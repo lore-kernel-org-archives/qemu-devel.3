@@ -4,127 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70F8FC43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 16:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7BA4C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 16:44:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whVNM-0006OB-U9; Wed, 08 Jul 2026 12:43:56 -0400
+	id 1whVNk-0006Wj-Jp; Wed, 08 Jul 2026 12:44:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1whVN5-0006Mj-7m
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:43:40 -0400
-Received: from smtpout9.mo537.mail-out.ovh.net ([51.210.91.28])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1whVN2-00036d-Ru
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:43:38 -0400
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net [79.137.60.36])
- by mo537.mail-out.ovh.net (Postfix) with ESMTPS id 4gwP6r2RjCz3yVN;
- Wed,  8 Jul 2026 16:43:32 +0000 (UTC)
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net. [127.0.0.1])
- by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <alistair@alistair23.me>; Wed,  8 Jul 2026 16:43:32 +0000 (UTC)
-Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.113.13])
- by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4gwP6r1JYKz1xy2; Wed,  8 Jul 2026 16:43:32 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.1])
- (Authenticated sender: clg@kaod.org)
- by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 723971B43D78;
- Wed,  8 Jul 2026 16:43:29 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-109S003ce937b0f-264b-42ef-b741-79778dfd29e4,
- 2D223E717D9FA260C3726021AC4FE3AAA9F332FE) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <6e33a168-4311-47e8-a153-f364a2c43bf1@kaod.org>
-Date: Wed, 8 Jul 2026 18:43:28 +0200
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1whVNj-0006T3-4m
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:44:19 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1whVNh-000395-Dm
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:44:18 -0400
+Received: from example.com (unknown [167.220.208.42])
+ by linux.microsoft.com (Postfix) with ESMTPSA id C54F720B7167;
+ Wed,  8 Jul 2026 09:44:04 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com C54F720B7167
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1783529046;
+ bh=DY2qObzKyxh0ok6Pcyi8n6b6EV+cuk6j2kBW8KO0Kps=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=SXMg+ob3XzbTx+w1kYsdyOdd2zlzlJZyv3p9mKnjjoLYCAiAviHQ38yQzmlBSye5P
+ 2Lkh6HzR+vs5f+2Yo//YVKsTUnEGcQX4sC4dI8cMOIEXaOo+10pchLYW0CVxZoY273
+ f9G0gadg6x/mCyvVuxRngCxJSm7PUtRDHYatQF3U=
+Date: Wed, 8 Jul 2026 18:44:07 +0200
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+To: Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Wei Liu <wei.liu@kernel.org>, Magnus Kulke <magnuskulke@microsoft.com>,
+ Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@microsoft.com>,
+ Wei Liu <liuwe@microsoft.com>
+Subject: Re: [PATCH 4/5] target/i386/mshv: remove fallback for register page
+ set registers
+Message-ID: <ak5+V9XXGOvt5neR@example.com>
+References: <20260707221645.24557-1-dblanzeanu@linux.microsoft.com>
+ <20260707221645.24557-5-dblanzeanu@linux.microsoft.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] tests/qtest: aspeed_smc: Add Dual Output Read (DOR)
- test coverage
-To: Bin Meng <bmeng.cn@gmail.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Alistair Francis <alistair@alistair23.me>,
- Bin Meng <bin.meng@processmission.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-References: <20260708111544.1440761-1-clg@redhat.com>
- <20260708111544.1440761-4-clg@redhat.com>
- <CAEUhbmV0Q2xpwVLUxv9NEDbb8pMgnjdChupPngtPvCuFFedv7A@mail.gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSBDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQGthb2Qub3JnPsLBeAQTAQIAIgUCW7yjdQIbAwYLCQgHAwIGFQgCCQoL
- BBYCAwECHgECF4AACgkQUaNDx8/77KGRSxAAuMJJMhJdj7acTcFtwof7CDSfoVX0owE2FJdd
- M43hNeTwPWlV5oLCj1BOQo0MVilIpSd9Qu5wqRD8KnN2Bv/rllKPqK2+i8CXymi9hsuzF56m
- 76wiPwbsX54jhv/VYY9Al7NBknh6iLYJiC/pgacRCHtSj/wofemSCM48s61s1OleSPSSvJE/
- jYRa0jMXP98N5IEn8rEbkPua/yrm9ynHqi4dKEBCq/F7WDQ+FfUaFQb4ey47A/aSHstzpgsl
- TSDTJDD+Ms8y9x2X5EPKXnI3GRLaCKXVNNtrvbUd9LsKymK3WSbADaX7i0gvMFq7j51P/8yj
- neaUSKSkktHauJAtBNXHMghWm/xJXIVAW8xX5aEiSK7DNp5AM478rDXn9NZFUdLTAScVf7LZ
- VzMFKR0jAVG786b/O5vbxklsww+YXJGvCUvHuysEsz5EEzThTJ6AC5JM2iBn9/63PKiS3ptJ
- QAqzasT6KkZ9fKLdK3qtc6yPaSm22C5ROM3GS+yLy6iWBkJ/nEYh/L/du+TLw7YNbKejBr/J
- ml+V3qZLfuhDjW0GbeJVPzsENuxiNiBbyzlSnAvKlzda/sBDvxmvWhC+nMRQCf47mFr8Xx3w
- WtDSQavnz3zTa0XuEucpwfBuVdk4RlPzNPri6p2KTBhPEvRBdC9wNOdRBtsP9rAPjd52d73O
- wU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhWpOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNL
- SoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZKXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVU
- cP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwpbV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+
- S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc
- 9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFUCSLB2AE4wXQkJbApye48qnZ09zc929df5gU6
- hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iSYBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616d
- tb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6gLxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/
- t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1c
- OY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0SdujWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475
- KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/JxIqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8
- o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoX
- ywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjKyKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0
- IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9jhQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Ta
- d2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yops302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it
- +OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/pLHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1n
- HzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBUwYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVIS
- l73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lUXOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY
- 3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
- ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
- KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <CAEUhbmV0Q2xpwVLUxv9NEDbb8pMgnjdChupPngtPvCuFFedv7A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 9093893550543907885
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGszzCa6Plw9XuHTjPf67GSsxXG9dq6BPqMe7UIwYeG/RzQJ95XUz5jNa6UYUtqQn9bCg4lSCW0g42IYKKfpnZjrC8L53YD3oFzmV+0Yo29SEV6JYXBY8kRz5Y30/L84pJGrRJ7IpoUs1xrU8jRL/nNXPai4ABznUP4uiDv8Dq1KA9KO4rbrAPtJQcX62yxiCJVhR+ragqVmRwpBdhkFjPmPX81ejUrS+jk0fxy/QSmiMzKnBIO52DXvTQZmNNoM8AYUoLYmMjqMhO9hWyVwH9zTSva9ZGyp+NQoISlN60IsApmXsytqW3pqtB0qv3yYmS/i0UAt/GwWQCgVpk45mQGnViLvEEHvQ4SdDd5rGpm8AFkP8ymKJLwRjXlWeGx/ugqGAN8VvWncOnaxkezSTVzewELC8K+BoGkypyhN07lO+7slw/A/jid0ImB7tnDFac5inFGIZgZuJrUIBkZeCtqrkrWldWdmGpsFN3VjKeByueDGE/Fu6HGHggzC7Di5JyT9iaGGk7FS2cc+XNv63VX6S8tXgumon0milGtGpGAFfu3ay7zHddPKRBoCNrJPf938tZ5q+XL5RYYTODc4nqs+g2ZcCmgvlG9v377lrXGX79m7xY8kYvxbhl2MHcO1pk2FU8aXXyyeXxVZaStfGr/4rxAqcw8UOoKKTPHLETEaw
-DKIM-Signature: a=rsa-sha256; bh=Ds/KL1fvt346pS+O31IxHHJuz+sSE+PgkxxmxezuTl8=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1783529014; v=1;
- b=e8xj9RPX6wRnYHa6RoAurMrkye4li7sQTKbvn9c7h+keurcXId6RGvflEVhaa8H2pfOUbzjo
- ab+wMcPCNMq/XdIsdHYSzjfxipate/tFwvK1OIdVjhWIohBhlz1tywWzemxP9pccv7CB2NU9C2E
- 8QWT/nykqpgjvQQAEAvKx4LG3nn+i48bbNCulDllE8N+Mf41GP/KXDH4iCO42gYe+HIGzhBgIXX
- TFYtGtXgK1exM+CZrOoaSiMKNtuczIK0V7gyyq39IW3ek5n/IS9uO7Iyrn7JARfoRVZLpJz4N8k
- GKe+aAwSwEiCcsEz8rqFSHOZ5pQArUHn/29z/i0zFXvcg==
-Received-SPF: pass client-ip=51.210.91.28; envelope-from=clg@kaod.org;
- helo=smtpout9.mo537.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <20260707221645.24557-5-dblanzeanu@linux.microsoft.com>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -141,37 +70,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/8/26 17:32, Bin Meng wrote:
-> On Wed, Jul 8, 2026 at 7:17â€¯PM CÃ©dric Le Goater <clg@redhat.com> wrote:
->>
->> Add read_page_mem_dor (CTRL_FREADMODE with DOR command and dual data
->> IO mode) and write_page_dor (user-mode DOR) tests.
->>
->> Signed-off-by: CÃ©dric Le Goater <clg@redhat.com>
->> ---
->>   tests/qtest/aspeed-smc-utils.h |  4 +++
->>   tests/qtest/aspeed-smc-utils.c | 50 ++++++++++++++++++++++++++++++++++
->>   tests/qtest/aspeed_smc-test.c  | 16 +++++++++++
->>   tests/qtest/ast2700-smc-test.c |  4 +++
->>   4 files changed, 74 insertions(+)
->>
->> diff --git a/tests/qtest/aspeed-smc-utils.h b/tests/qtest/aspeed-smc-utils.h
->> index 5a86514caf35..fbfb94e831d8 100644
->> --- a/tests/qtest/aspeed-smc-utils.h
->> +++ b/tests/qtest/aspeed-smc-utils.h
->> @@ -44,6 +44,7 @@
->>   #define   CTRL_FREADMODE       0x1
->>   #define   CTRL_WRITEMODE       0x2
->>   #define   CTRL_USERMODE        0x3
->> +#define   CTRL_IO_DUAL_DATA     BIT(29)
+On Wed, Jul 08, 2026 at 01:16:44AM +0300, Doru Blânzeanu wrote:
+> Update `store_regs` to use the register page when it is mmapped and
+> valid to set registers.
+> Remove the ioctl based register retrieval and fail in case the register
+> page is not correctly set or valid.
 > 
-> This macro is already defined in aspeed-smc-utils.h:43
+> Fixes: 80c7f8e9cd
+> Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+> ---
+>  target/i386/mshv/mshv-cpu.c | 48 +++++++++++++------------------------
+>  1 file changed, 17 insertions(+), 31 deletions(-)
+> 
+> diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+> index 9ec5c19c67..8a59a0b40e 100644
+> --- a/target/i386/mshv/mshv-cpu.c
+> +++ b/target/i386/mshv/mshv-cpu.c
+> @@ -448,7 +448,7 @@ static int set_standard_regs(const CPUState *cpu)
+>      return 0;
+>  }
+>  
+> -static void mshv_set_standard_regs_vp_page(CPUState *cpu)
+> +static void set_standard_regs_vp_page(CPUState *cpu)
+>  {
+>      X86CPU *x86cpu = X86_CPU(cpu);
+>      CPUX86State *env = &x86cpu->env;
+> @@ -478,29 +478,26 @@ static void mshv_set_standard_regs_vp_page(CPUState *cpu)
+>                                  | (1u << HV_X64_REGISTER_CLASS_FLAGS);
+>  }
+>  
+> -static int store_regs(CPUState *cpu)
+> +static void store_regs(CPUState *cpu)
+>  {
+>      X86CPU *x86cpu = X86_CPU(cpu);
+>      CPUX86State *env = &x86cpu->env;
+> -    int ret;
+>  
+> -    /* Use register vp page to optimize registers access */
+> -    if (env->regs_page && env->regs_page->isvalid != 0) {
+> -        mshv_set_standard_regs_vp_page(cpu);
+> -    } else {
+> -        ret = set_standard_regs(cpu);
+> -        if (ret < 0) {
+> -            return ret;
+> -        }
+> +    /* Check register page pointer and abort if in unexpected state */
+> +    if (!env->regs_page) {
+> +        error_report(
+> +                "store regs: register page not set for vcpu %d",
+> +                cpu->cpu_index);
+> +        abort();
+>      }
+> -
+> -    ret = set_special_regs(cpu);
+> -    if (ret < 0) {
+> -        error_report("Failed to store speical registers");
+> -        return ret;
+> +    if (env->regs_page->isvalid == 0) {
+> +        error_report(
+> +                "store regs: register page invalid for vcpu %d",
+> +                cpu->cpu_index);
+> +        abort();
+>      }
+>  
+> -    return 0;
+> +    set_standard_regs_vp_page(cpu);
+>  }
+>  
+>  static void populate_standard_regs(const hv_register_assoc *assocs,
+> @@ -1518,14 +1515,13 @@ static int set_memory_info(const struct hyperv_message *msg,
+>      return 0;
+>  }
+>  
+> -static int emulate_instruction(CPUState *cpu,
+> +static void emulate_instruction(CPUState *cpu,
+>                                 const uint8_t *insn_bytes, size_t insn_len,
+>                                 uint64_t gva, uint64_t gpa)
+>  {
+>      X86CPU *x86_cpu = X86_CPU(cpu);
+>      CPUX86State *env = &x86_cpu->env;
+>      struct x86_decode decode = { 0 };
+> -    int ret;
+>      x86_insn_stream stream = { .bytes = insn_bytes, .len = insn_len };
+>  
+>      load_regs(cpu);
+> @@ -1533,13 +1529,7 @@ static int emulate_instruction(CPUState *cpu,
+>      decode_instruction_stream(env, &decode, &stream);
+>      exec_instruction(env, &decode);
+>  
+> -    ret = store_regs(cpu);
+> -    if (ret < 0) {
+> -        error_report("failed to store registers");
+> -        return -1;
+> -    }
+> -
+> -    return 0;
+> +    store_regs(cpu);
+>  }
+>  
+>  static int handle_mmio(CPUState *cpu, const struct hyperv_message *msg,
+> @@ -1575,13 +1565,9 @@ static int handle_mmio(CPUState *cpu, const struct hyperv_message *msg,
+>  
+>      instruction_bytes = info.instruction_bytes;
+>  
+> -    ret = emulate_instruction(cpu, instruction_bytes, insn_len,
+> +    emulate_instruction(cpu, instruction_bytes, insn_len,
+>                                info.guest_virtual_address,
+>                                info.guest_physical_address);
+> -    if (ret < 0) {
+> -        error_report("failed to emulate mmio");
+> -        return -1;
+> -    }
+>  
+>      *exit_reason = MshvVmExitIgnore;
+>  
+> -- 
+> 2.53.0
 
-I am confused. I only see this CTRL_IO_DUAL_DATA define in
-hw/ssi/aspeed_smc.c.
-
-Thanks,
-
-C.
-
+Reviewed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
