@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9D3CC43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 16:19:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5C5CC43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 16:19:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whUzY-00014B-Jw; Wed, 08 Jul 2026 12:19:20 -0400
+	id 1whUzh-00016p-5z; Wed, 08 Jul 2026 12:19:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1whUzW-00012x-FE
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:19:18 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1whUzf-000163-RX
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:19:27 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1whUzU-0006yB-Ry
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:19:18 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2ccdb73f0e1so8890915ad.3
- for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 09:19:16 -0700 (PDT)
+ id 1whUze-0006zt-8i
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:19:27 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-381507c9380so688190a91.0
+ for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 09:19:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1783527555; x=1784132355; darn=nongnu.org;
+ d=sifive.com; s=google; t=1783527565; x=1784132365; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=xxHnlMV1JLQeffQVz+3d7Qr7bAg99XcAJ/gdYyuVnYk=;
- b=f4HmxCy9f8Cmb4R53cXaCxLxtqZgJPDpwDxpnQvjzDybF7Q0l91VjGuVz5d7utF2U7
- +te/9Edvd12YPPm6b0nGwgJFVWUZUVXMIyHLM2kzbQpbGPjLfQKxuqO6COOteCcgHP8e
- E6j1U8IZ5Eb89j/urzCxWPO14jG5MF7hVnfEeWeMKfdwlOlaacUlGEz30Ucl2sAlSdo1
- o2H5iTq0J3ovSJXl3SH+HUAL5YgL3pzEgRtxRSpOPdtJQCYOvptjpbteeAtPjd2G6ZIu
- vIAaeaj3EJbBXSngfvlTvWe95owiURMtX2QtmweWP3u+G62zQLZWspEc6csKPH/DbL9x
- dGTQ==
+ bh=j8dr4FDMitUA0gEzk3TdSWqsLs8LF2XIAra9aUvAPMY=;
+ b=csTIrrIFyCBn4Wab+H6Ju391qkVy4riXBRv1Pbxjvp4oxgJYL/vpPaQQawk2q7X0y6
+ aVG9WG58SLaCxXhmmyy7U+nJhQNNnaNoV97Etgz1odKRQaueTgc/gKw5mCxM6H+4F6zP
+ sOV+xNCq9GXxGybU+doH0vLBTDCgzBNIJMBNH7gk0saAKSXSwSW09Mdp0Lm3y5LGDmjG
+ l9Q/vnSv9+o6fdI+EgCcGo9XK+a9Ks1DXfwfs4vECLu30uFp5mAZFiQKCpIe+bJh53OE
+ 3uxKxxS6SgE5igVhvoHDwFIH0wkn1vd73XCVqRtjByMaHoWBvmnBL+S1Fn5vsUq4bmJO
+ ceug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783527555; x=1784132355;
+ d=1e100.net; s=20251104; t=1783527565; x=1784132365;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=xxHnlMV1JLQeffQVz+3d7Qr7bAg99XcAJ/gdYyuVnYk=;
- b=YF3L4RGstt31Nxcp/ipjNoyzJRjf8GOc35fvCvRbUJs451LqrU3Slmw6RAVoZLXOgo
- nXYO7FU+zdvRisXOjE93wHud1SV7wzo2NeUfBHk+mTeHDb7ghjLcN8+uWu6HZUNlFzMs
- JY58fDN7IoYD4ZfcVbmYTumZcnZs/XKbBk0EAep4d9D53TxJ1xasp+xly8hW9Cm+4D7Q
- 1xxy3G74LyDJaZ13dT7pB5UxlRT1kowoKFaT0iKpoNtmkXJ3yPGrWFS7LunRg4J2Kp6x
- G3+ePxVhyvJ8eOqLHu52iPkdLGdXbmqhv1GP34GxqQ2zvQ9vA2my2UEuAJNdNBxXRFUD
- wLwQ==
-X-Gm-Message-State: AOJu0YyoBmQTWPMs09hsFgTJAwhUBT42oBIheu7BVMzRbV6RiZyhjS1+
- LxN4t7gt67YX/ZmlHTgN7dTeFBRyj81XAEc7GLfNAlTnwV0kQ6FWtXV7ZHl0zsq3JknPXKYJCIN
- qDNkenIs5RxiV+RqnL+h3iwwYxtBJmniBTvm/iwIMhJ1uaWws2Dt6LpTXWnPozig4vPPcgoRhUS
- ggl4rWQBQbUC6Bgof7IH8nNXGeuDQnFKO5xJCOpRM=
-X-Gm-Gg: AfdE7clTk6csjgI37l0DklMZfpsyEvpiN4apMNZ6x02LJqSp1/EWCimvfMYkwyaQSJu
- soSCY5SHTp/gr+TKAhDH+LgpTHuNEP6ssqHqPXsDVGumpjDhG3pDqr3i6+t/QbSufn2wLxa4GKt
- LL7MEmXV78MxtReY8d+V/V7Vg0zohz/3mNoI6yk/plUKlUnSxHQiUZ2nMfIASPUqqbFTVXPwgdV
- KFF8/d1mZ4i4H3yndz5lLZk5HVt5vwTsI6QcubAwew1BSPAdLOlTCCFnXf66aXa7PMwSXYgS21A
- 71r7MwATHSWOYjLnqSB7FtociBW2MOTvFgEfZCh7nrUhB0Mfk1AqXSgM51u/I+b8AoHpifOz233
- RTlxxaVo8l3ZUvY5oB+PHyEm2FvkyLwa60kE0/0NbHeaQH+oLpurKJQj4EIhqh2FREvBtFhkyn6
- PA9V8PpAdqWukLSQrkTDTG737VoOf4TAo9vzaP72h/4px3FUsnczUrC7obxcz6GF2T8vDY0PSTT
- muFt0G5Pqq/1lgV
-X-Received: by 2002:a17:903:3250:b0:2ca:2079:91cc with SMTP id
- d9443c01a7336-2ccea371b35mr31671735ad.5.1783527555365; 
- Wed, 08 Jul 2026 09:19:15 -0700 (PDT)
+ bh=j8dr4FDMitUA0gEzk3TdSWqsLs8LF2XIAra9aUvAPMY=;
+ b=V9uI9qohdRHIw0R3PxLfwlUC+avzoG3KhsIiM0SrFvfJtkb5QO+nP1GonRhKBogTaT
+ yt/zhwdBfIXiKVMbG35zkEDj1sknZoys0qFgbjoDZfs3z/gusw6XBLtXeLu72mVc8hU8
+ NzcZtDFaYg7laZTLXOL/+0adocLvjMEi6/ID0KIVmEzWz6xzdqwiWxbAgTF4dozz+DJU
+ QD19WEQnr2oRl8lROhh5xfvJgfdP6dXxRThbCYnzXEY1kxMtQ0efuVDcH0QXpBLr3y5k
+ jELSvSybxfQOkYGEsHGxjJovWRznn5n8DYj6qB0uSDXZax70G8TDC/DzDTun7UW9bOIL
+ O5Xg==
+X-Gm-Message-State: AOJu0YzdR8ojgV1349USOAoUPSHz5dznepKj7Evcu5LuL8H0u5bXu3Hw
+ opSNYcOGU+mkgqq2B5HnbuBcbMvvmaxdhppChjP5EUXJ57U2b1lH5kw8ijuRnIWbWWgUWRdKeSn
+ coThJKEzTT0tuV3nx5guzr6ofbthE70CwbcnbEBD0C+FKk/A8OXIUmupXZSRErBIXoDRvelBPXY
+ VrIXZtGqDy3CwpX8MzHAK7QE3bQNLo+LB+2BW/xQY=
+X-Gm-Gg: AfdE7ck5Aoge9yYQ248H+xzklvJZlQHKNLv1H+3b12I0Bu4LQ6Xmvlx/WKAhEWMsAig
+ B76UOdDVZAA0huExQPOnXls11P2FCmv2HdyqTHiqqtk27ioS8Hxtiinht+/DFslM58MBqwT0eUs
+ qDs1FgOrJ1VRGLdYW0sgr1o5nVZ5PjlV8cquxFDsQ2bmsKZbIyyVBAaoaEvECOODxI3bL/iNE55
+ N2l8jeNCAla2dis2oPHnGenwuWCLwmdXPqyuja5eTLIIpUHkI9EXk0bf1YgSKOF3g2qdXfzVOOT
+ RRKulReAUl5mrNXaU/5+GBxRLVJb0QewldQPwHX8T+57d8LKJlf1sYwF08cR+E9L5VQlZnPeJk9
+ ohX6nKI3hqhF2eS536v60zb3KSiRCc43Z8a0HXVRDECWBjlPXFNp4drLnif+AD4FLjnTiZqeuc0
+ vEOR2MLLW6XrER0No5xZuUUdReefspY3cGLJ2N2ltmOhgOBu/E1iht3vTYN1VmUfc44Q8lNH95b
+ M5KyicgX4hMDZP+
+X-Received: by 2002:a17:90a:e183:b0:381:25ce:bcc2 with SMTP id
+ 98e67ed59e1d1-3893fb6b6ebmr3159659a91.6.1783527564581; 
+ Wed, 08 Jul 2026 09:19:24 -0700 (PDT)
 Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
  [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ccc9bdb56fsm30789265ad.15.2026.07.08.09.19.12
+ d9443c01a7336-2ccc9bdb56fsm30789265ad.15.2026.07.08.09.19.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Jul 2026 09:19:15 -0700 (PDT)
+ Wed, 08 Jul 2026 09:19:24 -0700 (PDT)
 From: Max Chou <max.chou@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -79,16 +79,17 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Chao Liu <chao.liu.zevorn@gmail.com>, Max Chou <max.chou@sifive.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v6 3/9] target/riscv: Add cfg property for Zvfofp8min extension
-Date: Thu,  9 Jul 2026 00:18:53 +0800
-Message-ID: <20260708161859.1124848-4-max.chou@sifive.com>
+Subject: [PATCH v6 6/9] target/riscv: rvv: Make vfncvtbf16.f.f.w support BF16
+ to OFP8 conversion for Zvfofp8min extension
+Date: Thu,  9 Jul 2026 00:18:56 +0800
+Message-ID: <20260708161859.1124848-7-max.chou@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260708161859.1124848-1-max.chou@sifive.com>
 References: <20260708161859.1124848-1-max.chou@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=max.chou@sifive.com; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=max.chou@sifive.com; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,74 +112,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the ISA spec of Zvfofp8min extension,
-
-"The Zvfofp8min extension requires on the Zve32f extension."
+According to the Zvfofp8min extension, the vfncvtbf16.f.f.w instruction
+supports BF16 to OFP8 conversion without saturation when SEW is 8.
+And the VTYPE.altfmt field is used to select the OFP8 format.
+* altfmt = 0: BF16 to OFP8.e4m3
+* altfmt = 1: BF16 to OFP8.e5m2
 
 Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Signed-off-by: Max Chou <max.chou@sifive.com>
 ---
- target/riscv/cpu.c                | 1 +
- target/riscv/cpu_cfg_fields.h.inc | 1 +
- target/riscv/tcg/tcg-cpu.c        | 5 +++++
- target/riscv/tcg/vector_helper.c  | 3 ++-
- 4 files changed, 9 insertions(+), 1 deletion(-)
+ target/riscv/tcg/insn_trans/trans_rvbf16.c.inc | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 5a82e6563b..38c580a22a 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -231,6 +231,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(zvfbfwma, PRIV_VERSION_1_12_0, ext_zvfbfwma),
-     ISA_EXT_DATA_ENTRY(zvfh, PRIV_VERSION_1_12_0, ext_zvfh),
-     ISA_EXT_DATA_ENTRY(zvfhmin, PRIV_VERSION_1_12_0, ext_zvfhmin),
-+    ISA_EXT_DATA_ENTRY(zvfofp8min, PRIV_VERSION_1_12_0, ext_zvfofp8min),
-     ISA_EXT_DATA_ENTRY(zvkb, PRIV_VERSION_1_12_0, ext_zvkb),
-     ISA_EXT_DATA_ENTRY(zvkg, PRIV_VERSION_1_12_0, ext_zvkg),
-     ISA_EXT_DATA_ENTRY(zvkn, PRIV_VERSION_1_12_0, ext_zvkn),
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index 9eb47af0a7..af78c19a9d 100644
---- a/target/riscv/cpu_cfg_fields.h.inc
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -105,6 +105,7 @@ BOOL_FIELD(ext_zvfbfmin)
- BOOL_FIELD(ext_zvfbfwma)
- BOOL_FIELD(ext_zvfh)
- BOOL_FIELD(ext_zvfhmin)
-+BOOL_FIELD(ext_zvfofp8min)
- BOOL_FIELD(ext_smaia)
- BOOL_FIELD(ext_ssaia)
- BOOL_FIELD(ext_smctr)
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 4af5cd9c73..5c3f79fbd5 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -639,6 +639,11 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         return;
-     }
+diff --git a/target/riscv/tcg/insn_trans/trans_rvbf16.c.inc b/target/riscv/tcg/insn_trans/trans_rvbf16.c.inc
+index 86eb86f615..7e9b0a53a4 100644
+--- a/target/riscv/tcg/insn_trans/trans_rvbf16.c.inc
++++ b/target/riscv/tcg/insn_trans/trans_rvbf16.c.inc
+@@ -67,11 +67,20 @@ static bool trans_fcvt_s_bf16(DisasContext *ctx, arg_fcvt_s_bf16 *a)
+ static bool trans_vfncvtbf16_f_f_w(DisasContext *ctx, arg_vfncvtbf16_f_f_w *a)
+ {
+     REQUIRE_FPU;
+-    REQUIRE_ZVFBFMIN(ctx);
  
-+    if (cpu->cfg.ext_zvfofp8min && !cpu->cfg.ext_zve32f) {
-+        error_setg(errp, "Zvfofp8min extension depends on Zve32f extension");
-+        return;
-+    }
+-    if (opfv_narrow_check(ctx, a) && (ctx->sew == MO_16)) {
++    if (opfv_narrow_check(ctx, a) &&
++        ((ctx->sew == MO_16 && ctx->cfg_ptr->ext_zvfbfmin) ||
++         (ctx->sew == MO_8 && ctx->cfg_ptr->ext_zvfofp8min))) {
++        gen_helper_gvec_3_ptr *fn;
+         uint32_t data = 0;
+ 
++        if (ctx->sew == MO_16) {
++            fn = gen_helper_vfncvtbf16_f_f_w;
++        } else {
++            fn = ctx->altfmt ? gen_helper_vfncvtbf16_f_f_w_ofp8e5m2 :
++                               gen_helper_vfncvtbf16_f_f_w_ofp8e4m3;
++        }
 +
-     if (cpu->cfg.ext_zvfh && !cpu->cfg.ext_zfhmin) {
-         error_setg(errp, "Zvfh extensions requires Zfhmin extension");
-         return;
-diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
-index 944f176b74..6b736948ff 100644
---- a/target/riscv/tcg/vector_helper.c
-+++ b/target/riscv/tcg/vector_helper.c
-@@ -38,7 +38,8 @@ static target_ulong vtype_reserved(CPURISCVState *env, target_ulong vtype)
-     int xlen = riscv_cpu_xlen(env);
-     target_ulong reserved = 0;
+         gen_set_rm_chkfrm(ctx, RISCV_FRM_DYN);
  
--    if (riscv_cpu_cfg(env)->ext_zvfbfa) {
-+    if (riscv_cpu_cfg(env)->ext_zvfbfa ||
-+        riscv_cpu_cfg(env)->ext_zvfofp8min) {
-         reserved = vtype & MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
-                                            xlen - 1 - R_VTYPE_RESERVED_SHIFT);
-     } else {
+         data = FIELD_DP32(data, VDATA, VM, a->vm);
+@@ -81,8 +90,7 @@ static bool trans_vfncvtbf16_f_f_w(DisasContext *ctx, arg_vfncvtbf16_f_f_w *a)
+         tcg_gen_gvec_3_ptr(vreg_ofs(ctx, a->rd), vreg_ofs(ctx, 0),
+                            vreg_ofs(ctx, a->rs2), tcg_env,
+                            ctx->cfg_ptr->vlenb,
+-                           ctx->cfg_ptr->vlenb, data,
+-                           gen_helper_vfncvtbf16_f_f_w);
++                           ctx->cfg_ptr->vlenb, data, fn);
+         finalize_rvv_inst(ctx);
+         return true;
+     }
 -- 
 2.55.0
 
