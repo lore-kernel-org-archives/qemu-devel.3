@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 972BDC44503
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 07:43:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82119C43602
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 07:43:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whMwB-0004Rl-47; Wed, 08 Jul 2026 03:43:19 -0400
+	id 1whMw9-0004QL-45; Wed, 08 Jul 2026 03:43:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1whMvw-00043b-Lk; Wed, 08 Jul 2026 03:43:04 -0400
+ id 1whMvs-00040s-RF; Wed, 08 Jul 2026 03:43:02 -0400
 Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1whMvu-0004ox-MJ; Wed, 08 Jul 2026 03:43:04 -0400
+ id 1whMvq-0004ox-KP; Wed, 08 Jul 2026 03:43:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1783496583; x=1815032583;
+ t=1783496579; x=1815032579;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=W0Yo/PAidXNCh/t02WCIULdm+1D7XGMULjYWmJ+pn8k=;
- b=ailSzGr0meK+iLEQLcHgA6wzvI3aOwJyiD6sOtyxLlJRYUYnDF3yU+Oe
- XP6RYxIY50DmuKyqUGat+jDj6MPUpxhKsVZ2QbqKOvndNtr2rBku3VfPK
- NRiPx2uuTmJFTR5H4R23hmhjNutEY8HTj/Y8vTIRokY2HQ8/eJ9P2mBsN
- p7nZVsy/ToFTzegiw4mUiqk2BUPk2mzQ3scU4JIABX4ZtoGisHsBLp1Mj
- i8W/vLhznHlRjbqKjWwuYpQXOGZbdyc1K34PsU98p9hnagYbMRsYStVTx
- Kx8YYOMBGWjYXjj31UIYffjtgCOHb5o2D1ERdXs9OvC2AZMqVvNzwszz4 w==;
-X-CSE-ConnectionGUID: 2+09BiJwSeOaJVg2BvTDsQ==
-X-CSE-MsgGUID: 0MF5kwKJSpihxQQHA7sOgw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11840"; a="84343286"
-X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; d="scan'208";a="84343286"
+ bh=odjHL0x+MROapiVixt+s6VKPVF1LIdg6RNrAA9VuKTM=;
+ b=gx3eoM/LFOFQtnyGx80XuSf3werD9FCQxb5+TLL8D0dlCyBPaJP74kJG
+ k4AJBzMnSdJLw2i6NasDteblT5w0Hw2rf2HHkWurBf4HosPj2BJeTXCW2
+ UyQCkrjtxRyaiLO625mmVmiXM7duDx/BblvU3TLz5iL7hGYaQAwehlc4D
+ CdmYvIvPNccDeHHWOgIGwbdx5zvNeq6+a/2LWhtky3bhLSRWns2BgG1rR
+ rSZBYZnG5v7c83hcIUD8y/KHCz4l3eo0vtoTIRh5fFrb5/08cdxVcTo/P
+ VM/Wq642/qsC0Wwq6XL3p2klkKyIBG/yoXxbJaYr/K8LmTMNJkSsitQyM Q==;
+X-CSE-ConnectionGUID: G6C/Rkw/TI2CokyQHXhwlQ==
+X-CSE-MsgGUID: yKH5+q73SUyE/Q/DvMz8OA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11840"; a="84343267"
+X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; d="scan'208";a="84343267"
 Received: from fmviesa008.fm.intel.com ([10.60.135.148])
  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Jul 2026 00:43:02 -0700
-X-CSE-ConnectionGUID: GRxtV1fgTR2gpTNPi2/pRA==
-X-CSE-MsgGUID: fU63z/x0R1mdKAUoY/bvnQ==
+ 08 Jul 2026 00:42:57 -0700
+X-CSE-ConnectionGUID: 8UbpCixwTdGX59kZCt78/A==
+X-CSE-MsgGUID: kunUydETR2mcJBOEcpot7A==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; d="scan'208";a="251555961"
+X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; d="scan'208";a="251555948"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa008.fm.intel.com with ESMTP; 08 Jul 2026 00:42:57 -0700
+ by fmviesa008.fm.intel.com with ESMTP; 08 Jul 2026 00:42:53 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
@@ -57,9 +57,10 @@ Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
  Junjie Mao <junjie.mao@hotmail.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>,
  Chuanxiao Dong <chuanxiao.dong@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC v2 09/26] rust/util: Add RCU bindings
-Date: Wed,  8 Jul 2026 16:10:35 +0800
-Message-Id: <20260708081052.2276617-10-zhao1.liu@intel.com>
+Subject: [RFC v2 08/26] rust/bindings/util-sys: Include rcu.h in bindings
+ wrapper
+Date: Wed,  8 Jul 2026 16:10:34 +0800
+Message-Id: <20260708081052.2276617-9-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260708081052.2276617-1-zhao1.liu@intel.com>
 References: <20260708081052.2276617-1-zhao1.liu@intel.com>
@@ -89,188 +90,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add RCU bindings, including an RAII guard for rcu_read_lock() &
-rcu_read_unlock(), and an RcuCell to model qatomic_rcu_read within an
-RCU critical section.
+rcu.h is transitively included by several crates'
+wrapper.h files (e.g. hwcore via hw/core/qdev.h, system via
+system/memory.h).
 
-Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
-Suggested-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Because several structs (e.g. BusChild/FlatView/AddressSpace) embed
+struct rcu_head, bindgen automatically generates a rcu_head definition
+in each crate that references it.
+
+Explicitly add rcu.h to util-sys/wrapper.h.  With the allowlist-then-
+blocklist logic in generate_bindgen_args.py, this makes util-sys the
+only owner of rcu.h bindings. Then rcu.h is blocked in hwcore-sys and
+system-sys, thus it's necessary to import rcu_head from util_sys in
+hwcore-sys/lib.rs and system-sys/lib.rs.
+
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
 Changes since v1:
- * Use RAII pattern to guard RCU locking.
- * New RcuCell to simplify RCU read in Rust.
+ * New commit.
 ---
- rust/hw/char/pl011/wrapper.h |   1 +
- rust/util/src/lib.rs         |   1 +
- rust/util/src/rcu.rs         | 137 +++++++++++++++++++++++++++++++++++
- 3 files changed, 139 insertions(+)
- create mode 100644 rust/util/src/rcu.rs
+ rust/bindings/hwcore-sys/lib.rs  | 2 +-
+ rust/bindings/system-sys/lib.rs  | 2 +-
+ rust/bindings/util-sys/wrapper.h | 1 +
+ 3 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/rust/hw/char/pl011/wrapper.h b/rust/hw/char/pl011/wrapper.h
-index 87a5a589c8ea..2f66683fcd10 100644
---- a/rust/hw/char/pl011/wrapper.h
-+++ b/rust/hw/char/pl011/wrapper.h
-@@ -49,3 +49,4 @@ typedef enum memory_order {
+diff --git a/rust/bindings/hwcore-sys/lib.rs b/rust/bindings/hwcore-sys/lib.rs
+index 8cef4a796193..9414c6639e2a 100644
+--- a/rust/bindings/hwcore-sys/lib.rs
++++ b/rust/bindings/hwcore-sys/lib.rs
+@@ -26,7 +26,7 @@
+     InterfaceClass, Object, ObjectClass, ObjectProperty, ObjectPropertyAccessor,
+     ObjectPropertyRelease,
+ };
+-use util_sys::{Error, QDict, QList};
++use util_sys::{rcu_head, Error, QDict, QList};
  
- #include "qemu/osdep.h"
- #include "hw/char/pl011.h"
+ #[cfg(MESON)]
+ include!("bindings.inc.rs");
+diff --git a/rust/bindings/system-sys/lib.rs b/rust/bindings/system-sys/lib.rs
+index 30adf683c355..8feaa76ca165 100644
+--- a/rust/bindings/system-sys/lib.rs
++++ b/rust/bindings/system-sys/lib.rs
+@@ -21,7 +21,7 @@
+ use common::Zeroable;
+ use hwcore_sys::{qemu_irq, DeviceClass, DeviceState};
+ use qom_sys::{Object, ObjectClass};
+-use util_sys::{Error, EventNotifier, QEMUBH};
++use util_sys::{rcu_head, Error, EventNotifier, QEMUBH};
+ 
+ #[cfg(MESON)]
+ include!("bindings.inc.rs");
+diff --git a/rust/bindings/util-sys/wrapper.h b/rust/bindings/util-sys/wrapper.h
+index e9c433e7dc14..5d3cf7792b92 100644
+--- a/rust/bindings/util-sys/wrapper.h
++++ b/rust/bindings/util-sys/wrapper.h
+@@ -27,6 +27,7 @@ typedef struct Visitor Visitor;
+ #include "qemu/module.h"
+ #include "qemu/option.h"
+ #include "qemu/timer.h"
 +#include "qemu/rcu.h"
-diff --git a/rust/util/src/lib.rs b/rust/util/src/lib.rs
-index 436c67e139ed..0736c1883dbf 100644
---- a/rust/util/src/lib.rs
-+++ b/rust/util/src/lib.rs
-@@ -5,6 +5,7 @@
- pub mod error;
- pub mod log;
- pub mod module;
-+pub mod rcu;
- 
- // preserve one-item-per-"use" syntax, it is clearer
- // for prelude-like modules
-diff --git a/rust/util/src/rcu.rs b/rust/util/src/rcu.rs
-new file mode 100644
-index 000000000000..e233f9698bfd
---- /dev/null
-+++ b/rust/util/src/rcu.rs
-@@ -0,0 +1,137 @@
-+// Copyright (C) 2026 Intel Corporation.
-+// Author(s): Zhao Liu <zhao1.liu@intel.com>
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+
-+//! Bindings for `rcu_read_lock` and `rcu_read_unlock`.
-+//! More details about RCU in QEMU, please refer docs/devel/rcu.rst.
-+
-+use std::{
-+    marker::PhantomData,
-+    sync::atomic::{AtomicPtr, Ordering},
-+};
-+
-+use crate::bindings;
-+
-+/// RAII guard for the RCU read side lock.  The lock is acquired on creation and
-+/// released on drop.
-+///
-+/// This guard is not `Send` or `Sync`, so it cannot be moved to another thread
-+/// or stored in a global variable.  This ensures the RCU read side lock to be
-+/// held and unlocked in the same thread.  The guard is also not `Clone` or
-+/// `Copy`, so it cannot be duplicated and this can avoid double-unlock, which
-+/// would be a bug.
-+///
-+/// ```ignore
-+/// let guard = RcuGuard::new();
-+/// // do some RCU read-side work
-+/// drop(guard); // releases the RCU read side lock
-+/// ```
-+pub struct RcuGuard {
-+    _marker: PhantomData<*const ()>,
-+}
-+
-+impl RcuGuard {
-+    /// Acquires the RCU read side lock and returns a guard.
-+    #[inline]
-+    pub fn new() -> Self {
-+        // SAFETY: An FFI call with no additional requirements.
-+        unsafe {
-+            bindings::rust_rcu_read_lock();
-+        }
-+        // INVARIANT: The RCU read side lock was just acquired above.
-+        Self {
-+            _marker: PhantomData,
-+        }
-+    }
-+}
-+
-+impl Default for RcuGuard {
-+    fn default() -> Self {
-+        Self::new()
-+    }
-+}
-+
-+impl Drop for RcuGuard {
-+    #[inline]
-+    fn drop(&mut self) {
-+        // SAFETY: An FFI call with no additional requirements.
-+        unsafe {
-+            bindings::rust_rcu_read_unlock();
-+        }
-+    }
-+}
-+
-+/// (Reader-side view of) an RCU-protected C pointer wrapper.
-+///
-+/// This wrapper expresses the RCU read semantics of the C side:
-+///
-+/// ```c
-+/// rcu_read_lock();
-+/// p = qatomic_rcu_read(&foo);
-+/// /* do something with p. */
-+/// rcu_read_unlock();
-+/// ```
-+///
-+/// With this wrapper, the above code can be expressed as:
-+///
-+/// ```ignore
-+/// // SAFETY: `foo_ptr` is a live RCU-protected pointer.
-+/// let cell = unsafe { RcuCell::from_ptr(foo_ptr) };
-+/// {
-+///     let guard = RcuGuard::new();
-+///     if let Some(p) = cell.get(&guard) {
-+///         /* do something with p. */
-+///     }
-+/// } // `rcu_read_unlock()` runs here, when `guard` is dropped.
-+/// ```
-+///
-+/// # Ordering vs. C's `qatomic_rcu_read`
-+///
-+/// C's `qatomic_rcu_read` compiles to `__ATOMIC_RELAXED` followed by
-+/// `smp_read_barrier_depends()` (or `__ATOMIC_CONSUME` under TSAN).
-+/// `smp_read_barrier_depends()` is a *compiler* barrier on all hosts QEMU
-+/// supports (see [docs/devel/atomics.rst](../../docs/devel/atomics.rst)),
-+/// providing dependency ordering.
-+///
-+/// Rust exposes neither `Ordering::Consume` nor a dependency-barrier
-+/// primitive.  So there is no exact Rust equivalent of `qatomic_rcu_read`.
-+/// Instead, use [`Ordering::Acquire`], the strictly stronger option:
-+/// - `Acquire` is a correct upper bound: every ordering that C's
-+///   `qatomic_rcu_read` guarantees is also guaranteed by `Acquire`, and it
-+///   correctly pairs with the updater's `qatomic_rcu_set()` (a Release store).
-+#[repr(transparent)]
-+pub struct RcuCell<T> {
-+    data: AtomicPtr<T>,
-+}
-+
-+impl<T> RcuCell<T> {
-+    /// Convert a C raw pointer to an [`RcuCell`] in place, without copying it.
-+    ///
-+    /// Note: copying the pointer first and then loading the copy would
-+    /// synchronise with nothing: the `Ordering::Acquire` must be applied to
-+    /// the original pointer to pair with `qatomic_rcu_set()`.
-+    ///
-+    /// # Safety
-+    ///
-+    /// `field` must point to a valid `*mut T` updated only with
-+    /// `qatomic_rcu_set()`, and the `T` object pointed to by `*field` must
-+    ///  remain valid during the RCU read-side critical section entered before
-+    ///  calling `RcuCell<T>::get`.
-+    pub unsafe fn from_ptr<'a>(field: *const *mut T) -> &'a Self {
-+        // SAFETY: `RcuCell` is `repr(transparent)` over `AtomicPtr<T>`.
-+        unsafe { &*(field.cast::<Self>()) }
-+    }
-+
-+    /// An almost equivalent of `qatomic_rcu_read()`, but with
-+    /// `Ordering::Acquire`.
-+    #[inline]
-+    fn raw_get(&self) -> *mut T {
-+        self.data.load(Ordering::Acquire)
-+    }
-+
-+    pub fn get<'g>(&self, _: &'g RcuGuard) -> Option<&'g T> {
-+        // SAFETY: the reference is *shared*, which allows several readers
-+        // to hold the RCU lock concurrently.
-+        unsafe { self.raw_get().as_ref() }
-+    }
-+}
+ #include "qapi/visitor.h"
+ #include "qobject/qbool.h"
+ #include "qobject/qdict.h"
 -- 
 2.34.1
 
