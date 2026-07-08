@@ -4,105 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23DE7C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 14:55:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F6ADC44501
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 14:57:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whTfz-0001a5-7r; Wed, 08 Jul 2026 10:55:03 -0400
+	id 1whTi7-00028P-0e; Wed, 08 Jul 2026 10:57:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1whTfy-0001Yk-7w
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 10:55:02 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1whTi4-000268-HK
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 10:57:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1whTfv-0002Pf-PW
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 10:55:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783522493; bh=xNhrJEvB0zw8BR5plVWc6N1uC0BFs2Y+dERdJklsFqM=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=Co8hly9LSDK7smgdRFIy95Kss8ESdOSXCBKHtrDsj7DunhLXaytc4Wxpjygxnrp1T
- mNXnO/O/PekWLmO69BxTTtBaf3OSDJuljonV1kAeNmNyoR7YMF0r8q/H7PUS54x9Y1
- FjAmY6pdNRwFu1u2W+VCNc61mn4EAei0NF256nP/USvb/GFRD/CLkdUhrXoEfCW6MP
- rPURLGPlIneLlpGZrlIIVpZL7GwDR0F4yGw1e0x6Y3azue/Mz/hWCJAPlyZ7mdK0p9
- HzCjDO034ChMqYSd3hdIpVlajLGlnX2KzauaIOqgXkhyxcz0+7W5SJhOcNzTyyAMh8
- 3gB3fsXjAEhiA==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id A0B271BF5DA;
- Wed, 08 Jul 2026 17:54:53 +0300 (MSK)
-Message-ID: <7a0e3797-1716-4d4c-89ed-9ae1ee3140b4@tls.msk.ru>
-Date: Wed, 8 Jul 2026 17:54:56 +0300
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1whTi2-0002oX-Tw
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 10:57:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783522629;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qqtcCGEdAWCxzTup/KGnnELVqnIsXFZyVQ0c9hfewNU=;
+ b=He7khu9glgLUNrA5NTvJWfRi7Z3K0zhKZvuSoQcClvgXFKVvOp4hDeQMMCK0xOO/T6vnZp
+ H1h9geK6b2CBfipOhrh/U7PjTFrgXsLWMCLgoux3GqJaAmJSzcbrENLwkbjOw+XhNwnIAn
+ st9Y1jTsrdvz0+XX0vfHobtCZJaoMFA=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-359-J9Ge_LdzMB6ULUbMmg4ujg-1; Wed, 08 Jul 2026 10:57:08 -0400
+X-MC-Unique: J9Ge_LdzMB6ULUbMmg4ujg-1
+X-Mimecast-MFC-AGG-ID: J9Ge_LdzMB6ULUbMmg4ujg_1783522627
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-51c1d7886cdso15621081cf.1
+ for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 07:57:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1783522627; x=1784127427; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=qqtcCGEdAWCxzTup/KGnnELVqnIsXFZyVQ0c9hfewNU=;
+ b=sMGnH9GGhDc2CFSuH6AlOeIUs4mB7FnK4DMkt8y9waPUH8i1gqrudDDGIkI/2DP1v0
+ GDOA0UJPbJJIuK73wxK5J4PpU3hC1ms4xNSYiO7npm1gMPioH6wUTmA2LYndxqcvZbMf
+ DUl326zuXPiqxS/3q/Bp6nlJ+LYkf2z2dc/Sw/lfeLOe9wBoopnLfHyLQclFfUDM07GH
+ bfauZdH8szLvdpJcFaQn/i5gxJb7oyIgawke0zjlLq9vO158Yt2rp0CKZ/4J7FkEz1Uq
+ KIVF7wCZqVwC6qsceooxRqNAfjF50zIRBq0IwQNzFQ7/TE9ugQLzPYhvunaonURoL1Qn
+ A+AA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783522627; x=1784127427;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=qqtcCGEdAWCxzTup/KGnnELVqnIsXFZyVQ0c9hfewNU=;
+ b=SL7y+jyoreaiCUMltTrnJs4LjrlaCF0pDDb3pr0h8m77+Zh5tyCAB3Kib8Bg2AO87L
+ ef0Z2F792oiyXf6IwLBtjD1OnVwfmPOaFsCyFXfS25HN3pwo1wAiqiKKO2StwDSos9DJ
+ LFMn/Z3rkGf1iY+65491jF6OYaoqv9IwBbGk2PZ6U8i6Wl7d7wKz+K1lvhon8GnGanwC
+ 1RW6kbKOPcz0qWhHn4mkJEkC5lB2NtWo/9zFrXT38rJIKO3M1owP6DZHanlHg1aqQ0cD
+ gbl2tMKk7/ZH2mzMOSdu+2sSzm1r4AOIKrYS5bf00Xk8M24mdlWz4x5CCe28piMdZI6w
+ O8uA==
+X-Gm-Message-State: AOJu0YwndvMgpRBP8IsJb6LbtyyMtqVzbBiD8MZ+4G1Xo8kxmAb61UjQ
+ sEYkVUBY+atOtfhZqye0DseO5czn97OuYlA7ybys6b1VKE5AG5Q54/xmiH9f4SrHZOTEsdCapW/
+ a/YzCEAm2feUjTd0JnlakdZ/9cn5AI0EEiMJC4J4Ki0zXsJmB2tubeT+2
+X-Gm-Gg: AfdE7cnnPLbLFnCfywOO2oLQ81M+P5u0fPU0SJ72XpiEdsmCChJI63tEAceoLWOGzl2
+ Xd5DLlcHOOuX/IPzLVTIpJhYep+wG0MCKUtRtrXs82u+0KcevGpIRV9l2xakIZ3J1Qo0UN/FXzB
+ ib0sTct6FdJfdqzOr/ls260KcTKhWz8jkvNam0/N95Q6oyk2cA5SrBoO7Bti/QhtTStCmstFYmP
+ kcnmK63hl5aME4GvVYOTMMfRaJucFQUxnzwajuQddPI/wIzhBwRIriPsBHf+5IPgppA0kuaS/J4
+ loZE9pef7goXLpQPJP7KOrY61iu9uH5GGg8cwzKszXhIdLDxAUSdYU16hxTa+/lnd6g+toAusar
+ +i2s=
+X-Received: by 2002:ac8:5f88:0:b0:51c:7b12:5fd2 with SMTP id
+ d75a77b69052e-51c8b436d14mr30284571cf.78.1783522627223; 
+ Wed, 08 Jul 2026 07:57:07 -0700 (PDT)
+X-Received: by 2002:ac8:5f88:0:b0:51c:7b12:5fd2 with SMTP id
+ d75a77b69052e-51c8b436d14mr30281441cf.78.1783522621969; 
+ Wed, 08 Jul 2026 07:57:01 -0700 (PDT)
+Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-51c41b7671csm146917041cf.13.2026.07.08.07.57.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 08 Jul 2026 07:57:01 -0700 (PDT)
+Date: Wed, 8 Jul 2026 10:56:49 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Aadeshveer Singh <aadeshveer07@gmail.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, pbonzini@redhat.com,
+ philmd@mailo.com, lvivier@redhat.com, ayoub@saferwall.com
+Subject: Re: [RFC PATCH v2 3/7] migration: Use file_bmap for RAMBlock during
+ incoming file load
+Message-ID: <ak5lMYNLxdTA7l2l@x1.local>
+References: <20260630081940.611092-1-aadeshveer07@gmail.com>
+ <20260630081940.611092-4-aadeshveer07@gmail.com>
+ <akwCJYxBS113ZKvH@x1.local>
+ <CA++cPvJDBipNRk5Kz2xTx=LvVf2tOe-whoLZH9cT8wY1aKxw7w@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] tests/docker/dockerfiles/ubuntu2404.docker: add
- missing apt update
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, mark.cave-ayland@ilande.co.uk,
- richard.henderson@linaro.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-References: <20260707214655.1138626-1-pierrick.bouvier@oss.qualcomm.com>
- <20260707214655.1138626-3-pierrick.bouvier@oss.qualcomm.com>
- <ak4H9Tn-t5rRH3oJ@redhat.com>
- <24403961-c7e6-4ab9-9d1e-719caa2f959b@tls.msk.ru>
- <03e7ce1f-f25c-4e83-be4b-042b1100c104@oss.qualcomm.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <03e7ce1f-f25c-4e83-be4b-042b1100c104@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CA++cPvJDBipNRk5Kz2xTx=LvVf2tOe-whoLZH9cT8wY1aKxw7w@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,28 +120,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08.07.2026 17:28, Philippe Mathieu-Daudé wrote:
-> On 8/7/26 11:27, Michael Tokarev wrote:
-
->> No, running it again should not be needed.  Unless we change
->> /etc/apt/sources.list.
+On Wed, Jul 08, 2026 at 07:54:47PM +0530, Aadeshveer Singh wrote:
+> > > @@ -4174,14 +4195,14 @@ static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
+> > >      num_pages = length / header.page_size;
+> > >      bitmap_size = BITS_TO_LONGS(num_pages) * sizeof(unsigned long);
+> >
+> > Here I think it would still be good to check the page_size is the same as
+> > what was expected (in this case, guest page size), otherwise we should fail
+> > because then the bitmap_size may still be unpredictable and it can cause
+> > illegal access (beyond the size of bitmap allocated) in worst case.
 > 
-> The problem we want to address is wrt remote content going out of
-> sync; we need to run 'apt update' previous to any 'apt' call which
-> use the remote.
+> 
+> Hi Peter, thanks for the review,
+> Currently mapped_ram_read_header() already enforces header->page_size
+> == TARGET_PAGE_SIZE and will throw error before reaching this point.
+> However if you would like an explicit check, let me know.
 
-It's definitely not required to be this way.  Running `apt update' once,
-when creating containers, is enough.  Any subsequent apt install &Co
-will be run "soon enough" to avoid worrying about cache going out of
-sync.  Even if meanwhile a new version of some package has been uploaded,
-old version is available for some time (usually at least a day).
-
-So no, running `apt update' before every `apt install' and similar
-is not necessary.
-
-And sure, you can do it - it's just some wasted time.
+Ahh, I missed that.  Then that would be fine.  With that, if you want you
+can add an assertion here and a comment.  But feel free to do whatever you
+prefer.
 
 Thanks,
 
-/mjt
+-- 
+Peter Xu
+
 
