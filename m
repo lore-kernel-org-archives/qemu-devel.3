@@ -4,99 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2334BC43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 15:02:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AEBFC43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 15:02:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whTmc-0008Lg-M6; Wed, 08 Jul 2026 11:01:54 -0400
+	id 1whTnJ-0000Tt-3F; Wed, 08 Jul 2026 11:02:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1whTma-0008LJ-GB
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 11:01:52 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1whTnG-0000MU-De
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 11:02:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1whTmT-0003eH-5b
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 11:01:47 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1whTnD-0003hR-Gh
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 11:02:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783522902;
+ s=mimecast20190719; t=1783522949;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=A1elI55cQ5u7wcTcBd1ly6oAW+0ZBzX1DFQjrnaxuOc=;
- b=QWE6ygoQv1ajgFPlkmGPZXWWEyANRNXNxcUpWcja9TG5joZJjx/bXadYeDU/j4Q5cJLgcQ
- a3i98ntqCBh9PaVcYKOliOunP9BRvX6zHDV53E9gTsVCxFqdEAnDkn0ZTixwQrikzjdt6v
- Oq42G/wczg1t0xjfJGC+7KDNS3/4tzk=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=sm67NC5o62t37KkceLNb2tcO/fP+rNojU2StTy8VQS8=;
+ b=SooJ9S1ZAoG/9yfNBAhY9gN8sZ7umyNdCShmf8PZat+ZuG18+XF6TUfJxNabB+zzWGLtkU
+ KdII6KjyOx1PDW5PV0zkvjSZWmOS13ggVwqTYJd+b5b+QaWttxFcYWXpr38ykG8QzV8BYM
+ kzMngmvgc4cMiZCHlNqiElLdTKWb54I=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-556-rlrvTd9BMpClrnqj3OJLUQ-1; Wed, 08 Jul 2026 11:01:39 -0400
-X-MC-Unique: rlrvTd9BMpClrnqj3OJLUQ-1
-X-Mimecast-MFC-AGG-ID: rlrvTd9BMpClrnqj3OJLUQ_1783522899
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-49244130073so6388345e9.1
- for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 08:01:39 -0700 (PDT)
+ us-mta-194-mZSN8vhqOcOfYE4R6tnXaw-1; Wed, 08 Jul 2026 11:02:27 -0400
+X-MC-Unique: mZSN8vhqOcOfYE4R6tnXaw-1
+X-Mimecast-MFC-AGG-ID: mZSN8vhqOcOfYE4R6tnXaw_1783522947
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-92e9a2b95b5so170959685a.2
+ for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 08:02:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1783522898; x=1784127698; darn=nongnu.org;
+ d=redhat.com; s=google; t=1783522947; x=1784127747; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=A1elI55cQ5u7wcTcBd1ly6oAW+0ZBzX1DFQjrnaxuOc=;
- b=U/3rAJ71FpR2HX1iG7CiDNLsqorvrI/92MP7zHa2vDSIxylYHkRYKR1j3VgL8ok/kF
- yfSH84ggVks3W9Bl4Zkei45S5dP+jfhhcdFsGUM+5Nq1Mr+Qo05EZH1P4R72JEyo/CIw
- jDooDqvWSPsGARyHzbsDYC2FSsQoJiYBdVILNkcDMUCrEOYtq0fH4GJ27HWGmMy8TI8a
- O40BgDM0hvERfc3vcbGkiqNLqGJBfQ9M+WlBGYk18DZRFgXKWKdcFDAXEMSY8eX4rx6C
- dxowx7iRv81RXFSTLI2rlS5y/+AlDlqXACFHqIg985V69vMwQwDmXKO5sZosr9/8EQxd
- K//A==
+ bh=sm67NC5o62t37KkceLNb2tcO/fP+rNojU2StTy8VQS8=;
+ b=Cjtbbbf9X7XObGmkr1Dws25ME8AM0vNVL7pXiOSlHLr35WhtizUn4TjdtM1wkn7pS4
+ zUfFY9hgp2vf0qRpCXz30G/ufka0dPtkYI+kSqJqw48i9Kqm8bBojBeiW9b7KLlzM0mW
+ vy52w73cQOl/xcxKRNLWbxYD8OliVe1dYBctFBSoP/ZfQGZxu8yFqXq1xGsYQdeirLJh
+ +WQkSbojZSu3bFjsWuIGOWy8NKm5t9oSclNrfa4WTu7IU7AXWwd0pJxLuy8UjxE8WRvG
+ n4H14oSzEBFjXDbpxJePQlaxuXoJLLxkQmHT/D4bnc+yX9trOnmSSN+SAxgNNloYe75Z
+ Rj4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783522898; x=1784127698;
+ d=1e100.net; s=20251104; t=1783522947; x=1784127747;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=A1elI55cQ5u7wcTcBd1ly6oAW+0ZBzX1DFQjrnaxuOc=;
- b=nT3GRw8iF3bv/ZdZUfefcDgGDFPwNzNA9T7aLvsYRb+G8X+lHOPQdFU6amX45RwUYN
- 1+NfB08JcqKCfGA7wnwHjW5jFPxqLzd0Lz3zcmC6SXuZPWZNtgJihUH7FlbJoiHRauKl
- cd/w78oO7R1E2Az9uxxnIS9l7xlujIiKhzjhM38qTK8DfFV/KuSeFEdmCaA2F7fhoMPg
- lNfHKJNZSYEghd9qbLArsDPYp584GchJKOGxDYwWWcs+AgwfQ2vg0IRQL4R1M+ipjKtm
- xvagaTn0jEHVX5YSYu9Q0kOz9Mi1vpWYFN2Wxpfm24rh181dAnXHjMP8K8YugJlMGpD/
- GXJw==
-X-Gm-Message-State: AOJu0YzcoECBEPFYlMyBobXFNHW7RlEPOuit19eSTBdoJkWo3NHT3V/H
- svbY7lCCZu6UdaQgN6MpfVOBOxjOlsRDpufV1BlFn8MfZo6tGJGNCTf4MQDYYUZIfcDZB3WIYwx
- 11b7lbhtUXLMC5w1etd5kkPm5b47yHy6cbTwuKdYbaJ5QT2xMD98lazuP
-X-Gm-Gg: AfdE7cnJocOo7k+U0A2HDl8WCwqqPrGf5mHa2/C+U7XK9td4yNRnrLN7CJ9GLEmpbO2
- 8iKvPaRwjqTvoXHZb5r+RGn1KyXLNxBynpf6OloVFvAaQeaziaFcQ/jaK4iunhO+gGO0PDf9atV
- EFCosHhMEWQ6gbeU5hv39WbXoZPYuQBJ/bEA6+9B2anYuW3Y9+0cgFM3bbqSzbdgvYKmVwpXbuf
- GQqx6FtHHHGpkIFa+1QEvNdRHFyoaUpMswiFjEVsBo5HFJFrnI6bGSW/z2GjJ5k0zZCvelV9QE0
- y5C/3w9gAXQFW8b4wUSFH3ZgVfWYUN96CB6OqULIOQOFOaJBrYSNoSjDadHC8EdyjIfVNXYzUSv
- x978V2ZjamyTSj5jFoXBX5MkUHA5mPmi8
-X-Received: by 2002:a05:600c:8b72:b0:493:c634:952 with SMTP id
- 5b1f17b1804b1-493e69b0dc8mr28019885e9.7.1783522898460; 
- Wed, 08 Jul 2026 08:01:38 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b72:b0:493:c634:952 with SMTP id
- 5b1f17b1804b1-493e69b0dc8mr28019155e9.7.1783522897830; 
- Wed, 08 Jul 2026 08:01:37 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-68-31.inter.net.il. [80.230.68.31])
+ bh=sm67NC5o62t37KkceLNb2tcO/fP+rNojU2StTy8VQS8=;
+ b=GtNKViHRadI8fWq1pVc2Zko0E4gXlvSIQccz5wjp+FAEsIo8vXd7wuVMHMA75m58f8
+ I6WrVlFHLicpdKqBU5xAxx3fXeQdwt2JQecH+lu+KunwZYbCWHv4Xf4qmjbo9MQqyHJr
+ BlUUafrPUjBh3wHCe5ujC0vmMQeRUii64hlSFaMX0nChb+pwsvFjDQrgO9/1HLRMVi/a
+ G6AsJTc+wxRAxRUaoZC2vz2sB/CtW6JGrt2f/p48srtVGKlfgIKLyLmx+mF0PxyrADNO
+ e8Pmo6g2B4c9UQmmP+LpDcDz5eOPb8ZNLs99NamJbDVZEc815un23L1Q3m/SDP2FN/9M
+ 10ew==
+X-Gm-Message-State: AOJu0Yw1IVcbB/OPfbvSJpZ6+JbCHKu6V9uHdsLjeqLJS0ERkT5kXcxu
+ p5HAlm+v7Z16vROrons4j9b1yQblbGB/cLltJSuqJZ2GsVVcAR8ecDWP4RfSvIEbPeiHw6HBWId
+ RcdYU8O28T3Zjqp8EhTdb2Z0MRTSGP1ifNwqzz8Fd+AikO7RKZERmVO3b
+X-Gm-Gg: AfdE7cnplCx2g3At5SKxhABAEz8MTaAeBeu/3cckoZ6QMorPbYzw6xl0p2iNPO9H83q
+ GzEVfOOh0Y0dSurK0EXnfk2KFqTusluCXonh2oJD9+8NhM9VnnUUT77HFCpqn1yi4njri1teED6
+ CXlZXIlFAFzY5baxVW5xXb9eGKaRnpuQnM5lJWFQ+6WCdBqgxQE1LaLRKY2CbnJTkTlPJaX/YHc
+ fhKOP+EpS+7ysgLVB4O1neh6GYLjsYZB+Kaxb2CEApgZXNOMCSPASQe4fCuwY+1T2rh4uvWBU4M
+ zmwCDusqm6TKtWNfdsfSQaFG+U3kyxxvCbk9WlQR/pYT4926dV1Jx+UFfWYZ4kus88yfH8xYD4O
+ ahbllROiRaDXFMaxLe9Yb243g642OF3RIFJ4Ge2Yj837AH5Wj1ZJUEPOXqB7KkgIxk62qKA==
+X-Received: by 2002:a05:620a:1d05:b0:92e:6a8d:38ba with SMTP id
+ af79cd13be357-92ecf6c7189mr246278585a.56.1783522946742; 
+ Wed, 08 Jul 2026 08:02:26 -0700 (PDT)
+X-Received: by 2002:a05:620a:1d05:b0:92e:6a8d:38ba with SMTP id
+ af79cd13be357-92ecf6c7189mr246271885a.56.1783522945896; 
+ Wed, 08 Jul 2026 08:02:25 -0700 (PDT)
+Received: from x1.local
+ (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493e0faed92sm134203565e9.9.2026.07.08.08.01.35
+ af79cd13be357-92e90c923c4sm1465921985a.24.2026.07.08.08.02.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 08 Jul 2026 08:01:36 -0700 (PDT)
-Date: Wed, 8 Jul 2026 11:01:33 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Amit Shah <amit@kernel.org>,
- qemu-stable@nongnu.org
-Subject: Re: [PATCH] hw/char/virtio-serial-bus: validate nr_active_ports from
- migration stream
-Message-ID: <20260708110124-mutt-send-email-mst@kernel.org>
-References: <20260708144112.1830881-1-lvivier@redhat.com>
+ Wed, 08 Jul 2026 08:02:24 -0700 (PDT)
+Date: Wed, 8 Jul 2026 11:02:17 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Aadeshveer Singh <aadeshveer07@gmail.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, pbonzini@redhat.com,
+ philmd@mailo.com, lvivier@redhat.com, ayoub@saferwall.com
+Subject: Re: [RFC PATCH v2 6/7] migration: add support for fault thread to
+ load pages from disk
+Message-ID: <ak5meTFBIDCAyYF8@x1.local>
+References: <20260630081940.611092-1-aadeshveer07@gmail.com>
+ <20260630081940.611092-7-aadeshveer07@gmail.com>
+ <akwRqYY3vfzafZ_X@x1.local>
+ <CA++cPvJ2N_oke1iMP083MDKxeV-YoKDZuWFtAfwoYKwoR65ocA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260708144112.1830881-1-lvivier@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+In-Reply-To: <CA++cPvJ2N_oke1iMP083MDKxeV-YoKDZuWFtAfwoYKwoR65ocA@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -120,43 +122,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 08, 2026 at 04:41:12PM +0200, Laurent Vivier wrote:
-> The migration restore path reads nr_active_ports from the incoming
-> stream and passes it directly to fetch_active_ports_list(), which
-> uses it to size a heap allocation. A crafted migration stream can set
-> this field to a very large value, causing QEMU to attempt a
-> multi-gigabyte allocation and abort.
+On Wed, Jul 08, 2026 at 08:01:34PM +0530, Aadeshveer Singh wrote:
+> > > +static bool postcopy_mapped_ram_load_page(MigrationIncomingState *mis,
+> > > +                                          RAMBlock *rb, ram_addr_t rb_offset,
+> > > +                                          uint64_t haddr, int channel,
+> > > +                                          Error **errp)
+> > > +{
+> > > +    void *place_source = mis->postcopy_tmp_pages[channel].tmp_huge_page;
+> > > +    size_t page;
+> > > +    size_t read;
+> > > +
+> > > +    page = rb_offset / qemu_ram_pagesize(rb);
+> >
+> > Yes, here it is correct to use qemu_ram_pagesize().
+> >
+> > > +
+> > > +    if (bitmap_test_and_clear_atomic(rb->pending_bmap, page, 1)) {
+> > > +        if (test_bit(page, rb->file_bmap)) {
+> >
+> > We'll need to be careful here when you add huge page support, because
+> > file_bmap so far is guest-psize based.  This line will start to break for
+> > huge pages, I am not sure if this is the bug you hit when developing huge
+> > page support, maybe yes?
+> >
+> > Not sure how you resolved it there if this is the case, but one idea is
+> > when postcopy-ram is enabled, you can convert the per-guest-psize bitmap
+> > into per-host-psize bitmap (when any bit set within the huge page range,
+> > set the bit in the new bitmap), then here it will be correct.
+> >
 > 
-> Fix this by checking nr_active_ports against the configured
-> max_virtserial_ports before calling fetch_active_ports_list().
-> 
-> Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3801
-> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+> For hugepages, I replaced this test_bit() with a ranged check. I felt
+> changing the semantics of file_bmap for when postcopy-ram is enabled
 
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
+When support huge pages, in previous patch if you will already switch to
+using ramblock page size for pending_bmap then I think we should indeed be
+good here.
 
+With that, actually file_bmap to be guest-psize is definitely
+better.. please ignore my above suggestion on bitmap conversions.  We just
+need to loop over all the bits of the huge page, when the bit is clear,
+instead of UFFDIO_ZEROPAGE, we should just do memset(0) for 4k (the tmp
+page may have been non-zero prefilled).
 
-> ---
->  hw/char/virtio-serial-bus.c | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
-> index c1973f0248fc..80f1b308aa53 100644
-> --- a/hw/char/virtio-serial-bus.c
-> +++ b/hw/char/virtio-serial-bus.c
-> @@ -804,6 +804,10 @@ static int virtio_serial_load_device(VirtIODevice *vdev, QEMUFile *f,
->  
->      qemu_get_be32s(f, &nr_active_ports);
->  
-> +    if (nr_active_ports > max_nr_ports) {
-> +        return -EINVAL;
-> +    }
-> +
->      if (nr_active_ports) {
->          ret = fetch_active_ports_list(f, s, nr_active_ports);
->          if (ret) {
-> -- 
-> 2.54.0
+I'll wait to see the new version when huge page support is there.
+
+Thanks,
+
+-- 
+Peter Xu
 
 
