@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82119C43602
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 07:43:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAEE9C44501
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 07:44:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whMw9-0004QL-45; Wed, 08 Jul 2026 03:43:17 -0400
+	id 1whMwF-0004bw-OU; Wed, 08 Jul 2026 03:43:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1whMvs-00040s-RF; Wed, 08 Jul 2026 03:43:02 -0400
+ id 1whMwC-0004V3-Vq; Wed, 08 Jul 2026 03:43:21 -0400
 Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1whMvq-0004ox-KP; Wed, 08 Jul 2026 03:43:00 -0400
+ id 1whMwB-0004ox-50; Wed, 08 Jul 2026 03:43:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1783496579; x=1815032579;
+ t=1783496599; x=1815032599;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=odjHL0x+MROapiVixt+s6VKPVF1LIdg6RNrAA9VuKTM=;
- b=gx3eoM/LFOFQtnyGx80XuSf3werD9FCQxb5+TLL8D0dlCyBPaJP74kJG
- k4AJBzMnSdJLw2i6NasDteblT5w0Hw2rf2HHkWurBf4HosPj2BJeTXCW2
- UyQCkrjtxRyaiLO625mmVmiXM7duDx/BblvU3TLz5iL7hGYaQAwehlc4D
- CdmYvIvPNccDeHHWOgIGwbdx5zvNeq6+a/2LWhtky3bhLSRWns2BgG1rR
- rSZBYZnG5v7c83hcIUD8y/KHCz4l3eo0vtoTIRh5fFrb5/08cdxVcTo/P
- VM/Wq642/qsC0Wwq6XL3p2klkKyIBG/yoXxbJaYr/K8LmTMNJkSsitQyM Q==;
-X-CSE-ConnectionGUID: G6C/Rkw/TI2CokyQHXhwlQ==
-X-CSE-MsgGUID: yKH5+q73SUyE/Q/DvMz8OA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11840"; a="84343267"
-X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; d="scan'208";a="84343267"
+ bh=xS9j1SfbNnXEP53X/50BOi4BX5IanNXaJwbdx5fCkPY=;
+ b=HRiCazY5ExS8t0Rx5/MoUJtjeiJ+lcoUbTpn+j1Lua71xLVpnAfOSHVb
+ +fSFO1BVt9wrlTzhH454DuwlHA0cEf1j2OaZMpoXy4SvVjDO0CTNmatf+
+ IihEbSy0/b1yqFe4/miVzt+hxh/bqIHctyNrAmUP5xEMNhLrBgq9/bovU
+ 34GWpWZ1HA4cAQsF9ulhCbA/qijZ7H/SIsfaBC37Vhsyi70Bq+9moTWzE
+ uudWLsujI8qTIIHPQ3RCV6mycoTZVy17jbRzQ7gFzxdJDMlelHzvkkLWE
+ xFlcsluSp61DGxsAKpKXVRtZDzRiZqFEAPW6Kl+YNEv2+Ux/USvW9FkCv Q==;
+X-CSE-ConnectionGUID: 77VtcnMiS+WesUYxn2sf8Q==
+X-CSE-MsgGUID: SSQjaL7XQCSf+KJy6JNX+g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11840"; a="84343336"
+X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; d="scan'208";a="84343336"
 Received: from fmviesa008.fm.intel.com ([10.60.135.148])
  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Jul 2026 00:42:57 -0700
-X-CSE-ConnectionGUID: 8UbpCixwTdGX59kZCt78/A==
-X-CSE-MsgGUID: kunUydETR2mcJBOEcpot7A==
+ 08 Jul 2026 00:43:18 -0700
+X-CSE-ConnectionGUID: m4NFgrQ4S86ij/sjZxG2Bw==
+X-CSE-MsgGUID: 0LLKhp6SReWv1r2rRw7shg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; d="scan'208";a="251555948"
+X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; d="scan'208";a="251555998"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa008.fm.intel.com with ESMTP; 08 Jul 2026 00:42:53 -0700
+ by fmviesa008.fm.intel.com with ESMTP; 08 Jul 2026 00:43:14 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
@@ -57,10 +57,10 @@ Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
  Junjie Mao <junjie.mao@hotmail.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>,
  Chuanxiao Dong <chuanxiao.dong@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC v2 08/26] rust/bindings/util-sys: Include rcu.h in bindings
- wrapper
-Date: Wed,  8 Jul 2026 16:10:34 +0800
-Message-Id: <20260708081052.2276617-9-zhao1.liu@intel.com>
+Subject: [RFC v2 13/26] memory: Add a translation helper to return a
+ MemoryRegionSection
+Date: Wed,  8 Jul 2026 16:10:39 +0800
+Message-Id: <20260708081052.2276617-14-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260708081052.2276617-1-zhao1.liu@intel.com>
 References: <20260708081052.2276617-1-zhao1.liu@intel.com>
@@ -90,68 +90,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-rcu.h is transitively included by several crates'
-wrapper.h files (e.g. hwcore via hw/core/qdev.h, system via
-system/memory.h).
+The Rust side will rely on MemoryRegionSection to organize non-overlapping
+memory "region" abstractions. Therefore, it is necessary to provide a
+translation helper variant that returns a MemoryRegionSection directly.
 
-Because several structs (e.g. BusChild/FlatView/AddressSpace) embed
-struct rcu_head, bindgen automatically generates a rcu_head definition
-in each crate that references it.
-
-Explicitly add rcu.h to util-sys/wrapper.h.  With the allowlist-then-
-blocklist logic in generate_bindgen_args.py, this makes util-sys the
-only owner of rcu.h bindings. Then rcu.h is blocked in hwcore-sys and
-system-sys, thus it's necessary to import rcu_head from util_sys in
-hwcore-sys/lib.rs and system-sys/lib.rs.
+Additionally, refine and complete the documentation for the translation
+helpers.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-Changes since v1:
- * New commit.
----
- rust/bindings/hwcore-sys/lib.rs  | 2 +-
- rust/bindings/system-sys/lib.rs  | 2 +-
- rust/bindings/util-sys/wrapper.h | 1 +
- 3 files changed, 3 insertions(+), 2 deletions(-)
+ include/system/memory.h | 76 +++++++++++++++++++++++++++++++++++------
+ system/physmem.c        | 22 +++++++++---
+ 2 files changed, 84 insertions(+), 14 deletions(-)
 
-diff --git a/rust/bindings/hwcore-sys/lib.rs b/rust/bindings/hwcore-sys/lib.rs
-index 8cef4a796193..9414c6639e2a 100644
---- a/rust/bindings/hwcore-sys/lib.rs
-+++ b/rust/bindings/hwcore-sys/lib.rs
-@@ -26,7 +26,7 @@
-     InterfaceClass, Object, ObjectClass, ObjectProperty, ObjectPropertyAccessor,
-     ObjectPropertyRelease,
- };
--use util_sys::{Error, QDict, QList};
-+use util_sys::{rcu_head, Error, QDict, QList};
+diff --git a/include/system/memory.h b/include/system/memory.h
+index c32e3d01f825..7e64a39662be 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -2609,24 +2609,80 @@ void address_space_flush_icache_range(AddressSpace *as,
+ IOMMUTLBEntry address_space_get_iotlb_entry(AddressSpace *as, hwaddr addr,
+                                             bool is_write, MemTxAttrs attrs);
  
- #[cfg(MESON)]
- include!("bindings.inc.rs");
-diff --git a/rust/bindings/system-sys/lib.rs b/rust/bindings/system-sys/lib.rs
-index 30adf683c355..8feaa76ca165 100644
---- a/rust/bindings/system-sys/lib.rs
-+++ b/rust/bindings/system-sys/lib.rs
-@@ -21,7 +21,7 @@
- use common::Zeroable;
- use hwcore_sys::{qemu_irq, DeviceClass, DeviceState};
- use qom_sys::{Object, ObjectClass};
--use util_sys::{Error, EventNotifier, QEMUBH};
-+use util_sys::{rcu_head, Error, EventNotifier, QEMUBH};
+-/* address_space_translate: translate an address range into an address space
+- * into a MemoryRegion and an address range into that section.  Should be
+- * called from an RCU critical section, to avoid that the last reference
+- * to the returned region disappears after address_space_translate returns.
++/**
++ * flatview_translate_section: Translate a guest physical address range
++ * to the corresponding #MemoryRegionSection in a FlatView.
+  *
+- * @fv: #FlatView to be accessed
+- * @addr: address within that address space
+- * @xlat: pointer to address within the returned memory region section's
++ * Must be called within an RCU critical section to prevent the last
++ * reference to the memory region (referenced by the returned section)
++ * from disappearing after the function returns.
++ *
++ * @fv: The FlatView to be accessed.
++ * @addr: The address to be translated within the given FlatView.
++ * @xlat: The translated address offset within the returned section's
+  * #MemoryRegion.
+- * @len: pointer to length
+- * @is_write: indicates the transfer direction
+- * @attrs: memory attributes
++ * @len: Pointer to the length. On return, this will be updated to the
++ * valid read/write length of the translated address range.
++ * @is_write: Indicates the transfer direction.
++ * @attrs: Memory attributes.
++ *
++ * Returns:
++ * The #MemoryRegionSection that contains the translated address.
++ */
++MemoryRegionSection *flatview_translate_section(FlatView *fv, hwaddr addr,
++                                                hwaddr *xlat, hwaddr *len,
++                                                bool is_write, MemTxAttrs attrs);
++
++/**
++ * flatview_translate: Translate a guest physical address range
++ * to the corresponding #MemoryRegionSection in a FlatView.
++ *
++ * Must be called within an RCU critical section to prevent the last
++ * reference to the returned memory region from disappearing after
++ * the function returns.
++ *
++ * This function is a variant of flatview_translate_section(), with the
++ * difference that it returns the #MemoryRegion contained in the
++ * #MemoryRegionSection.
++ *
++ * @fv: The FlatView to be accessed.
++ * @addr: The address to be translated within the given FlatView.
++ * @xlat: The translated address offset within the returned #MemoryRegion.
++ * @len: Pointer to the length. On return, this will be updated to the
++ * valid read/write length of the translated address range.
++ * @is_write: Indicates whether the translation operation is for a write.
++ * @attrs: Memory transaction attributes.
++ *
++ * Returns:
++ * The #MemoryRegion that contains the translated address.
+  */
+ MemoryRegion *flatview_translate(FlatView *fv,
+                                  hwaddr addr, hwaddr *xlat,
+                                  hwaddr *len, bool is_write,
+                                  MemTxAttrs attrs);
  
- #[cfg(MESON)]
- include!("bindings.inc.rs");
-diff --git a/rust/bindings/util-sys/wrapper.h b/rust/bindings/util-sys/wrapper.h
-index e9c433e7dc14..5d3cf7792b92 100644
---- a/rust/bindings/util-sys/wrapper.h
-+++ b/rust/bindings/util-sys/wrapper.h
-@@ -27,6 +27,7 @@ typedef struct Visitor Visitor;
- #include "qemu/module.h"
- #include "qemu/option.h"
- #include "qemu/timer.h"
-+#include "qemu/rcu.h"
- #include "qapi/visitor.h"
- #include "qobject/qbool.h"
- #include "qobject/qdict.h"
++/**
++ * address_space_translate: Translate a guest physical address range
++ * to the corresponding #MemoryRegionSection in a FlatView.
++ *
++ * Must be called within an RCU critical section to prevent the last
++ * reference to the returned memory region from disappearing after
++ * the function returns.
++ *
++ * This function is a variant of flatview_translate(), with the difference
++ * that it operates on an #AddressSpace rather than a #FlatView directly.
++ *
++ * @as: The #AddressSpace to be accessed.
++ * @addr: The address to be translated within the given address space.
++ * @xlat: The translated address offset within the returned #MemoryRegion.
++ * @len: Pointer to the length. On return, this will be updated to the
++ * valid read/write length of the translated address range.
++ * @is_write: Indicates whether the translation operation is for a write.
++ * @attrs: Memory transaction attributes.
++ *
++ * Returns:
++ * The #MemoryRegion that contains the translated address.
++ */
+ static inline MemoryRegion *address_space_translate(AddressSpace *as,
+                                                     hwaddr addr, hwaddr *xlat,
+                                                     hwaddr *len, bool is_write,
+diff --git a/system/physmem.c b/system/physmem.c
+index 418fc79ff2c0..ff60ac7dd3aa 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -560,9 +560,9 @@ iotlb_fail:
+ }
+ 
+ /* Called from RCU critical section */
+-MemoryRegion *flatview_translate(FlatView *fv, hwaddr addr, hwaddr *xlat,
+-                                 hwaddr *plen, bool is_write,
+-                                 MemTxAttrs attrs)
++MemoryRegionSection *flatview_translate_section(FlatView *fv, hwaddr addr,
++                                                hwaddr *xlat, hwaddr *plen,
++                                                bool is_write, MemTxAttrs attrs)
+ {
+     MemoryRegion *mr;
+     MemoryRegionSection *section;
+@@ -580,7 +580,21 @@ MemoryRegion *flatview_translate(FlatView *fv, hwaddr addr, hwaddr *xlat,
+         *plen = MIN(page, *plen);
+     }
+ 
+-    return mr;
++    return section;
++}
++
++/* Called from RCU critical section */
++MemoryRegion *flatview_translate(FlatView *fv, hwaddr addr, hwaddr *xlat,
++                                 hwaddr *plen, bool is_write,
++                                 MemTxAttrs attrs)
++{
++    MemoryRegionSection *section;
++
++    /* This can be MMIO, so setup MMIO bit. */
++    section = flatview_translate_section(fv, addr, xlat, plen,
++                                         is_write, attrs);
++
++    return section->mr;
+ }
+ 
+ #ifdef CONFIG_TCG
 -- 
 2.34.1
 
