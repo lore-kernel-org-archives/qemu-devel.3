@@ -4,147 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E56EC43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 22:14:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A6BAC43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 22:16:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whaWa-0007Kr-Kq; Wed, 08 Jul 2026 18:13:48 -0400
+	id 1whaZ7-0008DU-3A; Wed, 08 Jul 2026 18:16:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1whaWZ-0007Kg-P5
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 18:13:47 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1whaWX-0003pc-UJ
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 18:13:47 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 668KtGAI3802096
- for <qemu-devel@nongnu.org>; Wed, 8 Jul 2026 22:13:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- bYX3KACLVoJS6QH6ugDFeTZ55tWn/+xOhRkcAwPj6Sk=; b=gDJd4DA8332pooo0
- rf4PhX46FFFIdECh02M30mKrBCO+7EG0j9bbpIOyYEERXfDfR2ST2Z6l/JLEKz7W
- YBcopWAcjSee6I2IP88l8Ft429osLVYOXfCzf/eUloPJ9YBTuF/gn+5M+TpYH6BC
- QBuQO8v/SegKdR7jA4kpblZauBRV9cXxn5H7rVA9Aqxz8liznAWFlahF9PHvaLOJ
- PxhFuen9WvjZGxKem5DjA6XZGtOO4RoSpV6rj2TgIgDzQR+gZdTzSqs5ZkPa8alS
- Cs/dvP+7p03rFhONch/32PxNwXVyM3MKXfQa2GQmHpnh6MsYypjRLJ6wYB/MtfBb
- xdcb4A==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f9v4u0mv5-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 22:13:44 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-51c1d7886cdso3509051cf.1
- for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 15:13:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <faithilikerun@gmail.com>)
+ id 1whaZ5-0008DC-V1
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 18:16:24 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <faithilikerun@gmail.com>)
+ id 1whaZ3-0004Fk-Uz
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 18:16:23 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-6976b0c5adbso402163a12.2
+ for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 15:16:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783548823; x=1784153623; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=bYX3KACLVoJS6QH6ugDFeTZ55tWn/+xOhRkcAwPj6Sk=;
- b=JsN+2NuyziZCrSGRr8ZNcPf3lbzl9TXA/v+g5vW3KJvX/QoE5Qu9qDd/HbScTf7x07
- tVLOPC+/5MN7a4ZFWuDcCiIRd5i9hu1n+KA1QTnZBzEf7RiMx3vMR6Z/4+VWtFKADQvL
- TQDodxeQ9YUNwetDzzG4Wz8HgrF7DyBKhoR8jIfCmzlgbk2/HEzpSsVcCKK1mJw/OQ6e
- ww7SHvGl1+6iMQtYQtt5oQwy6452afckDdoLC+eIjzmrXx56TLL0Rt4yApm2/NRQHAFd
- 4HjWEKjBdWmtS8rfSx7p5+vtTfFeA2ZqSRUxFcPow0ru2K8gBp6yMMBYvI0O0oM2gbIE
- 9ivA==
+ d=gmail.com; s=20251104; t=1783548980; x=1784153780; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:content-type:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=wZfdlQkyAzH5VIPkLrLtKXOwB8nuoV5TdESUAbz0YPY=;
+ b=X3JZcPVV8C0L9GCChDMgvr17Cne1HlXoOOwyfERCeZV5zRlriWeIsJlkhWp/oF9azP
+ yoZs4SaYxq1TGsrugY2qEDklLQBicXi+yWQ2wvCsvaVpvxQ8zXxETga9TZDiQQ6xNBJL
+ 7S+h9wbjwCvvMucMzuhWR35ZRsNeDaxI9weV3MDUzU04vWt1Qmesaf7vMJ1PxVLPKAoC
+ qvsHjX4Vxb5EteHXDAkF31VLSzfN7w7v8E2OlIkJk1sw8we+CM4VYDoURhCGH6MmvBW7
+ yNtYZ34CPCFweYxLr/fJPoa5vdPpPkqjcCeyXimPTW0y8KVNlcviPJLs/znGYQd8Xiwx
+ L4qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783548823; x=1784153623;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=bYX3KACLVoJS6QH6ugDFeTZ55tWn/+xOhRkcAwPj6Sk=;
- b=YixVRzOfVWQDybRRQ/1thGOsmpRgXnG/Tu8SBnPOXUc57low9CGj6uO9ATfWgEqDNT
- AmPBi1ZBe6LR8mKksGXQ8qQ82qYryk324h1m8hUfik4E2+6+ZPaHcZP0j0jSPcC38G87
- IPd51YJChYWZRH45DaXShlkY6MYFmS3z7onzFMO8fu/AhcuhReg4qwPyOM0Jxhdxyizo
- OrgzDWugJCCniH6GgPaTn3dEZpIMtPxwg9FQab8O2MYRSMykJF1ETGN2+S7OVQcyCFRZ
- qVFVVSztuYxBsDk6Ongb9qNfms1WDTNcuKBhsCrAjp+hIaFa2V/knO7fShMnJn0fKXhq
- HK2g==
-X-Gm-Message-State: AOJu0Yw9h37n+oC06n3lbDFzA0GfFumzt2w68EOS7Gb7xgBfOnclx7Md
- smEuC+wSGXjuRLTyN9swf2CrIUTWC6EtkVLP0CXKOM1BkXQR5MTry/C5Brr2D3G/5nO+/TOw5Jc
- gjiT7CN4vrzAyFpb2mxJuYa2sKaTCFK1zxN+YcMsXtzBtTjkpyWxCCMzFQvlcgPmTrQ==
-X-Gm-Gg: AfdE7ck9VKxD06exv8qHiBTlNDLnD5nIosPof2FLIljI1KllB4Be611u6XxWz85cO9j
- pVGdl9nBRsy4FrC+d6aHVes43ZNLoqrTEb0MLw/8/UxOg+OnUXVSKSaBZq7VOJyjJhfrRgBsuMe
- NS99gCTDC+Fo1JDx9+hHTg9mv73fpCTDQQuYqRhUnKOcIeWrQ74IoDAZHW/MtaFXu/8eDFMaumo
- xTBZ5JM81xN/Cqm2CzNCwLwAkOCd2AO/7VJO1UrSxxzHMQOM7n23+ATF0xu4rgsCXYJDWLd2FLH
- oLKg0ksBYmCYjgiAWGHlfPysFeMxzT2aPUbeAczFyXnZjf4aUrmwtSSHFlB3QooC8fRi2bfd+fH
- tVqMlen+QHX1jiKyw9h1eYWX+uvZFbyug1Py2WcJsOtqbPaDh/tpN4uT7sI2Vuw==
-X-Received: by 2002:ac8:7e8f:0:b0:51c:7b12:5fda with SMTP id
- d75a77b69052e-51c8b438e93mr51306531cf.86.1783548822150; 
- Wed, 08 Jul 2026 15:13:42 -0700 (PDT)
-X-Received: by 2002:ac8:7e8f:0:b0:51c:7b12:5fda with SMTP id
- d75a77b69052e-51c8b438e93mr51305911cf.86.1783548821419; 
- Wed, 08 Jul 2026 15:13:41 -0700 (PDT)
-Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493e5a6240fsm65234225e9.2.2026.07.08.15.13.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Jul 2026 15:13:40 -0700 (PDT)
-Message-ID: <7ba7afe0-1e89-480e-92f1-6a1682b56baf@oss.qualcomm.com>
-Date: Thu, 9 Jul 2026 00:13:39 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 01/23] accel/hvf: Create hvf_protect_clean_range,
- hvf_unprotect_dirty_range
-Content-Language: en-US
+ d=1e100.net; s=20251104; t=1783548980; x=1784153780;
+ h=content-transfer-encoding:mime-version:content-type:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=wZfdlQkyAzH5VIPkLrLtKXOwB8nuoV5TdESUAbz0YPY=;
+ b=jBfALxyWCMX4hQZq51PLovk9qvWx25lxHFn+b4Sz7C7EFWlm6aM4YAjpfG6IlQV/tX
+ eOloZANmpkGrgnFN7c6deSzN1WAZ6VpmEusZG7iK/stH/DFqI8umshHg4fiPvGQHgzQm
+ A1remfwtPUYdNt3BiZGW9VF25gXI9c3ushsAi2Y50BVHjHnYuEyLo9IWgnnp+d7g82wK
+ 91GVwW7g0MmT04XOTePuLLRlTMpPw7Ayy9RjP+IOYh+s9bv6ji2PWNgomCzkuFfeTLVn
+ Gwkri6zLNfVRFNf/bIIpxPVwt/6Y61gXHfAaJxektCMog2VMp3ZPDcSllnXfhL5HmNj/
+ y4xg==
+X-Gm-Message-State: AOJu0YyyOBLYBGHBpB7Ajs3mEd2lAK7pTT8ubvruu+nu1Rg8rGPHs3Xb
+ sqRIc8jCvrGfJ8bN+oIt8+OgsXXGsGbAjYqmLRHxnhlSupilMjKKJKuuTql2xFoZHYA=
+X-Gm-Gg: AfdE7cmwjJn65brdFxdbEXWOcyxqMJt/TWOxZdNorQnrN02qeqTgbVaztPre5g3YN6K
+ 33I4nzX2xjHKne1Chm3HTdz6hHgT+X575FMlRN/ymAiiuQc5GegCZqIRNJjXiaUZufHyCsEcQun
+ u/MZwddoTGbjMCXwSLBk/oHZwEfdlpDc5CZYUYl1GnhxeoQUY+A4/XPQfImEMgdV1+ouA0Wnjjz
+ UcdfGuff5DshKH3R2DZOkihcdKZsD8pqqEa+mjADWoGgdINDjcsVP+VRPpThJ2279hoROfr5KkQ
+ kxrYMyHL+mkPopHuYgMOc35VvqqqVBKdyeq47GL7AFtC+oNatHWocVoRPZjXrA7uW6oDBaNh/zw
+ xMpHi77E/VMUkrF48FGC8xFWs2fp0ySilVD/3ZU+TzqKippdCEzbk+yszVtSV+fQhi/Hy98S/Qb
+ y+L3mrYVwj5LZx7zAMLP81u7Qdx5HSsAPQNq/UZ7tJITwe+A==
+X-Received: by 2002:a05:6402:3883:b0:698:3b7c:7e41 with SMTP id
+ 4fb4d7f45d1cf-69ab44ae903mr1924000a12.33.1783548980159; 
+ Wed, 08 Jul 2026 15:16:20 -0700 (PDT)
+Received: from dobby ([2a02:8109:a394:4800:2200:181c:eef9:4c12])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-69a19d786e7sm9059237a12.16.2026.07.08.15.16.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 08 Jul 2026 15:16:18 -0700 (PDT)
+From: Sam Li <faithilikerun@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Roman Bolshakov <rbolshakov@ddn.com>, Alexander Graf <agraf@csgraf.de>,
- Phil Dennis-Jordan <phil@philjordan.eu>, qemu-arm@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Richard Henderson
- <richard.henderson@linaro.org>, Akihiko Odaki
- <odaki@rsg.ci.i.u-tokyo.ac.jp>, Peter Collingbourne <pcc@google.com>,
- Cameron Esfahani <dirty@apple.com>, Mads Ynddal <mads@ynddal.dk>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-References: <20251103101034.59039-1-philmd@linaro.org>
- <20251103101034.59039-2-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20251103101034.59039-2-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: dlemoal@kernel.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ cassel@kernel.org, Markus Armbruster <armbru@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Eric Blake <eblake@redhat.com>,
+ qemu-block@nongnu.org, Sam Li <faithilikerun@gmail.com>
+Subject: [PATCH v14 0/6] Add full zoned storage emulation to the qcow2 driver
+Date: Thu,  9 Jul 2026 00:16:09 +0200
+Message-ID: <20260708221615.346155-1-faithilikerun@gmail.com>
+X-Mailer: git-send-email 2.53.0
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA4MDIxOCBTYWx0ZWRfX+hwxgQK5dHEH
- LKcgF7621ufx4JS2pcqINm56kr24S4Fjai0ceGKWS8ZvRL70x4bwep62juFBPsTEPx6yX6fYzI3
- fa1Gcx3qK4NQgf4r+76BoorxjDTUmUg=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA4MDIxOCBTYWx0ZWRfX0a2Ahaw1kO3R
- 5GeSEsAIO+gt0w7WEkErxgzk9hfE1bWXBT5iKwjo85dFg8Bqz7+U9gPi9avNv98QnFyhmfXLncJ
- payM6lJuvtoC54T6yyxsJC4PG+3NdGwhE+cpPUaJdI7z/PI0iFjC7Sxkz8lZjzn/3sNzNT+XYVl
- 9TH5BzYFuEhMXWJiU1yvLhYmWUQ6hlI+9DX8jXXFjCKMgt6btcdgxUegfC8OZu3J6WRIAMsMDe6
- qFI0PM+M7QXDEWNkUQsE/xME2GqmzQr0s+/LioOyXSwEa8TN6axZR1JCcmjFnCLdC9nJoKfKmog
- sowpbbWX9YlY9amuf1EOa8HuRXyjVSp2BqzctYvDqSrINXITMF6Q4eek7BD4JgH0QDJzj/b0wCZ
- 9YD2Kn5XNe10cD1net8nLIlcHhw7rzTt4l0/guT/5YaYmstvqovZoKhAmurO5YYh9viBk/PlGtB
- FYSwd6PSaCe8c3tdc+Q==
-X-Proofpoint-GUID: AxHC3Yg88yaqR0W1jJKteAAPXVptskto
-X-Proofpoint-ORIG-GUID: AxHC3Yg88yaqR0W1jJKteAAPXVptskto
-X-Authority-Analysis: v=2.4 cv=QoVuG1yd c=1 sm=1 tr=0 ts=6a4ecb98 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=KKAkSRfTAAAA:8 a=TsVdnq78nccsToMOntQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=a_PwQJl-kcHnX1M80qC6:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-08_04,2026-07-08_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 adultscore=0 suspectscore=0 lowpriorityscore=0
- clxscore=1015 bulkscore=0 phishscore=0 malwarescore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607080218
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=faithilikerun@gmail.com; helo=mail-ed1-x52c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,107 +102,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/11/25 11:10, Philippe Mathieu-Daudé wrote:
-> From: Richard Henderson <richard.henderson@linaro.org>
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   include/system/hvf_int.h |  3 +++
->   accel/hvf/hvf-all.c      | 25 +++++++++++++++++++++++++
->   accel/hvf/trace-events   |  1 +
->   3 files changed, 29 insertions(+)
-> 
-> diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
-> index 3d2be4092ef..5a57691885f 100644
-> --- a/include/system/hvf_int.h
-> +++ b/include/system/hvf_int.h
-> @@ -89,6 +89,9 @@ int hvf_arch_get_registers(CPUState *);
->   /* Must be called by the owning thread */
->   void hvf_arch_update_guest_debug(CPUState *cpu);
->   
-> +void hvf_protect_clean_range(hwaddr addr, size_t size);
-> +void hvf_unprotect_dirty_range(hwaddr addr, size_t size);
-> +
->   struct hvf_sw_breakpoint {
->       vaddr pc;
->       vaddr saved_insn;
-> diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
-> index 0a4b498e836..e13abddbd9c 100644
-> --- a/accel/hvf/hvf-all.c
-> +++ b/accel/hvf/hvf-all.c
-> @@ -58,6 +58,31 @@ void assert_hvf_ok_impl(hv_return_t ret, const char *file, unsigned int line,
->       abort();
->   }
->   
-> +static void do_hv_vm_protect(hwaddr start, size_t size,
-> +                             hv_memory_flags_t flags)
-> +{
-> +    hv_return_t ret;
-> +
-> +    trace_hvf_vm_protect(start, size, flags,
-> +                         flags & HV_MEMORY_READ  ? 'R' : '-',
-> +                         flags & HV_MEMORY_WRITE ? 'W' : '-',
-> +                         flags & HV_MEMORY_EXEC  ? 'X' : '-');
-> +
-> +    ret = hv_vm_protect(start, size, flags);
-> +    assert_hvf_ok(ret);
+This patch series add a new extension - zoned format - to the
+qcow2 driver, allowing full zoned storage emulation on a qcow2
+image file. A user can attach such an image to a guest and have
+it appear as a host-managed zoned block device.
 
-Maybe this assertion is a bit aggressive toward users, since while
-we know the host limits, we don't know what the guest wants to do.
+The zoned format is opt-in through a new qcow2 header extension
+that pins the zone geometry. Behind the extension is a dedicated
+zoned metadata region that stores one 8-byte write pointer (WP)
+per zone. The extension is gated by an incompatible bit, so an
+older qcow2 implementation cannot accidentally open the image.
 
-I got:
+Each write pointer is routed through the write pointer cache,
+a Qcow2Cache object. The write pointer cache is written to disk
+after the qcow2 metadata is written, thus guaranteeing that
+the write pointer is updated after the corresponding data is
+written.
 
-qemu-system-aarch64: Error: ret = HV_ERROR (0xfae94001, at 
-../../accel/hvf/hvf-all.c:77)
+Zone states are in memory. Read-only and offline states are
+device-internal events, which are not modelled in qcow2
+emulation for simplicity. The other zone states
+(closed, empty, full) can be inferred from write poiner
+values, presistent across QEMU reboots. The open states are
+kept in memory using open zone lists.
 
-Running with '-trace hvf_vm_map':
+To create a qcow2 file with the zoned format:
 
-hvf_vm_map paddr:0x0000000010000000 size:0x00020000 vaddr:0x104514000 
-flags:0x07/RWX
-hvf_vm_map paddr:0x0000000000000000 size:0x00020000 vaddr:0x104890000 
-flags:0x07/RWX
-hvf_vm_map paddr:0x0000000400000000 size:0x80000000 vaddr:0x380000000 
-flags:0x07/RWX
-hvf_vm_map paddr:0x0000000030bc0000 size:0x00040000 vaddr:0x1048b4000 
-flags:0x07/RWX
-hvf_vm_map paddr:0x0000000050bc0000 size:0x00040000 vaddr:0x1048f8000 
-flags:0x07/RWX
-hvf_vm_protect paddr:0x0000000430000000 size:0x00004000 flags:0x05/R-X
-hvf_vm_protect paddr:0x0000000030000000 size:0x00004000 flags:0x05/R-X
-qemu-system-aarch64: Error: ret = HV_ERROR (0xfae94001, at 
-../../accel/hvf/hvf-all.c:77)
+    qemu-img create -f qcow2 zbc.qcow2 \
+        -o size=768M \
+        -o zone.size=64M \
+        -o zone.capacity=64M \
+        -o zone.conventional_zones=0 \
+        -o zone.max_append_bytes=4096 \
+        -o zone.max_open_zones=6 \
+        -o zone.max_active_zones=8 \
+        -o zone.mode=host-managed
 
-Should we propagate the error to upper layer?
+Then attach it to a guest via the QEMU command line:
+    -blockdev node-name=drive1,driver=qcow2,\
+              file.driver=file,file.filename=zbc.qcow2 \
+    -device virtio-blk-pci,drive=drive1 \
 
-Are there cases we can safely ignore?
+v13->v14:
+- fix review comments [Stefan]
+    * store the on-disk write pointers big-endian
+    * move the conventional-zone flag to bit 63 to follow block layer's wp encoding
+    * add QEMU_BUILD_BUG_ON check on conv bit
+    * make zone_append beyond the device capacity return -ENOSPC
+    * cap nr_zones to avoid DoS
+    * zone reset and finish yield until in-flight writes to the target zone drain
+    * fix wps memory leak on zonedmeta refresh failure
+    * fix overflow on condition checks
+    * improve err handling for write pointers
+- refresh qcow2 checks output
+- add reviewed-by tags [Niklas]
 
-> +}
-> +
-> +void hvf_protect_clean_range(hwaddr addr, size_t size)
-> +{
-> +    do_hv_vm_protect(addr, size, HV_MEMORY_READ | HV_MEMORY_EXEC);
-> +}
-> +
-> +void hvf_unprotect_dirty_range(hwaddr addr, size_t size)
-> +{
-> +    do_hv_vm_protect(addr, size,
-> +                     HV_MEMORY_READ | HV_MEMORY_WRITE | HV_MEMORY_EXEC);
-> +}
-> +
->   static int do_hvf_set_memory(hvf_slot *slot, hv_memory_flags_t flags)
->   {
->       struct mac_slot *macslot;
-> diff --git a/accel/hvf/trace-events b/accel/hvf/trace-events
-> index 2fd3e127c74..f989da59492 100644
-> --- a/accel/hvf/trace-events
-> +++ b/accel/hvf/trace-events
-> @@ -5,3 +5,4 @@
->   # hvf-accel-ops.c
->   hvf_vm_map(uint64_t paddr, uint64_t size, void *vaddr, uint8_t flags, const char r, const char w, const char e) "paddr:0x%016"PRIx64" size:0x%08"PRIx64" vaddr:%p flags:0x%02x/%c%c%c"
->   hvf_vm_unmap(uint64_t paddr, uint64_t size) "paddr:0x%016"PRIx64" size:0x%08"PRIx64
-> +hvf_vm_protect(uint64_t paddr, size_t size, uint8_t flags, const char r, const char w, const char e) "paddr:0x%016"PRIx64" size:0x%08zx flags:0x%02x/%c%c%c"
+v12->v13:
+- split the zone_size widening to a separate commit [Niklas]
+- relocate the qcow2_check_zone_options reorder and
+  max_active/open/append-zones wording [Niklas]
+- modify the comment for request merge constraints [Niklas]
+
+v11->v12:
+- validate the zoned header extension before allocating any zoned metadata
+- fix the zoned locking discipline: hold the qcow2 state lock (s->lock)
+  across all zone-state list updates [Stefan]
+- reject, instead of aborting on an assertion, a write that reaches the
+  open-zone limit while every open zone is explicitly open
+- fix reduced-capacity (zone_capacity < zone_size) handling:
+    * transition a zone to FULL when the write pointer reaches the zone
+      capacity
+    * report the zone capacity, not the zone size, in zone_report
+- return -EIO rather than -EINVAL for zone write-rule violations
+- use int64_t for the zoned-metadata cluster offset and zone_size to
+  avoid truncation on large images
+- simplify qcow2_cache_set_dependency() [Stefan]
+- virtio-blk: read the zone size through a new blk_get_zone_size() [Stefan]
+- docs/QAPI: clarify the max_open_zones / max_active_zones /
+  max_append_bytes descriptions; use warn_report() for recoverable zoned
+  configuration values in qcow2_check_zone_options() [Niklas, Stefan]
+- iotests: add qcow2 check updates (303, qcow2-encryption) [Stefan]
+- coding style: function opening braces, DEBUG_EXT format specifier
+
+v10->v11:
+- add write ordering through write pointer cache [Stefan]
+- add new test cases to iotests for zone append write
+- add zoned image info to qemu-img --info
+- move virtio-blk cross-zone-boundary merge fix into its own patch [Stefan]
+- fix specs and docs:
+    * document bit 59 conventional-zone marker in qcow2.rst [Stefan]
+    * spell out write ordering for crash consistency [Stefan]
+    * QAPI: rephrase comments, bump version [Markus]
+- fix review comments [Stefan]
+
+v9->v10:
+- add cross-boundary constraint for merging writes on zoned devices
+- extract call from assert() to fix image creation crash
+
+v8->v9:
+- fix compilation err after modifying types
+
+v7->v8:
+- sets default values for zoned img confurations [Markus, Damien]
+- changes the type of zone_size, zone_capacity from uint32_t to uint64_t [Stefan]
+- fix docs [Stefan]
+- modify append writes to increase concurrency [Damien, Stefan]
+- use tailqueue to track active zones [Stefan]
+- fix undefined behavior of ranges_overlap()
+- fix the iotest of case 2(1)
+
+v6->v7:
+- modify zone resource managemant (style) [Damien]
+- fix accessing list with negative index err
+- add some tests for zrm in iotests
+- address review comments [Markus]
+
+v5->v6:
+- fix docs and specs [Eric, Markus, Stefan]
+- add general sanity checks for zoned device configurations while creation and opening [Eric]
+- fix LRU when implicitly open a zone for a long time [Stefan]
+
+v4->v5:
+- add incompatible bit for zoned format [Eric]
+- fix and manage zone resources via LRU [Damien]
+- renaming functions and fields, spec changes [Markus, Damien]
+- add closed zone list
+- make qemu iotests for zoned device consecutive [Stefan]
+
+v3->v4:
+- use QLIST for implicit, explicit open zones management [Stefan]
+- keep zone states in memory and drop state bits in wp metadata structure [Damien, Stefan]
+- change zone resource management and iotests accordingly
+- add tracing for number of implicit zones
+- address review comments [Stefan, Markus]:
+  * documentation, config, style
+
+v2->v3:
+- drop zoned_profile option [Klaus]
+- reformat doc comments of qcow2 [Markus]
+- add input validation and checks for zoned information [Stefan]
+- code style: format, comments, documentation, naming [Stefan]
+- add tracing function for wp tracking [Stefan]
+- reconstruct io path in check_zone_resources [Stefan]
+
+v1->v2:
+- add more tests to qemu-io zoned commands
+- make zone append change state to full when wp reaches end
+- add documentation to qcow2 zoned extension header
+- address review comments (Stefan):
+  * fix zoned_mata allocation size
+  * use bitwise or than addition
+  * fix wp index overflow and locking
+  * cleanups: comments, naming
+
+Sam Li (6):
+  docs/qcow2: add the zoned format feature
+  block: widen BlockLimits.zone_size to uint64_t
+  qcow2: add configurations for zoned format extension
+  virtio-blk: do not merge writes across a zone boundary
+  qcow2: add zoned emulation capability
+  iotests: test the zoned format feature for qcow2 file
+
+ block/block-backend.c                         |   11 +
+ block/file-posix.c                            |    2 +-
+ block/qcow2-cache.c                           |   11 +-
+ block/qcow2-refcount.c                        |    7 +
+ block/qcow2.c                                 | 1617 ++++++++++++++++-
+ block/qcow2.h                                 |   88 +-
+ block/trace-events                            |    2 +
+ docs/interop/qcow2.rst                        |  118 +-
+ docs/system/qemu-block-drivers.rst.inc        |   51 +
+ hw/block/virtio-blk.c                         |   22 +-
+ include/block/block_int-common.h              |   15 +-
+ include/system/block-backend-io.h             |    1 +
+ qapi/block-core.json                          |   91 +-
+ tests/qemu-iotests/031.out                    |    8 +-
+ tests/qemu-iotests/036.out                    |    4 +-
+ tests/qemu-iotests/082.out                    |  126 ++
+ tests/qemu-iotests/303.out                    |    4 +-
+ tests/qemu-iotests/tests/qcow2-encryption.out |    4 +-
+ tests/qemu-iotests/tests/zoned-qcow2          |  209 +++
+ tests/qemu-iotests/tests/zoned-qcow2.out      |  191 ++
+ 20 files changed, 2539 insertions(+), 43 deletions(-)
+ create mode 100755 tests/qemu-iotests/tests/zoned-qcow2
+ create mode 100644 tests/qemu-iotests/tests/zoned-qcow2.out
+
+-- 
+2.53.0
 
 
