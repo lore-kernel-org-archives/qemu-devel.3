@@ -4,138 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C6C8C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 15:57:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08176C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 16:12:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whUdx-0002fF-57; Wed, 08 Jul 2026 11:57:01 -0400
+	id 1whUs1-0007bx-98; Wed, 08 Jul 2026 12:11:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1whUdv-0002f6-FZ
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 11:56:59 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1whUrn-0007Zj-3Q
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:11:20 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1whUdt-0001bl-KW
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 11:56:59 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ id 1whUrg-0004QZ-AO
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 12:11:15 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 668C3Mc52579480
- for <qemu-devel@nongnu.org>; Wed, 8 Jul 2026 15:56:54 GMT
+ 668C3Ec62751436
+ for <qemu-devel@nongnu.org>; Wed, 8 Jul 2026 16:11:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- rl+8Lf3AHaMrrunPG0nqTjSiKI+WxqLQdG06+E4eoQs=; b=lgjAh8AXfZFljlTa
- kMjGtnW0FHui/SENhAxDMcymZidXavl9WBqrQ+ZcX71AIFHjcUXF/ZkTtohvJZB5
- oDLzfzmTeruYxj0YaW/efrX7OCgFMbwRhZBvjyX+/aJ7VwGKBE+Tp2n77Cg/YVoF
- shxWHav5RD3M9HYfFbHwCRJ7KkYYyHQI3UyV+vORWoj3cMY0fqqhzAPtasDLfSZn
- ee8UdVfzoik7p/kc611WJ/1n0EFob9afMq84amC/UWbIzOpRBLdzWpscTK6pmQju
- mMeOvg9dtr8XKE459vgMip4y5HWkbehJHiAi+5RXPCxD0jdvfThNnw5Ru/PzXOSR
- B5GQkw==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f9b5gbmew-1
+ 8+7oy5XvMxGGcBJTz9zw6CXYHe+C7AC9iXVcuc7gfBI=; b=RiaSutxVqX9S8O/g
+ TszGkNYvc6a2gglD0udwDllSE66GLCvxY+fZRaSGXvMjUxc/tcS43Rb0JyG5gxPz
+ GIp9QITzUcx7zY/aHUEue6th9kyhlMtgAttoEh8H6h5y58DS/tDLs01NQbybNuFV
+ vTgK0SGKNpLm4qofGnryM55BJj2TOVUGA3pWidX4o/fJ82Qkr5vWui3g25hOn+a+
+ rUpNu4fxYZwVsvW6z1CS8Wl1sRBUa0uwCAN4asDvbYU2bR69mTZ08JwGUBTypkL2
+ 23MRYWm58jwV/BobiPbGTEdXFm558tVGP05pQvaYw1idOTI/ICOEuhhYxvrU4Sju
+ DJlPxg==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f9g7hjpfw-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 15:56:53 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-c860544c077so1651140a12.3
- for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 08:56:53 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 16:11:09 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-384048e7e14so1272664a91.1
+ for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 09:11:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783526213; x=1784131013; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783527069; x=1784131869; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=rl+8Lf3AHaMrrunPG0nqTjSiKI+WxqLQdG06+E4eoQs=;
- b=BNiswEJpWdy9eKR2mDoeKy+jLoibhgoM9sECKgUlexFQ2KVoiFsomtZl8Rr837NzIe
- g0lsllmaOi0PdIP1mgz9aSZsUy0PcQVWtZbtqHTVpuAX3MS8q9H27vYyHIo1ammAz+gH
- khDD/Gxvagm+JzZZhSuqFBVTneyH22EIb350dZFFuL2HnVJtTjEtvPV/crN9xQMAsHke
- oVMwecwuLptnyds+8idruRYGUuhvSuuq6YuGNcuAkIXBG+gMV1Eca74pgEGkx4fFyVKs
- kTjZIzEpBI+15uSEiDxBthOi/vTB4p+44YU1Ghux048OrT7I4K3dmZzHHeBn9B3iPc0X
- cZVw==
+ bh=8+7oy5XvMxGGcBJTz9zw6CXYHe+C7AC9iXVcuc7gfBI=;
+ b=PzjqIBPr/DxdkTPH5GToq+7Rctl8qcqoV8KQjwDa4EU4O7+ggBe4uGZSz9Z7i7EeBV
+ EWoZO2vNeMNY6ZeUmgqmGckttk88EBeUhDF8hnoqdr/F04hzIoxdhq5Oa49dX393OAbJ
+ kQZvIvN0udbHVxQAtywxgrcNvgyhJi2gxDIqSKZvGjTf5TrSDasdxi6C9fS+zjoVcP3O
+ gF5BvO+pa64xJe5pj2Nvh0rri+jhJGbAjyKnNCf4mmrDvI2Zf5CS4F0961TZ7nTmZqMC
+ BV6y4DewU31fAiejcCnMBteoT47R+7OLPX/zDHIkPRLG4MnrO3tHM0b8Ceh82xkk+Tsi
+ 3Wow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783526213; x=1784131013;
+ d=1e100.net; s=20251104; t=1783527069; x=1784131869;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=rl+8Lf3AHaMrrunPG0nqTjSiKI+WxqLQdG06+E4eoQs=;
- b=HzDA21WmMHs8zRqlrihDIKEQwwp1exTB/PlqcdyycpRi6ZOhAECM07UN1yi9aUAK4G
- 3ZRqpeXhK7vVwRowPdNLvy6+8SJ49VEAUIPgSxiuH16kta7uJUijrjNugQiZNkBk3N7t
- Je+H73B1/JbooDO8Mf2wGawECChM/yal90MKra8NAL8RReDGpIu0pzkpkaUkUoSwQN1g
- Lu7KlRom7H/Lq5CFibBRfkGXQJoRC1s22VOpZWD42g2BILXoydz9NljVqlLv/rJ8+sjU
- WJSmQtTSzDtKdJn0dA5gFsLSL2VvCu2dzM6gtevT/aSU7iQhcV5zysy2GmAz4GErYSvv
- 2j7Q==
-X-Gm-Message-State: AOJu0YzBD8tNJAr2saA31O8ogpy+bgpBxGeFhm3DbBZv54TSb8gnqnA+
- DNT5+NyZ40jmgSicXn2jepw5fQ88k3JP6ePxnUOCPXGv/G1rxVU6nW+6s+nFX3bOVZaif0CXcxv
- TsVvbZXNQNOu35QUdaS9oFV5qWV72HbWR0ASIpEKT7RgkP2c9n0KhfYydFw==
-X-Gm-Gg: AfdE7clupc3LNcUQCFktLYEuF7l3Q1gpgnn9s14Q0RDIFgr36ZOClLmTShTLzgJyomW
- wg7oPWeXuQopV9tYKtvH7U9VjNEDYGicUUXZ2KevJ6hPgjqsibm/6Zc4/aYwBg3QxLTszg96HwZ
- fr7Alxlsu6Nkk9e1g8APJqH/t/IgY1ANcyBV26myz1BzbR62lNpaIs9HrmcWSUIdcvO1LwFGZqc
- kMebCkXCyPSVAV8UpWdc0Xg1GbzY0WGvfP70z6aC6hHyaMIbrEMao/SjwQvKeonD8ziIOFPFFx+
- H/VY2tYn4dmwWwSJ29C2ZbeJbbzVzNFja8oBiMRbuSJ8DPnaEsSjh5CES1eIdEM4Ho0g7mbIQsM
- KOBqkK//wy6tdKH7Uk8vH3MgEQF6V2jxHT00QBTkz/dKjUKLpgq6l+3MJpT705WKazDvlrhJ4HU
- IIFBk=
-X-Received: by 2002:a05:6a21:3315:b0:3c0:9c1b:d0ba with SMTP id
- adf61e73a8af0-3c0bd31de9bmr3654562637.69.1783526212922; 
- Wed, 08 Jul 2026 08:56:52 -0700 (PDT)
-X-Received: by 2002:a05:6a21:3315:b0:3c0:9c1b:d0ba with SMTP id
- adf61e73a8af0-3c0bd31de9bmr3654529637.69.1783526212481; 
- Wed, 08 Jul 2026 08:56:52 -0700 (PDT)
+ bh=8+7oy5XvMxGGcBJTz9zw6CXYHe+C7AC9iXVcuc7gfBI=;
+ b=Eu+pCst8dmp/qxNZvwd4Ogn79pj9Zc2zSKfQ7rqW/oR+k0wv0fs3PvH8rve/uYrHYr
+ cW2kqeceyTXcRuEK107Z5uX4KHVUikBnCdWbUw+AbzQ/L3dvQHPucLf8tZuXreiQ07k+
+ H0+XCpDa+YHzm3IKQCydAKNQm5R1DfyB5ukUfNGMXxdWVU2Q+WOQh1DapjQcn4x3tE67
+ C1+ebFdlhmXN538AXQLWuZbFfD/6SguRj+f4z6lQX6VEJ5ePSX8ApHE0N9BFidr7VJPD
+ nZU9H2qIHTwkzlvRvcV47H111ac8b+P3LSWCMYV8bZibLficHDZqGw4uDcJJeK2VFbJg
+ /W7A==
+X-Gm-Message-State: AOJu0Yzg1m+pQ70n+ZZFhT4cJlcpph9hDgtrqC1IprA0efLD0vwDZu1B
+ 2ccCeR8Dlu48g370DcXsPz7NDBZOOV55lKZ43cyrbRUY7/lnPPv9v2/sYpidWXxEQrLz4dsHe+a
+ 0yJK/jT78pIiVZy2w3HrcmGh7gVoff7TtJwgzxY6heECzrpwWNiC/XO7y/w==
+X-Gm-Gg: AfdE7ckiQ6dvuLyb/V5PSlgfyZO/fiy0d+nooRACcixCeCxzeHvaJuRRNEQqrc1qSkR
+ BNR9aGdYIS8EhjHQRx2fVS78E7NyU0LfhlkqToMU8/F11Ae/VD9y8d0y3WQ7CvLNqZLj3IwRgZd
+ DwccY5CUJ1lE2Gug04vTYlE/qZ5xuAtc/1q1FwPDkFI+XLf5kigZit4ws3O//6KkUgGvm5OEhYO
+ HyQK92mhh3lAbTKHMBORve7OcBx+CQdrRi9PiBnm98xymRwkbSuiFA2d/yYg26drPiN1oReLqU8
+ vQB/0Ewpo5S5qjwKy7E81zd0jFpxGYwl3gcaEDfoVAHKdKxrwEgRQLBeJPbKFjhZAFoJOrWt/zi
+ Upb8O99kJchBOOwpaIZUhcnY+HNe+5bZ1dLIZq828VPauagsY7sUpgo+oH02X1scNE7TpizM9eP
+ 2Z2Po=
+X-Received: by 2002:a17:90b:39cd:b0:37e:2005:6509 with SMTP id
+ 98e67ed59e1d1-3893fe5b9dbmr3628769a91.3.1783527068530; 
+ Wed, 08 Jul 2026 09:11:08 -0700 (PDT)
+X-Received: by 2002:a17:90b:39cd:b0:37e:2005:6509 with SMTP id
+ 98e67ed59e1d1-3893fe5b9dbmr3628717a91.3.1783527067940; 
+ Wed, 08 Jul 2026 09:11:07 -0700 (PDT)
 Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3117483dec6sm22131255eec.11.2026.07.08.08.56.51
+ 5a478bee46e88-31174a5b26csm21247572eec.15.2026.07.08.09.11.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 08 Jul 2026 08:56:52 -0700 (PDT)
-Message-ID: <1a1a0990-928d-42b7-b8b2-9bc9382f01b5@oss.qualcomm.com>
-Date: Wed, 8 Jul 2026 08:56:50 -0700
+ Wed, 08 Jul 2026 09:11:07 -0700 (PDT)
+Message-ID: <de1a5a28-7469-4331-9e47-e43f03f0980d@oss.qualcomm.com>
+Date: Wed, 8 Jul 2026 09:11:06 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] tests/lcitool/refresh: use raw string literal for
- trailers
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Subject: Re: [PATCH 2/4] tests/docker/dockerfiles/ubuntu2404.docker: add
+ missing apt update
+To: Michael Tokarev <mjt@tls.msk.ru>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, mark.cave-ayland@ilande.co.uk,
  richard.henderson@linaro.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, mjt@tls.msk.ru
+ <alex.bennee@linaro.org>
 References: <20260707214655.1138626-1-pierrick.bouvier@oss.qualcomm.com>
- <20260707214655.1138626-2-pierrick.bouvier@oss.qualcomm.com>
- <ak4Gmp15YT0x4lSZ@redhat.com>
+ <20260707214655.1138626-3-pierrick.bouvier@oss.qualcomm.com>
+ <ak4H9Tn-t5rRH3oJ@redhat.com>
+ <24403961-c7e6-4ab9-9d1e-719caa2f959b@tls.msk.ru>
+ <03e7ce1f-f25c-4e83-be4b-042b1100c104@oss.qualcomm.com>
+ <7a0e3797-1716-4d4c-89ed-9ae1ee3140b4@tls.msk.ru>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <ak4Gmp15YT0x4lSZ@redhat.com>
+In-Reply-To: <7a0e3797-1716-4d4c-89ed-9ae1ee3140b4@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA4MDE1NiBTYWx0ZWRfX/nFFDsyk2GX/
- dgLfGfbrxNBzIi7zaKuyZ736ltseGxmNE6wK2jkI01+XTP2MGuNrp3A/FtWayM7M5UDxKtCp0Pv
- xJm+8jAZvW/WI/+p8zfJaMtAWiIyTqM=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA4MDE1NiBTYWx0ZWRfX32mNOuX6Asok
- tpW3BUr6p3Y9qhuDCIsjq6csyJZCQSq1jJhPw03YcLF9TwyvSdrvNTgbzcozAmpr6NLfvhCOOEA
- MAZ98maC2wnfk/7JWO4WrZBh/43Zl2t5kEOnRf4QNweOyCaF5tXXLiudSwjqpl6OkwAa9Mepv1H
- piqxMVSYsOr+FJxSspojkO7ncvUs8Ueq2vn8bMH83pfHbA1B0hVRi4DHvhr8IryUy+HrrV/59UG
- 4ahriNUFZPHamr8gyoH71FJC4uUh2/YYOOFKzha+ai69D3etzwkW1BaCSAfFjvOhxbTg+9yPwsG
- orRhnaLBH1M8FOFskCON3eHohhbLEQ90qKb8EjLbe+Aa9OAxs8cxUvi6r2JNTTWVVBv0m/tAW6A
- FQwUIAsAVPBRSKDhxbORd9ZUYoGUfxHFITaRlWTRjPxCNDYPk7iC7BoZaUIsHtGdWEoSAAufOCs
- Fo8MQv5Oz0sPX+aKCeQ==
-X-Proofpoint-ORIG-GUID: fQ0lD8uwSAewr1PLpApAZ1IX-GJMaRri
-X-Authority-Analysis: v=2.4 cv=JLULdcKb c=1 sm=1 tr=0 ts=6a4e7345 cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA4MDE1OCBTYWx0ZWRfX0NRX6fpUVSVg
+ XAvxlKblv2LUCwu2clTbAb0piXeyLbC6jgFsGuDyvD0BNU6ojdosnyGyF3+39TbAOnOoLHY4ay2
+ nlEeMh7mQ4EoogeXL7rgxcCJISzq64+ftdz/16cqrEasGe1afZIR/jvkW6XidMACHY5+ZdXUfdE
+ VI5HsH2SdlWEyp2gXBGJzG/cYejas96S8k+8iajh2cfpeZ98qCC1Mtky77QQSh7Gh9kaqVaeh28
+ TgMfmVPrtpEuLfsv2HxZMhcD9eaDdJmtv5oQw3BNJjyBTSRTvkND+a4QeIxDZ/kMZmozhMSwCsb
+ /unT6xB1BF2mpopzcTRFF2RF4dJj19fKvc+wQcaZn3ulJ16QL/STTNnGPgOqPDg940X0V8pyIC9
+ xzPPPJGn3bODaFb9zzANSBi6buoDNITxENzvqEa4uXccqx9as/ltTlJaa8ciu9DOjfxgoG3V/rG
+ jJ7BrGivtLeIQZtSIoQ==
+X-Proofpoint-GUID: z7M-mIh4l9786vLBXqSlgdNvXcE8Zjj5
+X-Authority-Analysis: v=2.4 cv=TMp1jVla c=1 sm=1 tr=0 ts=6a4e769d cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=LdmRkruTV9A3LsMisGEA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
-X-Proofpoint-GUID: fQ0lD8uwSAewr1PLpApAZ1IX-GJMaRri
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=n6MYwUk4AAAA:8 a=uPZiAMpXAAAA:8 a=R2two0n6AAAA:8 a=FrIm8lUnDmQE-uxnit0A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA4MDE1OCBTYWx0ZWRfX3z0rSkR3U+cT
+ qHIaNBw/OqlzrRDzfD54XXDAD9AYQp3yigSQi8sT8w9XTwG1LjBhqZZ4akcEUaix9twIAtpbdfV
+ xqUr7wlZS+xMU9NP46R/2h1ygMCpNVw=
+X-Proofpoint-ORIG-GUID: z7M-mIh4l9786vLBXqSlgdNvXcE8Zjj5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-08_02,2026-07-08_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0
- suspectscore=0 spamscore=0 impostorscore=0 bulkscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607080156
-Received-SPF: pass client-ip=205.220.180.131;
+ impostorscore=0 priorityscore=1501 suspectscore=0 adultscore=0
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 phishscore=0 spamscore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607080158
+Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -158,34 +164,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/8/2026 1:13 AM, Daniel P. Berrangé wrote:
-> On Tue, Jul 07, 2026 at 02:46:52PM -0700, Pierrick Bouvier wrote:
->> Using a list of string is not convenient, as users need to escape it
->> manually and handle end of lines. By using a raw string literal,
->> what you see is what you get.
+On 7/8/2026 7:54 AM, Michael Tokarev wrote:
+> On 08.07.2026 17:28, Philippe Mathieu-Daudé wrote:
+>> On 8/7/26 11:27, Michael Tokarev wrote:
+> 
+>>> No, running it again should not be needed.  Unless we change
+>>> /etc/apt/sources.list.
 >>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->> ---
->>  tests/lcitool/refresh | 209 +++++++++++++++++++++---------------------
->>  1 file changed, 105 insertions(+), 104 deletions(-)
+>> The problem we want to address is wrt remote content going out of
+>> sync; we need to run 'apt update' previous to any 'apt' call which
+>> use the remote.
 > 
-> Does what it says on the tin so....
+> It's definitely not required to be this way.  Running `apt update' once,
+> when creating containers, is enough.  Any subsequent apt install &Co
+> will be run "soon enough" to avoid worrying about cache going out of
+> sync.  Even if meanwhile a new version of some package has been uploaded,
+> old version is available for some time (usually at least a day).
 > 
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> So no, running `apt update' before every `apt install' and similar
+> is not necessary.
 > 
-> ...but given the size of the trailer we have inline, I wonder if we
-> would be better off just having that trailer in a plain text file
-> alongside the refresh script, such that 'refresh' just auto-appends
-> any <foo>.trailer file contents to any docker file it emits called
-> "<foo>".
+> And sure, you can do it - it's just some wasted time.
 >
 
-IMHO a simple raw string literal in an existing script is enough, it's
-perfectly readable and maintainable this way. Adding yet another file
-means that you need to look in another place, which is already complex
-enough between the dockerfiles, lcitool itself, and refresh script.
+Sorry but that's an incorrect view of how docker layer is working.
+There is no guarantee of how "soon enough" a previous RUN statement will
+be ran, before a next one. As long as command line associated to RUN is
+not modified, or that base image is not pulled again, all previous RUN
+statements are cached by default.
 
-> With regards,
-> Daniel
+That's why Richard observed that his container was broken for weeks, and
+it could have been broken until the end of times.
 
+The recommendation given to him was to make a build without cache, which
+is not the right way to fix it.
+If you want a good analogy, let's imagine you have a build system with a
+missing dependency: you can either fix it, or suggest to run "clean" and
+start over. The latter was suggested.
+
+In the case of apt install, concerned package might not be available
+anymore between previous and current RUN statement. That's why you need
+apt update with every apt install.
+
+Those links, including official docker documentation, explain the same:
+- https://docs.docker.com/build/building/best-practices/#apt-get
+-
+https://stackoverflow.com/questions/34248439/in-docker-why-is-it-recommended-to-run-apt-get-update-in-the-dockerfile
+-
+https://medium.com/@janscheffler/lessons-learned-apt-install-in-docker-images-bfad0e026f6d
+
+Another common example is a previous RUN statement that downloads
+something from a (now) broken link. New builds will fail, while cached
+one will work. That's why building containers from scratch daily CI is a
+good practice. It's similar to what we observe with QEMU functional
+tests assets that are cached in our CI, but are missing regularly, until
+someone unfortunate discovers that.
+
+Running apt upgrade/dist-upgrade manually is not recommended, and the
+best way to have updated containers (especially for production purpose)
+is to rebuild them from scratch.
+
+> Thanks,
+> 
+> /mjt
+
+Regards,
+Pierrick
 
