@@ -4,106 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E3B7C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 09:32:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0D2EC43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 09:33:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whOdb-0002jq-Kv; Wed, 08 Jul 2026 05:32:26 -0400
+	id 1whOf3-0003Xr-EE; Wed, 08 Jul 2026 05:33:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1whOcj-0002ZM-4B
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 05:31:24 -0400
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1whOch-00038x-G4
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 05:31:20 -0400
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-66666bad8beso552709d50.3
- for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 02:31:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783503078; cv=none;
- d=google.com; s=arc-20260327;
- b=jkWiUTxB/VyUcVkpCG+2J5ef+J9aM08UdPiouiKzdhvGVajHcw11Qs8Pw+1CoBtdeZ
- M+3gPrSh/dQ7KNbnkcy8ulrU5mdnEfzIDkOwGQRYyaMnTDeWuQ3S81tp1wX4cJtraThM
- STkZ345e7ovandrFX3lJtgWmEdBEJtWKLenv6CalVyvQyGG1IxHWR3mTAwbdtcN9oiTo
- FXyryaXB/nWyxcPlidqMVIpsPDcHpXY9SkxDbTVdXZLs+1l8/IKpd3cN1ALZ3JSZCk9a
- O7LEiMO7/dOaPVPvXde0lbBCFGds20HXliwd0CH16go+Y0ONWBwd9sl9zhejOfsA2Gw7
- BNHQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=EX4ZaBtThJEvn6+hTN+UCvMpKGavs3Nhi1CFUMs/Qvs=;
- fh=i04XnI0vYWg+95BzMBDt0DrubMgrVlqYGMMrEIhTCSs=;
- b=N6vnltV7mYIN0IJOZT6cwCQ55Ws7lFh2muTYEOt9/4KPVYnT+AnyBOmrE8EYZIuGmX
- NXdNZURMcpbD+B7JCFE2+Tq6apOd9pG26k4Dz1A6ZjKM+GF3IddIJz7ieZrLWQ+xPe9K
- pmnr1llmf4AN812JNzw9+d9cZnzt/JzZe2vz5g1jGYwXR1JjhW6D+9QN9d5q6WBxKzZn
- yhWdlK8/qO3NcLXGeyTBNQlPopsjZLZbzfqqR1ltFonSTr02lG2ZqU9NNhU1I367SoNU
- DZi1o0bm/bhfaPD9uFwbJlor9f7KTocT6blmzebzbNvBsqBvuNrSO1x/KtHlJ22GQWcJ
- 8XJw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783503078; x=1784107878; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=EX4ZaBtThJEvn6+hTN+UCvMpKGavs3Nhi1CFUMs/Qvs=;
- b=VfKjmzYzD+IuHj2gz/feIySAJcbpO4w8hnqfnIELtMKtX9pPSRXPnsfj2utWJ5rxCn
- 33ztoJPeqURm/BTJRq6pyDljFDrHFRyomSfSScelcD9B8x5SgLK1QiUyBDsdPCgfrN4A
- kTfNDecQC0bWGuXTyiwOW5dVY6xKVHfNDPOUTxR2snWSqrE6WgGcXPEvwqn9fDNHgkEy
- DrZ2MzQ1PTutw+yrVifezQzaSPyZxProD5AaPcfP1yqqw8U6zcvoKf/DDcN3RKfWu+d1
- MwVbKumL2poqMLMe7CSgsPDvh76qJPO7IWWOys/hATzNC5GLuAWIOrqUjSFOt8IYfKiO
- CEAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783503078; x=1784107878;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=EX4ZaBtThJEvn6+hTN+UCvMpKGavs3Nhi1CFUMs/Qvs=;
- b=REMDD10XYdQjBomDsS7Wfwy736BsbKLd3t++HeqYK4VkCsZaV39w53Cg4Bd3/5Lwo1
- kp3A60ffcVkogQyTzANPjQyZW5WX6PxRwFtbJO1XpX5VFPZrcP4oWHzS8G9HwDgRSRq7
- uBXVlHtSke0Duw1GsM47o5fR3T0ww55D2iMv5FIM7zcFvsoStezRiewVBWlP6TwpveXM
- bJRGwSpCfyQsk/VELtfszRj27y+cN/fCQt89xD+5Z3g57disCDSovi+eZ9v2RVG7xAsC
- IP1/rHEPN3/JdGe0+G70y7BYiGPdoAGfwJRIbCZaKMxaa8W1wikctf/v6me8aji44CCw
- JWmQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrJYT6KUdW+zuZrIuAYCrDlWIsvZeZgJEa/ZHu/saoJuF9tSwFF7iRtOqkHMYlKGxt0tcX9E7VCZbuJ@nongnu.org
-X-Gm-Message-State: AOJu0YzcxuqDfmpEhavstQQEfDPso0MD1A7eFJZBoafHozAg2Z9JWIuZ
- 1zLzqxRJcO9mX3o4jVpst/s2jUOgWB40ShbezZ4sQm09IYYa+5r4yW0fFneztlEh2qp4GpAnZzx
- F8QM6Vpv5b2Wj0w6RRIM926BLk1bk/Xi43vTIboFmng==
-X-Gm-Gg: AfdE7ckZv7XVnrFljoxVo0o1d0/bvdfhHNpIKu57MbRg978iTV+If0g9+jt3n0cS3gr
- Wo1uc2pBDC+y0giCXfYvaJBDEguRtv3NIJx0D1120kfuw1Itz7vOOjt0CwE9EzwSHy+RR4kptVi
- PKLsA1WzEZmrRaVbeIkbp7rZ49pVxN3oeg701YxEsdLdBOFxTCWTGOZuZPyj3s0A4a1/osINc0G
- /zSjLidBhIRhuRuOQN3DjtPrui+brumrBSWIMhu9JPfJe/KQZdmHgDfBFydoFqyaP+lCVUiTo3r
- b+50jJe6+QFitICXpO7he9Dz+jcx+3CUCNQ0BplaDUamOCrPfqJL5yar
-X-Received: by 2002:a05:690e:419c:b0:664:85c8:f14d with SMTP id
- 956f58d0204a3-6679f00e56dmr1125222d50.14.1783503078021; Wed, 08 Jul 2026
- 02:31:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1whOer-0003XB-TB; Wed, 08 Jul 2026 05:33:35 -0400
+Received: from smtpout1.mo528.mail-out.ovh.net ([46.105.34.251])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1whOeo-0003nR-TY; Wed, 08 Jul 2026 05:33:32 -0400
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net [57.128.106.70])
+ by mo528.mail-out.ovh.net (Postfix) with ESMTPS id 4gwCZZ0Jlxz6V3X;
+ Wed,  8 Jul 2026 09:33:25 +0000 (UTC)
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net. [127.0.0.1])
+ by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <alexander.hansen@9elements.com>; Wed,  8 Jul 2026 09:33:25 +0000 (UTC)
+Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.113.129])
+ by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4gwCZY4BQnz7tCG; Wed,  8 Jul 2026 09:33:25 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.2])
+ (Authenticated sender: clg@kaod.org)
+ by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id BA2E01B43D6B;
+ Wed,  8 Jul 2026 09:33:22 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-107S001134b01e3-65ad-4bb5-aa85-6eb0320928cc,
+ 2D223E717D9FA260C3726021AC4FE3AAA9F332FE) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <9338574e-f5e7-44aa-94d8-1f0d81a386aa@kaod.org>
+Date: Wed, 8 Jul 2026 11:33:21 +0200
 MIME-Version: 1.0
-References: <20260705224407.32464-1-gilles.grimaud@univ-lille.fr>
- <CAFEAcA9Heev=ydTzO2u3EzeF_2q7dytOF8=67qF8ZMMY6Ky2Tw@mail.gmail.com>
- <a14481eb-9eed-43c0-a29c-187798f7f769@linaro.org>
-In-Reply-To: <a14481eb-9eed-43c0-a29c-187798f7f769@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 8 Jul 2026 10:31:06 +0100
-X-Gm-Features: AVVi8CexY1mKLXsWQsBsTgJpCsEZNagGTNEMRorW1Q3F8zPTODj9WYFoHZawm9o
-Message-ID: <CAFEAcA9x7tjW9xuT_XwNntdvoVtLrCL_PB+50tfhiW2XDvsCiw@mail.gmail.com>
-Subject: Re: [RFC PATCH] target/arm: report M-profile BKPT to gdbstub when
- attached
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Gilles Grimaud <gilles.grimaud@univ-lille.fr>, qemu-devel@nongnu.org, 
- qemu-arm@nongnu.org, =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 9/9] test/functional: anacapa: test ADC128D818
+To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Alexander Hansen <alexander.hansen@9elements.com>,
+ William de Abreu Pinho <williampinho@meta.com>,
+ Emmanuel Blot <eblot@meta.com>, qemu-arm@nongnu.org
+References: <20260707094413.17539-1-emmanuel.blot@free.fr>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260707094413.17539-1-emmanuel.blot@free.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+x-ovh-tracer-id: 1829868827668687917
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTGwcxf2ZuHRsUDmg9ITUuyrhUYAlV2g1EYBV2oDpt88FkivV/U6nLb6QbuER0aAH76Iw2n11T5a5aeZiC/yfk73iQYEb65ZYrjJ21aiek8y7hz55Y2T3XA1xi+hXAQ7aRVThvP1vWjBvkyOIAMgcK4zd03cMRMcdaOa2i6AhkgjWunBhyLDnE8YyNMdfMx+JTxTDwBFtQ9lcIJGv5g3kkv+CMlgUho4VVXDX3N4gOffKov8aCpnbiMWcIiw/ySWm9KRIORUP7STLB0l/3xBQg87efJJr2CzmL+1eeoi251u/WgE5lYCk8SJ9YJw5CStpQ4DOaqs9nak0P5XsHgDoSG7qEpg45AshHyWXxNjC9RglWZhUN0F1sRRMamsNHyeleSSlVsJ+3wpFf5RtfBfVp5jPVfsBnyp/eaR6vVi302BIe0DmLxo1ErIELoRrWOc6Fj5jUGH9Fb9NUKpL4NQ/uYjkuzM3atg99m40rQazQazHO9YuCRiHzbnnyW4HmKW5+amUahjrOQlKNeVysir/UUOQI/ItAL/KrJpUw8QLPhuTgpbF4ipRQpzCTY3BVP5tA/kidad3WtXytBflqyMu+8C20bLjBTF5HHOschZf9VD3LLWc2Iwcmf9p7BhnTvJ3Bbkz6G8uUYV02aGAOXB6jhDSVG0oy83+8XB9cCmZgEZ7w
+DKIM-Signature: a=rsa-sha256; bh=XYgVBuyYi9N94zM63IBowhoTyX0aUBn+eLSVrFzd4+o=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1783503208; v=1;
+ b=TyIoHaKKidENo34RyLf+7Vy0jdBxFnj1FjK4jYM7sSsbtXhDEMn/HZUNmWK3PkUmHRnW9VX2
+ 7hd2cBXXkSrUpSMpZB3YxjA952HIdW+wFNK+DCdaqgiEQ1PhRt/lrf+/F/2MXwBAAKGTzKbqZId
+ fcWsUHICun1p1GfxfukLR1Xb+3KawKd8nr/J1hUSH+9zf3qZBNrXvsdYFCHlowp2GNbb1u+hyLN
+ gYcJehGAeXKGRcmGlHCz5+u9vnPif0omH6u8SpzCChp/LgBw6TrAxK1LM/2SxkkG7EKUlcCED/L
+ 2c4sOVQHd0M2M7/H+LFg6B/nuaLPzt9J2DMrVO5W9rDEg==
+Received-SPF: pass client-ip=46.105.34.251; envelope-from=clg@kaod.org;
+ helo=smtpout1.mo528.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,28 +137,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 7 Jul 2026 at 18:27, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 7/6/26 02:21, Peter Maydell wrote:
-> > No other architecture, CPU or board in QEMU needs to do this,
-> > so my instinct is to say that M-profile should not be special here.
-> > Richard, Alex: how do we usually handle breakpoint insns for the
-> > gdbstub ?
->
-> We handle them via CPUBreakpoint structures; we never inject code changes.
+On 7/7/26 11:44, Emmanuel Blot wrote:
+> Verify the ADC128D818 on the Anacapa R-PDB (i2c8 mux channel 0): two
+> channels are driven with distinct voltages and each is checked to be
+> reported back independently through the kernel hwmon interface, and the
+> channel 0 limit registers are validated.
+> 
+> Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
+> ---
+>   tests/functional/arm/test_aspeed_anacapa.py | 68 +++++++++++++++++++--
+>   1 file changed, 62 insertions(+), 6 deletions(-)
+> 
+> diff --git a/tests/functional/arm/test_aspeed_anacapa.py b/tests/functional/arm/test_aspeed_anacapa.py
+> index 27f8bd8b56..bc227baa22 100644
+> --- a/tests/functional/arm/test_aspeed_anacapa.py
+> +++ b/tests/functional/arm/test_aspeed_anacapa.py
+> @@ -2,24 +2,80 @@
+>   #
+>   # Functional test that boots the ASPEED machines
+>   #
+> +# Copyright (c) 2026 Meta Platforms, Inc. and affiliates.
+> +#
+>   # SPDX-License-Identifier: GPL-2.0-or-later
+>   
+> +import re
+> +import time
+> +
+>   from qemu_test import Asset
+> +from qemu_test import exec_command_and_wait_for_pattern
+>   from aspeed import FacebookAspeedTest
+>   
+>   
+>   class AnacapaMachine(FacebookAspeedTest):
+>   
+>       ASSET_ANACAPA_FLASH = Asset(
+> -        'https://github.com/legoater/qemu-aspeed-boot/raw/3fa3212827b04be4034d43b5adeef57c27d6ab18/images/anacapa-bmc/openbmc-20260512025228/obmc-phosphor-image-anacapa-20260512025228.static.mtd.xz',
+> -        '2232e241abcfb6d4f6b82cb6c378ce5ce05e364aac6d118785c2b6cc33fe43f3')
+> +        "https://github.com/legoater/qemu-aspeed-boot/raw/c5f585f9f57843c0dc95e3865a57d92ec39cbb0b/images/anacapa-bmc/openbmc-20260616025349/obmc-phosphor-image-anacapa-20260616025349.static.mtd.xz",
+> +        "de3841fb6ed3085aec6424358ee6efc4b8ee85688361e5aa1987fd1acb7d3fb4",
+> +    )
+> +
+> +    ADC128D818_QOM_PATH = \
+> +        "/machine/soc/i2c/bus[8]/aspeed.i2c.bus.8/0x72/i2c.0/0x1f"
+> +    ADC128D818_MUX_CHANNEL = "/sys/bus/i2c/devices/8-0072/channel-0"
+> +    PROMPT = "root@anacapa:~#"
+>   
+>       def test_arm_ast2600_anacapa_openbmc(self):
+>           image_path = self.uncompress(self.ASSET_ANACAPA_FLASH)
+>   
+> -        self.do_test_arm_aspeed_openbmc('anacapa-bmc', image=image_path,
+> -                                        uboot='2019.04', cpu_id='0xf00',
+> -                                        soc='AST2600 rev A3')
+> +        self.do_test_arm_aspeed_openbmc(
+> +            "anacapa-bmc",
+> +            image=image_path,
+> +            uboot="2019.04",
+> +            cpu_id="0xf00",
+> +            soc="AST2600 rev A3",
+> +        )
+>   
+> -if __name__ == '__main__':
+> +        exec_command_and_wait_for_pattern(self, "root", "Password:")
+> +        exec_command_and_wait_for_pattern(self, "0penBmc", "#")
+> +
+> +        self.adc_hwmon = self.resolve_adc128d818_hwmon()
+> +        self.assertIn(b"adc128d818", self.read_adc128d818("name"))
+> +
+> +        adc = self.ADC128D818_QOM_PATH
+> +        for ch0_mv, ch1_mv in ((108, 2000), (1280, 500)):
+> +            self.vm.cmd("qom-set", path=adc, property="ain0", value=ch0_mv)
+> +            self.vm.cmd("qom-set", path=adc, property="ain1", value=ch1_mv)
+> +            self.wait_adc128d818_value("in0_input", ch0_mv)
+> +            self.wait_adc128d818_value("in1_input", ch1_mv)
+> +
+> +        self.assertIn(b"2551", self.read_adc128d818("in0_max"))
+> +        self.assertRegex(self.read_adc128d818("in0_min"), rb"(?m)^0\r*$")
+> +
+> +    def resolve_adc128d818_hwmon(self):
+> +        out = self.read_adc128d818_console(
+> +            f"basename $(readlink {self.ADC128D818_MUX_CHANNEL})"
+> +        )
+> +        match = re.search(rb"i2c-(\d+)", out)
+> +        self.assertIsNotNone(match, "could not resolve ADC128D818 i2c bus")
+> +        bus = int(match.group(1))
+> +        return f"/sys/bus/i2c/devices/{bus}-001f/hwmon/hwmon*"
+> +
+> +    def read_adc128d818_console(self, command):
+> +        return exec_command_and_wait_for_pattern(self, command, self.PROMPT)
+> +
+> +    def read_adc128d818(self, attr):
+> +        return self.read_adc128d818_console(f"cat {self.adc_hwmon}/{attr}")
+> +
+> +    def wait_adc128d818_value(self, attr, expected):
+> +        needle = str(expected).encode()
+> +        if needle in self.read_adc128d818(attr):
+> +            return
+> +        time.sleep(2)
+> +        if needle not in self.read_adc128d818(attr):
+> +            self.fail(f"{attr} did not reach {expected}")
+> +
+> +
+> +if __name__ == "__main__":
+>       FacebookAspeedTest.main()
 
-I don't mean "breakpoints that the gdbstub requests", I mean
-"breakpoint insns that are already in the guest code that get
-executed".
+Functional test fails :
 
-> The patch description explains the confusion: this is attempting to replicate a feature of
-> the Raspberry Pi Pico SDK, wherein a guest BPKT really is trapped by an external debugger.
+   $ ./pyvenv/bin/meson test --suite thorough func-arm-aspeed_anacapa
+   ninja: Entering directory `/home/legoater/work/qemu/qemu-aspeed.git/build'
+   [1/6] Generating qemu-version.h with a custom command (wrapped by meson to capture output)
+   1/1 qemu:func-thorough+func-arm-thorough+thorough / func-arm-aspeed_anacapa        ERROR           99.49s   exit status 1
+   
+   $ cat  tests/functional/arm/test_aspeed_anacapa.AnacapaMachine.test_arm_ast2600_anacapa_openbmc/base.log
+   ...
+   2026-07-08 11:29:31,385 - DEBUG: qemu-test._console_interaction Console interaction: success_msg='root@anacapa:~#' failure_msg='None' send_string='basename $(readlink /sys/bus/i'c/devices/8-0072/channel-0)
+   ...
+   
+   $ tail  -3  tests/functional/arm/test_aspeed_anacapa.AnacapaMachine.test_arm_ast2600_anacapa_openbmc/console.log
+   2026-07-08 11:29:31,398: basename $(readlink /sys/bus/i2c/devices/8-0072/channel-0)
+   2026-07-08 11:29:31,431: i2c-32
+   2026-07-08 11:29:31,434: root@anacapa:~#
+   
 
-But aren't breakpoint instructions of all kinds typically trapped
-to the external jtag debugger, on any architecture ? I'm a bit
-surprised that we don't do this already.
+Thanks,
 
-thanks
--- PMM
+C.
 
