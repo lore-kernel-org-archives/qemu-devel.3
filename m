@@ -4,120 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E56CC43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 14:57:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA46FC43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 14:59:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whTiK-0002G5-Vs; Wed, 08 Jul 2026 10:57:29 -0400
+	id 1whTjf-0003CJ-Cc; Wed, 08 Jul 2026 10:58:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1whTiJ-00029P-BB; Wed, 08 Jul 2026 10:57:27 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1whTiH-0002q2-Nm; Wed, 08 Jul 2026 10:57:27 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 668CIFBL3748051; Wed, 8 Jul 2026 14:57:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=edffyY4BVBzPyErgozeepHL7BRVr1M7UBTLXj0fNOl0=; b=iP52u5arLmJf
- rjb+srLFR+eEKaqb2W2BzvzXHVwwJsqwpdn/1TPAW7F7EIRezQVjohpseW6TFr/g
- fyoezr3DjCzCdyxV7+fquTHnQs8BMoBy/rObRb/vBo2iq9yImeOuyHXFI3gmeJBt
- W3PvKA1lv7NjlVXEdkXjvnar7qy/VG4oUXsS5uXxDcRNGxYY+IU4BHojcVHoB2KB
- tARL4yEoCiEjMgGdt/hfQEdMZz2Vf1loz2uiEFbb+i+X7zk5rlyiYH8HZQL9Qwl8
- wjR037RKG+xPb7PJcdZ+1jfW+cJr0I9chG286eBBDpsQw8r8RAlF2yFlVcsKXTpX
- 3pv1q+vvbQ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6suqvp6f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 08 Jul 2026 14:57:21 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 668EYhtR000722;
- Wed, 8 Jul 2026 14:57:20 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7eqg89rx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 08 Jul 2026 14:57:20 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 668EvJnb33424088
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 8 Jul 2026 14:57:19 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 15E985805B;
- Wed,  8 Jul 2026 14:57:19 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CD2B058058;
- Wed,  8 Jul 2026 14:57:17 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  8 Jul 2026 14:57:17 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1whTje-00034a-94
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 10:58:50 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1whTjb-0002yL-Gy
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 10:58:49 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-493e4cccd8dso3468255e9.2
+ for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 07:58:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1783522724; x=1784127524; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=4/76z9AwZCGlFXWRWhxdwp80YrRiItouGyhJLAV+VU0=;
+ b=j6j2RioPgfZKtyv5mNUP9jTMWe47mmeLpArO0YW1fVqi0JJzHsRUXcly309E6ef3yy
+ f69wNdj2stwC9wJAB+jHbY0TlvskfR7y2Uw+Ku6cvtsX+YZDZlCskQjhPX5T27PSNcEV
+ hHi+oPEOz+5GzIPqBu8m2Re5Cj4o0VM9W6tJ0hCd4swPLaO+24Z7D80sZS4UWyg7zTSJ
+ a7NVezaIf0wm2/TupqaZzJ3kiWflVDoMopD30cTMrqdYVBgJ2wHrpTakWNf98+THwlts
+ qbj+fXbUQeApr5c0CkHZjfk7nuf/yiRbFBy4t7QFALw7xMwOPbt2Jn9e2xoF2DK7iTFU
+ c0EQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783522724; x=1784127524;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=4/76z9AwZCGlFXWRWhxdwp80YrRiItouGyhJLAV+VU0=;
+ b=tKfohqvilva5WHnKEsI9FLMxoLV1IUT3QQfnQ7O8JVkCypP0MekPi/i87K4g5YWGT4
+ yaGzvGj2mOF9rGIOiMVFpQvOc6ikIHtYJ2KDNx7PVpkvE+pC/rcGHgrAf4+9JlugJFYt
+ fK2wD2Hr5ZQZs2es7Ld6ONGwklFyLE/72RbaY0Qur3aFVd8ZNSnCYdKifvYjPvq4yKem
+ 315ctdVPyqta2RV6NWOMqPj3m82yOwlCfaXB9DqPWyFW03APUqUQK/CqKY+5LiMe6ZAY
+ nmzIzJ6jrVRE4hB/yqSj+MMwNC5lJeWNZozJvIpbAVEIvxVxd7F6ZZGTUrdAar4pBW1Y
+ sVfw==
+X-Gm-Message-State: AOJu0Yy28Kp4kllEa5hUANWzWrDW7mOzMYJUm7+awD+Xa5cJlsi/ClNB
+ Zpuc2ih3HUlXTz/1N/jMQtUqn8MYVDsAnBfTa7cYakM3bA2jKP/iigpiHpgLrhHEMjQ=
+X-Gm-Gg: AfdE7cmj9Y3nrUmo/EI86xNa6ms0BUhddEbck99Bi9EG8in+V1nFlUszMFO+McwBwVq
+ NpIWdpVFqMd1gAgDWUT9F8QUJQQwafIvsg9F8Bjz17kAerRQPO+R6HkTiXJRtTY67VsIgkvFhpj
+ bShs3nGcExlgVBGI4tdAKa6l0zHqyC39Y8DT8LmQ2BvJgciQhr8m0wn3HieL1a1mYjvpz2pbQfq
+ 6Rg9NfKKQn4B2zBiUnidkhlNarfqLSIpMwM+SslAs9YnKX9QgLOIVdztusZvgvgJHKuXNH84xry
+ TP2EtPqwWpIg3M/DR5SVzwLI87TLMEfw2Zn1e62YlIBBU6j2XdvR/+ugMILVOf/kWoeaW99RJIe
+ YTL2QWCaW7csjCUNkM9QQqHSexX4Uk5tNXXXfqYZasNt2/rlYNDoV/qxtdcRTNu5UNiQGnTmuEK
+ 5b6HcHjxq/XFJ9
+X-Received: by 2002:a05:600c:1f8e:b0:493:c337:db18 with SMTP id
+ 5b1f17b1804b1-493e68a7496mr27226005e9.16.1783522723562; 
+ Wed, 08 Jul 2026 07:58:43 -0700 (PDT)
+Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493e54a25cfsm77596105e9.0.2026.07.08.07.58.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 08 Jul 2026 07:58:42 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id CF5985F8F3;
+ Wed, 08 Jul 2026 15:58:41 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH 0/8] More Arm FEAT_FOO documentation updates
+Date: Wed,  8 Jul 2026 15:58:33 +0100
+Message-ID: <20260708145841.3032079-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Date: Wed, 08 Jul 2026 16:57:17 +0200
-From: Harald Freudenberger <freude@linux.ibm.com>
-To: Cornelia Huck <cohuck@redhat.com>
-Cc: Michael Tokarev <mjt@tls.msk.ru>, richard.henderson@linaro.org,
- iii@linux.ibm.com, david@kernel.org, thuth@redhat.com,
- berrange@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- linux-s390@vger.kernel.org, dengler@linux.ibm.com,
- borntraeger@linux.ibm.com, fcallies@linux.ibm.com,
- qemu-stable <qemu-stable@nongnu.org>, =?UTF-8?Q?Philippe_Mathieu-Daud?=
- =?UTF-8?Q?=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: Re: [PATCH v11 01/21] target/s390x: Fix wrong address handling in
- address loops
-Mail-Reply-To: freude@linux.ibm.com
-In-Reply-To: <87zf01in2z.fsf@redhat.com>
-References: <20260707161815.40919-1-freude@linux.ibm.com>
- <20260707161815.40919-2-freude@linux.ibm.com>
- <3e31b38c-0561-4f37-b2c4-97c10e6f232f@tls.msk.ru>
- <d5436f34-5489-4335-bf83-74b924e04140@tls.msk.ru>
- <a38386d1eb7c0809e62a4e3399f8ea0e@linux.ibm.com> <87zf01in2z.fsf@redhat.com>
-Message-ID: <cbd3f1f1757c0b7740c20cecefc8ccfd@linux.ibm.com>
-X-Sender: freude@linux.ibm.com
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA4MDE0NiBTYWx0ZWRfXzYC1ynE9a3S8
- L9lPqWbAfN5M7vEm7NL3Wet89ckVnzhUu0/sZJ2apgrdSODQg0KXLXxXRtx102/dS5OT6ngc2m5
- /O2SkK7lrL+1RLtpCNhElF8ye6KffhM=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA4MDE0NiBTYWx0ZWRfX+qmtPtVO/hba
- oH8pVRDGFa0FEn8+3fFZC07TV/MQdejsjXE635DnUI8hE4VvexmwLWJV6f7j4LmXlY3YtTO3F/2
- uido9Z3xY4x5LbYoKu7nRsg+RCJfJ+pn+RemNoFQ3hcf+N+yB9C+xu0ziNVUGWx3EMMHjznZScJ
- BhAjZEil7A9TUg+RX7Eyo+IDd/62OL6A8r+Z8u+eBDVMfSyZlhp0DhakQy276Ct/zJ22cOIGyzp
- Dg079g1M8+m8m/09MNDv8vkUZbLQfTXRlTb8S2hxBKlFkNyBS+JyBZNfK9sj/aEby+H1o38bZZD
- RQtyynU0TmRo1DWbMw40v/JzxOQ5oJFCjsuCYDwFVIYP81ncUr6KM69WKO1M+dvl1qd6DVUlC08
- UNEB4LhNny6VExRIhljCwwbrxkWqCOEgYIxvGtsZW9XPWqcAD1Hbpv9D09/+8X4FyajmA/RVDJL
- +0MTGPAwXjLFdYSUUqg==
-X-Proofpoint-GUID: _EoQ-jtAyxmpSdE_E8QgQCFwXOH_W0eR
-X-Authority-Analysis: v=2.4 cv=Oot/DS/t c=1 sm=1 tr=0 ts=6a4e6551 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=iL7ffvFh4Ipb49WVzmgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: _EoQ-jtAyxmpSdE_E8QgQCFwXOH_W0eR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-08_02,2026-07-08_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0 phishscore=0
- malwarescore=0 suspectscore=0 spamscore=0 adultscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607080146
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=freude@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -131,55 +98,33 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: freude@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-07-08 16:16, Cornelia Huck wrote:
-> On Wed, Jul 08 2026, Harald Freudenberger <freude@linux.ibm.com> wrote:
-> 
->> On 2026-07-08 13:18, Michael Tokarev wrote:
->>> On 08.07.2026 13:37, Michael Tokarev wrote:
->>>> On 07.07.2026 19:17, Harald Freudenberger wrote:
->>>>> The loop increments addr by the element stride (+= 4) before 
->>>>> calling
->>>>> wrap_address, but then overwrites the loop addr with the wrapped
->>>>> value. On the next iteration the stride is applied to the wrapped
->>>>> address of the previous element, not to the original unwrapped
->>>>> address. This results in every element after the first is read from 
->>>>> a
->>>>> wrong (wrapped) address.
->>>>> 
->>>>> Fixes: 9f17bfdab4 ("target/s390x: support SHA-512 extensions")
->>>>> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
->>>>> ---
->>>>>   target/s390x/tcg/crypto_helper.c | 12 ++++--------
->>>>>   1 file changed, 4 insertions(+), 8 deletions(-)
->>>> 
->>>> This feels like qemu-stable material.
->>>> I'm picking this change up for currently active stable qemu series.
->>>> Please let me know if I shouldn't.
->>> 
->>> Um, this was a bit premature.
->>> 
->>> This particular commit requires a previous commit in this area,
->>> de96db79 "target/s390x: Compile crypto_helper.c as common unit".
->>> It's easy to back-port across, but since this change ("Fix wrong
->>> address handling...") hasn't been marked as for-stable, I'm *not*
->>> doing that.  If this change is actually needed in -stable, please
->>> let me know.  Also, is it okay to pick up the previous change
->>> ("compile as common unit") to -stable too, to avoid fixing up
->>> subsequent changes.
->>> 
->>> Thanks,
->>> 
->>> /mjt
->> 
->> Fine with me. However, Connie replied to my v10 series that she
->> wants to pick this patch. However, it is yet not on the qemu
->> master branch.
-> 
-> Should be now, as the s390 update was pulled?
+While reviewing the latest Arm ARM (M.c) I found a few more feature
+names that have been added for old existing features or we forgot to
+update in our emulation list.
 
-Yes, it is on master now.
+These are all documentation updates so should be good for merging
+during softfreeze.
+
+Alex.
+
+Alex Bennée (8):
+  docs/system: declare support for FEAT_EVT2
+  docs/system: add big and little endian features names
+  docs/system: document FEAT_Secure
+  docs/system: document FEAT_MTE4
+  docs/system: document FEAT_IVIPT
+  docs/system: fix sorting of FEAT_S2[PIE|FWB]
+  docs/system: add FEAT_S2TGran[4|16|64]K features
+  docs/system: add FEAT_HAF
+
+ docs/system/arm/emulation.rst | 14 +++++++++++++-
+ target/arm/cpu-max.c          |  2 +-
+ 2 files changed, 14 insertions(+), 2 deletions(-)
+
+-- 
+2.47.3
+
 
