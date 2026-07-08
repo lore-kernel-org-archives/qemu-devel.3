@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51135C43602
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 07:44:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACFF7C43458
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 07:44:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whMwF-0004Zv-H7; Wed, 08 Jul 2026 03:43:23 -0400
+	id 1whMw8-0004Nn-H7; Wed, 08 Jul 2026 03:43:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1whMw4-0004EG-Ex; Wed, 08 Jul 2026 03:43:12 -0400
+ id 1whMvp-0003zJ-3n; Wed, 08 Jul 2026 03:42:57 -0400
 Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1whMw2-0004ox-MV; Wed, 08 Jul 2026 03:43:12 -0400
+ id 1whMvn-0004ox-IV; Wed, 08 Jul 2026 03:42:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1783496591; x=1815032591;
+ t=1783496576; x=1815032576;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=VqnZQ7CrTJfaaaMOjcDnDIF8dHHxULpFm1eDfe3uLj0=;
- b=hnbn2/hvlVjLPpDz888/TVOW+Ui/GTjgcMWTrt6uz+Rb8lFrjxwvwr9c
- XsZenwrpg9QGeqZ2zKc1BfSAZsJVG624pOs3K3VNopFqe+cRUaOae8MVx
- IE/yOifTJtbjPA3cqllRJjM/sFGu17PGXmfyg05fCSBVvNfAUKiCC/KeL
- OH94t8WYI2QvedQlzagYx28eETlNkx7iLk+LAgJRWNljCx02d3FxtGPnG
- RV4nWwV4OGziijaAmUDRilZ78TTdXome0n7lLQP/2QNDLqqyQJ/kzZf0x
- 3lAjGjmTrDGtgkYJvFjWEp4Uol+gVXZOeJRQYfO/oD3+dcHFBF6zk0pvc w==;
-X-CSE-ConnectionGUID: 25jVDygBSKGGRK6xH06J2A==
-X-CSE-MsgGUID: WHDB7P+8QyuvolWQrxQdHA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11840"; a="84343314"
-X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; d="scan'208";a="84343314"
+ bh=iU39p6y9+8iUwssZDQG7wjvu6B8h4ifB2KTeCJq8KHU=;
+ b=S3UymKG8klMyD2pnSXkt3V3Crb7iDHOak+MHBODhJvuIvgzGhf5+4Zxs
+ 7bYjZxrk1RIYC6v7PayBZDw/KROEI+JQ12ENy+DXnEof4Pbw7lM/7aVto
+ uRiWTJoJeYZjBSOuo1VUfs8CJxmAuu3Ji3qKx1gFZ6ac4n35hEZSp6K9d
+ +vAasnz6PPZsKdprZm+mFaSinhZsE3w2qb9QArp4tBMQrBy6O7kVIeJtl
+ Wyj8j/uKE9yCWvWsLsHI5Y5D185ntTEcOMmgpFlHcLEzjrul3wAoOI42F
+ Ika4D/U0+jSH6NLtb/EnaFRiAPtinvR2tINEDelLZVYhFosrSBZZrpVkb g==;
+X-CSE-ConnectionGUID: NnQLs9wBTxa/4tfMgX08Zw==
+X-CSE-MsgGUID: R0uN/bChSOyN732pFwaumw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11840"; a="84343254"
+X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; d="scan'208";a="84343254"
 Received: from fmviesa008.fm.intel.com ([10.60.135.148])
  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Jul 2026 00:43:10 -0700
-X-CSE-ConnectionGUID: MOHvCCgVQr2b9OFdD1gm8A==
-X-CSE-MsgGUID: MiiSwpXuReeZtFi26cnlPg==
+ 08 Jul 2026 00:42:54 -0700
+X-CSE-ConnectionGUID: 8DlX7vkMQVaOhNoHiUWf0g==
+X-CSE-MsgGUID: uUU5xOkIRZqjswroCTBqlQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; d="scan'208";a="251555978"
+X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; d="scan'208";a="251555942"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa008.fm.intel.com with ESMTP; 08 Jul 2026 00:43:05 -0700
+ by fmviesa008.fm.intel.com with ESMTP; 08 Jul 2026 00:42:49 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
@@ -57,10 +57,10 @@ Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
  Junjie Mao <junjie.mao@hotmail.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>,
  Chuanxiao Dong <chuanxiao.dong@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC v2 11/26] memory: Rename address_space_lookup_region and expose
- it to Rust
-Date: Wed,  8 Jul 2026 16:10:37 +0800
-Message-Id: <20260708081052.2276617-12-zhao1.liu@intel.com>
+Subject: [RFC v2 07/26] rcu: Add rust wrappers for rcu_read_lock &
+ rcu_read_unlock
+Date: Wed,  8 Jul 2026 16:10:33 +0800
+Message-Id: <20260708081052.2276617-8-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260708081052.2276617-1-zhao1.liu@intel.com>
 References: <20260708081052.2276617-1-zhao1.liu@intel.com>
@@ -90,82 +90,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-address_space_lookup_region() returns a pointer to a
-MemoryRegionSection instead of a MemoryRegion. Therefore, rename
-it to address_space_lookup_section().
+Add rust wrappers for rcu_read_lock & rcu_read_unlock, then bindgen
+could generate the bindings.
 
-Add its declaration to memory.h so that bindgen can generate
-bindings for it.
-
-This interface will be used to implement GuestMemory::find_region()
-in the vm_memory crate.
-
-In addition, add its documentation in memory.h.
-
+Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- include/system/memory.h | 21 +++++++++++++++++++++
- system/physmem.c        |  8 ++++----
- 2 files changed, 25 insertions(+), 4 deletions(-)
+Changes since v1:
+ * Add rust wrappers instead of dropping inline.
+---
+ include/qemu/rcu.h | 18 ++++++++++++++++++
+ util/rcu.c         | 10 ++++++++++
+ 2 files changed, 28 insertions(+)
 
-diff --git a/include/system/memory.h b/include/system/memory.h
-index bf5bfa7164fb..c32e3d01f825 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -948,6 +948,27 @@ static inline FlatView *address_space_to_flatview(const AddressSpace *as)
-     return qatomic_rcu_read(&as->current_map);
+diff --git a/include/qemu/rcu.h b/include/qemu/rcu.h
+index 020dbe4d8b77..126ec52ba38f 100644
+--- a/include/qemu/rcu.h
++++ b/include/qemu/rcu.h
+@@ -118,6 +118,24 @@ static inline void rcu_read_unlock(void)
+     }
  }
  
 +/**
-+ * address_space_lookup_section: Find the MemoryRegionSection within a
-+ * given #AddressSpaceDispatch.
++ * rust_rcu_read_lock:
 + *
-+ * @d: The AddressSpaceDispatch to search within.
-+ * @addr: The address to look up.
-+ * @resolve_subpage: If 'true', resolve to a subpage section if the
-+ * region is a subpage container.
-+ *
-+ * This function translates an address (@addr) into its corresponding
-+ * #MemoryRegionSection within a given address space dispatch (@d).
-+ * Must be called within an RCU critical section.
-+ *
-+ * Returns:
-+ * A pointer to the #MemoryRegionSection. If the address is not
-+ * mapped, this will be a pointer to the 'unassigned' section.
++ * A wrapper over rcu_read_lock().
++ * Called from Rust to acquire an RCU read lock.
++ * Do not touch.
 + */
-+MemoryRegionSection *address_space_lookup_section(AddressSpaceDispatch *d,
-+                                                  hwaddr addr,
-+                                                  bool resolve_subpage);
++void rust_rcu_read_lock(void);
 +
- /**
-  * flatview_ref: Atomically increment the reference count of a #FlatView.
-  *
-diff --git a/system/physmem.c b/system/physmem.c
-index c21ea929153e..f807e60aa348 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -342,9 +342,9 @@ static MemoryRegionSection *phys_page_find(AddressSpaceDispatch *d, hwaddr addr)
++/**
++ * rust_rcu_read_unlock:
++ *
++ * A wrapper over rcu_read_unlock().
++ * Called from Rust to release an RCU read lock.
++ * Do not touch.
++ */
++void rust_rcu_read_unlock(void);
++
+ void synchronize_rcu(void);
+ 
+ /*
+diff --git a/util/rcu.c b/util/rcu.c
+index acac9446ea98..e9ba2c57bce6 100644
+--- a/util/rcu.c
++++ b/util/rcu.c
+@@ -171,6 +171,16 @@ static void wait_for_readers(void)
+     QLIST_SWAP(&registry, &qsreaders, node);
  }
  
- /* Called from RCU critical section */
--static MemoryRegionSection *address_space_lookup_region(AddressSpaceDispatch *d,
--                                                        hwaddr addr,
--                                                        bool resolve_subpage)
-+MemoryRegionSection *address_space_lookup_section(AddressSpaceDispatch *d,
-+                                                  hwaddr addr,
-+                                                  bool resolve_subpage)
++void rust_rcu_read_lock(void)
++{
++    rcu_read_lock();
++}
++
++void rust_rcu_read_unlock(void)
++{
++    rcu_read_unlock();
++}
++
+ void synchronize_rcu(void)
  {
-     MemoryRegionSection *section = qatomic_read(&d->mru_section);
-     subpage_t *subpage;
-@@ -370,7 +370,7 @@ address_space_translate_internal(AddressSpaceDispatch *d, hwaddr addr, hwaddr *x
-     MemoryRegion *mr;
-     Int128 diff;
- 
--    section = address_space_lookup_region(d, addr, resolve_subpage);
-+    section = address_space_lookup_section(d, addr, resolve_subpage);
-     /* Compute offset within MemoryRegionSection */
-     addr -= section->offset_within_address_space;
- 
+     QEMU_LOCK_GUARD(&rcu_sync_lock);
 -- 
 2.34.1
 
