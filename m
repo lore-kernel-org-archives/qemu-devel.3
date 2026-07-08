@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB816C43458
-	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 07:43:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E685C44503
+	for <qemu-devel@archiver.kernel.org>; Wed,  8 Jul 2026 07:43:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whMvz-00045K-F7; Wed, 08 Jul 2026 03:43:07 -0400
+	id 1whMw0-00045O-3d; Wed, 08 Jul 2026 03:43:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1whMvT-0003lF-Ga; Wed, 08 Jul 2026 03:42:35 -0400
+ id 1whMvZ-0003tH-3P; Wed, 08 Jul 2026 03:42:41 -0400
 Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1whMvQ-0004RW-DN; Wed, 08 Jul 2026 03:42:34 -0400
+ id 1whMvW-0004UJ-LV; Wed, 08 Jul 2026 03:42:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1783496553; x=1815032553;
+ t=1783496559; x=1815032559;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=BI6TOgdFhQ54fWSeUs+UOy7AvxWy1MB55cs1Y1rdGKI=;
- b=hsceRZZcbx69MKJJQPFH6JtQ0RNBzrh7czpc6lpqTIToqDiTCy7tI4U9
- rJbtUEFOM61OuiYofXcc41JlLB/vIVOeJoBoCWmubAJjhXdd8uvj/Sue0
- mzDTUvsYfhPFe8mCzAPzYspjWNSIfC/MqozFkwxm5Njddt0JlGi+95Fvx
- sBB+2Ccw2YEAAnqCbSDuihJQcmB80jnH6YyT3GN3i72hcDlm9VLyTwSY9
- nWXJcPI5S9d3UuX7XGM2mAKh8H/iRSkq4J/duaHAutDnTt1DhkZsXsH0e
- 0UJD74uCsqXHuRAN78NeGUkmyDsmtcyYOgKaKoi2QeiJz6aVq069PJHqk g==;
-X-CSE-ConnectionGUID: XnbpI5pQSE+e8YipVywfgw==
-X-CSE-MsgGUID: azNXajVSRwO1MqGGDatfCw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11840"; a="84343183"
-X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; d="scan'208";a="84343183"
+ bh=EJsxws4yFvbKYlREJ5MdL8C6I0Dx6ZflapaTgDMsgJs=;
+ b=TnVt7Q4ZKGbTzrwbUdsE9g5P62ENqGutACjKLZzHgxvUtUBxo/hGwaev
+ DecvsRQNih7QkER4doXYTeQS+rbwEI5pnY13bWCz0bsWp3rikp+x/i66f
+ wsx8YTV526GqS0ad39qhwTKeXSzE2JuRjozCzXB2oM3JmDnU2DU113hXp
+ AuRdzWT+GCS1y+RZ9ugVyCCF8Z6ihQ+Ckph9oKGDnMIk4L0w9vowYGKkO
+ ImHHQ8YvgDL03cWvNsktcgzLezUjcO+8eWvs96hXuuvUtsNmPP/qpy77w
+ u9DkbbTEb5IMHcJofHaoZ0/DcUh+a/DUxcAg7xY4Xca+ZrYdt2e8IIvxV Q==;
+X-CSE-ConnectionGUID: maKVqEcOQcSWQ3Yj310RvA==
+X-CSE-MsgGUID: jO374/lwQX6caFz2pfSrWA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11840"; a="84343214"
+X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; d="scan'208";a="84343214"
 Received: from fmviesa008.fm.intel.com ([10.60.135.148])
  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Jul 2026 00:42:29 -0700
-X-CSE-ConnectionGUID: hTd4+yO7RW+6EzhJgLUkBg==
-X-CSE-MsgGUID: 8GUVoGb2QeWSettsoaKp9g==
+ 08 Jul 2026 00:42:37 -0700
+X-CSE-ConnectionGUID: 7KXKxiDhS0mTtKJlsvKG1g==
+X-CSE-MsgGUID: BnhpTA1kSA24zktb48Nj7g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; d="scan'208";a="251555894"
+X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; d="scan'208";a="251555916"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa008.fm.intel.com with ESMTP; 08 Jul 2026 00:42:25 -0700
+ by fmviesa008.fm.intel.com with ESMTP; 08 Jul 2026 00:42:33 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
@@ -57,9 +57,9 @@ Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
  Junjie Mao <junjie.mao@hotmail.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>,
  Chuanxiao Dong <chuanxiao.dong@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC v2 01/26] rust/hpet: Fix the error caused by vm-memory
-Date: Wed,  8 Jul 2026 16:10:27 +0800
-Message-Id: <20260708081052.2276617-2-zhao1.liu@intel.com>
+Subject: [RFC v2 03/26] subprojects: Add thiserror-impl crate
+Date: Wed,  8 Jul 2026 16:10:29 +0800
+Message-Id: <20260708081052.2276617-4-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260708081052.2276617-1-zhao1.liu@intel.com>
 References: <20260708081052.2276617-1-zhao1.liu@intel.com>
@@ -89,48 +89,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-error[E0283]: type annotations needed
-   --> hw/timer/hpet/src/device.rs:884:55
-    |
-884 |         self.num_timers == self.num_timers_save.get().into()
-    |                         --                            ^^^^
-    |                         |
-    |                         type must be known at this point
-    |
-    = note: multiple `impl`s satisfying `usize: PartialEq<_>` found in the following crates: `core`, `vm_memory`:
-            - impl PartialEq<vm_memory::endian::BeSize> for usize;
-            - impl PartialEq<vm_memory::endian::LeSize> for usize;
-            - impl<host> PartialEq for usize
-              where the constant `host` has type `bool`;
-help: try using a fully qualified path to specify the expected types
-    |
-884 |         self.num_timers == <u8 as Into<T>>::into(self.num_timers_save.get())
-    |                            ++++++++++++++++++++++                          ~
-
-For more information about this error, try `rustc --explain E0283`.
-error: could not compile `hpet` (lib) due to 1 previous error
+Use thiserror-impl-1 v1.0.65 for QEMU.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-Changes since v1:
- * Use From instead of Into.
----
- rust/hw/timer/hpet/src/device.rs | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/archive-source.sh                     |  1 +
+ scripts/make-release                          |  2 +-
+ subprojects/.gitignore                        |  1 +
+ .../thiserror-impl-1-rs/meson.build           | 41 +++++++++++++++++++
+ subprojects/thiserror-impl-1-rs.wrap          | 10 +++++
+ 5 files changed, 54 insertions(+), 1 deletion(-)
+ create mode 100644 subprojects/packagefiles/thiserror-impl-1-rs/meson.build
+ create mode 100644 subprojects/thiserror-impl-1-rs.wrap
 
-diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index ec0bca4496de..7c60cc0f10ab 100644
---- a/rust/hw/timer/hpet/src/device.rs
-+++ b/rust/hw/timer/hpet/src/device.rs
-@@ -959,7 +959,7 @@ fn is_offset_needed(&self) -> bool {
-     }
+diff --git a/scripts/archive-source.sh b/scripts/archive-source.sh
+index a37acab524e0..b7f678872036 100755
+--- a/scripts/archive-source.sh
++++ b/scripts/archive-source.sh
+@@ -47,6 +47,7 @@ subprojects=(
+   proc-macro2-1-rs
+   quote-1-rs
+   syn-2-rs
++  thiserror-impl-1-rs
+   unicode-ident-1-rs
+ )
+ sub_deinit=""
+diff --git a/scripts/make-release b/scripts/make-release
+index 5f54b0e7939d..0f33522f39ba 100755
+--- a/scripts/make-release
++++ b/scripts/make-release
+@@ -44,7 +44,7 @@ SUBPROJECTS="libvfio-user keycodemapdb berkeley-softfloat-3
+   bilge-impl-0.2-rs either-1-rs foreign-0.3-rs itertools-0.11-rs
+   libc-0.2-rs probe-0.5-rs proc-macro2-1-rs
+   proc-macro-error-1-rs proc-macro-error-attr-1-rs quote-1-rs
+-  syn-2-rs unicode-ident-1-rs"
++  syn-2-rs thiserror-impl-1-rs unicode-ident-1-rs"
  
-     fn validate_num_timers(&self, _version_id: u8) -> bool {
--        self.num_timers == self.num_timers_save.get().into()
-+        self.num_timers == usize::from(self.num_timers_save.get())
-     }
- }
+ src="$1"
+ version="$2"
+diff --git a/subprojects/.gitignore b/subprojects/.gitignore
+index 011ce4dc3b77..816bc67111c9 100644
+--- a/subprojects/.gitignore
++++ b/subprojects/.gitignore
+@@ -22,6 +22,7 @@
+ /proc-macro*
+ /quote-*
+ /syn-*
++/thiserror-impl-*
+ /unicode-ident-*
  
+ # Workaround for Meson v1.9.0 https://github.com/mesonbuild/meson/issues/14948
+diff --git a/subprojects/packagefiles/thiserror-impl-1-rs/meson.build b/subprojects/packagefiles/thiserror-impl-1-rs/meson.build
+new file mode 100644
+index 000000000000..cc5546264035
+--- /dev/null
++++ b/subprojects/packagefiles/thiserror-impl-1-rs/meson.build
+@@ -0,0 +1,41 @@
++project('thiserror-impl-1-rs', 'rust',
++ meson_version: '>=1.5.0',
++ version: '1.0.65',
++ license: 'MIT OR Apache-2.0',
++ default_options: [])
++
++subproject('quote-1-rs', required: true)
++subproject('syn-2-rs', required: true)
++subproject('proc-macro2-1-rs', required: true)
++
++quote_dep = dependency('quote-1-rs', native: true)
++syn_dep = dependency('syn-2-rs', native: true)
++proc_macro2_dep = dependency('proc-macro2-1-rs', native: true)
++
++rust = import('rust')
++
++_thiserror_impl_rs = rust.proc_macro(
++  'thiserror_impl',
++  files('src/lib.rs'),
++  override_options: ['rust_std=2021', 'build.rust_std=2021'],
++  rust_args: [
++    '--cfg', 'feature="proc-macro"',
++    '--cfg', 'feature="clone-impls"',
++    '--cfg', 'feature="derive"',
++    '--cfg', 'feature="extra-traits"',
++    '--cfg', 'feature="full"',
++    '--cfg', 'feature="parsing"',
++    '--cfg', 'feature="printing"',
++  ],
++  dependencies: [
++    quote_dep,
++    syn_dep,
++    proc_macro2_dep
++  ],
++)
++
++thiserror_impl_dep = declare_dependency(
++  link_with: _thiserror_impl_rs,
++)
++
++meson.override_dependency('thiserror-impl-1-rs', thiserror_impl_dep)
+diff --git a/subprojects/thiserror-impl-1-rs.wrap b/subprojects/thiserror-impl-1-rs.wrap
+new file mode 100644
+index 000000000000..0f2ca85b8590
+--- /dev/null
++++ b/subprojects/thiserror-impl-1-rs.wrap
+@@ -0,0 +1,10 @@
++[wrap-file]
++directory = thiserror-impl-1.0.65
++source_url = https://crates.io/api/v1/crates/thiserror-impl/1.0.65/download
++source_filename = thiserror-impl-1.0.65.tar.gz
++source_hash = ae71770322cbd277e69d762a16c444af02aa0575ac0d174f0b9562d3b37f8602
++#method = cargo
++patch_directory = thiserror-impl-1-rs
++
++# bump this version number on every change to meson.build or the patches:
++# v2
 -- 
 2.34.1
 
