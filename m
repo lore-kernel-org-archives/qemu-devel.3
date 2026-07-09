@@ -4,83 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A7A8C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 14:03:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A61B2C44501
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 14:06:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whpKs-0005Iz-6C; Thu, 09 Jul 2026 10:02:42 -0400
+	id 1whpOT-0006kF-B8; Thu, 09 Jul 2026 10:06:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1whpKm-0005Hm-9z
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 10:02:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1)
+ (envelope-from <a25a3dbb8581c265d5eed2298738c6bfedf9cc38@kylie.crudebyte.com>)
+ id 1whpOS-0006jz-NF; Thu, 09 Jul 2026 10:06:24 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1whpKh-00028r-Ul
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 10:02:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783605750;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=h8WPIi0SgceB10SmalaBhT4PIQYdKlWIgidy8jS1ieY=;
- b=b5TKw9t95Elh1lbX9omGRSDuetWXjD1+5Sw1hP7dEm2sZj3/BaXsDw1n5TmugNKVPVztDh
- 3eAx01r1euyO9EoBPKL8t3UCJcIXjhk+eqHaDFKDZ8OEr6aiwzYukyBAqAfgAse99RMyGP
- vNYu5xub4amgPac9QQUKB5I/cedwcz0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-DOWb8VSFM9uCxO1_k6oj6w-1; Thu,
- 09 Jul 2026 10:02:26 -0400
-X-MC-Unique: DOWb8VSFM9uCxO1_k6oj6w-1
-X-Mimecast-MFC-AGG-ID: DOWb8VSFM9uCxO1_k6oj6w_1783605744
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0517718009D0; Thu,  9 Jul 2026 14:02:24 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.49.59])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7E23136933; Thu,  9 Jul 2026 14:02:18 +0000 (UTC)
-Date: Thu, 9 Jul 2026 15:02:15 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- Jan Kiszka <jan.kiszka@siemens.com>, qemu-arm@nongnu.org,
- BALATON Zoltan <balaton@eik.bme.hu>, qemu-ppc@nongnu.org,
- Huacai Chen <chenhuacai@kernel.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Gerd Hoffmann <kraxel@redhat.com>
-Subject: Re: A few Machines crash when "no default audio driver available"
-Message-ID: <ak-p56pwFPq9omMz@redhat.com>
-References: <87o6gge6b0.fsf@pond.sub.org>
- <CAFEAcA9goRQuxw3VD7AqUOHHTdOXu8MSfCxdQMBviE3QgGD58w@mail.gmail.com>
- <87zf00cn7m.fsf@pond.sub.org> <ak-i1dNY_RrGNHAM@redhat.com>
- <CAFEAcA_=rz22ZqPr77REQa5BJRZVuEkriq-gJ9xGg4E46JPUxQ@mail.gmail.com>
- <CAJ+F1C+BiqriKhDO-vY15z5iQECVarJN-NoemiaW3w93c3EpNg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJ+F1C+BiqriKhDO-vY15z5iQECVarJN-NoemiaW3w93c3EpNg@mail.gmail.com>
-User-Agent: Mutt/2.3.2 (2026-04-26)
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+ (Exim 4.90_1)
+ (envelope-from <a25a3dbb8581c265d5eed2298738c6bfedf9cc38@kylie.crudebyte.com>)
+ id 1whpOP-0003Ei-Dn; Thu, 09 Jul 2026 10:06:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
+ Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
+ Content-Description; bh=5kVAY5lFZkNqOZV7lvL5dd8Ah9g7M/jRqmCC6LpOgYs=; b=dF48X
+ QNKxTvcMfcsuMqCDyrEIYh8KQgK5ezHRhwC5s0t+g8xzmqZptdswz1dHnyqIZDmm9y1JUmbOXsV40
+ zzddeGUZwRCYGDpZwWmKB2NUwh/Hcff9M6/j70ONY2qjFwyHuuzMumc01mE0RPPfIubZHJT+Fy88L
+ 6xpKUkUoUJgCZ/bb6EHjlohbOomUiM/UvcRUZhfnNn3kbCnjsTyTtKyWn7IaC8gsvSyfAoKrwwDDc
+ RChxUZxvHu7EzPWZx1WvBY369l0l5MXiqf/6ZSxUelme2ewwj0sLLNurMBFJDxEDHE8fFApEuNb8Z
+ 8CsVh7CN5/LtGVEDo+vCX3rZGkCCDttodKqf0tCoPu01cRvD3TC31b/7GmbTp/hmJE4cCVDsiOnHn
+ ARI4tnMu/Vf2CnJGgUP+ph+TNFg8txuMsEmRZIAifHuYfcGF653rz5ncwbqgW9PcCIyMa7X5MsPvk
+ k2la925rej202Yb7V6A9bN5iNP4WLzrorB/CW2ZjgApElztTwto7nDyLmGXGajeFwmA6Q6M51MBTb
+ fu0uqhmtkGAHp1Kd0DF2L4RPDSmxn21JX6TGZuMFi3J1gVq6v7Mt9NLhE/YG0Dv0UokuNJKLVrzGp
+ w4zcacIG3Qmz+B0Tf4rlemdLg6W54nQecgWN8JdDdFUerTIbZdtNjORIlk6JDc=;
+Message-ID: <a25a3dbb8581c265d5eed2298738c6bfedf9cc38.1783604079.git.qemu_oss@crudebyte.com>
+In-Reply-To: <cover.1783604079.git.qemu_oss@crudebyte.com>
+References: <cover.1783604079.git.qemu_oss@crudebyte.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Date: Thu, 9 Jul 2026 15:50:36 +0200
+Subject: [PATCH 1/3] hw/9pfs/virtio: drain in-flight PDUs before virtio-9p
+ unrealize
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
+ Jia Jia <physicalmtea@gmail.com>
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=a25a3dbb8581c265d5eed2298738c6bfedf9cc38@kylie.crudebyte.com;
+ helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,92 +64,42 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 09, 2026 at 05:54:30PM +0400, Marc-André Lureau wrote:
-> Hi
-> 
-> On Thu, Jul 9, 2026 at 5:44 PM Peter Maydell <peter.maydell@linaro.org> wrote:
-> >
-> > On Thu, 9 Jul 2026 at 14:32, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > >
-> > > On Thu, Jul 09, 2026 at 03:22:05PM +0200, Markus Armbruster wrote:
-> > > > Cc: mainainters for "Overall Audio backends"
-> > > > Peter Maydell <peter.maydell@linaro.org> writes:
-> > > >
-> > > > > On Thu, 9 Jul 2026 at 12:44, Markus Armbruster <armbru@redhat.com> wrote:
-> > > > >>
-> > > > >> I stumbled over ARM machine musicpal, PPC machines pegasos1, pegasos2,
-> > > > >> and MIPS machine fuloong2e crashes.
-> > > > >>
-> > > > >> I run them like this:
-> > > > >>
-> > > > >> $ qemu-system-aarch64 -M musicpal -nodefaults -S -display none -monitor stdio
-> > > > >
-> > > > >> Died when device_set_realized() tried to propagate a "no default audio
-> > > > >> driver available" error to &error_abort.
-> > > > >
-> > > > > Is this something we want to have be a possibility the devices
-> > > > > have to cope with? Can we have the "ignores all audio data"
-> > > > > backend be always available instead?
-> > > >
-> > > > There's plenty of precedence for /dev/null-like backends.
-> > > >
-> > > > > Otherwise every audio device needs to cope with "there is no
-> > > > > audio backend available" and implement "do nothing with the
-> > > > > audio data" itself.
-> > > >
-> > > > Yes.
-> > >
-> > > We've got a bit of tension between "no defaults" and "builtin audio
-> > > devices" here.
-> > >
-> > > Cnosider if I had instead done
-> > >
-> > >   qemu-system-x86_64 -M pc -device ac97 -nodefaults
-> > >
-> > > It is not unreasonable to expect to see an error because you asked
-> > > explicitly for 'ac97'  and forgot to wire up the required audio
-> > > backend, and asked to NOT have any defaults.
-> > >
-> > > But with your 'musicpal' machine example, you never asked for the
-> > > frontend device, so you should be forgiven for also not asking
-> > > for a audio backend.
-> >
-> > Ah, so this is because of -nodefaults, not because QEMU was
-> > somehow built with no audio backends in it.
-> >
-> > > If we guarantee a /dev/null audio backend always exists, we help
-> > > the second case but degrade the first case
-> >
-> > As a possible analogy, for network devices we just warn in
-> > the analogous "device created but no backend wired up":
-> >
-> >  ./build/x86/qemu-system-x86_64 -nodefaults -device e1000 -display none
-> > qemu-system-x86_64: warning: nic e1000.0 has no peer
-> >
-> > and the effective behaviour is that output packets are dropped.
-> >
-> > We could make audio devices do that (which would be basically
-> > equivalent to "if we need an audio backend and we don't have
-> > one, warn and create the null backend").
-> >
-> 
-> Note that we don't have a real "null" backend. The "none" backend does
-> mixing/resampling/volume before dropping the audio (its parent is
-> MIXENG_BACKEND). I think it would be worth to add (so one day we can
-> compile qemu without the whole audio/ engine)
+A guest can trigger a heap-use-after-free in the virtio transport
+unrealize path by submitting a Treaddir request and immediately
+ejecting the device via ACPI PCI hotplug. The unrealize path frees
+struct LocalData while a worker thread still holds a reference
+on it, causing a UAF in local_open_nofollow().
 
-Rather than adding "null" backend, IMHO, we should make "none" do
-what its name suggests, by removing the MIGENG_BACKEND from it.
+Fix this by draining all in-flight 9p PDUs by calling v9fs_reset()
+before final server cleanup. This ensures all coroutines completed,
+all FIDs are closed, and no worker thread still holds references
+on 9p server state when it is freed.
 
-With regards,
-Daniel
+Reported-by: Jia Jia <physicalmtea@gmail.com>
+Suggested-by: Jia Jia <physicalmtea@gmail.com>
+Fixes: 6cecf09373 ("virtio-9p-device: add minimal unrealize handler")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3937
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+---
+ hw/9pfs/virtio-9p-device.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/hw/9pfs/virtio-9p-device.c b/hw/9pfs/virtio-9p-device.c
+index 50dc93091d..1ec48fc9e0 100644
+--- a/hw/9pfs/virtio-9p-device.c
++++ b/hw/9pfs/virtio-9p-device.c
+@@ -243,6 +243,7 @@ static void virtio_9p_device_unrealize(DeviceState *dev)
+     V9fsVirtioState *v = VIRTIO_9P(dev);
+     V9fsState *s = &v->state;
+ 
++    v9fs_reset(s);
+     virtio_delete_queue(v->vq);
+     virtio_cleanup(vdev);
+     v9fs_device_unrealize_common(s);
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.47.3
 
 
