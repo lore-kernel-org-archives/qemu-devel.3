@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08809C44507
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 19:10:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCA21C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 19:22:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whu8L-0005gT-1y; Thu, 09 Jul 2026 15:10:05 -0400
+	id 1whuJh-0007yH-3W; Thu, 09 Jul 2026 15:21:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1whu8J-0005fz-CY
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 15:10:03 -0400
-Received: from mail-pz2-x01.google.com ([2607:f8b0:4864:3b::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1whu8H-0005dn-P1
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 15:10:03 -0400
-Received: by mail-pz2-x01.google.com with SMTP id
- 41be03b00d2f7-ca696c4b152so57118a12.1
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 12:10:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783624200; x=1784229000; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :to:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=ZzNwAU/JZWYN3S4rth1QnTO5nzIMVJgGY4FB1s4nY9c=;
- b=S//zL3NxwxrVdTGjkZ/xgfUvCUfhlnsUHxfQfmr97QonO54RFT1QnFGcg4mrftJzGk
- U3oF7xCmG6SlWZ4+o2OyNz7nMhgnWteBWydLFpUHZoSVv9yVpvHrM9dV6l1533x8pYWt
- AYKMkA7hlkFPDgy70jYCbbiykCnf8ERIAsx4CYNznzX1L6P7SVCQSff16UnjmMCs9raM
- iTplAY3P5Jg3mV6kGispzqHRBLErOvd/CdLJJ43NTBUuxb6LZszYKJLBWvLkEHNol9ET
- /7VKP9srpsR06FvFp5NfpSu96I9sfKbQqdfjvOw4ahbQM846Qjo1yPMm/YMsK2O9V9C7
- U4Og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783624200; x=1784229000;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :to:subject:user-agent:mime-version:date:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=ZzNwAU/JZWYN3S4rth1QnTO5nzIMVJgGY4FB1s4nY9c=;
- b=oKIvPSkPePgAcAO45gjs01HsnTwkrzclWNkjLVcGSSixCUezASIHBxmxToMI8Qood0
- 44Xj9noS39EDZQWyfEnBGMzXgVhxiQ05DaLUQPbC41YYsfxWKL8VUYaeF/qJhr7yH76D
- y3XQNKminqTmkteKHJ7WTvL2x3EJx4WO3LiuuGTez3b7I8VyoCKjTqZSh2gs1MkpVQ/t
- j0AvXbP9ctIEvWZyauR6iq9lKI/D9nG/huSh+HdrEALjEF4PLeZ1w4EIpuR1MpMvNDIH
- I8m94Un9fE92yZSmPbmeHWR1uNYEgMja1UiOE1RySn3XkhkBQu6SowDAciW8HUCD6RHN
- z1fQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoIO21LIVTHWQLEQU/DbguLo7ggFoH+bD/oluUDmi/Qa1TX9gZ0WzFwmnCrvwUTde83uQAc0OWfeUtj@nongnu.org
-X-Gm-Message-State: AOJu0Yy8YaPGxrfa6mrx20Hl3QuhaUILHGdZ04535kmNrA9M7wV/fOxu
- XHkAfVusKzrTwh70m0Ev39iPnjEEPRzqPrSNUb5Ljf6j1/jfsqgVSrw=
-X-Gm-Gg: AfdE7cnVrjKicgaY1MYqY12DeMhkMRZaDJyY1zEQ90DQmJcDJlvlrtj557ddlbp4yFx
- C92HhsviTFbMt11pO/6bkWjr1C+xZoyAr2x44OKvY3l4DIIPiIIQxF9xy8PKmFf8KEme0Imha25
- X0dpTOhoM6Gu4YUgDScAcO3Pz0abyWR+BagC4kB37eiZqLgQ2tpgDCLPflKS6lurtxzvWO+pOQs
- IqdnSzKqlWRmtfH2UaYx+B2YBZRDubeMhYn3QsNmAWr03tYRzDmng7KRoDh7tS2VZOuxWXeAk6U
- 8ul7d7UgV2hllWbiS59SXsa43sFzlm2ErXzAQ4IA+7PHyPmngHQvypHphkY5Y0/Oo+AwIlfkvDZ
- 15ryA+tEWiFfT68hdwmTD/EDXnhSkFHGse3qFwa0hyX7zgY/IMljRRv6WxaRYJ937Quz964iM/R
- SQ49s4uT+q5q8OyOo2it3G4SPjQQcPbYzCj4sUmBmb1IP9C3A1SVqlvA/Gv2gdYxE=
-X-Received: by 2002:a05:6a21:485:b0:3bf:7bf7:7913 with SMTP id
- adf61e73a8af0-3c0bcead3cfmr9550804637.14.1783624199777; 
- Thu, 09 Jul 2026 12:09:59 -0700 (PDT)
-Received: from ?IPV6:2408:820c:8ffe:590:ec08:736d:f5be:1a6?
- ([2408:820c:8ffe:590:ec08:736d:f5be:1a6])
- by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13b65960d88sm28697771c88.6.2026.07.09.12.09.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Jul 2026 12:09:59 -0700 (PDT)
-Message-ID: <4fb182e2-9395-4bea-85d2-84d733d6b4cd@gmail.com>
-Date: Fri, 10 Jul 2026 03:09:58 +0800
+ (Exim 4.90_1)
+ (envelope-from <devnull+shankerwangmiao.gmail.com@kernel.org>)
+ id 1whuJe-0007xf-WC
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 15:21:47 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <devnull+shankerwangmiao.gmail.com@kernel.org>)
+ id 1whuJd-0000Je-2j
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 15:21:46 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 683C0600C3;
+ Thu,  9 Jul 2026 19:21:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 1DC70C2BCB7;
+ Thu,  9 Jul 2026 19:21:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1783624903;
+ bh=7fLZ2sAA938WMFeMYQpLEfSXXsyNIVRkUXhS+kpqv2U=;
+ h=From:Subject:Date:To:Cc:Reply-To:From;
+ b=IgC096sss8GGQuOzJecAtAOangAPIsU0tjVx2tCro+u6MduHyzOWO12F47BkJz0hq
+ +X1JvmJJK8GPXXkMui6Btf5biVJ7vm0BIRj6Ef9DXeAIwALCO2IpXGbsACifn6ZGKl
+ 5QNGQY9dWQemYMaJFIopWw9OwWxBJv5IgGXxy4O7rTg0DNXJkoNkEAxuYo+rpomyl1
+ wDyb+MI8YLm3jhAd8GAxyS2XRpAi1tAqVLJQb98TMDIRpnjQ0SjjVmdAo39HE2p2Ta
+ T0bWh2hpKS9+9Uf3t7eilO7f9KaalNUtDTxYYQS2QHGO/FWn4H02RE0sNFyuGSbLHU
+ +rzcBidrlOuSw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org
+ (localhost.localdomain [127.0.0.1])
+ by smtp.lore.kernel.org (Postfix) with ESMTP id 0AC1CC43458;
+ Thu,  9 Jul 2026 19:21:43 +0000 (UTC)
+From: Miao Wang via B4 Relay <devnull+shankerwangmiao.gmail.com@kernel.org>
+Subject: [PATCH v3 0/2] pvscsi: fix endianness issues
+Date: Fri, 10 Jul 2026 03:21:38 +0800
+Message-Id: <20260710-pvscsi-endianness-v3-0-27fe1c4d1f6e@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/9] contrib/gitdm: add more individual contributors
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-References: <20260709080040.4157324-1-alex.bennee@linaro.org>
- <20260709080040.4157324-8-alex.bennee@linaro.org>
-From: Tomita Moeko <tomitamoeko@gmail.com>
-In-Reply-To: <20260709080040.4157324-8-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:3b::1;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pz2-x01.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAML0T2oC/33NTQ6CMBCG4auQrq1py19h5T2MC9oOMIkU0jGNh
+ nB3CxtdGJfvl8wzKyMICMTabGUBIhLOPkV+ypgdOz8AR5eaKaEqUYmSL5EsIQfvsPMeiLgVLte
+ N06ougKW7JUCPz8O83lKPSI85vI4XUe7rPy1KLrkRpi9qZURfNpdh6vB+tvPEdi2qj1BL8UtQS
+ bClVFBZrYvGfAvbtr0BUvBDjfQAAAA=
+X-Change-ID: 20260605-pvscsi-endianness-c0d389d8274e
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>,
+ Arvind Kumar <arvindkumar@vmware.com>,
+ Miao Wang <shankerwangmiao@gmail.com>, b4-sent@kernel.org
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1294;
+ i=shankerwangmiao@gmail.com; s=20250715; h=from:subject:message-id;
+ bh=7fLZ2sAA938WMFeMYQpLEfSXXsyNIVRkUXhS+kpqv2U=;
+ b=owEBbQKS/ZANAwAKAbAx48p7/tluAcsmYgBqT/TEEgj3Z12khUW0lb7ZUjX2PxpIDuRNR605H
+ WRSFhenxEuJAjMEAAEKAB0WIQREqPWPgPJBxluezBOwMePKe/7ZbgUCak/0xAAKCRCwMePKe/7Z
+ bjySD/0QgQazFzhDj+b308/RfW7n/inCHQYPzKSfTT+iGdqtk4T9+cfQ1gUzBWGo+ZmbS8vThuN
+ e8Tl+fztqDq/cXg4Tct8fpUOsx+eLWAGxQUy04UimOObx7efc8+HqE41vTQHey0qSi4LaINy03y
+ s3bjf0h1pS/iFyeQTJkNfUi6ZDuxmpaEjGXelsnJxyvhXDjdU92PVaY507AAv59Tr+Fx6Ru/IZB
+ qI7MJeolnzs7oBTyQCWdFYaZ7sf0kzdAL7qp2A30uWt2ftsObQG8MuSGSaY2DuB4XG9ilPmPlQr
+ U8VGLBT14DlJX8IIRMU/Fpx87XpFO3f4fw1yKisg86XpZNZbiVNCXDL76Xnz2aD0xA169Z252SU
+ yBhJdGmOAOF51fYwI8vdhTYqroE6zSL4FOBT064icyCEOToFiC+xpNNlC1yv9UCgPbcosoP/XNH
+ EpN7SvWciQWby3uxBULQLP5GkK4sTCAxld95dO6sIo1d6YT8mg4tbo1a6V12X9jeQUzl4T20kuq
+ FQ+mrx0VEZrDa2Qs218NY1jpfdZD1DiFUIs8/AvlJ7Z3kqPt/Fo3tA4wWhACOqWGuk7CZOmsA4o
+ wRAhF4+XkUx31Ngw+Ik3Bxuq8iQN6bK9B9HoL0wf6cWDFp4a8H7d+LQQGRAd4IwAXktI01is++P
+ JU3ZDGzcm6eNGgQ==
+X-Developer-Key: i=shankerwangmiao@gmail.com; a=openpgp;
+ fpr=6FAEFF06B7D212A774C60BFDFA0D166D6632EF4A
+X-Endpoint-Received: by B4 Relay for shankerwangmiao@gmail.com/20250715
+ with auth_id=462
+X-Original-From: Miao Wang <shankerwangmiao@gmail.com>
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=devnull+shankerwangmiao.gmail.com@kernel.org;
+ helo=tor.source.kernel.org
+X-Spam_score_int: 0
+X-Spam_score: -0.0
+X-Spam_bar: /
+X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_FORGED_REPLYTO=2.095, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,53 +103,43 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: shankerwangmiao@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Acked-by: Tomita Moeko <tomitamoeko@gmail.com>
+This patch series fixes the endianness issues in the pvscsi device
+emulation and clarfies the endianness of pvscsi data structures.
 
-On 2026-07-09 16:00, Alex Benn=C3=A9e wrote:
-> I'll only add names explicitly acked here as its quite possible people
-> are using different addresses than their company affiliation. Let me
-> know if you want contributions mapped to a company or academia instead.=
+Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
+---
+Changes in v3:
+- Remove the unnecessary struct keyword for the structs that have
+  been already typedef-ed.
+- Add a comment in vmw_pvscsi.h to explain the endianness of pvscsi
+  data structures.
+- Link to v2: https://lore.kernel.org/qemu-devel/20260710-pvscsi-endianness-v2-1-c512e6c8849b@gmail.com
 
->=20
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> Cc: Amarjargal Gundjalam <amarjargal16@gmail.com>
-> Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-> Cc: Tomita Moeko <tomitamoeko@gmail.com>
-> Cc: Julian Ganz <neither@nut.email>
-> Cc: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-> Cc: Roy Hopkins <roy.hopkins@randomman.co.uk>
-> Cc: Phil Dennis-Jordan <phil@philjordan.eu>
-> Cc: Jackson Donaldson <jackson88044@gmail.com>
-> Cc: Weifeng Liu <weifeng.liu.z@gmail.com>
-> Cc: Roman Penyaev <r.peniaev@gmail.com>
-> Cc: Guenter Roeck <linux@roeck-us.net>
-> Cc: Tanish Desai <tanishdesai37@gmail.com>
-> ---
->  contrib/gitdm/group-map-individuals | 11 +++++++++++
->  1 file changed, 11 insertions(+)
->=20
-> diff --git a/contrib/gitdm/group-map-individuals b/contrib/gitdm/group-=
-map-individuals
-> index 178b393b8c3..42bee15d933 100644
-> --- a/contrib/gitdm/group-map-individuals
-> +++ b/contrib/gitdm/group-map-individuals
-> @@ -46,3 +46,14 @@ amarjargal16@gmail.com
->  me@sean.taipei
->  kosasihwilliam4@gmail.com
->  philmd@mailo.com
-> +soumyajyotisarkar23@gmail.com
-> +tomitamoeko@gmail.com
-> +neither@nut.email
-> +ktokunaga.mail@gmail.com
-> +roy.hopkins@randomman.co.uk
-> +phil@philjordan.eu
-> +jackson88044@gmail.com
-> +weifeng.liu.z@gmail.com
-> +r.peniaev@gmail.com
-> +linux@roeck-us.net
-> +tanishdesai37@gmail.com
+Changes in v2:
+- Assume pvscsi is little-endian instead of native-endian, and thus
+  replace tswap*() with le*_to_cpu() and cpu_to_le*() to convert the
+  endianness of pvscsi data structures to/from CPU endianness.
+- Link to v1: https://lore.kernel.org/qemu-devel/20260605-pvscsi-endianness-v1-1-b0bf472b0f59@gmail.com
+
+---
+Miao Wang (2):
+      pvscsi: translate data endianness
+      pvscsi: add a comment to explain the endianness
+
+ hw/scsi/vmw_pvscsi.c | 57 +++++++++++++++++++++++++++++++++++++++++++++++++++-
+ hw/scsi/vmw_pvscsi.h | 14 +++++++++++++
+ 2 files changed, 70 insertions(+), 1 deletion(-)
+---
+base-commit: 29c042c6e9d4a09d4a0ac3fa54aeb7ee08ce0bdc
+change-id: 20260605-pvscsi-endianness-c0d389d8274e
+
+Best regards,
+-- 
+Miao Wang <shankerwangmiao@gmail.com>
+
 
 
