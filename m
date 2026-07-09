@@ -4,110 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2525EC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 08:38:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 193EAC44517
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 08:48:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whkGj-0001Fz-PV; Thu, 09 Jul 2026 04:38:06 -0400
+	id 1whkPx-0002Sl-I1; Thu, 09 Jul 2026 04:47:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1whkGh-0001Fc-Jo
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 04:38:03 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1whkGf-0002WI-BR
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 04:38:03 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6696ISph1154923; Thu, 9 Jul 2026 08:37:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=3MNrVL
- DIguZ8+WXT4R5LsbdrW/uCpZnZGFs8D1sBjDQ=; b=KpEYEwfl51nOzKhfw3sKUk
- cxIUbPvWiQ/3aSgoshxl5kFDnyWA8+xxldBhaAUXPCiBuTm/Myc7/lvgRThV/Ogr
- 9gevBcn0yD+mLb0DyB0+ne9rLsmsy+lmBNLhtkOXc1I6Bc5ehxC3M/jXQc/x8gqS
- nhRclzsy7eRPPbJiJZv6WqR1Xt1P4GrgfMxIeO4p5fvdxsVYZSwxI34cNVOeY9+1
- hyLbz2z+64yBiV5px22a70Kz2USqY/orcYXMo1Xxy3SCYS5qOcJ0/k/ILJHXXz9Y
- WLZ41JRBeYkpcRzoBmgTzP5Mfib7WyyO4bGcUx0nov1HvfnprPA2Nij1GP462ULA
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6sw50tas-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Jul 2026 08:37:57 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6698YlXZ022616;
- Thu, 9 Jul 2026 08:37:56 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7cgqch5w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Jul 2026 08:37:56 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6698bt3M29164138
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 9 Jul 2026 08:37:55 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 125FA20040;
- Thu,  9 Jul 2026 08:37:55 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EFD492004B;
- Thu,  9 Jul 2026 08:37:54 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.224.75.238])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  9 Jul 2026 08:37:54 +0000 (GMT)
-Message-ID: <b4c289b6-3b64-4dd9-84d8-a73c7648d092@linux.ibm.com>
-Date: Thu, 9 Jul 2026 10:37:54 +0200
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1whkPv-0002SN-LB
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 04:47:35 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1whkPt-0005nL-Md
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 04:47:35 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-493d1e8aa46so12313145e9.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 01:47:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mihalicyn.com; s=mihalicyn; t=1783586851; x=1784191651; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=tWykkhUvZImzKk7PMKYU/gQ1ZJJOoPXOpglztp/ahl8=;
+ b=J3dpbayXHZFn0Z47OSxBivgRCCT38OUBLf6bjsTm1tfYxCQdDGlwkV5YQ41WbMG2Ez
+ B4at/8vOFepr2jmOjSIwSf2Tlc5cIjvMQbbfoyS0t59ZatuGZGYXVbILdQaYqQZ/tN+z
+ a4LhVv6y9E137PD1ovXfpzlxR1F3NZ2xYl9m4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783586851; x=1784191651;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=tWykkhUvZImzKk7PMKYU/gQ1ZJJOoPXOpglztp/ahl8=;
+ b=rFLTO0ls5uS6PxsiIgEcX1Qii62UNe5KyUdaF4oyR0KdGspq3BcyZrgNbAGej9E9gf
+ hpAfriWzlS8E1aD4Vi243jjC+165YWQ5o2AdwJ562CZsS2pt+OKRdnHakouks7OIqPIo
+ VXpdmzHlAbH0fO6qDZmK9jtIjj0MFq1fEARv2XL4y9EFfxdHdqQpHFEl2/OJr6OdfLQk
+ 6RBMfoBZR7buHV64w+XbGXZdUbUwwNLBA2lX1WEv1vMQ2lrBiy8NkuornPpXnbg/yG28
+ elYlqqAvW/khzx514+XPmoHxznzp+7w/nVo52xepxyWHr6g+OftESspbLdLYehPK18zU
+ OvaA==
+X-Gm-Message-State: AOJu0YzCMK185zyc3Ivk7ofCUgvpVUBLZ1v7PXUvx/pxtGQBjS/WimEF
+ WRgdR2SitEdjAPLWISAsJXSctSU5lpBhj+1RmgAOI/2zOpRj87JZvqWB3VcC+HylJVIHmPFfg39
+ IFe1Lb4x+pg==
+X-Gm-Gg: AfdE7clh5smhAPqIN682bNTO64EQR02dDL27SwxE1hXsxWJgH7NNUgLDqxZo33Hdq4w
+ d+jSRMUXcn+gUwMTjkdD7XkGHYJXmdfGuoBQTUjJZcJJnwNMwI0GmKB2Eb/pWmjdbVotGmNjrIX
+ 1jJt77p6w0OadhDGyAI6IlfY1UKQMlV/aUq9ueXx9/kjJvrN5HpYVRoxIJkXVrZY4q+UNqJ9oK5
+ AbV1hhs/PbiKcLi7+St24ActoZZoWz7Yaor+4gwFXXqDWveA+KEv7UloqkHIb/2KzqTQEWa71td
+ vCkWgXaKhUsacSD002xmFkFHiVOHrcYW55gm1wjde2BiLNQ9ZdSWX0WrYHfJifVOYa64atPPHNH
+ fSFQ/E5x0cJuGz/i2pdARRRNdtWaPgeo1RbmVCUbKB/ppt6hkt6RFszzhAlmArwa8tTV9FtsTnJ
+ uEUOKOznuCIqnSOB7mm31IIArRuDtIiLWRCs9y6tdKiom9HZDkUhXyAGEKOAuzhRoU3kvh9h9E3
+ OTovObuNtha
+X-Received: by 2002:a05:600d:8498:20b0:493:d115:d835 with SMTP id
+ 5b1f17b1804b1-493e68b8094mr47441755e9.8.1783586850644; 
+ Thu, 09 Jul 2026 01:47:30 -0700 (PDT)
+Received: from alex-laptop.lan
+ (p200300cf574a72003e9c5bb9189c1bc2.dip0.t-ipconnect.de.
+ [2003:cf:574a:7200:3e9c:5bb9:189c:1bc2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493eb6d4f9fsm44791685e9.4.2026.07.09.01.47.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 09 Jul 2026 01:47:30 -0700 (PDT)
+From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org,
+ Klaus Jensen <its@irrelevant.dk>, Keith Busch <kbusch@kernel.org>,
+ alexander@mihalicyn.com, Jesper Devantier <foss@defmacro.it>,
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Subject: [PATCH] hw/nvme: use GPtrArray for blocker_features
+Date: Thu,  9 Jul 2026 10:47:28 +0200
+Message-ID: <20260709084728.92862-1-alexander@mihalicyn.com>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/tcg: fix buffer overflow in
- multiarch/linux/linux-sigrtminmax
-To: Max Filippov <jcmvbkbc@gmail.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20260708150541.2137546-1-jcmvbkbc@gmail.com>
-Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <20260708150541.2137546-1-jcmvbkbc@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: aQOhjngocz3dgmgx_OQVWr2CeIHW8Wnc
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA5MDA3OCBTYWx0ZWRfX+XGCI836SWv/
- TUt75CXsOO2QoTtGciIDHkbDXKiTB4yGR3a89dwaxNiWbWVNUY2p9YQpxyCay3OyQOg7i6C+0Ot
- twGBY4O8Ysn2hKAtq0YV2GHI1ssM4dXmKtpjujUIfSEvGlbuvYUhAuR6oWr6Xjwnh0647My+wXo
- hN1sayrEeFTnocynO3d8m2TdGvstLjEbXCEhbeLfKE0Wko6m46sJSFFZAAqBXWgAQbxWV8GvKQb
- UrXlI7w9THJbeOLBOdChaCaKr5hZa7oQiu/mAd3MbCdIhdSMBVmkw3h9rtBj1NlXbaUecFbGfCJ
- r3heUAaxckUI33NIIsQBGb12QRZlLvnRDkAvLV0IItMaTtgH+5PZdQlfe8hNqMB0YAHsdYDusDN
- jOrI5qkQTIMwB8qsA+fXQMZyhEui1ASX9kyo5dxFovsp0mk6yo2TL0rBHLNgHvjgQa43hXpvLbb
- PkFucYdiD7YnVVmFDDA==
-X-Proofpoint-ORIG-GUID: SFNB4LxRAbmvOFi3ianHluGGW2u0Jkx5
-X-Authority-Analysis: v=2.4 cv=FqQ1OWrq c=1 sm=1 tr=0 ts=6a4f5de6 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=pGLkceISAAAA:8
- a=VnNF1IyMAAAA:8 a=cryIHRqGAZNLDTTz9SAA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA5MDA3OCBTYWx0ZWRfX9KztGs3/AsUH
- o5zUIIxU+R7MHm8Mhauacyu/OV6ZDkQszO3D+rJ4O2/PoEPI5lBAGZfmm3W3S9ZVHX3QG1MoWhc
- AcZki+Dq2C2MFQGPSZXTdezPDF4X9kU=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-09_01,2026-07-08_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 clxscore=1015 malwarescore=0 lowpriorityscore=0
- priorityscore=1501 bulkscore=0 suspectscore=0 spamscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607090078
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,38 +100,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
+Let's use GPtrArray to build a list of blocker features and then
+g_strjoinv() to build a final comma-delimited string.
 
-On 7/8/26 17:05, Max Filippov wrote:
-> Fix new_argv allocation size to be `(argc + 2) * sizeof(char *)` bytes,
-> which matches the way it's used to store `argc + 2` pointers.
-> 
-> This fixes the test for me, which otherwise fails on xtensa with the
-> following message
-> 
->    linux-sigrtminmax.c: 59: main: Assertion `execve(new_argv[0], new_argv, environ) == 0' failed.'.
-> 
-> Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
-> ---
->   tests/tcg/multiarch/linux/linux-sigrtminmax.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/tests/tcg/multiarch/linux/linux-sigrtminmax.c b/tests/tcg/multiarch/linux/linux-sigrtminmax.c
-> index a7059aacd9cb..b5ea65f3d393 100644
-> --- a/tests/tcg/multiarch/linux/linux-sigrtminmax.c
-> +++ b/tests/tcg/multiarch/linux/linux-sigrtminmax.c
-> @@ -39,7 +39,7 @@ int main(int argc, char **argv)
->       assert(qemu);
->   
->       if (!getenv("QEMU_RTSIG_MAP")) {
-> -        char **new_argv = malloc((argc + 2) + sizeof(char *));
-> +        char **new_argv = malloc((argc + 2) * sizeof(char *));
->           int tsig1, hsig1, count1, tsig2, hsig2, count2;
->           char rt_sigmap[64];
->   
+While previous approach was technically correct, it is fragile
+(because we need to take care of static buffer size choice) and
+Coverity dislikes it too.
 
-Whoops, a silly typo on my part.
-Thanks for taking the time to fix it!
+Note, that we use g_ptr_array_new() to allocate array which means
+that GDestroyNotify callback is not set, so we can pass pointers to
+a static memory like g_ptr_array_add(..., (gpointer) "SR-IOV") without
+any problems as there won't be any attempt to free that memory.
 
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Resolves: Coverity CID 1663673
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+---
+ hw/nvme/ctrl.c | 41 +++++++++++++++++------------------------
+ 1 file changed, 17 insertions(+), 24 deletions(-)
+
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index a67e1598891..95a586d82a9 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -9352,22 +9352,11 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
+     }
+ }
+ 
+-#define BLOCKER_FEATURES_MAX_LEN 256
+-
+-static inline void nvme_add_blocker_feature(char *blocker_features,
+-                                            const char *feature)
+-{
+-    if (strlen(blocker_features) > 0) {
+-        g_strlcat(blocker_features, ", ", BLOCKER_FEATURES_MAX_LEN);
+-    }
+-    g_strlcat(blocker_features, feature, BLOCKER_FEATURES_MAX_LEN);
+-}
+-
+ static bool nvme_set_migration_blockers(NvmeCtrl *n, PCIDevice *pci_dev,
+                                         Error **errp)
+ {
+     uint64_t unsupported_cap, cap = ldq_le_p(&n->bar.cap);
+-    char blocker_features[BLOCKER_FEATURES_MAX_LEN] = "";
++    g_autoptr(GPtrArray) blocker_features = g_ptr_array_new();
+     bool adm_cmd_security_checked = false;
+     bool cmd_io_mgmt_checked = false;
+     bool cmd_zone_checked = false;
+@@ -9416,15 +9405,15 @@ static bool nvme_set_migration_blockers(NvmeCtrl *n, PCIDevice *pci_dev,
+             }
+ 
+             if (namespaces_num > 1) {
+-                nvme_add_blocker_feature(blocker_features,
+-                                         "Namespace Attachment");
++                g_ptr_array_add(blocker_features,
++                                         (gpointer) "Namespace Attachment");
+             }
+ 
+             break;
+         }
+         case NVME_ADM_CMD_VIRT_MNGMT:
+             if (n->params.sriov_max_vfs) {
+-                nvme_add_blocker_feature(blocker_features, "SR-IOV");
++                g_ptr_array_add(blocker_features, (gpointer) "SR-IOV");
+             }
+ 
+             break;
+@@ -9435,7 +9424,7 @@ static bool nvme_set_migration_blockers(NvmeCtrl *n, PCIDevice *pci_dev,
+             }
+ 
+             if (pci_dev->spdm_port) {
+-                nvme_add_blocker_feature(blocker_features, "SPDM");
++                g_ptr_array_add(blocker_features, (gpointer) "SPDM");
+             }
+ 
+             adm_cmd_security_checked = true;
+@@ -9469,7 +9458,7 @@ static bool nvme_set_migration_blockers(NvmeCtrl *n, PCIDevice *pci_dev,
+ 
+             /* check for NVME_IOMS_MO_RUH_UPDATE */
+             if (n->subsys->params.fdp.enabled) {
+-                nvme_add_blocker_feature(blocker_features, "FDP");
++                g_ptr_array_add(blocker_features, (gpointer) "FDP");
+             }
+ 
+             cmd_io_mgmt_checked = true;
+@@ -9504,8 +9493,8 @@ static bool nvme_set_migration_blockers(NvmeCtrl *n, PCIDevice *pci_dev,
+                 }
+ 
+                 if (ns->params.zoned) {
+-                    nvme_add_blocker_feature(blocker_features,
+-                                             "Zoned Namespace");
++                    g_ptr_array_add(blocker_features,
++                                             (gpointer) "Zoned Namespace");
+                     break;
+                 }
+             }
+@@ -9525,24 +9514,28 @@ static bool nvme_set_migration_blockers(NvmeCtrl *n, PCIDevice *pci_dev,
+      * covered by unsupported_cap check.
+      */
+     if (NVME_CAP_CMBS(cap)) {
+-        nvme_add_blocker_feature(blocker_features, "CMB");
++        g_ptr_array_add(blocker_features, (gpointer) "CMB");
+         cap &= ~((uint64_t)CAP_CMBS_MASK << CAP_CMBS_SHIFT);
+     }
+ 
+     if (NVME_CAP_PMRS(cap)) {
+-        nvme_add_blocker_feature(blocker_features, "PMR");
++        g_ptr_array_add(blocker_features, (gpointer) "PMR");
+         cap &= ~((uint64_t)CAP_PMRS_MASK << CAP_PMRS_SHIFT);
+     }
+ 
+     unsupported_cap = cap & ~NVME_MIGRATION_SUPPORTED_CAP_BITS;
+     if (unsupported_cap) {
+-        nvme_add_blocker_feature(blocker_features, "unknown capability");
++        g_ptr_array_add(blocker_features, (gpointer) "unknown capability");
+     }
+ 
+     assert(n->migration_blocker == NULL);
+-    if (strlen(blocker_features) > 0) {
++    if (blocker_features->len > 0) {
++        g_autofree char *blocker_list = NULL;
++
++        g_ptr_array_add(blocker_features, NULL);
++        blocker_list = g_strjoinv(", ", (void *)blocker_features->pdata);
+         error_setg(&n->migration_blocker,
+-                   "Migration is not supported for %s", blocker_features);
++                   "Migration is not supported for %s", blocker_list);
+         if (migrate_add_blocker(&n->migration_blocker, errp) < 0) {
+             return false;
+         }
+-- 
+2.47.3
+
 
