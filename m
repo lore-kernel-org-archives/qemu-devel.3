@@ -4,80 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 193EAC44517
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 08:48:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EC9DC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 08:51:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whkPx-0002Sl-I1; Thu, 09 Jul 2026 04:47:37 -0400
+	id 1whkTO-0003I2-4j; Thu, 09 Jul 2026 04:51:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1whkPv-0002SN-LB
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 04:47:35 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1whkTM-0003HC-C9
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 04:51:08 -0400
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1whkPt-0005nL-Md
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 04:47:35 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-493d1e8aa46so12313145e9.0
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 01:47:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1whkTK-00074F-Hu
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 04:51:08 -0400
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-664b3831a20so978351d50.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 01:51:06 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783587065; cv=none;
+ d=google.com; s=arc-20260327;
+ b=aqiQS632celx7ahwZdNziGiQC1QMTY6HeLF9h20l0MDU2nLOSf7K2czJd/yqA0QYHF
+ HMMJ2nffs24YqOZf8CbOEbrsR+oJ5ItcbEn/r0SyMCDFpemr2cXb+EXDiLk9x9gs4iQT
+ UaLCX6uZAnsZFlNQ32xKYtoQ7ytM307AUS2g3J6bBfAXq/CJaT4xAisXI9ggA+zIh6DW
+ W0oak2EXAGN2KGQyt9SIU64qMgByKmaXo7H0N42LeUjAn8IPSP4BcGP+iPltAPghAfam
+ vbuJPTPGGlBSpng1LmddrTGz6cv/cnhC/jTu5XXXBShODltUlwyAuLL4es/f8F8OHGcj
+ JzCQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=dftZzcUdQANuJzxyS9rtMD345YGI8E+HJTWY0rvb3zY=;
+ fh=seLqzMn7RwRMOH4iMqxCA+O9B+H3gFtOjt3FsBQPmzw=;
+ b=GC7RXvyeXs5dIi0V9Npph+hX4J60VHa87b/Hvv1mfkAvGGjkUWeplYIF3IDaqXq0y8
+ EkEr7cNrKS/PYcyU0/a42nyle5Oi3SLd8uGuFraSoNr61HUZk7y0GEJJeOTvr/Db58QF
+ o2naCMIz3si9XMdruP7v4T4SF7vPa6GC8N1mCOp3iFqGcr6hfu6omtGescpR+khnee2v
+ E65rzRDNFsA4OI6TjWrZPqFE8J/lMyplf99CKP+4tq7YeI0whTCmyg9YgAxiUHkiQiyl
+ SCMfJ+k1Oz2eTMNAytjA8OBh+RNtb704tyzWjTlII0hVVJNunM81eTEQrV+Nfhc+aA2U
+ wT4A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1783586851; x=1784191651; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=tWykkhUvZImzKk7PMKYU/gQ1ZJJOoPXOpglztp/ahl8=;
- b=J3dpbayXHZFn0Z47OSxBivgRCCT38OUBLf6bjsTm1tfYxCQdDGlwkV5YQ41WbMG2Ez
- B4at/8vOFepr2jmOjSIwSf2Tlc5cIjvMQbbfoyS0t59ZatuGZGYXVbILdQaYqQZ/tN+z
- a4LhVv6y9E137PD1ovXfpzlxR1F3NZ2xYl9m4=
+ d=linaro.org; s=google; t=1783587065; x=1784191865; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=dftZzcUdQANuJzxyS9rtMD345YGI8E+HJTWY0rvb3zY=;
+ b=eILftnYOWbvFpqetM/hXgu2y58tzFnoyA72TxHoxs7sP/SnU3BJLF1FSbcyHTs/vJP
+ 9+QhliNvonLR1kwrAMXdc3YQIz8n8tnpp0Qfc+nJc4wRn3HXhb2hLcBG5VWqCHesKw8P
+ z05zE3qRt4hiYLlgJYKCEUtpW3vr2nmb68irp+5LU3CE+D0gcR1s+DHOZD1+TR12kAuv
+ M7gjjhOWTBu6h49hRi6baXVhPlN6EDiXgCvnfNRxQT9OcUwtS5qv1nMiUMQjwJvfHxGm
+ SSg/Wt5JtJSynviRFDZ/2CiET1UrcE7shp1MF+awinPSRH7FIMrCqPDHd/MGz5IzqReh
+ CG6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783586851; x=1784191651;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=tWykkhUvZImzKk7PMKYU/gQ1ZJJOoPXOpglztp/ahl8=;
- b=rFLTO0ls5uS6PxsiIgEcX1Qii62UNe5KyUdaF4oyR0KdGspq3BcyZrgNbAGej9E9gf
- hpAfriWzlS8E1aD4Vi243jjC+165YWQ5o2AdwJ562CZsS2pt+OKRdnHakouks7OIqPIo
- VXpdmzHlAbH0fO6qDZmK9jtIjj0MFq1fEARv2XL4y9EFfxdHdqQpHFEl2/OJr6OdfLQk
- 6RBMfoBZR7buHV64w+XbGXZdUbUwwNLBA2lX1WEv1vMQ2lrBiy8NkuornPpXnbg/yG28
- elYlqqAvW/khzx514+XPmoHxznzp+7w/nVo52xepxyWHr6g+OftESspbLdLYehPK18zU
- OvaA==
-X-Gm-Message-State: AOJu0YzCMK185zyc3Ivk7ofCUgvpVUBLZ1v7PXUvx/pxtGQBjS/WimEF
- WRgdR2SitEdjAPLWISAsJXSctSU5lpBhj+1RmgAOI/2zOpRj87JZvqWB3VcC+HylJVIHmPFfg39
- IFe1Lb4x+pg==
-X-Gm-Gg: AfdE7clh5smhAPqIN682bNTO64EQR02dDL27SwxE1hXsxWJgH7NNUgLDqxZo33Hdq4w
- d+jSRMUXcn+gUwMTjkdD7XkGHYJXmdfGuoBQTUjJZcJJnwNMwI0GmKB2Eb/pWmjdbVotGmNjrIX
- 1jJt77p6w0OadhDGyAI6IlfY1UKQMlV/aUq9ueXx9/kjJvrN5HpYVRoxIJkXVrZY4q+UNqJ9oK5
- AbV1hhs/PbiKcLi7+St24ActoZZoWz7Yaor+4gwFXXqDWveA+KEv7UloqkHIb/2KzqTQEWa71td
- vCkWgXaKhUsacSD002xmFkFHiVOHrcYW55gm1wjde2BiLNQ9ZdSWX0WrYHfJifVOYa64atPPHNH
- fSFQ/E5x0cJuGz/i2pdARRRNdtWaPgeo1RbmVCUbKB/ppt6hkt6RFszzhAlmArwa8tTV9FtsTnJ
- uEUOKOznuCIqnSOB7mm31IIArRuDtIiLWRCs9y6tdKiom9HZDkUhXyAGEKOAuzhRoU3kvh9h9E3
- OTovObuNtha
-X-Received: by 2002:a05:600d:8498:20b0:493:d115:d835 with SMTP id
- 5b1f17b1804b1-493e68b8094mr47441755e9.8.1783586850644; 
- Thu, 09 Jul 2026 01:47:30 -0700 (PDT)
-Received: from alex-laptop.lan
- (p200300cf574a72003e9c5bb9189c1bc2.dip0.t-ipconnect.de.
- [2003:cf:574a:7200:3e9c:5bb9:189c:1bc2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493eb6d4f9fsm44791685e9.4.2026.07.09.01.47.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jul 2026 01:47:30 -0700 (PDT)
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org,
- Klaus Jensen <its@irrelevant.dk>, Keith Busch <kbusch@kernel.org>,
- alexander@mihalicyn.com, Jesper Devantier <foss@defmacro.it>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH] hw/nvme: use GPtrArray for blocker_features
-Date: Thu,  9 Jul 2026 10:47:28 +0200
-Message-ID: <20260709084728.92862-1-alexander@mihalicyn.com>
-X-Mailer: git-send-email 2.47.3
+ d=1e100.net; s=20251104; t=1783587065; x=1784191865;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=dftZzcUdQANuJzxyS9rtMD345YGI8E+HJTWY0rvb3zY=;
+ b=hz0mKPs4zoduldn7uqRzNgRIQ8NmZQXtJ/NAwzT4nqyToI4BlKMs5bqc47ddx1q9pw
+ 4+9Qk8jvFZuJFw/VMWSsi8O6F6oW75jgzf84IC+4I2JNfw6/RPkW4DKalAW+lcuuK5Si
+ zVF2nA+3+vTBhuMW4L+xmeYBXwlsHJMeKUyX91V9FDTV47CeWfLAoPDHh6It0Nobgy4X
+ Hlu2a0nXZmYVLBIoRChN5JVKJGCsl7EsW6zEoDlgjdM+NyQ6Tcz7POj84VNOJOEebDoK
+ ZqMwvhyC8NW6f84b5LY2iB6sjDQyJ0yGxqYnU+pPentsBpsbV4wm16ETK1T5B7RR0joL
+ i0aA==
+X-Gm-Message-State: AOJu0YwzrHdtTQg1Mknmqbr87UMbBMD83shAXUEtWI5TeyPJI8Sk6bka
+ jhWfJlvzmjq3uM4rXDQegzmwhQSHzgewqFTUoa+BLrhc36o3cMxsRtkKA8hD6waEYkQNPoDFn7C
+ g/Xv5X+xB07YUg27/2eY6A4CFf7tk7qS24jAXudjGgA==
+X-Gm-Gg: AfdE7cl/GkxWi+APPlcj0FiL3VWUQq35YgZmjkh8Ly6J+l0fxCgIaHboVYkHn74ahlW
+ ztOmZ9C0YpJKfLDlGurJE86KB/5NDf10sHckcjD1aDm9n3rs5K/JGZX3L2MVU83DkxfXQrLbqKA
+ QQ0MfzWtnux86WaIWjspRZG2t7pYcbFJcaz4y6fgPfn/h4V9yyzNI60jnpRuUyImkq8EbC95PkG
+ z3KYAPwqG2pjj+RbOQJ3Ba9hWUhn9AGtXohHQVkQnl+khRMCRQPtTutK0BXsTaq9xhEgDVwMorW
+ W/dmA5faq0TG3n7biWckPGIGVUoTZ6Ov5X1qnK6A5JE0dBBw588Sb+hb
+X-Received: by 2002:a05:690e:14cd:b0:667:ac1d:16c6 with SMTP id
+ 956f58d0204a3-667ac1d1a05mr3765342d50.81.1783587065081; Thu, 09 Jul 2026
+ 01:51:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x329.google.com
+References: <20260709084728.92862-1-alexander@mihalicyn.com>
+In-Reply-To: <20260709084728.92862-1-alexander@mihalicyn.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 9 Jul 2026 09:50:52 +0100
+X-Gm-Features: AVVi8CfMMMIQr6LTs3iEgPiEmHZo7RrBtWRcBg8m2EspBCw5QODvIYCBvT34URo
+Message-ID: <CAFEAcA82Ps8EDcjpoYVBxf5VAmiSJNvE1dvuKWokPKbp7OpWjw@mail.gmail.com>
+Subject: Re: [PATCH] hw/nvme: use GPtrArray for blocker_features
+To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ Klaus Jensen <its@irrelevant.dk>, Keith Busch <kbusch@kernel.org>, 
+ Jesper Devantier <foss@defmacro.it>, 
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,138 +116,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+On Thu, 9 Jul 2026 at 09:47, Alexander Mikhalitsyn
+<alexander@mihalicyn.com> wrote:
+>
+> From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+>
+> Let's use GPtrArray to build a list of blocker features and then
+> g_strjoinv() to build a final comma-delimited string.
+>
+> While previous approach was technically correct, it is fragile
+> (because we need to take care of static buffer size choice) and
+> Coverity dislikes it too.
+>
+> Note, that we use g_ptr_array_new() to allocate array which means
+> that GDestroyNotify callback is not set, so we can pass pointers to
+> a static memory like g_ptr_array_add(..., (gpointer) "SR-IOV") without
+> any problems as there won't be any attempt to free that memory.
+>
+> Resolves: Coverity CID 1663673
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+> ---
+>  hw/nvme/ctrl.c | 41 +++++++++++++++++------------------------
+>  1 file changed, 17 insertions(+), 24 deletions(-)
+>
+> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> index a67e1598891..95a586d82a9 100644
+> --- a/hw/nvme/ctrl.c
+> +++ b/hw/nvme/ctrl.c
+> @@ -9352,22 +9352,11 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
+>      }
+>  }
+>
+> -#define BLOCKER_FEATURES_MAX_LEN 256
+> -
+> -static inline void nvme_add_blocker_feature(char *blocker_features,
+> -                                            const char *feature)
+> -{
+> -    if (strlen(blocker_features) > 0) {
+> -        g_strlcat(blocker_features, ", ", BLOCKER_FEATURES_MAX_LEN);
+> -    }
+> -    g_strlcat(blocker_features, feature, BLOCKER_FEATURES_MAX_LEN);
+> -}
+> -
+>  static bool nvme_set_migration_blockers(NvmeCtrl *n, PCIDevice *pci_dev,
+>                                          Error **errp)
+>  {
+>      uint64_t unsupported_cap, cap = ldq_le_p(&n->bar.cap);
+> -    char blocker_features[BLOCKER_FEATURES_MAX_LEN] = "";
+> +    g_autoptr(GPtrArray) blocker_features = g_ptr_array_new();
+>      bool adm_cmd_security_checked = false;
+>      bool cmd_io_mgmt_checked = false;
+>      bool cmd_zone_checked = false;
+> @@ -9416,15 +9405,15 @@ static bool nvme_set_migration_blockers(NvmeCtrl *n, PCIDevice *pci_dev,
+>              }
+>
+>              if (namespaces_num > 1) {
+> -                nvme_add_blocker_feature(blocker_features,
+> -                                         "Namespace Attachment");
+> +                g_ptr_array_add(blocker_features,
+> +                                         (gpointer) "Namespace Attachment");
 
-Let's use GPtrArray to build a list of blocker features and then
-g_strjoinv() to build a final comma-delimited string.
+Is the cast here because we're dropping the const property of the
+literal string?
 
-While previous approach was technically correct, it is fragile
-(because we need to take care of static buffer size choice) and
-Coverity dislikes it too.
-
-Note, that we use g_ptr_array_new() to allocate array which means
-that GDestroyNotify callback is not set, so we can pass pointers to
-a static memory like g_ptr_array_add(..., (gpointer) "SR-IOV") without
-any problems as there won't be any attempt to free that memory.
-
-Resolves: Coverity CID 1663673
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
----
- hw/nvme/ctrl.c | 41 +++++++++++++++++------------------------
- 1 file changed, 17 insertions(+), 24 deletions(-)
-
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index a67e1598891..95a586d82a9 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -9352,22 +9352,11 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
-     }
- }
- 
--#define BLOCKER_FEATURES_MAX_LEN 256
--
--static inline void nvme_add_blocker_feature(char *blocker_features,
--                                            const char *feature)
--{
--    if (strlen(blocker_features) > 0) {
--        g_strlcat(blocker_features, ", ", BLOCKER_FEATURES_MAX_LEN);
--    }
--    g_strlcat(blocker_features, feature, BLOCKER_FEATURES_MAX_LEN);
--}
--
- static bool nvme_set_migration_blockers(NvmeCtrl *n, PCIDevice *pci_dev,
-                                         Error **errp)
- {
-     uint64_t unsupported_cap, cap = ldq_le_p(&n->bar.cap);
--    char blocker_features[BLOCKER_FEATURES_MAX_LEN] = "";
-+    g_autoptr(GPtrArray) blocker_features = g_ptr_array_new();
-     bool adm_cmd_security_checked = false;
-     bool cmd_io_mgmt_checked = false;
-     bool cmd_zone_checked = false;
-@@ -9416,15 +9405,15 @@ static bool nvme_set_migration_blockers(NvmeCtrl *n, PCIDevice *pci_dev,
-             }
- 
-             if (namespaces_num > 1) {
--                nvme_add_blocker_feature(blocker_features,
--                                         "Namespace Attachment");
-+                g_ptr_array_add(blocker_features,
-+                                         (gpointer) "Namespace Attachment");
-             }
- 
-             break;
-         }
-         case NVME_ADM_CMD_VIRT_MNGMT:
-             if (n->params.sriov_max_vfs) {
--                nvme_add_blocker_feature(blocker_features, "SR-IOV");
-+                g_ptr_array_add(blocker_features, (gpointer) "SR-IOV");
-             }
- 
-             break;
-@@ -9435,7 +9424,7 @@ static bool nvme_set_migration_blockers(NvmeCtrl *n, PCIDevice *pci_dev,
-             }
- 
-             if (pci_dev->spdm_port) {
--                nvme_add_blocker_feature(blocker_features, "SPDM");
-+                g_ptr_array_add(blocker_features, (gpointer) "SPDM");
-             }
- 
-             adm_cmd_security_checked = true;
-@@ -9469,7 +9458,7 @@ static bool nvme_set_migration_blockers(NvmeCtrl *n, PCIDevice *pci_dev,
- 
-             /* check for NVME_IOMS_MO_RUH_UPDATE */
-             if (n->subsys->params.fdp.enabled) {
--                nvme_add_blocker_feature(blocker_features, "FDP");
-+                g_ptr_array_add(blocker_features, (gpointer) "FDP");
-             }
- 
-             cmd_io_mgmt_checked = true;
-@@ -9504,8 +9493,8 @@ static bool nvme_set_migration_blockers(NvmeCtrl *n, PCIDevice *pci_dev,
-                 }
- 
-                 if (ns->params.zoned) {
--                    nvme_add_blocker_feature(blocker_features,
--                                             "Zoned Namespace");
-+                    g_ptr_array_add(blocker_features,
-+                                             (gpointer) "Zoned Namespace");
-                     break;
-                 }
-             }
-@@ -9525,24 +9514,28 @@ static bool nvme_set_migration_blockers(NvmeCtrl *n, PCIDevice *pci_dev,
-      * covered by unsupported_cap check.
-      */
-     if (NVME_CAP_CMBS(cap)) {
--        nvme_add_blocker_feature(blocker_features, "CMB");
-+        g_ptr_array_add(blocker_features, (gpointer) "CMB");
-         cap &= ~((uint64_t)CAP_CMBS_MASK << CAP_CMBS_SHIFT);
-     }
- 
-     if (NVME_CAP_PMRS(cap)) {
--        nvme_add_blocker_feature(blocker_features, "PMR");
-+        g_ptr_array_add(blocker_features, (gpointer) "PMR");
-         cap &= ~((uint64_t)CAP_PMRS_MASK << CAP_PMRS_SHIFT);
-     }
- 
-     unsupported_cap = cap & ~NVME_MIGRATION_SUPPORTED_CAP_BITS;
-     if (unsupported_cap) {
--        nvme_add_blocker_feature(blocker_features, "unknown capability");
-+        g_ptr_array_add(blocker_features, (gpointer) "unknown capability");
-     }
- 
-     assert(n->migration_blocker == NULL);
--    if (strlen(blocker_features) > 0) {
-+    if (blocker_features->len > 0) {
-+        g_autofree char *blocker_list = NULL;
-+
-+        g_ptr_array_add(blocker_features, NULL);
-+        blocker_list = g_strjoinv(", ", (void *)blocker_features->pdata);
-         error_setg(&n->migration_blocker,
--                   "Migration is not supported for %s", blocker_features);
-+                   "Migration is not supported for %s", blocker_list);
-         if (migrate_add_blocker(&n->migration_blocker, errp) < 0) {
-             return false;
-         }
--- 
-2.47.3
-
+thanks
+-- PMM
 
