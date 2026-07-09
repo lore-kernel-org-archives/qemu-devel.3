@@ -4,77 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6F35C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 13:23:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5286FC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 13:23:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whohm-0000La-BT; Thu, 09 Jul 2026 09:22:18 -0400
+	id 1whoiS-0000nS-GT; Thu, 09 Jul 2026 09:23:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1whohl-0000L5-0u
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 09:22:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1whoiQ-0000kl-94; Thu, 09 Jul 2026 09:22:58 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1whohj-0006Cz-51
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 09:22:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783603333;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=1z+rzWCKmZgMeoXLtJups2UO+1ErV3D9ZoDEB6/Kx3U=;
- b=NoI6DOPCRg4BIWbCrU/PpuFtxp2sD1v6nOG1qjPUvGwzrGT5mDxR7nSJUInbxugIHngf0Q
- qFvnJhayUltc243GnsdKcptmSUN5SW3mpPwv9BrHO8Ca4rAkf7Hx0Oa3hYLLDhBlPwUzOs
- da4sRRb4C3IbVoR7FN+jGTKYceqaCbs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-401-1gMFYh49OdSdHk-p8uGJ_g-1; Thu,
- 09 Jul 2026 09:22:12 -0400
-X-MC-Unique: 1gMFYh49OdSdHk-p8uGJ_g-1
-X-Mimecast-MFC-AGG-ID: 1gMFYh49OdSdHk-p8uGJ_g_1783603330
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BE2A0195606F; Thu,  9 Jul 2026 13:22:09 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 695B11800347; Thu,  9 Jul 2026 13:22:08 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id BA72021E6920; Thu, 09 Jul 2026 15:22:05 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1whoiN-0006Ma-Cq; Thu, 09 Jul 2026 09:22:58 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id C3F3759673B;
+ Thu, 09 Jul 2026 15:22:43 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id TuaZ3GDGXGeP; Thu,  9 Jul 2026 15:22:41 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id A7471596747; Thu, 09 Jul 2026 15:22:41 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id A3A5F596746;
+ Thu, 09 Jul 2026 15:22:41 +0200 (CEST)
+Date: Thu, 9 Jul 2026 15:22:41 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
 To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,  Jan Kiszka <jan.kiszka@siemens.com>,
- qemu-arm@nongnu.org,  BALATON Zoltan <balaton@eik.bme.hu>,
- qemu-ppc@nongnu.org,  Huacai Chen <chenhuacai@kernel.org>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,  Jiaxun Yang
- <jiaxun.yang@flygoat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org, 
+ Jan Kiszka <jan.kiszka@siemens.com>, qemu-arm@nongnu.org, 
+ qemu-ppc@nongnu.org, Huacai Chen <chenhuacai@kernel.org>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@mailo.com>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
 Subject: Re: A few Machines crash when "no default audio driver available"
 In-Reply-To: <CAFEAcA9goRQuxw3VD7AqUOHHTdOXu8MSfCxdQMBviE3QgGD58w@mail.gmail.com>
- (Peter Maydell's message of "Thu, 9 Jul 2026 14:01:19 +0100")
+Message-ID: <541af191-0693-b268-beed-a326e0fd515f@eik.bme.hu>
 References: <87o6gge6b0.fsf@pond.sub.org>
  <CAFEAcA9goRQuxw3VD7AqUOHHTdOXu8MSfCxdQMBviE3QgGD58w@mail.gmail.com>
-Date: Thu, 09 Jul 2026 15:22:05 +0200
-Message-ID: <87zf00cn7m.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,9 +67,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc: mainainters for "Overall Audio backends"
-Peter Maydell <peter.maydell@linaro.org> writes:
-
+On Thu, 9 Jul 2026, Peter Maydell wrote:
 > On Thu, 9 Jul 2026 at 12:44, Markus Armbruster <armbru@redhat.com> wrote:
 >>
 >> I stumbled over ARM machine musicpal, PPC machines pegasos1, pegasos2,
@@ -108,13 +83,22 @@ Peter Maydell <peter.maydell@linaro.org> writes:
 > Is this something we want to have be a possibility the devices
 > have to cope with? Can we have the "ignores all audio data"
 > backend be always available instead?
-
-There's plenty of precedence for /dev/null-like backends.
-
+>
 > Otherwise every audio device needs to cope with "there is no
 > audio backend available" and implement "do nothing with the
 > audio data" itself.
 
-Yes.
+I think the "no default audio driver available" error was returned from 
+the device but it was not propagated properly somewhere around 
+error_handle to become an error message to abort with so it's not 
+something the devices should care about but some problem in error 
+handling. Without -nodefaults there is a default audio device so this does 
+not happen but with -nodefaults you need to specify one explicitly. I 
+think the question is why the error is not propagated and exited with on 
+error_abort instead of crashing and is not something specific to these 
+devices or machines which are just reproducers of the error handling 
+issue.
 
+Regards,
+BALATON Zoltan
 
