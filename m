@@ -4,47 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA1F6C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 02:06:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C72E7C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 02:06:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whe98-0004ez-Vi; Wed, 08 Jul 2026 22:05:51 -0400
+	id 1whe97-0004ep-Ia; Wed, 08 Jul 2026 22:05:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1whe97-0004eo-B7
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 22:05:49 -0400
-Received: from out-186.mta0.migadu.com ([2001:41d0:1004:224b::ba])
+ (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1whe95-0004eN-8d
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 22:05:47 -0400
+Received: from out-172.mta0.migadu.com ([2001:41d0:1004:224b::ac])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1whe95-0006kF-5Q
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 22:05:49 -0400
+ (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1whe92-0006jq-P2
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 22:05:46 -0400
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
  include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1783562745;
+ t=1783562741;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=w3JZLxnO6XLta1pKoilZoueRwppuc8ig9aUa6rlyn2s=;
- b=VqvumEPX7QgEUUlPuWI9ATHBG+qi9nysIpwY0ZXXiUarZt64SdZ2rMyig+YmhjrmJU3mVA
- dGne5aye8u+sLJ6A42bcuSW95uJK+/DtxliAsIsReAQsFHze7/TKBIL6MNpOdG4CDx7GsC
- zXHa7lKz/pc+mXsz4g613eJEKrCzIJ8=
+ content-transfer-encoding:content-transfer-encoding;
+ bh=11VJzCJmNpneVi+9tRrTkSmP3PfhrWHRWs+ymedDS/Y=;
+ b=iZGnrtvv+qcMzhYg5+0oE/Jj3FNpx2+MaX3QxJw/DBVkJ1ILFbl55kO9hcHcYYRPE0r/RU
+ Q/LLVZ5UFzvJrplUMVBouIhsOKR3peplD6KNtm6wl+Zs9Sixkt8Fgq05oB1BvB2eUdqz1j
+ V0FUTfPoT1XJw/G9gyTkOJN1RrSaMUk=
 From: Tao Cui <cui.tao@linux.dev>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, pbonzini@redhat.com, cuitao@kylinos.cn,
  cui.tao@linux.dev
-Subject: [PATCH v1 1/2] accel/tcg: fix crash on instruction straddling
+Subject: [PATCH v1 0/2] accel/tcg: fix crash on instruction straddling
  address-space end
-Date: Thu,  9 Jul 2026 10:05:28 +0800
-Message-ID: <20260709020529.126652-2-cui.tao@linux.dev>
-In-Reply-To: <20260709020529.126652-1-cui.tao@linux.dev>
-References: <20260709020529.126652-1-cui.tao@linux.dev>
+Date: Thu,  9 Jul 2026 10:05:27 +0800
+Message-ID: <20260709020529.126652-1-cui.tao@linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=2001:41d0:1004:224b::ba;
- envelope-from=cui.tao@linux.dev; helo=out-186.mta0.migadu.com
+Received-SPF: pass client-ip=2001:41d0:1004:224b::ac;
+ envelope-from=cui.tao@linux.dev; helo=out-172.mta0.migadu.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -68,63 +65,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Tao Cui <cuitao@kylinos.cn>
 
-translator_ld() reads the bytes of a page-crossing instruction into a
-contiguous buffer. When computing the second page address it assumes the
-two pages are virtually contiguous (second = page0 + TARGET_PAGE_SIZE)
-and asserts that the read pointer pc is on that page.
+translator_ld() asserts that a page-crossing instruction reads its two
+pages from virtually-contiguous addresses (page0 + TARGET_PAGE_SIZE). On
+32-bit targets a guest can defeat this by executing an instruction at
+the very end of the address space, which wraps the second page back to
+the start; the assert fires and QEMU aborts. This is a guest-triggered
+host crash (DoS).
 
-On targets whose address space is narrower than vaddr (the 32-bit
-targets, e.g. i386 or ARM AArch32 Thumb), an instruction at the very end
-of the address space wraps the second page back to the start of the
-address space. The target advances its fetch PC as a target_ulong, so pc
-wraps to 0, while the linear page0 + TARGET_PAGE_SIZE stays at
-0x1_0000_0000; the assert fails and QEMU aborts. A guest can trigger this
-by mapping the last page executable and running a straddling instruction,
-i.e. a guest-triggered host crash (DoS).
+Patch 1 takes the second page from pc when the linear page0 +
+TARGET_PAGE_SIZE does not land on pc's page, handling both the normal
+contiguous case and the wraparound case without needing the
+address-space width.
 
-Instead of asserting, take the second page from pc: if the linear
-page0 + TARGET_PAGE_SIZE does not land on pc's page, use pc's page. This
-is correct for both the normal contiguous case and the wraparound case,
-without needing to know the address-space width.
+Patch 2 adds a multiboot regression test (tests/multiboot/wraparound)
+that runs on qemu-system-i386 and aborts without the fix.
 
-Tested with a minimal i386 multiboot payload that executes an instruction
-at 0xfffffffe: before this change QEMU aborts (translator.c:296), after it
-translates and runs normally.
+Tao Cui (2):
+  accel/tcg: fix crash on instruction straddling address-space end
+  tests/multiboot: add regression test for translator_ld wraparound
 
-Signed-off-by: Tao Cui <cuitao@kylinos.cn>
----
- accel/tcg/translator.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ accel/tcg/translator.c         | 16 ++++++------
+ tests/multiboot/Makefile       |  7 +++++-
+ tests/multiboot/run_test.sh    |  8 +++++-
+ tests/multiboot/wraparound.c   | 46 ++++++++++++++++++++++++++++++++++
+ tests/multiboot/wraparound.out |  5 ++++
+ 5 files changed, 72 insertions(+), 10 deletions(-)
+ create mode 100644 tests/multiboot/wraparound.c
+ create mode 100644 tests/multiboot/wraparound.out
 
-diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
-index cd7d079fe0..750c132bbc 100644
---- a/accel/tcg/translator.c
-+++ b/accel/tcg/translator.c
-@@ -283,16 +283,16 @@ static bool translator_ld(CPUArchState *env, DisasContextBase *db,
-     }
- 
-     /*
--     * The read must conclude on the second page and not extend to a third.
--     *
--     * TODO: We could allow the two pages to be virtually discontiguous,
--     * since we already allow the two pages to be physically discontiguous.
--     * The only reasonable use case would be executing an insn at the end
--     * of the address space wrapping around to the beginning.  For that,
--     * we would need to know the current width of the address space.
--     * In the meantime, assert.
-+     * The read must conclude on the second page and must not extend to a
-+     * third.  An instruction that straddles the end of the address space
-+     * wraps the second page back to the start of the address space, so the
-+     * linear page0 + TARGET_PAGE_SIZE does not land on pc's page; in that
-+     * case take the second page from pc instead of asserting.
-      */
-     base = (base & TARGET_PAGE_MASK) + TARGET_PAGE_SIZE;
-+    if (((base ^ pc) & TARGET_PAGE_MASK) != 0) {
-+        base = pc & TARGET_PAGE_MASK;
-+    }
-     assert(((base ^ pc) & TARGET_PAGE_MASK) == 0);
-     assert(((base ^ last) & TARGET_PAGE_MASK) == 0);
-     host = db->host_addr[1];
 -- 
 2.43.0
 
