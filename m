@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24E83C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 02:11:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24279C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 02:13:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wheE3-0003IN-7m; Wed, 08 Jul 2026 22:10:55 -0400
+	id 1wheFm-0003nj-5Z; Wed, 08 Jul 2026 22:12:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1wheE1-0003I7-1W
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 22:10:53 -0400
-Received: from smtp186.sjtu.edu.cn ([202.120.2.186])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1wheDw-0001bW-5h
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 22:10:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sjtu.edu.cn;
- s=default; t=1783563037;
- bh=MF+5HdxhrCtx+4DJGVG1v2w1BdLxLL7jBJKB6w3wW8E=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=yJYbz0jxqzSGhqBP+iJ1x7yelhGB2LQytMfjDoH1psm6bbIOsaoxmt+CUh1dAKO9g
- RoaDW6EsQR4xlo93KDFuLIGYPLAKDTsbc8N061z2/QoOM5fx5FOy/gP5fg2oZu5Wq4
- +TBvq5gO6eciQ/1VzEEDFKst0RLzu4VE3cAZKHhxvvMCpBoq+K7rfNJucLEgT12yJG
- u0kywdWJ2uiBtR0mym6nrc96axHJqwXYyNXIXcbQJs9fXzVnrJDX52NcLq6QNkVcqy
- 3clYAxcAhozjQGBtzQDN0hi0ZQpH1D65wpbcZCsP8rAR9Tv4MqFB1i09OhJubvHEUK
- 7a8G1jvVo/ZPQ==
-Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
- by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id EEA3B30015A;
- Thu,  9 Jul 2026 02:10:36 +0000 (UTC)
-Received: from [10.0.1.62] (unknown [202.120.40.100])
- by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 3A255380C9A;
- Thu,  9 Jul 2026 10:10:32 +0800 (CST)
-Message-ID: <ac710e66-0e76-4ea2-a45e-57ad569fb8ee@sjtu.edu.cn>
-Date: Thu, 9 Jul 2026 10:10:31 +0800
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1wheFj-0003nI-AA
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 22:12:39 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1wheFg-0002WO-EO
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 22:12:39 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Bx1+qHA09qa7ABAA--.7139S3;
+ Thu, 09 Jul 2026 10:12:23 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJBxb8eGA09qRFwGAA--.11153S2;
+ Thu, 09 Jul 2026 10:12:22 +0800 (CST)
+Subject: Re: [PATCH v2 0/4] target/loongarch: add LVZ support for TCG
+To: SignKirigami <prcups@krgm.moe>, qemu-devel@nongnu.org
+Cc: xianglai li <lixianglai@loongson.cn>,
+ Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+References: <cover.1782194683.git.prcups@krgm.moe>
+ <FlLMXq5RQ6axxIAn2ivsvQ@krgm.moe>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <964c2e79-6225-44c8-a77d-1ff8efff8131@loongson.cn>
+Date: Thu, 9 Jul 2026 10:12:17 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 2/2] docs/about/emulation: document the dlcall plugin
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-devel <qemu-devel@nongnu.org>
-Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
- Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
- Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
-References: <20260709011945.282457-1-functioner@sjtu.edu.cn>
- <20260709011945.282457-3-functioner@sjtu.edu.cn>
- <6573ff2c-da32-496a-bbbd-28ebce020a22@oss.qualcomm.com>
- <8990dc77-d8af-47aa-abe4-8d279d9e2da7@sjtu.edu.cn>
- <62a83c4d-c26f-4b0c-b59f-62b6cc39b634@oss.qualcomm.com>
-From: Ziyang Zhang <functioner@sjtu.edu.cn>
-In-Reply-To: <62a83c4d-c26f-4b0c-b59f-62b6cc39b634@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <FlLMXq5RQ6axxIAn2ivsvQ@krgm.moe>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.120.2.186;
- envelope-from=functioner@sjtu.edu.cn; helo=smtp186.sjtu.edu.cn
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowJBxb8eGA09qRFwGAA--.11153S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7CryUGr4UWw1rXw4kZry3Jrc_yoW8tw1rpw
+ 1xur1rKay8CrZFyrn3Xa4Yqwn8Xrn7Gw4Iq3Wftry8Cw4Yqry7ZF1kt3929F1UJa4UGryI
+ qF1Fk34UuF48ZacCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8xuctUU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.97,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,231 +82,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 8 Jul 2026 18:59:01 -0700, Pierrick Bouvier wrote:
-> On 7/8/26 6:47 PM, Ziyang Zhang wrote:
->>
->>
->> On Wed, 8 Jul 2026 18:35:09 -0700, Pierrick Bouvier wrote:
->>> On 7/8/2026 6:19 PM, Ziyang Zhang wrote:
->>>> Document the dlcall plugin under Example Plugins: what it does, the 
->>>> trusted-
->>>> guests and guest_base == 0 constraints, how to load it, and a 
->>>> pointer to
->>>> Lorelei, one end-to-end userspace implementation, for the toolchain 
->>>> and a
->>>> runnable example.
->>>>
->>>> Co-authored-by: Kailiang Xu <xukl2019@sjtu.edu.cn>
->>>> Co-authored-by: Mingyuan Xia <xiamy@ultrarisc.com>
->>>> Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
->>>> ---
->>>>    docs/about/emulation.rst | 202 ++++++++++++++++++++++++++++++++++ 
->>>> +++++
->>>>    1 file changed, 202 insertions(+)
->>>>
->>>> diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
->>>> index 3b4c365933..b8fdc88a45 100644
->>>> --- a/docs/about/emulation.rst
->>>> +++ b/docs/about/emulation.rst
->>>> @@ -1046,6 +1046,208 @@ Count traps
->>>>    This plugin counts the number of interrupts (asynchronous 
->>>> events), exceptions
->>>>    (synchronous events) and host calls (e.g. semihosting) per cpu.
->>>> +Dynamic Linking Call
->>>> +....................
->>>> +
->>>> +``contrib/plugins/dlcall.c``
->>>> +
->>>> +This plugin provides a dynamic linking function call interception 
->>>> mechanism
->>>> +for linux-user guests: the guest hands a call off to the host, 
->>>> where the plugin
->>>> +runs native code in its place instead of the guest emulating it. 
->>>> Interception
->>>> +alone enables several uses, for instance tracing or auditing guest 
->>>> calls.
->>>> +One use is acceleration by leveraging the host's native shared 
->>>> libraries. For
->>>> +example, a thunk layer can run the stock zlib ``minizip`` utility 
->>>> under
->>>> +emulation while forwarding its ``deflate`` calls to the host's 
->>>> native zlib
->>>> +library (libz). This avoids emulating those selected library calls 
->>>> instruction
->>>> +by instruction.
->>>> +
->>>> +The guest issues a reserved "magic" system call (4096 by default, 
->>>> configurable
->>>> +with ``syscall_num=N``) whose first argument selects a pass-through 
->>>> operation:
->>>> +dlopen/dlclose a host library, dlsym a symbol, and invoke a 
->>>> resolved host
->>>> +function. The plugin performs the operation on the host and 
->>>> consumes the
->>>> +syscall, so the real kernel never sees it.
->>>> +
->>>> +.. warning::
->>>> +
->>>> +   Trusted guests only. The guest can load arbitrary host libraries 
->>>> and run
->>>> +   arbitrary code in the QEMU host process. The plugin is not a 
->>>> sandbox and
->>>> +   provides no isolation. It also requires ``guest_base == 0`` 
->>>> (qemu-user's
->>>> +   default), as guest pointers are dereferenced as host addresses 
->>>> with no
->>>> +   translation.
->>>> +
->>>> +The plugin intentionally keeps the QEMU side lightweight and knows 
->>>> nothing
->>>> +about any particular library or its calling convention. Turning a 
->>>> real library
->>>> +into working thunks, including argument marshalling, callbacks and 
->>>> variadic
->>>> +functions, is done entirely in userspace, and any toolchain can 
->>>> implement the
->>>> +interface.
->>>> +
->>>> +Loading the plugin is all that is required from QEMU's side:
->>>> +
->>>> +.. code-block:: shell
->>>> +
->>>> +   qemu-x86_64 -plugin contrib/plugins/libdlcall.so <guest- 
->>>> program> ...
->>>> +
->>>> +`Lorelei <https://github.com/rover2024/lorelei>`_ is one end-to-end 
->>>> userspace
->>>> +implementation of this: it provides the guest and host runtimes and an
->>>> +automated toolchain that generates the thunks from a library's 
->>>> headers, so guest
->>>> +library calls run on the host's native libraries. It supports an 
->>>> x86_64 guest
->>>> +running on an x86_64, aarch64 or riscv64 host.
->>>> +
->>>> +A minimal end-to-end example uses a one-function library, 
->>>> ``libhello.so``, built
->>>> +two ways: the guest build tags its output ``from guest`` and the 
->>>> host build tags
->>>> +it ``from host``. An unmodified guest program ``main`` calls 
->>>> ``hello("world",
->>>> +7)``, and the thunk makes that same binary reach the host build in 
->>>> place of its
->>>> +own. The sources live under ``src/``:
->>>> +
->>>> +.. code-block:: c
->>>> +
->>>> +   /* src/hello.h */
->>>> +   #ifdef __cplusplus
->>>> +   extern "C" {
->>>> +   #endif
->>>> +   void hello(const char *name, int lucky);
->>>> +   #ifdef __cplusplus
->>>> +   }
->>>> +   #endif
->>>> +
->>>> +.. code-block:: c
->>>> +
->>>> +   /* src/hello_guest.c */
->>>> +   #include "hello.h"
->>>> +   #include <stdio.h>
->>>> +
->>>> +   void hello(const char *name, int lucky)
->>>> +   {
->>>> +       printf("hello from guest: %s, lucky %d\n", name, lucky);
->>>> +       fflush(stdout);
->>>> +   }
->>>> +
->>>> +.. code-block:: c
->>>> +
->>>> +   /* src/hello_host.c */
->>>> +   #include "hello.h"
->>>> +   #include <stdio.h>
->>>> +
->>>> +   void hello(const char *name, int lucky)
->>>> +   {
->>>> +       printf("hello from host: %s, lucky %d\n", name, lucky);
->>>> +       fflush(stdout);
->>>> +   }
->>>> +
->>>> +.. code-block:: c
->>>> +
->>>> +   /* src/main.c */
->>>> +   #include "hello.h"
->>>> +
->>>> +   int main(void)
->>>> +   {
->>>> +       hello("world", 7);
->>>> +       return 0;
->>>> +   }
->>>> +
->>>> +Lorelei ships a prebuilt toolchain (a "devkit") in its releases. 
->>>> Download the
->>>> +one for your host and unpack it:
->>>> +
->>>> +.. code-block:: shell
->>>> +
->>>> +   # <arch> is your host architecture: x86_64, aarch64 or riscv64
->>>> +   wget https://github.com/rover2024/lorelei/releases/download/ 
->>>> v<version>/lorelei-devkit-<arch>-<version>.tar.xz
->>>> +   tar -xf lorelei-devkit-<arch>-<version>.tar.xz
->>>> +   DEVKIT=lorelei-devkit-<arch>
->>>> +
->>>> +Build the guest ``libhello.so`` (x86_64) and the host 
->>>> ``libhello.so`` (this
->>>> +host's own architecture), then the guest program. ``main`` links 
->>>> the guest
->>>> +library with an rpath, so by default it loads that one:
->>>> +
->>>> +.. code-block:: shell
->>>> +
->>>> +   mkdir -p build/guest build/host
->>>> +   $DEVKIT/bin/x86_64-linux-gnu-clang -shared -fPIC -o build/guest/ 
->>>> libhello.so src/hello_guest.c
->>>> +   cc -shared -fPIC -o build/host/libhello.so src/hello_host.c
->>>> +   $DEVKIT/bin/x86_64-linux-gnu-clang src/main.c -Isrc -Lbuild/ 
->>>> guest -lhello \
->>>> +       -Wl,-rpath,'$ORIGIN' -o build/guest/main
->>>> +
->>>
->>> Why is rpath needed? We don't want necessarily to find the library
->>> relative to where the binary is located.
->>>
->>> In practice, we'll have:
->>> - the binary
->>> - folder A containing host library
->>> - folder B containing thunks
->>>
->>> A and B are not related to binary location.
->> This example ships the guest libhello.so which is at the same directory
->> as the main executable, so I add the rpath to make QEMU run the original
->> program without specifying anything.
->>
->>>> +Run it under qemu. It loads its own guest library:
->>>> +
->>>> +.. code-block:: shell
->>>> +
->>>> +   qemu-x86_64 build/guest/main
->>>> +
->>>> +which prints::
->>>> +
->>>> +   hello from guest: world, lucky 7Would your suggestion be to not 
->>>> include rpath when compiling main, and
->> then set LD_LIBRARY_PATH to the library path when running the original
->> program?
->>
->> qemu-x86_64 -E LD_LIBRARY_PATH=build/guest build/guest/main
->>
->> Like this?
-> 
-> Yes, exactly.
-> 
-> By doing this, the end goal is to see that we can dynamically switch 
-> from the original host library to the thunks simply by switching this 
-> variable.
-> 
-> Regards,
-> Pierrick
 
-Thank you for the explanation. I will send out PATCH v9, and then I will
-update Lorelei.
+
+On 2026/7/7 下午12:40, SignKirigami wrote:
+> On 2026年6月23日星期二 中国标准时间 14:16:11，SignKirigami wrote：
+>> This patch implements Loongson VirtualiZation (LVZ) extension support for LoongArch's TCG target. With this patch, it is now possible to start a nested KVM-accelerated virtual machine on a TCG-emulated virtual machine.
+>>
+>> Signed-off-by: SignKirigami <prcups@krgm.moe>
+>> Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+>>
+>> SignKirigami (4):
+>>    target/loongarch: Add LVZ feature definitions and CPU structures
+>>    target/loongarch: Add guest CSR table and VM-level CSR infrastructure
+>>    target/loongarch: Add LVZ MMU, TCG infrastructure and guest support
+>>    target/loongarch: Add LVZ instruction decode, translation and
+>>      disassembly
+>>
+>>   target/loongarch/arch_dump.c                  |   6 +-
+>>   target/loongarch/cpu-csr.h                    |  42 ++
+>>   target/loongarch/cpu-mmu.h                    |  39 +-
+>>   target/loongarch/cpu.c                        | 279 ++++++---
+>>   target/loongarch/cpu.h                        |  62 +-
+>>   target/loongarch/cpu_helper.c                 |  87 ++-
+>>   target/loongarch/csr.c                        | 124 +++-
+>>   target/loongarch/csr.h                        |  12 +-
+>>   target/loongarch/disas.c                      |  16 +
+>>   target/loongarch/insns.decode                 |  14 +
+>>   target/loongarch/internals.h                  |   8 +-
+>>   target/loongarch/machine.c                    | 125 +++-
+>>   target/loongarch/tcg/constant_timer.c         |  74 ++-
+>>   target/loongarch/tcg/csr_helper.c             | 136 ++++-
+>>   target/loongarch/tcg/helper.h                 |  30 +-
+>>   .../tcg/insn_trans/trans_extra.c.inc          |   2 +-
+>>   .../tcg/insn_trans/trans_privileged.c.inc     | 353 ++++++++++-
+>>   target/loongarch/tcg/op_helper.c              |  45 +-
+>>   target/loongarch/tcg/tcg_cpu.c                |  65 +-
+>>   target/loongarch/tcg/tcg_loongarch.h          |   3 +-
+>>   target/loongarch/tcg/tlb_helper.c             | 577 +++++++++++++-----
+>>   target/loongarch/tcg/translate.c              |   6 +-
+>>   target/loongarch/translate.h                  |   2 +
+>>   23 files changed, 1747 insertions(+), 360 deletions(-)
+>>
+>>
+> I 'm sorry for not wrapping this cover message, and will fix it on next version.
+> Is there any progress on this patch serie?
+I suggest that split this patch into smaller patches, so that almost 
+every patch is easy to review. It is really hard to review carefully 
+with big patch :(
+
+Regards
+Bibo Mao
+> 
+> Regards
+> SignKirigami
+> 
+> 
+> 
+
 
