@@ -4,94 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C82C9C44501
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB226C44507
 	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 16:03:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whrDV-0006cO-K3; Thu, 09 Jul 2026 12:03:13 -0400
+	id 1whrCt-0005lR-ES; Thu, 09 Jul 2026 12:02:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1whrDP-0006Yc-GY; Thu, 09 Jul 2026 12:03:08 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1whrCZ-0005aB-1Z
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 12:02:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1whrDN-0004TS-6N; Thu, 09 Jul 2026 12:03:07 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 7AB6B59673B;
- Thu, 09 Jul 2026 18:03:00 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id YM5uTRnouatE; Thu,  9 Jul 2026 18:02:58 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 0ED50596742; Thu, 09 Jul 2026 18:02:58 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 0B492596741;
- Thu, 09 Jul 2026 18:02:58 +0200 (CEST)
-Date: Thu, 9 Jul 2026 18:02:58 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Markus Armbruster <armbru@redhat.com>
-cc: qemu-devel@nongnu.org, Aditya Gupta <adityag@linux.ibm.com>, 
- Alexander Graf <graf@amazon.com>, Alexandre Iooss <erdnaxe@crans.org>, 
- Alexey Kardashevskiy <aik@ozlabs.ru>, 
- Alistair Francis <Alistair.Francis@wdc.com>, 
- Alistair Francis <alistair@alistair23.me>, 
- Antony Pavlov <antonynpavlov@gmail.com>, 
- Artyom Tarasenko <atar4qemu@gmail.com>, 
- Bernhard Beschow <shentey@gmail.com>, Bibo Mao <maobibo@loongson.cn>, 
- Brian Cain <brian.cain@oss.qualcomm.com>, 
- Chao Liu <chao.liu@processmission.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>, 
- =?ISO-8859-15?Q?Cl=E9ment_Chigot?= <chigot@adacore.com>, 
- =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, 
- Dorjoy Chowdhury <dorjoychy111@gmail.com>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Eric Farman <farman@linux.ibm.com>, Farhan Ali <alifm@linux.ibm.com>, 
- Felipe Balbi <balbi@kernel.org>, 
- Francisco Iglesias <francisco.iglesias@amd.com>, 
- Frederic Konrad <konrad.frederic@yahoo.fr>, 
- Gaurav Sharma <gaurav.sharma_7@nxp.com>, Gautam Gala <ggala@linux.ibm.com>, 
- Glenn Miles <milesg@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>, 
- Hao Wu <wuhaotsh@google.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Helge Deller <deller@gmx.de>, Hendrik Brueckner <brueckner@linux.ibm.com>, 
- =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
- Huacai Chen <chenhuacai@kernel.org>, Jan Kiszka <jan.kiszka@web.de>, 
- Jared Rossi <jrossi@linux.ibm.com>, Joel Stanley <joel@jms.id.au>, 
- Laurent Vivier <laurent@vivier.eu>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, Max Filippov <jcmvbkbc@gmail.com>, 
- Michael Rolnik <mrolnik@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Niek Linnenbank <nieklinnenbank@gmail.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@mailo.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Ran Wang <wangran@bosc.ac.cn>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>, 
- Samuel Tardieu <sam@rfc1149.net>, Sergio Lopez <slp@redhat.com>, 
- Song Gao <17746591750@163.com>, Stafford Horne <shorne@gmail.com>, 
- Subbaraya Sundeep <sundeep.lkml@gmail.com>, 
- Thomas Huth <th.huth+qemu@posteo.eu>, Tyrone Ting <kfting@nuvoton.com>, 
- qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, 
- qemu-s390x@nongnu.org
-Subject: Re: Call to clean up QOM onboard devices lacking a parent
-In-Reply-To: <87se5scipx.fsf@pond.sub.org>
-Message-ID: <17c7f91b-8935-8ebf-a982-f91df755af81@eik.bme.hu>
-References: <87se5scipx.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1whrCT-0004PR-Vu
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 12:02:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783612928;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SZ4jwR/MhhnjHz2PbFK3r1/kvcPHuNb9esx6XuUrq8s=;
+ b=cps1jaJD0IzMYXwD+3AnvJMYBaF+B+CjmWL2ucjgpApVEtmT6HKXkVSgmLA2fXEUzXVWfE
+ XlHAy/q0LvV299N6hkVnoS4T4hTATuhPuywEwfGX2W0DYVL52mcI3TKwn++PHWpj8ya4NK
+ 88zs7TQ/1tpvKcc0O+zUup/ccWHDjOM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-468-YDxybqXbMAq9u4fGqIuWeQ-1; Thu,
+ 09 Jul 2026 12:02:05 -0400
+X-MC-Unique: YDxybqXbMAq9u4fGqIuWeQ-1
+X-Mimecast-MFC-AGG-ID: YDxybqXbMAq9u4fGqIuWeQ_1783612924
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0D1111800597; Thu,  9 Jul 2026 16:02:04 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.49.59])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CA0E318005A3; Thu,  9 Jul 2026 16:02:01 +0000 (UTC)
+Date: Thu, 9 Jul 2026 17:01:58 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH v2 2/4] tests/docker: add support for podman remote access
+Message-ID: <ak_F9r-TdJSq8f5m@redhat.com>
+References: <20260210163556.713841-1-berrange@redhat.com>
+ <20260210163556.713841-3-berrange@redhat.com>
+ <cbc2e0d7-72d6-4350-a906-e0003e8b5964@oss.qualcomm.com>
+ <ak_A20foem8Ry_-M@redhat.com>
+ <360aa513-7d40-4a49-babc-f579a1ecf441@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <360aa513-7d40-4a49-babc-f579a1ecf441@oss.qualcomm.com>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,64 +90,134 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Jul 09, 2026 at 08:55:08AM -0700, Pierrick Bouvier wrote:
+> On 7/9/2026 8:40 AM, Daniel P. Berrangé wrote:
+> > On Thu, Jul 09, 2026 at 07:48:14AM -0700, Pierrick Bouvier wrote:
+> >> On 2/10/2026 8:35 AM, Daniel P. Berrangé wrote:
+> >>> When a developer's environment is already within a podman container it
+> >>> is not possible to use 'podman' again to create containers. It will
+> >>> usually result in wierd errors such as:
+> >>>
+> >>>   Error: fatal error, invalid internal status, unable to create a new pause process: cannot re-exec process to join the existing user namespace. Try running "podman system migrate" and if that doesn't work reboot to recover
+> >>>
+> >>> Podman offers the ability to talk to a daemon outside the container,
+> >>> however, which could be leveraged by QEMU.
+> >>>
+> >>> This can be used by invoking "podman --remote", or equivalently the
+> >>> separate "podman-remote" binary:
+> >>>
+> >>>   https://github.com/containers/podman/blob/main/docs/tutorials/remote_client.md
+> >>>
+> >>> The current 'podman version' check is insufficient to detect the
+> >>> inability to launch containers, so it is replaced with the stronger
+> >>> 'podman info' check.
+> >>>
+> >>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> >>> ---
+> >>>  tests/docker/docker.py | 10 ++++++----
+> >>>  1 file changed, 6 insertions(+), 4 deletions(-)
+> >>>
+> >>> diff --git a/tests/docker/docker.py b/tests/docker/docker.py
+> >>> index ff68c7bf6f..9e18b984f4 100755
+> >>> --- a/tests/docker/docker.py
+> >>> +++ b/tests/docker/docker.py
+> >>> @@ -76,14 +76,16 @@ def _guess_engine_command():
+> >>>      commands = []
+> >>>  
+> >>>      if USE_ENGINE in [EngineEnum.AUTO, EngineEnum.PODMAN]:
+> >>> -        commands += [["podman"]]
+> >>> +        commands += [["podman"], ["podman-remote"], ["podman", "--remote"]]
+> >>>      if USE_ENGINE in [EngineEnum.AUTO, EngineEnum.DOCKER]:
+> >>>          commands += [["docker"], ["sudo", "-n", "docker"]]
+> >>>      for cmd in commands:
+> >>>          try:
+> >>> -            # docker version will return the client details in stdout
+> >>> -            # but still report a status of 1 if it can't contact the daemon
+> >>> -            if subprocess.call(cmd + ["version"],
+> >>> +            # 'version' is not sufficient to prove a working binary
+> >>> +            # for podman. 'info' is a stronger check that is more
+> >>> +            # likely to correlate with ability to create containers,
+> >>> +            # and required to detect the need for podman remote
+> >>> +            if subprocess.call(cmd + ["info"],
+> >>>                                 stdout=DEVNULL, stderr=DEVNULL) == 0:
+> >>>                  return cmd
+> >>>          except OSError:
+> >>
+> >> Taking a look at why tcg tests are slow to compile, I reached this
+> >> commit. It seems like that calling 'podman info' is 5 to 10 times slower
+> >> than calling 'podman version'.
+> >> Thus, a container run now takes +1s when it was 0.2 before.
+> >>
+> >> On my setup, podman (remote) version fails correctly if it can't
+> >> establish a connection.
+> >>
+> >> The commit description briefly says
+> >> ```
+> >> The current 'podman version' check is insufficient to detect the
+> >> inability to launch containers, so it is replaced with the stronger
+> >> 'podman info' check.
+> >> ```
+> >> but it's not what I observed.
+> >>
+> >> Do you have more information about what is the exact reason we can't use
+> >> 'podman version' for podman-remote?
+> > 
+> > My developer env involves toolbox, which is a wrapper around podman:
+> > 
+> > "podman version" is not an operational check - it is effectively
+> > nothing more than a variant of command line "help". Just shows
+> > the binary can print to stdout.
+> > 
+> > By contrast "docker version" is useful as IIUC it shows you can
+> > connect to docker daemon, but podman is daemonless so the 'version'
+> > chck doesn't offer any useful proof.
+> > 
+> > "podman info" is an operational check that correlates with the
+> > ability to actually create containers.
+> > 
+> > ⚙️  [host:fedora-44 ~]$ toolbox enter almalinux-toolbox-9 
+> > ⚙️  [podman:almalinux-9.8 ~]$ sudo dnf -y install podman
+> > ⚙️  [podman:almalinux-9.8 ~] podman version
+> > Client:       Podman Engine
+> > Version:      5.8.2
+> > API Version:  5.8.2
+> > Go Version:   go1.26.3 (Red Hat 1.26.3-1.el9_8)
+> > Built:        Tue Jun 16 23:52:20 2026
+> > OS/Arch:      linux/amd64
+> > 
+> > ⚙️  [podman:almalinux-9.8 ~]$ podman info
+> > Error: fatal error, invalid internal status, unable to create a new pause process: cannot re-exec process to join the existing user namespace. Try running "podman system migrate" and if that doesn't work reboot to recover
+> > 
+> > ⚙️  [podman:almalinux-9.8 ~] $ podman --remote info
+> > OS: linux/amd64
+> > provider: qemu
+> > version: 5.8.2
+> > ..snip...
+> >
+> 
+> In this case, isn't the problem is that the environment should not have
+> podman installed if it can't actually create containers?
 
+podman *can* create containers by using the '--remote' flag, which
+is what we made work in QEMU.
 
-On Thu, 9 Jul 2026, Markus Armbruster wrote:
-> A QOM object must be the child of exactly one parent.  This defines the
-> QOM composition tree.  The link from parent to child is a property of
-> the parent, and therefore has a name that is unique within its parent.
-> An object's canonical QOM path is these names on the path from root to
-> object in the QOM composition tree separated by '/'.
->
-> For devices:
->
-> * If a device is plugged in with -device / device_add, and it has an ID,
->  we make it a child of /machine/peripheral/ with name ID.  If it
->  doesn't have an ID, we make it a child of /machine/peripheral-anon/
->  with name device[N], where N counts up from zero.  The canonical QOM
->  path /machine/peripheral/ID is stable.  The canonical QOM path
->  /machine/peripheral-anon/device[N] isn't: it depends on the number of
->  devices already there.
->
-> * If a device is part of another device, it should be its child.  The
->  child's canonical QOM path is the parent's plus '/CHILD-NAME'.  Stable
->  as long as the parent's path and the child name are.
->
-> * "Should" because we have a lot of code that fails to pick the parent.
->  When such a device gets realized, we make it a child of
->  /machine/unattached/ orphanage with name device[N], where N counts up
->  from zero.  The canonical QOM path /machine/unattached/device[N]
->  depends on the number of children already in the orphanage, which
->  makes it unstable.
->
->  Letting code get away with not picking a parent was a mistake.  I
->  guess it "saved" us some thinking about what's part of what when
->  converting existing devices to QOM.  In other words, it enabled sloppy
->  hardware modeling.  We've been "saving" thinking ever since.
->
->  I want /machine/unattached/ to be empty.  If an onboard device isn't
->  part of another device, put it into /machine/ with a sensible name.
+> Considering this, I think it would be better to have a "fast" default,
+> that only checks version, and leave the rest to the user to make sure
+> their env is correctly configured (or that they remove podman if that's
+> not the case).
 
-The last time this came up I've asked a few questions but did not get an 
-answer:
+My env is correctly configured so that podman --remote works. Doing
+onmly a version check will make QEMU not work once more.
 
-1. What's the use of the QOM composition tree? I never needed it and apart 
-from being able to admire it in info qom-tree I don't know if it's used 
-for anything. For a long time I did not even know about info qom-tree 
-because I only needed info qtree and info mtree and rarely if ever need to 
-look at the qom-tree. If it has no real use I'm happy to not think about 
-it.
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
-2. What is a QOM parent? There were proposals to parent devices to their 
-bus if they have any, that's what qtree shows anyway. If it's something 
-else it should be better defined somewhere.
-
-Without getting answers for these questions I don't think I'm able to fix 
-the machines I maintain.
-
-Regards,
-BALATON Zoltan
 
