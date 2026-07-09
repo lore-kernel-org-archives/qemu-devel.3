@@ -4,92 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BE8BC44501
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 13:51:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC6CAC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 13:53:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whp9H-0001Zq-5o; Thu, 09 Jul 2026 09:50:43 -0400
+	id 1whpBK-00021F-Ay; Thu, 09 Jul 2026 09:52:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1whp9G-0001Zi-4Z
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 09:50:42 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1whpBH-00020O-1v
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 09:52:47 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1whp9C-0007pn-0h
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 09:50:41 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-475417f010dso864419f8f.2
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 06:50:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1whpBE-0008H3-Dp
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 09:52:46 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-698c0ff45b5so1557735a12.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 06:52:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783605156; cv=none;
+ d=google.com; s=arc-20260327;
+ b=X2S8cNYP4deMQcQLO9FK3lfwIXWz1nsZwKVowpMaLETn0LUgcIrHkBNohGomJceF62
+ F7gfg8Pi9rkW14IrY57uYxh48eC9zFNOa96ZVBdqDFJTQ277Tv7Hlm7C/jQl/n9Ct3gA
+ Qbep1CMwTWry4ZvxJYgyzrDLeRYPciXtuIFyDoFmEwnxY8pCn1j6+BDTIcIV8n7B4j9T
+ cC167lwvXhOh0PTjFk7iL8RYiNwIZ29foQ3X5h9bLYizgEC3zLlS7ky3W3w01aUwUlB6
+ zZwDPSstcUQs3MPYMT/yKHkce0AZZmxaBOyvGsMwr65PYWcZtNCNq/aRxXmbXUwVtgXh
+ A83w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=5cuGQR1+63nqgwesx/JZfl0oTpSQd/0m/0QKYn2lGzE=;
+ fh=qty3g77Sl39ix/vs6vEQferIpKkxxHZnWW1uZOZG04Y=;
+ b=HJPsKBxl3Bes2PqhDirnPsPqWqIwsv0xCp2m924WgVHtwBPq/D1H3KJyW/wGJF8iZ/
+ EF70YKvzP+WWC2ES9obuF+RWZA0tjWCItWiCvX7MtUqLDAP+ayvsqW4Y+zy+4paKYR7B
+ rPyPP3vTmHPL8y6RJVurz6gkTf5iaPTLva1P6GnRk1qfzhpVtg2RGcCLKvVPDNq2OTte
+ UN0R6dgnsBREpxH/InUzlMMcnpRfFXLOJjTFHn3tOSuN1xgA9QXRHHV4tOTG8nXw203m
+ scDdy6P88yjWhvawuaczAkxcbaBlueXxJkkmZWQmV4QbqXS7RmBQMRm3ct7Y6d4TGqFE
+ OlYQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783605034; x=1784209834; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=gArTuChALq1WJv9KKsDqn8DTz0CVPx7DfVtjVpVisFo=;
- b=ZnMmyDFURbSDCRx2hG7Dtbnsyyvq7nYbdFxx8Eo2eJErGNJWPEwc4G74oHtT19kprY
- vquGm73gygjisiGLoqDq/ovQYsxHvGWZaAQWkLgfHWVsV8kCqRbpbgCKrOsCjhkWvFpD
- rD4VH9Nj1z7pfY+QOWfT3a5fQ5HaUybpLIQ4rF+qmWAm14V/WtOouR4grVa3ccn2BTpg
- WHtlGZvGGLgUt1A98DPXsE6NvjgjAwWI1bILNqqXaIJlqsJJG5fgCqSnIwxMJLJGN8gY
- zmwtRz5Q+dse0ElTctf1YBuJKXmC5arxhxHimsu5m8+yJlE7Uoxu8OVGBM5vowSDme+L
- jIJA==
+ d=mihalicyn.com; s=mihalicyn; t=1783605156; x=1784209956; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=5cuGQR1+63nqgwesx/JZfl0oTpSQd/0m/0QKYn2lGzE=;
+ b=ccdEEQAlIOoBrP5ZC9EGTslI4gN42VjakOTqNO/+qisKFCBR2Hot55+0xGtgTvwgLP
+ DK1fjgsCzlWcpCgJOnnUhJSh+rASJm8jddnIRxjClAUMbUy7a1t9aFX/ImYBpKu1gAFQ
+ PGZglauCMaZjINisD9SuXNoPpNR8KByCPSmQ4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783605034; x=1784209834;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ d=1e100.net; s=20251104; t=1783605156; x=1784209956;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=gArTuChALq1WJv9KKsDqn8DTz0CVPx7DfVtjVpVisFo=;
- b=GiT5BIEtXn5MPbL9LG5mFDvG0sk/XvDtY8U3+/kXQOOUpqwX2dGPYu8GCJeO5DMhNJ
- 4THAggbAY0nZo83eUCYbwGvo931XTn+9IoFnhZYjSe5a1YHc3TsatT+sccjEQWE0/BRU
- 7f5AiRVl9cM8qgwoBeQImNh7H7B/Gd0yG567SOeZ6c3myrqKjO69Kts5z+tM7IGyA9ex
- xde/jsberw9m623i/Asxaan+BAC5EwBV2ks7WntrKuq/TGdqaFP/lse8yMFqyfxnvOAg
- eMxAo4PNd15SN8FX+DCw93Hb7+YsNySTuvUz8ikDrTeYSu9gD3pYGwSN7Dn+gQENdU/C
- lPsQ==
-X-Gm-Message-State: AOJu0YzqO4f94LacEaVSg3jsBNd6C27KaK9ZY5Jxx2IKe4SKfTpt+7hN
- Glj0IoX4mqG1zdzNIP7tO5DS5fMJcI1a5003/blmbJV7JdcJo2ldNbXO3CqyNLqHqQU=
-X-Gm-Gg: AfdE7ckS7O7Pxr853ePQu2Lo/bAi/wlIJuovElJwQEQ5HPENlwMDDk/j0A8T0xUDcUz
- C2YQz7szMUMJ90O3j1y9YXM1Dd91ReVZ6rk4EMOdVhWhmFu6uYba8PceTIpYi27xMXvMXO4oobm
- hoMV3CR3Xrww80D8OnzRJJ0SAIUyD34BN8Ut6PVj9N9jO+eh16hbPMRvvMaIsMbivNCqN/JtN6G
- q1KhAj3rMkuixJotIQIlnF5S5ecNdEBtBSc28saXVT4WBIoFtGVGbenSdSc3JlqVNyLfpqdvWYf
- 1RClKXuWn1Na15l6y2TNmNNDQtS6Hi4ur763os+IUL8KQLdgqDhJrwWIuXD72W1nQsnv47IibHs
- /wNz5NS+XD07+hsR/aMLN4wbyrNX4bnffNcBSANLWEsV6QAhTBtSXPf85zErAGYzYjq2SRXj8wR
- H/jER8N/oH5wD2
-X-Received: by 2002:a05:6000:1787:b0:45d:3aa3:7f76 with SMTP id
- ffacd0b85a97d-47df076ea68mr7070175f8f.33.1783605034230; 
- Thu, 09 Jul 2026 06:50:34 -0700 (PDT)
-Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47a9e3e2702sm55685468f8f.9.2026.07.09.06.50.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jul 2026 06:50:33 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2FADE5F82D;
- Thu, 09 Jul 2026 14:50:32 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,  Ilya Leoshkevich
- <iii@linux.ibm.com>,  Brian Cain <brian.cain@oss.qualcomm.com>,  Gustavo
- Romero <gustavo.romero@linaro.org>,  Laurent Vivier <laurent@vivier.eu>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,  Helge Deller
- <deller@gmx.de>,  Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH v3 00/91] tests/tcg: run tests with meson
-In-Reply-To: <20260706223343.988769-1-pierrick.bouvier@oss.qualcomm.com>
- (Pierrick Bouvier's message of "Mon, 6 Jul 2026 15:32:12 -0700")
-References: <20260706223343.988769-1-pierrick.bouvier@oss.qualcomm.com>
-User-Agent: mu4e 1.14.2; emacs 30.1
-Date: Thu, 09 Jul 2026 14:50:32 +0100
-Message-ID: <87pl0ws253.fsf@draig.linaro.org>
+ bh=5cuGQR1+63nqgwesx/JZfl0oTpSQd/0m/0QKYn2lGzE=;
+ b=cMplr4SVBIWhXtmsEOUBvLUBJKt0idiZQV0K8v6N0/NLoHccGYlh1GRppVVD30Gyi/
+ K3QxQIvU08IBNaJ0AD+7mQ6WUJxT9F0eFReHZHVPoIu/J33zP4mXB3B5Z+jtvhQdGprG
+ gG2culMPRmysM2IKOHfLe/NoAIB+K4Zdm75tZiJJhwhRyLdeXWnXc327+z0Vjx6yrhpA
+ rxt32EK+3wlYbAHzSHPKS9srn0CtAqr/00n5BuUWzad5q3/OnSC8DBCbYy8zuQZsqRst
+ VCNv2pUWTnWf7Jbh6zCDWeq+b9utxCu0jugAi96RGy0hiY9oRElWlK5j1vYugjXVoUUP
+ 6VSQ==
+X-Gm-Message-State: AOJu0YzM3zzvTY4xM6u29DigzVHV5nTKnfJxHdmH+FawcZtwnjXB5JXa
+ a3041OMcbLP1EOdjYXsbdSA4Bqx+0hWfpLGukRG1CZ0TfrI66RNvy9Fhd1pcGCwnbKRKBbu//6/
+ LNsZXsuj9bmhhfjzgR/XYshfSpWNk5c0VjC+4qJ9HxA==
+X-Gm-Gg: AfdE7cncWX7t5H9W2ZmbiAZuERTpNCk/pju1WOK/4s56i+lF5eSC5/CYa+aN5jeTVvb
+ +1DSbi+SeRWwpCJ1kAe4vz50gT62ggkyrnkveAyWqNKyDpFBJuo6oTJhugHMU4xS9HUzTj+QZ7V
+ NI5yqG5jVtN1/xnMaD24kAzFCp+rVkYYcUz63QBkQxTEw2uCKfYFspiVFvytAuOm6vuwGAyBUnK
+ XGp5qulc7ytgIgb9EvJiNDn4t4R0zCjt3NJaye3rP7SCFyPc5dZ9/yoe3+/+zqKdLSrAAVd/vJN
+ GdhuUIotPqhAR5WDSmI74eTA5i8h
+X-Received: by 2002:a17:907:60cd:b0:c15:a7b9:2ae1 with SMTP id
+ a640c23a62f3a-c15e7407dd8mr151478966b.6.1783605155527; Thu, 09 Jul 2026
+ 06:52:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20260626123531.132078-1-alexander@mihalicyn.com>
+ <20260626123531.132078-3-alexander@mihalicyn.com>
+ <thdv34.1hr3kwq58lz3p@linaro.org>
+In-Reply-To: <thdv34.1hr3kwq58lz3p@linaro.org>
+From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Date: Thu, 9 Jul 2026 15:52:22 +0200
+X-Gm-Features: AUfX_mzXe8DeGHsv0er24NHCEa9dZKqDZnbUqWppWyjURj8A0isJjAFPqIl39q0
+Message-ID: <CAJqdLrrmybT6H5mQSBypOwu7rqM1hNq3CWydtUM8X74cE5RZVw@mail.gmail.com>
+Subject: Re: [PATCH v3 2/9] hw/audio/virtio-sound: allocate an array of streams
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=alexander@mihalicyn.com; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,439 +121,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+Am Mo., 29. Juni 2026 um 09:49 Uhr schrieb Manos Pitsidianakis
+<manos.pitsidianakis@linaro.org>:
+>
+> On Fri, 26 Jun 2026 15:35, Alexander Mikhalitsyn <alexander@mihalicyn.com=
+> wrote:
+> >From: Volker R=C3=BCmelin <vr_qemu@t-online.de>
+> >
+> >It is much easier to migrate an array of structs than individual
+> >structs that are accessed via a pointer to a pointer to an array
+> >of pointers to struct.
+> >
+> >For this reason, allocate an array of streams in
+> >virtio_snd_realize() and initialise all stream variables that
+> >are constant at runtime immediately after allocation.
+> >
+> >This makes it easier to remove the virtio_snd_set_pcm_params()
+> >and virtio_snd_pcm_prepare() calls in the realisation phase and
+> >to migrate the audio streams of the virtio sound device after
+> >the next few patches.
+> >
+> >Signed-off-by: Volker R=C3=BCmelin <vr_qemu@t-online.de>
+> >[AM: there were too many conflicts, I did `git checkout --ours -- <.>`
+> >     and then reimplemented the patch idea
+> >/AM]
+> >Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.=
+io>
+> >Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> >---
+> >v3:
+> >       As suggested by Marc-Andr=C3=A9 Lureau:
+> >       - drop VirtIOSoundPCMStream's id field
+> >---
+> > hw/audio/virtio-snd.c         | 34 +++++++++++++++++++++-------------
+> > include/hw/audio/virtio-snd.h |  2 +-
+> > 2 files changed, 22 insertions(+), 14 deletions(-)
+> >
+> >diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+> >index 6eb31e2838e..859c2770195 100644
+> >--- a/hw/audio/virtio-snd.c
+> >+++ b/hw/audio/virtio-snd.c
+> >@@ -436,12 +436,9 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound =
+*s, uint32_t stream_id)
+> >
+> >     stream =3D virtio_snd_pcm_get_stream(s, stream_id);
+> >     if (stream =3D=3D NULL) {
+> >-        stream =3D g_new0(VirtIOSoundPCMStream, 1);
+> >+        stream =3D &s->streams[stream_id];
+> >         stream->active =3D false;
+> >-        stream->id =3D stream_id;
+> >-        stream->s =3D s;
+> >         stream->latency_bytes =3D 0;
+> >-        QSIMPLEQ_INIT(&stream->queue);
+> >
+> >         /*
+> >          * stream_id >=3D s->snd_conf.streams was checked before so thi=
+s is
+> >@@ -451,14 +448,6 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound =
+*s, uint32_t stream_id)
+> >     }
+> >
+> >     virtio_snd_get_qemu_audsettings(&as, params);
+> >-    stream->info.direction =3D stream_id < s->snd_conf.streams / 2 +
+> >-        (s->snd_conf.streams & 1) ? VIRTIO_SND_D_OUTPUT : VIRTIO_SND_D_=
+INPUT;
+> >-    stream->info.hdr.hda_fn_nid =3D VIRTIO_SOUND_HDA_FN_NID;
+> >-    stream->info.features =3D 0;
+> >-    stream->info.channels_min =3D 1;
+> >-    stream->info.channels_max =3D as.nchannels;
+> >-    stream->info.formats =3D supported_formats;
+> >-    stream->info.rates =3D supported_rates;
+> >     stream->params =3D *params;
+> >
+> >     stream->positions[0] =3D VIRTIO_SND_CHMAP_FL;
+> >@@ -1046,6 +1035,24 @@ static void virtio_snd_realize(DeviceState *dev, =
+Error **errp)
+> >     vsnd->vmstate =3D
+> >         qemu_add_vm_change_state_handler(virtio_snd_vm_state_change, vs=
+nd);
+> >
+> >+    vsnd->streams =3D g_new0(VirtIOSoundPCMStream, vsnd->snd_conf.strea=
+ms);
+> >+
+> >+    for (uint32_t i =3D 0; i < vsnd->snd_conf.streams; i++) {
+> >+        VirtIOSoundPCMStream *stream =3D &vsnd->streams[i];
+> >+
+> >+        stream->s =3D vsnd;
+> >+        QSIMPLEQ_INIT(&stream->queue);
+> >+        stream->info.hdr.hda_fn_nid =3D VIRTIO_SOUND_HDA_FN_NID;
+> >+        stream->info.features =3D 0;
+> >+        stream->info.formats =3D supported_formats;
+> >+        stream->info.rates =3D supported_rates;
+> >+        stream->info.direction =3D
+> >+            i < vsnd->snd_conf.streams / 2 + (vsnd->snd_conf.streams & =
+1)
+> >+            ? VIRTIO_SND_D_OUTPUT : VIRTIO_SND_D_INPUT;
 
-> This series replaces TCG tests makefiles with meson, with the
-> goal of having something more readable and maintainable in the long term.
-> Also it closes the gap that tcg tests had with the rest of tests, by inte=
-grating
-> them with meson directly.
->
-> It covers all existing tests for all architectures, including
-> user/system/multiarch-user/multiarch-system. It implements all requiremen=
-ts
-> listed on original thread [1].
->
-> [1] https://lore.kernel.org/qemu-devel/87wlwfsay4.fsf@draig.linaro.org/
->
-> We also have for free:
-> - correct and complete dependencies for any test, including:
->   scripts, c.inc, headers, reference files and binaries/plugins.
-> - catch test declaration issues at configure time vs test time.
-> - proper data types for variables instead of string expansion with make.
->
-> Series first introduce the meson machinery needed in tests/tcg/meson.buil=
-d, step
-> by step. Then it adds support for all existing archs. Finally, we remove
-> Makefiles and configure bits.
->
-> Usage:
->
-> ```
-> make check-tcg
-> make check-tcg-aarch64-linux-user
-> make check-tcg-aarch64-softmmu
->
-> make tcg-tests
->
-> ninja clean
-> ./pyvenv/bin/meson test aarch64-softmmu-asid2 --verbose
-> ```
+Dear Manos,
 
-For the series:
+> >+        stream->info.channels_min =3D 1;
+> >+        stream->info.channels_max =3D 2;
+>
+>
+> Why 2 instead of as.nchannels? Does this break support for more than 2
+> channels?
 
-Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+oh, good catch! It looks like the original patch has the same flaw
+here and it wasn't noticed by
+me while I was trying to be very attentive to details ;-)
+
+I agree, this looks like a bug to me and I think that a correct fix
+(to this patch) would be:
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D
+--- a/hw/audio/virtio-snd.c
++++ b/hw/audio/virtio-snd.c
+@@ -448,6 +448,7 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound
+*s, uint32_t stream_id)
+     }
+
+     virtio_snd_get_qemu_audsettings(&as, params);
++    stream->info.channels_max =3D as.nchannels;
+     stream->params =3D *params;
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D
+
+So, we can keep
++        stream->info.channels_max =3D 2;
+
+chunk in virtio_snd_realize() function (as we don't have
+virtio_snd_pcm_set_params at that point), but
+then in virtio_snd_pcm_prepare(), we can take data from
+virtio_snd_pcm_set_params through virtio_snd_get_qemu_audsettings()
+and then put it to stream->info.channels_max. WDYT?
+
+Kind regards,
+Alex
 
 >
-> A few items were left for further work (out of scope for this series):
-> - xtensaeb: didn't find how to cross compile for this architecture with w=
-hat we
->   have now in container debian-xtensa-cross. Tips are welcome.
-> - tricore: implemented but reverted as all tests seem to hang. To be
->   investigated.
-> - riscv64/interruptedmemory.S is hanging. To be investigated.
-> - i386/test-i386-fprem.c is deactivated for now. It's broken (output does=
- not
->   match bare metal result) and is the slowest test we have. To be refacto=
-red and
->   fixed.
->
-> v3
-> --
->
-> - add all architectures
-> - reduce number of plugins tests (only add one test for each plugin from
->   multiarch pool)
-> - add depends for executable - allow to depend on a custom target for gen=
-erated
->   headers (x86_64 mmx, avx)
-> - add new tests added since last version for aarch64 (mte + gpc)
-> - refactor series to keep all arch files at end
-> - add docker host architecture selection
->
-> v2
-> --
->
-> - s/mispell/misspell
-> - moved comment about why we remove 'lib' prefix for plugins
-> - if user declare a wrong entry in a dictionary, list possible keys
-> - build tests by default (with 'all' target), as long as cross compiler is
->   natively installed, to avoid triggering a container build.
-> - reword some comments based on reviewers feedback
-> - always declare all tests and avoid "per config" errors (no 'if' in arch=
- files)
-> - move compiler feature and gdb version checks directly in tests/tcg/meso=
-n.build
-> - add support for cross containers
-> - add top target 'tcg-tests' to rebuild all tests
->
-> Pierrick Bouvier (91):
->   tests/tcg/multiarch/system/memory.c: remove unused variable
->   tests/tcg/multiarch/plugin/check-plugin-output.sh: take test output as
->     input
->   tests/tcg/multiarch/plugin: rename check-plugin-output to
->     regex-compare
->   tests/tcg: introduce meson.build
->   tests/tcg/meson.build: introduce exe_name
->   tests/tcg/meson.build: introduce test_name
->   tests/tcg/meson.build: introduce cflags
->   tests/tcg/meson.build: introduce qemu_args
->   tests/tcg/meson.build: introduce env_var
->   tests/tcg/plugins: build list of test_plugins
->   tests/tcg/meson.build: introduce plugin_test
->   tests/tcg/meson.build: test gdb support and introduce gdb_arch
->   tests/tcg/meson.build: introduce gdb_test
->   tests/tcg/meson.build: add default flag for testing compiler support
->   tests/tcg/meson.build: introduce wrapper
->   tests/tcg/meson.build: introduce expected_output
->   tests/tcg/meson.build: add wrapper run_and_check_forbidden_output
->   tests/tcg/meson.build: add wrapper run_with_input
->   tests/tcg/meson.build: add wrapper record_replay
->   tests/tcg/meson.build: add wrapper check_plugin_output
->   tests/tcg/meson.build: add logic to skip tests
->   tests/tcg/meson.build: introduce cc_feat and cc_feat_cflags
->   tests/tcg/meson.build: introduce gdb_feat and gdb_feat_version
->   tests/tcg/meson.build: move gdb_arch support check
->   tests/tcg/meson.build: let test infrastructure detect compiler
->   tests/docker/docker.py: return error code if probe fails
->   tests/docker/docker.py: remove "Image is up to date" info
->   tests/tcg/meson.build: introduce cc_dockerfile and cc_docker_arch
->   tests/tcg/meson.build: introduce depends
->   tests/tcg/meson.build: add top-level 'tcg-tests' target
->   tests/tcg/multiarch: declare user tests
->   tests/tcg/multiarch: declare system tests
->   tests/tcg/meson.build: add generic plugin tests
->   tests/tcg/aarch64: user tests
->   tests/tcg/aarch64/system/gpc-test.c: remove unused variables
->   tests/tcg/aarch64: system tests
->   tests/tcg/aarch64_be: user tests
->   tests/tcg/alpha: add float reference files
->   tests/tcg/alpha: user tests
->   tests/tcg/alpha: system tests
->   tests/tcg/arm: user tests
->   tests/tcg/arm: system tests
->   tests/tcg/hexagon/overflow.c: add missing include
->   tests/tcg/hexagon: user tests
->   tests/tcg/multiarch/sha1.c: fix big endian implementation
->   tests/tcg/hppa: add float reference files
->   tests/tcg/hppa: user tests
->   tests/tcg/i386: add missing float reference files
->   tests/tcg/i386: user tests
->   tests/tcg/i386: system tests
->   tests/tcg/loongarch64: user tests
->   tests/tcg/loongarch64: system tests
->   tests/tcg/m68k: add float reference files
->   tests/tcg/m68k: user tests
->   scripts/probe-gdb-support.py: add mapping for mips architecture
->   tests/tcg/mips: add float reference files
->   test/tcg/mips: user tests
->   tests/tcg/mips64: add float reference files
->   tests/tcg/mips64: user tests
->   tests/tcg/mips64el: add float reference files
->   tests/tcg/mips64el: user tests
->   tests/docker/dockerfiles/debian-all-test-cross.docker: add or1k
->     toolchain
->   tests/tcg/or1k/test_addic.c: remove unused variables
->   tests/tcg/or1k/test_muli.c: remove set but unused variable
->   tests/tcg/or1k: add float reference files
->   plugins/api.c: identify or1k pc register and mark it as read only
->   tests/tcg/or1k: user tests
->   tests/tcg/ppc64: add float reference files
->   tests/tcg/ppc64: remove dependency on qemu/compiler.h
->   tests/tcg/ppc64: user tests
->   tests/tcg/ppc64le: add missing float reference file
->   tests/tcg/ppc64le: user tests
->   tests/tcg/riscv64: add float reference files
->   tests/tcg/riscv64: user tests
->   tests/tcg/riscv64: system tests
->   tests/tcg/s390x/head64.S: declare _exit symbol after main
->   tests/tcg/s390x: add float reference files
->   tests/tcg/s390x: user tests
->   tests/tcg/s390x: system tests
->   tests/tcg/sh4: add float reference files
->   tests/tcg/sh4: user tests
->   tests/tcg/tricore: system tests
->   Revert "tests/tcg/tricore: system tests"
->   tests/tcg/x86_64: add missing float reference file
->   tests/tcg/x86_64: user tests
->   tests/tcg/x86_64: system tests
->   tests/tcg/xtensa/crt.S: align .text section
->   tests/tcg/xtensa: system tests
->   tests: remove tcg tests machinery
->   tests/tcg: remove Makefiles
->   configure: remove --cross-cc* options
->
->  configure                                     | 473 ---------
->  docs/devel/testing/main.rst                   |  22 +-
->  plugins/api.c                                 |   2 +
->  scripts/probe-gdb-support.py                  |   1 +
->  tests/Makefile.include                        |  68 +-
->  tests/docker/docker.py                        |   4 +-
->  .../dockerfiles/debian-all-test-cross.docker  |  16 +-
->  tests/lcitool/refresh                         | 107 +-
->  tests/meson.build                             |   2 +-
->  tests/tcg/Makefile.target                     | 281 -----
->  tests/tcg/aarch64/Makefile.softmmu-target     | 147 ---
->  tests/tcg/aarch64/Makefile.target             | 198 ----
->  tests/tcg/aarch64/meson.build                 | 195 ++++
->  tests/tcg/aarch64/system/gpc-test.c           |   5 -
->  tests/tcg/aarch64/system/meson.build          | 108 ++
->  tests/tcg/aarch64_be/Makefile.target          |  17 -
->  tests/tcg/aarch64_be/meson.build              |  22 +
->  tests/tcg/alpha/Makefile.softmmu-target       |  34 -
->  tests/tcg/alpha/Makefile.target               |  18 -
->  tests/tcg/alpha/float_convd.ref               | 988 ++++++++++++++++++
->  tests/tcg/alpha/float_convs.ref               | 748 +++++++++++++
->  tests/tcg/alpha/float_madds.ref               | 768 ++++++++++++++
->  tests/tcg/alpha/meson.build                   |  55 +
->  tests/tcg/alpha/system/meson.build            |  46 +
->  tests/tcg/arm/Makefile.softmmu-target         |  80 --
->  tests/tcg/arm/Makefile.target                 |  87 --
->  tests/tcg/arm/meson.build                     |  80 ++
->  tests/tcg/arm/system/meson.build              |  66 ++
->  tests/tcg/hexagon/Makefile.target             | 146 ---
->  tests/tcg/hexagon/meson.build                 | 111 ++
->  tests/tcg/hexagon/overflow.c                  |   1 +
->  tests/tcg/hppa/Makefile.target                |  14 -
->  tests/tcg/hppa/float_convd.ref                | 988 ++++++++++++++++++
->  tests/tcg/hppa/float_convs.ref                | 748 +++++++++++++
->  tests/tcg/hppa/float_madds.ref                | 768 ++++++++++++++
->  tests/tcg/hppa/meson.build                    |  22 +
->  tests/tcg/i386/Makefile.softmmu-target        |  37 -
->  tests/tcg/i386/Makefile.target                | 102 --
->  tests/tcg/i386/float_convd.conf               | 988 ------------------
->  tests/tcg/i386/float_convd.ref                | 988 ++++++++++++++++++
->  tests/tcg/i386/float_madds.ref                | 768 ++++++++++++++
->  tests/tcg/i386/meson.build                    |  58 +
->  tests/tcg/i386/system/meson.build             |  48 +
->  tests/tcg/loongarch64/Makefile.softmmu-target |  33 -
->  tests/tcg/loongarch64/Makefile.target         |  20 -
->  tests/tcg/loongarch64/meson.build             |  32 +
->  tests/tcg/loongarch64/system/meson.build      |  47 +
->  tests/tcg/m68k/Makefile.target                |   7 -
->  tests/tcg/m68k/float_convd.ref                | 988 ++++++++++++++++++
->  tests/tcg/m68k/float_convs.ref                | 748 +++++++++++++
->  tests/tcg/m68k/float_madds.ref                | 768 ++++++++++++++
->  tests/tcg/m68k/meson.build                    |  23 +
->  tests/tcg/meson.build                         | 447 ++++++++
->  tests/tcg/minilib/Makefile.target             |  21 -
->  tests/tcg/mips/Makefile.target                |  19 -
->  tests/tcg/mips/float_convd.ref                | 988 ++++++++++++++++++
->  tests/tcg/mips/float_convs.ref                | 748 +++++++++++++
->  tests/tcg/mips/float_madds.ref                | 768 ++++++++++++++
->  tests/tcg/mips/meson.build                    |  25 +
->  tests/tcg/mips/user/ase/dsp/Makefile          | 184 ----
->  tests/tcg/mips/user/isa/mips64r6/crc/Makefile |  40 -
->  tests/tcg/mips/user/isa/r5900/Makefile        |  32 -
->  tests/tcg/mips64/Makefile.target              |  20 -
->  tests/tcg/mips64/float_convd.ref              | 988 ++++++++++++++++++
->  tests/tcg/mips64/float_convs.ref              | 748 +++++++++++++
->  tests/tcg/mips64/float_madds.ref              | 768 ++++++++++++++
->  tests/tcg/mips64/meson.build                  |  27 +
->  tests/tcg/mips64el/Makefile.target            |   8 -
->  tests/tcg/mips64el/float_convd.ref            | 988 ++++++++++++++++++
->  tests/tcg/mips64el/float_convs.ref            | 748 +++++++++++++
->  tests/tcg/mips64el/float_madds.ref            | 768 ++++++++++++++
->  tests/tcg/mips64el/meson.build                |  14 +
->  tests/tcg/multiarch/Makefile.target           | 233 -----
->  tests/tcg/multiarch/meson.build               | 149 +++
->  .../multiarch/plugin/check-plugin-output.sh   |  36 -
->  tests/tcg/multiarch/plugin/regex-compare.sh   |  28 +
->  tests/tcg/multiarch/sha1.c                    |   4 +-
->  tests/tcg/multiarch/sha1.ref                  |   1 +
->  .../multiarch/system/Makefile.softmmu-target  |  81 --
->  tests/tcg/multiarch/system/memory.c           |   3 +-
->  tests/tcg/multiarch/system/meson.build        |  53 +
->  tests/tcg/or1k/Makefile                       |  71 --
->  tests/tcg/or1k/float_convd.ref                | 247 +++++
->  tests/tcg/or1k/float_convs.ref                | 187 ++++
->  tests/tcg/or1k/float_madds.ref                | 192 ++++
->  tests/tcg/or1k/meson.build                    |  72 ++
->  tests/tcg/or1k/test_addic.c                   |   2 +-
->  tests/tcg/or1k/test_muli.c                    |   5 +-
->  tests/tcg/plugins/meson.build                 |  11 +-
->  tests/tcg/ppc64/Makefile.target               |  63 --
->  tests/tcg/ppc64/float_convd.ref               | 988 ++++++++++++++++++
->  tests/tcg/ppc64/float_convs.ref               | 748 +++++++++++++
->  tests/tcg/ppc64/float_madds.ref               | 768 ++++++++++++++
->  tests/tcg/ppc64/meson.build                   |  56 +
->  tests/tcg/ppc64/vector.c                      |  11 +-
->  tests/tcg/ppc64/vsx_f2i_nan.c                 |   7 +-
->  tests/tcg/ppc64le/Makefile.target             |   7 -
->  tests/tcg/ppc64le/float_convd.ref             | 988 ++++++++++++++++++
->  tests/tcg/ppc64le/meson.build                 |  14 +
->  tests/tcg/riscv64/Makefile.softmmu-target     |  45 -
->  tests/tcg/riscv64/Makefile.target             |  20 -
->  tests/tcg/riscv64/float_convd.ref             | 988 ++++++++++++++++++
->  tests/tcg/riscv64/float_convs.ref             | 748 +++++++++++++
->  tests/tcg/riscv64/float_madds.ref             | 768 ++++++++++++++
->  tests/tcg/riscv64/meson.build                 |  38 +
->  tests/tcg/riscv64/system/meson.build          |  38 +
->  tests/tcg/s390x/Makefile.softmmu-target       |  57 -
->  tests/tcg/s390x/Makefile.target               | 127 ---
->  tests/tcg/s390x/float_convd.ref               | 988 ++++++++++++++++++
->  tests/tcg/s390x/float_convs.ref               | 748 +++++++++++++
->  tests/tcg/s390x/float_madds.ref               | 768 ++++++++++++++
->  tests/tcg/s390x/head64.S                      |   2 +
->  tests/tcg/s390x/meson.build                   | 140 +++
->  tests/tcg/s390x/system/meson.build            |  92 ++
->  tests/tcg/scripts/check_plugin_output.sh      |  25 +
->  tests/tcg/scripts/record_replay.sh            |  16 +
->  .../scripts/run_and_check_forbidden_output.sh |  19 +
->  tests/tcg/scripts/run_and_diff.sh             |  15 +
->  tests/tcg/scripts/run_with_input.sh           |  12 +
->  tests/tcg/sh4/Makefile.target                 |  18 -
->  tests/tcg/sh4/float_convd.ref                 | 494 +++++++++
->  tests/tcg/sh4/float_convs.ref                 | 374 +++++++
->  tests/tcg/sh4/float_madds.ref                 | 384 +++++++
->  tests/tcg/sh4/meson.build                     |  25 +
->  tests/tcg/tricore/Makefile.softmmu-target     |  53 -
->  tests/tcg/x86_64/Makefile.softmmu-target      |  44 -
->  tests/tcg/x86_64/Makefile.target              |  40 -
->  tests/tcg/x86_64/float_madds.ref              | 768 ++++++++++++++
->  tests/tcg/x86_64/meson.build                  |  83 ++
->  tests/tcg/x86_64/system/meson.build           |  62 ++
->  tests/tcg/xtensa/Makefile.softmmu-target      |  46 -
->  tests/tcg/xtensa/crt.S                        |   1 +
->  tests/tcg/xtensa/meson.build                  |  89 ++
->  tests/tcg/xtensaeb/Makefile.softmmu-target    |   5 -
->  134 files changed, 30491 insertions(+), 4114 deletions(-)
->  delete mode 100644 tests/tcg/Makefile.target
->  delete mode 100644 tests/tcg/aarch64/Makefile.softmmu-target
->  delete mode 100644 tests/tcg/aarch64/Makefile.target
->  create mode 100644 tests/tcg/aarch64/meson.build
->  create mode 100644 tests/tcg/aarch64/system/meson.build
->  delete mode 100644 tests/tcg/aarch64_be/Makefile.target
->  create mode 100644 tests/tcg/aarch64_be/meson.build
->  delete mode 100644 tests/tcg/alpha/Makefile.softmmu-target
->  delete mode 100644 tests/tcg/alpha/Makefile.target
->  create mode 100644 tests/tcg/alpha/float_convd.ref
->  create mode 100644 tests/tcg/alpha/float_convs.ref
->  create mode 100644 tests/tcg/alpha/float_madds.ref
->  create mode 100644 tests/tcg/alpha/meson.build
->  create mode 100644 tests/tcg/alpha/system/meson.build
->  delete mode 100644 tests/tcg/arm/Makefile.softmmu-target
->  delete mode 100644 tests/tcg/arm/Makefile.target
->  create mode 100644 tests/tcg/arm/meson.build
->  create mode 100644 tests/tcg/arm/system/meson.build
->  delete mode 100644 tests/tcg/hexagon/Makefile.target
->  create mode 100644 tests/tcg/hexagon/meson.build
->  delete mode 100644 tests/tcg/hppa/Makefile.target
->  create mode 100644 tests/tcg/hppa/float_convd.ref
->  create mode 100644 tests/tcg/hppa/float_convs.ref
->  create mode 100644 tests/tcg/hppa/float_madds.ref
->  create mode 100644 tests/tcg/hppa/meson.build
->  delete mode 100644 tests/tcg/i386/Makefile.softmmu-target
->  delete mode 100644 tests/tcg/i386/Makefile.target
->  delete mode 100644 tests/tcg/i386/float_convd.conf
->  create mode 100644 tests/tcg/i386/float_convd.ref
->  create mode 100644 tests/tcg/i386/float_madds.ref
->  create mode 100644 tests/tcg/i386/meson.build
->  create mode 100644 tests/tcg/i386/system/meson.build
->  delete mode 100644 tests/tcg/loongarch64/Makefile.softmmu-target
->  delete mode 100644 tests/tcg/loongarch64/Makefile.target
->  create mode 100644 tests/tcg/loongarch64/meson.build
->  create mode 100644 tests/tcg/loongarch64/system/meson.build
->  delete mode 100644 tests/tcg/m68k/Makefile.target
->  create mode 100644 tests/tcg/m68k/float_convd.ref
->  create mode 100644 tests/tcg/m68k/float_convs.ref
->  create mode 100644 tests/tcg/m68k/float_madds.ref
->  create mode 100644 tests/tcg/m68k/meson.build
->  create mode 100644 tests/tcg/meson.build
->  delete mode 100644 tests/tcg/minilib/Makefile.target
->  delete mode 100644 tests/tcg/mips/Makefile.target
->  create mode 100644 tests/tcg/mips/float_convd.ref
->  create mode 100644 tests/tcg/mips/float_convs.ref
->  create mode 100644 tests/tcg/mips/float_madds.ref
->  create mode 100644 tests/tcg/mips/meson.build
->  delete mode 100644 tests/tcg/mips/user/ase/dsp/Makefile
->  delete mode 100644 tests/tcg/mips/user/isa/mips64r6/crc/Makefile
->  delete mode 100644 tests/tcg/mips/user/isa/r5900/Makefile
->  delete mode 100644 tests/tcg/mips64/Makefile.target
->  create mode 100644 tests/tcg/mips64/float_convd.ref
->  create mode 100644 tests/tcg/mips64/float_convs.ref
->  create mode 100644 tests/tcg/mips64/float_madds.ref
->  create mode 100644 tests/tcg/mips64/meson.build
->  delete mode 100644 tests/tcg/mips64el/Makefile.target
->  create mode 100644 tests/tcg/mips64el/float_convd.ref
->  create mode 100644 tests/tcg/mips64el/float_convs.ref
->  create mode 100644 tests/tcg/mips64el/float_madds.ref
->  create mode 100644 tests/tcg/mips64el/meson.build
->  delete mode 100644 tests/tcg/multiarch/Makefile.target
->  create mode 100644 tests/tcg/multiarch/meson.build
->  delete mode 100755 tests/tcg/multiarch/plugin/check-plugin-output.sh
->  create mode 100755 tests/tcg/multiarch/plugin/regex-compare.sh
->  create mode 100644 tests/tcg/multiarch/sha1.ref
->  delete mode 100644 tests/tcg/multiarch/system/Makefile.softmmu-target
->  create mode 100644 tests/tcg/multiarch/system/meson.build
->  delete mode 100644 tests/tcg/or1k/Makefile
->  create mode 100644 tests/tcg/or1k/float_convd.ref
->  create mode 100644 tests/tcg/or1k/float_convs.ref
->  create mode 100644 tests/tcg/or1k/float_madds.ref
->  create mode 100644 tests/tcg/or1k/meson.build
->  delete mode 100644 tests/tcg/ppc64/Makefile.target
->  create mode 100644 tests/tcg/ppc64/float_convd.ref
->  create mode 100644 tests/tcg/ppc64/float_convs.ref
->  create mode 100644 tests/tcg/ppc64/float_madds.ref
->  create mode 100644 tests/tcg/ppc64/meson.build
->  delete mode 100644 tests/tcg/ppc64le/Makefile.target
->  create mode 100644 tests/tcg/ppc64le/float_convd.ref
->  create mode 100644 tests/tcg/ppc64le/meson.build
->  delete mode 100644 tests/tcg/riscv64/Makefile.softmmu-target
->  delete mode 100644 tests/tcg/riscv64/Makefile.target
->  create mode 100644 tests/tcg/riscv64/float_convd.ref
->  create mode 100644 tests/tcg/riscv64/float_convs.ref
->  create mode 100644 tests/tcg/riscv64/float_madds.ref
->  create mode 100644 tests/tcg/riscv64/meson.build
->  create mode 100644 tests/tcg/riscv64/system/meson.build
->  delete mode 100644 tests/tcg/s390x/Makefile.softmmu-target
->  delete mode 100644 tests/tcg/s390x/Makefile.target
->  create mode 100644 tests/tcg/s390x/float_convd.ref
->  create mode 100644 tests/tcg/s390x/float_convs.ref
->  create mode 100644 tests/tcg/s390x/float_madds.ref
->  create mode 100644 tests/tcg/s390x/meson.build
->  create mode 100644 tests/tcg/s390x/system/meson.build
->  create mode 100755 tests/tcg/scripts/check_plugin_output.sh
->  create mode 100755 tests/tcg/scripts/record_replay.sh
->  create mode 100755 tests/tcg/scripts/run_and_check_forbidden_output.sh
->  create mode 100755 tests/tcg/scripts/run_and_diff.sh
->  create mode 100755 tests/tcg/scripts/run_with_input.sh
->  delete mode 100644 tests/tcg/sh4/Makefile.target
->  create mode 100644 tests/tcg/sh4/float_convd.ref
->  create mode 100644 tests/tcg/sh4/float_convs.ref
->  create mode 100644 tests/tcg/sh4/float_madds.ref
->  create mode 100644 tests/tcg/sh4/meson.build
->  delete mode 100644 tests/tcg/tricore/Makefile.softmmu-target
->  delete mode 100644 tests/tcg/x86_64/Makefile.softmmu-target
->  delete mode 100644 tests/tcg/x86_64/Makefile.target
->  create mode 100644 tests/tcg/x86_64/float_madds.ref
->  create mode 100644 tests/tcg/x86_64/meson.build
->  create mode 100644 tests/tcg/x86_64/system/meson.build
->  delete mode 100644 tests/tcg/xtensa/Makefile.softmmu-target
->  create mode 100644 tests/tcg/xtensa/meson.build
->  delete mode 100644 tests/tcg/xtensaeb/Makefile.softmmu-target
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> >+    }
+> >+
+> >     vsnd->pcm.streams =3D
+> >         g_new0(VirtIOSoundPCMStream *, vsnd->snd_conf.streams);
+> >     vsnd->pcm.pcm_params =3D
+> >@@ -1314,12 +1321,13 @@ static void virtio_snd_unrealize(DeviceState *de=
+v)
+> >             if (stream) {
+> >                 virtio_snd_process_cmdq(stream->s);
+> >                 virtio_snd_pcm_close(stream);
+> >-                g_free(stream);
+> >             }
+> >         }
+> >         g_free(vsnd->pcm.streams);
+> >     }
+> >     g_free(vsnd->pcm.pcm_params);
+> >+    g_free(vsnd->streams);
+> >+    vsnd->streams =3D NULL;
+> >     virtio_delete_queue(vsnd->queues[VIRTIO_SND_VQ_CONTROL]);
+> >     virtio_delete_queue(vsnd->queues[VIRTIO_SND_VQ_EVENT]);
+> >     virtio_delete_queue(vsnd->queues[VIRTIO_SND_VQ_TX]);
+> >diff --git a/include/hw/audio/virtio-snd.h b/include/hw/audio/virtio-snd=
+.h
+> >index fce7d1feea2..41c63b3f23b 100644
+> >--- a/include/hw/audio/virtio-snd.h
+> >+++ b/include/hw/audio/virtio-snd.h
+> >@@ -136,7 +136,6 @@ struct VirtIOSoundPCM {
+> > struct VirtIOSoundPCMStream {
+> >     virtio_snd_pcm_info info;
+> >     virtio_snd_pcm_set_params params;
+> >-    uint32_t id;
+> >     /* channel position values (VIRTIO_SND_CHMAP_XXX) */
+> >     uint8_t positions[VIRTIO_SND_CHMAP_MAX_SIZE];
+> >     VirtIOSound *s;
+> >@@ -214,6 +213,7 @@ struct VirtIOSound {
+> >     VirtQueue *queues[VIRTIO_SND_VQ_MAX];
+> >     uint64_t features;
+> >     VirtIOSoundPCM pcm;
+> >+    VirtIOSoundPCMStream *streams;
+> >     AudioBackend *audio_be;
+> >     VMChangeStateEntry *vmstate;
+> >     virtio_snd_config snd_conf;
+> >--
+> >2.47.3
+> >
 
