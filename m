@@ -4,113 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B37A5C44507
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 14:29:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADBFFC44501
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 14:30:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whpkh-0004gV-MA; Thu, 09 Jul 2026 10:29:23 -0400
+	id 1whplh-0006Pk-3j; Thu, 09 Jul 2026 10:30:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1whpkf-0004eN-0A; Thu, 09 Jul 2026 10:29:21 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1whplf-0006PL-3d
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 10:30:23 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1whpkd-00009t-Bl; Thu, 09 Jul 2026 10:29:20 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 669EIJxP2914112; Thu, 9 Jul 2026 14:29:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=DYcDtNnpeNvDzkmsM
- 3jRXgTazJtvdn25dCb/i75fLTw=; b=fkVVPxcPUFs4Z1B9v3vTd5UvPT4iBL7+Z
- W8UwweqLtfCU59uHpFO6FwOuBDhGowqcipZdZb1ZOdxr+01jNsdn242oUpTu1qpe
- 2Vey7UfN0SzmrICUg9TFgnZjFkvu/DqYojqjtMshup1D0Ok6WfyxR8bOpOen+hqE
- Q/kr62WXhgk+oYMYD8hGBJ8IcPeOelj5/DumycUtQL2JAn1PY+zz/mxEMGWpZDmz
- RODriwtDyDgR7N9N44W2itKiTZ6d8sJw7E4AAT0QLdB5Mrrn8WwqOSulBipxzpnN
- QIkxK4akoJ50gcU9/vSJdv1A+QI+IlRAMkmhYRWTM47XxmdrQHxaA==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6sur1vec-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Jul 2026 14:29:15 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 669EJbhN009803;
- Thu, 9 Jul 2026 14:29:14 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f7e0hndbh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Jul 2026 14:29:14 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 669EScEd22741578
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 9 Jul 2026 14:28:38 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A203B5805F;
- Thu,  9 Jul 2026 14:29:12 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 732615805A;
- Thu,  9 Jul 2026 14:29:10 +0000 (GMT)
-Received: from b35lp69.lnxne.boe (unknown [9.87.84.240])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  9 Jul 2026 14:29:10 +0000 (GMT)
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
-To: Cornelia Huck <cohuck@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
- Halil Pasic <pasic@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Hendrik Brueckner <brueckner@linux.ibm.com>,
- Janosch Frank <frankja@linux.ibm.com>, qemu-stable@nongnu.org
-Subject: [PATCH 1/2] s390x/sclp: prevent re-reading the sclp header
-Date: Thu,  9 Jul 2026 16:29:05 +0200
-Message-ID: <20260709142906.197474-2-borntraeger@linux.ibm.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260709142906.197474-1-borntraeger@linux.ibm.com>
-References: <20260709142906.197474-1-borntraeger@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1whplc-0000Ww-DH
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 10:30:22 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 669DwBJq1884242
+ for <qemu-devel@nongnu.org>; Thu, 9 Jul 2026 14:30:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 8fRMdA80WYiCFZ6oJDpKtaSl3RjQ+wPCaXagRFMigZw=; b=d0bb+9LKrxSVhxZJ
+ yAKxNvfy3M/dnEpwtoAogAUsjVpEUNrDT35n5LHZ/hUXy//GMy8BSsV5GLmZAtJY
+ B9XQVLqJGWgePqzZHVGopj+ng+cq9lPGqj+mhwDdudPZ+H1nR4HAvmnB95O4GvIi
+ a32WJckq9l55wiU5fD/2fWWg7XvEEB7ApDY7HPt3aIcO3NG6+3SmGRSUkyRq6vdV
+ eHQVY4sBFkG1frEr4fI/LDCj1XbKFFA3wzChDhIXsOnlv4EVUsLU944OA4gnYb/d
+ sSBpXRNVKJea7kTQkoF+Fl2Tg0yQiPpjSOn22W0lLbn9ohZkEHwlr8iLp3Bp1wj2
+ +9eP6w==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fa1ydu777-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 14:30:18 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2ce7dff6253so705655ad.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 07:30:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1783607418; x=1784212218; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=8fRMdA80WYiCFZ6oJDpKtaSl3RjQ+wPCaXagRFMigZw=;
+ b=bRsCBLSIhoYUxy5uAwJbucvkacpN0X8TSS3WS03HmZ9ZhD0jpzWEzn9lsL0AW+uuC8
+ 6qmUJxT5BaevnxUeqGNNzuMede4Z7/m69ymEXwrZqpRlDuoTLetHJrQIGOlr6TOIb+Yv
+ Hy/gh1OOJT+dCetUMhWNdR/8T42a9sQ4LvSgMaHL1bYeMjPN7Fxj6qUgae6WXEGAfPCA
+ tSMx9bgf2LblXpz8Gi/V/HWrV/Y+U4ZYIjFI++wmTfme0rxx7CsRBKJFRgrLfQIodLyh
+ sTmurIaStR/pMJs17v70CaQ2DFrbkbul7JlhH8N9F8BZgQsZ2buL48eG0cZgUI/hvhgE
+ rIOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783607418; x=1784212218;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=8fRMdA80WYiCFZ6oJDpKtaSl3RjQ+wPCaXagRFMigZw=;
+ b=hwLB0wlcJrUI2lOqCY+FlLsiYE5ati+H1CXuLRKtKopnKZBB13JkdB2Ma6ltUMAZE/
+ SQfAwrcG+FBh1WWUQ2kKbPYAl4fNaDzVReAg/9+/VtxVanUQywCs3EHhspxkS0PY4muw
+ kUD7rhBMMf04/XlcX83T73FCLHCA0bYJmQM9vXNSIqmJ+AcL2fftlBzfJLFCOE7/e4MM
+ Q1Bh3B9/bo1O5D/bx5ApWPoYlwNYXL9qNsmC/9Rz8XzgCQ/3T+M9ecVnRnnDCXHySXee
+ sq9NFSKTA4AD/qqznkZgmOCCGWmOWWBeyFxeqy7kREVsn+zcbarGaa/YMlk9M05MaIJC
+ rMOQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rrd1pwJe1py+cotnBReIFT8AvZz0BKv/uVFsRmrizIxwUXc1AuOl/jPMeS5Yk0woLNAZERS2+wl0S/4@nongnu.org
+X-Gm-Message-State: AOJu0YwRsUNUXxEky9OYfyyypQDCWj0H2mepDRA2Uor4SeXT4z8z7hxP
+ WG9sFJXEe7Vx3T/ejXtmDdHxAz4XJXlu9eQjI4fpeBZGbbY0sY+TVF4OXznZJ6CGe1tlAT7CDcy
+ nuLNn4Ry5V3lC3IsecaLi3GqqFS7xeXlmudpUUDozVksz+uHdJKO2TI8JtQ==
+X-Gm-Gg: AfdE7ckMELqbluLDGrv5V+R6xMiR5W+nq2fdMyIidMHX+BdJtbengL2xGP9ufPqyst7
+ YOA2Si5nue1xZKT6Y+26MuziVoACqhMh0dXyI0hG0q0JVkJPbuq4lZhee4IoGKhwbeolfe4KpJk
+ HW8oVHKjJKcT/nTMTFo69LIen9rwbGpWkJFR+InL0h7vlxeg3V2bqV1rCWtvwcmeKsvzsXgRSvt
+ 1ltZqk59F1F/jfqwu7eEDcpmkYMlwt0rwpkgWXWj/H25EfUtwYrWnlBmOp7DhcAmVvongSZaxCZ
+ OxKnbGNsJ/MGLX3LB0s9K0mVPW80sAG5U0foatxxiiADtvfPyTavSg5839LB2iMmE8HqjS9AsUX
+ WywCTF2HxN3040zZtkFuvqXLXg6MR28q/lQlXD//QCkoWehfMCZunc+NgSR4Dnc0AW6y0WBDiGK
+ QlwT8=
+X-Received: by 2002:a05:6a20:12d1:b0:3bf:a517:cdcd with SMTP id
+ adf61e73a8af0-3c0d68a85c6mr4219354637.12.1783607417457; 
+ Thu, 09 Jul 2026 07:30:17 -0700 (PDT)
+X-Received: by 2002:a05:6a20:12d1:b0:3bf:a517:cdcd with SMTP id
+ adf61e73a8af0-3c0d68a85c6mr4219293637.12.1783607416817; 
+ Thu, 09 Jul 2026 07:30:16 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-13b659d7c8bsm33852051c88.12.2026.07.09.07.30.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Jul 2026 07:30:16 -0700 (PDT)
+Message-ID: <baa75488-b9ff-4183-92df-e5f375575839@oss.qualcomm.com>
+Date: Thu, 9 Jul 2026 07:30:14 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 2/2] docs/about/emulation: document the dlcall plugin
+To: Ziyang Zhang <functioner@sjtu.edu.cn>, qemu-devel <qemu-devel@nongnu.org>
+Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
+ Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
+ Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
+References: <20260708152043.251537-1-functioner@sjtu.edu.cn>
+ <20260708152043.251537-3-functioner@sjtu.edu.cn>
+ <6abd4f15-03b5-4036-a016-74269e87c36a@oss.qualcomm.com>
+ <f6600480-2cac-4708-8a3d-b2c69d454196@sjtu.edu.cn>
+ <2c33043b-da8e-4b3f-8f17-c574b4632fcb@oss.qualcomm.com>
+ <2b67de22-f710-4b44-9e37-858a9b5b1e64@sjtu.edu.cn>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <2b67de22-f710-4b44-9e37-858a9b5b1e64@sjtu.edu.cn>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA5MDE0MSBTYWx0ZWRfX2enrX6IJP0jD
- uKaV3b1mbG+t37bTYKoCqlMDopZ2yDwDy3ahaSEd6r1ZRQ6S9Tuqd0b65f5Rzx8zXXBle15xOsd
- 1RgxfU3pyW21vgUGYgwobq7mPun2Zpg=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA5MDE0MSBTYWx0ZWRfX+1G+1zvR1W7o
- VFTE7tvBFHuHE/UG7IcELy3D4fCWtitpH5+KXZWAwNXQJ5O20LFAYqu2uogrNSZAe52hwKOxz45
- C/XIfmOwB1YDx2u3k/a6ugx+XkS2JfydCQy9Dz2JD7W3bDVgwOlkZHO1l2EFINeqPkWw+ysM2II
- ikO/FDT5eqBu+CcWU1umtpZmxXhJq5dHJrTWb+pLnnrC5VShx8grMrsf8CdsHSwGxOBbDvoksOa
- yish0N72ZdL5g+EUwsPyJmqpFQtMghRtQ60/mD4pmUsLHOOk3wNyxW7RINdZXqZEx1A137RnRkZ
- DxDJOtsT0DFbVjXiDdk7doUFKFyEURB6HfSveG9ASW2f3qaqKevfhgAoOQjotUrk19+A0Wlp9w5
- xRsjouykFrMZGYDamjF2Ck7wbAp/d99M6Ad/055Uw6CplGkrAWnbZV4XWWp9SVfp1b9uDQg4HBF
- v3bVMnitwPppRNKySKw==
-X-Proofpoint-GUID: EFTXvyH3xcyZYMLhkqm8a123i1Lx1UXL
-X-Authority-Analysis: v=2.4 cv=Oot/DS/t c=1 sm=1 tr=0 ts=6a4fb03b cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=69wJf7TsAAAA:8 a=VnNF1IyMAAAA:8
- a=U3GCA_YXEp6Erz6r9jEA:9 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-ORIG-GUID: EFTXvyH3xcyZYMLhkqm8a123i1Lx1UXL
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA5MDE0MyBTYWx0ZWRfX9FrxKbvAMdtg
+ G53V5b21bsy3/dGeKRVig0uIGNmU9v6i8En/R0mvIFScywPqPAjv7hngzbVGwyWHW02Z4kyjpeq
+ P1HzNApwg95uvBcOtzIQ83iA0pD/xIE=
+X-Proofpoint-ORIG-GUID: 5oVjdjt07k2t1yLU4qsP8kmoBWINk_Rc
+X-Authority-Analysis: v=2.4 cv=cOLQdFeN c=1 sm=1 tr=0 ts=6a4fb07a cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=NEAV23lmAAAA:8 a=9QnkZOefQ_BZJSPh0l0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-GUID: 5oVjdjt07k2t1yLU4qsP8kmoBWINk_Rc
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA5MDE0MyBTYWx0ZWRfX7glQuHSvrOk3
+ hm/0W/KPzglsrS02MxVTozhKnpwGFsEqEsd7TBjUAsemG708ZwwWG7JalS+vgCDUcICeNuC3sRg
+ 1gw0xae4lwTU6pdBpyHClobpUot7UWxox+FBJl3YcC3wv4+9J15LkiOj+ho5nQIQagX1BOALd/k
+ R+0hUbic8tUJ5EsvkrogGdS49H0qEC8y4818AaT5sO/SqOfhCINksfsu6SOFLscZ1EHBsr3SuM/
+ cRSe5/tHJvTHUEJ5Zd3ad61iGaAcEvgq7NzVa54GEgB/bn8j0MTcOEHDx3T0owWXaBTa4U1CDis
+ uBG+3l6Lm4KS6dbXpTZyjaK4iO8jfHQiytF3ogf06xooQmAygXAXlFaZ4XQKjD51ZV3h99iw7O+
+ qdUd/3Bnk/+vLf04SXyibOYTMGlS9Is2ruyJwJ6zgwX92c9p45xxRcJ26B9srzUEqj93mW+D1B/
+ /uVRtJ5GKQK1Dk4GIFQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-09_03,2026-07-09_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0 phishscore=0
- malwarescore=0 suspectscore=0 spamscore=0 adultscore=0 priorityscore=1501
+ malwarescore=0 clxscore=1015 priorityscore=1501 bulkscore=0 spamscore=0
+ lowpriorityscore=0 phishscore=0 suspectscore=0 impostorscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607090141
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=borntraeger@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607090143
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,44 +165,194 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We verify the sccb length and then allocate based on that length. The
-following access re-reads the sccb again. This can race against other
-vCPUs overwriting the length field.
+On 7/8/2026 7:52 PM, Ziyang Zhang wrote:
+> On Wed, 8 Jul 2026 18:29:59 -0700, Pierrick Bouvier wrote:
+>> On 7/8/2026 5:27 PM, Ziyang Zhang wrote:
+>>> Hi Pierrick,
+>>>
+>>> On Wed, 8 Jul 2026 16:55:19 -0700, Pierrick Bouvier wrote:
+>>>>> +A minimal end-to-end example wraps a one-function library,
+>>>>> ``libhello.so``,
+>>>>> +declared by ``hello.h``:
+>>>>> +
+>>>>> +.. code-block:: c
+>>>>> +
+>>>>> +   void hello(const char *name, int lucky);
+>>>>> +
+>>>>
+>>>> Please include full files for example:
+>>>> hello.h, hello.c and main.c calling hello function.
+>>>>
+>>>> Also, please include compiler commands for libhello.so and main.
+>>>> You can give a full example assuming it run on a x86_64 host.
+>>> Good idea. I will get it done in v8.
+>>>
+>>>> I could not get it to work.
+>>>> Following all the steps, the error message is:
+>>>>
+>>>> [GRT] failed to load host runtime
+>>>> qemu: uncaught target signal 6 (Aborted) - core dumped
+>>>> Aborted
+>>> On the error. [GRT] failed to load host runtime is the host side (QEMU)
+>>> failing to dlopen the Lorelei host runtime, which means $DEVKIT/lib was
+>>> not on the host LD_LIBRARY_PATH, for example if $DEVKIT was not set in
+>>> the shell that ran the command. -L only points QEMU at the guest's
+>>> loader and libc, so it is unrelated.
+>>>
+>>> I reproduced it: dropping just $DEVKIT/lib from the host LD_LIBRARY_PATH
+>>> gives exactly that message and the abort. The real fix is making the
+>>> example self-contained so nothing stays implicit, which is what v8 does.
+>>>
+>>
+>> I paid attention to follow steps correctly, but maybe I missed
+>> something. Please see here a full dump of my env and commands:
+>>
+>> $ git status
+>> Untracked files:
+>>    (use "git add <file>..." to include in what will be committed)
+>>          a.out
+>>          hello.c
+>>          hello.h
+>>          libhello.so
+>>          lorelei-devkit-x86_64-1.0.4.0.tar.xz
+>>          lorelei-devkit-x86_64/
+>>          main.c
+>>          thunks/
+>>
+>> nothing added to commit but untracked files present (use "git add" to
+>> track)
+>> $ ldd a.out
+>>          linux-vdso.so.1 (0x00007f5855c3a000)
+>>          libhello.so => not found
+>>          libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6
+>> (0x00007f5855a0a000)
+>>          /lib64/ld-linux-x86-64.so.2 (0x00007f5855c3c000)
+>> $ LD_LIBRARY_PATH=./ ldd a.out
+>>          linux-vdso.so.1 (0x00007fef23831000)
+>>          libhello.so => ./libhello.so (0x00007fef2381f000)
+>>          libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6
+>> (0x00007fef235fc000)
+>>          /lib64/ld-linux-x86-64.so.2 (0x00007fef23833000)
+>> $ env | grep DEVKIT
+>> DEVKIT=/home/user/.work/qemu/lorelei-devkit-x86_64
+>> $ tree thunks/
+>> thunks/
+>> ├── lib
+>> │   └── x86_64-LoreHTL
+>> │       └── libhello_HTL.so
+>> └── x86_64
+>>      └── lib
+>>          └── x86_64-LoreGTL
+>>              └── libhello.so
+>>
+>> 6 directories, 2 files
+>> $ LORELEI_THUNK_PATH=thunks LD_LIBRARY_PATH=$DEVKIT/lib:. \
+>> build/qemu-x86_64 -plugin build/contrib/plugins/libdlcall.so \
+>> -L $DEVKIT/x86_64/sysroot \
+>>   -E LD_LIBRARY_PATH=$DEVKIT/x86_64/lib:thunks/x86_64/lib/x86_64-LoreGTL\
+>> ./a.out
+>> [GRT] failed to load host runtime
+>> qemu: uncaught target signal 6 (Aborted) - core dumped
+>> Aborted
+>>
+>> Any idea what could be missing?
+> 
+> The "[GRT] failed to load host runtime" message is the host side failing
+> to dlopen libLoreHostRT.so, and until now it did not print why. The next
+> Lorelei devkit (1.0.5.0) fixes that: the same failure now reads
+> 
+> [GRT] failed to load host runtime: <the exact dlerror>
+> 
+> so upgrading the devkit will usually tell you the cause directly, with
+> nothing extra to run.
+> 
+> Set LD_DEBUG for the QEMU process, and unset it for the guest with -U so
+> the guest loader does not also flood the output:
+> 
+> LD_DEBUG=libs LORELEI_THUNK_PATH=thunks \
+> LD_LIBRARY_PATH=$DEVKIT/lib:. \
+>     build/qemu-x86_64 -U LD_DEBUG -plugin build/contrib/plugins/
+> libdlcall.so \
+>     -L $DEVKIT/x86_64/sysroot \
+>     -E LD_LIBRARY_PATH=$DEVKIT/x86_64/lib:thunks/x86_64/lib/x86_64-
+> LoreGTL \
+>     ./a.out 2>ld.txt
+> Then look in ld.txt for the block that starts with find
+> library=libLoreHostRT.so [0]; searching.
+> 
+> A healthy load tries $DEVKIT/lib first, finds it there, and ends in a
+> matching "calling init" line. A failing load has no trying
+> file=$DEVKIT/lib/libLoreHostRT.so line at all.
+> 
+> So the difference is a single line. If $DEVKIT/lib is never tried, then
+> it did not reach the host LD_LIBRARY_PATH of the QEMU process for that
+> command. If instead that line is present but the load still fails, the
+> message after it (a missing dependency, an ABI mismatch) is the real
+> reason, and that is what 1.0.5.0 would print.
+>
 
-sclp_service_call_protected does not need a change as the ultravisor
-provides a consistent snapshot.
+Thanks, I'll try from v9 and latest release.
 
-Fixes: c1db53a5910f ("s390/sclp: read sccb from mem based on provided length")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
----
- hw/s390x/sclp.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
-index 2d2cde7803..3c8cb16488 100644
---- a/hw/s390x/sclp.c
-+++ b/hw/s390x/sclp.c
-@@ -329,7 +329,8 @@ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code)
-     /*
-      * we want to work on a private copy of the sccb, to prevent guests
-      * from playing dirty tricks by modifying the memory content after
--     * the host has checked the values
-+     * the host has checked the values.
-+     * Reuse the previously fetched header
-      */
-     work_sccb = g_malloc0(be16_to_cpu(header.length));
-     ret = address_space_read(as, sccb, attrs,
-@@ -337,6 +338,7 @@ int sclp_service_call(S390CPU *cpu, uint64_t sccb, uint32_t code)
-     if (ret != MEMTX_OK) {
-         return -PGM_ADDRESSING;
-     }
-+    work_sccb->h = header;
- 
-     if (!sclp_command_code_valid(code)) {
-         work_sccb->h.response_code = cpu_to_be16(SCLP_RC_INVALID_SCLP_COMMAND);
--- 
-2.53.0
+>>>> We talked about not overriding sysroot, so please remove -L part.
+>>>> Also, Why do current dir is passed in LD_LIBRARY_PATH?
+>>> In this example it assumes that the host libhello.so is in the current
+>>> directory, which must be able to be found in LD_LIBRARY_PATH.
+>>>
+>>>>> +The guest ``LD_LIBRARY_PATH``, passed with ``-E``, controls what the
+>>>>> emulated
+>>>>> +program loads:
+>>>>> +
+>>>>> +* ``$DEVKIT/x86_64/lib`` contains the guest runtime support shipped
+>>>>> with the
+>>>>> +  devkit.
+>>>>> +* ``thunks/x86_64/lib/x86_64-LoreGTL`` contains the generated guest
+>>>>> +  ``libhello.so`` thunk, used in place of an ordinary guest library.
+>>>>> +
+>>>>> +The host ``LD_LIBRARY_PATH`` controls what the plugin and host thunk
+>>>>> load:
+>>>>> +
+>>>>> +* ``$DEVKIT/lib`` contains the host runtime support shipped with the
+>>>>> devkit.
+>>>>> +* ``.`` is the current directory, where the host's own
+>>>>> ``libhello.so`` is
+>>>>> +  located.
+>>>>> +
+>>>>> +See the runnable
+>>>>> +`hello <https://github.com/rover2024/lorelei/tree/main/examples/
+>>>>> hello>`_
+>>>>> +(minimal) and
+>>>>> +`demo <https://github.com/rover2024/lorelei/tree/main/examples/
+>>>>> demo>`_
+>>>>> +(variadic functions and a callback that reenters the guest)
+>>>>> examples, and
+>>>>> +`Lorelei <https://github.com/rover2024/lorelei>`_ for prebuilt thunk
+>>>>> trees and
+>>>>> +the runtime environment they expect.
+>>>>> +
+>>>>> +.. list-table:: Dynamic Linking Call arguments
+>>>>> +  :widths: 20 80
+>>>>> +  :header-rows: 1
+>>>>> +
+>>>>> +  * - Option
+>>>>> +    - Description
+>>>>> +  * - syscall_num=N
+>>>>> +    - The magic syscall number the guest issues (default 4096). Must
+>>>>> be high
+>>>>> +      enough not to clash with a real syscall.
+>>>>> +
+>>>>>    Other emulation features
+>>>>>    ------------------------
+>>>>>    
+>>>>
+>>>> Regards,
+>>>> Pierrick
+>>>
+>>> It looks unexplained today only because the walkthrough never shows
+>>> building it. v8 will.
+>>>
+>>> v8 will also include the full hello.h, hello.c and main.c, plus the cc
+>>> and clang commands for libhello.so and main, as one runnable x86_64
+>>> sequence.
+> 
 
 
