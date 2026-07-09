@@ -4,93 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 634B2C44506
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 03:13:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E03DC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 03:25:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whfCE-0005Pi-IE; Wed, 08 Jul 2026 23:13:06 -0400
+	id 1whfNa-0007gk-W9; Wed, 08 Jul 2026 23:24:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
- id 1whfCD-0005PP-Be
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 23:13:05 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1whfNZ-0007g4-7G
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 23:24:49 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
- id 1whfCB-0005yX-Qb
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 23:13:05 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-37fc02e660bso502063a91.0
- for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 20:13:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1whfNX-0007PO-M8
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 23:24:48 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-698e5859a3cso964715a12.0
+ for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 20:24:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783567485; cv=none;
+ d=google.com; s=arc-20260327;
+ b=l6nQOc3aAWo2jQ23kMO7UXe7CjSdP3OY0Xa7unfZxU5kAWeAu0ALjCMGhEl3IZ39Xs
+ 8tZyP36FJjfJtHcnp4E43nXJ7OwBedtzi2pXK2Y01+yhkbg3pr1APMu8GqhYIaK931dv
+ pSt8HEx7V9A9jG9SzRos337CFH574A0IMz2Tfm9h6EggVpjOzK5yx2iOfzmMgcxz2wKO
+ e6gvI12YZYmqMeGduxsvw/qiT0+jIsM5yFGPT3o3SJR+tD01S+AdAH7/1vUfC4wdvjE2
+ LhbJ1OH3lqewztriarARYikxnBUma48p5gkeLnFN4urlIWqS0hKP6lafEB6l3w+4NtnF
+ FVXQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=ng21UaoMrWYg72GHTzSnmQ+n9Ud5epwyJFjuyHbRGY0=;
+ fh=XprlEOYSYHeyk23qNQeiXsKEF8nE10zAIzGAHnZo09s=;
+ b=LyAkodTIy5p9RQSQ3DUVIZF28kRvcjorPFHqp8/zKpqscA7zCIViuGQLXAXHPdLx20
+ ifsBZQXdjKf5YX+HkxN4xG2XXjnZg9x5hEMaVoYrat92YBAt03To3H7sidROdX0mAHeu
+ KGtuhgAV1uFF8HdpySHBT9zyt57t++wFnNyEpIkW8BnOr/tmlIDZqUt3was56OkpCv6g
+ 7VbyTo32uow6O6OC//7vzd/hJH6ip7o1eP05nH/wIC2J+r0Cejk9ODqhZmKRsv0oeJUl
+ 7Z1Qfpgejo+/qdBU5y9IbHEN+cX6P+b078ntcDiVUT8EfslxlQRs7PjaQpNWwGfUqW5V
+ WIIA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783566782; x=1784171582; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=dOlaHkDVo2fS7llYKd3HgpxhrbHqdexVmAk0QASwx1Q=;
- b=BcCY2DkE7J5aEUhCBbYwc4I1T2dDyuO2OOLLDG1P+HqtpzxS/te9dEcqUesCpRh0s0
- xuflX1kyo6m/97qcL8cLwq8hghIPRPLhLsTWwRf2H0ZM8J4EmSSgCEHyCUufVXSrGwaj
- hYOuyeXdixLYc3u6XWkHLDrMfL8V3lgE04nYFbeNFd+tonEiyvEgrRf61DwWkvwbYoDn
- HiDfGPfWgnVjTpcFGZGQX4fOWu/TXnUlEgvBEy7+FTspjD59/5GzAifZx+CwKyVP0ZjS
- yNz66iGoL3Jo60ls/iopkVPSjbOor0OTRYkXSRfiGHbe96k+mzP/k7RDO0wbBkdobSJQ
- mKuA==
+ d=gmail.com; s=20251104; t=1783567485; x=1784172285; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=ng21UaoMrWYg72GHTzSnmQ+n9Ud5epwyJFjuyHbRGY0=;
+ b=I1uJSoP1/x+BZ1S9OW5gFrd/MfM6L09acsZ8JWN+3FpT8fABDP0xvN/eQpyreG4jVX
+ YkOPn6gsh+pq6VdGjOAkgy0H8hxH6MbSCMLqOJlfeKiptt+e7bFfAqq7qxor6T/JmbJw
+ 9A/hvka82Qdde+vypcz2ESXhIMUx0LaJULkroh9fIrUiyjMJpz2pB60/ELa+8yyu/5zn
+ FfgXJNW0wLcbMcFN9B/jMlMG/GE6jB7wHxmqYdy1XS4YZv8pulu1zIpoPMYoLWvuBaM8
+ 5RnxNCcHRxDofBoK5jbNqQ+mgV6IOt55sZXhMBVqps9XvAiyp0NmERy3HINIOzuFrk0Q
+ uFDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783566782; x=1784171582;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=dOlaHkDVo2fS7llYKd3HgpxhrbHqdexVmAk0QASwx1Q=;
- b=LkbBSpMw+012a6mCBjO2S9B0GWWSYyPLho1oNt8lacK5o9q95h0p5/arm191FWm9Bo
- G08mOVu/9zecT5DPR09Pm1oQNA6wX6pZFURFhkkNwvXUXzPpWqtjhUK/ipGXNbE4DoDX
- oxg/1lOotgLg+Yx8ts58nM8jBYS1WuknBcGjY2ZB0UrmjlasMx8rCz0CM7hlzBIhzGti
- g1gMHVd+nUw0VTpPkhn5rSjIACx0maVqeDSqxrraVWcptsLsliB1rHC4zknfWrF1FiSO
- XHltLgl8LB0/PbxVVsajUJc+eDSzHnTA03bt+V8g1zeF38PSUdmxj4PBDj3DYyBwWuBs
- Xpmw==
-X-Gm-Message-State: AOJu0YwW/QGHmXgm1JUP90u0keU0q09tfammFZWpVCSoVMT2eqxb4TB/
- s3KGPjHklVvOzmYomS9PgaVkMECALYG/Y131gtiQP/t7MNBVyyaUYtvfMRKsvJnR
-X-Gm-Gg: AfdE7cmmmm/GF2vjC7eMYeB4HqpLRXPqtOjW9XghjUjYscKAYxihfRTE/3vX8x0YsJO
- LgKkgSUhpepSGTTA8Ce3D5V0EE1cdKXCjveQO9PU3R/UfDSFzKvexhZq1qNw9FMh8VnExpxqC88
- jk9vJSnO7/MAPwUqb/0qEIa0r8opNAMewdCRVvc589N5ClKNitzIKy0lN1jRml60OyJIXo+8hwo
- Q6q+3vxyuiM/7R9RxH+5nnLiPqniHCwyWRFOZAw0F0PetPffXKJdrbv+iBLZVogw115RmYnv/J9
- R85264O/Kd4VE6XBDaXOipFcfc6/RvZuZsBmBkZh0MJ9AUgfMXYEdV5ILcLZirRJ2drPBN+5FWp
- QwD3qk+wivfsN8UwTYf48cOLOJHqh0GrLU6UJUUIZQfZOYJpFKAsESwuPOtbMMJHw/BghG40o1Q
- GB0E/koCIZv2xOysAGxmZ0yD+hHuQW
-X-Received: by 2002:a17:90b:4b86:b0:381:610b:e77d with SMTP id
- 98e67ed59e1d1-38941cc4c9cmr5085387a91.29.1783566782424; 
- Wed, 08 Jul 2026 20:13:02 -0700 (PDT)
-Received: from localhost.localdomain ([212.135.212.213])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38a5516949asm392988a91.1.2026.07.08.20.12.59
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 08 Jul 2026 20:13:01 -0700 (PDT)
-From: jack wang <163wangjack@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Jack Wang <163wangjack@gmail.com>, Chao Liu <chao.liu.zevorn@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-riscv@nongnu.org (open list:K230 Machines)
-Subject: [RFC PATCH 2/2] hw/riscv/k230: wire up the RMU device
-Date: Thu,  9 Jul 2026 11:12:37 +0800
-Message-ID: <20260709031237.21284-3-163wangjack@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260709031237.21284-1-163wangjack@gmail.com>
-References: <20260709031237.21284-1-163wangjack@gmail.com>
+ d=1e100.net; s=20251104; t=1783567485; x=1784172285;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=ng21UaoMrWYg72GHTzSnmQ+n9Ud5epwyJFjuyHbRGY0=;
+ b=aa4bnjC2g0DgpkZWo/W3otlO1A922luwu8L1fsgYOTDA7fkwzFuf1SCC0iExKRx3qf
+ hZYJHJqQ1IW/G6lZUnA6QZbrmmdcySM3jTSj36+1F1JYwWPTy6BB2Qw3UMAmmAQKDq9e
+ 8p8CGcjKsQOGNrX0Me5sTDGh4U6BcRyBZPsqecPzYf02UL3xjVhUiFmZmPqtGUSTfML/
+ 0IXG/Vxktxl8Ja/LXn3bnYgNJDkus2UPUBXeyM1GqlCW4MLlRGYTAIJ/06JEJbsV//8m
+ lHXcwGWGwOa0ZyV7I3K6Zua8h3abSFVDwFvwm6jJpePj1S416k6mr4t/JTcOyx1xU5Fx
+ HfJA==
+X-Gm-Message-State: AOJu0YxswOtpvseBU3vn/UtmxJX69RoDMRGi7/xheP3fiD3Ya0QAlGuR
+ /J3ln0PRxi5KcfnYAcK5qkhF6pS7xQ4pgEdeKnKErI+4XXHsWR2ORj5qSJwq5rMveQx1febmX5w
+ ulwVVzx2qWoMhhqAwB8ISK8PqwyDcFXc=
+X-Gm-Gg: AfdE7cnUyeG5pFCeF/cSFFtxnXbHmVNZW7eQ4Bk53/pkkdOH44zFoD3S71fOqsPaD9f
+ +74iYCFYibbJys8ybbn3yym5ow9gv8JOEP++OJQWNw4oQxX66i3sCwO8/SECoNjrlnGVz7VmQ85
+ 5vMRiQxYUYG3aRQMtYRYN1Ydf4dudTbC6qlzvx1CZZmFCMrU9JplY3bOXImn7OFKocSrPeFxUip
+ lAHCnh3dAoSOU/LNBgGR9gsgQhPEsRbXhIE3+391DvGEE+TmXd0u7HZlkW7UYobj+I4j2YwdrWc
+ TMDtv1HSsuVOZklJ3gzjRLe2aj4=
+X-Received: by 2002:a05:6402:4306:b0:697:eb97:a4ed with SMTP id
+ 4fb4d7f45d1cf-69c01b81c71mr375197a12.7.1783567485298; Wed, 08 Jul 2026
+ 20:24:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=163wangjack@gmail.com; helo=mail-pj1-x1030.google.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
+References: <20260707145407.70287-1-corvin.koehne@gmail.com>
+In-Reply-To: <20260707145407.70287-1-corvin.koehne@gmail.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 9 Jul 2026 13:24:18 +1000
+X-Gm-Features: AUfX_mwZe-tlLQ94Prq2m4JmqQ2Enya9vPDfJcrHq2m698UQsAYK88z9CwwnNPE
+Message-ID: <CAKmqyKO6bph9pnQM8pYD=_rPu+c6pn17HODDcJCfFH7WPZ9eHg@mail.gmail.com>
+Subject: Re: [PATCH] hw/misc/zynq_slcr.c: drop duplicate reset value for
+ DDRIOB_DCI_CTRL
+To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
+ YannickV <Y.Vossen@beckhoff.com>, qemu-arm@nongnu.org, 
+ Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ =?UTF-8?Q?Corvin_K=C3=B6hne?= <c.koehne@beckhoff.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x531.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FROM_STARTS_WITH_NUMS=0.738, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,98 +122,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jack Wang <163wangjack@gmail.com>
+On Wed, Jul 8, 2026 at 12:54=E2=80=AFAM Corvin K=C3=B6hne <corvin.koehne@gm=
+ail.com> wrote:
+>
+> From: Corvin K=C3=B6hne <c.koehne@beckhoff.com>
+>
+> When adding a reset value for DDRIOB_DCI_CTRL in c8ba862dbfdc, we haven't
+> noticed that a reset value already exists. DDRIOB is a 32 bit register, s=
+o
+> incrementing it by 12 will access the DDRIOB_DCI_CTRL register. According=
+ to
+> the manual [1] the correct reset value is 0x00000020. Additionally,
+> c8ba862dbfdc won't work with a reset value of 0x00000021 because it tries=
+ to
+> detect a toggle of the reset bit (bit 0). Therefore, we drop the old rese=
+t
+> value and keep the new one introduced in c8ba862dbfdc.
+>
+> [1] https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/Register-slcr-DD=
+RIOB_DCI_CTRL
+>
+> Fixes: c8ba862dbfdc ("hw/misc/zynq_slcr: Add logic for DCI configuration"=
+)
+> Signed-off-by: Corvin K=C3=B6hne <c.koehne@beckhoff.com>
 
-Replace the "rmu" create_unimplemented_device() stub with a real
-K230RmuState instance mapped at the K230_DEV_RMU memmap entry, select
-K230_RMU from the K230 Kconfig, and document the device.
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-Closes: gevico/qemu-camp-2026-k230#11
-Signed-off-by: Jack Wang <163wangjack@gmail.com>
----
- docs/system/riscv/k230.rst |  1 +
- hw/riscv/Kconfig           |  1 +
- hw/riscv/k230.c            | 10 +++++++---
- include/hw/riscv/k230.h    |  2 ++
- 4 files changed, 11 insertions(+), 3 deletions(-)
+Alistair
 
-diff --git a/docs/system/riscv/k230.rst b/docs/system/riscv/k230.rst
-index cea8202e55..3f2313a127 100644
---- a/docs/system/riscv/k230.rst
-+++ b/docs/system/riscv/k230.rst
-@@ -19,6 +19,7 @@ The ``k230`` machine supports the following devices:
- * Core Local Interruptor (CLINT)
- * Platform-Level Interrupt Controller (PLIC)
- * 2 K230 Watchdog Timer
-+* K230 Reset Management Unit (RMU)
- * 5 UART
- 
- Boot options
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index 54e41a6afc..bffa4e69c8 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -149,3 +149,4 @@ config K230
-     select SERIAL_MM
-     select UNIMP
-     select K230_WDT
-+    select K230_RMU
-diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
-index 502281c52c..b55e90c0d2 100644
---- a/hw/riscv/k230.c
-+++ b/hw/riscv/k230.c
-@@ -110,6 +110,7 @@ static void k230_soc_init(Object *obj)
-     object_initialize_child(obj, "c908-cpu", cpu0, TYPE_RISCV_HART_ARRAY);
-     object_initialize_child(obj, "k230-wdt0", &s->wdt[0], TYPE_K230_WDT);
-     object_initialize_child(obj, "k230-wdt1", &s->wdt[1], TYPE_K230_WDT);
-+    object_initialize_child(obj, "k230-rmu",  &s->rmu,    TYPE_K230_RMU);
- 
-     qdev_prop_set_uint32(DEVICE(cpu0), "hartid-base", 0);
-     qdev_prop_set_string(DEVICE(cpu0), "cpu-type", TYPE_RISCV_CPU_THEAD_C908);
-@@ -206,6 +207,12 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->wdt[1]), 0,
-                        qdev_get_gpio_in(DEVICE(s->c908_plic), K230_WDT1_IRQ));
- 
-+    /* RMU (reset management unit) */
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->rmu), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->rmu), 0, memmap[K230_DEV_RMU].base);
-+
-     /* unimplemented devices */
-     create_unimplemented_device("kpu.l2-cache",
-                                 memmap[K230_DEV_KPU_L2_CACHE].base,
-@@ -268,9 +275,6 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
-     create_unimplemented_device("cmu", memmap[K230_DEV_CMU].base,
-                                 memmap[K230_DEV_CMU].size);
- 
--    create_unimplemented_device("rmu", memmap[K230_DEV_RMU].base,
--                                memmap[K230_DEV_RMU].size);
--
-     create_unimplemented_device("boot", memmap[K230_DEV_BOOT].base,
-                                 memmap[K230_DEV_BOOT].size);
- 
-diff --git a/include/hw/riscv/k230.h b/include/hw/riscv/k230.h
-index 592e1c26bf..13f2a1ab0b 100644
---- a/include/hw/riscv/k230.h
-+++ b/include/hw/riscv/k230.h
-@@ -18,6 +18,7 @@
- #include "hw/core/boards.h"
- #include "hw/riscv/riscv_hart.h"
- #include "hw/watchdog/k230_wdt.h"
-+#include "hw/misc/k230_rmu.h"
- 
- #define C908_CPU_HARTID   (0)
- 
-@@ -33,6 +34,7 @@ typedef struct K230SoCState {
-     RISCVHartArrayState c908_cpu; /* Small core */
- 
-     K230WdtState wdt[2];
-+    K230RmuState rmu;
-     MemoryRegion sram;
-     MemoryRegion bootrom;
- 
--- 
-2.53.0
-
+> ---
+>  hw/misc/zynq_slcr.c | 1 -
+>  1 file changed, 1 deletion(-)
+>
+> diff --git a/hw/misc/zynq_slcr.c b/hw/misc/zynq_slcr.c
+> index 0ae5d607be9b..d0f899c3be4d 100644
+> --- a/hw/misc/zynq_slcr.c
+> +++ b/hw/misc/zynq_slcr.c
+> @@ -427,7 +427,6 @@ static void zynq_slcr_reset_init(Object *obj, ResetTy=
+pe type)
+>                            =3D s->regs[R_DDRIOB + 3] =3D 0x00000e00;
+>      s->regs[R_DDRIOB + 4] =3D s->regs[R_DDRIOB + 5] =3D s->regs[R_DDRIOB=
+ + 6]
+>                            =3D 0x00000e00;
+> -    s->regs[R_DDRIOB + 12] =3D 0x00000021;
+>
+>      s->regs[R_DDRIOB_DCI_CTRL] =3D 0x00000020;
+>  }
+> --
+> 2.47.3
+>
+>
 
