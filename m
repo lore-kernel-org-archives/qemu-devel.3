@@ -4,97 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3431C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 06:40:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DD45C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 06:57:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whiQG-0004MX-3q; Thu, 09 Jul 2026 02:39:48 -0400
+	id 1whih2-0007NQ-Ox; Thu, 09 Jul 2026 02:57:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1whiQD-0004MJ-Ax; Thu, 09 Jul 2026 02:39:45 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1whih0-0007Ix-Ro
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 02:57:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1whiQA-0003P3-JI; Thu, 09 Jul 2026 02:39:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783579173; bh=b95LgVcwOIAhHAh3cUZCOSlsG8lLUgG0vuunq5D6UFE=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=kFlioFntuH4oBCU8fXs+a4DDu5mV6f+T1NPz0zKTkBtO0d5D7aR9yADsJN3RJKKYl
- 1lP+SfR/k+gmp4n2kWXFwSDiCsijQc4dSW4pHEtA9lrvBqMreo0ExsqYVa2iTTGt0j
- n7DdTaK1HdyZWwW/stNWouHh+gXurZUQWaJl82agKMswIS+CLkCLC9nIaHEhHZUYsB
- URcPVqU9Ik2ra7pExLUwujyhSMOL2iy7yhomve485vuWzz20GWCjAZTYQvAqcYxjG8
- Qm6lI3vi+mNkb04U2YitSLkaALc3wK1JouaICt/sRehfFzG84tNkC4OuHK2HthMiZ0
- 5IDB5a6rsrCsg==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 64C4D1BF9EC;
- Thu, 09 Jul 2026 09:39:33 +0300 (MSK)
-Message-ID: <273f53b8-9edc-4c0b-a793-d0667548553a@tls.msk.ru>
-Date: Thu, 9 Jul 2026 09:39:37 +0300
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1whigy-0005vC-3m
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 02:57:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783580221;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=d6gs/XHoX4ZDqwwPH6tbgexahTbPCxNiIrl3M0bs+Ls=;
+ b=bNdNmxVTCzd0vFKPMQvVqXt2b0+ZbGkWpFdgRW9c/NS1+6r/bM8D/vLAgA3/HFSRuwPLwt
+ iz9vZA9bbE+ArcqBZIwQJBD3UuDugbD3BCgmEslGikrnRkzXPu70++FD57S2vwn5ZhhCpI
+ HaivESAubsYd7ZLspf8+muTTTrwB3UQ=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-605-yI-z97viPgG4F4Y9EsKUQA-1; Thu, 09 Jul 2026 02:56:58 -0400
+X-MC-Unique: yI-z97viPgG4F4Y9EsKUQA-1
+X-Mimecast-MFC-AGG-ID: yI-z97viPgG4F4Y9EsKUQA_1783580218
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-493c55d5ce5so9067755e9.0
+ for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 23:56:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1783580217; x=1784185017; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=d6gs/XHoX4ZDqwwPH6tbgexahTbPCxNiIrl3M0bs+Ls=;
+ b=kfk6GjtFAMijFDACXvOf9y7MjPrgZ6Qqak8apy2c1rf/B3iRkW9+Qq+wPR8bmBys1h
+ NMoQ1WWN5Tz5DFAeT+8/IjEMWgZcKAb4hkbPI+HnBhv+DNBcU4W2xEL/dA6DxMx24EVb
+ OeXaKAypvSr2Asmhn1tYYAoJInlwa0VTYskeeQuYzDf+7q0FvAri+AVMuJkvcvHHPzU3
+ P14qrfjsq+JonXVNokNfZPcnsH9DQXubQgTFOEAWueO3oZZhDnAyFD4mdYyGUOT5m2jw
+ 788JWzANm7o1PiUmbVzjkpiIzqqNchiBGeZMt7JfuK3Lr1X8y0+1l/8jFwSOw1JVzDcd
+ sClg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783580217; x=1784185017;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=d6gs/XHoX4ZDqwwPH6tbgexahTbPCxNiIrl3M0bs+Ls=;
+ b=RqDEknuaUkGTQ3xgygq2da7NPVd+HwPhvxfizAjJ5KerpsI+WQZpPxIZJfX3dDML6Z
+ KK12uxC1vdMRo5ZteMwAGzMiXX35Gb6GNgG11RFquwXns3lN/+4l9yt65gyJe/M3QEMb
+ SY4iDUJ23F0psgkg1VmMll5iOY7a1w+LQRmDPwL2KthRX7Onc2Tfyidj1oRL41Q7KFxW
+ 292a6vT5xFG1vOW2JFMBN+w8e5LfirAGr/WHgCPzifnodyrhOIWSxWAqJ5brdaco94pd
+ 9RFMsZcKfcTBr3V65OgSEd0C8D/eOaJ9kO1HiGBKQ37Eci6bD7kZ65cYXQ+mAwVL0XQG
+ Yf6Q==
+X-Gm-Message-State: AOJu0YwAVbJTGlY3o1krQQ5FISVnX3hGde95v5XxFc8msozIR/n0UEe6
+ 48E6sHVvtnfODNdTKJ0fVccgdSNZ/S5//3Bq4l2A1EnHi59nCp2VH8e5asYFxefzqqxnj/dC0c/
+ gqag16gVJhaw8JRlMDXVKYD7FgmcuGKQGXvnGFGU55tXoAoJYIzfJCq1c
+X-Gm-Gg: AfdE7claDeVs6VSfc4tT73d7CHlv1fQ/8D2KcI6GkfmUU25fkS9ww+U4UUG7Qyh5nUp
+ c5wrv1sb3DnxN7A6E7TNHpOBk+3r1mYl+TGYQhbpQEZhXYAiBy4S1g1JAj/XAfmvnPFHgFSc2n8
+ mIWHlA97Cp9+qgYeuatQLCRC2ywksfzHW5100lvzbB8YcJOL39KBXxCY2wuWwecgVA56mN3Xm61
+ tubHK+yj8WS1ThHhhqmF9Y5PAg+kRo0NuMgKxDrJhA/MHW/bTmLhNMXfCgKsC0ixR4XvPY8XOY4
+ Mfb1bIumseqNWLqrmw3MzLSxjyyc/zinkWcx4LvaZslc4VAA7Ft0GvKFYPVXh6VmnX6VJIc882M
+ xRyYPL2JaXzSH1BXYPzSfRDJp/yTRdWsVKwZcoJcxXu7GLO4wrQ==
+X-Received: by 2002:a05:600c:4753:b0:493:b307:6777 with SMTP id
+ 5b1f17b1804b1-493e6892718mr53025845e9.22.1783580217637; 
+ Wed, 08 Jul 2026 23:56:57 -0700 (PDT)
+X-Received: by 2002:a05:600c:4753:b0:493:b307:6777 with SMTP id
+ 5b1f17b1804b1-493e6892718mr53025685e9.22.1783580217215; 
+ Wed, 08 Jul 2026 23:56:57 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:e10:ef90:343a:68f:2e91:95c?
+ ([2a01:e0a:e10:ef90:343a:68f:2e91:95c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493eb6f2e56sm42907875e9.13.2026.07.08.23.56.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 08 Jul 2026 23:56:56 -0700 (PDT)
+Message-ID: <b41c008c-dd9a-4401-b422-f7b041f34117@redhat.com>
+Date: Thu, 9 Jul 2026 08:56:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pvscsi: translate data endianness
-To: shankerwangmiao@gmail.com, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, qemu-s390x@nongnu.org
-References: <20260605-pvscsi-endianness-v1-1-b0bf472b0f59@gmail.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260605-pvscsi-endianness-v1-1-b0bf472b0f59@gmail.com>
+Subject: Re: [PATCH] hw/char/virtio-serial-bus: validate nr_active_ports from
+ migration stream
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Amit Shah <amit@kernel.org>, qemu-stable@nongnu.org
+References: <20260708144112.1830881-1-lvivier@redhat.com>
+ <20260709015451-mutt-send-email-mst@kernel.org>
+Content-Language: en-US
+From: Laurent Vivier <lvivier@redhat.com>
+Autocrypt: addr=lvivier@redhat.com; keydata=
+ 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
+In-Reply-To: <20260709015451-mutt-send-email-mst@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=lvivier@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,173 +168,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05.06.2026 16:27, Miao Wang via B4 Relay wrote:
-> From: Miao Wang <shankerwangmiao@gmail.com>
+On 7/9/26 07:55, Michael S. Tsirkin wrote:
+> On Wed, Jul 08, 2026 at 04:41:12PM +0200, Laurent Vivier wrote:
+>> The migration restore path reads nr_active_ports from the incoming
+>> stream and passes it directly to fetch_active_ports_list(), which
+>> uses it to size a heap allocation. A crafted migration stream can set
+>> this field to a very large value, causing QEMU to attempt a
+>> multi-gigabyte allocation and abort.
+>>
+>> Fix this by checking nr_active_ports against the configured
+>> max_virtserial_ports before calling fetch_active_ports_list().
+>>
+>> Cc: qemu-stable@nongnu.org
 > 
-> This patch improves the implementation of the pvscsi device by
-> translating the endianness of the data sent or received from the guest.
-> This ensures pvscsi can work on big-endian hosts with little-endian
-> guests.
+> Can you add a Fixes tag pls?
 
-Hi!
+Fixes: 6663a1956eb6 ("virtio-serial-bus: Maintain guest and host port open/close state")
 
-Can we pick this one up for 11.1 please?
-I know right to nothing about s390x internals so can't really review
-the change.  But the fix seems to work, and it should be picked up for
-the stable qemu series too, it loks like.
+> 
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3801
+>> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+> 
+> to make sure who is merging this me?
+
+Yes, please merge it through your tree
 
 Thanks,
+Laurent
 
-/mjt
-
-> Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
-> ---
->   hw/scsi/vmw_pvscsi.c | 58 +++++++++++++++++++++++++++++++++++++++++++++++++++-
->   1 file changed, 57 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/scsi/vmw_pvscsi.c b/hw/scsi/vmw_pvscsi.c
-> index 11ae6b9b7474b9bc87621137eb7911361b5fd721..883dfe9b6b5dc687737de356da02fe5f68aea7ad 100644
-> --- a/hw/scsi/vmw_pvscsi.c
-> +++ b/hw/scsi/vmw_pvscsi.c
-> @@ -35,6 +35,7 @@
->   #include "hw/pci/msi.h"
->   #include "hw/core/qdev-properties.h"
->   #include "exec/cpu-common.h"
-> +#include "exec/tswap.h"
->   #include "vmw_pvscsi.h"
->   #include "trace.h"
->   #include "qom/object.h"
-> @@ -392,9 +393,18 @@ static void
->   pvscsi_cmp_ring_put(PVSCSIState *s, struct PVSCSIRingCmpDesc *cmp_desc)
->   {
->       hwaddr cmp_descr_pa;
-> +    struct PVSCSIRingCmpDesc cmp_desc_conv;
->   
->       cmp_descr_pa = pvscsi_ring_pop_cmp_descr(&s->rings);
->       trace_pvscsi_cmp_ring_put(cmp_descr_pa);
-> +    cmp_desc_conv = (struct PVSCSIRingCmpDesc) {
-> +        .context = tswap64(cmp_desc->context),
-> +        .dataLen = tswap64(cmp_desc->dataLen),
-> +        .senseLen = tswap32(cmp_desc->senseLen),
-> +        .hostStatus = tswap16(cmp_desc->hostStatus),
-> +        .scsiStatus = tswap16(cmp_desc->scsiStatus),
-> +    };
-> +    cmp_desc = &cmp_desc_conv;
->       cpu_physical_memory_write(cmp_descr_pa, cmp_desc, sizeof(*cmp_desc));
->   }
->   
-> @@ -402,9 +412,18 @@ static void
->   pvscsi_msg_ring_put(PVSCSIState *s, struct PVSCSIRingMsgDesc *msg_desc)
->   {
->       hwaddr msg_descr_pa;
-> +    struct PVSCSIRingMsgDesc msg_desc_conv;
-> +    int i;
->   
->       msg_descr_pa = pvscsi_ring_pop_msg_descr(&s->rings);
->       trace_pvscsi_msg_ring_put(msg_descr_pa);
-> +    msg_desc_conv = (struct PVSCSIRingMsgDesc) {
-> +        .type = tswap32(msg_desc->type),
-> +    };
-> +    for (i = 0; i < ARRAY_SIZE(msg_desc->args); i++) {
-> +        msg_desc_conv.args[i] = tswap32(msg_desc->args[i]);
-> +    }
-> +    msg_desc = &msg_desc_conv;
->       cpu_physical_memory_write(msg_descr_pa, msg_desc, sizeof(*msg_desc));
->   }
->   
-> @@ -481,6 +500,9 @@ pvscsi_get_next_sg_elem(PVSCSISGState *sg)
->       struct PVSCSISGElement elem;
->   
->       cpu_physical_memory_read(sg->elemAddr, &elem, sizeof(elem));
-> +    elem.addr = tswap64(elem.addr);
-> +    elem.length = tswap32(elem.length);
-> +    elem.flags = tswap32(elem.flags);
->       if ((elem.flags & ~PVSCSI_KNOWN_FLAGS) != 0) {
->           /*
->               * There is PVSCSI_SGE_FLAG_CHAIN_ELEMENT flag described in
-> @@ -759,6 +781,12 @@ pvscsi_process_io(PVSCSIState *s)
->   
->           trace_pvscsi_process_io(next_descr_pa);
->           cpu_physical_memory_read(next_descr_pa, &descr, sizeof(descr));
-> +        descr.context = tswap64(descr.context);
-> +        descr.dataAddr = tswap64(descr.dataAddr);
-> +        descr.dataLen = tswap64(descr.dataLen);
-> +        descr.senseAddr = tswap64(descr.senseAddr);
-> +        descr.senseLen = tswap32(descr.senseLen);
-> +        descr.flags = tswap32(descr.flags);
->           pvscsi_process_request_descriptor(s, &descr);
->       }
->   
-> @@ -808,6 +836,17 @@ pvscsi_on_cmd_setup_rings(PVSCSIState *s)
->   {
->       PVSCSICmdDescSetupRings *rc =
->           (PVSCSICmdDescSetupRings *) s->curr_cmd_data;
-> +    PVSCSICmdDescSetupRings translated;
-> +    int i;
-> +
-> +    translated.reqRingNumPages = tswap32(rc->reqRingNumPages);
-> +    translated.cmpRingNumPages = tswap32(rc->cmpRingNumPages);
-> +    translated.ringsStatePPN = tswap64(rc->ringsStatePPN);
-> +    for (i = 0; i < PVSCSI_SETUP_RINGS_MAX_NUM_PAGES; i++) {
-> +        translated.reqRingPPNs[i] = tswap64(rc->reqRingPPNs[i]);
-> +        translated.cmpRingPPNs[i] = tswap64(rc->cmpRingPPNs[i]);
-> +    }
-> +    rc = &translated;
->   
->       trace_pvscsi_on_cmd_arrived("PVSCSI_CMD_SETUP_RINGS");
->   
-> @@ -831,6 +870,11 @@ pvscsi_on_cmd_abort(PVSCSIState *s)
->       PVSCSICmdDescAbortCmd *cmd = (PVSCSICmdDescAbortCmd *) s->curr_cmd_data;
->       PVSCSIRequest *r, *next;
->   
-> +    PVSCSICmdDescAbortCmd translated = *cmd;
-> +    translated.context = tswap32(cmd->context);
-> +    translated.target = tswap32(cmd->target);
-> +    cmd = &translated;
-> +
->       trace_pvscsi_on_cmd_abort(cmd->context, cmd->target);
->   
->       QTAILQ_FOREACH_SAFE(r, &s->pending_queue, next, next) {
-> @@ -862,6 +906,10 @@ pvscsi_on_cmd_reset_device(PVSCSIState *s)
->           (struct PVSCSICmdDescResetDevice *) s->curr_cmd_data;
->       SCSIDevice *sdev;
->   
-> +    PVSCSICmdDescResetDevice translated = *cmd;
-> +    translated.target = tswap32(cmd->target);
-> +    cmd = &translated;
-> +
->       sdev = pvscsi_device_find(s, 0, cmd->target, cmd->lun, &target_lun);
->   
->       trace_pvscsi_on_cmd_reset_dev(cmd->target, (int) target_lun, sdev);
-> @@ -892,6 +940,14 @@ pvscsi_on_cmd_setup_msg_ring(PVSCSIState *s)
->   {
->       PVSCSICmdDescSetupMsgRing *rc =
->           (PVSCSICmdDescSetupMsgRing *) s->curr_cmd_data;
-> +    PVSCSICmdDescSetupMsgRing translated = *rc;
-> +    int i;
-> +
-> +    translated.numPages = tswap32(rc->numPages);
-> +    for (i = 0; i < PVSCSI_SETUP_MSG_RING_MAX_NUM_PAGES; i++) {
-> +        translated.ringPPNs[i] = tswap64(rc->ringPPNs[i]);
-> +    }
-> +    rc = &translated;
->   
->       trace_pvscsi_on_cmd_arrived("PVSCSI_CMD_SETUP_MSG_RING");
->   
-> @@ -994,7 +1050,7 @@ pvscsi_on_command_data(PVSCSIState *s, uint32_t value)
->       size_t bytes_arrived = s->curr_cmd_data_cntr * sizeof(uint32_t);
->   
->       assert(bytes_arrived < sizeof(s->curr_cmd_data));
-> -    s->curr_cmd_data[s->curr_cmd_data_cntr++] = value;
-> +    s->curr_cmd_data[s->curr_cmd_data_cntr++] = tswap32(value);
->   
->       pvscsi_do_command_processing(s);
->   }
+>> ---
+>>   hw/char/virtio-serial-bus.c | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>>
+>> diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
+>> index c1973f0248fc..80f1b308aa53 100644
+>> --- a/hw/char/virtio-serial-bus.c
+>> +++ b/hw/char/virtio-serial-bus.c
+>> @@ -804,6 +804,10 @@ static int virtio_serial_load_device(VirtIODevice *vdev, QEMUFile *f,
+>>   
+>>       qemu_get_be32s(f, &nr_active_ports);
+>>   
+>> +    if (nr_active_ports > max_nr_ports) {
+>> +        return -EINVAL;
+>> +    }
+>> +
+>>       if (nr_active_ports) {
+>>           ret = fetch_active_ports_list(f, s, nr_active_ports);
+>>           if (ret) {
+>> -- 
+>> 2.54.0
 > 
-> ---
-> base-commit: 29c042c6e9d4a09d4a0ac3fa54aeb7ee08ce0bdc
-> change-id: 20260605-pvscsi-endianness-c0d389d8274e
-> 
-> Best regards,
 
 
