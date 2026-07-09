@@ -4,82 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D93F3C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 16:15:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AF39C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 16:17:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whrPZ-0004hp-9H; Thu, 09 Jul 2026 12:15:41 -0400
+	id 1whrRY-00059X-HL; Thu, 09 Jul 2026 12:17:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1whrPX-0004hK-Vv
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 12:15:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1whrRX-00059P-Ds
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 12:17:43 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1whrPW-0007v1-0r
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 12:15:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783613737;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QVn5FDqIAzChr0p9xI8dnaC1cgv/qB9qW6eqGm35/wk=;
- b=DIXhU2LgfTIFJ3XUbgmjwf7mhitI0gYB4RTkPPTWWKeQ1gmuWs5S8jXE7Yr7Cj2G1N5JlZ
- /qGxJ5htliYX8Trc2hJOroqQv5GLAz9c67FK81nUuLyIkmFbDi/PJ89VtggGDOBnO0cbqb
- exdWiwZGQp8WMiRGSZ53dpKUBQF9pqo=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-333-W2x0vhwzMnS2PQZPXiKodQ-1; Thu,
- 09 Jul 2026 12:15:33 -0400
-X-MC-Unique: W2x0vhwzMnS2PQZPXiKodQ-1
-X-Mimecast-MFC-AGG-ID: W2x0vhwzMnS2PQZPXiKodQ_1783613732
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 703541800BC3; Thu,  9 Jul 2026 16:15:32 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.49.59])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6C112195608A; Thu,  9 Jul 2026 16:15:30 +0000 (UTC)
-Date: Thu, 9 Jul 2026 17:15:26 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH v2 2/4] tests/docker: add support for podman remote access
-Message-ID: <ak_JHhfOLQQnhTze@redhat.com>
-References: <20260210163556.713841-1-berrange@redhat.com>
- <20260210163556.713841-3-berrange@redhat.com>
- <cbc2e0d7-72d6-4350-a906-e0003e8b5964@oss.qualcomm.com>
- <ak_A20foem8Ry_-M@redhat.com>
- <360aa513-7d40-4a49-babc-f579a1ecf441@oss.qualcomm.com>
- <ak_F9r-TdJSq8f5m@redhat.com>
- <27dd2663-725c-486a-ab19-f2914d9b8e93@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1whrRV-00086C-Dz
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 12:17:43 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 669DvwpX2002005
+ for <qemu-devel@nongnu.org>; Thu, 9 Jul 2026 16:17:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ C5hxwYSgg5qs4JZ8Xj/5oBNw8JeP66Cx5M71kUg6wNA=; b=EcAC3GMCgQAzylbe
+ YhZ0T6szNYzBQefDyMvLym2Hihq+wxBiCh6nAoRWo/WIl87DUvN6qd76SYr8BlEJ
+ sFnOb2la6GmTcSVSz9uzaYjrGo+LszU6yuV24n4/aPMPdCSz1p3sRNfSKJUCBKBn
+ WYcF9uxCZzQwAS1SRqvkTw63sQZmuaka4ha9fImsDczXGORCmjMliYWS4YfS2pAv
+ LaTXcVvLBWRKNYp/qF0GUt7P1ZuY15WgVlZDokjst5XHh1fIflv4ei1PPgDFFezA
+ gzYZNPo/76T4/+D4oL5aL+LxfYPayG8Y/xLrRcN9a5MYxK6vwxnxs1ikQuSqzCLS
+ 7dDtIA==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fa6p3tn2a-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 16:17:39 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-51c1b4d961dso120111cf.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 09:17:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1783613859; x=1784218659; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=C5hxwYSgg5qs4JZ8Xj/5oBNw8JeP66Cx5M71kUg6wNA=;
+ b=cTMZj7fZaWoGhqsnWPBLf1/kpTerpZ6c+Jr1XWnostS/g9iktXyWcgSyinKOvSQ0ja
+ jQfHg7TGtzhlLW2TPmybQmTx1IEXoAtPW89vif4K3zLVbKEKu3LIUPbT2Dw5GkB0uAMu
+ avVLKsEqRTKaBny3EcxCnSQJnE280MfBMF76PEJJCDHrii8JzfKqnN3vZkqgbBXu1Ero
+ zW1Nowj3RrWj0Cblq//mF+4rngVMgksNQjTIMq2/Z8+WO+rQwo+G3ZcYwfh0ExO/RNVZ
+ ptJL/X4IkhIp+B8Cds9zLGp2FA6W92jyIFeCikw7wcG8CiY4gpaKn1hfjKw+WiKLBT4+
+ qSVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783613859; x=1784218659;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=C5hxwYSgg5qs4JZ8Xj/5oBNw8JeP66Cx5M71kUg6wNA=;
+ b=l90C68x7lF3SE+x5y2meRJuytzCLrNXeOYhGymVHglmXgKud2vX/p5AgV9u5ikGvQN
+ 1PclhtixVAr6J6sOJsKvcTeM88TFjJrFwv/O6LU7JfUHjt3pZs1qHj5CV9wgW0C6PC3G
+ WjGnHNUHJBD8jeKB2ervFNk0sHo+bbtEwiN+fRqbjSRgMIfIiV2ZytYCMocWPn1A2ujm
+ YH3Es+h+rDVS7g83rlBAlOr0Q45zZMHino3tUIMBWSfQXyYCAQmkqdftmVlwCp+5oMFz
+ hMDg6TSzLU003mCceBgCP+C2wjhTzREdr3c54oVa2ecC0dusYkHC7yaxjFttcQikO3Ri
+ zlFw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqEj88J2HaKoUbA9x+v1mOU0eMXBtQUEqCZGr1QsdVms+9e22zdJz4US7qeoT0j3flDVfnvO4Zwfsfx@nongnu.org
+X-Gm-Message-State: AOJu0YyvrnXmZKrsJGs5PRCPs9c/sUARHyJ09nRQiGCteEOTPY0c1sop
+ ePgxqaaEfmqDrtMmr2AjqLe6V48Ul7gl/2iM7AygxwtRHUD3G0ahd4RP3pty6tLD6ThFo87O9i6
+ wwUQvdLqU3NKnttMQs7G4hRBu8yGYh0fvAcp97SBDTZk/Wxp6whqBm/BuuA==
+X-Gm-Gg: AfdE7cnotehuuaPFaNWH0GzYEYjjJ8ikOHow1P3zaCku2lLDQnfCjAXbhAaL/CK8Slx
+ XkMrzZ/7OO1L3RDIG+4r9QMFCAFfCzkdzNzZPkJA5fLb8lI3ce+PVQJGebuRFUS0TLR5c17xP6N
+ HClINrVDHx0beFAuo77bD57CtX1dbM4o9E/5uPJkh5vgARP5ifFKOPzwnvngzdItqerBXq1elCI
+ NMCPx3vdRftmMjhBV3UUQHcnh3QQ0xeq6xc+dcAmvJ/HWK42YbcCtQekJp/ScqvG/KsY6mrM6ic
+ nM9PMlvvCmoqHQUIMlG38KygqDbcBC1Bs8N8wuCo3jKgK4wJbqwSSMQpcDcRGi1esNA4jfNoDt9
+ BBOeIY1vfaNl1XUNiMFnDlRneHE9ZssBTGoyLrlW3luD/v//qXG0fYt0WoMEqfQ==
+X-Received: by 2002:a05:622a:1920:b0:51c:291:82eb with SMTP id
+ d75a77b69052e-51c9b62a87emr44555001cf.14.1783613858564; 
+ Thu, 09 Jul 2026 09:17:38 -0700 (PDT)
+X-Received: by 2002:a05:622a:1920:b0:51c:291:82eb with SMTP id
+ d75a77b69052e-51c9b62a87emr44554591cf.14.1783613858130; 
+ Thu, 09 Jul 2026 09:17:38 -0700 (PDT)
+Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-69a3652a02asm9090736a12.11.2026.07.09.09.17.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Jul 2026 09:17:37 -0700 (PDT)
+Message-ID: <3fc6d811-e666-4c5c-bb85-94fc9bf102de@oss.qualcomm.com>
+Date: Thu, 9 Jul 2026 18:17:36 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <27dd2663-725c-486a-ab19-f2914d9b8e93@oss.qualcomm.com>
-User-Agent: Mutt/2.3.2 (2026-04-26)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/9] hw/ide: fix ATAPI CD reads racing port reset and drain
+Content-Language: en-US
+To: "Denis V. Lunev" <den@virtuozzo.com>, "Denis V. Lunev" <den@openvz.org>,
+ qemu-devel@nongnu.org
+Cc: jsnow@redhat.com, qemu-block@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>
+References: <20260619112158.304782-1-den@openvz.org>
+ <8f3c11a9-64e6-44a3-bafb-9ac5d91d67a0@virtuozzo.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <8f3c11a9-64e6-44a3-bafb-9ac5d91d67a0@virtuozzo.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: YEQb02ZPAwtle4VpfvEF05E5lTK0tNwe
+X-Proofpoint-GUID: YEQb02ZPAwtle4VpfvEF05E5lTK0tNwe
+X-Authority-Analysis: v=2.4 cv=TPh1jVla c=1 sm=1 tr=0 ts=6a4fc9a3 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=yKEMG7WmrWSR15lrZ-AA:9 a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA5MDE1OCBTYWx0ZWRfX1on6rSDE+pqw
+ HFtErDRLni8515Wz8lOMvyZQ+fDiYEDztEHpEx7Ltni5sl8zrhi2sAgK0uU2Ab6CwFx7W+eBjLe
+ /o3rQw6peSw+NN2RHjID7KgGcCexH1o=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA5MDE1OCBTYWx0ZWRfX67/6+hHB5zn3
+ QPpCnHAUF66InXyb+75/tike77sQxw0J8nCE6W+SChzQqET0qY3nMPSLp8GkY2z86PuDAWzlH8G
+ eu6m08vLWihKaGFGcdp0LaUZJMZW6rs0g+ExaIwljj9WYasVDo5MVGBmgxiF73IrABzXvHI9F+y
+ iETogz/EoT71uQ9qQ6ASBLYuCQIvxmCgBUYSLd4j77QtBxmApP+JqzPutMch8E1qBMRjTxote5B
+ QMccd+/t10nyCuPoVl1hQw+wJOtdKe32xV59WD+Bwq1D506fTOq8CPr4wr7trh2zjxSWU9MwKjt
+ C8N5bq6STyB1JmmZDTgcIJaV3Ivayjo4mgRpMFoxC56h8DD7NmjOwLO+Y3WZ/1G0ShUSeb76TNh
+ zAAD+3i7+O5Iv+QDn66LwcpD8Tso20X/3egeo88H3XpDXYvZ/D0IYAY/PRoW0DrTWDtaL0kTDZu
+ dw6OELHyLOzr9VF1DEw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-09_03,2026-07-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 adultscore=0 bulkscore=0 phishscore=0
+ lowpriorityscore=0 clxscore=1015 malwarescore=0 spamscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607090158
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,151 +152,99 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 09, 2026 at 09:04:36AM -0700, Pierrick Bouvier wrote:
-> On 7/9/2026 9:01 AM, Daniel P. Berrangé wrote:
-> > On Thu, Jul 09, 2026 at 08:55:08AM -0700, Pierrick Bouvier wrote:
-> >> On 7/9/2026 8:40 AM, Daniel P. Berrangé wrote:
-> >>> On Thu, Jul 09, 2026 at 07:48:14AM -0700, Pierrick Bouvier wrote:
-> >>>> On 2/10/2026 8:35 AM, Daniel P. Berrangé wrote:
-> >>>>> When a developer's environment is already within a podman container it
-> >>>>> is not possible to use 'podman' again to create containers. It will
-> >>>>> usually result in wierd errors such as:
-> >>>>>
-> >>>>>   Error: fatal error, invalid internal status, unable to create a new pause process: cannot re-exec process to join the existing user namespace. Try running "podman system migrate" and if that doesn't work reboot to recover
-> >>>>>
-> >>>>> Podman offers the ability to talk to a daemon outside the container,
-> >>>>> however, which could be leveraged by QEMU.
-> >>>>>
-> >>>>> This can be used by invoking "podman --remote", or equivalently the
-> >>>>> separate "podman-remote" binary:
-> >>>>>
-> >>>>>   https://github.com/containers/podman/blob/main/docs/tutorials/remote_client.md
-> >>>>>
-> >>>>> The current 'podman version' check is insufficient to detect the
-> >>>>> inability to launch containers, so it is replaced with the stronger
-> >>>>> 'podman info' check.
-> >>>>>
-> >>>>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> >>>>> ---
-> >>>>>  tests/docker/docker.py | 10 ++++++----
-> >>>>>  1 file changed, 6 insertions(+), 4 deletions(-)
-> >>>>>
-> >>>>> diff --git a/tests/docker/docker.py b/tests/docker/docker.py
-> >>>>> index ff68c7bf6f..9e18b984f4 100755
-> >>>>> --- a/tests/docker/docker.py
-> >>>>> +++ b/tests/docker/docker.py
-> >>>>> @@ -76,14 +76,16 @@ def _guess_engine_command():
-> >>>>>      commands = []
-> >>>>>  
-> >>>>>      if USE_ENGINE in [EngineEnum.AUTO, EngineEnum.PODMAN]:
-> >>>>> -        commands += [["podman"]]
-> >>>>> +        commands += [["podman"], ["podman-remote"], ["podman", "--remote"]]
-> >>>>>      if USE_ENGINE in [EngineEnum.AUTO, EngineEnum.DOCKER]:
-> >>>>>          commands += [["docker"], ["sudo", "-n", "docker"]]
-> >>>>>      for cmd in commands:
-> >>>>>          try:
-> >>>>> -            # docker version will return the client details in stdout
-> >>>>> -            # but still report a status of 1 if it can't contact the daemon
-> >>>>> -            if subprocess.call(cmd + ["version"],
-> >>>>> +            # 'version' is not sufficient to prove a working binary
-> >>>>> +            # for podman. 'info' is a stronger check that is more
-> >>>>> +            # likely to correlate with ability to create containers,
-> >>>>> +            # and required to detect the need for podman remote
-> >>>>> +            if subprocess.call(cmd + ["info"],
-> >>>>>                                 stdout=DEVNULL, stderr=DEVNULL) == 0:
-> >>>>>                  return cmd
-> >>>>>          except OSError:
-> >>>>
-> >>>> Taking a look at why tcg tests are slow to compile, I reached this
-> >>>> commit. It seems like that calling 'podman info' is 5 to 10 times slower
-> >>>> than calling 'podman version'.
-> >>>> Thus, a container run now takes +1s when it was 0.2 before.
-> >>>>
-> >>>> On my setup, podman (remote) version fails correctly if it can't
-> >>>> establish a connection.
-> >>>>
-> >>>> The commit description briefly says
-> >>>> ```
-> >>>> The current 'podman version' check is insufficient to detect the
-> >>>> inability to launch containers, so it is replaced with the stronger
-> >>>> 'podman info' check.
-> >>>> ```
-> >>>> but it's not what I observed.
-> >>>>
-> >>>> Do you have more information about what is the exact reason we can't use
-> >>>> 'podman version' for podman-remote?
-> >>>
-> >>> My developer env involves toolbox, which is a wrapper around podman:
-> >>>
-> >>> "podman version" is not an operational check - it is effectively
-> >>> nothing more than a variant of command line "help". Just shows
-> >>> the binary can print to stdout.
-> >>>
-> >>> By contrast "docker version" is useful as IIUC it shows you can
-> >>> connect to docker daemon, but podman is daemonless so the 'version'
-> >>> chck doesn't offer any useful proof.
-> >>>
-> >>> "podman info" is an operational check that correlates with the
-> >>> ability to actually create containers.
-> >>>
-> >>> ⚙️  [host:fedora-44 ~]$ toolbox enter almalinux-toolbox-9 
-> >>> ⚙️  [podman:almalinux-9.8 ~]$ sudo dnf -y install podman
-> >>> ⚙️  [podman:almalinux-9.8 ~] podman version
-> >>> Client:       Podman Engine
-> >>> Version:      5.8.2
-> >>> API Version:  5.8.2
-> >>> Go Version:   go1.26.3 (Red Hat 1.26.3-1.el9_8)
-> >>> Built:        Tue Jun 16 23:52:20 2026
-> >>> OS/Arch:      linux/amd64
-> >>>
-> >>> ⚙️  [podman:almalinux-9.8 ~]$ podman info
-> >>> Error: fatal error, invalid internal status, unable to create a new pause process: cannot re-exec process to join the existing user namespace. Try running "podman system migrate" and if that doesn't work reboot to recover
-> >>>
-> >>> ⚙️  [podman:almalinux-9.8 ~] $ podman --remote info
-> >>> OS: linux/amd64
-> >>> provider: qemu
-> >>> version: 5.8.2
-> >>> ..snip...
-> >>>
-> >>
-> >> In this case, isn't the problem is that the environment should not have
-> >> podman installed if it can't actually create containers?
-> > 
-> > podman *can* create containers by using the '--remote' flag, which
-> > is what we made work in QEMU.
-> > 
-> >> Considering this, I think it would be better to have a "fast" default,
-> >> that only checks version, and leave the rest to the user to make sure
-> >> their env is correctly configured (or that they remove podman if that's
-> >> not the case).
-> > 
-> > My env is correctly configured so that podman --remote works. Doing
-> > onmly a version check will make QEMU not work once more.
-> >
+On 9/7/26 17:22, Denis V. Lunev wrote:
+> On 6/19/26 13:21, Denis V. Lunev wrote:
+>> An in-flight ATAPI buffered CD read (ide_buffered_readv(), used by both
+>> the PIO and DMA reply paths in hw/ide/atapi.c) can collide with a
+>> concurrent port operation, and it breaks in two distinct ways. Both are
+>> guest-triggerable and reproduce on current master.
+>>
+>> Neither was found by inspection: both are real issues reported against
+>> the qemu-kvm 10.0 downstream -- the crash from production, and the
+>> deadlock from the downstream live-migration validation suite -- on
+>> CD-ROMs backed by high-latency network storage, where a backend read
+>> outlives the guest's SATA command timeout.
+>>
+>> 1. Command engine restart -> NULL-deref crash (patches 1-2)
+>>
+>>     A guest can stop and restart a port's command engine
+>>     (PxCMD.ST 1 -> 0 -> 1) while a read is in flight. The restart re-maps
+>>     the command list and clears AHCIDevice.cur_cmd, but nothing tears
+>>     down the outstanding read; its completion then dereferences the
+>>     cleared cur_cmd in ahci_pio_transfer() / ahci_dma_rw_buf(). This is
+>>     not the COMRESET path -- an engine restart does not run ide_reset(),
+>>     so the drive's transfer state is preserved and the read still runs.
+>>
+>>     Patch 1 cancels the outstanding I/O when the command list is
+>>     unmapped, reusing ide_cancel_dma_sync() exactly as ATAPI DEVICE
+>>     RESET already does from the same MMIO context. Patch 2 is a qtest
+>>     covering the PIO and DMA reply paths.
+>>
+>> 2. Concurrent drain -> main-loop deadlock (patch 8, repro in patch 9)
+>>
+>>     A multi-sector PIO read whose byte-count limit spans more than one
+>>     sector must fetch the later sectors of a DRQ burst from inside the
+>>     completion of the first, asynchronous read. cd_read_sector_sync()
+>>     did that with a synchronous blk_pread(), which queues behind any
+>>     drain in progress. When a guest reset reaches
+>>     virtio_blk_stop_ioeventfd() -> bdrv_drain_all_begin() while such a
+>>     read is in flight, the nested read is queued while the outer
+>>     completion still holds blk->in_flight, so the drain never finishes:
+>>     the main loop wedges in the drain with the BQL held and every
+>>     QMP/monitor operation blocks behind it.
+>>
+>>     Patch 8 reads the whole elementary transfer in a single asynchronous
+>>     request, so no read is ever issued mid-burst; cd_read_sector_sync()
+>>     is removed and the DMA path is unchanged. Patch 9 reproduces the
+>>     hang via x-blockdev-set-iothread, which takes the same
+>>     bdrv_drain_all_begin() path a guest reset does.
+>>
+>> Patches 3-7 are the test groundwork the deadlock fix needs: they fold
+>> the IDE CD-ROM read tests into one parametrized helper and add the
+>> previously missing coverage -- multi-sector DMA, and raw 2352-byte
+>> READ CD on both IDE and AHCI -- so the rewritten ATAPI read path
+>> (including its in-place 2352 unpack) is exercised on both consumers.
+>> The test patches pass with or without patch 8, keeping the series
+>> bisectable.
+>>
+>> Patches 1-2 stand alone as the engine-restart crash fix; they are
+>> included here because the deadlock work shares and extends the same
+>> ATAPI read path and its test scaffolding.
+>>
+>> checkpatch is clean on all nine patches; the new and existing IDE and
+>> AHCI qtests pass.
+>>
+>> Denis V. Lunev (9):
+>>    hw/ide/ahci: cancel in-flight buffered reads on command engine restart
+>>    tests/qtest/ahci: test ATAPI read completing after engine restart
+>>    tests/qtest/ide-test: parametrize the ATAPI CD-ROM read test
+>>    tests/qtest/ide-test: add a multi-sector ATAPI DMA read test
+>>    tests/qtest/ide-test: cover raw (2352-byte) ATAPI CD reads
+>>    tests/qtest/libqos/ahci: support raw (2352-byte) READ CD
+>>    tests/qtest/ahci: cover raw (2352-byte) ATAPI CD reads
+>>    hw/ide/atapi: read the whole elementary transfer asynchronously
+>>    tests/qtest/ahci: regression test for ATAPI read vs. drain
+>>
+>>   hw/ide/ahci.c             |   3 +
+>>   hw/ide/atapi.c            | 180 +++++++++++++++-----------------
+>>   tests/qtest/ahci-test.c   | 201 ++++++++++++++++++++++++++++++++++++
+>>   tests/qtest/ide-test.c    | 211 ++++++++++++++++++++++++--------------
+>>   tests/qtest/libqos/ahci.c |   8 ++
+>>   tests/qtest/libqos/ahci.h |   2 +
+>>   6 files changed, 433 insertions(+), 172 deletions(-)
+>>
+> patches 1-2 landed via Philippe, thanks a lot.
 > 
-> In this case, maybe we can test first podman --remote, before podman.
-> If it can't connect to podman socket, version returns an error as expected.
+> What about the rest?
 > 
-> This way, it *works* on your personal setup, and it's fast for everyone
-> else.
-> 
-> Sounds like a good compromise?
+> This is real obscure problem observable in production.
 
-Checking plain docker first was intentional, because it ensure you
-avoid the indirection of the podman daemon if you don't actually
-need it. This makes it all work optimally both inside and outside
-the toolbox containers.
+Since IDE is listed as "Odd Fixes" and no listed maintainers
+commented for a month on a fix, maybe you could step up as
+a new one... My 2 cents ;)
 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+Kevin, as core block/ maintainer, any objection?
 
