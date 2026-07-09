@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 993B0C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 15:26:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B568C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 15:26:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whqdY-0001hH-AP; Thu, 09 Jul 2026 11:26:04 -0400
+	id 1whqda-0001hh-8n; Thu, 09 Jul 2026 11:26:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1whqdR-0001fL-Nr; Thu, 09 Jul 2026 11:25:57 -0400
+ id 1whqdY-0001hI-As; Thu, 09 Jul 2026 11:26:04 -0400
 Received: from smtp2-g21.free.fr ([212.27.42.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1whqdO-0000Gu-6T; Thu, 09 Jul 2026 11:25:57 -0400
+ id 1whqdV-0000MP-NZ; Thu, 09 Jul 2026 11:26:03 -0400
 Received: from localhost (unknown [89.92.102.124])
  (Authenticated sender: emmanuel.blot@free.fr)
- by smtp2-g21.free.fr (Postfix) with ESMTPSA id B65542003CC;
- Thu,  9 Jul 2026 17:25:24 +0200 (CEST)
+ by smtp2-g21.free.fr (Postfix) with ESMTPSA id 993C42003DC;
+ Thu,  9 Jul 2026 17:25:42 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
- s=smtp-20201208; t=1783610742;
- bh=kt0kAG9do4HQJ9IshjozRg4XTHX7KV510mGPiRz2MXs=;
+ s=smtp-20201208; t=1783610760;
+ bh=SnKnbSWCiJv4knKbQJZq1xAsiDv4kW43nmwzOiobfNc=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=tARy8xK5MUnr+Y1MoPYPJ2oO6SKu7N2C230mog/hyoq4xAzW9KAuk+6vcgiBu7V4/
- fHymfvl7yLDZZclRKgr2BVVlBpNye8MZAgf/bY0EvaMVxLKkBoPNV0JtFkTuxa7Wga
- SmXoTR8mG0Xiu+5v65jLASmQGbZSbGoSVosAxX3cpn+zQxS8r7fkYm5r/4Hq5Ys9N7
- Ue/Go+0PJltegebqhUVC00EhH+KYRkvtBPJOQgeQ/fBsB5H+ocMZqsKWIn91sepAYk
- lIJnRKdIw5ByIp3OQAMCb0ozExPgbndJSvPYwpzaKzME9LOmtD38rd2QYO2/UIgo4g
- KMyI/gKhI6N4g==
+ b=d1254RwLPPpGO0W9XSi6fpeY50TM5z2pGVjW1t6rhZdP5QfKPAxezMc7dLsZYKmJV
+ E9S7J/ftobaIUXSb5CZUL1PtxfEqw5j05ZWHszmiIkYB6ih/y4ymBYbeYybvri77Zi
+ j5baWqOedPz55wwAM4TKihAg7Oq+GZR9NKhbQQyG81luYoRUT2f5Xw6/n/7YezcvjB
+ 1QMEXQagqLHYXLxk2WbAsfL5DtRZqBh+5tLdz59874cgA/p1VocQBgXCqBl216MsEh
+ py5hagGyaF7jCzlNAdwgWZTPaVI+pT3xIlfPDC91TPx2d+1ZLTf9h9kxU/wZBi6Y+K
+ 42Boaq5yO2zQQ==
 From: Emmanuel Blot <emmanuel.blot@free.fr>
-Date: Thu, 09 Jul 2026 17:23:42 +0200
-Subject: [PATCH 04/29] hw/gpio: pca9552: default description to the
- instantiated type name
+Date: Thu, 09 Jul 2026 17:23:43 +0200
+Subject: [PATCH 05/29] hw/gpio: pca9552: declare pca9555 device as an alias
+ of pca9535 device
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260709-catalina-upgrade-v1-4-814575bc076b@free.fr>
+Message-Id: <20260709-catalina-upgrade-v1-5-814575bc076b@free.fr>
 References: <20260709-catalina-upgrade-v1-0-814575bc076b@free.fr>
 In-Reply-To: <20260709-catalina-upgrade-v1-0-814575bc076b@free.fr>
 To: qemu-devel@nongnu.org
@@ -53,11 +53,11 @@ Cc: Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org,
  Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
  Corey Minyard <cminyard@mvista.com>, Emmanuel Blot <emmanuel.blot@free.fr>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783610647; l=897;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1783610647; l=1669;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=kt0kAG9do4HQJ9IshjozRg4XTHX7KV510mGPiRz2MXs=;
- b=toDy3ump7aV+xpo5dspuPifAxeEJZHIZmRU3Zkq50bD8p1t8ZPtUd4+v1u5ZB5QNgl5L7bcwE
- WdWRe4vkEaCB8abShrGqefqL1ja8bw6JlRKyKkB/EzFT7zyoipLto9P
+ bh=SnKnbSWCiJv4knKbQJZq1xAsiDv4kW43nmwzOiobfNc=;
+ b=FZ1Iq9Ru3Bq5qyFmij1Y2wqRNbViTxJJD9GAiBcihg7G1N9w20jVkqW40Ibof7jUv8wEY9qnv
+ hSfU2YaT2+7BV+vQ0/taMYkdNua0Bxbt6KXAzYTVj5jZ++FUgyqQYMD
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
 Received-SPF: pass client-ip=212.27.42.2; envelope-from=emmanuel.blot@free.fr;
@@ -84,29 +84,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When no description is supplied, fall back to the actual QOM type name
-(pca9552 / pca9535 / pca9555) via object_get_typename() instead of the
-opaque "pca-unspecified" placeholder, matching the PCA9554 model and
-giving meaningful device labels in traces.
+PCA9555 HW is mostly identical to PCA9535.
+PCA9555 HW features pull-up resistors that are not available on PCA9535.
+
+Pull-up are not handled by current PCA955x implementation and PCA9535
+already initializes input as Hi-Z.
 
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- hw/gpio/pca9552.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/gpio/pca9552.c         | 9 +++++++--
+ include/hw/gpio/pca9552.h | 1 +
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/hw/gpio/pca9552.c b/hw/gpio/pca9552.c
-index da21e56aab..ffeb438d2a 100644
+index ffeb438d2a..3b9b63eb17 100644
 --- a/hw/gpio/pca9552.c
 +++ b/hw/gpio/pca9552.c
-@@ -488,7 +488,7 @@ static void pca955x_realize(DeviceState *dev, Error **errp)
-     PCA955xState *s = PCA955X(dev);
+@@ -523,7 +523,7 @@ static void pca9552_class_init(ObjectClass *oc, const void *data)
+     pc->has_led_support = true;
+ }
  
-     if (!s->description) {
--        s->description = g_strdup("pca-unspecified");
-+        s->description = g_strdup(object_get_typename(OBJECT(dev)));
+-static void pca9535_class_init(ObjectClass *oc, const void *data)
++static void pca95x5_class_init(ObjectClass *oc, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(oc);
+     PCA955xClass *pc = PCA955X_CLASS(oc);
+@@ -553,7 +553,12 @@ static const TypeInfo pca955x_types[] = {
+     {
+         .name          = TYPE_PCA9535,
+         .parent        = TYPE_PCA955X,
+-        .class_init    = pca9535_class_init,
++        .class_init    = pca95x5_class_init,
++    },
++    {
++        .name          = TYPE_PCA9555,
++        .parent        = TYPE_PCA955X,
++        .class_init    = pca95x5_class_init,
      }
+ };
  
-     qdev_init_gpio_out(dev, s->gpio_out, k->pin_count);
+diff --git a/include/hw/gpio/pca9552.h b/include/hw/gpio/pca9552.h
+index 71479ea000..5299c13829 100644
+--- a/include/hw/gpio/pca9552.h
++++ b/include/hw/gpio/pca9552.h
+@@ -13,5 +13,6 @@
+ #define TYPE_PCA955X "pca955x"
+ #define TYPE_PCA9552 "pca9552"
+ #define TYPE_PCA9535 "pca9535"
++#define TYPE_PCA9555 "pca9555"
+ 
+ #endif
 
 -- 
 2.50.1
