@@ -4,105 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86900C44501
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 11:20:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D97CEC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 11:25:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whmnW-0002jS-0X; Thu, 09 Jul 2026 07:20:06 -0400
+	id 1whmsh-0005RP-RP; Thu, 09 Jul 2026 07:25:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1whmnU-0002ha-4c
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 07:20:04 -0400
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
+ id 1whmsg-0005QW-6W
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 07:25:26 -0400
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1whmnS-0001Gw-Jw
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 07:20:03 -0400
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-664ce3000e6so1720047d50.0
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 04:20:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783596001; cv=none;
+ id 1whmse-0002Yr-7r
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 07:25:25 -0400
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-667bae10ba3so376936d50.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 04:25:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783596322; cv=none;
  d=google.com; s=arc-20260327;
- b=IXYycu4zaXLvVYL7ft0JLwu7UjqefqVsJ+t28PAoR4/w9fMF59sfoX3VH5SXGAwoi/
- 9M7zE8wJBiIKwrTeUeGWoR0pNNZmqgEHin+kULIznyz2pzAfHX4FbQxMT2mSrc7M2ziP
- IRuelfNnua+sw67Gcnl+3M7+WPua9ahEmyf+dcwFcG6bOPy6U7/h99kM5Zrji7WYBjuY
- 5AvlJbHN0u4xebdeOQU/c/0b3SLtYSm3ALqvOPCK0oIW4mBC+bdK4KYlft/+srA8XgVt
- LkIqhLaL9Z//vydUzrv2o1b5cBJMxDwA4nlifvgPi7ID6xD/oyMnHQI31TSj/3LJp09m
- XvtA==
+ b=RoFxQ8qkt2c8rFxVePhfsPba7IkeSj/GqKictQRkCnoajVNJJQZaMjbGnKqec/3kw3
+ FWSU6a+TrGkba5bvQfBdg+3JmUlBmUqOK55CEzrIOAwlaiLtboFqQNiwyPBICMxlKBlN
+ Qq94WuXpwxpYa30aFY3oQc0kL9F+mnvGIvv/PUA+go1ZtzEeid9k5/MsomPoBmStvmom
+ JEPCukcm3qnpghtHiEmeQlLimmf2JnOvE7tDVu9fw9pIRWJPZqUcHt7L/+XxHs9V/8/r
+ woI3nAHnHCvff2v4BCmIj0OZIXj51ju3XPzKlQR9CAH9yAX4Ht+mj6jw33LlnOX77v1k
+ YX7g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=CCHk/EOcONFKt0oKJke0FsCC0xT1JGWrNSNs0RwyT9Y=;
- fh=tiNDaFvoog2kFPO+nj9EkYzDgF/523u1Vj0qu9MWNDQ=;
- b=iB+qux3zbr8wNoVTC/aMh6PA5fJLNuh2eAA86QJG+DBxzXcb7ZBPo+A3x+Uha8LDJ8
- FTdNXtFWic45SH6MSHmwAL4JH4QKNF10TNASMefvtO0VhhGFBMECjrNNC8KF4q4XnEyN
- FlvY8A4I/uSPCDjDUylQJ+U8XqXMVvmL1JZhkajvpRU67vyVAvRoyBRVoSQkNBvSduDO
- 6G5m6iWoBnjb+Nax0Yl477cyK2F9kTaOaRnWwrzUUWVu0qFdXlE5JmdYqF7ExLa+P7F2
- Z/NINB1N5v4NHL3ERYEV+4cKgG6GGGdsTwjavS6OuaLXOwiaFRobnaqCASYnoe0qyNIG
- Zr3g==; darn=nongnu.org
+ bh=PUTt8gEXC3evuZEI4FrKnGNtcaVB1W0fSDTAWKQlAes=;
+ fh=8tgGIjUAmI3rvyBiGHVyENPGCLFgbIUAXh2qgr0fPvI=;
+ b=oM8s8PkSQC6Nn0wCqqitaLne+NVPM6n4nnMLRIODR+T7/7Kf4u7jAh+z+XNGWCx3HC
+ PVTFWQ9EnfEMCyJGrMmP55baqzwTNO8NI2w32b0Bei72EXX2dv5bpYZLt0yGkKi2lkI1
+ mbTRNkeft8E2Jv3QKNjXtK86/LG6EpcB4zYDiPi2OnUsO4hSKrRSFudJ0yUIQ+5dQWAJ
+ ZFKdq48u0MNixge8xpFSYI3ARjrptH8aGAVWbxrxzOPobKJM18Tn/iNMvf2U5RWEjhwr
+ CQXXT5PcMyV04XdExCPnCmobTv4FxG25dMCTh81B94MpThojRJcAsYaN7wPfHb/gdOCy
+ eXjA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783596001; x=1784200801; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783596322; x=1784201122; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=CCHk/EOcONFKt0oKJke0FsCC0xT1JGWrNSNs0RwyT9Y=;
- b=QzgfuVeyP1heUu2uwCtsv/5sv+WJft9UmSdRHDu5a/oi1kYw+zSOddXJeI7ylvdv+n
- TVOGiyb9gEH/n1ZVnLGDG0nCWcghhn1l0P9yLCi3raI5agmTAz0zbZs1PeeQf5efz/Lk
- 0YgNJ1WA5jguPQG/Bw0SSMZykpCzEXKv00dbM77IcicQqSsPInsKVO0Y3VQBmNgg71o8
- /WnrNQjj/sjAUyuihOmMSdAe800HiU6tHW+BZ7LyL5xooME0ZoIOMaKyA3vW8edM327T
- NI7SUdxXYP5v1JtCw94FtVefqE4e5e6OUyyRZtgFQ1zvfCWtFwwcNYW52kySxZ1KELsF
- C6Wg==
+ bh=PUTt8gEXC3evuZEI4FrKnGNtcaVB1W0fSDTAWKQlAes=;
+ b=Bj81L+dInbXNf3tZOjlsiFAetK6uqe0sCRBO/tA7FCxcmIc7PhuS0LtYeu+s8l/QXW
+ euHyEQoWgSsSwSsjm5uacCDXdup3c20WJB43/LaNfJQHl5u63iRB1lThRSD7GMQDgFtG
+ G5UvlI0crNOz47nsyO2k6FfsSjBYpUkHz2Q9/d1P5fMrvMzA6YrixCYca11sg74J5DaD
+ CBWk+YRvqLPynfovWWQyFojuqD/W1mnTvdR6Lr8tPtIrAPMhpHbd7dWVrmCGkDQ/LTx5
+ KPJEsznKDSzWXEhGwLRPeqlgWwA9yzc30AgqobHGpuqYLD6RgdILkGvSQwLE3wrfm1sO
+ NyoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783596001; x=1784200801;
+ d=1e100.net; s=20251104; t=1783596322; x=1784201122;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=CCHk/EOcONFKt0oKJke0FsCC0xT1JGWrNSNs0RwyT9Y=;
- b=a83jw713tG8b61IMoIvPYO+jpFHLyb2cNqdNyirnI+z9nfLKA3jTwhgvcNBQEoPoPT
- avY+rxgnPiyAGr8/mVL6oh+GgrGDhN0eEGNdzuEidAjv+9dd9CLSDAyXkSBQRDZGftmr
- tjU+J4JQuc5K+aSVyGCQwn6OzucExAhEGg5T9IhhzNICx64/riA4JOpcPWLCA8LY3M+D
- GYVJoA/5wWCcbA+EX9YqsSqKV6G2qvcAJwSbIRcqnUTszNeKAPEqqvDF+x8yvoBVS17K
- 02HrfA6dxUaAVTGCNJ9G6Z9ODbIs/8DCtJrxdqKXWHPFs9r5OYpAQ9OwXK2GUT9M2nof
- OCPg==
-X-Gm-Message-State: AOJu0YyokHuz6R5VxQE9GThg5ve1w6b/UdfyOHLW+gqJNSk6FPswUBF7
- hXDD0cAyBasFBKpSqnXwolLF19d9tGf7EdF1T+fUSjjVzaaZXVSiX7fgkiIXLIeog5IrhgC68HO
- IsHdv8psZQWATo6kbKKsLlR3Y7gQs5z9axJDMfyUK7Q==
-X-Gm-Gg: AfdE7cksjk1BgpBx2pVSlafy11LhzvbryrpJWQDF9+Y6ugAaGHMlOUzkqVCwMe6l++I
- s1kXXgNZ8hXw67JOdsEeFDBH6lc/d/QiGQtHC10sQt8SuW03aAWEMwwvMyxh6BylXfTYRvnfddU
- ldInhgKy6Q+yZ6ho+7fwalJ8YadxW7rYplRK02pYm0NLEezz1VUhOFRaRrFRkrrAl5By+VlukkM
- hNzU+cWASqYhqqn6xopSWV1PJDxOh0SJON0yPHq2iCU/XnllNGArgHmj2P+UoFHjo227HiaPLgx
- XrTi/4Z1caFpGxOY/06vP9zQtS5HI0ysvQdJgfErUqVRHtOxslfS1Crv
-X-Received: by 2002:a05:690e:128a:b0:667:ad6a:deb1 with SMTP id
- 956f58d0204a3-667ad6ae4b1mr4072168d50.49.1783596000557; Thu, 09 Jul 2026
- 04:20:00 -0700 (PDT)
+ bh=PUTt8gEXC3evuZEI4FrKnGNtcaVB1W0fSDTAWKQlAes=;
+ b=lvoBtkEQNYM+aAtugQO/y5emhNvKd9LMxXbUIQ6SmK7f6BDVx1H1HqlTc4dBjR7LB4
+ IPMkiUSRImCDpyXH9acfhcGPQSiU0FDEcQIBkAaf1wNGXQWgVRu+jOYZzTgxSAF++C6T
+ hDdh4Tv0+tq4RZhDH3dEyNpZMhPHtHbU+w1FieRMia5YrSciNV3gORy9Rcqy7VwmqzQt
+ BA3Nt7O3MKB/ZgCQWAZXLGehOiKa4JLLg7iXqSETjfnMstl9qAimHlgRJc5a3H2g06wA
+ YghxXltKyzd6qvsxpfkz7qERs+1W1WPvVMn7WwW03f1JVh21d5PYTJwLxRasz9p5Hemb
+ aXgA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqNc3HqW2TBE7BUNhJnz/ZN+ThaUkXHCv99SPX9igv1evBSYaiMVC0sHTYkQ4GjU3Ybjk18XwoKo5+y@nongnu.org
+X-Gm-Message-State: AOJu0Yx9d4fBDhwZRIJ6yyGTESjZbvFVfX2z4TUamrp3NZ8NqTgCCJ7s
+ h2Pu8k+1fGOdPdpWYlOO10y7wjrWs5R5Kp+7Rw+cilLbxSbpmyTOAKy2lsjnsS1fF7FegixkZ9M
+ 2KIa99ULMWOfpAnRng+7yy62eP7tmmSBCDiDwjyDeLw==
+X-Gm-Gg: AfdE7cngqOXdijHUYcMkcP4PqKvfhFK6V0VVUcSJEwJZru/kJ7jmd6JqVDHNVIBVV1V
+ NMvteSRrkKPeXGJjABBWaSvq1YoROxoo1bPc/GgQiQKE/87/PPOJyki7kZB/jbw7mqwdSLXAf1M
+ P0xiVZkRVMJT0TcGEt60rnW4skliIOk9HyDpCZRh97ZAHaypXR6mB8rk1scUH8SkgAbiVewSfcl
+ u2T7IA0Yxg8jroIEgClUgpeuE+kWm1CwNIxAu/HgJq0E8RHqLu+3AyxKfUThoSz6M7yR/jdFrI0
+ GkmdvDLWvKgZHbTTqlPY6j34hYO6brRcDYHArmaCie3m3YoSh6c/QGph
+X-Received: by 2002:a05:690e:12c1:b0:667:a2e7:dd48 with SMTP id
+ 956f58d0204a3-667a2e7fb80mr3684954d50.32.1783596322185; Thu, 09 Jul 2026
+ 04:25:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260709111249.1107640-1-marcandre.lureau@redhat.com>
-In-Reply-To: <20260709111249.1107640-1-marcandre.lureau@redhat.com>
+References: <20260706230056.1888992-1-titusr@google.com>
+ <20260706230056.1888992-5-titusr@google.com>
+In-Reply-To: <20260706230056.1888992-5-titusr@google.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 9 Jul 2026 12:19:48 +0100
-X-Gm-Features: AVVi8CdT6tlX4Mr3pvenaEVYKZeSkpjpS5QX-JFXNy7s0f19P-9hi8iFDU13VME
-Message-ID: <CAFEAcA9HhtE8NPQ1ZTAk5qr=GHxf4SyDZpe7s+g=A7mVuL52Yw@mail.gmail.com>
-Subject: Re: [PATCH] hw/core/machine: fix fdt memory leak
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- Zhao Liu <zhao1.liu@intel.com>
+Date: Thu, 9 Jul 2026 12:25:10 +0100
+X-Gm-Features: AVVi8Cf_Be_bnmnQbnlaVkotuW5EKAB1PTCmMyaCs_lGE0gdg-J6NeJ2ZHzZtGw
+Message-ID: <CAFEAcA9vT6r_C9q9NKVTso1WCmHpozxa8thqC_v4R-Pj_hxU+A@mail.gmail.com>
+Subject: Re: [PATCH 4/5] hw/i2c: smbus: increase MAX_DATA_LEN
+To: Titus Rwantare <titusr@google.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kfting@nuvoton.com, 
+ imaginos32@gmail.com, wuhaotsh@google.com, philmd@mailo.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,19 +120,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 9 Jul 2026 at 12:13, <marcandre.lureau@redhat.com> wrote:
+On Tue, 7 Jul 2026 at 00:01, Titus Rwantare <titusr@google.com> wrote:
 >
-> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> From: titusr <titusr@google.com>
 >
-> The MachineState fdt field is allocated by various machine types via
-> create_device_tree(), load_device_tree(), or similar, but was never
-> freed in machine_finalize(). Add the missing g_free() call.
+> The 32 byte payload was raised to 255 for block reads in the SMBus 3.0
+> specification. SMBus does not provide a way for devices to declare which
+> version of the spec they are designed to so we must allow newer devices
+> to return as much data as they allow.
 >
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Specification: https://smbus.org/specs/SMBus_3_3_20240512.pdf
+>
+> > 6.5.7 Block Write/Read
+> The Block Write begins with a slave address and a write condition. After =
+the command code the host issues a byte count which describes how many more=
+ bytes will follow in the message. If a slave has 20 bytes to send, the byt=
+e count field will have the value 20 (14h), followed by the 20 bytes of dat=
+a. The byte count does not include the PEC byte. The byte count may be 0. A=
+ Block Read or Block Write is allowed to transfer a maximum of 255 data byt=
+es.
+>
+> Signed-off-by: Titus Rwantare <titusr@google.com>
 > ---
->  hw/core/machine.c | 1 +
+>  hw/i2c/smbus_slave.c         | 4 ++--
+>  include/hw/i2c/smbus_slave.h | 2 +-
+>  2 files changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/hw/i2c/smbus_slave.c b/hw/i2c/smbus_slave.c
+> index cfb61c879e..407a118d24 100644
+> --- a/hw/i2c/smbus_slave.c
+> +++ b/hw/i2c/smbus_slave.c
+> @@ -217,8 +217,8 @@ bool smbus_vmstate_needed(SMBusDevice *dev)
+>
+>  const VMStateDescription vmstate_smbus_device =3D {
+>      .name =3D TYPE_SMBUS_DEVICE,
+> -    .version_id =3D 1,
+> -    .minimum_version_id =3D 1,
+> +    .version_id =3D 2,
+> +    .minimum_version_id =3D 2,
+>      .fields =3D (const VMStateField[]) {
+>          VMSTATE_I2C_SLAVE(i2c, SMBusDevice),
+>          VMSTATE_INT32(mode, SMBusDevice),
+> diff --git a/include/hw/i2c/smbus_slave.h b/include/hw/i2c/smbus_slave.h
+> index 86bfe0a79e..59522ff1b1 100644
+> --- a/include/hw/i2c/smbus_slave.h
+> +++ b/include/hw/i2c/smbus_slave.h
+> @@ -64,7 +64,7 @@ struct SMBusDeviceClass {
+>      uint8_t (*receive_byte)(SMBusDevice *dev);
+>  };
+>
+> -#define SMBUS_DATA_MAX_LEN 34  /* command + len + 32 bytes of data.  */
+> +#define SMBUS_DATA_MAX_LEN 257  /* command + len + 255 bytes of data.  *=
+/
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+This is a migration compatibility break, and you can use this with
+machines like q35 where we care about migration compat (e.g. via
+the smbus-impi device creatable on the command line), so we need
+to do this in a way that maintains migration compat from older
+versions of QEMU, I'm afraid.
 
 thanks
 -- PMM
