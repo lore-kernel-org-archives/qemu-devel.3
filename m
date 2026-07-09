@@ -4,97 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 175E6C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 05:54:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 912CDC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 05:56:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whhi8-00032r-FB; Thu, 09 Jul 2026 01:54:13 -0400
+	id 1whhjP-0003sy-TH; Thu, 09 Jul 2026 01:55:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1whhi6-00032A-Pt; Thu, 09 Jul 2026 01:54:10 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1whhjO-0003s5-3m
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 01:55:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1whhi4-0002fD-CM; Thu, 09 Jul 2026 01:54:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783576440; bh=0e7GIVdM3bnUaoG0iY16k6d6PIptMGNk5bzKxeRStKc=;
- h=Date:Subject:From:To:Cc:References:In-Reply-To;
- b=QpdLSHB5AcRawo5xhI0gbBf1kefv6dyAChgVllNYWmcoM/HztWXLhL+1BoDEBOfv6
- oihsDuHLJVh5lE7t+y12h+8Ys1rmpTEkeSSyhN8F5Yn6D/90pphU752elbUCyUKMgm
- INHMQ2YsYmXCK1Yheij8p5bZoJqsSoFgOKekI62++BSlGQJ7KzeqcqDGHmP0BZBtgD
- 8zKJo3Fnov28lJ+7dSQ1x3cbnVZ1Z3gANvIjmskDFYe1fsvzmJufNetKNpDwNp+1+X
- if316UBnREeJMLCv2j3vAjvkNLT04B2XcznPYGtaWNyN0O16eeHMhiciVgvGR7eBn5
- jPQg4L/XWT9PQ==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 72CC71BF95D;
- Thu, 09 Jul 2026 08:54:00 +0300 (MSK)
-Message-ID: <dfb00ba2-91cc-4c7e-bdf4-44ae97b08576@tls.msk.ru>
-Date: Thu, 9 Jul 2026 08:54:04 +0300
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1whhjM-0003Cz-H3
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 01:55:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783576527;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=I6q/JfiVx37RI05jd5wlr+YLbTuEbvdb05ysw9TgDCw=;
+ b=fiU+wnAkdAIvQXkhya4XgwizVa6EDrRvPpbCiI0dwH/FDAl9DJ+9hjXlRnGz1RoLhtJWjr
+ 9rv55qZ3uJvrZSbmF4/SRJqGUhz1w3GuSl5oZqFtb04vft+oZDV697/5WSVD1VIsRvUNOX
+ Gvq+NnOKGwwihzFS1M2e/voxTjYDb/E=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-402-C3kKdAMkOOCPhunPx0g6ng-1; Thu, 09 Jul 2026 01:55:26 -0400
+X-MC-Unique: C3kKdAMkOOCPhunPx0g6ng-1
+X-Mimecast-MFC-AGG-ID: C3kKdAMkOOCPhunPx0g6ng_1783576525
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-493bdaf8549so12815165e9.2
+ for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 22:55:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1783576525; x=1784181325; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=I6q/JfiVx37RI05jd5wlr+YLbTuEbvdb05ysw9TgDCw=;
+ b=uJosWE+IvI/Dt6P81r0nsvvS2jmRSud6BI6+Zp07USRS3TiBRjcxjwGCFZ+7Sbudlc
+ laNHpmQXOpcXCkQv9jK8UJWOGn1zwuIBTbosq2JJDqOGfy+bCjqVyx7q6yBVjeTx+4MG
+ 0T4Xiu785d8nrQ1U+9e6dqhX+iHufKnKFCrHq0X8NS9dow/AFoevyryom59VVMbkJQNZ
+ GfOceOhiCTSSvQMI6s6K6vSbAceg7S3fU8TB/WVZ+h0MEL9xsSk8SNK94VDbvgEhebiw
+ gEF4T1FEZjlQ85dyHvxGEetxkv2IZh2pP7gT1oBWyFrF3slOcmQtn+dhYPlvQfY5sFAK
+ 52Yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783576525; x=1784181325;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=I6q/JfiVx37RI05jd5wlr+YLbTuEbvdb05ysw9TgDCw=;
+ b=Pv/4929ysfj9f3Cu/W0ZyOi6Koj0sfUaZ3mEafV/h7ISZTtQuAH0A0h8OHnv1/LVHS
+ GHMNU5NfTllx4mYpYoxvlscoI1JjtlRfTZi4oO/ixrBTGpmjF0ueLO/gQdJ2YLOfjuqb
+ KjCYFWgQk5D5XU+zT/QhvXyg6B0kv4yz5qFBM+lKtgbmClKrq7mcg7zIKgMHLJZvxm64
+ zT0KCAeJfynDdDYd+QJBl4MdrElpUmoL/RPScJ6u9FHT21G6qDWFcL6mK+pyK9WGehJS
+ RfS9/deXI34etwL+ZXiUyceKJkVa01XztFwnIaa+K8AxvaLd91eUiPF2Wz0UnNkFZXRR
+ Ua1Q==
+X-Gm-Message-State: AOJu0YwNw3K73mo8ZFxYMHk2Ou2HHAu1qKlj598ewYHSavkXCg97frkO
+ 4LKrdNrTtL2gJ3TX49GW3Ypw5YwUs2zXrjgZctWwzpVXziX3eeq7gYNjE94JARFzuP90Xb5GEKp
+ C1pLwFOFuEa7BF6d0yBbCLGU2IdqsouU5ub7zbIyb/gxsEkLvuizZ1Zxq
+X-Gm-Gg: AfdE7cljWIBevATgGl0SkwAfMwdZ8lVj+4nMkFHVcfAICeRUWUgz//b4hoU8SSfJMu7
+ nYEkfCBYlJZ80uYWAFjVvMiu2b9uA9cJPg78ZkocZfJdh26cuxpxotSFyk8any60ZN8Lprs9ss+
+ uU/jAT1BF0+HqeXe/z1La2MQj1ehleF+/EprM3jqx8clG4a4MY1EFG3mXvKtJ3YlYWYnepMTfHE
+ mLu5xvt3/8wURQXahxb/NGP+e79Tvi2O4a7krlyQwR04ntuET5L+0DOA2KBN/whoBH+LMfseZRr
+ bCdqdqovIL1R/673GUcp0iov16P6FOKOduG+uRHOUGF5Vd8qXQkKgo9SRNOU35nxSC7oTgmFAyN
+ tCBONiXzLFab8u94om0TehZNSb/4KClu/
+X-Received: by 2002:a05:600c:1391:b0:493:e508:1137 with SMTP id
+ 5b1f17b1804b1-493e68e0c1cmr48310085e9.39.1783576524588; 
+ Wed, 08 Jul 2026 22:55:24 -0700 (PDT)
+X-Received: by 2002:a05:600c:1391:b0:493:e508:1137 with SMTP id
+ 5b1f17b1804b1-493e68e0c1cmr48309965e9.39.1783576524058; 
+ Wed, 08 Jul 2026 22:55:24 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-68-31.inter.net.il. [80.230.68.31])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47a9de1e736sm52034925f8f.7.2026.07.08.22.55.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 08 Jul 2026 22:55:23 -0700 (PDT)
+Date: Thu, 9 Jul 2026 01:55:21 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Laurent Vivier <lvivier@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Amit Shah <amit@kernel.org>,
+ qemu-stable@nongnu.org
+Subject: Re: [PATCH] hw/char/virtio-serial-bus: validate nr_active_ports from
+ migration stream
+Message-ID: <20260709015451-mutt-send-email-mst@kernel.org>
+References: <20260708144112.1830881-1-lvivier@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tcg/loongarch64: Fix cmp_vec with TCG_COND_NE
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-stable <qemu-stable@nongnu.org>
-References: <20260623140609.645445-1-richard.henderson@linaro.org>
- <11442fc4-dca8-4bdb-b921-4ed749f4f0de@tls.msk.ru>
-Content-Language: en-US, ru-RU
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <11442fc4-dca8-4bdb-b921-4ed749f4f0de@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260708144112.1830881-1-lvivier@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,29 +120,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09.07.2026 08:45, Michael Tokarev wrote:
-> On 23.06.2026 17:06, Richard Henderson wrote:
->> For NE we need to invert EQ, not swap operands.
->>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3589
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On Wed, Jul 08, 2026 at 04:41:12PM +0200, Laurent Vivier wrote:
+> The migration restore path reads nr_active_ports from the incoming
+> stream and passes it directly to fetch_active_ports_list(), which
+> uses it to size a heap allocation. A crafted migration stream can set
+> this field to a very large value, causing QEMU to attempt a
+> multi-gigabyte allocation and abort.
 > 
-> This feels like a qemu-stable material.
-> I'm picking it up for the stable series,
-> please let me know if I should not.
+> Fix this by checking nr_active_ports against the configured
+> max_virtserial_ports before calling fetch_active_ports_list().
+> 
+> Cc: qemu-stable@nongnu.org
 
-And for 10.0.x "LTS" series, I'm also picking up 2 extra commits:
+Can you add a Fixes tag pls?
 
-a079836005 tcg/loongarch64: Fix vec_val computation in 
-tcg_target_const_match
-911f7328e9 tcg/loongarch64: Improve constraints for TCG_CT_CONST_VCMP
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3801
+> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
 
-which looks like an improvement too :)
+to make sure who is merging this me?
 
-Again, please let me know if I should not.
-
-Thanks,
-
-/mjt
+> ---
+>  hw/char/virtio-serial-bus.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
+> index c1973f0248fc..80f1b308aa53 100644
+> --- a/hw/char/virtio-serial-bus.c
+> +++ b/hw/char/virtio-serial-bus.c
+> @@ -804,6 +804,10 @@ static int virtio_serial_load_device(VirtIODevice *vdev, QEMUFile *f,
+>  
+>      qemu_get_be32s(f, &nr_active_ports);
+>  
+> +    if (nr_active_ports > max_nr_ports) {
+> +        return -EINVAL;
+> +    }
+> +
+>      if (nr_active_ports) {
+>          ret = fetch_active_ports_list(f, s, nr_active_ports);
+>          if (ret) {
+> -- 
+> 2.54.0
 
 
