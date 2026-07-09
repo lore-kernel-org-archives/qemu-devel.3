@@ -4,91 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53D2FC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 08:02:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82CA0C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 08:03:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whjgl-0007jv-87; Thu, 09 Jul 2026 04:00:55 -0400
+	id 1whjjG-00034B-7c; Thu, 09 Jul 2026 04:03:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1whjgj-0007jB-GM
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 04:00:53 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1whjgh-0008A0-9M
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 04:00:52 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-493bc8fda98so11221215e9.0
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 01:00:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783584048; x=1784188848; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=jU1a90ZfBRp5/0sdNCZ+p4SXKU0IB+parub6rmY9ydw=;
- b=Y3CsVR+HmLkpYaFa3v4ao4JmZsxJBANdCJazcYEeETPfsrGUCslFOeoCbMHbylLuFF
- N79687bd74Ze68G2aE5e67GkXpomEPRYIEtmSbDpsomvIzx9kZzMgwL4ITzvAj4cKVLl
- HhJrn7eB1XZEFXltgn80Z3MfPd30rNE6rcS8zWxKb4GcGxOebLzx4DJ05BafLFOxt9bY
- aUSGVqq12EJWFVaTfbrHjqBb0NKuBdx+tSyDv4XsrjgHrxrkVoAGsE6/XOXHDv77lkFM
- sKY770C7lADti8/W06nYeuC/prE46Jm52ARo+8mmYj+OaPKdyN0MMaJ+t33Y0OaF5D6y
- Maog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783584048; x=1784188848;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=jU1a90ZfBRp5/0sdNCZ+p4SXKU0IB+parub6rmY9ydw=;
- b=HsdViwdStZ8CaBe5OYu1Pps2m63378AXbowUM4R5klOuzFRnfe3X1FoDqYAXzol/Qo
- 1EUhh7yRg1rJLlSECqjkiWnZshz+JBV+h0/ZWgnxnvB/Zh0NK45UcUYLPJFZUwFD/FAp
- qBQ4Jz7gUzE34nr2XlftImAJjVIL9YUqHtdeWvigk7nwkXpV5yNL8n5n73VEufqCahB/
- c/VUER6Cmzj+Lvw7lh86q3gzPCIJovbsAM//0IXzeqwe9ZON09rvV9ZqcltCmuyfP+tR
- n4IJn1RrrfChjgJTGTOhXzostE5qQmyyNjxeSIRHsJeZdoGiOo64su2equY6H37CYDpn
- ilDA==
-X-Gm-Message-State: AOJu0Yz2jNNCdOgARlWwLP0InFod83rXg05cszYCFCo/f24Qg0UFW7lP
- GagNNQ5T9+eyc0L6BzhTyL+o470R/taQYlAxWjoEOh6UPiUhFfIZjENOwskk0DirUcA=
-X-Gm-Gg: AfdE7cnmdmg3wP+/KLBq5ACxbI8NNpuxY6UEO47ajN0kuynBL3EZOo57GRHf4VJ/oGY
- CUsp6LcYWia9wJcD/oC73MAAabJ4ZmdiuME8/nEJ69IZ/HDM5P7see90lLDvLRpK2D0jn2nWITF
- RJ4tIY4cVObkF1Aej2i5+KPIKrTrKavbl8IV35hS/kS1/pxDZSQdyA2k1F/1h9LcUrg1AQ0YIUW
- P1jItJdENOKxVHKu+OOADUZliXR4c+N7X+zhOnE/xKKqusdVjdYQhZM93R/3poplxw4qvz2WJTC
- 8UuZECYFvQMy21pClZE+PjGhrxlpl46R+SdLzet0SAG0xCDACj+po+v78zVgQAAXddz0dAkZGGf
- DDHJFHWEVxJkcAqAZGqYrNqKFglYDEMmoXZOjdTFqDuLuRUWn9K4evH2e1IdgjAbKT7lSfYTzJV
- SDASzLN4j9rzhCw8rM5e1f4rE=
-X-Received: by 2002:a05:600d:8443:10b0:492:1e36:1fe9 with SMTP id
- 5b1f17b1804b1-493e68e0d0cmr43207145e9.37.1783584047851; 
- Thu, 09 Jul 2026 01:00:47 -0700 (PDT)
-Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493eb6df6d9sm50271705e9.7.2026.07.09.01.00.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jul 2026 01:00:45 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B5427600F1;
- Thu, 09 Jul 2026 09:00:40 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- eopXD <yueh.ting.chen@gmail.com>
-Subject: [PATCH 6/9] contrib/gitdm: add group map for SiFive
-Date: Thu,  9 Jul 2026 09:00:36 +0100
-Message-ID: <20260709080040.4157324-7-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260709080040.4157324-1-alex.bennee@linaro.org>
-References: <20260709080040.4157324-1-alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1whjjE-00033p-Kk
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 04:03:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1whjjC-0000QK-Ce
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 04:03:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783584203;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=nPit7spSbc+ma1sq5uy8doSD2ETBEPaaArgmHi2+kJo=;
+ b=J+eBMmUlioJcDMmkT2AaVpkvQTK2cE22Pd//RtAGb0pnLdnJzexzNgez1fZ16+PxyWyLoX
+ 2ZciSV2n9Cx+g6Wbdq17gRBA2Y/4RiWQud/AyE4zJ+rbpXtaawlnbASOl/2AavSTHYi6F7
+ 7A72C8ll8XQcce5EFAiGn3bTDtucs7g=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-457-6F6ZNjTqMkW8GR2c1BCURA-1; Thu,
+ 09 Jul 2026 04:03:20 -0400
+X-MC-Unique: 6F6ZNjTqMkW8GR2c1BCURA-1
+X-Mimecast-MFC-AGG-ID: 6F6ZNjTqMkW8GR2c1BCURA_1783584199
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EF84D19560B5; Thu,  9 Jul 2026 08:03:18 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.49.59])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EC42D180058F; Thu,  9 Jul 2026 08:03:17 +0000 (UTC)
+Date: Thu, 9 Jul 2026 09:03:14 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@gmail.com>
+Subject: Re: [PULL 0/4] Misc patches queues
+Message-ID: <ak9VwgV77sETy5CM@redhat.com>
+References: <20260707175027.3029620-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20260707175027.3029620-1-berrange@redhat.com>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,44 +83,61 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some SiFive contributors use there personal emails. Add a group map
-for those developers. Please confirm.
+Note, I have updated my PGP key with a new signing sub-key,
+so it will need refreshing from keys.opengpg.org, under
+the same primary key ID as you already have for me.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Cc: eopXD <yueh.ting.chen@gmail.com>
----
- contrib/gitdm/group-map-sifive | 5 +++++
- gitdm.config                   | 1 +
- 2 files changed, 6 insertions(+)
- create mode 100644 contrib/gitdm/group-map-sifive
+On Tue, Jul 07, 2026 at 06:50:23PM +0100, Daniel P. Berrangé wrote:
+> The following changes since commit 94826ec1370328375c3b6d1e80fdc94c8f46c348:
+> 
+>   Merge tag 'accel-20260706' of https://github.com/philmd/qemu into staging (2026-07-06 18:38:14 +0200)
+> 
+> are available in the Git repository at:
+> 
+>   https://gitlab.com/berrange/qemu tags/misc-next-pull-request
+> 
+> for you to fetch changes up to 64d0d2efdd2822c827aa7cd276e15c7cefaccb95:
+> 
+>   docs: outline some guidelines for security classification (2026-07-07 18:36:15 +0100)
+> 
+> ----------------------------------------------------------------
+> * Outline security classification guidelines
+> * Use QEMU lock guards in inotify code
+> * Fix certificate error checking
+> 
+> ----------------------------------------------------------------
+> 
+> Daniel P. Berrangé (1):
+>   docs: outline some guidelines for security classification
+> 
+> Evgeny Kolmakov (1):
+>   util/filemonitor-inotify: Use QEMU_LOCK_GUARD()
+> 
+> Peter Maydell (1):
+>   io/channel-socket: Document why we can ignore socket_set_cork() errors
+> 
+> yujun (1):
+>   crypto/x509-utils: fix gnutls error code in crt_init failure path
+> 
+>  crypto/x509-utils.c        |  3 +-
+>  docs/system/security.rst   | 63 ++++++++++++++++++++++++++++++++++++++
+>  io/channel-socket.c        |  6 ++++
+>  util/filemonitor-inotify.c | 28 +++++------------
+>  4 files changed, 79 insertions(+), 21 deletions(-)
+> 
+> -- 
+> 2.55.0
+> 
 
-diff --git a/contrib/gitdm/group-map-sifive b/contrib/gitdm/group-map-sifive
-new file mode 100644
-index 00000000000..6ba761eb225
---- /dev/null
-+++ b/contrib/gitdm/group-map-sifive
-@@ -0,0 +1,5 @@
-+#
-+# SiFive contributors using non-corporate email
-+#
-+
-+yueh.ting.chen@gmail.com
-diff --git a/gitdm.config b/gitdm.config
-index 8764bf2f9ff..8206c0af8a9 100644
---- a/gitdm.config
-+++ b/gitdm.config
-@@ -42,6 +42,7 @@ GroupMap contrib/gitdm/group-map-janustech Janus Technologies
- GroupMap contrib/gitdm/group-map-microsoft Microsoft
- GroupMap contrib/gitdm/group-map-netflix Netflix
- GroupMap contrib/gitdm/group-map-redhat Red Hat
-+GroupMap contrib/gitdm/group-map-sifive SiFive
- GroupMap contrib/gitdm/group-map-wavecomp Wave Computing
- 
- # Also group together our prolific individual contributors
+With regards,
+Daniel
 -- 
-2.47.3
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
