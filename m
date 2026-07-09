@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E1ACC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 15:26:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5834EC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 15:27:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whqeC-0002V7-Rr; Thu, 09 Jul 2026 11:26:44 -0400
+	id 1whqeU-0003Dr-GF; Thu, 09 Jul 2026 11:27:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1whqe9-0002Mb-PR; Thu, 09 Jul 2026 11:26:41 -0400
-Received: from smtp2-g21.free.fr ([212.27.42.2])
+ id 1whqeP-00031g-Ni; Thu, 09 Jul 2026 11:26:58 -0400
+Received: from smtp2-g21.free.fr ([2a01:e0c:1:1599::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1whqe5-0000na-OU; Thu, 09 Jul 2026 11:26:41 -0400
+ id 1whqeN-0000qX-NQ; Thu, 09 Jul 2026 11:26:57 -0400
 Received: from localhost (unknown [89.92.102.124])
  (Authenticated sender: emmanuel.blot@free.fr)
- by smtp2-g21.free.fr (Postfix) with ESMTPSA id 8AC0A2003B4;
- Thu,  9 Jul 2026 17:26:18 +0200 (CEST)
+ by smtp2-g21.free.fr (Postfix) with ESMTPSA id 73F5B2003E3;
+ Thu,  9 Jul 2026 17:26:36 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
- s=smtp-20201208; t=1783610796;
- bh=Cs/cpJkcwVWL+K7NraoBVOBmQF4a5TCwGsyZOgRyaVw=;
+ s=smtp-20201208; t=1783610813;
+ bh=nTPKO9sBrN0leDBoGALQ4/xdAwz0yN4V8CDZkVDqDzQ=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=calB6dEMNpVi02yeSa5k35xx+YVTcyzjNyF6T8is2gu0ETqA4h7B1UZhWtbXIqbD3
- 44sXCh6TID+/env95z833HLEz8SfKikmZZeNQ5Z5pvC5Rh/GxV69q3C1fZ0KKv0TZo
- cGq3Vk6OoncOKMDnrKbP1ur+CbtvCKzIv5BJ/akDQeaanWC1N8R/SVCS4dE3TK0xEQ
- nILRVhjM0gryFXS5dyac0OnYer6d4QwGF3M0BPPgU369UfWJ78XT0Pye13NGgKGBVI
- tMqRCXXfPYvzxwFZN/GjE7AORonPnU4KkUMkD7hy2tidinJ75izmZjiqHw4ZIyL0t2
- /Srnmjgo+4rdQ==
+ b=iiObnCzJkyo2Y6JYMOeJ1Y7fR5EyEccHx6h9kfz6DcCSdTDbdwhxqukYr6TEzo63p
+ LRvqhMM7vP3IX10uZOWZEthe4Y+tTY//K35Vic2x2kzQdRsI0iVJRZhnsaXt5nsrTu
+ 35QjF0YDH6yYmwTOpzAUmI4/gbipHYjMaPnNdsZ1Gw7mPQLVB7x0MAeNkkGHt7vK6T
+ uwsvCy/YeudXwclCQbammA2acE8tmsRxSu7CGyrpXnqmwNH4vO3Kr/P0WGGE4dbeCd
+ O2Ma4lKAipLQns4yWBFz2/Vbudzt8EI38SzyeGniulw5WvgWBKFLDjq3rfXdFaZPWG
+ xT1qwYafBTcdw==
 From: Emmanuel Blot <emmanuel.blot@free.fr>
-Date: Thu, 09 Jul 2026 17:23:45 +0200
-Subject: [PATCH 07/29] hw/gpio: pca9552: apply input polarity inversion on read
+Date: Thu, 09 Jul 2026 17:23:46 +0200
+Subject: [PATCH 08/29] hw/gpio: pca9552: conform GPIO command handling to
+ the datasheet
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260709-catalina-upgrade-v1-7-814575bc076b@free.fr>
+Message-Id: <20260709-catalina-upgrade-v1-8-814575bc076b@free.fr>
 References: <20260709-catalina-upgrade-v1-0-814575bc076b@free.fr>
 In-Reply-To: <20260709-catalina-upgrade-v1-0-814575bc076b@free.fr>
 To: qemu-devel@nongnu.org
@@ -52,22 +53,22 @@ Cc: Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org,
  Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
  Corey Minyard <cminyard@mvista.com>, Emmanuel Blot <emmanuel.blot@free.fr>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783610647; l=2796;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1783610647; l=3521;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=Cs/cpJkcwVWL+K7NraoBVOBmQF4a5TCwGsyZOgRyaVw=;
- b=eW4fJi1wIQKqkwCeiYDR6dpymvE4IENIAC/zVDIJj1FNHIICgSe7vzpJcoNqX3VNbMNI9CPUw
- VTvsG3e2JaZD+HX1dD+macSKsul3YLP4MyN0nOe0w6ULWIWcjxTEpK8
+ bh=nTPKO9sBrN0leDBoGALQ4/xdAwz0yN4V8CDZkVDqDzQ=;
+ b=ntsEG//L/jcgGXvjOSqEr+ulnNAn80mpaRV3TOkaJdVzLrr2QyTKKHahCFdlJsD1wM7eVNoLG
+ FrV8QCzOVPxCInpv+7c3ez9NhK1Qcdl+uWTF7+FplTV2vtnFX6GNOBy
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=212.27.42.2; envelope-from=emmanuel.blot@free.fr;
- helo=smtp2-g21.free.fr
+Received-SPF: pass client-ip=2a01:e0c:1:1599::11;
+ envelope-from=emmanuel.blot@free.fr; helo=smtp2-g21.free.fr
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,72 +84,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The PCA9535 polarity inversion register inverts the value read back from
-the input port for every pin, regardless of its direction, and does not
-affect the output drive or the physical pin level.
+The PCA9535/PCA9555 GPIO expanders share the PCA955X command dispatch
+path with the PCA9552 LED blinker, but their register access differs from
+the LED variant:
 
-Store the raw pin level in the input register and apply the polarity
-inversion when the input port is read, instead of XORing it into the
-stored value of output-configured pins only. The interrupt output now
-reflects the raw pin level, matching the datasheet.
+  - Auto-increment happens on every access and toggles bit 0 so the
+    pointer stays within the addressed register pair (input, output,
+    polarity, config); there is no AI enable bit.
+
+  - The command byte only decodes 3 bits, so addresses beyond the last
+    register alias back into the 8-register window instead of faulting.
+
+Branch the auto-increment and command-decode logic on has_led_support so
+the GPIO variants follow their datasheet while the PCA9552 behaviour is
+left untouched.
 
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- hw/gpio/pca9552.c | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ hw/gpio/pca9552.c | 37 +++++++++++++++++++++++++++++++------
+ 1 file changed, 31 insertions(+), 6 deletions(-)
 
 diff --git a/hw/gpio/pca9552.c b/hw/gpio/pca9552.c
-index 66f699bf6a..24f6465415 100644
+index 24f6465415..54a5945d92 100644
 --- a/hw/gpio/pca9552.c
 +++ b/hw/gpio/pca9552.c
-@@ -167,9 +167,12 @@ static void pca955x_update_pin_input(PCA955xState *s)
-             /* PCA9535: Simple GPIO behavior */
-             uint8_t config_reg = PCA9535_CONFIG0 + (i / 8);
-             uint8_t output_reg = PCA9535_OUTPUT0 + (i / 8);
--            uint8_t polarity_reg = PCA9535_POLARITY0 + (i / 8);
- 
--            /* Check if pin is configured as input */
-+            /*
-+             * The input register holds the raw pin logic level; the
-+             * polarity inversion register is only applied when the input
-+             * port is read (see pca955x_read()).
-+             */
-             if (s->regs[config_reg] & bit_mask) {
-                 /* Input mode - reflect external state */
-                 if (s->ext_state[i] == PCA9552_PIN_LOW) {
-@@ -179,12 +182,8 @@ static void pca955x_update_pin_input(PCA955xState *s)
-                 }
-             } else {
-                 /* Output mode - reflect output register value */
--                uint8_t output_bit = s->regs[output_reg] & bit_mask;
--                uint8_t polarity_bit = s->regs[polarity_reg] & bit_mask;
--
--                /* Apply polarity inversion if set */
-                 s->regs[input_reg] = (s->regs[input_reg] & ~bit_mask) |
--                                    ((output_bit ^ polarity_bit) & bit_mask);
-+                                     (s->regs[output_reg] & bit_mask);
-             }
-         }
- 
-@@ -206,6 +205,18 @@ static uint8_t pca955x_read(PCA955xState *s, uint8_t reg)
-         return 0xFF;
-     }
- 
-+    /*
-+     * On the GPIO variants, reading an input port returns the raw pin
-+     * levels XORed with the polarity inversion register, as specified by
-+     * the datasheet.
-+     */
-+    if (!k->has_led_support &&
-+        (reg == PCA9535_INPUT0 || reg == PCA9535_INPUT1)) {
-+        uint8_t polarity_reg = PCA9535_POLARITY0 + (reg - PCA9535_INPUT0);
-+
-+        return s->regs[reg] ^ s->regs[polarity_reg];
-+    }
-+
-     return s->regs[reg];
+@@ -259,14 +259,26 @@ static void pca955x_write(PCA955xState *s, uint8_t reg, uint8_t data)
  }
  
+ /*
+- * When Auto-Increment is on, the register address is incremented
+- * after each byte is sent to or received by the device. The index
+- * rollovers to 0 when the maximum register address is reached.
++ * Advance the command pointer after each byte sent to or received from the
++ * device.
++ *
++ * The LED variant auto-increments only when the AI bit (bit 4) is set in the
++ * command byte, rolling over to 0 once the maximum register address is
++ * reached.
++ *
++ * The GPIO variants auto-increment on every access, toggling bit 0 so the
++ * pointer stays within the addressed register pair
++ * (input/output/polarity/config), as specified by their datasheet.
+  */
+ static void pca955x_autoinc(PCA955xState *s)
+ {
+     PCA955xClass *k = PCA955X_GET_CLASS(s);
+ 
++    if (!k->has_led_support) {
++        s->pointer ^= 0x1;
++        return;
++    }
++
+     if (s->pointer != 0xFF && s->pointer & PCA9552_AUTOINC) {
+         uint8_t reg = s->pointer & 0xf;
+ 
+@@ -275,12 +287,25 @@ static void pca955x_autoinc(PCA955xState *s)
+     }
+ }
+ 
++/*
++ * The LED variant addresses its registers with a 4-bit command field, while
++ * the GPIO variants only decode 3 bits (the command wraps into the 8-register
++ * window).
++ */
++static inline uint8_t pca955x_cmd_reg(PCA955xState *s)
++{
++    PCA955xClass *k = PCA955X_GET_CLASS(s);
++
++    return s->pointer & (k->has_led_support ? 0xf : 0x7);
++}
++
+ static uint8_t pca955x_recv(I2CSlave *i2c)
+ {
+     PCA955xState *s = PCA955X(i2c);
++    PCA955xClass *k = PCA955X_GET_CLASS(s);
+     uint8_t ret;
+ 
+-    ret = pca955x_read(s, s->pointer & 0xf);
++    ret = pca955x_read(s, pca955x_cmd_reg(s));
+ 
+     /*
+      * From the Specs:
+@@ -292,7 +317,7 @@ static uint8_t pca955x_recv(I2CSlave *i2c)
+      * I don't know what should be done in this case, so throw an
+      * error.
+      */
+-    if (s->pointer == PCA9552_AUTOINC) {
++    if (k->has_led_support && s->pointer == PCA9552_AUTOINC) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "%s: Autoincrement read starting with register 0\n",
+                       __func__);
+@@ -312,7 +337,7 @@ static int pca955x_send(I2CSlave *i2c, uint8_t data)
+         s->pointer = data;
+         s->len++;
+     } else {
+-        pca955x_write(s, s->pointer & 0xf, data);
++        pca955x_write(s, pca955x_cmd_reg(s), data);
+ 
+         pca955x_autoinc(s);
+     }
 
 -- 
 2.50.1
