@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47C80C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 23:35:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B770C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 23:35:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whyGY-0004u0-1A; Thu, 09 Jul 2026 19:34:50 -0400
+	id 1whyGU-0004t6-6K; Thu, 09 Jul 2026 19:34:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1whyGW-0004tk-C0
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 19:34:48 -0400
+ id 1whyGS-0004sE-FV
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 19:34:44 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1whyGU-0007S1-E8
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 19:34:48 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ id 1whyGQ-0007RI-HF
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 19:34:44 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 669JUkI32556963
- for <qemu-devel@nongnu.org>; Thu, 9 Jul 2026 23:34:45 GMT
+ 669KZKM22917939
+ for <qemu-devel@nongnu.org>; Thu, 9 Jul 2026 23:34:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- LpPkHYYRK3o0T7n1tWuJuAjG+4EP4gTciyO+ayCWuOs=; b=nrwotLu5NYOsuYJ2
- tBeknpT5RAoisZlgyywLall4bXWgJQsPa+VFg/v+CZAZkcXe8M30SCCMKYdeJyhR
- YVVqwojlPt/BaV3e18368E2g39hlrSag+4DA0+P9Yj2dG2S4veGd4Dxpxlat/c2j
- LzTBN3YB9haPF4d8h7Rb7pnyS9csirNdOK5KKlDoNe13R5FeCnPQYNuu3bt2bz8l
- MevlEngEbtPL5XYFpG/Iv4DWH0CVsCN6z6KW4jOip5UvzY+I0nSUkQb1OCGcAgNh
- Ry1nRu1pWuhHDdh8ps95/9Dm9jWyI0iJ8N5A4ZF0mVDaGHjGQBsGa3Khw13q/Reh
- eFgVDA==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fahv8grfs-1
+ 2CGMyPorS3RnTbOgvFXXSiw5DC8Rps4clQw48tKsp4g=; b=eq/Awij000Q3MXrx
+ bt6tHyR1k3Wgnq5B3lEK51rJM4scK+BZTtyulvCnKW0w2KW5Nhxiw5IbLTK1Jd7M
+ KTPWUO/A08CmrJFwp2o8Qo9gHeARg96vPThy6kBifmyXU5bZEFPezdqri3E3tyO7
+ Yx2+hJxuG2wrZLZuRc3Z1+/SVYOXhg5RL/BxW0H+ATteCaHPN01wmbc5oc1rWa3m
+ Nbh2Gt5wk3kpgPoMwQI2S2Xa6JpfBqmeWrxeOlNblmxyTMWsfus98ZGFG1yEPbUD
+ r8weHFiz3OCtbA9JR9NE26WEKVtKMChKzkX9ck+PJdlb/yJqm4DJcVgOOV5N5mK4
+ D33Sjw==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fajte0gkm-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 23:34:44 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-2cc7e86e7c5so5596175ad.3
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 16:34:44 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 23:34:40 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-383b6012ba4so609832a91.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 16:34:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783640084; x=1784244884; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783640080; x=1784244880; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=LpPkHYYRK3o0T7n1tWuJuAjG+4EP4gTciyO+ayCWuOs=;
- b=K4RlvYc1lilW6KwugL/wa3TLhZyhfdcQ49mLd6LSG+aI4dtnSP8nS6+nMNTPCIUVlq
- c8M2bqDoLEvrhpRwZbKRMSK3j8SwfZonvuKbw5bsuBEdDoUZD8gaBYoSUyRfo3XkaPLQ
- HGB+nLuS6hENnTkwS7UNuVJNwzxHkZqltrvUFEgv3sTyBE0k2oLwyRadEqVxhe3mW/+l
- 9sJidLkzfAC02ExRu9bLUr+VAIYqrOWrGpeg9wR8HRm2JdvowkgL1Em7Zd67rALsXyvK
- dygyjMmhumGvvaZuAVpoVhyMA6SC7N5rtCGUAKE23sdG3/bvBnyUMcNRtXL79oSwN3dN
- Zh+w==
+ bh=2CGMyPorS3RnTbOgvFXXSiw5DC8Rps4clQw48tKsp4g=;
+ b=djuPfOgUPQM1PmGTZFKhJUDujCzpYGYXlflRno3gKExX/V8bHdFnsnn86e9yrFlSxD
+ zNe0mkkgVY4VvKEo/tONtd1Tq1UTd5tQARAzasp2/voXId5Wvj74KRFSbC6tv7PVwmY2
+ W2EALE34IuUJrbKk5lsaEhln4FdDTyKstefCHhFXMv+BMfrF2So23TqlAgBZi5XMDnP5
+ DxL4ZCs9KO7O7D/JuNx9u7CfgN3RATLvqJ1ujrFPGLsQT3WEYU1Fg5Y1qGHfeOrwOUqz
+ UljGXBJhSBjZZibV/DBE9CNOD+e8T2AXrYx9SSdcoqVgGzbrO6rlit+cddPapinIsSVP
+ cIVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783640084; x=1784244884;
+ d=1e100.net; s=20251104; t=1783640080; x=1784244880;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=LpPkHYYRK3o0T7n1tWuJuAjG+4EP4gTciyO+ayCWuOs=;
- b=BIaAPjmzVsKX9MG08MmVq6gxvKvu6u0oo+fCrACYCWlgLwp0J8nXXIjzf1sxs/ccLn
- RWcAXq4swgQWrSuUKoEwoFsfxQqo9nl2IzKPeK0+/ure0Vt1oALGcxG/rlW3cWipP5uJ
- ATm8L9mS5Oc8VwisGOEYhUjekA29HBD+RwaVbsMkT9r1zPqyyEhXRsfmjBLud0oc3qFp
- dr0sqWsS0A0HBWhtndjythOoCY+T2tgqsRgg8eM7tc2vYKHvYkGc2xhrPRZzrRAgQYwL
- ARKxBdyk4+XN9qEb1U5FjSWm6QHo/S7Nv+fgVvLHWJEcf95E6GN7Bt5X7MQatsXh8qUU
- l7Kg==
-X-Gm-Message-State: AOJu0YxEuWlKWRCc0uhep3coLchJVLBg5mK0sKlMseVIbxGPK/ARQF59
- u/5Y77QTaqAxgYbWOjeM+4gAmeGQ0BlhA8K1apo1lZf1qjt8wcJYX7K6Bnu2adk5EPgnAwoToxp
- jMpH/7IoBp0CKVnLkXIHrYy8FTpXuBNcY+ZIENcKzo/rPt4Db8wmLTTX3CS9fZfTjUA==
-X-Gm-Gg: AfdE7cmpgPeDnXao57g6qtVSlek2a34spJlLVCJdwYci2NB4ouEM/4bwOcA35RVbfr3
- 8F/EpRTA5gB6Y9mIqVjMe6KqJjfUw5bLPyskZoMW1y/jkrYl87ZMYKqB4XrBxoNpZdtwkbE0M65
- lcOkHCPBcb4BWwbArDY9bAWrK6tD12gsqGZ0Nxg2KywdaLcc+55bo3npX2gVGusfBAbdy0qOz0K
- dqGryDhBiIFcCUDKK8QjSpq1zFuGQ5qZGuD27d5AkjZhpwqbBO7dPD5MGkI3ys8mDvyEaudynJV
- fLCnf90LQqhSrmWhClEHgXn7tbIQIbkPEK5IqVMUZfCHvp+gIw0r38BpVklo/rhqyEGqrHoQ3Sv
- 0cBYhDRphHTfAI1SVl7+nbS23e+EkNEbKli8Otx7cW4Pvd3spx9lAXjIc2Bs=
-X-Received: by 2002:a05:6a21:1493:b0:3c0:9c19:65bd with SMTP id
- adf61e73a8af0-3c0bccf6a47mr11318368637.69.1783640084062; 
- Thu, 09 Jul 2026 16:34:44 -0700 (PDT)
-X-Received: by 2002:a05:6a21:1493:b0:3c0:9c19:65bd with SMTP id
- adf61e73a8af0-3c0bccf6a47mr11318341637.69.1783640083628; 
- Thu, 09 Jul 2026 16:34:43 -0700 (PDT)
+ bh=2CGMyPorS3RnTbOgvFXXSiw5DC8Rps4clQw48tKsp4g=;
+ b=fz9GaT7Sl5bto4CuUKAxZHAaJmcYF/+ElBAzrgyHblHansEciHsbAi67D8dVJkdxxZ
+ xoDAVXIkgh7blfVprJJcKGBhHVzgsbICsFNofEagPmm2R9XzDOyUISGGBFFvefRxAUY3
+ D7enfqndw3bJYlaFgkvFCPCeQaaaFmBzpuDoGD1JtWAY9Mdq6wh9FBGKvT5mHfMSCnMs
+ VXa/jkNu2fkEb6z45Mrdwm07/kWZRiN1RNylUb73/nJnhRCflXYTUohrGgGEWfNdnScX
+ dFT3UH2ICHc9ORFCIw2mJySdQha4+0/XvrxomJNWo0Sn3JKSBto/V+o2J4vHnCFZlpqX
+ Gwag==
+X-Gm-Message-State: AOJu0YyA7u6TA+NIOI78J1KHPikUSqf8+umBvHwZyyGbrgwR6jduIZVO
+ u2HK55IXzJlqg0DzMCZuZPpyNdxh4zJwQSqwLX9+Lvaxo0vzMsmniofdhZIgZI6SdXwI8qQ6oid
+ 1JKxRigzlk1v96hXv10xLYm2kh6Jknt5640eezt0VxNfg3Wb4lIcGIYQFgrM1G9XZYQ==
+X-Gm-Gg: AfdE7cn9ZlPRPsW1+LnXi3GqTqzZJrpCAR1qOdQL7Kj/8w4bXk7vOSvNoskiz3Hclal
+ LkzHSR2UFZfBj28QO5d039lZ0JCk5s07ehGtgsEGJNdb829lBZVKhXvfhPVGxakIfyGGdvBqLoc
+ qqn2xBWxJjPhAYDJ1rE0tfqUtgwqPNGXIYjHcnI/2126RyTOv0UcUCertvBvVrC/2NJtRHwcoau
+ dslMy7627sY3uNGLmzlWwqV1UltYvPnUD4WLcVijoH2eqSsLfyhuVdsz0OoaQboCr7uYYGoYHYS
+ tP2QJaXNX6bo0ER8GBLafuAYlueeLFIFoOoPvB4danH0+z7s3qHKrFwI6YzJIJ5nOmO3m25V3UH
+ 1Ht4aUXbH9TYxcZyR6tLa0Y30ddXm+o10KO8eZb0nL6cr6Tx4oKUdS2oZlpM=
+X-Received: by 2002:a17:90b:3d83:b0:37f:e326:6557 with SMTP id
+ 98e67ed59e1d1-3893f693984mr9513420a91.4.1783640079947; 
+ Thu, 09 Jul 2026 16:34:39 -0700 (PDT)
+X-Received: by 2002:a17:90b:3d83:b0:37f:e326:6557 with SMTP id
+ 98e67ed59e1d1-3893f693984mr9513395a91.4.1783640079431; 
+ Thu, 09 Jul 2026 16:34:39 -0700 (PDT)
 Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3118389d9bcsm25447189eec.20.2026.07.09.16.34.42
+ 5a478bee46e88-3118389d9bcsm25447189eec.20.2026.07.09.16.34.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jul 2026 16:34:42 -0700 (PDT)
+ Thu, 09 Jul 2026 16:34:38 -0700 (PDT)
 From: Brian Cain <brian.cain@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -94,40 +94,40 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Anton Johansson <anjo@rev.ng>, Laurent Vivier <laurent@vivier.eu>,
  Brian Cain <brian.cain@oss.qualcomm.com>,
  Alessandro Di Federico <ale@rev.ng>
-Subject: [PATCH 4/4] tests/tcg/hexagon: add unaligned scalar test
-Date: Thu,  9 Jul 2026 16:34:36 -0700
-Message-Id: <20260709233436.3075100-5-brian.cain@oss.qualcomm.com>
+Subject: [PATCH 1/4] target/hexagon: raise SIGBUS on unaligned scalar loads
+Date: Thu,  9 Jul 2026 16:34:33 -0700
+Message-Id: <20260709233436.3075100-2-brian.cain@oss.qualcomm.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260709233436.3075100-1-brian.cain@oss.qualcomm.com>
 References: <20260709233436.3075100-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: -2opnf5_TgkUCY-ftmKDtqltcLWguKS8
-X-Proofpoint-ORIG-GUID: -2opnf5_TgkUCY-ftmKDtqltcLWguKS8
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA5MDIzNSBTYWx0ZWRfX6Gbuye2+9jqh
- FZ8qP0TgiDwRFhH2y1EuPurGjP36opGhFu8tduhTwamlpShXaDOXgFBsLuzqaEGA1saOglcbJpU
- 9e0aFeZXojSvC8otURIx+jfJftptiYA=
-X-Authority-Analysis: v=2.4 cv=funsol4f c=1 sm=1 tr=0 ts=6a503014 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-GUID: qzPDGMnoQtKm6Z4I99tIIej9V4pTQiU-
+X-Proofpoint-ORIG-GUID: qzPDGMnoQtKm6Z4I99tIIej9V4pTQiU-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA5MDIzNSBTYWx0ZWRfX0Bksq7sXWURf
+ ih1QbBuj4IfAFAHxMDbLjseEY8hO6M2Y3w5tm7Bxmi+SWh/xVaadwaQLcVKa7TuwHnqOkLSxnEl
+ N+EbyZEzbd45KywwH1riF8755YiELWeh7p0FZ5k0P/5v8v/bi58KAADgq1YCrEf4Lm2mX359gm3
+ sMDV1CO6Gg+OBDsZolfKZyi55SFSw9E8b8gVF32onPuG0CBSeoictyzYmL1GyHsE6V/ihB5vkcw
+ RmTh6uGfPlvdso+9Ak4EkZdlDNG0wJtX1iH7IvFlnztDJ0g3K0nZ6wKClsgiPP0xngDnzuRNdQ6
+ N5nbmVuxdj/FJVaU7X6cF2rpMbQWc/nrRc5VFKjlU6V6ncQa6K9qGq6nhkHg5tJ2LLT9yQADOEr
+ htJ1do2jwvSMgZSSmhet3P4b3t5zEsS6oCbevQnPtJkeyb7/avgLXitDMfg83A5LjTXx3fkbKg6
+ Uk6RjsdRH5imuQmqxjw==
+X-Authority-Analysis: v=2.4 cv=N7MZ0W9B c=1 sm=1 tr=0 ts=6a503010 cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=EUspDBNiAAAA:8 a=JA4W_Hs6HDHytmC4mdIA:9 a=QEXdDO2ut3YA:10
- a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA5MDIzNSBTYWx0ZWRfX+B4seWsXzerY
- mfHK8oZR491oM1S9imG1BSoMgY/kUmRoyUC2rj+w3n+3PcjNgimuyuJrogbL+yLilgTSuQLJczt
- Rm8D2YeFl/2jwIFXmAISe44zVbbU/8lH6qsVS4hlbmQVh7lOVqeIC680b2/1pXRGywDU8Od0Gxx
- SD1yh/T6gK1qkYMf4JhDNVYjNXnf9056aOwkuKAhGTugwxJc/VEfSFKKn75xHO53iK+m1h3avgq
- M3uYwuEt1dUFgq6dtd/TBFdCEBG76j72CcwHaOsofjf8rTyyhiz5C+3y88qn2Jl2qieaooNYxTt
- o2UNR2tcV2Qx+I5l+wlI801Fw0o7fsmz9FMEmgPlVMMk+3RwMjpWUZoMCnCCilDXn/XMDzeXXY4
- iXkt7gMdKLxM9QbPM4EfOLemFe5RkxPTCyAt/WUIYCxFNW/OriSk6Y/ciJNMlOspLgbGVVHW5Yk
- Pju+rL2XQRMkksUXEUQ==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=EUspDBNiAAAA:8 a=f50odatAX-H4vQHS3akA:9 a=QEXdDO2ut3YA:10
+ a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA5MDIzNSBTYWx0ZWRfX9xMfzgSL1rA6
+ RJMLaGWSo6Xb1sJGigf2Xvsts10a/hsP4YgdEXvwQetGw/yrFAqsicl3NU5hZJOovvR8FTlJaJV
+ c82wHv8nKaqa/7IbK+NmQeDOWdk8NzM=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-09_04,2026-07-09_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 clxscore=1015 lowpriorityscore=0 adultscore=0
- bulkscore=0 suspectscore=0 malwarescore=0 priorityscore=1501 impostorscore=0
+ clxscore=1015 spamscore=0 impostorscore=0 suspectscore=0 adultscore=0
+ malwarescore=0 phishscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607090235
 Received-SPF: pass client-ip=205.220.168.131;
@@ -154,160 +154,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add unaligned_data.c to exercise unaligned memh/memw/memd accesses and
-verify SIGBUS is raised and caught.
+hexagon-linux-user had no enforcement of alignment for scalar load
+exceptions, and unaligned loads silently succeeded instead of raising
+SIGBUS.
+
+Add MO_ALIGN to the MEM_LOAD* macros, the locked-load and
+load-frame helpers in genptr.c, and the idef-parser's fLOAD.
 
 Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 ---
- tests/tcg/hexagon/Makefile.target  |   2 +
- tests/tcg/hexagon/unaligned_data.c | 118 +++++++++++++++++++++++++++++
- 2 files changed, 120 insertions(+)
- create mode 100644 tests/tcg/hexagon/unaligned_data.c
+ target/hexagon/genptr.c                     |  6 ++---
+ target/hexagon/idef-parser/parser-helpers.c |  2 +-
+ target/hexagon/macros.h                     | 26 +++++++++++++--------
+ 3 files changed, 20 insertions(+), 14 deletions(-)
 
-diff --git a/tests/tcg/hexagon/Makefile.target b/tests/tcg/hexagon/Makefile.target
-index 70a8ec2e7fb..a2a0ffc69b2 100644
---- a/tests/tcg/hexagon/Makefile.target
-+++ b/tests/tcg/hexagon/Makefile.target
-@@ -54,6 +54,7 @@ HEX_TESTS += invalid-slots
- HEX_TESTS += invalid-encoding
- HEX_TESTS += multiple-writes
- HEX_TESTS += unaligned_pc
-+HEX_TESTS += unaligned_data
+diff --git a/target/hexagon/genptr.c b/target/hexagon/genptr.c
+index 1ebc7471409..05c9aa04467 100644
+--- a/target/hexagon/genptr.c
++++ b/target/hexagon/genptr.c
+@@ -470,14 +470,14 @@ void gen_set_byte_i64(int N, TCGv_i64 result, TCGv src)
  
- HEX_TESTS += test_abs
- HEX_TESTS += test_bitcnt
-@@ -108,6 +109,7 @@ preg_alias: preg_alias.c hex_test.h
- read_write_overlap: read_write_overlap.c hex_test.h
- reg_mut: reg_mut.c hex_test.h
- test_pnew_jump_loads: test_pnew_jump_loads.c hex_test.h
-+unaligned_data: unaligned_data.c hex_test.h
- unaligned_pc: unaligned_pc.c
+ static inline void gen_load_locked4u(TCGv dest, TCGv vaddr, int mem_index)
+ {
+-    tcg_gen_qemu_ld_tl(dest, vaddr, mem_index, MO_LE | MO_UL);
++    tcg_gen_qemu_ld_tl(dest, vaddr, mem_index, MO_LE | MO_UL | MO_ALIGN);
+     tcg_gen_mov_tl(hex_llsc_addr, vaddr);
+     tcg_gen_mov_tl(hex_llsc_val, dest);
+ }
  
- # Compile for v66 so that the ELF selects a v66 CPU; the test then
-diff --git a/tests/tcg/hexagon/unaligned_data.c b/tests/tcg/hexagon/unaligned_data.c
-new file mode 100644
-index 00000000000..e0375faafbe
---- /dev/null
-+++ b/tests/tcg/hexagon/unaligned_data.c
-@@ -0,0 +1,118 @@
-+/*
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+/*
-+ * Test that unaligned scalar loads raise SIGBUS.
-+ */
-+
-+#include <stdlib.h>
-+#include <stdio.h>
-+#include <stdint.h>
-+#include <stdbool.h>
-+#include <setjmp.h>
-+#include <signal.h>
-+
-+int err;
-+
-+#include "hex_test.h"
-+
-+static bool sigbus_caught;
-+static sigjmp_buf jmp_env;
-+static uint64_t buf[2] = { 0, 0 };
-+
-+static void sigbus_handler(int sig, siginfo_t *info, void *puc)
-+{
-+    check32(sig, SIGBUS);
-+    sigbus_caught = true;
-+    siglongjmp(jmp_env, 1);
-+}
-+
-+static void test_unaligned_load(int size, int offset)
-+{
-+    char *p = (char *)buf + offset;
-+    uint32_t dummy32;
-+    uint64_t dummy64;
-+
-+    sigbus_caught = false;
-+    if (sigsetjmp(jmp_env, 1) == 0) {
-+        switch (size) {
-+        case 2:
-+            asm volatile("%[dst] = memh(%[src])\n\t"
-+                          : [dst] "=r"(dummy32) : [src] "r"(p) : "memory");
-+            break;
-+        case 4:
-+            asm volatile("%[dst] = memw(%[src])\n\t"
-+                          : [dst] "=r"(dummy32) : [src] "r"(p) : "memory");
-+            break;
-+        case 8:
-+            asm volatile("%[dst] = memd(%[src])\n\t"
-+                          : [dst] "=r"(dummy64) : [src] "r"(p) : "memory");
-+            break;
-+        default:
-+            abort();
-+        }
-+    }
-+    check32(sigbus_caught, true);
-+}
-+
-+static void test_unaligned_store(int size, int offset)
-+{
-+    char *p = (char *)buf + offset;
-+    uint32_t val32 = 0x11223344;
-+    uint64_t val64 = 0x1122334455667788ULL;
-+
-+    sigbus_caught = false;
-+    if (sigsetjmp(jmp_env, 1) == 0) {
-+        switch (size) {
-+        case 2:
-+            asm volatile("memh(%[addr]) = %[val]\n\t"
-+                          : : [addr] "r"(p), [val] "r"(val32) : "memory");
-+            break;
-+        case 4:
-+            asm volatile("memw(%[addr]) = %[val]\n\t"
-+                          : : [addr] "r"(p), [val] "r"(val32) : "memory");
-+            break;
-+        case 8:
-+            asm volatile("memd(%[addr]) = %[val]\n\t"
-+                          : : [addr] "r"(p), [val] "r"(val64) : "memory");
-+            break;
-+        default:
-+            abort();
-+        }
-+    }
-+    check32(sigbus_caught, true);
-+}
-+
-+int main()
-+{
-+    struct sigaction act;
-+
-+    act.sa_sigaction = sigbus_handler;
-+    sigemptyset(&act.sa_mask);
-+    act.sa_flags = SA_SIGINFO;
-+    chk_error(sigaction(SIGBUS, &act, NULL));
-+
-+    test_unaligned_load(2, 1);
-+    test_unaligned_load(4, 1);
-+    test_unaligned_load(4, 2);
-+    test_unaligned_load(4, 3);
-+    test_unaligned_load(8, 1);
-+    test_unaligned_load(8, 4);
-+
-+    test_unaligned_store(2, 1);
-+    test_unaligned_store(4, 1);
-+    test_unaligned_store(4, 2);
-+    test_unaligned_store(4, 3);
-+    test_unaligned_store(8, 1);
-+    test_unaligned_store(8, 4);
-+
-+    act.sa_handler = SIG_DFL;
-+    sigemptyset(&act.sa_mask);
-+    act.sa_flags = 0;
-+    chk_error(sigaction(SIGBUS, &act, NULL));
-+
-+    puts(err ? "FAIL" : "PASS");
-+    return err ? EXIT_FAILURE : EXIT_SUCCESS;
-+}
+ static inline void gen_load_locked8u(TCGv_i64 dest, TCGv vaddr, int mem_index)
+ {
+-    tcg_gen_qemu_ld_i64(dest, vaddr, mem_index, MO_LE | MO_UQ);
++    tcg_gen_qemu_ld_i64(dest, vaddr, mem_index, MO_LE | MO_UQ | MO_ALIGN);
+     tcg_gen_mov_tl(hex_llsc_addr, vaddr);
+     tcg_gen_mov_i64(hex_llsc_val_i64, dest);
+ }
+@@ -890,7 +890,7 @@ static void gen_load_frame(DisasContext *ctx, TCGv_i64 frame, TCGv EA)
+ {
+     Insn *insn = ctx->insn;  /* Needed for CHECK_NOSHUF */
+     CHECK_NOSHUF(EA, 8);
+-    tcg_gen_qemu_ld_i64(frame, EA, ctx->mem_idx, MO_LE | MO_UQ);
++    tcg_gen_qemu_ld_i64(frame, EA, ctx->mem_idx, MO_LE | MO_UQ | MO_ALIGN);
+ }
+ 
+ /* Stack overflow check */
+diff --git a/target/hexagon/idef-parser/parser-helpers.c b/target/hexagon/idef-parser/parser-helpers.c
+index b942d9ea16b..49cc11fddd8 100644
+--- a/target/hexagon/idef-parser/parser-helpers.c
++++ b/target/hexagon/idef-parser/parser-helpers.c
+@@ -1770,7 +1770,7 @@ void gen_load(Context *c, YYLTYPE *locp, HexValue *width,
+     if (signedness == SIGNED) {
+         OUT(c, locp, " | MO_SIGN");
+     }
+-    OUT(c, locp, " | MO_LE);\n");
++    OUT(c, locp, " | MO_LE | MO_ALIGN);\n");
+ }
+ 
+ void gen_store(Context *c, YYLTYPE *locp, HexValue *width, HexValue *ea,
+diff --git a/target/hexagon/macros.h b/target/hexagon/macros.h
+index 21ab8ae5bbf..b439e31974c 100644
+--- a/target/hexagon/macros.h
++++ b/target/hexagon/macros.h
+@@ -106,37 +106,37 @@
+ #define MEM_LOAD1s(DST, VA) \
+     do { \
+         CHECK_NOSHUF(VA, 1); \
+-        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_SB); \
++        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_SB | MO_ALIGN); \
+     } while (0)
+ #define MEM_LOAD1u(DST, VA) \
+     do { \
+         CHECK_NOSHUF(VA, 1); \
+-        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_UB); \
++        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_UB | MO_ALIGN); \
+     } while (0)
+ #define MEM_LOAD2s(DST, VA) \
+     do { \
+         CHECK_NOSHUF(VA, 2); \
+-        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_LE | MO_SW); \
++        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_LE | MO_SW | MO_ALIGN); \
+     } while (0)
+ #define MEM_LOAD2u(DST, VA) \
+     do { \
+         CHECK_NOSHUF(VA, 2); \
+-        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_LE | MO_UW); \
++        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_LE | MO_UW | MO_ALIGN); \
+     } while (0)
+ #define MEM_LOAD4s(DST, VA) \
+     do { \
+         CHECK_NOSHUF(VA, 4); \
+-        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_LE | MO_SL); \
++        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_LE | MO_SL | MO_ALIGN); \
+     } while (0)
+ #define MEM_LOAD4u(DST, VA) \
+     do { \
+         CHECK_NOSHUF(VA, 4); \
+-        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_LE | MO_UL); \
++        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_LE | MO_UL | MO_ALIGN); \
+     } while (0)
+ #define MEM_LOAD8u(DST, VA) \
+     do { \
+         CHECK_NOSHUF(VA, 8); \
+-        tcg_gen_qemu_ld_i64(DST, VA, ctx->mem_idx, MO_LE | MO_UQ); \
++        tcg_gen_qemu_ld_i64(DST, VA, ctx->mem_idx, MO_LE | MO_UQ | MO_ALIGN); \
+     } while (0)
+ 
+ #define MEM_STORE1_FUNC(X) \
+@@ -519,9 +519,15 @@ static inline TCGv gen_read_ireg(TCGv result, TCGv val, int shift)
+ #define fLOAD(NUM, SIZE, SIGN, EA, DST) MEM_LOAD##SIZE##SIGN(DST, EA)
+ #else
+ #define MEM_LOAD1 cpu_ldub_data_ra
+-#define MEM_LOAD2 cpu_lduw_le_data_ra
+-#define MEM_LOAD4 cpu_ldl_le_data_ra
+-#define MEM_LOAD8 cpu_ldq_le_data_ra
++#define MEM_LOAD2(ENV, EA, RA) \
++    cpu_ldw_mmu(ENV, EA, make_memop_idx(MO_LEUW | MO_ALIGN, \
++                                        cpu_mmu_index(env_cpu(ENV), false)), RA)
++#define MEM_LOAD4(ENV, EA, RA) \
++    cpu_ldl_mmu(ENV, EA, make_memop_idx(MO_LEUL | MO_ALIGN, \
++                                        cpu_mmu_index(env_cpu(ENV), false)), RA)
++#define MEM_LOAD8(ENV, EA, RA) \
++    cpu_ldq_mmu(ENV, EA, make_memop_idx(MO_LEUQ | MO_ALIGN, \
++                                        cpu_mmu_index(env_cpu(ENV), false)), RA)
+ 
+ #define fLOAD(NUM, SIZE, SIGN, EA, DST) \
+     do { \
 -- 
 2.34.1
 
