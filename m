@@ -4,86 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BAF1C44501
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 15:59:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C82C9C44501
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 16:03:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whr9Y-0004PM-JE; Thu, 09 Jul 2026 11:59:08 -0400
+	id 1whrDV-0006cO-K3; Thu, 09 Jul 2026 12:03:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1whr9X-0004Ow-B4
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 11:59:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1whrDP-0006Yc-GY; Thu, 09 Jul 2026 12:03:08 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1whr9U-0002nR-Bw
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 11:59:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783612743;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YWF/eRUKuEvtmDKG/UlPZ8rYUVXNLbdBgzDg7U2hqMs=;
- b=D2MOIA/a1iHlxZx627ftesHPIBguBCOkmlJawbaN/KyjA0nUGWtWmAG7iW5+7hcpGIJEJz
- k1UiLWuDxub9RbXcA5Eb2pTjooKSdMtG2YqIYDmVRIis6RAVxj0KRSPMVKPxo7Kqgr97nT
- PqDO0TMshIeq0asefXL2tny2+ELl0y8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-465-dHq7FrBTMlO_XqXO2DRLZQ-1; Thu,
- 09 Jul 2026 11:58:59 -0400
-X-MC-Unique: dHq7FrBTMlO_XqXO2DRLZQ-1
-X-Mimecast-MFC-AGG-ID: dHq7FrBTMlO_XqXO2DRLZQ_1783612738
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AA0D519560BA; Thu,  9 Jul 2026 15:58:56 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.49.59])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 22FDD1955DC9; Thu,  9 Jul 2026 15:58:51 +0000 (UTC)
-Date: Thu, 9 Jul 2026 16:58:48 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- Jan Kiszka <jan.kiszka@siemens.com>, qemu-arm@nongnu.org,
- BALATON Zoltan <balaton@eik.bme.hu>, qemu-ppc@nongnu.org,
- Huacai Chen <chenhuacai@kernel.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Gerd Hoffmann <kraxel@redhat.com>
-Subject: Re: A few Machines crash when "no default audio driver available"
-Message-ID: <ak_FOBO0sPYrM4XR@redhat.com>
-References: <87o6gge6b0.fsf@pond.sub.org>
- <CAFEAcA9goRQuxw3VD7AqUOHHTdOXu8MSfCxdQMBviE3QgGD58w@mail.gmail.com>
- <87zf00cn7m.fsf@pond.sub.org> <ak-i1dNY_RrGNHAM@redhat.com>
- <CAFEAcA_=rz22ZqPr77REQa5BJRZVuEkriq-gJ9xGg4E46JPUxQ@mail.gmail.com>
- <CAJ+F1C+BiqriKhDO-vY15z5iQECVarJN-NoemiaW3w93c3EpNg@mail.gmail.com>
- <ak-p56pwFPq9omMz@redhat.com>
- <CAMxuvaz=7RxVDjDsR8LeMxAgk-u46ZsKGshsAGKXxMykj7M=FA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1whrDN-0004TS-6N; Thu, 09 Jul 2026 12:03:07 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 7AB6B59673B;
+ Thu, 09 Jul 2026 18:03:00 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id YM5uTRnouatE; Thu,  9 Jul 2026 18:02:58 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 0ED50596742; Thu, 09 Jul 2026 18:02:58 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 0B492596741;
+ Thu, 09 Jul 2026 18:02:58 +0200 (CEST)
+Date: Thu, 9 Jul 2026 18:02:58 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Markus Armbruster <armbru@redhat.com>
+cc: qemu-devel@nongnu.org, Aditya Gupta <adityag@linux.ibm.com>, 
+ Alexander Graf <graf@amazon.com>, Alexandre Iooss <erdnaxe@crans.org>, 
+ Alexey Kardashevskiy <aik@ozlabs.ru>, 
+ Alistair Francis <Alistair.Francis@wdc.com>, 
+ Alistair Francis <alistair@alistair23.me>, 
+ Antony Pavlov <antonynpavlov@gmail.com>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>, 
+ Bernhard Beschow <shentey@gmail.com>, Bibo Mao <maobibo@loongson.cn>, 
+ Brian Cain <brian.cain@oss.qualcomm.com>, 
+ Chao Liu <chao.liu@processmission.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>, 
+ =?ISO-8859-15?Q?Cl=E9ment_Chigot?= <chigot@adacore.com>, 
+ =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, 
+ Dorjoy Chowdhury <dorjoychy111@gmail.com>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Eric Farman <farman@linux.ibm.com>, Farhan Ali <alifm@linux.ibm.com>, 
+ Felipe Balbi <balbi@kernel.org>, 
+ Francisco Iglesias <francisco.iglesias@amd.com>, 
+ Frederic Konrad <konrad.frederic@yahoo.fr>, 
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>, Gautam Gala <ggala@linux.ibm.com>, 
+ Glenn Miles <milesg@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>, 
+ Hao Wu <wuhaotsh@google.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Helge Deller <deller@gmx.de>, Hendrik Brueckner <brueckner@linux.ibm.com>, 
+ =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
+ Huacai Chen <chenhuacai@kernel.org>, Jan Kiszka <jan.kiszka@web.de>, 
+ Jared Rossi <jrossi@linux.ibm.com>, Joel Stanley <joel@jms.id.au>, 
+ Laurent Vivier <laurent@vivier.eu>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Matthew Rosato <mjrosato@linux.ibm.com>, Max Filippov <jcmvbkbc@gmail.com>, 
+ Michael Rolnik <mrolnik@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Niek Linnenbank <nieklinnenbank@gmail.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@mailo.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Ran Wang <wangran@bosc.ac.cn>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>, 
+ Samuel Tardieu <sam@rfc1149.net>, Sergio Lopez <slp@redhat.com>, 
+ Song Gao <17746591750@163.com>, Stafford Horne <shorne@gmail.com>, 
+ Subbaraya Sundeep <sundeep.lkml@gmail.com>, 
+ Thomas Huth <th.huth+qemu@posteo.eu>, Tyrone Ting <kfting@nuvoton.com>, 
+ qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, 
+ qemu-s390x@nongnu.org
+Subject: Re: Call to clean up QOM onboard devices lacking a parent
+In-Reply-To: <87se5scipx.fsf@pond.sub.org>
+Message-ID: <17c7f91b-8935-8ebf-a982-f91df755af81@eik.bme.hu>
+References: <87se5scipx.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMxuvaz=7RxVDjDsR8LeMxAgk-u46ZsKGshsAGKXxMykj7M=FA@mail.gmail.com>
-User-Agent: Mutt/2.3.2 (2026-04-26)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,115 +104,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 09, 2026 at 07:31:31PM +0400, Marc-André Lureau wrote:
-> Hi
-> 
-> On Thu, Jul 9, 2026 at 6:02 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
-> >
-> > On Thu, Jul 09, 2026 at 05:54:30PM +0400, Marc-André Lureau wrote:
-> > > Hi
-> > >
-> > > On Thu, Jul 9, 2026 at 5:44 PM Peter Maydell <peter.maydell@linaro.org> wrote:
-> > > >
-> > > > On Thu, 9 Jul 2026 at 14:32, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > > > >
-> > > > > On Thu, Jul 09, 2026 at 03:22:05PM +0200, Markus Armbruster wrote:
-> > > > > > Cc: mainainters for "Overall Audio backends"
-> > > > > > Peter Maydell <peter.maydell@linaro.org> writes:
-> > > > > >
-> > > > > > > On Thu, 9 Jul 2026 at 12:44, Markus Armbruster <armbru@redhat.com> wrote:
-> > > > > > >>
-> > > > > > >> I stumbled over ARM machine musicpal, PPC machines pegasos1, pegasos2,
-> > > > > > >> and MIPS machine fuloong2e crashes.
-> > > > > > >>
-> > > > > > >> I run them like this:
-> > > > > > >>
-> > > > > > >> $ qemu-system-aarch64 -M musicpal -nodefaults -S -display none -monitor stdio
-> > > > > > >
-> > > > > > >> Died when device_set_realized() tried to propagate a "no default audio
-> > > > > > >> driver available" error to &error_abort.
-> > > > > > >
-> > > > > > > Is this something we want to have be a possibility the devices
-> > > > > > > have to cope with? Can we have the "ignores all audio data"
-> > > > > > > backend be always available instead?
-> > > > > >
-> > > > > > There's plenty of precedence for /dev/null-like backends.
-> > > > > >
-> > > > > > > Otherwise every audio device needs to cope with "there is no
-> > > > > > > audio backend available" and implement "do nothing with the
-> > > > > > > audio data" itself.
-> > > > > >
-> > > > > > Yes.
-> > > > >
-> > > > > We've got a bit of tension between "no defaults" and "builtin audio
-> > > > > devices" here.
-> > > > >
-> > > > > Cnosider if I had instead done
-> > > > >
-> > > > >   qemu-system-x86_64 -M pc -device ac97 -nodefaults
-> > > > >
-> > > > > It is not unreasonable to expect to see an error because you asked
-> > > > > explicitly for 'ac97'  and forgot to wire up the required audio
-> > > > > backend, and asked to NOT have any defaults.
-> > > > >
-> > > > > But with your 'musicpal' machine example, you never asked for the
-> > > > > frontend device, so you should be forgiven for also not asking
-> > > > > for a audio backend.
-> > > >
-> > > > Ah, so this is because of -nodefaults, not because QEMU was
-> > > > somehow built with no audio backends in it.
-> > > >
-> > > > > If we guarantee a /dev/null audio backend always exists, we help
-> > > > > the second case but degrade the first case
-> > > >
-> > > > As a possible analogy, for network devices we just warn in
-> > > > the analogous "device created but no backend wired up":
-> > > >
-> > > >  ./build/x86/qemu-system-x86_64 -nodefaults -device e1000 -display none
-> > > > qemu-system-x86_64: warning: nic e1000.0 has no peer
-> > > >
-> > > > and the effective behaviour is that output packets are dropped.
-> > > >
-> > > > We could make audio devices do that (which would be basically
-> > > > equivalent to "if we need an audio backend and we don't have
-> > > > one, warn and create the null backend").
-> > > >
-> > >
-> > > Note that we don't have a real "null" backend. The "none" backend does
-> > > mixing/resampling/volume before dropping the audio (its parent is
-> > > MIXENG_BACKEND). I think it would be worth to add (so one day we can
-> > > compile qemu without the whole audio/ engine)
-> >
-> > Rather than adding "null" backend, IMHO, we should make "none" do
-> > what its name suggests, by removing the MIGENG_BACKEND from it.
-> >
-> 
-> It's a bit more complicated, the "none" backend can be used by vnc
-> (not spice or dbus), and we have the now-deprecated HMP wavcapture
-> command.
 
-Oh right because VNC used the capture APIs to receive the audio.
-It should probably have had an explicit "vnc" audio backend like
-spice did :-(
 
-> 
-> Note, the new "qemu-vnc" server does not mix/resample audio at this
-> point, it takes the first audio stream instead.
+On Thu, 9 Jul 2026, Markus Armbruster wrote:
+> A QOM object must be the child of exactly one parent.  This defines the
+> QOM composition tree.  The link from parent to child is a property of
+> the parent, and therefore has a name that is unique within its parent.
+> An object's canonical QOM path is these names on the path from root to
+> object in the QOM composition tree separated by '/'.
+>
+> For devices:
+>
+> * If a device is plugged in with -device / device_add, and it has an ID,
+>  we make it a child of /machine/peripheral/ with name ID.  If it
+>  doesn't have an ID, we make it a child of /machine/peripheral-anon/
+>  with name device[N], where N counts up from zero.  The canonical QOM
+>  path /machine/peripheral/ID is stable.  The canonical QOM path
+>  /machine/peripheral-anon/device[N] isn't: it depends on the number of
+>  devices already there.
+>
+> * If a device is part of another device, it should be its child.  The
+>  child's canonical QOM path is the parent's plus '/CHILD-NAME'.  Stable
+>  as long as the parent's path and the child name are.
+>
+> * "Should" because we have a lot of code that fails to pick the parent.
+>  When such a device gets realized, we make it a child of
+>  /machine/unattached/ orphanage with name device[N], where N counts up
+>  from zero.  The canonical QOM path /machine/unattached/device[N]
+>  depends on the number of children already in the orphanage, which
+>  makes it unstable.
+>
+>  Letting code get away with not picking a parent was a mistake.  I
+>  guess it "saved" us some thinking about what's part of what when
+>  converting existing devices to QOM.  In other words, it enabled sloppy
+>  hardware modeling.  We've been "saving" thinking ever since.
+>
+>  I want /machine/unattached/ to be empty.  If an onboard device isn't
+>  part of another device, put it into /machine/ with a sensible name.
 
-> 
-> Fwiw, a "null" audio backend would still need to process audio data at
-> a correct pace.
-> 
+The last time this came up I've asked a few questions but did not get an 
+answer:
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+1. What's the use of the QOM composition tree? I never needed it and apart 
+from being able to admire it in info qom-tree I don't know if it's used 
+for anything. For a long time I did not even know about info qom-tree 
+because I only needed info qtree and info mtree and rarely if ever need to 
+look at the qom-tree. If it has no real use I'm happy to not think about 
+it.
 
+2. What is a QOM parent? There were proposals to parent devices to their 
+bus if they have any, that's what qtree shows anyway. If it's something 
+else it should be better defined somewhere.
+
+Without getting answers for these questions I don't think I'm able to fix 
+the machines I maintain.
+
+Regards,
+BALATON Zoltan
 
