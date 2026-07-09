@@ -4,86 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95EF3C44506
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 10:48:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C559C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 10:49:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whmJ8-0007oO-Ph; Thu, 09 Jul 2026 06:48:44 -0400
+	id 1whmJq-0008V4-Q9; Thu, 09 Jul 2026 06:49:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1whmJ3-0007ny-Q2
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 06:48:37 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1whmJ2-0002nP-5V
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 06:48:37 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-490cf322ed0so10009715e9.1
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 03:48:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1whmJp-0008Uu-SF
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 06:49:25 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1whmJo-0002wv-0m
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 06:49:25 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 669AiIRM1436933
+ for <qemu-devel@nongnu.org>; Thu, 9 Jul 2026 10:49:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 2n6tlerMAHjqwQImBwNF/d2lQqhj2OH/GyPyDXEuCKM=; b=VWnQh1CF9FDGl/zQ
+ ekw1kL7WzyKdyr4o7J9OoTyHIFT1KVOPVSgO6F9ChwSa99USf5aYeaBf2IOGDWaD
+ /P9o+qNuGpTyr4B0xeKzbtHsbh2jFqSrTQMjLobt5AG7KjL+yMI4TzZgYJErXnId
+ eojcoSp0ZBA6q5joegpQwflhlerxE3rrFxF2MRRc4agn+2zb5ZaZO1J3ljCsaa51
+ IwgVgMHkuJ5exU+GlY7CzVRNCgLb2brqBqjPR4F/+vw4qlSeswqvUQv/dQS2hoDK
+ saBfMVG38XTgVmw/9RPK9S0jQZ8L79r3C0iu0oiEushthIjlmUDxizL/DNEO/KSD
+ LQ5DfA==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f9v4u3ca8-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 10:49:22 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-51c1eb52e1fso13747421cf.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 03:49:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783594114; x=1784198914; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=rqtLfoBh3sPx8aGTGZbZdz7/c1WiWr68tf4T0IZ5WmM=;
- b=R0HKsArP50u+KP51BWKk0wb0cKzH52DF3vwX9srwxFwXOvMepHob3HyIuaDBa1PLnE
- I3zL1BHreQfTthQMYD9lN0ASzbTrezEiP1jtb1MmajUMmlx/EzDLFidLvcx3qvYrAi6x
- 1zOKBvHqps4MedTcYRDIow8BhTMVCvquYzpDxoRLIdxyeJnLfq46KthUPUsIHExKiZOL
- xWksRiaDMxo7vTV8jZUWgccme+03Bh4HOXeH7huJdIFUJxAX5NNoKweNuqigbC0XAuc1
- sAqkhnmA1quVgqCnAmL3e4Adv4JGmXJCWxTOZh1bpzjPcASCD/tmczor8B1ZsEMnIZig
- /r0w==
+ d=oss.qualcomm.com; s=google; t=1783594161; x=1784198961; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=2n6tlerMAHjqwQImBwNF/d2lQqhj2OH/GyPyDXEuCKM=;
+ b=hRJBNUnTuX7EbyzGqootj4cdV+GMFfuNRaZ6UG+3yAla0mcCvw+583zFxaSYy9zqwR
+ JoE0ijQiVMutF7J2HibkCbgVyroS0m2EnpI9mocYgHLSHtCUc5PIwRvfwItVfhqakMFk
+ /99BfswhQ9ZM70wPDaMTVb8M7lRrOZfTrRZWKHKPjL+gm8Pi0PIwiB/2zJe75RzNOFKk
+ pYy1YIKRiKwM3r+VGblTblLGtrxdT0At5XJNVQi96EpH6+lOPek+ZcKNNygBi++0AY9w
+ Z00tedZo9kS7UG37ndkulyNzTIwOAJ+glmqMClKDDsgoCb7gF+0+BqafjwlGkXCSeXnV
+ km8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783594114; x=1784198914;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1783594161; x=1784198961;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=rqtLfoBh3sPx8aGTGZbZdz7/c1WiWr68tf4T0IZ5WmM=;
- b=o5/nydknCnKJCVTGxh6GtNdVYS96ffgihg8hWoO0ML8aooIX4x2DgSXrQkrC/bdlb/
- Y2Q4mvPPWYDimlCvxCMdyAx3NhfOBDaErO6lPf4Ap+5CijU3oKpbiz2gE4+z49b6iMQR
- hxoVT89ckOxdYNBqygmtoZdPC/eEaiayQmWM4zdnjNf+XZeOp4wy2dcbvZvpkLPmxkIO
- j9m6jm7cjkE3M1B4Yl3v/oYaI8UVyOKjjEm0SM5H8vTIRLaqBN+TtpX46NT9m1U7f2rZ
- fl3s35/acfBeeM7Iu0+bEk0GdkJQox8kzTXUrP/5TckuaYGVuC/qmnkLxuBZ0QKtyVFg
- 5gVQ==
+ bh=2n6tlerMAHjqwQImBwNF/d2lQqhj2OH/GyPyDXEuCKM=;
+ b=hAfs5+BgL0Wk5Vuy6q58lsrx8Q3JLIG8QR9AA5syP1w02oc3Ib6NqR1I8eZ+ilwE58
+ 1FqJ9bzHbuUPgAdEbGxplnXpQNCeeQJUpS/ROvZpQcnVKzBStdyXn2h6yxC34D2Yh+fl
+ xMxaRWCOE41y9ZLgtiU+WaqrbQKi++1wZtgd6GjoenNTqyUq2Wv9Nc/AwtGWvNpYT/tS
+ BdfTzhqL9x9bjMHy3WKRohKBM/GU5CHrmKhkMdHWdh0yvf6YwcFVrNVSXYlaww+GCA8I
+ 8qT8a4BcCGqRorUNcHDNL3dMviWUiNs+vB01S0anED2ujdLhBTzut4sV4FDjyzEvfoL/
+ +M9g==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rp4O8uFWSCyTRvjCVDUPfVKhSEeMIUoRcsappDiMvCuHJASmCIYvOuKesUuio0WykDoLQqGc8rm07Ru@nongnu.org
-X-Gm-Message-State: AOJu0YxORIaUTurupr91DD8OF3sKShqZEN9o1lYnhxFBr3oo2QdHKfVr
- KGpjZT1lv+Mr6oViu212xXR7GxS2vkZT5U6w3mJSxbsrdN/a4zNpncXPoByS0eInY3Q=
-X-Gm-Gg: AfdE7cl+PFAog/AiDpsGIx/ioBAH5M9VG6rck1Ab/cbVd3yzzB2jOoWDY9JqmwHCCPv
- IquhRskbFa+Clvca9tQb8b8R7rawL6EqdKxxH9ChK3KxJIc+kVA8M9MBHtuM2zBrQ/7kMlVKvbJ
- Q03D1v4ekJVzBKDXOE2F/Fm+Qvq33TDfWY6N5lb7IjiPzusOiomwEqTQQuih7uemg8op2OtqmGr
- pPQ2Sh5kZ1FHCu746PTayQCGxP1CyMt+cI05jgqQNgEq6abZi/sva7DA1E3mkWExvDYBmQmv8fX
- veZBImyLktQ28vWueDdEAeRjU3mB0qRmLPNndk+HwWaBjQ2BxTIWqsiAujMxpRxTdPYuwm4LrEB
- sT92Pv5HOP2JW9RLcxepIsohK660o0YTzUWwO03LNj/9j4T2GEOhcp3osNtMljdu8tnQpneAmLq
- xTjNezJlMN0/Szb5Bi8aeXWVuPkePGFmxfQtm6f0OXkLp29eY5qyR9HTxRnZjZ+MvyUhhiFd5S3
- bxn8LowMTOjX1TM94WZsw==
-X-Received: by 2002:a05:600c:3115:b0:493:c862:3f2d with SMTP id
- 5b1f17b1804b1-493ed78e5bfmr16231385e9.5.1783594113761; 
- Thu, 09 Jul 2026 03:48:33 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493eb6f373csm89325445e9.14.2026.07.09.03.48.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jul 2026 03:48:32 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair@alistair23.me>
-Subject: [PATCH] hw/misc/stm32_rcc: Correct offset-to-irq calculation
-Date: Thu,  9 Jul 2026 11:48:32 +0100
-Message-ID: <20260709104832.1989240-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ AHgh+Rr8Jp0NFzjvJGQCCPPDmqy9lVrBjmN+S0JFT0RBf8GewG9Blixk5XQ4oiFhqw2n6du9SfskN9jqlpmp@nongnu.org
+X-Gm-Message-State: AOJu0YyhuAqkYRep1ZNF+Y2sMrrAYeyDR5e7SHg+FEBM1OuUYNb5CZiU
+ dKq7iU7L5KoSZf8hBh95yMBm4T58d4ExdNibGHsv3XzWyusWu8CdUpl/mzvQzRw+qdTPLLGzf8U
+ FX5jCvf/HjAgS73cBMLl5EK560fZey1bvl3A4rWvkzKIDFBgN9QjXuHBT2Q==
+X-Gm-Gg: AfdE7clGF0hFo+AjhkL0ue2ZKWEzrPxurGpKMWtwKqFdbIJTAnMk+ul56lbvnTRr3a7
+ yrOLCn9tOkMDz4e0TREvckUDXBpqfLk8kSQVTZtJqp1ZHNN54/tUU9ztf+/ajY7ys8jMmDPgLog
+ ZZzU5cyja4gygktmpAK4eNGC6F75lKW4eafZLqmZUkHyJBPrTOgbwndEUxUX88WWDatElpZsxOo
+ ZFYYPyr9Uy0iriceC3Yx5A2WUitItjzQGgZLXOc+W2ZHlLiiOcJV1xPPcjvQZGAZXy57jHDfd95
+ 23H7UqwgNVj+FwbJg5RSzY0C5HTBRb2j6wwy51Ye158n4BywNPCCK91mr3NEI5U94WBMy1oX0oR
+ GRUX3N7nUKSJu9PULBHReJglD7Amy1rFt0SLE8r0W9NNVCgp0NfrcuBqmC67aYA==
+X-Received: by 2002:a05:622a:1b94:b0:51c:19af:6330 with SMTP id
+ d75a77b69052e-51c8b2e4600mr67973611cf.36.1783594161135; 
+ Thu, 09 Jul 2026 03:49:21 -0700 (PDT)
+X-Received: by 2002:a05:622a:1b94:b0:51c:19af:6330 with SMTP id
+ d75a77b69052e-51c8b2e4600mr67973291cf.36.1783594160761; 
+ Thu, 09 Jul 2026 03:49:20 -0700 (PDT)
+Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47aa039bcdasm52233131f8f.21.2026.07.09.03.49.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Jul 2026 03:49:19 -0700 (PDT)
+Message-ID: <3f808266-b208-4881-84ba-fd1180c18459@oss.qualcomm.com>
+Date: Thu, 9 Jul 2026 12:49:18 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 21/91] tests/tcg/meson.build: add logic to skip tests
+Content-Language: en-US
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Helge Deller <deller@gmx.de>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20260706223343.988769-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260706223343.988769-22-pierrick.bouvier@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260706223343.988769-22-pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA5MDEwMyBTYWx0ZWRfX8YxSafSiMcqn
+ mwFy/1jo1dmi6VFRSMSuhZMkMZnHZedL0OuHPiuHZznyEHu7dpuLjrbw5j9oyh0tlFN13f7DVkd
+ rv2CX5NyjauiHgL9AoQFP17UU7QTJVQ=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA5MDEwMyBTYWx0ZWRfX1U7mAmOrO5d8
+ 6PSF8BAYIYaK4y0dVQ3Lrf91EpgYQlfNvYGi2I27BhtxmrpUUHAmTU1gyocHVd81Dj1GsP/TnHo
+ ek2zvfC35tEhK7JrNQtWtEaREVmCw6JkBRmynLgh3a3glPt/qrt6Mu8hbmghjiqWvP/1qFk/YP2
+ osWMTg9R7N4NtTT/KjXWxgPA175ihWhUmOAHI8/igNfnPeE1xq4kvNW5QJCtZRURtcv7HP9LGUW
+ DNXyCu2pwYY+g7sEzx6XVQcDJv+jbx2RkOywc/+7DewPHJjfeBhJt4SFT2z/Py8oPkaS5XXIydp
+ fje5WJKUBh7fFm3x90+F3b5YqhYGqVCMACyYLAS+0UAUYuXTL4iLkfnlTqw72kByD7Be7FxRQxz
+ +lJDSDfDqgRNvMm1g+YToZMrLghyN8flV+1AGPHgDN6F6b99g1TmswQ6YFjF5pSHtNadOjw1xmC
+ s1wrqRQ47gmUvZ85yEA==
+X-Proofpoint-GUID: nsvDQOu2AzYCjp7NtH-cJOV1yHHITnrl
+X-Proofpoint-ORIG-GUID: nsvDQOu2AzYCjp7NtH-cJOV1yHHITnrl
+X-Authority-Analysis: v=2.4 cv=QoVuG1yd c=1 sm=1 tr=0 ts=6a4f7cb2 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-09_02,2026-07-08_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 priorityscore=1501 adultscore=0 suspectscore=0 lowpriorityscore=0
+ clxscore=1015 bulkscore=0 phishscore=0 malwarescore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607090103
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,112 +164,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the STM32 RCC, there is a block of 5 "enable" registers, each of
-which has 32 bits; each bit determines the level of one of the 5 * 32
-= 160 enable_irq output lines.  The code calculates the irq to be
-worked on using
-  irq_offset = ((addr - STM32_RCC_AHB1_ENR) / 4) * 32;
+On 7/7/26 00:32, Pierrick Bouvier wrote:
+> Instead of skipping tests and not declare them, always declare them and
+> simply return an exit code 77 (SKIPPED for meson) and print reason why
+> test is skipped.
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+>   tests/tcg/meson.build | 9 +++++++++
+>   1 file changed, 9 insertions(+)
 
-This assumes that the registers are all consecutive; however, there
-is a gap between the AHB1/2/3 registers and the APB1/2 registers, so
-for the APB1/2 registers we calculate a number that is 32 too high
-and can index off the end of the enable_irq[] array.
-
-The handling of the reset registers has an identical bug.
-
-Adjust the calculation of irq_offset to cope with the gap, and fix
-the case labels so accesses to the gap fall into the default
-LOG_UNIMP rather than being treated as if they were an actual
-register.
-
-Coverity CID: 1663683, 1663686
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/misc/stm32_rcc.c         | 31 +++++++++++++++++++++++++++----
- include/hw/misc/stm32_rcc.h |  6 +++++-
- 2 files changed, 32 insertions(+), 5 deletions(-)
-
-diff --git a/hw/misc/stm32_rcc.c b/hw/misc/stm32_rcc.c
-index 74ea29b156..5cfb39e560 100644
---- a/hw/misc/stm32_rcc.c
-+++ b/hw/misc/stm32_rcc.c
-@@ -53,6 +53,27 @@ static uint64_t stm32_rcc_read(void *opaque, hwaddr addr, unsigned int size)
-     return value;
- }
- 
-+static int reg_offset_to_irq_offset(hwaddr addr)
-+{
-+    /*
-+     * The reset and enable registers aren't all consecutive. In getting the
-+     * irq index from the register offset, we need to account for the gap
-+     * between the AHB regs and the APB regs.
-+     */
-+    switch (addr) {
-+    case STM32_RCC_AHB1_RSTR ... STM32_RCC_AHB3_RSTR:
-+        return ((addr - STM32_RCC_AHB1_RSTR) / 4) * 32;
-+    case STM32_RCC_APB1_RSTR ... STM32_RCC_APB2_RSTR:
-+        return ((addr - STM32_RCC_APB1_RSTR) / 4) * 32 + STM32_RCC_N_AHB_IRQS;
-+    case STM32_RCC_AHB1_ENR ... STM32_RCC_AHB3_ENR:
-+        return ((addr - STM32_RCC_AHB1_ENR) / 4) * 32;
-+    case STM32_RCC_APB1_ENR ... STM32_RCC_APB2_ENR:
-+        return ((addr - STM32_RCC_APB1_ENR) / 4) * 32 + STM32_RCC_N_AHB_IRQS;
-+    default:
-+        g_assert_not_reached();
-+    }
-+}
-+
- static void stm32_rcc_write(void *opaque, hwaddr addr,
-                             uint64_t val64, unsigned int size)
- {
-@@ -69,11 +90,12 @@ static void stm32_rcc_write(void *opaque, hwaddr addr,
-     }
- 
-     switch (addr) {
--    case STM32_RCC_AHB1_RSTR...STM32_RCC_APB2_RSTR:
-+    case STM32_RCC_AHB1_RSTR ... STM32_RCC_AHB3_RSTR:
-+    case STM32_RCC_APB1_RSTR ... STM32_RCC_APB2_RSTR:
-         prev_value = s->regs[addr / 4];
-         s->regs[addr / 4] = value;
- 
--        irq_offset = ((addr - STM32_RCC_AHB1_RSTR) / 4) * 32;
-+        irq_offset = reg_offset_to_irq_offset(addr);
-         for (int i = 0; i < 32; i++) {
-             new_value = extract32(value, i, 1);
-             if (extract32(prev_value, i, 1) && !new_value) {
-@@ -82,11 +104,12 @@ static void stm32_rcc_write(void *opaque, hwaddr addr,
-             }
-         }
-         return;
--    case STM32_RCC_AHB1_ENR...STM32_RCC_APB2_ENR:
-+    case STM32_RCC_AHB1_ENR ... STM32_RCC_AHB3_ENR:
-+    case STM32_RCC_APB1_ENR ... STM32_RCC_APB2_ENR:
-         prev_value = s->regs[addr / 4];
-         s->regs[addr / 4] = value;
- 
--        irq_offset = ((addr - STM32_RCC_AHB1_ENR) / 4) * 32;
-+        irq_offset = reg_offset_to_irq_offset(addr);
-         for (int i = 0; i < 32; i++) {
-             new_value = extract32(value, i, 1);
-             if (!extract32(prev_value, i, 1) && new_value) {
-diff --git a/include/hw/misc/stm32_rcc.h b/include/hw/misc/stm32_rcc.h
-index 4dccacc2db..a94781bf34 100644
---- a/include/hw/misc/stm32_rcc.h
-+++ b/include/hw/misc/stm32_rcc.h
-@@ -65,7 +65,11 @@
- 
- #define STM32_RCC_NREGS ((STM32_RCC_DCKCFGR2 >> 2) + 1)
- #define STM32_RCC_PERIPHERAL_SIZE 0x400
--#define STM32_RCC_NIRQS (32 * 5) /* 32 bits per reg, 5 en/rst regs */
-+
-+/* 32 bits per reg, 3 AHB regs and 2 APB regs */
-+#define STM32_RCC_N_AHB_IRQS (32 * 3)
-+#define STM32_RCC_N_APB_IRQS (32 * 2)
-+#define STM32_RCC_NIRQS (STM32_RCC_N_AHB_IRQS + STM32_RCC_N_APB_IRQS)
- 
- #define STM32_RCC_GPIO_IRQ_OFFSET 0
- 
--- 
-2.43.0
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
