@@ -4,117 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DCD2C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 02:10:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24E83C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 02:11:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wheC5-00085N-FA; Wed, 08 Jul 2026 22:08:53 -0400
+	id 1wheE3-0003IN-7m; Wed, 08 Jul 2026 22:10:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wheBf-0007XJ-Um
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 22:08:29 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wheBd-0007z2-Dk
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 22:08:26 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-664ce3000e6so1321917d50.0
- for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 19:08:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783562903; cv=none;
- d=google.com; s=arc-20260327;
- b=pu6zGczzox0WtMUn37K20bXYnI3/xBhaU23s5TepArK9gWdB8uh6p6G942ovokK6dP
- Re+1qDRpcW0M2W5svS9b+s4DXyh/58vbNGPRgYihZ3xWevKvH4JkaB5bBhqvutAhUNIG
- oii7xnM525E2Z13r+seEC4jelLAJtgnABoIAdfvEQoAgsnMaiybhE2qfp6nFL9cY56Zd
- Qqsjmhq8fsgtxTouhTqBr2NJcXMkZrHV1p9FSdKkCrqMr7gjjEAhzGbx6BMPK6aUzr5j
- UXJxEtbYyhNiQ+sxY73ZybpwpSGkZF9kpoBerbfA+RoSb4axeiPl7cfX/ZMoPMaPU0V6
- UF6w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=snbydXFuW40Gh4poEDUHI1UONkA95bN3Yg9hISD38XM=;
- fh=vef3zk84tqMEnZhWIcmBaFB6NOsoD5bZoGiOSO+zhsM=;
- b=D5ZO319AxXCUYNN4XTdZ3h/4zuKDrO2zVmVqijHQhTKGJ4DtJPNi+iSW9CfVdzqxMt
- QBaQs9OBmSPaEkiOeMyD0NDCzZrJEF8c3HbSmBZXJNMlo27ytIRPKRf/7NLmQxtZt1W4
- 2KMUp8/QO2Wb6AEwQ6JgNGefDdg/dmCs9e+eVc7EALH/2F+UHyrGAz7kNeR6bM0G9kFd
- LEekYR0vUUZjhGkJ1W++oHO+3GliQWlkHFTLQ633oYLwTx6/EpJTt9KleQ/0WTFkLmTs
- vS2B5qOlpH4lBmkxT70wuAFAjUzkxCF9Hg6fJbgaQ159GzAJlXQexKdK6c1yhsQ2mXtT
- JbEA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783562903; x=1784167703; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=snbydXFuW40Gh4poEDUHI1UONkA95bN3Yg9hISD38XM=;
- b=SM2+7yqd+G9My7ytUhCxFINMPoZIGQRmRLc5/SWD6gQ39hIWmkzVPzg/XrVKSIDNDx
- nfNvZA2kl8QMt+BLzH4av+P6J8lYkvckwTdlkHg0+aRlrdE42WNT9NmGOQ5nFwd54bYK
- UNo0fZp8mFTCkuqHC7brSnAvWkc9HK8VL83K+Uilu1oCJVPJhsGTME90anTFQlcNaRYr
- ZnrdC4HTrdoJJrFHnQT1ZBTDWNdjZRsxhPEPnmCaJYEy+R8mClCLnxRq75BW/uCOqGvP
- /eSyodkya6X/q2eSqBxfcVUdGG0oL3ehR9qjEwdKNj+vbBB9H7vzLYtM9xRqb2ieKs12
- 6r8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783562903; x=1784167703;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=snbydXFuW40Gh4poEDUHI1UONkA95bN3Yg9hISD38XM=;
- b=R9nPIWRpVW03nnah0vYucy9wgSv+qB/PuooTGeHfH8Oss2Tw8GP3C525jKfZpRWoDE
- 8IGnuCK4OqX6SmBx6upMYANM3iE6Yrc7q9Z1SI2Qcd0U8GWZGjYxVDbuMd4ZjsQePRPi
- VcMq+VX7LG8wrZMNLIiGcg/ulg57ccdbM9m+WFin4CmNBBdQX83AM6rUBfyZKWD3+T0x
- 0FOdH0DKre9kpFLie+2HHV3p5IspWbSZ+hg2Z/PAAHWJ6xSxQfzfCxe7lzzNBNvwXOzG
- EN0St9ZogF09SbYhsQmzvcZAJ71NRgVDyL0XyJ4HQRmgYZREqBLWV93BCrGO+p2uLzTl
- XC9w==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqPAbgd5sKEozV7AD0sOSel1tL1hfMjtNDuUW4JATWirI5HoSB2HboD42bUd5i9Qer7Dm/+I2HU1tOf@nongnu.org
-X-Gm-Message-State: AOJu0YwvMaiZ3RXV1Fby3GyoC0IREuyuoG+jf5lwAbCReofxo9cVgfZc
- z9Zq8WbOHbrLVOPOy1zMCDaKpvDD/h8fju32pJlzkCN8YiZfhjUxx51IsELb84S1177/GP8okgH
- OLes0YktOOv2Hi6J4Ciby+OQzcxkvDHY=
-X-Gm-Gg: AfdE7cmXKMHu3vJclOBsxNiHqutVP4KdrWLtt+qy5htX/pWxT7gCZeQOLU/U8Kf5Xj8
- XVnG1T2HT+h/59nGc6MsHEDzmXkiE7W/TbsLEX0uy/r6+TCIfdEiscTc0Bq4lGSouS8kQPzmy2G
- VRNLNoFV4aGS1xw1FmFWlS97j932fVLBn4Z9oZumw8jSCHqJ+oK1dnIeu8zxRNjbAjJFfZUmoG/
- 9LESHF3pSNwx5CWhXMwJdvaUEyIEI8dU7t32zEvv8/nFROLcZFNMSxwqwgTAP6h6p2gCk6+WA/u
- sLlDIg==
-X-Received: by 2002:a05:690e:1917:b0:664:da95:cf4d with SMTP id
- 956f58d0204a3-6679f2cda01mr3740889d50.18.1783562903179; Wed, 08 Jul 2026
- 19:08:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
+ id 1wheE1-0003I7-1W
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 22:10:53 -0400
+Received: from smtp186.sjtu.edu.cn ([202.120.2.186])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
+ id 1wheDw-0001bW-5h
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 22:10:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sjtu.edu.cn;
+ s=default; t=1783563037;
+ bh=MF+5HdxhrCtx+4DJGVG1v2w1BdLxLL7jBJKB6w3wW8E=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=yJYbz0jxqzSGhqBP+iJ1x7yelhGB2LQytMfjDoH1psm6bbIOsaoxmt+CUh1dAKO9g
+ RoaDW6EsQR4xlo93KDFuLIGYPLAKDTsbc8N061z2/QoOM5fx5FOy/gP5fg2oZu5Wq4
+ +TBvq5gO6eciQ/1VzEEDFKst0RLzu4VE3cAZKHhxvvMCpBoq+K7rfNJucLEgT12yJG
+ u0kywdWJ2uiBtR0mym6nrc96axHJqwXYyNXIXcbQJs9fXzVnrJDX52NcLq6QNkVcqy
+ 3clYAxcAhozjQGBtzQDN0hi0ZQpH1D65wpbcZCsP8rAR9Tv4MqFB1i09OhJubvHEUK
+ 7a8G1jvVo/ZPQ==
+Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
+ by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id EEA3B30015A;
+ Thu,  9 Jul 2026 02:10:36 +0000 (UTC)
+Received: from [10.0.1.62] (unknown [202.120.40.100])
+ by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 3A255380C9A;
+ Thu,  9 Jul 2026 10:10:32 +0800 (CST)
+Message-ID: <ac710e66-0e76-4ea2-a45e-57ad569fb8ee@sjtu.edu.cn>
+Date: Thu, 9 Jul 2026 10:10:31 +0800
 MIME-Version: 1.0
-References: <20260708111544.1440761-1-clg@redhat.com>
- <20260708111544.1440761-4-clg@redhat.com>
- <CAEUhbmV0Q2xpwVLUxv9NEDbb8pMgnjdChupPngtPvCuFFedv7A@mail.gmail.com>
- <6e33a168-4311-47e8-a153-f364a2c43bf1@kaod.org>
-In-Reply-To: <6e33a168-4311-47e8-a153-f364a2c43bf1@kaod.org>
-From: Bin Meng <bmeng.cn@gmail.com>
-Date: Thu, 9 Jul 2026 10:08:11 +0800
-X-Gm-Features: AVVi8CeKBU8zsEgdrd9CL9auslSqxZEHLygkFE3hKG4nlkhLM8jtr3S_ArQNPjY
-Message-ID: <CAEUhbmUNmo72DUbx+Kyu0UPxo1-iMFgz2oJw9Vz=zC4U8XFxAA@mail.gmail.com>
-Subject: Re: [PATCH 3/4] tests/qtest: aspeed_smc: Add Dual Output Read (DOR)
- test coverage
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org, 
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Alistair Francis <alistair@alistair23.me>,
- Bin Meng <bin.meng@processmission.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yx1-xb135.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 2/2] docs/about/emulation: document the dlcall plugin
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ qemu-devel <qemu-devel@nongnu.org>
+Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
+ Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
+ Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
+References: <20260709011945.282457-1-functioner@sjtu.edu.cn>
+ <20260709011945.282457-3-functioner@sjtu.edu.cn>
+ <6573ff2c-da32-496a-bbbd-28ebce020a22@oss.qualcomm.com>
+ <8990dc77-d8af-47aa-abe4-8d279d9e2da7@sjtu.edu.cn>
+ <62a83c4d-c26f-4b0c-b59f-62b6cc39b634@oss.qualcomm.com>
+From: Ziyang Zhang <functioner@sjtu.edu.cn>
+In-Reply-To: <62a83c4d-c26f-4b0c-b59f-62b6cc39b634@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=202.120.2.186;
+ envelope-from=functioner@sjtu.edu.cn; helo=smtp186.sjtu.edu.cn
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,45 +81,231 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 9, 2026 at 12:43=E2=80=AFAM C=C3=A9dric Le Goater <clg@kaod.org=
-> wrote:
->
-> On 7/8/26 17:32, Bin Meng wrote:
-> > On Wed, Jul 8, 2026 at 7:17=E2=80=AFPM C=C3=A9dric Le Goater <clg@redha=
-t.com> wrote:
-> >>
-> >> Add read_page_mem_dor (CTRL_FREADMODE with DOR command and dual data
-> >> IO mode) and write_page_dor (user-mode DOR) tests.
-> >>
-> >> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
-> >> ---
-> >>   tests/qtest/aspeed-smc-utils.h |  4 +++
-> >>   tests/qtest/aspeed-smc-utils.c | 50 ++++++++++++++++++++++++++++++++=
-++
-> >>   tests/qtest/aspeed_smc-test.c  | 16 +++++++++++
-> >>   tests/qtest/ast2700-smc-test.c |  4 +++
-> >>   4 files changed, 74 insertions(+)
-> >>
-> >> diff --git a/tests/qtest/aspeed-smc-utils.h b/tests/qtest/aspeed-smc-u=
-tils.h
-> >> index 5a86514caf35..fbfb94e831d8 100644
-> >> --- a/tests/qtest/aspeed-smc-utils.h
-> >> +++ b/tests/qtest/aspeed-smc-utils.h
-> >> @@ -44,6 +44,7 @@
-> >>   #define   CTRL_FREADMODE       0x1
-> >>   #define   CTRL_WRITEMODE       0x2
-> >>   #define   CTRL_USERMODE        0x3
-> >> +#define   CTRL_IO_DUAL_DATA     BIT(29)
-> >
-> > This macro is already defined in aspeed-smc-utils.h:43
->
-> I am confused. I only see this CTRL_IO_DUAL_DATA define in
-> hw/ssi/aspeed_smc.c.
->
+On Wed, 8 Jul 2026 18:59:01 -0700, Pierrick Bouvier wrote:
+> On 7/8/26 6:47 PM, Ziyang Zhang wrote:
+>>
+>>
+>> On Wed, 8 Jul 2026 18:35:09 -0700, Pierrick Bouvier wrote:
+>>> On 7/8/2026 6:19 PM, Ziyang Zhang wrote:
+>>>> Document the dlcall plugin under Example Plugins: what it does, the 
+>>>> trusted-
+>>>> guests and guest_base == 0 constraints, how to load it, and a 
+>>>> pointer to
+>>>> Lorelei, one end-to-end userspace implementation, for the toolchain 
+>>>> and a
+>>>> runnable example.
+>>>>
+>>>> Co-authored-by: Kailiang Xu <xukl2019@sjtu.edu.cn>
+>>>> Co-authored-by: Mingyuan Xia <xiamy@ultrarisc.com>
+>>>> Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
+>>>> ---
+>>>>    docs/about/emulation.rst | 202 ++++++++++++++++++++++++++++++++++ 
+>>>> +++++
+>>>>    1 file changed, 202 insertions(+)
+>>>>
+>>>> diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+>>>> index 3b4c365933..b8fdc88a45 100644
+>>>> --- a/docs/about/emulation.rst
+>>>> +++ b/docs/about/emulation.rst
+>>>> @@ -1046,6 +1046,208 @@ Count traps
+>>>>    This plugin counts the number of interrupts (asynchronous 
+>>>> events), exceptions
+>>>>    (synchronous events) and host calls (e.g. semihosting) per cpu.
+>>>> +Dynamic Linking Call
+>>>> +....................
+>>>> +
+>>>> +``contrib/plugins/dlcall.c``
+>>>> +
+>>>> +This plugin provides a dynamic linking function call interception 
+>>>> mechanism
+>>>> +for linux-user guests: the guest hands a call off to the host, 
+>>>> where the plugin
+>>>> +runs native code in its place instead of the guest emulating it. 
+>>>> Interception
+>>>> +alone enables several uses, for instance tracing or auditing guest 
+>>>> calls.
+>>>> +One use is acceleration by leveraging the host's native shared 
+>>>> libraries. For
+>>>> +example, a thunk layer can run the stock zlib ``minizip`` utility 
+>>>> under
+>>>> +emulation while forwarding its ``deflate`` calls to the host's 
+>>>> native zlib
+>>>> +library (libz). This avoids emulating those selected library calls 
+>>>> instruction
+>>>> +by instruction.
+>>>> +
+>>>> +The guest issues a reserved "magic" system call (4096 by default, 
+>>>> configurable
+>>>> +with ``syscall_num=N``) whose first argument selects a pass-through 
+>>>> operation:
+>>>> +dlopen/dlclose a host library, dlsym a symbol, and invoke a 
+>>>> resolved host
+>>>> +function. The plugin performs the operation on the host and 
+>>>> consumes the
+>>>> +syscall, so the real kernel never sees it.
+>>>> +
+>>>> +.. warning::
+>>>> +
+>>>> +   Trusted guests only. The guest can load arbitrary host libraries 
+>>>> and run
+>>>> +   arbitrary code in the QEMU host process. The plugin is not a 
+>>>> sandbox and
+>>>> +   provides no isolation. It also requires ``guest_base == 0`` 
+>>>> (qemu-user's
+>>>> +   default), as guest pointers are dereferenced as host addresses 
+>>>> with no
+>>>> +   translation.
+>>>> +
+>>>> +The plugin intentionally keeps the QEMU side lightweight and knows 
+>>>> nothing
+>>>> +about any particular library or its calling convention. Turning a 
+>>>> real library
+>>>> +into working thunks, including argument marshalling, callbacks and 
+>>>> variadic
+>>>> +functions, is done entirely in userspace, and any toolchain can 
+>>>> implement the
+>>>> +interface.
+>>>> +
+>>>> +Loading the plugin is all that is required from QEMU's side:
+>>>> +
+>>>> +.. code-block:: shell
+>>>> +
+>>>> +   qemu-x86_64 -plugin contrib/plugins/libdlcall.so <guest- 
+>>>> program> ...
+>>>> +
+>>>> +`Lorelei <https://github.com/rover2024/lorelei>`_ is one end-to-end 
+>>>> userspace
+>>>> +implementation of this: it provides the guest and host runtimes and an
+>>>> +automated toolchain that generates the thunks from a library's 
+>>>> headers, so guest
+>>>> +library calls run on the host's native libraries. It supports an 
+>>>> x86_64 guest
+>>>> +running on an x86_64, aarch64 or riscv64 host.
+>>>> +
+>>>> +A minimal end-to-end example uses a one-function library, 
+>>>> ``libhello.so``, built
+>>>> +two ways: the guest build tags its output ``from guest`` and the 
+>>>> host build tags
+>>>> +it ``from host``. An unmodified guest program ``main`` calls 
+>>>> ``hello("world",
+>>>> +7)``, and the thunk makes that same binary reach the host build in 
+>>>> place of its
+>>>> +own. The sources live under ``src/``:
+>>>> +
+>>>> +.. code-block:: c
+>>>> +
+>>>> +   /* src/hello.h */
+>>>> +   #ifdef __cplusplus
+>>>> +   extern "C" {
+>>>> +   #endif
+>>>> +   void hello(const char *name, int lucky);
+>>>> +   #ifdef __cplusplus
+>>>> +   }
+>>>> +   #endif
+>>>> +
+>>>> +.. code-block:: c
+>>>> +
+>>>> +   /* src/hello_guest.c */
+>>>> +   #include "hello.h"
+>>>> +   #include <stdio.h>
+>>>> +
+>>>> +   void hello(const char *name, int lucky)
+>>>> +   {
+>>>> +       printf("hello from guest: %s, lucky %d\n", name, lucky);
+>>>> +       fflush(stdout);
+>>>> +   }
+>>>> +
+>>>> +.. code-block:: c
+>>>> +
+>>>> +   /* src/hello_host.c */
+>>>> +   #include "hello.h"
+>>>> +   #include <stdio.h>
+>>>> +
+>>>> +   void hello(const char *name, int lucky)
+>>>> +   {
+>>>> +       printf("hello from host: %s, lucky %d\n", name, lucky);
+>>>> +       fflush(stdout);
+>>>> +   }
+>>>> +
+>>>> +.. code-block:: c
+>>>> +
+>>>> +   /* src/main.c */
+>>>> +   #include "hello.h"
+>>>> +
+>>>> +   int main(void)
+>>>> +   {
+>>>> +       hello("world", 7);
+>>>> +       return 0;
+>>>> +   }
+>>>> +
+>>>> +Lorelei ships a prebuilt toolchain (a "devkit") in its releases. 
+>>>> Download the
+>>>> +one for your host and unpack it:
+>>>> +
+>>>> +.. code-block:: shell
+>>>> +
+>>>> +   # <arch> is your host architecture: x86_64, aarch64 or riscv64
+>>>> +   wget https://github.com/rover2024/lorelei/releases/download/ 
+>>>> v<version>/lorelei-devkit-<arch>-<version>.tar.xz
+>>>> +   tar -xf lorelei-devkit-<arch>-<version>.tar.xz
+>>>> +   DEVKIT=lorelei-devkit-<arch>
+>>>> +
+>>>> +Build the guest ``libhello.so`` (x86_64) and the host 
+>>>> ``libhello.so`` (this
+>>>> +host's own architecture), then the guest program. ``main`` links 
+>>>> the guest
+>>>> +library with an rpath, so by default it loads that one:
+>>>> +
+>>>> +.. code-block:: shell
+>>>> +
+>>>> +   mkdir -p build/guest build/host
+>>>> +   $DEVKIT/bin/x86_64-linux-gnu-clang -shared -fPIC -o build/guest/ 
+>>>> libhello.so src/hello_guest.c
+>>>> +   cc -shared -fPIC -o build/host/libhello.so src/hello_host.c
+>>>> +   $DEVKIT/bin/x86_64-linux-gnu-clang src/main.c -Isrc -Lbuild/ 
+>>>> guest -lhello \
+>>>> +       -Wl,-rpath,'$ORIGIN' -o build/guest/main
+>>>> +
+>>>
+>>> Why is rpath needed? We don't want necessarily to find the library
+>>> relative to where the binary is located.
+>>>
+>>> In practice, we'll have:
+>>> - the binary
+>>> - folder A containing host library
+>>> - folder B containing thunks
+>>>
+>>> A and B are not related to binary location.
+>> This example ships the guest libhello.so which is at the same directory
+>> as the main executable, so I add the rpath to make QEMU run the original
+>> program without specifying anything.
+>>
+>>>> +Run it under qemu. It loads its own guest library:
+>>>> +
+>>>> +.. code-block:: shell
+>>>> +
+>>>> +   qemu-x86_64 build/guest/main
+>>>> +
+>>>> +which prints::
+>>>> +
+>>>> +   hello from guest: world, lucky 7Would your suggestion be to not 
+>>>> include rpath when compiling main, and
+>> then set LD_LIBRARY_PATH to the library path when running the original
+>> program?
+>>
+>> qemu-x86_64 -E LD_LIBRARY_PATH=build/guest build/guest/main
+>>
+>> Like this?
+> 
+> Yes, exactly.
+> 
+> By doing this, the end goal is to see that we can dynamically switch 
+> from the original host library to the thunks simply by switching this 
+> variable.
+> 
+> Regards,
+> Pierrick
 
-Sorry, my fault. I had a local tree that modified some of these qtests befo=
-re.
-
-Regards,
-Bin
+Thank you for the explanation. I will send out PATCH v9, and then I will
+update Lorelei.
 
