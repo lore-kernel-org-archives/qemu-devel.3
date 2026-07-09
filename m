@@ -4,138 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74A18C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 21:04:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C72F8C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 21:06:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whvud-0003Oh-Im; Thu, 09 Jul 2026 17:04:03 -0400
+	id 1whvwb-00041w-Bz; Thu, 09 Jul 2026 17:06:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1whvuc-0003OG-0i
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 17:04:02 -0400
+ id 1whvwZ-00041l-LH
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 17:06:03 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1whvua-0005bR-7J
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 17:04:01 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ id 1whvwY-0006E3-4s
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 17:06:03 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 669HWtBe2502330
- for <qemu-devel@nongnu.org>; Thu, 9 Jul 2026 21:03:58 GMT
+ 669KZFTa2917694
+ for <qemu-devel@nongnu.org>; Thu, 9 Jul 2026 21:06:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- MCHsDhRkjv0bAIdOYCKgBtR1pOxExvwo9e3ZrTaYk+0=; b=nvV/IIRe+FGWpdHI
- oLNmurv56Tn/haICJKaANORDbk2DVWI3pQJf7B2YWoe3Q+LKQIb6ObxVpEodRUef
- 8xiJN9pIbZrLehD0ck5CW4IfGA/IOYIMjyBynXGYntbGnHycKH+Aw8S93JtZHSSg
- 7vNWm4FuNkVrU+lqwy7XHJ6ooapvoZCppd9tvrzyvCo6Xy9xoU0TL+iD0YTTIwei
- +MR+kmwCoRZ2TA99qxDjN9YTXkiS2ZnhzAJ+YMl/+1PSpJaK8J8+MG/ZpGYeG1mv
- 4RPSi9A3swV822u6a7nZHjPuFkU8/OUSkzUzb33afaQpxnkz6uCGHnsG/NpqmjFj
- Mq0G2g==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fa6p3ux04-1
+ NT9wSTQqiCx6Py9n0wbJL4qoTasrN/ID+pg47vv78nQ=; b=kt1ZxkHvzW0wUbUv
+ cxr7xJbguM/A84arNchs07gtORTEeCUyKO2WQHln0Blmodc7pGIC/AKA6IyAtHwO
+ ogHxnowOtvFLdyQWBPxMg4nIW6zf73DdZ8neL3l1e8tRRQfe/hfG3E3gzoRzqR9/
+ BQK7acALBmzerH8Id+/sHfIQew3KGGJEXfQdZmHSen2oZeH8v3xDBuvLFbjKxi1y
+ YsmEGPVfq17PfF9frK/iV6OZg39lMdNbhaBIlvnnA2em7hfaCG2Fb66TrfKjA9jG
+ divkrRcpyQnQgGmamBkCpPgJzJJ4SvQRODE0IMYrL7MSSPc7USwlgDkrEhsVSWsX
+ csJTuA==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fajte038j-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 21:03:58 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51c33f48ee4so2298181cf.1
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 14:03:58 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 21:06:00 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-51c20762d21so2564861cf.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 14:06:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783631037; x=1784235837; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783631159; x=1784235959; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=MCHsDhRkjv0bAIdOYCKgBtR1pOxExvwo9e3ZrTaYk+0=;
- b=SddLri8CCZOAzKVWrirYCSDqHtSD3mxPUCicDcN1rZAOiBM/dxT9+8w/Mu8rlU50gX
- OUEgLHufFzsEnElJuIJwYpUd5gjB+DMYJQQQP4cyg8rXe5uN7s4jIE0AcNkRvlRuYozH
- UiZmfuV3i/m0zd8TXqAIsbkaftKbKkrnnJFSlSXAuJ0zY0jjBf2F4XFKLdWqzK/vqEA4
- KKNCyJCAzttDCHl3n1Ly0/+6t08YwDm1YpR2M+CJiwq39IHXS+IR4FuEXAlJCfwC8xXT
- zfYXSa2glmizzeIN+v9vdZjC8g+jGXZ+c1acbmEhRcLTIvdssp6Uj3ywfF6kmG5ANK8L
- 5kJg==
+ bh=NT9wSTQqiCx6Py9n0wbJL4qoTasrN/ID+pg47vv78nQ=;
+ b=RdqFrg95i2tGuXpSwFXxpdw7jqjH+aIcfjCvFdEQ5iiLr8dB+piPdoGQXmvcGcYLpQ
+ WcXFJoxRGfyqI9ijZxNiHeM/7Sd1mLC+FKNip63OwkrULDnY/eW8ngGm829EyAtKdgEh
+ 6TgNnqEXESfEq7y9t10Sg8MeQKRl+CzRN/5yqyF7FeUhxFqDj1KPYN7uuKe8IC3914IX
+ Lfd0f630dgf0NPCTknevtwVHQAN8xT+d0MlP9wyzmji4MX9xVN+lU1WA5Ymc7BHfvzzp
+ PWxkmqMGuXeax715IpBBk2L9WQUblI4VYZMv/HZOGHwuiVzB45hrqpntrgn0qsG2gF3k
+ ChQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783631037; x=1784235837;
+ d=1e100.net; s=20251104; t=1783631159; x=1784235959;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=MCHsDhRkjv0bAIdOYCKgBtR1pOxExvwo9e3ZrTaYk+0=;
- b=Tst6tNVnA6g8FSrL/fZncR1PJB6avtm3TiGAN+UXuCbjDidaA1y4Jm2QQqTIoWVh/m
- N9/oPFvSXyFjBbO4cVgPvtKY0czF9VCROcAcRN7fncM3vChNH7xLWOD9KwAoDvG1hOTE
- Opshkdk4FdEMmOWRuzql76zyBfXm96fZ+XxPgAz/bVdZA4qCl5SCCOhpn/yUjP9cIpBm
- U6HYUE1M5rJGGM7iU7hJ9Zs8E4g+wP7AjKp9bDQU10Z4URLLtshXVpmjqFrylEZjRVLK
- HUoyGYiAR0ZAfdasDwdbeF0xOWMaY5A92Lpc5JzZTv5hTcVJxgfFwtraxEjDHS2SAimz
- 9WHA==
+ bh=NT9wSTQqiCx6Py9n0wbJL4qoTasrN/ID+pg47vv78nQ=;
+ b=rp7iG5kEpvSboA9F55EQmJHAYvIhQn+R6SFSFZMs22FKb/iJ0Uum6B+YamkQ4SeDjv
+ QnFWQIQ8THcXRLUhEEyXnlhmPX6vr3jbAVj/BH4yeb1pTuhKDlpeB3VDoYAW6nSCFue9
+ 1MxfL5pwujODlCwnCZC8vwoZf43DBru14v9LvD7dogHTiVsMCRt0XZQusuddF/TUdfJT
+ wPmmv0t6vfJNxODGPnBQaAzWZbeIWcBlh2TgAHGI+VMY1WfhFerepvHh6GzBneZ9suFr
+ 5EVLUPg+4XoIosxbn1WflwEmVSGn7oK/Lj8TTPf97Fnuny4tOacWzTxcK/M16N8I/O7r
+ 8vyw==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rrh6sn2u6zm52kCVUTGqt47bAdN7jFXcsXWAsYfibzq7N+bPQnKP6Ta9HQUGx9IiM4i+lgtClHRvdAk@nongnu.org
-X-Gm-Message-State: AOJu0Yy+F42pSnXQrWMLd07kBmwESqDtWN/z4QWVHdBeEpstzOp9bLEu
- y+zOFKCxrLDKfLP/3z1S0xzMJMiv7jsF3tA+Xb7ORTY75zii9VRs+iS8rrv5EH1sbEROFhsafiU
- oOfYjfQN8tztS+beS4ILIKJNvX171nHqjgxnF/CQwljEGBw5G6p+klmWhbA==
-X-Gm-Gg: AfdE7cmTyRvFg3AhZrUvMm9LC0UCK1EVECPw3A8yO1EBbgpfoXQhja6/YceiaeIBXw1
- b2t/9WK165Wz2lyDc3KYVxjRkL9u0c0571oWOt/ezZn61PcDXQCA3q4acKGxBbDKSkbZf7GUHP/
- j5RgRyOw0+j/VMI3bA1CIxQKpRjeYahsm6vFS90pCOQzff6UKh3EVJO/hTZJ+4TvvWgPSCFC7hr
- /talj8ve9w43woeSnAlFYZtVpJws+A/v3LIfSv+4oXdJpPBkzhCYPxHVymZlrX0qGCZsPI9R7nY
- TNHVkXdFeD1zu5zboGTiF0yXhjJLRsA9pz7C4itX+kKBanFnYi6CpgTtarygET9lQesQjDgCRVC
- 3H+S2MkvZIZnvrHNdcsenHQ6uDx/NEDSJkIz0P/ayuv5cR1VJGPXI4+VzPPW7mQ==
-X-Received: by 2002:a05:622a:113:b0:51a:8c97:938c with SMTP id
- d75a77b69052e-51c8b5671f5mr112944311cf.67.1783631037348; 
- Thu, 09 Jul 2026 14:03:57 -0700 (PDT)
-X-Received: by 2002:a05:622a:113:b0:51a:8c97:938c with SMTP id
- d75a77b69052e-51c8b5671f5mr112943541cf.67.1783631036749; 
- Thu, 09 Jul 2026 14:03:56 -0700 (PDT)
+ AHgh+RoeF/Q7DWasj3WlVSVNt5HYbtqObfVqJF990NYkPdgwPyEbs0ZyDXbfoFx0hKv6IfQxwS+6lZAhK56u@nongnu.org
+X-Gm-Message-State: AOJu0YyMRBovrSF4f7K5SGoZRdiR6fQuyo/v2dG/ywtrOsq3DZRt1/Ok
+ aDg5ga/g3zIj3yg3DW8X/58ZnRkuwog29Iw7I+Y5N86fXTIx5laq7WaUajNlpDUuGLvYST/x1ZO
+ /OgpOgRWmfL/2szk9jo3iwAcSioT/Ka783p3n1nUTbVcg99cNTpfwoEA62g==
+X-Gm-Gg: AfdE7ckFYWwL4xkN6oRbmL9JB+DtsAAQQ41R4NAcmmSxLmu+sOIzjqjQJB+pxu7I9HA
+ 37aTu3fCv0Yr9gbhifsr260PgWWs7g03O6h95FqXPWkXYV0scVQFXcdzw9oyWcJ+MEiU3b8Kmda
+ hAz7nxtgqT71W302qJccPSv97+63rjqHzg9bmLSt+4lkY0jwL4XUo4n6VgMS+s/Ab0ZdeB9vAQN
+ ytQKIA119Te/+tyzxN8NmzLRPltmZ6gnMvxVtXfKGFxmktgIokywdrh1J2Q+C8tMh+oTqZlaCtp
+ yHEBF0BdqTLMz9YHr5wF5bP88KVtyifodTrat1De91oRTqJWdSyd++TjKBQ35ciy9jnpMhbyzwi
+ NcaL5ccOSG1hUw4WMUMKlZbSFM4ahTLR4YX0w5rgFKMm8NulPrAtXkYsf55IcQg==
+X-Received: by 2002:a05:622a:4d86:b0:51c:21cd:e2d8 with SMTP id
+ d75a77b69052e-51c8b3033b8mr118175631cf.34.1783631159390; 
+ Thu, 09 Jul 2026 14:05:59 -0700 (PDT)
+X-Received: by 2002:a05:622a:4d86:b0:51c:21cd:e2d8 with SMTP id
+ d75a77b69052e-51c8b3033b8mr118175321cf.34.1783631158934; 
+ Thu, 09 Jul 2026 14:05:58 -0700 (PDT)
 Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493f2d88698sm7718105e9.1.2026.07.09.14.03.55
+ 5b1f17b1804b1-493eb705e22sm67948485e9.6.2026.07.09.14.05.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Jul 2026 14:03:55 -0700 (PDT)
-Message-ID: <6537f5d6-4e21-4e55-8a21-2818a7d7fa28@oss.qualcomm.com>
-Date: Thu, 9 Jul 2026 23:03:54 +0200
+ Thu, 09 Jul 2026 14:05:58 -0700 (PDT)
+Message-ID: <e958f4ef-7850-4128-afc6-16657cd8dd1b@oss.qualcomm.com>
+Date: Thu, 9 Jul 2026 23:05:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/3] hw/usb/aspeed-udc: Add ASPEED UDC device controller
+Subject: Re: Limit USB 1.0 (UHCI/OCHI) and 2.0 (EHCI) to non-virt use cases
 Content-Language: en-US
-To: Jamin Lin <jamin_lin@aspeedtech.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>,
- "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20260703074332.1049473-1-jamin_lin@aspeedtech.com>
- <20260703074332.1049473-2-jamin_lin@aspeedtech.com>
+To: Gerd Hoffmann <kraxel@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, devel@lists.libvirt.org
+References: <agRC56rkfb4z6zSO@redhat.com>
+ <CAFEAcA9_Xmy8FukkMDGVzU8LvE9giSp9zgrpiGvbxn=wNjJp-g@mail.gmail.com>
+ <agrtSFk-XGA-EcQd@sirius.home.kraxel.org>
+ <CAFEAcA9b2oeZaZtGkn5YPMKOXWDdZQEvdoBj5mGVh51aKi-BYw@mail.gmail.com>
+ <agrz1zBDwGc9Bvlo@sirius.home.kraxel.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260703074332.1049473-2-jamin_lin@aspeedtech.com>
+In-Reply-To: <agrz1zBDwGc9Bvlo@sirius.home.kraxel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: TrpYMaTZ_1uCYZ5BVnqhOU5HK6zO65qk
-X-Proofpoint-GUID: TrpYMaTZ_1uCYZ5BVnqhOU5HK6zO65qk
-X-Authority-Analysis: v=2.4 cv=TPh1jVla c=1 sm=1 tr=0 ts=6a500cbe cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: QojIF9mzM-ME3uiTX7iCKfzZAo-E3n2m
+X-Proofpoint-ORIG-GUID: QojIF9mzM-ME3uiTX7iCKfzZAo-E3n2m
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA5MDIxMCBTYWx0ZWRfX/rU538TwdsEU
+ GxtzfuqKglsf98ktDFE6EzgAmjL5WagCYqrLS4hxdOaKXaO1+qaed7x2Ic7W8cycSQPsoHxf3D7
+ 5eiQz89FUId5dzvYrkG4eFjD2BulJSbODDB0iF7+xOaqIlcw4ISi/1/F8GBA8Pew8Fbfi7vNkK6
+ 8dbltLHkAdfWP6aaDMiQDd+uEABu4jLBuHUpdXgII3ryv3ezBjUkNOnckLJ60YiqvdH7gj7q+y6
+ oFgEqMY3v8+WMIQRzJNPKFwkLvCQ6QrqZ8Xvy7zcpRjXB+pI5ZQIgG8+wHAJ7DD8Cu+5axh6Ams
+ ZNOqYcZShCqpICDA1JMhr9KQybtLxfHHclCm3DrSYohc6Fz06j2AYfjmTgUNpfZtosKa+K/2ESS
+ sQW5CcNk3bxAH/TQv1quXCOw4qSmR94MXAFVylF+gUjZKaYn4T4VBLac8QIALotfsKOj/8F/VoP
+ 4LRoYOSbLLSnAPz+v6Q==
+X-Authority-Analysis: v=2.4 cv=N7MZ0W9B c=1 sm=1 tr=0 ts=6a500d38 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=V2NxCb60AAAA:8 a=C6oVvHcd0U7zB2UF4PsA:9 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22 a=3L6qF29SlnrayQqPM2jZ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA5MDIxMCBTYWx0ZWRfXwlUF0+yGWA7/
- Cm/edo/OiX/KW86so19UXa6OpGXbvb/mAEPrI+BU352dBiCp9IDf5rMl5bRHZFXaeWptlYeh81S
- w4UOyMtNR9hLYFjONU3eYpCh1CUJkRo=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA5MDIxMCBTYWx0ZWRfX21EjHa5BJtiU
- B+C8KjyTYFD1mNNyO4eAqK7qzyHXHc68P+ysBAdApizF1qDJjYO9hyqguAO79jELgCu5v5nr2XD
- eHAwzHF2C7Ht1J0gxs36P8CTxHKIwtKkTmIf3ooD85PllJdDxGuizWsjn0GbTMxAoyTSoGCOd+t
- W7P5Nij+wzJFEUfd+g5wPfaAWqc+HT441ULgbUtIVVpgjX+Py5no/cetbysHZkmV/x3ZsDmfbir
- PTOcEfrYaZ6aO6H1ro+GK5YlpiXO14bdxsWkrNnGrMGjhxsK9/ZXH+xi+bwSaaK3SsK3HLqPHNI
- sLt4I9hBYB/iIzvUhNVseJ68Bc3R6soBtNwEib0r1ZwfOAlP6M/Uw6WxChP1B8EwIya6nTtcLDc
- c3LumG1nOx9iLovHufpr9GFhTVEvGfFfEtt25roNG0X6TP5hpVM0xGBCfQbnoIKNAALuEUYgbW1
- iW7tPndmUCaG/ME6ssQ==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=RYJPnzK0AAAA:8 a=20KFwNOVAAAA:8 a=3SmhVnXueZ8B8bg9T-IA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=ZXulRonScM0A:10 a=dawVfQjAaf238kedN5IG:22
+ a=71IlbOU7e524H-Equz-4:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA5MDIxMCBTYWx0ZWRfX7sARQMTPIgsc
+ vjRrSGltWrNT9MhSV6aJgA2GeHiftxkD+lwQY8DxUL0ZstwQ5UAPUmrFd0HNcNkMmOMhVZ92Lrm
+ qt4mmKbPjj33p1o+Nh8sYrinzOvzdVc=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-09_04,2026-07-09_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 adultscore=0 bulkscore=0 phishscore=0
- lowpriorityscore=0 clxscore=1015 malwarescore=0 spamscore=0 suspectscore=0
+ clxscore=1015 spamscore=0 impostorscore=0 suspectscore=0 adultscore=0
+ malwarescore=0 phishscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607090210
 Received-SPF: pass client-ip=205.220.168.131;
@@ -146,7 +145,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,116 +161,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jamin,
+Cédric FYI.
 
-On 3/7/26 09:43, Jamin Lin wrote:
-> The AST2600 has a USB 2.0 Device Controller (UDC) at 0x1e6a2000 with one
-> control endpoint and four programmable endpoints, driven by the Linux
-> "aspeed_udc" gadget driver.
+On 18/5/26 13:18, Gerd Hoffmann wrote:
+> On Mon, May 18, 2026 at 12:00:02PM +0100, Peter Maydell wrote:
+>> On Mon, 18 May 2026 at 11:53, Gerd Hoffmann <kraxel@redhat.com> wrote:
+>>> I fully support that too, recommending xhci since 2018 ;)
+>>>
+>>> https://www.kraxel.org/blog/2018/08/qemu-usb-tips/
+>>>
+>>> Except for the claim that windows 7 is in widespread use this
+>>> still applies today.
+>>
+>> Is it still the case that the "-usb" QEMU option gives you the
+>> old OHCI/UHCI controller? (My quick look at the source code suggests
+>> it is.) If so, that's an unfortunate default, since it makes it very
+>> easy to pick the non-security-supported bad config by accident.
 > 
-> Add the controller as a sysbus (system) device: the MMIO register map
-> described with the registerfields macros, the interrupt line and the
-> soft reset. This is only the register/system side.
+> It was still the case when I stopped maintaining usb and it is unlikely
+> it has changed since.
 > 
-> Note: this "device controller" is the system-bus device (TYPE_ASPEED_UDC).
-> It is not the gadget USB device (TYPE_ASPEED_UDC_DEV) that a host
-> controller enumerates, which is added in the next patch.
+>> Could we make "-usb" give the PC machines an XHCI controller for new
+>> machine version types ?
 > 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   hw/arm/Kconfig              |   1 +
->   hw/usb/Kconfig              |   4 +
->   hw/usb/aspeed-udc.c         | 264 ++++++++++++++++++++++++++++++++++++
->   hw/usb/meson.build          |   1 +
->   hw/usb/trace-events         |   7 +
->   include/hw/usb/aspeed-udc.h |  54 ++++++++
->   6 files changed, 331 insertions(+)
->   create mode 100644 hw/usb/aspeed-udc.c
->   create mode 100644 include/hw/usb/aspeed-udc.h
-
-
-> +static void aspeed_udc_realize(DeviceState *dev, Error **errp)
-> +{
-> +    AspeedUDCState *s = ASPEED_UDC(dev);
-> +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-> +    int i;
-> +
-> +    s->regs = g_new0(uint32_t, ASPEED_UDC_NR_REGS);
-> +
-> +    memory_region_init(&s->iomem, OBJECT(s), TYPE_ASPEED_UDC,
-> +                       ASPEED_UDC_REG_SIZE);
-> +
-> +    /* Root/global registers occupy the low part of the window */
-> +    memory_region_init_io(&s->reg_mr, OBJECT(s), &aspeed_udc_ops, s,
-> +                          TYPE_ASPEED_UDC ".regs", ASPEED_UDC_NR_REGS << 2);
-> +    memory_region_add_subregion(&s->iomem, 0, &s->reg_mr);
-> +
-> +    /* Each programmable endpoint has its own register bank */
-> +    for (i = 0; i < ASPEED_UDC_NUM_EP; i++) {
-> +        g_autofree char *name = g_strdup_printf(TYPE_ASPEED_UDC ".ep%d", i);
-> +
-> +        s->ep[i].index = i;
-> +        s->ep[i].regs = g_new0(uint32_t, ASPEED_UDC_EP_NR_REGS);
-
-Why allocate a fixed size? Otherwise LGTM.
-
-> +        memory_region_init_io(&s->ep[i].mr, OBJECT(s), &aspeed_udc_ep_ops,
-> +                              &s->ep[i], name, ASPEED_UDC_EP_NR_REGS << 2);
-> +        memory_region_add_subregion(&s->iomem, ASPEED_UDC_EP_REG_BASE +
-> +                                    i * ASPEED_UDC_EP_REG_SIZE, &s->ep[i].mr);
-> +    }
-> +
-> +    sysbus_init_mmio(sbd, &s->iomem);
-> +    sysbus_init_irq(sbd, &s->irq);
-> +}
-
-> +static void aspeed_udc_unrealize(DeviceState *dev)
-> +{
-> +    AspeedUDCState *s = ASPEED_UDC(dev);
-> +    int i;
-> +
-> +    for (i = 0; i < ASPEED_UDC_NUM_EP; i++) {
-> +        g_free(s->ep[i].regs);
-> +    }
-> +    g_free(s->regs);
-> +}
-
-> +/*
-> + * EP0 (control) is served through the root registers (UDC_EP0_*), so only
-> + * the 4 programmable endpoints get their own register bank / ep[] entry.
-> + */
-> +#define ASPEED_UDC_NUM_EP       4
-> +/* 32-bit registers per programmable endpoint */
-> +#define ASPEED_UDC_EP_NR_REGS   4
-> +
-> +/*
-> + * The root/global register block spans 0x000...0x087: the SETUP data buffer
-> + * ends at 0x84. Size the backing array to cover the whole block.
-> + */
-> +#define ASPEED_UDC_NR_REGS      (0x88 >> 2)
-> +
-> +/* MMIO window: root registers below EP_REG_BASE, then the per-EP banks */
-> +#define ASPEED_UDC_REG_SIZE     0x300
-> +#define ASPEED_UDC_EP_REG_BASE  0x200
-> +#define ASPEED_UDC_EP_REG_SIZE  0x10
-> +
-> +typedef struct AspeedUDCEP {
-> +    MemoryRegion mr;
-> +    int index;
-> +    uint32_t *regs;
-> +} AspeedUDCEP;
-> +
-> +struct AspeedUDCState {
-> +    SysBusDevice parent_obj;
-> +
-> +    /* container: root registers + per-endpoint banks */
-> +    MemoryRegion iomem;
-> +    MemoryRegion reg_mr;
-> +    qemu_irq irq;
-> +    uint32_t *regs;
-> +    AspeedUDCEP ep[ASPEED_UDC_NUM_EP];
-> +};
-> +
-> +#endif /* HW_USB_ASPEED_UDC_H */
+> Sounds reasonable to me.  libvirt has changed defaults years ago.
+> 
+> take care,
+>    Gerd
+> 
+> 
 
 
