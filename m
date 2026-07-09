@@ -4,80 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9430AC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 07:18:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B880FC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 07:34:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whj1C-0003r0-0I; Thu, 09 Jul 2026 03:17:58 -0400
+	id 1whjG7-0001wW-BR; Thu, 09 Jul 2026 03:33:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1whj1A-0003qU-Ej
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 03:17:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhaoguohan@kylinos.cn>)
+ id 1whjG4-0001w1-5w
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 03:33:20 -0400
+Received: from mailgw.kylinos.cn ([124.126.103.232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1whj18-0000iw-CC
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 03:17:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783581472;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=LLQallOHiCO1CXhrr78OGZA2cYyfA2TiZ1XNl37eVAE=;
- b=QtGYRq/kbprsvMhOIaOIEhBInv9J+ijHIF7Tk6Avk9u+L9JptYIS965s7IyWb7sQyVTNdv
- eVzs2Wq6P2UiKPaDZaBryyLHYP/G46V8H40ctQuqEv8Cfsn4l++w4iSkjDx9oVJTwzzBua
- xGLPd/lVEoVMMpThocGuFKjdVzDnF/4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-472-mFSSK6TYP_m-y69RZhYQHg-1; Thu,
- 09 Jul 2026 03:17:49 -0400
-X-MC-Unique: mFSSK6TYP_m-y69RZhYQHg-1
-X-Mimecast-MFC-AGG-ID: mFSSK6TYP_m-y69RZhYQHg_1783581468
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3806D195606E; Thu,  9 Jul 2026 07:17:48 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.49.59])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EAF881800595; Thu,  9 Jul 2026 07:17:46 +0000 (UTC)
-Date: Thu, 9 Jul 2026 08:17:43 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Anatol Belski <anbelski@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [RFC] virtio-villain: Guest fault injection for VMM robustness
-Message-ID: <ak9LAQDQMIZjWor5@redhat.com>
-References: <98dd26094403c204c7c2f0270d96b9c75842c7d8.camel@linux.microsoft.com>
- <aktl-ojkXVZ4Jira@redhat.com>
- <a2a7bb2e20d954689a638b8a27b7fb95de156667.camel@linux.microsoft.com>
- <akzXblNvD5s4QGgB@redhat.com>
- <861020196095d6d91a83b878a1ed744b2824d159.camel@linux.microsoft.com>
- <ak4Fxt989xkWfgwD@redhat.com>
- <068f20b5ff9e0ab58706c0f2260292c9fa63c471.camel@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <zhaoguohan@kylinos.cn>)
+ id 1whjFx-00032B-OW
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 03:33:19 -0400
+X-UUID: 6280aab47b6811f1aa26b74ffac11d73-20260709
+X-CID-O-RULE: Release_Ham
+X-CID-RULE: EDM_GE969F26
+X-CID-O-INFO: VERSION:1.3.12, REQID:53bc9d5c-b045-40e7-9b2f-6cad64eb530f, IP:15,
+ URL:0,TC:0,Content:-5,EDM:-20,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACT
+ ION:release,TS:-10
+X-CID-INFO: VERSION:1.3.12, REQID:53bc9d5c-b045-40e7-9b2f-6cad64eb530f, IP:15,
+ UR
+ L:0,TC:0,Content:-5,EDM:-20,RT:0,SF:0,FILE:0,BULK:0,RULE:EDM_GE969F26,ACTI
+ ON:release,TS:-10
+X-CID-META: VersionHash:e7bac3a, CLOUDID:dee2072e230bc126d8ca6bed7c38deb5,
+ BulkI
+ D:260709153248B3TY825Z,BulkQuantity:0,Recheck:0,SF:10|66|78|102|123|127|86
+ 5|898,TC:nil,Content:0|15|50,EDM:1,IP:-2,URL:0,File:nil,RT:nil,Bulk:nil,QS
+ :nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,A
+ RC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_AEC
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 6280aab47b6811f1aa26b74ffac11d73-20260709
+X-User: zhaoguohan@kylinos.cn
+Received: from zgh-vmware-virtual-platform.localdomain [(116.128.244.171)] by
+ mailgw.kylinos.cn (envelope-from <zhaoguohan@kylinos.cn>)
+ (Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+ with ESMTP id 126432042; Thu, 09 Jul 2026 15:32:48 +0800
+From: zhaoguohan@kylinos.cn
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PATCH] hw/virtio/vdpa-dev: pass set_config buffer to vhost backend
+Date: Thu,  9 Jul 2026 15:32:25 +0800
+Message-ID: <20260709073225.2341642-1-zhaoguohan@kylinos.cn>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <068f20b5ff9e0ab58706c0f2260292c9fa63c471.camel@linux.microsoft.com>
-User-Agent: Mutt/2.3.2 (2026-04-26)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=124.126.103.232;
+ envelope-from=zhaoguohan@kylinos.cn; helo=mailgw.kylinos.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,43 +75,37 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 08, 2026 at 08:25:19PM +0200, Anatol Belski wrote:
-> On Wed, 2026-07-08 at 09:09 +0100, Daniel P. Berrangé wrote:
-> 
-> 
-> > Yes, I think it'd be interesting to try to fit them directly into a
-> > functional test script. I guess having the virtio-villain repo as a
-> > git submodule would probably be the way to go to access the
-> > individual
-> > tests to build the initramfs.
-> 
-> A submodule would work. The build is a plain musl-gcc static link
-> plus a cpio wrap, so it should integrate without pulling in extra
-> dependencies.
-> 
-> One question on the kernel side. The harness currently uses the
-> Cloud Hypervisor prebuilt kernel
-> 
-> https://github.com/cloud-hypervisor/linux/releases/tag/ch-release-v6.16.9-20260508
-> 
-> which seems fully sufficient for the goals here. Is there a QEMU
-> preferred prebuilt kernel for tests/functional/ that I should use
-> instead?
+From: GuoHan Zhao <zhaoguohan@kylinos.cn>
 
-We don't have any stock kernel. Tests refer to any kenrel/initrd
-image that they require and download it via the "Asset" class
-functions which have caching built-in.
+vhost_vdpa_device_set_config() receives the updated config buffer, but
+forwards s->config to the vhost backend. Since s->config is refreshed by
+get_config(), it may contain stale backend state.
 
+Pass the supplied config buffer to vhost_dev_set_config() instead.
 
-With regards,
-Daniel
+Fixes: b430a2bd2303 ("vdpa: add vdpa-dev support")
+Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
+---
+ hw/virtio/vdpa-dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
+index 089a77f4d0b9..6dc684ab096a 100644
+--- a/hw/virtio/vdpa-dev.c
++++ b/hw/virtio/vdpa-dev.c
+@@ -212,7 +212,7 @@ vhost_vdpa_device_set_config(VirtIODevice *vdev, const uint8_t *config)
+     VhostVdpaDevice *s = VHOST_VDPA_DEVICE(vdev);
+     int ret;
+ 
+-    ret = vhost_dev_set_config(&s->dev, s->config, 0, s->config_size,
++    ret = vhost_dev_set_config(&s->dev, config, 0, s->config_size,
+                                VHOST_SET_CONFIG_TYPE_FRONTEND);
+     if (ret) {
+         error_report("set device config space failed");
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.43.0
 
 
