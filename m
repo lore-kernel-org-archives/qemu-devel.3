@@ -4,96 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 422D9C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 05:46:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 132CCC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 05:52:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whhZe-0000fh-J9; Thu, 09 Jul 2026 01:45:26 -0400
+	id 1whhgG-0002TT-Tu; Thu, 09 Jul 2026 01:52:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1whhZc-0000fN-Hv; Thu, 09 Jul 2026 01:45:24 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1whhgD-0002TK-DH
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 01:52:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1whhZZ-0008BP-L9; Thu, 09 Jul 2026 01:45:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783575904; bh=qUo9RA6Yco3N5ktcjolMyMYRq+EQKawxPGMRNUBLFwc=;
- h=Date:Subject:To:References:Cc:From:In-Reply-To;
- b=RRoNgWwDvnL3RfjwihmD3cOVXPXc1cfWxXtj+RsHJE003DgYiMnEqk8uTuTCtdDPE
- ikNclPEb0ztBG+USV9ZqVPXPinE8P+G1lJllyIvs5zZAocfsVzPZS33C7e0yXpT4U2
- IyCCqjxZ6uUq5BkezOXKGYQlnOSpgtIT1By6FvImeNsIBe7g4NiBLBRAimQ4A6fJNx
- I0TTkkXGHWul7ZZzUGyIvyXB9kK5Qv641fRvqe2P3ohcEV8/gmAe104//3KAceKrl9
- Oid3HYUPfbWHUd62abH6AXctbOUbigpln7wALZIU4Tx4xhPJNL3N7e2m5DJ6JY+GuU
- DH+nNQRFT52lA==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id C58311BF956;
- Thu, 09 Jul 2026 08:45:03 +0300 (MSK)
-Message-ID: <11442fc4-dca8-4bdb-b921-4ed749f4f0de@tls.msk.ru>
-Date: Thu, 9 Jul 2026 08:45:07 +0300
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1whhg8-00029b-UB
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 01:52:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783576327;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=KmZzQdZWsgpJ6GxnyzeEPn6AOQ7U4yMp/pczXd1HTpk=;
+ b=dcV2YHq2dGOrtoNaTbyiBOjvkAyQ9ELG/QnGaKE/4qVvkcBrMVcbqiP9hJTBSeBWiEHzxq
+ Ox37xD3QCtvdcUV12VL8pEZnJKOI5Oelz0GQC1nl+GYUQ/zZ73Odn39tFvGdFbEhZCN7gQ
+ QOfZawcyLS1frneZFf/AX3FXr7Rjpao=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-423-afZIPhiwNKW5iIpvd1HjwQ-1; Thu, 09 Jul 2026 01:52:05 -0400
+X-MC-Unique: afZIPhiwNKW5iIpvd1HjwQ-1
+X-Mimecast-MFC-AGG-ID: afZIPhiwNKW5iIpvd1HjwQ_1783576325
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-493d742c668so12180445e9.2
+ for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 22:52:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1783576325; x=1784181125; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=KmZzQdZWsgpJ6GxnyzeEPn6AOQ7U4yMp/pczXd1HTpk=;
+ b=GCKqcks0QgA37rhRF++kt1VA9XqAvrtp1HGUZrlOWttuuqcTnwo74vsTOSPRuLmomg
+ CX1KvRcUP3WjXZjf6+tRayPT2RpLxh27Ybuk04oCyhib1c0lpGaipQT8ldavUVbpXNVU
+ Z4fnFDE/O3puqX+W+VLJFn1HwzwE2DDO/f/XiGw6cy37qMghLl+luZZvzzGjpToD4TDM
+ 5dHWUl96OYSrdhF7TmhNVKbGUYO7RBXnd4653gNc7MgqjictS7pl3CJpNqFbFtJFrN4+
+ GY0gwucmCOV7WsjDtTVzuDusWB3FQZ5wixo+dS2bnW/v6JFU3+Bko43XwUPAAXY1LwsG
+ wP3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783576325; x=1784181125;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=KmZzQdZWsgpJ6GxnyzeEPn6AOQ7U4yMp/pczXd1HTpk=;
+ b=KhGLKCiz5HpeiQ272SQvpgAGzWemlYb6QGZKDpKDl8cXgaYksk1OMIX9VpXzNAPE3q
+ HcNP6NJJ6nFIHVeFCD8PwQjQ0AJ8hDDuIGxluNbOitGeO0qACjx/t7RM1VWMKdL1rhUi
+ IlJlABPcVYe9ud+L1imFUd7+oN9bYCBAAHW6GTY6fMrj8iiFEAKXQJnCQ+ljdN52EC78
+ 403Dz8SBVgeBIjKv18HuZnYrJDW8jKE01h3hmCU8jgjATd8MYUeMER3AKfPmnkdiDZsx
+ 6qqX8Krgscelz1tXICgY0yqK/C4oJYJGvfv+R1TzJdG+810teyxDJWUWuWtpiIJdZbu8
+ 66ew==
+X-Gm-Message-State: AOJu0YyLsjbKn/Bqcy+NPYDRDsYrS1QzQR3o1lIZGz/dOOdLrwAENV7q
+ rvcHg6YjyEuq7vRfivicxrxW3hhiot8TG1beIgDiyWNEDzLx1bPFTqOaQyWzCY/qFELUTIjEE4t
+ MnqC8mZQ9OQ9vaPJKscetrQ2lYNpFmRPJha8rsIDzDOnoo1E/+hPvnKuljIizY4pE
+X-Gm-Gg: AfdE7cmtedpDCz7n1BZ6/bb9lEY5IzuCYrlxGMB4mdwBrFNmbqn2XjljeVXarvZdm8c
+ uwaXJl9nJKMgZLFGR+h0gvcvscjrK2aEb6evW0Wu6R3NILwJ9QDr1MYpUx4LIj6hJFhdheKtJ70
+ oIMKHovmGDHfcKS9l9eTgGUs+WKDCsn+uz3cSncaoBTGr2qWjc1s/kuVoDqls1bQHAL3KCbZTxe
+ /Gj3J7WnBflq7Bn1iYycI6y8Hj6ZRLfb+CPAuJqOcPG+fljKZWu9q5y15R1IMDnwKivHeyktRlY
+ m671Cn60UzB0/4Q9ymNbZxKq9vG7FfWA6W+EmSRcuAn8Sni5fRMHf4HYOuMIyzIIHhRzIyLYjhB
+ MlvUo0DGq0uzuvE5jf2v82y9N+5TztBpJ
+X-Received: by 2002:a05:600c:4e93:b0:490:e5c1:b8b9 with SMTP id
+ 5b1f17b1804b1-493e67f7c3emr49585855e9.0.1783576324638; 
+ Wed, 08 Jul 2026 22:52:04 -0700 (PDT)
+X-Received: by 2002:a05:600c:4e93:b0:490:e5c1:b8b9 with SMTP id
+ 5b1f17b1804b1-493e67f7c3emr49585405e9.0.1783576324006; 
+ Wed, 08 Jul 2026 22:52:04 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-68-31.inter.net.il. [80.230.68.31])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493eb6f3b85sm58465005e9.2.2026.07.08.22.52.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 08 Jul 2026 22:52:03 -0700 (PDT)
+Date: Thu, 9 Jul 2026 01:52:00 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PULL 4/4] docs: outline some guidelines for security
+ classification
+Message-ID: <20260709014834-mutt-send-email-mst@kernel.org>
+References: <20260707175027.3029620-1-berrange@redhat.com>
+ <20260707175027.3029620-5-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tcg/loongarch64: Fix cmp_vec with TCG_COND_NE
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20260623140609.645445-1-richard.henderson@linaro.org>
-Content-Language: en-US, ru-RU
-Cc: qemu-stable <qemu-stable@nongnu.org>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260623140609.645445-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260707175027.3029620-5-berrange@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,71 +120,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23.06.2026 17:06, Richard Henderson wrote:
-> For NE we need to invert EQ, not swap operands.
+On Tue, Jul 07, 2026 at 06:50:27PM +0100, Daniel P. Berrangé wrote:
+> Beyond the overall virt/non-virt use case classification, there are
+> a number of scenarios which we have decided will not be treated as
+> security issues. Start to document some of these to give consistency
+> in our treatment of incoming disclosures.
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3589
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> Acked-by: Michael S. Tsirkin <mst@redhat.com>
+> Reviewed-by: Mauro Matteo Cascella <mcascell@redhat.com>
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>  docs/system/security.rst | 63 ++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 63 insertions(+)
+> 
+> diff --git a/docs/system/security.rst b/docs/system/security.rst
+> index 53992048e6..52bbf0cc7a 100644
+> --- a/docs/system/security.rst
+> +++ b/docs/system/security.rst
+> @@ -75,6 +75,69 @@ Bugs affecting the non-virtualization use case are not considered security
+>  bugs at this time.  Users with non-virtualization use cases must not rely on
+>  QEMU to provide guest isolation or any security guarantees.
+>  
+> +Security boundary scope
+> +'''''''''''''''''''''''
+> +
+> +Even where a flaw affects the virtualization use case described above,
+> +not all scenarios will be considered in scope. The following guidelines
+> +are used to evaluate whether to apply the full security process, or treat
+> +an issue as a normal bug.
+> +
+> +* **assert** / **abort**. If triggering the code path requires kernel
+> +  privileges (or root account access) in the guest, asserts/aborts in
+> +  QEMU are a self inflicted denial of service. These will **not** be
+> +  treated as security flaws, at most hardening bugs. If triggering the
+> +  code path can be done by an unprivileged guest OS account, this
+> +  **may** justify handling as a security bug.
+> +
+> +* **vhost-user/vfio-user backends**. The backend processes have
+> +  shared memory regions co-mapped with the QEMU process. The intent
+> +  of the process separation is operational resilience & flexibility
+> +  and allowing for independent software suppliers. There is not
+> +  considered to be security boundary between QEMU and the vhost-user
+> +  & vfio-user backends. Thus flaws in the backends which can cause
+> +  crashes / undesirable behaviour in QEMU will **not** be treated as
+> +  security flaws, but should be fixed as hardening bugs.
+> +
+> +* **memory allocation bounds**. There are many ways in which a QEMU
+> +  process can legitimately consume an amount of memory that is
+> +  significantly larger than the assigned guest RAM. QEMU's worst
+> +  case memory usage should be considered effectively unbounded. As
+> +  such the QEMU deployment on the host should account for the
+> +  possibility of large memory peaks and apply countermeasures to
+> +  provide continuity of host operations. It is typical for the Linux
+> +  OOM killer to reap the process triggering host memory overcommit
+> +  in the case of exccessive usage, offering a degree of protection.
 
-This feels like a qemu-stable material.
-I'm picking it up for the stable series,
-please let me know if I should not.
+It seems to work kinda unreliably here on my laptop. Likes killing firefox
+for some reason. Using libvirt ... what am I doing wrong?
 
-Thanks,
+> +  As such, bugs which can lead to excessive/unbounded memory allocations
+> +  will usually not be classified as security flaws, but should be
+> +  fixed as hardening bugs.
 
-/mjt
-
-> diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-> index c3350c90fc..182dcfd5eb 100644
-> --- a/tcg/loongarch64/tcg-target.c.inc
-> +++ b/tcg/loongarch64/tcg-target.c.inc
-> @@ -2371,19 +2371,36 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
->                   default:
->                       g_assert_not_reached();
->                   }
-> -                break;
-> -            }
-> -
-> -            insn = cmp_vec_insn[cond][lasx][vece];
-> -            if (insn == 0) {
-> -                TCGArg t;
-> -                t = a1, a1 = a2, a2 = t;
-> -                cond = tcg_swap_cond(cond);
-> -                insn = cmp_vec_insn[cond][lasx][vece];
-> -                tcg_debug_assert(insn != 0);
-> +            } else {
-> +                switch (cond) {
-> +                case TCG_COND_EQ:
-> +                case TCG_COND_LE:
-> +                case TCG_COND_LEU:
-> +                case TCG_COND_LT:
-> +                case TCG_COND_LTU:
-> +                    insn = cmp_vec_insn[cond][lasx][vece];
-> +                    tcg_out32(s, encode_vdvjvk_insn(insn, a0, a1, a2));
-> +                    break;
-> +                case TCG_COND_GE:
-> +                case TCG_COND_GEU:
-> +                case TCG_COND_GT:
-> +                case TCG_COND_GTU:
-> +                    insn = cmp_vec_insn[tcg_swap_cond(cond)][lasx][vece];
-> +                    tcg_out32(s, encode_vdvjvk_insn(insn, a0, a2, a1));
-> +                    break;
-> +                case TCG_COND_NE:
-> +                    /* ne -> not(eq) */
-> +                    insn = cmp_vec_insn[TCG_COND_EQ][lasx][vece];
-> +                    tcg_out32(s, encode_vdvjvk_insn(insn, a0, a1, a2));
-> +                    insn = lasx ? OPC_XVNOR_V : OPC_VNOR_V;
-> +                    tcg_out32(s, encode_vdvjvk_insn(insn, a0, a0, a0));
-> +                    break;
-> +                default:
-> +                    g_assert_not_reached();
-> +                }
->               }
->           }
-> -        goto vdvjvk;
-> +        break;
->       case INDEX_op_add_vec:
->           tcg_out_addsub_vec(s, lasx, vece, a0, a1, a2, const_args[2], true);
->           break;
 
 
