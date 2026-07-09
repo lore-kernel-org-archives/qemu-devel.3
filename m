@@ -4,64 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40988C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 02:56:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 039A8C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 03:13:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whevo-0002wf-0p; Wed, 08 Jul 2026 22:56:08 -0400
+	id 1whfC7-0005OX-Qa; Wed, 08 Jul 2026 23:12:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1whevg-0002wA-0c
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 22:56:01 -0400
-Received: from smtp186.sjtu.edu.cn ([202.120.2.186])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1whevd-0003OW-LY
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 22:55:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sjtu.edu.cn;
- s=default; t=1783565734;
- bh=JQNoImtzZFI1DJif8R/dIUH8/U36CaUAE24kYC9Sd94=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=xG4SfXuVsmTBiGiUQt3+9EO1TSRZBY7HasJtcOMwKmVbj5YO6jWQ6fEe05EKrbFlx
- /WJA0WWq/GAVd6ZclueuWvM1c6pig5ctqBbcxdRfgbyQa935/XJ4Fp+HOmpUF2tN0q
- SbgkCtun0/aCsQ+GN4jyPe50hELIlnox+H+GrHjOoGLlhbJCIVfU9GAXd7UCU2NRi/
- i8AvV9JqP6JJsTqwxgndZACe3EvHPn5ZKekCcT1X7EaOZTKxlj620wGQrFFlepltsb
- njCzgBlZgee8nmJbCVuqDgUyRaGtv0t+GYUSDU0HJSudmZWKI61NqCLt70srhqIxP/
- 9ikVwqBYE3zzg==
-Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
- by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id D509A300155;
- Thu,  9 Jul 2026 02:55:34 +0000 (UTC)
-Received: from pc.. (unknown [202.120.40.100])
- by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 55F3A380DBB;
- Thu,  9 Jul 2026 10:55:30 +0800 (CST)
-From: Ziyang Zhang <functioner@sjtu.edu.cn>
-To: qemu-devel <qemu-devel@nongnu.org>
-Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
- Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
- Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>,
- Ziyang Zhang <functioner@sjtu.edu.cn>
-Subject: [PATCH v9 1/2] contrib/plugins: add a minimal dlcall plugin
-Date: Thu,  9 Jul 2026 10:55:27 +0800
-Message-Id: <20260709025528.300019-2-functioner@sjtu.edu.cn>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260709025528.300019-1-functioner@sjtu.edu.cn>
-References: <20260709025528.300019-1-functioner@sjtu.edu.cn>
+ (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
+ id 1whfC6-0005OI-BB
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 23:12:58 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
+ id 1whfC4-0005y8-V4
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 23:12:58 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-38511175ad3so414502a91.2
+ for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 20:12:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1783566775; x=1784171575; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=xrBYEFLDiXOxs2TITvTQ+HFC+bvOB+RzdxF2b60BeKY=;
+ b=ImlsExhJptcl/huSlvcbonb3gmiCwlGmbWpZB1HS7b5eoS98OZJk3Gk9Z2YNpXE/iM
+ WKybB4/GzforAPVdr9lqadCFnH0XzEBLwjDWupV/NeX23CmHX6y7cyq8O0d4IOXdE0dQ
+ HnQk+k/C4wbt037TjcN+zaJinfGo1Y7xbejGNLAuU7VTtK7D2jiBpgaEFnz+u+i+khw4
+ nhkgBKlLalg8/kI2YKYcG5hkxuD50ds81lKWciTbJovU7+KrhCAswtFwavi6PKwDSlIT
+ JWU3q7ODf3SqhpOFV3N9NCWzlqX3h2+oKXuJbwoBR0lBTZVR2bx3ZZC8Wl3wQxQQ6g14
+ vEWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783566775; x=1784171575;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=xrBYEFLDiXOxs2TITvTQ+HFC+bvOB+RzdxF2b60BeKY=;
+ b=SzholnefOE8a+bL5i44yOl4ul/9aSrSw2h21sE6HK1ZbcY2+MAiy0pIckniCEqpeMl
+ VHesEwGmbwuVb5zAvBBD/1lmVyDsM18ClU0Rlpj0v57r8wtP4TnU87wvlUtzBgMpkHa+
+ ZWXoucodiKqJXNSL5qj7C38iK9cz6eH2dXm/oH1cUjZEezBFAaN8BqEjx9zuslCraUT2
+ A/cLVS6yjmOM1tVGqdB6ua38UHAZ2/G0j7sOvm02JPJh4kekdpgfS82ZVjp0EA5Tnhbx
+ ezkMFciAalqfbGORZBAKjDIQe/XZ79oIQb0zZB8C9NOHBdDKtkebbkTf5r7Fy1MGHELj
+ g6WA==
+X-Gm-Message-State: AOJu0YwZiipLcuhq+5p6XWbL5jSy7MXtmEelLYxAFYo3xe3NtSrgAUls
+ xpAhai3uXR8bL12+IwJqHsy/4vy5//Qa2YsEX+us6rsMR1J9u6gCHvHG9RLOsz7I
+X-Gm-Gg: AfdE7cnM09jSXJNARlU/oXXB4/c5BidrlAoewuarffz3D0F3s4kqTc214zSy8THIkbw
+ 4441qzb1lJ7b0Zj9rK9QXHpVAJWqQaGVXRNIH2oKihxCQh61B+xPetoMXUpkl9jhSozRR2a450z
+ zGmpQaFV5Fk6GRfTRdy4242JdoInIl7VOO4x0nV8o+CVCr1F3gOOQGt1yBG+JkrjS/We0wG0Y5k
+ V2x/Cmx9pXDZ9UkgaYzy2sJCaY7/GHHifgW7yaWY44TuLk4WBEavNT03id8hVF79LhtEg/pn8k9
+ TEfyGhpLPvCrWqgIkwpY8StEH0kjNEJc+8KPQLrBZO9Twxda7F3YxRHaqxUldSgIx+uLFUaswWJ
+ iMVZ32Rs8iLPXKb6gbMLR/N8QOB9rlSjS05JYk5awzVjvVKIT4dnB4UrnLzREGiB3gvreGundub
+ Z1cobBNgb5tnF0bhtH0NtjR0EydsBC
+X-Received: by 2002:a17:90b:1cc6:b0:381:a766:efcb with SMTP id
+ 98e67ed59e1d1-3893f694da8mr5590222a91.4.1783566774870; 
+ Wed, 08 Jul 2026 20:12:54 -0700 (PDT)
+Received: from localhost.localdomain ([212.135.212.213])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-38a5516949asm392988a91.1.2026.07.08.20.12.53
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 08 Jul 2026 20:12:54 -0700 (PDT)
+From: jack wang <163wangjack@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Jack Wang <163wangjack@gmail.com>
+Subject: [RFC PATCH 0/2] *** Add k230 reset management unit support ***
+Date: Thu,  9 Jul 2026 11:12:35 +0800
+Message-ID: <20260709031237.21284-1-163wangjack@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.120.2.186;
- envelope-from=functioner@sjtu.edu.cn; helo=smtp186.sjtu.edu.cn
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=163wangjack@gmail.com; helo=mail-pj1-x102e.google.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FROM_STARTS_WITH_NUMS=0.738, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,297 +96,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a minimal dlcall plugin that lets the guest invoke host functions
-through magic system calls. The plugin registers a vCPU syscall filter
-callback that intercepts a reserved syscall number and dispatches a set
-of pass-through operations: querying host attributes, loading and freeing
-shared libraries, resolving symbols, retrieving the last library error,
-and invoking a host function through a common interface.
+From: Jack Wang <163wangjack@gmail.com>
 
-The magic syscall number defaults to 4096 and can be overridden at load
-time with the "syscall_num=N" argument; values low enough to clash with a
-real syscall are rejected.
+This series adds support for reset management unit found on k230 soc and 
+successfully  wires it up to k230 machine;
 
-Co-authored-by: Kailiang Xu <xukl2019@sjtu.edu.cn>
-Co-authored-by: Mingyuan Xia <xiamy@ultrarisc.com>
-Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
----
- contrib/plugins/dlcall.c    | 248 ++++++++++++++++++++++++++++++++++++
- contrib/plugins/meson.build |   5 +
- 2 files changed, 253 insertions(+)
- create mode 100644 contrib/plugins/dlcall.c
+The register design are implemented based on k230 trm and linux reset driver
+(drivers/reset/reset-k230.c)
 
-diff --git a/contrib/plugins/dlcall.c b/contrib/plugins/dlcall.c
-new file mode 100644
-index 0000000000..9d2230b2d1
---- /dev/null
-+++ b/contrib/plugins/dlcall.c
-@@ -0,0 +1,248 @@
-+/*
-+ * Copyright (C) 2026, Ziyang Zhang <functioner@sjtu.edu.cn>
-+ *
-+ * dlcall (Dynamic Linking Call) plugin: lets a linux-user guest invoke host
-+ * functions by issuing a magic system call. The guest can ask QEMU to dlopen()
-+ * a host shared library, dlsym() a symbol, and call it with guest-supplied
-+ * arguments.
-+ *
-+ * The plugin intentionally keeps the QEMU side lightweight and prescribes
-+ * nothing about how a library is thunked. Any toolchain can implement the
-+ * userspace side. Lorelei is one end-to-end implementation (guest/host
-+ * runtimes plus a thunk compiler that generates thunks from a library's
-+ * headers):
-+ * https://github.com/rover2024/lorelei
-+ *
-+ * See docs/about/emulation.rst|Dynamic Linking Call for details and examples.
-+ *
-+ * WARNING: trusted guests only. The guest can load arbitrary host libraries
-+ * and execute arbitrary host code with arbitrary arguments, i.e. full code
-+ * execution in the QEMU host process. It is NOT a sandbox and provides no
-+ * isolation; only load it for guests you fully trust.
-+ *
-+ * WARNING: requires guest_base == 0, which is qemu-user's default. Pointer
-+ * operands are dereferenced as host addresses directly, and the invoked host
-+ * functions dereference guest pointers with no address translation, so guest
-+ * and host must share a single address space. A non-zero guest_base (e.g. set
-+ * via -B/-R) would make every pointer off by guest_base and hit unrelated
-+ * host memory.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include <assert.h>
-+#include <errno.h>
-+#include <string.h>
-+#include <stdio.h>
-+#include <glib.h>
-+#include <dlfcn.h>
-+
-+#include <qemu-plugin.h>
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
-+
-+/*
-+ * The magic system call number for dlcall.
-+ *
-+ * It defaults to DLCALL_SYSCALL_DEFAULT and can be overridden at load time
-+ * with the "syscall_num=N" argument. To avoid hijacking a real syscall the
-+ * guest might issue, N must be at least DLCALL_SYSCALL_MIN: every Linux ABI
-+ * keeps its syscall numbers well below this; numbers from here up are free.
-+ */
-+enum {
-+    DLCALL_SYSCALL_DEFAULT = 4096,
-+    DLCALL_SYSCALL_MIN = 4096,
-+};
-+
-+static int64_t dlcall_syscall_num = DLCALL_SYSCALL_DEFAULT;
-+
-+/*
-+ * dlcall calling convention.
-+ *
-+ * The guest issues the magic system call (dlcall_syscall_num). The first
-+ * argument (a1) is one of the call IDs below; the remaining arguments (a2, a3,
-+ * a4, ...) are that ID's operands. All pointer operands are guest virtual
-+ * addresses that the plugin dereferences as host addresses directly (see the
-+ * guest_base requirement above). Results are written back through
-+ * caller-provided "out" pointers rather than returned in the syscall value.
-+ *
-+ * The syscall return value (*sysret) only reports dispatch status: 0 on a
-+ * recognised ID, -EINVAL for an unknown one. The actual success/failure of an
-+ * operation (e.g. a NULL handle from dlopen) is delivered through its out
-+ * pointer, exactly like the underlying libdl call.
-+ *
-+ * Operands per ID:
-+ *
-+ *   DLCALL_ID_GET_HOST_ATTRIBUTE
-+ *     a2  const char *key        in:  attribute name to query
-+ *     a3  const char **attr_ptr  out: matching value, or NULL if unknown
-+ *
-+ *   DLCALL_ID_LOAD_LIBRARY                            (wraps dlopen)
-+ *     a2  const char *path       in:  library path
-+ *     a3  int flags              in:  dlopen() flags (e.g. RTLD_NOW)
-+ *     a4  void **handle_ptr      out: library handle, or NULL on failure
-+ *
-+ *   DLCALL_ID_GET_PROC_ADDRESS                        (wraps dlsym)
-+ *     a2  void *handle           in:  library handle
-+ *     a3  const char *name       in:  symbol name
-+ *     a4  void **entry_ptr       out: symbol address, or NULL if not found
-+ *
-+ *   DLCALL_ID_FREE_LIBRARY                            (wraps dlclose)
-+ *     a2  void *handle           in:  library handle
-+ *     a3  int *ret_ptr           out: dlclose() return value (0 on success)
-+ *
-+ *   DLCALL_ID_GET_LIBRARY_ERROR                       (wraps dlerror)
-+ *     a2  const char **error_ptr out: last libdl error string, or NULL
-+ *
-+ *   DLCALL_ID_INVOKE_PROC                             (calls the symbol)
-+ *     a2  void *proc             in:  function pointer, signature
-+ *                                     void (*)(void *arg1, void *arg2)
-+ *     a3  void *arg1             in:  first argument forwarded to proc
-+ *     a4  void *arg2             in:  second argument forwarded to proc
-+ */
-+enum DlcallID {
-+    DLCALL_ID_GET_HOST_ATTRIBUTE,
-+    DLCALL_ID_LOAD_LIBRARY,
-+    DLCALL_ID_GET_PROC_ADDRESS,
-+    DLCALL_ID_FREE_LIBRARY,
-+    DLCALL_ID_GET_LIBRARY_ERROR,
-+    DLCALL_ID_INVOKE_PROC,
-+};
-+
-+static inline const char *query_host_attribute(const char *key)
-+{
-+    if (strcmp(key, "emu") == 0) {
-+        return "qemu";
-+    }
-+    return NULL;
-+}
-+
-+static inline void invoke_proc(void *proc, void *arg1, void *arg2)
-+{
-+    typedef void (*Func)(void * /*arg1*/, void * /*arg2*/);
-+    Func func = (Func) proc;
-+    func(arg1, arg2);
-+}
-+
-+static bool vcpu_syscall_filter(unsigned int vcpu_index,
-+                                int64_t num, uint64_t a1, uint64_t a2,
-+                                uint64_t a3, uint64_t a4, uint64_t a5,
-+                                uint64_t a6, uint64_t a7, uint64_t a8,
-+                                int64_t *sysret, void *userdata)
-+{
-+    if (num == dlcall_syscall_num) {
-+        switch (a1) {
-+        /* Query host attribute by a reserved key. */
-+        case DLCALL_ID_GET_HOST_ATTRIBUTE: {
-+            const char *key = (const char *) a2;
-+            const char **attr_ptr = (const char **) a3;
-+            assert(attr_ptr);
-+            *attr_ptr = query_host_attribute(key);
-+            *sysret = 0;
-+            break;
-+        }
-+
-+        /* Load a shared library. */
-+        case DLCALL_ID_LOAD_LIBRARY: {
-+            const char *path = (const char *) a2;
-+            int flags = (int) a3;
-+            void **handle_ptr = (void **) a4;
-+            assert(handle_ptr);
-+            *handle_ptr = dlopen(path, flags);
-+            *sysret = 0;
-+            break;
-+        }
-+
-+        /* Get the address of a function in a shared library. */
-+        case DLCALL_ID_GET_PROC_ADDRESS: {
-+            void *handle = (void *) a2;
-+            const char *name = (const char *) a3;
-+            void **entry_ptr = (void **) a4;
-+            assert(entry_ptr);
-+            *entry_ptr = dlsym(handle, name);
-+            *sysret = 0;
-+            break;
-+        }
-+
-+        /* Free a shared library. */
-+        case DLCALL_ID_FREE_LIBRARY: {
-+            void *handle = (void *) a2;
-+            int *ret_ptr = (int *) a3;
-+            *ret_ptr = dlclose(handle);
-+            *sysret = 0;
-+            break;
-+        }
-+
-+        /* Get the last error message for a library event. */
-+        case DLCALL_ID_GET_LIBRARY_ERROR: {
-+            const char **error_ptr = (const char **) a2;
-+            *error_ptr = dlerror();
-+            *sysret = 0;
-+            break;
-+        }
-+
-+        /* Invoke a function of a common interface. */
-+        case DLCALL_ID_INVOKE_PROC: {
-+            void *proc = (void *) a2;
-+            void *arg1 = (void *) a3;
-+            void *arg2 = (void *) a4;
-+            assert(proc);
-+            invoke_proc(proc, arg1, arg2);
-+            *sysret = 0;
-+            break;
-+        }
-+
-+        default:
-+            *sysret = -EINVAL;
-+            break;
-+        }
-+        return true;
-+    }
-+    return false;
-+}
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-+                                           const qemu_info_t *info,
-+                                           int argc, char **argv)
-+{
-+    if (info->system_emulation) {
-+        fprintf(stderr, "plugin dlcall: only useful for user emulation\n");
-+        return -1;
-+    }
-+
-+    for (int i = 0; i < argc; i++) {
-+        char *opt = argv[i];
-+        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
-+        if (g_strcmp0(tokens[0], "syscall_num") == 0) {
-+            const char *val = tokens[1];
-+            char *endptr = NULL;
-+            guint64 num;
-+            if (!val || *val == '\0') {
-+                fprintf(stderr,
-+                        "plugin dlcall: missing value for syscall_num\n");
-+                return -1;
-+            }
-+            num = g_ascii_strtoull(val, &endptr, 0);
-+            if (*endptr != '\0' || g_strrstr(val, "-") != NULL) {
-+                fprintf(stderr,
-+                        "plugin dlcall: invalid syscall_num '%s'\n", val);
-+                return -1;
-+            }
-+            if (num < DLCALL_SYSCALL_MIN || num > G_MAXINT64) {
-+                fprintf(stderr,
-+                        "plugin dlcall: syscall_num %s is out of range; "
-+                        "it must be >= %d to avoid clashing with a real "
-+                        "syscall\n", val, DLCALL_SYSCALL_MIN);
-+                return -1;
-+            }
-+            dlcall_syscall_num = (int64_t) num;
-+        } else {
-+            fprintf(stderr, "plugin dlcall: unknown option '%s'\n", opt);
-+            return -1;
-+        }
-+    }
-+
-+    qemu_plugin_register_vcpu_syscall_filter_cb(id, vcpu_syscall_filter, NULL);
-+
-+    return 0;
-+}
-diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
-index 099319e7a1..e7fc4d6d8f 100644
---- a/contrib/plugins/meson.build
-+++ b/contrib/plugins/meson.build
-@@ -19,6 +19,11 @@ if host_os != 'windows'
-   contrib_plugins += 'lockstep.c'
- endif
- 
-+if host_os == 'linux'
-+  # dlcall passes guest calls through to host libraries; linux-user only
-+  contrib_plugins += 'dlcall.c'
-+endif
-+
- if 'cpp' in all_languages
-   contrib_plugins += 'cpp.cpp'
- endif
+detailed implementations:
+1. write-enable mask for control registers(strobe in the upper 16 bits)
+2. hardware auto-clearing for reset and flush request bits
+3. latching of Done bits and w1c logic
+4. qtest coverage for register read/write behaviors and hardware state modelin
+
+There are some checkpatch style warnings (line length, comment
+formatting) that will be addressed in v2 based on reviewer feedback.
+
+this is my first time for hardware-unit modeling so apologies for possible mistake.
+I am apprecitated for any feedback
+
+Jack Wang (2):
+  hw/misc/k230_rmu: add Kendryte K230 Reset Management Unit model
+  hw/riscv/k230: wire up the RMU device
+
+ docs/system/riscv/k230.rst  |   1 +
+ hw/misc/Kconfig             |   3 +
+ hw/misc/k230_rmu.c          | 280 ++++++++++++++++++++++++++++++++++++
+ hw/misc/meson.build         |   1 +
+ hw/misc/trace-events        |   6 +
+ hw/riscv/Kconfig            |   1 +
+ hw/riscv/k230.c             |  10 +-
+ include/hw/misc/k230_rmu.h  |  76 ++++++++++
+ include/hw/riscv/k230.h     |   2 +
+ tests/qtest/k230-rmu-test.c | 125 ++++++++++++++++
+ tests/qtest/meson.build     |   3 +-
+ 11 files changed, 504 insertions(+), 4 deletions(-)
+ create mode 100644 hw/misc/k230_rmu.c
+ create mode 100644 include/hw/misc/k230_rmu.h
+ create mode 100644 tests/qtest/k230-rmu-test.c
+
 -- 
-2.34.1
+2.53.0
 
 
