@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AAF1C44506
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 14:06:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEA93C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 14:07:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whpOZ-0006lK-3a; Thu, 09 Jul 2026 10:06:31 -0400
+	id 1whpOf-0006mI-6I; Thu, 09 Jul 2026 10:06:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <d07de8d7b33fbbdd84909c21b67156fe564dc050@kylie.crudebyte.com>)
- id 1whpOX-0006l4-Bz
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 10:06:29 -0400
+ (envelope-from <6811fc561b7d20610e5f39234d08542cc1f31fd7@kylie.crudebyte.com>)
+ id 1whpOe-0006lt-3Q; Thu, 09 Jul 2026 10:06:36 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <d07de8d7b33fbbdd84909c21b67156fe564dc050@kylie.crudebyte.com>)
- id 1whpOV-0003FA-OE
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 10:06:29 -0400
+ (envelope-from <6811fc561b7d20610e5f39234d08542cc1f31fd7@kylie.crudebyte.com>)
+ id 1whpOc-0003FQ-EU; Thu, 09 Jul 2026 10:06:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=a9kk3nEJUJVMFkYDzYsvSFLuPOkZ2fBYXKASbT2Jrzo=; b=vqDIW
- kIF01iVGBL9Q38D4bSiux2nISG2RBS5276wKiV3XyndB8FXdYSfHzziy7DEIxaAlR9aqy+MkRSRlL
- wbyoiDubw4/SolhABkqTPWitg1BM7RxAvlobNJo6kqcMQx5oSroGtJhzqOWekNUU0ES9u37zIF8PW
- XLBRquSPZ6MSoEa4ggDhlpTLCQRm/C78zFTNhgEov5BAnNJND16aHV64aBg/i+/6+kpKxjofAbp24
- knQcGWr7H8JNrvFD+7IJG+LYNDgRaBy5zVHjpNWKMUtlGWQ3LfThtDwmge/2qcaCaw2ImLRMb+xz8
- FZkr/9WLCgI01i73n8tH3hP/XanHP8Vqo7JUaDKZ2oaQM9Fo2KkxhoXvLWMrDslga2AXqH1j0B3/Z
- bYmF66+ktGwaPS/O647n0NpUvEUK98ZkitBteIHyWGd1S+lg/gsqX9+5DlDxzFhgMvkSLFYLhCHQ/
- 6wLnI2wTYFkEL3B3rJsoX6d1mqPkxttU7zhIOkA17j7u+gOqvfaeov4Zhqc+PArd1eQF97Bz9+eb8
- n/Fgf5eljMjH+5+ZmtPPFeWk0dboRoFWYkIK+BUa6+9lluo6AV8i1GcSvO03NbgYpcUO0pkvVu8br
- W2EWbofHLYjdw8aIHuWBGwzZyzKf9c0/mB+w4QXFda6PZOJsB1DvAOOQ8EC0x0=;
-Message-ID: <d07de8d7b33fbbdd84909c21b67156fe564dc050.1783604079.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=K8zgQQ6Iv80yY1QpDUYnVdPfr2KBosKHF1doFomoksY=; b=ZaiSY
+ SAfBMU8dH9Bvq034QsSeLvsR8PxcJObwn54s2atII6fbn8gkbXTbHttYqWG+H0CZ4dClCBy2V30JZ
+ i+DBP74uG5H0AtXzM0c16eIYZh/FvQzwiNq8cwQjTV5sRodJO8K8HwRO1H8j51rznxlsWd9vnD92k
+ v82DxrEmqBalPKfd/g63T3VAQGaKLA35W43sKyWUODvpWzs+sFVeOyjqaT8KFgqKxn/dUovyBoI7+
+ kTUEBN3aBIQ0a+I1X15DCo2rtpt27qYeCetzqJcqshm4c+j9ixNngrN2JRFyP3Z+RRBZDRvER5vRQ
+ sEtSeuGRjFRNk2FWiXIBUyZSWh91pIEZ0wbxLmPFQJeAn94+hTXV06HUytJRves2FEQ/sjHR2upDm
+ nehtWfRTwmuWwcSOvw6fGrZVhTMFC4yJueMQ211HIv1Ea2qBoWFSGZtLVsxgJeBaJNPPKDCwZcfE6
+ Yuapj3mAOsSTZuU/qoZgc9N86gv03frUlknEB9HixOfSt5LG1e4Q4xrIl0uNfsLcZLvct8wHNf7b4
+ lL8AuQvl9FNeaMZrV3Kh/YdOZiAzuybCaUq7N/rfRlO7ykgCilOXRGLdXQpWexd/fznL+CfhRas+u
+ 2uBXiIaGY3svbpugvdLouUGN54KGbjFahiqoBheIUk5qY1ivNq4PEz/BX3PX5k=;
+Message-ID: <6811fc561b7d20610e5f39234d08542cc1f31fd7.1783604079.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1783604079.git.qemu_oss@crudebyte.com>
 References: <cover.1783604079.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Thu, 9 Jul 2026 15:50:36 +0200
-Subject: [PATCH 2/3] hw/9pfs/virtio: disable hotpluggable property of
- virtio-9p device
+Subject: [PATCH 3/3] hw/9pfs/xen: drain in-flight PDUs before xen-9p disconnect
 To: qemu-devel@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>,
-    Jia Jia <physicalmtea@gmail.com>
+Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=d07de8d7b33fbbdd84909c21b67156fe564dc050@kylie.crudebyte.com;
+ envelope-from=6811fc561b7d20610e5f39234d08542cc1f31fd7@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -69,38 +68,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Harden security by disabling hotpluggable property, to prevent
-issues like fixed in the previous commit.
+The xen-9p disconnect path has two issues:
 
-Virtio-9p is a pass-through file-sharing device that provides a
-guest mount of a host filesystem tree. Unlike block or network
-devices, guest-triggered hotplug of the 9p device has no practical
-use case: the guest cannot recover from the device removal, and there
-is no protocol-level device-loss scenario as with block or ethernet
-devices.
+1. It frees the Xen9pfsRing structures while in-flight PDUs may still
+   reference them via pdu->tag to index rings[]. This causes a UAF
+   in xen_9pfs_push_and_notify() when worker threads resume after
+   completing filesystem operations.
 
-Prevent guest-triggered hotplug by marking the device as
-non-hotpluggable. Device removal via QMP is not affected by this, as
-the QMP removal path is not reading the device's hotpluggable field
-at all.
+2. It never calls v9fs_device_unrealize_common(), which means server
+   state (struct LocalData, mountfd, FIDs) is never cleaned up on
+   disconnect, causing a resource leak on every guest-initiated
+   disconnect.
 
+Fix both by draining in-flight PDUs via v9fs_reset() before tearing
+down rings, and calling v9fs_device_unrealize_common() to clean up
+server state.
+
+Fixes: b37eeb0201 ("xen/9pfs: introduce Xen 9pfs backend")
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- hw/9pfs/virtio-9p-device.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/9pfs/xen-9p-backend.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/hw/9pfs/virtio-9p-device.c b/hw/9pfs/virtio-9p-device.c
-index 1ec48fc9e0..ba43fd22d2 100644
---- a/hw/9pfs/virtio-9p-device.c
-+++ b/hw/9pfs/virtio-9p-device.c
-@@ -273,6 +273,7 @@ static void virtio_9p_class_init(ObjectClass *klass, const void *data)
+diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
+index 24c90d97ec..3b7a68779a 100644
+--- a/hw/9pfs/xen-9p-backend.c
++++ b/hw/9pfs/xen-9p-backend.c
+@@ -368,10 +368,14 @@ static void xen_9pfs_evtchn_event(void *opaque)
+ static void xen_9pfs_disconnect(struct XenLegacyDevice *xendev)
+ {
+     Xen9pfsDev *xen_9pdev = container_of(xendev, Xen9pfsDev, xendev);
++    V9fsState *s = &xen_9pdev->state;
+     int i;
  
-     device_class_set_props(dc, virtio_9p_properties);
-     dc->vmsd = &vmstate_virtio_9p;
-+    dc->hotpluggable = false;
-     set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
-     vdc->realize = virtio_9p_device_realize;
-     vdc->unrealize = virtio_9p_device_unrealize;
+     trace_xen_9pfs_disconnect(xendev->name);
+ 
++    v9fs_reset(s);
++    v9fs_device_unrealize_common(s);
++
+     for (i = 0; i < xen_9pdev->num_rings; i++) {
+         if (xen_9pdev->rings[i].evtchndev != NULL) {
+             qemu_set_fd_handler(qemu_xen_evtchn_fd(xen_9pdev->rings[i].evtchndev),
 -- 
 2.47.3
 
