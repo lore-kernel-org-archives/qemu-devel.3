@@ -4,121 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22E43C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 18:43:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E46E1C44506
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 18:43:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whtiM-0003DG-AW; Thu, 09 Jul 2026 14:43:14 -0400
+	id 1whtiY-0003EK-8P; Thu, 09 Jul 2026 14:43:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1whtiK-0003Ck-Lb
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 14:43:12 -0400
-Received: from mail-qk1-x736.google.com ([2607:f8b0:4864:20::736])
+ (Exim 4.90_1) (envelope-from <jrtc27@jrtc27.com>) id 1whtiT-0003Db-Od
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 14:43:22 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1whtiJ-0008CR-9m
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 14:43:12 -0400
-Received: by mail-qk1-x736.google.com with SMTP id
- af79cd13be357-92edb12cdf2so6248785a.3
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 11:43:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783622590; cv=none;
- d=google.com; s=arc-20260327;
- b=P1HavccwMOJvB1Pjo6k6rvkGNCF+4h4eBz/CyqbUaaAcvZOFDqs+hsAbRQXxribMYp
- 1W/Zlhj18FkF/3kcApIM2wes3f/aDShrWuht017pOxUkO643iBA+ixnEtcArnJtB8dHE
- suN7SwRrsQF/QB+TXpaMGoCCoO9gH4KkN7thP6PiPD/96Eah8RRqGx/rPSjkWkefv4pI
- ewyRSGiYO6aQL3X9GW0lvt/kAY461nrpu4JvDsMg9fgfUBiC5bLgmBLzTQAIeGGicIwl
- 7tqGjFmIvCqN13hl1OrcRnw6x2+CdhftEbLcNIBARxDF6pnjfTNvgXzc9ZauTEFWYnwp
- 4JnA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=zKf7luZYc8hCBd/cSUNCTohnF3HdfKwUI1Mh0LwST0E=;
- fh=py8qWij750+NlEfFcK5ghwGWeGBs72nVcPl8SzkNb0c=;
- b=HRP/Uhp4wXb5Gi8MKxeE5T3LnvrupcsBZM7iJzFI9QZ+3pAa88Y9X6pldtCp7wiWtY
- wNmHhyBbBqDBI683ub6thDdrB/prYC3+METeEhEaA89wEGCdd7FkaXahy1uJnO+1RCJZ
- Mv82/eE01GvolxPgczvFdA9g/ebe9gg+u75zZqN+kbyxKVqJKC+4JEwGN4ieJLYU1lLy
- VyN498yES82qMpLyXrjUy20Wvn+DNtVFmYx6qVW7/P6ArKYl8HNvJmq8p1OtE7aAmRUm
- v0CLv0VEFrouF0Iw2A44ozb2/qj0qhQ3gm8IWp1eW/mzokS50eHdSFdgvp04N7draAwM
- JUqw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <jrtc27@jrtc27.com>) id 1whtiS-0008Cq-2b
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 14:43:21 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-493b779003fso587635e9.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 11:43:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783622590; x=1784227390; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=zKf7luZYc8hCBd/cSUNCTohnF3HdfKwUI1Mh0LwST0E=;
- b=qva47jxuogCcXsfa85GObQgwLesijugYzGc/W7dq2pfZqQ0SQg5qlJ6yEj/tEG83fv
- ABJDeBLdU0MV113d8i27tQJKUCGrtb4a2wpq5fgiA98vDytR9OnWJRFT6HPZZIyWPe0R
- DmQ93SYwIjp2RS++pH+EJB9Yubpa3fEodEBwRKVmAtoV3QO2avOtkZv/cu9QyxABcsa2
- 2To+5Ya2Epg+Dmqt8iV9TeicAsNlg4rOBzRGWJFUsLeQInafsqUkp37oepMrfS4E5X4s
- JRZ7rGpxSCoJabL/1MVqXmB/6WkHZrVBsdm829BBSJG81H839iY/lTRygfsW9xYiddoc
- 4MdA==
+ d=jrtc27.com; s=gmail.jrtc27.user; t=1783622598; x=1784227398; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=TuvHUcfBP8Wj91c+KUP3SZ34Ru6yihkIh4zI164mLWE=;
+ b=JJdk9jsMLCmC1gPpPQu6e6CCADKiFniyB5yHo7cByjAhTCiSU6v5+OO2OjLk0RUDqs
+ Lm/Q6nBhLxmAxa40eCu07rgwfysmRsX5/+nxyBwGFpYUtSo02YwxYNkEsEdUCDHcSQRJ
+ YzUZ8GuALIwXujZQqI0OBR2xhP354i0rCkOUyuXbuTpvP1pujDrs53AYEPPe9JxoaszQ
+ 0yrAioG4kbxASC34/2eY/jUx7zvelIAYPxTdHrv8Ym/RFvQbkFJjsDg5w9h9K+91ooTI
+ qZe6qjYQ4DoS+WBW2O51+MR8oQb9K41ri1/CNez/a1ToXNNDKVc1vrtzJDPOZwWFYrrd
+ gynw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783622590; x=1784227390;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=zKf7luZYc8hCBd/cSUNCTohnF3HdfKwUI1Mh0LwST0E=;
- b=dut+8V4gYPLEOJ0elVEglfIFIHpDZSKjaVHozUSdWuTjK2cuBM/qmDlsXEdroWfaS/
- YPnhDsyTaG75q3S4Y5UjS/jqx30fz3T4BLs6vAdie3SmEbMlVMmSSG6oZUbaRt5kuOu+
- h2nPZMo28g8nhr2rfgX1qs3ggDxV2dbluCTy4N9frJaoQCLS1wWGjAlw9GEVhVFNGEkM
- uOSkyEl6HFyCDI8LyLFr6vfH78xp6h8Rb97/lZbOBPULjhyileNdj7K5ZfPgqmBb1Qfq
- svWUHL/FL//JcjgXZhcnK/BP1j7ZqRl4aRYCdc25zFu+N0T1On22yfhlXeXOWdXQVygy
- KDGg==
-X-Gm-Message-State: AOJu0Yyq29Lh6s1mntAECP/XjPxfHcv71DLUjn9d/8a7nbJ9eVBbduWm
- p5GGur/7LNlUJcghwkqS9hBwUdLI5cnOJ3q3URKAW/U9znDbMrXkYyoWXlUYyTfNPXYTQb3pt/b
- DG/Z7RvgO4zmJ+zSy9ksUEn4MH6XVseE=
-X-Gm-Gg: AfdE7cnPTNK04WzqCZoK7YxIH+OsRwLzM7wVXf3TqIdoGPuPBNT9Z3B6ih/XeqEP4Ur
- xKQtaP0B+fkUaj3hAquQuZMNFek+z/yV2xNNZmsZqVfTk9YJWPaR+ioSHXdepS3gJar4YEHXgCc
- siRkl3n4TbRLD5Brz/5xr+Xmm0TGlZN6DX45RVivDNzpVn2sXmhs1qWeYdQ39sB5Zl1s+JGbkb9
- vpj/e9bqFFwBe/htrD7GUb3xm3o40ReOX4OSbCPQz6N9+wm3sEtWlzMCsXCs0xmaKosP34XQTdQ
- i509cWjdI5GUETiwOCUMuWSJVJOQYU6SWfWEIbdopks6/RUSmBP3WmBDdrGt
-X-Received: by 2002:a05:620a:4506:b0:92e:6c8a:2a39 with SMTP id
- af79cd13be357-92ecf5b4610mr882839585a.13.1783622589589; Thu, 09 Jul 2026
- 11:43:09 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783622598; x=1784227398;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=TuvHUcfBP8Wj91c+KUP3SZ34Ru6yihkIh4zI164mLWE=;
+ b=o6YEDpNEiKz1KiS58mEAKkB6K2H87OYJynGEVR0/8Eufpw1XfeWmeUTVHV8j1Q2ucF
+ a432Cjao2rOcm2ISlHHG7H+MATZ18rXBrIbbPyEXJb7iEyRYAfjicPZKMujmVlMG7ydw
+ PmM6HQgVaT84kxUbocaRVbML0XOlAUEdG47mm7blVhMLaoODJliUtJlfdv0WY/Ar0Go/
+ IXvL1A6RhAGr/biUe7T+vT4AYvoo6sSmUsES/KqSNbuDuRGcBfD4y6/Kwo43VzSU7xNS
+ nhQFugl3hJFmzUqzG/87KoPXOytcGdTQevC9IWvIZUTrQykofhBSpD2uvE/CVb9nqlnl
+ XokQ==
+X-Gm-Message-State: AOJu0YwaB4pbeTd22APTQe5DNjpruYrBCy+9gvic/5wCf7j9gWB/Mwg0
+ WHPkPxILm05S9VLknlgYF6or+q3Td+1nRi+gWOOskMcvjndX/H3CDFMoo7AtGotGKU0=
+X-Gm-Gg: AfdE7clbRE+mUXN7MPtAGcx4iDp2BZSYry4SreUroxa8BvKjATmXRAvrQRMz2E3mWyh
+ hJptcIgnMYGeCJzCyUqObENxHow/c5ZYPdBsIv1Ms3EOmKJFH02NH6YE1EzeWUi8svELM6mhZF7
+ Uv9q2MNUexNmS4NdRFymYY211xATlqHY1HLcIHf5JdNyD8czkzuxOaxZu2tOBe0ff425XhDKliS
+ defwg1Xe/iKEgoH0YAbYjtHVfMD0VeVfQQ1eZMQlEc7+8XlJNgDsdljVwNs25+p4pyL0Y+6myga
+ EB2cSvWqmSE1bCUDhV4CZ5wn/d94xx3J06f5geIrX1I/FPGex7E3WboNu1q/tffOq0ix1dynUPs
+ XKcRge6G75INBoUeXXaS3T0EJ3aq1+m/OCekADkRG23Dtow0DCS0yBMPMO/xoTj0tfymEneqm+0
+ WdLxGrgsXVjcd60oMSu38HWy+OOd3w06kEoFs+6AmcpP9DxiHVvf5CV2c4++uLZdlTdR431V+2z
+ tC2WFFD1nOUs/uC1Y/tLi+vf/ZbgJxX7A==
+X-Received: by 2002:a05:600c:310f:b0:493:d1e0:a4f1 with SMTP id
+ 5b1f17b1804b1-493e6c05de0mr75949025e9.0.1783622597560; 
+ Thu, 09 Jul 2026 11:43:17 -0700 (PDT)
+Received: from Jessicas-MacBook-Pro.localdomain (nat-184-161.net.cam.ac.uk.
+ [131.111.184.161]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493eb74b3edsm90498585e9.15.2026.07.09.11.43.16
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 09 Jul 2026 11:43:16 -0700 (PDT)
+Received: by Jessicas-MacBook-Pro.localdomain (Postfix, from userid 501)
+ id 01C9614898DFD; Thu,  9 Jul 2026 19:43:15 +0100 (BST)
+From: Jessica Clarke <jrtc27@jrtc27.com>
+To: qemu-devel@nongnu.org
+Cc: Jessica Clarke <jrtc27@jrtc27.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH] test-util-filemonitor: Adapt to FreeBSD 15's native inotify
+ semantics
+Date: Thu,  9 Jul 2026 19:42:27 +0100
+Message-ID: <20260709184229.21628-1-jrtc27@jrtc27.com>
+X-Mailer: git-send-email 2.47.0
 MIME-Version: 1.0
-References: <20260706223343.988769-1-pierrick.bouvier@oss.qualcomm.com>
- <20260706223343.988769-88-pierrick.bouvier@oss.qualcomm.com>
- <CAMo8BfJg09ca6Kxw0WLLj0SQLBcOCwYmSN=e3u063oY-fgrdfw@mail.gmail.com>
- <99d7064e-50f3-4947-884a-6f6c14f2cee2@oss.qualcomm.com>
- <84fddbf3-e523-4a23-b95e-cc6102e459c3@oss.qualcomm.com>
- <CAMo8BfKGqu=GbDhp525Oqt4VVCC7cPSYZ5obsUuuFQYKvreeKQ@mail.gmail.com>
- <422b0dd7-b3a2-45fc-a76f-43c18f95c426@oss.qualcomm.com>
- <968352f9-089f-4409-800a-3efef59d114d@oss.qualcomm.com>
-In-Reply-To: <968352f9-089f-4409-800a-3efef59d114d@oss.qualcomm.com>
-From: Max Filippov <jcmvbkbc@gmail.com>
-Date: Thu, 9 Jul 2026 11:42:56 -0700
-X-Gm-Features: AUfX_mwpLCUsUyFi5F9AFn_AcPwVqIDIRH6DOarSz8bHDsPxGFc__wpuUCoNy1w
-Message-ID: <CAMo8BfLPahC0T-8U=y=Jacx5zNvO=4jFXiCFfWvYUKtyNVk=Qg@mail.gmail.com>
-Subject: Re: [PATCH v3 87/91] tests/tcg/xtensa/crt.S: align .text section
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Gustavo Romero <gustavo.romero@linaro.org>, Laurent Vivier <laurent@vivier.eu>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Helge Deller <deller@gmx.de>, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::736;
- envelope-from=jcmvbkbc@gmail.com; helo=mail-qk1-x736.google.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.999, HK_RANDOM_FROM=0.999,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=jrtc27@jrtc27.com; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,23 +99,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 9, 2026 at 8:24=E2=80=AFAM Pierrick Bouvier
-<pierrick.bouvier@oss.qualcomm.com> wrote:
-> If you have a chance to take a look, I observed that test_timer.S is
-> flaky on xtensaeb with kc705_be. It fails with a probably of 25% on my
-> machine.
+FreeBSD 15 introduces a native inotify implementation rather than
+requiring use of the kqueue-based libinotify package. This native
+implementation does not generate the extra deleted events, so don't
+expect them. However, the original implementation did have a bug that
+caused IN_IGNORED to never be generated if you did not also watch for
+IN_DELETE_SELF, which affects 15.0 and 15.1, but has been fixed and will
+no longer apply in 15.2 / 16.0.
 
-This is a rather well-known issue that for a core with .clock_freq_khz
-that is not
-exactly matching the icount argument used to run the timer test it
-will sometimes
-fail. The easiest way to fix it is probably changing the default core
-clock frequency.
-The more useful way to fix it would be to make the core clock of the
-`sim` machine
-adjustable and set it to the value that matches the icount.
+Note that the deleted event check is for the userspace version, since
+that governs whether libinotify is being used or not, whereas the
+ignored event check is both for the userspace version (to check if we're
+using the native syscall) and the kernel version (to check if the kernel
+has the bug or not).
 
---=20
-Thanks.
--- Max
+All __FreeBSD_version values used here correspond to the value in-tree
+at the time of the relevant commits. Since neither commit bumped the
+value there will be a window of development snapshots between each
+commit and the previous bump that will be incorrectly identified here,
+but this is the best we can do, and something users of snapshots should
+be prepared to deal with.
+
+Signed-off-by: Jessica Clarke <jrtc27@jrtc27.com>
+---
+ tests/unit/test-util-filemonitor.c | 29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
+
+diff --git a/tests/unit/test-util-filemonitor.c b/tests/unit/test-util-filemonitor.c
+index 02e67fc96ac..972651dc1e1 100644
+--- a/tests/unit/test-util-filemonitor.c
++++ b/tests/unit/test-util-filemonitor.c
+@@ -27,6 +27,10 @@
+ 
+ #include <utime.h>
+ 
++#ifdef __FreeBSD__
++#include <osreldate.h>
++#endif
++
+ enum {
+     QFILE_MONITOR_TEST_OP_ADD_WATCH,
+     QFILE_MONITOR_TEST_OP_DEL_WATCH,
+@@ -221,6 +225,24 @@ qemu_file_monitor_test_expect(QFileMonitorTestData *data,
+ }
+ 
+ 
++static bool
++expect_broken_ignored(void)
++{
++#if defined(__FreeBSD__) && __FreeBSD_version >= 1500051
++    int osreldate;
++
++    osreldate = getosreldate();
++    if (osreldate == -1) {
++        g_printerr("Unable to call getosreldate: %s\n", strerror(errno));
++        abort();
++    }
++    return osreldate < 1501501 || (osreldate >= 1600000 && osreldate < 1600019);
++#else
++    return false;
++#endif
++}
++
++
+ static void
+ test_file_monitor_events(void)
+ {
+@@ -360,7 +382,7 @@ test_file_monitor_events(void)
+         { .type = QFILE_MONITOR_TEST_OP_EVENT,
+           .filesrc = "one.txt", .watchid = &watch4,
+           .eventid = QFILE_MONITOR_EVENT_DELETED },
+-#ifdef __FreeBSD__
++#if defined(__FreeBSD__) && __FreeBSD_version < 1500051
+         { .type = QFILE_MONITOR_TEST_OP_EVENT,
+           .filesrc = "two.txt", .watchid = &watch0,
+           .eventid = QFILE_MONITOR_EVENT_DELETED },
+@@ -539,6 +561,11 @@ test_file_monitor_events(void)
+                 g_printerr("Event id=%" PRIx64 " event=%d file=%s\n",
+                            *op->watchid, op->eventid, op->filesrc);
+             }
++            if (op->eventid == QFILE_MONITOR_EVENT_IGNORED &&
++                expect_broken_ignored()) {
++                g_printerr("Expect ignored event to be broken, skipping\n");
++                break;
++            }
+             if (!qemu_file_monitor_test_expect(&data, *op->watchid,
+                                                op->eventid, op->filesrc,
+                                                op->swapnext))
+-- 
+2.53.0
+
 
