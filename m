@@ -4,109 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E03DC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 03:25:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BFCEC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 03:44:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whfNa-0007gk-W9; Wed, 08 Jul 2026 23:24:51 -0400
+	id 1whfg0-0001hA-1x; Wed, 08 Jul 2026 23:43:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1whfNZ-0007g4-7G
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 23:24:49 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1whfNX-0007PO-M8
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 23:24:48 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-698e5859a3cso964715a12.0
- for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 20:24:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783567485; cv=none;
- d=google.com; s=arc-20260327;
- b=l6nQOc3aAWo2jQ23kMO7UXe7CjSdP3OY0Xa7unfZxU5kAWeAu0ALjCMGhEl3IZ39Xs
- 8tZyP36FJjfJtHcnp4E43nXJ7OwBedtzi2pXK2Y01+yhkbg3pr1APMu8GqhYIaK931dv
- pSt8HEx7V9A9jG9SzRos337CFH574A0IMz2Tfm9h6EggVpjOzK5yx2iOfzmMgcxz2wKO
- e6gvI12YZYmqMeGduxsvw/qiT0+jIsM5yFGPT3o3SJR+tD01S+AdAH7/1vUfC4wdvjE2
- LhbJ1OH3lqewztriarARYikxnBUma48p5gkeLnFN4urlIWqS0hKP6lafEB6l3w+4NtnF
- FVXQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=ng21UaoMrWYg72GHTzSnmQ+n9Ud5epwyJFjuyHbRGY0=;
- fh=XprlEOYSYHeyk23qNQeiXsKEF8nE10zAIzGAHnZo09s=;
- b=LyAkodTIy5p9RQSQ3DUVIZF28kRvcjorPFHqp8/zKpqscA7zCIViuGQLXAXHPdLx20
- ifsBZQXdjKf5YX+HkxN4xG2XXjnZg9x5hEMaVoYrat92YBAt03To3H7sidROdX0mAHeu
- KGtuhgAV1uFF8HdpySHBT9zyt57t++wFnNyEpIkW8BnOr/tmlIDZqUt3was56OkpCv6g
- 7VbyTo32uow6O6OC//7vzd/hJH6ip7o1eP05nH/wIC2J+r0Cejk9ODqhZmKRsv0oeJUl
- 7Z1Qfpgejo+/qdBU5y9IbHEN+cX6P+b078ntcDiVUT8EfslxlQRs7PjaQpNWwGfUqW5V
- WIIA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783567485; x=1784172285; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=ng21UaoMrWYg72GHTzSnmQ+n9Ud5epwyJFjuyHbRGY0=;
- b=I1uJSoP1/x+BZ1S9OW5gFrd/MfM6L09acsZ8JWN+3FpT8fABDP0xvN/eQpyreG4jVX
- YkOPn6gsh+pq6VdGjOAkgy0H8hxH6MbSCMLqOJlfeKiptt+e7bFfAqq7qxor6T/JmbJw
- 9A/hvka82Qdde+vypcz2ESXhIMUx0LaJULkroh9fIrUiyjMJpz2pB60/ELa+8yyu/5zn
- FfgXJNW0wLcbMcFN9B/jMlMG/GE6jB7wHxmqYdy1XS4YZv8pulu1zIpoPMYoLWvuBaM8
- 5RnxNCcHRxDofBoK5jbNqQ+mgV6IOt55sZXhMBVqps9XvAiyp0NmERy3HINIOzuFrk0Q
- uFDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783567485; x=1784172285;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=ng21UaoMrWYg72GHTzSnmQ+n9Ud5epwyJFjuyHbRGY0=;
- b=aa4bnjC2g0DgpkZWo/W3otlO1A922luwu8L1fsgYOTDA7fkwzFuf1SCC0iExKRx3qf
- hZYJHJqQ1IW/G6lZUnA6QZbrmmdcySM3jTSj36+1F1JYwWPTy6BB2Qw3UMAmmAQKDq9e
- 8p8CGcjKsQOGNrX0Me5sTDGh4U6BcRyBZPsqecPzYf02UL3xjVhUiFmZmPqtGUSTfML/
- 0IXG/Vxktxl8Ja/LXn3bnYgNJDkus2UPUBXeyM1GqlCW4MLlRGYTAIJ/06JEJbsV//8m
- lHXcwGWGwOa0ZyV7I3K6Zua8h3abSFVDwFvwm6jJpePj1S416k6mr4t/JTcOyx1xU5Fx
- HfJA==
-X-Gm-Message-State: AOJu0YxswOtpvseBU3vn/UtmxJX69RoDMRGi7/xheP3fiD3Ya0QAlGuR
- /J3ln0PRxi5KcfnYAcK5qkhF6pS7xQ4pgEdeKnKErI+4XXHsWR2ORj5qSJwq5rMveQx1febmX5w
- ulwVVzx2qWoMhhqAwB8ISK8PqwyDcFXc=
-X-Gm-Gg: AfdE7cnUyeG5pFCeF/cSFFtxnXbHmVNZW7eQ4Bk53/pkkdOH44zFoD3S71fOqsPaD9f
- +74iYCFYibbJys8ybbn3yym5ow9gv8JOEP++OJQWNw4oQxX66i3sCwO8/SECoNjrlnGVz7VmQ85
- 5vMRiQxYUYG3aRQMtYRYN1Ydf4dudTbC6qlzvx1CZZmFCMrU9JplY3bOXImn7OFKocSrPeFxUip
- lAHCnh3dAoSOU/LNBgGR9gsgQhPEsRbXhIE3+391DvGEE+TmXd0u7HZlkW7UYobj+I4j2YwdrWc
- TMDtv1HSsuVOZklJ3gzjRLe2aj4=
-X-Received: by 2002:a05:6402:4306:b0:697:eb97:a4ed with SMTP id
- 4fb4d7f45d1cf-69c01b81c71mr375197a12.7.1783567485298; Wed, 08 Jul 2026
- 20:24:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1whffs-0001gn-My
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 23:43:45 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1whffp-0001Mk-9l
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 23:43:44 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8CxquvlGE9qHrYBAA--.7361S3;
+ Thu, 09 Jul 2026 11:43:33 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJDxDcfkGE9qMW4GAA--.11731S2;
+ Thu, 09 Jul 2026 11:43:33 +0800 (CST)
+Subject: Re: [PATCH] target/loongarch/kvm: set pv features per vCPU in
+ kvm_arch_init_vcpu
+To: Tao Cui <cui.tao@linux.dev>, qemu-devel@nongnu.org
+Cc: Song Gao <gaosong@loongson.cn>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@mailo.com>,
+ Tao Cui <cuitao@kylinos.cn>
+References: <20260625015317.678762-1-cui.tao@linux.dev>
+ <39029c52-b386-f5b3-4cfb-e912121d224d@loongson.cn>
+ <765a77d3-2c35-4ecc-b2bb-8fde8e35d87b@linux.dev>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <623e33bc-2907-b802-fcd1-73e6e1d1b0ca@loongson.cn>
+Date: Thu, 9 Jul 2026 11:43:27 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20260707145407.70287-1-corvin.koehne@gmail.com>
-In-Reply-To: <20260707145407.70287-1-corvin.koehne@gmail.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 9 Jul 2026 13:24:18 +1000
-X-Gm-Features: AUfX_mwZe-tlLQ94Prq2m4JmqQ2Enya9vPDfJcrHq2m698UQsAYK88z9CwwnNPE
-Message-ID: <CAKmqyKO6bph9pnQM8pYD=_rPu+c6pn17HODDcJCfFH7WPZ9eHg@mail.gmail.com>
-Subject: Re: [PATCH] hw/misc/zynq_slcr.c: drop duplicate reset value for
- DDRIOB_DCI_CTRL
-To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
- YannickV <Y.Vossen@beckhoff.com>, qemu-arm@nongnu.org, 
- Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- =?UTF-8?Q?Corvin_K=C3=B6hne?= <c.koehne@beckhoff.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+In-Reply-To: <765a77d3-2c35-4ecc-b2bb-8fde8e35d87b@linux.dev>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJDxDcfkGE9qMW4GAA--.11731S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxZrW8Cr4xZrW7uw43KFyfAFc_yoW5KrWfpF
+ 97Aay5Wry5Wr4kAw18ta4UXFy5Ar4xJ3WUZF18JFy8AFsrJr12gry0qFnFgr1DA3ykXr1F
+ qF45Jr9xZF15AabCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4j6r4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAF
+ wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
+ CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+ 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
+ IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+ 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
+ W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j1WlkU
+ UUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.97,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,54 +85,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 8, 2026 at 12:54=E2=80=AFAM Corvin K=C3=B6hne <corvin.koehne@gm=
-ail.com> wrote:
->
-> From: Corvin K=C3=B6hne <c.koehne@beckhoff.com>
->
-> When adding a reset value for DDRIOB_DCI_CTRL in c8ba862dbfdc, we haven't
-> noticed that a reset value already exists. DDRIOB is a 32 bit register, s=
-o
-> incrementing it by 12 will access the DDRIOB_DCI_CTRL register. According=
- to
-> the manual [1] the correct reset value is 0x00000020. Additionally,
-> c8ba862dbfdc won't work with a reset value of 0x00000021 because it tries=
- to
-> detect a toggle of the reset bit (bit 0). Therefore, we drop the old rese=
-t
-> value and keep the new one introduced in c8ba862dbfdc.
->
-> [1] https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/Register-slcr-DD=
-RIOB_DCI_CTRL
->
-> Fixes: c8ba862dbfdc ("hw/misc/zynq_slcr: Add logic for DCI configuration"=
-)
-> Signed-off-by: Corvin K=C3=B6hne <c.koehne@beckhoff.com>
+On 2026/7/3 下午2:05, Tao Cui wrote:
+> 
+> 
+> 在 2026/6/25 11:14, Bibo Mao 写道:
+>>
+>>
+>> On 2026/6/25 上午9:53, Tao Cui wrote:
+>>> From: Tao Cui <cuitao@kylinos.cn>
+>>>
+>>> kvm_set_pv_features() programs the KVM_FEATURE cpucfg attribute, which is a
+>>> per-vCPU setting. It was called from kvm_arch_put_registers() under a
+>>> function-local static guard, so it ran only once for the whole VM and only
+>>> the first vCPU actually got its pv features pushed to KVM.
+>>>
+>>> Move the call to kvm_arch_init_vcpu(), which runs once per vCPU, right
+>>> after the pv features are computed, and drop the static guard.
+>>>
+>>> Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+>>> ---
+>>>    target/loongarch/kvm/kvm.c | 15 ++++++---------
+>>>    1 file changed, 6 insertions(+), 9 deletions(-)
+>>>
+>>> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+>>> index d6539c12ac..985812c828 100644
+>>> --- a/target/loongarch/kvm/kvm.c
+>>> +++ b/target/loongarch/kvm/kvm.c
+>>> @@ -816,7 +816,6 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
+>>>    int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
+>>>    {
+>>>        int ret;
+>>> -    static int once;
+>>>          ret = kvm_loongarch_put_regs_core(cs);
+>>>        if (ret) {
+>>> @@ -843,14 +842,6 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
+>>>            return ret;
+>>>        }
+>>>    -    if (!once) {
+>>> -        ret = kvm_set_pv_features(cs);
+>>> -        if (ret) {
+>>> -            return ret;
+>>> -        }
+>>> -        once = 1;
+>>> -    }
+>>> -
+>>>        if (level >= KVM_PUT_FULL_STATE) {
+>>>            /*
+>>>             * only KVM_PUT_FULL_STATE is required, kvm kernel will clear
+>>> @@ -1209,6 +1200,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
+>>>            return ret;
+>>>        }
+>>>    +    /* pv_features is a per-vCPU attribute; set it here, once per vCPU. */
+>>> +    ret = kvm_set_pv_features(cs);
+>>> +    if (ret < 0) {
+>>> +        return ret;
+>>> +    }
+>> I prefer the old method. The pv_features is one vCPU state instead, and it will be added in vCPU VMState if migration is supported on different host kernel version.
+>>
+>> Here is host feature detection, not vCPU state setting.
+> 
+> Thanks, that makes sense. init_vcpu() is the host-detection path; the
+> per-vCPU write belongs in kvm_arch_put_registers(). I'll keep it there,
+> drop the VM-global static guard, and push per-vCPU under
+> level >= KVM_PUT_FULL_STATE, the same gate kvm_set_stealtime() already
+> uses just below.
+> 
+> For migration across kernel versions, I'll add env->pv_features as a
+> sub-section of vmstate_loongarch_cpu (leaving version 4 untouched) so
+> the value travels with the vCPU.
+yes, instead pv_features is the value of pseudo register 
+CPUCFG_KVM_FEATURE 0x40000004, defined in kernel file 
+arch/loongarch/include/uapi/asm/kvm_para.h.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Also also remember to add field no_pv_feature in LoongArchCPU object and 
+VirtMachineClass. So that with QEMU 11.1 machine type, no_pv_feature is 
+true, with higer version than QEMU 11.1,  no_pv_feature is default false.
 
-Alistair
+Regards
+Bibo Mao
+> 
+> Thanks,
+> Tao
+> 
+>>
+>> Regards
+>> Bibo Mao
+>>> +
+>>>        ret = kvm_cpu_check_ptw(cs, &local_err);
+>>>        if (ret < 0) {
+>>>            error_report_err(local_err);
+>>>
+>>
+> 
 
-> ---
->  hw/misc/zynq_slcr.c | 1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/hw/misc/zynq_slcr.c b/hw/misc/zynq_slcr.c
-> index 0ae5d607be9b..d0f899c3be4d 100644
-> --- a/hw/misc/zynq_slcr.c
-> +++ b/hw/misc/zynq_slcr.c
-> @@ -427,7 +427,6 @@ static void zynq_slcr_reset_init(Object *obj, ResetTy=
-pe type)
->                            =3D s->regs[R_DDRIOB + 3] =3D 0x00000e00;
->      s->regs[R_DDRIOB + 4] =3D s->regs[R_DDRIOB + 5] =3D s->regs[R_DDRIOB=
- + 6]
->                            =3D 0x00000e00;
-> -    s->regs[R_DDRIOB + 12] =3D 0x00000021;
->
->      s->regs[R_DDRIOB_DCI_CTRL] =3D 0x00000020;
->  }
-> --
-> 2.47.3
->
->
 
