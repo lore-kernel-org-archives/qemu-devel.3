@@ -4,94 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 594BAC44501
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 12:43:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DD72C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 12:43:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1who5P-00050s-7y; Thu, 09 Jul 2026 08:42:39 -0400
+	id 1who6G-0005Xt-4S; Thu, 09 Jul 2026 08:43:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiri@resnulli.us>) id 1who5K-00050I-I2
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 08:42:36 -0400
-Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jiri@resnulli.us>) id 1who5G-0003g0-PQ
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 08:42:34 -0400
-Received: by mail-lj1-x235.google.com with SMTP id
- 38308e7fff4ca-39c82d9f801so8615331fa.2
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 05:42:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1who6E-0005Xc-Qm
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 08:43:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1who6D-0003ua-AZ
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 08:43:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783601008;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=LZx3yEI35+BLl1OHEsrMGv/yeZy1pl6cc/ZsubhglY4=;
+ b=E5mBIsA2nGP4hmm5Ez/4TnH/sVpESFl3jO/Wf2LKFnHQatNbeQEL3WA1NqRsQE3pDFf4kY
+ IbgGCYhqxHJqvD4TZKqkIWMmKy+xLSc4SS83qp9dfsUQgN2SkERz1fAI1TeOTXrg6YE1KU
+ krcEnQqD39+5BGyXYhPbC/Cy1mKOYHQ=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-617-Z-owOjJ-OYWrK1AIzK5hXw-1; Thu, 09 Jul 2026 08:43:27 -0400
+X-MC-Unique: Z-owOjJ-OYWrK1AIzK5hXw-1
+X-Mimecast-MFC-AGG-ID: Z-owOjJ-OYWrK1AIzK5hXw_1783601006
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-473e18559b2so1371205f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 05:43:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=resnulli-us.20251104.gappssmtp.com; s=20251104; t=1783600944; x=1784205744;
- darn=nongnu.org; 
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Jtq7nr5TqTcyF8ib11A7Ilkid5l8c0LQE3QT2fNEZ0M=;
- b=ErB4W8muKLOrsw/mG28q1WYd/SiDtTZGc7w/yIFfFU3qXpM6CJ0VEb4Q+fCbE08bsn
- DnES6mLiGknh2MWEoRJUvdIvTE+W9IfSdYXMzmJaAI2XmJbNLbCvlFQkh73iVzD88Ecj
- EbYt6fVpia0vlEdF46oDQYeZWeo0v4tJ3ZRTtJdvl6kp1/GH4u6zqZR0Rz1ew8JzjQro
- nt35JJAdTqCPjV4N66HNIJs5+6o/5IW+Y1Nn2rzN4BjL/s3iiYYnu6f/tPfJsl084Drz
- 315VJNdMMJ12aobINiW1/tDA6zmxxGvXvVZ3A74AyLcSVuoL097DjXQLJ8wTBr7SxmFt
- sbuw==
+ d=redhat.com; s=google; t=1783601006; x=1784205806; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=LZx3yEI35+BLl1OHEsrMGv/yeZy1pl6cc/ZsubhglY4=;
+ b=Lp6A4lEM/n9etqng4Pv7s+ocxqLxqL+Qx6YpaYbHIlQR6E0vRH03s/fhYjgACWs2Ri
+ 66yGnqp8Qg13t3X2enj0FlzVihsh9ty4zYP8AiQYFR3ycu0tukPxlKxnC3zfrL/hSwtN
+ 6ABwhB3i/BPUdXqbNCLfxK8sH8mfN5fu7cHKzYP2O9PHEopKHBZ1VQl0bRVIRMO8OLsz
+ csN86XZAXwcgN7uHhYTD8KTlw3fE2WwBzN7Z8umyRLFjYH7JSl0FMYyQm+s7TJ2j/9ef
+ L4NJx4amdXJ/4NQhXq/uGZAmIY5VCEe11Rp8WyyTIuoxfFho0L1itsiGpaiY8KKxAEbx
+ z7aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783600944; x=1784205744;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=Jtq7nr5TqTcyF8ib11A7Ilkid5l8c0LQE3QT2fNEZ0M=;
- b=s14WkXMx6qgEafeuhknRPW/bJwzfTTNhptlD7epWYoLPG5yOwdgn2AGOtumXJdiTSK
- mxKIeXFzLKVb6al4WH+j/gF8hLgKstlYBXc0E5wLrpm3W1olJZ90pBq8gVhOI+kZYdS8
- 7viSZXdVwJ7wBERbr7Y3Mm7kqNmk7Y74XYCplYJ+BXkD58Ce19yOR4a1AsvwzEn8tT3c
- mDAyi/oTLZAWffr0U0poILFmFp/cScGhQ9qIZl0J8QwUw6bCjp3/3raiG2BoIUaqn1h/
- 4sglOLq2w3qeRi7RFCe6CdlBArhETFKNRngNntVgayrGYvSqUrYLueXp4fqVk4HFoVqO
- zt/w==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrldpXQuLgc8zXdYJfqBJ2qDYV8ckZj3EuYmjG6pr0Jb+rtlsEeD5wtKF6Q5TDTHE9/v6tkGgRa9sZW@nongnu.org
-X-Gm-Message-State: AOJu0YzslsARyiP/hrZMXAtq62SdTiufJD6tYElGSewCBJ1y7SaqWgU5
- 9F7IgZqQun+SbFwdiDV0t2cQvPsuQk6z6UwggLZx3mBvH4BrJLSgIUOSVe6OXm4DzTo=
-X-Gm-Gg: AfdE7ckU4PQf9QsFpW/GUGtSYGjF1pLHUNkKr07Q++Gl/JTuA7Otdv1g+LH66VKQtQ/
- wz+ouCxgIgHAte+qKg0xBp98QTuT3C9KGW0vEuJQJ6Aw0RB1mxVkSYu42wq0XEVXD469knd0yl1
- fQD9sFt0hEML/V4qyzDeanZvT9PvmzVYfboj59/lozccnF/g/yzq/0GaMTZm1CEHfgXvzFnePJH
- dQJEWKGMlNsOUtCU0Tb8LfgeLP+R0S//6s+b+vxDh40/c2mRYGEhDQaz9cNFyLtZ0IZSDiB1sd2
- 4GqcfrVv5hDhIDzTEimZkeFLdNpPcJq/rhyqJGqxJ8x1RO4GEKxwMlUh9I3oOIbkRzEruQsUnFv
- mBOzBGymnIIYO1Isf48gVt5Sq+XdUNnLlIrF6pQJvH7MqxNZNNisv9GhUJ8tnf9h1r3JgK/mg3c
- L4wLArWFJw2S0OAJLwaf+9ig==
-X-Received: by 2002:ac2:4563:0:b0:5b0:f9d:f7a0 with SMTP id
- 2adb3069b0e04-5b011476339mr1104861e87.8.1783600944007; 
- Thu, 09 Jul 2026 05:42:24 -0700 (PDT)
-Received: from localhost ([140.209.217.211]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-5aed13bfecbsm5164417e87.64.2026.07.09.05.42.22
+ d=1e100.net; s=20251104; t=1783601006; x=1784205806;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=LZx3yEI35+BLl1OHEsrMGv/yeZy1pl6cc/ZsubhglY4=;
+ b=ARZz9I3gccq8+GRCRzcfyyicNwRukCPfSuex34GJ2JWfMtPcWK9pSabwngNaom7W55
+ 50/fVnUKLGfEp358GnUNDIYuu1zJFu7UHRgec3pH1jdaTgYWQ3JsrrPhuavxBTX2ZywV
+ 7qS6hDHTW3t0sEj0hccfq95LixXTQDamqPCXAxFmLCIw/q9qagkhP4YMV6SA/ylutQvl
+ f3bKWX39DW4H1ftvyHwfjDp8HayX5aTs+erp3h2pri9UZxT4hklDgEy7qkG5Aqb20+py
+ jG7wkdSj2CZmp/ihWfjc2c8i/zOwZfOSpiDYREtCH4UgdWDC6Pv83S0H60M/DxznxQ5d
+ nLRw==
+X-Gm-Message-State: AOJu0YyNoaGeaCUeN9RWdgqurliizUeem185iZ7xP/QDb+GxJNexGUMw
+ 1JjFXScYCGOluSlxJXLNg4VSqJTWeFa6V/I+CYsOu3b1KB5jaTzadXU3+UwvA8+a1K9NjO7LPDZ
+ LiEMBX/f7eB0rjG1ZGsXpSl+EW0ePVkNjYG9puy7sIjGT72YJnUNjbyD4m8eXkdpr
+X-Gm-Gg: AfdE7cmWQcprP3rDLFXuLv7fHI2iAAus7cBFU+9ITMACmzBxWn+b4fj60knquSdEneB
+ Vt53ZZCWz8zIXHzmkPb0+jhiOUntpBfZEAbU/aHflXFXa00el2uqmq8lSQq6HFTzp4gL0SMGOvC
+ c7qVWRB3sy5Pxla+qZ4Nv1ruCicTeFJfxn39p07TPduQqGcUEofahj11AWpgaVYHF5IPB89CYl+
+ +9qLS+dKPwMeALFre16xD86//t6JKPUe83UhVfcWYvt1WybOhRKlTxRv39ipujBeGjxHaB1aBLv
+ /6k1bvLF0C65u0PoF7QbAgzs7SU5HwlNze7/rWHjv9JWilsbIFw/OS5xSCpAZJp4j32TKBtpMTL
+ iZuYn4Hek+yvPg95QFlSntNndFm6pZncN
+X-Received: by 2002:a5d:59c1:0:b0:475:f0f0:9ec9 with SMTP id
+ ffacd0b85a97d-47df08147d6mr8052656f8f.52.1783601006015; 
+ Thu, 09 Jul 2026 05:43:26 -0700 (PDT)
+X-Received: by 2002:a5d:59c1:0:b0:475:f0f0:9ec9 with SMTP id
+ ffacd0b85a97d-47df08147d6mr8052622f8f.52.1783601005550; 
+ Thu, 09 Jul 2026 05:43:25 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-68-31.inter.net.il. [80.230.68.31])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47aa0960634sm52177371f8f.26.2026.07.09.05.43.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jul 2026 05:42:23 -0700 (PDT)
-Date: Thu, 9 Jul 2026 14:42:19 +0200
-From: Jiri Pirko <jiri@resnulli.us>
-To: Xiong Weimin <15927021679@163.com>
-Cc: Serapheim Dimitropoulos <serapheimd@gmail.com>, stefanha@redhat.com, 
- qemu-devel@nongnu.org, mst@redhat.com, pbonzini@redhat.com,
- sgarzarella@redhat.com, Xie <xieyongji@bytedance.com>
-Subject: Re: [RFC DISCUSSION] virtio-rdma: RDMA device emulation for QEMU
-Message-ID: <ak-XIaqLG2FiBcF4@FV6GYCPJ69>
-References: <20260316210600.62415-1-serapheimd@gmail.com>
- <CAJSP0QX3JtwhXDTnEgS-heLYYncjJtttg1KmFqG-+_VUXbH+Ww@mail.gmail.com>
- <20260320172345.4688-1-serapheimd@gmail.com>
- <1747673b.8c8c.19efe3cc66f.Coremail.15927021679@163.com>
- <akUFOeFkqtRVyHuX@FV6GYCPJ69>
- <7c793a79.8b24.19f4667c92b.Coremail.15927021679@163.com>
+ Thu, 09 Jul 2026 05:43:25 -0700 (PDT)
+Date: Thu, 9 Jul 2026 08:43:22 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Jia Jia <physicalmtea@gmail.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] virtio: validate split queue head count before popping
+Message-ID: <20260709084105-mutt-send-email-mst@kernel.org>
+References: <20260709100529.41267-1-physicalmtea@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7c793a79.8b24.19f4667c92b.Coremail.15927021679@163.com>
-Received-SPF: none client-ip=2a00:1450:4864:20::235;
- envelope-from=jiri@resnulli.us; helo=mail-lj1-x235.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20260709100529.41267-1-physicalmtea@gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,51 +116,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thu, Jul 09, 2026 at 12:23:54PM +0200, 15927021679@163.com wrote:
->
->
->Hi all,
->
->
->The VIRTIO_RDMA_SPEC draft is ready. The canonical copy is available in my public GitHub repository:
->
->
->https://github.com/xiongweimin1/virtio_rdma_wholeproject
+On Thu, Jul 09, 2026 at 06:05:29PM +0800, Jia Jia wrote:
+> virtqueue_split_pop() reads the next split avail ring entry after
+> virtio_queue_empty_rcu() reports work. Call virtqueue_num_heads() before
+> consuming that entry, so an avail index distance larger than the queue
+> size is rejected.
+> 
+> virtqueue_num_heads() also keeps the read barrier needed before the avail
+> ring entry is read.
+> 
+> This prevents an invalid split queue state from being expanded into
+> repeated device command processing.
+> 
+> Link: https://gitlab.com/qemu-project/qemu/-/issues/3930
+> Signed-off-by: Jia Jia <physicalmtea@gmail.com>
+> ---
+> Tested with qemu-system-x86_64 11.0.50, built from origin/master
+> f893c46c3931 plus this patch, configured with:
+>   --target-list=x86_64-softmmu --enable-kvm --disable-tcg
+> 
+> The original virtio-iommu live-vring qtest reproducer used for the
+> report completed successfully on the patched build without host OOM,
+> confirming that this reproducer is fixed by the patch.
+> 
+>  hw/virtio/virtio.c | 8 +++++---
+>  1 file changed, 5 insertions(+), 3 deletions(-)
+> 
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index f4d86a3655..252bff8641 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -1751,9 +1751,11 @@ static void *virtqueue_split_pop(VirtQueue *vq, size_t sz)
+>      if (virtio_queue_empty_rcu(vq)) {
+>          goto done;
+>      }
+> -    /* Needed after virtio_queue_empty(), see comment in
+> -     * virtqueue_num_heads(). */
+> -    smp_rmb();
+> +
+> +    rc = virtqueue_num_heads(vq, vq->last_avail_idx);
+> +    if (rc <= 0) {
+> +        goto done;
+> +    }
 
-got 404.
 
+Do we still need virtio_queue_empty_rcu then? Why?
 
->
->
->I’ve attached a PDF for convenience, but please treat the GitHub file as the source of truth for review and iteration.
->
->
->The document formatting and code layout can still be improved, so I’m happy to revise them further if needed.
->
->
->Best,
->Xiong Weimin
->
->At 2026-07-01 20:18:17, "Jiri Pirko" <jiri@resnulli.us> wrote:
->>Thu, Jun 25, 2026 at 12:04:16PM +0200, 15927021679@163.com wrote:
->>
->>
->>[...]
->>
->>
->>>= What is working today =
->>>
->>>
->>>We now have an end-to-end stack:
->>>
->>>
->>>  guest: linux drivers/infiniband/hw/virtio/
->>>  userspace: rdma-core virtio provider
->>>  VMM: QEMU vhost-user-rdma device
->>
->>
->>Can you share links to public git repos for these? And what about
->>virtio spec?
-
+>      /* When we start there are none of either input nor output. */
+>      out_num = in_num = elem_entries = 0;
+> -- 
+> 2.34.1
 
 
