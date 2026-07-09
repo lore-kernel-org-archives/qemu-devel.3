@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4E96C44503
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 08:01:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A6B7C44506
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 08:01:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whjgj-0007jj-T6; Thu, 09 Jul 2026 04:00:54 -0400
+	id 1whjgk-0007js-Rx; Thu, 09 Jul 2026 04:00:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1whjge-0007hr-My
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 04:00:48 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1whjgi-0007io-1n
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 04:00:53 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1whjgc-000891-UD
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 04:00:48 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-493c52cde9eso5228285e9.3
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 01:00:46 -0700 (PDT)
+ id 1whjgg-00089L-0N
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 04:00:51 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-493c52cde9eso5228435e9.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 01:00:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1783584045; x=1784188845; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=C70+uWMIPFlVAoXFJOb24D4T9JBIOgkKt64Wojdhw3s=;
- b=SC49cBmDLFUCK0nYppYWUmeE6itn+Rjasrc1nkQc4I2MQmetZGKmduhPTv0YusxOOi
- 8Do8ruXMotkTrj7VMuFUZ5piFMBOgltOCHbZG+OnDHHkU3/z0iThUGW9aTtZOOSyQu8p
- CASHaqDy1ibRklS0OqYkzspWR7XwJR7Nw3jFu7hpl/diQxUcplRGKdU7g6yshYL7EcWM
- l9iZALpE5PhkUc/0sRdRthG5bZ+YmayQeTjdMepQCPbquGWHqZ3f1a7z/PN9/SV0gT2k
- gRRN3MW/bs+Ks0BiHR+6i6HJwDFifM8pZXVZYwf9LsBWkxG9NMvn+o2b83NFzFK2KgBv
- Z7kQ==
+ bh=utbr16OPhWil3cJSdh4EP0+c6AU4qwdtLRXf+B+3uqQ=;
+ b=dydUTH7UobFwTAewnZcHoa4oDW+Gb/M7vsxQ6FWySYtKPaeWE1DttUs8Ev/yP+P14A
+ ikn+7NAyL14k3hFcf512Ok0y5TKetAdZYHSD4QnWUb60SONCLmrTpCpo5aGbIdW0y/+c
+ 1oNzjTD1ZC2EWtfsghD9pYN3ECqy34hsp352ob9DA6KzeRrfsFWwEiAfmxatLw/tkxMq
+ /449N9D+JO6uN3gig3zy+uoO50R29rDcTxBpEEGeov0syR08B5iVhAl2107lOWLF1SuL
+ al52k1rWOZL34a9xPUMyr5lI+Wd/UoR5UJZqRBIRyqEKXyCvUvRn+znxVp1rH3B/Wk+z
+ T1KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20251104; t=1783584045; x=1784188845;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=C70+uWMIPFlVAoXFJOb24D4T9JBIOgkKt64Wojdhw3s=;
- b=ne+cWVoridnNqGQtPSm9eyUM2W+5zGTQ3Khj4WIR6100RkajM1q6btgQ9O7CYgiivN
- twmzRWVZzDGV5Jk8/+9SA0gMd6R1cvDtWwfbrz4Q9ikwZe3Gn3/A4LM0KZ7zVG2oUMfY
- 0ObHhHyx4TygPh8OQoSez8/kur6A8zvaCSRMREStqzW7cRb3BLgVJv2ZlW95Pb5/Sjao
- OEe/JiPp7AV7/LBWJhOzArbxPe7cR2Url4MX0jHOeaH5LriAvhdPsjwvQx+nNrXui8rk
- LUfQrR70/qnqb93NhCl5ujTkWUOMc2HmBQoMdqcKwO4cvZyBCa7PJepLRKITdfET9oSK
- z3Vg==
-X-Gm-Message-State: AOJu0Yzo3Wtv9K69uP5t6YNuplZEqj+0Z/TXq37YStGTuAnyMum4zntb
- actF/POoxi1/CxIPXU1Onvhl//O98H9c0qwltbaf5tOZcAQsXlmdZoKQFU1uCVVUYMG5bGVFHCa
- p+Yyv3JI=
-X-Gm-Gg: AfdE7cluL543v6/THzFPhItStVsohuDjRgQsv9ToCm+Wkk7vKA16CHkHx0jmU0SFKi2
- VSX98xNt22Ae1HB+O1FUDcG8t03qsalc+w5ID77Os7RfsPiehcFOp+GSIVRtcjm/C1kJHWOGxHj
- xIL3adBzev4IL1uN3SFODjRZoCNmTnwxlypEwF7qeISJvGBKuJagH6XtD1GXNp+MNSaQOqCYiVp
- q6a+cCXh0Ys2kWPov1JTcUK408J7Z1qTR0o90ypWYRVb1tZn631A0Xdq4+sv+QpNYR+eF1C/4De
- mVZEiB3o0lhIiuznTr22r3lWeShZbby2TWdmcLDfIYCPAX9pZ6Q4qd93huIqBqY/H26D1gqfe6b
- nBbs/YeZjKLl8wWCMTfuMfODiMYXleQeRT3Th5Ih5471QWhgzkA4imOhgp5ZP18fqyJEglm3pz6
- P5tGvLBhCzvFqm
-X-Received: by 2002:a05:600d:84ca:20b0:493:c984:db9c with SMTP id
- 5b1f17b1804b1-493e6898b54mr41240505e9.2.1783584044657; 
- Thu, 09 Jul 2026 01:00:44 -0700 (PDT)
+ bh=utbr16OPhWil3cJSdh4EP0+c6AU4qwdtLRXf+B+3uqQ=;
+ b=PPJoQ5JZZy/jwTZBEI5U6l237VQnjMD2SszPqKG+TDR0xE6dhPltyGxkf3TAwnPt/Q
+ vjrXAioBBnLUu96SyDprKyxIk+T9ZApk6mmDxCHa7DcCudtttHEtGF22wzs1yZkLX1dR
+ oUMyyFo1327CadkWxUfwyYM5w7rO+/5cYol6YM9dRgSla7rkiDpkEOK2ID7/U0eLRHHT
+ HqLPwzIZw3/xlpYpmKh8sIR3+MnX4JAyEVPjm6Gsvwi8bRZPA8f7KzdhMaUh8F4XevLd
+ 6dlWqoeAzuAdtq5yljR6AJiL7Ei7N2mBTPH1KAMAvQTrJMKiZabMW/Pb/+2GJ4cFKVt1
+ Za/A==
+X-Gm-Message-State: AOJu0YwdNhhFTC2sXy+5FTQXaan9OxJkVTyQZeW/pGtm1HAdwp2croz9
+ 38/8zp/0um7Pa77RqkCynkhhw0bCzjWENyspyRkHIVIChxEVVZba63Gm+eBKZQifVax8koqBoSb
+ LJJmU6dc=
+X-Gm-Gg: AfdE7cndjviMO5bZLkWU3DKxbiCbj4AIWLlXCr3uiuakYZ2aMGBRA6Mx2CLhHri0ewd
+ 4hAD9c0ZhY0AkgmvkXgA0nf6t14lQZ6DetBaf3Y7/DSR+wL0GsDq2/f1wpOwUamIx9i140ce/M4
+ 9QAuvIjw4Cu088numDI7lz4THJW/JNOCH4sk1hxRCGq5qfSRyiVNMvK58FT1iSnOSa4TcGh2OD3
+ I9ZHfaiVJbEHaMjDutrVeZaBRo529EkZ4am2zim4kNiY2OMc4sgvSHhXzx3iQi16S89UbGw5Psz
+ JFedxHm//XxsYXeNrALT86sZS8lORw4Z4dVPHIxoMgD6/2+Yt0wpvlQWEtnS+AwxeHiWH3FcxiT
+ fs+8eFTWIINlhw6xxy1SNcfaSgj24m76o+xcWbIv2Z4m2vjbv6iaJY2+l6pQVDpqtPzavKTix2n
+ PxVouzBPBJD5vD
+X-Received: by 2002:a05:600c:3e0f:b0:493:9cb3:53fc with SMTP id
+ 5b1f17b1804b1-493e7e84c21mr47569965e9.11.1783584045135; 
+ Thu, 09 Jul 2026 01:00:45 -0700 (PDT)
 Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47a9de1d8f1sm50017820f8f.3.2026.07.09.01.00.41
+ 5b1f17b1804b1-493eb6d5055sm43707915e9.5.2026.07.09.01.00.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jul 2026 01:00:41 -0700 (PDT)
+ Thu, 09 Jul 2026 01:00:42 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 43B555FBD4;
+ by draig.lan (Postfix) with ESMTP id 836EB60053;
  Thu, 09 Jul 2026 09:00:40 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PATCH 1/9] mailmap: Fix Ryan Zhang email address
-Date: Thu,  9 Jul 2026 09:00:31 +0100
-Message-ID: <20260709080040.4157324-2-alex.bennee@linaro.org>
+ Joel Stanley <joel@jms.id.au>
+Subject: [PATCH 4/9] contrib/gitdm: Update IBM map
+Date: Thu,  9 Jul 2026 09:00:34 +0100
+Message-ID: <20260709080040.4157324-5-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260709080040.4157324-1-alex.bennee@linaro.org>
 References: <20260709080040.4157324-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,32 +105,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+From: Joel Stanley <joel@jms.id.au>
 
-Add a .mailmap entry to fix the invalid email introduced
-in commit 490a3e1867f ("ui/sdl2: Set GL ES profile before
-creating initial GL context").
+A number of us have moved on from IBM.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Message-ID: <20260619071422.99061-1-philmd@oss.qualcomm.com>
+ * Alexey moved to AMD in 2022.
+ * Andrew moved to Code Construct in 2023.
+ * Ben moved to Amazon in 2019.
+ * Cedric moved to Redhat.
+ * Daniel moved to Ventana in 2024.
+ * Greg moved to Redhat.
+ * Joel moved to Tenstorrent in 2025.
+ * Suraj moved to Amazon in 2019
+
+Most have either stopped working on QEMU or swtiched to corp addresses.
+
+Signed-off-by: Joel Stanley <joel@jms.id.au>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- .mailmap | 1 +
- 1 file changed, 1 insertion(+)
+ contrib/gitdm/group-map-ibm | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/.mailmap b/.mailmap
-index 593b6c2c534..7665ea87562 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -36,6 +36,7 @@ Jason Wang <jasowangio@gmail.com> Jason Wang <jasowang@redhat.com>
- Marek Dolata <mkdolata@us.ibm.com> mkdolata@us.ibm.com <mkdolata@us.ibm.com>
- Michael Ellerman <mpe@ellerman.id.au> michael@ozlabs.org <michael@ozlabs.org>
- Nick Hudson <hnick@vmware.com> hnick@vmware.com <hnick@vmware.com>
-+Ryan Zhang <ryan.zhang@nxp.com> Ryan Zhang <mailto>
- Timothée Cocault <timothee.cocault@gmail.com> timothee.cocault@gmail.com <timothee.cocault@gmail.com>
- Stefan Weil <sw@weilnetz.de> <weil@mail.berlios.de>
- Stefan Weil <sw@weilnetz.de> Stefan Weil <stefan@kiwi.(none)>
+diff --git a/contrib/gitdm/group-map-ibm b/contrib/gitdm/group-map-ibm
+index 24d8dc1b865..39c53a42ca1 100644
+--- a/contrib/gitdm/group-map-ibm
++++ b/contrib/gitdm/group-map-ibm
+@@ -2,14 +2,6 @@
+ # Some IBM contributors submit via another domain
+ #
+ 
+-aik@ozlabs.ru
+-andrew@aj.id.au
+-benh@kernel.crashing.org
+-clg@kaod.org
+-danielhb413@gmail.com
+-groug@kaod.org
+ jcfaracco@gmail.com
+-joel@jms.id.au
+-sjitindarsingh@gmail.com
+ tommusta@gmail.com
+ idan.horowitz@gmail.com
 -- 
 2.47.3
 
