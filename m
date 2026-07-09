@@ -4,88 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B380DC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 05:09:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60556C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 05:13:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whh0p-0006l6-2W; Thu, 09 Jul 2026 01:09:27 -0400
+	id 1whh4Y-0000Fh-F0; Thu, 09 Jul 2026 01:13:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1whh0n-0006kJ-S0
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 01:09:25 -0400
-Received: from sonic314-21.consmr.mail.gq1.yahoo.com ([98.137.69.84])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1whh4X-0000FY-IY
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 01:13:17 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1whh0l-0005mB-BZ
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 01:09:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aol.com; s=a2048;
- t=1783573760; bh=UmUmWH59zwDkMLLGuuGvz0xwapBoT1O8sVu7oXOskMA=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Subject:Reply-To;
- b=hGHrGkCZrQZCC7XLtuCMvJIdut61Pe/EmUDh0iLkCd/+jW65mcTW6JH0XjzA6jvabpZsVqk641YUUGNH39EU5YeFPCeapQB3t4JdY1Rct3CaNTqamO+JBrgBTNPbByTSaEnjnMgMObZZOa7xm2LDa3dN9QZikCwv8Kk7ACNiMQK9E4eO+DDeIh7+bH95LQ7C2splnR5CJp0YpkJNZ83ZoGhLS/cluKUChART3xYV63nJlVkoUkwGYWbX3q0duIpLgePeqZgdU57ZFJn19PHolewmNVHjTI+QdCnib38GOXoEEnS1MCf1lVpKyrNz+p2leiMb+TUPQF/HXHMdhJI1Qw==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1783573760; bh=9xClvDzp3a1vB5OzI9ZBLOxM/ZtVUMYTi9D1WxSqNGH=;
- h=X-Sonic-MF:From:To:Subject:Date:From:Subject;
- b=s2wHTm8b6Q9HGZDmxBeolGQ2/STF0XVsaH9gI2V5oPJJRKskqgwrFrjhFcyEDEpejw4+bNvJuzeQ4a6RRW3x195EwNLiDx8JwH/r/QWF7ZxXfeAo8jfK410urEhyjsBx2FAm5VOJOiX04Hb4D6qEy2P9ukoaNaDdTUuV/Je4XzLD/lLKX8Ze5uJJp/y2ImG/jpIccVU4j+cT42PrvzPerlVq6Z/bXXZJL9YukN4hpTY0SbqVWdiYelS6OxpkftqFHl9IuZOkyqCrqmiWxrbqFJtJNv1uIHXD/Gd2t48K4dgU2WE7LcweqOqRZuH8DpqH9FKj0YqX/GHowV6RX+MLiA==
-X-YMail-OSG: M2AD1sEVM1n8ckvxeNh8b1S.UEC2tMUHrV5UUtXVp3HMLDkQ_7RGScJZvo1jjHS
- EfcWrN1N7dnF3zCvb0zBX5GW7.LZj5aYUaEIZyHGnV0njwihcIXuu.jyzgD7NEXSrPHAwlSKauUe
- dG8cvXDlYcAeDoIgiLLSfY6NKoUVPq9V9JsWcUOy_lZIPSGLufQm8QeOFTPE9RmKMv5j._GyKphp
- af5KHl7DqDB9FCu3Dp9Da_729wBsZ7PqfF0w65WiQ6sh6X6K9IUNUR7_cgE52M1uzABiSf7xDQqo
- Pw5ijPjRIukt.GOFWQdx_YcvTsPN_5194MdLclO3HW.XGKWXyA3A28.rw_0QjKcUOKH8omNK5GiW
- pd2mpKldi.bsotvIlXHzJ2bUvoqk9MiKvF_QpIKJgYW7aOyPlBIQkF3OkDK.h4ajiU_8Cw9.RtgW
- VFpYK6KZzIH3TQG9LM453gdE6wWL88B6S7pX5Wnwk1zxWzmGSg0gKy6wzMS9U2.bES_CPUEIvDJe
- rdAsk9aH0MgUkvXgvYP4Quqm9LRqDW2o7lnuIMIYS2sfu42Xnglr7GSPzwuODhUDgUVYlP5x4yi8
- Vc1e3wrbM9yDaZkrlx0qPgFbHSDwlk4p598CZaleRyybmMYfVQoYTvwb.fOk8PZMx0Ky0cUk8.YM
- 4cSBPETMZLbNzzbuoTGRHaZ6qddca1yTh1J19z66PH4fBHTf3w7lrd5Zo.TmoUS07AKJnOpegRLE
- 2zMfy3zxZn_0sRlXNl.b6V5Zdksk.D9dq9pCbw2EhHzEA4yx_yIXKvl3nrpjP8VNtJZHWOicVecG
- 37g6pdMuM32l.fcpkzMqSVYWfGEMja1rP0gBOglfbKFK5w4AygzahleZQEsJxfVtLQ40B8kJtnQw
- 6BqJLnkUnfKgUmNfz1W8kMxMDsJNYvI0LTZdTQQaWxhXYuyKHUaW4cFWlZiP5SDUxMnuU9NJ8es_
- WSbVUAhZtVCpOaw1V3mFgCzH2gm7aS9mkFwBCHsW3r_q0DgRNJsZNE0lODZQS1z0AtAivHH48sJI
- uwvE44Il5mV9EJ4bQXyb.9bSVH2ayQjGrpovFLJFanaWodUsWfUGSknEdJNCuTqKFeTw9IDSXSyJ
- eO98oqiQRkt1TOk1q7RVVeGxO4Z22nUCAyZmH3ZsMS46hoIuUXpLy0JJeKW4w_lSZhyFUz.xjYp3
- 8k0mNsWx5Y.rQNmoFoSBhiRwkg94xNIFxXzF48agN9Ag9xMVtnlY3HnSSLqNKEPCpoEJiFPN5iFo
- AMojO0LOZit1N8FEVOsZ_HDUavMA6yWclKvBjp4pset97LUREWJXAvcsWNdD0y4BVybqWLDwuzs5
- .JromwszZQRmswsj9DWt191vbBuwXIJwym9WLSUZcPAbqutg9R5m.i2XbJbvSQEWiUYsreM_zOvc
- OaOLbsw9u0gUM_I0LJDKtJnMxTh7pmzDR0_Yvfoa1NvyzhJzTD0tL5XITV0qNizdZD03L.K7Ale7
- jL.oNyBvsWh40_U.eodZVPzLbwgXPKopfvXzAQhi_geuMWOFxMaJAJaNLhvyZaIAerKHsGHXCd1I
- rkSSuS3y7B1iKy06flwelHce0QrmujnOsN9zbLxSrboz9kbaxCCMrnhIwi7S3wqivwm.x.JPxOmV
- YWWUHxZ3k7V0T57nxVZyUDCCLRfDJmSZzN78tNvR4eRro.6H90GadGypP9jDL4w4n2_qZ9w17LJW
- Js8gKvxuZLC65uz8r.3q7fTjzc.8HaiH0FXy25ViX0v1EgS7Kcxe8vzJ63ceLS0dvBOgkaKechkl
- FzJcsIONxOpVg_PzLRMykYuCYCAsYVCTemyxGIxutTHZUrYEmTSI4c3y_iTgJuPal4B81oDqwgqa
- 0Dksj.wVwUiNCQ4_lJ0mzeiObB0sm6IHIVpeI5JiWuEgZRr244fsinTP79cfAZftm0lzy3MqscEv
- jaVuTHPjX.c3jGEy5KsbPZQkkWj74g0.YrHFBEXDrY.HzSRhniqMpHpiyd_xQRq0Z3A7vt1QQe.H
- klVQGSK91OCdctFkP.athI26.gnWQWufh6Qy5GyfRXp0709_J8EZxKspyE10UL.UW.U5Aa4v1Cpc
- flIU0FlQVEU0Yut56zAl4E_WtMWG0mcmFYesn5oj9HM7_G2e27nxGw3JU4LTF.cVbAqpczSIdmm4
- 1BWb7IfOOAUkQQorbZYYglwJS96nkZ._2ff3sWiB.hvxRftpxR2YpyZSDO0jzvh7hzDwX2byEShg
- 5hhJ6zOmRP4t_x1s2jlkXQ8Fs5lCVL0LcAw--
-X-Sonic-MF: <brchuckz@aol.com>
-X-Sonic-ID: 95c2e078-b625-436e-bd84-c2e244a36491
-Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic314.consmr.mail.gq1.yahoo.com with HTTP; Thu, 9 Jul 2026 05:09:20 +0000
-Received: by hermes--production-ne1-7568ccb994-mqdhs (Yahoo Inc. Hermes SMTP
- Server) with ESMTPA ID da73cafa7d25cff72b3b6899257e7b9a; 
- Thu, 09 Jul 2026 05:09:16 +0000 (UTC)
-From: Chuck Zmudzinski <brchuckz@aol.com>
-To: qemu-devel@nongnu.org
-Cc: xen-devel@lists.xenproject.org,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>,
- "Edgar E . Iglesias" <edgar.iglesias@gmail.com>
-Subject: [PATCH 3/3] xen/igd: fixup device id before registering rom
-Date: Thu,  9 Jul 2026 01:09:10 -0400
-Message-ID: <20260709050910.8217-4-brchuckz@aol.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260709050910.8217-1-brchuckz@aol.com>
-References: <20260709050910.8217-1-brchuckz@aol.com>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1whh4V-0006Pp-GZ
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 01:13:17 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-6986578d8c0so742832a12.1
+ for <qemu-devel@nongnu.org>; Wed, 08 Jul 2026 22:13:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783573991; cv=none;
+ d=google.com; s=arc-20260327;
+ b=oc6kVwx4klvKb/ttyp5bc0mYBeS+ihvW68pmYTajjvXa5BKAPcPeN2BCkRP1rVAK4O
+ AUgMPo0nfzmxymOPycFzm0SR6T3h//TOcNnfvMWUEXc9hnUMpDcDhL/K8BiBC3RnlLTH
+ CU9N2q97YhQ+9bBdwDOwxgeMxQiPuc+Kc3V477Rz9WmDHt9S2qOqzSy0X11UrgiRF4y6
+ VwmvKJpoTLbw3bgdiuvWfBSRbTGTFf2aFtgZBGA8KE8p9tnAvrL7eRnX+mC+cyZmYxZ4
+ vT/3Ghonth5orDO62iZcPH+cHRbawRs8yv/kPYGnDrPT4ivg16LXIgAWNRtCkRGDuZk3
+ ke9Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=8yheC23Fu7BnrPVtyitxwmCziP0KD0Q2ZaaJxs8SOa8=;
+ fh=m/WZA3u3rBkZ+1/typaUaOujij8qXHEnx536J+geYTw=;
+ b=XmImuH1zK6O/yfZcjxT3fQL6+rPEWFFSU6mutZzzSQ6lMPmogu4jswM4L/opIgytP0
+ HsLGYs+abu2M7hy4UGL6AydWDAHRAIbRdqR8veztyv79X007AjEXp3G0mzL2obUP5JME
+ GtXsQtBGSWDW+aoLnV0E7TRd1RCPIBcL/oXjfu5wOUwMM0vqI7HfNu4LNuK+iyAIOsn+
+ sfiOzMWmzN/N+5GDgfrqn021G5Qmg2qnhjQm+d5yJ2mHXCkYeKHQjcAztqVlf+wG16cc
+ f3HqCnqDieC8ACmGNW4KNhfUDkhrOC4YviixCuAPj0EbZtTt4buaRu4+juyR46T3xLQo
+ S4WA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1783573991; x=1784178791; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=8yheC23Fu7BnrPVtyitxwmCziP0KD0Q2ZaaJxs8SOa8=;
+ b=I5fVtV45R7t/hAWcBbiAtVVY6r7L7zyxNdqgNqJpEyE1dYqGIAirE8yrQrJxjj4v0N
+ 22LeAZi9U5Ya/mczFdc50pCOrtBlJSoTRHbmjraXdrO9ntyyw2mRwqK5HxsACaeKwT/T
+ 1MEPvg7LOiNhRahiKjnP1RPzQH5FO5iJgl+Rhu/wQ/YHRrjnKfQPKyg+m8Dn14S0PA+5
+ a9RFqXACUx4+CUrQnG0+BTr6EDarMRsqApoxkU+5XMtXgaJiYms7JNzMcXz0DUCnvFrz
+ q50027JLpl3J9sewiOiPrev+jWTWjB5MT8jKzdqtG20y1jBuPmlt/VihA0dX55PF0WBy
+ zbhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783573991; x=1784178791;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=8yheC23Fu7BnrPVtyitxwmCziP0KD0Q2ZaaJxs8SOa8=;
+ b=SKPe0rqb8Sw/3+3C4uP8mWQ71m/hDqdYJGeY11sF/UgCO9DtwRjbO/TkzXSnRaaT1W
+ NQujh0SpnxcqwyQdef7xxThsw2dN6vL7yZXgj5L1sa/68whgt5wWQlofUeg3jxbqHUqK
+ X6XA8t9Onc/xmnM79HmfED+ugFEbFkTI8rGn0HlGA/10S+wEGzt3DNyZWW+SG2LaxgZv
+ pMLisGBLXuq8aGuVxDSuDRP8U7kl+tgIC53/Qktd+hH46nsXz44oRdX9EWrA2wMO6Nov
+ 3tbxl2PHE0PWxvs/3SI2Jn47OAMCdeuma8OhD2F14rhv0QRYiIyzN6CRjYQ0ODd+zitB
+ xnSg==
+X-Gm-Message-State: AOJu0YwP7yTqB682zV0JILF/3iXD3U7oQLVzkjtjnq3SLpdT3KVyF7PN
+ b2Nffqomeuq+AJ6Re9j4asOmQ0ssQytDZnyuyxWThAihpC/qqVgCQIaiC9ynUli72xBfZzgeuUq
+ b0uAupiDkp7ivA2myDNFDKhHWLXg1lhU=
+X-Gm-Gg: AfdE7cmI0dSAVBrGN8FodWZRFLRgCZjA4q5mUZpoNE4aBRkW3tYyPcVJ/AIHUkI7kSu
+ tGJqSxJ7y941wKqeOftgDZF5nBGhuNvH8hy23dDF5moHCE+lNmNVn/+Oe6kqcbzhetXAetA58os
+ RMO0ywqiWLBliXP9WnrM7OTlHFRcVQ167NqnIufPmOywRchc47idLdi4sTpb1y9K8IK5NmxlyVf
+ bdeOeRTcYuI+nfrvLfjCEEuE5QyIvI7wzCYlaXTiLA6fcj7TYpyQe2I/w5A0vjNpcHvyLTLkOwo
+ 6Q6mZ1k2gyC49Fdw2ybQKBHK6ZU=
+X-Received: by 2002:a05:6402:4303:b0:698:3946:b78e with SMTP id
+ 4fb4d7f45d1cf-69ab4451c88mr2034100a12.5.1783573991200; Wed, 08 Jul 2026
+ 22:13:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=98.137.69.84; envelope-from=brchuckz@aol.com;
- helo=sonic314-21.consmr.mail.gq1.yahoo.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+References: <20260706161716.29488-1-bin.meng@processmission.com>
+In-Reply-To: <20260706161716.29488-1-bin.meng@processmission.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 9 Jul 2026 15:12:44 +1000
+X-Gm-Features: AUfX_myHysVwGqtWqQ67Ko0ynSj3XUs4vZYbeFXnmNZ4BMEyjIwZrON-k8ol3J0
+Message-ID: <CAKmqyKMURcgzxxA6oOYSMvxbCJ_-cZXjgwF3ioKG5yczSakHrw@mail.gmail.com>
+Subject: Re: [PATCH] gitlab-ci: Remove job building OpenSBI firmware binaries
+To: Bin Meng <bin.meng@processmission.com>
+Cc: QEMU <qemu-devel@nongnu.org>, Thomas Huth <thuth@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x532.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,83 +120,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With the current implementation, Seabios does not see the fixup of
-the device id done here and consequently Seabios does not load the
-VGA bios and the guest screen does not light up until the guest OS
-graphics driver is loaded. So there is no VGA output from the passed
-through Intel IGD from either Seabios or the guest bootloader with
-the current implementation in cases when the device id needs fixing.
+On Tue, Jul 7, 2026 at 2:23=E2=80=AFAM Bin Meng <bin.meng@processmission.co=
+m> wrote:
+>
+> The OpenSBI firmware build job follows the same pattern as the EDK2 job
+> [1] that was removed earlier [2]: it exists to produce firmware binaries
+> from CI artifacts, but those outputs are not consumed by the tree.
+>
+> Remove the job definition and its project include to avoid maintaining
+> bitrotting container and firmware build logic.
+>
+> [1] 71920809ceab ("gitlab-ci.yml: Add jobs to build EDK2 firmware binarie=
+s")
+> [2] 690ceb71936f ("gitlab-ci: Remove job building EDK2 firmware binaries"=
+)
+>
+> Signed-off-by: Bin Meng <bin.meng@processmission.com>
 
-Fix this by waiting until after doing fixup of the device id before
-registering the option ROM. With this patch, Seabios sees the fixup
-done here and loads the VGA bios, and both Seabios and the guest
-bootloader light up the guest screen in cases when fixup of the
-device id is needed.
+Thanks!
 
-Also, remove unused header hw/core/loader.h
+Applied to riscv-to-apply.next
 
-Fixes: 881213f ("xen, gfx passthrough: retrieve VGA BIOS to work")
-Signed-off-by: Chuck Zmudzinski <brchuckz@aol.com>
----
- hw/xen/xen_pt_graphics.c |  3 +++
- hw/xen/xen_pt_load_rom.c | 18 ++++++++++++------
- 2 files changed, 15 insertions(+), 6 deletions(-)
+Alistair
 
-diff --git a/hw/xen/xen_pt_graphics.c b/hw/xen/xen_pt_graphics.c
-index 54f0d54..9e9ab55 100644
---- a/hw/xen/xen_pt_graphics.c
-+++ b/hw/xen/xen_pt_graphics.c
-@@ -222,6 +222,9 @@ void xen_pt_setup_vga(XenPCIPassthroughState *s, XenHostPCIDevice *dev,
-         }
-     }
- 
-+    pci_register_bar(&s->dev, PCI_ROM_SLOT, 0, &s->dev.rom);
-+    s->dev.has_rom = true;
-+
-     /* Currently we fixed this address as a primary for legacy BIOS. */
-     physical_memory_write(0xc0000, bios, bios_size);
- }
-diff --git a/hw/xen/xen_pt_load_rom.c b/hw/xen/xen_pt_load_rom.c
-index 319efca..407b630 100644
---- a/hw/xen/xen_pt_load_rom.c
-+++ b/hw/xen/xen_pt_load_rom.c
-@@ -4,14 +4,22 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
--#include "hw/core/loader.h"
- #include "hw/pci/pci.h"
- #include "xen_pt.h"
- 
- /*
-- * Scan the assigned devices for the devices that have an option ROM, and then
-- * load the corresponding ROM data to RAM. If an error occurs while loading an
-- * option ROM, we just ignore that option ROM and continue with the next one.
-+ * Normally xen_pt_register_regions will handle loading the option ROM,
-+ * but in some cases, such as for the Intel IGD, the option ROM might
-+ * need to be modified.
-+ *
-+ * For such cases, use this function to get a pointer to the option ROM
-+ * from sysfs. Caller has the responsibility to edit the option ROM as
-+ * needed, call pci_register_bar to register the modified option ROM,
-+ * and set has_rom to true for the PCI device.
-+ *
-+ * This function must be called before xen_pt_register_regions is called
-+ * because if xen_pt_register_regions is called first, it will register
-+ * the option ROM and any attempt to register it again will fail.
-  */
- void *pci_assign_dev_load_option_rom(PCIDevice *dev,
-                                      int *size, unsigned int domain,
-@@ -76,8 +84,6 @@ void *pci_assign_dev_load_option_rom(PCIDevice *dev,
-         goto close_rom;
-     }
- 
--    pci_register_bar(dev, PCI_ROM_SLOT, 0, &dev->rom);
--    dev->has_rom = true;
-     *size = st.st_size;
- close_rom:
-     /* Write "0" to disable ROM */
--- 
-2.52.0
-
+>
+> ---
+>
+>  MAINTAINERS                     |  2 -
+>  .gitlab-ci.d/opensbi.yml        | 88 ---------------------------------
+>  .gitlab-ci.d/opensbi/Dockerfile | 34 -------------
+>  .gitlab-ci.d/qemu-project.yml   |  1 -
+>  4 files changed, 125 deletions(-)
+>  delete mode 100644 .gitlab-ci.d/opensbi.yml
+>  delete mode 100644 .gitlab-ci.d/opensbi/Dockerfile
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 97dcc78ded..59707bf2a7 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -4117,8 +4117,6 @@ R: Daniel Henrique Barboza <daniel.barboza@oss.qual=
+comm.com>
+>  L: qemu-riscv@nongnu.org
+>  S: Supported
+>  F: pc-bios/opensbi-*
+> -F: .gitlab-ci.d/opensbi.yml
+> -F: .gitlab-ci.d/opensbi/
+>
+>  Clock framework
+>  M: Luc Michel <luc@lmichel.fr>
+> diff --git a/.gitlab-ci.d/opensbi.yml b/.gitlab-ci.d/opensbi.yml
+> deleted file mode 100644
+> index 42f137d624..0000000000
+> --- a/.gitlab-ci.d/opensbi.yml
+> +++ /dev/null
+> @@ -1,88 +0,0 @@
+> -# All jobs needing docker-opensbi must use the same rules it uses.
+> -.opensbi_job_rules:
+> -  rules:
+> -    # Forks don't get pipelines unless QEMU_CI=3D1 or QEMU_CI=3D2 is set
+> -    - if: '$QEMU_CI !=3D "1" && $QEMU_CI !=3D "2" && $CI_PROJECT_NAMESPA=
+CE !=3D "qemu-project"'
+> -      when: never
+> -
+> -    # In forks, if QEMU_CI=3D1 is set, then create manual job
+> -    # if any files affecting the build output are touched
+> -    - if: '$QEMU_CI =3D=3D "1" && $CI_PROJECT_NAMESPACE !=3D "qemu-proje=
+ct"'
+> -      changes:
+> -        - .gitlab-ci.d/opensbi.yml
+> -        - .gitlab-ci.d/opensbi/Dockerfile
+> -        - roms/opensbi/*
+> -      when: manual
+> -
+> -    # In forks, if QEMU_CI=3D1 is set, then create manual job
+> -    # if the branch/tag starts with 'opensbi'
+> -    - if: '$QEMU_CI =3D=3D "1" && $CI_PROJECT_NAMESPACE !=3D "qemu-proje=
+ct" && $CI_COMMIT_REF_NAME =3D~ /^opensbi/'
+> -      when: manual
+> -
+> -    # In forks, if QEMU_CI=3D1 is set, then create manual job
+> -    # if the last commit msg contains 'OpenSBI' (case insensitive)
+> -    - if: '$QEMU_CI =3D=3D "1" && $CI_PROJECT_NAMESPACE !=3D "qemu-proje=
+ct" && $CI_COMMIT_MESSAGE =3D~ /opensbi/i'
+> -      when: manual
+> -
+> -    # Scheduled runs on mainline don't get pipelines except for the spec=
+ial Coverity job
+> -    - if: '$CI_PROJECT_NAMESPACE =3D=3D $QEMU_CI_UPSTREAM && $CI_PIPELIN=
+E_SOURCE =3D=3D "schedule"'
+> -      when: never
+> -
+> -    # Run if any files affecting the build output are touched
+> -    - changes:
+> -        - .gitlab-ci.d/opensbi.yml
+> -        - .gitlab-ci.d/opensbi/Dockerfile
+> -        - roms/opensbi/*
+> -      when: on_success
+> -
+> -    # Run if the branch/tag starts with 'opensbi'
+> -    - if: '$CI_COMMIT_REF_NAME =3D~ /^opensbi/'
+> -      when: on_success
+> -
+> -    # Run if the last commit msg contains 'OpenSBI' (case insensitive)
+> -    - if: '$CI_COMMIT_MESSAGE =3D~ /opensbi/i'
+> -      when: on_success
+> -
+> -docker-opensbi:
+> -  extends: .opensbi_job_rules
+> -  stage: containers
+> -  image: docker:latest
+> -  services:
+> -    - docker:dind
+> -  variables:
+> -    GIT_DEPTH: 3
+> -    IMAGE_TAG: $CI_REGISTRY_IMAGE:opensbi-cross-build
+> -  before_script:
+> -    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REG=
+ISTRY
+> -    - until docker info; do sleep 1; done
+> -  script:
+> -    - docker pull $IMAGE_TAG || true
+> -    - docker build --cache-from $IMAGE_TAG --tag $CI_REGISTRY_IMAGE:$CI_=
+COMMIT_SHA
+> -                                           --tag $IMAGE_TAG .gitlab-ci.d=
+/opensbi
+> -    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+> -    - docker push $IMAGE_TAG
+> -
+> -build-opensbi:
+> -  extends: .opensbi_job_rules
+> -  stage: build
+> -  needs: ['docker-opensbi']
+> -  artifacts:
+> -    when: on_success
+> -    paths: # 'artifacts.zip' will contains the following files:
+> -      - pc-bios/opensbi-riscv32-generic-fw_dynamic.bin
+> -      - pc-bios/opensbi-riscv64-generic-fw_dynamic.bin
+> -      - opensbi32-generic-stdout.log
+> -      - opensbi32-generic-stderr.log
+> -      - opensbi64-generic-stdout.log
+> -      - opensbi64-generic-stderr.log
+> -  image: $CI_REGISTRY_IMAGE:opensbi-cross-build
+> -  variables:
+> -    GIT_DEPTH: 3
+> -  script: # Clone the required submodules and build OpenSBI
+> -    - git submodule update --init roms/opensbi
+> -    - export JOBS=3D$(($(getconf _NPROCESSORS_ONLN) + 1))
+> -    - echo "=3D=3D=3D Using ${JOBS} simultaneous jobs =3D=3D=3D"
+> -    - make -j${JOBS} -C roms/opensbi clean
+> -    - make -j${JOBS} -C roms opensbi32-generic 2>&1 1>opensbi32-generic-=
+stdout.log | tee -a opensbi32-generic-stderr.log >&2
+> -    - make -j${JOBS} -C roms/opensbi clean
+> -    - make -j${JOBS} -C roms opensbi64-generic 2>&1 1>opensbi64-generic-=
+stdout.log | tee -a opensbi64-generic-stderr.log >&2
+> diff --git a/.gitlab-ci.d/opensbi/Dockerfile b/.gitlab-ci.d/opensbi/Docke=
+rfile
+> deleted file mode 100644
+> index 5ccf4151f4..0000000000
+> --- a/.gitlab-ci.d/opensbi/Dockerfile
+> +++ /dev/null
+> @@ -1,34 +0,0 @@
+> -#
+> -# Docker image to cross-compile OpenSBI firmware binaries
+> -#
+> -FROM ubuntu:18.04
+> -
+> -MAINTAINER Bin Meng <bmeng.cn@gmail.com>
+> -
+> -# Install packages required to build OpenSBI
+> -RUN apt update \
+> -    && \
+> -    \
+> -    DEBIAN_FRONTEND=3Dnoninteractive \
+> -    apt install --assume-yes --no-install-recommends \
+> -        build-essential \
+> -        ca-certificates \
+> -        git \
+> -        make \
+> -       python3 \
+> -        wget \
+> -    && \
+> -    \
+> -    rm -rf /var/lib/apt/lists/*
+> -
+> -# Manually install the kernel.org "Crosstool" based toolchains for gcc-8=
+.3
+> -RUN wget -O - \
+> -    https://mirrors.edge.kernel.org/pub/tools/crosstool/files/bin/x86_64=
+/8.3.0/x86_64-gcc-8.3.0-nolibc-riscv32-linux.tar.xz \
+> -    | tar -C /opt -xJ
+> -RUN wget -O - \
+> -    https://mirrors.edge.kernel.org/pub/tools/crosstool/files/bin/x86_64=
+/8.3.0/x86_64-gcc-8.3.0-nolibc-riscv64-linux.tar.xz \
+> -    | tar -C /opt -xJ
+> -
+> -# Export the toolchains to the system path
+> -ENV PATH=3D"/opt/gcc-8.3.0-nolibc/riscv32-linux/bin:${PATH}"
+> -ENV PATH=3D"/opt/gcc-8.3.0-nolibc/riscv64-linux/bin:${PATH}"
+> diff --git a/.gitlab-ci.d/qemu-project.yml b/.gitlab-ci.d/qemu-project.ym=
+l
+> index 104a147b2d..72d02bc65b 100644
+> --- a/.gitlab-ci.d/qemu-project.yml
+> +++ b/.gitlab-ci.d/qemu-project.yml
+> @@ -11,7 +11,6 @@ default:
+>  include:
+>    - local: '/.gitlab-ci.d/base.yml'
+>    - local: '/.gitlab-ci.d/stages.yml'
+> -  - local: '/.gitlab-ci.d/opensbi.yml'
+>    - local: '/.gitlab-ci.d/containers.yml'
+>    - local: '/.gitlab-ci.d/crossbuilds.yml'
+>    - local: '/.gitlab-ci.d/buildtest.yml'
+> --
+> 2.34.1
+>
+>
 
