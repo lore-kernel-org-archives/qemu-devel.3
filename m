@@ -4,169 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 424BFC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 17:28:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53007C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 17:30:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whsXn-0000nu-KM; Thu, 09 Jul 2026 13:28:15 -0400
+	id 1whsZU-0001K8-Eg; Thu, 09 Jul 2026 13:30:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chang.seok.bae@intel.com>)
- id 1whsXm-0000nX-Jk; Thu, 09 Jul 2026 13:28:14 -0400
-Received: from mgamail.intel.com ([192.198.163.16])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1whsZQ-0001Jr-HT
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 13:29:56 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chang.seok.bae@intel.com>)
- id 1whsXj-0003Df-Qr; Thu, 09 Jul 2026 13:28:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1783618092; x=1815154092;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=M8qao6f8lzVhdrlH/Kt+I5Z+SqG8dceZwbcDzSv9LQM=;
- b=SjriT/OegZgmn495dTl5RyaSfn3JCES43WlWlDATfsuPytFS7S1BUx2I
- PBwTjo7D0aN4hrc5KrvqqyMNMHlKcGYWuhRgGsCU2kmcErRE6KZIwaU5Y
- OkwGdWP9ET4kk42T2Bo+VkaSvbcDLuy6eP7LjY0jIA/WUE3tLdnNfq4qZ
- jSBfwe7xu5T7fLg2xQA3H/xcs1PQictFpQOw91zWgQa4dnTe7FDO2xqCn
- YpgFHqn+A7I5oIoSW7JZ+8sU23E2QvP18fbvlwljzxsTKcpJi2c9I4Xbz
- MX58vrkG++CdUF3k/Jhie7po4G3XxV+kbgdue0kIyTPtgMiXnKQa8dMDt g==;
-X-CSE-ConnectionGUID: UTe+xi+fSZmwsQeIXgZEiQ==
-X-CSE-MsgGUID: eDUybfPeQbaUy4YIC+Cjrw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11841"; a="71832094"
-X-IronPort-AV: E=Sophos;i="6.25,154,1779174000"; d="scan'208";a="71832094"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Jul 2026 10:28:08 -0700
-X-CSE-ConnectionGUID: Xp/7AXTFS2CRd48OjeEF3A==
-X-CSE-MsgGUID: tKAspHh2R5+2RPPvAJ7Glg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,154,1779174000"; d="scan'208";a="258955382"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
- by orviesa005.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Jul 2026 10:28:08 -0700
-Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43; Thu, 9 Jul 2026 10:28:08 -0700
-Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43 via Frontend Transport; Thu, 9 Jul 2026 10:28:08 -0700
-Received: from DM5PR21CU001.outbound.protection.outlook.com (52.101.62.28) by
- edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43; Thu, 9 Jul 2026 10:28:06 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=iR4ohd+G1IMKi/rx8DkzOmMeqARVDG/Zl/jmJURoRzjf4to/q654jS20mg1HrgcP43z/wEdor/Uno/k4ZWcWoXFIwki+/3kEG5umuNJ3Wl1sOu/RlkHp/5NGD9OpiuztNt3WVb50xGXNvFWfk+0os1FonEYaaLTZeaThozNTsD47WOPesTsNubBPJHZqQTyRKLeOUOKMYLFmt2HhzZkxCi/ZK9Lnd5vhOR4e2FSLJyb1K3DnKXPYY93lWj7bPA/KH6fwNpdAXviljwSzWqtuVaBIWzNH/AIU0WWK/QjAirs9rUTZUIGWMEs4fbHZ2dhmprFu5bFi39pfjr6ZjUrd1A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=CdFLTeeMrFXcP7OoTow1O0y6Ur22guB/9bd0wlKZ2d4=;
- b=qRSeo6uWKc143INhoI/jSAdkFxJTMU5zHBUv5BYtE9L1xN0zfJ6b/z/GrJFK+H+SYHqXY8maQOkSUqeGRuzH9fVoeCt9yVf4bW1g98R+hv9fXiK2ObWVGwKZuXtGAS9Iy0Bj7GJUbcWpyIr7c+/RdqbGXI/pHGLm22mqi15cUDBsQPzmxkn/In2WfUj9IWzwTiMx8VeTP2CunwuDgsCaNpd3EAJ52AC+Ea3Az7ZFZhmMmiXvYjQt8pbvJkeCGyrbcGHtbl/8zCbKDWP7wHwHb1KGhzeXiEgqxlRGyD3gEjTue4EMxBk7kySN0ZMkET0fpssJGPjYjdkqpzklwnhdwA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DS0PR11MB7925.namprd11.prod.outlook.com (2603:10b6:8:f8::18) by
- MW4PR11MB6838.namprd11.prod.outlook.com (2603:10b6:303:213::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.10; Thu, 9 Jul
- 2026 17:27:59 +0000
-Received: from DS0PR11MB7925.namprd11.prod.outlook.com
- ([fe80::60af:89a0:65dc:9c84]) by DS0PR11MB7925.namprd11.prod.outlook.com
- ([fe80::60af:89a0:65dc:9c84%3]) with mapi id 15.21.0181.009; Thu, 9 Jul 2026
- 17:27:59 +0000
-Message-ID: <7095a033-e2c6-4d60-ac6e-9d2d95add470@intel.com>
-Date: Thu, 9 Jul 2026 10:27:57 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] i386/cpu: Remove AMX-TF32 CPUID bit
-To: Zhao Liu <zhao1.liu@intel.com>
-CC: <qemu-devel@nongnu.org>, <pbonzini@redhat.com>, <berrange@redhat.com>,
- <seanjc@google.com>, <qemu-stable@nongnu.org>
-References: <20260708210326.402054-1-chang.seok.bae@intel.com>
- <ak9+ZaWdzxr4eCju@intel.com>
-Content-Language: en-US
-From: "Chang S. Bae" <chang.seok.bae@intel.com>
-In-Reply-To: <ak9+ZaWdzxr4eCju@intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BYAPR21CA0009.namprd21.prod.outlook.com
- (2603:10b6:a03:114::19) To DS0PR11MB7925.namprd11.prod.outlook.com
- (2603:10b6:8:f8::18)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1whsZN-0003OX-OC
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 13:29:56 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 669HSJee2553768
+ for <qemu-devel@nongnu.org>; Thu, 9 Jul 2026 17:29:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ UkJrkwjhU43RFSro4Kt/QPmHgp57NUW9Be4L1NT+d58=; b=kzjPrsQ4E9w1p/8/
+ pM97HUWTCnDyg1T+ICX9uPvadhsHi98XhpkYR1T4wp5zCyG5t+xjXKIwZigCJZZj
+ v4OxZRuJjst4TQyWAx0HENotJE9zP8F6IxLuVcO9kEEEvQyqKCZgFYu19aVCxvva
+ p2dlZ1ymaCTQDkJblYN+c26IZ+4ZggZY5bv2JzyASNZA2XIY/ulXLrEV+eJ72/Yk
+ cxj+Xh/2EeyF8tfhNC/E5QFLFg5vd6HI9QnUirAo3zAL0GEMT+RNmnj+K7WJ+b5Y
+ lmILUQeg00uMqYP+n363OBNPTBZwdzxKht8tAXP488aRmgL/PrSH3YXttLVAdX1W
+ 86/YFQ==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4faeg3gkp0-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 17:29:51 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-3810960140eso182098a91.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 10:29:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1783618191; x=1784222991; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=UkJrkwjhU43RFSro4Kt/QPmHgp57NUW9Be4L1NT+d58=;
+ b=EQpKG38acyfNV2t7PQe+9Id7nETGE33h1Wi6guGhcODPamn8Fxx8bmb6aigQMlR95P
+ 8wyCLl2x8e0Pj5yXAdGFS5JhlZ+LccQki7f4oqsAvC2KfkGANTAMTUTHSyF7HJcjAd8z
+ F3tyq26U0XNCvSP4akgEbCxd31fgqnB19CSKsB9lE8oE2cv5tJCI/m69x8IIKKksbZMa
+ IcEc7czGGYocs+MYNbBj2UO6mKy1ZrOQzd5YXPibZgiQ025PGJGyOTt34GlUIV51w/1Z
+ iOHmm20Lzv1nW8my9tyDOSZlTJAmSESFOd3YEQljQ+jeOC5dF4iCLzdxu9z1C6+HA8UR
+ aVOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783618191; x=1784222991;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=UkJrkwjhU43RFSro4Kt/QPmHgp57NUW9Be4L1NT+d58=;
+ b=O9RLgNeKq0GF8+6Azjc4GckRXnlogjnHXSHCGqaZ2YubEuDeI35WKraBVI+KsH4wZ2
+ WVYgA49PqpBHKgLLHASEpCVqmjDVpeuKGVE96962J3Y/Oc9bkav6DjjvvHDGho87nvfY
+ meDiD1XS3yWx/efDT89eMm8Af1/Y7B6n0JJ8GtcNfpVs/RhXzCLgPGwmozPy8rA3YfHO
+ DcyObg+baOkhYCF769dnvp1Lwt9WTZJJpGYrWkfLND+/6axLm+LH2A9xL5m7WxPVWY4R
+ f7E0KM27XG6KE0pQ4nCC114UO5IzUpKO1hVilbJc2By3HkP1UBhg19f/4WyzInEMQ6gw
+ wdjg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rpf1sKx0va0ZgMQ9X5APd8tXeepmEXrzsSelacBzG0FeomLYyx+CxcgL46jOIOhX5AM+Bpp716tMy+k@nongnu.org
+X-Gm-Message-State: AOJu0YwVetGD4OnuQ2Dl79M0XGX4Q0bwkf5QdlewsuRFyl01dlsaOWL0
+ 8nRBl/jS0R6G4hZ3cHjoSWR0oO/HFntWEnGRje0vEFjIAS+1uwJ5api9aBuG3o4kEtn9W4yqBbX
+ UPXq0y3V6dF6glBKYfbgcOR8eu8y0wDV3EVcvtlN2+x1GFHvO0j7k0NmXqw==
+X-Gm-Gg: AfdE7ckT6zwwybFg8MfZG61kW8mcgIcvWgpCqPBi9ySCakmXKpNb14t39R2oSjq1+HD
+ kBOsGC04x8FJbAmDITbfQiJAshVYl3DAiJp6Zll44vcd42Du2W8lsu4hnWKBi1OCtxnQdkrw75g
+ x/Gocmo3O4KjWmilqU3Jyv6qb8CCSHDOF8pG+Az90NmmkzbhgWk3bTtAOe3K0BLGEc7wY7iK7mn
+ RfnrvVactkYtcDrKL8uFrlBCgz2l5px6AsgBIi2TxqiPOouFNm4RGoZrUxRXLcsTRooKE80PU6x
+ 8JaLAanfsoO5NRQRG4NPcssdPmy3oyD3X3ynP95rTAEGdELkKRSIECvk8KcYc6TPm2CiNC65XnE
+ E0DObAYny65yMUZCL+AGswkG3Ic7R2l7cfZsxv6UavpBTuJYH/zopItFbyg6xYJ6v7LIIUNPJKf
+ FD9vU=
+X-Received: by 2002:a17:90b:2545:b0:387:e0cb:7f1 with SMTP id
+ 98e67ed59e1d1-389425942dcmr8294114a91.37.1783618190691; 
+ Thu, 09 Jul 2026 10:29:50 -0700 (PDT)
+X-Received: by 2002:a17:90b:2545:b0:387:e0cb:7f1 with SMTP id
+ 98e67ed59e1d1-389425942dcmr8294076a91.37.1783618190032; 
+ Thu, 09 Jul 2026 10:29:50 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-38a5516abffsm1556796a91.4.2026.07.09.10.29.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Jul 2026 10:29:49 -0700 (PDT)
+Message-ID: <3954a5e4-32c2-4f89-a4e4-4b445e52589a@oss.qualcomm.com>
+Date: Thu, 9 Jul 2026 10:29:48 -0700
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS0PR11MB7925:EE_|MW4PR11MB6838:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1fc1e6c9-7eea-4744-fedf-08dedddf6ba9
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|366016|376014|1800799024|11063799006|4143699003|56012099006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: IUHEhXFYiXJrKZe/M/EMZ+L8bnvrAemOQdVEakrcyIs8eA4m91i/C02OsXJ7hGJoCo2Mfc1a1+TXoG0y1HpNZDQk77ja+mMRN/rpRTjgkoicziF2Tj2o8sruYkd+cvtN+XnuJFHQS8+iUk6HTL/psmdSMQLRepw6YVruOTQTKXCAwb7ZRflaoFALkI77sUADsBLCNj3QRQromlB1d/6NVbNGaNUqCmdmjM8ARYkPy4fcegrSwK1fjniLt82GvrINolxXi3QlM/qG2XyiP3qtjbW7r2m0DkyvUr4sGXVGMsLEW8wdiPSSYNyzrescED6WrxwkTbKHoc3kt7gZuAaxKPYoG9NQyAh9/DuVSTLzMMT0xu1SM3U8lJidYBTNIyv1ICWte55lvXl+kJNSlAfnjTxIRoAMc1sZ2Y2p98Gdfbp8pY2C0FzUajchg5+ig3L831hR8tc1r+BNaIKafXxiFOYQA5rTOsp5iku+HWx9UyE9S6lgQQjuEzb98nbzSDKU9e4mBEot160PpaUysI6KOWUBzUejE2TeqcMO9KKR6pDwAEq4UROF9hFHw8UUzgHJBO92x7V2gKkk5NYOoSHxWdL0GblMxItyQgTAY4NZoB/HEN6786AORZ67tEcWQ8Jthse0PJZ97z6Dw3PSmPCDDnZh2b61fuJmXw6J8NQ+H8g=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DS0PR11MB7925.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(366016)(376014)(1800799024)(11063799006)(4143699003)(56012099006)(22082099003)(18002099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?djEvR29ybkNqZWtMbGdJQlVBV1RuZ3FXTXFGZStwRjBsTVZGUHhXRkw2aGVs?=
- =?utf-8?B?TUxwUHdBeE5qK0lUUFd2SmF2WFRzQ0pOL1RjZFRiZDhOTkFDNXpDc2UxT0gr?=
- =?utf-8?B?aWNLMERteWdNMFVLaCtRRHd2bUptbDV2em9GS0ppMnRQS3BQTlpKSnlqSHFK?=
- =?utf-8?B?UE5mb0pzbWZkOWNHSmxhbGhjblZ2azExekd6RUx2Ulk0QnVWc0tXc0lIZ2dh?=
- =?utf-8?B?NGZWYjExTGNnbVBlWE1zdTlIVWozakVEalRkdjY0QXlkZ1lLd2RVcllVa280?=
- =?utf-8?B?eHpYSVlPSEZXRGdXaVF1dlFzSGZWU2xobEZ3RmV3MUt6K0dEYUJ2cytlUUdJ?=
- =?utf-8?B?cTNGc3VONnltUVhIdDdYN1VwRGYzSTFSWXJjT24zWmE4R1FyZlJZQjczOGNk?=
- =?utf-8?B?TDlLaUgrdFppVmtJdHMyQTEzcUJaNlNsUUR5aWozMXNyS2dWZklLODNxMG5y?=
- =?utf-8?B?ZTAyTGlmN2w1UG9adkNyNmVxRkw1N0gzRFQ0Ym5mMno0VmxxK2VSN2Z6N21k?=
- =?utf-8?B?R0RzNDJWNEFiWHBFWkVPcmx1Z1l2M3EvY2lXeGt2M05RZkpGL0U0VmVsZDYx?=
- =?utf-8?B?ZGZtdGtaZHJmYzRydW1EU3ZEamgxRUpGN2hzbkZGV3BtOEhNTzVVZDIvdnBv?=
- =?utf-8?B?Q0JkS1p3YTJYb2ZhaEFUNERvb0NMekI2RlZFS3J6R01XQnlWUnBuYVNOMm1y?=
- =?utf-8?B?cXBMWnZSd1VsRDdwWTh5RmJkNUtxWUYycUh6Y2dPMTRjOHhyTG8zUlpDaExS?=
- =?utf-8?B?RC93eFNjNzZIMVZwT2dJb2pXbDRodC96TEpuTDNXdVYzWXhrZXVnUEZEaVRB?=
- =?utf-8?B?aVJKdzdSRFYwVlRmRDlMb0VUamQyVENQLzkzOUVQQTNGU3pZVDlPYVBtWWZo?=
- =?utf-8?B?WFJqOHdiWTVrRUcraGVjbjB5ejZsNHgwTEl1K0hQUWJJcncrS2c0dUtJSkN1?=
- =?utf-8?B?RGFEOEpYQmZ1VFFXSFVRckVBNTlFYytuTjBaaVQ3Nnc3WStoTThNYjFIdFJL?=
- =?utf-8?B?Y3UvOHFzOEl5OTk4TjROTXYxdnZjQlVhKzV3Nzd0RzgrRWhhTm9CUnJhSEJ4?=
- =?utf-8?B?ZGpuT1F2TWNGd3RXQ21Ndy9BSE9ueWx0cUlSV3NzWGtOZklzSERiWUNTSDBF?=
- =?utf-8?B?R2J6ZGE2V1FzL281c3RjUGUrRkdFSlgwMVZiN0xpbXBBb2FzQ2JzNlhHdzJr?=
- =?utf-8?B?SGJXZ3lQT0hvNmJZS2l3VXN6bW9rM2Z0WStNd1dCdEliaEZGeUxRSkVoZEFG?=
- =?utf-8?B?aEFQTGhsYmk0cHFtemE0VkptaldmTlJlM1FwNG9nUmpzOHFqdStCM2dJazFI?=
- =?utf-8?B?YmRWUnpyeENWS2Q5SktqVVp2azJ3NFFoRDUrN3FFU3hWS3dzUUl3bVNlaEJu?=
- =?utf-8?B?WGxKZDBtOEhpQzFuSWNnMEFSNEpIbU5xSnM3dnd6MlNHdS83K2ZOUEhBSTNt?=
- =?utf-8?B?WGFhSUlOTnRERjRkREJmSkZVcWI5dFdmY2FUVEViWFlzL3hydE0waFpFT3BO?=
- =?utf-8?B?eHdWUG9Rc1J2K0d1QWVRSFNvMmMrbThNM0JYczVnUi9CeE5TNndIK3V1ajQ4?=
- =?utf-8?B?eWZuQ0w4NjU0TmRzV1I2WnkxTGpXNDRSb3hFNWsrVmRocmxGOCttdnkyckp3?=
- =?utf-8?B?akJLWFloK0lJdk1pR2JZYytpRHRhQ2o2ZVFlbjhVMXpVNG0vMThPNm9jeUdJ?=
- =?utf-8?B?V3VsWC94eW5uRmthd1h3TmYybFFzNUZUcUttZGtEeERNKzhsUHdHajd5aWtk?=
- =?utf-8?B?YW4wTGt5NWJDOUVBUGtuV3NKN2Zxd2lBclNZdnZMckZLamhZdzZQOVBlcW5v?=
- =?utf-8?B?NjZaaHpubVQ2dHdtckJyOGtHek11WlQrWElKTmx1dHdONVpRSE9CYno1UU5J?=
- =?utf-8?B?SDYxTjNMczYwQkNoZ2wrRVIxYWt0dFQzdGo0ZjZWU3R4VlRKVytCNWxsS3dV?=
- =?utf-8?B?eXUvc3c3QnBUSmszdjgzYjErTktNTVlqeTBrYXRBbzlwVFkzV1ZSSytadHBl?=
- =?utf-8?B?ZDhzbWVuT2l3S3BXRjVLNWY3TjdMMEFWWVlLUU15S1ZNaU0yVXM3ZUtKb21j?=
- =?utf-8?B?WXZNRGZScDRYb0ZOa0JqSDAzVFdBZGljSm1nakdPNFByMndvdExGUE1QSmdu?=
- =?utf-8?B?MVA2ZUh0QTBlQ0tGZkxvS0lyZDQ2MTZjY1BJMjB5R2pKNFp0K2d1M0JkR2p2?=
- =?utf-8?B?R2Mrc2MraFNGelQxcUpYMFR5SVk4MENBa3orRitJaWxmYmZoZ05VTTJBVGl5?=
- =?utf-8?B?cUpqNWtlWjRCK3cwR05CNTIrY2xzY2xLMmpFTzFJVWx0SVBiVi9HQUw5Y2c5?=
- =?utf-8?B?OVVDY2NlbHZSYTJIUCtmUG5zZGVKZCs0dWlLaXgvSG5XcEZyUGQ3Zz09?=
-X-Exchange-RoutingPolicyChecked: VmpQMaEG6cs8qbf3rF+YxIxoTw8TTcp+1HN/8YWck/psX7guKYAdOLKMUqCQtSHC3zpaKWhVgCITgnAKn7qR0y1nCWnWneRRWvRP9PjkpAJC7UGCGA3MEPKbz8zqKaeWkMSpba3OeTh1v4z3A+3Hi4QuhkSvIA48jNhPKSAoUo9wEQmac3uls6bPZHUDbTVUVmaj1u+ckWi+LF6ewkeKhjdTD+tH/Z2hB7udipsFcpdaB3xdbXX/nMA7D+avG/o2b291k6xAILvtJ8lDRrwUV5c67bG/X+xCBUHuV7GF0ae7WbmJ/GYHOV8mxPgG2XU+3Alsq7bcepYwHzFmvF7hAw==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1fc1e6c9-7eea-4744-fedf-08dedddf6ba9
-X-MS-Exchange-CrossTenant-AuthSource: DS0PR11MB7925.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jul 2026 17:27:58.9600 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: qZ6RrBz0igJDkAO3h2IRZ/HHL6lsjHkvF69Ss21nqrlNVdrLBZcpIZ6DPTUw8wWsfzcG8ohR8SIFnB6mZTmAc7KsohE6J2IGk8U6Im5kiGA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR11MB6838
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.16;
- envelope-from=chang.seok.bae@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 2/2] docs/about/emulation: document the dlcall plugin
+To: Ziyang Zhang <functioner@sjtu.edu.cn>, qemu-devel <qemu-devel@nongnu.org>
+Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
+ Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
+ Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
+References: <20260709025528.300019-1-functioner@sjtu.edu.cn>
+ <20260709025528.300019-3-functioner@sjtu.edu.cn>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260709025528.300019-3-functioner@sjtu.edu.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA5MDE3MiBTYWx0ZWRfX9CPv0VDDAPk6
+ hS19qlaRs1Qb8ashAIehl6mE05ogyx17lJo+T7z3xd7zLM22y18YockRRg0qXp0Ywv0OUEKOhZe
+ 61Fp43wTrJFrLzNWsM6U+6FY/i2k4N8Ghq+4YDD6k4jUE9lL95FJYV8r80Y/hkWWfe+OeNGWBcA
+ /QPgqsRaleJMm5T1c7p2lzf4373szbT5pHPRzurgwS+kL8vlNg/ec8eiyqIvmXuVua5R/0RYNYD
+ cEuPYAnceWZsYhOGx6uRZumBxp0DWW162gJaJEFuSV0cw/S+fMPODu6XrZXyGQ4TJ4AqRBvSsJA
+ 1x5pL2M0H1oAHlWA5xVcXGdAGAq/8lXHXLkXizHOIIsAOIwZAMmHc72HpWqWEdLj5bOQWZVbmpE
+ S8rDT53M3lpDNxMDC0FzNQqDee2XR0YhbKV+ZS+jVqvEDejq+nW3CvoW8m6Dfb9ddO2c7nQ+nl6
+ mp3rJeLwFx/GO6BCcGA==
+X-Authority-Analysis: v=2.4 cv=ZcMt8MVA c=1 sm=1 tr=0 ts=6a4fda8f cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=NEAV23lmAAAA:8 a=jQIij1hyAAAA:20 a=Lx1EvxgrAAAA:8 a=AuJn8XObV2d6nrw1dPgA:9
+ a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22 a=ZFi1QaP_tuf8dODdgmj-:22
+ a=bA3UWDv6hWIuX7UZL3qL:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA5MDE3MiBTYWx0ZWRfX4QPFYvuTaNL3
+ 9w4hAKefazrjJ7dKwnctwQHQNFVm7OdLYC3f/7h0MAVgZFpAcXdL1KKhM2sRp1hBMei151njMYH
+ 3pdPWdmghkTShgbKvFXbK8CLXKwWDu8=
+X-Proofpoint-GUID: vIzKMEb32hXxSr2mZoF94Xe0dizISQ5w
+X-Proofpoint-ORIG-GUID: vIzKMEb32hXxSr2mZoF94Xe0dizISQ5w
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-09_03,2026-07-09_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015 lowpriorityscore=0 malwarescore=0 bulkscore=0
+ suspectscore=0 priorityscore=1501 impostorscore=0 phishscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607090172
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -182,19 +162,298 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/9/2026 3:56 AM, Zhao Liu wrote:
-> 
-> (Cc stable list)
-> 
-> At present, there's no user for DMR CPU model, so I think it's safe to
-> drop this feature flag from DMR CPU model driectly.
-> 
-> But to avoid unnecessary warning on older QEMU, IMO this patch should
-> be backported to the stable QEMU as well.
+Thanks for the update.
 
-Yes, I think so.
-
+On 7/8/2026 7:55 PM, Ziyang Zhang wrote:
+> Document the dlcall plugin under Example Plugins: what it does, the trusted-
+> guests and guest_base == 0 constraints, how to load it, and a pointer to
+> Lorelei, one end-to-end userspace implementation, for the toolchain and a
+> runnable example.
 > 
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Thanks!
+> Co-authored-by: Kailiang Xu <xukl2019@sjtu.edu.cn>
+> Co-authored-by: Mingyuan Xia <xiamy@ultrarisc.com>
+> Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
+> ---
+>  docs/about/emulation.rst | 202 +++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 202 insertions(+)
+> 
+> diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+> index 3b4c365933..1a6480de89 100644
+> --- a/docs/about/emulation.rst
+> +++ b/docs/about/emulation.rst
+> @@ -1046,6 +1046,208 @@ Count traps
+>  This plugin counts the number of interrupts (asynchronous events), exceptions
+>  (synchronous events) and host calls (e.g. semihosting) per cpu.
+>  
+> +Dynamic Linking Call
+> +....................
+> +
+> +``contrib/plugins/dlcall.c``
+> +
+> +This plugin provides a dynamic linking function call interception mechanism
+> +for linux-user guests: the guest hands a call off to the host, where the plugin
+> +runs native code in its place instead of the guest emulating it. Interception
+> +alone enables several uses, for instance tracing or auditing guest calls.
+> +One use is acceleration by leveraging the host's native shared libraries. For
+> +example, a thunk layer can run the stock zlib ``minizip`` utility under
+> +emulation while forwarding its ``deflate`` calls to the host's native zlib
+> +library (libz). This avoids emulating those selected library calls instruction
+> +by instruction.
+> +
+> +The guest issues a reserved "magic" system call (4096 by default, configurable
+> +with ``syscall_num=N``) whose first argument selects a pass-through operation:
+> +dlopen/dlclose a host library, dlsym a symbol, and invoke a resolved host
+> +function. The plugin performs the operation on the host and consumes the
+> +syscall, so the real kernel never sees it.
+> +
+> +.. warning::
+> +
+> +   Trusted guests only. The guest can load arbitrary host libraries and run
+> +   arbitrary code in the QEMU host process. The plugin is not a sandbox and
+> +   provides no isolation. It also requires ``guest_base == 0`` (qemu-user's
+> +   default), as guest pointers are dereferenced as host addresses with no
+> +   translation.
+> +
+> +The plugin intentionally keeps the QEMU side lightweight and knows nothing
+> +about any particular library or its calling convention. Turning a real library
+> +into working thunks, including argument marshalling, callbacks and variadic
+> +functions, is done entirely in userspace, and any toolchain can implement the
+> +interface.
+> +
+> +Loading the plugin is all that is required from QEMU's side:
+> +
+> +.. code-block:: shell
+> +
+> +   qemu-x86_64 -plugin contrib/plugins/libdlcall.so <guest-program> ...
+> +
+> +`Lorelei <https://github.com/rover2024/lorelei>`_ is one end-to-end userspace
+> +implementation of this: it provides the guest and host runtimes and an
+> +automated toolchain that generates the thunks from a library's headers, so guest
+> +library calls run on the host's native libraries. It supports an x86_64 guest
+> +running on an x86_64, aarch64 or riscv64 host.
+> +
+> +A minimal end-to-end example uses a one-function library, ``libhello.so``, built
+> +two ways: the guest build tags its output ``from guest`` and the host build tags
+> +it ``from host``. An unmodified guest program ``main`` calls ``hello("world",
+> +7)``, and the thunk makes that same binary reach the host build in place of its
+> +own. The sources live under ``src/``:
+> +
+> +.. code-block:: c
+> +
+> +   /* src/hello.h */
+> +   #ifdef __cplusplus
+> +   extern "C" {
+> +   #endif
+> +   void hello(const char *name, int lucky);
+> +   #ifdef __cplusplus
+> +   }
+> +   #endif
+> +
+
+Please remove the cplusplus part, we don't need it here.
+
+> +.. code-block:: c
+> +
+> +   /* src/hello_guest.c */
+> +   #include "hello.h"
+> +   #include <stdio.h>
+> +
+> +   void hello(const char *name, int lucky)
+> +   {
+> +       printf("hello from guest: %s, lucky %d\n", name, lucky);
+> +       fflush(stdout);
+
+No need for fflush (same in hello_host)
+
+> +   }
+> +
+> +.. code-block:: c
+> +
+> +   /* src/hello_host.c */
+> +   #include "hello.h"
+> +   #include <stdio.h>
+> +
+> +   void hello(const char *name, int lucky)
+> +   {
+> +       printf("hello from host: %s, lucky %d\n", name, lucky);
+> +       fflush(stdout);
+> +   }
+> +
+
+Excellent, that's a nice way to see difference between guest and host.
+
+> +.. code-block:: c
+> +
+> +   /* src/main.c */
+> +   #include "hello.h"
+> +
+> +   int main(void)
+> +   {
+> +       hello("world", 7);
+> +       return 0;
+> +   }
+> +
+> +Lorelei ships a prebuilt toolchain (a "devkit") in its releases. Download the
+> +one for your host and unpack it:
+> +
+> +.. code-block:: shell
+> +
+> +   # <arch> is your host architecture: x86_64, aarch64 or riscv64
+> +   wget https://github.com/rover2024/lorelei/releases/download/v<version>/lorelei-devkit-<arch>-<version>.tar.xz
+> +   tar -xf lorelei-devkit-<arch>-<version>.tar.xz
+> +   DEVKIT=lorelei-devkit-<arch>
+
+Please replace this part with a proper url, choosing a specific version
+and arch. Ideally, you can publish under "latest" in addition to
+versioned releases on GitHub so url stays stable.
+
+Also, please add a link to https://github.com/rover2024/lorelei/releases
+in the comment so people can click this and see what is available.
+
+> +
+> +Build the guest ``libhello.so`` (x86_64) and the host ``libhello.so`` (this
+> +host's own architecture), then the guest program:
+> +
+> +.. code-block:: shell
+> +
+> +   mkdir -p build/guest build/host
+> +   $DEVKIT/bin/x86_64-linux-gnu-clang -shared -fPIC src/hello_guest.c -o build/guest/libhello.so
+> +   cc -shared -fPIC src/hello_host.c -o build/host/libhello.so
+> +   $DEVKIT/bin/x86_64-linux-gnu-clang src/main.c -Isrc -Lbuild/guest -lhello -o build/guest/main
+> +
+
+Good.
+
+> +Run it under qemu:
+> +
+> +.. code-block:: shell
+> +
+> +   qemu-x86_64 -E LD_LIBRARY_PATH=build/guest build/guest/main
+> +
+> +which prints::
+> +
+> +   hello from guest: world, lucky 7
+> +
+> +Now generate the thunk from the host ``libhello.so``. This produces a guest-side
+> +``libhello.so`` that stands in for the guest build, and a host-side thunk library
+> +that dispatches to the host build:
+> +
+> +.. code-block:: shell
+> +
+> +   $DEVKIT/bin/LoreMakeThunk.py --name hello --lib build/host/libhello.so \
+> +       --header hello.h -o thunks -- -Isrc
+> +
+> +Run the same ``main`` under the plugin, with the generated guest ``libhello.so``
+> +on ``LD_LIBRARY_PATH`` in place of its own. The call reaches the host build now,
+> +from the same unmodified binary:
+> +
+> +.. code-block:: shell
+> +
+> +   LORELEI_THUNK_PATH=thunks \
+
+Why do we need this variable?
+
+> +   LD_LIBRARY_PATH=$DEVKIT/lib:build/host \
+> +       qemu-x86_64 -plugin contrib/plugins/libdlcall.so \
+> +       -E LD_LIBRARY_PATH=thunks/x86_64/lib/x86_64-LoreGTL:$DEVKIT/x86_64/lib \
+> +       build/guest/main
+> +
+
+This still fails on my side with following error message:
+lorelei.guest-rt: failed to load host runtime: libLoreHostRT.so: cannot
+enable executable stack as shared object requires: Invalid argument
+qemu: uncaught target signal 6 (Aborted) - core dumped
+Aborted
+
+Seems like error message is incorrect in itself "invalid argument"?
+
+I'm using debian trixie (stable) in case you want to reproduce this on a VM.
+
+----
+
+Please simplify thunks/ folder hierarchy. Make only one subfolder
+(thunks/x86_64) having both the thunks and lorelei lib, and remove the rest.
+
+With this, we can simplify command to become:
+LD_LIBRARY_PATH=$DEVKIT/lib/:build/host \
+qemu-x86_64 -plugin contrib/plugins/libdlcall.so \
+-E LD_LIBRARY_PATH=thunks/x86_64 build/guest/main
+
+---
+
+Also, in lorelei tarball, why do we have /lib and x86_64/lib that have
+same libraries, but with different sizes? What's the difference?
+It's confusing.
+
+It seems like x86_64/lib folder is never used?
+
+> +which prints::
+> +
+> +   hello from host: world, lucky 7
+> +
+
+[
+> +The guest ``LD_LIBRARY_PATH``, passed with ``-E``, is where the emulated program
+> +looks for its libraries. Because ``main`` has no rpath, whatever ``libhello.so``
+> +this path resolves is the one it loads. The thunk run lists the generated thunk
+> +here, not the guest build, so the thunk stands in for it:
+> +
+> +* ``thunks/x86_64/lib/x86_64-LoreGTL`` holds the generated guest ``libhello.so``.
+> +* ``$DEVKIT/x86_64/lib`` holds the guest runtime support shipped with the devkit.
+> +
+> +The host ``LD_LIBRARY_PATH`` is QEMU's own search path:
+> +
+> +* ``$DEVKIT/lib`` holds the host runtime support shipped with the devkit.
+> +* ``build/host`` holds the host ``libhello.so`` the host thunk dispatches to.
+> +
+> +The finished tree::
+> +
+> +   src/
+> +     hello.h
+> +     hello_guest.c
+> +     hello_host.c
+> +     main.c
+> +   build/
+> +     guest/
+> +       libhello.so                            (guest build of the library)
+> +       main                                   (the guest program)
+> +     host/
+> +       libhello.so                            (host build of the library)
+> +   thunks/
+> +     lib/x86_64-LoreHTL/libhello_HTL.so       (host thunk)
+> +     x86_64/lib/x86_64-LoreGTL/libhello.so    (guest thunk, the drop-in)
+> +
+> +See the runnable
+> +`hello <https://github.com/rover2024/lorelei/tree/main/examples/hello>`_
+> +(minimal) and
+> +`demo <https://github.com/rover2024/lorelei/tree/main/examples/demo>`_
+> +(variadic functions and a callback that reenters the guest) examples, and
+> +`Lorelei <https://github.com/rover2024/lorelei>`_ for the toolchain and the
+> +runtime environment they expect.
+> +
+]
+
+Please remove the section above from the doc since it does not add
+useful information. Also, we already have a link to Lorelei above.
+
+> +.. list-table:: Dynamic Linking Call arguments
+> +  :widths: 20 80
+> +  :header-rows: 1
+> +
+> +  * - Option
+> +    - Description
+> +  * - syscall_num=N
+> +    - The magic syscall number the guest issues (default 4096). Must be high
+> +      enough not to clash with a real syscall.
+> +
+>  Other emulation features
+>  ------------------------
+>  
+
+We're getting closer, hang on.
+We need to have a simple example that is functional before being able to
+accept the plugin.
+
+Regards,
+Pierrick
 
