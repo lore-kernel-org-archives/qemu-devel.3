@@ -4,70 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F098C44501
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 17:46:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48DBEC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 18:17:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whsoD-0006XB-AC; Thu, 09 Jul 2026 13:45:14 -0400
+	id 1whtIT-0004CG-Mo; Thu, 09 Jul 2026 14:16:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1whso9-0006Ws-EU; Thu, 09 Jul 2026 13:45:09 -0400
-Received: from smtp2-g21.free.fr ([212.27.42.2])
+ (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
+ id 1whtIQ-0004C8-N2
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 14:16:26 -0400
+Received: from smtp186.sjtu.edu.cn ([202.120.2.186])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1whso6-0006zP-TM; Thu, 09 Jul 2026 13:45:09 -0400
-Received: from localhost (unknown [89.92.102.124])
- (Authenticated sender: emmanuel.blot@free.fr)
- by smtp2-g21.free.fr (Postfix) with ESMTPSA id 3EF5D20039E;
- Thu,  9 Jul 2026 19:44:46 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
- s=smtp-20201208; t=1783619103;
- bh=Vo3yKldZbhsukEB6vokF4cP035jiACvQjrkOM/NbWkA=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=XOSpvj1lWWWddEwq6Dz2ZXRQRsNcuMTYvg8DRkfSVBCpksfwxUPpll9FolaUle9oZ
- M+3hkGvo+Lk9sB6tDG8HXXOBoNf1I6m9YJ6v/s81mm0ZnjNcHJcpUqhlG2z3LCG964
- NEZlqokW82oxr388kONG+PurQc1IyzXWpaOzrXCocnbqilEjo1KmSUHbQ4MZ2qnjzF
- MF/bQSMTdwCb/OtEkiZoqWxIcosIJ7aw2rWJ8jsZc2R+pAjoUAFTpkeFvg5Z4RrGZ2
- bUv4bqhxtNCd/VCgHpEw5mVnjabGGf4UlkPJeZq25QhmQ+rzhVkWmqWNFf34zSelqO
- TGlpnI31sykOg==
-From: Emmanuel Blot <emmanuel.blot@free.fr>
-Date: Thu, 09 Jul 2026 17:23:07 +0200
-Subject: [PATCH 15/29] hw/gpio: pca9554: add PCA9536 support
+ (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
+ id 1whtIM-0000LB-QP
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 14:16:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sjtu.edu.cn;
+ s=default; t=1783620971;
+ bh=pWtVe8ZEveqlZZima8YhRxKX1iTAh2G4gLlSmZ9MW3w=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=p3PJCffBS7erm+4eD+TraAsopTdJLhYk9MN7iZ+bfAZyJJF1RH+CwfgLORdpUq+EX
+ AU+CAko5trFWjILMZwtTuqT5i+Pmlh9jb9IYKwGEoz3tlthVViiGdRjg0t5rncgvAg
+ wm+aEJThucXqupS0P/ZyvgGPql0E1v077iV8sm4hMtU+b0HOB8D5KY2psGB3ocKu7D
+ Md0pfl4Nro3WpWtw7hekrcjUAYwCNd6Xct1cdx1EXf6Hkl4+j3EyR9izIf6UbKFJBA
+ rHiE/fov/0oHHplOYWcHaTKAI24qfK9CZ9CDR3iDk8b9U3c9LRuJZfTAtSDLikoVP7
+ 7eT9nGRldVqZA==
+Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
+ by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id 9C1B32FF3B9;
+ Thu,  9 Jul 2026 18:16:11 +0000 (UTC)
+Received: from [10.0.1.62] (unknown [202.120.40.100])
+ by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 3607137C91E;
+ Fri, 10 Jul 2026 02:15:40 +0800 (CST)
+Message-ID: <0903b004-c598-49f1-ab57-55799abbb890@sjtu.edu.cn>
+Date: Fri, 10 Jul 2026 02:15:38 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 2/2] docs/about/emulation: document the dlcall plugin
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ qemu-devel <qemu-devel@nongnu.org>
+Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
+ Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
+ Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
+References: <20260709025528.300019-1-functioner@sjtu.edu.cn>
+ <20260709025528.300019-3-functioner@sjtu.edu.cn>
+ <3954a5e4-32c2-4f89-a4e4-4b445e52589a@oss.qualcomm.com>
+From: Ziyang Zhang <functioner@sjtu.edu.cn>
+In-Reply-To: <3954a5e4-32c2-4f89-a4e4-4b445e52589a@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260709-catalina-upgrade-v1-15-82a63fead90c@free.fr>
-References: <20260709-catalina-upgrade-v1-0-82a63fead90c@free.fr>
-In-Reply-To: <20260709-catalina-upgrade-v1-0-82a63fead90c@free.fr>
-To: qemu-devel@nongnu.org
-Cc: Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org, 
- qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
- Corey Minyard <cminyard@mvista.com>, Emmanuel Blot <emmanuel.blot@free.fr>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783610579; l=7809;
- i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=Vo3yKldZbhsukEB6vokF4cP035jiACvQjrkOM/NbWkA=;
- b=nHDuS6gCuze7Zk+bOv6pKzKFq818zSVKL6Cl2O+lUWeDjgMzjXL65atS6SbUlKmjP/68B/eA7
- 8bAv4ipHup8D0mFQLtv9eZKkXZYyfRtMxgPlquccMOxzJwMJ7CvvM0X
-X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
- pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=212.27.42.2; envelope-from=emmanuel.blot@free.fr;
- helo=smtp2-g21.free.fr
+Received-SPF: pass client-ip=202.120.2.186;
+ envelope-from=functioner@sjtu.edu.cn; helo=smtp186.sjtu.edu.cn
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,227 +79,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The PCA9536 is a 4-bit I/O expander that's register-compatible with the
-PCA9554 but only has 4 pins.  Rather than duplicating the whole driver,
-make the existing PCA9554 model parameterizable and register PCA9536 as
-a subtype.
+Thanks for the detailed review. Replies inline.
 
-Introduce a PCA9554Class with a pin_count property, and replace every
-hard-coded PCA9554_PIN_COUNT reference in the driver with the class
-value.  The reset function now computes the correct pin mask from
-pin_count instead of assuming 0xFF.
+On Thu, 9 Jul 2026 10:29:48 -0700, Pierrick Bouvier wrote:
+ > Please remove the cplusplus part, we don't need it here.
 
-Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
----
- hw/gpio/pca9554.c         | 79 +++++++++++++++++++++++++++++++----------------
- include/hw/gpio/pca9554.h |  2 ++
- 2 files changed, 54 insertions(+), 27 deletions(-)
+Will do, hello.h will be plain C. The guard was there because the thunk
+generator parses the header as C++, so without C linkage the generated
+guest library exports a mangled name and the drop-in fails to resolve
+hello(). I will fix that in the generator instead: it will wrap the
+header in extern "C" by default (treating it as a C library), with an
+opt-out for genuine C++ headers, so the example header stays clean C.
 
-diff --git a/hw/gpio/pca9554.c b/hw/gpio/pca9554.c
-index 8427e01e9b2..b44ec0d9991 100644
---- a/hw/gpio/pca9554.c
-+++ b/hw/gpio/pca9554.c
-@@ -24,6 +24,8 @@ struct PCA9554Class {
-     /*< private >*/
-     I2CSlaveClass parent_class;
-     /*< public >*/
-+
-+    uint8_t pin_count;
- };
- typedef struct PCA9554Class PCA9554Class;
- 
-@@ -37,12 +39,13 @@ static const char *pin_state[] = {"low", "high"};
- 
- static void pca9554_update_pin_input(PCA9554State *s)
- {
-+    PCA9554Class *pc = PCA9554_GET_CLASS(s);
-     int i;
-     uint8_t config = s->regs[PCA9554_CONFIG];
-     uint8_t output = s->regs[PCA9554_OUTPUT];
-     uint8_t internal_state = config | output;
- 
--    for (i = 0; i < PCA9554_PIN_COUNT; i++) {
-+    for (i = 0; i < pc->pin_count; i++) {
-         uint8_t bit_mask = 1 << i;
-         uint8_t internal_pin_state = (internal_state >> i) & 0x1;
-         uint8_t old_value = s->regs[PCA9554_INPUT] & bit_mask;
-@@ -67,7 +70,7 @@ static void pca9554_update_pin_input(PCA9554State *s)
-             break;
-         }
- 
--        /* update irq state only if pin state changed */
-+        /* drive the per-pin GPIO output only if the pin level changed */
-         new_value = s->regs[PCA9554_INPUT] & bit_mask;
-         if (new_value != old_value) {
-             if (new_value) {
-@@ -99,6 +102,12 @@ static uint8_t pca9554_read(PCA9554State *s, uint8_t reg)
- 
- static void pca9554_write(PCA9554State *s, uint8_t reg, uint8_t data)
- {
-+    PCA9554Class *pc = PCA9554_GET_CLASS(s);
-+    uint8_t pin_mask = (1 << pc->pin_count) - 1;
-+
-+    /* Variants narrower than 8 bits ignore the unimplemented upper pins. */
-+    data &= pin_mask;
-+
-     switch (reg) {
-     case PCA9554_OUTPUT:
-     case PCA9554_CONFIG:
-@@ -157,7 +166,7 @@ static void pca9554_get_pin(Object *obj, Visitor *v, const char *name,
-         error_setg(errp, "%s: error reading %s", __func__, name);
-         return;
-     }
--    if (pin < 0 || pin >= PCA9554_PIN_COUNT) {
-+    if (pin < 0 || pin >= PCA9554_GET_CLASS(s)->pin_count) {
-         error_setg(errp, "%s invalid pin %s", __func__, name);
-         return;
-     }
-@@ -184,7 +193,7 @@ static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
-         error_setg(errp, "%s: error reading %s", __func__, name);
-         return;
-     }
--    if (pin < 0 || pin >= PCA9554_PIN_COUNT) {
-+    if (pin < 0 || pin >= PCA9554_GET_CLASS(s)->pin_count) {
-         error_setg(errp, "%s invalid pin %s", __func__, name);
-         return;
-     }
-@@ -232,13 +241,15 @@ static const VMStateDescription pca9554_vmstate = {
- static void pca9554_reset(DeviceState *dev)
- {
-     PCA9554State *s = PCA9554(dev);
-+    PCA9554Class *pc = PCA9554_GET_CLASS(s);
-+    uint8_t pin_mask = (1 << pc->pin_count) - 1;
- 
--    s->regs[PCA9554_INPUT] = 0xFF;
--    s->regs[PCA9554_OUTPUT] = 0xFF;
-+    s->regs[PCA9554_INPUT] = pin_mask;
-+    s->regs[PCA9554_OUTPUT] = pin_mask;
-     s->regs[PCA9554_POLARITY] = 0x0; /* No pins are inverted */
--    s->regs[PCA9554_CONFIG] = 0xFF; /* All pins are inputs */
-+    s->regs[PCA9554_CONFIG] = pin_mask; /* All pins are inputs */
- 
--    memset(s->ext_state, PCA9554_PIN_HIZ, PCA9554_PIN_COUNT);
-+    memset(s->ext_state, PCA9554_PIN_HIZ, pc->pin_count);
-     pca9554_update_pin_input(s);
- 
-     s->pointer = 0x0;
-@@ -247,9 +258,10 @@ static void pca9554_reset(DeviceState *dev)
- 
- static void pca9554_initfn(Object *obj)
- {
-+    PCA9554Class *pc = PCA9554_GET_CLASS(obj);
-     int pin;
- 
--    for (pin = 0; pin < PCA9554_PIN_COUNT; pin++) {
-+    for (pin = 0; pin < pc->pin_count; pin++) {
-         char *name;
- 
-         name = g_strdup_printf("pin%d", pin);
-@@ -269,23 +281,24 @@ static void pca9554_set_ext_state(PCA9554State *s, int pin, int level)
- 
- static void pca9554_gpio_in_handler(void *opaque, int pin, int level)
- {
--
-     PCA9554State *s = PCA9554(opaque);
-+    PCA9554Class *pc = PCA9554_GET_CLASS(s);
- 
--    assert((pin >= 0) && (pin < PCA9554_PIN_COUNT));
-+    assert((pin >= 0) && (pin < pc->pin_count));
-     pca9554_set_ext_state(s, pin, level);
- }
- 
- static void pca9554_realize(DeviceState *dev, Error **errp)
- {
-     PCA9554State *s = PCA9554(dev);
-+    PCA9554Class *pc = PCA9554_GET_CLASS(s);
- 
-     if (!s->description) {
--        s->description = g_strdup("pca9554");
-+        s->description = g_strdup(object_get_typename(OBJECT(dev)));
-     }
- 
--    qdev_init_gpio_out(dev, s->gpio_out, PCA9554_PIN_COUNT);
--    qdev_init_gpio_in(dev, pca9554_gpio_in_handler, PCA9554_PIN_COUNT);
-+    qdev_init_gpio_out(dev, s->gpio_out, pc->pin_count);
-+    qdev_init_gpio_in(dev, pca9554_gpio_in_handler, pc->pin_count);
- }
- 
- static const Property pca9554_properties[] = {
-@@ -296,6 +309,7 @@ static void pca9554_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
-+    PCA9554Class *pc = PCA9554_CLASS(klass);
- 
-     k->event = pca9554_event;
-     k->recv = pca9554_recv;
-@@ -304,21 +318,32 @@ static void pca9554_class_init(ObjectClass *klass, const void *data)
-     device_class_set_legacy_reset(dc, pca9554_reset);
-     dc->vmsd = &pca9554_vmstate;
-     device_class_set_props(dc, pca9554_properties);
-+
-+    pc->pin_count = PCA9554_PIN_COUNT;
- }
- 
--static const TypeInfo pca9554_info = {
--    .name          = TYPE_PCA9554,
--    .parent        = TYPE_I2C_SLAVE,
--    .instance_init = pca9554_initfn,
--    .instance_size = sizeof(PCA9554State),
--    .class_init    = pca9554_class_init,
--    .class_size    = sizeof(PCA9554Class),
--    .abstract      = false,
--};
--
--static void pca9554_register_types(void)
-+static void pca9536_class_init(ObjectClass *klass, const void *data)
- {
--    type_register_static(&pca9554_info);
-+    PCA9554Class *pc = PCA9554_CLASS(klass);
-+
-+    pc->pin_count = PCA9536_PIN_COUNT;
- }
- 
--type_init(pca9554_register_types)
-+static const TypeInfo pca9554_types[] = {
-+    {
-+        .name          = TYPE_PCA9554,
-+        .parent        = TYPE_I2C_SLAVE,
-+        .instance_init = pca9554_initfn,
-+        .instance_size = sizeof(PCA9554State),
-+        .class_init    = pca9554_class_init,
-+        .class_size    = sizeof(PCA9554Class),
-+        .abstract      = false,
-+    },
-+    {
-+        .name          = TYPE_PCA9536,
-+        .parent        = TYPE_PCA9554,
-+        .class_init    = pca9536_class_init,
-+    }
-+};
-+
-+DEFINE_TYPES(pca9554_types);
-diff --git a/include/hw/gpio/pca9554.h b/include/hw/gpio/pca9554.h
-index 54bfc4c4c7a..c09108e8b65 100644
---- a/include/hw/gpio/pca9554.h
-+++ b/include/hw/gpio/pca9554.h
-@@ -12,12 +12,14 @@
- #include "qom/object.h"
- 
- #define TYPE_PCA9554 "pca9554"
-+#define TYPE_PCA9536 "pca9536"
- typedef struct PCA9554State PCA9554State;
- DECLARE_INSTANCE_CHECKER(PCA9554State, PCA9554,
-                          TYPE_PCA9554)
- 
- #define PCA9554_NR_REGS 4
- #define PCA9554_PIN_COUNT 8
-+#define PCA9536_PIN_COUNT 4
- 
- struct PCA9554State {
-     /*< private >*/
+ > No need for fflush (same in hello_host)
 
--- 
-2.50.1
+I will remove both. One caveat on the host side though: dropping its
+fflush is not really recommended. "hello from host" runs in the host
+process, so it writes to the host libc's stdout buffer, and QEMU tears
+the process down on guest exit without running the host libc atexit
+handlers that would flush it. On a terminal it prints anyway
+(line-buffered, the newline flushes), but once stdout is redirected or
+piped it is fully buffered and the line is lost. So with both removed the
+example only shows the host line on a terminal.
 
+ > Excellent, that's a nice way to see difference between guest and host.
+
+Thanks.
+
+ > Please replace this part with a proper url, choosing a specific version
+ > and arch. Ideally, you can publish under "latest" in addition to
+ > versioned releases on GitHub so url stays stable.
+ >
+ > Also, please add a link to
+ > https://github.com/rover2024/lorelei/releases
+ > in the comment so people can click this and see what is available.
+
+Will do. I will pin the command to x86_64 and a specific release, add a
+comment linking to the releases page, and publish a stable "latest"
+download asset so the URL does not rot.
+
+ > Why do we need this variable?
+
+It is the thunk-pack discovery path, and it does a different job from
+LD_LIBRARY_PATH. LD_LIBRARY_PATH is the loader's search path for shared
+objects. LORELEI_THUNK_PATH tells the host runtime where the thunk packs
+live, so it can find the host side of each thunk (the HTL) and the
+guest-to-host library mapping, and it can layer several packs. The
+runtime resolves these itself, they are not something the loader would
+find, so I would keep this variable rather than fold it into
+LD_LIBRARY_PATH. Flattening the layout (your next point) shortens the
+paths but does not remove the need for it.
+
+ > This still fails on my side with following error message:
+ > lorelei.guest-rt: failed to load host runtime: libLoreHostRT.so: cannot
+ > enable executable stack as shared object requires: Invalid argument
+ > qemu: uncaught target signal 6 (Aborted) - core dumped
+ > Aborted
+ >
+ > Seems like error message is incorrect in itself "invalid argument"?
+ >
+ > I'm using debian trixie (stable) in case you want to reproduce this on
+ > a VM.
+
+Thank you, this is the real bug, and the new error string is exactly
+what let me find it. libLoreHostRT.so was linked with an executable
+stack: one assembly file in the runtime (the coroutine context switch)
+was missing the ".note.GNU-stack" marker, so the linker marked the whole
+library's stack executable. A hardened loader (Debian trixie) then
+refuses to dlopen it.
+
+The message is not wrong. "Invalid argument" is the kernel's errno for
+the refused stack mprotect, surfaced through dlerror. It read as a
+mystery only because older releases did not print the dlerror string at
+all.
+
+The fix is to mark the runtime's stack non-executable (add the missing
+note, plus -z noexecstack at link time). I have confirmed the GNU_STACK
+flag flips from RWE to RW with that change. A new devkit and runtime
+release will carry it, and the example will load on trixie. I will
+follow up here once it is published so you can retry.
+
+ > Please simplify thunks/ folder hierarchy. Make only one subfolder
+ > (thunks/x86_64) having both the thunks and lorelei lib, and remove the
+ > rest.
+ >
+ > With this, we can simplify command to become:
+ > LD_LIBRARY_PATH=$DEVKIT/lib/:build/host \
+ > qemu-x86_64 -plugin contrib/plugins/libdlcall.so \
+ > -E LD_LIBRARY_PATH=thunks/x86_64 build/guest/main
+
+I would rather keep the current layout, and I think it is justified.
+Those subdirectories are not cosmetic: they are the contract the host
+runtime uses to discover thunks. It scans each LORELEI_THUNK_PATH prefix
+for <prefix>/x86_64/lib/x86_64-LoreGTL (guest thunks) and
+<prefix>/lib/<host-arch>-LoreHTL (host thunks), which is how it tells a
+guest thunk from a host thunk, and by architecture. The same guest-thunk
+directory is also what the guest loader reads through -E, so collapsing
+the -E path collapses the discovery path with it.
+
+Merging the "lorelei lib" into that folder has a second cost: those are
+the runtime libraries, shipped once in the devkit, not per thunk. Thunk
+packs are deliberately standalone and do not each carry a copy of the
+runtime. Putting them together would either duplicate the runtime into
+every pack, or mix runtime libraries in with the thunks so the scan can
+no longer separate the two.
+
+So the second -E entry is not redundant: one directory is this library's
+thunk, the other is the shared guest runtime. The extra path components
+are the price of that separation, and the existing thunk packs already
+follow this layout, so I would keep it. If the two directories read as
+redundant, I can add a one-line note saying which is which, but I would
+rather not collapse them.
+
+ > Also, in lorelei tarball, why do we have /lib and x86_64/lib that have
+ > same libraries, but with different sizes? What's the difference?
+ > It's confusing.
+ >
+ > It seems like x86_64/lib folder is never used?
+
+They are two builds of the runtime. /lib is the host runtime, native to
+the host, loaded by the QEMU process (the plugin dlopens
+libLoreHostRT.so from there). x86_64/lib is the guest runtime, x86_64,
+loaded by the emulated guest (the generated guest thunk needs
+libLoreGuestRT.so from there). Same names, different targets, hence the
+different sizes. x86_64/lib is used, by the guest side. I agree the
+split is confusing and will make the layout and the docs clearer.
+
+ > Please remove the section above from the doc since it does not add
+ > useful information. Also, we already have a link to Lorelei above.
+
+Will remove it.
+
+ > We're getting closer, hang on.
+ > We need to have a simple example that is functional before being able
+ > to accept the plugin.
+
+Understood, and the executable-stack fix above is what makes it
+functional. I will publish a new devkit and send a trimmed revision that
+addresses all of the above.
+
+Thanks,
+Ziyang Zhang
 
