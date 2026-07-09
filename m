@@ -4,107 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D97CEC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 11:25:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 459E2C44501
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 11:25:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whmsh-0005RP-RP; Thu, 09 Jul 2026 07:25:27 -0400
+	id 1whmsK-0005Nl-0t; Thu, 09 Jul 2026 07:25:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1whmsg-0005QW-6W
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 07:25:26 -0400
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1whmse-0002Yr-7r
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 07:25:25 -0400
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-667bae10ba3so376936d50.2
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 04:25:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783596322; cv=none;
- d=google.com; s=arc-20260327;
- b=RoFxQ8qkt2c8rFxVePhfsPba7IkeSj/GqKictQRkCnoajVNJJQZaMjbGnKqec/3kw3
- FWSU6a+TrGkba5bvQfBdg+3JmUlBmUqOK55CEzrIOAwlaiLtboFqQNiwyPBICMxlKBlN
- Qq94WuXpwxpYa30aFY3oQc0kL9F+mnvGIvv/PUA+go1ZtzEeid9k5/MsomPoBmStvmom
- JEPCukcm3qnpghtHiEmeQlLimmf2JnOvE7tDVu9fw9pIRWJPZqUcHt7L/+XxHs9V/8/r
- woI3nAHnHCvff2v4BCmIj0OZIXj51ju3XPzKlQR9CAH9yAX4Ht+mj6jw33LlnOX77v1k
- YX7g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=PUTt8gEXC3evuZEI4FrKnGNtcaVB1W0fSDTAWKQlAes=;
- fh=8tgGIjUAmI3rvyBiGHVyENPGCLFgbIUAXh2qgr0fPvI=;
- b=oM8s8PkSQC6Nn0wCqqitaLne+NVPM6n4nnMLRIODR+T7/7Kf4u7jAh+z+XNGWCx3HC
- PVTFWQ9EnfEMCyJGrMmP55baqzwTNO8NI2w32b0Bei72EXX2dv5bpYZLt0yGkKi2lkI1
- mbTRNkeft8E2Jv3QKNjXtK86/LG6EpcB4zYDiPi2OnUsO4hSKrRSFudJ0yUIQ+5dQWAJ
- ZFKdq48u0MNixge8xpFSYI3ARjrptH8aGAVWbxrxzOPobKJM18Tn/iNMvf2U5RWEjhwr
- CQXXT5PcMyV04XdExCPnCmobTv4FxG25dMCTh81B94MpThojRJcAsYaN7wPfHb/gdOCy
- eXjA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1whmsF-0005KK-AP
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 07:24:59 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1whmsD-0002Wn-9y
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 07:24:59 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 669BNEVn1488701
+ for <qemu-devel@nongnu.org>; Thu, 9 Jul 2026 11:24:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ Jr7nqG1LMoDZg48VU6EGcRreVnPE+HRizbTPv6opaVg=; b=EXI0SvvbfhqmP+Up
+ PK+yKOzd+KVGygMNLgAwV3rJGG+RR/A1i8gezTrBDvVNkTGi6xZG6aN4AHA0vtu3
+ TE/keBtbanIB9fMKY0SOXMTO0gNhDKPdnwjeJUK0E19+YdSSq1lP2oXoIuO4akXC
+ w0d+3UlOpQ4FjAS5Gps+lvwFs/c4IfpNj/B/O82CXEPh6j4dbFbz8VKStWkz21RM
+ 46Pc+nFbhWsYQsLIuW713HkonWHaOWTk0kSHO3bFoUHcbvbAxSLLMdY8ojeiVjlo
+ 8O05dQYGZZfAeKu5rTYtYIjwiF7Li0O4REea9W+r2AF28XujR7uIRJqdla6NVoxS
+ Na5ghw==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f9wwftw7j-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 11:24:54 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-51c21c01cf3so35781441cf.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 04:24:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783596322; x=1784201122; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=PUTt8gEXC3evuZEI4FrKnGNtcaVB1W0fSDTAWKQlAes=;
- b=Bj81L+dInbXNf3tZOjlsiFAetK6uqe0sCRBO/tA7FCxcmIc7PhuS0LtYeu+s8l/QXW
- euHyEQoWgSsSwSsjm5uacCDXdup3c20WJB43/LaNfJQHl5u63iRB1lThRSD7GMQDgFtG
- G5UvlI0crNOz47nsyO2k6FfsSjBYpUkHz2Q9/d1P5fMrvMzA6YrixCYca11sg74J5DaD
- CBWk+YRvqLPynfovWWQyFojuqD/W1mnTvdR6Lr8tPtIrAPMhpHbd7dWVrmCGkDQ/LTx5
- KPJEsznKDSzWXEhGwLRPeqlgWwA9yzc30AgqobHGpuqYLD6RgdILkGvSQwLE3wrfm1sO
- NyoQ==
+ d=oss.qualcomm.com; s=google; t=1783596294; x=1784201094; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Jr7nqG1LMoDZg48VU6EGcRreVnPE+HRizbTPv6opaVg=;
+ b=eRPMNtGtsg9BpchNBLbDTOZT4iXajfmB0bTGIBLVI49rMlBvN17ENU4NsW1tHusZsO
+ Xfwto7whk6OZ+D8A6v1rm9cSL4L7K2eyh2oyYfP3PmK0uCYQDhEII1zPdqKwUUJBb/q0
+ /k+0qutgbB6Ky5+4outZmyn6PmWQr4i6SzBXNpYWbPplgDpE9/a9+GXR8f1+rymFnQ0o
+ 6Eg7IHEy9dGqBsvUx1FsyNXZK2i2+BxUtzmgZfuX95tTsitn5TXwo8viq9O2VMp+X61B
+ RGrxYC/gsT8dPtLp1ppYssY/95XhWhn8YiQqEysBynEABuRFr9auuLW/l/4sJirxoZFL
+ dx4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783596322; x=1784201122;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=PUTt8gEXC3evuZEI4FrKnGNtcaVB1W0fSDTAWKQlAes=;
- b=lvoBtkEQNYM+aAtugQO/y5emhNvKd9LMxXbUIQ6SmK7f6BDVx1H1HqlTc4dBjR7LB4
- IPMkiUSRImCDpyXH9acfhcGPQSiU0FDEcQIBkAaf1wNGXQWgVRu+jOYZzTgxSAF++C6T
- hDdh4Tv0+tq4RZhDH3dEyNpZMhPHtHbU+w1FieRMia5YrSciNV3gORy9Rcqy7VwmqzQt
- BA3Nt7O3MKB/ZgCQWAZXLGehOiKa4JLLg7iXqSETjfnMstl9qAimHlgRJc5a3H2g06wA
- YghxXltKyzd6qvsxpfkz7qERs+1W1WPvVMn7WwW03f1JVh21d5PYTJwLxRasz9p5Hemb
- aXgA==
+ d=1e100.net; s=20251104; t=1783596294; x=1784201094;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Jr7nqG1LMoDZg48VU6EGcRreVnPE+HRizbTPv6opaVg=;
+ b=Ioiy0sqT8FCPx3rl/SurfGBuqA0d4IClNCOaJOqagGYZ4FfoEHoWJoYv5Nqnro7nP3
+ YQPygoWySW7kgClw65+UOYLwzQcfVyQnsrjzTlvQCI+TBuK5mmJ2ePWewKWIi7y3GbfL
+ QYyQOJt9UJ5VyzTleLo6WNqy9GdDMeCImn0iziYqx+z/V58vjb8lbOpk5cElor4HVBKo
+ fpsDQ/CZ9AbkNWhjl2qjTgS406MGaKbh9sY2rvZY0QJLwtJIMLqEZUj/tSgkcStLXsSx
+ CSWRKNp/qtALZJ4lZUmKxdkCFUT1Bz2aNb1qgXmMGxuBVkCpiDjknFoRODLK6tctD/TG
+ ljhw==
 X-Forwarded-Encrypted: i=1;
- AHgh+RqNc3HqW2TBE7BUNhJnz/ZN+ThaUkXHCv99SPX9igv1evBSYaiMVC0sHTYkQ4GjU3Ybjk18XwoKo5+y@nongnu.org
-X-Gm-Message-State: AOJu0Yx9d4fBDhwZRIJ6yyGTESjZbvFVfX2z4TUamrp3NZ8NqTgCCJ7s
- h2Pu8k+1fGOdPdpWYlOO10y7wjrWs5R5Kp+7Rw+cilLbxSbpmyTOAKy2lsjnsS1fF7FegixkZ9M
- 2KIa99ULMWOfpAnRng+7yy62eP7tmmSBCDiDwjyDeLw==
-X-Gm-Gg: AfdE7cngqOXdijHUYcMkcP4PqKvfhFK6V0VVUcSJEwJZru/kJ7jmd6JqVDHNVIBVV1V
- NMvteSRrkKPeXGJjABBWaSvq1YoROxoo1bPc/GgQiQKE/87/PPOJyki7kZB/jbw7mqwdSLXAf1M
- P0xiVZkRVMJT0TcGEt60rnW4skliIOk9HyDpCZRh97ZAHaypXR6mB8rk1scUH8SkgAbiVewSfcl
- u2T7IA0Yxg8jroIEgClUgpeuE+kWm1CwNIxAu/HgJq0E8RHqLu+3AyxKfUThoSz6M7yR/jdFrI0
- GkmdvDLWvKgZHbTTqlPY6j34hYO6brRcDYHArmaCie3m3YoSh6c/QGph
-X-Received: by 2002:a05:690e:12c1:b0:667:a2e7:dd48 with SMTP id
- 956f58d0204a3-667a2e7fb80mr3684954d50.32.1783596322185; Thu, 09 Jul 2026
- 04:25:22 -0700 (PDT)
+ AHgh+RpSu0Z6nQTjhweQbO0B32n7eUCO+I7DcLoVpbESc0lEUc13H+UdBcXySC2lyUnNcssfrFFzvV7zlR5N@nongnu.org
+X-Gm-Message-State: AOJu0Yztb8imQtDMcaA9bZWMeRrHA33z20g5Xb41GJ+MRHoZIyrt+zWZ
+ ACwxCkkELF+Dv8YMCkQpBntBrjWYcBSbYfIHKbLHESqB6Bq0U6BMUDOFtg9VIL2cqzSjfcyLFxs
+ ZTraDTJGKqiFprEumGg0IXtv9+Id4gQmwupKSGYxWncvbqud10UrfXYm/oQ==
+X-Gm-Gg: AfdE7clhNWw5Z+xB4Q3+dCEiGGNpkbhCBcHfEBsEpostC1B8SiF04f8Z42/VKhPGmMT
+ 99j5Xz2Xc3kDGNlQst9c5c1ZyGsRf1+P8U51rwXBem6IqWUDzBmMNHC0P8YVgHWvEtMr0WBAZEZ
+ UgDY0KYchfiSaCGpA/sD6Z8tlVDsd3p7tbk0PSh2BOb/w0Q3IJbk46aL7cdWxF7HTrsv/AAQs/u
+ ooMZzzt8XvV3m2w3TxHdyU491Bo4DOGAgl6OCwOnVXZ+BGrLLdPPtmNOyqCDWD3sQkJ/LQW4pmM
+ mXqhfb1p1QOEHusX4DojCPGrGJskl8FGyXKFETdQ5+yxuN3sVRHjuEHsyQ5SXtylTH15P/qM2RN
+ fJoeoUZNWHZad8ozKHd2bqpkkvpKGIn1rnHhmleyJRjWDFMwBZbkbucMN2M6BKA==
+X-Received: by 2002:a05:622a:213:b0:516:d83c:edb6 with SMTP id
+ d75a77b69052e-51c8b399396mr71210861cf.12.1783596293944; 
+ Thu, 09 Jul 2026 04:24:53 -0700 (PDT)
+X-Received: by 2002:a05:622a:213:b0:516:d83c:edb6 with SMTP id
+ d75a77b69052e-51c8b399396mr71210601cf.12.1783596293566; 
+ Thu, 09 Jul 2026 04:24:53 -0700 (PDT)
+Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c15ada05d72sm470529766b.53.2026.07.09.04.24.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Jul 2026 04:24:52 -0700 (PDT)
+Message-ID: <ba3aa0f0-29b8-4c84-bdad-c9d5c0318bfe@oss.qualcomm.com>
+Date: Thu, 9 Jul 2026 13:24:52 +0200
 MIME-Version: 1.0
-References: <20260706230056.1888992-1-titusr@google.com>
- <20260706230056.1888992-5-titusr@google.com>
-In-Reply-To: <20260706230056.1888992-5-titusr@google.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 9 Jul 2026 12:25:10 +0100
-X-Gm-Features: AVVi8Cf_Be_bnmnQbnlaVkotuW5EKAB1PTCmMyaCs_lGE0gdg-J6NeJ2ZHzZtGw
-Message-ID: <CAFEAcA9vT6r_C9q9NKVTso1WCmHpozxa8thqC_v4R-Pj_hxU+A@mail.gmail.com>
-Subject: Re: [PATCH 4/5] hw/i2c: smbus: increase MAX_DATA_LEN
-To: Titus Rwantare <titusr@google.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kfting@nuvoton.com, 
- imaginos32@gmail.com, wuhaotsh@google.com, philmd@mailo.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/core/machine: fix fdt memory leak
+Content-Language: en-US
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+References: <20260709111249.1107640-1-marcandre.lureau@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260709111249.1107640-1-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA5MDExMCBTYWx0ZWRfX78pq0O26csuy
+ xdQhEnB4gEyzjinFHlUEEQVCBooqB6sUlK2gZMrfjFfxfegx9vD0qJ5yXUsMHHqudzWhFhgBkBK
+ VtADijcp+aaT4CwZDfTBxc9YTkCVWsRMSzOy+gcVQjijyY9ghBLiH2zO69RlSf1p/hh4U9di/SN
+ eEZPyUGKCPwWHTND3mKX0UyPKtP1L2jka9YC8cpFJ+Pjsfk6VIWK7TbnHT0LikqGtC9G7KJF3Rz
+ oQQ0oFk+3s7afHDfg5WkBmTSzD5fMC3l7042mlQvIWNr88rJw158xivopnZWUZC7e3qGaL06jad
+ hSPThjtJlYVyarap9nEhWK4XSyqtAXA6X3Nkuu7mLyXetNDAZfskqyrCHhqIsAs1k71L927yNB1
+ c5ecbKDwok3W1dq5BjStfiz1RqjmA8q1dNpw0GLypGYxMudtjrUY9c9TZSHOUlvCcLeZo7xrDf8
+ gdAOXKEzyKLq413ZDCg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA5MDExMCBTYWx0ZWRfXwxK7qkmtnvjp
+ Ystr2GDYESNjDy0Aq/N3hggcEu/vqyqtGbuKOwbHSnG4xci+1C10VoUq0qngNLEvhYZ9eAKYC2o
+ 5FYgHfEVlwpVdyv7dKASpEQxPVsIMdE=
+X-Proofpoint-ORIG-GUID: n7lKVr4VsUeBGTM4uOftk4IiofA_NUl0
+X-Proofpoint-GUID: n7lKVr4VsUeBGTM4uOftk4IiofA_NUl0
+X-Authority-Analysis: v=2.4 cv=Krh9H2WN c=1 sm=1 tr=0 ts=6a4f8506 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-09_02,2026-07-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 phishscore=0 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 adultscore=0 spamscore=0 suspectscore=0 bulkscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607090110
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,65 +155,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 7 Jul 2026 at 00:01, Titus Rwantare <titusr@google.com> wrote:
->
-> From: titusr <titusr@google.com>
->
-> The 32 byte payload was raised to 255 for block reads in the SMBus 3.0
-> specification. SMBus does not provide a way for devices to declare which
-> version of the spec they are designed to so we must allow newer devices
-> to return as much data as they allow.
->
-> Specification: https://smbus.org/specs/SMBus_3_3_20240512.pdf
->
-> > 6.5.7 Block Write/Read
-> The Block Write begins with a slave address and a write condition. After =
-the command code the host issues a byte count which describes how many more=
- bytes will follow in the message. If a slave has 20 bytes to send, the byt=
-e count field will have the value 20 (14h), followed by the 20 bytes of dat=
-a. The byte count does not include the PEC byte. The byte count may be 0. A=
- Block Read or Block Write is allowed to transfer a maximum of 255 data byt=
-es.
->
-> Signed-off-by: Titus Rwantare <titusr@google.com>
+On 9/7/26 13:12, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> The MachineState fdt field is allocated by various machine types via
+> create_device_tree(), load_device_tree(), or similar, but was never
+> freed in machine_finalize(). Add the missing g_free() call.
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->  hw/i2c/smbus_slave.c         | 4 ++--
->  include/hw/i2c/smbus_slave.h | 2 +-
->  2 files changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/hw/i2c/smbus_slave.c b/hw/i2c/smbus_slave.c
-> index cfb61c879e..407a118d24 100644
-> --- a/hw/i2c/smbus_slave.c
-> +++ b/hw/i2c/smbus_slave.c
-> @@ -217,8 +217,8 @@ bool smbus_vmstate_needed(SMBusDevice *dev)
->
->  const VMStateDescription vmstate_smbus_device =3D {
->      .name =3D TYPE_SMBUS_DEVICE,
-> -    .version_id =3D 1,
-> -    .minimum_version_id =3D 1,
-> +    .version_id =3D 2,
-> +    .minimum_version_id =3D 2,
->      .fields =3D (const VMStateField[]) {
->          VMSTATE_I2C_SLAVE(i2c, SMBusDevice),
->          VMSTATE_INT32(mode, SMBusDevice),
-> diff --git a/include/hw/i2c/smbus_slave.h b/include/hw/i2c/smbus_slave.h
-> index 86bfe0a79e..59522ff1b1 100644
-> --- a/include/hw/i2c/smbus_slave.h
-> +++ b/include/hw/i2c/smbus_slave.h
-> @@ -64,7 +64,7 @@ struct SMBusDeviceClass {
->      uint8_t (*receive_byte)(SMBusDevice *dev);
->  };
->
-> -#define SMBUS_DATA_MAX_LEN 34  /* command + len + 32 bytes of data.  */
-> +#define SMBUS_DATA_MAX_LEN 257  /* command + len + 255 bytes of data.  *=
-/
+>   hw/core/machine.c | 1 +
+>   1 file changed, 1 insertion(+)
 
-This is a migration compatibility break, and you can use this with
-machines like q35 where we care about migration compat (e.g. via
-the smbus-impi device creatable on the command line), so we need
-to do this in a way that maintains migration compat from older
-versions of QEMU, I'm afraid.
-
-thanks
--- PMM
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
