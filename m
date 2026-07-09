@@ -4,142 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D552C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 19:01:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 042AAC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 19:02:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whtzg-0001X7-UN; Thu, 09 Jul 2026 15:01:08 -0400
+	id 1whu0e-000223-OB; Thu, 09 Jul 2026 15:02:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1whtzc-0001Wl-1j; Thu, 09 Jul 2026 15:01:04 -0400
-Received: from mail-westeuropeazlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c201::3] helo=AS8PR04CU009.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1whu0T-00021K-AX
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 15:01:58 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1whtza-0003Fl-8D; Thu, 09 Jul 2026 15:01:03 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jT2nd4oX0ujTA1DxTEksdn8wVbRdFi3c7Z600UXEus7mGZem6p9vL3TLVTLfELDuifdFEaX4zLvLf3/NGzA7eb3E8YxRag2EdNDBCYOVsoFZmAtCkWTG75kD4IYMWCbRXqbhI7RlB73XeESLpGnJbx8kvRxfdzsdpS59aE2U6nTAiqUzXiJxF2u8v93KMJjBIH10s6qH24ZME2P+KetOv5u5o1bBchHJ2pdLi2iKPBfI2A+oKi4LDUWbAoyKYR0x7q+9AbhRNgm/TGs5tbS+U9roJDFAhEZkKbUNVMfPlUpcN/7F6ykmM2Wyh9hZYX+45Sref7PaToAfxYarw+w5Tw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qT97eLmzXRVJSf3OZrhNH1/MLn+NNdkp/EraQ05BGOM=;
- b=XXd+qoTYmHYS0tjCA/zxQa0TjfPh8JTF7zMnZz4HC24beEGpLdzlpJSIviim2gjSdFYbs+8zfHNAeNugeitpJhDfwApf60hNVizRQAeYwpsOHw1oCbohY9oBignSRY7P3a0Vb6G4j1/VGD8g5hsao7Dd+EYeKK49F9G+bzHTIxyuwHLK8ipfPhiHlSvLAKwrz5o7CQJS2DX36sBWDTzA2JsJLdvUisRJ8Hb+88QDel/W/LiXKZWc8mn48CUbWj+uVjjQ40zsg0sg4+8v9pMF5D+OByNYhyzEvM8KLwjyBMqD66BMqFbaNkTrO/b8dczylW9ptFcs9mA1tkgUFKo8MQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qT97eLmzXRVJSf3OZrhNH1/MLn+NNdkp/EraQ05BGOM=;
- b=bd+m9joe+0LPqQOz8Ljshu7zVUjKyg8bjFUgK3GNVM9XBVsCpLgjCScySTukb7NUn3RcdJNb/W5r8KUH6MKrdVjNTKo5VHuFk4S9DiqzIgp44DWFxaR2+2+DXRr/znpllrrQ6T6HU8qPwUKKDgb3vFbKGqun3r5dv5ApCdtj9I2CLGFT9YGDCTVRo/6usk/MwBOdrouvmkiq7MXZyrErm7HJLrWsKzcf9w50/q5oyz44WrPpqifSC8Luk3PUrs22OTkzRv0eSQ7Ze9wdC9DcxEGdhu1CiYUW6+2XrRS8MrWb3+H+jugtOnZctviYPrdEpduDItHazWDl24Jz2z93Iw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
- by GV1PR08MB7756.eurprd08.prod.outlook.com (2603:10a6:150:57::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.15; Thu, 9 Jul
- 2026 19:00:54 +0000
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0181.014; Thu, 9 Jul 2026
- 19:00:54 +0000
-Message-ID: <9cbdce55-83a7-4b43-b3b6-8123d85ab9c8@virtuozzo.com>
-Date: Thu, 9 Jul 2026 21:00:52 +0200
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1whu0Q-0003VU-M9
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 15:01:57 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 669HWvUA2514897
+ for <qemu-devel@nongnu.org>; Thu, 9 Jul 2026 19:01:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 5UeyxvW5cl6nnCwqonQZgMIvSG8dVAlE5MEv33rGWK8=; b=A2YsUVRMyHXBAfJB
+ ydC4LG1973Z4wdiAOOpB5vFPiXwIdjFnfMbM5OmsZHVndr4lVjUXcA2JyLOASg4f
+ lWKFFyWZuu/dAVypqOoYeKhhfaEVt0/nXWyer96M5AC2dzuHfypUxDXmi3FPAifq
+ eJPYGzrwPrMZuKA6O5QkjG0IUYav5QKu1FAjYbBksGBzJgW76cXP7BnE7C/6sVU+
+ aD/kbCVHzFFIARVPnos3TiYcA50UU7Q6py6E2fDKuXuhQeo3nsZFv+najmtMAi+q
+ Hp15kCCFju0BEYWUCR92zPWhzR/g+YMlVFrZxRl51UpclbcgGc5+yw4GZLEx3sKt
+ J1kj0A==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fa418m1rs-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 19:01:52 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-38c7e26ecabso196371a91.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 12:01:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1783623711; x=1784228511; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=5UeyxvW5cl6nnCwqonQZgMIvSG8dVAlE5MEv33rGWK8=;
+ b=VPnxUKGl9UouN8eNPvtdZdan+x9/G4toaYCXg+M8eX29I33/LOW6tgd975rmzTzK+v
+ ELB2vtSzuFwcX/SQ0mAt4cIaSU8pqZP3kyjRC3+oYh+60rF3xCbZkB06xkTMHZyd6B94
+ jWtVgK98AP4sWPuuueTWVDMcub1bvGZqG9Un93UL30XxL02i4AsCyYBVh+FguZpO3j9e
+ 2Zv93w2jzPCIq1OOJArK0JSXBC4BGH+3GzDdBUr26DxqBsnOL53gr/Ile72k7tfeAY7l
+ gbrUskn26+w3USgSgOs0DBDTnDaMBVlyILM/MHqZg6YUXhGzg1qnzHFvc+Ueyfa6oSgB
+ c3Kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783623711; x=1784228511;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=5UeyxvW5cl6nnCwqonQZgMIvSG8dVAlE5MEv33rGWK8=;
+ b=d6vrXK7oNSXDe7VTDHsoMBPacQWOJyNFhpicpm6at04qacNFmYIcuQgCbS5tB2DrD5
+ T1UlHeagqMVw++NbN45r1r9NKYW2HU9J3WR1onEtJRJmqQ7jwpUaIbRjdPc+njmmFcJc
+ 5Z+ST3whGNITNOqoyhhdMzaTXixpCvikY4uvYjl1ecLdujCYZnitVNxdS6Dft8SxJCuR
+ kj7v7C2kZadH/Npr0p7+ee8J8ckoCNYjHRjf8uUZvyIKMW1w5toGRKoJN2gpnxfkZQLf
+ U+uXcYxcce9wYl8QDVeU+NYjogVIjcQalnC73Vrg2fKskGG3I+JRjLFiYjhY+sF7Jf4j
+ mCcQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Ro3VGU0lEVyQB+XdCHu12+tdSHcx6+Y4HBrh5DPUQ3HQaMhmt1MrIT8UkmEdnzHIqcq/eAMR6zFLRiO@nongnu.org
+X-Gm-Message-State: AOJu0YzH468u+t2i1aGMAhCuDW1HL0KlDaSqAQ9oYaIM0I3qNY5i01fJ
+ L3o9myqgPTiDalrtNqnzVPFLrjdKQO8/eaqvHmw3z0y45Nt59LtiqD3M5hdljDydkas8pft1Qpi
+ ax7UrHImvaFY9vro8+51S0r2+7Lh7U5JNMUBFVP8eor5MOECd5ygppJeFSA==
+X-Gm-Gg: AfdE7cmSMnJFIafmoJrLBLw0qbswol0ellmdjiGvZAGD6LD43wLCM/tHaQXixwRMV7M
+ JW2+u9koLdNAoKWWI/SF2KaZDEIDLE4FjNeL/VDX3ga866SM+PLtyoTF5rHOARF2EIDeYXjFZtx
+ ptd3syZJ6RL7XjbM7Q7RsDRbCjMhsbgjN1uxPHSo8iWbN2EyzcIpAQbeGD3gngt3/EJUIiceNa0
+ Vdq+jepjhpzEdjStlrp1ZewO1WIidJSyZ7Mou/QkX7AZByhqhxMohJxxqcyfeQqX8VEy8UFLfcB
+ QLU3q37NjWuXN4x2yYc4pei/eyCLZtWSlPJjNYt2zpOBa0TT1or0sXWqCWUtG4oLDfaXqt+7WLY
+ klSNSXW3U2vfoT2OBWS1Gc4CZMLQzpVmMDHRmjZOM/qG2b6LDEQksNKHRDvS3Yn0zHYTCjq4HPT
+ zQzXU=
+X-Received: by 2002:a17:90b:4c10:b0:387:e0db:bc2d with SMTP id
+ 98e67ed59e1d1-389421a4f5fmr8308646a91.35.1783623711293; 
+ Thu, 09 Jul 2026 12:01:51 -0700 (PDT)
+X-Received: by 2002:a17:90b:4c10:b0:387:e0db:bc2d with SMTP id
+ 98e67ed59e1d1-389421a4f5fmr8308577a91.35.1783623710622; 
+ Thu, 09 Jul 2026 12:01:50 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-311747f596asm33478635eec.2.2026.07.09.12.01.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Jul 2026 12:01:50 -0700 (PDT)
+Message-ID: <2d3832dc-5714-4dd6-8e4a-4ff7c8c5b424@oss.qualcomm.com>
+Date: Thu, 9 Jul 2026 12:01:48 -0700
+MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/1] coroutine: fix lost wakeup in qemu_co_sleep_wake()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org,
- Peter Xu <peterx@redhat.com>, Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: qemu-block@nongnu.org, qemu-stable@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
-References: <20260610115850.2410566-1-den@openvz.org>
- <20260610115850.2410566-2-den@openvz.org>
- <b87db62f-6c9c-4da5-8382-500adc29b828@oss.qualcomm.com>
+Subject: Re: [PATCH v9 2/2] docs/about/emulation: document the dlcall plugin
+To: Ziyang Zhang <functioner@sjtu.edu.cn>, qemu-devel <qemu-devel@nongnu.org>
+Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
+ Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
+ Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
+References: <20260709025528.300019-1-functioner@sjtu.edu.cn>
+ <20260709025528.300019-3-functioner@sjtu.edu.cn>
+ <3954a5e4-32c2-4f89-a4e4-4b445e52589a@oss.qualcomm.com>
+ <0903b004-c598-49f1-ab57-55799abbb890@sjtu.edu.cn>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <b87db62f-6c9c-4da5-8382-500adc29b828@oss.qualcomm.com>
+In-Reply-To: <0903b004-c598-49f1-ab57-55799abbb890@sjtu.edu.cn>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: VI1PR0102CA0060.eurprd01.prod.exchangelabs.com
- (2603:10a6:803::37) To AM9PR08MB5892.eurprd08.prod.outlook.com
- (2603:10a6:20b:2dd::16)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|GV1PR08MB7756:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3486e705-9f59-484a-5487-08deddec6725
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|7416014|376014|10070799003|366016|1800799024|56012099006|4143699003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: rN0d9WExlkjsFMM78es/KDls+AeJrP3Ci6Y2uquoHsOi0nonBE4h9tYeykrseZgsRoKqRgPFqTS8S/eXXlTMzfdr5dJKwQluf3QCtIMe96w4pW/qOnQJk7h/gdBHaTC9n+zhHFq+MEK0BUqEJ1uxCiFXUyuKGUWW+ctjVvqgrG9eBllL5L1kxAYG35Gp8pQHyGRsg14dd2JjL4R0ZiCUpnqXpgfQpI6ysK0RBi1mobpeJwF5o1aRMC5mNTAnHbgMdBVa1t0LxygaLFrQCmF9Q3RX32nV7V9I+l/9LTdUuI5H1ZAobH8+ButxIdknEuYzoKR3Uex/FJb9kW8DZi2cPKU3JCDeeHzRyPstPk23tmYG21cn5FLT0It30oD8stjtPPnq1tWGr+NO0qVilBB7lvQpMFuVwDbf6UEEuyZ8pPlmyuOP6JiVFlvdev13y9JPcBqrTjLRqeZgbbNDVr7NycKMEuy3QnA61Cw77fCl7DIEiSTNIofCofu3MrUw4WSLyQybBwOfG2UQPq61oJ/q4pr+dH9zDzRy3WwTRdklTBWLI/QejZ/o2doj9sUvK/xd4vO4gXDsYYmm6SOexyvWDr7GpkSZb3PrYM9++mgTqUVQsl6ALipL51G3LJ62mRWxceUvw3tWYbyNvTqvi7hOIhUxDIDrvL2NY2WO6wKN/DM=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(7416014)(376014)(10070799003)(366016)(1800799024)(56012099006)(4143699003)(18002099003)(22082099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Qzd1UGgwNmpvZCtlaGd3c2oreWFjV2pXYjhTTDdXYkFvV3NLODZkWE5Ed3FG?=
- =?utf-8?B?YzcxaURpV20zdUw5UXBxK0x0QnlmeDJ6RmhxbC82Q29mVjI4SW9ENm5iZEcx?=
- =?utf-8?B?NUsxU3JYbVIyU3NWZGlmdnBlbm11QjlWeXpBNjhyK21tRlNzdmF6TURXYTJv?=
- =?utf-8?B?SDloV21lRkhwZXowY2RpMFpaWS9iQnN5VGxOR2NBazMwREJZaGhLSVVTaDlw?=
- =?utf-8?B?cHluZzV6SWtFNzdOdkJkMytaL1MydmFUZ3pLUkxQR0NjQTJyb3UvWkxQclE2?=
- =?utf-8?B?R0JueUcxNG5JSkRBRkJJUmxHL2IrQmNRUlBjU0NVNG9iRnBvRGpqZFA3bHZH?=
- =?utf-8?B?ZmpsdUgyZUR1YXhEL0kyWU9JZGdMRWdwYXgxZWRDcFhIaXFsYldrNnc0WUU1?=
- =?utf-8?B?VHhZZVhXRHRQdkJPdDBmYkxLVVNjci9NUE1YTGtUMjlEcS9uTFFRUkQxU0N5?=
- =?utf-8?B?dXVFcjFsTjE3SHNnTzFOTFQ1ZEFSRVd2enJVYXhxUVo5TTl1MkxzaWxNbjRG?=
- =?utf-8?B?RFpYbHc0dllxSFMwLzFRL2ZoRm0yWmlrZU9kUzVFZldWU2h0aG9BUzVaM2lW?=
- =?utf-8?B?aHhjWkFCVnV3VHBHdlJKWUJweWFKV1FrK2xTV3M4elRFZGxXbHFsczhFZG1p?=
- =?utf-8?B?eDU0N1JlOGl5UU1qSUtDV3dkOGNRTjMzWnRITHcvTUg5ZWFnTTlUY3FYdk1w?=
- =?utf-8?B?QUhjdGt2ckdoM1hnSjJRUFNBd3JkV3QzMit4N1p6aWhoMFN0aEFnTDFDa2ow?=
- =?utf-8?B?bVN3VEpiZW1Qb2x4TW5JWC9mMTZzMFhEeWNmQmZSS0kxdis0a0dlRXBUQ3Nx?=
- =?utf-8?B?MDdRUVYzdDNVZnpjYkgzUDJtUTIxdm5OTEowemxGMUxzMW5Td2M1UWkrU1A1?=
- =?utf-8?B?azVFdDRZMDNPT2UrdjBubHZGNXhGdUpERzRadC9JNDFHRXNZT09DTXZZZmtR?=
- =?utf-8?B?Q1BxUnp6MGZ2VWowckNVK0FIaUwwdnBuQkhBdTd3ZUxPdjFJM2RUYnUrcW5B?=
- =?utf-8?B?Z3FJWHI0eHFCc3JFZ2Qra2duci9ienA5UFgxSE8xc0RHTVJiRGl0d2VuczJn?=
- =?utf-8?B?TnBBTUFEUEhvSW9FbUNQU01qOHJnSEZONi9ZeEdBQWVsd3pSeTJVbW5oM0Nq?=
- =?utf-8?B?elVMbEc4S3IyNFpzcUdSV3FadkV4K09BdFhuL01GQTByWDVmeTA5YU40WXMw?=
- =?utf-8?B?ckFnQ0JJWnd0aEZUM0ZVdTc5c1Z1V2ZXamtKcVp4NU1lL0x0d1dBcldwaWJj?=
- =?utf-8?B?SWNDc0xxWEFVbmNYSUEwd2NabDdxZnpVL29PY1ljbGRJRnpwcGYvanJ6OUd1?=
- =?utf-8?B?aUtubW1iRGliQ1dYVmVCaTREVzBaVXh4bytPbjUrU1dDWC9XTmtEZExxSmtS?=
- =?utf-8?B?MDV4bFNKM3BOQ3oyYjg3dXhFQnAxQzdYV1l0emM5RDI5OWZaNldTODhhSE9X?=
- =?utf-8?B?amVlTWtOcE9UeWlob2pTTHpwN1duRjZBbG1JNmpwQ0NQZ01lcElRamxQdjBE?=
- =?utf-8?B?U09pTDloQ0RyUkthaTVLKytpWjZSSkcvMkNmYTRZNkxPQzFyNS9ybElFS2lB?=
- =?utf-8?B?VWVkd0htMXd3TW5idHl6ZTJpcjZubThOQVBadlpzVU5HQ2s4Sk5ZZkF4NmdX?=
- =?utf-8?B?bWR1NkZMZDVLQ2M4QmRQaHNRbytFRGpPcXVhWVIwRFk0VUhVTEp4eERVVU9R?=
- =?utf-8?B?OVhWelNpNW1nTERlQ3lxbnFZVWNKVDdqRVczeFM3VG0va2Jucjh6emFXQXM0?=
- =?utf-8?B?OEU0cjF2RjUrUjZWbU1wZDVCajN1WklUR0RCdjJZNWZFVzJxclcwR1NCYnBG?=
- =?utf-8?B?ak9FbnRFem40Y3lYM0dUcVE0OWgrZFlseStXSFdkOWNNUkJFZ01LblZZMjBq?=
- =?utf-8?B?R1FnZFQwSFV4ZGVadU5BSWNtVTdIZWFHYm5EenFjOGMxbXJ6N3lpUVM4TTFq?=
- =?utf-8?B?cGxSMHNibDJneW14VUV5NkszelFUa1I1dUIwL1cwK0ovRURtVkVhMEZ4VDNC?=
- =?utf-8?B?cFd4azU0Q3g3K09OM3gvL3hTRVJWTGlGM2ZQZUdqUjZBMHhrWTIzSVJmWmlU?=
- =?utf-8?B?NWpUY3R3Q2ZGaXlRYk0rbG9OSUZVY2lSRFAxL3dXRlU1WVVVWlBjUEtrdmNm?=
- =?utf-8?B?VWFGNnFRVk9XejExWVNUdUw2TUI5ek10bDdubittSERWTmJlemEydkJDNDdh?=
- =?utf-8?B?cXQ2cVgwT284VEsyUDR5YUJPTG9iZXpEcTVxa1JoT1ArL01VZFZlb1dsV25t?=
- =?utf-8?B?ajJGUTlWQ3ZZNkhrVno2Z2FBWHc1eHd1UXo2aXllZmNYUzhRbnFUSXFWQk9h?=
- =?utf-8?B?L0RlTlV0T2pwL2tONkFReUJoeDFuWmVvN1VQTmVlaW5ueEhZZnVmcVRndjhS?=
- =?utf-8?Q?sXv0Qje3EueI2vR/yHg8pVscejob+aLimUMtLO/qLmuGy?=
-X-MS-Exchange-AntiSpam-MessageData-1: 4TzOTEry7PFZCg==
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3486e705-9f59-484a-5487-08deddec6725
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jul 2026 19:00:54.6694 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: XbDEODIiEEjVAo0Kv9CWy2TTvasgOn00duJZ/FN/aU6hE9KKSx+8+NiHarxJZ1P/CzXDF/cd4GxnUwi2qLNAyg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1PR08MB7756
-Received-SPF: pass client-ip=2a01:111:f403:c201::3;
- envelope-from=den@virtuozzo.com;
- helo=AS8PR04CU009.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Authority-Analysis: v=2.4 cv=UI3t2ify c=1 sm=1 tr=0 ts=6a4ff020 cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=jQIij1hyAAAA:20 a=IlNb2fE1D_EgsWQvCfgA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22 a=bA3UWDv6hWIuX7UZL3qL:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA5MDE4OCBTYWx0ZWRfXwkt21KV6tnOH
+ VjKCOxx5WLsVaxEzkanAKHrlQ7Cq3a5fGHYqzRpunT8m4CJywZKvCxhsd8CRoieW6MrEvo1ZHXz
+ wnZPk5zTDqEY4UasC3fRgnrEELh3R42ASg1iUoZTUCKj7YkU9Cq9H64k6++WXZ79SjF2lnlFE4A
+ RTG1bH4dEjHqM1fu2z2pvDFQL+Q6F9040rRP0rMW3yEjXho7YpKgJb8jH0NgHnqj33ni8Wzkl77
+ Zs6xBHUGILO6ezw/GKu/myG1sNZ59+VPiTg70+1/IwcX1saP5LiCGkY64U90v9lUOkxFakQZeaU
+ yEhjeDqgGASepmsk1DHD1+ekOtEQSqbQi5vv7VBXQZev1rCRhT0N49Cs0bKHVh69qU04NvzdwX2
+ d1cVOsXiq5XsNFPjlZE9FT2pHsaOoMnhcrjHLImu9x9jM+pMRuvDogEcO4WBMHzxuOsqoUa+0II
+ mBvk51/3C1UVdvXCoRw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA5MDE4OCBTYWx0ZWRfX4ymyFd2IIbfy
+ tdr4O1q3Go6gscn+mtSxtR/G4XAICNiJTGi4fLYAPPebLNUNLxRABUZsYe22vgy7jh7HP4cevQa
+ Z890rCuwmwTkqaylqxLIs/zezxKsa3o=
+X-Proofpoint-GUID: 0GuOvwi2qUVCKLWpmVi9Zyi2BTLCaso8
+X-Proofpoint-ORIG-GUID: 0GuOvwi2qUVCKLWpmVi9Zyi2BTLCaso8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-09_04,2026-07-09_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 suspectscore=0 spamscore=0 malwarescore=0 bulkscore=0
+ adultscore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607090188
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,15 +163,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/9/26 20:55, Philippe Mathieu-Daudé wrote:
-> Hi Denis,
->
-> I tried to review, but not my area and way out of my confort zone...
-> Cc'ing Akihiko & Peter who might have more familiarity :)
+On 7/9/2026 11:15 AM, Ziyang Zhang wrote:
+> Thanks for the detailed review. Replies inline.
+> 
+> On Thu, 9 Jul 2026 10:29:48 -0700, Pierrick Bouvier wrote:
+>> Please remove the cplusplus part, we don't need it here.
+> 
+> Will do, hello.h will be plain C. The guard was there because the thunk
+> generator parses the header as C++, so without C linkage the generated
+> guest library exports a mangled name and the drop-in fails to resolve
+> hello(). I will fix that in the generator instead: it will wrap the
+> header in extern "C" by default (treating it as a C library), with an
+> opt-out for genuine C++ headers, so the example header stays clean C.
 >
 
-I thought that v3 should go fast, this is v3. Not too much
-changes + unit test. I was wrong :(
+Yes, we can have a parameter --lang c|c++ for makethunks script to solve
+this.
 
-Den
+>> No need for fflush (same in hello_host)
+> 
+> I will remove both. One caveat on the host side though: dropping its
+> fflush is not really recommended. "hello from host" runs in the host
+> process, so it writes to the host libc's stdout buffer, and QEMU tears
+> the process down on guest exit without running the host libc atexit
+> handlers that would flush it. On a terminal it prints anyway
+> (line-buffered, the newline flushes), but once stdout is redirected or
+> piped it is fully buffered and the line is lost. So with both removed the
+> example only shows the host line on a terminal.
+>
+
+Hum, I'm not sure to see why. QEMU or any native program uses libc and
+things are correctly flushed without needing an explicit fflush.
+What is special in Lorelei case?
+
+>> Excellent, that's a nice way to see difference between guest and host.
+> 
+> Thanks.
+> 
+>> Please replace this part with a proper url, choosing a specific version
+>> and arch. Ideally, you can publish under "latest" in addition to
+>> versioned releases on GitHub so url stays stable.
+>>
+>> Also, please add a link to
+>> https://github.com/rover2024/lorelei/releases
+>> in the comment so people can click this and see what is available.
+> 
+> Will do. I will pin the command to x86_64 and a specific release, add a
+> comment linking to the releases page, and publish a stable "latest"
+> download asset so the URL does not rot.
+> 
+>> Why do we need this variable?
+> 
+> It is the thunk-pack discovery path, and it does a different job from
+> LD_LIBRARY_PATH. LD_LIBRARY_PATH is the loader's search path for shared
+> objects. LORELEI_THUNK_PATH tells the host runtime where the thunk packs
+> live, so it can find the host side of each thunk (the HTL) and the
+> guest-to-host library mapping, and it can layer several packs. The
+> runtime resolves these itself, they are not something the loader would
+> find, so I would keep this variable rather than fold it into
+> LD_LIBRARY_PATH. Flattening the layout (your next point) shortens the
+> paths but does not remove the need for it.
+>
+
+Which .so exactly is covered by this?
+Maybe it should be a parameter of plugin itself, that passes this down
+to Lorelei?
+
+>> This still fails on my side with following error message:
+>> lorelei.guest-rt: failed to load host runtime: libLoreHostRT.so: cannot
+>> enable executable stack as shared object requires: Invalid argument
+>> qemu: uncaught target signal 6 (Aborted) - core dumped
+>> Aborted
+>>
+>> Seems like error message is incorrect in itself "invalid argument"?
+>>
+>> I'm using debian trixie (stable) in case you want to reproduce this on
+>> a VM.
+> 
+> Thank you, this is the real bug, and the new error string is exactly
+> what let me find it. libLoreHostRT.so was linked with an executable
+> stack: one assembly file in the runtime (the coroutine context switch)
+> was missing the ".note.GNU-stack" marker, so the linker marked the whole
+> library's stack executable. A hardened loader (Debian trixie) then
+> refuses to dlopen it.
+> 
+> The message is not wrong. "Invalid argument" is the kernel's errno for
+> the refused stack mprotect, surfaced through dlerror. It read as a
+> mystery only because older releases did not print the dlerror string at
+> all.
+> 
+> The fix is to mark the runtime's stack non-executable (add the missing
+> note, plus -z noexecstack at link time). I have confirmed the GNU_STACK
+> flag flips from RWE to RW with that change. A new devkit and runtime
+> release will carry it, and the example will load on trixie. I will
+> follow up here once it is published so you can retry.
+>
+
+👍
+
+>> Please simplify thunks/ folder hierarchy. Make only one subfolder
+>> (thunks/x86_64) having both the thunks and lorelei lib, and remove the
+>> rest.
+>>
+>> With this, we can simplify command to become:
+>> LD_LIBRARY_PATH=$DEVKIT/lib/:build/host \
+>> qemu-x86_64 -plugin contrib/plugins/libdlcall.so \
+>> -E LD_LIBRARY_PATH=thunks/x86_64 build/guest/main
+> 
+> I would rather keep the current layout, and I think it is justified.
+> Those subdirectories are not cosmetic: they are the contract the host
+> runtime uses to discover thunks. It scans each LORELEI_THUNK_PATH prefix
+> for <prefix>/x86_64/lib/x86_64-LoreGTL (guest thunks) and
+> <prefix>/lib/<host-arch>-LoreHTL (host thunks), which is how it tells a
+> guest thunk from a host thunk, and by architecture. The same guest-thunk
+> directory is also what the guest loader reads through -E, so collapsing
+> the -E path collapses the discovery path with it.
+
+The same thing can be achieved by looking into current LD_LIBRARY_PATH,
+without needing another env var for this. No guest binary will link to
+lorelei shared objects, so there is no conflict to be expected.
+
+If any library name clashes between guest/host side, just rename things
+directly.
+
+I would like to insist to see LORELEI_THUNK_PATH gone and that we rely
+on LD_LIBRARY_PATH only.
+This way, it's clear what is consumed on host side, and what is consumed
+on guest side.
+Having a magic variable forces to read Lorelei sources to understand
+what is going on, and it's not needed.
+
+> 
+> Merging the "lorelei lib" into that folder has a second cost: those are
+> the runtime libraries, shipped once in the devkit, not per thunk. Thunk
+> packs are deliberately standalone and do not each carry a copy of the
+> runtime. Putting them together would either duplicate the runtime into
+> every pack, or mix runtime libraries in with the thunks so the scan can
+> no longer separate the two.
+> > So the second -E entry is not redundant: one directory is this library's
+> thunk, the other is the shared guest runtime. The extra path components
+> are the price of that separation, and the existing thunk packs already
+> follow this layout, so I would keep it. If the two directories read as
+> redundant, I can add a one-line note saying which is which, but I would
+> rather not collapse them.
+> 
+>> Also, in lorelei tarball, why do we have /lib and x86_64/lib that have
+>> same libraries, but with different sizes? What's the difference?
+>> It's confusing.
+>>
+>> It seems like x86_64/lib folder is never used?
+> 
+> They are two builds of the runtime. /lib is the host runtime, native to
+> the host, loaded by the QEMU process (the plugin dlopens
+> libLoreHostRT.so from there). x86_64/lib is the guest runtime, x86_64,
+> loaded by the emulated guest (the generated guest thunk needs
+> libLoreGuestRT.so from there). Same names, different targets, hence the
+> different sizes. x86_64/lib is used, by the guest side. I agree the
+> split is confusing and will make the layout and the docs clearer.
+>
+
+libLoreHostRT.so is in both, so I'm confused about which is which.
+Thanks for clearing that also.
+
+>> Please remove the section above from the doc since it does not add
+>> useful information. Also, we already have a link to Lorelei above.
+> 
+> Will remove it.
+> 
+>> We're getting closer, hang on.
+>> We need to have a simple example that is functional before being able
+>> to accept the plugin.
+> 
+> Understood, and the executable-stack fix above is what makes it
+> functional. I will publish a new devkit and send a trimmed revision that
+> addresses all of the above.
+>
+
+We'll be close from the final version with this. Only thing left will be
+to clean the layouts, disambiguate files, and eliminate
+LORELEI_THUNK_PATH to rely on LD_LIBRARY_PATH only.
+
+> Thanks,
+> Ziyang Zhang
+
+Thanks,
+Pierrick
 
