@@ -4,70 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 469B5C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 18:37:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22E43C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 18:43:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whtcw-0000sl-1H; Thu, 09 Jul 2026 14:37:38 -0400
+	id 1whtiM-0003DG-AW; Thu, 09 Jul 2026 14:43:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1whtcM-0000Ko-L6; Thu, 09 Jul 2026 14:37:03 -0400
-Received: from smtp2-g21.free.fr ([2a01:e0c:1:1599::11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1whtcJ-0006xw-VA; Thu, 09 Jul 2026 14:37:02 -0400
-Received: from localhost (unknown [89.92.102.124])
- (Authenticated sender: emmanuel.blot@free.fr)
- by smtp2-g21.free.fr (Postfix) with ESMTPSA id E85C92003C3;
- Thu,  9 Jul 2026 20:36:37 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
- s=smtp-20201208; t=1783622215;
- bh=/xhDYqX32sp5AONV22mgTb0it3HYU+t4cXJ3+D/dOPM=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=UWch1zpWiXFqCdq5rYzKPvwQFP5s90WYsqW7rYi3O/FRgfY/kEL1lLbl0hBB/8/E/
- hB0mQUw9SyAYsFetQU2uHvcOSh5EAJTtHfOCkP1eaWbIQABgTFoCrl5rFmsZvMd7bk
- eehtE2J0hfm8T9vOodClULlQr0lz7J3XygY0g/ns43vkuVOr9r4Bv1OjyIVIH+auxK
- 3ELI/I1o/RQk19xTqIy5I8iP+Nck0xDdjVeJd8ocNa+feQuROwRtzd4p3frSX3+v0s
- 15o8howo6pkG5pt69+HRTvcMjY7sy9hgdW8SdYt6f3dT3U+GHH3IpAANp3Su2IzBLH
- 1pvf9lblFmJlQ==
-From: Emmanuel Blot <emmanuel.blot@free.fr>
-Date: Thu, 09 Jul 2026 17:23:08 +0200
-Subject: [PATCH 16/29] hw/gpio: pca9554: add hw-dir property honoring the
- configured pin direction
+ (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
+ id 1whtiK-0003Ck-Lb
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 14:43:12 -0400
+Received: from mail-qk1-x736.google.com ([2607:f8b0:4864:20::736])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
+ id 1whtiJ-0008CR-9m
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 14:43:12 -0400
+Received: by mail-qk1-x736.google.com with SMTP id
+ af79cd13be357-92edb12cdf2so6248785a.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 11:43:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783622590; cv=none;
+ d=google.com; s=arc-20260327;
+ b=P1HavccwMOJvB1Pjo6k6rvkGNCF+4h4eBz/CyqbUaaAcvZOFDqs+hsAbRQXxribMYp
+ 1W/Zlhj18FkF/3kcApIM2wes3f/aDShrWuht017pOxUkO643iBA+ixnEtcArnJtB8dHE
+ suN7SwRrsQF/QB+TXpaMGoCCoO9gH4KkN7thP6PiPD/96Eah8RRqGx/rPSjkWkefv4pI
+ ewyRSGiYO6aQL3X9GW0lvt/kAY461nrpu4JvDsMg9fgfUBiC5bLgmBLzTQAIeGGicIwl
+ 7tqGjFmIvCqN13hl1OrcRnw6x2+CdhftEbLcNIBARxDF6pnjfTNvgXzc9ZauTEFWYnwp
+ 4JnA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=zKf7luZYc8hCBd/cSUNCTohnF3HdfKwUI1Mh0LwST0E=;
+ fh=py8qWij750+NlEfFcK5ghwGWeGBs72nVcPl8SzkNb0c=;
+ b=HRP/Uhp4wXb5Gi8MKxeE5T3LnvrupcsBZM7iJzFI9QZ+3pAa88Y9X6pldtCp7wiWtY
+ wNmHhyBbBqDBI683ub6thDdrB/prYC3+METeEhEaA89wEGCdd7FkaXahy1uJnO+1RCJZ
+ Mv82/eE01GvolxPgczvFdA9g/ebe9gg+u75zZqN+kbyxKVqJKC+4JEwGN4ieJLYU1lLy
+ VyN498yES82qMpLyXrjUy20Wvn+DNtVFmYx6qVW7/P6ArKYl8HNvJmq8p1OtE7aAmRUm
+ v0CLv0VEFrouF0Iw2A44ozb2/qj0qhQ3gm8IWp1eW/mzokS50eHdSFdgvp04N7draAwM
+ JUqw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1783622590; x=1784227390; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=zKf7luZYc8hCBd/cSUNCTohnF3HdfKwUI1Mh0LwST0E=;
+ b=qva47jxuogCcXsfa85GObQgwLesijugYzGc/W7dq2pfZqQ0SQg5qlJ6yEj/tEG83fv
+ ABJDeBLdU0MV113d8i27tQJKUCGrtb4a2wpq5fgiA98vDytR9OnWJRFT6HPZZIyWPe0R
+ DmQ93SYwIjp2RS++pH+EJB9Yubpa3fEodEBwRKVmAtoV3QO2avOtkZv/cu9QyxABcsa2
+ 2To+5Ya2Epg+Dmqt8iV9TeicAsNlg4rOBzRGWJFUsLeQInafsqUkp37oepMrfS4E5X4s
+ JRZ7rGpxSCoJabL/1MVqXmB/6WkHZrVBsdm829BBSJG81H839iY/lTRygfsW9xYiddoc
+ 4MdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783622590; x=1784227390;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=zKf7luZYc8hCBd/cSUNCTohnF3HdfKwUI1Mh0LwST0E=;
+ b=dut+8V4gYPLEOJ0elVEglfIFIHpDZSKjaVHozUSdWuTjK2cuBM/qmDlsXEdroWfaS/
+ YPnhDsyTaG75q3S4Y5UjS/jqx30fz3T4BLs6vAdie3SmEbMlVMmSSG6oZUbaRt5kuOu+
+ h2nPZMo28g8nhr2rfgX1qs3ggDxV2dbluCTy4N9frJaoQCLS1wWGjAlw9GEVhVFNGEkM
+ uOSkyEl6HFyCDI8LyLFr6vfH78xp6h8Rb97/lZbOBPULjhyileNdj7K5ZfPgqmBb1Qfq
+ svWUHL/FL//JcjgXZhcnK/BP1j7ZqRl4aRYCdc25zFu+N0T1On22yfhlXeXOWdXQVygy
+ KDGg==
+X-Gm-Message-State: AOJu0Yyq29Lh6s1mntAECP/XjPxfHcv71DLUjn9d/8a7nbJ9eVBbduWm
+ p5GGur/7LNlUJcghwkqS9hBwUdLI5cnOJ3q3URKAW/U9znDbMrXkYyoWXlUYyTfNPXYTQb3pt/b
+ DG/Z7RvgO4zmJ+zSy9ksUEn4MH6XVseE=
+X-Gm-Gg: AfdE7cnPTNK04WzqCZoK7YxIH+OsRwLzM7wVXf3TqIdoGPuPBNT9Z3B6ih/XeqEP4Ur
+ xKQtaP0B+fkUaj3hAquQuZMNFek+z/yV2xNNZmsZqVfTk9YJWPaR+ioSHXdepS3gJar4YEHXgCc
+ siRkl3n4TbRLD5Brz/5xr+Xmm0TGlZN6DX45RVivDNzpVn2sXmhs1qWeYdQ39sB5Zl1s+JGbkb9
+ vpj/e9bqFFwBe/htrD7GUb3xm3o40ReOX4OSbCPQz6N9+wm3sEtWlzMCsXCs0xmaKosP34XQTdQ
+ i509cWjdI5GUETiwOCUMuWSJVJOQYU6SWfWEIbdopks6/RUSmBP3WmBDdrGt
+X-Received: by 2002:a05:620a:4506:b0:92e:6c8a:2a39 with SMTP id
+ af79cd13be357-92ecf5b4610mr882839585a.13.1783622589589; Thu, 09 Jul 2026
+ 11:43:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260709-catalina-upgrade-v1-16-82a63fead90c@free.fr>
-References: <20260709-catalina-upgrade-v1-0-82a63fead90c@free.fr>
-In-Reply-To: <20260709-catalina-upgrade-v1-0-82a63fead90c@free.fr>
-To: qemu-devel@nongnu.org
-Cc: Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org, 
- qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
- Corey Minyard <cminyard@mvista.com>, Emmanuel Blot <emmanuel.blot@free.fr>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783610579; l=5836;
- i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=/xhDYqX32sp5AONV22mgTb0it3HYU+t4cXJ3+D/dOPM=;
- b=X+gAoJxXpbIPOlNG9LyZdRPPufVJhUr6v+E50Gw0oHcbs1gLNUslsqjpx/J2upuWUDsG8rKOe
- T0vpwV/jCM6CyLo/kCe15JCumZnFp4IBodfzlT8d5YuAv2rs0lqU8Aa
-X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
- pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=2a01:e0c:1:1599::11;
- envelope-from=emmanuel.blot@free.fr; helo=smtp2-g21.free.fr
-X-Spam_score_int: -4
-X-Spam_score: -0.5
+References: <20260706223343.988769-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260706223343.988769-88-pierrick.bouvier@oss.qualcomm.com>
+ <CAMo8BfJg09ca6Kxw0WLLj0SQLBcOCwYmSN=e3u063oY-fgrdfw@mail.gmail.com>
+ <99d7064e-50f3-4947-884a-6f6c14f2cee2@oss.qualcomm.com>
+ <84fddbf3-e523-4a23-b95e-cc6102e459c3@oss.qualcomm.com>
+ <CAMo8BfKGqu=GbDhp525Oqt4VVCC7cPSYZ5obsUuuFQYKvreeKQ@mail.gmail.com>
+ <422b0dd7-b3a2-45fc-a76f-43c18f95c426@oss.qualcomm.com>
+ <968352f9-089f-4409-800a-3efef59d114d@oss.qualcomm.com>
+In-Reply-To: <968352f9-089f-4409-800a-3efef59d114d@oss.qualcomm.com>
+From: Max Filippov <jcmvbkbc@gmail.com>
+Date: Thu, 9 Jul 2026 11:42:56 -0700
+X-Gm-Features: AUfX_mwpLCUsUyFi5F9AFn_AcPwVqIDIRH6DOarSz8bHDsPxGFc__wpuUCoNy1w
+Message-ID: <CAMo8BfLPahC0T-8U=y=Jacx5zNvO=4jFXiCFfWvYUKtyNVk=Qg@mail.gmail.com>
+Subject: Re: [PATCH v3 87/91] tests/tcg/xtensa/crt.S: align .text section
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Gustavo Romero <gustavo.romero@linaro.org>, Laurent Vivier <laurent@vivier.eu>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Helge Deller <deller@gmx.de>, 
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::736;
+ envelope-from=jcmvbkbc@gmail.com; helo=mail-qk1-x736.google.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
 X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.999, HK_RANDOM_FROM=0.999,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,160 +134,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The pinN QOM accessors are meant to let external agents observe and
-stimulate the expander's pins, but their default behaviour does not
-match real hardware:
+On Thu, Jul 9, 2026 at 8:24=E2=80=AFAM Pierrick Bouvier
+<pierrick.bouvier@oss.qualcomm.com> wrote:
+> If you have a chance to take a look, I observed that test_timer.S is
+> flaky on xtensaeb with kc705_be. It fails with a probably of 25% on my
+> machine.
 
- - to "drive" a pin, set_pin writes the OUTPUT register and then clears
-   the pin's Configuration bit to force it into output mode. On a real
-   device the pin direction is owned solely by the host (programmed
-   through the Configuration register over I2C); an external agent can
-   neither flip a pin's direction nor impose a level on a pin the host
-   drives as an output -- the latter is a voltage conflict, not a legal
-   operation.
- - get_pin returns a CONFIG|OUTPUT composite, i.e. the guest's intent,
-   rather than the level actually sampled on the pin.
+This is a rather well-known issue that for a core with .clock_freq_khz
+that is not
+exactly matching the icount argument used to run the timer test it
+will sometimes
+fail. The easiest way to fix it is probably changing the default core
+clock frequency.
+The more useful way to fix it would be to make the core clock of the
+`sim` machine
+adjustable and set it to the value that matches the icount.
 
-The PCA9555 GPIO variant (hw/gpio/pca9552.c) already models this
-correctly and unconditionally: only input-configured pins can be driven
-from outside, and reads return the sampled INPUT register.
-
-Add a "hw-dir" property to bring the pca9554 pin accessors in line with
-the hardware (and with the PCA9555 model), without changing the
-behaviour seen by existing users:
-
- - hw-dir=true: set_pin only drives pins the guest has configured as
-   inputs; a set on an output pin is refused with a LOG_UNIMP warning.
-   get_pin returns the sampled INPUT register.
- - hw-dir=false (default): keeps the legacy, non-conformant behaviour
-   for backward compatibility.
-
-Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
----
- hw/gpio/pca9554.c         | 65 ++++++++++++++++++++++++++++++-----------------
- include/hw/gpio/pca9554.h |  1 +
- 2 files changed, 43 insertions(+), 23 deletions(-)
-
-diff --git a/hw/gpio/pca9554.c b/hw/gpio/pca9554.c
-index b44ec0d999..ed38fe102b 100644
---- a/hw/gpio/pca9554.c
-+++ b/hw/gpio/pca9554.c
-@@ -154,6 +154,14 @@ static int pca9554_event(I2CSlave *i2c, enum i2c_event event)
-     return 0;
- }
- 
-+static void pca9554_set_ext_state(PCA9554State *s, int pin, int level)
-+{
-+    if (s->ext_state[pin] != level) {
-+        s->ext_state[pin] = level;
-+        pca9554_update_pin_input(s);
-+    }
-+}
-+
- static void pca9554_get_pin(Object *obj, Visitor *v, const char *name,
-                             void *opaque, Error **errp)
- {
-@@ -171,9 +179,13 @@ static void pca9554_get_pin(Object *obj, Visitor *v, const char *name,
-         return;
-     }
- 
--    state = pca9554_read(s, PCA9554_CONFIG);
--    state |= pca9554_read(s, PCA9554_OUTPUT);
--    state = (state >> pin) & 0x1;
-+    /*
-+     * Report the physical pin level. The input register is kept in sync by
-+     * pca9554_update_pin_input(): output pins mirror the OUTPUT register and
-+     * input pins reflect the externally driven (or pulled-up) level, so it
-+     * holds the wire level regardless of the configured direction.
-+     */
-+    state = (s->regs[PCA9554_INPUT] >> pin) & 0x1;
-     visit_type_str(v, name, (char **)&pin_state[state], errp);
- }
- 
-@@ -208,20 +220,34 @@ static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
-         return;
-     }
- 
--    /* First, modify the output register bit */
--    val = pca9554_read(s, PCA9554_OUTPUT);
--    mask = 0x1 << pin;
--    if (state == PCA9554_PIN_LOW) {
--        val &= ~(mask);
-+    if (s->hw_dir) {
-+        /* Warn and ignore if the guest has configured this pin as output */
-+        if (!((s->regs[PCA9554_CONFIG] >> pin) & 0x1)) {
-+            qemu_log_mask(LOG_UNIMP,
-+                          "%s: pin %d is configured as output, "
-+                          "ignoring external set\n",
-+                          s->description, pin);
-+            return;
-+        }
-+        /* Drive the external input level */
-+        pca9554_set_ext_state(s, pin, state != PCA9554_PIN_LOW);
-     } else {
--        val |= mask;
--    }
--    pca9554_write(s, PCA9554_OUTPUT, val);
-+        /* Legacy behavior: force output mode and drive */
-+        /* First, modify the output register bit */
-+        val = pca9554_read(s, PCA9554_OUTPUT);
-+        mask = 0x1 << pin;
-+        if (state == PCA9554_PIN_LOW) {
-+            val &= ~(mask);
-+        } else {
-+            val |= mask;
-+        }
-+        pca9554_write(s, PCA9554_OUTPUT, val);
- 
--    /* Then, clear the config register bit for output mode */
--    val = pca9554_read(s, PCA9554_CONFIG);
--    val &= ~mask;
--    pca9554_write(s, PCA9554_CONFIG, val);
-+        /* Then, clear the config register bit for output mode */
-+        val = pca9554_read(s, PCA9554_CONFIG);
-+        val &= ~mask;
-+        pca9554_write(s, PCA9554_CONFIG, val);
-+    }
- }
- 
- static const VMStateDescription pca9554_vmstate = {
-@@ -271,14 +297,6 @@ static void pca9554_initfn(Object *obj)
-     }
- }
- 
--static void pca9554_set_ext_state(PCA9554State *s, int pin, int level)
--{
--    if (s->ext_state[pin] != level) {
--        s->ext_state[pin] = level;
--        pca9554_update_pin_input(s);
--    }
--}
--
- static void pca9554_gpio_in_handler(void *opaque, int pin, int level)
- {
-     PCA9554State *s = PCA9554(opaque);
-@@ -303,6 +321,7 @@ static void pca9554_realize(DeviceState *dev, Error **errp)
- 
- static const Property pca9554_properties[] = {
-     DEFINE_PROP_STRING("description", PCA9554State, description),
-+    DEFINE_PROP_BOOL("hw-dir", PCA9554State, hw_dir, false),
- };
- 
- static void pca9554_class_init(ObjectClass *klass, const void *data)
-diff --git a/include/hw/gpio/pca9554.h b/include/hw/gpio/pca9554.h
-index c09108e8b6..ac835371aa 100644
---- a/include/hw/gpio/pca9554.h
-+++ b/include/hw/gpio/pca9554.h
-@@ -33,6 +33,7 @@ struct PCA9554State {
-     qemu_irq gpio_out[PCA9554_PIN_COUNT];
-     uint8_t ext_state[PCA9554_PIN_COUNT];
-     char *description; /* For debugging purpose only */
-+    bool hw_dir; /* Honor pin direction */
- };
- 
- #endif
-
--- 
-2.50.1
-
+--=20
+Thanks.
+-- Max
 
