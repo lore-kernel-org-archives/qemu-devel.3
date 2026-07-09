@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEC14C44508
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEBD1C44507
 	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 13:01:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whoNB-0001gK-Mj; Thu, 09 Jul 2026 09:01:01 -0400
+	id 1whoNB-0001g2-7i; Thu, 09 Jul 2026 09:01:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <phind.uet@gmail.com>)
- id 1whoN5-0001dI-6C
+ id 1whoN5-0001dP-JN
  for qemu-devel@nongnu.org; Thu, 09 Jul 2026 09:00:56 -0400
 Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <phind.uet@gmail.com>)
- id 1whoN2-00006u-K5
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 09:00:54 -0400
+ id 1whoN0-00005Z-BJ
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 09:00:55 -0400
 Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-ca80d708489so548942a12.1
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 06:00:52 -0700 (PDT)
+ 41be03b00d2f7-ca913a601fbso209317a12.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 06:00:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783602051; x=1784206851; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=ZaEIfqybV7I+19pe9ex1wILGmf1tN0Ou6N7PZUVaFys=;
- b=X0fNRs+lQwO1DVp2lDS3xUkBEgrzl09J+el6aFUcWWakbpsbxyYtKW6ovFx9WiK0/7
- pYt+7fFLj1Hsi1ho/66utcJwxU4WziRSAz1aKemNJ7HGsoMiPK5WvR0HhAlOG5uiqg5A
- syOm6wTy8Bw6GWCTKybYXnt9fm83o6WNfdWWzm5duPT54vH1nrNHHlwiYwMiRJTCA5O1
- YvthAOZiNIn7BSZS5TRqLXYam4cBEfknYEgVmBWCry3oTPHHpOZZotmRkafAyM5FFWBz
- xx4n9Fdmjl2uHChRcliBDbEKtdHvDKDLcHNZ0Htit9lYkGI9H/K2tdyBKSvFJdaL1sOr
- jzVA==
+ d=gmail.com; s=20251104; t=1783602048; x=1784206848; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=20jw1gKRRwIYR9j0Ca71dxRoZUJNv80X1O03w2o3ayc=;
+ b=GB6UqlkJlvJ5SRua3N6dXO116O9MSzD+1VbAj6l9zgGw8MFcYTe6EwzEQxaJUGQ9U7
+ OJZ4tg+IsIzJ8OLeri61mIU2cpwnntUFKvAp5OO37BRxDXD5zq3YNR0zbIcD/zf0AngU
+ fS2H8VZXHQELBVqJEhUfOsCD+q7o9w803HUeJFIgH7nPPw5EIgmDZuUBLpKDPo/qgFEm
+ ihqP8cVqxurvGKwEfprRO+cvZNsk/hIB8bEY8ObqAc1R17SqoN3c3HOGDQGlAjaMWsDR
+ mRDn7egArsorgaTUM/xmLFNf14oy9yb8/L7fsHKLhPzz9mS1ogmKFrFVJzRf/gublZoH
+ GPXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783602051; x=1784206851;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=ZaEIfqybV7I+19pe9ex1wILGmf1tN0Ou6N7PZUVaFys=;
- b=Un/LFN31TZMWBbcnT7/UKGhWEMai+obxH583iMw1rqyji23t9tLio5o5j0Y2+EIP21
- DZFnviIIj+4SuB0UNX5up+z3N2n5sLNJREmKP6f/FQBveYopcys6uvRABQPdTFeSZ7qF
- hF5zG71kk5f6ytWdKE2fpBDbcG4xehhcxNabbkqmnZVbakz5a/n2AnD9NAH1Xg/ImXf9
- 5zLZVbQgWz9NBivVmqLazcxFx89PQX+znslGUvbu92MCUCRxW2ErEJpBj7HOt/L7eHsJ
- IKdRKxmevabl0Mla4i93PnCiAd3pjV3s0D4L9qV4Xjstn6ZpZZDVKP8ewkm/K5SEzkn3
- Bicw==
+ d=1e100.net; s=20251104; t=1783602048; x=1784206848;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=20jw1gKRRwIYR9j0Ca71dxRoZUJNv80X1O03w2o3ayc=;
+ b=fsaEP7W3EErx9pGCzS9r4pgk4u1CPDc96cMeklx8nmuaYB2A6hESkVnkaCbKGQ5r0b
+ VAoCqda9eWCpvtOZm6eN31zcclWxfNiDW3s9uawgH+KOZFN5xUG78F4Go2xni5sgceAJ
+ ARY49UvU/vkPzi4inbMwGHU8aKyjZTU56icFk8yicZi46Uocdn8UyF9ASQ0Sv/Yp+fG/
+ 1XU6Bx5uhVMKTk7X7dOiOmF1tt8adtVmViX9xvj8WdM9gtmARgL/9H7kW1J6NyqemBF8
+ n3F52Den3Uy4T+MhQaP6Z6Yb0JlNKDUryJJPmyicIRDODgldot1gHPsGgSyi8O9wYKC0
+ KiRA==
 X-Forwarded-Encrypted: i=1;
- AHgh+RrIQmH/6Bu00HVW9iRLirq6UVYlZbY3o5tjKfwLoFLOQuos7ihxJSpIJPR9OxrLX9fjlq3ShsYwrkPS@nongnu.org
-X-Gm-Message-State: AOJu0YzC6zoidff9NwnHeiZ2BzQKGeHYguJc1u9aaYf0tmmOlicrpsgr
- 3xgHNnVOgL63VRjQNZMMsdhaYe/4eXa+b0jBhsfMXtu4mQA5VCE9wklZ
-X-Gm-Gg: AfdE7cmjcxhW3rhyJor8HlCz5AmtB0hQiIpk2dNC3cWWpRTHHNDQfWdROCaxoCePLjS
- zu37EByaSga7/fo+kKJo9hCmUCK2yhTtTYLMt/55vVY6vqP2dU4LZxGtI72stzRtKWEnTgrkX/i
- HyTrK1voGAoot3pg+RslOaC/fU4pwegp9DMXpORow4cMgp7IbPfKa5IXK0SNDYDCNjHlgcXc9NM
- 8NyEySRJI1BH1BuDEpblt0vFjWQR3rvZk+HRADFnd0oZHe1sbfmEkJNLX/UpCuF+miYy6pGSAwO
- ctXwgIDLyYWWIzr8GFALE9hzC9beln+xkVpLXKS20Ylo38tqOUorHCr5Kk393f5hGvLTUOJm4Of
- EICvjyW2rDq66nYJR91dUfe8EURUp07YSN6TELK0K3MMbyQxXyoj1YxHnXx4+e5zAZPdJAzbwbt
- YOKtWaFxv8TA6hRldusLEg4aL1W5Oab5CBTShmobCwbULUhwqndXGhPoFT
-X-Received: by 2002:a05:6a20:d81a:b0:3bf:a8fa:a7b1 with SMTP id
- adf61e73a8af0-3c0d6c6f129mr3623269637.37.1783602050476; 
- Thu, 09 Jul 2026 06:00:50 -0700 (PDT)
+ AHgh+RqICOYgUisKRQVDfapwRB7kt4rkmb5VScrFNIgiqgKHhX4wtr04LNKLMBJUu64dM8G5LFykHjNxNW4u@nongnu.org
+X-Gm-Message-State: AOJu0YzqVg6gh1+grhBpq6/GKWMNJ5SMGCfa1wqSDQepzhv2I5q+K4Mj
+ HKlmsrj1R5ERwCGVDhaQoOTIdtz97Oi80vhFZLG3pguZeHZI2/t8KfMi
+X-Gm-Gg: AfdE7cnOcKt+Sh8fI/xN70LjABnTE6PebO42uD7KelmEB8yRVyVZSzyeDSwMCncBF/u
+ PgZncLr7WvS6x8ciGvgoB16lbBt7UzDGawy0/mGMRHcVC3RJmtl4oqrZyfwJxL+ZIpkuO9VqrOx
+ 6DF4YhNsN3eeUjeq4uCFCOc9yysnt/Y77QUggsW/9EgBf/wLNAfWJAgdQ46PIa5mGZ2L+IE65U7
+ SYV3CbAK1OSpXgzH1FQCDuIv/InJLQClII3Yrcem4nk+VItED383EFb1EKdNFm/irWW0vThgKbP
+ 3+s3jGm/5aDWEJtVVaz+DVbucCGjYiM0hpdKVNGQJ8SuLXcv5K/R1HnmxUiAph0ofcPIM5JpQHM
+ J9Tg8MZqsExi1Q0O98H2SKa742yvSGIKc8rswrl7c+laR0AWQBOG8Q3qEqK8Dl9R3d1ObkBPh/s
+ LSOc9/F2G76etvklc37APF7fUtSTeaIJ4oMgP4yO2EIGTFZ4HTKAqG3RsN
+X-Received: by 2002:a05:6a21:a95:b0:3bf:6c08:fb9d with SMTP id
+ adf61e73a8af0-3c0bcead1b1mr9350607637.49.1783602047307; 
+ Thu, 09 Jul 2026 06:00:47 -0700 (PDT)
 Received: from C02G720XMD6P.sg.corp.seagroup.com ([111.223.92.222])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-31174ac14f2sm32908611eec.27.2026.07.09.06.00.48
+ 5a478bee46e88-31174ac14f2sm32908611eec.27.2026.07.09.06.00.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jul 2026 06:00:49 -0700 (PDT)
+ Thu, 09 Jul 2026 06:00:46 -0700 (PDT)
 From: phind.uet@gmail.com
-To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Lukas Straub <lukasstraub2@web.de>,
+ Peter Xu <peterx@redhat.com>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Mark Kanda <mark.kanda@oracle.com>, Ben Chaney <bchaney@akamai.com>
 Cc: Nguyen Dinh Phi <phind.uet@gmail.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH 3/3] tests/migration: Add chain (A to B to C) precopy
- migration tests
-Date: Thu,  9 Jul 2026 21:00:27 +0800
-Message-ID: <20260709130032.58667-4-phind.uet@gmail.com>
+Subject: [PATCH 2/3] tests/migration: Retrieve serial path from QTestState
+Date: Thu,  9 Jul 2026 21:00:26 +0800
+Message-ID: <20260709130032.58667-3-phind.uet@gmail.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260709130032.58667-1-phind.uet@gmail.com>
 References: <20260709130032.58667-1-phind.uet@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
  envelope-from=phind.uet@gmail.com; helo=mail-pg1-x52e.google.com
@@ -108,339 +108,439 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Nguyen Dinh Phi <phind.uet@gmail.com>
 
-Extract migrate_precopy_hop() from the SUCCESS path of test_precopy_common()
-to wrap the per-hop migration sequence of a succesfull migration.
-test_precopy_common() delegates its success path to this helper; failure
-paths are handled directly.
+Replace hard-coded side names ("src_serial", "dest_serial") passed to
+wait_for_serial() with qtest_get_serial_path().  The path is stored on
+the QTestState at launch time by migrate_launch_source/dest().
 
-Introduce test_precopy_chain(), a helper that drives two consecutive
-migration hops on already-running processes: first A→B, then B→C, both
-hops are expected to be success.
-
-Add two test cases exercising the new helper:
-    - /migration/precopy/tcp/plain/chain
-    - /migration/multifd/tcp/channels/plain/chain
+Hard-coded names break when a process changes role, for example when a
+completed destination is re-used as a new source in a chain migration.
 
 Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
 ---
- tests/qtest/migration/framework.c     | 195 +++++++++++++++++---------
- tests/qtest/migration/framework.h     |   1 +
- tests/qtest/migration/precopy-tests.c |  23 +++
- 3 files changed, 153 insertions(+), 66 deletions(-)
+ tests/qtest/libqtest.c                | 16 ++++++++++++
+ tests/qtest/libqtest.h                |  8 ++++++
+ tests/qtest/migration/colo-tests.c    | 14 +++++-----
+ tests/qtest/migration/cpr-tests.c     |  8 +++---
+ tests/qtest/migration/framework.c     | 37 ++++++++++++++++-----------
+ tests/qtest/migration/framework.h     |  2 +-
+ tests/qtest/migration/misc-tests.c    |  4 +--
+ tests/qtest/migration/precopy-tests.c | 28 +++++++++++---------
+ 8 files changed, 76 insertions(+), 41 deletions(-)
 
-diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-index a7dffeb82c..b4218b2f23 100644
---- a/tests/qtest/migration/framework.c
-+++ b/tests/qtest/migration/framework.c
-@@ -883,28 +883,25 @@ void test_postcopy_recovery_common(MigrateCommon *args,
-     migrate_postcopy_complete(from, to, hook_data, args);
+diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+index c33c799c92..3fccd089dd 100644
+--- a/tests/qtest/libqtest.c
++++ b/tests/qtest/libqtest.c
+@@ -93,6 +93,7 @@ struct QTestState
+     GList *pending_events;
+     QTestQMPEventCallback eventCB;
+     void *eventData;
++    char *serial_path;
+ };
+ 
+ static GHookList abrt_hooks;
+@@ -688,10 +689,25 @@ void qtest_quit(QTestState *s)
+     }
+ 
+     g_list_free(s->pending_events);
++    if (s->serial_path) {
++        unlink(s->serial_path);
++        g_free(s->serial_path);
++    }
+ 
+     g_free(s);
  }
  
--int test_precopy_common(MigrateCommon *args)
-+/*
-+ * Perform one precopy migration hop on an already-running (from, to) pair.
-+ * Both processes must have migrate_setup_instance() called before this
-+ * function.
-+ * Always expects the hop to succeed.
-+ *
-+ */
-+static void migrate_precopy_hop(QTestState *from, QTestState *to,
-+                                 const char *listen_uri,
-+                                 const char *connect_uri,
-+                                 MigrateCommon *args)
- {
--    QTestState *from, *to;
--    void *data_hook = NULL;
-     QObject *channels = NULL;
--    const char *listen_uri = args->uri ?: "tcp:127.0.0.1:0";
--
--    if (migrate_start(&from, &to, &args->start)) {
--        return -1;
--    }
--
--    if (args->start_hook) {
--        data_hook = args->start_hook(from, to);
--    }
-+    int iters;
- 
-     migrate_incoming_qmp(to, listen_uri, NULL, "{}");
- 
--    /* Wait for the first serial output from the source */
--    if (args->result == MIG_TEST_SUCCEED) {
--        wait_for_serial(qtest_get_serial_path(from));
--        wait_for_suspend(from, &src_state);
--    }
-+    wait_for_serial(qtest_get_serial_path(from));
-+    wait_for_suspend(from, &src_state);
- 
-     if (args->live) {
-         migrate_ensure_non_converge(from);
-@@ -913,76 +910,104 @@ int test_precopy_common(MigrateCommon *args)
-         /*
-          * Testing non-live migration, we allow it to run at
-          * full speed to ensure short test case duration.
--         * For tests expected to fail, we don't need to
--         * change anything.
-          */
--        if (args->result == MIG_TEST_SUCCEED) {
--            qtest_qmp_assert_success(from, "{ 'execute' : 'stop'}");
--            wait_for_stop(from, &src_state);
--            migrate_ensure_converge(from);
--        }
-+        qtest_qmp_assert_success(from, "{ 'execute' : 'stop'}");
-+        wait_for_stop(from, &src_state);
-+        migrate_ensure_converge(from);
-     }
- 
-     if (args->connect_channels) {
-         channels = qobject_from_json(args->connect_channels, &error_abort);
-     }
- 
--    if (args->result == MIG_TEST_QMP_ERROR) {
--        migrate_qmp_fail(from, args->uri, channels, "{}");
--        goto finish;
--    }
-+    migrate_qmp(from, to, connect_uri, channels, "{}");
- 
--    migrate_qmp(from, to, args->uri, channels, "{}");
-+    if (args->live) {
-+        /*
-+         * For initial iteration(s) we must do a full pass,
-+         * but for the final iteration, we need only wait
-+         * for some dirty mem before switching to converge.
-+         */
-+        /*
-+         * Avoid changing the args->iterations by using a local copy
-+         */
-+        iters = args->iterations;
-+        while (iters > 1) {
-+            wait_for_migration_pass(from, &src_state);
-+            iters--;
-+        }
-+        migrate_wait_for_dirty_mem(from, to);
-+
-+        migrate_ensure_converge(from);
-+
-+        /*
-+         * We do this first, as it has a timeout to stop us
-+         * hanging forever if migration didn't converge
-+         */
-+        wait_for_migration_complete(from);
-+
-+        wait_for_stop(from, &src_state);
- 
--    if (args->result != MIG_TEST_SUCCEED) {
--        bool allow_active = args->result == MIG_TEST_FAIL;
--        wait_for_migration_fail(from, allow_active);
-     } else {
--        if (args->live) {
--            /*
--             * For initial iteration(s) we must do a full pass,
--             * but for the final iteration, we need only wait
--             * for some dirty mem before switching to converge
--             */
--            while (args->iterations > 1) {
--                wait_for_migration_pass(from, &src_state);
--                args->iterations--;
--            }
--            migrate_wait_for_dirty_mem(from, to);
-+        wait_for_migration_complete(from);
-+        /*
-+         * Must wait for dst to finish reading all incoming
-+         * data on the socket before issuing 'cont' otherwise
-+         * it'll be ignored
-+         */
-+        wait_for_migration_complete(to);
- 
--            migrate_ensure_converge(from);
-+        qtest_qmp_assert_success(to, "{ 'execute' : 'cont'}");
-+    }
- 
--            /*
--             * We do this first, as it has a timeout to stop us
--             * hanging forever if migration didn't converge
--             */
--            wait_for_migration_complete(from);
-+    wait_for_resume(to, &dst_state);
-+
-+    if (args->start.suspend_me) {
-+        /* wakeup succeeds only if guest is suspended */
-+        qtest_qmp_assert_success(to, "{'execute': 'system_wakeup'}");
-+    }
- 
--            wait_for_stop(from, &src_state);
-+    wait_for_serial(qtest_get_serial_path(to));
-+}
- 
--        } else {
--            wait_for_migration_complete(from);
--            /*
--             * Must wait for dst to finish reading all incoming
--             * data on the socket before issuing 'cont' otherwise
--             * it'll be ignored
--             */
--            wait_for_migration_complete(to);
-+int test_precopy_common(MigrateCommon *args)
++void qtest_set_serial_path(QTestState *s, const char *path)
 +{
-+    QTestState *from, *to;
-+    void *data_hook = NULL;
-+    const char *listen_uri = args->uri ?: "tcp:127.0.0.1:0";
- 
--            qtest_qmp_assert_success(to, "{ 'execute' : 'cont'}");
--        }
-+    if (migrate_start(&from, &to, &args->start)) {
-+        return -1;
-+    }
++    g_free(s->serial_path);
++    s->serial_path = g_strdup(path);
++}
 +
-+    if (args->start_hook) {
-+        data_hook = args->start_hook(from, to);
-+    }
- 
--        wait_for_resume(to, &dst_state);
-+    if (args->result == MIG_TEST_SUCCEED) {
-+        migrate_precopy_hop(from, to, listen_uri, args->uri, args);
-+    } else {
-+        QObject *channels = NULL;
++const char *qtest_get_serial_path(QTestState *s)
++{
++    return s->serial_path;
++}
 +
-+        migrate_incoming_qmp(to, listen_uri, NULL, "{}");
+ static void socket_send(int fd, const char *buf, size_t size)
+ {
+     ssize_t res = qemu_send_full(fd, buf, size);
+diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
+index 45217fb8dc..0958cf1662 100644
+--- a/tests/qtest/libqtest.h
++++ b/tests/qtest/libqtest.h
+@@ -98,6 +98,14 @@ QTestState *qtest_init(const char *extra_args);
+ QTestState *qtest_init_ext(const char *var, const char *extra_args,
+                            QList *capabilities, bool do_connect);
+ 
++/**
++ * qtest_set_serial_path:
++ * @s: #QTestState instance
++ * @path: full path to the serial output file to unlink on qtest_quit()
++ */
++void qtest_set_serial_path(QTestState *s, const char *path);
++const char *qtest_get_serial_path(QTestState *s);
 +
-+        if (args->live) {
-+            migrate_ensure_non_converge(from);
-+            migrate_prepare_for_dirty_mem(from);
-+        }
+ /**
+  * qtest_init_without_qmp_handshake:
+  * @extra_args: other arguments to pass to QEMU.  CAUTION: these
+diff --git a/tests/qtest/migration/colo-tests.c b/tests/qtest/migration/colo-tests.c
+index f7f9ba491b..c6b6faa578 100644
+--- a/tests/qtest/migration/colo-tests.c
++++ b/tests/qtest/migration/colo-tests.c
+@@ -58,21 +58,21 @@ static int test_colo_common(MigrateCommon *args,
+     migrate_incoming_qmp(to, args->uri, NULL, "{}");
  
--        if (args->start.suspend_me) {
--            /* wakeup succeeds only if guest is suspended */
--            qtest_qmp_assert_success(to, "{'execute': 'system_wakeup'}");
-+        if (args->connect_channels) {
-+            channels = qobject_from_json(args->connect_channels, &error_abort);
-         }
+     migrate_ensure_converge(from);
+-    wait_for_serial("src_serial");
++    wait_for_serial(qtest_get_serial_path(from));
  
--        wait_for_serial(qtest_get_serial_path(to));
-+        if (args->result == MIG_TEST_QMP_ERROR) {
-+            migrate_qmp_fail(from, args->uri, channels, "{}");
-+        } else {
-+            migrate_qmp(from, to, args->uri, channels, "{}");
-+            wait_for_migration_fail(from, args->result == MIG_TEST_FAIL);
-+        }
+     migrate_qmp(from, to, NULL, NULL, "{}");
+ 
+     wait_for_migration_status(from, "colo", NULL);
+     wait_for_resume(to, get_dst());
+ 
+-    wait_for_serial("src_serial");
+-    wait_for_serial("dest_serial");
++    wait_for_serial(qtest_get_serial_path(from));
++    wait_for_serial(qtest_get_serial_path(to));
+ 
+     /* wait for 3 checkpoints */
+     for (int i = 0; i < 3; i++) {
+         qtest_qmp_eventwait(to, "RESUME");
+-        wait_for_serial("src_serial");
+-        wait_for_serial("dest_serial");
++        wait_for_serial(qtest_get_serial_path(from));
++        wait_for_serial(qtest_get_serial_path(to));
      }
  
--finish:
+     if (failover_during_checkpoint) {
+@@ -83,13 +83,13 @@ static int test_colo_common(MigrateCommon *args,
+                                             "'arguments': {'instances':"
+                                                 "[{'type': 'migration'}]}}");
+         qtest_qmp_assert_success(from, "{'execute': 'x-colo-lost-heartbeat'}");
+-        wait_for_serial("src_serial");
++        wait_for_serial(qtest_get_serial_path(from));
+     } else {
+         qtest_qmp_assert_success(to, "{'exec-oob': 'yank', 'id': 'yank-cmd', "
+                                         "'arguments': {'instances':"
+                                             "[{'type': 'migration'}]}}");
+         qtest_qmp_assert_success(to, "{'execute': 'x-colo-lost-heartbeat'}");
+-        wait_for_serial("dest_serial");
++        wait_for_serial(qtest_get_serial_path(to));
+     }
+ 
+     if (args->end_hook) {
+diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
+index 0bec753b4a..f56bbe48fe 100644
+--- a/tests/qtest/migration/cpr-tests.c
++++ b/tests/qtest/migration/cpr-tests.c
+@@ -66,7 +66,7 @@ static int test_transfer(MigrateCommon *args, const char *cpr_channel,
+ 
+     migrate_set_parameter_str(from, "mode", "cpr-transfer");
+ 
+-    wait_for_serial("src_serial");
++    wait_for_serial(qtest_get_serial_path(from));
+ 
+     qtest_qmp_assert_success(from, "{ 'execute' : 'stop'}");
+     wait_for_stop(from, get_src());
+@@ -89,7 +89,7 @@ static int test_transfer(MigrateCommon *args, const char *cpr_channel,
+     qtest_qmp_assert_success(to, "{ 'execute' : 'cont'}");
+ 
+     wait_for_resume(to, get_dst());
+-    wait_for_serial("dest_serial");
++    wait_for_serial(qtest_get_serial_path(to));
+ 
+     migrate_end(from, to, true);
+ 
+@@ -241,7 +241,7 @@ static void test_cpr_exec(MigrateCommon *args)
+         data_hook = args->start_hook(from, NULL);
+     }
+ 
+-    wait_for_serial("src_serial");
++    wait_for_serial(qtest_get_serial_path(from));
+     set_cpr_exec_args(from, args);
+     migrate_set_capability(from, "events", true);
+     migrate_qmp(from, NULL, connect_uri, NULL, "{}");
+@@ -260,7 +260,7 @@ static void test_cpr_exec(MigrateCommon *args)
+ 
+     wait_for_resume(to, get_dst());
+     /* Device on target is still named src_serial because args do not change */
+-    wait_for_serial("src_serial");
++    wait_for_serial(qtest_get_serial_path(from));
+ 
      if (args->end_hook) {
          args->end_hook(from, to, data_hook);
+diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+index 305b8968ff..a7dffeb82c 100644
+--- a/tests/qtest/migration/framework.c
++++ b/tests/qtest/migration/framework.c
+@@ -58,10 +58,9 @@ static char *tmpfs;
+  * we get an 'A' followed by an endless string of 'B's
+  * but on the destination we won't have the A (unless we enabled suspend/resume)
+  */
+-void wait_for_serial(const char *side)
++void wait_for_serial(const char *path)
+ {
+-    g_autofree char *serialpath = g_strdup_printf("%s/%s", tmpfs, side);
+-    FILE *serialfile = fopen(serialpath, "r");
++    FILE *serialfile = fopen(path, "r");
+ 
+     do {
+         int readvalue = fgetc(serialfile);
+@@ -82,7 +81,7 @@ void wait_for_serial(const char *side)
+             break;
+ 
+         default:
+-            fprintf(stderr, "Unexpected %d on %s serial\n", readvalue, side);
++            fprintf(stderr, "Unexpected %d on %s serial\n", readvalue, path);
+             g_assert_not_reached();
+         }
+     } while (true);
+@@ -450,7 +449,12 @@ QTestState *migrate_launch_source(const char *serial_name, MigrateStart *args)
+                           false, args, &cmd)) {
+         return NULL;
      }
-@@ -1000,6 +1025,44 @@ void test_precopy_unix_common(MigrateCommon *args)
-     test_precopy_common(args);
+-    return qtest_init_ext(QEMU_ENV_SRC, cmd, capabilities, true);
++    QTestState *s = qtest_init_ext(QEMU_ENV_SRC, cmd, capabilities, true);
++    if (s) {
++        g_autofree char *path = g_strdup_printf("%s/%s", tmpfs, serial_name);
++        qtest_set_serial_path(s, path);
++    }
++    return s;
  }
  
-+int test_precopy_chain(MigrateCommon *args)
-+{
-+    QTestState *from, *to, *to2;
-+    const char *listen_uri = args->uri ?: "tcp:127.0.0.1:0";
-+
-+    /*
-+     * Hook callbacks operate on a fixed (from, to) pair; they do not
-+     * compose across multiple migration legs.
-+     */
-+    g_assert(!args->start_hook && !args->end_hook);
-+
-+    if (migrate_start(&from, &to, &args->start)) {
-+        return -1;
+ /*
+@@ -466,8 +470,13 @@ QTestState *migrate_launch_dest(const char *serial_name, MigrateStart *args)
+                           args->defer_target_connect, args, &cmd)) {
+         return NULL;
+     }
+-    return qtest_init_ext(QEMU_ENV_DST, cmd, capabilities,
+-                          !args->defer_target_connect);
++    QTestState *s = qtest_init_ext(QEMU_ENV_DST, cmd, capabilities,
++                                   !args->defer_target_connect);
++    if (s) {
++        g_autofree char *path = g_strdup_printf("%s/%s", tmpfs, serial_name);
++        qtest_set_serial_path(s, path);
 +    }
-+
-+    /* First leg: A -> B */
-+    migrate_precopy_hop(from, to, listen_uri, args->uri, args);
-+
-+    /*
-+     * Second leg: B -> C.
-+     */
-+    qtest_quit(from);
-+    migrate_setup_instance(to, &src_state, &args->start);
-+
-+    to2 = migrate_launch_dest("dest_serial2", &args->start);
-+    if (!to2) {
-+        qtest_quit(to);
-+        return -1;
-+    }
-+    migrate_setup_instance(to2, &dst_state, &args->start);
-+
-+    migrate_precopy_hop(to, to2, listen_uri, NULL, args);
-+
-+    migrate_end(to, to2, true);
-+
-+    return 0;
-+}
-+
- static void file_dirty_offset_region(void)
- {
-     g_autofree char *path = g_strdup_printf("%s/%s", tmpfs, FILE_TEST_FILENAME);
++    return s;
+ }
+ 
+ int migrate_args(char **from, char **to, MigrateStart *args)
+@@ -595,8 +604,6 @@ void migrate_end(QTestState *from, QTestState *to, bool test_dest)
+ 
+     cleanup("migsocket");
+     cleanup("cpr.sock");
+-    cleanup("src_serial");
+-    cleanup("dest_serial");
+     cleanup(FILE_TEST_FILENAME);
+ }
+ 
+@@ -631,7 +638,7 @@ static int migrate_postcopy_prepare(QTestState **from_ptr,
+                              "                'port': '0' } } ] } }");
+ 
+     /* Wait for the first serial output from the source */
+-    wait_for_serial("src_serial");
++    wait_for_serial(qtest_get_serial_path(from));
+     wait_for_suspend(from, &src_state);
+ 
+     migrate_qmp(from, to, NULL, NULL, "{}");
+@@ -657,7 +664,7 @@ static void migrate_postcopy_complete(QTestState *from, QTestState *to,
+     }
+ 
+     /* Make sure we get at least one "B" on destination */
+-    wait_for_serial("dest_serial");
++    wait_for_serial(qtest_get_serial_path(to));
+ 
+     if (env->uffd_feature_thread_id) {
+         read_blocktime(to);
+@@ -895,7 +902,7 @@ int test_precopy_common(MigrateCommon *args)
+ 
+     /* Wait for the first serial output from the source */
+     if (args->result == MIG_TEST_SUCCEED) {
+-        wait_for_serial("src_serial");
++        wait_for_serial(qtest_get_serial_path(from));
+         wait_for_suspend(from, &src_state);
+     }
+ 
+@@ -972,7 +979,7 @@ int test_precopy_common(MigrateCommon *args)
+             qtest_qmp_assert_success(to, "{'execute': 'system_wakeup'}");
+         }
+ 
+-        wait_for_serial("dest_serial");
++        wait_for_serial(qtest_get_serial_path(to));
+     }
+ 
+ finish:
+@@ -1063,7 +1070,7 @@ void test_file_common(MigrateCommon *args, bool stop_src)
+     }
+ 
+     migrate_ensure_converge(from);
+-    wait_for_serial("src_serial");
++    wait_for_serial(qtest_get_serial_path(from));
+ 
+     if (stop_src) {
+         qtest_qmp_assert_success(from, "{ 'execute' : 'stop'}");
+@@ -1090,7 +1097,7 @@ void test_file_common(MigrateCommon *args, bool stop_src)
+     }
+     wait_for_resume(to, &dst_state);
+ 
+-    wait_for_serial("dest_serial");
++    wait_for_serial(qtest_get_serial_path(to));
+ 
+     if (check_offset) {
+         file_check_offset_region();
 diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
-index f6936eb8c6..ca5289329a 100644
+index f054ef8f4d..f6936eb8c6 100644
 --- a/tests/qtest/migration/framework.h
 +++ b/tests/qtest/migration/framework.h
-@@ -254,6 +254,7 @@ void test_postcopy_common(MigrateCommon *args);
- void test_postcopy_recovery_common(MigrateCommon *args,
-                                    PostcopyRecoveryFailStage fail_stage);
- int test_precopy_common(MigrateCommon *args);
-+int test_precopy_chain(MigrateCommon *args);
- void test_precopy_unix_common(MigrateCommon *args);
- void test_file_common(MigrateCommon *args, bool stop_src);
+@@ -227,7 +227,7 @@ typedef struct {
+ 
+ typedef struct QTestMigrationState QTestMigrationState;
+ 
+-void wait_for_serial(const char *side);
++void wait_for_serial(const char *path);
+ void migrate_prepare_for_dirty_mem(QTestState *from);
+ void migrate_wait_for_dirty_mem(QTestState *from, QTestState *to);
+ 
+diff --git a/tests/qtest/migration/misc-tests.c b/tests/qtest/migration/misc-tests.c
+index ec6d438cdc..73750335f1 100644
+--- a/tests/qtest/migration/misc-tests.c
++++ b/tests/qtest/migration/misc-tests.c
+@@ -128,7 +128,7 @@ static void do_test_validate_uuid(MigrateStart *args, bool should_fail)
+     migrate_set_capability(from, "validate-uuid", true);
+ 
+     /* Wait for the first serial output from the source */
+-    wait_for_serial("src_serial");
++    wait_for_serial(qtest_get_serial_path(from));
+ 
+     migrate_incoming_qmp(to, uri, NULL, "{}");
+     migrate_qmp(from, to, uri, NULL, "{}");
+@@ -185,7 +185,7 @@ static void do_test_validate_uri_channel(MigrateCommon *args)
+     }
+ 
+     /* Wait for the first serial output from the source */
+-    wait_for_serial("src_serial");
++    wait_for_serial(qtest_get_serial_path(from));
+ 
+     migrate_incoming_qmp(to, "tcp:127.0.0.1:0", NULL, "{}");
  
 diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-index 194462c841..fccff76ef6 100644
+index a23d51126b..194462c841 100644
 --- a/tests/qtest/migration/precopy-tests.c
 +++ b/tests/qtest/migration/precopy-tests.c
-@@ -182,6 +182,11 @@ static void test_precopy_tcp_plain(char *name, MigrateCommon *args)
-     test_precopy_common(args);
- }
+@@ -282,7 +282,8 @@ static void test_auto_converge(char *name, MigrateCommon *args)
+     /* To check remaining size after precopy */
+     migrate_set_capability(from, "pause-before-switchover", true);
  
-+static void test_precopy_tcp_plain_chain(char *name, MigrateCommon *args)
-+{
-+    test_precopy_chain(args);
-+}
-+
- static void test_precopy_tcp_switchover_ack(char *name, MigrateCommon *args)
+-    wait_for_serial("src_serial");
++    /* Wait for the first serial output from the source */
++    wait_for_serial(qtest_get_serial_path(from));
+ 
+     migrate_incoming_qmp(to, uri, NULL, "{}");
+     migrate_qmp(from, to, uri, NULL, "{}");
+@@ -317,7 +318,7 @@ static void test_auto_converge(char *name, MigrateCommon *args)
+ 
+     qtest_qmp_eventwait(to, "RESUME");
+ 
+-    wait_for_serial("dest_serial");
++    wait_for_serial(qtest_get_serial_path(to));
+     wait_for_migration_complete(from);
+ 
+     migrate_end(from, to, true);
+@@ -436,7 +437,7 @@ static void test_multifd_tcp_cancel(MigrateCommon *args, bool postcopy_ram)
+     migrate_incoming_qmp(to, "tcp:127.0.0.1:0", NULL, "{}");
+ 
+     /* Wait for the first serial output from the source */
+-    wait_for_serial("src_serial");
++    wait_for_serial(qtest_get_serial_path(from));
+ 
+     migrate_qmp(from, to, NULL, NULL, "{}");
+ 
+@@ -486,7 +487,7 @@ static void test_multifd_tcp_cancel(MigrateCommon *args, bool postcopy_ram)
+     wait_for_stop(from, get_src());
+     qtest_qmp_eventwait(to2, "RESUME");
+ 
+-    wait_for_serial("dest_serial");
++    wait_for_serial(qtest_get_serial_path(to2));
+     wait_for_migration_complete(from);
+     migrate_end(from, to2, true);
+ }
+@@ -510,7 +511,7 @@ static void test_cancel_src_after_failed(QTestState *from, QTestState *to,
+      * failed state during migrate_qmp().
+      */
+ 
+-    wait_for_serial("src_serial");
++    wait_for_serial(qtest_get_serial_path(from));
+     migrate_ensure_converge(from);
+ 
+     migrate_qmp(from, to, uri, NULL, "{}");
+@@ -535,7 +536,7 @@ static void test_cancel_src_after_cancelled(QTestState *from, QTestState *to,
  {
-     /*
-@@ -398,6 +403,20 @@ static void test_multifd_tcp_channels_none(char *name, MigrateCommon *args)
-     test_precopy_common(args);
+     migrate_incoming_qmp(to, uri, NULL, "{}");
+ 
+-    wait_for_serial("src_serial");
++    wait_for_serial(qtest_get_serial_path(from));
+     migrate_ensure_converge(from);
+ 
+     migrate_qmp(from, to, uri, NULL, "{}");
+@@ -560,7 +561,7 @@ static void test_cancel_src_after_complete(QTestState *from, QTestState *to,
+ {
+     migrate_incoming_qmp(to, uri, NULL, "{}");
+ 
+-    wait_for_serial("src_serial");
++    wait_for_serial(qtest_get_serial_path(from));
+     migrate_ensure_converge(from);
+ 
+     migrate_qmp(from, to, uri, NULL, "{}");
+@@ -586,7 +587,7 @@ static void test_cancel_src_after_none(QTestState *from, QTestState *to,
+      */
+     migrate_cancel(to);
+ 
+-    wait_for_serial("src_serial");
++    wait_for_serial(qtest_get_serial_path(from));
+     migrate_cancel(from);
+ 
+     migrate_incoming_qmp(to, uri, NULL, "{}");
+@@ -610,7 +611,7 @@ static void test_cancel_src_pre_switchover(QTestState *from, QTestState *to,
+ 
+     migrate_incoming_qmp(to, uri, NULL, "{}");
+ 
+-    wait_for_serial("src_serial");
++    wait_for_serial(qtest_get_serial_path(from));
+     migrate_ensure_converge(from);
+ 
+     migrate_qmp(from, to, uri, NULL, "{}");
+@@ -831,7 +832,10 @@ static void test_vcpu_dirty_limit(char *name, MigrateCommon *args)
+     vm = dirtylimit_start_vm();
+ 
+     /* Wait for the first serial output from the vm*/
+-    wait_for_serial("vm_serial");
++    {
++        g_autofree char *vm_serial = g_strdup_printf("%s/vm_serial", tmpfs);
++        wait_for_serial(vm_serial);
++    }
+ 
+     /* Do dirtyrate measurement with calc time equals 1s */
+     calc_dirty_rate(vm, 1);
+@@ -924,7 +928,7 @@ static void migrate_dirty_limit_wait_showup(QTestState *from,
+     migrate_set_capability(from, "pause-before-switchover", true);
+ 
+     /* Wait for the serial output from the source */
+-    wait_for_serial("src_serial");
++    wait_for_serial(qtest_get_serial_path(from));
  }
  
-+static void test_multifd_tcp_channels_chain(char *name, MigrateCommon *args)
-+{
-+    args->live = true;
-+    args->connect_channels = ("[ { 'channel-type': 'main',"
-+                             "    'addr': { 'transport': 'socket',"
-+                             "              'type': 'inet',"
-+                             "              'host': '127.0.0.1',"
-+                             "              'port': '0' } } ]");
-+
-+    args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
-+
-+    test_precopy_chain(args);
-+}
-+
  /*
-  * This test does:
-  *  source               target
-@@ -1112,6 +1131,8 @@ void migration_test_add_precopy(MigrationTestEnv *env)
-         return;
-     }
+@@ -1062,7 +1066,7 @@ static void test_dirty_limit(char *name, MigrateCommon *args)
  
-+    migration_test_add("/migration/precopy/tcp/plain/chain",
-+                       test_precopy_tcp_plain_chain);
-     migration_test_add("/migration/precopy/tcp/plain/switchover-ack",
-                        test_precopy_tcp_switchover_ack);
+     qtest_qmp_eventwait(to, "RESUME");
  
-@@ -1133,6 +1154,8 @@ void migration_test_add_precopy(MigrationTestEnv *env)
-     }
-     migration_test_add("/migration/multifd/tcp/channels/plain/none",
-                        test_multifd_tcp_channels_none);
-+    migration_test_add("/migration/multifd/tcp/channels/plain/chain",
-+                       test_multifd_tcp_channels_chain);
-     migration_test_add("/migration/multifd/tcp/plain/zero-page/legacy",
-                        test_multifd_tcp_zero_page_legacy);
-     migration_test_add("/migration/multifd/tcp/plain/zero-page/none",
+-    wait_for_serial("dest_serial");
++    wait_for_serial(qtest_get_serial_path(to));
+     wait_for_migration_complete(from);
+ 
+     migrate_end(from, to, true);
 -- 
 2.50.1 (Apple Git-155)
 
