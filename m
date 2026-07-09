@@ -4,104 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22FD6C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 15:36:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D32E2C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 15:40:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whqnJ-0007Ni-Va; Thu, 09 Jul 2026 11:36:09 -0400
+	id 1whqrS-0008GN-0X; Thu, 09 Jul 2026 11:40:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1whqnI-0007NS-S5
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 11:36:08 -0400
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1whqnH-0004uX-Ie
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 11:36:08 -0400
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-664c6304683so1978300d50.2
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 08:36:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783611366; cv=none;
- d=google.com; s=arc-20260327;
- b=XxEQr0sSjJol1Tgz65SzjlqHBesdh5eV6w73APF028gdF3sajlmIA4OMWA8pRcnapJ
- Gn5gDnjCL44fUp7bLo2Ps+Xu08Xdq7Bd4NsvtMLkG2hJU6Mu8AsoRKtmyPUWLpbCxDSM
- 6H2pkRO+8NUKBwbwU91TxSHzQMO87Spo4X3ydkgB+GppX0/GZK1GrJaa4O7Q73TjMED9
- LoBVtLkktqjczhLaMQJTLj/OLz+LoQipePRPQnxdUgX55pV1k1jNAJE9gEsAXE7dyvfE
- F9oERGT3F6chBvlO7NOASBa5Ldl4iqas8CUxqK/ad0EtiikCKLppLNYkgGWodL/0BI0Y
- 0WJg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=KwEI7FceSirCv519qRyIn/kuOFSAWrpFnuPieG2C4N8=;
- fh=waovLH6vWO53HDNC8VeHE8f11msCwa+FEZv2zJ1AgFs=;
- b=oxICgiGbENQH7o5Q19kfjioxT4CB3/KjPyYkl4eoB6KPVf0hWqWLIhv/huRMbKxvd3
- MVx6596jpVcLMIyL6F6IdUUS6ZSlQXwHcd9pdITvmDixVon+ITEXg79IxoAkEOhuPkTl
- 67TD0YbimEoHjvBHiRpdKMlWQXzz1zqo6yg/lMuxwtEYKZACFGtq1pXIdDgCefZOF+5U
- DOEtAY7VISc2mBlU7+S8SaIyo66TSYW5brg0MxBaASYuFIgB/mCnc20pmFHN1rK2+O83
- 0UcbfYC8SW4qqEXMaMAzLgKayXoHkZPtZVhrD9NPBtEBK9I4Hn585ByPLY2lEZQ5onQC
- OnDw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783611366; x=1784216166; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=KwEI7FceSirCv519qRyIn/kuOFSAWrpFnuPieG2C4N8=;
- b=QM+uNxThQItqFHZXFAqv7ZlQ/cSgNeiK5N8c8Id5jJP0USpyl6qSRLi3nHvcIgWwDc
- rng3AjEcXkx6VZfy8OdPCpu3/nNk88e8phvtJPD0CD8I0+CZPzvFO/Pbz548BgKCLdSS
- 0caYTt/RyibxI4EEP7dtN7zQEzfFA1kGH/VHuobrlEwDbFmOuCa4XTC8QPR6ffE6RodH
- KZ/nYi0ZxhZXqhAIZ0DlIh+7K6UwWJNYS6vGWLdgPybNSEpT2GfhihK458zX+ejmeMM1
- mf53TKObTHHn2HCDu623Z8UM9Uvif/hJnIqcZ0dQpSDIXOST3hEYkBPrfMVg2dWWlRsm
- CqIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783611366; x=1784216166;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=KwEI7FceSirCv519qRyIn/kuOFSAWrpFnuPieG2C4N8=;
- b=dQjEz+md3gpmUtSmiN31O1PMfn1qmlnhfUB+bZRkTJWoMHf8IiX/Z2DddwjvA+zoTB
- vVYem3PrtrrD6lvwXogv0iX7mm+5hSuAe4B85cRhI+NB4LqbTqxStJZq3sPItZWXn1Ce
- V7AWPpAKZ8lP4CfCHvNK5FEzN7NxdmbZLAPCu4OkOOgHCBHWyl7mgb7OrMDnzq+on6XE
- 2oLzhTsNS6XJA3RnLCqRjElgzFdOsZvYkbYPwy7R16/Jo2Js3OmKdD41um9YXKZ1Waqu
- fbzcinwDQpN0oN8hn23GrrLN13/yrmqo1flNdQAmeZSWVqTFa3dvkIs1Q1gQ/NtaBIqp
- E55g==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpWkIU6pSgjED4TGIRgGkcYbhwEdaeXFKGnM8IeimWAX0cSQAUtm+Ug+CIqa03G3ISDmxAx8u+L97IY@nongnu.org
-X-Gm-Message-State: AOJu0YxJHf7S65dzOCBklwa3ztDTr0QvNIK0VKmk8TATpWuvAuRyJ1SS
- b0WoRE4NfJL8qLHtZj3TLnLbgdtfIioJnCkYRxxizNUVZG/0bTZXc5NSAzYBlg27fnkpYfPKpAk
- 60REpTnaIAc+jRp1tVYjyaWLNUCmtwI2kiG4DRMyPzA==
-X-Gm-Gg: AfdE7cksNjZksahr7/w4u+S+IkmbD94+bOlfaow9XAn4TR7KOc3rVHSts4SOdRdohto
- pVQioHAlffAOMdol9I86rg6O40bsSweO/EvdvNp5wzgQINK+4P6TGTUkHhGxSOPErX7dAayqZvE
- Fh7PZS+YYNZYhqOjLIu/QOW1bmRrOgGbHG2wHEZLwb/NhZtK9HIpOWvNe8QDp/mGKqHZvaK6NGo
- DCegI95N0SelBjdEeZJPbmc8cbTR+byf0SyepJn2troDIy0DqCqZqjyvYUaUbGo4D3/TvwWUgGe
- j3BA25Qe08paJ1AP+IT6WHQssc9gGJDaf/tRQvy4Wt/e53RY6bFKKZIX
-X-Received: by 2002:a05:690e:d02:b0:667:bca8:a685 with SMTP id
- 956f58d0204a3-667bca8a866mr1278764d50.57.1783611366173; Thu, 09 Jul 2026
- 08:36:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1whqrQ-0008Fl-Hs
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 11:40:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1whqrO-0006Mn-5h
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 11:40:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783611620;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=79PPrAudAMPH/R5fpA7aGZdkzvU9MQ/qET+5bFnQ2+c=;
+ b=DXr+bjSwfRt4m7vbacJZ+OxaIoofWXcNrHUhC1A8noFfxYm1rY0/aXbPXaUN9LmpLZxf3U
+ XHIzxV62/dz52ScyHbSuTt3BUWom4jGodABQ7S1bPdycpGQiIqUMFdIK222Xn0vunYeiTG
+ AwbHcc37hwLkPBeb92NYXYBeRPdTnx8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-155-aXr_l6u0PEmszqbNTJkC1g-1; Thu,
+ 09 Jul 2026 11:40:19 -0400
+X-MC-Unique: aXr_l6u0PEmszqbNTJkC1g-1
+X-Mimecast-MFC-AGG-ID: aXr_l6u0PEmszqbNTJkC1g_1783611618
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 12988180064A; Thu,  9 Jul 2026 15:40:18 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.49.59])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 731193000C01; Thu,  9 Jul 2026 15:40:15 +0000 (UTC)
+Date: Thu, 9 Jul 2026 16:40:11 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH v2 2/4] tests/docker: add support for podman remote access
+Message-ID: <ak_A20foem8Ry_-M@redhat.com>
+References: <20260210163556.713841-1-berrange@redhat.com>
+ <20260210163556.713841-3-berrange@redhat.com>
+ <cbc2e0d7-72d6-4350-a906-e0003e8b5964@oss.qualcomm.com>
 MIME-Version: 1.0
-References: <20260706230056.1888992-1-titusr@google.com>
- <20260706230056.1888992-4-titusr@google.com>
-In-Reply-To: <20260706230056.1888992-4-titusr@google.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 9 Jul 2026 16:35:54 +0100
-X-Gm-Features: AVVi8Ceo9j-IbnSkrgLdqiHmoFCZuCmjfRlevj6CwfdZLuPmseXzgkJa8shXbVk
-Message-ID: <CAFEAcA_6RgRbunqGvd2uPGehATNay6=Vh1uPH-yT=T+4NjXPQA@mail.gmail.com>
-Subject: Re: [PATCH 3/5] hw/i2c: pmbus: clear output buffer on write
-To: Titus Rwantare <titusr@google.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kfting@nuvoton.com, 
- imaginos32@gmail.com, wuhaotsh@google.com, philmd@mailo.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cbc2e0d7-72d6-4350-a906-e0003e8b5964@oss.qualcomm.com>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,23 +88,118 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 7 Jul 2026 at 00:01, Titus Rwantare <titusr@google.com> wrote:
->
-> From: titusr <titusr@google.com>
->
-> Generally we expect a PMBus sensor to issue writes after all pending
-> reads have completed. If a data read needs to be resumed, this state can
-> be tracked in the device model and the pending data placed in the output
-> buffer.
->
-> Signed-off-by: Titus Rwantare <titusr@google.com>
+On Thu, Jul 09, 2026 at 07:48:14AM -0700, Pierrick Bouvier wrote:
+> On 2/10/2026 8:35 AM, Daniel P. Berrangé wrote:
+> > When a developer's environment is already within a podman container it
+> > is not possible to use 'podman' again to create containers. It will
+> > usually result in wierd errors such as:
+> > 
+> >   Error: fatal error, invalid internal status, unable to create a new pause process: cannot re-exec process to join the existing user namespace. Try running "podman system migrate" and if that doesn't work reboot to recover
+> > 
+> > Podman offers the ability to talk to a daemon outside the container,
+> > however, which could be leveraged by QEMU.
+> > 
+> > This can be used by invoking "podman --remote", or equivalently the
+> > separate "podman-remote" binary:
+> > 
+> >   https://github.com/containers/podman/blob/main/docs/tutorials/remote_client.md
+> > 
+> > The current 'podman version' check is insufficient to detect the
+> > inability to launch containers, so it is replaced with the stronger
+> > 'podman info' check.
+> > 
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > ---
+> >  tests/docker/docker.py | 10 ++++++----
+> >  1 file changed, 6 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/tests/docker/docker.py b/tests/docker/docker.py
+> > index ff68c7bf6f..9e18b984f4 100755
+> > --- a/tests/docker/docker.py
+> > +++ b/tests/docker/docker.py
+> > @@ -76,14 +76,16 @@ def _guess_engine_command():
+> >      commands = []
+> >  
+> >      if USE_ENGINE in [EngineEnum.AUTO, EngineEnum.PODMAN]:
+> > -        commands += [["podman"]]
+> > +        commands += [["podman"], ["podman-remote"], ["podman", "--remote"]]
+> >      if USE_ENGINE in [EngineEnum.AUTO, EngineEnum.DOCKER]:
+> >          commands += [["docker"], ["sudo", "-n", "docker"]]
+> >      for cmd in commands:
+> >          try:
+> > -            # docker version will return the client details in stdout
+> > -            # but still report a status of 1 if it can't contact the daemon
+> > -            if subprocess.call(cmd + ["version"],
+> > +            # 'version' is not sufficient to prove a working binary
+> > +            # for podman. 'info' is a stronger check that is more
+> > +            # likely to correlate with ability to create containers,
+> > +            # and required to detect the need for podman remote
+> > +            if subprocess.call(cmd + ["info"],
+> >                                 stdout=DEVNULL, stderr=DEVNULL) == 0:
+> >                  return cmd
+> >          except OSError:
+> 
+> Taking a look at why tcg tests are slow to compile, I reached this
+> commit. It seems like that calling 'podman info' is 5 to 10 times slower
+> than calling 'podman version'.
+> Thus, a container run now takes +1s when it was 0.2 before.
+> 
+> On my setup, podman (remote) version fails correctly if it can't
+> establish a connection.
+> 
+> The commit description briefly says
+> ```
+> The current 'podman version' check is insufficient to detect the
+> inability to launch containers, so it is replaced with the stronger
+> 'podman info' check.
+> ```
+> but it's not what I observed.
+> 
+> Do you have more information about what is the exact reason we can't use
+> 'podman version' for podman-remote?
 
-I'm going to apply this patch to target-arm.next for 11.1,
-as it fixes a bug.
+My developer env involves toolbox, which is a wrapper around podman:
 
-thanks
--- PMM
+"podman version" is not an operational check - it is effectively
+nothing more than a variant of command line "help". Just shows
+the binary can print to stdout.
+
+By contrast "docker version" is useful as IIUC it shows you can
+connect to docker daemon, but podman is daemonless so the 'version'
+chck doesn't offer any useful proof.
+
+"podman info" is an operational check that correlates with the
+ability to actually create containers.
+
+⚙️  [host:fedora-44 ~]$ toolbox enter almalinux-toolbox-9 
+⚙️  [podman:almalinux-9.8 ~]$ sudo dnf -y install podman
+⚙️  [podman:almalinux-9.8 ~] podman version
+Client:       Podman Engine
+Version:      5.8.2
+API Version:  5.8.2
+Go Version:   go1.26.3 (Red Hat 1.26.3-1.el9_8)
+Built:        Tue Jun 16 23:52:20 2026
+OS/Arch:      linux/amd64
+
+⚙️  [podman:almalinux-9.8 ~]$ podman info
+Error: fatal error, invalid internal status, unable to create a new pause process: cannot re-exec process to join the existing user namespace. Try running "podman system migrate" and if that doesn't work reboot to recover
+
+⚙️  [podman:almalinux-9.8 ~] $ podman --remote info
+OS: linux/amd64
+provider: qemu
+version: 5.8.2
+..snip...
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
