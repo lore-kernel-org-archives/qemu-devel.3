@@ -4,72 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B7C3C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 16:05:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F6EDC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 16:13:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whrFW-00081q-LR; Thu, 09 Jul 2026 12:05:18 -0400
+	id 1whrN1-0003Gy-AO; Thu, 09 Jul 2026 12:13:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1whrFU-0007wU-EY
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 12:05:16 -0400
-Received: from smtp2-g21.free.fr ([212.27.42.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1whrFQ-0005JU-Ic
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 12:05:15 -0400
-Received: from localhost (unknown [89.92.102.124])
- (Authenticated sender: emmanuel.blot@free.fr)
- by smtp2-g21.free.fr (Postfix) with ESMTPSA id 54A7620039E
- for <qemu-devel@nongnu.org>; Thu,  9 Jul 2026 18:05:10 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
- s=smtp-20201208; t=1783613110;
- bh=OnsmkUn5MF+iN15cD+qVI7EFy2XS1sFgY52LuhiYnok=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=FVqBFciDFbFWADIkJA70CeM9yydr3O3qwmVJ13/v4rw0ZVxQQ2WjqWK5DJamybPOq
- 6zxD0r+xIRh/rqBecGwEYzX5L13Dm272It2jSru/9fHjE/OW0rtbeX0CXNxG4UZemR
- DqFF5uOGWaTU0y+ywjD7eSmD+PvwQRqOd+HJYpQJ9sxcdnC3kxAOUnV/xmxw4F7KJM
- bdXL00ed4KbGXR0q8SgOS0JGKtPzcoW1RrwGu5mTJETd6Jkhu6LG2JSXAKsoUktIxQ
- zByxvyOI0mit6CPENXfSss51NPXAzWwjiJPqGZ2dt+kINRxiDZb7A++dYNBkWfjE6/
- tJ/yD1QqZlg3w==
-From: Emmanuel Blot <emmanuel.blot@free.fr>
-Date: Thu, 09 Jul 2026 17:23:04 +0200
-Subject: [PATCH 12/29] tests/qtest: pca9555: test polarity inversion
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1whrMy-0003Gb-Hp
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 12:13:00 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1whrMw-0007FE-RE
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 12:13:00 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-493d92b7db3so21332295e9.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 09:12:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1783613576; x=1784218376; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=zvnSguue5BmlLwAC2u9mLn2rr1UmDTzgdMs0UziSNyM=;
+ b=PbBdWPRfTGj0YzTrm81EQGaa/tnzB76iG22ta2F7q9QQNWszQCVkMh61E6astjZdic
+ IB7F7n81JGd8acMsMKABfDyDKa5FjA+PPOFXtYOc+p90pii4LSQ2V9kh7cYvImhXTz6b
+ 3AEBRRK1v5HLs4aUoqKZuJNqFgayLyc/K0AXWf+LmiA3yXyb5Q759l6vLD6I4hGCcoac
+ Vy5b5Im0ZYwmVvh+nUE8f7UfmazM70peVRH46fWkiNxkSGOp0Sd0eNBuOgV3ApDjUZVa
+ LCucSFU+VruxmdvrGoNGs3ltxVd7VCCDEBSZ9JwNMSSJJe9nH5B3o+vlesjvJbENlCCP
+ ItMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783613576; x=1784218376;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=zvnSguue5BmlLwAC2u9mLn2rr1UmDTzgdMs0UziSNyM=;
+ b=QkU+pfySfidFeh0JUwFRooy3KdbjedxiclQQMw/dRiIcQMVWkxv9XrZfKt2eNz003d
+ nBndzjILHMAtAZnj4LnyI9FGeBf5LOXMomJaTTviDIP6VEBoea/qM/fKVWWHc8u7P/51
+ J4i/N32VDx9wKrxUy3FI2MiBP99lGKvjB9ae2MB2Ob6v+Pnk9SYYM0iMjikp16rvhFJW
+ /UnD/V7dxoh1fTpPPp/Q4KY2OjHaiNAJ99vlF6vuE2BJLAOkASkjxf0CaaoKTatF3n8N
+ telbNeze+n8LJXqSwMLpAFCs71R6FfatR/2gL54jxmR9vXGwZcMnK8YH+To6P7cgmVS7
+ l4IQ==
+X-Gm-Message-State: AOJu0Yw8uGi/Gk3+m+oRQhtm6GpaqfHjTJNNR3i638uBbw8vlb3KERsC
+ O6+PYT8Gw5Ymgvp9tfPZCt68OvThVr5LcPjNzw6cp4ITB7IRrNmQ7m7sW7zhmR9pGcE=
+X-Gm-Gg: AfdE7cnRgdlY299Oja6fEiOULo7oZUQF/QTuIe5hElzUQEsc7fJBOXv99N57YIevgkO
+ DXfk4AmIa9s5f663W0uW9NDs/NIbmu5iPl072yfXq8cAPxUrdeVG7yZqgSi3gIZmPlowl7yW0vc
+ 7BVNCJDhBx48AuwRncR6M9YyHV8oJ+mMssDXbmKTwpddYhYpIVHnNzlkX2A8a3QkSt4Xn2QgpHN
+ Qa/3yVgpK5RP5Lri6YLF6P7R6qY4ObuU4GrBwzVbM1+TLCkZBj0B+r0pPj73bhtWnntlqxySdBu
+ KkQr8UdRu5HVgjTcC50fQ0tfMFaB8X4Dt+4ZRPUAImVcp6N52gwsOyugvg2X7BlV2S03HT0V+Cg
+ 0DJ+PUvBwM1TFjpPv+EAhuceD1IjDyYXjf1gee6V8P8mHxZMPMsnZEqFt+YvSkDt+QRysVG3+kS
+ v6010/ExI1Fm99
+X-Received: by 2002:a05:600c:4fc6:b0:493:cefc:d113 with SMTP id
+ 5b1f17b1804b1-493e68b7f62mr80626235e9.5.1783613575585; 
+ Thu, 09 Jul 2026 09:12:55 -0700 (PDT)
+Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47a9e4d6da9sm51570179f8f.12.2026.07.09.09.12.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 09 Jul 2026 09:12:54 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id C7B745F82D;
+ Thu, 09 Jul 2026 17:12:53 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@oss.qualcomm.com>,  Daniel =?utf-8?Q?P=2EBerrang=C3=A9?=
+ <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,  Ilya Leoshkevich
+ <iii@linux.ibm.com>,  Brian Cain <brian.cain@oss.qualcomm.com>,  Gustavo
+ Romero <gustavo.romero@linaro.org>,  Laurent Vivier <laurent@vivier.eu>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,  Helge Deller
+ <deller@gmx.de>,  Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v3 19/91] tests/tcg/meson.build: add wrapper record_replay
+In-Reply-To: <decd7f0d-fd74-4314-8a44-df9f7a75d8d5@oss.qualcomm.com> (Pierrick
+ Bouvier's message of "Thu, 9 Jul 2026 08:10:59 -0700")
+References: <20260706223343.988769-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260706223343.988769-20-pierrick.bouvier@oss.qualcomm.com>
+ <87echcrzah.fsf@draig.linaro.org>
+ <41fb9818-b18f-4deb-889c-e1847293a3f0@oss.qualcomm.com>
+ <decd7f0d-fd74-4314-8a44-df9f7a75d8d5@oss.qualcomm.com>
+User-Agent: mu4e 1.14.2; emacs 30.1
+Date: Thu, 09 Jul 2026 17:12:53 +0100
+Message-ID: <878q7krvju.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260709-catalina-upgrade-v1-12-82a63fead90c@free.fr>
-References: <20260709-catalina-upgrade-v1-0-82a63fead90c@free.fr>
-In-Reply-To: <20260709-catalina-upgrade-v1-0-82a63fead90c@free.fr>
-To: qemu-devel@nongnu.org
-Cc: Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org, 
- qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
- Corey Minyard <cminyard@mvista.com>, Emmanuel Blot <emmanuel.blot@free.fr>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783610579; l=2701;
- i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=OnsmkUn5MF+iN15cD+qVI7EFy2XS1sFgY52LuhiYnok=;
- b=V10WlXWlT58Se5mRTVubpMa0xD4Kv/J4kSwyGaoKkRQGflY+V8wsTG4d7Wmv/OK8Gx0T9WVww
- T8YFWtwBjFMAzlmw+75xjfWTicfyZXyhnnV+1lOhRDPUHWEoq0MYKPa
-X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
- pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=212.27.42.2; envelope-from=emmanuel.blot@free.fr;
- helo=smtp2-g21.free.fr
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,79 +116,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add tests for the polarity inversion register: the inversion is applied
-when reading the INPUT register, both for input pins (pull-up) and for
-output-driven pins, and it does not affect the OUTPUT register readback.
+Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 
-Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
----
- tests/qtest/pca9555-test.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 44 insertions(+)
+> On 7/9/2026 8:03 AM, Pierrick Bouvier wrote:
+>> On 7/9/2026 7:52 AM, Alex Benn=C3=A9e wrote:
+>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>>
+>>>> Runs a record and replay test, and make sure the output produced by
+>>>> both runs is the same.
+>>>>
+>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>>> ---
+>>>>  tests/tcg/meson.build              |  1 +
+>>>>  tests/tcg/scripts/record_replay.sh | 16 ++++++++++++++++
+>>>>  2 files changed, 17 insertions(+)
+>>>>  create mode 100755 tests/tcg/scripts/record_replay.sh
+>>>>
+>>>> diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+>>>> index 30178df0f7a..e610ce30f40 100644
+>>>> --- a/tests/tcg/meson.build
+>>>> +++ b/tests/tcg/meson.build
+>>>> @@ -7,6 +7,7 @@ if config_host.has_key('GDB')
+>>>>  endif
+>>>>  gdb =3D find_program(gdb_progs, required: false)
+>>>>  prog_gdb_test =3D find_program('../guest-debug/run-test.py')
+>>>> +prog_record_replay =3D find_program('./scripts/record_replay.sh')
+>>>>  prog_run_and_diff =3D find_program('./scripts/run_and_diff.sh')
+>>>>  prog_run_with_input =3D find_program('./scripts/run_with_input.sh')
+>>>>  prog_run_and_check_forbidden_output =3D find_program(
+>>>> diff --git a/tests/tcg/scripts/record_replay.sh b/tests/tcg/scripts/re=
+cord_replay.sh
+>>>> new file mode 100755
+>>>> index 00000000000..57775a2d4c1
+>>>> --- /dev/null
+>>>> +++ b/tests/tcg/scripts/record_replay.sh
+>>>> @@ -0,0 +1,16 @@
+>>>> +#!/usr/bin/env bash
+>>>
+>>> While at it is there any reason this couldn't be plain POSIX shell. I
+>>> don't think we explicitly require bash although its super likely to be
+>>> on most systems. configure is all POSIX shell.
+>>>
+>>=20
+>> The main reason for me to use bash is that it supports set -uo pipefail
+>> in combination with set -e.
+>>=20
+>> Which produces:
+>> - exit if a variable is undefined
+>> - exit if any command in a pipe sequence fails
+>> Without this, script shells are pretty much house of cards waiting to
+>> collapse on any corner case.
+>>=20
+>> bash is available out of the box at least on macos, msys2, and I expect,
+>> every single linux distro out there. Not sure about bsds though.
+>>=20
+>> If that's such a big issue, I can port the scripts to sh.
+>>
+>
+> Interestingly, QEMU main Makefile makes bash a defacto requirement,
+> since it uses it for every single command to run. The reason is... to
+> use -o pipefail.
+>
+> https://gitlab.com/qemu-project/qemu/-/blob/master/Makefile?ref_type=3Dhe=
+ads#L17
+>
 
-diff --git a/tests/qtest/pca9555-test.c b/tests/qtest/pca9555-test.c
-index 6b085702c3..2afa061bd2 100644
---- a/tests/qtest/pca9555-test.c
-+++ b/tests/qtest/pca9555-test.c
-@@ -99,6 +99,46 @@ static void test_port_independence(void *obj, void *data,
-     g_assert_cmphex(i2c_get8(dev, PCA9535_OUTPUT1), ==, 0xAA);
- }
- 
-+/*
-+ * Polarity inversion: reading INPUT with polarity bits set should
-+ * return the XOR of the actual input state and the polarity register.
-+ */
-+static void test_polarity_inversion(void *obj, void *data,
-+                                    QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+
-+    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT0), ==, 0xFF);
-+
-+    i2c_set8(dev, PCA9535_POLARITY0, 0xFF);
-+    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT0), ==, 0x00);
-+
-+    i2c_set8(dev, PCA9535_POLARITY0, 0x0F);
-+    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT0), ==, 0xF0);
-+
-+    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT1), ==, 0xFF);
-+
-+    i2c_set8(dev, PCA9535_POLARITY1, 0xAA);
-+    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT1), ==, 0x55);
-+}
-+
-+/* Polarity inversion combined with output-driven pins. */
-+static void test_polarity_with_output(void *obj, void *data,
-+                                      QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+
-+    i2c_set8(dev, PCA9535_CONFIG0, 0x00);
-+    i2c_set8(dev, PCA9535_OUTPUT0, 0xA5);
-+
-+    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT0), ==, 0xA5);
-+
-+    i2c_set8(dev, PCA9535_POLARITY0, 0xFF);
-+    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT0), ==, 0x5A);
-+
-+    g_assert_cmphex(i2c_get8(dev, PCA9535_OUTPUT0), ==, 0xA5);
-+}
-+
- static void pca9555_register_nodes(void)
- {
-     QOSGraphEdgeOptions opts = {
-@@ -114,6 +154,10 @@ static void pca9555_register_nodes(void)
-                  NULL);
-     qos_add_test("input-pullup", "pca9555", test_input_pullup, NULL);
-     qos_add_test("port-independence", "pca9555", test_port_independence, NULL);
-+    qos_add_test("polarity-inversion", "pca9555", test_polarity_inversion,
-+                 NULL);
-+    qos_add_test("polarity-with-output", "pca9555", test_polarity_with_output,
-+                 NULL);
- }
- 
- libqos_init(pca9555_register_nodes);
+Well it looks like I misremembered as we list bash as a dependency in
+qemu-minimal:
 
--- 
-2.50.1
+  packages:
+   - bash
 
+so I drop my objection.
+
+
+>>>> +# SPDX-License-Identifier: GPL-2.0-or-later
+>>>> +
+>>>> +set -euo pipefail
+>>>> +
+>>>> +if [ $# -lt 2 ]; then
+>>>> +    echo "record_replay: qemu_bin [args]..." 1>&2
+>>>> +    exit 1
+>>>> +fi
+>>>> +qemu=3D"$1";shift
+>>>> +tmp=3D$(mktemp -d)
+>>>> +trap "rm -rf $tmp" EXIT
+>>>> +set -x
+>>>> +$qemu -icount shift=3D5,rr=3Drecord,rrfile=3D$tmp/rr.bin "$@" |& tee =
+$tmp/record
+>>>> +$qemu -icount shift=3D5,rr=3Dreplay,rrfile=3D$tmp/rr.bin "$@" |& tee =
+$tmp/replay
+>>>> +diff $tmp/record $tmp/replay
+>>>
+>>=20
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
