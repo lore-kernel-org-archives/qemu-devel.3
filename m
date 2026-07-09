@@ -4,83 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B28A8C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 21:28:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78ED5C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 22:53:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whwHy-0000u0-ES; Thu, 09 Jul 2026 17:28:10 -0400
+	id 1whxcG-00083x-Rh; Thu, 09 Jul 2026 18:53:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <randomjack94dev@gmail.com>)
- id 1whwHx-0000nD-CE
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 17:28:09 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <randomjack94dev@gmail.com>)
- id 1whwHv-0002u9-Ek
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 17:28:09 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-698ab9aae16so489446a12.3
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 14:28:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1whxcF-00083e-OU
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 18:53:11 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1whxcE-0006lk-5B
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 18:53:11 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 669HXfDE2473916
+ for <qemu-devel@nongnu.org>; Thu, 9 Jul 2026 22:53:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ e87iGVll2xIUN1LNGA4IM4XgFh6Nl4c09zWdKpmbViw=; b=jP3RQh1pNn+uM8o0
+ 0y1jeAAOsuRMY1wI8iBYmIjlRN/lugPEOCTilRgnmHnYdzaChKzXlEZ2L5dqdsw9
+ ohvHF4+4gJQ+hLNDwT0Bi0+HmSMNBWQsK9HO7GzasTPnRX6S0JeCSutHS38G1Wlx
+ 4iB0rLD2tweJAABtp2APYB35Rzr8oESOQqZKIQZyhjsC0zW7KIZYIVugnNze4cph
+ yFUzgS9dXk54lgavUckeZYjd9zxxXBr4QrVGvr7bEzLgz+uRlIw60doAZ6F3bRtA
+ 2HYTVyC/XtmRMjf6FaxvEnR5otRvqPrLTBGSxpxAr4CgQWW+wEGpaBqvrc1wbpN6
+ VVysgw==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4facqpjajh-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 22:53:08 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-51c075c1e25so2409681cf.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 15:53:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783632486; x=1784237286; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=cdhDkgTHfKqxBOiswfDOl+RwIrVKFia7sjo3NwIrfTU=;
- b=jVHlAMqvc1rC2jp1hIfyJJzkbCOeJdZ3IOESOp5jmnc9PiKVek3m7alW6pUhvnklbF
- z/RXWkLq54iVqcMMrnNpszOvV8TjYDgBPwN1GGHHfNX6gH7fzlokQ5lM4jCDc0K0Qvm2
- v/w7qzFb7GZR01/SrprdAARkP63NuF2umtpZnegtSjezNa3s1lXGe0Kz9BOZj7Nk28DL
- O28Kvi80Xqs3EYAtPkwKU0koBCDEy1ERUf5fLMPqRAlZJqSRU26nPmucM8jYzx3doS+/
- f9xRRJ9YCTUZjj2T/5HggjlAre6J5kHMGUQPvEAemwIqd9HLdj8eDiyDJtzM4rELsQ59
- LnPw==
+ d=oss.qualcomm.com; s=google; t=1783637588; x=1784242388; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=e87iGVll2xIUN1LNGA4IM4XgFh6Nl4c09zWdKpmbViw=;
+ b=PL9LdiMpT/n2gOlHjKtJS/Mo+wRp84R3MtSq5DnXKounBhO4HAVprbq7U/H9YLFKm5
+ XGgp3/tNTFKMDx9z4N5+YUFoAc993ZgGryAS5Dn6XlJy0ISjnhKGXbpr2sCKFDRWeH8n
+ yYy4uH8u4fi6q+owt8ccqROC5GckjVGKQ1CH/990du78N/czCS10K+u7WYALdh054jLy
+ bCVsA6fgUtMqFF4Xt4UGa2vCmIocpAEz14aSDu0jrUMZEM3FaAg4El6ioRcmSAqVxINM
+ nv5xbbzToxYGwG1XDe9jQ7WGnjQ/tveM6XFX1jW3eprHjswliATZup46rYwesysa3HG9
+ fJ8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783632486; x=1784237286;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1783637588; x=1784242388;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=cdhDkgTHfKqxBOiswfDOl+RwIrVKFia7sjo3NwIrfTU=;
- b=h+hdupEVUbbPgcs/BXBVHWCxZ21Ch7yjovKyc2fCXvLhdpjgwpXk5z8+cHMkz4dRS8
- hKYAWEvBI2eh7XBltPWWz+geRrX4u+IclbC2WeBCGcqzqmQ7yGDOs0WGiOVQcf0ME915
- 2MV6ZTLfZe8ZDXY0hRoY3GJ94LO2KgshWyh5jiBlXkBZxZ6ezSsgx4BxHnKBvlub/o5c
- QUpZFMUATuhA5MGugpH6Qodb4omMu5CmezcJ3KWZbc5e35DK3mLPaUsjpXAaoNMoGbMc
- 3hhhVUgKU5AiK6/Rf+QYerS/rCFSWKwVbt2YaqhhUF8Y0LBtIeThv7NElVpJz7dkoJ9s
- rfcQ==
-X-Gm-Message-State: AOJu0Yx/0//86TwE2ZJoD5bV4mFVnrEcKprMlkpivlt0u+BqOVNtyyBZ
- yZ0xpqWn+7Qrmop3wj5E9I07vhOZAuueNBkzyQZIlV9+9tBMLHGfXml6TZY1Fw==
-X-Gm-Gg: AfdE7ck1wlktPYjBBodhlj+t/5sBuW943C0J9b2J+2D7e/Xii2DOu5DB4eH9az6flKe
- +Dh9YkmFJOKJLO2MSD3obvmJTubv3j+iFxI257qjtAwdF8VsVGNVOsDtranS5g74Ny+3+E0kJQ1
- XNqSwC4Wm12OGAtKZTJnoaaAuZKRcTKfF76s9BNkmusgRzaCDUG90mFBMZdoenyamAKhXKJNpCv
- tEVy2aQiJaensiKndVVXd5j6wPBl0SMcyWBEzYqkhu/3AdxNuHECx+XqtfGpG1gkoO4UCZ9AIcf
- JNrxIrnGRFDcK76Ke/4N4CxadbcQ3H98uHt4UXrHlRRZnsE13TJo5fXDxJZukzh7LKLxDxlvDNA
- duCHfPFJ6s1R2Ovg7WzXUPb9jsXJNqMhlbP9wAKsYvgDbEHGRf5GRwvoZ7iN1N3tZtZDz7VOhjO
- At5B/0V/YptTehxObU
-X-Received: by 2002:a05:6402:3552:b0:698:87ae:6ced with SMTP id
- 4fb4d7f45d1cf-69ab44b1288mr4316134a12.28.1783632485671; 
- Thu, 09 Jul 2026 14:28:05 -0700 (PDT)
-Received: from machine.. ([37.113.214.163]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-69a19dbee72sm10097802a12.30.2026.07.09.14.28.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jul 2026 14:28:04 -0700 (PDT)
-From: Evgeny Kolmakov <randomjack94dev@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com,
-	Evgeny Kolmakov <randomjack94dev@gmail.com>
-Subject: [PATCH] crypto: Use g_autofree
-Date: Fri, 10 Jul 2026 00:27:50 +0300
-Message-ID: <20260709212750.290898-1-randomjack94dev@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ bh=e87iGVll2xIUN1LNGA4IM4XgFh6Nl4c09zWdKpmbViw=;
+ b=RKGoaVgAHlACFOmYvSEN53A+fiVE1/MyE1yjeXx26XS0A5Y+7/xX+eAt59CBvSZKil
+ +3e2v4jvDHNspPDAbh4Y8NVxKHJVxUQwy2aG1Q2XyQSvhwU8Ml7DklkRMRlOWBE6zPzF
+ +tndW6f4Dj89h4ZDyTNEk0c4yt24zVcH+vd7kkhoeYnGzVcZVPLvtGLQ53/GbyzotWHY
+ qN2Z6cAu1BWKxPOBzONjSJtZFiRXW+8ipmNHCfDsHWQxwwWkiLuVvflaFBRUME1A3hXT
+ Ect/nZlAJMTo5Tv/ldonH9O+PtYwRGLuB9HcfmZgRuP9D/1pTQcTDDJKIw9Hg/qoX1rY
+ PglA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrEDR/s3fU3UiAcMev35WkRG312lNERbV6ruc5JUBaIRpoBr7OWD02zmtWnL21htJ5zwMFruPFcAkK2@nongnu.org
+X-Gm-Message-State: AOJu0YyoHfMKAmxN5INnsQIY8il6muRAljkSicYVwAW/ulIu5OqAYrFF
+ 2v7OaRJVQJODWYEvmqwFVEgF55QLvYqkmhPW5eSMydNI8jVARI4P8l7enCzQCzv50mlxEnkDpUX
+ UaRs+POuI/CbtmDY7NQNym1YHM6YH3SL8hd3hJgPodIk26rTNjWATporaog==
+X-Gm-Gg: AfdE7cke1gxj3mt7l2UEG9PMeyh3AOHCc0pnoeEwdpZwZxbMw3+Pw+Op60W/VnXFoi4
+ 4c8C9bkS/GtuI4ltJDeyKHlGpim/+jkpcSqdofFeCaRM6vJHC9vrEcS1CwkrkEBreZ8ERyFwsLQ
+ ddcCbY61bgG0cjNjM/9CVXeRUvavEPbCvMcsxwtroM89jtcaSQkhynihKQi9HimGn5gz4u5uZK/
+ wbBA+b2shtWoWH8okB/o7b+0mGyUMU1Uk3OxSsjDSqfrYukpqwjjoKn5VKs0UNMKkbUJDEmkcoH
+ S+c70DfhVB6UtzmV5SDKogbP0pwBcEHNGPLbJ9D8npJRPDHX3XTQXjcA2TipO78uy+vzK0M1oR4
+ JSiwxoiOAMyHbjpgcjONfZkJyIcJ1/cXiVlcx0VSDAaz1lnf2ArjmQlJBln4T/w==
+X-Received: by 2002:a05:622a:281:b0:51c:7b11:41ad with SMTP id
+ d75a77b69052e-51c8b51366cmr99602411cf.73.1783637587710; 
+ Thu, 09 Jul 2026 15:53:07 -0700 (PDT)
+X-Received: by 2002:a05:622a:281:b0:51c:7b11:41ad with SMTP id
+ d75a77b69052e-51c8b51366cmr99602241cf.73.1783637587298; 
+ Thu, 09 Jul 2026 15:53:07 -0700 (PDT)
+Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493eb66beddsm106641295e9.0.2026.07.09.15.53.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Jul 2026 15:53:06 -0700 (PDT)
+Message-ID: <3a360264-4dbe-4e99-9555-9454d67de533@oss.qualcomm.com>
+Date: Fri, 10 Jul 2026 00:53:04 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=randomjack94dev@gmail.com; helo=mail-ed1-x530.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/8] Refactor AST2700 SCU preparation for coprocessors
+Content-Language: en-US
+To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>
+References: <20260707060919.350637-1-jamin_lin@aspeedtech.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260707060919.350637-1-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA5MDIyOSBTYWx0ZWRfX/EZwgQz0jbsm
+ pU/EHxp0dRChEP//MaShIjpAccp2bD5yLn5nsjximmOV50HMdLLHPrhVPpSajxScHEqZqOg7P6o
+ WZ4V0G+v4AeY4QQog3XRDrkXTdH9TYcX8Zylorm3h8hXaLUKnMkNzDom6U9dQrBxM0DbRdIKsy7
+ mN48Dz/EzJUlEra7A+JgchvxRfEo1uje8QDiD37UUKvipNms/TC+tVEKNphEVxRYUL8mCfHszUx
+ yQng7nHjixY6ZrqSgBYaO2m6DIjMc5SGe0OzLztq5G8WclZdMNzprseuSepgenjpjYBkIiNNZBt
+ q90uy52uv2XSGqkw7oRk8k14dezxzDGBa5AcXVt4sDziRbpbPE0XpX4rUQt9+gZBMhDoFO7eIer
+ 4LCL1XX9P480/G5QytnRqLKvXLbHlmmDBvM5dK8iFuh9OpLuTz3nGRwQ86QOno0JP4UQ2M9FWH7
+ vOcHJj/50hTKJzCCaoQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA5MDIyOSBTYWx0ZWRfX3a7CfbDX3OGU
+ WV5pqW4AzaFW1wruP1y98JaYbXpGiuhewBkR0A18RISCu2J2YAH6hz32UuPTGlVIy9D2Cpch8G2
+ MuUYNh3Kgpa/zoXRLapApu04QCRKLjE=
+X-Proofpoint-GUID: XIgjuVzsyBZio8WxVFfaKo1n38inBW4U
+X-Proofpoint-ORIG-GUID: XIgjuVzsyBZio8WxVFfaKo1n38inBW4U
+X-Authority-Analysis: v=2.4 cv=GJ441ONK c=1 sm=1 tr=0 ts=6a502654 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=Cn5a_A406VAXTJO-DV8A:9 a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-09_04,2026-07-09_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 lowpriorityscore=0 bulkscore=0 priorityscore=1501
+ clxscore=1015 suspectscore=0 spamscore=0 phishscore=0 adultscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607090229
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,297 +160,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use g_autofree attribute to reduce the amount
-of manual g_free() calls and 'goto out' code
+Hi Jamin,
 
-Signed-off-by: Evgeny Kolmakov <randomjack94dev@gmail.com>
----
- crypto/block.c          | 17 ++++++-----------
- crypto/hmac-gcrypt.c    | 12 ++++--------
- crypto/hmac-glib.c      | 10 +++-------
- crypto/ivgen-essiv.c    | 15 ++++-----------
- crypto/ivgen.c          |  6 ++----
- crypto/secret_keyring.c |  5 ++---
- 6 files changed, 21 insertions(+), 44 deletions(-)
+On 7/7/26 08:09, Jamin Lin wrote:
+> The original AST2700 FC support series [1] is fairly large, making it
+> difficult to review all changes together.
+> 
+> To help speed up the review process, this series extracts the SCU/FMC-related
+> refactoring into a standalone prerequisite series.
 
-diff --git a/crypto/block.c b/crypto/block.c
-index 96c83e60b9..42558f3caf 100644
---- a/crypto/block.c
-+++ b/crypto/block.c
-@@ -55,7 +55,7 @@ QCryptoBlock *qcrypto_block_open(QCryptoBlockOpenOptions *options,
-                                  unsigned int flags,
-                                  Error **errp)
- {
--    QCryptoBlock *block = g_new0(QCryptoBlock, 1);
-+    g_autofree QCryptoBlock *block = g_new0(QCryptoBlock, 1);
- 
-     qemu_mutex_init(&block->mutex);
- 
-@@ -65,7 +65,6 @@ QCryptoBlock *qcrypto_block_open(QCryptoBlockOpenOptions *options,
-         !qcrypto_block_drivers[options->format]) {
-         error_setg(errp, "Unsupported block driver %s",
-                    QCryptoBlockFormat_str(options->format));
--        g_free(block);
-         return NULL;
-     }
- 
-@@ -74,11 +73,10 @@ QCryptoBlock *qcrypto_block_open(QCryptoBlockOpenOptions *options,
-     if (block->driver->open(block, options, optprefix,
-                             readfunc, opaque, flags, errp) < 0)
-     {
--        g_free(block);
-         return NULL;
-     }
- 
--    return block;
-+    return g_steal_pointer(&block);
- }
- 
- 
-@@ -90,7 +88,7 @@ QCryptoBlock *qcrypto_block_create(QCryptoBlockCreateOptions *options,
-                                    unsigned int flags,
-                                    Error **errp)
- {
--    QCryptoBlock *block = g_new0(QCryptoBlock, 1);
-+    g_autofree QCryptoBlock *block = g_new0(QCryptoBlock, 1);
- 
-     qemu_mutex_init(&block->mutex);
- 
-@@ -100,7 +98,6 @@ QCryptoBlock *qcrypto_block_create(QCryptoBlockCreateOptions *options,
-         !qcrypto_block_drivers[options->format]) {
-         error_setg(errp, "Unsupported block driver %s",
-                    QCryptoBlockFormat_str(options->format));
--        g_free(block);
-         return NULL;
-     }
- 
-@@ -109,11 +106,10 @@ QCryptoBlock *qcrypto_block_create(QCryptoBlockCreateOptions *options,
- 
-     if (block->driver->create(block, options, optprefix, initfunc,
-                               writefunc, opaque, errp) < 0) {
--        g_free(block);
-         return NULL;
-     }
- 
--    return block;
-+    return g_steal_pointer(&block);
- }
- 
- 
-@@ -185,17 +181,16 @@ int qcrypto_block_amend_options(QCryptoBlock *block,
- QCryptoBlockInfo *qcrypto_block_get_info(QCryptoBlock *block,
-                                          Error **errp)
- {
--    QCryptoBlockInfo *info = g_new0(QCryptoBlockInfo, 1);
-+    g_autofree QCryptoBlockInfo *info = g_new0(QCryptoBlockInfo, 1);
- 
-     info->format = block->format;
- 
-     if (block->driver->get_info &&
-         block->driver->get_info(block, info, errp) < 0) {
--        g_free(info);
-         return NULL;
-     }
- 
--    return info;
-+    return g_steal_pointer(&info);
- }
- 
- 
-diff --git a/crypto/hmac-gcrypt.c b/crypto/hmac-gcrypt.c
-index e428d17479..44631fb348 100644
---- a/crypto/hmac-gcrypt.c
-+++ b/crypto/hmac-gcrypt.c
-@@ -50,7 +50,7 @@ void *qcrypto_hmac_ctx_new(QCryptoHashAlgo alg,
-                            const uint8_t *key, size_t nkey,
-                            Error **errp)
- {
--    QCryptoHmacGcrypt *ctx;
-+    g_autofree QCryptoHmacGcrypt *ctx = NULL;
-     gcry_error_t err;
- 
-     if (!qcrypto_hmac_supports(alg)) {
-@@ -66,7 +66,7 @@ void *qcrypto_hmac_ctx_new(QCryptoHashAlgo alg,
-     if (err != 0) {
-         error_setg(errp, "Cannot initialize hmac: %s",
-                    gcry_strerror(err));
--        goto error;
-+        return NULL;
-     }
- 
-     err = gcry_mac_setkey(ctx->handle, (const void *)key, nkey);
-@@ -74,14 +74,10 @@ void *qcrypto_hmac_ctx_new(QCryptoHashAlgo alg,
-         error_setg(errp, "Cannot set key: %s",
-                    gcry_strerror(err));
-         gcry_mac_close(ctx->handle);
--        goto error;
-+        return NULL;
-     }
- 
--    return ctx;
--
--error:
--    g_free(ctx);
--    return NULL;
-+    return g_steal_pointer(&ctx);
- }
- 
- static void
-diff --git a/crypto/hmac-glib.c b/crypto/hmac-glib.c
-index b845133a05..1f17769c1c 100644
---- a/crypto/hmac-glib.c
-+++ b/crypto/hmac-glib.c
-@@ -46,7 +46,7 @@ void *qcrypto_hmac_ctx_new(QCryptoHashAlgo alg,
-                            const uint8_t *key, size_t nkey,
-                            Error **errp)
- {
--    QCryptoHmacGlib *ctx;
-+    g_autofree QCryptoHmacGlib *ctx = NULL;
- 
-     if (!qcrypto_hmac_supports(alg)) {
-         error_setg(errp, "Unsupported hmac algorithm %s",
-@@ -60,14 +60,10 @@ void *qcrypto_hmac_ctx_new(QCryptoHashAlgo alg,
-                             (const uint8_t *)key, nkey);
-     if (!ctx->ghmac) {
-         error_setg(errp, "Cannot initialize hmac and set key");
--        goto error;
-+        return NULL;
-     }
- 
--    return ctx;
--
--error:
--    g_free(ctx);
--    return NULL;
-+    return g_steal_pointer(&ctx);
- }
- 
- static void
-diff --git a/crypto/ivgen-essiv.c b/crypto/ivgen-essiv.c
-index 3d5a188795..d5fa269888 100644
---- a/crypto/ivgen-essiv.c
-+++ b/crypto/ivgen-essiv.c
-@@ -31,10 +31,10 @@ static int qcrypto_ivgen_essiv_init(QCryptoIVGen *ivgen,
-                                     const uint8_t *key, size_t nkey,
-                                     Error **errp)
- {
--    uint8_t *salt;
-+    g_autofree uint8_t *salt = NULL;
-     size_t nhash;
-     size_t nsalt;
--    QCryptoIVGenESSIV *essiv = g_new0(QCryptoIVGenESSIV, 1);
-+    g_autofree QCryptoIVGenESSIV *essiv = g_new0(QCryptoIVGenESSIV, 1);
- 
-     /* Not necessarily the same as nkey */
-     nsalt = qcrypto_cipher_get_key_len(ivgen->cipher);
-@@ -46,8 +46,6 @@ static int qcrypto_ivgen_essiv_init(QCryptoIVGen *ivgen,
-     if (qcrypto_hash_bytes(ivgen->hash, (const gchar *)key, nkey,
-                            &salt, &nhash,
-                            errp) < 0) {
--        g_free(essiv);
--        g_free(salt);
-         return -1;
-     }
- 
-@@ -57,13 +55,10 @@ static int qcrypto_ivgen_essiv_init(QCryptoIVGen *ivgen,
-                                        salt, MIN(nhash, nsalt),
-                                        errp);
-     if (!essiv->cipher) {
--        g_free(essiv);
--        g_free(salt);
-         return -1;
-     }
- 
--    g_free(salt);
--    ivgen->private = essiv;
-+    ivgen->private = g_steal_pointer(&essiv);
- 
-     return 0;
- }
-@@ -75,7 +70,7 @@ static int qcrypto_ivgen_essiv_calculate(QCryptoIVGen *ivgen,
- {
-     QCryptoIVGenESSIV *essiv = ivgen->private;
-     size_t ndata = qcrypto_cipher_get_block_len(ivgen->cipher);
--    uint8_t *data = g_new(uint8_t, ndata);
-+    g_autofree uint8_t *data = g_new(uint8_t, ndata);
- 
-     sector = cpu_to_le64(sector);
-     memcpy(data, (uint8_t *)&sector, MIN(sizeof(sector), ndata));
-@@ -88,7 +83,6 @@ static int qcrypto_ivgen_essiv_calculate(QCryptoIVGen *ivgen,
-                                data,
-                                ndata,
-                                errp) < 0) {
--        g_free(data);
-         return -1;
-     }
- 
-@@ -99,7 +93,6 @@ static int qcrypto_ivgen_essiv_calculate(QCryptoIVGen *ivgen,
-     if (ndata < niv) {
-         memset(iv + ndata, 0, niv - ndata);
-     }
--    g_free(data);
-     return 0;
- }
- 
-diff --git a/crypto/ivgen.c b/crypto/ivgen.c
-index 6b7d24d889..9f1f7d7dca 100644
---- a/crypto/ivgen.c
-+++ b/crypto/ivgen.c
-@@ -33,7 +33,7 @@ QCryptoIVGen *qcrypto_ivgen_new(QCryptoIVGenAlgo alg,
-                                 const uint8_t *key, size_t nkey,
-                                 Error **errp)
- {
--    QCryptoIVGen *ivgen = g_new0(QCryptoIVGen, 1);
-+    g_autofree QCryptoIVGen *ivgen = g_new0(QCryptoIVGen, 1);
- 
-     ivgen->algorithm = alg;
-     ivgen->cipher = cipheralg;
-@@ -51,16 +51,14 @@ QCryptoIVGen *qcrypto_ivgen_new(QCryptoIVGenAlgo alg,
-         break;
-     default:
-         error_setg(errp, "Unknown block IV generator algorithm %d", alg);
--        g_free(ivgen);
-         return NULL;
-     }
- 
-     if (ivgen->driver->init(ivgen, key, nkey, errp) < 0) {
--        g_free(ivgen);
-         return NULL;
-     }
- 
--    return ivgen;
-+    return g_steal_pointer(&ivgen);
- }
- 
- 
-diff --git a/crypto/secret_keyring.c b/crypto/secret_keyring.c
-index 78d7f09b3b..3b332276ef 100644
---- a/crypto/secret_keyring.c
-+++ b/crypto/secret_keyring.c
-@@ -41,7 +41,7 @@ qcrypto_secret_keyring_load_data(QCryptoSecretCommon *sec_common,
-                                  Error **errp)
- {
-     QCryptoSecretKeyring *secret = QCRYPTO_SECRET_KEYRING(sec_common);
--    uint8_t *buffer = NULL;
-+    g_autofree uint8_t *buffer = NULL;
-     long retcode;
- 
-     *output = NULL;
-@@ -61,12 +61,11 @@ qcrypto_secret_keyring_load_data(QCryptoSecretCommon *sec_common,
- 
-     retcode = keyctl_read(secret->serial, buffer, retcode);
-     if (retcode < 0) {
--        g_free(buffer);
-         goto keyctl_error;
-     }
- 
-     *outputlen = retcode;
--    *output = buffer;
-+    *output = g_steal_pointer(&buffer);
-     return;
- 
- keyctl_error:
--- 
-2.43.0
+
+> Jamin Lin (8):
+>    hw/misc/aspeed_scu: Introduce Aspeed2700SCUState
+>    hw/arm/aspeed: Use Aspeed2700SCUState for AST2700 users
+>    hw/arm/aspeed_ast27x0: Move SCU link into AST27x0 coprocessors
+>    hw/misc/aspeed_scu: Add separate reset handler for AST2700 SCUIO
+>    hw/arm/aspeed_ast27x0: Pass realized PSP SoC to SSP/TSP initialization
+>    hw/arm/ast27x0: Share single SCUIO instance across PSP, SSP, and TSP
+>    hw/arm/ast27x0: Share FMC controller with SSP and TSP
+>    hw/ssi/aspeed_smc: Add Data FIFO-based flash access support for
+>      AST2700
+
+Looking at this machine in more detail, I think it would be
+better modelled as:
+
+struct Ast2700FcMachineState {
+     MachineState parent_obj;
+
+     MemoryRegion dram;
+     Aspeed2700SCUState scu;
+
+     Aspeed27x0SoCState psp;
+     MemoryRegion psp_memory;
+     MemoryRegion psp_bootrom;
+
+     Aspeed27x0CoprocessorState ssp;
+     Clock *ssp_sysclk;
+     MemoryRegion ssp_memory;
+
+     Aspeed27x0CoprocessorState tsp;
+     Clock *tsp_sysclk;
+     MemoryRegion tsp_memory;
+};
+
+- dram and scu are shared within psp/ssp/tsp
+   (ca35_dram renamed as generic dram)
+   (ca35_memory renamed as psp_memory)
+   (ca35_boot_rom renamed as psp_bootrom)
+
+and:
+
+struct Aspeed27x0SoCState {
+     AspeedSoCState parent;
+
+     ARMCPU cpu[ASPEED_CPUS_NUM];
+     AspeedINTCState intc[ASPEED_INTC_NUM];
+     AspeedINTCState intcioexp[ASPEED_IOEXP_NUM];
+     GICv3State gic;
+     MemoryRegion dram_empty;
+     Aspeed2700SCUState *scu;
+};
+
+- scu becomes a link property
+
+struct Ast2700FcMachineState {
+     MachineState parent_obj;
+
+     MemoryRegion dram;
+     Aspeed2700SCUState scu;
+
+     Aspeed27x0SoCState psp;
+     MemoryRegion psp_memory;
+     MemoryRegion psp_bootrom;
+
+     Aspeed27x0CoprocessorState ssp;
+     Clock *ssp_sysclk;
+     MemoryRegion ssp_memory;
+
+     Aspeed27x0CoprocessorState tsp;
+     Clock *tsp_sysclk;
+     MemoryRegion tsp_memory;
+};
+
+My personal style preference being:
+
+struct Ast2700FcMachineState {
+     MachineState parent_obj;
+
+     MemoryRegion dram;
+     Aspeed2700SCUState scu;
+
+     struct {
+         Aspeed27x0SoCState mpcore;
+         MemoryRegion memory;
+         MemoryRegion bootrom;
+     } psp;
+
+     struct {
+         Aspeed27x0CoprocessorState mcu;
+         Clock *sysclk;
+         MemoryRegion memory;
+     } ssp;
+
+     struct {
+         Aspeed27x0CoprocessorState mcu;
+         Clock *sysclk;
+         MemoryRegion memory;
+     } tsp;
+};
 
 
