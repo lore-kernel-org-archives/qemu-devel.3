@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24279C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 02:13:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1863C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 02:13:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wheFm-0003nj-5Z; Wed, 08 Jul 2026 22:12:42 -0400
+	id 1wheGA-000430-Lf; Wed, 08 Jul 2026 22:13:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wheFj-0003nI-AA
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 22:12:39 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wheFg-0002WO-EO
- for qemu-devel@nongnu.org; Wed, 08 Jul 2026 22:12:39 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Bx1+qHA09qa7ABAA--.7139S3;
- Thu, 09 Jul 2026 10:12:23 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJBxb8eGA09qRFwGAA--.11153S2;
- Thu, 09 Jul 2026 10:12:22 +0800 (CST)
-Subject: Re: [PATCH v2 0/4] target/loongarch: add LVZ support for TCG
-To: SignKirigami <prcups@krgm.moe>, qemu-devel@nongnu.org
-Cc: xianglai li <lixianglai@loongson.cn>,
- Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-References: <cover.1782194683.git.prcups@krgm.moe>
- <FlLMXq5RQ6axxIAn2ivsvQ@krgm.moe>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <964c2e79-6225-44c8-a77d-1ff8efff8131@loongson.cn>
-Date: Thu, 9 Jul 2026 10:12:17 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
+ id 1wheG7-00040C-7t
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 22:13:03 -0400
+Received: from smtp186.sjtu.edu.cn ([202.120.2.186])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
+ id 1wheG4-0002eu-CM
+ for qemu-devel@nongnu.org; Wed, 08 Jul 2026 22:13:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sjtu.edu.cn;
+ s=default; t=1783563174;
+ bh=J3rnRvBcPFYMdbXtlj+DgAzmWtnixrwsFMTZY8UI+3w=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=T77WCPOmqbfNw1xL+BBd1N2zO66UNN8gr7UtqnRSLZFCfIFgecMuAPxUcie8HYiwg
+ eWe/fgyrTHcA8jRxBkvrLa2WFHJqXv5JmzcyFdt4mWit3rACtxcIm6ZiZsMr5/MNlW
+ XrLdgORyeeg7QKDIPa1PZmdcUlLOLbwzY2fyNzDAVARPoanuV9L1ffT8Tvb+IjcuV0
+ Hk8cDlQSIPyKbTRb3UTU81GyBwbfwziu6gomKHmocWY589f6IdDGufHS1aSS0uujrA
+ 5VYA+Zoq9vdzbNROPSHp6qXWE4DfLPpqMEGCk0o0ed0xBJ6fdyG9JHKNyzlVpplEWh
+ XSSrJU7YZbQ3g==
+Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
+ by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id 4D4B730015A;
+ Thu,  9 Jul 2026 02:12:54 +0000 (UTC)
+Received: from [10.0.1.62] (unknown [202.120.40.100])
+ by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id B4315380CA4;
+ Thu,  9 Jul 2026 10:12:53 +0800 (CST)
+Message-ID: <ad7f6d1d-5ec5-4aaa-808b-6b13c81d69bd@sjtu.edu.cn>
+Date: Thu, 9 Jul 2026 10:12:52 +0800
 MIME-Version: 1.0
-In-Reply-To: <FlLMXq5RQ6axxIAn2ivsvQ@krgm.moe>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 2/2] docs/about/emulation: document the dlcall plugin
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ qemu-devel <qemu-devel@nongnu.org>
+Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
+ Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
+ Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
+References: <20260708152043.251537-1-functioner@sjtu.edu.cn>
+ <20260708152043.251537-3-functioner@sjtu.edu.cn>
+ <6abd4f15-03b5-4036-a016-74269e87c36a@oss.qualcomm.com>
+ <f6600480-2cac-4708-8a3d-b2c69d454196@sjtu.edu.cn>
+ <2c33043b-da8e-4b3f-8f17-c574b4632fcb@oss.qualcomm.com>
+From: Ziyang Zhang <functioner@sjtu.edu.cn>
+In-Reply-To: <2c33043b-da8e-4b3f-8f17-c574b4632fcb@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxb8eGA09qRFwGAA--.11153S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7CryUGr4UWw1rXw4kZry3Jrc_yoW8tw1rpw
- 1xur1rKay8CrZFyrn3Xa4Yqwn8Xrn7Gw4Iq3Wftry8Cw4Yqry7ZF1kt3929F1UJa4UGryI
- qF1Fk34UuF48ZacCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8xuctUU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.97,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=202.120.2.186;
+ envelope-from=functioner@sjtu.edu.cn; helo=smtp186.sjtu.edu.cn
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,61 +81,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2026/7/7 下午12:40, SignKirigami wrote:
-> On 2026年6月23日星期二 中国标准时间 14:16:11，SignKirigami wrote：
->> This patch implements Loongson VirtualiZation (LVZ) extension support for LoongArch's TCG target. With this patch, it is now possible to start a nested KVM-accelerated virtual machine on a TCG-emulated virtual machine.
+On Wed, 8 Jul 2026 18:29:59 -0700, Pierrick Bouvier wrote:
+> On 7/8/2026 5:27 PM, Ziyang Zhang wrote:
+>> Hi Pierrick,
 >>
->> Signed-off-by: SignKirigami <prcups@krgm.moe>
->> Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+>> On Wed, 8 Jul 2026 16:55:19 -0700, Pierrick Bouvier wrote:
+>>>> +A minimal end-to-end example wraps a one-function library,
+>>>> ``libhello.so``,
+>>>> +declared by ``hello.h``:
+>>>> +
+>>>> +.. code-block:: c
+>>>> +
+>>>> +   void hello(const char *name, int lucky);
+>>>> +
+>>>
+>>> Please include full files for example:
+>>> hello.h, hello.c and main.c calling hello function.
+>>>
+>>> Also, please include compiler commands for libhello.so and main.
+>>> You can give a full example assuming it run on a x86_64 host.
+>> Good idea. I will get it done in v8.
 >>
->> SignKirigami (4):
->>    target/loongarch: Add LVZ feature definitions and CPU structures
->>    target/loongarch: Add guest CSR table and VM-level CSR infrastructure
->>    target/loongarch: Add LVZ MMU, TCG infrastructure and guest support
->>    target/loongarch: Add LVZ instruction decode, translation and
->>      disassembly
+>>> I could not get it to work.
+>>> Following all the steps, the error message is:
+>>>
+>>> [GRT] failed to load host runtime
+>>> qemu: uncaught target signal 6 (Aborted) - core dumped
+>>> Aborted
+>> On the error. [GRT] failed to load host runtime is the host side (QEMU)
+>> failing to dlopen the Lorelei host runtime, which means $DEVKIT/lib was
+>> not on the host LD_LIBRARY_PATH, for example if $DEVKIT was not set in
+>> the shell that ran the command. -L only points QEMU at the guest's
+>> loader and libc, so it is unrelated.
 >>
->>   target/loongarch/arch_dump.c                  |   6 +-
->>   target/loongarch/cpu-csr.h                    |  42 ++
->>   target/loongarch/cpu-mmu.h                    |  39 +-
->>   target/loongarch/cpu.c                        | 279 ++++++---
->>   target/loongarch/cpu.h                        |  62 +-
->>   target/loongarch/cpu_helper.c                 |  87 ++-
->>   target/loongarch/csr.c                        | 124 +++-
->>   target/loongarch/csr.h                        |  12 +-
->>   target/loongarch/disas.c                      |  16 +
->>   target/loongarch/insns.decode                 |  14 +
->>   target/loongarch/internals.h                  |   8 +-
->>   target/loongarch/machine.c                    | 125 +++-
->>   target/loongarch/tcg/constant_timer.c         |  74 ++-
->>   target/loongarch/tcg/csr_helper.c             | 136 ++++-
->>   target/loongarch/tcg/helper.h                 |  30 +-
->>   .../tcg/insn_trans/trans_extra.c.inc          |   2 +-
->>   .../tcg/insn_trans/trans_privileged.c.inc     | 353 ++++++++++-
->>   target/loongarch/tcg/op_helper.c              |  45 +-
->>   target/loongarch/tcg/tcg_cpu.c                |  65 +-
->>   target/loongarch/tcg/tcg_loongarch.h          |   3 +-
->>   target/loongarch/tcg/tlb_helper.c             | 577 +++++++++++++-----
->>   target/loongarch/tcg/translate.c              |   6 +-
->>   target/loongarch/translate.h                  |   2 +
->>   23 files changed, 1747 insertions(+), 360 deletions(-)
+>> I reproduced it: dropping just $DEVKIT/lib from the host LD_LIBRARY_PATH
+>> gives exactly that message and the abort. The real fix is making the
+>> example self-contained so nothing stays implicit, which is what v8 does.
 >>
->>
-> I 'm sorry for not wrapping this cover message, and will fix it on next version.
-> Is there any progress on this patch serie?
-I suggest that split this patch into smaller patches, so that almost 
-every patch is easy to review. It is really hard to review carefully 
-with big patch :(
-
-Regards
-Bibo Mao
 > 
-> Regards
-> SignKirigami
+> I paid attention to follow steps correctly, but maybe I missed
+> something. Please see here a full dump of my env and commands:
 > 
+> $ git status
+> Untracked files:
+>    (use "git add <file>..." to include in what will be committed)
+>          a.out
+>          hello.c
+>          hello.h
+>          libhello.so
+>          lorelei-devkit-x86_64-1.0.4.0.tar.xz
+>          lorelei-devkit-x86_64/
+>          main.c
+>          thunks/
 > 
+> nothing added to commit but untracked files present (use "git add" to track)
+> $ ldd a.out
+>          linux-vdso.so.1 (0x00007f5855c3a000)
+>          libhello.so => not found
+>          libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f5855a0a000)
+>          /lib64/ld-linux-x86-64.so.2 (0x00007f5855c3c000)
+> $ LD_LIBRARY_PATH=./ ldd a.out
+>          linux-vdso.so.1 (0x00007fef23831000)
+>          libhello.so => ./libhello.so (0x00007fef2381f000)
+>          libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007fef235fc000)
+>          /lib64/ld-linux-x86-64.so.2 (0x00007fef23833000)
+> $ env | grep DEVKIT
+> DEVKIT=/home/user/.work/qemu/lorelei-devkit-x86_64
+> $ tree thunks/
+> thunks/
+> ├── lib
+> │   └── x86_64-LoreHTL
+> │       └── libhello_HTL.so
+> └── x86_64
+>      └── lib
+>          └── x86_64-LoreGTL
+>              └── libhello.so
 > 
+> 6 directories, 2 files
+> $ LORELEI_THUNK_PATH=thunks LD_LIBRARY_PATH=$DEVKIT/lib:. \
+> build/qemu-x86_64 -plugin build/contrib/plugins/libdlcall.so \
+> -L $DEVKIT/x86_64/sysroot \
+>   -E LD_LIBRARY_PATH=$DEVKIT/x86_64/lib:thunks/x86_64/lib/x86_64-LoreGTL\
+> ./a.out
+> [GRT] failed to load host runtime
+> qemu: uncaught target signal 6 (Aborted) - core dumped
+> Aborted
+> 
+> Any idea what could be missing?
+> 
+>>> We talked about not overriding sysroot, so please remove -L part.
+>>> Also, Why do current dir is passed in LD_LIBRARY_PATH?
+>> In this example it assumes that the host libhello.so is in the current
+>> directory, which must be able to be found in LD_LIBRARY_PATH.
+>>
+>>>> +The guest ``LD_LIBRARY_PATH``, passed with ``-E``, controls what the
+>>>> emulated
+>>>> +program loads:
+>>>> +
+>>>> +* ``$DEVKIT/x86_64/lib`` contains the guest runtime support shipped
+>>>> with the
+>>>> +  devkit.
+>>>> +* ``thunks/x86_64/lib/x86_64-LoreGTL`` contains the generated guest
+>>>> +  ``libhello.so`` thunk, used in place of an ordinary guest library.
+>>>> +
+>>>> +The host ``LD_LIBRARY_PATH`` controls what the plugin and host thunk
+>>>> load:
+>>>> +
+>>>> +* ``$DEVKIT/lib`` contains the host runtime support shipped with the
+>>>> devkit.
+>>>> +* ``.`` is the current directory, where the host's own
+>>>> ``libhello.so`` is
+>>>> +  located.
+>>>> +
+>>>> +See the runnable
+>>>> +`hello <https://github.com/rover2024/lorelei/tree/main/examples/
+>>>> hello>`_
+>>>> +(minimal) and
+>>>> +`demo <https://github.com/rover2024/lorelei/tree/main/examples/demo>`_
+>>>> +(variadic functions and a callback that reenters the guest)
+>>>> examples, and
+>>>> +`Lorelei <https://github.com/rover2024/lorelei>`_ for prebuilt thunk
+>>>> trees and
+>>>> +the runtime environment they expect.
+>>>> +
+>>>> +.. list-table:: Dynamic Linking Call arguments
+>>>> +  :widths: 20 80
+>>>> +  :header-rows: 1
+>>>> +
+>>>> +  * - Option
+>>>> +    - Description
+>>>> +  * - syscall_num=N
+>>>> +    - The magic syscall number the guest issues (default 4096). Must
+>>>> be high
+>>>> +      enough not to clash with a real syscall.
+>>>> +
+>>>>    Other emulation features
+>>>>    ------------------------
+>>>>    
+>>>
+>>> Regards,
+>>> Pierrick
+>>
+>> It looks unexplained today only because the walkthrough never shows
+>> building it. v8 will.
+>>
+>> v8 will also include the full hello.h, hello.c and main.c, plus the cc
+>> and clang commands for libhello.so and main, as one runnable x86_64
+>> sequence.
 
+Although I have tested in the empty containers of each ISA, it is not
+possible to cover all Linux distributions. Currently, the Lorelei Host
+Runtime (in the devkit, libLoreHostRT.so) fails to load and does not
+output dlerror(). At present, I am unable to analyze why there is an
+error on your end.
+
+Perhaps you could set the LD_DEBUG for the host and use -U to unset
+LD_DEBUG for the guest, and then observe the output.
+
+Regards,
+Ziyang Zhang
 
