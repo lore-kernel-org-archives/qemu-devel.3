@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A112EC43458
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC480C44506
 	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 16:42:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whroY-0003BN-Ny; Thu, 09 Jul 2026 12:41:32 -0400
+	id 1whroe-0003CC-1X; Thu, 09 Jul 2026 12:41:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1whroU-0003A4-S6
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 12:41:26 -0400
+ id 1whroc-0003BX-B7
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 12:41:34 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1whroR-0003cA-Hh
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 12:41:25 -0400
+ id 1whroZ-0003ch-3g
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 12:41:33 -0400
 Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 669GPx3x2319004
- for <qemu-devel@nongnu.org>; Thu, 9 Jul 2026 16:41:22 GMT
+ 669GPvMw2318971
+ for <qemu-devel@nongnu.org>; Thu, 9 Jul 2026 16:41:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 9QebU+MNsT2OdSqbSlYYVFrJtMb+QkrQbrdiQLBQFZ0=; b=J0lcEYuJtPMqJtQz
- SP92/1GflV7Cm2SR02hcZz5QOSt3uFbG/W0cvTg3GvTiNAO6tlqIrhfbD93bd1Tj
- C4QGrpLHpXzY/ItUJCWIVkKL2a/F28eB1GwqKKIx2vrua9dawcxE3WNBSg/Qdaip
- jHO2T12wC0x4omrIXz69oX/QM33dLEuVmon3cBHkgo0kc3kj/MjJ5qx3G09CXxPj
- i6saW9fG8tHXYtJk8QvxPE5XKRamC6IppHF/DOZ9R8ipjtcJel6nEwVsyn++plyk
- 3WuaQlMxCaighINvOyGjjC1E44cqo5gsckRP6e/eLnl8ZXPAWjrkucNJKkxKkCMH
- 5hHQPQ==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4faf5mr3es-1
+ 6+NumQOKfMH7xgRpkQrLTiQfxEVRG2QlSf2brndq35M=; b=m29ZE4epxMhU/NYt
+ fFJ6XqxlovGV+rJBi12DeD0YjMDcX9qZoh5tOI0HmulkBuy74KSWGkI7YBedWpan
+ Vg1AoLV08tUWJBPl+dfIfC44IPkG/tpgxX2KBNO1zrIM2TiKcLouLEYJnpcrz91t
+ pBywulBYfGgReNmzpB27pN9hcmZRVyN9AE3Gqz/HcazpCLJue4XERzl7DNVwZXL7
+ TjBahXOrf5yxlnRNqfji66tNY8Vyp5+UcQ8lIgTJOVIcBEyPm+X+u1b++8d47ffp
+ pL7NiwT4X39xh4ptnvWr+h5ISAsq+5A30FMHR5WhKjKXctWI3d+62vR9E8RkP2v3
+ KcS4SQ==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4faf5mr3fb-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 16:41:22 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-51c2af04aeeso686921cf.0
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 09:41:21 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 16:41:29 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-51c1a9764f0so26724991cf.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 09:41:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783615281; x=1784220081; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783615289; x=1784220089; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=9QebU+MNsT2OdSqbSlYYVFrJtMb+QkrQbrdiQLBQFZ0=;
- b=fUQNMGtZZrsO/DN98WQeUMRULyy09cRmygWn7S+quZaICS1o/+P8cWWJxXtVASh1xi
- LX2MZvWZNFfQCoxAVzYQnuBAP25oijzh+zNZYfVb7FeVDAJGxF5vzOmSnTDzIkYIkfD6
- xYqIRtlO+hNjn6ENT7CBPiuQ79EzrdGAx4pl7ST7Y0rTK2+CtBhRg4gP5Kld1MDvEk1D
- K441s6d4n4Mq1HI9x72npZnylXkU5+WTB9csoVkIOZ8CAp0qQ/eMEAZk/RNTAxCBT4jU
- 3AR2deejE3g8OleLKUhWx4dq6PFa1FSdokqUamXr67oRogCbuzPeH2nJiWI0Plozpfve
- 9fOw==
+ bh=6+NumQOKfMH7xgRpkQrLTiQfxEVRG2QlSf2brndq35M=;
+ b=jv9sB1DBRAa0KnSPyGQLoj5SXmUicPURDO0bsXwqkVKPVlwYm9cXvLKF5yc7NlpozW
+ 6jmojYh755+I5qHqUk3fB5qyeiWAKlsnf5QTmwBomLx6G+1ojDzxTJShAS3ML+1xpAlu
+ F+GPpuqwrYqEg5LNMzOa2Qa5WV38HkCYuEBzbMnrrq1FDwLjqMgZDJTdJE/xklvRy0iq
+ tLxzBCth9uSr7EshPCv2MRWLZyq6YUDXBG7C2ipBghDrU9/Nzqzm7ZJH9Q2rzO2tveJx
+ h2aDE5VF6XwtyS/cHTFAwIYt+r5grKchMS1ed0bGif0Zy5L/PNvYwAFz7QZw95Gm2aIU
+ 6uPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783615281; x=1784220081;
+ d=1e100.net; s=20251104; t=1783615289; x=1784220089;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=9QebU+MNsT2OdSqbSlYYVFrJtMb+QkrQbrdiQLBQFZ0=;
- b=suqaAAHQZ0Hu//oArJvOsruVM/Y9oITmGApimMWYPuNKny27ILtnv0SCxY2ZmN1fK7
- za595QuSoJ8CVbt+XHXXo/nfB8PsBCIY80ijuinDOmtrfkDNzfxCx6Ua0UvMc77vPmIx
- 03XJi9D6nU772kEgxMew6YKXI+2j1457A1FvKCMKHVqtKJq7Fp3HGAuJygKcZAIsUwQp
- JG8K9f0leOgxETo9+zaxJ547Vi5p7iGTrSPlOHaVawByIGchtcS1GKa+2xc2DnmfJKoE
- YTI4oCEMt2gww/DkO96JCQjvwbAtxySe1HcZN05710mtzODNx2cdyq9NammeCAA82bTp
- Enig==
-X-Gm-Message-State: AOJu0Yxzi8yvOmWKb058FjdK0mQpzCbHHhmhMIiSWpdzq8r5R1gGl2i9
- 92cKy7lP9gzWSIjTgN0Q4JDdPHLuxmcVB03ldtRiKc04yLM1DOxdioGSsIDx/LJHNf7AGK0/dKg
- V+WL3+mcZO8i+bGIHbPB3yYPgE/L9lTjDuPEYfkekAmiuQprDEfI7V/bsqawdpx+jAw==
-X-Gm-Gg: AfdE7cmcq8usjRI+tHOAL8e4LIU5nVrsylKgygZy/ykhV346gILWH8emex5xPatiyE4
- sogOxok7+Fapwi4jodnjAqf5aXoPuuTmS5d4AkXHzJZiDDv1xWFcjtRR/udcWZcQPOskCI954N0
- Dwbf1aM7Bc/TPvMbLr045bghdEJHML+xDR2WGYQT+6R/mPtGSIIxdzTVzdiWu4TNIAXmRtUBhiF
- XZIohKFUpUVTISC4rNBuU9enhwvK2rOzNwRoz+EYqfQUS4pTebXbuNHstNR0MLBdDpdHLq+lme1
- zDCLVmV9KJ6+4T6VrVwknd/9kPYLFYxArawCBTAhHBTx/C25Db0emlWjFgFSJqtp3LJK7bsYHGN
- qr7rSHCd569YkFxdp9i3diKNIw7EPIIOF6e/JoA4vVvBvdTiehr/vyZznG6hGGUcDX4Mx
-X-Received: by 2002:a05:622a:1dcd:b0:51c:98f:f288 with SMTP id
- d75a77b69052e-51caa12810amr214801cf.25.1783615281429; 
- Thu, 09 Jul 2026 09:41:21 -0700 (PDT)
-X-Received: by 2002:a05:622a:1dcd:b0:51c:98f:f288 with SMTP id
- d75a77b69052e-51caa12810amr214411cf.25.1783615281065; 
- Thu, 09 Jul 2026 09:41:21 -0700 (PDT)
+ bh=6+NumQOKfMH7xgRpkQrLTiQfxEVRG2QlSf2brndq35M=;
+ b=eWfgRSoG87nrJ0x6wZh83UuNaZIdJvAVCTOjlSgKASxdrp4Q6AaIOpq2Nt47DO2nLT
+ +7P2CzVAo6aw1bnJcWleoexYfSULPXOhsZuxzU6QXm7fToTw9757n6NzFf3xa/ZF0aN3
+ siDRrOQfbybM1/3oG6BDiwj9Vs/erwybIX051Pzo6KbEXuJetJlacP0HM3WaxsRyY95r
+ v7k7+5qal0g7d4Mqr6427pWgBV+EzXamRrR4znYD8zBVJg9NcFjQOl0uEYyqAypDgRix
+ YFJjzNC+Ur9SFDNzqZMuA7MjptTiV11Ftar1zVbItVQTqL+kct8oZkCdd4SYRS4xJ6Ck
+ yoAQ==
+X-Gm-Message-State: AOJu0Yw8DLo9lCi6W9pivabwDMxSIf1Q/LJ3Io7timru9nqeBBxjjp1m
+ bJym1OrwVoYv6NUjpU78rtu8ZtGMNX5AMz70WwDafSVfdgxSn71pSppbfbL/g3AwMadmuLT+y+m
+ J05ZCOC2e6pfdu9Ocv8yGUoQ6S/C0WvOpva7LsFzVcGUdFIou9Gu8Up5PXOqWkgdX4A==
+X-Gm-Gg: AfdE7cn/oYtjiRuMBm5d6azFoBfFaIOoAhxvQ7AHZ684SJoqigjI0zXnhqNADJdxHtn
+ HJgzK4/JPqr0dbqI/YVSznNl7mbUQHMXA91GCPiQYEERUcUjHW4pIUCpsAJJVCqgcRNNYLMkFz6
+ IEzckppU1WIuGjHSq/F19vaTJ+6oOe4ugdyOGcGYgZwmt57fho6NMIY5ClCx+x6emksErO0TOpX
+ 1BwWH4cP5rdqJhOMlCTbKUUEuq98lYS3eRsZs039+Tc5fehM+oxuLVl++LzFfPcapFwiJlqxRv+
+ GkqvMA+cYvHJ6sGchtI6GVQO/4vKpbSzukA4xZOIqDIFU8K9yRoAcxGGD1J9GjjtO2jn02FpWvB
+ 8nFcpmALdGaCxQaTaOS5EmzpEEZJza0Ba7m3PhqWlrbCXRkwtPQzDoZM+XNimpPFw2THk
+X-Received: by 2002:a05:622a:1352:b0:51a:8c9b:6496 with SMTP id
+ d75a77b69052e-51c8b40fd3cmr83837151cf.58.1783615289155; 
+ Thu, 09 Jul 2026 09:41:29 -0700 (PDT)
+X-Received: by 2002:a05:622a:1352:b0:51a:8c9b:6496 with SMTP id
+ d75a77b69052e-51c8b40fd3cmr83836691cf.58.1783615288706; 
+ Thu, 09 Jul 2026 09:41:28 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493eb66beddsm80776075e9.0.2026.07.09.09.41.19
+ ffacd0b85a97d-47aa0f214d2sm51352319f8f.33.2026.07.09.09.41.27
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 09 Jul 2026 09:41:20 -0700 (PDT)
+ Thu, 09 Jul 2026 09:41:27 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
@@ -96,37 +96,36 @@ Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  Joel Stanley <joel@jms.id.au>, Steven Lee <steven_lee@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Kane Chen <kane_chen@aspeedtech.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-stable@nongnu.org
-Subject: [PATCH 2/3] hw/arm/aspeed: Add missing Kconfig dependencies on
- required components
-Date: Thu,  9 Jul 2026 18:41:01 +0200
-Message-ID: <20260709164103.37614-3-philmd@oss.qualcomm.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH 3/3] hw/arm/aspeed: Add missing Kconfig dependencies on
+ optional components
+Date: Thu,  9 Jul 2026 18:41:02 +0200
+Message-ID: <20260709164103.37614-4-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260709164103.37614-1-philmd@oss.qualcomm.com>
 References: <20260709164103.37614-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: o51fuzyeG9u3a9sgtsXd_9t8I2qn4Ade
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA5MDE2MyBTYWx0ZWRfX9aO1BNlBTfrw
- fBGdvpE5fQkonHNRFuZDPnHZNkxJumwqXdVqCA9KfzRLM8WEWE/QuuDt4H51zsn64tN3vE1Y3uL
- l9RRSGtEwKEWLEd9HCLvf4ENgPlGTKc=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA5MDE2MyBTYWx0ZWRfX4dE80dD+uD00
- h6CSy34H6dGb1CbQt3Abo1qdEZyzniqQBWIMMp8X6toXDYD6YQZ+XjIYjQf+fTjtCS7R6skTma1
- mbEsLireyCn1Ydmc/RAAvhVZb8FY2fEUfVZF8/AVMsozSPUHaEuIGh8NCmnRnBhR28dlJNp8WVG
- IwZTZfJw5PmI86+M2Vpfk8zPku8R2dW4eKAFkDEFSZ8OlZS2QmLjvU96TA/oPT55rBGxXd0Rjnu
- Uo77iUamwzuvc7zLtNzpl7fezAbBkCOcCo8TLV2Qv+SqM3TcQCpSznGsNPhXrPNSFMQmfEjNw57
- vZ15YGgrqJfhOk8qwH5H9JoUg1I1O076UKQwGhoVI7bYEmSmM+QqqhS1lyUYsCRupDuFCoiGnXW
- 1TeqUgd99gXm3FVuvv0h2rITYaM/t5kmA7YVdgVquw0w05erCOm7f9kLetrQpIMLLyw61+bk6RB
- +pilVBKI3Fi4ivFIYoA==
-X-Proofpoint-GUID: o51fuzyeG9u3a9sgtsXd_9t8I2qn4Ade
-X-Authority-Analysis: v=2.4 cv=N+QZ0W9B c=1 sm=1 tr=0 ts=6a4fcf32 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-ORIG-GUID: jHrL0qgZWxa643hnoVFp89wjsupvP-Bk
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA5MDE2MyBTYWx0ZWRfX6ggPlolrboI8
+ WmepH/cEPqDzTXyBg4EMKa5is3UAxQCJeIuVqPQJZ2YGsoyzPzdO+nYtv183gpuJLzks1tqARav
+ uo6FdvrNyx9cvPIji+GlUFLUzbpl9Oo=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA5MDE2MyBTYWx0ZWRfX6VNsYhHt0AmX
+ JRW2N9dswMOBFBdr+t/7+ln8JUTrJrAT6u1kcb25NvJGJD2WaY85kPK73subSiI8VTMCmIHeOCL
+ UQZJt+PdeCJd86DqzXJAMh+QIYLUtjXmtwZabItk6HkCgWaiRRZ9sCBa3TGdnz087tYTYxlqL3R
+ 1VmbClSA7i99z8it/WXkoDutj5QMObHYWtT7kL31Zh0tP4uf7NeuKRdv421MNgeGRKPfKf3e2Ol
+ 84+RjkRiIglWBUvc+XRYnQR9ukcEpm8DVjCVDnbaFloMLeD01xXoO7CMK+Ei7YWf/YllfPzDFqi
+ 1+5c12vQBf+O+Q5ncITQMtUlkKTgc4u6fqn7gFlFYVZWEeRA3+dj751UcsEz5VRAAtqiWJBQYjm
+ 0BGwoPm6EDAgdWemLhZl9OAIWkcYxVdWJxB+SvYzhAakIWJkTqX8NXiFmRqxL5S3PuWjbR3tl9/
+ 0sne3P4Evc7FCnWIlVw==
+X-Proofpoint-GUID: jHrL0qgZWxa643hnoVFp89wjsupvP-Bk
+X-Authority-Analysis: v=2.4 cv=N+QZ0W9B c=1 sm=1 tr=0 ts=6a4fcf39 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=69wJf7TsAAAA:8 a=EUspDBNiAAAA:8 a=mjaNlZT-9ziipFgz8p4A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22 a=Fg1AiH1G6rFz08G2ETeA:22
+ a=EUspDBNiAAAA:8 a=44yfr59QGiQIZl82vZEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=zZCYzV9kfG8A:10 a=dawVfQjAaf238kedN5IG:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-09_03,2026-07-09_02,2025-10-01_01
@@ -143,7 +142,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,51 +158,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add various missing Kconfig dependencies of the Aspeed SoCs:
+Add missing Kconfig optional dependencies to avoid the
+following runtime error:
 
-- USB EHCI (commit bfdd34f1caa "hw/arm: ast2400/ast2500: Wire up
-  EHCI controllers")
-- OR-IRQ (commit d831c5fd868 "aspeed/intc: Add AST2700 support")
-- SDHCI (commit 2bea128c3d0 "hw/sd/aspeed_sdhci: New device"
-  and f25c0ae1079 "aspeed/soc: Add AST2600 support")
+  qemu-system-aarch64: -device loader,force-raw=on,addr=0x400000000,file=./u-boot.bin: 'loader' is not a valid device model name
+  qemu-system-aarch64: -device e1000e,netdev=net1,bus=pcie.2: 'e1000e' is not a valid device model name
 
-This fixes the following runtime issues:
-
-  qemu-system-aarch64: unknown type 'platform-ehci-usb'
-  qemu-system-aarch64: unknown type 'or-irq'
-  qemu-system-aarch64: unknown type 'generic-sdhci'
-
-Cc: qemu-stable@nongnu.org
-Fixes: 2bea128c3d0 ("hw/sd/aspeed_sdhci: New device")
-Fixes: f25c0ae1079 ("aspeed/soc: Add AST2600 support")
-Fixes: d831c5fd868 ("aspeed/intc: Add AST2700 support")
-Fixes: bfdd34f1caa ("hw/arm: ast2400/ast2500: Wire up EHCI controllers")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/arm/Kconfig | 3 +++
- 1 file changed, 3 insertions(+)
+ hw/arm/Kconfig | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 00e2d938033..6f5b2add66e 100644
+index 6f5b2add66e..5869f0f9e89 100644
 --- a/hw/arm/Kconfig
 +++ b/hw/arm/Kconfig
-@@ -551,6 +551,7 @@ config ASPEED_SOC
-     select TMP105
-     select TMP421
-     select EMC141X
-+    select OR_IRQ
-     select UNIMP
-     select LED
-     select PMBUS
-@@ -558,6 +559,8 @@ config ASPEED_SOC
-     select FSI_APB2OPB_ASPEED
-     select AT24C
-     select PCI_EXPRESS_ASPEED
-+    select USB_EHCI_SYSBUS
-+    select SDHCI
- 
- config MPS2
+@@ -533,7 +533,9 @@ config ASPEED_SOC
      bool
+     default y
+     depends on TCG && ARM
++    imply GENERIC_LOADER
+     imply PCI_DEVICES
++    imply E1000E_PCI_EXPRESS
+     select DS1338
+     select FTGMAC100
+     select I2C
 -- 
 2.53.0
 
