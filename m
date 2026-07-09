@@ -4,95 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6574AC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 20:23:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFDE4C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 20:29:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whvGq-0001qT-7f; Thu, 09 Jul 2026 16:22:56 -0400
+	id 1whvM9-0003Ca-MJ; Thu, 09 Jul 2026 16:28:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1whvGo-0001qB-Ms
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 16:22:54 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <randomjack94dev@gmail.com>)
+ id 1whvM8-0003CH-3g
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 16:28:24 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1whvGn-0007Ka-5A
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 16:22:54 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-848595b338cso213550b3a.0
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 13:22:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <randomjack94dev@gmail.com>)
+ id 1whvM6-0000dS-OE
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 16:28:23 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-c15e2937e9dso41343166b.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 13:28:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783628571; x=1784233371; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=er2nd01K52fzoSCDKuPe6L+4tKyOrTAJPVN5CW28/d4=;
- b=jSYpQXQKWHL/vQK39bDSAYu/W/zP32QKBVs9KtTuJg9xH1KIo/jsyd/7QOyF0ldBQi
- Mj0nvQkvrC94kb1kv4n84IEhyIXFyQqWbRbPCWzoTSqTByF9UEOxl5/jskJiCRjmGTm6
- 0nKQrdRSZ05nafXSvWAbY8XnJpt5BJCWQo90+w0T0qJB7po0PqUtN8NyMF6/7Ot1o+rg
- 14mkwKcnavhJBdrUkI/fOBPpsm4McIOnxJZUyEecDeEOxywSwDCY/rzqHq90fYKWVWJ4
- ZbRqeygxHWm/Pwa+CIQQfnejYVL9MQGz2VYSUuylRtOW2kf/5nry5jXLX69EM2j9cv5g
- W1qw==
+ d=gmail.com; s=20251104; t=1783628901; x=1784233701; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=lK1zpbyr0sEe7U9mK48Dpu/WkfnxcH8pX3QyNSJ86tA=;
+ b=WhTevbJ3SPmDTY9HpaV2YAv93baIkaAHSg+JYnlVWr8ag9BaV8IFNiewSeiSrXHFOL
+ Op49tzP89gfQ/NuVzoETVgvuzKq1VS8QfT8+UZH+5YShiCmTNa6S9en4k205yuiiYr+M
+ NjVSFaWwLkHmRaIj8Pm7O3eXpc4w3Z0j/vgm5iQEnrtfWVTtR1uj6khwy8WQGsgbzocl
+ nTA5a7+3AgZXEKHP+T2UgyqoxFsdVmBiwCSAB620wbAcI5B5XytG8PeZyT6xdxjKMO9m
+ YY8ZK3dGdaCV/0ksqRZxkKniY55ab0VpzNprVjLeO7jobsunDQ6UI04l/bI8GlvpiM4O
+ lIKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783628571; x=1784233371;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=er2nd01K52fzoSCDKuPe6L+4tKyOrTAJPVN5CW28/d4=;
- b=JlHYUzZR5kB4vPxChpQ1mcZdQj6y/xIHGx172NSQKZK46TCZKCyI7RxEWPorQfFSEM
- HAT24PSz0NR20QX57kCPBA+rwZVF1oYws8GZFG8CfP3Kxrm+AvZ7bft/k9I70Iwc9/BR
- DEHcNyrMultdpuq+S3Yjx2/QIWS3vaYndk/1uMSQ6uofcOZN1nMawBV0fKih/m+y+wmQ
- Pv/IdaNduyebbWFv53PUgLcbWgCQ12lXCZ5sXHkZv+L9ShwFjV8gkwJ9IJcdYPO43Cmm
- PDeOfNOisuvwiSJ/QcACCRA3617xWQkk+w/mEHCPH8cnG5zqXEun4k7Xe9Z5LVjfWngP
- ydlA==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rrl7NLEIKkItIKRbznsyWNBb2GhscOdvU9aRCKHToePI88D/RMzQ+hXNFVDAWZ6Az0Xfzzyy55L6YjE@nongnu.org
-X-Gm-Message-State: AOJu0YwinZIekGBDPZGg/o8i4cjZ/yu5/yWh/1bNbFnl7zlYy4YlCFJC
- KwZQH7T5gCrngWKBP8+4N8oV9qJkgTJcKzpWwuG9vJWqFZzQa2yBjIPed25nOf27pvU=
-X-Gm-Gg: AfdE7ckAN1XYCoPeZRFF6QnXTCPFBrPGyG3/gXCTcKeNTMiNvPsSevJl/oqWKWj5Yzb
- UtrvgmNOOsEmArC+xC5pZ7DVCeaOBqeo1/FpEktqENjc73DfUx/Eup0PW8K5XIgAC7+XLqIgkCy
- 6l8KCiQmpObSRdlZmuI6LjEixdlQRYiUAB1Lc4bRhaMIQ7Mt36ctJBC7LOJP+0eaxTxu1IStEFw
- H7QAjTKXxYFETKuGlKavqB2ev2OU4G+YAEd8AArB4fG+BxBARwH62x+pAEQDGueGHqniGgP+unE
- dlhFqMlwdEJ+tXovAZtgznAW4tsLyleFKbSSKOFbVSzUkCZG43hajF/3qbfJUTD+pxjgDkqkdi7
- qszFInjD0/XFIdKIM/o1+XgSRZbFVqw82En/1/S/8GIvyd9SKWrgJyxntASHdStslcRaK7vgaHx
- B9NZYo6ai5XsFabB3b
-X-Received: by 2002:a05:6a00:91d6:b0:848:44ae:47c1 with SMTP id
- d2e1a72fcca58-84844ae87b9mr7146613b3a.78.1783628571139; 
- Thu, 09 Jul 2026 13:22:51 -0700 (PDT)
-Received: from p14s ([2604:3d09:148c:c800:2f15:8249:27c4:1b26])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-847f6d4dbdesm9126916b3a.31.2026.07.09.13.22.49
+ d=1e100.net; s=20251104; t=1783628901; x=1784233701;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=lK1zpbyr0sEe7U9mK48Dpu/WkfnxcH8pX3QyNSJ86tA=;
+ b=qV4me498XfanB4J0jp+U/P8UVHSnYuYLofHzSLEFto/sGl4w8P8vSNWI/y8JBX7pci
+ KCo5FNg2RGRQZuPatMlDFYo0nAufSK9p7GDMNtzSucDKmcr144qbVvejW8kMkLi+DZXN
+ HVkhKSmEywblaj4M4riw6s9EbqLQjB2v76OhfMTledWzvFPhqpIuuITxGwTRLc6XNfIt
+ eigkNy/xcvm2zPpkbtPA0EV1L4zb5fLQ3LTudGbnbRN8OOBf5St5DyXQXh+aC8qvVPQJ
+ Z0uqA3lcYZNr+7lkDKds4/wmLVDAehCzYd01Iz6NCIKZsb1hMlt54FdW9uKktoYRtGOR
+ GJ+w==
+X-Gm-Message-State: AOJu0Yx1sYYO7sbAVLBZJ+yrtC1qkE7CR0J+0M/sNdO1TN9f/bLqDMTl
+ tFnGdm8G/gvAyqaypGqQWtC2JqpYNPuS1zAXjGkTda+BHWUvRfKrrD3Mse4gmQ==
+X-Gm-Gg: AfdE7cmCNjdW0WJHAGnap9fTZj0GAgvgMcJoLClrCkYXQon3VBryCUoiMU3Da7VFgOU
+ DgFr0m/Ycu+bCRTmYxNOA8WOyilOGkxljYcoTLPTpoiYBXqDeFzxKRb1sojhR4cMROPK9e9605B
+ b687yLkFzvbrkDr6K4+PluyF7BYWQjVnZe+/fn5F9RLn93JiDbZegl5+fL0vXCETVzeqRM26VaO
+ nUn93/NSsJOM4pLtxzpCSwfOJRZvSjUZiAVI0zNK1mw4nu+JkUcUDHTAM7qGoLK+XOfLlujz7Fc
+ y0BMmxJQbtl1VpCaWNhbzIe9+gd1gm+9nj908tzhO4/7LYX4ApTwkX/p8e4NFPkeau+Hn1XsK9N
+ miRkctjLK1865swFr5xGS+9q8GoioLE6S2u2joLo/kBWyKNDk7s66iqD6IfwtH+M1KEW143av1W
+ MpftLjPgywXkiruBmWUbiKhaAhOYU=
+X-Received: by 2002:a17:907:3c84:b0:c12:54c8:16f0 with SMTP id
+ a640c23a62f3a-c15ce237960mr378418166b.63.1783628900611; 
+ Thu, 09 Jul 2026 13:28:20 -0700 (PDT)
+Received: from machine.. ([37.113.214.163]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c15c38c164asm375453166b.3.2026.07.09.13.28.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jul 2026 13:22:50 -0700 (PDT)
-Date: Thu, 9 Jul 2026 14:22:47 -0600
-From: Mathieu Poirier <mathieu.poirier@linaro.org>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: berrange@redhat.com, kchamart@redhat.com,
- pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
- mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
- eblake@redhat.com, jpb@kernel.org, lorenzo.pieralisi@linaro.org,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvm@vger.kernel.org
-Subject: Re: [RFC v1 03/25] target/arm: Add confidential guest support
-Message-ID: <alADF-nLnPH53uWO@p14s>
-References: <20260707224306.1202330-1-mathieu.poirier@linaro.org>
- <20260707224306.1202330-4-mathieu.poirier@linaro.org>
- <87bjcim6x1.fsf@pond.sub.org>
+ Thu, 09 Jul 2026 13:28:20 -0700 (PDT)
+From: Evgeny Kolmakov <randomjack94dev@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, maciej.szmigiero@oracle.com,
+ Evgeny Kolmakov <randomjack94dev@gmail.com>
+Subject: [PATCH] hw/hyperv/vmbus: Use QEMU_LOCK_GUARD()
+Date: Thu,  9 Jul 2026 23:27:22 +0300
+Message-ID: <20260709202722.7291-1-randomjack94dev@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87bjcim6x1.fsf@pond.sub.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=mathieu.poirier@linaro.org; helo=mail-pf1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=randomjack94dev@gmail.com; helo=mail-ej1-x629.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,27 +96,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 08, 2026 at 06:39:22AM +0200, Markus Armbruster wrote:
-> Mathieu Poirier <mathieu.poirier@linaro.org> writes:
-> 
-> > From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> >
-> > Add a new RmeGuest object, inheriting from ConfidentialGuestSupport, to
-> > support the Arm Realm Management Extension (RME). It is instantiated by
-> > passing on the command-line:
-> >
-> >   -M virt,confidential-guest-support=<id>
-> >   -object rme-guest,id=<id>[,options...]
-> >
-> > This is only the skeleton. Support will be added in following patches.
-> 
-> Which of the patches add options?
+Replace manual qemu_mutex_(un)lock() calls with
+QEMU_LOCK_GUARD() to remove 'goto out' code
 
-Good catch - options have been removed because they are not supported on the V14
-kernel.
+Signed-off-by: Evgeny Kolmakov <randomjack94dev@gmail.com>
+---
+ hw/hyperv/vmbus.c | 16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
-> 
-> > Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> > Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-> 
+diff --git a/hw/hyperv/vmbus.c b/hw/hyperv/vmbus.c
+index c5259d1a76..ab99f082d1 100644
+--- a/hw/hyperv/vmbus.c
++++ b/hw/hyperv/vmbus.c
+@@ -1525,14 +1525,12 @@ static VMBusChannel *find_channel(VMBus *vmbus, uint32_t id)
+ static int enqueue_incoming_message(VMBus *vmbus,
+                                     const struct hyperv_post_message_input *msg)
+ {
+-    int ret = 0;
+     uint8_t idx, prev_size;
+ 
+-    qemu_mutex_lock(&vmbus->rx_queue_lock);
++    QEMU_LOCK_GUARD(&vmbus->rx_queue_lock);
+ 
+     if (vmbus->rx_queue_size == HV_MSG_QUEUE_LEN) {
+-        ret = -ENOBUFS;
+-        goto out;
++        return -ENOBUFS;
+     }
+ 
+     prev_size = vmbus->rx_queue_size;
+@@ -1544,9 +1542,7 @@ static int enqueue_incoming_message(VMBus *vmbus,
+     if (!prev_size) {
+         vmbus_resched(vmbus);
+     }
+-out:
+-    qemu_mutex_unlock(&vmbus->rx_queue_lock);
+-    return ret;
++    return 0;
+ }
+ 
+ static uint16_t vmbus_recv_message(const struct hyperv_post_message_input *msg,
+@@ -2097,10 +2093,10 @@ static void process_message(VMBus *vmbus)
+     void *msgdata;
+     uint32_t msglen;
+ 
+-    qemu_mutex_lock(&vmbus->rx_queue_lock);
++    QEMU_LOCK_GUARD(&vmbus->rx_queue_lock);
+ 
+     if (!vmbus->rx_queue_size) {
+-        goto unlock;
++        return;
+     }
+ 
+     hv_msg = &vmbus->rx_queue[vmbus->rx_queue_head];
+@@ -2149,8 +2145,6 @@ out:
+     vmbus->rx_queue_head %= HV_MSG_QUEUE_LEN;
+ 
+     vmbus_resched(vmbus);
+-unlock:
+-    qemu_mutex_unlock(&vmbus->rx_queue_lock);
+ }
+ 
+ static const struct {
+-- 
+2.43.0
+
 
