@@ -4,109 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C37DBC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 12:41:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 594BAC44501
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 12:43:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1who3c-00047u-93; Thu, 09 Jul 2026 08:40:49 -0400
+	id 1who5P-00050s-7y; Thu, 09 Jul 2026 08:42:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1who3T-00047P-Qw
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 08:40:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1who3R-0003NW-8b
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 08:40:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783600835;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3bJIhTuKBVJdL0iSe31SY0Zwq1/ReEDqkPDWUKBLh/w=;
- b=CEvOU1T4qidjKLxginFi3/3yryap425zETkyzk76to9lnd9I8CiFQZZFWToQutvh1IqJuV
- n+lvadAGLtKmdkSMM3dYmjYUrnYaMPDyUerA+N0ntJOvFRV1may8MxVZAA+yneJV9UGNWF
- IjaCTeOXAuF56YP3pIDT4KTiu/fqgKw=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-621-jwPFNhxWPsS6eQ4bBjFfcg-1; Thu, 09 Jul 2026 08:40:33 -0400
-X-MC-Unique: jwPFNhxWPsS6eQ4bBjFfcg-1
-X-Mimecast-MFC-AGG-ID: jwPFNhxWPsS6eQ4bBjFfcg_1783600832
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-47416fc1674so2157181f8f.3
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 05:40:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jiri@resnulli.us>) id 1who5K-00050I-I2
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 08:42:36 -0400
+Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jiri@resnulli.us>) id 1who5G-0003g0-PQ
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 08:42:34 -0400
+Received: by mail-lj1-x235.google.com with SMTP id
+ 38308e7fff4ca-39c82d9f801so8615331fa.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 05:42:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1783600832; x=1784205632; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=3bJIhTuKBVJdL0iSe31SY0Zwq1/ReEDqkPDWUKBLh/w=;
- b=PgiBuO4Z45NHMPsRJ6uZrtVuL/ltt9+YrBe6sPYp3WGYmPkQ8Fu1mf08h5h+8wSXH9
- RLZKcW4ZWDXuv3HVuteVXsnVRH4bqdXN4pYmEZiFFsMePQSRt+2ACQZxp5m15M177P5I
- 5zBv8t5I0K8qghB9whHX/84mVXIXx/iqQcD6RfE9XTt0XVtDy9YCZyiXwaH4TZG7DWa6
- 2J9dEKD7svxG+6RcN/kRUQ8QgMGR1loSUNzXSd2UZbuPYxbUUXdidQjHWmyxDnm5cY6b
- BsJaRLh7XzP2FiRi4RSsYF4iDTRd+/w0tAWN3a27NStEPJfZN/Sv4pk8IR4+FhyO7nVR
- 8CEw==
+ d=resnulli-us.20251104.gappssmtp.com; s=20251104; t=1783600944; x=1784205744;
+ darn=nongnu.org; 
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Jtq7nr5TqTcyF8ib11A7Ilkid5l8c0LQE3QT2fNEZ0M=;
+ b=ErB4W8muKLOrsw/mG28q1WYd/SiDtTZGc7w/yIFfFU3qXpM6CJ0VEb4Q+fCbE08bsn
+ DnES6mLiGknh2MWEoRJUvdIvTE+W9IfSdYXMzmJaAI2XmJbNLbCvlFQkh73iVzD88Ecj
+ EbYt6fVpia0vlEdF46oDQYeZWeo0v4tJ3ZRTtJdvl6kp1/GH4u6zqZR0Rz1ew8JzjQro
+ nt35JJAdTqCPjV4N66HNIJs5+6o/5IW+Y1Nn2rzN4BjL/s3iiYYnu6f/tPfJsl084Drz
+ 315VJNdMMJ12aobINiW1/tDA6zmxxGvXvVZ3A74AyLcSVuoL097DjXQLJ8wTBr7SxmFt
+ sbuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783600832; x=1784205632;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=3bJIhTuKBVJdL0iSe31SY0Zwq1/ReEDqkPDWUKBLh/w=;
- b=ZdzIsqKy0aC5uF9xIV0p3jnS2zlqlRmcPeXQZ7cq3UYVt0U/7eA6jUKdPrYF7yqy1m
- XW71lN45AMLykFNA3+9Y0wErF/Halq++IZcSQc28ARjQsSj9MFOn42h1FN7kivpi0szn
- JwWwMboHFtdMuee9XbYL9+YnWfCP4zKf3FVyC9ngp7cP91XgLfZbCyo7aOyBbnfAvqBu
- oac8nWaEr8/v/CR1MO9Z8cb7KqZZFlB3dWNKoqaemi/FWJIVqzI/211Z/+xG+NEVdNiJ
- h064yoFue7JUT7liP1kJ+JuTOceLjNXGja94fEvNrwTdTIVNvNtLpCfK4sfgMSVbbzQX
- bdMw==
-X-Gm-Message-State: AOJu0Yyg6LY6VwDaX9I7KPPD3CZdZ1gmT7R9Ol89F9jqSbzfV6fgkKbD
- Tak8+S9CmMYlskd4awPkDI4B7X7E5VAArBT7RYys8EjGOgvPJZXfEMc0MxqB9gh2G4A5v1sTfn5
- n2teAKhDKgnHIRBH5rc0N/6iTMQWc/eigC+O8pkPEO31G8mqHVJDuqeOM
-X-Gm-Gg: AfdE7cn7QzvpPyegD+M5reUO4SC0+mJrkjKaxJ5I63sAp8HT4EAsAj4tHIw10lEadN6
- RmJVba5ZrXa900vHnG4sX09og/L/DnXTJRUTTglr96X0V3vDkHn4LbbnGhIpLagiXwdm8z5Cb93
- TkFXaa7FJ5hR1SlWiFbwYiApEITYmVAsgcotMjIVpt294T1UeLLjZ6I3UuO1dIy3fB+k+uDI7IL
- UZThCdzI20rA2oKKqkqQRtenWov9DJMWYAj6n+asB/zluDzlJcNV3kC9RZ228Wjo3HToDdJqWdz
- 0D+R0rf5RVl7jlN+BFuRkXEyU9mZ8C3s+CSbEZriksGNCwDCsn6tq/rKnK+L/aFgENitnUvKykB
- CRtcHCCnFI+6wiK0fn5RsBJWfdK1R0d7v
-X-Received: by 2002:a05:6000:2081:b0:473:cf28:a23e with SMTP id
- ffacd0b85a97d-47df075564dmr8251283f8f.19.1783600832138; 
- Thu, 09 Jul 2026 05:40:32 -0700 (PDT)
-X-Received: by 2002:a05:6000:2081:b0:473:cf28:a23e with SMTP id
- ffacd0b85a97d-47df075564dmr8251228f8f.19.1783600831686; 
- Thu, 09 Jul 2026 05:40:31 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-68-31.inter.net.il. [80.230.68.31])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47a9e4d83bdsm51209729f8f.13.2026.07.09.05.40.29
+ d=1e100.net; s=20251104; t=1783600944; x=1784205744;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=Jtq7nr5TqTcyF8ib11A7Ilkid5l8c0LQE3QT2fNEZ0M=;
+ b=s14WkXMx6qgEafeuhknRPW/bJwzfTTNhptlD7epWYoLPG5yOwdgn2AGOtumXJdiTSK
+ mxKIeXFzLKVb6al4WH+j/gF8hLgKstlYBXc0E5wLrpm3W1olJZ90pBq8gVhOI+kZYdS8
+ 7viSZXdVwJ7wBERbr7Y3Mm7kqNmk7Y74XYCplYJ+BXkD58Ce19yOR4a1AsvwzEn8tT3c
+ mDAyi/oTLZAWffr0U0poILFmFp/cScGhQ9qIZl0J8QwUw6bCjp3/3raiG2BoIUaqn1h/
+ 4sglOLq2w3qeRi7RFCe6CdlBArhETFKNRngNntVgayrGYvSqUrYLueXp4fqVk4HFoVqO
+ zt/w==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrldpXQuLgc8zXdYJfqBJ2qDYV8ckZj3EuYmjG6pr0Jb+rtlsEeD5wtKF6Q5TDTHE9/v6tkGgRa9sZW@nongnu.org
+X-Gm-Message-State: AOJu0YzslsARyiP/hrZMXAtq62SdTiufJD6tYElGSewCBJ1y7SaqWgU5
+ 9F7IgZqQun+SbFwdiDV0t2cQvPsuQk6z6UwggLZx3mBvH4BrJLSgIUOSVe6OXm4DzTo=
+X-Gm-Gg: AfdE7ckU4PQf9QsFpW/GUGtSYGjF1pLHUNkKr07Q++Gl/JTuA7Otdv1g+LH66VKQtQ/
+ wz+ouCxgIgHAte+qKg0xBp98QTuT3C9KGW0vEuJQJ6Aw0RB1mxVkSYu42wq0XEVXD469knd0yl1
+ fQD9sFt0hEML/V4qyzDeanZvT9PvmzVYfboj59/lozccnF/g/yzq/0GaMTZm1CEHfgXvzFnePJH
+ dQJEWKGMlNsOUtCU0Tb8LfgeLP+R0S//6s+b+vxDh40/c2mRYGEhDQaz9cNFyLtZ0IZSDiB1sd2
+ 4GqcfrVv5hDhIDzTEimZkeFLdNpPcJq/rhyqJGqxJ8x1RO4GEKxwMlUh9I3oOIbkRzEruQsUnFv
+ mBOzBGymnIIYO1Isf48gVt5Sq+XdUNnLlIrF6pQJvH7MqxNZNNisv9GhUJ8tnf9h1r3JgK/mg3c
+ L4wLArWFJw2S0OAJLwaf+9ig==
+X-Received: by 2002:ac2:4563:0:b0:5b0:f9d:f7a0 with SMTP id
+ 2adb3069b0e04-5b011476339mr1104861e87.8.1783600944007; 
+ Thu, 09 Jul 2026 05:42:24 -0700 (PDT)
+Received: from localhost ([140.209.217.211]) by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-5aed13bfecbsm5164417e87.64.2026.07.09.05.42.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jul 2026 05:40:31 -0700 (PDT)
-Date: Thu, 9 Jul 2026 08:40:28 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Hanna Reitz <hreitz@redhat.com>, Amit Shah <amit@kernel.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng <fam@euphon.net>,
- Kevin Wolf <kwolf@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-stable@nongnu.org
-Subject: Re: [PATCH] hw/virtio: return NULL from qemu_get_virtqueue_element()
- on invalid state
-Message-ID: <20260709083651-mutt-send-email-mst@kernel.org>
-References: <20260709100644.1878369-1-lvivier@redhat.com>
+ Thu, 09 Jul 2026 05:42:23 -0700 (PDT)
+Date: Thu, 9 Jul 2026 14:42:19 +0200
+From: Jiri Pirko <jiri@resnulli.us>
+To: Xiong Weimin <15927021679@163.com>
+Cc: Serapheim Dimitropoulos <serapheimd@gmail.com>, stefanha@redhat.com, 
+ qemu-devel@nongnu.org, mst@redhat.com, pbonzini@redhat.com,
+ sgarzarella@redhat.com, Xie <xieyongji@bytedance.com>
+Subject: Re: [RFC DISCUSSION] virtio-rdma: RDMA device emulation for QEMU
+Message-ID: <ak-XIaqLG2FiBcF4@FV6GYCPJ69>
+References: <20260316210600.62415-1-serapheimd@gmail.com>
+ <CAJSP0QX3JtwhXDTnEgS-heLYYncjJtttg1KmFqG-+_VUXbH+Ww@mail.gmail.com>
+ <20260320172345.4688-1-serapheimd@gmail.com>
+ <1747673b.8c8c.19efe3cc66f.Coremail.15927021679@163.com>
+ <akUFOeFkqtRVyHuX@FV6GYCPJ69>
+ <7c793a79.8b24.19f4667c92b.Coremail.15927021679@163.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260709100644.1878369-1-lvivier@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7c793a79.8b24.19f4667c92b.Coremail.15927021679@163.com>
+Received-SPF: none client-ip=2a00:1450:4864:20::235;
+ envelope-from=jiri@resnulli.us; helo=mail-lj1-x235.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,106 +107,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 09, 2026 at 12:06:44PM +0200, Laurent Vivier wrote:
-> qemu_get_virtqueue_element() uses assert() to check that the in_num
-> and out_num fields deserialized from the migration stream do not
-> exceed VIRTQUEUE_MAX_SIZE. A crafted migration stream can set these
-> fields to invalid values, hitting the assertion and aborting the
-> destination QEMU process.
-> 
-> Replace the assertions with a bounds check that returns NULL on
-> failure. Update all callers (virtio-serial-bus, virtio-blk,
-> virtio-scsi) to handle the NULL return and fail the migration
-> gracefully.
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 6bdc21c050a2 ("virtio: fix up max size checks")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3802
-> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-> ---
->  hw/block/virtio-blk.c       |  4 ++++
->  hw/char/virtio-serial-bus.c |  3 +++
->  hw/scsi/virtio-scsi.c       |  4 ++++
->  hw/virtio/virtio.c          | 11 ++++-------
->  4 files changed, 15 insertions(+), 7 deletions(-)
-> 
-> diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-> index 6b92066aff4c..42c0f2553f18 100644
-> --- a/hw/block/virtio-blk.c
-> +++ b/hw/block/virtio-blk.c
-> @@ -1384,6 +1384,10 @@ static int virtio_blk_load_device(VirtIODevice *vdev, QEMUFile *f,
->          }
->  
->          req = qemu_get_virtqueue_element(vdev, f, sizeof(VirtIOBlockReq));
-> +        if (!req) {
-> +            return -EINVAL;
-> +        }
-> +
->          virtio_blk_init_request(s, virtio_get_queue(vdev, vq_idx), req);
->  
->          WITH_QEMU_LOCK_GUARD(&s->rq_lock) {
-> diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
-> index c1973f0248fc..879df158608a 100644
-> --- a/hw/char/virtio-serial-bus.c
-> +++ b/hw/char/virtio-serial-bus.c
-> @@ -763,6 +763,9 @@ static int fetch_active_ports_list(QEMUFile *f,
->  
->              port->elem =
->                  qemu_get_virtqueue_element(vdev, f, sizeof(VirtQueueElement));
-> +            if (!port->elem) {
-> +                return -EINVAL;
-> +            }
->  
->              /*
->               *  Port was throttled on source machine.  Let's
-> diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
-> index 6c7376801190..8dd0b88a30c4 100644
-> --- a/hw/scsi/virtio-scsi.c
-> +++ b/hw/scsi/virtio-scsi.c
-> @@ -274,6 +274,10 @@ static void *virtio_scsi_load_request(QEMUFile *f, SCSIRequest *sreq)
->      assert(n < vs->conf.num_queues);
+Thu, Jul 09, 2026 at 12:23:54PM +0200, 15927021679@163.com wrote:
+>
+>
+>Hi all,
+>
+>
+>The VIRTIO_RDMA_SPEC draft is ready. The canonical copy is available in my public GitHub repository:
+>
+>
+>https://github.com/xiongweimin1/virtio_rdma_wholeproject
+
+got 404.
 
 
-I mean just above this we have this assert.
+>
+>
+>I’ve attached a PDF for convenience, but please treat the GitHub file as the source of truth for review and iteration.
+>
+>
+>The document formatting and code layout can still be improved, so I’m happy to revise them further if needed.
+>
+>
+>Best,
+>Xiong Weimin
+>
+>At 2026-07-01 20:18:17, "Jiri Pirko" <jiri@resnulli.us> wrote:
+>>Thu, Jun 25, 2026 at 12:04:16PM +0200, 15927021679@163.com wrote:
+>>
+>>
+>>[...]
+>>
+>>
+>>>= What is working today =
+>>>
+>>>
+>>>We now have an end-to-end stack:
+>>>
+>>>
+>>>  guest: linux drivers/infiniband/hw/virtio/
+>>>  userspace: rdma-core virtio provider
+>>>  VMM: QEMU vhost-user-rdma device
+>>
+>>
+>>Can you share links to public git repos for these? And what about
+>>virtio spec?
 
-
-If you are really want to be nicer about handling
-malformed input, pls do this systematically, not just
-at random places for no apparent reason.
-
-
->      req = qemu_get_virtqueue_element(vdev, f,
->                                       sizeof(VirtIOSCSIReq) + vs->cdb_size);
-> +    if (!req) {
-> +        return NULL;
-> +    }
-> +
->      virtio_scsi_init_req(s, vs->cmd_vqs[n], req);
->  
->      if (virtio_scsi_parse_req(req, sizeof(VirtIOSCSICmdReq) + vs->cdb_size,
-> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> index f4d86a365530..7bccfdde33e7 100644
-> --- a/hw/virtio/virtio.c
-> +++ b/hw/virtio/virtio.c
-> @@ -2167,13 +2167,10 @@ void *qemu_get_virtqueue_element(VirtIODevice *vdev, QEMUFile *f, size_t sz)
->  
->      qemu_get_buffer(f, (uint8_t *)&data, sizeof(VirtQueueElementOld));
->  
-> -    /* TODO: teach all callers that this can fail, and return failure instead
-> -     * of asserting here.
-> -     * This is just one thing (there are probably more) that must be
-> -     * fixed before we can allow NDEBUG compilation.
-> -     */
-> -    assert(ARRAY_SIZE(data.in_addr) >= data.in_num);
-> -    assert(ARRAY_SIZE(data.out_addr) >= data.out_num);
-> +    if (data.in_num > ARRAY_SIZE(data.in_addr) ||
-> +        data.out_num > ARRAY_SIZE(data.out_addr)) {
-> +        return NULL;
-> +    }
->  
->      elem = virtqueue_alloc_element(sz, data.out_num, data.in_num);
->      elem->index = data.index;
-> -- 
-> 2.54.0
 
 
