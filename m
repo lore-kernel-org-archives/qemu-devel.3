@@ -4,143 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DD81C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 10:41:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C07BCC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 10:43:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whmBD-0003rt-JB; Thu, 09 Jul 2026 06:40:31 -0400
+	id 1whmDB-0004W8-W4; Thu, 09 Jul 2026 06:42:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1whmBC-0003of-U4
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 06:40:30 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1whmDA-0004VK-RC
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 06:42:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1whmBA-0001Az-FO
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 06:40:30 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 669ANR8j1533610
- for <qemu-devel@nongnu.org>; Thu, 9 Jul 2026 10:40:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 79XwVJIR3IPv5shmrjRHDiMLrwib01GT/w2p2t6F3GI=; b=VHdtc66+QX6l6fU9
- 8brH7iJlL9EyfkuFH3+qtkl8yLxDIKkGtnkR6jc8DSQBSwWgAbt/8MWCkraVz92a
- yUOEC5Nm1H99S48gfbiqzv7gc9oInEd0gTGXA/hV3/BL8XJLHSG6cya6PIDTONVk
- +gjjsWBZz6rYWD5e4/G/Pj4CcsVaealw5Rn8g9lt0sPyJLUogdxIjpZYm7njLsL1
- AtfsY0G/ya8eM/CFxrzxRxIOPGi9XC3Y2G30/PXrZC7tatx9PwAKA1szXyxFmhNp
- Y9GWEPePTVg4mgOWnuVE+vnwL24d4fJzy/ZCXDGLQsxkw4CiJp7O081jYiAoTmid
- EGdZ6w==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fa418hmk6-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 10:40:24 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-51bfe3fa93bso21601211cf.2
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 03:40:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783593623; x=1784198423; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=79XwVJIR3IPv5shmrjRHDiMLrwib01GT/w2p2t6F3GI=;
- b=RbykaPRIPdGh/XV+shQEFZ2NrB2cwoEZCy/8D34VMbB/k5UheQEy6vkfwgf2JsO99f
- QcnSmzR4LkGCN/iY+wFfJMg8v23zTZX+BAaRJKSfo7PbDrCPCCDE0kRsGtbT3yxmRxEO
- 9KqEiMcZ0lb444IuO5mH6/o60Ml5ndwQwaa4TQ4Pk++x/q4JS6oT37/uHrIJPLXAMx7H
- aTgPE/8OiM1aXy+Q+dPYgFZ9SRkkJi3epFXIjPmcRnZv6dsFk/5U3/TwOWau7XCg0wW5
- JJpv0DtPU1a3lSo8cFMlOe2++Ul+I9fitr4MCD5SYrlAREMn1wdVXsZY1YBPHuPPGX6B
- 3BiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783593623; x=1784198423;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=79XwVJIR3IPv5shmrjRHDiMLrwib01GT/w2p2t6F3GI=;
- b=dgzDcTZL6HCn2PJRi/Re/L9HUU4FTGQLIbgSDBqmKCpWud50kkKs6hPbXax37T7TL5
- Obvg6wCSjSBlfsNNY0eAYJoi/4u4i/3R7nlC/CNbo3zo+756Ylpu4MU/Zf5p8xCp8KlC
- Y4jkvPnkou2JdXulngPhJeavxRtTMnk9bWcB/YcUh3TDFT3NJA/6HB0kxpiQtr2j4R3N
- BpYDOz9cyNXsH0srqj7FndltIeRNtaQlVFC4kdYbxTl0NQQ0x2QdgJsSvUuZNQzujbCW
- WlpvEJPBfflsbfGop1QIPHsNYSoRJruct5xAS8L2wPsu3qyEyUV0+VqvvgJXiR6nZ75y
- j8gQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpXHbBN1l1nun+jzmQ+UhIDLvDQssshls4HDtiYMsrTG1QlvoZ6AerpFUOt58yAkTaIiYkWo/KGSaot@nongnu.org
-X-Gm-Message-State: AOJu0Yyx7oQSB5oxEVa3a7o1g+tz3anDZGC9tZp4bDCm8vRNjseIr0GY
- UASxf4CtAnQ+FO5Wcz4qan3ACbjXn7UJHZcZyAxkcgcuUopH2FxS/MajPuXd/gYURAsAHWcnizR
- 0qfSoZluQVsK4crVZd/G04SzV8vOqAhh2uOmsC6NTmSlNWHC5sZ7wKgeaAA==
-X-Gm-Gg: AfdE7cnZ0d5cWaZzYtUXg/775ovaxcVca2ns69d9sd4wwqXbaH6fTQM2qVVVAFYLb9B
- PNjrticNwBjphxHZwz1PWds5nmIuqEcz+7TU54qAmbbF8gDrXb+1G7x5cI3O85FKQTCd8Ky91yC
- JWv5SBrZAQutwvMA6mOz5LQOxrFXO3VMaibYqI1Nt3y7G72JTgHPKsKzPCdASOHlUibbLnC1HED
- 4w//zmgB8yI/zAMD4BKF1pWL1s1NdC5KlU46nQ4YrvSEPPsWOMEbiY9c/qG91prcpvOQG4HglIb
- AfR3ZvTozNi5JU/pLW3e1sJR+OgHF+CYSwqBFn7V02S3zNRfo0z3H4J2XFp43bRIB9KKJjexRJh
- xs/Q4x6/kohdF2fyxCIbisVnkscHpytn6IUP9X0rGcGrAfz5XPLeCzfe1CJLuGA==
-X-Received: by 2002:a05:622a:1810:b0:516:e152:7a59 with SMTP id
- d75a77b69052e-51c8b3c6834mr71579261cf.42.1783593623443; 
- Thu, 09 Jul 2026 03:40:23 -0700 (PDT)
-X-Received: by 2002:a05:622a:1810:b0:516:e152:7a59 with SMTP id
- d75a77b69052e-51c8b3c6834mr71579041cf.42.1783593623038; 
- Thu, 09 Jul 2026 03:40:23 -0700 (PDT)
-Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-69a19d7a375sm9157300a12.15.2026.07.09.03.40.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Jul 2026 03:40:22 -0700 (PDT)
-Message-ID: <2fbac1e2-cb04-498d-954d-8815e0305868@oss.qualcomm.com>
-Date: Thu, 9 Jul 2026 12:40:21 +0200
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1whmD9-0001Y0-5P
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 06:42:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783593750;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=UGWHelquemiDD5NLCvYR1AkBolWYwsAixwbTYXmasbU=;
+ b=IYSp2WsdkAMl6bxzTa6cPgGWHBunsvqzZOBhq9NjrrRXuoA4hcS87ztaiynUn9iHCHIpqJ
+ Cb0Heg6WZ2FrI3Z6IoTVpFYWOCLUDHY4fiki6jBi61wnRPlpd8yN7SFdpjkhPsT9mrni3M
+ PoYIt4g+2w8oEMvNNS15rTRxMRSdz0Q=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-557-R0OpMHJQMgm6kcaZ1oingQ-1; Thu,
+ 09 Jul 2026 06:42:27 -0400
+X-MC-Unique: R0OpMHJQMgm6kcaZ1oingQ-1
+X-Mimecast-MFC-AGG-ID: R0OpMHJQMgm6kcaZ1oingQ_1783593746
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7495819560BB; Thu,  9 Jul 2026 10:42:26 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.32.140])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 028181955D71; Thu,  9 Jul 2026 10:42:26 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 426371801013; Thu, 09 Jul 2026 12:42:23 +0200 (CEST)
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: mcascell@redhat.com, Gerd Hoffmann <kraxel@redhat.com>,
+ peter.maydell@linaro.org
+Subject: [PATCH v3 2/5] hw/uefi: remove debug function
+Date: Thu,  9 Jul 2026 12:42:17 +0200
+Message-ID: <20260709104223.143594-3-kraxel@redhat.com>
+In-Reply-To: <20260709104223.143594-1-kraxel@redhat.com>
+References: <20260709104223.143594-1-kraxel@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/9] mailmap: add fix for Zhongyao Chen
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: chen.zhongyao@zte.com.cn
-References: <20260709080040.4157324-1-alex.bennee@linaro.org>
- <20260709080040.4157324-4-alex.bennee@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260709080040.4157324-4-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=UI3t2ify c=1 sm=1 tr=0 ts=6a4f7a98 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=KKAkSRfTAAAA:8 a=1RTuLK3dAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
- a=cvBusfyB2V15izCimMoJ:22 a=kRpfLKi8w9umh8uBmg1i:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA5MDEwMiBTYWx0ZWRfXw9mXQSyaWegd
- niupQVtpIC8wSSl1irkOEHuTPboAItkkSK8GNzMxd/3k5pmd0sCRnFi8RQpeg0xuzM58NK+Hj40
- a6joY3J1GPk+5YkQ4YD9OyROAxIMnjSCU+Vvy6mXaX6rFOM/CUVvnCH1B81pNSnv5FoTliMhIJ1
- HOS7h8iTEuImdPNdumIl+IlxGdiuhkvhQPeYzx85CDnuR9GKnFNB4dxH9ujpLcuDFmUaSOyJ5hQ
- wF3SkZmTMfDYpM7kkmvyPHcKBSZ9/zgvzmPUWpdEzyGhAAkpyA+YJg95TqCYS63rhoDeSTR/XYu
- Acw7A2l1VrnXMLGIv7k1fBXE5JXJR896vg7Y0C/cL3eJ7xu36LBgaS6z/pAB3XYHihqHthFwJyf
- Ha71qghFPmQ3y9zeKUXkcTP9QXcIW8r8BSWb2z16n0ZdDxn9PpT95hvbrY8f/lcFhEgHKwq+qjq
- pYUOOQTE3oCno/vLaaw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA5MDEwMiBTYWx0ZWRfX0JBBLPMZA0vn
- g/cMc1UsLoHygenM5TfrETEVapqy45sLbWmhBURHooy016SqHtdPUvelZ03GSeDMZgDHVqdSdDN
- 7OEvUnzcdu86SDMLqtrgf9AnoQBWGqI=
-X-Proofpoint-GUID: MzQESyk0gWndz2CpgmNYEb-o3uoEMB48
-X-Proofpoint-ORIG-GUID: MzQESyk0gWndz2CpgmNYEb-o3uoEMB48
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-09_02,2026-07-08_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 spamscore=0 malwarescore=0 bulkscore=0
- adultscore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607090102
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,13 +85,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/7/26 10:00, Alex BennÃ©e wrote:
-> Fixes: c24f58d5322 (target/riscv: Fix tail handling for vmv.s.x and vfmv.s.f)
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> Cc: <chen.zhongyao@zte.com.cn>
-> ---
->   .mailmap | 1 +
->   1 file changed, 1 insertion(+)
+This was never meant to be present in production builds.  It's a code
+path not hit on a normal boot (OVMF wouldn't try variable updates which
+are not allowed), so this went unnoticed.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Remove the function.  If needed for debugging the git log is your
+friend.
+
+Fixes: CVE-2026-58582
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3615
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+---
+ hw/uefi/var-service-policy.c | 32 --------------------------------
+ 1 file changed, 32 deletions(-)
+
+diff --git a/hw/uefi/var-service-policy.c b/hw/uefi/var-service-policy.c
+index 989bf87ddb86..0880bfe074a6 100644
+--- a/hw/uefi/var-service-policy.c
++++ b/hw/uefi/var-service-policy.c
+@@ -37,37 +37,6 @@ const VMStateDescription vmstate_uefi_var_policy = {
+     },
+ };
+ 
+-static void print_policy_entry(variable_policy_entry *pe)
+-{
+-    uint16_t *name = (void *)pe + pe->offset_to_name;
+-
+-    fprintf(stderr, "%s:\n", __func__);
+-
+-    fprintf(stderr, "    name ´");
+-    while (*name) {
+-        fprintf(stderr, "%c", *name);
+-        name++;
+-    }
+-    fprintf(stderr, "', version=%d.%d, size=%d\n",
+-            pe->version >> 16, pe->version & 0xffff, pe->size);
+-
+-    if (pe->min_size) {
+-        fprintf(stderr, "    size min=%d\n", pe->min_size);
+-    }
+-    if (pe->max_size != UINT32_MAX) {
+-        fprintf(stderr, "    size max=%u\n", pe->max_size);
+-    }
+-    if (pe->attributes_must_have) {
+-        fprintf(stderr, "    attr must=0x%x\n", pe->attributes_must_have);
+-    }
+-    if (pe->attributes_cant_have) {
+-        fprintf(stderr, "    attr cant=0x%x\n", pe->attributes_cant_have);
+-    }
+-    if (pe->lock_policy_type) {
+-        fprintf(stderr, "    lock policy type %d\n", pe->lock_policy_type);
+-    }
+-}
+-
+ static gboolean wildcard_str_equal(uefi_var_policy *pol,
+                                    uefi_variable *var)
+ {
+@@ -173,7 +142,6 @@ efi_status uefi_vars_policy_check(uefi_vars_state *uv,
+     pe = pol->entry;
+ 
+     uefi_trace_variable(__func__, var->guid, var->name, var->name_size);
+-    print_policy_entry(pe);
+ 
+     if ((var->attributes & pe->attributes_must_have) != pe->attributes_must_have) {
+         trace_uefi_vars_policy_deny("must-have-attr");
+-- 
+2.55.0
+
 
