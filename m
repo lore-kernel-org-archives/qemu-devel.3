@@ -4,108 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC6CAC43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 13:53:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34054C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 13:55:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whpBK-00021F-Ay; Thu, 09 Jul 2026 09:52:50 -0400
+	id 1whpDE-0002mv-Qn; Thu, 09 Jul 2026 09:54:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1whpBH-00020O-1v
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 09:52:47 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1whpDD-0002lp-7z
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 09:54:47 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1whpBE-0008H3-Dp
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 09:52:46 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-698c0ff45b5so1557735a12.1
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 06:52:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783605156; cv=none;
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1whpDA-0000Q7-K0
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 09:54:46 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-381c51fde6bso1989476a91.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 06:54:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783605283; cv=none;
  d=google.com; s=arc-20260327;
- b=X2S8cNYP4deMQcQLO9FK3lfwIXWz1nsZwKVowpMaLETn0LUgcIrHkBNohGomJceF62
- F7gfg8Pi9rkW14IrY57uYxh48eC9zFNOa96ZVBdqDFJTQ277Tv7Hlm7C/jQl/n9Ct3gA
- Qbep1CMwTWry4ZvxJYgyzrDLeRYPciXtuIFyDoFmEwnxY8pCn1j6+BDTIcIV8n7B4j9T
- cC167lwvXhOh0PTjFk7iL8RYiNwIZ29foQ3X5h9bLYizgEC3zLlS7ky3W3w01aUwUlB6
- zZwDPSstcUQs3MPYMT/yKHkce0AZZmxaBOyvGsMwr65PYWcZtNCNq/aRxXmbXUwVtgXh
- A83w==
+ b=pVeWX3dWh8gzxz5l+7TeMMA0/LrvOZpNhdjjWsWJXh1TXXDJZe5ATo33Xem4oIBved
+ 94SuZSGgbnSczY/orsTg31OMXBoknVqPQbLwQywzyPnChjKJe7wsJVuqoKlREtyBjy7+
+ AaXP8Lnza5aE2KhMktzFy7fITTs7O9Wfx2v5MMBK7fRtqqz3ZhIT27RJKSvi+S+6sAH1
+ LXnF7BF097lxuB1apG+wnEWidkR5RQU8dLf6YlJnPmyw6prI3oChhqXCrM8bM9LNF7kP
+ R/g6DayAE5lS5RmRsG00XAEAEETTr4sbEqQDeccmDoMKItWITPvG2PKQYEdrTqGm3Iyd
+ 8Veg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=5cuGQR1+63nqgwesx/JZfl0oTpSQd/0m/0QKYn2lGzE=;
- fh=qty3g77Sl39ix/vs6vEQferIpKkxxHZnWW1uZOZG04Y=;
- b=HJPsKBxl3Bes2PqhDirnPsPqWqIwsv0xCp2m924WgVHtwBPq/D1H3KJyW/wGJF8iZ/
- EF70YKvzP+WWC2ES9obuF+RWZA0tjWCItWiCvX7MtUqLDAP+ayvsqW4Y+zy+4paKYR7B
- rPyPP3vTmHPL8y6RJVurz6gkTf5iaPTLva1P6GnRk1qfzhpVtg2RGcCLKvVPDNq2OTte
- UN0R6dgnsBREpxH/InUzlMMcnpRfFXLOJjTFHn3tOSuN1xgA9QXRHHV4tOTG8nXw203m
- scDdy6P88yjWhvawuaczAkxcbaBlueXxJkkmZWQmV4QbqXS7RmBQMRm3ct7Y6d4TGqFE
- OlYQ==; darn=nongnu.org
+ bh=N/SxFcNMNZJt4Ldv8rYYoLqhtuevn48hV5E6n1GgtSc=;
+ fh=wTuVNhPC2811iDA4b03vqzSoA6l+KOt1p2lpSzAKEho=;
+ b=W4bNhg6Np7SQI1e+kSwAu7Yt7PQoAP2VViL/q3PSoF2lgadYE0cxuejzQu6L19jIYx
+ Jt1amH8YiyoakwyGh8O3dStocCpX5L5am/ZTLDsGQwqH6xbvuJLgHoifOPD7NJbyAzZn
+ sUQhnPvbctNrPqpNUz6aH/drsRTv0j2886FsIKwj3o1QHNxxOXKcmjW2Yw55au+wmrFM
+ bZsOn5IZMcJJUEWZcCQwME+KF6vWMNi9zxz1+ZeuvGCQSbhT4ZptZm/gw/nuM22NX7g2
+ oEYMnr7FEjxxgRqe1KgGD3iXhIBcW3yOZ2ywSfMc8UHBwL0MxPtMaa3HtroMXgmMTnnL
+ RvOg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1783605156; x=1784209956; darn=nongnu.org;
+ d=redhat.com; s=google; t=1783605283; x=1784210083; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=5cuGQR1+63nqgwesx/JZfl0oTpSQd/0m/0QKYn2lGzE=;
- b=ccdEEQAlIOoBrP5ZC9EGTslI4gN42VjakOTqNO/+qisKFCBR2Hot55+0xGtgTvwgLP
- DK1fjgsCzlWcpCgJOnnUhJSh+rASJm8jddnIRxjClAUMbUy7a1t9aFX/ImYBpKu1gAFQ
- PGZglauCMaZjINisD9SuXNoPpNR8KByCPSmQ4=
+ bh=N/SxFcNMNZJt4Ldv8rYYoLqhtuevn48hV5E6n1GgtSc=;
+ b=Awq5c0bPgE2/WGRgyjHgRKyZunL6sgOiSqMAN+YkYDwN3Gug5CQsSYRxpWOtkXInQh
+ Ytk+A+Q4crw/nfJrUIoYWHBpx1k7m7yrf3VJaJ39H0McFPAj3w8uOWGnOvB1ddbyRdqI
+ c7P8dkPPtMyUWphHbcoSiXzUJd45Jbn6LKHijbkbMEapbPD2+8+zXsAXZa47CDdKNDZT
+ 5rLzgmG+8eqebqjDuxClEM5P8mzyLp2cPcRULgoRDXYg//tWByvFN91RjU9R+3OeeoOv
+ lfmXTEh2SXjLiuWvOsdwM15pDj1JREywkKBmYvNiwdk3vhszBs++n8HuARwfsOdKWch/
+ mxMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783605156; x=1784209956;
+ d=1e100.net; s=20251104; t=1783605283; x=1784210083;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=5cuGQR1+63nqgwesx/JZfl0oTpSQd/0m/0QKYn2lGzE=;
- b=cMplr4SVBIWhXtmsEOUBvLUBJKt0idiZQV0K8v6N0/NLoHccGYlh1GRppVVD30Gyi/
- K3QxQIvU08IBNaJ0AD+7mQ6WUJxT9F0eFReHZHVPoIu/J33zP4mXB3B5Z+jtvhQdGprG
- gG2culMPRmysM2IKOHfLe/NoAIB+K4Zdm75tZiJJhwhRyLdeXWnXc327+z0Vjx6yrhpA
- rxt32EK+3wlYbAHzSHPKS9srn0CtAqr/00n5BuUWzad5q3/OnSC8DBCbYy8zuQZsqRst
- VCNv2pUWTnWf7Jbh6zCDWeq+b9utxCu0jugAi96RGy0hiY9oRElWlK5j1vYugjXVoUUP
- 6VSQ==
-X-Gm-Message-State: AOJu0YzM3zzvTY4xM6u29DigzVHV5nTKnfJxHdmH+FawcZtwnjXB5JXa
- a3041OMcbLP1EOdjYXsbdSA4Bqx+0hWfpLGukRG1CZ0TfrI66RNvy9Fhd1pcGCwnbKRKBbu//6/
- LNsZXsuj9bmhhfjzgR/XYshfSpWNk5c0VjC+4qJ9HxA==
-X-Gm-Gg: AfdE7cncWX7t5H9W2ZmbiAZuERTpNCk/pju1WOK/4s56i+lF5eSC5/CYa+aN5jeTVvb
- +1DSbi+SeRWwpCJ1kAe4vz50gT62ggkyrnkveAyWqNKyDpFBJuo6oTJhugHMU4xS9HUzTj+QZ7V
- NI5yqG5jVtN1/xnMaD24kAzFCp+rVkYYcUz63QBkQxTEw2uCKfYFspiVFvytAuOm6vuwGAyBUnK
- XGp5qulc7ytgIgb9EvJiNDn4t4R0zCjt3NJaye3rP7SCFyPc5dZ9/yoe3+/+zqKdLSrAAVd/vJN
- GdhuUIotPqhAR5WDSmI74eTA5i8h
-X-Received: by 2002:a17:907:60cd:b0:c15:a7b9:2ae1 with SMTP id
- a640c23a62f3a-c15e7407dd8mr151478966b.6.1783605155527; Thu, 09 Jul 2026
- 06:52:35 -0700 (PDT)
+ bh=N/SxFcNMNZJt4Ldv8rYYoLqhtuevn48hV5E6n1GgtSc=;
+ b=fnZFWh8d/StKRDQ+l4SsymclDBFO1vWolFaoPJy+WC3Sm18OD1zUBdFcXSUMmYxH6m
+ 1ubkvI+Rne9nXiqEMGZRG9p3qOBdvHHbOiZJT5zxe4vGwMHRV8Tu9NzbHYtfEj5kJj74
+ OVDBRo4aM1iHq8LOI0KSKcSL23IyLdZEKqB51P/9f94iAEN73STuWXorpBB7F9tnif4f
+ h6CLoN9F46s2B0gDM1AZm+7+XX+67WN03J2I1ZSzMoRoWb4JCcbeYMC/18N+q84ZpuaE
+ oBszrTdNIfHueE2xq9YM6YHZFsmNDZsTWeuYaL2huP6lHvXmO6hfzbeOIFC2MDwa8NaK
+ LdBw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpJoUCnAfr2UtNYE95jihk5CppfLZ1vjzJjbb0/MmbVC0I/5zKsbScjlPXD+M5p2dUxT3Xss/TC0xO9@nongnu.org
+X-Gm-Message-State: AOJu0YyE1x0pfYwTYY8LQIUVP4EgOK3Fy4VfEOlMzGDwW71sZ2zwy56b
+ uL6Cp+zAs3qSNI0oShkCZBHrjYbEKoYtjhRob2dBI6g+juW9urziQr0xJcwii2x9jxah5cP5W1+
+ Hpp6vueM9hv68+zbCSzNyJP++pEZLbnc=
+X-Gm-Gg: AfdE7cnE/JEJjroE3Sqb383PE78mYjy+LO9dIxgQUVPWGuyBDjIq0Coe2sTBKu7wFx6
+ ccVg4nUUW/JkmHIxq6T0fAGhXovPAksbr/LzVu9lZ9TNZLQwjlCw0lrIK1nrKeVRuWO9XSGENVs
+ xeCogac50AAU12An1LF1BWUKIYw0mf+YFf7lsp6KS69gSlhW02vzJ8kEQa06wHsEjiLVLVS8CqD
+ EKtprdly9/Y1mzrgoEEi+DA3WF6wnrwbu0IQZKKnvDiMRemvTYODiOMm0jN4Ho8NTDj1raBvYO5
+ imZRJkaS9BhIiNnxc5+59vKP5j/S
+X-Received: by 2002:a17:90b:33c8:b0:37f:9ce1:cdb3 with SMTP id
+ 98e67ed59e1d1-3894279ba33mr7328995a91.33.1783605282473; Thu, 09 Jul 2026
+ 06:54:42 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260626123531.132078-1-alexander@mihalicyn.com>
- <20260626123531.132078-3-alexander@mihalicyn.com>
- <thdv34.1hr3kwq58lz3p@linaro.org>
-In-Reply-To: <thdv34.1hr3kwq58lz3p@linaro.org>
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Date: Thu, 9 Jul 2026 15:52:22 +0200
-X-Gm-Features: AUfX_mzXe8DeGHsv0er24NHCEa9dZKqDZnbUqWppWyjURj8A0isJjAFPqIl39q0
-Message-ID: <CAJqdLrrmybT6H5mQSBypOwu7rqM1hNq3CWydtUM8X74cE5RZVw@mail.gmail.com>
-Subject: Re: [PATCH v3 2/9] hw/audio/virtio-sound: allocate an array of streams
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+References: <87o6gge6b0.fsf@pond.sub.org>
+ <CAFEAcA9goRQuxw3VD7AqUOHHTdOXu8MSfCxdQMBviE3QgGD58w@mail.gmail.com>
+ <87zf00cn7m.fsf@pond.sub.org> <ak-i1dNY_RrGNHAM@redhat.com>
+ <CAFEAcA_=rz22ZqPr77REQa5BJRZVuEkriq-gJ9xGg4E46JPUxQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA_=rz22ZqPr77REQa5BJRZVuEkriq-gJ9xGg4E46JPUxQ@mail.gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Thu, 9 Jul 2026 17:54:30 +0400
+X-Gm-Features: AUfX_mxCpgQ9_NwafLskUA2MzJqouf8Rog06wvsTXmTy-VGH8G1_GSGXtS0d00Y
+Message-ID: <CAJ+F1C+BiqriKhDO-vY15z5iQECVarJN-NoemiaW3w93c3EpNg@mail.gmail.com>
+Subject: Re: A few Machines crash when "no default audio driver available"
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org, 
+ Jan Kiszka <jan.kiszka@siemens.com>, qemu-arm@nongnu.org, 
+ BALATON Zoltan <balaton@eik.bme.hu>, qemu-ppc@nongnu.org, 
+ Huacai Chen <chenhuacai@kernel.org>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Gerd Hoffmann <kraxel@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=alexander@mihalicyn.com; helo=mail-ed1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-pj1-x1033.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,187 +128,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Mo., 29. Juni 2026 um 09:49 Uhr schrieb Manos Pitsidianakis
-<manos.pitsidianakis@linaro.org>:
+Hi
+
+On Thu, Jul 9, 2026 at 5:44=E2=80=AFPM Peter Maydell <peter.maydell@linaro.=
+org> wrote:
 >
-> On Fri, 26 Jun 2026 15:35, Alexander Mikhalitsyn <alexander@mihalicyn.com=
+> On Thu, 9 Jul 2026 at 14:32, Daniel P. Berrang=C3=A9 <berrange@redhat.com=
 > wrote:
-> >From: Volker R=C3=BCmelin <vr_qemu@t-online.de>
 > >
-> >It is much easier to migrate an array of structs than individual
-> >structs that are accessed via a pointer to a pointer to an array
-> >of pointers to struct.
+> > On Thu, Jul 09, 2026 at 03:22:05PM +0200, Markus Armbruster wrote:
+> > > Cc: mainainters for "Overall Audio backends"
+> > > Peter Maydell <peter.maydell@linaro.org> writes:
+> > >
+> > > > On Thu, 9 Jul 2026 at 12:44, Markus Armbruster <armbru@redhat.com> =
+wrote:
+> > > >>
+> > > >> I stumbled over ARM machine musicpal, PPC machines pegasos1, pegas=
+os2,
+> > > >> and MIPS machine fuloong2e crashes.
+> > > >>
+> > > >> I run them like this:
+> > > >>
+> > > >> $ qemu-system-aarch64 -M musicpal -nodefaults -S -display none -mo=
+nitor stdio
+> > > >
+> > > >> Died when device_set_realized() tried to propagate a "no default a=
+udio
+> > > >> driver available" error to &error_abort.
+> > > >
+> > > > Is this something we want to have be a possibility the devices
+> > > > have to cope with? Can we have the "ignores all audio data"
+> > > > backend be always available instead?
+> > >
+> > > There's plenty of precedence for /dev/null-like backends.
+> > >
+> > > > Otherwise every audio device needs to cope with "there is no
+> > > > audio backend available" and implement "do nothing with the
+> > > > audio data" itself.
+> > >
+> > > Yes.
 > >
-> >For this reason, allocate an array of streams in
-> >virtio_snd_realize() and initialise all stream variables that
-> >are constant at runtime immediately after allocation.
+> > We've got a bit of tension between "no defaults" and "builtin audio
+> > devices" here.
 > >
-> >This makes it easier to remove the virtio_snd_set_pcm_params()
-> >and virtio_snd_pcm_prepare() calls in the realisation phase and
-> >to migrate the audio streams of the virtio sound device after
-> >the next few patches.
+> > Cnosider if I had instead done
 > >
-> >Signed-off-by: Volker R=C3=BCmelin <vr_qemu@t-online.de>
-> >[AM: there were too many conflicts, I did `git checkout --ours -- <.>`
-> >     and then reimplemented the patch idea
-> >/AM]
-> >Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.=
-io>
-> >Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >---
-> >v3:
-> >       As suggested by Marc-Andr=C3=A9 Lureau:
-> >       - drop VirtIOSoundPCMStream's id field
-> >---
-> > hw/audio/virtio-snd.c         | 34 +++++++++++++++++++++-------------
-> > include/hw/audio/virtio-snd.h |  2 +-
-> > 2 files changed, 22 insertions(+), 14 deletions(-)
+> >   qemu-system-x86_64 -M pc -device ac97 -nodefaults
 > >
-> >diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-> >index 6eb31e2838e..859c2770195 100644
-> >--- a/hw/audio/virtio-snd.c
-> >+++ b/hw/audio/virtio-snd.c
-> >@@ -436,12 +436,9 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound =
-*s, uint32_t stream_id)
+> > It is not unreasonable to expect to see an error because you asked
+> > explicitly for 'ac97'  and forgot to wire up the required audio
+> > backend, and asked to NOT have any defaults.
 > >
-> >     stream =3D virtio_snd_pcm_get_stream(s, stream_id);
-> >     if (stream =3D=3D NULL) {
-> >-        stream =3D g_new0(VirtIOSoundPCMStream, 1);
-> >+        stream =3D &s->streams[stream_id];
-> >         stream->active =3D false;
-> >-        stream->id =3D stream_id;
-> >-        stream->s =3D s;
-> >         stream->latency_bytes =3D 0;
-> >-        QSIMPLEQ_INIT(&stream->queue);
-> >
-> >         /*
-> >          * stream_id >=3D s->snd_conf.streams was checked before so thi=
-s is
-> >@@ -451,14 +448,6 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound =
-*s, uint32_t stream_id)
-> >     }
-> >
-> >     virtio_snd_get_qemu_audsettings(&as, params);
-> >-    stream->info.direction =3D stream_id < s->snd_conf.streams / 2 +
-> >-        (s->snd_conf.streams & 1) ? VIRTIO_SND_D_OUTPUT : VIRTIO_SND_D_=
-INPUT;
-> >-    stream->info.hdr.hda_fn_nid =3D VIRTIO_SOUND_HDA_FN_NID;
-> >-    stream->info.features =3D 0;
-> >-    stream->info.channels_min =3D 1;
-> >-    stream->info.channels_max =3D as.nchannels;
-> >-    stream->info.formats =3D supported_formats;
-> >-    stream->info.rates =3D supported_rates;
-> >     stream->params =3D *params;
-> >
-> >     stream->positions[0] =3D VIRTIO_SND_CHMAP_FL;
-> >@@ -1046,6 +1035,24 @@ static void virtio_snd_realize(DeviceState *dev, =
-Error **errp)
-> >     vsnd->vmstate =3D
-> >         qemu_add_vm_change_state_handler(virtio_snd_vm_state_change, vs=
-nd);
-> >
-> >+    vsnd->streams =3D g_new0(VirtIOSoundPCMStream, vsnd->snd_conf.strea=
-ms);
-> >+
-> >+    for (uint32_t i =3D 0; i < vsnd->snd_conf.streams; i++) {
-> >+        VirtIOSoundPCMStream *stream =3D &vsnd->streams[i];
-> >+
-> >+        stream->s =3D vsnd;
-> >+        QSIMPLEQ_INIT(&stream->queue);
-> >+        stream->info.hdr.hda_fn_nid =3D VIRTIO_SOUND_HDA_FN_NID;
-> >+        stream->info.features =3D 0;
-> >+        stream->info.formats =3D supported_formats;
-> >+        stream->info.rates =3D supported_rates;
-> >+        stream->info.direction =3D
-> >+            i < vsnd->snd_conf.streams / 2 + (vsnd->snd_conf.streams & =
-1)
-> >+            ? VIRTIO_SND_D_OUTPUT : VIRTIO_SND_D_INPUT;
-
-Dear Manos,
-
-> >+        stream->info.channels_min =3D 1;
-> >+        stream->info.channels_max =3D 2;
+> > But with your 'musicpal' machine example, you never asked for the
+> > frontend device, so you should be forgiven for also not asking
+> > for a audio backend.
 >
+> Ah, so this is because of -nodefaults, not because QEMU was
+> somehow built with no audio backends in it.
 >
-> Why 2 instead of as.nchannels? Does this break support for more than 2
-> channels?
-
-oh, good catch! It looks like the original patch has the same flaw
-here and it wasn't noticed by
-me while I was trying to be very attentive to details ;-)
-
-I agree, this looks like a bug to me and I think that a correct fix
-(to this patch) would be:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D
---- a/hw/audio/virtio-snd.c
-+++ b/hw/audio/virtio-snd.c
-@@ -448,6 +448,7 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound
-*s, uint32_t stream_id)
-     }
-
-     virtio_snd_get_qemu_audsettings(&as, params);
-+    stream->info.channels_max =3D as.nchannels;
-     stream->params =3D *params;
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D
-
-So, we can keep
-+        stream->info.channels_max =3D 2;
-
-chunk in virtio_snd_realize() function (as we don't have
-virtio_snd_pcm_set_params at that point), but
-then in virtio_snd_pcm_prepare(), we can take data from
-virtio_snd_pcm_set_params through virtio_snd_get_qemu_audsettings()
-and then put it to stream->info.channels_max. WDYT?
-
-Kind regards,
-Alex
-
+> > If we guarantee a /dev/null audio backend always exists, we help
+> > the second case but degrade the first case
 >
-> >+    }
-> >+
-> >     vsnd->pcm.streams =3D
-> >         g_new0(VirtIOSoundPCMStream *, vsnd->snd_conf.streams);
-> >     vsnd->pcm.pcm_params =3D
-> >@@ -1314,12 +1321,13 @@ static void virtio_snd_unrealize(DeviceState *de=
-v)
-> >             if (stream) {
-> >                 virtio_snd_process_cmdq(stream->s);
-> >                 virtio_snd_pcm_close(stream);
-> >-                g_free(stream);
-> >             }
-> >         }
-> >         g_free(vsnd->pcm.streams);
-> >     }
-> >     g_free(vsnd->pcm.pcm_params);
-> >+    g_free(vsnd->streams);
-> >+    vsnd->streams =3D NULL;
-> >     virtio_delete_queue(vsnd->queues[VIRTIO_SND_VQ_CONTROL]);
-> >     virtio_delete_queue(vsnd->queues[VIRTIO_SND_VQ_EVENT]);
-> >     virtio_delete_queue(vsnd->queues[VIRTIO_SND_VQ_TX]);
-> >diff --git a/include/hw/audio/virtio-snd.h b/include/hw/audio/virtio-snd=
-.h
-> >index fce7d1feea2..41c63b3f23b 100644
-> >--- a/include/hw/audio/virtio-snd.h
-> >+++ b/include/hw/audio/virtio-snd.h
-> >@@ -136,7 +136,6 @@ struct VirtIOSoundPCM {
-> > struct VirtIOSoundPCMStream {
-> >     virtio_snd_pcm_info info;
-> >     virtio_snd_pcm_set_params params;
-> >-    uint32_t id;
-> >     /* channel position values (VIRTIO_SND_CHMAP_XXX) */
-> >     uint8_t positions[VIRTIO_SND_CHMAP_MAX_SIZE];
-> >     VirtIOSound *s;
-> >@@ -214,6 +213,7 @@ struct VirtIOSound {
-> >     VirtQueue *queues[VIRTIO_SND_VQ_MAX];
-> >     uint64_t features;
-> >     VirtIOSoundPCM pcm;
-> >+    VirtIOSoundPCMStream *streams;
-> >     AudioBackend *audio_be;
-> >     VMChangeStateEntry *vmstate;
-> >     virtio_snd_config snd_conf;
-> >--
-> >2.47.3
-> >
+> As a possible analogy, for network devices we just warn in
+> the analogous "device created but no backend wired up":
+>
+>  ./build/x86/qemu-system-x86_64 -nodefaults -device e1000 -display none
+> qemu-system-x86_64: warning: nic e1000.0 has no peer
+>
+> and the effective behaviour is that output packets are dropped.
+>
+> We could make audio devices do that (which would be basically
+> equivalent to "if we need an audio backend and we don't have
+> one, warn and create the null backend").
+>
+
+Note that we don't have a real "null" backend. The "none" backend does
+mixing/resampling/volume before dropping the audio (its parent is
+MIXENG_BACKEND). I think it would be worth to add (so one day we can
+compile qemu without the whole audio/ engine)
 
