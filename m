@@ -4,142 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25669C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 14:41:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9D29C43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 14:47:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whpwH-0000lF-Q6; Thu, 09 Jul 2026 10:41:21 -0400
+	id 1whq18-0001fV-MH; Thu, 09 Jul 2026 10:46:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1whpwH-0000ke-2q
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 10:41:21 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1whq17-0001ew-Ij; Thu, 09 Jul 2026 10:46:21 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1whpwF-0002LF-Hq
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 10:41:20 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 669DwPFJ2014470
- for <qemu-devel@nongnu.org>; Thu, 9 Jul 2026 14:41:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- F/MEHsgY09tIfxmk11wChFOkw+/ArJxt14+6bvFwW9k=; b=WNq3a4hhaYYBNpmu
- aLC8fu7zUNEar51OHMk2bzKIcjIJ5sdeCcd9/37e7kQT5qtzyuRYVrgAdYsw+3wY
- 0X3RjgQUcOh+rWxgBa10Y0Dl8lkMkT/oy/WRXacetzFrK0FqNJ43eqktcTbl0oam
- 8im28qjyX1GeW1MSUsg4y70aXzzUGDE+XSTo4FNiwxP9jRpEVLb4cYzIWBEGiO1Q
- 1herrb78XceMhdeltZydHZLT+XkDGiRwGBfY87ZzW1ivboUyZZdXMJ6XDeVUzhAB
- SEXmiaf4qI5SQ4/kD6/1LqMeYCbgQR/cMTxr59L1wXcWj6bISDoV807H+AfPMyAy
- AoJoVw==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f9ug6mbb7-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 14:41:18 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-51c083f1818so18846231cf.0
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 07:41:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783608078; x=1784212878; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=F/MEHsgY09tIfxmk11wChFOkw+/ArJxt14+6bvFwW9k=;
- b=iWumnNDDNukgxCmbonvBWjLoXhaOlv/+VShQS2c6Wql/aBou41ifUa7jVIZ3e2EvQv
- 4zVaDFPO6MI4Gcl49kKpuWcxevkJPhRlNBn9ZHod8Zb82PpEwW5MQ33z8J2WTb3UG+i9
- Zr2ejklnU22ov+EXaxeb3GYN4cGZ6TkHPQAWO9cLbFulzaAKr4/EocYBc2DG/crKm2KB
- yQI2slYUebx9iO8Nw1YG7YBlPWAUXUdlD1G4T+CxC+nMfrEyvCUi/2qxMS1DztQKIdjJ
- G1Dm1Sn8paAXpCMNVtXrGNtKIm6+DC4yFKPzx02r0XOzyg0Q6zyB8oYgWOf9LZWU1ZX4
- 08bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783608078; x=1784212878;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=F/MEHsgY09tIfxmk11wChFOkw+/ArJxt14+6bvFwW9k=;
- b=S0NHfcqx+YILNIeq3w4RuzHWkXiEPMtX1083DvzRP5P4toLoqnTyoDVt5JrOq4JMNW
- Yzd/4oKwNAYEQSjgU2i5JJbMjxrvsAS0OmCmeDRDcoXR00C3L39zsM1AQ981tZPkrDKj
- Vwo2e13sIUfKTYl6vN+y3LzmL626v9MGpWANcZVPPRE+8fhmSoDjmS9bkhX7uq8mi7Bv
- tlyfD1FztctfPuxk1httmuDaJVGU2mR5oj//+QilRzZS6Zr5bRH8lzWXZudsnP5n3CH1
- 1o5oHVvMit0gdsViBZshhORJhVNsnzLlukpVMXwOqgY3IfGWSjWORRCNZP6Pr9scLPZ3
- Q5Kg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqCcdk4U3Lc4A4p1Rr4R9SHnWYjaUZjo0Zzkts41acYZmRM4x9kf2ri3f9sK6lshi5h+YU/2bXRh6ob@nongnu.org
-X-Gm-Message-State: AOJu0Yw8Z7ZUb774bp7J07mV/DCdrkxTEhPVSrGUmiRT3KHeZEZrn4AV
- 1UnkPnVooWKRkBSfhXgjrRAyU2ZBkX2PKkAgHWJ9+eKpKrwEcKT+QjQ0pm0lOSdVg6lXy+2N00R
- EE893rt6xcnwQMScOt1OaRGxNST3lccrcsEh6BtSVrt7DBWAfepMwyzdgWg==
-X-Gm-Gg: AfdE7cmekuBr5SJmazvvmILqHoOp4tM7Ij4a+esuuLfScSbS+Xzd5OPLw7n6KtiEoCa
- 44M6KsIm+7k+BjqtL3yBsjcPv4ZMPRPdA/YPcAkRBT4Dng76yvYTYhx5D/OG+htDxt29jnExLz6
- V7TvQllhZct/4GwsuBjlx3jFJUBLYW/HcyIE0o82n+DFB+1DPSqrJInKPwKDQWg4JbPrNMX7WN+
- mKAtrwkmUCAf2VquNr4xXlFj2NtLYIRCQDRMTlHRxPxtGwFNI7Haxwya1ZlLRXWbI65SZKJ41UJ
- 2pWNCLuVFaixztNyg/6A45i7NDp6AnEngB477XALc2Zkf+99FoZFhkDvGrz8o0cO+7xZ8+3aQAz
- u/zd87DW/ayj0LLgBikBpnzT6m/HH2jze8NmcP02ycC1VK67gcO6HUxWSmmalCg==
-X-Received: by 2002:a05:622a:1:b0:51c:e78:6213 with SMTP id
- d75a77b69052e-51c8b3cbf15mr90396411cf.57.1783608077826; 
- Thu, 09 Jul 2026 07:41:17 -0700 (PDT)
-X-Received: by 2002:a05:622a:1:b0:51c:e78:6213 with SMTP id
- d75a77b69052e-51c8b3cbf15mr90396061cf.57.1783608077372; 
- Thu, 09 Jul 2026 07:41:17 -0700 (PDT)
-Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493eb705e22sm53044145e9.6.2026.07.09.07.41.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Jul 2026 07:41:16 -0700 (PDT)
-Message-ID: <89089d8f-101c-4520-8031-e9522e2cbb1f@oss.qualcomm.com>
-Date: Thu, 9 Jul 2026 16:41:15 +0200
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1whq14-000420-Nw; Thu, 09 Jul 2026 10:46:19 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 669EIXdr2551742; Thu, 9 Jul 2026 14:46:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=cUCedvf/NsvquBkKgrKyvcJwBe9Veh
+ fLBecXP8OxiPk=; b=jyMZgX6+/U1I78eb53qEyyrusv2UGAOLjPFU/eWkY9IA9p
+ vldEFpplAoPNNyRHCOl9kajx8/EPRPLg1kmIfH9O/tbXY8Sb0LxZBZpaflFAqMZ7
+ moXr24ki66qp5s9qp90JbpKdko5J2dhIEl5CtQffTP9l/btOeyU6ibP23aMuYQQY
+ dVRloI/JHkRRAFAeDb+zaxyaoQEQDSIjD/tmOa/D8IRyw4KF2BcRgS6sSk6Ap7Gg
+ 6Usf3clJzEEQf0P5uTLYoNhrpyGQugNyAdUzHzjexjlRzUQg/ql2YtyHuypcOQz7
+ BF2jzcuZm4OgAyi+U8bT3Wp6bqrc9FcgbZ5Jjw2g==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6qknsnjt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 09 Jul 2026 14:46:15 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 669EYd5M012737;
+ Thu, 9 Jul 2026 14:46:14 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7f6yd8ep-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 09 Jul 2026 14:46:14 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 669EkAHo38142308
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 9 Jul 2026 14:46:10 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6FB6220049;
+ Thu,  9 Jul 2026 14:46:10 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E3A6120040;
+ Thu,  9 Jul 2026 14:46:08 +0000 (GMT)
+Received: from fedora (unknown [9.5.7.39])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Thu,  9 Jul 2026 14:46:08 +0000 (GMT)
+Date: Thu, 9 Jul 2026 20:16:11 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: Re: [PATCH] target/ppc: Remove unused helper_lscbx()
+Message-ID: <20260709201237.46ba7f2d-72-amachhiw@linux.ibm.com>
+Mail-Followup-To: Peter Maydell <peter.maydell@linaro.org>, 
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+References: <20260709095056.1803725-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pvscsi: translate data endianness
-Content-Language: en-US
-To: Michael Tokarev <mjt@tls.msk.ru>, shankerwangmiao@gmail.com,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, qemu-s390x@nongnu.org
-References: <20260605-pvscsi-endianness-v1-1-b0bf472b0f59@gmail.com>
- <273f53b8-9edc-4c0b-a793-d0667548553a@tls.msk.ru>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <273f53b8-9edc-4c0b-a793-d0667548553a@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA5MDE0NCBTYWx0ZWRfX5bMq5pKUv0GO
- GlO1gEw7Cfc6cPC6wXrdlbaQyS6CIrktoVoMH45IOWktcqVkRHQkOi7FJC0nSYcyBif55IATA9n
- LupZxOLIxKkZOVGkUq4S5XLP1z4pUhg=
-X-Proofpoint-GUID: 4JERzMvg9vAMSyfenrNe4WcO6M77BgFr
-X-Authority-Analysis: v=2.4 cv=cL3QdFeN c=1 sm=1 tr=0 ts=6a4fb30e cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=pGLkceISAAAA:8 a=dD9blWidltQKhXxuiYcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-ORIG-GUID: 4JERzMvg9vAMSyfenrNe4WcO6M77BgFr
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA5MDE0NCBTYWx0ZWRfX3dnj15XldC1A
- /yxZ4RCt3lhXxKyuluewrHNAix8EOgQEduhPwT0skQbVyyLdOYsFsjh9lFsi6kSsJV8diHIfIK9
- uaxijB29D2OooWo6n2B79k9F1uxUzZULgBHbi2KYhDbK4jLJllfgQK0SSDSSQmGJXAMNS7+yVXY
- yVkebYZT3Rx2N1xy7MlJKdmY+6CnHpndmRFegEoeR0UgH6LtfBa4aYJ50LuBALrhdY01xhrpzqp
- T1hRiyEv4GWEFY0Ff4OxPPNumKxAMrAe9oMQbiOpVSAFNcMgmB9PQx20Lfbq0xnteq/nSWe8sCv
- B6eMkTFazPnk/m0PSxdunaznTBAQweGwoPf7i1DV1DiMC047cxhiBXFS0gxRZT5eWyScei+GIhB
- lLHjZ0gmAEwgeoHImcHmaq3HwZEJb7t9ZOXrPgUyMalvCU17ZLTemRY41IlqDknEWHLFoqjNYGP
- ImLqLiDl9ylajdBl2OA==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260709095056.1803725-1-peter.maydell@linaro.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=Q/XiJY2a c=1 sm=1 tr=0 ts=6a4fb437 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=kj9zAlcOel0A:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=KKAkSRfTAAAA:8
+ a=VnNF1IyMAAAA:8 a=BoEjErS5yIuBRj-D9BoA:9 a=CjuIK1q_8ugA:10
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: j4hRIfUkxQx4vdQ1I0ltETK7GBageFgn
+X-Proofpoint-ORIG-GUID: ojND788OhKRrUAlyZcToP4QMcJxnxxk2
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA5MDE0MSBTYWx0ZWRfXwd7470xBM7n3
+ 6E28ZekJACldfJHpF0PCCixtHo/FyFSpWNhPhP27VOqrVZ+xy7Jd/TaB85LlPmfsfb/7TLE7MrY
+ EWKAf60T2OQxqWsVEe124ZT0PUOGN3w=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA5MDE0MSBTYWx0ZWRfXy0QhhVUMNUFY
+ +2lkD+f087O7RMQsEGqUm3It/fvNPBhUTbnNzJ8bgsr+FMYaQ19SNMm35UzHcAOr/C5q9FgR7Dm
+ 4NLiKWulsLeEIhThxOPxkczWF34nFWEeY554DFArDrw1YxBei/INrLh3rqYnyKUps1beOgyiNDs
+ jwrz5HMWCey87LdHP8nGBdcILlERwHH1zydri0Lh1HgxSLt8rJoirTqygDP0eMNZQfO2ua//kTh
+ DT31EulMV50n3lrJWJwxlUUz5+tFkwonZxe61b9Ve1h34Ut5kE2NKWGeAime6kSV8ZvhG7lBD7o
+ VDMtpZOumhRnuvZecL4QxYBlcZLDstxwXXEr42IL1smuiSkUVZ4RyAuTeDQGiS6VFQfSiYHL+T3
+ SUgeghUNAajgPcgxOhS21ebdJJnGVveQII7mS3kKFs3kyzO7lxr95ett6eGfUW3jGTJlhflZ6XS
+ eETWNxwswuf9vgsI3RA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-09_03,2026-07-09_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 suspectscore=0 adultscore=0 spamscore=0
- phishscore=0 bulkscore=0 lowpriorityscore=0 clxscore=1015 malwarescore=0
+ adultscore=0 impostorscore=0 spamscore=0 phishscore=0 priorityscore=1501
+ bulkscore=0 clxscore=1015 lowpriorityscore=0 suspectscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607090144
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607090141
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,59 +128,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/7/26 08:39, Michael Tokarev wrote:
-> On 05.06.2026 16:27, Miao Wang via B4 Relay wrote:
->> From: Miao Wang <shankerwangmiao@gmail.com>
->>
->> This patch improves the implementation of the pvscsi device by
->> translating the endianness of the data sent or received from the guest.
->> This ensures pvscsi can work on big-endian hosts with little-endian
->> guests.
+On 2026/07/09 10:50 AM, Peter Maydell wrote:
+> The helper_lscbx() function isn't called anywhere.  It used to be
+> used by the PPC 601 CPU support; we removed that in commit 005b69fdcc
+> in 2022 but missed this helper function.
 > 
-> Hi!
+> Fixes: 005b69fdcc ("target/ppc: Remove PowerPC 601 CPUs")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> This came to my attention because Coverity reported a
+> "shifts into sign bit" issue in the function: CID 1663681
+> ---
+>  target/ppc/helper.h     |  1 -
+>  target/ppc/mem_helper.c | 28 ----------------------------
+>  2 files changed, 29 deletions(-)
+
+"git grep lscbx" returns only the declaration in helper.h and the
+definition in mem_helper.c -- no TCG translator references, no
+gen_lscbx, nothing in translate.c. Confirmed dead code with zero
+callers. Thanks for the cleanup.
+
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+
+Thanks,
+Amit
+
 > 
-> Can we pick this one up for 11.1 please?
-> I know right to nothing about s390x internals so can't really review
-> the change.  But the fix seems to work, and it should be picked up for
-> the stable qemu series too, it loks like.
-
-I tagged this for review and forgot. Basically we shouldn't using
-tswap*() anywhere in system emulation except semihosting. Here it
-seems reasonable to use cpu_to_le*()/le*_to_cpu().
-
->> Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
->> ---
->>   hw/scsi/vmw_pvscsi.c | 58 ++++++++++++++++++++++++++++++++++++++++++ 
->> +++++++++-
->>   1 file changed, 57 insertions(+), 1 deletion(-)
->>
->> diff --git a/hw/scsi/vmw_pvscsi.c b/hw/scsi/vmw_pvscsi.c
->> index 
->> 11ae6b9b7474b9bc87621137eb7911361b5fd721..883dfe9b6b5dc687737de356da02fe5f68aea7ad 100644
->> --- a/hw/scsi/vmw_pvscsi.c
->> +++ b/hw/scsi/vmw_pvscsi.c
->> @@ -35,6 +35,7 @@
->>   #include "hw/pci/msi.h"
->>   #include "hw/core/qdev-properties.h"
->>   #include "exec/cpu-common.h"
->> +#include "exec/tswap.h"
->>   #include "vmw_pvscsi.h"
->>   #include "trace.h"
->>   #include "qom/object.h"
->> @@ -392,9 +393,18 @@ static void
->>   pvscsi_cmp_ring_put(PVSCSIState *s, struct PVSCSIRingCmpDesc *cmp_desc)
->>   {
->>       hwaddr cmp_descr_pa;
->> +    struct PVSCSIRingCmpDesc cmp_desc_conv;
->>       cmp_descr_pa = pvscsi_ring_pop_cmp_descr(&s->rings);
->>       trace_pvscsi_cmp_ring_put(cmp_descr_pa);
->> +    cmp_desc_conv = (struct PVSCSIRingCmpDesc) {
->> +        .context = tswap64(cmp_desc->context),
->> +        .dataLen = tswap64(cmp_desc->dataLen),
->> +        .senseLen = tswap32(cmp_desc->senseLen),
->> +        .hostStatus = tswap16(cmp_desc->hostStatus),
->> +        .scsiStatus = tswap16(cmp_desc->scsiStatus),
->> +    };
->> +    cmp_desc = &cmp_desc_conv;
->>       cpu_physical_memory_write(cmp_descr_pa, cmp_desc, 
+> diff --git a/target/ppc/helper.h b/target/ppc/helper.h
+> index e99c8c824b..6b2d19a3ad 100644
+> --- a/target/ppc/helper.h
+> +++ b/target/ppc/helper.h
+> @@ -54,7 +54,6 @@ DEF_HELPER_FLAGS_2(dcbzl, TCG_CALL_NO_WG, void, env, tl)
+>  #endif
+>  DEF_HELPER_FLAGS_2(icbi, TCG_CALL_NO_WG, void, env, tl)
+>  DEF_HELPER_FLAGS_2(icbiep, TCG_CALL_NO_WG, void, env, tl)
+> -DEF_HELPER_5(lscbx, tl, env, tl, i32, i32, i32)
+>  
+>  #if defined(TARGET_PPC64)
+>  DEF_HELPER_4(DIVDEU, i64, env, i64, i64, i32)
+> diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
+> index 119dc1df23..787ba2cdec 100644
+> --- a/target/ppc/mem_helper.c
+> +++ b/target/ppc/mem_helper.c
+> @@ -367,34 +367,6 @@ void helper_icbiep(CPUPPCState *env, target_ulong addr)
+>  #endif
+>  }
+>  
+> -/* XXX: to be tested */
+> -target_ulong helper_lscbx(CPUPPCState *env, target_ulong addr, uint32_t reg,
+> -                          uint32_t ra, uint32_t rb)
+> -{
+> -    int i, c, d;
+> -
+> -    d = 24;
+> -    for (i = 0; i < xer_bc; i++) {
+> -        c = cpu_ldub_data_ra(env, addr, GETPC());
+> -        addr = addr_add(env, addr, 1);
+> -        /* ra (if not 0) and rb are never modified */
+> -        if (likely(reg != rb && (ra == 0 || reg != ra))) {
+> -            env->gpr[reg] = (env->gpr[reg] & ~(0xFF << d)) | (c << d);
+> -        }
+> -        if (unlikely(c == xer_cmp)) {
+> -            break;
+> -        }
+> -        if (likely(d != 0)) {
+> -            d -= 8;
+> -        } else {
+> -            d = 24;
+> -            reg++;
+> -            reg = reg & 0x1F;
+> -        }
+> -    }
+> -    return i;
+> -}
+> -
+>  /*****************************************************************************/
+>  /* Altivec extension helpers */
+>  #if HOST_BIG_ENDIAN
+> -- 
+> 2.43.0
+> 
+> 
 
