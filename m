@@ -4,114 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9D29C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 14:47:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 511CCC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 14:48:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whq18-0001fV-MH; Thu, 09 Jul 2026 10:46:22 -0400
+	id 1whq36-0002Rv-2K; Thu, 09 Jul 2026 10:48:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1whq17-0001ew-Ij; Thu, 09 Jul 2026 10:46:21 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1whq34-0002RW-TW
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 10:48:22 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1whq14-000420-Nw; Thu, 09 Jul 2026 10:46:19 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 669EIXdr2551742; Thu, 9 Jul 2026 14:46:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=cUCedvf/NsvquBkKgrKyvcJwBe9Veh
- fLBecXP8OxiPk=; b=jyMZgX6+/U1I78eb53qEyyrusv2UGAOLjPFU/eWkY9IA9p
- vldEFpplAoPNNyRHCOl9kajx8/EPRPLg1kmIfH9O/tbXY8Sb0LxZBZpaflFAqMZ7
- moXr24ki66qp5s9qp90JbpKdko5J2dhIEl5CtQffTP9l/btOeyU6ibP23aMuYQQY
- dVRloI/JHkRRAFAeDb+zaxyaoQEQDSIjD/tmOa/D8IRyw4KF2BcRgS6sSk6Ap7Gg
- 6Usf3clJzEEQf0P5uTLYoNhrpyGQugNyAdUzHzjexjlRzUQg/ql2YtyHuypcOQz7
- BF2jzcuZm4OgAyi+U8bT3Wp6bqrc9FcgbZ5Jjw2g==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6qknsnjt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Jul 2026 14:46:15 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 669EYd5M012737;
- Thu, 9 Jul 2026 14:46:14 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7f6yd8ep-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Jul 2026 14:46:14 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 669EkAHo38142308
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 9 Jul 2026 14:46:10 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6FB6220049;
- Thu,  9 Jul 2026 14:46:10 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E3A6120040;
- Thu,  9 Jul 2026 14:46:08 +0000 (GMT)
-Received: from fedora (unknown [9.5.7.39])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Thu,  9 Jul 2026 14:46:08 +0000 (GMT)
-Date: Thu, 9 Jul 2026 20:16:11 +0530
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>,
- Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: Re: [PATCH] target/ppc: Remove unused helper_lscbx()
-Message-ID: <20260709201237.46ba7f2d-72-amachhiw@linux.ibm.com>
-Mail-Followup-To: Peter Maydell <peter.maydell@linaro.org>, 
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-References: <20260709095056.1803725-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1whq32-0004Qf-RD
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 10:48:22 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 669Dw1IP1883875
+ for <qemu-devel@nongnu.org>; Thu, 9 Jul 2026 14:48:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ bZVq9cWuLvNiJKw17a9QT46rjDSH8VKY9euYuZPyTaw=; b=EEXCrvjNi6Ts6GZc
+ qPH9LW7L976cZM6Pyo0Fo5N/l+q+XYR6jAl5x+48bw9CI/RAB9F03eG5uHp/ds1e
+ URbf3wZHSzABXN0KFYBbCYz7isP1dYuJKZbe/yUcexRN2tiWHGxZce9pxMfy9+P8
+ A1A5A5lG9TgUoEHeNGHrMF+In+xakMD5Zt4OMyziyI6zh3F6kY3uAqYcYb1f2xC8
+ qflhWFRHlAdSejbR+CpbPJDNqZqH1MBRdwWyrIUdtlwL2XyAw4GpKAJAgbySwpnY
+ gJXcRkaMM0NFJJmuj/2MdnxJntD0/3JCvJAOhlgou+UnC24x7Ek0h57ZBlskMi4j
+ 47iD8g==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fa1ydua7w-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 14:48:17 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-c88e0d11a3fso1867581a12.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 07:48:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1783608497; x=1784213297; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=bZVq9cWuLvNiJKw17a9QT46rjDSH8VKY9euYuZPyTaw=;
+ b=iFr7P7Pv/y3d/IYT2BwuZHO14HjQce4G04vOAssBRRd4YyctggFyIEwpmbdII4et0N
+ 66CVSx684znN5Gp2g3dsjY7g1B0XVIEF5EvnlqkMOAG5oLrrfTXvyNgvvGgGw12Eo2Ib
+ 61/vWARVnXY8A5RUFYQdepZ8gQa0UPICNDRXDwwOfAPMOLiR/sTZUxeB5RXLZdESnUnF
+ 6LsHo3YUIg6x9SoDTEdQ+TcR1RmjI7bhljn+CL/8Vfqvv/OWge6GKYolai5z30SVBXcD
+ 5T2Z/BjgZr0j5o0Y3UOda04qxGgqGZ23Jg9IzyhwsZRiMUPlNm0c53N/SzCT99K6Y/ZH
+ at6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783608497; x=1784213297;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=bZVq9cWuLvNiJKw17a9QT46rjDSH8VKY9euYuZPyTaw=;
+ b=PrfX6o9/7+fCtCMA9Ev6dc0+G5yPbztrAXoocSi8N1CKy1DNRqXcYJtVQcTxJ2pp5V
+ K/quFAkzMltjxc9kK5uJmJ4hYAEr7BiozBSrbtiGeszPszJxd1KZ60QKVTsd9bBfWJmY
+ 4Rpi9tHOdUnUsQsgQ157gA0RncC6GzhGlRsXIWqHnOxv+3TN6Px18Pu28tYc3YxK6SbN
+ YTw9zmkKJj7LHiblQzbNpJrSbWhRTy69/1nK3seqnippnzHVt2Q7DrlJdflxy6v+B5iN
+ rNfJRphbueX9siM/7ZNe1qvfS7cvQQWHf1ShjCElW4sB1Vq6pcXW6boMTR5s2cJp7HZV
+ GQIw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rp8hW7QB0Nae6mhptr6U3awlnE+sAzU4WsRKpBHgZ5VNZ3aGPcz9iUFWTqjbtbO27KbHysjJ3tENPkg@nongnu.org
+X-Gm-Message-State: AOJu0YzEhcKmUhUp381Pk/D3v/t6Yq2aXs+igNHGYhWREgY9sb5b5PoE
+ NNoi/DA/D1nvuGi9bsptr9ccZmRxJxTOUfmGePFT9lQtkfYpa4tjNZltUQ4RJMeJFmq10MV0I0I
+ kF1bEU56syEL+Kt8sogAO4vH9giOEggW1cYrULWnVuAZpCaW+k3i3jE2C8g==
+X-Gm-Gg: AfdE7clDdH/Ik9JJQFnvNMPaun/eK7gMAT1Q7GngQBPwCxOxAKHMmiEhEd1geMRGd1S
+ WreARkaNumFweS/TXrlOyQyrXoX9xcvD0OkCPSdYssIta/Y5/OnGtbcXlGMdbVdzxoqF7HEM6Oo
+ 0YCy+f4Zvyvgcy1pWKWwChb6BqZtUnjWl0mg3Iw3tjEOspydV4c4d1CNrzo9io+JaNTs5bF6SJZ
+ DC4aUPLhNGNqydgiZDPaVJ+OHXnlS6Rn+Ic4tsbFE0vUb4/taPq6Xd2497oebwAUt19xtVGEkdi
+ V11pnGza65wCQee2ivQGq2zZ0pW3pbzwnjnV9/+vP7txFjGKJJ9TXiz4Xb17oUsfDr55RGqemtb
+ Ip9U8b52oCMK3NzTGkacKgoAbk1OnzfdFMk37FmWBe/cpG45l3tjqXXm91eICmvcxi0Us1liVGF
+ mN6ws=
+X-Received: by 2002:a05:6a20:bea6:b0:3bf:b885:2fae with SMTP id
+ adf61e73a8af0-3c0bcc0aec6mr8263920637.56.1783608496661; 
+ Thu, 09 Jul 2026 07:48:16 -0700 (PDT)
+X-Received: by 2002:a05:6a20:bea6:b0:3bf:b885:2fae with SMTP id
+ adf61e73a8af0-3c0bcc0aec6mr8263873637.56.1783608496025; 
+ Thu, 09 Jul 2026 07:48:16 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3118389d9bcsm22923046eec.20.2026.07.09.07.48.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 09 Jul 2026 07:48:15 -0700 (PDT)
+Message-ID: <cbc2e0d7-72d6-4350-a906-e0003e8b5964@oss.qualcomm.com>
+Date: Thu, 9 Jul 2026 07:48:14 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260709095056.1803725-1-peter.maydell@linaro.org>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=Q/XiJY2a c=1 sm=1 tr=0 ts=6a4fb437 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=kj9zAlcOel0A:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=KKAkSRfTAAAA:8
- a=VnNF1IyMAAAA:8 a=BoEjErS5yIuBRj-D9BoA:9 a=CjuIK1q_8ugA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: j4hRIfUkxQx4vdQ1I0ltETK7GBageFgn
-X-Proofpoint-ORIG-GUID: ojND788OhKRrUAlyZcToP4QMcJxnxxk2
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA5MDE0MSBTYWx0ZWRfXwd7470xBM7n3
- 6E28ZekJACldfJHpF0PCCixtHo/FyFSpWNhPhP27VOqrVZ+xy7Jd/TaB85LlPmfsfb/7TLE7MrY
- EWKAf60T2OQxqWsVEe124ZT0PUOGN3w=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA5MDE0MSBTYWx0ZWRfXy0QhhVUMNUFY
- +2lkD+f087O7RMQsEGqUm3It/fvNPBhUTbnNzJ8bgsr+FMYaQ19SNMm35UzHcAOr/C5q9FgR7Dm
- 4NLiKWulsLeEIhThxOPxkczWF34nFWEeY554DFArDrw1YxBei/INrLh3rqYnyKUps1beOgyiNDs
- jwrz5HMWCey87LdHP8nGBdcILlERwHH1zydri0Lh1HgxSLt8rJoirTqygDP0eMNZQfO2ua//kTh
- DT31EulMV50n3lrJWJwxlUUz5+tFkwonZxe61b9Ve1h34Ut5kE2NKWGeAime6kSV8ZvhG7lBD7o
- VDMtpZOumhRnuvZecL4QxYBlcZLDstxwXXEr42IL1smuiSkUVZ4RyAuTeDQGiS6VFQfSiYHL+T3
- SUgeghUNAajgPcgxOhS21ebdJJnGVveQII7mS3kKFs3kyzO7lxr95ett6eGfUW3jGTJlhflZ6XS
- eETWNxwswuf9vgsI3RA==
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/4] tests/docker: add support for podman remote access
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20260210163556.713841-1-berrange@redhat.com>
+ <20260210163556.713841-3-berrange@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260210163556.713841-3-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA5MDE0NiBTYWx0ZWRfX+jgdl/oN5Agu
+ Gg6nt4cNwJ7l0T1Yr81JRp0ME+JPWGRCkoTwx3BHWF2nHwWF+jU2zNR0DDZvVCorY/rRBqfIkiy
+ eZ38tFjX54hb5XMV1tCjH7ko7EEBRN8=
+X-Proofpoint-ORIG-GUID: Wx4-nqHW4qW132sNSsPrgvQjseVQQhwu
+X-Authority-Analysis: v=2.4 cv=cOLQdFeN c=1 sm=1 tr=0 ts=6a4fb4b1 cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=8hG23R3pAAAA:20 a=20KFwNOVAAAA:8 a=6508XR_vrpcv8PFJ1OEA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=x9snwWr2DeNwDh03kgHS:22 a=bA3UWDv6hWIuX7UZL3qL:22
+X-Proofpoint-GUID: Wx4-nqHW4qW132sNSsPrgvQjseVQQhwu
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA5MDE0NiBTYWx0ZWRfX73p8NFjUGSxx
+ TkjWpFCSUk2H4BPHjEy/jIgaKJjggDlJLogCX38gDNovCk7/D60bG6xnSwrWmTOXE6JXNKfTRiN
+ fa+cJE9kuMX6Vq5FHgG5/3zsn9OpJ9GU28fzsvrtDk1j/q+1qQiuslld9a5yaLLeCt6ZjrIfded
+ 1B0Qmc/Ki1+XexDln/mGe3Ch+4YAiCqFk8JPrEpCRrbVf+VitcAEgQGitXevZlewxiatRcIRzHp
+ JJX6CCNwTbKXibGCururifpBl9SHuii+RUIAs6PFvnSRHCP0Jgl1jjvZuYIBDptmBcTeXhdagfP
+ juIX1BKqRF+Y3iSY4sK83hVQzqSGSpT7roQJ0NXMrXHqoT58us2Oef9HrlpA4Ftaz+jG9yqXNDG
+ 7mfQgbg6bkN7S3LvBHze/Le20f05KBeVqlD67bpHDscdPffNGQOb+Sc++v3FX3jtniyr3pv/wyn
+ rUrdxqYL2/OJHyNNAlQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-09_03,2026-07-09_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 spamscore=0 phishscore=0 priorityscore=1501
- bulkscore=0 clxscore=1015 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ malwarescore=0 clxscore=1015 priorityscore=1501 bulkscore=0 spamscore=0
+ lowpriorityscore=0 phishscore=0 suspectscore=0 impostorscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607090141
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607090146
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,85 +159,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/07/09 10:50 AM, Peter Maydell wrote:
-> The helper_lscbx() function isn't called anywhere.  It used to be
-> used by the PPC 601 CPU support; we removed that in commit 005b69fdcc
-> in 2022 but missed this helper function.
+On 2/10/2026 8:35 AM, Daniel P. Berrangé wrote:
+> When a developer's environment is already within a podman container it
+> is not possible to use 'podman' again to create containers. It will
+> usually result in wierd errors such as:
 > 
-> Fixes: 005b69fdcc ("target/ppc: Remove PowerPC 601 CPUs")
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+>   Error: fatal error, invalid internal status, unable to create a new pause process: cannot re-exec process to join the existing user namespace. Try running "podman system migrate" and if that doesn't work reboot to recover
+> 
+> Podman offers the ability to talk to a daemon outside the container,
+> however, which could be leveraged by QEMU.
+> 
+> This can be used by invoking "podman --remote", or equivalently the
+> separate "podman-remote" binary:
+> 
+>   https://github.com/containers/podman/blob/main/docs/tutorials/remote_client.md
+> 
+> The current 'podman version' check is insufficient to detect the
+> inability to launch containers, so it is replaced with the stronger
+> 'podman info' check.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
-> This came to my attention because Coverity reported a
-> "shifts into sign bit" issue in the function: CID 1663681
-> ---
->  target/ppc/helper.h     |  1 -
->  target/ppc/mem_helper.c | 28 ----------------------------
->  2 files changed, 29 deletions(-)
-
-"git grep lscbx" returns only the declaration in helper.h and the
-definition in mem_helper.c -- no TCG translator references, no
-gen_lscbx, nothing in translate.c. Confirmed dead code with zero
-callers. Thanks for the cleanup.
-
-Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-
-Thanks,
-Amit
-
+>  tests/docker/docker.py | 10 ++++++----
+>  1 file changed, 6 insertions(+), 4 deletions(-)
 > 
-> diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-> index e99c8c824b..6b2d19a3ad 100644
-> --- a/target/ppc/helper.h
-> +++ b/target/ppc/helper.h
-> @@ -54,7 +54,6 @@ DEF_HELPER_FLAGS_2(dcbzl, TCG_CALL_NO_WG, void, env, tl)
->  #endif
->  DEF_HELPER_FLAGS_2(icbi, TCG_CALL_NO_WG, void, env, tl)
->  DEF_HELPER_FLAGS_2(icbiep, TCG_CALL_NO_WG, void, env, tl)
-> -DEF_HELPER_5(lscbx, tl, env, tl, i32, i32, i32)
+> diff --git a/tests/docker/docker.py b/tests/docker/docker.py
+> index ff68c7bf6f..9e18b984f4 100755
+> --- a/tests/docker/docker.py
+> +++ b/tests/docker/docker.py
+> @@ -76,14 +76,16 @@ def _guess_engine_command():
+>      commands = []
 >  
->  #if defined(TARGET_PPC64)
->  DEF_HELPER_4(DIVDEU, i64, env, i64, i64, i32)
-> diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
-> index 119dc1df23..787ba2cdec 100644
-> --- a/target/ppc/mem_helper.c
-> +++ b/target/ppc/mem_helper.c
-> @@ -367,34 +367,6 @@ void helper_icbiep(CPUPPCState *env, target_ulong addr)
->  #endif
->  }
->  
-> -/* XXX: to be tested */
-> -target_ulong helper_lscbx(CPUPPCState *env, target_ulong addr, uint32_t reg,
-> -                          uint32_t ra, uint32_t rb)
-> -{
-> -    int i, c, d;
-> -
-> -    d = 24;
-> -    for (i = 0; i < xer_bc; i++) {
-> -        c = cpu_ldub_data_ra(env, addr, GETPC());
-> -        addr = addr_add(env, addr, 1);
-> -        /* ra (if not 0) and rb are never modified */
-> -        if (likely(reg != rb && (ra == 0 || reg != ra))) {
-> -            env->gpr[reg] = (env->gpr[reg] & ~(0xFF << d)) | (c << d);
-> -        }
-> -        if (unlikely(c == xer_cmp)) {
-> -            break;
-> -        }
-> -        if (likely(d != 0)) {
-> -            d -= 8;
-> -        } else {
-> -            d = 24;
-> -            reg++;
-> -            reg = reg & 0x1F;
-> -        }
-> -    }
-> -    return i;
-> -}
-> -
->  /*****************************************************************************/
->  /* Altivec extension helpers */
->  #if HOST_BIG_ENDIAN
-> -- 
-> 2.43.0
-> 
-> 
+>      if USE_ENGINE in [EngineEnum.AUTO, EngineEnum.PODMAN]:
+> -        commands += [["podman"]]
+> +        commands += [["podman"], ["podman-remote"], ["podman", "--remote"]]
+>      if USE_ENGINE in [EngineEnum.AUTO, EngineEnum.DOCKER]:
+>          commands += [["docker"], ["sudo", "-n", "docker"]]
+>      for cmd in commands:
+>          try:
+> -            # docker version will return the client details in stdout
+> -            # but still report a status of 1 if it can't contact the daemon
+> -            if subprocess.call(cmd + ["version"],
+> +            # 'version' is not sufficient to prove a working binary
+> +            # for podman. 'info' is a stronger check that is more
+> +            # likely to correlate with ability to create containers,
+> +            # and required to detect the need for podman remote
+> +            if subprocess.call(cmd + ["info"],
+>                                 stdout=DEVNULL, stderr=DEVNULL) == 0:
+>                  return cmd
+>          except OSError:
+
+Taking a look at why tcg tests are slow to compile, I reached this
+commit. It seems like that calling 'podman info' is 5 to 10 times slower
+than calling 'podman version'.
+Thus, a container run now takes +1s when it was 0.2 before.
+
+On my setup, podman (remote) version fails correctly if it can't
+establish a connection.
+
+The commit description briefly says
+```
+The current 'podman version' check is insufficient to detect the
+inability to launch containers, so it is replaced with the stronger
+'podman info' check.
+```
+but it's not what I observed.
+
+Do you have more information about what is the exact reason we can't use
+'podman version' for podman-remote?
+
+Regards,
+Pierrick
 
