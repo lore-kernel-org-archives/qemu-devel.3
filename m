@@ -4,42 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1BB4C43458
-	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 15:25:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D32CC43458
+	for <qemu-devel@archiver.kernel.org>; Thu,  9 Jul 2026 15:25:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whqci-0008Mb-9O; Thu, 09 Jul 2026 11:25:12 -0400
+	id 1whqcz-0000rw-0D; Thu, 09 Jul 2026 11:25:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1whqcg-0008IE-3l; Thu, 09 Jul 2026 11:25:10 -0400
+ id 1whqcx-0000oA-E1; Thu, 09 Jul 2026 11:25:27 -0400
 Received: from smtp2-g21.free.fr ([2a01:e0c:1:1599::11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1whqce-0008KV-3m; Thu, 09 Jul 2026 11:25:09 -0400
+ id 1whqcv-0008TD-W2; Thu, 09 Jul 2026 11:25:27 -0400
 Received: from localhost (unknown [89.92.102.124])
  (Authenticated sender: emmanuel.blot@free.fr)
- by smtp2-g21.free.fr (Postfix) with ESMTPSA id D71552003D3;
- Thu,  9 Jul 2026 17:24:48 +0200 (CEST)
+ by smtp2-g21.free.fr (Postfix) with ESMTPSA id D01352003D0;
+ Thu,  9 Jul 2026 17:25:06 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
- s=smtp-20201208; t=1783610706;
- bh=7Z7eCg8fN9+L3Nr+gHPabU3QFP5nsLFgd58dIgxmT20=;
+ s=smtp-20201208; t=1783610724;
+ bh=qgrnOtzqZvVPJsK5XjTyaMP4kgKLz0kEI72U6v+M054=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=DkvkNLNAd1iCSDLk3nd4DqLr6Rf5TiimmwdP6oL12XTKE5nhRZ2vEPAoC/3zcDyr5
- 31wQe3JQbgGnMdP8jkjOyJ/hziC6gGy2fm9HopWAtb7I0/f6xCaMXKUOBdTcmGCThN
- Ays5a2X9dSOctxUqFkBaKonxYVDEFdi6xVhodbAchnq2eYA683qrwtBLCswgkQ8zFb
- 1jfpqgwZAstE4I3yMziv5qR5qKKngpPujIcKaMjtoz6qmOwQ5EAxcshXU34KebgAve
- j7y5QtrwfLWbPLFafs7i2c/pSVGEvZcTrYyKBYR8gFGplYdL/L4/WONoLudq1uzUx3
- ogSl7Anskm1sA==
+ b=WXgaY601rijQdNRWMFpx9y33fiXbKfS/QD7fdc1hsF/ORWHY7pPqKXQRqP32ebgze
+ WZXw/Fl0UpsVEdHgtcf0WXR+O2nIFqMptCOHLXGPVVFLRSF0XN9X1PLm4E0AIBsHW1
+ 60RQ+3loTnTiYK9muYCXZktaGf4070YuZlWLjyMrsBcldqVTUZ/MoT3buVOTXedqiE
+ b09cemCz19vh7xDfhfe9ZIPREHQFe3DI8syiIBm+PZAoYM5bgD1F6vHPCiIBa1Ko9B
+ 35sxDSF6i6QdXHkBGbmqNqti5AxgnfUc0HEtfD/SLhRG6xTF1c+GP8oIifIbYQOWFW
+ Wh1YaXAujigeA==
 From: Emmanuel Blot <emmanuel.blot@free.fr>
-Date: Thu, 09 Jul 2026 17:23:40 +0200
-Subject: [PATCH 02/29] hw/gpio: pca9552: move PCA955xState definition out
- of the header
+Date: Thu, 09 Jul 2026 17:23:41 +0200
+Subject: [PATCH 03/29] hw/gpio: pca9552: rename I2CSlave member to parent_obj
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260709-catalina-upgrade-v1-2-814575bc076b@free.fr>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260709-catalina-upgrade-v1-3-814575bc076b@free.fr>
 References: <20260709-catalina-upgrade-v1-0-814575bc076b@free.fr>
 In-Reply-To: <20260709-catalina-upgrade-v1-0-814575bc076b@free.fr>
 To: qemu-devel@nongnu.org
@@ -53,11 +52,11 @@ Cc: Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org,
  Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
  Corey Minyard <cminyard@mvista.com>, Emmanuel Blot <emmanuel.blot@free.fr>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783610647; l=3933;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1783610647; l=1001;
  i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=7Z7eCg8fN9+L3Nr+gHPabU3QFP5nsLFgd58dIgxmT20=;
- b=xK4JxD/vDva0fOhv3Y/chtWQKRtOrET6oIkqb2X3g9QR+MUrMoDYk62InGw8s8ykpR2WXb2JK
- zv4rJ+vOSrGBOB9DrYX7RbbAiSNySwhwAyc5636Lq/BH9q79EO/+NGR
+ bh=qgrnOtzqZvVPJsK5XjTyaMP4kgKLz0kEI72U6v+M054=;
+ b=OSzJuhjJeYttM7oSV/lNlb91xHHvYPaB+zncy8jIftzN4KhrU6QD6KzegRewFyL7gYOBtgrFi
+ 4tzJKb4Iea9A3RfQ98tBpXqtWLlJBiDyRPdd/jJlCVYcHI95Drjzzqn
 X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
  pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
 Received-SPF: pass client-ip=2a01:e0c:1:1599::11;
@@ -84,134 +83,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nothing outside pca9552.c uses the PCA955xState structure, its instance
-checker, or the PCA955X_NR_REGS/PCA955X_PIN_COUNT_MAX defines: the board
-files and qtests only rely on the TYPE_* name macros (and the register
-macros in pca9552_regs.h).
-
-Move the state structure and the size defines into pca9552.c, leaving
-pca9552.h with just the type-name macros. While at it, replace the
-separate DECLARE_INSTANCE_CHECKER and DECLARE_CLASS_CHECKERS declarations
-with a single OBJECT_DECLARE_TYPE().
+Use the conventional parent_obj name for the embedded I2CSlave instance.
 
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 ---
- hw/gpio/pca9552.c         | 29 ++++++++++++++++++++++++-----
- include/hw/gpio/pca9552.h | 30 ++++--------------------------
- 2 files changed, 28 insertions(+), 31 deletions(-)
+ hw/gpio/pca9552.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/hw/gpio/pca9552.c b/hw/gpio/pca9552.c
-index 50e868a6e9a..36bc4f86edb 100644
+index 36bc4f86ed..da21e56aab 100644
 --- a/hw/gpio/pca9552.c
 +++ b/hw/gpio/pca9552.c
-@@ -1,7 +1,10 @@
- /*
-- * PCA9552 I2C LED blinker
-+ * PCA955X I2C LED blinker and I/O expanders
-  *
-  *     https://www.nxp.com/docs/en/application-note/AN264.pdf
-+ *     https://www.nxp.com/docs/en/data-sheet/PCA9552.pdf
-+ *     https://www.nxp.com/docs/en/data-sheet/PCA9555.pdf
-+ *     https://www.nxp.com/docs/en/data-sheet/PCA9535_PCA9535C.pdf
-  *
-  * Copyright (c) 2017-2018, IBM Corporation.
-  * Copyright (c) 2020 Philippe Mathieu-Daudé
-@@ -12,9 +15,9 @@
+@@ -34,7 +34,7 @@ OBJECT_DECLARE_TYPE(PCA955xState, PCA955xClass, PCA955X)
  
- #include "qemu/osdep.h"
- #include "qemu/log.h"
--#include "qemu/module.h"
- #include "qemu/bitops.h"
- #include "hw/core/qdev-properties.h"
-+#include "hw/i2c/i2c.h"
- #include "hw/gpio/pca9552.h"
- #include "hw/gpio/pca9552_regs.h"
- #include "hw/core/irq.h"
-@@ -24,6 +27,25 @@
- #include "trace.h"
- #include "qom/object.h"
- 
-+#define PCA955X_NR_REGS 10
-+#define PCA955X_PIN_COUNT_MAX 16
-+
-+OBJECT_DECLARE_TYPE(PCA955xState, PCA955xClass, PCA955X)
-+
-+struct PCA955xState {
-+    /*< private >*/
-+    I2CSlave i2c;
-+    /*< public >*/
-+
-+    uint8_t len;
-+    uint8_t pointer;
-+
-+    uint8_t regs[PCA955X_NR_REGS];
-+    qemu_irq gpio_out[PCA955X_PIN_COUNT_MAX];
-+    uint8_t ext_state[PCA955X_PIN_COUNT_MAX];
-+    char *description; /* For debugging purpose only */
-+};
-+
- struct PCA955xClass {
+ struct PCA955xState {
      /*< private >*/
-     I2CSlaveClass parent_class;
-@@ -33,10 +55,7 @@ struct PCA955xClass {
-     uint8_t max_reg;
-     bool has_led_support;
- };
--typedef struct PCA955xClass PCA955xClass;
- 
--DECLARE_CLASS_CHECKERS(PCA955xClass, PCA955X,
--                       TYPE_PCA955X)
- /*
-  * Note:  The LED_ON and LED_OFF configuration values for the PCA955X
-  *        chips are the reverse of the PCA953X family of chips.
-diff --git a/include/hw/gpio/pca9552.h b/include/hw/gpio/pca9552.h
-index 43b175235d2..71479ea0006 100644
---- a/include/hw/gpio/pca9552.h
-+++ b/include/hw/gpio/pca9552.h
-@@ -1,39 +1,17 @@
- /*
-- * PCA9552 I2C LED blinker
-+ * PCA955X I2C LED blinker and I/O expanders
-  *
-  * Copyright (c) 2017-2018, IBM Corporation.
-  *
-  * This work is licensed under the terms of the GNU GPL, version 2 or
-  * later. See the COPYING file in the top-level directory.
-  */
--#ifndef PCA9552_H
--#define PCA9552_H
- 
--#include "hw/i2c/i2c.h"
--#include "qom/object.h"
-+#ifndef HW_GPIO_PCA9552_H
-+#define HW_GPIO_PCA9552_H
- 
--#define TYPE_PCA9552 "pca9552"
- #define TYPE_PCA955X "pca955x"
-+#define TYPE_PCA9552 "pca9552"
- #define TYPE_PCA9535 "pca9535"
--typedef struct PCA955xState PCA955xState;
--DECLARE_INSTANCE_CHECKER(PCA955xState, PCA955X,
--                         TYPE_PCA955X)
--
--#define PCA955X_NR_REGS 10
--#define PCA955X_PIN_COUNT_MAX 16
--
--struct PCA955xState {
--    /*< private >*/
 -    I2CSlave i2c;
--    /*< public >*/
--
--    uint8_t len;
--    uint8_t pointer;
--
--    uint8_t regs[PCA955X_NR_REGS];
--    qemu_irq gpio_out[PCA955X_PIN_COUNT_MAX];
--    uint8_t ext_state[PCA955X_PIN_COUNT_MAX];
--    char *description; /* For debugging purpose only */
--};
++    I2CSlave parent_obj;
+     /*< public >*/
  
- #endif
+     uint8_t len;
+@@ -401,7 +401,7 @@ static const VMStateDescription pca9552_vmstate = {
+         VMSTATE_UINT8(pointer, PCA955xState),
+         VMSTATE_UINT8_ARRAY(regs, PCA955xState, PCA955X_NR_REGS),
+         VMSTATE_UINT8_ARRAY(ext_state, PCA955xState, PCA955X_PIN_COUNT_MAX),
+-        VMSTATE_I2C_SLAVE(i2c, PCA955xState),
++        VMSTATE_I2C_SLAVE(parent_obj, PCA955xState),
+         VMSTATE_END_OF_LIST()
+     }
+ };
 
 -- 
 2.50.1
