@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31DEFC43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 21:03:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92EAAC43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 21:03:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiIKG-00035d-3t; Fri, 10 Jul 2026 17:00:00 -0400
+	id 1wiIF7-0001el-Ig; Fri, 10 Jul 2026 16:54:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wiIIQ-0000yE-4X
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 16:58:13 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ id 1wiIF2-0001bg-MK
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 16:54:36 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wiIID-0001xB-Iv
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 16:58:05 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-383cb94f742so1237580a91.3
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 13:57:52 -0700 (PDT)
+ id 1wiIEo-0000kn-Ku
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 16:54:36 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-84864b41100so1173801b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 13:54:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783717072; x=1784321872; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783716861; x=1784321661; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=XDiSL4skeBdw/QfZ4bPcuanFzLKyweW4gBYzMWPnN78=;
- b=SWigjjwV+adHRAHruT2Xzf4LIZ/QXekhl5kA0EvV/cGTTxJjhPwtaDkfEp35/n9uzq
- hQ+uKQ1Xjyxsykur9kI8zTq6EiDLtTfLKBzKd/mGCp8RdCe/ptxohScWZJDCqHhtTYPS
- 0rfng+ByxQhUS9VgGypuw7XFDrF1nF362CFcaDX7D0jn9naGvnP9EySQ4ZqpJSS39TV2
- UQe/ldUZPvp5ZkAA7lDMeiU0+OFrfXQXDE8+EWYDFVahuhEoqxkkcPMF9O7e01RYS/mH
- BA/U2hJHub7wxTYbqX5GVahcN3+9gdVS7Do/wba1da75/Gq/urmZzIKrjcVFDw2kPOvP
- W/aQ==
+ bh=9b7zTETWU90o56GcX57svy4revXN3qZdBYXrx4oYXfA=;
+ b=YNqTHRTdrERMIIJfD8UxOqF0hYvmFQ64eCYxJy05/PSJB6sPhbguUY7SVCdrGMXFyB
+ zz8WTZnxn9GNNGnpLnG0QyNY6LbFc3oi3sccENFYyu4hISfztHWTtWBtZEli31mJa3g+
+ aM2zwmrNq1PGu2whbavryzv2H2gyt8i3YOSb0XsaU4Zm8JrA3HVFf056o05JWH3a7VO9
+ eNX92ugdo2042ifgCbL2Ud83NqgN/UHZ1jXgDIsyaBWSkVHBpO6NABTC8HdqYTsrhO5i
+ 49J7VDydY/mKGI9nzauFY/oVmJv82mI0Hz2+MwZpLlF2y4+Nn/PxgA/M5y87hyk99vgc
+ YAhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783717072; x=1784321872;
+ d=1e100.net; s=20251104; t=1783716861; x=1784321661;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=XDiSL4skeBdw/QfZ4bPcuanFzLKyweW4gBYzMWPnN78=;
- b=oMGpo7JCiHV4JbITCGKo4Mqla/1X0SyNU+qdLEmN8PO+qMUvfhvvQzhHVSoJFK7vty
- UUFdj5ZF04aXCVGEenoteMTUYx4G+Dghk7Pzv/xMzlFVRUjdT/tGIrEIaTiS3bBjLvCP
- 3ZZAajizYzuCAZ74wXUCxQEaDzGLI/n7VvpH3sh5CZH6Ui25T0a2iM7v72ViKQb9Tb5v
- dJMU56cMcMK6JV8NuwBLWhBDPgYefFKv2Y9J6IZbG2dLcKmSs2J/k9JEoobu7+lEd8A/
- O8Wn8TXnSdhujea49uFNacXfM9wqT2ex/tbpdyhwSOxVt2u4x0u66hEVDZ6PmW2lby2O
- dcvw==
-X-Gm-Message-State: AOJu0YzqKJKb6nIiS3u1PIJHFWQJdDAIqhgr1EJhYMXLdYsTzoNWelMK
- G0XKpZi/UOvAERggcyv2R8ZzK/E18O6+SNXN5nFV9uPRieh1CBROt7QcQvx+F5l4Qp5qjPY4rHG
- O9haY
-X-Gm-Gg: AfdE7cn0sMUZeMkYgfb1Zg+8+BGACwS7TN8HjHUU/RT1RwNVh3TNIqYYsVnmmvTo+Iu
- QNKKhZCWaoajR5eLIvDjT/uHk2DNpqc90mi7ZcsdtpqJr0ZaeUgUVYhFn+UAHLpB58OpOGaUhYq
- 6TZtdMlzU+8fmztkDK7OxGUfzexuNWHYyRwdgoYV/L0H+XUhYfBaegbDz/WzwIHwxi/noYbAcp3
- DtUqITz2LfR9LGiXazPjI5y4lQKHeqVGC0EpTnDgarkqxdXxZMrd+Cs7ihX8AaAno3gTAC1i9HO
- m8iNliAKIFUaOjsTY7RjxbNK0JY9dL8MRvq/MuzX+HudVUOgw4BNYz2yA6yfxmcnPZd7UfYWoJN
- f2aQo9yybFIa8A1p3UZZE70F2tqyB4c0NWr8BbVQKJX4GpaG3AMtN/WuSmDkBhbDZ5mj6JdfyQ2
- CoLpidJZvmOkRz46YKAw==
-X-Received: by 2002:a17:90b:3806:b0:37f:e326:6559 with SMTP id
- 98e67ed59e1d1-38dc7b37972mr513114a91.22.1783717071586; 
- Fri, 10 Jul 2026 13:57:51 -0700 (PDT)
+ bh=9b7zTETWU90o56GcX57svy4revXN3qZdBYXrx4oYXfA=;
+ b=A1nRkPrZfgbaFeqZ6fGFwqZRiU1A2Ba10meAQioVK2k+Rf5pwYOQGdFnUFl5oHFv29
+ y/YPOVK+AiEaAPiZ1vZ0Rxr2peX7O6u4wdG9wogkATdHLk4WiJNhNFG3LUiGzKo63UKi
+ E7YIJjbeVC5XYi2kN3wqIU2r8GafLujCyQHoZ5k0m4HayLCaCN+1ybwWx3kxCETSGm19
+ Z/C68bzCmqwA3EE4ahNnuTRgH4C6XIdytic4mbX6z5rH9ieZ9Jc+STDXzHzk5cQtXtt2
+ 7YCGJLRu0Owxm46KZL6rpo2yknUxpCH890o21R7bdikZbBOd7CIeePenPPfjdPDrlaM6
+ q7MA==
+X-Gm-Message-State: AOJu0Ywh0P+EWf0oawbQ/xmAFwT4SJbWxApKiYQFUuKP/SGlHFmu41Fk
+ 3o+iQGP2p3jzvsRstRBeDyT4wdSuDa9ltDpuRwwrT8GpwHW0YPihnVYL0vQOoJSDwodb5IKbH/B
+ wjmxP
+X-Gm-Gg: AfdE7ckWae0wk2tH7shMVYZMGfZoSGdkfODsXopRD0FUOAJ+LO8ydU/M7Zowyzgfcj9
+ NTRiNZR0T+ot4gHj7A1fvH/tIUZIDi3GuogfrLl4r4+4aPGWeLkUCvQ2+eL/JuOjWI6CCrqo0/N
+ a9Y32h3c7xRMqZ1IVpM9ntyjyv6N2WexDdm1jPj1SICjXxMvsGF6pm4ZBZuXKtZyH+cllAVfYtO
+ K8O5ChpPz+yIfjmcYAasY4a5rBJoidHepnaoB2OWxzGvjlOjAzAqGPuT3yS5e79dN64Wv9+s4mD
+ S3L6f/b0eawM6FEQci1djxkEKOK4D/TLmw8QUDp+bxCQ6rAZyxonPMY6QUuFeJi5AHnwc9Hp11m
+ +viHx553VPJPPZ4dDIrBNSszM5BI0kfhJXpTIHUknHHyKD7yH0Onb4/uF3Kz3mjjk8quKD3EHUE
+ TfqK6HMV8nqOdC+ZWQeQ==
+X-Received: by 2002:a05:6a00:b47:b0:837:e9cc:d474 with SMTP id
+ d2e1a72fcca58-8488974f808mr577808b3a.2.1783716861043; 
+ Fri, 10 Jul 2026 13:54:21 -0700 (PDT)
 Received: from stoup.. ([71.212.146.49]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38a58792cdasm3256221a91.16.2026.07.10.13.57.51
+ d2e1a72fcca58-847f6d76106sm10780574b3a.40.2026.07.10.13.54.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Jul 2026 13:57:51 -0700 (PDT)
+ Fri, 10 Jul 2026 13:54:20 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
- qemu-s390x@nongnu.org, jcmvbkbc@gmail.com, qemu-stable@nongnu.org
-Subject: [PATCH v3 48/51] target/arm: Be more defensive for invalid
- tlbi_aa64_get_range
-Date: Fri, 10 Jul 2026 13:53:58 -0700
-Message-ID: <20260710205401.836304-49-richard.henderson@linaro.org>
+ qemu-s390x@nongnu.org, jcmvbkbc@gmail.com
+Subject: [PATCH v3 17/51] gdbstub: Report actual watchpoint trigger address
+Date: Fri, 10 Jul 2026 13:53:27 -0700
+Message-ID: <20260710205401.836304-18-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260710205401.836304-1-richard.henderson@linaro.org>
 References: <20260710205401.836304-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: 4
 X-Spam_score: 0.4
 X-Spam_bar: /
@@ -101,30 +100,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It's possible to program TCR_ELx with an invalid granule size,
-which could match passing an invalid granule size to TLBI RVA,
-which would then fall through to assert in arm_granule_bits.
+While gdb doesn't care either way, it seems more correct to
+report the address of the watchpoint hit, rather than the
+beginning of the watchpoint region.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 3c003f7029e ("target/arm: Use ARMGranuleSize in ARMVAParameters")
+Adjust all virtualization hosts which construct a dummy
+CPUWatchpoint structure.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/tlb-insns.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ gdbstub/system.c       | 4 ++--
+ target/arm/hvf/hvf.c   | 1 +
+ target/arm/kvm.c       | 1 +
+ target/i386/kvm/kvm.c  | 4 ++--
+ target/ppc/kvm.c       | 4 ++--
+ target/s390x/kvm/kvm.c | 2 +-
+ 6 files changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/target/arm/tcg/tlb-insns.c b/target/arm/tcg/tlb-insns.c
-index 1a0a332583..b24eb57788 100644
---- a/target/arm/tcg/tlb-insns.c
-+++ b/target/arm/tcg/tlb-insns.c
-@@ -854,7 +854,7 @@ static TLBIRange tlbi_aa64_get_range(CPUARMState *env, ARMMMUIdx mmuidx,
-     gran = tlbi_range_tg_to_gran_size(page_size_granule);
+diff --git a/gdbstub/system.c b/gdbstub/system.c
+index 724fd24c00..b36e957b95 100644
+--- a/gdbstub/system.c
++++ b/gdbstub/system.c
+@@ -166,10 +166,10 @@ static void gdb_vm_state_change(void *opaque, bool running, RunState state)
+             }
+             trace_gdbstub_hit_watchpoint(type,
+                                          gdb_get_cpu_index(cpu),
+-                                         cpu->watchpoint_hit->vaddr);
++                                         cpu->watchpoint_hit->hitaddr);
+             g_string_printf(buf, "T%02xthread:%s;%swatch:%" VADDR_PRIx ";",
+                             GDB_SIGNAL_TRAP, tid->str, type,
+-                            cpu->watchpoint_hit->vaddr);
++                            cpu->watchpoint_hit->hitaddr);
+             cpu->watchpoint_hit = NULL;
+             goto send_packet;
+         } else {
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index da3ec521fc..70edb2f219 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -2375,6 +2375,7 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
+         if (!wp) {
+             error_report("EXCP_DEBUG but unknown hw watchpoint");
+         }
++        wp->hitaddr = excp->virtual_address;
+         cpu->watchpoint_hit = wp;
+         break;
+     }
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index d40a6a9859..ebe4ecbb77 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -1519,6 +1519,7 @@ static bool kvm_arm_handle_debug(ARMCPU *cpu,
+     {
+         CPUWatchpoint *wp = find_hw_watchpoint(cs, debug_exit->far);
+         if (wp) {
++            wp->hitaddr = debug_exit->far;
+             cs->watchpoint_hit = wp;
+             return true;
+         }
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 8161831de2..51ff5cd767 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -6264,13 +6264,13 @@ static int kvm_handle_debug(X86CPU *cpu,
+                     case 0x1:
+                         ret = EXCP_DEBUG;
+                         cs->watchpoint_hit = &hw_watchpoint;
+-                        hw_watchpoint.vaddr = hw_breakpoint[n].addr;
++                        hw_watchpoint.hitaddr = hw_breakpoint[n].addr;
+                         hw_watchpoint.flags = BP_MEM_WRITE;
+                         break;
+                     case 0x3:
+                         ret = EXCP_DEBUG;
+                         cs->watchpoint_hit = &hw_watchpoint;
+-                        hw_watchpoint.vaddr = hw_breakpoint[n].addr;
++                        hw_watchpoint.hitaddr = hw_breakpoint[n].addr;
+                         hw_watchpoint.flags = BP_MEM_ACCESS;
+                         break;
+                     }
+diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+index 1a093e1f83..2a98ed89c8 100644
+--- a/target/ppc/kvm.c
++++ b/target/ppc/kvm.c
+@@ -1589,11 +1589,11 @@ static int kvm_handle_hw_breakpoint(CPUState *cs,
+                                         KVMPPC_DEBUG_WATCH_WRITE)) {
+             BreakpointFlags flag = 0;
  
-     /* The granule encoded in value must match the granule in use. */
--    if (gran != param.gran) {
-+    if (gran != param.gran || gran == GranInvalid) {
-         qemu_log_mask(LOG_GUEST_ERROR, "Invalid tlbi page size granule %d\n",
-                       page_size_granule);
-         return ret;
+-            n = find_hw_watchpoint(arch_info->address,  &flag);
++            n = find_hw_watchpoint(arch_info->address, &flag);
+             if (n >= 0) {
+                 handle = DEBUG_RETURN_GDB;
+                 cs->watchpoint_hit = &hw_watchpoint;
+-                hw_watchpoint.vaddr = hw_debug_points[n].addr;
++                hw_watchpoint.hitaddr = arch_info->address;
+                 hw_watchpoint.flags = flag;
+             }
+         }
+diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
+index 6f7f75f601..89e90a84ec 100644
+--- a/target/s390x/kvm/kvm.c
++++ b/target/s390x/kvm/kvm.c
+@@ -1864,7 +1864,7 @@ static int kvm_arch_handle_debug_exit(S390CPU *cpu)
+     case KVM_HW_WP_WRITE:
+         if (find_hw_breakpoint(arch_info->addr, -1, arch_info->type)) {
+             cs->watchpoint_hit = &hw_watchpoint;
+-            hw_watchpoint.vaddr = arch_info->addr;
++            hw_watchpoint.hitaddr = arch_info->addr;
+             hw_watchpoint.flags = BP_MEM_WRITE;
+             ret = EXCP_DEBUG;
+         }
 -- 
 2.43.0
 
