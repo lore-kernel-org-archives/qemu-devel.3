@@ -4,70 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4843C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 06:55:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E814CC43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 07:07:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi58D-0008EW-0s; Fri, 10 Jul 2026 02:54:41 -0400
+	id 1wi5JQ-0001cb-I8; Fri, 10 Jul 2026 03:06:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1wi58A-0008Dv-V7; Fri, 10 Jul 2026 02:54:38 -0400
-Received: from smtp2-g21.free.fr ([212.27.42.2])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wi5JO-0001bs-D8
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 03:06:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1wi588-0001QM-Ns; Fri, 10 Jul 2026 02:54:38 -0400
-Received: from localhost (unknown [89.92.102.124])
- (Authenticated sender: emmanuel.blot@free.fr)
- by smtp2-g21.free.fr (Postfix) with ESMTPSA id E36922003CA;
- Fri, 10 Jul 2026 08:54:14 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
- s=smtp-20201208; t=1783666473;
- bh=ToGYoeQq6hYz/IP1kPqkClccSwvZPQbTO/IYBcwXWv4=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=paKyMSu55luiY5d8DyywUgvJ9UKfGysGA1YO85fIjQEAmCsDrVMp07COK7gp7efOe
- 4IJ80XtcvnoV6vYIivt/4DbPw139T5shc3Vxcb6qvbQ4c4ypK3yHtJ9gFzFEAXofQX
- XefW5i8SWAWv5EeMHUi+Z1r1w6hQLedO3LTB8xXbT+Fh5GQg+FiCAfOxtRRjqvBBM2
- hszV5IPlruA/Y5xxnR1yqRUlghYNCdknuqkawp2e9iY6jFfZYNMrX7j9hFDzcrsmkJ
- G9jt74KjY22Yz7LHgDXjJaN2ERX9UXtrrHdgK9EI3BHTH0hwkgpuksIJLoMLS4L3qq
- NO7EgMpE0MnkQ==
-From: Emmanuel Blot <emmanuel.blot@free.fr>
-Date: Thu, 09 Jul 2026 17:23:15 +0200
-Subject: [PATCH 23/29] tests/qtest: pca9554: test the PCA9536 4-bit variant
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wi5JL-0002mZ-M2
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 03:06:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783667170;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=BA3zZUPyelCMWKs4FcfDK0ObJLwr6OM7SdxtcjefBws=;
+ b=eKgz+TxtskU+vs5bvmVYzTRdsf1/wruVFKQqnd6L38IEF21JzY27I3GefnlnjlvR2wGemk
+ w7IxgKqi/NFgLuHQ3GohlIIt43vLTrHoQTz7KZjXuJMcdUrQwittEMNYrhD774FBsD0Twa
+ VkSDFv2Gl0GkRN35IVQ+6qXjL0eH5mU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-616-6nRvkKPhNkCrIGKJnm5cjA-1; Fri,
+ 10 Jul 2026 03:06:06 -0400
+X-MC-Unique: 6nRvkKPhNkCrIGKJnm5cjA-1
+X-Mimecast-MFC-AGG-ID: 6nRvkKPhNkCrIGKJnm5cjA_1783667161
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 887111955D5E; Fri, 10 Jul 2026 07:05:59 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3723E180029C; Fri, 10 Jul 2026 07:05:56 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id C233521E6920; Fri, 10 Jul 2026 09:05:53 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org,  Aditya Gupta <adityag@linux.ibm.com>,  Alexander
+ Graf <graf@amazon.com>,  Alexandre Iooss <erdnaxe@crans.org>,  Alexey
+ Kardashevskiy <aik@ozlabs.ru>,  Alistair Francis
+ <Alistair.Francis@wdc.com>,  Alistair Francis <alistair@alistair23.me>,
+ Antony Pavlov <antonynpavlov@gmail.com>,  Artyom Tarasenko
+ <atar4qemu@gmail.com>,  Bernhard Beschow <shentey@gmail.com>,  Bibo Mao
+ <maobibo@loongson.cn>,  Brian Cain <brian.cain@oss.qualcomm.com>,  Chao
+ Liu <chao.liu@processmission.com>,  Christian Borntraeger
+ <borntraeger@linux.ibm.com>,  =?utf-8?Q?Cl=C3=A9ment?= Chigot
+ <chigot@adacore.com>,  =?utf-8?Q?C=C3=A9dric?=
+ Le Goater <clg@kaod.org>,  Dorjoy Chowdhury <dorjoychy111@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,  Eric Farman
+ <farman@linux.ibm.com>,  Farhan Ali <alifm@linux.ibm.com>,  Felipe Balbi
+ <balbi@kernel.org>,  Francisco Iglesias <francisco.iglesias@amd.com>,
+ Frederic Konrad <konrad.frederic@yahoo.fr>,  Gaurav Sharma
+ <gaurav.sharma_7@nxp.com>,  Gautam Gala <ggala@linux.ibm.com>,  Glenn
+ Miles <milesg@linux.ibm.com>,  Halil Pasic <pasic@linux.ibm.com>,  Hao Wu
+ <wuhaotsh@google.com>,  Harsh Prateek Bora <harshpb@linux.ibm.com>,  Helge
+ Deller <deller@gmx.de>,  Hendrik Brueckner <brueckner@linux.ibm.com>,
+ =?utf-8?Q?Herv=C3=A9?= Poussineau <hpoussin@reactos.org>,  Huacai Chen
+ <chenhuacai@kernel.org>,  Jan Kiszka <jan.kiszka@web.de>,  Jared Rossi
+ <jrossi@linux.ibm.com>,  Joel Stanley <joel@jms.id.au>,  Laurent Vivier
+ <laurent@vivier.eu>,  Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>,  Mark Cave-Ayland
+ <mark.cave-ayland@ilande.co.uk>,  Matthew Rosato <mjrosato@linux.ibm.com>,
+ Max Filippov <jcmvbkbc@gmail.com>,  Michael Rolnik <mrolnik@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,  Nicholas Piggin
+ <npiggin@gmail.com>,  Niek Linnenbank <nieklinnenbank@gmail.com>,  Palmer
+ Dabbelt <palmer@dabbelt.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Peter
+ Maydell <peter.maydell@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?=
+ <philmd@mailo.com>,  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Ran Wang <wangran@bosc.ac.cn>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Sai Pavan Boddu
+ <sai.pavan.boddu@amd.com>,  Samuel Tardieu <sam@rfc1149.net>,  Sergio
+ Lopez <slp@redhat.com>,  Song Gao <17746591750@163.com>,  Stafford Horne
+ <shorne@gmail.com>,  Subbaraya Sundeep <sundeep.lkml@gmail.com>,  Thomas
+ Huth <th.huth+qemu@posteo.eu>,  Tyrone Ting <kfting@nuvoton.com>,
+ qemu-arm@nongnu.org,  qemu-ppc@nongnu.org,  qemu-riscv@nongnu.org,
+ qemu-s390x@nongnu.org
+Subject: Re: Call to clean up QOM onboard devices lacking a parent
+In-Reply-To: <17c7f91b-8935-8ebf-a982-f91df755af81@eik.bme.hu> (BALATON
+ Zoltan's message of "Thu, 9 Jul 2026 18:02:58 +0200 (CEST)")
+References: <87se5scipx.fsf@pond.sub.org>
+ <17c7f91b-8935-8ebf-a982-f91df755af81@eik.bme.hu>
+Date: Fri, 10 Jul 2026 09:05:53 +0200
+Message-ID: <87a4rzxr1q.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260709-catalina-upgrade-v1-23-82a63fead90c@free.fr>
-References: <20260709-catalina-upgrade-v1-0-82a63fead90c@free.fr>
-In-Reply-To: <20260709-catalina-upgrade-v1-0-82a63fead90c@free.fr>
-To: qemu-devel@nongnu.org
-Cc: Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org, 
- qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
- Corey Minyard <cminyard@mvista.com>, Emmanuel Blot <emmanuel.blot@free.fr>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783610580; l=3824;
- i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=ToGYoeQq6hYz/IP1kPqkClccSwvZPQbTO/IYBcwXWv4=;
- b=EdnSyM14ah+fr5x+uLTcqdZauPe0qFxLQvWdgwDYzZZCuCC3yIhtMvYLNYHcjWJrxoJW79A4j
- jrigj7P6jrAA4qOLWkwCBnbdNajwx2cjRolPhi+FRaPPLo7PfZYe7aH
-X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
- pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=212.27.42.2; envelope-from=emmanuel.blot@free.fr;
- helo=smtp2-g21.free.fr
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,105 +124,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The PCA9536 shares the PCA9554 register map and code path but exposes
-only four pins. Add a pca9536 node and check its reset defaults and
-output-to-input reflection are masked to the low nibble.
+BALATON Zoltan <balaton@eik.bme.hu> writes:
 
-Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
----
- tests/qtest/pca9554-test.c | 70 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 70 insertions(+)
+> On Thu, 9 Jul 2026, Markus Armbruster wrote:
+>> A QOM object must be the child of exactly one parent.  This defines the
+>> QOM composition tree.  The link from parent to child is a property of
+>> the parent, and therefore has a name that is unique within its parent.
+>> An object's canonical QOM path is these names on the path from root to
+>> object in the QOM composition tree separated by '/'.
+>>
+>> For devices:
+>>
+>> * If a device is plugged in with -device / device_add, and it has an ID,
+>>  we make it a child of /machine/peripheral/ with name ID.  If it
+>>  doesn't have an ID, we make it a child of /machine/peripheral-anon/
+>>  with name device[N], where N counts up from zero.  The canonical QOM
+>>  path /machine/peripheral/ID is stable.  The canonical QOM path
+>>  /machine/peripheral-anon/device[N] isn't: it depends on the number of
+>>  devices already there.
+>>
+>> * If a device is part of another device, it should be its child.  The
+>>  child's canonical QOM path is the parent's plus '/CHILD-NAME'.  Stable
+>>  as long as the parent's path and the child name are.
+>>
+>> * "Should" because we have a lot of code that fails to pick the parent.
+>>  When such a device gets realized, we make it a child of
+>>  /machine/unattached/ orphanage with name device[N], where N counts up
+>>  from zero.  The canonical QOM path /machine/unattached/device[N]
+>>  depends on the number of children already in the orphanage, which
+>>  makes it unstable.
+>>
+>>  Letting code get away with not picking a parent was a mistake.  I
+>>  guess it "saved" us some thinking about what's part of what when
+>>  converting existing devices to QOM.  In other words, it enabled sloppy
+>>  hardware modeling.  We've been "saving" thinking ever since.
+>>
+>>  I want /machine/unattached/ to be empty.  If an onboard device isn't
+>>  part of another device, put it into /machine/ with a sensible name.
+>
+> The last time this came up I've asked a few questions but did not get an answer:
+>
+> 1. What's the use of the QOM composition tree? I never needed it and apart from being able to admire it in info qom-tree I don't know if it's used for anything. For a long time I did not even know about info qom-tree because I only needed info qtree and info mtree and rarely if ever need to look at the qom-tree. If it has no real use I'm happy to not think about it.
+>
+> 2. What is a QOM parent? There were proposals to parent devices to their bus if they have any, that's what qtree shows anyway. If it's something else it should be better defined somewhere.
+>
+> Without getting answers for these questions I don't think I'm able to fix the machines I maintain.
 
-diff --git a/tests/qtest/pca9554-test.c b/tests/qtest/pca9554-test.c
-index 0da1f3304b..5366e71984 100644
---- a/tests/qtest/pca9554-test.c
-+++ b/tests/qtest/pca9554-test.c
-@@ -129,6 +129,66 @@ static void test_no_autoincrement(void *obj, void *data,
-     g_assert_cmphex(i2c_get8(dev, PCA9554_POLARITY), ==, 0x33);
- }
- 
-+/*
-+ * The PCA9536 shares the PCA9554 register map but only has four pins, so its
-+ * reset defaults and pin logic are masked to the low nibble.
-+ */
-+static void test_pca9536_reset_defaults(void *obj, void *data,
-+                                        QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+
-+    g_assert_cmphex(i2c_get8(dev, PCA9554_INPUT), ==, 0x0F);
-+    g_assert_cmphex(i2c_get8(dev, PCA9554_OUTPUT), ==, 0x0F);
-+    g_assert_cmphex(i2c_get8(dev, PCA9554_POLARITY), ==, 0x00);
-+    g_assert_cmphex(i2c_get8(dev, PCA9554_CONFIG), ==, 0x0F);
-+}
-+
-+/* Only the four low pins are driven; the upper nibble stays low. */
-+static void test_pca9536_output_drives_input(void *obj, void *data,
-+                                             QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+
-+    i2c_set8(dev, PCA9554_CONFIG, 0x00);
-+
-+    i2c_set8(dev, PCA9554_OUTPUT, 0x0A);
-+    g_assert_cmphex(i2c_get8(dev, PCA9554_INPUT), ==, 0x0A);
-+
-+    i2c_set8(dev, PCA9554_OUTPUT, 0x00);
-+    g_assert_cmphex(i2c_get8(dev, PCA9554_INPUT), ==, 0x00);
-+}
-+
-+/*
-+ * The four upper bits address pins that do not exist on the PCA9536, so writes
-+ * to the register map discard them: the writable registers read back with bits
-+ * [7:4] cleared, and driving them onto the pins never surfaces in INPUT.
-+ */
-+static void test_pca9536_ignores_upper_bits(void *obj, void *data,
-+                                            QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+
-+    /* Bits [7:4] are dropped on write; bits [3:0] survive. */
-+    i2c_set8(dev, PCA9554_OUTPUT, 0xFA);
-+    g_assert_cmphex(i2c_get8(dev, PCA9554_OUTPUT), ==, 0x0A);
-+
-+    i2c_set8(dev, PCA9554_POLARITY, 0xF5);
-+    g_assert_cmphex(i2c_get8(dev, PCA9554_POLARITY), ==, 0x05);
-+
-+    i2c_set8(dev, PCA9554_CONFIG, 0xF3);
-+    g_assert_cmphex(i2c_get8(dev, PCA9554_CONFIG), ==, 0x03);
-+
-+    /*
-+     * With all four pins as outputs, driving 0xFF only affects the low
-+     * nibble.
-+     */
-+    i2c_set8(dev, PCA9554_POLARITY, 0x00);
-+    i2c_set8(dev, PCA9554_CONFIG, 0x00);
-+    i2c_set8(dev, PCA9554_OUTPUT, 0xFF);
-+    g_assert_cmphex(i2c_get8(dev, PCA9554_INPUT), ==, 0x0F);
-+}
-+
- static void pca9554_register_nodes(void)
- {
-     QOSGraphEdgeOptions opts = {
-@@ -148,6 +208,16 @@ static void pca9554_register_nodes(void)
-     qos_add_test("polarity-with-output", "pca9554", test_polarity_with_output,
-                  NULL);
-     qos_add_test("no-autoincrement", "pca9554", test_no_autoincrement, NULL);
-+
-+    qos_node_create_driver("pca9536", i2c_device_create);
-+    qos_node_consumes("pca9536", "i2c-bus", &opts);
-+
-+    qos_add_test("reset-defaults", "pca9536", test_pca9536_reset_defaults,
-+                 NULL);
-+    qos_add_test("output-drives-input", "pca9536",
-+                 test_pca9536_output_drives_input, NULL);
-+    qos_add_test("ignores-upper-bits", "pca9536",
-+                 test_pca9536_ignores_upper_bits, NULL);
- }
- 
- libqos_init(pca9554_register_nodes);
+Unfortunately, I don't have the time to teach a class on QOM basics
+today.  The text you quoted explains what QOM parent and canonical QOM
+path are, albeit briefly.  It also explains how to pick the QOM parent
+properly, what happens when you neglect to pick one, and why that's
+undesirable.  I'm going to elaborate a bit.
 
--- 
-2.50.1
+A fully constructed QOM object is part of the QOM composition tree.
+This is a fundamental property of QOM's design.
+
+A QOM object can be composed of sub-objects.  Its sub-objects are its
+children in the composition tree.  That's why it's named *composition*
+tree.
+
+Canonical QOM paths are visible at external interfaces both as input and
+as output.  A few quick examples:
+
+* QMP command query-cpus-fast reports a CPU's canonical QOM path.  For
+  some machines, we get something like "/machine/unattached/device[0]".
+  Fine as long as the client treats it as an opaque handle.  For other
+  machines, we get something like "/machine/soc/cpu", which is clearly
+  better.
+
+* Error messages use canonical QOM paths to identify devices.  With
+  properly modeled hardware, these paths are actually helpful for
+  humans.  Something like "/machine/unattached/device[7]" not so much.
+
+* QMP command device-sync-config accepts a QOM path argument.  With
+  properly modeled hardware, you can use a stable canonical QOM path.
+  But when the device is in the /machine/unattached orphanage, its
+  canonical QOM path is unstable.  A client has to first search the
+  orphanage to find today's path.
+
+Further questions?
 
 
