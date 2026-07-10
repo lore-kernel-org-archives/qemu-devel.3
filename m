@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 920A8C43458
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02BA8C44501
 	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 02:59:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi1Qs-0002k7-NW; Thu, 09 Jul 2026 22:57:42 -0400
+	id 1wi1PA-0007IH-Dj; Thu, 09 Jul 2026 22:55:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wi1Ql-0002Cn-Ok
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:57:36 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1wi1P8-0007Hv-B9
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:55:54 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wi1Qk-00007b-5c
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:57:35 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-8454160043aso382299b3a.3
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 19:57:33 -0700 (PDT)
+ id 1wi1P6-0008Lm-Os
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:55:54 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-8486672f03cso323879b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 19:55:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783652252; x=1784257052; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1783652151; x=1784256951; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=gcGJEAtnepMpUZxOeYdxA0flnG4QP3imNssCsJBk514=;
- b=AJnrn1frn4hoAKCufj8M9+x35idYFtWekbH+aUi5JhPVoXzYsMLh/EdH9Z7m3zfWnt
- IqIrD1fSdeZ75LtmHvOOuAgNGj5qbEj3UWnVIH0UnxXOjPXwv0JIbVoFlCAKhiZ04IrZ
- KTpvcSpG+2jJKwD9g89cKH0GbC5tWtYJNNMI5GviyJwiOntLFqpD3OfEcmom0fwIVgx8
- E7VvMtHCrh7+exGHGHirbwM9XSDDg58Lzo5xMiiKtsbbSBqi3994QCd7unVIVSvirrXb
- 2s78TH/gBMs3zQIuDRGIyt6WxbkMxToF2UjhRuu+XXzQjdbcZ+5oLvX8Bj+lmhU4a5z4
- BZvA==
+ bh=+40W3U3aXppQIKmmgpDKYpEBlgnR/8DBQlvnCXRDAHQ=;
+ b=rdqalGPjQ1Gcecw+gIc+sIKl1uBR1PqePZdYOrlbjRHABLcW1wARo4qyeEGuzjSgrX
+ HpzmfNk0W6ZiLgGvygrCVrAH5SfztQIxyw6i3qVQxlJxvMGUuaVc/Wvbg10A3s4sNKL3
+ ZnAS4nLjgE0ZSfogKsSlAiHhz0H+m3Jowru0CjihiQm5IyQn63hMQ8y8oWvlWW3FdSXc
+ uhWvV877HRr9rOhhPAN1cBXYjU2dt8WArBc/moFnKYOGuXHfV3wtgfFnQ83/Sjpr9FyA
+ D9WNNothikWSz4GToTqS/mhAr0x7xaM/iwMmTGo+ZGJEdxtqEovpkoHJSQkjjUy30hZ5
+ Wb+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783652252; x=1784257052;
+ d=1e100.net; s=20251104; t=1783652151; x=1784256951;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=gcGJEAtnepMpUZxOeYdxA0flnG4QP3imNssCsJBk514=;
- b=l56Tooja+vL1/2wC7sqgvfXlk3f/Fa8wNbQK7MXg0O+33f6rSWLJ1iy/P1dHBts48A
- dzzhg2/vpBGuuSL7D1bxOfX1mqBXphQNpYcmhr8ewMCCVkf8k75zcC392jhDyVGZy84R
- tvjbp7CTI3VaCmja8B80KiMM6AQRmhhDd7j5qOrN2JGAPtx1YtcSLpxkTfP3LLGqpry5
- /gcCFh8/79BWCC6d+mdF3UYr9PXIvOFIvqUIYSnObAF5cLxY+jvCe27lnqAmHSI9IGsS
- cXWqxLSWIDI71fFF0V4Fspp5nZHNBvBQiVJK/PVWRyVPfwkEqHoxhLwnF9jqz0lHvnVi
- imWQ==
-X-Gm-Message-State: AOJu0YzvcXe0IpNYsLXKr4DS5/Hiq4T+YrbEqmbg4IPpDUcFRdLLBMrQ
- n/f/QynRY4H7ougN3lhOFEyDiw2Owk79m0sbpKXcjfyk8aZeSKvnHlbTfejQgg==
-X-Gm-Gg: AfdE7clZ7i9kaMs3jDTlYXuIe+KanlesACJUWH+rCqXsL23O0NUA+Xwk/Y/0cB+/Jhn
- ILuiJyD6+cUvBq4VE2nwuyMH7tRobAh5z7qFYYWyXjzeGAikGXv8MjxtvFmXdSDXO6I2qBs72Jn
- FUnFLxc+iVOvDeCiVUr/Sfd924YXvm01yIOlJDy4wCwRmhEG31WmGUJmTlDLIHiT2CgdrfrtrNQ
- BiHAirEmH+NS/jdbGasK9TCLNFLqkpFJNYw75TyJRhPniftz4cuZA1fZvdTQFnKwaYMrAqg+pdj
- l569h+ZniN+5R36ygUUlpn1gzwyKwrR4UYZNOsq6tZcpSoNdhSlckud2qTm3kOcjAzcOSrxfwgO
- 55pAewYZUDLfR6ziESkQy+EMyjR0wSU6lVlO4CTVoDpxdPwWy8/iHDeGHto7Lfca4YGmJ4a+BGk
- DLh65TmsPqGwcWQvwfY8bByIP9mmspvDU=
-X-Received: by 2002:a05:6a00:1a91:b0:848:76af:db37 with SMTP id
- d2e1a72fcca58-84876afe05amr863914b3a.7.1783652252441; 
- Thu, 09 Jul 2026 19:57:32 -0700 (PDT)
+ bh=+40W3U3aXppQIKmmgpDKYpEBlgnR/8DBQlvnCXRDAHQ=;
+ b=r4XXcRaxM67Tx0lvxjJ9zH6ca/vt/E7srLkWodDjgR4C/Cs580JvlGRg2w6230FjKh
+ Y8q3qvmteMT1GzOH2Cg62JLLNPUH0uaKcaFfPuq8e/fhOIQXIzKO21ZfWyK6S1APHFTM
+ 62lcnEXMCEdSJQGdspa0zNz3dHCm4WkG7zAl2AGeVeSvyakqsEwpw2A4+ayuxUlhtxeW
+ 7QcHSIRgxgnIgZKta82ypOTbxF/19R8vdMX0oZ7Zp+sPkHwMCIMoTQZUA7/vhiNtikdW
+ 28JPhSvLzXx8vzEI+lffjcKNpReLYwG8Uoa3wycLTsydYNUq5B2odDvDEfBV0hItpHm3
+ EGLg==
+X-Gm-Message-State: AOJu0Yw2vab0buga8jhngkEtgjTf3Z4dJeT1cIRms/VAJnH40oz4c0Ub
+ 6IWi5jvxXCv7nwyT+xr6o7Lm0x42jXPLl3s4fbchWROp2sq/PwP05RYX8m3y7Q==
+X-Gm-Gg: AfdE7ckMFOXIf5dLAuZjpX4ZLy8gk565BHUkixJmZQC+aoivmqpV9ecJdRA7beY+SD4
+ Ryx9BI9td64ZoLj4V4k4Jh62NaqnyQgH8K8OzwL3qKeQ6iLNWl0d/lApAiOZYpHGNUX2/oRBqxe
+ lM9nc6Ca48oanGebWrTMP53uTG5ZJIhlrsF7W9tuFFo4fd/ScNl+DKBLOIx+j+1WFIySM40bppF
+ ZuT9GABrysyzmIi5dWnzByOuwLaKJw/3oNS6xdF6IweAfDja8xcCbHcWV92C0GPAVOjn6WqnBn5
+ GpR7041UjaSzpkjl2+bDr7VAU0SEDHMcPrHsqhkCs2Ck/RWDTwupxwdlX+jzxYF2dZb1SPmQ6S0
+ h52Ge9r8Ad8C1uzq6SCTfQnqhRPPhepuSRtS4Qnv4A4YdO91SWL+1DXuuYdZDw23xFXcpOHwijS
+ TZltCBBTfS/pPFrtjEa/htrKo6n20L4Q8=
+X-Received: by 2002:a05:6a21:700b:b0:3c0:9c19:65a5 with SMTP id
+ adf61e73a8af0-3c0bd3137b7mr12746467637.61.1783652151358; 
+ Thu, 09 Jul 2026 19:55:51 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-ca5af6e04fcsm4576769a12.4.2026.07.09.19.57.29
+ 41be03b00d2f7-ca5af6e04fcsm4576769a12.4.2026.07.09.19.55.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jul 2026 19:57:31 -0700 (PDT)
+ Thu, 09 Jul 2026 19:55:50 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Wang Yechao <wang.yechao255@zte.com.cn>,
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 36/40] target/riscv/kvm: add extensions after v7.1-rc4 update
-Date: Fri, 10 Jul 2026 12:55:21 +1000
-Message-ID: <20260710025525.1704417-37-alistair.francis@wdc.com>
+Subject: [PULL 04/40] hw/riscv/riscv-iommu.c: fault for non-user PTE in G_STAGE
+Date: Fri, 10 Jul 2026 12:54:49 +1000
+Message-ID: <20260710025525.1704417-5-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260710025525.1704417-1-alistair.francis@wdc.com>
 References: <20260710025525.1704417-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,36 +102,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Wang Yechao <wang.yechao255@zte.com.cn>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-Expose zilsd, zclsd and zalasr.
+riscv-iommu spec 1.0 says:
 
-Signed-off-by: Wang Yechao <wang.yechao255@zte.com.cn>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260707072610.403595-1-wang.yechao255@zte.com.cn>
+"When checking the U bit in a second-stage PTE, the transaction
+ is treated as not requesting supervisor privilege."
+
+We need to *always* fault in case we're on G_STAGE and PTE_U is cleared
+since we can't be on supervisor mode at this point.
+
+Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3555
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260701121111.537654-4-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/kvm/kvm-cpu.c | 3 +++
- 1 file changed, 3 insertions(+)
+ hw/riscv/riscv-iommu.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index dfcd6e3c77..495cb42dc8 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -303,10 +303,13 @@ static KVMCPUConfig kvm_multi_ext_cfgs[] = {
-     KVM_EXT_CFG("zihintntl", ext_zihintntl, KVM_RISCV_ISA_EXT_ZIHINTNTL),
-     KVM_EXT_CFG("zihintpause", ext_zihintpause, KVM_RISCV_ISA_EXT_ZIHINTPAUSE),
-     KVM_EXT_CFG("zihpm", ext_zihpm, KVM_RISCV_ISA_EXT_ZIHPM),
-+    KVM_EXT_CFG("zilsd", ext_zilsd, KVM_RISCV_ISA_EXT_ZILSD),
-     KVM_EXT_CFG("zimop", ext_zimop, KVM_RISCV_ISA_EXT_ZIMOP),
-     KVM_EXT_CFG("zcmop", ext_zcmop, KVM_RISCV_ISA_EXT_ZCMOP),
-+    KVM_EXT_CFG("zclsd", ext_zclsd, KVM_RISCV_ISA_EXT_ZCLSD),
-     KVM_EXT_CFG("zabha", ext_zabha, KVM_RISCV_ISA_EXT_ZABHA),
-     KVM_EXT_CFG("zacas", ext_zacas, KVM_RISCV_ISA_EXT_ZACAS),
-+    KVM_EXT_CFG("zalasr", ext_zalasr, KVM_RISCV_ISA_EXT_ZALASR),
-     KVM_EXT_CFG("zawrs", ext_zawrs, KVM_RISCV_ISA_EXT_ZAWRS),
-     KVM_EXT_CFG("zfa", ext_zfa, KVM_RISCV_ISA_EXT_ZFA),
-     KVM_EXT_CFG("zfbfmin", ext_zfbfmin, KVM_RISCV_ISA_EXT_ZFBFMIN),
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index c35e9f0119..6b20940b89 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -495,6 +495,16 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+             break;                /* Access bit not set */
+         } else if ((iotlb->perm & IOMMU_WO) && !ade && !(pte & PTE_D)) {
+             break;                /* Dirty bit not set */
++        } else if (pass == G_STAGE && !(pte & PTE_U)) {
++            /*
++             * riscv-iommu spec 1.0: "When checking the U bit in a
++             * second-stage PTE, the transaction is treated as
++             * not requesting supervisor privilege."
++             *
++             * I.e. we need to fault if this is a non-user PTE since
++             * we are always in user mode at this point.
++             */
++            break;
+         } else {
+             /* Leaf PTE, translation completed. */
+             sc[pass].step = sc[pass].levels;
 -- 
 2.54.0
 
