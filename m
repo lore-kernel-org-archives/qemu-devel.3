@@ -4,71 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3FC5C44507
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 10:59:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AA1CC43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 10:59:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi8wU-0006QL-2W; Fri, 10 Jul 2026 06:58:50 -0400
+	id 1wi8wz-0006VP-W6; Fri, 10 Jul 2026 06:59:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wi8wS-0006Q6-95
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 06:58:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wi8wQ-0001LL-AT
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 06:58:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783681123;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=UrzWsj8kIqgBGqcJvs+UBNmOFtQTPGguXJ+ziy5MbG8=;
- b=f947IatRlTqeYxgJQonPyqBaYDVXfJzzidRvFld4dJ3Otb1RM5h8Cvqce1cp98LYSSELVs
- DBDqeBr9GXPRZiUzSGU78S4nnnv9Og7cJNjK2EyyTI6qfetWKWV8UbAaW0uLrUDpsOWflq
- ATzZsNR2oeb63IqEppdMw2XLjNgn6Vo=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-92-cg1z-GSqPP66vlnCcyOewg-1; Fri,
- 10 Jul 2026 06:58:40 -0400
-X-MC-Unique: cg1z-GSqPP66vlnCcyOewg-1
-X-Mimecast-MFC-AGG-ID: cg1z-GSqPP66vlnCcyOewg_1783681119
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AE7A0180137B; Fri, 10 Jul 2026 10:58:38 +0000 (UTC)
-Received: from berrange.com (unknown [10.44.49.77])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E850C180056E; Fri, 10 Jul 2026 10:58:35 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Warner Losh <imp@bsdimp.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Kyle Evans <kevans@freebsd.org>, Li-Wen Hsu <lwhsu@freebsd.org>
-Subject: [PATCH] tests/vm: update to FreeBSD 14.4 image
-Date: Fri, 10 Jul 2026 11:58:33 +0100
-Message-ID: <20260710105833.84195-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wi8ws-0006Rz-Gb
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 06:59:14 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wi8wq-0001NW-QQ
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 06:59:14 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-493ec555a26so5428175e9.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 03:59:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1783681151; x=1784285951; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Q3wpaFTLm6nOZdl3we8uo+58Jj19P/ToBCyD+56rgIM=;
+ b=tEGdPw49XGQpn4yyFflndaJN1jJX1/Nsht7F9N9m+76JsH7z8uWWLEkJUHpvz1sA9y
+ B/t+BawlrksBtuHfm3n8dEdE3oUXrn8ys5ADQQW7jNiLNeYylfq1PRdDYvgoftcYuf8O
+ S70RkUuZNXMVGOEiq260Zcg3TCz7TyqFHeoonSGThAbvSZQiRUIZlXNVuigOX3DBoj6b
+ U+cjY1g+526qxTjG+7pUoZZqrrpiU0lG5GSr2Pb41/pO8KBReROSupQZ2H9z7XHT7rm+
+ FrX5EKVeXbmReXRYHTqaVin6g6LD8/44YyJUkOZiv71KU8nmjvODSVGqDg7wXmX6KT18
+ JWsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783681151; x=1784285951;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Q3wpaFTLm6nOZdl3we8uo+58Jj19P/ToBCyD+56rgIM=;
+ b=ODsqCz4/qS6JsxFL6DNnkrAiWl7bol6WNd6ol/e6W7UQR+/rRDm+W4zJ+XICv71hUV
+ ZezxP4RuzuAQR+cExRQA4+3Zh1iV+7AY2c/P8MrPEekEJ4dkBvQ/i0OhMmVab1BDhIPW
+ owmRPFOm4hAwVB438oQp6rAEEwuESkVtooGmsoUeQjR62O1sFwUAcnDLoRibUl3tbZae
+ aDGJcaoA5kBODGjitGXsBHfPQuL+JSQWl1mlY/VygZE43nZwQRTnfmpLkc6STbJ7To2w
+ t2MxLaXSC5ya0lBwX1rcG0OHMylRD1W+WclBLr4zrZGSCcmdpBom1JmZk6kD9p6ahAOq
+ czCw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrGTfyt1YlLW0+YCVcViAZaWGsBPEnswDCR8mfT/ZG4+ba3R+VrYV9qLxNjuPLYyzhlnDpO5HdeUpcD@nongnu.org
+X-Gm-Message-State: AOJu0Yyczw6ZYc20Ey1zuwe55SXwYzkmzF5NsVv6Owo0OL+m9eWZkuAe
+ zzmW9sXeD8ZuAn3xbJSIrGmxxe3zmEJk2q7ditG0a36OOLUD6UX2O+i2BwrAVNqp4qQ=
+X-Gm-Gg: AfdE7cmh0YHs0D8J+aX0JUrHfYsXbR5KTKi9AyV58EWGRERakKPBF/UAmDLyYfjgiBB
+ CPGy6xdd/8VXV2YLdUYqLdpyBHTYY8ldFMxM9Z0K9f62wqF+8A97Z2Ilw63W8SHn4e3scyNCdEs
+ ECFTbgv9flDPZN03m1/XAWIxBp7G6IlzDzu1NZUEjmfRJFm9Sdw19PZct++EQMZ5k3MrhB1GcuR
+ GU6UqLgiKsr1nuVeVkBE9gg1pEcyTYGtopLUk+KCqLITyHQ8aXqkgf2mLoCatBE5n2Ddv6290yU
+ xBagDOhXVerKOjK7RyXwIGUTWyIB96bOufr270jBYArfA3VyBwTxa1UbodyfBrU9Z3RFVrlNnTQ
+ 21Dg2xr6xrxdErwQ7AJW/K1zC3jRbS8ZGRuYjxziHfjrzj2x7xT4R73YKae4z6+le/Vv42y07Bo
+ c1hasbr4cjTKQ8LqPrgIW5121Ic1MguMiE/lSCN1Urb7uUCktwG8suUXP5qVPp50qRDSTvLW2c5
+ UXROLlvLeRtqC8uMa92AQ==
+X-Received: by 2002:a05:600c:3e0c:b0:493:c548:87fb with SMTP id
+ 5b1f17b1804b1-493f536ceb3mr17085525e9.36.1783681150936; 
+ Fri, 10 Jul 2026 03:59:10 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493f2d88698sm51946175e9.1.2026.07.10.03.59.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 10 Jul 2026 03:59:10 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Jim MacArthur <jim.macarthur@linaro.org>
+Subject: [PATCH 2/9] hw/dma/soc_dma: Simplify soc_dma_ch_update()
+Date: Fri, 10 Jul 2026 11:59:00 +0100
+Message-ID: <20260710105907.2570621-3-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260710105907.2570621-1-peter.maydell@linaro.org>
+References: <20260710105907.2570621-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,40 +103,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This avoids an interactive prompt that halts execution when
-attempting to run the FreeBSD tests due to outdated 14.3
-base image:
+Now we only have "mem" and "other" as soc_dma_port_type values, we
+can simplify soc_dma_ch_update(): either both src and dst are mem, in
+which case we use transfer_mem2mem and set update to 1 to tell
+omap_dma_transfer_setup() to update all the guest-visible
+src/dest/count information to indicate a completed transfer; or else
+we use the omap_dma_transfer_generic() function, and we set update to
+0 to tell omap_dma_transfer_setup() that the transfer function will
+be updating the src/dest/count.
 
-  `Bootstrapping pkg from pkg+https://pkg.FreeBSD.org/FreeBSD:14:amd64/quarterly, please wait...
-  Verifying signature with trusted certificate pkg.freebsd.org.2013102301... done
-  Installing pkg-2.6.2_1...
-  Newer FreeBSD version for package pkg:
-  To ignore this error set IGNORE_OSVERSION=yes
-  - package: 1404000
-  - running userland: 1403000
-  Ignore the mismatch and continue? [y/N]:
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/vm/freebsd | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/dma/soc_dma.c | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
-diff --git a/tests/vm/freebsd b/tests/vm/freebsd
-index ea09b21fbc..bfb1a85af3 100755
---- a/tests/vm/freebsd
-+++ b/tests/vm/freebsd
-@@ -28,8 +28,8 @@ class FreeBSDVM(basevm.BaseVM):
-     name = "freebsd"
-     arch = "x86_64"
+diff --git a/hw/dma/soc_dma.c b/hw/dma/soc_dma.c
+index 8ba531feea..ff51338388 100644
+--- a/hw/dma/soc_dma.c
++++ b/hw/dma/soc_dma.c
+@@ -121,19 +121,14 @@ void soc_dma_ch_update(struct soc_dma_ch_s *ch)
+     enum soc_dma_port_type src, dst;
  
--    link = "https://download.freebsd.org/releases/CI-IMAGES/14.3-RELEASE/amd64/Latest/FreeBSD-14.3-RELEASE-amd64-BASIC-CI.raw.xz"
--    csum = "ec0f5a4bbe63aa50a725d9fee0f1931f850e9a21cbebdadb991df00f168d6805"
-+    link = "https://download.freebsd.org/releases/CI-IMAGES/14.4-RELEASE/amd64/Latest/FreeBSD-14.4-RELEASE-amd64-BASIC-CI.raw.xz"
-+    csum = "627937af554eb6522891875ddc8cf5b86b40e9a12143c1b951f830b3f691de49"
-     size = "20G"
+     src = soc_dma_ch_update_type(ch, 0);
+-    if (src == soc_dma_port_other) {
++    dst = soc_dma_ch_update_type(ch, 1);
++    if (src == soc_dma_port_other || dst == soc_dma_port_other) {
+         ch->update = 0;
+         ch->transfer_fn = ch->dma->transfer_fn;
+-        return;
+-    }
+-    dst = soc_dma_ch_update_type(ch, 1);
+-
+-    if (src == soc_dma_port_mem && dst == soc_dma_port_mem)
++    } else {
++        ch->update = 1;
+         ch->transfer_fn = transfer_mem2mem;
+-    else
+-        ch->transfer_fn = ch->dma->transfer_fn;
+-
+-    ch->update = (dst != soc_dma_port_other);
++    }
+ }
  
-     BUILD_SCRIPT = """
+ static void soc_dma_ch_freq_update(struct dma_s *s)
 -- 
-2.55.0
+2.43.0
 
 
