@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B39EC43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 21:01:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56C7EC44501
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 21:01:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiIEm-0001DZ-Rw; Fri, 10 Jul 2026 16:54:20 -0400
+	id 1wiIKB-0002Zd-Ki; Fri, 10 Jul 2026 16:59:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wiIEk-00019X-AA
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 16:54:18 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1wiIIS-0000yZ-1b
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 16:58:13 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wiIEd-0000dN-M9
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 16:54:17 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-84867f07d63so1546409b3a.2
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 13:54:11 -0700 (PDT)
+ id 1wiIIE-0001yK-4t
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 16:58:07 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-38d489b6b71so1141625a91.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 13:57:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783716850; x=1784321650; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783717072; x=1784321872; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=gkaJCNX67B3j7ndloFDN5kylCYvx7pNXiMbKUrJ80tc=;
- b=tfh08xfnK67VgfddWUo+s1dlhHRgF/MPn50vxksRQoI+UbScFdrhL5YvYNNMIC3fxW
- Tt0wDJzLm7liaXUB2RhASjxVLsT5/D3K6UJY8956hO6EJ2e1lXBwy05Q9F9XbDxKq55s
- l9BXIO7q8pLgsXriXsprAauhEZvtJE3WHQ8Exq0qMiYSnjUiw/zoCgECZePsILhLNXOB
- NzHFXw8LMSRN2swNhizxjE1PO2gW8avUpKQUIAmoY2peZ0S1c6szy8rTqdmyJYBaEIAd
- N+zuzUq3arsWwU4pUpzDmqpu4P86FeiiBEUW1b0YLhKNlVgCPUjORH/7xYEKCXQZW983
- M/8g==
+ bh=KpnTdJpquXSGqeXOM/ODDLLKulghlNdrEhAgoBJAG/g=;
+ b=O4odXN0/2FJ2BI+krkEQzvAGSglPW4QlsfSykLmYMmLjnt0CoZ7ScRcI/kgFhQInIQ
+ 04OY0JmsXsoUY8+Wz5ze5ZTiEgFy7veAmgwkMp3aL5CD+1iVzmBuzZhjoML+e/4zKg4q
+ 9ajILiGTEFtCnX0yK89dBsKxowbQFLKaDKxDlVYnNHrerAb3OMc+/pk66dFNJrWKwXk0
+ bkW/ImIQkHDvNa/17rbtAKddFcZIg/5QAUMRa9abldb5x6RzrjxabduL7l0VwaPIxzTp
+ de+UJ6yofvcr/xNZAEeCJLrScp5mMGJveccugz3SEp9GItqgoQ7uvTV1b6Tf05lLLsVF
+ Xnzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783716850; x=1784321650;
+ d=1e100.net; s=20251104; t=1783717072; x=1784321872;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=gkaJCNX67B3j7ndloFDN5kylCYvx7pNXiMbKUrJ80tc=;
- b=TWlx/57BYRUisdcoPYvm/+02r3k6li/Sc8tE199bACLWPDxRdzCF+ukdx13KGyqxGk
- cJ+ER6qSmUlu05STeUuEWy+Bz7/maQjffVthQybojXn9dMbeeIN6RAPYWC2iNZzd1kEP
- wyhRg1akFUtNqNFnvVXbq9PfdHvBQTFURWm28gPp2Wero1M1Qsm5GFmxM4PtKDAQvpE5
- /f5ay673R184GjDZ6HvWnbrOGT8uKzVerdtOHKcFHHFMrQyIlZigQDeSqH6aoCia8ra5
- WMHhn22NAJrJAI3U7tDxaXJ61WfgYfitEJg8I+grPg1ehAwHrjtIPCsKJzAurWAN55AI
- Clqw==
-X-Gm-Message-State: AOJu0YzJvwsUEwq6tpdk4OU53v2J3GGjfLFxML7o5V7nETaInkdTon6k
- O6sW2U3O+rL/GZK75pKg063hhc3VrWfsJpHS+20dfhPqwssvPBavvZlC0R7b+OQNAIIhf56mrrv
- yOmKa
-X-Gm-Gg: AfdE7cnHhm0FFG2nE/Y2pMjnKD2C5moW7O2oKxgXk8fcXIa+NtzjQoSxeCs7RZ9rEoR
- ISMlRqvOjfjktY6YwURO2zSu8aQjhUg1UpE4+t9z5cLe+I7y0s0pY1FdNzjR2f7buaGvdnd+7Uu
- BFZlPXKpXO+PPbPXGRJ6VjiNVsJMgh3J7V6c7nXr2PMVLVDgdgbiuwR7F9PtnBV7ThkDK3eRCZh
- SKOEWc00JzSGjU+TRecz/iSk4Fsb08mviAKHwMW888a+h3Ypx8lu/vI7AWnuykF/P4itYBqSyFI
- 77h/IZOWddXXKSMtscRRm4y0S4895x39nvfDLamsLZ5H9ZFliwGLm6Saq8Df8jAsCIQgBY8OMJ/
- k760U2i2k2et5R/uuGbJVQsY2FexeT3u91JBoFvrHxTbIWUe9Z8iNvCvuId9NQJ8IizIyTUXyu2
- a7zDx8ffqKQGva0GeUJADyP8OmLzBZ
-X-Received: by 2002:a05:6a00:f08:b0:848:4859:a45 with SMTP id
- d2e1a72fcca58-848895dc4b9mr564447b3a.2.1783716850013; 
- Fri, 10 Jul 2026 13:54:10 -0700 (PDT)
+ bh=KpnTdJpquXSGqeXOM/ODDLLKulghlNdrEhAgoBJAG/g=;
+ b=lUaD4ypDV89tNq80f2+haSasQe2TKsdMYkccOs2UIt8H3qzA8a80jSjMTC5ICzwCOA
+ 9IdNNnmNld9uSVYygSdMKsx2qgkWpB+5z+Mbf2Y46X5KIM/237jbo6uEnON9ZKRHSuZ3
+ abfkRmr2ymLkYYkzkaM7jROfVrhMe6CN3NlhSJ6ogNCze5O11GiDCFC9IC61dqGWJ55L
+ PjeFi6LHgXP1W8j80CTSlILO2hzdAoGrWluc+KFfXT7NHz9j7vD9LqKwL371hcfFU3gn
+ 2wTk2SyyZ/ezBw1pNxYuYDAPjqJGi4OJOuSe0Cv9BVJ4tEcseGixh53ogiiEXwHIClRN
+ n2Rw==
+X-Gm-Message-State: AOJu0YxvCS0oM1UqXecHLjN5+HrRKjEbPMr7y4yGbdTjHsBD/mChC5KJ
+ YceVgTZQ8AbWv58G9ag4hyLkuGV7ceAaz6BBcwkNVB29yDF+ZiYiEmdOFFc4o0bDJfMJgqxLW6n
+ BvBs4
+X-Gm-Gg: AfdE7cl9cpSzhSGC/r+yRBlf85JkVaTj+VyTXYiHluH4vVVhqcyimV1M/hInN24gYvq
+ 5R4acHN2rWt/LfTfavSkWhtdv8HrF9SaxWJcsdCYRMVwjEg5RDO3CfqIXJbJyDf0zKOvoEJmdgM
+ 9ype7DJ9h9ymTHGicEG9f3LFAVkXl6fASnC2puyexZUJ+31bhnAicxNOrSPtfgwtU0ScdJHyl3q
+ cSjCebGpTLo5hhR7qUxswmPQ5sPNOibwqH/2sEupRmqn0zGsXxACTPJcDKIHG3ADQZw0bhDL5Sm
+ X7Mg2gj6MpJXmqYF7mI9fgORZ7GIOd2FjQWR+4sPaPJpIixC22UQl8dhs2kBy/2LgYd8SCsFLBW
+ 7gPjD2KvIpQvepa2DWRWnT8Ngpsw5WgSVxluuSOHVCnluf6xvVu/LaqSDinA1mhR6vPahh7lR8g
+ TeKc1L3PKMzhFqyOvXi/QxlufPn0h+
+X-Received: by 2002:a17:90b:164b:b0:37f:ceed:e1d8 with SMTP id
+ 98e67ed59e1d1-38dc7730cbdmr483202a91.12.1783717072370; 
+ Fri, 10 Jul 2026 13:57:52 -0700 (PDT)
 Received: from stoup.. ([71.212.146.49]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-847f6d76106sm10780574b3a.40.2026.07.10.13.54.09
+ 98e67ed59e1d1-38a58792cdasm3256221a91.16.2026.07.10.13.57.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Jul 2026 13:54:09 -0700 (PDT)
+ Fri, 10 Jul 2026 13:57:51 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
  qemu-s390x@nongnu.org, jcmvbkbc@gmail.com
-Subject: [PATCH v3 05/51] hw/core/cpu: Remove exec/breakpoint.h include
-Date: Fri, 10 Jul 2026 13:53:15 -0700
-Message-ID: <20260710205401.836304-6-richard.henderson@linaro.org>
+Subject: [PATCH v3 49/51] accel/tcg: Change tlb_flush_range_* to use addr/last
+Date: Fri, 10 Jul 2026 13:53:59 -0700
+Message-ID: <20260710205401.836304-50-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260710205401.836304-1-richard.henderson@linaro.org>
 References: <20260710205401.836304-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: 4
 X-Spam_score: 0.4
 X-Spam_bar: /
@@ -100,130 +100,253 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is no longer required in the generic header.  Add includes
-where required elsewhere in the code base.
+Plugs a hole in the API by which one cannot flush the
+entire address space with one range.  There are only a
+few users, so it's easy to update them all at once.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/hw/core/cpu.h     | 1 -
- accel/tcg/tcg-accel-ops.c | 1 +
- cpu-common.c              | 1 +
- gdbstub/system.c          | 1 +
- gdbstub/user.c            | 1 +
- target/i386/kvm/kvm.c     | 1 +
- target/ppc/kvm.c          | 1 +
- target/s390x/kvm/kvm.c    | 1 +
- target/xtensa/helper.c    | 1 +
- 9 files changed, 8 insertions(+), 1 deletion(-)
+ include/exec/cputlb.h             | 12 ++++++------
+ accel/tcg/cputlb.c                | 27 ++++++++++++++++-----------
+ target/arm/tcg/tlb-insns.c        | 21 +++++++++++----------
+ target/hppa/mem_helper.c          |  3 +--
+ target/loongarch/tcg/tlb_helper.c |  5 +++--
+ target/ppc/mmu_helper.c           |  4 ++--
+ 6 files changed, 39 insertions(+), 33 deletions(-)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 481646f5b9..5c01908f83 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -22,7 +22,6 @@
+diff --git a/include/exec/cputlb.h b/include/exec/cputlb.h
+index f7f7020382..30e1d1f93e 100644
+--- a/include/exec/cputlb.h
++++ b/include/exec/cputlb.h
+@@ -209,21 +209,21 @@ void tlb_flush_page_bits_by_mmuidx_all_cpus_synced(CPUState *cpu, vaddr addr,
+  * tlb_flush_range_by_mmuidx
+  * @cpu: CPU whose TLB should be flushed
+  * @addr: virtual address of the start of the range to be flushed
+- * @len: length of range to be flushed
++ * @last: virtual address of the end of the range to be flushed, inclusive
+  * @idxmap: bitmap of mmu indexes to flush
+  * @bits: number of significant bits in address
+  *
+- * For each mmuidx in @idxmap, flush all pages within [@addr,@addr+@len),
++ * For each mmuidx in @idxmap, flush all pages within [@addr,@last]
+  * comparing only the low @bits worth of each virtual page.
+  */
+ void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
+-                               vaddr len, MMUIdxMap idxmap,
++                               vaddr last, MMUIdxMap idxmap,
+                                unsigned bits);
  
- #include "hw/core/qdev.h"
- #include "disas/dis-asm.h"
--#include "exec/breakpoint.h"
- #include "exec/hwaddr.h"
- #include "exec/vaddr.h"
- #include "exec/memattrs.h"
-diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
-index c59ab85606..76af8d67c0 100644
---- a/accel/tcg/tcg-accel-ops.c
-+++ b/accel/tcg/tcg-accel-ops.c
-@@ -31,6 +31,7 @@
- #include "accel/tcg/cpu-loop.h"
- #include "system/tcg.h"
- #include "system/replay.h"
-+#include "exec/breakpoint.h"
- #include "exec/icount.h"
- #include "qemu/main-loop.h"
- #include "qemu/guest-random.h"
-diff --git a/cpu-common.c b/cpu-common.c
-index ba2676cbad..af64bb1126 100644
---- a/cpu-common.c
-+++ b/cpu-common.c
-@@ -20,6 +20,7 @@
- #include "qemu/osdep.h"
- #include "qemu/main-loop.h"
- #include "exec/cpu-common.h"
-+#include "exec/breakpoint.h"
- #include "hw/core/cpu.h"
- #include "qemu/lockable.h"
- #include "trace/trace-root.h"
-diff --git a/gdbstub/system.c b/gdbstub/system.c
-index c77d067ab4..724fd24c00 100644
---- a/gdbstub/system.c
-+++ b/gdbstub/system.c
-@@ -15,6 +15,7 @@
- #include "qemu/error-report.h"
- #include "qemu/cutils.h"
- #include "exec/gdbstub.h"
-+#include "exec/breakpoint.h"
- #include "gdbstub/syscalls.h"
- #include "gdbstub/commands.h"
- #include "exec/hwaddr.h"
-diff --git a/gdbstub/user.c b/gdbstub/user.c
-index 9e6f9a6f37..0a61bd7d92 100644
---- a/gdbstub/user.c
-+++ b/gdbstub/user.c
-@@ -14,6 +14,7 @@
- #include "qemu/cutils.h"
- #include "qemu/sockets.h"
- #include "qapi/error.h"
-+#include "exec/breakpoint.h"
- #include "exec/hwaddr.h"
- #include "exec/gdbstub.h"
- #include "gdbstub/commands.h"
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 4272b6770c..8161831de2 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -68,6 +68,7 @@
- #include "hw/pci/msi.h"
- #include "hw/pci/msix.h"
- #include "migration/blocker.h"
-+#include "exec/breakpoint.h"
- #include "exec/memattrs.h"
- #include "exec/target_page.h"
- #include "trace.h"
-diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-index aa21cab50e..1a093e1f83 100644
---- a/target/ppc/kvm.c
-+++ b/target/ppc/kvm.c
-@@ -40,6 +40,7 @@
- #include "system/watchdog.h"
- #include "trace.h"
- #include "gdbstub/enums.h"
-+#include "exec/breakpoint.h"
- #include "exec/memattrs.h"
- #include "system/ramblock.h"
- #include "system/hostmem.h"
-diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-index 72031a5714..6f7f75f601 100644
---- a/target/s390x/kvm/kvm.c
-+++ b/target/s390x/kvm/kvm.c
-@@ -48,6 +48,7 @@
- #include "hw/s390x/s390-pci-bus.h"
- #include "hw/s390x/ipl.h"
- #include "hw/s390x/ebcdic.h"
-+#include "exec/breakpoint.h"
- #include "exec/memattrs.h"
- #include "hw/s390x/s390-virtio-ccw.h"
- #include "hw/s390x/s390-hypercall.h"
-diff --git a/target/xtensa/helper.c b/target/xtensa/helper.c
-index 5a0e865514..0db5502287 100644
---- a/target/xtensa/helper.c
-+++ b/target/xtensa/helper.c
-@@ -30,6 +30,7 @@
- #include "cpu.h"
- #include "exec/cputlb.h"
- #include "exec/target_page.h"
-+#include "exec/breakpoint.h"
- #include "gdbstub/helpers.h"
- #include "exec/helper-proto.h"
- #include "accel/tcg/cpu-loop.h"
+ /* Similarly, with broadcast and syncing. */
+ void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *cpu,
+                                                vaddr addr,
+-                                               vaddr len,
++                                               vaddr last,
+                                                MMUIdxMap idxmap,
+                                                unsigned bits);
+ #else
+@@ -268,13 +268,13 @@ tlb_flush_page_bits_by_mmuidx_all_cpus_synced(CPUState *cpu, vaddr addr,
+ {
+ }
+ static inline void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
+-                                             vaddr len, MMUIdxMap idxmap,
++                                             vaddr last, MMUIdxMap idxmap,
+                                              unsigned bits)
+ {
+ }
+ static inline void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *cpu,
+                                                              vaddr addr,
+-                                                             vaddr len,
++                                                             vaddr last,
+                                                              MMUIdxMap idxmap,
+                                                              unsigned bits)
+ {
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index 2c0f7bed52..0a49b87bcb 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -761,13 +761,12 @@ static void tlb_flush_range_by_mmuidx_async_1(CPUState *cpu,
+     g_free(d);
+ }
+ 
+-void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
+-                               vaddr len, MMUIdxMap idxmap,
+-                               unsigned bits)
++void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr, vaddr last,
++                               MMUIdxMap idxmap, unsigned bits)
+ {
+     TLBFlushRangeData d = {
+         .addr = addr & TARGET_PAGE_MASK,
+-        .last = (addr + len - 1) & TARGET_PAGE_MASK,
++        .last = last & TARGET_PAGE_MASK,
+         .idxmap = idxmap,
+         .bits = bits,
+     };
+@@ -795,18 +794,20 @@ void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
+ void tlb_flush_page_bits_by_mmuidx(CPUState *cpu, vaddr addr,
+                                    MMUIdxMap idxmap, unsigned bits)
+ {
+-    tlb_flush_range_by_mmuidx(cpu, addr, TARGET_PAGE_SIZE, idxmap, bits);
++    /*
++     * The implementation above only cares about the page of @last,
++     * so we don't need to find the end of the page for @addr.
++     */
++    tlb_flush_range_by_mmuidx(cpu, addr, addr, idxmap, bits);
+ }
+ 
+ void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
+-                                               vaddr addr,
+-                                               vaddr len,
+-                                               MMUIdxMap idxmap,
+-                                               unsigned bits)
++                                               vaddr addr, vaddr last,
++                                               MMUIdxMap idxmap, unsigned bits)
+ {
+     TLBFlushRangeData d = {
+         .addr = addr & TARGET_PAGE_MASK,
+-        .last = (addr + len - 1) & TARGET_PAGE_MASK,
++        .last = last & TARGET_PAGE_MASK,
+         .idxmap = idxmap,
+         .bits = bits,
+     };
+@@ -847,7 +848,11 @@ void tlb_flush_page_bits_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
+                                                    MMUIdxMap idxmap,
+                                                    unsigned bits)
+ {
+-    tlb_flush_range_by_mmuidx_all_cpus_synced(src_cpu, addr, TARGET_PAGE_SIZE,
++    /*
++     * The implementation above only cares about the page of @last,
++     * so we don't need to find the end of the page for @addr.
++     */
++    tlb_flush_range_by_mmuidx_all_cpus_synced(src_cpu, addr, addr,
+                                               idxmap, bits);
+ }
+ 
+diff --git a/target/arm/tcg/tlb-insns.c b/target/arm/tcg/tlb-insns.c
+index b24eb57788..cf1698941c 100644
+--- a/target/arm/tcg/tlb-insns.c
++++ b/target/arm/tcg/tlb-insns.c
+@@ -819,7 +819,7 @@ static const ARMCPRegInfo tlbi_el3_cp_reginfo[] = {
+ 
+ typedef struct {
+     uint64_t base;
+-    uint64_t length;
++    uint64_t last;
+ } TLBIRange;
+ 
+ static ARMGranuleSize tlbi_range_tg_to_gran_size(int tg)
+@@ -847,8 +847,8 @@ static TLBIRange tlbi_aa64_get_range(CPUARMState *env, ARMMMUIdx mmuidx,
+     /* Extract one bit to represent the va selector in use. */
+     uint64_t select = sextract64(value, 36, 1);
+     ARMVAParameters param = aa64_va_parameters(env, select, mmuidx, true, false);
+-    TLBIRange ret = { };
+     ARMGranuleSize gran;
++    uint64_t base, length;
+ 
+     page_size_granule = extract64(value, 46, 2);
+     gran = tlbi_range_tg_to_gran_size(page_size_granule);
+@@ -857,7 +857,8 @@ static TLBIRange tlbi_aa64_get_range(CPUARMState *env, ARMMMUIdx mmuidx,
+     if (gran != param.gran || gran == GranInvalid) {
+         qemu_log_mask(LOG_GUEST_ERROR, "Invalid tlbi page size granule %d\n",
+                       page_size_granule);
+-        return ret;
++        /* The behaviour of the insn is undefined. */
++        return (TLBIRange) { 0, 0 };
+     }
+ 
+     page_shift = arm_granule_bits(gran);
+@@ -865,12 +866,12 @@ static TLBIRange tlbi_aa64_get_range(CPUARMState *env, ARMMMUIdx mmuidx,
+     scale = extract64(value, 44, 2);
+     exponent = (5 * scale) + 1;
+ 
+-    ret.length = (num + 1) << (exponent + page_shift);
++    length = (num + 1) << (exponent + page_shift);
+ 
+     if (param.select) {
+-        ret.base = sextract64(value, 0, 37);
++        base = sextract64(value, 0, 37);
+     } else {
+-        ret.base = extract64(value, 0, 37);
++        base = extract64(value, 0, 37);
+     }
+     if (param.ds) {
+         /*
+@@ -880,9 +881,9 @@ static TLBIRange tlbi_aa64_get_range(CPUARMState *env, ARMMMUIdx mmuidx,
+          */
+         page_shift = 16;
+     }
+-    ret.base <<= page_shift;
++    base <<= page_shift;
+ 
+-    return ret;
++    return (TLBIRange){ .base = base, .last = base + length - 1 };
+ }
+ 
+ static void do_rvae_write(CPUARMState *env, uint64_t value,
+@@ -898,12 +899,12 @@ static void do_rvae_write(CPUARMState *env, uint64_t value,
+     if (synced) {
+         tlb_flush_range_by_mmuidx_all_cpus_synced(env_cpu(env),
+                                                   range.base,
+-                                                  range.length,
++                                                  range.last,
+                                                   idxmap,
+                                                   bits);
+     } else {
+         tlb_flush_range_by_mmuidx(env_cpu(env), range.base,
+-                                  range.length, idxmap, bits);
++                                  range.last, idxmap, bits);
+     }
+ }
+ 
+diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
+index 01e6149c81..394e975533 100644
+--- a/target/hppa/mem_helper.c
++++ b/target/hppa/mem_helper.c
+@@ -106,8 +106,7 @@ static void hppa_flush_tlb_ent(CPUHPPAState *env, HPPATLBEntry *ent,
+     trace_hppa_tlb_flush_ent(env, ent, ent->itree.start,
+                              ent->itree.last, ent->pa);
+ 
+-    tlb_flush_range_by_mmuidx(cs, ent->itree.start,
+-                              ent->itree.last - ent->itree.start + 1,
++    tlb_flush_range_by_mmuidx(cs, ent->itree.start, ent->itree.last,
+                               HPPA_MMU_FLUSH_MASK, TARGET_LONG_BITS);
+ 
+     /* Never clear BTLBs, unless forced to do so. */
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index a4b90beca6..3a708ebf3a 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -130,13 +130,14 @@ static void invalidate_tlb_entry(CPULoongArchState *env, int index)
+ 
+     tlb_v = pte_present(env, tlb->tlb_entry0);
+     if (tlb_v) {
+-        tlb_flush_range_by_mmuidx(env_cpu(env), addr, pagesize,
++        tlb_flush_range_by_mmuidx(env_cpu(env), addr, addr + pagesize - 1,
+                                   idxmap, TARGET_LONG_BITS);
+     }
+ 
+     tlb_v = pte_present(env, tlb->tlb_entry1);
+     if (tlb_v) {
+-        tlb_flush_range_by_mmuidx(env_cpu(env), addr + pagesize, pagesize,
++        tlb_flush_range_by_mmuidx(env_cpu(env), addr + pagesize,
++                                  addr + 2 * pagesize - 1,
+                                   idxmap, TARGET_LONG_BITS);
+     }
+ }
+diff --git a/target/ppc/mmu_helper.c b/target/ppc/mmu_helper.c
+index ac60705402..c881191749 100644
+--- a/target/ppc/mmu_helper.c
++++ b/target/ppc/mmu_helper.c
+@@ -734,8 +734,8 @@ static void ppcemb_tlb_flush(CPUState *cs, ppcemb_tlb_t *tlb)
+         mmu_idx <<= 2;
+     }
+ 
+-    tlb_flush_range_by_mmuidx(cs, tlb->EPN, tlb->size, mmu_idx,
+-                              TARGET_LONG_BITS);
++    tlb_flush_range_by_mmuidx(cs, tlb->EPN, tlb->EPN + tlb->size - 1,
++                              mmu_idx, TARGET_LONG_BITS);
+ }
+ 
+ void helper_4xx_tlbwe_hi(CPUPPCState *env, target_ulong entry,
 -- 
 2.43.0
 
