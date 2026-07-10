@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39409C44501
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 10:59:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3158C44506
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 10:59:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi8x0-0006Xs-N8; Fri, 10 Jul 2026 06:59:22 -0400
+	id 1wi8x3-0006bU-Gv; Fri, 10 Jul 2026 06:59:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wi8wt-0006Sp-Di
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 06:59:15 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1wi8wz-0006U5-28
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 06:59:21 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wi8wr-0001Nr-Ov
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 06:59:15 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-490cf322ed0so5104815e9.1
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 03:59:13 -0700 (PDT)
+ id 1wi8wx-0001Pw-Fl
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 06:59:20 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-493b966dd74so2878265e9.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 03:59:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783681152; x=1784285952; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783681158; x=1784285958; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=nAPCdwrWWBDYxeA6TQlHH2OHF4Kfqc3umJBBZYyOgHU=;
- b=nSa4UfoNF511HvnuoRJEZByq2KMP2fCP9MhbHursags4O3Wc8B8uNWFtCYjUEsK2nv
- 8t7/snIdWyhmpjTstP8KCwXhXrPZ8/wT510LRGmvuUQPbFqGqX5sT8bx1XjTrelHUlxp
- daNnfKQP3bivQ3+LMQx/PAi9F85wirGZ7Ta/5mBhXjZpWMv0X5rMLTIOcgK6tU3Fm/G9
- U36mwLlK9f50Jom82fwDkLpjQwm1JUFO2OB5nQyv0WAK0cM8RufpAiu1KPlTYIcJo2l7
- iJ1Wj+fttkc+WsWjiLAJ+ZS6PrP8NvdkuHRZc+4CIIKgG1hZJzZvKfGs1a8rrrwNAm9V
- 3hXg==
+ bh=PzHxCXsIOILaIZXbiZCOtU/tN9ewAfAvcdvjSx7fAwY=;
+ b=Oz9p/VZ7GEk7IZcAViytVng484dusrcF27axUwgHcA2YjbOdumOGMUe2dEBe1U3FdT
+ rNhhMvrqPcE+0rqySJMqhPcUqVwmWUDv30s8FY8jLVAPPq0/2D9w7E3JqpCGLpZ7nOv9
+ adveexRBGA2SciDjbYa+4z3u3giZ/22/fhNXlApMAV1tFqDIrBq4f1lAbIWGrnoIuJzn
+ 5fM0l8zImqpq9uAcBYVZ9prEAM/1iJOAPHbpoAYG0oz8E2EhamZGEhVkETRCsUJk4+cE
+ Gg09f44+21wl7/1cA61Mi24FGbaRcLDZJtTjRZNJJX1CHM3G7DudJpAm1/P4zF2lC75U
+ 3KYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783681152; x=1784285952;
+ d=1e100.net; s=20251104; t=1783681158; x=1784285958;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=nAPCdwrWWBDYxeA6TQlHH2OHF4Kfqc3umJBBZYyOgHU=;
- b=JL4F4IZlnUU2XusjxXo16ZLzDrLythS/mE8pu+QoISklFLYQvXxsct15La0G0ILKnF
- QoGwNn13cam6iF37VvRMC6O+NBCkMJR9U6KhOlWqvlxiNBobPTy77FIcovqz9Qw7mb9o
- XILj6PSfEBuo8wipOvv8V7gUZ0MYSXLFe/JnS699VHZEwAF6YPuQbgjGwDvTY05CS0cG
- 75y1vuRSuv3x1LqZrTtG6sID35Fn4tYKPp2qtbJHhzh1hGDmv/5B/DHPCMEzKPWA2q6k
- vbLqgYRCR9Dm13F3DlBE4eEDW/JDvCGK82AVgfhDEdnGIpTNYREPg05+BUEuMh317Dr/
- MC7g==
+ bh=PzHxCXsIOILaIZXbiZCOtU/tN9ewAfAvcdvjSx7fAwY=;
+ b=jeAJ1d4tRDYEoPecFDUCE39qURIgjopG3U4i2ROr2AyZ6Nwu5P6J5Fv09noYKcQkDm
+ haoj8rKJOrAtV6r2Cr23dRSZmC8gSXK5+kE9h7WE5eJoHuJqNkJ8L4yyNpXWJjDDYadV
+ nePNC8sDCvjTu4wrZPBtGwOV6DDE1efGKCLkop4fqqIkcbZu5GTDd446j3O132tm3I6t
+ mKWeqMuRrvq6YmZw5peoE/ziG7UEfFqVWgDlMJNohKHIj2nQHqga0qEu8zjsJZQRfMPT
+ GYodvlyu4+DisY6HD3K56lZoSapPw6QGDwl1bjG9zkl3KSpiInUYof+yO719rbWYNnP7
+ GFjA==
 X-Forwarded-Encrypted: i=1;
- AHgh+Roa0XddiVzkLasJ54oDgPSwrWGlUT+qH2t4FRpIa+EjCxwQDOzcWpMSsUq3PVtkKrTVBkjEHvuUWXLD@nongnu.org
-X-Gm-Message-State: AOJu0Yw5iaNV34457vxBRklzmcVlN9pBuAw8+uidgJ+rrHpSnFNSU6u1
- BLsEjsbMEcv0889qpJs7bSVgJXRpLx5NQ6UXfxfMs61Jmo6mou1PqldjWN4rVVOehE0=
-X-Gm-Gg: AfdE7cmpc7pORWPlJ8lUCHF3xCJ7OwG8j5/7thBx0S1bdLczJiy9v3sOcpEaIhU+qXF
- x/g21c92DeNj02/QZtKOK8T7hLZ4slV9NkUP/Evx6flHxSvaM7qhQsep33vhc7hO5WQfed27M5g
- H+txfj4/w5N6yfPcD2mu8yy6cw982YuUhf/JBZ2hTCx7CRtnz0G+yV6NlyzZmzqv6DKSOvSKWc3
- S/rdD1WOSMgNbyPNKPm7sqmsw4/uaOOLW+q5d4QWndOK+pnUs4Cxr4fwodH6ARgmCeoecIx3jQ1
- vz2ddGU/yy1A/ZziMjYiH2S8ChLrxK44tYnYAsPGEfIwrF/Xug+/9suOitsl1zhv74K2+7veSLN
- 6W+XJ7C6mFtZAzX3T5qLTZz3OFTkvrgYfRX+THCji1j2PA3QUerf2v+6FLINjU9cOaI62FDr1Fw
- 3MrgO2G/i1pKV+oLHs/X1iVawbdwGfjb90dNa3fOitGn8udfMqVJYSWEsiQZ2f5Q67SV5N+K9xG
- gxMviT8HTB8eMKV86TfNg==
-X-Received: by 2002:a05:600c:630c:b0:492:53e8:3bc1 with SMTP id
- 5b1f17b1804b1-493e6a4a615mr100164985e9.17.1783681152404; 
- Fri, 10 Jul 2026 03:59:12 -0700 (PDT)
+ AHgh+RqLpnxg0y5+aJXcfxzp6so1b9BzsORwuPt3JljvsgK317HN4QIrCAtfuwXd3qVXz1FjTOu7C+OLfS25@nongnu.org
+X-Gm-Message-State: AOJu0Yz2iYSD5BPAfzspfyneeM4rU8O/xi69dbZ9eeipu9UBHLYuO7hC
+ bwdads6zT+qBz91rb7FvKgSL1Julbvw+tY8o7VPeqoFAWwjLn3HZVpLjpJmUJ2vhmcg=
+X-Gm-Gg: AfdE7cnTKs+T9H/sjwICerzpbMGXYetXmTZdIG5ITTeu+oldgr6NfpsInauB5xam+dt
+ ILzZKkwoOT0FErHUsewbz/F8q1i0WFftNB1+6+9r+xQCp7vN4V2cHQz/GrR1o7gT0nJ1WyNNKOg
+ xYAUm1L+NDWnJgHUU58u+gbCnLdUiXA+eUJ6x6S1/+INMCjdKLnT6FcXzLoKd2EHNfJpTR4+E9a
+ I/V+D2Vyzqt/cvlI81A5wj13PNTCcAdo0uF83wxocZd1MSykGOxVvpojcuxGCzibuLDIkbt5LdS
+ SKsfbLHN2PeUrl9kiwC7XnMvQ6Pi9A+fihMGuEcDaTLlniEAQcAYatNqiToKFXWpj+T1lGs3nEq
+ tWIiszYx+blgcl01WTMq/sMD/b16vsijZFdTreNFdhjwG1ouxJtEdVR14WBsZ7iK/JAQfWh3R3V
+ M7O6R4c7gOL94Ctx3pdKOtf+Vl8MKBQ8+JxxyXamFlShtu+3tPD2VZPH6OcAKxdOnmJt38/3O81
+ bnImXdzPzdJX/vb0c6xMQ==
+X-Received: by 2002:a05:600c:3b26:b0:493:e3e9:85fb with SMTP id
+ 5b1f17b1804b1-493e685f1f6mr113555855e9.20.1783681157419; 
+ Fri, 10 Jul 2026 03:59:17 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493f2d88698sm51946175e9.1.2026.07.10.03.59.11
+ 5b1f17b1804b1-493f2d88698sm51946175e9.1.2026.07.10.03.59.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Jul 2026 03:59:11 -0700 (PDT)
+ Fri, 10 Jul 2026 03:59:16 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Jim MacArthur <jim.macarthur@linaro.org>
-Subject: [PATCH 3/9] hw/dma/soc_dma: Remove union from memmap_entry_s struct
-Date: Fri, 10 Jul 2026 11:59:01 +0100
-Message-ID: <20260710105907.2570621-4-peter.maydell@linaro.org>
+Subject: [PATCH 8/9] include/hw/arm/omap_dma.h: Move to include/hw/dma
+Date: Fri, 10 Jul 2026 11:59:06 +0100
+Message-ID: <20260710105907.2570621-9-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260710105907.2570621-1-peter.maydell@linaro.org>
 References: <20260710105907.2570621-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,80 +103,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There's only one field in the union inside memmap_entry_s now that
-we've removed the soc_dma_port_fifo handling.  Simplify by removing
-the union.
+omap_dma.h is the header file for hw/dma/omap_dma.c; it fits better
+to put it in include/hw/dma/ to match where we have the .c file.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/dma/soc_dma.c | 22 ++++++++++------------
- 1 file changed, 10 insertions(+), 12 deletions(-)
+ hw/arm/omap1.c                    | 2 +-
+ hw/dma/omap_dma.c                 | 2 +-
+ hw/dma/soc_dma.c                  | 2 +-
+ include/hw/{arm => dma}/soc_dma.h | 0
+ 4 files changed, 3 insertions(+), 3 deletions(-)
+ rename include/hw/{arm => dma}/soc_dma.h (100%)
 
+diff --git a/hw/arm/omap1.c b/hw/arm/omap1.c
+index 9e739a0712..0f78cbd410 100644
+--- a/hw/arm/omap1.c
++++ b/hw/arm/omap1.c
+@@ -32,7 +32,7 @@
+ #include "hw/sd/sd.h"
+ #include "system/blockdev.h"
+ #include "system/system.h"
+-#include "hw/arm/soc_dma.h"
++#include "hw/dma/soc_dma.h"
+ #include "system/qtest.h"
+ #include "system/reset.h"
+ #include "system/runstate.h"
+diff --git a/hw/dma/omap_dma.c b/hw/dma/omap_dma.c
+index 1a3ae74726..16575e73b7 100644
+--- a/hw/dma/omap_dma.c
++++ b/hw/dma/omap_dma.c
+@@ -22,7 +22,7 @@
+ #include "qemu/timer.h"
+ #include "hw/arm/omap.h"
+ #include "hw/core/irq.h"
+-#include "hw/arm/soc_dma.h"
++#include "hw/dma/soc_dma.h"
+ #include "system/physmem.h"
+ 
+ struct omap_dma_channel_s {
 diff --git a/hw/dma/soc_dma.c b/hw/dma/soc_dma.c
-index ff51338388..bbcd2bdcd5 100644
+index ff890149ee..4feb22e6ea 100644
 --- a/hw/dma/soc_dma.c
 +++ b/hw/dma/soc_dma.c
-@@ -39,12 +39,10 @@ struct dma_s {
-     struct memmap_entry_s {
-         enum soc_dma_port_type type;
-         hwaddr addr;
--        union {
--           struct {
--               void *base;
--               size_t size;
--           } mem;
--        } u;
-+        struct {
-+            void *base;
-+            size_t size;
-+        } mem;
-     } *memmap;
-     int memmap_size;
+@@ -22,7 +22,7 @@
+ #include "qemu/timer.h"
+ #include "qemu/log.h"
+ #include "system/physmem.h"
+-#include "hw/arm/soc_dma.h"
++#include "hw/dma/soc_dma.h"
  
-@@ -99,7 +97,7 @@ static inline enum soc_dma_port_type soc_dma_ch_update_type(
- 
-     if (entry->type == soc_dma_port_mem) {
-         if (entry->addr > ch->vaddr[port] ||
--                        entry->addr + entry->u.mem.size <= ch->vaddr[port])
-+                        entry->addr + entry->mem.size <= ch->vaddr[port])
-             return soc_dma_port_other;
- 
-         /* TODO: support constant memory address for source port as used for
-@@ -107,7 +105,7 @@ static inline enum soc_dma_port_type soc_dma_ch_update_type(
-         if (ch->type[port] != soc_dma_access_const)
-             return soc_dma_port_other;
- 
--        ch->paddr[port] = (uint8_t *) entry->u.mem.base +
-+        ch->paddr[port] = (uint8_t *) entry->mem.base +
-                 (ch->vaddr[port] - entry->addr);
-         /* TODO: save bytes left to the end of the mapping somewhere so we
-          * can check we're not reading beyond it.  */
-@@ -212,12 +210,12 @@ void soc_dma_port_add_mem(struct soc_dma_s *soc, uint8_t *phys_base,
-         if (entry->type == soc_dma_port_mem) {
-             if ((entry->addr >= virt_base && entry->addr < virt_base + size) ||
-                             (entry->addr <= virt_base &&
--                             entry->addr + entry->u.mem.size > virt_base)) {
-+                             entry->addr + entry->mem.size > virt_base)) {
-                 error_report("%s: RAM at %"PRIx64 "-%"PRIx64
-                              " collides with RAM region at %"PRIx64
-                              "-%"PRIx64, __func__,
-                              virt_base, virt_base + size,
--                             entry->addr, entry->addr + entry->u.mem.size);
-+                             entry->addr, entry->addr + entry->mem.size);
-                 exit(-1);
-             }
- 
-@@ -246,8 +244,8 @@ void soc_dma_port_add_mem(struct soc_dma_s *soc, uint8_t *phys_base,
- 
-     entry->addr          = virt_base;
-     entry->type          = soc_dma_port_mem;
--    entry->u.mem.base    = phys_base;
--    entry->u.mem.size    = size;
-+    entry->mem.base    = phys_base;
-+    entry->mem.size    = size;
- }
- 
- /* TODO: port removal for ports like PCMCIA memory */
+ static void transfer_mem2mem(struct soc_dma_ch_s *ch)
+ {
+diff --git a/include/hw/arm/soc_dma.h b/include/hw/dma/soc_dma.h
+similarity index 100%
+rename from include/hw/arm/soc_dma.h
+rename to include/hw/dma/soc_dma.h
 -- 
 2.43.0
 
