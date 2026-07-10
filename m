@@ -4,81 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9FB4C44501
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 08:07:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E54F2C44501
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 08:09:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi6GK-0008VA-LP; Fri, 10 Jul 2026 04:07:08 -0400
+	id 1wi6Im-0000rl-If; Fri, 10 Jul 2026 04:09:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wi6GJ-0008Up-7t
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 04:07:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1wi6Ik-0000rd-Ug
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 04:09:38 -0400
+Received: from out-189.mta1.migadu.com ([95.215.58.189])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wi6GH-0006Nd-Du
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 04:07:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783670824;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1wi6Ie-0007Pf-UX
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 04:09:37 -0400
+Message-ID: <4f914264-be8e-4b5b-a54a-14a911855529@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1783670970;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tCgOFOD16OJF/0xn0dQOC+l1EPZ+ctd/ZsABuqUHURs=;
- b=cevj8wncAt4hEG3PmV0TdtEL3g6isQlQWLSZryxWMf5Ui1/ETZWiEnkKTSBrzc803VWh0i
- t2bnakqCFRS/WMUZOR+1hfSTXqpbrYV/mNxMlxz8UhYTQJE0mXtEH3KdDt46fVG4nKXg7M
- 0LupT6jtsCDFATBUONLZ5PW/9Hx+59s=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-370-5niyaRRuMR24eS5lwt8H4A-1; Fri,
- 10 Jul 2026 04:07:01 -0400
-X-MC-Unique: 5niyaRRuMR24eS5lwt8H4A-1
-X-Mimecast-MFC-AGG-ID: 5niyaRRuMR24eS5lwt8H4A_1783670820
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3E9EA1955F1B; Fri, 10 Jul 2026 08:07:00 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.145])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2D1E31800348; Fri, 10 Jul 2026 08:06:57 +0000 (UTC)
-Date: Fri, 10 Jul 2026 09:06:54 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH v2 2/4] tests/docker: add support for podman remote access
-Message-ID: <alCoHiXzBAcwnOxJ@redhat.com>
-References: <20260210163556.713841-1-berrange@redhat.com>
- <20260210163556.713841-3-berrange@redhat.com>
- <cbc2e0d7-72d6-4350-a906-e0003e8b5964@oss.qualcomm.com>
- <ak_IsMGkkMY8wERc@redhat.com>
- <947a4843-34ae-43f7-8fbc-80109bc0c077@oss.qualcomm.com>
+ bh=4cE2kxM/I3okHAWsVt5WlSoOW/bk4D0jPtCMWrCMuIk=;
+ b=ttzfSMNWZ7ZTblMvFh4Pr5XvVb2hQzLmRpwwH6XlHhPpmTEv9lnA41GzesIKPm4btjHjji
+ jONXV7dfY79/oxhMRpJM/TxlBpt6m7Y3KS0U/EnzUTcZ9nWv4iCq8I46NW+4pl7nAPSCAM
+ AFgW6j3naou1T8vxQ+BcC27YIXbV87M=
+Date: Fri, 10 Jul 2026 16:09:20 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Cc: cui.tao@linux.dev, Song Gao <gaosong@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Tao Cui <cuitao@kylinos.cn>
+Subject: Re: [PATCH v2 1/3] target/loongarch/kvm: advertise pv features per
+ vCPU
+To: Bibo Mao <maobibo@loongson.cn>, qemu-devel@nongnu.org
+References: <20260710005029.345378-1-cui.tao@linux.dev>
+ <20260710005029.345378-2-cui.tao@linux.dev>
+ <70dc23f1-f346-2d47-4a42-e2195ea9e622@loongson.cn>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+From: Tao Cui <cui.tao@linux.dev>
+In-Reply-To: <70dc23f1-f346-2d47-4a42-e2195ea9e622@loongson.cn>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <947a4843-34ae-43f7-8fbc-80109bc0c077@oss.qualcomm.com>
-User-Agent: Mutt/2.3.2 (2026-04-26)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=95.215.58.189; envelope-from=cui.tao@linux.dev;
+ helo=out-189.mta1.migadu.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,108 +69,107 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 09, 2026 at 09:24:12AM -0700, Pierrick Bouvier wrote:
-> On 7/9/2026 9:13 AM, Daniel P. Berrangé wrote:
-> > On Thu, Jul 09, 2026 at 07:48:14AM -0700, Pierrick Bouvier wrote:
-> >> On 2/10/2026 8:35 AM, Daniel P. Berrangé wrote:
-> >>> When a developer's environment is already within a podman container it
-> >>> is not possible to use 'podman' again to create containers. It will
-> >>> usually result in wierd errors such as:
-> >>>
-> >>>   Error: fatal error, invalid internal status, unable to create a new pause process: cannot re-exec process to join the existing user namespace. Try running "podman system migrate" and if that doesn't work reboot to recover
-> >>>
-> >>> Podman offers the ability to talk to a daemon outside the container,
-> >>> however, which could be leveraged by QEMU.
-> >>>
-> >>> This can be used by invoking "podman --remote", or equivalently the
-> >>> separate "podman-remote" binary:
-> >>>
-> >>>   https://github.com/containers/podman/blob/main/docs/tutorials/remote_client.md
-> >>>
-> >>> The current 'podman version' check is insufficient to detect the
-> >>> inability to launch containers, so it is replaced with the stronger
-> >>> 'podman info' check.
-> >>>
-> >>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> >>> ---
-> >>>  tests/docker/docker.py | 10 ++++++----
-> >>>  1 file changed, 6 insertions(+), 4 deletions(-)
-> >>>
-> >>> diff --git a/tests/docker/docker.py b/tests/docker/docker.py
-> >>> index ff68c7bf6f..9e18b984f4 100755
-> >>> --- a/tests/docker/docker.py
-> >>> +++ b/tests/docker/docker.py
-> >>> @@ -76,14 +76,16 @@ def _guess_engine_command():
-> >>>      commands = []
-> >>>  
-> >>>      if USE_ENGINE in [EngineEnum.AUTO, EngineEnum.PODMAN]:
-> >>> -        commands += [["podman"]]
-> >>> +        commands += [["podman"], ["podman-remote"], ["podman", "--remote"]]
-> >>>      if USE_ENGINE in [EngineEnum.AUTO, EngineEnum.DOCKER]:
-> >>>          commands += [["docker"], ["sudo", "-n", "docker"]]
-> >>>      for cmd in commands:
-> >>>          try:
-> >>> -            # docker version will return the client details in stdout
-> >>> -            # but still report a status of 1 if it can't contact the daemon
-> >>> -            if subprocess.call(cmd + ["version"],
-> >>> +            # 'version' is not sufficient to prove a working binary
-> >>> +            # for podman. 'info' is a stronger check that is more
-> >>> +            # likely to correlate with ability to create containers,
-> >>> +            # and required to detect the need for podman remote
-> >>> +            if subprocess.call(cmd + ["info"],
-> >>>                                 stdout=DEVNULL, stderr=DEVNULL) == 0:
-> >>>                  return cmd
-> >>>          except OSError:
-> >>
-> >> Taking a look at why tcg tests are slow to compile, I reached this
-> >> commit. It seems like that calling 'podman info' is 5 to 10 times slower
-> >> than calling 'podman version'.
-> >> Thus, a container run now takes +1s when it was 0.2 before.
-> > 
-> > Hmmm, but we call 'docker.py probe' in configure and cache the result,
-> > so that probe should only be done once.  0.2 vs 1s is just noise in
-> > the context of configure.
-> > 
-> > That you're seeing any negative effects suggests that we've got
-> > something not using the cached probe result, which we should fix.
-> >
+
+
+在 2026/7/10 10:58, Bibo Mao 写道:
 > 
-> Not really, docker.py --engine X still calls X info.
 > 
-> https://gitlab.com/qemu-project/qemu/-/blob/master/tests/docker/docker.py#L675
-> https://gitlab.com/qemu-project/qemu/-/blob/master/tests/docker/docker.py#L78
+> On 2026/7/10 上午8:50, Tao Cui wrote:
+>> From: Tao Cui <cuitao@kylinos.cn>
+>>
+>> kvm_set_pv_features() programs the KVM_FEATURE cpucfg attribute, which is a
+>> per-vCPU setting. It was called from kvm_arch_put_registers() under a
+>> function-local static guard, so it ran only once for the whole VM: only the
+>> first vCPU got its pv features pushed to KVM, and on SMP guests the others
+>> never saw KVM_FEATURE_IPI / KVM_FEATURE_STEAL_TIME.
+>>
+>> Drop the static guard and push pv features per vCPU under
+>> KVM_PUT_FULL_STATE, the same gate kvm_set_stealtime() already uses. Host
+>> feature detection stays in kvm_arch_init_vcpu(); the per-vCPU state write
+>> belongs in kvm_arch_put_registers().
+>>
+>> Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+>> ---
+>>   target/loongarch/kvm/kvm.c | 15 ++++++---------
+>>   1 file changed, 6 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+>> index d6539c12ac..c557ee3c3d 100644
+>> --- a/target/loongarch/kvm/kvm.c
+>> +++ b/target/loongarch/kvm/kvm.c
+>> @@ -816,7 +816,6 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
+>>   int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
+>>   {
+>>       int ret;
+>> -    static int once;
+>>         ret = kvm_loongarch_put_regs_core(cs);
+>>       if (ret) {
+>> @@ -843,19 +842,17 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
+>>           return ret;
+>>       }
+>>   -    if (!once) {
+>> +    if (level >= KVM_PUT_FULL_STATE) {
+>> +        /*
+>> +         * pv_features and steal time are per-vCPU state. Push them on
+>> +         * full-state sync so every vCPU gets its own settings; the kernel
+>> +         * clears the steal-time guest_addr on KVM_PUT_RESET_STATE.
+>> +         */
+>>           ret = kvm_set_pv_features(cs);
+> pv feature is a little different from steal-time. steal-time guest_addr is created from guest OS, pv feature is created from VMM at beginning. steal-time guest_addr can be set for many times, and there is bit KVM_STEAL_PHYS_VALID checking with steal-time guest_addr, however pv feature can be set only once with existing method.
 > 
-> Maybe the fix is to remove the check if user specified an explicit
-> engine. But in this case, there is a problem with podman-remote not
-> being detected anymore.
+
+Hi Bibo,
+
+Thanks for catching this — I hadn't fully considered the double-call path.
+
+KVM_PUT_FULL_STATE fires both at realize (cpu_synchronize_post_init) and
+on incoming migration load (cpu_synchronize_all_post_init), so
+kvm_set_pv_features() runs twice on the destination.
+
+> Although I do not understand flow of VM migration, with KVM_PUT_FULL_STATE state changing, there are at least two places where this state is set, one is from cpu_common_realizefn() which calls cpu_synchronize_post_init(), the other is qemu_loadvm_state()/qemu_loadvm_state_main() which calls cpu_synchronize_all_post_init().
 > 
-> We can fix this by introducing engine=podman-remote, and skip the check
-> if engine is explicitly set.
-> What do you think?
+> It seems that VM will fail to migrate since kvm_set_pv_features is called twice at least here. Do you test VM migration with this patch?
 
-Urgh, so i see now we have two code paths / make variables
+I did test migration (virt-11.2 -> virt-11.2, virt-11.1 -> virt-11.1) and
+it passed, but that was on a single host — source and destination computed
+the same pv_features. The kernel (kvm_loongarch_cpucfg_set_attr) only
+rejects a re-set when the value differs:
 
-  RUNC=podman --remote
-  CONTAINER_ENGINE=auto
+    if ((kvm->arch.pv_features & LOONGARCH_PV_FEAT_UPDATED) &&
+        ((kvm->arch.pv_features & valid) != val))
+        return -EINVAL;
 
-Sometimes we'll invoke docker.py --engine $(CONTAINER_ENGINE)
-and sometimes we'll directly invoke $(RUNC).
+So a cross-host migration where the two sides compute different pv_features
+would indeed fail on the second set.
 
-The result of "probe" cannot be fed back in to "--engine" which
-is a bit of a mess. I think the "engine" concept should not be
-exposed on the cli, and instead have a "--runc" arg which takes
-the full arg(s), since we need probe to report the runc args
-for other reasons.
+I'll add a per-vCPU guard so the push happens exactly once (at the first
+FULL_STATE sync); subsequent syncs are skipped and the destination keeps
+advertising the features its own host supports. Does that sound like the
+right direction?
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+Thanks,
+Tao
+
+> 
+> Regards
+> Bibo Mao
+>>           if (ret) {
+>>               return ret;
+>>           }
+>> -        once = 1;
+>> -    }
+>>   -    if (level >= KVM_PUT_FULL_STATE) {
+>> -        /*
+>> -         * only KVM_PUT_FULL_STATE is required, kvm kernel will clear
+>> -         * guest_addr for KVM_PUT_RESET_STATE
+>> -         */
+>>           ret = kvm_set_stealtime(cs);
+>>           if (ret) {
+>>               return ret;
+>>
+> 
 
 
