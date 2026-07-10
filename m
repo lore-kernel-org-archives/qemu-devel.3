@@ -4,125 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1070C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 12:26:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37A77C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 12:26:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiAEd-0006Vf-4y; Fri, 10 Jul 2026 08:21:39 -0400
+	id 1wiAEp-0006Xy-Vq; Fri, 10 Jul 2026 08:21:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
- id 1wi3lR-0000OC-62
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 01:27:05 -0400
+ id 1wi3lG-0000Ms-Md
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 01:26:55 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
- id 1wi3lO-0004BO-HO
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 01:27:04 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ id 1wi3lE-000492-Av
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 01:26:53 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66A3mbbW3838073
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 05:27:01 GMT
+ 66A3n9k43707758
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 05:26:49 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=Reyq+Bfk7gr
- 9bLQ5GSqP4nU1exjoe62siU0U9X/2MjE=; b=NylzNL0S/HTOjdjfURU+fGJuqb0
- 8BBYLYAx6hn+bsq3QTbvajCiW4C+fPff6WvDYlc/Ynz+shZZrFB8LubFyLltr4mb
- QteRiTIcR/dfamkkTG9NcuZb4dWhcyA2WAnxZEjlPg0/SPUp5GMiGjy75xUNv8ps
- HNIYZ6WuX9vKE08BT2XR8CDi+0a7hYl6/g3worQqyfHG0pPbZ92MfEwzqJ4d38S1
- VQZXQ7wo8DCP5U6tx+cSmWpc8zqRg4vdxD/qtFbC3UH5eCnaOC5JyifMdDiulqAv
- 0A0w97fpv2kGwAPu5Jq17aI5jziAcVeNGpgfP+gYqMvQ7Agmud5LCGkpkSA==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fanwe8wac-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=zx5e3hvpLfG
+ gFFqw5DlLZdwsG1nOx/3xyThtl99TTe0=; b=kpuKGG1crFBDdRVoK00ZOggM2tY
+ AnPQcqfo6+NwIu2l0LKd4YmzyH4WuqVmqfKQnZgmmoa2hhLcTAo9m463B8V4XKqc
+ ewoHMPcOr7k/e8MIiE2J0X8VYhVGUCiqOATav2TA/PJbEoxNM8ZHokzKMLjHZoog
+ vzYl4lN6hjnOTzeEWnQ9ZVwWL/DuCluzruXD7X7clnEyFw/OEvmTVKwzHzIQ/YuH
+ 1P9b0hQfpBJkr7VXGWi/QSwiUXVY635vNM2AD6LKQEKl44kVQdAuAsTL/b8OHCA3
+ 43HxYawm28HWnj2dUZkORfPZmhlZKxxsRNALl8+OLwYRIR04DeQD0ddRNEQ==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4faeg5jvfp-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 05:27:01 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-382befb9555so161275a91.1
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 22:27:01 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 05:26:49 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-37dedbd1cf1so322950a91.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 22:26:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783661220; x=1784266020; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783661209; x=1784266009; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=Reyq+Bfk7gr9bLQ5GSqP4nU1exjoe62siU0U9X/2MjE=;
- b=HcUWlxTvOBNl+BziiYEjPq5rk3JowqvLQ4w9KU+0ybjCuMfn2BLm4aKDgYAqjpHEVC
- 9R/hcY4k2giimxqmoo8jTvowh1y5n+a+eBL2DpimKZE7JCae6hPGBaw8MpuzjjMKTXii
- zJasmCh701xk9BIDdERzCN7WgPhej+IqwDDhmLBkkLPSNX0XzvkZehqXORDOgSgypMat
- l14gejhH7ezs03GLL5x6BPy/mTo7oeR0ECzdAjpFIaJw0aUti+ln+eHcRsPz4S99s1tv
- HJVGFK/9GQlJEbF9qlBAjT0rsqXhY2LEP/Pq2SbK+mVZBUJVi4TVHLmV6Sckr2ySuU24
- sTKQ==
+ bh=zx5e3hvpLfGgFFqw5DlLZdwsG1nOx/3xyThtl99TTe0=;
+ b=iCTGmp5fsCWWM94k2ngiMoPuiVuHdmtNtoJCg9VnYgYNQAOdDLmQl0DmzgCxi29qeL
+ +GkzH+by6rnn2emXCcQd9hY0ml4M9U3hndL0us8luh+nAUvPk+0tITDM2N+2mdZC4ytr
+ z5YDauK+xL9XvLu5qP+XDgIPHmdkB7r/Z0QGZYWH9yYJh6yMDEq8qxdqMJDdZH8CucyH
+ jXttLq7cHzpawW2ig22jfHgDHqOQI0ogZxwh1TLU/1l9hXiKWy4lGf+Vl0LKyMfzDo93
+ TEOD8dHMlxDHe5WQu4c7fkI9P7RjkbAHfopFMX10IM9XXtWItrBZ7fEVNxb7/SzAssqD
+ 6a5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783661220; x=1784266020;
+ d=1e100.net; s=20251104; t=1783661209; x=1784266009;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=Reyq+Bfk7gr9bLQ5GSqP4nU1exjoe62siU0U9X/2MjE=;
- b=fZIIIQWlL9qFVStiCo11UooxXxQZlZT77/q817s3i+werD7EhxkKWQzdKFCQE8h4IE
- UriZK1xvA5afJZMKcD8T1Y7Fowvzx9190sXTFsnNAZIP7tZh6w8IPOoLZylY6etJzhdy
- aJCyLkALR6rWhJpXGrM2At3s5qRO3BdGytEGrJ/96aM0fkMsdzyW7G9Lyf5BnyhbpJMf
- xELWhGG11OWbNd2yJS7ZO2yFtabTjm9P309WUxNqN+VMjmWIKBrnoiJK1pIOVSNxYi6k
- 4mpNP/AuyX1/RWTncpuZLuiYb5kxmxt7obXvZpPWSRYz+iQl9GDHDjh1+pv/mjFqJU8s
- XscA==
-X-Gm-Message-State: AOJu0YxmSgaE9ZHrMOQ2TKcByOzX5ng5iOEmTDa1bfAPrpUjdmcj80Kq
- saMwLpnWg/909ZQZALhGZuT3WM7y08Ik2XpIseJTvEiPfd9yO5O1QlA0yIhd7rwiVmEkkx0kMmH
- Dwp+D6dHj1TogkPi80CMzKPSb7sT/eLRjNxJjc/MnCDWth7E8fPFSvFcXtRRAfuT4Vg==
-X-Gm-Gg: AfdE7cnwr8Uwv+yYatRxh7kTI2+mL//M1udUHsIesmA4xTvvdzl1O3ZxzaBKEWmAtDb
- sRvFQf1s6UfmuiUNHKG/Kr3ti/c0zvwNNxDiKgwFYctPOjCzuZ4OaAKgkUFod4lAioeiz2IwPxb
- amU87t3A8+zu8/0/kbbtCnpZD+mTUyfvR4PC2ID9rMl4LF6Q9lbmYmYFbQetOknhuqaWayP2Eqm
- OggTJSt8Vclh29G1MknQ2gVlWH7YLKN8Twm0uaELvZmanJIfyntIffeKftGT+ifUJUyUDne0Nl2
- ZQsyEvys1EhwjmIPtPaVKZZWae8yjiDOn4vRXatYmsGIj6VgmjVgc9PgKkdOZ/Iyl4/wJvNAxWa
- Pax9X7IQOb6aQ1MtQekcsR4c+/dRcbm7GTAhNjpNXSzSyY7dInRKKkVdG18e0uuqcrPwApvf8S0
- sR0jA1G8LL+RIe3Oov/AJ308sAvuKPoAVSMX1WD4OGPA==
-X-Received: by 2002:a17:90b:4d12:b0:380:9cd1:d985 with SMTP id
- 98e67ed59e1d1-38a2160e57emr6423841a91.6.1783661220326; 
- Thu, 09 Jul 2026 22:27:00 -0700 (PDT)
-X-Received: by 2002:a17:90b:4d12:b0:380:9cd1:d985 with SMTP id
- 98e67ed59e1d1-38a2160e57emr6423817a91.6.1783661219730; 
- Thu, 09 Jul 2026 22:26:59 -0700 (PDT)
+ bh=zx5e3hvpLfGgFFqw5DlLZdwsG1nOx/3xyThtl99TTe0=;
+ b=PMJxuzDyNXQBMpdSiCr/w0KUPW17pr/83joWLtXrprzATwORHU2mB+VIQj/m6dv6ex
+ ZHa0qDdYUK5BdYoqtkiwyAT6froglAar4OZLLWCvDzVUy43WWmO80oaoH6adHBqHib9A
+ 3BixPGgnceNgDz2AX19nfvoofU0JK63n0nsUA4Jz7lsFkpmdRy+U/LLceeBUxS28Xkl+
+ u6qZ/6Syw66pU2LpBTq2oF4htLfU5wOAk/yPrZHdTm6eD6rxdcE3pikOzpedgu6oXjkv
+ nQLNbce+jvk1PEGZiIBeHhr+4R3qRjkCQ4Nvqirejz7oS9akvyWU0D4Djq1S/zhDw/eT
+ Wi4g==
+X-Gm-Message-State: AOJu0YzWVSfpR4SE9MDKzCSVbh9v8PkQeBin2T4f3MYLckVeOlufTpsl
+ j6Bw2sVbIqOlURlQGloxFQOkxjI81hqL2P6qRVuzO6GVulHGHi53EPXYQ/TdUG3zVkCgn3UUI/J
+ fGXS9q4hg4FpvFXoVp/GbH67agvhszAfc/2gAakXv2lpv4sqvYCS7LeeL6fPGkXw84A==
+X-Gm-Gg: AfdE7ckJYYSgQu2n5BqQGOKOYi4GFCBSbvHWoUxdiUE2Q+5iQSN51va3FLLexA57bHP
+ NiHkz3zL67Chf2y4vcpc1Ha4T/Iq1JvHXs94a3QVFW+QxjfkGj+/b9KUlcr9ynXTZ1paIS5U0Ox
+ Ap/TKZB1yGQ6bz70ejzbBgBrIeAmTWgYKaEDnot8wKb5w+1KtfQlxnxEaFfDmKkRCp7wi7p0Tlb
+ A83Xhwv53LqyKVEGGAx4MJydj5OZN03jMBaMv5vBgObUjlgJVcsaXXv42gLqWgR4ajJF0P9lRxq
+ o98DVHWp4sv+71XJLWK5IMQRj/Vr+HP+FSTBFsCHs3uwL1Lt+18qgGAta9vwu8s/FsPjCNzQBlN
+ jRHTiV6r/d9QyW7HYI/lSjQdwORb3E1wAv5GEv0Sc+w3Mkzp7sSQAVoRquyjA9IJ+nD4SJu5aoh
+ nXbsIqQiwbaMXuJRGaZ8A/Hud0d2p3+MEmc1697C6Reg==
+X-Received: by 2002:a17:90b:37cc:b0:381:6cf0:d5f5 with SMTP id
+ 98e67ed59e1d1-38a2122afafmr5569047a91.5.1783661208641; 
+ Thu, 09 Jul 2026 22:26:48 -0700 (PDT)
+X-Received: by 2002:a17:90b:37cc:b0:381:6cf0:d5f5 with SMTP id
+ 98e67ed59e1d1-38a2122afafmr5569029a91.5.1783661208044; 
+ Thu, 09 Jul 2026 22:26:48 -0700 (PDT)
 Received: from hu-slingapp-blr.qualcomm.com
  (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13b659d8da9sm62476707c88.14.2026.07.09.22.26.58
+ a92af1059eb24-13b659d8da9sm62476707c88.14.2026.07.09.22.26.46
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jul 2026 22:26:59 -0700 (PDT)
+ Thu, 09 Jul 2026 22:26:47 -0700 (PDT)
 From: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 08/10] docs/system/riscv: document initial virt RPMI support
-Date: Fri, 10 Jul 2026 10:56:40 +0530
-Message-ID: <10f13dfad6528556a3bb4aa077aca8c38e34bc24.1783660209.git.subrahmanya.lingappa@qti.qualcomm.com>
+Subject: [PATCH 01/10] build: add optional librpmi dependency
+Date: Fri, 10 Jul 2026 10:56:33 +0530
+Message-ID: <1f2732b7220280efc1b5f69ae022b318dbbc3827.1783660209.git.subrahmanya.lingappa@qti.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1783660209.git.subrahmanya.lingappa@qti.qualcomm.com>
 References: <cover.1783660209.git.subrahmanya.lingappa@qti.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=LbIMLDfi c=1 sm=1 tr=0 ts=6a5082a5 cx=c_pps
- a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+X-Authority-Analysis: v=2.4 cv=FN8rAeos c=1 sm=1 tr=0 ts=6a508299 cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
  a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=V1jnuoLLAAAA:20
- a=NEAV23lmAAAA:8 a=EUspDBNiAAAA:8 a=RyhCfiGMEKD-kOZgqhYA:9
- a=uKXjsCUrEbL0IQVhDsJ9:22 a=bA3UWDv6hWIuX7UZL3qL:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEwMDA0OCBTYWx0ZWRfX0qk3kBf3t7Bz
- ho2aVUSrmZBN5NLzbUdlYfi/hERI0jEY+dU2VusGNoLy+zsnYS7NHoM2v+LeL7Wt+dRLPzrPMk/
- +DxusujH8WRgp6SyIHCfhUXMAnf35IsV5zJ9wYdwPSyUhSwGVvyA9OqgTkmdw97QyybXxdU3t2X
- ZPohyBWSjYAzGigoszNaRs/eoFf8Kl9AR0r5wBIxOk4u+HBpV5h5bdas1+vKvh74dJ0mlyTizmO
- OqInm2onSJBwNu7TZRlUGfMsudozo8GJRlHq9X7M6HAt4Q4Z+WYqc7icONQeHwReiuwMYdHzv3k
- fyLGzzm4DFbHpiV+PZFS2R8sjQZMtW4go8DoHHRqfvd/J3Xsm26mV7Ivo9hHXskLufeyiBOtYw2
- lNnqpgY8W9FIrwuAT+x8Fkrw3h9F7YcXD2iqvQGEcmO1OZhKd5ne6TLrZOAQEvM6g2leEgFVMQU
- 94AscevCFSmT13wQ0Fw==
-X-Proofpoint-ORIG-GUID: lKnOc_esYAkQpCl2MyrWY9XCodyJWfEM
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEwMDA0OCBTYWx0ZWRfX3pkzbtitc9Te
- AN3TqqvgNyIKrVEj5SON83DlObcQk23FlMyos2vAWyxhePpDdjBku06sJcq7Nebh0nQqWGtdoTi
- 54g/O87EQzNCTZn/eS6zFyq4VFGNkPA=
-X-Proofpoint-GUID: lKnOc_esYAkQpCl2MyrWY9XCodyJWfEM
+ a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=EUspDBNiAAAA:8
+ a=_6tmRKQHnRYSWcN6IbQA:9 a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEwMDA0OCBTYWx0ZWRfX34t3AZQlWxTA
+ hbQD2tWtK1xRMVOy0g4c4iYRFCStsOQ8S5fiqlQM7Ss92RFMOAEvZzRgWXB5JjJ8r8sIReK9R4V
+ c3a89MMjD8ckhN3J/UKpcrEB5ZcNQ7E=
+X-Proofpoint-ORIG-GUID: XwXcyZAMabP-59oH6HVX67yyciKGKVFk
+X-Proofpoint-GUID: XwXcyZAMabP-59oH6HVX67yyciKGKVFk
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEwMDA0OCBTYWx0ZWRfX9GPf7Z8btbUk
+ HhG4aQQ/Zx876bKgivsRjkXyISknXqmIUuVDWXXbZfaBwMAnBmb9dA0J5GZwRB/RMmae7lZWSFU
+ Iaf2BkaMrp1OkMX+/tUAY02eN5AEAf1970IK0skdXGsIaEARUqB2KWK0zq4z3k4A3547t5XcTih
+ yInfA3yLEvP7arh77+4Nx4N/vp2fpWSYi6E5c2eyOJ3eJWQWN8T7A4GMdYqgSF9W0hS81pnei/j
+ 1y9YNiMRr1uU8itChQVArW38st1OqmzxzKVzSAGTTaczsqX3BYJUs6Lcgwp5zHTpctmDS69Ngyd
+ UhlKEwCD9DxxdYFaNXx9KboErUxwgTG55Yfxf/+QpvftgasTVYMaVYe0i9+ZRYF+pd/weir3Zpv
+ uDhqjhCcxtl9TYaUyhsLqOYRs4T2ig7+o9w56EvNYFM7rGV1PoplAYdA+SXVaQ7NH6TDpfd81tm
+ cm+XnMx8t4rL6mSBXbQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-10_01,2026-07-09_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
- clxscore=1015 impostorscore=0 priorityscore=1501 phishscore=0 adultscore=0
+ bulkscore=0 suspectscore=0 phishscore=0 clxscore=1011 impostorscore=0
+ spamscore=0 priorityscore=1501 lowpriorityscore=0 adultscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607100048
 Received-SPF: pass client-ip=205.220.168.131;
@@ -153,75 +152,112 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Subrahmanya Lingappa <subrahmanya.lingappa@qti.qualcomm.com>
 
-Document the opt-in virt RPMI transport and the initial HSM, system
-reset, and system suspend service groups.
+Add a meson option and config probe for librpmi so RISC-V machines can
+opt into RPMI support when the library is available. Keep the dependency
+optional so default builds without librpmi continue to work.
 
 Signed-off-by: Subrahmanya Lingappa <subrahmanya.lingappa@qti.qualcomm.com>
 ---
- docs/system/riscv/virt.rst | 50 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 50 insertions(+)
+ Kconfig.host                  |  3 +++
+ meson.build                   | 14 ++++++++++++++
+ meson_options.txt             |  2 ++
+ scripts/meson-buildoptions.sh |  3 +++
+ 4 files changed, 22 insertions(+)
 
-diff --git a/docs/system/riscv/virt.rst b/docs/system/riscv/virt.rst
-index 60850970ce..8e88f780e1 100644
---- a/docs/system/riscv/virt.rst
-+++ b/docs/system/riscv/virt.rst
-@@ -146,6 +146,56 @@ The following machine-specific options are supported:
+diff --git a/Kconfig.host b/Kconfig.host
+index 933425c74b..6f98dadb2e 100644
+--- a/Kconfig.host
++++ b/Kconfig.host
+@@ -8,6 +8,9 @@ config LINUX
+ config LIBCBOR
+     bool
  
-   Enables the riscv-iommu-sys platform device. Defaults to 'off'.
++config LIBRPMI
++    bool
++
+ config GNUTLS
+     bool
  
-+- rpmi=[on|off]
-+
-+  Enables the RISC-V RPMI shared-memory transport. This option defaults to
-+  "off", is TCG-only, and is available only when QEMU is built with librpmi
-+  support. This support targets the RISC-V Platform Management Interface
-+  (RPMI) Specification v1.0 Ratified (`RPMI v1.0 specification`_). The initial
-+  ``virt`` implementation exposes RPMI system reset, system suspend, and HSM
-+  service groups. System reset can request shutdown or cold reboot through
-+  RPMI. HSM uses the ``virt`` hart IDs and supports hart discovery, status,
-+  start, stop, and suspend commands. System suspend uses QEMU's suspend and
-+  wakeup path. Migration is currently blocked while RPMI transport and service
-+  VMState support is being designed.
-+
-+  The build dependency is provided by `librpmi`_. Install librpmi so that
-+  ``pkg-config`` can find ``librpmi.pc``, then configure QEMU with
-+  ``--enable-librpmi`` or ``-Dlibrpmi=enabled``.
-+
-+.. _RPMI v1.0 specification: https://github.com/riscv-non-isa/riscv-rpmi/releases/download/v1.0/riscv-rpmi.pdf
-+.. _librpmi: https://github.com/riscv-software-src/librpmi
-+
-+RPMI firmware and guest smoke
-+-----------------------------
-+
-+A firmware-level RPMI smoke test can be run with OpenSBI, a Linux kernel, and a
-+RISC-V disk image:
-+
-+.. code-block:: bash
-+
-+  $ qemu-system-riscv64 \
-+      -machine virt,rpmi=on \
-+      -cpu rv64 -smp 4 -m 4G -nographic \
-+      -bios /path/to/fw_jump.bin \
-+      -kernel /path/to/Image \
-+      -append "root=/dev/vda rw console=ttyS0 earlycon=sbi" \
-+      -drive file=/path/to/rootfs.img,format=raw,if=virtio,snapshot=on
-+
-+The OpenSBI banner should report RPMI-backed HSM and system suspend support.
-+After the guest reaches a shell, normal guest reboot/poweroff commands exercise
-+the RPMI system reset path.
-+
-+RPMI device tree policy
-+-----------------------
-+
-+RPMI is currently described through FDT only; no ACPI representation is emitted
-+for the RPMI transport or service groups. The ``virt`` machine uses the
-+``riscv,rpmi-shmem-mbox`` shared-memory mailbox node plus child service nodes
-+with ``riscv,rpmi-*`` compatible strings. These binding names are part of the
-+RPMI RFC surface and may be revised if the RISC-V RPMI bindings change during
-+review.
-+
- Running Linux kernel
- --------------------
+diff --git a/meson.build b/meson.build
+index 19e123423b..103b4649b8 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2005,6 +2005,17 @@ if lzo.found() and not cc.links('''
+   endif
+ endif
  
++librpmi = not_found
++if not get_option('librpmi').auto() or have_system
++  librpmi = dependency('librpmi', required: get_option('librpmi'),
++                       method: 'pkg-config')
++  if librpmi.found() and not cc.has_header_symbol('librpmi.h',
++                                                  'rpmi_service_group_logging_create',
++                                                  dependencies: librpmi)
++    error('librpmi support requires the RPMI logging service group API')
++  endif
++endif
++
+ numa = not_found
+ if not get_option('numa').auto() or have_system or have_tools
+   numa = cc.find_library('numa', has_headers: ['numa.h'],
+@@ -2427,6 +2438,7 @@ config_host_data.set('CONFIG_LINUX', host_os == 'linux')
+ config_host_data.set('CONFIG_POSIX', host_os != 'windows')
+ config_host_data.set('CONFIG_WIN32', host_os == 'windows')
+ config_host_data.set('CONFIG_LZO', lzo.found())
++config_host_data.set('CONFIG_LIBRPMI', librpmi.found())
+ config_host_data.set('CONFIG_MPATH', mpathpersist.found())
+ config_host_data.set('CONFIG_BLKIO', blkio.found())
+ if blkio.found()
+@@ -3258,6 +3270,7 @@ host_kconfig = \
+   (multiprocess_allowed ? ['CONFIG_MULTIPROCESS_ALLOWED=y'] : []) + \
+   (vfio_user_server_allowed ? ['CONFIG_VFIO_USER_SERVER_ALLOWED=y'] : []) + \
+   (hv_balloon ? ['CONFIG_HV_BALLOON_POSSIBLE=y'] : []) + \
++  (librpmi.found() ? ['CONFIG_LIBRPMI=y'] : []) + \
+   (have_rust ? ['CONFIG_HAVE_RUST=y'] : [])
+ 
+ ignored = [ 'TARGET_XML_FILES', 'TARGET_ABI_DIR' ]
+@@ -4971,6 +4984,7 @@ summary_info += {'TPM support':       have_tpm}
+ summary_info += {'IGVM support':      igvm}
+ summary_info += {'libssh support':    libssh}
+ summary_info += {'lzo support':       lzo}
++summary_info += {'librpmi support':   librpmi}
+ summary_info += {'snappy support':    snappy}
+ summary_info += {'bzip2 support':     libbzip2}
+ summary_info += {'lzfse support':     liblzfse}
+diff --git a/meson_options.txt b/meson_options.txt
+index a07cb47d35..9f773a7886 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -204,6 +204,8 @@ option('lzfse', type : 'feature', value : 'auto',
+        description: 'lzfse support for DMG images')
+ option('lzo', type : 'feature', value : 'auto',
+        description: 'lzo compression support')
++option('librpmi', type : 'feature', value : 'auto',
++       description: 'RISC-V RPMI support')
+ option('pvg', type: 'feature', value: 'auto',
+        description: 'macOS paravirtualized graphics support')
+ option('rbd', type : 'feature', value : 'auto',
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index c003985047..e8a20068e7 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -140,6 +140,7 @@ meson_options_help() {
+   printf "%s\n" '  libkeyutils     Linux keyutils support'
+   printf "%s\n" '  libnfs          libnfs block device driver'
+   printf "%s\n" '  libpmem         libpmem support'
++  printf "%s\n" '  librpmi         RISC-V RPMI support'
+   printf "%s\n" '  libssh          ssh block device support'
+   printf "%s\n" '  libudev         Use libudev to enumerate host devices'
+   printf "%s\n" '  libusb          libusb support for USB passthrough'
+@@ -376,6 +377,8 @@ _meson_option_parse() {
+     --disable-libnfs) printf "%s" -Dlibnfs=disabled ;;
+     --enable-libpmem) printf "%s" -Dlibpmem=enabled ;;
+     --disable-libpmem) printf "%s" -Dlibpmem=disabled ;;
++    --enable-librpmi) printf "%s" -Dlibrpmi=enabled ;;
++    --disable-librpmi) printf "%s" -Dlibrpmi=disabled ;;
+     --enable-libssh) printf "%s" -Dlibssh=enabled ;;
+     --disable-libssh) printf "%s" -Dlibssh=disabled ;;
+     --enable-libudev) printf "%s" -Dlibudev=enabled ;;
 -- 
 2.43.0
 
