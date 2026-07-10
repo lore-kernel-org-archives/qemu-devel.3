@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09F77C44506
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 10:16:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56226C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 10:16:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi8H0-0006o4-Af; Fri, 10 Jul 2026 06:15:58 -0400
+	id 1wi8HG-0006q3-G2; Fri, 10 Jul 2026 06:16:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wi8Gz-0006nb-1h
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 06:15:57 -0400
+ id 1wi8HD-0006pE-Eq
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 06:16:12 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wi8Gx-0006HL-JJ
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 06:15:56 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wi8HB-0006OD-Rd
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 06:16:11 -0400
 Received: from DESKTOP-TUU1E5L.fritz.box (p3e9c0c70.dip0.t-ipconnect.de
  [62.156.12.112])
- by linux.microsoft.com (Postfix) with ESMTPSA id 1166D20B716F;
- Fri, 10 Jul 2026 03:15:45 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 1166D20B716F
+ by linux.microsoft.com (Postfix) with ESMTPSA id 80B1A20B716F;
+ Fri, 10 Jul 2026 03:16:00 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 80B1A20B716F
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1783678548;
- bh=Jn8tM3gPqJHIZqmfAJS0m6WTLE5cquacWSQOkwm6lnU=;
+ s=default; t=1783678563;
+ bh=MLYd/clY4DaUkQwiV2AlNE84dmZItUqtEVca75uY3SI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=DEJeoAuZhu7Ko6udy9jxkmlDqaexPi4mZgnuIu4DRU55zpnMD4IK8XEfOwOZNYPdV
- nf/LnMWJkSSHEO6hl97rmUsIRDqGauN1nHHHR08Fr/EsNKLDarY4+bgloiMUpInJdE
- qYCP3TI+AGJ1In7moVF3fEeudpgE/E8K0Zr8J/bQ=
+ b=HxkCaUzIaCET+X5UDWcNsjxKfn6YFBED8qqEjc7o0mpw3PeY0DmCSs5AH63wJJV0U
+ 3w1mUk0nn3I5i7zjnerSWYFyZubmqRVGxoJSukf25GILGWz6gruMi7EomVOWefpepX
+ kbysbEVyyBX8vr+5L/0XJv15AmHH8tfO2G6I0W2I=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -42,9 +42,9 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Wei Liu <wei.liu@kernel.org>,
  =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <doru.blanzeanu@microsoft.com>,
  Wei Liu <liuwe@microsoft.com>
-Subject: [PATCH 04/12] accel/mshv: install dummy handler for SIG_IPI
-Date: Fri, 10 Jul 2026 12:15:26 +0200
-Message-Id: <20260710101534.664604-5-magnuskulke@linux.microsoft.com>
+Subject: [PATCH 08/12] target/i386/mshv: migrate STIMER state
+Date: Fri, 10 Jul 2026 12:15:30 +0200
+Message-Id: <20260710101534.664604-9-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260710101534.664604-1-magnuskulke@linux.microsoft.com>
 References: <20260710101534.664604-1-magnuskulke@linux.microsoft.com>
@@ -73,50 +73,194 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is similar to HVF's implementation. We want to interrupt the blocking
-vcpu run. The self-kick was effectively a no-op for mshv.
+This part of Synic state is retrieved via a mem-aligned page. We declare
+the required space (size reference: rust-vmm/mshv) as a buffer on the VM
+state struct for inclusion in a migration.
+
+Other than other SynIC features, STIMER doesn't depend on SCONTROL being
+set.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- accel/mshv/mshv-all.c | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ include/system/mshv_int.h   |  2 ++
+ target/i386/cpu.h           |  5 ++++
+ target/i386/machine.c       | 20 +++++++++++++++
+ target/i386/mshv/mshv-cpu.c | 12 +++++++++
+ target/i386/mshv/synic.c    | 51 +++++++++++++++++++++++++++++++++++++
+ 5 files changed, 90 insertions(+)
 
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index 7b3c13cf1e..f9511ca050 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -621,17 +621,13 @@ static int mshv_cpu_exec(CPUState *cpu)
- }
+diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+index bc023d3535..063852115e 100644
+--- a/include/system/mshv_int.h
++++ b/include/system/mshv_int.h
+@@ -144,5 +144,7 @@ int mshv_set_simp(int cpu_fd, const uint8_t *page);
+ int mshv_get_siefp(int cpu_fd, uint8_t *page);
+ int mshv_set_siefp(int cpu_fd, const uint8_t *page);
+ bool mshv_synic_enabled(const CPUState *cpu);
++int mshv_get_synthetic_timers(int cpu_fd, uint8_t *state);
++int mshv_set_synthetic_timers(int cpu_fd, const uint8_t *state);
  
- /*
-- * The signal handler is triggered when QEMU's main thread receives a SIG_IPI
-- * (SIGUSR1). This signal causes the current CPU thread to be kicked, forcing a
-- * VM exit on the CPU. The VM exit generates an exit reason that breaks the loop
-- * (see mshv_cpu_exec). If the exit is due to a Ctrl+A+x command, the system
-- * will shut down. For other cases, the system will continue running.
-+ * We need a dummy handler to make SIG_IPI a deliverable signal. The kernel
-+ * handler will be woken up by the caught signal and instruct the hypervisor
-+ * to suspend execution (the concrete mechanism differs between schedulers)
-+ * and return to userspace.
-  */
--static void sa_ipi_handler(int sig)
-+static void dummy_handler(int sig)
+ #endif
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 9270ae95d0..6c9e674e81 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -45,6 +45,10 @@
+ #define ELF_MACHINE_UNAME "i686"
+ #endif
+ 
++#ifdef CONFIG_MSHV
++#define MSHV_STIMERS_STATE_SIZE 200
++#endif
++
+ enum {
+     R_EAX = 0,
+     R_ECX = 1,
+@@ -2303,6 +2307,7 @@ typedef struct CPUArchState {
+ #if defined(CONFIG_MSHV)
+     uint8_t hv_simp_page[HV_HYP_PAGE_SIZE];
+     uint8_t hv_siefp_page[HV_HYP_PAGE_SIZE];
++    uint8_t hv_synthetic_timers_state[MSHV_STIMERS_STATE_SIZE];
+ #endif
+ 
+     uint64_t mcg_cap;
+diff --git a/target/i386/machine.c b/target/i386/machine.c
+index 023a397ab8..8d69d7e25e 100644
+--- a/target/i386/machine.c
++++ b/target/i386/machine.c
+@@ -10,6 +10,7 @@
+ #include "exec/watchpoint.h"
+ #include "system/kvm.h"
+ #include "system/kvm_xen.h"
++#include "system/mshv.h"
+ #include "system/tcg.h"
+ 
+ #include "qemu/error-report.h"
+@@ -952,6 +953,24 @@ static const VMStateDescription vmstate_msr_hyperv_reenlightenment = {
+ };
+ 
+ #ifdef CONFIG_MSHV
++
++static bool mshv_synthetic_timers_needed(void *opaque)
++{
++    /* Always migrate synthetic timers */
++    return mshv_enabled();
++}
++
++static const VMStateDescription vmstate_mshv_synthetic_timers = {
++    .name = "cpu/mshv_synthetic_timers",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = mshv_synthetic_timers_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_BUFFER(env.hv_synthetic_timers_state, X86CPU),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static bool mshv_synic_vp_state_needed(void *opaque)
  {
--    /* TODO: call IOCTL to set_immediate_exit, once implemented. */
--
--    qemu_cpu_kick_self();
+     X86CPU *cpu = opaque;
+@@ -1941,6 +1960,7 @@ const VMStateDescription vmstate_x86_cpu = {
+ #endif
+ #ifdef CONFIG_MSHV
+         &vmstate_mshv_synic_vp_state,
++        &vmstate_mshv_synthetic_timers,
+ #endif
+         NULL
+     }
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 57244bc667..ce6cfccc0a 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -118,6 +118,12 @@ static int get_synic_state(CPUState *cpu)
+     int cpu_fd = mshv_vcpufd(cpu);
+     int ret;
+ 
++    ret = mshv_get_synthetic_timers(cpu_fd, env->hv_synthetic_timers_state);
++    if (ret < 0) {
++        error_report("failed to get synthetic timers");
++        return -1;
++    }
++
+     /* SIMP/SIEFP can only be read when SynIC is enabled */
+     if (!mshv_synic_enabled(cpu)) {
+         return 0;
+@@ -1420,6 +1426,12 @@ static int set_synic_state(const CPUState *cpu)
+     int cpu_fd = mshv_vcpufd(cpu);
+     int ret;
+ 
++    ret = mshv_set_synthetic_timers(cpu_fd, env->hv_synthetic_timers_state);
++    if (ret < 0) {
++        error_report("failed to set synthetic timers state");
++        return -1;
++    }
++
+     /* SIMP/SIEFP can only be written when SynIC is enabled */
+     if (!mshv_synic_enabled(cpu)) {
+         return 0;
+diff --git a/target/i386/mshv/synic.c b/target/i386/mshv/synic.c
+index 8f9fee6ed7..4c629adc3a 100644
+--- a/target/i386/mshv/synic.c
++++ b/target/i386/mshv/synic.c
+@@ -54,6 +54,57 @@ static int set_vp_state(int cpu_fd, const struct mshv_get_set_vp_state *state)
+     return 0;
  }
  
- static void init_signal(CPUState *cpu)
-@@ -641,7 +637,7 @@ static void init_signal(CPUState *cpu)
-     sigset_t set;
- 
-     memset(&sigact, 0, sizeof(sigact));
--    sigact.sa_handler = sa_ipi_handler;
-+    sigact.sa_handler = dummy_handler;
-     sigaction(SIG_IPI, &sigact, NULL);
- 
-     pthread_sigmask(SIG_BLOCK, NULL, &set);
++int mshv_get_synthetic_timers(int cpu_fd, uint8_t *state)
++{
++    int ret;
++    void *buffer;
++    struct mshv_get_set_vp_state args = {0};
++
++    buffer = qemu_memalign(HV_HYP_PAGE_SIZE, HV_HYP_PAGE_SIZE);
++    args.buf_ptr = (uint64_t)buffer;
++    args.buf_sz = HV_HYP_PAGE_SIZE;
++    args.type = MSHV_VP_STATE_SYNTHETIC_TIMERS;
++
++    ret = get_vp_state(cpu_fd, &args);
++
++    if (ret < 0) {
++        qemu_vfree(buffer);
++        error_report("failed to get synthetic timers");
++        return -1;
++    }
++
++    memcpy(state, buffer, MSHV_STIMERS_STATE_SIZE);
++    qemu_vfree(buffer);
++
++    return 0;
++}
++
++int mshv_set_synthetic_timers(int cpu_fd, const uint8_t *state)
++{
++    int ret;
++    void *buffer;
++    struct mshv_get_set_vp_state args = {0};
++
++    buffer = qemu_memalign(HV_HYP_PAGE_SIZE, HV_HYP_PAGE_SIZE);
++    memset(buffer, 0, HV_HYP_PAGE_SIZE);
++    args.buf_ptr = (uint64_t)buffer;
++    args.buf_sz = HV_HYP_PAGE_SIZE;
++    args.type = MSHV_VP_STATE_SYNTHETIC_TIMERS;
++
++    assert(state);
++    memcpy(buffer, state, MSHV_STIMERS_STATE_SIZE);
++
++    ret = set_vp_state(cpu_fd, &args);
++    qemu_vfree(buffer);
++
++    if (ret < 0) {
++        error_report("failed to set synthetic timers");
++        return -1;
++    }
++
++    return 0;
++}
++
+ int mshv_get_simp(int cpu_fd, uint8_t *page)
+ {
+     int ret;
 -- 
 2.34.1
 
