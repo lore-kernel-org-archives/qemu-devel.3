@@ -4,102 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22B7EC43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 15:37:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF446C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 16:03:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiDIC-0002A0-P9; Fri, 10 Jul 2026 11:37:32 -0400
+	id 1wiDh0-0008Kz-Sb; Fri, 10 Jul 2026 12:03:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wiDIB-00029N-G5
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 11:37:31 -0400
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ id 1wiDgz-0008JP-71
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 12:03:09 -0400
+Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wiDIA-0005sq-2v
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 11:37:31 -0400
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-6675db463b9so974157d50.3
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 08:37:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783697849; cv=none;
+ id 1wiDgx-0004Wi-5A
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 12:03:08 -0400
+Received: by mail-yx1-xb12b.google.com with SMTP id
+ 956f58d0204a3-664e3ed58bcso3304382d50.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 09:03:06 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783699385; cv=none;
  d=google.com; s=arc-20260327;
- b=iBWEMIdBFqiePirLxHchhh8IT/HcLtfqNavYiDoWUjDjwVPoARk94X8I+SbvCE/hBZ
- 4GdqvLhHrzE/HS9HGPukKmEWx8hQdrfPLiZATromNsqGb3vvzJ9cobZ0zTfqGJj069Th
- KFgE89CTiN8wRFB5/ymHDMGNmL4MdmsDeReDT3Ev8pZcYwsSNv635DAjIUQoGwVE4xdG
- Pk2A5D7IeB2i1PCORq2jgWc/lQq240ZRmgVLfNVEYLuTlvQDb4E00fBxI5EJ8uuHauDT
- c8LYvcHssHR9sOWHe0Dur/NwcmdWu526O2M6XZKUr+lHXkQLB23vSSIkiXrh89BaFeTK
- GSQg==
+ b=dIm8NsAEK4++JPxPA2xDUyFnYS1wJmeAXpbaNlifeS1pxHkDiXKfvfW119cs6vIWm5
+ QIQfnr1IXz73cFl2PLyPSOjRS255YNMsC5MyknYWeawI8aAVGe9mCK+E8xrYY7v+2R9/
+ ndqUTCsEj216WaVmGbry/d21QXG6uYhu/FMf041ujlbOigCpY+tNXIYpmAO54KFTLkDf
+ OGS/+HyjPgyUZ93gZ6++Bip9mA8tlcbCZlG8KhgxvMdp4h4IORJOMENGH0gdj0QjY1mS
+ FERwMjv89GCWbsoKanu/14B3SLcI2lHNI/lbAiwXEuAmPaiP94OMLd0a8oCecJIixYnI
+ Xt3g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Ag4xZwJH7gb8h0r+0qSJVFucgFXmp4y/0lv0QiWfd2E=;
- fh=SRsBcQge+NwcX+9yi1dK5ZdC1U2Y2fTBPVZfMkPwrjg=;
- b=fdRYjyL8BPV9dg24JzqW+SnUIVaPAsIQL5Q23rtF3T7oU9klqsS0s7g3rKyoCJOYyy
- ikU8J9ZT8t42wA+3sTSgyzrf9WtzHpl5KHB9+LUCUp6Re8LI+O3BiKgxlijyqYdOrFNy
- jTilHsVv9Q/k1BEH5tsFFf+VVshqBrL+A2Bjw0XXfR9uplnbEAJ5f3bHZaVght6WSRwS
- Js/tk+UzA1z1T2cmSbk7ngSM/LUu5wy160Pjfp960i3W4ZK1b/OGTCwCJBF5Tvy3XRO/
- XrS5XL/aYwPSOVGbcAyyQFgtds1wEV72J3aHwM5L33LGXHVm2nmR2Ng6KJTTYnoot0Qd
- pfAQ==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=C4Gs7/5bjNBtEqp/BTEAIxi2Dwb+uoso76U0rWkUORg=;
+ fh=yxaAGfWycof4JxXdWp2QLuOyxznVY86vFN8SI3CECUA=;
+ b=Crt/KMVI9aFlDJKTTqNx+vBlWMZnVDKGYPh4Q1hBZktOY+8FauDQ2CnUQmDctE0os/
+ ptZ7aORpBh9wOYkeEcmpjj7qMaBtY1NQUDNrsww9zz77VWGeai65yOQBZdTmFP2yvgU1
+ IQVJYln+OuWXZPmPIzd+0LZ361QofB+zw1Job6MngODjtDy/kIk4C76f5ALzUVOD2Bj9
+ C4L1V4K1KWplD25Zk9D08s1PsmpSt9Z0oPGjdj6GksiqODbEjmq0ceO+WtBGDZknQMgf
+ J2JOQO86JEqIjXPPgjWwjYzpyg9ZbCEBsqgP5fsGcWV/O+T+BF5Dt/ux6CKAllgizNiH
+ eNCQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783697849; x=1784302649; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=Ag4xZwJH7gb8h0r+0qSJVFucgFXmp4y/0lv0QiWfd2E=;
- b=N+f9ljeW+HETTvmarfJyOpoaqnMd2FmpcWpdJ53Zo+AruF8m/6qt8WeRGNyid+Wl1w
- GbhbQcto+wNVjpyGc9y3DAriAYfT77oD15QoGimc8mRzzPjJBocs1rPvRVRlzJraj58k
- bivyIL9JIO2ZVyUROcVLYIq+1fcnzEB8roT6u6QBTGEarH0mc+ZffLF0vqKvO9kvjdnF
- 3f2bROb8fcAlxyuJ3Rqoje4VdIru3GlFukVRQgSJJOY5FzHjPsUybCyip4tRbfNvPSUJ
- HnlocbsMzSsGDMXgu+e+BZEOGQ+Cwxw5Sra4YBINAELBwZzml8HphYieKfTwJ4rwPIZ6
- n4tQ==
+ d=linaro.org; s=google; t=1783699385; x=1784304185; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:mime-version:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=C4Gs7/5bjNBtEqp/BTEAIxi2Dwb+uoso76U0rWkUORg=;
+ b=Sqm5PENmWyLEQWrM7i7Diz+WfkYausaJ6QqNgij6bA9ID1hG59E6chU2QjICMAZ5Gp
+ GXnbFjp4KCC8YalrKadRw30xis2bj6qAw9p3OivsGPWpKqfGPni4J0DN/GMJcaJ6/bQo
+ NRq6KlPkXpyZlXJqC8O3SP4cScpo1q3/nkPOhcWeriA0vvCMDB5sxlDX1K5PR0IRMFB8
+ qVcEKU4bWMeE7uhPrLn5pq+0XJJkWhkzHea1Z4SHxZ1HUMcM8uIyip4RcJkK3L/GQyHk
+ Gzm/Vy6PkA1RwJ+SFRzPYiOlb4RmrTq2xyhQEFyj/hRW6XtaWjBMhx3a627A3vLRqEnC
+ AFgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783697849; x=1784302649;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=Ag4xZwJH7gb8h0r+0qSJVFucgFXmp4y/0lv0QiWfd2E=;
- b=Cs2IgNRXW4Kz1KP0AZ/1sBxWMzI1vjvVqYPVYQYMVqh3IAT+4l68W3bG4cW2I1bl/K
- ACEdBoMsgdaBMos+a1wy3f5he2kCqkrL7UuS2A7JTdZm1lqIDwuFbF4SwW29TZ7kZlum
- jZ0i0PPJGEKKYr1NF/taZsvR0CuVETOgsbHCUntA9MfEDl5IrE2SJsGa1BTSYG4hS9I1
- 0dJpg3WF8yyUXy6pkf5fLIUy7VHSFNW4+d6zOyxVqD2M6ihBs9JJ6p2dCQUc2ZVr9+RG
- 4efEp8BpFDrq2nKOwYnF4FwoW/j9l3FJ4Sa6BmZKtESNpsfoIQwe6dl0fJ4Wu+AEnC2I
- gUTg==
-X-Gm-Message-State: AOJu0Yw82tbm4RNzGOaclcyR/1r5CkV4wilsm0LBa+IDbzMdQZVrvWdU
- SGEgjbbjcY517v8Gt8Wk+lUSesbcG4whPhpy/i+eRsu/NQ3Jq0GxFGIx8jHdfWqjSMrOb5SsBNH
- nEvuQE4tuaCHVeCJSncab/gg3/tZR2Br3fBI2uaKOgg==
-X-Gm-Gg: AfdE7ckEXRA8DFUVJxGO+23jzA3oLq9y5bg9UgbKgqsthFQutz7e9CvaUq8AlB/pBbg
- B0CgeJ8mFm6i8hG003LAwA7BSZhBmuOlMa59GnlJf7f0WnGHUYPRCi6FQRcgYLXgQ8V/WQqusJP
- 6Xni9pFw8Xt+KpAp8rrYRWFYu+5dOJkjrA7rPIIaLAUtXnw7ywYczmWPQj9mAkk4TMIZAcj/j/M
- BJ/rA94Nag3FJkHnPEUqmEPR8jFM60NlN2a76BEE7rGE1FRUy4+MCUwiQzMpjj3qcn+A3fRy9KI
- GtdvAX/FdSjdajofxBTCQypjRgea4yCwN2yigOjYtAjkq8A9m1NCYJz9zDoYuj0C5og=
-X-Received: by 2002:a53:acc9:0:20b0:664:ae6a:ef3 with SMTP id
- 956f58d0204a3-6679f1c3a41mr6846637d50.81.1783697848598; Fri, 10 Jul 2026
- 08:37:28 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783699385; x=1784304185;
+ h=content-type:cc:to:subject:message-id:date:from:mime-version
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=C4Gs7/5bjNBtEqp/BTEAIxi2Dwb+uoso76U0rWkUORg=;
+ b=ZYXdrcZHbL+7JsiD+odCPTnXv62Bzgn5VIIBvlf8/f9MjfcjsPVnPxnDXx3acwULm1
+ NazA6MP5YPkOYKPPZE1ocoPFUytQofUe5IquNjYBzdSnTtxXJON5YzVZwhWJDg2x3Z3N
+ iv+c1ooEYCiSjPmnmX6juAZlGdPl6vyMC5KZJsl9F1Qtxf6+HvWtg3oOAfpbtS4Fv/N6
+ X/Y+NoYE39mK7hR01/Zp45FnbzblboMvOrhmAVEYtZdspKtr3FhOwYzmu90BFgUbXAWI
+ djlZWqn46m4gui4hnHgin3RnRZJv8dQj7HnXj5zr/PcRxj9b/ZM3NlmWbY5pQMxpqhRK
+ zhsA==
+X-Gm-Message-State: AOJu0YyGFKbOZ0aPL4LvMiKHXvHxM19JfpGh4DVTp1Q4xZlHVzfTZJJB
+ 6MUmq+SF+/8IfXRFyaOcQWSL9BtflE/bUzEpYxcnTRmP6Ey3K4/1XYZQENlffBrPb6nsjzfCCNZ
+ vUoUDLy4Yit5Vujuu+2O0ekLKvMLF09saIT1P2bVCSmwB6GmkHDhtZTI=
+X-Gm-Gg: AfdE7cn9RhGKdykX3/qqszDT2xMDq5Mpkai+OswIfFO93TMJ0rIhMlYFIodCzlpjDtb
+ /EcY8BINp6Ay0IMpqS4gaxSVn+q2QaOkAKOE/XqgTto6+YbBQFHL7ZMibA9Ho2iswHCZ/yv5co/
+ NkNGUWXkK4+0rEhdnKS/j0R9mMe86+O/xv9Lek4BgixxH6rKinvcwWZSaceRiFcJF8jX2uhyEcx
+ fSq40oFx1jEj9FzDJ9XGSzRJOevPbWMKgAbi9lhuECXg99xr1MODs5zsUwhIkybbuktn5vcJLlJ
+ Ptv9Np0s6dHEoy0cibDOHXvlx26vg2j8NOH9YjdaJinMl8uSGIic+Vlm
+X-Received: by 2002:a05:690e:4892:20b0:667:a025:89a7 with SMTP id
+ 956f58d0204a3-667c601147emr2122955d50.11.1783699384866; Fri, 10 Jul 2026
+ 09:03:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260623-guest-panic-unhandle-v1-1-6adfb6d4221e@ooseel.net>
-In-Reply-To: <20260623-guest-panic-unhandle-v1-1-6adfb6d4221e@ooseel.net>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 10 Jul 2026 16:37:15 +0100
-X-Gm-Features: AVVi8CfOawhLWs7Bm1-Vsh0ZNUpgz_FdkFUJ8b3Xi-rODP0bkwZT9YqljhRRhiY
-Message-ID: <CAFEAcA9LCRKmU+r77zGp+4Rgd-uaZLPnoPPQDSfG8X5eeiynJA@mail.gmail.com>
-Subject: Re: [PATCH] target/arm/hvf: panic the guest if an unhandled exception
- occurs
-To: Leesoo Ahn <lsahn@ooseel.net>
-Cc: qemu-devel@nongnu.org, Alexander Graf <agraf@csgraf.de>,
- qemu-arm@nongnu.org
+Date: Fri, 10 Jul 2026 17:02:53 +0100
+X-Gm-Features: AUfX_mwcbvQur4SKJ8lmkt20QYEVLdjk3dB2_z3J0r-PQREy6Sl2T2a4_HjsN-o
+Message-ID: <CAFEAcA_zmc=Vvs38Qos_gecCmGAbRgDQF-0+x85Ja66nsqrHxA@mail.gmail.com>
+Subject: what is qemu_system_guest_panicked() for?
+To: QEMU Developers <qemu-devel@nongnu.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Pedro Barbuda <pbarbuda@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>, 
+ Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>, 
+ "Daniel P. Berrange" <berrange@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,37 +115,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 23 Jun 2026 at 13:56, Leesoo Ahn <lsahn@ooseel.net> wrote:
->
-> It's worth cleaning up all resources that the guest taking and to quit
-> if an exception in el1 could not be resolved.
->
-> Otherwise, the guest will get in the infinite black-hole by
-> unmodified pc.
->
-> Signed-off-by: Leesoo Ahn <lsahn@ooseel.net>
-> ---
->  target/arm/hvf/hvf.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-> index 8b902c6882..4358cf90e8 100644
-> --- a/target/arm/hvf/hvf.c
-> +++ b/target/arm/hvf/hvf.c
-> @@ -2533,6 +2533,7 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
->          cpu_synchronize_state(cpu);
->          trace_hvf_exit(syndrome, ec, env->pc);
->          error_report("0x%llx: unhandled exception ec=0x%x", env->pc, ec);
-> +        qemu_system_guest_panicked(cpu_get_crash_info(cpu));
->      }
+(cc list is a random mix of maintainers of code that calls this
+function, Paolo as "main loop maintainer" and a few others who
+I thought might have an opinion.)
 
-We should do something here, but my question is whether
-qemu_system_guest_panicked() is the right thing. We mostly
-use that for "the guest OS wants to tell QEMU that it has
-panicked, so QEMU can reflect that to the user and perhaps
-reboot or exit", though we do in a few places use it for
-things that are more like "we don't handle this case". I'm
-not sure exactly what the right thing to do here is, though.
+We have a qemu_system_guest_panicked() function which causes QEMU
+to report this to the user and do one of a couple of possible options
+(shutdown, pause the VM, do nothing). This seems mostly intended for
+"the guest OS told us by some mechanism that it just panicked". But
+we use it more widely than that...
 
+Cases which are "the guest told us about a panic":
+ - accel/kvm/kvm-all.c handling of the KVM_EXIT_SYSTEM_EVENT SEV_TERM
+   and CRASH subtypes
+ - the pvpanic device
+ - the spapr ibm,os-term RTAS call
+ - x86 kvm: tdx_panicked_on_fatal_error()
+ - x86 xen: the SHUTDOWN_crash shutdown subtype
+
+Cases which are not:
+ - hw/spapr/rtas.c: if the FDT has no RTAS address during system reset
+ - hw/spapr/spapr_events.c: if we wanted to deliver a machine check
+   exception to the guest but the FDT has no RTAS address
+ - hw/spapr/spapr_events.c: if we want to deliver a machine check
+   but the guest is still dealing with a previous machine check
+ - arm whpx, if we get an unknown/unexpected exit code trying to run the VM
+ - x86 nvmm, for an unknown/unexpected VM exit code
+ - ppc TCG, in powerpc_checkstop(), for a machine check exception I think
+ - s390_handle_wait(): not sure exactly what this is
+ - s390 unmanageable_intercept(): again not sure, think this is where
+   the guest has gone off the rails and we can't keep running
+
+At least one or two of the above have comments to the effect that
+they don't want to use e.g. cpu_abort() because they want to give
+the user the ability to examine the VM after this unrecoverable
+guest error, rather than just exiting QEMU.
+
+So I guess my question is, is it OK to mash these two categories of
+"we can't keep running the VM" together, or should we define a new
+one for the "unrecoverable guest error" case, or do we already have
+some better thing to do that I missed?
+
+In particular, "do nothing" might be a reasonable response for the
+user to configure to a guest panic notification, since the guest will
+presumably stick the vcpu into a do-nothing loop, but "do nothing"
+doesn't make sense for "unrecoverable guest error" because we'll
+probably then sit in QEMU in a tight loop retrying whatever it
+was that failed.
+
+If we had some kind of qemu_system_unrecoverable_guest_error() then
+we could maybe convert some uses of cpu_abort() over to that (though
+uses of cpu_abort() are a very mixed bunch, some of which should be
+LOG_UNIMP or LOG_GUEST_ERROR and continue and some of which should
+be straightforward assertions, as well as some which might be this
+new exit case).
+
+(This query was prompted by a patch for arm whpx which adds a new
+qemu_system_guest_panicked() call for an unhandled VM exit situation.)
+
+thanks
 -- PMM
 
