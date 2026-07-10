@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E351AC43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 03:00:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FF89C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 03:00:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi1Qx-0003C9-JE; Thu, 09 Jul 2026 22:57:47 -0400
+	id 1wi1Qr-0002bo-Ax; Thu, 09 Jul 2026 22:57:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wi1Qu-0002y0-RG
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:57:44 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1wi1QV-0001iC-1w
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:57:24 -0400
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wi1Qs-00008t-Ms
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:57:44 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-84536ecfc5bso411426b3a.2
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 19:57:42 -0700 (PDT)
+ id 1wi1QR-00006M-Gv
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:57:18 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-c89636920a3so260450a12.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 19:57:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783652261; x=1784257061; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1783652234; x=1784257034; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Kv+GArOshXmFdR1sZyXd23A57ETGs8RdZ+Z2GyBMGTk=;
- b=AJCxr8wYiuj5qkfL8TT1X7t6p/G5FXz8vs/Mz+xLD7WTwps+KGLS9cWf5YOyrUeVrf
- 4R4yPwCQrdQ4AY7lPv16smxLtbth5EGwbeeoGsilX6JBUU9kcHyeYzrIyDD87a3vu4kM
- l2/WBGlPp7PwjIi+Sl+RfaZ1KYRWKJgXdvxaid2VPWFf9N/eTwtHonDWeUHmUHETvwvy
- B/W+3QtNgTrtGwJ4u2ZelNZl2BeZbMmUD7C95dkU6G7e+3bvGKXoFHPKQ8Ut9E4UKkib
- EXxEnpw2hcoeht6rc4k/RQjAm44ETmY1es7Ku3HqyEYNE3ImeTrpLeoa4yWUZUFH+Bcv
- dotA==
+ bh=epjIeIoo3qO8AeUMEkh0+2XLO4Va9XPOC03KmUycfEc=;
+ b=H5NJ4rKNqJO6C7rxpZoOR368P2VOzbHD7GdtO2sXPME5rkgixocxafM+5zSsAF4QR7
+ RRTvYEargNnq/W3O0rY3ZODvkI0dcmuZ5nn8oRDlyoXZcyxcxdrPQj5kutPr9iRF5/NG
+ MEKBC3605xExIM8cFDJRCM+5/n6hPwNwwBtTw2gjpdnvvRzldv8UlP20N1qhTZcE5j+p
+ dH/puzZxv6ivBrezeBqjTjRKsrH6gebKHV3sllu55LUAn6xf2DCVKQlT4OxEqvkSt1L6
+ l4Fq9pTzKK/E7BTOw9PB+NAFAHFrGGLUYQkqoNnRw3TeqHkmyFNx8QJGiSSm1uo/sJES
+ UdQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783652261; x=1784257061;
+ d=1e100.net; s=20251104; t=1783652234; x=1784257034;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Kv+GArOshXmFdR1sZyXd23A57ETGs8RdZ+Z2GyBMGTk=;
- b=Qr6u2RMCh6VcUSZ2w+2G/xvc0eo2A6K7oPhmcDXrZsY+EwRLepdWOwYBlPTy2bVLI9
- pfnDtDZh2QTdEWXrz9s3u5QZx04ew4rDWlQTKPZ1NZtdEZZ3kL5QYsMlwFrw7ZQRICd2
- ijnjUoliEfEVa0uDG5n2cKbeLlI2ai5aQ3QcEJSlxggkIS3tqc5VjrH72+qBKWteMhEH
- sURpT+9+LM5WlVbReI6cdeW9AFre/2PtYeSVZQP3m0N118Ycgu6cdDsip1mqhFwNvLiP
- S55IpzmYdt56cVGMIvTVMMzqxlCM4mvicT7PBmjcYXdL2l8+JXxApellF6Jtil2kAltR
- cU7A==
-X-Gm-Message-State: AOJu0YwI5yTC6xD0nty/UXvqvLSwLlA8+sR8GJUEl36lNlhn65DjRj3+
- I/MOEPXQMsjpf+d2+FDvzXdOgV25kHdsPmL1HpQirciJ8tmcblAwd2JcBCMxIw==
-X-Gm-Gg: AfdE7cktsMciiCO4QDwl8nvU1touE06wBq24QOBjndfwcT6BQC6ZEDjqckBrBj9GtOX
- 5xbdlzqTi/vgYaBH5ZylfQjgZx4xmO+F6x6bZgzFjqHVTbAvwKyP9YWqUWUc3owdUgeTpJfEc3c
- N+o1hZ35lAeB35HJ5/lFyJFSqeyF3/PzJgsNX8t1DSZhsl8utaRDJGOyELZijHY9zRVKO7YI2lI
- 5t/pYqMxmCPD4xDMnmQuNqSjNmHT+Etr+r7IjFjbePLDnKulKjeLsg/2aMhA72RE6iDBTNHGCIb
- YJyHgZ2PXjX14c2CWoWmzW0A02uE3Ev1caFcXtm3XHKEHy/GusJnvWqrSEUyjLJ+5pAxdeVd+09
- xTyYPpnmm30rTRiv6jMBg/uRSifIdpP+7OyQRRzuocYrTHjUUopUkDgq7pi8ciJ2bi+S5XfCEqE
- Q9gc41kQRBIEnmmir+qCNiuB7lX7lzglNa4DAGx4Sugw==
-X-Received: by 2002:a05:6a21:a96:b0:3bf:d0c8:2aa7 with SMTP id
- adf61e73a8af0-3c0bcbc5172mr11540647637.47.1783652261211; 
- Thu, 09 Jul 2026 19:57:41 -0700 (PDT)
+ bh=epjIeIoo3qO8AeUMEkh0+2XLO4Va9XPOC03KmUycfEc=;
+ b=YKjf5T2IVtANWu10/Wav3ht9HLXANhrBR1NZhxtSMr8p1Kqe6lh98TL2JIMdsJcdUd
+ RTLHn9WiPc46sMCf6o1OtdM8BwWWHWyrGuuH6mo89NMX9GA0TnCSUbSW3F88oRVV12jj
+ ZPl22v0xetdTa51vHAB4l04NoW1+0xuWt1fb5GCeo5s/iBnv44sZQ8HoRfAtpdkmjIYv
+ /gUh5KetkaU+hgT2XJJ7bvmAIzzKiADjO+6pOaR0poYnA4zbvolf64eSEUpIb/HXGkmz
+ L3TkTlLrGMAf0mEiBv3KGJh5TOI+dh2qVQzB2NtPKydQaFZvk48vFAC1g57OSUxg0mJr
+ 7y1Q==
+X-Gm-Message-State: AOJu0Yy15FeJKss/UrsVt4uKdw8RpmTLJ4JwkS16uQXbUIl+F71GxX9E
+ s9jM0vlp5aIwuPiyNDj9DsN4p/YtZlbMm/WVviOvMyiCpgLcHx+pZj/7oc0EHA==
+X-Gm-Gg: AfdE7cmdgzBoVg7NLlu/9/yEDPYH3ZVW/kgU1zfaERlljMwx/BT3Q/oILYEcs68YdJL
+ fWhrZ8gBfsdgySrTTNBmIDcCRM5r/sEx2PvS2oaqBvUr4UzypM+MbI8aufilF8tdXDJkNU6AZgS
+ xu5bcUGm8nTpaUWOWRhDMk4NqygLGX2i/SRwAWFVa/2MjS7TICHIZ8dnz4uOmVuddRuTt61iB10
+ jfMjMPLMIn/NcsuouFFYOZ104kBxmBAGx4BwdpW+TlDzBTGFT4PDbI1BwgoRwu1MFUx7/87iLTT
+ w6G+5oIZTSlQk/2UyghLXuPv2MohT3SgK25dpTFttQ47BjfEUx9Rarfdel7YDR4EVtL169A4FUS
+ ZaexF2tXUvWkyWS1QYocA3w2aygLUbUFdpwvMCXdkVm1hu8FC0nre+ab87IJU9Jaw9ML+dBCuwo
+ pg2elIccAFyJo2eluwNYTqMuNNB/mmpsM=
+X-Received: by 2002:a05:6300:2288:b0:3b3:241f:66c6 with SMTP id
+ adf61e73a8af0-3c0bc9562ffmr10353704637.26.1783652234107; 
+ Thu, 09 Jul 2026 19:57:14 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-ca5af6e04fcsm4576769a12.4.2026.07.09.19.57.38
+ 41be03b00d2f7-ca5af6e04fcsm4576769a12.4.2026.07.09.19.57.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jul 2026 19:57:40 -0700 (PDT)
+ Thu, 09 Jul 2026 19:57:13 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
+Cc: Zephyr Li <fritchleybohrer@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 39/40] hw/acpi: correct field sequence in SPCR table
-Date: Fri, 10 Jul 2026 12:55:24 +1000
-Message-ID: <20260710025525.1704417-40-alistair.francis@wdc.com>
+Subject: [PULL 30/40] gitlab-ci.d/crossbuilds: add riscv64 KVM-only build job
+Date: Fri, 10 Jul 2026 12:55:15 +1000
+Message-ID: <20260710025525.1704417-31-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260710025525.1704417-1-alistair.francis@wdc.com>
 References: <20260710025525.1704417-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,58 +103,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+From: Zephyr Li <fritchleybohrer@gmail.com>
 
-On LoongArch and RISC-V invalid SPCR tables are created:
+Add CI coverage for a riscv64 --disable-tcg cross build. This ensures that
+RISC-V no-TCG/KVM-only builds keep working and prevents TCG-only code from
+being accidentally pulled into common RISC-V sources again.
 
-    Terminal Type : 00
-    Language : 03
+The cross_accel_build_job template enables KVM by default via
+--enable-${ACCEL:-kvm}, so the extra options only need to disable TCG.
 
-The correct values are:
-
-    Terminal Type : 03
-    Language : 00
-
-This is due to commit 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate
-SPCR creation to common location") that swapped the fields.
-
-See the specification of the table in
-https://learn.microsoft.com/en-us/windows-hardware/drivers/bringup/serial-port-console-redirection-table
-
-This page shows version 1.10. But the sequence of the fields was not changed
-since version 1.0.
-
-Our LoongArch and ARM code uses version 1.07 of the specification.
-Our RISC-V code uses version 1.10 of the specification.
-
-Fixes: 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate SPCR creation to common location")
-Origin: https://lore.kernel.org/qemu-devel/20260326121947.51200-1-heinrich.schuchardt@canonical.com/T/#u
-Bug-Ubuntu: https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2146419
-Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260705063147.199732-3-heinrich.schuchardt@canonical.com>
+Message-ID: <20260703180538.3346781-25-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/acpi/aml-build.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .gitlab-ci.d/crossbuilds.yml | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-index 9b3cdd3781..990abc64cd 100644
---- a/hw/acpi/aml-build.c
-+++ b/hw/acpi/aml-build.c
-@@ -2144,10 +2144,10 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
-     build_append_int_noprefix(table_data, f->stop_bits, 1);
-     /* Flow Control */
-     build_append_int_noprefix(table_data, f->flow_control, 1);
--    /* Language */
--    build_append_int_noprefix(table_data, f->language, 1);
-     /* Terminal Type */
-     build_append_int_noprefix(table_data, f->terminal_type, 1);
-+    /* Language */
-+    build_append_int_noprefix(table_data, f->language, 1);
-     /* PCI Device ID  */
-     build_append_int_noprefix(table_data, f->pci_device_id, 2);
-     /* PCI Vendor ID */
+diff --git a/.gitlab-ci.d/crossbuilds.yml b/.gitlab-ci.d/crossbuilds.yml
+index eaeeb533ce..a823aaaa21 100644
+--- a/.gitlab-ci.d/crossbuilds.yml
++++ b/.gitlab-ci.d/crossbuilds.yml
+@@ -59,6 +59,14 @@ cross-riscv64-user:
+   variables:
+     IMAGE: debian-riscv64-cross
+ 
++cross-riscv64-kvm-only:
++  extends: .cross_accel_build_job
++  needs:
++    - job: riscv64-debian-cross-container
++  variables:
++    IMAGE: debian-riscv64-cross
++    EXTRA_CONFIGURE_OPTS: --disable-tcg --without-default-features
++
+ cross-s390x-system:
+   extends: .cross_system_build_job
+   needs:
 -- 
 2.54.0
 
