@@ -4,145 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42F55C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 18:13:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 038A7C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 18:21:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiFif-0000Ud-Gz; Fri, 10 Jul 2026 14:13:01 -0400
+	id 1wiFqC-0002U4-8q; Fri, 10 Jul 2026 14:20:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wiFid-0000UK-1v
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 14:12:59 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wiFqA-0002Tw-BY
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 14:20:46 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wiFia-0005Ax-QN
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 14:12:58 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ id 1wiFq8-0007g7-16
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 14:20:46 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66AH55So1407282
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 18:12:54 GMT
+ 66AH43JO1326513
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 18:20:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 3kswRUuNIGIPNOVlVMT3M7ixSyvsxJDJCdHVCTCPMGQ=; b=U+PF5Mor1c4BVxRW
- z5kmBfxId4FA4mDfyPpYibKn4blwKOo9b9oHiJGnoJXHoFyPD74Ozg0x0XJJX35t
- TK/srjwHyA/sATpa6HKOTB8qu+kKcNMh8Vd83xpvJTQCd/r+eUjssq/VsITBMHEu
- xy2fYM9oRbTfn27kAbKChuqgOKr3gPeDVmvxjo9ODNRl00iSlqcOjtpkVLHunXDx
- MeUUTKw1AIPcveI734NWXp/9zmNBEqPZjVdBWdS/fZYe76O8RRVobMUoVsB8GHPV
- LKt53NM3k7YxFflO6bUgEirDg0guwlNj284CcfvRxKOhK77yItCs9mA6stKyKrtI
- gPi3uQ==
+ 28oowZWD7L5UKWM8XWo5kcsWjb8K2kJgyuHuZWN10xI=; b=e8T4coHUzubZzhew
+ yyXrhAowDNj76ybTFuqYGWVJU9rLNqri78jYVHwJJMZ3zUC1sWKQNwQtfEF2/TIt
+ t6hj5tMgp5uFPyrUeCyVdoiIA9wd/psW0txes8K5WLQaFH22EbS9OyQ+CiZ0NqZ6
+ A4uhJMvBILZ53hSKGTU6ZEcf668/5bYhEcjxddYNkmCn7CxHc9Nmu/Y4G8qC/zNs
+ zFPHpT6hgZKSh0mKU+ADX7gTJA10WedaESGlJq+wOoPMH9KMp8J+xR3A3ozhHUKs
+ dggldoMXSCF7yHZ8my5vI0nUjOkA8SPo+lVVURG/mV6aRTMhfZqkvErbOroyDnOy
+ kSqOlw==
 Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
  [209.85.216.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fax5f9x0y-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fb339rpnh-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 18:12:54 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 18:20:41 +0000 (GMT)
 Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-38c7de7baf1so1325057a91.1
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 11:12:53 -0700 (PDT)
+ 98e67ed59e1d1-38dc4401dc7so157940a91.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 11:20:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783707173; x=1784311973; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783707641; x=1784312441; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=3kswRUuNIGIPNOVlVMT3M7ixSyvsxJDJCdHVCTCPMGQ=;
- b=MA4tX40xHwaCR5q1/i7Vi/FcRjGsdl16YyJusz0mr6blfJ5rPKJFqY7O7HNEdLoVmu
- Zrgd2qLBPEnFx8lhuFv4xbYmzibN1I90gAP8d+661nw06rxIhv7PusK+XIJKLXnUuE2y
- NFB2By5at9Hx4g6w+6f0Jd0AqTbSCws+Zs5fjDlXdI0pEBSENzxrTx+ZPL5/c63Kz4w9
- VG3GB9JkfUSQ56estwfNswDjd0uD1CK+JfnFrRm5e07c6RFcy3nsLC/EtMWCqhLj4QeO
- 88tF3iVf8L2as+Oj92YSqluC4wrwFofAzLKwPiD2VJdSdBgQBVeYwi8qY8/NRuLcbnZQ
- 8kGg==
+ bh=28oowZWD7L5UKWM8XWo5kcsWjb8K2kJgyuHuZWN10xI=;
+ b=GHzaFkFtJufNlA2e6+unVQxc5vaB3vGN8fPN1dbLv+uSSBB6JkIGxN/rdyDX2BpsCd
+ c4bBg4DjnlC1T82wOG1nudRhL/LdffZT+HxBuJ2JkcG6C2aPNIoY+AgPmZPTCfNs9O/o
+ gr3SkbQ2vHJmyutgN4bkHMFvPum6HN9bG2ELjtfggXU6cJnMWwnLYN4YC9jSlz7yaAdO
+ eJR++OMHi0DBThfUWbiIDH/FyLQ5s1HXOftZgBLMvI/O/ebFDkXSvAXN7DR1nzgzqoBE
+ 1VuAvtzYFCTWfgYslc432bbjs3bHLeJEHlYDFz4o0ijxl++ijMkAowabP16vPg67B1mK
+ 2ehA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783707173; x=1784311973;
+ d=1e100.net; s=20251104; t=1783707641; x=1784312441;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=3kswRUuNIGIPNOVlVMT3M7ixSyvsxJDJCdHVCTCPMGQ=;
- b=U6PmEUDN+rDzHCnpIr3/8+v/yS7vk+GqCaNUJ0rNUndG0JJ45J32F5SWedpgqBUH1x
- wZ2KB+Vpk2XfHVUTeKxU35uHMSWc1qq73P9aGdOT4iYx/k3ylsqy+3uhLGD5DiwSnyoq
- e7e/yFWMmjJwirQa775XJhvlHGP7y6FARV9sVaiKWoj+b2zM4aVpjOa3E7koRsa1APa3
- zUbHSKN5NEb8N7GByL3kl4pvrFbr2OXCEAzQbQyX/tsqrwcx2wjvaoW+0E3BahTCc223
- Ds35YXMnXqeUWCsHBgVv372xhCjbWKCR7L/SkP2PVswIPOuT7iiDVwhnzwlSBlWed1Y2
- sh2g==
-X-Gm-Message-State: AOJu0YyLSDrPWWdn1eJfjhb5+m+e6jim0BefsdxtfOaY3Hzrgf6VDykM
- CFXA/JQxiJd6KqG29o8bqk6J2iHAjBa5FzmdejGkuLS3I/Gvbk1EQRmIGnsC/JaP1Gd7xPGTowL
- Zs39ZRSx7Afu0TTw3HvfmXSMebXZ1HxpzNUKs8N2iO4pr0Bk5JStgBR0LmbnVaV+IMg==
-X-Gm-Gg: AfdE7cnpEbYDnaTnB21QHBjMZTb+rfeeyK/S1VD2k06ha/VLXrJkg1EcEAVb0gEocxP
- 5XpR+ILHyJ4ECV0GoK7A+6j6+rjbtdGwEvEhJbJeCCxphDpkpCiU7lRPmxyoezmfYMlUUCibBTU
- moNCdncBiN/uhqPFNqfnhb3owwT3SkkQEjkEcQMb6sa49eMNVgCNJR8wOw0ivJlEz5CyOe4uTv9
- 673OupUuuLfWZlfG49JQILi+TVIBkGirTIRYItJToCzAZLkRlvXeTljEBTZ2OOKCwgkAwoLeB3Z
- AKGwv1kE/qD+oJHBmmjsIqcZZHzXkRPsweVSfdo4q1L6PLuS2AIR0XchWdmNSO9lJpQLLHp+7p/
- CRmh6C6Z0fEc2f6laRUE0GqMGdnb0qJA8ti/Ix/lrTYYDSFCu6EmVTKudWIzu9q8fTdBRKo66k0
- zKVG4=
-X-Received: by 2002:a17:90b:2d4e:b0:385:393e:7124 with SMTP id
- 98e67ed59e1d1-38dc7847bbdmr46095a91.14.1783707173044; 
- Fri, 10 Jul 2026 11:12:53 -0700 (PDT)
-X-Received: by 2002:a17:90b:2d4e:b0:385:393e:7124 with SMTP id
- 98e67ed59e1d1-38dc7847bbdmr46070a91.14.1783707172519; 
- Fri, 10 Jul 2026 11:12:52 -0700 (PDT)
+ bh=28oowZWD7L5UKWM8XWo5kcsWjb8K2kJgyuHuZWN10xI=;
+ b=iDLTsx0y5E2X34lVA8SVJh6saa0zRTdrWIGlOHR+fgMA8/6gjwzIncxp6i7NPSIaSN
+ dXSbLC4zrtH2TosU59s34jm3IbnOdXrlV4CYVzjkM0oMOsgKxVfthe4RIZ6KuIgsBcLL
+ O+3XxwqBIv+8wtjLY/gxNzYNhFySImFJ1P+Wcdr5PAtxJ+C8hrPIa3Gp8CvSOFcT3b65
+ zOA0qlfrAjMm0kYtdAgrLk5fY9+Kutna6he4n5C96/Kz9/rUfJ4zMNqsZoikU+31bbR5
+ jhOiqWh0At9Amz/kL7JWiN92gy33twlV2+qRKQ+LQpzWs2E2F1ACmPRLImH8QG4qDQyz
+ DlQw==
+X-Gm-Message-State: AOJu0YzOqasL2haJ65lavqWxM9y6sjV06oXHrNYptiHm+u0y+743ZOmk
+ I0pDyFjjO0xq48PdwnQHRktQMhVAUbCFVL5IGz+fqRUXvvHlJpy+gqEzyAPJdM4rpcZwxVTbvxk
+ jdiTqwwvwmicwSZ635o0p1iny0gDIWK4td6LR63TRerm2z0c4a4QqexhgsQ==
+X-Gm-Gg: AfdE7cna/xNjn5JceoCn5P/YPseKb4N0h5QFL49kYAtu87zfSMIGJCe0sPLq8b+UbC7
+ jYchWX+bZeV1JuI66cpvn+GlXfihwX2W5H3/Kcz3/02eqcf8ocbTEOIlseubBcBR67R+5A4CMOD
+ lTbKhAntjMczxhCqEQtGr1I630WTEpMhn+JS+zeXYznm4ELt3sOBgo5JiNp69KBe8LyegcrLAZU
+ F+5POcrmOuhvuYOGTCfL4oxlec+O5tvB5mPg3fJdx7WwM9m0aSvbBOc3CWAuWOTVTdRPr9f5FXM
+ j953IhmX2CtsaaU73uaPW6D+q6VVY95lxrGK1Gj1RUX+6+LyofL5lHNleqXy+JiJLJVjTGDa7L0
+ WN+HX39OCr8kZBb0utSS4qGWoqQ/qiJ0dqY9B21QLraZ6by/sEyAlb/+/T1+rYSoBXZvBB7jalj
+ C6FAs=
+X-Received: by 2002:a17:90b:4b8d:b0:381:12d5:1ab5 with SMTP id
+ 98e67ed59e1d1-38dc7611412mr112218a91.0.1783707640545; 
+ Fri, 10 Jul 2026 11:20:40 -0700 (PDT)
+X-Received: by 2002:a17:90b:4b8d:b0:381:12d5:1ab5 with SMTP id
+ 98e67ed59e1d1-38dc7611412mr112186a91.0.1783707640001; 
+ Fri, 10 Jul 2026 11:20:40 -0700 (PDT)
 Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-313b3206aaasm7624526eec.13.2026.07.10.11.12.51
+ 5a478bee46e88-3117483dec6sm44017910eec.11.2026.07.10.11.20.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 10 Jul 2026 11:12:51 -0700 (PDT)
-Message-ID: <79ebf178-063a-49fd-8cdd-f29317f569b4@oss.qualcomm.com>
-Date: Fri, 10 Jul 2026 11:12:50 -0700
+ Fri, 10 Jul 2026 11:20:39 -0700 (PDT)
+Message-ID: <2bbe43b8-2654-40f3-ac7f-c68ab6ebdcce@oss.qualcomm.com>
+Date: Fri, 10 Jul 2026 11:20:37 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 95/97] tests/tcg: remove Makefiles
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Gustavo Romero <gustavo.romero@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Brian Cain <brian.cain@oss.qualcomm.com>, Paolo Bonzini
- <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- Helge Deller <deller@gmx.de>, Peter Maydell <peter.maydell@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-References: <20260710062016.1818125-1-pierrick.bouvier@oss.qualcomm.com>
- <20260710062016.1818125-96-pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH v2 2/4] tests/docker: add support for podman remote access
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, "Edgar E . Iglesias" <edgar.iglesias@amd.com>
+References: <20260210163556.713841-1-berrange@redhat.com>
+ <20260210163556.713841-3-berrange@redhat.com>
+ <cbc2e0d7-72d6-4350-a906-e0003e8b5964@oss.qualcomm.com>
+ <ak_IsMGkkMY8wERc@redhat.com>
+ <947a4843-34ae-43f7-8fbc-80109bc0c077@oss.qualcomm.com>
+ <alCoHiXzBAcwnOxJ@redhat.com> <87ldbjqd67.fsf@draig.linaro.org>
+ <alDdCh7zfJvdD0tn@redhat.com>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20260710062016.1818125-96-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <alDdCh7zfJvdD0tn@redhat.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=Ab2B2XXG c=1 sm=1 tr=0 ts=6a513626 cx=c_pps
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEwMDE4NCBTYWx0ZWRfX/SGNO5ygl7R2
+ InlmgPtJ8ZeRuBBglGOTNhExewebY2NxWcZB6zwrZDJrVReXfFUGnobOFTN9IqsF/3IXqJsFdPB
+ YUdkMYHyZzw+WilNxlAU0ICj+uHF57M=
+X-Authority-Analysis: v=2.4 cv=Re6gzVtv c=1 sm=1 tr=0 ts=6a5137f9 cx=c_pps
  a=0uOsjrqzRL749jD1oC5vDA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=32ggs3lF5JV5lGpjTxAA:9 a=QEXdDO2ut3YA:10
- a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-ORIG-GUID: _JJzCSuqsu0Xnj_I6qWdDhb5w3yuUkpQ
-X-Proofpoint-GUID: _JJzCSuqsu0Xnj_I6qWdDhb5w3yuUkpQ
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEwMDE4MyBTYWx0ZWRfX0vUvfZoyy2El
- 9O6T5AZFGCmjAwkh2vloCVIv6kJUvsJB0FT/6fyfi2YsLexVlGGuEodvgzCuNTVTrMC4TrjWPFM
- 1L345y4nXUgT8nGn6NnrVmrCDWgmhjU=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEwMDE4MyBTYWx0ZWRfX6NHH0Hd8gUZY
- lq5z6O2HJ1VoYVR4mb9mgzg0ZK1846YzRADb/1FDlTyOHaR+XhUbSv/YtqWN6Z7Wyy8tiwBDUD1
- DhsODh0xP7ap+cLxIfPmP8RfG+/WSybfFnc+6FXoRBOPtJ+isfTYoAq7Byu0DJ27VA2qFZg1Jlv
- auPsdCDLWK/0QDonRtJeMsjETypov1ma9ma/jiVCltfKPKmUGUWUOivDdJY+MyIUBC2UW9weXoe
- /PkBD54BHST19rUF8Wyy6rAAsPF+whZuSB/yPFj8Ct9ZCr8gS1pvcYGs7BPkIAsUah6FFKjnww6
- f8FC3AbXfLc+furQZD9z8iVJYrRM+n8+gXS26tWJzBMb9f5X4NCqrlDOXLnB+Uu+IT3RjG96NV1
- LXkoLA5iUV0uXKXPuD55a5/z2oNdTqyulFwuM/PYgRDb511dndJ/gJTtS2z9CKBotmUAlyJRDnX
- YL2kqUxfWFS1F6YV52Q==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=p0WdMEafAAAA:8 a=20KFwNOVAAAA:8 a=nYIUxUqRKmhLqxvdhLQA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
+X-Proofpoint-ORIG-GUID: 8Fpj1moL4a8NHbV8rfREaaO8bxLUPgys
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEwMDE4NCBTYWx0ZWRfXzWBLRZhV0FHj
+ 6M4Ccxc9gpcQif3l6AW0dVrWik4xemrRJpA0eN0hDA255dQ+7AjNh6Muf8hdS+xLPIG+tuu42Wt
+ 8bQZ0B7b9tKUZY8SBUUrgogIbjCwohdW1OarGJteIvIdWfZeqBEUBiZ1RwaJvFIqV9KMhWo18Oo
+ mrVDG19bakBEmlbV+6lldifUkDo2ul3KVrRU8KsM+b1GgndZs5bicFgWXnJss6P95zaQhvHaT1j
+ iD9Wwioi7eQhqLqjRSJp5KopP4lxEeDNU4nOSsgll3FVWd96hM3dNAIuQozooDYczJapH0oIhJE
+ kgj43QCY68hQ5hib+uSGt50mc2oYwfR118259xeyIzCe4377BtJYQM3s+s3+L38Tf/S3NjftkR+
+ xtpa2st+kcV/aGEscmWR6KUejUGk68C97goswfFYEfn0hA8te5jUmyHBpLc/Uv6Krn0akjGsSDm
+ pvjWCQvbXvVhjgISmVQ==
+X-Proofpoint-GUID: 8Fpj1moL4a8NHbV8rfREaaO8bxLUPgys
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-10_05,2026-07-10_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 clxscore=1015 malwarescore=0 phishscore=0 bulkscore=0
- suspectscore=0 impostorscore=0 lowpriorityscore=0 priorityscore=1501
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607100183
-Received-SPF: pass client-ip=205.220.180.131;
+ suspectscore=0 clxscore=1015 spamscore=0 lowpriorityscore=0 bulkscore=0
+ malwarescore=0 priorityscore=1501 phishscore=0 impostorscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607100184
+Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -165,39 +162,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/9/2026 11:20 PM, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> ---
+On 7/10/2026 4:52 AM, Daniel P. Berrangé wrote:
+> On Fri, Jul 10, 2026 at 12:47:28PM +0100, Alex Bennée wrote:
+>> Daniel P. Berrangé <berrange@redhat.com> writes:
+>>
+>> (added Edgar for Microblaze)
+>>
+>>> On Thu, Jul 09, 2026 at 09:24:12AM -0700, Pierrick Bouvier wrote:
+>>>> On 7/9/2026 9:13 AM, Daniel P. Berrangé wrote:
+>>>>> On Thu, Jul 09, 2026 at 07:48:14AM -0700, Pierrick Bouvier wrote:
+>>>>>> On 2/10/2026 8:35 AM, Daniel P. Berrangé wrote:
+>>>>>>> When a developer's environment is already within a podman container it
+>>>>>>> is not possible to use 'podman' again to create containers. It will
+>>>>>>> usually result in wierd errors such as:
+>>>>>>>
+>>>>>>>   Error: fatal error, invalid internal status, unable to create a new pause process: cannot re-exec process to join the existing user namespace. Try running "podman system migrate" and if that doesn't work reboot to recover
+>>>>>>>
+>>>>>>> Podman offers the ability to talk to a daemon outside the container,
+>>>>>>> however, which could be leveraged by QEMU.
+>>>>>>>
+>> <snip>
+>>>>>> Taking a look at why tcg tests are slow to compile, I reached this
+>>>>>> commit. It seems like that calling 'podman info' is 5 to 10 times slower
+>>>>>> than calling 'podman version'.
+>>>>>> Thus, a container run now takes +1s when it was 0.2 before.
+>>>>>
+>>>>> Hmmm, but we call 'docker.py probe' in configure and cache the result,
+>>>>> so that probe should only be done once.  0.2 vs 1s is just noise in
+>>>>> the context of configure.
+>>>>>
+>>>>> That you're seeing any negative effects suggests that we've got
+>>>>> something not using the cached probe result, which we should fix.
+>>>>>
+>>>>
+>>>> Not really, docker.py --engine X still calls X info.
+>>>>
+>>>> https://gitlab.com/qemu-project/qemu/-/blob/master/tests/docker/docker.py#L675
+>>>> https://gitlab.com/qemu-project/qemu/-/blob/master/tests/docker/docker.py#L78
+>>>>
+>>>> Maybe the fix is to remove the check if user specified an explicit
+>>>> engine. But in this case, there is a problem with podman-remote not
+>>>> being detected anymore.
+>>>>
+>>>> We can fix this by introducing engine=podman-remote, and skip the check
+>>>> if engine is explicitly set.
+>>>> What do you think?
+>>>
+>>> Urgh, so i see now we have two code paths / make variables
+>>>
+>>>   RUNC=podman --remote
+>>>   CONTAINER_ENGINE=auto
+>>>
+>>> Sometimes we'll invoke docker.py --engine $(CONTAINER_ENGINE)
+>>> and sometimes we'll directly invoke $(RUNC).
+>>
+>> Yeah that could do with cleaning up. I suspect the only places we
+>> actually still need the script is where we are doing binfmt_misc enabled
+>> containers unless there is a way to emulate the copying of qemu into the
+>> container with a plain call? Maybe all the systems now have the
+>> persistent flags which would skip this.
+> 
+> Yeah, I'd be inclined to say this is a job for the distros to have
+> qemu-user integration, and simplify our life. THe docker.py script
+> always confuses me.  We could choose podman vs podman --remote vs
+> docker simply in the meson.build file, as we do for other dev env
+> choices.
+> 
+>> The toolchain case could be skipped if we could find hosted compilers
+>> for microblaze. However I do see we have a patch in there.
+>>
+>>>
+>>> The result of "probe" cannot be fed back in to "--engine" which
+>>> is a bit of a mess. I think the "engine" concept should not be
+>>> exposed on the cli, and instead have a "--runc" arg which takes
+>>> the full arg(s), since we need probe to report the runc args
+>>> for other reasons.
+>>>
+>>> With regards,
+>>> Daniel
+>>
+>> -- 
+>> Alex Bennée
+>> Virtualisation Tech Lead @ Linaro
+>>
+> 
+> With regards,
+> Daniel
 
-...
+Is it me or did we incredibly derailed from original issue which was:
+"It was fast to query which container engine is available, and now it's
+5-10 times slower to accommodate toolbox workflow where podman is
+available but not really available?"
 
->  delete mode 100644 tests/tcg/Makefile.target
->  delete mode 100644 tests/tcg/aarch64/Makefile.softmmu-target
->  delete mode 100644 tests/tcg/aarch64/Makefile.target
->  delete mode 100644 tests/tcg/aarch64_be/Makefile.target
->  delete mode 100644 tests/tcg/alpha/Makefile.softmmu-target
->  delete mode 100644 tests/tcg/alpha/Makefile.target
->  delete mode 100644 tests/tcg/arm/Makefile.softmmu-target
->  delete mode 100644 tests/tcg/arm/Makefile.target
->  delete mode 100644 tests/tcg/hexagon/Makefile.target
->  delete mode 100644 tests/tcg/hppa/Makefile.target
->  delete mode 100644 tests/tcg/i386/Makefile.softmmu-target
->  delete mode 100644 tests/tcg/i386/Makefile.target
->  delete mode 100644 tests/tcg/loongarch64/Makefile.softmmu-target
->  delete mode 100644 tests/tcg/loongarch64/Makefile.target
->  delete mode 100644 tests/tcg/m68k/Makefile.target
->  delete mode 100644 tests/tcg/minilib/Makefile.target
->  delete mode 100644 tests/tcg/mips/Makefile.target
+I agree it's sad to have several ways to set container engine, but it's
+absolutely not related to the current issue.
 
->  delete mode 100644 tests/tcg/mips/user/ase/dsp/Makefile
->  delete mode 100644 tests/tcg/mips/user/isa/mips64r6/crc/Makefile
->  delete mode 100644 tests/tcg/mips/user/isa/r5900/Makefile
-
-Philippe mentioned to me that those Makefiles were not currently ran by
-check-tcg, and it would be nice to add them.
-
-They require custom toolchain(s?), so I'll add a dockerfile for it and
-integrate them to mips user.
+Daniel, since you introduced the slow check path with podman info for
+your personal need, I would appreciate if it's something you could fix also.
 
 Regards,
 Pierrick
