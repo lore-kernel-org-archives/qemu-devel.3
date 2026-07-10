@@ -4,68 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BCB8C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 14:28:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3AF2C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 14:32:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiCCY-00051J-Th; Fri, 10 Jul 2026 10:27:38 -0400
+	id 1wiCGk-00069A-I8; Fri, 10 Jul 2026 10:31:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wiCCX-000514-Ve
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 10:27:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wiCGj-000690-OA
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 10:31:57 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wiCCW-0000i2-FC
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 10:27:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783693655;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=s7bqSPE0+h6E2uo2f7LBnH1MZIKQeHIa4sG2I7ZIKG8=;
- b=iWDZsatPfg3E1XO0iPyws7YCSLMvtJA8Wrdir8tHvkPP84zBT0QzxRfp+FeWEpY0LWGdfb
- Yujj1endsXl9nnIKP2rERn/crHNUZYllH1XiICirH4gqca1wCJvv0WDrG51JvHg8Ns33KD
- E4FWIqIs68lr5ucfhgBizN1k2N+AdqM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-399-LBBHJ9VXMdOJy0pXIeqD8w-1; Fri,
- 10 Jul 2026 10:27:32 -0400
-X-MC-Unique: LBBHJ9VXMdOJy0pXIeqD8w-1
-X-Mimecast-MFC-AGG-ID: LBBHJ9VXMdOJy0pXIeqD8w_1783693651
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 83ECA1955EBC; Fri, 10 Jul 2026 14:27:31 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.49.56])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5F2B9414; Fri, 10 Jul 2026 14:27:28 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH] hw/usb/hcd-xhci: Turn guest-triggerable abort() into
- qemu_log_mask()
-Date: Fri, 10 Jul 2026 16:27:27 +0200
-Message-ID: <20260710142727.592667-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wiCGi-0002bC-2n
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 10:31:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=pfbfQUIC7badV5OtiBVKNQ0Hbmyf6nV2Q5VDHLkrAjQ=; b=YcM6A0qpJbiLndBXu+aAPYp6ov
+ UxqxVtiYRZQEzDuRibYJEQIaivPlIDvrXaBLzaih3cma2AyC3K//gR0IXSOjufkzehxoKrl9IsWLA
+ 5WN3Yj8mAmZRbEKAccmAxtImdYs7t1Gc9oEfCcbXRow57RSEqU60FO4vB6KQgDD89aT3z/k/n2fuj
+ zAK2hYIQ8ki1lJfkvF6XegD4TUjFy3TAv7d9u3auskEPcj3lJxerO6y0LgPFIkC8jJYav/jlD/aPQ
+ abvoGnSgp+CSswoAZNoMpFUg3Rpb8VdopmnYrmBuZ910Og7z3OJ26UK0SGCR21tp8rEjZngQtrYxS
+ ScnPDZ3XUgxvonBm3z8S71zW0+Tt/xyQGSLTJrRZJMCw1zOkkr1Z6R2WZFLcZUZcUAtUZDSW2AoHx
+ MMCrbNVBAME+6dQctKKWqOKnBH4A5o8gejy+QfpFpqdDpuUt1kqBrcvtGLdBic1dR/wuHiRvfAk1/
+ GNLIrGRQcxmgimyq4DaLiW7u8SdWAkxXm7H8P1OJJvn1iTEUsiqu11GOhN6XG6UbxqD6TfnmBf82p
+ m9l8ukxIlOy/pcQmj7j5Zm1+QPzDLSxPVfmFJsr+qkSwsYVvFWKGaNCzWUDTAK0u5pJiErtf1iD5O
+ PMeoSRtn3TpKzagG8BU4U/CI3SFXz6MxcluT+HoLg=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org, Greg Kurz <groug@kaod.org>,
+ Jia Jia <physicalmtea@gmail.com>
+Subject: Re: [PATCH 2/3] hw/9pfs/virtio: disable hotpluggable property of
+ virtio-9p device
+Date: Fri, 10 Jul 2026 16:31:51 +0200
+Message-ID: <2055091.yKVeVyVuyW@weasel>
+In-Reply-To: <20260710145149.6e077fdd@imammedo>
+References: <cover.1783604079.git.qemu_oss@crudebyte.com>
+ <2355649.iZASKD2KPV@weasel> <20260710145149.6e077fdd@imammedo>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,41 +71,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+On Friday, 10 July 2026 14:51:49 CEST Igor Mammedov wrote:
+> On Fri, 10 Jul 2026 12:49:06 +0200
+> 
+> Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
+> > On Friday, 10 July 2026 12:23:45 CEST Igor Mammedov wrote:
+[...]
+> note: I'm looking from pov of hotpluggable PCI device and generic hotplug
+> infra, only.
 
-The FIXME macros in xhci_alloc_device_streams() can be triggered
-by a (malicious) guest. Since the macro also contains an abort()
-statement, this terminates QEMU. Turn the FIXME statements into
-a qemu_log_mask() instead to avoid that a guest can shoot itself
-this way.
+That's okay, but so far I don't see the relevance for this particular 9p 
+device.
+ 
+> it's not guest users directly, it's how hotplug flow works for various guest
+> OSes:
+> 
+> 1. host plugs device in (-device or device_add)
+> 2. guest OS get's notified one way or another and does what ever guest side
+>    init needed (incl. mounting share in 9pfs case)
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3784
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- hw/usb/hcd-xhci.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+That's not affected by this patch, right?
 
-diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
-index 2cdab3ba0e4..9ff50d0b7f9 100644
---- a/hw/usb/hcd-xhci.c
-+++ b/hw/usb/hcd-xhci.c
-@@ -965,11 +965,13 @@ static TRBCCode xhci_alloc_device_streams(XHCIState *xhci, unsigned int slotid,
-          * together and make an usb_device_alloc_streams call per group.
-          */
-         if (epctxs[i]->nr_pstreams != req_nr_streams) {
--            FIXME("guest streams config not identical for all eps");
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "guest streams config not identical for all eps");
-             return CC_RESOURCE_ERROR;
-         }
-         if (eps[i]->max_streams != dev_max_streams) {
--            FIXME("device streams config not identical for all eps");
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "device streams config not identical for all eps");
-             return CC_RESOURCE_ERROR;
-         }
-     }
--- 
-2.55.0
+> opposite flow:
+> 1. host does device_del (basically notify guest to remove device)
+> 2. guest OS frees resources and tells qemu to delete device
+> 3. qemu process remove event (which incl. unrealize as part of destroying
+> device)
+
+And that's not affected by this patch either, right?
+
+> Of cause guest if free to eject device without signal from host,
+
+OK, here is the point where we deviate: you are apparently seeing this from a 
+purely theoretical PoV.
+
+I am facing reality: for several years I'm the only person taking care about 
+this piece of code at all (on a side channel, for free, next to my actual 
+work). And for several months I get AI generated security reports thrown at 
+me, where I have to a) filter legit ones, and b) fix those legit security 
+issues.
+
+For that reason, I am tightening security wherever I can, to prevent further 
+flood.
+
+So the question here is: are you concerned about a real-life issue being 
+introduced by disabling hotplugging for 9pfs specifically?
+
+> (I could imagine: get some file from share once and then guest releases
+> no longer need resource).
+
+It's a pass-through file system. Ejecting the device does not really free a 
+noteworthy amount of resources.
+
+> > Looking at the fixed issue (patch 1), my impression was that original 9p
+> > server developers were unaware that guest can actually trigger a device
+> > unrealize via ACPI eject.
+> 
+> I'd say it's a bug, and you are trying to fix it in patch #1
+> 
+> > Most probably because hotplugging is enabled by
+> > default for all devices in QEMU
+> 
+> it is on by default for PCI devices but also heavily depends on used
+> configuration (where/what is plugged).
+
+Exactly! And I was trying to explain, that for this particular use case 
+(9pfs), I don't see any real-live use-case for allowing a guest to eject the 
+9p device at runtime.
+
+So why allowing it? Just for fun?
+
+> > Independent of this patch here, I'm therefore currently investigating
+> > whether enabling hotplugging by default in QEMU actually make sense. To
+> > me, this should be an opt-in, not the other way around. Because device
+> > developers should make sure that ejecting a device a) makes sense for the
+> > device type in the first place and most importantly b) that ejecting the
+> > device works (without data loss and without negative security impact, as
+> > it was the case here).
+> 
+> well, hotplug is on by default for PCI devices. It is unlikely we would
+> flip default now.
+
+I am investigating to flip the default value for good reasons: I made a quick 
+scan on the huge list of devices in QEMU and found quite a number that are 
+affected by a similar UAF issue on guest ACPI eject. What do those devices 
+have in common? Hotplug is enabled by default, not explicitly by the 
+respective device.
+
+> that said, if 9pfs maintainer deem that it shouldn't be hotpluggable and 
+> it's safe to remove capability,
+
+That's me, unfortunately. Singular.
+
+> I'm fine with that too, just fix commit message
+> section wrt QMP removal and perhaps move the flag into front-end impl of
+> the device.
+
+Yeah, I just noticed that as well, that this should rather go to the PCI 
+bridge device. This patch applied it to the inner device, which is wrong.
+
+> BTW: always describe a way to reproduce problem (cover letter and/or patch)
+> so that reviewer could see whole flow. Otherwise one has to guess what/how
+> it gets broken based on context.
+
+The original report (private) is linked by patch 1:
+https://gitlab.com/qemu-project/qemu/-/work_items/3937
+
+Anyway, I'll think some more days about this, whether I should fix or drop the 
+patch.
+
+If you have more feedback, always appreciated of course.
+
+Thanks!
+
+/Christian
+
+
 
 
