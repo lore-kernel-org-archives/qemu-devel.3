@@ -4,61 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA410C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 12:47:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC824C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 12:52:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiAdI-00005A-QW; Fri, 10 Jul 2026 08:47:08 -0400
+	id 1wiAi8-0001Zr-4u; Fri, 10 Jul 2026 08:52:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1wiAd7-0008Vl-Lm
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 08:46:59 -0400
-Received: from out-185.mta0.migadu.com ([91.218.175.185])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1wiAi0-0001ZZ-9J
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 08:52:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1wiAd4-0003cm-N5
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 08:46:57 -0400
-Message-ID: <81b1df12-815b-456a-acb5-1470748d828b@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1783687611;
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1wiAhw-0004dY-DW
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 08:51:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783687915;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AzW2irXH6Qlh2VQ5TvDh/esrttATZjJE9K2l/IHdfIQ=;
- b=MrNruQATw8wIJEeqKSJJO4dVo4XIAtrf15Lq5YnLbwrjlTEV4jG/JcCvFbfzCDP5jYI0L/
- V/UiCVNsqP4zbr880tVT2UK5sshpYJcuZc2bcELCGAvdLkDeLR+7NRcgmZVRdwPkyVDOnB
- jynmvtcGuqindmq/Mr3sFGfrJcEAxhE=
-Date: Fri, 10 Jul 2026 20:46:46 +0800
+ bh=hL4FnZyN6daSqKYgIN14TAROTFTV6MHl4gO95rMlBZU=;
+ b=hyVcPy4fIsLunK+VESiDxrjZDEmEUIR+nwVtyIw6MRIPDxzkYStSaicNA4lE0HeYni9Bv8
+ I2qCU/BQtoiXNcUjQ9WD/HyeKDn4D4hAVOTzcBY2OX3ly32u4CqFa3xKNcBcfAahlJ1gQx
+ 8zkKNtRzMQWr9rEq8K/ur6r7t/LcBNc=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-304-2DTu0Na6PVWDQssuIvKg0Q-1; Fri, 10 Jul 2026 08:51:53 -0400
+X-MC-Unique: 2DTu0Na6PVWDQssuIvKg0Q-1
+X-Mimecast-MFC-AGG-ID: 2DTu0Na6PVWDQssuIvKg0Q_1783687913
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-493ce08a6b4so7137655e9.1
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 05:51:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1783687912; x=1784292712; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=hL4FnZyN6daSqKYgIN14TAROTFTV6MHl4gO95rMlBZU=;
+ b=D+8WuSfVcKhwACEoSR/SWGkYlNdEVNVkjkGdsjMfIosZz726Vv0Ylq/iuJ5jUFbwYN
+ yG2UANnEFEzfTHFZkgdwwFF4m3A7y5/eU2er+WCrNaDKeTqj7otszjfaW596fD+9WKH5
+ C0WoWuzCColmLkL2c/UPcJdoFmK5L/bJjkPP/mBuOwaIUorgf35nXEIeayP4MG2efGRj
+ oh+7lprQwCSOKC5jT60tDJ+Tu9x7kd/p4qEEEL0tonIqJc1GAHQodvkD5jMoBB2pxrLY
+ FWKc24eKC/U0Bw36eYbzNq0e4XxLGixHXR9xUO1o7gM1NoMOA4f9P1WMe+ybeSVNHuF/
+ CZBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783687912; x=1784292712;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=hL4FnZyN6daSqKYgIN14TAROTFTV6MHl4gO95rMlBZU=;
+ b=NergBcIWr5NVClTAF/CDg/QAw4zstIYHs3oX7bG38v23uhn3rCD0UJBI6lk+LwJLmr
+ DQSvybfxsNXYmsOQIf8Q2hEz2a7OoP4nSDAofar1m/2v4uQ9uMF4IzkXY6Ophm+L1fI5
+ HN5qkWSsMP8zBYnmaSmQflQ0Z/ujf1RRv7a+qw5dEbo8ROewgPXLUmCEPWBNxbSXhukN
+ XBmLldCVIV9d/FlUWeDLPFXSOzFUM8Xv+dUSPPLbhB/OXHo59DyBxrakbQJBgv9TsbB9
+ 2NZCl6DnrvjtZUkJa1Q2N7n7SPZ39OGHlHR63/pSIizCbylAmAPuJ8hTtpjuO/bWBUDD
+ DU5Q==
+X-Gm-Message-State: AOJu0Yw0roFULO4FucNHLLbTfr9bSzmHY36qsYGI6/gqOocvBYV8M7kZ
+ 8CBBaQsrv3v12v0R8fYb+K51a4zwL2j5NqZ/JPDMH+hdIp2Y94sWzt49Y+MRyRRs/ZCRuCffQ76
+ DWWmo4iN2HlF9MdYYssSlMqg2Mc2W0Fe5WYs7ziA4t8yNO73X9SNjXmLBsEyqBow3
+X-Gm-Gg: AfdE7cl07DZ9v5bIiUK88D783lIbF3cLc+RLmjiOW7BBKmTS3EKOih5HjA0hQZfedKp
+ ppis7DsUrusv+SQ0N+sW04fsUO2XFp2BIQ7Roa2zXS0Bz987GP/hUq55xrnNBpCpC55RljInSkt
+ n0q5/+d5vCCGwktUjMvhRBLYHWYfgz7Z/QFt9whOtFaoCD1IZr9zJbM4K8owQdEcgX49+qN1Gif
+ 6GQt8a+r0srP9qHXZSRhMdeTzVKbBvThOhlFL3OHIRkBBF9/vqxOVUcUo3BYukST+dqGtsneFfh
+ iremSm65nicRWCBX1ibUoFB8pB82IWviI7vKJGTJQQPd3WHCnHT0oZKOQdFexGpy9Sck/W4=
+X-Received: by 2002:a05:600c:c16d:b0:493:f140:c3fb with SMTP id
+ 5b1f17b1804b1-493f4fd4a72mr22406445e9.7.1783687912452; 
+ Fri, 10 Jul 2026 05:51:52 -0700 (PDT)
+X-Received: by 2002:a05:600c:c16d:b0:493:f140:c3fb with SMTP id
+ 5b1f17b1804b1-493f4fd4a72mr22406175e9.7.1783687911932; 
+ Fri, 10 Jul 2026 05:51:51 -0700 (PDT)
+Received: from imammedo ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47aa039b0cesm61058638f8f.22.2026.07.10.05.51.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 10 Jul 2026 05:51:51 -0700 (PDT)
+Date: Fri, 10 Jul 2026 14:51:49 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Cc: qemu-devel@nongnu.org, Greg Kurz <groug@kaod.org>, Jia Jia
+ <physicalmtea@gmail.com>
+Subject: Re: [PATCH 2/3] hw/9pfs/virtio: disable hotpluggable property of
+ virtio-9p device
+Message-ID: <20260710145149.6e077fdd@imammedo>
+In-Reply-To: <2355649.iZASKD2KPV@weasel>
+References: <cover.1783604079.git.qemu_oss@crudebyte.com>
+ <6008134.DvuYhMxLoT@weasel> <20260710122345.6a6dd56e@imammedo>
+ <2355649.iZASKD2KPV@weasel>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Cc: cui.tao@linux.dev, Song Gao <gaosong@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Tao Cui <cuitao@kylinos.cn>
-Subject: Re: [PATCH v2 1/3] target/loongarch/kvm: advertise pv features per
- vCPU
-To: Bibo Mao <maobibo@loongson.cn>, qemu-devel@nongnu.org
-References: <20260710005029.345378-1-cui.tao@linux.dev>
- <20260710005029.345378-2-cui.tao@linux.dev>
- <70dc23f1-f346-2d47-4a42-e2195ea9e622@loongson.cn>
- <4f914264-be8e-4b5b-a54a-14a911855529@linux.dev>
- <471614c4-7f4e-74e2-fbf6-eb6873c67d17@loongson.cn>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-From: Tao Cui <cui.tao@linux.dev>
-In-Reply-To: <471614c4-7f4e-74e2-fbf6-eb6873c67d17@loongson.cn>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=91.218.175.185; envelope-from=cui.tao@linux.dev;
- helo=out-185.mta0.migadu.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,175 +122,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, 10 Jul 2026 12:49:06 +0200
+Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
 
+> On Friday, 10 July 2026 12:23:45 CEST Igor Mammedov wrote:
+> > On Fri, 10 Jul 2026 10:06:29 +0200
+> > 
+> > Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:  
+> > > On Friday, 10 July 2026 09:37:37 CEST Igor Mammedov wrote:  
+> > > > On Thu, 9 Jul 2026 15:50:36 +0200
+> > > > 
+> > > > Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:  
+> > > > > Harden security by disabling hotpluggable property, to prevent
+> > > > > issues like fixed in the previous commit.
+> > > > > 
+> > > > > Virtio-9p is a pass-through file-sharing device that provides a
+> > > > > guest mount of a host filesystem tree. Unlike block or network
+> > > > > devices, guest-triggered hotplug of the 9p device has no practical
+> > > > > use case: the guest cannot recover from the device removal, and there
+> > > > > is no protocol-level device-loss scenario as with block or ethernet
+> > > > > devices.  
+> > > > 
+> > > > hmh, I'm no maintainer of 9pfs, but to me it looks like any other
+> > > > storage device.
+> > > > One should be able to unmount/stop using it and unplug
+> > > > (it doesn't really matter if unplug is triggered by guest or host side).  
+> > > 
+> > > Guest could still unmount and stop using the 9pfs device. But why should
+> > > guest be able to unrealize the 9pfs device at any time? What should be
+> > > the purpose for this particular device?  
+> > 
+> > unrealize is part of unplug process, at the end of unplug no device should
+> > be left attached. You might not need/use it but others might be using it
+> > actively.  
+> 
+> I got that, but my question was: why would they want to do that with an 9pfs 
+> device? Can you make up any real-life scenario why a guest might want to 
+> remove a 9p device, given there is no way for them to bring the device back?
 
-在 2026/7/10 16:44, Bibo Mao 写道:
+note: I'm looking from pov of hotpluggable PCI device and generic hotplug infra, only.
+
+it's not guest users directly, it's how hotplug flow works for various guest OSes:
+
+1. host plugs device in (-device or device_add)
+2. guest OS get's notified one way or another and does what ever guest side
+   init needed (incl. mounting share in 9pfs case)
+
+opposite flow:
+1. host does device_del (basically notify guest to remove device)
+2. guest OS frees resources and tells qemu to delete device 
+3. qemu process remove event (which incl. unrealize as part of destroying device)
+
+Of cause guest if free to eject device without signal from host,
+(I could imagine: get some file from share once and then guest releases
+no longer need resource).
+ 
+> Looking at the fixed issue (patch 1), my impression was that original 9p 
+> server developers were unaware that guest can actually trigger a device 
+> unrealize via ACPI eject.
+
+I'd say it's a bug, and you are trying to fix it in patch #1
+
+> Most probably because hotplugging is enabled by 
+> default for all devices in QEMU
+
+it is on by default for PCI devices but also heavily depends on used
+configuration (where/what is plugged).
+
+> Independent of this patch here, I'm therefore currently investigating whether 
+> enabling hotplugging by default in QEMU actually make sense. To me, this 
+> should be an opt-in, not the other way around. Because device developers 
+> should make sure that ejecting a device a) makes sense for the device type in 
+> the first place and most importantly b) that ejecting the device works 
+> (without data loss and without negative security impact, as it was the case 
+> here).
+
+well, hotplug is on by default for PCI devices. It is unlikely we would
+flip default now.
+
+It might make sense to disable hotplug in mmio frontend if such exists,
+but then it's pointless as there is no way to trigger unplug for it
+(both host or guest side)
+
+> 
+> > ---
+> > 
+> > In QEMU impl. it's cooperative process (we don't do surprise removal of PCI
+> > devices), where host triggers plug/unplug process and guest side completes
+> > it, by: 1. freeing resources on its side 1st (hopefully)
+> >   2. issuing eject/poweroff (either via ACPI or native PCIE-HP/SHPC
+> > interface)
+> > 
+> > If guest fails to do #1 it is able to abort process, or it might continue
+> > and do #2 with a risk of loosing data but it's guest's business/policy.
+> > 
+> > If you need to disable hotplug for a specific PCI device instance,
+> > use 'hotplug' CLI option on pcie bridge. If you use other than PCI variant
+> > of virtio device, then unplug as you describe it isn't reachable, and if it
+> > should be disabled in code, it's up to actual frontend device that exposes
+> > underlying virtio one.  
+> 
+> What does that have to do with this issue here? The normal 9pfs live-cycle is 
+> to create the 9p device at QEMU startup, and unrealizing the 9p device at QEMU 
+> shutdown.
+> 
+> If guest does an ACPI eject, then the only way to bring the 9p device back is 
+> to restart QEMU with the required -virtfs / -fsdev -device CLI options.
+
+one can use device_add to put it back into running machine.
+
+given mention of ACPI eject, 9pfs flavor actually used is PCI variant =>
+all PCI device features apply incl. hot(un)plug.
+If hotplug is not desirable for particular device instance, one can disable
+it on CLI.
+
+that said,
+if 9pfs maintainer deem that it shouldn't be hotpluggable and it's
+safe to remove capability, I'm fine with that too, just fix commit message
+section wrt QMP removal and perhaps move the flag into front-end impl of
+the device.
+
+BTW: always describe a way to reproduce problem (cover letter and/or patch)
+so that reviewer could see whole flow. Otherwise one has to guess what/how it gets
+broken based on context.
+ 
+> The Linux 9p client (guest) does never trigger an ACPI reject on unmount. It 
+> just marks the virtio channel as unused. If client would eject it, it would 
+> not be possible for guest to re-mount it later on.
+
+no argument here
+
+> /Christian
 > 
 > 
-> On 2026/7/10 下午4:09, Tao Cui wrote:
->>
->>
->> 在 2026/7/10 10:58, Bibo Mao 写道:
->>>
->>>
->>> On 2026/7/10 上午8:50, Tao Cui wrote:
->>>> From: Tao Cui <cuitao@kylinos.cn>
->>>>
->>>> kvm_set_pv_features() programs the KVM_FEATURE cpucfg attribute, which is a
->>>> per-vCPU setting. It was called from kvm_arch_put_registers() under a
->>>> function-local static guard, so it ran only once for the whole VM: only the
->>>> first vCPU got its pv features pushed to KVM, and on SMP guests the others
->>>> never saw KVM_FEATURE_IPI / KVM_FEATURE_STEAL_TIME.
->>>>
->>>> Drop the static guard and push pv features per vCPU under
->>>> KVM_PUT_FULL_STATE, the same gate kvm_set_stealtime() already uses. Host
->>>> feature detection stays in kvm_arch_init_vcpu(); the per-vCPU state write
->>>> belongs in kvm_arch_put_registers().
->>>>
->>>> Signed-off-by: Tao Cui <cuitao@kylinos.cn>
->>>> ---
->>>>    target/loongarch/kvm/kvm.c | 15 ++++++---------
->>>>    1 file changed, 6 insertions(+), 9 deletions(-)
->>>>
->>>> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
->>>> index d6539c12ac..c557ee3c3d 100644
->>>> --- a/target/loongarch/kvm/kvm.c
->>>> +++ b/target/loongarch/kvm/kvm.c
->>>> @@ -816,7 +816,6 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
->>>>    int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
->>>>    {
->>>>        int ret;
->>>> -    static int once;
->>>>          ret = kvm_loongarch_put_regs_core(cs);
->>>>        if (ret) {
->>>> @@ -843,19 +842,17 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
->>>>            return ret;
->>>>        }
->>>>    -    if (!once) {
->>>> +    if (level >= KVM_PUT_FULL_STATE) {
->>>> +        /*
->>>> +         * pv_features and steal time are per-vCPU state. Push them on
->>>> +         * full-state sync so every vCPU gets its own settings; the kernel
->>>> +         * clears the steal-time guest_addr on KVM_PUT_RESET_STATE.
->>>> +         */
->>>>            ret = kvm_set_pv_features(cs);
->>> pv feature is a little different from steal-time. steal-time guest_addr is created from guest OS, pv feature is created from VMM at beginning. steal-time guest_addr can be set for many times, and there is bit KVM_STEAL_PHYS_VALID checking with steal-time guest_addr, however pv feature can be set only once with existing method.
->>>
->>
->> Hi Bibo,
->>
->> Thanks for catching this — I hadn't fully considered the double-call path.
->>
->> KVM_PUT_FULL_STATE fires both at realize (cpu_synchronize_post_init) and
->> on incoming migration load (cpu_synchronize_all_post_init), so
->> kvm_set_pv_features() runs twice on the destination.
->>
->>> Although I do not understand flow of VM migration, with KVM_PUT_FULL_STATE state changing, there are at least two places where this state is set, one is from cpu_common_realizefn() which calls cpu_synchronize_post_init(), the other is qemu_loadvm_state()/qemu_loadvm_state_main() which calls cpu_synchronize_all_post_init().
->>>
->>> It seems that VM will fail to migrate since kvm_set_pv_features is called twice at least here. Do you test VM migration with this patch?
->>
->> I did test migration (virt-11.2 -> virt-11.2, virt-11.1 -> virt-11.1) and
->> it passed, but that was on a single host — source and destination computed
->> the same pv_features. The kernel (kvm_loongarch_cpucfg_set_attr) only
->> rejects a re-set when the value differs:
->>
->>      if ((kvm->arch.pv_features & LOONGARCH_PV_FEAT_UPDATED) &&
->>          ((kvm->arch.pv_features & valid) != val))
->>          return -EINVAL;
->>
->> So a cross-host migration where the two sides compute different pv_features
->> would indeed fail on the second set.
->>
->> I'll add a per-vCPU guard so the push happens exactly once (at the first
->> FULL_STATE sync); subsequent syncs are skipped and the destination keeps
->> advertising the features its own host supports. Does that sound like the
->> right direction?
-> I do not consider pv feature migration supports before. There are two points from my side when VM migrates from hostA to hostB, maybe there are other requirements out of my knowledge :(
->   1. the pv feature value got from running vCPUs on hostA should be supported on hostB.
->   2. if VM is rebooted or one vCPU is hot added, the pv feature value got from new added vCPU on hostB should be the same with boot CPU0, which is got from hostA.
 > 
-
-Thanks, those are good points — my set-once guard doesn't handle them
-correctly.
-
-For Point 2, the root issue is that kvm->arch.pv_features is VM-level:
-the first vCPU locks the value, and all others (including hot-added) must
-match. So after migrating hostA -> hostB, a hot-added vCPU on hostB must
-still use hostA's value, not re-compute from hostB.
-
-I've been thinking about how to handle the push. The challenge is that
-there's no single QEMU hook that fires exactly once with the final
-pv_features value for both fresh boot and migration:
-  - post_load only fires on migration load, not on fresh boot;
-  - KVM_PUT_FULL_STATE fires at both realize and load (the double-call).
-
-One option that seems to work: push from the first KVM_PUT_RUNTIME_STATE
-sync (when the guest first runs), gated by a per-vCPU flag. By that point
-env->pv_features holds the correct value for both cases — host-detected on
-fresh boot, or the migrated value after post_load. The flag ensures the
-push happens only once per vCPU.
-
-This still doesn't solve hot-add after cross-host migration: a newly
-created vCPU would re-compute from hostB via check_pv_features, getting a
-different value from CPU0. For that I think pv_features needs to be stored
-at the VM level (matching kvm->arch.pv_features), so hot-added vCPUs
-inherit it rather than re-detecting.
-
-I've also checked a few other migration paths: savevm/snapshot restore
-goes through the same post_load, and multi-hop migration keeps the
-original host's value — the runtime-state push should cover both.
-During testing I observed that cross-machine-type migration (virt-11.1 <->
-virt-11.2) fails at QEMU's configuration check; I haven't investigated
-whether pv_features adds further constraints there.
-
-I also looked at how other architectures handle this. On x86, CPUID
-(including KVM feature leaves) is set via KVM_SET_CPUID2 in
-kvm_arch_init_vcpu(), not in put_registers(); the kernel allows
-re-setting CPUID and validates the features against the host on each SET.
-On arm, KVM_ARM_VCPU_INIT and device attributes (PMU, PVTIME IPA, etc.)
-are set in init_vcpu / machine init; the kernel likewise permits
-re-setting device attributes. Neither architecture pushes feature
-configuration through put_registers.
-
-On LoongArch, the kernel currently locks pv_features after the first SET
-and rejects any different value. This is what makes the migration case
-hard — the destination cannot override the host-detected value with the
-migrated one. If the kernel could relax this (allow overriding while
-validating that the new value is a subset of what the host supports,
-similar to x86's KVM_SET_CPUID2), the QEMU side would be simpler: push
-once in init_vcpu (host-detected), then override from post_load on
-migration. I think adjusting both QEMU and KVM together would be simpler
-than working around it entirely in QEMU — would that work?
-
-I'm still going through the overall flow to check if there are other
-edge cases I've missed.
-
-Tao
-
-> Regards
-> Bibo Mao
->>
->> Thanks,
->> Tao
->>
->>>
->>> Regards
->>> Bibo Mao
->>>>            if (ret) {
->>>>                return ret;
->>>>            }
->>>> -        once = 1;
->>>> -    }
->>>>    -    if (level >= KVM_PUT_FULL_STATE) {
->>>> -        /*
->>>> -         * only KVM_PUT_FULL_STATE is required, kvm kernel will clear
->>>> -         * guest_addr for KVM_PUT_RESET_STATE
->>>> -         */
->>>>            ret = kvm_set_stealtime(cs);
->>>>            if (ret) {
->>>>                return ret;
->>>>
->>>
 > 
 
 
