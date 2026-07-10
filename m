@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 753E3C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 19:20:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C73BEC43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 19:20:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiGk5-0000hu-LN; Fri, 10 Jul 2026 15:18:33 -0400
+	id 1wiGkA-0000iV-QA; Fri, 10 Jul 2026 15:18:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wiGk4-0000hL-Af
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 15:18:32 -0400
+ id 1wiGk7-0000i9-3u
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 15:18:35 -0400
 Received: from forwardcorp1d.mail.yandex.net
  ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wiGk2-00055v-LM
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 15:18:32 -0400
+ id 1wiGk5-00056B-68
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 15:18:34 -0400
 Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 6C55C80E16;
- Fri, 10 Jul 2026 22:18:29 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id DC9A480E18;
+ Fri, 10 Jul 2026 22:18:31 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:c7d::1:20])
  by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id AIRXsO0a8eA0-FFBigJfd; Fri, 10 Jul 2026 22:18:28 +0300
+ id AIRXsO0a8eA0-wXYy6fBB; Fri, 10 Jul 2026 22:18:31 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1783711108;
- bh=wYTFMxty67cpxrqvnVb0SdexdR1ptDjH3O3T1+cVtfo=;
+ s=default; t=1783711111;
+ bh=0h4FRshqjUqB96nBxw2kg+mDvm+Iz910HInQMIOp/rg=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=sgk3rNmClcz1VrpbO9nqRkPN6vhyDSgg/Mqs9HvT2od5x5yZji+VAvX/yaGk5E4pD
- 3I4HViqtUBsBrXmnKka/96eenPkkjMKNNnj3ftc7U9pSsAKlG5G9aJKc0mtK1SppHk
- 85GkJNvzp0HMhAxlXwQXhRStDgwENEzyerGj7QL8=
+ b=EHkCR90Viq3Qc07aJDYgyHqFZAgjjFqpp6bE1OKA5YsGCNkc/2kF+lLpr+aryns+O
+ Px+zc2S7Q3cEtQZ+yWy1K1D68QF2ekoV7ONM3rA99GhGesm2HXCgYULlXW3qkHlw7o
+ dEIX7ExgduEwB9vetlB9GkTo6YmTxKhofgfI0Y+s=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -48,10 +48,9 @@ Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
  qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
  yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
  Jason Wang <jasowangio@gmail.com>
-Subject: [PATCH v18 05/14] net/tap: move vhost initialization to
- tap_setup_vhost()
-Date: Fri, 10 Jul 2026 22:17:54 +0300
-Message-ID: <20260710191809.721154-6-vsementsov@yandex-team.ru>
+Subject: [PATCH v18 06/14] net/tap: use container_of instead of DO_UPCAST
+Date: Fri, 10 Jul 2026 22:17:55 +0300
+Message-ID: <20260710191809.721154-7-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260710191809.721154-1-vsementsov@yandex-team.ru>
 References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
@@ -79,103 +78,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make a new helper function in a way it can be reused later for
-TAP fd-migration feature: we'll need to initialize vhost in a later
-point when we doesn't have access to QAPI parameters.
+We are going to QOMify tap backend, which includes deriving TAPState
+from Object. So "NetClientState nc" will not be a first member.
+Let's parepare for this change, and use container_of(), which will
+work regardless position of "nc" field.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Ben Chaney <bchaney@akamai.com>
 ---
- net/tap.c | 62 ++++++++++++++++++++++++++++++++++---------------------
- 1 file changed, 38 insertions(+), 24 deletions(-)
+ net/tap.c | 36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
 diff --git a/net/tap.c b/net/tap.c
-index 2f0ccc138da..bc269a2fc3b 100644
+index bc269a2fc3b..7380a62da80 100644
 --- a/net/tap.c
 +++ b/net/tap.c
-@@ -71,6 +71,8 @@ static const int kernel_feature_bits[] = {
- typedef struct TAPState {
-     NetClientState nc;
-     int fd;
-+    int vhostfd;
-+    uint32_t vhost_busyloop_timeout;
-     char down_script[1024];
-     char down_script_arg[128];
-     uint8_t buf[NET_BUFSIZE];
-@@ -719,6 +721,38 @@ static int net_tap_init(const NetdevTapOptions *tap, int *vnet_hdr,
-     return fd;
+@@ -172,7 +172,7 @@ static ssize_t tap_write_packet(TAPState *s, const struct iovec *iov, int iovcnt
+ static ssize_t tap_receive_iov(NetClientState *nc, const struct iovec *iov,
+                                int iovcnt)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     const struct iovec *iovp = iov;
+     g_autofree struct iovec *iov_copy = NULL;
+     struct virtio_net_hdr hdr = { };
+@@ -208,7 +208,7 @@ ssize_t tap_read_packet(int tapfd, uint8_t *buf, int maxlen)
+ 
+ static void tap_send_completed(NetClientState *nc, ssize_t len)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     tap_read_poll(s, true);
  }
  
-+static bool tap_setup_vhost(TAPState *s, Error **errp)
-+{
-+    VhostNetOptions options;
-+
-+    if (s->vhostfd == -1) {
-+        return true;
-+    }
-+
-+    options.backend_type = VHOST_BACKEND_TYPE_KERNEL;
-+    options.net_backend = &s->nc;
-+    options.busyloop_timeout = s->vhost_busyloop_timeout;
-+    options.opaque = (void *)(uintptr_t)s->vhostfd;
-+    options.nvqs = 2;
-+    options.feature_bits = kernel_feature_bits;
-+    options.get_acked_features = NULL;
-+    options.save_acked_features = NULL;
-+    options.max_tx_queue_size = 0;
-+    options.is_vhost_user = false;
-+
-+    s->vhost_net = vhost_net_init(&options);
-+    if (!s->vhost_net) {
-+        error_setg(errp,
-+                   "vhost-net requested but could not be initialized");
-+        return false;
-+    }
-+
-+    /* vhostfd ownership is passed to s->vhost_net */
-+    s->vhostfd = -1;
-+
-+    return true;
-+}
-+
- static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
-                              const char *name,
-                              const char *ifname, const char *script,
-@@ -753,30 +787,10 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
-         }
-     }
+@@ -268,7 +268,7 @@ static void tap_send(void *opaque)
  
--    if (vhostfd != -1) {
--        VhostNetOptions options;
--
--        options.backend_type = VHOST_BACKEND_TYPE_KERNEL;
--        options.net_backend = &s->nc;
--        if (tap->has_poll_us) {
--            options.busyloop_timeout = tap->poll_us;
--        } else {
--            options.busyloop_timeout = 0;
--        }
--        options.opaque = (void *)(uintptr_t)vhostfd;
--        options.nvqs = 2;
--        options.feature_bits = kernel_feature_bits;
--        options.get_acked_features = NULL;
--        options.save_acked_features = NULL;
--        options.max_tx_queue_size = 0;
--        options.is_vhost_user = false;
--
--        s->vhost_net = vhost_net_init(&options);
--        if (!s->vhost_net) {
--            error_setg(errp,
--                       "vhost-net requested but could not be initialized");
--            goto failed;
--        }
-+    s->vhostfd = vhostfd;
-+    s->vhost_busyloop_timeout = tap->has_poll_us ? tap->poll_us : 0;
-+    if (!tap_setup_vhost(s, errp)) {
-+        return false;
-     }
+ static bool tap_has_ufo(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
  
-     return true;
+     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+ 
+@@ -277,7 +277,7 @@ static bool tap_has_ufo(NetClientState *nc)
+ 
+ static bool tap_has_uso(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+ 
+     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+ 
+@@ -286,7 +286,7 @@ static bool tap_has_uso(NetClientState *nc)
+ 
+ static bool tap_has_tunnel(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+ 
+     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+     return s->has_tunnel;
+@@ -294,7 +294,7 @@ static bool tap_has_tunnel(NetClientState *nc)
+ 
+ static bool tap_has_vnet_hdr(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+ 
+     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+ 
+@@ -308,7 +308,7 @@ static bool tap_has_vnet_hdr_len(NetClientState *nc, int len)
+ 
+ static void tap_set_vnet_hdr_len(NetClientState *nc, int len)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+ 
+     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+ 
+@@ -319,21 +319,21 @@ static void tap_set_vnet_hdr_len(NetClientState *nc, int len)
+ 
+ static int tap_set_vnet_le(NetClientState *nc, bool is_le)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+ 
+     return tap_fd_set_vnet_le(s->fd, is_le);
+ }
+ 
+ static int tap_set_vnet_be(NetClientState *nc, bool is_be)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+ 
+     return tap_fd_set_vnet_be(s->fd, is_be);
+ }
+ 
+ static void tap_set_offload(NetClientState *nc, const NetOffloads *ol)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     if (s->fd < 0) {
+         return;
+     }
+@@ -354,7 +354,7 @@ static void tap_exit_notify(Notifier *notifier, void *data)
+ 
+ static void tap_cleanup(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+ 
+     if (s->vhost_net) {
+         vhost_net_cleanup(s->vhost_net);
+@@ -378,14 +378,14 @@ static void tap_cleanup(NetClientState *nc)
+ 
+ static void tap_poll(NetClientState *nc, bool enable)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     tap_read_poll(s, enable);
+     tap_write_poll(s, enable);
+ }
+ 
+ static bool tap_set_steering_ebpf(NetClientState *nc, int prog_fd)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+ 
+     return tap_fd_set_steering_ebpf(s->fd, prog_fd) == 0;
+@@ -393,7 +393,7 @@ static bool tap_set_steering_ebpf(NetClientState *nc, int prog_fd)
+ 
+ int tap_get_fd(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+     return s->fd;
+ }
+@@ -405,7 +405,7 @@ int tap_get_fd(NetClientState *nc)
+  */
+ static VHostNetState *tap_get_vhost_net(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+     return s->vhost_net;
+ }
+@@ -444,7 +444,7 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
+ 
+     nc = qemu_new_net_client(&net_tap_info, peer, model, name);
+ 
+-    s = DO_UPCAST(TAPState, nc, nc);
++    s = container_of(nc, TAPState, nc);
+ 
+     s->fd = fd;
+     s->host_vnet_hdr_len = vnet_hdr ? sizeof(struct virtio_net_hdr) : 0;
+@@ -1012,7 +1012,7 @@ fail:
+ 
+ int tap_enable(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     int ret;
+ 
+     if (s->enabled) {
+@@ -1029,7 +1029,7 @@ int tap_enable(NetClientState *nc)
+ 
+ int tap_disable(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     int ret;
+ 
+     if (s->enabled == 0) {
 -- 
 2.43.0
 
