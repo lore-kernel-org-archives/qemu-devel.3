@@ -4,145 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AEC7C44501
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87A86C43458
 	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 06:21:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi4bJ-000135-Ew; Fri, 10 Jul 2026 02:20:41 -0400
+	id 1wi4bK-00013I-5A; Fri, 10 Jul 2026 02:20:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wi4bE-00010Q-Na
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 02:20:37 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wi4bC-0004SJ-4I
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 02:20:36 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66A3orq43854964
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 06:20:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=lXVGlYz0DTP
- EroHroj86/br4bW/BfcatYJoHWR5m8SY=; b=l0FKYfYl/WijgxE0z1cxzsumCM9
- kq2IjuazGkUFMOfxj8FbFFL0+8dDfnKY3sCXtP8Jrpj7DOC/ziZmy4jRPW42XEWF
- 2GarWfvRMxQzp8a1ZL6Aw8t8NvQErMsIpHESq66P60xKcKtmk73/Vf1jDP+vCUOp
- i1eq/SD2r3JEgkcFMU38Fjq+E5RPZKp0e9Ye9murdiAH7KpYdEYwphCyKozgVcd3
- WJekmu4lTryEJNbIyesl+49Yvvoqf57rMBR0tye3q7FIrvxmlmAzsNr5gTAai9L9
- sq41FampuRFTap3jXCGeHwLNjefGM4M+w5mY7sEUpHHm+GlGJtloMNxyHcw==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fas6n0h39-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 06:20:32 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-c892143db7fso582896a12.1
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 23:20:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <infra.ai.cloud@bitdeer.com>)
+ id 1wi4bI-00012T-9d
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 02:20:40 -0400
+Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <infra.ai.cloud@bitdeer.com>)
+ id 1wi4bF-0004T1-KJ
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 02:20:40 -0400
+Received: by mail-lj1-x231.google.com with SMTP id
+ 38308e7fff4ca-39669bcaadfso4285101fa.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 23:20:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783664435; cv=none;
+ d=google.com; s=arc-20260327;
+ b=YnRJOAOYVCmBmWHfVDdHbrWAzyIGh4SUipeRI07BEyBnfZBGrBW/sS4NNz65rQDm/V
+ vupeBqOWDsKvBr+H1fkTihPY7WsFcUb7odVf3rmF2mM/l9OJIMq3F1zdlOTZ1vF/O+SJ
+ rVKmI2ybIuHOyUhH/NZcxg8s0rNx4dcl6VPul1pOcXwMhZNdYpaETYgMNWsrZRM0ClXI
+ Q8l/UGrrIemZP4e7m3+yp6HtFSSkRLyPK/PapOPLdOKlTD2FZXbSotP4hbFGk9cUCx7h
+ TOdO1DIipBlIr2ues7F4ZvWMIZDec1uWaxoZYktM3StWmVv2zuZkcKXjlwJN3smZrD4w
+ XPmg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=3K2lJjNYbabdV2J8xkgif5q+aOVMgO7AsbYEYuCj8Tw=;
+ fh=kuVKdZVNXtkINJ6RzqfM652oKl3wb+pcFiE1RT84mA0=;
+ b=eGrrbp+LDeOsWNESCQAM0t7a+2vOsdU/5giOr064ad7/DA+k04bXIdriiG1CW78gnd
+ 9nsda87RyuED77sPjH/SbcZPeNco9+34wJ1DdfpVnVeo1NK+Go7DCoHZirA5sGfI2N0u
+ 7rYoHMsmKi3eAqHg2xzeR8iQQ70uPLUchvQtekSopvjQoYaqYlvhlFDfyK4IDKNNwZgd
+ rI0VInCoc/eqfd2P43YThMqSu78hNATKrTjnwUhic5nRYvVuGX+LiQ0iBkd1Scj/JnwH
+ /o5BndBvJU00wWNW1YX8N9zj7ITgN742b2AxbvsXuT4SsLhqTpAn1yGFx8Tf+aciviqZ
+ VrEQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783664432; x=1784269232; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=lXVGlYz0DTPEroHroj86/br4bW/BfcatYJoHWR5m8SY=;
- b=GaMmUCxblaL5zxvetx0EFs3CwiYyK6g4agbqj25T9uNjAipJFKdIZYdQxEqq1/YtXw
- 81TpVCIP+c9wjdP5JXy+nJ7zlnnkovQ3zmzo0Y0eG/j1OieLWbriBtmvrvF5ZFTVB6j7
- db2fPH/mrdQ7uTjn18S00vcluaKERph8aKkzzAlRt2/eKVxuvxpK/4QO1x1ivhBSmfIu
- yiGp9/xXMjyixK0M5MJ4mmP0WtZvZzzIpLGHzqhlc8kR7TIFegbcmvb4uaWUoi+t13SU
- iO77flby/IKhIHXCXdxBThq8uvLPfJXnujkdrYgOrN494oE7u6Svgb3iKZ2mvMYuAS2E
- 3Vaw==
+ d=bitdeer.com; s=google; t=1783664435; x=1784269235; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=3K2lJjNYbabdV2J8xkgif5q+aOVMgO7AsbYEYuCj8Tw=;
+ b=TXvZ4QZ2wISBI5rm1a/GvlfmFOKUq9/viJ6M0MLTkwN3pJ3OGD83QRqda6ncOqEMoi
+ uACJDVHgQrwklnWp42Tg7QWsCuGXGQL4FQtoQn2hvbyrPp5UmA38Q4saKA7Dr25FO7ZU
+ 9sDYvfN0gjeG4vOpAigB17W3WAoiV7q7s1QQKY7Y7OnuolenJyC4e84X2lTYgb5f4rQq
+ lbRkQtBcm7BSzd2aodFTIWMkTTYp17avpkWc6MLa/rpLra+cpz0yssKKi7lJdO+Efw0b
+ 0F6Tj33O3AphUCl4qHNolBsPunsuLGU1D1/9Q2FWqZY+BWMPs1nKHXuX0KGXP/wPXN6I
+ 14AA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783664432; x=1784269232;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=lXVGlYz0DTPEroHroj86/br4bW/BfcatYJoHWR5m8SY=;
- b=VWu517SvaIuoYd3Pmji+CRKFvba2dsRkKMO5sPcJhQvUvwvtkkRrLLoPC3nU55ogkG
- nQMzMXkKAa4eGCMR4pFdVS7loVKojVuWgmgVtJDwXat4SSJFnXnZwsNvImk9GDMcMylx
- G1BeHeHIBVsg+bVDV00dxKuIiVuLz85gm3inQZTNVrqICrPYt/+pBjpwgQhBTGArlqW6
- k76YNoz3kEs9P4PZMeySt8fh2pshRUYZaaXdkPsfnw6AmY9w43Hcj5sgVJ4O44VsOYoL
- tXs2T/qe7ZQjbYaU1Wpyv4wmHKiKunPXrjMCXWqT9gNxFeLnuW9tIf57s0eygHoZScg9
- yDdA==
-X-Gm-Message-State: AOJu0YyVEs7sjg3pEiKsVXXiRyUc5e3sNXVe7H1mHVl8ySXMmeUYlwDy
- YDYaTHcvwApHP7Fv4czDuirFb2fNQz3gdVnF8OyM9N9m0v42+GQrRl/vrvlmIUcPaxiZ5NF6hjp
- mrNKSi8b+hzixWtHf6Lm8WQHFVqhw4oJm4RsEBWJ6NYggio5dHim2oRkIj6W8BgIG+w==
-X-Gm-Gg: AfdE7cmy6tf0S3EY6m+ilJ6S3sbNqhULd8TSdhJsQg8Cv9El6x3QtZUkNfF4NYTdVQ0
- IOCnC57WjbZKtWvEvBarjdWkYeVgjPRAZRKNxMtms+UzML5Xiqp3EZsKu7ZA8qnMLt2dhGvsR6n
- 9aBmTb3EDkouxT0saMv9qRrxVfnEVAyH5S7abdF6U/yR9BRMXnEB8c6tGZLeeCjeLcVSmS2f1pd
- zC8YVlnFV9DdRebkQUm1aknSN1J2Y5jKmdU34lsFtOSpJo9cT9lAG4cfEpedXj356rCNO/8RhUB
- UVaV7JViL/uOf4m3HvlirLGQn37XlOuv5n6+b0YPDYxDhsNXxxVq38CTzfzQgZ0OgkWc8RD2I9g
- MuohM2B4+X1/Z5sxYUp9TudtnF1DTDOPsQmzCZHUhSlqlLHFvdhVDTzSJgP5PgMZVM2dS0VZMDy
- 7KGqerFw==
-X-Received: by 2002:a05:6a21:e083:b0:3bf:a489:1483 with SMTP id
- adf61e73a8af0-3c0bd048ae1mr12320891637.33.1783664431793; 
- Thu, 09 Jul 2026 23:20:31 -0700 (PDT)
-X-Received: by 2002:a05:6a21:e083:b0:3bf:a489:1483 with SMTP id
- adf61e73a8af0-3c0bd048ae1mr12320820637.33.1783664431074; 
- Thu, 09 Jul 2026 23:20:31 -0700 (PDT)
-Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13b659fa13bsm35428126c88.15.2026.07.09.23.20.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jul 2026 23:20:30 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Gustavo Romero <gustavo.romero@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Helge Deller <deller@gmx.de>, Peter Maydell <peter.maydell@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v4 04/97] meson: bump minimal version to 1.6.0
-Date: Thu,  9 Jul 2026 23:18:42 -0700
-Message-ID: <20260710062016.1818125-5-pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260710062016.1818125-1-pierrick.bouvier@oss.qualcomm.com>
-References: <20260710062016.1818125-1-pierrick.bouvier@oss.qualcomm.com>
+ d=1e100.net; s=20251104; t=1783664435; x=1784269235;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=3K2lJjNYbabdV2J8xkgif5q+aOVMgO7AsbYEYuCj8Tw=;
+ b=jiL/0lHxDfIq6+BLVVouXrAO8X+N13h4zjK1UC5Td7s1H3hvGxYRTnsRnNnYFBuyjZ
+ BQnRwMCuxaSMolp16zL4yRJsJvz2f8K2m+5GIdymsvTwbC3bMaty82XP9IJKUXazaPQl
+ Mk6D7Ccf/YFDxsmu/phpKcUuiWh86neBgybIkI31Rsg0M+skiqFYb9jBEJZtBEMS5zqA
+ 9RZ3AJoy64XbheRIHbEMdlpEWQ26fiE/OsPRcwimcvXeY8j9FFTKmHngKi/+Rclxv94x
+ VVEfbh6jcq6aC+6tnNNetd0lT6zbuxEWJ35MNH13PwIMrElY+mZaKSDmD/5sbT2Z0s8N
+ qSnA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpbORYI7gJxtKfWAZ0ajDmxvBjbry8jDsTgiQHaMTBySi1lyOnWeagaqb0nXoNubx0zXjtWxMbUh2lW@nongnu.org
+X-Gm-Message-State: AOJu0YxJEDTuPtdMIC7gNTto2BkGVtbMoi6oe+m9smV0cS0eZWAgAgwn
+ d4Pa/yt/9TzGm1JO5M9vpegOKBSFeNplGxJavL4L9VToKfsT289GS6KMkmw30xVF20wC9Sh2E1j
+ X6dbgzHikYdr+nJphDAiZjWIOS1CSdys0cC9N/Hcaug==
+X-Gm-Gg: AfdE7clNHyCx7UZl0Sprym7n7Y4klf3VYJLGnkLsyEzPPpywjb/NEXh/W6DYRUdY6lO
+ 3kOh8V4g7Ym0m3Xf1zhwoYQjA4cODXbM0f13ZnO39xH4jvWzmk4rO+JHfKCpCN+L0U5v7PI2aBN
+ fNYDIbp34SG7uWwHe8qD18Y5L8aqfaVFlY3HOJXZF/zEpOkQJUuriX1zvkIbe+DwGhVOfNFtnSb
+ DCqbYF3n+w1xYQ3ztSulKABrhHP5JveHBmFP7zHCokWa12woRUfHs7C6L1iQIEs/SiM9snL
+X-Received: by 2002:a2e:ab06:0:b0:39c:94d4:fb51 with SMTP id
+ 38308e7fff4ca-39c94d4ffb1mr4235191fa.34.1783664434683; Thu, 09 Jul 2026
+ 23:20:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEwMDA1OCBTYWx0ZWRfXyMu19S9BsG1M
- PAcvMKlUCI3Uxi2O/1hDM7yX7RK1nI7BYszf0WGN9aAAqFkOupTP73H6y2MqH7imYhJYjl6YZYL
- Q94i0Ot2h6Z0qpdvQY3ufKvRC+5nNdw=
-X-Authority-Analysis: v=2.4 cv=DYgnbPtW c=1 sm=1 tr=0 ts=6a508f30 cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=EUspDBNiAAAA:8
- a=OdLkAQov_zCaxSa-YWIA:9 a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-ORIG-GUID: _Pkk7A8eiDwnNEJX52ZhDEVCcL4dsl-Q
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEwMDA1OCBTYWx0ZWRfX7aLgPVaoFStt
- Wgl0kter3uDGZJKeRbWA2iX/4YwOY+YXUS/JO1Et6QOGrkBzg/4oLy6huj4m2hW1kmFDGnFCT2a
- H0D82fJD7ovV4kYsG4YMzaeKgZv7shYDBJ4HL73YM78EHZn7nqt4qpovmxGT9uEAngvj0aLmMdD
- J7PAQuTDloOBuAD/okC8bnx0fmmNBfymT+6UOJHxLu+pH2eZk/zoG3lnJpa9o4eXDx7XkFPRxM2
- U4d6Ef1WV2fC/3c9E1JNEdjR2QNThwMpRMOF+ykW15zFRGVGLoQFCAOTtGI4yD4+oW+Knbk9uzS
- C/b5gmgsd0WycNvQSf7vkPDHsERBANX2ZQxjoiIh4aY3IEphJHXtH5B9kSNuL85j/6P3U8VCLcg
- Y362bIWBeX/IuRgZJ3BnaxztWU+j2uDHUJYVicUeJBk012OpkjcRMGc+HRTdm2JwxxE4Rk0Vfic
- IidiATK0Um1x49xkz2A==
-X-Proofpoint-GUID: _Pkk7A8eiDwnNEJX52ZhDEVCcL4dsl-Q
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-10_01,2026-07-09_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 adultscore=0 suspectscore=0 bulkscore=0
- clxscore=1015 phishscore=0 malwarescore=0 spamscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607100058
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260604070029.34982-1-guobin@linux.alibaba.com>
+ <CAFWXh4w==tF6VA1QyHWRqBX0hBE2R1Ko7u2Expwn+xv7=Fed2w@mail.gmail.com>
+ <CAFWXh4x7sP-r6i9n-X7-gzkNNNqE5OegYkJZ=6TQvzhtgFLPdg@mail.gmail.com>
+In-Reply-To: <CAFWXh4x7sP-r6i9n-X7-gzkNNNqE5OegYkJZ=6TQvzhtgFLPdg@mail.gmail.com>
+From: Hy Man <infra.ai.cloud@bitdeer.com>
+Date: Fri, 10 Jul 2026 14:20:21 +0800
+X-Gm-Features: AUfX_mxYHxQzrHIxMXLyAf7SNCY_YI6Wsl4UBQr6JmzU6bogb79UW2SFlnaUTxs
+Message-ID: <CAFWXh4w4K9FabNoSECdrvce7cXZBcC=CYpgxR_3VvyK+hfny-Q@mail.gmail.com>
+Subject: Re: [PATCH v2] accel/kvm: event-driven wakeup for dirty ring reaper
+ thread
+To: Bin Guo <guobin@linux.alibaba.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::231;
+ envelope-from=infra.ai.cloud@bitdeer.com; helo=mail-lj1-x231.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,258 +121,231 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Without it, we'll get the following warning:
-WARNING: Project specifies a minimum meson_version '>=1.5.0' but uses features which were added in newer versions:
- * 1.6.0: {'test with external_program in args'}
+Ping
 
-Which we require because of how we build iteratively our test command
-line.
+In case this patch gets overlooked as time goes on.
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
----
- meson.build                                                   | 4 ++--
- pythondeps.toml                                               | 2 +-
- subprojects/packagefiles/anyhow-1-rs/meson.build              | 2 +-
- subprojects/packagefiles/arbitrary-int-1-rs/meson.build       | 2 +-
- subprojects/packagefiles/attrs-0.2-rs/meson.build             | 2 +-
- subprojects/packagefiles/bilge-0.2-rs/meson.build             | 2 +-
- subprojects/packagefiles/bilge-impl-0.2-rs/meson.build        | 2 +-
- subprojects/packagefiles/either-1-rs/meson.build              | 2 +-
- subprojects/packagefiles/foreign-0.3-rs/meson.build           | 2 +-
- subprojects/packagefiles/glib-sys-0.21-rs/meson.build         | 2 +-
- subprojects/packagefiles/itertools-0.11-rs/meson.build        | 2 +-
- subprojects/packagefiles/libc-0.2-rs/meson.build              | 2 +-
- subprojects/packagefiles/probe-0.5-rs/meson.build             | 2 +-
- subprojects/packagefiles/proc-macro-error-1-rs/meson.build    | 2 +-
- .../packagefiles/proc-macro-error-attr-1-rs/meson.build       | 2 +-
- subprojects/packagefiles/proc-macro2-1-rs/meson.build         | 2 +-
- subprojects/packagefiles/quote-1-rs/meson.build               | 2 +-
- subprojects/packagefiles/syn-2-rs/meson.build                 | 2 +-
- subprojects/packagefiles/unicode-ident-1-rs/meson.build       | 2 +-
- 19 files changed, 20 insertions(+), 20 deletions(-)
-
-diff --git a/meson.build b/meson.build
-index 164328ded83..fbb7d4ac6d4 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1,4 +1,4 @@
--project('qemu', ['c'], meson_version: '>=1.5.0',
-+project('qemu', ['c'], meson_version: '>=1.6.0',
-         default_options: ['warning_level=1', 'c_std=gnu11', 'cpp_std=gnu++23', 'b_colorout=auto',
-                           'b_staticpic=false', 'stdsplit=false', 'optimization=2', 'b_pie=true'] +
- 
-@@ -1382,7 +1382,7 @@ if not get_option('zstd').auto() or have_block
- endif
- qpl = not_found
- if not get_option('qpl').auto() or have_system
--  qpl = dependency('qpl', version: '>=1.5.0',
-+  qpl = dependency('qpl', version: '>=1.6.0',
-                     required: get_option('qpl'),
-                     method: 'pkg-config')
- endif
-diff --git a/pythondeps.toml b/pythondeps.toml
-index bef88d49a6e..e2ee450ba68 100644
---- a/pythondeps.toml
-+++ b/pythondeps.toml
-@@ -19,7 +19,7 @@
- 
- [meson]
- # The install key should match the version in python/wheels/
--meson = { accepted = ">=1.5.0", installed = "1.11.1", canary = "meson" }
-+meson = { accepted = ">=1.6.0", installed = "1.11.1", canary = "meson" }
- pycotap = { accepted = ">=1.1.0", installed = "1.3.1" }
- 
- [meson-rust]
-diff --git a/subprojects/packagefiles/anyhow-1-rs/meson.build b/subprojects/packagefiles/anyhow-1-rs/meson.build
-index 348bab98b9f..e82b1f20bb4 100644
---- a/subprojects/packagefiles/anyhow-1-rs/meson.build
-+++ b/subprojects/packagefiles/anyhow-1-rs/meson.build
-@@ -1,5 +1,5 @@
- project('anyhow-1-rs', 'rust',
--  meson_version: '>=1.5.0',
-+  meson_version: '>=1.6.0',
-   version: '1.0.98',
-   license: 'MIT OR Apache-2.0',
-   default_options: [])
-diff --git a/subprojects/packagefiles/arbitrary-int-1-rs/meson.build b/subprojects/packagefiles/arbitrary-int-1-rs/meson.build
-index 00733d1faab..267357fa912 100644
---- a/subprojects/packagefiles/arbitrary-int-1-rs/meson.build
-+++ b/subprojects/packagefiles/arbitrary-int-1-rs/meson.build
-@@ -1,5 +1,5 @@
- project('arbitrary-int-1-rs', 'rust',
--  meson_version: '>=1.5.0',
-+  meson_version: '>=1.6.0',
-   version: '1.2.7',
-   license: 'MIT',
-   default_options: [])
-diff --git a/subprojects/packagefiles/attrs-0.2-rs/meson.build b/subprojects/packagefiles/attrs-0.2-rs/meson.build
-index ee575476cb2..9b76fe0f73e 100644
---- a/subprojects/packagefiles/attrs-0.2-rs/meson.build
-+++ b/subprojects/packagefiles/attrs-0.2-rs/meson.build
-@@ -1,5 +1,5 @@
- project('attrs-0.2-rs', 'rust',
--  meson_version: '>=1.5.0',
-+  meson_version: '>=1.6.0',
-   version: '0.2.9',
-   license: 'MIT OR Apache-2.0',
-   default_options: [])
-diff --git a/subprojects/packagefiles/bilge-0.2-rs/meson.build b/subprojects/packagefiles/bilge-0.2-rs/meson.build
-index ce13d0fe80f..4d4c9bde404 100644
---- a/subprojects/packagefiles/bilge-0.2-rs/meson.build
-+++ b/subprojects/packagefiles/bilge-0.2-rs/meson.build
-@@ -1,7 +1,7 @@
- project(
-   'bilge-0.2-rs',
-   'rust',
--  meson_version: '>=1.5.0',
-+  meson_version: '>=1.6.0',
-   version : '0.2.0',
-   license : 'MIT or Apache-2.0',
- )
-diff --git a/subprojects/packagefiles/bilge-impl-0.2-rs/meson.build b/subprojects/packagefiles/bilge-impl-0.2-rs/meson.build
-index 04617b875c5..57bdf30ba05 100644
---- a/subprojects/packagefiles/bilge-impl-0.2-rs/meson.build
-+++ b/subprojects/packagefiles/bilge-impl-0.2-rs/meson.build
-@@ -1,5 +1,5 @@
- project('bilge-impl-0.2-rs', 'rust',
--  meson_version: '>=1.5.0',
-+  meson_version: '>=1.6.0',
-   version: '0.2.0',
-   license: 'MIT OR Apache-2.0',
-   default_options: [])
-diff --git a/subprojects/packagefiles/either-1-rs/meson.build b/subprojects/packagefiles/either-1-rs/meson.build
-index 04c96cc5fb3..d869201e43e 100644
---- a/subprojects/packagefiles/either-1-rs/meson.build
-+++ b/subprojects/packagefiles/either-1-rs/meson.build
-@@ -1,5 +1,5 @@
- project('either-1-rs', 'rust',
--  meson_version: '>=1.5.0',
-+  meson_version: '>=1.6.0',
-   version: '1.12.0',
-   license: 'MIT OR Apache-2.0',
-   default_options: [])
-diff --git a/subprojects/packagefiles/foreign-0.3-rs/meson.build b/subprojects/packagefiles/foreign-0.3-rs/meson.build
-index 0901c02c527..80e68967ab4 100644
---- a/subprojects/packagefiles/foreign-0.3-rs/meson.build
-+++ b/subprojects/packagefiles/foreign-0.3-rs/meson.build
-@@ -1,5 +1,5 @@
- project('foreign-0.3-rs', 'rust',
--  meson_version: '>=1.5.0',
-+  meson_version: '>=1.6.0',
-   version: '0.2.0',
-   license: 'MIT OR Apache-2.0',
-   default_options: [])
-diff --git a/subprojects/packagefiles/glib-sys-0.21-rs/meson.build b/subprojects/packagefiles/glib-sys-0.21-rs/meson.build
-index 8c5483311ed..b9ceb12463f 100644
---- a/subprojects/packagefiles/glib-sys-0.21-rs/meson.build
-+++ b/subprojects/packagefiles/glib-sys-0.21-rs/meson.build
-@@ -1,5 +1,5 @@
- project('glib-sys-0.21-rs', 'rust',
--  meson_version: '>=1.5.0',
-+  meson_version: '>=1.6.0',
-   version: '0.21.2',
-   license: 'MIT',
-   default_options: [])
-diff --git a/subprojects/packagefiles/itertools-0.11-rs/meson.build b/subprojects/packagefiles/itertools-0.11-rs/meson.build
-index 2a3fbe9ee5a..3081639890b 100644
---- a/subprojects/packagefiles/itertools-0.11-rs/meson.build
-+++ b/subprojects/packagefiles/itertools-0.11-rs/meson.build
-@@ -1,5 +1,5 @@
- project('itertools-0.11-rs', 'rust',
--  meson_version: '>=1.5.0',
-+  meson_version: '>=1.6.0',
-   version: '0.11.0',
-   license: 'MIT OR Apache-2.0',
-   default_options: [])
-diff --git a/subprojects/packagefiles/libc-0.2-rs/meson.build b/subprojects/packagefiles/libc-0.2-rs/meson.build
-index ac4f80dba98..d1a9da194da 100644
---- a/subprojects/packagefiles/libc-0.2-rs/meson.build
-+++ b/subprojects/packagefiles/libc-0.2-rs/meson.build
-@@ -1,5 +1,5 @@
- project('libc-0.2-rs', 'rust',
--  meson_version: '>=1.5.0',
-+  meson_version: '>=1.6.0',
-   version: '0.2.162',
-   license: 'MIT OR Apache-2.0',
-   default_options: [])
-diff --git a/subprojects/packagefiles/probe-0.5-rs/meson.build b/subprojects/packagefiles/probe-0.5-rs/meson.build
-index e6ea69533b7..1d33800cde2 100644
---- a/subprojects/packagefiles/probe-0.5-rs/meson.build
-+++ b/subprojects/packagefiles/probe-0.5-rs/meson.build
-@@ -1,5 +1,5 @@
- project('probe-0.5-rs', 'rust',
--  meson_version: '>=1.5.0',
-+  meson_version: '>=1.6.0',
-   version: '0.5.2',
-   license: 'Apache-2.0 OR MIT',
-   default_options: [])
-diff --git a/subprojects/packagefiles/proc-macro-error-1-rs/meson.build b/subprojects/packagefiles/proc-macro-error-1-rs/meson.build
-index 8ba558e1330..523572173c7 100644
---- a/subprojects/packagefiles/proc-macro-error-1-rs/meson.build
-+++ b/subprojects/packagefiles/proc-macro-error-1-rs/meson.build
-@@ -1,5 +1,5 @@
- project('proc-macro-error-1-rs', 'rust',
--  meson_version: '>=1.5.0',
-+  meson_version: '>=1.6.0',
-   version: '1.0.4',
-   license: 'MIT OR Apache-2.0',
-   default_options: [])
-diff --git a/subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build b/subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build
-index a85d7c07143..85f190e56e0 100644
---- a/subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build
-+++ b/subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build
-@@ -1,5 +1,5 @@
- project('proc-macro-error-attr-1-rs', 'rust',
--  meson_version: '>=1.5.0',
-+  meson_version: '>=1.6.0',
-   version: '1.12.0',
-   license: 'MIT OR Apache-2.0',
-   default_options: [])
-diff --git a/subprojects/packagefiles/proc-macro2-1-rs/meson.build b/subprojects/packagefiles/proc-macro2-1-rs/meson.build
-index ba7de070292..7cb4f93bb08 100644
---- a/subprojects/packagefiles/proc-macro2-1-rs/meson.build
-+++ b/subprojects/packagefiles/proc-macro2-1-rs/meson.build
-@@ -1,5 +1,5 @@
- project('proc-macro2-1-rs', 'rust',
--  meson_version: '>=1.5.0',
-+  meson_version: '>=1.6.0',
-   version: '1.0.95',
-   license: 'MIT OR Apache-2.0',
-   default_options: [])
-diff --git a/subprojects/packagefiles/quote-1-rs/meson.build b/subprojects/packagefiles/quote-1-rs/meson.build
-index bf41fad99bb..fdd549e7648 100644
---- a/subprojects/packagefiles/quote-1-rs/meson.build
-+++ b/subprojects/packagefiles/quote-1-rs/meson.build
-@@ -1,5 +1,5 @@
- project('quote-1-rs', 'rust',
--  meson_version: '>=1.5.0',
-+  meson_version: '>=1.6.0',
-   version: '1.12.0',
-   license: 'MIT OR Apache-2.0',
-   default_options: [])
-diff --git a/subprojects/packagefiles/syn-2-rs/meson.build b/subprojects/packagefiles/syn-2-rs/meson.build
-index 3e6dc318a9c..a7baa6feff4 100644
---- a/subprojects/packagefiles/syn-2-rs/meson.build
-+++ b/subprojects/packagefiles/syn-2-rs/meson.build
-@@ -1,5 +1,5 @@
- project('syn-2-rs', 'rust',
--  meson_version: '>=1.5.0',
-+  meson_version: '>=1.6.0',
-   version: '2.0.104',
-   license: 'MIT OR Apache-2.0',
-   default_options: [])
-diff --git a/subprojects/packagefiles/unicode-ident-1-rs/meson.build b/subprojects/packagefiles/unicode-ident-1-rs/meson.build
-index 11a5dab97df..ee483e13423 100644
---- a/subprojects/packagefiles/unicode-ident-1-rs/meson.build
-+++ b/subprojects/packagefiles/unicode-ident-1-rs/meson.build
-@@ -1,5 +1,5 @@
- project('unicode-ident-1-rs', 'rust',
--  meson_version: '>=1.5.0',
-+  meson_version: '>=1.6.0',
-   version: '1.0.12',
-   license: '(MIT OR Apache-2.0) AND Unicode-DFS-2016',
-   default_options: [])
--- 
-2.47.3
-
+On Thu, Jun 18, 2026 at 8:58=E2=80=AFAM Hy Man <infra.ai.cloud@bitdeer.com>=
+ wrote:
+>
+> Ping=E3=80=82
+>
+> Hi Paolo, could you please take a look at this patch, I=E2=80=99d appreci=
+ate
+> your feedback on this patch.
+>
+> On Fri, Jun 5, 2026 at 4:22=E2=80=AFPM Hy Man <infra.ai.cloud@bitdeer.com=
+> wrote:
+> >
+> > Reviewed-by: Hyman Huang <infra.ai.cloud@bitdeer.com>
+> >
+> > On Thu, Jun 4, 2026 at 3:00=E2=80=AFPM Bin Guo <guobin@linux.alibaba.co=
+m> wrote:
+> > >
+> > > The reaper polls with sleep(1) (TODO in the code) and only notices
+> > > dirty-limit teardown at the next 1s tick.
+> > >
+> > > Replace the sleep with qemu_poll_ns() on an EventNotifier, kicked
+> > > from dirtylimit_state_finalize() after dirtylimit_state has been
+> > > cleared.  The kick must follow the NULL assignment: kicking earlier
+> > > wakes the reaper while dirtylimit_in_service() still returns true,
+> > > so it just loops back to wait.  A 1s fallback timeout remains as a
+> > > liveness backstop.
+> > >
+> > > 20 set-/cancel-vcpu-dirty-limit cycles via QMP, |reaper-wake -
+> > > cancel-ack| measured with strace on the reaper TID:
+> > >
+> > >     before: median 255 ms, max 502 ms
+> > >     after:  median 0.6 ms, max  27 ms
+> > >
+> > > kvm_dirty_ring_reaper_init() returns int again (was made void in
+> > > commit 43a5e377f4) to propagate event_notifier_init() failure.
+> > >
+> > > Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+> > > ---
+> > > Changes in v2:
+> > > - Fix compilation error: kvm_init() has no Error **errp parameter, so
+> > >   kvm_dirty_ring_reaper_init() now uses error_report() directly and
+> > >   no longer accepts an errp argument.
+> > > - Remove the kick from kvm_cpu_exec() KVM_EXIT_DIRTY_RING_FULL handle=
+r:
+> > >   it already reaps synchronously (all vCPUs or the ring-full one), so
+> > >   a background reaper kick would only be redundant or a no-op.
+> > > - Move kick site from dirtylimit_change(false) to
+> > >   dirtylimit_state_finalize() after dirtylimit_state =3D NULL, ensuri=
+ng
+> > >   the reaper actually proceeds past the dirtylimit_in_service() check=
+.
+> > >
+> > >  accel/kvm/kvm-all.c      | 42 ++++++++++++++++++++++++++++++++++----=
+--
+> > >  accel/stubs/kvm-stub.c   |  4 ++++
+> > >  include/system/kvm.h     |  7 +++++++
+> > >  include/system/kvm_int.h |  3 +++
+> > >  system/dirtylimit.c      |  2 ++
+> > >  5 files changed, 52 insertions(+), 6 deletions(-)
+> > >
+> > > diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> > > index 96f90ebb24..be005832bc 100644
+> > > --- a/accel/kvm/kvm-all.c
+> > > +++ b/accel/kvm/kvm-all.c
+> > > @@ -1754,6 +1754,8 @@ static void kvm_set_phys_mem(KVMMemoryListener =
+*kml,
+> > >      } while (size);
+> > >  }
+> > >
+> > > +#define KVM_DIRTY_RING_REAPER_FALLBACK_NS  (1 * NANOSECONDS_PER_SECO=
+ND)
+> > > +
+> > >  static void *kvm_dirty_ring_reaper_thread(void *data)
+> > >  {
+> > >      KVMState *s =3D data;
+> > > @@ -1764,12 +1766,18 @@ static void *kvm_dirty_ring_reaper_thread(voi=
+d *data)
+> > >      trace_kvm_dirty_ring_reaper("init");
+> > >
+> > >      while (true) {
+> > > +        GPollFD pfd =3D {
+> > > +            .fd =3D event_notifier_get_fd(&r->reaper_notifier),
+> > > +            .events =3D G_IO_IN,
+> > > +        };
+> > > +
+> > >          r->reaper_state =3D KVM_DIRTY_RING_REAPER_WAIT;
+> > >          trace_kvm_dirty_ring_reaper("wait");
+> > > -        /*
+> > > -         * TODO: provide a smarter timeout rather than a constant?
+> > > -         */
+> > > -        sleep(1);
+> > > +
+> > > +        qemu_poll_ns(&pfd, 1, KVM_DIRTY_RING_REAPER_FALLBACK_NS);
+> > > +
+> > > +        /* Drain unconditionally so a stale event can't spin the nex=
+t loop. */
+> > > +        event_notifier_test_and_clear(&r->reaper_notifier);
+> > >
+> > >          /* keep sleeping so that dirtylimit not be interfered by rea=
+per */
+> > >          if (dirtylimit_in_service()) {
+> > > @@ -1789,13 +1797,32 @@ static void *kvm_dirty_ring_reaper_thread(voi=
+d *data)
+> > >      g_assert_not_reached();
+> > >  }
+> > >
+> > > -static void kvm_dirty_ring_reaper_init(KVMState *s)
+> > > +static int kvm_dirty_ring_reaper_init(KVMState *s)
+> > >  {
+> > >      struct KVMDirtyRingReaper *r =3D &s->reaper;
+> > > +    int ret;
+> > > +
+> > > +    ret =3D event_notifier_init(&r->reaper_notifier, 0);
+> > > +    if (ret < 0) {
+> > > +        error_report("Failed to initialize dirty ring reaper notifie=
+r: %s",
+> > > +                     strerror(-ret));
+> > > +        return ret;
+> > > +    }
+> > >
+> > >      qemu_thread_create(&r->reaper_thr, "kvm-reaper",
+> > >                         kvm_dirty_ring_reaper_thread,
+> > >                         s, QEMU_THREAD_JOINABLE);
+> > > +    return 0;
+> > > +}
+> > > +
+> > > +void kvm_dirty_ring_reaper_kick(void)
+> > > +{
+> > > +    KVMState *s =3D kvm_state;
+> > > +
+> > > +    if (!s || !s->kvm_dirty_ring_size) {
+> > > +        return;
+> > > +    }
+> > > +    event_notifier_set(&s->reaper.reaper_notifier);
+> > >  }
+> > >
+> > >  static int kvm_dirty_ring_init(KVMState *s)
+> > > @@ -3097,7 +3124,10 @@ static int kvm_init(AccelState *as, MachineSta=
+te *ms)
+> > >      }
+> > >
+> > >      if (s->kvm_dirty_ring_size) {
+> > > -        kvm_dirty_ring_reaper_init(s);
+> > > +        ret =3D kvm_dirty_ring_reaper_init(s);
+> > > +        if (ret < 0) {
+> > > +            goto err;
+> > > +        }
+> > >      }
+> > >
+> > >      if (kvm_check_extension(kvm_state, KVM_CAP_BINARY_STATS_FD)) {
+> > > diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
+> > > index c4617caac6..b878598552 100644
+> > > --- a/accel/stubs/kvm-stub.c
+> > > +++ b/accel/stubs/kvm-stub.c
+> > > @@ -134,6 +134,10 @@ uint32_t kvm_dirty_ring_size(void)
+> > >      return 0;
+> > >  }
+> > >
+> > > +void kvm_dirty_ring_reaper_kick(void)
+> > > +{
+> > > +}
+> > > +
+> > >  bool kvm_hwpoisoned_mem(void)
+> > >  {
+> > >      return false;
+> > > diff --git a/include/system/kvm.h b/include/system/kvm.h
+> > > index 5fa33eddda..e127a5eb37 100644
+> > > --- a/include/system/kvm.h
+> > > +++ b/include/system/kvm.h
+> > > @@ -553,6 +553,13 @@ bool kvm_dirty_ring_enabled(void);
+> > >
+> > >  uint32_t kvm_dirty_ring_size(void);
+> > >
+> > > +/**
+> > > + * kvm_dirty_ring_reaper_kick - wake the background dirty ring reape=
+r.
+> > > + *
+> > > + * Safe from any thread; no-op when the dirty ring is not in use.
+> > > + */
+> > > +void kvm_dirty_ring_reaper_kick(void);
+> > > +
+> > >  void kvm_mark_guest_state_protected(void);
+> > >
+> > >  /**
+> > > diff --git a/include/system/kvm_int.h b/include/system/kvm_int.h
+> > > index 0876aac938..c14ebc927f 100644
+> > > --- a/include/system/kvm_int.h
+> > > +++ b/include/system/kvm_int.h
+> > > @@ -12,6 +12,7 @@
+> > >  #include "system/memory.h"
+> > >  #include "qapi/qapi-types-common.h"
+> > >  #include "qemu/accel.h"
+> > > +#include "qemu/event_notifier.h"
+> > >  #include "qemu/queue.h"
+> > >  #include "system/kvm.h"
+> > >  #include "accel/accel-ops.h"
+> > > @@ -100,6 +101,8 @@ struct KVMDirtyRingReaper {
+> > >      QemuThread reaper_thr;
+> > >      volatile uint64_t reaper_iteration; /* iteration number of reape=
+r thr */
+> > >      volatile enum KVMDirtyRingReaperState reaper_state; /* reap thr =
+state */
+> > > +    /* Wakeup channel: kicked when dirty-limit is torn down. */
+> > > +    EventNotifier reaper_notifier;
+> > >  };
+> > >  struct KVMState
+> > >  {
+> > > diff --git a/system/dirtylimit.c b/system/dirtylimit.c
+> > > index c934ceb0de..a33256ade7 100644
+> > > --- a/system/dirtylimit.c
+> > > +++ b/system/dirtylimit.c
+> > > @@ -239,6 +239,8 @@ void dirtylimit_state_finalize(void)
+> > >      g_free(dirtylimit_state);
+> > >      dirtylimit_state =3D NULL;
+> > >
+> > > +    kvm_dirty_ring_reaper_kick();
+> > > +
+> > >      trace_dirtylimit_state_finalize();
+> > >  }
+> > >
+> > > --
+> > > 2.50.1 (Apple Git-155)
+> > >
 
