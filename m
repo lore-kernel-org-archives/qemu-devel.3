@@ -4,61 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3211CC43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 11:43:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 593B8C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 11:44:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi9dY-0004ks-07; Fri, 10 Jul 2026 07:43:20 -0400
+	id 1wi9dY-0004lE-FD; Fri, 10 Jul 2026 07:43:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wi9dS-0004k5-Eh
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wi9dS-0004k4-C7
  for qemu-devel@nongnu.org; Fri, 10 Jul 2026 07:43:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wi9dQ-00088Z-IY
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wi9dQ-00088a-IR
  for qemu-devel@nongnu.org; Fri, 10 Jul 2026 07:43:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1783683791;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WCLoksdvxdaNTrYa/ngOZERpM1BZWXy6Lgwm/GMmvqc=;
- b=WafQQpoHyBghEBRr0km+u2uJRI8WuvqHsrOr/LB9stKGP+hkhbknF/KB1lrwNlXYUJMBm6
- FhWE44ypcuPk4z/P7q9WtwXJHNHVIAFZXoIFe0YF5viksnOrBCeOvo3wPAoGsM/4N9DYoj
- ElWDFqbpH26YFTBNZDUV+h55xFxXZzw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=NVa9Jhpk/DOy6Dye0WvlpH7ON0y8rJ710rrHDJdtfx0=;
+ b=Q8yQd1VyRSu4H4QFY5nw7aVRrCdA+VqnjGwcYnDxdlhq9FCtMDYFqOZsGaik4yigciCHGW
+ lHKmaJOfdA5kumU/8HpQ2ugGoAxmtuoE07GcrmVCEjYh237OtSdz+4YHmtibesruQNIMUl
+ s1zSraKcw3aqlemvMJpcjAeH2P+/JMw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-626-tNcvQNK3NgeC6O7Rjesgkw-1; Fri,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-344-KBJwp3iMNFmi2KAkpwhzIg-1; Fri,
  10 Jul 2026 07:43:09 -0400
-X-MC-Unique: tNcvQNK3NgeC6O7Rjesgkw-1
-X-Mimecast-MFC-AGG-ID: tNcvQNK3NgeC6O7Rjesgkw_1783683788
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+X-MC-Unique: KBJwp3iMNFmi2KAkpwhzIg-1
+X-Mimecast-MFC-AGG-ID: KBJwp3iMNFmi2KAkpwhzIg_1783683788
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 63D1C195606D; Fri, 10 Jul 2026 11:43:08 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3C98E19560B6; Fri, 10 Jul 2026 11:43:08 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AC30F195608E; Fri, 10 Jul 2026 11:43:07 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CC72A1800347; Fri, 10 Jul 2026 11:43:07 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5947421E6931; Fri, 10 Jul 2026 13:43:05 +0200 (CEST)
+ id 52A6821E6920; Fri, 10 Jul 2026 13:43:05 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com, qemu-riscv@nongnu.org, bin.meng@processmission.com,
  mzamazal@redhat.com, mst@redhat.com, sgarzare@redhat.com
-Subject: [PATCH 2/2] MAINTAINERS: Mark "vhost-user-scmi" orphaned
-Date: Fri, 10 Jul 2026 13:43:05 +0200
-Message-ID: <20260710114305.2961898-3-armbru@redhat.com>
-In-Reply-To: <20260710114305.2961898-1-armbru@redhat.com>
-References: <20260710114305.2961898-1-armbru@redhat.com>
+Subject: [PATCH 0/2] MAINTAINERS: Mark sections orphaned
+Date: Fri, 10 Jul 2026 13:43:03 +0200
+Message-ID: <20260710114305.2961898-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -84,28 +81,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit a5dab090e1 (hw/virtio: Add boilerplate for vhost-user-scmi
-device, 2023-06-28) added the section with S: Supported, but no M:.
-This makes no sense.  Downgrade to S: Orphan.
+"S: Supported" without an M: makes no sense.  Change to S: Orphan.
 
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
----
- MAINTAINERS | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+If you want them to remain supported, please find a maintainer.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index aa2df9cbe3..4d558ddee9 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2622,7 +2622,7 @@ F: include/hw/virtio/vhost-user-snd.h
- 
- vhost-user-scmi
- R: Milan Zamazal <mzamazal@redhat.com>
--S: Supported
-+S: Orphan
- F: hw/virtio/vhost-user-scmi*
- F: include/hw/virtio/vhost-user-scmi.h
- F: tests/qtest/libqos/virtio-scmi.*
+We could do "S: Odd fixes" for "vhost-user-scmi", since it has an R:.
+Milan, you decide.
+
+Markus Armbruster (2):
+  MAINTAINERS: Mark "Microchip PolarFire SoC Icicle Kit" orphaned
+  MAINTAINERS: Mark "vhost-user-scmi" orphaned
+
+ MAINTAINERS | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
 -- 
 2.54.0
 
