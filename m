@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C704BC43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 20:56:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E107BC43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 20:57:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiIEm-0001C8-54; Fri, 10 Jul 2026 16:54:20 -0400
+	id 1wiIFH-0001oh-44; Fri, 10 Jul 2026 16:54:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wiIEh-00016u-8L
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 16:54:15 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1wiIF4-0001eW-84
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 16:54:38 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wiIEb-0000cH-Jl
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 16:54:14 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-84862b0d5f8so1161417b3a.3
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 13:54:09 -0700 (PDT)
+ id 1wiIEp-0000lH-ER
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 16:54:37 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-84864b41100so1173809b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 13:54:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783716848; x=1784321648; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783716862; x=1784321662; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Fk3aaqwEL447TLAUxQvRMrNROG8iRdVw/mnS/h1SzDM=;
- b=l94OAmaKL0EIKtarLCm8pkrzcHzJ7IUidHjNxh6HjPu0R71u1cnXbhaZQSuWIy0yr6
- 73Jm0GW5S6+0eeEkQc0arLgI9vHfiJxHgnnhf078xQCz2CNB5f0f+vlmYcMKlTUGECSr
- v/l0gR6Iqr3PBOA+AkRaD9i/PptYVZys7THM97b6Ko+rCXoDTjeeb/Ojru4//QR6rHh/
- VhXqmhvp3TxiMhFpKL0M34yS9bv1Rjfv6IfzrCxhI1mb72vw3zWTSnITi5pe27OM4wJ0
- IZoGKCLQk49UFQVjjd/y4/PCeuEBtYZQw+tFusOIoGpnoncbJA6gu1lu2JrWhKA6z0Ng
- wyOA==
+ bh=I8oM6zA995h2YqemG4RaUvMUdlMqbrs5DxUx8iaXoJQ=;
+ b=FwPNQHe6kT/SxBQXjmesrPIw0u5v7SMoYJWma2G+DSjFJlkfVvoegVjisLd1uVIs8s
+ RPdL+FPzQEd2nX/dCC3YLPd2EWIn7Df+S5W1pUBBvDv0sVCtfCyTk7Vlga/ZzCAcsXUL
+ 7AvizZI+8T3sEh6IB29UdG/43xNdTyjxBJLpNefpqGwSP26AIii2uI+O5EgNcvOmlJRl
+ 1Nqd4Z88srvpWs0IA1vaJ6Gpa4Ksgqs5wQ1ryEyLw4XPKkBk0x/JhL/0uAI4+QFUYV4m
+ O+WfLZU0hvpHzmXuAuvnoQUJZG1NHvzViIULNUqB2nRBVyp2Hrk04aTl3U/VG66sWt49
+ AKUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783716848; x=1784321648;
+ d=1e100.net; s=20251104; t=1783716862; x=1784321662;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Fk3aaqwEL447TLAUxQvRMrNROG8iRdVw/mnS/h1SzDM=;
- b=d83G8viNEYtcOMQJnCuFOlzVqiCmwkoKDPQKGXWvPmYlpW1cZkjYLnzFOuaNq9yRif
- /+WgTmXwdCfdSDPnjIQwYn2wYtKWwgKaSwowaq0IJN52wmara9FJG/cpvNqhZLjGXuB6
- 7oZSfc8bUaoKYRKDgpk40YkYqLTCyxfBWshYxhAicoGn/Asnq22zm91zKBgHMZ7/eDjG
- BcUO/y6sIOAXGkid7md6euLa0QYWgPD8qDNGUfz/0PXJj0lqelKZ/DDQCON+EnGKair/
- icI6wo5zZhdQ15OnH1mhItfMwoTVNHOk2Peyn8HFuw76GkOKfMORgGciOvfkuDdwixgq
- YXhg==
-X-Gm-Message-State: AOJu0YyysHdIYPB9Ba+MUrp7e5aWAugj1svYa3vsocjS2+jlK6TkM9cB
- 69zzuklsvsXrDIVKMyNsjm2DW4Lm1jEaSmbKd1zdx6fuwXjNVKnSVSbKZR9GtxkWTmKBRXbFm4a
- Nx5Z8
-X-Gm-Gg: AfdE7cl6daIbIPEbBoGTSS/1rZ4Txyh0anxkSX/3If1uv7jWGio1Zgkb6JsJZTmjSRW
- 5JjIKVtukgpgiSZRyk32OejJfzGRSxN+4Q6Uh2yXOBPwUac+RvCX41rmC/o+sq66Qzcq+7QH0LC
- BntsKnZrKkDYicGRZcAW+A3fmCBg/a9IPLuL3arFwRGaFiJjV+IAqlFQVoCfg+FElkveu8HRdG6
- SejRJqTDBVpODK6ccPP+Qv8bUpQZdqBCAiwj2e3/Z5ohEl5ydIItt2XPg66oYtaC6jJACEn9ZPm
- Yntt/X7t8PiBfyvlC/zOuD3D+ymEesWlPBM7GLbVKteb3goZfTAucbQfpwcRF8babEqHEC+ua0k
- qDt8SVIqiyPZaDjZfcB/KysM6Zf/nPzSDDwJ8PV5jsfrdYyHisgSLCgAvU9T/J15UR/0fI7VBRe
- n4WaHUUJ3uanEn3BWEKA==
-X-Received: by 2002:aa7:88c8:0:b0:842:5bf3:c53c with SMTP id
- d2e1a72fcca58-848895db20bmr576161b3a.2.1783716847914; 
- Fri, 10 Jul 2026 13:54:07 -0700 (PDT)
+ bh=I8oM6zA995h2YqemG4RaUvMUdlMqbrs5DxUx8iaXoJQ=;
+ b=b2YEjUvAoaqtxFoEwhohJfVsSqzRLyxZwj5UQNvk2rBzeJcswezOVpHiiwICdaz9fG
+ YKPmM7AwIthXZjG1/zkCssIiJRhmEEHfQYrRYhuk/s6uchPpJnmHPXZ+eyKKQT+aUemn
+ d0MRmBrdr6xhTD1+J1d2LfMGMj/o4utq0eZUvHAb4Xrz2CbSaeu+CpKB+jxeXfC4+fal
+ pxXbWtqZQ07zudpbG1guZ2By0fwBjheUcRcowF9w1fHU1Yv488C2LnxXDeLxpt1kX17t
+ CYpWt0zkGTeTj7kzfiyKeJ8ccs5d0Xj+M2RFKx+0ci1A3SN3MDRui/r+6UdW1I7QuxLg
+ lE8w==
+X-Gm-Message-State: AOJu0Yxgn9yZ/Hl0jrfEhXhu8mix697MX7syny3QB5Pg5jTZWwtG5fna
+ kimqBN5rck599C8YKiuivUb8cjGaPPwJwEhRAQEhIev6adQYvJoTmxpk9LcinAzlxEYCJYPCWcf
+ g8fWI
+X-Gm-Gg: AfdE7clYrVS+FsVcKzmSNMOcZnhg9f/ZkjkJ2gKes/uirImclNP4SWjQwjZsxd27spZ
+ mnYWrx/t1d4SuKEGu/KwlXOwJwOrKqKNkHkB8Zu1inOxaeBpJyp5gJZLie1PaTpEzu3PG3q7rN5
+ X3jl6FRQvwz6gkXONRNiWBAG0wKVrEfm240jyC97EoVn2wj0IV5J8XqG6KrVic0mLBdn7HPVrA8
+ ETFsrTX0uahvKAkvnvOePhEDQyNQ9ki/SbUkHiEc5PgQdYd+mMxHfeZvb1c9cy3S5w+4cGAiCfb
+ xHX1VJ/F30amok1zleCreOfI6rY6FPWKSyKvOKBYhAHUPFKCAL7WjDExY7WqGKyCJGq7zJJgWPQ
+ pqrg+PyNNyoiTg5HiCphyCTB70dnizD1lxQCnty5+zjVMh30Ujm8lp/0YFW5zW1NoLZ6C18FAIk
+ CIH+SwzMHnKrrQCXJqJw==
+X-Received: by 2002:a05:6a00:ab88:b0:848:411f:3969 with SMTP id
+ d2e1a72fcca58-8488979fc3cmr487713b3a.20.1783716861885; 
+ Fri, 10 Jul 2026 13:54:21 -0700 (PDT)
 Received: from stoup.. ([71.212.146.49]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-847f6d76106sm10780574b3a.40.2026.07.10.13.54.06
+ d2e1a72fcca58-847f6d76106sm10780574b3a.40.2026.07.10.13.54.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Jul 2026 13:54:06 -0700 (PDT)
+ Fri, 10 Jul 2026 13:54:21 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
  qemu-s390x@nongnu.org, jcmvbkbc@gmail.com
-Subject: [PATCH v3 03/51] exec/breakpoint: Merge watchpoint.h
-Date: Fri, 10 Jul 2026 13:53:13 -0700
-Message-ID: <20260710205401.836304-4-richard.henderson@linaro.org>
+Subject: [PATCH v3 18/51] cpu: Use interval-tree for CPUWatchpoint
+Date: Fri, 10 Jul 2026 13:53:28 -0700
+Message-ID: <20260710205401.836304-19-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260710205401.836304-1-richard.henderson@linaro.org>
 References: <20260710205401.836304-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: 4
 X-Spam_score: 0.4
 X-Spam_bar: /
@@ -100,252 +100,388 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the contents of watchpoint.h into breakpoint.h.
-Adjust all users of exec/watchpoint.h.
+Use a balanced binary tree rather than a simple list for watchpoints.
+Using an interval tree makes it easy to probe for any overlapping address.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/breakpoint.h           |  7 +++++++
- include/exec/watchpoint.h           | 20 --------------------
- accel/tcg/tcg-accel-ops.c           |  2 +-
- accel/tcg/user-exec-stub.c          |  2 +-
- system/watchpoint.c                 |  2 +-
- target/arm/debug_helper.c           |  2 +-
- target/arm/tcg/debug.c              |  2 +-
- target/i386/cpu.c                   |  2 +-
- target/i386/machine.c               |  2 +-
- target/i386/tcg/system/bpt_helper.c |  2 +-
- target/ppc/cpu.c                    |  2 +-
- target/ppc/cpu_init.c               |  2 +-
- target/riscv/debug.c                |  2 +-
- target/s390x/helper.c               |  1 -
- target/s390x/tcg/debug.c            |  1 -
- target/xtensa/dbg_helper.c          |  2 +-
- 16 files changed, 19 insertions(+), 34 deletions(-)
- delete mode 100644 include/exec/watchpoint.h
+ include/exec/breakpoint.h |   7 +-
+ include/hw/core/cpu.h     |   3 +-
+ accel/tcg/cpu-exec.c      |   8 +-
+ accel/tcg/watchpoint.c    | 155 +++++++++++++++++++++-----------------
+ hw/core/cpu-common.c      |   1 -
+ system/watchpoint.c       |  43 ++++++-----
+ target/arm/hyp_gdbstub.c  |   3 +-
+ 7 files changed, 119 insertions(+), 101 deletions(-)
 
 diff --git a/include/exec/breakpoint.h b/include/exec/breakpoint.h
-index e6aa630d17..c886f3afb7 100644
+index bb7cbc626d..e0826a1a2d 100644
 --- a/include/exec/breakpoint.h
 +++ b/include/exec/breakpoint.h
-@@ -50,4 +50,11 @@ void cpu_breakpoint_remove_by_ref(CPUState *cpu, CPUBreakpoint *breakpoint);
- void cpu_breakpoint_remove_all(CPUState *cpu, BreakpointFlags mask);
- bool cpu_breakpoint_test(CPUState *cpu, vaddr pc, BreakpointFlags mask);
+@@ -9,7 +9,6 @@
+ #define EXEC_BREAKPOINT_H
  
-+int cpu_watchpoint_insert(CPUState *cpu, vaddr addr, vaddr len,
-+                          BreakpointFlags flags, CPUWatchpoint **watchpoint);
-+int cpu_watchpoint_remove(CPUState *cpu, vaddr addr,
-+                          vaddr len, BreakpointFlags flags);
-+void cpu_watchpoint_remove_by_ref(CPUState *cpu, CPUWatchpoint *watchpoint);
-+void cpu_watchpoint_remove_all(CPUState *cpu, BreakpointFlags mask);
-+
- #endif
-diff --git a/include/exec/watchpoint.h b/include/exec/watchpoint.h
-deleted file mode 100644
-index a09daf47f1..0000000000
---- a/include/exec/watchpoint.h
-+++ /dev/null
-@@ -1,20 +0,0 @@
--/*
-- * CPU watchpoints
-- *
-- * Copyright (c) 2012 SUSE LINUX Products GmbH
-- * SPDX-License-Identifier: LGPL-2.1-or-later
-- */
--
--#ifndef EXEC_WATCHPOINT_H
--#define EXEC_WATCHPOINT_H
--
--#include "exec/breakpoint.h"
--
--int cpu_watchpoint_insert(CPUState *cpu, vaddr addr, vaddr len,
--                          BreakpointFlags flags, CPUWatchpoint **watchpoint);
--int cpu_watchpoint_remove(CPUState *cpu, vaddr addr,
--                          vaddr len, BreakpointFlags flags);
--void cpu_watchpoint_remove_by_ref(CPUState *cpu, CPUWatchpoint *watchpoint);
--void cpu_watchpoint_remove_all(CPUState *cpu, BreakpointFlags mask);
--
--#endif /* EXEC_WATCHPOINT_H */
-diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
-index 0aba254b81..c59ab85606 100644
---- a/accel/tcg/tcg-accel-ops.c
-+++ b/accel/tcg/tcg-accel-ops.c
-@@ -39,7 +39,7 @@
- #include "exec/hwaddr.h"
- #include "exec/tb-flush.h"
- #include "exec/translation-block.h"
--#include "exec/watchpoint.h"
-+#include "exec/breakpoint.h"
- #include "gdbstub/enums.h"
+ #include "qemu/interval-tree.h"
+-#include "qemu/queue.h"
+ #include "exec/vaddr.h"
+ #include "exec/memattrs.h"
  
+@@ -36,13 +35,11 @@ struct CPUBreakpoint {
+ };
+ 
+ struct CPUWatchpoint {
+-    vaddr vaddr;
+-    vaddr len;
++    IntervalTreeNode itree;
+     vaddr hitaddr;
+     MemTxAttrs hitattrs;
+-    int flags; /* BP_* */
++    BreakpointFlags flags;
+     unsigned id;
+-    QTAILQ_ENTRY(CPUWatchpoint) entry;
+ };
+ 
+ int cpu_breakpoint_insert(CPUState *cpu, vaddr pc, BreakpointFlags flags,
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index b8a1419860..7e19ea418d 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -525,8 +525,7 @@ struct CPUState {
+ 
+     /* ice debug support */
+     IntervalTreeRoot breakpoints;
+-
+-    QTAILQ_HEAD(, CPUWatchpoint) watchpoints;
++    IntervalTreeRoot watchpoints;
+     CPUWatchpoint *watchpoint_hit;
+ 
+     void *opaque;
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 2762cf6705..ab299387e3 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -682,10 +682,12 @@ static inline bool cpu_handle_halt(CPUState *cpu)
+ static inline void cpu_handle_debug_exception(CPUState *cpu)
+ {
+     const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
+-    CPUWatchpoint *wp;
++    IntervalTreeNode *n;
+ 
+-    if (!cpu->watchpoint_hit) {
+-        QTAILQ_FOREACH(wp, &cpu->watchpoints, entry) {
++    for (n = interval_tree_iter_first(&cpu->watchpoints, 0, -1); n;
++         n = interval_tree_iter_next(n, 0, -1)) {
++        CPUWatchpoint *wp = container_of(n, CPUWatchpoint, itree);
++        if (wp != cpu->watchpoint_hit) {
+             wp->flags &= ~BP_WATCHPOINT_HIT;
+         }
+     }
+diff --git a/accel/tcg/watchpoint.c b/accel/tcg/watchpoint.c
+index 5ea66e9763..a7ce5fa9dd 100644
+--- a/accel/tcg/watchpoint.c
++++ b/accel/tcg/watchpoint.c
+@@ -30,38 +30,18 @@
  #include "hw/core/cpu.h"
-diff --git a/accel/tcg/user-exec-stub.c b/accel/tcg/user-exec-stub.c
-index a10ff03922..973bdbcd7a 100644
---- a/accel/tcg/user-exec-stub.c
-+++ b/accel/tcg/user-exec-stub.c
-@@ -2,7 +2,7 @@
- #include "hw/core/cpu.h"
- #include "accel/tcg/cpu-ops.h"
- #include "exec/replay-core.h"
--#include "exec/watchpoint.h"
-+#include "exec/breakpoint.h"
  #include "internal-common.h"
  
- void cpu_resume(CPUState *cpu)
+-/*
+- * Return true if this watchpoint address matches the specified
+- * access (ie the address range covered by the watchpoint overlaps
+- * partially or completely with the address range covered by the
+- * access).
+- */
+-static inline bool watchpoint_address_matches(CPUWatchpoint *wp,
+-                                              vaddr addr, vaddr len)
+-{
+-    /*
+-     * We know the lengths are non-zero, but a little caution is
+-     * required to avoid errors in the case where the range ends
+-     * exactly at the top of the address space and so addr + len
+-     * wraps round to zero.
+-     */
+-    vaddr wpend = wp->vaddr + wp->len - 1;
+-    vaddr addrend = addr + len - 1;
+-
+-    return !(addr > wpend || wp->vaddr > addrend);
+-}
+-
+ /* Return flags for watchpoints that match addr + prot.  */
+ BreakpointFlags cpu_watchpoint_address_matches(CPUState *cpu,
+                                                vaddr addr, vaddr len)
+ {
+-    CPUWatchpoint *wp;
++    vaddr last = addr + len - 1;
+     BreakpointFlags ret = 0;
++    IntervalTreeNode *n;
+ 
+-    QTAILQ_FOREACH(wp, &cpu->watchpoints, entry) {
+-        if (watchpoint_address_matches(wp, addr, len)) {
+-            ret |= wp->flags;
+-        }
++    for (n = interval_tree_iter_first(&cpu->watchpoints, addr, last); n;
++         n = interval_tree_iter_next(n, addr, last)) {
++        CPUWatchpoint *wp = container_of(n, CPUWatchpoint, itree);
++        ret |= wp->flags;
+     }
+     return ret;
+ }
+@@ -70,7 +50,10 @@ BreakpointFlags cpu_watchpoint_address_matches(CPUState *cpu,
+ void cpu_check_watchpoint(CPUState *cpu, vaddr addr, vaddr len,
+                           MemTxAttrs attrs, BreakpointFlags flags, uintptr_t ra)
+ {
+-    CPUWatchpoint *wp;
++    vaddr last = addr + len - 1;
++    IntervalTreeNode *n;
++    CPUWatchpoint *found_wp = NULL;
++    bool have_cpu_wp = false;
+ 
+     assert(tcg_enabled());
+     if (cpu->watchpoint_hit) {
+@@ -88,56 +71,90 @@ void cpu_check_watchpoint(CPUState *cpu, vaddr addr, vaddr len,
+     if (cpu->cc->tcg_ops->adjust_watchpoint_address) {
+         /* this is currently used only by ARM BE32 */
+         addr = cpu->cc->tcg_ops->adjust_watchpoint_address(cpu, addr, len);
++        last = addr + len - 1;
+     }
+ 
+     assert((flags & ~BP_MEM_ACCESS) == 0);
+-    QTAILQ_FOREACH(wp, &cpu->watchpoints, entry) {
+-        BreakpointFlags hit_flags = wp->flags & flags;
+ 
+-        if (hit_flags && watchpoint_address_matches(wp, addr, len)) {
+-            if (replay_running_debug()) {
+-                /*
+-                 * replay_breakpoint reads icount.
+-                 * Force recompile to succeed, because icount may
+-                 * be read only at the end of the block.
+-                 */
+-                if (!cpu->neg.can_do_io) {
+-                    /* Force execution of one insn next time.  */
+-                    cpu->cflags_next_tb = 1 | CF_NOIRQ | curr_cflags(cpu);
+-                    cpu_loop_exit_restore(cpu, ra);
+-                }
+-                /*
+-                 * Don't process the watchpoints when we are
+-                 * in a reverse debugging operation.
+-                 */
+-                replay_breakpoint();
+-                return;
+-            }
++    for (n = interval_tree_iter_first(&cpu->watchpoints, addr, last); n;
++         n = interval_tree_iter_next(n, addr, last)) {
++        CPUWatchpoint *wp = container_of(n, CPUWatchpoint, itree);
+ 
+-            wp->flags |= hit_flags << BP_HIT_SHIFT;
+-            wp->hitaddr = MAX(addr, wp->vaddr);
+-            wp->hitattrs = attrs;
+-
+-            if (wp->flags & BP_CPU
+-                && cpu->cc->tcg_ops->debug_check_watchpoint
+-                && !cpu->cc->tcg_ops->debug_check_watchpoint(cpu, wp)) {
++        if (wp->flags & flags) {
++            /*
++             * Prefer GDB over CPU watchpoint, so we can take the first
++             * GDB watchpoint that we see.
++             */
++            if (wp->flags & BP_GDB) {
+                 wp->flags &= ~BP_WATCHPOINT_HIT;
+-                continue;
+-            }
+-            cpu->watchpoint_hit = wp;
++                wp->flags |= flags << BP_HIT_SHIFT;
++                wp->hitaddr = MAX(addr, wp->itree.start);
++                wp->hitattrs = attrs;
+ 
+-            /* This call also restores vCPU state */
+-            tb_check_watchpoint(cpu, ra);
+-            if (wp->flags & BP_STOP_BEFORE_ACCESS) {
+-                cpu->exception_index = EXCP_DEBUG;
+-                cpu_loop_exit(cpu);
+-            } else {
+-                /* Force execution of one insn next time.  */
+-                cpu->cflags_next_tb = 1 | CF_NOIRQ | curr_cflags(cpu);
+-                cpu_loop_exit_noexc(cpu);
++                found_wp = wp;
++                goto found;
+             }
+-        } else {
+-            wp->flags &= ~BP_WATCHPOINT_HIT;
++            have_cpu_wp = true;
+         }
+     }
++
++    if (have_cpu_wp) {
++        const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
++
++        for (n = interval_tree_iter_first(&cpu->watchpoints, addr, last); n;
++             n = interval_tree_iter_next(n, addr, last)) {
++            CPUWatchpoint *wp = container_of(n, CPUWatchpoint, itree);
++
++            if ((wp->flags & BP_CPU) && (wp->flags & flags)) {
++                wp->flags &= ~BP_WATCHPOINT_HIT;
++                wp->flags |= flags << BP_HIT_SHIFT;
++                wp->hitaddr = MAX(addr, wp->itree.start);
++                wp->hitattrs = attrs;
++
++                if (tcg_ops->debug_check_watchpoint
++                    && !tcg_ops->debug_check_watchpoint(cpu, wp)) {
++                    wp->flags &= ~BP_WATCHPOINT_HIT;
++                    continue;
++                }
++
++                found_wp = wp;
++                goto found;
++            }
++        }
++    }
++    return;
++
++ found:
++    if (replay_running_debug()) {
++        /*
++         * replay_breakpoint reads icount.
++         * Force recompile to succeed, because icount may
++         * be read only at the end of the block.
++         */
++        if (!cpu->neg.can_do_io) {
++            /* Force execution of one insn next time.  */
++            cpu->cflags_next_tb = 1 | CF_NOIRQ | curr_cflags(cpu);
++            cpu_loop_exit_restore(cpu, ra);
++        }
++        /*
++         * Don't process the watchpoints when we are
++         * in a reverse debugging operation.
++         */
++        replay_breakpoint();
++        return;
++    }
++
++    cpu->watchpoint_hit = found_wp;
++
++    /* This call also restores vCPU state */
++    tb_check_watchpoint(cpu, ra);
++    if (found_wp->flags & BP_STOP_BEFORE_ACCESS) {
++        cpu->exception_index = EXCP_DEBUG;
++        cpu_loop_exit(cpu);
++    } else {
++        /* Force execution of one insn next time.  */
++        cpu->cflags_next_tb = 1 | CF_NOIRQ | curr_cflags(cpu);
++        cpu_loop_exit_noexc(cpu);
++    }
++    qemu_build_not_reached();
+ }
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index 5c2d7ed42c..868c7c4d46 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -322,7 +322,6 @@ static void cpu_common_initfn(Object *obj)
+     qemu_mutex_init(&cpu->work_mutex);
+     qemu_lockcnt_init(&cpu->in_ioctl_lock);
+     QSIMPLEQ_INIT(&cpu->work_list);
+-    QTAILQ_INIT(&cpu->watchpoints);
+ 
+     cpu_exec_initfn(cpu);
+ 
 diff --git a/system/watchpoint.c b/system/watchpoint.c
-index 3785ffff46..67e4560e78 100644
+index a618bb5acd..ed505da403 100644
 --- a/system/watchpoint.c
 +++ b/system/watchpoint.c
-@@ -21,7 +21,7 @@
- #include "qemu/error-report.h"
- #include "exec/cputlb.h"
- #include "exec/target_page.h"
--#include "exec/watchpoint.h"
-+#include "exec/breakpoint.h"
- #include "hw/core/cpu.h"
- 
- /* Add a watchpoint.  */
-diff --git a/target/arm/debug_helper.c b/target/arm/debug_helper.c
-index 8477ca5def..2c3a56c7d5 100644
---- a/target/arm/debug_helper.c
-+++ b/target/arm/debug_helper.c
-@@ -11,7 +11,7 @@
- #include "internals.h"
- #include "cpu-features.h"
- #include "cpregs.h"
--#include "exec/watchpoint.h"
-+#include "exec/breakpoint.h"
- #include "system/tcg.h"
- 
- /*
-diff --git a/target/arm/tcg/debug.c b/target/arm/tcg/debug.c
-index 7171501d40..f245d5b072 100644
---- a/target/arm/tcg/debug.c
-+++ b/target/arm/tcg/debug.c
-@@ -12,7 +12,7 @@
- #include "internals.h"
- #include "cpu-features.h"
- #include "cpregs.h"
--#include "exec/watchpoint.h"
-+#include "exec/breakpoint.h"
- #include "system/tcg.h"
- 
- /* Return the Exception Level targeted by debug exceptions. */
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 5805d33ab9..7a7cd38b14 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -39,7 +39,7 @@
- #include "standard-headers/asm-x86/kvm_para.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/i386/topology.h"
--#include "exec/watchpoint.h"
-+#include "exec/breakpoint.h"
- #ifndef CONFIG_USER_ONLY
- #include "confidential-guest.h"
- #include "monitor/hmp.h"
-diff --git a/target/i386/machine.c b/target/i386/machine.c
-index df0e0c178e..390ccfa3f8 100644
---- a/target/i386/machine.c
-+++ b/target/i386/machine.c
-@@ -7,7 +7,7 @@
- #include "hw/i386/x86.h"
- #include "kvm/kvm_i386.h"
- #include "hw/xen/xen.h"
--#include "exec/watchpoint.h"
-+#include "exec/breakpoint.h"
- #include "system/kvm.h"
- #include "system/kvm_xen.h"
- #include "system/tcg.h"
-diff --git a/target/i386/tcg/system/bpt_helper.c b/target/i386/tcg/system/bpt_helper.c
-index 2feea69c8a..0ba2f01016 100644
---- a/target/i386/tcg/system/bpt_helper.c
-+++ b/target/i386/tcg/system/bpt_helper.c
-@@ -21,7 +21,7 @@
- #include "accel/tcg/cpu-loop.h"
- #include "cpu.h"
- #include "exec/helper-proto.h"
--#include "exec/watchpoint.h"
-+#include "exec/breakpoint.h"
- #include "tcg/helper-tcg.h"
- 
- 
-diff --git a/target/ppc/cpu.c b/target/ppc/cpu.c
-index 36e1209119..7ff352b11b 100644
---- a/target/ppc/cpu.c
-+++ b/target/ppc/cpu.c
-@@ -22,7 +22,7 @@
- #include "cpu-models.h"
- #include "cpu-qom.h"
- #include "exec/log.h"
--#include "exec/watchpoint.h"
-+#include "exec/breakpoint.h"
- #include "fpu/softfloat-helpers.h"
- #include "mmu-hash64.h"
- #include "helper_regs.h"
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index f404c7e549..9dd91ae95a 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -41,7 +41,7 @@
- #include "disas/capstone.h"
- #include "fpu/softfloat.h"
- #include "exec/page-protection.h"
--#include "exec/watchpoint.h"
-+#include "exec/breakpoint.h"
- #include "helper_regs.h"
- #include "internal.h"
- #include "spr_common.h"
-diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-index fa47b2724e..b8fea64bec 100644
---- a/target/riscv/debug.c
-+++ b/target/riscv/debug.c
-@@ -31,7 +31,7 @@
- #include "target/riscv/debug.h"
- #include "trace.h"
- #include "exec/helper-proto.h"
--#include "exec/watchpoint.h"
-+#include "exec/breakpoint.h"
- #include "system/cpu-timers.h"
- #include "exec/icount.h"
- 
-diff --git a/target/s390x/helper.c b/target/s390x/helper.c
-index 1a2658eaf9..dabf8571cd 100644
---- a/target/s390x/helper.c
-+++ b/target/s390x/helper.c
-@@ -27,7 +27,6 @@
- #include "system/memory.h"
- #include "system/runstate.h"
- #include "exec/target_page.h"
--#include "exec/watchpoint.h"
- 
- void s390x_tod_timer(void *opaque)
+@@ -30,26 +30,23 @@ int cpu_watchpoint_insert(CPUState *cpu, vaddr addr, vaddr len,
+                           CPUWatchpoint **watchpoint)
  {
-diff --git a/target/s390x/tcg/debug.c b/target/s390x/tcg/debug.c
-index d10e9ed892..7a838775ec 100644
---- a/target/s390x/tcg/debug.c
-+++ b/target/s390x/tcg/debug.c
-@@ -6,7 +6,6 @@
+     CPUWatchpoint *wp;
++    vaddr last = addr + len - 1;
+     vaddr in_page;
  
- #include "qemu/osdep.h"
- #include "exec/breakpoint.h"
--#include "exec/watchpoint.h"
- #include "accel/tcg/cpu-loop.h"
- #include "target/s390x/cpu.h"
- #include "target/s390x/s390x-internal.h"
-diff --git a/target/xtensa/dbg_helper.c b/target/xtensa/dbg_helper.c
-index 990012f60e..e180096b42 100644
---- a/target/xtensa/dbg_helper.c
-+++ b/target/xtensa/dbg_helper.c
-@@ -30,7 +30,7 @@
- #include "cpu.h"
- #include "exec/helper-proto.h"
- #include "qemu/host-utils.h"
--#include "exec/watchpoint.h"
-+#include "exec/breakpoint.h"
- #include "system/address-spaces.h"
+     /* forbid ranges which are empty or run off the end of the address space */
+-    if (len == 0 || (addr + len - 1) < addr) {
++    if (len == 0 || last < addr) {
+         error_report("tried to set invalid watchpoint at %"
+                      VADDR_PRIx ", len=%" VADDR_PRIu, addr, len);
+         return -EINVAL;
+     }
+-    wp = g_malloc(sizeof(*wp));
  
- void HELPER(wsr_ibreakenable)(CPUXtensaState *env, uint32_t v)
+-    wp->vaddr = addr;
+-    wp->len = len;
++    wp = g_new0(CPUWatchpoint, 1);
++
++    wp->itree.start = addr;
++    wp->itree.last = last;
+     wp->flags = flags;
+ 
+-    /* keep all GDB-injected watchpoints in front */
+-    if (flags & BP_GDB) {
+-        QTAILQ_INSERT_HEAD(&cpu->watchpoints, wp, entry);
+-    } else {
+-        QTAILQ_INSERT_TAIL(&cpu->watchpoints, wp, entry);
+-    }
++    interval_tree_insert(&wp->itree, &cpu->watchpoints);
+ 
+     in_page = -(addr | TARGET_PAGE_MASK);
+     if (len <= in_page) {
+@@ -68,11 +65,16 @@ int cpu_watchpoint_insert(CPUState *cpu, vaddr addr, vaddr len,
+ int cpu_watchpoint_remove(CPUState *cpu, vaddr addr, vaddr len,
+                           BreakpointFlags flags)
+ {
+-    CPUWatchpoint *wp;
++    vaddr last = addr + len - 1;
++    IntervalTreeNode *n;
+ 
+-    QTAILQ_FOREACH(wp, &cpu->watchpoints, entry) {
+-        if (addr == wp->vaddr && len == wp->len
+-                && flags == (wp->flags & ~BP_WATCHPOINT_HIT)) {
++    for (n = interval_tree_iter_first(&cpu->watchpoints, addr, addr); n;
++         n = interval_tree_iter_next(n, addr, addr)) {
++        CPUWatchpoint *wp = container_of(n, CPUWatchpoint, itree);
++
++        if (addr == wp->itree.start &&
++            last == wp->itree.last &&
++            flags == (wp->flags & ~BP_WATCHPOINT_HIT)) {
+             cpu_watchpoint_remove_by_ref(cpu, wp);
+             return 0;
+         }
+@@ -83,19 +85,20 @@ int cpu_watchpoint_remove(CPUState *cpu, vaddr addr, vaddr len,
+ /* Remove a specific watchpoint by reference.  */
+ void cpu_watchpoint_remove_by_ref(CPUState *cpu, CPUWatchpoint *watchpoint)
+ {
+-    QTAILQ_REMOVE(&cpu->watchpoints, watchpoint, entry);
+-
+-    tlb_flush_page(cpu, watchpoint->vaddr);
+-
++    interval_tree_remove(&watchpoint->itree, &cpu->watchpoints);
++    tlb_flush_page(cpu, watchpoint->itree.start);
+     g_free(watchpoint);
+ }
+ 
+ /* Remove all matching watchpoints.  */
+ void cpu_watchpoint_remove_all(CPUState *cpu, BreakpointFlags mask)
+ {
+-    CPUWatchpoint *wp, *next;
++    IntervalTreeNode *n = interval_tree_iter_first(&cpu->watchpoints, 0, -1);
+ 
+-    QTAILQ_FOREACH_SAFE(wp, &cpu->watchpoints, entry, next) {
++    while (n) {
++        CPUWatchpoint *wp = container_of(n, CPUWatchpoint, itree);
++
++        n = interval_tree_iter_next(n, 0, -1);
+         if (wp->flags & mask) {
+             cpu_watchpoint_remove_by_ref(cpu, wp);
+         }
+diff --git a/target/arm/hyp_gdbstub.c b/target/arm/hyp_gdbstub.c
+index c91efa7495..8dd1fbd440 100644
+--- a/target/arm/hyp_gdbstub.c
++++ b/target/arm/hyp_gdbstub.c
+@@ -130,7 +130,8 @@ int insert_gdbstub_hw_watchpoint(vaddr addr, vaddr len, GdbBreakpointType type)
+     HWWatchpoint wp = {
+         .wcr = R_DBGWCR_E_MASK, /* E=1, enable */
+         .wvr = addr & (~0x7ULL),
+-        .details = { .vaddr = addr, .len = len }
++        .details.itree.start = addr,
++        .details.itree.last = addr + len - 1,
+     };
+ 
+     if (cur_hw_wps >= max_hw_wps) {
 -- 
 2.43.0
 
