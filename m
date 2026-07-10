@@ -4,78 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2FAEC43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 02:56:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D718AC43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 02:56:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi1Oy-0007GL-UY; Thu, 09 Jul 2026 22:55:44 -0400
+	id 1wi1P1-0007Gp-VW; Thu, 09 Jul 2026 22:55:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wi1Ox-0007G0-L6
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:55:43 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1wi1Oz-0007GY-RF
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:55:45 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wi1Ov-0008KD-7C
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:55:43 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-8454160043aso381498b3a.3
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 19:55:40 -0700 (PDT)
+ id 1wi1Ox-0008KN-T5
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:55:45 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-8454160043aso381512b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 19:55:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783652139; x=1784256939; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=unzbCpk1EG10n2wNhWfoadQ/+TRGFkwmC8IHNABx2SE=;
- b=cSsbUuPWYZvfScQLWVydh9FEx+uDjx1AcI1Hy/ilQ74eOKgKJoyWLab0Iol+D8gzpd
- 5EOFgoqlw/gKN6toxqixbqrulBzH75lxDb6lkz/IpD3yiwh6lXYz8eXiWmStCodbt+EP
- Uj/T5RquGMOrUo+J9RUrB8wcFM+7ONduISi8tL2nU+5ObVqrkF0HVBmuT4ysrDG/rnhi
- ziNjj75tVvhdnVehkSodmlL8Oa8Bt/iNdo8oIYakawTXOKhvKAEZH616ZC6ZY2dsHNYg
- C3WB/59tGOStpVOIla+aXfZgfyx8wC/FDqZ2Bp/NLFR50kdpVxkEDJ4HBVR1AqOJMJxh
- 4D2Q==
+ d=gmail.com; s=20251104; t=1783652142; x=1784256942; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=W90HJTxOqEIBzB25r20xhD/LGkwlsggR/lqqd0Qil4s=;
+ b=XFpAjQVUbBEfT/ZzAS24DUKDx7tGlez6kdhfintFoLPP+lPUzyZW5tNAj4DshlOR/A
+ PXUxZeLKa00Qmz0yM4BMuXmjnJKR1l2iaYLUTkpN1jusCGOblkx2+J5Zgpdsz8hRQ4Xq
+ m5BMTId9BKKlkMhEZBWXC46vGWU4jFZ0QhqtqKv5pkZHZxIhJrbyPIvqEbrFWzHlG0X9
+ sfgdrg8C+FI87niQJag4TwL8MGX5FlFCUCjRAcYToyqlijBD6VhFlpVJ9Os8t9qqMetd
+ qT9QId5aMwIHmHdabUVKCsm3HuVjgKuesHp2NhFTcXI3mphLIgamq1hQF4jKyx6KDys8
+ pr1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783652139; x=1784256939;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=unzbCpk1EG10n2wNhWfoadQ/+TRGFkwmC8IHNABx2SE=;
- b=YzmaFvNEpcG5WPLbtJ9GGIPkuAA576/Me6Y0b4zQ2tf7cSAZwjsjB0+X2xQH9Aqufr
- FRbr+7NDgeP6J+vZOMmevcMnNECJwX6+r4mzqBGkmHr1zaEcYV3CMjrxzgCHX23qO1HO
- zgFhNOU6NNPpR37b79b6krcOgowOf4ZlysCoWz4b6atKrjBXLnjcnJ/GMEgGgTbGU2xf
- XL9MlgBHludGjrzB7hdd+SGq7EJK1HNO+jlauqUMHyMussw4JQnZPH6Dljg26xuoMhTb
- 5VSLBfM6HnCsSI5EeQ6Kow+FWbzagtBU+FOg+Z4dqk/vyVIUEeGpWg2Iyama6ofp+EXq
- 6wSg==
-X-Gm-Message-State: AOJu0Yw2g9RihDNHZkIhCRteeZyOGyykT95t20YVU5W9Q7sR78zmIgE1
- vVwydBjLxc/0VZjnarVaJscFiZa69WEuC8+4CZRvR40ovR55E38d1f3WliZUiA==
-X-Gm-Gg: AfdE7cn+r+BpRa0jeqTuQ5IfNPGSEKuln9L3Kzk6KQPmwV2yfc5hdqpd7Mt9QfaSwv5
- Mk5Cd0EQ0tTSK5pdcuBz4Vii1Zo0ENDvWljYiiBUvK35PLwgeEB9W4ptRMsB0LhKFdCHjcfwBZw
- dO4RzTMnbnFI3XCXqcvEf0rrcjg6goyP8hhqli3YpWylZ9RSxIB6zEw8I8KwnjWlzDws5Rqyb+P
- 2edxtxUT8ICJkYHdy0kJq94qYI5+3+YhK0xaozXyHGlZtBGMX1TC3eDxa+F+J0Yzp8sCK0S0YSO
- rCjbXROahkmjv89jw737c5Mxe6tUTUTk15Hu609JXXgfvSEpjiOXCxUr/ZC7T6Z/MB1UXxR9lX+
- O4RTbaKxcQLWA5S7B3bvb37x7nZV2BBL0Z45C8pu2FSb8wwdP/7+EQtbXm1pEeUApfoHN0MpevY
- EtGkJ8Ekvzq4quOir0AytMlA0Euqc1DmA=
-X-Received: by 2002:a05:6a00:3486:b0:842:614e:cc94 with SMTP id
- d2e1a72fcca58-84842f303fcmr9270790b3a.26.1783652139416; 
- Thu, 09 Jul 2026 19:55:39 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783652142; x=1784256942;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=W90HJTxOqEIBzB25r20xhD/LGkwlsggR/lqqd0Qil4s=;
+ b=T6YsI4epBniUKcDtONd7iEfmv7u5ITOnVfNLra83I2wYGMSJyd8QUXTbHQ+WAbzp0L
+ uJomv9XG6fdriuHVzkNamptOQr9y7AsIzUptiLx79W3EIu4/Jiggi7jxVf5eSXIkex8K
+ pTwHaaxf9xBmj3K8iquaw8d49eBemTtGgwdLdO3ECEbb6IXHxjwHa2argg7mSBjqSnMA
+ Fud0QwfuJ5QrSzTqpVWOsg2qF42qRRkl6eM7Rac7Ub+pAWvF5zq3+0a5bnTQ6hhbe4lL
+ mM821agHD8IhZo+xWwTZIa6o78dSI8LuNXZCKABnF2r/aRsCrWY/eF0s0OuEm9C75SJC
+ mYEQ==
+X-Gm-Message-State: AOJu0YzL8xAeTDrke631cBWOg7nDTR/kM+DrgjbuiRAT2oOtIllaBM6c
+ nzOtqVUyetILPUVyGMAiEtyK17eUEHPUCg088v7/Io+hAWB697AZ3OkpSro1rA==
+X-Gm-Gg: AfdE7clSV4DNUurVFGkruD1h1dIfYHZMrEbuFgi5S+mhTYSceSeXLoKC9aVbK2mSvQO
+ u0SMQOspe0GBDb+0SwNBnZOa9AJwCCrgU3MXQCR72KLTKW7o7aScdSWH+MiyFDLJ9SF51XKqGsq
+ HFSdlj308NyRCAd0fpFNl//4A9BelWqpEgIf3PZHHGVo6bU7IeLRVhvCmj+rZnCRRRsA9QGi3eT
+ UAzA6Aii7rmK94HAcV6PVHTn78Ug/z67fqO9yIjas01WbNCGMU0X/kDbE2ztKVIxZmSSP6DUdq1
+ 3ChInoZF4ciGnVtvxYChcpL+biddEDPREuriqwJNPrc3NT7nOV59opNgUWYjbQ0njleNv3ySI2U
+ mwgTcQJkYreTSLVw4z+/cUTcLeHIMWKoqpzEVk5VEIuFoMJEvyVxapCRt8VbK5AGlhRPJAdr8k3
+ Mv2xZNdEz+SJAGJDz5GKHAxx6+rCMTSzY=
+X-Received: by 2002:a05:6a00:198f:b0:848:6f63:8d37 with SMTP id
+ d2e1a72fcca58-8486f639411mr1817418b3a.61.1783652142074; 
+ Thu, 09 Jul 2026 19:55:42 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-ca5af6e04fcsm4576769a12.4.2026.07.09.19.55.35
+ 41be03b00d2f7-ca5af6e04fcsm4576769a12.4.2026.07.09.19.55.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jul 2026 19:55:38 -0700 (PDT)
+ Thu, 09 Jul 2026 19:55:41 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 00/40] riscv-to-apply queue
-Date: Fri, 10 Jul 2026 12:54:45 +1000
-Message-ID: <20260710025525.1704417-1-alistair.francis@wdc.com>
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 01/40] hw/riscv/riscv-iommu.c: fix fault type for spa_fetch()
+ faults
+Date: Fri, 10 Jul 2026 12:54:46 +1000
+Message-ID: <20260710025525.1704417-2-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260710025525.1704417-1-alistair.francis@wdc.com>
+References: <20260710025525.1704417-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,229 +103,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair.francis@wdc.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-The following changes since commit f893c46c3931b3684d235d221bf8b7844ddbf1d7:
+Under certain circunstances, like the one described in [1] and [2],
+a read operation that faults will be logged as a write fault instead,
+and vice-versa, if they happen after the translation phase in
+riscv_iommu_spa_fetch().
 
-  Merge tag 'qemu-openbios-20260707' of https://github.com/mcayland/qemu into staging (2026-07-08 16:01:29 +0200)
+The first problem is that we're overwriting iotlb->perm with PTE flags,
+so an IOMMU_RO access flag can be overwritten by whatever flags
+the PTE has.  This will cause the wrong fault type to be thrown at
+the end of the function in case a fault happens.
 
-are available in the Git repository at:
+To solve the iotlb->perm overwrite we'll bit_and the original
+iotlb->perm access flags with the PTE access flags, preserving the
+original access type.  So a IOMMU_RO access in a R+W PTE will result in
+a IOMMU_RO perm.
 
-  https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-20260710
+Second, the resulting fault is received by riscv_iommu_translate(), which
+will then report the fault.  To do that we require a transaction type
+(ttype).  We're prioritizing checking "perm & IOMMU_RW" to set a
+UADDR_WR ttype, and then checking "perm & IOMMU_RO" to set UADDR_RD
+ttype.  The issue with that is IOMMU_RO=1 and IOMMU_RW=3, thus checking
+"perm & IOMMU_RW" for a write then "perm & IOMMU_RO" for a read will
+cause the read fault to always be diagnosed as write.
 
-for you to fetch changes up to ec7d32428757d5813935cbe099449f6201980d80:
+Make the iotlb->perm matches more strict: "perm & IOMMU_RW" must be
+exactly IOMMU_RW, ensuring that 'perm' has both flags.  Then we can
+check perm & IOMMU_WO and perm & IOMMU_RO without worrying about
+overlapping with the RW flag.
 
-  tests: update SPCR loongarch64 and riscv64 test data (2026-07-09 16:21:52 +1000)
+[1] https://gitlab.com/qemu-project/qemu/-/work_items/3557
+[2] https://gitlab.com/qemu-project/qemu/-/work_items/3577
 
-----------------------------------------------------------------
-RISC-V PR for 11.1
+Fixes: 69a9ae4836 ("hw/riscv/riscv-iommu: add ATS support")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3557
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3577
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260701124034.552271-1-daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ hw/riscv/riscv-iommu.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-* Fix IOMMU fault type for spa_fetch() faults
-* Check IOMMU for reserved PTE bits
-* Fault when IOMMU !PTE_U and no priv access
-* Fault IOMMU for non-user PTE in G_STAGE
-* Check IOMMU reserved MSI PTE basic bits
-* Record fault on IOMMU-generated MSI write
-* Move RISC-V TCG files and fix --disable-tcg
-* Check for misaligned IOMMU IOHGATP_PPN
-* Update IOMMU ioval2 when faulting in spa_fetch()
-* Forbid IOMMU GATE/SADE if caps.AMO_HWADD is zero
-* Set IOMMU ftype and iova in riscv_iommu_ctx()
-* Check PCIe DOE mailbox length for overflows
-* Add extensions after v7.1-rc4 update
-* Remove job building OpenSBI firmware binaries
-* Correct ACPI field sequence in SPCR table
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 974042d017..7f94ce152e 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -282,6 +282,7 @@ static hwaddr riscv_iommu_napot_page_mask(hwaddr ppn, hwaddr addr, hwaddr *out)
+ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+     IOMMUTLBEntry *iotlb)
+ {
++    IOMMUAccessFlags pte_perm;
+     dma_addr_t addr, base;
+     uint64_t satp, gatp, pte;
+     bool en_s, en_g;
+@@ -509,8 +510,16 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+             }
+             /* Translation phase completed (GPA or SPA) */
+             iotlb->translated_addr = base;
+-            iotlb->perm = (pte & PTE_W) ? ((pte & PTE_R) ? IOMMU_RW : IOMMU_WO)
+-                                                         : IOMMU_RO;
++
++            /*
++             * Do a bit_and between the PTE bits and the original
++             * request flags to determine the exact permission we
++             * need, i.e. if the original request is RO and the
++             * PTE has RW flags the actual perm is RO.
++             */
++            pte_perm = (pte & PTE_W) ? ((pte & PTE_R) ? IOMMU_RW : IOMMU_WO)
++                                     : IOMMU_RO;
++            iotlb->perm &= pte_perm;
+ 
+             /* Check MSI GPA address match */
+             if (pass == S_STAGE && (iotlb->perm & IOMMU_WO) &&
+@@ -1727,7 +1736,8 @@ done:
+     if (fault) {
+         unsigned ttype = RISCV_IOMMU_FQ_TTYPE_PCIE_ATS_REQ;
+ 
+-        if (iotlb->perm & IOMMU_RW) {
++        if ((iotlb->perm & IOMMU_RW) == IOMMU_RW
++            || iotlb->perm & IOMMU_WO) {
+             ttype = RISCV_IOMMU_FQ_TTYPE_UADDR_WR;
+         } else if (iotlb->perm & IOMMU_RO) {
+             ttype = RISCV_IOMMU_FQ_TTYPE_UADDR_RD;
+-- 
+2.54.0
 
-----------------------------------------------------------------
-Alistair Francis (1):
-      hw/pci/pcie_doe: Check mailbox length for overflows
-
-Bin Meng (1):
-      gitlab-ci: Remove job building OpenSBI firmware binaries
-
-Daniel Henrique Barboza (32):
-      hw/riscv/riscv-iommu.c: fix fault type for spa_fetch() faults
-      hw/riscv/riscv-iommu.c: check for reserved PTE bits
-      hw/riscv/riscv-iommu.c: fault when !PTE_U and no priv access
-      hw/riscv/riscv-iommu.c: fault for non-user PTE in G_STAGE
-      hw/riscv/riscv-iommu.c: check reserved MSI PTE basic bits
-      hw/riscv/riscv-iommu-sys.c: record fault on IOMMU-generated MSI write
-      target/riscv: move valid_vm_* satp arrays to cpu.c
-      hw/riscv, target/riscv: move pmu fdt function to fdt-common.c
-      target/riscv: move TCG only files to tcg subdir
-      target/riscv/machine.c: do not migrate pmp state with kvm
-      target/riscv: move pmp files to tcg subdir
-      target/riscv: tidy up riscv_sysemu_ops
-      target/riscv: move debug.h to tcg subdir
-      target/riscv: remove csr.h from kvm-cpu.c
-      target/riscv: move csr.h to tcg subdir
-      target/riscv: move custom_csrs logic to tcg-cpu.c
-      target/riscv: move riscv_cpu_set_nmi() to tcg-cpu.c
-      target/riscv: move some irq helpers to cpu.c
-      target/riscv: move riscv_cpu_claim_interrupts to cpu.c
-      target/riscv/cpu.c: handle TCG bits of riscv_cpu_dump_state
-      target/riscv: gate riscv_cpu_update_mip with tcg_enabled()
-      target/riscv/cpu.c: filter TCG only bits in riscv_cpu_reset_hold()
-      hw/riscv/riscv_hart.c isolate tcg only bits
-      target/riscv/gdbstub.c: isolate TCG only checks
-      target/riscv: move riscv_cpu_set_rdtime_fn to riscv_aclint
-      target/riscv/tcg: remove unused riscv_cpu_get_geilen()
-      target/riscv: move riscv_cpu_set_geilen() to riscv-imsic
-      target/riscv: move riscv_cpu_set_aia_ireg_rmw_cb() to riscv_imsic
-      hw/riscv/riscv-iommu.c: check for misaligned IOHGATP_PPN
-      hw/riscv/riscv-iommu.c: update ioval2 when faulting in spa_fetch()
-      hw/riscv/riscv-iommu: forbid GATE/SADE if caps.AMO_HWADD is zero
-      hw/riscv/riscv-iommu.c: set ftype and iova in riscv_iommu_ctx()
-
-Heinrich Schuchardt (3):
-      tests: allow differences in SPCR
-      hw/acpi: correct field sequence in SPCR table
-      tests: update SPCR loongarch64 and riscv64 test data
-
-Wang Yechao (1):
-      target/riscv/kvm: add extensions after v7.1-rc4 update
-
-Zephyr Li (2):
-      target/riscv: Remove unused tcg/tcg.h include
-      gitlab-ci.d/crossbuilds: add riscv64 KVM-only build job
-
- MAINTAINERS                                        |   2 -
- hw/riscv/riscv-iommu-bits.h                        |   1 +
- hw/riscv/riscv-iommu.h                             |   1 +
- include/hw/riscv/fdt-common.h                      |   1 +
- target/riscv/cpu.h                                 |  24 +-
- target/riscv/{ => tcg}/csr.h                       |   6 +-
- target/riscv/{ => tcg}/debug.h                     |   0
- target/riscv/{ => tcg}/pmp.h                       |   0
- target/riscv/{ => tcg}/pmu.h                       |   0
- target/riscv/{ => tcg}/vector_internals.h          |   0
- tests/qtest/libqos/qos-riscv-iommu.h               |   4 +-
- hw/acpi/aml-build.c                                |   4 +-
- hw/intc/riscv_aclint.c                             |   8 +
- hw/intc/riscv_imsic.c                              |  24 ++
- hw/pci/pcie_doe.c                                  |  27 +-
- hw/riscv/fdt-common.c                              |  52 ++++
- hw/riscv/riscv-iommu-sys.c                         |  16 +-
- hw/riscv/riscv-iommu.c                             | 117 +++++++-
- hw/riscv/riscv_hart.c                              |   8 +-
- hw/riscv/tt_atlantis.c                             |   1 -
- hw/riscv/virt.c                                    |   1 -
- target/riscv/cpu.c                                 | 318 ++++++++++++++++++---
- target/riscv/gdbstub.c                             |  10 +-
- target/riscv/kvm/kvm-cpu.c                         |   4 +-
- target/riscv/machine.c                             |  15 +-
- target/riscv/monitor.c                             |   4 +-
- target/riscv/riscv-qmp-cmds.c                      |   2 +-
- target/riscv/{ => tcg}/bitmanip_helper.c           |   0
- target/riscv/{ => tcg}/cpu_helper.c                | 253 +---------------
- target/riscv/{ => tcg}/crypto_helper.c             |   0
- target/riscv/{ => tcg}/csr.c                       |  45 +--
- target/riscv/{ => tcg}/debug.c                     |   2 +-
- target/riscv/{ => tcg}/fpu_helper.c                |   0
- target/riscv/{ => tcg}/m128_helper.c               |   0
- target/riscv/{ => tcg}/mips_csr.c                  |   2 +-
- target/riscv/{ => tcg}/op_helper.c                 |   2 +-
- target/riscv/{ => tcg}/pmp.c                       |   2 +-
- target/riscv/{ => tcg}/pmu.c                       |  52 ----
- target/riscv/tcg/tcg-cpu.c                         |  30 +-
- target/riscv/{ => tcg}/th_csr.c                    |   2 +-
- target/riscv/{ => tcg}/translate.c                 |   0
- target/riscv/{ => tcg}/vcrypto_helper.c            |   0
- target/riscv/{ => tcg}/vector_helper.c             |   0
- target/riscv/{ => tcg}/vector_internals.c          |   0
- target/riscv/{ => tcg}/zce_helper.c                |   0
- target/riscv/time_helper.c                         |  33 ++-
- .../{ => tcg}/insn_trans/trans_privileged.c.inc    |   0
- target/riscv/{ => tcg}/insn_trans/trans_rva.c.inc  |   0
- target/riscv/{ => tcg}/insn_trans/trans_rvb.c.inc  |   0
- .../riscv/{ => tcg}/insn_trans/trans_rvbf16.c.inc  |   0
- target/riscv/{ => tcg}/insn_trans/trans_rvd.c.inc  |   0
- target/riscv/{ => tcg}/insn_trans/trans_rvf.c.inc  |   0
- target/riscv/{ => tcg}/insn_trans/trans_rvh.c.inc  |   0
- target/riscv/{ => tcg}/insn_trans/trans_rvi.c.inc  |   0
- target/riscv/{ => tcg}/insn_trans/trans_rvk.c.inc  |   0
- target/riscv/{ => tcg}/insn_trans/trans_rvm.c.inc  |   0
- target/riscv/{ => tcg}/insn_trans/trans_rvv.c.inc  |   0
- target/riscv/{ => tcg}/insn_trans/trans_rvvk.c.inc |   0
- .../riscv/{ => tcg}/insn_trans/trans_rvzabha.c.inc |   0
- .../riscv/{ => tcg}/insn_trans/trans_rvzacas.c.inc |   0
- .../{ => tcg}/insn_trans/trans_rvzalasr.c.inc      |   0
- .../riscv/{ => tcg}/insn_trans/trans_rvzawrs.c.inc |   0
- .../riscv/{ => tcg}/insn_trans/trans_rvzce.c.inc   |   0
- .../riscv/{ => tcg}/insn_trans/trans_rvzcmop.c.inc |   0
- .../riscv/{ => tcg}/insn_trans/trans_rvzfa.c.inc   |   0
- .../riscv/{ => tcg}/insn_trans/trans_rvzfh.c.inc   |   0
- .../riscv/{ => tcg}/insn_trans/trans_rvzicbo.c.inc |   0
- .../{ => tcg}/insn_trans/trans_rvzicfiss.c.inc     |   0
- .../{ => tcg}/insn_trans/trans_rvzicond.c.inc      |   0
- .../riscv/{ => tcg}/insn_trans/trans_rvzimop.c.inc |   0
- .../riscv/{ => tcg}/insn_trans/trans_svinval.c.inc |   0
- .../riscv/{ => tcg}/insn_trans/trans_xlrbr.c.inc   |   0
- .../riscv/{ => tcg}/insn_trans/trans_xmips.c.inc   |   0
- .../riscv/{ => tcg}/insn_trans/trans_xthead.c.inc  |   0
- .../insn_trans/trans_xventanacondops.c.inc         |   0
- .../riscv/{ => tcg}/insn_trans/trans_zilsd.c.inc   |   0
- .gitlab-ci.d/crossbuilds.yml                       |   8 +
- .gitlab-ci.d/opensbi.yml                           |  88 ------
- .gitlab-ci.d/opensbi/Dockerfile                    |  34 ---
- .gitlab-ci.d/qemu-project.yml                      |   1 -
- target/riscv/meson.build                           |  17 --
- target/riscv/tcg/meson.build                       |  31 +-
- tests/data/acpi/loongarch64/virt/SPCR              | Bin 80 -> 80 bytes
- tests/data/acpi/riscv64/virt/SPCR                  | Bin 90 -> 90 bytes
- 84 files changed, 666 insertions(+), 586 deletions(-)
- rename target/riscv/{ => tcg}/csr.h (96%)
- rename target/riscv/{ => tcg}/debug.h (100%)
- rename target/riscv/{ => tcg}/pmp.h (100%)
- rename target/riscv/{ => tcg}/pmu.h (100%)
- rename target/riscv/{ => tcg}/vector_internals.h (100%)
- rename target/riscv/{ => tcg}/bitmanip_helper.c (100%)
- rename target/riscv/{ => tcg}/cpu_helper.c (92%)
- rename target/riscv/{ => tcg}/crypto_helper.c (100%)
- rename target/riscv/{ => tcg}/csr.c (99%)
- rename target/riscv/{ => tcg}/debug.c (99%)
- rename target/riscv/{ => tcg}/fpu_helper.c (100%)
- rename target/riscv/{ => tcg}/m128_helper.c (100%)
- rename target/riscv/{ => tcg}/mips_csr.c (99%)
- rename target/riscv/{ => tcg}/op_helper.c (99%)
- rename target/riscv/{ => tcg}/pmp.c (99%)
- rename target/riscv/{ => tcg}/pmu.c (86%)
- rename target/riscv/{ => tcg}/th_csr.c (99%)
- rename target/riscv/{ => tcg}/translate.c (100%)
- rename target/riscv/{ => tcg}/vcrypto_helper.c (100%)
- rename target/riscv/{ => tcg}/vector_helper.c (100%)
- rename target/riscv/{ => tcg}/vector_internals.c (100%)
- rename target/riscv/{ => tcg}/zce_helper.c (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_privileged.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rva.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvb.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvbf16.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvd.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvf.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvh.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvi.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvk.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvm.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvv.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvvk.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvzabha.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvzacas.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvzalasr.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvzawrs.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvzce.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvzcmop.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvzfa.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvzfh.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvzicbo.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvzicfiss.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvzicond.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvzimop.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_svinval.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_xlrbr.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_xmips.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_xthead.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_xventanacondops.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_zilsd.c.inc (100%)
- delete mode 100644 .gitlab-ci.d/opensbi.yml
- delete mode 100644 .gitlab-ci.d/opensbi/Dockerfile
 
