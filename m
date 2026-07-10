@@ -4,102 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07DBDC43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 07:29:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E973C44501
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 07:29:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi5fT-0006na-OL; Fri, 10 Jul 2026 03:29:03 -0400
+	id 1wi5fq-0007Aa-6R; Fri, 10 Jul 2026 03:29:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wi5fR-0006n4-Hc
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 03:29:01 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wi5fP-00068O-KW
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 03:29:01 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-476d8e647e9so723586f8f.0
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 00:28:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783668538; x=1784273338; darn=nongnu.org;
- h=content-type:content-transfer-encoding:mime-version:message-id
- :in-reply-to:references:user-agent:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=e1Uelp51FK0IoYf8lsOFxMV3daGsxrmMJ24Ougs6BK4=;
- b=Sufgpc84v/Eaokg+Z5NF7Y+TjsHRsYjjkV4Dln+RKXBYzYKg/GZ3+aXBnYzxDmMfhr
- F44ovcaJr+YtKhoFblDYfFFeVF5f+8aHozjrRqAoMK0efCU3YSVxGtb7WxsnJdO2SNDw
- XT/tjvV+ZY9JNMsyyQJZamiu3D203QK1bEUJVr2R2nAPt7QE+da7Lzk0gjyIzc3lz4Lw
- gZfDj6hAiZKVV1qwLuBCKm1pfUjZwCmFDzhv0QaXWgOiLniwYWCjK9cR3tFzxhgr3CUZ
- l1f4P8eJLEvuVZz2VOKlxmkjRk/ERQZmxjPITmgrHRRd+8V1gLpH5NHWFjPf9th2aa8j
- SJwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783668538; x=1784273338;
- h=content-type:content-transfer-encoding:mime-version:message-id
- :in-reply-to:references:user-agent:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=e1Uelp51FK0IoYf8lsOFxMV3daGsxrmMJ24Ougs6BK4=;
- b=psSNv2dY6o5s6AtSF127svLynz+ocweaqu4zxvoDqExlMIUcgmu3eomjrSbZ3LCj2L
- 50F9y3VaBxS4NMNvuDOH0F4k35pfMpFwNQGXaSMVxxrvmRWvfJNSKsC1kAKE/6DVotVX
- GCdc4WPoj8mgAztNTC6HUGrizI99txGYFtcEjqR7DNZedSsJ6ZJWISYzbuuZwh8VfiJE
- 2PrU5Eio0Q1OBx9t1YOm/zP4gRHDKNKhy1H2mzp614NMKKQRtExis/mO0rS7ws0zQsOD
- u3qRlxzbCh22JtOApg+qkOBfaEe49jD/vt4sBg798M9dlEsSEUv2jWZk/9gHQuu3M7Mn
- bGig==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rp1qTcoygZ0qlOQTqWpqDcYUqCy/ewV+UtiXWJdk0Fe0SIGSGjuFSQLL3Oygh7HxWprLI7K4znueJ3R@nongnu.org
-X-Gm-Message-State: AOJu0YzgXCHgXw5IHT8Ki3+TerDE7qwQXmUcHuCual3+cnHIObAyHCo0
- IHmOKsKMSOKFBdYSCYKOWHg2yFMfuHkzIzNaYvlDw3KvSS+tIMk+aSHvBuoDiV2YCBA=
-X-Gm-Gg: AfdE7ckjpSLgJ//JNvrm+QLjhl1vhmo3wV4PPDw3/SUpocXwxXwMAWWT9cqwLRsEqmC
- mau6t1cuUaSlUpP9gplXAAbcXv5FVOABmuGT65IeFeIXjCkjaCy+Lx40H+Za00+ngHdYkK5gu3K
- pkETVcenz/3ubZtD3ytSwjArpt+gYlCC5NNrwBfVhVM/9vTFcdAIhFnW2KZCqSYwZ2rqkyS7EWD
- rK/VFLrZJAmzgL206DQaEZST+IqkQnf/eoaK10JTW+D/Pt2Ui6Jtlm/yDyO/517MzYUAL6kUZJX
- sYQ0hP8BtUuY1m3l45ujoK7oXgBSuJ/CXVYmUTAWw4ti6cKugYxTS031tjauSRB7jQ5AgSqYn31
- 0prvny0i3Sj8F4khD2ZUiXbqZQ8kH0+Lr1bMbzkLzAfgaJmnRmKRD1IagFJ9Hu1ocLFo8yeQHmm
- aC0UhPou2oGKuB8H0ADcGkGdk8e89IxIVfxBljESdkTM2rB+e6Lg4bDWnFIYnbhyIjgpiML7rcC
- HfqnKdqfZCP+shJykoOlbgi3ktKnR2vhpOyxKFzMutPX3FpOLFoLRnW/vQvU5OzEuN05CSxySXj
- fILYQcvfrQmb75PiZh3hLuDLt7Qn5WTrhnHLjvcgdQnMQAfHblfpMdU=
-X-Received: by 2002:a05:6000:2902:b0:47d:eb17:3bee with SMTP id
- ffacd0b85a97d-47df074e323mr12079518f8f.6.1783668538121; 
- Fri, 10 Jul 2026 00:28:58 -0700 (PDT)
-Received: from meli-email.org (ppp-2-86-131-154.home.otenet.gr. [2.86.131.154])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47aa039afacsm55176177f8f.19.2026.07.10.00.28.57
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 10 Jul 2026 00:28:57 -0700 (PDT)
-Date: Fri, 10 Jul 2026 10:28:46 +0300
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- "Daniel P . Berrang=?UTF-8?B?w6k=?=" <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Gustavo Romero <gustavo.romero@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Brian Cain <brian.cain@oss.qualcomm.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Alex Benn=?UTF-8?B?w6ll?= <alex.bennee@linaro.org>,
- Helge Deller <deller@gmx.de>, Peter Maydell <peter.maydell@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>,
- Philippe Mathieu-Daud=?UTF-8?B?w6k=?= <philmd@oss.qualcomm.com>
-Subject: Re: [PATCH v4 97/97] docs/devel/testing/: update documentation
-User-Agent: meli/0.8.13
-References: <20260710062016.1818125-1-pierrick.bouvier@oss.qualcomm.com>
- <20260710062016.1818125-98-pierrick.bouvier@oss.qualcomm.com>
-In-Reply-To: <20260710062016.1818125-98-pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <thy7g8.2u3xwaqe3d2r0@linaro.org>
+ (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
+ id 1wi5fo-00075Q-6r
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 03:29:24 -0400
+Received: from mail-eastusazon11011059.outbound.protection.outlook.com
+ ([52.101.52.59] helo=BL2PR02CU003.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
+ id 1wi5fl-0006GI-TG
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 03:29:23 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=coKwQr5PnQPVtR4PoA/SsrDvfDgqtbn7WitXMycl2dF02419FBmpozI/O3jedp59Dwtdl/uda/0RWIPHigxirNvpJXLUlaR6tEl9jZ4AsZFQ1e8tgia45J/9fUTblj2LCBk84MW3jNHVfjUXI+y8TPD9coc1kMPKr9CDbkFrmfG7wVLeXnKlUAdv6kILX1npfRjmz+/f84U9gIF41GhMaMpgQ0f90jIG39ktul6mDJwJSIw9j7zaaAFl/CY2sK1YGu0LSmuet4Yrd+hk8egIxBxDDS0VkuZxndIwiYcmeVc+lDAQFyeLorZnf8fvwuldMaw2Ix1ammCeejlz2DSomg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+0pt+hOkxwqSiCbPzfi7fpRAjF5w3dB8Jtk2pmqMYv0=;
+ b=OkjzYcpEN4jVDzIm6sCQudNqea1PuhmOcQkLKsEkJfMuWwKpWMLk4y32yYHcHXznG24ubNg29vWl/Y7fK14ly3018vKc2PfPNz4PM7gsdzukhl1AZAxHd0K0C/+mTjfU75+ACWL7MrR55J2TgGa4GtqxeFyYcs+Ws4WacpQxM4w4vLaNDi/r7CK0fhoLYRYRDkuZMcl1w+7qnrA3TrS1PzlksjSQ/z8713k/uAr3zL/c5V5rSn0aDaoZhb9N/NkRoGR0/2eNhgVFxPJbAA/145OBc/Ok2vropA7UlNQdupz2EfzBqCinEOmditbnB8QJdScjnz2CIvdbP+XCuy/lZA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+0pt+hOkxwqSiCbPzfi7fpRAjF5w3dB8Jtk2pmqMYv0=;
+ b=C4r2z8ln9Ntp8vxw+K0RyxOoLeyGEFSMQAHCchWED2uGWbN8xqMJB1M6EbP398sA40NXdvNIHgH9cW5Srp1CoO0Wb6xGH0BmiNgnAW4gLfw4Op31ErjIw0TmgkT8K2ZGWA2ch63LTNP3H7cj+oR1I+zydbtUUOT0KYdF+pjePpU=
+Received: from SA0PR13CA0010.namprd13.prod.outlook.com (2603:10b6:806:130::15)
+ by IA1PR12MB6162.namprd12.prod.outlook.com (2603:10b6:208:3ea::19)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Fri, 10 Jul
+ 2026 07:24:11 +0000
+Received: from SA2PEPF000015C6.namprd03.prod.outlook.com
+ (2603:10b6:806:130:cafe::44) by SA0PR13CA0010.outlook.office365.com
+ (2603:10b6:806:130::15) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.223.5 via Frontend Transport; Fri, 10
+ Jul 2026 07:24:11 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
+Received: from satlexmb08.amd.com (165.204.84.17) by
+ SA2PEPF000015C6.mail.protection.outlook.com (10.167.241.196) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.181.6 via Frontend Transport; Fri, 10 Jul 2026 07:24:11 +0000
+Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Fri, 10 Jul
+ 2026 02:24:11 -0500
+Received: from XFR-LUMICHEL-L2.amd.com (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.41 via
+ Frontend Transport; Fri, 10 Jul 2026 02:24:09 -0500
+From: Luc Michel <luc.michel@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: Luc Michel <luc.michel@amd.com>, "Edgar E . Iglesias"
+ <edgar.iglesias@gmail.com>, "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
+ Richard Henderson <richard.henderson@linaro.org>, Francisco Iglesias
+ <francisco.iglesias@amd.com>, Frederic Konrad <frederic.konrad@amd.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH] target/microblaze/translate: fix reversed load/store
+ translation
+Date: Fri, 10 Jul 2026 09:23:46 +0200
+Message-ID: <20260710072348.3575-1-luc.michel@amd.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA2PEPF000015C6:EE_|IA1PR12MB6162:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9947a3cc-0b19-4157-93b2-08dede543d0c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|36860700016|23010399003|1800799024|376014|6133799003|11063799006|56012099006|18092099006|18002099003;
+X-Microsoft-Antispam-Message-Info: XnLgw7083c+/T3Ft9jp2oaB8of3aC9bQAPBq2nVVRxqIWonzB+WkxuoQt/m4wbb1aeXOLgdW1roP1HHZnBxOHjKwiMEmsN7BKlAUtK0rkRm8GuMJtiitsic8QA/ZGiqKDkFwAxZ3KtNwegHnh5AaS68us9Vim9rOqkKqWa/X42YpGE83ABwfnU1CXuuufiFxuXjAWdW+OKwZQdVkmJSO4qpzJMqrUvluHqB8cIaAF62U3PwbdCp+EF4C0bw8RTvtKMUDHRktMLtT7qpSyxUfonmgmLQjRAKWHMycoaJoOsUBBM5yq7u3Ce1PJfS4j402Z5JFwprsiruQ0Rtw/81WxVuieCjm9pEozI0spJr5wQPsgdaJYh1frDZ0nQe6UwHDpwyIhkxSWw0SQge0cyxKPfgtayKuqFl16GxrD0cX0wez9HxrWsIMzcQYzJEn++4tCAQw0VAj8GFlLwYdLFb2OX71ntgkt0gCsppOe5my6JPzNJWZCoRNw3eplU0OJ3T1ohgh9Usz1tqIQzpD7EzhvuHGhzNqIeRx5Nh+CFsTP4mI+vQ/RE25lUvYhXJ2t9aI/l288dDy2udCItJuRpaH3+X9QFztTy76VeP42itxdyJr1ptqTaFAHCVi44X+7rImm0K9XFdIOjvM2Y6nG1IqGyYb53fteBLw8fP+8cSC9XPM0W9DZbNZhHNwDmQKkyvH9RNDSO3RXHI+JdlNMrrU+w==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb08.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(82310400026)(36860700016)(23010399003)(1800799024)(376014)(6133799003)(11063799006)(56012099006)(18092099006)(18002099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: QM6HFqIrbpO0BYtVjWOI7fhGypwfzdHPz8mWx4ERIdLiTpsrSYxGwlX59kqdEeBZYO/8+4hBuGMkfymG8JVhLbne4rEQtBM4WIqWYeKvltranIAXgaSuoLsVZsTS7uxI9Cv7IRiqy8akFCVLbm4n0LRmXzX7RKTCNRE+Z5bJig9MUYq3Y/XKBsgAV8D7QxsGB45/RN2vvEJbMA+s7oHrCgb5XUrdKCmpIYPBLfT1hBLIJbWjr8Wxr5Bdbubz6e+8T9bT+5+ECQbhu9GY2nODE1QvQDYWNK8LOLP4tUz/9T6IXqYSEYFwCp5iKgwVf0J6JuSKq3h1qMjMkjdqEmkAX+DSSKL5TQndK3JI34kzhQTuC3SyzcRMy1s2mrACCWXO/7u345Gg2fhIxtgY9QIr8dUrluwBVc89xixiKBEGg6c4BzCh77MR2a1ViKFlD7ZD
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jul 2026 07:24:11.5439 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9947a3cc-0b19-4157-93b2-08dede543d0c
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb08.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SA2PEPF000015C6.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6162
+Received-SPF: permerror client-ip=52.101.52.59;
+ envelope-from=Luc.Michel@amd.com;
+ helo=BL2PR02CU003.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,118 +128,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 10 Jul 2026 09:20, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> wrote:
->We document how to build and run tcg tests with new framework.
->
->Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->---
+Since 36a9529e60e0 the TCGv returned by compute_ldst_addr_type{a,b} for
+the address can be a target register or a constant. However
+do_{load,store} might modify it in the case of a reversed load/store.
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Fix this by factoring out the reversed access logic and copying the
+address in a new TCGv_i32 if it needs to be modified.
 
-> docs/devel/build-system.rst |  4 +--
-> docs/devel/testing/main.rst | 55 +++++++++++++++++--------------------
-> 2 files changed, 27 insertions(+), 32 deletions(-)
->
->diff --git a/docs/devel/build-system.rst b/docs/devel/build-system.rst
->index 71331e64ac8..c64d40b42af 100644
->--- a/docs/devel/build-system.rst
->+++ b/docs/devel/build-system.rst
->@@ -447,8 +447,8 @@ these sub-Makefiles, the resulting build is largely non-recursive.
-> Tests, whether defined in ``meson.build`` or not, are also ran by the
-> Makefile with the traditional ``make check`` phony target, while benchmarks
-> are run with ``make bench``.  Meson test suites such as ``unit`` can be ran
->-with ``make check-unit``, and ``make check-tcg`` builds and runs "non-Meson"
->-tests for all targets.
->+with ``make check-unit``, and ``make check-tcg`` builds and runs tcg tests
->+for all targets.
-> 
-> If desired, it is also possible to use ``ninja`` and ``pyvenv/bin/meson test``,
-> respectively to build emulators and run tests defined in meson.build.
->diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
->index c6821a36d99..5a8f9386661 100644
->--- a/docs/devel/testing/main.rst
->+++ b/docs/devel/testing/main.rst
->@@ -1010,54 +1010,49 @@ simple as::
-> 
->   apt install gcc-aarch64-linux-gnu
-> 
->-The configure script will automatically pick up their presence.
->-Sometimes compilers have slightly odd names so the availability of
->-them can be prompted by passing in the appropriate configure option
->-for the architecture in question, for example::
->-
->-  $(configure) --cross-cc-aarch64=aarch64-cc
->-
->-There is also a ``--cross-cc-cflags-ARCH`` flag in case additional
->-compiler flags are needed to build for a given target.
->-
->-If you have the ability to run containers as the user the build system
->-will automatically use them where no system compiler is available. For
->-architectures where we also support building QEMU we will generally
->-use the same container to build tests. However there are a number of
->-additional containers defined that have a minimal cross-build
->-environment that is only suitable for building test cases. Sometimes
->-we may use a bleeding edge distribution for compiler features needed
->-for test cases that aren't yet in the LTS distros we support for QEMU
->-itself.
->+Meson will automatically pick up their presence. In case a cross compiler is
->+missing, if podman or docker are available, we'll automatically build
->+images containing cross compilers and execute those.
-> 
-> See :ref:`container-ref` for more details.
-> 
-> Running subset of tests
-> ~~~~~~~~~~~~~~~~~~~~~~~
-> 
->-You can build the tests for one architecture::
->+You can build the tcg tests using::
-> 
->-  make build-tcg-tests-$TARGET
->+  make tcg-tests
-> 
->-And run with::
->+And run them for one target with::
-> 
->-  make run-tcg-tests-$TARGET
->+  make check-tcg-$TARGET
-> 
-> Adding ``V=1`` to the invocation will show the details of how to
-> invoke QEMU for the test which is useful for debugging tests.
-> 
->+Tests can also be run using directly meson test::
->+
->+  ./pyvenv/bin/meson test --suite tcg
->+  ./pyvenv/bin/meson test --suite tcg-$TARGET
->+
->+Tests can be listed using::
->+
->+  ./pyvenv/bin/meson test --suite tcg --list
->+
-> Running individual tests
-> ~~~~~~~~~~~~~~~~~~~~~~~~
-> 
->-Tests can also be run directly from the test build directory. If you
->-run ``make help`` from the test build directory you will get a list of
->-all the tests that can be run. Please note that same binaries are used
->-in multiple tests, for example::
->+Tests can also be run using directly meson test::
-> 
->-  make run-plugin-test-mmap-with-libinline.so
->+  ./pyvenv/bin/meson test $TARGET-$TEST
-> 
->-will run the mmap test with the ``libinline.so`` TCG plugin. The
->-gdbstub tests also re-use the test binaries but while exercising gdb.
->+For instance::
->+
->+  ./pyvenv/bin/meson test aarch64-softmmu-hello
->+
->+Test command and output can be accessed by using verbose flag::
->+
->+  ./pyvenv/bin/meson test aarch64-softmmu-hello --verbose
-> 
-> TCG test dependencies
-> ~~~~~~~~~~~~~~~~~~~~~
->-- 
->2.47.3
->
+Fixes: 36a9529e60e0 (target/microblaze: Simplify compute_ldst_addr_type{a,b})
+Signed-off-by: Luc Michel <luc.michel@amd.com>
+---
+ target/microblaze/translate.c | 56 ++++++++++++++++++++---------------
+ 1 file changed, 32 insertions(+), 24 deletions(-)
+
+diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
+index 8b219afb5dd..9fb84e1bf9f 100644
+--- a/target/microblaze/translate.c
++++ b/target/microblaze/translate.c
+@@ -701,30 +701,47 @@ static void gen_alignment_check_ea(DisasContext *dc, TCGv_i64 ea, int rb,
+ static inline MemOp mo_endian(DisasContext *dc)
+ {
+     return dc->cfg->endi ? MO_LE : MO_BE;
+ }
+ 
++static void handle_reversed_access(MemOp *mop, TCGv_i32 *addr)
++{
++    MemOp size = *mop & MO_SIZE;
++
++    /*
++     * When doing reverse accesses we need to do two things.
++     *
++     * 1. Reverse the address wrt endianness.
++     * 2. Byteswap the data lanes on the way back into the CPU core.
++     *
++     * Use a new TCGv_i32 to modify the address because the current one might be
++     * a register or a constant.
++     */
++
++    if (size > MO_8) {
++        *mop ^= MO_BSWAP;
++    }
++
++    if (size < MO_32) {
++        TCGv_i32 new_addr = tcg_temp_new_i32();
++
++        tcg_gen_xori_i32(new_addr, *addr, 3 - size);
++        *addr = new_addr;
++    }
++}
++
+ static bool do_load(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
+                     int mem_index, bool rev)
+ {
++#ifndef CONFIG_USER_ONLY
+     MemOp size = mop & MO_SIZE;
++#endif
+ 
+     mop |= mo_endian(dc);
+ 
+-    /*
+-     * When doing reverse accesses we need to do two things.
+-     *
+-     * 1. Reverse the address wrt endianness.
+-     * 2. Byteswap the data lanes on the way back into the CPU core.
+-     */
+     if (rev) {
+-        if (size > MO_8) {
+-            mop ^= MO_BSWAP;
+-        }
+-        if (size < MO_32) {
+-            tcg_gen_xori_i32(addr, addr, 3 - size);
+-        }
++        handle_reversed_access(&mop, &addr);
+     }
+ 
+     /*
+      * For system mode, enforce alignment if the cpu configuration
+      * requires it.  For user-mode, the Linux kernel will have fixed up
+@@ -864,27 +881,18 @@ static bool trans_lwx(DisasContext *dc, arg_typea *arg)
+ }
+ 
+ static bool do_store(DisasContext *dc, int rd, TCGv_i32 addr, MemOp mop,
+                      int mem_index, bool rev)
+ {
++#ifndef CONFIG_USER_ONLY
+     MemOp size = mop & MO_SIZE;
++#endif
+ 
+     mop |= mo_endian(dc);
+ 
+-    /*
+-     * When doing reverse accesses we need to do two things.
+-     *
+-     * 1. Reverse the address wrt endianness.
+-     * 2. Byteswap the data lanes on the way back into the CPU core.
+-     */
+     if (rev) {
+-        if (size > MO_8) {
+-            mop ^= MO_BSWAP;
+-        }
+-        if (size < MO_32) {
+-            tcg_gen_xori_i32(addr, addr, 3 - size);
+-        }
++        handle_reversed_access(&mop, &addr);
+     }
+ 
+     /*
+      * For system mode, enforce alignment if the cpu configuration
+      * requires it.  For user-mode, the Linux kernel will have fixed up
+-- 
+2.53.0
+
 
