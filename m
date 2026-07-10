@@ -4,61 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B82C1C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 07:37:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A207C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 07:37:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi5nI-0000Sk-2u; Fri, 10 Jul 2026 03:37:08 -0400
+	id 1wi5ny-0000zo-9u; Fri, 10 Jul 2026 03:37:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lpieralisi@kernel.org>)
- id 1wi5nG-0000SH-Fq; Fri, 10 Jul 2026 03:37:06 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1wi5nw-0000zd-S2
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 03:37:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lpieralisi@kernel.org>)
- id 1wi5nE-0007WW-ND; Fri, 10 Jul 2026 03:37:06 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 4869340A49;
- Fri, 10 Jul 2026 07:37:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6025B1F000E9;
- Fri, 10 Jul 2026 07:36:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1783669021;
- bh=b84j8BRb9WotFlaTbggvLYyWIKKk/t181LGP2ZV1jvA=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To;
- b=gkPuQLIjaexg36f+QvwVppKPu5AdXMJt06ZvxQqk/Xfw5H8PJDRCY/yTUpzSN7lc7
- 8/WdF9UgQeUwMV8YJeKITpCZJ3Zc7AJ6qe5coYROm1C64C8mO3yeOSewADEKItg9gu
- WuNLMCAim32wOEBIzQ1smD+/E/mZWcHe1DbtI6RFaTFF5c/mNg7EJNQGBebIWf+KKJ
- RwF57n2VGiLpvCqtikH+b2zXMqw9AWtXBECWfZWoVkRrBx4R8NOnH7mkr/ljPyPFmp
- TPse0yg/2+8cKKAlY3BB+XUIH3C9bZaqz6Jrg0vngSuukfgEZtnvm7czkRyVbWEnmv
- eyB0GkZ4wJqsQ==
-Date: Fri, 10 Jul 2026 09:36:54 +0200
-From: Lorenzo Pieralisi <lpieralisi@kernel.org>
-To: Gavin Shan <gshan@redhat.com>
-Cc: Mathieu Poirier <mathieu.poirier@linaro.org>, berrange@redhat.com,
- kchamart@redhat.com, pierrick.bouvier@oss.qualcomm.com,
- peter.maydell@linaro.org, mst@redhat.com, cohuck@redhat.com,
- pbonzini@redhat.com, eblake@redhat.com, armbru@redhat.com,
- jpb@kernel.org, lorenzo.pieralisi@linaro.org, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvm@vger.kernel.org
-Subject: Re: [RFC v1 01/25] linux-headers: Add RME related definitions
-Message-ID: <alChFhS7HwGXcVh+@lpieralisi>
-References: <20260707224306.1202330-1-mathieu.poirier@linaro.org>
- <20260707224306.1202330-2-mathieu.poirier@linaro.org>
- <03a39e32-3b15-49a3-a23a-782f8ba25466@redhat.com>
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1wi5nu-0007d4-SY
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 03:37:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783669064;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=BgZmUfYDVV54E+bvl7OuDJJ7IZEJ9yLm3bm2KVdRi7o=;
+ b=UPamX4ORZDyW/R1ODQfAme+E/NoeI9lwZEbmeifN6OybDfwLfRJWgBEGeJFOP9D6XJzFzr
+ O6S8TbwsonaXVhYjc94f2qbtmnVJQEGc3x7MryyZygdYaEXUwOLZw4ftKLYOlTLGP9LUpL
+ +37XWpDUb0b3RSwEBaDBnNmspFL/L/g=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-86-2WmG_0GePLyt8kwFI5h1Vg-1; Fri, 10 Jul 2026 03:37:40 -0400
+X-MC-Unique: 2WmG_0GePLyt8kwFI5h1Vg-1
+X-Mimecast-MFC-AGG-ID: 2WmG_0GePLyt8kwFI5h1Vg_1783669059
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-4731a357b0aso628960f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 00:37:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1783669059; x=1784273859; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=BgZmUfYDVV54E+bvl7OuDJJ7IZEJ9yLm3bm2KVdRi7o=;
+ b=KRzG8uPQ7JKtCOAZpD45Wx8cpZGIxofcCs3SDc+AfZ3SOLrIqd9rwjuqy3zcXeYmqq
+ IXILjRHnBie5ZV0ZsJpNBym8GeIt2lpEUz0Xe2nvQW3andio4tMjT/RBkAx7DnU5tIcy
+ p8fce30Yb6ETc9BQ2rgOK8jc8MBhnoZ6QqQtTZAW4vr8PH9R0fKeakPykexkZMWjIeZP
+ p5EX0L0Qco3e7CFn0wVgUXyz7tE9cg2rkz4rlJys4a/YZD5E/wdjm66Q1DwIsK86t3sK
+ xYyBLFc0y/QchOEG8wSUMrObFctxpqkIn/CZPjYlFituYIHNdRFBJ1E7PiTNhi9bmxH9
+ e/xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783669059; x=1784273859;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=BgZmUfYDVV54E+bvl7OuDJJ7IZEJ9yLm3bm2KVdRi7o=;
+ b=WB8VL3kGPxysZLYlAfeYQGVuh47Wlo9xU6HlGYaUgRTqEN44A77jhtbvUkRPLheMhK
+ lI7XjfVT80kBaOiQ/XxnSu1zlluBz0nFR9Go9Mw9fcTHKG1xAHbM31xpuMJO6YxNG40k
+ uGxYzc5lxV+Pi6aQv2IRXxaaw/djrm4wzZvyemcdGKmZgSv60JYjZdNfQI9XEECBiGGA
+ uJjkALatAan4ZgOClMN2ZArIqmvo4Ed27hL+jEA8hI4cPWBjHSimPVCOBuJJUDEcY/3t
+ pXo2goRcCxBCdjv0bnhO7XCdsP25GWdE6/kYNCSG9mjVbRKJDSLSpCY/E48q+tS/LbyC
+ 2Brg==
+X-Gm-Message-State: AOJu0Yz5ERbBeihgrq3C0xg1Vtmfj276hxBbGMA1OngWlEP/4I13OVrf
+ IIYJm7gB4BgOPc02lXF84/GVNpPnWHCvA8BhUkpVOPf3FexIIuI46igRFB0R8++87mcUHGnXinJ
+ AOYA2tRoYTfss7tTf5ivUMipgTd5pUBHNwGUkWruTnYK/nO2zUvhiweSR
+X-Gm-Gg: AfdE7cni6PhRg0uSFWA7wolrQUQm4Up4kqe2dswD4S8diHwdLsjJ0qaNq80jBcI1zZo
+ HqcOxp9PBjPs9kcDWF6y/uSDLylMH/MI0XUbetcIaniTdGOyxCctpFGJA1FAkLipNIh9OK9M7rs
+ YfqpIIXihSShdEWqlyTofCAn7hnHhdw/DvKkSFla/tDoxWddmRO44PSwc/T8xC4oAgjBZJtJC40
+ 3PEOI6MFUuUYuHJ3ylFgVXw3pEB16ZU6cld9h+7GAlJXguCA8zVQSgLpqVAqEQBlmb6GAdwGUuk
+ h1rHI2pnZZnnxLLVSUILfTD8aM0zUITsNVby+1KRJ9itTdHSv3Lh4uOrTvgxbB2yEIhJmA4=
+X-Received: by 2002:a5d:5f88:0:b0:475:2171:add with SMTP id
+ ffacd0b85a97d-47df072e297mr11282199f8f.22.1783669058981; 
+ Fri, 10 Jul 2026 00:37:38 -0700 (PDT)
+X-Received: by 2002:a5d:5f88:0:b0:475:2171:add with SMTP id
+ ffacd0b85a97d-47df072e297mr11282174f8f.22.1783669058598; 
+ Fri, 10 Jul 2026 00:37:38 -0700 (PDT)
+Received: from imammedo ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47aa0960af0sm53097288f8f.30.2026.07.10.00.37.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 10 Jul 2026 00:37:38 -0700 (PDT)
+Date: Fri, 10 Jul 2026 09:37:37 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Cc: qemu-devel@nongnu.org, Greg Kurz <groug@kaod.org>, Jia Jia
+ <physicalmtea@gmail.com>
+Subject: Re: [PATCH 2/3] hw/9pfs/virtio: disable hotpluggable property of
+ virtio-9p device
+Message-ID: <20260710093737.4948ded4@imammedo>
+In-Reply-To: <d07de8d7b33fbbdd84909c21b67156fe564dc050.1783604079.git.qemu_oss@crudebyte.com>
+References: <cover.1783604079.git.qemu_oss@crudebyte.com>
+ <d07de8d7b33fbbdd84909c21b67156fe564dc050.1783604079.git.qemu_oss@crudebyte.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <03a39e32-3b15-49a3-a23a-782f8ba25466@redhat.com>
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=lpieralisi@kernel.org; helo=sea.source.kernel.org
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,111 +121,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 10, 2026 at 11:09:43AM +1000, Gavin Shan wrote:
-> On 7/8/26 8:42 AM, Mathieu Poirier wrote:
-> > From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> > 
-> > This is a temporary patch intended for testing purposes only. It provides
-> > definitions related to supporting Realms by the QEMU-VMM.
-> > 
-> > Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> > Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-> > ---
-> >   linux-headers/asm-arm64/kvm.h |  9 +++++++++
-> >   linux-headers/linux/kvm.h     | 21 +++++++++++++++++----
-> >   2 files changed, 26 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/linux-headers/asm-arm64/kvm.h b/linux-headers/asm-arm64/kvm.h
-> > index 6aefe7973814..4c08631ec7d2 100644
-> > --- a/linux-headers/asm-arm64/kvm.h
-> > +++ b/linux-headers/asm-arm64/kvm.h
-> > @@ -208,6 +208,15 @@ struct kvm_arm_counter_offset {
-> >   	__u64 reserved;
-> >   };
-> > +#define KVM_ARM_RMI_POPULATE_FLAGS_MEASURE     (1 << 0)
-> > +struct kvm_arm_rmi_populate {
-> > +	__u64 base;
-> > +	__u64 size;
-> > +	__u64 source_uaddr;
-> > +	__u32 flags;
-> > +	__u32 reserved;
-> > +};
-> > +
-> >   #define KVM_ARM_TAGS_TO_GUEST		0
-> >   #define KVM_ARM_TAGS_FROM_GUEST		1
-> > diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
-> > index 50e87ed72c20..dae6e5ba8457 100644
-> > --- a/linux-headers/linux/kvm.h
-> > +++ b/linux-headers/linux/kvm.h
-> > @@ -685,11 +685,21 @@ struct kvm_enable_cap {
-> >   #define KVM_S390_SIE_PAGE_OFFSET 1
-> >   /*
-> > - * On arm64, machine type can be used to request the physical
-> > - * address size for the VM. Bits[7-0] are reserved for the guest
-> > - * PA size shift (i.e, log2(PA_Size)). For backward compatibility,
-> > - * value 0 implies the default IPA size, 40bits.
-> > + * On arm64, machine type can be used to request both the machine type and
-> > + * the physical address size for the VM.
-> > + *
-> > + * Bits[31-30] are reserved for the ARM specific machine type.
-> > + *
-> > + * Bits[7-0] are reserved for the guest PA size shift (i.e, log2(PA_Size)).
-> > + * For backward compatibility, value 0 implies the default IPA size, 40bits.
-> >    */
-> > +#define KVM_VM_TYPE_ARM_SHIFT		30
-> > +#define KVM_VM_TYPE_ARM_MASK		(0x3ULL << KVM_VM_TYPE_ARM_SHIFT)
-> > +#define KVM_VM_TYPE_ARM(_type)		\
-> > +	(((_type) << KVM_VM_TYPE_ARM_SHIFT) & KVM_VM_TYPE_ARM_MASK)
-> > +#define KVM_VM_TYPE_ARM_NORMAL		KVM_VM_TYPE_ARM(0)
-> > +#define KVM_VM_TYPE_ARM_REALM		KVM_VM_TYPE_ARM(1)
-> > +
-> >   #define KVM_VM_TYPE_ARM_IPA_SIZE_MASK	0xffULL
-> >   #define KVM_VM_TYPE_ARM_IPA_SIZE(x)		\
-> >   	((x) & KVM_VM_TYPE_ARM_IPA_SIZE_MASK)
-> 
-> The definitions in this section aren't exactly same to that in (v14) host series,
-> leading to KVM_VM_TYPE_ARM_REALM = 0 in my environment and the realm guest can't
-> be started with the following error message. At least, KVM_VM_TYPE_ARM_MASK has
-> been redefined with different values.
-> 
->   qemu-system-aarch64: KVM does not support guest_memfd
-> 
->   ----> linux-headers/linux/kvm.h
-> 
->   #define KVM_VM_TYPE_ARM_SHIFT          30
->   #define KVM_VM_TYPE_ARM_MASK           (0x3ULL << KVM_VM_TYPE_ARM_SHIFT)
-> 
->   #define KVM_VM_TYPE_ARM_MASK           (KVM_VM_TYPE_ARM_IPA_SIZE_MASK | \
->                                           KVM_VM_TYPE_ARM_PROTECTED)
-> 
-> After syncing the definitions with those in (v14) host series, I'm able to boot
-> a simple realm guest (no virtio devices) with one warning.
-> 
->   qemu-system-aarch64: Failed to enable KVM_CAP_ARM_NISV_TO_USER cap
+On Thu, 9 Jul 2026 15:50:36 +0200
+Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
 
-Yep, that's correct the VM type handling has to be updated and I am looking
-into the cap failure.
-
-Thanks,
-Lorenzo
-
-> Thanks,
-> Gavin
+> Harden security by disabling hotpluggable property, to prevent
+> issues like fixed in the previous commit.
 > 
-> > @@ -719,6 +729,8 @@ struct kvm_enable_cap {
-> >   #define KVM_GET_EMULATED_CPUID	  _IOWR(KVMIO, 0x09, struct kvm_cpuid2)
-> >   #define KVM_GET_MSR_FEATURE_INDEX_LIST    _IOWR(KVMIO, 0x0a, struct kvm_msr_list)
-> > +#define KVM_ARM_RMI_POPULATE	  _IOWR(KVMIO, 0xd7, struct kvm_arm_rmi_populate)
-> > +
-> >   /*
-> >    * Extension capability list.
-> >    */
-> > @@ -985,6 +997,7 @@ struct kvm_enable_cap {
-> >   #define KVM_CAP_S390_USER_OPEREXEC 246
-> >   #define KVM_CAP_S390_KEYOP 247
-> >   #define KVM_CAP_S390_VSIE_ESAMODE 248
-> > +#define KVM_CAP_ARM_RMI 249
-> >   struct kvm_irq_routing_irqchip {
-> >   	__u32 irqchip;
+> Virtio-9p is a pass-through file-sharing device that provides a
+> guest mount of a host filesystem tree. Unlike block or network
+> devices, guest-triggered hotplug of the 9p device has no practical
+> use case: the guest cannot recover from the device removal, and there
+> is no protocol-level device-loss scenario as with block or ethernet
+> devices.
+
+hmh, I'm no maintainer of 9pfs, but to me it looks like any other
+storage device.
+One should be able to unmount/stop using it and unplug
+(it doesn't really matter if unplug is triggered by guest or host side).
+
+> Prevent guest-triggered hotplug by marking the device as
+> non-hotpluggable. Device removal via QMP is not affected by this, as
+> the QMP removal path is not reading the device's hotpluggable field
+> at all.
 > 
+> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> ---
+>  hw/9pfs/virtio-9p-device.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/hw/9pfs/virtio-9p-device.c b/hw/9pfs/virtio-9p-device.c
+> index 1ec48fc9e0..ba43fd22d2 100644
+> --- a/hw/9pfs/virtio-9p-device.c
+> +++ b/hw/9pfs/virtio-9p-device.c
+> @@ -273,6 +273,7 @@ static void virtio_9p_class_init(ObjectClass *klass, const void *data)
+>  
+>      device_class_set_props(dc, virtio_9p_properties);
+>      dc->vmsd = &vmstate_virtio_9p;
+> +    dc->hotpluggable = false;
+>      set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
+>      vdc->realize = virtio_9p_device_realize;
+>      vdc->unrealize = virtio_9p_device_unrealize;
+
 
