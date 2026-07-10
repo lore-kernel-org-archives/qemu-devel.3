@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B7FEC43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 19:20:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3AC6C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 19:20:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiGkc-0000qq-Gc; Fri, 10 Jul 2026 15:19:08 -0400
+	id 1wiGki-0000sg-A1; Fri, 10 Jul 2026 15:19:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wiGkE-0000ir-AR
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 15:18:48 -0400
+ id 1wiGkP-0000kJ-PZ
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 15:18:54 -0400
 Received: from forwardcorp1d.mail.yandex.net
  ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wiGkC-00056x-KR
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 15:18:42 -0400
+ id 1wiGkO-00058R-BI
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 15:18:53 -0400
 Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 6CA8480DF8;
- Fri, 10 Jul 2026 22:18:39 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 20A5C80DF7;
+ Fri, 10 Jul 2026 22:18:51 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:c7d::1:20])
  by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id AIRXsO0a8eA0-ELicxnEe; Fri, 10 Jul 2026 22:18:38 +0300
+ id AIRXsO0a8eA0-VFGXCG7b; Fri, 10 Jul 2026 22:18:50 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1783711118;
- bh=ttlb87vMsTqUA7FIWcHgDFVA2A253o/PTpf/Af7BP8c=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=ZW9dQf9t1ctqQfOwgWnB+8cjaEwIZxC8wi0HMh6efLLeAqQWQ9g6N8c+gwqWXOdSf
- yoaTI5fYUb7ny8f0IOAqOUioNClrmf5XUuF8Qrj2T/J4PMnBnMuCilh8K3ZIU3pYfd
- IFC4ZABeNckK1DSNh2AuBnrrn7QPrxP7359HGZZU=
+ s=default; t=1783711130;
+ bh=ZyIouWud7rbL1EFPuOUataXp3Mt3zQlDWZq23EqDr5k=;
+ h=Cc:Message-ID:References:Date:In-Reply-To:Subject:To:From;
+ b=FU8cg5tidNLbJdtbw0QDeHLPWjPb4KHfWJgEqGDrGL7tBCGtkHs5ViFHGJJ6tY5vX
+ E+GnL4kfUaNNIp72CREZVnzczRAQ7VUXh45WdlBPJgMdonZcqu1Iu9KTIxI8WKIVrP
+ LkTQ4pcRiYNm4WwcCuJqsqNZJETvcpd1axrUpPVk=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -47,14 +47,18 @@ Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
  raphael.s.norwitz@gmail.com, bchaney@akamai.com, vsementsov@yandex-team.ru,
  qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
  yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
- Eric Blake <eblake@redhat.com>
-Subject: [PATCH v18 09/14] qapi: add local migration parameter
-Date: Fri, 10 Jul 2026 22:17:58 +0300
-Message-ID: <20260710191809.721154-10-vsementsov@yandex-team.ru>
+ Thomas Huth <thuth@redhat.com>, Lei Yang <leiyang@redhat.com>,
+ Maksim Davydov <davydov-max@yandex-team.ru>,
+ Thomas Huth <th.huth+qemu@posteo.eu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+Subject: [PATCH v18 13/14] tests/functional: add skipWithoutSudo() decorator
+Date: Fri, 10 Jul 2026 22:18:02 +0300
+Message-ID: <20260710191809.721154-14-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260710191809.721154-1-vsementsov@yandex-team.ru>
 References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
@@ -78,138 +82,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We are going to implement local-migration feature: some devices will be
-able to transfer open file descriptors through migration stream (which
-must UNIX domain socket for that purpose).  This allows to transfer the
-whole backend state without reconnecting and restarting the backend
-service. For example, virtio-net will migrate its attached TAP netdev,
-together with its connected file descriptors.
-
-In this commit we introduce a migration parameter, which enables
-the feature for devices that support it (none at the moment).
+To be used in the next commit: that would be a test for TAP
+networking, and it will need to setup TAP device.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Acked-by: Markus Armbruster <armbru@redhat.com>
-Acked-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Tested-by: Lei Yang <leiyang@redhat.com>
+Reviewed-by: Maksim Davydov <davydov-max@yandex-team.ru>
 Reviewed-by: Ben Chaney <bchaney@akamai.com>
 ---
- include/migration/misc.h |  2 ++
- migration/options.c      | 18 +++++++++++++++++-
- qapi/migration.json      | 12 ++++++++++--
- 3 files changed, 29 insertions(+), 3 deletions(-)
+ tests/functional/qemu_test/decorators.py | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/include/migration/misc.h b/include/migration/misc.h
-index 2b2fbb59a40..019717f4cda 100644
---- a/include/migration/misc.h
-+++ b/include/migration/misc.h
-@@ -161,4 +161,6 @@ bool multifd_join_device_state_save_threads(void);
+diff --git a/tests/functional/qemu_test/decorators.py b/tests/functional/qemu_test/decorators.py
+index fcf236ecfdf..aa135acc785 100644
+--- a/tests/functional/qemu_test/decorators.py
++++ b/tests/functional/qemu_test/decorators.py
+@@ -6,6 +6,7 @@
+ import os
+ import platform
+ import resource
++import subprocess
+ from unittest import skipIf, skipUnless
  
- void migration_request_switchover_ack_legacy(const char *requester);
- 
-+bool migrate_local(void);
+ from .cmd import which
+@@ -177,3 +178,18 @@ def skipLockedMemoryTest(locked_memory):
+         ulimit_memory == resource.RLIM_INFINITY or ulimit_memory >= locked_memory * 1024,
+         f'Test required {locked_memory} kB of available locked memory',
+     )
 +
- #endif
-diff --git a/migration/options.c b/migration/options.c
-index dfce19405d4..5c439f6d724 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -14,6 +14,7 @@
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
- #include "qemu/units.h"
-+#include "qapi/util.h"
- #include "exec/target_page.h"
- #include "qapi/clone-visitor.h"
- #include "qapi/error.h"
-@@ -25,6 +26,7 @@
- #include "migration/colo.h"
- #include "migration/cpr.h"
- #include "migration/misc.h"
-+#include "migration/options.h"
- #include "migration.h"
- #include "migration-stats.h"
- #include "qemu-file.h"
-@@ -350,6 +352,12 @@ bool migrate_mapped_ram(void)
-     return s->capabilities[MIGRATION_CAPABILITY_MAPPED_RAM];
- }
- 
-+bool migrate_local(void)
-+{
-+    MigrationState *s = migrate_get_current();
-+    return s->parameters.local;
-+}
++'''
++Decorator to skip execution of a test if passwordless
++sudo command is not available.
++'''
++def skipWithoutSudo():
++    proc = subprocess.run(["sudo", "-n", "/bin/true"],
++                          stdin=subprocess.PIPE,
++                          stdout=subprocess.PIPE,
++                          stderr=subprocess.STDOUT,
++                          universal_newlines=True,
++                          check=False)
 +
- bool migrate_ignore_shared(void)
- {
-     MigrationState *s = migrate_get_current();
-@@ -1085,7 +1093,7 @@ static void migrate_mark_all_params_present(MigrationParameters *p)
-         &p->has_announce_step, &p->has_block_bitmap_mapping,
-         &p->has_x_vcpu_dirty_limit_period, &p->has_vcpu_dirty_limit,
-         &p->has_mode, &p->has_zero_page_detection, &p->has_direct_io,
--        &p->has_x_rdma_chunk_size, &p->has_cpr_exec_command,
-+        &p->has_x_rdma_chunk_size, &p->has_cpr_exec_command, &p->has_local,
-     };
- 
-     len = ARRAY_SIZE(has_fields);
-@@ -1433,6 +1441,10 @@ static void migrate_params_test_apply(MigrationParameters *params,
-         qapi_free_strList(dest->cpr_exec_command);
-         dest->cpr_exec_command = QAPI_CLONE(strList, params->cpr_exec_command);
-     }
-+
-+    if (params->has_local) {
-+        dest->local = params->local;
-+    }
- }
- 
- static void migrate_params_apply(MigrationParameters *params)
-@@ -1565,6 +1577,10 @@ static void migrate_params_apply(MigrationParameters *params)
-         s->parameters.cpr_exec_command =
-             QAPI_CLONE(strList, params->cpr_exec_command);
-     }
-+
-+    if (params->has_local) {
-+        s->parameters.local = params->local;
-+    }
- }
- 
- void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 66bd900465a..03bdf19f3a6 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -830,7 +830,8 @@
-            'zero-page-detection',
-            'direct-io',
-            { 'name': 'x-rdma-chunk-size', 'features': [ 'unstable' ] },
--           'cpr-exec-command'] }
-+           'cpr-exec-command',
-+           'local'] }
- 
- ##
- # @migrate-set-parameters:
-@@ -1012,6 +1013,12 @@
- #     Must be set to the same value on both source and destination
- #     before migration starts.  (Since 11.1)
- #
-+# @local: Enable local migration for devices that support it.  Backend
-+#     state and its file descriptors can then be passed to the
-+#     destination in the migration channel.  The migration channel
-+#     must be a Unix domain socket.  Usually needs to be enabled per
-+#     device.  (Since 11.2)
-+#
- # Features:
- #
- # @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
-@@ -1053,7 +1060,8 @@
-             '*direct-io': 'bool',
-             '*x-rdma-chunk-size': { 'type': 'uint64',
-                                     'features': [ 'unstable' ] },
--            '*cpr-exec-command': [ 'str' ]} }
-+            '*cpr-exec-command': [ 'str' ],
-+            '*local': 'bool' } }
- 
- ##
- # @query-migrate-parameters:
++    return skipUnless(proc.returncode == 0,
++                      f'requires password-less sudo access: {proc.stdout}')
 -- 
 2.43.0
 
