@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74D33C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 19:18:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B851C44501
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 19:18:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiGjw-0000fA-EW; Fri, 10 Jul 2026 15:18:24 -0400
+	id 1wiGjy-0000fQ-0S; Fri, 10 Jul 2026 15:18:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wiGju-0000ea-D0
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 15:18:22 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ id 1wiGjv-0000f1-T5
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 15:18:23 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wiGjr-00054M-VC
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 15:18:22 -0400
+ id 1wiGjt-00054h-Ms
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 15:18:23 -0400
 Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id F027280898;
- Fri, 10 Jul 2026 22:18:16 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 5826480E21;
+ Fri, 10 Jul 2026 22:18:19 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:c7d::1:20])
  by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id AIRXsO0a8eA0-75QvDYpY; Fri, 10 Jul 2026 22:18:16 +0300
+ id AIRXsO0a8eA0-2cZW9bI0; Fri, 10 Jul 2026 22:18:18 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1783711096;
- bh=mJdkRWSOhzq8wvcrtU+0pBu22CGS5GmslG9eOtXQXn4=;
+ s=default; t=1783711098;
+ bh=ySKR8znfCSK85AX+fMA3St2SdKWQ2bOSFRO1n106T/I=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=fmOnku1yfkLX7RvNNxAvslUm7qZPdWKkzJEQ8Cm+sv35Deiy5I7WfL6crXFIZNtNq
- uLniD0PmmoDd72kZZGKXOs1HVSx7NXV7aEaElQ/L6VyuvNX1u6N7Vm9xRAjdIiftA+
- BwoQN/kCxWW4M3QH/zF3mMPfFAGLCKgTw7U834s4=
+ b=otg4Qd/ISgb4PcxcrE0NV5ww/Sg8j59Ng7hTInqEyESZr5LKmxWYguazZPlCaHv3W
+ H5Bu5MlhtcysDYxaqaPimLsNRXXfRzvK871Sii8stBtWjyYMN/pU9vkC9yT76jPbYN
+ HCHcDZd7B2mSbwbrwpOTD7dKq2pzQvN8SShwDir8=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -47,16 +46,17 @@ Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
  raphael.s.norwitz@gmail.com, bchaney@akamai.com, vsementsov@yandex-team.ru,
  qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
  yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
- Jason Wang <jasowangio@gmail.com>
-Subject: [PATCH v18 01/14] net/tap: rework tap_parse_script
-Date: Fri, 10 Jul 2026 22:17:50 +0300
-Message-ID: <20260710191809.721154-2-vsementsov@yandex-team.ru>
+ Jason Wang <jasowangio@gmail.com>, Eric Blake <eblake@redhat.com>
+Subject: [PATCH v18 02/14] net/tap: improve script/downscript options
+ documentation
+Date: Fri, 10 Jul 2026 22:17:51 +0300
+Message-ID: <20260710191809.721154-3-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260710191809.721154-1-vsementsov@yandex-team.ru>
 References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.200;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -78,59 +78,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Factor out tap_is_explicit_no_script() helper, to simplify
-further changes.
+Properly document defaults and special values of "" and "no".
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- net/tap.c | 27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ qapi/net.json   | 12 +++++++++---
+ qemu-options.hx |  9 +++++----
+ 2 files changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/net/tap.c b/net/tap.c
-index 57ffb09885c..fedd48c48d2 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -92,19 +92,34 @@ static void launch_script(const char *setup_script, const char *ifname,
- static void tap_send(void *opaque);
- static void tap_writable(void *opaque);
+diff --git a/qapi/net.json b/qapi/net.json
+index 1a6382825c5..8f0915c4d86 100644
+--- a/qapi/net.json
++++ b/qapi/net.json
+@@ -399,9 +399,15 @@
+ # @fds: multiple file descriptors of already opened multiqueue capable
+ #     tap
+ #
+-# @script: script to initialize the interface
+-#
+-# @downscript: script to shut down the interface
++# @script: script to initialize the interface.  An empty string or
++#     "no" disables script execution.  Defaults to
++#     ``<sysconfdir>/qemu-ifup``, where ``<sysconfdir>`` is the
++#     system configuration directory at build time (typically /etc).
++#
++# @downscript: script to shut down the interface.  An empty string or
++#     "no" disables script execution.  Defaults to
++#     ``<sysconfdir>/qemu-ifdown``, where ``<sysconfdir>`` is the
++#     system configuration directory at build time (typically /etc).
+ #
+ # @br: bridge name (since 2.8)
+ #
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 34970fffc94..200949655ea 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -3014,7 +3014,7 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
+     "                use network scripts 'file' (default=" DEFAULT_NETWORK_SCRIPT ")\n"
+     "                to configure it and 'dfile' (default=" DEFAULT_NETWORK_DOWN_SCRIPT ")\n"
+     "                to deconfigure it\n"
+-    "                use '[down]script=no' to disable script execution\n"
++    "                use '[down]script=no' or '[down]script=' to disable script execution\n"
+     "                use network helper 'helper' (default=" DEFAULT_BRIDGE_HELPER ") to\n"
+     "                configure it\n"
+     "                use 'fd=h' to connect to an already opened TAP interface\n"
+@@ -3550,9 +3550,10 @@ SRST
+     Use the network script file to configure it and the network script
+     dfile to deconfigure it. If name is not provided, the OS
+     automatically provides one. The default network configure script is
+-    ``/etc/qemu-ifup`` and the default network deconfigure script is
+-    ``/etc/qemu-ifdown``. Use ``script=no`` or ``downscript=no`` to
+-    disable script execution.
++    ``<sysconfdir>/qemu-ifup`` and the default network deconfigure script is
++    ``<sysconfdir>/qemu-ifdown``, where ``<sysconfdir>`` is the system
++    configuration directory at build time (typically ``/etc``).
++    Use ``[down]script=no`` or ``[down]script=`` to disable script execution.
  
--static char *tap_parse_script(const char *script_arg, const char *default_path)
-+static bool tap_is_explicit_no_script(const char *script_arg)
- {
--    g_autofree char *res = g_strdup(script_arg);
-+    if (!script_arg) {
-+        return false;
-+    }
- 
--    if (!res) {
--        res = get_relocated_path(default_path);
-+    if (script_arg[0] == '\0') {
-+        return true;
-+    }
-+
-+    if (strcmp(script_arg, "no") == 0) {
-+        return true;
-     }
- 
--    if (res[0] == '\0' || strcmp(res, "no") == 0) {
-+    return false;
-+}
-+
-+static char *tap_parse_script(const char *script_arg, const char *default_path)
-+{
-+    if (tap_is_explicit_no_script(script_arg)) {
-         return NULL;
-     }
- 
--    return g_steal_pointer(&res);
-+    if (!script_arg) {
-+        return get_relocated_path(default_path);
-+    }
-+
-+    return g_strdup(script_arg);
- }
- 
- static void tap_update_fd_handler(TAPState *s)
+     If running QEMU as an unprivileged user, use the network helper
+     to configure the TAP interface and attach it to the bridge.
 -- 
 2.43.0
 
