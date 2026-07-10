@@ -4,49 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DC6BC44506
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 00:51:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F6A9C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 00:51:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whzS9-0000A2-S9; Thu, 09 Jul 2026 20:50:53 -0400
+	id 1whzS6-00009W-Jk; Thu, 09 Jul 2026 20:50:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1whzS8-00009o-9k
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 20:50:52 -0400
-Received: from out-173.mta0.migadu.com ([2001:41d0:1004:224b::ad])
+ (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1whzS3-00008v-7Z
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 20:50:47 -0400
+Received: from out-184.mta0.migadu.com ([2001:41d0:1004:224b::b8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1whzS4-0005dr-W8
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 20:50:51 -0400
+ (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1whzS1-0005dD-44
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 20:50:47 -0400
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
  include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1783644646;
+ t=1783644639;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pSFFtc8Qs7YopIepyDIhuXWQE/SNoI3BvDv19mqrZl0=;
- b=A6rgKkRs4fgBxHAE5a7hTlueHxJVq4a225Jd9ZuWJjpUWkMCH4sBjh8eeCw7Wtk2R9SQap
- wIn8hG+IbDR6VHOs2HXHfOGUS+sDlC+rPN+OGLEj9bgiDfbfG3tv8hhepF1cuFCgBWzJRY
- ixTyoY0V+uQjjL6ITIdgd79R533+zNQ=
+ content-transfer-encoding:content-transfer-encoding;
+ bh=RhHtW2icY+xvS+w/LmbdvKpn6cXmtf66tQcvtAixaj8=;
+ b=xUPouLoxYQiKRzmhFoTOKXr4L9ph494qSghGDcWMp9YrsbItvGnE4wfE85HBCtYulv19ar
+ PDI+7Y7IA3PPXDuc25malqHXiDFQDCbXnpjm3hXUoVhTLvRdaqHToF1x34NwXVni+8u9vO
+ u2KgwUsIWjF8mbBSrGAopXWReRzkumM=
 From: Tao Cui <cui.tao@linux.dev>
 To: qemu-devel@nongnu.org
 Cc: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Tao Cui <cuitao@kylinos.cn>
-Subject: [PATCH v2 2/3] target/loongarch: migrate pv_features in the vCPU
- VMState
-Date: Fri, 10 Jul 2026 08:50:28 +0800
-Message-ID: <20260710005029.345378-3-cui.tao@linux.dev>
-In-Reply-To: <20260710005029.345378-1-cui.tao@linux.dev>
-References: <20260710005029.345378-1-cui.tao@linux.dev>
+Subject: [PATCH v2 0/3] target/loongarch: advertise pv features per vCPU
+Date: Fri, 10 Jul 2026 08:50:26 +0800
+Message-ID: <20260710005029.345378-1-cui.tao@linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=2001:41d0:1004:224b::ad;
- envelope-from=cui.tao@linux.dev; helo=out-173.mta0.migadu.com
+Received-SPF: pass client-ip=2001:41d0:1004:224b::b8;
+ envelope-from=cui.tao@linux.dev; helo=out-184.mta0.migadu.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -70,53 +66,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Tao Cui <cuitao@kylinos.cn>
 
-pv_features holds the value of pseudo-register CPUCFG_KVM_FEATURE and is now
-pushed per vCPU. Add it to the vCPU VMState as a subsection (sent when
-non-zero) so it travels with the vCPU across migration between host kernel
-versions.
+kvm_set_pv_features() programs the KVM_FEATURE cpucfg attribute, which is a
+per-vCPU setting, but it was called from kvm_arch_put_registers() under a
+function-local static guard and so ran only once for the whole VM: only the
+first vCPU got its pv features pushed to KVM, and on SMP guests the others
+never saw KVM_FEATURE_IPI / KVM_FEATURE_STEAL_TIME.
 
-Signed-off-by: Tao Cui <cuitao@kylinos.cn>
----
- target/loongarch/machine.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+  1/3: drop the static guard and push pv features per vCPU under
+       KVM_PUT_FULL_STATE, like kvm_set_stealtime(); host detection stays in
+       kvm_arch_init_vcpu().
+  2/3: add pv_features (the value of pseudo-register CPUCFG_KVM_FEATURE) to
+       the vCPU VMState as a subsection so it travels across migration.
+  3/3: add a no_pv_feature compat flag (LoongArchCPU + virt machine class)
+       so the new behavior is gated per machine version: 11.1 keeps pv
+       advertisement off, the new 11.2 enables it.
 
-diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
-index 931a5ca5ba..b8819bd44d 100644
---- a/target/loongarch/machine.c
-+++ b/target/loongarch/machine.c
-@@ -65,6 +65,24 @@ static const VMStateDescription vmstate_msgint = {
-     },
- };
- 
-+static bool pv_features_needed(void *opaque)
-+{
-+    LoongArchCPU *cpu = opaque;
-+
-+    return cpu->env.pv_features != 0;
-+}
-+
-+static const VMStateDescription vmstate_pv_features = {
-+    .name = "cpu/pv_features",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = pv_features_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(env.pv_features, LoongArchCPU),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
- static const VMStateDescription vmstate_lsxh_reg = {
-     .name = "lsxh_reg",
-     .version_id = 1,
-@@ -289,6 +307,7 @@ const VMStateDescription vmstate_loongarch_cpu = {
-         &vmstate_lbt,
-         &vmstate_msgint,
-         &vmstate_pmu,
-+        &vmstate_pv_features,
-         NULL
-     }
- };
+Compiled and boot-tested on a loongarch64 KVM host; migration verified
+virt-11.2->virt-11.2 and virt-11.1->virt-11.1.
+
+Changes in v2 (per Bibo Mao's review):
+- Revert v1's move to kvm_arch_init_vcpu(); keep kvm_set_pv_features() in
+  kvm_arch_put_registers(), drop the static guard, push per vCPU under
+  KVM_PUT_FULL_STATE.
+- Migrate pv_features (CPUCFG_KVM_FEATURE) via a VMState subsection.
+- Add no_pv_feature compat flag: 11.1 off, 11.2 on.
+- Split into three patches (fix / migrate / compat).
+
+Tao Cui (3):
+  target/loongarch/kvm: advertise pv features per vCPU
+  target/loongarch: migrate pv_features in the vCPU VMState
+  target/loongarch: add no_pv_feature compat flag
+
+ hw/loongarch/virt.c         | 14 +++++++++++++-
+ include/hw/loongarch/virt.h |  9 ++++++++-
+ target/loongarch/cpu.h      |  1 +
+ target/loongarch/kvm/kvm.c  | 20 +++++++++++---------
+ target/loongarch/machine.c  | 19 +++++++++++++++++++
+ 5 files changed, 52 insertions(+), 11 deletions(-)
+
 -- 
 2.43.0
 
