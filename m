@@ -4,59 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3AF2C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 14:32:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDD02C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 14:33:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiCGk-00069A-I8; Fri, 10 Jul 2026 10:31:58 -0400
+	id 1wiCI9-0006os-Mw; Fri, 10 Jul 2026 10:33:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1wiCGj-000690-OA
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 10:31:57 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1wiCGi-0002bC-2n
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 10:31:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=pfbfQUIC7badV5OtiBVKNQ0Hbmyf6nV2Q5VDHLkrAjQ=; b=YcM6A0qpJbiLndBXu+aAPYp6ov
- UxqxVtiYRZQEzDuRibYJEQIaivPlIDvrXaBLzaih3cma2AyC3K//gR0IXSOjufkzehxoKrl9IsWLA
- 5WN3Yj8mAmZRbEKAccmAxtImdYs7t1Gc9oEfCcbXRow57RSEqU60FO4vB6KQgDD89aT3z/k/n2fuj
- zAK2hYIQ8ki1lJfkvF6XegD4TUjFy3TAv7d9u3auskEPcj3lJxerO6y0LgPFIkC8jJYav/jlD/aPQ
- abvoGnSgp+CSswoAZNoMpFUg3Rpb8VdopmnYrmBuZ910Og7z3OJ26UK0SGCR21tp8rEjZngQtrYxS
- ScnPDZ3XUgxvonBm3z8S71zW0+Tt/xyQGSLTJrRZJMCw1zOkkr1Z6R2WZFLcZUZcUAtUZDSW2AoHx
- MMCrbNVBAME+6dQctKKWqOKnBH4A5o8gejy+QfpFpqdDpuUt1kqBrcvtGLdBic1dR/wuHiRvfAk1/
- GNLIrGRQcxmgimyq4DaLiW7u8SdWAkxXm7H8P1OJJvn1iTEUsiqu11GOhN6XG6UbxqD6TfnmBf82p
- m9l8ukxIlOy/pcQmj7j5Zm1+QPzDLSxPVfmFJsr+qkSwsYVvFWKGaNCzWUDTAK0u5pJiErtf1iD5O
- PMeoSRtn3TpKzagG8BU4U/CI3SFXz6MxcluT+HoLg=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org, Greg Kurz <groug@kaod.org>,
- Jia Jia <physicalmtea@gmail.com>
-Subject: Re: [PATCH 2/3] hw/9pfs/virtio: disable hotpluggable property of
- virtio-9p device
-Date: Fri, 10 Jul 2026 16:31:51 +0200
-Message-ID: <2055091.yKVeVyVuyW@weasel>
-In-Reply-To: <20260710145149.6e077fdd@imammedo>
-References: <cover.1783604079.git.qemu_oss@crudebyte.com>
- <2355649.iZASKD2KPV@weasel> <20260710145149.6e077fdd@imammedo>
+ (Exim 4.90_1) (envelope-from <rdmitry0911@gmail.com>)
+ id 1wiBNp-0003aw-Fm
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 09:35:18 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <rdmitry0911@gmail.com>)
+ id 1wiBNl-0004kD-MO
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 09:35:12 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-47df440fcd5so502851f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 06:35:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1783690506; x=1784295306; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=EcpyO9YPEYhCRw56J+zTglMTassEZTi9UwcPRp700Ww=;
+ b=jX7Mk3bfjQty4BgItwr5WEK/09rkCBN+8BmoNtpRQXNFyksHkquhovQSqa49bq7Fdj
+ p6OK2AFdDmBDvO8GysAAGBVT0ETLqv3WQ/8pHh7t4xdRhpi6AxnWEHdnFHQiEmAwDdpS
+ Yv7QvQOc4ZFcPXbUL71W94gkIr5hGLoD1OTwFgaLQh7Ou/pHvl9yBYyMiwwN3WLgwdkl
+ wUL7o+jvMzO4OqGjkBoF+A0C+sfyctZnUIIOyprYjRXOVjYeSa8YaUTYq7KPCx9pFzYv
+ RPmPgMRc0VPjrcAoiHDlJPJr8jGuBXUUSJfnlrIFGSgSUbps+qSryoUFlx2+ica1wNbT
+ VkoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783690506; x=1784295306;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=EcpyO9YPEYhCRw56J+zTglMTassEZTi9UwcPRp700Ww=;
+ b=kYZjmTJozt84kMTkWKgnhU0vPZyjPqTrtGqXjBRZ7HPnOCZkhRLbWP6I0ZZW1d9NyN
+ eQclkRVBLfN0wghH6S243CVxTAkGvGt5dCFf8zk39p0NRYnFqgbRAK5BAyaXwmuZ5Hk0
+ CwAmbqjNeVb7haRquq9Z5h9xisPXcmqA9YRD4zZOzhYhxdXDx3df0yThVDEDvquz4L1d
+ 6FTNjd5u7fFTbwNA2yu46fxPVo5Sv0WLz1Fwnnn5U5R/QZqpgj6YuddFZdaLQnqYP9l6
+ 3Ca5y2GMqSfNgKOwx0kRjgINkLxC1LtaAN4PWOOjLFbKAc08SzbVG+NOsukZENPX8BC4
+ o2kw==
+X-Gm-Message-State: AOJu0YwuXxl1KBMTSxfMoHQ6NByaCFs1HPKp1ine91rQHM+TZFKtsfVj
+ 9La9/kkGBc7poIZlv+pfc+m5SqU+K7NpL+xrD0DRh2SIov0oH5KW75GIrVVHl7Kxq+Y=
+X-Gm-Gg: AfdE7clZur2jQVx3ITtlNBaqVWb6OrHio8RIJY9Dif6Xxr0eidjWUVon4ErgbQhvNa1
+ NLnvcQm8REjYE8888v5+FcBxYZSlc3RlGJJSAs+dvWg3Zu9TzhNLCNH9Wnwr8NjsRz4RFe42fhI
+ T/fVvlTjk4UvLkJRCc9esVa4m/U9wl3LE5wp27U90KT0AzTyoynh3yyRyrffc9KKCP5TFEZVEqP
+ 6xfwJMzpvFFkQ6GpLwTtjXHLfwo7pEgKAc1NWNMUj2F3b1jQoCspzDUIk6RUHGpru5yAZP3PY0s
+ 7D2l939AtsOmK00w2ek+Di4hUIH0MF8OWHnnGIU7Llagrstttg0iGjmvuAGq/00kOSaqmuxSwG0
+ ixpAU3HjR6dcCYaxVGxxnXXR5GEi3tQOsNMSFOxQ1XPhkiLSXdY3eIYCEYTolNL4XpMOckBjTks
+ K5JX7hWa3FnlU4ZaW9PVP8Pp+WxAJJwZNqP6cB3vPg790mlbNhWIei+KRGvh6XYlKlz7VKy7V0v
+ 6ehF4kgTqlEspqF/sk=
+X-Received: by 2002:a05:6000:402a:b0:46e:98a7:232b with SMTP id
+ ffacd0b85a97d-47df07a8676mr13668587f8f.10.1783690505342; 
+ Fri, 10 Jul 2026 06:35:05 -0700 (PDT)
+Received: from debian-for-building.localdomain
+ (static.244.71.243.136.clients.your-server.de. [136.243.71.244])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47a9b4d850dsm61405779f8f.0.2026.07.10.06.35.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 10 Jul 2026 06:35:04 -0700 (PDT)
+From: Dmitry R <rdmitry0911@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Dmitry R <rdmitry0911@gmail.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [RFC PATCH v1 0/1] Thunderbolt PCIe hotplug layer
+Date: Fri, 10 Jul 2026 16:34:37 +0300
+Message-ID: <20260710133440.2845828-1-rdmitry0911@gmail.com>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=rdmitry0911@gmail.com; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 10 Jul 2026 10:33:23 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,121 +103,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Friday, 10 July 2026 14:51:49 CEST Igor Mammedov wrote:
-> On Fri, 10 Jul 2026 12:49:06 +0200
-> 
-> Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
-> > On Friday, 10 July 2026 12:23:45 CEST Igor Mammedov wrote:
-[...]
-> note: I'm looking from pov of hotpluggable PCI device and generic hotplug
-> infra, only.
+This RFC adds a Thunderbolt-flavoured PCIe hotplug layer for QEMU.
 
-That's okay, but so far I don't see the relevance for this particular 9p 
-device.
- 
-> it's not guest users directly, it's how hotplug flow works for various guest
-> OSes:
-> 
-> 1. host plugs device in (-device or device_add)
-> 2. guest OS get's notified one way or another and does what ever guest side
->    init needed (incl. mounting share in 9pfs case)
+The main goal is hotplug and hot-unplug of real and virtual devices in
+guests where direct hotplug for those devices is not supported or not
+usable.  macOS is the main validation target for this path: the guest can
+observe endpoints through a guest-visible Thunderbolt layer even when direct
+PCIe hotplug for the same endpoint is not usable.
 
-That's not affected by this patch, right?
+The series intentionally keeps regular QEMU PCI endpoint devices intact.
+Devices behind the new layer remain normal QEMU PCI devices; the
+Thunderbolt root port controls guest-visible link presence, publishes ACPI
+properties, and emits PCIe hotplug notifications.
 
-> opposite flow:
-> 1. host does device_del (basically notify guest to remove device)
-> 2. guest OS frees resources and tells qemu to delete device
-> 3. qemu process remove event (which incl. unrealize as part of destroying
-> device)
+The patch adds:
 
-And that's not affected by this patch either, right?
+* thunderbolt-root-port, creating a thunderbolt-bus secondary bus.
+* thunderbolt-pcie-pci-bridge for tunnelled PCI endpoints.
+* thunderbolt-vga, a separate stdvga-compatible hotpluggable endpoint.
+* README/specs documentation with VGA, USB storage, and NVMe examples.
+* qtest coverage for the Thunderbolt VGA hotplug path.
 
-> Of cause guest if free to eject device without signal from host,
+The regular QEMU VGA device is not changed and remains non-hotpluggable.
+The Thunderbolt display path uses the separate thunderbolt-vga device type.
 
-OK, here is the point where we deviate: you are apparently seeing this from a 
-purely theoretical PoV.
+Runtime validation performed so far:
 
-I am facing reality: for several years I'm the only person taking care about 
-this piece of code at all (on a side channel, for free, next to my actual 
-work). And for several months I get AI generated security reports thrown at 
-me, where I have to a) filter legit ones, and b) fix those legit security 
-issues.
+* macOS guest booted from QCOW2 overlays over immutable base disk images.
+* Thunderbolt VGA hotplug/removal while the standard boot VGA remains.
+* NVMe hotplug/removal with guest driver instance checks.
+* USB controller hotplug, USB storage mount/write/eject, controller removal,
+  replug, and data persistence verification.
 
-For that reason, I am tightening security wherever I can, to prevent further 
-flood.
+Build/test validation:
 
-So the question here is: are you concerned about a real-life issue being 
-introduced by disabling hotplugging for 9pfs specifically?
+* ninja -C build qemu-system-x86_64 tests/qtest/display-vga-test
+* meson test -C build qtest-x86_64/display-vga-test --print-errorlogs
+* scripts/checkpatch.pl --no-tree --no-signoff on the full diff:
+  0 errors, with expected warnings for MIT inheritance in thunderbolt-vga.c
+  and possible MAINTAINERS coverage.
 
-> (I could imagine: get some file from share once and then guest releases
-> no longer need resource).
+Open questions:
 
-It's a pass-through file system. Ejecting the device does not really free a 
-noteworthy amount of resources.
+* Whether this should be split into smaller review patches after the overall
+  Thunderbolt modelling direction is accepted.
+* Which MAINTAINERS entry should own the Thunderbolt PCIe layer.
+* Whether the guest-visible properties are sufficient for non-macOS guests
+  that may also benefit from Thunderbolt-style tunnelling.
 
-> > Looking at the fixed issue (patch 1), my impression was that original 9p
-> > server developers were unaware that guest can actually trigger a device
-> > unrealize via ACPI eject.
-> 
-> I'd say it's a bug, and you are trying to fix it in patch #1
-> 
-> > Most probably because hotplugging is enabled by
-> > default for all devices in QEMU
-> 
-> it is on by default for PCI devices but also heavily depends on used
-> configuration (where/what is plugged).
+Dmitry R (1):
+  hw/pci-bridge: add Thunderbolt PCIe hotplug layer
 
-Exactly! And I was trying to explain, that for this particular use case 
-(9pfs), I don't see any real-live use-case for allowing a guest to eject the 
-9p device at runtime.
+ README.md                                   |  91 ++++
+ docs/specs/index.rst                        |   1 +
+ docs/specs/thunderbolt-pcie-hotplug.rst     |  99 ++++
+ hw/display/meson.build                      |   1 +
+ hw/display/thunderbolt-vga.c                | 275 ++++++++++
+ hw/pci-bridge/meson.build                   |   2 +
+ hw/pci-bridge/thunderbolt_pcie_pci_bridge.c | 156 ++++++
+ hw/pci-bridge/thunderbolt_root_port.c       | 565 ++++++++++++++++++++
+ tests/qtest/display-vga-test.c              |  68 +++
+ 9 files changed, 1258 insertions(+)
+ create mode 100644 README.md
+ create mode 100644 docs/specs/thunderbolt-pcie-hotplug.rst
+ create mode 100644 hw/display/thunderbolt-vga.c
+ create mode 100644 hw/pci-bridge/thunderbolt_pcie_pci_bridge.c
+ create mode 100644 hw/pci-bridge/thunderbolt_root_port.c
 
-So why allowing it? Just for fun?
-
-> > Independent of this patch here, I'm therefore currently investigating
-> > whether enabling hotplugging by default in QEMU actually make sense. To
-> > me, this should be an opt-in, not the other way around. Because device
-> > developers should make sure that ejecting a device a) makes sense for the
-> > device type in the first place and most importantly b) that ejecting the
-> > device works (without data loss and without negative security impact, as
-> > it was the case here).
-> 
-> well, hotplug is on by default for PCI devices. It is unlikely we would
-> flip default now.
-
-I am investigating to flip the default value for good reasons: I made a quick 
-scan on the huge list of devices in QEMU and found quite a number that are 
-affected by a similar UAF issue on guest ACPI eject. What do those devices 
-have in common? Hotplug is enabled by default, not explicitly by the 
-respective device.
-
-> that said, if 9pfs maintainer deem that it shouldn't be hotpluggable and 
-> it's safe to remove capability,
-
-That's me, unfortunately. Singular.
-
-> I'm fine with that too, just fix commit message
-> section wrt QMP removal and perhaps move the flag into front-end impl of
-> the device.
-
-Yeah, I just noticed that as well, that this should rather go to the PCI 
-bridge device. This patch applied it to the inner device, which is wrong.
-
-> BTW: always describe a way to reproduce problem (cover letter and/or patch)
-> so that reviewer could see whole flow. Otherwise one has to guess what/how
-> it gets broken based on context.
-
-The original report (private) is linked by patch 1:
-https://gitlab.com/qemu-project/qemu/-/work_items/3937
-
-Anyway, I'll think some more days about this, whether I should fix or drop the 
-patch.
-
-If you have more feedback, always appreciated of course.
-
-Thanks!
-
-/Christian
-
-
-
+-- 
+2.47.3
 
