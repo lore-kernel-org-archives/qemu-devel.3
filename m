@@ -4,107 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87A86C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 06:21:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AAF9C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 06:21:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi4bK-00013I-5A; Fri, 10 Jul 2026 02:20:42 -0400
+	id 1wi4bF-00010b-IH; Fri, 10 Jul 2026 02:20:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <infra.ai.cloud@bitdeer.com>)
- id 1wi4bI-00012T-9d
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 02:20:40 -0400
-Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <infra.ai.cloud@bitdeer.com>)
- id 1wi4bF-0004T1-KJ
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 02:20:40 -0400
-Received: by mail-lj1-x231.google.com with SMTP id
- 38308e7fff4ca-39669bcaadfso4285101fa.0
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 23:20:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783664435; cv=none;
- d=google.com; s=arc-20260327;
- b=YnRJOAOYVCmBmWHfVDdHbrWAzyIGh4SUipeRI07BEyBnfZBGrBW/sS4NNz65rQDm/V
- vupeBqOWDsKvBr+H1fkTihPY7WsFcUb7odVf3rmF2mM/l9OJIMq3F1zdlOTZ1vF/O+SJ
- rVKmI2ybIuHOyUhH/NZcxg8s0rNx4dcl6VPul1pOcXwMhZNdYpaETYgMNWsrZRM0ClXI
- Q8l/UGrrIemZP4e7m3+yp6HtFSSkRLyPK/PapOPLdOKlTD2FZXbSotP4hbFGk9cUCx7h
- TOdO1DIipBlIr2ues7F4ZvWMIZDec1uWaxoZYktM3StWmVv2zuZkcKXjlwJN3smZrD4w
- XPmg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=3K2lJjNYbabdV2J8xkgif5q+aOVMgO7AsbYEYuCj8Tw=;
- fh=kuVKdZVNXtkINJ6RzqfM652oKl3wb+pcFiE1RT84mA0=;
- b=eGrrbp+LDeOsWNESCQAM0t7a+2vOsdU/5giOr064ad7/DA+k04bXIdriiG1CW78gnd
- 9nsda87RyuED77sPjH/SbcZPeNco9+34wJ1DdfpVnVeo1NK+Go7DCoHZirA5sGfI2N0u
- 7rYoHMsmKi3eAqHg2xzeR8iQQ70uPLUchvQtekSopvjQoYaqYlvhlFDfyK4IDKNNwZgd
- rI0VInCoc/eqfd2P43YThMqSu78hNATKrTjnwUhic5nRYvVuGX+LiQ0iBkd1Scj/JnwH
- /o5BndBvJU00wWNW1YX8N9zj7ITgN742b2AxbvsXuT4SsLhqTpAn1yGFx8Tf+aciviqZ
- VrEQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wi4b9-0000sK-AN
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 02:20:31 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wi4b4-0004P4-W2
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 02:20:30 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66A3nDbn3752767
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 06:20:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=UlGsSEvi1EGQV3q6XUqbC9
+ BwlyG0eLN6j7prlwTM7S0=; b=cq3gbxU8iTwwXLKzdbW1cY7ZOV5P8Dtp6qfLkd
+ hTTBs3WZSSPGcnK+7riBqVoHCA0DNohW6y/ZbwOHdAK5FaalrcO9RtxX08UeWHGy
+ /0KtYPUTUCrnq4wkA6A4km3QvsfMiF/h0mWGnrJMQKh/y3bhUB5GPB3YjsC4jJ5T
+ MXPCEXwAc02Rhex00pe0I3nbnm8iUbX3DIjecpjqKp/cVuh4sJQFMon3iWLRp5WH
+ RVYHIZq4R+aB3rpTgnGWyyoW5cDWkZEFvNOypJCF5Ij3CNy4EOM3uXjJDFZwjsHz
+ wtxrnIYfiV/8ufSV7hhzPf5SWhLNgBqXvA7xV8tOjXVj6jjg==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fadvjb9h1-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 06:20:25 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2cacd6d37edso7889705ad.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 23:20:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bitdeer.com; s=google; t=1783664435; x=1784269235; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=3K2lJjNYbabdV2J8xkgif5q+aOVMgO7AsbYEYuCj8Tw=;
- b=TXvZ4QZ2wISBI5rm1a/GvlfmFOKUq9/viJ6M0MLTkwN3pJ3OGD83QRqda6ncOqEMoi
- uACJDVHgQrwklnWp42Tg7QWsCuGXGQL4FQtoQn2hvbyrPp5UmA38Q4saKA7Dr25FO7ZU
- 9sDYvfN0gjeG4vOpAigB17W3WAoiV7q7s1QQKY7Y7OnuolenJyC4e84X2lTYgb5f4rQq
- lbRkQtBcm7BSzd2aodFTIWMkTTYp17avpkWc6MLa/rpLra+cpz0yssKKi7lJdO+Efw0b
- 0F6Tj33O3AphUCl4qHNolBsPunsuLGU1D1/9Q2FWqZY+BWMPs1nKHXuX0KGXP/wPXN6I
- 14AA==
+ d=oss.qualcomm.com; s=google; t=1783664424; x=1784269224; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=UlGsSEvi1EGQV3q6XUqbC9BwlyG0eLN6j7prlwTM7S0=;
+ b=Kxj4KygNe8suuc9JiIdZxy7ZYPmh//FcOPmFm7FpSsrqjIil1a3mId4bIeDAEBzxkt
+ e+xsQcmAMmC6PMtT5hSszxU1C4hFkDlK5+2qqueRqQ152I5luseeIrQ/9Yr7ox/0v0RL
+ 4YmUnyp7LlzmqsAt8/pW6Ps6W7yncSiRz84uNkvVqwt4Xjf+9vVcHLceS9LTcG3UR4HE
+ WAZpZMT8zecDYzK3QOtLt0IJYH2ca4THDb/cRnn82M44PyZ0ZJowwzWNErmt/2cKUJUc
+ KwuinyuR90v7WrCpDcrXo8Se7tdZCU4Dcpoeey5yP0cdpn9O7Is4xMcUVavdEy6KoYPh
+ zCUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783664435; x=1784269235;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=3K2lJjNYbabdV2J8xkgif5q+aOVMgO7AsbYEYuCj8Tw=;
- b=jiL/0lHxDfIq6+BLVVouXrAO8X+N13h4zjK1UC5Td7s1H3hvGxYRTnsRnNnYFBuyjZ
- BQnRwMCuxaSMolp16zL4yRJsJvz2f8K2m+5GIdymsvTwbC3bMaty82XP9IJKUXazaPQl
- Mk6D7Ccf/YFDxsmu/phpKcUuiWh86neBgybIkI31Rsg0M+skiqFYb9jBEJZtBEMS5zqA
- 9RZ3AJoy64XbheRIHbEMdlpEWQ26fiE/OsPRcwimcvXeY8j9FFTKmHngKi/+Rclxv94x
- VVEfbh6jcq6aC+6tnNNetd0lT6zbuxEWJ35MNH13PwIMrElY+mZaKSDmD/5sbT2Z0s8N
- qSnA==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpbORYI7gJxtKfWAZ0ajDmxvBjbry8jDsTgiQHaMTBySi1lyOnWeagaqb0nXoNubx0zXjtWxMbUh2lW@nongnu.org
-X-Gm-Message-State: AOJu0YxJEDTuPtdMIC7gNTto2BkGVtbMoi6oe+m9smV0cS0eZWAgAgwn
- d4Pa/yt/9TzGm1JO5M9vpegOKBSFeNplGxJavL4L9VToKfsT289GS6KMkmw30xVF20wC9Sh2E1j
- X6dbgzHikYdr+nJphDAiZjWIOS1CSdys0cC9N/Hcaug==
-X-Gm-Gg: AfdE7clNHyCx7UZl0Sprym7n7Y4klf3VYJLGnkLsyEzPPpywjb/NEXh/W6DYRUdY6lO
- 3kOh8V4g7Ym0m3Xf1zhwoYQjA4cODXbM0f13ZnO39xH4jvWzmk4rO+JHfKCpCN+L0U5v7PI2aBN
- fNYDIbp34SG7uWwHe8qD18Y5L8aqfaVFlY3HOJXZF/zEpOkQJUuriX1zvkIbe+DwGhVOfNFtnSb
- DCqbYF3n+w1xYQ3ztSulKABrhHP5JveHBmFP7zHCokWa12woRUfHs7C6L1iQIEs/SiM9snL
-X-Received: by 2002:a2e:ab06:0:b0:39c:94d4:fb51 with SMTP id
- 38308e7fff4ca-39c94d4ffb1mr4235191fa.34.1783664434683; Thu, 09 Jul 2026
- 23:20:34 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783664424; x=1784269224;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=UlGsSEvi1EGQV3q6XUqbC9BwlyG0eLN6j7prlwTM7S0=;
+ b=je8sTznKDijake5Mn6MRab5p38vBfJFShHDoIxiZ8g+ngYMevTQ0ToR/QJT/riqDWY
+ IM1XkgZ5iMgEG+Y1KqV1ijGFkq3fNZT2eKqjNeJJCqDiLuP5KNrFUaNRQK7NVFludCkY
+ aAtwaDzd1knv1HsJYtrPCP9nt3R262MnbjqxiSbuRrrMXyaeLuLHJYNqDyEllnzwa33U
+ 3UEJNmtLwEA8qfQdpgzQRlApXYsbM+HUYQsz33cht6957lGWF4FmuVkcsB7uW2V8k/Vq
+ YGR8L4K9vkvTdVRiaWsrpgCqE+awJ4iGqhNvHXwy8sJZHKseSbdB3CsAlwXzifdhzwwV
+ 8XZw==
+X-Gm-Message-State: AOJu0YzMRepSop71UydJpHkl5m6vAy0qbw8r2B1lSIfGH9RC9cQU0eTo
+ N+flNqt1x11UdhAxTLfCHMGXnYDWcxkCpaTrDAtHZSD7LPmW5AQh1yON8YA792igkt9mqFZZuVD
+ iWVQ3jaYJ+B1BFVy24l2hQCtWyMM04RXWSrYWC4tCh9o5fBux0rMnuCwiLPqZpmoCzw==
+X-Gm-Gg: AfdE7clS5l7EMJMV5oFpxVUdmsGLUjJMjRH28zZXOiw0rXdpyIhpDZdASsI9NvxBKNF
+ dXvb/AA9KZFnmuoq9lK2Qb6zRiJYEV+5Dao8lvSSeNtRFkgG/BSnRRoRu8nTlRAHhopXk90gnXk
+ admZIaqobwpBmtEnkQPxX850pOKqLC5muANVp50c/XkQMAv7uWfS137uEkjFU12sJFq8ArsS3l6
+ 7yKjSJIamd4yKofQ1hWXOAoVJge37SabCduW7rqQRWq2z5W3mwOZnfUTPd4vlihvDKeRNEF1M0Y
+ eb3Y+H7jlUH7TI2GRJZEcIQIh+X2lV3W++q6ly3EsmekE0irvz5mmZzsJQMe/WWJ5jv5DRNYFOY
+ p0y3H9MksdX0Jnf8iF+G12D/4z+rOjBeELkLCx1ak2YCegsLI/Xq7/yq9/IBVu+e85lxpkZwqeJ
+ WdOwWYEQ==
+X-Received: by 2002:a05:6a20:6f8d:b0:3bf:6222:2e7e with SMTP id
+ adf61e73a8af0-3c0bcf4923emr13094562637.4.1783664423858; 
+ Thu, 09 Jul 2026 23:20:23 -0700 (PDT)
+X-Received: by 2002:a05:6a20:6f8d:b0:3bf:6222:2e7e with SMTP id
+ adf61e73a8af0-3c0bcf4923emr13094503637.4.1783664423125; 
+ Thu, 09 Jul 2026 23:20:23 -0700 (PDT)
+Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-13b659fa13bsm35428126c88.15.2026.07.09.23.20.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 09 Jul 2026 23:20:22 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Helge Deller <deller@gmx.de>, Peter Maydell <peter.maydell@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH v4 00/97] tests/tcg: run tests with meson
+Date: Thu,  9 Jul 2026 23:18:38 -0700
+Message-ID: <20260710062016.1818125-1-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-References: <20260604070029.34982-1-guobin@linux.alibaba.com>
- <CAFWXh4w==tF6VA1QyHWRqBX0hBE2R1Ko7u2Expwn+xv7=Fed2w@mail.gmail.com>
- <CAFWXh4x7sP-r6i9n-X7-gzkNNNqE5OegYkJZ=6TQvzhtgFLPdg@mail.gmail.com>
-In-Reply-To: <CAFWXh4x7sP-r6i9n-X7-gzkNNNqE5OegYkJZ=6TQvzhtgFLPdg@mail.gmail.com>
-From: Hy Man <infra.ai.cloud@bitdeer.com>
-Date: Fri, 10 Jul 2026 14:20:21 +0800
-X-Gm-Features: AUfX_mxYHxQzrHIxMXLyAf7SNCY_YI6Wsl4UBQr6JmzU6bogb79UW2SFlnaUTxs
-Message-ID: <CAFWXh4w4K9FabNoSECdrvce7cXZBcC=CYpgxR_3VvyK+hfny-Q@mail.gmail.com>
-Subject: Re: [PATCH v2] accel/kvm: event-driven wakeup for dirty ring reaper
- thread
-To: Bin Guo <guobin@linux.alibaba.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::231;
- envelope-from=infra.ai.cloud@bitdeer.com; helo=mail-lj1-x231.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEwMDA1OCBTYWx0ZWRfX7uIL2lL+gss4
+ Vfn1XGKIy1JFDhj3FfZDRWf7OxU/GlzGQGsxkWSDbhn47Q+N1zvmNbuKdmx8x5INjMu7F/jefcm
+ rC+kyiO0F2OXO7DDaCQ2qDnC4W5rb2osCZvrdz7V7njSWrW5QyK3BRraoJw5xTuJsvSY+8ZG1LJ
+ qiAswJkDHOY9ojMm8O09Ido3y/pO2hKRXo6b8SLPf64yi2Qc+jN14G5v+mKvGLtA+vZTa+DhiHh
+ DbCqX9QpMz8uCD/aBgh6cLH/a648r6bJv6wdtrYEHB7O7Ja1403f6R8t93ljfA9t0E82o5fOEuM
+ AbalToZUzyR7eGhbh6V3Rvyb3J9kQHFrYdmSDg+6wA6F90w/lsEA9jP6XJliGNbQ4Ll9df6VPnB
+ yNpDGOjvuUlsGIsN5f2fogazzaJxbf8GhcdEtZEvjKSr2/cNjTLMPVnuiYiGai6DbrqI9TviXbb
+ tGFdARWviC62m5sDe6g==
+X-Authority-Analysis: v=2.4 cv=WpIb99fv c=1 sm=1 tr=0 ts=6a508f29 cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=mUXnL0deTPNMi5eDGMMA:9 a=QEXdDO2ut3YA:10
+ a=1OuFwYUASf3TG4hYMiVC:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: KsqMCTRF4n9o0lPzlk9h3Sndr9BUj_7p
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEwMDA1OCBTYWx0ZWRfXxQ2lD0u3jJiw
+ Fd0vYCu5OYsYN7ZBJuVpliohZU8Oyi35xVrxQ4n6FstY3+1Wc4036oRsdkSJKYjFF8knkD+UEO4
+ uh4PIMK8z5fnLhJqBjwvw1MQrsgJ5Ck=
+X-Proofpoint-ORIG-GUID: KsqMCTRF4n9o0lPzlk9h3Sndr9BUj_7p
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-10_01,2026-07-09_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 adultscore=0 lowpriorityscore=0
+ clxscore=1015 malwarescore=0 phishscore=0 spamscore=0 bulkscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607100058
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,231 +159,466 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping
+This series replaces TCG tests makefiles with meson, with the
+goal of having something more readable and maintainable in the long term.
+Also it closes the gap that tcg tests had with the rest of tests, by integrating
+them with meson directly.
 
-In case this patch gets overlooked as time goes on.
+It covers all existing tests for all architectures, including
+user/system/multiarch-user/multiarch-system. It implements all requirements
+listed on original thread [1].
 
-On Thu, Jun 18, 2026 at 8:58=E2=80=AFAM Hy Man <infra.ai.cloud@bitdeer.com>=
- wrote:
->
-> Ping=E3=80=82
->
-> Hi Paolo, could you please take a look at this patch, I=E2=80=99d appreci=
-ate
-> your feedback on this patch.
->
-> On Fri, Jun 5, 2026 at 4:22=E2=80=AFPM Hy Man <infra.ai.cloud@bitdeer.com=
-> wrote:
-> >
-> > Reviewed-by: Hyman Huang <infra.ai.cloud@bitdeer.com>
-> >
-> > On Thu, Jun 4, 2026 at 3:00=E2=80=AFPM Bin Guo <guobin@linux.alibaba.co=
-m> wrote:
-> > >
-> > > The reaper polls with sleep(1) (TODO in the code) and only notices
-> > > dirty-limit teardown at the next 1s tick.
-> > >
-> > > Replace the sleep with qemu_poll_ns() on an EventNotifier, kicked
-> > > from dirtylimit_state_finalize() after dirtylimit_state has been
-> > > cleared.  The kick must follow the NULL assignment: kicking earlier
-> > > wakes the reaper while dirtylimit_in_service() still returns true,
-> > > so it just loops back to wait.  A 1s fallback timeout remains as a
-> > > liveness backstop.
-> > >
-> > > 20 set-/cancel-vcpu-dirty-limit cycles via QMP, |reaper-wake -
-> > > cancel-ack| measured with strace on the reaper TID:
-> > >
-> > >     before: median 255 ms, max 502 ms
-> > >     after:  median 0.6 ms, max  27 ms
-> > >
-> > > kvm_dirty_ring_reaper_init() returns int again (was made void in
-> > > commit 43a5e377f4) to propagate event_notifier_init() failure.
-> > >
-> > > Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
-> > > ---
-> > > Changes in v2:
-> > > - Fix compilation error: kvm_init() has no Error **errp parameter, so
-> > >   kvm_dirty_ring_reaper_init() now uses error_report() directly and
-> > >   no longer accepts an errp argument.
-> > > - Remove the kick from kvm_cpu_exec() KVM_EXIT_DIRTY_RING_FULL handle=
-r:
-> > >   it already reaps synchronously (all vCPUs or the ring-full one), so
-> > >   a background reaper kick would only be redundant or a no-op.
-> > > - Move kick site from dirtylimit_change(false) to
-> > >   dirtylimit_state_finalize() after dirtylimit_state =3D NULL, ensuri=
-ng
-> > >   the reaper actually proceeds past the dirtylimit_in_service() check=
-.
-> > >
-> > >  accel/kvm/kvm-all.c      | 42 ++++++++++++++++++++++++++++++++++----=
+[1] https://lore.kernel.org/qemu-devel/87wlwfsay4.fsf@draig.linaro.org/
+
+We also have for free:
+- correct and complete dependencies for any test, including:
+  scripts, c.inc, headers, reference files and binaries/plugins.
+- catch test declaration issues at configure time vs test time.
+- proper data types for variables instead of string expansion with make.
+
+Series first introduce the meson machinery needed in tests/tcg/meson.build, step
+by step. Then it adds support for all existing archs. Finally, we remove
+Makefiles and configure bits, and add documentation.
+
+Usage:
+
+```
+make check-tcg
+make check-tcg-aarch64-linux-user
+make check-tcg-aarch64-softmmu
+make tcg-tests
+
+ninja tcg-tests
+ninja clean
+./pyvenv/bin/meson test aarch64-softmmu-asid2 --verbose
+```
+
+v4
 --
-> > >  accel/stubs/kvm-stub.c   |  4 ++++
-> > >  include/system/kvm.h     |  7 +++++++
-> > >  include/system/kvm_int.h |  3 +++
-> > >  system/dirtylimit.c      |  2 ++
-> > >  5 files changed, 52 insertions(+), 6 deletions(-)
-> > >
-> > > diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> > > index 96f90ebb24..be005832bc 100644
-> > > --- a/accel/kvm/kvm-all.c
-> > > +++ b/accel/kvm/kvm-all.c
-> > > @@ -1754,6 +1754,8 @@ static void kvm_set_phys_mem(KVMMemoryListener =
-*kml,
-> > >      } while (size);
-> > >  }
-> > >
-> > > +#define KVM_DIRTY_RING_REAPER_FALLBACK_NS  (1 * NANOSECONDS_PER_SECO=
-ND)
-> > > +
-> > >  static void *kvm_dirty_ring_reaper_thread(void *data)
-> > >  {
-> > >      KVMState *s =3D data;
-> > > @@ -1764,12 +1766,18 @@ static void *kvm_dirty_ring_reaper_thread(voi=
-d *data)
-> > >      trace_kvm_dirty_ring_reaper("init");
-> > >
-> > >      while (true) {
-> > > +        GPollFD pfd =3D {
-> > > +            .fd =3D event_notifier_get_fd(&r->reaper_notifier),
-> > > +            .events =3D G_IO_IN,
-> > > +        };
-> > > +
-> > >          r->reaper_state =3D KVM_DIRTY_RING_REAPER_WAIT;
-> > >          trace_kvm_dirty_ring_reaper("wait");
-> > > -        /*
-> > > -         * TODO: provide a smarter timeout rather than a constant?
-> > > -         */
-> > > -        sleep(1);
-> > > +
-> > > +        qemu_poll_ns(&pfd, 1, KVM_DIRTY_RING_REAPER_FALLBACK_NS);
-> > > +
-> > > +        /* Drain unconditionally so a stale event can't spin the nex=
-t loop. */
-> > > +        event_notifier_test_and_clear(&r->reaper_notifier);
-> > >
-> > >          /* keep sleeping so that dirtylimit not be interfered by rea=
-per */
-> > >          if (dirtylimit_in_service()) {
-> > > @@ -1789,13 +1797,32 @@ static void *kvm_dirty_ring_reaper_thread(voi=
-d *data)
-> > >      g_assert_not_reached();
-> > >  }
-> > >
-> > > -static void kvm_dirty_ring_reaper_init(KVMState *s)
-> > > +static int kvm_dirty_ring_reaper_init(KVMState *s)
-> > >  {
-> > >      struct KVMDirtyRingReaper *r =3D &s->reaper;
-> > > +    int ret;
-> > > +
-> > > +    ret =3D event_notifier_init(&r->reaper_notifier, 0);
-> > > +    if (ret < 0) {
-> > > +        error_report("Failed to initialize dirty ring reaper notifie=
-r: %s",
-> > > +                     strerror(-ret));
-> > > +        return ret;
-> > > +    }
-> > >
-> > >      qemu_thread_create(&r->reaper_thr, "kvm-reaper",
-> > >                         kvm_dirty_ring_reaper_thread,
-> > >                         s, QEMU_THREAD_JOINABLE);
-> > > +    return 0;
-> > > +}
-> > > +
-> > > +void kvm_dirty_ring_reaper_kick(void)
-> > > +{
-> > > +    KVMState *s =3D kvm_state;
-> > > +
-> > > +    if (!s || !s->kvm_dirty_ring_size) {
-> > > +        return;
-> > > +    }
-> > > +    event_notifier_set(&s->reaper.reaper_notifier);
-> > >  }
-> > >
-> > >  static int kvm_dirty_ring_init(KVMState *s)
-> > > @@ -3097,7 +3124,10 @@ static int kvm_init(AccelState *as, MachineSta=
-te *ms)
-> > >      }
-> > >
-> > >      if (s->kvm_dirty_ring_size) {
-> > > -        kvm_dirty_ring_reaper_init(s);
-> > > +        ret =3D kvm_dirty_ring_reaper_init(s);
-> > > +        if (ret < 0) {
-> > > +            goto err;
-> > > +        }
-> > >      }
-> > >
-> > >      if (kvm_check_extension(kvm_state, KVM_CAP_BINARY_STATS_FD)) {
-> > > diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
-> > > index c4617caac6..b878598552 100644
-> > > --- a/accel/stubs/kvm-stub.c
-> > > +++ b/accel/stubs/kvm-stub.c
-> > > @@ -134,6 +134,10 @@ uint32_t kvm_dirty_ring_size(void)
-> > >      return 0;
-> > >  }
-> > >
-> > > +void kvm_dirty_ring_reaper_kick(void)
-> > > +{
-> > > +}
-> > > +
-> > >  bool kvm_hwpoisoned_mem(void)
-> > >  {
-> > >      return false;
-> > > diff --git a/include/system/kvm.h b/include/system/kvm.h
-> > > index 5fa33eddda..e127a5eb37 100644
-> > > --- a/include/system/kvm.h
-> > > +++ b/include/system/kvm.h
-> > > @@ -553,6 +553,13 @@ bool kvm_dirty_ring_enabled(void);
-> > >
-> > >  uint32_t kvm_dirty_ring_size(void);
-> > >
-> > > +/**
-> > > + * kvm_dirty_ring_reaper_kick - wake the background dirty ring reape=
-r.
-> > > + *
-> > > + * Safe from any thread; no-op when the dirty ring is not in use.
-> > > + */
-> > > +void kvm_dirty_ring_reaper_kick(void);
-> > > +
-> > >  void kvm_mark_guest_state_protected(void);
-> > >
-> > >  /**
-> > > diff --git a/include/system/kvm_int.h b/include/system/kvm_int.h
-> > > index 0876aac938..c14ebc927f 100644
-> > > --- a/include/system/kvm_int.h
-> > > +++ b/include/system/kvm_int.h
-> > > @@ -12,6 +12,7 @@
-> > >  #include "system/memory.h"
-> > >  #include "qapi/qapi-types-common.h"
-> > >  #include "qemu/accel.h"
-> > > +#include "qemu/event_notifier.h"
-> > >  #include "qemu/queue.h"
-> > >  #include "system/kvm.h"
-> > >  #include "accel/accel-ops.h"
-> > > @@ -100,6 +101,8 @@ struct KVMDirtyRingReaper {
-> > >      QemuThread reaper_thr;
-> > >      volatile uint64_t reaper_iteration; /* iteration number of reape=
-r thr */
-> > >      volatile enum KVMDirtyRingReaperState reaper_state; /* reap thr =
-state */
-> > > +    /* Wakeup channel: kicked when dirty-limit is torn down. */
-> > > +    EventNotifier reaper_notifier;
-> > >  };
-> > >  struct KVMState
-> > >  {
-> > > diff --git a/system/dirtylimit.c b/system/dirtylimit.c
-> > > index c934ceb0de..a33256ade7 100644
-> > > --- a/system/dirtylimit.c
-> > > +++ b/system/dirtylimit.c
-> > > @@ -239,6 +239,8 @@ void dirtylimit_state_finalize(void)
-> > >      g_free(dirtylimit_state);
-> > >      dirtylimit_state =3D NULL;
-> > >
-> > > +    kvm_dirty_ring_reaper_kick();
-> > > +
-> > >      trace_dirtylimit_state_finalize();
-> > >  }
-> > >
-> > > --
-> > > 2.50.1 (Apple Git-155)
-> > >
+
+- rebase on top of master (Makefiles + Dockerfile changes)
+- full CI pass on GitLab
+- update documentation for tcg-tests
+- check host cross cc is working (handle fedora cross compiler without runtime or
+  headers)
+- rename cc_docker_arch to cc_docker_host_arch
+- add test added since v3: aarch64/fprcvt
+- enable tricore system tests (was missing -kernel parameter)
+- add xtensaeb system tests
+- remove dependency from s390x/console.c to roms/SLOF submodule, which allows to
+  compile those tests without requiring the submodule.
+- fix meson warnings (min version for test with external program in args +
+  s/source_root/project_source_root/)
+- skip failing test gdb-prot-none on GitLab CI
+
+v3
+--
+
+- add all architectures
+- reduce number of plugins tests (only add one test for each plugin from
+  multiarch pool)
+- add depends for executable - allow to depend on a custom target for generated
+  headers (x86_64 mmx, avx)
+- add new tests added since last version for aarch64 (mte + gpc)
+- refactor series to keep all arch files at end
+- add docker host architecture selection
+
+v2
+--
+
+- s/mispell/misspell
+- moved comment about why we remove 'lib' prefix for plugins
+- if user declare a wrong entry in a dictionary, list possible keys
+- build tests by default (with 'all' target), as long as cross compiler is
+  natively installed, to avoid triggering a container build.
+- reword some comments based on reviewers feedback
+- always declare all tests and avoid "per config" errors (no 'if' in arch files)
+- move compiler feature and gdb version checks directly in tests/tcg/meson.build
+- add support for cross containers
+- add top target 'tcg-tests' to rebuild all tests
+
+Pierrick Bouvier (97):
+  tests/tcg/multiarch/system/memory.c: remove unused variable
+  tests/tcg/multiarch/plugin/check-plugin-output.sh: take test output as
+    input
+  tests/tcg/multiarch/plugin: rename check-plugin-output to
+    regex-compare
+  meson: bump minimal version to 1.6.0
+  tests/tcg: introduce meson.build
+  tests/tcg/meson.build: introduce exe_name
+  tests/tcg/meson.build: introduce test_name
+  tests/tcg/meson.build: introduce cflags
+  tests/tcg/meson.build: introduce qemu_args
+  tests/tcg/meson.build: introduce env_var
+  tests/tcg/plugins: build list of test_plugins
+  tests/tcg/meson.build: introduce plugin_test
+  tests/tcg/meson.build: test gdb support and introduce gdb_arch
+  tests/tcg/meson.build: introduce gdb_test
+  tests/tcg/meson.build: introduce wrapper
+  tests/tcg/meson.build: introduce expected_output
+  tests/tcg/meson.build: add wrapper run_and_check_forbidden_output
+  tests/tcg/meson.build: add wrapper run_with_input
+  tests/tcg/meson.build: add wrapper record_replay
+  tests/tcg/meson.build: add wrapper check_plugin_output
+  tests/tcg/meson.build: add logic to skip tests
+  tests/tcg/meson.build: introduce cc_feat and cc_feat_cflags
+  tests/tcg/meson.build: introduce gdb_feat and gdb_feat_version
+  tests/tcg/meson.build: move gdb_arch support check
+  tests/tcg/meson.build: let test infrastructure detect compiler
+  tests/docker/docker.py: return error code if probe fails
+  tests/docker/docker.py: remove "Image is up to date" info
+  tests/tcg/meson.build: introduce cc_dockerfile and cc_docker_host_arch
+  tests/tcg/meson.build: check host cross cc is working
+  tests/tcg/meson.build: introduce depends
+  tests/tcg/meson.build: add top-level 'tcg-tests' target
+  tests/tcg/multiarch/gdbstub/prot-none.py: deactivate on gitlab CI
+  tests/tcg/multiarch: declare user tests
+  tests/tcg/multiarch: declare system tests
+  tests/tcg/meson.build: add generic plugin tests
+  tests/tcg/arm/fcvt.c: use raw opcode for FPRCVT
+  tests/tcg/aarch64: user tests
+  tests/tcg/aarch64/system/gpc-test.c: remove unused variables
+  tests/tcg/aarch64: system tests
+  tests/tcg/aarch64_be: user tests
+  tests/tcg/alpha: add float reference files
+  tests/tcg/alpha: user tests
+  tests/tcg/alpha: system tests
+  tests/tcg/arm: user tests
+  tests/tcg/arm: system tests
+  tests/tcg/hexagon/overflow.c: add missing include
+  tests/tcg/hexagon: user tests
+  tests/tcg/multiarch/sha1.c: fix big endian implementation
+  tests/tcg/hppa: add float reference files
+  tests/tcg/hppa: user tests
+  tests/tcg/i386: add missing float reference files
+  tests/tcg/i386: user tests
+  tests/tcg/i386: system tests
+  tests/tcg/loongarch64: user tests
+  tests/tcg/loongarch64: system tests
+  tests/tcg/m68k: add float reference files
+  tests/tcg/m68k: user tests
+  scripts/probe-gdb-support.py: add mapping for mips architecture
+  tests/tcg/mips: add float reference files
+  test/tcg/mips: user tests
+  tests/tcg/mips64: add float reference files
+  tests/tcg/mips64: user tests
+  tests/tcg/mips64el: add float reference files
+  tests/tcg/mips64el: user tests
+  tests/docker/dockerfiles/debian-all-test-cross.docker: add or1k
+    toolchain
+  tests/tcg/or1k/test_addic.c: remove unused variables
+  tests/tcg/or1k/test_muli.c: remove set but unused variable
+  tests/tcg/or1k: add float reference files
+  plugins/api.c: identify or1k pc register and mark it as read only
+  tests/tcg/or1k: user tests
+  tests/tcg/ppc64: add float reference files
+  tests/tcg/ppc64: remove dependency on qemu/compiler.h
+  tests/tcg/ppc64: user tests
+  tests/tcg/ppc64le: add missing float reference file
+  tests/tcg/ppc64le: user tests
+  tests/tcg/riscv64: add float reference files
+  tests/tcg/riscv64: user tests
+  tests/tcg/riscv64: system tests
+  tests/tcg/s390x/head64.S: declare _exit symbol after main
+  tests/tcg/s390x: add float reference files
+  tests/tcg/s390x: user tests
+  tests/tcg/s390x/console.c: directly implement memcpy and memset
+  tests/tcg/s390x: system tests
+  tests/tcg/sh4: add float reference files
+  tests/tcg/sh4: user tests
+  tests/tcg/tricore: system tests
+  tests/tcg/x86_64: add missing float reference file
+  tests/tcg/x86_64: user tests
+  tests/tcg/x86_64: system tests
+  tests/tcg/xtensa/crt.S: align .text section
+  tests/docker/dockerfiles/debian-xtensa-cross.docker: add test_kc705_be
+    toolchain for xtensaeb
+  tests/tcg/xtensa: system tests
+  tests/tcg/xtensa: xtensaeb system tests
+  tests: remove tcg tests machinery
+  tests/tcg: remove Makefiles
+  configure: remove --cross-cc* options
+  docs/devel/testing/: update documentation
+
+ configure                                     | 473 ---------
+ docs/devel/build-system.rst                   |   4 +-
+ docs/devel/testing/main.rst                   |  55 +-
+ meson.build                                   |   4 +-
+ plugins/api.c                                 |   2 +
+ pythondeps.toml                               |   2 +-
+ scripts/probe-gdb-support.py                  |   1 +
+ .../packagefiles/anyhow-1-rs/meson.build      |   2 +-
+ .../arbitrary-int-1-rs/meson.build            |   2 +-
+ .../packagefiles/attrs-0.2-rs/meson.build     |   2 +-
+ .../packagefiles/bilge-0.2-rs/meson.build     |   2 +-
+ .../bilge-impl-0.2-rs/meson.build             |   2 +-
+ .../packagefiles/either-1-rs/meson.build      |   2 +-
+ .../packagefiles/foreign-0.3-rs/meson.build   |   2 +-
+ .../packagefiles/glib-sys-0.21-rs/meson.build |   2 +-
+ .../itertools-0.11-rs/meson.build             |   2 +-
+ .../packagefiles/libc-0.2-rs/meson.build      |   2 +-
+ .../packagefiles/probe-0.5-rs/meson.build     |   2 +-
+ .../proc-macro-error-1-rs/meson.build         |   2 +-
+ .../proc-macro-error-attr-1-rs/meson.build    |   2 +-
+ .../packagefiles/proc-macro2-1-rs/meson.build |   2 +-
+ .../packagefiles/quote-1-rs/meson.build       |   2 +-
+ subprojects/packagefiles/syn-2-rs/meson.build |   2 +-
+ .../unicode-ident-1-rs/meson.build            |   2 +-
+ tests/Makefile.include                        |  68 +-
+ tests/docker/docker.py                        |   4 +-
+ .../dockerfiles/debian-all-test-cross.docker  |  14 +-
+ .../dockerfiles/debian-xtensa-cross.docker    |   4 +-
+ tests/lcitool/refresh                         |  14 +-
+ tests/meson.build                             |   2 +-
+ tests/tcg/Makefile.target                     | 281 -----
+ tests/tcg/aarch64/Makefile.softmmu-target     | 147 ---
+ tests/tcg/aarch64/Makefile.target             | 210 ----
+ tests/tcg/aarch64/meson.build                 | 207 ++++
+ tests/tcg/aarch64/system/gpc-test.c           |   5 -
+ tests/tcg/aarch64/system/meson.build          | 108 ++
+ tests/tcg/aarch64_be/Makefile.target          |  17 -
+ tests/tcg/aarch64_be/meson.build              |  22 +
+ tests/tcg/alpha/Makefile.softmmu-target       |  34 -
+ tests/tcg/alpha/Makefile.target               |  18 -
+ tests/tcg/alpha/float_convd.ref               | 988 ++++++++++++++++++
+ tests/tcg/alpha/float_convs.ref               | 748 +++++++++++++
+ tests/tcg/alpha/float_madds.ref               | 768 ++++++++++++++
+ tests/tcg/alpha/meson.build                   |  55 +
+ tests/tcg/alpha/system/meson.build            |  46 +
+ tests/tcg/arm/Makefile.softmmu-target         |  80 --
+ tests/tcg/arm/Makefile.target                 |  87 --
+ tests/tcg/arm/fcvt.c                          |   6 +-
+ tests/tcg/arm/meson.build                     |  80 ++
+ tests/tcg/arm/system/meson.build              |  66 ++
+ tests/tcg/hexagon/Makefile.target             | 146 ---
+ tests/tcg/hexagon/meson.build                 | 111 ++
+ tests/tcg/hexagon/overflow.c                  |   1 +
+ tests/tcg/hppa/Makefile.target                |  14 -
+ tests/tcg/hppa/float_convd.ref                | 988 ++++++++++++++++++
+ tests/tcg/hppa/float_convs.ref                | 748 +++++++++++++
+ tests/tcg/hppa/float_madds.ref                | 768 ++++++++++++++
+ tests/tcg/hppa/meson.build                    |  22 +
+ tests/tcg/i386/Makefile.softmmu-target        |  37 -
+ tests/tcg/i386/Makefile.target                | 102 --
+ tests/tcg/i386/float_convd.conf               | 988 ------------------
+ tests/tcg/i386/float_convd.ref                | 988 ++++++++++++++++++
+ tests/tcg/i386/float_madds.ref                | 768 ++++++++++++++
+ tests/tcg/i386/meson.build                    |  58 +
+ tests/tcg/i386/system/meson.build             |  48 +
+ tests/tcg/loongarch64/Makefile.softmmu-target |  33 -
+ tests/tcg/loongarch64/Makefile.target         |  20 -
+ tests/tcg/loongarch64/meson.build             |  32 +
+ tests/tcg/loongarch64/system/meson.build      |  47 +
+ tests/tcg/m68k/Makefile.target                |   7 -
+ tests/tcg/m68k/float_convd.ref                | 988 ++++++++++++++++++
+ tests/tcg/m68k/float_convs.ref                | 748 +++++++++++++
+ tests/tcg/m68k/float_madds.ref                | 768 ++++++++++++++
+ tests/tcg/m68k/meson.build                    |  23 +
+ tests/tcg/meson.build                         | 461 ++++++++
+ tests/tcg/minilib/Makefile.target             |  21 -
+ tests/tcg/mips/Makefile.target                |  19 -
+ tests/tcg/mips/float_convd.ref                | 988 ++++++++++++++++++
+ tests/tcg/mips/float_convs.ref                | 748 +++++++++++++
+ tests/tcg/mips/float_madds.ref                | 768 ++++++++++++++
+ tests/tcg/mips/meson.build                    |  25 +
+ tests/tcg/mips/user/ase/dsp/Makefile          | 184 ----
+ tests/tcg/mips/user/isa/mips64r6/crc/Makefile |  40 -
+ tests/tcg/mips/user/isa/r5900/Makefile        |  32 -
+ tests/tcg/mips64/Makefile.target              |  20 -
+ tests/tcg/mips64/float_convd.ref              | 988 ++++++++++++++++++
+ tests/tcg/mips64/float_convs.ref              | 748 +++++++++++++
+ tests/tcg/mips64/float_madds.ref              | 768 ++++++++++++++
+ tests/tcg/mips64/meson.build                  |  27 +
+ tests/tcg/mips64el/Makefile.target            |   8 -
+ tests/tcg/mips64el/float_convd.ref            | 988 ++++++++++++++++++
+ tests/tcg/mips64el/float_convs.ref            | 748 +++++++++++++
+ tests/tcg/mips64el/float_madds.ref            | 768 ++++++++++++++
+ tests/tcg/mips64el/meson.build                |  14 +
+ tests/tcg/multiarch/Makefile.target           | 224 ----
+ tests/tcg/multiarch/gdbstub/prot-none.py      |  11 +-
+ tests/tcg/multiarch/meson.build               | 149 +++
+ .../multiarch/plugin/check-plugin-output.sh   |  36 -
+ tests/tcg/multiarch/plugin/regex-compare.sh   |  28 +
+ tests/tcg/multiarch/sha1.c                    |   4 +-
+ tests/tcg/multiarch/sha1.ref                  |   1 +
+ .../multiarch/system/Makefile.softmmu-target  |  81 --
+ tests/tcg/multiarch/system/memory.c           |   3 +-
+ tests/tcg/multiarch/system/meson.build        |  53 +
+ tests/tcg/or1k/Makefile                       |  71 --
+ tests/tcg/or1k/float_convd.ref                | 247 +++++
+ tests/tcg/or1k/float_convs.ref                | 187 ++++
+ tests/tcg/or1k/float_madds.ref                | 192 ++++
+ tests/tcg/or1k/meson.build                    |  72 ++
+ tests/tcg/or1k/test_addic.c                   |   2 +-
+ tests/tcg/or1k/test_muli.c                    |   5 +-
+ tests/tcg/plugins/meson.build                 |  11 +-
+ tests/tcg/ppc64/Makefile.target               |  63 --
+ tests/tcg/ppc64/float_convd.ref               | 988 ++++++++++++++++++
+ tests/tcg/ppc64/float_convs.ref               | 748 +++++++++++++
+ tests/tcg/ppc64/float_madds.ref               | 768 ++++++++++++++
+ tests/tcg/ppc64/meson.build                   |  56 +
+ tests/tcg/ppc64/vector.c                      |  11 +-
+ tests/tcg/ppc64/vsx_f2i_nan.c                 |   7 +-
+ tests/tcg/ppc64le/Makefile.target             |   7 -
+ tests/tcg/ppc64le/float_convd.ref             | 988 ++++++++++++++++++
+ tests/tcg/ppc64le/meson.build                 |  14 +
+ tests/tcg/riscv64/Makefile.softmmu-target     |  45 -
+ tests/tcg/riscv64/Makefile.target             |  20 -
+ tests/tcg/riscv64/float_convd.ref             | 988 ++++++++++++++++++
+ tests/tcg/riscv64/float_convs.ref             | 748 +++++++++++++
+ tests/tcg/riscv64/float_madds.ref             | 768 ++++++++++++++
+ tests/tcg/riscv64/meson.build                 |  38 +
+ tests/tcg/riscv64/system/meson.build          |  38 +
+ tests/tcg/s390x/Makefile.softmmu-target       |  57 -
+ tests/tcg/s390x/Makefile.target               | 127 ---
+ tests/tcg/s390x/console.c                     |  30 +-
+ tests/tcg/s390x/float_convd.ref               | 988 ++++++++++++++++++
+ tests/tcg/s390x/float_convs.ref               | 748 +++++++++++++
+ tests/tcg/s390x/float_madds.ref               | 768 ++++++++++++++
+ tests/tcg/s390x/head64.S                      |   2 +
+ tests/tcg/s390x/meson.build                   | 140 +++
+ tests/tcg/s390x/system/meson.build            |  90 ++
+ tests/tcg/scripts/check_plugin_output.sh      |  25 +
+ tests/tcg/scripts/record_replay.sh            |  16 +
+ .../scripts/run_and_check_forbidden_output.sh |  19 +
+ tests/tcg/scripts/run_and_diff.sh             |  15 +
+ tests/tcg/scripts/run_with_input.sh           |  12 +
+ tests/tcg/sh4/Makefile.target                 |  18 -
+ tests/tcg/sh4/float_convd.ref                 | 494 +++++++++
+ tests/tcg/sh4/float_convs.ref                 | 374 +++++++
+ tests/tcg/sh4/float_madds.ref                 | 384 +++++++
+ tests/tcg/sh4/meson.build                     |  25 +
+ tests/tcg/test_cc.c                           |   7 +
+ tests/tcg/tricore/Makefile.softmmu-target     |  53 -
+ tests/tcg/tricore/meson.build                 |  57 +
+ tests/tcg/x86_64/Makefile.softmmu-target      |  44 -
+ tests/tcg/x86_64/Makefile.target              |  40 -
+ tests/tcg/x86_64/float_madds.ref              | 768 ++++++++++++++
+ tests/tcg/x86_64/meson.build                  |  83 ++
+ tests/tcg/x86_64/system/meson.build           |  62 ++
+ tests/tcg/xtensa/Makefile.softmmu-target      |  46 -
+ tests/tcg/xtensa/crt.S                        |   1 +
+ tests/tcg/xtensa/meson.build                  | 110 ++
+ tests/tcg/xtensaeb/Makefile.softmmu-target    |   5 -
+ 160 files changed, 30639 insertions(+), 4111 deletions(-)
+ delete mode 100644 tests/tcg/Makefile.target
+ delete mode 100644 tests/tcg/aarch64/Makefile.softmmu-target
+ delete mode 100644 tests/tcg/aarch64/Makefile.target
+ create mode 100644 tests/tcg/aarch64/meson.build
+ create mode 100644 tests/tcg/aarch64/system/meson.build
+ delete mode 100644 tests/tcg/aarch64_be/Makefile.target
+ create mode 100644 tests/tcg/aarch64_be/meson.build
+ delete mode 100644 tests/tcg/alpha/Makefile.softmmu-target
+ delete mode 100644 tests/tcg/alpha/Makefile.target
+ create mode 100644 tests/tcg/alpha/float_convd.ref
+ create mode 100644 tests/tcg/alpha/float_convs.ref
+ create mode 100644 tests/tcg/alpha/float_madds.ref
+ create mode 100644 tests/tcg/alpha/meson.build
+ create mode 100644 tests/tcg/alpha/system/meson.build
+ delete mode 100644 tests/tcg/arm/Makefile.softmmu-target
+ delete mode 100644 tests/tcg/arm/Makefile.target
+ create mode 100644 tests/tcg/arm/meson.build
+ create mode 100644 tests/tcg/arm/system/meson.build
+ delete mode 100644 tests/tcg/hexagon/Makefile.target
+ create mode 100644 tests/tcg/hexagon/meson.build
+ delete mode 100644 tests/tcg/hppa/Makefile.target
+ create mode 100644 tests/tcg/hppa/float_convd.ref
+ create mode 100644 tests/tcg/hppa/float_convs.ref
+ create mode 100644 tests/tcg/hppa/float_madds.ref
+ create mode 100644 tests/tcg/hppa/meson.build
+ delete mode 100644 tests/tcg/i386/Makefile.softmmu-target
+ delete mode 100644 tests/tcg/i386/Makefile.target
+ delete mode 100644 tests/tcg/i386/float_convd.conf
+ create mode 100644 tests/tcg/i386/float_convd.ref
+ create mode 100644 tests/tcg/i386/float_madds.ref
+ create mode 100644 tests/tcg/i386/meson.build
+ create mode 100644 tests/tcg/i386/system/meson.build
+ delete mode 100644 tests/tcg/loongarch64/Makefile.softmmu-target
+ delete mode 100644 tests/tcg/loongarch64/Makefile.target
+ create mode 100644 tests/tcg/loongarch64/meson.build
+ create mode 100644 tests/tcg/loongarch64/system/meson.build
+ delete mode 100644 tests/tcg/m68k/Makefile.target
+ create mode 100644 tests/tcg/m68k/float_convd.ref
+ create mode 100644 tests/tcg/m68k/float_convs.ref
+ create mode 100644 tests/tcg/m68k/float_madds.ref
+ create mode 100644 tests/tcg/m68k/meson.build
+ create mode 100644 tests/tcg/meson.build
+ delete mode 100644 tests/tcg/minilib/Makefile.target
+ delete mode 100644 tests/tcg/mips/Makefile.target
+ create mode 100644 tests/tcg/mips/float_convd.ref
+ create mode 100644 tests/tcg/mips/float_convs.ref
+ create mode 100644 tests/tcg/mips/float_madds.ref
+ create mode 100644 tests/tcg/mips/meson.build
+ delete mode 100644 tests/tcg/mips/user/ase/dsp/Makefile
+ delete mode 100644 tests/tcg/mips/user/isa/mips64r6/crc/Makefile
+ delete mode 100644 tests/tcg/mips/user/isa/r5900/Makefile
+ delete mode 100644 tests/tcg/mips64/Makefile.target
+ create mode 100644 tests/tcg/mips64/float_convd.ref
+ create mode 100644 tests/tcg/mips64/float_convs.ref
+ create mode 100644 tests/tcg/mips64/float_madds.ref
+ create mode 100644 tests/tcg/mips64/meson.build
+ delete mode 100644 tests/tcg/mips64el/Makefile.target
+ create mode 100644 tests/tcg/mips64el/float_convd.ref
+ create mode 100644 tests/tcg/mips64el/float_convs.ref
+ create mode 100644 tests/tcg/mips64el/float_madds.ref
+ create mode 100644 tests/tcg/mips64el/meson.build
+ delete mode 100644 tests/tcg/multiarch/Makefile.target
+ create mode 100644 tests/tcg/multiarch/meson.build
+ delete mode 100755 tests/tcg/multiarch/plugin/check-plugin-output.sh
+ create mode 100755 tests/tcg/multiarch/plugin/regex-compare.sh
+ create mode 100644 tests/tcg/multiarch/sha1.ref
+ delete mode 100644 tests/tcg/multiarch/system/Makefile.softmmu-target
+ create mode 100644 tests/tcg/multiarch/system/meson.build
+ delete mode 100644 tests/tcg/or1k/Makefile
+ create mode 100644 tests/tcg/or1k/float_convd.ref
+ create mode 100644 tests/tcg/or1k/float_convs.ref
+ create mode 100644 tests/tcg/or1k/float_madds.ref
+ create mode 100644 tests/tcg/or1k/meson.build
+ delete mode 100644 tests/tcg/ppc64/Makefile.target
+ create mode 100644 tests/tcg/ppc64/float_convd.ref
+ create mode 100644 tests/tcg/ppc64/float_convs.ref
+ create mode 100644 tests/tcg/ppc64/float_madds.ref
+ create mode 100644 tests/tcg/ppc64/meson.build
+ delete mode 100644 tests/tcg/ppc64le/Makefile.target
+ create mode 100644 tests/tcg/ppc64le/float_convd.ref
+ create mode 100644 tests/tcg/ppc64le/meson.build
+ delete mode 100644 tests/tcg/riscv64/Makefile.softmmu-target
+ delete mode 100644 tests/tcg/riscv64/Makefile.target
+ create mode 100644 tests/tcg/riscv64/float_convd.ref
+ create mode 100644 tests/tcg/riscv64/float_convs.ref
+ create mode 100644 tests/tcg/riscv64/float_madds.ref
+ create mode 100644 tests/tcg/riscv64/meson.build
+ create mode 100644 tests/tcg/riscv64/system/meson.build
+ delete mode 100644 tests/tcg/s390x/Makefile.softmmu-target
+ delete mode 100644 tests/tcg/s390x/Makefile.target
+ create mode 100644 tests/tcg/s390x/float_convd.ref
+ create mode 100644 tests/tcg/s390x/float_convs.ref
+ create mode 100644 tests/tcg/s390x/float_madds.ref
+ create mode 100644 tests/tcg/s390x/meson.build
+ create mode 100644 tests/tcg/s390x/system/meson.build
+ create mode 100755 tests/tcg/scripts/check_plugin_output.sh
+ create mode 100755 tests/tcg/scripts/record_replay.sh
+ create mode 100755 tests/tcg/scripts/run_and_check_forbidden_output.sh
+ create mode 100755 tests/tcg/scripts/run_and_diff.sh
+ create mode 100755 tests/tcg/scripts/run_with_input.sh
+ delete mode 100644 tests/tcg/sh4/Makefile.target
+ create mode 100644 tests/tcg/sh4/float_convd.ref
+ create mode 100644 tests/tcg/sh4/float_convs.ref
+ create mode 100644 tests/tcg/sh4/float_madds.ref
+ create mode 100644 tests/tcg/sh4/meson.build
+ create mode 100644 tests/tcg/test_cc.c
+ delete mode 100644 tests/tcg/tricore/Makefile.softmmu-target
+ create mode 100644 tests/tcg/tricore/meson.build
+ delete mode 100644 tests/tcg/x86_64/Makefile.softmmu-target
+ delete mode 100644 tests/tcg/x86_64/Makefile.target
+ create mode 100644 tests/tcg/x86_64/float_madds.ref
+ create mode 100644 tests/tcg/x86_64/meson.build
+ create mode 100644 tests/tcg/x86_64/system/meson.build
+ delete mode 100644 tests/tcg/xtensa/Makefile.softmmu-target
+ create mode 100644 tests/tcg/xtensa/meson.build
+ delete mode 100644 tests/tcg/xtensaeb/Makefile.softmmu-target
+
+-- 
+2.47.3
+
 
