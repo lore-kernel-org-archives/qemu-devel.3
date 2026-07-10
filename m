@@ -4,88 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61D3CC44506
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 21:04:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C721C44506
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 21:27:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiIHH-0005Ju-Co; Fri, 10 Jul 2026 16:56:55 -0400
+	id 1wiIka-0001bX-P4; Fri, 10 Jul 2026 17:27:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wiIFa-0002Nd-Jb
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 16:55:12 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wiIFK-00010X-L3
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 16:55:10 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-8485b358552so1514299b3a.2
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 13:54:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783716881; x=1784321681; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Lp+19HN1hDJRD/nyQTZDKaLa3PwvYZGSdAI5w9aXD2A=;
- b=NRm5vutXosn0qEulf6s2AP8yiv/XvKe89Rh0B2V3gMDw+vAV+qEpzwZqB8udydLASm
- KRITViG9NOfHn6IdT1eUbWd6BVzrupMPzQIgLqeT5VhSjCdsHOKxke/5F1AM55d9mecv
- HfjyOrU5Io242Kf2uxaTkJm1/jiOIfgnSQ1HR1Lig/dzTkEM7053Royqa51opk0AmSDA
- OevP2h+hDK3W4Jn2F5KiGhBeVrjaiCo/alaVALMMCyaA2JeSYOBloGNSNqYjAlzTXpkW
- 4LU7wg+uWtpFECG/IpSrfDH/KdZz/2EV8m/IDGRLRkGwsu3eRwcB5/RfCYmAVwuYHcdP
- I9kA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783716881; x=1784321681;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Lp+19HN1hDJRD/nyQTZDKaLa3PwvYZGSdAI5w9aXD2A=;
- b=llXtZbM7r1dL1QZrywlqDVHKqf/EtaUNJmqd8eehQeekLuULa22HrYKjFDjGL2Guet
- +3/HN9/5StLZmP37n1WOEoF4tPMBqWJeqmpvd7c9/1P1NuZsK6LEt4lPSmo+UtUuW/fV
- S0ZgmzZo1Bu27Ds66Or3IA7UhBcnkmuY0dseoLlpGgTaJUxnS6r9gdtgJ4TPJ8ruVhVv
- SXl4ySW2IjMygC5MLhl6XN1+uyAyRecG2IQsw0PHzx2n0BHBJQRn4SWeWCz922KLP/o/
- FFlfVJBcbhzsO/Qy0qkK9/gsLZ4ZB/BhWK2fjCZooOpnBO2Mwlo8UGS3nkOKGuzusHJZ
- pP3Q==
-X-Gm-Message-State: AOJu0YykmyG+cz6zKg6fgKiWnrMjxcLiTcXvQB2gsZf/I+7xr3yPD8+O
- 3ABBaYVMb/vJIovthiN52J4/3VulXaMBavzBOXwPwFUTeQssZP0Ys9GL/0wLsctBj9tiJ9I8WrM
- pKYw2
-X-Gm-Gg: AfdE7ck3PbpLClN2/U47sz74tNzq3orIW2ZN7hXnXQmpLMe1jkW5ZMzhghiCKVSIxtQ
- qZuGCSi+eBi0bIuE8Hna1bo+T1MtlCLvzzwU5flLjCjbd0dMtGJNjTpiwyxTeLKiNhL5IL90uO8
- G0hD2olK9TFPZVHWMtPDlRHjqeqJN8pXNzeP8I/sskxHsqcwiNuzWWR6d2biCMJSRVomXZT2mQy
- Vg3zowBynRSrUc6SIfUueeNk2bbNu29l/kYIIB90T78vjgEBk3IMd2N94XzNLu61q/rCWCEEvkV
- cFs19gHZu5cPD5nn5wF6BbjYKnXmztgNwrbT1+nEnPkeNhwmYmZSGFxQlu+lLaBHv+EvL2UgVEU
- 8xFGWmXkWyh6V1fYS8/cVEy4s97e+yePKxaZ96r1O2MZWBdPO/iLqmYcS7Mm/im3W5th1nVVXMc
- rQHGfgiy6jHTlzISvZAQ==
-X-Received: by 2002:a05:6a00:1256:b0:847:904c:8452 with SMTP id
- d2e1a72fcca58-8488986fb9emr455784b3a.38.1783716881331; 
- Fri, 10 Jul 2026 13:54:41 -0700 (PDT)
-Received: from stoup.. ([71.212.146.49]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-847f6d76106sm10780574b3a.40.2026.07.10.13.54.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Jul 2026 13:54:40 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
- qemu-s390x@nongnu.org, jcmvbkbc@gmail.com
-Subject: [PATCH v3 36/51] target/riscv: Set badaddr in
- riscv_cpu_debug_excp_handler
-Date: Fri, 10 Jul 2026 13:53:46 -0700
-Message-ID: <20260710205401.836304-37-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260710205401.836304-1-richard.henderson@linaro.org>
-References: <20260710205401.836304-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
+ id 1wiIkZ-0001bG-1S
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 17:27:11 -0400
+Received: from smtp186.sjtu.edu.cn ([202.120.2.186])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
+ id 1wiIkW-0001JU-IZ
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 17:27:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sjtu.edu.cn;
+ s=default; t=1783718799;
+ bh=JQNoImtzZFI1DJif8R/dIUH8/U36CaUAE24kYC9Sd94=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=jKzvX9KWfuXkZn0t3kC5DFag8UP/mlOklWkjcJp/Il5URgVZhkoAK2ZPGL/ZzP+w6
+ rHGnPFz89damiaRG1blbY2C+CDEakRGUE7griijldRiZ21wzUh9xg/dtxbDwkJqQUw
+ iMv5OLAVEj+vnZ2u1YGfJoTcQNwm0jZfaEkQc6+dqTiIeLKjpCYBZGyAsttbHjGwlb
+ JEkJ0h9oRCPDvS/YQHYnqUmb8/9pUULQ2TKuPcNl4/enLs5py6vSkhreb3l4lYnH4Q
+ yCPaiY5RBcwISGFlyk5zLXJ8HBPCm6VkIs0fZW/h+AYfV7noZqK1pEEMVG1pIi59p+
+ wnbAXL78qkZpA==
+Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
+ by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id 566DA2FF3F6;
+ Fri, 10 Jul 2026 21:26:39 +0000 (UTC)
+Received: from pc.. (unknown [202.120.40.100])
+ by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 7922037C925;
+ Sat, 11 Jul 2026 05:26:08 +0800 (CST)
+From: Ziyang Zhang <functioner@sjtu.edu.cn>
+To: qemu-devel <qemu-devel@nongnu.org>
+Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
+ Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
+ Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>,
+ Ziyang Zhang <functioner@sjtu.edu.cn>
+Subject: [PATCH v11 1/2] contrib/plugins: add a minimal dlcall plugin
+Date: Sat, 11 Jul 2026 05:26:00 +0800
+Message-Id: <20260710212601.583352-2-functioner@sjtu.edu.cn>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260710212601.583352-1-functioner@sjtu.edu.cn>
+References: <20260710212601.583352-1-functioner@sjtu.edu.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- SUSPICIOUS_RECIPS=2.51 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=202.120.2.186;
+ envelope-from=functioner@sjtu.edu.cn; helo=smtp186.sjtu.edu.cn
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,58 +77,297 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Setting badaddr in riscv_cpu_debug_check_breakpoint was a minor
-buglet as that function should only be testing if the breakpoint
-should trigger.
+Add a minimal dlcall plugin that lets the guest invoke host functions
+through magic system calls. The plugin registers a vCPU syscall filter
+callback that intercepts a reserved syscall number and dispatches a set
+of pass-through operations: querying host attributes, loading and freeing
+shared libraries, resolving symbols, retrieving the last library error,
+and invoking a host function through a common interface.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+The magic syscall number defaults to 4096 and can be overridden at load
+time with the "syscall_num=N" argument; values low enough to clash with a
+real syscall are rejected.
+
+Co-authored-by: Kailiang Xu <xukl2019@sjtu.edu.cn>
+Co-authored-by: Mingyuan Xia <xiamy@ultrarisc.com>
+Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
 ---
- target/riscv/cpu_helper.c | 4 ----
- target/riscv/debug.c      | 8 ++------
- 2 files changed, 2 insertions(+), 10 deletions(-)
+ contrib/plugins/dlcall.c    | 248 ++++++++++++++++++++++++++++++++++++
+ contrib/plugins/meson.build |   5 +
+ 2 files changed, 253 insertions(+)
+ create mode 100644 contrib/plugins/dlcall.c
 
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index c318dcd633..f9556c04a5 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -2373,10 +2373,6 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-             break;
-         case RISCV_EXCP_BREAKPOINT:
-             tval = env->badaddr;
--            if (cs->watchpoint_hit) {
--                tval = cs->watchpoint_hit->hitaddr;
--                cs->watchpoint_hit = NULL;
--            }
-             break;
-         case RISCV_EXCP_SW_CHECK:
-             tval = env->sw_check_code;
-diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-index 994a77fd31..f4689519d8 100644
---- a/target/riscv/debug.c
-+++ b/target/riscv/debug.c
-@@ -919,6 +919,7 @@ void riscv_cpu_debug_excp_handler(CPUState *cs, CPUBreakpoint *hit)
-     RISCVCPU *cpu = RISCV_CPU(cs);
-     CPURISCVState *env = &cpu->env;
+diff --git a/contrib/plugins/dlcall.c b/contrib/plugins/dlcall.c
+new file mode 100644
+index 0000000000..9d2230b2d1
+--- /dev/null
++++ b/contrib/plugins/dlcall.c
+@@ -0,0 +1,248 @@
++/*
++ * Copyright (C) 2026, Ziyang Zhang <functioner@sjtu.edu.cn>
++ *
++ * dlcall (Dynamic Linking Call) plugin: lets a linux-user guest invoke host
++ * functions by issuing a magic system call. The guest can ask QEMU to dlopen()
++ * a host shared library, dlsym() a symbol, and call it with guest-supplied
++ * arguments.
++ *
++ * The plugin intentionally keeps the QEMU side lightweight and prescribes
++ * nothing about how a library is thunked. Any toolchain can implement the
++ * userspace side. Lorelei is one end-to-end implementation (guest/host
++ * runtimes plus a thunk compiler that generates thunks from a library's
++ * headers):
++ * https://github.com/rover2024/lorelei
++ *
++ * See docs/about/emulation.rst|Dynamic Linking Call for details and examples.
++ *
++ * WARNING: trusted guests only. The guest can load arbitrary host libraries
++ * and execute arbitrary host code with arbitrary arguments, i.e. full code
++ * execution in the QEMU host process. It is NOT a sandbox and provides no
++ * isolation; only load it for guests you fully trust.
++ *
++ * WARNING: requires guest_base == 0, which is qemu-user's default. Pointer
++ * operands are dereferenced as host addresses directly, and the invoked host
++ * functions dereference guest pointers with no address translation, so guest
++ * and host must share a single address space. A non-zero guest_base (e.g. set
++ * via -B/-R) would make every pointer off by guest_base and hit unrelated
++ * host memory.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include <assert.h>
++#include <errno.h>
++#include <string.h>
++#include <stdio.h>
++#include <glib.h>
++#include <dlfcn.h>
++
++#include <qemu-plugin.h>
++
++QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
++
++/*
++ * The magic system call number for dlcall.
++ *
++ * It defaults to DLCALL_SYSCALL_DEFAULT and can be overridden at load time
++ * with the "syscall_num=N" argument. To avoid hijacking a real syscall the
++ * guest might issue, N must be at least DLCALL_SYSCALL_MIN: every Linux ABI
++ * keeps its syscall numbers well below this; numbers from here up are free.
++ */
++enum {
++    DLCALL_SYSCALL_DEFAULT = 4096,
++    DLCALL_SYSCALL_MIN = 4096,
++};
++
++static int64_t dlcall_syscall_num = DLCALL_SYSCALL_DEFAULT;
++
++/*
++ * dlcall calling convention.
++ *
++ * The guest issues the magic system call (dlcall_syscall_num). The first
++ * argument (a1) is one of the call IDs below; the remaining arguments (a2, a3,
++ * a4, ...) are that ID's operands. All pointer operands are guest virtual
++ * addresses that the plugin dereferences as host addresses directly (see the
++ * guest_base requirement above). Results are written back through
++ * caller-provided "out" pointers rather than returned in the syscall value.
++ *
++ * The syscall return value (*sysret) only reports dispatch status: 0 on a
++ * recognised ID, -EINVAL for an unknown one. The actual success/failure of an
++ * operation (e.g. a NULL handle from dlopen) is delivered through its out
++ * pointer, exactly like the underlying libdl call.
++ *
++ * Operands per ID:
++ *
++ *   DLCALL_ID_GET_HOST_ATTRIBUTE
++ *     a2  const char *key        in:  attribute name to query
++ *     a3  const char **attr_ptr  out: matching value, or NULL if unknown
++ *
++ *   DLCALL_ID_LOAD_LIBRARY                            (wraps dlopen)
++ *     a2  const char *path       in:  library path
++ *     a3  int flags              in:  dlopen() flags (e.g. RTLD_NOW)
++ *     a4  void **handle_ptr      out: library handle, or NULL on failure
++ *
++ *   DLCALL_ID_GET_PROC_ADDRESS                        (wraps dlsym)
++ *     a2  void *handle           in:  library handle
++ *     a3  const char *name       in:  symbol name
++ *     a4  void **entry_ptr       out: symbol address, or NULL if not found
++ *
++ *   DLCALL_ID_FREE_LIBRARY                            (wraps dlclose)
++ *     a2  void *handle           in:  library handle
++ *     a3  int *ret_ptr           out: dlclose() return value (0 on success)
++ *
++ *   DLCALL_ID_GET_LIBRARY_ERROR                       (wraps dlerror)
++ *     a2  const char **error_ptr out: last libdl error string, or NULL
++ *
++ *   DLCALL_ID_INVOKE_PROC                             (calls the symbol)
++ *     a2  void *proc             in:  function pointer, signature
++ *                                     void (*)(void *arg1, void *arg2)
++ *     a3  void *arg1             in:  first argument forwarded to proc
++ *     a4  void *arg2             in:  second argument forwarded to proc
++ */
++enum DlcallID {
++    DLCALL_ID_GET_HOST_ATTRIBUTE,
++    DLCALL_ID_LOAD_LIBRARY,
++    DLCALL_ID_GET_PROC_ADDRESS,
++    DLCALL_ID_FREE_LIBRARY,
++    DLCALL_ID_GET_LIBRARY_ERROR,
++    DLCALL_ID_INVOKE_PROC,
++};
++
++static inline const char *query_host_attribute(const char *key)
++{
++    if (strcmp(key, "emu") == 0) {
++        return "qemu";
++    }
++    return NULL;
++}
++
++static inline void invoke_proc(void *proc, void *arg1, void *arg2)
++{
++    typedef void (*Func)(void * /*arg1*/, void * /*arg2*/);
++    Func func = (Func) proc;
++    func(arg1, arg2);
++}
++
++static bool vcpu_syscall_filter(unsigned int vcpu_index,
++                                int64_t num, uint64_t a1, uint64_t a2,
++                                uint64_t a3, uint64_t a4, uint64_t a5,
++                                uint64_t a6, uint64_t a7, uint64_t a8,
++                                int64_t *sysret, void *userdata)
++{
++    if (num == dlcall_syscall_num) {
++        switch (a1) {
++        /* Query host attribute by a reserved key. */
++        case DLCALL_ID_GET_HOST_ATTRIBUTE: {
++            const char *key = (const char *) a2;
++            const char **attr_ptr = (const char **) a3;
++            assert(attr_ptr);
++            *attr_ptr = query_host_attribute(key);
++            *sysret = 0;
++            break;
++        }
++
++        /* Load a shared library. */
++        case DLCALL_ID_LOAD_LIBRARY: {
++            const char *path = (const char *) a2;
++            int flags = (int) a3;
++            void **handle_ptr = (void **) a4;
++            assert(handle_ptr);
++            *handle_ptr = dlopen(path, flags);
++            *sysret = 0;
++            break;
++        }
++
++        /* Get the address of a function in a shared library. */
++        case DLCALL_ID_GET_PROC_ADDRESS: {
++            void *handle = (void *) a2;
++            const char *name = (const char *) a3;
++            void **entry_ptr = (void **) a4;
++            assert(entry_ptr);
++            *entry_ptr = dlsym(handle, name);
++            *sysret = 0;
++            break;
++        }
++
++        /* Free a shared library. */
++        case DLCALL_ID_FREE_LIBRARY: {
++            void *handle = (void *) a2;
++            int *ret_ptr = (int *) a3;
++            *ret_ptr = dlclose(handle);
++            *sysret = 0;
++            break;
++        }
++
++        /* Get the last error message for a library event. */
++        case DLCALL_ID_GET_LIBRARY_ERROR: {
++            const char **error_ptr = (const char **) a2;
++            *error_ptr = dlerror();
++            *sysret = 0;
++            break;
++        }
++
++        /* Invoke a function of a common interface. */
++        case DLCALL_ID_INVOKE_PROC: {
++            void *proc = (void *) a2;
++            void *arg1 = (void *) a3;
++            void *arg2 = (void *) a4;
++            assert(proc);
++            invoke_proc(proc, arg1, arg2);
++            *sysret = 0;
++            break;
++        }
++
++        default:
++            *sysret = -EINVAL;
++            break;
++        }
++        return true;
++    }
++    return false;
++}
++
++QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
++                                           const qemu_info_t *info,
++                                           int argc, char **argv)
++{
++    if (info->system_emulation) {
++        fprintf(stderr, "plugin dlcall: only useful for user emulation\n");
++        return -1;
++    }
++
++    for (int i = 0; i < argc; i++) {
++        char *opt = argv[i];
++        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
++        if (g_strcmp0(tokens[0], "syscall_num") == 0) {
++            const char *val = tokens[1];
++            char *endptr = NULL;
++            guint64 num;
++            if (!val || *val == '\0') {
++                fprintf(stderr,
++                        "plugin dlcall: missing value for syscall_num\n");
++                return -1;
++            }
++            num = g_ascii_strtoull(val, &endptr, 0);
++            if (*endptr != '\0' || g_strrstr(val, "-") != NULL) {
++                fprintf(stderr,
++                        "plugin dlcall: invalid syscall_num '%s'\n", val);
++                return -1;
++            }
++            if (num < DLCALL_SYSCALL_MIN || num > G_MAXINT64) {
++                fprintf(stderr,
++                        "plugin dlcall: syscall_num %s is out of range; "
++                        "it must be >= %d to avoid clashing with a real "
++                        "syscall\n", val, DLCALL_SYSCALL_MIN);
++                return -1;
++            }
++            dlcall_syscall_num = (int64_t) num;
++        } else {
++            fprintf(stderr, "plugin dlcall: unknown option '%s'\n", opt);
++            return -1;
++        }
++    }
++
++    qemu_plugin_register_vcpu_syscall_filter_cb(id, vcpu_syscall_filter, NULL);
++
++    return 0;
++}
+diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
+index 099319e7a1..e7fc4d6d8f 100644
+--- a/contrib/plugins/meson.build
++++ b/contrib/plugins/meson.build
+@@ -19,6 +19,11 @@ if host_os != 'windows'
+   contrib_plugins += 'lockstep.c'
+ endif
  
-+    env->badaddr = hit->hitaddr;
-     do_trigger_action(env, DBG_ACTION_BP);
- }
- 
-@@ -929,12 +930,7 @@ bool riscv_cpu_debug_check_breakpoint(CPUState *cs, CPUBreakpoint *bp)
-     int i = bp->id;
-     trigger_type_t trigger_type = get_trigger_type(env, i);
- 
--    if (trigger_common_match(env, trigger_type, i)) {
--        env->badaddr = env->tdata2[i];
--        return true;
--    }
--
--    return false;
-+    return trigger_common_match(env, trigger_type, i);
- }
- 
- bool riscv_cpu_debug_check_watchpoint(CPUState *cs, CPUBreakpoint *wp)
++if host_os == 'linux'
++  # dlcall passes guest calls through to host libraries; linux-user only
++  contrib_plugins += 'dlcall.c'
++endif
++
+ if 'cpp' in all_languages
+   contrib_plugins += 'cpp.cpp'
+ endif
 -- 
-2.43.0
+2.34.1
 
 
