@@ -4,72 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6004BC44501
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 02:59:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DD6BC43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 02:59:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi1S2-0006bH-W9; Thu, 09 Jul 2026 22:58:55 -0400
+	id 1wi1QA-00016s-73; Thu, 09 Jul 2026 22:56:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wi1Rz-0006S1-CQ
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:58:51 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wi1Rv-0000KT-R6
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:58:51 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8DxturdX1BqQiACAA--.8955S3;
- Fri, 10 Jul 2026 10:58:37 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJDxDcfbX1BqyOEHAA--.22907S2;
- Fri, 10 Jul 2026 10:58:37 +0800 (CST)
-Subject: Re: [PATCH v2 1/3] target/loongarch/kvm: advertise pv features per
- vCPU
-To: Tao Cui <cui.tao@linux.dev>, qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@mailo.com>,
- Tao Cui <cuitao@kylinos.cn>
-References: <20260710005029.345378-1-cui.tao@linux.dev>
- <20260710005029.345378-2-cui.tao@linux.dev>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <70dc23f1-f346-2d47-4a42-e2195ea9e622@loongson.cn>
-Date: Fri, 10 Jul 2026 10:58:29 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wi1Q7-0000xo-Ut
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:56:55 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wi1Q5-0008SG-N8
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:56:55 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-ca957432c7fso356397a12.1
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 19:56:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1783652212; x=1784257012; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=RLYdpAzigg9J75XfNcRMec9sSKmFFpVw8BwdfGHdZvs=;
+ b=VjVpNQmlnswRNhCMmb+6MaYa28NP62fsEatIhrqa/o6fML3mMZbkhQKWsG1ISWH7VN
+ l3iuzZRMn59k8GBmYXP/i0P84UFIgYhfY8JThDuT1N0M4sAJ2lUBmmeBzTsqAlbLHvPD
+ ETRvoKKrqIKR9GeH60YYAvqWFtOQfW+yFs5cFGNwy8J8tIrASUhGxHxSMdbqzFS/EYua
+ YdlalICeNzC1IXfhtfq0YrLif8u0wZXS27W1NGgMQ7/EuiD9kBThJiZnPQuXLs/Z2BZh
+ QD2uLA3nbmJvw4AZ9jpQo9IFwsMxS05lkJ5B6DJat0ZsYyRcXgSHjktSdQQzoP/ccbG+
+ iexg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783652212; x=1784257012;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=RLYdpAzigg9J75XfNcRMec9sSKmFFpVw8BwdfGHdZvs=;
+ b=aHmzSbnGc6kcJRtZ02EFV/EpVJdYpe3zUyXWxrEkGHe6tiLzqWX/54qUSAk81BHUNG
+ bgHHQMafifHz4fRsacMm1QJvMZEEHp1hdlmCaebnUrimmh6GXAyltViWvFeSSWcA8eDe
+ bFVKc0ecGUP0dkfx8Sb8rYcM+aTtcH2oqb3c+3A5csPEgkXV4McaP2DlAskPrFfeLhA0
+ SvtgAKwCmTafRgSzB0JcqkjXYSkkkx2gdKHLOaEjv6LNV4KRmtI7Tb+VE8NaKyZF/Mba
+ bEIlLls2WN1SYEdmRLJgVQYouSZD9Jl4m4x601Nsx4DBx71ccA+JVU0pgHwOvlIgya7m
+ GGdg==
+X-Gm-Message-State: AOJu0YxI2IBXMnkp3h6g02jqDiHd+Q78rwyPleiW9qBscMpC1uPTdqs7
+ CAifxq9wwtDt97ihfA2nWdYfoyNfV8v57+4bkC88MNm3X05GP5OgUZ5RnaTL/Q==
+X-Gm-Gg: AfdE7ck6kJ3yFCHE3iqjSIiMQZqervbWdulr/KEu+vCjWV7xWBcqbvqmya0PcMbO+j5
+ V0y0OXAkKSlx0gmJ1UGWhvRVundWRLtYKh8b2vraG0eCean2bbWfs1FYpiYVfZzgJtcsxjvSVJO
+ xFUAXE0e7ZqGn+qsOCFvlZuX2Qmc8WHYstsTFd3bqjKzvl66UbxLvP+/ynoHky+Qr7HrTNCxCZW
+ minCBuRCkbM31ND5nYeXfkIiW604LdLTDOAtKBuQuagnEN+H0rDMYUYY816l7PNTQIK/0HEYWwK
+ mO67gG9YgEG4maeV5USLNgWmAgO4naK4IOdKiR1wmqlQl2yUdcSyL5WylH4YYf81OvRJjuGULZm
+ GmQ3NBCq6ckHmGVWPjFPv+AS+vUnd8zth2Ahb7jqBNX9V9PZJB56USlakl4TwpoOMC1pkdWPdgd
+ 4pydVWc2ygsFSOj8v/RhfOWrDj727TsmA=
+X-Received: by 2002:a05:6a21:682:b0:3bf:a7d5:df38 with SMTP id
+ adf61e73a8af0-3c0bcbe6cdbmr9111763637.9.1783652212219; 
+ Thu, 09 Jul 2026 19:56:52 -0700 (PDT)
+Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-ca5af6e04fcsm4576769a12.4.2026.07.09.19.56.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 09 Jul 2026 19:56:51 -0700 (PDT)
+From: alistair23@gmail.com
+X-Google-Original-From: alistair.francis@wdc.com
+To: qemu-devel@nongnu.org
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 23/40] target/riscv/cpu.c: filter TCG only bits in
+ riscv_cpu_reset_hold()
+Date: Fri, 10 Jul 2026 12:55:08 +1000
+Message-ID: <20260710025525.1704417-24-alistair.francis@wdc.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260710025525.1704417-1-alistair.francis@wdc.com>
+References: <20260710025525.1704417-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-In-Reply-To: <20260710005029.345378-2-cui.tao@linux.dev>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxDcfbX1BqyOEHAA--.22907S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxWryUtr1rZw4DtFW3Jr45CFX_yoW5WF13pa
- 9rAas0gFn5GrW0vws7Jan5WrWUG34xJrsF9F1xA34xAF4DCrsIqF1FkF9FvFs0y3s7WrsY
- qF45Jry3u3W5JwcCm3ZEXasCq-sJn29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUBjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2kKe7AKxVWUXVWUAwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYI
- kI8VC2zVCFFI0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWU
- AwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMx
- k0xIA0c2IEe2xFo4CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_
- Gr1l4IxYO2xFxVAFwI0_Jrv_JF1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67
- AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8I
- cVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI
- 8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v2
- 6r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07jepB-UUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.97,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x535.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,83 +106,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
+We have a lot of TCG only initialization in the common cpu_reset_hold
+callback that prevents --disable-tcg to work.
 
-On 2026/7/10 上午8:50, Tao Cui wrote:
-> From: Tao Cui <cuitao@kylinos.cn>
-> 
-> kvm_set_pv_features() programs the KVM_FEATURE cpucfg attribute, which is a
-> per-vCPU setting. It was called from kvm_arch_put_registers() under a
-> function-local static guard, so it ran only once for the whole VM: only the
-> first vCPU got its pv features pushed to KVM, and on SMP guests the others
-> never saw KVM_FEATURE_IPI / KVM_FEATURE_STEAL_TIME.
-> 
-> Drop the static guard and push pv features per vCPU under
-> KVM_PUT_FULL_STATE, the same gate kvm_set_stealtime() already uses. Host
-> feature detection stays in kvm_arch_init_vcpu(); the per-vCPU state write
-> belongs in kvm_arch_put_registers().
-> 
-> Signed-off-by: Tao Cui <cuitao@kylinos.cn>
-> ---
->   target/loongarch/kvm/kvm.c | 15 ++++++---------
->   1 file changed, 6 insertions(+), 9 deletions(-)
-> 
-> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-> index d6539c12ac..c557ee3c3d 100644
-> --- a/target/loongarch/kvm/kvm.c
-> +++ b/target/loongarch/kvm/kvm.c
-> @@ -816,7 +816,6 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
->   int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
->   {
->       int ret;
-> -    static int once;
->   
->       ret = kvm_loongarch_put_regs_core(cs);
->       if (ret) {
-> @@ -843,19 +842,17 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
->           return ret;
->       }
->   
-> -    if (!once) {
-> +    if (level >= KVM_PUT_FULL_STATE) {
-> +        /*
-> +         * pv_features and steal time are per-vCPU state. Push them on
-> +         * full-state sync so every vCPU gets its own settings; the kernel
-> +         * clears the steal-time guest_addr on KVM_PUT_RESET_STATE.
-> +         */
->           ret = kvm_set_pv_features(cs);
-pv feature is a little different from steal-time. steal-time guest_addr 
-is created from guest OS, pv feature is created from VMM at beginning. 
-steal-time guest_addr can be set for many times, and there is bit 
-KVM_STEAL_PHYS_VALID checking with steal-time guest_addr, however pv 
-feature can be set only once with existing method.
+Put a CONFIG_TCG ifdef around those bits to make the build work.
+Eventually we'll create a TCG specific reset function in tcg-cpu.c but
+for now this suffices.
 
-Although I do not understand flow of VM migration, with 
-KVM_PUT_FULL_STATE state changing, there are at least two places where 
-this state is set, one is from cpu_common_realizefn() which calls 
-cpu_synchronize_post_init(), the other is 
-qemu_loadvm_state()/qemu_loadvm_state_main() which calls 
-cpu_synchronize_all_post_init().
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260703180538.3346781-18-daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ target/riscv/cpu.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-It seems that VM will fail to migrate since kvm_set_pv_features is 
-called twice at least here. Do you test VM migration with this patch?
-
-Regards
-Bibo Mao
->           if (ret) {
->               return ret;
->           }
-> -        once = 1;
-> -    }
->   
-> -    if (level >= KVM_PUT_FULL_STATE) {
-> -        /*
-> -         * only KVM_PUT_FULL_STATE is required, kvm kernel will clear
-> -         * guest_addr for KVM_PUT_RESET_STATE
-> -         */
->           ret = kvm_set_stealtime(cs);
->           if (ret) {
->               return ret;
-> 
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 6b79dcc5ee..5a82e6563b 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -965,10 +965,6 @@ bool riscv_cpu_has_work(CPUState *cs)
+ 
+ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+ {
+-#ifndef CONFIG_USER_ONLY
+-    uint8_t iprio;
+-    int i, irq, rdzero;
+-#endif
+     CPUState *cs = CPU(obj);
+     RISCVCPU *cpu = RISCV_CPU(cs);
+     RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(obj);
+@@ -1020,6 +1016,10 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+                     MENVCFG_ADUE : 0);
+     env->henvcfg = 0;
+ 
++#ifdef CONFIG_TCG
++    uint8_t iprio;
++    int i, irq, rdzero;
++
+     /* Initialized default priorities of local interrupts. */
+     for (i = 0; i < ARRAY_SIZE(env->miprio); i++) {
+         iprio = riscv_cpu_default_priority(i);
+@@ -1057,11 +1057,12 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+     }
+ 
+     pmp_unlock_entries(env);
++#endif /* ifdef CONFIG_TCG */
+ #else
+     env->priv = PRV_U;
+     env->senvcfg = 0;
+     env->menvcfg = 0;
+-#endif
++#endif /* !CONFIG_USER_ONLY */
+ 
+     /* on reset elp is clear */
+     env->elp = false;
+-- 
+2.54.0
 
 
