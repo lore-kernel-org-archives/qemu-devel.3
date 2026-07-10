@@ -4,72 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C468C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 07:42:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02602C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 07:52:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi5sI-0002a6-VW; Fri, 10 Jul 2026 03:42:18 -0400
+	id 1wi61N-0004Od-9c; Fri, 10 Jul 2026 03:51:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1wi5sG-0002ZV-UR; Fri, 10 Jul 2026 03:42:17 -0400
-Received: from smtp2-g21.free.fr ([212.27.42.2])
+ (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
+ id 1wi61K-0004OV-U3
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 03:51:39 -0400
+Received: from mail-westus2azlp170120002.outbound.protection.outlook.com
+ ([2a01:111:f403:c007::2] helo=MW6PR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1wi5sE-00006M-UN; Fri, 10 Jul 2026 03:42:16 -0400
-Received: from localhost (unknown [89.92.102.124])
- (Authenticated sender: emmanuel.blot@free.fr)
- by smtp2-g21.free.fr (Postfix) with ESMTPSA id 05B792003ED;
- Fri, 10 Jul 2026 09:41:54 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
- s=smtp-20201208; t=1783669332;
- bh=cfQJSmjmzrO00JDyTF/c03sGnlSkqs87kIrzvzuBxog=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=XwjnHiPTEi3wBFLyRLNvTkTnqHimqvN8XAxatSE9T1oREtXatvpigQdwf7NkY1bEt
- /mRZ+f5FdRBYcr3jDBv2Tzh7gq7/m/ri0P1rMGmtn5K+IjKZgqCztfhSPVdScfLeuV
- 2/UCMydFu4oQv6wvFMUlKt2DJaJB36NWqMjeglzxaasMq4kT/TZKdX+P9Uhay+Z1e9
- CLvvURTK2C1tCQYN41xfNteCB4FVTXNjqTmWFtHax6ULy3v1+lunyRAR/t3EDrhJdR
- GraUNt/yPcApyID5gjvHFQcjs32y/BArV1MUiJ+qiDrLf92u4rWZGK2fo3OVQf7Q/l
- F5LdB6Vq9gZdA==
-From: Emmanuel Blot <emmanuel.blot@free.fr>
-Date: Thu, 09 Jul 2026 17:23:17 +0200
-Subject: [PATCH 25/29] hw/arm: catalina: add NIC and FIO temperature
- sensors
+ (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
+ id 1wi61I-0001oK-N9
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 03:51:38 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=MD+hxfXqR1r49qidM5Uw2s309JVBFw6zV8MBkoOrXF2bZnBjY57l5VoAFdeEcqs8X7E7uLQxjkSX6vFlDNX8FMYVlnKWH5Uh4pLa09gHsWndCImlSPSFIF4zsLiZsKg8p7lPGtdrpoKRB3FIw5ukk5QN2I/EuCDf9LxNvd1x5FCSzp8rkuTVenhna+x0cJkLqvaiM5mz/RZV050C28yxEmY7licUo2kcusWZ7uLpisaDw2O/Ti2/mHYiELxaf0J+IwxU4jvSFjp+LMRLmDp5NBBH5YKfHFDk2/F5TnaoBcSMEMEmQ1gGdBRjsnAEDaJ711zfpZLckZEwTRo2TlLjgA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=NaJto9UyZTIoXR4PzIkhbYx0Y1DdpzXHTteb+QQ99So=;
+ b=dsSJf2rJnFlhovF0FvcfaYoBI+5JBlBQtuzoa8WMtooU6thrB1ja1u8zNEDYdzME+WI1FZOKzhz09M+24FltTe/NGP1mI7DJk6Tow2iKfLfwoc1tjxvq9kfJynzk0sc+uZZ1juA2vK7PlWPCj2rDDw3mS/86ww+XdDgCG6vaimfCVdSnut0DWeVA9/L/SSDIQZU2zWv9tztF+DmQU6fj4UUtK9HfmkQdMNnrOP2OTE2460X0YbCzKtDGbN6wlMuochJm6wOZL0+9MOuWI9f8y7eMPClScX7r04iIStIVR/8JkS9vy53KleRZdO0sz9KBeU4rUkeQ8Zh6Zo25wqtU9w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=NaJto9UyZTIoXR4PzIkhbYx0Y1DdpzXHTteb+QQ99So=;
+ b=jEhKFaty1gzJ9w96+SNpOVJqxoRg7lj08v4bZx8R4CnzSOoAJmCvQ46sbzRTN71MWZcHk+f9iXRt1ouBpmjt8j1jxcXeUoNAcKEQDSmMxprUd9AaPm7i2sfUSeOUlDG6cXOHUcsIKp7hW6eOTf3qxM86ON9dVgZ/xrSmCmJ8ohg=
+Received: from BLAP220CA0023.NAMP220.PROD.OUTLOOK.COM (2603:10b6:208:32c::28)
+ by DS7PR12MB8274.namprd12.prod.outlook.com (2603:10b6:8:da::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.16; Fri, 10 Jul
+ 2026 07:51:29 +0000
+Received: from BL02EPF0001A105.namprd05.prod.outlook.com
+ (2603:10b6:208:32c:cafe::40) by BLAP220CA0023.outlook.office365.com
+ (2603:10b6:208:32c::28) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.202.10 via Frontend Transport; Fri,
+ 10 Jul 2026 07:51:29 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BL02EPF0001A105.mail.protection.outlook.com (10.167.241.137) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.181.6 via Frontend Transport; Fri, 10 Jul 2026 07:51:29 +0000
+Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Fri, 10 Jul
+ 2026 02:51:28 -0500
+Received: from XFR-LUMICHEL-L2.amd.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.41 via
+ Frontend Transport; Fri, 10 Jul 2026 02:51:27 -0500
+From: Luc Michel <luc.michel@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: Luc Michel <luc.michel@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>, "Pierrick
+ Bouvier" <pierrick.bouvier@oss.qualcomm.com>, Francisco Iglesias
+ <francisco.iglesias@amd.com>, Frederic Konrad <frederic.konrad@amd.com>
+Subject: [PATCH] meson.build: re-add explicit gcrypt/nettle request check
+Date: Fri, 10 Jul 2026 09:51:12 +0200
+Message-ID: <20260710075113.35631-1-luc.michel@amd.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260709-catalina-upgrade-v1-25-82a63fead90c@free.fr>
-References: <20260709-catalina-upgrade-v1-0-82a63fead90c@free.fr>
-In-Reply-To: <20260709-catalina-upgrade-v1-0-82a63fead90c@free.fr>
-To: qemu-devel@nongnu.org
-Cc: Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org, 
- qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
- Corey Minyard <cminyard@mvista.com>, Emmanuel Blot <emmanuel.blot@free.fr>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783610580; l=3192;
- i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=cfQJSmjmzrO00JDyTF/c03sGnlSkqs87kIrzvzuBxog=;
- b=hDHCUEmnTjGCqaYei4TISujhvVRMceqVvAZrpnNCHRAylHYqJolDGTR5tq3ei64OxXvtdoI01
- IXeIaQ8mt6nA/dxVqZD0IcjNAJUqxxm+F7N0irIIi+3C66hiNnqxAO7
-X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
- pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=212.27.42.2; envelope-from=emmanuel.blot@free.fr;
- helo=smtp2-g21.free.fr
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL02EPF0001A105:EE_|DS7PR12MB8274:EE_
+X-MS-Office365-Filtering-Correlation-Id: 81c775a9-4d4d-47de-1c1e-08dede580d28
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|82310400026|1800799024|23010399003|36860700016|18002099003|11063799006|56012099006;
+X-Microsoft-Antispam-Message-Info: sYqbEp7zovSQV/nx99Ki+MlYdbV9dnBVmSRPkUuOcRS6D+emIQQfValrL2vnIYXEPqq+iL3oTa+BE/6cfaPPimkVRsk1doy55qJXpEqsU1UCx1uuzGtspCZo2viwpsTBOwQkeB589L1fa0Rk1uZJ9sfwavcBgczSBPZ1IJWoX6GN3iB0nEj/J+1EUZ3vNGX2vcxiKG62bG9y24z5AuUixsRagejHdVyBuiZxCX9Y68JRwVJ9CfWlzGu/zlSSkR62mxsZQr/oKtqV9iiUiABrC49BVDLbAXSkJeOceW+bpojqfb6Nnl0QWjnpw9ia1C0SiQxXJaI8c5Wq2XrwTMQiv163woY8kiB7VLk9TEYvcK6mJ2xVKlgGwt+rd+dA+50PPY2/bm/uNEuGfsRg9ioNpvJwm9/p8gmEm+NQEc6oAybsPYfWEfNGU47ybhmfnxUegL5EMjEArpGMNUfbPjN4sYlId3HCzxTQ3xSzWbwaNedJOb3l/f5jhReKMob/cwUlmseavImnPojHzh/etHW9kqIlwb3urvxcUrxk23RH6xo021DqWfUjgarFTH9S3JmZ5+2RKNs/eoyxIXzPeJQwoaYt9ri2lCCpi6Khwl3M8bj0jnwOc+IIdOCFQ+vEDle8Jdf1/uwJXTUsSqsugDCxjiDVtsyTV7UBKZ+5IHKPue8VaJC8LScZ6BqeiWUpRj5iK1rtwUcnNuwXxN+ejc4dXg==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(82310400026)(1800799024)(23010399003)(36860700016)(18002099003)(11063799006)(56012099006);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: ir4SgHO5nTu9WwqJN26BoOAuLmZyY4Xe1L7GL+0iyqEJsNsdeGvav/pC0+9QWjK5wXSvzAWBpQi/GB88qFIlA8My9rp5UhbcH76i2lrKjUkOeFxa7zxfPkm5Q0NLD5xIunqN8+V3lMoQVD2Usy2GHfEDUt6f3hXymnZRrMx3jvnJn/B+K0AXFJ+YU1YX89hFRjAxsayJxlFkpp3ewqaBXewqKUOxjdVpAO5X40MRzJKX+T8ux2sQyX9P4pFzwVQW/kjuEzth3MaEwnmeG1uZLSkKXdty/BxyrYcngYEoM8EUgmaLV2WEhvRfaZRnFwZlkKN/IhTNM18jgvDFi7yhXg+qB/oMvEdwFM54kTzUtmXbVbUQ5kepz48FGlBkZttfwsK5a8PU6G6AFM6SOq3GjNUlVfmsP0kYt8QINHQdGrgT8sSxsteF6f20KS44iBPm
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jul 2026 07:51:29.1972 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 81c775a9-4d4d-47de-1c1e-08dede580d28
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0001A105.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB8274
+Received-SPF: permerror client-ip=2a01:111:f403:c007::2;
+ envelope-from=Luc.Michel@amd.com;
+ helo=MW6PR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,80 +127,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Model the temperature sensors described by the Catalina device tree that
-have existing QEMU device models but were not yet instantiated: the four
-IOB NIC TMP421 sensors behind the i2c0 PCA9546 muxes at 0x71 and 0x75, and
-the FIO remote TMP75 sensor at 0x4f on the i2c1 mux.
+c4b3d0074 removed the check that nettle or gcrypt were explicitly
+requested as the crypto library to use, breaking the --enable-nettle and
+--enable-gcrypt options. Re-add the check.
 
-Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
+Fixes: c4b3d0074 (crypto: bump min gnutls to 3.7.5)
+Signed-off-by: Luc Michel <luc.michel@amd.com>
 ---
- hw/arm/aspeed_ast2600_catalina.c | 30 +++++++++++++++++++++++-------
- 1 file changed, 23 insertions(+), 7 deletions(-)
+ meson.build | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/hw/arm/aspeed_ast2600_catalina.c b/hw/arm/aspeed_ast2600_catalina.c
-index f3b22e9aa9..f714c9d1b3 100644
---- a/hw/arm/aspeed_ast2600_catalina.c
-+++ b/hw/arm/aspeed_ast2600_catalina.c
-@@ -472,7 +472,16 @@ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
+diff --git a/meson.build b/meson.build
+index 164328ded83..475c5922030 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1809,10 +1809,15 @@ crypto_sm3 = not_found
  
-     /* &i2c0 */
-     /* i2c-mux@71 (PCA9546) on i2c0 */
--    i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x71);
-+    i2c_mux = i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x71);
+ if get_option('nettle').enabled() and get_option('gcrypt').enabled()
+   error('Only one of gcrypt & nettle can be enabled')
+ endif
+ 
++# Explicit nettle/gcrypt request, so ignore gnutls for crypto
++if get_option('nettle').enabled() or get_option('gcrypt').enabled()
++  gnutls = not_found
++endif
 +
-+    /* i2c0mux0ch0 */
-+    /* IOB0 NIC0 temperature-sensor@1f - tmp421 */
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 0),
-+                            TYPE_TMP421, 0x1f);
-+    /* i2c0mux0ch2 */
-+    /* IOB0 NIC1 temperature-sensor@1f - tmp421 */
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 2),
-+                            TYPE_TMP421, 0x1f);
- 
-     /* i2c-mux@72 (PCA9546) on i2c0 */
-     i2c_mux = i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x72);
-@@ -489,7 +498,16 @@ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
-     i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x73);
- 
-     /* i2c-mux@75 (PCA9546) on i2c0 */
--    i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x75);
-+    i2c_mux = i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x75);
-+
-+    /* i2c0mux3ch0 */
-+    /* IOB1 NIC0 temperature-sensor@1f - tmp421 */
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 0),
-+                            TYPE_TMP421, 0x1f);
-+    /* i2c0mux3ch2 */
-+    /* IOB1 NIC1 temperature-sensor@1f - tmp421 */
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 2),
-+                            TYPE_TMP421, 0x1f);
- 
-     /* i2c-mux@76 (PCA9546) on i2c0 */
-     i2c_mux = i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x76);
-@@ -544,6 +562,8 @@ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
-                           fio_eeprom, fio_eeprom_len);
-     /* temperature-sensor@4b - tmp75 */
-     i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 7), TYPE_TMP75, 0x4b);
-+    /* temperature-sensor@4f - tmp75 (FIO remote) */
-+    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 7), TYPE_TMP75, 0x4f);
- 
-     /* &i2c2 */
-     /* io_expander0 - pca9555@20 */
-@@ -564,11 +584,7 @@ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
-     /* eeprom@52 */
-     at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 6), 0x52, 8 * KiB,
-                           hdd_eeprom, hdd_eeprom_len);
--    /* i2c5mux0ch7 */
--    /* ina230@40 - no model */
--    /* ina230@41 - no model */
--    /* ina230@44 - no model */
--    /* ina230@45 - no model */
-+    /* i2c5mux0ch7 - empty */
- 
-     /* &i2c6 */
-     /* io_expander3 - pca9555@21 */
-
+ if not gnutls.found()
+   if (not get_option('gcrypt').auto() or have_system) and not get_option('nettle').enabled()
+     gcrypt = dependency('libgcrypt', version: '>=1.9.4',
+                         required: get_option('gcrypt'))
+     # Debian has removed -lgpg-error from libgcrypt-config
 -- 
-2.50.1
+2.53.0
 
 
