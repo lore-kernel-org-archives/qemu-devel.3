@@ -4,74 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D54F9C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 08:45:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6938DC44501
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 08:57:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi6r4-0001ph-IP; Fri, 10 Jul 2026 04:45:06 -0400
+	id 1wi736-0004dB-0N; Fri, 10 Jul 2026 04:57:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wi6qx-0001oN-UQ
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 04:45:00 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wi6qv-0002LC-8R
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 04:44:59 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Axx+oDsVBqbDUCAA--.9446S3;
- Fri, 10 Jul 2026 16:44:51 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJBxEuQAsVBqeiEIAA--.24787S2;
- Fri, 10 Jul 2026 16:44:50 +0800 (CST)
-Subject: Re: [PATCH v2 1/3] target/loongarch/kvm: advertise pv features per
- vCPU
-To: Tao Cui <cui.tao@linux.dev>, qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@mailo.com>,
- Tao Cui <cuitao@kylinos.cn>
-References: <20260710005029.345378-1-cui.tao@linux.dev>
- <20260710005029.345378-2-cui.tao@linux.dev>
- <70dc23f1-f346-2d47-4a42-e2195ea9e622@loongson.cn>
- <4f914264-be8e-4b5b-a54a-14a911855529@linux.dev>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <471614c4-7f4e-74e2-fbf6-eb6873c67d17@loongson.cn>
-Date: Fri, 10 Jul 2026 16:44:42 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wi733-0004cq-7g
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 04:57:30 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wi72z-0003lo-Id
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 04:57:28 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66A7eeNP092368
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 08:57:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ ilbqXyvaK/hyxjHXCWiec1ZeQUj4EWNbu0CeUAfZjGA=; b=MPHts0j3QBibtmZn
+ 6K5BZv5tMM5Iuck8pp92GamMSHR7uP9mtfkbrCsN5T+C+kaeouR/2H58Nn+GFzS3
+ 0w5UScUUzOGCIroRy6BpMskA0RiLhlD0ZAEfJRWCS3CMy3EHx2b4zNI+tvLKKUCL
+ I4/9Ak8d4dZc8CMSGzXd1EauBgd+WXCJjZRnmAbTC3faiPYxay119YQ5+2o8ZXOq
+ L/rOvws4dZo94oT6ZeCUhyTghTe2KPvsvwICHyAXTNG4OrZHqVv40CDFCFbK2lCY
+ A9iZISG3U/wW+Asrlv+vQyji9j/2ounXNvKabhaT4nV4cfUmsyZYSfjU6zOALg9B
+ oH2IAg==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fadvjbv0w-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 08:57:23 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-51c0199faafso6309701cf.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 01:57:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1783673843; x=1784278643; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ilbqXyvaK/hyxjHXCWiec1ZeQUj4EWNbu0CeUAfZjGA=;
+ b=j13tOJeHDyJ4Rgjonak6L78rlwopbHQhNWi7eIn1Wj1YhtEPUDErIkMyW2SX9Ym5FJ
+ AGAvM7dVl1aV+RSIqpxmyriT4Ydbg/f+1nXSIqyZiCELVTx1Y8BHNjDNkaQ+JwB9CNtY
+ VQzxuaAqAjDC4Su6g86j/GfmM+C9c5D8nBzxREdVGHLGO2PWIfohGRtgIaghzii9Yi1B
+ vU9im7nyo9lRvFVeBJ2YW0Z6MRvh1Q9TCoswjLWgMnbopD/o8SSOIUqxJCk1ZRYsMSTb
+ /0ZQgRaYkfKzx8298YBcHk3m/wMJjjKnmc6HBzoT3bYpVvqgnwF9/LYeTw/ELYUIVKxl
+ jTHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783673843; x=1784278643;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=ilbqXyvaK/hyxjHXCWiec1ZeQUj4EWNbu0CeUAfZjGA=;
+ b=R2mZvUIT0br7H/IdeK1VqzGD95IkOdoUp1etbrrkkp5wL5/llXMVrzqp1ayIIJY0GT
+ SxuRQx1WsPcwj4HDxoE3tVrcqdgTo1ujz8hrO11sGrK04V43oHBIdFdI1VBOLfjxtG77
+ CM3NFr6WFH20QO0jBg59DLHZdrhRibprzJu/200rFmSjaaffezCEpaKEyT01Z48Ne9s6
+ +P07jIa+HXjfTacBfO7LUjw/KxUd5urm65WvPVYjY6DrSpXVGcK/QfLeie7jq8KfDdfJ
+ gx+ksDG5BybaF/Io6b0MaaeiEA9wUYOdTLncMbw4isPDMlcv6YZD8n6KhLQd4gvUWPbD
+ r0Ng==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rrv0VG3euJL9FN/LMJ/qWbWBna6HQ2Cou9TFBGsW61N9F25qXN/H2rjyZjS2bGAzP+Wbm/ShN+ap+qo@nongnu.org
+X-Gm-Message-State: AOJu0YyFP1/yUgDAyVEwyJqG40wkOTfRQ5PQemQk6RbsaqUuRcL0Mfu+
+ cv3TwL1c7sZsauDSD02P7OTHdx9/Gj92DEA8XZJ2YYPKGfXKmK76z4jbUzHIE2QV2E/KUFKkV5i
+ R/uJoBGPd6/q3ec5TtjGsb4r+YFGP55URkrtV3fhbYVbRGRYF4GuPGcDnBA==
+X-Gm-Gg: AfdE7cmYYv1ChyMCzgLRwf/ih7Xf/R6EJVSp3VPHpjbumKngWeKCtCZckyXaol23Aqc
+ jQMR4y6f7xyi4qbVLDT6oGfqLijKhxh/qgQKta6d+hizckS0TaYohzWgTDOd/PG43qrEj/1+Ztj
+ X/Gc4wfs1E6CyO1TH+PeOKOhbop3jlpsnuGsGVeAm344a4KBvFUmvA03UvAU4e3tkGaD5MsqKAl
+ JTanIgB4A/nVUWS7hif7OqBSS76UTDyj/Ns/9wh7RCRxII0lgGXx7ecfSTN1k2toQJEnweGbIDr
+ uSajapGwnvUlvfOQHRbHan16fuAwHAzxd42i928zpz1vyugm5c9TvPHqkirsCoUi3je8TnLMEZy
+ KsMxcivHmhDqxnG6Zn8m5Hve5nGQWzXQ=
+X-Received: by 2002:ac8:7d46:0:b0:51a:8c97:9378 with SMTP id
+ d75a77b69052e-51c8b3fa402mr112450791cf.64.1783673843057; 
+ Fri, 10 Jul 2026 01:57:23 -0700 (PDT)
+X-Received: by 2002:ac8:7d46:0:b0:51a:8c97:9378 with SMTP id
+ d75a77b69052e-51c8b3fa402mr112450581cf.64.1783673842661; 
+ Fri, 10 Jul 2026 01:57:22 -0700 (PDT)
+Received: from [192.168.69.219] ([88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47a9de1e785sm58222840f8f.8.2026.07.10.01.57.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 10 Jul 2026 01:57:21 -0700 (PDT)
+Message-ID: <53e139ad-02f4-490d-9d5c-44d2f495c336@oss.qualcomm.com>
+Date: Fri, 10 Jul 2026 10:57:18 +0200
 MIME-Version: 1.0
-In-Reply-To: <4f914264-be8e-4b5b-a54a-14a911855529@linux.dev>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] meson.build: re-add explicit gcrypt/nettle request check
 Content-Language: en-US
+To: Luc Michel <luc.michel@amd.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Frederic Konrad <frederic.konrad@amd.com>
+References: <20260710075113.35631-1-luc.michel@amd.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260710075113.35631-1-luc.michel@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxEuQAsVBqeiEIAA--.24787S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3Jr1kKrW7WFWkuw1kZw47Awc_yoW7Xr1kpF
- s5AFy5WFZ8Gr4kAw4DJas8XryYyr1xJa1DXr18JFy8AF4DGr12gr109FnF9F1DA397Wr1F
- qF45try7ZFy5ArcCm3ZEXasCq-sJn29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUB2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2kKe7AKxVWUXVWUAwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07
- AIYIkI8VC2zVCFFI0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWU
- XVWUAwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI4
- 8JMxk0xIA0c2IEe2xFo4CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_
- Jr0_Gr1l4IxYO2xFxVAFwI0_JF0_Jw1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8Gjc
- xK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0
- cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8V
- AvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF7I0E
- 14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxU4s2-UUUUU
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.97,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEwMDA4NiBTYWx0ZWRfXycfTshJgK3CT
+ cVXFWIrBvqXCDoZh5OlfjNNua7MHGxwTG6lFV6UlAvzfNe9oaL57Uc/lAsWvY4IEJ0XqFk2IZTn
+ Km0H9mRxXI3p/K2C2RQfh3RpZS4SaR6Wf8pZbc2eglzB2ZyRnaIdKNqQvqwa0lKmuI6XdpiTqg9
+ ZVi1VzLv6ixgnM/Y2wfGnEIxHPD+JhLC/7Pj5je0lw8hJAfjrR+45soY7P1N33fDxOS1R2A3jJk
+ ZdrazBMsNCP7DSGLsr8+sGGlAfORZ2bAe5jpeGUMi8Cdte6in7p9xy+ArwiHg9bWNV9Ki3ATpQ2
+ T1O63xWfdQZ+1xnEpfedhIs4fclt8gLmDcEIdaRVms4OCH/cuv9rAAm3mhWa2LgDYotF5SD1H4N
+ PxywnejbS8Ja4ETdgwscX9aM7wtOd9MpndEzhp5w9kK/CgihxrbuyqAlVy271URom6vyNsyft0B
+ 3cL2ZyQoE6uUSORfbDQ==
+X-Authority-Analysis: v=2.4 cv=WpIb99fv c=1 sm=1 tr=0 ts=6a50b3f3 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=zd2uoN0lAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=ZXulRonScM0A:10 a=0lgtpPvCYYIA:10
+ a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-GUID: O_mZa_REhOn4j_Kg4argUbn3vbOJofy0
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEwMDA4NiBTYWx0ZWRfX89MZhQ1AShXe
+ xLOZVBLTBrV07UEsuE2MGuROgKi6GmmloLMQirRTVI9ZaY/0tV8QxQ7WedtrPHeKWPYBAuh2O2o
+ HcgzDXccjoN50lD7mni+tYDa80d513k=
+X-Proofpoint-ORIG-GUID: O_mZa_REhOn4j_Kg4argUbn3vbOJofy0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-10_02,2026-07-09_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 adultscore=0 lowpriorityscore=0
+ clxscore=1015 malwarescore=0 phishscore=0 spamscore=0 bulkscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607100086
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,118 +161,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 10/7/26 09:51, Luc Michel wrote:
+> c4b3d0074 removed the check that nettle or gcrypt were explicitly
+> requested as the crypto library to use, breaking the --enable-nettle and
+> --enable-gcrypt options. Re-add the check.
+> 
+> Fixes: c4b3d0074 (crypto: bump min gnutls to 3.7.5)
+> Signed-off-by: Luc Michel <luc.michel@amd.com>
+> ---
+>   meson.build | 5 +++++
+>   1 file changed, 5 insertions(+)
 
-
-On 2026/7/10 下午4:09, Tao Cui wrote:
-> 
-> 
-> 在 2026/7/10 10:58, Bibo Mao 写道:
->>
->>
->> On 2026/7/10 上午8:50, Tao Cui wrote:
->>> From: Tao Cui <cuitao@kylinos.cn>
->>>
->>> kvm_set_pv_features() programs the KVM_FEATURE cpucfg attribute, which is a
->>> per-vCPU setting. It was called from kvm_arch_put_registers() under a
->>> function-local static guard, so it ran only once for the whole VM: only the
->>> first vCPU got its pv features pushed to KVM, and on SMP guests the others
->>> never saw KVM_FEATURE_IPI / KVM_FEATURE_STEAL_TIME.
->>>
->>> Drop the static guard and push pv features per vCPU under
->>> KVM_PUT_FULL_STATE, the same gate kvm_set_stealtime() already uses. Host
->>> feature detection stays in kvm_arch_init_vcpu(); the per-vCPU state write
->>> belongs in kvm_arch_put_registers().
->>>
->>> Signed-off-by: Tao Cui <cuitao@kylinos.cn>
->>> ---
->>>    target/loongarch/kvm/kvm.c | 15 ++++++---------
->>>    1 file changed, 6 insertions(+), 9 deletions(-)
->>>
->>> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
->>> index d6539c12ac..c557ee3c3d 100644
->>> --- a/target/loongarch/kvm/kvm.c
->>> +++ b/target/loongarch/kvm/kvm.c
->>> @@ -816,7 +816,6 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
->>>    int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
->>>    {
->>>        int ret;
->>> -    static int once;
->>>          ret = kvm_loongarch_put_regs_core(cs);
->>>        if (ret) {
->>> @@ -843,19 +842,17 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
->>>            return ret;
->>>        }
->>>    -    if (!once) {
->>> +    if (level >= KVM_PUT_FULL_STATE) {
->>> +        /*
->>> +         * pv_features and steal time are per-vCPU state. Push them on
->>> +         * full-state sync so every vCPU gets its own settings; the kernel
->>> +         * clears the steal-time guest_addr on KVM_PUT_RESET_STATE.
->>> +         */
->>>            ret = kvm_set_pv_features(cs);
->> pv feature is a little different from steal-time. steal-time guest_addr is created from guest OS, pv feature is created from VMM at beginning. steal-time guest_addr can be set for many times, and there is bit KVM_STEAL_PHYS_VALID checking with steal-time guest_addr, however pv feature can be set only once with existing method.
->>
-> 
-> Hi Bibo,
-> 
-> Thanks for catching this — I hadn't fully considered the double-call path.
-> 
-> KVM_PUT_FULL_STATE fires both at realize (cpu_synchronize_post_init) and
-> on incoming migration load (cpu_synchronize_all_post_init), so
-> kvm_set_pv_features() runs twice on the destination.
-> 
->> Although I do not understand flow of VM migration, with KVM_PUT_FULL_STATE state changing, there are at least two places where this state is set, one is from cpu_common_realizefn() which calls cpu_synchronize_post_init(), the other is qemu_loadvm_state()/qemu_loadvm_state_main() which calls cpu_synchronize_all_post_init().
->>
->> It seems that VM will fail to migrate since kvm_set_pv_features is called twice at least here. Do you test VM migration with this patch?
-> 
-> I did test migration (virt-11.2 -> virt-11.2, virt-11.1 -> virt-11.1) and
-> it passed, but that was on a single host — source and destination computed
-> the same pv_features. The kernel (kvm_loongarch_cpucfg_set_attr) only
-> rejects a re-set when the value differs:
-> 
->      if ((kvm->arch.pv_features & LOONGARCH_PV_FEAT_UPDATED) &&
->          ((kvm->arch.pv_features & valid) != val))
->          return -EINVAL;
-> 
-> So a cross-host migration where the two sides compute different pv_features
-> would indeed fail on the second set.
-> 
-> I'll add a per-vCPU guard so the push happens exactly once (at the first
-> FULL_STATE sync); subsequent syncs are skipped and the destination keeps
-> advertising the features its own host supports. Does that sound like the
-> right direction?
-I do not consider pv feature migration supports before. There are two 
-points from my side when VM migrates from hostA to hostB, maybe there 
-are other requirements out of my knowledge :(
-   1. the pv feature value got from running vCPUs on hostA should be 
-supported on hostB.
-   2. if VM is rebooted or one vCPU is hot added, the pv feature value 
-got from new added vCPU on hostB should be the same with boot CPU0, 
-which is got from hostA.
-
-Regards
-Bibo Mao
-> 
-> Thanks,
-> Tao
-> 
->>
->> Regards
->> Bibo Mao
->>>            if (ret) {
->>>                return ret;
->>>            }
->>> -        once = 1;
->>> -    }
->>>    -    if (level >= KVM_PUT_FULL_STATE) {
->>> -        /*
->>> -         * only KVM_PUT_FULL_STATE is required, kvm kernel will clear
->>> -         * guest_addr for KVM_PUT_RESET_STATE
->>> -         */
->>>            ret = kvm_set_stealtime(cs);
->>>            if (ret) {
->>>                return ret;
->>>
->>
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
