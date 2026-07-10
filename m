@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1E33C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 03:00:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3560AC44506
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 03:00:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi1Qi-0001zf-8f; Thu, 09 Jul 2026 22:57:32 -0400
+	id 1wi1Pr-00086z-6b; Thu, 09 Jul 2026 22:56:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wi1QN-0001ci-RF
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:57:12 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ id 1wi1Pf-0007uJ-Bf
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:56:27 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wi1QL-0008WQ-Co
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:57:11 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-ca88130e09aso287579a12.3
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 19:57:08 -0700 (PDT)
+ id 1wi1Pd-0008OA-HC
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:56:27 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-84867f07d63so447961b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 19:56:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783652228; x=1784257028; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1783652184; x=1784256984; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=KCKfH9COIDQuGdY+gAsHKTofIOH+wj3D7nq+4tMertw=;
- b=m+XX/NIkma+VNHSH/N9GmXsQvEJWYgtK2LCxmlJ/t9L020dsuMNbIzX9gich+VxBlg
- A9N7DY4RgzRzcbE8zMkK/3kIEfMvd0EYEgwdWyHTDg2SVii/pmRjy2hKCF7C4tAj+96I
- w6NvjKmFuQIirgBh3ssvXwlyV+neRjsJTCVxTVKo/3gK5l32BpS9RXfuYPATUeybK7Kp
- 6xo8wW9JKAm1Ab/4rMbQC8i+td4/MnmZAN9T7sBQGNCB42XHQHopGJGj4cJ4Eh2EZI5f
- 8tIusY0Qr6RmqpMl9yoJnXdlHr5H8TeOf74n8ErmPfcBzGsGYMP0HHr8oaQVnT6BiZrz
- urNg==
+ bh=MdcafjiFXFuJrZ0Mtwb0BBBWElZ4I5sC9RwHK2DaMdA=;
+ b=nCRoLNNrCSO+Tiqg9cH7wkk9vo4l4v5nz34qLX4KB03MssgGwd7snAdSzbArZ9ufS5
+ TH1WnEFvlokw2qtDZG81l0hvNKl/OT/Uot1zM/Qg8vAS3dUgTEIq2bfagS08l1Umz7Wy
+ ZyZ1Xed9a771K1a/gi1Qc1XpVWtaYt8kS/+BrolDB+OBhvQis/aZ2foKJmsNrUTHPfOL
+ hK3CiurxIUClwnV6tzthKCPtaeOt4+nKoNKqVeOoMgjnUNTwI+ioSt4ESfFpKHC/qMrz
+ 3txukCP3fbrgyJg74r1C0TWUiLnQkEgHMe8IjXpd9C4InuStodyIFZyLHVb70XW04DWw
+ tEfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783652228; x=1784257028;
+ d=1e100.net; s=20251104; t=1783652184; x=1784256984;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=KCKfH9COIDQuGdY+gAsHKTofIOH+wj3D7nq+4tMertw=;
- b=AfHJlein0RpSr0R3mmNTM5v8w37QV6bgG9rNEL3p74KLlUWgZ+QoiTG3i9oQlzE/iZ
- 3NZXzYjwgMTQvHtvU5P09lD0gVr87ZbfpUtVxxUnUv8Uz7pPzIy0x5Q74/r3zL/i7qm8
- CPllcSOafo3fYWUuJ7Tq9gZSHSn6Y0E4Tqs9FX+e32d4MCscAOhgXnZOp1DJpBrY3V/k
- o98OcfBg84IjFC38LZkR3L6Dlv/UXH50yN3llKe2dh1uvXcpBllRmL08HKYkjLfiwFa+
- VD542GoSwTNWkDghPjVZbt6aTrNIv2fEGCOf3w1NB+tNnLCG8Tm8ezHxetXz6ZoXVF/C
- pIZw==
-X-Gm-Message-State: AOJu0Yz3KSfeI58PvAO72KPxqlpJlm1Ths6MzNAhBmUH8Jfk5BUVcNcb
- RLUv8zQzLg7OLK4YAw0v8Y0qxqEq8MofwCMLeisoTzTmeVHbalNp6g+SY7kfQw==
-X-Gm-Gg: AfdE7ckdM3XRIlTo/C1TCm6e8hmrgQk3zvx8keikBDZuZvuIzS5Q6R/3Tqdm1DMObII
- gPHir3+ZOCU0vy+2BswENIf131ZfqUkuGghnIHEkU6Bodr92kJG2J3i6HkkJuiBFk8CIjWzo8HM
- CyXyTyO0tEZ+lBsj2hxD6sOoZsycAGl03M+/pvtb331encBzBrMogkcVxAMVAjQqWbU8qjMXiBX
- oZYNwREUHJY/RxtibGX29WNgdWI4TP/Ykdr7kB7879dWsNbym3MrTRwJCbvibfRL05fMAVSaudJ
- U6/YwHFa2Cwjb2di5VzBxP4g0QIxcdoWFLyQrQ7xsilZoQ3wue8upEZN1/PG1fSKfQa2KqvKQxH
- U/43BfBgT8Me4V84XfuV/7lF8U2kBRknaX4QWEiWI7Glzmn+OoECpy3WNtQyxiDhWUKZKeK9YVF
- HZCmyamk9RKyCJgh2ZFPnkyt0Nk+ftqHo=
-X-Received: by 2002:a05:6a20:734b:b0:3b4:8880:2089 with SMTP id
- adf61e73a8af0-3c0bce8fd22mr10888009637.16.1783652227857; 
- Thu, 09 Jul 2026 19:57:07 -0700 (PDT)
+ bh=MdcafjiFXFuJrZ0Mtwb0BBBWElZ4I5sC9RwHK2DaMdA=;
+ b=Y1eyMw2QYNj7rg6xfqF+uhnxH+4D4VEkGeDlEDSsUhyF6+gfN8cXQMzyb+/7geVNoJ
+ CyL4X2FanDcKRbNhTpdZ3h5px9RZzyESZb3kfIGCAFCbUYd+jauji905vl9iIxX+WU2w
+ 037DSG/MI1wa0fuhq99LSFWfUMlk+XbY9+jQykmrmQ5hy7PdCv3+Sc3UXgXMVre1gzc7
+ J0ZcnEBnIGfB6Os8M/ttl3a5IkhDihKqH5FtoTrlZLpIoD9hw5rFuPUol5I5cbyGIZLG
+ DjTgIvUNkHx3Bsa1orfYpO4MuY71RtrvnjxmSV9nU/sNY7cvOfMStbOzCspgjTprFF0z
+ +e3g==
+X-Gm-Message-State: AOJu0YxgEVNs7NHOI77FGgWJKdqDNPhVPdkUOtdKPmaaeyAXfPYqwTAt
+ PlY37E07Z3caNfQjjL2oZ/463aYtt/7fWl+o0ak5oA99wDLh0HmE5+xZSrhV/w==
+X-Gm-Gg: AfdE7cmkAFRqI7ETxFLTzZKyaH7r3uL8840uJw3iGQv13wBFqdfSABfUskcjmRK2E1D
+ uBUDIFKPDq1xL3x3/DS3g4743uxFi1t1PktqTCUl1DQapcxKaRAu9QAOaAMxPp+E69kHDP1cqN9
+ CO4Z8MmZnBrBypWuzp58iiq9R9AOzXjZKVmrMY3TYKPSRH8k+Nnv3ofLbogYOBIWyf7U7HbIk3s
+ QEezR1vKtK1a6gLQRXnw4V9rmaI7iewFopIRQtLx+UbrLR+hHm2Il03aENRseB70bDtOwBbIxi5
+ 75Eg4EQcSDjSsIvKAcoPPvGDPU/SORROidl3U+C17ZQ0Q1npJkAu7BKbmiV0FURDcUGIdzZWLSG
+ 7rOPPSQ58ZjpguXqwykcI0Zau+dXmotGGIY1WveODp7OXHTCSKZJTsJ+ahyIYTZ6Jw+CQqnousb
+ zpjCLpiYILu7/sdWGkz2tsOmk5fkz1LZA4QyjwcQ639g==
+X-Received: by 2002:a05:6a21:4a89:b0:3b4:7b2a:6a0a with SMTP id
+ adf61e73a8af0-3c0bd206afdmr12269169637.35.1783652184266; 
+ Thu, 09 Jul 2026 19:56:24 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-ca5af6e04fcsm4576769a12.4.2026.07.09.19.57.05
+ 41be03b00d2f7-ca5af6e04fcsm4576769a12.4.2026.07.09.19.56.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jul 2026 19:57:07 -0700 (PDT)
+ Thu, 09 Jul 2026 19:56:23 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
 Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 28/40] target/riscv: move riscv_cpu_set_geilen() to riscv-imsic
-Date: Fri, 10 Jul 2026 12:55:13 +1000
-Message-ID: <20260710025525.1704417-29-alistair.francis@wdc.com>
+Subject: [PULL 14/40] target/riscv: move debug.h to tcg subdir
+Date: Fri, 10 Jul 2026 12:54:59 +1000
+Message-ID: <20260710025525.1704417-15-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260710025525.1704417-1-alistair.francis@wdc.com>
 References: <20260710025525.1704417-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x533.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,80 +107,140 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-riscv_imsic.c is the only caller.  Having it sitting in the TCG only
-cpu_helper.c gets in the way of --disable-tcg for no good reason.
+riscv_trigger_* APIs are TCG only.  Wrap the usages we have of them
+in cpu.c with CONFIG_TCG.
+
+After that we can move the header to the tcg subdir.  This will be
+enough to get this out of the way for the --disable-tcg build.
 
 Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260703180538.3346781-23-daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260703180538.3346781-9-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h            |  1 -
- hw/intc/riscv_imsic.c         | 13 +++++++++++++
- target/riscv/tcg/cpu_helper.c | 13 -------------
- 3 files changed, 13 insertions(+), 14 deletions(-)
+ target/riscv/{ => tcg}/debug.h | 0
+ target/riscv/cpu.c             | 8 +++++---
+ target/riscv/machine.c         | 2 +-
+ target/riscv/tcg/cpu_helper.c  | 2 +-
+ target/riscv/tcg/csr.c         | 2 +-
+ target/riscv/tcg/debug.c       | 2 +-
+ target/riscv/tcg/tcg-cpu.c     | 2 +-
+ 7 files changed, 10 insertions(+), 8 deletions(-)
+ rename target/riscv/{ => tcg}/debug.h (100%)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 7618110412..7a4d8abe07 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -646,7 +646,6 @@ int riscv_cpu_pending_to_irq(CPURISCVState *env,
+diff --git a/target/riscv/debug.h b/target/riscv/tcg/debug.h
+similarity index 100%
+rename from target/riscv/debug.h
+rename to target/riscv/tcg/debug.h
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index d17ba0474a..a2887adf16 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -39,7 +39,7 @@
+ #include "kvm/kvm_riscv.h"
+ #include "tcg/tcg-cpu.h"
+ #if !defined(CONFIG_USER_ONLY)
+-#include "target/riscv/debug.h"
++#include "target/riscv/tcg/debug.h"
+ #endif
  
+ /* RISC-V CPU definitions */
+@@ -856,9 +856,11 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+     env->vill = true;
  
- bool riscv_cpu_fp_enabled(CPURISCVState *env);
--void riscv_cpu_set_geilen(CPURISCVState *env, uint8_t geilen);
- bool riscv_cpu_vector_enabled(CPURISCVState *env);
- void riscv_cpu_set_virt_enabled(CPURISCVState *env, bool enable);
- int riscv_env_mmu_index(CPURISCVState *env, bool ifetch);
-diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
-index 7e5b5349ba..ebb55191c7 100644
---- a/hw/intc/riscv_imsic.c
-+++ b/hw/intc/riscv_imsic.c
-@@ -46,6 +46,19 @@
- #define IMSIC_EISTATE_ENPEND           (IMSIC_EISTATE_ENABLED | \
-                                         IMSIC_EISTATE_PENDING)
+ #ifndef CONFIG_USER_ONLY
++#ifdef CONFIG_TCG
+     if (cpu->cfg.debug) {
+         riscv_trigger_reset_hold(env);
+     }
++#endif
  
-+static void riscv_cpu_set_geilen(CPURISCVState *env, uint8_t geilen)
-+{
-+    if (!riscv_has_ext(env, RVH)) {
-+        return;
-+    }
-+
-+    if (geilen > (TARGET_LONG_BITS - 1)) {
-+        return;
-+    }
-+
-+    env->geilen = geilen;
-+}
-+
- static uint32_t riscv_imsic_topei(RISCVIMSICState *imsic, uint32_t page)
+     if (cpu->cfg.ext_smrnmi) {
+         env->rnmip = 0;
+@@ -1016,7 +1018,7 @@ static void riscv_cpu_realize(DeviceState *dev, Error **errp)
+ 
+     riscv_cpu_register_gdb_regs_for_features(cs);
+ 
+-#ifndef CONFIG_USER_ONLY
++#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+     if (cpu->cfg.debug) {
+         riscv_trigger_realize(&cpu->env);
+     }
+@@ -1031,7 +1033,7 @@ static void riscv_cpu_realize(DeviceState *dev, Error **errp)
+ static void riscv_cpu_unrealize(DeviceState *dev)
  {
-     uint32_t i, max_irq, base;
+     RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(dev);
+-#ifndef CONFIG_USER_ONLY
++#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+     RISCVCPU *cpu = RISCV_CPU(dev);
+ 
+     if (cpu->cfg.debug) {
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index ef0a8eae24..0ab613a298 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -23,7 +23,7 @@
+ #include "system/tcg.h"
+ #include "migration/cpu.h"
+ #include "exec/icount.h"
+-#include "target/riscv/debug.h"
++#include "target/riscv/tcg/debug.h"
+ #include "hw/riscv/machines-qom.h"
+ 
+ static bool pmp_needed(void *opaque)
 diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
-index 6b39152ee2..71a96a20ef 100644
+index 885b4172c0..310c18db46 100644
 --- a/target/riscv/tcg/cpu_helper.c
 +++ b/target/riscv/tcg/cpu_helper.c
-@@ -526,19 +526,6 @@ void riscv_cpu_swap_hypervisor_regs(CPURISCVState *env)
-     }
- }
+@@ -35,7 +35,7 @@
+ #include "semihosting/common-semi.h"
+ #include "exec/icount.h"
+ #include "cpu_bits.h"
+-#include "target/riscv/debug.h"
++#include "target/riscv/tcg/debug.h"
+ #include "pmp.h"
+ #include "qemu/plugin.h"
  
--void riscv_cpu_set_geilen(CPURISCVState *env, uint8_t geilen)
--{
--    if (!riscv_has_ext(env, RVH)) {
--        return;
--    }
--
--    if (geilen > (TARGET_LONG_BITS - 1)) {
--        return;
--    }
--
--    env->geilen = geilen;
--}
--
- void riscv_cpu_set_rnmi(RISCVCPU *cpu, uint32_t irq, bool level)
- {
-     CPURISCVState *env = &cpu->env;
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index 7818d81fb0..36d12b6a51 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -34,7 +34,7 @@
+ #include "tcg/insn-start-words.h"
+ #include "internals.h"
+ #if !defined(CONFIG_USER_ONLY)
+-#include "target/riscv/debug.h"
++#include "target/riscv/tcg/debug.h"
+ #endif
+ 
+ /* CSR function table public API */
+diff --git a/target/riscv/tcg/debug.c b/target/riscv/tcg/debug.c
+index ba5bc6ae13..3c0fe70101 100644
+--- a/target/riscv/tcg/debug.c
++++ b/target/riscv/tcg/debug.c
+@@ -28,7 +28,7 @@
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+ #include "cpu.h"
+-#include "target/riscv/debug.h"
++#include "target/riscv/tcg/debug.h"
+ #include "trace.h"
+ #include "exec/helper-proto.h"
+ #include "exec/watchpoint.h"
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index b73e3e9dd4..fe6350f497 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -37,7 +37,7 @@
+ #include "hw/core/boards.h"
+ #include "system/tcg.h"
+ #include "exec/icount.h"
+-#include "target/riscv/debug.h"
++#include "target/riscv/tcg/debug.h"
+ #endif
+ 
+ /* Hash that stores user set extensions */
 -- 
 2.54.0
 
