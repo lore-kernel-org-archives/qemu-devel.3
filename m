@@ -4,98 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C095C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 14:41:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C4BFC44506
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 14:41:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiCPt-0000jR-Kx; Fri, 10 Jul 2026 10:41:25 -0400
+	id 1wiCPy-0000nO-Pl; Fri, 10 Jul 2026 10:41:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wiCPn-0000ey-0h
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 10:41:19 -0400
+ id 1wiCPq-0000h2-LK
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 10:41:24 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wiCPl-0005VE-3n
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 10:41:18 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1wiCPl-0005Vq-Q3
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 10:41:20 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66ADIC411212225; Fri, 10 Jul 2026 14:41:13 GMT
+ 66ADIGZB1713152; Fri, 10 Jul 2026 14:41:14 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=dOH6/D7smKp+iU17VebbwyH6QbmltiUz/3QF9KNOK
- No=; b=cxIraVkePNhW6dTZynAvSr5+FYAsZHdhmOjMggfyf8QCRo1DTw89MpOLD
- 0XLbPPfN5rzkHTePXIlNxHNzosvdvUNiYbilzBeYNLAWAE7CUvEG2w7mgygpbpJ3
- 35d9dd4KqRfNekm8jXi4Xi7Mo+yXyFKjjtlRaDwlVzdi8XX+F+erYtUoqek51yyP
- n+D2Mnd+5rH/QvsRvflQ15S0xT2UGunW4aCpArRfPrPBJ7J2yplgb7ad5Q4KsKP8
- /fStek7eMoHOlm/VNwqdiGfYEAy30wyKXVwWiUipSylvE3yWFkuMAVtI+2EsDGNX
- Dee5E8cvWSM5FNhOKnvE5q70mRSLw==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fafh0cgsx-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=5sUN3aY1SEIaIMqzM
+ /v+nyCI8fuHCvxkw6Kn4YZhYdc=; b=MFIz0Ur0SydITEZnHAA5j+iEYmBK2H1An
+ FK8X+6RgVm2l2xa9F384qB7PTjGKQ08s/EFkqHMtdGv4GhGNXCOMqLUcj//Gkag9
+ h2/2MvCJaBZPMJTQT283EkHoF62JMRRK1emgltfsa41qE1s4LPftXAeJyhqYbFic
+ LIZQUVuoT23eXlX/vs8RbORz26Ajdpyr6oTbn1MROB2Of9mARrCFpYEN94MO506Z
+ FqQ7eNhoYaypBlxc6ES8ZjKrdNm1xW4yLSeWbe8kNFcYEZ8M2tiaoa4XMnaTlHkH
+ HYiLsWEkRFdtUUD6oP46SayFOqdk4LfVd+igTte9YebaxeFRDtwCg==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6sur6yx8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 10 Jul 2026 14:41:14 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66AEJwTn023925;
+ Fri, 10 Jul 2026 14:41:13 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f7dgkjf0c-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Fri, 10 Jul 2026 14:41:13 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66AEYmgk013549;
- Fri, 10 Jul 2026 14:41:12 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f7e0htb7r-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 10 Jul 2026 14:41:12 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66AEfAF321758572
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66AEfCs49044642
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 10 Jul 2026 14:41:11 GMT
+ Fri, 10 Jul 2026 14:41:12 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D35E55805C;
- Fri, 10 Jul 2026 14:41:10 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 286BD5805C;
+ Fri, 10 Jul 2026 14:41:12 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 542FB5805A;
- Fri, 10 Jul 2026 14:41:10 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id A79CF5805A;
+ Fri, 10 Jul 2026 14:41:11 +0000 (GMT)
 Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 10 Jul 2026 14:41:10 +0000 (GMT)
+ Fri, 10 Jul 2026 14:41:11 +0000 (GMT)
 From: Stefan Berger <stefanb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Stefan Berger <stefanb@linux.ibm.com>
-Subject: [PULL v1 0/3] Merge tpm 2026/07/10 v1
-Date: Fri, 10 Jul 2026 10:41:05 -0400
-Message-ID: <20260710144108.621828-1-stefanb@linux.ibm.com>
+Cc: peter.maydell@linaro.org, Mohammadfaiz Bawa <mbawa@redhat.com>,
+ Stefan Berger <stefanb@linux.ibm.com>
+Subject: [PULL v1 2/3] hw/tpm: gate PPI support on tpm-tis-device behind a
+ device property
+Date: Fri, 10 Jul 2026 10:41:07 -0400
+Message-ID: <20260710144108.621828-3-stefanb@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260710144108.621828-1-stefanb@linux.ibm.com>
+References: <20260710144108.621828-1-stefanb@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=VebH+lp9 c=1 sm=1 tr=0 ts=6a510489 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEwMDE0MiBTYWx0ZWRfX7rb1cB3DLshg
+ WQ5PXrYS18JlvzOC2y1Mc9DcCj3GXWP/aMnN7IiKw2BJPepS6rSfUXcKO6OBWStaUrRf29NE3T4
+ 96WWYOf9zuNVCCyWInw/b3XwXI/gr6Q=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEwMDE0MiBTYWx0ZWRfX09qJGfYJ2vQl
+ dr/qUJELWTByOI29tfQVN4hB2qh+u2phx6PyAAvokVgotwU5IJ8LFPg8MhcJZ4wlkgnYD+edodz
+ R6YjxZPJ8sdU6CNyis6WKcxW8X/t5aMZ8yQf0LbdsB9Rc2oXVKAti35h9n0R8g/zQmkBIKjdBIW
+ mFAXjYAn7PG84JrTfkwCVuquGz+0xaYlXqwj/eOAnU142eoEWBTwSvolb8cslA/zljliEESeqbs
+ z6Mny0XI7DK2xkrcnpXl1C0MGb1aeVIZ3jEHDUBFTUiDZvUepMWa/qTIQXY/pzH0WQdnt8t31AY
+ 59ORqGoM2/UTNTQQaum3qX/M9GlNBjDAfwMEUNjyJ26yRo8q0iUqLeJEbPro2ycj8bpsKxLn0LG
+ 1KCDwuypRHoO61Ux/XW0YJvUDI8w+tQQjiBoc/xQgop+yjuR0qb9QImdDdsRljYlwux+eayv4AL
+ uKq0g4TiqqVw05gLGiA==
+X-Proofpoint-GUID: rGhlN8FMs48yqR8SX0_HQcMWqLFCQxlQ
+X-Authority-Analysis: v=2.4 cv=Oot/DS/t c=1 sm=1 tr=0 ts=6a51048a cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=p0WdMEafAAAA:8 a=NEAV23lmAAAA:8
- a=kILJIRLdMjHf4_WiUX0A:9
-X-Proofpoint-GUID: xXsAeJZz7S1uX5uDwo64pUx8J2lZGk1m
-X-Proofpoint-ORIG-GUID: xXsAeJZz7S1uX5uDwo64pUx8J2lZGk1m
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEwMDE0MiBTYWx0ZWRfX5v0nx3A+rnmn
- TitBXEmfTWOcfDphCoUjnwJcyWDuB6c87DA/rRqbOTu4JoUr/PPLJctFCbHy2Ag68xaL/Gbf8pN
- DcK4Bf8TIz4GPnpixLpDiPD9oQhxBvk=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEwMDE0MiBTYWx0ZWRfX0ar6Irjrfezu
- GkRZkBH8e3+n9hrMbOsytcouCKoWq1r1YTQWjiPigEZNR0AoJ440yLdHiact7wA+YpdQoaIg4f2
- f4N+jP1DNf8nyyskAk9xsZNyquwbgRIvQ0+s6YvSiXaNp7fOaplH45ZlibEAjIYDAeBprMWOzAz
- +WX8Wu9V000Hi1Lrm4TFW9XkV11dLL2+FhfbsBHbghVDOV527niGscEBwegKgCObWpLgk4cjbwT
- epygqIbWt+h7gnZo34IjmltxFa5eqzuui7rTnNqbI/O4Y62pTVHIrTK7Q3vU2XM6THWkUhOALYy
- hXw7hzID+YFicEaZnCRdyBKBvrLY6+bFe6mpCfVt9xozzRYE/D24yYTU8ivrtAmMPEun6ETp5Tv
- 5hAkRtDp6ec3/Vu6/0JMvnxLU7eNjUGIYq847R6xfwzc8HS+eSgFtRM0KKhxDcJ4D2daF3WvYoW
- G93teT3/rVIcf6Q79xg==
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8
+ a=QC3pr3st6DBKPxuHkVwA:9
+X-Proofpoint-ORIG-GUID: rGhlN8FMs48yqR8SX0_HQcMWqLFCQxlQ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-10_03,2026-07-10_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 clxscore=1015 malwarescore=0
- impostorscore=0 phishscore=0 lowpriorityscore=0 adultscore=0 spamscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607100142
+ bulkscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0 phishscore=0
+ malwarescore=0 suspectscore=0 spamscore=0 adultscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607100142
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -120,36 +123,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit ab2056a0b7c944b16b224a8feabd99023772ae91:
+From: Mohammadfaiz Bawa <mbawa@redhat.com>
 
-  Merge tag 'pull-ufs-20260709' of https://gitlab.com/jeuk20.kim/qemu into staging (2026-07-09 12:04:14 +0200)
+Add a "ppi" boolean property (default: true) to tpm-tis-device.
+When ppi=off the RAMBlock is never registered and the migration
+stream omits "tpm-ppi", restoring backward compatibility.
 
-are available in the Git repository at:
+Move sysbus_init_mmio() calls from instance_init to realizefn so
+the memory regions are initialized before being registered.  When
+ppi=off, the PPI MMIO region is simply not exposed.
 
-  https://github.com/stefanberger/qemu-tpm.git tags/pull-tpm-2026-07-10-1
-
-for you to fetch changes up to 5e33de4f00c25f12afdf02481e0dd4013a7e96b9:
-
-  hw/core/machine: disable tpm-tis-device PPI for machine type <= 11.0 (2026-07-10 10:29:27 -0400)
-
-----------------------------------------------------------------
-
-This series of patches fixes a backwards compatibility issue related to
-migration of VMs on aarch64.
-
-----------------------------------------------------------------
-
-Mohammadfaiz Bawa (3):
-  hw/core/platform-bus: guard platform_bus_get_mmio_addr() against NULL
-  hw/tpm: gate PPI support on tpm-tis-device behind a device property
-  hw/core/machine: disable tpm-tis-device PPI for machine type <= 11.0
-
- hw/core/machine.c       |  1 +
- hw/core/platform-bus.c  |  3 +--
+Fixes: 46cd2c1050f0 ("hw/tpm: add PPI support to tpm-tis-device for ARM64 virt")
+Signed-off-by: Mohammadfaiz Bawa <mbawa@redhat.com>
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260619093140.832136-3-mbawa@redhat.com
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+---
  hw/tpm/tpm_tis.h        |  1 +
  hw/tpm/tpm_tis_sysbus.c | 18 +++++++++++-------
- 4 files changed, 14 insertions(+), 9 deletions(-)
+ 2 files changed, 12 insertions(+), 7 deletions(-)
 
+diff --git a/hw/tpm/tpm_tis.h b/hw/tpm/tpm_tis.h
+index 1531620bf9..6ac9804050 100644
+--- a/hw/tpm/tpm_tis.h
++++ b/hw/tpm/tpm_tis.h
+@@ -76,6 +76,7 @@ typedef struct TPMState {
+     size_t be_buffer_size;
+ 
+     TPMPPI ppi;
++    bool ppi_enabled;
+ } TPMState;
+ 
+ extern const VMStateDescription vmstate_locty;
+diff --git a/hw/tpm/tpm_tis_sysbus.c b/hw/tpm/tpm_tis_sysbus.c
+index 16bb17874b..a7b0002d82 100644
+--- a/hw/tpm/tpm_tis_sysbus.c
++++ b/hw/tpm/tpm_tis_sysbus.c
+@@ -94,6 +94,7 @@ static void tpm_tis_sysbus_reset(DeviceState *dev)
+ static const Property tpm_tis_sysbus_properties[] = {
+     DEFINE_PROP_UINT32("irq", TPMStateSysBus, state.irq_num, TPM_TIS_IRQ),
+     DEFINE_PROP_TPMBE("tpmdev", TPMStateSysBus, state.be_driver),
++    DEFINE_PROP_BOOL("ppi", TPMStateSysBus, state.ppi_enabled, true),
+ };
+ 
+ static void tpm_tis_sysbus_initfn(Object *obj)
+@@ -101,9 +102,7 @@ static void tpm_tis_sysbus_initfn(Object *obj)
+     TPMStateSysBus *sbdev = TPM_TIS_SYSBUS(obj);
+     TPMState *s = &sbdev->state;
+ 
+-    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
+     sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq);
+-    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->ppi.ram);
+ }
+ 
+ static void tpm_tis_sysbus_realizefn(DeviceState *dev, Error **errp)
+@@ -122,14 +121,19 @@ static void tpm_tis_sysbus_realizefn(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
+-    s->ppi.buf = qemu_memalign(host_page_size,
+-                               ROUND_UP(TPM_PPI_ADDR_SIZE, host_page_size));
+     memory_region_init_io(&s->mmio, OBJECT(dev), &tpm_tis_memory_ops,
+                           s, "tpm-tis-mmio",
+                           TPM_TIS_NUM_LOCALITIES << TPM_TIS_LOCALITY_SHIFT);
+-    memory_region_init_ram_device_ptr(&s->ppi.ram, OBJECT(dev), "tpm-ppi",
+-                                      TPM_PPI_ADDR_SIZE, s->ppi.buf);
+-    vmstate_register_ram(&s->ppi.ram, dev);
++    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mmio);
++
++    if (s->ppi_enabled) {
++        s->ppi.buf = qemu_memalign(host_page_size,
++                                   ROUND_UP(TPM_PPI_ADDR_SIZE, host_page_size));
++        memory_region_init_ram_device_ptr(&s->ppi.ram, OBJECT(dev), "tpm-ppi",
++                                          TPM_PPI_ADDR_SIZE, s->ppi.buf);
++        sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->ppi.ram);
++        vmstate_register_ram(&s->ppi.ram, dev);
++    }
+ }
+ 
+ static void tpm_tis_sysbus_class_init(ObjectClass *klass, const void *data)
 -- 
 2.55.0
 
