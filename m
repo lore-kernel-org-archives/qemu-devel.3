@@ -4,104 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03D35C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 16:05:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9B3BC43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 16:13:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiDjK-00017G-Tx; Fri, 10 Jul 2026 12:05:34 -0400
+	id 1wiDqu-0002T7-P8; Fri, 10 Jul 2026 12:13:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wiDjJ-00016n-Jw
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 12:05:33 -0400
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wiDqo-0002Rq-PA
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 12:13:19 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wiDjI-0005Cf-3N
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 12:05:33 -0400
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-6679d88abdcso1633267d50.2
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 09:05:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783699531; cv=none;
- d=google.com; s=arc-20260327;
- b=Pz2QsS0/yNDRSed+7D8b4gDqqkxlxveH63XwfCz6NHiPV00sbDwZbO4xH1hSsnTgRF
- qN9p6fzP3Iziy/n4MU+K2J+VI9EXr0X5xTW7Tlmc1dOi9JxV3yrD9V350n5N0S/VLshj
- lBN4Bw7GBgT8cXNZd3Z0sMBnk46xXInvWRqnPiPvIJm6oXUmEEy/npIrF+XYZVqOJMxM
- F3cwz/KM6BptnHI0HsAms2Qqwlbn6Zz3fw0BHiFYqKvgdYHFOprqNKuuKu4bLWGdAPif
- vkLrMXvNDrrLMLmivpeQJWyrmDGsMglz2ITwxgVDA+xCcXVvFkwhFgBxFEHamwvqVEtS
- +3CQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=JjRqBV6GD0nzOQPZYnLK57qn2ikPRZS3euqQT4WBNHM=;
- fh=Q74IszV7dBBQTCrTN/swS6sOCl7kjQtl4fQ1TjrJJlA=;
- b=Ns0mu+nIZtmCGdg9n4OxGnmJCpwE3aGOWJb0Uroxp/I8NgWU0auXaF4JXUemw2EXgo
- JethZYF78fXF9YhgIuEMiVeTuxcIf8Flod9/IeujhcPkwVCKZsf2/bUWBYxpZCg2khK8
- L6dMHMwFdCqxZOpOHw0igzg1drxE8EWwflg7RSCKqC7aq/a5xUvuKmfo3xQzWZj6G4Nr
- VC5opWY2XZf3mjsjKbJAI3t/sj0Cb+rb6DKc5bhZkSJzShh9w08vUImjiIYKoJtaDO7G
- zxlCXeyjhjr47WCTT/SzOgqxX3OYui2ZxrgC1v8gFKJyQfYvMjyw3o6YRc45WNT5BIfv
- KVnA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wiDqm-0006aX-H9
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 12:13:18 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-493b27c7451so27531875e9.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 09:13:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783699531; x=1784304331; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=JjRqBV6GD0nzOQPZYnLK57qn2ikPRZS3euqQT4WBNHM=;
- b=GiSI6sYF5mmLDMhHkPPZfehxV9jljS09vyV2Fq+Cs2Q4qh2lGa4RvjUxlgKTqbhUaD
- sPO0RN21SkfFKlKNzDjDfY+37oDLd2+r7HS5QZS5Atptvm12SibPQRarAyLVJWlRRqw3
- Bv+7j8WmWubuDVIAWqQUaGIdqinHoyiIR97SiKL+h27DRsEsqgrtMFZ/y6vOe697xJhS
- rLIBON8oMC7wPONqpP3dbH8GXMYgmRe14fexGXLfEHMWF6a/vOxcWJEl5K+araQMMV4k
- 0u5ehwJc90/x8kvyUlIwJyoL+Sqz1SoC5MBJXBylIfF4fy8pYbxMCzQv4idxXF2y4RzR
- QAwg==
+ d=openvz.org; s=google; t=1783699994; x=1784304794; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=b9+WW0WzzDwWC4+VBlNwLNOZ/ug0yqYomOfZpjSFUvA=;
+ b=ZPmFWsj8Gn5dPKlawT2nfuAw8SXvecTUt09grOEW1mB9bKp8fIfvpArIECTtc1tclT
+ reo83fSOO5+LulzC3iQq4UeIN1gf5MWS46ZPpC6tg14grVKDfewU/LoBGSXy3CAACA89
+ kNecFlOUFj9fIPcoec7iiQNLMSOQKEe4UZiFu7acK8Xzyw/1qusscBH/tIiLBvBadzIP
+ OAKOOptQ+i9Und6h2l9sfl/EK97RQ1vtxtBCXkDctUSFHapijqAaQT4sac64HqTvEVw3
+ qeTcC8t/fJrAXt8n+kvXl2+NMQoBsWC9gY+fIAxT9ejtj2UDOZb/1BtK/adbe4K+9aeD
+ aqkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783699531; x=1784304331;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=JjRqBV6GD0nzOQPZYnLK57qn2ikPRZS3euqQT4WBNHM=;
- b=g6kJD5q26fqt377wAqeIHD4ibowcuGW9QD9t+1zL6WU2Z5OuP4Lpx492gQl1VM3W2z
- dvvAvd1UkQZ05/8b//3emDS8weFllkJix+MmS7gYIbZRC4SU76YFlkRDTIgekW9XMcWi
- 6UmNrU5zk46ADkxk9NPGG+/5VHb+PwM58bkzmgZ+WoP+bgm9fIpqWgRFnDPsfNDIzl8Z
- 6K+tzRpy6UClCg3UwXUmZTwMQB0TmzI95D3IwV+hYFBXcPYK4xg/DPCUHGtnupwQlSem
- 5mHGtjhPu+DwktrhPd6K9JU8IzY5XUesVoUblPqCkQcRq6Y5okYPfb6QuV5yUYhAMsyu
- PuUA==
-X-Gm-Message-State: AOJu0YzMXiDna+prpwdvhhiz+wzw4Iy7CjXtBLGx4Yf1r47Pm5LgjVrt
- SVRRhpb+A+SC0yqQ/arYVeSPjK41hN9POP60MKeY7TP9mHoy9QrUHucSyE9oC+3cYW4qp0XGCpg
- l/KbqOBBVevXkaaQXuCSpA458svWFemXmqMP34Vi9fw==
-X-Gm-Gg: AfdE7clePXOYu/8seVk1Ml/5sZlqYNbkZMxwLlZ3RqbFvgeh7zmleMHJUHN+BWjthj2
- aJ04HBINvUEuMIhyTgJdRVVKq5Tvjwlb1kALsk6lyoxUnepb/V0lI/N5F5sWOZYPH8hrkDbJiAd
- 32kHAwKnkPIWQVE+mc2vPBa1WgGYAHUx9n2m4fMc3Mt9AnKytVfB6OlcBws25F5dZ1p1Gs2AyD1
- HXDWnD/ce6URJq1X07WFKCb9+tRv2CRzZjhUQ+zpkjYQnoHhDJkxyEJYnEFpkbeuYTNyZDfHgwo
- 9aAXsihYOKS06Q943I7EqXfgq0qTIXGvdByd4ETE2ODH4N7weKnl61yA
-X-Received: by 2002:a05:690e:bc6:b0:667:9fe4:8d7c with SMTP id
- 956f58d0204a3-6679fe494d1mr8274537d50.90.1783699529167; Fri, 10 Jul 2026
- 09:05:29 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783699994; x=1784304794;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=b9+WW0WzzDwWC4+VBlNwLNOZ/ug0yqYomOfZpjSFUvA=;
+ b=l9vXrOdcVG0ygcCoQ7GEXRxJkR9Tk+fncxWxeJh8KWywzMIB3ITaLcdOOENAleL0xi
+ EJX+uLvMeQs9YhnLwgRvEVeO+OUw/pvFO7nIFvqBEUxSoAWYHl17tJMBOlArojCEQ6Th
+ R7eBf4riyehrWv+STk4dqPgv0jZBApEZ+SDro/EInzLMJOsCNrqcT7PC4ndXGAap3yFK
+ t8xvcglqKBnleos/CjSHbA3/pO29zcpKqNgSHSspX5QzDOViU1tzsBQtLb1x3Gjafibe
+ fbWwkzeFu5JYceDrSXj4sH5I+nUClR5P0xK9vwq3xqZ+i7YBa03ajZXZcx/1e7XhMOfM
+ 8BYg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Ro0Q53sc6poEseHxEcoE9ASZ1oR1WzCzuUBBW7upVZcmJxp2vRTSw98ZRiq4JEw05bCAz/8S2WBQIqB@nongnu.org
+X-Gm-Message-State: AOJu0Yx4F4+cKQuBcYU6moRAUgrJN2aWJ9ivTIxgV+nN/0Mwub56gbYs
+ s6/+6pUJB+UN0M3usAdMbV5yjJ4QF3YpncpZttFYvM3QqBGjztCkLRQNrv1fphqINk8=
+X-Gm-Gg: AfdE7ckmZ3xP5b70g+D4GJYwEmoxVoQ8+drXcOC8UjhrmjZzgxd56I/pWQwiFeFAaoB
+ vyKmqR5wPO3Hc3uZnV3Uz0li7eqOaWeF9WiwXGJBKbyUiFwsHIpM64jZ+AV3QoEaShDJ4FjcP/6
+ RtC+kd8IlZ9H9zd94cDzhCAjAVka+EwExerYjGIdtCN8puyhFwzCVe87u5Qt4SALJOA5yGdKgU2
+ gibcyvrH39Lg4RpVNJxuO3xI69s0515KYRVkpv4kfxWXacWGgsBb7vRO1IxsVCWWDBGYrpdy3Q5
+ xKUV038Rev6BVOkbjK0U+jsi4hEJmB3EB1Wb0NP0hDHTCRPM/h0OCL3h6SjUGdEMMoXKw6wwRUe
+ 0gpOvuz03kZRw6IYkjmLGMIz7M2BzafRotJ6qQYONGI1StGGhyxV1e93Zmqm7r9BQg2rGz/FLWe
+ Bp/w==
+X-Received: by 2002:a05:600d:f:b0:493:f6c1:7aac with SMTP id
+ 5b1f17b1804b1-493f6c17b53mr21530615e9.12.1783699994454; 
+ Fri, 10 Jul 2026 09:13:14 -0700 (PDT)
+Received: from athena ([2a06:5b06:b600:300:5926:51ec:1f64:b9b3])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47aa0f214d2sm59944836f8f.33.2026.07.10.09.13.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 10 Jul 2026 09:13:14 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
+To: qemu-block@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: den@openvz.org, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>
+Subject: [PATCH 1/3] iotests: run the test pool with the 'fork' start method
+Date: Fri, 10 Jul 2026 18:13:07 +0200
+Message-ID: <20260710161309.1104712-2-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260710161309.1104712-1-den@openvz.org>
+References: <20260710161309.1104712-1-den@openvz.org>
 MIME-Version: 1.0
-References: <20260701-i2c-adc128d818-anacapa-v5-0-fe8292d86b38@free.fr>
- <20260701-i2c-adc128d818-anacapa-v5-6-fe8292d86b38@free.fr>
-In-Reply-To: <20260701-i2c-adc128d818-anacapa-v5-6-fe8292d86b38@free.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 10 Jul 2026 17:05:16 +0100
-X-Gm-Features: AVVi8Cdip2x3LDXCNl1ZWeozoKWLNRi3-ZwZ674T_ECc_kwwScoaqc-w-PHAOF0
-Message-ID: <CAFEAcA8mygA035i3VSEGzQWppCDaUz0HM5mNU9DvTsOjei1F8Q@mail.gmail.com>
-Subject: Re: [PATCH v5 6/8] hw/i2c: parent slaves created with
- i2c_slave_create_simple
-To: Emmanuel Blot <emmanuel.blot@free.fr>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
- Alexander Hansen <alexander.hansen@9elements.com>, 
- William de Abreu Pinho <williampinho@meta.com>, Emmanuel Blot <eblot@meta.com>,
- qemu-arm@nongnu.org, Corey Minyard <cminyard@mvista.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=den@openvz.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -124,18 +101,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 1 Jul 2026 at 18:31, Emmanuel Blot <emmanuel.blot@free.fr> wrote:
->
-> Slaves created with i2c_slave_create_simple() were left unparented and
-> showed up under /machine/unattached with no stable QOM path. Add each
-> slave as a QOM child of its bus, named after its I2C address, so it has
-> a deterministic and addressable QOM path.
+run_tests_pool() shares the runner via the class attribute
+TestRunner.shared_self, relying on worker processes to inherit it.
+That only works with the 'fork' start method. Python 3.14 switched
+the Linux default to 'forkserver', so workers see shared_self as
+None and parallel runs abort with:
 
-Should devices on a bus be QOM children of the bus, though?
-I would expect that they ought to be QOM children of e.g.
-the SoC or machine that created them.
+  assert runner is not None
+  AssertionError
 
-Do we do this for other bus types, e.g. PCI ?
+Only reproduces with Python 3.14+ and 'check -jN' (N > 1); meson
+runs one test per process and never calls run_tests_pool(), so CI
+is unaffected.
 
--- PMM
+Request get_context('fork') explicitly; it is available on all
+supported Python versions and a no-op before 3.14.
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Kevin Wolf <kwolf@redhat.com>
+CC: Hanna Reitz <hreitz@redhat.com>
+---
+ tests/qemu-iotests/testrunner.py | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/tests/qemu-iotests/testrunner.py b/tests/qemu-iotests/testrunner.py
+index dbe2dddc32..5b2664d9f3 100644
+--- a/tests/qemu-iotests/testrunner.py
++++ b/tests/qemu-iotests/testrunner.py
+@@ -26,7 +26,7 @@
+ import json
+ import shutil
+ import sys
+-from multiprocessing import Pool
++from multiprocessing import Pool, get_context
+ from typing import List, Optional, Any, Sequence, Dict
+ from testenv import TestEnv
+ 
+@@ -125,7 +125,7 @@ def run_tests_pool(self, tests: List[str],
+         assert TestRunner.shared_self is None
+         TestRunner.shared_self = self
+ 
+-        with Pool(jobs) as p:
++        with get_context('fork').Pool(jobs) as p:
+             results = p.starmap(self.proc_run_test,
+                                 zip(tests, [test_field_width] * len(tests)))
+ 
+-- 
+2.53.0
+
 
