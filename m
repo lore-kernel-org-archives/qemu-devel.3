@@ -4,72 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19A5EC44506
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 07:27:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07DBDC43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 07:29:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi5dV-00067t-Ra; Fri, 10 Jul 2026 03:27:01 -0400
+	id 1wi5fT-0006na-OL; Fri, 10 Jul 2026 03:29:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1wi5dT-00067Z-Dk; Fri, 10 Jul 2026 03:27:00 -0400
-Received: from smtp2-g21.free.fr ([212.27.42.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1wi5dR-0005oX-Bm; Fri, 10 Jul 2026 03:26:59 -0400
-Received: from localhost (unknown [89.92.102.124])
- (Authenticated sender: emmanuel.blot@free.fr)
- by smtp2-g21.free.fr (Postfix) with ESMTPSA id F1B192003C6;
- Fri, 10 Jul 2026 09:26:36 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
- s=smtp-20201208; t=1783668414;
- bh=7+IEfH29HKzSg6MtCPwrf2NQfJyXfgZFiYTj8F7wswI=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=XmtXOTON16fLiul9xWsuGq7KlODWNbcHQzLLKTOfLkwWj2HG3EP4xsWzu62L09w/h
- YWzdzr1C6hKRsjqZZs3nguQ2Q+C9Ek6EZxLJyD+BSFRwoYyow+86Y9lHLqW/S5+S6o
- Tvspz7bl5rqwj7+AxdTRHLIjviPVZK++lowFI2HVPTWv1ic8YQaQt4D6Zf+/kMw6ka
- gPtD9lWtk244uTI2ZMFV0xQyG8m+IcIHt0E465oOG7tcZlhe0TIs1PgFSa2DeZH0LJ
- QTGk/G89reHkBVGrINB053Ht7kdxCKiE66yyaJrzJmQQVhvnPFE1Kj1bqozcGXWYFY
- cpU5tYIMDc8Vg==
-From: Emmanuel Blot <emmanuel.blot@free.fr>
-Date: Thu, 09 Jul 2026 17:23:16 +0200
-Subject: [PATCH 24/29] hw/arm: catalina: model PCA9555 IO expanders with
- their own type
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1wi5fR-0006n4-Hc
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 03:29:01 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1wi5fP-00068O-KW
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 03:29:01 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-476d8e647e9so723586f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 00:28:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1783668538; x=1784273338; darn=nongnu.org;
+ h=content-type:content-transfer-encoding:mime-version:message-id
+ :in-reply-to:references:user-agent:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=e1Uelp51FK0IoYf8lsOFxMV3daGsxrmMJ24Ougs6BK4=;
+ b=Sufgpc84v/Eaokg+Z5NF7Y+TjsHRsYjjkV4Dln+RKXBYzYKg/GZ3+aXBnYzxDmMfhr
+ F44ovcaJr+YtKhoFblDYfFFeVF5f+8aHozjrRqAoMK0efCU3YSVxGtb7WxsnJdO2SNDw
+ XT/tjvV+ZY9JNMsyyQJZamiu3D203QK1bEUJVr2R2nAPt7QE+da7Lzk0gjyIzc3lz4Lw
+ gZfDj6hAiZKVV1qwLuBCKm1pfUjZwCmFDzhv0QaXWgOiLniwYWCjK9cR3tFzxhgr3CUZ
+ l1f4P8eJLEvuVZz2VOKlxmkjRk/ERQZmxjPITmgrHRRd+8V1gLpH5NHWFjPf9th2aa8j
+ SJwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783668538; x=1784273338;
+ h=content-type:content-transfer-encoding:mime-version:message-id
+ :in-reply-to:references:user-agent:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=e1Uelp51FK0IoYf8lsOFxMV3daGsxrmMJ24Ougs6BK4=;
+ b=psSNv2dY6o5s6AtSF127svLynz+ocweaqu4zxvoDqExlMIUcgmu3eomjrSbZ3LCj2L
+ 50F9y3VaBxS4NMNvuDOH0F4k35pfMpFwNQGXaSMVxxrvmRWvfJNSKsC1kAKE/6DVotVX
+ GCdc4WPoj8mgAztNTC6HUGrizI99txGYFtcEjqR7DNZedSsJ6ZJWISYzbuuZwh8VfiJE
+ 2PrU5Eio0Q1OBx9t1YOm/zP4gRHDKNKhy1H2mzp614NMKKQRtExis/mO0rS7ws0zQsOD
+ u3qRlxzbCh22JtOApg+qkOBfaEe49jD/vt4sBg798M9dlEsSEUv2jWZk/9gHQuu3M7Mn
+ bGig==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rp1qTcoygZ0qlOQTqWpqDcYUqCy/ewV+UtiXWJdk0Fe0SIGSGjuFSQLL3Oygh7HxWprLI7K4znueJ3R@nongnu.org
+X-Gm-Message-State: AOJu0YzgXCHgXw5IHT8Ki3+TerDE7qwQXmUcHuCual3+cnHIObAyHCo0
+ IHmOKsKMSOKFBdYSCYKOWHg2yFMfuHkzIzNaYvlDw3KvSS+tIMk+aSHvBuoDiV2YCBA=
+X-Gm-Gg: AfdE7ckjpSLgJ//JNvrm+QLjhl1vhmo3wV4PPDw3/SUpocXwxXwMAWWT9cqwLRsEqmC
+ mau6t1cuUaSlUpP9gplXAAbcXv5FVOABmuGT65IeFeIXjCkjaCy+Lx40H+Za00+ngHdYkK5gu3K
+ pkETVcenz/3ubZtD3ytSwjArpt+gYlCC5NNrwBfVhVM/9vTFcdAIhFnW2KZCqSYwZ2rqkyS7EWD
+ rK/VFLrZJAmzgL206DQaEZST+IqkQnf/eoaK10JTW+D/Pt2Ui6Jtlm/yDyO/517MzYUAL6kUZJX
+ sYQ0hP8BtUuY1m3l45ujoK7oXgBSuJ/CXVYmUTAWw4ti6cKugYxTS031tjauSRB7jQ5AgSqYn31
+ 0prvny0i3Sj8F4khD2ZUiXbqZQ8kH0+Lr1bMbzkLzAfgaJmnRmKRD1IagFJ9Hu1ocLFo8yeQHmm
+ aC0UhPou2oGKuB8H0ADcGkGdk8e89IxIVfxBljESdkTM2rB+e6Lg4bDWnFIYnbhyIjgpiML7rcC
+ HfqnKdqfZCP+shJykoOlbgi3ktKnR2vhpOyxKFzMutPX3FpOLFoLRnW/vQvU5OzEuN05CSxySXj
+ fILYQcvfrQmb75PiZh3hLuDLt7Qn5WTrhnHLjvcgdQnMQAfHblfpMdU=
+X-Received: by 2002:a05:6000:2902:b0:47d:eb17:3bee with SMTP id
+ ffacd0b85a97d-47df074e323mr12079518f8f.6.1783668538121; 
+ Fri, 10 Jul 2026 00:28:58 -0700 (PDT)
+Received: from meli-email.org (ppp-2-86-131-154.home.otenet.gr. [2.86.131.154])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47aa039afacsm55176177f8f.19.2026.07.10.00.28.57
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 10 Jul 2026 00:28:57 -0700 (PDT)
+Date: Fri, 10 Jul 2026 10:28:46 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ "Daniel P . Berrang=?UTF-8?B?w6k=?=" <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Brian Cain <brian.cain@oss.qualcomm.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Alex Benn=?UTF-8?B?w6ll?= <alex.bennee@linaro.org>,
+ Helge Deller <deller@gmx.de>, Peter Maydell <peter.maydell@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Philippe Mathieu-Daud=?UTF-8?B?w6k=?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH v4 97/97] docs/devel/testing/: update documentation
+User-Agent: meli/0.8.13
+References: <20260710062016.1818125-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260710062016.1818125-98-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20260710062016.1818125-98-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <thy7g8.2u3xwaqe3d2r0@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260709-catalina-upgrade-v1-24-82a63fead90c@free.fr>
-References: <20260709-catalina-upgrade-v1-0-82a63fead90c@free.fr>
-In-Reply-To: <20260709-catalina-upgrade-v1-0-82a63fead90c@free.fr>
-To: qemu-devel@nongnu.org
-Cc: Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org, 
- qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
- Corey Minyard <cminyard@mvista.com>, Emmanuel Blot <emmanuel.blot@free.fr>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783610580; l=3586;
- i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=7+IEfH29HKzSg6MtCPwrf2NQfJyXfgZFiYTj8F7wswI=;
- b=G08CVt1cwOYrPH/b0Avt/M0R3/KP0wNa1Y2dTja8IwdmN4Bov99M+7eXFjFgeKd3cAIAYkolG
- oJQqCVuWsrgARntsEn5IvYH5qDp9eerAJwhvSeN373Bt3ePTdvw4CYi
-X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
- pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=212.27.42.2; envelope-from=emmanuel.blot@free.fr;
- helo=smtp2-g21.free.fr
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,86 +116,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Catalina BMC device tree describes several IO expanders as nxp,pca9555.
-These were previously instantiated as PCA9552 devices as no PCA9555 model
-existed. Now that a dedicated PCA9555 device is available, use it so the
-emulated IO expanders match the hardware.
+On Fri, 10 Jul 2026 09:20, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> wrote:
+>We document how to build and run tcg tests with new framework.
+>
+>Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>---
 
-Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
----
- hw/arm/aspeed_ast2600_catalina.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-diff --git a/hw/arm/aspeed_ast2600_catalina.c b/hw/arm/aspeed_ast2600_catalina.c
-index 65495a524ea..f3b22e9aa9a 100644
---- a/hw/arm/aspeed_ast2600_catalina.c
-+++ b/hw/arm/aspeed_ast2600_catalina.c
-@@ -533,7 +533,7 @@ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
-                             TYPE_PCA9554, 0x27);
-     /* io_expander6 - pca9555@25 */
-     i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 6),
--                            TYPE_PCA9552, 0x25);
-+                            TYPE_PCA9555, 0x25);
-     /* eeprom@51 */
-     at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 6), 0x51, 8 * KiB,
-                           osfp_eeprom, osfp_eeprom_len);
-@@ -547,11 +547,11 @@ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
- 
-     /* &i2c2 */
-     /* io_expander0 - pca9555@20 */
--    i2c_slave_create_simple(i2c[2], TYPE_PCA9552, 0x20);
-+    i2c_slave_create_simple(i2c[2], TYPE_PCA9555, 0x20);
-     /* io_expander0 - pca9555@21 */
--    i2c_slave_create_simple(i2c[2], TYPE_PCA9552, 0x21);
-+    i2c_slave_create_simple(i2c[2], TYPE_PCA9555, 0x21);
-     /* io_expander0 - pca9555@27 */
--    i2c_slave_create_simple(i2c[2], TYPE_PCA9552, 0x27);
-+    i2c_slave_create_simple(i2c[2], TYPE_PCA9555, 0x27);
-     /* eeprom@50 */
-     at24c_eeprom_init(i2c[2], 0x50, 8 * KiB);
-     /* eeprom@51 */
-@@ -572,13 +572,13 @@ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
- 
-     /* &i2c6 */
-     /* io_expander3 - pca9555@21 */
--    i2c_slave_create_simple(i2c[6], TYPE_PCA9552, 0x21);
-+    i2c_slave_create_simple(i2c[6], TYPE_PCA9555, 0x21);
-     /* rtc@6f - nct3018y */
-     i2c_slave_create_simple(i2c[6], TYPE_DS1338, 0x6f);
- 
-     /* &i2c9 */
-     /* io_expander4 - pca9555@4f */
--    i2c_slave_create_simple(i2c[9], TYPE_PCA9552, 0x4f);
-+    i2c_slave_create_simple(i2c[9], TYPE_PCA9555, 0x4f);
-     /* temperature-sensor@4b - tpm75 */
-     i2c_slave_create_simple(i2c[9], TYPE_TMP75, 0x4b);
-     /* eeprom@50 */
-@@ -615,17 +615,17 @@ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
- 
-     /* &i2c14 */
-     /* io_expander9 - pca9555@10 */
--    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x10);
-+    i2c_slave_create_simple(i2c[14], TYPE_PCA9555, 0x10);
-     /* io_expander10 - pca9555@11 */
--    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x11);
-+    i2c_slave_create_simple(i2c[14], TYPE_PCA9555, 0x11);
-     /* io_expander11 - pca9555@12 */
--    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x12);
-+    i2c_slave_create_simple(i2c[14], TYPE_PCA9555, 0x12);
-     /* io_expander12 - pca9555@13 */
--    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x13);
-+    i2c_slave_create_simple(i2c[14], TYPE_PCA9555, 0x13);
-     /* io_expander13 - pca9555@14 */
--    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x14);
-+    i2c_slave_create_simple(i2c[14], TYPE_PCA9555, 0x14);
-     /* io_expander14 - pca9555@15 */
--    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x15);
-+    i2c_slave_create_simple(i2c[14], TYPE_PCA9555, 0x15);
- 
-     /* &i2c15 */
-     /* temperature-sensor@1f - tmp421 */
-
--- 
-2.50.1
-
+> docs/devel/build-system.rst |  4 +--
+> docs/devel/testing/main.rst | 55 +++++++++++++++++--------------------
+> 2 files changed, 27 insertions(+), 32 deletions(-)
+>
+>diff --git a/docs/devel/build-system.rst b/docs/devel/build-system.rst
+>index 71331e64ac8..c64d40b42af 100644
+>--- a/docs/devel/build-system.rst
+>+++ b/docs/devel/build-system.rst
+>@@ -447,8 +447,8 @@ these sub-Makefiles, the resulting build is largely non-recursive.
+> Tests, whether defined in ``meson.build`` or not, are also ran by the
+> Makefile with the traditional ``make check`` phony target, while benchmarks
+> are run with ``make bench``.  Meson test suites such as ``unit`` can be ran
+>-with ``make check-unit``, and ``make check-tcg`` builds and runs "non-Meson"
+>-tests for all targets.
+>+with ``make check-unit``, and ``make check-tcg`` builds and runs tcg tests
+>+for all targets.
+> 
+> If desired, it is also possible to use ``ninja`` and ``pyvenv/bin/meson test``,
+> respectively to build emulators and run tests defined in meson.build.
+>diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
+>index c6821a36d99..5a8f9386661 100644
+>--- a/docs/devel/testing/main.rst
+>+++ b/docs/devel/testing/main.rst
+>@@ -1010,54 +1010,49 @@ simple as::
+> 
+>   apt install gcc-aarch64-linux-gnu
+> 
+>-The configure script will automatically pick up their presence.
+>-Sometimes compilers have slightly odd names so the availability of
+>-them can be prompted by passing in the appropriate configure option
+>-for the architecture in question, for example::
+>-
+>-  $(configure) --cross-cc-aarch64=aarch64-cc
+>-
+>-There is also a ``--cross-cc-cflags-ARCH`` flag in case additional
+>-compiler flags are needed to build for a given target.
+>-
+>-If you have the ability to run containers as the user the build system
+>-will automatically use them where no system compiler is available. For
+>-architectures where we also support building QEMU we will generally
+>-use the same container to build tests. However there are a number of
+>-additional containers defined that have a minimal cross-build
+>-environment that is only suitable for building test cases. Sometimes
+>-we may use a bleeding edge distribution for compiler features needed
+>-for test cases that aren't yet in the LTS distros we support for QEMU
+>-itself.
+>+Meson will automatically pick up their presence. In case a cross compiler is
+>+missing, if podman or docker are available, we'll automatically build
+>+images containing cross compilers and execute those.
+> 
+> See :ref:`container-ref` for more details.
+> 
+> Running subset of tests
+> ~~~~~~~~~~~~~~~~~~~~~~~
+> 
+>-You can build the tests for one architecture::
+>+You can build the tcg tests using::
+> 
+>-  make build-tcg-tests-$TARGET
+>+  make tcg-tests
+> 
+>-And run with::
+>+And run them for one target with::
+> 
+>-  make run-tcg-tests-$TARGET
+>+  make check-tcg-$TARGET
+> 
+> Adding ``V=1`` to the invocation will show the details of how to
+> invoke QEMU for the test which is useful for debugging tests.
+> 
+>+Tests can also be run using directly meson test::
+>+
+>+  ./pyvenv/bin/meson test --suite tcg
+>+  ./pyvenv/bin/meson test --suite tcg-$TARGET
+>+
+>+Tests can be listed using::
+>+
+>+  ./pyvenv/bin/meson test --suite tcg --list
+>+
+> Running individual tests
+> ~~~~~~~~~~~~~~~~~~~~~~~~
+> 
+>-Tests can also be run directly from the test build directory. If you
+>-run ``make help`` from the test build directory you will get a list of
+>-all the tests that can be run. Please note that same binaries are used
+>-in multiple tests, for example::
+>+Tests can also be run using directly meson test::
+> 
+>-  make run-plugin-test-mmap-with-libinline.so
+>+  ./pyvenv/bin/meson test $TARGET-$TEST
+> 
+>-will run the mmap test with the ``libinline.so`` TCG plugin. The
+>-gdbstub tests also re-use the test binaries but while exercising gdb.
+>+For instance::
+>+
+>+  ./pyvenv/bin/meson test aarch64-softmmu-hello
+>+
+>+Test command and output can be accessed by using verbose flag::
+>+
+>+  ./pyvenv/bin/meson test aarch64-softmmu-hello --verbose
+> 
+> TCG test dependencies
+> ~~~~~~~~~~~~~~~~~~~~~
+>-- 
+>2.47.3
+>
 
