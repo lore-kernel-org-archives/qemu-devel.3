@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 753AEC43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 10:16:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E1FDC44506
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 10:16:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi8HN-0006rV-Us; Fri, 10 Jul 2026 06:16:21 -0400
+	id 1wi8Gp-0006lK-IL; Fri, 10 Jul 2026 06:15:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wi8HN-0006rN-6y
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 06:16:21 -0400
+ id 1wi8Go-0006kN-Fn
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 06:15:46 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wi8HL-0006Oo-QX
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 06:16:20 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wi8Gn-0006C9-1Q
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 06:15:46 -0400
 Received: from DESKTOP-TUU1E5L.fritz.box (p3e9c0c70.dip0.t-ipconnect.de
  [62.156.12.112])
- by linux.microsoft.com (Postfix) with ESMTPSA id 60E4820B7170;
- Fri, 10 Jul 2026 03:16:10 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 60E4820B7170
+ by linux.microsoft.com (Postfix) with ESMTPSA id 6807C20B716F;
+ Fri, 10 Jul 2026 03:15:35 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 6807C20B716F
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1783678572;
- bh=Ap1AGdm2urEO2qR8Nc2JiIOZF+4iUaECLj3pRkt9gko=;
+ s=default; t=1783678537;
+ bh=b2Bgk0lYWwE6rb1Xc2GSgwgap3hUpX+o2F3ekqBW8To=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=sU3YP/Vo4H0EUNT3rRSdU7r0qOVqQKc4fdjWaA7eBL3WyqUFFgBk5CDKItNp1zKPy
- K4X1W4xNjDy7CUU1zEo7U7cSnviq2FLmAmaH0J6Hl3s/jrd8c5IRiEwAafeNNk4ixS
- LflCWZnylJEtjxrPzFyPkOt3P5lj6+O9S1fNzvqw=
+ b=qgsV4nLY6JRgOW50fS28KBr4HpeEWz8AluoRL1rnnPdesNavYPP5sMm55Q/J8YcZp
+ L30y9SLhPyUMqUF17FFIWP6NWni77221G9iuRexAgKXAU24kvr5gYKN0AuDpSh1N+S
+ o66C68bO+EQnRuFYLkPzCi9Af9JZYhzu6Fjmfxtg=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -42,9 +42,9 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Wei Liu <wei.liu@kernel.org>,
  =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <doru.blanzeanu@microsoft.com>,
  Wei Liu <liuwe@microsoft.com>
-Subject: [PATCH 11/12] target/i386/mshv: toggle fpu/xsave migration
-Date: Fri, 10 Jul 2026 12:15:33 +0200
-Message-Id: <20260710101534.664604-12-magnuskulke@linux.microsoft.com>
+Subject: [PATCH 01/12] target/i386/mshv: disable AMX TILE features
+Date: Fri, 10 Jul 2026 12:15:23 +0200
+Message-Id: <20260710101534.664604-2-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260710101534.664604-1-magnuskulke@linux.microsoft.com>
 References: <20260710101534.664604-1-magnuskulke@linux.microsoft.com>
@@ -73,57 +73,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-MSHV exposes overlapping legacy FP/SSE state through two paths:
-explicit Hyper-V FPU/XMM + registers and VP XSAVE state. There can
-be subtle inconsistencies across migrations when XSAVE is written after
-FPU state.
+For the time being we disable AMX TILE in partition processor features
+and CPUID b/c AMX TILE XSAVE state (XTILE_DATA) is 8KB, which exceeds
+the current fixed 4KB XSAVE buffer size.
+
+For now we filter it until buffer sizing is computed dynamically from CPUID.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- target/i386/mshv/mshv-cpu.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ accel/mshv/mshv-all.c       |  8 ++++++++
+ target/i386/mshv/mshv-cpu.c | 16 ++++++++++++++++
+ 2 files changed, 24 insertions(+)
 
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index 72721d0f0d..5e8756ede2 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -203,6 +203,14 @@ static int create_partition(int mshv_fd, int *vm_fd)
+ 
+     /* enable all */
+     disabled_xsave_features.as_uint64 = 0;
++    /*
++     * AMX TILE XSAVE state (XTILE_DATA) is 8KB, which exceeds the
++     * current fixed 4KB XSAVE buffer size.
++     */
++    disabled_xsave_features.amx_tile_support = 1;
++    disabled_xsave_features.amx_bf16_support = 1;
++    disabled_xsave_features.amx_int8_support = 1;
++    disabled_xsave_features.amx_fp16_support = 1;
+ 
+     /*
+      * query host for supported processor features and disable unsupported
 diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index bff1ac9d17..f528dd2b9a 100644
+index 1c433c408c..8eca01a8fa 100644
 --- a/target/i386/mshv/mshv-cpu.c
 +++ b/target/i386/mshv/mshv-cpu.c
-@@ -1057,7 +1057,7 @@ int mshv_arch_load_vcpu_state(CPUState *cpu)
-         return ret;
+@@ -2156,6 +2156,22 @@ uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg)
+          */
+         ret &= ~CPUID_7_0_ECX_LA57;
      }
++    if (func == 0x07 && idx == 0 && reg == R_EDX) {
++        /*
++         * AMX TILE XSAVE state (XTILE_DATA) is 8KB, which exceeds the
++         * current fixed 4KB XSAVE buffer size. Filter until buffer
++         * sizing is computed dynamically from CPUID.
++         */
++        ret &= ~CPUID_7_0_EDX_AMX_TILE;
++        ret &= ~CPUID_7_0_EDX_AMX_BF16;
++        ret &= ~CPUID_7_0_EDX_AMX_INT8;
++    }
++    if (func == 0x07 && idx == 1 && reg == R_EAX) {
++        ret &= ~CPUID_7_1_EAX_AMX_FP16;
++    }
++    if (func == 0x07 && idx == 1 && reg == R_EDX) {
++        ret &= ~CPUID_7_1_EDX_AMX_COMPLEX;
++    }
  
--    ret = get_fpu(cpu);
-+    ret = get_xsave_state(cpu);
-     if (ret < 0) {
-         return ret;
-     }
-@@ -1072,7 +1072,7 @@ int mshv_arch_load_vcpu_state(CPUState *cpu)
-         return ret;
-     }
- 
--    ret = get_xsave_state(cpu);
-+    ret = get_fpu(cpu);
-     if (ret < 0) {
-         return ret;
-     }
-@@ -1551,7 +1551,7 @@ int mshv_arch_store_vcpu_state(const CPUState *cpu)
-         return ret;
-     }
- 
--    ret = set_fpu(cpu);
-+    ret = set_xsave_state(cpu);
-     if (ret < 0) {
-         return ret;
-     }
-@@ -1567,7 +1567,8 @@ int mshv_arch_store_vcpu_state(const CPUState *cpu)
-         return ret;
-     }
- 
--    ret = set_xsave_state(cpu);
-+    /* INVARIANT: legacy FPU state must be restored after XSAVE */
-+    ret = set_fpu(cpu);
-     if (ret < 0) {
-         return ret;
-     }
+     return ret;
+ }
 -- 
 2.34.1
 
