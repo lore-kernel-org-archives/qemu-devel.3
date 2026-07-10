@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BBB2C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 11:01:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A22B1C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 11:01:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi8x3-0006ax-1E; Fri, 10 Jul 2026 06:59:25 -0400
+	id 1wi8x1-0006Z5-5D; Fri, 10 Jul 2026 06:59:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wi8ww-0006T0-Mi
+ id 1wi8wu-0006Sr-Fn
  for qemu-devel@nongnu.org; Fri, 10 Jul 2026 06:59:18 -0400
-Received: from mail-wm2-x01.google.com ([2a00:1450:4864:31::1])
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wi8wu-0001P7-Qu
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 06:59:18 -0400
-Received: by mail-wm2-x01.google.com with SMTP id
- 5b1f17b1804b1-493b567a019so6189225e9.1
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 03:59:16 -0700 (PDT)
+ id 1wi8ws-0001OH-Nd
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 06:59:16 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-493f60208a5so2683875e9.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 03:59:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783681155; x=1784285955; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783681153; x=1784285953; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=TwtMnO8OPUvmvUO/Mqi1pAdDOfN8vKq344KVKqtA96Y=;
- b=uApEtj/al8Mp9tWlqegjtZ8pnI1DRkQtt0gZBhkD4ay3zLtVPUcEw4Ao5CEA4b5Xdf
- hatN25FSRz5tS2JyHQWn1vJV+Bb+MU4ur3ROV6ag3bQ6ftiRrEr0vhNIYc++SSXCiab0
- GdT/2mNsXsaVMNdl0IFVM+hIBih6RCNLg1QyBTRdAJSwKkeNUnFF9fqXxGGTx8H+CZxK
- QDS0p2gDSxWUtr3+77dHEkNOa/TC1Xdu+FvfqtRSWHqzG1PSJTIuGo/yHDAOFJwhRn/G
- dBgs7GH8Xk/boaOJ5TsrafVbbI0kfsBAM3hgw0J72+xAwUyWDwMM/rRQNfiuFuEG0cfb
- ITLA==
+ bh=/ucYtSuy5GlYosuT4raxReezYE6ZXB4/gAcNEyJFOq4=;
+ b=FX9UWjwjtf32+IdYg/UGroqy4kfKmE1zsqgVXF8x7bXH8FJH7pYdPPh+gaKFTy1UJh
+ r3ag3X4xWUOfjg/cjsbxys7jq/xrR0FmI4HORdPfSsDdBgkqLrLABm+MPno6hzBccs3t
+ WmeZp6B8bhaNWJHkWk2vIVn1ybfjAQjZPPkoQUUUYKNBH00wrmIZVawYDFSq1kL0dZXD
+ mWn5CLChINbkcfAGX0rAS2icZwkbncizG8JzD7SQGWNs4a9bxlyjqAhiYBiM8puA9W6j
+ 2ANCoGScncUfK80yv1rKvo3PzIlz11SBcwyUtGGJkANAmE9zapXq6zvTpuPEbDAFA4D/
+ gBPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783681155; x=1784285955;
+ d=1e100.net; s=20251104; t=1783681153; x=1784285953;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=TwtMnO8OPUvmvUO/Mqi1pAdDOfN8vKq344KVKqtA96Y=;
- b=d02Wabm9hwkG8uIL3ijQ2zIRFogJ05+ROEIfxvRWpUbm85P2fYsQ+o+p0BYmcwA4L6
- eGS8VO0ksgaylkiPdn5/+KYVLa4pZYdjH2puTHwIqwmco7cGE9OuunYmHjqrWl90qI2Z
- vwYdTWdPqvGfRM6IeyiOG4tZDo3E9QOF6J1IIg2VGCduCpql0Viegn5mQrjGtSahgkbv
- rs0z4slIfnmNDRT5gtD/ls/dzJomwScKbhZv2djrfZVBEb1Ihz7xyMSyJ0uv97Ix56rU
- AplVc3ZpYczMblRZuZSd6IwgzoACirjhB1L5qWLTyTj70jsjPKR/avLionHq/Txpxie9
- uneQ==
+ bh=/ucYtSuy5GlYosuT4raxReezYE6ZXB4/gAcNEyJFOq4=;
+ b=nu+EivKWZSW8YYOYXSl3rHeKGi7BdMUNtkVuFkbUVgcQlIkSNU3NyDbRhP2HJqOpO5
+ V9XyX60OC0wNzk4HD41nerb+HW6uPsFQTb/ocwE1Qc6tplMWRkMc/kl7zjeDNv9dCCZR
+ 4ZJ/vTTGhxxxQNSkbUj2DrJ7BfArilVU8a8CEcia7KFqQ8nIrftTya2oytdJEt0P8os4
+ jWoQbca0rAXHAvNUKDIUfTxUCBBRHNklh1TOCAcrqF4oQ2uaJKGJsNBbCH0cg161t/zu
+ lGSALQ6rTozanETur471jFuHPXpfnNXfvYybcGtyDK0F8haFiJJLh6UJM4kAane/8BE3
+ 7K0g==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rp697y7UToExAzVDQInHVy2ZLaBiF6OMDLPLIe82lw0eNN+INeKtrwDqavaqcw4M2ae1Id5YN2OWO2C@nongnu.org
-X-Gm-Message-State: AOJu0YycqdMz/cJykpAxf6vePil/hIh7PdFfI0CsaCTlFt7vv9azNRfu
- 2mJybCQ3O4unJvhKTllQH+PjdDCZuuPHkDE2ak3lJAwfxkLWdPHyPo00gr745SL4Fjw=
-X-Gm-Gg: AfdE7cltGO1fMqjBVBKK17h2iI3cj3KDqNZ/jJcIek7sQduEF1zC98I7HUbx+y4Jund
- kBOFQUbV5/TFD47Wbo16yJtnmdr24BQbMsLHN3jeHpIHB7q6CsvbZKoMVVYqZ2PjGxz6NMb10BI
- piwheL3gME/QRHkcnyZSuy/cL77s1kvKXUoG7vyt0Qpm03p2cUOA4pRoNOGgwm8dcTu9p5TEVI7
- TkWOWZvNLzPgHcNmaMOdEjuqC89xsDRU8Z2fvgzrTqV0SjOV8zjjYLm6tb85ytT6Q+bbmSfnjhh
- tV5OA39s5Fay9WWI+hj1xViNweSJI6SpkoX7kYHZgU+dniNYe4162FfdpyvzH4ClyLa52lOn8iR
- ELCc2n6Gi1NtGYVyB9IzMUc8I7+JQlikgkf1RMZ+UQNB51Ngp/lCMaPqufB8R6EQM5Q3V7jsQI0
- mI25EMOFhpyiPb2rGIShwJ2ECykNDR4SgDSxwASxcJD1N8h1ioMAuji9zSsUL8+q1y7mFM3FYLG
- NE+14E7DsTKeqC1nTL+sw==
-X-Received: by 2002:a05:600c:4743:b0:493:c1a1:68f0 with SMTP id
- 5b1f17b1804b1-493e68c80b5mr115463735e9.20.1783681155277; 
- Fri, 10 Jul 2026 03:59:15 -0700 (PDT)
+ AHgh+RpKMxcqLbV5KdUjyCxO7RONZ2l0LCmUNK1YLIW2UoALoMRyQnzdHhte1lXNqRP8yV/iKBYUyF6pn3VY@nongnu.org
+X-Gm-Message-State: AOJu0YxErSeJMorSnGJ+mzus3z+v3LLPoVaJ5rkyRRiyyQYQtNVGepZ8
+ qjN+wAfRPT8ms993JwI0yRRpGQEmYSog501RGpR6m+CR2xWm2qTnPI2RD2rLY0KVh68=
+X-Gm-Gg: AfdE7cnqIyukUe2EWBfaM4+nCam2kTyuhMMob02sWTL8qB5CSkdOQBMrPXZnxDag2LK
+ W0e2e89pQuqqn09P3Oh+qRo2XOmq2dt0R1GHRSbV8OUnK/A7mLger1qENjcE7L/qEq7WBe9AveS
+ 2ipTi9l6HLDOIGtugmCpCy1Qao3DLsrlbzuFBov9Shx3vagV4hPxHF2l2JgtVYu1TltuI8AeOUn
+ Cok7PKLVEJYKUk1TMR8eF+oc5SNrEve0oKRZ4wykH9eWg5fsbCJmLNcamkncFeJuhWJ+WUXrtww
+ gRkViFDUKWtIY3lXicOHbR30r/UdhpYm7qL8mqA5Pg4k59zvnCa0kBMR+jfwKH9HhvsIRte22Y0
+ dV6qlDfQhEQwCegKBiGCc8RMjG9EbUYfjr1fLBKey43O4kemoDgMF1x885JvlZTHgTeXU44oajb
+ RO3d1pKezNzJqs27qR30zcDXKlc+nBrDaZy/W4Vnq1F+wMX+18g/yQElhqu0Uc+HSys6I2zrmw/
+ JUd3tnEa6k6oCZwcIKceA==
+X-Received: by 2002:a05:600c:8215:b0:493:f278:ba2f with SMTP id
+ 5b1f17b1804b1-493f278c63fmr34038605e9.9.1783681153335; 
+ Fri, 10 Jul 2026 03:59:13 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493f2d88698sm51946175e9.1.2026.07.10.03.59.14
+ 5b1f17b1804b1-493f2d88698sm51946175e9.1.2026.07.10.03.59.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Jul 2026 03:59:14 -0700 (PDT)
+ Fri, 10 Jul 2026 03:59:12 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Jim MacArthur <jim.macarthur@linaro.org>
-Subject: [PATCH 6/9] hw/dma/soc_dma: Use physical_memory_map() for mem2mem
- transfers
-Date: Fri, 10 Jul 2026 11:59:04 +0100
-Message-ID: <20260710105907.2570621-7-peter.maydell@linaro.org>
+Subject: [PATCH 4/9] hw/dma/omap_dma: Be more careful about overflow in
+ transfer setup
+Date: Fri, 10 Jul 2026 11:59:02 +0100
+Message-ID: <20260710105907.2570621-5-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260710105907.2570621-1-peter.maydell@linaro.org>
 References: <20260710105907.2570621-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:31::1;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm2-x01.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,135 +104,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The soc_dma code has a fastpath for when DMA transfers are from RAM
-to RAM.  The current implementation of this has the caller of
-soc_dma_port_add_mem() pass the underlying host address of the RAM
-block that the DMA port is connected to (obtained via
-memory_region_get_ram_ptr()).  Then the actual transfer function does
-a simple memcpy(). This has several problems.
+In omap_dma_transfer_setup(), the maximum number of elements we can
+transfer is 0xffff * 0xffff == 0xfffe0001 (because the max frame
+count and max elements per frame are both 65535).  However, we store
+total element counts in 'int' variables, and use INT_MAX as a "bigger
+than any valid value" sentinel, and when performing arithmetic with
+the total count of transferred elements we are not careful about
+avoiding overflows. Fix these:
 
-Most importantly, no bounds checking is done on the address and size
-passed by the guest, so the memcpy source and destination might be
-outside the backing host RAM entirely.  Secondly, because the DMA
-access is done via this back door, there is no updating of the dirty
-region when memory is written this way (there is a TODO comment
-in omap_dma.c noting this).
+ - use uint32_t rather than int for the local variables tracking
+   various element and frame counts
+ - use UINT_MAX as our sentinel
+ - calculate new packet, element and frame counter values using
+   arithmetic on a local uint32_t, rather than doing it in-place
+   on local variables that are only 'int' because the actual
+   counter registers are 16 bits
+ - use 64-bit arithmetic when calculating how much to advance the
+   source and dest pointers and the total dma->bytes transferred
 
-Fix both of these by making the memory to memory transfer function
-use physical_memory_map() to get the host addresses for the memory
-copy.  That function will automatically give us the bounds check that
-we want and return a short length if the transfer would run off the
-end of the RAM MemoryRegion it starts in.  Since the OMAP DMA
-documentation states that it's a guest error to misprogram the
-addresses so that they fall outside the range that is valid for the
-particular DMA port being addressed and that this can result in guest
-memory corruption , we don't need to loop for short transfers, but
-can simply log them and continue.
+Note that since soc_dma_ch_s::bytes is only 'int' this can still
+overflow; we'll fix that in a subsequent patch.
 
-Note that we don't need to update addresses or bytecount here in the
-transfer function, because when soc_dma_ch_update() selects
-transfer_mem2mem it also sets ch->update to 1, which tells the
-omap_dma_transfer_setup() code that it is responsible for updating
-all the guest visible fields to match "transfer completed".
-
-(We use physical_memory_map() here to match the use of
-physical_memory_read() and physical_memory_write() in omap_dma.c;
-making the DMA controller use an explicit AddressSpace would be
-a separate cleanup task.)
-
-Together with the preceding commits that fixed some integer overflow
-problems, this fixes the "guest can provoke a bad memcpy() operation"
-reported in issue #3204.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3204
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/dma/omap_dma.c |  5 -----
- hw/dma/soc_dma.c  | 51 ++++++++++++++++++++++++++++++++++++++++++++---
- 2 files changed, 48 insertions(+), 8 deletions(-)
+ hw/dma/omap_dma.c | 30 ++++++++++++++++++++----------
+ 1 file changed, 20 insertions(+), 10 deletions(-)
 
 diff --git a/hw/dma/omap_dma.c b/hw/dma/omap_dma.c
-index 14b310bf40..1a3ae74726 100644
+index 77f1441498..14b310bf40 100644
 --- a/hw/dma/omap_dma.c
 +++ b/hw/dma/omap_dma.c
-@@ -559,11 +559,6 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
-         if (!ch->sync && frames) {
-             ch->cpc = a->dest & 0xffff;
-         }
--
--        /*
--         * TODO: if the destination port is IMIF or EMIFF, set the dirty
--         * bits on it.
--         */
+@@ -391,7 +391,7 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
+     struct omap_dma_reg_set_s *a;
+     struct omap_dma_channel_s *ch = dma->opaque;
+     struct omap_dma_s *s = dma->dma->opaque;
+-    int frames, min_elems, elements[__omap_dma_intr_last];
++    uint32_t frames, min_elems, elements[__omap_dma_intr_last];
+ 
+     a = &ch->active_set;
+ 
+@@ -403,7 +403,14 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
+                         __func__, dma->num);
      }
  
-     omap_dma_interrupts_update(s);
-diff --git a/hw/dma/soc_dma.c b/hw/dma/soc_dma.c
-index 1b93aaf565..6e325122d9 100644
---- a/hw/dma/soc_dma.c
-+++ b/hw/dma/soc_dma.c
-@@ -20,13 +20,58 @@
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
- #include "qemu/timer.h"
-+#include "qemu/log.h"
-+#include "system/physmem.h"
- #include "hw/arm/soc_dma.h"
- 
- static void transfer_mem2mem(struct soc_dma_ch_s *ch)
- {
--    memcpy(ch->paddr[0], ch->paddr[1], ch->bytes);
--    ch->paddr[0] += ch->bytes;
--    ch->paddr[1] += ch->bytes;
+-    min_elems = INT_MAX;
 +    /*
-+     * Memory-to-memory transfer: do the whole thing in one go.  The
-+     * hardware spec says that it is invalid to program the OMAP DMA
-+     * controller with addresses that don't match the port (i.e. to
-+     * ask for a transfer to/from a memory port with a physaddr that
-+     * isn't within that port range) and that if you do then the
-+     * transfer continues and memory can be corrupted.  So we can map
-+     * both source and destination, and treat short mappings and
-+     * failed mappings as a guest error.
++     * The maximum frame count and maximum element count are both 0xffff,
++     * so our worst case possible number of elements to transfer is
++     * 0xffff * 0xffff == 0xfffe0001. We can therefore keep element
++     * counts in a uint32_t and use UINT_MAX as a sentinel value for
++     * "not set" / "condition does not occur".
 +     */
-+    hwaddr srclen = ch->bytes;
-+    hwaddr dstlen = ch->bytes;
-+    hwaddr srcaddr = ch->vaddr[0];
-+    hwaddr dstaddr = ch->vaddr[1];
-+    void *srcmem, *dstmem;
-+    hwaddr xferlen = 0;
-+
-+    srcmem = physical_memory_map(srcaddr, &srclen, false);
-+    if (!srcmem) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "soc_dma mem2mem transfer: could not map source; "
-+                      "guest error programming source port/address\n");
-+        return;
-+    }
-+
-+    dstmem = physical_memory_map(dstaddr, &dstlen, true);
-+    if (!dstmem) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "soc_dma mem2mem transfer: could not map destination; "
-+                      "guest error programming destination port/address\n");
-+        goto unmap_src;
-+    }
-+
-+    xferlen = MIN(srclen, dstlen);
-+    if (xferlen < ch->bytes) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "soc_dma mem2mem transfer: could not transfer all data; "
-+                      "guest error programming src or destination addresses\n");
-+        /* Continue to transfer whatever did fit in the port window */
-+    }
-+
-+    memmove(dstmem, srcmem, xferlen);
-+
-+    physical_memory_unmap(dstmem, dstlen, true, xferlen);
-+unmap_src:
-+    physical_memory_unmap(srcmem, srclen, false, xferlen);
- }
++    min_elems = UINT_MAX;
  
- struct dma_s {
+     /* Check all the conditions that terminate the transfer starting
+      * with those that can occur the soonest.  */
+@@ -413,7 +420,7 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
+         if (elements[id] < min_elems)   \
+             min_elems = elements[id];   \
+     } else              \
+-        elements[id] = INT_MAX;
++        elements[id] = UINT_MAX;
+ 
+     /* Elements */
+     INTR_CHECK(
+@@ -465,7 +472,7 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
+                     (a->frames - a->frame - 1) * a->elements +
+                     (a->elements - a->element))
+ 
+-    dma->bytes = min_elems * ch->data_type;
++    dma->bytes = (uint64_t)min_elems * ch->data_type;
+ 
+     /* Set appropriate interrupts and/or deactivate channels */
+ 
+@@ -528,8 +535,9 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
+ 
+     /* Update packet number */
+     if (ch->fs && ch->bs) {
+-        a->pck_element += min_elems;
+-        a->pck_element %= a->pck_elements;
++        /* Can't overflow: worst case min_elems 0xFFFE0001 + element 0xFFFF */
++        uint32_t new_pck_element = a->pck_element + min_elems;
++        a->pck_element = new_pck_element % a->pck_elements;
+     }
+ 
+     /*
+@@ -537,13 +545,15 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
+      * can skip part of this.
+      */
+     if (dma->update) {
++        /* Can't overflow: worst case min_elems 0xFFFE0001 + element 0xFFFF */
++        uint32_t new_element = a->element + min_elems;
+         a->element += min_elems;
+ 
+-        frames = a->element / a->elements;
+-        a->element = a->element % a->elements;
++        frames = new_element / a->elements;
++        a->element = new_element % a->elements;
+         a->frame += frames;
+-        a->src += min_elems * a->elem_delta[0] + frames * a->frame_delta[0];
+-        a->dest += min_elems * a->elem_delta[1] + frames * a->frame_delta[1];
++        a->src += (uint64_t)min_elems * a->elem_delta[0] + frames * a->frame_delta[0];
++        a->dest += (uint64_t)min_elems * a->elem_delta[1] + frames * a->frame_delta[1];
+ 
+         /* If the channel is async, update cpc */
+         if (!ch->sync && frames) {
 -- 
 2.43.0
 
