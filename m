@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E1FDC44506
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 10:16:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECF52C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 10:16:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi8Gp-0006lK-IL; Fri, 10 Jul 2026 06:15:47 -0400
+	id 1wi8HS-0006sI-AO; Fri, 10 Jul 2026 06:16:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wi8Go-0006kN-Fn
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 06:15:46 -0400
+ id 1wi8HQ-0006s3-G2
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 06:16:24 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wi8Gn-0006C9-1Q
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 06:15:46 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wi8HP-0006Oz-6X
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 06:16:24 -0400
 Received: from DESKTOP-TUU1E5L.fritz.box (p3e9c0c70.dip0.t-ipconnect.de
  [62.156.12.112])
- by linux.microsoft.com (Postfix) with ESMTPSA id 6807C20B716F;
- Fri, 10 Jul 2026 03:15:35 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 6807C20B716F
+ by linux.microsoft.com (Postfix) with ESMTPSA id 935A120B716E;
+ Fri, 10 Jul 2026 03:16:13 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 935A120B716E
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1783678537;
- bh=b2Bgk0lYWwE6rb1Xc2GSgwgap3hUpX+o2F3ekqBW8To=;
+ s=default; t=1783678576;
+ bh=VWQQm8vY6vkKwijEQUIN0sG/z6alwTBab0Y7LEX90Ek=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=qgsV4nLY6JRgOW50fS28KBr4HpeEWz8AluoRL1rnnPdesNavYPP5sMm55Q/J8YcZp
- L30y9SLhPyUMqUF17FFIWP6NWni77221G9iuRexAgKXAU24kvr5gYKN0AuDpSh1N+S
- o66C68bO+EQnRuFYLkPzCi9Af9JZYhzu6Fjmfxtg=
+ b=DXrghXxGGn8OX7QKTG6AYHX5EqgGyS4zlYGH8iCco6+cK75UdCfjdsSuRgj2PItQw
+ Zq08mRKuwy5nM5enjm9hpCldW/jzpxZ+Ya40sqYHkg/HOow8+Sa7Eelkp2QtX/jiwI
+ ESEYwQF+Bf/4AbVSUc67+BSk6ozC/UCWnEMa1vHQ=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -42,9 +42,9 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Wei Liu <wei.liu@kernel.org>,
  =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <doru.blanzeanu@microsoft.com>,
  Wei Liu <liuwe@microsoft.com>
-Subject: [PATCH 01/12] target/i386/mshv: disable AMX TILE features
-Date: Fri, 10 Jul 2026 12:15:23 +0200
-Message-Id: <20260710101534.664604-2-magnuskulke@linux.microsoft.com>
+Subject: [PATCH 12/12] hw/i386/mshv: drop initial msi vector 0
+Date: Fri, 10 Jul 2026 12:15:34 +0200
+Message-Id: <20260710101534.664604-13-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260710101534.664604-1-magnuskulke@linux.microsoft.com>
 References: <20260710101534.664604-1-magnuskulke@linux.microsoft.com>
@@ -73,63 +73,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For the time being we disable AMX TILE in partition processor features
-and CPUID b/c AMX TILE XSAVE state (XTILE_DATA) is 8KB, which exceeds
-the current fixed 4KB XSAVE buffer size.
-
-For now we filter it until buffer sizing is computed dynamically from CPUID.
+This has been a warning before that was always raised if the machine has
+a hpet. hpet_reset() will eventually result in mshv_send_msi called w/
+vector 0, which we can safely drop.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- accel/mshv/mshv-all.c       |  8 ++++++++
- target/i386/mshv/mshv-cpu.c | 16 ++++++++++++++++
- 2 files changed, 24 insertions(+)
+ hw/i386/mshv/apic.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index 72721d0f0d..5e8756ede2 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -203,6 +203,14 @@ static int create_partition(int mshv_fd, int *vm_fd)
+diff --git a/hw/i386/mshv/apic.c b/hw/i386/mshv/apic.c
+index 9188a93b2f..ad326030bf 100644
+--- a/hw/i386/mshv/apic.c
++++ b/hw/i386/mshv/apic.c
+@@ -293,6 +293,16 @@ static void mshv_send_msi(MSIMessage *msi)
+     delivery     = (data >> MSI_DATA_DELIVERY_MODE_SHIFT) &
+                    MSI_DATA_DELIVERY_MODE_MASK;
  
-     /* enable all */
-     disabled_xsave_features.as_uint64 = 0;
 +    /*
-+     * AMX TILE XSAVE state (XTILE_DATA) is 8KB, which exceeds the
-+     * current fixed 4KB XSAVE buffer size.
++     * Vector 0 is not a valid interrupt vector (0-15 are reserved for CPU
++     * exceptions). This can trigger during machine reset, if hpet_reset()
++     * forces the PIT to pulse GSI 2 before IOAPIC's own reset has masked its
++     * redirection entries.
 +     */
-+    disabled_xsave_features.amx_tile_support = 1;
-+    disabled_xsave_features.amx_bf16_support = 1;
-+    disabled_xsave_features.amx_int8_support = 1;
-+    disabled_xsave_features.amx_fp16_support = 1;
- 
-     /*
-      * query host for supported processor features and disable unsupported
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 1c433c408c..8eca01a8fa 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -2156,6 +2156,22 @@ uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg)
-          */
-         ret &= ~CPUID_7_0_ECX_LA57;
-     }
-+    if (func == 0x07 && idx == 0 && reg == R_EDX) {
-+        /*
-+         * AMX TILE XSAVE state (XTILE_DATA) is 8KB, which exceeds the
-+         * current fixed 4KB XSAVE buffer size. Filter until buffer
-+         * sizing is computed dynamically from CPUID.
-+         */
-+        ret &= ~CPUID_7_0_EDX_AMX_TILE;
-+        ret &= ~CPUID_7_0_EDX_AMX_BF16;
-+        ret &= ~CPUID_7_0_EDX_AMX_INT8;
++    if (vector == 0) {
++        return;
 +    }
-+    if (func == 0x07 && idx == 1 && reg == R_EAX) {
-+        ret &= ~CPUID_7_1_EAX_AMX_FP16;
-+    }
-+    if (func == 0x07 && idx == 1 && reg == R_EDX) {
-+        ret &= ~CPUID_7_1_EDX_AMX_COMPLEX;
-+    }
- 
-     return ret;
++
+     mshv_request_interrupt(mshv_state, delivery, vector, dest, dest_mode,
+                            trigger_mode);
  }
 -- 
 2.34.1
