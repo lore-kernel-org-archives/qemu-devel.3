@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73850C43458
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93F9DC44506
 	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 02:59:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi1Qn-0002Cx-Rc; Thu, 09 Jul 2026 22:57:37 -0400
+	id 1wi1R1-0003PM-3v; Thu, 09 Jul 2026 22:57:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wi1QX-0001iT-UT
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:57:26 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ id 1wi1Qy-0003Hx-Ta
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:57:48 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wi1QV-00006U-97
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:57:20 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-c981c2c37cbso322415a12.0
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 19:57:18 -0700 (PDT)
+ id 1wi1Qv-00009G-HK
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:57:48 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-c9c26a5fb98so297642a12.0
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 19:57:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783652238; x=1784257038; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1783652264; x=1784257064; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=zngc8++rDgHsEz930J3TVwiP7P95jxbHJgjE5BMDNeI=;
- b=TkCeKOo8G6P//sZDXir30ptoUC3Z6TvfQsSUQmH7Meeq2SdyGKAxaSqX6PPVwCeJb4
- 3JRQ8Vr7BDUjnwRgmj0PJpYTENSBxvj4WPdZGiQJusANO3sxjeyUUcs9oBtT5/Da6AqW
- Ug2DYbmD0yr6aPa8UcvjLlzwujEliHe3OaTlQywFmnjEI9LGNSZeJjBoyTG5nryPCHDs
- HbHjUPXfUDnjr6QzvxL4tcWHUJshgyldxhSXjeeYzlW8vteMleFecqb6XxwNSZ7xVeb6
- o708liY/3Lf3mSFx4K9ZAc4S6MIy8SInC8dHQCpPe0OdvGfQcQbP/Nu3MCoQ0jyEkKGy
- WUBQ==
+ bh=zr/+DWx7DIpUXKiFc+x0C2H/CKshylFSLRxsLwBzrrc=;
+ b=WYGDeF+peCDF8ZJJb2LQ/q3oY3LYHdR5F/9uiaUIdc8LWVbN4LoayGJ/bY8/JruUla
+ /yUyrBMMXW6zrtRCDn89PQgxxmpBDZbT6nYaNZqq9yUXsAI3xYZQdPiYkJPH1x20Lh1O
+ GC0mGlYRZyDtMKSWn4zNYVqVF+PngXZYtoGrRQs7ETeMzk/wHiyySU3PdZ9jUgQiwLjt
+ VEwghseH5N0FEvtS5RXtAWPd9mVrOBvz2DrxdRYrpKbC3l73wjjfxfN2JUu79lyOEK/Z
+ pDUKW+R7R60FVVU1/vQQYlNTtfRZxRF2mE6CDvHdLAbCliAIVV6G/CbTUCpQanm3JoO/
+ zDrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783652238; x=1784257038;
+ d=1e100.net; s=20251104; t=1783652264; x=1784257064;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=zngc8++rDgHsEz930J3TVwiP7P95jxbHJgjE5BMDNeI=;
- b=VKydvV0yqluksrwhrOA8sOenqPQ1YDU+vQRVOKsmCNtiij9nGRViYraI+YgdDxCBgY
- rhjL6AjJZ1OY+9wk12EK4sk1CypJS+IjX8lofNJ2IsMqH08lymmht81HNb3w4TCV2z95
- +NdVGfq1O7UyrGEd4JgSQbu00VVNd8oZUKnukQEt4aH4rwh2FGulyWHjqTHQL5E/CvzX
- 9Io3SewY38dnFgSbtb5b8ce0Jazp7Y9Wj1BRHjszq0VMmkdni7efcaHmht89ttPiXECk
- ENVR/xFgNnr9Bda9RnDoGKr71bhTFm4NzTDv9AR6AlA9TdaYoPWIMJXaiwepxQTPRAyk
- IfCg==
-X-Gm-Message-State: AOJu0Ywt5u4o0xo6y7YXYQ4h6CEGigFwgfTZte1DdTXOoZSjIqi5I2/W
- Iwl7qXIVIFVsb2InQqFVjjXP/+3SNQk3/n8HiLjq98ONd5ggAJ2ofnjOFjIekQ==
-X-Gm-Gg: AfdE7ck/ryydKCG3+JprflGhhe+lVYWApHppBhQcc/aMa4SttzooC4Sz1OZRK2RrHKX
- g6GimT8YEzmG8XhPaj35KrgsQPUbO78pJ1jeQWEpFtRy+7WNuzQMr/PWiGA+XwIsCxFoX0cdfVQ
- JKR1hXFYsrLG8v1c1sBqO9KUUksNe/ZgJsMJmLdw/kBwlm19yoc1ZVkMs6mnuf6IRUd0FE74hAI
- B+pEBqMYChq8Aapw6/74JD3iKO3iwYtx1hvTRx7T57XW4YHBUkmn3Pvk5OFzXJdmk7Dtre642ne
- Y15YsklNZDaDEw80OiBmw2X12BgDcSgNUV+lyYqpw6neilnny517H2Y0O+uvNnqJzdfji+eCi6p
- S2HvfSv24DLwciDGkRlSpkjsYeWfdBn0IpP8ZBOapH2yRuVzBnYQvZNyOfLtJ617jl2LI+rENVY
- efH3o3sQM/O9QK0PgerS/vbD9TM76Sl2o=
-X-Received: by 2002:a05:6a20:918e:b0:3bf:b3d5:ce2d with SMTP id
- adf61e73a8af0-3c0bce18b54mr11943205637.7.1783652237566; 
- Thu, 09 Jul 2026 19:57:17 -0700 (PDT)
+ bh=zr/+DWx7DIpUXKiFc+x0C2H/CKshylFSLRxsLwBzrrc=;
+ b=syy6Ncy0KXptg+JJv+fb6zOd9w7YyJWoUI/0no3FtAYD2IpomFxQCSQd/6b4w9GfzL
+ O34XJRpkL+oHisEvp/XnY4ahqbACycyxos7MazdZIoN4hwFxIkJOBPkwkxxVurK3GYXn
+ VaHW+43e5ef6OR6eRGqPbL3m7XgKyYLlAMXyMBaUq/CCZzq2dAMnYyPpEwFxHAEo2uGe
+ FrTCAkhEAtoQ//dF6N2M/dBLtSoeoijNEWQm75dpfZF63DrC8UlmoUJaL6/iVQFmrJuS
+ 3RkBQMc7NnB/R1Zq2hTa2371E32kUcBggy0tJ/s7uQ8PLMi+lQOTbtZKZvDTJRMAIstz
+ buhw==
+X-Gm-Message-State: AOJu0YxQBWmytjzsqxLQQOKaEUZaztCn3qM/AiX/2wOP/+nciUHDvW88
+ 7YT6+1jqdPX++jOkUEFbaLV0UykHZ0uda/IJGqya5OlnnqdjKE4iuLHcHSsFOg==
+X-Gm-Gg: AfdE7clU7ggvmozg82rcxHWlkxC9SRwm+wSgIMj1j7YRdAiol8rNrt8FL3u0QfhVoHU
+ o4K4erRgmKrsUMs7FCt5icADgarYxFVJsLarF3E6//hhBKFO282YMpEVB1DMx4mFu4ZkA705Gyw
+ w4jyZcY+BOOpOQnByOm3pRzecqA4r2cEuTm5Hj8I4ciHTrIZrcChu0Yp0K4bT68zddViOSPzg2J
+ 1eTKdNiDUWG+ui7MtuAHu5atctD514zVcBfrcsT8WdQHYjM3YdTwr4E38xcFG7KKbx1dYynwYrA
+ cSjOEyMWbpF40Hwum/cxeIV/eoXvuOKJAtA235ptFuHe38kzwvbATieFUt6+OFnnYnJh5H7HxXL
+ WMSzTRJglOoj7MGax7K8RUPqWmocIYC/+CS19rckOY5i0dtKni/2SRqLubjdXmDBwUu/0NEnOHk
+ xvbE5yWbd59EHApK7+sD5aCEbE+PogAic=
+X-Received: by 2002:a05:6300:6702:b0:3bf:b9de:8557 with SMTP id
+ adf61e73a8af0-3c0f11d7a4amr1668024637.9.1783652263875; 
+ Thu, 09 Jul 2026 19:57:43 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-ca5af6e04fcsm4576769a12.4.2026.07.09.19.57.14
+ 41be03b00d2f7-ca5af6e04fcsm4576769a12.4.2026.07.09.19.57.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jul 2026 19:57:16 -0700 (PDT)
+ Thu, 09 Jul 2026 19:57:43 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Nutty Liu <nutty.liu@hotmail.com>,
+Cc: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 31/40] hw/riscv/riscv-iommu.c: check for misaligned IOHGATP_PPN
-Date: Fri, 10 Jul 2026 12:55:16 +1000
-Message-ID: <20260710025525.1704417-32-alistair.francis@wdc.com>
+Subject: [PULL 40/40] tests: update SPCR loongarch64 and riscv64 test data
+Date: Fri, 10 Jul 2026 12:55:25 +1000
+Message-ID: <20260710025525.1704417-41-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260710025525.1704417-1-alistair.francis@wdc.com>
 References: <20260710025525.1704417-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x533.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,47 +102,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 
-We must check if IOHGATP_PPN is 16kb aligned for non-bare GATP modes.
+On LoongArch and RISC-V the SPCR test data contained:
 
-Fixes: 69a9ae4836 ("hw/riscv/riscv-iommu: add ATS support")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3550
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Message-ID: <20260702203616.1795588-2-daniel.barboza@oss.qualcomm.com>
+    Terminal Type : 00
+    Language : 03
+
+The corrected values are:
+
+    Terminal Type : 03
+    Language : 00
+
+See the specification of the table in
+https://learn.microsoft.com/en-us/windows-hardware/drivers/bringup/serial-port-console-redirection-table
+
+The ACPI table data was rebuilt with
+tests/data/acpi/rebuild-expected-aml.sh.
+
+Remove SPCR expections from tests/qtest/bios-tables-test-allowed-diff.h.
+
+Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260705063147.199732-4-heinrich.schuchardt@canonical.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/riscv-iommu.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ tests/qtest/bios-tables-test-allowed-diff.h |   2 --
+ tests/data/acpi/loongarch64/virt/SPCR       | Bin 80 -> 80 bytes
+ tests/data/acpi/riscv64/virt/SPCR           | Bin 90 -> 90 bytes
+ 3 files changed, 2 deletions(-)
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 12f20fa4bd..d3710aa3a2 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -862,6 +862,21 @@ static bool riscv_iommu_validate_device_ctx(RISCVIOMMUState *s,
-         return false;
-     }
- 
-+    if (gatp != RISCV_IOMMU_DC_IOHGATP_MODE_BARE) {
-+        uint64_t iohgatp_ppn = get_field(ctx->gatp,
-+                                         RISCV_IOMMU_DC_IOHGATP_PPN);
-+
-+        /*
-+         * One of the conditions for a misconfigured DDT entry
-+         * according to the riscv-spec: "DC.iohgatp.MODE is not
-+         * Bare and the root page table (address) determined by
-+         * DC.iohgatp.PPN is not aligned to a 16-KiB boundary."
-+         */
-+        if (PPN_PHYS(iohgatp_ppn) & ((1ULL << 14) - 1)) {
-+            return false;
-+        }
-+    }
-+
-     fsc_mode = get_field(ctx->satp, RISCV_IOMMU_DC_FSC_MODE);
- 
-     if (ctx->tc & RISCV_IOMMU_DC_TC_PDTV) {
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index 2c7086d9de..dfb8523c8b 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,3 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/loongarch64/virt/SPCR",
+-"tests/data/acpi/riscv64/virt/SPCR",
+diff --git a/tests/data/acpi/loongarch64/virt/SPCR b/tests/data/acpi/loongarch64/virt/SPCR
+index 3cc9bbcfb8..7bb819cd0d 100644
+Binary files a/tests/data/acpi/loongarch64/virt/SPCR and b/tests/data/acpi/loongarch64/virt/SPCR differ
+diff --git a/tests/data/acpi/riscv64/virt/SPCR b/tests/data/acpi/riscv64/virt/SPCR
+index 09617f8793..59d2c8f7f2 100644
+Binary files a/tests/data/acpi/riscv64/virt/SPCR and b/tests/data/acpi/riscv64/virt/SPCR differ
 -- 
 2.54.0
 
