@@ -4,130 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 517FFC4450C
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 12:21:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 874D6C44506
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 12:21:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiAEb-0006Tr-6j; Fri, 10 Jul 2026 08:21:37 -0400
+	id 1wiAEb-0006Tp-1l; Fri, 10 Jul 2026 08:21:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
- id 1wi6mk-0000Xe-Hk
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 04:40:38 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wi6mm-0000Ys-P7
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 04:40:40 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
- id 1wi6mg-0001rq-Cj
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 04:40:38 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ id 1wi6mi-0001sM-UY
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 04:40:40 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66A7eJaf141562
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 08:40:27 GMT
+ 66A7dSnL172472
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 08:40:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=IKyJmrjcSr9
- iKT+1GncuQy3zeUNSlN0odNLhTzFLUg8=; b=QmEf0HxtmwO1t6K08hbcdgXJmoJ
- UbVPxCT7NyQMuM7bsqaSea0hCTISiB+KKSHOhH9Dy6VPX/9IpwY8M3BKu1jhy1XK
- kmOelnDxdMH+0N+MjwEUjf7a4/I3ikuRe3AVm22sZBRcTrqbF76QpTa/N7wqur1R
- iHN10anAECRIqKHQ6gYu9tcv3G09pa5RuOcoElDSpzHoeFkzfT3BVLUOn+HZ8+Ti
- sewPlJsnAvXXIJpoi1d/9isfI10hyVSiddbX+/JHniJRWvpqk5JLo0kTXw93njv6
- 2kI4XW83cPPAa7GeAHBAXNZ3mXi+PK42JVv+Cjj+DFqzuFtPDWPCKCAd3RA==
+ :mime-version:references:subject:to; s=qcppdkim1; bh=h1qAKkeuy63
+ TsTKKdXSBb2qB4Ny1vxVvMN2n9VV1JXI=; b=nV3lMiI5KaPNCpOHN9F5OVNsz3e
+ Zh3cqjTWmSGfGGcWBznoT5r5vDhMPPIYTeQxjHx+YYg5/GBLwr9pADYmUE+mxHfx
+ +HRW4NrG223qFXBedFi10QFy6Sly56IUdzIkb6vaLI3bLX1CeJ72eyn0/uOn6K/W
+ mJGzhUvnbbqdSyLQRW639zyFodVxRhMR7LPLvwnXFXwE1/o2jA/rACHoIbveY6iF
+ yyNGAkTWtPv+GbVOiztwzEGjP7LCNHu1A3+0CKuK2kpUN+ODy6zsY6A4BCPPsXua
+ 8bmvYEbYuhOzOo+W5Ap66guLXXeBU9TE8m5MqqWUU7Hn7669UX2U1PusmVg==
 Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
  [209.85.216.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4faf5mub7x-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fanwe9mad-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 08:40:27 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 08:40:33 +0000 (GMT)
 Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-384d033f7f5so191810a91.1
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 01:40:27 -0700 (PDT)
+ 98e67ed59e1d1-38459087607so333243a91.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 01:40:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783672826; x=1784277626; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783672832; x=1784277632; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=IKyJmrjcSr9iKT+1GncuQy3zeUNSlN0odNLhTzFLUg8=;
- b=GqnGkBLSkA/eypl67uBp8FC/NFpmESaZsxp6UZNj+Ud3OipXTCT6nEd5GL/mmbp+nw
- 8DbtumXQu+Xj2Yap4AeEjAEm4HkBiDC4BnHmeKtjNPJ4ln0tGS6CYOdZro6ju2WHZD/B
- FEnWRKPaYoCloNBqUMfa05hLFzUqEpTcSDt+6tTerfs0bLU6ozqIicdFfCdiDQQGg/VX
- bcKKj9K9z9C57SlD5UcF5dtHeCMmCbjGAjrCWj13jbQjw+MtNneh54+1VfQ4MU8ta7zk
- oAKdC3H0sqJ9WGIhZ1/koMhtM/kCeRkP5X8DuCa9z4kuknisUKTYmrJXsiRj5Ae9ULWR
- ityw==
+ bh=h1qAKkeuy63TsTKKdXSBb2qB4Ny1vxVvMN2n9VV1JXI=;
+ b=Yp3oQ3eMY8oeHIpxQDtjO8KO7G5uZx9GZ3HKp3Nl4gJT3mx5IV+DYtefhBZS/d6mNR
+ N2w6DIKgvnHKOw6pL77yFjY40XgA4qp8yq4tHH4gQK9pVVOYfM2SXqdxK1kSk11fJR26
+ vcMRx0F3EJEN66MG6NH/MYKgHIx+uCwrPM/P/TLTthPZpm8vQiFAflQMNy7iygQ0SN5c
+ YKaLErZ5HItzDToxQb4bbHx4DaCkJuduS4v4ppmv2AaS2Mu4q3fkV667sXYs4ft20Hf9
+ deSSmrICnBK4qJQ4/qvJYz89VzqEKdcyIFdDfn9WneBzV5QJvT778NZzVtlxbHWnwLPz
+ D70Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783672826; x=1784277626;
+ d=1e100.net; s=20251104; t=1783672832; x=1784277632;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=IKyJmrjcSr9iKT+1GncuQy3zeUNSlN0odNLhTzFLUg8=;
- b=SMapH02+9SVxFSQsvgn3RESiFMmxajcqPB/Uw1ret9I0W9rRpd/IkSIsNMJMuRWgdt
- AZxGlLYtKU5q8OmOse7osTQTDHgyw/rflljlzzDD8OuxBXXPqtFimEJqETC0V0/NJuZX
- CzAX6C28K5J15NSakSzDEC2gFi2Mjx5XZFIShGlrsqHsxDoF2PoMd0bdWCJSgowQ/Guf
- F2kA3uB36UTpg7oKSLpurJotRGtIU25apO1i8v1XVUUfrB/j6cA19TiC8BurRiowpLV4
- OqOHdxYqqlPOvJ6HVeaYmal8Smv1/IpYy+CRELD4kA1g0UQQm8/sfKqVLskxcz2vCWwk
- NGIw==
-X-Gm-Message-State: AOJu0YzzFMmrPVb3mycJfU1/Kl7P4TdbyWwN9GkJKQnV8b9v16JjgbLF
- eXGz3TCu3PoaFzelZd3Zv8A72WzS7F8eVHk0HPJLIrJ7mG+xRKDcy5l2qicn8HyzeI8fHrvWrOL
- XrdwUhz72eqFjwg/FxeSdF/tO6rebpbqb7w+Q4l3hNTyfScK4jhXnO94Mvg==
-X-Gm-Gg: AfdE7cnrkfBh2GOgPZlv0L1kXH1tb+vj1KNvrDVL7Zt8jkJrpzFUJ5MT549a7PNA8t2
- qd0xET4+qWOC5Fo+Y5ECvWS7m/jlZWmMefoH97g1IcOceFfMZMkkGljPiBWkeEn8NSXm4TUR7bq
- tYkzddN/99PdfdwvZpOABi/YtIlBTU6IpLkFUf2pBA7GxbU+r0owt0gObr+Qi9u5OUx7pSHAbx0
- KhZ/kpm+VacTViN7Qkik7EAIaD2rGguw9QO22RfA0kGgbtaOZ3hSFtD7GSs+RsVaxaVjDnT17Lm
- ZNqNSIeOKRYjwT+p0zdeusqEcYXSOmNMHDB2D2UkNJW/Nuh5FTSJ0ljvfPKK69qda22A0itoJb1
- ld16WiLbuN0s/t4mRENTVCA1Pv9Kz9vj83cp9hl0OAygZDZkxaZIGL1TYAfTBwuQ0V432jEMMpm
- 2L9ml5GIZw0YULprK7/ruILddNgxc2Q3ODZRwHnydVyQ==
-X-Received: by 2002:a17:90b:33cb:b0:383:5a16:bd67 with SMTP id
- 98e67ed59e1d1-389419cdeccmr7838900a91.4.1783672826244; 
- Fri, 10 Jul 2026 01:40:26 -0700 (PDT)
-X-Received: by 2002:a17:90b:33cb:b0:383:5a16:bd67 with SMTP id
- 98e67ed59e1d1-389419cdeccmr7838881a91.4.1783672825724; 
- Fri, 10 Jul 2026 01:40:25 -0700 (PDT)
+ bh=h1qAKkeuy63TsTKKdXSBb2qB4Ny1vxVvMN2n9VV1JXI=;
+ b=SoSRT45YB16SsGRe4xmCB4TYd6xiswsFfl8ujtqxA/9DlV3n4OuyXlhyR76P1X7zOi
+ YDXgCOyU5Z5QDxvlKnTz/KW6CdKTmbbAvXAioS9yJu0Lp6jaq2dGFS07mtc/V90LXeE5
+ +BocuaPG/jUL/NBggpbMW7SlfJZ/99eHPrf0bMHmVj1mL3vL/INZm0gSZCUUPpC9ULsv
+ OGDjeeVKV05CUcEY5Cbr0nWdMz1skrATQCSPAJDIyZ4mAYwjHMFJzV2gkv0l+jpkkNuq
+ PMXPfh9OaUQS/89XHzFH2Fvc+d2cd3QMWaLq15o0TzFF3z3JQwFzEoaJ6yHxnhNmpM8s
+ mdwg==
+X-Gm-Message-State: AOJu0YxsSaCCYYKg770QezTUgrLG/I8Pe6aSskA0iHiES3ThvCt/t6DU
+ XuCY97aUP0UFq5Vr83tMIGwOHn5T2UNr9/qrzVMzP617he5+Xojx/MLjO3J9JufHH/pcof1H5rQ
+ GpJk8fFOPrZGuWeD1eyNeW6BSktb9rRfKtKvVjSVXvu3s9kjiRTTnv3zAXg==
+X-Gm-Gg: AfdE7clUpJWG7nieGBTv4ORQRIIXaLmPD3MY019JFqXBHgjqtaE0nxkQ8C5LlgEXhI4
+ uTEs2VR5AZH/KRzwW1VcHA+mw85SJSK97EQOAFgIVyGV3DUm58pY2i5URTl0NqpB06/eB7cGYVA
+ Hl4uDYIcxW4kdvMo6UJfRD4o8exxKdE1uvJ1zgfO2ypsBpZvhEzfbTQIPZrbf4EdeMxFXDtKTO4
+ AvWMwc3Gi7brq7XIo7/zEkzTbFJ7g9fEOd7FzrPtRf8BCPVwYkyuMTWiLzcwLoMBLCTh2cFpJIY
+ fua0w+S5Cx4NK9picsntpE9U/jOIUdAYEVPRxu17dQz8IcEyCBboq/ZlrZx3Re2U1Zdn/7y0ykr
+ Tq2eEe8r/UHhoU6CGOj/u2QX0Smsu2dqBk8NfTJKR4JNPqtRQOsjI3YninRxltgEi7cd0F8MQlA
+ WG+rOrCpWgyqOMvNeFPkWPGF1gv5CgPhIvs+4BRFUB/Q==
+X-Received: by 2002:a17:90b:5886:b0:381:bcfb:e710 with SMTP id
+ 98e67ed59e1d1-38a20e414e7mr6736690a91.3.1783672832317; 
+ Fri, 10 Jul 2026 01:40:32 -0700 (PDT)
+X-Received: by 2002:a17:90b:5886:b0:381:bcfb:e710 with SMTP id
+ 98e67ed59e1d1-38a20e414e7mr6736656a91.3.1783672831740; 
+ Fri, 10 Jul 2026 01:40:31 -0700 (PDT)
 Received: from hu-slingapp-blr.qualcomm.com
  (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3118389d9bcsm29164925eec.20.2026.07.10.01.40.23
+ 5a478bee46e88-3118389d9bcsm29164925eec.20.2026.07.10.01.40.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Jul 2026 01:40:25 -0700 (PDT)
+ Fri, 10 Jul 2026 01:40:31 -0700 (PDT)
 From: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
 To: qemu-riscv@nongnu.org
 Cc: qemu-devel@nongnu.org, daniel.barboza@oss.qualcomm.com,
  Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
-Subject: [PATCH v2 03/10] hw/riscv: add RPMI FDT helpers
-Date: Fri, 10 Jul 2026 14:09:45 +0530
-Message-ID: <0028254f03ea55c578dc6e79b7a8d9cbabaa201d.1783660209.git.subrahmanya.lingappa@oss.qualcomm.com>
+Subject: [PATCH v2 05/10] riscv: add RPMI system reset service
+Date: Fri, 10 Jul 2026 14:09:47 +0530
+Message-ID: <febceb0b735f4db2e9d5348c864f51ebedc30ee5.1783660209.git.subrahmanya.lingappa@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1783660209.git.subrahmanya.lingappa@oss.qualcomm.com>
 References: <cover.1783660209.git.subrahmanya.lingappa@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: ol95gbI1QoUghkEnmEWgD3At2vewX_pH
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEwMDA4MiBTYWx0ZWRfX+QkXoB3PAY5c
- TvzcDHFgHYFmgSP0IKtzc5ahhBphiOuchhNR8jBlBAFVF6lGih5e/8dRimwOuM/JjQBTXrj2R9c
- /cvPQus9RR4qGLVcgwdJXEM+M4mJ3rk=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEwMDA4MiBTYWx0ZWRfX0fumO1L+1QJP
- 8WDxgr76Dbsz/0eYSdheVH7zlpilI1MEPHbgSQDIlThvI/wQp2g7kWbBKRhfVdr6HsXyYN8Bh6c
- /hpNwry1xnwiBGlkBm9NBCHigqw3WGVuUgiJyyQphOXkcv0avMhUNEr5Fu4jgmSX1l4/ka80CDj
- hF050hbHECG++Jf46P4iAEUEFnlz90u/H8K+v+J6tZ55oZOHg7bVD9JRZCCqnC4GaMBNtkW/QRU
- D4b5SVr8G52fzYAZrKIYTdD6SFqPPVSwdPq8FZxgsTvC40M7S70ZKesGadbnW3AfvnF/lmUk21x
- 3SGW5pA/8g7grUMF77vb4GeU4Cls6yuooDrJj+7iJiZkXlnNtKduDWJ9PIhn1gurq4gyygTvQdd
- /4fQCqhYNBLnjGvVEVAvh8jPPNNCp0/ChYVzNiZ+59BKeGREXp5st5NuoJwxHW4Q8nOH3GJSqmR
- aEqiUKQuHPyE1QdWuOA==
-X-Proofpoint-GUID: ol95gbI1QoUghkEnmEWgD3At2vewX_pH
-X-Authority-Analysis: v=2.4 cv=N+QZ0W9B c=1 sm=1 tr=0 ts=6a50affb cx=c_pps
+X-Authority-Analysis: v=2.4 cv=LbIMLDfi c=1 sm=1 tr=0 ts=6a50b001 cx=c_pps
  a=RP+M6JBNLl+fLTcSJhASfg==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
  a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22 a=EUspDBNiAAAA:8
- a=jHWy4UxqgUe44QwoGJQA:9 a=iS9zxrgQBfv6-_F4QbHw:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=EUspDBNiAAAA:8
+ a=blQ9iIGB7deKtsPWDqUA:9 a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEwMDA4MyBTYWx0ZWRfX07vyHIFzbTmB
+ ToU91+fOY0f/JkKvSAOxcbJZPBufrcARKxjQnKb16IqAQIlObkvjhwTeofUDkSQqrPM5yz0CcRB
+ FbizJUwf8AzazrtGHfgueeBRzp1rpmVLlf+Np2++UxwfgmR/MshWWPvGITqVFBNc1mUaIOKc5iz
+ K9h4U89vYLXv/cEvg3DRLSDw3NFpIUMaYH1ff/wx2CZbJPzsbS13zCDu2KnxSaFU2jUflAtSN3s
+ L0Fz6Zb87Eaxq8Hv/gejcsoh+1d+HtOrMAbfmHKN0JrMZ4evmlJh1q5HlIHRJjRM9HZLMUpOq0N
+ 8JBstqzx4Uz9mamsgjyreWmgItCtEW6lOUkfF3rQyLAOfvPvCjZO452r8doaMXShl2EEEjwjr0w
+ uDDVF3ksvNB1giM9s4ojnMYM0hgHe0r5BVR6kHDY0EA2sBcVPvboH5PRfHtXfJMlRpskIqNmSuO
+ VRozktii43MK2jki/TA==
+X-Proofpoint-ORIG-GUID: MZcCp-heoFbnb39HlW52KzcEpWiftEuG
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEwMDA4MyBTYWx0ZWRfX0jneq/7j2BxJ
+ J9GgXP7fnbrDo3MxtBtKHiEkVqxH6yxD8b2/1tLHT+oavbOwqdNErRoR93EyWNLNWEokmWP7AnF
+ on+sTO6ffPEMyp7V/+3dk70Ff5TXr7s=
+X-Proofpoint-GUID: MZcCp-heoFbnb39HlW52KzcEpWiftEuG
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-10_02,2026-07-09_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 priorityscore=1501 phishscore=0 adultscore=0
- suspectscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
+ malwarescore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
+ clxscore=1015 impostorscore=0 priorityscore=1501 phishscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607100082
-Received-SPF: pass client-ip=205.220.180.131;
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607100083
+Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=subrahmanya.lingappa@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -153,44 +153,137 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
 
-Add helper routines for describing RPMI shared-memory mailbox transports
-and service child nodes in the RISC-V virt device tree.
+Add a QEMU implementation of the RPMI System Reset service group.
 
-The helpers keep RPMI node construction in one place so the virt machine
-can add service groups without open-coding compatible strings, channel
-IDs, interrupts, and shared-memory references at each call site.
+The service advertises shutdown and cold reboot reset types, validates
+guest requests, and dispatches accepted requests through the machine
+reset and shutdown callbacks. This lets firmware use RPMI reset commands
+while keeping the board-specific reset policy in the RISC-V virt machine.
 
 Signed-off-by: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
 ---
- hw/riscv/meson.build        |   1 +
- hw/riscv/rpmi-fdt.c         | 103 ++++++++++++++++++++++++++++++++++++
- include/hw/riscv/rpmi-fdt.h |  30 +++++++++++
- 3 files changed, 134 insertions(+)
- create mode 100644 hw/riscv/rpmi-fdt.c
- create mode 100644 include/hw/riscv/rpmi-fdt.h
+ hw/misc/meson.build           |   1 +
+ hw/misc/riscv_rpmi.c          |  38 ++++++-
+ hw/misc/riscv_rpmi_internal.h |   9 ++
+ hw/misc/riscv_rpmi_sysreset.c | 206 ++++++++++++++++++++++++++++++++++
+ hw/riscv/virt.c               |  40 +++++++
+ include/hw/misc/riscv_rpmi.h  |  13 ++-
+ include/hw/riscv/rpmi-fdt.h   |  11 ++
+ 7 files changed, 313 insertions(+), 5 deletions(-)
+ create mode 100644 hw/misc/riscv_rpmi_sysreset.c
 
-diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
-index b70a054579..529ec273fd 100644
---- a/hw/riscv/meson.build
-+++ b/hw/riscv/meson.build
-@@ -3,6 +3,7 @@ riscv_ss.add(files('boot.c'))
- riscv_ss.add(files('fdt-common.c'))
- riscv_ss.add(when: 'CONFIG_RISCV_NUMA', if_true: files('numa.c'))
- riscv_ss.add(files('riscv_hart.c'))
-+riscv_ss.add(files('rpmi-fdt.c'))
- riscv_ss.add(when: 'CONFIG_OPENTITAN', if_true: files('opentitan.c'))
- riscv_ss.add(when: 'CONFIG_RISCV_VIRT', if_true: files('virt.c'))
- riscv_ss.add(when: 'CONFIG_SHAKTI_C', if_true: files('shakti_c.c'))
-diff --git a/hw/riscv/rpmi-fdt.c b/hw/riscv/rpmi-fdt.c
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index e7c2ebe28f..bca7819ee0 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -170,4 +170,5 @@ system_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa_ec.c'))
+ system_ss.add(when: 'CONFIG_LASI', if_true: files('lasi.c'))
+ system_ss.add(when: 'CONFIG_RISCV_RPMI', if_true: [files(
+   'riscv_rpmi.c',
++  'riscv_rpmi_sysreset.c',
+ ), librpmi])
+diff --git a/hw/misc/riscv_rpmi.c b/hw/misc/riscv_rpmi.c
+index c4b115b659..7a3f570ee7 100644
+--- a/hw/misc/riscv_rpmi.c
++++ b/hw/misc/riscv_rpmi.c
+@@ -175,6 +175,8 @@ static void riscv_rpmi_configure_base(RiscvRpmiState *s,
+                                       const RiscvRpmiConfig *cfg)
+ {
+     s->platform_info = g_strdup(cfg->platform_info);
++    s->machine_ops = cfg->machine_ops;
++    s->machine_opaque = cfg->machine_opaque;
+     s->services = cfg->services;
+     s->service_count = cfg->service_count;
+ 
+@@ -211,7 +213,9 @@ static void riscv_rpmi_reset(DeviceState *dev)
+ 
+ static void riscv_rpmi_cleanup(RiscvRpmiState *s)
+ {
+-
++    for (uint32_t i = ARRAY_SIZE(riscv_rpmi_service_ops); i > 0; i--) {
++        riscv_rpmi_service_ops[i - 1].remove(s);
++    }
+ 
+     if (s->context) {
+         rpmi_context_destroy(s->context);
+@@ -247,6 +251,30 @@ bool riscv_rpmi_service_enabled(RiscvRpmiState *s, RiscvRpmiServiceKind kind)
+     return false;
+ }
+ 
++bool riscv_rpmi_context_add_group(RiscvRpmiState *s,
++                                  struct rpmi_service_group *group,
++                                  const char *name,
++                                  Error **errp)
++{
++    enum rpmi_error rc;
++
++    rc = rpmi_context_add_group(s->context, group);
++    if (rc != RPMI_SUCCESS) {
++        error_setg(errp, "failed to add RPMI %s service group: %d", name, rc);
++        return false;
++    }
++
++    return true;
++}
++
++void riscv_rpmi_context_remove_group(RiscvRpmiState *s,
++                                     struct rpmi_service_group *group)
++{
++    if (s->context && group) {
++        rpmi_context_remove_group(s->context, group);
++    }
++}
++
+ static bool riscv_rpmi_validate_config(RiscvRpmiState *s, Error **errp)
+ {
+     uint64_t queue_bytes;
+@@ -318,11 +346,15 @@ static bool riscv_rpmi_add_service_group(RiscvRpmiState *s,
+                                          const RiscvRpmiServiceConfig *service,
+                                          Error **errp)
+ {
+-    switch (service->kind) {
+-    default:
++    const RiscvRpmiServiceOps *ops;
++
++    ops = riscv_rpmi_service_ops_by_kind(service->kind);
++    if (!ops) {
+         error_setg(errp, "unsupported RPMI service kind %d", service->kind);
+         return false;
+     }
++
++    return ops->add(s, errp);
+ }
+ 
+ static bool riscv_rpmi_init_services(RiscvRpmiState *s, Error **errp)
+diff --git a/hw/misc/riscv_rpmi_internal.h b/hw/misc/riscv_rpmi_internal.h
+index 447c0acb55..fe09804e69 100644
+--- a/hw/misc/riscv_rpmi_internal.h
++++ b/hw/misc/riscv_rpmi_internal.h
+@@ -20,5 +20,14 @@
+ extern const struct rpmi_shmem_platform_ops rpmi_shmem_qemu_ops;
+ bool riscv_rpmi_service_enabled(RiscvRpmiState *s,
+                                 RiscvRpmiServiceKind kind);
++bool riscv_rpmi_context_add_group(RiscvRpmiState *s,
++                                  struct rpmi_service_group *group,
++                                  const char *name,
++                                  Error **errp);
++void riscv_rpmi_context_remove_group(RiscvRpmiState *s,
++                                     struct rpmi_service_group *group);
++
++bool riscv_rpmi_sysreset_add(RiscvRpmiState *s, Error **errp);
++void riscv_rpmi_sysreset_remove(RiscvRpmiState *s);
+ 
+ #endif
+diff --git a/hw/misc/riscv_rpmi_sysreset.c b/hw/misc/riscv_rpmi_sysreset.c
 new file mode 100644
-index 0000000000..b2b3daea1c
+index 0000000000..da6ef4c566
 --- /dev/null
-+++ b/hw/riscv/rpmi-fdt.c
-@@ -0,0 +1,103 @@
++++ b/hw/misc/riscv_rpmi_sysreset.c
+@@ -0,0 +1,206 @@
 +/*
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
-+ * RISC-V RPMI device-tree helpers
++ * RISC-V RPMI System Reset service.
 + *
 + * Copyright (c) 2026 Qualcomm Technologies, Inc.
 + * Author:
@@ -198,134 +291,343 @@ index 0000000000..b2b3daea1c
 + */
 +
 +#include "qemu/osdep.h"
-+#include "qemu/bswap.h"
-+#include "hw/riscv/rpmi-fdt.h"
-+#include "hw/misc/riscv_rpmi.h"
-+#include "system/device_tree.h"
++#include "riscv_rpmi_internal.h"
++#include "qemu/log.h"
++#include "librpmi_env.h"
 +
-+void riscv_rpmi_fdt_add_mbox(void *fdt,
-+                             const RiscvRpmiFdtMboxConfig *cfg,
-+                             uint32_t *phandle,
-+                             uint32_t *mbox_handle)
++typedef struct RiscvRpmiSysresetType {
++    uint32_t type;
++    void (*action)(RiscvRpmiState *s);
++} RiscvRpmiSysresetType;
++
++typedef struct RiscvRpmiSysresetGroup {
++    struct rpmi_service_group group;
++    struct rpmi_service services[RPMI_SYSRST_SRV_ID_MAX];
++    RiscvRpmiState *rpmi;
++} RiscvRpmiSysresetGroup;
++
++static void riscv_rpmi_sysreset_reboot(RiscvRpmiState *s)
 +{
-+    g_autofree char *name = NULL;
-+    hwaddr a2p_req_base, p2a_ack_base, p2a_req_base, a2p_ack_base;
-+    static const char * const regnames_all[RPMI_ALL_NUM_REGS] = {
-+        "a2p-req", "p2a-ack", "p2a-req", "a2p-ack", "a2p-doorbell"
-+    };
-+    static const char * const regnames_a2p[RPMI_A2P_NUM_REGS] = {
-+        "a2p-req", "p2a-ack", "a2p-doorbell"
-+    };
++    const RiscvRpmiMachineOps *ops = s->machine_ops;
 +
-+    a2p_req_base = cfg->shmem_base;
-+    p2a_ack_base = a2p_req_base + cfg->a2p_req_size;
-+    p2a_req_base = p2a_ack_base + cfg->a2p_req_size;
-+    a2p_ack_base = p2a_req_base + cfg->p2a_req_size;
-+
-+    *mbox_handle = (*phandle)++;
-+    name = g_strdup_printf("/soc/mailbox@%" HWADDR_PRIx, cfg->shmem_base);
-+    qemu_fdt_add_subnode(fdt, name);
-+    qemu_fdt_setprop_string(fdt, name, "compatible", "riscv,rpmi-shmem-mbox");
-+    qemu_fdt_setprop_cell(fdt, name, "riscv,slot-size", RPMI_QUEUE_SLOT_SIZE);
-+    qemu_fdt_setprop_cell(fdt, name, "#mbox-cells", 1);
-+
-+    if (cfg->p2a_req_size) {
-+        qemu_fdt_setprop_string_array(fdt, name, "reg-names",
-+                                      (char **)&regnames_all,
-+                                      ARRAY_SIZE(regnames_all));
-+        qemu_fdt_setprop_cells(fdt, name, "reg",
-+            (uint32_t)(a2p_req_base >> 32), (uint32_t)a2p_req_base,
-+            0x0, cfg->a2p_req_size,
-+            (uint32_t)(p2a_ack_base >> 32), (uint32_t)p2a_ack_base,
-+            0x0, cfg->a2p_req_size,
-+            (uint32_t)(p2a_req_base >> 32), (uint32_t)p2a_req_base,
-+            0x0, cfg->p2a_req_size,
-+            (uint32_t)(a2p_ack_base >> 32), (uint32_t)a2p_ack_base,
-+            0x0, cfg->p2a_req_size,
-+            (uint32_t)(cfg->doorbell_base >> 32), (uint32_t)cfg->doorbell_base,
-+            0x0, cfg->doorbell_size);
-+    } else {
-+        qemu_fdt_setprop_string_array(fdt, name, "reg-names",
-+                                      (char **)&regnames_a2p,
-+                                      ARRAY_SIZE(regnames_a2p));
-+        qemu_fdt_setprop_cells(fdt, name, "reg",
-+            (uint32_t)(a2p_req_base >> 32), (uint32_t)a2p_req_base,
-+            0x0, cfg->a2p_req_size,
-+            (uint32_t)(p2a_ack_base >> 32), (uint32_t)p2a_ack_base,
-+            0x0, cfg->a2p_req_size,
-+            (uint32_t)(cfg->doorbell_base >> 32), (uint32_t)cfg->doorbell_base,
-+            0x0, cfg->doorbell_size);
++    if (ops && ops->system_reset) {
++        ops->system_reset(s->machine_opaque);
 +    }
-+
-+    qemu_fdt_setprop_cells(fdt, name, "phandle", *mbox_handle);
 +}
 +
++static void riscv_rpmi_sysreset_shutdown(RiscvRpmiState *s)
++{
++    const RiscvRpmiMachineOps *ops = s->machine_ops;
++
++    if (ops && ops->system_shutdown) {
++        ops->system_shutdown(s->machine_opaque);
++    }
++}
++
++static const RiscvRpmiSysresetType riscv_rpmi_sysreset_types[] = {
++    {
++        .type = RPMI_SYSRST_TYPE_SHUTDOWN,
++        .action = riscv_rpmi_sysreset_shutdown,
++    }, {
++        .type = RPMI_SYSRST_TYPE_COLD_REBOOT,
++        .action = riscv_rpmi_sysreset_reboot,
++    },
++};
++
++static const RiscvRpmiSysresetType *riscv_rpmi_sysreset_type_by_id(
++    uint32_t reset_type)
++{
++    for (uint32_t index = 0; index < ARRAY_SIZE(riscv_rpmi_sysreset_types);
++         index++) {
++        if (riscv_rpmi_sysreset_types[index].type == reset_type) {
++            return &riscv_rpmi_sysreset_types[index];
++        }
++    }
++
++    return NULL;
++}
++
++static void riscv_rpmi_do_system_reset(RiscvRpmiState *s,
++                                       rpmi_uint32_t reset_type)
++{
++    const RiscvRpmiSysresetType *type;
++
++    type = riscv_rpmi_sysreset_type_by_id(reset_type);
++    if (type) {
++        type->action(s);
++        return;
++    }
++
++    qemu_log_mask(LOG_GUEST_ERROR, "%s: unsupported reset type %u\n",
++                  __func__, reset_type);
++}
++
++static enum rpmi_error riscv_rpmi_sysreset_get_attributes(
++    struct rpmi_service_group *group, struct rpmi_service *service,
++    struct rpmi_transport *trans, rpmi_uint16_t request_data_len,
++    const rpmi_uint8_t *request_data, rpmi_uint16_t *response_data_len,
++    rpmi_uint8_t *response_data)
++{
++    uint32_t reset_type = ldl_le_p(request_data);
++    uint32_t *resp = (uint32_t *)response_data;
++
++    *response_data_len = 2 * sizeof(*resp);
++    stl_le_p(&resp[0], RPMI_SUCCESS);
++    stl_le_p(&resp[1], riscv_rpmi_sysreset_type_by_id(reset_type) ?
++             RPMI_SYSRST_ATTRS_FLAGS_RESETTYPE : 0);
++
++    return RPMI_SUCCESS;
++}
++
++static enum rpmi_error riscv_rpmi_sysreset_do_reset(
++    struct rpmi_service_group *group, struct rpmi_service *service,
++    struct rpmi_transport *trans, rpmi_uint16_t request_data_len,
++    const rpmi_uint8_t *request_data, rpmi_uint16_t *response_data_len,
++    rpmi_uint8_t *response_data)
++{
++    RiscvRpmiSysresetGroup *sysreset = group->priv;
++    uint32_t reset_type = ldl_le_p(request_data);
++    uint32_t *resp = (uint32_t *)response_data;
++
++    *response_data_len = sizeof(*resp);
++
++    if (!riscv_rpmi_sysreset_type_by_id(reset_type)) {
++        stl_le_p(resp, (uint32_t)RPMI_ERR_INVALID_PARAM);
++        return RPMI_SUCCESS;
++    }
++
++    stl_le_p(resp, RPMI_SUCCESS);
++    riscv_rpmi_do_system_reset(sysreset->rpmi, reset_type);
++    return RPMI_SUCCESS;
++}
++
++static const struct rpmi_service riscv_rpmi_sysreset_services[] = {
++    [RPMI_SYSRST_SRV_ENABLE_NOTIFICATION] = {
++        .service_id = RPMI_SYSRST_SRV_ENABLE_NOTIFICATION,
++        .min_a2p_request_datalen = 8,
++    },
++    [RPMI_SYSRST_SRV_GET_ATTRIBUTES] = {
++        .service_id = RPMI_SYSRST_SRV_GET_ATTRIBUTES,
++        .min_a2p_request_datalen = 4,
++        .process_a2p_request = riscv_rpmi_sysreset_get_attributes,
++    },
++    [RPMI_SYSRST_SRV_SYSTEM_RESET] = {
++        .service_id = RPMI_SYSRST_SRV_SYSTEM_RESET,
++        .min_a2p_request_datalen = 4,
++        .process_a2p_request = riscv_rpmi_sysreset_do_reset,
++    },
++};
++
++static struct rpmi_service_group *riscv_rpmi_sysreset_create(RiscvRpmiState *s)
++{
++    RiscvRpmiSysresetGroup *sysreset;
++    struct rpmi_service_group *group;
++
++    sysreset = g_new0(RiscvRpmiSysresetGroup, 1);
++    sysreset->rpmi = s;
++    memcpy(sysreset->services, riscv_rpmi_sysreset_services,
++           sizeof(riscv_rpmi_sysreset_services));
++
++    group = &sysreset->group;
++    group->name = "sysreset";
++    group->servicegroup_id = RPMI_SRVGRP_SYSTEM_RESET;
++    group->max_service_id = RPMI_SYSRST_SRV_ID_MAX;
++    group->servicegroup_version =
++        RPMI_BASE_VERSION(RPMI_SPEC_VERSION_MAJOR, RPMI_SPEC_VERSION_MINOR);
++    group->privilege_level_bitmap = RPMI_PRIVILEGE_M_MODE_MASK;
++    group->services = sysreset->services;
++    group->lock = rpmi_env_alloc_lock();
++    group->priv = sysreset;
++
++    return group;
++}
++
++static void riscv_rpmi_sysreset_destroy(struct rpmi_service_group *group)
++{
++    if (!group) {
++        return;
++    }
++
++    rpmi_env_free_lock(group->lock);
++    g_free(group->priv);
++}
++
++bool riscv_rpmi_sysreset_add(RiscvRpmiState *s, Error **errp)
++{
++    struct rpmi_service_group *group;
++
++    if (s->sysreset_group) {
++        error_setg(errp, "duplicate RPMI sysreset service descriptor");
++        return false;
++    }
++
++    group = riscv_rpmi_sysreset_create(s);
++    if (!group) {
++        error_setg(errp, "failed to create RPMI sysreset service group");
++        return false;
++    }
++
++    if (!riscv_rpmi_context_add_group(s, group, "sysreset", errp)) {
++        riscv_rpmi_sysreset_destroy(group);
++        return false;
++    }
++
++    s->sysreset_group = group;
++    return true;
++}
++
++void riscv_rpmi_sysreset_remove(RiscvRpmiState *s)
++{
++    if (!s->sysreset_group) {
++        return;
++    }
++
++    riscv_rpmi_context_remove_group(s, s->sysreset_group);
++    riscv_rpmi_sysreset_destroy(s->sysreset_group);
++    s->sysreset_group = NULL;
++}
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index e52ccfae1f..273a9aa04f 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -1007,6 +1007,35 @@ static void create_fdt_iommu(RISCVVirtState *s, uint16_t bdf)
+ }
+ 
+ 
++static const RiscvRpmiServiceConfig virt_rpmi_services[] = {
++    {
++        .kind = RISCV_RPMI_SERVICE_SYSRESET,
++        .node_name = "sysreset",
++        .compatible = "riscv,rpmi-system-reset",
++        .service_group = RISCV_RPMI_SRVGRP_SYSTEM_RESET,
++    },
++};
++
++static uint32_t virt_rpmi_service_count(RISCVVirtState *s)
++{
++    return ARRAY_SIZE(virt_rpmi_services);
++}
++
++static void virt_rpmi_system_reset(void *opaque)
++{
++    qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
++}
++
++static void virt_rpmi_system_shutdown(void *opaque)
++{
++    qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
++}
++
++static const RiscvRpmiMachineOps virt_rpmi_machine_ops = {
++    .system_reset = virt_rpmi_system_reset,
++    .system_shutdown = virt_rpmi_system_shutdown,
++};
++
+ static RiscvRpmiConfig virt_rpmi_config(RISCVVirtState *s,
+                                         const uint32_t *hart_ids,
+                                         uint32_t hart_count)
+@@ -1018,8 +1047,12 @@ static RiscvRpmiConfig virt_rpmi_config(RISCVVirtState *s,
+         .a2p_req_size = VIRT_RPMI_A2P_REQ_SIZE,
+         .p2a_req_size = VIRT_RPMI_P2A_REQ_SIZE,
+         .platform_info = "QEMU RISC-V virt RPMI",
++        .machine_ops = &virt_rpmi_machine_ops,
++        .machine_opaque = s,
+         .hart_ids = hart_ids,
+         .hart_count = hart_count,
++        .services = virt_rpmi_services,
++        .service_count = virt_rpmi_service_count(s),
+     };
+ }
+ 
+@@ -1028,6 +1061,7 @@ static void create_fdt_rpmi(RISCVVirtState *s, uint32_t *phandle,
+ {
+     RiscvRpmiConfig rpmi_cfg = virt_rpmi_config(s, NULL, 0);
+     uint32_t rpmi_mbox_handle;
++    uint32_t i;
+     RiscvRpmiFdtMboxConfig cfg = {
+         .shmem_base = rpmi_cfg.shmem_base,
+         .doorbell_base = rpmi_cfg.doorbell_base,
+@@ -1038,6 +1072,12 @@ static void create_fdt_rpmi(RISCVVirtState *s, uint32_t *phandle,
+ 
+     riscv_rpmi_fdt_add_mbox(MACHINE(s)->fdt, &cfg, phandle,
+                             &rpmi_mbox_handle);
++
++    for (i = 0; i < rpmi_cfg.service_count; i++) {
++        riscv_rpmi_fdt_add_service_node(MACHINE(s)->fdt, rpmi_cfg.shmem_base,
++                                        &rpmi_cfg.services[i],
++                                        rpmi_mbox_handle);
++    }
+ }
+ 
+ static void finalize_fdt(RISCVVirtState *s)
+diff --git a/include/hw/misc/riscv_rpmi.h b/include/hw/misc/riscv_rpmi.h
+index b5d8a32f9b..d11db87731 100644
+--- a/include/hw/misc/riscv_rpmi.h
++++ b/include/hw/misc/riscv_rpmi.h
+@@ -27,6 +27,7 @@
+ #define VIRT_RPMI_A2P_REQ_SIZE (16 * RPMI_QUEUE_SLOT_SIZE)
+ #define VIRT_RPMI_P2A_REQ_SIZE 0
+ 
++#define RISCV_RPMI_SRVGRP_SYSTEM_RESET   3
+ 
+ #define TYPE_RISCV_RPMI "riscv-rpmi"
+ OBJECT_DECLARE_SIMPLE_TYPE(RiscvRpmiState, RISCV_RPMI)
+@@ -38,8 +39,13 @@ struct rpmi_transport;
+ 
+ typedef enum RiscvRpmiServiceKind {
+     RISCV_RPMI_SERVICE_INVALID = 0,
++    RISCV_RPMI_SERVICE_SYSRESET,
+ } RiscvRpmiServiceKind;
+ 
++typedef struct RiscvRpmiMachineOps {
++    void (*system_reset)(void *opaque);
++    void (*system_shutdown)(void *opaque);
++} RiscvRpmiMachineOps;
+ typedef struct RiscvRpmiServiceConfig {
+     RiscvRpmiServiceKind kind;
+     const char *node_name;
+@@ -56,7 +62,8 @@ typedef struct RiscvRpmiConfig {
+     uint32_t a2p_req_size;
+     uint32_t p2a_req_size;
+     const char *platform_info;
+-
++    const RiscvRpmiMachineOps *machine_ops;
++    void *machine_opaque;
+     const uint32_t *hart_ids;
+     uint32_t hart_count;
+     const RiscvRpmiServiceConfig *services;
+@@ -73,7 +80,9 @@ struct RiscvRpmiState {
+     uint32_t a2p_req_size;
+     uint32_t p2a_req_size;
+     char *platform_info;
+-
++    const RiscvRpmiMachineOps *machine_ops;
++    void *machine_opaque;
++    struct rpmi_service_group *sysreset_group;
+     uint32_t *hart_ids;
+     uint32_t hart_count;
+     const RiscvRpmiServiceConfig *services;
+diff --git a/include/hw/riscv/rpmi-fdt.h b/include/hw/riscv/rpmi-fdt.h
+index f053ae5d57..af0e8a65ab 100644
+--- a/include/hw/riscv/rpmi-fdt.h
++++ b/include/hw/riscv/rpmi-fdt.h
+@@ -26,5 +26,16 @@ void riscv_rpmi_fdt_add_mbox(void *fdt,
+                              const RiscvRpmiFdtMboxConfig *cfg,
+                              uint32_t *phandle,
+                              uint32_t *mbox_handle);
 +void riscv_rpmi_fdt_add_service(void *fdt, hwaddr shmem_base,
 +                                const char *node_name,
 +                                const char *compatible,
 +                                uint32_t mbox_handle,
 +                                uint32_t service_group,
 +                                bool has_mpxy_channel,
-+                                uint32_t mpxy_channel)
-+{
-+    g_autofree char *name = g_strdup_printf("/soc/mailbox@%" HWADDR_PRIx "/%s",
-+                                            shmem_base, node_name);
-+
-+    qemu_fdt_add_subnode(fdt, name);
-+    qemu_fdt_setprop_string(fdt, name, "compatible", compatible);
-+    qemu_fdt_setprop_cells(fdt, name, "mboxes", mbox_handle, service_group);
-+    if (has_mpxy_channel) {
-+        qemu_fdt_setprop_cell(fdt, name, "riscv,sbi-mpxy-channel-id",
-+                              mpxy_channel);
-+    }
-+}
++                                uint32_t mpxy_channel);
 +
 +void riscv_rpmi_fdt_add_service_node(void *fdt, hwaddr shmem_base,
 +                                     const RiscvRpmiServiceConfig *service,
-+                                     uint32_t mbox_handle)
-+{
-+    riscv_rpmi_fdt_add_service(fdt, shmem_base, service->node_name,
-+                               service->compatible, mbox_handle,
-+                               service->service_group,
-+                               service->has_mpxy_channel,
-+                               service->mpxy_channel);
-+}
-diff --git a/include/hw/riscv/rpmi-fdt.h b/include/hw/riscv/rpmi-fdt.h
-new file mode 100644
-index 0000000000..f053ae5d57
---- /dev/null
-+++ b/include/hw/riscv/rpmi-fdt.h
-@@ -0,0 +1,30 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * RISC-V RPMI device-tree helpers
-+ *
-+ * Copyright (c) 2026 Qualcomm Technologies, Inc.
-+ * Author:
-+ *  Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
-+ */
-+
-+#ifndef HW_RISCV_RPMI_FDT_H
-+#define HW_RISCV_RPMI_FDT_H
-+
-+#include "exec/hwaddr.h"
-+#include "hw/misc/riscv_rpmi.h"
-+
-+typedef struct RiscvRpmiFdtMboxConfig {
-+    hwaddr shmem_base;
-+    hwaddr doorbell_base;
-+    uint32_t a2p_req_size;
-+    uint32_t p2a_req_size;
-+    uint32_t doorbell_size;
-+} RiscvRpmiFdtMboxConfig;
-+
-+void riscv_rpmi_fdt_add_mbox(void *fdt,
-+                             const RiscvRpmiFdtMboxConfig *cfg,
-+                             uint32_t *phandle,
-+                             uint32_t *mbox_handle);
-+
-+#endif
++                                     uint32_t mbox_handle);
+ 
+ #endif
 -- 
 2.43.0
 
