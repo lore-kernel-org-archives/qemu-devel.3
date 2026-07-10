@@ -4,71 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B848C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 07:58:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACB4FC43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 08:04:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi678-0005Y5-E9; Fri, 10 Jul 2026 03:57:38 -0400
+	id 1wi6D9-00077D-J3; Fri, 10 Jul 2026 04:03:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1wi676-0005XV-DH; Fri, 10 Jul 2026 03:57:36 -0400
-Received: from smtp2-g21.free.fr ([212.27.42.2])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wi6D7-00076B-VE
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 04:03:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1wi674-0002wG-EY; Fri, 10 Jul 2026 03:57:36 -0400
-Received: from localhost (unknown [89.92.102.124])
- (Authenticated sender: emmanuel.blot@free.fr)
- by smtp2-g21.free.fr (Postfix) with ESMTPSA id E6AF02003B4;
- Fri, 10 Jul 2026 09:57:12 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
- s=smtp-20201208; t=1783670251;
- bh=CdqKKfVtsjgJdqIULJuMGh/IOJvF7tvnIxvWLsK9iuQ=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=Xyv16B35XsTiqasjE8R4mKyTXekuZVkVPxeYWWxPT7j42GjuLL1F+YZdlfj/YATpi
- toiFWxjCXsJanzw6bqz4Uyvx7sNqWQuaQoBtZWAwKm9RVwMtvrcyQDzDBdETk13gMn
- YcuikbaOB5welWA2TeQHDqMsqTiSg7LTBWAln0UT0Ombay03duU29TEKpB+okNDXd2
- 4NI2JNDReKGy2Te9Yf9fUCZ25DuKLX/RNSZdjoWZ4pyqBtRY2m+al9dLyctj2R91u4
- LtDBUhgELeK91NYaZI3lBnmt1Q7fpb8COzOzN7NeVB/rfh2G6KzHCVL5iYEowPKCZb
- AOsK4SCtNSKKQ==
-From: Emmanuel Blot <emmanuel.blot@free.fr>
-Date: Thu, 09 Jul 2026 17:23:18 +0200
-Subject: [PATCH 26/29] hw/i2c: parent slaves created with
- i2c_slave_create_simple
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wi6D5-00051R-15
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 04:03:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783670625;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=HnAu3sO/3EXcDRs1eSZBrA68B3yp/C/99tGMAFnBno4=;
+ b=Avg4w6f4J8s5i6joOYbFBPVhZQ8sXAoCjr458eXBGwN/9e+W2WGKpgBnDZrZW+Z3XBjgEG
+ 6rQYovfuTVqVb4TgdApyOwEnzrzhdpcSO2IAFW1CSMyFr5kTQICbDfe3NBJKq3kkEtiUZt
+ w7yGDxhV4f7Pj3srm4V+b4DSC3x+I3I=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-470-_4-tgnmAOvqWWuzmjMClsw-1; Fri,
+ 10 Jul 2026 04:03:40 -0400
+X-MC-Unique: _4-tgnmAOvqWWuzmjMClsw-1
+X-Mimecast-MFC-AGG-ID: _4-tgnmAOvqWWuzmjMClsw_1783670615
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8162E1956055; Fri, 10 Jul 2026 08:03:33 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7380A1771; Fri, 10 Jul 2026 08:03:29 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 1859121E6920; Fri, 10 Jul 2026 10:03:27 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: "Graf (AWS), Alexander" <graf@amazon.de>
+Cc: BALATON Zoltan <balaton@eik.bme.hu>,  "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>,  Aditya Gupta <adityag@linux.ibm.com>,
+ "Alexandre Iooss" <erdnaxe@crans.org>,  Alexey Kardashevskiy
+ <aik@ozlabs.ru>,  "Alistair Francis" <Alistair.Francis@wdc.com>,  Alistair
+ Francis <alistair@alistair23.me>,  Antony Pavlov
+ <antonynpavlov@gmail.com>,  "Artyom Tarasenko" <atar4qemu@gmail.com>,
+ Bernhard Beschow <shentey@gmail.com>,  "Bibo Mao" <maobibo@loongson.cn>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,  Chao Liu
+ <chao.liu@processmission.com>,  Christian Borntraeger
+ <borntraeger@linux.ibm.com>,  =?utf-8?Q?Cl=C3=A9ment?= Chigot
+ <chigot@adacore.com>,  =?utf-8?Q?C=C3=A9dric?=
+ Le Goater <clg@kaod.org>,  Dorjoy Chowdhury <dorjoychy111@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,  Eric Farman
+ <farman@linux.ibm.com>,  Farhan Ali <alifm@linux.ibm.com>,  Felipe Balbi
+ <balbi@kernel.org>,  Francisco Iglesias <francisco.iglesias@amd.com>,
+ Frederic Konrad <konrad.frederic@yahoo.fr>,  Gaurav Sharma
+ <gaurav.sharma_7@nxp.com>,  Gautam Gala <ggala@linux.ibm.com>,  Glenn
+ Miles <milesg@linux.ibm.com>,  Halil Pasic <pasic@linux.ibm.com>,  Hao Wu
+ <wuhaotsh@google.com>,  Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ "Helge Deller" <deller@gmx.de>,  Hendrik Brueckner
+ <brueckner@linux.ibm.com>,  =?utf-8?Q?Herv=C3=A9?= Poussineau
+ <hpoussin@reactos.org>,
+ Huacai Chen <chenhuacai@kernel.org>,  Jan Kiszka <jan.kiszka@web.de>,
+ Jared Rossi <jrossi@linux.ibm.com>,  Joel Stanley <joel@jms.id.au>,
+ Laurent Vivier <laurent@vivier.eu>,  Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>,  Mark Cave-Ayland
+ <mark.cave-ayland@ilande.co.uk>,  Matthew Rosato <mjrosato@linux.ibm.com>,
+ Max Filippov <jcmvbkbc@gmail.com>,  Michael Rolnik <mrolnik@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,  Nicholas Piggin
+ <npiggin@gmail.com>,  Niek Linnenbank <nieklinnenbank@gmail.com>,  "Palmer
+ Dabbelt" <palmer@dabbelt.com>,  Paolo Bonzini <pbonzini@redhat.com>,
+ "Peter Maydell" <peter.maydell@linaro.org>,  Philippe =?utf-8?Q?Mathieu-?=
+ =?utf-8?Q?Daud=C3=A9?= <philmd@mailo.com>,  "Pierrick Bouvier"
+ <pierrick.bouvier@oss.qualcomm.com>,  Ran Wang <wangran@bosc.ac.cn>,
+ Richard Henderson <richard.henderson@linaro.org>,  Sai Pavan Boddu
+ <sai.pavan.boddu@amd.com>,  Samuel Tardieu <sam@rfc1149.net>,  Sergio
+ Lopez <slp@redhat.com>,  Song Gao <17746591750@163.com>,  Stafford Horne
+ <shorne@gmail.com>,  Subbaraya Sundeep <sundeep.lkml@gmail.com>,  Thomas
+ Huth <th.huth+qemu@posteo.eu>,  Tyrone Ting <kfting@nuvoton.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,  "qemu-ppc@nongnu.org"
+ <qemu-ppc@nongnu.org>,  "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "qemu-s390x@nongnu.org" <qemu-s390x@nongnu.org>
+Subject: Re: Call to clean up QOM onboard devices lacking a parent
+In-Reply-To: <b5176cd7-385f-4e09-a2da-4f697de63bf0@amazon.de> (Graf
+ Alexander's message of "Fri, 10 Jul 2026 07:38:07 +0000")
+References: <87se5scipx.fsf@pond.sub.org>
+ <17c7f91b-8935-8ebf-a982-f91df755af81@eik.bme.hu>
+ <fee18020-dcfe-4d91-8384-5cc5f8321ff7@amazon.com>
+ <87h5m7xsxi.fsf@pond.sub.org>
+ <b5176cd7-385f-4e09-a2da-4f697de63bf0@amazon.de>
+Date: Fri, 10 Jul 2026 10:03:27 +0200
+Message-ID: <87jyr3w9tc.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260709-catalina-upgrade-v1-26-82a63fead90c@free.fr>
-References: <20260709-catalina-upgrade-v1-0-82a63fead90c@free.fr>
-In-Reply-To: <20260709-catalina-upgrade-v1-0-82a63fead90c@free.fr>
-To: qemu-devel@nongnu.org
-Cc: Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org, 
- qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
- Corey Minyard <cminyard@mvista.com>, Emmanuel Blot <emmanuel.blot@free.fr>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783610580; l=2108;
- i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=CdqKKfVtsjgJdqIULJuMGh/IOJvF7tvnIxvWLsK9iuQ=;
- b=p9o0xEIN8/0URdldssS2ASxK22H/K+l6lpB6QbOLsCRd5/QLtMCd4WdvDs3uLjEnCE7on/Ixa
- m2CaVu5E7GNBRYbckNJhFDbHccqkKZVfPTvawGBbz1jPmmp48SdtseG
-X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
- pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=212.27.42.2; envelope-from=emmanuel.blot@free.fr;
- helo=smtp2-g21.free.fr
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,61 +129,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-THIS PATCH IS ALREADY PART OF THE ADC128D818 SERIES
-WILL BE REMOVED BEFORE FINAL REVIEW
+"Graf (AWS), Alexander" <graf@amazon.de> writes:
 
-Slaves created with i2c_slave_create_simple() were left unparented and
-showed up under /machine/unattached with no stable QOM path. Add each
-slave as a QOM child of its bus, named after its I2C address, so it has
-a deterministic and addressable QOM path.
+> On 10.07.26 08:25, Markus Armbruster wrote:
+>> "Graf (AWS), Alexander" <graf@amazon.de> writes:
+>>
+>>> Hi Markus,
+>> [...]
+>>
+>>> I'm also curious on whether there is anything that makes sysbus device
+>>> spawns both easy (as they are today) and at the same time fully QOM
+>>> parent compliant.
+>>>
+>>> I had a quick look at the vmapple machine and most of the offenders are
+>>> sysbus devices I spawn via qdev_new(). Would you want all of these to
+>>> get their parent declared via object_property_add_child()? If that's the
+>>> case, why don't we introduce a new qdev_new_child() which does that
+>>> automatically?
+>>
+>> We do have such convenience functions at the QOM layer: object_new() and
+>> object_property_add_child() etc., are basic building blocks, and
+>> object_new_with_props() etc. combine them in useful ways.
+>>
+>> We don't have such convenience functions at the qdev layer.  Can't see
+>> why we couldn't add them.
+>>
+>> Number of orphaned device types I see by bus_type:
+>>
+>>      69      busless
+>>      15      ISA
+>>      33      PCI
+>>      11      SSI
+>>      209     System
+>>      2       apple-desktop-bus
+>>      23      i2c-bus
+>>      2       sd-bus
+>>      1       spapr-vio-bus
+>>      2       usb-bus
+>>
+>> Again, not a problem with the device types, but the code that creates
+>> and realizes them.
+>>
+>> Bus types commonly provide a layer above qdev for that.  Perhaps these
+>> layers could also use convenience functions to more easily deal with
+>> setting the QOM parent.
+>
+>
+> I think the crux of the problem is that we ended up inheriting creation 
+> APIs that didn't necessarily express a clear parent/child relationship, 
+> so we end up orphaning these type of objects in the QOM tree. So the 
+> *real* answer IMHO is to rebuild all these APIs into something that 
+> enforces that. This way we also won't have new offenders sneaking in.
 
-Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
-(cherry picked from commit f55644fa78777e52fd90efaa59dd89b4ff0a7020)
-Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
----
- hw/i2c/core.c        | 3 +++
- include/hw/i2c/i2c.h | 7 +++++--
- 2 files changed, 8 insertions(+), 2 deletions(-)
+The appended trivial patch will keep new offenders out.  Drawback: it
+breaks almost everything due to existing offenders ;)
 
-diff --git a/hw/i2c/core.c b/hw/i2c/core.c
-index 54f6bdca882..0bbce45d48d 100644
---- a/hw/i2c/core.c
-+++ b/hw/i2c/core.c
-@@ -382,6 +382,9 @@ I2CSlave *i2c_slave_create_simple(I2CBus *bus, const char *name, uint8_t addr)
- {
-     I2CSlave *dev = i2c_slave_new(name, addr);
- 
-+    g_autofree char *childname = g_strdup_printf("0x%02x", addr);
-+    object_property_add_child(OBJECT(bus), childname, OBJECT(dev));
-+
-     i2c_slave_realize_and_unref(dev, bus, &error_abort);
- 
-     return dev;
-diff --git a/include/hw/i2c/i2c.h b/include/hw/i2c/i2c.h
-index dd5930f4b5e..dc557bbf3f2 100644
---- a/include/hw/i2c/i2c.h
-+++ b/include/hw/i2c/i2c.h
-@@ -166,13 +166,16 @@ bool i2c_scan_bus(I2CBus *bus, uint8_t address, bool broadcast,
- I2CSlave *i2c_slave_new(const char *name, uint8_t addr);
- 
- /**
-- * Create and realize an I2C slave device on the heap.
-+ * Create and realize an I2C slave device on the heap, add the device as a
-+ * child of its parent bus.
-+ *
-  * @bus: I2C bus to put it on
-  * @name: I2C slave device type name
-  * @addr: I2C address of the slave when put on a bus
-  *
-  * Create the device state structure, initialize it, put it on the
-- * specified @bus, and drop the reference to it (the device is realized).
-+ * specified @bus, parent it, and drop the reference to it (the device is
-+ * realized).
-  */
- I2CSlave *i2c_slave_create_simple(I2CBus *bus, const char *name, uint8_t addr);
- 
+Kidding aside, the code it deletes was a mistake.  We likely added it
+for quicker initial conversions.  The technical debt's compound interest
+has been piling up ever since.
 
--- 
-2.50.1
+> I won't be able to spend the weeks it requires to do this by hand, but I 
+> can have a stab at it with AI - which is likely much more reliable at 
+> getting this done correctly than me too :). I can post it as RFC and 
+> then we decide whether we want to take it or leave it.
+
+The part that requires actual thought is the hardware modeling: what's
+part of what.
+
+
+
+diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+index e2aab3d1fc..058f89fa55 100644
+--- a/hw/core/qdev.c
++++ b/hw/core/qdev.c
+@@ -493,15 +493,6 @@ static void device_set_realized(Object *obj, bool value, Error **errp)
+             goto fail;
+         }
+ 
+-        if (!obj->parent) {
+-            gchar *name = g_strdup_printf("device[%d]", unattached_count++);
+-
+-            object_property_add_child(machine_get_container("unattached"),
+-                                      name, obj);
+-            unattached_parent = true;
+-            g_free(name);
+-        }
+-
+         hotplug_ctrl = qdev_get_hotplug_handler(dev);
+         if (hotplug_ctrl) {
+             hotplug_handler_pre_plug(hotplug_ctrl, dev, &local_err);
 
 
