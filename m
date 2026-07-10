@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC7A4C44501
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 23:02:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64590C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 23:03:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiKE6-0004Qq-Jh; Fri, 10 Jul 2026 19:01:46 -0400
+	id 1wiKE6-0004Pq-5j; Fri, 10 Jul 2026 19:01:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wiKDj-0004GN-5c
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 19:01:23 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1wiKDp-0004HT-0O
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 19:01:29 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wiKDh-000313-5o
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 19:01:22 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-381891a9525so1792874a91.3
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 16:01:20 -0700 (PDT)
+ id 1wiKDn-00032T-Bm
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 19:01:28 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-38d489b6b71so1211632a91.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 16:01:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783724479; x=1784329279; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=0a+Tjei23EgueA74aObJAM97tufvPB2kilv0MMrOaOc=;
- b=VBlKZmTNl5EMzk5tpajiic01wQSXo3Mt941bK9IAf/j54i2VxElxXV/70MWchJdwwl
- 5QfujeOp2NEOxGP8nLnahPmXCOq3gjp5/9oSDDCDdE0hDpt3TS8ly4dZyJLFEJPa3wVk
- g5LghXYJEM+TVNeGxMuIa8I0fT+o9RjtJwj9ttLtckJlmZNxysLgkPzee+XVo+hqKRIs
- BeWEVvCtwDEGncuc26vFcfvkbf1UWwDmoUOayEXuElyf4l5tuNzjbnYd06ZByuIrpd9H
- 1FvpNqWyX45rsXXdGlAzGEzVYjAjGn1IvWopLSN5KPIrvQPa9mHNrzBT9/3aP6sR1Dyw
- 0Y/w==
+ d=linaro.org; s=google; t=1783724485; x=1784329285; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=6/pGEOfqexvIxUlRRyRk5XlzbOiuQDRd5o3A4U/Y/0M=;
+ b=Ux/ncW5sHhc379d3xonQ++wBsus7Dnl6MlFwr+D6qHHOxlGCUDdCLIjk0tjN9rMNEG
+ 7wMFjMnChw4FO+MWYoxlt8LT5+FrOIEuQiRZ+oHr+ABnZl/w2sowFTlpke5H//6NjgsL
+ WSIyYPrS8iGwcgKYkLV2PTkJrPoVv/fDd0RB+vgYVl35fpgNKfcDzFqD5ruHwhcbvG+P
+ MlvcAWUsUycD4z5vVaaXXcA35lXCz+r19Pt+14SsXtAOj1x9oZYfMMFWa131IaqKB9kY
+ aGOzkG71A1pMz7pNhuqj1VsbTCRSdY9IgJZtt0+ORmLQCMx980rufgC+BNGnLHnc0MEI
+ 3/0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783724479; x=1784329279;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=0a+Tjei23EgueA74aObJAM97tufvPB2kilv0MMrOaOc=;
- b=B96O4rlJiNf3l3oBWTDrJJCenKhiGD6uOHzZYV3xE7NHBstv6tFUn3qR2gn0qgubWT
- FPFdtNla8rHjGCnVVUaPz25/mCnVwiK4fsgnsfpHWEq+TkVL/49njAawKBC5X5GvU9RS
- o2NusDYe4HOy0bMqkoVOd9AwIy/2Zrv+epqkB1de+HR5IIPI8DZSW02hjnbJIsPZ6tvh
- /0ejVrSgfxl9diO3/IRlz5Zdok2V+VAcA4OkZ4hRySq6MIgGP5u8HlNK6ZNGLSyePhYw
- lI4TzR3cqEtCqKwKxMq2fpvsGq6a0FUv3qXlhOy4vy4dHJlQb/7AxKcn9HVFigZLoGZs
- Tinw==
-X-Gm-Message-State: AOJu0Yz1mJDfZ02lr31FipD6mxjXnCBKA75aAE41dt5q8LNvt0eJyZYo
- TlVlgqKLC1adIF/3RFpOSIJD4reosWuGA5gRdZmO/vVSvle0jWoaV9VF2ivKJUh9GW4m/u0weU8
- tFZdn
-X-Gm-Gg: AfdE7cmXRXl0uyH7TzQESe4EuOScx/LgIGpKG/wS5bQb3RR8awlSb2/gnWoe984JYwl
- kBsAAjATcIP0cAiMc/vsygUn1YKq8eXdtSenKOjXWAKskVtVRoG6B9sPbPMjCVLGc245xf9b4/1
- QEZ6CRs9XpcQT1IGQFzErsFTpp16vICb5y1UG/cY1towLBMyWxH5shdJUkWm3fLiJxDsoFPAW1I
- AheCBwP5Pl75jDsWxqALFaNPdURtnPkQ2SE+gp9SinXr/XpYrSbV/ddlVh2tInDzhf4AFDEzNzi
- zV6xfNxAa9G11TjkpjSKYDCBANmGzdzGL5lKYssLg6VJZtd6DHr2pzK9JhUKg7m03kUjPGqwmYO
- Lg8PSp9cPQsPLh+WNdnWqPrfeJueWimUXi6Qpp4q5bfshxrgp6t7rFsWW+/zTbRfc/5hcAu2Zb0
- K5tjG0omxDMzKhM1IBgUHBJkHuO3+1
-X-Received: by 2002:a17:90b:4ed0:b0:37f:bfd6:8b40 with SMTP id
- 98e67ed59e1d1-38dc74c25d3mr797273a91.5.1783724478879; 
- Fri, 10 Jul 2026 16:01:18 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783724485; x=1784329285;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=6/pGEOfqexvIxUlRRyRk5XlzbOiuQDRd5o3A4U/Y/0M=;
+ b=c542yY5xWPXkjJJj9JQt7K01EXg+jV+BWOrmGE6We+amxJiEKdIcX7dyFXQn7PdvPZ
+ leFpXMHkWO/mOaoYhZRjO7ibCdlLFgxcOB1Yt4cgMTHjj9KEOVhnOip1xAPmv5ugIyRy
+ ewKvpHjUcBVT0lajYN1N+S9nrxI4ud26OEk7li4j/P3VuUQcz+WzFneDjdzHiYJmczcu
+ TFWHTb6XXVmlBHOQOUYhlhgV+uPtYl9LG9wYn5bAQDBHhXTQmg+rFdk8BHlI/crWPuE6
+ jvzWuJn0mIyz7WtAK1GuZtX3C03koDrOL9G6Biv0kGAD8xjjsIaf2UM7+eIuEoEn/cWx
+ 99xw==
+X-Gm-Message-State: AOJu0Yx4/LxEY7JYkCb/m5gP7gE4b81YDHMgLUea7YI+qUS6hg+ndMig
+ xAc4GcsjhkA/gpVmmUI7sXKBep+VI6r7YQ7LCp3DgqHjwmvIH7fltcmgE487jetVQklxCU96P/u
+ 4oxcs
+X-Gm-Gg: AfdE7ckqGb6TPv8FOX9CsCY7k3Suit9JnWULmRMzGDN36W5LTu0h2qXrbyr9ibjB0nE
+ aslw2MlOYVQhZeKOknTkuceKzzXZ3JpgBGbdUcM0wTOw6c9adSMRTzDHYEZcCYoKFqvxkhQdNVA
+ hPhHk0Bp/fiEMFErQkTFCTCrKyOa2M0Swyu1S9sA2NuajMycqxX8ZvTHQvdtmu8IMlmeSq3Jja2
+ iHYSDmmkTgRHX5wLQGNRq3wjW3+EynC606ZVi6e7LVYy/kdGfqPKgPw2FRcDfyyFE+lunve8gpj
+ 5kFdBCtvts/Z+y0FYXrSfWTn1MQ3HzGTiv9bcrGjeEh997ILxCAi2nKC4lesc07C5QByJu7v1uq
+ a0SlDxEL53ky8ayBgw6Wit4EPhk+5XL+KIrpRmcBQtARZ0uriIABeWDUehIUyjtDfJwvMj1K5aE
+ Hiaka3yav5WKUzDv5x3w==
+X-Received: by 2002:a17:90b:2641:b0:387:e0cb:7f4 with SMTP id
+ 98e67ed59e1d1-38dc783efacmr829262a91.40.1783724485437; 
+ Fri, 10 Jul 2026 16:01:25 -0700 (PDT)
 Received: from stoup.. ([71.212.146.49]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38a55b3c9eesm3426569a91.11.2026.07.10.16.01.18
+ 98e67ed59e1d1-38a55b3c9eesm3426569a91.11.2026.07.10.16.01.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Jul 2026 16:01:18 -0700 (PDT)
+ Fri, 10 Jul 2026 16:01:25 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Warner Losh <imp@bsdimp.com>, Helge Deller <deller@gmx.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 02/13] linux-user: Use PGBRange in load_elf_image
-Date: Fri, 10 Jul 2026 16:01:05 -0700
-Message-ID: <20260710230116.900171-3-richard.henderson@linaro.org>
+Cc: Helge Deller <deller@gmx.de>,
+	Warner Losh <imp@bsdimp.com>
+Subject: [PULL 10/13] common-user: Implement read_self_maps for FreeBSD
+Date: Fri, 10 Jul 2026 16:01:13 -0700
+Message-ID: <20260710230116.900171-11-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260710230116.900171-1-richard.henderson@linaro.org>
 References: <20260710230116.900171-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,106 +100,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Collect into range instead of loaddr+hiaddr.
+Use sysctl to fetch the vm map of the current process.
 
-Reviewed-by: Warner Losh <imp@bsdimp.com>
 Reviewed-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Warner Losh <imp@bsdimp.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/elfload.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ common-user/selfmap.c | 45 ++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 44 insertions(+), 1 deletion(-)
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 2566c2f54c..30d7beb562 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -1278,7 +1278,8 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
-                            char **pinterp_name)
+diff --git a/common-user/selfmap.c b/common-user/selfmap.c
+index a1b88dee66..139dae15e8 100644
+--- a/common-user/selfmap.c
++++ b/common-user/selfmap.c
+@@ -9,6 +9,10 @@
+ #include "qemu/osdep.h"
+ #include "qemu/cutils.h"
+ #include "user/selfmap.h"
++#ifdef __FreeBSD__
++#include <sys/sysctl.h>
++#include <sys/user.h>
++#endif
+ 
+ IntervalTreeRoot *read_self_maps(void)
  {
-     g_autofree struct elf_phdr *phdr = NULL;
--    abi_ulong load_addr, load_bias, loaddr, hiaddr, error, align;
-+    PGBRange range = { -1, 0 };
-+    abi_ulong load_addr, load_bias, error, align;
-     size_t reserve_size, align_size;
-     int i, prot_exec;
-     Error *err = NULL;
-@@ -1318,19 +1319,18 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
-      * Find the maximum size of the image and allocate an appropriate
-      * amount of memory to handle that.  Locate the interpreter, if any.
-      */
--    loaddr = -1, hiaddr = 0;
-     align = 0;
-     info->exec_stack = EXSTACK_DEFAULT;
-     for (i = 0; i < ehdr->e_phnum; ++i) {
-         struct elf_phdr *eppnt = phdr + i;
-         if (eppnt->p_type == PT_LOAD) {
-             abi_ulong a = eppnt->p_vaddr & TARGET_PAGE_MASK;
--            if (a < loaddr) {
--                loaddr = a;
-+            if (a < range.lo) {
-+                range.lo = a;
-             }
-             a = eppnt->p_vaddr + eppnt->p_memsz - 1;
--            if (a > hiaddr) {
--                hiaddr = a;
-+            if (a > range.hi) {
-+                range.hi = a;
-             }
-             ++info->nsegs;
-             align |= eppnt->p_align;
-@@ -1361,7 +1361,7 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
-         }
-     }
+@@ -80,9 +84,48 @@ IntervalTreeRoot *read_self_maps(void)
+     g_strfreev(lines);
+     g_free(maps);
  
--    load_addr = loaddr;
-+    load_addr = range.lo;
++    return root;
++#elif defined(__FreeBSD__)
++    int mib[] = { CTL_KERN, KERN_PROC, KERN_PROC_VMMAP, getpid() };
++    size_t len = 0;
++    g_autofree void *buf = NULL;
++    IntervalTreeRoot *root;
++
++    /* Probe for buffer size. */
++    if (sysctl(mib, ARRAY_SIZE(mib), NULL, &len, NULL, 0) < 0) {
++        return NULL;
++    }
++
++    buf = g_malloc(len);
++    if (sysctl(mib, ARRAY_SIZE(mib), buf, &len, NULL, 0) < 0) {
++        return NULL;
++    }
++
++    root = g_new0(IntervalTreeRoot, 1);
++
++    for (size_t i = 0; i < len; ) {
++        struct kinfo_vmentry *k = buf + i;
++        MapInfo *e = g_new0(MapInfo, 1);
++
++        e->itree.start = k->kve_start;
++        e->itree.last = k->kve_end - 1;
++
++        /*
++         * TODO: The rest of the fields in MapInfo are used by linux-user
++         * for the implementation of open_self_maps().  These fields are
++         * quite specific to the textual format of /proc/self/maps.
++         *
++         * We may need something different to emulate KERN_PROC_VMMAP
++         * in bsd-user, but so far they're unused -- leave them zeroed.
++         */
++
++        interval_tree_insert(&e->itree, root);
++        i += k->kve_structsize;
++    }
++
+     return root;
+ #else
+-    return NULL;
++# error
+ #endif
+ }
  
-     align = pow2ceil(align);
- 
-@@ -1371,13 +1371,13 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
-              * Make sure that the low address does not conflict with
-              * MMAP_MIN_ADDR or the QEMU application itself.
-              */
--            probe_guest_base(image_name, loaddr, hiaddr);
-+            probe_guest_base(image_name, range.lo, range.hi);
-         } else {
-             /*
-              * The binary is dynamic, but we still need to
-              * select guest_base.  In this case we pass a size.
-              */
--            probe_guest_base(image_name, 0, hiaddr - loaddr);
-+            probe_guest_base(image_name, 0, range.hi - range.lo);
- 
-             /*
-              * Avoid collision with the loader by providing a different
-@@ -1414,7 +1414,7 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
-      * In both cases, we will overwrite pages in this range with mappings
-      * from the executable.
-      */
--    reserve_size = (size_t)hiaddr - loaddr + 1;
-+    reserve_size = range.hi - range.lo + 1;
-     align_size = reserve_size;
- 
-     if (ehdr->e_type != ET_EXEC && align > qemu_real_host_page_size()) {
-@@ -1443,7 +1443,7 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
-         load_addr = align_addr;
-     }
- 
--    load_bias = load_addr - loaddr;
-+    load_bias = load_addr - range.lo;
- 
-     if (elf_is_fdpic(ehdr)) {
-         struct elf32_fdpic_loadseg *loadsegs = info->loadsegs =
-@@ -1480,7 +1480,7 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
-     info->start_data = -1;
-     info->end_data = 0;
-     /* Usual start for brk is after all sections of the main executable. */
--    info->brk = TARGET_PAGE_ALIGN(hiaddr + load_bias);
-+    info->brk = TARGET_PAGE_ALIGN(range.hi + load_bias);
-     info->elf_flags = ehdr->e_flags;
- #ifdef TARGET_MIPS
-     info->use_k0_tls = (ehdr->e_flags & EF_MIPS_MACH) == EF_MIPS_MACH_OCTEON;
 -- 
 2.43.0
 
