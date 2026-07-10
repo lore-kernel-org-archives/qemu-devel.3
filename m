@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB6DCC44506
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 02:59:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8644AC43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 02:59:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi1Q6-0000pG-On; Thu, 09 Jul 2026 22:56:54 -0400
+	id 1wi1PL-0007Tu-SD; Thu, 09 Jul 2026 22:56:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wi1Q4-0000jS-Hc
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:56:53 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1wi1PI-0007Qr-Sq
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:56:04 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wi1Q2-0008Rv-MK
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:56:52 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-84861fc51f5so294823b3a.1
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 19:56:50 -0700 (PDT)
+ id 1wi1PH-0008MX-Ec
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:56:04 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-84867f07d63so447734b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 19:56:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783652209; x=1784257009; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1783652162; x=1784256962; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=0h2oruHZnh29VIiTSUazncxA9mDGSoBYIgjhS8uHdws=;
- b=jttNQBqchGcMolwyLe4U4NpdGF0HOAAmeSlSuLekH3zZZ0KBoGS+ld1e27rEgUuRdY
- RsSddygvcuhmsfJHiIVM7TBpt7QIg/siJOHv2/ulAppTYgY8B0ckujk4DZYUtsguu1hS
- NqIOeVhqoFC0fAYqtPkHIJRnpUTKQLXjttl4RayhhXCacxyzib7fEmnxGENb4AyQH82/
- 2lFUPImtBd0fwfgu9YotSwWfQFmgUobeWym7uPBKFBLG+dI5xx1lTjB5qMAnBc/GhDIU
- RKdVM99WxRjUF1KofBQZHYqDZ1V2mrsGWP6NO28qTSn4lDw7++1OIWyuGw6G4FrWw1ik
- Dulg==
+ bh=PZOS9wr0YeRnsq3Q/TO63AlK4WPz+t+ZzPbZ9ZWHPdg=;
+ b=QMYSNxIOfsYQFeiX4vNeKqHDao6MDKaUQw1gUrO2LqON14+8yZjRiOhGczNOXU6lIY
+ THZ+kjO3GxWXTNcWo+VWj9mxTGoPuwCdBo36gt3sAWImH44FpqQWpn6FuxKJIdUY+jPQ
+ mPoXMqfbJNzSPe2bpKJBIZe0NJ/c01TQg4BqzE1yaVvUMQ/a1b/TKtPZgoj5BUln8Gg0
+ ++YopgvvaB1eAid4F6zKyhR3bOY04GzAX2B3SWaxcsSAhdayevsCN7S6X9lpAavZzJQ7
+ Fz026aaRNFg4lMJEqgLsgqITaskjIkn1TGza4ROhX+OibQ6ctqnhKSdlthlH4c46PCWS
+ k6HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783652209; x=1784257009;
+ d=1e100.net; s=20251104; t=1783652162; x=1784256962;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=0h2oruHZnh29VIiTSUazncxA9mDGSoBYIgjhS8uHdws=;
- b=UDMIR2YF8pbFVD8byhAiE2dNr65Rl+QX3jPnl0vPmbSrXHpSU69aDAWtTi4Iihf2UI
- pIp3tJgwKFvUZ9lQR+IrrUM5fpeV9p2aNipxVVavarO7SvvixFTXKJaCrazB0GDC9/IA
- DwoFbZ6vvNlbtR+RgQXk4XQkeK7u6MgRFwkvIpzof8BXA9ZsG5G44H+NT8jWiiEopzMO
- hR4JM9pAGIPfrTZLrW0POi45gYto0ejI+UpkD2XYlwuagRqT3IP88CIMePbnhIJov1LA
- wkpmPbvUOcGGo9PlzOdEJUJcLCmytlWsVgrzEX3UccGYLQJAtYHu3Efci0AVoEc/NnGu
- aKCQ==
-X-Gm-Message-State: AOJu0Yw7npgz2VtmkCaCkPUXyaK8sLelJFUq46R7I1jyisTyKGzQNFHE
- ONp8SzDG6dpsqPaA6xCnAniTJcG3LLLzYRuTiuZFT9EyKUMZqNTL9KLyMrqEyg==
-X-Gm-Gg: AfdE7clM98GhUX7mDKHXLNNGfdl1jyD+VnMQyCzC5VehScpjs8CdZyazFiOrWb3RPqb
- s9tpskyLTteXhvcKc92SxGvmW05IZ2OzGVK0VSM1Got9lJVui9XSag/v3tocAJQKQ/KLIU6Yr/h
- tPn4Q7kLXUgcTMs40P8wXBEN3ANNdxq92lPm4E2rTZ/sMMvVLTSUAl9nD95H2NtONQWQmf/gtPk
- rblwgyu8A1dZOyLqateLr4lMAI8n73GizvA5XJAVxOhVYGjbwrWuSB9RFqBjpez4F0gNz3FaDWV
- oATnjR1YTuOZ6KLkIEUH2SYJrS7KTdfKDa2IWjofHDwq1OaG8QXEY48sVu+QtpGmEXXFkx3hLjS
- QwxF3CXLjZwEAHOPGlJbxJ+St8gZYKBdDVag76mVFSMeaW8FpuM3lCt4d3k/Y99siZeSiIOY9+k
- XffbngIO4ltIW4rHvr35gNlNTl7V3iwNI=
-X-Received: by 2002:a05:6a00:4191:b0:846:bc81:3e29 with SMTP id
- d2e1a72fcca58-84842ebd1b3mr9477252b3a.2.1783652209201; 
- Thu, 09 Jul 2026 19:56:49 -0700 (PDT)
+ bh=PZOS9wr0YeRnsq3Q/TO63AlK4WPz+t+ZzPbZ9ZWHPdg=;
+ b=jdqiCdH1EVYFaaxlIgfGe1Jqk/OWVJpJ8gOw86KruSpQbbyHdRFbIiRdKJFDssRAh7
+ phlu/eEZIKCwaUlEat2k11K5MZgh5hsMvaxpcTnyIj6bLcuZKJq+OiA0MSLQ0OxnNXw1
+ wawGGkTSbR4w+iqpd4dJuKI5qd7Mub2DvKE4hmU0qX5EeJ1X1IrZV42q7llFsyzJ8vOf
+ vBuV7VXlz/oASQi1IeGPRNuvTWECycdlcz4OuNdyZkvx++jiVAnj/m8xHsB0u0L41sBT
+ kco7Je1FQL8YjQIahhg0VnBm8jcy5ij/8t7cLS3cDTTptQgkaOcNr1hJbPlY8HaewRza
+ g75Q==
+X-Gm-Message-State: AOJu0Yyc2YE3atVU3+ycNzcklrj6LkHWEC+EvYaiDhecNcnEa6o503XD
+ zF7cuRh6yVp47Og4rh8CltJQYmJUiUh2+eFwcIse2PmCENOYbHo614Gtv4vJ5Q==
+X-Gm-Gg: AfdE7ckdzn3fz23O5AL+YCdRK98yZvEhk7SomQXz2GPrzE3JrPI2AcG9zgeEcZVVjul
+ lPTWlU9jV9nGpAzvgyedqTnny/8TXlKozDPWsq3rqXGDRPFK07CiHeAexf7uKr+8zg5p00r6x/n
+ totssjSligwCLBrCCxNv8qWHUJjlEfryeLRgLQx51UfktAGfnKlRzqOsfXHyV28ZddFez5P1qZQ
+ 6Eo9oQ/hN0bJx/ZZ6yFdKr2RBYF++TxrNiVI2pAbh8Qn5gqmlRidFjKs9N+LFaYfizMb+Q2nftL
+ 4MNwLlpPdrsEQ7nI8vfB1VJdLwhT8EfkhUj8sllV+dVSqsI8w8pzkDplx9Udcq1hKqNvUX4txb7
+ fC//aET3LDCph2MD8FiKP0TRHPqO9zOi25rFgJHJZ+WwT0/SJz8Gov0utbJpczob5m79bkNthsU
+ yZJw7jCFPA5P+c6IX9XHMkYoRa2gHiIBzpc4rZl0luyw==
+X-Received: by 2002:a05:6a00:3d0a:b0:847:99bb:b6d8 with SMTP id
+ d2e1a72fcca58-8484302e490mr9823736b3a.26.1783652161892; 
+ Thu, 09 Jul 2026 19:56:01 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-ca5af6e04fcsm4576769a12.4.2026.07.09.19.56.46
+ 41be03b00d2f7-ca5af6e04fcsm4576769a12.4.2026.07.09.19.55.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jul 2026 19:56:48 -0700 (PDT)
+ Thu, 09 Jul 2026 19:56:01 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+Cc: Zephyr Li <fritchleybohrer@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 22/40] target/riscv: gate riscv_cpu_update_mip with
- tcg_enabled()
-Date: Fri, 10 Jul 2026 12:55:07 +1000
-Message-ID: <20260710025525.1704417-23-alistair.francis@wdc.com>
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>
+Subject: [PULL 07/40] target/riscv: Remove unused tcg/tcg.h include
+Date: Fri, 10 Jul 2026 12:54:52 +1000
+Message-ID: <20260710025525.1704417-8-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260710025525.1704417-1-alistair.francis@wdc.com>
 References: <20260710025525.1704417-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -106,179 +107,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Zephyr Li <fritchleybohrer@gmail.com>
 
-riscv_cpu_update_mip() is a TCG only call.  Its KVM equivalent is
-kvm_riscv_set_irq().  cpu.c gates the KVM only function with a
-kvm_enabled() check, making it unavailable for TCG only builds.  We need
-to do the same for riscv_cpu_update_mip() otherwise a KVM only build
-will fail because it doesn't know what this function is.
-
-Use tcg_enabled() for the couple of riscv_cpu_update_mip() calls we have
-unguarded in cpu.c.
-
-We have way more calls to deal with in time_helper.c which isn't using
-kvm_riscv_set_irq() at all, so create a riscv_accel_set_irq() local
-helper that will choose whether to use the KVM or TCG API.
-
-The reason we're going through all this hassle in time_helper.c is
-because hw/int/riscv_aclint.c uses it, and if we don't do something
-about we won't have riscv_aclint working for KVM.  Whether this is a
-real problem or not and we should remove aclint support for KVM is
-question for another day.
-
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260703180538.3346781-17-daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Message-ID: <20260703180538.3346781-2-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.c         | 19 ++++++++++++++-----
- target/riscv/time_helper.c | 33 +++++++++++++++++++++++++--------
- 2 files changed, 39 insertions(+), 13 deletions(-)
+ target/riscv/cpu.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index db18c52656..6b79dcc5ee 100644
+index 4d2eb281bf..7664e686fa 100644
 --- a/target/riscv/cpu.c
 +++ b/target/riscv/cpu.c
-@@ -1343,14 +1343,18 @@ static void riscv_cpu_set_irq(void *opaque, int irq, int level)
-         case IRQ_M_EXT:
-             if (kvm_enabled()) {
-                 kvm_riscv_set_irq(cpu, irq, level);
--            } else {
-+            }
-+
-+            if (tcg_enabled()) {
-                 riscv_cpu_update_mip(env, 1 << irq, BOOL_TO_MASK(level));
-             }
-              break;
-         case IRQ_S_EXT:
-             if (kvm_enabled()) {
-                 kvm_riscv_set_irq(cpu, irq, level);
--            } else {
-+            }
-+
-+            if (tcg_enabled()) {
-                 env->external_seip = level;
-                 riscv_cpu_update_mip(env, 1 << irq,
-                                      BOOL_TO_MASK(level | env->software_seip));
-@@ -1377,9 +1381,14 @@ static void riscv_cpu_set_irq(void *opaque, int irq, int level)
-             env->hgeip |= 1ULL << irq;
-         }
- 
--        /* Update mip.SGEIP bit */
--        riscv_cpu_update_mip(env, MIP_SGEIP,
--                             BOOL_TO_MASK(!!(env->hgeie & env->hgeip)));
-+        if (kvm_enabled()) {
-+            kvm_riscv_set_irq(cpu, irq, level);
-+        }
-+        if (tcg_enabled()) {
-+            /* Update mip.SGEIP bit */
-+            riscv_cpu_update_mip(env, MIP_SGEIP,
-+                                 BOOL_TO_MASK(!!(env->hgeie & env->hgeip)));
-+        }
-     } else {
-         g_assert_not_reached();
-     }
-diff --git a/target/riscv/time_helper.c b/target/riscv/time_helper.c
-index 400e917354..ede1a4c2a3 100644
---- a/target/riscv/time_helper.c
-+++ b/target/riscv/time_helper.c
-@@ -21,19 +21,34 @@
- #include "cpu_bits.h"
- #include "time_helper.h"
- #include "hw/intc/riscv_aclint.h"
-+#include "kvm/kvm_riscv.h"
-+#include "system/kvm.h"
-+#include "system/tcg.h"
-+
-+static void riscv_accel_set_irq(RISCVCPU *cpu, int irq, int level)
-+{
-+    if (kvm_enabled()) {
-+        kvm_riscv_set_irq(cpu, irq, level);
-+    }
-+
-+    if (tcg_enabled()) {
-+        riscv_cpu_update_mip(&cpu->env, irq, level);
-+    }
-+}
-+
- 
- static void riscv_vstimer_cb(void *opaque)
- {
-     RISCVCPU *cpu = opaque;
-     CPURISCVState *env = &cpu->env;
-     env->vstime_irq = 1;
--    riscv_cpu_update_mip(env, 0, BOOL_TO_MASK(1));
-+    riscv_accel_set_irq(cpu, 0, BOOL_TO_MASK(1));
- }
- 
- static void riscv_stimer_cb(void *opaque)
- {
-     RISCVCPU *cpu = opaque;
--    riscv_cpu_update_mip(&cpu->env, MIP_STIP, BOOL_TO_MASK(1));
-+    riscv_accel_set_irq(cpu, MIP_STIP, BOOL_TO_MASK(1));
- }
- 
- /*
-@@ -48,6 +63,7 @@ void riscv_timer_write_timecmp(CPURISCVState *env, QEMUTimer *timer,
-     RISCVAclintMTimerState *mtimer = env->rdtime_fn_arg;
-     uint32_t timebase_freq;
-     uint64_t rtc_r;
-+    RISCVCPU *cpu;
- 
-     if (!riscv_cpu_cfg(env)->ext_sstc || !env->rdtime_fn ||
-         !env->rdtime_fn_arg || !get_field(env->menvcfg, MENVCFG_STCE)) {
-@@ -63,6 +79,7 @@ void riscv_timer_write_timecmp(CPURISCVState *env, QEMUTimer *timer,
- 
-     timebase_freq = mtimer->timebase_freq;
-     rtc_r = env->rdtime_fn(env->rdtime_fn_arg) + delta;
-+    cpu = env_archcpu(env);
- 
-     if (timecmp <= rtc_r) {
-         /*
-@@ -71,9 +88,9 @@ void riscv_timer_write_timecmp(CPURISCVState *env, QEMUTimer *timer,
-          */
-         if (timer_irq == MIP_VSTIP) {
-             env->vstime_irq = 1;
--            riscv_cpu_update_mip(env, 0, BOOL_TO_MASK(1));
-+            riscv_accel_set_irq(cpu, 0, BOOL_TO_MASK(1));
-         } else {
--            riscv_cpu_update_mip(env, MIP_STIP, BOOL_TO_MASK(1));
-+            riscv_accel_set_irq(cpu, MIP_STIP, BOOL_TO_MASK(1));
-         }
-         return;
-     }
-@@ -81,9 +98,9 @@ void riscv_timer_write_timecmp(CPURISCVState *env, QEMUTimer *timer,
-     /* Clear the [VS|S]TIP bit in mip */
-     if (timer_irq == MIP_VSTIP) {
-         env->vstime_irq = 0;
--        riscv_cpu_update_mip(env, 0, BOOL_TO_MASK(0));
-+        riscv_accel_set_irq(cpu, 0, BOOL_TO_MASK(0));
-     } else {
--        riscv_cpu_update_mip(env, timer_irq, BOOL_TO_MASK(0));
-+        riscv_accel_set_irq(cpu, timer_irq, BOOL_TO_MASK(0));
-     }
- 
-     /*
-@@ -151,7 +168,7 @@ static void riscv_timer_disable_timecmp(CPURISCVState *env, QEMUTimer *timer,
- {
-     /* Disable S-mode Timer IRQ and HW-based STIP */
-     if ((timer_irq == MIP_STIP) && !get_field(env->menvcfg, MENVCFG_STCE)) {
--        riscv_cpu_update_mip(env, timer_irq, BOOL_TO_MASK(0));
-+        riscv_accel_set_irq(env_archcpu(env), timer_irq, BOOL_TO_MASK(0));
-         timer_del(timer);
-         return;
-     }
-@@ -161,7 +178,7 @@ static void riscv_timer_disable_timecmp(CPURISCVState *env, QEMUTimer *timer,
-         (!get_field(env->menvcfg, MENVCFG_STCE) ||
-          !get_field(env->henvcfg, HENVCFG_STCE))) {
-         env->vstime_irq = 0;
--        riscv_cpu_update_mip(env, 0, BOOL_TO_MASK(0));
-+        riscv_accel_set_irq(env_archcpu(env), 0, BOOL_TO_MASK(0));
-         timer_del(timer);
-         return;
-     }
+@@ -38,7 +38,6 @@
+ #include "system/tcg.h"
+ #include "kvm/kvm_riscv.h"
+ #include "tcg/tcg-cpu.h"
+-#include "tcg/tcg.h"
+ #if !defined(CONFIG_USER_ONLY)
+ #include "target/riscv/debug.h"
+ #endif
 -- 
 2.54.0
 
