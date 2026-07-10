@@ -4,108 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E62EDC43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 13:50:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD9A3C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 14:01:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiBc1-0007yD-R8; Fri, 10 Jul 2026 09:49:53 -0400
+	id 1wiBmv-0001Sy-Jg; Fri, 10 Jul 2026 10:01:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wiBc0-0007xJ-2a
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 09:49:52 -0400
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wiBbw-00017b-E7
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 09:49:50 -0400
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-66771ded50aso1587593d50.1
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 06:49:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783691387; cv=none;
- d=google.com; s=arc-20260327;
- b=NCOY0AaZylSMNfVYW227ViPOIjwFuzSRZ0nYV/3PquFy5d8tjEXaDyiv/N3GpDp84P
- OXkMIBgHWFIBvwgUQbsxlOLfEgNeFr3MsUiI2EGr9k2Edx2My6TqtXT9yWODtI+jq1rR
- CagRz/rShz6VwAEn7NF9V7Q8YLo600uBCsAXSij0K+DBcVN3k7GCfBmUbV14981cBQ6B
- g9cEvNfXlEUeucjEQ2FS546DXmtEoopd8GDtmnqgtU+DPdQqfHc3Vt2QTHWKVstjMGCJ
- a4xTSBAyQTzkQ/N6zVxPyZKzMXCYWes5JraxOfzy/XDO4ysmN3aDOz1uvDbstQBMH5Iq
- BC3w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=9FHEy95HDKrD+em7DRowOIijJMJSg06LQji/uBbaXOc=;
- fh=wR2fQUyvsEP5H6Cw5GuiOKUlf08ZVMKpkdLkzO0Xni0=;
- b=Q4FPnl2B5SoI2ISdmgd/0UzAYZAh1SJsJj2nZF3PwJgeepxb02JL5Adr+pNalKq0Gx
- rkVsbhSay3/ON+sTd2DerGe0sb+UfMAGql3ZKvybqMJfyc+Pvn5AJkYTZUBrFfvAnaMg
- EelOO58Vfhlawsx3ezkT3hNCR5u0G+Jb9Hyjj6+5egFkvsAdVm4kA7D8sm6pZrJdx9od
- TqQVbylFe7xnWr6+L25KMBpA3iLb6f4eBHi4d9mMGn/B8qer+FhGP3hraEx5dOmJuOMz
- VuTKcgn1CC2jImyPOs05+MvCJNS/jgs/rGmaX9QBrFvHZ1DHD1ootC6eU9qd1XjWwq+M
- v8Iw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783691387; x=1784296187; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=9FHEy95HDKrD+em7DRowOIijJMJSg06LQji/uBbaXOc=;
- b=h6S0njRfdiIELRs0z712Bbf3P6g9QZsX4zH/Bciko/h0SBHz1coZ7tFotH8zBkAbiG
- 8gaV/z3n/Pu9KP7VVYsq557AUS0ViE8b+IgXQVn/GEKGu4vEyjyXfYaDSEIQPcHRjNBk
- hLn4KcLsS0kd78nKozva4GjsNtpz7Y5cNyTYAommsr/1AJcA4omzm1z/1QlgtoKQY21w
- CEfoL/aJW8vFSRTGF/Ab/gpVwQw8TqG/7XWFz5MOWRKQgHnNMPjen4pXJQh5IXn3jRFo
- 6xamWNtcpVI/kkfETzWHpbrReNEvIq7Z66gAgug75QaJG+XRYDRG88vtgv0VIC7v5E9x
- jrfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783691387; x=1784296187;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=9FHEy95HDKrD+em7DRowOIijJMJSg06LQji/uBbaXOc=;
- b=sKtOVCnd0TkEEgP39byiCtaXIybbTEzJsKxfcT5Fg1HHvwEKNSCZT8JkExhNT2Dn+x
- 360K1uTQxHjlADeMrH2jMSFSWJzXPy3MXF6Q6Qlp2zFshSM4MgGbbFYha/BWvlIrU1Ny
- 1FC3UohzuIsxbigVYKziqZt2CJfCyfXfnzAYWDayv9djdlbpo2cAw0gbPmtVGWO/7+Tf
- E2MC+tnpgs3wvU1y1zfCVmepjn8tgPREQMCEDXfKlpRAJqbbUGNk6F2hfqx2py24wsLb
- ZylltGIk5sce8tTF0KLnSRzvJtb0T88W8TWjU+8v2QrCFjXkYyezitmAqBQr+pvzZP+l
- C0VA==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrNBdupWIorez2VOTRqcWRiRi6Kk24OskDeSiqMisEiB62leyJfqd4Oev52QC4+sTcy87BSYnS+w8xf@nongnu.org
-X-Gm-Message-State: AOJu0YzWR4MFASS0rTmUWeFIcBz9It+e3/4XhaiTZugoD5vjiS9o19uY
- VzmDT5yWJ2vA823yrPbRqDLKnvUTT3za0cppRpXsoUOf11Omti0TzYrZBQwHp4UG1GC7DaVjKXW
- 4SAtbuAg5HwAgKav4kMRou6ebEpY9razTXWejFggHRw==
-X-Gm-Gg: AfdE7ckQ+6Le6jJ+kw13qpFI77TlBkBJ72Tzo7YNLLNbrVINlFQY3XXBxFaprt3R7Er
- dc1XNTtu0hlG5BAUHqMEbQ8uFIpdCb6Wp8D2Tgj9lDWPYuxURj/CR7Pfg8UasMmNH9pbU4Sqm8e
- TReXnFmopqIHOKnk7KCbl0duszPP40o0iV1gzztpBfgaCua+tv1Q8eKL1gMjljPUYyjLiNFUwRL
- 64J6Y/sbyGdqjgXBm/gEBhOEcipaSg0A6v8e67FC88BgoO4O3iIX+T5fNRhkizPYrizvp7hFTon
- oGbSQOciuI0XD0TcEsgVdVpJB7bK3vKjVmmc1pcgHnRIKD/2KKD6OA3n
-X-Received: by 2002:a05:690e:43c2:b0:667:8a13:c3f with SMTP id
- 956f58d0204a3-6679f0c80c2mr6226539d50.42.1783691386827; Fri, 10 Jul 2026
- 06:49:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wiBmt-0001Sa-Rz
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 10:01:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wiBms-0003G6-1E
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 10:01:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783692063;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6F7g5LJi9+KE2tcGUjJ1O3R/32fFLVDjiZuy+Hl7Ip8=;
+ b=Z7yERooz/PRZxgvfCrwtztbs8m0tV/4KsI2f4LABcF1t8lCVkty+tcRTPAOcILERJvHyT2
+ 8VNgOsfnPmrcNWsvB1RN+kTr2hG4IyFzQtJVmnodssvjBJeJvdNMszmELIho74SMzWA7Tn
+ h4S3z0lHl2DzfOMu1pabl7FsUKnZU4s=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-386-APqk4ukRNbuawtfWYc2f8A-1; Fri,
+ 10 Jul 2026 10:01:00 -0400
+X-MC-Unique: APqk4ukRNbuawtfWYc2f8A-1
+X-Mimecast-MFC-AGG-ID: APqk4ukRNbuawtfWYc2f8A_1783692059
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B59E71955F07; Fri, 10 Jul 2026 14:00:58 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 489A1180028B; Fri, 10 Jul 2026 14:00:58 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id CAF4021E6920; Fri, 10 Jul 2026 16:00:55 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Mark
+ Cave-Ayland <mark.caveayland@nutanix.com>,  pbonzini@redhat.com,
+ richard.henderson@linaro.org,  mst@redhat.com,  mtosatti@redhat.com,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH 8/9] hw/i386/pc_sysfw.c: convert pflash0 and pflash1
+ object props to class props
+In-Reply-To: <CAFEAcA_isBMYU8mEZV-sjbiePHLDqERiczkoPP6xw4i4UYm5pw@mail.gmail.com>
+ (Peter Maydell's message of "Wed, 8 Jul 2026 14:27:44 +0100")
+References: <20260703090814.2993188-1-mark.caveayland@nutanix.com>
+ <20260703090814.2993188-9-mark.caveayland@nutanix.com>
+ <CAFEAcA-Agr3jDYfM466UtqNywfxxX6Vv6H30B8QQDMykQ0ktOg@mail.gmail.com>
+ <ak4lRc9u5ol0DtCM@redhat.com> <87fr1tk9pu.fsf@pond.sub.org>
+ <ak40R8r6q6X0bDyF@redhat.com> <875x2pk5ld.fsf@pond.sub.org>
+ <ak5IXipr3F9we3oX@redhat.com> <87v7apiqpl.fsf@pond.sub.org>
+ <CAFEAcA_isBMYU8mEZV-sjbiePHLDqERiczkoPP6xw4i4UYm5pw@mail.gmail.com>
+Date: Fri, 10 Jul 2026 16:00:55 +0200
+Message-ID: <87v7anx7u0.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20260710105907.2570621-1-peter.maydell@linaro.org>
- <20260710105907.2570621-9-peter.maydell@linaro.org>
- <4162f17d-c91a-4e59-82e4-d4c1f590396c@oss.qualcomm.com>
-In-Reply-To: <4162f17d-c91a-4e59-82e4-d4c1f590396c@oss.qualcomm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 10 Jul 2026 14:49:33 +0100
-X-Gm-Features: AUfX_mw1QgM1LwR9N1Ooz8dtwW8YBTKUeBniwFqXXPqueOTEUJcG5uQg6VhsQJo
-Message-ID: <CAFEAcA8_wGzV60Z+8r8U3w5is7F=Vqn=He9xj7JNfqmi+qLNzQ@mail.gmail.com>
-Subject: Re: [PATCH 8/9] include/hw/arm/omap_dma.h: Move to include/hw/dma
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- Jim MacArthur <jim.macarthur@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,28 +96,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 10 Jul 2026 at 14:37, Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> On 10/7/26 12:59, Peter Maydell wrote:
-> > omap_dma.h is the header file for hw/dma/omap_dma.c; it fits better
-> > to put it in include/hw/dma/ to match where we have the .c file.
-> >
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> >   hw/arm/omap1.c                    | 2 +-
-> >   hw/dma/omap_dma.c                 | 2 +-
-> >   hw/dma/soc_dma.c                  | 2 +-
-> >   include/hw/{arm =3D> dma}/soc_dma.h | 0
-> >   4 files changed, 3 insertions(+), 3 deletions(-)
-> >   rename include/hw/{arm =3D> dma}/soc_dma.h (100%)
->
-> Per the cover letter, "The omap_dma device is the only user of
-> the soc_dma code", then maybe take the rename opportunity to
-> name as omap_dma.h?
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-It's the only user but it is still a separate C file, so
-I think we should keep soc_dma.h to match the soc_dma.c filename.
+> On Wed, 8 Jul 2026 at 13:57, Markus Armbruster <armbru@redhat.com> wrote:
+>>
+>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>>
+>> > On Wed, Jul 08, 2026 at 02:50:54PM +0200, Markus Armbruster wrote:
+>> >> > Something would need to validate that instantiating a machine type
+>> >> > for help usage won't trip over any edge cases. Could be done with
+>> >> > unit tests.
+>> >>
+>> >> tests/qtest/device-introspect-test.c covers this for devices.
+>> >
+>> > Ah, good, I was misled by its name into thinking it was only devices,
+>> > not machine types too.
+>>
+>> Misunderstanding: it does cover it for devices, and only for devices.
+>
+> Does Marc-Andr=C3=A9's recent qom-tests test cover the machines? It
+> does an instantiate/get props/unref cycle for all non-abstract
+> QOM types, which ought to include the machines.
 
--- PMM
+I guess you mean commit f741225073 (qtest: add "qom-tests" command,
+2026-04-24).  Looking at the code...  yes, that should cover machines.
+
+> A while back I had a look at moving Machine to be a subclass
+> of Device, incidentally -- that would let us have machine
+> reset not be a weird special case, allow separating machine
+> init from realize, and make machines be more like SoC objects
+> (which they resemble a lot in being "creates, configures
+> and wires up a load of other devices").
+
+Makes sense to me.
+
+>                                         I forget where I
+> got to in that, though.
+
+Been there, done that *sigh*.
+
 
