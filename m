@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFF5AC43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 19:19:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94DC5C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 19:19:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiGkZ-0000pR-Ny; Fri, 10 Jul 2026 15:19:03 -0400
+	id 1wiGkS-0000kZ-3J; Fri, 10 Jul 2026 15:18:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wiGkJ-0000j8-L4
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 15:18:50 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ id 1wiGkC-0000iq-Oq
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 15:18:44 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wiGkI-00057d-29
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 15:18:47 -0400
+ id 1wiGkB-00056k-2d
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 15:18:40 -0400
 Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id CD8DF807BA;
- Fri, 10 Jul 2026 22:18:44 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id CC49980898;
+ Fri, 10 Jul 2026 22:18:36 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:c7d::1:20])
  by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id AIRXsO0a8eA0-rMEDC6Ws; Fri, 10 Jul 2026 22:18:44 +0300
+ id AIRXsO0a8eA0-XBorONAa; Fri, 10 Jul 2026 22:18:36 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1783711124;
- bh=hbYiRyekA3Dmh3vtzBsAip8Kg3UYaird5OyQROLYaS0=;
+ s=default; t=1783711116;
+ bh=mlaZ6apYEnKewoMIOTTboOZsP/6zLw/eEpvWPVWwxjg=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=y5lDmJqjXzzWdpiK+tSSdBTEAMnXhQ7VHeY8IHInlbQDpqsvIK6/7gmZpynqF9z5T
- UkONJBiJKX4f6aTxLFDqYz8THBMKQFHyYVhk8rguNjcRcdh+DSKlCgKM/gSBXO0BDz
- 3NGKmpgw7dDb6mQJlINz4jyW3tuW+vel7Ap6iHDY=
+ b=J/9yfkI8xM6aCog6dVhi9UGEN8kv9eLK4eI0om655uIhdxyZDU2ESHjmiLaQufwFt
+ aMI/xh32uP2Tvq0CsEgvcPEdygiKzNseL6EOsts0SieSALcuF5Nxgs+XwvwPkpkjvk
+ We7mnexqALezSLd0UzDV/eE3cKmOYmsWVr9pHNc0=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -47,15 +48,15 @@ Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
  qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
  yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
  Jason Wang <jasowangio@gmail.com>
-Subject: [PATCH v18 11/14] net/tap: disable read polling for stopped VM
-Date: Fri, 10 Jul 2026 22:18:00 +0300
-Message-ID: <20260710191809.721154-12-vsementsov@yandex-team.ru>
+Subject: [PATCH v18 08/14] net/tap: add TYPE_VMSTATE_IF interface
+Date: Fri, 10 Jul 2026 22:17:57 +0300
+Message-ID: <20260710191809.721154-9-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260710191809.721154-1-vsementsov@yandex-team.ru>
 References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -77,88 +78,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Polling when VM is stopped doesn't make real sense, as stopped VM can't
-handle incoming traffic anyway.
-
-And it's critical for introduction of local TAP migration
-feature in the next commit: the TAP device will be transferred
-to the target (open fd will be passed through migration channel),
-and if we continue polling on source, we may get a package, which
-we'll never handle on source (already stopped), it will be lost.
-Better is save this package for target VM to handle.
+We'll need it to implement TAP backend live migration.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- net/tap.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ net/tap.c | 43 ++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 34 insertions(+), 9 deletions(-)
 
 diff --git a/net/tap.c b/net/tap.c
-index b5be456936d..605e5867b01 100644
+index c2f63308ff9..b5be456936d 100644
 --- a/net/tap.c
 +++ b/net/tap.c
-@@ -36,6 +36,7 @@
- #include "net/net.h"
- #include "clients.h"
- #include "monitor/monitor.h"
-+#include "system/runstate.h"
- #include "system/system.h"
- #include "qapi/error.h"
- #include "qemu/cutils.h"
-@@ -92,6 +93,8 @@ struct TAPState {
-     Notifier exit;
+@@ -43,7 +43,6 @@
+ #include "qemu/main-loop.h"
+ #include "qemu/sockets.h"
+ #include "hw/virtio/vhost.h"
+-#include "qom/object.h"
  
-     int queue_index;
-+    bool read_poll_detached;
-+    VMChangeStateEntry *vmstate;
+ #include "net/tap.h"
+ #include "net/util.h"
+@@ -91,6 +90,8 @@ struct TAPState {
+     VHostNetState *vhost_net;
+     unsigned host_vnet_hdr_len;
+     Notifier exit;
++
++    int queue_index;
  };
  
  static void launch_script(const char *setup_script, const char *ifname,
-@@ -146,6 +149,23 @@ static void tap_read_poll(TAPState *s, bool enable)
-     tap_update_fd_handler(s);
+@@ -416,10 +417,29 @@ static VHostNetState *tap_get_vhost_net(NetClientState *nc)
  }
  
-+static void tap_vm_state_change(void *opaque, bool running, RunState state)
+ 
++static char *tap_vmstate_if_get_id(VMStateIf *obj)
 +{
-+    TAPState *s = opaque;
-+
-+    if (running) {
-+        if (s->read_poll_detached) {
-+            tap_read_poll(s, true);
-+            s->read_poll_detached = false;
-+        }
-+    } else if (state == RUN_STATE_FINISH_MIGRATE) {
-+        if (s->read_poll) {
-+            s->read_poll_detached = true;
-+            tap_read_poll(s, false);
-+        }
-+    }
++    TAPState *s = TAP_NETDEV(obj);
++    char *res = g_strdup_printf("%s/%d", s->nc.name, s->queue_index);
++    return res;
 +}
 +
- static void tap_write_poll(TAPState *s, bool enable)
- {
-     s->write_poll = enable;
-@@ -376,6 +396,11 @@ static void tap_cleanup(NetClientState *nc)
-         s->exit.notify = NULL;
-     }
- 
-+    if (s->vmstate) {
-+        qemu_del_vm_change_state_handler(s->vmstate);
-+        s->vmstate = NULL;
-+    }
++static void tap_class_init(ObjectClass *klass, const void *data)
++{
++    VMStateIfClass *vc = VMSTATE_IF_CLASS(klass);
 +
-     tap_read_poll(s, false);
-     tap_write_poll(s, false);
-     close(s->fd);
-@@ -815,6 +840,9 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
++    vc->get_id = tap_vmstate_if_get_id;
++}
++
+ static const TypeInfo tap_netdev_info = {
+     .name = TYPE_TAP_NETDEV,
+     .parent = TYPE_OBJECT,
+     .instance_size = sizeof(TAPState),
++    .class_init = tap_class_init,
++    .interfaces = (const InterfaceInfo[]) {
++        { TYPE_VMSTATE_IF },
++        { }
++    },
+ };
+ 
+ static void tap_net_client_destructor(NetClientState *nc)
+@@ -452,13 +472,16 @@ static NetClientInfo net_tap_info = {
+ 
+ static TAPState *new_tap(NetClientState *peer,
+                          const char *model,
+-                         const char *name)
++                         const char *name,
++                         int queue_index)
+ {
+     TAPState *s = TAP_NETDEV(object_new(TYPE_TAP_NETDEV));
+ 
+     qemu_net_client_setup(&s->nc, &net_tap_info, peer, model, name,
+                           tap_net_client_destructor, true);
+ 
++    s->queue_index = queue_index;
++
+     return s;
+ }
+ 
+@@ -466,10 +489,11 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
+                                  const char *model,
+                                  const char *name,
+                                  int fd,
+-                                 int vnet_hdr)
++                                 int vnet_hdr,
++                                 int queue_index)
+ {
+     NetOffloads ol = {};
+-    TAPState *s = new_tap(peer, model, name);
++    TAPState *s = new_tap(peer, model, name, queue_index);
+ 
+     s->fd = fd;
+     s->host_vnet_hdr_len = vnet_hdr ? sizeof(struct virtio_net_hdr) : 0;
+@@ -706,7 +730,7 @@ int net_init_bridge(const Netdev *netdev, const char *name,
+         close(fd);
+         return -1;
+     }
+-    s = net_tap_fd_init(peer, "bridge", name, fd, vnet_hdr);
++    s = net_tap_fd_init(peer, "bridge", name, fd, vnet_hdr, 0);
+ 
+     qemu_set_info_str(&s->nc, "helper=%s,br=%s", helper, br);
+ 
+@@ -782,10 +806,11 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+                              const char *name,
+                              const char *ifname, const char *script,
+                              const char *downscript, int vhostfd,
+-                             int vnet_hdr, int fd, Error **errp)
++                             int vnet_hdr, int fd, int queue_index,
++                             Error **errp)
+ {
+     TAPState *s = net_tap_fd_init(peer, tap->helper ? "bridge" : "tap",
+-                                  name, fd, vnet_hdr);
++                                  name, fd, vnet_hdr, queue_index);
+     bool sndbuf_required = tap->has_sndbuf;
      int sndbuf =
          (tap->has_sndbuf && tap->sndbuf) ? MIN(tap->sndbuf, INT_MAX) : INT_MAX;
- 
-+    s->read_poll_detached = false;
-+    s->vmstate = qemu_add_vm_change_state_handler(tap_vm_state_change, s);
-+
-     if (!tap_set_sndbuf(fd, sndbuf, sndbuf_required ? errp : NULL) &&
-         sndbuf_required) {
-         goto failed;
+@@ -986,7 +1011,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
+             if (!net_init_tap_one(tap, peer, name, ifname,
+                                   NULL, NULL,
+                                   vhost_fds ? vhost_fds[i] : -1,
+-                                  vnet_hdr, fds[i], errp)) {
++                                  vnet_hdr, fds[i], i, errp)) {
+                 goto fail;
+             }
+         }
+@@ -1020,7 +1045,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
+                                   i >= 1 ? NULL : script,
+                                   i >= 1 ? NULL : downscript,
+                                   vhost_fds ? vhost_fds[i] : -1,
+-                                  vnet_hdr, fd, errp)) {
++                                  vnet_hdr, fd, i, errp)) {
+                 goto fail;
+             }
+         }
 -- 
 2.43.0
 
