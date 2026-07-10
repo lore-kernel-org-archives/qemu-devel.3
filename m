@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94DC5C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 19:19:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA39DC43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 19:19:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiGkS-0000kZ-3J; Fri, 10 Jul 2026 15:18:57 -0400
+	id 1wiGkk-0000sw-6s; Fri, 10 Jul 2026 15:19:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wiGkC-0000iq-Oq
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 15:18:44 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ id 1wiGkO-0000jw-9D
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 15:18:54 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wiGkB-00056k-2d
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 15:18:40 -0400
+ id 1wiGkL-00057y-49
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 15:18:51 -0400
 Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id CC49980898;
- Fri, 10 Jul 2026 22:18:36 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id D502B80DDA;
+ Fri, 10 Jul 2026 22:18:47 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:c7d::1:20])
  by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id AIRXsO0a8eA0-XBorONAa; Fri, 10 Jul 2026 22:18:36 +0300
+ id AIRXsO0a8eA0-2fnHdEZE; Fri, 10 Jul 2026 22:18:47 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1783711116;
- bh=mlaZ6apYEnKewoMIOTTboOZsP/6zLw/eEpvWPVWwxjg=;
+ s=default; t=1783711127;
+ bh=QkOwoMXn6aVbh3Vcos0lrw9l1awW+f+7IIrb4muwImI=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=J/9yfkI8xM6aCog6dVhi9UGEN8kv9eLK4eI0om655uIhdxyZDU2ESHjmiLaQufwFt
- aMI/xh32uP2Tvq0CsEgvcPEdygiKzNseL6EOsts0SieSALcuF5Nxgs+XwvwPkpkjvk
- We7mnexqALezSLd0UzDV/eE3cKmOYmsWVr9pHNc0=
+ b=kzB7YPFPhwQuWd9bhgLiSNwR6zosrjaf/Ihj5eJxv0oBI8pMJbcdlFMPfneHfKdjb
+ nYMdrrunasfsbk+KX9GjIBUXpE42+qKTdxx6HjmPsibxS53NXTYm0nHqC6YFTA7geC
+ KJtLh+ORH8LXpI39h/22ore18I+wdrpS3NfjpYLc=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -47,16 +46,18 @@ Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
  raphael.s.norwitz@gmail.com, bchaney@akamai.com, vsementsov@yandex-team.ru,
  qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
  yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
- Jason Wang <jasowangio@gmail.com>
-Subject: [PATCH v18 08/14] net/tap: add TYPE_VMSTATE_IF interface
-Date: Fri, 10 Jul 2026 22:17:57 +0300
-Message-ID: <20260710191809.721154-9-vsementsov@yandex-team.ru>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Jason Wang <jasowangio@gmail.com>,
+ Eric Blake <eblake@redhat.com>
+Subject: [PATCH v18 12/14] net/tap: support local migration with virtio-net
+Date: Fri, 10 Jul 2026 22:18:01 +0300
+Message-ID: <20260710191809.721154-13-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260710191809.721154-1-vsementsov@yandex-team.ru>
 References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.200;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -78,137 +79,432 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We'll need it to implement TAP backend live migration.
+Support transferring of TAP state (including open fd).
+
+Add new property "local-migration-supported", which defines
+whether local-migration is actually supported for this TAP device.
+Starting from 11.2 QEMU Machine Types it's enabled by default.
+
+Note, that local-migration (including migrating opened FDs
+through migration channel, which must be UNIX socket), is
+enabled by global "local" migration parameters. But individual
+devices may have additional options to enable/disable it
+per device.
+
+The tricky thing, is that we need to know, should we do
+call open/connect in TAP initialization code. That means,
+that on incoming migration we want to know status of
+"local" migration parameter at time of creating TAP device.
+So, currently, for incoming local migration only TAP device
+created through QMP is supported, as you need to set migration
+parameter first (through QMP as well).
+
+So the full picture is:
+
+On source, to start outgoing "local" migration you need:
+
+ - migration parameter "local" set to true
+ - "local-migration-supported" TAP option set to true (the
+   default, starting from 11.2 QEMU Machine Types)
+
+If at least one of these options is not set, TAP backend
+doesn't participate in migration.
+
+On target, things are more difficult:
+
+Same, you need both "local" and "local-migration-supported"
+be set. And same, if one of them is not set, TAP backend
+is initialized as usual, and doesn't accept any incoming
+state.
+
+Additionally, if you are going to set "local", it must be
+set before creating the TAP device. If TAP device created
+with "local" unset, it initializes as usual. If you enable
+"local" after it and start incoming migration, it will fail
+in .pre_load handler of TAP backend.
+
+Moreover, there are interface restrictions: if you create TAP
+device when QEMU is in INCOMING state, and both "local"
+and "local-migration-supported" set, most of TAP options are
+not allowed, and script/downscript are required to be explicitly
+unset (set to "" or "no").
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- net/tap.c | 43 ++++++++++++++++++++++++++++++++++---------
- 1 file changed, 34 insertions(+), 9 deletions(-)
 
+In v17 thread we considered making new qapi parameters "unstable".
+Still, it was because of doubtful "incoming-fds" parameter. In this
+v18 it's completely removed, and we may live only with "local"
+migration parameter + "local-migration-supported" TAP option.
+This way the series doesn't conflict with suggested by Peter
+  [PATCH RFC 0/2] migration/vl: new -incoming config:* for early migration parameters
+So, I think, worth making one more iteration as "stable candidate".
+If still some doubts, not problem for me to resend with "unstable" features.
+
+ hw/core/machine.c |   7 ++
+ net/tap.c         | 162 ++++++++++++++++++++++++++++++++++++++++++++--
+ qapi/net.json     |  23 ++++++-
+ 3 files changed, 185 insertions(+), 7 deletions(-)
+
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 15886a56b19..2a1abb29041 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -36,10 +36,16 @@
+ #include "hw/virtio/virtio-pci.h"
+ #include "hw/virtio/virtio-net.h"
+ #include "hw/virtio/virtio-iommu.h"
++#include "net/tap.h"
+ #include "hw/acpi/generic_event_device.h"
+ #include "qemu/audio.h"
+ #include "hw/arm/smmuv3.h"
+ 
++/*
++ * TODO: When hw_compat_11_1 appears, local-migration-supported=false
++ * for TYPE_TAP_NETDEV should be move to it from hw_compat_11_0.
++ */
++
+ GlobalProperty hw_compat_11_0[] = {
+     { "chardev-vc", "encoding", "cp437" },
+     { "tpm-crb", "cap-chunk", "off" },
+@@ -49,6 +55,7 @@ GlobalProperty hw_compat_11_0[] = {
+     { TYPE_ARM_SMMUV3, "ssidsize", "0" },
+     { TYPE_ARM_SMMUV3, "oas", "44" },
+     { "migration", "switchover-ack-legacy", "on" },
++    { TYPE_TAP_NETDEV, "local-migration-supported", "false" },
+ };
+ const size_t hw_compat_11_0_len = G_N_ELEMENTS(hw_compat_11_0);
+ 
 diff --git a/net/tap.c b/net/tap.c
-index c2f63308ff9..b5be456936d 100644
+index 605e5867b01..adcac70b7ea 100644
 --- a/net/tap.c
 +++ b/net/tap.c
-@@ -43,7 +43,6 @@
+@@ -38,12 +38,17 @@
+ #include "monitor/monitor.h"
+ #include "system/runstate.h"
+ #include "system/system.h"
++#include "migration/misc.h"
+ #include "qapi/error.h"
+ #include "qemu/cutils.h"
+ #include "qemu/error-report.h"
  #include "qemu/main-loop.h"
  #include "qemu/sockets.h"
  #include "hw/virtio/vhost.h"
--#include "qom/object.h"
++#include "hw/core/vmstate-if.h"
++#include "migration/vmstate.h"
++#include "qom/object.h"
++#include "qom/compat-properties.h"
  
  #include "net/tap.h"
  #include "net/util.h"
-@@ -91,6 +90,8 @@ struct TAPState {
-     VHostNetState *vhost_net;
-     unsigned host_vnet_hdr_len;
-     Notifier exit;
+@@ -71,6 +76,8 @@ static const int kernel_feature_bits[] = {
+ 
+ OBJECT_DECLARE_SIMPLE_TYPE(TAPState, TAP_NETDEV)
+ 
++static const VMStateDescription vmstate_tap;
 +
-+    int queue_index;
+ struct TAPState {
+     Object parent_obj;
+ 
+@@ -95,6 +102,7 @@ struct TAPState {
+     int queue_index;
+     bool read_poll_detached;
+     VMChangeStateEntry *vmstate;
++    bool local_migration_supported;
  };
  
  static void launch_script(const char *setup_script, const char *ifname,
-@@ -416,10 +417,29 @@ static VHostNetState *tap_get_vhost_net(NetClientState *nc)
+@@ -405,6 +413,8 @@ static void tap_cleanup(NetClientState *nc)
+     tap_write_poll(s, false);
+     close(s->fd);
+     s->fd = -1;
++
++    vmstate_unregister(VMSTATE_IF(s), &vmstate_tap, s);
  }
  
+ static void tap_poll(NetClientState *nc, bool enable)
+@@ -441,6 +451,73 @@ static VHostNetState *tap_get_vhost_net(NetClientState *nc)
+     return s->vhost_net;
+ }
  
-+static char *tap_vmstate_if_get_id(VMStateIf *obj)
++static bool tap_is_wait_incoming(NetClientState *nc)
++{
++    TAPState *s = container_of(nc, TAPState, nc);
++    assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
++    return s->fd == -1;
++}
++
++static int tap_pre_load(void *opaque)
++{
++    TAPState *s = opaque;
++
++    if (s->fd != -1) {
++        error_report(
++            "TAP is already initialized and cannot receive incoming fd");
++        return -EINVAL;
++    }
++
++    return 0;
++}
++
++static bool tap_setup_vhost(TAPState *s, Error **errp);
++
++static int tap_post_load(void *opaque, int version_id)
++{
++    TAPState *s = opaque;
++    Error *local_err = NULL;
++
++    tap_read_poll(s, true);
++
++    if (s->fd < 0) {
++        return -1;
++    }
++
++    if (!tap_setup_vhost(s, &local_err)) {
++        error_prepend(&local_err,
++                      "Failed to setup vhost during TAP post-load: ");
++        error_report_err(local_err);
++        return -1;
++    }
++
++    return 0;
++}
++
++static bool tap_needed(void *opaque)
++{
++    TAPState *s = opaque;
++
++    return s->local_migration_supported && migrate_local();
++}
++
++static const VMStateDescription vmstate_tap = {
++    .name = "net-tap",
++    .priority = MIG_PRI_BACKEND,
++    .pre_load = tap_pre_load,
++    .post_load = tap_post_load,
++    .needed = tap_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_FD(fd, TAPState),
++        VMSTATE_BOOL(using_vnet_hdr, TAPState),
++        VMSTATE_BOOL(has_ufo, TAPState),
++        VMSTATE_BOOL(has_uso, TAPState),
++        VMSTATE_BOOL(has_tunnel, TAPState),
++        VMSTATE_BOOL(enabled, TAPState),
++        VMSTATE_UINT32(host_vnet_hdr_len, TAPState),
++        VMSTATE_END_OF_LIST()
++    }
++};
+ 
+ static char *tap_vmstate_if_get_id(VMStateIf *obj)
+ {
+@@ -449,17 +526,42 @@ static char *tap_vmstate_if_get_id(VMStateIf *obj)
+     return res;
+ }
+ 
++static bool tap_get_local_migration_supported_prop(Object *obj, Error **errp)
 +{
 +    TAPState *s = TAP_NETDEV(obj);
-+    char *res = g_strdup_printf("%s/%d", s->nc.name, s->queue_index);
-+    return res;
++    return s->local_migration_supported;
 +}
 +
-+static void tap_class_init(ObjectClass *klass, const void *data)
++static void tap_set_local_migration_supported_prop(Object *obj, bool value,
++                                                   Error **errp)
 +{
-+    VMStateIfClass *vc = VMSTATE_IF_CLASS(klass);
-+
-+    vc->get_id = tap_vmstate_if_get_id;
++    TAPState *s = TAP_NETDEV(obj);
++    s->local_migration_supported = value;
 +}
 +
++static void tap_instance_init(Object *obj)
++{
++    TAPState *s = TAP_NETDEV(obj);
++    s->local_migration_supported = true;
++}
++
+ static void tap_class_init(ObjectClass *klass, const void *data)
+ {
+     VMStateIfClass *vc = VMSTATE_IF_CLASS(klass);
+ 
+     vc->get_id = tap_vmstate_if_get_id;
++
++    object_class_property_add_bool(klass, "local-migration-supported",
++                                   tap_get_local_migration_supported_prop,
++                                   tap_set_local_migration_supported_prop);
+ }
+ 
  static const TypeInfo tap_netdev_info = {
      .name = TYPE_TAP_NETDEV,
      .parent = TYPE_OBJECT,
      .instance_size = sizeof(TAPState),
-+    .class_init = tap_class_init,
-+    .interfaces = (const InterfaceInfo[]) {
-+        { TYPE_VMSTATE_IF },
-+        { }
-+    },
++    .instance_init = tap_instance_init,
++    .instance_post_init = object_apply_compat_props,
+     .class_init = tap_class_init,
+     .interfaces = (const InterfaceInfo[]) {
+         { TYPE_VMSTATE_IF },
+@@ -492,13 +594,16 @@ static NetClientInfo net_tap_info = {
+     .set_vnet_le = tap_set_vnet_le,
+     .set_vnet_be = tap_set_vnet_be,
+     .set_steering_ebpf = tap_set_steering_ebpf,
++    .is_wait_incoming = tap_is_wait_incoming,
+     .get_vhost_net = tap_get_vhost_net,
  };
- 
- static void tap_net_client_destructor(NetClientState *nc)
-@@ -452,13 +472,16 @@ static NetClientInfo net_tap_info = {
  
  static TAPState *new_tap(NetClientState *peer,
                           const char *model,
--                         const char *name)
-+                         const char *name,
-+                         int queue_index)
+                          const char *name,
+-                         int queue_index)
++                         int queue_index,
++                         bool has_local_migration_supported,
++                         bool local_migration_supported)
  {
      TAPState *s = TAP_NETDEV(object_new(TYPE_TAP_NETDEV));
  
-     qemu_net_client_setup(&s->nc, &net_tap_info, peer, model, name,
-                           tap_net_client_destructor, true);
+@@ -507,6 +612,12 @@ static TAPState *new_tap(NetClientState *peer,
  
-+    s->queue_index = queue_index;
+     s->queue_index = queue_index;
+ 
++    if (has_local_migration_supported) {
++        s->local_migration_supported = local_migration_supported;
++    }
++
++    vmstate_register(VMSTATE_IF(s), VMSTATE_INSTANCE_ID_ANY, &vmstate_tap, s);
 +
      return s;
  }
  
-@@ -466,10 +489,11 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
-                                  const char *model,
+@@ -515,10 +626,14 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
                                   const char *name,
                                   int fd,
--                                 int vnet_hdr)
-+                                 int vnet_hdr,
-+                                 int queue_index)
+                                  int vnet_hdr,
+-                                 int queue_index)
++                                 int queue_index,
++                                 bool has_local_migration_supported,
++                                 bool local_migration_supported)
  {
      NetOffloads ol = {};
--    TAPState *s = new_tap(peer, model, name);
-+    TAPState *s = new_tap(peer, model, name, queue_index);
+-    TAPState *s = new_tap(peer, model, name, queue_index);
++    TAPState *s = new_tap(peer, model, name, queue_index,
++                          has_local_migration_supported,
++                          local_migration_supported);
  
      s->fd = fd;
      s->host_vnet_hdr_len = vnet_hdr ? sizeof(struct virtio_net_hdr) : 0;
-@@ -706,7 +730,7 @@ int net_init_bridge(const Netdev *netdev, const char *name,
+@@ -755,7 +870,7 @@ int net_init_bridge(const Netdev *netdev, const char *name,
          close(fd);
          return -1;
      }
--    s = net_tap_fd_init(peer, "bridge", name, fd, vnet_hdr);
-+    s = net_tap_fd_init(peer, "bridge", name, fd, vnet_hdr, 0);
+-    s = net_tap_fd_init(peer, "bridge", name, fd, vnet_hdr, 0);
++    s = net_tap_fd_init(peer, "bridge", name, fd, vnet_hdr, 0, true, false);
  
      qemu_set_info_str(&s->nc, "helper=%s,br=%s", helper, br);
  
-@@ -782,10 +806,11 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
-                              const char *name,
-                              const char *ifname, const char *script,
-                              const char *downscript, int vhostfd,
--                             int vnet_hdr, int fd, Error **errp)
-+                             int vnet_hdr, int fd, int queue_index,
-+                             Error **errp)
+@@ -835,7 +950,9 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+                              Error **errp)
  {
      TAPState *s = net_tap_fd_init(peer, tap->helper ? "bridge" : "tap",
--                                  name, fd, vnet_hdr);
-+                                  name, fd, vnet_hdr, queue_index);
+-                                  name, fd, vnet_hdr, queue_index);
++                                  name, fd, vnet_hdr, queue_index,
++                                  tap->has_local_migration_supported,
++                                  tap->local_migration_supported);
      bool sndbuf_required = tap->has_sndbuf;
      int sndbuf =
          (tap->has_sndbuf && tap->sndbuf) ? MIN(tap->sndbuf, INT_MAX) : INT_MAX;
-@@ -986,7 +1011,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
-             if (!net_init_tap_one(tap, peer, name, ifname,
-                                   NULL, NULL,
-                                   vhost_fds ? vhost_fds[i] : -1,
--                                  vnet_hdr, fds[i], errp)) {
-+                                  vnet_hdr, fds[i], i, errp)) {
-                 goto fail;
-             }
-         }
-@@ -1020,7 +1045,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
-                                   i >= 1 ? NULL : script,
-                                   i >= 1 ? NULL : downscript,
-                                   vhost_fds ? vhost_fds[i] : -1,
--                                  vnet_hdr, fd, errp)) {
-+                                  vnet_hdr, fd, i, errp)) {
-                 goto fail;
-             }
-         }
+@@ -983,6 +1100,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
+     /* for the no-fd, no-helper case */
+     char ifname[128];
+     int *fds = NULL, *vhost_fds = NULL;
++    bool incoming_fds;
+ 
+     assert(netdev->type == NET_CLIENT_DRIVER_TAP);
+     tap = &netdev->u.tap;
+@@ -1005,6 +1123,23 @@ int net_init_tap(const Netdev *netdev, const char *name,
+         return -1;
+     }
+ 
++    incoming_fds = tap->local_migration_supported && migrate_local() &&
++                   runstate_check(RUN_STATE_INMIGRATE);
++
++    if (incoming_fds &&
++        (tap->fd || tap->fds || tap->helper || tap->br || tap->ifname ||
++         tap->has_sndbuf || tap->has_vnet_hdr ||
++         !tap_is_explicit_no_script(tap->script) ||
++         !tap_is_explicit_no_script(tap->downscript))) {
++        error_setg(errp, "Local incoming migration of TAP device (-incoming, "
++                   "migration parameter @local is set, "
++                   "TAP parameter @local-migration-supported is set) "
++                   "is incompatible with "
++                   "fd=, fds=, helper=, br=, ifname=, sndbuf= and vnet_hdr=, "
++                   "and requires explicit empty script= and downscript=");
++        return -1;
++    }
++
+     queues = tap_parse_fds_and_queues(tap, &fds, errp);
+     if (queues < 0) {
+         return -1;
+@@ -1023,7 +1158,22 @@ int net_init_tap(const Netdev *netdev, const char *name,
+         goto fail;
+     }
+ 
+-    if (fds) {
++    if (incoming_fds) {
++        for (i = 0; i < queues; i++) {
++            TAPState *s = new_tap(peer, "tap", name, i,
++                                  tap->has_local_migration_supported,
++                                  tap->local_migration_supported);
++            qemu_set_info_str(&s->nc, "incoming");
++
++            s->fd = -1;
++            if (vhost_fds) {
++                s->vhostfd = vhost_fds[i];
++                s->vhost_busyloop_timeout = tap->has_poll_us ? tap->poll_us : 0;
++            } else {
++                s->vhostfd = -1;
++            }
++        }
++    } else if (fds) {
+         for (i = 0; i < queues; i++) {
+             if (i == 0) {
+                 vnet_hdr = tap_probe_vnet_hdr(fds[i], errp);
+diff --git a/qapi/net.json b/qapi/net.json
+index ada0329ef9d..2070979f20e 100644
+--- a/qapi/net.json
++++ b/qapi/net.json
+@@ -435,6 +435,26 @@
+ # @poll-us: maximum number of microseconds that could be spent on busy
+ #     polling for tap (since 2.7)
+ #
++# @local-migration-supported: enable local migration for this TAP
++#     backend.  When set, local migration is enabled/disabled by
++#     migration parameter @local for this TAP backend.  When unset,
++#     migration parameter @local is ignored for this TAP backend.
++#     To be able to do incoming local migration of TAP backend,
++#     migration parameter @local must be set _before_ creating the
++#     TAP backend.  Otherwise, TAP backend is initialized as usual,
++#     opening/creating TAP devices in kernel.  In this case further
++#     local incoming migration (with migration parameter @local set
++#     after creating TAP backend with @local-migration-supporeted
++#     parameter set) will simply fail.
++#     Moreover, when QEMU is in incoming migration state, migration
++#     parameter @local is set and @local-migration-supported is set,
++#     following options are not supported and must not be set:
++#     @ds, @fds, @helper, @br, @ifname, @sndbuf, @vnet_hdr.
++#     Additionally in this case @script and @downscipt must be
++#     explicitly disabled (empty strings or "no").
++#     (Since 11.2.  Defaults to true for QEMU Machine Types >= 11.2,
++#     and to false for QEMU Machine Types < 11.2)
++#
+ # Since: 1.2
+ ##
+ { 'struct': 'NetdevTapOptions',
+@@ -453,7 +473,8 @@
+     '*vhostfds':   'str',
+     '*vhostforce': 'bool',
+     '*queues':     'uint32',
+-    '*poll-us':    'uint32'} }
++    '*poll-us':    'uint32',
++    '*local-migration-supported': 'bool' } }
+ 
+ ##
+ # @NetdevSocketOptions:
 -- 
 2.43.0
 
