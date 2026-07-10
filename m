@@ -4,57 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3544C44506
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 08:30:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56CDCC43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 08:34:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi6cE-0006Am-RK; Fri, 10 Jul 2026 04:29:47 -0400
+	id 1wi6gl-00071B-Kq; Fri, 10 Jul 2026 04:34:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1wi6cB-0006AE-Vj
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 04:29:44 -0400
-Received: from out-182.mta1.migadu.com ([95.215.58.182])
+ (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
+ id 1wi6gb-00070m-MM; Fri, 10 Jul 2026 04:34:19 -0400
+Received: from apollo.dupie.be ([2001:bc8:3f2a:101::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1wi6c9-00006s-6I
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 04:29:43 -0400
-Message-ID: <f04f159f-7ade-4d2e-bf32-41cd6e6d71ff@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1783672177;
+ (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
+ id 1wi6gX-00014e-TX; Fri, 10 Jul 2026 04:34:16 -0400
+Received: from [IPV6:2a02:a03f:fafb:301:46c3:62e6:fe62:23a1] (unknown
+ [IPv6:2a02:a03f:fafb:301:46c3:62e6:fe62:23a1])
+ by apollo.dupie.be (Postfix) with ESMTPSA id 187721520DA8;
+ Fri, 10 Jul 2026 10:34:09 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
+ t=1783672449;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OeIcNjRADKE/HqFC66TZVcEHnK3cb4R3oYoaysH3IWU=;
- b=wGocQvBQzyJsx5XnxKtIupT1OHPh8Wae2H+uNrXS37eGXr77tWthzZbVO6vtfbH42l5yFN
- H+gG2ON04x39IWWBuQQ89aCJSqTb3MVHzuZoajqrpxlHnMCFjfcZnQDckhcj8jDyV801j5
- 36+ESU8oLbnZkS3AdBHktZjNaezwHpg=
-Date: Fri, 10 Jul 2026 16:28:56 +0800
+ bh=aw6clpuHEBdONkM/kPMqS9gHm//7aRPf/tPCidxoklI=;
+ b=MfAeurUnx03bVV8M6yJ56ZxuB7MepoLSTUUuwGMS3Wqjcbv8YOHHOoOgKIyzJKpmIyez4u
+ VfrErp9ar1n3fXuH/Mq0cJeSd7FGMzaOINzomAYTDIdzQm63ZuPUQ9LYxshNlwiZUdzj/e
+ /U8UkZhkxYagd7iLpfTBMC6RdZwiaNIaXOLFi/yTExyRDhr9xVhJvjA4+hHobWGWufqupi
+ AISB5rP8srJedi+g8beraU5q5fCuo27/4dk7AEEnSwLO/uQJ43cSC/aakTcnV8AfimBVz4
+ yv2S439PCgN4OqgEfjbUds1gNDlCdYhYDB4tDHHq4XaxLBvZ3EFdVS0A5cwMsg==
+Message-ID: <7697a2b6-fc26-4de2-8cd6-0b3651b79511@dupond.be>
+Date: Fri, 10 Jul 2026 10:34:08 +0200
 MIME-Version: 1.0
-Cc: cui.tao@linux.dev, Song Gao <gaosong@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Tao Cui <cuitao@kylinos.cn>
-Subject: Re: [PATCH v2 3/3] target/loongarch: add no_pv_feature compat flag
-To: Bibo Mao <maobibo@loongson.cn>, qemu-devel@nongnu.org
-References: <20260710005029.345378-1-cui.tao@linux.dev>
- <20260710005029.345378-4-cui.tao@linux.dev>
- <dba7047b-a2e5-ba52-c59c-683e02a5ea19@loongson.cn>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-From: Tao Cui <cui.tao@linux.dev>
-In-Reply-To: <dba7047b-a2e5-ba52-c59c-683e02a5ea19@loongson.cn>
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 1/1] qcow2: add functionality to repair bitmaps
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ John Snow <jsnow@redhat.com>, qemu-block@nongnu.org,
+ Eric Blake <eblake@redhat.com>
+References: <20260522224335.1286291-1-jean-louis@dupond.be>
+ <20260522224335.1286291-2-jean-louis@dupond.be>
+ <93dc8fbe-2346-430d-90f1-ca44b3970cd5@yandex-team.ru>
+Content-Language: en-US, en-GB, nl-BE
+From: Jean-Louis Dupond <jean-louis@dupond.be>
+In-Reply-To: <93dc8fbe-2346-430d-90f1-ca44b3970cd5@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=95.215.58.182; envelope-from=cui.tao@linux.dev;
- helo=out-182.mta1.migadu.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2001:bc8:3f2a:101::1;
+ envelope-from=jean-louis@dupond.be; helo=apollo.dupie.be
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,137 +76,336 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-
-在 2026/7/10 11:09, Bibo Mao 写道:
-> 
-> 
-> On 2026/7/10 上午8:50, Tao Cui wrote:
->> From: Tao Cui <cuitao@kylinos.cn>
+On 29/06/2026 11:18, Vladimir Sementsov-Ogievskiy wrote:
+> 23.05.26 01:43, Jean-Louis Dupond пишет:
+>> In some cases, it might happen that bitmaps become corrupt.
+>> For example when adding/removing bitmaps on a live image.
 >>
->> Advertising pv features to the guest affects the migration stream. Add a
->> no_pv_feature compat flag so the behavior can be gated per machine version:
->> LoongArchCPU gets a bool field, and the virt machine gains a
->> LoongArchVirtMachineClass field that defaults the CPU flag per version.
+>> Of course this should not happen, but in case this happens, the image is
+>> corrupt and even cannot be opened anymore. You'll get something like the
+>> following:
+>> qemu-img: Could not open 'disk.qcow2': Bitmap '' doesn't satisfy the 
+>> constraints
 >>
->> kvm_cpu_check_pv_features() skips populating pv features when the flag is
->> set. The 11.1 machine type keeps pv advertisement off (no_pv_feature is
->> true, preserving the previous behavior); from the new 11.2 machine type it
->> is on by default.
+>> So the image becomes useless, and cannot be repaired. This while in fact
+>> only (one) bitmap entry is corrupt, and the rest of the data is just
+>> intact.
 >>
->> Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+>> This commit adds a way to fix this corruption, by just replacing the
+>> bitmap list in the qcow2 image with the valid bitmaps, and dropping the
+>> bitmaps that are corrupt.
+>>
+>> $ qemu-img check disk.qcow2
+>> qemu-img: Check failed: Invalid argument
+>> qemu-img: Lost persistent bitmaps during inactivation of node 
+>> '#block147': Bitmap '' doesn't satisfy the constraints
+>>
+>> $ qemu-img check -r all disk.qcow2
+>> qcow2_free_clusters failed: Invalid argument
+>> Leaked cluster 3 refcount=1 reference=0
+>> Leaked cluster 26 refcount=1 reference=0
+>> ERROR cluster 983214 refcount=0 reference=1
+>> Rebuilding refcount structure
+>> Repairing cluster 1 refcount=1 reference=0
+>> Repairing cluster 2 refcount=1 reference=0
+>> Repairing cluster 32768 refcount=1 reference=0
+>> ....
+>> Repairing cluster 983214 refcount=1 reference=0
+>> The following inconsistencies were found and repaired:
+>>
+>>      2 leaked clusters
+>>      3 corruptions
+>>
+>> Double checking the fixed image now...
+>> No errors were found on the image.
+>> 983056/1048576 = 93.75% allocated, 0.05% fragmented, 0.00% compressed 
+>> clusters
+>> Image end offset: 64437878784
+>>
+>> And the image is valid again!
+>> Worst case you lose all bitmaps, but at least the image and the data
+>> itself is useable again.
+>>
+>> Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
+>
+> Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>
+> (some nit-picking and notes below, but the patch is OK for me as is)
+Thanks!
+>
 >> ---
->>   hw/loongarch/virt.c         | 14 +++++++++++++-
->>   include/hw/loongarch/virt.h |  9 ++++++++-
->>   target/loongarch/cpu.h      |  1 +
->>   target/loongarch/kvm/kvm.c  |  5 +++++
->>   4 files changed, 27 insertions(+), 2 deletions(-)
+>>   block/qcow2-bitmap.c   | 42 +++++++++++++++++++++++++++++++++++++++---
+>>   block/qcow2-refcount.c |  3 ++-
+>>   block/qcow2.c          | 16 ++++++++++++----
+>>   block/qcow2.h          |  3 ++-
+>>   4 files changed, 55 insertions(+), 9 deletions(-)
 >>
->> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
->> index 6693dea647..53c84c8def 100644
->> --- a/hw/loongarch/virt.c
->> +++ b/hw/loongarch/virt.c
->> @@ -955,6 +955,8 @@ static void virt_init(MachineState *machine)
->>                            machine->cpu_type);
->>               exit(EXIT_FAILURE);
->>           }
->> +        LOONGARCH_CPU(cpuobj)->no_pv_feature =
->> +            LOONGARCH_VIRT_MACHINE_GET_CLASS(lvms)->no_pv_feature;
-> I think it will better to set in function virt_cpu_plug().
-On virt_cpu_plug(): 
-  agreed, that's cleaner — I'll move the propagation there.
->>           qdev_realize_and_unref(DEVICE(cpuobj), NULL, &error_fatal);
->>       }
->>       virt_check_dmsi(machine);
->> @@ -1584,6 +1586,7 @@ static const TypeInfo virt_machine_info = {
->>       .parent         = TYPE_MACHINE,
->>       .abstract       = true,
->>       .instance_size  = sizeof(LoongArchVirtMachineState),
->> +    .class_size     = sizeof(LoongArchVirtMachineClass),
->>       .class_init     = virt_class_init,
->>       .instance_init  = virt_initfn,
->>       .instance_finalize = virt_instance_finalize,
->> @@ -1601,6 +1604,15 @@ static void machvirt_machine_init(void)
->>   type_init(machvirt_machine_init);
->>     static void virt_machine_11_1_options(MachineClass *mc)
->> +{
->> +    LoongArchVirtMachineClass *vmc = LOONGARCH_VIRT_MACHINE_CLASS(mc);
+>> diff --git a/block/qcow2-bitmap.c b/block/qcow2-bitmap.c
+>> index 256ec99878..91bd82a9f5 100644
+>> --- a/block/qcow2-bitmap.c
+>> +++ b/block/qcow2-bitmap.c
+>> @@ -100,6 +100,9 @@ typedef enum BitmapType {
+>>       BT_DIRTY_TRACKING_BITMAP = 1
+>>   } BitmapType;
+>>   +static int GRAPH_RDLOCK
+>> +update_ext_header_and_dir(BlockDriverState *bs, Qcow2BitmapList 
+>> *bm_list);
 >> +
->> +    /* pv feature advertisement is enabled from 11.2; keep 11.1 unchanged */
->> +    vmc->no_pv_feature = true;
->> +}
->> +DEFINE_VIRT_MACHINE(11, 1)
->> +
->> +static void virt_machine_11_2_options(MachineClass *mc)
+>>   static inline bool can_write(BlockDriverState *bs)
 >>   {
->>   }
->> -DEFINE_VIRT_MACHINE_AS_LATEST(11, 1)
->> +DEFINE_VIRT_MACHINE_AS_LATEST(11, 2)
->> diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
->> index d39a9bbf5d..cf8d9e1fd2 100644
->> --- a/include/hw/loongarch/virt.h
->> +++ b/include/hw/loongarch/virt.h
->> @@ -130,8 +130,15 @@ struct LoongArchVirtMachineState {
->>       bool highmem_mmio;
->>   };
->>   +struct LoongArchVirtMachineClass {
->> +    MachineClass parent_obj;
+>>       return !bdrv_is_read_only(bs) && !(bdrv_get_flags(bs) & 
+>> BDRV_O_INACTIVE);
+>> @@ -655,12 +658,14 @@ fail:
+>>   int coroutine_fn
+>>   qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult 
+>> *res,
+>>                                 void **refcount_table,
+>> -                              int64_t *refcount_table_size)
+>> +                              int64_t *refcount_table_size,
+>> +                              BdrvCheckMode fix)
+>>   {
+>>       int ret;
+>>       BDRVQcow2State *s = bs->opaque;
+>>       Qcow2BitmapList *bm_list;
+>> -    Qcow2Bitmap *bm;
+>> +    Qcow2Bitmap *bm, *bm_next;
+>> +    bool bitmap_modified = false;
+>
+> (I'd call it bm_list_modified, as we don't modify any bitmap..)
+I slightly modified it to also address comment below.
+>
+>>         if (s->nb_bitmaps == 0) {
+>>           return 0;
+>> @@ -677,12 +682,21 @@ qcow2_check_bitmaps_refcounts(BlockDriverState 
+>> *bs, BdrvCheckResult *res,
+>>                                  s->bitmap_directory_size, NULL);
+>>       if (bm_list == NULL) {
+>>           res->corruptions++;
 >> +
->> +    bool no_pv_feature;   /* compat: 11.1 and older do not advertise pv features */
->> +};
+>> +        if (fix & BDRV_FIX_ERRORS) {
+>> +            ret = update_ext_header_and_dir(bs, NULL);
+>> +            if (ret >= 0) {
+>> +                res->corruptions_fixed++;
+>> +            }
+>> +            goto out;
+>
+> I think, "return ret" is better here.
+>
+> at "out:" we only free the bm_list, which is NULL here anyway.
+>
+> And on the next line, we do "return -EINVAL", not "goto out", better 
+> be consistent.
+Fixed
+>
+>> +        }
+>>           return -EINVAL;
+>>       }
+>>   -    QSIMPLEQ_FOREACH(bm, bm_list, entry) {
+>> +    QSIMPLEQ_FOREACH_SAFE(bm, bm_list, entry, bm_next) {
+>>           uint64_t *bitmap_table = NULL;
+>>           int i;
+>> +        bool bitmap_valid = true;
+>>             ret = qcow2_inc_refcounts_imrt(bs, res,
+>>                                          refcount_table, 
+>> refcount_table_size,
+>> @@ -695,6 +709,12 @@ qcow2_check_bitmaps_refcounts(BlockDriverState 
+>> *bs, BdrvCheckResult *res,
+>>           ret = bitmap_table_load(bs, &bm->table, &bitmap_table);
+>>           if (ret < 0) {
+>>               res->corruptions++;
+>
+> This maybe called several times per bitmap, but finally we calculate
+> corruptions_fixed as bitmaps count.
+>
+> Still, I don't think it's important.
+Modified to bm_list_fixed. Which counts the corruptions fixed.
+Value is then used to increment corruptions_fixed.
+>
+>> +            if (fix & BDRV_FIX_ERRORS) {
+>> +                QSIMPLEQ_REMOVE(bm_list, bm, Qcow2Bitmap, entry);
+>> +                bitmap_free(bm);
+>> +                bitmap_modified = true;
+>> +                continue;
+>> +            }
+>>               goto out;
+>>           }
+>>   @@ -704,6 +724,7 @@ qcow2_check_bitmaps_refcounts(BlockDriverState 
+>> *bs, BdrvCheckResult *res,
+>>                 if (check_table_entry(entry, s->cluster_size) < 0) {
+>>                   res->corruptions++;
+>> +                bitmap_valid = false;
+>>                   continue;
+>>               }
+>>   @@ -720,9 +741,24 @@ qcow2_check_bitmaps_refcounts(BlockDriverState 
+>> *bs, BdrvCheckResult *res,
+>>               }
+>>           }
+>
+> Note, that if qcow2_inc_refcounts_imrt() fails, we'll fix nothing.
+Indeed. Then we have deeper corruption.
+I don't know if we could just ignore the failure if in BDRV_FIX_ERRORS 
+mode and clear the bitmap table if call fails?
+>
+>>   +        if ((fix & BDRV_FIX_ERRORS) && !bitmap_valid) {
+>> +            QSIMPLEQ_REMOVE(bm_list, bm, Qcow2Bitmap, entry);
+>> +            bitmap_free(bm);
+>> +            bitmap_modified = true;
+>> +        }
 >> +
->>   #define TYPE_LOONGARCH_VIRT_MACHINE  MACHINE_TYPE_NAME("virt")
->> -OBJECT_DECLARE_SIMPLE_TYPE(LoongArchVirtMachineState, LOONGARCH_VIRT_MACHINE)
->> +OBJECT_DECLARE_TYPE(LoongArchVirtMachineState, LoongArchVirtMachineClass,
->> +                    LOONGARCH_VIRT_MACHINE)
->>   void virt_acpi_setup(LoongArchVirtMachineState *lvms);
->>   void virt_fdt_setup(LoongArchVirtMachineState *lvms);
->>   diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
->> index ad30c73167..11bbb5f36e 100644
->> --- a/target/loongarch/cpu.h
->> +++ b/target/loongarch/cpu.h
->> @@ -447,6 +447,7 @@ struct ArchCPU {
->>       OnOffAuto msgint;
->>       OnOffAuto kvm_pv_ipi;
->>       OnOffAuto kvm_steal_time;
->> +    bool no_pv_feature;   /* compat: do not advertise KVM pv features */
->>       int32_t socket_id;  /* socket-id of this CPU */
->>       int32_t core_id;    /* core-id of this CPU */
->>       int32_t thread_id;  /* thread-id of this CPU */
->> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
->> index c557ee3c3d..878914928b 100644
->> --- a/target/loongarch/kvm/kvm.c
->> +++ b/target/loongarch/kvm/kvm.c
->> @@ -1119,6 +1119,11 @@ static int kvm_cpu_check_pv_features(CPUState *cs, Error **errp)
->>       CPULoongArchState *env = cpu_env(cs);
->>       bool kvm_supported;
->>   +    /* compat: older machine types do not advertise pv features to the guest */
->> +    if (cpu->no_pv_feature) {
->> +        return 0;
+>>           g_free(bitmap_table);
+>>       }
+>>   +    /* If fixing, update the bitmap directory with the repaired 
+>> list */
+>> +    if ((fix & BDRV_FIX_ERRORS) && bitmap_modified) {
+>> +        uint32_t initial_bitmaps = s->nb_bitmaps;
+>> +        ret = update_ext_header_and_dir(bs, bm_list);
+>> +        if (ret >= 0) {
+>> +            res->corruptions_fixed += initial_bitmaps - s->nb_bitmaps;
+>> +        }
 >> +    }
 >> +
-> This piece of code is unnecessary, with QEMU-11.1 machine type, kvm_cpu_check_pv_features checking is skipped when CPU is created, why?
+>>   out:
+>>       bitmap_list_free(bm_list);
+>>   diff --git a/block/qcow2-refcount.c b/block/qcow2-refcount.c
+>> index 6512cda407..df7f6d2f23 100644
+>> --- a/block/qcow2-refcount.c
+>> +++ b/block/qcow2-refcount.c
+>> @@ -2305,7 +2305,8 @@ calculate_refcounts(BlockDriverState *bs, 
+>> BdrvCheckResult *res,
+>>       }
+>>         /* bitmaps */
+>> -    ret = qcow2_check_bitmaps_refcounts(bs, res, refcount_table, 
+>> nb_clusters);
+>> +    ret = qcow2_check_bitmaps_refcounts(bs, res, refcount_table,
+>> +                                        nb_clusters, fix);
+>>       if (ret < 0) {
+>>           return ret;
+>>       }
+>> diff --git a/block/qcow2.c b/block/qcow2.c
+>> index 81fd299b4c..adfb7ee37a 100644
+>> --- a/block/qcow2.c
+>> +++ b/block/qcow2.c
+>> @@ -1927,11 +1927,19 @@ qcow2_do_open(BlockDriverState *bs, QDict 
+>> *options, int flags,
+>>       if (!(bdrv_get_flags(bs) & BDRV_O_INACTIVE)) {
+>>           /* It's case 1, 2 or 3.2. Or 3.1 which is BUG in management 
+>> layer. */
+>>           bool header_updated;
+>> -        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, errp)) {
+>> -            ret = -EINVAL;
+>> -            goto fail;
+>> +        Error *local_err = NULL;
+>> +        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, 
+>> &local_err)) {
+>> +            /*
+>> +             * Allow this to fail in check mode
+>> +             * because otherwise we can't open the image at all.
+>> +             */
+>> +            if (!(flags & BDRV_O_CHECK)) {
+>> +                ret = -EINVAL;
+>> +                error_propagate(errp, local_err);
+>> +                goto fail;
+>> +            }
+>
+> Should we at least print local_err (I mean error_report_err())?
+As we do an error_propagate this shouldn't be needed?
+>
+>> +            error_free(local_err);
+>>           }
+>> -
+>>           update_header = update_header && !header_updated;
+>>       }
+>>   diff --git a/block/qcow2.h b/block/qcow2.h
+>> index 192a45d596..2d9c6929a7 100644
+>> --- a/block/qcow2.h
+>> +++ b/block/qcow2.h
+>> @@ -1034,7 +1034,8 @@ void qcow2_cache_discard(Qcow2Cache *c, void 
+>> *table);
+>>   int coroutine_fn GRAPH_RDLOCK
+>>   qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult 
+>> *res,
+>>                                 void **refcount_table,
+>> -                              int64_t *refcount_table_size);
+>> +                              int64_t *refcount_table_size,
+>> +                              BdrvCheckMode fix);
+>>     bool coroutine_fn GRAPH_RDLOCK
+>>   qcow2_load_dirty_bitmaps(BlockDriverState *bs, bool *header_updated,
+>
+>
 
-On the check_pv_features guard: 
-you're right, it's unnecessary. As you
-pointed out in v1, check_pv_features() is host detection and should run
-regardless of machine version. I'll remove the guard and check
-no_pv_feature in kvm_set_pv_features() instead, so the push is skipped for
-11.1 while detection still happens normally.
+I now have the following diff since v5, if you confirm it's ok, then 
+I'll push a v6:
 
-One timing concern: 
-virt_cpu_plug() runs after qdev_realize(), but the
-first FULL_STATE sync (post_init) fires during realize — so the push could
-happen before no_pv_feature is set in plug. Should I keep setting the flag
-before qdev_realize() (in virt_init) for now, or is there a better
-mechanism?
+diff --git a/block/qcow2-bitmap.c b/block/qcow2-bitmap.c
+index 91bd82a9f5..90a109d9b2 100644
+--- a/block/qcow2-bitmap.c
++++ b/block/qcow2-bitmap.c
+@@ -665,7 +665,7 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, 
+BdrvCheckResult *res,
+      BDRVQcow2State *s = bs->opaque;
+      Qcow2BitmapList *bm_list;
+      Qcow2Bitmap *bm, *bm_next;
+-    bool bitmap_modified = false;
++    int bm_list_fixed = 0;
 
-> 
-> Regards
-> Bibo Mao
->>       kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_PV_IPI);
->>       if (cpu->kvm_pv_ipi == ON_OFF_AUTO_ON) {
->>           if (!kvm_supported) {
->>
-> 
+      if (s->nb_bitmaps == 0) {
+          return 0;
+@@ -688,14 +688,14 @@ qcow2_check_bitmaps_refcounts(BlockDriverState 
+*bs, BdrvCheckResult *res,
+              if (ret >= 0) {
+                  res->corruptions_fixed++;
+              }
+-            goto out;
++            return ret;
+          }
+          return -EINVAL;
+      }
+
+      QSIMPLEQ_FOREACH_SAFE(bm, bm_list, entry, bm_next) {
+          uint64_t *bitmap_table = NULL;
+-        int i;
++        int i, corruptions;
+          bool bitmap_valid = true;
+
+          ret = qcow2_inc_refcounts_imrt(bs, res,
+@@ -712,12 +712,13 @@ qcow2_check_bitmaps_refcounts(BlockDriverState 
+*bs, BdrvCheckResult *res,
+              if (fix & BDRV_FIX_ERRORS) {
+                  QSIMPLEQ_REMOVE(bm_list, bm, Qcow2Bitmap, entry);
+                  bitmap_free(bm);
+-                bitmap_modified = true;
++                bm_list_fixed++;
+                  continue;
+              }
+              goto out;
+          }
+
++        corruptions = res->corruptions;
+          for (i = 0; i < bm->table.size; ++i) {
+              uint64_t entry = bitmap_table[i];
+              uint64_t offset = entry & BME_TABLE_ENTRY_OFFSET_MASK;
+@@ -744,18 +745,18 @@ qcow2_check_bitmaps_refcounts(BlockDriverState 
+*bs, BdrvCheckResult *res,
+          if ((fix & BDRV_FIX_ERRORS) && !bitmap_valid) {
+              QSIMPLEQ_REMOVE(bm_list, bm, Qcow2Bitmap, entry);
+              bitmap_free(bm);
+-            bitmap_modified = true;
++            bm_list_fixed += res->corruptions - corruptions;
+          }
+
+          g_free(bitmap_table);
+      }
+
+      /* If fixing, update the bitmap directory with the repaired list */
+-    if ((fix & BDRV_FIX_ERRORS) && bitmap_modified) {
++    if ((fix & BDRV_FIX_ERRORS) && bm_list_fixed > 0) {
+          uint32_t initial_bitmaps = s->nb_bitmaps;
+          ret = update_ext_header_and_dir(bs, bm_list);
+          if (ret >= 0) {
+-            res->corruptions_fixed += initial_bitmaps - s->nb_bitmaps;
++            res->corruptions_fixed += bm_list_fixed;
+          }
+      }
+
 
 
