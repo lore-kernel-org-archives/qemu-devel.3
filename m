@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE063C44501
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 21:02:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18CCDC4450A
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 21:03:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiIK6-000285-5B; Fri, 10 Jul 2026 16:59:50 -0400
+	id 1wiIGY-0003mf-AM; Fri, 10 Jul 2026 16:56:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wiIIN-0000w6-CC
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 16:58:05 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1wiIFC-0001kD-6x
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 16:54:46 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wiIIC-0001wA-Os
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 16:58:03 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-38125cebfdaso1934160a91.1
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 13:57:51 -0700 (PDT)
+ id 1wiIEw-0000rR-Jg
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 16:54:45 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-8454160043aso1457389b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 13:54:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783717071; x=1784321871; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783716869; x=1784321669; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=JmjdcWDm3mF1YdNNpgp9aZdazz5VacQFjad94vdrfZs=;
- b=w7myDxbY0j/pKAPQCAtHPY+3cs14SMqB5k9lZ37eup9GINqoPB7+0cQV4pkqhlrgsF
- /qUs7oeD1y/tVWh6/mQGhgbBryAtd3F0E/4d5KaxdwR/sd5wGCVV8L78xtZNBDWdeS3x
- 0g5mpfwezF6WQRpmd/Yxq/jzvJN/jUffeDJTe7ql1sSLGijuTAjsBC51Bv/FZjLfaU91
- ZScEZawT9tqhjYFK+6zNBHK3ugoYDZOeO86q7qeSAtLB+1zenigw8rzWkb82Wd+eMRMt
- B3t8h5WhdYVSvbsMF2dSli22oBuy2lSM7YOKNCRQue9yv/QydjgPd8Qig6D35pJxEC1N
- kmAA==
+ bh=oTQ42LKlvaXUmLWp84DyN7oebX42kH2GrCSdO42BkNs=;
+ b=nPlyKx4uzAOKw2uirf/xZ9exHJsp3oN3YTEYePgVhZPpFLWok0T6nbuE5nkc2Y/m7Q
+ 6D+T+7cEnfIIJbwJAPvd90UDRCj54XlGvC4QSspveQM9k7d3cx0jVjijGx1Tg6hXTjSd
+ 2a0p+IrIvUa15CCbzxYxCXfDRJH60ktXGutwZuYpnnhGu8M8aWHLenBfSNX+XK1oIeDH
+ uvY9sTff79AD5jJ2RCGBywSTeZ+P2ISPd5cWMISZFZnt8FM+p3FYMKau7LY8HFwI0tWh
+ 0Xttku3klGSHY2+/ErBEHQ4gv+HtLsiv7zD2HtK8yxZaKQvPVBic7E/Ba8Fv+DEzGcHf
+ tuDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783717071; x=1784321871;
+ d=1e100.net; s=20251104; t=1783716869; x=1784321669;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=JmjdcWDm3mF1YdNNpgp9aZdazz5VacQFjad94vdrfZs=;
- b=O61/2VHUZ74Qcv0HHU1QmHzMlU2MXHV5167lXdE4tYa0rSLX26Jo+v45KInqezUTSa
- LZQXgUiYk/CbB+E1nIOchwNFg8RJaC8fo18+kBXLdvd4RSsOdsHS6P59y3McodQ/AdRv
- Jf4Ejo86LDkYaHX9EVar06+k9Fsx1jrwfyh4D0VnxiUQ85e6vO7vGhIy9jCZPGj6JBs+
- /6FHfqDqCeRQcUxujT0+pCNKfZFwXYMfpYEr0c7GkwzMpfIg9PsH3Db4wOd9mDbW8j79
- NZh4cN2DRjh6d2RifwNCf3vf9QIHWDmdwhcu/1nmntn1IbkovKMZ5xRCDktVFMEi9y0S
- xfyQ==
-X-Gm-Message-State: AOJu0YySu6AXokZRFAOOikS1s2qPKpkOeUkCuxpWmcMcDj18Ao1PoFT3
- /BXVm6xQ2RSYJC6wSFhLrKeUBS4ujVSqAjYqLIo2d1dNm1S70/eEj7AGNi4esPwHd/PyvoV1cic
- 0Gaxq
-X-Gm-Gg: AfdE7ck5sg/0AE4yKyEIrBTwO/OQn+CMCv7o+9IA9LgJ4qnaE4WVEn4pYt9ZMF2Un/+
- zEFbWVjLmYBTTTw4+F6W4uZxFxYYfO1tZzMD52Hj0ucJ93QjD6Ge8dkuEpYpkv3+5cBU6On0Anb
- U5P7vwBYWNvg1fbbkwgzDFp1YjqLywJwLJaMU+NF+2JSadxczEeWzhUR86HFkZjkNV+/zO0heDq
- AuRIa2oupGCaVNFibwgkwa3P/q4nrFZGVPB7nLa+2bKXjc+4b7o9R8hD7H0d4hFthv7hr0eWFg9
- xCJDAC0NoXZZFlgRanlGt+TNBzBg52qlXxycHFPqkCKsxEPcwQly0sAot1l5qQrJHBDHcQDVnG5
- HX091dWc+u4FasES1Y0p1lDsp0oTqtmGLIiLLj4r5mrdV/P5gA4KARtxN8wXkI7C5fspUTYkPSn
- 4GCc5TZ/0Fr8GUg7D2WA==
-X-Received: by 2002:a17:90a:da87:b0:37f:caeb:69df with SMTP id
- 98e67ed59e1d1-38dc77381f2mr529130a91.22.1783717070836; 
- Fri, 10 Jul 2026 13:57:50 -0700 (PDT)
+ bh=oTQ42LKlvaXUmLWp84DyN7oebX42kH2GrCSdO42BkNs=;
+ b=NcNN6FViDhpfLWF2nV8FlHHuvlXiy+TG3Ts8EYjoFwpILQYh5uWTal1sDtAi01QFI6
+ qyTSrz4pyvKPYOeEDXAAqYWtoyxMiS2KRoIHH0c8wLO3AGgUi5uGw2uYBLcX1p7GJcDk
+ A1nQr5yU7SU83BVgjh5E0XWBcFn0TsHL1LjfR0dC3xAJDx/xDMf4WuETZJWmDBjF+god
+ gSqhJfn9LRdr77kUc8pGucMg4gnUQOly6xFcZhv61FH2R0aiOMvbeieSjhdCaxjtpZ15
+ qMjkvRee1jdhIg3X/oMPL9/o1CALp5thTIewttPeoe53BSuRUXbaHCz+RR276RBy0tIC
+ AVYg==
+X-Gm-Message-State: AOJu0YzIhp52hLLmUtMIrodzQFSz+NX9rlz+2YbtbduSkcgppUHPBUhI
+ IGDOa9g8+3taYr20ZojFwC1gHrL5Usm+dCbHRJMPeLCI2uHXBf3C26ZjRRuxlptPug6m3AXY3GA
+ gITN8
+X-Gm-Gg: AfdE7cnXGadpIkQvXuoWwJaPCDDfe+1AbMfZ64UIAe2Hm1rxVh/CLHCYe7yX2YNMrSK
+ 31BjGUdEDiZOSfJ8EklIVknd+tL1XHRpIHRQ8V4cMvtJO26JSN8FufkT9S7CYXlMzp6j8xK9U1j
+ xsgH7q36Xa8rzZYwSXpAmr8rk7O1N5fV8uMhf8UL1UEUmr2PGkkiX0GI/bK9nHhw4WaY6TduZNr
+ VxAaRkbXGzOoE6tAjfcLQllRjEGhuSTQz0ZAply1S4ZRS+/9w8QulPRnIqynLoVYNCMIAqxNYmj
+ 42+mGV2w9GofR7rcqal4rGSZFR8Y0amOfLapEPw9AEqMJJ5Z3O9clfAfnK1dKrp5ZIZLIsqEXJ7
+ WLEvcqI0N2iMmXD7mjtcQhloxRuvE0Gb0WFZ0Q6INNxD/iqGKG5dRHdPaYLp0JIAi/bqkKC1xys
+ s3lxgkCnbh0XoD55wSUw==
+X-Received: by 2002:a05:6a00:f89:b0:848:3e74:85eb with SMTP id
+ d2e1a72fcca58-84889611e4fmr542804b3a.1.1783716868959; 
+ Fri, 10 Jul 2026 13:54:28 -0700 (PDT)
 Received: from stoup.. ([71.212.146.49]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38a58792cdasm3256221a91.16.2026.07.10.13.57.50
+ d2e1a72fcca58-847f6d76106sm10780574b3a.40.2026.07.10.13.54.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Jul 2026 13:57:50 -0700 (PDT)
+ Fri, 10 Jul 2026 13:54:28 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
  qemu-s390x@nongnu.org, jcmvbkbc@gmail.com
-Subject: [PATCH v3 47/51] accel/tcg: Use addr/last in tlb_flush_range_locked
-Date: Fri, 10 Jul 2026 13:53:57 -0700
-Message-ID: <20260710205401.836304-48-richard.henderson@linaro.org>
+Subject: [PATCH v3 24/51] exec/breakpoint: Add CPUWatchpoint.hitlast
+Date: Fri, 10 Jul 2026 13:53:34 -0700
+Message-ID: <20260710205401.836304-25-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260710205401.836304-1-richard.henderson@linaro.org>
 References: <20260710205401.836304-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: 4
 X-Spam_score: 0.4
 X-Spam_bar: /
@@ -100,199 +100,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Change from addr/len to addr/last in the implementation.
+Allow the debug_check_watchpoint callback to see the
+entire range that triggered the query.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/cputlb.c | 71 +++++++++++++++++++++++++---------------------
- 1 file changed, 38 insertions(+), 33 deletions(-)
+ include/exec/breakpoint.h | 1 +
+ accel/tcg/watchpoint.c    | 2 ++
+ 2 files changed, 3 insertions(+)
 
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index c8ba727859..2c0f7bed52 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -655,7 +655,7 @@ void tlb_flush_page_all_cpus_synced(CPUState *src, vaddr addr)
- }
+diff --git a/include/exec/breakpoint.h b/include/exec/breakpoint.h
+index 60fda8dbb7..fe6dd02bdf 100644
+--- a/include/exec/breakpoint.h
++++ b/include/exec/breakpoint.h
+@@ -37,6 +37,7 @@ struct CPUBreakpoint {
+ struct CPUWatchpoint {
+     IntervalTreeNode itree;
+     vaddr hitaddr;
++    vaddr hitlast;
+     MemTxAttrs hitattrs;
+     BreakpointFlags flags;
+     unsigned id;
+diff --git a/accel/tcg/watchpoint.c b/accel/tcg/watchpoint.c
+index a7ce5fa9dd..edd1d5708b 100644
+--- a/accel/tcg/watchpoint.c
++++ b/accel/tcg/watchpoint.c
+@@ -89,6 +89,7 @@ void cpu_check_watchpoint(CPUState *cpu, vaddr addr, vaddr len,
+                 wp->flags &= ~BP_WATCHPOINT_HIT;
+                 wp->flags |= flags << BP_HIT_SHIFT;
+                 wp->hitaddr = MAX(addr, wp->itree.start);
++                wp->hitlast = MIN(last, wp->itree.last);
+                 wp->hitattrs = attrs;
  
- static void tlb_flush_range_locked(CPUState *cpu, int midx,
--                                   vaddr addr, vaddr len,
-+                                   vaddr addr, vaddr last,
-                                    unsigned bits)
- {
-     CPUTLBDesc *d = &cpu->neg.tlb.d[midx];
-@@ -669,13 +669,13 @@ static void tlb_flush_range_locked(CPUState *cpu, int midx,
-      * TODO: Perhaps allow bits to be a few bits less than the size.
-      * For now, just flush the entire TLB.
-      *
--     * If @len is larger than the tlb size, then it will take longer to
-+     * If [addr:last] is larger than the tlb size, then it will take longer to
-      * test all of the entries in the TLB than it will to flush it all.
-      */
--    if (mask < f->mask || len > f->mask) {
-+    if (mask < f->mask || ((addr ^ last) & ~f->mask) != 0) {
-         tlb_debug("forcing full flush midx %d ("
--                  "%016" VADDR_PRIx "/%016" VADDR_PRIx "+%016" VADDR_PRIx ")\n",
--                  midx, addr, mask, len);
-+                  "%016" VADDR_PRIx "/%016" VADDR_PRIx "-%016" VADDR_PRIx ")\n",
-+                  midx, addr, mask, last);
-         tlb_flush_one_mmuidx_locked(cpu, midx, get_clock_realtime());
-         return;
-     }
-@@ -685,7 +685,7 @@ static void tlb_flush_range_locked(CPUState *cpu, int midx,
-      * Because large_page_mask contains all 1's from the msb,
-      * we only need to test the end of the range.
-      */
--    if (((addr + len - 1) & d->large_page_mask) == d->large_page_addr) {
-+    if ((last & d->large_page_mask) == d->large_page_addr) {
-         tlb_debug("forcing full flush midx %d ("
-                   "%016" VADDR_PRIx "/%016" VADDR_PRIx ")\n",
-                   midx, d->large_page_addr, d->large_page_mask);
-@@ -693,20 +693,23 @@ static void tlb_flush_range_locked(CPUState *cpu, int midx,
-         return;
-     }
+                 found_wp = wp;
+@@ -109,6 +110,7 @@ void cpu_check_watchpoint(CPUState *cpu, vaddr addr, vaddr len,
+                 wp->flags &= ~BP_WATCHPOINT_HIT;
+                 wp->flags |= flags << BP_HIT_SHIFT;
+                 wp->hitaddr = MAX(addr, wp->itree.start);
++                wp->hitlast = MIN(last, wp->itree.last);
+                 wp->hitattrs = attrs;
  
--    for (vaddr i = 0; i < len; i += TARGET_PAGE_SIZE) {
--        vaddr page = addr + i;
-+    for (vaddr page = addr; ; page += TARGET_PAGE_SIZE) {
-         CPUTLBEntry *entry = tlb_entry(cpu, midx, page);
- 
-         if (tlb_flush_entry_mask_locked(entry, page, mask)) {
-             tlb_n_used_entries_dec(cpu, midx);
-         }
-         tlb_flush_vtlb_page_mask_locked(cpu, midx, page, mask);
-+
-+        if (page == last) {
-+            break;
-+        }
-     }
- }
- 
- typedef struct {
-     vaddr addr;
--    vaddr len;
-+    vaddr last;
-     MMUIdxMap idxmap;
-     unsigned bits;
- } TLBFlushRangeData;
-@@ -718,13 +721,13 @@ static void tlb_flush_range_by_mmuidx_async_0(CPUState *cpu,
- 
-     assert_cpu_is_self(cpu);
- 
--    tlb_debug("range: %016" VADDR_PRIx "/%u+%016" VADDR_PRIx " mmu_map:0x%x\n",
--              d.addr, d.bits, d.len, d.idxmap);
-+    tlb_debug("range: %016" VADDR_PRIx "/%u-%016" VADDR_PRIx " mmu_map:0x%x\n",
-+              d.addr, d.bits, d.last, d.idxmap);
- 
-     qemu_spin_lock(&cpu->neg.tlb.c.lock);
-     for (mmu_idx = 0; mmu_idx < NB_MMU_MODES; mmu_idx++) {
-         if ((d.idxmap >> mmu_idx) & 1) {
--            tlb_flush_range_locked(cpu, mmu_idx, d.addr, d.len, d.bits);
-+            tlb_flush_range_locked(cpu, mmu_idx, d.addr, d.last, d.bits);
-         }
-     }
-     qemu_spin_unlock(&cpu->neg.tlb.c.lock);
-@@ -733,7 +736,7 @@ static void tlb_flush_range_by_mmuidx_async_0(CPUState *cpu,
-      * If the length is larger than the jump cache size, then it will take
-      * longer to clear each entry individually than it will to clear it all.
-      */
--    if (d.len >= (TARGET_PAGE_SIZE * TB_JMP_CACHE_SIZE)) {
-+    if (((d.last - d.addr) >> TARGET_PAGE_SIZE) + 1 >= TB_JMP_CACHE_SIZE) {
-         tcg_flush_jmp_cache(cpu);
-         return;
-     }
-@@ -742,10 +745,11 @@ static void tlb_flush_range_by_mmuidx_async_0(CPUState *cpu,
-      * Discard jump cache entries for any tb which might potentially
-      * overlap the flushed pages, which includes the previous.
-      */
--    d.addr -= TARGET_PAGE_SIZE;
--    for (vaddr i = 0, n = d.len / TARGET_PAGE_SIZE + 1; i < n; i++) {
--        tb_jmp_cache_clear_page(cpu, d.addr);
--        d.addr += TARGET_PAGE_SIZE;
-+    tb_jmp_cache_clear_page(cpu, d.addr - TARGET_PAGE_SIZE);
-+    for (vaddr page = d.addr; ; page += TARGET_PAGE_SIZE) {
-+        if (page == d.last) {
-+            break;
-+        }
-     }
- }
- 
-@@ -761,7 +765,12 @@ void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
-                                vaddr len, MMUIdxMap idxmap,
-                                unsigned bits)
- {
--    TLBFlushRangeData d;
-+    TLBFlushRangeData d = {
-+        .addr = addr & TARGET_PAGE_MASK,
-+        .last = (addr + len - 1) & TARGET_PAGE_MASK,
-+        .idxmap = idxmap,
-+        .bits = bits,
-+    };
- 
-     assert_cpu_is_self(cpu);
- 
-@@ -770,21 +779,16 @@ void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
-         tlb_flush_by_mmuidx(cpu, idxmap);
-         return;
-     }
-+
-     /*
-      * If all bits are significant, and len is small,
-      * this devolves to tlb_flush_page.
-      */
--    if (len <= TARGET_PAGE_SIZE && bits >= target_long_bits()) {
-+    if (d.addr == d.last && bits >= target_long_bits()) {
-         tlb_flush_page_by_mmuidx(cpu, addr, idxmap);
-         return;
-     }
- 
--    /* This should already be page aligned */
--    d.addr = addr & TARGET_PAGE_MASK;
--    d.len = len;
--    d.idxmap = idxmap;
--    d.bits = bits;
--
-     tlb_flush_range_by_mmuidx_async_0(cpu, d);
- }
- 
-@@ -800,7 +804,13 @@ void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
-                                                MMUIdxMap idxmap,
-                                                unsigned bits)
- {
--    TLBFlushRangeData d, *p;
-+    TLBFlushRangeData d = {
-+        .addr = addr & TARGET_PAGE_MASK,
-+        .last = (addr + len - 1) & TARGET_PAGE_MASK,
-+        .idxmap = idxmap,
-+        .bits = bits,
-+    };
-+    TLBFlushRangeData *p;
-     CPUState *dst_cpu;
- 
-     /* If no page bits are significant, this devolves to tlb_flush. */
-@@ -808,21 +818,16 @@ void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
-         tlb_flush_by_mmuidx_all_cpus_synced(src_cpu, idxmap);
-         return;
-     }
-+
-     /*
-      * If all bits are significant, and len is small,
-      * this devolves to tlb_flush_page.
-      */
--    if (len <= TARGET_PAGE_SIZE && bits >= target_long_bits()) {
-+    if (d.addr == d.last && bits >= target_long_bits()) {
-         tlb_flush_page_by_mmuidx_all_cpus_synced(src_cpu, addr, idxmap);
-         return;
-     }
- 
--    /* This should already be page aligned */
--    d.addr = addr & TARGET_PAGE_MASK;
--    d.len = len;
--    d.idxmap = idxmap;
--    d.bits = bits;
--
-     /* Allocate a separate data block for each destination cpu.  */
-     CPU_FOREACH(dst_cpu) {
-         if (dst_cpu != src_cpu) {
+                 if (tcg_ops->debug_check_watchpoint
 -- 
 2.43.0
 
