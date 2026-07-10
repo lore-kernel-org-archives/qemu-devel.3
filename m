@@ -4,108 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4674C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 15:32:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95C7BC43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 15:35:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiDAO-0001x6-3E; Fri, 10 Jul 2026 11:29:28 -0400
+	id 1wiDFo-0000o9-PW; Fri, 10 Jul 2026 11:35:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1wiDAL-0001tq-6n; Fri, 10 Jul 2026 11:29:25 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wiDFm-0000mx-Bg
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 11:35:02 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1wiDAH-0004Ey-2H; Fri, 10 Jul 2026 11:29:24 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66AEmTDm1164607; Fri, 10 Jul 2026 15:29:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=irWtw/zx0j1a+Ojop
- f/0It0+i3iGzSr+JCkBUCuqt9I=; b=Mz4Aej3GoBZyy54tOKPymGxFb4pi/jKUg
- LIBYgqK5ZW8brGO+o1e9YYRQ/Dmd2gMcBgowZBxLvTjIrPf6VCyv00c3WmlrmESl
- Ipzzl2XOLUs8yrVXv6Z1VSCKB6z3Amy0frq69ZR4dp6siEsqgP7RGYXO5ffJdBj0
- aZnuW1R8p3wpkxfXf4I0I19r9hcHYMiuHgJ5rhGQl3BHMOVNbk4otY7o+W4ny8Lx
- CPyew7p895/oL9AzaRwpzFqqaXql0AaDaX74nx4bGNYMkjshiDAQXv4bhryMUovK
- js22lcUxN9SEsB1TQ7Unbyuic9JoXTovJWwiNcNBH2nU8aj/gwMvg==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4f6sw57f6j-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 10 Jul 2026 15:29:15 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66AFJjmZ003178;
- Fri, 10 Jul 2026 15:29:14 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4f7cvwjt2g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 10 Jul 2026 15:29:14 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66AFTAt348824662
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 10 Jul 2026 15:29:10 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4B8FF20043;
- Fri, 10 Jul 2026 15:29:10 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 24FED20040;
- Fri, 10 Jul 2026 15:29:10 +0000 (GMT)
-Received: from funtu2.ibm.com (unknown [9.111.196.135])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 10 Jul 2026 15:29:10 +0000 (GMT)
-From: Harald Freudenberger <freude@linux.ibm.com>
-To: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
- thuth@redhat.com, berrange@redhat.com
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, linux-s390@vger.kernel.org, 
- dengler@linux.ibm.com, borntraeger@linux.ibm.com,
- fcallies@linux.ibm.com, cohuck@redhat.com
-Subject: [PATCH v12 15/17] target/s390x: Support protected key AES XTS for
- cpacf km instruction
-Date: Fri, 10 Jul 2026 17:29:01 +0200
-Message-ID: <20260710152906.80207-16-freude@linux.ibm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260710152906.80207-1-freude@linux.ibm.com>
-References: <20260710152906.80207-1-freude@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wiDFk-0005Fu-Ee
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 11:35:02 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66AEcOT51176235
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 15:34:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ yvO92o1FBhJfTYk9NDMNmn9qAonxfBHrzVWDs5qPKcY=; b=nO1F8MHPCQE95h6o
+ UCEodapxNIAxoEvYBnRxhpLKALKq4VNIGnkvf9IS1IpX7vxJ+6/Nn+zMcuMuoSF3
+ STUltFI1P3Ak2QuevEklCjDXH4c8KYyQhsT/I8GM/qZlN0a4lotQiXYjmIKmwSDh
+ r9kXHRYw1/j4n/2BaK9ieLIA4zVJWNjgjjspW55HDfZGBci+UxLJQZJyMQ9b0EQf
+ dJaIqrd3DB5PQk8d2iajZXYi4yaz9nhfjfX8bXK92Z0/R5hhAsEblzqxcCopI1BV
+ /ans4dT1Ao8Vwnun7eJK5DRBkjgNiD2csNhFgEdSKOkPKTGYQVSoWpuMy0cN2e/I
+ bcWpYg==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4faeg3n5ug-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 15:34:58 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-51c1a97644aso10558581cf.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 08:34:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1783697697; x=1784302497; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=yvO92o1FBhJfTYk9NDMNmn9qAonxfBHrzVWDs5qPKcY=;
+ b=BNcxXiuALi7IEgCTWxc7mGm+PCdFn1qpVObrV+4L4q9SdpBrU/oiU/E4M/S42PhSE8
+ Q2Q6OnQrG5NbZlwLIvSVbgA9ODHTyyfaBw6lJoEHL8nXvClmnZOat7aGIVUXQxSqze8E
+ AiVvnaw41t1tX9uEfbYhEgmgl5a4RzlcHA+WffOJ1ZWgdAPaHF/6FsrXnHgeCwffyMA4
+ vxlWaEuaaNv9d1PKNtNzfDYWu8t5Gk89HC3Ia0wlBNkCKEUScYvSBn4jkhZnZnLvXctF
+ vyqKID6XPgS9EZPfIF3yIB8OZbLVezHR60VXlOroC5B1Pr0WEkDUUN6ykMsKqnrpRw51
+ xsKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783697697; x=1784302497;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=yvO92o1FBhJfTYk9NDMNmn9qAonxfBHrzVWDs5qPKcY=;
+ b=V3dGaxP+KjpsPpR3ac4yg6MEoLT9cwUpcpP1/HYFOgrklapjggz1CCs8ptyneGB443
+ r990zxMZLfmmzxppYa+x57cc1+q/IXDvP1jOL5PIdGCncUuJSQKoov9BvsRmA4cnD5kW
+ AyuL63zLtgc13CF1vp+owV5p/CIRsLn6RRem95czHI5AJ9EZNbOPtJfCzo5ByLVMDKJM
+ Sfuek4R7HKA+Uj4vdAkNJnLt5dJ9VArkbCrs8cEXwMi3mBFDJkm8PcpXpPZj6F3bYukY
+ c0SAPcIj6iNPQLB9dwAUG4ai+sAWVBQekWhSGmudv3W9vQw8BfqXulapxU/D4YLbXmkc
+ xp9g==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rrptot77WKl/7O6ore4EtrHweocYxeFVfigc9TmOpr6J/g19eeVBwA1Dq8lqKhF90uhkzUTxY1idH/u@nongnu.org
+X-Gm-Message-State: AOJu0Yw0kYL9M+f42HlcUoiLQ7krKEnhrlIicLHf6qp6DcQZRUR0WecB
+ Yu6PLlobtcGOi4xDuDWyFDXex0k5EQz/dgctjjsfFM0QmMzB2JKD8SbCQ2Af7FPxvBJcbY0ZBQq
+ 6/GgwBEPcjwFGk57Fleeu9j8YENYNfeUFvs9Hwa1jYPyw5zXoj2Xl5lID9Q==
+X-Gm-Gg: AfdE7ckLN9NOvf53CD4Rad9rRTuEh/Qrqrm2zHsyOGAqFYVGD+VfwHDSmlf9EOBxcbz
+ L0M8io5ffPjK5c6dAON3SsmSroRkcuVh+RkKtUSolBM2K917yIa4gLnqX9CVH+/OwAvctFTgUc4
+ UGbQfTMOgfiKxw0MSoloZ3ywHgNCKJn9TLX7vLm7TPbqWE8jjZwx/98XAorcTTUsPa0veIMS7uh
+ qYBq+qjx7r5Ww+gWmhBVM3nM1tGl9rcR6+X8u9HlsdL9/4n3h7b6gS0Z7jgfj489nE5qh4qySnK
+ z7+v6LcyyCxElGWWifgkLKUlke1i5vmDR9PBM4TjCeI8qRCArJ0BRqOK1okja/JBQe/6LbPX7nS
+ 7gh5AqhZNtgkMeTeQnUztBWKtY7giQpj6y9DuAjf/Ew6yv2iRxB03dquk2AlEWA==
+X-Received: by 2002:a05:622a:95a:10b0:51c:9193:fd9d with SMTP id
+ d75a77b69052e-51c919404a0mr70347371cf.67.1783697697303; 
+ Fri, 10 Jul 2026 08:34:57 -0700 (PDT)
+X-Received: by 2002:a05:622a:95a:10b0:51c:9193:fd9d with SMTP id
+ d75a77b69052e-51c919404a0mr70347161cf.67.1783697696785; 
+ Fri, 10 Jul 2026 08:34:56 -0700 (PDT)
+Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47a9e4d843csm59970239f8f.14.2026.07.10.08.34.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 10 Jul 2026 08:34:55 -0700 (PDT)
+Message-ID: <5df23403-6da0-4431-be8a-a74c82298894@oss.qualcomm.com>
+Date: Fri, 10 Jul 2026 17:34:54 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vhost-user-gpu: fix integer overflow in buffer allocation
+Content-Language: en-US
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+References: <20260710134720.2317856-1-marcandre.lureau@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260710134720.2317856-1-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: ku-3G40n5Sgv-S7iIr9sSiVfBOdFMgil
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEwMDE1MyBTYWx0ZWRfX6jKXr+ipzgxH
- rK6YfEq/Dg0hp7y2fAKutcFjbIdeP7mQP8igDTypQz8zw/PX4uBBfZ7w8A9r2KYMZE1+lAYKPvd
- 7J+1yZMj/JaG1gWqoE0lxZzEiVKZUX10ih9+/pK4LxiVuPgUMgUEML5sutcWEU5kLF2ruUzP475
- gfYeQCPFevwmTKMobimOOl8Pm9BUyAk8z2aMxKMirQ7azq2DT0sF3XRrrG/saVo7PRa245ljFfa
- xH8tovwSBBQTjWbNeIDG8CobyL2TkqjHmssJywAi1AxsQaavRoouARgRFaTX/tEEvxglRANaWOB
- AS+uDcwyOKhwgS7k+O3lLOTQ2aZfkEQe5zW/vYsD7AXMISOh+eS47ckLwPXdXmFSV2ge+QSNlwo
- 9MwI7bJwiwFB3YgLgMZJVhGNEBLxqEgoUZfRGcm2RHVx32UMmGR0SxASt+HfEt3e9zj/vHRAuG7
- L/LFzCo2ATJusCexdnw==
-X-Proofpoint-ORIG-GUID: ku-3G40n5Sgv-S7iIr9sSiVfBOdFMgil
-X-Authority-Analysis: v=2.4 cv=FqQ1OWrq c=1 sm=1 tr=0 ts=6a510fcb cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=D0XGIOQStSI5JxgU9CcA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEwMDE1MyBTYWx0ZWRfX5tJEO9iIDKTB
- fQ3I5re6HP0TZKUQgNtErsPGsimKekrJCkZs8hvLGqLIEwjqABB/6ExsjxI1jyG04pW65h2GNzt
- AoTyuy+maZC32hmgcL4XQy+JLQZrLPk=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEwMDE1NSBTYWx0ZWRfX8ERrBiCQ4lM3
+ 5Wduqgmfw0yTdmNC8m822hRBbPfNOye9rQRsuz8pfTO/kyao2o+aZicsPJ8Ht4pTvNOT7Lcl70w
+ c7V8cTlK5/m6THhLsvjnSvBtPV7QkPeVMmc4qfVbYfL7pRkbMeY/BPelGD3LXSB45MoTuhunlTv
+ a7/btTQgSYseiFI3v3w+0T+X95OZ6EDONwRZjO3BwYxJpMqWzTLQNw1un7uF0oqbwoUyQUpvJ4K
+ n6LsLVJSY1A54oTejPvgp+OmSWxBywWmqXHP2jvhMDfrOtqq+wIiJnQk5oABlvX5ANWsiCii0Lb
+ wwaN228XqhMVFsGtvR5Yohy2cqM6QbCp7/Lo5D+t7q8aEhSaagIehv1vNzuAgvE0pjwSiKBWkM6
+ ES2KpGqdt86EzPyXWBm6ZiGCDveuRa+KWVNi+heGMG7XLmEDC9UZskFfLX3q7rdfjE7O/zabuX6
+ tHUc4i8sIY1jIfe+frw==
+X-Authority-Analysis: v=2.4 cv=ZcMt8MVA c=1 sm=1 tr=0 ts=6a511122 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=p0WdMEafAAAA:8 a=20KFwNOVAAAA:8 a=6b3zXhvIAAAA:8 a=qWurVJCvpz64fImHfXQA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
+ a=vnv6_c11HO5uxQbMB8V9:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEwMDE1NSBTYWx0ZWRfX1eQUo3NqZksP
+ 7mzPJLDCe2WonyXLmmsF3xxMirvg6Je7lB65SlVWHzF8aPWjpL9t0oepoM2Z4i+D2LOYr89/SxS
+ UWjXUWlanaLPhGbiIfBbDEx6kX+nhws=
+X-Proofpoint-GUID: wdRPp1GmzPRzfXCw-jJI8A_Sw_qEfgLP
+X-Proofpoint-ORIG-GUID: wdRPp1GmzPRzfXCw-jJI8A_Sw_qEfgLP
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-10_04,2026-07-10_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 clxscore=1015 malwarescore=0 lowpriorityscore=0
- priorityscore=1501 bulkscore=0 suspectscore=0 spamscore=0 phishscore=0
+ spamscore=0 clxscore=1015 lowpriorityscore=0 malwarescore=0 bulkscore=0
+ suspectscore=0 priorityscore=1501 impostorscore=0 phishscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607100153
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=freude@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607100155
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,164 +155,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Support the subfunctions CPACF_KM_PXTS_128 and CPACF_KM_PXTS_256
-for the cpacf km instruction.
+On 10/7/26 15:47, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> A malicious guest can trigger a heap buffer overflow in the
+> vhost-user-gpu backend by sending a VIRTIO_GPU_CMD_RESOURCE_CREATE_2D
+> with large width and height values (e.g. 65537x65537). The allocation
+> size width * height * 4 silently wraps in uint32_t arithmetic,
+> resulting in a much smaller allocation than expected. Subsequent
+> VIRTIO_GPU_CMD_TRANSFER_TO_HOST_2D writes past the heap buffer.
+> 
+> The in-tree virtio-gpu device (hw/display/virtio-gpu.c) already handles
+> this via calc_image_hostmem() with uint64_t arithmetic and an overflow
+> check. Apply the same approach to the vhost-user-gpu contrib backend:
+> 
+> - Add an overflow check in vugbm_buffer_create() rejecting dimensions
+>    where width * height * 4 exceeds UINT32_MAX
+> - Promote the size arithmetic to uint64_t in mem_alloc_bo() and
+>    udmabuf_get_size()
+> - Check the return value of vugbm_buffer_create() in
+>    vg_resource_create_2d(), which was previously ignored
+> 
+> Fixes: CVE-2026-15264
+> Reported-by: "Vulnerability Report" <vr@darknavy.com>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3940
+> Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+> ---
+>   contrib/vhost-user-gpu/vhost-user-gpu.c |  8 +++++++-
+>   contrib/vhost-user-gpu/vugbm.c          | 11 +++++++++--
+>   2 files changed, 16 insertions(+), 3 deletions(-)
 
-Tested-by: Holger Dengler <dengler@linux.ibm.com>
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
----
- target/s390x/gen-features.c      |  2 +
- target/s390x/tcg/cpacf.h         |  4 ++
- target/s390x/tcg/cpacf_aes.c     | 93 ++++++++++++++++++++++++++++++++
- target/s390x/tcg/crypto_helper.c |  6 +++
- 4 files changed, 105 insertions(+)
 
-diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
-index 6b206cee83..0afea9fdd0 100644
---- a/target/s390x/gen-features.c
-+++ b/target/s390x/gen-features.c
-@@ -930,6 +930,8 @@ static uint16_t qemu_MAX[] = {
-     S390_FEAT_KM_EAES_256,
-     S390_FEAT_KM_XTS_AES_128,
-     S390_FEAT_KM_XTS_AES_256,
-+    S390_FEAT_KM_XTS_EAES_128,
-+    S390_FEAT_KM_XTS_EAES_256,
-     S390_FEAT_KMC_AES_128,
-     S390_FEAT_KMC_AES_192,
-     S390_FEAT_KMC_AES_256,
-diff --git a/target/s390x/tcg/cpacf.h b/target/s390x/tcg/cpacf.h
-index 1786a21f83..d86d3b58f9 100644
---- a/target/s390x/tcg/cpacf.h
-+++ b/target/s390x/tcg/cpacf.h
-@@ -297,5 +297,9 @@ int cpacf_paes_ctr(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-                    uint8_t fc, uint8_t mod);
- int cpacf_paes_pcc(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-                    uint64_t param_addr, uint8_t fc);
-+int cpacf_paes_xts(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-+                   uint64_t param_addr, uint64_t *dst_ptr_reg,
-+                   uint64_t *src_ptr_reg, uint64_t *src_len_reg,
-+                   uint32_t type, uint8_t fc, uint8_t mod);
- 
- #endif /* S390X_CPACF_H */
-diff --git a/target/s390x/tcg/cpacf_aes.c b/target/s390x/tcg/cpacf_aes.c
-index a53c59d488..173e5f1b61 100644
---- a/target/s390x/tcg/cpacf_aes.c
-+++ b/target/s390x/tcg/cpacf_aes.c
-@@ -808,3 +808,96 @@ int cpacf_paes_pcc(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
- 
-     return 0;
- }
-+
-+int cpacf_paes_xts(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-+                   uint64_t param_addr, uint64_t *dst_ptr_reg,
-+                   uint64_t *src_ptr_reg, uint64_t *src_len_reg,
-+                   uint32_t type, uint8_t fc, uint8_t mod)
-+{
-+    enum { MAX_BLOCKS_PER_RUN = 8192 / AES_BLOCK_SIZE };
-+    uint8_t in[AES_BLOCK_SIZE], out[AES_BLOCK_SIZE];
-+    uint8_t key[32], wkvp[32], tweak[AES_BLOCK_SIZE];
-+    uint64_t len = *src_len_reg, done = 0;
-+    int i, keysize, addr_reg_size = 64;
-+    AES_KEY exkey;
-+
-+    g_assert(type == S390_FEAT_TYPE_KM);
-+
-+    switch (fc) {
-+    case CPACF_KM_PXTS_128:
-+        keysize = 16;
-+        break;
-+    case CPACF_KM_PXTS_256:
-+        keysize = 32;
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    if (!(env->psw.mask & PSW_MASK_64)) {
-+        len = (uint32_t)len;
-+        addr_reg_size = (env->psw.mask & PSW_MASK_32) ? 32 : 24;
-+    }
-+
-+    /* length has to be properly aligned. */
-+    if (!QEMU_IS_ALIGNED(len, AES_BLOCK_SIZE)) {
-+        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-+    }
-+
-+    /* fetch and check wkvp from param block */
-+    copy_from_guest_wrap(env, mmu_idx, ra,
-+                         param_addr + keysize, wkvp, sizeof(wkvp));
-+    if (memcmp(wkvp, protkey_wkvp, sizeof(wkvp))) {
-+        /* wkvp mismatch -> return with cc 1 */
-+        return 1;
-+    }
-+
-+    /* fetch protected key from param block */
-+    copy_from_guest_wrap(env, mmu_idx, ra, param_addr, key, keysize);
-+    /* decrypt the protected key */
-+    decrypt_protkey(key, keysize);
-+
-+    /* expand key */
-+    if (mod) {
-+        AES_set_decrypt_key(key, keysize * 8, &exkey);
-+    } else {
-+        AES_set_encrypt_key(key, keysize * 8, &exkey);
-+    }
-+
-+    /* fetch tweak from param block */
-+    copy_from_guest_wrap(env, mmu_idx, ra,
-+                         param_addr + keysize + sizeof(wkvp),
-+                         tweak, AES_BLOCK_SIZE);
-+
-+    /* process up to MAX_BLOCKS_PER_RUN aes blocks */
-+    for (i = 0; i < MAX_BLOCKS_PER_RUN && len >= AES_BLOCK_SIZE; i++) {
-+        /* fetch one AES block into in */
-+        aes_read_block(env, mmu_idx, ra, *src_ptr_reg + done, in);
-+        if (mod) {
-+            /* decrypt in => out */
-+            AES_xts_decrypt(in, out, tweak, &exkey);
-+        } else {
-+            /* encrypt in => out */
-+            AES_xts_encrypt(in, out, tweak, &exkey);
-+        }
-+        /* prep tweak for next round */
-+        AES_xts_prep_next_tweak(tweak);
-+        /* write out this processed block from out */
-+        aes_write_block(env, mmu_idx, ra, *dst_ptr_reg + done, out);
-+        len -= AES_BLOCK_SIZE;
-+        done += AES_BLOCK_SIZE;
-+    }
-+
-+    /* update tweak in param block */
-+    copy_to_guest_wrap(env, mmu_idx, ra,
-+                       param_addr + keysize + sizeof(wkvp),
-+                       tweak, AES_BLOCK_SIZE);
-+
-+    *src_ptr_reg = deposit64(*src_ptr_reg, 0, addr_reg_size,
-+                             *src_ptr_reg + done);
-+    *dst_ptr_reg = deposit64(*dst_ptr_reg, 0, addr_reg_size,
-+                             *dst_ptr_reg + done);
-+    *src_len_reg -= done;
-+
-+    return !len ? 0 : 3;
-+}
-diff --git a/target/s390x/tcg/crypto_helper.c b/target/s390x/tcg/crypto_helper.c
-index 5e924b78f5..6172012979 100644
---- a/target/s390x/tcg/crypto_helper.c
-+++ b/target/s390x/tcg/crypto_helper.c
-@@ -116,6 +116,12 @@ static int cpacf_km(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-                            &env->regs[r1], &env->regs[r2], &env->regs[r2 + 1],
-                            S390_FEAT_TYPE_KM, fc, mod);
-         break;
-+    case CPACF_KM_PXTS_128:
-+    case CPACF_KM_PXTS_256:
-+        rc = cpacf_paes_xts(env, mmu_idx, ra, env->regs[1],
-+                            &env->regs[r1], &env->regs[r2], &env->regs[r2 + 1],
-+                            S390_FEAT_TYPE_KM, fc, mod);
-+        break;
-     default:
-         tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-     }
--- 
-2.43.0
+> diff --git a/contrib/vhost-user-gpu/vugbm.c b/contrib/vhost-user-gpu/vugbm.c
+> index 503d0a4566f..710d5452977 100644
+> --- a/contrib/vhost-user-gpu/vugbm.c
+> +++ b/contrib/vhost-user-gpu/vugbm.c
+> @@ -13,7 +13,7 @@
+>   static bool
+>   mem_alloc_bo(struct vugbm_buffer *buf)
+>   {
+> -    buf->mmap = g_malloc(buf->width * buf->height * 4);
+> +    buf->mmap = g_malloc((uint64_t)buf->width * buf->height * 4);
+
+Just curious, would this also work safely?
+
+        buf->mmap = g_malloc_n(4, buf->width * buf->height);
+
+The GLib description is:
+
+   This function is similar to g_malloc(),
+   allocating (n_blocks * n_block_bytes) bytes,
+   but care is taken to detect possible overflow
+   during multiplication.
+
+>       buf->stride = buf->width * 4;
+>       return true;
+>   }
 
 
