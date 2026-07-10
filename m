@@ -4,100 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B3B5C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 01:36:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67F1BC43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 01:38:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi09c-0004OG-QI; Thu, 09 Jul 2026 21:35:48 -0400
+	id 1wi0BM-0004mo-5W; Thu, 09 Jul 2026 21:37:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <physicalmtea@gmail.com>)
- id 1wi09P-0004Nt-Mx
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 21:35:37 -0400
-Received: from mail-qt1-x82a.google.com ([2607:f8b0:4864:20::82a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <physicalmtea@gmail.com>)
- id 1wi09N-0006Aw-HK
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 21:35:35 -0400
-Received: by mail-qt1-x82a.google.com with SMTP id
- d75a77b69052e-51a868b6962so3329271cf.2
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 18:35:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783647332; cv=none;
- d=google.com; s=arc-20260327;
- b=k1F7p0HDEiPsQ8yaqr+4plJCzcxTBepU2qUn9ZNEqESy0lxWR7mVCdRdXtefZyLbxe
- wjhQOAItIz54BQYO4v7H/cIN1J187DKu3jfVjd6khX9ZYabp2bl3cBZ6Sawt54d7cM4e
- 9IltR/7e3VdBSiYL68cTpzHBEHkt25S2dOBVI6nXKl92AQdKEndq5s/+ydNj5+t2gqTX
- 9USCTcmhbBCSZbBlm0MP1TSFL+WytDPyvhcfoTyPH65i3KAasmrEbjiM1Y7xmU8Ic/AH
- X9WEQqvBmdtMtxGJshwnnVoP6df1yd0dTLLcQcKqWTHUxzjIir8QlrJ70raUXZpqsIsI
- H5bA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=EdIctWCqJ1+QiJTyvdkc+1IsGOZH7utBpkweEL/hnV8=;
- fh=gMjfbdOkdsdyugoyuRb6DYWE7E1DjTHLX9jbWQ8ybu8=;
- b=n41lL5Q5S4BxPX8Ys2zHb8jrormhth67XI+ZvFUhEMtZ7HI+MiqMf2/5l1ykkmtEpC
- EBdhBIp+A113JH2lXwhskh82Zydni1nh6hpLqBUg87zWrenzkOIbdNht7mXzhpZvmhLj
- wlcxnCOgK2jAYX/t8wGM23eKeSh8BREXF55HY/n1Y6unddmqPYPXaSaIQqBohuywU7Lh
- WDWGxELlaCaOTSpN4Tymd57YfZaqXKn8jiyLKnLE1NGwvyefvK2eHzd68IiSZe9nFOPf
- s7VesrXXSSIGRwMqCnlz9MDhi7f52oEfaTPwW5q6BSwVsVk32qgBwd4XZ1taxossyWgf
- SkYA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783647332; x=1784252132; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=EdIctWCqJ1+QiJTyvdkc+1IsGOZH7utBpkweEL/hnV8=;
- b=Pi9pL9mrqeoCv1GjUoskmM2uROfLqeYcfWAy00gmhvDrmhc69/ACg1Wd2oRLHy6dJT
- 55NdUQ8L2e9liDkLzO+qtaIs4Ru44DKLnMu3yM2BgFXwXZ0tq9jr5VJy9/7QK2vi9BeM
- JUYbNiV0Vxfjv421XMCJbF2ocJm9Kqi+6DrMBuKnYr6HmWTns10Iczgeg9iFKnOoUJ+v
- HBQNQ/hUd/QVAqmfmLjNa1WKGdc1d0PoHgHnuAevqibXEWBTvcde+IMXFZ4bHZ11f6DZ
- XZqQXEahdkkrhq5alNuPQwwxyNrQrV44HpPEnLOdBmI0g0MtwfLMjL0lb47/IP1JdWNR
- l7eQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783647332; x=1784252132;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=EdIctWCqJ1+QiJTyvdkc+1IsGOZH7utBpkweEL/hnV8=;
- b=KvkKcrB3/jpmdI6ueyXEtWuGS92QRwqmRznU8Fd4EIOFdIkUuM5hLlrwkBNs9OBCwd
- nY+e9hVMeQuely+eg1kkvuTM2PsKQDNBO0m4nXrSfxc6xEpqR+lywAzo2YKnhbLgh75E
- ejiOC7eJS4v4uDQ4Og2hF2O16bBmtYJ9kSgtR4dK9NzOmffZt3THgYUAQqllbRF+xr+H
- 6ARICS/S+p+zNvID+1o4YTU2rxgw8M95UW+4rZ3258qzVq3bkmxkeAzSKffsGd1TJ9QN
- fPAidge5QHpEpQkJZ+mc5gErPgqcF1/wMcXLn+2HZjqnXMwhwHyDjS17pqsJckOcNUkl
- x9Dw==
-X-Gm-Message-State: AOJu0YxdrbGlllpV4MtvIyRkRVVmg9Bea4hEZBVf/ejLhJ5zH5eA2xH6
- xbWOGyPCWi65XKund0mFK5lTsfcol0yA/NfpnFKS8GiIm3qXewlWcqRjWaRWwAT3q49UGH7/lZu
- RFJldjALMFUvNkEnHi956k2iRjF/RFLQ=
-X-Gm-Gg: AfdE7cmUH0xpzGm4bCAyW1CHplgwv9xFAQmKFRLA53KLAxm7tS+mTdV+1mHlqrKBfca
- mFhSqqZQkVDxcbl2lxkP9HV3mRef2v6XesTvDhMxQyutZBXRcUVlBsZeM2n3UsLwtZ+jgqkIwlx
- i/QfMcfVYXkiQc/MOK7LNWJdPXBS+fYYw18XOp5TRPUHS6VTf5HxGXkOBXO6MoQ89OPIHYQ3Quv
- S2rWoDEswXPh0l+6IFPoH5yWMwgMQuJE9roAHwn7pDJN47e7Nj/EXrvE4ozjzNW0Tv9EZYTEAOy
- HhY+Ii4=
-X-Received: by 2002:a05:622a:5809:b0:51c:7b11:419d with SMTP id
- d75a77b69052e-51c8b4c03eemr127258581cf.74.1783647331654; Thu, 09 Jul 2026
- 18:35:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wi0B5-0004lz-JZ; Thu, 09 Jul 2026 21:37:21 -0400
+Received: from fout-a1-smtp.messagingengine.com ([103.168.172.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wi0B3-0006ZF-Jy; Thu, 09 Jul 2026 21:37:19 -0400
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+ by mailfout.phl.internal (Postfix) with ESMTP id 6A57DEC0188;
+ Thu,  9 Jul 2026 21:37:16 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-06.internal (MEProxy); Thu, 09 Jul 2026 21:37:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
+ h=cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm2; t=1783647436;
+ x=1783733836; bh=Oe8fgGBJ9Ci/iWjpJe3KQeeehWXfwyPcEilYlAALFVI=; b=
+ UQrW5If/JThHdeAW4TInD703TZ3+E2EzBNnI2iTIHAXqcNtTpfS3Gafv3tSWck6q
+ 7nOcHlPkrNeIIedVGMdHTtzWn2c6Bj8X/2t8//KQWKLx8xJUKpHzJINK0PgnJXnK
+ fbSdHs8iDj0PELWpobMR3FJ8P1x7D7X1CLo7Sb7sG2wUgA5K04QwpoZXCgIF0gsF
+ tISA4Fiej9A3cSV2d5pkG87fnQjmXCl6VqxoNh9fWsXbxtAjzj/bSWJMYEqLSd0O
+ trh5Vuy7fEvvRgZwptR69NUqPvMyUvzWh50bCI4A8q9TCGvebyKnBw+lOtpOJC7R
+ Y2l73EVfE1q+6goHYsQnbQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:content-type
+ :content-type:date:date:feedback-id:feedback-id:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm2; t=1783647436; x=1783733836; bh=O
+ e8fgGBJ9Ci/iWjpJe3KQeeehWXfwyPcEilYlAALFVI=; b=UIp/WJmca6Fruj774
+ ViqVHfEXE2eSV7te6XLHKMOThB0bz5XoX7vFZkDbIc3VaIZS+Xg0yM89YMJS52Vy
+ v9F2UjZzzOz1h/Hke2bSHkkM4BCvFshRFu/dZgEKjsx59Xo4xDQS5LOool65GYCZ
+ C9DmyW2I5YRP0Kf224qLcG7J0I72gDp+1hmVGNOf3JJWU1nhjLOBJo8BPXJPTFsv
+ nwRMZxpu15LpOPtyWphQwG/l52tmZ4zz0H1aDBS8X6YAKU7nA1UARaKuJ2dZXRwW
+ 4hiD2Um1iUeMyEMy9LGHG28cfyl/uTMH1c9gh+THz4Ext1x6TEwRNsoEDTVaAwHB
+ O2Lmw==
+X-ME-Sender: <xms:zExQajK8-xssxnB-uKccmNbFvUyESb1Ae_nENxNi4YPI0LIsJaPyog>
+ <xme:zExQarf484yCE3FYJcNaBEZl11nEdf1OgGcYaKAinADmoAF6M8M3R0AZgU3HSwF7r
+ acGXjWVSyP2F2hIduFFqD9yldE5vF4RpT9_m5dDLzhy7gpEJUUtmNPN>
+X-ME-Received: <xmr:zExQaq0Cngv0Rlltx5zqYh5rRkAYyp0ba0AGtrh9SCPtyY6yHL6TaS7IZO5m3OK0wecDVh_tWcQXa_e48HNlmckTUNU>
+X-ME-Proxy-Cause: dmFkZTF6SyI/3xOq8yN7X3wAOUHqmmgyHWEO1Arm1cf3YiPkVfUqYfibiO+nLDvbesbI97
+ ZXppwbB7YMsPMfadmpkPJ9pnJRCf+MplGpmKdAXZN/sqS5JsqHKvyu/iC7PEnxMCsQDzft
+ yfdPcC4Vt/h+3fc4eYa8NX7jH52tDsDbsWhkbPgJ9DJR/zgcXBfPHIoEI2dHoLXH/shs9B
+ kS/Wpf/0Pq4i1SROHWEuMOP5xCSSS9LGu1Ss3qaNwLBhvYRZPV0zhYuKQfYXL97ZIMBGZM
+ r3wSCFAEFpUZf6vexYAhOxLUTN6MytZD6o/RDfO5Bq/6gOBVCtSajR+flZSdmJC+1YzHWO
+ QRcWfpty5EJz4QBVtQS+dxOutSTdcvE1zt0fBOzA6JH1lTRsEHgRNQuX9MrgDiJZXZnwR+
+ 8U1rh8ugakxndCvsx92dfIkIoILAd45IV3BZ2R04jCIxmIGncrRecUAliJKqrk/FHgO+a5
+ 9PsDGke6r1XvZK1nHx41BDmlUXaK0q5y89bOGS+XqRRaonquV9DMLe0IX8Mirvw80Ja9QD
+ TCOuojFX5bi4xLUi1WljhmvULBA1Je9huIG8ccR/0E04N0TvqbPtuJcNUlQxxULdWu6pqM
+ qfl7qQOpKMyWeE5DkNQqtQvNZnc478RJGz6BS9iZ1gwZDLs+3VUaYAUXzJLQ
+X-ME-Proxy: <xmx:zExQakiJ_Bd1Rs73N5iZLZTXiDxTGAQpurimCxQ_2vsu6cUJfu0-Ag>
+ <xmx:zExQagQsu0z9LGUEBN2S9YDfd5qovS5K-qY73kuSisbmzcd0exmA6Q>
+ <xmx:zExQaljZt8n7t01C4tTsSnBQ5u2h7AfFCsz3HtWtO2qbyPqufd_d6Q>
+ <xmx:zExQag4WDijR5rjlSLrGtDuANvo7YW409fLhL_JGHN4VAUHvmDMqHA>
+ <xmx:zExQag-2RbyDUkPAK3hEO3aKA68TwNfnmnEOn3SyYKBfqZayoJnlb01r>
+Feedback-ID: ifd214418:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 9 Jul 2026 21:37:14 -0400 (EDT)
+Message-ID: <a6607686d2682e7b916e5c0a2f26382d19e818d5.camel@alistair23.me>
+Subject: Re: [PATCH] hw/misc/stm32_rcc: Correct offset-to-irq calculation
+From: Alistair <alistair@alistair23.me>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ qemu-devel@nongnu.org
+Date: Fri, 10 Jul 2026 11:37:12 +1000
+In-Reply-To: <20260709104832.1989240-1-peter.maydell@linaro.org>
+References: <20260709104832.1989240-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.2 (by Flathub.org) 
 MIME-Version: 1.0
-References: <20260709100529.41267-1-physicalmtea@gmail.com>
- <20260709084105-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20260709084105-mutt-send-email-mst@kernel.org>
-From: "m'te'a physical" <physicalmtea@gmail.com>
-Date: Fri, 10 Jul 2026 09:34:54 +0800
-X-Gm-Features: AVVi8CcM7GUxkHn_0qKkobyNiwfGgyLDC0zAeXYOh4sGis7bI4sb_zTljHuQpkA
-Message-ID: <CAJwVaM+LE9BdOU=cMx0P7GmSuBpVEBQYANHxr0DsuB_UhhUCuw@mail.gmail.com>
-Subject: Re: [PATCH] virtio: validate split queue head count before popping
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000009b9ffe065637c1aa"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82a;
- envelope-from=physicalmtea@gmail.com; helo=mail-qt1-x82a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=103.168.172.144;
+ envelope-from=alistair@alistair23.me; helo=fout-a1-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,209 +105,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000009b9ffe065637c1aa
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Thu, 2026-07-09 at 11:48 +0100, Peter Maydell wrote:
+> In the STM32 RCC, there is a block of 5 "enable" registers, each of
+> which has 32 bits; each bit determines the level of one of the 5 * 32
+> =3D 160 enable_irq output lines.=C2=A0 The code calculates the irq to be
+> worked on using
+> =C2=A0 irq_offset =3D ((addr - STM32_RCC_AHB1_ENR) / 4) * 32;
+>=20
+> This assumes that the registers are all consecutive; however, there
+> is a gap between the AHB1/2/3 registers and the APB1/2 registers, so
+> for the APB1/2 registers we calculate a number that is 32 too high
+> and can index off the end of the enable_irq[] array.
+>=20
+> The handling of the reset registers has an identical bug.
+>=20
+> Adjust the calculation of irq_offset to cope with the gap, and fix
+> the case labels so accesses to the gap fall into the default
+> LOG_UNIMP rather than being treated as if they were an actual
+> register.
+>=20
+> Coverity CID: 1663683, 1663686
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
-I think virtio_queue_empty_rcu() is no longer needed after this change.
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-For this caller, the pieces it covered are either already handled elsewhere
-or
-kept explicitly in the split pop path.
+Alistair
 
-The disabled-device check is already done by virtqueue_pop() before it call=
-s
-virtqueue_split_pop().
-
-The empty-queue check is covered by virtqueue_num_heads(): rc =3D=3D 0 is t=
-he
-normal empty case, and rc < 0 is the invalid avail index distance case that
-this
-patch wants to reject.
-
-The read barrier is also covered by virtqueue_num_heads(), since it does
-smp_rmb() when it returns a positive head count, before the caller reads th=
-e
-avail ring entry with virtqueue_get_head().
-
-The only old check that I think should stay explicit in
-virtqueue_split_pop() is
-!vq->vring.avail. virtqueue_num_heads() does not check that, and the old
-behavior for an unconfigured split queue was to treat it as empty. So v2
-keeps
-that guard and replaces the rest of virtio_queue_empty_rcu() with
-virtqueue_num_heads():
-
-    RCU_READ_LOCK_GUARD();
-    if (unlikely(!vq->vring.avail)) {
-        goto done;
-    }
-
-    rc =3D virtqueue_num_heads(vq, vq->last_avail_idx);
-    if (rc <=3D 0) {
-        goto done;
-    }
-
-With that, virtio_queue_empty_rcu() has no remaining users and can be
-removed.
-
-If this looks right, I can send a v2 patch with this change.
-
-Michael S. Tsirkin <mst@redhat.com> =E4=BA=8E2026=E5=B9=B47=E6=9C=889=E6=97=
-=A5=E5=91=A8=E5=9B=9B 20:43=E5=86=99=E9=81=93=EF=BC=9A
-
-> On Thu, Jul 09, 2026 at 06:05:29PM +0800, Jia Jia wrote:
-> > virtqueue_split_pop() reads the next split avail ring entry after
-> > virtio_queue_empty_rcu() reports work. Call virtqueue_num_heads() befor=
-e
-> > consuming that entry, so an avail index distance larger than the queue
-> > size is rejected.
-> >
-> > virtqueue_num_heads() also keeps the read barrier needed before the ava=
-il
-> > ring entry is read.
-> >
-> > This prevents an invalid split queue state from being expanded into
-> > repeated device command processing.
-> >
-> > Link: https://gitlab.com/qemu-project/qemu/-/issues/3930
-> > Signed-off-by: Jia Jia <physicalmtea@gmail.com>
-> > ---
-> > Tested with qemu-system-x86_64 11.0.50, built from origin/master
-> > f893c46c3931 plus this patch, configured with:
-> >   --target-list=3Dx86_64-softmmu --enable-kvm --disable-tcg
-> >
-> > The original virtio-iommu live-vring qtest reproducer used for the
-> > report completed successfully on the patched build without host OOM,
-> > confirming that this reproducer is fixed by the patch.
-> >
-> >  hw/virtio/virtio.c | 8 +++++---
-> >  1 file changed, 5 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> > index f4d86a3655..252bff8641 100644
-> > --- a/hw/virtio/virtio.c
-> > +++ b/hw/virtio/virtio.c
-> > @@ -1751,9 +1751,11 @@ static void *virtqueue_split_pop(VirtQueue *vq,
-> size_t sz)
-> >      if (virtio_queue_empty_rcu(vq)) {
-> >          goto done;
-> >      }
-> > -    /* Needed after virtio_queue_empty(), see comment in
-> > -     * virtqueue_num_heads(). */
-> > -    smp_rmb();
-> > +
-> > +    rc =3D virtqueue_num_heads(vq, vq->last_avail_idx);
-> > +    if (rc <=3D 0) {
-> > +        goto done;
-> > +    }
->
->
-> Do we still need virtio_queue_empty_rcu then? Why?
->
-> >      /* When we start there are none of either input nor output. */
-> >      out_num =3D in_num =3D elem_entries =3D 0;
-> > --
-> > 2.34.1
->
->
-
---0000000000009b9ffe065637c1aa
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">I think virtio_queue_empty_rcu() is no longer needed after=
- this change.<br><br>For this caller, the pieces it covered are either alre=
-ady handled elsewhere or<br>kept explicitly in the split pop path.<br><br>T=
-he disabled-device check is already done by virtqueue_pop() before it calls=
-<br>virtqueue_split_pop().<br><br>The empty-queue check is covered by virtq=
-ueue_num_heads(): rc =3D=3D 0 is the<br>normal empty case, and rc &lt; 0 is=
- the invalid avail index distance case that this<br>patch wants to reject.<=
-br><br>The read barrier is also covered by virtqueue_num_heads(), since it =
-does<br>smp_rmb() when it returns a positive head count, before the caller =
-reads the<br>avail ring entry with virtqueue_get_head().<br><br>The only ol=
-d check that I think should stay explicit in virtqueue_split_pop() is<br>!v=
-q-&gt;vring.avail. virtqueue_num_heads() does not check that, and the old<b=
-r>behavior for an unconfigured split queue was to treat it as empty. So v2 =
-keeps<br>that guard and replaces the rest of virtio_queue_empty_rcu() with<=
-br>virtqueue_num_heads():<br><br>=C2=A0 =C2=A0 RCU_READ_LOCK_GUARD();<br>=
-=C2=A0 =C2=A0 if (unlikely(!vq-&gt;vring.avail)) {<br>=C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 goto done;<br>=C2=A0 =C2=A0 }<br><br>=C2=A0 =C2=A0 rc =3D virtqueue_=
-num_heads(vq, vq-&gt;last_avail_idx);<br>=C2=A0 =C2=A0 if (rc &lt;=3D 0) {<=
-br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto done;<br>=C2=A0 =C2=A0 }<br><br>With th=
-at, virtio_queue_empty_rcu() has no remaining users and can be removed.<br>=
-<br>If this looks right, I can send a v2 patch with this change.</div><br><=
-div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"g=
-mail_attr">Michael S. Tsirkin &lt;<a href=3D"mailto:mst@redhat.com">mst@red=
-hat.com</a>&gt; =E4=BA=8E2026=E5=B9=B47=E6=9C=889=E6=97=A5=E5=91=A8=E5=9B=
-=9B 20:43=E5=86=99=E9=81=93=EF=BC=9A<br></div><blockquote class=3D"gmail_qu=
-ote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,20=
-4);padding-left:1ex">On Thu, Jul 09, 2026 at 06:05:29PM +0800, Jia Jia wrot=
-e:<br>
-&gt; virtqueue_split_pop() reads the next split avail ring entry after<br>
-&gt; virtio_queue_empty_rcu() reports work. Call virtqueue_num_heads() befo=
-re<br>
-&gt; consuming that entry, so an avail index distance larger than the queue=
-<br>
-&gt; size is rejected.<br>
-&gt; <br>
-&gt; virtqueue_num_heads() also keeps the read barrier needed before the av=
-ail<br>
-&gt; ring entry is read.<br>
-&gt; <br>
-&gt; This prevents an invalid split queue state from being expanded into<br=
->
-&gt; repeated device command processing.<br>
-&gt; <br>
-&gt; Link: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/3930" r=
-el=3D"noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qemu/-/=
-issues/3930</a><br>
-&gt; Signed-off-by: Jia Jia &lt;<a href=3D"mailto:physicalmtea@gmail.com" t=
-arget=3D"_blank">physicalmtea@gmail.com</a>&gt;<br>
-&gt; ---<br>
-&gt; Tested with qemu-system-x86_64 11.0.50, built from origin/master<br>
-&gt; f893c46c3931 plus this patch, configured with:<br>
-&gt;=C2=A0 =C2=A0--target-list=3Dx86_64-softmmu --enable-kvm --disable-tcg<=
-br>
-&gt; <br>
-&gt; The original virtio-iommu live-vring qtest reproducer used for the<br>
-&gt; report completed successfully on the patched build without host OOM,<b=
-r>
-&gt; confirming that this reproducer is fixed by the patch.<br>
-&gt; <br>
-&gt;=C2=A0 hw/virtio/virtio.c | 8 +++++---<br>
-&gt;=C2=A0 1 file changed, 5 insertions(+), 3 deletions(-)<br>
-&gt; <br>
-&gt; diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c<br>
-&gt; index f4d86a3655..252bff8641 100644<br>
-&gt; --- a/hw/virtio/virtio.c<br>
-&gt; +++ b/hw/virtio/virtio.c<br>
-&gt; @@ -1751,9 +1751,11 @@ static void *virtqueue_split_pop(VirtQueue *vq,=
- size_t sz)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 if (virtio_queue_empty_rcu(vq)) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto done;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; -=C2=A0 =C2=A0 /* Needed after virtio_queue_empty(), see comment in<br=
->
-&gt; -=C2=A0 =C2=A0 =C2=A0* virtqueue_num_heads(). */<br>
-&gt; -=C2=A0 =C2=A0 smp_rmb();<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 rc =3D virtqueue_num_heads(vq, vq-&gt;last_avail_idx);<=
-br>
-&gt; +=C2=A0 =C2=A0 if (rc &lt;=3D 0) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto done;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-<br>
-<br>
-Do we still need virtio_queue_empty_rcu then? Why?<br>
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 /* When we start there are none of either input no=
-r output. */<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 out_num =3D in_num =3D elem_entries =3D 0;<br>
-&gt; -- <br>
-&gt; 2.34.1<br>
-<br>
-</blockquote></div>
-
---0000000000009b9ffe065637c1aa--
+> ---
+> =C2=A0hw/misc/stm32_rcc.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ | 31 +++++++++++++++++++++++++++----
+> =C2=A0include/hw/misc/stm32_rcc.h |=C2=A0 6 +++++-
+> =C2=A02 files changed, 32 insertions(+), 5 deletions(-)
+>=20
+> diff --git a/hw/misc/stm32_rcc.c b/hw/misc/stm32_rcc.c
+> index 74ea29b156..5cfb39e560 100644
+> --- a/hw/misc/stm32_rcc.c
+> +++ b/hw/misc/stm32_rcc.c
+> @@ -53,6 +53,27 @@ static uint64_t stm32_rcc_read(void *opaque,
+> hwaddr addr, unsigned int size)
+> =C2=A0=C2=A0=C2=A0=C2=A0 return value;
+> =C2=A0}
+> =C2=A0
+> +static int reg_offset_to_irq_offset(hwaddr addr)
+> +{
+> +=C2=A0=C2=A0=C2=A0 /*
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * The reset and enable registers aren't all con=
+secutive. In
+> getting the
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * irq index from the register offset, we need t=
+o account for
+> the gap
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * between the AHB regs and the APB regs.
+> +=C2=A0=C2=A0=C2=A0=C2=A0 */
+> +=C2=A0=C2=A0=C2=A0 switch (addr) {
+> +=C2=A0=C2=A0=C2=A0 case STM32_RCC_AHB1_RSTR ... STM32_RCC_AHB3_RSTR:
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return ((addr - STM32_RCC_AHB=
+1_RSTR) / 4) * 32;
+> +=C2=A0=C2=A0=C2=A0 case STM32_RCC_APB1_RSTR ... STM32_RCC_APB2_RSTR:
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return ((addr - STM32_RCC_APB=
+1_RSTR) / 4) * 32 +
+> STM32_RCC_N_AHB_IRQS;
+> +=C2=A0=C2=A0=C2=A0 case STM32_RCC_AHB1_ENR ... STM32_RCC_AHB3_ENR:
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return ((addr - STM32_RCC_AHB=
+1_ENR) / 4) * 32;
+> +=C2=A0=C2=A0=C2=A0 case STM32_RCC_APB1_ENR ... STM32_RCC_APB2_ENR:
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return ((addr - STM32_RCC_APB=
+1_ENR) / 4) * 32 +
+> STM32_RCC_N_AHB_IRQS;
+> +=C2=A0=C2=A0=C2=A0 default:
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 g_assert_not_reached();
+> +=C2=A0=C2=A0=C2=A0 }
+> +}
+> +
+> =C2=A0static void stm32_rcc_write(void *opaque, hwaddr addr,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 uint64_t val64, unsigned int size)
+> =C2=A0{
+> @@ -69,11 +90,12 @@ static void stm32_rcc_write(void *opaque, hwaddr
+> addr,
+> =C2=A0=C2=A0=C2=A0=C2=A0 }
+> =C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0 switch (addr) {
+> -=C2=A0=C2=A0=C2=A0 case STM32_RCC_AHB1_RSTR...STM32_RCC_APB2_RSTR:
+> +=C2=A0=C2=A0=C2=A0 case STM32_RCC_AHB1_RSTR ... STM32_RCC_AHB3_RSTR:
+> +=C2=A0=C2=A0=C2=A0 case STM32_RCC_APB1_RSTR ... STM32_RCC_APB2_RSTR:
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 prev_value =3D s->regs[a=
+ddr / 4];
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->regs[addr / 4] =3D va=
+lue;
+> =C2=A0
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 irq_offset =3D ((addr - STM32=
+_RCC_AHB1_RSTR) / 4) * 32;
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 irq_offset =3D reg_offset_to_=
+irq_offset(addr);
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 for (int i =3D 0; i < 32=
+; i++) {
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+new_value =3D extract32(value, i, 1);
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+if (extract32(prev_value, i, 1) && !new_value) {
+> @@ -82,11 +104,12 @@ static void stm32_rcc_write(void *opaque, hwaddr
+> addr,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+}
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
+> -=C2=A0=C2=A0=C2=A0 case STM32_RCC_AHB1_ENR...STM32_RCC_APB2_ENR:
+> +=C2=A0=C2=A0=C2=A0 case STM32_RCC_AHB1_ENR ... STM32_RCC_AHB3_ENR:
+> +=C2=A0=C2=A0=C2=A0 case STM32_RCC_APB1_ENR ... STM32_RCC_APB2_ENR:
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 prev_value =3D s->regs[a=
+ddr / 4];
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->regs[addr / 4] =3D va=
+lue;
+> =C2=A0
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 irq_offset =3D ((addr - STM32=
+_RCC_AHB1_ENR) / 4) * 32;
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 irq_offset =3D reg_offset_to_=
+irq_offset(addr);
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 for (int i =3D 0; i < 32=
+; i++) {
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+new_value =3D extract32(value, i, 1);
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+if (!extract32(prev_value, i, 1) && new_value) {
+> diff --git a/include/hw/misc/stm32_rcc.h
+> b/include/hw/misc/stm32_rcc.h
+> index 4dccacc2db..a94781bf34 100644
+> --- a/include/hw/misc/stm32_rcc.h
+> +++ b/include/hw/misc/stm32_rcc.h
+> @@ -65,7 +65,11 @@
+> =C2=A0
+> =C2=A0#define STM32_RCC_NREGS ((STM32_RCC_DCKCFGR2 >> 2) + 1)
+> =C2=A0#define STM32_RCC_PERIPHERAL_SIZE 0x400
+> -#define STM32_RCC_NIRQS (32 * 5) /* 32 bits per reg, 5 en/rst regs
+> */
+> +
+> +/* 32 bits per reg, 3 AHB regs and 2 APB regs */
+> +#define STM32_RCC_N_AHB_IRQS (32 * 3)
+> +#define STM32_RCC_N_APB_IRQS (32 * 2)
+> +#define STM32_RCC_NIRQS (STM32_RCC_N_AHB_IRQS +
+> STM32_RCC_N_APB_IRQS)
+> =C2=A0
+> =C2=A0#define STM32_RCC_GPIO_IRQ_OFFSET 0
+> =C2=A0
 
