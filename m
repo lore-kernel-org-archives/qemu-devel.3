@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1014BC44501
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 02:58:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC069C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 02:58:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi1Qu-0002uL-G2; Thu, 09 Jul 2026 22:57:44 -0400
+	id 1wi1Qh-0001nA-J8; Thu, 09 Jul 2026 22:57:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wi1Qr-0002f6-Pg
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:57:41 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1wi1QL-0001cP-Dl
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:57:12 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wi1Qp-00008N-QJ
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:57:41 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-84862b0d5f8so284172b3a.3
- for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 19:57:39 -0700 (PDT)
+ id 1wi1QI-0008V3-LO
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 22:57:08 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-84864b41122so242384b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 09 Jul 2026 19:57:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783652258; x=1784257058; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=8zDdwLkQCOfTgDRIqJwe8VKyrIWC/vnGKmGbmRukuEY=;
- b=Apbp/zinbhbPKaBwK+9R68xYHd8rcOqpm8p4L6o9M26BM5JZZ/Tw4dYMm63AGyT3J/
- DzxUPIMzq6e5S8ajN2IAqhamxMda8E1pkxoXvFMoKYbdB34vGNAl/vWVMTTre85MAr+f
- wAJqs8eXGjqWpqrZIKgRkq5ASnmqC60Pebji3owovrqW2c88I+L4VFWTeKzsEfXWR/ow
- oCCl3IBW7t4TaayOEjQbp9rmVehsS8UyGnUbcpC4Tb+14953NL3bm8NsR1F4aCpFV0OL
- MK9OMD3sysEaS40EFIfKRtyD2cE7IoLU//7/sWY2rNeZo50wXDZ/gpnpRhcT3RhzowdE
- VU9A==
+ d=gmail.com; s=20251104; t=1783652225; x=1784257025; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=bGm16Ac/ND1idT2A8VfTVEu4e8kNxtj4BOaAI19EInA=;
+ b=YixW6SptEFxjY4U9aPeVqurMhY5n66dR3vXLGhtVD1mVb7kzBKkttK1Q2kC5uDwNGx
+ AxrZGYvhlnOp2SgTxt5ikEgxzi2dLm5ICdxK5tstYg5uR5YaoY11hvjNNY4jAvfbyBzx
+ jS+dcNzNUN74hoNl4GEbvtLCRgYB9ekK/XS82zUs8rW7GVZIBQ5Mka9pd3pCg2WsOAr0
+ Tid/YMMuctl+jjHSQDC4WZPoJK5r4iJCxRopA+MYZLyRondd54lEToGtjUNIcqVpO/HP
+ NDaUF+/46RRRcF3fVxUggT+zd+c5CiD7OInIDGnCcZBxJ1pbAqxfxvjcIo0JYxXaHyoQ
+ VdaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783652258; x=1784257058;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=8zDdwLkQCOfTgDRIqJwe8VKyrIWC/vnGKmGbmRukuEY=;
- b=QHRYCPM8uLnNZtOzlZeH8LoVN4pHQ8dvJ6H9EQlj66j2qi8uTNuZft5FFg6+mPPi6H
- vLHj9443cA4J23slHKxv135+rrXmqq1kyfKkK0xxGsajEXFb/xK4MsCLW4dWAmF6P85U
- nYw3WIHq+JUAdSeGxjSs9XB7GS0gG10B3jAGgJR3f9caTi4XgnfMw2wFFntlOUrkNkSZ
- OF0M0kq/EQbAgnd3Zmnh08YO7PoRE7ZPAh6mdFVvjCgI+kskBeMpenFy2z62h/t4cU9X
- HinuwT8vIEImY/ALrhWVZJxY5l+zclLENJekoz/cVG0g1e1mkyb7yWXIHE9rjGUBg3GX
- P2cQ==
-X-Gm-Message-State: AOJu0YzLStTT7aWs9hH3R5w8YnLPP38N+Vf4cZAf5YOqdK4Ab7cXQYQS
- FwGS2HhDz1rP0UUvcVmOMj0WNZRxxSJ7nNmCqF//zgMRUuyDnsLBwlwMHF9zXg==
-X-Gm-Gg: AfdE7clqV46fBXAeXi+K6yj7+2Fc742yLPVW4mMEJw3PZpfBJwfG4EiiBo9wzKQx58u
- CdRTqcCyvDMZXZRRe126vbzUY8aQtbjgmsDDwW+In1Ve+mdHXoG/U7ykSNJuhedvVcDjTWtYfVJ
- YchOTNcgByzMN2iKiWVPS5xriNAMNZI+6tb2O7fEdlo6AiPy9gyxQ0+1h1FT5qXTaBn/LdSUEV2
- XozqF4Vc5wI0y0aOX+ad+B2eYPW2zM7Z0rSP5h51BHbkM6hS5APpleGBuL0w+K7paLsrzAz/oec
- KHRsNPUIzFpQLpmwjyBmpdjQUcSc8/nIq+hCjYjt/NzOFQZ7YnszJ8AzrjCA1lXGs415spXSyCj
- 5xzggHdUjVESsKynSIpzHf0zWvc7x+lPEGQNcLFA+eNtMPPqM5QOVJ30ca9ucKhXMwGD1TB70rf
- FpaGj5O3E/1PT3b2CAfIpzXdeoSh2PDrE=
-X-Received: by 2002:a05:6a00:2350:b0:848:6ef9:f5ca with SMTP id
- d2e1a72fcca58-8486ef9ffefmr1949826b3a.63.1783652258350; 
- Thu, 09 Jul 2026 19:57:38 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783652225; x=1784257025;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=bGm16Ac/ND1idT2A8VfTVEu4e8kNxtj4BOaAI19EInA=;
+ b=B/Purk90RAtR1jE425/MQgt1D+I7Cf+cjXQFgrp3LEblDdQvmRl4Cuzqax0F80ZIZh
+ YfxYdLni1ka9GmpHKACRcUfzH/gF363FqNvkjH4N2IqoKQxuNPe67uATnQ5P6p2uXW9+
+ IKxuX4TT8XJ3oeLc4shOn7rxJ9KBurwB6vZxaetA3N+DkpGNOVH1rDGbvQDUWPRygOfu
+ 0MiJ5W1UeNJ8iPhe18JobEUMum4P2dSNm1lRWYV4yQrOPIA/SuZlIfK6n3lZgqCHOVBu
+ HEVmL4ztcnlAIRrl4/NyG92/0QL5adx5BEOrIpUD15w7KIVIHhHd2IeW+kOK8lTY3st3
+ yHMw==
+X-Gm-Message-State: AOJu0Yz+2n66JkVqHo9dRniaPk7LTMpcxPERhvV3UC96FOdft49pbDsm
+ fotxWN5bw9Py7FY+DmOZqBSpcJrV/RSwO9xyHkVBvVRNNakJtmoxsEV3nbYLkQ==
+X-Gm-Gg: AfdE7clXrjkM2cdCBzYNu/7EX34VzBdg19qc3pt4zYWPeHT+skFRFYERtqcK7t7fFsY
+ dvvnEicHDbW7yiio5KWsZHBQEW+m6bgCdWhR/Vi7Nu019O4CMzpLvZbORTN7mDM46A42SwuGxaZ
+ GBeOAEDRX66y1F85jge1mUPzx6uTTHLYtNwmc+9XVW9b4tdrtpg6ZZpuRyWt2ZXWOFR5oCdKEB8
+ XyHkDTWFdmrvnsb0hbrELnA00vdLXiQ9WGq5VVwaQrg+Vosn/XELXN5eOmx+j6dRdyJcKdJQNY2
+ EcAQoDgE3gb4/O1HWWPjU/V4P7o/qjYYQSELClXEZKn0LE6ZbSJo62+4xVQ7M7Okf1csvLyDIfS
+ 2Z56lLpg/7AJxwfGHYITe01vteLD1YshEbw4+nTFgkO6vV1KyzYlTwbJSXnNfqB23pOGXrtViBz
+ jDO2pUmteqy+liWih3D9FlVpKhPvdp+zGuKHwDdsV4xw==
+X-Received: by 2002:a05:6a00:12cc:b0:847:770f:da4c with SMTP id
+ d2e1a72fcca58-84842ebd1d9mr8712630b3a.16.1783652224709; 
+ Thu, 09 Jul 2026 19:57:04 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-ca5af6e04fcsm4576769a12.4.2026.07.09.19.57.35
+ 41be03b00d2f7-ca5af6e04fcsm4576769a12.4.2026.07.09.19.57.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jul 2026 19:57:37 -0700 (PDT)
+ Thu, 09 Jul 2026 19:57:04 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 38/40] tests: allow differences in SPCR
-Date: Fri, 10 Jul 2026 12:55:23 +1000
-Message-ID: <20260710025525.1704417-39-alistair.francis@wdc.com>
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL 27/40] target/riscv/tcg: remove unused riscv_cpu_get_geilen()
+Date: Fri, 10 Jul 2026 12:55:12 +1000
+Message-ID: <20260710025525.1704417-28-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260710025525.1704417-1-alistair.francis@wdc.com>
 References: <20260710025525.1704417-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,26 +105,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-For easier bisection add the SPCR table to bios-tables-test-allowed-diff.h.
+No one uses it.
 
-Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260705063147.199732-2-heinrich.schuchardt@canonical.com>
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20260703180538.3346781-22-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h | 2 ++
- 1 file changed, 2 insertions(+)
+ target/riscv/cpu.h            | 1 -
+ target/riscv/tcg/cpu_helper.c | 9 ---------
+ 2 files changed, 10 deletions(-)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..2c7086d9de 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,3 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/loongarch64/virt/SPCR",
-+"tests/data/acpi/riscv64/virt/SPCR",
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index d6c5d6c1db..7618110412 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -646,7 +646,6 @@ int riscv_cpu_pending_to_irq(CPURISCVState *env,
+ 
+ 
+ bool riscv_cpu_fp_enabled(CPURISCVState *env);
+-uint8_t riscv_cpu_get_geilen(CPURISCVState *env);
+ void riscv_cpu_set_geilen(CPURISCVState *env, uint8_t geilen);
+ bool riscv_cpu_vector_enabled(CPURISCVState *env);
+ void riscv_cpu_set_virt_enabled(CPURISCVState *env, bool enable);
+diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
+index 7a1ea53ae7..6b39152ee2 100644
+--- a/target/riscv/tcg/cpu_helper.c
++++ b/target/riscv/tcg/cpu_helper.c
+@@ -526,15 +526,6 @@ void riscv_cpu_swap_hypervisor_regs(CPURISCVState *env)
+     }
+ }
+ 
+-uint8_t riscv_cpu_get_geilen(CPURISCVState *env)
+-{
+-    if (!riscv_has_ext(env, RVH)) {
+-        return 0;
+-    }
+-
+-    return env->geilen;
+-}
+-
+ void riscv_cpu_set_geilen(CPURISCVState *env, uint8_t geilen)
+ {
+     if (!riscv_has_ext(env, RVH)) {
 -- 
 2.54.0
 
