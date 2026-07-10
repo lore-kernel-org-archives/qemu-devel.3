@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E117C43458
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DC6BC44506
 	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 00:51:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1whzSB-0000Ag-Hp; Thu, 09 Jul 2026 20:50:55 -0400
+	id 1whzS9-0000A2-S9; Thu, 09 Jul 2026 20:50:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1whzS9-0000A3-TB
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 20:50:53 -0400
-Received: from out-186.mta0.migadu.com ([2001:41d0:1004:224b::ba])
+ (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1whzS8-00009o-9k
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 20:50:52 -0400
+Received: from out-173.mta0.migadu.com ([2001:41d0:1004:224b::ad])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1whzS8-0005e8-2d
- for qemu-devel@nongnu.org; Thu, 09 Jul 2026 20:50:53 -0400
+ (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1whzS4-0005dr-W8
+ for qemu-devel@nongnu.org; Thu, 09 Jul 2026 20:50:51 -0400
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
  include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1783644650;
+ t=1783644646;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=17veAsOjpBHNJ3+WJW+uxRGp+1ftuI3Nv8suHg2yNBs=;
- b=FLKMagPVQ/2l3oZFqjLA2oJ5ETi458E1NC8KIfIwm0d70tXBdMwWTzBG+IP/nwiiB6rYIV
- +qgUAF3LmCSvZlV5Lc45nx+SqMQoD17Vn0/cGD+sQ0Vm04v9jLYGVfCHuoeuN5ydJyl8mx
- z4qFjtKeTkg2v1Fg++z5ZcqAupMN6hI=
+ bh=pSFFtc8Qs7YopIepyDIhuXWQE/SNoI3BvDv19mqrZl0=;
+ b=A6rgKkRs4fgBxHAE5a7hTlueHxJVq4a225Jd9ZuWJjpUWkMCH4sBjh8eeCw7Wtk2R9SQap
+ wIn8hG+IbDR6VHOs2HXHfOGUS+sDlC+rPN+OGLEj9bgiDfbfG3tv8hhepF1cuFCgBWzJRY
+ ixTyoY0V+uQjjL6ITIdgd79R533+zNQ=
 From: Tao Cui <cui.tao@linux.dev>
 To: qemu-devel@nongnu.org
 Cc: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Tao Cui <cuitao@kylinos.cn>
-Subject: [PATCH v2 3/3] target/loongarch: add no_pv_feature compat flag
-Date: Fri, 10 Jul 2026 08:50:29 +0800
-Message-ID: <20260710005029.345378-4-cui.tao@linux.dev>
+Subject: [PATCH v2 2/3] target/loongarch: migrate pv_features in the vCPU
+ VMState
+Date: Fri, 10 Jul 2026 08:50:28 +0800
+Message-ID: <20260710005029.345378-3-cui.tao@linux.dev>
 In-Reply-To: <20260710005029.345378-1-cui.tao@linux.dev>
 References: <20260710005029.345378-1-cui.tao@linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=2001:41d0:1004:224b::ba;
- envelope-from=cui.tao@linux.dev; helo=out-186.mta0.migadu.com
+Received-SPF: pass client-ip=2001:41d0:1004:224b::ad;
+ envelope-from=cui.tao@linux.dev; helo=out-173.mta0.migadu.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -69,111 +70,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Tao Cui <cuitao@kylinos.cn>
 
-Advertising pv features to the guest affects the migration stream. Add a
-no_pv_feature compat flag so the behavior can be gated per machine version:
-LoongArchCPU gets a bool field, and the virt machine gains a
-LoongArchVirtMachineClass field that defaults the CPU flag per version.
-
-kvm_cpu_check_pv_features() skips populating pv features when the flag is
-set. The 11.1 machine type keeps pv advertisement off (no_pv_feature is
-true, preserving the previous behavior); from the new 11.2 machine type it
-is on by default.
+pv_features holds the value of pseudo-register CPUCFG_KVM_FEATURE and is now
+pushed per vCPU. Add it to the vCPU VMState as a subsection (sent when
+non-zero) so it travels with the vCPU across migration between host kernel
+versions.
 
 Signed-off-by: Tao Cui <cuitao@kylinos.cn>
 ---
- hw/loongarch/virt.c         | 14 +++++++++++++-
- include/hw/loongarch/virt.h |  9 ++++++++-
- target/loongarch/cpu.h      |  1 +
- target/loongarch/kvm/kvm.c  |  5 +++++
- 4 files changed, 27 insertions(+), 2 deletions(-)
+ target/loongarch/machine.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 6693dea647..53c84c8def 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -955,6 +955,8 @@ static void virt_init(MachineState *machine)
-                          machine->cpu_type);
-             exit(EXIT_FAILURE);
-         }
-+        LOONGARCH_CPU(cpuobj)->no_pv_feature =
-+            LOONGARCH_VIRT_MACHINE_GET_CLASS(lvms)->no_pv_feature;
-         qdev_realize_and_unref(DEVICE(cpuobj), NULL, &error_fatal);
-     }
-     virt_check_dmsi(machine);
-@@ -1584,6 +1586,7 @@ static const TypeInfo virt_machine_info = {
-     .parent         = TYPE_MACHINE,
-     .abstract       = true,
-     .instance_size  = sizeof(LoongArchVirtMachineState),
-+    .class_size     = sizeof(LoongArchVirtMachineClass),
-     .class_init     = virt_class_init,
-     .instance_init  = virt_initfn,
-     .instance_finalize = virt_instance_finalize,
-@@ -1601,6 +1604,15 @@ static void machvirt_machine_init(void)
- type_init(machvirt_machine_init);
- 
- static void virt_machine_11_1_options(MachineClass *mc)
-+{
-+    LoongArchVirtMachineClass *vmc = LOONGARCH_VIRT_MACHINE_CLASS(mc);
-+
-+    /* pv feature advertisement is enabled from 11.2; keep 11.1 unchanged */
-+    vmc->no_pv_feature = true;
-+}
-+DEFINE_VIRT_MACHINE(11, 1)
-+
-+static void virt_machine_11_2_options(MachineClass *mc)
- {
- }
--DEFINE_VIRT_MACHINE_AS_LATEST(11, 1)
-+DEFINE_VIRT_MACHINE_AS_LATEST(11, 2)
-diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-index d39a9bbf5d..cf8d9e1fd2 100644
---- a/include/hw/loongarch/virt.h
-+++ b/include/hw/loongarch/virt.h
-@@ -130,8 +130,15 @@ struct LoongArchVirtMachineState {
-     bool highmem_mmio;
+diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
+index 931a5ca5ba..b8819bd44d 100644
+--- a/target/loongarch/machine.c
++++ b/target/loongarch/machine.c
+@@ -65,6 +65,24 @@ static const VMStateDescription vmstate_msgint = {
+     },
  };
  
-+struct LoongArchVirtMachineClass {
-+    MachineClass parent_obj;
++static bool pv_features_needed(void *opaque)
++{
++    LoongArchCPU *cpu = opaque;
 +
-+    bool no_pv_feature;   /* compat: 11.1 and older do not advertise pv features */
++    return cpu->env.pv_features != 0;
++}
++
++static const VMStateDescription vmstate_pv_features = {
++    .name = "cpu/pv_features",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = pv_features_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(env.pv_features, LoongArchCPU),
++        VMSTATE_END_OF_LIST()
++    },
 +};
 +
- #define TYPE_LOONGARCH_VIRT_MACHINE  MACHINE_TYPE_NAME("virt")
--OBJECT_DECLARE_SIMPLE_TYPE(LoongArchVirtMachineState, LOONGARCH_VIRT_MACHINE)
-+OBJECT_DECLARE_TYPE(LoongArchVirtMachineState, LoongArchVirtMachineClass,
-+                    LOONGARCH_VIRT_MACHINE)
- void virt_acpi_setup(LoongArchVirtMachineState *lvms);
- void virt_fdt_setup(LoongArchVirtMachineState *lvms);
- 
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index ad30c73167..11bbb5f36e 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -447,6 +447,7 @@ struct ArchCPU {
-     OnOffAuto msgint;
-     OnOffAuto kvm_pv_ipi;
-     OnOffAuto kvm_steal_time;
-+    bool no_pv_feature;   /* compat: do not advertise KVM pv features */
-     int32_t socket_id;  /* socket-id of this CPU */
-     int32_t core_id;    /* core-id of this CPU */
-     int32_t thread_id;  /* thread-id of this CPU */
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index c557ee3c3d..878914928b 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -1119,6 +1119,11 @@ static int kvm_cpu_check_pv_features(CPUState *cs, Error **errp)
-     CPULoongArchState *env = cpu_env(cs);
-     bool kvm_supported;
- 
-+    /* compat: older machine types do not advertise pv features to the guest */
-+    if (cpu->no_pv_feature) {
-+        return 0;
-+    }
-+
-     kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_PV_IPI);
-     if (cpu->kvm_pv_ipi == ON_OFF_AUTO_ON) {
-         if (!kvm_supported) {
+ static const VMStateDescription vmstate_lsxh_reg = {
+     .name = "lsxh_reg",
+     .version_id = 1,
+@@ -289,6 +307,7 @@ const VMStateDescription vmstate_loongarch_cpu = {
+         &vmstate_lbt,
+         &vmstate_msgint,
+         &vmstate_pmu,
++        &vmstate_pv_features,
+         NULL
+     }
+ };
 -- 
 2.43.0
 
