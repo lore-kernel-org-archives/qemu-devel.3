@@ -4,65 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8644EC43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 12:54:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC8D5C4450A
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 12:54:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiAk9-0002UY-AE; Fri, 10 Jul 2026 08:54:13 -0400
+	id 1wiAk5-0002TX-4j; Fri, 10 Jul 2026 08:54:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wiAk6-0002To-Rj; Fri, 10 Jul 2026 08:54:10 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ (Exim 4.90_1) (envelope-from <mvaralar@redhat.com>)
+ id 1wiAk3-0002TG-Gu
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 08:54:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wiAk1-0004sY-0P; Fri, 10 Jul 2026 08:54:10 -0400
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:39a2:0:640:ae2d:0])
- by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id BD11EC08F3;
- Fri, 10 Jul 2026 15:54:00 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:167::1:39] (unknown
- [2a02:6bf:8080:167::1:39])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id xrK86H0ZveA0-7NWX0eNW; Fri, 10 Jul 2026 15:54:00 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1783688040;
- bh=oZ3Q8wfqnaqwqc0YOedQ2fPWn8wPWyUybhzzuY0XLs8=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=B3u6v4J4CVTQctNN3CxON+tEtY96b7+2RtW0w9/4RaL8oEgigRUhPX4cAX+6x66CJ
- wyHSesP5pnHEl9FiyZiFdVp8bkaIzrf5jfsDB2phz5mZznR+IEe6QNZNxzyZsGmp60
- grfGTD8QMjOwMOzJyQFqcmkb+vJztxpyNJxsPt1s=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <8a04a36e-b78b-4a60-ab1b-b2ecec6b3966@yandex-team.ru>
-Date: Fri, 10 Jul 2026 15:53:59 +0300
+ (Exim 4.90_1) (envelope-from <mvaralar@redhat.com>)
+ id 1wiAk1-0004ss-G1
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 08:54:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783688044;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=6Cp1BjII0FuKVOdJwcODOGG4IVFWnhrJeFpeInpRWrU=;
+ b=BV+rcCOEMzSrs7vK+jzKtHieZCfqGWJjs4d33u2YDwTQAqIGNnqIrUgdLVAH+aINBl77++
+ pIhm6Dl48syreq33AaOiSRR8EHZg1F/WeXCUFhULa3pXDWcQgNNaT+Mvly+ZayL8/REWfx
+ SHYOuWpSdfUyYiIiUG4Tbepf+i20B5s=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-8-6XQiJn7IOnSz9R9Lv6gHHg-1; Fri, 10 Jul 2026 08:52:58 -0400
+X-MC-Unique: 6XQiJn7IOnSz9R9Lv6gHHg-1
+X-Mimecast-MFC-AGG-ID: 6XQiJn7IOnSz9R9Lv6gHHg_1783687977
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-493bf840a69so6196905e9.3
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 05:52:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1783687977; x=1784292777; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=6Cp1BjII0FuKVOdJwcODOGG4IVFWnhrJeFpeInpRWrU=;
+ b=eQLwj5OqYCfCoBiMGZC6PyEoTF4TYFxoRwgF8oJqB1fgT+WwD6NDueDHNanOZPIEUL
+ ciIXt3C2v3955dXJwvLFAjquY3rMH4uCd4wI65VLOwusNhcGw03tRMrFWAUriwviR5Ma
+ l8QtVhWHpXfuNAr2W6sTfMipUH49pGIl83nPrVe1UfB2NO9fldd6AudOeyT0nFtbVorS
+ mNEZy0YKN41zXjb7lYja/+tOrKMO2Nv0jlL1MPlUXznAKaQfFuFToPL8XmQHSImwN4ys
+ uUZYBdxaJGcJGTMdff9UUz3PFISw8hhEQcmVxCgGaVyD2sxs2ADUJ325689WVY4/N11S
+ PV4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783687977; x=1784292777;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=6Cp1BjII0FuKVOdJwcODOGG4IVFWnhrJeFpeInpRWrU=;
+ b=BkVatagU84NxUPwCLyWwGNZruWmscLLeb7TuImm59NNfwiWWuoURKI1WGDSWeHL/7O
+ 3n14CCsl0nFRimT6fbwI4lvXdttaf4LAVapCiJCRhSGf38UJ4EH72rGZtTHVGIf98Wzb
+ T9pmV9DsSTLv7uy6z4RTgmpvpmd1Aoz0ZbpUSi0yis7PhyzyDRKR42N1IhxLGcJTbwtY
+ VVWOWAhbSAi77X7uy9x+lLoHxybRNcGd1SSGH/Iy9RH+x1iizPpJcE/TRgCr8f9Qdhxo
+ ZVi4hN3SMLcTQs0SROHYVweCsk2CZwZFbkkFZvV+D2b4iil02fh1VF2WXXampWvxIYKQ
+ vIZg==
+X-Gm-Message-State: AOJu0Yx1r6tVfQD0oFS81fZnnhrjZDpGnFpLT9XTc9J9zqpCkkLYUbEk
+ T+HbIqIYyEwLlMg/ZKrgimw5kseRa5JqtoHaRKM9WOz+X8mRCD6pm+Zm/yo864DL+KDvakAmV4X
+ F0fm7yy51X7W5GvYZA+cbDOad9XyAz/50DChjUUyOwUD5enP7bbgHAK/1KU0oUs0k
+X-Gm-Gg: AfdE7clbI/1N8esdorrTxh/95gvrwn49gYEfDarDieWdopbQoJ/EWxUBl4Jc/zT7P9q
+ kNJ1I6NRcj178fBmes7a64XoECXerMIAxmMvC5bWU5UmBQQxin+jB+0mr11WSLk0QEtqhr3XYYm
+ e6Y//uDbQRJZGTtQOrUmT0o4IAqYRTDeuREgQ7TS1XUwXoniSvqWz1fI5Q9AHbBN5YZSkrRr+XU
+ pgRQsRVhHdl56Cq094vf39tCDcurINX6ssZof+Rs5nZEbgHudbLRB+rZq8Qqo6pQZDO0bPFzmoD
+ 6K2d1NBxmyRi5NG/cp072I6dq1CrCW0JXZl5UZchLd+qIn2N7LEeZm00VWGz8UyajcIz2zxexRN
+ 0V3Wk
+X-Received: by 2002:a05:600d:8496:20b0:493:ae5d:8c40 with SMTP id
+ 5b1f17b1804b1-493e68e9ff7mr81865625e9.27.1783687976858; 
+ Fri, 10 Jul 2026 05:52:56 -0700 (PDT)
+X-Received: by 2002:a05:600d:8496:20b0:493:ae5d:8c40 with SMTP id
+ 5b1f17b1804b1-493e68e9ff7mr81865395e9.27.1783687976405; 
+ Fri, 10 Jul 2026 05:52:56 -0700 (PDT)
+Received: from fedora ([2a01:e0a:257:8c60:80f1:cdf8:48d0:b0a1])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493eb6d53absm134675665e9.6.2026.07.10.05.52.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 10 Jul 2026 05:52:55 -0700 (PDT)
+Date: Fri, 10 Jul 2026 14:52:54 +0200
+From: Matias Ezequiel Vara Larsen <mvaralar@redhat.com>
+To: Anatol Belski <anbelski@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [RFC] virtio-villain: Guest fault injection for VMM robustness
+Message-ID: <alDrJiFzJsf04RFT@fedora>
+References: <98dd26094403c204c7c2f0270d96b9c75842c7d8.camel@linux.microsoft.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/1] qcow2: add functionality to repair bitmaps
-To: Jean-Louis Dupond <jean-louis@dupond.be>, qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- John Snow <jsnow@redhat.com>, qemu-block@nongnu.org,
- Eric Blake <eblake@redhat.com>
-References: <20260522224335.1286291-1-jean-louis@dupond.be>
- <20260522224335.1286291-2-jean-louis@dupond.be>
- <93dc8fbe-2346-430d-90f1-ca44b3970cd5@yandex-team.ru>
- <7697a2b6-fc26-4de2-8cd6-0b3651b79511@dupond.be>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <7697a2b6-fc26-4de2-8cd6-0b3651b79511@dupond.be>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <98dd26094403c204c7c2f0270d96b9c75842c7d8.camel@linux.microsoft.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mvaralar@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,344 +118,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10.07.26 11:34, Jean-Louis Dupond wrote:
+On Sat, Jul 04, 2026 at 03:37:21PM +0200, Anatol Belski wrote:
+> Hi,
 > 
-> On 29/06/2026 11:18, Vladimir Sementsov-Ogievskiy wrote:
->> 23.05.26 01:43, Jean-Louis Dupond пишет:
->>> In some cases, it might happen that bitmaps become corrupt.
->>> For example when adding/removing bitmaps on a live image.
->>>
->>> Of course this should not happen, but in case this happens, the image is
->>> corrupt and even cannot be opened anymore. You'll get something like the
->>> following:
->>> qemu-img: Could not open 'disk.qcow2': Bitmap '' doesn't satisfy the constraints
->>>
->>> So the image becomes useless, and cannot be repaired. This while in fact
->>> only (one) bitmap entry is corrupt, and the rest of the data is just
->>> intact.
->>>
->>> This commit adds a way to fix this corruption, by just replacing the
->>> bitmap list in the qcow2 image with the valid bitmaps, and dropping the
->>> bitmaps that are corrupt.
->>>
->>> $ qemu-img check disk.qcow2
->>> qemu-img: Check failed: Invalid argument
->>> qemu-img: Lost persistent bitmaps during inactivation of node '#block147': Bitmap '' doesn't satisfy the constraints
->>>
->>> $ qemu-img check -r all disk.qcow2
->>> qcow2_free_clusters failed: Invalid argument
->>> Leaked cluster 3 refcount=1 reference=0
->>> Leaked cluster 26 refcount=1 reference=0
->>> ERROR cluster 983214 refcount=0 reference=1
->>> Rebuilding refcount structure
->>> Repairing cluster 1 refcount=1 reference=0
->>> Repairing cluster 2 refcount=1 reference=0
->>> Repairing cluster 32768 refcount=1 reference=0
->>> ....
->>> Repairing cluster 983214 refcount=1 reference=0
->>> The following inconsistencies were found and repaired:
->>>
->>>      2 leaked clusters
->>>      3 corruptions
->>>
->>> Double checking the fixed image now...
->>> No errors were found on the image.
->>> 983056/1048576 = 93.75% allocated, 0.05% fragmented, 0.00% compressed clusters
->>> Image end offset: 64437878784
->>>
->>> And the image is valid again!
->>> Worst case you lose all bitmaps, but at least the image and the data
->>> itself is useable again.
->>>
->>> Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
->>
->> Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->>
->> (some nit-picking and notes below, but the patch is OK for me as is)
-> Thanks!
->>
->>> ---
->>>   block/qcow2-bitmap.c   | 42 +++++++++++++++++++++++++++++++++++++++---
->>>   block/qcow2-refcount.c |  3 ++-
->>>   block/qcow2.c          | 16 ++++++++++++----
->>>   block/qcow2.h          |  3 ++-
->>>   4 files changed, 55 insertions(+), 9 deletions(-)
->>>
->>> diff --git a/block/qcow2-bitmap.c b/block/qcow2-bitmap.c
->>> index 256ec99878..91bd82a9f5 100644
->>> --- a/block/qcow2-bitmap.c
->>> +++ b/block/qcow2-bitmap.c
->>> @@ -100,6 +100,9 @@ typedef enum BitmapType {
->>>       BT_DIRTY_TRACKING_BITMAP = 1
->>>   } BitmapType;
->>>   +static int GRAPH_RDLOCK
->>> +update_ext_header_and_dir(BlockDriverState *bs, Qcow2BitmapList *bm_list);
->>> +
->>>   static inline bool can_write(BlockDriverState *bs)
->>>   {
->>>       return !bdrv_is_read_only(bs) && !(bdrv_get_flags(bs) & BDRV_O_INACTIVE);
->>> @@ -655,12 +658,14 @@ fail:
->>>   int coroutine_fn
->>>   qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
->>>                                 void **refcount_table,
->>> -                              int64_t *refcount_table_size)
->>> +                              int64_t *refcount_table_size,
->>> +                              BdrvCheckMode fix)
->>>   {
->>>       int ret;
->>>       BDRVQcow2State *s = bs->opaque;
->>>       Qcow2BitmapList *bm_list;
->>> -    Qcow2Bitmap *bm;
->>> +    Qcow2Bitmap *bm, *bm_next;
->>> +    bool bitmap_modified = false;
->>
->> (I'd call it bm_list_modified, as we don't modify any bitmap..)
-> I slightly modified it to also address comment below.
->>
->>>         if (s->nb_bitmaps == 0) {
->>>           return 0;
->>> @@ -677,12 +682,21 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
->>>                                  s->bitmap_directory_size, NULL);
->>>       if (bm_list == NULL) {
->>>           res->corruptions++;
->>> +
->>> +        if (fix & BDRV_FIX_ERRORS) {
->>> +            ret = update_ext_header_and_dir(bs, NULL);
->>> +            if (ret >= 0) {
->>> +                res->corruptions_fixed++;
->>> +            }
->>> +            goto out;
->>
->> I think, "return ret" is better here.
->>
->> at "out:" we only free the bm_list, which is NULL here anyway.
->>
->> And on the next line, we do "return -EINVAL", not "goto out", better be consistent.
-> Fixed
->>
->>> +        }
->>>           return -EINVAL;
->>>       }
->>>   -    QSIMPLEQ_FOREACH(bm, bm_list, entry) {
->>> +    QSIMPLEQ_FOREACH_SAFE(bm, bm_list, entry, bm_next) {
->>>           uint64_t *bitmap_table = NULL;
->>>           int i;
->>> +        bool bitmap_valid = true;
->>>             ret = qcow2_inc_refcounts_imrt(bs, res,
->>>                                          refcount_table, refcount_table_size,
->>> @@ -695,6 +709,12 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
->>>           ret = bitmap_table_load(bs, &bm->table, &bitmap_table);
->>>           if (ret < 0) {
->>>               res->corruptions++;
->>
->> This maybe called several times per bitmap, but finally we calculate
->> corruptions_fixed as bitmaps count.
->>
->> Still, I don't think it's important.
-> Modified to bm_list_fixed. Which counts the corruptions fixed.
-> Value is then used to increment corruptions_fixed.
->>
->>> +            if (fix & BDRV_FIX_ERRORS) {
->>> +                QSIMPLEQ_REMOVE(bm_list, bm, Qcow2Bitmap, entry);
->>> +                bitmap_free(bm);
->>> +                bitmap_modified = true;
->>> +                continue;
->>> +            }
->>>               goto out;
->>>           }
->>>   @@ -704,6 +724,7 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
->>>                 if (check_table_entry(entry, s->cluster_size) < 0) {
->>>                   res->corruptions++;
->>> +                bitmap_valid = false;
->>>                   continue;
->>>               }
->>>   @@ -720,9 +741,24 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
->>>               }
->>>           }
->>
->> Note, that if qcow2_inc_refcounts_imrt() fails, we'll fix nothing.
-> Indeed. Then we have deeper corruption.
-> I don't know if we could just ignore the failure if in BDRV_FIX_ERRORS mode and clear the bitmap table if call fails?
->>
->>>   +        if ((fix & BDRV_FIX_ERRORS) && !bitmap_valid) {
->>> +            QSIMPLEQ_REMOVE(bm_list, bm, Qcow2Bitmap, entry);
->>> +            bitmap_free(bm);
->>> +            bitmap_modified = true;
->>> +        }
->>> +
->>>           g_free(bitmap_table);
->>>       }
->>>   +    /* If fixing, update the bitmap directory with the repaired list */
->>> +    if ((fix & BDRV_FIX_ERRORS) && bitmap_modified) {
->>> +        uint32_t initial_bitmaps = s->nb_bitmaps;
->>> +        ret = update_ext_header_and_dir(bs, bm_list);
->>> +        if (ret >= 0) {
->>> +            res->corruptions_fixed += initial_bitmaps - s->nb_bitmaps;
->>> +        }
->>> +    }
->>> +
->>>   out:
->>>       bitmap_list_free(bm_list);
->>>   diff --git a/block/qcow2-refcount.c b/block/qcow2-refcount.c
->>> index 6512cda407..df7f6d2f23 100644
->>> --- a/block/qcow2-refcount.c
->>> +++ b/block/qcow2-refcount.c
->>> @@ -2305,7 +2305,8 @@ calculate_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
->>>       }
->>>         /* bitmaps */
->>> -    ret = qcow2_check_bitmaps_refcounts(bs, res, refcount_table, nb_clusters);
->>> +    ret = qcow2_check_bitmaps_refcounts(bs, res, refcount_table,
->>> +                                        nb_clusters, fix);
->>>       if (ret < 0) {
->>>           return ret;
->>>       }
->>> diff --git a/block/qcow2.c b/block/qcow2.c
->>> index 81fd299b4c..adfb7ee37a 100644
->>> --- a/block/qcow2.c
->>> +++ b/block/qcow2.c
->>> @@ -1927,11 +1927,19 @@ qcow2_do_open(BlockDriverState *bs, QDict *options, int flags,
->>>       if (!(bdrv_get_flags(bs) & BDRV_O_INACTIVE)) {
->>>           /* It's case 1, 2 or 3.2. Or 3.1 which is BUG in management layer. */
->>>           bool header_updated;
->>> -        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, errp)) {
->>> -            ret = -EINVAL;
->>> -            goto fail;
->>> +        Error *local_err = NULL;
->>> +        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, &local_err)) {
->>> +            /*
->>> +             * Allow this to fail in check mode
->>> +             * because otherwise we can't open the image at all.
->>> +             */
->>> +            if (!(flags & BDRV_O_CHECK)) {
->>> +                ret = -EINVAL;
->>> +                error_propagate(errp, local_err);
->>> +                goto fail;
->>> +            }
->>
->> Should we at least print local_err (I mean error_report_err())?
-> As we do an error_propagate this shouldn't be needed?
+> I would like to share virtio-villain, a guest side fault injection
+> harness for virtio device models. The repository is at
+> https://github.com/weltling/virtio-villain
+> 
+> Comments on the approach, the coverage so far, and test cases worth
+> adding are all welcome. While the tool targets multiple hypervisors,
+> QEMU support is active and has already surfaced a few initial bugs.
+> 
+> Threat model. The harness operates under the hostile guest model. A
+> malicious or buggy guest driver violates the virtio protocol on
+> purpose. It targets the modern 1.2+ interface only. The test binary
+> runs as init inside a minimal initramfs, bypasses the kernel virtio
+> drivers with initcall_blacklist, walks the PCI capability list
+> itself, programs the queues by hand, and asserts on the exact spec
+> mandated values. Each test violates one driver MUST rule and checks
+> that the host VMM process handles it gracefully without crashing,
+> wedging, or corrupting state.
+> 
+> Scope and status. The primary target so far is Cloud Hypervisor,
+> which accounts for most of the findings to date. Testing focuses on
+> the amd64 and aarch64 architectures. QEMU is supported as a PCI host
+> and as the microvm MMIO host. Differential testing across VMMs,
+> running the same suite and comparing outcomes, is the roadmap. This
+> is a spec violation fault injection tool that surfaces unvalidated
+> input handling rather than an exploit framework, so no CVEs have
+> been issued.
+> 
+Thanks for sharing it. I am also interesting on finding violations of
+the virtio specification. I presented something two years ago in LPC
+(see https://lpc.events/event/18/contributions/1897/). As a result of
+that work, we worked adding kani proofs in rust-vmm devices. The
+validation of the spec is coded in RUST and by using kani we verify that
+the implemented devices follows the specification. For some
+requirements, we were able to prove that the device is conform. The
+proofs are written together with the implementation of the device like
+tests.  
 
-You do error_propagate on error-path it's OK.
+> What is already covered. There are two transports, modern virtio PCI
+> and virtio MMIO via the QEMU microvm machine type. A dozen device
+> categories are present. They include net, block with zoned support,
+> console, entropy, balloon, vsock, virtio-fs, IOMMU, virtio-mem,
+> virtio-pmem, RTC, and watchdog, plus the admin queue and the split
+> and packed virtqueue layers. Test cases derive from the virtio spec
+> normative text, each tied to a specific section.
+> 
+> Beyond the static suite there are two extra layers.
+> 
+>   - Host coordinated sidecars. A test can ship a small Python file
+>     that drives the host, for example pause, snapshot, hot plug, or
+>     config change, while the guest makes a precise assertion the
+>     kernel driver cannot make. As an example, snapshot the VM while
+>     the guest sits between two block reads, then assert the used
+>     ring drains deterministically on resume.
+> 
+>   - A coverage guided mutation fuzzer. It encodes a descriptor chain
+>     into a 4096 byte blob, patches it into a fuzz guest, boots the
+>     VMM, and classifies the result. With a coverage instrumented
+>     build it feeds new edges back into the corpus. Crashes are
+>     grouped by error class for triage.
+> 
+> Impact. Many findings have led to substantial improvements in
+> virtio spec compliance and stability in Cloud Hypervisor, from
 
-I mean when "error-skip" path, when you do just error_free(). In this
-case we print nothing about error.
+Feel free to file patches to the virtio specification in cases you think
+the spec is too permissive. 
 
->>
->>> +            error_free(local_err);
->>>           }
->>> -
->>>           update_header = update_header && !header_updated;
->>>       }
->>>   diff --git a/block/qcow2.h b/block/qcow2.h
->>> index 192a45d596..2d9c6929a7 100644
->>> --- a/block/qcow2.h
->>> +++ b/block/qcow2.h
->>> @@ -1034,7 +1034,8 @@ void qcow2_cache_discard(Qcow2Cache *c, void *table);
->>>   int coroutine_fn GRAPH_RDLOCK
->>>   qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
->>>                                 void **refcount_table,
->>> -                              int64_t *refcount_table_size);
->>> +                              int64_t *refcount_table_size,
->>> +                              BdrvCheckMode fix);
->>>     bool coroutine_fn GRAPH_RDLOCK
->>>   qcow2_load_dirty_bitmaps(BlockDriverState *bs, bool *header_updated,
->>
->>
-> 
-> I now have the following diff since v5, if you confirm it's ok, then I'll push a v6:
-> 
-> diff --git a/block/qcow2-bitmap.c b/block/qcow2-bitmap.c
-> index 91bd82a9f5..90a109d9b2 100644
-> --- a/block/qcow2-bitmap.c
-> +++ b/block/qcow2-bitmap.c
-> @@ -665,7 +665,7 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
->       BDRVQcow2State *s = bs->opaque;
->       Qcow2BitmapList *bm_list;
->       Qcow2Bitmap *bm, *bm_next;
-> -    bool bitmap_modified = false;
-> +    int bm_list_fixed = 0;
-> 
->       if (s->nb_bitmaps == 0) {
->           return 0;
-> @@ -688,14 +688,14 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
->               if (ret >= 0) {
->                   res->corruptions_fixed++;
->               }
-> -            goto out;
-> +            return ret;
->           }
->           return -EINVAL;
->       }
-> 
->       QSIMPLEQ_FOREACH_SAFE(bm, bm_list, entry, bm_next) {
->           uint64_t *bitmap_table = NULL;
-> -        int i;
-> +        int i, corruptions;
->           bool bitmap_valid = true;
-> 
->           ret = qcow2_inc_refcounts_imrt(bs, res,
-> @@ -712,12 +712,13 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
->               if (fix & BDRV_FIX_ERRORS) {
->                   QSIMPLEQ_REMOVE(bm_list, bm, Qcow2Bitmap, entry);
->                   bitmap_free(bm);
-> -                bitmap_modified = true;
-> +                bm_list_fixed++;
->                   continue;
->               }
->               goto out;
->           }
-> 
-> +        corruptions = res->corruptions;
->           for (i = 0; i < bm->table.size; ++i) {
->               uint64_t entry = bitmap_table[i];
->               uint64_t offset = entry & BME_TABLE_ENTRY_OFFSET_MASK;
+> input validation gaps to a config read that could take down a VM
+> on aarch64. In QEMU the harness has surfaced a few guest triggered
 
-             if (check_table_entry(entry, s->cluster_size) < 0) {
-                 res->corruptions++;
+At some point, I wanted to add some checks in QEMU to inform user when
+guest violates the spec. That would help to catch some issues with less
+testing. For example, two years ago the virtio-sound driver was silently
+violating the spec by writing the content of the buffers that were
+already in the available ring. 
 
-I'd prefer simply bm_list_fixed++ here, instead of recalculating from res->corruptions.
-Relaying on res is not good, as we pass it to other functions, like qcow2_inc_refcounts_imrt().
-It's not a problem now, as we fail if qcow2_inc_refcounts_imrt() fails, and on success
-path we expect it doesn't modify res. Still the code may change in future. I think res
-is mostly for "write only (increment counters) access". It's external to our code, and
-it looks unsafe to reuse it for internal logic.
-
-Or even better make a separate counter nb_corrupted_entries, starting from zero. And it
-can replace also the bimtap_modified variable.
-
-                 continue;
-             }
-
-             if (offset == 0) {
-                 continue;
-             }
-
-> @@ -744,18 +745,18 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
->           if ((fix & BDRV_FIX_ERRORS) && !bitmap_valid) {
->               QSIMPLEQ_REMOVE(bm_list, bm, Qcow2Bitmap, entry);
->               bitmap_free(bm);
-> -            bitmap_modified = true;
-> +            bm_list_fixed += res->corruptions - corruptions;
->           }
+> hangs and a double completion. The repository README lists the
+> details with PR links and the test ID for each.
 > 
->           g_free(bitmap_table);
->       }
+> Thanks for reading.
 > 
->       /* If fixing, update the bitmap directory with the repaired list */
-> -    if ((fix & BDRV_FIX_ERRORS) && bitmap_modified) {
-> +    if ((fix & BDRV_FIX_ERRORS) && bm_list_fixed > 0) {
->           uint32_t initial_bitmaps = s->nb_bitmaps;
->           ret = update_ext_header_and_dir(bs, bm_list);
->           if (ret >= 0) {
-> -            res->corruptions_fixed += initial_bitmaps - s->nb_bitmaps;
-> +            res->corruptions_fixed += bm_list_fixed;
->           }
->       }
-> 
+> Anatol Belski
 > 
 
-
--- 
-Best regards,
-Vladimir
 
