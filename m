@@ -4,108 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F29D4C44506
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 14:56:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04C07C43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 15:26:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiCeg-00053B-GC; Fri, 10 Jul 2026 10:56:44 -0400
+	id 1wiD73-0000sU-Eo; Fri, 10 Jul 2026 11:26:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wiCef-000533-CA
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 10:56:41 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wiCeb-00085F-Gi
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 10:56:40 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-69532288224so1881164a12.0
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 07:56:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783695394; cv=none;
- d=google.com; s=arc-20260327;
- b=EUtYar8E7H1P5r49Dyix8deON9WlHTbc42eV2ScZh8JFc4/chb+mZxk0KLy35+0/nr
- ArAEaObulMpeotZ6u9ke7qzzOWTo1c5l2x20rPk0vJb+tR9L316Pkv1Ypmz6Hp8x8U28
- V8RcmSde7PpYdXu2gSfohJXgWiK10Kb/K2nVFWVp+BGbnNK2eY2UTVk1j1NHT2Sm4gGm
- w+I3UmFz4nuEGsyxXthG9eutZIcInhVyydD+NGPLqC2+q6hBFaxjDJFgc36Ob286fPWb
- IKZvXro6BYsbDikZGq1bSBXZwYE/l9j751LdRv0A1046YCD4h64PTYnDFcBKLDxGA1KS
- IBwQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=6QjXBG8VmiERsup4FSb8gYsxcEZ8IevDwRw0yWvY6B8=;
- fh=SwNleLYJHDBNZ+ewKo8ooGZbSGpoaqEpx2+XEMRpscw=;
- b=hIpwjObFAaWEVIaR5v8MIAIlpZ9vJJw0cjIpyTRk5FSgFLDEPbXqGE0fTZtCG5ne/o
- yj+AukUj6GyfnGupJVCoey66JZy+ewZKWUw2n96qVuZCHnCZ3BMfYXoxetA9Hy7Yca3o
- C6eRenwqOlqZMKPZOtunLcND3snPrSbGzFZvZCBFKQN8V64NHsN+PS1N4sIXDh28K1y4
- Qp+YfsO30/J4+BHD9KZUhHDUTinU90PD3+pj9RGAnPaUdbNACqSWPiZhE5nTv3oyewMt
- gMy5r8UpGGflJZ//PLKHkRfyzP+wGUCbG5zaD62+GJdTWhC3gIdSj3jrxVWTmDXZqtjc
- i9Eg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1783695394; x=1784300194; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=6QjXBG8VmiERsup4FSb8gYsxcEZ8IevDwRw0yWvY6B8=;
- b=SULW6rNlWLEgrr9M7izajDhAfyZHuO4TGsfGI/AAyc9zuzQ7nEfedPLTlqZa70nKtG
- ca3lho5sZJWKVJRwuPG6sUQOMyYSpzGee0souIt33xciRGsyaWs1K0YnkrKJCoGv/iXu
- aIRzRfAam6vWlSaueC5rhQGAv2vJcevg3CxDY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783695394; x=1784300194;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=6QjXBG8VmiERsup4FSb8gYsxcEZ8IevDwRw0yWvY6B8=;
- b=OTd8V/gcBDQQm3kIXeJefEDXwdkrvzNG/cgm9ILh8ZEbhcRVMF7jNvDNhUZgqMnEW6
- bQfJ/310BWmOZMDT/pHUz2wrzq3Z2omq+H/3TWYALIcy8z7m2ZdV6EDnmlxRV0WVlDDj
- B1ssrOW/R4VdrgjFo2brqY59DLi5mMatNJ89SfopbNo4fVACHbBCDAf2wzAx0wbmjqDZ
- HVI3IwfISBAbqDE/tOXncqGr6FjBnq2jHIPZ1ForkQJZ6cEaK3oravdF0ZdAwUWJ13Rp
- H6vzW/N4P+jTsGkuAi+j3tibtlxSSJkfLOfNeSx+H+JPMlLP8un9tAHRK9D88R/0UXoE
- BMCA==
-X-Gm-Message-State: AOJu0YybhyulAUUzsS5Pfhla1j5ROU/LkpxI9JfzS8A66iUPtp+bfAA4
- ryjKWVH/gQBPWXV2QlhR4sKrLLW2i9AdNhp3AmAaH/tImGtQT/Q9bWzUGaN6smCU2fOo3Sxls1q
- 8ePySNY/CY5fuDV0WBbm42p6smUQbIP86YZ3UgF1hnQ==
-X-Gm-Gg: AfdE7cnLMcHrYZP5fEa9OK+8KdLC6BaBPdoIpxfErmdPvy8hIPAQj+QHxUukIYLd+/t
- rG4UnsOgaxeg/62TLRJuIo/uX4lnnRK3yYZyqzeIt0/TA4blPgBmYtuYQByNkWd7bu8mohH4q1+
- 4ih5PJ23a2AnEdYMISfIQ5y5DE0qNSoeXHJiOuiOQobuKV6VpfNu1mIK7/23du7OspjyVgBNa8v
- 8GT+7rfRLU4RbWEAO/Jba5ARSYfoxOm5iBVg5Tz5LfLGaE5jUlOxP/gHyCAjXhLgA+MgMkAiriC
- cQeYCs2L0Ywb1d1D5863MFLY2RU=
-X-Received: by 2002:a17:907:784:b0:bfa:f563:9294 with SMTP id
- a640c23a62f3a-c15ce014238mr496694066b.18.1783695393988; Fri, 10 Jul 2026
- 07:56:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wiD70-0000qz-FJ
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 11:25:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wiD6q-0003uN-B6
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 11:25:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783697138;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/9UJOclM0qjWuIqNTg3Kp+hUdS6wHGjNe0ibCsQIdXM=;
+ b=FQMuDZyJGVtiBq0s1JeSrM/yPbNjmum/HZaiAHNO5t6oV/ObHxxS3+b0LNrcVQ7xhoHY5q
+ FCJpj9R0zgDOv9VBLf3E/6WTMBqF8R0x1gEHJndWHfrGSDUX8s8SDLoyldNmPuRp8WVzKH
+ WjXggeIU5cRoXcI31X8c/whCdhPxhpY=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-410-owYi1dIKOqG1GOpIRlM19A-1; Fri,
+ 10 Jul 2026 11:25:35 -0400
+X-MC-Unique: owYi1dIKOqG1GOpIRlM19A-1
+X-Mimecast-MFC-AGG-ID: owYi1dIKOqG1GOpIRlM19A_1783697133
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C8DAF1956055; Fri, 10 Jul 2026 15:25:31 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2DB041956045; Fri, 10 Jul 2026 15:25:29 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 8913521E6920; Fri, 10 Jul 2026 17:25:26 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Emmanuel Blot <emmanuel.blot@free.fr>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,  Fabiano Rosas
+ <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,  Peter Maydell
+ <peter.maydell@linaro.org>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@kaod.org>,  Steven Lee
+ <steven_lee@aspeedtech.com>,  Troy Lee <leetroy@gmail.com>,  Jamin Lin
+ <jamin_lin@aspeedtech.com>,  Kane Chen <kane_chen@aspeedtech.com>,  Andrew
+ Jeffery <andrew@codeconstruct.com.au>,  Joel Stanley <joel@jms.id.au>,
+ Alexander Hansen <alexander.hansen@9elements.com>,  William de Abreu
+ Pinho <williampinho@meta.com>,  Emmanuel Blot <eblot@meta.com>,
+ qemu-arm@nongnu.org,  Corey Minyard <cminyard@mvista.com>
+Subject: Re: [PATCH v5 6/8] hw/i2c: parent slaves created with
+ i2c_slave_create_simple
+In-Reply-To: <20260701-i2c-adc128d818-anacapa-v5-6-fe8292d86b38@free.fr>
+ (Emmanuel Blot's message of "Wed, 01 Jul 2026 19:28:36 +0200")
+References: <20260701-i2c-adc128d818-anacapa-v5-0-fe8292d86b38@free.fr>
+ <20260701-i2c-adc128d818-anacapa-v5-6-fe8292d86b38@free.fr>
+Date: Fri, 10 Jul 2026 17:25:26 +0200
+Message-ID: <87pl0uyihl.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20260626123531.132078-1-alexander@mihalicyn.com>
- <20260626123531.132078-6-alexander@mihalicyn.com>
- <178248314307.2718091.12113748256980319907.b4-review@b4>
-In-Reply-To: <178248314307.2718091.12113748256980319907.b4-review@b4>
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Date: Fri, 10 Jul 2026 16:56:22 +0200
-X-Gm-Features: AUfX_myMWaLwht8mAOMOmxJXrFSK8BhtIPzH1zdf4xHa7gdQVxeX10MDnzjMCcM
-Message-ID: <CAJqdLrr2FLG=_FWabC+dmJcWVVfiAf-hKxOHqPK_d_7inftMSQ@mail.gmail.com>
-Subject: Re: [PATCH v3 5/9] hw/audio/virtio-sound: add stream state variable
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=alexander@mihalicyn.com; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,414 +96,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Fr., 26. Juni 2026 um 16:12 Uhr schrieb <marcandre.lureau@redhat.com>:
+Emmanuel Blot <emmanuel.blot@free.fr> writes:
+
+> Slaves created with i2c_slave_create_simple() were left unparented and
+> showed up under /machine/unattached with no stable QOM path. Add each
+> slave as a QOM child of its bus, named after its I2C address, so it has
+> a deterministic and addressable QOM path.
+
+Could use an example.
+
+Doesn't tell which machines are affected.
+
+To find affected machines, I captured output of "info qom-tree" by running
+
+    $ echo -e 'info qom-tree\nq' | qemu-system-TARGET -M MACHINE -S -display none -monitor stdio
+
+for all targets and all their machine types.
+
+This fails on my box for a number of machines: misses some image file,
+needs Xen, ...  These are
+
+    an5206
+    boston
+    boston-aia
+    canon-a1100
+    leon3_generic
+    loongson3-virt
+    mcf5208evb
+    microchip-icicle-kit
+    niagara
+    nitro
+    q800
+    sx1
+    sx1-v1
+    xenfv-4.2
+    xenpv
+    xenpvh
+
+Testing them manually would be possible.  Not by me.
+
+Of the ones that run, output differs for
+
+    anacapa-bmc
+    ast1030-evb
+    ast1040-evb
+    ast1060-evb
+    ast2500-evb
+    ast2600-evb
+    ast2700a1-evb
+    ast2700a2-evb
+    ast2700fc
+    bletchley-bmc
+    bpim2u
+    catalina-bmc
+    cubieboard
+    fby35-bmc
+    fuji-bmc
+    g220a-bmc
+    gb200nvl-bmc
+    kudo-bmc
+    lm3s811evb
+    mpc8544ds
+    npcm750-evb
+    npcm845-evb
+    palmetto-bmc
+    powernv10-rainier
+    ppce500
+    quanta-gsj
+    quanta-q71l-bmc
+    rainier-bmc
+    realview-eb
+    realview-eb-mpcore
+    realview-pb-a8
+    realview-pbx-a9
+    romulus-bmc
+    sam460ex
+    supermicro-x11spi-bmc
+    supermicrox11-bmc
+    tiogapass-bmc
+    tt-atlantis
+    versatileab
+    versatilepb
+    vexpress-a15
+    vexpress-a9
+    witherspoon-bmc
+    yosemitev2-bmc
+
+Looking for one with a short diff, I found realview-eb:
+
+         /device[26] (versatile_i2c)
+           /arm_sbcon_i2c[0] (memory-region)
+           /i2c (i2c-bus)
+    -    /device[27] (ds1338)
+    +        /0x68 (ds1338)
+         /device[2] (realview_gic)
+           /gic (arm_gic)
+             /gic_cpu[0] (memory-region)
+
+The QOM path of this ds1338 device changes from
+
+    /machine/unattached/device[27]
+
+to
+
+   /machine/unattached/device[26]/0x68
+
+The new path still isn't stable, because the parent's path isn't.  This
+caveat should be noted in the commit message.
+
+An example of successful stabilization is tt-atlantis, where the QOM
+paths of ds1338 and tmp105 change from
+
+    /machine/unattached/device[21]
+    /machine/unattached/device[22]
+
+to
+
+    /machine/i2c[0]/i2c-bus/0x6f
+    /machine/i2c[4]/i2c-bus/0x48
+
+> Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
+> ---
+>  hw/i2c/core.c        | 3 +++
+>  include/hw/i2c/i2c.h | 7 +++++--
+>  2 files changed, 8 insertions(+), 2 deletions(-)
 >
-> > So far, only rudimentary checks have been made to ensure that
-> > the guest only performs state transitions permitted in
-> > virtio-v1.2-csd01 5.14.6.6.1 PCM Command Lifecycle. Add a state
-> > variable per audio stream and check all state transitions.
-> >
-> > Because only permitted state transitions are possible, only one
-> > copy of the audio stream parameters is required and these do not
-> > need to be initialised with default values.
-> >
-> > The state variable will also make it easier to restore the audio
-> > stream after migration.
-> >
-> > Signed-off-by: Volker R=C3=BCmelin <vr_qemu@t-online.de>
-> > [AM: there were too many conflicts, I did `git checkout --ours -- <.>`
-> >      and then reimplemented the patch idea
-> > /AM]
-> > Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion=
-.io>
-> > Message-ID: <20260626123531.132078-6-alexander@mihalicyn.com>
-> >
-> > diff --git a/include/hw/audio/virtio-snd.h b/include/hw/audio/virtio-sn=
-d.h
-> > index 41c63b3f23b..72ef34e0976 100644
-> > --- a/include/hw/audio/virtio-snd.h
-> > +++ b/include/hw/audio/virtio-snd.h
-> > @@ -75,8 +75,6 @@ typedef struct VirtIOSoundPCMStream VirtIOSoundPCMStr=
-eam;
-> >
-> >  typedef struct virtio_snd_ctrl_command virtio_snd_ctrl_command;
-> >
-> > -typedef struct VirtIOSoundPCM VirtIOSoundPCM;
-> > -
-> >  typedef struct VirtIOSoundPCMBuffer VirtIOSoundPCMBuffer;
-> >
-> >  /*
-> > @@ -121,31 +119,18 @@ struct VirtIOSoundPCMBuffer {
-> >      uint8_t data[];
-> >  };
-> >
-> > -struct VirtIOSoundPCM {
-> > -    /*
-> > -     * PCM parameters are a separate field instead of a VirtIOSoundPCM=
-Stream
-> > -     * field, because the operation of PCM control requests is first
-> > -     * VIRTIO_SND_R_PCM_SET_PARAMS and then VIRTIO_SND_R_PCM_PREPARE; =
-this
-> > -     * means that some times we get parameters without having an alloc=
-ated
-> > -     * stream yet.
-> > -     */
-> > -    virtio_snd_pcm_set_params *pcm_params;
-> > -    VirtIOSoundPCMStream **streams;
-> > -};
-> > -
-> >  struct VirtIOSoundPCMStream {
-> >      virtio_snd_pcm_info info;
-> >      virtio_snd_pcm_set_params params;
-> > +    uint32_t state;
-> >      /* channel position values (VIRTIO_SND_CHMAP_XXX) */
-> >      uint8_t positions[VIRTIO_SND_CHMAP_MAX_SIZE];
-> >      VirtIOSound *s;
-> > -    bool flushing;
-> >      audsettings as;
-> >      union {
-> >          SWVoiceIn *in;
-> >          SWVoiceOut *out;
-> >      } voice;
-> > -    bool active;
-> >      uint32_t latency_bytes;
-> >      QSIMPLEQ_HEAD(, VirtIOSoundPCMBuffer) queue;
-> >  };
-> > @@ -212,7 +197,6 @@ struct VirtIOSound {
-> >
-> >      VirtQueue *queues[VIRTIO_SND_VQ_MAX];
-> >      uint64_t features;
-> > -    VirtIOSoundPCM pcm;
-> >      VirtIOSoundPCMStream *streams;
-> >      AudioBackend *audio_be;
-> >      VMChangeStateEntry *vmstate;
-> > diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-> > index 300ba13ffeb..68d737478f5 100644
-> > --- a/hw/audio/virtio-snd.c
-> > +++ b/hw/audio/virtio-snd.c
-> > @@ -30,11 +30,30 @@
-> >  #define VIRTIO_SOUND_CHMAP_DEFAULT 0
-> >  #define VIRTIO_SOUND_HDA_FN_NID 0
-> >
-> > +#define VSND_PCMSTREAM_STATE_F_PARAMS_SET  0x10000
-> > +#define VSND_PCMSTREAM_STATE_F_PREPARED    0x20000
-> > +#define VSND_PCMSTREAM_STATE_F_ACTIVE      0x40000
-> > +
-> > +#define VSND_PCMSTREAM_STATE_UNINITIALIZED 0
-> > +#define VSND_PCMSTREAM_STATE_PARAMS_SET    (1 \
-> > +                                           | VSND_PCMSTREAM_STATE_F_PA=
-RAMS_SET)
-> > +#define VSND_PCMSTREAM_STATE_PREPARED      (2 \
-> > +                                           | VSND_PCMSTREAM_STATE_F_PA=
-RAMS_SET \
-> > +                                           | VSND_PCMSTREAM_STATE_F_PR=
-EPARED)
-> > +#define VSND_PCMSTREAM_STATE_STARTED       (4 \
-> > +                                           | VSND_PCMSTREAM_STATE_F_PA=
-RAMS_SET \
-> > +                                           | VSND_PCMSTREAM_STATE_F_PR=
-EPARED \
-> > +                                           | VSND_PCMSTREAM_STATE_F_AC=
-TIVE)
-> > +#define VSND_PCMSTREAM_STATE_STOPPED       (6 \
-> > +                                           | VSND_PCMSTREAM_STATE_F_PA=
-RAMS_SET \
-> > +                                           | VSND_PCMSTREAM_STATE_F_PR=
-EPARED)
-> > +#define VSND_PCMSTREAM_STATE_RELEASED      (7 \
-> > +                                           | VSND_PCMSTREAM_STATE_F_PA=
-RAMS_SET)
->
+> diff --git a/hw/i2c/core.c b/hw/i2c/core.c
+> index 54f6bdca88..0bbce45d48 100644
+> --- a/hw/i2c/core.c
+> +++ b/hw/i2c/core.c
+> @@ -382,6 +382,9 @@ I2CSlave *i2c_slave_create_simple(I2CBus *bus, const char *name, uint8_t addr)
+>  {
+>      I2CSlave *dev = i2c_slave_new(name, addr);
+>  
+> +    g_autofree char *childname = g_strdup_printf("0x%02x", addr);
 
-Dear Marc-Andr=C3=A9,
+Is the hex address a satisfactory child name?
 
-> Hmm, those 1,2,4,6,7 values matches the spec 5.14.6.6.1 states. Ok, but w=
-orth a
-> comment imho.
+> +    object_property_add_child(OBJECT(bus), childname, OBJECT(dev));
+> +
+>      i2c_slave_realize_and_unref(dev, bus, &error_abort);
+>  
+>      return dev;
+> diff --git a/include/hw/i2c/i2c.h b/include/hw/i2c/i2c.h
+> index dd5930f4b5..dc557bbf3f 100644
+> --- a/include/hw/i2c/i2c.h
+> +++ b/include/hw/i2c/i2c.h
+> @@ -166,13 +166,16 @@ bool i2c_scan_bus(I2CBus *bus, uint8_t address, bool broadcast,
+>  I2CSlave *i2c_slave_new(const char *name, uint8_t addr);
+>  
+>  /**
+> - * Create and realize an I2C slave device on the heap.
+> + * Create and realize an I2C slave device on the heap, add the device as a
+> + * child of its parent bus.
+> + *
+>   * @bus: I2C bus to put it on
+>   * @name: I2C slave device type name
+>   * @addr: I2C address of the slave when put on a bus
+>   *
+>   * Create the device state structure, initialize it, put it on the
+> - * specified @bus, and drop the reference to it (the device is realized).
+> + * specified @bus, parent it, and drop the reference to it (the device is
+> + * realized).
+>   */
+>  I2CSlave *i2c_slave_create_simple(I2CBus *bus, const char *name, uint8_t addr);
 
-Manos made a point that we can simplify these definitions and instead
-of using bitmask,
-just have enum like:
-
-+ enum virtio_snd_pcm_state {
-+   VIRTIO_SND_PCM_STATE_UNINIT =3D 0,
-+   VIRTIO_SND_PCM_STATE_PARAMS_SET,
-+   VIRTIO_SND_PCM_STATE_PREPARED,
-+   VIRTIO_SND_PCM_STATE_STARTED,
-+   VIRTIO_SND_PCM_STATE_STOPPED,
-+   VIRTIO_SND_PCM_STATE_RELEASED,
-+ }
-
-(see https://lore.kernel.org/qemu-devel/thdwg7.z2gqqr4zn5aq@linaro.org/#t )
-
-WDYT?
-
->
-> > +
-> >  static void virtio_snd_pcm_out_cb(void *data, int available);
-> >  static void virtio_snd_process_cmdq(VirtIOSound *s);
-> >  static void virtio_snd_pcm_flush(VirtIOSoundPCMStream *stream);
-> >  static void virtio_snd_pcm_in_cb(void *data, int available);
-> > -static void virtio_snd_unrealize(DeviceState *dev);
-> >
-> >  static uint32_t supported_formats =3D BIT(VIRTIO_SND_PCM_FMT_S8)
-> >                                    | BIT(VIRTIO_SND_PCM_FMT_U8)
-> > @@ -129,7 +148,7 @@ static VirtIOSoundPCMStream *virtio_snd_pcm_get_str=
-eam(VirtIOSound *s,
-> >                                                         uint32_t stream=
-_id)
-> >  {
-> >      return stream_id >=3D s->snd_conf.streams ? NULL :
-> > -        s->pcm.streams[stream_id];
-> > +        &s->streams[stream_id];
-> >  }
-> >
-> >  /*
-> > @@ -141,8 +160,8 @@ static VirtIOSoundPCMStream *virtio_snd_pcm_get_str=
-eam(VirtIOSound *s,
-> >  static virtio_snd_pcm_set_params *virtio_snd_pcm_get_params(VirtIOSoun=
-d *s,
-> >                                                              uint32_t s=
-tream_id)
-> >  {
-> > -    return stream_id >=3D s->snd_conf.streams ? NULL
-> > -        : &s->pcm.pcm_params[stream_id];
-> > +    return stream_id >=3D s->snd_conf.streams ? NULL :
-> > +        &s->streams[stream_id].params;
-> >  }
-> >
-> >  /*
-> > @@ -245,11 +264,10 @@ static void virtio_snd_handle_pcm_info(VirtIOSoun=
-d *s,
-> >
-> >  /*
-> >   * Set the given stream params.
-> > - * Called by both virtio_snd_handle_pcm_set_params and during device
-> > - * initialization.
-> >   * Returns the response status code. (VIRTIO_SND_S_*).
-> >   *
-> >   * @s: VirtIOSound device
-> > + * @stream_id: stream id
-> >   * @params: The PCM params as defined in the virtio specification
-> >   */
-> >  static
-> > @@ -257,14 +275,25 @@ uint32_t virtio_snd_set_pcm_params(VirtIOSound *s=
-,
-> >                                     uint32_t stream_id,
-> >                                     virtio_snd_pcm_set_params *params)
-> >  {
-> > +    VirtIOSoundPCMStream *stream;
-> >      virtio_snd_pcm_set_params *st_params;
-> >
-> > -    if (stream_id >=3D s->snd_conf.streams || s->pcm.pcm_params =3D=3D=
- NULL) {
-> > +    if (stream_id >=3D s->snd_conf.streams) {
-> >          virtio_error(VIRTIO_DEVICE(s), "Streams have not been initiali=
-zed.\n");
->
-> The error message should be updated.
-
-Thanks, I'll fix this in v4.
-
->
-> >          return cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
-> >      }
-> >
-> > -    st_params =3D virtio_snd_pcm_get_params(s, stream_id);
-> > +    stream =3D virtio_snd_pcm_get_stream(s, stream_id);
-> > +
-> > +    switch (stream->state) {
-> > +    case VSND_PCMSTREAM_STATE_UNINITIALIZED:
-> > +    case VSND_PCMSTREAM_STATE_PARAMS_SET:
-> > +    case VSND_PCMSTREAM_STATE_PREPARED:
-> > +    case VSND_PCMSTREAM_STATE_RELEASED:
-> > +        break;
-> > +    default:
->
-> Keep a virtio_error()?
-
-Sure, will do in v4.
-
->
-> > +        return cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
-> > +    }
-> >
-> >      if (params->channels < 1 || params->channels > AUDIO_MAX_CHANNELS)=
- {
-> >          error_report("Number of channels is not supported.");
-> > @@ -281,6 +310,8 @@ uint32_t virtio_snd_set_pcm_params(VirtIOSound *s,
-> >          return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
-> >      }
-> >
-> > +    st_params =3D virtio_snd_pcm_get_params(s, stream_id);
-> > +
-> >      st_params->buffer_bytes =3D le32_to_cpu(params->buffer_bytes);
-> >      st_params->period_bytes =3D le32_to_cpu(params->period_bytes);
-> >      st_params->features =3D le32_to_cpu(params->features);
-> > @@ -289,6 +320,13 @@ uint32_t virtio_snd_set_pcm_params(VirtIOSound *s,
-> >      st_params->format =3D params->format;
-> >      st_params->rate =3D params->rate;
-> >
-> > +    if (stream->state & VSND_PCMSTREAM_STATE_F_PREPARED) {
-> > +        /* implicit VIRTIO_SND_R_PCM_RELEASE */
-> > +        virtio_snd_pcm_flush(stream);
-> > +    }
->
-> I'd leave a comment to explain we keep the SWVoice opened.
-
-I decided to add virtio_snd_pcm_close(stream) call to
-virtio_snd_set_pcm_params().
-
->
-> > +
-> > +    stream->state =3D VSND_PCMSTREAM_STATE_PARAMS_SET;
-> > +
-> >      return cpu_to_le32(VIRTIO_SND_S_OK);
-> >  }
-> >
-> > @@ -398,15 +436,12 @@ static void virtio_snd_get_qemu_audsettings(audse=
-ttings *as,
-> >   */
-> >  static void virtio_snd_pcm_close(VirtIOSoundPCMStream *stream)
-> >  {
-> > -    if (stream) {
-> > -        virtio_snd_pcm_flush(stream);
-> > -        if (stream->info.direction =3D=3D VIRTIO_SND_D_OUTPUT) {
-> > -            audio_be_close_out(stream->s->audio_be, stream->voice.out)=
-;
-> > -            stream->voice.out =3D NULL;
-> > -        } else if (stream->info.direction =3D=3D VIRTIO_SND_D_INPUT) {
-> > -            audio_be_close_in(stream->s->audio_be, stream->voice.in);
-> > -            stream->voice.in =3D NULL;
-> > -        }
-> > +    if (stream->info.direction =3D=3D VIRTIO_SND_D_OUTPUT) {
-> > +        audio_be_close_out(stream->s->audio_be, stream->voice.out);
-> > +        stream->voice.out =3D NULL;
-> > +    } else if (stream->info.direction =3D=3D VIRTIO_SND_D_INPUT) {
-> > +        audio_be_close_in(stream->s->audio_be, stream->voice.in);
-> > +        stream->voice.in =3D NULL;
-> >      }
-> >  }
-> >
-> > @@ -423,32 +458,23 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSoun=
-d *s, uint32_t stream_id)
-> >      virtio_snd_pcm_set_params *params;
-> >      VirtIOSoundPCMStream *stream;
-> >
-> > -    if (s->pcm.streams =3D=3D NULL ||
-> > -        s->pcm.pcm_params =3D=3D NULL ||
-> > -        stream_id >=3D s->snd_conf.streams) {
-> > +    stream =3D virtio_snd_pcm_get_stream(s, stream_id);
-> > +    if (!stream) {
-> >          return cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
-> >      }
-> >
-> > -    params =3D virtio_snd_pcm_get_params(s, stream_id);
-> > -    if (params =3D=3D NULL) {
-> > +    switch (stream->state) {
-> > +    case VSND_PCMSTREAM_STATE_PARAMS_SET:
-> > +    case VSND_PCMSTREAM_STATE_PREPARED:
-> > +    case VSND_PCMSTREAM_STATE_RELEASED:
-> > +        break;
-> > +    default:
-> >          return cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
-> >      }
-> >
-> > -    stream =3D virtio_snd_pcm_get_stream(s, stream_id);
-> > -    if (stream =3D=3D NULL) {
-> > -        stream =3D &s->streams[stream_id];
-> > -        stream->active =3D false;
-> > -        stream->latency_bytes =3D 0;
-> > -
-> > -        /*
-> > -         * stream_id >=3D s->snd_conf.streams was checked before so th=
-is is
-> > -         * in-bounds
-> > -         */
-> > -        s->pcm.streams[stream_id] =3D stream;
-> > -    }
-> > +    params =3D virtio_snd_pcm_get_params(s, stream_id);
-> >
-> >      virtio_snd_get_qemu_audsettings(&as, params);
-> > -    stream->params =3D *params;
-> >
-> >      stream->positions[0] =3D VIRTIO_SND_CHMAP_FL;
-> >      stream->positions[1] =3D VIRTIO_SND_CHMAP_FR;
-> > @@ -472,6 +498,8 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound =
-*s, uint32_t stream_id)
-> >          audio_be_set_volume_in_lr(s->audio_be, stream->voice.in, 0, 25=
-5, 255);
-> >      }
-> >
-> > +    stream->state =3D VSND_PCMSTREAM_STATE_PREPARED;
-> > +
-> >      return cpu_to_le32(VIRTIO_SND_S_OK);
-> >  }
-> >
-> > @@ -542,12 +570,28 @@ static uint32_t virtio_snd_pcm_start_stop(VirtIOS=
-ound *s,
-> >      }
-> >
-> >      if (start) {
-> > +        switch (stream->state) {
-> > +        case VSND_PCMSTREAM_STATE_PREPARED:
-> > +        case VSND_PCMSTREAM_STATE_STOPPED:
-> > +            break;
-> > +        default:
-> > +            return cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
-> > +        }
-> > +
-> >          trace_virtio_snd_handle_pcm_start(stream_id);
-> > +        stream->state =3D VSND_PCMSTREAM_STATE_STARTED;
-> >      } else {
-> > +        switch (stream->state) {
-> > +        case VSND_PCMSTREAM_STATE_STARTED:
-> > +            break;
-> > +        default:
-> > +            return cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
-> > +        }
-> > +
-> >          trace_virtio_snd_handle_pcm_stop(stream_id);
-> > +        stream->state =3D VSND_PCMSTREAM_STATE_STOPPED;
-> >      }
-> >
-> > -    stream->active =3D start;
-> >      if (stream->info.direction =3D=3D VIRTIO_SND_D_OUTPUT) {
-> >          audio_be_set_active_out(s->audio_be, stream->voice.out, start)=
-;
-> >      } else {
-> > @@ -641,6 +685,15 @@ static void virtio_snd_handle_pcm_release(VirtIOSo=
-und *s,
-> >          return;
-> >      }
-> >
-> > +    switch (stream->state) {
-> > +    case VSND_PCMSTREAM_STATE_PREPARED:
-> > +    case VSND_PCMSTREAM_STATE_STOPPED:
-> > +        break;
-> > +    default:
-> > +        cmd->resp.code =3D cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
-> > +        return;
-> > +    }
-> > +
-> >      if (virtio_snd_pcm_get_io_msgs_count(stream)) {
-> >          /*
-> >           * virtio-v1.2-csd01, 5.14.6.6.5.1,
-> > @@ -655,6 +708,8 @@ static void virtio_snd_handle_pcm_release(VirtIOSou=
-nd *s,
-> >          virtio_snd_pcm_flush(stream);
-> >      }
->
-> Same here.
-
-I decided to add virtio_snd_pcm_close(stream) call to
-virtio_snd_handle_pcm_release().
-
-Kind regards,
-Alex
-
->
-> --
-> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
 
