@@ -4,72 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7F30C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 08:28:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3544C44506
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 08:30:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wi6ak-0005fd-8d; Fri, 10 Jul 2026 04:28:14 -0400
+	id 1wi6cE-0006Am-RK; Fri, 10 Jul 2026 04:29:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1wi6ah-0005fL-Sq; Fri, 10 Jul 2026 04:28:11 -0400
-Received: from smtp2-g21.free.fr ([212.27.42.2])
+ (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1wi6cB-0006AE-Vj
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 04:29:44 -0400
+Received: from out-182.mta1.migadu.com ([95.215.58.182])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1wi6ag-0008C7-0f; Fri, 10 Jul 2026 04:28:11 -0400
-Received: from localhost (unknown [89.92.102.124])
- (Authenticated sender: emmanuel.blot@free.fr)
- by smtp2-g21.free.fr (Postfix) with ESMTPSA id 072462003D0;
- Fri, 10 Jul 2026 10:27:49 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
- s=smtp-20201208; t=1783672087;
- bh=hyBmI2Vm393pvvYJAsZ7U8knPDlelq2X+4zSmoussIM=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=ZCK27AYowhMS5QnlYAOWyvFFpIHx6QCI8ZOatv/mVbCN0XKDxNSkvWyqrjtxNR7Zq
- T8XS51l12aH6NSRjruC7N/0MXwO3F6MH736CE0gtvzHVI6DlG370sM+FplWUslpm1K
- yIlKwO9IzhwkIuLbj43ve1tUb0Ehd9urUyE5Ox3PjZH4eL1cnzFT0vLtv6u2wVvz0O
- v99lr1dWAh/KuWbn+CijcDy9mRyayzYxvFeZoH64Cp0bF42Cx8qf3e7e/WbyWELPyW
- 5MvbPdwF4VHLkHd50URxzi+Ts5BjhQBuWg5MDNJVL0UWgedC4v/cZqbV0tOZ39AHGH
- uks0ovvxInv2g==
-From: Emmanuel Blot <emmanuel.blot@free.fr>
-Date: Thu, 09 Jul 2026 17:23:21 +0200
-Subject: [PATCH 29/29] test/functional: catalina: test PCA9554 IO expander
- via QOM
+ (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1wi6c9-00006s-6I
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 04:29:43 -0400
+Message-ID: <f04f159f-7ade-4d2e-bf32-41cd6e6d71ff@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1783672177;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=OeIcNjRADKE/HqFC66TZVcEHnK3cb4R3oYoaysH3IWU=;
+ b=wGocQvBQzyJsx5XnxKtIupT1OHPh8Wae2H+uNrXS37eGXr77tWthzZbVO6vtfbH42l5yFN
+ H+gG2ON04x39IWWBuQQ89aCJSqTb3MVHzuZoajqrpxlHnMCFjfcZnQDckhcj8jDyV801j5
+ 36+ESU8oLbnZkS3AdBHktZjNaezwHpg=
+Date: Fri, 10 Jul 2026 16:28:56 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260709-catalina-upgrade-v1-29-82a63fead90c@free.fr>
-References: <20260709-catalina-upgrade-v1-0-82a63fead90c@free.fr>
-In-Reply-To: <20260709-catalina-upgrade-v1-0-82a63fead90c@free.fr>
-To: qemu-devel@nongnu.org
-Cc: Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org, 
- qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
- Corey Minyard <cminyard@mvista.com>, Emmanuel Blot <emmanuel.blot@free.fr>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783610581; l=1727;
- i=emmanuel.blot@free.fr; s=20260602; h=from:subject:message-id;
- bh=hyBmI2Vm393pvvYJAsZ7U8knPDlelq2X+4zSmoussIM=;
- b=5KwcCBGm8H+8Wjjvy4SWEPoR/MhilYC419xnrqox0pz8rFbPnvF5DaTcICuTcHoPe927SsCN5
- zFbHVOGBE3zC4cnRTmXDa36SttEDL2MUTm/e/XAcoA/uKyywKTKXWY/
-X-Developer-Key: i=emmanuel.blot@free.fr; a=ed25519;
- pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-Received-SPF: pass client-ip=212.27.42.2; envelope-from=emmanuel.blot@free.fr;
- helo=smtp2-g21.free.fr
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Cc: cui.tao@linux.dev, Song Gao <gaosong@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Tao Cui <cuitao@kylinos.cn>
+Subject: Re: [PATCH v2 3/3] target/loongarch: add no_pv_feature compat flag
+To: Bibo Mao <maobibo@loongson.cn>, qemu-devel@nongnu.org
+References: <20260710005029.345378-1-cui.tao@linux.dev>
+ <20260710005029.345378-4-cui.tao@linux.dev>
+ <dba7047b-a2e5-ba52-c59c-683e02a5ea19@loongson.cn>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+From: Tao Cui <cui.tao@linux.dev>
+In-Reply-To: <dba7047b-a2e5-ba52-c59c-683e02a5ea19@loongson.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=95.215.58.182; envelope-from=cui.tao@linux.dev;
+ helo=out-182.mta1.migadu.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,41 +71,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cover io_expander5 (pca9554@27, behind pca9548@70 channel 6 on i2c1), an
-8-bit expander reached through the pca9548 mux.
 
-Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
----
- tests/functional/arm/test_aspeed_catalina.py | 7 +++++++
- 1 file changed, 7 insertions(+)
 
-diff --git a/tests/functional/arm/test_aspeed_catalina.py b/tests/functional/arm/test_aspeed_catalina.py
-index cf8a59bd2a..17391164c3 100755
---- a/tests/functional/arm/test_aspeed_catalina.py
-+++ b/tests/functional/arm/test_aspeed_catalina.py
-@@ -22,6 +22,11 @@ class CatalinaMachine(AspeedTest):
-     # io_expander0: pca9555@20 on i2c2, a 16-bit expander directly on the bus.
-     IOEXP0_QOM = "/machine/soc/i2c/bus[2]/aspeed.i2c.bus.2/0x20"
-     IOEXP0_GPIODETECT = r"\[2-0020\]"
-+    # io_expander5: pca9554@27 behind pca9548@70 channel 6 on i2c1, an 8-bit
-+    # expander. Another expander sits at address 0x27 (pca9555@27 on i2c2), so
-+    # it is matched on both its address and its line count.
-+    IOEXP5_QOM = "/machine/soc/i2c/bus[1]/aspeed.i2c.bus.1/0x70/i2c.6/0x27"
-+    IOEXP5_GPIODETECT = r"-0027] \(8 lines\)"
- 
-     def test_arm_ast2600_catalina_openbmc(self):
-         image_path = self.uncompress(self.ASSET_CATALINA_FLASH)
-@@ -35,6 +40,8 @@ def test_arm_ast2600_catalina_openbmc(self):
- 
-         # pca9555@20 spans two 8-bit ports (pins 0-7 and 8-15).
-         self.check_ioexp(self.IOEXP0_QOM, self.IOEXP0_GPIODETECT, (0, 7, 8, 15))
-+        # pca9554@27 is a single 8-bit port.
-+        self.check_ioexp(self.IOEXP5_QOM, self.IOEXP5_GPIODETECT, (0, 3, 7))
- 
-     def check_ioexp(self, qom, gpiodetect, pins):
-         # The guest uses these expander lines as inputs (with pull-ups), so
+在 2026/7/10 11:09, Bibo Mao 写道:
+> 
+> 
+> On 2026/7/10 上午8:50, Tao Cui wrote:
+>> From: Tao Cui <cuitao@kylinos.cn>
+>>
+>> Advertising pv features to the guest affects the migration stream. Add a
+>> no_pv_feature compat flag so the behavior can be gated per machine version:
+>> LoongArchCPU gets a bool field, and the virt machine gains a
+>> LoongArchVirtMachineClass field that defaults the CPU flag per version.
+>>
+>> kvm_cpu_check_pv_features() skips populating pv features when the flag is
+>> set. The 11.1 machine type keeps pv advertisement off (no_pv_feature is
+>> true, preserving the previous behavior); from the new 11.2 machine type it
+>> is on by default.
+>>
+>> Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+>> ---
+>>   hw/loongarch/virt.c         | 14 +++++++++++++-
+>>   include/hw/loongarch/virt.h |  9 ++++++++-
+>>   target/loongarch/cpu.h      |  1 +
+>>   target/loongarch/kvm/kvm.c  |  5 +++++
+>>   4 files changed, 27 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+>> index 6693dea647..53c84c8def 100644
+>> --- a/hw/loongarch/virt.c
+>> +++ b/hw/loongarch/virt.c
+>> @@ -955,6 +955,8 @@ static void virt_init(MachineState *machine)
+>>                            machine->cpu_type);
+>>               exit(EXIT_FAILURE);
+>>           }
+>> +        LOONGARCH_CPU(cpuobj)->no_pv_feature =
+>> +            LOONGARCH_VIRT_MACHINE_GET_CLASS(lvms)->no_pv_feature;
+> I think it will better to set in function virt_cpu_plug().
+On virt_cpu_plug(): 
+  agreed, that's cleaner — I'll move the propagation there.
+>>           qdev_realize_and_unref(DEVICE(cpuobj), NULL, &error_fatal);
+>>       }
+>>       virt_check_dmsi(machine);
+>> @@ -1584,6 +1586,7 @@ static const TypeInfo virt_machine_info = {
+>>       .parent         = TYPE_MACHINE,
+>>       .abstract       = true,
+>>       .instance_size  = sizeof(LoongArchVirtMachineState),
+>> +    .class_size     = sizeof(LoongArchVirtMachineClass),
+>>       .class_init     = virt_class_init,
+>>       .instance_init  = virt_initfn,
+>>       .instance_finalize = virt_instance_finalize,
+>> @@ -1601,6 +1604,15 @@ static void machvirt_machine_init(void)
+>>   type_init(machvirt_machine_init);
+>>     static void virt_machine_11_1_options(MachineClass *mc)
+>> +{
+>> +    LoongArchVirtMachineClass *vmc = LOONGARCH_VIRT_MACHINE_CLASS(mc);
+>> +
+>> +    /* pv feature advertisement is enabled from 11.2; keep 11.1 unchanged */
+>> +    vmc->no_pv_feature = true;
+>> +}
+>> +DEFINE_VIRT_MACHINE(11, 1)
+>> +
+>> +static void virt_machine_11_2_options(MachineClass *mc)
+>>   {
+>>   }
+>> -DEFINE_VIRT_MACHINE_AS_LATEST(11, 1)
+>> +DEFINE_VIRT_MACHINE_AS_LATEST(11, 2)
+>> diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+>> index d39a9bbf5d..cf8d9e1fd2 100644
+>> --- a/include/hw/loongarch/virt.h
+>> +++ b/include/hw/loongarch/virt.h
+>> @@ -130,8 +130,15 @@ struct LoongArchVirtMachineState {
+>>       bool highmem_mmio;
+>>   };
+>>   +struct LoongArchVirtMachineClass {
+>> +    MachineClass parent_obj;
+>> +
+>> +    bool no_pv_feature;   /* compat: 11.1 and older do not advertise pv features */
+>> +};
+>> +
+>>   #define TYPE_LOONGARCH_VIRT_MACHINE  MACHINE_TYPE_NAME("virt")
+>> -OBJECT_DECLARE_SIMPLE_TYPE(LoongArchVirtMachineState, LOONGARCH_VIRT_MACHINE)
+>> +OBJECT_DECLARE_TYPE(LoongArchVirtMachineState, LoongArchVirtMachineClass,
+>> +                    LOONGARCH_VIRT_MACHINE)
+>>   void virt_acpi_setup(LoongArchVirtMachineState *lvms);
+>>   void virt_fdt_setup(LoongArchVirtMachineState *lvms);
+>>   diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+>> index ad30c73167..11bbb5f36e 100644
+>> --- a/target/loongarch/cpu.h
+>> +++ b/target/loongarch/cpu.h
+>> @@ -447,6 +447,7 @@ struct ArchCPU {
+>>       OnOffAuto msgint;
+>>       OnOffAuto kvm_pv_ipi;
+>>       OnOffAuto kvm_steal_time;
+>> +    bool no_pv_feature;   /* compat: do not advertise KVM pv features */
+>>       int32_t socket_id;  /* socket-id of this CPU */
+>>       int32_t core_id;    /* core-id of this CPU */
+>>       int32_t thread_id;  /* thread-id of this CPU */
+>> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+>> index c557ee3c3d..878914928b 100644
+>> --- a/target/loongarch/kvm/kvm.c
+>> +++ b/target/loongarch/kvm/kvm.c
+>> @@ -1119,6 +1119,11 @@ static int kvm_cpu_check_pv_features(CPUState *cs, Error **errp)
+>>       CPULoongArchState *env = cpu_env(cs);
+>>       bool kvm_supported;
+>>   +    /* compat: older machine types do not advertise pv features to the guest */
+>> +    if (cpu->no_pv_feature) {
+>> +        return 0;
+>> +    }
+>> +
+> This piece of code is unnecessary, with QEMU-11.1 machine type, kvm_cpu_check_pv_features checking is skipped when CPU is created, why?
 
--- 
-2.50.1
+On the check_pv_features guard: 
+you're right, it's unnecessary. As you
+pointed out in v1, check_pv_features() is host detection and should run
+regardless of machine version. I'll remove the guard and check
+no_pv_feature in kvm_set_pv_features() instead, so the push is skipped for
+11.1 while detection still happens normally.
+
+One timing concern: 
+virt_cpu_plug() runs after qdev_realize(), but the
+first FULL_STATE sync (post_init) fires during realize — so the push could
+happen before no_pv_feature is set in plug. Should I keep setting the flag
+before qdev_realize() (in virt_init) for now, or is there a better
+mechanism?
+
+> 
+> Regards
+> Bibo Mao
+>>       kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_PV_IPI);
+>>       if (cpu->kvm_pv_ipi == ON_OFF_AUTO_ON) {
+>>           if (!kvm_supported) {
+>>
+> 
 
 
