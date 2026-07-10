@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99037C44501
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 21:00:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B39EC43458
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 21:01:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiIGS-0003Ve-Kd; Fri, 10 Jul 2026 16:56:05 -0400
+	id 1wiIEm-0001DZ-Rw; Fri, 10 Jul 2026 16:54:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wiIFL-0001zd-Qf
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 16:54:57 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1wiIEk-00019X-AA
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 16:54:18 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wiIF4-0000xT-Bj
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 16:54:55 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-8484f229529so1094242b3a.2
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 13:54:37 -0700 (PDT)
+ id 1wiIEd-0000dN-M9
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 16:54:17 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-84867f07d63so1546409b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 13:54:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783716877; x=1784321677; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783716850; x=1784321650; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=HlU1WJhs/EKnxRmtpuuBgS8HV9oUIdhQMc6Ge3RayaI=;
- b=HtJpNWkwLoR95fmac8+GtHEMOhehaX/IUQfm65dwLdb4paOnXG3HDGDnu6bOQ85r13
- IJcnumPGGi9PKXTtB2gk/lh8GdRjakdp/ui5KdLtyo1HaEJ2/4d9yP5Kt1ZZFe0B91zl
- aCxxVSyBDR+77xB0XBWEFfHZmHj+Y6V5TcNhk/qXxZaIJ5IkjQnXjYhPZXwgdH71Up5z
- xJUAJp9WjtSuOmxXePCEzBXmE6EV+BqwLN3nV8aawPxqIn0yKWqUXeDLmN7hdw4r6rbS
- DohGBnLHk0tQk9DHHv9JT6a3xRParWg/stt6e8diQXrZpF5s+x1D+xYCcnJ1vq13pwLr
- JWZg==
+ bh=gkaJCNX67B3j7ndloFDN5kylCYvx7pNXiMbKUrJ80tc=;
+ b=tfh08xfnK67VgfddWUo+s1dlhHRgF/MPn50vxksRQoI+UbScFdrhL5YvYNNMIC3fxW
+ Tt0wDJzLm7liaXUB2RhASjxVLsT5/D3K6UJY8956hO6EJ2e1lXBwy05Q9F9XbDxKq55s
+ l9BXIO7q8pLgsXriXsprAauhEZvtJE3WHQ8Exq0qMiYSnjUiw/zoCgECZePsILhLNXOB
+ NzHFXw8LMSRN2swNhizxjE1PO2gW8avUpKQUIAmoY2peZ0S1c6szy8rTqdmyJYBaEIAd
+ N+zuzUq3arsWwU4pUpzDmqpu4P86FeiiBEUW1b0YLhKNlVgCPUjORH/7xYEKCXQZW983
+ M/8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783716877; x=1784321677;
+ d=1e100.net; s=20251104; t=1783716850; x=1784321650;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=HlU1WJhs/EKnxRmtpuuBgS8HV9oUIdhQMc6Ge3RayaI=;
- b=fXS8Rx2c481FSUN4h0M1surPn/fWsfB+bcV+fGd7rednd/Nrw4J1NuFOv2gybCsLse
- i0wfyTFhQ2ny5tb0+SdotEbAQ6WwLvAKhD66G4iaCYqNz1ohXZl3vcpCcRGWtKrVs0+Q
- EYQrCgSQ+FG73HdCHaXiv26gBCaOeCklVELCYTTrthCatoXAfQ75hHENZhcb+D33SWMf
- eDbZZezHfjyl9AMfCmBS0frGt0TfwLSChMxN39QSURb8rTv35OI1e/+ZNAbuRZWsj+kn
- IN7nw8MjSXtcPxdUTb0fasICsxqbFjgZvSrB+rpqKRuZnmn0Udpwa7pcSDkr1rJOhSTa
- X2bA==
-X-Gm-Message-State: AOJu0Yx/lROJZIR7p8ZyxNbECMYMomMnNLPEqPV25MDfmS+BfLvvzV5s
- bfJOvy1mOcxM6vyR4JEGH3cNJGBwf6Kpx5NV980Oj5R+fLMeXFxuLRSxtEtjnCg+jlzAH/sju/V
- S+qth
-X-Gm-Gg: AfdE7clT6MX+qrsxFcZDjkCaBzRvh53YvyQyNW+h7BXPIcHG4a6Dd68mOmALPioa/4O
- 4BfUhwaMtbX30x5RUwWutiXDqg/cI12TsgHJx3ra+oEZdW3n9xfbrd1yDWb3rrCAb78TtMQhOt5
- qGV+E22/IER1JoUu0MqNmuTLffAHQcrX14nKaLGoDstxylLrRmqhnJo5mpFhd82XvF869DM0nrc
- Gxv/noLUSThkXQrfuLhMAQYT77QC59TBgLtS0XNodQG//iYqmWtBckcltbQPhG0KIvCVDqIBWJ0
- oMwBJJvQ6GX32MNoq1zZQym1ITZfns3yARuSmRLv9d3knHMot4ptb2ZudA822EnJrebaiPUasmv
- g4YaPm3HJOIQ7Py5/joOUo/lVDy9oNPp7GuyTnaC/+prNJonOFSSMMaJSLtAk0v53nHGKhuJ4gV
- 5piTK2gkPif/NClqJ/nIwckfSYYLi8
-X-Received: by 2002:a05:6a00:1881:b0:846:f517:ba5a with SMTP id
- d2e1a72fcca58-84889716692mr549556b3a.28.1783716876615; 
- Fri, 10 Jul 2026 13:54:36 -0700 (PDT)
+ bh=gkaJCNX67B3j7ndloFDN5kylCYvx7pNXiMbKUrJ80tc=;
+ b=TWlx/57BYRUisdcoPYvm/+02r3k6li/Sc8tE199bACLWPDxRdzCF+ukdx13KGyqxGk
+ cJ+ER6qSmUlu05STeUuEWy+Bz7/maQjffVthQybojXn9dMbeeIN6RAPYWC2iNZzd1kEP
+ wyhRg1akFUtNqNFnvVXbq9PfdHvBQTFURWm28gPp2Wero1M1Qsm5GFmxM4PtKDAQvpE5
+ /f5ay673R184GjDZ6HvWnbrOGT8uKzVerdtOHKcFHHFMrQyIlZigQDeSqH6aoCia8ra5
+ WMHhn22NAJrJAI3U7tDxaXJ61WfgYfitEJg8I+grPg1ehAwHrjtIPCsKJzAurWAN55AI
+ Clqw==
+X-Gm-Message-State: AOJu0YzJvwsUEwq6tpdk4OU53v2J3GGjfLFxML7o5V7nETaInkdTon6k
+ O6sW2U3O+rL/GZK75pKg063hhc3VrWfsJpHS+20dfhPqwssvPBavvZlC0R7b+OQNAIIhf56mrrv
+ yOmKa
+X-Gm-Gg: AfdE7cnHhm0FFG2nE/Y2pMjnKD2C5moW7O2oKxgXk8fcXIa+NtzjQoSxeCs7RZ9rEoR
+ ISMlRqvOjfjktY6YwURO2zSu8aQjhUg1UpE4+t9z5cLe+I7y0s0pY1FdNzjR2f7buaGvdnd+7Uu
+ BFZlPXKpXO+PPbPXGRJ6VjiNVsJMgh3J7V6c7nXr2PMVLVDgdgbiuwR7F9PtnBV7ThkDK3eRCZh
+ SKOEWc00JzSGjU+TRecz/iSk4Fsb08mviAKHwMW888a+h3Ypx8lu/vI7AWnuykF/P4itYBqSyFI
+ 77h/IZOWddXXKSMtscRRm4y0S4895x39nvfDLamsLZ5H9ZFliwGLm6Saq8Df8jAsCIQgBY8OMJ/
+ k760U2i2k2et5R/uuGbJVQsY2FexeT3u91JBoFvrHxTbIWUe9Z8iNvCvuId9NQJ8IizIyTUXyu2
+ a7zDx8ffqKQGva0GeUJADyP8OmLzBZ
+X-Received: by 2002:a05:6a00:f08:b0:848:4859:a45 with SMTP id
+ d2e1a72fcca58-848895dc4b9mr564447b3a.2.1783716850013; 
+ Fri, 10 Jul 2026 13:54:10 -0700 (PDT)
 Received: from stoup.. ([71.212.146.49]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-847f6d76106sm10780574b3a.40.2026.07.10.13.54.35
+ d2e1a72fcca58-847f6d76106sm10780574b3a.40.2026.07.10.13.54.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Jul 2026 13:54:36 -0700 (PDT)
+ Fri, 10 Jul 2026 13:54:09 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
  qemu-s390x@nongnu.org, jcmvbkbc@gmail.com
-Subject: [PATCH v3 31/51] target/ppc: Use CPUBreakpoint arg in
- breakpoint_handler
-Date: Fri, 10 Jul 2026 13:53:41 -0700
-Message-ID: <20260710205401.836304-32-richard.henderson@linaro.org>
+Subject: [PATCH v3 05/51] hw/core/cpu: Remove exec/breakpoint.h include
+Date: Fri, 10 Jul 2026 13:53:15 -0700
+Message-ID: <20260710205401.836304-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260710205401.836304-1-richard.henderson@linaro.org>
 References: <20260710205401.836304-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: 4
 X-Spam_score: 0.4
 X-Spam_bar: /
@@ -101,47 +100,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We don't need to check PPC_ISA207S, because that's already
-done starting with register_book3s_207_dbg_sprs().
-We no longer need to check BP_CPU or clear watchpoint_hit.
+This is no longer required in the generic header.  Add includes
+where required elsewhere in the code base.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/ppc/tcg-excp_helper.c | 21 ++++++++-------------
- 1 file changed, 8 insertions(+), 13 deletions(-)
+ include/hw/core/cpu.h     | 1 -
+ accel/tcg/tcg-accel-ops.c | 1 +
+ cpu-common.c              | 1 +
+ gdbstub/system.c          | 1 +
+ gdbstub/user.c            | 1 +
+ target/i386/kvm/kvm.c     | 1 +
+ target/ppc/kvm.c          | 1 +
+ target/s390x/kvm/kvm.c    | 1 +
+ target/xtensa/helper.c    | 1 +
+ 9 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
-index 51358c901f..56ca66e7b5 100644
---- a/target/ppc/tcg-excp_helper.c
-+++ b/target/ppc/tcg-excp_helper.c
-@@ -314,19 +314,14 @@ void ppc_cpu_debug_excp_handler(CPUState *cs, CPUBreakpoint *hit)
- #if defined(TARGET_PPC64)
-     CPUPPCState *env = cpu_env(cs);
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 481646f5b9..5c01908f83 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -22,7 +22,6 @@
  
--    if (env->insns_flags2 & PPC2_ISA207S) {
--        if (cs->watchpoint_hit) {
--            if (cs->watchpoint_hit->flags & BP_CPU) {
--                env->spr[SPR_DAR] = cs->watchpoint_hit->hitaddr;
--                env->spr[SPR_DSISR] = PPC_BIT(41);
--                cs->watchpoint_hit = NULL;
--                raise_exception(env, POWERPC_EXCP_DSI);
--            }
--            cs->watchpoint_hit = NULL;
--        } else if (cpu_breakpoint_test(cs, env->nip, BP_CPU)) {
--            raise_exception_err(env, POWERPC_EXCP_TRACE,
--                                PPC_BIT(33) | PPC_BIT(43));
--        }
-+    if (hit->flags & BP_MEM_ACCESS) {
-+        /* watchpoint */
-+        env->spr[SPR_DAR] = hit->hitaddr;
-+        env->spr[SPR_DSISR] = PPC_BIT(41);
-+        raise_exception(env, POWERPC_EXCP_DSI);
-+    } else {
-+        /* breakpoint */
-+        raise_exception_err(env, POWERPC_EXCP_TRACE, PPC_BIT(33) | PPC_BIT(43));
-     }
- #endif
- }
+ #include "hw/core/qdev.h"
+ #include "disas/dis-asm.h"
+-#include "exec/breakpoint.h"
+ #include "exec/hwaddr.h"
+ #include "exec/vaddr.h"
+ #include "exec/memattrs.h"
+diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
+index c59ab85606..76af8d67c0 100644
+--- a/accel/tcg/tcg-accel-ops.c
++++ b/accel/tcg/tcg-accel-ops.c
+@@ -31,6 +31,7 @@
+ #include "accel/tcg/cpu-loop.h"
+ #include "system/tcg.h"
+ #include "system/replay.h"
++#include "exec/breakpoint.h"
+ #include "exec/icount.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/guest-random.h"
+diff --git a/cpu-common.c b/cpu-common.c
+index ba2676cbad..af64bb1126 100644
+--- a/cpu-common.c
++++ b/cpu-common.c
+@@ -20,6 +20,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/main-loop.h"
+ #include "exec/cpu-common.h"
++#include "exec/breakpoint.h"
+ #include "hw/core/cpu.h"
+ #include "qemu/lockable.h"
+ #include "trace/trace-root.h"
+diff --git a/gdbstub/system.c b/gdbstub/system.c
+index c77d067ab4..724fd24c00 100644
+--- a/gdbstub/system.c
++++ b/gdbstub/system.c
+@@ -15,6 +15,7 @@
+ #include "qemu/error-report.h"
+ #include "qemu/cutils.h"
+ #include "exec/gdbstub.h"
++#include "exec/breakpoint.h"
+ #include "gdbstub/syscalls.h"
+ #include "gdbstub/commands.h"
+ #include "exec/hwaddr.h"
+diff --git a/gdbstub/user.c b/gdbstub/user.c
+index 9e6f9a6f37..0a61bd7d92 100644
+--- a/gdbstub/user.c
++++ b/gdbstub/user.c
+@@ -14,6 +14,7 @@
+ #include "qemu/cutils.h"
+ #include "qemu/sockets.h"
+ #include "qapi/error.h"
++#include "exec/breakpoint.h"
+ #include "exec/hwaddr.h"
+ #include "exec/gdbstub.h"
+ #include "gdbstub/commands.h"
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 4272b6770c..8161831de2 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -68,6 +68,7 @@
+ #include "hw/pci/msi.h"
+ #include "hw/pci/msix.h"
+ #include "migration/blocker.h"
++#include "exec/breakpoint.h"
+ #include "exec/memattrs.h"
+ #include "exec/target_page.h"
+ #include "trace.h"
+diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+index aa21cab50e..1a093e1f83 100644
+--- a/target/ppc/kvm.c
++++ b/target/ppc/kvm.c
+@@ -40,6 +40,7 @@
+ #include "system/watchdog.h"
+ #include "trace.h"
+ #include "gdbstub/enums.h"
++#include "exec/breakpoint.h"
+ #include "exec/memattrs.h"
+ #include "system/ramblock.h"
+ #include "system/hostmem.h"
+diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
+index 72031a5714..6f7f75f601 100644
+--- a/target/s390x/kvm/kvm.c
++++ b/target/s390x/kvm/kvm.c
+@@ -48,6 +48,7 @@
+ #include "hw/s390x/s390-pci-bus.h"
+ #include "hw/s390x/ipl.h"
+ #include "hw/s390x/ebcdic.h"
++#include "exec/breakpoint.h"
+ #include "exec/memattrs.h"
+ #include "hw/s390x/s390-virtio-ccw.h"
+ #include "hw/s390x/s390-hypercall.h"
+diff --git a/target/xtensa/helper.c b/target/xtensa/helper.c
+index 5a0e865514..0db5502287 100644
+--- a/target/xtensa/helper.c
++++ b/target/xtensa/helper.c
+@@ -30,6 +30,7 @@
+ #include "cpu.h"
+ #include "exec/cputlb.h"
+ #include "exec/target_page.h"
++#include "exec/breakpoint.h"
+ #include "gdbstub/helpers.h"
+ #include "exec/helper-proto.h"
+ #include "accel/tcg/cpu-loop.h"
 -- 
 2.43.0
 
