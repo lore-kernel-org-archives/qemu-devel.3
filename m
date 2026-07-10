@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB063C43458
-	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 21:53:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D088C44501
+	for <qemu-devel@archiver.kernel.org>; Fri, 10 Jul 2026 21:53:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiJA4-0002zL-6f; Fri, 10 Jul 2026 17:53:32 -0400
+	id 1wiJAA-0003Dh-LT; Fri, 10 Jul 2026 17:53:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wiJ9x-000252-C9
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 17:53:25 -0400
+ id 1wiJ9z-0002Po-N3
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 17:53:27 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wiJ9s-0006N1-Ec
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 17:53:25 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ id 1wiJ9s-0006Lf-Ei
+ for qemu-devel@nongnu.org; Fri, 10 Jul 2026 17:53:27 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66AK3Gel1621358
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 21:53:07 GMT
+ 66AK3RY61697276
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 21:53:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=3BpZ/M9+d6e
- c7QF7OgKBpEOVQEVMQRqG6BSoQvgmFZM=; b=Jajb+E/xiyPoxwlMDjL2HaY5ADo
- YCledJ+/V2Sgtdhf2gzQ64NgxGAjGcjfM24ApY3+ThGNQhU88X033dgpsHOyj8GL
- O4nfU3MWL64MXncPpF6xGqBWw4vAOO4QmNCI4ppGUTEtWUFIy0WTdXs73lI5Euis
- lEUnr+zNU5NdUs7TuFRkZqJ1ZHyFXVAA0ooePDH9p0iQ0a1gBJu/WXqMHc13WPy9
- MtLXgLCX1apjkqy0adIdD6ppFH2xDdTGdqgxYDza1au1BWZ6KZee4eKKR3yuyMRH
- Ja7p8CN/1WJYk+mExvj7MAEyyc9m9LB21qx6uLElwszLA5SyHlKHY9SklhA==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fb4rm8vj9-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=tAEmOwTjiYF
+ I2fHVjKsEic1v78ZawPb5T21+qhrLc1s=; b=D6OXZEHvaO78Tqc4IJ8iRkasagU
+ DnDn6FrUBfYbJceOw4QDy/CQA9Qi/r6oPOoBXPUw98ovgyBpF0RzN7HZMmndIG0+
+ QMF4T1GNHLvrR2XLuFBmShZk0YYwWlFX9D/n7B0DiJ2WQyfoUBCehRLhQJY7Q5uC
+ fiwU9hymCOhsO9s6+j34gurYtc3NRGNASkZyjRzlZcm7TWnKID//Maa2WEep+Rpi
+ S9ne2M4buADvg79gRLcrwpgN/55kP4BNZ16/iNflsI5HUD+0VGAUi+yX0at0V+ss
+ fK9dswi3H93vjNcXU52YwXWBlQ5C6OFBAz8TUY5lNARUgLDczH7l0ikZnnA==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
+ [209.85.210.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fax5djhgb-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 21:53:07 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-c88aab7c1d4so1588171a12.3
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 14:53:07 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 21:53:02 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id
+ d2e1a72fcca58-8478423e020so2337007b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 14:53:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783720387; x=1784325187; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783720382; x=1784325182; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=3BpZ/M9+d6ec7QF7OgKBpEOVQEVMQRqG6BSoQvgmFZM=;
- b=Vgx/YZPpTB6IbeTdg8laMWLV879L80mKDENsjarJQPIpIq/2w5u/ADWA92zMGmIVQf
- SGq1u5u+tnRcy3O84i/lIGuMmOCWWJVPNbxFF+RlibpU7cUMYShGkv91O2iMfcVYZ5mR
- 0WkTk8r69MO2almu6exnyGHUlaytnTnXwXKcUURR6IFH6iWhHONKoUBTW25N5dJviajk
- Li6rjGEJfKHxPHbbo4bgVuQNsFUDKbmzEXH4oZHPzmWOiUYd6HaxzcWY8BS83EpF+1R1
- ocZknPGug0A+TjUtHACUcxlCKGFZI2YaXS8V/g36alyrVcqJqYqOukp++8qeqm1eAZvr
- YxJA==
+ bh=tAEmOwTjiYFI2fHVjKsEic1v78ZawPb5T21+qhrLc1s=;
+ b=RX8LIdcBdGLNS/9A2qq0VV5ePIQU5Ljgxu7/g+pwS2kjM7NHDvHr4hqSXpc0hF5WqY
+ HXiI3FFXV24dsf8hJtg6j0c2tRXGxNQ9mm8rSyyT1UxQ/HdYrD961ZE+nr+f13x+kpQX
+ rqaZ7BiKvvT1lJAfMBda0iMTkU8LBzJHRh+Oe1Auc5SDib0DeqccnoZFH9D122wl2isp
+ 0qUjEi4LLDZVv8JsboI8CEyEofCsyV4rQYWPsTsNVLEB6uuQPk8XTyXZQpooM/D0y1kt
+ /55zA6g5MRE6+d7fTfaHsQf5rj4/u/xRncmxeC3cacpwmYLY9PoSdDMoDA/dfmG8AKeN
+ Lf1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783720387; x=1784325187;
+ d=1e100.net; s=20251104; t=1783720382; x=1784325182;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=3BpZ/M9+d6ec7QF7OgKBpEOVQEVMQRqG6BSoQvgmFZM=;
- b=qkq5n4/O5LBlhIydbJQZp4GPI/w7ojObu+T4dztrEPs7vZ0jMmzriyeYyyL6i3kUTn
- LWrlgJN9eHkoWj/0YpzfO7Oz1n9X6tUTKjBdetx+MC7ZBVSiQ09JRC7dC1/1IPrXPe3A
- vITv0Q41jjA8CL5cOa9wtM6Yas6XoF4xK3+Tu5yHPSq3PZP8mAAkAx6PnIrJaL7vxNYp
- 2FgNNlVzbAx+Mgd5dKo47xawcLJT6sZpG69OOcoLaACbfMekq84idszw8+F862R8dR/m
- jrSkhLR7UYhCKJwQYwMlZ8SQYPnxRx1nI36KkJMZrcoJQQhfLyuE+gJjmtKF/+Q+0llA
- A7lA==
-X-Gm-Message-State: AOJu0YxJM3DdkKecuq419jB9wL8hECr6IC7akujvinPbsbCL+l+Ns1Nf
- 5pBBu3n/x4Lzek+wS7QFJV2cSsgUHoiEmi6cnpEq9xojBTI0y62jT22UesLGhXq3Wn40ioB7JvX
- /JOLmcUElSmCg7H8S+szHN2Xg4u/weT5eH+Fb/BlEP+mYPTHQMhU3919pfRyxwzFYxA==
-X-Gm-Gg: AfdE7cn7CO1+kF0XTGdLmJcnE6PQ5ta31wDWwK/3ZIV+P2KUe8rDB76sfHHDPRwgFaH
- nHKCnq0hCepI1rYNgKN4Bvz7i01L9ZOeiChTnSeqGWJUjfEJ1z1ZOJ5jZkKZcKzbZosmg43eFv2
- OVc04fACXP9f44bkdrTN+XcjzvTw2cAZ68SPl1IWgiEXinxWDWBlC9wMFPOPkA0nSsDuwZL5/9d
- 0emJ+wQNLugDyZIY7gtATYVY+VUEC2NltgFCeEhi+d8WbGQHphSQrjiIb+UIRc7qdo/W+LF7CJK
- nJPj58QSwfyLSjXiuq+7v/rHG7mBGSTs4j3ialZ0t/YeIDWWIQBe6CwJqILit0Hc/XrYbihS5Oa
- 1sBkaLlJAS+a0MZhXAq4SWn7C1DvkX8va3kF4hwTijWKFEWx16kxJwGWZ3YtlJZMdj+tXtcQBPS
- BDl6ozcA==
-X-Received: by 2002:a05:6a21:b8d:b0:3c0:9c19:659a with SMTP id
- adf61e73a8af0-3c110b7b9f2mr713694637.66.1783720386776; 
- Fri, 10 Jul 2026 14:53:06 -0700 (PDT)
-X-Received: by 2002:a05:6a21:b8d:b0:3c0:9c19:659a with SMTP id
- adf61e73a8af0-3c110b7b9f2mr713665637.66.1783720386314; 
- Fri, 10 Jul 2026 14:53:06 -0700 (PDT)
+ bh=tAEmOwTjiYFI2fHVjKsEic1v78ZawPb5T21+qhrLc1s=;
+ b=GjG+Hyhe7+MjZX0PWdCZMLyjsBGMKNbQ3mz5RnRfHEWxuyhz2A6Kty8icw2jFq0Wfm
+ ugNbKYfa/clk1S3wUFtDcD2DsDEtTpySrHj6CIUMAy4qnnL/LOaaqQ4f3I+Wo64DcS0m
+ Y02G1Oh0YLvGOBW8qSuqYYsYyZBJgHpWOwsulhFib57BpFhnj6MxnQTyFlm+2oJpno0h
+ N2v8aPafIaxgV9Np6q4OZh3sYIzQSpjWjtHURhifeToPiI3o988vhA5wGW9uDUOBy+hJ
+ 3cwLCf0pHsmI3WvBIR2AT1n0W/z0iNzERmZlMLzWnqO9LHp/DYWUvlBOk2IpEO2XKk9G
+ uh2Q==
+X-Gm-Message-State: AOJu0Yx4wfN255Bjvk7Vqs7yPikJtyfInpfx/EykJnWpf+hfDSz7cLbF
+ QHFo7/iMXJuUP7zhQBVaR47CcyOUw/opotwcBE8i8Y2yYs6HthFoN8IPsxWX14C/M+cwq+1Plpc
+ JGVPQ6TuLhLzg6AVvbP9R/cZoHnwCbevSyC8u2zyy5lj1DTK82NORlB1hIVVvrAYjRQ==
+X-Gm-Gg: AfdE7cm/z5+GTOJ5wrA6ld03GekbUMPq3u5qECIYzn/pCqTnJXA37zzslVWcCuJ54UG
+ cGiDwqxedWQQzhpP4s/YQvQrAcF6lIDyjTACNkSfcpkYI+jouFiMZZLvw2PowuLxFnM+6Y0HFKp
+ w/aTSnycRIFx065RuGLx3bQylDEoohxBSz8+Dv16otJHrOjLO1pBb+Pa3sSWKfKaS7Cnv7HUXzU
+ sMn0ZA3Ctz9zrjPwluT5SvP4D/x0ulI+Kf0Rlyv3DP6DEgKE6lttbzNSvsJfNiRglSk4Feu7L2B
+ ozK6Je8hpkzZ4e6ZS1QLG9JLUG5IXj1GWhgpFSTXFsuZhPyLwotaVuhYlntEqp56rS2KS8ZlaMu
+ nY7eC7afEKGZmFr8iA/IYkYiutQcSFuZooD4aTb0IhM9Rh3wPauIcbvcNJN5QuTkKYee+FQavek
+ 9efcCYjA==
+X-Received: by 2002:a05:6a21:10b:b0:3c0:9c19:6589 with SMTP id
+ adf61e73a8af0-3c110cea187mr785589637.67.1783720381880; 
+ Fri, 10 Jul 2026 14:53:01 -0700 (PDT)
+X-Received: by 2002:a05:6a21:10b:b0:3c0:9c19:6589 with SMTP id
+ adf61e73a8af0-3c110cea187mr785573637.67.1783720381407; 
+ Fri, 10 Jul 2026 14:53:01 -0700 (PDT)
 Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-311b00048a3sm14268659eec.5.2026.07.10.14.53.04
+ 5a478bee46e88-311b00048a3sm14268659eec.5.2026.07.10.14.52.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Jul 2026 14:53:05 -0700 (PDT)
+ Fri, 10 Jul 2026 14:52:59 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
@@ -99,41 +99,40 @@ Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
  Gustavo Romero <gustavo.romero@linaro.org>, Helge Deller <deller@gmx.de>
-Subject: [PATCH v5 86/98] tests/tcg/sh4: user tests
-Date: Fri, 10 Jul 2026 14:43:30 -0700
-Message-ID: <20260710214343.2065491-87-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v5 84/98] tests/tcg/s390x: system tests
+Date: Fri, 10 Jul 2026 14:43:28 -0700
+Message-ID: <20260710214343.2065491-85-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260710214343.2065491-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260710214343.2065491-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: ue8EOL4MwukCqqx6BDSDIFSAKuBW0nw9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEwMDIyMCBTYWx0ZWRfX4gUUAZnG/0q+
- WapUzm0KEtz5SC+SLlmwo5u64e1zXwpnd1Q3IH445FXiIkEWnvKERxGSE52hpmz/suRyf4nQ5lu
- 1cDskRm08iK92ww0QfErMTGLL2X7mYabjmf0Zc8JKIh7lDVqK0aV5PXGUU8iC1Zmdi/SRTsZU8q
- +cEEuA46HVsBjnwV/PxIA/+M1tsPT+C8AMGIxKIdfngAxVHhpcdvPCW0xQYDq46tiyNBAwCqnOq
- Vazl2tHdwX7iwtMiI0e1CcFzBySKTn+kd5MdAeCZgMh3096UGgxSSq2T8n5mqpN0gcBeX7GAngM
- woZHT8wzHIGlg4ukn4QZvocEqDESw0Y4aTOijxTw0fjw7RYeTmHeBY6UHKSpi51L3+YJesxPjP8
- Qc/C/FuZfjNRKqaisI1c2w2aRVmajZf7CZfvvmiKCpXNfzkS9zCK/zz5plBTqRPY9//l4seyZjU
- fcLRz+gh1TWuOggXbgw==
-X-Authority-Analysis: v=2.4 cv=JIYLdcKb c=1 sm=1 tr=0 ts=6a5169c3 cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEwMDIyMCBTYWx0ZWRfX/Swkww9RtEtH
+ hbRYQbL95MNtWc2Et+7kPJ62IA1lCKXdA1EPW6IKS+iAPuepMACc/GV73Cfy6m5E3dxMPRTIge+
+ q6kAeE14IqbtO6OBg8mfPfNQ8DA3/+U=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEwMDIyMCBTYWx0ZWRfX/6+6WmFKIUmm
+ JCFL2XVkumaUyvxW8xzxiGRpV+K772jRKDfpgi2WcYq8563UVwr/ywb/d5mtBDModjaQ4nHVaGQ
+ tZAoJrg5s5lD2+LTKbPEMULnsrTIbtwUSQ9OIPo6fqgQO4lJcQaiUUXVTcchIW7Ha1zj7U3jTUo
+ dkZGejTm5w7FY0mYVpOne/bCiyl8G6kZkFs+5pFZT0KLZXYPngRHFsaRchWlDWiUbH/0CitKJWB
+ 0wOHCuhWdN7pYTpVPQPIvKVVh7/JGpfSaBh86QHVo5PVTRI2IQorz84mVrcssGwIooV7nr18qUl
+ c7LdhILRspgUAkaytaMN3G+KaMg6C2qxpMpUpkxGYqX2t+xy3D/I8u8DA4YLmostFOdKWl0c2HJ
+ XdUTR3I9hC4YqVUQedn6rt6wC3TMFpx+hyjOj5UM83edx+yQz1E6nfot4HGt8V1zCTjjHPav+k4
+ VKK63GnlrRpzCQ8+W8A==
+X-Proofpoint-GUID: qViLe6wAOpSmSJHGPU9YfOsIuMuR611p
+X-Proofpoint-ORIG-GUID: qViLe6wAOpSmSJHGPU9YfOsIuMuR611p
+X-Authority-Analysis: v=2.4 cv=M/x97Sws c=1 sm=1 tr=0 ts=6a5169be cx=c_pps
+ a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=EUspDBNiAAAA:8
- a=fPVroQZirc9Ac6AjaT0A:9 a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-GUID: ue8EOL4MwukCqqx6BDSDIFSAKuBW0nw9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEwMDIyMCBTYWx0ZWRfX47k7q2iHHusU
- ccoqxZcCRKraoWBQOswevlAoAGTXb5+DUDZodj/fushq6gOvVYQC2Pw1qOmOmRAoJBmK91xXyRT
- LsEDSWVD4IicN9MTgmyLvQt/gJkC/AA=
+ a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=EUspDBNiAAAA:8
+ a=_v66U6LDWMuBVSOQVNIA:9 a=OpyuDcXvxspvyRM73sMx:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-10_06,2026-07-10_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 adultscore=0 impostorscore=0 lowpriorityscore=0
- bulkscore=0 malwarescore=0 spamscore=0 suspectscore=0 clxscore=1015
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607100220
+ lowpriorityscore=0 adultscore=0 bulkscore=0 malwarescore=0 suspectscore=0
+ phishscore=0 spamscore=0 clxscore=1015 priorityscore=1501 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607100220
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0a-0031df01.pphosted.com
@@ -161,76 +160,181 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/tcg/meson.build         |  1 +
- tests/tcg/sh4/Makefile.target | 18 ------------------
- tests/tcg/sh4/meson.build     | 25 +++++++++++++++++++++++++
- 3 files changed, 26 insertions(+), 18 deletions(-)
- delete mode 100644 tests/tcg/sh4/Makefile.target
- create mode 100644 tests/tcg/sh4/meson.build
+ tests/tcg/s390x/Makefile.softmmu-target | 57 ----------------
+ tests/tcg/s390x/meson.build             |  2 +
+ tests/tcg/s390x/system/meson.build      | 90 +++++++++++++++++++++++++
+ 3 files changed, 92 insertions(+), 57 deletions(-)
+ delete mode 100644 tests/tcg/s390x/Makefile.softmmu-target
+ create mode 100644 tests/tcg/s390x/system/meson.build
 
-diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-index 014959c38cb..07e03048d18 100644
---- a/tests/tcg/meson.build
-+++ b/tests/tcg/meson.build
-@@ -150,6 +150,7 @@ subdir('ppc64')
- subdir('ppc64le')
- subdir('riscv64')
- subdir('s390x')
-+subdir('sh4')
- 
- image_targets = {}
- exe_targets = []
-diff --git a/tests/tcg/sh4/Makefile.target b/tests/tcg/sh4/Makefile.target
+diff --git a/tests/tcg/s390x/Makefile.softmmu-target b/tests/tcg/s390x/Makefile.softmmu-target
 deleted file mode 100644
-index b7a8737be0f..00000000000
---- a/tests/tcg/sh4/Makefile.target
+index a4425d3184a..00000000000
+--- a/tests/tcg/s390x/Makefile.softmmu-target
 +++ /dev/null
-@@ -1,18 +0,0 @@
--# -*- Mode: makefile -*-
--#
--# SuperH specific tweaks
--#
+@@ -1,57 +0,0 @@
+-S390X_SRC=$(SRC_PATH)/tests/tcg/s390x
+-VPATH+=$(S390X_SRC)
+-# EXTFLAGS can be passed by the user, e.g. to override the --accel
+-QEMU_OPTS+=-action panic=exit-failure -nographic -serial chardev:output $(EXTFLAGS) -kernel
+-LINK_SCRIPT=$(S390X_SRC)/softmmu.ld
+-CFLAGS+=-ggdb -O0 -I$(SRC_PATH)/include/hw/s390x/ipl/
+-LDFLAGS=-nostdlib -static
 -
--VPATH += $(SRC_PATH)/tests/tcg/sh4
+-%.o: %.S
+-	$(CC) -march=z13 -m64 -Wa,--noexecstack -c $< -o $@
 -
--test-macl: CFLAGS += -O -g
--TESTS += test-macl
+-%.o: %.c
+-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -march=z13 -m64 -c $< -o $@
 -
--test-macw: CFLAGS += -O -g
--TESTS += test-macw
+-%: %.o
+-	$(CC) $< -o $@ $(LDFLAGS)
 -
--test-addv: CFLAGS += -O -g
--TESTS += test-addv
+-ASM_TESTS =                                                                    \
+-    bal                                                                        \
+-    cksm                                                                       \
+-    clm                                                                        \
+-    exrl-ssm-early                                                             \
+-    icm                                                                        \
+-    sam                                                                        \
+-    lpsw                                                                       \
+-    lpswe-early                                                                \
+-    lra                                                                        \
+-    mc                                                                         \
+-    per                                                                        \
+-    precise-smc-softmmu                                                        \
+-    sckc                                                                       \
+-    ssm-early                                                                  \
+-    stosm-early                                                                \
+-    stpq                                                                       \
+-    unaligned-lowcore
 -
--test-subv: CFLAGS += -O -g
--TESTS += test-subv
-diff --git a/tests/tcg/sh4/meson.build b/tests/tcg/sh4/meson.build
+-include $(S390X_SRC)/pgm-specification.mak
+-$(PGM_SPECIFICATION_TESTS): pgm-specification-softmmu.o
+-$(PGM_SPECIFICATION_TESTS): LDFLAGS+=pgm-specification-softmmu.o
+-ASM_TESTS += $(PGM_SPECIFICATION_TESTS)
+-
+-$(ASM_TESTS): LDFLAGS += -Wl,-T$(LINK_SCRIPT) -Wl,--build-id=none
+-$(ASM_TESTS): $(LINK_SCRIPT)
+-TESTS += $(ASM_TESTS)
+-
+-MULTIARCH_TESTS += mvc-smc
+-S390X_MULTIARCH_RUNTIME_OBJS = head64.o console.o $(MINILIB_OBJS)
+-$(MULTIARCH_TESTS): $(S390X_MULTIARCH_RUNTIME_OBJS)
+-$(MULTIARCH_TESTS): LDFLAGS += $(S390X_MULTIARCH_RUNTIME_OBJS)
+-$(MULTIARCH_TESTS): CFLAGS += $(MINILIB_INC) \
+-			      -I$(SRC_PATH)/roms/SLOF/lib/libc/include/
+-memory: CFLAGS += -DCHECK_UNALIGNED=0
+-
+-# s390x clears the BSS section so we need to account for that
+-run-plugin-memory-with-libmem.so: 		\
+-	CHECK_PLUGIN_OUTPUT_COMMAND=$(MULTIARCH_SYSTEM_SRC)/validate-memory-counts.py \
+-		--bss-cleared $@.out
+diff --git a/tests/tcg/s390x/meson.build b/tests/tcg/s390x/meson.build
+index 3adb7dc464c..d614531ca61 100644
+--- a/tests/tcg/s390x/meson.build
++++ b/tests/tcg/s390x/meson.build
+@@ -21,6 +21,8 @@ tests_s390x_pgm = [
+   'strl-unaligned.S',
+ ]
+ 
++subdir('system')
++
+ tests = []
+ 
+ # Multi arch tests
+diff --git a/tests/tcg/s390x/system/meson.build b/tests/tcg/s390x/system/meson.build
 new file mode 100644
-index 00000000000..d73df074497
+index 00000000000..041fe83e382
 --- /dev/null
-+++ b/tests/tcg/sh4/meson.build
-@@ -0,0 +1,25 @@
++++ b/tests/tcg/s390x/system/meson.build
+@@ -0,0 +1,90 @@
 +tests = []
 +
-+tests += tcg_tests['multiarch-linux-user']['tests']
++minilib_dir = meson.current_source_dir() / '..' / '..' / 'minilib'
++minilib_printf = files(minilib_dir / 'printf.c')[0]
++link_script = files('../softmmu.ld')[0]
++head64 = files('../head64.S')[0]
++console = files('../console.c')[0]
++ipl_inc = meson.project_source_root()/'include'/'hw'/'s390x'/'ipl'
++cflags = ['-nostdlib',
++          '-I', minilib_dir, minilib_printf,
++          '-I', ipl_inc,
++          '-march=z13',
++          head64, console]
++asmflags = ['-nostdlib',
++            '-Wl,-T', link_script, '-Wl,--build-id=none',
++            '-march=z13', '-Wa,--noexecstack']
++qemu_args = ['-display', 'none',
++             '-action', 'panic=exit-failure',
++             '-serial', 'stdio',
++             '-kernel']
++
++# Multi arch tests - add cflags only once per src
++multi_src = []
++foreach t: tcg_tests['multiarch-softmmu']['tests']
++  foreach src, setup: t
++    new_cflags = cflags
++    if fs.stem(src) == 'memory'
++      new_cflags += '-DCHECK_UNALIGNED=0'
++    endif
++    if 'test_name' in setup and setup['test_name'] == 'memory-access'
++      # s390x clears the BSS section so we need to account for that
++      # ./validate-memory-counts.py --bss-cleared
++      setup += {'wrapper': setup['wrapper'] + '--bss-cleared'}
++    endif
++    if src not in multi_src
++      setup += {'cflags': [new_cflags]}
++      multi_src += src
++    endif
++    tests += {src: setup + {'qemu_args': qemu_args}}
++  endforeach
++endforeach
 +
 +tests += {
-+  'test-addv.c': {},
-+  'test-macl.c': {},
-+  'test-macw.c': {},
-+  'test-subv.c': {},
++  'mvc-smc.c': {'cflags': [cflags], 'qemu_args': qemu_args},
 +}
 +
-+if 'qemu-sh4' in emulators
++setup_asm = {'cflags': [asmflags], 'qemu_args': qemu_args}
++tests += {
++  'bal.S': setup_asm,
++  'cksm.S': setup_asm,
++  'clm.S': setup_asm,
++  'exrl-ssm-early.S': setup_asm,
++  'icm.S': setup_asm,
++  'sam.S': setup_asm,
++  'lpsw.S': setup_asm,
++  'lpswe-early.S': setup_asm,
++  'lra.S': setup_asm,
++  'mc.S': setup_asm,
++  'per.S': setup_asm,
++  'precise-smc-softmmu.S': setup_asm,
++  'sckc.S': setup_asm,
++  'ssm-early.S': setup_asm,
++  'stosm-early.S': setup_asm,
++  'stpq.S': setup_asm,
++  'unaligned-lowcore.S': setup_asm,
++}
++
++foreach src: tests_s390x_pgm
++  tests += {
++    src: {
++      'cflags': [asmflags, files('../pgm-specification-softmmu.S')],
++      'qemu_args': qemu_args,
++    }
++  }
++endforeach
++
++if 'qemu-system-s390x' in emulators
 +  tcg_tests += {
-+    'sh4-linux-user': {
-+      'cc': 'sh4-linux-gnu-gcc',
-+      'cc_dockerfile': 'debian-all-test-cross',
-+      'cc_docker_host_arch': ['aarch64', 'x86_64'],
++    's390x-softmmu': {
++      'cc': cc,
++      'cc_dockerfile': cc_dockerfile,
++      'cc_docker_host_arch': cc_docker_host_arch,
 +      'cc_feat_cflags': cc_feat_cflags,
-+      'folder': 'sh4',
-+      'gdb_arch': 'sh4',
-+      'qemu': emulators['qemu-sh4'],
++      'folder': 's390x',
++      'gdb_arch': 's390x',
++      'qemu': emulators['qemu-system-s390x'],
 +      'tests': tests,
 +    }
 +  }
