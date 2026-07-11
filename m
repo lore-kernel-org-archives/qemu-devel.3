@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23C76C44506
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:05:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32321C44507
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:06:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifnT-0000BS-3v; Sat, 11 Jul 2026 18:03:43 -0400
+	id 1wifoW-0003V8-Au; Sat, 11 Jul 2026 18:04:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifnG-0007pa-Qe; Sat, 11 Jul 2026 18:03:32 -0400
+ id 1wifoU-0003QZ-KZ; Sat, 11 Jul 2026 18:04:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifnB-0000BO-CQ; Sat, 11 Jul 2026 18:03:26 -0400
+ id 1wifoS-0000Io-Su; Sat, 11 Jul 2026 18:04:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807181; bh=nuTOMIE/WJ+A+UsDjoUlEZxCqmfVQBK6le+mjRTmLcA=;
+ t=1783807181; bh=AmXa34GkWAKZ+42cqjvspGOsXvpCNEE/VZgSOahoWcA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=t+YR1uQe4S2mb4QDj7EQqFwZYwuFlcy56EsU4Rx95zAiTXcVM5pg3KlqYcn2QpVSt
- +8aCvXXS8UsVrlUJRDdY4r3XoxpaVlT3oUtPz3Bl770Q9Z9NZLdF5kKRo0dqeknqN9
- KUGq4dQ7ZgKQrWEvlKI9OIhr7uVayCkURGsgjhMmGWTjxnqfRtFQbBp4mGkPc5YHh+
- E4NHTZSce8uV34GWCB1mdmzoJh5FIOPOUJW2Udu8opGojIxx5jXGHPfgrKKlSCOrl4
- UXNBZb1XKWnhHaK9AELRiwO7Y6vWAfgqvnZuadl0GQ0GrpUUbRhL4CmhcaO3jQ6POg
- gdnAUkqAdHlnA==
+ b=FDW6N6zZdsub5OKCBKT9v+dUIxVKTfWms1m5XhjiyapDktyPCxXhoPb6wSsMuK15s
+ yimdWYLDZchEjAbL5xBT6Rf9KoeqU+6Qn3xUZzTiZv+otFfx68B/EoWMBoN8i32iX1
+ 377m+JadQbJ4+qcqop9E4uUT/B4RpJ+8cc5LDyN1oq8ZZTOVJuPiMM9xVyer1Od6Bl
+ 31D4BqiRF8lBlTkoF1lllH4V9dwE+5juVCocKsUfhH93VG+GstDwZI+cTBLGsSVvz3
+ StRO3ZmH3Z+7gtfVZmpIuWK2PwKW4wuGnZUVqw7MYyFVOwnnwxvNTYHqs3HdXc5Gua
+ 5O/28cYIfyoSw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 167191C0AB5;
+ by isrv.corpit.ru (Postfix) with ESMTP id 544D51C0AC0;
  Sun, 12 Jul 2026 00:59:41 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C108A3EAF40;
- Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0B65F3EAF4B;
+ Sun, 12 Jul 2026 00:59:51 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 9BE6A13337; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id B70AA1334D; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Farhan Ali <alifm@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 42/81] s390x/ioinst: Require strict length and format
- for SEI CHSC handler
-Date: Sun, 12 Jul 2026 00:58:20 +0300
-Message-ID: <20260711215904.3757-42-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, no92 <leo@managarm.org>,
+ Clement Mathieu--Drif <clement.mathieu--drif@bull.com>,
+ Yi Liu <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 53/81] intel_iommu: Correctly set pt bit in extended
+ capability register
+Date: Sun, 12 Jul 2026 00:58:31 +0300
+Message-ID: <20260711215904.3757-53-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
@@ -73,68 +73,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matthew Rosato <mjrosato@linux.ibm.com>
+From: no92 <leo@managarm.org>
 
-Ensure SEI commands that are received are of the appropriate length and
-format before handling.
+With the changes in c7b2e22bd957, the `pt` bit was set in the (wrong)
+capability register, instead of the (correct) extended capability
+register.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 8cba80c3a0 ("s390: Add PCI bus support")
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Message-ID: <20260707070728.147203-5-borntraeger@linux.ibm.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-(cherry picked from commit 386268daea86e53d90baf99df5c7b8e2727ea783)
+Fixes: c7b2e22bd957 ("hw/i386/x86-iommu: Remove X86IOMMUState::pt_supported field")
+Signed-off-by: no92 <leo@managarm.org>
+Reviewed-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260624103933.1793586-3-leo@managarm.org>
+(cherry picked from commit dbc0ed56223011281e14b5cb8c02453915d35d12)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/s390x/ioinst.c b/target/s390x/ioinst.c
-index 2320dd4c122..94619f92155 100644
---- a/target/s390x/ioinst.c
-+++ b/target/s390x/ioinst.c
-@@ -609,13 +609,27 @@ static int chsc_sei_nt2_have_event(void)
- 
- #define CHSC_SEI_NT0    (1ULL << 63)
- #define CHSC_SEI_NT2    (1ULL << 61)
-+#define CHSC_SEI_0_FMT 0x0f000000
- static void ioinst_handle_chsc_sei(ChscReq *req, ChscResp *res)
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index f395fa248c0..7b2cead8f8b 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -4998,7 +4998,7 @@ static void vtd_cap_init(IntelIOMMUState *s)
  {
-     uint64_t selection_mask = ldq_be_p(&req->param1);
-+    uint32_t param0 = be32_to_cpu(req->param0);
-     uint8_t *res_flags = (uint8_t *)res->data;
-+    uint16_t len = be16_to_cpu(req->len);
-+    uint16_t resp_code;
-     int have_event = 0;
-     int have_more = 0;
+     X86IOMMUState *x86_iommu = X86_IOMMU_DEVICE(s);
  
-+    if (len != 0x0010) {
-+        resp_code = 0x0003;
-+        goto out_err;
-+    }
-+
-+    if (param0 & CHSC_SEI_0_FMT) {
-+        resp_code = 0x0007;
-+        goto out_err;
-+    }
-+
-     /* regarding architecture nt0 can not be masked */
-     have_event = !chsc_sei_nt0_get_event(res);
-     have_more = chsc_sei_nt0_have_event();
-@@ -642,6 +656,12 @@ static void ioinst_handle_chsc_sei(ChscReq *req, ChscResp *res)
-         res->code = cpu_to_be16(0x0005);
-         res->len = cpu_to_be16(CHSC_MIN_RESP_LEN);
+-    s->cap = VTD_CAP_FRO | VTD_CAP_NFR | VTD_CAP_ND | VTD_ECAP_PT |
++    s->cap = VTD_CAP_FRO | VTD_CAP_NFR | VTD_CAP_ND |
+              VTD_CAP_MAMV | VTD_CAP_PSI | VTD_CAP_SSLPS | VTD_CAP_DRAIN |
+              VTD_CAP_ESRTPS | VTD_CAP_MGAW(s->aw_bits);
+     if (x86_iommu->dma_translation) {
+@@ -5009,7 +5009,7 @@ static void vtd_cap_init(IntelIOMMUState *s)
+                     s->cap |= VTD_CAP_SAGAW_48bit;
+             }
      }
-+    return;
-+
-+ out_err:
-+    res->code = cpu_to_be16(resp_code);
-+    res->len = cpu_to_be16(CHSC_MIN_RESP_LEN);
-+    res->param = 0;
- }
+-    s->ecap = VTD_ECAP_QI | VTD_ECAP_IRO;
++    s->ecap = VTD_ECAP_QI | VTD_ECAP_IRO | VTD_ECAP_PT;
  
- static void ioinst_handle_chsc_unimplemented(ChscResp *res)
+     if (x86_iommu_ir_supported(x86_iommu)) {
+         s->ecap |= VTD_ECAP_IR | VTD_ECAP_MHMV;
 -- 
 2.47.3
 
