@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBC9BC44501
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 23:07:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B23C3C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 23:08:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wignI-00065D-40; Sat, 11 Jul 2026 19:07:36 -0400
+	id 1wignQ-0006JK-3Z; Sat, 11 Jul 2026 19:07:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wignG-00063q-4n; Sat, 11 Jul 2026 19:07:34 -0400
-Received: from pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([44.245.243.92])
+ id 1wignN-00069t-Qa; Sat, 11 Jul 2026 19:07:41 -0400
+Received: from pdx-out-003.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([44.246.68.102])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wignD-0003ne-MX; Sat, 11 Jul 2026 19:07:33 -0400
+ id 1wignM-0003rD-0s; Sat, 11 Jul 2026 19:07:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783811251; x=1815347251;
+ t=1783811260; x=1815347260;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=VyIS3tAqhuM3UisEQfW17suUR3YbifHZz0wMYXIhOJ0=;
- b=FwyYLmHPCTClLnEPaRk0TB5tKLq5Zfpn5IbLT8HHMrGHRVf6TK2wS16R
- QSMDnLewyjrJ98ZRAl+Zj6i+AdnZ2w4DF/VsQj0C4sc5Ay3CL4Vtyvijt
- H6mDqWpcPjI6MIhKSYq8UMs00WTUGgUf1MaDIBHsUHi4+0mf+Y/Y6eW+S
- TfiQNoQ7eWJUIlLT6pTVmUdZuEEUjST9Kox7JfeMzZsrmG3+40I4Rgdmc
- BtcDPf8yXOI598rNnVQHEkn1IR0tNbVsSLT8JR9yQSLahpL2dJAayUti7
- IwQZauB37izbr5wRGVChERi3PO9wHwVL2gzfgfmEnbZ550piP7tVvzo/X A==;
-X-CSE-ConnectionGUID: e2PWIL11R3mlDcZNDWGbdA==
-X-CSE-MsgGUID: LFO5E141SIuvWzhtEFjV0Q==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="22997837"
-Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
- by internal-pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 23:07:27 +0000
-Received: from EX19MTAUWB002.ant.amazon.com [205.251.233.111:20547]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.11.68:2525]
+ bh=0t83vrkzVA8QS1Yf+f3mopksiJFjcP4RLaXceTkVB2I=;
+ b=cY887D1Aqus0vXDC0Pk7BRJcSymdxKbUgP01n5MAp9Yzvyxy9+ZrEUyK
+ vhqkTFLWXt1bnSnwCHzWHGaumxNX2FexTvBZ4/iAYRLYV9+WgZJMxVP9/
+ vwCzj4H67oD93lk4eHYsVAFckLAxs3bxWiSEesf/WBhiLuW4bl64sR256
+ d/NSGVg1IGMRQdp/8gJKQ6IqdIbadK88r4wBZ3ycp9zE4HgbOT0WUW61U
+ t7roA4fZPwztOZBQzHh4cP2Ihx1ii5PLMl4hw52QNbEgLGJxFPnG0OeaM
+ 2IDpamVQCyAX8p+Cp7Tz9u8M9REP06i0tiHwUKg+2ozqlBXsPpbbXrrcX w==;
+X-CSE-ConnectionGUID: 5u04uP+7TEuOwNHNrVv/tA==
+X-CSE-MsgGUID: Y0mHu6VwTWCfSVSdDKh0jw==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23517425"
+Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
+ by internal-pdx-out-003.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 23:07:36 +0000
+Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.178:16436]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.26.212:2525]
  with esmtp (Farcaster)
- id 63ada6ad-89a4-439d-9d15-1d71f0caea81; Sat, 11 Jul 2026 23:07:27 +0000 (UTC)
-X-Farcaster-Flow-ID: 63ada6ad-89a4-439d-9d15-1d71f0caea81
+ id 749f953e-1a47-49c4-9433-cae2ef12f849; Sat, 11 Jul 2026 23:07:35 +0000 (UTC)
+X-Farcaster-Flow-ID: 749f953e-1a47-49c4-9433-cae2ef12f849
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
+ EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 23:07:27 +0000
+ Sat, 11 Jul 2026 23:07:35 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 23:07:18 +0000
+ Sat, 11 Jul 2026 23:07:27 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,10 +91,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 115/134] hw/core: Parent GPIO input IRQs and embedded
- IRQState via QOM
-Date: Sat, 11 Jul 2026 22:36:48 +0000
-Message-ID: <20260711223707.42139-116-graf@amazon.com>
+Subject: [RFC PATCH 116/134] irq: Delete the *_orphan() IRQ allocation variants
+Date: Sat, 11 Jul 2026 22:36:49 +0000
+Message-ID: <20260711223707.42139-117-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -104,9 +103,9 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D046UWB003.ant.amazon.com (10.13.139.174) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=44.245.243.92;
+Received-SPF: pass client-ip=44.246.68.102;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-003.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
@@ -130,196 +129,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qdev_init_gpio_in_named_with_opaque() now uses qemu_extend_irqs()
-directly, so the input IRQ objects are parented under the device via
-object_new_child() and the manual object_property_add_child() loop
-goes away.  device_finalize() no longer needs to free the IRQ objects
-explicitly since child<> property destruction does that; only the
-qemu_irq* array itself needs g_free().
-
-Convert the six users of qemu_init_irq()/qemu_init_irqs() (which
-initialize an IRQState embedded in a device struct) to
-qemu_init_irq_child() so those IRQs also get a QOM parent.
-
-qdev_connect_gpio_out_named() now asserts that its input pin has a
-parent instead of falling back to /machine/unattached; every
-qemu_irq that reaches it is parented after this and the preceding
-commits.
+Every caller has been converted to the parented form; drop the
+transitional *_orphan() helpers.
 
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/core/gpio.c    | 24 ++++--------------------
- hw/core/qdev.c    |  3 ++-
- hw/ipack/ipack.c  | 11 +++++++++--
- hw/isa/vt82c686.c |  3 ++-
- hw/net/imx_fec.c  |  2 +-
- hw/net/lan9118.c  |  2 +-
- hw/ppc/pegasos.c  |  3 ++-
- hw/sh4/r2d.c      |  5 ++++-
- 8 files changed, 25 insertions(+), 28 deletions(-)
+ hw/core/irq.c         | 35 -----------------------------------
+ include/hw/core/irq.h | 20 +-------------------
+ 2 files changed, 1 insertion(+), 54 deletions(-)
 
-diff --git a/hw/core/gpio.c b/hw/core/gpio.c
-index ef8ef8f25a..f76d604520 100644
---- a/hw/core/gpio.c
-+++ b/hw/core/gpio.c
-@@ -45,24 +45,12 @@ void qdev_init_gpio_in_named_with_opaque(DeviceState *dev,
-                                          void *opaque,
-                                          const char *name, int n)
- {
+diff --git a/hw/core/irq.c b/hw/core/irq.c
+index ee954eaf62..a93c64e6ae 100644
+--- a/hw/core/irq.c
++++ b/hw/core/irq.c
+@@ -68,34 +68,6 @@ void qemu_init_irqs(IRQState irq[], size_t count,
+     }
+ }
+ 
+-qemu_irq *qemu_extend_irqs_orphan(qemu_irq *old, int n_old, qemu_irq_handler handler,
+-                           void *opaque, int n)
+-{
+-    qemu_irq *s;
 -    int i;
-     NamedGPIOList *gpio_list = qdev_get_named_gpio_list(dev, name);
- 
-     assert(gpio_list->num_out == 0 || !name);
--    gpio_list->in = qemu_extend_irqs_orphan(gpio_list->in, gpio_list->num_in, handler,
--                                     opaque, n);
 -
--    if (!name) {
--        name = "unnamed-gpio-in";
+-    if (!old) {
+-        n_old = 0;
 -    }
--    for (i = gpio_list->num_in; i < gpio_list->num_in + n; i++) {
--        gchar *propname = g_strdup_printf("%s[%u]", name, i);
--
--        object_property_add_child(OBJECT(dev), propname,
--                                  OBJECT(gpio_list->in[i]));
--        g_free(propname);
+-    s = old ? g_renew(qemu_irq, old, n + n_old) : g_new(qemu_irq, n);
+-    for (i = n_old; i < n + n_old; i++) {
+-        s[i] = qemu_allocate_irq_orphan(handler, opaque, i);
 -    }
+-    return s;
+-}
 -
-+    gpio_list->in = qemu_extend_irqs(OBJECT(dev), name ?: "unnamed-gpio-in",
-+                                     gpio_list->in, gpio_list->num_in,
-+                                     handler, opaque, n);
-     gpio_list->num_in += n;
- }
- 
-@@ -119,11 +107,7 @@ void qdev_connect_gpio_out_named(DeviceState *dev, const char *name, int n,
+-qemu_irq *qemu_allocate_irqs_orphan(qemu_irq_handler handler, void *opaque, int n)
+-{
+-    return qemu_extend_irqs_orphan(NULL, 0, handler, opaque, n);
+-}
+-
+-qemu_irq qemu_allocate_irq_orphan(qemu_irq_handler handler, void *opaque, int n)
+-{
+-    IRQState *irq = IRQ(object_new(TYPE_IRQ));
+-    init_irq_fields(irq, handler, opaque, n);
+-    return irq;
+-}
+-
+ qemu_irq qemu_allocate_irq(Object *owner, const char *name,
+                            qemu_irq_handler handler, void *opaque, int n)
  {
-     char *propname = g_strdup_printf("%s[%d]",
-                                      name ? name : "unnamed-gpio-out", n);
--    if (input_pin && !OBJECT(input_pin)->parent) {
--        /* We need a name for object_property_set_link to work */
--        object_property_add_child(machine_get_container("unattached"),
--                                  "non-qdev-gpio[*]", OBJECT(input_pin));
--    }
-+    g_assert(!input_pin || OBJECT(input_pin)->parent);
-     object_property_set_link(OBJECT(dev), propname,
-                              OBJECT(input_pin), &error_abort);
-     g_free(propname);
-diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-index f7b512eb35..44a44862fd 100644
---- a/hw/core/qdev.c
-+++ b/hw/core/qdev.c
-@@ -697,7 +697,8 @@ static void device_finalize(Object *obj)
- 
-     QLIST_FOREACH_SAFE(ngl, &dev->gpios, node, next) {
-         QLIST_REMOVE(ngl, node);
--        qemu_free_irqs(ngl->in, ngl->num_in);
-+        /* IRQs are child<> properties of dev; freed via child destruction */
-+        g_free(ngl->in);
-         g_free(ngl->name);
-         g_free(ngl);
-         /* ngl->out irqs are owned by the other end and should not be freed
-diff --git a/hw/ipack/ipack.c b/hw/ipack/ipack.c
-index f2e5524fa8..dad0d486df 100644
---- a/hw/ipack/ipack.c
-+++ b/hw/ipack/ipack.c
-@@ -55,18 +55,25 @@ static void ipack_device_realize(DeviceState *dev, Error **errp)
-     }
-     bus->free_slot = idev->slot + 1;
- 
--    qemu_init_irqs(idev->irq, ARRAY_SIZE(idev->irq), bus->set_irq, idev);
-+    for (int i = 0; i < ARRAY_SIZE(idev->irq); i++) {
-+        qemu_init_irq_child(OBJECT(idev), "irq[*]", &idev->irq[i],
-+                            bus->set_irq, idev, i);
-+    }
- 
-     k->realize(dev, errp);
+@@ -153,13 +125,6 @@ static void qemu_notirq(void *opaque, int line, int level)
+     qemu_set_irq(irq, !level);
  }
  
- static void ipack_device_unrealize(DeviceState *dev)
+-qemu_irq qemu_irq_invert_orphan(qemu_irq irq)
+-{
+-    /* The default state for IRQs is low, so raise the output now.  */
+-    qemu_irq_raise(irq);
+-    return qemu_allocate_irq_orphan(qemu_notirq, irq, 0);
+-}
+-
+ qemu_irq qemu_irq_invert(Object *owner, const char *name, qemu_irq irq)
  {
-+    IPackDevice *idev = IPACK_DEVICE(dev);
-     IPackDeviceClass *k = IPACK_DEVICE_GET_CLASS(dev);
+     /* The default state for IRQs is low, so raise the output now.  */
+diff --git a/include/hw/core/irq.h b/include/hw/core/irq.h
+index 5ccccd2697..89923cf4a8 100644
+--- a/include/hw/core/irq.h
++++ b/include/hw/core/irq.h
+@@ -74,19 +74,8 @@ void qemu_init_irq_child(Object *parent, const char *propname,
+ void qemu_init_irqs(IRQState irq[], size_t count,
+                     qemu_irq_handler handler, void *opaque);
  
-     if (k->unrealize) {
-         k->unrealize(dev);
--        return;
-+    }
-+
-+    for (int i = 0; i < ARRAY_SIZE(idev->irq); i++) {
-+        object_unparent(OBJECT(&idev->irq[i]));
-     }
- }
+-/* Returns an array of N IRQs. Each IRQ is assigned the argument handler and
+- * opaque data.
+- */
+-qemu_irq *qemu_allocate_irqs_orphan(qemu_irq_handler handler, void *opaque, int n);
+-
+ /*
+- * Allocates a single IRQ. The irq is assigned with a handler, an opaque
+- * data and the interrupt number.
+- */
+-qemu_irq qemu_allocate_irq_orphan(qemu_irq_handler handler, void *opaque, int n);
+-
+-/*
+- * Same as the *_orphan() variants above, but the new IRQ objects are
++ * Allocate IRQ objects with an explicit QOM parent.  The new objects are
+  * parented under @owner with property name @name (or @name[*] for the
+  * array/extend variants).  The reference is held by @owner; call
+  * qemu_free_irq() to unparent and free.
+@@ -99,17 +88,10 @@ qemu_irq *qemu_extend_irqs(Object *owner, const char *name,
+                            qemu_irq *old, int n_old,
+                            qemu_irq_handler handler, void *opaque, int n);
  
-diff --git a/hw/isa/vt82c686.c b/hw/isa/vt82c686.c
-index 2337c3115b..f93bf49754 100644
---- a/hw/isa/vt82c686.c
-+++ b/hw/isa/vt82c686.c
-@@ -722,7 +722,8 @@ static void via_isa_realize(PCIDevice *d, Error **errp)
+-/* Extends an Array of IRQs. Old IRQs have their handlers and opaque data
+- * preserved. New IRQs are assigned the argument handler and opaque data.
+- */
+-qemu_irq *qemu_extend_irqs_orphan(qemu_irq *old, int n_old, qemu_irq_handler handler,
+-                                void *opaque, int n);
+-
+ void qemu_free_irqs(qemu_irq *s, int n);
+ void qemu_free_irq(qemu_irq irq);
  
-     qdev_init_gpio_out_named(dev, &s->cpu_intr, "intr", 1);
-     qdev_init_gpio_in_named(dev, via_isa_pirq, "pirq", PCI_NUM_PINS);
--    qemu_init_irq(&s->i8259_irq, via_isa_request_i8259_irq, s, 0);
-+    qemu_init_irq_child(OBJECT(s), "i8259-irq", &s->i8259_irq,
-+                        via_isa_request_i8259_irq, s, 0);
-     isa_bus = isa_bus_new(dev, pci_address_space(d), pci_address_space_io(d),
-                           errp);
+ /* Returns a new IRQ with opposite polarity.  */
+-qemu_irq qemu_irq_invert_orphan(qemu_irq irq);
+ qemu_irq qemu_irq_invert(Object *owner, const char *name, qemu_irq irq);
  
-diff --git a/hw/net/imx_fec.c b/hw/net/imx_fec.c
-index c177b7ff2b..38e0f64462 100644
---- a/hw/net/imx_fec.c
-+++ b/hw/net/imx_fec.c
-@@ -1205,7 +1205,7 @@ static void imx_eth_realize(DeviceState *dev, Error **errp)
-     sysbus_init_irq(sbd, &s->irq[0]);
-     sysbus_init_irq(sbd, &s->irq[1]);
- 
--    qemu_init_irq(&s->mii_irq, imx_phy_update_irq, s, 0);
-+    qemu_init_irq_child(OBJECT(s), "mii-irq", &s->mii_irq, imx_phy_update_irq, s, 0);
-     object_initialize_child(OBJECT(s), "mii", &s->mii, TYPE_LAN9118_PHY);
-     if (!sysbus_realize_and_unref(SYS_BUS_DEVICE(&s->mii), errp)) {
-         return;
-diff --git a/hw/net/lan9118.c b/hw/net/lan9118.c
-index 91c3533702..2003280fc4 100644
---- a/hw/net/lan9118.c
-+++ b/hw/net/lan9118.c
-@@ -1274,7 +1274,7 @@ static void lan9118_realize(DeviceState *dev, Error **errp)
-     const MemoryRegionOps *mem_ops =
-             s->mode_16bit ? &lan9118_16bit_mem_ops : &lan9118_mem_ops;
- 
--    qemu_init_irq(&s->mii_irq, lan9118_update_irq, s, 0);
-+    qemu_init_irq_child(OBJECT(s), "mii-irq", &s->mii_irq, lan9118_update_irq, s, 0);
-     object_initialize_child(OBJECT(s), "mii", &s->mii, TYPE_LAN9118_PHY);
-     if (!sysbus_realize_and_unref(SYS_BUS_DEVICE(&s->mii), errp)) {
-         return;
-diff --git a/hw/ppc/pegasos.c b/hw/ppc/pegasos.c
-index 426a54d8ee..845b6355e9 100644
---- a/hw/ppc/pegasos.c
-+++ b/hw/ppc/pegasos.c
-@@ -134,7 +134,8 @@ static void pegasos2_setup_pci_irq(PegasosMachineState *pm)
-                                                    TYPE_OR_IRQ, &error_fatal,
-                                                    "num-lines", "2", NULL);
-                 qdev_realize(DEVICE(ori), NULL, &error_fatal);
--                qemu_init_irq(&pm->pci_irqs[i], pegasos2_pci_irq, pm, i);
-+                qemu_init_irq_child(OBJECT(pm), "pci-irq[*]", &pm->pci_irqs[i],
-+                                    pegasos2_pci_irq, pm, i);
-                 qdev_connect_gpio_out(DEVICE(ori), 0, &pm->pci_irqs[i]);
-                 pm->mv_pirq[i] = qdev_get_gpio_in_named(pm->nb, "gpp", 12 + i);
-                 pm->via_pirq[i] = qdev_get_gpio_in_named(pm->sb, "pirq", i);
-diff --git a/hw/sh4/r2d.c b/hw/sh4/r2d.c
-index 8deda6e5f4..21e804f3d9 100644
---- a/hw/sh4/r2d.c
-+++ b/hw/sh4/r2d.c
-@@ -200,7 +200,10 @@ static r2d_fpga_t *r2d_fpga_init(Object *owner,
-     memory_region_init_io(&s->iomem, owner, &r2d_fpga_ops, s, "r2d-fpga", 0x40);
-     memory_region_add_subregion(sysmem, base, &s->iomem);
- 
--    qemu_init_irqs(s->irq, NR_IRQS, r2d_fpga_irq_set, s);
-+    for (int i = 0; i < NR_IRQS; i++) {
-+        qemu_init_irq_child(owner, "fpga-irq[*]", &s->irq[i],
-+                            r2d_fpga_irq_set, s, i);
-+    }
- 
-     return s;
- }
+ /* For internal use in qtest. */
 -- 
 2.47.1
 
