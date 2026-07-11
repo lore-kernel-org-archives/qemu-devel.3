@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87D43C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:02:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CDC7C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:03:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifl0-00042w-Ev; Sat, 11 Jul 2026 18:01:10 -0400
+	id 1wiflS-0005Va-LO; Sat, 11 Jul 2026 18:01:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifkx-0003uX-VS; Sat, 11 Jul 2026 18:01:07 -0400
+ id 1wiflR-0005Rd-21; Sat, 11 Jul 2026 18:01:37 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifkw-0008GD-9L; Sat, 11 Jul 2026 18:01:07 -0400
+ id 1wiflP-0008Ja-3H; Sat, 11 Jul 2026 18:01:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807180; bh=N8fw3larQKBeYlCddhOQdJElfCUvvc4yPAFQsxc8eKg=;
+ t=1783807180; bh=kKwU2/gwY4uoL79RTPGfSUbSgRquyUwaMfK6S4tVAVk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ccxuQ5o75mnk1TKiQFXs/3yJ2x3Rm0aKN8spZUD+dKgz/j1zxH+v3vqUG1vykjO3S
- RZycMCO/Pzucmxpr90TOCrVzHQUlwHHziOPRUTTZiZjdMnWibTSbiq7WkJASfo46v+
- /wREXSLHSomIaiIZVbm8jF3ID45dyiqa732nl7pyRfCRvQmp1YeU1bF+7Jwgp013Nb
- grlidIwfT5S5+fWoDyAiLiPXm+O26ws06IDoxtQ3Z1wKt2KLMSIKqteq2zrPW+7Mk8
- g64PkqbxuNd9uiuXPj9f9b2D8iGll0wvluxxr17rGdN2jt+i055Yopxp5Mprc6xYXw
- Hd6xRXWCyae+w==
+ b=H/aXOd6lmwNwbnXFRYESE7G7/3+rAhO/vEI7Avb0/duvsVD5ZX3PKHYVpAp7rhkeC
+ JhRwlDfjl+flhropilnUiznByKIEJtItW0qqcNnFt5XrxwR6ORtcyN/vUd6Rcmt7QM
+ QGKikfIRbUP1EbmK8XiObuDf2GYrCDovNmPjzH+E+Oq1xAQtTlnJ0oEFe4uhXcscN5
+ KBG+srML7qqqqe8UB/yOL4ymc1Ewh62jZTS0iiruLq/b8HpCm3M8sBmCqhsu8lNB3+
+ uhgNsB8bedVxUhYHNhfz1yDun6HtbE15ers6WMlAyYXipCqKRy8f7mDiv2GVHAlbcU
+ IJhR+f5CTRD4Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7FC041C0A9E;
+ by isrv.corpit.ru (Postfix) with ESMTP id 9C4F31C0AA3;
  Sun, 12 Jul 2026 00:59:40 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 375AE3EAF29;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 52F463EAF2E;
  Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 6266113309; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id 6DEC113313; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 19/81] hw/9pfs: add xattr count query interface to fs
- synth driver
-Date: Sun, 12 Jul 2026 00:57:57 +0300
-Message-ID: <20260711215904.3757-19-mjt@tls.msk.ru>
+ Feifan Qian <bea1e@proton.me>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 24/81] hw/9pfs: fix invalid union access by
+ v9fs_co_fsync()
+Date: Sun, 12 Jul 2026 00:58:02 +0300
+Message-ID: <20260711215904.3757-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
@@ -73,62 +73,52 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-Add a synthetic "/stat/xattr_count" file path that, if being read
-by 9p client, returns the 9p server internal xattr FID counter to
-client.
+The individual FID types (P9_FID_NONE, P9_FID_FILE, P9_FID_DIR, P9_FID_XATTR)
+share union V9fsFidOpenState with FID-type specific fields. Accessing any of
+the union fields must comply with the FID-type to avoid undefined behaviour
+or information disclosure.
 
-This allows to test and verify that the xattr FID limit is being
-enforced correctly.
+Fix this in v9fs_fsync() and v9fs_wstat() by checking if FID has a valid file
+descriptor before calling v9fs_co_fsync().
 
-Link: https://lore.kernel.org/qemu-devel/357c20fc244c04dcbd36b13aa20a5c9b2034e9f0.1781361555.git.qemu_oss@crudebyte.com
+Fixes: 10b468bdc533 ("virtio-9p: Implement TXATTRCREATE")
+Reported-by: Feifan Qian <bea1e@proton.me>
+Link: https://lore.kernel.org/qemu-devel/b583e29d5a0776e41263732c93ac9f0da0a6016d.1781621428.git.qemu_oss@crudebyte.com
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit 7e42d569a68aec6b0b6f1f068328c5c4ff20bc72)
+(cherry picked from commit 32cae47c332f88241632905e0a3abcbb35b019c3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
-index 4b0732e0936..3b3654b2820 100644
---- a/hw/9pfs/9p-synth.c
-+++ b/hw/9pfs/9p-synth.c
-@@ -565,6 +565,19 @@ static ssize_t v9fs_synth_qtest_flush_write(void *buf, int len, off_t offset,
-     return 1;
- }
- 
-+/* transmits internal xattr counter to client */
-+static ssize_t v9fs_synth_read_xattr_count(void *buf, int len, off_t offset,
-+                                           void *arg)
-+{
-+    FsContext *ctx = arg;
-+    size_t local_count = ctx->xattr_fid_count;
-+    if (len < (int)sizeof(size_t)) {
-+        return -ENOSPC;
-+    }
-+    memcpy(buf, &local_count, sizeof(size_t));
-+    return sizeof(size_t);
-+}
-+
- static int synth_init(FsContext *ctx, Error **errp)
- {
-     QLIST_INIT(&synth_root.child);
-@@ -626,6 +639,19 @@ static int synth_init(FsContext *ctx, Error **errp)
-                 g_free(name);
-             }
-         }
-+
-+        /* Directory for internal statistic queries */
-+        {
-+            V9fsSynthNode *stat_dir = NULL;
-+            ret = qemu_v9fs_synth_mkdir(NULL, 0755, "stat", &stat_dir);
-+            assert(!ret);
-+
-+            /* File for internal xattr count query */
-+            ret = qemu_v9fs_synth_add_file(stat_dir, 0444, "xattr_count",
-+                                           v9fs_synth_read_xattr_count,
-+                                           NULL, ctx);
-+            assert(!ret);
-+        }
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index 1b064a27fc5..162cd6e6486 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -2291,10 +2291,15 @@ static void coroutine_fn v9fs_fsync(void *opaque)
+         err = -ENOENT;
+         goto out_nofid;
      }
- 
-     return 0;
++    if (!fid_has_valid_file_handle(pdu->s, fidp)) {
++        err = -EBADF;
++        goto out;
++    }
+     err = v9fs_co_fsync(pdu, fidp, datasync);
+     if (!err) {
+         err = offset;
+     }
++out:
+     put_fid(pdu, fidp);
+ out_nofid:
+     pdu_complete(pdu, err);
+@@ -3648,6 +3653,10 @@ static void coroutine_fn v9fs_wstat(void *opaque)
+     }
+     /* do we need to sync the file? */
+     if (donttouch_stat(&v9stat)) {
++        if (!fid_has_valid_file_handle(s, fidp)) {
++            err = -EBADF;
++            goto out;
++        }
+         err = v9fs_co_fsync(pdu, fidp, 0);
+         goto out;
+     }
 -- 
 2.47.3
 
