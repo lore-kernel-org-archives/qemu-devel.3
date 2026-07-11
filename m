@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB35FC43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:06:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 511CDC43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:06:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifo8-000266-Ph; Sat, 11 Jul 2026 18:04:25 -0400
+	id 1wifpN-0005nK-M9; Sat, 11 Jul 2026 18:05:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifo6-0001tZ-8V; Sat, 11 Jul 2026 18:04:22 -0400
+ id 1wifpL-0005g5-Lo; Sat, 11 Jul 2026 18:05:39 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifo4-0000I3-7q; Sat, 11 Jul 2026 18:04:21 -0400
+ id 1wifpJ-0000bY-N1; Sat, 11 Jul 2026 18:05:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807181; bh=6o4QXKrAfHBv/13iR2iSq2AMyvJa+9WDo2zhcCyCTys=;
+ t=1783807181; bh=MI7uRsMIx7P0xMIvgrXGd6plvVl2HxCsSXwG5yiEXxo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Gs/EfHj8frV8v00zuTmgXqxAsAIGD766vr1Jm7eNaR9ULIfe/Ea6QmEQgjylKe4fn
- zIpLgkDATFy/1MQqnZsKR3qCcHS7kUrDw7Oz3LxOP0cQifr9ahWORP8IhqfExelxVR
- RfoLBPEA6wbj5bxDkjsT+UFELAhdsdDXIfgWaoPH0fLgZTADRJsyrstt5Ta/iefaQ6
- l7qmzFLf8tPJnLW+5JgXbQs8w3RAVQ2N3j1xV4jqbjrkt3/wKw0jpD8lorsRS3MvsD
- R5ZeBtAxOcctnR+2VXOmT4E/XwY2ST0mbt3zl2ZD9aLXn9xI9Tw53ONCF2eJiuQA3C
- V0MnF5Ee4/RHg==
+ b=uQoMULZdok9Zd2JP+I8WOhjrYdnxW2FkWqYcUh3Jitg20FYp0nO5tIpkz+0w9IRA8
+ uvM0NJnvTYGzKlsioEgWbchp3gbink0/wAxPWAA10/9Rt50OoYYK+DokkcrAq07myU
+ m1cX5DQXEQQh4bchELVy5cI/as3f6C01MWmE59GKIgu819YKNd+2tXk/wU6Z8baGE5
+ 9aX0P9zPWfF5LDmfzKHGgN8fZE0xjgTIy+KGL0pxnr1FuXd3gfE9WuVuOkjWRVtSsX
+ jNNU8nJZNC7EAilhSQcfPE+P195YSjFb+tZkrIuYwnTLFeskuljKIv20mOQ6A0bNyw
+ f4TejL7h2Bu5w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 444551C0ABD;
+ by isrv.corpit.ru (Postfix) with ESMTP id 808A91C0AC8;
  Sun, 12 Jul 2026 00:59:41 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id EFAC93EAF48;
- Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 372D63EAF53;
+ Sun, 12 Jul 2026 00:59:51 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id AFEB413347; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id CA1C41335D; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 50/81] hw/dma/i8257: Return zeroes for read_memory in
- verify mode
-Date: Sun, 12 Jul 2026 00:58:28 +0300
-Message-ID: <20260711215904.3757-50-mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 61/81] accel/tcg: Use TLB_FORCE_SLOW not TLB_MMIO for
+ user-only plugins
+Date: Sun, 12 Jul 2026 00:58:39 +0300
+Message-ID: <20260711215904.3757-61-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
@@ -74,74 +74,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The i8257 DMA controller has a "verify" mode, which the datasheet
-describes like this:
+In 6d03226b422 we set TLB_MMIO to a non-zero value for user-only
+so that we could return a non-zero value from probe_* functions
+so that we could force callers like Arm SVE vector moves to use
+the slow path rather than direct access.  All for the sake of
+exposing these accesses to plugins.
 
-> DMA verify, which does not actually involve the transfer of data.
-> When an 8257 channel is in the DMA verify mode, it will respond the
-> same as described for transfer operations, except that no memory or
-> I/O read/write control signals will be generated.  When an 8257
-> channel is in the DMA verify mode, it will respond the same as
-> described for transfer operations, except that no memory or I/O read
-> /write control signals will be generated, thus preventing the
-> transfer of data.  The 8257, however, will gain control of the system
-> bus and will acknowledge the peripheral's DMA request for each DMA
-> cycle.  The perihperal can use these acknowledge signals to enable an
-> internal access of each byte of a data block in order to execute some
-> verification procedure, such as the accumulation of a CRC check word.
-
-In practice, for QEMU's purposes the only real user of this is the
-floppy controller, which can be made to perform a "read data from
-floppy disk and check the checksum" by telling the fdc to do a read
-and the DMA controller to do a verify.  This causes the fdc to do all
-the usual read actions including the checksum, but the data is never
-written to memory.  However, it is possible for a guest doing
-something silly to program the DMA controller to do a verify
-operation for a device that wants to read from memory.  Currently we
-simply return early from i8257_dma_read_memory() without writing to
-the buffer.  None of the callers (the GUS, sb16 and cs4231a sound
-cards, plus the fdc) expect this, so they will take the uninitialized
-data as if it were from the guest.  This can cause us to leak host
-data off the stack into the guest.
-
-Make i8257_dma_read_memory() fill the buffer with zeroes rather
-than leaving it untouched for a verify operation.
+Back then, TLB_FORCE_SLOW did not exist, so TLB_MMIO seemed like
+a reasonable solution.  However, user-only doesn't really have
+MMIO and this has knock-on effects, like forcing Arm SVE first-fault
+vector loads to stop.  Better to use TLB_FORCE_SLOW as a more exact
+trigger for plugins.
 
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3487
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20260629140128.1900095-1-peter.maydell@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit 03071f99a3e1549b3acc9b9534961632df016f76)
+Fixes: 6d03226b422 ("plugins: force slow path when plugins instrument memory ops")
+Acked-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260702171057.47998-1-richard.henderson@linaro.org>
+(cherry picked from commit b79a9b6e5b5657534615dd8e574d58305e16841c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/dma/i8257.c b/hw/dma/i8257.c
-index 3637d8f82d7..34c19dbd84e 100644
---- a/hw/dma/i8257.c
-+++ b/hw/dma/i8257.c
-@@ -407,6 +407,19 @@ static int i8257_dma_read_memory(IsaDma *obj, int nchan, void *buf, int pos,
-     hwaddr addr = ((r->pageh & 0x7f) << 24) | (r->page << 16) | r->now[ADDR];
+diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+index d283d3cc724..dd0bcde4d49 100644
+--- a/accel/tcg/user-exec.c
++++ b/accel/tcg/user-exec.c
+@@ -768,7 +768,7 @@ static int probe_access_internal(CPUArchState *env, vaddr addr,
+         if (page_flags & acc_flag) {
+             if (access_type != MMU_INST_FETCH
+                 && cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
+-                return TLB_MMIO;
++                return TLB_FORCE_SLOW;
+             }
+             return 0; /* success */
+         }
+@@ -803,7 +803,7 @@ void *probe_access(CPUArchState *env, vaddr addr, int size,
  
-     if (i8257_is_verify_transfer(r)) {
-+        /*
-+         * If the device is expecting this verify operation then
-+         * it won't care about the nonexistent data. But if it
-+         * is expecting a real read (i.e. the guest has misprogrammed
-+         * the DMA controller and the device) it's going to try to do
-+         * something with the buffer contents. Give it zeroes.
-+         * (It's not clear whether this is exactly what happens if
-+         * you do this on real hardware. In practice no device QEMU
-+         * emulates has a use for verify on a memory-read transfer,
-+         * so we don't care beyond avoiding the guest being able to
-+         * trigger the caller reading uninitialized data.)
-+         */
-+        memset(buf, 0, len);
-         return len;
-     }
+     g_assert(-(addr | TARGET_PAGE_MASK) >= size);
+     flags = probe_access_internal(env, addr, size, access_type, false, ra);
+-    g_assert((flags & ~TLB_MMIO) == 0);
++    g_assert((flags & ~TLB_FORCE_SLOW) == 0);
  
+     return size ? g2h_vaddr(env_cpu(env), addr) : NULL;
+ }
+diff --git a/include/exec/tlb-flags.h b/include/exec/tlb-flags.h
+index 357e79095c9..e12cddf2345 100644
+--- a/include/exec/tlb-flags.h
++++ b/include/exec/tlb-flags.h
+@@ -27,12 +27,13 @@
+ 
+ /*
+  * Allow some level of source compatibility with softmmu.
+- * Invalid is set when the page does not have requested permissions.
+- * MMIO is set when we want the target helper to use the functional
++ * INVALID is set when the page does not have requested permissions.
++ * FORCE_SLOW is set when we want the target helper to use the functional
+  * interface for load/store so that plugins see the access.
+  */
+ #define TLB_INVALID_MASK     (1 << 0)
+-#define TLB_MMIO             (1 << 1)
++#define TLB_FORCE_SLOW       (1 << 1)
++#define TLB_MMIO             0
+ #define TLB_WATCHPOINT       0
+ 
+ #else
 -- 
 2.47.3
 
