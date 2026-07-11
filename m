@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CF1CC43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:01:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C9F8C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:01:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifkW-0002Mn-PH; Sat, 11 Jul 2026 18:00:40 -0400
+	id 1wifka-0002gJ-FF; Sat, 11 Jul 2026 18:00:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifkQ-0002D2-7P; Sat, 11 Jul 2026 18:00:38 -0400
+ id 1wifkX-0002Qk-Ga; Sat, 11 Jul 2026 18:00:41 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifkO-0007y6-8L; Sat, 11 Jul 2026 18:00:33 -0400
+ id 1wifkV-0008Af-2f; Sat, 11 Jul 2026 18:00:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807180; bh=32ly9JrxztZXfXdc+BkSY9lrMxJh2P7wCEom8Eu27FA=;
+ t=1783807180; bh=/+WpNnVQ+IZvhaql9T8ymGudEPU9tsQcGKEBkw9XzRo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=PzcljL8B1XrfF9prI//dLoo+kZpMJ0Xb3o2l5oo/RlyzRTEljHd6Jyd7IzEMkyhz5
- piJBgqze0vzWxnVUAKPVjS/tmmBWWfk7epN1BlG9zQ0boOPa3nUWsh9VJORvjr15RG
- tAgqRhPj8yKoLjczIaI4MKJohNOOFVNIvPpD1QZ9oQHcTRt7MMk6w0CRFraMGW5iKu
- Gc9YDovpG425TrEMDTGodhJge+zA2177at9iG0IG/knjUqJPRuk3mEydq2M66yi3Og
- TkIAp+HbxHtTZzGSW4QZRqm8CL4e0/0wbNmKj2pnUy1XueflHXDyGzTb9WdEcbznxI
- Alh9SVfNz3zDQ==
+ b=o6Qub/tacWylghJCyhk/X9xn1BioEDsqecxoIWYVq7BsfVv1h/leILilLGcRHTPVj
+ 3kNNXmU8+YTct17Rhhz3Xdtk2bGnzvxD+sj3dA/nR3ffTtpdJRLHK1OcNNdkVaaTT4
+ w9JHmlx3gAwNbRSc3p3OnpJFgXArLJWvyGjgkkWMb2BV+8ZvPtyOp6ULOgpmgXGDVi
+ 1UgaLaSfT1Uu9JHFyVvEK5y5HhEGxmQ/IV/KVk4ZQ6Wd/A8GF619wE7Vy05+MQKHFe
+ FyWbyIOK42uATUPqE3e513E8sHAhfl9U+FgnSjHbgIBzhc1pUDBMIbQZy0NnNYkvmf
+ vvmfNbjQiNCeA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 50F831C0A98;
+ by isrv.corpit.ru (Postfix) with ESMTP id 5D5DA1C0A9A;
  Sun, 12 Jul 2026 00:59:40 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 087AC3EAF23;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 14BC83EAF25;
  Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 54D0A132FD; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id 5960713301; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 13/81] hw/9pfs: add max_xattr option
-Date: Sun, 12 Jul 2026 00:57:51 +0300
-Message-ID: <20260711215904.3757-13-mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 15/81] tests/9p: add Tread / Rread test client
+ functions
+Date: Sun, 12 Jul 2026 00:57:53 +0300
+Message-ID: <20260711215904.3757-15-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
@@ -72,176 +73,136 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-Previous patch introduced a limit of max. 1024 simultaneous xattr FIDs.
+Add v9fs_tread() and v9fs_rread() functions to the 9P test client
+for reading files from 9pfs server in test cases.
 
-This patch introduces an option "max_attr" that allows to override this
-limit, just for the case that some user might run into this limit for
-some reason, even if unlikely; or for reducing the limit further down
-(e.g. that default limit of 1024 would cap at max. 64 MiB host memory,
-at least on Linux hosts where the limit per xattr is 64k).
-
-This new "max_xattr" option can be specified with both -fsdev and
--virtfs command line options, with the "local" and the "synth" fs
-drivers.
-
-The previous limit of 1024 is preserved as the default value.
-
-Link: https://lore.kernel.org/qemu-devel/b7631ac0d8dde0629bc7c4f2c4185d9f57b962b4.1781361555.git.qemu_oss@crudebyte.com
+Link: https://lore.kernel.org/qemu-devel/049bdd1e66416f5200fb3d59d2da5e8ec149926d.1781361555.git.qemu_oss@crudebyte.com
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit e6116a81f04c48af9530d984d16ef4ed4346e865)
+(cherry picked from commit 54b8f64c422d0ed6d992387f0de419420cdb9fea)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
-index 454761d81d7..1d931144f40 100644
---- a/fsdev/file-op-9p.h
-+++ b/fsdev/file-op-9p.h
-@@ -101,6 +101,8 @@ typedef struct FsDriverEntry {
-     FsThrottle fst;
-     mode_t fmode;
-     mode_t dmode;
-+    /* temporary storage for parse_opts only */
-+    uint32_t max_xattr;
- } FsDriverEntry;
- 
- struct FsContext {
-diff --git a/fsdev/qemu-fsdev-opts.c b/fsdev/qemu-fsdev-opts.c
-index 07a18c6e48d..c2c1e83611b 100644
---- a/fsdev/qemu-fsdev-opts.c
-+++ b/fsdev/qemu-fsdev-opts.c
-@@ -46,6 +46,9 @@ static QemuOptsList qemu_fsdev_opts = {
-         }, {
-             .name = "dmode",
-             .type = QEMU_OPT_NUMBER,
-+        }, {
-+            .name = "max_xattr",
-+            .type = QEMU_OPT_NUMBER,
-         },
- 
-         THROTTLE_OPTS,
-@@ -92,6 +95,9 @@ static QemuOptsList qemu_virtfs_opts = {
-         }, {
-             .name = "dmode",
-             .type = QEMU_OPT_NUMBER,
-+        }, {
-+            .name = "max_xattr",
-+            .type = QEMU_OPT_NUMBER,
-         },
- 
-         { /*End of list */ }
-diff --git a/fsdev/qemu-fsdev.c b/fsdev/qemu-fsdev.c
-index 57877dad0a7..f97103cf442 100644
---- a/fsdev/qemu-fsdev.c
-+++ b/fsdev/qemu-fsdev.c
-@@ -45,7 +45,7 @@ typedef struct FsDriverListEntry {
- static QTAILQ_HEAD(, FsDriverListEntry) fsdriver_entries =
-     QTAILQ_HEAD_INITIALIZER(fsdriver_entries);
- 
--#define COMMON_FS_DRIVER_OPTIONS "id", "fsdriver", "readonly"
-+#define COMMON_FS_DRIVER_OPTIONS "id", "fsdriver", "readonly", "max_xattr"
- 
- static FsDriverTable FsDrivers[] = {
-     {
-diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
-index aa48306b0ee..4708e170a42 100644
---- a/hw/9pfs/9p-local.c
-+++ b/hw/9pfs/9p-local.c
-@@ -1527,6 +1527,15 @@ static int local_parse_opts(QemuOpts *opts, FsDriverEntry *fse, Error **errp)
-     const char *path = qemu_opt_get(opts, "path");
-     const char *multidevs = qemu_opt_get(opts, "multidevs");
- 
-+    uint64_t val = qemu_opt_get_number(opts, "max_xattr",
-+                                       V9FS_MAX_XATTR_DEFAULT);
-+    if (val > UINT32_MAX) {
-+        error_setg(errp, "max_xattr value '%s' too large",
-+                   qemu_opt_get(opts, "max_xattr"));
-+        return -1;
-+    }
-+    fse->max_xattr = val;
-+
-     if (!sec_model) {
-         error_setg(errp, "security_model property not set");
-         error_append_security_model_hint(errp);
-diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
-index b3743f61696..322dc3bb690 100644
---- a/hw/9pfs/9p-synth.c
-+++ b/hw/9pfs/9p-synth.c
-@@ -25,6 +25,8 @@
- #include "qemu/rcu_queue.h"
- #include "qemu/cutils.h"
- #include "system/qtest.h"
-+#include "qapi/error.h"
-+#include "qemu/option.h"
- 
- /* Root node for synth file system */
- static V9fsSynthNode synth_root = {
-@@ -629,12 +631,27 @@ static int synth_init(FsContext *ctx, Error **errp)
-     return 0;
+diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
+index af01d4c3458..b9785ef8cb7 100644
+--- a/tests/qtest/libqos/virtio-9p-client.c
++++ b/tests/qtest/libqos/virtio-9p-client.c
+@@ -241,6 +241,7 @@ static const char *rmessage_name(uint8_t id)
+         id == P9_RUNLINKAT ? "RUNLINKAT" :
+         id == P9_RFLUSH ? "RFLUSH" :
+         id == P9_RREADDIR ? "RREADDIR" :
++        id == P9_RREAD ? "RREAD" :
+         "<unknown>";
  }
  
-+static int synth_parse_opts(QemuOpts *opts, FsDriverEntry *fse, Error **errp)
-+{
-+    uint64_t val = qemu_opt_get_number(opts, "max_xattr",
-+                                       V9FS_MAX_XATTR_DEFAULT);
-+    if (val > UINT32_MAX) {
-+        error_setg(errp, "max_xattr value '%s' too large",
-+                   qemu_opt_get(opts, "max_xattr"));
-+        return -1;
-+    }
-+    fse->max_xattr = val;
+@@ -1103,3 +1104,47 @@ void v9fs_runlinkat(P9Req *req)
+     v9fs_req_recv(req, P9_RUNLINKAT);
+     v9fs_req_free(req);
+ }
 +
-+    return 0;
++/* size[4] Tread tag[2] fid[4] offset[8] count[4] */
++TReadRes v9fs_tread(TReadOpt opt)
++{
++    P9Req *req;
++    uint32_t err;
++
++    g_assert(opt.client);
++
++    uint32_t body_size = 4 + 8 + 4;
++
++    req = v9fs_req_init(opt.client, body_size, P9_TREAD, opt.tag);
++    v9fs_uint32_write(req, opt.fid);
++    v9fs_uint64_write(req, opt.offset);
++    v9fs_uint32_write(req, opt.count);
++    v9fs_req_send(req);
++
++    if (!opt.requestOnly) {
++        v9fs_req_wait_for_reply(req, NULL);
++        if (opt.expectErr) {
++            v9fs_rlerror(req, &err);
++            g_assert_cmpint(err, ==, opt.expectErr);
++        } else {
++            v9fs_rread(req, opt.rread.count, opt.rread.data);
++        }
++        req = NULL; /* request was freed */
++    }
++
++    return (TReadRes) {
++        .req = req,
++        .count = opt.rread.count ? *opt.rread.count : 0
++    };
 +}
 +
- static bool synth_has_valid_file_handle(int fid_type, V9fsFidOpenState *fs)
++/* size[4] Rread tag[2] count[4] data[count] */
++void v9fs_rread(P9Req *req, uint32_t *count, void *data)
++{
++    v9fs_req_recv(req, P9_RREAD);
++    v9fs_uint32_read(req, count);
++    if (data && *count > 0) {
++        v9fs_memread(req, data, *count);
++    }
++    v9fs_req_free(req);
++}
+diff --git a/tests/qtest/libqos/virtio-9p-client.h b/tests/qtest/libqos/virtio-9p-client.h
+index e3221a31041..37f2517cff1 100644
+--- a/tests/qtest/libqos/virtio-9p-client.h
++++ b/tests/qtest/libqos/virtio-9p-client.h
+@@ -473,6 +473,37 @@ typedef struct TunlinkatRes {
+     P9Req *req;
+ } TunlinkatRes;
+ 
++/* options for 'Tread' 9p request */
++typedef struct TReadOpt {
++    /* 9P client being used (mandatory) */
++    QVirtio9P *client;
++    /* user supplied tag number being returned with response (optional) */
++    uint16_t tag;
++    /* file ID of file to read from (required) */
++    uint32_t fid;
++    /* start position of read from beginning of file (optional) */
++    uint64_t offset;
++    /* how many bytes to read (required) */
++    uint32_t count;
++    /* data being received from 9p server as 'Rread' response (optional) */
++    struct {
++        uint32_t *count;
++        void *data;
++    } rread;
++    /* only send Tread request but not wait for a reply? (optional) */
++    bool requestOnly;
++    /* do we expect an Rlerror response, if yes which error code? (optional) */
++    uint32_t expectErr;
++} TReadOpt;
++
++/* result of 'Tread' 9p request */
++typedef struct TReadRes {
++    /* if requestOnly was set: request object for further processing */
++    P9Req *req;
++    /* amount of bytes read */
++    uint32_t count;
++} TReadRes;
++
+ void v9fs_set_allocator(QGuestAllocator *t_alloc);
+ void v9fs_memwrite(P9Req *req, const void *addr, size_t len);
+ void v9fs_memskip(P9Req *req, size_t len);
+@@ -524,5 +555,7 @@ TlinkRes v9fs_tlink(TlinkOpt);
+ void v9fs_rlink(P9Req *req);
+ TunlinkatRes v9fs_tunlinkat(TunlinkatOpt);
+ void v9fs_runlinkat(P9Req *req);
++TReadRes v9fs_tread(TReadOpt opt);
++void v9fs_rread(P9Req *req, uint32_t *count, void *data);
+ 
+ #endif
+diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
+index 1c69d41e332..8ccec77e706 100644
+--- a/tests/qtest/virtio-9p-test.c
++++ b/tests/qtest/virtio-9p-test.c
+@@ -31,6 +31,7 @@
+ #define tsymlink(...) v9fs_tsymlink((TsymlinkOpt) __VA_ARGS__)
+ #define tlink(...) v9fs_tlink((TlinkOpt) __VA_ARGS__)
+ #define tunlinkat(...) v9fs_tunlinkat((TunlinkatOpt) __VA_ARGS__)
++#define tread(...) v9fs_tread((TReadOpt) __VA_ARGS__)
+ 
+ static void pci_config(void *obj, void *data, QGuestAllocator *t_alloc)
  {
-     return false;
- }
- 
- FileOperations synth_ops = {
-+    .parse_opts   = synth_parse_opts,
-     .init         = synth_init,
-     .lstat        = synth_lstat,
-     .readlink     = synth_readlink,
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 437588f9d5c..1b064a27fc5 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -4505,8 +4505,8 @@ int v9fs_device_realize_common(V9fsState *s, const V9fsTransport *t,
- 
-     s->reclaiming = false;
- 
--    /* init xattr FID limit */
--    s->ctx.xattr_fid_limit = V9FS_MAX_XATTR_DEFAULT;
-+    /* init xattr FID limit from fsdev config */
-+    s->ctx.xattr_fid_limit = fse->max_xattr;
-     s->ctx.xattr_fid_count = 0;
- 
-     rc = 0;
-diff --git a/system/vl.c b/system/vl.c
-index 246623b3196..806327bd39a 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -3254,7 +3254,7 @@ void qemu_init(int argc, char **argv)
-                 QemuOpts *fsdev;
-                 QemuOpts *device;
-                 const char *writeout, *sock_fd, *socket, *path, *security_model,
--                           *multidevs;
-+                           *multidevs, *max_xattr_str;
- 
-                 olist = qemu_find_opts("virtfs");
-                 if (!olist) {
-@@ -3318,6 +3318,11 @@ void qemu_init(int argc, char **argv)
-                 if (multidevs) {
-                     qemu_opt_set(fsdev, "multidevs", multidevs, &error_abort);
-                 }
-+                max_xattr_str = qemu_opt_get(opts, "max_xattr");
-+                if (max_xattr_str) {
-+                    qemu_opt_set(fsdev, "max_xattr", max_xattr_str,
-+                                 &error_abort);
-+                }
-                 device = qemu_opts_create(qemu_find_opts("device"), NULL, 0,
-                                           &error_abort);
-                 qemu_opt_set(device, "driver", "virtio-9p-pci", &error_abort);
 -- 
 2.47.3
 
