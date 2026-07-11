@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6577C44501
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:41:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBB9CC44507
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:41:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigNS-0004XF-Ie; Sat, 11 Jul 2026 18:40:54 -0400
+	id 1wigNL-00049R-T0; Sat, 11 Jul 2026 18:40:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigNQ-0004Q0-D4; Sat, 11 Jul 2026 18:40:52 -0400
-Received: from pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([34.218.115.239])
+ id 1wigNJ-00043m-EO; Sat, 11 Jul 2026 18:40:45 -0400
+Received: from pdx-out-003.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([44.246.68.102])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigNO-0005os-AX; Sat, 11 Jul 2026 18:40:52 -0400
+ id 1wigNF-0005mV-87; Sat, 11 Jul 2026 18:40:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783809650; x=1815345650;
+ t=1783809641; x=1815345641;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=ZLtpU6t0pkB0bJ724CMQihST0BRaAPM8GUkYNktSJgY=;
- b=aCFBKFS4xbAGNih85Hk9xnN0+ypOjafqjYpgvWmZcZ6WzIsrnPS3XMfX
- /5Kk5A0hF8V7dSKFn19Gh9oMWFtP9NSf8nCga+/hI43XC7j8lKVt9T/7U
- MI6YtBnRwuIgX/wdeNqHW2vSDyWk5Dz98fWalUvxEMTmwS6IsEJbZ/b5k
- Atn5bZoHrWGAz3oWXW3rmqoXvNtIPMw11LNhbhJwpV5CTIdwcKvGZ4cqE
- JiQ2MZp94P4jg8h57A9HTEs++9Eo6JMV/F4aHsaUOb9vfjy7Joi/isdCa
- H/SRttZFxHEdnDVuklKcSrrV6hcicMScOKoYa3teWWCW/LlK9a+eWWfZS g==;
-X-CSE-ConnectionGUID: wmjeqMWCR/CG0ag96zf8IA==
-X-CSE-MsgGUID: CBhn+ZQLROyDI1olWo342Q==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23296563"
-Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
- by internal-pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:40:45 +0000
-Received: from EX19MTAUWA001.ant.amazon.com [205.251.233.182:20728]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.51.175:2525]
+ bh=eSRbV7G7G+bleKDtHv/YImdHl7QlpX/35p7U7LwVHOw=;
+ b=dR2pg7wnLXoUfifgOoWcvHjGsNTK5Ejej1Jn8C7+2v81fZxgOBSRLwOD
+ DXJ+EVyJQgEoa8UUbEldr51NeBYRyHnNR2fhaTWr3YTCyFamAlwHmsuXu
+ qTUfYiVfQUM1EaUOLAolkE4hdpfIBpDrJEzP+vin1s2iFPsnUL1fQ2U3/
+ cjoN2sn2roJ8Rd1IwlRS8IhU3qElMi2wbn1QT8hzNsrLgL58YE0ZGhYQL
+ tem5eVr1G14T/6hNIu6Fo1MyYF6jmuZb8bP72YoBEMelcYHSvGZC6cutU
+ NKe41UkqOoLZV9tiUUtF+aJwBjlP6wpCAePy0vDAi7oD1cZGPAaDEGcjE g==;
+X-CSE-ConnectionGUID: OBrRkZmQRha2ZyFwcTJHng==
+X-CSE-MsgGUID: fkAkwbXFSC2hofj4r1cHcA==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23517013"
+Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
+ by internal-pdx-out-003.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:40:28 +0000
+Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.51:31681]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.35.214:2525]
  with esmtp (Farcaster)
- id ceb96b90-fa1d-4111-9117-20fc3f6abbc4; Sat, 11 Jul 2026 22:40:45 +0000 (UTC)
-X-Farcaster-Flow-ID: ceb96b90-fa1d-4111-9117-20fc3f6abbc4
+ id 69686bc1-4ec4-41c7-a277-8d93fb6fae40; Sat, 11 Jul 2026 22:40:28 +0000 (UTC)
+X-Farcaster-Flow-ID: 69686bc1-4ec4-41c7-a277-8d93fb6fae40
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA001.ant.amazon.com (10.250.64.217) with Microsoft SMTP Server
+ EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:40:45 +0000
+ Sat, 11 Jul 2026 22:40:28 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:40:36 +0000
+ Sat, 11 Jul 2026 22:40:19 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,9 +91,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 014/134] hw/nitro: Give onboard devices a QOM parent
-Date: Sat, 11 Jul 2026 22:35:07 +0000
-Message-ID: <20260711223707.42139-15-graf@amazon.com>
+Subject: [RFC PATCH 012/134] hw/xtensa: Give onboard devices a QOM parent
+Date: Sat, 11 Jul 2026 22:35:05 +0000
+Message-ID: <20260711223707.42139-13-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -103,9 +103,9 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D031UWC004.ant.amazon.com (10.13.139.246) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=34.218.115.239;
+Received-SPF: pass client-ip=44.246.68.102;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-003.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
@@ -129,7 +129,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the *_orphan() device-creation calls in hw/nitro to the new
+Convert the *_orphan() device-creation calls in hw/xtensa to the new
 parented API introduced earlier in this series, so every onboard
 device gets a stable path in the composition tree instead of landing
 in /machine/unattached with an unstable device[N] name.
@@ -140,47 +140,98 @@ composite children.  Names follow existing QOM conventions.
 
 Per-site rationale (reviewers: dispute the modeling here):
 
-  file:line              | parent          | name        | rationale
-  machine.c:200          | OBJECT(bridge)  | "heartbeat" | onboard heartbeat is a fixed child of the vsock bridge it plugs into; bridge owns its lifetime
-  machine.c:212          | OBJECT(bridge)  | "serial"    | debug-mode serial-over-vsock is a fixed child of the same bridge
-  nitro-vsock-bus.c:51   | ORPHAN-JUSTIFIED| -           | bridge is parented immediately after via qdev_set_id() to /machine/peripheral/nitro-vsock; keep the orphan creator here
+  file:line       | parent           | name     | rationale
+  sim.c:66        | OBJECT(machine)  | "cpu[*]" | SMP CPUs created by board init(); machine owns them
+  virt.c:64       | OBJECT(ms)       | "pcie"   | GPEX PCIe host is a fixed onboard device of the virt machine; create_pcie() already receives MachineState
+  xtfpga.c:176    | OBJECT(machine)  | "flash"  | onboard CFI flash; thread an Object *parent argument through the static xtfpga_flash_init() helper from board init()
+  xtfpga.c:253    | OBJECT(machine)  | "cpu[*]" | SMP CPUs created by board init()
 
 Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/nitro/machine.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ hw/xtensa/sim.c    |  2 +-
+ hw/xtensa/virt.c   |  4 ++--
+ hw/xtensa/xtfpga.c | 13 ++++++++-----
+ 3 files changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/hw/nitro/machine.c b/hw/nitro/machine.c
-index efcc2c8a3f..6b61de911f 100644
---- a/hw/nitro/machine.c
-+++ b/hw/nitro/machine.c
-@@ -195,10 +195,11 @@ static void nitro_machine_init(MachineState *machine)
+diff --git a/hw/xtensa/sim.c b/hw/xtensa/sim.c
+index 17245a0388..ad1439a0b4 100644
+--- a/hw/xtensa/sim.c
++++ b/hw/xtensa/sim.c
+@@ -63,7 +63,7 @@ XtensaCPU *xtensa_sim_common_init(MachineState *machine)
+     int n;
  
-     if (defaults_enabled()) {
-         NitroVsockBridge *bridge = nitro_vsock_bridge_create();
-+        DeviceState *dev;
+     for (n = 0; n < machine->smp.cpus; n++) {
+-        cpu = XTENSA_CPU(cpu_create_orphan(machine->cpu_type));
++        cpu = XTENSA_CPU(cpu_create(OBJECT(machine), "cpu[*]", machine->cpu_type));
+         env = &cpu->env;
  
-         /* Nitro Enclaves require a heartbeat device. Provide one. */
--        qdev_realize(qdev_new_orphan(TYPE_NITRO_HEARTBEAT),
--                     BUS(&bridge->bus), &error_fatal);
-+        dev = qdev_new(OBJECT(bridge), "heartbeat", TYPE_NITRO_HEARTBEAT);
-+        qdev_realize(dev, BUS(&bridge->bus), &error_fatal);
+         env->sregs[PRID] = n;
+diff --git a/hw/xtensa/virt.c b/hw/xtensa/virt.c
+index e31b783b91..6b1271d0d5 100644
+--- a/hw/xtensa/virt.c
++++ b/hw/xtensa/virt.c
+@@ -61,8 +61,8 @@ static void create_pcie(MachineState *ms, CPUXtensaState *env, int irq_base,
+     qemu_irq *extints;
+     int i;
  
-         /*
-          * In debug mode, Nitro Enclaves expose the guest's serial output via
-@@ -209,8 +210,8 @@ static void nitro_machine_init(MachineState *machine)
-             Chardev *chr = serial_hd(0);
+-    dev = qdev_new_orphan(TYPE_GPEX_HOST);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    dev = qdev_new(OBJECT(ms), "pcie", TYPE_GPEX_HOST);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
  
-             if (chr) {
--                DeviceState *dev = qdev_new_orphan(TYPE_NITRO_SERIAL_VSOCK);
--
-+                dev = qdev_new(OBJECT(bridge), "serial",
-+                               TYPE_NITRO_SERIAL_VSOCK);
-                 qdev_prop_set_chr(dev, "chardev", chr);
-                 qdev_realize(dev, BUS(&bridge->bus), &error_fatal);
-             }
+     /* Map only the first size_ecam bytes of ECAM space. */
+     ecam_alias = g_new0(MemoryRegion, 1);
+diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
+index 0ee7350945..07b791b9bf 100644
+--- a/hw/xtensa/xtfpga.c
++++ b/hw/xtensa/xtfpga.c
+@@ -168,12 +168,13 @@ static void xtfpga_net_init(MemoryRegion *address_space,
+     memory_region_add_subregion(address_space, buffers, ram);
+ }
+ 
+-static PFlashCFI01 *xtfpga_flash_init(MemoryRegion *address_space,
++static PFlashCFI01 *xtfpga_flash_init(Object *parent,
++                                      MemoryRegion *address_space,
+                                       const XtfpgaBoardDesc *board,
+                                       DriveInfo *dinfo, int be)
+ {
+     SysBusDevice *s;
+-    DeviceState *dev = qdev_new_orphan(TYPE_PFLASH_CFI01);
++    DeviceState *dev = qdev_new(parent, "flash", TYPE_PFLASH_CFI01);
+ 
+     qdev_prop_set_drive(dev, "drive", blk_by_legacy_dinfo(dinfo));
+     qdev_prop_set_uint32(dev, "num-blocks",
+@@ -183,7 +184,7 @@ static PFlashCFI01 *xtfpga_flash_init(MemoryRegion *address_space,
+     qdev_prop_set_bit(dev, "big-endian", be);
+     qdev_prop_set_string(dev, "name", "xtfpga.io.flash");
+     s = SYS_BUS_DEVICE(dev);
+-    sysbus_realize_and_unref(s, &error_fatal);
++    sysbus_realize(s, &error_fatal);
+     memory_region_add_subregion(address_space, board->flash->base,
+                                 sysbus_mmio_get_region(s, 0));
+     return PFLASH_CFI01(dev);
+@@ -250,7 +251,8 @@ static void xtfpga_init(const XtfpgaBoardDesc *board, MachineState *machine)
+     for (n = 0; n < smp_cpus; n++) {
+         CPUXtensaState *cenv = NULL;
+ 
+-        cpu = XTENSA_CPU(cpu_create_orphan(machine->cpu_type));
++        cpu = XTENSA_CPU(cpu_create(OBJECT(machine), "cpu[*]",
++                                    machine->cpu_type));
+         cenv = &cpu->env;
+         if (!env) {
+             env = cenv;
+@@ -315,7 +317,8 @@ static void xtfpga_init(const XtfpgaBoardDesc *board, MachineState *machine)
+ 
+     dinfo = drive_get(IF_PFLASH, 0, 0);
+     if (dinfo) {
+-        flash = xtfpga_flash_init(system_io, board, dinfo, TARGET_BIG_ENDIAN);
++        flash = xtfpga_flash_init(OBJECT(machine), system_io, board, dinfo,
++                                  TARGET_BIG_ENDIAN);
+     }
+ 
+     /* Use presence of kernel file name as 'boot from SRAM' switch. */
 -- 
 2.47.1
 
