@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB34CC44501
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 23:08:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2BBFC44506
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 23:08:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigoB-0007V5-CZ; Sat, 11 Jul 2026 19:08:31 -0400
+	id 1wigny-0007Je-6O; Sat, 11 Jul 2026 19:08:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigo1-0007OD-6N; Sat, 11 Jul 2026 19:08:21 -0400
-Received: from pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([35.155.198.111])
+ id 1wignt-0007BG-2B; Sat, 11 Jul 2026 19:08:13 -0400
+Received: from pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([34.218.115.239])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wignx-00040w-Sd; Sat, 11 Jul 2026 19:08:20 -0400
+ id 1wignq-0003yo-Az; Sat, 11 Jul 2026 19:08:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783811297; x=1815347297;
+ t=1783811290; x=1815347290;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=i/Hf/CC9n0E6uWWRloIhxXYo3/PHlHdMS6c+m1UmphE=;
- b=pIgpMdOd5zwIiwnvodRBl11CpGpI9CE6Tz3lKuTuJ5/31BqBpbWig8Q6
- ZPLvezAKgKXeVHplTzMtvjBGcPNozxHJBfHy5b8nBfAh7OUmob3r+/VJ2
- 3GV7yKGtiqskfG9ZAmrF/0ddbawBnIqv/EgARGSaPS4Q7r/swW/Iru5OF
- dmZn7HNRQAmS9RJM7XORu2XyIqG/CXSVZxAD3O2BnCAt+MgoPymrKg0r4
- kWdvI7on/PJ+yiE/GKPnDBaBAGXsNCFyseo/qM9sUVd9v2nuxf8we3HWq
- Vcx/q9sUrOD8AhszgNi9M9YlYWcboIGNKadx3EY+bQRejm9DLMNI3DFKE Q==;
-X-CSE-ConnectionGUID: zyMz+3qfQKq9jVsUr9v0Vg==
-X-CSE-MsgGUID: gB76WvxdS7q26FgZ8F47qQ==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23390775"
-Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
- by internal-pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 23:08:14 +0000
-Received: from EX19MTAUWC002.ant.amazon.com [205.251.233.111:16608]
+ bh=tPMmk224u2umsl8me1FiHvbMiJivmP9hfh/70Zj6vFI=;
+ b=jZ6CiOpERBlruOdDJ7AemH3VwwRV9XmiSkqTP7L/8M32j7hxlt4cF9/M
+ zz3uPd7sbE2yzhjtbcFdEstkZtjK25KTxz/uqKkiUfU4Og3DC4cRQkLEO
+ jdNxERSvpTtp0iImJn/cM36AbKdGuOj1DLQch67Vxgx98xa5YzYOtV+kj
+ JwJKBXtlEtV+EyMqfwq/aILBk95a8uyW7M8Z0lZR/W+jH6ELNHpCJR2rS
+ aPRF7GBYC+HJdOwb/27KHtu5gF1BxX+b6SH6tUYMad+9Vra0YTvwd17/9
+ gWwcB2xTDzzSEVPCBpEPHCbsLzuljIIPuNMtKnqHcoZVqFItxVMf+wnEu Q==;
+X-CSE-ConnectionGUID: ILu1D4OTQNiaaASA3l3rlg==
+X-CSE-MsgGUID: VCgiFJwOQjqPkICgdRiK9g==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23296956"
+Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
+ by internal-pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 23:08:06 +0000
+Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.51:25963]
  by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.31.54:2525]
  with esmtp (Farcaster)
- id 0bb4526d-b27c-4c11-afaa-8f6891211b52; Sat, 11 Jul 2026 23:08:14 +0000 (UTC)
-X-Farcaster-Flow-ID: 0bb4526d-b27c-4c11-afaa-8f6891211b52
+ id 0176f3c0-559c-45c9-948b-39f3e11e643e; Sat, 11 Jul 2026 23:08:06 +0000 (UTC)
+X-Farcaster-Flow-ID: 0176f3c0-559c-45c9-948b-39f3e11e643e
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
+ EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 23:08:14 +0000
+ Sat, 11 Jul 2026 23:08:05 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 23:08:05 +0000
+ Sat, 11 Jul 2026 23:07:57 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,10 +91,10 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 118/134] accel: Parent the accelerator singleton under
+Subject: [RFC PATCH 117/134] sysbus: Parent main-system-bus directly under
  /machine
-Date: Sat, 11 Jul 2026 22:36:51 +0000
-Message-ID: <20260711223707.42139-119-graf@amazon.com>
+Date: Sat, 11 Jul 2026 22:36:50 +0000
+Message-ID: <20260711223707.42139-118-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -104,9 +104,9 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D044UWB002.ant.amazon.com (10.13.139.188) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=35.155.198.111;
+Received-SPF: pass client-ip=34.218.115.239;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
@@ -130,37 +130,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-do_configure_accelerator() runs after qemu_create_machine(), so
-current_machine is available.  Give the AccelState singleton a
-canonical path at /machine/accel and drop the floating caller
-reference; on init failure, unparent instead of unref.
+The main system bus is the only object deliberately placed under
+/machine/unattached; every other resident is an accidental orphan.
+Promoting it to /machine/sysbus makes /machine/unattached a pure
+bug indicator that later commits can turn into a hard error.
+
+The canonical path changes from /machine/unattached/sysbus to
+/machine/sysbus.  qom-list users that hard-code the old path need
+to be updated; the hmp/qmp qom-tree output naturally follows.
 
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- accel/accel-system.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ system/vl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/accel/accel-system.c b/accel/accel-system.c
-index 9176665202..987c982c16 100644
---- a/accel/accel-system.c
-+++ b/accel/accel-system.c
-@@ -41,12 +41,14 @@ int accel_init_machine(AccelState *accel, MachineState *ms)
-     AccelClass *acc = ACCEL_GET_CLASS(accel);
-     int ret;
-     ms->accelerator = accel;
-+    object_property_add_child(OBJECT(ms), "accel", OBJECT(accel));
-+    object_unref(OBJECT(accel));
-     *(acc->allowed) = true;
-     ret = acc->init_machine(accel, ms);
-     if (ret < 0) {
-         ms->accelerator = NULL;
-         *(acc->allowed) = false;
--        object_unref(OBJECT(accel));
-+        object_unparent(OBJECT(accel));
-     } else {
-         object_set_accelerator_compat_props(acc->compat_props);
-     }
+diff --git a/system/vl.c b/system/vl.c
+index 061cbdf860..b4434839df 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -2211,7 +2211,7 @@ static void qemu_create_machine(QDict *qdict)
+     object_property_add_child(object_get_root(), "machine",
+                               OBJECT(current_machine));
+     qemu_create_machine_containers(OBJECT(current_machine));
+-    object_property_add_child(machine_get_container("unattached"),
++    object_property_add_child(OBJECT(current_machine),
+                               "sysbus", OBJECT(sysbus_get_default()));
+ 
+     if (machine_class->minimum_page_bits) {
 -- 
 2.47.1
 
