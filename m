@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC96AC43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:58:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8BD0C44501
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:58:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigdy-0003dt-83; Sat, 11 Jul 2026 18:57:58 -0400
+	id 1wigeE-0004Hy-5W; Sat, 11 Jul 2026 18:58:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigdx-0003Yw-05; Sat, 11 Jul 2026 18:57:57 -0400
-Received: from pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([34.218.115.239])
+ id 1wigeD-0004Cu-8r; Sat, 11 Jul 2026 18:58:13 -0400
+Received: from pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([44.245.243.92])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigdv-0001PN-BT; Sat, 11 Jul 2026 18:57:56 -0400
+ id 1wigeB-0001QT-CD; Sat, 11 Jul 2026 18:58:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783810675; x=1815346675;
+ t=1783810691; x=1815346691;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Ma/DwAjwZrLcqKA98spRqUTG7sd6afeYhtmjFkqce2M=;
- b=MmOVFV4j7ToMhTfH/GWC3VI5GuScwXruas5Q5G3J9om/iQktoWFk3wc4
- AKM9HOkU3f8R1D60GRLJ9Hk42O2VXM0tQ7RWy+EFGqS9mtId29lIzfPca
- 1YMPRlS94mMNAWaak7gxL/UwNTZDhpIPEBraNBCiQcXy0+kuzrS+qmyKj
- PGrNcdRwXOCAOXBtKBCP+jEYAebi1uhCoGkDs/Q9833b8WdkqhCqvWa3/
- GazcA2YEtCmf5XtW7hS8P2OQMhh/DehxRbTCk1kXy2I0Yr7Mm0sAbTOSP
- KFIV391bQ8JmiAC3G0tHcPoHR9KhNjVYSxlKX4plVEl5v+0iug4zyFOwp w==;
-X-CSE-ConnectionGUID: 3HTAobOWSR+ialyx60XHPA==
-X-CSE-MsgGUID: ecozqXy4TZKqeVEkBQYEIQ==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23296857"
-Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
- by internal-pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:57:51 +0000
-Received: from EX19MTAUWC002.ant.amazon.com [205.251.233.111:11199]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.35.214:2525]
+ bh=zNqLOx2x0I9gZElFzToX/WDwD+3MyIg002yqWRyyMKE=;
+ b=DQyuHtcIPwrLO5qk8M+VeVMXjC2ALmM4CPp9lpUAxrXw6igQCWAjQgfn
+ jTM1291dPJcYUVWi+m3Mq+UIuBmOomqI4rc8zrJUDGVkcTXPMKKBBxkNy
+ Gyj5BdQ+Nt/8N8BNo5Ngfm8v/T+WTiWVf+DYFCIwEMNc60jP4B01nyUZ1
+ jdqL/iaIqYMjU/JhIiPiRebWr8CCNyQClckGppWKZ9C2woIVZ41HGX33Z
+ iNL/QiFbNJsX4rJPUoqmVhCHI7vxCaj/xTr2gtLigYRU5OJzOnP2mtfD5
+ fvKOpBPBoECn7baJGJVQDRVdVYFfRSabBC/gwf8idzV6sNz19YlVUT/YU w==;
+X-CSE-ConnectionGUID: OUYYIaILTuSOvJTRPR+sIg==
+X-CSE-MsgGUID: VekgXWuRSZ6Ypbmk+wdovQ==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="22997667"
+Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
+ by internal-pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:58:08 +0000
+Received: from EX19MTAUWC001.ant.amazon.com [205.251.233.53:8221]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.31.54:2525]
  with esmtp (Farcaster)
- id b383e339-ef54-46c7-9d12-f452bd2223db; Sat, 11 Jul 2026 22:57:51 +0000 (UTC)
-X-Farcaster-Flow-ID: b383e339-ef54-46c7-9d12-f452bd2223db
+ id 4e9f9928-008a-42bb-b64d-d988d99267b3; Sat, 11 Jul 2026 22:58:08 +0000 (UTC)
+X-Farcaster-Flow-ID: 4e9f9928-008a-42bb-b64d-d988d99267b3
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
+ EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:57:51 +0000
+ Sat, 11 Jul 2026 22:58:08 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:57:42 +0000
+ Sat, 11 Jul 2026 22:57:59 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,9 +91,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 078/134] hw/audio: Give -audio model= devices a QOM parent
-Date: Sat, 11 Jul 2026 22:36:11 +0000
-Message-ID: <20260711223707.42139-79-graf@amazon.com>
+Subject: [RFC PATCH 080/134] hw/nitro: Give the vsock bridge a QOM parent
+Date: Sat, 11 Jul 2026 22:36:13 +0000
+Message-ID: <20260711223707.42139-81-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -103,9 +103,9 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D036UWC003.ant.amazon.com (10.13.139.214) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=34.218.115.239;
+Received-SPF: pass client-ip=44.245.243.92;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
@@ -129,58 +129,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-audio_model_devices_init() is the '-audio model=' command-line path,
-so parent the created device under /machine/peripheral-anon like
--device without id= would.
+nitro_vsock_bridge_create() was using qdev_set_id() to slot the
+bridge under /machine/peripheral.  The bridge is a board-owned
+singleton created from nitro_machine_init(), so make it a plain
+child of the machine and drop the qdev_set_id() indirection.
 
-The intel-hda .init helper for '-audio model=hda' additionally
-creates an hda-duplex codec on the controller's HDA bus; the codec
-is a natural child of the controller device it just spawned.
+The heartbeat device that hangs off the bridge is already a child<>
+of it, so the composition tree becomes:
 
-Both sites drop the extra unref: the child<> property now holds the
-reference.
+  /machine/nitro-vsock (nitro-vsock-bridge)
+  /machine/nitro-vsock/heartbeat (nitro-heartbeat)
 
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/audio/intel-hda.c | 4 ++--
- hw/audio/model.c     | 5 +++--
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ hw/nitro/machine.c                 | 2 +-
+ hw/nitro/nitro-vsock-bus.c         | 9 ++++-----
+ include/hw/nitro/nitro-vsock-bus.h | 2 +-
+ 3 files changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/hw/audio/intel-hda.c b/hw/audio/intel-hda.c
-index cd4743a405..f51c98511a 100644
---- a/hw/audio/intel-hda.c
-+++ b/hw/audio/intel-hda.c
-@@ -1313,9 +1313,9 @@ static void intel_hda_and_codec_init(const char *audiodev)
-     intel_hda = qdev_device_add_from_qdict(props, false, &error_fatal);
-     hdabus = QLIST_FIRST(&intel_hda->child_bus);
+diff --git a/hw/nitro/machine.c b/hw/nitro/machine.c
+index 6b61de911f..e522eae5ba 100644
+--- a/hw/nitro/machine.c
++++ b/hw/nitro/machine.c
+@@ -194,7 +194,7 @@ static void nitro_machine_init(MachineState *machine)
+                         MEMTXATTRS_UNSPECIFIED, eif_data, eif_size);
  
--    codec = qdev_new_orphan("hda-duplex");
-+    codec = qdev_new(OBJECT(intel_hda), "codec", "hda-duplex");
-     qdev_prop_set_string(codec, "audiodev", audiodev);
--    qdev_realize_and_unref(codec, hdabus, &error_fatal);
-+    qdev_realize(codec, hdabus, &error_fatal);
-     object_unref(intel_hda);
+     if (defaults_enabled()) {
+-        NitroVsockBridge *bridge = nitro_vsock_bridge_create();
++        NitroVsockBridge *bridge = nitro_vsock_bridge_create(OBJECT(machine));
+         DeviceState *dev;
+ 
+         /* Nitro Enclaves require a heartbeat device. Provide one. */
+diff --git a/hw/nitro/nitro-vsock-bus.c b/hw/nitro/nitro-vsock-bus.c
+index f7540eaa54..2c4b66931f 100644
+--- a/hw/nitro/nitro-vsock-bus.c
++++ b/hw/nitro/nitro-vsock-bus.c
+@@ -20,7 +20,6 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+-#include "monitor/qdev.h"
+ #include "hw/core/sysbus.h"
+ #include "hw/nitro/nitro-vsock-bus.h"
+ 
+@@ -46,12 +45,12 @@ void nitro_vsock_bridge_start_enclave(NitroVsockBridge *bridge,
+     }
  }
  
-diff --git a/hw/audio/model.c b/hw/audio/model.c
-index bd8ca35153..308b899459 100644
---- a/hw/audio/model.c
-+++ b/hw/audio/model.c
-@@ -110,10 +110,11 @@ void audio_model_init(void)
-     }
+-NitroVsockBridge *nitro_vsock_bridge_create(void)
++NitroVsockBridge *nitro_vsock_bridge_create(Object *parent)
+ {
+-    DeviceState *dev = qdev_new_orphan(TYPE_NITRO_VSOCK_BRIDGE);
++    DeviceState *dev = qdev_new(parent, "nitro-vsock",
++                                TYPE_NITRO_VSOCK_BRIDGE);
  
-     if (c->typename) {
--        DeviceState *dev = qdev_new_orphan(c->typename);
-+        DeviceState *dev = qdev_new(machine_get_container("peripheral-anon"),
-+                                    "audio[*]", c->typename);
-         BusState *bus = qdev_find_default_bus(DEVICE_GET_CLASS(dev), &error_fatal);
-         qdev_prop_set_string(dev, "audiodev", audiodev_id);
--        qdev_realize_and_unref(dev, bus, &error_fatal);
-+        qdev_realize(dev, bus, &error_fatal);
-     } else {
-         c->init(audiodev_id);
-     }
+-    qdev_set_id(dev, g_strdup("nitro-vsock"), &error_fatal);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+ 
+     return NITRO_VSOCK_BRIDGE(dev);
+ }
+diff --git a/include/hw/nitro/nitro-vsock-bus.h b/include/hw/nitro/nitro-vsock-bus.h
+index 064260aa41..36f4dde78f 100644
+--- a/include/hw/nitro/nitro-vsock-bus.h
++++ b/include/hw/nitro/nitro-vsock-bus.h
+@@ -50,7 +50,7 @@ struct NitroVsockDeviceClass {
+ /*
+  * Machine helper to create the Nitro vsock bridge sysbus device.
+  */
+-NitroVsockBridge *nitro_vsock_bridge_create(void);
++NitroVsockBridge *nitro_vsock_bridge_create(Object *parent);
+ 
+ /*
+  * Find the Nitro vsock bridge on the sysbus.
 -- 
 2.47.1
 
