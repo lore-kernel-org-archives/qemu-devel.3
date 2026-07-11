@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CDC7C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:03:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34890C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:03:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiflS-0005Va-LO; Sat, 11 Jul 2026 18:01:38 -0400
+	id 1wifl1-00046S-94; Sat, 11 Jul 2026 18:01:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wiflR-0005Rd-21; Sat, 11 Jul 2026 18:01:37 -0400
+ id 1wifkz-0003x7-7S; Sat, 11 Jul 2026 18:01:09 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wiflP-0008Ja-3H; Sat, 11 Jul 2026 18:01:36 -0400
+ id 1wifkx-0008GV-C6; Sat, 11 Jul 2026 18:01:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807180; bh=kKwU2/gwY4uoL79RTPGfSUbSgRquyUwaMfK6S4tVAVk=;
+ t=1783807180; bh=tKbQKlDOKGMFUfgf+hbmUB5/Y9LfVcWerKrcFBBY0gY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=H/aXOd6lmwNwbnXFRYESE7G7/3+rAhO/vEI7Avb0/duvsVD5ZX3PKHYVpAp7rhkeC
- JhRwlDfjl+flhropilnUiznByKIEJtItW0qqcNnFt5XrxwR6ORtcyN/vUd6Rcmt7QM
- QGKikfIRbUP1EbmK8XiObuDf2GYrCDovNmPjzH+E+Oq1xAQtTlnJ0oEFe4uhXcscN5
- KBG+srML7qqqqe8UB/yOL4ymc1Ewh62jZTS0iiruLq/b8HpCm3M8sBmCqhsu8lNB3+
- uhgNsB8bedVxUhYHNhfz1yDun6HtbE15ers6WMlAyYXipCqKRy8f7mDiv2GVHAlbcU
- IJhR+f5CTRD4Q==
+ b=h016JflZobmKGlaUgL+znVy228BM1Wv1EUMtP8PX96NNQ4AJSrmQxomHKCSD5rwHE
+ Mm4avxjcDkM3ybahfTFx7QRwxY29b3IQ28aZqF/+GDF/6UXqwr6rTYot2ja1K+nFmj
+ wkT3aSDSlh3BmLc5hdCJN07x25IOT80lMDXs55fIWY7HJc6yfnIeTYV5FBoOJoICBC
+ /qznQiHSvxf8m0qwdg+mhQ/P78dSwAWs7NpRtFkpq0bG5mAku33GXJAB6NHaZCgWC7
+ /eJ7KQh3BQ8gYeI9UNZnKwRDpJjJX4+ie4lRQfoFRlhY7WQhW0N2NiWcSIWrtri3sq
+ k3y4MgZExwV3A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9C4F31C0AA3;
+ by isrv.corpit.ru (Postfix) with ESMTP id 858041C0A9F;
  Sun, 12 Jul 2026 00:59:40 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 52F463EAF2E;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3C6AE3EAF2A;
  Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 6DEC113313; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id 64AB61330B; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Feifan Qian <bea1e@proton.me>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 24/81] hw/9pfs: fix invalid union access by
- v9fs_co_fsync()
-Date: Sun, 12 Jul 2026 00:58:02 +0300
-Message-ID: <20260711215904.3757-24-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 20/81] tests/9p: increase P9_MAX_SIZE for test client
+Date: Sun, 12 Jul 2026 00:57:58 +0300
+Message-ID: <20260711215904.3757-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
@@ -73,52 +72,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-The individual FID types (P9_FID_NONE, P9_FID_FILE, P9_FID_DIR, P9_FID_XATTR)
-share union V9fsFidOpenState with FID-type specific fields. Accessing any of
-the union fields must comply with the FID-type to avoid undefined behaviour
-or information disclosure.
+Increase the maximum 9P message size ('msize') of 9p test client from
+4k to 32k to support larger messages.
 
-Fix this in v9fs_fsync() and v9fs_wstat() by checking if FID has a valid file
-descriptor before calling v9fs_co_fsync().
+This is needed for the xattr tests being added with the subsequent
+patches which are going to transmit xattrs of size 8k. It would have
+also been possible to send them in multiple chunks, however let's not
+overcomplicate things.
 
-Fixes: 10b468bdc533 ("virtio-9p: Implement TXATTRCREATE")
-Reported-by: Feifan Qian <bea1e@proton.me>
-Link: https://lore.kernel.org/qemu-devel/b583e29d5a0776e41263732c93ac9f0da0a6016d.1781621428.git.qemu_oss@crudebyte.com
+This new msize is still reasonable small compared to common msize
+values on production systems.
+
+Link: https://lore.kernel.org/qemu-devel/2dcb1243c80ea97d085af5171785850cf012be36.1781361555.git.qemu_oss@crudebyte.com
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit 32cae47c332f88241632905e0a3abcbb35b019c3)
+(cherry picked from commit df88255543667e7f14ac34d97e0ced142af18bdf)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 1b064a27fc5..162cd6e6486 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -2291,10 +2291,15 @@ static void coroutine_fn v9fs_fsync(void *opaque)
-         err = -ENOENT;
-         goto out_nofid;
-     }
-+    if (!fid_has_valid_file_handle(pdu->s, fidp)) {
-+        err = -EBADF;
-+        goto out;
-+    }
-     err = v9fs_co_fsync(pdu, fidp, datasync);
-     if (!err) {
-         err = offset;
-     }
-+out:
-     put_fid(pdu, fidp);
- out_nofid:
-     pdu_complete(pdu, err);
-@@ -3648,6 +3653,10 @@ static void coroutine_fn v9fs_wstat(void *opaque)
-     }
-     /* do we need to sync the file? */
-     if (donttouch_stat(&v9stat)) {
-+        if (!fid_has_valid_file_handle(s, fidp)) {
-+            err = -EBADF;
-+            goto out;
-+        }
-         err = v9fs_co_fsync(pdu, fidp, 0);
-         goto out;
-     }
+diff --git a/tests/qtest/libqos/virtio-9p-client.h b/tests/qtest/libqos/virtio-9p-client.h
+index c432b0daee4..4b043245034 100644
+--- a/tests/qtest/libqos/virtio-9p-client.h
++++ b/tests/qtest/libqos/virtio-9p-client.h
+@@ -21,7 +21,8 @@
+ #include "qgraph.h"
+ #include "tests/qtest/libqtest-single.h"
+ 
+-#define P9_MAX_SIZE 4096 /* Max size of a T-message or R-message */
++/* Max size of a T-message or R-message */
++#define P9_MAX_SIZE (32 * 1024)
+ 
+ typedef struct {
+     QTestState *qts;
 -- 
 2.47.3
 
