@@ -4,45 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0045C44501
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:07:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ABCDC43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:07:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifkX-0002Or-3Q; Sat, 11 Jul 2026 18:00:41 -0400
+	id 1wifpv-0000GE-NB; Sat, 11 Jul 2026 18:06:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifkN-0002CP-M0; Sat, 11 Jul 2026 18:00:35 -0400
+ id 1wifpt-00005P-JF; Sat, 11 Jul 2026 18:06:13 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifkL-0007xO-JI; Sat, 11 Jul 2026 18:00:31 -0400
+ id 1wifpr-0000kw-PI; Sat, 11 Jul 2026 18:06:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807180; bh=M4SKRLMhO/9EcyMAQ8+9gJB3i1e6BtatvFupzrmiIH4=;
+ t=1783807181; bh=iC7Llk0MXkN1E0EbY/KQjeVTicc0xpZ714SRsRLQ1X0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Df2/vuss3szQRNRZUE8KvPY6Zy5dWLQxO+QrQ3PHJx/c/Q8xgdgfRnQV4EhHXnuet
- WGfu9LGKeN1cZmwab0IoBwxBXio3rEnHwyKfyp5bkSyDdhZCnpf/PMZNngUYfAUmTe
- XpS1UUCqJ6QYYAATsuycsApPOqu5bCR9m6tT6I6bB5O6Ehu3iMgKgUcyRuSpV820n3
- 33/ts2j215YOS0d4K0PcpQCQwe0hYqIpvbHSs1VxWa1+3xrinKxm4OECgb9fBjWs8S
- X9tV6zalpWvO4eKJys4AaN9Hft2Fejs+Zr4Dx+uoltDlEwNXsSMQGJFqHakC4HPo8O
- VU3GprnhXJj6Q==
+ b=WT9lbRISMlpGalH4R/ZSwvLxVnDgNcLt9SMBe5cicEzjXnJqr4x55ZWwWDIcLONbi
+ EcFPKi0ImV15R4XV4gX2PHkogdv3Q59Zt98TeWkVsYA7NdbQMZ/B2y0Q8hMXQTQNOO
+ rbi2KTg/HoSysHblj6prYA468tsrljzyij1fgnir7sEbZJHMusmEsnruF2s2peAT1a
+ dQOooTxAg9E7CYgJ/eRjHqHBRzxY72UMveJ5+vT8EMBwKLEMO3AT/DBlsAi9Ner3fW
+ WNcYlfHvFbtUaSJ1Tvuio973F6P1F2UzP2Nkeuf3d5CVtD5z/bdbi2ztXrvC9EKsRP
+ H1knIC4zZd+dQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4C5171C0A97;
- Sun, 12 Jul 2026 00:59:40 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A83121C0ACF;
+ Sun, 12 Jul 2026 00:59:41 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 036F83EAF22;
- Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5F6273EAF5A;
+ Sun, 12 Jul 2026 00:59:51 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 52846132FB; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id DC1341336B; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Feifan Qian <bea1e@proton.me>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 12/81] hw/9pfs: add xattr FID limit to prevent memory
- exhaustion
-Date: Sun, 12 Jul 2026 00:57:50 +0300
-Message-ID: <20260711215904.3757-12-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Nutty Liu <nutty.liu@hotmail.com>, Chao Liu <chao.liu.zevorn@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 68/81] hw/riscv/riscv-iommu.c: check for reserved PTE
+ bits
+Date: Sun, 12 Jul 2026 00:58:46 +0300
+Message-ID: <20260711215904.3757-68-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
@@ -71,203 +74,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-Add a limit on the number of simultaneously open xattr FIDs to prevent
-host memory exhaustion attacks. Each xattr FID contains a buffer for the
-xattr value, and without a limit, a malicious priviliged guest with
-direct communication access to 9p server could create a huge number of
-xattr FIDs until host memory is eventually exhausted.
+We need to fault if reserved PTE bits (60:54) are set.
 
-Fix this by:
-
- - add xattr_fid_limit to struct FsContext for the max. amount
- - add xattr_fid_count to struct FsContext for the current amount
- - init xattr_fid_limit with 1024
- - init xattr_fid_count with 0
- - add function xattr_fid_count_inc() to increment the count
- - add function xattr_fid_count_decr() to decrement the count
- - call xattr_fid_count_inc() in Txattrcreate handler
- - call xattr_fid_count_inc() in Txattrwalk handler
- - call xattr_fid_count_decr() when a xattr FID is freed
-
-Additionally:
-
- - reset the xattr FID counter in virtfs_reset()
-
-When the limit is reached then xattr_fid_count_inc() returns -ENOSPC and
-the request handler is aborted on its error path without turning the
-FID into an xattr type and without allocating memory for the xattr.
-
-The default value of 1024 was chosen, as (sane usage of) xattr requests
-in the 9p protocol are usually very short-lived, and even machines with
-128 cores with very high xattr activity should have plenty of head room
-without ever hitting this limit.
-
-Fixes: 10b468bdc5 ("virtio-9p: Implement TXATTRCREATE")
-Fixes: CVE-2026-8348
-Reported-by: Feifan Qian <bea1e@proton.me>
-Link: https://lore.kernel.org/qemu-devel/eb3787869745d47234fb662600187bf773e1ef8a.1781361555.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit 693b296b176d1829b10855d9831bd2ad21b2cdcf)
+Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3554
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Message-ID: <20260701121111.537654-2-daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit c1d5ec3a2f4bbc9fdc120ba5697e8ad89e682e45)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
-index e8d0661c4b5..454761d81d7 100644
---- a/fsdev/file-op-9p.h
-+++ b/fsdev/file-op-9p.h
-@@ -81,6 +81,11 @@ typedef struct ExtendedOps {
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index b16a53294dd..8e86e9150cc 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -459,6 +459,8 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
  
- #define V9FS_SEC_MASK               0x0000003C
- 
-+/*
-+ * Limits the maximum amount of simultaneously open xattr FIDs to prevent
-+ * host memory exhaustion (as each xattr FID contains a xattr value buffer).
-+ */
-+#define V9FS_MAX_XATTR_DEFAULT  1024
- 
- typedef struct FileOperations FileOperations;
- typedef struct XattrOperations XattrOperations;
-@@ -109,6 +114,10 @@ struct FsContext {
-     void *private;
-     mode_t fmode;
-     mode_t dmode;
-+    /* max. amount of simultaneously open xattr FIDs */
-+    uint32_t xattr_fid_limit;
-+    /* current amount of open xattr FIDs */
-+    uint32_t xattr_fid_count;
- };
- 
- struct V9fsPath {
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index c76744d9a85..437588f9d5c 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -265,6 +265,31 @@ static size_t v9fs_string_size(V9fsString *str)
-     return str->size;
- }
- 
-+static int xattr_fid_count_inc(V9fsPDU *pdu)
-+{
-+    V9fsState *s = pdu->s;
-+
-+    if (s->ctx.xattr_fid_limit > 0 &&
-+        s->ctx.xattr_fid_count >= s->ctx.xattr_fid_limit) {
-+        error_report_once("9pfs: xattr_fid_count limit exceeded "
-+                          "(configurable by option 'max_xattr').");
-+        return -ENOSPC;
-+    }
-+    s->ctx.xattr_fid_count++;
-+    return 0;
-+}
-+
-+static void xattr_fid_count_decr(V9fsPDU *pdu)
-+{
-+    V9fsState *s = pdu->s;
-+
-+    if (s->ctx.xattr_fid_count > 0) {
-+        s->ctx.xattr_fid_count--;
-+    } else {
-+        error_report_once("9pfs: xattr_fid_count underflow detected");
-+    }
-+}
-+
- /*
-  * returns 0 if fid got re-opened, 1 if not, < 0 on error
-  */
-@@ -397,6 +422,7 @@ static int coroutine_fn free_fid(V9fsPDU *pdu, V9fsFidState *fidp)
-         }
-     } else if (fidp->fid_type == P9_FID_XATTR) {
-         retval = v9fs_xattr_fid_clunk(pdu, fidp);
-+        xattr_fid_count_decr(pdu);
-     }
-     v9fs_path_free(&fidp->path);
-     g_free(fidp);
-@@ -634,6 +660,14 @@ static void coroutine_fn virtfs_reset(V9fsPDU *pdu)
-         fidp->clunked = true;
-         put_fid(pdu, fidp);
-     }
-+
-+    /*
-+     * Explicitly reset the xattr FID counter.
-+     *
-+     * free_fid() already decrements the counter for each P9_FID_XATTR, so the
-+     * counter should already be zero, hence this is just a defensive measure.
-+     */
-+    s->ctx.xattr_fid_count = 0;
- }
- 
- #define P9_QID_TYPE_DIR         0x80
-@@ -4045,6 +4079,14 @@ static void coroutine_fn v9fs_xattrwalk(void *opaque)
-             clunk_fid(s, xattr_fidp->fid);
-             goto out;
-         }
-+
-+        /* Check xattr FID limit */
-+        err = xattr_fid_count_inc(pdu);
-+        if (err < 0) {
-+            clunk_fid(s, xattr_fidp->fid);
-+            goto out;
-+        }
-+
-         /*
-          * Read the xattr value
-          */
-@@ -4052,6 +4094,7 @@ static void coroutine_fn v9fs_xattrwalk(void *opaque)
-         xattr_fidp->fid_type = P9_FID_XATTR;
-         xattr_fidp->fs.xattr.xattrwalk_fid = true;
-         xattr_fidp->fs.xattr.value = g_malloc0(size);
-+
-         if (size) {
-             err = v9fs_co_llistxattr(pdu, &xattr_fidp->path,
-                                      xattr_fidp->fs.xattr.value,
-@@ -4078,6 +4121,14 @@ static void coroutine_fn v9fs_xattrwalk(void *opaque)
-             clunk_fid(s, xattr_fidp->fid);
-             goto out;
-         }
-+
-+        /* Check xattr FID limit */
-+        err = xattr_fid_count_inc(pdu);
-+        if (err < 0) {
-+            clunk_fid(s, xattr_fidp->fid);
-+            goto out;
-+        }
-+
-         /*
-          * Read the xattr value
-          */
-@@ -4085,6 +4136,7 @@ static void coroutine_fn v9fs_xattrwalk(void *opaque)
-         xattr_fidp->fid_type = P9_FID_XATTR;
-         xattr_fidp->fs.xattr.xattrwalk_fid = true;
-         xattr_fidp->fs.xattr.value = g_malloc0(size);
-+
-         if (size) {
-             err = v9fs_co_lgetxattr(pdu, &xattr_fidp->path,
-                                     &name, xattr_fidp->fs.xattr.value,
-@@ -4186,6 +4238,12 @@ static void coroutine_fn v9fs_xattrcreate(void *opaque)
-         goto out_put_fid;
-     }
- 
-+    /* Check xattr FID limit */
-+    err = xattr_fid_count_inc(pdu);
-+    if (err < 0) {
-+        goto out_put_fid;
-+    }
-+
-     /* Make the file fid point to xattr */
-     xattr_fidp = file_fidp;
-     xattr_fidp->fid_type = P9_FID_XATTR;
-@@ -4447,6 +4505,10 @@ int v9fs_device_realize_common(V9fsState *s, const V9fsTransport *t,
- 
-     s->reclaiming = false;
- 
-+    /* init xattr FID limit */
-+    s->ctx.xattr_fid_limit = V9FS_MAX_XATTR_DEFAULT;
-+    s->ctx.xattr_fid_count = 0;
-+
-     rc = 0;
- out:
-     if (rc) {
+         if (!(pte & PTE_V)) {
+             break;                /* Invalid PTE */
++        } else if (pte & PTE_RESERVED(false)) {
++            break;                /* Reserved PTE bits set */
+         } else if (!(pte & (PTE_R | PTE_W | PTE_X))) {
+             base = PPN_PHYS(ppn); /* Inner PTE, continue walking */
+         } else if ((pte & (PTE_R | PTE_W | PTE_X)) == PTE_W) {
 -- 
 2.47.3
 
