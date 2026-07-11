@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DC79C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:41:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F6EDC43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:41:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigO6-00060N-QR; Sat, 11 Jul 2026 18:41:34 -0400
+	id 1wigOB-00067x-UJ; Sat, 11 Jul 2026 18:41:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigO4-0005y9-RV; Sat, 11 Jul 2026 18:41:32 -0400
-Received: from pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.26.1.71])
+ id 1wigOA-000663-K9; Sat, 11 Jul 2026 18:41:38 -0400
+Received: from pdx-out-010.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.12.53.23])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigO0-0005vV-Oi; Sat, 11 Jul 2026 18:41:32 -0400
+ id 1wigO8-00060V-C6; Sat, 11 Jul 2026 18:41:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783809688; x=1815345688;
+ t=1783809696; x=1815345696;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=RncaBp9AWxGSftZuWkeLsuFC+aVbpad6KBOmlHbCn0g=;
- b=PfTCjpIkkKisgkp7wgYa9Uqm5uT7wIT8JLBlEZsf0A9elnwE9LPRDyXG
- a/NnCpPD0PucoAQ0dpQ+ydeTDwzogJO/cqHjY4x0/O8IZybJXlmbtPPRK
- ZzA7nyIbeXdqTqrOm0xJv5+nfFD4MRzSC2XwQwB/0XudIbkUr5DHQgwUE
- 61kX6YFRE5VFiwJH8jELxu8nGLHcVxxtPJAcASUGcI6zNKa4DZueoQM2u
- HAZVDSGa16H5c9OxfnSsuqFsKxeZoIf9G7ZrtKg1JBTkOPH22SO9YAHSj
- OQh/VeEaN3c2oHc4P4KMCItLcj0wgYaSWuvXI7cQPyiaVrVY2dact5QPm A==;
-X-CSE-ConnectionGUID: lePvNfXFSIWjokDUljhAPQ==
-X-CSE-MsgGUID: hLPlCHmoSZa8jfJ5+5+dFg==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23522100"
-Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
- by internal-pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:41:24 +0000
-Received: from EX19MTAUWB002.ant.amazon.com [205.251.233.111:3368]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.51.175:2525]
+ bh=qZLqcWFwyyuo1+YqN2tsQP0C3YqE8iqlsYVFe/D6JGY=;
+ b=PwPT7KDpjwDjU9SJHzSx0E7jeEtMqbQX9hsCNy941TOyGysF1oNyuWQU
+ 6ImTQSK/UHxhuMO/SCTExjGUEHPQJOXt5khuSEYksF/TGHnTIH5fJRoQo
+ PLcb7p4KY0wWZ6TBcMqHvumGGwevmDL7JSDGg/mcVTmRVO4f4UmGukpLW
+ AfshVC9txAn5PiA0lROM47msKT0l893Zvf0Z5LaldbX/D5vNMKuFonrpG
+ 03fZ4MmocQE1QsU8EAJ40lVJjVb8ZJoNCG5cyXOaIOZHkm6o8WUQ0uS6n
+ xiDMycZjmoO7+Gdr0XSPmYCVYd+MnwVuv6v6CtBzol9wTsxBCdX7c6y5i Q==;
+X-CSE-ConnectionGUID: JsFsr1VpST+86DzooOXBiA==
+X-CSE-MsgGUID: 3JKju3gKQOSXd6reQ7S0Wg==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23369710"
+Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
+ by internal-pdx-out-010.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:41:32 +0000
+Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.178:14607]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.58.33:2525]
  with esmtp (Farcaster)
- id b8ce2edb-8dd9-4367-a36d-b9ae8d54b95c; Sat, 11 Jul 2026 22:41:24 +0000 (UTC)
-X-Farcaster-Flow-ID: b8ce2edb-8dd9-4367-a36d-b9ae8d54b95c
+ id 658abee9-6d46-49e6-a77c-01fad9bdae41; Sat, 11 Jul 2026 22:41:32 +0000 (UTC)
+X-Farcaster-Flow-ID: 658abee9-6d46-49e6-a77c-01fad9bdae41
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
+ EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:41:24 +0000
+ Sat, 11 Jul 2026 22:41:32 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:41:15 +0000
+ Sat, 11 Jul 2026 22:41:23 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,9 +91,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 016/134] hw/hppa: Give onboard devices a QOM parent
-Date: Sat, 11 Jul 2026 22:35:09 +0000
-Message-ID: <20260711223707.42139-17-graf@amazon.com>
+Subject: [RFC PATCH 017/134] hw/microblaze: Give onboard devices a QOM parent
+Date: Sat, 11 Jul 2026 22:35:10 +0000
+Message-ID: <20260711223707.42139-18-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -103,9 +103,9 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D045UWA002.ant.amazon.com (10.13.139.12) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=52.26.1.71;
+Received-SPF: pass client-ip=52.12.53.23;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-010.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
@@ -129,7 +129,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the *_orphan() device-creation calls in hw/hppa to the new
+Convert the *_orphan() device-creation calls in hw/microblaze to the new
 parented API introduced earlier in this series, so every onboard
 device gets a stable path in the composition tree instead of landing
 in /machine/unattached with an unstable device[N] name.
@@ -140,216 +140,169 @@ composite children.  Names follow existing QOM conventions.
 
 Per-site rationale (reviewers: dispute the modeling here):
 
-  hw/hppa/machine.c:268 | OBJECT(machine) | "lasi" | lasi_init() static helper called from board init; thread Object *parent from caller
-  hw/hppa/machine.c:278 | OBJECT(machine) | "dino" | dino_init() static helper called from board init; thread Object *parent from caller
-  hw/hppa/machine.c:301 | OBJECT(machine) | "cpu[*]" | board init CPU creation loop; auto-index child of machine
-  hw/hppa/machine.c:414 | OBJECT(machine) | "artist" | board init tail; on-board Artist graphics owned by machine
-  hw/hppa/machine.c:431 | OBJECT(machine) | "diva-gsp" | board init tail; on-board Diva GSP PCI card owned by machine
-  hw/hppa/machine.c:446 | OBJECT(machine) | "ohci" | board init tail; on-board OHCI USB controller owned by machine
-  hw/hppa/machine.c:449 | OBJECT(pci_dev) | "usb-kbd" | USB keyboard is child of the OHCI controller it plugs into
-  hw/hppa/machine.c:450 | OBJECT(pci_dev) | "usb-mouse" | USB mouse is child of the OHCI controller it plugs into
-  hw/hppa/machine.c:617 | OBJECT(machine) | "lasips2" | HP 715 board init; on-board Lasi PS/2 controller
-  hw/hppa/machine.c:709 | OBJECT(machine) | "lasips2" | HP B160L board init; on-board Lasi PS/2 controller
-  hw/hppa/machine.c:724 | OBJECT(machine) | "scsi" | HP B160L board init; on-board LSI SCSI HBA
-  hw/hppa/machine.c:736 | OBJECT(machine) | "astro" | astro_init() static helper called from board init; thread Object *parent from caller
-  hw/hppa/machine.c:776 | OBJECT(machine) | "scsi" | HP C3700 board init; on-board LSI SCSI HBA
+  hw/microblaze/petalogix_ml605_mmu.c:113 | OBJECT(machine) | "intc" | board init(); single XPS interrupt controller owned by machine
+  hw/microblaze/petalogix_ml605_mmu.c:129 | OBJECT(machine) | "timer" | board init(); single XPS timer block owned by machine
+  hw/microblaze/petalogix_ml605_mmu.c:138 | OBJECT(machine) | "xilinx-eth" | board init(); keep existing child name; drop now-redundant object_property_add_child()
+  hw/microblaze/petalogix_ml605_mmu.c:139 | OBJECT(machine) | "xilinx-dma" | board init(); keep existing child name; drop now-redundant object_property_add_child()
+  hw/microblaze/petalogix_ml605_mmu.c:177 | OBJECT(machine) | "spi" | board init(); single XPS SPI controller owned by machine
+  hw/microblaze/petalogix_ml605_mmu.c:191 | OBJECT(machine) | "spi-flash[*]" | board init(); NUM_SPI_FLASHES instances in loop, auto-index; plugged onto SPI bus but lifetime-owned by machine
+  hw/microblaze/petalogix_s3adsp1800_mmu.c:110 | OBJECT(machine) | "intc" | board init(); single XPS interrupt controller owned by machine
+  hw/microblaze/petalogix_s3adsp1800_mmu.c:122 | OBJECT(machine) | "uart" | board init(); single Xilinx uartlite owned by machine
+  hw/microblaze/petalogix_s3adsp1800_mmu.c:130 | OBJECT(machine) | "timer" | board init(); single XPS timer block owned by machine
+  hw/microblaze/petalogix_s3adsp1800_mmu.c:138 | OBJECT(machine) | "eth" | board init(); single XPS ethernetlite owned by machine
 
 Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/hppa/machine.c | 60 ++++++++++++++++++++++++++---------------------
- 1 file changed, 33 insertions(+), 27 deletions(-)
+ hw/microblaze/petalogix_ml605_mmu.c      | 28 ++++++++++--------------
+ hw/microblaze/petalogix_s3adsp1800_mmu.c | 16 +++++++-------
+ 2 files changed, 20 insertions(+), 24 deletions(-)
 
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index a4b8e9ee77..729524e065 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -261,24 +261,24 @@ static FWCfgState *create_fw_cfg(MachineState *ms, PCIBus *pci_bus,
-     return fw_cfg;
- }
+diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/petalogix_ml605_mmu.c
+index 178cfd4a5e..031de37cec 100644
+--- a/hw/microblaze/petalogix_ml605_mmu.c
++++ b/hw/microblaze/petalogix_ml605_mmu.c
+@@ -110,10 +110,10 @@ petalogix_ml605_init(MachineState *machine)
+                           64 * KiB, 2, 0x89, 0x18, 0x0000, 0x0, 0);
  
--static LasiState *lasi_init(void)
-+static LasiState *lasi_init(Object *parent)
- {
-     DeviceState *dev;
  
--    dev = qdev_new_orphan(TYPE_LASI_CHIP);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    dev = qdev_new(parent, "lasi", TYPE_LASI_CHIP);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
- 
-     return LASI_CHIP(dev);
- }
- 
--static DinoState *dino_init(MemoryRegion *addr_space)
-+static DinoState *dino_init(Object *parent, MemoryRegion *addr_space)
- {
-     DeviceState *dev;
- 
--    dev = qdev_new_orphan(TYPE_DINO_PCI_HOST_BRIDGE);
-+    dev = qdev_new(parent, "dino", TYPE_DINO_PCI_HOST_BRIDGE);
-     object_property_set_link(OBJECT(dev), "memory-as", OBJECT(addr_space),
-                              &error_fatal);
+-    dev = qdev_new_orphan("xlnx.xps-intc");
++    dev = qdev_new(OBJECT(machine), "intc", "xlnx.xps-intc");
+     qdev_prop_set_enum(dev, "endianness", ENDIAN_MODE_LITTLE);
+     qdev_prop_set_uint32(dev, "kind-of-intr", 1 << TIMER_IRQ);
 -    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
 +    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
- 
-     return DINO_PCI_HOST_BRIDGE(dev);
- }
-@@ -298,7 +298,8 @@ static TranslateFn *machine_HP_common_init_cpus(MachineState *machine)
- 
-     /* Create CPUs.  */
-     for (unsigned int i = 0; i < smp_cpus; i++) {
--        cpu[i] = HPPA_CPU(cpu_create_orphan(machine->cpu_type));
-+        cpu[i] = HPPA_CPU(cpu_create(OBJECT(machine), "cpu[*]",
-+                                     machine->cpu_type));
-     }
- 
-     /* Initialize memory */
-@@ -411,11 +412,11 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
-     lasi_dev = hpm->lasi_dev;
-     if (lasi_dev && machine->enable_graphics &&
-         vga_interface_type != VGA_NONE) {
--        dev = qdev_new_orphan("artist");
-+        dev = qdev_new(OBJECT(machine), "artist", "artist");
-         s = SYS_BUS_DEVICE(dev);
-         bool disabled = object_property_get_bool(OBJECT(dev), "disable", NULL);
-         if (!disabled) {
--            sysbus_realize_and_unref(s, &error_fatal);
-+            sysbus_realize(s, &error_fatal);
-             vga_interface_created = true;
-             sysbus_mmio_map(s, 0, translate(NULL, LASI_GFX_HPA));
-             sysbus_mmio_map(s, 1, translate(NULL, ARTIST_FB_ADDR));
-@@ -428,7 +429,8 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
- 
-     if (pci_bus && hppa_is_pa20(&cpu[0]->env)) {
-         /* BMC board: HP Diva GSP PCI card */
--        pci_dev = pci_new_multifunction_orphan(PCI_DEVFN(2, 0), "diva-gsp");
-+        pci_dev = pci_new_multifunction(OBJECT(machine), "diva-gsp",
-+                                        PCI_DEVFN(2, 0), "diva-gsp");
-         if (!lasi_dev) {
-             /* bind default keyboard/serial to Diva card */
-             qdev_prop_set_chr(DEVICE(pci_dev), "chardev1", serial_hd(0));
-@@ -436,18 +438,19 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
-             qdev_prop_set_chr(DEVICE(pci_dev), "chardev3", serial_hd(2));
-             qdev_prop_set_chr(DEVICE(pci_dev), "chardev4", serial_hd(3));
-         }
--        pci_realize_and_unref(pci_dev, pci_bus, &error_fatal);
-+        qdev_realize(DEVICE(pci_dev), BUS(pci_bus), &error_fatal);
-     }
- 
-     /* create USB OHCI controller for USB keyboard & mouse on Astro machines */
-     if (!lasi_dev && machine->enable_graphics && defaults_enabled()) {
-         USBBus *usb_bus;
- 
--        pci_create_simple_orphan(pci_bus, -1, "pci-ohci");
-+        pci_dev = pci_create_simple(OBJECT(machine), "ohci", pci_bus, -1,
-+                                    "pci-ohci");
-         usb_bus = USB_BUS(object_resolve_type_unambiguous(TYPE_USB_BUS,
-                                                           &error_abort));
--        usb_create_simple_orphan(usb_bus, "usb-kbd");
--        usb_create_simple_orphan(usb_bus, "usb-mouse");
-+        usb_create_simple(OBJECT(pci_dev), "usb-kbd", usb_bus, "usb-kbd");
-+        usb_create_simple(OBJECT(pci_dev), "usb-mouse", usb_bus, "usb-mouse");
-     }
- 
-     /* register power switch emulation */
-@@ -597,7 +600,7 @@ static void machine_HP_715_init(MachineState *machine)
-     assert(isa_bus);
- 
-     /* Init Lasi chip */
--    lasi_dev = DEVICE(lasi_init());
-+    lasi_dev = DEVICE(lasi_init(OBJECT(machine)));
-     hpm->lasi_dev = lasi_dev;
-     memory_region_add_subregion(addr_space, translate(NULL, LASI_HPA_715),
-                                 sysbus_mmio_get_region(
-@@ -614,8 +617,8 @@ static void machine_HP_715_init(MachineState *machine)
-                      parallel_hds[0]);
- 
-     /* PS/2 Keyboard/Mouse */
--    dev = qdev_new_orphan(TYPE_LASIPS2);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    dev = qdev_new(OBJECT(machine), "lasips2", TYPE_LASIPS2);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, INTC_BASEADDR);
      sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
-                        qdev_get_gpio_in(lasi_dev, LASI_IRQ_PS2KBD_HPA));
-     memory_region_add_subregion(addr_space,
-@@ -672,14 +675,14 @@ static void machine_HP_B160L_init(MachineState *machine)
-     }
+                        qdev_get_gpio_in(DEVICE(cpu), MB_CPU_IRQ));
+@@ -126,21 +126,17 @@ petalogix_ml605_init(MachineState *machine)
+                    DEVICE_LITTLE_ENDIAN);
  
-     /* Init Lasi chip */
--    lasi_dev = DEVICE(lasi_init());
-+    lasi_dev = DEVICE(lasi_init(OBJECT(machine)));
-     hpm->lasi_dev = lasi_dev;
-     memory_region_add_subregion(addr_space, translate(NULL, LASI_HPA),
-                                 sysbus_mmio_get_region(
-                                     SYS_BUS_DEVICE(lasi_dev), 0));
- 
-     /* Init Dino (PCI host bus chip).  */
--    dino_dev = DEVICE(dino_init(addr_space));
-+    dino_dev = DEVICE(dino_init(OBJECT(machine), addr_space));
-     memory_region_add_subregion(addr_space, translate(NULL, DINO_HPA),
-                                 sysbus_mmio_get_region(
-                                     SYS_BUS_DEVICE(dino_dev), 0));
-@@ -706,8 +709,8 @@ static void machine_HP_B160L_init(MachineState *machine)
-                      parallel_hds[0]);
- 
-     /* PS/2 Keyboard/Mouse */
--    dev = qdev_new_orphan(TYPE_LASIPS2);
+     /* 2 timers at irq 2 @ 100 Mhz.  */
+-    dev = qdev_new_orphan("xlnx.xps-timer");
++    dev = qdev_new(OBJECT(machine), "timer", "xlnx.xps-timer");
+     qdev_prop_set_enum(dev, "endianness", ENDIAN_MODE_LITTLE);
+     qdev_prop_set_uint32(dev, "one-timer-only", 0);
+     qdev_prop_set_uint32(dev, "clock-frequency", 100 * 1000000);
 -    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    dev = qdev_new(OBJECT(machine), "lasips2", TYPE_LASIPS2);
 +    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, TIMER_BASEADDR);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq[TIMER_IRQ]);
+ 
+     /* axi ethernet and dma initialization. */
+-    eth0 = qdev_new_orphan("xlnx.axi-ethernet");
+-    dma = qdev_new_orphan("xlnx.axi-dma");
+-
+-    /* FIXME: attach to the sysbus instead */
+-    object_property_add_child(qdev_get_machine(), "xilinx-eth", OBJECT(eth0));
+-    object_property_add_child(qdev_get_machine(), "xilinx-dma", OBJECT(dma));
++    eth0 = qdev_new(OBJECT(machine), "xilinx-eth", "xlnx.axi-ethernet");
++    dma = qdev_new(OBJECT(machine), "xilinx-dma", "xlnx.axi-dma");
+ 
+     ds = object_property_get_link(OBJECT(dma),
+                                   "axistream-connected-target", NULL);
+@@ -153,7 +149,7 @@ petalogix_ml605_init(MachineState *machine)
+                              &error_abort);
+     object_property_set_link(OBJECT(eth0), "axistream-control-connected", cs,
+                              &error_abort);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(eth0), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(eth0), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(eth0), 0, AXIENET_BASEADDR);
+     sysbus_connect_irq(SYS_BUS_DEVICE(eth0), 0, irq[AXIENET_IRQ]);
+ 
+@@ -166,7 +162,7 @@ petalogix_ml605_init(MachineState *machine)
+                              &error_abort);
+     object_property_set_link(OBJECT(dma), "axistream-control-connected", cs,
+                              &error_abort);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dma), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(dma), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dma), 0, AXIDMA_BASEADDR);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dma), 0, irq[AXIDMA_IRQ0]);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dma), 1, irq[AXIDMA_IRQ1]);
+@@ -174,11 +170,11 @@ petalogix_ml605_init(MachineState *machine)
+     {
+         SSIBus *spi;
+ 
+-        dev = qdev_new_orphan("xlnx.xps-spi");
++        dev = qdev_new(OBJECT(machine), "spi", "xlnx.xps-spi");
+         qdev_prop_set_enum(dev, "endianness", ENDIAN_MODE_LITTLE);
+         qdev_prop_set_uint8(dev, "num-ss-bits", NUM_SPI_FLASHES);
+         busdev = SYS_BUS_DEVICE(dev);
+-        sysbus_realize_and_unref(busdev, &error_fatal);
++        sysbus_realize(busdev, &error_fatal);
+         sysbus_mmio_map(busdev, 0, SPI_BASEADDR);
+         sysbus_connect_irq(busdev, 0, irq[SPI_IRQ]);
+ 
+@@ -188,14 +184,14 @@ petalogix_ml605_init(MachineState *machine)
+             dinfo = drive_get(IF_MTD, 0, i);
+             qemu_irq cs_line;
+ 
+-            dev = qdev_new_orphan("n25q128");
++            dev = qdev_new(OBJECT(machine), "spi-flash[*]", "n25q128");
+             if (dinfo) {
+                 qdev_prop_set_drive_err(dev, "drive",
+                                         blk_by_legacy_dinfo(dinfo),
+                                         &error_fatal);
+             }
+             qdev_prop_set_uint8(dev, "cs", i);
+-            qdev_realize_and_unref(dev, BUS(spi), &error_fatal);
++            qdev_realize(dev, BUS(spi), &error_fatal);
+ 
+             cs_line = qdev_get_gpio_in_named(dev, SSI_GPIO_CS, 0);
+             sysbus_connect_irq(busdev, i+1, cs_line);
+diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+index 91c1d64451..b4327ad493 100644
+--- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
++++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+@@ -107,11 +107,11 @@ petalogix_s3adsp1800_init(MachineState *machine)
+                           dinfo ? blk_by_legacy_dinfo(dinfo) : NULL,
+                           64 * KiB, 1, 0x89, 0x18, 0x0000, 0x0, 1);
+ 
+-    dev = qdev_new_orphan("xlnx.xps-intc");
++    dev = qdev_new(OBJECT(machine), "intc", "xlnx.xps-intc");
+     qdev_prop_set_enum(dev, "endianness", endianness);
+     qdev_prop_set_uint32(dev, "kind-of-intr",
+                          1 << ETHLITE_IRQ | 1 << UARTLITE_IRQ);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, INTC_BASEADDR);
      sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
-                        qdev_get_gpio_in(lasi_dev, LASI_IRQ_PS2KBD_HPA));
-     memory_region_add_subregion(addr_space,
-@@ -721,7 +724,8 @@ static void machine_HP_B160L_init(MachineState *machine)
- 
-     /* SCSI disk setup. */
-     if (drive_get_max_bus(IF_SCSI) >= 0) {
--        dev = DEVICE(pci_create_simple_orphan(pci_bus, -1, "lsi53c895a"));
-+        dev = DEVICE(pci_create_simple(OBJECT(machine), "scsi", pci_bus, -1,
-+                                       "lsi53c895a"));
-         lsi53c8xx_handle_legacy_cmdline(dev);
+                        qdev_get_gpio_in(DEVICE(cpu), MB_CPU_IRQ));
+@@ -119,28 +119,28 @@ petalogix_s3adsp1800_init(MachineState *machine)
+         irq[i] = qdev_get_gpio_in(dev, i);
      }
  
-@@ -729,15 +733,15 @@ static void machine_HP_B160L_init(MachineState *machine)
-     machine_HP_common_init_tail(machine, pci_bus, translate);
- }
- 
--static AstroState *astro_init(void)
-+static AstroState *astro_init(Object *parent)
- {
-     DeviceState *dev;
- 
--    dev = qdev_new_orphan(TYPE_ASTRO_CHIP);
-+    dev = qdev_new(parent, "astro", TYPE_ASTRO_CHIP);
-     object_property_set_int(OBJECT(dev), "phys-addr-bits",
-                             hppa_phys_addr_bits(&cpu[0]->env),
-                             &error_abort);
+-    dev = qdev_new_orphan(TYPE_XILINX_UARTLITE);
++    dev = qdev_new(OBJECT(machine), "uart", TYPE_XILINX_UARTLITE);
+     qdev_prop_set_enum(dev, "endianness", endianness);
+     qdev_prop_set_chr(dev, "chardev", serial_hd(0));
 -    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
 +    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, UARTLITE_BASEADDR);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq[UARTLITE_IRQ]);
  
-     return ASTRO_CHIP(dev);
- }
-@@ -763,7 +767,7 @@ static void machine_HP_C3700_init(MachineState *machine)
-     }
+     /* 2 timers at irq 2 @ 62 Mhz.  */
+-    dev = qdev_new_orphan("xlnx.xps-timer");
++    dev = qdev_new(OBJECT(machine), "timer", "xlnx.xps-timer");
+     qdev_prop_set_enum(dev, "endianness", endianness);
+     qdev_prop_set_uint32(dev, "one-timer-only", 0);
+     qdev_prop_set_uint32(dev, "clock-frequency", 62 * 1000000);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, TIMER_BASEADDR);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq[TIMER_IRQ]);
  
-     /* Init Astro and the Elroys (PCI host bus chips).  */
--    astro = astro_init();
-+    astro = astro_init(OBJECT(machine));
-     astro_dev = DEVICE(astro);
-     memory_region_add_subregion(addr_space, translate(NULL, ASTRO_HPA),
-                                 sysbus_mmio_get_region(
-@@ -773,7 +777,9 @@ static void machine_HP_C3700_init(MachineState *machine)
- 
-     /* SCSI disk setup. */
-     if (drive_get_max_bus(IF_SCSI) >= 0) {
--        DeviceState *dev = DEVICE(pci_create_simple_orphan(pci_bus, -1, "lsi53c895a"));
-+        DeviceState *dev = DEVICE(pci_create_simple(OBJECT(machine), "scsi",
-+                                                    pci_bus, -1,
-+                                                    "lsi53c895a"));
-         lsi53c8xx_handle_legacy_cmdline(dev);
-     }
+-    dev = qdev_new_orphan("xlnx.xps-ethernetlite");
++    dev = qdev_new(OBJECT(machine), "eth", "xlnx.xps-ethernetlite");
+     qdev_prop_set_enum(dev, "endianness", endianness);
+     qemu_configure_nic_device(dev, true, NULL);
+     qdev_prop_set_uint32(dev, "tx-ping-pong", 0);
+     qdev_prop_set_uint32(dev, "rx-ping-pong", 0);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, ETHLITE_BASEADDR);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq[ETHLITE_IRQ]);
  
 -- 
 2.47.1
