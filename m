@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E02FC43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 23:03:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A019EC43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 23:03:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigjB-0005WA-Sv; Sat, 11 Jul 2026 19:03:21 -0400
+	id 1wigjL-0005gv-LX; Sat, 11 Jul 2026 19:03:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigik-0005PS-GD; Sat, 11 Jul 2026 19:02:56 -0400
-Received: from pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.34.181.151])
+ id 1wigjK-0005g9-9f; Sat, 11 Jul 2026 19:03:30 -0400
+Received: from pdx-out-014.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([35.83.148.184])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigie-0002ae-8I; Sat, 11 Jul 2026 19:02:54 -0400
+ id 1wigjH-0002gY-Ky; Sat, 11 Jul 2026 19:03:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783810968; x=1815346968;
+ t=1783811007; x=1815347007;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=kIRDMMYQoAbVbR+Yb/nq/CG8IV16g3zCWr2Me2GLW6M=;
- b=sUfzUOvrQkXfianEQf6XpKIjfw6GTnGndKfxbQuP6PAG9P8W7x3ao94L
- a+ut8WNGBUf7Jczye+n/vGYRFnd7TWecy0XZr9aB0/gx2iDK7UYFuT3F6
- 7o6zysR+mmUYqDKgvxwXiOs41NS8+wBypuVomJ+oam3Ws6AsndFzfgHXt
- MsJrXIm+NygTZxrfX1y8LOPbLidZFtlP8rVKPclFVDIkMSepmHHrTLs1b
- 09L7EeEER0EvOztkwOOmI5UDwHTWiuAWzIU726QhdD/H/d3eTyESzX0du
- o22ZFYDN1HJcCRad7iKlLyfW1xH0ReufgQiS6mzEuInq0wFEB6JfF3q60 g==;
-X-CSE-ConnectionGUID: UnS3OulPSI22PLwrbrOoMw==
-X-CSE-MsgGUID: rqh8YVmBRDC1yM2K3LZ0kg==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23483611"
+ bh=citDJO/IgAyEM0d7gOprPaAJwEL9dlx4/AYZ8X4e0X8=;
+ b=KxbIHQ/GD7lC4slz88QcRYjYUVks3k+YYbvM9ef35E+CsjkSZRuBfQvR
+ QnAEYJ7mpbxNXiKSSAWMpjoZYG/VrwPImWfVJZLWyeURlDwjUejWJFNYu
+ H+s4Ub9eUrZ7CtP4GPhOwxwPPNDLP77yqSX1hXzqoBe1v1uEkSka2hU46
+ 2/AypuWMTnJXXJQCXmGOIiw/1wT09SLhkeNq7G8o5gAaJX/oaWFTpqWhk
+ 8nd9G5tlypW/G+hHO872sRwq/LdpAlX/DVx/I3v6goudOvVVV/h3fuF/H
+ z+txNoCku4SeDa2fso1BborUB97O8w6k3kQaILxR+EJ/dmix2PCxwwt8D w==;
+X-CSE-ConnectionGUID: /3KBkcdFRc6GZDoKyWj5Ww==
+X-CSE-MsgGUID: E5fapg9mShqcDSogambTYA==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23287862"
 Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
  smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
- by internal-pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 23:02:44 +0000
-Received: from EX19MTAUWC002.ant.amazon.com [205.251.233.111:23292]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.47.135:2525]
+ by internal-pdx-out-014.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 23:03:23 +0000
+Received: from EX19MTAUWC001.ant.amazon.com [205.251.233.53:2970]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.26.212:2525]
  with esmtp (Farcaster)
- id c3cb8fca-4aa2-4924-8f15-6db4f3d24a39; Sat, 11 Jul 2026 23:02:44 +0000 (UTC)
-X-Farcaster-Flow-ID: c3cb8fca-4aa2-4924-8f15-6db4f3d24a39
+ id 58563f03-7203-4cb6-8bde-513e859732de; Sat, 11 Jul 2026 23:03:22 +0000 (UTC)
+X-Farcaster-Flow-ID: 58563f03-7203-4cb6-8bde-513e859732de
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
+ EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 23:02:43 +0000
+ Sat, 11 Jul 2026 23:03:22 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 23:02:35 +0000
+ Sat, 11 Jul 2026 23:03:13 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,9 +91,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 097/134] hw/m68k: Give memory regions an explicit owner
-Date: Sat, 11 Jul 2026 22:36:30 +0000
-Message-ID: <20260711223707.42139-98-graf@amazon.com>
+Subject: [RFC PATCH 099/134] hw/tricore: Give memory regions an explicit owner
+Date: Sat, 11 Jul 2026 22:36:32 +0000
+Message-ID: <20260711223707.42139-100-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -101,11 +101,11 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D046UWA003.ant.amazon.com (10.13.139.18) To
+X-ClientProxiedBy: EX19D044UWB003.ant.amazon.com (10.13.139.168) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=52.34.181.151;
+Received-SPF: pass client-ip=35.83.148.184;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-014.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
@@ -132,192 +132,203 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Convert memory_region_init*() calls that pass NULL owner to pass
 the enclosing machine or device instead.
 
-Thread Object *owner through the static mcf5208_sys_init() helper. mcf5206_mbar_realize() already has DeviceState *dev in scope.
+Thread Object *owner through the static make_rom() / make_ram() / make_alias() helpers in tc27x_soc.c. All callers are inside tc27x_soc_init_memory_mapping(DeviceState *dev_soc).
 
 No functional change intended.
 
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/m68k/an5206.c    |  2 +-
- hw/m68k/mcf5206.c   |  2 +-
- hw/m68k/mcf5208.c   | 15 ++++++++-------
- hw/m68k/next-cube.c | 10 +++++-----
- hw/m68k/q800.c      | 10 +++++-----
- 5 files changed, 20 insertions(+), 19 deletions(-)
+ hw/tricore/tc27x_soc.c         | 77 +++++++++++++++++-----------------
+ hw/tricore/tricore_testboard.c | 12 +++---
+ 2 files changed, 45 insertions(+), 44 deletions(-)
 
-diff --git a/hw/m68k/an5206.c b/hw/m68k/an5206.c
-index 5027311cad..6c6c7d7248 100644
---- a/hw/m68k/an5206.c
-+++ b/hw/m68k/an5206.c
-@@ -60,7 +60,7 @@ static void an5206_init(MachineState *machine)
-     memory_region_add_subregion(address_space_mem, 0, machine->ram);
- 
-     /* Internal SRAM.  */
--    memory_region_init_ram(sram, NULL, "an5206.sram", 512, &error_fatal);
-+    memory_region_init_ram(sram, OBJECT(machine), "an5206.sram", 512, &error_fatal);
-     memory_region_add_subregion(address_space_mem, AN5206_RAMBAR_ADDR, sram);
- 
-     mcf5206_init(OBJECT(machine), cpu, address_space_mem, AN5206_MBAR_ADDR);
-diff --git a/hw/m68k/mcf5206.c b/hw/m68k/mcf5206.c
-index b3c745d3f9..ee39a6ac30 100644
---- a/hw/m68k/mcf5206.c
-+++ b/hw/m68k/mcf5206.c
-@@ -589,7 +589,7 @@ static void mcf5206_mbar_realize(DeviceState *dev, Error **errp)
+diff --git a/hw/tricore/tc27x_soc.c b/hw/tricore/tc27x_soc.c
+index 5b1b07cee1..0475698b29 100644
+--- a/hw/tricore/tc27x_soc.c
++++ b/hw/tricore/tc27x_soc.c
+@@ -67,10 +67,10 @@ const MemmapEntry tc27x_soc_memmap[] = {
+  * Initialize the auxiliary ROM region @mr and map it into
+  * the memory map at @base.
+  */
+-static void make_rom(MemoryRegion *mr, const char *name,
++static void make_rom(Object *owner, MemoryRegion *mr, const char *name,
+                      hwaddr base, hwaddr size)
  {
-     m5206_mbar_state *s = MCF5206_MBAR(dev);
- 
--    memory_region_init_io(&s->iomem, NULL, &m5206_mbar_ops, s,
-+    memory_region_init_io(&s->iomem, OBJECT(dev), &m5206_mbar_ops, s,
-                           "mbar", 0x00001000);
-     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->iomem);
- 
-diff --git a/hw/m68k/mcf5208.c b/hw/m68k/mcf5208.c
-index a955efebeb..93aee5ebd5 100644
---- a/hw/m68k/mcf5208.c
-+++ b/hw/m68k/mcf5208.c
-@@ -227,7 +227,8 @@ static const MemoryRegionOps m5208_rcm_ops = {
-     .endianness = DEVICE_BIG_ENDIAN,
- };
- 
--static void mcf5208_sys_init(MemoryRegion *address_space, DeviceState *intc,
-+static void mcf5208_sys_init(Object *owner, MemoryRegion *address_space,
-+                             DeviceState *intc,
-                              M68kCPU *cpu)
- {
-     MemoryRegion *iomem = g_new(MemoryRegion, 1);
-@@ -236,17 +237,17 @@ static void mcf5208_sys_init(MemoryRegion *address_space, DeviceState *intc,
-     int i;
- 
-     /* RCM */
--    memory_region_init_io(iomem_rcm, NULL, &m5208_rcm_ops, cpu,
-+    memory_region_init_io(iomem_rcm, owner, &m5208_rcm_ops, cpu,
-                           "m5208-rcm", 0x00000080);
-     memory_region_add_subregion(address_space, 0xfc0a0000, iomem_rcm);
-     /* SDRAMC.  */
--    memory_region_init_io(iomem, NULL, &m5208_sys_ops, NULL, "m5208-sys", 0x00004000);
-+    memory_region_init_io(iomem, owner, &m5208_sys_ops, NULL, "m5208-sys", 0x00004000);
-     memory_region_add_subregion(address_space, 0xfc0a8000, iomem);
-     /* Timers.  */
-     for (i = 0; i < 2; i++) {
-         s = g_new0(m5208_timer_state, 1);
-         s->timer = ptimer_init(m5208_timer_trigger, s, PTIMER_POLICY_LEGACY);
--        memory_region_init_io(&s->iomem, NULL, &m5208_timer_ops, s,
-+        memory_region_init_io(&s->iomem, owner, &m5208_timer_ops, s,
-                               "m5208-timer", 0x00004000);
-         memory_region_add_subregion(address_space, 0xfc080000 + 0x4000 * i,
-                                     &s->iomem);
-@@ -296,14 +297,14 @@ static void mcf5208evb_init(MachineState *machine)
-     /* TODO: Configure BARs.  */
- 
-     /* ROM at 0x00000000 */
--    memory_region_init_rom(rom, NULL, "mcf5208.rom", ROM_SIZE, &error_fatal);
-+    memory_region_init_rom(rom, OBJECT(machine), "mcf5208.rom", ROM_SIZE, &error_fatal);
-     memory_region_add_subregion(address_space_mem, 0x00000000, rom);
- 
-     /* DRAM at 0x40000000 */
-     memory_region_add_subregion(address_space_mem, 0x40000000, machine->ram);
- 
-     /* Internal SRAM.  */
--    memory_region_init_ram(sram, NULL, "mcf5208.sram", 16 * KiB, &error_fatal);
-+    memory_region_init_ram(sram, OBJECT(machine), "mcf5208.sram", 16 * KiB, &error_fatal);
-     memory_region_add_subregion(address_space_mem, 0x80000000, sram);
- 
-     /* Internal peripherals.  */
-@@ -316,7 +317,7 @@ static void mcf5208evb_init(MachineState *machine)
-     mcf_uart_create_mmap(OBJECT(machine), 0xfc068000,
-                          qdev_get_gpio_in(intc, 28), serial_hd(2));
- 
--    mcf5208_sys_init(address_space_mem, intc, cpu);
-+    mcf5208_sys_init(OBJECT(machine), address_space_mem, intc, cpu);
- 
-     mcf_fec_init(address_space_mem, 0xfc030000, intc);
- 
-diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index c80d32ef29..564a10a69e 100644
---- a/hw/m68k/next-cube.c
-+++ b/hw/m68k/next-cube.c
-@@ -1310,11 +1310,11 @@ static void next_cube_init(MachineState *machine)
-     sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 5, 0x0211a000);
- 
-     /* BMAP memory */
--    memory_region_init_ram_flags_nomigrate(&m->bmapm1, NULL, "next.bmapmem",
-+    memory_region_init_ram_flags_nomigrate(&m->bmapm1, OBJECT(machine), "next.bmapmem",
-                                            64, RAM_SHARED, &error_fatal);
-     memory_region_add_subregion(sysmem, 0x020c0000, &m->bmapm1);
-     /* The Rev_2.5_v66.bin firmware accesses it at 0x820c0020, too */
--    memory_region_init_alias(&m->bmapm2, NULL, "next.bmapmem2", &m->bmapm1,
-+    memory_region_init_alias(&m->bmapm2, OBJECT(machine), "next.bmapmem2", &m->bmapm1,
-                              0x0, 64);
-     memory_region_add_subregion(sysmem, 0x820c0000, &m->bmapm2);
- 
-@@ -1322,9 +1322,9 @@ static void next_cube_init(MachineState *machine)
-     sysbus_create_simple(OBJECT(machine), "kbd", TYPE_NEXTKBD, 0x0200e000, NULL);
- 
-     /* Load ROM here */
--    memory_region_init_rom(&m->rom, NULL, "next.rom", 0x20000, &error_fatal);
-+    memory_region_init_rom(&m->rom, OBJECT(machine), "next.rom", 0x20000, &error_fatal);
-     memory_region_add_subregion(sysmem, 0x01000000, &m->rom);
--    memory_region_init_alias(&m->rom2, NULL, "next.rom2", &m->rom, 0x0,
-+    memory_region_init_alias(&m->rom2, OBJECT(machine), "next.rom2", &m->rom, 0x0,
-                              0x20000);
-     memory_region_add_subregion(sysmem, 0x0, &m->rom2);
-     Error *local_err = NULL;
-@@ -1352,7 +1352,7 @@ static void next_cube_init(MachineState *machine)
-     }
- 
-     /* DMA */
--    memory_region_init_io(&m->dmamem, NULL, &next_dma_ops, machine,
-+    memory_region_init_io(&m->dmamem, OBJECT(machine), &next_dma_ops, machine,
-                           "next.dma", 0x5000);
-     memory_region_add_subregion(sysmem, 0x02000000, &m->dmamem);
+-    memory_region_init_rom(mr, NULL, name, size, &error_fatal);
++    memory_region_init_rom(mr, owner, name, size, &error_fatal);
+     memory_region_add_subregion(get_system_memory(), base, mr);
  }
-diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
-index 15b3bcab5f..954cdf8489 100644
---- a/hw/m68k/q800.c
-+++ b/hw/m68k/q800.c
-@@ -309,7 +309,7 @@ static void q800_machine_init(MachineState *machine)
-     memory_region_add_subregion(get_system_memory(), IO_BASE + IO_SLICE,
-                                 &m->macio_alias);
  
--    memory_region_init_io(&m->machine_id, NULL, &machine_id_ops, NULL,
-+    memory_region_init_io(&m->machine_id, OBJECT(machine), &machine_id_ops, NULL,
-                           "Machine ID", 4);
-     memory_region_add_subregion(get_system_memory(), 0x5ffffffc,
-                                 &m->machine_id);
-@@ -407,7 +407,7 @@ static void q800_machine_init(MachineState *machine)
-     sysbus_connect_irq(sysbus, 0,
-                        qdev_get_gpio_in(DEVICE(&m->glue), GLUE_IRQ_IN_SONIC));
+@@ -78,10 +78,10 @@ static void make_rom(MemoryRegion *mr, const char *name,
+  * Initialize the auxiliary RAM region @mr and map it into
+  * the memory map at @base.
+  */
+-static void make_ram(MemoryRegion *mr, const char *name,
++static void make_ram(Object *owner, MemoryRegion *mr, const char *name,
+                      hwaddr base, hwaddr size)
+ {
+-    memory_region_init_ram(mr, NULL, name, size, &error_fatal);
++    memory_region_init_ram(mr, owner, name, size, &error_fatal);
+     memory_region_add_subregion(get_system_memory(), base, mr);
+ }
  
--    memory_region_init_rom(&m->dp8393x_prom, NULL, "dp8393x-q800.prom",
-+    memory_region_init_rom(&m->dp8393x_prom, OBJECT(machine), "dp8393x-q800.prom",
-                            SONIC_PROM_SIZE, &error_fatal);
-     memory_region_add_subregion(get_system_memory(), SONIC_PROM_BASE,
-                                 &m->dp8393x_prom);
-@@ -606,7 +606,7 @@ static void q800_machine_init(MachineState *machine)
-         BOOTINFO1(param_ptr, BI_MAC_VROW, macfb_mode->stride);
-         BOOTINFO1(param_ptr, BI_MAC_SCCBASE, SCC_BASE);
+@@ -89,10 +89,10 @@ static void make_ram(MemoryRegion *mr, const char *name,
+  * Create an alias of an entire original MemoryRegion @orig
+  * located at @base in the memory map.
+  */
+-static void make_alias(MemoryRegion *mr, const char *name,
++static void make_alias(Object *owner, MemoryRegion *mr, const char *name,
+                            MemoryRegion *orig, hwaddr base)
+ {
+-    memory_region_init_alias(mr, NULL, name, orig, 0,
++    memory_region_init_alias(mr, owner, name, orig, 0,
+                              memory_region_size(orig));
+     memory_region_add_subregion(get_system_memory(), base, mr);
+ }
+@@ -101,81 +101,82 @@ static void tc27x_soc_init_memory_mapping(DeviceState *dev_soc)
+ {
+     TC27XSoCState *s = TC27X_SOC(dev_soc);
+     TC27XSoCClass *sc = TC27X_SOC_GET_CLASS(s);
++    Object *obj = OBJECT(dev_soc);
  
--        memory_region_init_ram_ptr(&m->rom, NULL, "m68k_fake_mac.rom",
-+        memory_region_init_ram_ptr(&m->rom, OBJECT(machine), "m68k_fake_mac.rom",
-                                    sizeof(fake_mac_rom), fake_mac_rom);
-         memory_region_set_readonly(&m->rom, true);
-         memory_region_add_subregion(get_system_memory(), MACROM_ADDR, &m->rom);
-@@ -651,12 +651,12 @@ static void q800_machine_init(MachineState *machine)
-     } else {
-         uint8_t *ptr;
-         /* allocate and load BIOS */
--        memory_region_init_rom(&m->rom, NULL, "m68k_mac.rom", MACROM_SIZE,
-+        memory_region_init_rom(&m->rom, OBJECT(machine), "m68k_mac.rom", MACROM_SIZE,
-                                &error_abort);
-         filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
-         memory_region_add_subregion(get_system_memory(), MACROM_ADDR, &m->rom);
+-    make_ram(&s->cpu0mem.dspr, "CPU0.DSPR",
++    make_ram(obj, &s->cpu0mem.dspr, "CPU0.DSPR",
+         sc->memmap[TC27XD_DSPR0].base, sc->memmap[TC27XD_DSPR0].size);
+-    make_ram(&s->cpu0mem.pspr, "CPU0.PSPR",
++    make_ram(obj, &s->cpu0mem.pspr, "CPU0.PSPR",
+         sc->memmap[TC27XD_PSPR0].base, sc->memmap[TC27XD_PSPR0].size);
+-    make_ram(&s->cpu1mem.dspr, "CPU1.DSPR",
++    make_ram(obj, &s->cpu1mem.dspr, "CPU1.DSPR",
+         sc->memmap[TC27XD_DSPR1].base, sc->memmap[TC27XD_DSPR1].size);
+-    make_ram(&s->cpu1mem.pspr, "CPU1.PSPR",
++    make_ram(obj, &s->cpu1mem.pspr, "CPU1.PSPR",
+         sc->memmap[TC27XD_PSPR1].base, sc->memmap[TC27XD_PSPR1].size);
+-    make_ram(&s->cpu2mem.dspr, "CPU2.DSPR",
++    make_ram(obj, &s->cpu2mem.dspr, "CPU2.DSPR",
+         sc->memmap[TC27XD_DSPR2].base, sc->memmap[TC27XD_DSPR2].size);
+-    make_ram(&s->cpu2mem.pspr, "CPU2.PSPR",
++    make_ram(obj, &s->cpu2mem.pspr, "CPU2.PSPR",
+         sc->memmap[TC27XD_PSPR2].base, sc->memmap[TC27XD_PSPR2].size);
  
--        memory_region_init_alias(&m->rom_alias, NULL, "m68k_mac.rom-alias",
-+        memory_region_init_alias(&m->rom_alias, OBJECT(machine), "m68k_mac.rom-alias",
-                                  &m->rom, 0, MACROM_SIZE);
-         memory_region_add_subregion(get_system_memory(), 0x40000000,
-                                     &m->rom_alias);
+     /* TODO: Control Cache mapping with Memory Test Unit (MTU) */
+-    make_ram(&s->cpu2mem.dcache, "CPU2.DCACHE",
++    make_ram(obj, &s->cpu2mem.dcache, "CPU2.DCACHE",
+         sc->memmap[TC27XD_DCACHE2].base, sc->memmap[TC27XD_DCACHE2].size);
+-    make_ram(&s->cpu2mem.dtag,   "CPU2.DTAG",
++    make_ram(obj, &s->cpu2mem.dtag,   "CPU2.DTAG",
+         sc->memmap[TC27XD_DTAG2].base, sc->memmap[TC27XD_DTAG2].size);
+-    make_ram(&s->cpu2mem.pcache, "CPU2.PCACHE",
++    make_ram(obj, &s->cpu2mem.pcache, "CPU2.PCACHE",
+         sc->memmap[TC27XD_PCACHE2].base, sc->memmap[TC27XD_PCACHE2].size);
+-    make_ram(&s->cpu2mem.ptag,   "CPU2.PTAG",
++    make_ram(obj, &s->cpu2mem.ptag,   "CPU2.PTAG",
+         sc->memmap[TC27XD_PTAG2].base, sc->memmap[TC27XD_PTAG2].size);
+ 
+-    make_ram(&s->cpu1mem.dcache, "CPU1.DCACHE",
++    make_ram(obj, &s->cpu1mem.dcache, "CPU1.DCACHE",
+         sc->memmap[TC27XD_DCACHE1].base, sc->memmap[TC27XD_DCACHE1].size);
+-    make_ram(&s->cpu1mem.dtag,   "CPU1.DTAG",
++    make_ram(obj, &s->cpu1mem.dtag,   "CPU1.DTAG",
+         sc->memmap[TC27XD_DTAG1].base, sc->memmap[TC27XD_DTAG1].size);
+-    make_ram(&s->cpu1mem.pcache, "CPU1.PCACHE",
++    make_ram(obj, &s->cpu1mem.pcache, "CPU1.PCACHE",
+         sc->memmap[TC27XD_PCACHE1].base, sc->memmap[TC27XD_PCACHE1].size);
+-    make_ram(&s->cpu1mem.ptag,   "CPU1.PTAG",
++    make_ram(obj, &s->cpu1mem.ptag,   "CPU1.PTAG",
+         sc->memmap[TC27XD_PTAG1].base, sc->memmap[TC27XD_PTAG1].size);
+ 
+-    make_ram(&s->cpu0mem.pcache, "CPU0.PCACHE",
++    make_ram(obj, &s->cpu0mem.pcache, "CPU0.PCACHE",
+         sc->memmap[TC27XD_PCACHE0].base, sc->memmap[TC27XD_PCACHE0].size);
+-    make_ram(&s->cpu0mem.ptag,   "CPU0.PTAG",
++    make_ram(obj, &s->cpu0mem.ptag,   "CPU0.PTAG",
+         sc->memmap[TC27XD_PTAG0].base, sc->memmap[TC27XD_PTAG0].size);
+ 
+     /*
+      * TriCore QEMU executes CPU0 only, thus it is sufficient to map
+      * LOCAL.PSPR/LOCAL.DSPR exclusively onto PSPR0/DSPR0.
+      */
+-    make_alias(&s->psprX, "LOCAL.PSPR", &s->cpu0mem.pspr,
++    make_alias(obj, &s->psprX, "LOCAL.PSPR", &s->cpu0mem.pspr,
+         sc->memmap[TC27XD_PSPRX].base);
+-    make_alias(&s->dsprX, "LOCAL.DSPR", &s->cpu0mem.dspr,
++    make_alias(obj, &s->dsprX, "LOCAL.DSPR", &s->cpu0mem.dspr,
+         sc->memmap[TC27XD_DSPRX].base);
+ 
+-    make_ram(&s->flashmem.pflash0_c, "PF0",
++    make_ram(obj, &s->flashmem.pflash0_c, "PF0",
+         sc->memmap[TC27XD_PFLASH0_C].base, sc->memmap[TC27XD_PFLASH0_C].size);
+-    make_ram(&s->flashmem.pflash1_c, "PF1",
++    make_ram(obj, &s->flashmem.pflash1_c, "PF1",
+         sc->memmap[TC27XD_PFLASH1_C].base, sc->memmap[TC27XD_PFLASH1_C].size);
+-    make_ram(&s->flashmem.dflash0,   "DF0",
++    make_ram(obj, &s->flashmem.dflash0,   "DF0",
+         sc->memmap[TC27XD_DFLASH0].base, sc->memmap[TC27XD_DFLASH0].size);
+-    make_ram(&s->flashmem.dflash1,   "DF1",
++    make_ram(obj, &s->flashmem.dflash1,   "DF1",
+         sc->memmap[TC27XD_DFLASH1].base, sc->memmap[TC27XD_DFLASH1].size);
+-    make_ram(&s->flashmem.olda_c,    "OLDA",
++    make_ram(obj, &s->flashmem.olda_c,    "OLDA",
+         sc->memmap[TC27XD_OLDA_C].base, sc->memmap[TC27XD_OLDA_C].size);
+-    make_rom(&s->flashmem.brom_c,    "BROM",
++    make_rom(obj, &s->flashmem.brom_c,    "BROM",
+         sc->memmap[TC27XD_BROM_C].base, sc->memmap[TC27XD_BROM_C].size);
+-    make_ram(&s->flashmem.lmuram_c,  "LMURAM",
++    make_ram(obj, &s->flashmem.lmuram_c,  "LMURAM",
+         sc->memmap[TC27XD_LMURAM_C].base, sc->memmap[TC27XD_LMURAM_C].size);
+-    make_ram(&s->flashmem.emem_c,    "EMEM",
++    make_ram(obj, &s->flashmem.emem_c,    "EMEM",
+         sc->memmap[TC27XD_EMEM_C].base, sc->memmap[TC27XD_EMEM_C].size);
+ 
+-    make_alias(&s->flashmem.pflash0_u, "PF0.U",    &s->flashmem.pflash0_c,
++    make_alias(obj, &s->flashmem.pflash0_u, "PF0.U",    &s->flashmem.pflash0_c,
+         sc->memmap[TC27XD_PFLASH0_U].base);
+-    make_alias(&s->flashmem.pflash1_u, "PF1.U",    &s->flashmem.pflash1_c,
++    make_alias(obj, &s->flashmem.pflash1_u, "PF1.U",    &s->flashmem.pflash1_c,
+         sc->memmap[TC27XD_PFLASH1_U].base);
+-    make_alias(&s->flashmem.olda_u,    "OLDA.U",   &s->flashmem.olda_c,
++    make_alias(obj, &s->flashmem.olda_u,    "OLDA.U",   &s->flashmem.olda_c,
+         sc->memmap[TC27XD_OLDA_U].base);
+-    make_alias(&s->flashmem.brom_u,    "BROM.U",   &s->flashmem.brom_c,
++    make_alias(obj, &s->flashmem.brom_u,    "BROM.U",   &s->flashmem.brom_c,
+         sc->memmap[TC27XD_BROM_U].base);
+-    make_alias(&s->flashmem.lmuram_u,  "LMURAM.U", &s->flashmem.lmuram_c,
++    make_alias(obj, &s->flashmem.lmuram_u,  "LMURAM.U", &s->flashmem.lmuram_c,
+         sc->memmap[TC27XD_LMURAM_U].base);
+-    make_alias(&s->flashmem.emem_u,    "EMEM.U",   &s->flashmem.emem_c,
++    make_alias(obj, &s->flashmem.emem_u,    "EMEM.U",   &s->flashmem.emem_c,
+         sc->memmap[TC27XD_EMEM_U].base);
+ }
+ 
+diff --git a/hw/tricore/tricore_testboard.c b/hw/tricore/tricore_testboard.c
+index 9e8cccbd59..4b5398ab95 100644
+--- a/hw/tricore/tricore_testboard.c
++++ b/hw/tricore/tricore_testboard.c
+@@ -70,17 +70,17 @@ static void tricore_testboard_init(MachineState *machine, int board_id)
+ 
+     cpu = TRICORE_CPU(cpu_create(mo, "cpu", machine->cpu_type));
+     env = &cpu->env;
+-    memory_region_init_ram(ext_cram, NULL, "powerlink_ext_c.ram",
++    memory_region_init_ram(ext_cram, OBJECT(machine), "powerlink_ext_c.ram",
+                            2 * MiB, &error_fatal);
+-    memory_region_init_ram(ext_dram, NULL, "powerlink_ext_d.ram",
++    memory_region_init_ram(ext_dram, OBJECT(machine), "powerlink_ext_d.ram",
+                            4 * MiB, &error_fatal);
+-    memory_region_init_ram(int_cram, NULL, "powerlink_int_c.ram", 48 * KiB,
++    memory_region_init_ram(int_cram, OBJECT(machine), "powerlink_int_c.ram", 48 * KiB,
+                            &error_fatal);
+-    memory_region_init_ram(int_dram, NULL, "powerlink_int_d.ram", 48 * KiB,
++    memory_region_init_ram(int_dram, OBJECT(machine), "powerlink_int_d.ram", 48 * KiB,
+                            &error_fatal);
+-    memory_region_init_ram(pcp_data, NULL, "powerlink_pcp_data.ram",
++    memory_region_init_ram(pcp_data, OBJECT(machine), "powerlink_pcp_data.ram",
+                            16 * KiB, &error_fatal);
+-    memory_region_init_ram(pcp_text, NULL, "powerlink_pcp_text.ram",
++    memory_region_init_ram(pcp_text, OBJECT(machine), "powerlink_pcp_text.ram",
+                            32 * KiB, &error_fatal);
+ 
+     memory_region_add_subregion(sysmem, 0x80000000, ext_cram);
 -- 
 2.47.1
 
