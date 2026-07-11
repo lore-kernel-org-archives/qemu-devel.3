@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14831C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:04:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B057AC43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:04:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiflT-0005YA-QR; Sat, 11 Jul 2026 18:01:39 -0400
+	id 1wifnf-00014b-TU; Sat, 11 Jul 2026 18:03:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wiflS-0005VO-Cj; Sat, 11 Jul 2026 18:01:38 -0400
+ id 1wifnd-000132-PO; Sat, 11 Jul 2026 18:03:53 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wiflQ-0008Jw-KW; Sat, 11 Jul 2026 18:01:38 -0400
+ id 1wifnc-0000Cv-7m; Sat, 11 Jul 2026 18:03:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807180; bh=ZFfgkNxlWufqHUICXktaiqzClipERZQRiCv3/dePY2M=;
+ t=1783807181; bh=sOb7KOaB9Fa5lT3CgCH9pL8kdvFT6gD12EgC3VN22GE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=d61ww69yuhtqmsZpmYANj1f08zQUnxRW4KQtlJbwxMVdvZc4CGmfY/6rFmTi0KJip
- CNrHMN6fMQFHs/TBeOCni5yUkh8N4fKWqxUl3z+hzyDOOQJKnGpZDan4DSKgYcQNF5
- 5t+skWX9s+W7/UDIJCB1aStu2PaVPFDaPgLvst/QWP8P2jjsqcg22t+szJGzzThuJ2
- QZIDnK+xB6iKNYMYCgRfrtuLUxKR0Mp7OQraHFHzI1AUurS6jDn7Zh41XwiIyWuIaB
- roRAhZ70yUKVzsy/gjGxgSwi7dlf1e9jrHAmJF0YgGbDeEL7OCi8k4vuLKWqsofNLT
- DaOdp0vUIeKnA==
+ b=ECAKRPbDnYFMhwWCJa14wpzEst2uQtxdYdla2e9MoMSdnbqF82woyemPfwOhlsIOD
+ 4gLmb+x9/NBsrGfzMViP3co6jK+T9cD/omg57XjmmdhmgVlaP+9HI5PS7KlNDVGWAV
+ U3b0EY2PIs0f5HPH0Fx+RymjQuui2E3rGLxAUnvl5ELFnurvFKyShyW29kZ1on2Gi4
+ F9r7xSGwUw8HyhcARa48R+MxRz00xseTVmLG9JHN6y67Dhh73E/oVE/Pl4b7A3WCey
+ I9wvnRgOwvA2GJBMAqxZwpbl4N5/vo11HzxgtVy1cTFl4Qaph/cy8u48s7fO/WQgrl
+ 4GPJTy9OSqStg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A3BBB1C0AA4;
- Sun, 12 Jul 2026 00:59:40 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 222A31C0AB7;
+ Sun, 12 Jul 2026 00:59:41 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 59E123EAF2F;
+ by tsrv.corpit.ru (Postfix) with ESMTP id CD16E3EAF42;
  Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 7025E13315; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id A0DDD1333B; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 25/81] hw/9pfs: fix invalid union access by
- v9fs_co_fstat()
-Date: Sun, 12 Jul 2026 00:58:03 +0300
-Message-ID: <20260711215904.3757-25-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Miao Wang <shankerwangmiao@gmail.com>,
+ Song Gao <gaosong@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 44/81] target/loongarch: Enable TARGET_PAGE_BITS_VARY
+ for loongarch64 user-only
+Date: Sun, 12 Jul 2026 00:58:22 +0300
+Message-ID: <20260711215904.3757-44-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
@@ -71,48 +71,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Miao Wang <shankerwangmiao@gmail.com>
 
-The individual FID types (P9_FID_NONE, P9_FID_FILE, P9_FID_DIR, P9_FID_XATTR)
-share union V9fsFidOpenState with FID-type specific fields. Accessing any of
-the union fields must comply with the FID-type to avoid undefined behaviour
-or information disclosure.
+Hard coding PAGE_SIZE to 4K will prevent user-only emulation from
+working on hosts with 16K page size.
 
-Fix this in v9fs_lock() and v9fs_getlock() by checking if FID has a valid
-file descriptor before calling v9fs_co_fstat().
+Fixes: 1d832c19db1e ("target/loongarch: Support 4K page size")
+Fixes: qemu-project/qemu#3651
 
-Fixes: 10b468bdc533 ("virtio-9p: Implement TXATTRCREATE")
-Link: https://lore.kernel.org/qemu-devel/4b33cd1aaa2551efda220a6f651e3660d27f4746.1781621428.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit c3aa2491cd2cd89e2f484d32f323ee447e782984)
+Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+Message-ID: <20260630-loong64-vary-page-sz-v1-1-1d1a894674be@gmail.com>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+(cherry picked from commit e819c126a8d9629f57deef31689f3a7fc476fa45)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 162cd6e6486..85565a014e3 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -3925,6 +3925,10 @@ static void coroutine_fn v9fs_lock(void *opaque)
-         err = -ENOENT;
-         goto out_nofid;
-     }
-+    if (!fid_has_valid_file_handle(pdu->s, fidp)) {
-+        err = -EBADF;
-+        goto out;
-+    }
-     err = v9fs_co_fstat(pdu, fidp, &stbuf);
-     if (err < 0) {
-         goto out;
-@@ -3970,6 +3974,10 @@ static void coroutine_fn v9fs_getlock(void *opaque)
-         err = -ENOENT;
-         goto out_nofid;
-     }
-+    if (!fid_has_valid_file_handle(pdu->s, fidp)) {
-+        err = -EBADF;
-+        goto out;
-+    }
-     err = v9fs_co_fstat(pdu, fidp, &stbuf);
-     if (err < 0) {
-         goto out;
+diff --git a/target/loongarch/cpu-param.h b/target/loongarch/cpu-param.h
+index 3bcf77b3755..6abe72ff5ca 100644
+--- a/target/loongarch/cpu-param.h
++++ b/target/loongarch/cpu-param.h
+@@ -10,6 +10,11 @@
+ 
+ #define TARGET_VIRT_ADDR_SPACE_BITS 48
+ 
+-#define TARGET_PAGE_BITS 12
++#ifdef CONFIG_USER_ONLY
++/* Allow user-only to vary page size from 4k */
++# define TARGET_PAGE_BITS_VARY
++#else
++# define TARGET_PAGE_BITS 12
++#endif
+ 
+ #endif
 -- 
 2.47.3
 
