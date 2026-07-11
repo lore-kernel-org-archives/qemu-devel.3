@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF79CC43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:07:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E911BC43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:07:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiflx-0006vJ-9t; Sat, 11 Jul 2026 18:02:09 -0400
+	id 1wifoA-0002Le-CI; Sat, 11 Jul 2026 18:04:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wiflu-0006rz-Ak; Sat, 11 Jul 2026 18:02:06 -0400
+ id 1wifo7-00021k-Cn; Sat, 11 Jul 2026 18:04:23 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wiflo-0008Ke-3Y; Sat, 11 Jul 2026 18:02:06 -0400
+ id 1wifo5-0000IP-HS; Sat, 11 Jul 2026 18:04:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807180; bh=27p8mXYMM4XTshDOy58mBtIzoX97mUrxGvNlTsfj4oc=;
+ t=1783807181; bh=Vf4ThstD9/nu0JmqenpiSl32qQnpEMfk3XWv2WZ4bgM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=hciuUNa8NCqhZ1ObEeWmEwLTwPlEEvXczofFNWCTQAcY+xBfLTy56BoyYHikG5z0j
- zrb+AhXmhML18A8tFMuT37AVfk2f9tvrR9hkq3RiOfBGo+9Ee2RHH/szcp2OJiJuJ3
- hQZzER4pSlZBlkbNUaVTje5XXpxa1fLEH8DPfOtfg4wa6zTlq5EghLR38M6Vby6DXS
- hJazufsrrbLAvMpKCSdOjMoNR04La8cvGwgqMYzTwPBwbhpDnOkHTVZV1B4sK4caK5
- 2t+9FXPF2jJoJoVbCMOMwFgMgLuVPaXOkOscSGRFQbVEom6OMdqUfhPcmuyYxGVJ6T
- deRJ6xwAFWnhw==
+ b=ruKQ7bObX3Mc3Fd33xIwDHSz0D4LLCCEjygftXoQR/6r0JtmuaXl3geA/84OuOHpm
+ M6QiLNBeg9jslTWXQlTOES66V6IX9lbasz0cV3tZzEv1OfnqfBywmfbo3pmulXMwmX
+ cq2xp/7hk9+oMIJIiXn8m8MFq7gDSM9ddkfhiEPVuk9C9rNO88CtCTL4BxsHHQvU3K
+ 8GXoeD1R1aiMPeX4eFcN2xai6nFfSO66gB3zHOYRdq35vZ8TQzYBQGXSphECWxjb74
+ iMa6o44nK6zRNCxLuM6/noih+HCYq/IGCEAzWxDcdUya1qNrZaDI/07bhc10/Ez15O
+ WiGblSqfWINbA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B190D1C0AA6;
- Sun, 12 Jul 2026 00:59:40 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4A37A1C0ABE;
+ Sun, 12 Jul 2026 00:59:41 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 68DC03EAF31;
- Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 014AD3EAF49;
+ Sun, 12 Jul 2026 00:59:51 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 74B7F13319; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id B247513349; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Inochi Amaoto <inochiama@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 27/81] target/riscv: Check PMP before updating PTE
-Date: Sun, 12 Jul 2026 00:58:05 +0300
-Message-ID: <20260711215904.3757-27-mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 51/81] hw/scsi/mptsas: Reset doorbell state on reset
+Date: Sun, 12 Jul 2026 00:58:29 +0300
+Message-ID: <20260711215904.3757-51-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,43 +72,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Inochi Amaoto <inochiama@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-According to the RISC-V spec, the PTE update is a supervisor write
-operations, and it should also follow the CPU PMP configuration like
-the PTE read.
+Currently the mptsas reset function clears intr_status, but it
+doesn't reset the doorbell state machine.  This means that the state
+machine and the interrupt state get out of sync, and the guest can
+trigger an assertion failure in mptsas_doorbell_read() where
+s->doorbell_state is still DOORBELL_READ but s->intr_status does not
+have MPI_HIS_DOORBELL_INTERRUPT set.
+
+Fix this by having reset also reset the doorbell state.  Strictly
+speaking we don't need to also clear doorbell_reply_idx and
+doorbell_reply_size, because those are only read when in
+DOORBELL_READ state, and the code always sets them up before
+transitioning into that state.  But it's less confusing to clear them
+out on reset.
 
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260622113402.563196-1-inochiama@gmail.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit fa2cf7488379d9b14041a7bcd76867c9bdad2b5e)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/304
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20260629185035.2138238-1-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit 831a13665ab1123b5ccd127820f287e41be137e9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 665d0f71818..c74b04f5b2f 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1601,10 +1601,18 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+diff --git a/hw/scsi/mptsas.c b/hw/scsi/mptsas.c
+index e4a7b2fee4a..5df124c0ce5 100644
+--- a/hw/scsi/mptsas.c
++++ b/hw/scsi/mptsas.c
+@@ -811,6 +811,10 @@ static void mptsas_soft_reset(MPTSASState *s)
+     s->intr_status = 0;
+     s->intr_mask = save_mask;
  
-     /* Page table updates need to be atomic with MTTCG enabled */
-     if (updated_pte != pte && !is_debug) {
-+        int pmp_prot, pmp_ret;
++    s->doorbell_state = DOORBELL_NONE;
++    s->doorbell_reply_idx = 0;
++    s->doorbell_reply_size = 0;
 +
-         if (!adue) {
-             return TRANSLATE_FAIL;
-         }
- 
-+        pmp_ret = get_physical_address_pmp(env, &pmp_prot, pte_addr,
-+                                           sxlen_bytes, MMU_DATA_STORE, PRV_S);
-+        if (pmp_ret != TRANSLATE_SUCCESS) {
-+            return TRANSLATE_PMP_FAIL;
-+        }
-+
-         /*
-          * - if accessed or dirty bits need updating, and the PTE is
-          *   in RAM, then we do so atomically with a compare and swap.
+     s->reply_free_tail = 0;
+     s->reply_free_head = 0;
+     s->reply_post_tail = 0;
 -- 
 2.47.3
 
