@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AFEDC43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 23:11:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4AAFC43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 23:11:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigqc-00040v-S1; Sat, 11 Jul 2026 19:11:02 -0400
+	id 1wigqT-0003ro-B4; Sat, 11 Jul 2026 19:10:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigqX-0003yT-4T; Sat, 11 Jul 2026 19:10:57 -0400
-Received: from pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([44.245.243.92])
+ id 1wigqJ-0003p4-0n; Sat, 11 Jul 2026 19:10:44 -0400
+Received: from pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.13.214.179])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigqV-0004lQ-1a; Sat, 11 Jul 2026 19:10:56 -0400
+ id 1wigqF-0004k2-Iy; Sat, 11 Jul 2026 19:10:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783811455; x=1815347455;
+ t=1783811439; x=1815347439;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=TuoK8joFsumPRX8AvA+Aa0Su2W6xDI9ickcaSwYLvB0=;
- b=ABG7+jPLe6hSkwmGClQ9KXkkhEGL+Ogy3rUl4KLYLrRp/GIQ4FrT6e4A
- ByjSR0MZDN8KLwdgBSubVKsX9m1rV1bpoKuA2+TaBg2y8RkzHwg3DCC0N
- knT1VbwnT6SsV3+MDqo5G6NmeLYQ+fUjQUIM0TBhoySXi59AjknBWcRFa
- sqYRa65wzxaLTb6BnnElRqKSdzqb6TInD+bAjBSgfRwnpeyCvUOHda8uN
- hhJyyKPKoTkgrl4k7gwRh9901KfGaWhD14XDpzP/ERd6MUqwbkS0r+jhJ
- UgeP5Rl4IiVQTel6nPI1Ex9qPAOoM/dfITxyjH5b3xPIOQc4GZpCTclv8 w==;
-X-CSE-ConnectionGUID: HuE6SchkQqCyxAwy7oFAdA==
-X-CSE-MsgGUID: uGyLGB/ARLOJShSVLLvzmA==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="22997878"
-Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
- by internal-pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 23:10:44 +0000
-Received: from EX19MTAUWA001.ant.amazon.com [205.251.233.182:28747]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.51.175:2525]
+ bh=TbZxnvlCgqxRYbSkjD7PiKw4zwtBC/AGap9WXjlv7fc=;
+ b=RgAx2SN/P0w94yf0G1ySDTwUtI9xuGRPZ7utcQEVA7eWppvsL1LwSQTe
+ JNDNPHYLSJVWncG0Y+8+1vhFdn1r0M71WUBklLfBk0SYaCseJ++7BT2ie
+ heeNrilDiNFP//pzWOqB+4J1g64LRxAK2YL0kvQ4XijJjXle2ysiQilCN
+ gcuzN3GsB2PfWPdb7tyxNP6jfnTWmdLWtypCukKfnz4lbgJaaTisEcih+
+ Xwf2GZ20jOIA3Cla9wT3A7hyOV3HTYVkZFcFYRvEG3wPPS+FPJ8ffEUXg
+ kwggE/lpOZ7SPsLfaQ3M+eYTZbL2OoiaaYVIz5Ee0QwSbm83f0RCO6uLK A==;
+X-CSE-ConnectionGUID: WpYrxjzTR7u+9OBIRIisvw==
+X-CSE-MsgGUID: 4CZpgdhRS7eavosU1qdfEA==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23479783"
+Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
+ by internal-pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 23:10:36 +0000
+Received: from EX19MTAUWC002.ant.amazon.com [205.251.233.111:4383]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.42.69:2525]
  with esmtp (Farcaster)
- id c08d5f57-41d1-4356-ae13-171f8b05d161; Sat, 11 Jul 2026 23:10:44 +0000 (UTC)
-X-Farcaster-Flow-ID: c08d5f57-41d1-4356-ae13-171f8b05d161
+ id a19a5bb4-8115-4bef-ad77-f89fe96dee66; Sat, 11 Jul 2026 23:10:36 +0000 (UTC)
+X-Farcaster-Flow-ID: a19a5bb4-8115-4bef-ad77-f89fe96dee66
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA001.ant.amazon.com (10.250.64.218) with Microsoft SMTP Server
+ EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 23:10:44 +0000
+ Sat, 11 Jul 2026 23:10:35 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 23:10:35 +0000
+ Sat, 11 Jul 2026 23:10:27 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,10 +91,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 128/134] hw: Pair object_initialize_child() with plain
- realize()
-Date: Sat, 11 Jul 2026 22:37:01 +0000
-Message-ID: <20260711223707.42139-129-graf@amazon.com>
+Subject: [RFC PATCH 127/134] hw/microblaze: Parent the CPU under the machine
+Date: Sat, 11 Jul 2026 22:37:00 +0000
+Message-ID: <20260711223707.42139-128-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -104,9 +103,9 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D044UWB002.ant.amazon.com (10.13.139.188) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=44.245.243.92;
+Received-SPF: pass client-ip=52.13.214.179;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
@@ -130,190 +129,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A number of composite devices and boards create embedded children
-via object_initialize_child() (or object_new_with_props()) and
-then realize them via *_realize_and_unref().  The child<> property
-already holds the sole reference; the extra unref drops it and the
-object survives only because bus_add_child() takes a reference of
-its own.  Use plain sysbus_realize()/qdev_realize() so the parent's
-child<> keeps the reference it is documented to hold.
+Both petalogix boards create exactly one MicroBlaze CPU via
+object_new(); parent it as /machine/cpu[0] like every other
+single-CPU board.
 
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/arm/imx8mm-evk.c          | 2 +-
- hw/arm/imx8mp-evk.c          | 2 +-
- hw/arm/mps2.c                | 2 +-
- hw/display/sm501.c           | 2 +-
- hw/m68k/q800.c               | 6 +++---
- hw/misc/macio/macio.c        | 2 +-
- hw/net/imx_fec.c             | 2 +-
- hw/net/lan9118.c             | 2 +-
- hw/nubus/nubus-virtio-mmio.c | 2 +-
- hw/pci-host/mv64361.c        | 2 +-
- hw/xen/xen-pvh-common.c      | 2 +-
- 11 files changed, 13 insertions(+), 13 deletions(-)
+ hw/microblaze/petalogix_ml605_mmu.c      | 3 ++-
+ hw/microblaze/petalogix_s3adsp1800_mmu.c | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/imx8mm-evk.c b/hw/arm/imx8mm-evk.c
-index 72fa1930ae..84a1ae6aa4 100644
---- a/hw/arm/imx8mm-evk.c
-+++ b/hw/arm/imx8mm-evk.c
-@@ -80,7 +80,7 @@ static void imx8mm_evk_init(MachineState *machine)
-     s = FSL_IMX8MM(object_new_with_props(TYPE_FSL_IMX8MM, OBJECT(machine),
-                                          "soc", &error_fatal, NULL));
-     object_property_set_uint(OBJECT(s), "fec1-phy-num", 1, &error_fatal);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(s), &error_fatal);
+diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/petalogix_ml605_mmu.c
+index 26470b0251..cfc76bf518 100644
+--- a/hw/microblaze/petalogix_ml605_mmu.c
++++ b/hw/microblaze/petalogix_ml605_mmu.c
+@@ -82,7 +82,8 @@ petalogix_ml605_init(MachineState *machine)
+     qemu_irq irq[32];
  
-     memory_region_add_subregion(get_system_memory(), FSL_IMX8MM_RAM_START,
-                                 machine->ram);
-diff --git a/hw/arm/imx8mp-evk.c b/hw/arm/imx8mp-evk.c
-index 6116e6e9dc..776aa22b9a 100644
---- a/hw/arm/imx8mp-evk.c
-+++ b/hw/arm/imx8mp-evk.c
-@@ -93,7 +93,7 @@ static void imx8mp_evk_init(MachineState *machine)
-         object_property_set_link(OBJECT(&s->soc), bus_name,
-                                  OBJECT(s->canbus[i]), &error_fatal);
-     }
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(&s->soc), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(&s->soc), &error_fatal);
+     /* init CPUs */
+-    cpu = MICROBLAZE_CPU(object_new(TYPE_MICROBLAZE_CPU));
++    cpu = MICROBLAZE_CPU(object_new_child(OBJECT(machine), "cpu[0]",
++                                          TYPE_MICROBLAZE_CPU));
+     object_property_set_str(OBJECT(cpu), "version", "8.10.a", &error_abort);
+     /* Use FPU but don't use floating point conversion and square
+      * root instructions
+diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+index 83bf325b2b..82e486e716 100644
+--- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
++++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+@@ -85,7 +85,8 @@ petalogix_s3adsp1800_init(MachineState *machine)
+     MemoryRegion *sysmem = get_system_memory();
+     EndianMode endianness = psms->endianness;
  
-     memory_region_add_subregion(get_system_memory(), FSL_IMX8MP_RAM_START,
-                                 machine->ram);
-diff --git a/hw/arm/mps2.c b/hw/arm/mps2.c
-index 1032f47cb8..3de11b19a9 100644
---- a/hw/arm/mps2.c
-+++ b/hw/arm/mps2.c
-@@ -379,7 +379,7 @@ static void mps2_common_init(MachineState *machine)
-                                 TYPE_CMSDK_APB_TIMER);
-         sbd = SYS_BUS_DEVICE(&mms->timer[i]);
-         qdev_connect_clock_in(DEVICE(&mms->timer[i]), "pclk", mms->sysclk);
--        sysbus_realize_and_unref(sbd, &error_fatal);
-+        sysbus_realize(sbd, &error_fatal);
-         sysbus_mmio_map(sbd, 0, base);
-         sysbus_connect_irq(sbd, 0, qdev_get_gpio_in(armv7m, irqno));
-     }
-diff --git a/hw/display/sm501.c b/hw/display/sm501.c
-index 81c27c8f52..c7daf2c7ba 100644
---- a/hw/display/sm501.c
-+++ b/hw/display/sm501.c
-@@ -2045,7 +2045,7 @@ static void sm501_realize_sysbus(DeviceState *dev, Error **errp)
-     sysbus_init_mmio(sbd, &s->state.mmio_region);
- 
-     /* bridge to usb host emulation module */
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(&s->ohci), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(&s->ohci), &error_fatal);
-     memory_region_add_subregion(&s->state.mmio_region, SM501_USB_HOST,
-                        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->ohci), 0));
-     sysbus_pass_irq(sbd, SYS_BUS_DEVICE(&s->ohci));
-diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
-index 677dc4ad80..9fc186737b 100644
---- a/hw/m68k/q800.c
-+++ b/hw/m68k/q800.c
-@@ -324,14 +324,14 @@ static void q800_machine_init(MachineState *machine)
-     object_initialize_child(OBJECT(machine), "djmemc", &m->djmemc,
-                             TYPE_DJMEMC);
-     sysbus = SYS_BUS_DEVICE(&m->djmemc);
--    sysbus_realize_and_unref(sysbus, &error_fatal);
-+    sysbus_realize(sysbus, &error_fatal);
-     memory_region_add_subregion(&m->macio, DJMEMC_BASE - IO_BASE,
-                                 sysbus_mmio_get_region(sysbus, 0));
- 
-     /* IOSB subsystem */
-     object_initialize_child(OBJECT(machine), "iosb", &m->iosb, TYPE_IOSB);
-     sysbus = SYS_BUS_DEVICE(&m->iosb);
--    sysbus_realize_and_unref(sysbus, &error_fatal);
-+    sysbus_realize(sysbus, &error_fatal);
-     memory_region_add_subregion(&m->macio, IOSB_BASE - IO_BASE,
-                                 sysbus_mmio_get_region(sysbus, 0));
- 
-@@ -497,7 +497,7 @@ static void q800_machine_init(MachineState *machine)
-         qdev_prop_set_string(DEVICE(&m->asc), "audiodev", machine->audiodev);
-     }
-     sysbus = SYS_BUS_DEVICE(&m->asc);
--    sysbus_realize_and_unref(sysbus, &error_fatal);
-+    sysbus_realize(sysbus, &error_fatal);
-     memory_region_add_subregion(&m->macio, ASC_BASE - IO_BASE,
-                                 sysbus_mmio_get_region(sysbus, 0));
-     sysbus_connect_irq(sysbus, 0, qdev_get_gpio_in(DEVICE(&m->glue),
-diff --git a/hw/misc/macio/macio.c b/hw/misc/macio/macio.c
-index 2813705c03..a26babfbc2 100644
---- a/hw/misc/macio/macio.c
-+++ b/hw/misc/macio/macio.c
-@@ -274,7 +274,7 @@ static void macio_newworld_realize(PCIDevice *d, Error **errp)
-     /* OpenPIC */
-     qdev_prop_set_uint32(pic_dev, "model", OPENPIC_MODEL_KEYLARGO);
-     sbd = SYS_BUS_DEVICE(&ns->pic);
--    sysbus_realize_and_unref(sbd, &error_fatal);
-+    sysbus_realize(sbd, &error_fatal);
-     memory_region_add_subregion(&s->bar, 0x40000,
-                                 sysbus_mmio_get_region(sbd, 0));
- 
-diff --git a/hw/net/imx_fec.c b/hw/net/imx_fec.c
-index 38e0f64462..fddb0bbba3 100644
---- a/hw/net/imx_fec.c
-+++ b/hw/net/imx_fec.c
-@@ -1207,7 +1207,7 @@ static void imx_eth_realize(DeviceState *dev, Error **errp)
- 
-     qemu_init_irq_child(OBJECT(s), "mii-irq", &s->mii_irq, imx_phy_update_irq, s, 0);
-     object_initialize_child(OBJECT(s), "mii", &s->mii, TYPE_LAN9118_PHY);
--    if (!sysbus_realize_and_unref(SYS_BUS_DEVICE(&s->mii), errp)) {
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->mii), errp)) {
-         return;
-     }
-     qdev_connect_gpio_out(DEVICE(&s->mii), 0, &s->mii_irq);
-diff --git a/hw/net/lan9118.c b/hw/net/lan9118.c
-index 2003280fc4..fa425bb5bb 100644
---- a/hw/net/lan9118.c
-+++ b/hw/net/lan9118.c
-@@ -1276,7 +1276,7 @@ static void lan9118_realize(DeviceState *dev, Error **errp)
- 
-     qemu_init_irq_child(OBJECT(s), "mii-irq", &s->mii_irq, lan9118_update_irq, s, 0);
-     object_initialize_child(OBJECT(s), "mii", &s->mii, TYPE_LAN9118_PHY);
--    if (!sysbus_realize_and_unref(SYS_BUS_DEVICE(&s->mii), errp)) {
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->mii), errp)) {
-         return;
-     }
-     qdev_connect_gpio_out(DEVICE(&s->mii), 0, &s->mii_irq);
-diff --git a/hw/nubus/nubus-virtio-mmio.c b/hw/nubus/nubus-virtio-mmio.c
-index 63aeca5b12..29008ea6c2 100644
---- a/hw/nubus/nubus-virtio-mmio.c
-+++ b/hw/nubus/nubus-virtio-mmio.c
-@@ -51,7 +51,7 @@ static void nubus_virtio_mmio_realize(DeviceState *dev, Error **errp)
-     for (i = 0; i < NUBUS_VIRTIO_MMIO_NUM_DEVICES; i++) {
-         sbd = SYS_BUS_DEVICE(&s->virtio_mmio[i]);
-         qdev_prop_set_bit(DEVICE(sbd), "force-legacy", false);
--        if (!sysbus_realize_and_unref(sbd, errp)) {
-+        if (!sysbus_realize(sbd, errp)) {
-             return;
-         }
- 
-diff --git a/hw/pci-host/mv64361.c b/hw/pci-host/mv64361.c
-index 3ef51fef1b..8c3dadd490 100644
---- a/hw/pci-host/mv64361.c
-+++ b/hw/pci-host/mv64361.c
-@@ -874,7 +874,7 @@ static void mv64361_realize(DeviceState *dev, Error **errp)
-                                 TYPE_MV64361_PCI);
-         DeviceState *pci = DEVICE(&s->pci[i]);
-         qdev_prop_set_uint8(pci, "index", i);
--        sysbus_realize_and_unref(SYS_BUS_DEVICE(pci), &error_fatal);
-+        sysbus_realize(SYS_BUS_DEVICE(pci), &error_fatal);
-     }
-     sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->cpu_irq);
-     qdev_init_gpio_in_named(dev, mv64361_gpp_irq, "gpp", 32);
-diff --git a/hw/xen/xen-pvh-common.c b/hw/xen/xen-pvh-common.c
-index 76893c8fcf..9ced68afea 100644
---- a/hw/xen/xen-pvh-common.c
-+++ b/hw/xen/xen-pvh-common.c
-@@ -230,7 +230,7 @@ static inline void xenpvh_gpex_init(XenPVHMachineState *s,
-     object_initialize_child(OBJECT(s), "gpex", &s->pci.gpex,
-                             TYPE_GPEX_HOST);
-     dev = DEVICE(&s->pci.gpex);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
- 
-     ecam_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
-     memory_region_add_subregion(sysmem, s->cfg.pci_ecam.base, ecam_reg);
+-    cpu = MICROBLAZE_CPU(object_new(TYPE_MICROBLAZE_CPU));
++    cpu = MICROBLAZE_CPU(object_new_child(OBJECT(machine), "cpu[0]",
++                                          TYPE_MICROBLAZE_CPU));
+     object_property_set_str(OBJECT(cpu), "version", "7.10.d", &error_abort);
+     object_property_set_bool(OBJECT(cpu), "little-endian",
+                              endianness == ENDIAN_MODE_LITTLE, &error_abort);
 -- 
 2.47.1
 
