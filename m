@@ -4,45 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF004C44501
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:03:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A2FFC43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:03:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifmm-0007Bq-IZ; Sat, 11 Jul 2026 18:03:00 -0400
+	id 1wifmm-0007FP-Rk; Sat, 11 Jul 2026 18:03:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifmU-000759-Gd; Sat, 11 Jul 2026 18:02:48 -0400
+ id 1wiflz-0006xB-Qe; Sat, 11 Jul 2026 18:02:14 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifmL-0008RN-9x; Sat, 11 Jul 2026 18:02:41 -0400
+ id 1wifly-0008Qi-5F; Sat, 11 Jul 2026 18:02:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807180; bh=lqu+kprOeII3+eEnwuEAvOlbZGnBz2nwZfl6x19HGcM=;
+ t=1783807180; bh=wSNU6e7WpFXFiBVayG3OBCpB8wb0GuSFcimKi/wmiyw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=tVCifyZO0GmhP/IbKb34Qv2MBCGQ4SguKsHW60HonSb95vEI82VUci/t6JU1aCQc8
- WAvfEONwL0XNw5TJGp8v13YUVB4Rh3s454tsOZsew/KJaC+HfHnaDPZxfHe2WxmEBU
- AWWEmMIwxrfTMbuXGjEmSkRqpc8L5p+pbvVQKk58Fv5Ydqi6iE4qL41xle3F3fEEoH
- JwFSjcXm6hK29NYWPOVx64tRNpy3Eb2sNK2qofKIfi0DpVKtLSEwhOXkHYufOEb5K3
- 39ZckbMEyqpg7agzesDHUJMidQDnqygqApGJ++WXnjngSE2vMB6iFmSJ/UntQSXgFQ
- FiQ/X73eeePog==
+ b=O3ldSQ5d9qx+lun8d2JBW5MAnSVZVmJuJQlt+w3sb5K3yOdyeXrNscWrazTH6Mf+W
+ 3JGrksTHw9cmqF7tbNfxcF0lC30ZrxMBo6I6ILbmpIf8ReI1HxGh4+YwpFvbbmycjP
+ C6qA5px3ucQ39lsQ/Bnpnv/ZzSqzq6P59M43jf5HLY5RJGLuy18eluouduAE/ek8vs
+ S27t1sPq/v4ATf2gLrYS/gFkwCH4m/B0Q7ceWok82W82EGhxl2YhYLY3POPI3kErMb
+ Rx11NiCs34lVzToZtXrFZ4so12mw44DiA17t0goA7JHVy+Ke1YBIBtTBbDAEKsz1ck
+ hWXjPcZMu652w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D051F1C0AAB;
+ by isrv.corpit.ru (Postfix) with ESMTP id C32CD1C0AA9;
  Sun, 12 Jul 2026 00:59:40 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 86F8A3EAF36;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7ABC93EAF34;
  Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 82C4813323; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id 7DE8A1331F; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 32/81] hw/char/virtio-serial-bus: fix
- guest-triggerable OOM in control_out()
-Date: Sun, 12 Jul 2026 00:58:10 +0300
-Message-ID: <20260711215904.3757-32-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, SeungJu Cheon <suunj1331@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 30/81] target/riscv: Apply UXL WARL handling to
+ vsstatus
+Date: Sun, 12 Jul 2026 00:58:08 +0300
+Message-ID: <20260711215904.3757-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
@@ -71,103 +73,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: SeungJu Cheon <suunj1331@gmail.com>
 
-A malicious guest can craft virtqueue descriptors with arbitrary lengths.
-control_out() calls iov_size() on the guest-supplied scatter-gather list
-and passes the result directly to g_malloc(), allowing a guest to force
-QEMU to attempt multi-gigabyte allocations and crash the host process.
+write_mstatus() already handles the reserved UXL value by writing a
+legal value instead.
 
-Fix this by copying at most sizeof(struct virtio_console_control) into a
-stack-local variable instead of allocating a buffer sized by the guest.
-handle_control_message() only accesses the fixed-size id, event, and
-value fields, so no data beyond the struct was ever needed.
+Apply the same handling when writing vsstatus so that reserved UXL
+values follow the same WARL behavior.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3585
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260622161144.2883799-1-lvivier@redhat.com>
-(cherry picked from commit 36b37f8494800ed9c5d4b6ef03924bd1636cb810)
+Factor the common logic into a local helper riscv_write_uxl() and use
+it for both mstatus and vsstatus.
+
+Suggested-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Fixes: f310df58bd2 ("target/riscv: Enable uxl field write")
+Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260625081521.595683-1-suunj1331@gmail.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit dcd028517749835a618bb1fe8dca32d82318e1c1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
-index cd234dc6db1..c1973f0248f 100644
---- a/hw/char/virtio-serial-bus.c
-+++ b/hw/char/virtio-serial-bus.c
-@@ -344,22 +344,16 @@ void virtio_serial_throttle_port(VirtIOSerialPort *port, bool throttle)
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index c8f510709ae..24c1f94ced0 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -1991,6 +1991,20 @@ static target_ulong legalize_mpp(CPURISCVState *env, target_ulong old_mpp,
+     return val;
  }
  
- /* Guest wants to notify us of some event */
--static void handle_control_message(VirtIOSerial *vser, void *buf, size_t len)
-+static void handle_control_message(VirtIOSerial *vser,
-+                                   struct virtio_console_control *gcpkt)
++static uint64_t riscv_write_uxl(CPURISCVState *env, uint64_t val,
++                                uint64_t field)
++{
++    RISCVMXL xl = riscv_cpu_mxl(env);
++    uint64_t uxl = get_field(val, field);
++
++    if (uxl == MXL_RV128) {
++        uxl = xl == MXL_RV128 ? MXL_RV64 : xl;
++        val = set_field(val, field, uxl);
++    }
++
++    return val;
++}
++
+ static RISCVException write_mstatus(CPURISCVState *env, int csrno,
+                                     target_ulong val, uintptr_t ra)
  {
-     VirtIODevice *vdev = VIRTIO_DEVICE(vser);
-     struct VirtIOSerialPort *port;
-     VirtIOSerialPortClass *vsc;
--    struct virtio_console_control cpkt, *gcpkt;
-+    struct virtio_console_control cpkt;
-     uint8_t *buffer;
-     size_t buffer_len;
+@@ -2037,17 +2051,8 @@ static RISCVException write_mstatus(CPURISCVState *env, int csrno,
  
--    gcpkt = buf;
+     if (xl != MXL_RV32 || env->debugger) {
+         if ((val & MSTATUS64_UXL) != 0) {
+-            uint64_t uxl = val & MSTATUS64_UXL >> 32;
+             mask |= MSTATUS64_UXL;
 -
--    if (len < sizeof(cpkt)) {
--        /* The guest sent an invalid control packet */
--        return;
--    }
--
-     cpkt.event = virtio_lduw_p(vdev, &gcpkt->event);
-     cpkt.value = virtio_lduw_p(vdev, &gcpkt->value);
- 
-@@ -457,41 +451,27 @@ static void control_in(VirtIODevice *vdev, VirtQueue *vq)
- 
- static void control_out(VirtIODevice *vdev, VirtQueue *vq)
- {
-+    struct virtio_console_control cpkt;
-     VirtQueueElement *elem;
-     VirtIOSerial *vser;
--    uint8_t *buf;
-     size_t len;
- 
-     vser = VIRTIO_SERIAL(vdev);
- 
--    len = 0;
--    buf = NULL;
-     for (;;) {
--        size_t cur_len;
--
-         elem = virtqueue_pop(vq, sizeof(VirtQueueElement));
-         if (!elem) {
-             break;
+-            /*
+-             * uxl = 3 is reserved so write the current xl instead.
+-             * In case xl = MXL_RV128 (3) write MXL_RV64.
+-             */
+-            if (uxl == 3) {
+-                uxl = xl == MXL_RV128 ? MXL_RV64 : xl;
+-                val = deposit64(val, 32, 2, uxl);
+-            }
++            val = riscv_write_uxl(env, val, MSTATUS64_UXL);
          }
- 
--        cur_len = iov_size(elem->out_sg, elem->out_num);
--        /*
--         * Allocate a new buf only if we didn't have one previously or
--         * if the size of the buf differs
--         */
--        if (cur_len > len) {
--            g_free(buf);
--
--            buf = g_malloc(cur_len);
--            len = cur_len;
-+        len = iov_to_buf(elem->out_sg, elem->out_num, 0, &cpkt, sizeof(cpkt));
-+        if (len == sizeof(cpkt)) {
-+            handle_control_message(vser, &cpkt);
-         }
--        iov_to_buf(elem->out_sg, elem->out_num, 0, buf, cur_len);
- 
--        handle_control_message(vser, buf, cur_len);
-         virtqueue_push(vq, elem, 0);
-         g_free(elem);
      }
--    g_free(buf);
-     virtio_notify(vdev, vq);
- }
  
+@@ -5155,6 +5160,8 @@ static RISCVException write_vsstatus(CPURISCVState *env, int csrno,
+     uint64_t mask = (target_ulong)-1;
+     if ((val & VSSTATUS64_UXL) == 0) {
+         mask &= ~VSSTATUS64_UXL;
++    } else {
++        val = riscv_write_uxl(env, val, VSSTATUS64_UXL);
+     }
+     if ((env->henvcfg & HENVCFG_DTE)) {
+         if ((val & SSTATUS_SDT) != 0) {
 -- 
 2.47.3
 
