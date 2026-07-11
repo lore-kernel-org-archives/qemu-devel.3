@@ -4,70 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45110C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 04:49:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B6B8C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 05:06:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiPdl-0005db-N6; Sat, 11 Jul 2026 00:48:37 -0400
+	id 1wiPuh-0000q0-7H; Sat, 11 Jul 2026 01:06:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wiPdY-0005d7-1K
- for qemu-devel@nongnu.org; Sat, 11 Jul 2026 00:48:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
+ id 1wiPue-0000ps-RT
+ for qemu-devel@nongnu.org; Sat, 11 Jul 2026 01:06:04 -0400
+Received: from smtp186.sjtu.edu.cn ([202.120.2.186])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wiPdV-0005LH-Mf
- for qemu-devel@nongnu.org; Sat, 11 Jul 2026 00:48:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783745298;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=X9Qkiiy8uqLljb8rNBCGWNZb3MKP0DkFmn2lNzKVBrQ=;
- b=Yhagb5C/jK763L0v3aJMFHtNNM8b0ZPZtM25Nu7CuDZixiBmZez2ruIWT3QIWPLfoEXri8
- CKcFG6sCMwdtE3SO0N0RWKmm9L8QZknw4MC1cYrK+Y99bIQv/+hWUBghYchs7DbxLLGLRZ
- l6Ss+vbEy6+kMwdMoqCPQ1qMhRIEg8w=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-122-OphUQES8PJ-8Zwn6T32ViQ-1; Sat,
- 11 Jul 2026 00:48:13 -0400
-X-MC-Unique: OphUQES8PJ-8Zwn6T32ViQ-1
-X-Mimecast-MFC-AGG-ID: OphUQES8PJ-8Zwn6T32ViQ_1783745292
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 10B391800EF3; Sat, 11 Jul 2026 04:48:12 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.3])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DFEF019560A0; Sat, 11 Jul 2026 04:48:10 +0000 (UTC)
-Date: Sat, 11 Jul 2026 06:42:41 +0200
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: alistair23@gmail.com
-Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
-Subject: Re: [PULL 00/40] riscv-to-apply queue
-Message-ID: <20260711044241.GA634212@fedora>
-References: <20260710025525.1704417-1-alistair.francis@wdc.com>
+ (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
+ id 1wiPua-0003wm-LQ
+ for qemu-devel@nongnu.org; Sat, 11 Jul 2026 01:06:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sjtu.edu.cn;
+ s=default; t=1783746349;
+ bh=Q7FuBRKB6UcRVF5SG8jdFX5zpQxwxYAdgPRRvH7+wdE=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=DPaVoctlCwag12J2rYNsHqxotl87wxOaHxGGgjVQOTbtrdpCd37bFAnHNRcI89/PK
+ +jPyWTOKdDpQk4JWC0IefG+hvhxjCq3T1TG/GlRRCQtdJ0Rbou/dPSukmWu2s33Il9
+ +7y5bBXWD1ywnA6lBEP4bMTrVpHz+SAtUwC1CN3T3TMya3oV9KIlnhfECagCYge0Cr
+ rriDVQLXTKhWfSNCTmhlhqfX1F7ybOTxID3dlVGnBilJM5m1CwYAoF61fLuNsmNmOq
+ WNLtplFcwAcTuu7lFQhlva3x469RAjYcJxo0n92jtbnFQTKsP/dTiflaWpv1Vbw+d5
+ X04L11y2wx13w==
+Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
+ by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id AFC202FF3B9;
+ Sat, 11 Jul 2026 05:05:49 +0000 (UTC)
+Received: from [10.0.1.62] (unknown [202.120.40.100])
+ by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 8D816380C9A;
+ Sat, 11 Jul 2026 13:05:18 +0800 (CST)
+Message-ID: <5a303ce5-cb6f-43b9-857f-39cffc8c7d67@sjtu.edu.cn>
+Date: Sat, 11 Jul 2026 13:05:17 +0800
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="Kv1zF53iOOplVGfi"
-Content-Disposition: inline
-In-Reply-To: <20260710025525.1704417-1-alistair.francis@wdc.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 2/2] docs/about/emulation: document the dlcall plugin
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ qemu-devel <qemu-devel@nongnu.org>
+Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
+ Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
+ Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
+References: <20260710212601.583352-1-functioner@sjtu.edu.cn>
+ <20260710212601.583352-3-functioner@sjtu.edu.cn>
+ <990f11f5-c8fd-4cf6-b186-180e24452ff3@oss.qualcomm.com>
+From: Ziyang Zhang <functioner@sjtu.edu.cn>
+In-Reply-To: <990f11f5-c8fd-4cf6-b186-180e24452ff3@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=202.120.2.186;
+ envelope-from=functioner@sjtu.edu.cn; helo=smtp186.sjtu.edu.cn
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,30 +79,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi,
 
---Kv1zF53iOOplVGfi
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Fri, 10 Jul 2026 15:57:52 -0700, Pierrick Bouvier wrote:
+> Great work, the workflow is now ready!
+> 
+> A few small issues are left with lib dependencies.
+> 
+> libstdc++
+> ---------
+> 
+> LD_LIBRARY_PATH=$DEVKIT/lib:build/host \
+> ./build/qemu-x86_64 -plugin ./build/contrib/plugins/libdlcall.so \
+> -E LD_LIBRARY_PATH=$DEVKIT/x86_64/lib:thunks/x86_64 \
+> -L /usr/x86_64-linux-gnu/ \
+> build/guest/main
+> build/guest/main: error while loading shared libraries: libstdc++.so.6:
+> cannot open shared object file: No such file or directory
+> 
+> Indeed, libstc++ is not available in machine's x86_64 sysroot by
+> default. It works with -L $DEVKIT/x86_64/sysroot but as mentioned
+> previously, we don't want to use another sysroot than the one that user
+> has, since it can contain extra libraries we are not aware about (or
+> Lorelei one can bring extra dependencies that we don't want).
+> 
+> So the last thing needed is to link statically libstdc++ for guest thunk
+> and host thunk. In addition, you can do it for lorelei .so (I mean .so
+> included in devkit), so thunking is fully self contained and does not
+> require extra dependencies from the system where it runs.
+> Same for libgcc.
+> Link parameters you need are -static-libstdc++ -static-libgcc.
+> Once added, all thunks and lorelei devkit should be portable between
+> different machines 👍.
+> 
+> The only base dependency we can assume will be present is libc (which
+> also includes libm.so).
+> We could argue if c++ should be considered as a base dependency also.
+> For debian (+ubuntu), fedora and archlinux, it's not.
+> See what is included in debian libc package. For instance, in our case:
+> https://packages.debian.org/trixie/all/libc6-amd64-cross/filelist
+> 
+> doc
+> ---
+> 
+> While at it, please add -L /usr/x86_64-linux-gnu/ to command line so it
+> matches the default people will use.
+> 
+> rpath
+> -----
+> 
+> It seems that .so in thunks have rpath set to $ORIGIN:$ORIGIN/../../lib,
+> which should not be needed. LD_LIBRARY_PATH will specify where to find
+> the correct libraries, please remove it.
+> 
+> You can use this command to double check this:
+> readelf -d thunks/libhello_HTL.so thunks/x86_64/libhello.so
+> No RUNPATH should be present.
+> 
+> thunks/libhello_HTL.so has an explicit dependency to
+> build/host/libhello.so. It should not include build/host and just link
+> to libhello.so. Remove rpath also.
+> 
+> thunks/x86_64/libhello.so, remove rpath.
+> 
+> To clarify, lorelei-devkit-*/*/lib/* can use rpath since devkit itself
+> is self contained. Thunks can not.
+> 
+> -----
+> 
+> Once solved, we'll have a clean and minimal workflow, which ensure
+> thunks do not require any extra dependency.
+> 
+> With this, any user will be able to grab a lorelei devkit + a thunk
+> tarball and use it as a drag and drop replacement for their system
+> libraries, as long as it matches their version of course.
+> 
+> Keep up the good work!
+> Pierrick
 
-Applied, thanks.
+Thanks for the careful review.
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.1 for any user-visible changes.
+On libstdcxx / libgcc: rather than static-linking them into every thunk, I'd
+prefer to bundle the shared libraries in the devkit and let the thunks link
+against them dynamically. The reasoning:
 
---Kv1zF53iOOplVGfi
-Content-Type: application/pgp-signature; name=signature.asc
+The devkit already has to carry libstdcxx for LoreTLC itself, which is a 
+large
+C++ program. Shipping it once as a shared library and having the guest and
+host thunks link that same copy avoids baking a static libstdc++ into every
+thunk, and keeps LoreTLC and the thunks on one runtime.
 
------BEGIN PGP SIGNATURE-----
+The portability you're after is preserved. libstdc++.so.6 and libgcc_s.so.1
+sit beside the lorelei runtimes (the devkit's host lib/ and guest 
+x86_64/lib/),
+so they are found on the same LD_LIBRARY_PATH the run already sets. A clean
+Fedora or Arch container with only libc installed runs a devkit + thunk pack
+directly, nothing else needed. The one base dependency we assume is still
+libc. The devkit brings its own libstdcxx and libgcc.
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmpRycEACgkQnKSrs4Gr
-c8jHHwgAgv5QAdWU+0I9PFw6HB3s0iMUM7TeeJQ7V9Ta0l3BTfCJJVufM5M9bEif
-dIOsaEP/ulEZQE4dRqIIgQ9/TAuwzxCmKnNfGpF/z/eI17pPJ+JOLY6He6NqL0km
-B3aDKg7Ye58nv+iO4Jz1k6tse6qbJLGlVb69TzlQYSQ70Xqc3NRrZAekVE1O7zII
-tq4fx1ywDY3ooZfzti4eo/wmISS42SinbtLt9Zpki9HbtgqehWZyqHTxWv9zGPat
-MKMw2qR5rG7R3MXeSOMmMN9FMRVDu1gY4o1BBRDVT/s19n1B0zcUb0bJjcrpefvw
-iHGNoyPoibPBd8yw2EfwmbgMzYlPDw==
-=K/Yp
------END PGP SIGNATURE-----
+So static vs dynamic doesn't change what the user must have installed. I 
+went
+with dynamic because it's the smaller and simpler of the two here.
 
---Kv1zF53iOOplVGfi--
+For the rest: I'll drop the RPATH from the thunk libraries, make the host
+thunk record its real library's SONAME (libfoo.so) instead of the build 
+path,
+and add -L /usr/x86_64-linux-gnu/ to the documented command.
 
 
