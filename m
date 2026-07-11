@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 494BBC44506
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:06:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 152C7C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:06:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifnS-00006r-KE; Sat, 11 Jul 2026 18:03:42 -0400
+	id 1wifpw-0000LA-T5; Sat, 11 Jul 2026 18:06:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifnB-0007lu-Lc; Sat, 11 Jul 2026 18:03:26 -0400
+ id 1wifpt-00007d-Vj; Sat, 11 Jul 2026 18:06:14 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifn9-0000B4-Tl; Sat, 11 Jul 2026 18:03:25 -0400
+ id 1wifps-0000l6-5v; Sat, 11 Jul 2026 18:06:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807181; bh=zivBvMtzxtYkIZOGgfUxFwYqxl7Hte03wmnIXCt/eyk=;
+ t=1783807181; bh=PIjGoZxGK9PyFlLzxsQlfXOKSZkQMgPlbyXy9RaZ+44=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=lb1sdgz1pdjdS9mN/KM2+IslWhTHR2kZ/XU2KZCRvprBtZuF9oINmy+QHws/BSrwL
- N9FQS6RLPahehY15Qnw9wUZjNK58DeqVGqMrCh9wCngU5jSGdDNqxZ2DTjXizMbaBH
- a04ZuOKAtL0r8+Tg1ZUPeSCBRKTarmPXhXUo7QtDcgCSNJ+oKHPR+I8eNjcfACWPLf
- uNVFyMlb7+x+CusThQsvIgjLh4bsBsgtXiJjVeSt21dPdqk0tX79SbacyxDSfx4ng5
- +/1Pxd0PzDIgoM6RKyqLbX/g+VnBaYia9D7M7KqYTjLdjY3iClfszRZ0s7IckUUiYN
- SoE4QnCJMFPow==
+ b=O98fOe2DOVlSaYKfhWT87dq8L3epb9ZJGdQ2ZhlPCAKKqWzMJ7P5p6rHlSkYZhai+
+ kCfTW0FPZA7JmgImvYPochafMPQJaHUJGIJsB1a4oSjjtXCSN5zHhkIYwNsEtk91Ml
+ x/83+lYoM5CtqZpQpVqa/CSV3OrJ0oLSetPijXT0gCNm31v7y8zfrM/tUDLBgK3XNm
+ BUfrLYtx2D7Po7Yj/OEirjQOgGkZZoFcH/gElsLldDysWp08WdtavavMwsAVEa8Gmz
+ qWp8cQI92uDEq+5qFmfgjQCr+urn+oRSLyLo0Yce1EpG59GXUpoEX2XHVa8PTpoopr
+ bXw0itZgntlqQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1073F1C0AB4;
+ by isrv.corpit.ru (Postfix) with ESMTP id B121C1C0AD0;
  Sun, 12 Jul 2026 00:59:41 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id BB6A13EAF3F;
- Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6893D3EAF5B;
+ Sun, 12 Jul 2026 00:59:51 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 9952313335; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id DEAFC1336D; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Farhan Ali <alifm@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Nutty Liu <nutty.liu@hotmail.com>, Chao Liu <chao.liu.zevorn@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 41/81] s390x/pci: Shrink RPCIT ranges to registered
- window
-Date: Sun, 12 Jul 2026 00:58:19 +0300
-Message-ID: <20260711215904.3757-41-mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 69/81] hw/riscv/riscv-iommu.c: fault when !PTE_U and
+ no priv access
+Date: Sun, 12 Jul 2026 00:58:47 +0300
+Message-ID: <20260711215904.3757-69-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
@@ -73,57 +74,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matthew Rosato <mjrosato@linux.ibm.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-Today, if a RPCIT instruction is presented from the guest whose range
-exceeds the previously-registered IOAT, QEMU will process the range
-so long as 1) the specified range at least partially overlaps with
-what was previously registered and 2) the guest has valid IOAT entries
-in its table.  If the entries are not present (invalid), then the
-RPCIT will unnecessarily spend time reporting the invalid
-region/segment entries.
+All IOMMU accesses are assumed to be user mode unless told otherwise,
+i.e. we have a process_id.  In case we have a non-user mode leaf PTE
+(PTE_U isn't set) and we are running in user mode, we need to throw a
+fault.
 
-Optimize this path by exiting immediately if the requested range falls
-completely outside of the previously-registered range or if the
-requested range ends before it starts (which would only occur if the
-guest-specified address + length would overflow a u64).  Otherwise,
-clamp the request to only the portion of the range that overlaps with
-what was previously registered, effectively ignoring the portion
-outside of the registered range.
+This also reflects on qos-riscv-iommu tests: the tests always run in
+user mode so our PTEs must have PTE_U (bit 0x10) set.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 5d1abf2344 ("s390x/pci: enforce zPCI state checking")
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Message-ID: <20260707070728.147203-4-borntraeger@linux.ibm.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-(cherry picked from commit b8c8ec1d752661e1904d089c77d8617c4b6bfb5a)
+Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3553
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Message-ID: <20260701121111.537654-3-daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit b795ea0ba4715182805994db0cdabd2650a553a7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
-index ef20f7645eb..b7de23c7d2c 100644
---- a/hw/s390x/s390-pci-inst.c
-+++ b/hw/s390x/s390-pci-inst.c
-@@ -770,10 +770,16 @@ int rpcit_service_call(S390CPU *cpu, uint8_t r1, uint8_t r2, uintptr_t ra)
-         goto err;
-     }
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 8e86e9150cc..021176e3df8 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -288,6 +288,7 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+         G_STAGE = 1,
+     } pass;
+     MemTxResult ret;
++    bool pv = !!ctx->process_id;
  
--    if (end < iommu->pba || start > iommu->pal) {
-+    if (end < start || end < iommu->pba || start > iommu->pal) {
-         error = ERR_EVENT_OORANGE;
-         goto err;
-     }
-+    /*
-+     * If the specified range at least partially overlaps the registered
-+     * aperture, clamp the request to the aperture and ignore the rest.
-+     */
-+    sstart = MAX(start, iommu->pba);
-+    end = MIN(end, iommu->pal + 1);
+     satp = get_field(ctx->satp, RISCV_IOMMU_ATP_MODE_FIELD);
+     gatp = get_field(ctx->gatp, RISCV_IOMMU_ATP_MODE_FIELD);
+@@ -461,6 +462,13 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+             break;                /* Invalid PTE */
+         } else if (pte & PTE_RESERVED(false)) {
+             break;                /* Reserved PTE bits set */
++        } else if (!(pte & PTE_U) && !pv) {
++            /*
++             * All accesses are assumed to be User mode unless
++             * process_id is valid (pv).  In case we have a
++             * non-user mode PTE and !pv we need to fault.
++             */
++            break;
+         } else if (!(pte & (PTE_R | PTE_W | PTE_X))) {
+             base = PPN_PHYS(ppn); /* Inner PTE, continue walking */
+         } else if ((pte & (PTE_R | PTE_W | PTE_X)) == PTE_W) {
+diff --git a/tests/qtest/libqos/qos-riscv-iommu.h b/tests/qtest/libqos/qos-riscv-iommu.h
+index 90e69a5d731..c218e9d66db 100644
+--- a/tests/qtest/libqos/qos-riscv-iommu.h
++++ b/tests/qtest/libqos/qos-riscv-iommu.h
+@@ -54,8 +54,8 @@
+  * PTE masks for RISC-V IOMMU page tables.
+  * Values match PTE_V, PTE_R, PTE_W, PTE_A, PTE_D in target/riscv/cpu_bits.h
+  */
+-#define QRIOMMU_NON_LEAF_PTE_MASK   0x001  /* PTE_V */
+-#define QRIOMMU_LEAF_PTE_RW_MASK    0x0c7  /* V|R|W|A|D */
++#define QRIOMMU_NON_LEAF_PTE_MASK   0x011  /* PTE_V | PTE_U */
++#define QRIOMMU_LEAF_PTE_RW_MASK    0x0d7  /* V | R | W | A | D | PTE_U */
+ #define QRIOMMU_PTE_PPN_MASK        0x003ffffffffffc00ull
  
-  retry:
-     start = sstart;
+ /* Address-space base offset for test tables */
 -- 
 2.47.3
 
