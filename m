@@ -4,92 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DCF8C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 09:49:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7341C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 09:56:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiUKG-00050X-Cd; Sat, 11 Jul 2026 05:48:48 -0400
+	id 1wiUQn-0000br-DZ; Sat, 11 Jul 2026 05:55:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rdmitry0911@gmail.com>)
- id 1wiUKF-0004zM-Fw
- for qemu-devel@nongnu.org; Sat, 11 Jul 2026 05:48:47 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rdmitry0911@gmail.com>)
- id 1wiUKD-0002wc-H9
- for qemu-devel@nongnu.org; Sat, 11 Jul 2026 05:48:47 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-47362928f65so1653839f8f.2
- for <qemu-devel@nongnu.org>; Sat, 11 Jul 2026 02:48:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783763324; x=1784368124; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Gi7c1MfU7nbcJC21lIHFYt2wXJwMDStiiHNF/L/LY0E=;
- b=soSUgd0e99FeSlSdo/NsC8mWGGL/aardELi4P5YtWhINuJhdqTMt3h/wpR5U1a8ixU
- n+lsSh4dHdsI7CRgWlEeL2wes3xmzI7wAQ3eqmC3K8gBlnc4y0OPXgaj0fIorQo8xw8S
- 0W/w8Ksgoa+XT9gP7xs9uL/YHsbGJBWnTtgxnOr5UcoxiaLG3uWYYfSzDvl1Nhe+/Mbl
- FXNG/hjQQLLr8hE2NXF5tghju05dJlzaHWDC43u7GxaBMl6Tklhe1OADSPZYC8p58wY6
- nq5F8mzYOgY8X8hv1w6SwUCT41p0DUx4kmSw1hMT+HOzhbCUCYk+2Gudn+UvzGSsb8Xs
- l7QQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783763324; x=1784368124;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Gi7c1MfU7nbcJC21lIHFYt2wXJwMDStiiHNF/L/LY0E=;
- b=VoVZRQbH2rhfHAEjiZYZhFBLk9cGLIZiInoABtk5MTGq7SbCU41pz1x0lGN37IWQz3
- G6Z0DzMlltCTW9h6VkPoZzMLX2nYReM8TWy8LqGHTRoOE7Ax6dNZwZ9ROeJy+vAd059Q
- mdRL7SMtQQlhWYcIvYAI3bXmSugKjjMVyVs6S4gN1GBoiynOMchFolQmXmBy7iYBBn1p
- GH2+SZ1c98ih1CANpJROAifnxvFX9enOfzSPWbYbvK5iSIQkfqrIvlQg6dvDZnF1z2zx
- QKFWqrbQVDxCJMrpKy5JzQplJostlyLkcuMxFAhMfuorErpflkidGqj2Uaezafcf1TH5
- /91w==
-X-Gm-Message-State: AOJu0YwOILlRjOik6T3NmN/wOlX7EV0nrVp04QwBH+O8Q8keMh5/vErb
- 5dvqaGfy6pp0cbQHOydxyvVvAtFVaqEidH3FQtsPzWm2+E8HI5ec33fi2zewyenM
-X-Gm-Gg: AfdE7cn7D4mGVNomG3qQNYRM8iXIDbz6JoDYIPTMRFY/gP/UaLEExFuCkEOr61biK8t
- yqFnpqDW4PLk16R0vI2PiTgbT0Hqa33vkoJ9mP3EubaVhWtJTu36ygHmFC9SmidbR4F7N2V4i2H
- 5BRXOMGfI7PJC75JKoHZ7RONqtGVGHoldng81iTk080oPVGG4MvOrG7INGJ8sPQ79njcjIzVdAC
- ZhWJbe+oErJ5uTrfbaodNQHdb1emBQcGiCAM8roC+xmVo+JS7TQt9STNnZRJN/r/pdg7qLTdPNO
- 1jlHZt/sl1AYVV7MWcs4NoqVBPFU2Tiphqlf3WLQ4nTxv4zpl3SSEXxvzygf6YwmKwr456JvDGh
- xxwIMz+XAsETeJcruRpWwClfBQloUvkYeEIACZu7nUZpDnGUgVnR0Mme0h6nF4SPSzbJGXEAZ0D
- uipZM84YiLjfXTwKtPfOPWKj/lRKB+ZS9VUcrrqstHSI7IWQM+wAJJeGt3u75+DlsrD0I/qAxCu
- +mAE5QIi+pTI9q896g=
-X-Received: by 2002:a05:6000:2f86:b0:475:c578:b619 with SMTP id
- ffacd0b85a97d-47f2dcd71ccmr2111570f8f.30.1783763323810; 
- Sat, 11 Jul 2026 02:48:43 -0700 (PDT)
-Received: from debian-for-building.localdomain
- (static.244.71.243.136.clients.your-server.de. [136.243.71.244])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47aa039ad21sm66558181f8f.20.2026.07.11.02.48.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 11 Jul 2026 02:48:43 -0700 (PDT)
-From: Dmitry R <rdmitry0911@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Dmitry R <rdmitry0911@gmail.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [RFC PATCH v2 5/5] docs: document Thunderbolt PCIe hotplug layer
-Date: Sat, 11 Jul 2026 12:48:01 +0300
-Message-ID: <20260711094803.3589239-6-rdmitry0911@gmail.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260711094803.3589239-1-rdmitry0911@gmail.com>
-References: <20260710133440.2845828-1-rdmitry0911@gmail.com>
- <20260711094803.3589239-1-rdmitry0911@gmail.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wiUQm-0000bd-D1; Sat, 11 Jul 2026 05:55:32 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wiUQg-00045L-Mm; Sat, 11 Jul 2026 05:55:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1783763713; bh=Or3l6tu7Cw/+G98gQAX4hnuAcnL4W4+KWsGx50dmqdE=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=UzOMQYJ1DdlP2KMdc7eN4prdJHqAfeWHOGi6fnE/78z7jDOgbA/5arHhf8/LjiCy0
+ 5RNpY5bxZLeGV+ty6M7aKayNghxQXUA/I77O9NEDhwX7bkCl4Ay6MrSVtgZaBqUM56
+ xDNf+MXNtsdOiP1b4tPkWTv9rw3YprYB5lIuaBuFmIBR1PXCMHoUccdEggUl3Fu4xo
+ VNXN2p0ZdK83SW0JWb3GlAoa3mJLF5JKBtSE3g7XnLRn020IM898FnufaZx2aNwgD+
+ u+kfEPiPUFuGm93UlqyhzdGKftRsWftCpRqXAg8ht6WQcSQWrne+D+jBphi1ViBzT+
+ ulmk6VRlzoJMg==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id D0DFF1C0737;
+ Sat, 11 Jul 2026 12:55:13 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 683913EAB03;
+ Sat, 11 Jul 2026 12:55:22 +0300 (MSK)
+Message-ID: <6ee27254-b417-4c4a-b9bf-aa8bd39a1c42@tls.msk.ru>
+Date: Sat, 11 Jul 2026 12:55:22 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=rdmitry0911@gmail.com; helo=mail-wr1-x42e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] hw/pci-host/q35.c: Always initialize smram-region
+ even if SMM disabled
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Isaku Yamahata <isaku.yamahata@linux.intel.com>,
+ Sean Christopherson <seanjc@google.com>
+References: <20260708121011.1653365-1-peter.maydell@linaro.org>
+ <20260708121011.1653365-2-peter.maydell@linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260708121011.1653365-2-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,256 +119,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add documentation and usage examples for the Thunderbolt PCIe hotplug
-layer, including VGA, USB storage, and NVMe hotplug flows.
+On 7/8/26 15:10, Peter Maydell wrote:
+> The MCHPCIState::smram_region looks like it ought to be SMM-specific,
+> but it isn't, because its behaviour is "alias the PCI address space
+> into system memory at the SMRAM_C_BASE offset", and it must be
+> enabled for "hide SMRAM", and disabled for "show SMRAM".  If the
+> SMRAM regions are disabled, we want "hide SMRAM", so we need to
+> initialize and place this MR.  Do this in the minimal way, by moving
+> the "bail out of realize if has_smm_ranges is false" check down below
+> the initialization code.
+> 
+> This fixes a bug where disabling SMM causes the VGA screen to be
+> blank during seabios output, until the OS graphics driver is
+> initialized.  This is most obvious for accelerators which have no SMM
+> support (e.g.  NVMM, HVF, WHPX) as there smm=off is the default, but
+> you can also see it on KVM and TCG if you explicitly pass smm=off:
+>   qemu-system-x86_64 -machine q35,accel=kvm,smm=off
+> 
+> The early return is bug-prone, so we can refactor the code to clean
+> it up, but this is the minimal bug fix for backports, and is what
+> Debian used to work around this:
+>   https://salsa.debian.org/qemu-team/qemu/-/commit/6e0766f0f897dc2b75ab87dd59da0d4639bb37ee
+> 
+> Another proposed fix for this:
+>   https://patchew.org/QEMU/20260413170407.57574-1-mohamed@unpredictable.fr/
+> also moves an early return in mch_update-smram() and tweaks
+> mch_update_smram() accordingly.  This shouldn't be necessary, because
+> in the no-SMM case smram_region should always be enabled and we don't
+> want to allow the guest to make it disabled.
+> 
+> NetBSD bug: https://gnats.NetBSD.org/59721
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: b07bf7b7 ("q35: Introduce smm_ranges property for q35-pci-host")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2608
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
-Add a MAINTAINERS entry for the Thunderbolt PCIe files with Dmitry R as
-reviewer, while keeping the files under the existing PCI area through
-their paths.
+This was the very first my fix for this:
+https://lore.kernel.org/qemu-devel/3458e5b7-b53e-4057-baea-03a729452255@tls.msk.ru/
 
-Signed-off-by: Dmitry R <rdmitry0911@gmail.com>
----
- MAINTAINERS                             |  7 ++
- README.md                               | 91 +++++++++++++++++++++++
- docs/specs/index.rst                    |  1 +
- docs/specs/thunderbolt-pcie-hotplug.rst | 99 +++++++++++++++++++++++++
- 4 files changed, 198 insertions(+)
- create mode 100644 README.md
- create mode 100644 docs/specs/thunderbolt-pcie-hotplug.rst
+(but without the comment).  So,
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 6171cc7494..0be88e77fa 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2223,6 +2223,13 @@ F: docs/pci*
- F: docs/specs/*pci*
- F: docs/system/sriov.rst
- 
-+Thunderbolt PCIe
-+R: Dmitry R <rdmitry0911@gmail.com>
-+S: Maintained
-+F: docs/specs/thunderbolt-pcie-hotplug.rst
-+F: hw/display/thunderbolt-vga.c
-+F: hw/pci-bridge/thunderbolt*.c
-+
- ARM PCI Hotplug
- M: Gustavo Romero <gustavo.romero@linaro.org>
- L: qemu-arm@nongnu.org
-diff --git a/README.md b/README.md
-new file mode 100644
-index 0000000000..1115c9db82
---- /dev/null
-+++ b/README.md
-@@ -0,0 +1,91 @@
-+SPDX-License-Identifier: GPL-2.0-or-later
-+
-+# QEMU Thunderbolt PCIe hotplug layer
-+
-+This branch adds a Thunderbolt-flavoured PCIe hotplug layer for QEMU
-+experiments.  The implementation keeps normal QEMU PCI devices intact and
-+adds a new Thunderbolt bus/root-port layer around them.
-+
-+The primary goal is to provide hotplug and hot-unplug for real and virtual
-+devices in guests that do not support those devices being added or removed
-+directly.  macOS is the main validation target for this path: devices can be
-+tunnelled through a guest-visible Thunderbolt layer even when direct PCIe
-+hotplug for the same endpoint is not usable.
-+
-+The regular QEMU `VGA` device is not changed and is not made hotpluggable.
-+Thunderbolt display experiments use a separate `thunderbolt-vga` device type.
-+
-+## Added device types
-+
-+- `thunderbolt-root-port`: a PCIe root port that creates a `thunderbolt-bus`.
-+  Its `connected` QOM property controls guest-visible link presence.
-+- `thunderbolt-pcie-pci-bridge`: a PCIe-to-PCI bridge for tunnelled PCI
-+  endpoints with Thunderbolt-related ACPI properties.
-+- `thunderbolt-vga`: a hotpluggable stdvga-compatible endpoint with constrained
-+  default EDID settings for guest hotplug tests.
-+
-+## Basic boot example
-+
-+Start the guest with its normal boot display and an empty Thunderbolt root
-+port:
-+
-+```sh
-+qemu-system-x86_64 \
-+  -machine q35 \
-+  -device VGA,id=bootvga,bus=pcie.0,addr=0x06,vgamem_mb=4,xres=1280,yres=800,xmax=1280,ymax=800,refresh_rate=60000 \
-+  -device thunderbolt-root-port,id=tbrp0,bus=pcie.0,chassis=1,slot=1,addr=0x05 \
-+  ...
-+```
-+
-+Hotplug and remove a Thunderbolt VGA endpoint through the QEMU monitor:
-+
-+```text
-+(qemu) device_add thunderbolt-vga,id=tbvga0,bus=tbrp0,addr=0x00
-+(qemu) device_del tbvga0
-+```
-+
-+Disconnect or reconnect the whole Thunderbolt root port:
-+
-+```text
-+(qemu) qom-set /machine/peripheral/tbrp0 connected false
-+(qemu) qom-set /machine/peripheral/tbrp0 connected true
-+```
-+
-+## USB storage example
-+
-+Attach a USB controller behind the Thunderbolt root port, then attach USB mass
-+storage to that controller:
-+
-+```text
-+(qemu) device_add qemu-xhci,id=tbxhci0,bus=tbrp0,addr=0x00
-+(qemu) drive_add 0 if=none,id=TBUSB,file=TBUSB.raw,format=raw,cache=writeback,aio=threads
-+(qemu) device_add usb-storage,id=tbusb0,bus=tbxhci0.0,drive=TBUSB,serial=tb-usb-stick0
-+```
-+
-+After the guest ejects or unmounts the disk, remove the device and controller:
-+
-+```text
-+(qemu) device_del tbusb0
-+(qemu) device_del tbxhci0
-+```
-+
-+## NVMe example
-+
-+```text
-+(qemu) drive_add 0 if=none,id=TBNVME,file=TBNVME.qcow2,format=qcow2
-+(qemu) device_add nvme,id=tbnvme0,bus=tbrp0,addr=0x00,serial=tb-nvme0,drive=TBNVME
-+(qemu) device_del tbnvme0
-+```
-+
-+## Validation status
-+
-+The development validation used macOS guests booted from overlay disk images so
-+the base images stayed immutable.  The tested hotplug flows covered:
-+
-+- `thunderbolt-vga` detection and removal while the standard boot VGA remained.
-+- NVMe controller hotplug and driver instance disappearance after unplug.
-+- USB controller hotplug, USB storage mount/write/eject, controller removal,
-+  replug, and data persistence verification.
-+
-+The qtest coverage checks that regular `VGA` hotplug still fails while
-+`thunderbolt-vga` can be hotplugged behind `thunderbolt-root-port`.
-diff --git a/docs/specs/index.rst b/docs/specs/index.rst
-index b7909a108a..1f0d3e4b4a 100644
---- a/docs/specs/index.rst
-+++ b/docs/specs/index.rst
-@@ -31,6 +31,7 @@ guest hardware that is specific to QEMU.
-    pvpanic
-    spdm
-    standard-vga
-+   thunderbolt-pcie-hotplug
-    virt-ctlr
-    vmcoreinfo
-    vmgenid
-diff --git a/docs/specs/thunderbolt-pcie-hotplug.rst b/docs/specs/thunderbolt-pcie-hotplug.rst
-new file mode 100644
-index 0000000000..f14c64b181
---- /dev/null
-+++ b/docs/specs/thunderbolt-pcie-hotplug.rst
-@@ -0,0 +1,99 @@
-+.. SPDX-License-Identifier: GPL-2.0-or-later
-+
-+Thunderbolt PCIe hotplug layer
-+==============================
-+
-+This series adds a Thunderbolt-flavoured PCIe layer for experiments with
-+guest-visible PCIe tunnelling.  Devices behind the layer remain normal QEMU
-+PCI devices; the Thunderbolt root port provides the guest-visible connection
-+state, ACPI properties, and PCIe hotplug notifications.
-+
-+The main use case is hotplug and hot-unplug of real and virtual devices in
-+guests that cannot use direct hotplug for those devices.  For example, a macOS
-+guest can observe the endpoint through a guest-visible Thunderbolt layer when
-+direct PCIe hotplug for the same endpoint is not supported or not usable.
-+
-+The implementation adds three user-visible device types:
-+
-+``thunderbolt-root-port``
-+  PCIe root port that creates a ``thunderbolt-bus`` secondary bus.  The
-+  ``connected`` QOM property controls whether devices behind the port are
-+  reported as present to the guest.
-+
-+``thunderbolt-pcie-pci-bridge``
-+  PCIe-to-PCI bridge for tunnelled PCI endpoints.  It adds Thunderbolt-related
-+  ACPI properties while leaving downstream PCI devices otherwise normal.
-+
-+``thunderbolt-vga``
-+  Hotpluggable stdvga-compatible device for Thunderbolt experiments.  The
-+  regular ``VGA`` device is not made hotpluggable and its defaults are not
-+  changed.
-+
-+Basic launch example
-+--------------------
-+
-+Start the guest with its normal boot display and an empty Thunderbolt root
-+port:
-+
-+::
-+
-+  qemu-system-x86_64 \
-+      -machine q35 \
-+      -device VGA,id=bootvga,bus=pcie.0,addr=0x06,vgamem_mb=4,xres=1280,yres=800,xmax=1280,ymax=800,refresh_rate=60000 \
-+      -device thunderbolt-root-port,id=tbrp0,bus=pcie.0,chassis=1,slot=1,addr=0x05 \
-+      ...
-+
-+Hotplug a Thunderbolt VGA endpoint after the guest has booted:
-+
-+::
-+
-+  (qemu) device_add thunderbolt-vga,id=tbvga0,bus=tbrp0,addr=0x00
-+  (qemu) device_del tbvga0
-+
-+Temporarily disconnect and reconnect the whole Thunderbolt port:
-+
-+::
-+
-+  (qemu) qom-set /machine/peripheral/tbrp0 connected false
-+  (qemu) qom-set /machine/peripheral/tbrp0 connected true
-+
-+USB storage example
-+-------------------
-+
-+Attach a USB controller to the Thunderbolt root port, then attach USB mass
-+storage to that controller:
-+
-+::
-+
-+  (qemu) device_add qemu-xhci,id=tbxhci0,bus=tbrp0,addr=0x00
-+  (qemu) drive_add 0 if=none,id=TBUSB,file=TBUSB.raw,format=raw,cache=writeback,aio=threads
-+  (qemu) device_add usb-storage,id=tbusb0,bus=tbxhci0.0,drive=TBUSB,serial=tb-usb-stick0
-+
-+After the guest ejects or unmounts the disk, remove the USB device and the
-+controller:
-+
-+::
-+
-+  (qemu) device_del tbusb0
-+  (qemu) device_del tbxhci0
-+
-+NVMe example
-+------------
-+
-+Attach an NVMe controller behind the Thunderbolt root port:
-+
-+::
-+
-+  (qemu) drive_add 0 if=none,id=TBNVME,file=TBNVME.qcow2,format=qcow2
-+  (qemu) device_add nvme,id=tbnvme0,bus=tbrp0,addr=0x00,serial=tb-nvme0,drive=TBNVME
-+  (qemu) device_del tbnvme0
-+
-+Notes for review
-+----------------
-+
-+The regular QEMU ``VGA`` type is intentionally left non-hotpluggable.  Tests
-+check that hotplugging ``VGA`` behind a Thunderbolt root port still fails, and
-+that ``thunderbolt-vga`` can be hotplugged with constrained display defaults.
-+
-+The macOS validation flow used QCOW2 overlays for all mutable disks so the base
-+guest images remained unchanged.
--- 
-2.47.3
+> ---
+>   hw/pci-host/q35.c | 17 ++++++++++++-----
+>   1 file changed, 12 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
+> index 4784b8f59b..47e726c41d 100644
+> --- a/hw/pci-host/q35.c
+> +++ b/hw/pci-host/q35.c
+> @@ -596,11 +596,14 @@ static void mch_realize(PCIDevice *d, Error **errp)
+>                    PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
+>       }
+>   
+> -    if (!mch->has_smm_ranges) {
+> -        return;
+> -    }
+> -
+> -    /* if *disabled* show SMRAM to all CPUs */
+> +    /*
+> +     * This memory region looks like it's SMM specific, but it is not.
+> +     * It's an alias that makes the pci_address_space appear in system
+> +     * memory at the SMRAM_C_BASE address. The alias is enabled when the
+> +     * CPU should not see SMRAM, and *disabled* when the low SMRAM should be
+> +     * visible. So for non-SMM configs we need to create the alias, and
+> +     * leave it permanently enabled.
+> +     */
+>       memory_region_init_alias(&mch->smram_region, OBJECT(mch), "smram-region",
+>                                mch->pci_address_space, MCH_HOST_BRIDGE_SMRAM_C_BASE,
+>                                MCH_HOST_BRIDGE_SMRAM_C_SIZE);
+> @@ -608,6 +611,10 @@ static void mch_realize(PCIDevice *d, Error **errp)
+>                                           &mch->smram_region, 1);
+>       memory_region_set_enabled(&mch->smram_region, true);
+>   
+> +    if (!mch->has_smm_ranges) {
+> +        return;
+> +    }
+> +
+>       memory_region_init_alias(&mch->open_high_smram, OBJECT(mch), "smram-open-high",
+>                                mch->ram_memory, MCH_HOST_BRIDGE_SMRAM_C_BASE,
+>                                MCH_HOST_BRIDGE_SMRAM_C_SIZE);
 
 
