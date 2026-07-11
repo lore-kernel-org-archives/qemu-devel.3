@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCA48C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:08:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4494C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:08:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifql-0006Gl-Tj; Sat, 11 Jul 2026 18:07:08 -0400
+	id 1wifqR-000390-Ii; Sat, 11 Jul 2026 18:06:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifqj-000633-T6; Sat, 11 Jul 2026 18:07:06 -0400
+ id 1wifqO-0002dc-EB; Sat, 11 Jul 2026 18:06:44 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifqg-0000q3-JI; Sat, 11 Jul 2026 18:07:05 -0400
+ id 1wifqM-0000q0-Cv; Sat, 11 Jul 2026 18:06:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807181; bh=Z6hNah6jkunQm9TNzNK1O2VT0XM5uDFJDc+XN0Y9pVM=;
+ t=1783807181; bh=HBi9jncrm7xDI+ntRKe1yiWaWP4PWrOp6AA6sTByA40=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=douDR5tpLiEQ2kHKdRmuir1hQUjZy6UFj8/tW2zHY34hYhuqHw4zhLHoPjYRtaquX
- Theqs/M7kzm5XG4uS7Qca9KiwMYnElaeGRQqXtLrH98X7iMaosDxhfYK1/+AWi9/VE
- Mq5XvidcKJZ7wQjh3h0Dw7jhxnJsJSGp5rFu556RY7T6+x1g+rMxXySy2ZJaBxYQv7
- vf36G9xuRsUeeqO8mUj8bhxks2O58EscFpL1r0w5Bk7dzVu+7aTsVJOghzYku8nDnX
- WpZs9j5694xKjMCqNwOzcMZtHMTsFGo7Si3vMyld/FVKbOfgYpsZMC3Lvm/lZg5TJm
- raFFJI0vvOn3Q==
+ b=pZQZSBwIKj/E5XUuaSNLHQXcZHRjbNo/WY3MQ8lY14z3R3iOGgcGRuSHALj5lCd/c
+ dgPNxM1pXSvgg4+zkoq711OGs342vjQIh6pBbauh9ea3BwBk5LZhTtRIvL4KkbTeE4
+ bmTLx2y/zxLbM3/YSUzbU4N6rxHErUd9EFgXdtvwYFXp2yKcuGKtwbHKgjJANe9+nn
+ aKql+ebCMOw4EmIHtjVHKfut+gtsOWASEZJqYKQ1aG+TBks0mHm7YpRJKmoEnl+KvL
+ /UfB2kHfuzR+jmSrIZwTUgmMm9ct7Xd09pc/046ko456LWeHEzgQo0laSGHBYxgjnB
+ HD28aODLN5JDA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D3E321C0AD6;
+ by isrv.corpit.ru (Postfix) with ESMTP id CD8ED1C0AD5;
  Sun, 12 Jul 2026 00:59:41 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8A1D53EAF61;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 855C03EAF60;
  Sun, 12 Jul 2026 00:59:51 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id EDA7413379; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id EB37D13377; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Nutty Liu <nutty.liu@hotmail.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 75/81] hw/riscv/riscv-iommu: forbid GATE/SADE if
- caps.AMO_HWADD is zero
-Date: Sun, 12 Jul 2026 00:58:53 +0300
-Message-ID: <20260711215904.3757-75-mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 74/81] hw/riscv/riscv-iommu.c: update ioval2 when
+ faulting in spa_fetch()
+Date: Sun, 12 Jul 2026 00:58:52 +0300
+Message-ID: <20260711215904.3757-74-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
@@ -76,46 +75,46 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-When capabilities.AMO_HWADD isn't set, DC.tc.GADE and DC.tc.SADE are
-reserved bits and setting them throws a DDT_MISCONFIGURED error.
+riscv_iommu_translate(), the only caller of riscv_iommu_spa_fetch(),
+will use riscv_iommu_report_fault() for all faults it detects.  And it
+will use iotlb->translated_addr as 'iotval2' every time.
+
+At this moment we're updating iotlb->translated_addr only after a
+translation step is completed, meaning any fault that occur before that
+will have a zeroed iotlb->translated_addr, and as a result iotval2 will
+also be zero later on.
+
+Keep iotlb->translated_addr updated with the latest translated addr we
+have.
 
 Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3549
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3559
 Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Message-ID: <20260630172110.1866951-1-daniel.barboza@oss.qualcomm.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260702171202.1322493-1-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 6d2b9d542fe2cec17eec71bdb33e45bee8805105)
+(cherry picked from commit 79616dd6e499c4eed0af534872f3ff0e3c133c04)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
-index 47fe01bee58..28b956daed0 100644
---- a/hw/riscv/riscv-iommu-bits.h
-+++ b/hw/riscv/riscv-iommu-bits.h
-@@ -86,6 +86,7 @@ struct riscv_iommu_pq_record {
- #define RISCV_IOMMU_CAP_SV57X4          BIT_ULL(19)
- #define RISCV_IOMMU_CAP_MSI_FLAT        BIT_ULL(22)
- #define RISCV_IOMMU_CAP_MSI_MRIF        BIT_ULL(23)
-+#define RISCV_IOMMU_CAP_AMO_HWAD        BIT_ULL(24)
- #define RISCV_IOMMU_CAP_ATS             BIT_ULL(25)
- #define RISCV_IOMMU_CAP_T2GPA           BIT_ULL(26)
- #define RISCV_IOMMU_CAP_IGS             GENMASK_ULL(29, 28)
 diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 37d50968e52..c66db608717 100644
+index e9e204109a9..37d50968e52 100644
 --- a/hw/riscv/riscv-iommu.c
 +++ b/hw/riscv/riscv-iommu.c
-@@ -407,6 +407,11 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-         const bool ade =
-             ctx->tc & (pass ? RISCV_IOMMU_DC_TC_GADE : RISCV_IOMMU_DC_TC_SADE);
+@@ -564,6 +564,14 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+         }
+     } while (1);
  
-+        if (ade && !(s->cap & RISCV_IOMMU_CAP_AMO_HWAD)) {
-+            /* GADE/SADE are reserved bits if AMO_HWAD is cleared.  */
-+            return RISCV_IOMMU_FQ_CAUSE_DDT_MISCONFIGURED;
-+        }
++    /*
++     * riscv_iommu_translate() will receive a fault and then call
++     * riscv_iommu_report_fault() using iotlb->translated_addr
++     * as iotval2.  Update translated_addr it with the latest
++     * translated addr we have.
++     */
++    iotlb->translated_addr = addr;
 +
-         /* Address range check before first level lookup */
-         if (!sc[pass].step) {
-             const uint64_t va_len = va_skip + va_bits;
+     return (iotlb->perm & IOMMU_WO) ?
+                 (pass ? RISCV_IOMMU_FQ_CAUSE_WR_FAULT_VS :
+                         RISCV_IOMMU_FQ_CAUSE_WR_FAULT_S) :
 -- 
 2.47.3
 
