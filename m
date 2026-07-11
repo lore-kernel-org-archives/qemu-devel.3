@@ -4,90 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7152C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 16:53:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9841AC43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 16:57:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiawB-0003vf-25; Sat, 11 Jul 2026 12:52:23 -0400
+	id 1wib0M-0004wx-0X; Sat, 11 Jul 2026 12:56:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wiaw9-0003uv-In
- for qemu-devel@nongnu.org; Sat, 11 Jul 2026 12:52:21 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1wib0H-0004wZ-6N
+ for qemu-devel@nongnu.org; Sat, 11 Jul 2026 12:56:38 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wiaw8-0005Dw-2o
- for qemu-devel@nongnu.org; Sat, 11 Jul 2026 12:52:21 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-3811e59df58so1241202a91.1
- for <qemu-devel@nongnu.org>; Sat, 11 Jul 2026 09:52:19 -0700 (PDT)
+ id 1wib0E-0005mA-S6
+ for qemu-devel@nongnu.org; Sat, 11 Jul 2026 12:56:36 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2ccf2360620so16265175ad.3
+ for <qemu-devel@nongnu.org>; Sat, 11 Jul 2026 09:56:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783788738; x=1784393538; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783788993; x=1784393793; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=nefIjTWKSN7IYNh5mubqdUhbFGrCxOtboRLZ3Plmug4=;
- b=POAhqcC8LB4+RsivEmssD2nuLbWXmAuGUhcU5pHyyTfYT00XCWuyO7gmW6K8V7lCWM
- lLipKP9FWgSWet8D80juoRbKIE4che5hQuKymRo81nc/zCYIolKvM+L+8zP+zeq52xLu
- KYBgggQ44BdMs13PKIpet0HX2RVLruDZIzVDeXmtl8ezRyReFrbsAc/5QCD358YexvsT
- PyXE5p+FtoR1CsPuCvotlWKMGf1GWv1MXQ6fqGnRA9+nz9iHwPuerugs4oxf/z53rXHG
- UXDHvkKRaehbG+ArlkJovo5PoYYpLVz3tHijYOwnxKwPYcIHiqj8xCEPC5bP9Z4d90vx
- ExIg==
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=wcZfmofIcDrGbWmqSeB8+oYv+9SSujzRHEhb2Wp+1IA=;
+ b=pGi1fZdMjlZvymgzHzXskZ1B77JwDVWs6uaHtX0giouIrI66/r7urgd5B/AwTQ5Sj3
+ UH8G2lZbkVFGhoDeVkAe7J7feGA1DZ4Ovrf2hWCKhiWVTnvQpPmaWPQo4UTZgorcy1El
+ yuUiNo3vEIZAs+y/Y9NAANgC1o+jiaY/G2xVdXyPEExlkPxwayRadUzep8bHFLajPanS
+ nP0+ytKXdtzZbMJ5Jp3AetJE2EimfpQgbZh8poDZaF2v96SJ0/ShmzCSmMip1GuQg8Ih
+ RTM1hjZ/SwTa3ycZRnqbn0px9oRmcTvV64bF2/KOfphHOfTN3UMWhLnH/N6BUZ/EOUSN
+ fWVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783788738; x=1784393538;
+ d=1e100.net; s=20251104; t=1783788993; x=1784393793;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=nefIjTWKSN7IYNh5mubqdUhbFGrCxOtboRLZ3Plmug4=;
- b=AWh2AyEVDS55g4K71TN+KnRwQsU9vdRnHxh18FwQroYlWnCKiPxFNxt6moFIUBIk16
- WPV4mW4wadWSBwQG0PXxewfimWwBr9fVKTyUvKwUZOGrlEJz6HoaE5cZlN/aCfzYz8bY
- Sldwt7Uv8PWiSf39SH8Zn2nZRpbDSNE6DbGtGjWn1ZJFhb3kSGTFk7I8tx/cwVcDJmk6
- ip4wbxayjpdND/zq0S1Y40c4z4/3T82KrbkW9j7nGzOhG+Z05mOcKqcfFtwjsgd3t9YJ
- r39Ch1ympfsApammIi5TZHJBF9qD9JnYA+FikwLFNnvOQf9U9N8tJoGp7RdbwPkDlTXf
- B7SA==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rq7NxN3h4NBGHLchFMBVQVYweY9oAgBEbGz7dbW6Zl1pQNzkNmbM0qxXsmPJxumcCrbwPmuV5nwzKur@nongnu.org
-X-Gm-Message-State: AOJu0Yzr9h4fo1rx0ZzIm/loP4dlvOGvm5ExOiGgGaDLZcDdvPeU6LKZ
- Li5XQR4TyOCtbCHt0slos+VqN2JG7rLMoSUh+jIosQGRD4OvXuRWEI8y6EnksuymQVo=
-X-Gm-Gg: AfdE7cnjAa+fLaCla5KWAF5IbSrADWR5U/5jrfj+OLjUv6wIP5PjHGG9sqBkpJaCfgZ
- Gh0OZ94gbO1AFNqEugYVAZlRY6dI+3LP2KPilhdqyp5IWctsrH1BvoIHxd5SQQX70I8IbwONaKI
- QT7fBLGOSSiDYKa8QYyQeA9j1wasgMgEM9z1PiSr8LlcWH1Uee5FEP3vupbPaW2BH2dF/J1InmY
- FXt1b/owqR58JGakcPwNBV0/1y411obzX7ohSyoweq2kp5q7XvqkLn3ZESPnC00Sq9kxegwCqc9
- ZT0I4XvDrZdD5ZK7wCqsDfZe1ZebLIduwDQfjB57bla2fWBzFCxLENBq49oCHBtbT7MVvj261kE
- XMPo7kBuccFpADaKg2krXdgjKJSp7zruYtQ1LHUAaWRYI6OgBXU64QORJez0xjXCUwPp7tI9uON
- x8+WnnssuvtdJ/AIvJkGVt0LoxpA==
-X-Received: by 2002:a17:90b:1c91:b0:380:534f:58c2 with SMTP id
- 98e67ed59e1d1-38dc7b81c27mr3067888a91.30.1783788738173; 
- Sat, 11 Jul 2026 09:52:18 -0700 (PDT)
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=wcZfmofIcDrGbWmqSeB8+oYv+9SSujzRHEhb2Wp+1IA=;
+ b=UmILjHw9+ZT5L6Mr5PxwpB5w1TmxTI11pRKqjXM9mRpKoKwVb1jKJKGndtnDiiskDK
+ 7lUELvHHwsEhHN+xj4QSUopanenlUm7RQacQW0pmLC03ZXw8E45ubuds/RGePiO8h3ur
+ x/mq+SwQFuy03wSOTBMoqO6JfBTxuBDQCTX/WFpuJv7k0SroHnBwCdw6DJ2OgUBcfeKJ
+ YgH2a68E5Dqaux0YAgxBgnSiZYGxeLIPfN7wcI0yDUT+OQxuvDYugm1OxrTQuxMlKTws
+ r0QB815fwtZTHtXNxhJTI52BX0QscovwsH4gM/eOrPM8v3ub+nM+TF3wj08Tk3iF/qmB
+ zVnw==
+X-Gm-Message-State: AOJu0YxoNXFl3XyNRILRkW5mDEcEUMQs9xXRH4BkXILk7Co2IIhuEcoH
+ +LisTm7VBOWFmHIwxALhCBeduAHlX/Nk10B9yYXoGLqzhnH1GIJb6MzgOqJl3m2sjGTWmCDfeZ9
+ rYhuH
+X-Gm-Gg: AfdE7ck6QIoRmfTy542XZ6NCEh/1LDDb/0NlOcuXGPXTVQKJyObacEyJ1h81KL5EhXq
+ 4Bi1AOxy/LkvQ86cp9FcztZiWjYlbiND1RvAkRIg0iSRBZNe6DjgomKdeBzkW7qIa70DiY9I4Yl
+ L3hJqhwuQDnT7zQiIszR/mLKtbvVdCQf0uFMpBWZ1G16iqlrSUOHloSZqoj/IHOziOEPhWQ+Q4M
+ R+TzCRd/6CEfiKnB2Z3f7HTgD355IUxM+8Ld4ETIdPPbaU3uW0W7DnLP86E7a0y3eAGPJJaPmUt
+ SJ6wGklEUCnuqXp+GR5RjIsBOBnQnpq/UnE53tjFz8eqM8UD7jPRh4zhWKLzm5N0Umh+JxAZR3m
+ lx3Ug6LHln8zj3l7Lk+Yb8I9nzMesxSASA+AtzrDLO8C/RwopiWo9YnYNElR1He6Qqw7ScuGeHA
+ B1CUw0fcisV/BpgAKucga3iwDF+Q==
+X-Received: by 2002:a17:903:2986:b0:2cc:f4d4:29a6 with SMTP id
+ d9443c01a7336-2ce9ee1300emr36497915ad.23.1783788993235; 
+ Sat, 11 Jul 2026 09:56:33 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.146.49])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38a583a16c2sm4194226a91.13.2026.07.11.09.52.17
+ d9443c01a7336-2ccc9d3bc1fsm75105795ad.55.2026.07.11.09.56.32
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 11 Jul 2026 09:52:17 -0700 (PDT)
-Message-ID: <8e9907db-68b6-4644-9c16-6fbbbcd52b0b@linaro.org>
-Date: Sat, 11 Jul 2026 09:52:15 -0700
+ Sat, 11 Jul 2026 09:56:32 -0700 (PDT)
+Message-ID: <d01f1efe-dcfa-4e17-9201-16f97188e1a5@linaro.org>
+Date: Sat, 11 Jul 2026 09:56:31 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 33/51] target/ppc: Simplify
- ppc_cpu_debug_check_watchpoint
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
- Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
- qemu-s390x@nongnu.org, jcmvbkbc@gmail.com, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>
+Subject: Re: [PATCH v3 42/51] accel/tcg: Merge CPUState.{break, watch}point_hit
+To: qemu-devel@nongnu.org
 References: <20260710205401.836304-1-richard.henderson@linaro.org>
- <20260710205401.836304-34-richard.henderson@linaro.org>
- <bf1b73da-919c-4b02-8b46-78b939077610@linux.ibm.com>
+ <20260710205401.836304-43-richard.henderson@linaro.org>
+ <3c6e2c1d-baeb-4b49-9fda-3945c73e83b2@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <bf1b73da-919c-4b02-8b46-78b939077610@linux.ibm.com>
+In-Reply-To: <3c6e2c1d-baeb-4b49-9fda-3945c73e83b2@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,50 +105,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/11/26 03:54, Harsh Prateek Bora wrote:
-> + Cedric, Shiva
-> 
-> On 11/07/26 2:23 am, Richard Henderson wrote:
->> We don't need to check either ISA bit, because that's already
->> done starting with SPR registration.  Replace target_ulong with
->> uint64_t, as we're under TARGET_PPC64.
+On 7/10/26 15:15, Philippe Mathieu-Daudé via qemu development wrote:
+> On 10/7/26 22:53, Richard Henderson wrote:
+>> Merge and name bp_wp_hit.  Now that all targets have been
+>> converted to use debug_excp_handler hit argument, we only
+>> need one pointer to an outstanding debug event.
 >>
 >> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 >> ---
->>   target/ppc/tcg-excp_helper.c | 30 +++++++++---------------------
->>   1 file changed, 9 insertions(+), 21 deletions(-)
+>>   include/hw/core/cpu.h  |  3 +--
+>>   accel/tcg/cpu-exec.c   |  7 +++---
+>>   accel/tcg/watchpoint.c |  4 ++--
+>>   gdbstub/system.c       | 50 ++++++++++++++++++++++--------------------
+>>   target/arm/hvf/hvf.c   |  5 ++---
+>>   target/arm/kvm.c       |  2 +-
+>>   target/i386/kvm/kvm.c  |  4 ++--
+>>   target/ppc/kvm.c       |  2 +-
+>>   target/s390x/kvm/kvm.c |  2 +-
+>>   9 files changed, 39 insertions(+), 40 deletions(-)
 >>
->> diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
->> index 99ffe4a820..4065440949 100644
->> --- a/target/ppc/tcg-excp_helper.c
->> +++ b/target/ppc/tcg-excp_helper.c
->> @@ -353,35 +353,23 @@ bool ppc_cpu_debug_check_watchpoint(CPUState *cs, CPUBreakpoint *wp)
->>   {
->>   #if defined(TARGET_PPC64)
->>       CPUPPCState *env = cpu_env(cs);
->> -    bool wt, wti, hv, sv, pr;
->> -    uint32_t dawrx;
->> +    uint32_t dawrx = env->spr[wp->id ? SPR_DAWRX1 : SPR_DAWRX0];
->> +    bool wt = extract32(dawrx, PPC_BIT_NR(59), 1);
->> +    bool wti = extract32(dawrx, PPC_BIT_NR(60), 1);
->> +    bool hv = extract32(dawrx, PPC_BIT_NR(61), 1);
->> +    bool sv = extract32(dawrx, PPC_BIT_NR(62), 1);
->> +    bool pr = extract32(dawrx, PPC_BIT_NR(62), 1);
->> -    if ((env->insns_flags2 & PPC2_ISA207S) &&
->> -        (wp == env->dawr_watchpoint[0])) {
->> -        dawrx = env->spr[SPR_DAWRX0];
->> -    } else if ((env->insns_flags2 & PPC2_ISA310) &&
->> -               (wp == env->dawr_watchpoint[1])) {
->> -        dawrx = env->spr[SPR_DAWRX1];
->> -    } else {
+>> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+>> index 1a42940d92..5401d7c14b 100644
+>> --- a/include/hw/core/cpu.h
+>> +++ b/include/hw/core/cpu.h
+>> @@ -526,8 +526,7 @@ struct CPUState {
+>>       /* ice debug support */
+>>       IntervalTreeRoot breakpoints;
+>>       IntervalTreeRoot watchpoints;
+>> -    CPUBreakpoint *breakpoint_hit;
+>> -    CPUBreakpoint *watchpoint_hit;
+>> +    CPUBreakpoint *bp_wp_hit;
 > 
-> Previously, there were different ISA version checks resulting in different behaviour, now 
-> with this change we are allowing for both ISA versions. Not sure if this would be an 
-> expected behaviour?
+> During the last QEMU community call Alex said these fields are for
+> TCG, and this series confirms it (also this patch $subject).
+> I planned to move that to the TCG accelerator state at some point,
+> but then I'm confused by the uses in the hw accelerators...
 
-Per the commit comment, the ISA version checks are done when registering the system 
-register.  One cannot write to DAWRX1 unless ISA310, and therefore dawr_watchpoint[1] will 
-not be set nor wp->id be 1.
+They are not exclusively used by TCG.
+
+All accelerators use bp_wp_hit, as that's what's used to communicate with gdbstub.  WHPX 
+uses cpu->breakpoints for some reason, unlike other native virtualization; I haven't 
+looked into that closely.
 
 
 r~
