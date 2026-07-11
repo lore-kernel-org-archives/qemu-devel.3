@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8E00C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 23:09:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2735C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 23:09:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigoE-0007iD-C4; Sat, 11 Jul 2026 19:08:34 -0400
+	id 1wigov-0000ar-MB; Sat, 11 Jul 2026 19:09:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigo8-0007SE-Cj; Sat, 11 Jul 2026 19:08:29 -0400
-Received: from pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.42.203.116])
+ id 1wigou-0000V5-An; Sat, 11 Jul 2026 19:09:16 -0400
+Received: from pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.13.214.179])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigo6-00043Q-K9; Sat, 11 Jul 2026 19:08:28 -0400
+ id 1wigos-0004Ck-B0; Sat, 11 Jul 2026 19:09:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783811306; x=1815347306;
+ t=1783811354; x=1815347354;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Z9jEjZXxPXlMJqbiHIRBDdPowd0FRoDuIoH9/d4zUSc=;
- b=XCuquQOiTrbrU5LLYEObM2TtvrgHqR7wuT5OAMYrJMablcFtBcxC5z4z
- A9Xzdlre1Ja7pmHL6mVLeXlRA1pMaANbv4tBgYwgbtVKNcULuievnUJ6r
- iNUQPZlTawzglsMCVSMGMEQ9bxARuu8RuXzirHyOLhdbRqqAmLjmm798L
- BsnUpdpHlhQpinLcOWIOOk6GgkHzr9YmmqHTJGDZp3zRBBZalwJs6O4AH
- hh22wj36qGnkTD3pLWuMkR+Zpr1uHvqa0EklozDznhqILsHF4afAq3/LE
- 1woEXRF8If48s7wxHUT1tFY5GwywnJ7w07T8gxBfoVKygbF0GqytMv9DH A==;
-X-CSE-ConnectionGUID: xEw6ybjpR9ScqvbkC6e2Bw==
-X-CSE-MsgGUID: B1bQ1VuZQimt/IgX0fVpjg==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23518195"
+ bh=58vuEDPWBKeVxQ+J6iDweV7dM3CK5c5aTeYxd9agUu8=;
+ b=a72pp/4igNW3weucaIV/93T7FqDct6apSzpdUri6DVZqNagV1CdsyD/O
+ YJP5pKJlCCxzRVJTtoz9romzapBn5tunwzKvyUFg65b+orcosQsvre8+r
+ JZsPdPQ2WVGgqZy306A4r0rRCHdvN8w3dFh0arpQ0DyzhMShQc2o1cGbd
+ /lgLQxjP2yMaEr7cirKs8X5FRhCranwmMvGHRItKgosc83HYfhfVh5QnL
+ VI1mQj5E/M4pdqsyV0KPXXGwrJz5YhmQDfMO9x71KKnPdS7NZusGF8hUS
+ TPQDTLNGtM+Doo9KZChi5DScTnZlqfL4QeBRtUZhZEX3CA2o3zYeutCd5 g==;
+X-CSE-ConnectionGUID: nmXXdLb6Sw6HHVzIQV9dOQ==
+X-CSE-MsgGUID: EdW55aA4QoqwLoho2ZfuAw==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23479768"
 Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
  smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
- by internal-pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 23:08:23 +0000
-Received: from EX19MTAUWA001.ant.amazon.com [205.251.233.236:8809]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.11.115:2525]
+ by internal-pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 23:09:10 +0000
+Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.178:17227]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.26.212:2525]
  with esmtp (Farcaster)
- id 04fffb0f-cf34-4624-a838-41849e58edce; Sat, 11 Jul 2026 23:08:22 +0000 (UTC)
-X-Farcaster-Flow-ID: 04fffb0f-cf34-4624-a838-41849e58edce
+ id 97d868e9-9a29-44c2-9832-a89ef0a585d0; Sat, 11 Jul 2026 23:09:10 +0000 (UTC)
+X-Farcaster-Flow-ID: 97d868e9-9a29-44c2-9832-a89ef0a585d0
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA001.ant.amazon.com (10.250.64.218) with Microsoft SMTP Server
+ EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 23:08:22 +0000
+ Sat, 11 Jul 2026 23:09:09 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 23:08:13 +0000
+ Sat, 11 Jul 2026 23:09:01 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,10 +91,10 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 119/134] hw/core/reset: Give the root reset container and
- legacy shims a QOM path
-Date: Sat, 11 Jul 2026 22:36:52 +0000
-Message-ID: <20260711223707.42139-120-graf@amazon.com>
+Subject: [RFC PATCH 122/134] hw/i386/amd_iommu: Parent internally-created
+ AMDVI-PCI under the IOMMU
+Date: Sat, 11 Jul 2026 22:36:55 +0000
+Message-ID: <20260711223707.42139-123-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -102,11 +102,11 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D044UWB002.ant.amazon.com (10.13.139.188) To
+X-ClientProxiedBy: EX19D033UWC002.ant.amazon.com (10.13.139.196) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=52.42.203.116;
+Received-SPF: pass client-ip=52.13.214.179;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
@@ -130,78 +130,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The root ResettableContainer and the LegacyReset shim objects are
-long-lived singletons held only by static pointers and refcounts.
-Give them a canonical path in the composition tree so
-qom-tree/qom-list can enumerate them and so device_set_realized()
-can require a QOM parent for every object.
-
-  /machine/reset-container                (ResettableContainer)
-  /machine/reset-container/legacy-reset[N] (LegacyReset shims)
-
-get_root_reset_container() is first reached from configure_accelerators()
-or machine_run_board_init(), both of which run after qemu_create_machine(),
-so qdev_get_machine() is available.  qemu_unregister_reset() switches
-from object_unref() to object_unparent() to release the child<> ref.
+When the AMD IOMMU creates its own PCI companion device (no pci-id
+supplied by the user), parent it under the sysbus IOMMU so it has a
+canonical path at <iommu>/pci.  The user-supplied path already
+parents via -device.
 
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/core/reset.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ hw/i386/amd_iommu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/core/reset.c b/hw/core/reset.c
-index e7230b49b7..34c1ab84d9 100644
---- a/hw/core/reset.c
-+++ b/hw/core/reset.c
-@@ -27,6 +27,7 @@
- #include "system/reset.h"
- #include "hw/core/resettable.h"
- #include "hw/core/resetcontainer.h"
-+#include "hw/core/qdev.h"
- 
- /*
-  * Return a pointer to the singleton container that holds all the Resettable
-@@ -38,7 +39,9 @@ static ResettableContainer *get_root_reset_container(void)
- 
-     if (!root_reset_container) {
-         root_reset_container =
--            RESETTABLE_CONTAINER(object_new(TYPE_RESETTABLE_CONTAINER));
-+            RESETTABLE_CONTAINER(object_new_child(qdev_get_machine(),
-+                                          "reset-container",
-+                                          TYPE_RESETTABLE_CONTAINER));
-     }
-     return root_reset_container;
- }
-@@ -94,7 +97,8 @@ static void legacy_reset_class_init(ObjectClass *klass, const void *data)
- 
- void qemu_register_reset(QEMUResetHandler *func, void *opaque)
- {
--    Object *obj = object_new(TYPE_LEGACY_RESET);
-+    Object *obj = object_new_child(OBJECT(get_root_reset_container()),
-+                                   "legacy-reset[*]", TYPE_LEGACY_RESET);
-     LegacyReset *lr = LEGACY_RESET(obj);
- 
-     lr->func = func;
-@@ -104,7 +108,8 @@ void qemu_register_reset(QEMUResetHandler *func, void *opaque)
- 
- void qemu_register_reset_nosnapshotload(QEMUResetHandler *func, void *opaque)
- {
--    Object *obj = object_new(TYPE_LEGACY_RESET);
-+    Object *obj = object_new_child(OBJECT(get_root_reset_container()),
-+                                   "legacy-reset[*]", TYPE_LEGACY_RESET);
-     LegacyReset *lr = LEGACY_RESET(obj);
- 
-     lr->func = func;
-@@ -156,7 +161,7 @@ void qemu_unregister_reset(QEMUResetHandler *func, void *opaque)
- 
-     if (obj) {
-         qemu_unregister_resettable(obj);
--        object_unref(obj);
-+        object_unparent(obj);
-     }
- }
- 
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 90252c52af..e3394bad6e 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -2698,7 +2698,8 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
+         s->pci = AMD_IOMMU_PCI(pdev);
+         dc->vmsd = &vmstate_amdvi_sysbus_migratable;
+     } else {
+-        s->pci = AMD_IOMMU_PCI(object_new(TYPE_AMD_IOMMU_PCI));
++        s->pci = AMD_IOMMU_PCI(object_new_child(OBJECT(s), "pci",
++                                                TYPE_AMD_IOMMU_PCI));
+         /* This device should take care of IOMMU PCI properties */
+         if (!qdev_realize(DEVICE(s->pci), &bus->qbus, errp)) {
+             return;
 -- 
 2.47.1
 
