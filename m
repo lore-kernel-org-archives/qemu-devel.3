@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33748C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 23:01:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E029CC43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 23:02:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wighM-0002iY-23; Sat, 11 Jul 2026 19:01:28 -0400
+	id 1wigho-0003u1-P2; Sat, 11 Jul 2026 19:01:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wighH-0002cn-C6; Sat, 11 Jul 2026 19:01:25 -0400
-Received: from pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([34.218.115.239])
+ id 1wighm-0003rp-Nf; Sat, 11 Jul 2026 19:01:54 -0400
+Received: from pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.35.192.45])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wighF-0002LG-2R; Sat, 11 Jul 2026 19:01:23 -0400
+ id 1wighk-0002Rr-0p; Sat, 11 Jul 2026 19:01:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783810881; x=1815346881;
+ t=1783810912; x=1815346912;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=yIUqaaVOKyW6WE6UpNA0Yu8tEW8Hhu7gGasqeX93vnc=;
- b=oxEsD8U2WTbH5qoq/ruBchlVu2RJ9YQCoeGRwiCzMb6YbxQVvPGPKtZT
- dc315JpdRwbNutxg05g5ZMmNfitgTbvsQFhE7TNbVU2NceWXKc7ec+q08
- P9FlClRH4V/DVYC55zskKyH/g028esflNZA1RvUnkEEO9pxyeFOdNo/Uu
- eoC/sbQ9x3Tk1P7awa9VgEIPeB6A94Tq5ucsodv3a3hrE8p+E7NO8fEk6
- XcU1ABnjL3xRaYdS36Zb9yC/NF7+Ia0eteQRSVdBzHLTj0FQJphKD6gzo
- uoeL3Vg8OgFViYkCp4Qe2A1VogFWb1aLcAJOLmaqhiTvCO+QhjrSmrUGo Q==;
-X-CSE-ConnectionGUID: fuMYKtZcRkObAiwvL/1PQQ==
-X-CSE-MsgGUID: CHb0sgUEQRK3FrClhaPqQQ==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23296882"
-Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
- by internal-pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 23:01:17 +0000
-Received: from EX19MTAUWA001.ant.amazon.com [205.251.233.236:24263]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.11.115:2525]
+ bh=DiX+95jUtmO2ci0nQOaB0TiQDjO51XBHVRpZP2hU858=;
+ b=jfQ+tn0AyjuhuSByRIGmZp2U7ccAfUEqr3XPpocAvv1JJnJykjSQRvcd
+ 5I7A3S2nETtLRlYOAvngmPUKzwk4n97xdkhvP4XE16R2dp8/S0HMQn6TP
+ 4Y+T3ybWGeyI9S9R4TrOGB6Br560OtzyEXehNv7VgJRvJ9ima+pzX3Km/
+ A+1IXYZHQCtyE/lcci7b2nFr8YFrftUxET171up6CaCtA3N5s8YWC71xn
+ XlkNo6nW1AameZQqrLHt817Dx341TmPQHxnAt6VxkfKsaRMLuxjBFIMMU
+ atDig8bcy8hdpJxaXjAfdobVIC7qfgug55sCY2jrXxn4yer4a0vplx1Qz Q==;
+X-CSE-ConnectionGUID: w0xk7H4qTwGbRsRJfpLGmA==
+X-CSE-MsgGUID: 40blBCG/TQauvrfbT1AYtQ==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23269950"
+Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
+ by internal-pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 23:01:48 +0000
+Received: from EX19MTAUWC001.ant.amazon.com [205.251.233.53:9203]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.58.33:2525]
  with esmtp (Farcaster)
- id 36bfcfa6-394a-47cd-9a76-514b4182d1bb; Sat, 11 Jul 2026 23:01:17 +0000 (UTC)
-X-Farcaster-Flow-ID: 36bfcfa6-394a-47cd-9a76-514b4182d1bb
+ id b8772382-7edd-489a-aafc-5deff6682a9d; Sat, 11 Jul 2026 23:01:47 +0000 (UTC)
+X-Farcaster-Flow-ID: b8772382-7edd-489a-aafc-5deff6682a9d
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA001.ant.amazon.com (10.250.64.218) with Microsoft SMTP Server
+ EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 23:01:17 +0000
+ Sat, 11 Jul 2026 23:01:47 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 23:01:08 +0000
+ Sat, 11 Jul 2026 23:01:38 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,9 +91,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 092/134] hw/riscv: Give memory regions an explicit owner
-Date: Sat, 11 Jul 2026 22:36:25 +0000
-Message-ID: <20260711223707.42139-93-graf@amazon.com>
+Subject: [RFC PATCH 093/134] hw/i386: Give memory regions an explicit owner
+Date: Sat, 11 Jul 2026 22:36:26 +0000
+Message-ID: <20260711223707.42139-94-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -101,11 +101,11 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D032UWB002.ant.amazon.com (10.13.139.190) To
+X-ClientProxiedBy: EX19D036UWB003.ant.amazon.com (10.13.139.172) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=34.218.115.239;
+Received-SPF: pass client-ip=52.35.192.45;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
@@ -130,203 +130,240 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Convert memory_region_init*() calls that pass NULL owner to pass
-the enclosing machine or SoC device instead. All sites are inside
-board init (MachineState *machine) or SoC realize (DeviceState *dev)
-functions.
+the enclosing PC/x86/microvm machine or device instead.
+
+Thread X86MachineState through x86_isa_bios_init() so the isa-bios
+alias is owned by the machine that creates it.
 
 No functional change intended.
 
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/riscv/boston-aia.c           |  8 ++++----
- hw/riscv/microblaze-v-generic.c |  4 ++--
- hw/riscv/microchip_pfsoc.c      | 14 +++++++-------
- hw/riscv/sifive_u.c             |  4 ++--
- hw/riscv/spike.c                |  2 +-
- hw/riscv/tt_atlantis.c          |  2 +-
- hw/riscv/virt.c                 |  2 +-
- 7 files changed, 18 insertions(+), 18 deletions(-)
+ hw/i386/microvm.c          |  4 ++--
+ hw/i386/pc.c               |  8 ++++----
+ hw/i386/pc_piix.c          |  2 +-
+ hw/i386/pc_q35.c           |  2 +-
+ hw/i386/pc_sysfw.c         |  6 +++---
+ hw/i386/x86-common.c       | 11 ++++++-----
+ hw/i386/xen/xen-hvm.c      |  8 ++++----
+ hw/i386/xen/xen_pvdevice.c |  2 +-
+ include/hw/i386/x86.h      |  3 ++-
+ 9 files changed, 24 insertions(+), 22 deletions(-)
 
-diff --git a/hw/riscv/boston-aia.c b/hw/riscv/boston-aia.c
-index 5a9ec28068..ef41f53aac 100644
---- a/hw/riscv/boston-aia.c
-+++ b/hw/riscv/boston-aia.c
-@@ -374,7 +374,7 @@ static void boston_mach_init(MachineState *machine)
-     sysbus_mmio_map_overlap(SYS_BUS_DEVICE(&s->cps), 0, 0, 1);
+diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
+index aa0e1ef155..751e3962fa 100644
+--- a/hw/i386/microvm.c
++++ b/hw/i386/microvm.c
+@@ -305,7 +305,7 @@ static void microvm_memory_init(MicrovmMachineState *mms)
+     }
  
-     flash =  g_new(MemoryRegion, 1);
--    memory_region_init_rom(flash, NULL, "boston.flash",
-+    memory_region_init_rom(flash, OBJECT(machine), "boston.flash",
-                            boston_memmap[BOSTON_FLASH].size, &error_fatal);
-     memory_region_add_subregion_overlap(sys_mem,
-                                         boston_memmap[BOSTON_FLASH].base,
-@@ -385,7 +385,7 @@ static void boston_mach_init(MachineState *machine)
-                                         machine->ram, 0);
+     ram_below_4g = g_malloc(sizeof(*ram_below_4g));
+-    memory_region_init_alias(ram_below_4g, NULL, "ram-below-4g", machine->ram,
++    memory_region_init_alias(ram_below_4g, OBJECT(mms), "ram-below-4g", machine->ram,
+                              0, x86ms->below_4g_mem_size);
+     memory_region_add_subregion(system_memory, 0, ram_below_4g);
  
-     ddr_low_alias = g_new(MemoryRegion, 1);
--    memory_region_init_alias(ddr_low_alias, NULL, "boston_low.ddr",
-+    memory_region_init_alias(ddr_low_alias, OBJECT(machine), "boston_low.ddr",
-                              machine->ram, 0,
-                              MIN(machine->ram_size, (256 * MiB)));
-     memory_region_add_subregion_overlap(sys_mem, 0, ddr_low_alias, 0);
-@@ -398,7 +398,7 @@ static void boston_mach_init(MachineState *machine)
-                              qdev_get_gpio_in(s->cps.aplic, PCIE2_INT));
+@@ -313,7 +313,7 @@ static void microvm_memory_init(MicrovmMachineState *mms)
  
-     platreg = g_new(MemoryRegion, 1);
--    memory_region_init_io(platreg, NULL, &boston_platreg_ops, s,
-+    memory_region_init_io(platreg, OBJECT(machine), &boston_platreg_ops, s,
-                           "boston-platregs",
-                           boston_memmap[BOSTON_PLATREG].size);
-     memory_region_add_subregion_overlap(sys_mem,
-@@ -410,7 +410,7 @@ static void boston_mach_init(MachineState *machine)
-                              serial_hd(0), DEVICE_LITTLE_ENDIAN);
+     if (x86ms->above_4g_mem_size > 0) {
+         ram_above_4g = g_malloc(sizeof(*ram_above_4g));
+-        memory_region_init_alias(ram_above_4g, NULL, "ram-above-4g",
++        memory_region_init_alias(ram_above_4g, OBJECT(mms), "ram-above-4g",
+                                  machine->ram,
+                                  x86ms->below_4g_mem_size,
+                                  x86ms->above_4g_mem_size);
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index e505391985..8057058ff0 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -795,13 +795,13 @@ void pc_memory_init(PCMachineState *pcms,
+      * done for backwards compatibility with older qemus.
+      */
+     ram_below_4g = g_malloc(sizeof(*ram_below_4g));
+-    memory_region_init_alias(ram_below_4g, NULL, "ram-below-4g", machine->ram,
++    memory_region_init_alias(ram_below_4g, OBJECT(pcms), "ram-below-4g", machine->ram,
+                              0, x86ms->below_4g_mem_size);
+     memory_region_add_subregion(system_memory, 0, ram_below_4g);
+     e820_add_entry(0, x86ms->below_4g_mem_size, E820_RAM);
+     if (x86ms->above_4g_mem_size > 0) {
+         ram_above_4g = g_malloc(sizeof(*ram_above_4g));
+-        memory_region_init_alias(ram_above_4g, NULL, "ram-above-4g",
++        memory_region_init_alias(ram_above_4g, OBJECT(pcms), "ram-above-4g",
+                                  machine->ram,
+                                  x86ms->below_4g_mem_size,
+                                  x86ms->above_4g_mem_size);
+@@ -871,10 +871,10 @@ void pc_memory_init(PCMachineState *pcms,
+     if (!is_tdx_vm()) {
+         option_rom_mr = g_malloc(sizeof(*option_rom_mr));
+         if (machine_require_guest_memfd(machine)) {
+-            memory_region_init_ram_guest_memfd(option_rom_mr, NULL, "pc.rom",
++            memory_region_init_ram_guest_memfd(option_rom_mr, OBJECT(pcms), "pc.rom",
+                                             PC_ROM_SIZE, &error_fatal);
+         } else {
+-            memory_region_init_ram(option_rom_mr, NULL, "pc.rom", PC_ROM_SIZE,
++            memory_region_init_ram(option_rom_mr, OBJECT(pcms), "pc.rom", PC_ROM_SIZE,
+                                 &error_fatal);
+             if (pcmc->pci_enabled) {
+                 memory_region_set_readonly(option_rom_mr, true);
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index c9e6c61734..0b8d7d88b9 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -191,7 +191,7 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+     }
  
-     lcd = g_new(MemoryRegion, 1);
--    memory_region_init_io(lcd, NULL, &boston_lcd_ops, s, "boston-lcd", 0x8);
-+    memory_region_init_io(lcd, OBJECT(machine), &boston_lcd_ops, s, "boston-lcd", 0x8);
-     memory_region_add_subregion_overlap(sys_mem,
-                                         boston_memmap[BOSTON_LCD].base, lcd, 0);
+     pci_memory = g_new(MemoryRegion, 1);
+-    memory_region_init(pci_memory, NULL, "pci", UINT64_MAX);
++    memory_region_init(pci_memory, OBJECT(machine), "pci", UINT64_MAX);
  
-diff --git a/hw/riscv/microblaze-v-generic.c b/hw/riscv/microblaze-v-generic.c
-index 7253ae7822..0a83932405 100644
---- a/hw/riscv/microblaze-v-generic.c
-+++ b/hw/riscv/microblaze-v-generic.c
-@@ -70,12 +70,12 @@ static void mb_v_generic_init(MachineState *machine)
-     object_property_set_bool(OBJECT(cpu), "d", false, NULL);
-     qdev_realize(DEVICE(cpu), NULL, &error_abort);
-     /* Attach emulated BRAM through the LMB.  */
--    memory_region_init_ram(phys_lmb_bram, NULL,
-+    memory_region_init_ram(phys_lmb_bram, OBJECT(machine),
-                            "mb_v.lmb_bram", LMB_BRAM_SIZE,
+     phb = OBJECT(qdev_new(OBJECT(machine), "i440fx", TYPE_I440FX_PCI_HOST_BRIDGE));
+     object_property_set_link(phb, PCI_HOST_PROP_RAM_MEM,
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 62625abed8..b2cdca8ade 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -208,7 +208,7 @@ static void pc_q35_init(MachineState *machine)
+                                                &error_abort);
+ 
+     /* allocate ram and load rom/bios */
+-    memory_region_init(pci_memory, NULL, "pci", UINT64_MAX);
++    memory_region_init(pci_memory, OBJECT(machine), "pci", UINT64_MAX);
+     pc_memory_init(pcms, system_memory, pci_memory, pci_hole64_size);
+ 
+     object_property_set_link(phb, PCI_HOST_PROP_RAM_MEM,
+diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+index 02d75e2838..b536fca60f 100644
+--- a/hw/i386/pc_sysfw.c
++++ b/hw/i386/pc_sysfw.c
+@@ -52,10 +52,10 @@ static void pc_isa_bios_init(PCMachineState *pcms, MemoryRegion *isa_bios,
+     /* map the last 128KB of the BIOS in ISA space */
+     isa_bios_size = MIN(flash_size, 128 * KiB);
+     if (machine_require_guest_memfd(MACHINE(pcms))) {
+-        memory_region_init_ram_guest_memfd(isa_bios, NULL, "isa-bios",
++        memory_region_init_ram_guest_memfd(isa_bios, OBJECT(pcms), "isa-bios",
+                                            isa_bios_size, &error_fatal);
+     } else {
+-        memory_region_init_ram(isa_bios, NULL, "isa-bios", isa_bios_size,
++        memory_region_init_ram(isa_bios, OBJECT(pcms), "isa-bios", isa_bios_size,
+                                &error_fatal);
+     }
+     memory_region_add_subregion_overlap(rom_memory,
+@@ -189,7 +189,7 @@ static void pc_system_flash_map(PCMachineState *pcms,
+         if (i == 0) {
+             flash_mem = pflash_cfi01_get_memory(system_flash);
+             if (pcmc->isa_bios_alias) {
+-                x86_isa_bios_init(&x86ms->isa_bios, rom_memory, flash_mem,
++                x86_isa_bios_init(x86ms, &x86ms->isa_bios, rom_memory, flash_mem,
+                                   true);
+             } else {
+                 pc_isa_bios_init(pcms, &x86ms->isa_bios, rom_memory, flash_mem);
+diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+index 73a53fbf3f..151a67ee5f 100644
+--- a/hw/i386/x86-common.c
++++ b/hw/i386/x86-common.c
+@@ -993,13 +993,14 @@ void x86_load_linux(X86MachineState *x86ms,
+     nb_option_roms++;
+ }
+ 
+-void x86_isa_bios_init(MemoryRegion *isa_bios, MemoryRegion *isa_memory,
++void x86_isa_bios_init(X86MachineState *x86ms, MemoryRegion *isa_bios,
++                       MemoryRegion *isa_memory,
+                        MemoryRegion *bios, bool read_only)
+ {
+     uint64_t bios_size = memory_region_size(bios);
+     uint64_t isa_bios_size = MIN(bios_size, 128 * KiB);
+ 
+-    memory_region_init_alias(isa_bios, NULL, "isa-bios", bios,
++    memory_region_init_alias(isa_bios, OBJECT(x86ms), "isa-bios", bios,
+                              bios_size - isa_bios_size, isa_bios_size);
+     memory_region_add_subregion_overlap(isa_memory, 1 * MiB - isa_bios_size,
+                                         isa_bios, 1);
+@@ -1036,13 +1037,13 @@ static void load_bios_from_file(X86MachineState *x86ms, const char *bios_name,
+ 
+     /* BIOS load */
+     if (machine_require_guest_memfd(MACHINE(x86ms))) {
+-        memory_region_init_ram_guest_memfd(&x86ms->bios, NULL, "pc.bios",
++        memory_region_init_ram_guest_memfd(&x86ms->bios, OBJECT(x86ms), "pc.bios",
+                                            bios_size, &error_fatal);
+         if (is_tdx_vm()) {
+             tdx_set_tdvf_region(&x86ms->bios);
+         }
+     } else {
+-        memory_region_init_ram(&x86ms->bios, NULL, "pc.bios",
++        memory_region_init_ram(&x86ms->bios, OBJECT(x86ms), "pc.bios",
+                                bios_size, &error_fatal);
+     }
+     if (sev_enabled() || is_tdx_vm()) {
+@@ -1107,7 +1108,7 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
+ 
+     if (!machine_require_guest_memfd(MACHINE(x86ms))) {
+         /* map the last 128KB of the BIOS in ISA space */
+-        x86_isa_bios_init(&x86ms->isa_bios, rom_memory, &x86ms->bios,
++        x86_isa_bios_init(x86ms, &x86ms->isa_bios, rom_memory, &x86ms->bios,
+                           !isapc_ram_fw);
+     }
+ 
+diff --git a/hw/i386/xen/xen-hvm.c b/hw/i386/xen/xen-hvm.c
+index d3ce082e07..01d851ce3e 100644
+--- a/hw/i386/xen/xen-hvm.c
++++ b/hw/i386/xen/xen-hvm.c
+@@ -156,11 +156,11 @@ static void xen_ram_init(PCMachineState *pcms,
+          */
+         block_len = (4 * GiB) + x86ms->above_4g_mem_size;
+     }
+-    memory_region_init_ram(&xen_memory, NULL, "xen.ram", block_len,
++    memory_region_init_ram(&xen_memory, OBJECT(pcms), "xen.ram", block_len,
                             &error_fatal);
-     memory_region_add_subregion(sysmem, 0x00000000, phys_lmb_bram);
+     *ram_memory_p = &xen_memory;
  
--    memory_region_init_ram(phys_ram, NULL, "mb_v.ram",
-+    memory_region_init_ram(phys_ram, OBJECT(machine), "mb_v.ram",
-                            ram_size, &error_fatal);
-     memory_region_add_subregion(sysmem, ddr_base, phys_ram);
- 
-diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index 0a98ac1c5e..f1ee64ef86 100644
---- a/hw/riscv/microchip_pfsoc.c
-+++ b/hw/riscv/microchip_pfsoc.c
-@@ -219,14 +219,14 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
-     qdev_realize(DEVICE(&s->u_cluster), NULL, &error_abort);
- 
-     /* Reserved Memory at address 0 */
--    memory_region_init_ram(rsvd0_mem, NULL, "microchip.pfsoc.rsvd0_mem",
-+    memory_region_init_ram(rsvd0_mem, OBJECT(dev), "microchip.pfsoc.rsvd0_mem",
-                            memmap[MICROCHIP_PFSOC_RSVD0].size, &error_fatal);
-     memory_region_add_subregion(system_memory,
-                                 memmap[MICROCHIP_PFSOC_RSVD0].base,
-                                 rsvd0_mem);
- 
-     /* E51 DTIM */
--    memory_region_init_ram(e51_dtim_mem, NULL, "microchip.pfsoc.e51_dtim_mem",
-+    memory_region_init_ram(e51_dtim_mem, OBJECT(dev), "microchip.pfsoc.e51_dtim_mem",
-                            memmap[MICROCHIP_PFSOC_E51_DTIM].size, &error_fatal);
-     memory_region_add_subregion(system_memory,
-                                 memmap[MICROCHIP_PFSOC_E51_DTIM].base,
-@@ -271,7 +271,7 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
-      * leave it enabled all the time. This won't break anything, but will be
-      * too generous to misbehaving guests.
+-    memory_region_init_alias(&ram_640k, NULL, "xen.ram.640k",
++    memory_region_init_alias(&ram_640k, OBJECT(pcms), "xen.ram.640k",
+                              &xen_memory, 0, 0xa0000);
+     memory_region_add_subregion(sysmem, 0, &ram_640k);
+     /* Skip of the VGA IO memory space, it will be registered later by the VGA
+@@ -169,12 +169,12 @@ static void xen_ram_init(PCMachineState *pcms,
+      * The area between 0xc0000 and 0x100000 will be used by SeaBIOS to load
+      * the Options ROM, so it is registered here as RAM.
       */
--    memory_region_init_ram(l2lim_mem, NULL, "microchip.pfsoc.l2lim",
-+    memory_region_init_ram(l2lim_mem, OBJECT(dev), "microchip.pfsoc.l2lim",
-                            memmap[MICROCHIP_PFSOC_L2LIM].size, &error_fatal);
-     memory_region_add_subregion(system_memory,
-                                 memmap[MICROCHIP_PFSOC_L2LIM].base,
-@@ -549,10 +549,10 @@ static void microchip_icicle_kit_machine_init(MachineState *machine)
-     /* Split RAM into low and high regions using aliases to machine->ram */
-     mem_low_size = memmap[MICROCHIP_PFSOC_DRAM_LO].size;
-     mem_high_size = machine->ram_size - mem_low_size;
--    memory_region_init_alias(mem_low, NULL,
-+    memory_region_init_alias(mem_low, OBJECT(machine),
-                              "microchip.icicle.kit.ram_low", machine->ram,
-                              0, mem_low_size);
--    memory_region_init_alias(mem_high, NULL,
-+    memory_region_init_alias(mem_high, OBJECT(machine),
-                              "microchip.icicle.kit.ram_high", machine->ram,
-                              mem_low_size, mem_high_size);
+-    memory_region_init_alias(&ram_lo, NULL, "xen.ram.lo",
++    memory_region_init_alias(&ram_lo, OBJECT(pcms), "xen.ram.lo",
+                              &xen_memory, 0xc0000,
+                              x86ms->below_4g_mem_size - 0xc0000);
+     memory_region_add_subregion(sysmem, 0xc0000, &ram_lo);
+     if (x86ms->above_4g_mem_size > 0) {
+-        memory_region_init_alias(&ram_hi, NULL, "xen.ram.hi",
++        memory_region_init_alias(&ram_hi, OBJECT(pcms), "xen.ram.hi",
+                                  &xen_memory, 0x100000000ULL,
+                                  x86ms->above_4g_mem_size);
+         memory_region_add_subregion(sysmem, 0x100000000ULL, &ram_hi);
+diff --git a/hw/i386/xen/xen_pvdevice.c b/hw/i386/xen/xen_pvdevice.c
+index fab26a06af..6c255aeae1 100644
+--- a/hw/i386/xen/xen_pvdevice.c
++++ b/hw/i386/xen/xen_pvdevice.c
+@@ -108,7 +108,7 @@ static void xen_pv_realize(PCIDevice *pci_dev, Error **errp)
  
-@@ -565,13 +565,13 @@ static void microchip_icicle_kit_machine_init(MachineState *machine)
-                                 mem_high);
+     pci_conf[PCI_INTERRUPT_PIN] = 1;
  
-     /* Create aliases for the low and high RAM regions */
--    memory_region_init_alias(mem_low_alias, NULL,
-+    memory_region_init_alias(mem_low_alias, OBJECT(machine),
-                              "microchip.icicle.kit.ram_low.alias",
-                              mem_low, 0, mem_low_size);
-     memory_region_add_subregion(system_memory,
-                                 memmap[MICROCHIP_PFSOC_DRAM_LO_ALIAS].base,
-                                 mem_low_alias);
--    memory_region_init_alias(mem_high_alias, NULL,
-+    memory_region_init_alias(mem_high_alias, OBJECT(machine),
-                              "microchip.icicle.kit.ram_high.alias",
-                              mem_high, 0, mem_high_size);
-     memory_region_add_subregion(system_memory,
-diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-index aba6716b73..9d3f5c8f59 100644
---- a/hw/riscv/sifive_u.c
-+++ b/hw/riscv/sifive_u.c
-@@ -477,7 +477,7 @@ static void sifive_u_machine_init(MachineState *machine)
-                                 machine->ram);
+-    memory_region_init_io(&d->mmio, NULL, &xen_pv_mmio_ops, d,
++    memory_region_init_io(&d->mmio, OBJECT(pci_dev), &xen_pv_mmio_ops, d,
+                           "mmio", d->size);
  
-     /* register QSPI0 Flash */
--    memory_region_init_ram(flash0, NULL, "riscv.sifive.u.flash0",
-+    memory_region_init_ram(flash0, OBJECT(machine), "riscv.sifive.u.flash0",
-                            memmap[SIFIVE_U_DEV_FLASH0].size, &error_fatal);
-     memory_region_add_subregion(system_memory, memmap[SIFIVE_U_DEV_FLASH0].base,
-                                 flash0);
-@@ -763,7 +763,7 @@ static void sifive_u_soc_realize(DeviceState *dev, Error **errp)
-      * leave it enabled all the time. This won't break anything, but will be
-      * too generous to misbehaving guests.
-      */
--    memory_region_init_ram(l2lim_mem, NULL, "riscv.sifive.u.l2lim",
-+    memory_region_init_ram(l2lim_mem, OBJECT(dev), "riscv.sifive.u.l2lim",
-                            memmap[SIFIVE_U_DEV_L2LIM].size, &error_fatal);
-     memory_region_add_subregion(system_memory, memmap[SIFIVE_U_DEV_L2LIM].base,
-                                 l2lim_mem);
-diff --git a/hw/riscv/spike.c b/hw/riscv/spike.c
-index c53409e4f1..9f1a1b5898 100644
---- a/hw/riscv/spike.c
-+++ b/hw/riscv/spike.c
-@@ -179,7 +179,7 @@ static void spike_board_init(MachineState *machine)
-         machine->ram);
+     pci_register_bar(pci_dev, 1, PCI_BASE_ADDRESS_MEM_PREFETCH,
+diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
+index 61d6ec1755..9d5d7694d4 100644
+--- a/include/hw/i386/x86.h
++++ b/include/hw/i386/x86.h
+@@ -121,7 +121,8 @@ void x86_cpu_unplug_request_cb(HotplugHandler *hotplug_dev,
+ void x86_cpu_unplug_cb(HotplugHandler *hotplug_dev,
+                        DeviceState *dev, Error **errp);
  
-     /* boot rom */
--    memory_region_init_rom(mask_rom, NULL, "riscv.spike.mrom",
-+    memory_region_init_rom(mask_rom, OBJECT(machine), "riscv.spike.mrom",
-                            memmap[SPIKE_MROM].size, &error_fatal);
-     memory_region_add_subregion(system_memory, memmap[SPIKE_MROM].base,
-                                 mask_rom);
-diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
-index 9ae5af3162..f068d8751e 100644
---- a/hw/riscv/tt_atlantis.c
-+++ b/hw/riscv/tt_atlantis.c
-@@ -539,7 +539,7 @@ static void tt_atlantis_machine_init(MachineState *machine)
-                                 s->memmap[TT_ATL_DDR_LO].base, ram_lo);
- 
-     /* Boot ROM */
--    memory_region_init_rom(bootrom, NULL, "tt-atlantis.bootrom",
-+    memory_region_init_rom(bootrom, OBJECT(machine), "tt-atlantis.bootrom",
-                            s->memmap[TT_ATL_BOOTROM].size, &error_fatal);
-     memory_region_add_subregion(system_memory, s->memmap[TT_ATL_BOOTROM].base,
-                                 bootrom);
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 7e5bdaf210..d1de8bb2be 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -1463,7 +1463,7 @@ static void virt_machine_init(MachineState *machine)
-                                 machine->ram);
- 
-     /* boot rom */
--    memory_region_init_rom(mask_rom, NULL, "riscv_virt_board.mrom",
-+    memory_region_init_rom(mask_rom, OBJECT(machine), "riscv_virt_board.mrom",
-                            s->memmap[VIRT_MROM].size, &error_fatal);
-     memory_region_add_subregion(system_memory, s->memmap[VIRT_MROM].base,
-                                 mask_rom);
+-void x86_isa_bios_init(MemoryRegion *isa_bios, MemoryRegion *isa_memory,
++void x86_isa_bios_init(X86MachineState *x86ms, MemoryRegion *isa_bios,
++                       MemoryRegion *isa_memory,
+                        MemoryRegion *bios, bool read_only);
+ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
+                        MemoryRegion *rom_memory, bool isapc_ram_fw);
 -- 
 2.47.1
 
