@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14805C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:49:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C264C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:49:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigVZ-0002p8-SW; Sat, 11 Jul 2026 18:49:19 -0400
+	id 1wigVq-0003bH-VL; Sat, 11 Jul 2026 18:49:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigUz-0002TX-P3; Sat, 11 Jul 2026 18:48:48 -0400
-Received: from pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([44.245.243.92])
+ id 1wigVo-0003SQ-B3; Sat, 11 Jul 2026 18:49:32 -0400
+Received: from pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.42.203.116])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigUs-0007hI-ND; Sat, 11 Jul 2026 18:48:40 -0400
+ id 1wigVl-0007ps-4q; Sat, 11 Jul 2026 18:49:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783810114; x=1815346114;
+ t=1783810169; x=1815346169;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=8KkhcGyYmg0+jThLKAxCQ7nWBS2kSIXd0k39qM9FEew=;
- b=sC33+53RdIOE5FfYAvgAz9rvOe96qTsTfAIjYsWfVyZfN/gcL/HVZCAH
- oJybLiP4WhS2vgyLXDToXq8+qRpnjzzsZ5kFAUmOARW6W6b6l38927v5b
- yAYY2daahL6YCVeO+qfZb5xyFT8Dz5AS2HjwJiMdepMF8MZkUh5dUaQa0
- HVzev3d7pNveiUWo9G5P87ELAVqJNc/xZEnDN2CbpilwUMVXs4a5ZnSo0
- O1V8dSfwB41KXPn17JW/vPCwLG+8375Zh2vcFSm5zxUyEvwmMjhctkQDb
- XkZe+PaomGo3rFNEahSpOu7kGYyDk/yUyzYchSRhQTzr961+PecoAT/n2 Q==;
-X-CSE-ConnectionGUID: H7N00OZKQcOM+AmKb7jJeQ==
-X-CSE-MsgGUID: tpFFSFlLRQepVsdEn5Ff8A==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="22997528"
-Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
- by internal-pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:48:29 +0000
-Received: from EX19MTAUWA001.ant.amazon.com [205.251.233.236:17675]
+ bh=hLNkfsJafq9PSdTKHfm6ySTJYjE9YwrZGJM3/ZyitbE=;
+ b=VZsVQ/0o76160tYXilbxMyoRtaUPrPLBsqr9ejSaOp/aT3MDCXoV/LsN
+ ybuA75UIvXqV126JgyZIhfPNZFMqP6x9bhrIAqVzI25PpjSu4qoeswye7
+ CnNFXdNhT4rl+mY+0hHBEhwVZdc1otBSynjAaWU6QfHJl6AlmSeZMsNJK
+ cSE9ggJv9KDOaHyYHRKnQtiDmf9oQnmKKnXcKSz+EpxV5LOG0yHYtFEL1
+ qkeNb9L8Uwtp4Ma9C2Wp4bAGeWRIbAuXHJw/1C8owX5Cf5JP50xGCiz2m
+ pkfR122snqzwoqAFAFkW017LOq7knWBpKPr0sakPmmTNJwR4gYEZ7zBLo A==;
+X-CSE-ConnectionGUID: H1kVl1n7QUWStXDbDunXEg==
+X-CSE-MsgGUID: wotJJSSGSDKWLnKOY/siJA==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23517846"
+Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
+ by internal-pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:49:25 +0000
+Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.51:21950]
  by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.35.214:2525]
  with esmtp (Farcaster)
- id 994473be-6809-44dd-ad88-b5ecf0ca075d; Sat, 11 Jul 2026 22:48:29 +0000 (UTC)
-X-Farcaster-Flow-ID: 994473be-6809-44dd-ad88-b5ecf0ca075d
+ id 22e9e83d-65ae-40fa-9789-fb68e231249c; Sat, 11 Jul 2026 22:49:25 +0000 (UTC)
+X-Farcaster-Flow-ID: 22e9e83d-65ae-40fa-9789-fb68e231249c
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA001.ant.amazon.com (10.250.64.217) with Microsoft SMTP Server
+ EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:48:29 +0000
+ Sat, 11 Jul 2026 22:49:25 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:48:20 +0000
+ Sat, 11 Jul 2026 22:49:16 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,9 +91,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 043/134] hw/sparc: Give onboard devices a QOM parent
-Date: Sat, 11 Jul 2026 22:35:36 +0000
-Message-ID: <20260711223707.42139-44-graf@amazon.com>
+Subject: [RFC PATCH 047/134] hw/block: Give onboard devices a QOM parent
+Date: Sat, 11 Jul 2026 22:35:40 +0000
+Message-ID: <20260711223707.42139-48-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -101,11 +101,11 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D042UWB001.ant.amazon.com (10.13.139.160) To
+X-ClientProxiedBy: EX19D039UWA003.ant.amazon.com (10.13.139.49) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=44.245.243.92;
+Received-SPF: pass client-ip=52.42.203.116;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
@@ -129,7 +129,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the *_orphan() device-creation calls in hw/sparc to the new
+Convert the *_orphan() device-creation calls in hw/block to the new
 parented API introduced earlier in this series, so every onboard
 device gets a stable path in the composition tree instead of landing
 in /machine/unattached with an unstable device[N] name.
@@ -140,541 +140,413 @@ composite children.  Names follow existing QOM conventions.
 
 Per-site rationale (reviewers: dispute the modeling here):
 
-hw/sparc/leon3.c:295 | qdev_new | OBJECT(machine) | "ahb-pnp" | leon3_generic_hw_init() board init
-hw/sparc/leon3.c:302 | qdev_new | OBJECT(machine) | "apb-pnp" | leon3_generic_hw_init() board init
-hw/sparc/leon3.c:310 | qdev_new | OBJECT(machine) | "irqmp" | leon3_generic_hw_init() board init
-hw/sparc/leon3.c:409 | qdev_new | OBJECT(machine) | "gptimer" | leon3_generic_hw_init() board init
-hw/sparc/leon3.c:426 | qdev_new | OBJECT(machine) | "uart" | leon3_generic_hw_init() board init
-hw/sparc/sun4m.c:283 | qdev_new | parent | "iommu" | iommu_init() helper: thread Object *parent from board init
-hw/sparc/sun4m.c:305 | qdev_new | parent | "dma" | sparc32_dma_init() helper: thread Object *parent from board init
-hw/sparc/sun4m.c:350 | qdev_new | parent | "intctl" | slavio_intctl_init() helper: thread Object *parent from board init
-hw/sparc/sun4m.c:379 | qdev_new | parent | "timer" | slavio_timer_init_all() helper: thread Object *parent from board init
-hw/sparc/sun4m.c:417 | qdev_new | parent | "misc" | slavio_misc_init() helper: thread Object *parent from board init
-hw/sparc/sun4m.c:454 | qdev_new | parent | "ecc" | ecc_init() helper: thread Object *parent from board init
-hw/sparc/sun4m.c:470 | qdev_new | parent | "apc" | apc_init() helper: thread Object *parent from board init
-hw/sparc/sun4m.c:484 | qdev_new | parent | "tcx" | tcx_init() helper: thread Object *parent from board init
-hw/sparc/sun4m.c:536 | qdev_new | parent | "cgthree" | cg3_init() helper: thread Object *parent from board init
-hw/sparc/sun4m.c:565 | qdev_new | parent | "idreg" | idreg_init() helper: thread Object *parent from board init
-hw/sparc/sun4m.c:624 | qdev_new | parent | "afx" | afx_init() helper: thread Object *parent from board init
-hw/sparc/sun4m.c:681 | qdev_new | parent | "prom" | prom_init() helper: thread Object *parent from board init
-hw/sparc/sun4m.c:838 | qdev_new | OBJECT(machine) | "ram" | sun4m_hw_init() board init
-hw/sparc/sun4m.c:950 | qdev_new | OBJECT(machine) | "nvram" | sun4m_hw_init() board init
-hw/sparc/sun4m.c:962 | qdev_new | OBJECT(machine) | "escc-kbd" | sun4m_hw_init() board init; keyboard/mouse ESCC
-hw/sparc/sun4m.c:975 | qdev_new | OBJECT(machine) | "ms-kb-orgate" | sun4m_hw_init() board init; drop _and_unref
-hw/sparc/sun4m.c:982 | qdev_new | OBJECT(machine) | "escc-serial" | sun4m_hw_init() board init; serial ESCC
-hw/sparc/sun4m.c:996 | qdev_new | OBJECT(machine) | "serial-orgate" | sun4m_hw_init() board init; drop _and_unref
-hw/sparc/sun4m.c:1022 | sysbus_create_simple | OBJECT(machine) | "cs4231" | sun4m_hw_init() board init
-hw/sparc/sun4m.c:1055 | qdev_new | OBJECT(machine) | TYPE_FW_CFG | collapse existing object_property_add_child(); keep name; drop _and_unref
+hw/block/fdc-sysbus.c:105 | qdev_new | parent | "fdc" | helper called from mips_jazz board init; thread Object *parent through fdctrl_init_sysbus()
+hw/block/fdc-sysbus.c:121 | qdev_new | parent | "fdc" | helper called from sun4m board init; thread Object *parent through sun4m_fdctrl_init()
+hw/block/fdc.c:2332 | qdev_new | OBJECT(bus->bus.parent) | "floppy[*]" | drive is child of the FDC device that owns the FloppyBus
+hw/block/pflash_cfi01.c:961 | qdev_new | parent | name | helper already receives QOM name; thread Object *parent through pflash_cfi01_register() and its 9 board callers
+hw/block/pflash_cfi02.c:1008 | qdev_new | parent | name | helper already receives QOM name; thread Object *parent through pflash_cfi02_register() and its 4 board callers
+hw/block/xen-block.c:1077 | qdev_new_orphan | ORPHAN-JUSTIFIED | - | XenBackend .create() callback; hotplugged device analogous to qdev_device_add() path, parented later on realize into xenbus
 
 Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/sparc/leon3.c |  22 ++++----
- hw/sparc/sun4m.c | 142 ++++++++++++++++++++++++-----------------------
- 2 files changed, 85 insertions(+), 79 deletions(-)
+ hw/arm/collie.c                          |  2 +-
+ hw/arm/digic_boards.c                    |  2 +-
+ hw/arm/musicpal.c                        |  3 ++-
+ hw/arm/omap_sx1.c                        |  4 ++--
+ hw/arm/versatilepb.c                     |  2 +-
+ hw/arm/xilinx_zynq.c                     |  2 +-
+ hw/block/fdc-sysbus.c                    | 13 +++++++------
+ hw/block/fdc.c                           |  4 ++--
+ hw/block/pflash_cfi01.c                  |  6 +++---
+ hw/block/pflash_cfi02.c                  |  6 +++---
+ hw/microblaze/petalogix_ml605_mmu.c      |  3 ++-
+ hw/microblaze/petalogix_s3adsp1800_mmu.c |  2 +-
+ hw/mips/jazz.c                           |  3 ++-
+ hw/mips/malta.c                          |  2 +-
+ hw/ppc/sam460ex.c                        |  7 ++++---
+ hw/ppc/virtex_ml507.c                    |  2 +-
+ hw/sh4/r2d.c                             |  2 +-
+ hw/sparc/sun4m.c                         |  2 +-
+ include/hw/block/fdc.h                   |  5 +++--
+ include/hw/block/flash.h                 |  4 ++--
+ 20 files changed, 41 insertions(+), 35 deletions(-)
 
-diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
-index d921cd8dc6..a96ccca8e3 100644
---- a/hw/sparc/leon3.c
-+++ b/hw/sparc/leon3.c
-@@ -292,25 +292,27 @@ static void leon3_generic_hw_init(MachineState *machine)
-         qemu_register_reset(leon3_cpu_reset, &reset_info->info[i]);
+diff --git a/hw/arm/collie.c b/hw/arm/collie.c
+index 81bc019460..b3646daa3b 100644
+--- a/hw/arm/collie.c
++++ b/hw/arm/collie.c
+@@ -58,7 +58,7 @@ static void collie_init(MachineState *machine)
+ 
+     for (unsigned i = 0; i < 2; i++) {
+         DriveInfo *dinfo = drive_get(IF_PFLASH, 0, i);
+-        pflash_cfi01_register(i ? SA_CS1 : SA_CS0,
++        pflash_cfi01_register(OBJECT(machine), i ? SA_CS1 : SA_CS0,
+                               i ? "collie.fl2" : "collie.fl1", FLASH_SIZE,
+                               dinfo ? blk_by_legacy_dinfo(dinfo) : NULL,
+                               FLASH_SECTOR_SIZE, 4, 0x00, 0x00, 0x00, 0x00, 0);
+diff --git a/hw/arm/digic_boards.c b/hw/arm/digic_boards.c
+index ed12f54200..92b66f34f7 100644
+--- a/hw/arm/digic_boards.c
++++ b/hw/arm/digic_boards.c
+@@ -117,7 +117,7 @@ static void digic4_add_k8p3215uqb_rom(DigicState *s, hwaddr addr,
+ #define FLASH_K8P3215UQB_SIZE (4 * 1024 * 1024)
+ #define FLASH_K8P3215UQB_SECTOR_SIZE (64 * 1024)
+ 
+-    pflash_cfi02_register(addr, "pflash", FLASH_K8P3215UQB_SIZE,
++    pflash_cfi02_register(OBJECT(s), addr, "pflash", FLASH_K8P3215UQB_SIZE,
+                           NULL, FLASH_K8P3215UQB_SECTOR_SIZE,
+                           DIGIC4_ROM_MAX_SIZE / FLASH_K8P3215UQB_SIZE,
+                           4,
+diff --git a/hw/arm/musicpal.c b/hw/arm/musicpal.c
+index a07359813e..43e15a4e48 100644
+--- a/hw/arm/musicpal.c
++++ b/hw/arm/musicpal.c
+@@ -1279,7 +1279,8 @@ static void musicpal_init(MachineState *machine)
+          * 0xFF800000 (if there is 8 MB flash). So remap flash access if the
+          * image is smaller than 32 MB.
+          */
+-        pflash_cfi02_register(0x100000000ULL - MP_FLASH_SIZE_MAX,
++        pflash_cfi02_register(OBJECT(machine),
++                              0x100000000ULL - MP_FLASH_SIZE_MAX,
+                               "musicpal.flash", flash_size,
+                               blk, FLASH_SECTOR_SIZE,
+                               MP_FLASH_SIZE_MAX / flash_size,
+diff --git a/hw/arm/omap_sx1.c b/hw/arm/omap_sx1.c
+index bcb7105323..a468b045d4 100644
+--- a/hw/arm/omap_sx1.c
++++ b/hw/arm/omap_sx1.c
+@@ -150,7 +150,7 @@ static void sx1_init(MachineState *machine, const int version)
+ 
+     fl_idx = 0;
+     if ((dinfo = drive_get(IF_PFLASH, 0, fl_idx)) != NULL) {
+-        pflash_cfi01_register(OMAP_CS0_BASE,
++        pflash_cfi01_register(OBJECT(machine), OMAP_CS0_BASE,
+                               "omap_sx1.flash0-1", flash_size,
+                               blk_by_legacy_dinfo(dinfo),
+                               SECTOR_SIZE, 4, 0, 0, 0, 0, 0);
+@@ -169,7 +169,7 @@ static void sx1_init(MachineState *machine, const int version)
+         memory_region_add_subregion(address_space,
+                                 OMAP_CS1_BASE + FLASH1_SIZE, &cs[1]);
+ 
+-        pflash_cfi01_register(OMAP_CS1_BASE,
++        pflash_cfi01_register(OBJECT(machine), OMAP_CS1_BASE,
+                               "omap_sx1.flash1-1", FLASH1_SIZE,
+                               blk_by_legacy_dinfo(dinfo),
+                               SECTOR_SIZE, 4, 0, 0, 0, 0, 0);
+diff --git a/hw/arm/versatilepb.c b/hw/arm/versatilepb.c
+index 5de99cb854..59bb2d1346 100644
+--- a/hw/arm/versatilepb.c
++++ b/hw/arm/versatilepb.c
+@@ -391,7 +391,7 @@ static void versatile_init(MachineState *machine, int board_id)
+     /* 0x34000000 NOR Flash */
+ 
+     dinfo = drive_get(IF_PFLASH, 0, 0);
+-    pflash_cfi01_register(VERSATILE_FLASH_ADDR, "versatile.flash",
++    pflash_cfi01_register(OBJECT(machine), VERSATILE_FLASH_ADDR, "versatile.flash",
+                           VERSATILE_FLASH_SIZE,
+                           dinfo ? blk_by_legacy_dinfo(dinfo) : NULL,
+                           VERSATILE_FLASH_SECT_SIZE,
+diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
+index 7f31cd6088..ba00c5a3aa 100644
+--- a/hw/arm/xilinx_zynq.c
++++ b/hw/arm/xilinx_zynq.c
+@@ -242,7 +242,7 @@ static void zynq_init(MachineState *machine)
+     DriveInfo *dinfo = drive_get(IF_PFLASH, 0, 0);
+ 
+     /* AMD */
+-    pflash_cfi02_register(0xe2000000, "zynq.pflash", FLASH_SIZE,
++    pflash_cfi02_register(OBJECT(machine), 0xe2000000, "zynq.pflash", FLASH_SIZE,
+                           dinfo ? blk_by_legacy_dinfo(dinfo) : NULL,
+                           FLASH_SECTOR_SIZE, 1,
+                           1, 0x0066, 0x0022, 0x0000, 0x0000, 0x0555, 0x2aa,
+diff --git a/hw/block/fdc-sysbus.c b/hw/block/fdc-sysbus.c
+index 4050750e65..955abb9c4c 100644
+--- a/hw/block/fdc-sysbus.c
++++ b/hw/block/fdc-sysbus.c
+@@ -96,30 +96,31 @@ static void fdctrl_handle_tc(void *opaque, int irq, int level)
+     trace_fdctrl_tc_pulse(level);
+ }
+ 
+-void fdctrl_init_sysbus(qemu_irq irq, hwaddr mmio_base, DriveInfo **fds)
++void fdctrl_init_sysbus(Object *parent, qemu_irq irq, hwaddr mmio_base,
++                        DriveInfo **fds)
+ {
+     DeviceState *dev;
+     SysBusDevice *sbd;
+     FDCtrlSysBus *sys;
+ 
+-    dev = qdev_new_orphan("sysbus-fdc");
++    dev = qdev_new(parent, "fdc", "sysbus-fdc");
+     sys = SYSBUS_FDC(dev);
+     sbd = SYS_BUS_DEVICE(dev);
+-    sysbus_realize_and_unref(sbd, &error_fatal);
++    sysbus_realize(sbd, &error_fatal);
+     sysbus_connect_irq(sbd, 0, irq);
+     sysbus_mmio_map(sbd, 0, mmio_base);
+ 
+     fdctrl_init_drives(&sys->state.bus, fds);
+ }
+ 
+-void sun4m_fdctrl_init(qemu_irq irq, hwaddr io_base,
++void sun4m_fdctrl_init(Object *parent, qemu_irq irq, hwaddr io_base,
+                        DriveInfo **fds, qemu_irq *fdc_tc)
+ {
+     DeviceState *dev;
+     FDCtrlSysBus *sys;
+ 
+-    dev = qdev_new_orphan("sun-fdtwo");
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    dev = qdev_new(parent, "fdc", "sun-fdtwo");
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     sys = SYSBUS_FDC(dev);
+     sysbus_connect_irq(SYS_BUS_DEVICE(sys), 0, irq);
+     sysbus_mmio_map(SYS_BUS_DEVICE(sys), 0, io_base);
+diff --git a/hw/block/fdc.c b/hw/block/fdc.c
+index baac5f3c19..02508c79aa 100644
+--- a/hw/block/fdc.c
++++ b/hw/block/fdc.c
+@@ -2329,12 +2329,12 @@ void fdctrl_init_drives(FloppyBus *bus, DriveInfo **fds)
+ 
+     for (i = 0; i < MAX_FD; i++) {
+         if (fds[i]) {
+-            dev = qdev_new_orphan("floppy");
++            dev = qdev_new(OBJECT(bus->bus.parent), "floppy[*]", "floppy");
+             qdev_prop_set_uint32(dev, "unit", i);
+             qdev_prop_set_enum(dev, "drive-type", FLOPPY_DRIVE_TYPE_AUTO);
+             qdev_prop_set_drive_err(dev, "drive", blk_by_legacy_dinfo(fds[i]),
+                                     &error_fatal);
+-            qdev_realize_and_unref(dev, &bus->bus, &error_fatal);
++            qdev_realize(dev, &bus->bus, &error_fatal);
+         }
      }
+ }
+diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
+index 0466682ca8..d584d7ea9f 100644
+--- a/hw/block/pflash_cfi01.c
++++ b/hw/block/pflash_cfi01.c
+@@ -948,7 +948,7 @@ static const TypeInfo pflash_cfi01_types[] = {
  
--    ahb_pnp = GRLIB_AHB_PNP(qdev_new_orphan(TYPE_GRLIB_AHB_PNP));
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(ahb_pnp), &error_fatal);
-+    ahb_pnp = GRLIB_AHB_PNP(qdev_new(OBJECT(machine), "ahb-pnp",
-+                                     TYPE_GRLIB_AHB_PNP));
-+    sysbus_realize(SYS_BUS_DEVICE(ahb_pnp), &error_fatal);
-     sysbus_mmio_map(SYS_BUS_DEVICE(ahb_pnp), 0, LEON3_AHB_PNP_OFFSET);
-     grlib_ahb_pnp_add_entry(ahb_pnp, 0, 0, GRLIB_VENDOR_GAISLER,
-                             GRLIB_LEON3_DEV, GRLIB_AHB_MASTER,
-                             GRLIB_CPU_AREA);
+ DEFINE_TYPES(pflash_cfi01_types)
  
--    apb_pnp = GRLIB_APB_PNP(qdev_new_orphan(TYPE_GRLIB_APB_PNP));
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(apb_pnp), &error_fatal);
-+    apb_pnp = GRLIB_APB_PNP(qdev_new(OBJECT(machine), "apb-pnp",
-+                                     TYPE_GRLIB_APB_PNP));
-+    sysbus_realize(SYS_BUS_DEVICE(apb_pnp), &error_fatal);
-     sysbus_mmio_map(SYS_BUS_DEVICE(apb_pnp), 0, LEON3_APB_PNP_OFFSET);
-     grlib_ahb_pnp_add_entry(ahb_pnp, LEON3_APB_PNP_OFFSET, 0xFFF,
-                             GRLIB_VENDOR_GAISLER, GRLIB_APBMST_DEV,
-                             GRLIB_AHB_SLAVE, GRLIB_AHBMEM_AREA);
+-PFlashCFI01 *pflash_cfi01_register(hwaddr base,
++PFlashCFI01 *pflash_cfi01_register(Object *parent, hwaddr base,
+                                    const char *name,
+                                    hwaddr size,
+                                    BlockBackend *blk,
+@@ -958,7 +958,7 @@ PFlashCFI01 *pflash_cfi01_register(hwaddr base,
+                                    uint16_t id2, uint16_t id3,
+                                    int be)
+ {
+-    DeviceState *dev = qdev_new_orphan(TYPE_PFLASH_CFI01);
++    DeviceState *dev = qdev_new(parent, name, TYPE_PFLASH_CFI01);
  
-     /* Allocate IRQ manager */
--    irqmpdev = qdev_new_orphan(TYPE_GRLIB_IRQMP);
-+    irqmpdev = qdev_new(OBJECT(machine), "irqmp", TYPE_GRLIB_IRQMP);
-     object_property_set_int(OBJECT(irqmpdev), "ncpus", machine->smp.cpus,
-                             &error_fatal);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(irqmpdev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(irqmpdev), &error_fatal);
- 
-     for (i = 0; i < machine->smp.cpus; i++) {
-         cpu = reset_info->info[i].cpu;
-@@ -406,11 +408,11 @@ static void leon3_generic_hw_init(MachineState *machine)
-     }
- 
-     /* Allocate timers */
--    dev = qdev_new_orphan(TYPE_GRLIB_GPTIMER);
-+    dev = qdev_new(OBJECT(machine), "gptimer", TYPE_GRLIB_GPTIMER);
-     qdev_prop_set_uint32(dev, "nr-timers", LEON3_TIMER_COUNT);
-     qdev_prop_set_uint32(dev, "frequency", CPU_CLK);
-     qdev_prop_set_uint32(dev, "irq-line", LEON3_TIMER_IRQ);
+     if (blk) {
+         qdev_prop_set_drive(dev, "drive", blk);
+@@ -973,7 +973,7 @@ PFlashCFI01 *pflash_cfi01_register(hwaddr base,
+     qdev_prop_set_uint16(dev, "id2", id2);
+     qdev_prop_set_uint16(dev, "id3", id3);
+     qdev_prop_set_string(dev, "name", name);
 -    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
 +    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
  
-     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, LEON3_TIMER_OFFSET);
-     for (i = 0; i < LEON3_TIMER_COUNT; i++) {
-@@ -423,9 +425,9 @@ static void leon3_generic_hw_init(MachineState *machine)
-                             0, LEON3_TIMER_IRQ, GRLIB_APBIO_AREA);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
+     return PFLASH_CFI01(dev);
+diff --git a/hw/block/pflash_cfi02.c b/hw/block/pflash_cfi02.c
+index a22bdc5830..0dbd173be0 100644
+--- a/hw/block/pflash_cfi02.c
++++ b/hw/block/pflash_cfi02.c
+@@ -993,7 +993,7 @@ static void pflash_cfi02_register_types(void)
  
-     /* Allocate uart */
--    dev = qdev_new_orphan(TYPE_GRLIB_APB_UART);
-+    dev = qdev_new(OBJECT(machine), "uart", TYPE_GRLIB_APB_UART);
-     qdev_prop_set_chr(dev, "chrdev", serial_hd(0));
+ type_init(pflash_cfi02_register_types)
+ 
+-PFlashCFI02 *pflash_cfi02_register(hwaddr base,
++PFlashCFI02 *pflash_cfi02_register(Object *parent, hwaddr base,
+                                    const char *name,
+                                    hwaddr size,
+                                    BlockBackend *blk,
+@@ -1005,7 +1005,7 @@ PFlashCFI02 *pflash_cfi02_register(hwaddr base,
+                                    uint16_t unlock_addr1,
+                                    int be)
+ {
+-    DeviceState *dev = qdev_new_orphan(TYPE_PFLASH_CFI02);
++    DeviceState *dev = qdev_new(parent, name, TYPE_PFLASH_CFI02);
+ 
+     if (blk) {
+         qdev_prop_set_drive(dev, "drive", blk);
+@@ -1023,7 +1023,7 @@ PFlashCFI02 *pflash_cfi02_register(hwaddr base,
+     qdev_prop_set_uint16(dev, "unlock-addr0", unlock_addr0);
+     qdev_prop_set_uint16(dev, "unlock-addr1", unlock_addr1);
+     qdev_prop_set_string(dev, "name", name);
 -    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
 +    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
-     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, LEON3_UART_OFFSET);
-     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
-                        qdev_get_gpio_in(irqmpdev, LEON3_UART_IRQ));
-diff --git a/hw/sparc/sun4m.c b/hw/sparc/sun4m.c
-index 52627dbdec..b0f018a3c5 100644
---- a/hw/sparc/sun4m.c
-+++ b/hw/sparc/sun4m.c
-@@ -275,22 +275,23 @@ static unsigned long sun4m_load_kernel(const char *kernel_filename,
-     return kernel_size;
- }
  
--static void *iommu_init(hwaddr addr, uint32_t version, qemu_irq irq)
-+static void *iommu_init(Object *parent, hwaddr addr, uint32_t version,
-+                        qemu_irq irq)
- {
-     DeviceState *dev;
-     SysBusDevice *s;
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
+     return PFLASH_CFI02(dev);
+diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/petalogix_ml605_mmu.c
+index 031de37cec..b77df1132b 100644
+--- a/hw/microblaze/petalogix_ml605_mmu.c
++++ b/hw/microblaze/petalogix_ml605_mmu.c
+@@ -105,7 +105,8 @@ petalogix_ml605_init(MachineState *machine)
+     dinfo = drive_get(IF_PFLASH, 0, 0);
+     /* 5th parameter 2 means bank-width
+      * 10th parameter 0 means little-endian */
+-    pflash_cfi01_register(FLASH_BASEADDR, "petalogix_ml605.flash", FLASH_SIZE,
++    pflash_cfi01_register(OBJECT(machine), FLASH_BASEADDR,
++                          "petalogix_ml605.flash", FLASH_SIZE,
+                           dinfo ? blk_by_legacy_dinfo(dinfo) : NULL,
+                           64 * KiB, 2, 0x89, 0x18, 0x0000, 0x0, 0);
  
--    dev = qdev_new_orphan(TYPE_SUN4M_IOMMU);
-+    dev = qdev_new(parent, "iommu", TYPE_SUN4M_IOMMU);
-     qdev_prop_set_uint32(dev, "version", version);
-     s = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
-     sysbus_connect_irq(s, 0, irq);
-     sysbus_mmio_map(s, 0, addr);
+diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+index b4327ad493..0979d3632b 100644
+--- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
++++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+@@ -102,7 +102,7 @@ petalogix_s3adsp1800_init(MachineState *machine)
+     memory_region_add_subregion(sysmem, ddr_base, phys_ram);
  
-     return s;
- }
- 
--static void *sparc32_dma_init(hwaddr dma_base,
-+static void *sparc32_dma_init(Object *parent, hwaddr dma_base,
-                               hwaddr esp_base, qemu_irq espdma_irq,
-                               hwaddr le_base, qemu_irq ledma_irq,
-                               MACAddr *mac)
-@@ -302,7 +303,7 @@ static void *sparc32_dma_init(hwaddr dma_base,
-     SysBusPCNetState *lance;
-     NICInfo *nd = qemu_find_nic_info("lance", true, NULL);
- 
--    dma = qdev_new_orphan(TYPE_SPARC32_DMA);
-+    dma = qdev_new(parent, "dma", TYPE_SPARC32_DMA);
-     espdma = SPARC32_ESPDMA_DEVICE(object_resolve_path_component(
-                                    OBJECT(dma), "espdma"));
- 
-@@ -322,7 +323,7 @@ static void *sparc32_dma_init(hwaddr dma_base,
-         qdev_prop_set_macaddr(DEVICE(lance), "mac", mac->a);
+     dinfo = drive_get(IF_PFLASH, 0, 0);
+-    pflash_cfi01_register(FLASH_BASEADDR,
++    pflash_cfi01_register(OBJECT(machine), FLASH_BASEADDR,
+                           "petalogix_s3adsp1800.flash", FLASH_SIZE,
+                           dinfo ? blk_by_legacy_dinfo(dinfo) : NULL,
+                           64 * KiB, 1, 0x89, 0x18, 0x0000, 0x0, 1);
+diff --git a/hw/mips/jazz.c b/hw/mips/jazz.c
+index 938aaf3fe1..13eaa2d2ec 100644
+--- a/hw/mips/jazz.c
++++ b/hw/mips/jazz.c
+@@ -351,7 +351,8 @@ static void mips_jazz_init(MachineState *machine,
+         fds[n] = drive_get(IF_FLOPPY, 0, n);
      }
+     /* FIXME: we should enable DMA with a custom IsaDma device */
+-    fdctrl_init_sysbus(qdev_get_gpio_in(rc4030, 1), 0x80003000, fds);
++    fdctrl_init_sysbus(OBJECT(machine), qdev_get_gpio_in(rc4030, 1),
++                       0x80003000, fds);
  
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dma), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(dma), &error_fatal);
+     /* Real time clock */
+     mc146818_rtc_init(OBJECT(machine), isa_bus, 1980, NULL);
+diff --git a/hw/mips/malta.c b/hw/mips/malta.c
+index 52aae144da..8dc7429ac9 100644
+--- a/hw/mips/malta.c
++++ b/hw/mips/malta.c
+@@ -1137,7 +1137,7 @@ void mips_malta_init(MachineState *machine)
  
-     sysbus_connect_irq(SYS_BUS_DEVICE(espdma), 0, espdma_irq);
- 
-@@ -338,7 +339,7 @@ static void *sparc32_dma_init(hwaddr dma_base,
-     return dma;
- }
- 
--static DeviceState *slavio_intctl_init(hwaddr addr,
-+static DeviceState *slavio_intctl_init(Object *parent, hwaddr addr,
-                                        hwaddr addrg,
-                                        unsigned int smp_cpus,
-                                        DeviceState **cpus)
-@@ -347,10 +348,10 @@ static DeviceState *slavio_intctl_init(hwaddr addr,
-     SysBusDevice *s;
-     unsigned int i, j;
- 
--    dev = qdev_new_orphan("slavio_intctl");
-+    dev = qdev_new(parent, "intctl", "slavio_intctl");
- 
-     s = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
- 
-     for (i = 0; i < smp_cpus; i++) {
-         for (j = 0; j < MAX_PILS; j++) {
-@@ -369,17 +370,18 @@ static DeviceState *slavio_intctl_init(hwaddr addr,
- #define SYS_TIMER_OFFSET      0x10000ULL
- #define CPU_TIMER_OFFSET(cpu) (0x1000ULL * cpu)
- 
--static void slavio_timer_init_all(hwaddr addr, qemu_irq master_irq,
-+static void slavio_timer_init_all(Object *parent, hwaddr addr,
-+                                  qemu_irq master_irq,
-                                   qemu_irq *cpu_irqs, unsigned int num_cpus)
- {
-     DeviceState *dev;
-     SysBusDevice *s;
-     unsigned int i;
- 
--    dev = qdev_new_orphan("slavio_timer");
-+    dev = qdev_new(parent, "timer", "slavio_timer");
-     qdev_prop_set_uint32(dev, "num_cpus", num_cpus);
-     s = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
-     sysbus_connect_irq(s, 0, master_irq);
-     sysbus_mmio_map(s, 0, addr + SYS_TIMER_OFFSET);
- 
-@@ -406,7 +408,7 @@ static Notifier slavio_system_powerdown_notifier = {
- #define MISC_MDM  0x01b00000
- #define MISC_SYS  0x01f00000
- 
--static void slavio_misc_init(hwaddr base,
-+static void slavio_misc_init(Object *parent, hwaddr base,
-                              hwaddr aux1_base,
-                              hwaddr aux2_base, qemu_irq irq,
-                              qemu_irq fdc_tc)
-@@ -414,9 +416,9 @@ static void slavio_misc_init(hwaddr base,
-     DeviceState *dev;
-     SysBusDevice *s;
- 
--    dev = qdev_new_orphan("slavio_misc");
-+    dev = qdev_new(parent, "misc", "slavio_misc");
-     s = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
-     if (base) {
-         /* 8 bit registers */
-         /* Slavio control */
-@@ -446,15 +448,16 @@ static void slavio_misc_init(hwaddr base,
-     qemu_register_powerdown_notifier(&slavio_system_powerdown_notifier);
- }
- 
--static void ecc_init(hwaddr base, qemu_irq irq, uint32_t version)
-+static void ecc_init(Object *parent, hwaddr base, qemu_irq irq,
-+                     uint32_t version)
- {
-     DeviceState *dev;
-     SysBusDevice *s;
- 
--    dev = qdev_new_orphan("eccmemctl");
-+    dev = qdev_new(parent, "ecc", "eccmemctl");
-     qdev_prop_set_uint32(dev, "version", version);
-     s = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
-     sysbus_connect_irq(s, 0, irq);
-     sysbus_mmio_map(s, 0, base);
-     if (version == 0) { // SS-600MP only
-@@ -462,32 +465,32 @@ static void ecc_init(hwaddr base, qemu_irq irq, uint32_t version)
-     }
- }
- 
--static void apc_init(hwaddr power_base, qemu_irq cpu_halt)
-+static void apc_init(Object *parent, hwaddr power_base, qemu_irq cpu_halt)
- {
-     DeviceState *dev;
-     SysBusDevice *s;
- 
--    dev = qdev_new_orphan("apc");
-+    dev = qdev_new(parent, "apc", "apc");
-     s = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
-     /* Power management (APC) XXX: not a Slavio device */
-     sysbus_mmio_map(s, 0, power_base);
-     sysbus_connect_irq(s, 0, cpu_halt);
- }
- 
--static void tcx_init(hwaddr addr, qemu_irq irq, int vram_size, int width,
--                     int height, int depth)
-+static void tcx_init(Object *parent, hwaddr addr, qemu_irq irq, int vram_size,
-+                     int width, int height, int depth)
- {
-     DeviceState *dev;
-     SysBusDevice *s;
- 
--    dev = qdev_new_orphan("sun-tcx");
-+    dev = qdev_new(parent, "tcx", "sun-tcx");
-     qdev_prop_set_uint32(dev, "vram_size", vram_size);
-     qdev_prop_set_uint16(dev, "width", width);
-     qdev_prop_set_uint16(dev, "height", height);
-     qdev_prop_set_uint16(dev, "depth", depth);
-     s = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
- 
-     /* 10/ROM : FCode ROM */
-     sysbus_mmio_map(s, 0, addr);
-@@ -527,19 +530,19 @@ static void tcx_init(hwaddr addr, qemu_irq irq, int vram_size, int width,
-     sysbus_connect_irq(s, 0, irq);
- }
- 
--static void cg3_init(hwaddr addr, qemu_irq irq, int vram_size, int width,
--                     int height, int depth)
-+static void cg3_init(Object *parent, hwaddr addr, qemu_irq irq, int vram_size,
-+                     int width, int height, int depth)
- {
-     DeviceState *dev;
-     SysBusDevice *s;
- 
--    dev = qdev_new_orphan("cgthree");
-+    dev = qdev_new(parent, "cgthree", "cgthree");
-     qdev_prop_set_uint32(dev, "vram-size", vram_size);
-     qdev_prop_set_uint16(dev, "width", width);
-     qdev_prop_set_uint16(dev, "height", height);
-     qdev_prop_set_uint16(dev, "depth", depth);
-     s = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
- 
-     /* FCode ROM */
-     sysbus_mmio_map(s, 0, addr);
-@@ -557,14 +560,14 @@ static void cg3_init(hwaddr addr, qemu_irq irq, int vram_size, int width,
- 
- static const uint8_t idreg_data[] = { 0xfe, 0x81, 0x01, 0x03 };
- 
--static void idreg_init(hwaddr addr)
-+static void idreg_init(Object *parent, hwaddr addr)
- {
-     DeviceState *dev;
-     SysBusDevice *s;
- 
--    dev = qdev_new_orphan(TYPE_MACIO_ID_REGISTER);
-+    dev = qdev_new(parent, "idreg", TYPE_MACIO_ID_REGISTER);
-     s = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
- 
-     sysbus_mmio_map(s, 0, addr);
-     address_space_write_rom(&address_space_memory, addr,
-@@ -616,14 +619,14 @@ struct AFXState {
+     /* Load firmware in flash / BIOS. */
+     dinfo = drive_get(IF_PFLASH, 0, fl_idx);
+-    fl = pflash_cfi01_register(FLASH_ADDRESS, "mips_malta.bios",
++    fl = pflash_cfi01_register(OBJECT(machine), FLASH_ADDRESS, "mips_malta.bios",
+                                FLASH_SIZE,
+                                dinfo ? blk_by_legacy_dinfo(dinfo) : NULL,
+                                65536,
+diff --git a/hw/ppc/sam460ex.c b/hw/ppc/sam460ex.c
+index 8623848633..41d4670fa8 100644
+--- a/hw/ppc/sam460ex.c
++++ b/hw/ppc/sam460ex.c
+@@ -83,7 +83,7 @@ struct boot_info {
+     uint32_t entry;
  };
  
- /* SS-5 TCX AFX register */
--static void afx_init(hwaddr addr)
-+static void afx_init(Object *parent, hwaddr addr)
+-static int sam460ex_load_uboot(void)
++static int sam460ex_load_uboot(Object *parent)
  {
-     DeviceState *dev;
-     SysBusDevice *s;
+     /*
+      * This first creates 1MiB of flash memory mapped at the end of
+@@ -106,7 +106,8 @@ static int sam460ex_load_uboot(void)
+     DriveInfo *dinfo;
  
--    dev = qdev_new_orphan(TYPE_TCX_AFX);
-+    dev = qdev_new(parent, "afx", TYPE_TCX_AFX);
-     s = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
+     dinfo = drive_get(IF_PFLASH, 0, 0);
+-    if (!pflash_cfi01_register(FLASH_BASE | ((hwaddr)FLASH_BASE_H << 32),
++    if (!pflash_cfi01_register(parent,
++                               FLASH_BASE | ((hwaddr)FLASH_BASE_H << 32),
+                                "sam460ex.flash", FLASH_SIZE,
+                                dinfo ? blk_by_legacy_dinfo(dinfo) : NULL,
+                                64 * KiB, 1, 0x89, 0x18, 0x0000, 0x0, 1)) {
+@@ -459,7 +460,7 @@ static void sam460ex_init(MachineState *machine)
  
-     sysbus_mmio_map(s, 0, addr);
- }
-@@ -671,16 +674,16 @@ static uint64_t translate_prom_address(void *opaque, uint64_t addr)
-     return addr + *base_addr - PROM_VADDR;
- }
+     /* Load U-Boot image. */
+     if (!machine->kernel_filename) {
+-        success = sam460ex_load_uboot();
++        success = sam460ex_load_uboot(OBJECT(machine));
+         if (success < 0) {
+             error_report("could not load firmware");
+             exit(1);
+diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
+index 9163d8acf8..1379c168d3 100644
+--- a/hw/ppc/virtex_ml507.c
++++ b/hw/ppc/virtex_ml507.c
+@@ -213,7 +213,7 @@ static void virtex_init(MachineState *machine)
+     memory_region_add_subregion(address_space_mem, ram_base, machine->ram);
  
--static void prom_init(hwaddr addr, const char *bios_name)
-+static void prom_init(Object *parent, hwaddr addr, const char *bios_name)
- {
-     DeviceState *dev;
-     SysBusDevice *s;
-     char *filename;
-     int ret;
+     dinfo = drive_get(IF_PFLASH, 0, 0);
+-    pflash_cfi01_register(PFLASH_BASEADDR, "virtex.flash", FLASH_SIZE,
++    pflash_cfi01_register(OBJECT(machine), PFLASH_BASEADDR, "virtex.flash", FLASH_SIZE,
+                           dinfo ? blk_by_legacy_dinfo(dinfo) : NULL,
+                           64 * KiB, 1, 0x89, 0x18, 0x0000, 0x0, 1);
  
--    dev = qdev_new_orphan(TYPE_OPENPROM);
-+    dev = qdev_new(parent, "prom", TYPE_OPENPROM);
-     s = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
- 
-     sysbus_mmio_map(s, 0, addr);
- 
-@@ -835,9 +838,9 @@ static void sun4m_hw_init(MachineState *machine)
-     }
- 
-     /* Create and map RAM frontend */
--    dev = qdev_new_orphan("memory");
-+    dev = qdev_new(OBJECT(machine), "ram", "memory");
-     object_property_set_link(OBJECT(dev), "memdev", OBJECT(ram_memdev), &error_fatal);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
-     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0);
- 
-     /* models without ECC don't trap when missing ram is accessed */
-@@ -846,9 +849,9 @@ static void sun4m_hw_init(MachineState *machine)
-                         hwdef->max_mem - machine->ram_size);
-     }
- 
--    prom_init(hwdef->slavio_base, machine->firmware);
-+    prom_init(OBJECT(machine), hwdef->slavio_base, machine->firmware);
- 
--    slavio_intctl = slavio_intctl_init(hwdef->intctl_base,
-+    slavio_intctl = slavio_intctl_init(OBJECT(machine), hwdef->intctl_base,
-                                        hwdef->intctl_base + 0x10000ULL,
-                                        smp_cpus,
-                                        cpus);
-@@ -861,14 +864,15 @@ static void sun4m_hw_init(MachineState *machine)
-     }
- 
-     if (hwdef->idreg_base) {
--        idreg_init(hwdef->idreg_base);
-+        idreg_init(OBJECT(machine), hwdef->idreg_base);
-     }
- 
-     if (hwdef->afx_base) {
--        afx_init(hwdef->afx_base);
-+        afx_init(OBJECT(machine), hwdef->afx_base);
-     }
- 
--    iommu_init(hwdef->iommu_base, hwdef->iommu_version, slavio_irq[30]);
-+    iommu_init(OBJECT(machine), hwdef->iommu_base, hwdef->iommu_version,
-+               slavio_irq[30]);
- 
-     if (hwdef->iommu_pad_base) {
-         /* On the real hardware (SS-5, LX) the MMU is not padded, but aliased.
-@@ -879,7 +883,7 @@ static void sun4m_hw_init(MachineState *machine)
-                         hwdef->iommu_pad_base, hwdef->iommu_pad_len);
-     }
- 
--    sparc32_dma_init(hwdef->dma_base,
-+    sparc32_dma_init(OBJECT(machine), hwdef->dma_base,
-                      hwdef->esp_base, slavio_irq[18],
-                      hwdef->le_base, slavio_irq[16], &hostid);
- 
-@@ -911,7 +915,7 @@ static void sun4m_hw_init(MachineState *machine)
-             }
- 
-             /* sbus irq 5 */
--            cg3_init(hwdef->tcx_base, slavio_irq[11], 0x00100000,
-+            cg3_init(OBJECT(machine), hwdef->tcx_base, slavio_irq[11], 0x00100000,
-                      graphic_width, graphic_height, graphic_depth);
-             vga_interface_created = true;
-         } else {
-@@ -927,7 +931,7 @@ static void sun4m_hw_init(MachineState *machine)
-                 exit(1);
-             }
- 
--            tcx_init(hwdef->tcx_base, slavio_irq[11], 0x00100000,
-+            tcx_init(OBJECT(machine), hwdef->tcx_base, slavio_irq[11], 0x00100000,
-                      graphic_width, graphic_height, graphic_depth);
-             vga_interface_created = true;
-         }
-@@ -947,19 +951,20 @@ static void sun4m_hw_init(MachineState *machine)
-         create_unimplemented_device("sun-sx", hwdef->sx_base, 0x2000);
-     }
- 
--    dev = qdev_new_orphan("sysbus-m48t08");
-+    dev = qdev_new(OBJECT(machine), "nvram", "sysbus-m48t08");
-     qdev_prop_set_int32(dev, "base-year", 1968);
-     s = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
-     sysbus_connect_irq(s, 0, slavio_irq[0]);
-     sysbus_mmio_map(s, 0, hwdef->nvram_base);
-     nvram = NVRAM(dev);
- 
--    slavio_timer_init_all(hwdef->counter_base, slavio_irq[19], slavio_cpu_irq, smp_cpus);
-+    slavio_timer_init_all(OBJECT(machine), hwdef->counter_base, slavio_irq[19],
-+                          slavio_cpu_irq, smp_cpus);
- 
-     /* Slavio TTYA (base+4, Linux ttyS0) is the first QEMU serial device
-        Slavio TTYB (base+0, Linux ttyS1) is the second QEMU serial device */
--    dev = qdev_new_orphan(TYPE_ESCC);
-+    dev = qdev_new(OBJECT(machine), "escc-kbd", TYPE_ESCC);
-     qdev_prop_set_uint32(dev, "disabled", !machine->enable_graphics);
-     qdev_prop_set_uint32(dev, "frequency", ESCC_CLOCK);
-     qdev_prop_set_uint32(dev, "it_shift", 1);
-@@ -968,18 +973,18 @@ static void sun4m_hw_init(MachineState *machine)
-     qdev_prop_set_uint32(dev, "chnBtype", escc_mouse);
-     qdev_prop_set_uint32(dev, "chnAtype", escc_kbd);
-     s = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
-     sysbus_mmio_map(s, 0, hwdef->ms_kb_base);
- 
-     /* Logically OR both its IRQs together */
--    ms_kb_orgate = qdev_new_orphan(TYPE_OR_IRQ);
-+    ms_kb_orgate = qdev_new(OBJECT(machine), "ms-kb-orgate", TYPE_OR_IRQ);
-     object_property_set_int(OBJECT(ms_kb_orgate), "num-lines", 2, &error_fatal);
--    qdev_realize_and_unref(ms_kb_orgate, NULL, &error_fatal);
-+    qdev_realize(ms_kb_orgate, NULL, &error_fatal);
-     sysbus_connect_irq(s, 0, qdev_get_gpio_in(ms_kb_orgate, 0));
-     sysbus_connect_irq(s, 1, qdev_get_gpio_in(ms_kb_orgate, 1));
-     qdev_connect_gpio_out(ms_kb_orgate, 0, slavio_irq[14]);
- 
--    dev = qdev_new_orphan(TYPE_ESCC);
-+    dev = qdev_new(OBJECT(machine), "escc-serial", TYPE_ESCC);
-     qdev_prop_set_uint32(dev, "disabled", 0);
-     qdev_prop_set_uint32(dev, "frequency", ESCC_CLOCK);
-     qdev_prop_set_uint32(dev, "it_shift", 1);
-@@ -989,20 +994,21 @@ static void sun4m_hw_init(MachineState *machine)
-     qdev_prop_set_uint32(dev, "chnAtype", escc_serial);
- 
-     s = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
-     sysbus_mmio_map(s, 0, hwdef->serial_base);
- 
-     /* Logically OR both its IRQs together */
--    serial_orgate = qdev_new_orphan(TYPE_OR_IRQ);
-+    serial_orgate = qdev_new(OBJECT(machine), "serial-orgate", TYPE_OR_IRQ);
-     object_property_set_int(OBJECT(serial_orgate), "num-lines", 2,
-                             &error_fatal);
--    qdev_realize_and_unref(serial_orgate, NULL, &error_fatal);
-+    qdev_realize(serial_orgate, NULL, &error_fatal);
-     sysbus_connect_irq(s, 0, qdev_get_gpio_in(serial_orgate, 0));
-     sysbus_connect_irq(s, 1, qdev_get_gpio_in(serial_orgate, 1));
-     qdev_connect_gpio_out(serial_orgate, 0, slavio_irq[15]);
- 
-     if (hwdef->apc_base) {
--        apc_init(hwdef->apc_base, qemu_allocate_irq(cpu_halt_signal, NULL, 0));
-+        apc_init(OBJECT(machine), hwdef->apc_base,
-+                 qemu_allocate_irq(cpu_halt_signal, NULL, 0));
-     }
- 
-     if (hwdef->fd_base) {
-@@ -1015,12 +1021,12 @@ static void sun4m_hw_init(MachineState *machine)
+diff --git a/hw/sh4/r2d.c b/hw/sh4/r2d.c
+index c0f8cad335..c03df91aca 100644
+--- a/hw/sh4/r2d.c
++++ b/hw/sh4/r2d.c
+@@ -309,7 +309,7 @@ static void r2d_init(MachineState *machine)
+      * addressable in words of 16bit.
+      */
+     dinfo = drive_get(IF_PFLASH, 0, 0);
+-    pflash_cfi02_register(0x0, "r2d.flash", FLASH_SIZE,
++    pflash_cfi02_register(OBJECT(machine), 0x0, "r2d.flash", FLASH_SIZE,
+                           dinfo ? blk_by_legacy_dinfo(dinfo) : NULL,
+                           64 * KiB, 1, 2, 0x0001, 0x227e, 0x2220, 0x2200,
+                           0x555, 0x2aa, 0);
+diff --git a/hw/sparc/sun4m.c b/hw/sparc/sun4m.c
+index b0f018a3c5..144345d46a 100644
+--- a/hw/sparc/sun4m.c
++++ b/hw/sparc/sun4m.c
+@@ -1015,7 +1015,7 @@ static void sun4m_hw_init(MachineState *machine)
+         /* there is zero or one floppy drive */
+         memset(fd, 0, sizeof(fd));
+         fd[0] = drive_get(IF_FLOPPY, 0, 0);
+-        sun4m_fdctrl_init(slavio_irq[22], hwdef->fd_base, fd,
++        sun4m_fdctrl_init(OBJECT(machine), slavio_irq[22], hwdef->fd_base, fd,
+                           &fdc_tc);
+     } else {
          fdc_tc = qemu_allocate_irq(dummy_fdc_tc, NULL, 0);
-     }
+diff --git a/include/hw/block/fdc.h b/include/hw/block/fdc.h
+index c367c5efea..7ff6681835 100644
+--- a/include/hw/block/fdc.h
++++ b/include/hw/block/fdc.h
+@@ -10,8 +10,9 @@
+ #define TYPE_ISA_FDC "isa-fdc"
  
--    slavio_misc_init(hwdef->slavio_base, hwdef->aux1_base, hwdef->aux2_base,
--                     slavio_irq[30], fdc_tc);
-+    slavio_misc_init(OBJECT(machine), hwdef->slavio_base, hwdef->aux1_base,
-+                     hwdef->aux2_base, slavio_irq[30], fdc_tc);
+ void isa_fdc_init_drives(ISADevice *fdc, DriveInfo **fds);
+-void fdctrl_init_sysbus(qemu_irq irq, hwaddr mmio_base, DriveInfo **fds);
+-void sun4m_fdctrl_init(qemu_irq irq, hwaddr io_base,
++void fdctrl_init_sysbus(Object *parent, qemu_irq irq, hwaddr mmio_base,
++                        DriveInfo **fds);
++void sun4m_fdctrl_init(Object *parent, qemu_irq irq, hwaddr io_base,
+                        DriveInfo **fds, qemu_irq *fdc_tc);
  
-     if (hwdef->cs_base) {
--        sysbus_create_simple_orphan("sun-CS4231", hwdef->cs_base,
--                             slavio_irq[5]);
-+        sysbus_create_simple(OBJECT(machine), "cs4231", "sun-CS4231",
-+                             hwdef->cs_base, slavio_irq[5]);
-     }
+ void isa_fdc_set_iobase(ISADevice *fdc, hwaddr iobase);
+diff --git a/include/hw/block/flash.h b/include/hw/block/flash.h
+index 3671f0174d..c005b707b2 100644
+--- a/include/hw/block/flash.h
++++ b/include/hw/block/flash.h
+@@ -12,7 +12,7 @@
+ OBJECT_DECLARE_SIMPLE_TYPE(PFlashCFI01, PFLASH_CFI01)
  
-     if (hwdef->dbri_base) {
-@@ -1049,17 +1055,15 @@ static void sun4m_hw_init(MachineState *machine)
-                hwdef->nvram_machine_id, "Sun4m");
  
-     if (hwdef->ecc_base)
--        ecc_init(hwdef->ecc_base, slavio_irq[28],
-+        ecc_init(OBJECT(machine), hwdef->ecc_base, slavio_irq[28],
-                  hwdef->ecc_version);
+-PFlashCFI01 *pflash_cfi01_register(hwaddr base,
++PFlashCFI01 *pflash_cfi01_register(Object *parent, hwaddr base,
+                                    const char *name,
+                                    hwaddr size,
+                                    BlockBackend *blk,
+@@ -31,7 +31,7 @@ void pflash_cfi01_legacy_drive(PFlashCFI01 *dev, DriveInfo *dinfo);
+ OBJECT_DECLARE_SIMPLE_TYPE(PFlashCFI02, PFLASH_CFI02)
  
--    dev = qdev_new_orphan(TYPE_FW_CFG_MEM);
-+    dev = qdev_new(OBJECT(machine), TYPE_FW_CFG, TYPE_FW_CFG_MEM);
-     fw_cfg = FW_CFG(dev);
-     qdev_prop_set_uint32(dev, "data_width", 1);
-     qdev_prop_set_bit(dev, "dma_enabled", false);
--    object_property_add_child(OBJECT(qdev_get_machine()), TYPE_FW_CFG,
--                              OBJECT(fw_cfg));
-     s = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
-     sysbus_mmio_map(s, 0, CFG_ADDR);
-     sysbus_mmio_map(s, 1, CFG_ADDR + 2);
  
+-PFlashCFI02 *pflash_cfi02_register(hwaddr base,
++PFlashCFI02 *pflash_cfi02_register(Object *parent, hwaddr base,
+                                    const char *name,
+                                    hwaddr size,
+                                    BlockBackend *blk,
 -- 
 2.47.1
 
