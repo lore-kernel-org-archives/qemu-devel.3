@@ -4,45 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA7B1C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:07:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 939BFC44501
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:07:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifpD-0004nV-AA; Sat, 11 Jul 2026 18:05:31 -0400
+	id 1wifqM-0002Ft-Ab; Sat, 11 Jul 2026 18:06:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifox-0004Lk-NJ; Sat, 11 Jul 2026 18:05:15 -0400
+ id 1wifqL-00028r-2Z; Sat, 11 Jul 2026 18:06:41 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifov-0000Oo-An; Sat, 11 Jul 2026 18:05:14 -0400
+ id 1wifqI-0000mh-Uj; Sat, 11 Jul 2026 18:06:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807181; bh=bCMVFGcS9pSFs0oWr3Jp9KED3QuIW9mi9PPpdkwK6MQ=;
+ t=1783807181; bh=3Q6ZXG+BDAb7zFboOJ/J/8u/UJ71/GcqvySrUBpfbA8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=pOWnKV697FTK7/i1BAYDxXQODzOf9MC2FKOl6+9cKdS2OQMMDzWZlVWkuVc30FFS+
- vc9DpsBpadP/U4htZyLFu/a+tRQRyzPra6eRXooNvxyuDIq14RcdYeWeeR3daEpvfM
- LgV2OyVFtQug9LsZm9a9ulTofFm/vL+R/LYI0aMKLy18QsjSAC1chjAhxjmQRjocH0
- P2OBvHIuU4ChI/x9nUfCPLVpH1PDh7F9k30fc8dC1eklJXcedc+r71k60ivYw+aRty
- 3qWyZ2TtanlolpjFxSqH4aR9TPI8PI75bcksxnFMcCnOi3kDJ8v27gxKDhRY+BqmYe
- +vSk9hye78Kdw==
+ b=cwxFX+AoL6vtcQVeqjHUomm+ZkYPakS5uJximYe3nfVn9kbc5VkcSJ+YsCMktSBh3
+ R/fLT2IRhINyPv4dKySyL3/6p2+cZ9l90mQGUXqc76DU9kYGVjdHuCCIygHuZAkLkX
+ 69WUr0ag9EVSg49DUb40wf7oe4hW7ojmSDl8OKO4fUkBFfg28Ujl2lG79p22VBkMz8
+ Yz4uX6irWQtNdVJyIzxfyvO/+RpZHbP831a1wIPZxtWRid+bfRC7UwjXZu15Eze0nK
+ W5dPXh7UFc6wwIgZFUXFcXhXZxehZJA/5JMhpER3dimxN7n9R3rH4PLoFQ/j3l2xZH
+ MgqPdJHHVfIOg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6D9CB1C0AC5;
+ by isrv.corpit.ru (Postfix) with ESMTP id C339D1C0AD3;
  Sun, 12 Jul 2026 00:59:41 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 24BA33EAF50;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7A7363EAF5E;
  Sun, 12 Jul 2026 00:59:51 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id C2F7713357; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id E63DE13373; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Qing Wang <qinwang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Nutty Liu <nutty.liu@hotmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 58/81] scsi: always send valid PREEMPT TYPE field
-Date: Sun, 12 Jul 2026 00:58:36 +0300
-Message-ID: <20260711215904.3757-58-mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 72/81] hw/riscv/riscv-iommu-sys.c: record fault on
+ IOMMU-generated MSI write
+Date: Sun, 12 Jul 2026 00:58:50 +0300
+Message-ID: <20260711215904.3757-72-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
@@ -71,62 +74,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-The SPC-6 specification says that the PREEMPT service action ignores the
-TYPE field when there is no reservation. However, the LIO Linux iSCSI
-target rejects commands with a zero TYPE field. The field never ends up
-being used in this case, so replace it with a "valid" value to work
-around the issue.
+The riscv-iommu spec requires that the IOMMU records its own generated
+MSI write faults.
 
-Reported-by: Qing Wang <qinwang@redhat.com>
-Buglink: https://redhat.atlassian.net/browse/RHEL-155807
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Link: https://lore.kernel.org/r/20260401171927.396672-3-stefanha@redhat.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 15a202656cd553911272f9666aa067c706fc3dfe)
+Fixes: 01c1caa9d1 ("hw/riscv/virt.c, riscv-iommu-sys.c: add MSIx support")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3572
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Message-ID: <20260629165954.1018123-1-daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 58e801f74e6a4ebd3a0cf3ab1a96e1676b263efd)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/scsi-generic.c b/hw/scsi/scsi-generic.c
-index b55d0683238..349dea6bddf 100644
---- a/hw/scsi/scsi-generic.c
-+++ b/hw/scsi/scsi-generic.c
-@@ -453,6 +453,16 @@ static bool scsi_generic_pr_preempt(SCSIDevice *s, uint64_t key,
-     uint64_t key_be = cpu_to_be64(key);
-     int ret;
+diff --git a/hw/riscv/riscv-iommu-sys.c b/hw/riscv/riscv-iommu-sys.c
+index bf87b0b4ea3..3314adeed23 100644
+--- a/hw/riscv/riscv-iommu-sys.c
++++ b/hw/riscv/riscv-iommu-sys.c
+@@ -26,6 +26,7 @@
+ #include "qemu/host-utils.h"
+ #include "qemu/module.h"
+ #include "qom/object.h"
++#include "target/riscv/cpu_bits.h"
+ #include "trace.h"
  
-+    /*
-+     * The LIO iSCSI target in Linux up to at least version 7.0 rejects PREEMPT
-+     * commands with a zero TYPE field although the SPC-6 specification says
-+     * the field should be ignored when there is no persistent reservation.
-+     * Work around this by choosing an arbitrary valid PR type value.
-+     */
-+    if (resv_type == 0) {
-+        resv_type = PR_TYPE_WRITE_EXCLUSIVE;
+ #include "riscv-iommu.h"
+@@ -143,7 +144,20 @@ static void riscv_iommu_sysdev_send_MSI(RISCVIOMMUStateSys *s,
+ 
+     address_space_stl_le(&address_space_memory, msi_addr,
+                          msi_data, MEMTXATTRS_UNSPECIFIED, &result);
+-    trace_riscv_iommu_sys_msi_sent(vector, msi_addr, msi_data, result);
++
++    if (result == MEMTX_OK) {
++        trace_riscv_iommu_sys_msi_sent(vector, msi_addr, msi_data, result);
++    } else {
++        /* Record an access fault error in the fault queue */
++        struct riscv_iommu_fq_record ev = { 0 };
++        RISCVIOMMUState *iommu = &s->iommu;
++
++        ev.hdr = set_field(ev.hdr, RISCV_IOMMU_FQ_HDR_CAUSE,
++                           RISCV_IOMMU_FQ_CAUSE_MSI_WR_FAULT);
++        ev.hdr = set_field(ev.hdr, RISCV_IOMMU_FQ_HDR_TTYPE,
++                           RISCV_IOMMU_FQ_TTYPE_UADDR_WR);
++        riscv_iommu_fault(iommu, &ev);
 +    }
-+
-     cmd[0] = PERSISTENT_RESERVE_OUT;
-     cmd[1] = PRO_PREEMPT;
-     cmd[2] = resv_type & 0xf;
-diff --git a/include/scsi/constants.h b/include/scsi/constants.h
-index cb97bdb6362..717e470a5d4 100644
---- a/include/scsi/constants.h
-+++ b/include/scsi/constants.h
-@@ -340,4 +340,14 @@
- #define PRO_REGISTER_AND_MOVE                   0x07
- #define PRO_REPLACE_LOST_RESERVATION            0x08
+ }
  
-+/*
-+ * Persistent reservation types
-+ */
-+#define PR_TYPE_WRITE_EXCLUSIVE             0x1
-+#define PR_TYPE_EXCLUSIVE_ACCESS            0x3
-+#define PR_TYPE_WRITE_EXCLUSIVE_REG_ONLY    0x5
-+#define PR_TYPE_EXCLUSIVE_ACCESS_REG_ONLY   0x6
-+#define PR_TYPE_WRITE_EXCLUSIVE_ALL_REGS    0x7
-+#define PR_TYPE_EXCLUSIVE_ACCESS_ALL_REGS   0x8
-+
- #endif
+ static void riscv_iommu_sysdev_notify(RISCVIOMMUState *iommu,
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 4330b2257d4..3f0392c2528 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -108,8 +108,7 @@ void riscv_iommu_notify(RISCVIOMMUState *s, int vec_type)
+     }
+ }
+ 
+-static void riscv_iommu_fault(RISCVIOMMUState *s,
+-                              struct riscv_iommu_fq_record *ev)
++void riscv_iommu_fault(RISCVIOMMUState *s, struct riscv_iommu_fq_record *ev)
+ {
+     uint32_t ctrl = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_FQCSR);
+     uint32_t head = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_FQH) & s->fq_mask;
+diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
+index 2a9f6fccd52..7a1523e9fd8 100644
+--- a/hw/riscv/riscv-iommu.h
++++ b/hw/riscv/riscv-iommu.h
+@@ -99,6 +99,7 @@ void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
+ void riscv_iommu_set_cap_igs(RISCVIOMMUState *s, riscv_iommu_igs_mode mode);
+ void riscv_iommu_reset(RISCVIOMMUState *s);
+ void riscv_iommu_notify(RISCVIOMMUState *s, int vec_type);
++void riscv_iommu_fault(RISCVIOMMUState *s, struct riscv_iommu_fq_record *ev);
+ 
+ typedef struct RISCVIOMMUContext RISCVIOMMUContext;
+ /* Device translation context state. */
 -- 
 2.47.3
 
