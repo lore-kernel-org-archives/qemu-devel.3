@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF80AC43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:00:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4708C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:01:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifk2-0001ow-Na; Sat, 11 Jul 2026 18:00:11 -0400
+	id 1wifk0-0001jH-Vg; Sat, 11 Jul 2026 18:00:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifjz-0001go-VY; Sat, 11 Jul 2026 18:00:08 -0400
+ id 1wifjy-0001f4-OJ; Sat, 11 Jul 2026 18:00:06 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifjx-0007v0-CY; Sat, 11 Jul 2026 18:00:07 -0400
+ id 1wifjw-0007ul-L3; Sat, 11 Jul 2026 18:00:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807180; bh=SqgggJubRVStc1gNTX7oPIDEaPV3dUMrYIYtU+T0x+w=;
+ t=1783807180; bh=sDSprV+FPAcs6Amd77X282EZcz1S09lIO7RsVybcig4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=BdGxWPgEREx+H9LIntMa/jMUy0nr7DfHMBMTYhLJKhnYqn+mRvugHnoWpVJVTWmw4
- gtaFJIsRhLXorkJLx1nG+gvFcpWIPSbfBLfMhFMcqs9AUQGq/BIsuuIu+C0LmtPUbA
- sXKtZy/ry2IC7E8IKR5J/ifvHW6g7quEGpXtMNrYdgABw7hXBPObHLvBKyg5FZZ0KR
- dkS97xuLV6EB0EB203/ifBzGPKffyO5xf3WakIdO70kJ8TQ6A1TTWmQjNd5sRHwaDs
- n3LtXZCMkDJQK57ZnGeMHy/TxEivbOBMGwv9o/T5YD+pPGFZgvErYIkGkyV5xCHtDo
- xNZt7hjZz9X0Q==
+ b=LTwgGxNcjxCuQzZvAvjnkJRYuAXUNPNSUIp0SOpcF6DlfYn41CZtpE/lZ6LlpMHgm
+ ivVuErjdr05l/zrZ8IXgoLrJUjtdWhWEikI+z5imLfrIAJGexnCHn5zE+s3SW7p9xi
+ LoSLwYuVfMAsaempQ0SupOMfmh6X9JV6qSrRiLV0gVb15ieqw6g1YPdIF3YYeEafms
+ PZ0eaQujBy3gSPgzzPV7dv6NGYjTRRHTqGPLb4KPLNUVooTwqZDlATEpqOJ/dWaAPI
+ tvb9W0bZqNBB4wQxC3HFAlHJ8DYLt2k1KhijriI5fvS61yV+XaPlQNEDJPEfeuNXTi
+ I2Rv9ATfa4Mpw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3FE7D1C0A95;
+ by isrv.corpit.ru (Postfix) with ESMTP id 3A12B1C0A94;
  Sun, 12 Jul 2026 00:59:40 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id EAF753EAF20;
+ by tsrv.corpit.ru (Postfix) with ESMTP id E54CA3EAF1F;
  Sun, 12 Jul 2026 00:59:49 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 4DD15132F7; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id 4B805132F5; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 10/81] 9pfs/xen: implement response_buffer_size
+Subject: [Stable-11.0.3 09/81] 9pfs/virtio: implement response_buffer_size
  callback
-Date: Sun, 12 Jul 2026 00:57:48 +0300
-Message-ID: <20260711215904.3757-10-mjt@tls.msk.ru>
+Date: Sun, 12 Jul 2026 00:57:47 +0300
+Message-ID: <20260711215904.3757-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
@@ -74,55 +73,46 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-Add and implement the response_buffer_size callback for the Xen
+Add and implement the response_buffer_size callback for the virtio
 transport.
 
-Returns the size of the response buffer from the rings in_sg, as limit
-for 9p server while generating a response for supplied PDU.
+Returns the actual current virtio response buffer size for the supplied
+PDU, which will be used as safety guard for limiting the response size
+when generating a 9p response.
 
-We use a local iovec array variable in_sg[2] instead of ring->sg, as
-ring->sg is only allocated by init_in_iov_from_pdu() and
-init_out_iov_from_pdu() during request / response processing.
-response_buffer_size() however may be called before those allocators,
-which would dereference ring->sg as NULL pointer. The local array
-avoids this.
-
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Link: https://lore.kernel.org/qemu-devel/3b139769eb1d3f9d91ee5281228e6467f9a08b99.1781287774.git.qemu_oss@crudebyte.com
+Link: https://lore.kernel.org/qemu-devel/5bbed2768f7a0da8fa2be183e75928c5d1ef691d.1781287774.git.qemu_oss@crudebyte.com
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit 69c8f5e6946f76a70b141a340c7aeb9d6a8e3c27)
+(cherry picked from commit 12bcbdca8ae9fcd5fec093e8ef5e70521e85e889)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
-index e31124bcf51..24c90d97ec9 100644
---- a/hw/9pfs/xen-9p-backend.c
-+++ b/hw/9pfs/xen-9p-backend.c
-@@ -268,6 +268,17 @@ static size_t xen_9p_msize_limit(V9fsState *s)
-     return limit;
+diff --git a/hw/9pfs/virtio-9p-device.c b/hw/9pfs/virtio-9p-device.c
+index 8c5d86cb66a..50dc93091d3 100644
+--- a/hw/9pfs/virtio-9p-device.c
++++ b/hw/9pfs/virtio-9p-device.c
+@@ -198,6 +198,15 @@ static size_t virtio_9p_msize_limit(V9fsState *s)
+     return (VIRTQUEUE_MAX_SIZE - 2) * guestPageSize;
  }
  
-+static size_t xen_9pfs_response_buffer_size(V9fsPDU *pdu)
++static size_t virtio_9p_response_buffer_size(V9fsPDU *pdu)
 +{
-+    Xen9pfsDev *priv = container_of(pdu->s, Xen9pfsDev, state);
-+    Xen9pfsRing *ring = &priv->rings[pdu->tag % priv->num_rings];
-+    struct iovec in_sg[2];
-+    int num;
++    V9fsState *s = pdu->s;
++    V9fsVirtioState *v = container_of(s, V9fsVirtioState, state);
++    VirtQueueElement *elem = v->elems[pdu->idx];
 +
-+    xen_9pfs_in_sg(ring, in_sg, &num, pdu->idx, 0);
-+    return iov_size(in_sg, num);
++    return iov_size(elem->in_sg, elem->in_num);
 +}
 +
- static const V9fsTransport xen_9p_transport = {
-     .pdu_vmarshal = xen_9pfs_pdu_vmarshal,
-     .pdu_vunmarshal = xen_9pfs_pdu_vunmarshal,
-@@ -275,6 +286,7 @@ static const V9fsTransport xen_9p_transport = {
-     .init_out_iov_from_pdu = xen_9pfs_init_out_iov_from_pdu,
-     .push_and_notify = xen_9pfs_push_and_notify,
-     .msize_limit = xen_9p_msize_limit,
-+    .response_buffer_size = xen_9pfs_response_buffer_size,
+ static const V9fsTransport virtio_9p_transport = {
+     .pdu_vmarshal = virtio_pdu_vmarshal,
+     .pdu_vunmarshal = virtio_pdu_vunmarshal,
+@@ -205,6 +214,7 @@ static const V9fsTransport virtio_9p_transport = {
+     .init_out_iov_from_pdu = virtio_init_out_iov_from_pdu,
+     .push_and_notify = virtio_9p_push_and_notify,
+     .msize_limit = virtio_9p_msize_limit,
++    .response_buffer_size = virtio_9p_response_buffer_size,
  };
  
- static int xen_9pfs_init(struct XenLegacyDevice *xendev)
+ static void virtio_9p_device_realize(DeviceState *dev, Error **errp)
 -- 
 2.47.3
 
