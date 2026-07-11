@@ -4,105 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16DE5C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 10:06:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72FA9C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 10:34:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiUb5-0000A7-0g; Sat, 11 Jul 2026 06:06:11 -0400
+	id 1wiV1b-0002JQ-K9; Sat, 11 Jul 2026 06:33:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wiUb3-0008Tn-7B; Sat, 11 Jul 2026 06:06:09 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1wiV1Z-0002DT-Kr; Sat, 11 Jul 2026 06:33:33 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wiUb0-0005IX-0c; Sat, 11 Jul 2026 06:06:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783764348; bh=u5xWAQlFWksu1bb3YDxTxSA4tPTrVS9t7StkCo/pwWo=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=v0UsogDKkZ84NTjvPOEP481UvE48zK/hmk82tMp42681i+Ptd5eXhX+m2rg4KsfQ1
- PO+1txTbfxVcVDNpU9nkElip78nHL/8zTgqXUy7KsERCsZI8xUsHdbkxXbNR8sSdnA
- 933gNnX0C8Mq3mnc45sHwVBlx+3juSZ1QzmGqU1pvP8wf2QyeZDCSsz3QzHsuFOGPJ
- +71go+MN4jcn3+k+i5wXc5ZkRhA3rrNvXbkZ+KftcqvvYclQKor+V+Nl9MS5HqgL4a
- HPg2SfV6zh381gm3o5Gi2DA86J4DcMrNJ0vgOJOzB0aCImsgbZB1bfl/cGFtvO2zyP
- tyC8Ap6X2pNXg==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E8C771C0740;
- Sat, 11 Jul 2026 13:05:48 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 924AA3EAB11;
- Sat, 11 Jul 2026 13:05:57 +0300 (MSK)
-Message-ID: <cd35fcc4-9bf1-41fa-9f25-179825069666@tls.msk.ru>
-Date: Sat, 11 Jul 2026 13:05:57 +0300
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1wiV1Y-0001LY-1m; Sat, 11 Jul 2026 06:33:33 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66B7BrsG364697; Sat, 11 Jul 2026 10:33:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=RrDYf/
+ qNCiPK+CrJPPw8yeiPATUnlsOUmW3TqGKgbfg=; b=i/Ejf9pcKrSsHOX4V8sVKn
+ rvgTRi9EHOxqvmrE10sblnaO5up1T433bYQ0eQqJVMEC7AaN+Bb3CR1M25A8kQXg
+ iDGiuP+Pbi/GlaqNZlByhRv6L1ORfye58SogkRSMmBpcpyl1d+FjpBowPAxuQnmD
+ bg6iRb2tcxDuyXQYXFGCuPz4Sdg+CH5AAvlhe7wZQpV3zxEMFTrlSB3DEYBlC720
+ YWIFvOoomW6dtnKd9Ubad8x7OFZUu2OvIZ/EsPdVtsHC5jE8O4au5ubNXWb0n8eg
+ kB4EpWlZVClgDzbZtXAYAyv/MfMsKoKsleyg79tflBSpX7+GyoUMu2XXBWdH2uNw
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbegb8vfw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 11 Jul 2026 10:33:26 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66BAJl1J018100;
+ Sat, 11 Jul 2026 10:33:25 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7f6ynrrx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 11 Jul 2026 10:33:25 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66BAXNgU2491338
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sat, 11 Jul 2026 10:33:24 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D964058054;
+ Sat, 11 Jul 2026 10:33:23 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AA6D158052;
+ Sat, 11 Jul 2026 10:33:19 +0000 (GMT)
+Received: from [9.124.217.8] (unknown [9.124.217.8])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Sat, 11 Jul 2026 10:33:19 +0000 (GMT)
+Message-ID: <13b853cb-7943-46ff-8a38-2f8624d04641@linux.ibm.com>
+Date: Sat, 11 Jul 2026 16:03:17 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] hw/pci-host/q35.c: Avoid early return in
- mch_write_config()
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Isaku Yamahata <isaku.yamahata@linux.intel.com>,
- Sean Christopherson <seanjc@google.com>
-References: <20260708121011.1653365-1-peter.maydell@linaro.org>
- <20260708121011.1653365-4-peter.maydell@linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260708121011.1653365-4-peter.maydell@linaro.org>
+Subject: Re: [PULL 07/35] target/ppc: Implement watchpoint debug facility for
+ v2.07S
+Content-Language: en-GB
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-ppc@nongnu.org, qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <Harsh.Prateek.Bora@ibm.com>
+References: <20230904090630.725952-1-clg@kaod.org>
+ <20230904090630.725952-8-clg@kaod.org>
+ <905b6448-d313-4808-b76b-d42f9ecfae55@oss.qualcomm.com>
+ <0e1cc6c4-c403-42c8-9bb9-d6d5a658965f@kaod.org>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <0e1cc6c4-c403-42c8-9bb9-d6d5a658965f@kaod.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=fOcJG5ae c=1 sm=1 tr=0 ts=6a521bf6 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22
+ a=pGLkceISAAAA:8 a=aow-egSQAAAA:8 a=BZWqBp3Lla1tp9cZoBsA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=gFNbaldVC-z-bsjSTzMo:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzExMDA5OCBTYWx0ZWRfXw5k7ecSmEUCs
+ Kb0HiPhWhWPveAuXk49O6omM4E9xjzx4NuoetZest2Vj2z9LOf2ynNJrCwmUdH9H674Y6on2fv2
+ NkkflmL5ULwAZstHDWnmcFBTGBKROEjyZ0hUtOqR2tPlGvYhfG59VvbffWTgvxjLrHF2aSXpFn5
+ x9KKB3v7c2FjWChs35yU7LdVpKO+uwgxy3W9oWHx/6QmEN1H9WXb4Y5s0UNpAnb5Kpf7JBj+iTj
+ p6/XmferS5SbJuQbTnVuCEWQpZ8AF5uDpR0LcTz/KX3ndJpQNMklN65ho0svjfmYesTkqEnFSDo
+ u487GTW0OFXvpI2YfZi90dDQriarl61iIhAVsmNGPOZWGPoHOD+zoxOhc7VpUI1B4elsQ1sYKR7
+ 4Fg38teGFJAtChxlGxh5dGE+CRQ4CRViyfgbIibLHvxSDPrv07ZAcN3nvuyKIJcbjczu00wagWK
+ CjrYtST9j1WXPndsxBA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzExMDA5OCBTYWx0ZWRfX1kuesSX1oF+d
+ BWHpIgneQpODPME7lEX8dbOW5Rs4uGQF0V/nIEgSrL+FtQ/0ObUglA1PkNytj2duS67ObR4IPXV
+ kwJl4gkFUBiv6dtzdQyUbbIrd8n2Hc4=
+X-Proofpoint-GUID: m1VSR_UuaiqvgS5U1dNLruB2vhb_YBf1
+X-Proofpoint-ORIG-GUID: fZcFuSy_afQw6578S9fJEEkmq1y12ZCY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-11_02,2026-07-10_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 impostorscore=0 suspectscore=0 adultscore=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 phishscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607110098
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,67 +135,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/8/26 15:10, Peter Maydell wrote:
-> In mch_write_config() we return early if has_smm_ranges is false.
-> This is slightly bug-prone because it leaves the door open to somebody
-> later adding non-SMM-specific code at the bottom of the function.
++ Richard, Shiva
+
+Hi Philippe, Cedric,
+
+On 11/07/26 4:19 am, Cédric Le Goater wrote:
+> + Harsh
 > 
-> This case isn't as bad as the one in realize, because the function is
-> a lot shorter.  But putting the handling of the three SMM specific
-> ranges into an if() rather than having an early return seems better.
-
-Yes, this is a good small refactoring, - at the time I haven't seen
-the same pattern in another place.
-
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-
-Thanks!
-
-/mjt
-
->   hw/pci-host/q35.c | 26 ++++++++++++--------------
->   1 file changed, 12 insertions(+), 14 deletions(-)
+> On 7/11/26 00:07, Philippe Mathieu-Daudé wrote:
+>> Hi,
+>>
+>> (committed as d5ee641cfc5c3cbd51282d0c6e996f990b9d62a3)
+>>
+>> On 4/9/23 11:06, Cédric Le Goater wrote:
+>>> From: Nicholas Piggin <npiggin@gmail.com>
+>>>
+>>> ISA v2.07S introduced the watchpoint facility based on the DAWR0
+>>> and DAWRX0 SPRs. Implement this in TCG.
+>>>
+>>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+>>> Signed-off-by: Cédric Le Goater <clg@kaod.org>
+>>> ---
+>>>   target/ppc/cpu.h         |  4 +++
+>>>   target/ppc/helper.h      |  2 ++
+>>>   target/ppc/internal.h    |  1 +
+>>>   target/ppc/spr_common.h  |  2 ++
+>>>   target/ppc/cpu.c         | 59 ++++++++++++++++++++++++++++++++++++++++
+>>>   target/ppc/cpu_init.c    |  6 ++--
+>>>   target/ppc/excp_helper.c | 52 ++++++++++++++++++++++++++++++++++-
+>>>   target/ppc/machine.c     |  1 +
+>>>   target/ppc/misc_helper.c | 10 +++++++
+>>>   target/ppc/translate.c   | 13 +++++++++
+>>>   10 files changed, 147 insertions(+), 3 deletions(-)
+>>
+>>
+>>> diff --git a/target/ppc/cpu.c b/target/ppc/cpu.c
+>>> index d9c665ce1819..62e1c15e3d33 100644
+>>> --- a/target/ppc/cpu.c
+>>> +++ b/target/ppc/cpu.c
+>>> @@ -128,6 +128,65 @@ void ppc_store_ciabr(CPUPPCState *env, 
+>>> target_ulong val)
+>>>       env->spr[SPR_CIABR] = val;
+>>>       ppc_update_ciabr(env);
+>>>   }
+>>> +
+>>> +void ppc_update_daw0(CPUPPCState *env)
 > 
-> diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
-> index e42b84b978..f4556ad03a 100644
-> --- a/hw/pci-host/q35.c
-> +++ b/hw/pci-host/q35.c
-> @@ -485,22 +485,20 @@ static void mch_write_config(PCIDevice *d,
->           mch_update_pciexbar(mch);
->       }
->   
-> -    if (!mch->has_smm_ranges) {
-> -        return;
-> -    }
-> +    if (mch->has_smm_ranges) {
-> +        if (ranges_overlap(address, len, MCH_HOST_BRIDGE_SMRAM,
-> +                           MCH_HOST_BRIDGE_SMRAM_SIZE)) {
-> +            mch_update_smram(mch);
-> +        }
->   
-> -    if (ranges_overlap(address, len, MCH_HOST_BRIDGE_SMRAM,
-> -                       MCH_HOST_BRIDGE_SMRAM_SIZE)) {
-> -        mch_update_smram(mch);
-> -    }
-> +        if (ranges_overlap(address, len, MCH_HOST_BRIDGE_EXT_TSEG_MBYTES,
-> +                           MCH_HOST_BRIDGE_EXT_TSEG_MBYTES_SIZE)) {
-> +            mch_update_ext_tseg_mbytes(mch);
-> +        }
->   
-> -    if (ranges_overlap(address, len, MCH_HOST_BRIDGE_EXT_TSEG_MBYTES,
-> -                       MCH_HOST_BRIDGE_EXT_TSEG_MBYTES_SIZE)) {
-> -        mch_update_ext_tseg_mbytes(mch);
-> -    }
-> -
-> -    if (ranges_overlap(address, len, MCH_HOST_BRIDGE_F_SMBASE, 1)) {
-> -        mch_update_smbase_smram(mch);
-> +        if (ranges_overlap(address, len, MCH_HOST_BRIDGE_F_SMBASE, 1)) {
-> +            mch_update_smbase_smram(mch);
-> +        }
->       }
->   }
->   
+> dawr0
+
+I guess it was kept as daw0 since it considers both dawr0 and dawrx0.
+
+> 
+>>> +{
+>>> +    CPUState *cs = env_cpu(env);
+>>> +    target_ulong deaw = env->spr[SPR_DAWR0] & PPC_BITMASK(0, 60);
+>>> +    uint32_t dawrx = env->spr[SPR_DAWRX0];
+>>> +    int mrd = extract32(dawrx, PPC_BIT_NR(48), 54 - 48);
+>>> +    bool dw = extract32(dawrx, PPC_BIT_NR(57), 1);
+>>> +    bool dr = extract32(dawrx, PPC_BIT_NR(58), 1);
+>>> +    bool hv = extract32(dawrx, PPC_BIT_NR(61), 1);
+>>> +    bool sv = extract32(dawrx, PPC_BIT_NR(62), 1);
+>>> +    bool pr = extract32(dawrx, PPC_BIT_NR(62), 1);
+>>
+>> Is it deliberate @sv and @pr are the same?
+> 
+> I think it's a typo. Should be 63. Harsh could you confirm please ?
+
+Yes, It (pr) should have been 63. As per ISA 3.1:
+
+61:63 PRIVM Privilege Mask
+61 HYP Hypervisor non-ultravisor state
+62 PNH Privileged Non-Hypervisor state
+63 PRO Problem state
+
+Shiva, Hope SV (supervisor) == PNH above ?
+
+I see another patch in-flight modifying code in this routine from 
+Richard for which I have comment, will post there.
+
+Thanks for catching this.
+
+regards,
+Harsh>
+> Thanks,
+> 
+> C.
+> 
 
 
