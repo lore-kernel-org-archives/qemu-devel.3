@@ -4,45 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8170C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:05:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23C76C44506
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:05:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifnR-0008Ly-5t; Sat, 11 Jul 2026 18:03:41 -0400
+	id 1wifnT-0000BS-3v; Sat, 11 Jul 2026 18:03:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifmk-0007AP-Ge; Sat, 11 Jul 2026 18:02:58 -0400
+ id 1wifnG-0007pa-Qe; Sat, 11 Jul 2026 18:03:32 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifmg-0008Tu-Vp; Sat, 11 Jul 2026 18:02:58 -0400
+ id 1wifnB-0000BO-CQ; Sat, 11 Jul 2026 18:03:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807180; bh=2/UMdZmGkrqCMWpA4A1Pr5CQLkrQP/7AvMXSoTxKWMM=;
+ t=1783807181; bh=nuTOMIE/WJ+A+UsDjoUlEZxCqmfVQBK6le+mjRTmLcA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=AfGFdYxFJ4ZlznojKjQP+GZ2uWs1aSg31uEE+Kqh4RnA/J/MsmxcCCNpIP+aM62Et
- p8BjJxTZa1sFFef70paiBOOnuAsb9EydyzUZbAmAlUq4eMfDhBxtbnsqGuPy7cMZGT
- xRWR/OURCWS9FMMRCG+euMa+sqL54POcAeL2lJdz01sn9kstaAAsNhZCVdlJjRTY2q
- /HdHnpWAKcLgRIFkThBsMSDmoe4ecpLhoJoDbJmk/iwaA62qkuABx+yB/pEwA80jzq
- yuN6w/UPMMEkeNFOrcWwQl4ISeGkKcJvO0cR89wCeUksSRO392xtKl6ex7s3YULimf
- RaeJUI/xdMeRQ==
+ b=t+YR1uQe4S2mb4QDj7EQqFwZYwuFlcy56EsU4Rx95zAiTXcVM5pg3KlqYcn2QpVSt
+ +8aCvXXS8UsVrlUJRDdY4r3XoxpaVlT3oUtPz3Bl770Q9Z9NZLdF5kKRo0dqeknqN9
+ KUGq4dQ7ZgKQrWEvlKI9OIhr7uVayCkURGsgjhMmGWTjxnqfRtFQbBp4mGkPc5YHh+
+ E4NHTZSce8uV34GWCB1mdmzoJh5FIOPOUJW2Udu8opGojIxx5jXGHPfgrKKlSCOrl4
+ UXNBZb1XKWnhHaK9AELRiwO7Y6vWAfgqvnZuadl0GQ0GrpUUbRhL4CmhcaO3jQ6POg
+ gdnAUkqAdHlnA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EF9F61C0AB0;
- Sun, 12 Jul 2026 00:59:40 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 167191C0AB5;
+ Sun, 12 Jul 2026 00:59:41 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A48E03EAF3B;
+ by tsrv.corpit.ru (Postfix) with ESMTP id C108A3EAF40;
  Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 8F1871332D; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id 9BE6A13337; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jesper Wendel Devantier <j.devantier@samsung.com>,
- jaeyeong <fin@spl.team>, Jesper Wendel Devantier <foss@defmacro.it>,
- Klaus Jensen <k.jensen@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 37/81] hw/nvme: fix FDP set FDP events
-Date: Sun, 12 Jul 2026 00:58:15 +0300
-Message-ID: <20260711215904.3757-37-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Farhan Ali <alifm@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 42/81] s390x/ioinst: Require strict length and format
+ for SEI CHSC handler
+Date: Sun, 12 Jul 2026 00:58:20 +0300
+Message-ID: <20260711215904.3757-42-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
@@ -71,115 +73,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jesper Wendel Devantier <j.devantier@samsung.com>
+From: Matthew Rosato <mjrosato@linux.ibm.com>
 
-Addresses an issue reported whereby user-provided event type values
-could trigger two issues:
-
- 1. if provided event_type == 0xff -> out-of-bounds access
-
- 2. if provided event_type > 7 -> generate a value too large for the
-    u8 event mask.
-
-This patch fixes (1) by correctly adjusting the length of the look-up
-array to be 256 values.
-This patch fixes (2) by:
-  a. changing the event_type mask to 64bit, matching
-     NvmeRuHandle.event_filter
-  b. Matching the behavior of Get Feature - FDP Events by skipping
-     event type values which we do not support.
-     5.2.26.1.21 of the 2.3 Base specification does not explicitly
-     tell us to reject unsupported event type values.
-  c. Documenting in the event type lookup table, that supporting
-     event types greater than 63 requires refactoring the masking
-     code.
+Ensure SEI commands that are received are of the appropriate length and
+format before handling.
 
 Cc: qemu-stable@nongnu.org
-Reported-by: jaeyeong <fin@spl.team>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3631
-Signed-off-by: Jesper Wendel Devantier <foss@defmacro.it>
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit ec917cd49918b6135546b4f6c02658a1913e3d7c)
+Fixes: 8cba80c3a0 ("s390: Add PCI bus support")
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Message-ID: <20260707070728.147203-5-borntraeger@linux.ibm.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+(cherry picked from commit 386268daea86e53d90baf99df5c7b8e2727ea783)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 8463fd3e9a0..28cc8d0e7dc 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -6242,10 +6242,6 @@ static uint16_t nvme_get_feature_fdp_events(NvmeCtrl *n, NvmeNamespace *ns,
-     for (uint8_t event_type = 0; event_type < FDP_EVT_MAX; event_type++) {
-         uint8_t shift = nvme_fdp_evf_shifts[event_type];
-         if (!shift && event_type) {
--            /*
--             * only first entry (event_type == 0) has a shift value of 0
--             * other entries are simply unpopulated.
--             */
-             continue;
-         }
+diff --git a/target/s390x/ioinst.c b/target/s390x/ioinst.c
+index 2320dd4c122..94619f92155 100644
+--- a/target/s390x/ioinst.c
++++ b/target/s390x/ioinst.c
+@@ -609,13 +609,27 @@ static int chsc_sei_nt2_have_event(void)
  
-@@ -6490,9 +6486,9 @@ static uint16_t nvme_set_feature_fdp_events(NvmeCtrl *n, NvmeNamespace *ns,
-     uint8_t noet = (cdw11 >> 16) & 0xff;
-     uint16_t ret, ruhid;
-     uint8_t enable = le32_to_cpu(cmd->cdw12) & 0x1;
--    uint8_t event_mask = 0;
-+    uint64_t event_mask = 0;
-     unsigned int i;
--    g_autofree uint8_t *events = g_malloc0(noet);
-+    g_autofree uint8_t *events = NULL;
-     NvmeRuHandle *ruh = NULL;
+ #define CHSC_SEI_NT0    (1ULL << 63)
+ #define CHSC_SEI_NT2    (1ULL << 61)
++#define CHSC_SEI_0_FMT 0x0f000000
+ static void ioinst_handle_chsc_sei(ChscReq *req, ChscResp *res)
+ {
+     uint64_t selection_mask = ldq_be_p(&req->param1);
++    uint32_t param0 = be32_to_cpu(req->param0);
+     uint8_t *res_flags = (uint8_t *)res->data;
++    uint16_t len = be16_to_cpu(req->len);
++    uint16_t resp_code;
+     int have_event = 0;
+     int have_more = 0;
  
-     assert(ns);
-@@ -6505,15 +6501,29 @@ static uint16_t nvme_set_feature_fdp_events(NvmeCtrl *n, NvmeNamespace *ns,
-         return NVME_INVALID_FIELD | NVME_DNR;
-     }
- 
-+    if (unlikely(noet == 0)) {
-+        return NVME_SUCCESS;
++    if (len != 0x0010) {
++        resp_code = 0x0003;
++        goto out_err;
 +    }
 +
-     ruhid = ns->fdp.phs[ph];
-     ruh = &n->subsys->endgrp.fdp.ruhs[ruhid];
- 
-+    events = g_malloc0(noet);
++    if (param0 & CHSC_SEI_0_FMT) {
++        resp_code = 0x0007;
++        goto out_err;
++    }
 +
-     ret = nvme_h2c(n, events, noet, req);
-     if (ret) {
-         return ret;
+     /* regarding architecture nt0 can not be masked */
+     have_event = !chsc_sei_nt0_get_event(res);
+     have_more = chsc_sei_nt0_have_event();
+@@ -642,6 +656,12 @@ static void ioinst_handle_chsc_sei(ChscReq *req, ChscResp *res)
+         res->code = cpu_to_be16(0x0005);
+         res->len = cpu_to_be16(CHSC_MIN_RESP_LEN);
      }
++    return;
++
++ out_err:
++    res->code = cpu_to_be16(resp_code);
++    res->len = cpu_to_be16(CHSC_MIN_RESP_LEN);
++    res->param = 0;
+ }
  
-     for (i = 0; i < noet; i++) {
-+        /*
-+         * We ignore requests to enable tracking of unsupported FDP event types
-+         */
-+        uint8_t event_type = events[i];
-+        uint8_t shift = nvme_fdp_evf_shifts[event_type];
-+        if (!shift && event_type) {
-+            continue;
-+        }
-         event_mask |= (1 << nvme_fdp_evf_shifts[events[i]]);
-     }
- 
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index d66f7dc82d5..ad0f8fa9678 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -160,7 +160,14 @@ typedef struct NvmeZone {
- #define NVME_FDP_MAX_NS_RUHS 32u
- #define FDPVSS 0
- 
--static const uint8_t nvme_fdp_evf_shifts[FDP_EVT_MAX] = {
-+/*
-+ * NOTE: Apart from event type 0, any event type with a shift value of 0 is
-+ * considered unsupported and thus skipped in get/set features calls.
-+ *
-+ * NOTE: NvmeRuHandle uses a 64bit event mask - refactor to support event types
-+ *       of 63 or greater.
-+ */
-+static const uint8_t nvme_fdp_evf_shifts[FDP_EVT_MAX + 1] = {
-     /* Host events */
-     [FDP_EVT_RU_NOT_FULLY_WRITTEN]      = 0,
-     [FDP_EVT_RU_ATL_EXCEEDED]           = 1,
+ static void ioinst_handle_chsc_unimplemented(ChscResp *res)
 -- 
 2.47.3
 
