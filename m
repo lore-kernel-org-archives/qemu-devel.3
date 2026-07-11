@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 939BFC44501
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:07:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1EEFC43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:07:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifqM-0002Ft-Ab; Sat, 11 Jul 2026 18:06:42 -0400
+	id 1wifqN-0002Tq-Qu; Sat, 11 Jul 2026 18:06:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifqL-00028r-2Z; Sat, 11 Jul 2026 18:06:41 -0400
+ id 1wifqL-00028B-9p; Sat, 11 Jul 2026 18:06:41 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifqI-0000mh-Uj; Sat, 11 Jul 2026 18:06:40 -0400
+ id 1wifqI-0000pc-Tq; Sat, 11 Jul 2026 18:06:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807181; bh=3Q6ZXG+BDAb7zFboOJ/J/8u/UJ71/GcqvySrUBpfbA8=;
+ t=1783807181; bh=gp1Ggtg5EqdOijSgwF0DQzKz56Xr32EOtA+zOkzXAGQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=cwxFX+AoL6vtcQVeqjHUomm+ZkYPakS5uJximYe3nfVn9kbc5VkcSJ+YsCMktSBh3
- R/fLT2IRhINyPv4dKySyL3/6p2+cZ9l90mQGUXqc76DU9kYGVjdHuCCIygHuZAkLkX
- 69WUr0ag9EVSg49DUb40wf7oe4hW7ojmSDl8OKO4fUkBFfg28Ujl2lG79p22VBkMz8
- Yz4uX6irWQtNdVJyIzxfyvO/+RpZHbP831a1wIPZxtWRid+bfRC7UwjXZu15Eze0nK
- W5dPXh7UFc6wwIgZFUXFcXhXZxehZJA/5JMhpER3dimxN7n9R3rH4PLoFQ/j3l2xZH
- MgqPdJHHVfIOg==
+ b=AaM4o2zTzCzbxLXzr10zHiJVbClMV0K4JcC0s4yci2MIXX6ZoJH+lmmvZVfGQH2KD
+ g8zQ3NWlHQlUyV8AmpJNHWljLWu1E4Jo0N5S+/5rQJi0ioDZm8etn0yuUfKwCxvPT4
+ 4W/kh47k6bBMFjzNiw+YTBS5WIooMEp++L+748k2bLkfgedF89XluwHGe0J/z/MywD
+ joTICXeQYRxaKVGBYiCxtTMlREjGfjoRcRb2Ds1eVmPbvNaStMhRqNweLHCBnAUOFB
+ o3Q0Z5MWSENZe7hgzYOuxvKBUGcbaPwPEfQpXmMmCLVvGL1zLlPjumYiNqiwI8Kvlf
+ DjbasQtIFbIQg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C339D1C0AD3;
+ by isrv.corpit.ru (Postfix) with ESMTP id C8C581C0AD4;
  Sun, 12 Jul 2026 00:59:41 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7A7363EAF5E;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 801CD3EAF5F;
  Sun, 12 Jul 2026 00:59:51 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E63DE13373; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id E8C0413375; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Nutty Liu <nutty.liu@hotmail.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Nutty Liu <nutty.liu@hotmail.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 72/81] hw/riscv/riscv-iommu-sys.c: record fault on
- IOMMU-generated MSI write
-Date: Sun, 12 Jul 2026 00:58:50 +0300
-Message-ID: <20260711215904.3757-72-mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 73/81] hw/riscv/riscv-iommu.c: check for misaligned
+ IOHGATP_PPN
+Date: Sun, 12 Jul 2026 00:58:51 +0300
+Message-ID: <20260711215904.3757-73-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
@@ -76,78 +76,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-The riscv-iommu spec requires that the IOMMU records its own generated
-MSI write faults.
+We must check if IOHGATP_PPN is 16kb aligned for non-bare GATP modes.
 
-Fixes: 01c1caa9d1 ("hw/riscv/virt.c, riscv-iommu-sys.c: add MSIx support")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3572
+Fixes: 69a9ae4836 ("hw/riscv/riscv-iommu: add ATS support")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3550
 Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Message-ID: <20260629165954.1018123-1-daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260702203616.1795588-2-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 58e801f74e6a4ebd3a0cf3ab1a96e1676b263efd)
+(cherry picked from commit bf274c54295c81aeda3835e2e0bc971f0bd57f47)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/riscv/riscv-iommu-sys.c b/hw/riscv/riscv-iommu-sys.c
-index bf87b0b4ea3..3314adeed23 100644
---- a/hw/riscv/riscv-iommu-sys.c
-+++ b/hw/riscv/riscv-iommu-sys.c
-@@ -26,6 +26,7 @@
- #include "qemu/host-utils.h"
- #include "qemu/module.h"
- #include "qom/object.h"
-+#include "target/riscv/cpu_bits.h"
- #include "trace.h"
- 
- #include "riscv-iommu.h"
-@@ -143,7 +144,20 @@ static void riscv_iommu_sysdev_send_MSI(RISCVIOMMUStateSys *s,
- 
-     address_space_stl_le(&address_space_memory, msi_addr,
-                          msi_data, MEMTXATTRS_UNSPECIFIED, &result);
--    trace_riscv_iommu_sys_msi_sent(vector, msi_addr, msi_data, result);
-+
-+    if (result == MEMTX_OK) {
-+        trace_riscv_iommu_sys_msi_sent(vector, msi_addr, msi_data, result);
-+    } else {
-+        /* Record an access fault error in the fault queue */
-+        struct riscv_iommu_fq_record ev = { 0 };
-+        RISCVIOMMUState *iommu = &s->iommu;
-+
-+        ev.hdr = set_field(ev.hdr, RISCV_IOMMU_FQ_HDR_CAUSE,
-+                           RISCV_IOMMU_FQ_CAUSE_MSI_WR_FAULT);
-+        ev.hdr = set_field(ev.hdr, RISCV_IOMMU_FQ_HDR_TTYPE,
-+                           RISCV_IOMMU_FQ_TTYPE_UADDR_WR);
-+        riscv_iommu_fault(iommu, &ev);
-+    }
- }
- 
- static void riscv_iommu_sysdev_notify(RISCVIOMMUState *iommu,
 diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 4330b2257d4..3f0392c2528 100644
+index 3f0392c2528..e9e204109a9 100644
 --- a/hw/riscv/riscv-iommu.c
 +++ b/hw/riscv/riscv-iommu.c
-@@ -108,8 +108,7 @@ void riscv_iommu_notify(RISCVIOMMUState *s, int vec_type)
+@@ -829,6 +829,21 @@ static bool riscv_iommu_validate_device_ctx(RISCVIOMMUState *s,
+         return false;
      }
- }
  
--static void riscv_iommu_fault(RISCVIOMMUState *s,
--                              struct riscv_iommu_fq_record *ev)
-+void riscv_iommu_fault(RISCVIOMMUState *s, struct riscv_iommu_fq_record *ev)
- {
-     uint32_t ctrl = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_FQCSR);
-     uint32_t head = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_FQH) & s->fq_mask;
-diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
-index 2a9f6fccd52..7a1523e9fd8 100644
---- a/hw/riscv/riscv-iommu.h
-+++ b/hw/riscv/riscv-iommu.h
-@@ -99,6 +99,7 @@ void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
- void riscv_iommu_set_cap_igs(RISCVIOMMUState *s, riscv_iommu_igs_mode mode);
- void riscv_iommu_reset(RISCVIOMMUState *s);
- void riscv_iommu_notify(RISCVIOMMUState *s, int vec_type);
-+void riscv_iommu_fault(RISCVIOMMUState *s, struct riscv_iommu_fq_record *ev);
++    if (gatp != RISCV_IOMMU_DC_IOHGATP_MODE_BARE) {
++        uint64_t iohgatp_ppn = get_field(ctx->gatp,
++                                         RISCV_IOMMU_DC_IOHGATP_PPN);
++
++        /*
++         * One of the conditions for a misconfigured DDT entry
++         * according to the riscv-spec: "DC.iohgatp.MODE is not
++         * Bare and the root page table (address) determined by
++         * DC.iohgatp.PPN is not aligned to a 16-KiB boundary."
++         */
++        if (PPN_PHYS(iohgatp_ppn) & ((1ULL << 14) - 1)) {
++            return false;
++        }
++    }
++
+     fsc_mode = get_field(ctx->satp, RISCV_IOMMU_DC_FSC_MODE);
  
- typedef struct RISCVIOMMUContext RISCVIOMMUContext;
- /* Device translation context state. */
+     if (ctx->tc & RISCV_IOMMU_DC_TC_PDTV) {
 -- 
 2.47.3
 
