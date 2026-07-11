@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13AADC44507
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:06:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 494BBC44506
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:06:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifmn-0007HR-Ct; Sat, 11 Jul 2026 18:03:02 -0400
+	id 1wifnS-00006r-KE; Sat, 11 Jul 2026 18:03:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifme-00077b-6q; Sat, 11 Jul 2026 18:02:53 -0400
+ id 1wifnB-0007lu-Lc; Sat, 11 Jul 2026 18:03:26 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifmc-0008TK-Km; Sat, 11 Jul 2026 18:02:51 -0400
+ id 1wifn9-0000B4-Tl; Sat, 11 Jul 2026 18:03:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807180; bh=3RD5JNOkSPrWlHNEmA/+dJRj4CoMpMAytqA+nPxw8uA=;
+ t=1783807181; bh=zivBvMtzxtYkIZOGgfUxFwYqxl7Hte03wmnIXCt/eyk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=wBP3KE+yLd8eolA8NCcPdUUjrYz92P5129QQmtSIygRqmtyB1lAskK1uSd5mp+xIT
- xvagADwqLHNAytlJFSrQjVh+0LSzy7Uk5TA3Vj9CcL821+WhDloJFYJevjWjrXiwuP
- SeWVw56QgVNfoSVIniy09j3+VYRV62KHal2vbl6OFYjgP5hftkpZlS7P9YO4dVzrRO
- X/cU18+n/WEAPQB6Ap5y4GGV11y8ktOD05FJ/VjZx+4e8hYaa71NgNgT2Wjt8UwgPl
- KOIhvJsSjasrQoKBVD8ocsxnSWRky/PcJyRlLsUDb1TJNi4K8YseJsluboswzI9a+R
- kUeQAi/eXIoIQ==
+ b=lb1sdgz1pdjdS9mN/KM2+IslWhTHR2kZ/XU2KZCRvprBtZuF9oINmy+QHws/BSrwL
+ N9FQS6RLPahehY15Qnw9wUZjNK58DeqVGqMrCh9wCngU5jSGdDNqxZ2DTjXizMbaBH
+ a04ZuOKAtL0r8+Tg1ZUPeSCBRKTarmPXhXUo7QtDcgCSNJ+oKHPR+I8eNjcfACWPLf
+ uNVFyMlb7+x+CusThQsvIgjLh4bsBsgtXiJjVeSt21dPdqk0tX79SbacyxDSfx4ng5
+ +/1Pxd0PzDIgoM6RKyqLbX/g+VnBaYia9D7M7KqYTjLdjY3iClfszRZ0s7IckUUiYN
+ SoE4QnCJMFPow==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E3D0B1C0AAE;
- Sun, 12 Jul 2026 00:59:40 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1073F1C0AB4;
+ Sun, 12 Jul 2026 00:59:41 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 98C353EAF39;
+ by tsrv.corpit.ru (Postfix) with ESMTP id BB6A13EAF3F;
  Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 89F8B13329; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id 9952313335; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Oliver Upton <oupton@kernel.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 35/81] target/arm: Only evaluate SCR_EL3.PIEN if
- ARM_FEATURE_EL3 is present
-Date: Sun, 12 Jul 2026 00:58:13 +0300
-Message-ID: <20260711215904.3757-35-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Farhan Ali <alifm@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 41/81] s390x/pci: Shrink RPCIT ranges to registered
+ window
+Date: Sun, 12 Jul 2026 00:58:19 +0300
+Message-ID: <20260711215904.3757-41-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
@@ -72,46 +73,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Oliver Upton <oupton@kernel.org>
+From: Matthew Rosato <mjrosato@linux.ibm.com>
 
-Running KVM with (as of writing, out-of-tree) support for FEAT_S2PIE
-on -cpu max gets stuck in an infinite loop of stage-2 permission faults
-due to the PTW incorrectly using an effective value of 0 for S2PIR_EL2.
+Today, if a RPCIT instruction is presented from the guest whose range
+exceeds the previously-registered IOAT, QEMU will process the range
+so long as 1) the specified range at least partially overlaps with
+what was previously registered and 2) the guest has valid IOAT entries
+in its table.  If the entries are not present (invalid), then the
+RPCIT will unnecessarily spend time reporting the invalid
+region/segment entries.
 
-Similar to how S1PIE is handled, only use the IMPLEMENTATION SPECIFIC
-value of 0 for S2PIR_EL2 if EL3 is implemented and PIEN=0.
+Optimize this path by exiting immediately if the requested range falls
+completely outside of the previously-registered range or if the
+requested range ends before it starts (which would only occur if the
+guest-specified address + length would overflow a u64).  Otherwise,
+clamp the request to only the portion of the range that overlaps with
+what was previously registered, effectively ignoring the portion
+outside of the registered range.
 
 Cc: qemu-stable@nongnu.org
-Fixes: a811c5dafb ("target/arm: Implement get_S2prot_indirect")
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Oliver Upton <oupton@kernel.org>
-Message-id: 20260626231738.947317-1-oupton@kernel.org
-[PMM: removed hardcoded tab]
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit d77a93ca4b53da18ce01c5b7678e0eb435851919)
+Fixes: 5d1abf2344 ("s390x/pci: enforce zPCI state checking")
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Message-ID: <20260707070728.147203-4-borntraeger@linux.ibm.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+(cherry picked from commit b8c8ec1d752661e1904d089c77d8617c4b6bfb5a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 7b993bb5b39..df98cf87aaf 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -1392,9 +1392,14 @@ static int get_S2prot_indirect(CPUARMState *env, GetPhysAddrResult *result,
-                   PAGE_READ | PAGE_WRITE },
-     };
+diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
+index ef20f7645eb..b7de23c7d2c 100644
+--- a/hw/s390x/s390-pci-inst.c
++++ b/hw/s390x/s390-pci-inst.c
+@@ -770,10 +770,16 @@ int rpcit_service_call(S390CPU *cpu, uint8_t r1, uint8_t r2, uintptr_t ra)
+         goto err;
+     }
  
--    uint64_t pir = (env->cp15.scr_el3 & SCR_PIEN ? env->cp15.s2pir_el2 : 0);
--    int s2pi = extract64(pir, pi_index * 4, 4);
-+    uint64_t pir = env->cp15.s2pir_el2;
-+    int s2pi;
+-    if (end < iommu->pba || start > iommu->pal) {
++    if (end < start || end < iommu->pba || start > iommu->pal) {
+         error = ERR_EVENT_OORANGE;
+         goto err;
+     }
++    /*
++     * If the specified range at least partially overlaps the registered
++     * aperture, clamp the request to the aperture and ignore the rest.
++     */
++    sstart = MAX(start, iommu->pba);
++    end = MIN(end, iommu->pal + 1);
  
-+    if (arm_feature(env, ARM_FEATURE_EL3) && !(env->cp15.scr_el3 & SCR_PIEN)) {
-+        pir = 0;
-+    }
-+
-+    s2pi = extract64(pir, pi_index * 4, 4);
-     result->f.prot = perm_table[s2pi][2];
-     return perm_table[s2pi][s1_is_el0];
- }
+  retry:
+     start = sstart;
 -- 
 2.47.3
 
