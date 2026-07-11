@@ -4,53 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C398C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:04:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 421D4C44506
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:04:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifnJ-0007pP-Ux; Sat, 11 Jul 2026 18:03:34 -0400
+	id 1wifmw-0007PG-Hm; Sat, 11 Jul 2026 18:03:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifmi-0007A8-T9; Sat, 11 Jul 2026 18:02:58 -0400
+ id 1wifmd-00077Q-3H; Sat, 11 Jul 2026 18:02:52 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifme-0008Tj-Vh; Sat, 11 Jul 2026 18:02:55 -0400
+ id 1wifmb-0008Si-8h; Sat, 11 Jul 2026 18:02:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807180; bh=3cwmI49HXM72Da66YxfJEp4L0b8B2GoQ2HW28gHV5eQ=;
+ t=1783807180; bh=N6CrWlcueapDe57i8B21TJMFx1p1nROoiikxrxvS2aY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=NZ0hxNYn9zc36XFmjP4FCPILYy14Req/iG5nPPfHydHbcoDjSfw+gns/Jo0EHut6C
- 76Z8/GwC3DuXa0JAhBE2Rq3hSKUi4IOJpXdlTJAb6PLmqfJX4tKlkAnkUsBivA56it
- pHmzYEtQ2U7fsyWY2qRswjSS4xuBm9P8x55WowNcKM9fksLf9LBc0JFeSivT9Ob3OT
- C12YeqUhD5waMhDtkJ1Mgh8KvtrMDbEmFT5ESPs0NQr5RYwI+a2yf1VA/4jtM4c9Y9
- Q0lu5VNsY/yJUsm0sszsaaKldveiA3jcP0eKhOv6cDm01xqhxL4gZlPj9tClFZqnjD
- kDrtPgGobfihw==
+ b=RLiFjxvdyMOuyfSXZNQDIYmAdTA3rMQWavHK4ZEXI8y2z7xN+hQtvrj6Xk1DLlrko
+ 0YxvPDoUKqUiiLI4SjQZAmr0ZMkfW4JrX+xBgtAQ8qm6SMuZlyK3i2opawUcq/Xp8q
+ scP/lHjp21BZXj4mzRPZRAz54HwiyO7j1FTgWkpftMe7KOJXgsNk0qxk67cQXVeRno
+ iZ610ERfSkb4dGzkBr5lR2yojcJlnDCDbuqKg7HzhDZzXlvCgdRJZ+jFrLGcN43979
+ I3omPS67wHaQuDH44z9SdG4YQiFAtkq0qZ7+AEEcBWdSOnzkZdPa7HX0zgWNp7ZC5S
+ SsIhA3asgeqcA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E8CB71C0AAF;
+ by isrv.corpit.ru (Postfix) with ESMTP id DBA6F1C0AAD;
  Sun, 12 Jul 2026 00:59:40 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9DC0A3EAF3A;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 91D0C3EAF38;
  Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 8C89D1332B; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id 87A1713327; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Arnd Bergmann <arnd@arndb.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 36/81] hw/arm: use cortex-a9 mpcore base for CBAR on
- npcm7xx machines
-Date: Sun, 12 Jul 2026 00:58:14 +0300
-Message-ID: <20260711215904.3757-36-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Feifan Qian <bea1e@proton.me>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 34/81] hw/net/fsl_etsec: validate FCB offsets in
+ process_tx_fcb()
+Date: Sun, 12 Jul 2026 00:58:12 +0300
+Message-ID: <20260711215904.3757-34-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -75,49 +71,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Feifan Qian <bea1e@proton.me>
 
-CBAR is an IMPDEF register and according to the A9 TRM [1]:
+The TX Frame Control Block (FCB) is prepended to a TX frame when
+BD_TX_TOEUN is set. It contains two guest-controlled u8 offset
+fields that process_tx_fcb() uses to locate L3/L4 headers within
+the frame buffer:
 
-  In Cortex-A9 MPCore implementations, the base address is reset to
-  PERIPHBASE[31:13] so that software can determine the location of the
-  private memory region [2].
+  l3_header_offset = FCB byte 3 (0..255)
+  l4_header_offset = FCB byte 2 (0..255)
 
-If it doesn't we will confuse the Linux kernel as it probes the system
-SCU registers [3] and erroneously assumes the system is a buggy Aegis SOC
-and nerf the emission of SEV instructions, deadlocking any WFE's in
-the kernel (or QEMU smpboot code).
+These offsets are applied without any bounds check. When the
+UDP-no-CTU branch is taken, the function writes zero to
+l4_header[6] and l4_header[7]. With both offsets set to 0xFF the
+write target is:
 
-[1] https://developer.arm.com/documentation/ddi0388/i/system-control/register-descriptions/configuration-base-address-register
-[2] https://developer.arm.com/documentation/ddi0407/g/Introduction/Private-Memory-Region
-[3] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm/kernel/head.S?h=v7.1#n550
+  tx_buffer + 8 + 255 + 255 + 6/7 = tx_buffer + 525
 
-Fixes: 2d8f048c25ab ("hw/arm: Add NPCM730 and NPCM750 SoC models")
+A malicious guest can therefore corrupt up to 509 bytes of heap
+memory beyond a minimally-sized (16 B) TX frame.
+
+Fix: reject the frame and log a guest error when the minimum
+required buffer length
+
+  8 (FCB) + l3_header_offset + l4_header_offset + 8
+
+exceeds tx_buffer_len. Move the l3_header and l4_header pointer
+declarations past the new guard so that out-of-bounds pointers
+are never materialised.
+
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3517
+Signed-off-by: Feifan Qian <bea1e@proton.me>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260624103049.884930-2-alex.bennee@linaro.org
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 62b425bec3d52a326781025d1c51eb4d65ece49e)
+(cherry picked from commit bc22c7e4187a619bf9ff7776288b588322e9ee41)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/arm/npcm7xx.c b/hw/arm/npcm7xx.c
-index c2bbcd89dbc..c27f149c04a 100644
---- a/hw/arm/npcm7xx.c
-+++ b/hw/arm/npcm7xx.c
-@@ -492,7 +492,7 @@ static void npcm7xx_realize(DeviceState *dev, Error **errp)
-     /* CPUs */
-     for (i = 0; i < nc->num_cpus; i++) {
-         object_property_set_int(OBJECT(&s->cpu[i]), "reset-cbar",
--                                NPCM7XX_GIC_CPU_IF_ADDR, &error_abort);
-+                                NPCM7XX_CPUP_BA, &error_abort);
-         object_property_set_bool(OBJECT(&s->cpu[i]), "reset-hivecs", true,
-                                  &error_abort);
+diff --git a/hw/net/fsl_etsec/rings.c b/hw/net/fsl_etsec/rings.c
+index 22660c32b84..e60303f52cf 100644
+--- a/hw/net/fsl_etsec/rings.c
++++ b/hw/net/fsl_etsec/rings.c
+@@ -176,15 +176,30 @@ static void tx_padding_and_crc(eTSEC *etsec, uint32_t min_frame_len)
+ static void process_tx_fcb(eTSEC *etsec)
+ {
+     uint8_t flags = (uint8_t)(*etsec->tx_buffer);
+-    /* L3 header offset from start of frame */
++    /* L3 header offset from start of frame (FCB byte 3) */
+     uint8_t l3_header_offset = (uint8_t)*(etsec->tx_buffer + 3);
+-    /* L4 header offset from start of L3 header */
++    /* L4 header offset from start of L3 header (FCB byte 2) */
+     uint8_t l4_header_offset = (uint8_t)*(etsec->tx_buffer + 2);
++    uint8_t *l3_header;
++    uint8_t *l4_header;
++    int csum = 0;
++
++    /*
++     * Validate FCB header offsets before pointer arithmetic. The highest
++     * byte accessed is l4_header[7], at offset
++     *   8 (FCB size) + l3_header_offset + l4_header_offset + 7
++     * from tx_buffer. Drop the frame if this exceeds the buffer length.
++     */
++    if (etsec->tx_buffer_len < 8u + l3_header_offset + l4_header_offset + 8u) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "eTSEC: FCB offsets exceed frame length, dropping\n");
++        return;
++    }
++
+     /* L3 header */
+-    uint8_t *l3_header = etsec->tx_buffer + 8 + l3_header_offset;
++    l3_header = etsec->tx_buffer + 8 + l3_header_offset;
+     /* L4 header */
+-    uint8_t *l4_header = l3_header + l4_header_offset;
+-    int csum = 0;
++    l4_header = l3_header + l4_header_offset;
  
+     /* if packet is IP4 and IP checksum is requested */
+     if (flags & FCB_TX_IP && flags & FCB_TX_CIP) {
 -- 
 2.47.3
 
