@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB3B8C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:58:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC96AC43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:58:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigdh-0002rO-PN; Sat, 11 Jul 2026 18:57:43 -0400
+	id 1wigdy-0003dt-83; Sat, 11 Jul 2026 18:57:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigdT-0002kM-ND; Sat, 11 Jul 2026 18:57:28 -0400
-Received: from pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.13.214.179])
+ id 1wigdx-0003Yw-05; Sat, 11 Jul 2026 18:57:57 -0400
+Received: from pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([34.218.115.239])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigdR-0001MP-Bc; Sat, 11 Jul 2026 18:57:27 -0400
+ id 1wigdv-0001PN-BT; Sat, 11 Jul 2026 18:57:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783810645; x=1815346645;
+ t=1783810675; x=1815346675;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=jOWQ3MPKNOWbOTZvD1jfyggpxHQg9YeLUu3eSDISNmU=;
- b=LMUGEkfpeGM7UdCSUyMyyMmeZ08rL0jfwj/F8f2UkTHdnGkQZST4EMw3
- sKSVsPuzpByHKJjXTWs3WOgT9JLp3ul81OKCUk3RBMw2JG2zQgeeeh+H6
- m8yrw7kP4nT7LzRkd7Dv0HGaGaK80+Cq/CkCDnBg1jArcufwrriWo2Rhe
- SicIH2JXdjAy61gRruHWpROP6WZsKxQevQuckQnAEIA+1Gy5H17ccm2ap
- OQonhvADI4JHFD34n3KVz9mBIoblXwqC5xwv+JziO/8afwD+BMpLsfRyn
- z0YKHmCzMOZzkPMhID139Zum7tgK93EkNhaGCfoLAe5QTsWCjcSsdrZo1 A==;
-X-CSE-ConnectionGUID: qzQbjqiTQWSbTGEt3b6D3Q==
-X-CSE-MsgGUID: STEgFdRuR3qcPoDsdwU3VA==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23479604"
-Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
- by internal-pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:57:21 +0000
-Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.51:12053]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.40.123:2525]
+ bh=Ma/DwAjwZrLcqKA98spRqUTG7sd6afeYhtmjFkqce2M=;
+ b=MmOVFV4j7ToMhTfH/GWC3VI5GuScwXruas5Q5G3J9om/iQktoWFk3wc4
+ AKM9HOkU3f8R1D60GRLJ9Hk42O2VXM0tQ7RWy+EFGqS9mtId29lIzfPca
+ 1YMPRlS94mMNAWaak7gxL/UwNTZDhpIPEBraNBCiQcXy0+kuzrS+qmyKj
+ PGrNcdRwXOCAOXBtKBCP+jEYAebi1uhCoGkDs/Q9833b8WdkqhCqvWa3/
+ GazcA2YEtCmf5XtW7hS8P2OQMhh/DehxRbTCk1kXy2I0Yr7Mm0sAbTOSP
+ KFIV391bQ8JmiAC3G0tHcPoHR9KhNjVYSxlKX4plVEl5v+0iug4zyFOwp w==;
+X-CSE-ConnectionGUID: 3HTAobOWSR+ialyx60XHPA==
+X-CSE-MsgGUID: ecozqXy4TZKqeVEkBQYEIQ==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23296857"
+Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
+ by internal-pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:57:51 +0000
+Received: from EX19MTAUWC002.ant.amazon.com [205.251.233.111:11199]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.35.214:2525]
  with esmtp (Farcaster)
- id 978060d7-e4f5-46cc-a897-f56672c31de4; Sat, 11 Jul 2026 22:57:21 +0000 (UTC)
-X-Farcaster-Flow-ID: 978060d7-e4f5-46cc-a897-f56672c31de4
+ id b383e339-ef54-46c7-9d12-f452bd2223db; Sat, 11 Jul 2026 22:57:51 +0000 (UTC)
+X-Farcaster-Flow-ID: b383e339-ef54-46c7-9d12-f452bd2223db
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
+ EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:57:21 +0000
+ Sat, 11 Jul 2026 22:57:51 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:57:12 +0000
+ Sat, 11 Jul 2026 22:57:42 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,10 +91,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 077/134] hw/usb: Give -usbdevice and auto-hub devices a
- QOM parent
-Date: Sat, 11 Jul 2026 22:36:10 +0000
-Message-ID: <20260711223707.42139-78-graf@amazon.com>
+Subject: [RFC PATCH 078/134] hw/audio: Give -audio model= devices a QOM parent
+Date: Sat, 11 Jul 2026 22:36:11 +0000
+Message-ID: <20260711223707.42139-79-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -102,11 +101,11 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D038UWC002.ant.amazon.com (10.13.139.238) To
+X-ClientProxiedBy: EX19D036UWC003.ant.amazon.com (10.13.139.214) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=52.13.214.179;
+Received-SPF: pass client-ip=34.218.115.239;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
@@ -130,79 +129,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The three remaining orphan-creating sites in hw/usb are all
-command-line and hotplug-adjacent code paths that always run after
-the machine is up:
+audio_model_devices_init() is the '-audio model=' command-line path,
+so parent the created device under /machine/peripheral-anon like
+-device without id= would.
 
-  usb_claim_port() auto-hub  -> child of the USB host controller
-                                 (bus->qbus.parent)
-  usbdevice_create()         -> /machine/peripheral-anon, same as
-                                 -device without id=
-  usb_braille_init()          -> ditto (a .usbdevice_init callback)
+The intel-hda .init helper for '-audio model=hda' additionally
+creates an hda-duplex codec on the controller's HDA bus; the codec
+is a natural child of the controller device it just spawned.
 
-Switch to qdev_new()/qdev_try_new() with an explicit parent and use
-plain qdev_realize() since the reference is now held by the parent's
-child<> property.
+Both sites drop the extra unref: the child<> property now holds the
+reference.
 
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/usb/bus.c        | 15 ++++++++++-----
- hw/usb/dev-serial.c |  3 ++-
- 2 files changed, 12 insertions(+), 6 deletions(-)
+ hw/audio/intel-hda.c | 4 ++--
+ hw/audio/model.c     | 5 +++--
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/hw/usb/bus.c b/hw/usb/bus.c
-index d45cce7666..725b0303b1 100644
---- a/hw/usb/bus.c
-+++ b/hw/usb/bus.c
-@@ -410,9 +410,10 @@ void usb_claim_port(USBDevice *dev, Error **errp)
-     } else {
-         if (bus->nfree == 1 && strcmp(object_get_typename(OBJECT(dev)), "usb-hub") != 0) {
-             /* Create a new hub and chain it on */
--            hub = USB_DEVICE(qdev_try_new_orphan("usb-hub"));
-+            hub = USB_DEVICE(qdev_try_new(OBJECT(bus->qbus.parent),
-+                                          "auto-hub[*]", "usb-hub"));
-             if (hub) {
--                usb_realize_and_unref(hub, bus, NULL);
-+                qdev_realize(DEVICE(hub), &bus->qbus, NULL);
-             }
-         }
-         if (bus->nfree == 0) {
-@@ -661,13 +662,17 @@ USBDevice *usbdevice_create(const char *driver)
-         return NULL;
-     }
+diff --git a/hw/audio/intel-hda.c b/hw/audio/intel-hda.c
+index cd4743a405..f51c98511a 100644
+--- a/hw/audio/intel-hda.c
++++ b/hw/audio/intel-hda.c
+@@ -1313,9 +1313,9 @@ static void intel_hda_and_codec_init(const char *audiodev)
+     intel_hda = qdev_device_add_from_qdict(props, false, &error_fatal);
+     hdabus = QLIST_FIRST(&intel_hda->child_bus);
  
--    dev = f->usbdevice_init ? f->usbdevice_init()
--                            : USB_DEVICE(qdev_new_orphan(f->name));
-+    if (f->usbdevice_init) {
-+        dev = f->usbdevice_init();
-+    } else {
-+        dev = USB_DEVICE(qdev_new(machine_get_container("peripheral-anon"),
-+                                  "usbdevice[*]", f->name));
-+    }
-     if (!dev) {
-         error_report("Failed to create USB device '%s'", f->name);
-         return NULL;
-     }
--    if (!usb_realize_and_unref(dev, bus, &err)) {
-+    if (!qdev_realize(DEVICE(dev), &bus->qbus, &err)) {
-         error_reportf_err(err, "Failed to initialize USB device '%s': ",
-                           f->name);
-         object_unparent(OBJECT(dev));
-diff --git a/hw/usb/dev-serial.c b/hw/usb/dev-serial.c
-index 81897b2d76..4ae3faf656 100644
---- a/hw/usb/dev-serial.c
-+++ b/hw/usb/dev-serial.c
-@@ -622,7 +622,8 @@ static USBDevice *usb_braille_init(void)
-         return NULL;
-     }
- 
--    dev = USB_DEVICE(qdev_new_orphan("usb-braille"));
-+    dev = USB_DEVICE(qdev_new(machine_get_container("peripheral-anon"),
-+                              "usbdevice[*]", "usb-braille"));
-     qdev_prop_set_chr(&dev->qdev, "chardev", cdrv);
-     return dev;
+-    codec = qdev_new_orphan("hda-duplex");
++    codec = qdev_new(OBJECT(intel_hda), "codec", "hda-duplex");
+     qdev_prop_set_string(codec, "audiodev", audiodev);
+-    qdev_realize_and_unref(codec, hdabus, &error_fatal);
++    qdev_realize(codec, hdabus, &error_fatal);
+     object_unref(intel_hda);
  }
+ 
+diff --git a/hw/audio/model.c b/hw/audio/model.c
+index bd8ca35153..308b899459 100644
+--- a/hw/audio/model.c
++++ b/hw/audio/model.c
+@@ -110,10 +110,11 @@ void audio_model_init(void)
+     }
+ 
+     if (c->typename) {
+-        DeviceState *dev = qdev_new_orphan(c->typename);
++        DeviceState *dev = qdev_new(machine_get_container("peripheral-anon"),
++                                    "audio[*]", c->typename);
+         BusState *bus = qdev_find_default_bus(DEVICE_GET_CLASS(dev), &error_fatal);
+         qdev_prop_set_string(dev, "audiodev", audiodev_id);
+-        qdev_realize_and_unref(dev, bus, &error_fatal);
++        qdev_realize(dev, bus, &error_fatal);
+     } else {
+         c->init(audiodev_id);
+     }
 -- 
 2.47.1
 
