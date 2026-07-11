@@ -4,88 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE39DC43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 00:17:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45110C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 04:49:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiLOG-0002nW-TI; Fri, 10 Jul 2026 20:16:20 -0400
+	id 1wiPdl-0005db-N6; Sat, 11 Jul 2026 00:48:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sun4qemu@gmail.com>)
- id 1wiJe7-0007t4-St
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 18:24:35 -0400
-Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sun4qemu@gmail.com>)
- id 1wiJe6-0006iQ-CN
- for qemu-devel@nongnu.org; Fri, 10 Jul 2026 18:24:35 -0400
-Received: by mail-lj1-x229.google.com with SMTP id
- 38308e7fff4ca-39c8dbf4f38so13733551fa.3
- for <qemu-devel@nongnu.org>; Fri, 10 Jul 2026 15:24:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783722272; x=1784327072; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=a1VcYo6Li8HN5FVWYK0KPdgZk8BbnfCQuFN3FFztCGY=;
- b=BT9xB0UXH09QwLyNyc2IDdEcW6kMG5dHvjv4KoAodW6Xaai/bMi7c4CWxmcpDTVgjb
- kU9ZF40YDrfeHaGsTo9vxWw+4TJ96nJX9ElfvxdojRzLB/c8Qc+3YcsDrCvnUXNyWEha
- xbLF2Z060zoRJ4EXYCp18qoJepVgzaiEH4kS5mcvEqm1t57yX77zttAhjvGEC16r7Re6
- QChZ0KMiPz3uE2ZuCKbdKjKvUYeiff38O51KVQuV63yPPSx0eQukYu91vLgyabe9Q++V
- Tf/p3yGMjfY9eacNZoA3Adkx/Ljhbsb6cI2boCYpNr74pbuNYkvtwgp6xrWfF4WiSlPe
- BQWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783722272; x=1784327072;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=a1VcYo6Li8HN5FVWYK0KPdgZk8BbnfCQuFN3FFztCGY=;
- b=LoALzCmVtV75wHmpJjcLHIM8YliGriOWwGtRANK28pLNjMLwNkmgNktf8WkwIjs6E6
- 6s3rqrZ6kC2aiRkBuR2OgGfEedB+Os10WcfXVqNoOA9Ohx8FLDsskUVbaG/RUvnq3oBL
- z2c9msBknAgA/GgOIjYsWIEG5qCbRYtH8F1RDR6GqITDBnPVUbVcRgXLuur7cE/qX6jM
- TpLg7RhMkQpmAl5Bu8p2SwKvbHKDcCiwFsUJyUMRYNXkmNszpB6GLAZfHJJtKMe4sfX6
- sdeg01LyfxgaauyI4rDPF50sPeH01+T7RRjJutX0EsFI28u4i46lD9WwvxcxF6xbqEkk
- xkVg==
-X-Gm-Message-State: AOJu0Yx/pIeMRHT9juQWH6DFl81wUxb0qGFw8XIwv1I9ymKAZUAVjro0
- WgKfOKbV28tHkQMpAhQrMstTwSoJiGo5CgScrTK0ry71NlBwXmFaRHvM35eK/YRUMgsnnw==
-X-Gm-Gg: AfdE7cmOL8mLNT87TIr7+tRFlmZ01LbCktXa6WJgf1V2XsVRqdVcoDF8/lRK7eGKy0E
- 0LOoBpd4v8mwPWxdnKgXgdqaqfArEB/D81JRyNg9RFGgU4kczCjBya4Q33osZ7ZqDb+trIhXH98
- BM3TQCRJTYFtRAtBfgVDLunG0yw9UbUMcbLj27RtThCXTa41LcMvsW+GVUHp/Z2HNJDqFtQscT+
- jDzn7T9a1NCBrmmI2aXgw/yxFzRfHoJmd4XG7dP2Skl95wUvC5bpCa63Adi4MwDfpMU6G3bxILV
- V1HVBT7RADsuR/ohQGtg0Sl863Gd1JFzgHGuFKAYPMjxvGfbGi5SjllAvdaUa4jNvtTNHA6Fd1G
- gtKoYtDugfQ/gBD33/GekpHE5+6KlLc13OT7eGiGY1b4ReaYF6BceXOORE4cl1gfuMujHTENO9T
- 9Oe3y5/0H2MSbwsd2cJK6VExMZbf4ZXQ==
-X-Received: by 2002:a2e:a006:0:b0:39c:7d51:70d8 with SMTP id
- 38308e7fff4ca-39caa8884camr1025651fa.32.1783722271825; 
- Fri, 10 Jul 2026 15:24:31 -0700 (PDT)
-Received: from vmbox.lan (088156177242.warszawa.vectranet.pl. [88.156.177.242])
- by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-39ca11ba925sm3282261fa.31.2026.07.10.15.24.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Jul 2026 15:24:31 -0700 (PDT)
-From: Dmitry Pimenov <sun4qemu@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Dmitry Pimenov <sun4qemu@gmail.com>
-Subject: [PATCH] hw/sparc64/niagara: use int64_t for vdisk size to avoid
- truncation
-Date: Sat, 11 Jul 2026 00:23:50 +0200
-Message-ID: <20260710222350.9185-1-sun4qemu@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wiPdY-0005d7-1K
+ for qemu-devel@nongnu.org; Sat, 11 Jul 2026 00:48:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wiPdV-0005LH-Mf
+ for qemu-devel@nongnu.org; Sat, 11 Jul 2026 00:48:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783745298;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=X9Qkiiy8uqLljb8rNBCGWNZb3MKP0DkFmn2lNzKVBrQ=;
+ b=Yhagb5C/jK763L0v3aJMFHtNNM8b0ZPZtM25Nu7CuDZixiBmZez2ruIWT3QIWPLfoEXri8
+ CKcFG6sCMwdtE3SO0N0RWKmm9L8QZknw4MC1cYrK+Y99bIQv/+hWUBghYchs7DbxLLGLRZ
+ l6Ss+vbEy6+kMwdMoqCPQ1qMhRIEg8w=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-122-OphUQES8PJ-8Zwn6T32ViQ-1; Sat,
+ 11 Jul 2026 00:48:13 -0400
+X-MC-Unique: OphUQES8PJ-8Zwn6T32ViQ-1
+X-Mimecast-MFC-AGG-ID: OphUQES8PJ-8Zwn6T32ViQ_1783745292
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 10B391800EF3; Sat, 11 Jul 2026 04:48:12 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.3])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DFEF019560A0; Sat, 11 Jul 2026 04:48:10 +0000 (UTC)
+Date: Sat, 11 Jul 2026 06:42:41 +0200
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: alistair23@gmail.com
+Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
+Subject: Re: [PULL 00/40] riscv-to-apply queue
+Message-ID: <20260711044241.GA634212@fedora>
+References: <20260710025525.1704417-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::229;
- envelope-from=sun4qemu@gmail.com; helo=mail-lj1-x229.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="Kv1zF53iOOplVGfi"
+Content-Disposition: inline
+In-Reply-To: <20260710025525.1704417-1-alistair.francis@wdc.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 10 Jul 2026 20:16:19 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,31 +83,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-blk_getlength() returns int64_t, but niagara_init() stored it in an int,
-truncating the if=pflash virtual-ramdisk size for images >= 2 GiB. A ~4 GiB
-image truncated to 0/negative, failed the `size > 0` check, and exit(1)'d
-before the CPU ran, ending with:
 
-  qemu-system-sparc64: could not load ram disk
+--Kv1zF53iOOplVGfi
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-AI-used-for: code (bug fix)
-Signed-off-by: Dmitry Pimenov <sun4qemu@gmail.com>
----
- hw/sparc64/niagara.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-diff --git a/hw/sparc64/niagara.c b/hw/sparc64/niagara.c
-index 1211ecb82d..ad5e5945a8 100644
---- a/hw/sparc64/niagara.c
-+++ b/hw/sparc64/niagara.c
-@@ -137,7 +137,7 @@ static void niagara_init(MachineState *machine)
-        outside of the partition RAM */
-     if (dinfo) {
-         BlockBackend *blk = blk_by_legacy_dinfo(dinfo);
--        int size = blk_getlength(blk);
-+        int64_t size = blk_getlength(blk);
-         if (size > 0) {
-             memory_region_init_ram(&s->vdisk_ram, NULL, "sun4v_vdisk.ram", size,
-                                    &error_fatal);
---
-2.43.0
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.1 for any user-visible changes.
+
+--Kv1zF53iOOplVGfi
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmpRycEACgkQnKSrs4Gr
+c8jHHwgAgv5QAdWU+0I9PFw6HB3s0iMUM7TeeJQ7V9Ta0l3BTfCJJVufM5M9bEif
+dIOsaEP/ulEZQE4dRqIIgQ9/TAuwzxCmKnNfGpF/z/eI17pPJ+JOLY6He6NqL0km
+B3aDKg7Ye58nv+iO4Jz1k6tse6qbJLGlVb69TzlQYSQ70Xqc3NRrZAekVE1O7zII
+tq4fx1ywDY3ooZfzti4eo/wmISS42SinbtLt9Zpki9HbtgqehWZyqHTxWv9zGPat
+MKMw2qR5rG7R3MXeSOMmMN9FMRVDu1gY4o1BBRDVT/s19n1B0zcUb0bJjcrpefvw
+iHGNoyPoibPBd8yw2EfwmbgMzYlPDw==
+=K/Yp
+-----END PGP SIGNATURE-----
+
+--Kv1zF53iOOplVGfi--
+
 
