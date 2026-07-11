@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7341C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 09:56:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16DE5C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 10:06:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiUQn-0000br-DZ; Sat, 11 Jul 2026 05:55:33 -0400
+	id 1wiUb5-0000A7-0g; Sat, 11 Jul 2026 06:06:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wiUQm-0000bd-D1; Sat, 11 Jul 2026 05:55:32 -0400
+ id 1wiUb3-0008Tn-7B; Sat, 11 Jul 2026 06:06:09 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wiUQg-00045L-Mm; Sat, 11 Jul 2026 05:55:32 -0400
+ id 1wiUb0-0005IX-0c; Sat, 11 Jul 2026 06:06:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783763713; bh=Or3l6tu7Cw/+G98gQAX4hnuAcnL4W4+KWsGx50dmqdE=;
+ t=1783764348; bh=u5xWAQlFWksu1bb3YDxTxSA4tPTrVS9t7StkCo/pwWo=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=UzOMQYJ1DdlP2KMdc7eN4prdJHqAfeWHOGi6fnE/78z7jDOgbA/5arHhf8/LjiCy0
- 5RNpY5bxZLeGV+ty6M7aKayNghxQXUA/I77O9NEDhwX7bkCl4Ay6MrSVtgZaBqUM56
- xDNf+MXNtsdOiP1b4tPkWTv9rw3YprYB5lIuaBuFmIBR1PXCMHoUccdEggUl3Fu4xo
- VNXN2p0ZdK83SW0JWb3GlAoa3mJLF5JKBtSE3g7XnLRn020IM898FnufaZx2aNwgD+
- u+kfEPiPUFuGm93UlqyhzdGKftRsWftCpRqXAg8ht6WQcSQWrne+D+jBphi1ViBzT+
- ulmk6VRlzoJMg==
+ b=v0UsogDKkZ84NTjvPOEP481UvE48zK/hmk82tMp42681i+Ptd5eXhX+m2rg4KsfQ1
+ PO+1txTbfxVcVDNpU9nkElip78nHL/8zTgqXUy7KsERCsZI8xUsHdbkxXbNR8sSdnA
+ 933gNnX0C8Mq3mnc45sHwVBlx+3juSZ1QzmGqU1pvP8wf2QyeZDCSsz3QzHsuFOGPJ
+ +71go+MN4jcn3+k+i5wXc5ZkRhA3rrNvXbkZ+KftcqvvYclQKor+V+Nl9MS5HqgL4a
+ HPg2SfV6zh381gm3o5Gi2DA86J4DcMrNJ0vgOJOzB0aCImsgbZB1bfl/cGFtvO2zyP
+ tyC8Ap6X2pNXg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D0DFF1C0737;
- Sat, 11 Jul 2026 12:55:13 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E8C771C0740;
+ Sat, 11 Jul 2026 13:05:48 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 683913EAB03;
- Sat, 11 Jul 2026 12:55:22 +0300 (MSK)
-Message-ID: <6ee27254-b417-4c4a-b9bf-aa8bd39a1c42@tls.msk.ru>
-Date: Sat, 11 Jul 2026 12:55:22 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 924AA3EAB11;
+ Sat, 11 Jul 2026 13:05:57 +0300 (MSK)
+Message-ID: <cd35fcc4-9bf1-41fa-9f25-179825069666@tls.msk.ru>
+Date: Sat, 11 Jul 2026 13:05:57 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] hw/pci-host/q35.c: Always initialize smram-region
- even if SMM disabled
+Subject: Re: [PATCH 3/3] hw/pci-host/q35.c: Avoid early return in
+ mch_write_config()
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
  Mohamed Mediouni <mohamed@unpredictable.fr>,
@@ -47,7 +47,7 @@ Cc: qemu-stable@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
  Isaku Yamahata <isaku.yamahata@linux.intel.com>,
  Sean Christopherson <seanjc@google.com>
 References: <20260708121011.1653365-1-peter.maydell@linaro.org>
- <20260708121011.1653365-2-peter.maydell@linaro.org>
+ <20260708121011.1653365-4-peter.maydell@linaro.org>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -93,7 +93,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260708121011.1653365-2-peter.maydell@linaro.org>
+In-Reply-To: <20260708121011.1653365-4-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -120,85 +120,66 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/8/26 15:10, Peter Maydell wrote:
-> The MCHPCIState::smram_region looks like it ought to be SMM-specific,
-> but it isn't, because its behaviour is "alias the PCI address space
-> into system memory at the SMRAM_C_BASE offset", and it must be
-> enabled for "hide SMRAM", and disabled for "show SMRAM".  If the
-> SMRAM regions are disabled, we want "hide SMRAM", so we need to
-> initialize and place this MR.  Do this in the minimal way, by moving
-> the "bail out of realize if has_smm_ranges is false" check down below
-> the initialization code.
+> In mch_write_config() we return early if has_smm_ranges is false.
+> This is slightly bug-prone because it leaves the door open to somebody
+> later adding non-SMM-specific code at the bottom of the function.
 > 
-> This fixes a bug where disabling SMM causes the VGA screen to be
-> blank during seabios output, until the OS graphics driver is
-> initialized.  This is most obvious for accelerators which have no SMM
-> support (e.g.  NVMM, HVF, WHPX) as there smm=off is the default, but
-> you can also see it on KVM and TCG if you explicitly pass smm=off:
->   qemu-system-x86_64 -machine q35,accel=kvm,smm=off
-> 
-> The early return is bug-prone, so we can refactor the code to clean
-> it up, but this is the minimal bug fix for backports, and is what
-> Debian used to work around this:
->   https://salsa.debian.org/qemu-team/qemu/-/commit/6e0766f0f897dc2b75ab87dd59da0d4639bb37ee
-> 
-> Another proposed fix for this:
->   https://patchew.org/QEMU/20260413170407.57574-1-mohamed@unpredictable.fr/
-> also moves an early return in mch_update-smram() and tweaks
-> mch_update_smram() accordingly.  This shouldn't be necessary, because
-> in the no-SMM case smram_region should always be enabled and we don't
-> want to allow the guest to make it disabled.
-> 
-> NetBSD bug: https://gnats.NetBSD.org/59721
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: b07bf7b7 ("q35: Introduce smm_ranges property for q35-pci-host")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2608
+> This case isn't as bad as the one in realize, because the function is
+> a lot shorter.  But putting the handling of the three SMM specific
+> ranges into an if() rather than having an early return seems better.
+
+Yes, this is a good small refactoring, - at the time I haven't seen
+the same pattern in another place.
+
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
-This was the very first my fix for this:
-https://lore.kernel.org/qemu-devel/3458e5b7-b53e-4057-baea-03a729452255@tls.msk.ru/
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 
-(but without the comment).  So,
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Thanks!
 
-> ---
->   hw/pci-host/q35.c | 17 ++++++++++++-----
->   1 file changed, 12 insertions(+), 5 deletions(-)
+/mjt
+
+>   hw/pci-host/q35.c | 26 ++++++++++++--------------
+>   1 file changed, 12 insertions(+), 14 deletions(-)
 > 
 > diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
-> index 4784b8f59b..47e726c41d 100644
+> index e42b84b978..f4556ad03a 100644
 > --- a/hw/pci-host/q35.c
 > +++ b/hw/pci-host/q35.c
-> @@ -596,11 +596,14 @@ static void mch_realize(PCIDevice *d, Error **errp)
->                    PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
+> @@ -485,22 +485,20 @@ static void mch_write_config(PCIDevice *d,
+>           mch_update_pciexbar(mch);
 >       }
 >   
 > -    if (!mch->has_smm_ranges) {
 > -        return;
 > -    }
-> -
-> -    /* if *disabled* show SMRAM to all CPUs */
-> +    /*
-> +     * This memory region looks like it's SMM specific, but it is not.
-> +     * It's an alias that makes the pci_address_space appear in system
-> +     * memory at the SMRAM_C_BASE address. The alias is enabled when the
-> +     * CPU should not see SMRAM, and *disabled* when the low SMRAM should be
-> +     * visible. So for non-SMM configs we need to create the alias, and
-> +     * leave it permanently enabled.
-> +     */
->       memory_region_init_alias(&mch->smram_region, OBJECT(mch), "smram-region",
->                                mch->pci_address_space, MCH_HOST_BRIDGE_SMRAM_C_BASE,
->                                MCH_HOST_BRIDGE_SMRAM_C_SIZE);
-> @@ -608,6 +611,10 @@ static void mch_realize(PCIDevice *d, Error **errp)
->                                           &mch->smram_region, 1);
->       memory_region_set_enabled(&mch->smram_region, true);
+> +    if (mch->has_smm_ranges) {
+> +        if (ranges_overlap(address, len, MCH_HOST_BRIDGE_SMRAM,
+> +                           MCH_HOST_BRIDGE_SMRAM_SIZE)) {
+> +            mch_update_smram(mch);
+> +        }
 >   
-> +    if (!mch->has_smm_ranges) {
-> +        return;
-> +    }
-> +
->       memory_region_init_alias(&mch->open_high_smram, OBJECT(mch), "smram-open-high",
->                                mch->ram_memory, MCH_HOST_BRIDGE_SMRAM_C_BASE,
->                                MCH_HOST_BRIDGE_SMRAM_C_SIZE);
+> -    if (ranges_overlap(address, len, MCH_HOST_BRIDGE_SMRAM,
+> -                       MCH_HOST_BRIDGE_SMRAM_SIZE)) {
+> -        mch_update_smram(mch);
+> -    }
+> +        if (ranges_overlap(address, len, MCH_HOST_BRIDGE_EXT_TSEG_MBYTES,
+> +                           MCH_HOST_BRIDGE_EXT_TSEG_MBYTES_SIZE)) {
+> +            mch_update_ext_tseg_mbytes(mch);
+> +        }
+>   
+> -    if (ranges_overlap(address, len, MCH_HOST_BRIDGE_EXT_TSEG_MBYTES,
+> -                       MCH_HOST_BRIDGE_EXT_TSEG_MBYTES_SIZE)) {
+> -        mch_update_ext_tseg_mbytes(mch);
+> -    }
+> -
+> -    if (ranges_overlap(address, len, MCH_HOST_BRIDGE_F_SMBASE, 1)) {
+> -        mch_update_smbase_smram(mch);
+> +        if (ranges_overlap(address, len, MCH_HOST_BRIDGE_F_SMBASE, 1)) {
+> +            mch_update_smbase_smram(mch);
+> +        }
+>       }
+>   }
+>   
 
 
