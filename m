@@ -4,63 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33573C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 09:47:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA1F3C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 09:49:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiUI8-0003Vl-58; Sat, 11 Jul 2026 05:46:36 -0400
+	id 1wiUK5-0004cV-VJ; Sat, 11 Jul 2026 05:48:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1wiUI6-0003VZ-Mz
- for qemu-devel@nongnu.org; Sat, 11 Jul 2026 05:46:34 -0400
-Received: from smtp186.sjtu.edu.cn ([202.120.2.186])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1wiUI4-0002h1-EB
- for qemu-devel@nongnu.org; Sat, 11 Jul 2026 05:46:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sjtu.edu.cn;
- s=default; t=1783763156;
- bh=FePJtfm0kFlZzj4BpZ/WBEHbETtJ1pu/fD1Zj+iD200=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=kapfk4nDtr4EvbyXGJnSbQqgVGzGIEpCj4+pQqYlsIeBItN0cEa93uwHRXhAkSaP2
- 8hSAbMjhLD14ZLo+EiDUyvTbyPB4E6QQN0mcbDLNtjhZqACYspz1mYIAQuKhqXc9OR
- FCU1wWF3lhRKSdcvDJ1gbuUiauEW9Wi1//4s3Li0/0AvjsIagSUpXSWWFPkIqiP5Zs
- v97YeoV2oaMrdBgkW4BQoxlcw2oDFM7knjU7/eUVr0uihrSxjpBi0F6/aJ/L1T9TWQ
- UGZbImZq5sX/iBmjAl/piu7ymq1veo+z8z2oXUZZH+nonuhrymxzotsF9V2z7EqU4K
- gOC9krrMR1REQ==
-Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
- by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id 8B1982FF3F9;
- Sat, 11 Jul 2026 09:45:56 +0000 (UTC)
-Received: from pc.. (unknown [202.120.40.100])
- by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 0634A380CA1;
- Sat, 11 Jul 2026 17:45:26 +0800 (CST)
-From: Ziyang Zhang <functioner@sjtu.edu.cn>
-To: qemu-devel <qemu-devel@nongnu.org>
-Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
- Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
+ (Exim 4.90_1) (envelope-from <rdmitry0911@gmail.com>)
+ id 1wiUK4-0004b6-3A
+ for qemu-devel@nongnu.org; Sat, 11 Jul 2026 05:48:36 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <rdmitry0911@gmail.com>)
+ id 1wiUK2-0002vn-95
+ for qemu-devel@nongnu.org; Sat, 11 Jul 2026 05:48:35 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-4728c12ba97so724834f8f.0
+ for <qemu-devel@nongnu.org>; Sat, 11 Jul 2026 02:48:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1783763311; x=1784368111; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=fHMF608ViM3meYtTIhdTIQXdBSuZ8GsIRk22bURZIGs=;
+ b=r1Uf+ThBaZ654bmfLUH+h/EA+KD/vjwhgcclI7WswrKCpz5g9JCLTM95+Z8go4LjPg
+ E2qg0oCHpmcK0BgNS7rsq6tEYqeqCXzntYLI4WfAsMLp0x+HHQ2yjwRLMty9/zI/YEZo
+ TafDwne0li+VP/Uvit9w15pn7mSK2K6CwLEgY7LnZX21GBzFEZQ6P19/SHLgBugbM7LZ
+ ZdIQsxciP83/1yIP+Dz5ChhR5hsXj6fsQ/1/7o1cjH8gaf21N4by6kOX5RHo5TPscikY
+ mAjXhJt0ryKBUVGu5e9juddQm+iWaT0LTrVjd0w7rDJOsfgLuGTWsV2cQuliJMVUig2a
+ ExSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783763311; x=1784368111;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=fHMF608ViM3meYtTIhdTIQXdBSuZ8GsIRk22bURZIGs=;
+ b=BNn328WmP2Mw//+Ynpn5tQ1AG/cEHJ4XicbfnNuUnIFTW7ztk8uHLophiDLoMFK2Lx
+ 7wXW8Ema4mWxXtRm89+ZXdNR3bfv6+llMkrgK4vTtMRG7qa44SY6TUF/fzP1THGj7RIG
+ cDcE6DhYTJ7BmokzCizsC+IbiEiypgB+W3eyRiy/l+SHVr1YQYVDmWMV4cwyv7CEvocN
+ u+QUTkq6GnGXJjpU4RBKZTyfSh2+6+pJkwtTLRJ93lveqZc5BiPn6/Xdub6yXRYXHK45
+ X7Khg1CR9B1dWr9aYHRgYTlIqV8b9VoG29QCCyNM0Y7e5iYsVDRTB9G1hqPjtT+AuYdi
+ FZHQ==
+X-Gm-Message-State: AOJu0YyJEWSMgJoBqdtu+oKPzS2s7pE2aAs3njTengsNhJDq1IlBLifz
+ i2sRawkdz0V6EZdF5fNj0OJie94shvNrGau8C82H8+CXFIZTqqGNCa4+RFzQbmOU
+X-Gm-Gg: AfdE7cmeCxctgEKgyKkAWraMN5Tprqh4AsBNX+gz+D/oT0fAmtHJjGBACOHK30KHMZP
+ Ic6mx77wp5wjtKB3MpQvlMvwCKXwnd9zVXoaXBW4bFUUTvRS5w5Sqmvx2XMyw8Qcad/oZ83OCRd
+ jVL2aRSpVYNW2TKmzXk4XvyqweenCPiaA79ZC1huym1YHDUz3ez7NJ/+UISbIWKc0i1dskOE0f/
+ T9PvP16QQHetLK98/Fl8GclOwDGjhpGi5ZPcj+vLwPLtTFI60I6feE9/i7t1Q9EKVMpBN1yGXKc
+ yDqHky2y13tP9HuTt7irCBvW3GCKnil8J0T2oqI87/9nSjSgENROI8zwYvkS/Vj0n/pBZxp6lTS
+ xqZNLEQm4gSg7Kr7wTFyf+D9TD775d3SQjj6YBJK2qL+0cV9Nq6WvJ6ixpXfc9JnSar+7SOORE3
+ GcxffPdMPOPDYh6vNXdYGRFoNHhnpXTOoW9aYt7r/9bbw1YSSRkhIzHdpdy0O3fvXBohti/olkk
+ bAEXbeRbi5irVaHcM5lbDNpOjrFhQ==
+X-Received: by 2002:a05:6000:400a:b0:47f:25b1:e7b6 with SMTP id
+ ffacd0b85a97d-47f2dcec940mr2004587f8f.30.1783763310811; 
+ Sat, 11 Jul 2026 02:48:30 -0700 (PDT)
+Received: from debian-for-building.localdomain
+ (static.244.71.243.136.clients.your-server.de. [136.243.71.244])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47aa039ad21sm66558181f8f.20.2026.07.11.02.48.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 11 Jul 2026 02:48:29 -0700 (PDT)
+From: Dmitry R <rdmitry0911@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Dmitry R <rdmitry0911@gmail.com>, "Michael S . Tsirkin" <mst@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
- Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>,
- Ziyang Zhang <functioner@sjtu.edu.cn>
-Subject: [PATCH v12 2/2] docs/about/emulation: document the dlcall plugin
-Date: Sat, 11 Jul 2026 17:45:23 +0800
-Message-Id: <20260711094523.622997-3-functioner@sjtu.edu.cn>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260711094523.622997-1-functioner@sjtu.edu.cn>
-References: <20260711094523.622997-1-functioner@sjtu.edu.cn>
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [RFC PATCH v2 0/5] Thunderbolt PCIe hotplug layer
+Date: Sat, 11 Jul 2026 12:47:56 +0300
+Message-ID: <20260711094803.3589239-1-rdmitry0911@gmail.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260710133440.2845828-1-rdmitry0911@gmail.com>
+References: <20260710133440.2845828-1-rdmitry0911@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.120.2.186;
- envelope-from=functioner@sjtu.edu.cn; helo=smtp186.sjtu.edu.cn
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=rdmitry0911@gmail.com; helo=mail-wr1-x431.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,188 +105,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Document the dlcall plugin under Example Plugins: what it does, the trusted-
-guests and guest_base == 0 constraints, how to load it, and a pointer to
-Lorelei, one end-to-end userspace implementation, for the toolchain and a
-runnable example.
+This RFC adds a Thunderbolt-flavoured PCIe hotplug layer for QEMU.
 
-Co-authored-by: Kailiang Xu <xukl2019@sjtu.edu.cn>
-Co-authored-by: Mingyuan Xia <xiamy@ultrarisc.com>
-Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
----
- docs/about/emulation.rst | 158 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 158 insertions(+)
+The main goal is hotplug and hot-unplug of real and virtual devices in
+guests where direct hotplug for those devices is not supported or not
+usable.  macOS is the main validation target for this path: the guest can
+observe endpoints through a guest-visible Thunderbolt layer even when direct
+PCIe hotplug for the same endpoint is not usable.
 
-diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
-index 3b4c365933..b861501e85 100644
---- a/docs/about/emulation.rst
-+++ b/docs/about/emulation.rst
-@@ -1046,6 +1046,164 @@ Count traps
- This plugin counts the number of interrupts (asynchronous events), exceptions
- (synchronous events) and host calls (e.g. semihosting) per cpu.
- 
-+Dynamic Linking Call
-+....................
-+
-+``contrib/plugins/dlcall.c``
-+
-+This plugin provides a dynamic linking function call interception mechanism
-+for linux-user guests: the guest hands a call off to the host, where the plugin
-+runs native code in its place instead of the guest emulating it. Interception
-+alone enables several uses, for instance tracing or auditing guest calls.
-+One use is acceleration by leveraging the host's native shared libraries. For
-+example, a thunk layer can run the stock zlib ``minizip`` utility under
-+emulation while forwarding its ``deflate`` calls to the host's native zlib
-+library (libz). This avoids emulating those selected library calls instruction
-+by instruction.
-+
-+The guest issues a reserved "magic" system call (4096 by default, configurable
-+with ``syscall_num=N``) whose first argument selects a pass-through operation:
-+dlopen/dlclose a host library, dlsym a symbol, and invoke a resolved host
-+function. The plugin performs the operation on the host and consumes the
-+syscall, so the real kernel never sees it.
-+
-+.. warning::
-+
-+   Trusted guests only. The guest can load arbitrary host libraries and run
-+   arbitrary code in the QEMU host process. The plugin is not a sandbox and
-+   provides no isolation. It also requires ``guest_base == 0`` (qemu-user's
-+   default), as guest pointers are dereferenced as host addresses with no
-+   translation.
-+
-+The plugin intentionally keeps the QEMU side lightweight and knows nothing
-+about any particular library or its calling convention. Turning a real library
-+into working thunks, including argument marshalling, callbacks and variadic
-+functions, is done entirely in userspace, and any toolchain can implement the
-+interface.
-+
-+Loading the plugin is all that is required from QEMU's side:
-+
-+.. code-block:: shell
-+
-+   qemu-x86_64 -plugin contrib/plugins/libdlcall.so <guest-program> ...
-+
-+`Lorelei <https://github.com/rover2024/lorelei>`_ is one end-to-end userspace
-+implementation of this: it provides the guest and host runtimes and an
-+automated toolchain that generates the thunks from a library's headers, so guest
-+library calls run on the host's native libraries. It supports an x86_64 guest
-+running on an x86_64, aarch64 or riscv64 host.
-+
-+A minimal end-to-end example uses a one-function library, ``libhello.so``, built
-+two ways: the guest build tags its output ``(from the guest)`` and the host
-+build ``(from the host)``. An unmodified guest program ``main`` calls
-+``hello("World", 7)``, and the thunk makes that same binary reach the host build
-+in place of its own. The sources live under ``src/``:
-+
-+.. code-block:: c
-+
-+   /* src/hello.h */
-+   void hello(const char *name, int lucky);
-+
-+.. code-block:: c
-+
-+   /* src/hello_guest.c */
-+   #include "hello.h"
-+   #include <stdio.h>
-+
-+   void hello(const char *name, int lucky)
-+   {
-+       printf("Hello, %s! Your lucky number is %d. (from the guest)\n", name, lucky);
-+   }
-+
-+.. code-block:: c
-+
-+   /* src/hello_host.c */
-+   #include "hello.h"
-+   #include <stdio.h>
-+
-+   void hello(const char *name, int lucky)
-+   {
-+       printf("Hello, %s! Your lucky number is %d. (from the host)\n", name, lucky);
-+   }
-+
-+.. code-block:: c
-+
-+   /* src/main.c */
-+   #include "hello.h"
-+
-+   int main(void)
-+   {
-+       hello("World", 7);
-+       return 0;
-+   }
-+
-+Lorelei ships a prebuilt toolchain (a "devkit") in its releases. Download the
-+one for your host and unpack it:
-+
-+.. code-block:: shell
-+
-+   # ARCH is your host's architecture: x86_64, aarch64 or riscv64. This example uses aarch64.
-+   # See https://github.com/rover2024/lorelei/releases
-+   ARCH=aarch64
-+   VERSION=$(curl -fsSL -o /dev/null -w '%{url_effective}' \
-+         https://github.com/rover2024/lorelei/releases/latest | sed 's|.*/tag/v||')
-+   wget "https://github.com/rover2024/lorelei/releases/download/v$VERSION/lorelei-devkit-$ARCH-$VERSION.tar.xz"
-+   tar -xf lorelei-devkit-$ARCH-$VERSION.tar.xz
-+   DEVKIT=lorelei-devkit-$ARCH
-+
-+Build the guest ``libhello.so`` (x86_64) and the host ``libhello.so`` (this
-+host's architecture), then the guest program:
-+
-+.. code-block:: shell
-+
-+   mkdir -p build/guest build/host
-+   $DEVKIT/bin/x86_64-linux-gnu-clang -shared -fPIC src/hello_guest.c -o build/guest/libhello.so
-+   cc -shared -fPIC src/hello_host.c -o build/host/libhello.so
-+   $DEVKIT/bin/x86_64-linux-gnu-clang src/main.c -Isrc -Lbuild/guest -lhello -o build/guest/main
-+
-+Run it under qemu:
-+
-+.. code-block:: shell
-+
-+   qemu-x86_64 -L /usr/x86_64-linux-gnu/ -E LD_LIBRARY_PATH=build/guest build/guest/main
-+
-+which prints::
-+
-+   Hello, World! Your lucky number is 7. (from the guest)
-+
-+Now generate the thunk from the host ``libhello.so``. This produces a guest-side
-+``libhello.so`` that stands in for the guest build, and a host-side thunk library
-+that dispatches to the host build:
-+
-+.. code-block:: shell
-+
-+   $DEVKIT/bin/LoreMakeThunk.py --name hello --lib build/host/libhello.so \
-+       --header hello.h -o thunks -- -Isrc
-+
-+Run the same ``main`` under the plugin. The call reaches the host build now:
-+
-+.. code-block:: shell
-+
-+   LD_LIBRARY_PATH=$DEVKIT/lib:build/host \
-+       qemu-x86_64 -plugin contrib/plugins/libdlcall.so \
-+       -E LD_LIBRARY_PATH=$DEVKIT/x86_64/lib:thunks/x86_64 \
-+       -L /usr/x86_64-linux-gnu/ \
-+       build/guest/main
-+
-+which prints::
-+
-+   Hello, World! Your lucky number is 7. (from the host)
-+
-+.. list-table:: Dynamic Linking Call arguments
-+  :widths: 20 80
-+  :header-rows: 1
-+
-+  * - Option
-+    - Description
-+  * - syscall_num=N
-+    - The magic syscall number the guest issues (default 4096). Must be high
-+      enough not to clash with a real syscall.
-+
- Other emulation features
- ------------------------
- 
+In v2, the series is split so the modelling part is explicit:
+
+* patch 1 adds the Thunderbolt root port and thunderbolt-bus.  This is the
+  core Thunderbolt PCIe model: endpoint devices remain normal QEMU PCI
+  devices, while the root port controls guest-visible link presence and PCIe
+  hotplug signalling.
+* patch 2 adds the Thunderbolt PCIe-to-PCI bridge for tunnelled PCI
+  endpoints.
+* patch 3 adds a separate thunderbolt-vga endpoint for display hotplug tests.
+  The regular QEMU VGA device remains untouched and non-hotpluggable.
+* patch 4 adds qtest coverage.
+* patch 5 adds documentation and MAINTAINERS coverage.
+
+I added myself as reviewer for the Thunderbolt PCIe files.  The files still
+match the existing PCI area through their paths, so PCI maintainership is
+inherited by normal get_maintainer.pl matching.
+
+Runtime validation performed so far:
+
+* macOS guest booted from QCOW2 overlays over immutable base disk images.
+* Thunderbolt VGA hotplug/removal while the standard boot VGA remains.
+* NVMe hotplug/removal with guest driver instance checks.
+* USB controller hotplug, USB storage mount/write/eject, controller removal,
+  replug, and data persistence verification.
+
+Build/test validation:
+
+* ninja -C build qemu-system-x86_64 tests/qtest/display-vga-test
+* meson test -C build qtest-x86_64/display-vga-test --print-errorlogs
+* scripts/checkpatch.pl --no-tree --no-signoff on the full diff:
+  0 errors, with one expected warning for MIT inheritance in thunderbolt-vga.c.
+
+Changes since v1:
+
+* Split the single large patch into five patches.
+* Clarified that the modelling piece is the Thunderbolt root port/bus.
+* Added a MAINTAINERS entry with Dmitry R as reviewer.
+
+Dmitry R (5):
+  hw/pci-bridge: add Thunderbolt root port
+  hw/pci-bridge: add Thunderbolt PCIe-to-PCI bridge
+  hw/display: add Thunderbolt VGA endpoint
+  tests/qtest: cover Thunderbolt VGA hotplug
+  docs: document Thunderbolt PCIe hotplug layer
+
+ MAINTAINERS                                 |   7 +
+ README.md                                   |  91 ++++
+ docs/specs/index.rst                        |   1 +
+ docs/specs/thunderbolt-pcie-hotplug.rst     |  99 ++++
+ hw/display/meson.build                      |   1 +
+ hw/display/thunderbolt-vga.c                | 275 ++++++++++
+ hw/pci-bridge/meson.build                   |   2 +
+ hw/pci-bridge/thunderbolt_pcie_pci_bridge.c | 156 ++++++
+ hw/pci-bridge/thunderbolt_root_port.c       | 565 ++++++++++++++++++++
+ tests/qtest/display-vga-test.c              |  68 +++
+ 10 files changed, 1265 insertions(+)
+ create mode 100644 README.md
+ create mode 100644 docs/specs/thunderbolt-pcie-hotplug.rst
+ create mode 100644 hw/display/thunderbolt-vga.c
+ create mode 100644 hw/pci-bridge/thunderbolt_pcie_pci_bridge.c
+ create mode 100644 hw/pci-bridge/thunderbolt_root_port.c
+
 -- 
-2.34.1
-
+2.47.3
 
