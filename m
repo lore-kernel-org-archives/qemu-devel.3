@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AEAAC44506
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 23:02:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78B82C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 23:02:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigi5-0004Oe-RJ; Sat, 11 Jul 2026 19:02:13 -0400
+	id 1wighy-0004HI-Ra; Sat, 11 Jul 2026 19:02:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigi4-0004Nn-La; Sat, 11 Jul 2026 19:02:12 -0400
-Received: from pdx-out-010.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.12.53.23])
+ id 1wighw-0004Ew-TP; Sat, 11 Jul 2026 19:02:04 -0400
+Received: from pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([44.246.77.92])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigi1-0002W7-DP; Sat, 11 Jul 2026 19:02:12 -0400
+ id 1wighs-0002V9-Hh; Sat, 11 Jul 2026 19:02:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783810929; x=1815346929;
+ t=1783810920; x=1815346920;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=yXEPLRdLcRNfGFAnyVqm/80r2ImyQOLlkzWpZEmKNMQ=;
- b=TxXD3SUwFVWohzqWgOHJu94Ge0nJIc631e3OH1Yjm9cBXewglg7VN8MD
- ty3G++P3rnex9EAVK88QHkIsytoGPFPZaMb+Y+sH1tz4u1zTkrLArM9J5
- fKEhmgq+opCcxX4tgS5DyRAP3WmWwzRLCNtHbsE7gOIZFUmHIUEJTuR0v
- 2JwhQVr5YfVagWZHEPOcGTjPUTS6ub6QXqfaSDG/Mv7jRRaJBgLCT0EJg
- D8/rgBJzFy8P/HpUHBk2faFOZJNx97JVsov0c91IRZTF++SazLzRE3kI4
- j0JsUOk/MLOzSuu/zkpxvcyEJ58IPNxPGPZgZfgr1xzTEPk/fQbebFyt5 A==;
-X-CSE-ConnectionGUID: LUXJsxTAQO24CLkV3IevOw==
-X-CSE-MsgGUID: NorTnlBHTDSOMJc3wMsxOQ==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23370030"
+ bh=NZAkmR9DgASiSiF7oiWZArJziZLnM9FMZOPtI4sVT+Y=;
+ b=b1lMTitP5khYuHfe3KmPOgWMK52qlY3f1rJYDv0ICRcBeNyA2FN3TqO/
+ oRQG9dHTjWlmwdFESpngE8XyjxqaPPTiV0+EA/vgdi11xzix7VaqvD03e
+ VZl0hVtOaYmXlq2dXdf33cg4d0zsEXSLvdUXGkbNq7JzDARyPBEZBrgQ9
+ YYxOKwFauwiKIA6feSF9ssCZlLmMLRksu1auwzKjTWhc4sqrn715Lz4+G
+ 5BpfpxAyowT0qO5LfhZMPgrQU+1cuWqTU71pFm5mc36+4S8CG76vSaR5I
+ 0wUfUzzlM1YP0YKVJGdAc9TUyPXmgf7zQf9vrnXWnCz0YWO3pV18LT5e6 g==;
+X-CSE-ConnectionGUID: prJRftq2QLC4/KPbXqCdzg==
+X-CSE-MsgGUID: CO5UNAu3TtK6lIPxombkJA==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23493313"
 Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
  smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
- by internal-pdx-out-010.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 23:02:05 +0000
-Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.178:12109]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.11.115:2525]
+ by internal-pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 23:01:56 +0000
+Received: from EX19MTAUWB002.ant.amazon.com [205.251.233.48:31437]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.11.68:2525]
  with esmtp (Farcaster)
- id dd3fd112-2142-4446-ad95-9d286d5892c9; Sat, 11 Jul 2026 23:02:05 +0000 (UTC)
-X-Farcaster-Flow-ID: dd3fd112-2142-4446-ad95-9d286d5892c9
+ id 96603ab5-59f3-4931-8bb8-5c40a0523f7c; Sat, 11 Jul 2026 23:01:56 +0000 (UTC)
+X-Farcaster-Flow-ID: 96603ab5-59f3-4931-8bb8-5c40a0523f7c
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
+ EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 23:02:05 +0000
+ Sat, 11 Jul 2026 23:01:56 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 23:01:56 +0000
+ Sat, 11 Jul 2026 23:01:47 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,10 +91,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 095/134] hw/arm/omap1: Give memory regions an explicit
- owner
-Date: Sat, 11 Jul 2026 22:36:28 +0000
-Message-ID: <20260711223707.42139-96-graf@amazon.com>
+Subject: [RFC PATCH 094/134] hw/arm: Give memory regions an explicit owner
+Date: Sat, 11 Jul 2026 22:36:27 +0000
+Message-ID: <20260711223707.42139-95-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -104,16 +103,16 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D036UWB003.ant.amazon.com (10.13.139.172) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=52.12.53.23;
+Received-SPF: pass client-ip=44.246.77.92;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-010.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
 X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
  HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
+ RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
  UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,547 +129,792 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-omap1.c models the TI OMAP310 MPU with ~20 pre-QOM sub-block init
-helpers (omap_mpu_timer_init, omap_ulpd_pm_init, omap_pin_cfg_init,
-omap_id_init, omap_mpui_init, omap_tipb_bridge_init, omap_tcmi_init,
-omap_dpll_init, omap_clkm_init, omap_mpuio_init, omap_uwire_init,
-omap_pwl_init, omap_pwt_init, omap_rtc_init, omap_mcbsp_init,
-omap_lpg_init, omap_setup_mpui_io, omap_setup_dsp_mapping, ...) that
-each create MemoryRegions with owner==NULL.
+Convert memory_region_init*() calls that pass NULL owner to pass
+the enclosing SoC device or machine instead.
 
-Thread an Object *owner first argument through every sub-block init
-helper. All are static and called only from omap310_mpu_init(),
-which already carries an Object *parent from the earlier device
-conversion; pass it through.
+Static helpers make_ram()/make_ram_alias() in mps2.c and mps2-tz.c,
+create_tag_ram() in virt.c, and exynos4_boards_init_ram() gain an
+Object *owner first argument. armsse.c:make_alias() and
+aspeed_install_boot_rom() already carry a QOM-derived first
+argument; use it.
+
+hw/arm/omap1.c is handled in a separate commit as its 20+ non-QOM
+sub-init helpers all need owner threading.
 
 No functional change intended.
 
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/arm/omap1.c | 175 ++++++++++++++++++++++++++-----------------------
- 1 file changed, 94 insertions(+), 81 deletions(-)
+ hw/arm/armsse.c            |  8 ++++----
+ hw/arm/aspeed.c            |  2 +-
+ hw/arm/aspeed_soc_common.c |  2 +-
+ hw/arm/exynos4210.c        |  2 +-
+ hw/arm/exynos4_boards.c    |  8 ++++----
+ hw/arm/fsl-imx25.c         |  2 +-
+ hw/arm/fsl-imx31.c         |  2 +-
+ hw/arm/fsl-imx6.c          |  2 +-
+ hw/arm/fsl-imx6ul.c        |  2 +-
+ hw/arm/fsl-imx7.c          |  8 ++++----
+ hw/arm/imx25_pdk.c         |  2 +-
+ hw/arm/integratorcp.c      |  2 +-
+ hw/arm/kzm.c               |  2 +-
+ hw/arm/max78000_soc.c      |  2 +-
+ hw/arm/mps2-tz.c           |  9 +++++----
+ hw/arm/mps2.c              | 33 +++++++++++++++++----------------
+ hw/arm/mps3r.c             |  4 ++--
+ hw/arm/msf2-soc.c          |  2 +-
+ hw/arm/msf2-som.c          |  2 +-
+ hw/arm/musca.c             |  4 ++--
+ hw/arm/musicpal.c          |  2 +-
+ hw/arm/omap_sx1.c          | 14 +++++++-------
+ hw/arm/realview.c          |  8 ++++----
+ hw/arm/sbsa-ref.c          |  2 +-
+ hw/arm/stellaris.c         |  4 ++--
+ hw/arm/stm32f100_soc.c     |  2 +-
+ hw/arm/stm32f205_soc.c     |  2 +-
+ hw/arm/stm32f405_soc.c     |  4 ++--
+ hw/arm/vexpress.c          |  8 ++++----
+ hw/arm/virt.c              | 13 +++++++------
+ hw/arm/xilinx_zynq.c       |  2 +-
+ hw/arm/xlnx-zynqmp.c       |  2 +-
+ 32 files changed, 83 insertions(+), 80 deletions(-)
 
-diff --git a/hw/arm/omap1.c b/hw/arm/omap1.c
-index e5e092e074..be6af35e26 100644
---- a/hw/arm/omap1.c
-+++ b/hw/arm/omap1.c
-@@ -221,8 +221,8 @@ static void omap_mpu_timer_reset(struct omap_mpu_timer_s *s)
-     s->it_ena = 1;
- }
- 
--static struct omap_mpu_timer_s *omap_mpu_timer_init(MemoryRegion *system_memory,
--                hwaddr base,
-+static struct omap_mpu_timer_s *omap_mpu_timer_init(Object *owner,
-+                MemoryRegion *system_memory, hwaddr base,
-                 qemu_irq irq, omap_clk clk)
+diff --git a/hw/arm/armsse.c b/hw/arm/armsse.c
+index ddb210c895..81895ad370 100644
+--- a/hw/arm/armsse.c
++++ b/hw/arm/armsse.c
+@@ -620,7 +620,7 @@ static uint32_t armsse_sys_config_value(ARMSSE *s, const ARMSSEInfo *info)
+ static void make_alias(ARMSSE *s, MemoryRegion *mr, MemoryRegion *container,
+                        const char *name, hwaddr base, hwaddr size, hwaddr orig)
  {
-     struct omap_mpu_timer_s *s = g_new0(struct omap_mpu_timer_s, 1);
-@@ -234,7 +234,7 @@ static struct omap_mpu_timer_s *omap_mpu_timer_init(MemoryRegion *system_memory,
-     omap_mpu_timer_reset(s);
-     omap_timer_clk_setup(s);
- 
--    memory_region_init_io(&s->iomem, NULL, &omap_mpu_timer_ops, s,
-+    memory_region_init_io(&s->iomem, owner, &omap_mpu_timer_ops, s,
-                           "omap-mpu-timer", 0x100);
- 
-     memory_region_add_subregion(system_memory, base, &s->iomem);
-@@ -353,8 +353,8 @@ static void omap_wd_timer_reset(struct omap_watchdog_timer_s *s)
-     omap_timer_update(&s->timer);
+-    memory_region_init_alias(mr, NULL, name, container, orig, size);
++    memory_region_init_alias(mr, OBJECT(s), name, container, orig, size);
+     /* The alias is even lower priority than unimplemented_device regions */
+     memory_region_add_subregion_overlap(container, base, mr, -1500);
  }
+@@ -1161,7 +1161,7 @@ static void armsse_realize(DeviceState *dev, Error **errp)
+         SysBusDevice *sbd_mpc;
+         uint32_t sram_bank_size = 1 << s->sram_addr_width;
  
--static struct omap_watchdog_timer_s *omap_wd_timer_init(MemoryRegion *memory,
--                hwaddr base,
-+static struct omap_watchdog_timer_s *omap_wd_timer_init(Object *owner,
-+                MemoryRegion *memory, hwaddr base,
-                 qemu_irq irq, omap_clk clk)
+-        memory_region_init_ram(&s->sram[i], NULL, ramname,
++        memory_region_init_ram(&s->sram[i], OBJECT(dev), ramname,
+                                sram_bank_size, errp);
+         g_free(ramname);
+         if (*errp) {
+@@ -1226,11 +1226,11 @@ static void armsse_realize(DeviceState *dev, Error **errp)
+ 
+     if (info->has_tcms) {
+         /* The SSE-300 has an ITCM at 0x0000_0000 and a DTCM at 0x2000_0000 */
+-        memory_region_init_ram(&s->itcm, NULL, "sse300-itcm", 512 * KiB, errp);
++        memory_region_init_ram(&s->itcm, OBJECT(dev), "sse300-itcm", 512 * KiB, errp);
+         if (*errp) {
+             return;
+         }
+-        memory_region_init_ram(&s->dtcm, NULL, "sse300-dtcm", 512 * KiB, errp);
++        memory_region_init_ram(&s->dtcm, OBJECT(dev), "sse300-dtcm", 512 * KiB, errp);
+         if (*errp) {
+             return;
+         }
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index 2e76e09f8f..f9249a9851 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -201,7 +201,7 @@ static void aspeed_machine_init(MachineState *machine)
+     if (machine->kernel_filename && sc->num_cpus > 1) {
+         /* With no u-boot we must set up a boot stub for the secondary CPU */
+         MemoryRegion *smpboot = g_new(MemoryRegion, 1);
+-        memory_region_init_ram(smpboot, NULL, "aspeed.smpboot",
++        memory_region_init_ram(smpboot, OBJECT(bmc), "aspeed.smpboot",
+                                0x80, &error_abort);
+         memory_region_add_subregion(get_system_memory(),
+                                     AST_SMP_MAILBOX_BASE, smpboot);
+diff --git a/hw/arm/aspeed_soc_common.c b/hw/arm/aspeed_soc_common.c
+index 780a9659cc..c79b27c561 100644
+--- a/hw/arm/aspeed_soc_common.c
++++ b/hw/arm/aspeed_soc_common.c
+@@ -177,7 +177,7 @@ void aspeed_install_boot_rom(AspeedSoCState *soc, BlockBackend *blk,
  {
-     struct omap_watchdog_timer_s *s = g_new0(struct omap_watchdog_timer_s, 1);
-@@ -365,7 +365,7 @@ static struct omap_watchdog_timer_s *omap_wd_timer_init(MemoryRegion *memory,
-     omap_wd_timer_reset(s);
-     omap_timer_clk_setup(&s->timer);
+     AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(soc);
  
--    memory_region_init_io(&s->iomem, NULL, &omap_wd_timer_ops, s,
-+    memory_region_init_io(&s->iomem, owner, &omap_wd_timer_ops, s,
-                           "omap-wd-timer", 0x100);
-     memory_region_add_subregion(memory, base, &s->iomem);
+-    memory_region_init_rom(boot_rom, NULL, "aspeed.boot_rom", rom_size,
++    memory_region_init_rom(boot_rom, OBJECT(soc), "aspeed.boot_rom", rom_size,
+                            &error_abort);
+     memory_region_add_subregion_overlap(&soc->spi_boot_container, 0,
+                                         boot_rom, 1);
+diff --git a/hw/arm/exynos4210.c b/hw/arm/exynos4210.c
+index 74ce36c1e6..676915e814 100644
+--- a/hw/arm/exynos4210.c
++++ b/hw/arm/exynos4210.c
+@@ -660,7 +660,7 @@ static void exynos4210_realize(DeviceState *socdev, Error **errp)
+                                 &s->irom_alias_mem);
  
-@@ -462,8 +462,8 @@ static void omap_os_timer_reset(struct omap_32khz_timer_s *s)
-     s->timer.ar = 1;
- }
- 
--static struct omap_32khz_timer_s *omap_os_timer_init(MemoryRegion *memory,
--                hwaddr base,
-+static struct omap_32khz_timer_s *omap_os_timer_init(Object *owner,
-+                MemoryRegion *memory, hwaddr base,
-                 qemu_irq irq, omap_clk clk)
- {
-     struct omap_32khz_timer_s *s = g_new0(struct omap_32khz_timer_s, 1);
-@@ -474,7 +474,7 @@ static struct omap_32khz_timer_s *omap_os_timer_init(MemoryRegion *memory,
-     omap_os_timer_reset(s);
-     omap_timer_clk_setup(&s->timer);
- 
--    memory_region_init_io(&s->iomem, NULL, &omap_os_timer_ops, s,
-+    memory_region_init_io(&s->iomem, owner, &omap_os_timer_ops, s,
-                           "omap-os-timer", 0x800);
-     memory_region_add_subregion(memory, base, &s->iomem);
- 
-@@ -707,11 +707,11 @@ static void omap_ulpd_pm_reset(struct omap_mpu_state_s *mpu)
-     omap_clk_reparent(omap_findclk(mpu, "ck_48m"), omap_findclk(mpu, "dpll4"));
- }
- 
--static void omap_ulpd_pm_init(MemoryRegion *system_memory,
--                hwaddr base,
-+static void omap_ulpd_pm_init(Object *owner,
-+                MemoryRegion *system_memory, hwaddr base,
-                 struct omap_mpu_state_s *mpu)
- {
--    memory_region_init_io(&mpu->ulpd_pm_iomem, NULL, &omap_ulpd_pm_ops, mpu,
-+    memory_region_init_io(&mpu->ulpd_pm_iomem, owner, &omap_ulpd_pm_ops, mpu,
-                           "omap-ulpd-pm", 0x800);
-     memory_region_add_subregion(system_memory, base, &mpu->ulpd_pm_iomem);
-     omap_ulpd_pm_reset(mpu);
-@@ -933,11 +933,11 @@ static void omap_pin_cfg_reset(struct omap_mpu_state_s *mpu)
-     memset(mpu->mod_conf_ctrl, 0, sizeof(mpu->mod_conf_ctrl));
- }
- 
--static void omap_pin_cfg_init(MemoryRegion *system_memory,
--                hwaddr base,
-+static void omap_pin_cfg_init(Object *owner,
-+                MemoryRegion *system_memory, hwaddr base,
-                 struct omap_mpu_state_s *mpu)
- {
--    memory_region_init_io(&mpu->pin_cfg_iomem, NULL, &omap_pin_cfg_ops, mpu,
-+    memory_region_init_io(&mpu->pin_cfg_iomem, owner, &omap_pin_cfg_ops, mpu,
-                           "omap-pin-cfg", 0x800);
-     memory_region_add_subregion(system_memory, base, &mpu->pin_cfg_iomem);
-     omap_pin_cfg_reset(mpu);
-@@ -994,15 +994,16 @@ static const MemoryRegionOps omap_id_ops = {
-     .endianness = DEVICE_NATIVE_ENDIAN,
- };
- 
--static void omap_id_init(MemoryRegion *memory, struct omap_mpu_state_s *mpu)
-+static void omap_id_init(Object *owner, MemoryRegion *memory,
-+                         struct omap_mpu_state_s *mpu)
- {
--    memory_region_init_io(&mpu->id_iomem, NULL, &omap_id_ops, mpu,
-+    memory_region_init_io(&mpu->id_iomem, owner, &omap_id_ops, mpu,
-                           "omap-id", 0x100000000ULL);
--    memory_region_init_alias(&mpu->id_iomem_e18, NULL, "omap-id-e18", &mpu->id_iomem,
--                             0xfffe1800, 0x800);
-+    memory_region_init_alias(&mpu->id_iomem_e18, owner, "omap-id-e18",
-+                             &mpu->id_iomem, 0xfffe1800, 0x800);
-     memory_region_add_subregion(memory, 0xfffe1800, &mpu->id_iomem_e18);
--    memory_region_init_alias(&mpu->id_iomem_ed4, NULL, "omap-id-ed4", &mpu->id_iomem,
--                             0xfffed400, 0x100);
-+    memory_region_init_alias(&mpu->id_iomem_ed4, owner, "omap-id-ed4",
-+                             &mpu->id_iomem, 0xfffed400, 0x100);
-     memory_region_add_subregion(memory, 0xfffed400, &mpu->id_iomem_ed4);
- }
- 
-@@ -1086,10 +1087,10 @@ static void omap_mpui_reset(struct omap_mpu_state_s *s)
-     s->mpui_ctrl = 0x0003ff1b;
- }
- 
--static void omap_mpui_init(MemoryRegion *memory, hwaddr base,
-+static void omap_mpui_init(Object *owner, MemoryRegion *memory, hwaddr base,
-                 struct omap_mpu_state_s *mpu)
- {
--    memory_region_init_io(&mpu->mpui_iomem, NULL, &omap_mpui_ops, mpu,
-+    memory_region_init_io(&mpu->mpui_iomem, owner, &omap_mpui_ops, mpu,
-                           "omap-mpui", 0x100);
-     memory_region_add_subregion(memory, base, &mpu->mpui_iomem);
- 
-@@ -1195,7 +1196,7 @@ static void omap_tipb_bridge_reset(struct omap_tipb_bridge_s *s)
-     s->enh_control = 0x000f;
- }
- 
--static struct omap_tipb_bridge_s *omap_tipb_bridge_init(
-+static struct omap_tipb_bridge_s *omap_tipb_bridge_init(Object *owner,
-     MemoryRegion *memory, hwaddr base,
-     qemu_irq abort_irq, omap_clk clk)
- {
-@@ -1204,7 +1205,7 @@ static struct omap_tipb_bridge_s *omap_tipb_bridge_init(
-     s->abort = abort_irq;
-     omap_tipb_bridge_reset(s);
- 
--    memory_region_init_io(&s->iomem, NULL, &omap_tipb_bridge_ops, s,
-+    memory_region_init_io(&s->iomem, owner, &omap_tipb_bridge_ops, s,
-                           "omap-tipb-bridge", 0x100);
-     memory_region_add_subregion(memory, base, &s->iomem);
- 
-@@ -1314,10 +1315,10 @@ static void omap_tcmi_reset(struct omap_mpu_state_s *mpu)
-     mpu->tcmi_regs[0x40 >> 2] = 0x00000000;
- }
- 
--static void omap_tcmi_init(MemoryRegion *memory, hwaddr base,
-+static void omap_tcmi_init(Object *owner, MemoryRegion *memory, hwaddr base,
-                 struct omap_mpu_state_s *mpu)
- {
--    memory_region_init_io(&mpu->tcmi_iomem, NULL, &omap_tcmi_ops, mpu,
-+    memory_region_init_io(&mpu->tcmi_iomem, owner, &omap_tcmi_ops, mpu,
-                           "omap-tcmi", 0x100);
-     memory_region_add_subregion(memory, base, &mpu->tcmi_iomem);
-     omap_tcmi_reset(mpu);
-@@ -1399,11 +1400,12 @@ static void omap_dpll_reset(struct dpll_ctl_s *s)
-     omap_clk_setrate(s->dpll, 1, 1);
- }
- 
--static struct dpll_ctl_s  *omap_dpll_init(MemoryRegion *memory,
-+static struct dpll_ctl_s  *omap_dpll_init(Object *owner, MemoryRegion *memory,
-                            hwaddr base, omap_clk clk)
- {
-     struct dpll_ctl_s *s = g_malloc0(sizeof(*s));
--    memory_region_init_io(&s->iomem, NULL, &omap_dpll_ops, s, "omap-dpll", 0x100);
-+    memory_region_init_io(&s->iomem, owner, &omap_dpll_ops, s,
-+                          "omap-dpll", 0x100);
- 
-     s->dpll = clk;
-     omap_dpll_reset(s);
-@@ -1822,12 +1824,13 @@ static void omap_clkm_reset(struct omap_mpu_state_s *s)
-     s->clkm.dsp_rstct2 = 0x0000;
- }
- 
--static void omap_clkm_init(MemoryRegion *memory, hwaddr mpu_base,
--                hwaddr dsp_base, struct omap_mpu_state_s *s)
-+static void omap_clkm_init(Object *owner, MemoryRegion *memory,
-+                hwaddr mpu_base, hwaddr dsp_base,
-+                struct omap_mpu_state_s *s)
- {
--    memory_region_init_io(&s->clkm_iomem, NULL, &omap_clkm_ops, s,
-+    memory_region_init_io(&s->clkm_iomem, owner, &omap_clkm_ops, s,
-                           "omap-clkm", 0x100);
--    memory_region_init_io(&s->clkdsp_iomem, NULL, &omap_clkdsp_ops, s,
-+    memory_region_init_io(&s->clkdsp_iomem, owner, &omap_clkdsp_ops, s,
-                           "omap-clkdsp", 0x1000);
- 
-     s->clkm.arm_idlect1 = 0x03ff;
-@@ -2071,8 +2074,8 @@ static void omap_mpuio_onoff(void *opaque, int line, int on)
-         omap_mpuio_kbd_update(s);
- }
- 
--static struct omap_mpuio_s *omap_mpuio_init(MemoryRegion *memory,
--                hwaddr base,
-+static struct omap_mpuio_s *omap_mpuio_init(Object *owner,
-+                MemoryRegion *memory, hwaddr base,
-                 qemu_irq kbd_int, qemu_irq gpio_int,
-                 omap_clk clk)
- {
-@@ -2083,7 +2086,7 @@ static struct omap_mpuio_s *omap_mpuio_init(MemoryRegion *memory,
-     s->in = qemu_allocate_irqs(omap_mpuio_set, s, 16);
-     omap_mpuio_reset(s);
- 
--    memory_region_init_io(&s->iomem, NULL, &omap_mpuio_ops, s,
-+    memory_region_init_io(&s->iomem, owner, &omap_mpuio_ops, s,
-                           "omap-mpuio", 0x800);
-     memory_region_add_subregion(memory, base, &s->iomem);
- 
-@@ -2236,7 +2239,8 @@ static void omap_uwire_reset(struct omap_uwire_s *s)
-     s->setup[4] = 0;
- }
- 
--static struct omap_uwire_s *omap_uwire_init(MemoryRegion *system_memory,
-+static struct omap_uwire_s *omap_uwire_init(Object *owner,
-+                                            MemoryRegion *system_memory,
-                                             hwaddr base,
-                                             qemu_irq txirq, qemu_irq rxirq,
-                                             qemu_irq dma,
-@@ -2249,7 +2253,8 @@ static struct omap_uwire_s *omap_uwire_init(MemoryRegion *system_memory,
-     s->txdrq = dma;
-     omap_uwire_reset(s);
- 
--    memory_region_init_io(&s->iomem, NULL, &omap_uwire_ops, s, "omap-uwire", 0x800);
-+    memory_region_init_io(&s->iomem, owner, &omap_uwire_ops, s,
-+                          "omap-uwire", 0x800);
-     memory_region_add_subregion(system_memory, base, &s->iomem);
- 
-     return s;
-@@ -2345,7 +2350,8 @@ static void omap_pwl_clk_update(void *opaque, int line, int on)
-     omap_pwl_update(s);
- }
- 
--static struct omap_pwl_s *omap_pwl_init(MemoryRegion *system_memory,
-+static struct omap_pwl_s *omap_pwl_init(Object *owner,
-+                                        MemoryRegion *system_memory,
-                                         hwaddr base,
-                                         omap_clk clk)
- {
-@@ -2353,7 +2359,7 @@ static struct omap_pwl_s *omap_pwl_init(MemoryRegion *system_memory,
- 
-     omap_pwl_reset(s);
- 
--    memory_region_init_io(&s->iomem, NULL, &omap_pwl_ops, s,
-+    memory_region_init_io(&s->iomem, owner, &omap_pwl_ops, s,
-                           "omap-pwl", 0x800);
-     memory_region_add_subregion(system_memory, base, &s->iomem);
- 
-@@ -2456,7 +2462,8 @@ static void omap_pwt_reset(struct omap_pwt_s *s)
-     s->gcr = 0;
- }
- 
--static struct omap_pwt_s *omap_pwt_init(MemoryRegion *system_memory,
-+static struct omap_pwt_s *omap_pwt_init(Object *owner,
-+                                        MemoryRegion *system_memory,
-                                         hwaddr base,
-                                         omap_clk clk)
- {
-@@ -2464,7 +2471,7 @@ static struct omap_pwt_s *omap_pwt_init(MemoryRegion *system_memory,
-     s->clk = clk;
-     omap_pwt_reset(s);
- 
--    memory_region_init_io(&s->iomem, NULL, &omap_pwt_ops, s,
-+    memory_region_init_io(&s->iomem, owner, &omap_pwt_ops, s,
-                           "omap-pwt", 0x800);
-     memory_region_add_subregion(system_memory, base, &s->iomem);
-     return s;
-@@ -2822,7 +2829,8 @@ static void omap_rtc_reset(struct omap_rtc_s *s)
-     omap_rtc_tick(s);
- }
- 
--static struct omap_rtc_s *omap_rtc_init(MemoryRegion *system_memory,
-+static struct omap_rtc_s *omap_rtc_init(Object *owner,
-+                                        MemoryRegion *system_memory,
-                                         hwaddr base,
-                                         qemu_irq timerirq, qemu_irq alarmirq,
-                                         omap_clk clk)
-@@ -2835,7 +2843,7 @@ static struct omap_rtc_s *omap_rtc_init(MemoryRegion *system_memory,
- 
-     omap_rtc_reset(s);
- 
--    memory_region_init_io(&s->iomem, NULL, &omap_rtc_ops, s,
-+    memory_region_init_io(&s->iomem, owner, &omap_rtc_ops, s,
-                           "omap-rtc", 0x800);
-     memory_region_add_subregion(system_memory, base, &s->iomem);
- 
-@@ -3372,7 +3380,8 @@ static void omap_mcbsp_reset(struct omap_mcbsp_s *s)
-     timer_del(s->sink_timer);
- }
- 
--static struct omap_mcbsp_s *omap_mcbsp_init(MemoryRegion *system_memory,
-+static struct omap_mcbsp_s *omap_mcbsp_init(Object *owner,
-+                                            MemoryRegion *system_memory,
-                                             hwaddr base,
-                                             qemu_irq txirq, qemu_irq rxirq,
-                                             qemu_irq *dma, omap_clk clk)
-@@ -3387,7 +3396,8 @@ static struct omap_mcbsp_s *omap_mcbsp_init(MemoryRegion *system_memory,
-     s->source_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, omap_mcbsp_source_tick, s);
-     omap_mcbsp_reset(s);
- 
--    memory_region_init_io(&s->iomem, NULL, &omap_mcbsp_ops, s, "omap-mcbsp", 0x800);
-+    memory_region_init_io(&s->iomem, owner, &omap_mcbsp_ops, s,
-+                          "omap-mcbsp", 0x800);
-     memory_region_add_subregion(system_memory, base, &s->iomem);
- 
-     return s;
-@@ -3555,7 +3565,8 @@ static void omap_lpg_clk_update(void *opaque, int line, int on)
-     omap_lpg_update(s);
- }
- 
--static struct omap_lpg_s *omap_lpg_init(MemoryRegion *system_memory,
-+static struct omap_lpg_s *omap_lpg_init(Object *owner,
-+                                        MemoryRegion *system_memory,
-                                         hwaddr base, omap_clk clk)
- {
-     struct omap_lpg_s *s = g_new0(struct omap_lpg_s, 1);
-@@ -3564,7 +3575,8 @@ static struct omap_lpg_s *omap_lpg_init(MemoryRegion *system_memory,
- 
-     omap_lpg_reset(s);
- 
--    memory_region_init_io(&s->iomem, NULL, &omap_lpg_ops, s, "omap-lpg", 0x800);
-+    memory_region_init_io(&s->iomem, owner, &omap_lpg_ops, s,
-+                          "omap-lpg", 0x800);
-     memory_region_add_subregion(system_memory, base, &s->iomem);
- 
-     omap_clk_adduser(clk, qemu_allocate_irq(omap_lpg_clk_update, s, 0));
-@@ -3602,10 +3614,10 @@ static const MemoryRegionOps omap_mpui_io_ops = {
-     .endianness = DEVICE_NATIVE_ENDIAN,
- };
- 
--static void omap_setup_mpui_io(MemoryRegion *system_memory,
-+static void omap_setup_mpui_io(Object *owner, MemoryRegion *system_memory,
-                                struct omap_mpu_state_s *mpu)
- {
--    memory_region_init_io(&mpu->mpui_io_iomem, NULL, &omap_mpui_io_ops, mpu,
-+    memory_region_init_io(&mpu->mpui_io_iomem, owner, &omap_mpui_io_ops, mpu,
-                           "omap-mpui-io", 0x7fff);
-     memory_region_add_subregion(system_memory, OMAP_MPUI_BASE,
-                                 &mpu->mpui_io_iomem);
-@@ -3678,14 +3690,15 @@ static const struct omap_map_s {
-     { 0 }
- };
- 
--static void omap_setup_dsp_mapping(MemoryRegion *system_memory,
-+static void omap_setup_dsp_mapping(Object *owner,
-+                                   MemoryRegion *system_memory,
-                                    const struct omap_map_s *map)
- {
-     MemoryRegion *io;
- 
-     for (; map->phys_dsp; map ++) {
-         io = g_new(MemoryRegion, 1);
--        memory_region_init_alias(io, NULL, map->name,
-+        memory_region_init_alias(io, owner, map->name,
-                                  system_memory, map->phys_mpu, map->size);
-         memory_region_add_subregion(system_memory, map->phys_dsp, io);
+     /* Internal RAM */
+-    memory_region_init_ram(&s->iram_mem, NULL, "exynos4210.iram",
++    memory_region_init_ram(&s->iram_mem, OBJECT(socdev), "exynos4210.iram",
+                            EXYNOS4210_IRAM_SIZE, &error_fatal);
+     memory_region_add_subregion(system_mem, EXYNOS4210_IRAM_BASE_ADDR,
+                                 &s->iram_mem);
+diff --git a/hw/arm/exynos4_boards.c b/hw/arm/exynos4_boards.c
+index dce2c24860..8430317815 100644
+--- a/hw/arm/exynos4_boards.c
++++ b/hw/arm/exynos4_boards.c
+@@ -88,14 +88,14 @@ static void lan9215_init(uint32_t base, qemu_irq irq)
      }
-@@ -3757,11 +3770,11 @@ struct omap_mpu_state_s *omap310_mpu_init(Object *parent, MemoryRegion *dram,
-     omap_clk_init(s);
+ }
  
-     /* Memory-mapped stuff */
--    memory_region_init_ram(&s->imif_ram, NULL, "omap1.sram", s->sram_size,
-+    memory_region_init_ram(&s->imif_ram, parent, "omap1.sram", s->sram_size,
+-static void exynos4_boards_init_ram(Exynos4BoardState *s,
++static void exynos4_boards_init_ram(Object *owner, Exynos4BoardState *s,
+                                     MemoryRegion *system_mem,
+                                     unsigned long ram_size)
+ {
+     unsigned long mem_size = ram_size;
+ 
+     if (mem_size > EXYNOS4210_DRAM_MAX_SIZE) {
+-        memory_region_init_ram(&s->dram1_mem, NULL, "exynos4210.dram1",
++        memory_region_init_ram(&s->dram1_mem, owner, "exynos4210.dram1",
+                                mem_size - EXYNOS4210_DRAM_MAX_SIZE,
+                                &error_fatal);
+         memory_region_add_subregion(system_mem, EXYNOS4210_DRAM1_BASE_ADDR,
+@@ -103,7 +103,7 @@ static void exynos4_boards_init_ram(Exynos4BoardState *s,
+         mem_size = EXYNOS4210_DRAM_MAX_SIZE;
+     }
+ 
+-    memory_region_init_ram(&s->dram0_mem, NULL, "exynos4210.dram0", mem_size,
++    memory_region_init_ram(&s->dram0_mem, owner, "exynos4210.dram0", mem_size,
                             &error_fatal);
-     memory_region_add_subregion(system_memory, OMAP_IMIF_BASE, &s->imif_ram);
+     memory_region_add_subregion(system_mem, EXYNOS4210_DRAM0_BASE_ADDR,
+                                 &s->dram0_mem);
+@@ -122,7 +122,7 @@ exynos4_boards_init_common(MachineState *machine,
+     exynos4_board_binfo.gic_cpu_if_addr =
+             EXYNOS4210_SMP_PRIVATE_BASE_ADDR + 0x100;
  
--    omap_clkm_init(system_memory, 0xfffece00, 0xe1008000, s);
-+    omap_clkm_init(parent, system_memory, 0xfffece00, 0xe1008000, s);
+-    exynos4_boards_init_ram(s, get_system_memory(),
++    exynos4_boards_init_ram(OBJECT(machine), s, get_system_memory(),
+                             exynos4_board_ram_size[board_type]);
  
-     s->ih[0] = qdev_new(parent, "intc[0]", "omap-intc");
-     qdev_prop_set_uint32(s->ih[0], "size", 0x100);
-@@ -3804,21 +3817,21 @@ struct omap_mpu_state_s *omap310_mpu_init(Object *parent, MemoryRegion *dram,
-     soc_dma_port_add_mem(s->dma, memory_region_get_ram_ptr(&s->imif_ram),
-                          OMAP_IMIF_BASE, s->sram_size);
+     object_initialize_child(OBJECT(machine), "soc", &s->soc,
+diff --git a/hw/arm/fsl-imx25.c b/hw/arm/fsl-imx25.c
+index 7f65f4ca4b..f589c83567 100644
+--- a/hw/arm/fsl-imx25.c
++++ b/hw/arm/fsl-imx25.c
+@@ -292,7 +292,7 @@ static void fsl_imx25_realize(DeviceState *dev, Error **errp)
+                                 &s->rom[1]);
  
--    s->timer[0] = omap_mpu_timer_init(system_memory, 0xfffec500,
-+    s->timer[0] = omap_mpu_timer_init(parent, system_memory, 0xfffec500,
-                     qdev_get_gpio_in(s->ih[0], OMAP_INT_TIMER1),
-                     omap_findclk(s, "mputim_ck"));
--    s->timer[1] = omap_mpu_timer_init(system_memory, 0xfffec600,
-+    s->timer[1] = omap_mpu_timer_init(parent, system_memory, 0xfffec600,
-                     qdev_get_gpio_in(s->ih[0], OMAP_INT_TIMER2),
-                     omap_findclk(s, "mputim_ck"));
--    s->timer[2] = omap_mpu_timer_init(system_memory, 0xfffec700,
-+    s->timer[2] = omap_mpu_timer_init(parent, system_memory, 0xfffec700,
-                     qdev_get_gpio_in(s->ih[0], OMAP_INT_TIMER3),
-                     omap_findclk(s, "mputim_ck"));
+     /* initialize internal RAM (128 KB) */
+-    if (!memory_region_init_ram(&s->iram, NULL, "imx25.iram",
++    if (!memory_region_init_ram(&s->iram, OBJECT(dev), "imx25.iram",
+                                 FSL_IMX25_IRAM_SIZE, errp)) {
+         return;
+     }
+diff --git a/hw/arm/fsl-imx31.c b/hw/arm/fsl-imx31.c
+index 190f863355..fc387bbbc3 100644
+--- a/hw/arm/fsl-imx31.c
++++ b/hw/arm/fsl-imx31.c
+@@ -204,7 +204,7 @@ static void fsl_imx31_realize(DeviceState *dev, Error **errp)
+                                 &s->rom);
  
--    s->wdt = omap_wd_timer_init(system_memory, 0xfffec800,
-+    s->wdt = omap_wd_timer_init(parent, system_memory, 0xfffec800,
-                     qdev_get_gpio_in(s->ih[0], OMAP_INT_WD_TIMER),
-                     omap_findclk(s, "armwdt_ck"));
+     /* initialize internal RAM (16 KB) */
+-    if (!memory_region_init_ram(&s->iram, NULL, "imx31.iram",
++    if (!memory_region_init_ram(&s->iram, OBJECT(dev), "imx31.iram",
+                                 FSL_IMX31_IRAM_SIZE, errp)) {
+         return;
+     }
+diff --git a/hw/arm/fsl-imx6.c b/hw/arm/fsl-imx6.c
+index f0fbdc1a68..99250910cb 100644
+--- a/hw/arm/fsl-imx6.c
++++ b/hw/arm/fsl-imx6.c
+@@ -491,7 +491,7 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
+                                 &s->caam);
  
--    s->os_timer = omap_os_timer_init(system_memory, 0xfffb9000,
-+    s->os_timer = omap_os_timer_init(parent, system_memory, 0xfffb9000,
-                     qdev_get_gpio_in(s->ih[1], OMAP_INT_OS_TIMER),
-                     omap_findclk(s, "clk32-kHz"));
+     /* OCRAM memory */
+-    if (!memory_region_init_ram(&s->ocram, NULL, "imx6.ocram",
++    if (!memory_region_init_ram(&s->ocram, OBJECT(dev), "imx6.ocram",
+                                 FSL_IMX6_OCRAM_SIZE, errp)) {
+         return;
+     }
+diff --git a/hw/arm/fsl-imx6ul.c b/hw/arm/fsl-imx6ul.c
+index adbb896fd1..f830dce9df 100644
+--- a/hw/arm/fsl-imx6ul.c
++++ b/hw/arm/fsl-imx6ul.c
+@@ -699,7 +699,7 @@ static void fsl_imx6ul_realize(DeviceState *dev, Error **errp)
+     /*
+      * OCRAM memory
+      */
+-    memory_region_init_ram(&s->ocram, NULL, "imx6ul.ocram",
++    memory_region_init_ram(&s->ocram, OBJECT(dev), "imx6ul.ocram",
+                            FSL_IMX6UL_OCRAM_MEM_SIZE,
+                            &error_abort);
+     memory_region_add_subregion(get_system_memory(), FSL_IMX6UL_OCRAM_MEM_ADDR,
+diff --git a/hw/arm/fsl-imx7.c b/hw/arm/fsl-imx7.c
+index 07a5ae8cd0..ceb26b4efd 100644
+--- a/hw/arm/fsl-imx7.c
++++ b/hw/arm/fsl-imx7.c
+@@ -689,7 +689,7 @@ static void fsl_imx7_realize(DeviceState *dev, Error **errp)
+     /*
+      * OCRAM memory
+      */
+-    memory_region_init_ram(&s->ocram, NULL, "imx7.ocram",
++    memory_region_init_ram(&s->ocram, OBJECT(dev), "imx7.ocram",
+                            FSL_IMX7_OCRAM_MEM_SIZE,
+                            &error_abort);
+     memory_region_add_subregion(get_system_memory(), FSL_IMX7_OCRAM_MEM_ADDR,
+@@ -698,7 +698,7 @@ static void fsl_imx7_realize(DeviceState *dev, Error **errp)
+     /*
+      * OCRAM EPDC memory
+      */
+-    memory_region_init_ram(&s->ocram_epdc, NULL, "imx7.ocram_epdc",
++    memory_region_init_ram(&s->ocram_epdc, OBJECT(dev), "imx7.ocram_epdc",
+                            FSL_IMX7_OCRAM_EPDC_SIZE,
+                            &error_abort);
+     memory_region_add_subregion(get_system_memory(), FSL_IMX7_OCRAM_EPDC_ADDR,
+@@ -707,7 +707,7 @@ static void fsl_imx7_realize(DeviceState *dev, Error **errp)
+     /*
+      * OCRAM PXP memory
+      */
+-    memory_region_init_ram(&s->ocram_pxp, NULL, "imx7.ocram_pxp",
++    memory_region_init_ram(&s->ocram_pxp, OBJECT(dev), "imx7.ocram_pxp",
+                            FSL_IMX7_OCRAM_PXP_SIZE,
+                            &error_abort);
+     memory_region_add_subregion(get_system_memory(), FSL_IMX7_OCRAM_PXP_ADDR,
+@@ -716,7 +716,7 @@ static void fsl_imx7_realize(DeviceState *dev, Error **errp)
+     /*
+      * OCRAM_S memory
+      */
+-    memory_region_init_ram(&s->ocram_s, NULL, "imx7.ocram_s",
++    memory_region_init_ram(&s->ocram_s, OBJECT(dev), "imx7.ocram_s",
+                            FSL_IMX7_OCRAM_S_SIZE,
+                            &error_abort);
+     memory_region_add_subregion(get_system_memory(), FSL_IMX7_OCRAM_S_ADDR,
+diff --git a/hw/arm/imx25_pdk.c b/hw/arm/imx25_pdk.c
+index 9351d53850..cecfc25e9a 100644
+--- a/hw/arm/imx25_pdk.c
++++ b/hw/arm/imx25_pdk.c
+@@ -104,7 +104,7 @@ static void imx25_pdk_init(MachineState *machine)
+         ram_size -= size;
  
-@@ -3827,20 +3840,20 @@ struct omap_mpu_state_s *omap310_mpu_init(Object *parent, MemoryRegion *dram,
-                             omap_dma_get_lcdch(s->dma),
-                             omap_findclk(s, "lcd_ck"));
+         if (size < ram[i].size) {
+-            memory_region_init_alias(&s->ram_alias, NULL, "ram.alias",
++            memory_region_init_alias(&s->ram_alias, OBJECT(machine), "ram.alias",
+                                      machine->ram,
+                                      alias_offset, ram[i].size - size);
+             memory_region_add_subregion(get_system_memory(),
+diff --git a/hw/arm/integratorcp.c b/hw/arm/integratorcp.c
+index ed715a3eb8..81c0bce8f9 100644
+--- a/hw/arm/integratorcp.c
++++ b/hw/arm/integratorcp.c
+@@ -617,7 +617,7 @@ static void integratorcp_init(MachineState *machine)
+     /* SDRAM at address zero*/
+     memory_region_add_subregion(address_space_mem, 0, machine->ram);
+     /* And again at address 0x80000000 */
+-    memory_region_init_alias(ram_alias, NULL, "ram.alias", machine->ram,
++    memory_region_init_alias(ram_alias, OBJECT(machine), "ram.alias", machine->ram,
+                              0, ram_size);
+     memory_region_add_subregion(address_space_mem, 0x80000000, ram_alias);
  
--    omap_ulpd_pm_init(system_memory, 0xfffe0800, s);
--    omap_pin_cfg_init(system_memory, 0xfffe1000, s);
--    omap_id_init(system_memory, s);
-+    omap_ulpd_pm_init(parent, system_memory, 0xfffe0800, s);
-+    omap_pin_cfg_init(parent, system_memory, 0xfffe1000, s);
-+    omap_id_init(parent, system_memory, s);
+diff --git a/hw/arm/kzm.c b/hw/arm/kzm.c
+index 36e12bb362..3e879c492d 100644
+--- a/hw/arm/kzm.c
++++ b/hw/arm/kzm.c
+@@ -104,7 +104,7 @@ static void kzm_init(MachineState *machine)
+         ram_size -= size;
  
--    omap_mpui_init(system_memory, 0xfffec900, s);
-+    omap_mpui_init(parent, system_memory, 0xfffec900, s);
+         if (size < ram[i].size) {
+-            memory_region_init_alias(&s->ram_alias, NULL, "ram.alias",
++            memory_region_init_alias(&s->ram_alias, OBJECT(machine), "ram.alias",
+                                      machine->ram,
+                                      alias_offset, ram[i].size - size);
+             memory_region_add_subregion(get_system_memory(),
+diff --git a/hw/arm/max78000_soc.c b/hw/arm/max78000_soc.c
+index b8e0265de2..41cfaee925 100644
+--- a/hw/arm/max78000_soc.c
++++ b/hw/arm/max78000_soc.c
+@@ -74,7 +74,7 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
  
--    s->private_tipb = omap_tipb_bridge_init(system_memory, 0xfffeca00,
-+    s->private_tipb = omap_tipb_bridge_init(parent, system_memory, 0xfffeca00,
-                     qdev_get_gpio_in(s->ih[0], OMAP_INT_BRIDGE_PRIV),
-                     omap_findclk(s, "tipb_ck"));
--    s->public_tipb = omap_tipb_bridge_init(system_memory, 0xfffed300,
-+    s->public_tipb = omap_tipb_bridge_init(parent, system_memory, 0xfffed300,
-                     qdev_get_gpio_in(s->ih[0], OMAP_INT_BRIDGE_PUB),
-                     omap_findclk(s, "tipb_ck"));
+     memory_region_add_subregion(system_memory, FLASH_BASE_ADDRESS, &s->flash);
  
--    omap_tcmi_init(system_memory, 0xfffecc00, s);
-+    omap_tcmi_init(parent, system_memory, 0xfffecc00, s);
+-    memory_region_init_ram(&s->sram, NULL, "MAX78000.sram", SRAM_SIZE,
++    memory_region_init_ram(&s->sram, obj, "MAX78000.sram", SRAM_SIZE,
+                            &err);
  
-     s->uart[0] = omap_uart_init(parent, 0xfffb0000,
-                                 qdev_get_gpio_in(s->ih[1], OMAP_INT_UART1),
-@@ -3864,11 +3877,11 @@ struct omap_mpu_state_s *omap310_mpu_init(Object *parent, MemoryRegion *dram,
-                     "uart3",
-                     serial_hd(0) && serial_hd(1) ? serial_hd(2) : NULL);
+     gcrdev = DEVICE(&s->gcr);
+diff --git a/hw/arm/mps2-tz.c b/hw/arm/mps2-tz.c
+index 32e3db1134..a57915e208 100644
+--- a/hw/arm/mps2-tz.c
++++ b/hw/arm/mps2-tz.c
+@@ -338,7 +338,7 @@ static MemoryRegion *mr_for_raminfo(MPS2TZMachineState *mms,
+     assert(raminfo->mrindex < MPS2TZ_RAM_MAX);
+     ram = &mms->ram[raminfo->mrindex];
  
--    s->dpll[0] = omap_dpll_init(system_memory, 0xfffecf00,
-+    s->dpll[0] = omap_dpll_init(parent, system_memory, 0xfffecf00,
-                                 omap_findclk(s, "dpll1"));
--    s->dpll[1] = omap_dpll_init(system_memory, 0xfffed000,
-+    s->dpll[1] = omap_dpll_init(parent, system_memory, 0xfffed000,
-                                 omap_findclk(s, "dpll2"));
--    s->dpll[2] = omap_dpll_init(system_memory, 0xfffed100,
-+    s->dpll[2] = omap_dpll_init(parent, system_memory, 0xfffed100,
-                                 omap_findclk(s, "dpll3"));
+-    memory_region_init_ram(ram, NULL, raminfo->name,
++    memory_region_init_ram(ram, OBJECT(mms), raminfo->name,
+                            raminfo->size, &error_fatal);
+     if (raminfo->flags & IS_ROM) {
+         memory_region_set_readonly(ram, true);
+@@ -349,10 +349,10 @@ static MemoryRegion *mr_for_raminfo(MPS2TZMachineState *mms,
+ /* Create an alias of an entire original MemoryRegion @orig
+  * located at @base in the memory map.
+  */
+-static void make_ram_alias(MemoryRegion *mr, const char *name,
++static void make_ram_alias(Object *owner, MemoryRegion *mr, const char *name,
+                            MemoryRegion *orig, hwaddr base)
+ {
+-    memory_region_init_alias(mr, NULL, name, orig, 0,
++    memory_region_init_alias(mr, owner, name, orig, 0,
+                              memory_region_size(orig));
+     memory_region_add_subregion(get_system_memory(), base, mr);
+ }
+@@ -767,7 +767,8 @@ static void create_non_mpc_ram(MPS2TZMachineState *mms)
+         if (p->flags & IS_ALIAS) {
+             SysBusDevice *mpc_sbd = SYS_BUS_DEVICE(&mms->mpc[p->mpc]);
+             MemoryRegion *upstream = sysbus_mmio_get_region(mpc_sbd, 1);
+-            make_ram_alias(&mms->ram[p->mrindex], p->name, upstream, p->base);
++            make_ram_alias(OBJECT(mms), &mms->ram[p->mrindex], p->name,
++                           upstream, p->base);
+         } else if (p->mpc == -1) {
+             /* RAM not behind an MPC */
+             MemoryRegion *mr = mr_for_raminfo(mms, p);
+diff --git a/hw/arm/mps2.c b/hw/arm/mps2.c
+index 23a814e4e4..1dec4a5d4d 100644
+--- a/hw/arm/mps2.c
++++ b/hw/arm/mps2.c
+@@ -115,20 +115,20 @@ OBJECT_DECLARE_TYPE(MPS2MachineState, MPS2MachineClass, MPS2_MACHINE)
+ /* Initialize the auxiliary RAM region @mr and map it into
+  * the memory map at @base.
+  */
+-static void make_ram(MemoryRegion *mr, const char *name,
++static void make_ram(Object *owner, MemoryRegion *mr, const char *name,
+                      hwaddr base, hwaddr size)
+ {
+-    memory_region_init_ram(mr, NULL, name, size, &error_fatal);
++    memory_region_init_ram(mr, owner, name, size, &error_fatal);
+     memory_region_add_subregion(get_system_memory(), base, mr);
+ }
  
-     dinfo = drive_get(IF_SD, 0, 0);
-@@ -3895,7 +3908,7 @@ struct omap_mpu_state_s *omap310_mpu_init(Object *parent, MemoryRegion *dram,
-                      &error_fatal);
+ /* Create an alias of an entire original MemoryRegion @orig
+  * located at @base in the memory map.
+  */
+-static void make_ram_alias(MemoryRegion *mr, const char *name,
++static void make_ram_alias(Object *owner, MemoryRegion *mr, const char *name,
+                            MemoryRegion *orig, hwaddr base)
+ {
+-    memory_region_init_alias(mr, NULL, name, orig, 0,
++    memory_region_init_alias(mr, owner, name, orig, 0,
+                              memory_region_size(orig));
+     memory_region_add_subregion(get_system_memory(), base, mr);
+ }
+@@ -192,12 +192,12 @@ static void mps2_common_init(MachineState *machine)
+     memory_region_add_subregion(system_memory, mmc->psram_base, machine->ram);
+ 
+     if (mmc->has_block_ram) {
+-        make_ram(&mms->blockram, "mps.blockram", 0x01000000, 0x4000);
+-        make_ram_alias(&mms->blockram_m1, "mps.blockram_m1",
++        make_ram(obj, &mms->blockram, "mps.blockram", 0x01000000, 0x4000);
++        make_ram_alias(obj, &mms->blockram_m1, "mps.blockram_m1",
+                        &mms->blockram, 0x01004000);
+-        make_ram_alias(&mms->blockram_m2, "mps.blockram_m2",
++        make_ram_alias(obj, &mms->blockram_m2, "mps.blockram_m2",
+                        &mms->blockram, 0x01008000);
+-        make_ram_alias(&mms->blockram_m3, "mps.blockram_m3",
++        make_ram_alias(obj, &mms->blockram_m3, "mps.blockram_m3",
+                        &mms->blockram, 0x0100c000);
      }
  
--    s->mpuio = omap_mpuio_init(system_memory, 0xfffb5000,
-+    s->mpuio = omap_mpuio_init(parent, system_memory, 0xfffb5000,
-                                qdev_get_gpio_in(s->ih[1], OMAP_INT_KEYBOARD),
-                                qdev_get_gpio_in(s->ih[1], OMAP_INT_MPUIO),
-                                omap_findclk(s, "clk32-kHz"));
-@@ -3907,14 +3920,14 @@ struct omap_mpu_state_s *omap310_mpu_init(Object *parent, MemoryRegion *dram,
-                        qdev_get_gpio_in(s->ih[0], OMAP_INT_GPIO_BANK1));
-     sysbus_mmio_map(SYS_BUS_DEVICE(s->gpio), 0, 0xfffce000);
+@@ -205,17 +205,18 @@ static void mps2_common_init(MachineState *machine)
+     case FPGA_AN385:
+     case FPGA_AN386:
+     case FPGA_AN500:
+-        make_ram(&mms->ssram1, "mps.ssram1", 0x0, 0x400000);
+-        make_ram_alias(&mms->ssram1_m, "mps.ssram1_m", &mms->ssram1, 0x400000);
+-        make_ram(&mms->ssram23, "mps.ssram23", 0x20000000, 0x400000);
+-        make_ram_alias(&mms->ssram23_m, "mps.ssram23_m",
++        make_ram(obj, &mms->ssram1, "mps.ssram1", 0x0, 0x400000);
++        make_ram_alias(obj, &mms->ssram1_m, "mps.ssram1_m",
++                       &mms->ssram1, 0x400000);
++        make_ram(obj, &mms->ssram23, "mps.ssram23", 0x20000000, 0x400000);
++        make_ram_alias(obj, &mms->ssram23_m, "mps.ssram23_m",
+                        &mms->ssram23, 0x20400000);
+         break;
+     case FPGA_AN511:
+-        make_ram(&mms->blockram, "mps.blockram", 0x0, 0x40000);
+-        make_ram(&mms->ssram1, "mps.ssram1", 0x00400000, 0x00800000);
+-        make_ram(&mms->sram, "mps.sram", 0x20000000, 0x20000);
+-        make_ram(&mms->ssram23, "mps.ssram23", 0x20400000, 0x400000);
++        make_ram(obj, &mms->blockram, "mps.blockram", 0x0, 0x40000);
++        make_ram(obj, &mms->ssram1, "mps.ssram1", 0x00400000, 0x00800000);
++        make_ram(obj, &mms->sram, "mps.sram", 0x20000000, 0x20000);
++        make_ram(obj, &mms->ssram23, "mps.ssram23", 0x20400000, 0x400000);
+         break;
+     default:
+         g_assert_not_reached();
+diff --git a/hw/arm/mps3r.c b/hw/arm/mps3r.c
+index 4d432de6ba..d6c29c1172 100644
+--- a/hw/arm/mps3r.c
++++ b/hw/arm/mps3r.c
+@@ -215,7 +215,7 @@ static MemoryRegion *mr_for_raminfo(MPS3RMachineState *mms,
+     assert(raminfo->mrindex < MPS3R_RAM_MAX);
+     ram = &mms->ram[raminfo->mrindex];
  
--    s->microwire = omap_uwire_init(system_memory, 0xfffb3000,
-+    s->microwire = omap_uwire_init(parent, system_memory, 0xfffb3000,
-                                    qdev_get_gpio_in(s->ih[1], OMAP_INT_uWireTX),
-                                    qdev_get_gpio_in(s->ih[1], OMAP_INT_uWireRX),
-                     s->drq[OMAP_DMA_UWIRE_TX], omap_findclk(s, "mpuper_ck"));
+-    memory_region_init_ram(ram, NULL, raminfo->name,
++    memory_region_init_ram(ram, OBJECT(mms), raminfo->name,
+                            raminfo->size, &error_fatal);
+     if (raminfo->flags & IS_ROM) {
+         memory_region_set_readonly(ram, true);
+@@ -397,7 +397,7 @@ static void mps3r_common_init(MachineState *machine)
+         object_unref(mms->cpu[i]);
  
--    s->pwl = omap_pwl_init(system_memory, 0xfffb5800,
-+    s->pwl = omap_pwl_init(parent, system_memory, 0xfffb5800,
-                            omap_findclk(s, "armxor_ck"));
--    s->pwt = omap_pwt_init(system_memory, 0xfffb6000,
-+    s->pwt = omap_pwt_init(parent, system_memory, 0xfffb6000,
-                            omap_findclk(s, "armxor_ck"));
+         /* Per-CPU RAM */
+-        memory_region_init_ram(&mms->cpu_ram[i], NULL, ramname,
++        memory_region_init_ram(&mms->cpu_ram[i], OBJECT(mms), ramname,
+                                0x1000, &error_fatal);
+         memory_region_add_subregion(&mms->cpu_sysmem[i], 0xe7c01000,
+                                     &mms->cpu_ram[i]);
+diff --git a/hw/arm/msf2-soc.c b/hw/arm/msf2-soc.c
+index c03778c439..ce320a5a38 100644
+--- a/hw/arm/msf2-soc.c
++++ b/hw/arm/msf2-soc.c
+@@ -128,7 +128,7 @@ static void m2sxxx_soc_realize(DeviceState *dev_soc, Error **errp)
+     memory_region_add_subregion(system_memory, ENVM_BASE_ADDRESS, &s->nvm);
+     memory_region_add_subregion(system_memory, 0, &s->nvm_alias);
  
-     s->i2c[0] = qdev_new(parent, "i2c", "omap_i2c");
-@@ -3927,29 +3940,29 @@ struct omap_mpu_state_s *omap310_mpu_init(Object *parent, MemoryRegion *dram,
-     sysbus_connect_irq(busdev, 2, s->drq[OMAP_DMA_I2C_RX]);
-     sysbus_mmio_map(busdev, 0, 0xfffb3800);
+-    memory_region_init_ram(&s->sram, NULL, "MSF2.eSRAM", s->esram_size,
++    memory_region_init_ram(&s->sram, OBJECT(dev_soc), "MSF2.eSRAM", s->esram_size,
+                            &error_fatal);
+     memory_region_add_subregion(system_memory, SRAM_BASE_ADDRESS, &s->sram);
  
--    s->rtc = omap_rtc_init(system_memory, 0xfffb4800,
-+    s->rtc = omap_rtc_init(parent, system_memory, 0xfffb4800,
-                            qdev_get_gpio_in(s->ih[1], OMAP_INT_RTC_TIMER),
-                            qdev_get_gpio_in(s->ih[1], OMAP_INT_RTC_ALARM),
-                     omap_findclk(s, "clk32-kHz"));
+diff --git a/hw/arm/msf2-som.c b/hw/arm/msf2-som.c
+index 0d0e2514dd..5493f1cf70 100644
+--- a/hw/arm/msf2-som.c
++++ b/hw/arm/msf2-som.c
+@@ -55,7 +55,7 @@ static void emcraft_sf2_s2s010_init(MachineState *machine)
+     MemoryRegion *ddr = g_new(MemoryRegion, 1);
+     Clock *m3clk;
  
--    s->mcbsp1 = omap_mcbsp_init(system_memory, 0xfffb1800,
-+    s->mcbsp1 = omap_mcbsp_init(parent, system_memory, 0xfffb1800,
-                                 qdev_get_gpio_in(s->ih[1], OMAP_INT_McBSP1TX),
-                                 qdev_get_gpio_in(s->ih[1], OMAP_INT_McBSP1RX),
-                     &s->drq[OMAP_DMA_MCBSP1_TX], omap_findclk(s, "dspxor_ck"));
--    s->mcbsp2 = omap_mcbsp_init(system_memory, 0xfffb1000,
-+    s->mcbsp2 = omap_mcbsp_init(parent, system_memory, 0xfffb1000,
-                                 qdev_get_gpio_in(s->ih[0],
-                                                  OMAP_INT_310_McBSP2_TX),
-                                 qdev_get_gpio_in(s->ih[0],
-                                                  OMAP_INT_310_McBSP2_RX),
-                     &s->drq[OMAP_DMA_MCBSP2_TX], omap_findclk(s, "mpuper_ck"));
--    s->mcbsp3 = omap_mcbsp_init(system_memory, 0xfffb7000,
-+    s->mcbsp3 = omap_mcbsp_init(parent, system_memory, 0xfffb7000,
-                                 qdev_get_gpio_in(s->ih[1], OMAP_INT_McBSP3TX),
-                                 qdev_get_gpio_in(s->ih[1], OMAP_INT_McBSP3RX),
-                     &s->drq[OMAP_DMA_MCBSP3_TX], omap_findclk(s, "dspxor_ck"));
+-    memory_region_init_ram(ddr, NULL, "ddr-ram", DDR_SIZE,
++    memory_region_init_ram(ddr, OBJECT(machine), "ddr-ram", DDR_SIZE,
+                            &error_fatal);
+     memory_region_add_subregion(sysmem, DDR_BASE_ADDRESS, ddr);
  
--    s->led[0] = omap_lpg_init(system_memory,
-+    s->led[0] = omap_lpg_init(parent, system_memory,
-                               0xfffbd000, omap_findclk(s, "clk32-kHz"));
--    s->led[1] = omap_lpg_init(system_memory,
-+    s->led[1] = omap_lpg_init(parent, system_memory,
-                               0xfffbd800, omap_findclk(s, "clk32-kHz"));
+diff --git a/hw/arm/musca.c b/hw/arm/musca.c
+index 75d82eebca..38eac4af76 100644
+--- a/hw/arm/musca.c
++++ b/hw/arm/musca.c
+@@ -235,12 +235,12 @@ static MemoryRegion *make_mpc(MuscaMachineState *mms, void *opaque,
+     switch (mpcinfo[i].type) {
+     case MPC_ROM:
+         downstream = &mms->ram[i];
+-        memory_region_init_rom(downstream, NULL, mpcinfo[i].name,
++        memory_region_init_rom(downstream, OBJECT(mms), mpcinfo[i].name,
+                                mpcinfo[i].size, &error_fatal);
+         break;
+     case MPC_RAM:
+         downstream = &mms->ram[i];
+-        memory_region_init_ram(downstream, NULL, mpcinfo[i].name,
++        memory_region_init_ram(downstream, OBJECT(mms), mpcinfo[i].name,
+                                mpcinfo[i].size, &error_fatal);
+         break;
+     case MPC_CRYPTOISLAND:
+diff --git a/hw/arm/musicpal.c b/hw/arm/musicpal.c
+index 86ea348d3d..fda42f71d5 100644
+--- a/hw/arm/musicpal.c
++++ b/hw/arm/musicpal.c
+@@ -1236,7 +1236,7 @@ static void musicpal_init(MachineState *machine)
  
-     /* Register mappings not currently implemented:
-@@ -3967,8 +3980,8 @@ struct omap_mpu_state_s *omap310_mpu_init(Object *parent, MemoryRegion *dram,
-      * DSP MMU          fffed200 - fffed2ff
-      */
+     memory_region_add_subregion(address_space_mem, 0, machine->ram);
  
--    omap_setup_dsp_mapping(system_memory, omap15xx_dsp_mm);
--    omap_setup_mpui_io(system_memory, s);
-+    omap_setup_dsp_mapping(parent, system_memory, omap15xx_dsp_mm);
-+    omap_setup_mpui_io(parent, system_memory, s);
+-    memory_region_init_ram(sram, NULL, "musicpal.sram", MP_SRAM_SIZE,
++    memory_region_init_ram(sram, OBJECT(machine), "musicpal.sram", MP_SRAM_SIZE,
+                            &error_fatal);
+     memory_region_add_subregion(address_space_mem, MP_SRAM_BASE, sram);
  
-     qemu_register_reset(omap1_mpu_reset, s);
+diff --git a/hw/arm/omap_sx1.c b/hw/arm/omap_sx1.c
+index 1bd6c6d4bc..f8d54c2716 100644
+--- a/hw/arm/omap_sx1.c
++++ b/hw/arm/omap_sx1.c
+@@ -128,22 +128,22 @@ static void sx1_init(MachineState *machine, const int version)
+     mpu = omap310_mpu_init(OBJECT(machine), machine->ram, machine->cpu_type);
  
+     /* External Flash (EMIFS) */
+-    memory_region_init_rom(flash, NULL, "omap_sx1.flash0-0", flash_size,
++    memory_region_init_rom(flash, OBJECT(machine), "omap_sx1.flash0-0", flash_size,
+                            &error_fatal);
+     memory_region_add_subregion(address_space, OMAP_CS0_BASE, flash);
+ 
+-    memory_region_init_io(&cs[0], NULL, &static_ops, &cs0val,
++    memory_region_init_io(&cs[0], OBJECT(machine), &static_ops, &cs0val,
+                           "sx1.cs0", OMAP_CS0_SIZE - flash_size);
+     memory_region_add_subregion(address_space,
+                                 OMAP_CS0_BASE + flash_size, &cs[0]);
+ 
+ 
+-    memory_region_init_io(&cs[2], NULL, &static_ops, &cs2val,
++    memory_region_init_io(&cs[2], OBJECT(machine), &static_ops, &cs2val,
+                           "sx1.cs2", OMAP_CS2_SIZE);
+     memory_region_add_subregion(address_space,
+                                 OMAP_CS2_BASE, &cs[2]);
+ 
+-    memory_region_init_io(&cs[3], NULL, &static_ops, &cs3val,
++    memory_region_init_io(&cs[3], OBJECT(machine), &static_ops, &cs3val,
+                           "sx1.cs3", OMAP_CS3_SIZE);
+     memory_region_add_subregion(address_space,
+                                 OMAP_CS3_BASE, &cs[3]);
+@@ -160,11 +160,11 @@ static void sx1_init(MachineState *machine, const int version)
+     if ((version == 1) &&
+             (dinfo = drive_get(IF_PFLASH, 0, fl_idx)) != NULL) {
+         MemoryRegion *flash_1 = g_new(MemoryRegion, 1);
+-        memory_region_init_rom(flash_1, NULL, "omap_sx1.flash1-0",
++        memory_region_init_rom(flash_1, OBJECT(machine), "omap_sx1.flash1-0",
+                                FLASH1_SIZE, &error_fatal);
+         memory_region_add_subregion(address_space, OMAP_CS1_BASE, flash_1);
+ 
+-        memory_region_init_io(&cs[1], NULL, &static_ops, &cs1val,
++        memory_region_init_io(&cs[1], OBJECT(machine), &static_ops, &cs1val,
+                               "sx1.cs1", OMAP_CS1_SIZE - FLASH1_SIZE);
+         memory_region_add_subregion(address_space,
+                                 OMAP_CS1_BASE + FLASH1_SIZE, &cs[1]);
+@@ -175,7 +175,7 @@ static void sx1_init(MachineState *machine, const int version)
+                               SECTOR_SIZE, 4, 0, 0, 0, 0, 0);
+         fl_idx++;
+     } else {
+-        memory_region_init_io(&cs[1], NULL, &static_ops, &cs1val,
++        memory_region_init_io(&cs[1], OBJECT(machine), &static_ops, &cs1val,
+                               "sx1.cs1", OMAP_CS1_SIZE);
+         memory_region_add_subregion(address_space,
+                                 OMAP_CS1_BASE, &cs[1]);
+diff --git a/hw/arm/realview.c b/hw/arm/realview.c
+index 2441137222..73bfffa6e6 100644
+--- a/hw/arm/realview.c
++++ b/hw/arm/realview.c
+@@ -159,18 +159,18 @@ static void realview_init(MachineState *machine,
+         ram_lo = g_new(MemoryRegion, 1);
+         low_ram_size = ram_size - 0x20000000;
+         ram_size = 0x20000000;
+-        memory_region_init_ram(ram_lo, NULL, "realview.lowmem", low_ram_size,
++        memory_region_init_ram(ram_lo, OBJECT(machine), "realview.lowmem", low_ram_size,
+                                &error_fatal);
+         memory_region_add_subregion(sysmem, 0x20000000, ram_lo);
+     }
+ 
+-    memory_region_init_ram(ram_hi, NULL, "realview.highmem", ram_size,
++    memory_region_init_ram(ram_hi, OBJECT(machine), "realview.highmem", ram_size,
+                            &error_fatal);
+     low_ram_size = ram_size;
+     if (low_ram_size > 0x10000000)
+       low_ram_size = 0x10000000;
+     /* SDRAM at address zero.  */
+-    memory_region_init_alias(ram_alias, NULL, "realview.alias",
++    memory_region_init_alias(ram_alias, OBJECT(machine), "realview.alias",
+                              ram_hi, 0, low_ram_size);
+     memory_region_add_subregion(sysmem, 0, ram_alias);
+     if (is_pb) {
+@@ -396,7 +396,7 @@ static void realview_init(MachineState *machine,
+        startup code.  I guess this works on real hardware because the
+        BootROM happens to be in ROM/flash or in memory that isn't clobbered
+        until after Linux boots the secondary CPUs.  */
+-    memory_region_init_ram(ram_hack, NULL, "realview.hack", 0x1000,
++    memory_region_init_ram(ram_hack, OBJECT(machine), "realview.hack", 0x1000,
+                            &error_fatal);
+     memory_region_add_subregion(sysmem, SMP_BOOT_ADDR, ram_hack);
+ 
+diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
+index f632df742b..c9adc972c1 100644
+--- a/hw/arm/sbsa-ref.c
++++ b/hw/arm/sbsa-ref.c
+@@ -410,7 +410,7 @@ static void create_secure_ram(SBSAMachineState *sms,
+     hwaddr base = sbsa_ref_memmap[SBSA_SECURE_MEM].base;
+     hwaddr size = sbsa_ref_memmap[SBSA_SECURE_MEM].size;
+ 
+-    memory_region_init_ram(secram, NULL, "sbsa-ref.secure-ram", size,
++    memory_region_init_ram(secram, OBJECT(sms), "sbsa-ref.secure-ram", size,
+                            &error_fatal);
+     memory_region_add_subregion(secure_sysmem, base, secram);
+ }
+diff --git a/hw/arm/stellaris.c b/hw/arm/stellaris.c
+index 6a732a3c11..1bc428e063 100644
+--- a/hw/arm/stellaris.c
++++ b/hw/arm/stellaris.c
+@@ -1084,11 +1084,11 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
+     object_property_add_child(OBJECT(ms), "soc", soc_container);
+ 
+     /* Flash programming is done via the SCU, so pretend it is ROM.  */
+-    memory_region_init_rom(flash, NULL, "stellaris.flash", flash_size,
++    memory_region_init_rom(flash, OBJECT(ms), "stellaris.flash", flash_size,
+                            &error_fatal);
+     memory_region_add_subregion(system_memory, 0, flash);
+ 
+-    memory_region_init_ram(sram, NULL, "stellaris.sram", sram_size,
++    memory_region_init_ram(sram, OBJECT(ms), "stellaris.sram", sram_size,
+                            &error_fatal);
+     memory_region_add_subregion(system_memory, 0x20000000, sram);
+ 
+diff --git a/hw/arm/stm32f100_soc.c b/hw/arm/stm32f100_soc.c
+index e9e722f359..d6d81c1338 100644
+--- a/hw/arm/stm32f100_soc.c
++++ b/hw/arm/stm32f100_soc.c
+@@ -108,7 +108,7 @@ static void stm32f100_soc_realize(DeviceState *dev_soc, Error **errp)
+     memory_region_add_subregion(system_memory, 0, &s->flash_alias);
+ 
+     /* Init SRAM region */
+-    memory_region_init_ram(&s->sram, NULL, "STM32F100.sram", SRAM_SIZE,
++    memory_region_init_ram(&s->sram, OBJECT(dev_soc), "STM32F100.sram", SRAM_SIZE,
+                            &error_fatal);
+     memory_region_add_subregion(system_memory, SRAM_BASE_ADDRESS, &s->sram);
+ 
+diff --git a/hw/arm/stm32f205_soc.c b/hw/arm/stm32f205_soc.c
+index a03c6b4002..2997e7d777 100644
+--- a/hw/arm/stm32f205_soc.c
++++ b/hw/arm/stm32f205_soc.c
+@@ -121,7 +121,7 @@ static void stm32f205_soc_realize(DeviceState *dev_soc, Error **errp)
+     memory_region_add_subregion(system_memory, FLASH_BASE_ADDRESS, &s->flash);
+     memory_region_add_subregion(system_memory, 0, &s->flash_alias);
+ 
+-    memory_region_init_ram(&s->sram, NULL, "STM32F205.sram", SRAM_SIZE,
++    memory_region_init_ram(&s->sram, OBJECT(dev_soc), "STM32F205.sram", SRAM_SIZE,
+                            &error_fatal);
+     memory_region_add_subregion(system_memory, SRAM_BASE_ADDRESS, &s->sram);
+ 
+diff --git a/hw/arm/stm32f405_soc.c b/hw/arm/stm32f405_soc.c
+index dc9b3053a5..4783f3f64a 100644
+--- a/hw/arm/stm32f405_soc.c
++++ b/hw/arm/stm32f405_soc.c
+@@ -134,7 +134,7 @@ static void stm32f405_soc_realize(DeviceState *dev_soc, Error **errp)
+     memory_region_add_subregion(system_memory, FLASH_BASE_ADDRESS, &s->flash);
+     memory_region_add_subregion(system_memory, 0, &s->flash_alias);
+ 
+-    memory_region_init_ram(&s->sram, NULL, "STM32F405.sram", SRAM_SIZE,
++    memory_region_init_ram(&s->sram, OBJECT(dev_soc), "STM32F405.sram", SRAM_SIZE,
+                            &err);
+     if (err != NULL) {
+         error_propagate(errp, err);
+@@ -142,7 +142,7 @@ static void stm32f405_soc_realize(DeviceState *dev_soc, Error **errp)
+     }
+     memory_region_add_subregion(system_memory, SRAM_BASE_ADDRESS, &s->sram);
+ 
+-    memory_region_init_ram(&s->ccm, NULL, "STM32F405.ccm", CCM_SIZE,
++    memory_region_init_ram(&s->ccm, OBJECT(dev_soc), "STM32F405.ccm", CCM_SIZE,
+                            &err);
+     if (err != NULL) {
+         error_propagate(errp, err);
+diff --git a/hw/arm/vexpress.c b/hw/arm/vexpress.c
+index a643c6b079..f877ccf330 100644
+--- a/hw/arm/vexpress.c
++++ b/hw/arm/vexpress.c
+@@ -392,7 +392,7 @@ static void a15_daughterboard_init(VexpressMachineState *vms,
+     /* 0x2b060000: SP805 watchdog: not modelled */
+     /* 0x2b0a0000: PL341 dynamic memory controller: not modelled */
+     /* 0x2e000000: system SRAM */
+-    memory_region_init_ram(&vms->a15sram, NULL, "vexpress.a15sram", 0x10000,
++    memory_region_init_ram(&vms->a15sram, OBJECT(vms), "vexpress.a15sram", 0x10000,
+                            &error_fatal);
+     memory_region_add_subregion(sysmem, 0x2e000000, &vms->a15sram);
+ 
+@@ -677,7 +677,7 @@ static void vexpress_common_init(MachineState *machine)
+         /* Map flash 0 as an alias into low memory */
+         MemoryRegion *flash0mem;
+         flash0mem = sysbus_mmio_get_region(SYS_BUS_DEVICE(pflash0), 0);
+-        memory_region_init_alias(&vms->flashalias, NULL, "vexpress.flashalias",
++        memory_region_init_alias(&vms->flashalias, OBJECT(vms), "vexpress.flashalias",
+                                  flash0mem, 0, VEXPRESS_FLASH_SIZE);
+         memory_region_add_subregion(sysmem, map[VE_NORFLASHALIAS], &vms->flashalias);
+     }
+@@ -687,12 +687,12 @@ static void vexpress_common_init(MachineState *machine)
+                              "vexpress.flash1", dinfo);
+ 
+     sram_size = 0x2000000;
+-    memory_region_init_ram(&vms->sram, NULL, "vexpress.sram", sram_size,
++    memory_region_init_ram(&vms->sram, OBJECT(vms), "vexpress.sram", sram_size,
+                            &error_fatal);
+     memory_region_add_subregion(sysmem, map[VE_SRAM], &vms->sram);
+ 
+     vram_size = 0x800000;
+-    memory_region_init_ram(&vms->vram, NULL, "vexpress.vram", vram_size,
++    memory_region_init_ram(&vms->vram, OBJECT(vms), "vexpress.vram", vram_size,
+                            &error_fatal);
+     memory_region_add_subregion(sysmem, map[VE_VIDEORAM], &vms->vram);
+ 
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index ea51a5f3bd..f2249a0b72 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -2308,13 +2308,13 @@ static void create_platform_bus(VirtMachineState *vms)
+                                 sysbus_mmio_get_region(s, 0));
+ }
+ 
+-static void create_tag_ram(MemoryRegion *tag_sysmem,
++static void create_tag_ram(Object *owner, MemoryRegion *tag_sysmem,
+                            hwaddr base, hwaddr size,
+                            const char *name)
+ {
+     MemoryRegion *tagram = g_new(MemoryRegion, 1);
+ 
+-    memory_region_init_ram(tagram, NULL, name, size / 32, &error_fatal);
++    memory_region_init_ram(tagram, owner, name, size / 32, &error_fatal);
+     memory_region_add_subregion(tag_sysmem, base / 32, tagram);
+ }
+ 
+@@ -2328,7 +2328,7 @@ static void create_secure_ram(VirtMachineState *vms,
+     hwaddr size = vms->memmap[VIRT_SECURE_MEM].size;
+     MachineState *ms = MACHINE(vms);
+ 
+-    memory_region_init_ram(secram, NULL, "virt.secure-ram", size,
++    memory_region_init_ram(secram, OBJECT(vms), "virt.secure-ram", size,
+                            &error_fatal);
+     memory_region_add_subregion(secure_sysmem, base, secram);
+ 
+@@ -2340,7 +2340,8 @@ static void create_secure_ram(VirtMachineState *vms,
+     qemu_fdt_setprop_string(ms->fdt, nodename, "secure-status", "okay");
+ 
+     if (secure_tag_sysmem) {
+-        create_tag_ram(secure_tag_sysmem, base, size, "mach-virt.secure-tag");
++        create_tag_ram(OBJECT(vms), secure_tag_sysmem, base, size,
++                       "mach-virt.secure-tag");
+     }
+ 
+     g_free(nodename);
+@@ -2840,7 +2841,7 @@ static void virt_post_cpus_gic_realized(VirtMachineState *vms,
+                 exit(1);
+             }
+ 
+-            memory_region_init_ram(pvtime, NULL, "pvtime", pvtime_size, NULL);
++            memory_region_init_ram(pvtime, OBJECT(vms), "pvtime", pvtime_size, NULL);
+             memory_region_add_subregion(sysmem, pvtime_reg_base, pvtime);
+         }
+         if (!aarch64 && vms->virt) {
+@@ -3200,7 +3201,7 @@ static void machvirt_init(MachineState *machine)
+     }
+ 
+     if (tag_sysmem) {
+-        create_tag_ram(tag_sysmem, vms->memmap[VIRT_MEM].base,
++        create_tag_ram(OBJECT(vms), tag_sysmem, vms->memmap[VIRT_MEM].base,
+                        machine->ram_size, "mach-virt.tag");
+     }
+ 
+diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
+index 30f0ce5b5f..441289e63f 100644
+--- a/hw/arm/xilinx_zynq.c
++++ b/hw/arm/xilinx_zynq.c
+@@ -238,7 +238,7 @@ static void zynq_init(MachineState *machine)
+     memory_region_add_subregion(address_space_mem, 0, machine->ram);
+ 
+     /* 256K of on-chip memory */
+-    memory_region_init_ram(ocm_ram, NULL, "zynq.ocm_ram", 256 * KiB,
++    memory_region_init_ram(ocm_ram, OBJECT(machine), "zynq.ocm_ram", 256 * KiB,
+                            &error_fatal);
+     memory_region_add_subregion(address_space_mem, 0xFFFC0000, ocm_ram);
+ 
+diff --git a/hw/arm/xlnx-zynqmp.c b/hw/arm/xlnx-zynqmp.c
+index e4a10861a8..a25d5d3158 100644
+--- a/hw/arm/xlnx-zynqmp.c
++++ b/hw/arm/xlnx-zynqmp.c
+@@ -510,7 +510,7 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
+     for (i = 0; i < XLNX_ZYNQMP_NUM_OCM_BANKS; i++) {
+         char *ocm_name = g_strdup_printf("zynqmp.ocm_ram_bank_%d", i);
+ 
+-        memory_region_init_ram(&s->ocm_ram[i], NULL, ocm_name,
++        memory_region_init_ram(&s->ocm_ram[i], OBJECT(dev), ocm_name,
+                                XLNX_ZYNQMP_OCM_RAM_SIZE, &error_fatal);
+         memory_region_add_subregion(get_system_memory(),
+                                     XLNX_ZYNQMP_OCM_RAM_0_ADDRESS +
 -- 
 2.47.1
 
