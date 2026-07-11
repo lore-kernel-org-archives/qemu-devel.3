@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84486C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 23:04:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E49ADC43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 23:05:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigkG-0008L8-1b; Sat, 11 Jul 2026 19:04:28 -0400
+	id 1wigkt-0001My-4O; Sat, 11 Jul 2026 19:05:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigkE-0008HB-FP; Sat, 11 Jul 2026 19:04:26 -0400
-Received: from pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([35.155.198.111])
+ id 1wigkp-0001KG-BR; Sat, 11 Jul 2026 19:05:03 -0400
+Received: from pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.34.181.151])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigkB-0002pi-0P; Sat, 11 Jul 2026 19:04:26 -0400
+ id 1wigkn-00034E-19; Sat, 11 Jul 2026 19:05:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783811063; x=1815347063;
+ t=1783811101; x=1815347101;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=0/nsBnKgWUlON7W258sp5IjMJ0xeaJFkP12OrTIw2Mo=;
- b=aRbldrnzMsCNYZL6q9vJcfVLh0DMyZv07Cyy9BBTw4vd/ThZRli5BhHl
- wS9wvguTmwpD+Omwdn59DgGJRCKB/oOFPslPTldeytwcBdTrm5Vkvx/ce
- T66SfWDfsjJse+hMHVRj3fulF4oEafil7044Ar4HAG8BGO1EML0WSMBTa
- VQgaMIlrNta7RYjHR1JHTtdD5xDeqN7pJKQUw25CiWXc0fAxSrJQBd6uq
- hq+DfxYLYC2DRN3xo65koLJt4/sWDt6yHxoTFA6SdwGcPSN/UJ5oYKe+T
- g0lbmH9k1cd+OcY7cgmfGWljrzlfBAfGACf3xBQu9XdDwKTQr5O/W96cc A==;
-X-CSE-ConnectionGUID: AGbXCP+9RtCoOqHxGe6ViQ==
-X-CSE-MsgGUID: l+4ZrixzSSer7JzOoCq3og==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23390719"
-Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
- by internal-pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 23:04:19 +0000
-Received: from EX19MTAUWC002.ant.amazon.com [205.251.233.111:17774]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.51.175:2525]
+ bh=0OdVNN4g/A5CRAastFV+ZN9q0YHZjTY/AfP8eitSwz8=;
+ b=ilR9x/Bg/MoBWWcECVrpyrSqV5HwxZnyKLUOxPbdxV38pmPgyWzPV2WR
+ d3rmEi4g+NwYbfjUjRpwor8yJjFek6Z682zlQrJejM1vFUc1q9Sn9anLQ
+ a0qKB1HjCxUet0K7w/BtR8KvY3AAw0k7PU8Wt4c2gskTJ+O6fa5gqgO1k
+ 5yZGd558l6/KqqzogJF5YwIw17jONplnCW9X/yBpOmLoIW59cbg8YRDL4
+ +Wy+ZblWPqZrpd71sG0sDS3IG9xn/5dKDA331/YhV4CgxuD7sj+Xx4IEm
+ uTzWwJbD9vZoGUfGnZ0owRR+vZ2oUOSQY5ObYx7zM0ItrKUXoYd2/K/bd g==;
+X-CSE-ConnectionGUID: 6Z/7fXYqQ6a5eWRf8lHOcA==
+X-CSE-MsgGUID: Tc6fBYq2TIm6a+yLpsYvEg==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23483651"
+Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
+ by internal-pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 23:04:57 +0000
+Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.51:17720]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.35.214:2525]
  with esmtp (Farcaster)
- id f5231cf3-4194-4805-81c5-b5267b89a834; Sat, 11 Jul 2026 23:04:18 +0000 (UTC)
-X-Farcaster-Flow-ID: f5231cf3-4194-4805-81c5-b5267b89a834
+ id 70131fcf-8d62-4358-bfd4-d8b4a724f4b5; Sat, 11 Jul 2026 23:04:57 +0000 (UTC)
+X-Farcaster-Flow-ID: 70131fcf-8d62-4358-bfd4-d8b4a724f4b5
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
+ EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 23:04:18 +0000
+ Sat, 11 Jul 2026 23:04:57 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 23:04:10 +0000
+ Sat, 11 Jul 2026 23:04:48 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,10 +91,10 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 103/134] hw/char: Give parallel and htif memory regions an
- explicit owner
-Date: Sat, 11 Jul 2026 22:36:36 +0000
-Message-ID: <20260711223707.42139-104-graf@amazon.com>
+Subject: [RFC PATCH 105/134] system,
+ backends: Give named memory regions an explicit owner
+Date: Sat, 11 Jul 2026 22:36:38 +0000
+Message-ID: <20260711223707.42139-106-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -102,11 +102,11 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D043UWC001.ant.amazon.com (10.13.139.202) To
+X-ClientProxiedBy: EX19D046UWA001.ant.amazon.com (10.13.139.112) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=35.155.198.111;
+Received-SPF: pass client-ip=52.34.181.151;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
@@ -130,147 +130,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thread Object *owner as the first argument through parallel_mm_init()
-and htif_mm_init(). All callers are inside board init functions
-and pass OBJECT(machine).
+memory_map_init() creates the "system" and "io" root memory regions
+after qemu_create_machine() has instantiated current_machine, so
+qdev_get_machine() is available as owner.
+
+The IGVM backend creates guest-memory regions on behalf of the
+confidential-guest machine it carries in ctx->machine_state; use
+that as owner.
+
+subpage_init() and io_mem_init() pass name==NULL and thus never
+QOM-parent their MemoryRegion; leave owner NULL there.
 
 No functional change intended.
 
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/char/parallel.c           | 5 +++--
- hw/char/riscv_htif.c         | 5 +++--
- hw/hppa/machine.c            | 5 +++--
- hw/mips/jazz.c               | 2 +-
- hw/riscv/spike.c             | 2 +-
- include/hw/char/parallel.h   | 3 ++-
- include/hw/char/riscv_htif.h | 3 ++-
- 7 files changed, 15 insertions(+), 10 deletions(-)
+ backends/igvm.c  | 6 ++++--
+ system/physmem.c | 4 ++--
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/hw/char/parallel.c b/hw/char/parallel.c
-index 07bbc9443f..39a1d77e9f 100644
---- a/hw/char/parallel.c
-+++ b/hw/char/parallel.c
-@@ -585,7 +585,8 @@ static const MemoryRegionOps parallel_mm_ops = {
- };
- 
- /* If fd is zero, it means that the parallel device uses the console */
--bool parallel_mm_init(MemoryRegion *address_space,
-+bool parallel_mm_init(Object *owner,
-+                      MemoryRegion *address_space,
-                       hwaddr base, int it_shift, qemu_irq irq,
-                       Chardev *chr)
+diff --git a/backends/igvm.c b/backends/igvm.c
+index 80e87fe602..544a51b70e 100644
+--- a/backends/igvm.c
++++ b/backends/igvm.c
+@@ -256,13 +256,15 @@ static void *qigvm_prepare_memory(QIgvm *ctx, uint64_t addr, uint64_t size,
+         igvm_pages = g_new0(MemoryRegion, 1);
+         if (ctx->machine_state->cgs &&
+             ctx->machine_state->cgs->require_guest_memfd) {
+-            if (!memory_region_init_ram_guest_memfd(igvm_pages, NULL,
++            if (!memory_region_init_ram_guest_memfd(igvm_pages,
++                                                     OBJECT(ctx->machine_state),
+                                                     region_name, size, errp)) {
+                 g_free(igvm_pages);
+                 return NULL;
+             }
+         } else {
+-            if (!memory_region_init_ram(igvm_pages, NULL, region_name, size,
++            if (!memory_region_init_ram(igvm_pages, OBJECT(ctx->machine_state),
++                                        region_name, size,
+                                         errp)) {
+                 g_free(igvm_pages);
+                 return NULL;
+diff --git a/system/physmem.c b/system/physmem.c
+index c21ea92915..8466885994 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3100,11 +3100,11 @@ static void memory_map_init(void)
  {
-@@ -597,7 +598,7 @@ bool parallel_mm_init(MemoryRegion *address_space,
-     s->it_shift = it_shift;
-     qemu_register_reset(parallel_reset, s);
+     system_memory = g_malloc(sizeof(*system_memory));
  
--    memory_region_init_io(&s->iomem, NULL, &parallel_mm_ops, s,
-+    memory_region_init_io(&s->iomem, owner, &parallel_mm_ops, s,
-                           "parallel", 8 << it_shift);
-     memory_region_add_subregion(address_space, base, &s->iomem);
-     return true;
-diff --git a/hw/char/riscv_htif.c b/hw/char/riscv_htif.c
-index 488f938d98..f9e39c31aa 100644
---- a/hw/char/riscv_htif.c
-+++ b/hw/char/riscv_htif.c
-@@ -329,7 +329,8 @@ static const MemoryRegionOps htif_mm_ops = {
-     },
- };
+-    memory_region_init(system_memory, NULL, "system", UINT64_MAX);
++    memory_region_init(system_memory, qdev_get_machine(), "system", UINT64_MAX);
+     address_space_init(&address_space_memory, system_memory, "memory");
  
--HTIFState *htif_mm_init(MemoryRegion *address_space, Chardev *chr,
-+HTIFState *htif_mm_init(Object *owner,
-+                        MemoryRegion *address_space, Chardev *chr,
-                         uint64_t nonelf_base, bool custom_base)
- {
-     uint64_t base, size, tohost_offset, fromhost_offset;
-@@ -359,7 +360,7 @@ HTIFState *htif_mm_init(MemoryRegion *address_space, Chardev *chr,
-     qemu_chr_fe_set_handlers(&s->chr, htif_can_recv, htif_recv, htif_event,
-         htif_be_change, s, NULL, true);
- 
--    memory_region_init_io(&s->mmio, NULL, &htif_mm_ops, s,
-+    memory_region_init_io(&s->mmio, owner, &htif_mm_ops, s,
-                           TYPE_HTIF_UART, size);
-     memory_region_add_subregion_overlap(address_space, base,
-                                         &s->mmio, 1);
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index 233cf6318b..ea02b9e70e 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -613,7 +613,8 @@ static void machine_HP_715_init(MachineState *machine)
-         serial_hd(0), DEVICE_BIG_ENDIAN);
- 
-     /* Parallel port */
--    parallel_mm_init(addr_space, translate(NULL, LASI_HPA_715 + LASI_LPT + 0x800), 0,
-+    parallel_mm_init(OBJECT(machine), addr_space,
-+                     translate(NULL, LASI_HPA_715 + LASI_LPT + 0x800), 0,
-                      qdev_get_gpio_in(lasi_dev, LASI_IRQ_LPT_HPA),
-                      parallel_hds[0]);
- 
-@@ -706,7 +707,7 @@ static void machine_HP_B160L_init(MachineState *machine)
-         serial_hd(1), DEVICE_BIG_ENDIAN);
- 
-     /* Parallel port */
--    parallel_mm_init(addr_space,
-+    parallel_mm_init(OBJECT(machine), addr_space,
-                      translate(NULL, LASI_HPA + LASI_LPT + 0x800), 0,
-                      qdev_get_gpio_in(lasi_dev, LASI_IRQ_LPT_HPA),
-                      parallel_hds[0]);
-diff --git a/hw/mips/jazz.c b/hw/mips/jazz.c
-index 8999efb352..ff18b28c86 100644
---- a/hw/mips/jazz.c
-+++ b/hw/mips/jazz.c
-@@ -385,7 +385,7 @@ static void mips_jazz_init(MachineState *machine,
- 
-     /* Parallel port */
-     if (parallel_hds[0])
--        parallel_mm_init(address_space, 0x80008000, 0,
-+        parallel_mm_init(OBJECT(machine), address_space, 0x80008000, 0,
-                          qdev_get_gpio_in(rc4030, 0), parallel_hds[0]);
- 
-     /* FIXME: missing Jazz sound at 0x8000c000, rc4030[2] */
-diff --git a/hw/riscv/spike.c b/hw/riscv/spike.c
-index 9f1a1b5898..cd9a2ee0df 100644
---- a/hw/riscv/spike.c
-+++ b/hw/riscv/spike.c
-@@ -247,7 +247,7 @@ static void spike_board_init(MachineState *machine)
-                               fdt_load_addr);
- 
-     /* initialize HTIF using symbols found in load_kernel */
--    htif_mm_init(system_memory, serial_hd(0), memmap[SPIKE_HTIF].base,
-+    htif_mm_init(OBJECT(machine), system_memory, serial_hd(0), memmap[SPIKE_HTIF].base,
-                  htif_custom_base);
+     system_io = g_malloc(sizeof(*system_io));
+-    memory_region_init_io(system_io, NULL, &unassigned_io_ops, NULL, "io",
++    memory_region_init_io(system_io, qdev_get_machine(), &unassigned_io_ops, NULL, "io",
+                           65536);
+     address_space_init(&address_space_io, system_io, "I/O");
  }
- 
-diff --git a/include/hw/char/parallel.h b/include/hw/char/parallel.h
-index 782cc12602..7e8b9c9012 100644
---- a/include/hw/char/parallel.h
-+++ b/include/hw/char/parallel.h
-@@ -25,7 +25,8 @@ typedef struct ParallelState {
- 
- void parallel_hds_isa_init(Object *parent, ISABus *bus, int n);
- 
--bool parallel_mm_init(MemoryRegion *address_space,
-+bool parallel_mm_init(Object *owner,
-+                      MemoryRegion *address_space,
-                       hwaddr base, int it_shift, qemu_irq irq,
-                       Chardev *chr);
- 
-diff --git a/include/hw/char/riscv_htif.h b/include/hw/char/riscv_htif.h
-index 9d61e60d0a..40516adc08 100644
---- a/include/hw/char/riscv_htif.h
-+++ b/include/hw/char/riscv_htif.h
-@@ -48,7 +48,8 @@ void htif_symbol_callback(const char *st_name, int st_info, uint64_t st_value,
-     uint64_t st_size);
- 
- /* legacy pre qom */
--HTIFState *htif_mm_init(MemoryRegion *address_space, Chardev *chr,
-+HTIFState *htif_mm_init(Object *owner,
-+                        MemoryRegion *address_space, Chardev *chr,
-                         uint64_t nonelf_base, bool custom_base);
- 
- #endif
 -- 
 2.47.1
 
