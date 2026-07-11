@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DEC6C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:38:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1909C44509
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:38:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigKE-0006jV-AA; Sat, 11 Jul 2026 18:37:34 -0400
+	id 1wigKs-0006zs-1g; Sat, 11 Jul 2026 18:38:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigKC-0006ir-Kj; Sat, 11 Jul 2026 18:37:32 -0400
-Received: from pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.35.192.45])
+ id 1wigKq-0006wE-BH; Sat, 11 Jul 2026 18:38:12 -0400
+Received: from pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([50.112.246.219])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigKA-00053A-O1; Sat, 11 Jul 2026 18:37:32 -0400
+ id 1wigKo-000561-8q; Sat, 11 Jul 2026 18:38:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783809450; x=1815345450;
+ t=1783809490; x=1815345490;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=rb5gq6ZHZBxOqKEpOZvFqZlQVBtfnTT7/ZsZ/2gLzGg=;
- b=Wt1kToVz+LWCPn0Rbg004ANfb1RhoqIBvVFVxRqW7K5n0Vpdg6rcMZxE
- N6PiPdd4r4KfBkBH0ehpQnAAUoni2xTmAMgo2+EmVJh+m0bKonenjcyll
- HOrq/kJNql3N+cljm3UAEnF0hRmU9/v20JhlWFwQPB4K57LNWf/DDrzV8
- sXJkMxeDLSTBHqI0bGNrOTphsAEAmLfq22exor8qJKErTf33v+ro1T+bq
- FyRqGBbgLOpkJLXXeIxk0cIQdxrcXzIiDEv9527kOchBUgztb1/sU5Omi
- 799J3u0TA4F49F99Gi/nMFZj41IxcHvFvYkIeD4o1IEnOLtyX1SgKA0ll g==;
-X-CSE-ConnectionGUID: YXV/bHzRTb+Zoo+Uf0BTOA==
-X-CSE-MsgGUID: TGUJ1lNQTMG0RHrO4RPxHw==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23269516"
-Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
- by internal-pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:37:27 +0000
-Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.178:25475]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.51.175:2525]
+ bh=pMDhFLVLe52iFEESjI2BUOdg87f0qHOEgA7LeqYFsI0=;
+ b=OitS5fysu80s7Oj5ZyR1n2d+mA0HxQaG3zaAvCXX6LfJVNTjm9BBq95K
+ zChocXqLKZokCT0sMtim0WWS0Ux46XUb4CyI6bTB7kpekXNOo13NXgJMf
+ 38hJMQBlCldm37UtDT/p0gwGOSXN0qL6ifIn/WXNTBK3Jd7N9T0Z6KQJW
+ 2DWMT6UOipP0xir8ahJ1qTkgFdWQ4KUwt2E3qAMQEClG+fU0IIoibm7LG
+ HYUf8rcHcuzq4L/zxkW5JH3WJ0TV/qYss7BlUDHiOZWb+Z8ZKr5MKw4FS
+ VgMXPG8w7t8Y5CHKjdRwJAeb0F7IjOX+T/VB+cbd/jfDcwiPDrRPWEvp6 A==;
+X-CSE-ConnectionGUID: rpgzi9FzT9+qmJm9aCagdw==
+X-CSE-MsgGUID: 9DjULvmqR7+TXJ0ERc1IAg==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23299817"
+Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
+ by internal-pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:38:06 +0000
+Received: from EX19MTAUWC002.ant.amazon.com [205.251.233.51:8399]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.26.212:2525]
  with esmtp (Farcaster)
- id bf881622-812b-48a4-bdae-9e8d4d470b98; Sat, 11 Jul 2026 22:37:26 +0000 (UTC)
-X-Farcaster-Flow-ID: bf881622-812b-48a4-bdae-9e8d4d470b98
+ id 794e71ce-3ff5-4ebc-83aa-c88d04de0714; Sat, 11 Jul 2026 22:38:05 +0000 (UTC)
+X-Farcaster-Flow-ID: 794e71ce-3ff5-4ebc-83aa-c88d04de0714
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
+ EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:37:26 +0000
+ Sat, 11 Jul 2026 22:38:05 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:37:17 +0000
+ Sat, 11 Jul 2026 22:37:56 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,9 +91,10 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 001/134] qom: Introduce object_new_child()
-Date: Sat, 11 Jul 2026 22:34:54 +0000
-Message-ID: <20260711223707.42139-2-graf@amazon.com>
+Subject: [RFC PATCH 003/134] qdev: Reintroduce qdev_new() with a mandatory QOM
+ parent
+Date: Sat, 11 Jul 2026 22:34:56 +0000
+Message-ID: <20260711223707.42139-4-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -101,11 +102,11 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D042UWB002.ant.amazon.com (10.13.139.175) To
+X-ClientProxiedBy: EX19D040UWB003.ant.amazon.com (10.13.138.8) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=52.35.192.45;
+Received-SPF: pass client-ip=50.112.246.219;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
@@ -129,94 +130,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We already have two ways of creating a QOM object with a parent set
-from birth: object_initialize_child() for objects embedded in the
-parent struct, and object_new_with_props() for heap-allocated objects
-that also want a list of string properties applied.  What we do not
-have is the plain heap-allocated dual of object_initialize_child():
-create the object, add it as a child<> of a given parent under a given
-name, and hand the reference to the parent.
+The previous commit vacated the qdev_new()/qdev_try_new() names.
+Reintroduce them with the signature we actually want:
 
-Board and composite-device code that heap-allocates children today
-therefore either open-codes object_new()+object_property_add_child()
-+object_unref(), or skips the parenting step entirely and lets
-device_set_realized() dump the object into /machine/unattached.
+  DeviceState *qdev_new(Object *parent, const char *id,
+                        const char *type);
 
-Add object_new_child(parent, id, typename) as that missing primitive.
-The reference created by object_new() is transferred to the parent's
-child<> property, so on return the sole reference is held by @parent
-and the caller does not need to unref.  Later patches build the qdev
-and per-bus creation helpers on top of this.
+which is the qdev-layer, heap-allocated dual of
+object_initialize_child(): the returned device is created and
+immediately added to the QOM composition tree as a child of @parent
+under @id.
+
+Refcount contract: the initial reference is transferred to the
+child<> property of @parent, so on return the caller does not hold a
+reference.  Pair with qdev_realize() (not qdev_realize_and_unref()),
+matching object_initialize_child()'s convention.
+
+qdev_new_orphan() remains for callers that set the parent themselves
+before realize (notably qdev_device_add(), which parents under
+/machine/peripheral via qdev_set_id()).  Later patches convert the
+remaining orphan callers subsystem by subsystem.
 
 Suggested-by: Markus Armbruster <armbru@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- include/qom/object.h | 25 +++++++++++++++++++++++++
- qom/object.c         | 13 +++++++++++++
- 2 files changed, 38 insertions(+)
+ hw/core/qdev.c         | 19 +++++++++++++++++++
+ include/hw/core/qdev.h | 34 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 53 insertions(+)
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index 11f55613fc..ce6a23b5a1 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -632,6 +632,31 @@ Object *object_new_with_class(ObjectClass *klass);
-  */
- Object *object_new(const char *typename);
- 
-+/**
-+ * object_new_child:
-+ * @parent: the QOM composition-tree parent
-+ * @id: the child<> property name; the object's canonical QOM path
-+ *      becomes @parent's path plus "/" plus @id
-+ * @typename: the name of the type of the object to instantiate
-+ *
-+ * Create a heap-allocated object and immediately add it to the QOM
-+ * composition tree as a child of @parent.
-+ *
-+ * This is the heap-allocated dual of object_initialize_child(): use
-+ * this when the child is a pointer member of the parent, and use
-+ * object_initialize_child() when the child is embedded in the parent
-+ * struct.  See also object_new_with_props() for the variant that
-+ * additionally sets a list of properties.
-+ *
-+ * The reference returned by object_new() is transferred to the child<>
-+ * property of @parent, so the object has a reference count of 1 held
-+ * by @parent, and the caller does not need to unref.
-+ *
-+ * Returns: the newly allocated, instantiated and parented object.
-+ */
-+Object *object_new_child(Object *parent, const char *id,
-+                         const char *typename);
-+
- /**
-  * object_new_with_props:
-  * @typename:  The name of the type of the object to instantiate.
-diff --git a/qom/object.c b/qom/object.c
-index f79b2cf361..b4d181b617 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -718,6 +718,19 @@ Object *object_new(const char *typename)
-     return object_new_with_type(ti);
+diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+index 8a8d206a02..d2c89d0310 100644
+--- a/hw/core/qdev.c
++++ b/hw/core/qdev.c
+@@ -145,6 +145,25 @@ bool qdev_set_parent_bus(DeviceState *dev, BusState *bus, Error **errp)
+     return true;
  }
  
-+Object *object_new_child(Object *parent, const char *id,
-+                          const char *typename)
++DeviceState *qdev_new(Object *parent, const char *id, const char *type)
 +{
++    return DEVICE(object_new_child(parent, id, type));
++}
++
++DeviceState *qdev_try_new(Object *parent, const char *id, const char *type)
++{
++    ObjectClass *oc = module_object_class_by_name(type);
 +    Object *obj;
 +
-+    g_assert(parent);
-+    g_assert(id);
-+
-+    obj = object_new(typename);
++    if (!oc) {
++        return NULL;
++    }
++    obj = object_new_with_class(oc);
 +    object_property_add_child(parent, id, obj);
 +    object_unref(obj);
-+    return obj;
++    return DEVICE(obj);
 +}
++
+ DeviceState *qdev_new_orphan(const char *name)
+ {
+     return DEVICE(object_new(name));
+diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
+index 839c1b4147..e692a1d48e 100644
+--- a/include/hw/core/qdev.h
++++ b/include/hw/core/qdev.h
+@@ -406,6 +406,40 @@ struct BusState {
  
- Object *object_new_with_props(const char *typename,
-                               Object *parent,
+ /*** Board API.  This should go away once we have a machine config file.  ***/
+ 
++/**
++ * qdev_new: Create a device and parent it in the QOM composition tree
++ * @parent: the QOM parent (usually the machine or containing device)
++ * @id: child<> property name; the device's canonical QOM path becomes
++ *      @parent's path plus "/" plus @id
++ * @type: device type to create (we assert() that this type exists)
++ *
++ * Heap-allocated counterpart to object_initialize_child().  This
++ * allocates and initializes the device state and immediately adds it
++ * as a child of @parent, ready for the caller to set properties and
++ * then realize.
++ *
++ * The reference count of the returned device is 1, held by @parent's
++ * child<> property.  The caller therefore does not hold a reference
++ * and pairs this with qdev_realize() (NOT qdev_realize_and_unref()).
++ *
++ * Return: a derived DeviceState, owned by @parent.
++ */
++DeviceState *qdev_new(Object *parent, const char *id, const char *type);
++
++/**
++ * qdev_try_new: Try to create a parented device on the heap
++ * @parent: the QOM parent
++ * @id: child<> property name
++ * @type: device type to create
++ *
++ * This is like qdev_new(), except it returns %NULL when @type does
++ * not exist, rather than asserting.
++ *
++ * Return: a derived DeviceState owned by @parent, or NULL if @type
++ * does not exist.
++ */
++DeviceState *qdev_try_new(Object *parent, const char *id, const char *type);
++
+ /**
+  * qdev_new_orphan: Create a device on the heap
+  * @name: device type to create (we assert() that this type exists)
 -- 
 2.47.1
 
