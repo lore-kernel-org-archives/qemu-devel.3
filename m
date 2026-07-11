@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02903C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:46:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED2B4C44506
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:47:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigTG-0008Bq-Uf; Sat, 11 Jul 2026 18:46:55 -0400
+	id 1wigTX-0008O1-Cy; Sat, 11 Jul 2026 18:47:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigTF-0008B3-0B; Sat, 11 Jul 2026 18:46:53 -0400
-Received: from pdx-out-012.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([35.162.73.231])
+ id 1wigTV-0008Mx-N8; Sat, 11 Jul 2026 18:47:09 -0400
+Received: from pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.26.1.71])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigTC-0007N8-BP; Sat, 11 Jul 2026 18:46:52 -0400
+ id 1wigTT-0007Pe-8A; Sat, 11 Jul 2026 18:47:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783810010; x=1815346010;
+ t=1783810027; x=1815346027;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=meFsLf47H5P+7QoX1jJ2rNzaffdsteXUDRvG8BWlryM=;
- b=gF8nPVo10cbk50q81vlv7h705yGfLC+S9Rag3flHCwdvDC5s2c/dlNG+
- dYf1Vbh6gddBRCXqKIjwstL0Hq1/R/X+kEy5WyQCgmBRglT+5+eQAm9oB
- l0Sku0NeIaa02fj4CMoo12Dz7Vg70w+QLArMdqmI2RV1YnikYYhRoyaX5
- kjnH7P671uIxMDnfSM2tfeApRrIstqdBgLWzIJyLunrks95VmQpOGPrGy
- I/HFUf95DCoalk334VF5t/Q9d7EPfDcFNt6F2LLA5BegnsDtyrIzMtkvS
- t8tyTu7yMLaRsXWQZeehPsQh++YKHJQkUTB6lWVExYHidn41GQPaKX7E5 w==;
-X-CSE-ConnectionGUID: nqogrhn+R9yzWAPUXMxucg==
-X-CSE-MsgGUID: w4WGZkGoQDyXp/ZeTWooMw==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23293923"
-Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
- by internal-pdx-out-012.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:46:46 +0000
-Received: from EX19MTAUWC002.ant.amazon.com [205.251.233.51:24258]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.51.175:2525]
+ bh=qrYU/6J9K1fxb4U0qKmY9Ctb2pPuWEVVahf8vltU/98=;
+ b=jaxT+XebPBZf4q2mP4nb4H92Lm4EDYzWct3iEZFPmQoucJn8C3dCi5JD
+ tl20tOWvZPJux4+FcZpUQVRPXR09N8kS4/r0vkHm7DNpUcUpky+gj11b8
+ ghqphEYwmdju5boj3nuhD57EbGimsm/8I3bFb0SVnH3tpFvCBY0bCwxYg
+ 0Qma1gU9WJ/gHJAtY9GhxEAwFuO35/qH2LL5rygtHJ0APSdcUABvOtJWY
+ 6INCClbCMpS3YrupR00QDkFLgLTxJAO601cZWizw84cAIhU5BLIyD/BDG
+ T3g5Qmf+pLI8jWkT9zs+f4eaxr4Xp37e+wH7C1NsE+NCG1Qg12RGqdegG Q==;
+X-CSE-ConnectionGUID: LO/MXiafRO23K8nPh9ACug==
+X-CSE-MsgGUID: MGRPoYV+TcO1LqeTHP7r8A==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23522206"
+Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
+ by internal-pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:47:03 +0000
+Received: from EX19MTAUWC001.ant.amazon.com [205.251.233.53:5753]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.47.135:2525]
  with esmtp (Farcaster)
- id 736a152e-b649-4d60-a25a-67d8e3159c80; Sat, 11 Jul 2026 22:46:46 +0000 (UTC)
-X-Farcaster-Flow-ID: 736a152e-b649-4d60-a25a-67d8e3159c80
+ id 4c311944-0553-4620-a794-e087afeeb4e7; Sat, 11 Jul 2026 22:47:03 +0000 (UTC)
+X-Farcaster-Flow-ID: 4c311944-0553-4620-a794-e087afeeb4e7
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
+ EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:46:46 +0000
+ Sat, 11 Jul 2026 22:47:03 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:46:37 +0000
+ Sat, 11 Jul 2026 22:46:54 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,9 +91,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 036/134] hw/misc: Give onboard devices a QOM parent
-Date: Sat, 11 Jul 2026 22:35:29 +0000
-Message-ID: <20260711223707.42139-37-graf@amazon.com>
+Subject: [RFC PATCH 038/134] hw/net: Give onboard devices a QOM parent
+Date: Sat, 11 Jul 2026 22:35:31 +0000
+Message-ID: <20260711223707.42139-39-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -103,16 +103,16 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D031UWC001.ant.amazon.com (10.13.139.241) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=35.162.73.231;
+Received-SPF: pass client-ip=52.26.1.71;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-012.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
 X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
  HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_NONE=0.001, T_FILL_THIS_FORM_SHORT=0.01, T_SPF_PERMERROR=0.01,
+ SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
  UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,7 +129,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the *_orphan() device-creation calls in hw/misc to the new
+Convert the *_orphan() device-creation calls in hw/net to the new
 parented API introduced earlier in this series, so every onboard
 device gets a stable path in the composition tree instead of landing
 in /machine/unattached with an unstable device[N] name.
@@ -140,270 +140,244 @@ composite children.  Names follow existing QOM conventions.
 
 Per-site rationale (reviewers: dispute the modeling here):
 
-hw/misc/empty_slot.c:61 | qdev_new | parent | name | thread Object *parent as first arg; use existing name arg as child name; 7 callers updated (m68k next-cube, sparc sun4m, gt64120 realize)
-hw/misc/led.c:144 | qdev_new | parentobj | name | already receives parentobj; collapse existing object_property_add_child(); compute name before create
-hw/misc/sifive_e_prci.c:120 | qdev_new | parent | "prci" | thread Object *parent as first arg; single caller in sifive_e_soc_realize passes OBJECT(dev)
-hw/misc/sifive_test.c:100 | qdev_new | parent | "test" | thread Object *parent as first arg; 2 callers (riscv virt, or1k virt) pass machine-state
+hw/net/lan9118.c:1342 | qdev_new | parent | "eth" | thread Object *parent as first arg; 5 board-init callers pass OBJECT(machine)
+hw/net/smc91c111.c:957 | qdev_new | parent | "eth" | thread Object *parent as first arg; 3 board-init callers pass OBJECT(machine)
+hw/net/spapr_llan.c:374 | qdev_new | parent | "vlan[*]" | thread Object *parent as first arg; single caller in hw/ppc/spapr.c board-init loop passes OBJECT(spapr)
+hw/net/xen_nic.c:622 | qdev_new | ORPHAN-JUSTIFIED | - | XenBackendOps.create hotplug callback driven by xenstore watch; dynamic device with no board owner (same pattern as xen-block/xen_console)
 
 Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/m68k/next-cube.c             |  6 +++---
- hw/misc/empty_slot.c            |  7 ++++---
- hw/misc/led.c                   | 15 ++++++++-------
- hw/misc/sifive_e_prci.c         |  6 +++---
- hw/misc/sifive_test.c           |  6 +++---
- hw/or1k/virt.c                  |  2 +-
- hw/pci-host/gt64120.c           |  2 +-
- hw/riscv/sifive_e.c             |  2 +-
- hw/riscv/virt.c                 |  2 +-
- hw/sparc/sun4m.c                |  7 ++++---
- include/hw/misc/empty_slot.h    |  3 ++-
- include/hw/misc/sifive_e_prci.h |  2 +-
- include/hw/misc/sifive_test.h   |  2 +-
- 13 files changed, 33 insertions(+), 29 deletions(-)
+ hw/arm/integratorcp.c      | 2 +-
+ hw/arm/kzm.c               | 2 +-
+ hw/arm/mps2.c              | 2 +-
+ hw/arm/mps3r.c             | 2 +-
+ hw/arm/realview.c          | 4 ++--
+ hw/arm/versatilepb.c       | 2 +-
+ hw/arm/vexpress.c          | 2 +-
+ hw/net/lan9118.c           | 6 +++---
+ hw/net/smc91c111.c         | 6 +++---
+ hw/net/spapr_llan.c        | 6 +++---
+ hw/ppc/spapr.c             | 2 +-
+ include/hw/net/lan9118.h   | 2 +-
+ include/hw/net/smc91c111.h | 2 +-
+ include/hw/ppc/spapr_vio.h | 2 +-
+ 14 files changed, 21 insertions(+), 21 deletions(-)
 
-diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index d97168d9f3..530dc1ab59 100644
---- a/hw/m68k/next-cube.c
-+++ b/hw/m68k/next-cube.c
-@@ -1292,9 +1292,9 @@ static void next_cube_init(MachineState *machine)
-     sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 1, 0x02106000);
+diff --git a/hw/arm/integratorcp.c b/hw/arm/integratorcp.c
+index 3df488921a..163012a7bf 100644
+--- a/hw/arm/integratorcp.c
++++ b/hw/arm/integratorcp.c
+@@ -670,7 +670,7 @@ static void integratorcp_init(MachineState *machine)
+     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, pic[25]);
  
-     /* unknown: Brightness control register? */
--    empty_slot_init("next.unknown.0", 0x02110000, 0x10);
-+    empty_slot_init(OBJECT(machine), "next.unknown.0", 0x02110000, 0x10);
-     /* unknown: Magneto-Optical drive controller? */
--    empty_slot_init("next.unknown.1", 0x02112000, 0x10);
-+    empty_slot_init(OBJECT(machine), "next.unknown.1", 0x02112000, 0x10);
- 
-     /* SCSI */
-     sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 2, 0x02114000);
-@@ -1304,7 +1304,7 @@ static void next_cube_init(MachineState *machine)
-     sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 4, 0x02118000);
- 
-     /* unknown: Serial clock configuration register? */
--    empty_slot_init("next.unknown.2", 0x02118004, 0x10);
-+    empty_slot_init(OBJECT(machine), "next.unknown.2", 0x02118004, 0x10);
- 
-     /* Timer */
-     sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 5, 0x0211a000);
-diff --git a/hw/misc/empty_slot.c b/hw/misc/empty_slot.c
-index 182211fdcc..64764dfd92 100644
---- a/hw/misc/empty_slot.c
-+++ b/hw/misc/empty_slot.c
-@@ -52,16 +52,17 @@ static const MemoryRegionOps empty_slot_ops = {
-     .endianness = DEVICE_NATIVE_ENDIAN,
- };
- 
--void empty_slot_init(const char *name, hwaddr addr, uint64_t slot_size)
-+void empty_slot_init(Object *parent, const char *name, hwaddr addr,
-+                     uint64_t slot_size)
- {
-     if (slot_size > 0) {
-         /* Only empty slots larger than 0 byte need handling. */
-         DeviceState *dev;
- 
--        dev = qdev_new_orphan(TYPE_EMPTY_SLOT);
-+        dev = qdev_new(parent, name, TYPE_EMPTY_SLOT);
- 
-         qdev_prop_set_uint64(dev, "size", slot_size);
--        sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+        sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
- 
-         sysbus_mmio_map_overlap(SYS_BUS_DEVICE(dev), 0, addr, -10000);
+     if (qemu_find_nic_info("smc91c111", true, NULL)) {
+-        smc91c111_init(0xc8000000, pic[27]);
++        smc91c111_init(OBJECT(machine), 0xc8000000, pic[27]);
      }
-diff --git a/hw/misc/led.c b/hw/misc/led.c
-index 620284063b..bed85ec3c6 100644
---- a/hw/misc/led.c
-+++ b/hw/misc/led.c
-@@ -141,20 +141,21 @@ LEDState *led_create_simple(Object *parentobj,
-     g_autofree char *name = NULL;
-     DeviceState *dev;
  
--    dev = qdev_new_orphan(TYPE_LED);
--    qdev_prop_set_bit(dev, "gpio-active-high",
--                      gpio_polarity == GPIO_POLARITY_ACTIVE_HIGH);
--    qdev_prop_set_string(dev, "color", led_color_name[color]);
-     if (!description) {
-         static unsigned undescribed_led_id;
-         name = g_strdup_printf("undescribed-led-#%u", undescribed_led_id++);
-     } else {
--        qdev_prop_set_string(dev, "description", description);
-         name = g_ascii_strdown(description, -1);
-         name = g_strdelimit(name, " #", '-');
+     dev = qdev_new_orphan("pl110");
+diff --git a/hw/arm/kzm.c b/hw/arm/kzm.c
+index 168ecf35d0..de9919c8cb 100644
+--- a/hw/arm/kzm.c
++++ b/hw/arm/kzm.c
+@@ -115,7 +115,7 @@ static void kzm_init(MachineState *machine)
      }
--    object_property_add_child(parentobj, name, OBJECT(dev));
--    qdev_realize_and_unref(dev, NULL, &error_fatal);
-+    dev = qdev_new(parentobj, name, TYPE_LED);
-+    qdev_prop_set_bit(dev, "gpio-active-high",
-+                      gpio_polarity == GPIO_POLARITY_ACTIVE_HIGH);
-+    qdev_prop_set_string(dev, "color", led_color_name[color]);
-+    if (description) {
-+        qdev_prop_set_string(dev, "description", description);
-+    }
-+    qdev_realize(dev, NULL, &error_fatal);
  
-     return LED(dev);
- }
-diff --git a/hw/misc/sifive_e_prci.c b/hw/misc/sifive_e_prci.c
-index 7ac5db5933..a466d37735 100644
---- a/hw/misc/sifive_e_prci.c
-+++ b/hw/misc/sifive_e_prci.c
-@@ -115,10 +115,10 @@ type_init(sifive_e_prci_register_types)
- /*
-  * Create PRCI device.
-  */
--DeviceState *sifive_e_prci_create(hwaddr addr)
-+DeviceState *sifive_e_prci_create(Object *parent, hwaddr addr)
- {
--    DeviceState *dev = qdev_new_orphan(TYPE_SIFIVE_E_PRCI);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    DeviceState *dev = qdev_new(parent, "prci", TYPE_SIFIVE_E_PRCI);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
-     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, addr);
-     return dev;
- }
-diff --git a/hw/misc/sifive_test.c b/hw/misc/sifive_test.c
-index f861858d9b..81ae00a110 100644
---- a/hw/misc/sifive_test.c
-+++ b/hw/misc/sifive_test.c
-@@ -95,10 +95,10 @@ type_init(sifive_test_register_types)
- /*
-  * Create Test device.
-  */
--DeviceState *sifive_test_create(hwaddr addr)
-+DeviceState *sifive_test_create(Object *parent, hwaddr addr)
- {
--    DeviceState *dev = qdev_new_orphan(TYPE_SIFIVE_TEST);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    DeviceState *dev = qdev_new(parent, "test", TYPE_SIFIVE_TEST);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
-     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, addr);
-     return dev;
- }
-diff --git a/hw/or1k/virt.c b/hw/or1k/virt.c
-index 7362433a02..276be32648 100644
---- a/hw/or1k/virt.c
-+++ b/hw/or1k/virt.c
-@@ -264,7 +264,7 @@ static void openrisc_virt_test_init(OR1KVirtState *state, hwaddr base,
-     char *nodename;
+     if (qemu_find_nic_info("lan9118", true, NULL)) {
+-        lan9118_init(KZM_LAN9118_ADDR,
++        lan9118_init(OBJECT(machine), KZM_LAN9118_ADDR,
+                      qdev_get_gpio_in(DEVICE(&s->soc.avic), 52));
+     }
  
-     /* SiFive Test MMIO device */
--    sifive_test_create(base);
-+    sifive_test_create(OBJECT(state), base);
- 
-     /* SiFive Test MMIO Reset device FDT */
-     nodename = g_strdup_printf("/soc/test@%" HWADDR_PRIx, base);
-diff --git a/hw/pci-host/gt64120.c b/hw/pci-host/gt64120.c
-index 780c86cd9a..0c49e51ad0 100644
---- a/hw/pci-host/gt64120.c
-+++ b/hw/pci-host/gt64120.c
-@@ -1224,7 +1224,7 @@ static void gt64120_realize(DeviceState *dev, Error **errp)
-      * exception when accessing invalid memory. Create an empty slot to
-      * emulate this feature.
+diff --git a/hw/arm/mps2.c b/hw/arm/mps2.c
+index 5a0384a412..e646c7c71e 100644
+--- a/hw/arm/mps2.c
++++ b/hw/arm/mps2.c
+@@ -461,7 +461,7 @@ static void mps2_common_init(MachineState *machine)
+     /* In hardware this is a LAN9220; the LAN9118 is software compatible
+      * except that it doesn't support the checksum-offload feature.
       */
--    empty_slot_init("GT64120", 0, 0x20000000);
-+    empty_slot_init(OBJECT(dev), "GT64120", 0, 0x20000000);
- }
+-    lan9118_init(mmc->ethernet_base,
++    lan9118_init(OBJECT(machine), mmc->ethernet_base,
+                  qdev_get_gpio_in(armv7m,
+                                   mmc->fpga_type == FPGA_AN511 ? 47 : 13));
  
- static void gt64120_pci_realize(PCIDevice *d, Error **errp)
-diff --git a/hw/riscv/sifive_e.c b/hw/riscv/sifive_e.c
-index dfdb7ae4c1..d07edde237 100644
---- a/hw/riscv/sifive_e.c
-+++ b/hw/riscv/sifive_e.c
-@@ -233,7 +233,7 @@ static void sifive_e_soc_realize(DeviceState *dev, Error **errp)
-         RISCV_ACLINT_DEFAULT_MTIMER_SIZE, 0, ms->smp.cpus,
-         RISCV_ACLINT_DEFAULT_MTIMECMP, RISCV_ACLINT_DEFAULT_MTIME,
-         SIFIVE_E_LFCLK_DEFAULT_FREQ, false);
--    sifive_e_prci_create(memmap[SIFIVE_E_DEV_PRCI].base);
-+    sifive_e_prci_create(OBJECT(dev), memmap[SIFIVE_E_DEV_PRCI].base);
+diff --git a/hw/arm/mps3r.c b/hw/arm/mps3r.c
+index caad820d3b..8e249c9b9d 100644
+--- a/hw/arm/mps3r.c
++++ b/hw/arm/mps3r.c
+@@ -549,7 +549,7 @@ static void mps3r_common_init(MachineState *machine)
+      * In hardware this is a LAN9220; the LAN9118 is software compatible
+      * except that it doesn't support the checksum-offload feature.
+      */
+-    lan9118_init(0xe0300000,
++    lan9118_init(OBJECT(machine), 0xe0300000,
+                  qdev_get_gpio_in(gicdev, 18));
  
-     /* AON */
+     create_unimplemented_device("usb", 0xe0301000, 0x1000);
+diff --git a/hw/arm/realview.c b/hw/arm/realview.c
+index f37ddf8073..f51730c487 100644
+--- a/hw/arm/realview.c
++++ b/hw/arm/realview.c
+@@ -309,9 +309,9 @@ static void realview_init(MachineState *machine,
  
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 3ceb476b84..d7ce57069a 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -1477,7 +1477,7 @@ static void virt_machine_init(MachineState *machine)
-     rom_set_fw(s->fw_cfg);
- 
-     /* SiFive Test MMIO device */
--    sifive_test_create(s->memmap[VIRT_TEST].base);
-+    sifive_test_create(OBJECT(machine), s->memmap[VIRT_TEST].base);
- 
-     /* VirtIO MMIO devices */
-     for (i = 0; i < VIRTIO_COUNT; i++) {
-diff --git a/hw/sparc/sun4m.c b/hw/sparc/sun4m.c
-index 80e37555b1..52627dbdec 100644
---- a/hw/sparc/sun4m.c
-+++ b/hw/sparc/sun4m.c
-@@ -842,7 +842,7 @@ static void sun4m_hw_init(MachineState *machine)
- 
-     /* models without ECC don't trap when missing ram is accessed */
-     if (!hwdef->ecc_base) {
--        empty_slot_init("ecc", machine->ram_size,
-+        empty_slot_init(OBJECT(machine), "ecc", machine->ram_size,
-                         hwdef->max_mem - machine->ram_size);
-     }
- 
-@@ -875,7 +875,7 @@ static void sun4m_hw_init(MachineState *machine)
-            Software shouldn't use aliased addresses, neither should it crash
-            when does. Using empty_slot instead of aliasing can help with
-            debugging such accesses */
--        empty_slot_init("iommu.alias",
-+        empty_slot_init(OBJECT(machine), "iommu.alias",
-                         hwdef->iommu_pad_base, hwdef->iommu_pad_len);
-     }
- 
-@@ -937,7 +937,8 @@ static void sun4m_hw_init(MachineState *machine)
-         /* vsimm registers probed by OBP */
-         if (hwdef->vsimm[i].reg_base) {
-             char *name = g_strdup_printf("vsimm[%d]", i);
--            empty_slot_init(name, hwdef->vsimm[i].reg_base, 0x2000);
-+            empty_slot_init(OBJECT(machine), name,
-+                            hwdef->vsimm[i].reg_base, 0x2000);
-             g_free(name);
+     if (qemu_find_nic_info(is_pb ? "lan9118" : "smc91c111", true, NULL)) {
+         if (is_pb) {
+-            lan9118_init(0x4e000000, pic[28]);
++            lan9118_init(OBJECT(machine), 0x4e000000, pic[28]);
+         } else {
+-            smc91c111_init(0x4e000000, pic[28]);
++            smc91c111_init(OBJECT(machine), 0x4e000000, pic[28]);
          }
      }
-diff --git a/include/hw/misc/empty_slot.h b/include/hw/misc/empty_slot.h
-index dec56e56ae..12f03aa16a 100644
---- a/include/hw/misc/empty_slot.h
-+++ b/include/hw/misc/empty_slot.h
-@@ -14,6 +14,7 @@
  
- #include "exec/hwaddr.h"
+diff --git a/hw/arm/versatilepb.c b/hw/arm/versatilepb.c
+index dcc7b7debd..5de99cb854 100644
+--- a/hw/arm/versatilepb.c
++++ b/hw/arm/versatilepb.c
+@@ -265,7 +265,7 @@ static void versatile_init(MachineState *machine, int board_id)
+     pci_bus = (PCIBus *)qdev_get_child_bus(dev, "pci");
  
--void empty_slot_init(const char *name, hwaddr addr, uint64_t slot_size);
-+void empty_slot_init(Object *parent, const char *name, hwaddr addr,
-+                     uint64_t slot_size);
+     if (qemu_find_nic_info("smc91c111", true, NULL)) {
+-        smc91c111_init(0x10010000, sic[25]);
++        smc91c111_init(OBJECT(machine), 0x10010000, sic[25]);
+     }
+     pci_init_nic_devices(pci_bus, "rtl8139");
+ 
+diff --git a/hw/arm/vexpress.c b/hw/arm/vexpress.c
+index ffd3c52d4f..5cbb2c44cb 100644
+--- a/hw/arm/vexpress.c
++++ b/hw/arm/vexpress.c
+@@ -694,7 +694,7 @@ static void vexpress_common_init(MachineState *machine)
+ 
+     /* 0x4e000000 LAN9118 Ethernet */
+     if (qemu_find_nic_info("lan9118", true, NULL)) {
+-        lan9118_init(map[VE_ETHERNET], pic[15]);
++        lan9118_init(OBJECT(machine), map[VE_ETHERNET], pic[15]);
+     }
+ 
+     /* VE_USB: not modelled */
+diff --git a/hw/net/lan9118.c b/hw/net/lan9118.c
+index 87213c0d8d..91c3533702 100644
+--- a/hw/net/lan9118.c
++++ b/hw/net/lan9118.c
+@@ -1334,15 +1334,15 @@ static void lan9118_register_types(void)
+ 
+ /* Legacy helper function.  Should go away when machine config files are
+    implemented.  */
+-void lan9118_init(uint32_t base, qemu_irq irq)
++void lan9118_init(Object *parent, uint32_t base, qemu_irq irq)
+ {
+     DeviceState *dev;
+     SysBusDevice *s;
+ 
+-    dev = qdev_new_orphan(TYPE_LAN9118);
++    dev = qdev_new(parent, "eth", TYPE_LAN9118);
+     qemu_configure_nic_device(dev, true, NULL);
+     s = SYS_BUS_DEVICE(dev);
+-    sysbus_realize_and_unref(s, &error_fatal);
++    sysbus_realize(s, &error_fatal);
+     sysbus_mmio_map(s, 0, base);
+     sysbus_connect_irq(s, 0, irq);
+ }
+diff --git a/hw/net/smc91c111.c b/hw/net/smc91c111.c
+index 6186d88717..85f3d4d34a 100644
+--- a/hw/net/smc91c111.c
++++ b/hw/net/smc91c111.c
+@@ -949,15 +949,15 @@ static void smc91c111_register_types(void)
+ 
+ /* Legacy helper function.  Should go away when machine config files are
+    implemented.  */
+-void smc91c111_init(uint32_t base, qemu_irq irq)
++void smc91c111_init(Object *parent, uint32_t base, qemu_irq irq)
+ {
+     DeviceState *dev;
+     SysBusDevice *s;
+ 
+-    dev = qdev_new_orphan(TYPE_SMC91C111);
++    dev = qdev_new(parent, "eth", TYPE_SMC91C111);
+     qemu_configure_nic_device(dev, true, NULL);
+     s = SYS_BUS_DEVICE(dev);
+-    sysbus_realize_and_unref(s, &error_fatal);
++    sysbus_realize(s, &error_fatal);
+     sysbus_mmio_map(s, 0, base);
+     sysbus_connect_irq(s, 0, irq);
+ }
+diff --git a/hw/net/spapr_llan.c b/hw/net/spapr_llan.c
+index f10ea64798..1d5637f294 100644
+--- a/hw/net/spapr_llan.c
++++ b/hw/net/spapr_llan.c
+@@ -367,15 +367,15 @@ static void spapr_vlan_instance_finalize(Object *obj)
+     }
+ }
+ 
+-void spapr_vlan_create(SpaprVioBus *bus, NICInfo *nd)
++void spapr_vlan_create(Object *parent, SpaprVioBus *bus, NICInfo *nd)
+ {
+     DeviceState *dev;
+ 
+-    dev = qdev_new_orphan("spapr-vlan");
++    dev = qdev_new(parent, "vlan[*]", "spapr-vlan");
+ 
+     qdev_set_nic_properties(dev, nd);
+ 
+-    qdev_realize_and_unref(dev, &bus->bus, &error_fatal);
++    qdev_realize(dev, &bus->bus, &error_fatal);
+ }
+ 
+ static int spapr_vlan_devnode(SpaprVioDevice *dev, void *fdt, int node_off)
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 91f9d873b8..b81db9e8f3 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -3056,7 +3056,7 @@ static void spapr_machine_init(MachineState *machine)
+     phb = spapr_create_default_phb();
+ 
+     while ((nd = qemu_find_nic_info("spapr-vlan", true, "ibmveth"))) {
+-        spapr_vlan_create(spapr->vio_bus, nd);
++        spapr_vlan_create(OBJECT(spapr), spapr->vio_bus, nd);
+     }
+ 
+     pci_init_nic_devices(phb->bus, NULL);
+diff --git a/include/hw/net/lan9118.h b/include/hw/net/lan9118.h
+index 4bf9da7a63..b199f1912f 100644
+--- a/include/hw/net/lan9118.h
++++ b/include/hw/net/lan9118.h
+@@ -15,6 +15,6 @@
+ 
+ #define TYPE_LAN9118 "lan9118"
+ 
+-void lan9118_init(uint32_t, qemu_irq);
++void lan9118_init(Object *parent, uint32_t, qemu_irq);
  
  #endif
-diff --git a/include/hw/misc/sifive_e_prci.h b/include/hw/misc/sifive_e_prci.h
-index d0abd59f4b..6221e95d36 100644
---- a/include/hw/misc/sifive_e_prci.h
-+++ b/include/hw/misc/sifive_e_prci.h
-@@ -69,6 +69,6 @@ struct SiFiveEPRCIState {
-     uint32_t plloutdiv;
- };
+diff --git a/include/hw/net/smc91c111.h b/include/hw/net/smc91c111.h
+index dba32a233f..788f12678e 100644
+--- a/include/hw/net/smc91c111.h
++++ b/include/hw/net/smc91c111.h
+@@ -13,6 +13,6 @@
  
--DeviceState *sifive_e_prci_create(hwaddr addr);
-+DeviceState *sifive_e_prci_create(Object *parent, hwaddr addr);
+ #include "net/net.h"
  
- #endif
-diff --git a/include/hw/misc/sifive_test.h b/include/hw/misc/sifive_test.h
-index 85afd35263..fd079cfd4c 100644
---- a/include/hw/misc/sifive_test.h
-+++ b/include/hw/misc/sifive_test.h
-@@ -42,6 +42,6 @@ enum {
-     FINISHER_RESET = 0x7777
- };
- 
--DeviceState *sifive_test_create(hwaddr addr);
-+DeviceState *sifive_test_create(Object *parent, hwaddr addr);
+-void smc91c111_init(uint32_t, qemu_irq);
++void smc91c111_init(Object *parent, uint32_t, qemu_irq);
  
  #endif
+diff --git a/include/hw/ppc/spapr_vio.h b/include/hw/ppc/spapr_vio.h
+index 72baef6919..fcb29aebff 100644
+--- a/include/hw/ppc/spapr_vio.h
++++ b/include/hw/ppc/spapr_vio.h
+@@ -138,7 +138,7 @@ int spapr_vio_send_crq(SpaprVioDevice *dev, uint8_t *crq);
+ SpaprVioDevice *vty_lookup(SpaprMachineState *spapr, target_ulong reg);
+ void vty_putchars(SpaprVioDevice *sdev, uint8_t *buf, int len);
+ void spapr_vty_create(SpaprVioBus *bus, Chardev *chardev);
+-void spapr_vlan_create(SpaprVioBus *bus, NICInfo *nd);
++void spapr_vlan_create(Object *parent, SpaprVioBus *bus, NICInfo *nd);
+ void spapr_vscsi_create(Object *parent, SpaprVioBus *bus);
+ 
+ SpaprVioDevice *spapr_vty_get_default(SpaprVioBus *bus);
 -- 
 2.47.1
 
