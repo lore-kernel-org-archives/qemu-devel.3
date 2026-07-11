@@ -4,150 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77D3AC44501
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 14:18:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B68A7C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 15:02:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiYWn-00055Y-Py; Sat, 11 Jul 2026 10:18:01 -0400
+	id 1wiZD9-0005uK-Mf; Sat, 11 Jul 2026 11:01:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wiYWm-00055K-B4
- for qemu-devel@nongnu.org; Sat, 11 Jul 2026 10:18:00 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1wiZD4-0005u3-Rk
+ for qemu-devel@nongnu.org; Sat, 11 Jul 2026 11:01:42 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wiYWk-0000Df-MV
- for qemu-devel@nongnu.org; Sat, 11 Jul 2026 10:18:00 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66BAo1gQ3604009
- for <qemu-devel@nongnu.org>; Sat, 11 Jul 2026 14:17:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- IkTPwBujc3bcPBobJBiyfKk9qLW8wgCUCnI79+jbQv0=; b=mYLc/QLqBqlAXtSG
- FpVFRiKMNcjChCa69sHehCmmsu9sZZgPdevw1e5RQqZP9kBEdIdCk4dwDFYnCGRB
- eihyZv8i/+tEBIqQSATm+cEV/4GkCoGTx/B9tRt0D2SMaGuXj8Gwwmmjl2sRse6z
- SZA2zdYzcIWTjaAvzAGAyl2bVXWsPwKj3W3CSUzCvgR+n9/NL3kWJ7J398LUJaLM
- NHWpW00jq+3ogS+QH5EntlnTg+hndguHKb9QBoCt4x7j7jKl1MJo4SroJ4PH60+E
- 9kCLmvQ83yw5/7BvatBQZv5NsyU0oPZN0jAfSECxU/vkVzqYscj6gllV7PFGDdxd
- wJKsVg==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fbeehgxu9-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sat, 11 Jul 2026 14:17:55 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-51a87ef9713so31154941cf.1
- for <qemu-devel@nongnu.org>; Sat, 11 Jul 2026 07:17:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783779475; x=1784384275; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=IkTPwBujc3bcPBobJBiyfKk9qLW8wgCUCnI79+jbQv0=;
- b=KX3OmoYrW6kUREOFF5w1izmro7rNn/GHrxP7wI1K+KjSej3i8UB8ItBFpwXTuI9fe0
- 7LYIm2STAqFKc8tCGKzhBiU2RpmmtIEVLES8+xwBPm0FvI1pe8x9sArhP6YXCanvmpb+
- O1/kpOIt8paCyJwq15kVrShIJNxe3Cx11cEf9ClabckWRdU2wOHgobxAoyTbNjM9WdS2
- J4Q5Tryq0GAwQvRLPWvxiNh/tmAwD3XfT0NQjGlYEyN3/ul61NhxehdwnXxg/leAOpYh
- sozBF28ev6xd4CU3eCjG6wLyzzFk+oqvWIb8MkyaFhB7svNjA1M3q6Oj7OM/TpLEoiMx
- +MIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783779475; x=1784384275;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=IkTPwBujc3bcPBobJBiyfKk9qLW8wgCUCnI79+jbQv0=;
- b=fvUnabhgAGcuhUpqOgUmBVFnZTV4Z2hGBTnU427LgX3bNMbl0vVho4lTXza9PPRLUM
- Sj5OPuvpg/w6ZMIqb0OVCx9dwzGXNlMBjRYet45yXFBs31abSrnL0gvxxhmscOYijlWO
- /jiw+7M3oZyTw+z8of2SBYGprcs3CRR+x18WSSckJecC43O7snVok+66/SFGcYPVHkGJ
- 6eHP7WhQ6/s96czmIDoEcfi0YVY6DhQtpXOv8+a1xq/oaHRwqpdpiFLODkBVJ7ekVvWB
- xBTBIUkyvOkF7IgL4Llh/IhCLT8Z/QsnGr6nrUUMrBSpR+pTw0VkxFSjJ46w+nv391Is
- cvgQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrQNDiad3znTlK8EgSnfQD/cR/XCajbEMI3yoezPMEXJcrouSOxq3XT3ypeTBmYW3ZMUQIMjBUA8UmG@nongnu.org
-X-Gm-Message-State: AOJu0Ywn1E0BfO/5nMTKlPx6YTBpEzvKES8ZkG1+FejUNPxZPOGwsMGS
- gY1XPFbmrUk54lNeRGstxvFpZQqTemAiSkU5QtDilKAXxEX4oa0YglHXMcaOljHl5Fb78r8nUhg
- df5gltXGL3cpygTnetFnaUA7b1N1/TAOrJqO8v6e1QH7sIOfsZpT5A6MBBQ==
-X-Gm-Gg: AfdE7cmAO/LNbDTw1PoMLCMMO9JcaCQMmUnvg/StN0S3ei+WdpkG+kGcwWWosGuMwxM
- 6eJ79zx0ZTUzC22F0AJ/xPMnyb+mz8iUro3Dm6JJSfNZmK9+4leSQMdNw0YP4Zz3ADefEkRUN2/
- 9Lw2GG+zAotcWdXYIKyFVwHgENw5j4idKWlShO7O9YxBJgrqrrmh2oV+XGWUWvVs44HXdoAk0nY
- 3Itzsi91n/jIYoqa2tfHCJWrXaJxPuZKbnNMcCA63Uk9i0HC4Eszhh/RlpFeg5blYK/vFAOG2K7
- 6anVqBAUjt7fyhLcDYQPTLn1wJR/5T159vbhAe0PELVmD6i1o7pkKyB5+5Na6tvc55AQOSC9/k3
- vnGx1kObQvwQUG/HReAepzoQiNmH60hzDFmwLzhBiQ5ldE7IPnaecOHu0PFIB1w==
-X-Received: by 2002:a05:622a:13cd:b0:51c:98f:f282 with SMTP id
- d75a77b69052e-51caa1286e9mr74726291cf.27.1783779475267; 
- Sat, 11 Jul 2026 07:17:55 -0700 (PDT)
-X-Received: by 2002:a05:622a:13cd:b0:51c:98f:f282 with SMTP id
- d75a77b69052e-51caa1286e9mr74726011cf.27.1783779474866; 
- Sat, 11 Jul 2026 07:17:54 -0700 (PDT)
-Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47a9de1e736sm74202814f8f.7.2026.07.11.07.17.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 11 Jul 2026 07:17:54 -0700 (PDT)
-Message-ID: <7f61b5f7-38a4-46d4-ad3e-2d70349475ea@oss.qualcomm.com>
-Date: Sat, 11 Jul 2026 16:17:52 +0200
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1wiZCz-0002tY-96
+ for qemu-devel@nongnu.org; Sat, 11 Jul 2026 11:01:42 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66BEfwxR1169446; Sat, 11 Jul 2026 15:01:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=YQL3wy
+ sWOxi16ay2mHG00ggz6JJcnIVupd7/2k8UiZo=; b=S3SHHHw8noPenFQ7NETg80
+ kXVB9/+L68asPASYwMwnvTE735zQI63WgL4CcgAxZVsnr2v4mMZGvFiutyL8hA0T
+ ZGCopvfL3xx4DBG1TIbVvPML9wJkPKi3lAT5yVm+i+2Lba1NPQJOjvq93ILrcFIP
+ DxyPPR/OPrK21uxFWyrTB/PW+YPQCCLpBeEAtLbBQAwWOz1YYIoWxu4Q+jqsJYmB
+ l/g6jafK2zov879wpHATo/r0mmL6GuReT9PQ/o8GyPU2iUkhmVl1X8rmowBFyInr
+ qJJhsU0W+skW4jwh2pG3iW7jeWLCG1aV6s22nf0SCx0lVwucf/JJ9iAY+CBhBT3Q
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbf29sbcx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 11 Jul 2026 15:01:30 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66BEnkmg020575;
+ Sat, 11 Jul 2026 15:01:30 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4f7cgqpwdg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 11 Jul 2026 15:01:30 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66BF0rXV31523422
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sat, 11 Jul 2026 15:00:54 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 168EA58056;
+ Sat, 11 Jul 2026 15:01:28 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E96EA5803F;
+ Sat, 11 Jul 2026 15:01:21 +0000 (GMT)
+Received: from [9.124.216.136] (unknown [9.124.216.136])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Sat, 11 Jul 2026 15:01:21 +0000 (GMT)
+Message-ID: <a75fd34b-2146-471f-89af-90f61cdaa722@linux.ibm.com>
+Date: Sat, 11 Jul 2026 20:31:19 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 51/98] tests/tcg/hppa: user tests
-Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
- Gustavo Romero <gustavo.romero@linaro.org>, Helge Deller <deller@gmx.de>
-References: <20260710214343.2065491-1-pierrick.bouvier@oss.qualcomm.com>
- <20260710214343.2065491-52-pierrick.bouvier@oss.qualcomm.com>
- <eac788e5-bb7a-4644-8355-110975562531@oss.qualcomm.com>
- <a57b4879-b850-40de-a665-089b897b98a3@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <a57b4879-b850-40de-a665-089b897b98a3@oss.qualcomm.com>
+Subject: Re: what is qemu_system_guest_panicked() for?
+Content-Language: en-GB
+To: Peter Maydell <peter.maydell@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Nicholas Piggin <npiggin@gmail.com>, Cornelia Huck <cohuck@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>,
+ Aditya Gupta <adityag@linux.ibm.com>
+References: <CAFEAcA_zmc=Vvs38Qos_gecCmGAbRgDQF-0+x85Ja66nsqrHxA@mail.gmail.com>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <CAFEAcA_zmc=Vvs38Qos_gecCmGAbRgDQF-0+x85Ja66nsqrHxA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzExMDE0MSBTYWx0ZWRfXw8n+fx1b7Oc+
- IYeBa0KzsJqc+glulGirf0WU8xGPo666cP0kZA/dzy4eAW2kdpXwrqoon8u9ZIE0gKgprNPSL3D
- UiaaHVX0wS2wv7e0XPBgM0ef9Eo11cg=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzExMDE0MSBTYWx0ZWRfXzBuLjx0iYMz5
- tYDRT1xyeII/6XNazGXY6xKABvKP8k3M5K78yVa6+H0acw5KgkDynFEy9MZuWzNho26DX3QKRTg
- dVoix3Kd1+ZL0EQtixaBu5wjWch2EBnrVRSGf4Z2D6YjtwZBT6jxV3nmYKNzAoqAvOaN3GDg8ng
- lHHtpAKtxpK7xv8YQ/phmfl7CMdRTCRaNqnJHhZnBpiJjrdO3R8Ao73KEtmjNZhgpwinqHuFJDV
- 1+CdJdvJpzQ+rzjhUF1+cSum2CwxA+GLtxQOugXxxgkRzXj+sAuBLi0OGTcdqubvtyF+gBhw9WP
- BJvUP4fKxUYsYO6BvFV1QNXU0UGbQbKSaWHKGGNNVXpO8C18zCqqg3S8i0HCTCxLDErcMBrk19q
- G63Bh2VyhPXnN359CipAJ0wqU0y0U0R9r7hKPwkPi5F+LeDPng4YFliebbtoYych83gvBHTCKVM
- ogQJBO1FL9sV+n0MEYg==
-X-Proofpoint-GUID: 9tYf-OuGL8vGjnFPXLQQgiwyCDnBjVV5
-X-Proofpoint-ORIG-GUID: 9tYf-OuGL8vGjnFPXLQQgiwyCDnBjVV5
-X-Authority-Analysis: v=2.4 cv=aPvAb79m c=1 sm=1 tr=0 ts=6a525093 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=EUspDBNiAAAA:8 a=TIKj5AyxKjWiKhh4rnkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=a_PwQJl-kcHnX1M80qC6:22
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzExMDE0NiBTYWx0ZWRfX6izbXNM+u/jc
+ xZduL3n4KcjpL3wtRhyCsKK2nqf8oMRMBzofabky7shKEbcgOBiGF+YiBXOoJxTynlOfBHXjZFd
+ cd46CKCJgzxgky5JaM32KLLXWRr11qQ=
+X-Proofpoint-GUID: eZNJw6n60Zg48Qo9u3r4r25dC62JMvMU
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzExMDE0NiBTYWx0ZWRfXzTIlH0kSHOEe
+ JjMeEom8T7vCje1Z0syNhUcbNiOq+j7G2RPwFnvVhWa1ywMD5l+SxkQybQjT9ctSQz6I/Louy4Q
+ U0xkxeDAO9UwkPo36wj5kJw8npzxL2qC4IoTujY6VQJ3w9UfaqyOYuXWlcvfQiGj5TzfaeEpLZ4
+ Ss3wtj19Yh6CM5HX0j8lTp6Qqm8IHW2G2d+BtFdcyQRe+HX3PprPCUZJyqm6Nd9nd+QSnncMq1L
+ kq8Kd/N5CD9trBXDyUkVExp+/nM3eDQnboRNoeUV2IkqTVmw8oRG/hYnPgncFwnV2pWghxantMu
+ dP7XHmyGp2dwYlxRTNBaA/7b/vzQJ+TUV2+61w74kP3ULkku5JYx5f/IhchnezkZACLQ6aCzfUb
+ MCffL0ycA4WBtsZjnJqG8fxhr/+ITqbUbls7TMfOBpVZ9P2Sl+wyL/mcGl4o//AmBDRAXAokjX1
+ ocrTxK06v+nB9upsYAg==
+X-Proofpoint-ORIG-GUID: DgFHqivXhhHmWjrSSHaAmVsTDOThezkQ
+X-Authority-Analysis: v=2.4 cv=PvajqQM3 c=1 sm=1 tr=0 ts=6a525acb cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22
+ a=E4-JPO3nfyr_mCP9PrkA:9 a=QEXdDO2ut3YA:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-11_03,2026-07-10_01,2025-10-01_01
+ definitions=2026-07-11_04,2026-07-10_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 malwarescore=0 adultscore=0 suspectscore=0 bulkscore=0
- clxscore=1015 priorityscore=1501 spamscore=0 lowpriorityscore=0 phishscore=0
+ priorityscore=1501 malwarescore=0 bulkscore=0 impostorscore=0 adultscore=0
+ clxscore=1011 lowpriorityscore=0 spamscore=0 suspectscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607110141
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607110146
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -164,63 +136,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/7/26 01:15, Pierrick Bouvier wrote:
-> On 7/10/2026 3:24 PM, Philippe Mathieu-Daudé wrote:
->> On 10/7/26 23:42, Pierrick Bouvier wrote:
->>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->>> ---
->>>    tests/tcg/hppa/Makefile.target | 14 --------------
->>>    tests/tcg/hppa/meson.build     | 22 ++++++++++++++++++++++
->>>    tests/tcg/meson.build          |  1 +
->>>    3 files changed, 23 insertions(+), 14 deletions(-)
->>>    delete mode 100644 tests/tcg/hppa/Makefile.target
->>>    create mode 100644 tests/tcg/hppa/meson.build
->>>
->>> diff --git a/tests/tcg/hppa/Makefile.target b/tests/tcg/hppa/
->>> Makefile.target
->>> deleted file mode 100644
->>> index ea5ae2186df..00000000000
->>> --- a/tests/tcg/hppa/Makefile.target
->>> +++ /dev/null
->>> @@ -1,14 +0,0 @@
->>> -# -*- Mode: makefile -*-
->>> -#
->>> -# HPPA specific tweaks - specifically masking out broken tests
->>> -
->>> -# This triggers failures for hppa-linux about 1% of the time
->>> -# HPPA is the odd target that can't use the sigtramp page;
->>> -# it requires the full vdso with dwarf2 unwind info.
->>> -run-signals: signals
->>> -    $(call skip-test, $<, "BROKEN awaiting vdso support")
->>> -
->>> -VPATH += $(SRC_PATH)/tests/tcg/hppa
->>> -TESTS += stby
->>> -
->>> -stby: CFLAGS += -pthread
->>> diff --git a/tests/tcg/hppa/meson.build b/tests/tcg/hppa/meson.build
->>> new file mode 100644
->>> index 00000000000..9ca8f29fa93
->>> --- /dev/null
->>> +++ b/tests/tcg/hppa/meson.build
->>> @@ -0,0 +1,22 @@
->>> +tests = []
->>> +
->>> +tests += tcg_tests['multiarch-linux-user']['tests']
->>> +
->>> +tests += {
->>> +  'stby.c': {'cflags': ['-pthread']},
->>
->> Should we mention the 'signals' test?
->>
-> 
-> It passes this torture test on my machine:
-> ./build/pyvenv/bin/meson test -C build hppa-linux-user-signals \
-> --repeat 100000  -j 256
-> 
-> So I would be inclined to give it a chance and let it run by default.
-> What do you think?
++ folks who might have an opinion from PPC RAS perspective as MCE, 
+checkstop related.
 
-HPPA vdso was added earlier in c7bc2a8fb14 ("linux-user/hppa: Add vdso")
-but maybe not as "full with dwarf2 unwind info". Personally I'd add it
-but I'll let Richard who wrote this comment to decide.
+On 10/07/26 9:32 pm, Peter Maydell wrote:
+> (cc list is a random mix of maintainers of code that calls this
+> function, Paolo as "main loop maintainer" and a few others who
+> I thought might have an opinion.)
+> 
+> We have a qemu_system_guest_panicked() function which causes QEMU
+> to report this to the user and do one of a couple of possible options
+> (shutdown, pause the VM, do nothing). This seems mostly intended for
+> "the guest OS told us by some mechanism that it just panicked". But
+> we use it more widely than that...
+> 
+> Cases which are "the guest told us about a panic":
+>   - accel/kvm/kvm-all.c handling of the KVM_EXIT_SYSTEM_EVENT SEV_TERM
+>     and CRASH subtypes
+>   - the pvpanic device
+>   - the spapr ibm,os-term RTAS call
+>   - x86 kvm: tdx_panicked_on_fatal_error()
+>   - x86 xen: the SHUTDOWN_crash shutdown subtype
+> 
+> Cases which are not:
+>   - hw/spapr/rtas.c: if the FDT has no RTAS address during system reset
+>   - hw/spapr/spapr_events.c: if we wanted to deliver a machine check
+>     exception to the guest but the FDT has no RTAS address
+>   - hw/spapr/spapr_events.c: if we want to deliver a machine check
+
+I liked the suggestion of qemu_system_unrecoverable_guest_error() but 
+let's hear from others as well.
+
+regards,
+Harsh
+
+>     but the guest is still dealing with a previous machine check
+>   - arm whpx, if we get an unknown/unexpected exit code trying to run the VM
+>   - x86 nvmm, for an unknown/unexpected VM exit code
+>   - ppc TCG, in powerpc_checkstop(), for a machine check exception I think
+>   - s390_handle_wait(): not sure exactly what this is
+>   - s390 unmanageable_intercept(): again not sure, think this is where
+>     the guest has gone off the rails and we can't keep running
+> 
+> At least one or two of the above have comments to the effect that
+> they don't want to use e.g. cpu_abort() because they want to give
+> the user the ability to examine the VM after this unrecoverable
+> guest error, rather than just exiting QEMU.
+> 
+> So I guess my question is, is it OK to mash these two categories of
+> "we can't keep running the VM" together, or should we define a new
+> one for the "unrecoverable guest error" case, or do we already have
+> some better thing to do that I missed?
+> 
+> In particular, "do nothing" might be a reasonable response for the
+> user to configure to a guest panic notification, since the guest will
+> presumably stick the vcpu into a do-nothing loop, but "do nothing"
+> doesn't make sense for "unrecoverable guest error" because we'll
+> probably then sit in QEMU in a tight loop retrying whatever it
+> was that failed.
+> 
+> If we had some kind of qemu_system_unrecoverable_guest_error() then
+> we could maybe convert some uses of cpu_abort() over to that (though
+> uses of cpu_abort() are a very mixed bunch, some of which should be
+> LOG_UNIMP or LOG_GUEST_ERROR and continue and some of which should
+> be straightforward assertions, as well as some which might be this
+> new exit case).
+> 
+> (This query was prompted by a patch for arm whpx which adds a new
+> qemu_system_guest_panicked() call for an unhandled VM exit situation.)
+> 
+> thanks
+> -- PMM
+
 
