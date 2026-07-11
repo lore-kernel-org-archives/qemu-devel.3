@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05033C44501
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:48:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFED0C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:48:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigUM-0000r8-Ql; Sat, 11 Jul 2026 18:48:02 -0400
+	id 1wigUN-0000wd-OJ; Sat, 11 Jul 2026 18:48:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigUB-0000bs-AO; Sat, 11 Jul 2026 18:47:54 -0400
-Received: from pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([44.246.1.125])
+ id 1wigUL-0000kA-Ao; Sat, 11 Jul 2026 18:48:01 -0400
+Received: from pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.35.192.45])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigU6-0007UR-Pw; Sat, 11 Jul 2026 18:47:51 -0400
+ id 1wigUE-0007XR-H6; Sat, 11 Jul 2026 18:47:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783810066; x=1815346066;
+ t=1783810074; x=1815346074;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=urslx+F+1DcIG3WUi4fMfYT2/zRrg9pAEDrsh9YargQ=;
- b=izSq6CFs3F6ndSae3lsgI27z+khf3AxUlyHYfP8Bts9XfTaNIXvBFXID
- Q5bU3MH9Cqn2gCdmlyC3EKjSS/rdamoycyInva76OUNT6Q9XWYeat0T1n
- s2E/myT8vAD/bXuUQiXoyBo0grdtOu5Zg3YSdNUAdQ2e35xq9qiN1Z4vz
- /1o+kkhoQl0oRbVrHvOkNzylYyvmeziqkL8KTyhGzZApEslfxcj6aEYko
- 9VlXn7rF69kAJpO4BkPjRYHurS+5PViW4GflvreCzP5300gWC7AiDbHG3
- ueKSFQwK1KhgekwkVU6oEpb0JsSeOjMEY468vFFWumH9N/pCqIC52s765 A==;
-X-CSE-ConnectionGUID: k2DGPdOOTCSGAO5S8+UCUw==
-X-CSE-MsgGUID: fpsjUdf1Sx2W5u6wG68Dog==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23505584"
-Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
- by internal-pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:47:42 +0000
-Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.234:25187]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.47.135:2525]
+ bh=6/uUnSgnZmJBm5T2o5OPuJjkNENFoH1An9ZTNcC61IY=;
+ b=nUndGGtKOqQYYjaQAMLtrHuC3H9HTpkmBsMfGLdIt+gWsUNjjSR0g40K
+ 2519WNZL1SPmr+htDWe2Wm1Dw/Lpldd6Kdt0vXU4bzu1zZVPI9S4JBp/t
+ 5PIyZ+629Ti13FF/iBci/hwqeV2Yquj9pgmfizaoYGfJD32cjlCf1VOLP
+ GwFUQwFU5lJQ1lByG/3NpEBHStMpVWVcRVpVHQlIZGDD1tWhrSh2NaQx3
+ 5cYXcBoDMV+8fNEl2CtmRg8uuWNCXgCz9Zcr099BUi4q/61OK+Y35WdFf
+ 0QnihDXiLwSziMPD1dW/Lsb2W2MWQ8GMuoVOE7QdtahOkzKbS0pMCF+J3 g==;
+X-CSE-ConnectionGUID: OdDvNDRGQgew3sQ+azLArA==
+X-CSE-MsgGUID: onkKNhqZSkCSzgGziWgpkA==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23269697"
+Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
+ by internal-pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:47:50 +0000
+Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.51:13244]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.40.123:2525]
  with esmtp (Farcaster)
- id 8f9145b8-4259-41d4-b720-ba37100c3c08; Sat, 11 Jul 2026 22:47:42 +0000 (UTC)
-X-Farcaster-Flow-ID: 8f9145b8-4259-41d4-b720-ba37100c3c08
+ id 6a46bbc3-e7ff-48af-8a80-60bb425c2dde; Sat, 11 Jul 2026 22:47:50 +0000 (UTC)
+X-Farcaster-Flow-ID: 6a46bbc3-e7ff-48af-8a80-60bb425c2dde
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
+ EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:47:41 +0000
+ Sat, 11 Jul 2026 22:47:50 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:47:33 +0000
+ Sat, 11 Jul 2026 22:47:41 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,9 +91,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 040/134] hw/i3c: Give onboard devices a QOM parent
-Date: Sat, 11 Jul 2026 22:35:33 +0000
-Message-ID: <20260711223707.42139-41-graf@amazon.com>
+Subject: [RFC PATCH 041/134] hw/pci-bridge: Give onboard devices a QOM parent
+Date: Sat, 11 Jul 2026 22:35:34 +0000
+Message-ID: <20260711223707.42139-42-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -103,9 +103,9 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D040UWA002.ant.amazon.com (10.13.139.113) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=44.246.1.125;
+Received-SPF: pass client-ip=52.35.192.45;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
@@ -129,7 +129,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the *_orphan() device-creation calls in hw/i3c to the new
+Convert the *_orphan() device-creation calls in hw/pci-bridge to the new
 parented API introduced earlier in this series, so every onboard
 device gets a stable path in the composition tree instead of landing
 in /machine/unattached with an unstable device[N] name.
@@ -140,104 +140,62 @@ composite children.  Names follow existing QOM conventions.
 
 Per-site rationale (reviewers: dispute the modeling here):
 
-hw/i3c/core.c:550 | qdev_new | parent | id | public helper; thread Object *parent + const char *id through i3c_target_new() and its caller i3c_target_create_simple()
-hw/i3c/core.c:626 | i2c_slave_new | parent | id | public helper; thread Object *parent + const char *id through legacy_i2c_device_create_simple()
+hw/pci-bridge/pci_expander_bridge.c:362 | qdev_new | OBJECT(dev) | "pxb-host" | pxb_dev_realize_common() is DeviceClass.realize of PXB PCIDevice; child host bridge owned by PXB device
+hw/pci-bridge/pci_expander_bridge.c:371 | qdev_new | OBJECT(dev) | "pci-bridge" | same realize(); internal pci-bridge owned by PXB device; error path unref->unparent
 
 Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/i3c/core.c        | 19 +++++++++++--------
- include/hw/i3c/i3c.h |  9 ++++++---
- 2 files changed, 17 insertions(+), 11 deletions(-)
+ hw/pci-bridge/pci_expander_bridge.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/hw/i3c/core.c b/hw/i3c/core.c
-index 469d66f1fb..23b32290e5 100644
---- a/hw/i3c/core.c
-+++ b/hw/i3c/core.c
-@@ -542,12 +542,13 @@ static bool i3c_addr_is_rsvd(uint8_t addr)
-     return is_rsvd[addr];
+diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
+index 11a28b5503..bf970dae76 100644
+--- a/hw/pci-bridge/pci_expander_bridge.c
++++ b/hw/pci-bridge/pci_expander_bridge.c
+@@ -359,7 +359,8 @@ static bool pxb_dev_realize_common(PCIDevice *dev, enum BusType type,
+         dev_name = dev->qdev.id;
+     }
+ 
+-    ds = qdev_new_orphan(type == CXL ? TYPE_PXB_CXL_HOST : TYPE_PXB_HOST);
++    ds = qdev_new(OBJECT(dev), "pxb-host",
++                  type == CXL ? TYPE_PXB_CXL_HOST : TYPE_PXB_HOST);
+     if (type == PCIE) {
+         bus = pci_root_bus_new(ds, dev_name, NULL, NULL, 0, TYPE_PXB_PCIE_BUS);
+     } else if (type == CXL) {
+@@ -368,7 +369,7 @@ static bool pxb_dev_realize_common(PCIDevice *dev, enum BusType type,
+         PXB_CXL_DEV(dev)->cxl_host_bridge = PXB_CXL_HOST(ds);
+     } else {
+         bus = pci_root_bus_new(ds, "pxb-internal", NULL, NULL, 0, TYPE_PXB_BUS);
+-        bds = qdev_new_orphan("pci-bridge");
++        bds = qdev_new(OBJECT(dev), "pci-bridge", "pci-bridge");
+         bds->id = g_strdup(dev_name);
+         qdev_prop_set_uint8(bds, PCI_BRIDGE_DEV_PROP_CHASSIS_NR, pxb->bus_nr);
+         qdev_prop_set_bit(bds, PCI_BRIDGE_DEV_PROP_SHPC, false);
+@@ -388,9 +389,9 @@ static bool pxb_dev_realize_common(PCIDevice *dev, enum BusType type,
+         goto err_register_bus;
+     }
+ 
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(ds), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(ds), &error_fatal);
+     if (bds) {
+-        qdev_realize_and_unref(bds, &bus->qbus, &error_fatal);
++        qdev_realize(bds, &bus->qbus, &error_fatal);
+     }
+ 
+     pci_word_test_and_set_mask(dev->config + PCI_STATUS,
+@@ -401,9 +402,9 @@ static bool pxb_dev_realize_common(PCIDevice *dev, enum BusType type,
+     return true;
+ 
+ err_register_bus:
+-    object_unref(OBJECT(bds));
++    object_unparent(OBJECT(bds));
+     object_unparent(OBJECT(bus));
+-    object_unref(OBJECT(ds));
++    object_unparent(OBJECT(ds));
+     return false;
  }
- 
--I3CTarget *i3c_target_new(const char *name, uint8_t addr, uint8_t dcr,
-+I3CTarget *i3c_target_new(Object *parent, const char *id,
-+                          const char *name, uint8_t addr, uint8_t dcr,
-                           uint8_t bcr, uint64_t pid)
- {
-     DeviceState *dev;
- 
--    dev = qdev_new_orphan(name);
-+    dev = qdev_new(parent, id, name);
-     qdev_prop_set_uint8(dev, "static-address", addr);
-     qdev_prop_set_uint8(dev, "dcr", dcr);
-     qdev_prop_set_uint8(dev, "bcr", bcr);
-@@ -566,12 +567,13 @@ bool i3c_target_realize_and_unref(I3CTarget *dev, I3CBus *bus, Error **errp)
-     return qdev_realize_and_unref(&dev->parent_obj, &bus->parent_obj, errp);
- }
- 
--I3CTarget *i3c_target_create_simple(I3CBus *bus, const char *name, uint8_t addr,
-+I3CTarget *i3c_target_create_simple(Object *parent, const char *id,
-+                                    I3CBus *bus, const char *name, uint8_t addr,
-                                     uint8_t dcr, uint8_t bcr, uint64_t pid)
- {
--    I3CTarget *dev = i3c_target_new(name, addr, dcr, bcr, pid);
-+    I3CTarget *dev = i3c_target_new(parent, id, name, addr, dcr, bcr, pid);
-     dev->address = 0;
--    i3c_target_realize_and_unref(dev, bus, &error_abort);
-+    qdev_realize(DEVICE(dev), BUS(bus), &error_abort);
- 
-     return dev;
- }
-@@ -620,12 +622,13 @@ void legacy_i2c_end_transfer(I3CBus *bus)
-     i2c_end_transfer(bus->i2c_bus);
- }
- 
--I2CSlave *legacy_i2c_device_create_simple(I3CBus *bus, const char *name,
-+I2CSlave *legacy_i2c_device_create_simple(Object *parent, const char *id,
-+                                          I3CBus *bus, const char *name,
-                                           uint8_t addr)
- {
--    I2CSlave *dev = i2c_slave_new_orphan(name, addr);
-+    I2CSlave *dev = i2c_slave_new(parent, id, name, addr);
- 
--    i2c_slave_realize_and_unref(dev, bus->i2c_bus, &error_abort);
-+    qdev_realize(DEVICE(dev), BUS(bus->i2c_bus), &error_abort);
-     return dev;
- }
- 
-diff --git a/include/hw/i3c/i3c.h b/include/hw/i3c/i3c.h
-index dcf8d9b143..d0edf7d8bd 100644
---- a/include/hw/i3c/i3c.h
-+++ b/include/hw/i3c/i3c.h
-@@ -257,7 +257,8 @@ int legacy_i2c_start_transfer(I3CBus *bus, uint8_t address, bool is_recv);
- int legacy_i2c_start_recv(I3CBus *bus, uint8_t address);
- int legacy_i2c_start_send(I3CBus *bus, uint8_t address);
- void legacy_i2c_end_transfer(I3CBus *bus);
--I2CSlave *legacy_i2c_device_create_simple(I3CBus *bus, const char *name,
-+I2CSlave *legacy_i2c_device_create_simple(Object *parent, const char *id,
-+                                          I3CBus *bus, const char *name,
-                                           uint8_t addr);
- 
- /**
-@@ -265,7 +266,8 @@ I2CSlave *legacy_i2c_device_create_simple(I3CBus *bus, const char *name,
-  *
-  * The target returned from this function still needs to be realized.
-  */
--I3CTarget *i3c_target_new(const char *name, uint8_t addr, uint8_t dcr,
-+I3CTarget *i3c_target_new(Object *parent, const char *id,
-+                          const char *name, uint8_t addr, uint8_t dcr,
-                           uint8_t bcr, uint64_t pid);
- 
- /**
-@@ -274,7 +276,8 @@ I3CTarget *i3c_target_new(const char *name, uint8_t addr, uint8_t dcr,
-  * Create the target, initialize it, put it on the specified I3C bus, and
-  * realize it.
-  */
--I3CTarget *i3c_target_create_simple(I3CBus *bus, const char *name,
-+I3CTarget *i3c_target_create_simple(Object *parent, const char *id,
-+                                    I3CBus *bus, const char *name,
-                                     uint8_t addr, uint8_t dcr, uint8_t bcr,
-                                     uint64_t pid);
  
 -- 
 2.47.1
