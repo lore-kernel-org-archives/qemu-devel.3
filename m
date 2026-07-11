@@ -4,68 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3542FC44501
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 15:07:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7152C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 16:53:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiZI7-0006si-Un; Sat, 11 Jul 2026 11:06:56 -0400
+	id 1wiawB-0003vf-25; Sat, 11 Jul 2026 12:52:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlmgr@proulx.com>) id 1wiZHh-0006pi-SO
- for qemu-devel@nongnu.org; Sat, 11 Jul 2026 11:06:30 -0400
-Received: from havoc.proulx.com ([198.99.81.74])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlmgr@proulx.com>) id 1wiZHg-0003YT-4M
- for qemu-devel@nongnu.org; Sat, 11 Jul 2026 11:06:29 -0400
-Received: by havoc.proulx.com (Postfix, from userid 1027)
- id 67D766AF; Sat, 11 Jul 2026 09:06:26 -0600 (MDT)
-Resent-From: Mailing List Manager <mlmgr@proulx.com>
-Resent-Date: Sat, 11 Jul 2026 09:06:26 -0600
-Resent-Message-ID: <alJb8rTLC45j0FF8@havoc.proulx.com>
-Resent-To: qemu-devel@nongnu.org
-Received: from eggs.gnu.org ([2001:470:142:3::10])
- by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <caojunze424@caojunze424deMacBook-Air.local>)
- id 1wiXCz-00021H-IS; Sat, 11 Jul 2026 08:53:29 -0400
-Received: from [180.213.84.245] (helo=caojunze424deMacBook-Air.local)
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <caojunze424@caojunze424deMacBook-Air.local>)
- id 1wiXCx-0005w5-Fk; Sat, 11 Jul 2026 08:53:29 -0400
-Received: by caojunze424deMacBook-Air.local (Postfix, from userid 501)
- id 8FCD227F1DE3; Sat, 11 Jul 2026 20:53:21 +0800 (CST)
-From: Junze Cao <caojunze424@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, chao.liu@processmission.com,
- alistair.francis@wdc.com, th.huth+qemu@posteo.eu,
- Junze Cao <caojunze424@gmail.com>
-Subject: [PATCH] tests/functional/riscv64: Add K230 Linux boot tests
-Date: Sat, 11 Jul 2026 20:53:20 +0800
-Message-ID: <20260711125320.72319-1-caojunze424@gmail.com>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wiaw9-0003uv-In
+ for qemu-devel@nongnu.org; Sat, 11 Jul 2026 12:52:21 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wiaw8-0005Dw-2o
+ for qemu-devel@nongnu.org; Sat, 11 Jul 2026 12:52:21 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-3811e59df58so1241202a91.1
+ for <qemu-devel@nongnu.org>; Sat, 11 Jul 2026 09:52:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1783788738; x=1784393538; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=nefIjTWKSN7IYNh5mubqdUhbFGrCxOtboRLZ3Plmug4=;
+ b=POAhqcC8LB4+RsivEmssD2nuLbWXmAuGUhcU5pHyyTfYT00XCWuyO7gmW6K8V7lCWM
+ lLipKP9FWgSWet8D80juoRbKIE4che5hQuKymRo81nc/zCYIolKvM+L+8zP+zeq52xLu
+ KYBgggQ44BdMs13PKIpet0HX2RVLruDZIzVDeXmtl8ezRyReFrbsAc/5QCD358YexvsT
+ PyXE5p+FtoR1CsPuCvotlWKMGf1GWv1MXQ6fqGnRA9+nz9iHwPuerugs4oxf/z53rXHG
+ UXDHvkKRaehbG+ArlkJovo5PoYYpLVz3tHijYOwnxKwPYcIHiqj8xCEPC5bP9Z4d90vx
+ ExIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783788738; x=1784393538;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=nefIjTWKSN7IYNh5mubqdUhbFGrCxOtboRLZ3Plmug4=;
+ b=AWh2AyEVDS55g4K71TN+KnRwQsU9vdRnHxh18FwQroYlWnCKiPxFNxt6moFIUBIk16
+ WPV4mW4wadWSBwQG0PXxewfimWwBr9fVKTyUvKwUZOGrlEJz6HoaE5cZlN/aCfzYz8bY
+ Sldwt7Uv8PWiSf39SH8Zn2nZRpbDSNE6DbGtGjWn1ZJFhb3kSGTFk7I8tx/cwVcDJmk6
+ ip4wbxayjpdND/zq0S1Y40c4z4/3T82KrbkW9j7nGzOhG+Z05mOcKqcfFtwjsgd3t9YJ
+ r39Ch1ympfsApammIi5TZHJBF9qD9JnYA+FikwLFNnvOQf9U9N8tJoGp7RdbwPkDlTXf
+ B7SA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rq7NxN3h4NBGHLchFMBVQVYweY9oAgBEbGz7dbW6Zl1pQNzkNmbM0qxXsmPJxumcCrbwPmuV5nwzKur@nongnu.org
+X-Gm-Message-State: AOJu0Yzr9h4fo1rx0ZzIm/loP4dlvOGvm5ExOiGgGaDLZcDdvPeU6LKZ
+ Li5XQR4TyOCtbCHt0slos+VqN2JG7rLMoSUh+jIosQGRD4OvXuRWEI8y6EnksuymQVo=
+X-Gm-Gg: AfdE7cnjAa+fLaCla5KWAF5IbSrADWR5U/5jrfj+OLjUv6wIP5PjHGG9sqBkpJaCfgZ
+ Gh0OZ94gbO1AFNqEugYVAZlRY6dI+3LP2KPilhdqyp5IWctsrH1BvoIHxd5SQQX70I8IbwONaKI
+ QT7fBLGOSSiDYKa8QYyQeA9j1wasgMgEM9z1PiSr8LlcWH1Uee5FEP3vupbPaW2BH2dF/J1InmY
+ FXt1b/owqR58JGakcPwNBV0/1y411obzX7ohSyoweq2kp5q7XvqkLn3ZESPnC00Sq9kxegwCqc9
+ ZT0I4XvDrZdD5ZK7wCqsDfZe1ZebLIduwDQfjB57bla2fWBzFCxLENBq49oCHBtbT7MVvj261kE
+ XMPo7kBuccFpADaKg2krXdgjKJSp7zruYtQ1LHUAaWRYI6OgBXU64QORJez0xjXCUwPp7tI9uON
+ x8+WnnssuvtdJ/AIvJkGVt0LoxpA==
+X-Received: by 2002:a17:90b:1c91:b0:380:534f:58c2 with SMTP id
+ 98e67ed59e1d1-38dc7b81c27mr3067888a91.30.1783788738173; 
+ Sat, 11 Jul 2026 09:52:18 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.146.49])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-38a583a16c2sm4194226a91.13.2026.07.11.09.52.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 11 Jul 2026 09:52:17 -0700 (PDT)
+Message-ID: <8e9907db-68b6-4644-9c16-6fbbbcd52b0b@linaro.org>
+Date: Sat, 11 Jul 2026 09:52:15 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 33/51] target/ppc: Simplify
+ ppc_cpu_debug_check_watchpoint
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
+ qemu-s390x@nongnu.org, jcmvbkbc@gmail.com, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>
+References: <20260710205401.836304-1-richard.henderson@linaro.org>
+ <20260710205401.836304-34-richard.henderson@linaro.org>
+ <bf1b73da-919c-4b02-8b46-78b939077610@linux.ibm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <bf1b73da-919c-4b02-8b46-78b939077610@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 180.213.84.245 (failed)
-Received-SPF: none client-ip=180.213.84.245;
- envelope-from=caojunze424@caojunze424deMacBook-Air.local;
- helo=caojunze424deMacBook-Air.local
-X-Spam_action: reject
-X-Listhelper-Id: 20260711065350-5291
-X-Bogosity: Spam, tests=bogofilter, spamicity=1.000000, version=1.2.5
-X-CRM114-Status: UNSURE (   2.03  )
-Received-SPF: pass client-ip=198.99.81.74; envelope-from=mlmgr@proulx.com;
- helo=havoc.proulx.com
-X-Spam_score_int: 46
-X-Spam_score: 4.6
-X-Spam_bar: ++++
-X-Spam_report: (4.6 / 5.0 requ) BAYES_00=-1.9, DKIM_ADSP_CUSTOM_MED=0.001,
- FORGED_GMAIL_RCVD=1, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- HK_RANDOM_ENVFROM=0.999, NML_ADSP_CUSTOM_MED=0.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sat, 11 Jul 2026 11:06:55 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,172 +110,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The K230 machine supports direct Linux boot and firmware boot through
-the SDK U-Boot, but neither path has functional test coverage.
+On 7/11/26 03:54, Harsh Prateek Bora wrote:
+> + Cedric, Shiva
+> 
+> On 11/07/26 2:23 am, Richard Henderson wrote:
+>> We don't need to check either ISA bit, because that's already
+>> done starting with SPR registration.  Replace target_ulong with
+>> uint64_t, as we're under TARGET_PPC64.
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   target/ppc/tcg-excp_helper.c | 30 +++++++++---------------------
+>>   1 file changed, 9 insertions(+), 21 deletions(-)
+>>
+>> diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
+>> index 99ffe4a820..4065440949 100644
+>> --- a/target/ppc/tcg-excp_helper.c
+>> +++ b/target/ppc/tcg-excp_helper.c
+>> @@ -353,35 +353,23 @@ bool ppc_cpu_debug_check_watchpoint(CPUState *cs, CPUBreakpoint *wp)
+>>   {
+>>   #if defined(TARGET_PPC64)
+>>       CPUPPCState *env = cpu_env(cs);
+>> -    bool wt, wti, hv, sv, pr;
+>> -    uint32_t dawrx;
+>> +    uint32_t dawrx = env->spr[wp->id ? SPR_DAWRX1 : SPR_DAWRX0];
+>> +    bool wt = extract32(dawrx, PPC_BIT_NR(59), 1);
+>> +    bool wti = extract32(dawrx, PPC_BIT_NR(60), 1);
+>> +    bool hv = extract32(dawrx, PPC_BIT_NR(61), 1);
+>> +    bool sv = extract32(dawrx, PPC_BIT_NR(62), 1);
+>> +    bool pr = extract32(dawrx, PPC_BIT_NR(62), 1);
+>> -    if ((env->insns_flags2 & PPC2_ISA207S) &&
+>> -        (wp == env->dawr_watchpoint[0])) {
+>> -        dawrx = env->spr[SPR_DAWRX0];
+>> -    } else if ((env->insns_flags2 & PPC2_ISA310) &&
+>> -               (wp == env->dawr_watchpoint[1])) {
+>> -        dawrx = env->spr[SPR_DAWRX1];
+>> -    } else {
+> 
+> Previously, there were different ISA version checks resulting in different behaviour, now 
+> with this change we are allowing for both ISA versions. Not sure if this would be an 
+> expected behaviour?
 
-Add one test for each boot path. Both tests use the Yocto initramfs
-assets and wait for the shell prompt to confirm a successful boot.
-
-Fetch the boot assets from the k230-boot-assets repository maintained
-by Chao Liu. Pin the URLs to a repository commit and verify each asset
-with its SHA-256 digest.
-
-Signed-off-by: Junze Cao <caojunze424@gmail.com>
----
- MAINTAINERS                           |   1 +
- tests/functional/riscv64/meson.build  |   2 +
- tests/functional/riscv64/test_k230.py | 108 ++++++++++++++++++++++++++
- 3 files changed, 111 insertions(+)
- create mode 100755 tests/functional/riscv64/test_k230.py
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 6171cc7494..fcf87609cb 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1828,6 +1828,7 @@ F: hw/riscv/k230.c
- F: hw/watchdog/k230_wdt.c
- F: include/hw/riscv/k230.h
- F: include/hw/watchdog/k230_wdt.h
-+F: tests/functional/riscv64/test_k230.py
- F: tests/qtest/k230-wdt-test.c
- 
- RX Machines
-diff --git a/tests/functional/riscv64/meson.build b/tests/functional/riscv64/meson.build
-index c9d4c090fb..d1a3e6c2bf 100644
---- a/tests/functional/riscv64/meson.build
-+++ b/tests/functional/riscv64/meson.build
-@@ -2,6 +2,7 @@
- 
- test_riscv64_timeouts = {
-   'boston' : 120,
-+  'k230' : 120,
-   'tuxrun' : 120,
- }
- 
-@@ -13,6 +14,7 @@ tests_riscv64_system_quick = [
- tests_riscv64_system_thorough = [
-   'endianness',
-   'boston',
-+  'k230',
-   'sifive_u',
-   'tt_atlantis',
-   'tuxrun',
-diff --git a/tests/functional/riscv64/test_k230.py b/tests/functional/riscv64/test_k230.py
-new file mode 100755
-index 0000000000..6ccbf2d581
---- /dev/null
-+++ b/tests/functional/riscv64/test_k230.py
-@@ -0,0 +1,108 @@
-+#!/usr/bin/env python3
-+#
-+# Functional tests that boot Linux on a Kendryte K230 machine.
-+#
-+# The direct boot test lets QEMU load OpenSBI, Linux, the device tree, and the
-+# initramfs.  The firmware boot test starts the K230 SDK U-Boot and uses bootm
-+# to launch OpenSBI and Linux from images preloaded into RAM.
-+#
-+# Author:
-+#  Junze Cao
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+import os
-+
-+from qemu_test import Asset, LinuxKernelTest
-+from qemu_test import exec_command_and_wait_for_pattern
-+from qemu_test import interrupt_interactive_console_until_pattern
-+
-+
-+class K230Machine(LinuxKernelTest):
-+
-+    ASSET_KERNEL = Asset(
-+        ('https://raw.githubusercontent.com/zevorn/k230-boot-assets/'
-+         'c3c32fb46e8307c5063f13e8f367c98bf9273cd1/'
-+         'yocto/direct-boot/Image'),
-+        '3a44970213fa68ad318d308518adfc0bf4bee72ed1b2926f9b468f82ef7d7829')
-+    ASSET_DTB = Asset(
-+        ('https://raw.githubusercontent.com/zevorn/k230-boot-assets/'
-+         'c3c32fb46e8307c5063f13e8f367c98bf9273cd1/'
-+         'yocto/direct-boot/k230-canmv.dtb'),
-+        '5050240b48ce0988c73eaefa73e4945a40abca503cf488d22a3adf6ef50bbe4c')
-+    ASSET_INITRD = Asset(
-+        ('https://raw.githubusercontent.com/zevorn/k230-boot-assets/'
-+         'c3c32fb46e8307c5063f13e8f367c98bf9273cd1/'
-+         'yocto/direct-boot/rootfs.cpio.gz'),
-+        '4e1869a99a232ee60324f71f3a9e84a79b03ccabb5b73f8a727c5ff5be5c0914')
-+    ASSET_UBOOT = Asset(
-+        ('https://raw.githubusercontent.com/zevorn/k230-boot-assets/'
-+         'c3c32fb46e8307c5063f13e8f367c98bf9273cd1/common/u-boot'),
-+        '0915b9a92a7c911846a8cf691866ef14ef050a51d04209f884ae8e9ec33f36d2')
-+    ASSET_FW_JUMP = Asset(
-+        ('https://raw.githubusercontent.com/zevorn/k230-boot-assets/'
-+         'c3c32fb46e8307c5063f13e8f367c98bf9273cd1/'
-+         'common/fw_jump.uImage'),
-+        'cf7788e470f1d6e8c85491ecdc2705518db1b6af54080e8c7a3464bad0d902b7')
-+
-+    def wait_for_linux_shell(self):
-+        self.wait_for_console_pattern('meta-k230 initramfs starting...')
-+        self.wait_for_console_pattern('~ #')
-+
-+    def test_k230_direct_boot(self):
-+        self.set_machine('k230')
-+        kernel_path = self.ASSET_KERNEL.fetch()
-+        dtb_path = self.ASSET_DTB.fetch()
-+        initrd_path = self.ASSET_INITRD.fetch()
-+
-+        self.vm.set_console()
-+        self.vm.add_args('-kernel', kernel_path,
-+                         '-dtb', dtb_path,
-+                         '-initrd', initrd_path,
-+                         '-append', 'console=ttyS0,115200 earlycon=sbi',
-+                         '-no-reboot')
-+        self.vm.launch()
-+        self.wait_for_linux_shell()
-+
-+    def test_k230_uboot_boot(self):
-+        self.set_machine('k230')
-+        kernel_path = self.ASSET_KERNEL.fetch()
-+        dtb_path = self.ASSET_DTB.fetch()
-+        initrd_path = self.ASSET_INITRD.fetch()
-+        uboot_path = self.ASSET_UBOOT.fetch()
-+        fw_jump_path = self.ASSET_FW_JUMP.fetch()
-+        initrd_end = 0x0a100000 + os.path.getsize(initrd_path)
-+
-+        self.vm.set_console()
-+        self.vm.add_args(
-+            '-bios', uboot_path,
-+            '-device',
-+            f'loader,file={fw_jump_path},addr=0xc100000,force-raw=on',
-+            '-device',
-+            f'loader,file={kernel_path},addr=0x8200000,force-raw=on',
-+            '-device',
-+            f'loader,file={initrd_path},addr=0xa100000,force-raw=on',
-+            '-device',
-+            f'loader,file={dtb_path},addr=0xa000000,force-raw=on',
-+            '-no-reboot')
-+        self.vm.launch()
-+
-+        interrupt_interactive_console_until_pattern(self, 'K230#')
-+        commands = (
-+            'setenv bootargs console=ttyS0,115200 earlycon=sbi',
-+            'fdt addr 0xa000000',
-+            'fdt resize 8192',
-+            'fdt set /chosen linux,initrd-start <0x0 0xa100000>',
-+            f'fdt set /chosen linux,initrd-end <0x0 0x{initrd_end:x}>',
-+        )
-+        for command in commands:
-+            exec_command_and_wait_for_pattern(self, command, 'K230#')
-+
-+        exec_command_and_wait_for_pattern(
-+            self, 'bootm 0xc100000 - 0xa000000',
-+            'Starting kernel ...', failure_message='ERROR')
-+        self.wait_for_linux_shell()
-+
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
--- 
-2.53.0
+Per the commit comment, the ISA version checks are done when registering the system 
+register.  One cannot write to DAWRX1 unless ISA310, and therefore dawr_watchpoint[1] will 
+not be set nor wp->id be 1.
 
 
+r~
 
