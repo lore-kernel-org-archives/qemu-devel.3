@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEF4FC44506
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 23:04:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 220D0C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 23:04:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigk8-0007rz-1K; Sat, 11 Jul 2026 19:04:20 -0400
+	id 1wigkM-0000Jq-IE; Sat, 11 Jul 2026 19:04:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigk6-0007ks-Qp; Sat, 11 Jul 2026 19:04:18 -0400
-Received: from pdx-out-003.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([44.246.68.102])
+ id 1wigkL-0000Ec-8o; Sat, 11 Jul 2026 19:04:33 -0400
+Received: from pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([44.246.77.92])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigk2-0002oO-CS; Sat, 11 Jul 2026 19:04:18 -0400
+ id 1wigkJ-0002rm-BW; Sat, 11 Jul 2026 19:04:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783811054; x=1815347054;
+ t=1783811071; x=1815347071;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=rW304WD8m6eC/9oh/zviljvTS+3YODW4+WlFj2/NhOM=;
- b=UFdXdzOLBsXzPnqKrr1FTHC6r6nZvMvk+z6IC/bIguAEDcEfq+x1Zlrc
- 4/wbTSi8ZX58qMr8kgU11WVZKS9TtdY86xPZ2AEr9GwAoEsFG5wgeHfel
- 4/nFumLiNo4sKyXY9e/SKe6jK93j/8GNr9BJ5dGkPZLZvR/DICxg3qyg4
- mawV6CevliAoHzkXIX+n155765DeD8af8l0emdrBVwxr+nxMvJA3FFtWz
- mqF7vH3bpk1XBXioTeLb8tc2eJ8nm4o3rrwrwibw4hZ/3BrRGwyZknLNV
- PQWmCuq7IZzaiflN3HnP1yW6plrMlpWt1AXslBp1jtSkbCKEsZYSewFUA g==;
-X-CSE-ConnectionGUID: 6tIA76JPR3mMnMBZ0VgdZg==
-X-CSE-MsgGUID: 1zPiy3USRBi7VRafESsQOg==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23517391"
-Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
- by internal-pdx-out-003.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 23:04:10 +0000
-Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.51:20638]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.51.175:2525]
+ bh=n8EvPM4JcXpYSayZRgeREEgwZhhcy95t1AHvCdmHV5k=;
+ b=ppeGZFPhPUrC+/IXk1gsd29Hxi3rU67TEUXxv6lF0Rb5S/qN5pKM0t79
+ +9nO1EX4+ayFz9akYUmPQ/GFyguxq2PZ4M42EEg3BWAf8xv41+c4VOtkl
+ wXlyCeKqmO5ZsfHb+i03nrJ79fjbBFpu8I4DUNMo+lQrIUdDzBiAbqyyV
+ GTdE3C8AJeslA8v6nYM3z9CWXzjoUfke8pbjZmBnDdM6Q2C6ATRzarBOE
+ prY7VdZ/48QYY9f0gWGY4FbcpSDfZ8mzt7bn9ZH5IZP4oH62uzKOJ5ckX
+ Y3hr/DdRa9vMzRuISru/F5HE/FCbTrfcZmVF2miySQ9q+Ro34Zxqs20yM A==;
+X-CSE-ConnectionGUID: gGF/P07gQXO38gsa/uetTA==
+X-CSE-MsgGUID: WPW6qZGbQ8CPqgEEH4HNBw==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23493364"
+Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
+ by internal-pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 23:04:27 +0000
+Received: from EX19MTAUWA001.ant.amazon.com [205.251.233.236:11463]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.31.54:2525]
  with esmtp (Farcaster)
- id 926cf72b-e496-47ae-9227-8b4bcc4d2808; Sat, 11 Jul 2026 23:04:10 +0000 (UTC)
-X-Farcaster-Flow-ID: 926cf72b-e496-47ae-9227-8b4bcc4d2808
+ id dba23c15-67d5-4a9c-a7ed-a62a6bafc7ff; Sat, 11 Jul 2026 23:04:27 +0000 (UTC)
+X-Farcaster-Flow-ID: dba23c15-67d5-4a9c-a7ed-a62a6bafc7ff
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
+ EX19MTAUWA001.ant.amazon.com (10.250.64.218) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 23:04:10 +0000
+ Sat, 11 Jul 2026 23:04:27 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 23:04:01 +0000
+ Sat, 11 Jul 2026 23:04:18 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,10 +91,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 102/134] hw/arm/omap: Give lcdc and dma memory regions an
- explicit owner
-Date: Sat, 11 Jul 2026 22:36:35 +0000
-Message-ID: <20260711223707.42139-103-graf@amazon.com>
+Subject: [RFC PATCH 104/134] hw/remote: Give memory regions an explicit owner
+Date: Sat, 11 Jul 2026 22:36:37 +0000
+Message-ID: <20260711223707.42139-105-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -104,16 +103,16 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D043UWC001.ant.amazon.com (10.13.139.202) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=44.246.68.102;
+Received-SPF: pass client-ip=44.246.77.92;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-003.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
 X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
  HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
+ RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
  UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,111 +129,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thread Object *owner as the first argument through omap_lcdc_init()
-and omap_dma_init(), matching the earlier conversion of omap1.c
-sub-block helpers. omap310_mpu_init() passes its parent through.
+remote_machine_init() passes OBJECT(machine). remote_sysmem_reconfig()
+runs in the multi-process remote and creates system-memory subregions
+on behalf of the machine; use qdev_get_machine() as owner.
+dma_register() in the vfio-user server creates DMA windows for a
+VfuObject; use it as owner.
 
 No functional change intended.
 
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/arm/omap1.c         | 4 ++--
- hw/display/omap_lcdc.c | 5 +++--
- hw/dma/omap_dma.c      | 4 ++--
- include/hw/arm/omap.h  | 5 +++--
- 4 files changed, 10 insertions(+), 8 deletions(-)
+ hw/remote/machine.c       | 2 +-
+ hw/remote/memory.c        | 3 ++-
+ hw/remote/vfio-user-obj.c | 2 +-
+ 3 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/hw/arm/omap1.c b/hw/arm/omap1.c
-index be6af35e26..474a3902fe 100644
---- a/hw/arm/omap1.c
-+++ b/hw/arm/omap1.c
-@@ -3800,7 +3800,7 @@ struct omap_mpu_state_s *omap310_mpu_init(Object *parent, MemoryRegion *dram,
-         dma_irqs[i] = qdev_get_gpio_in(s->ih[omap1_dma_irq_map[i].ih],
-                                        omap1_dma_irq_map[i].intr);
-     }
--    s->dma = omap_dma_init(0xfffed800, dma_irqs, system_memory,
-+    s->dma = omap_dma_init(parent, 0xfffed800, dma_irqs, system_memory,
-                            qdev_get_gpio_in(s->ih[0], OMAP_INT_DMA_LCD),
-                            s, omap_findclk(s, "dma_ck"));
+diff --git a/hw/remote/machine.c b/hw/remote/machine.c
+index e8e9cf259f..09154fa122 100644
+--- a/hw/remote/machine.c
++++ b/hw/remote/machine.c
+@@ -37,7 +37,7 @@ static void remote_machine_init(MachineState *machine)
+     system_io = get_system_io();
  
-@@ -3835,7 +3835,7 @@ struct omap_mpu_state_s *omap310_mpu_init(Object *parent, MemoryRegion *dram,
-                     qdev_get_gpio_in(s->ih[1], OMAP_INT_OS_TIMER),
-                     omap_findclk(s, "clk32-kHz"));
+     pci_memory = g_new(MemoryRegion, 1);
+-    memory_region_init(pci_memory, NULL, "pci", UINT64_MAX);
++    memory_region_init(pci_memory, OBJECT(machine), "pci", UINT64_MAX);
  
--    s->lcd = omap_lcdc_init(system_memory, 0xfffec000,
-+    s->lcd = omap_lcdc_init(parent, system_memory, 0xfffec000,
-                             qdev_get_gpio_in(s->ih[0], OMAP_INT_LCD_CTRL),
-                             omap_dma_get_lcdch(s->dma),
-                             omap_findclk(s, "lcd_ck"));
-diff --git a/hw/display/omap_lcdc.c b/hw/display/omap_lcdc.c
-index b88ea5f2f1..3f6066e3a8 100644
---- a/hw/display/omap_lcdc.c
-+++ b/hw/display/omap_lcdc.c
-@@ -489,7 +489,8 @@ static const GraphicHwOps omap_ops = {
-     .gfx_update  = omap_update_display,
- };
+     rem_host = REMOTE_PCIHOST(qdev_new(OBJECT(s), "remote-pcihost",
+                                        TYPE_REMOTE_PCIHOST));
+diff --git a/hw/remote/memory.c b/hw/remote/memory.c
+index 8195aa5fb8..3f8fe54bac 100644
+--- a/hw/remote/memory.c
++++ b/hw/remote/memory.c
+@@ -12,6 +12,7 @@
  
--struct omap_lcd_panel_s *omap_lcdc_init(MemoryRegion *sysmem,
-+struct omap_lcd_panel_s *omap_lcdc_init(Object *owner,
-+                                        MemoryRegion *sysmem,
-                                         hwaddr base,
-                                         qemu_irq irq,
-                                         struct omap_dma_lcd_channel_s *dma,
-@@ -502,7 +503,7 @@ struct omap_lcd_panel_s *omap_lcdc_init(MemoryRegion *sysmem,
-     s->sysmem = sysmem;
-     omap_lcdc_reset(s);
+ #include "hw/remote/memory.h"
+ #include "qapi/error.h"
++#include "hw/core/qdev.h"
  
--    memory_region_init_io(&s->iomem, NULL, &omap_lcdc_ops, s, "omap.lcdc", 0x100);
-+    memory_region_init_io(&s->iomem, owner, &omap_lcdc_ops, s, "omap.lcdc", 0x100);
-     memory_region_add_subregion(sysmem, base, &s->iomem);
+ static void remote_sysmem_reset(void)
+ {
+@@ -42,7 +43,7 @@ void remote_sysmem_reconfig(MPQemuMsg *msg, Error **errp)
+     for (region = 0; region < msg->num_fds; region++, suffix++) {
+         g_autofree char *name = g_strdup_printf("remote-mem-%u", suffix);
+         subregion = g_new(MemoryRegion, 1);
+-        memory_region_init_ram_from_fd(subregion, NULL,
++        memory_region_init_ram_from_fd(subregion, qdev_get_machine(),
+                                        name, sysmem_info->sizes[region],
+                                        RAM_SHARED, msg->fds[region],
+                                        sysmem_info->offsets[region],
+diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
+index 87fa7b6572..685d4c2baf 100644
+--- a/hw/remote/vfio-user-obj.c
++++ b/hw/remote/vfio-user-obj.c
+@@ -324,7 +324,7 @@ static void dma_register(vfu_ctx_t *vfu_ctx, vfu_dma_info_t *info)
  
-     s->con = qemu_graphic_console_create(NULL, 0, &omap_ops, s);
-diff --git a/hw/dma/omap_dma.c b/hw/dma/omap_dma.c
-index 77f1441498..b130ba2480 100644
---- a/hw/dma/omap_dma.c
-+++ b/hw/dma/omap_dma.c
-@@ -1089,7 +1089,7 @@ static void omap_dma_clk_update(void *opaque, int line, int on)
-             soc_dma_set_request(s->ch[i].dma, on);
- }
+     subregion = g_new0(MemoryRegion, 1);
  
--struct soc_dma_s *omap_dma_init(hwaddr base, qemu_irq *irqs,
-+struct soc_dma_s *omap_dma_init(Object *owner, hwaddr base, qemu_irq *irqs,
-                                 MemoryRegion *sysmem,
-                                 qemu_irq lcd_irq,
-                                 struct omap_mpu_state_s *mpu, omap_clk clk)
-@@ -1127,7 +1127,7 @@ struct soc_dma_s *omap_dma_init(hwaddr base, qemu_irq *irqs,
-     omap_dma_reset(s->dma);
-     omap_dma_clk_update(s, 0, 1);
+-    memory_region_init_ram_ptr(subregion, NULL, name,
++    memory_region_init_ram_ptr(subregion, OBJECT(o), name,
+                                iov->iov_len, info->vaddr);
  
--    memory_region_init_io(&s->iomem, NULL, &omap_dma_ops, s, "omap.dma", memsize);
-+    memory_region_init_io(&s->iomem, owner, &omap_dma_ops, s, "omap.dma", memsize);
-     memory_region_add_subregion(sysmem, base, &s->iomem);
- 
-     mpu->drq = s->dma->drq;
-diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
-index e000dffe13..591abf752b 100644
---- a/include/hw/arm/omap.h
-+++ b/include/hw/arm/omap.h
-@@ -173,7 +173,7 @@ void omap_gpio_set_clk(Omap1GpioState *gpio, omap_clk clk);
- 
- /* omap_dma.c */
- struct soc_dma_s;
--struct soc_dma_s *omap_dma_init(hwaddr base, qemu_irq *irqs,
-+struct soc_dma_s *omap_dma_init(Object *owner, hwaddr base, qemu_irq *irqs,
-                                 MemoryRegion *sysmem,
-                                 qemu_irq lcd_irq,
-                                 struct omap_mpu_state_s *mpu, omap_clk clk);
-@@ -296,7 +296,8 @@ void omap_mcbsp_i2s_attach(struct omap_mcbsp_s *s, I2SCodec *slave);
- /* omap_lcdc.c */
- struct omap_lcd_panel_s;
- void omap_lcdc_reset(struct omap_lcd_panel_s *s);
--struct omap_lcd_panel_s *omap_lcdc_init(MemoryRegion *sysmem,
-+struct omap_lcd_panel_s *omap_lcdc_init(Object *owner,
-+                                        MemoryRegion *sysmem,
-                                         hwaddr base,
-                                         qemu_irq irq,
-                                         struct omap_dma_lcd_channel_s *dma,
+     dma_as = pci_device_iommu_address_space(o->pci_dev);
 -- 
 2.47.1
 
