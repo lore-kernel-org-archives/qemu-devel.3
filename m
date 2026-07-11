@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32E80C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:45:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92EA1C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:46:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigS1-0005bG-N6; Sat, 11 Jul 2026 18:45:37 -0400
+	id 1wigSU-0006hX-KY; Sat, 11 Jul 2026 18:46:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigRz-0005Y5-A4; Sat, 11 Jul 2026 18:45:35 -0400
-Received: from pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.42.203.116])
+ id 1wigST-0006dy-1Y; Sat, 11 Jul 2026 18:46:05 -0400
+Received: from pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.34.181.151])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigRx-00078c-5x; Sat, 11 Jul 2026 18:45:35 -0400
+ id 1wigSQ-0007Eb-V0; Sat, 11 Jul 2026 18:46:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783809933; x=1815345933;
+ t=1783809962; x=1815345962;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Yjj6bjc52hJrvGNoYEgZZOaZL70oE4aLasfwIgRs9Yc=;
- b=YIE93Qpj7iHJbINzEhNK5gGNeOxyB230xUi6YGu4DMTLQcONVsazxvgt
- bcRxEY1EN6Dmgmdj2U3GesiplqS+6SqDdbXCcGwOVyFGg0LxMT/VWErpn
- 5FfGhgO1wGtcVOclPXOjYD3vT/lvk2B9yAqLMLbVO7/DF0gUBCEVYUZG2
- YyFl/mqN742Feea17hBnfBolphjgfITv0oTq7SN0fTs1bGUSWYeq4xB/F
- z1n63vTPSl3hAgav8ohcyqvZCBY6lj1xXe0Tpqzx6/lwG92PAOl5KWTLC
- 8CIGgLg07J73q4Ch+UbTOBgW1wmr9+YA0ed19hSB1TsTOcRZ4/rNhLGaN w==;
-X-CSE-ConnectionGUID: 9aEUzVSDQJefVn+WDWwBBQ==
-X-CSE-MsgGUID: nqWeb9+BSrSaT3C9ZULJig==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23517779"
-Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
- by internal-pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:45:29 +0000
-Received: from EX19MTAUWC001.ant.amazon.com [205.251.233.53:19086]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.58.33:2525]
+ bh=PQ7+7sUsosVHkyrfX5+2EvwRXc5Bo4T59ZveoBFIrEU=;
+ b=ta80x3hQJbMd1fo+rQYJ91EPC/ExsVLcYbkOI4ZLrRhCJIsnLII2xFA8
+ f38UCZGqGdN/leyevSkBVwyhqHBM9M3ggz3xIbgi/UbaW5Ka2Yr+2XKG8
+ tZ5F3pCdroX8sWh9ke0LqdxhmsoMuxi5+ccY6ZVH8eENV/gczbOHvqTix
+ nrIPRfLhNOZq4KapBxtSBRLwUvjr5wtmUts0o50OuFLk4claOJGGSzaRS
+ PHh963mhABh04oCZbjzHprZLhMPUvo8R2GLCg64xZz9cuqJ+ZOjiytOLm
+ r/+xHJCa77RUMYrimE2AMtNjoSMgMNsAJ+/gPGCMMHLloFth0A6MQxKaR A==;
+X-CSE-ConnectionGUID: l6XsyWVLT1upymioAXIsNQ==
+X-CSE-MsgGUID: nXlztDblTy+vrgZFo9LUpg==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23483305"
+Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
+ by internal-pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:45:59 +0000
+Received: from EX19MTAUWB002.ant.amazon.com [205.251.233.48:18161]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.51.175:2525]
  with esmtp (Farcaster)
- id 727577cc-1245-4712-83ba-d12936fa9405; Sat, 11 Jul 2026 22:45:29 +0000 (UTC)
-X-Farcaster-Flow-ID: 727577cc-1245-4712-83ba-d12936fa9405
+ id e672f84b-2235-4799-9b2b-3856611b472b; Sat, 11 Jul 2026 22:45:59 +0000 (UTC)
+X-Farcaster-Flow-ID: e672f84b-2235-4799-9b2b-3856611b472b
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
+ EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:45:28 +0000
+ Sat, 11 Jul 2026 22:45:58 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:45:20 +0000
+ Sat, 11 Jul 2026 22:45:50 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,9 +91,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 032/134] hw/xen: Give onboard devices a QOM parent
-Date: Sat, 11 Jul 2026 22:35:25 +0000
-Message-ID: <20260711223707.42139-33-graf@amazon.com>
+Subject: [RFC PATCH 033/134] hw/display: Give onboard devices a QOM parent
+Date: Sat, 11 Jul 2026 22:35:26 +0000
+Message-ID: <20260711223707.42139-34-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -101,11 +101,11 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D032UWB001.ant.amazon.com (10.13.139.152) To
+X-ClientProxiedBy: EX19D036UWB002.ant.amazon.com (10.13.139.139) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=52.42.203.116;
+Received-SPF: pass client-ip=52.34.181.151;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
@@ -129,7 +129,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the *_orphan() device-creation calls in hw/xen to the new
+Convert the *_orphan() device-creation calls in hw/display to the new
 parented API introduced earlier in this series, so every onboard
 device gets a stable path in the composition tree instead of landing
 in /machine/unattached with an unstable device[N] name.
@@ -140,102 +140,76 @@ composite children.  Names follow existing QOM conventions.
 
 Per-site rationale (reviewers: dispute the modeling here):
 
-hw/xen/xen-bus.c:1152 | qdev_new | qdev_get_machine() | "xen-bridge" | init helper called from 3 board paths with no parent arg; use qdev_get_machine() (already used in this subsystem)
-hw/xen/xen-legacy-backend.c:601 | qdev_new | qdev_get_machine() | "xen-sysdev" | init helper with no parent arg; qdev_get_machine() already used just above in xen_set_dynamic_sysbus()
-hw/xen/xen-pvh-common.c:176 | sysbus_create_simple | OBJECT(s) | "virtio-mmio[*]" | board-init helper receives XenPVHMachineState *s; loop-created
-hw/xen/xen-pvh-common.c:196 | qdev_new | OBJECT(s) | "tpm" | board-init helper receives XenPVHMachineState *s
-hw/xen/xen_pt_graphics.c:402 | pci_create_simple | OBJECT(s) | "isa-bridge" | called from XenPCIPassthroughState realize; s is the composite passthrough device
+hw/display/sii9022.c:167 | i2c_slave_create_simple | OBJECT(dev) | "ddc" | DeviceClass.realize(); DDC slave owned by sii9022 device
+hw/display/sm501.c:1913 | qdev_new | OBJECT(dev) | "ddc" | sm501_init() helper receives realizing DeviceState *dev; drop _and_unref
+hw/display/xlnx_dp.c:1349 | qdev_new | obj | "dpcd" | instance_init(Object *obj); collapse existing add_child+unref, keep name
+hw/display/xlnx_dp.c:1353 | qdev_new | obj | "edid" | instance_init(Object *obj); collapse existing add_child+unref, keep name
 
 Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/xen/xen-bus.c            | 5 +++--
- hw/xen/xen-legacy-backend.c | 5 +++--
- hw/xen/xen-pvh-common.c     | 7 ++++---
- hw/xen/xen_pt_graphics.c    | 3 ++-
- 4 files changed, 12 insertions(+), 8 deletions(-)
+ hw/display/sii9022.c |  2 +-
+ hw/display/sm501.c   |  4 ++--
+ hw/display/xlnx_dp.c | 14 +++-----------
+ 3 files changed, 6 insertions(+), 14 deletions(-)
 
-diff --git a/hw/xen/xen-bus.c b/hw/xen/xen-bus.c
-index 746014416b..934ff33402 100644
---- a/hw/xen/xen-bus.c
-+++ b/hw/xen/xen-bus.c
-@@ -1149,10 +1149,11 @@ type_init(xen_register_types)
+diff --git a/hw/display/sii9022.c b/hw/display/sii9022.c
+index 0bf49195d7..2accebf193 100644
+--- a/hw/display/sii9022.c
++++ b/hw/display/sii9022.c
+@@ -164,7 +164,7 @@ static void sii9022_realize(DeviceState *dev, Error **errp)
+     I2CBus *bus;
  
- void xen_bus_init(void)
- {
--    DeviceState *dev = qdev_new_orphan(TYPE_XEN_BRIDGE);
-+    DeviceState *dev = qdev_new(qdev_get_machine(), "xen-bridge",
-+                                TYPE_XEN_BRIDGE);
-     BusState *bus = qbus_new(TYPE_XEN_BUS, dev, NULL);
+     bus = I2C_BUS(qdev_get_parent_bus(dev));
+-    i2c_slave_create_simple_orphan(bus, TYPE_I2CDDC, 0x50);
++    i2c_slave_create_simple(OBJECT(dev), "ddc", bus, TYPE_I2CDDC, 0x50);
+ }
  
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
-     qbus_set_bus_hotplug_handler(bus);
+ static void sii9022_class_init(ObjectClass *klass, const void *data)
+diff --git a/hw/display/sm501.c b/hw/display/sm501.c
+index d4b0ed048c..81c27c8f52 100644
+--- a/hw/display/sm501.c
++++ b/hw/display/sm501.c
+@@ -1910,9 +1910,9 @@ static void sm501_init(SM501State *s, DeviceState *dev,
+     /* i2c */
+     s->i2c_bus = i2c_init_bus(dev, "sm501.i2c");
+     /* ddc */
+-    I2CDDCState *ddc = I2CDDC(qdev_new_orphan(TYPE_I2CDDC));
++    I2CDDCState *ddc = I2CDDC(qdev_new(OBJECT(dev), "ddc", TYPE_I2CDDC));
+     i2c_slave_set_address(I2C_SLAVE(ddc), 0x50);
+-    qdev_realize_and_unref(DEVICE(ddc), BUS(s->i2c_bus), &error_abort);
++    qdev_realize(DEVICE(ddc), BUS(s->i2c_bus), &error_abort);
  
-     qemu_create_nic_bus_devices(bus, TYPE_XEN_DEVICE, "xen-net-device",
-diff --git a/hw/xen/xen-legacy-backend.c b/hw/xen/xen-legacy-backend.c
-index 29c90a388c..0e1da18d12 100644
---- a/hw/xen/xen-legacy-backend.c
-+++ b/hw/xen/xen-legacy-backend.c
-@@ -598,8 +598,9 @@ void xen_be_init(void)
-         exit(1);
-     }
+     /* mmio */
+     memory_region_init(&s->mmio_region, OBJECT(dev), "sm501.mmio", MMIO_SIZE);
+diff --git a/hw/display/xlnx_dp.c b/hw/display/xlnx_dp.c
+index e8490d644d..5968466e79 100644
+--- a/hw/display/xlnx_dp.c
++++ b/hw/display/xlnx_dp.c
+@@ -1341,19 +1341,11 @@ static void xlnx_dp_init(Object *obj)
+      */
+     s->aux_bus = aux_bus_init(DEVICE(obj), "aux");
  
--    xen_sysdev = qdev_new_orphan(TYPE_XENSYSDEV);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(xen_sysdev), &error_fatal);
-+    xen_sysdev = qdev_new(qdev_get_machine(), "xen-sysdev",
-+                          TYPE_XENSYSDEV);
-+    sysbus_realize(SYS_BUS_DEVICE(xen_sysdev), &error_fatal);
-     xen_sysbus = qbus_new(TYPE_XENSYSBUS, xen_sysdev, "xen-sysbus");
-     qbus_set_bus_hotplug_handler(xen_sysbus);
+-    /*
+-     * Initialize DPCD and EDID. Once we have added the objects as
+-     * child properties of this device, we can drop the reference we
+-     * hold to them, leaving the child-property as the only reference.
+-     */
+-    s->dpcd = DPCD(qdev_new_orphan("dpcd"));
+-    object_property_add_child(OBJECT(s), "dpcd", OBJECT(s->dpcd));
+-    object_unref(s->dpcd);
++    /* Initialize DPCD and EDID. */
++    s->dpcd = DPCD(qdev_new(obj, "dpcd", "dpcd"));
  
-diff --git a/hw/xen/xen-pvh-common.c b/hw/xen/xen-pvh-common.c
-index 17f545d07c..dae523f723 100644
---- a/hw/xen/xen-pvh-common.c
-+++ b/hw/xen/xen-pvh-common.c
-@@ -173,7 +173,8 @@ static void xen_create_virtio_mmio_devices(XenPVHMachineState *s)
-         qemu_irq irq = qemu_allocate_irq(xen_set_irq, NULL,
-                                          s->cfg.virtio_mmio_irq_base + i);
+-    s->edid = I2CDDC(qdev_new_orphan("i2c-ddc"));
++    s->edid = I2CDDC(qdev_new(obj, "edid", "i2c-ddc"));
+     i2c_slave_set_address(I2C_SLAVE(s->edid), 0x50);
+-    object_property_add_child(OBJECT(s), "edid", OBJECT(s->edid));
+-    object_unref(s->edid);
  
--        sysbus_create_simple_orphan("virtio-mmio", base, irq);
-+        sysbus_create_simple(OBJECT(s), "virtio-mmio[*]", "virtio-mmio",
-+                             base, irq);
- 
-         trace_xen_create_virtio_mmio_devices(i,
-                                              s->cfg.virtio_mmio_irq_base + i,
-@@ -193,7 +194,7 @@ static void xen_enable_tpm(XenPVHMachineState *s)
-         error_report("Couldn't find tmp0 backend");
-         return;
-     }
--    dev = qdev_new_orphan(TYPE_TPM_TIS_SYSBUS);
-+    dev = qdev_new(OBJECT(s), "tpm", TYPE_TPM_TIS_SYSBUS);
-     /*
-      * FIXME This use of &err is is wrong.  If both calls fail, the
-      * second will trip error_setv()'s assertion.  If just one call
-@@ -204,7 +205,7 @@ static void xen_enable_tpm(XenPVHMachineState *s)
-     object_property_set_link(OBJECT(dev), "tpmdev", OBJECT(be), &err);
-     object_property_set_str(OBJECT(dev), "tpmdev", be->id, &err);
-     busdev = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(busdev, &error_fatal);
-+    sysbus_realize(busdev, &error_fatal);
-     sysbus_mmio_map(busdev, 0, s->cfg.tpm.base);
- 
-     trace_xen_enable_tpm(s->cfg.tpm.base);
-diff --git a/hw/xen/xen_pt_graphics.c b/hw/xen/xen_pt_graphics.c
-index 4457209e83..2841b45ca1 100644
---- a/hw/xen/xen_pt_graphics.c
-+++ b/hw/xen/xen_pt_graphics.c
-@@ -399,7 +399,8 @@ void xen_igd_passthrough_isa_bridge_create(XenPCIPassthroughState *s,
-     }
- 
-     /* Currently IGD drivers always need to access PCH by 1f.0. */
--    bridge_dev = pci_create_simple_orphan(bus, PCI_DEVFN(0x1f, 0),
-+    bridge_dev = pci_create_simple(OBJECT(s), "isa-bridge", bus,
-+                                   PCI_DEVFN(0x1f, 0),
-                                    "igd-passthrough-isa-bridge");
- 
-     /*
+     fifo8_create(&s->rx_fifo, 16);
+     fifo8_create(&s->tx_fifo, 16);
 -- 
 2.47.1
 
