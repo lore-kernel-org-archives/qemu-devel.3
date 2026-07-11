@@ -4,70 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F971C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 08:39:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1385C44501
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 08:48:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiTFD-00059U-H8; Sat, 11 Jul 2026 04:39:31 -0400
+	id 1wiTNQ-0006vA-GA; Sat, 11 Jul 2026 04:48:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wiTFC-00059G-Rz
- for qemu-devel@nongnu.org; Sat, 11 Jul 2026 04:39:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wiTNC-0006tC-ER; Sat, 11 Jul 2026 04:47:46 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wiTFB-0007CP-24
- for qemu-devel@nongnu.org; Sat, 11 Jul 2026 04:39:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783759168;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nRATPXre/QiDPA/V19dth0YLLkbfvn8NCqZUEm32A1k=;
- b=NGoN6cCDUWropHEZe2xAv1UWsTCnn1bQBM9llVSg4gbB6RcNZpYmyr7utc+cpKVB/hrfhS
- /P9SHRXMPz6oeoNYcNyh6263ZTniGErRHFzYEGoWLGarSPEsLpiEclUIumzcarjNEHWh80
- 2ye3ZvZhtoXDTZLnyk2lzSW9Pi6u1vI=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-286-ZaZThrVpNTq92oDDMvFDYA-1; Sat,
- 11 Jul 2026 04:39:25 -0400
-X-MC-Unique: ZaZThrVpNTq92oDDMvFDYA-1
-X-Mimecast-MFC-AGG-ID: ZaZThrVpNTq92oDDMvFDYA_1783759164
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9886719560A1; Sat, 11 Jul 2026 08:39:24 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.3])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 038CE3000232; Sat, 11 Jul 2026 08:39:23 +0000 (UTC)
-Date: Sat, 11 Jul 2026 10:39:22 +0200
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PULL 00/13] user patch queue
-Message-ID: <20260711083922.GA637744@fedora>
-References: <20260710230116.900171-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wiTN8-00021H-1f; Sat, 11 Jul 2026 04:47:44 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66B8lCIF059829
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Sat, 11 Jul 2026 17:47:12 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=oLHuqQNm7x08Ep5efDS1zs9hdSdwQTbHqCe/xY3u7GE=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1783759632; v=1;
+ b=wJcnK17Cv+8oMMt+KCTXmROyrljZPy7nl15jNHVJsAORYGvVLaVBryOfcO+z9rH6
+ oD0jUi4NTzB2ZjqtyMwN7P+82IpaScgxvaKgAk8dkntDam/sQfbOQkLvK1rrHIAt
+ iFtncK1XDAy6rJw6h2KIUTX+rC/dPluKmSd1xx7krcgmcxb0NP+Xqg53IokBqXlm
+ dJ2Dc9lEnyZCQ3ZUPNvB7GUoe9KX41T69SUL2q+LUsvVl9jN3xLfu+R+tiMqf1JE
+ CB/v33MTy5apwcAlrZy3vW4F6ybpJAY7xq9wi/D3EXCGpMFMiV1Wbw+LylU5FZ9p
+ 9BdmusMzEzPPXQwezQgKsQ==
+Message-ID: <6b4f41b6-6a72-4378-950d-b8884e7dd839@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sat, 11 Jul 2026 17:47:11 +0900
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="BRQ7ZS4h/ZHqkyVh"
-Content-Disposition: inline
-In-Reply-To: <20260710230116.900171-1-richard.henderson@linaro.org>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/riscv/riscv-iommu.c: set ftype and iova in
+ riscv_iommu_ctx()
+To: Michael Tokarev <mjt@tls.msk.ru>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ andrew.jones@oss.qualcomm.com, Palmer Dabbelt <palmer@dabbelt.com>,
+ Chengbo Gao <gaochengbo@bosc.ac.cn>, qemu-stable <qemu-stable@nongnu.org>,
+ Frank Chang <frank.chang@sifive.com>
+References: <20260701092241.307801-1-daniel.barboza@oss.qualcomm.com>
+ <59d0a99c-8eb2-4192-a388-331d0dd93358@tls.msk.ru>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <59d0a99c-8eb2-4192-a388-331d0dd93358@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,30 +78,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi,
 
---BRQ7ZS4h/ZHqkyVh
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+First, thank you for your work maintaining the stable series.
 
-Applied, thanks.
+On 2026/07/11 16:47, Michael Tokarev wrote:
+> On 7/1/26 12:22, Daniel Henrique Barboza wrote:
+>> We're hardcoding faulting type as READ, where it could very well be a
+>> write access, and we're not recording the faulting addr/iova.
+>>
+>> A note was added in the fault_type logic because I wasn't able to
+>> trivially handle a probable code repeitition it in this same patch.
+>> Something to do in a later date.
+>>
+>> Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3564
+>> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+>> ---
+>>   hw/riscv/riscv-iommu.c | 29 +++++++++++++++++++++++------
+>>   1 file changed, 23 insertions(+), 6 deletions(-)
+> 
+> For the stable qemu series (currently 10.0.x-LTS and 11.0.x), in order
+> to pick this commit, I also picked v11.0.0-1212-gca7bac51e04
+> "hw/riscv/riscv-iommu: Avoid caching PCI device IDs" by Chengbo Gao
+> (Cc'ed) - because it touched the same code and there's a merge conflict.
+> I can edit this patch ("set ftype and iova in riscv_iommu_ctx()") instead,
+> but it felt that ca7bac51e04 is also a good pick for the stable series.
+> 
+> Additionally for 10.0.x-LTS series, I also picked 2 more commits:
+> 
+> v10.2.0-323-g15406cc593a "hw/riscv: riscv-iommu: Don't look up DDT cache
+>   in Off and Bare modes" by Frank Chang (Cc'ed), which avoids a merge
+>   conflict and also looks like a (maybe missing) bugfix.
+> 
+> v10.2.0-312-gc497ef6739c "hw/riscv/riscv-iommu: Fix MemoryRegion owner"
+>   by Akihiko Odaki, which I spotted when looking for the history of
+>   changes, and which looked like an obvious bugfix.
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.1 for any user-visible changes.
+This particular change is somewhat orthogonal to the broader issue you 
+describe with RISC-V patches. I found it through a codebase-wide search 
+for incorrect MemoryRegion ownership, rather than while following the 
+evolution of the RISC-V code. The same search found a similar issue 
+elsewhere, which you have already picked up:
 
---BRQ7ZS4h/ZHqkyVh
-Content-Type: application/pgp-signature; name=signature.asc
+https://lore.kernel.org/qemu-devel/20251121184424.1137669-18-mjt@tls.msk.ru/
+("[Stable-10.0.7 18/81] hw/nvram/ds1225y: Fix nvram MemoryRegion owner")
 
------BEGIN PGP SIGNATURE-----
+Unfortunately, there are several recurring patterns of MemoryRegion 
+misuse, and in some cases I am not entirely sure what the correct 
+ownership should be. In any case, this is separate from the concerns 
+around fast-moving RISC-V development.
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmpSATkACgkQnKSrs4Gr
-c8gdXQf6A6BtSiGgqWj19tlfQXw6NmRfJP1hzT2Sk9aVz5HdRR4teuBDrr0fMYhj
-d1RbK2MTlEYrrhhM5VT+T6GQu9nFisrUQXhASYDZYZ2s4GKW0M73ONuHuWWjNR9d
-Dm+O64WsorkX0SL/DdIAPQTaRaD5D1rupWg7UXT8MCzYjpJF+vZ/WiX4kN48lj0X
-kQo0Vkmm2aBZC0cg0N4K5oACT+/+01j4mFKSfz3jcYvMFdYcQ5b1CNnkW5KGNuPi
-3/RQqXA8iD+Z/Bag+4nCKVrdJFyFdFogp9P7ZdKoFoNUP0FwJAMDCke43Nmgkyef
-4ObG463uh8IF99AN86JjAO0Nat4g0g==
-=w1p4
------END PGP SIGNATURE-----
+This particular change is trivial; it corrects semantically incorrect 
+code, but I am not sure whether the bug has any user-visible effect.
 
---BRQ7ZS4h/ZHqkyVh--
+Regards,
+Akihiko Odaki
+
+> 
+> Hopefully this is okay.  Unfortunately even the simpler changes brings
+> up quite a lot of missing fixes just by a chance - this means that we
+> either not doing a good job keeping stable series up to date (by marking
+> commits fixing stuff for-stable), or we should not try fixing stuff in
+> previous series for a too-fast-moving target.
+> 
+> I'm sorry I'm bringing up this more general question in a very narrow
+> context of this particular fix (which might not even be important
+> enough).  Maybe I should discuss this separately.  Overall, I'm
+> having some.. issues with riscv pullreqs in context of stable series,
+> it's always more time-consuming to handle these and a bit more difficult
+> to decide what is imortant and what can be skipped.
+> 
+> Thanks,
+> 
+> /mjt
+> 
 
 
