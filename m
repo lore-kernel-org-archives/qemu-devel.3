@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B16BC43458
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FE13C44506
 	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:52:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigYg-0001FB-1Z; Sat, 11 Jul 2026 18:52:30 -0400
+	id 1wigY7-0000YH-86; Sat, 11 Jul 2026 18:51:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigYc-00017D-Gl; Sat, 11 Jul 2026 18:52:27 -0400
-Received: from pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([44.246.77.92])
+ id 1wigXy-0000UT-8N; Sat, 11 Jul 2026 18:51:47 -0400
+Received: from pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.35.192.45])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigYY-0008Tx-V9; Sat, 11 Jul 2026 18:52:26 -0400
+ id 1wigXv-0008Qa-Fa; Sat, 11 Jul 2026 18:51:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783810343; x=1815346343;
+ t=1783810303; x=1815346303;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=qJ9SPZd6KqKT0DByIkveEz5n2P2u8Ab+W4C2Tdl7jYU=;
- b=RaQia3awJ9VURokJD/SJpdT5RmyuQIi9OzMik2N9DQGN/CRREhUdD/vC
- yK7Ahl/4PcylV0VfAljIfFQ+WPbgFrruvhevlbspTkEqPNYMxwoNPo5xw
- eobvM/v7GllIn4tLurNatE+cmZkVZU4EqQqlfaTQvqLpZKlMa6+VN77xs
- VtQEIMulGneHMqtFJSJGCVC/6ly8XqTynghEOi4ezRiJDF1ikwX1sMvNq
- xFN2SKArBFl2SqJN4eeFFh85/2CB3EhvSH3y1DTg/lm+ZD0Ypkp9w9CXE
- RflYbU7HSGAbfG5xBcBA5u4eDo8/HbMawfAcGfY/gikuA3t3i1WwRqs+6 w==;
-X-CSE-ConnectionGUID: jjHQ2GzHTxyUeU25lbK3Pg==
-X-CSE-MsgGUID: 290MNva6RYilvvSdP7ceRA==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23493166"
-Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
- by internal-pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:52:18 +0000
-Received: from EX19MTAUWC002.ant.amazon.com [205.251.233.51:25417]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.31.54:2525]
+ bh=+3CHlRaRUq+QN73YCyXxZoAtepYUsMDG1tbwEp/dhoo=;
+ b=Fxkcvv5UVLYi9E9X8ySkiWgKkFYXxSnGbzGlBQGIyT5hF40CgGEYzAOl
+ wMNhrcod4A1TYxXXlLVjIE/ycONQUzpfvDT8WRIbW+arKMbgIeW2//XJ/
+ LGf28HvyhF57RqG3Bodl5Gbd8eR/lmhKc0AuXLgwfB9i9+45cB258h7Pw
+ XNpwG7KReF2he84mPp+N5ClY49Y3c4fbnbWEZ2R5MP5A7h76D4UfxX1Fx
+ ROrdMhfuKz7+ul870jPgnHh2evAqYQ9tyqxmg9W9fC1H6BqNJW1jPOk+1
+ l5TZiTIHifB3xPgLmOjsjUblYH/nOjB28lBPFFDYALYWEh/N60p84sotd Q==;
+X-CSE-ConnectionGUID: +AHRVVNIRLiAdgA1OlvxTg==
+X-CSE-MsgGUID: 3AzIhDP5TRWXkONbur4nAA==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23269763"
+Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
+ by internal-pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:51:39 +0000
+Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.234:6460]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.51.175:2525]
  with esmtp (Farcaster)
- id 1520f47c-e749-4a59-a4bb-753b46ca57be; Sat, 11 Jul 2026 22:52:18 +0000 (UTC)
-X-Farcaster-Flow-ID: 1520f47c-e749-4a59-a4bb-753b46ca57be
+ id 2988a08e-ee4b-4527-b4fe-b06adc9af304; Sat, 11 Jul 2026 22:51:39 +0000 (UTC)
+X-Farcaster-Flow-ID: 2988a08e-ee4b-4527-b4fe-b06adc9af304
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
+ EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:52:18 +0000
+ Sat, 11 Jul 2026 22:51:39 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:52:09 +0000
+ Sat, 11 Jul 2026 22:51:30 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,9 +91,10 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 057/134] hw/arm/sbsa-ref: Give onboard devices a QOM parent
-Date: Sat, 11 Jul 2026 22:35:50 +0000
-Message-ID: <20260711223707.42139-58-graf@amazon.com>
+Subject: [RFC PATCH 055/134] hw/pci,
+ hw/isa: Give VGA and slot-NIC helpers a QOM parent
+Date: Sat, 11 Jul 2026 22:35:48 +0000
+Message-ID: <20260711223707.42139-56-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -101,18 +102,18 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D043UWA003.ant.amazon.com (10.13.139.31) To
+X-ClientProxiedBy: EX19D035UWA002.ant.amazon.com (10.13.139.60) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=44.246.77.92;
+Received-SPF: pass client-ip=52.35.192.45;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
 X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
  HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
+ SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
  UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,280 +130,430 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the *_orphan() device-creation calls in the hw/arm sbsa-ref
-board files to the new parented API introduced earlier in this
-series, so every onboard device gets a stable path in the
-composition tree instead of landing in /machine/unattached with an
-unstable device[N] name.
+Now that all callers of pci_vga_init(), pci_init_nic_in_slot() and
+isa_vga_init() live in already-converted board files, thread an
+Object *parent through these three convenience helpers so that the
+default VGA and default NIC created via -vga and -net become proper
+children of their machine instead of landing under
+/machine/unattached.
 
-The parent for each device is the object that owns its lifetime: the
-machine for board-created devices, the containing SoC device for
-composite children.  Names follow existing QOM conventions.
-
-Per-site rationale (reviewers: dispute the modeling here):
-
-hw/arm/sbsa-ref.c:299 | qdev_new | OBJECT(sms) | name | collapse existing object_property_add_child(OBJECT(sms), name, ...); keep existing name; sbsa_flash_map1 realize -> sysbus_realize
-hw/arm/sbsa-ref.c:424 | qdev_new | OBJECT(sms) | "its" | helper receives SBSAMachineState* board pointer
-hw/arm/sbsa-ref.c:443 | qdev_new | OBJECT(sms) | "gic" | helper receives SBSAMachineState* board pointer
-hw/arm/sbsa-ref.c:525 | qdev_new | OBJECT(sms) | "uart[*]" | helper called 3x from board init -> auto-index; drop const
-hw/arm/sbsa-ref.c:540 | sysbus_create_simple | OBJECT(sms) | "rtc" | helper receives SBSAMachineState*; drop const
-hw/arm/sbsa-ref.c:547 | qdev_new | OBJECT(sms) | "wdt" | helper receives SBSAMachineState*; drop const
-hw/arm/sbsa-ref.c:575 | sysbus_create_simple | OBJECT(sms) | "gpio" | helper receives SBSAMachineState*; drop const
-hw/arm/sbsa-ref.c:578 | sysbus_create_simple | OBJECT(sms) | "gpio-key" | helper receives SBSAMachineState*
-hw/arm/sbsa-ref.c:593 | qdev_new | OBJECT(sms) | "ahci" | helper receives SBSAMachineState*; drop const
-hw/arm/sbsa-ref.c:608 | qdev_new | OBJECT(sms) | "xhci" | helper receives SBSAMachineState*; drop const
-hw/arm/sbsa-ref.c:625 | qdev_new | OBJECT(sms) | "smmuv3" | helper receives SBSAMachineState*; drop const
-hw/arm/sbsa-ref.c:661 | qdev_new | OBJECT(sms) | "pcie" | helper receives SBSAMachineState*
-hw/arm/sbsa-ref.c:698 | pci_create_simple | OBJECT(sms) | "bochs-display" | board owns lifetime; bus is plug location not parent
-hw/arm/sbsa-ref.c:715 | qdev_new | parent | "sbsa-ec" | helper lacks parent-capable pointer -> thread Object *parent from sbsa_ref_init
+pc_vga_init() and the two static network_init() helpers in
+hw/mips/{fuloong2e,malta}.c gain the parent argument as well and
+pass it through.
 
 Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/arm/sbsa-ref.c | 70 ++++++++++++++++++++++++-----------------------
- 1 file changed, 36 insertions(+), 34 deletions(-)
+ hw/alpha/dp264.c         |  2 +-
+ hw/i386/isapc.c          |  2 +-
+ hw/i386/pc.c             |  6 +++---
+ hw/i386/pc_piix.c        |  2 +-
+ hw/i386/pc_q35.c         |  2 +-
+ hw/isa/isa-bus.c         |  6 +++---
+ hw/mips/fuloong2e.c      |  6 +++---
+ hw/mips/loongson3_virt.c |  2 +-
+ hw/mips/malta.c          |  8 ++++----
+ hw/pci/pci.c             | 18 +++++++++---------
+ hw/ppc/amigaone.c        |  2 +-
+ hw/ppc/mac_newworld.c    |  2 +-
+ hw/ppc/mac_oldworld.c    |  2 +-
+ hw/ppc/pegasos.c         |  2 +-
+ hw/ppc/prep.c            |  4 ++--
+ hw/ppc/spapr.c           |  6 +++---
+ hw/riscv/boston-aia.c    |  3 ++-
+ hw/sh4/r2d.c             |  2 +-
+ include/hw/i386/pc.h     |  2 +-
+ include/hw/isa/isa.h     |  2 +-
+ include/hw/pci/pci.h     |  4 ++--
+ 21 files changed, 43 insertions(+), 42 deletions(-)
 
-diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
-index f9fb681d31..f632df742b 100644
---- a/hw/arm/sbsa-ref.c
-+++ b/hw/arm/sbsa-ref.c
-@@ -296,7 +296,7 @@ static PFlashCFI01 *sbsa_flash_create1(SBSAMachineState *sms,
-      * Create a single flash device.  We use the same parameters as
-      * the flash devices on the Versatile Express board.
-      */
--    DeviceState *dev = qdev_new_orphan(TYPE_PFLASH_CFI01);
-+    DeviceState *dev = qdev_new(OBJECT(sms), name, TYPE_PFLASH_CFI01);
+diff --git a/hw/alpha/dp264.c b/hw/alpha/dp264.c
+index 40dee88f2d..d7d4fe3e8b 100644
+--- a/hw/alpha/dp264.c
++++ b/hw/alpha/dp264.c
+@@ -122,7 +122,7 @@ static void clipper_init(MachineState *machine)
+     mc146818_rtc_init(mo, isa_bus, 1900, rtc_irq);
  
-     qdev_prop_set_uint64(dev, "sector-length", SBSA_FLASH_SECTOR_SIZE);
-     qdev_prop_set_uint8(dev, "width", 4);
-@@ -307,7 +307,6 @@ static PFlashCFI01 *sbsa_flash_create1(SBSAMachineState *sms,
-     qdev_prop_set_uint16(dev, "id2", 0x00);
-     qdev_prop_set_uint16(dev, "id3", 0x00);
-     qdev_prop_set_string(dev, "name", name);
--    object_property_add_child(OBJECT(sms), name, OBJECT(dev));
-     object_property_add_alias(OBJECT(sms), alias_prop_name,
-                               OBJECT(dev), "drive");
-     return PFLASH_CFI01(dev);
-@@ -328,7 +327,7 @@ static void sbsa_flash_map1(PFlashCFI01 *flash,
-     assert(QEMU_IS_ALIGNED(size, SBSA_FLASH_SECTOR_SIZE));
-     assert(size / SBSA_FLASH_SECTOR_SIZE <= UINT32_MAX);
-     qdev_prop_set_uint32(dev, "num-blocks", size / SBSA_FLASH_SECTOR_SIZE);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     /* VGA setup.  Don't bother loading the bios.  */
+-    pci_vga_init(pci_bus);
++    pci_vga_init(OBJECT(machine), pci_bus);
  
-     memory_region_add_subregion(sysmem, base,
-                                 sysbus_mmio_get_region(SYS_BUS_DEVICE(dev),
-@@ -421,11 +420,11 @@ static void create_its(SBSAMachineState *sms)
-     const char *itsclass = its_class_name();
-     DeviceState *dev;
+     /* Network setup.  e1000 is good enough, failing Tulip support.  */
+     pci_init_nic_devices(pci_bus, mc->default_nic);
+diff --git a/hw/i386/isapc.c b/hw/i386/isapc.c
+index c5bba66967..842ae94acb 100644
+--- a/hw/i386/isapc.c
++++ b/hw/i386/isapc.c
+@@ -130,7 +130,7 @@ static void pc_init_isa(MachineState *machine)
+         x86_register_ferr_irq(x86ms->gsi[13]);
+     }
  
--    dev = qdev_new_orphan(itsclass);
-+    dev = qdev_new(OBJECT(sms), "its", itsclass);
+-    pc_vga_init(isa_bus, NULL);
++    pc_vga_init(OBJECT(machine), isa_bus, NULL);
  
-     object_property_set_link(OBJECT(dev), "parent-gicv3", OBJECT(sms->gic),
-                              &error_abort);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
-     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, sbsa_ref_memmap[SBSA_GIC_ITS].base);
+     /* init basic PC hardware */
+     pc_basic_device_init(pcms, isa_bus, x86ms->gsi, x86ms->rtc,
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 1073888b42..0c89310ab7 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -946,15 +946,15 @@ uint64_t pc_pci_hole64_start(void)
+     return ROUND_UP(hole64_start, 1 * GiB);
  }
  
-@@ -440,7 +439,7 @@ static void create_gic(SBSAMachineState *sms, MemoryRegion *mem)
- 
-     gictype = gicv3_class_name();
- 
--    sms->gic = qdev_new_orphan(gictype);
-+    sms->gic = qdev_new(OBJECT(sms), "gic", gictype);
-     qdev_prop_set_uint32(sms->gic, "revision", 3);
-     qdev_prop_set_uint32(sms->gic, "num-cpu", smp_cpus);
-     /*
-@@ -463,7 +462,7 @@ static void create_gic(SBSAMachineState *sms, MemoryRegion *mem)
-     qdev_prop_set_bit(sms->gic, "has-lpi", true);
- 
-     gicbusdev = SYS_BUS_DEVICE(sms->gic);
--    sysbus_realize_and_unref(gicbusdev, &error_fatal);
-+    sysbus_realize(gicbusdev, &error_fatal);
-     sysbus_mmio_map(gicbusdev, 0, sbsa_ref_memmap[SBSA_GIC_DIST].base);
-     sysbus_mmio_map(gicbusdev, 1, sbsa_ref_memmap[SBSA_GIC_REDIST].base);
- 
-@@ -517,39 +516,40 @@ static void create_gic(SBSAMachineState *sms, MemoryRegion *mem)
-     create_its(sms);
- }
- 
--static void create_uart(const SBSAMachineState *sms, int uart,
-+static void create_uart(SBSAMachineState *sms, int uart,
-                         MemoryRegion *mem, Chardev *chr)
+-DeviceState *pc_vga_init(ISABus *isa_bus, PCIBus *pci_bus)
++DeviceState *pc_vga_init(Object *parent, ISABus *isa_bus, PCIBus *pci_bus)
  {
-     hwaddr base = sbsa_ref_memmap[uart].base;
-     int irq = sbsa_ref_irqmap[uart];
--    DeviceState *dev = qdev_new_orphan(TYPE_PL011);
-+    DeviceState *dev = qdev_new(OBJECT(sms), "uart[*]", TYPE_PL011);
-     SysBusDevice *s = SYS_BUS_DEVICE(dev);
+     DeviceState *dev = NULL;
  
-     qdev_prop_set_chr(dev, "chardev", chr);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
-     memory_region_add_subregion(mem, base,
-                                 sysbus_mmio_get_region(s, 0));
-     sysbus_connect_irq(s, 0, qdev_get_gpio_in(sms->gic, irq));
+     if (pci_bus) {
+-        PCIDevice *pcidev = pci_vga_init(pci_bus);
++        PCIDevice *pcidev = pci_vga_init(parent, pci_bus);
+         dev = pcidev ? &pcidev->qdev : NULL;
+     } else if (isa_bus) {
+-        ISADevice *isadev = isa_vga_init(isa_bus);
++        ISADevice *isadev = isa_vga_init(parent, isa_bus);
+         dev = isadev ? DEVICE(isadev) : NULL;
+     }
+ 
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 8ae2108e73..c9e6c61734 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -290,7 +290,7 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+         x86_register_ferr_irq(x86ms->gsi[13]);
+     }
+ 
+-    pc_vga_init(isa_bus, pcms->pcibus);
++    pc_vga_init(OBJECT(machine), isa_bus, pcms->pcibus);
+ 
+     /* init basic PC hardware */
+     pc_basic_device_init(pcms, isa_bus, x86ms->gsi, x86ms->rtc,
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 1a65811fae..62625abed8 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -325,7 +325,7 @@ static void pc_q35_init(MachineState *machine)
+     }
+ 
+     /* the rest devices to which pci devfn is automatically assigned */
+-    pc_vga_init(isa_bus, pcms->pcibus);
++    pc_vga_init(OBJECT(machine), isa_bus, pcms->pcibus);
+     pc_nic_init(pcmc, isa_bus, pcms->pcibus);
+ 
+     if (machine->nvdimms_state->is_enabled) {
+diff --git a/hw/isa/isa-bus.c b/hw/isa/isa-bus.c
+index c15cf53469..fb20c43869 100644
+--- a/hw/isa/isa-bus.c
++++ b/hw/isa/isa-bus.c
+@@ -200,17 +200,17 @@ ISABus *isa_bus_from_device(ISADevice *dev)
+     return ISA_BUS(qdev_get_parent_bus(DEVICE(dev)));
  }
  
--static void create_rtc(const SBSAMachineState *sms)
-+static void create_rtc(SBSAMachineState *sms)
+-ISADevice *isa_vga_init(ISABus *bus)
++ISADevice *isa_vga_init(Object *parent, ISABus *bus)
  {
-     hwaddr base = sbsa_ref_memmap[SBSA_RTC].base;
-     int irq = sbsa_ref_irqmap[SBSA_RTC];
- 
--    sysbus_create_simple_orphan("pl031", base, qdev_get_gpio_in(sms->gic, irq));
-+    sysbus_create_simple(OBJECT(sms), "rtc", "pl031", base,
-+                         qdev_get_gpio_in(sms->gic, irq));
+     vga_interface_created = true;
+     switch (vga_interface_type) {
+     case VGA_CIRRUS:
+-        return isa_create_simple_orphan(bus, "isa-cirrus-vga");
++        return isa_create_simple(parent, "vga", bus, "isa-cirrus-vga");
+     case VGA_QXL:
+         error_report("%s: qxl: no PCI bus", __func__);
+         return NULL;
+     case VGA_STD:
+-        return isa_create_simple_orphan(bus, "isa-vga");
++        return isa_create_simple(parent, "vga", bus, "isa-vga");
+     case VGA_VMWARE:
+         error_report("%s: vmware_vga: no PCI bus", __func__);
+         return NULL;
+diff --git a/hw/mips/fuloong2e.c b/hw/mips/fuloong2e.c
+index 88d2901829..477ad99c87 100644
+--- a/hw/mips/fuloong2e.c
++++ b/hw/mips/fuloong2e.c
+@@ -201,10 +201,10 @@ static void main_cpu_reset(void *opaque)
  }
  
--static void create_wdt(const SBSAMachineState *sms)
-+static void create_wdt(SBSAMachineState *sms)
+ /* Network support */
+-static void network_init(PCIBus *pci_bus)
++static void network_init(Object *parent, PCIBus *pci_bus)
  {
-     hwaddr rbase = sbsa_ref_memmap[SBSA_GWDT_REFRESH].base;
-     hwaddr cbase = sbsa_ref_memmap[SBSA_GWDT_CONTROL].base;
--    DeviceState *dev = qdev_new_orphan(TYPE_WDT_SBSA);
-+    DeviceState *dev = qdev_new(OBJECT(sms), "wdt", TYPE_WDT_SBSA);
-     SysBusDevice *s = SYS_BUS_DEVICE(dev);
-     int irq = sbsa_ref_irqmap[SBSA_GWDT_WS0];
+     /* The Fuloong board has a RTL8139 card using PCI SLOT 7 */
+-    pci_init_nic_in_slot(pci_bus, "rtl8139", NULL, "07");
++    pci_init_nic_in_slot(parent, pci_bus, "rtl8139", NULL, "07");
+     pci_init_nic_devices(pci_bus, "rtl8139");
+ }
  
-     qdev_prop_set_uint64(dev, "clock-frequency", SBSA_GTIMER_HZ);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
-     sysbus_mmio_map(s, 0, rbase);
-     sysbus_mmio_map(s, 1, cbase);
-     sysbus_connect_irq(s, 0, qdev_get_gpio_in(sms->gic, irq));
-@@ -566,23 +566,23 @@ static Notifier sbsa_ref_powerdown_notifier = {
-     .notify = sbsa_ref_powerdown_req
- };
+@@ -326,7 +326,7 @@ static void mips_fuloong2e_init(MachineState *machine)
+     smbus_eeprom_init_one(OBJECT(machine), smbus, 0x50, spd_data);
  
--static void create_gpio(const SBSAMachineState *sms)
-+static void create_gpio(SBSAMachineState *sms)
+     /* Network card: RTL8139D */
+-    network_init(pci_bus);
++    network_init(OBJECT(machine), pci_bus);
+ }
+ 
+ static void mips_fuloong2e_machine_init(MachineClass *mc)
+diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
+index 9ab1edceb2..99d2016ef1 100644
+--- a/hw/mips/loongson3_virt.c
++++ b/hw/mips/loongson3_virt.c
+@@ -460,7 +460,7 @@ static inline void loongson3_virt_devices_init(MachineState *machine,
+     }
+     msi_nonbroken = true;
+ 
+-    pci_vga_init(pci_bus);
++    pci_vga_init(OBJECT(machine), pci_bus);
+ 
+     if (defaults_enabled() && object_class_by_name("pci-ohci")) {
+         USBBus *usb_bus;
+diff --git a/hw/mips/malta.c b/hw/mips/malta.c
+index ebd1456657..e8c130d5bb 100644
+--- a/hw/mips/malta.c
++++ b/hw/mips/malta.c
+@@ -602,10 +602,10 @@ static MaltaFPGAState *malta_fpga_init(Object *parent, MemoryRegion *address_spa
+ }
+ 
+ /* Network support */
+-static void network_init(PCIBus *pci_bus)
++static void network_init(Object *parent, PCIBus *pci_bus)
  {
-     DeviceState *pl061_dev;
-     hwaddr base = sbsa_ref_memmap[SBSA_GPIO].base;
-     int irq = sbsa_ref_irqmap[SBSA_GPIO];
- 
--    pl061_dev = sysbus_create_simple_orphan("pl061", base,
-+    pl061_dev = sysbus_create_simple(OBJECT(sms), "gpio", "pl061", base,
-                                      qdev_get_gpio_in(sms->gic, irq));
- 
--    gpio_key_dev = sysbus_create_simple_orphan("gpio-key", -1,
--                                        qdev_get_gpio_in(pl061_dev, 3));
-+    gpio_key_dev = sysbus_create_simple(OBJECT(sms), "gpio-key", "gpio-key",
-+                                        -1, qdev_get_gpio_in(pl061_dev, 3));
- 
-     /* connect powerdown request */
-     qemu_register_powerdown_notifier(&sbsa_ref_powerdown_notifier);
+     /* The malta board has a PCNet card using PCI SLOT 11 */
+-    pci_init_nic_in_slot(pci_bus, "pcnet", NULL, "0b");
++    pci_init_nic_in_slot(parent, pci_bus, "pcnet", NULL, "0b");
+     pci_init_nic_devices(pci_bus, "pcnet");
  }
  
--static void create_ahci(const SBSAMachineState *sms)
-+static void create_ahci(SBSAMachineState *sms)
+@@ -1259,10 +1259,10 @@ void mips_malta_init(MachineState *machine)
+                       TYPE_FDC37M81X_SUPERIO);
+ 
+     /* Network card */
+-    network_init(pci_bus);
++    network_init(OBJECT(machine), pci_bus);
+ 
+     /* Optional PCI video card */
+-    pci_vga_init(pci_bus);
++    pci_vga_init(OBJECT(machine), pci_bus);
+ }
+ 
+ static void mips_malta_instance_init(Object *obj)
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 61b9f2a230..ca5882ba59 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -2083,7 +2083,7 @@ void pci_init_nic_devices(PCIBus *bus, const char *default_model)
+                                 "virtio", "virtio-net-pci");
+ }
+ 
+-bool pci_init_nic_in_slot(PCIBus *rootbus, const char *model,
++bool pci_init_nic_in_slot(Object *parent, PCIBus *rootbus, const char *model,
+                           const char *alias, const char *devaddr)
  {
-     hwaddr base = sbsa_ref_memmap[SBSA_AHCI].base;
-     int irq = sbsa_ref_irqmap[SBSA_AHCI];
-@@ -590,9 +590,9 @@ static void create_ahci(const SBSAMachineState *sms)
-     DriveInfo *hd[NUM_SATA_PORTS];
-     SysbusAHCIState *sysahci;
+     NICInfo *nd = qemu_find_nic_info(model, true, alias);
+@@ -2118,26 +2118,26 @@ bool pci_init_nic_in_slot(PCIBus *rootbus, const char *model,
+         exit(1);
+     }
  
--    dev = qdev_new_orphan("sysbus-ahci");
-+    dev = qdev_new(OBJECT(sms), "ahci", "sysbus-ahci");
-     qdev_prop_set_uint32(dev, "num-ports", NUM_SATA_PORTS);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
-     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
-     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, qdev_get_gpio_in(sms->gic, irq));
- 
-@@ -601,19 +601,19 @@ static void create_ahci(const SBSAMachineState *sms)
-     ahci_ide_create_devs(&sysahci->ahci, hd);
+-    pci_dev = pci_new_orphan(devfn, model);
++    pci_dev = pci_new(parent, "nic[*]", devfn, model);
+     qdev_set_nic_properties(&pci_dev->qdev, nd);
+-    pci_realize_and_unref(pci_dev, bus, &error_fatal);
++    qdev_realize(DEVICE(pci_dev), BUS(bus), &error_fatal);
+     return true;
  }
  
--static void create_xhci(const SBSAMachineState *sms)
-+static void create_xhci(SBSAMachineState *sms)
+-PCIDevice *pci_vga_init(PCIBus *bus)
++PCIDevice *pci_vga_init(Object *parent, PCIBus *bus)
  {
-     hwaddr base = sbsa_ref_memmap[SBSA_XHCI].base;
-     int irq = sbsa_ref_irqmap[SBSA_XHCI];
--    DeviceState *dev = qdev_new_orphan(TYPE_XHCI_SYSBUS);
-+    DeviceState *dev = qdev_new(OBJECT(sms), "xhci", TYPE_XHCI_SYSBUS);
-     qdev_prop_set_uint32(dev, "slots", XHCI_MAXSLOTS);
+     vga_interface_created = true;
+     switch (vga_interface_type) {
+     case VGA_CIRRUS:
+-        return pci_create_simple_orphan(bus, -1, "cirrus-vga");
++        return pci_create_simple(parent, "vga", bus, -1, "cirrus-vga");
+     case VGA_QXL:
+-        return pci_create_simple_orphan(bus, -1, "qxl-vga");
++        return pci_create_simple(parent, "vga", bus, -1, "qxl-vga");
+     case VGA_STD:
+-        return pci_create_simple_orphan(bus, -1, "VGA");
++        return pci_create_simple(parent, "vga", bus, -1, "VGA");
+     case VGA_VMWARE:
+-        return pci_create_simple_orphan(bus, -1, "vmware-svga");
++        return pci_create_simple(parent, "vga", bus, -1, "vmware-svga");
+     case VGA_VIRTIO:
+-        return pci_create_simple_orphan(bus, -1, "virtio-vga");
++        return pci_create_simple(parent, "vga", bus, -1, "virtio-vga");
+     case VGA_NONE:
+     default: /* Other non-PCI types. Checking for unsupported types is already
+                 done in vl.c. */
+diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
+index faf76f12be..60aed15a6e 100644
+--- a/hw/ppc/amigaone.c
++++ b/hw/ppc/amigaone.c
+@@ -370,7 +370,7 @@ static void amigaone_init(MachineState *machine)
+                                                              "pirq", i));
+     }
+     pci_ide_create_devs(PCI_DEVICE(object_resolve_path_component(via, "ide")));
+-    pci_vga_init(pci_bus);
++    pci_vga_init(OBJECT(machine), pci_bus);
  
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
-     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
-     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, qdev_get_gpio_in(sms->gic, irq));
+     if (!machine->kernel_filename) {
+         return;
+diff --git a/hw/ppc/mac_newworld.c b/hw/ppc/mac_newworld.c
+index e9ee44a2f1..a6af53e21a 100644
+--- a/hw/ppc/mac_newworld.c
++++ b/hw/ppc/mac_newworld.c
+@@ -435,7 +435,7 @@ static void ppc_core99_init(MachineState *machine)
+         }
+     }
+ 
+-    pci_vga_init(pci_bus);
++    pci_vga_init(OBJECT(machine), pci_bus);
+ 
+     if (!graphic_width) {
+         graphic_width = 800;
+diff --git a/hw/ppc/mac_oldworld.c b/hw/ppc/mac_oldworld.c
+index 6ef8207f96..f9b62a518a 100644
+--- a/hw/ppc/mac_oldworld.c
++++ b/hw/ppc/mac_oldworld.c
+@@ -267,7 +267,7 @@ static void ppc_heathrow_init(MachineState *machine)
+         }
+     }
+ 
+-    pci_vga_init(pci_bus);
++    pci_vga_init(OBJECT(machine), pci_bus);
+ 
+     pci_init_nic_devices(pci_bus, mc->default_nic);
+ 
+diff --git a/hw/ppc/pegasos.c b/hw/ppc/pegasos.c
+index 6ce1e3f174..4917d8137a 100644
+--- a/hw/ppc/pegasos.c
++++ b/hw/ppc/pegasos.c
+@@ -267,7 +267,7 @@ static void pegasos_init(MachineState *machine)
+     smbus_eeprom_init_one(OBJECT(machine), i2c_bus, 0x57, spd_data);
+ 
+     /* other PC hardware */
+-    pci_vga_init(pci_bus);
++    pci_vga_init(OBJECT(machine), pci_bus);
+ 
+     /* pci interrupt routing */
+     switch (pm->type) {
+diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
+index ff85a4e64b..52f94b206a 100644
+--- a/hw/ppc/prep.c
++++ b/hw/ppc/prep.c
+@@ -357,10 +357,10 @@ static void ibm_40p_init(MachineState *machine)
+         qdev_connect_gpio_out(dev, 0, qdev_get_gpio_in(i82378_dev, 13));
+ 
+         /* XXX: s3-trio at PCI_DEVFN(2, 0) */
+-        pci_vga_init(pci_bus);
++        pci_vga_init(OBJECT(machine), pci_bus);
+ 
+         /* First PCNET device at PCI_DEVFN(3, 0) */
+-        pci_init_nic_in_slot(pci_bus, mc->default_nic, NULL, "3");
++        pci_init_nic_in_slot(OBJECT(machine), pci_bus, mc->default_nic, NULL, "3");
+         pci_init_nic_devices(pci_bus, mc->default_nic);
+     }
+ 
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index fbf6c59516..9b6b5e7257 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -1909,7 +1909,7 @@ static void spapr_rtc_create(SpaprMachineState *spapr)
  }
  
--static void create_smmu(const SBSAMachineState *sms, PCIBus *bus,
-+static void create_smmu(SBSAMachineState *sms, PCIBus *bus,
-                         MemoryRegion *sysmem,
-                         MemoryRegion *secure_sysmem)
+ /* Returns whether we want to use VGA or not */
+-static bool spapr_vga_init(PCIBus *pci_bus, Error **errp)
++static bool spapr_vga_init(Object *parent, PCIBus *pci_bus, Error **errp)
  {
-@@ -622,7 +622,7 @@ static void create_smmu(const SBSAMachineState *sms, PCIBus *bus,
-     DeviceState *dev;
-     int i;
+     vga_interface_created = true;
+     switch (vga_interface_type) {
+@@ -1920,7 +1920,7 @@ static bool spapr_vga_init(PCIBus *pci_bus, Error **errp)
+     case VGA_STD:
+     case VGA_VIRTIO:
+     case VGA_CIRRUS:
+-        return pci_vga_init(pci_bus) != NULL;
++        return pci_vga_init(parent, pci_bus) != NULL;
+     default:
+         error_setg(errp,
+                    "Unsupported VGA mode, only -vga std or -vga virtio is supported");
+@@ -3066,7 +3066,7 @@ static void spapr_machine_init(MachineState *machine)
+     }
  
--    dev = qdev_new_orphan(TYPE_ARM_SMMUV3);
-+    dev = qdev_new(OBJECT(sms), "smmuv3", TYPE_ARM_SMMUV3);
+     /* Graphics */
+-    has_vga = spapr_vga_init(phb->bus, &error_fatal);
++    has_vga = spapr_vga_init(OBJECT(machine), phb->bus, &error_fatal);
+     if (has_vga) {
+         spapr->want_stdout_path = !machine->enable_graphics;
+         machine->usb |= defaults_enabled() && !machine->usb_disabled;
+diff --git a/hw/riscv/boston-aia.c b/hw/riscv/boston-aia.c
+index 3b0eba00a7..5a9ec28068 100644
+--- a/hw/riscv/boston-aia.c
++++ b/hw/riscv/boston-aia.c
+@@ -428,7 +428,8 @@ static void boston_mach_init(MachineState *machine)
+     ahci_ide_create_devs(&ich9->ahci, hd);
  
-     object_property_set_str(OBJECT(dev), "stage", "nested", &error_abort);
-     object_property_set_link(OBJECT(dev), "primary-bus", OBJECT(bus),
-@@ -631,7 +631,7 @@ static void create_smmu(const SBSAMachineState *sms, PCIBus *bus,
-                              &error_abort);
-     object_property_set_link(OBJECT(dev), "secure-memory", OBJECT(secure_sysmem),
-                              &error_abort);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
-     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
-     for (i = 0; i < NUM_SMMU_IRQS; i++) {
-         sysbus_connect_irq(SYS_BUS_DEVICE(dev), i,
-@@ -658,8 +658,8 @@ static void create_pcie(SBSAMachineState *sms,
-     PCIHostState *pci;
-     int i;
+     /* Create e1000e using slot 0 func 1 */
+-    pci_init_nic_in_slot(&PCI_BRIDGE(&pcie2->root)->sec_bus, "e1000e", NULL,
++    pci_init_nic_in_slot(OBJECT(machine), &PCI_BRIDGE(&pcie2->root)->sec_bus,
++                         "e1000e", NULL,
+                          "00.1");
+     pci_init_nic_devices(&PCI_BRIDGE(&pcie2->root)->sec_bus, "e1000e");
  
--    dev = qdev_new_orphan(TYPE_GPEX_HOST);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    dev = qdev_new(OBJECT(sms), "pcie", TYPE_GPEX_HOST);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+diff --git a/hw/sh4/r2d.c b/hw/sh4/r2d.c
+index c03df91aca..6154aed2c4 100644
+--- a/hw/sh4/r2d.c
++++ b/hw/sh4/r2d.c
+@@ -315,7 +315,7 @@ static void r2d_init(MachineState *machine)
+                           0x555, 0x2aa, 0);
  
-     /* Map ECAM space */
-     ecam_alias = g_new0(MemoryRegion, 1);
-@@ -695,7 +695,7 @@ static void create_pcie(SBSAMachineState *sms,
+     /* NIC: rtl8139 on-board, and 2 slots. */
+-    pci_init_nic_in_slot(pci_bus, mc->default_nic, NULL, "2");
++    pci_init_nic_in_slot(OBJECT(machine), pci_bus, mc->default_nic, NULL, "2");
+     pci_init_nic_devices(pci_bus, mc->default_nic);
  
-     pci_init_nic_devices(pci->bus, mc->default_nic);
+     /* USB keyboard */
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index dbaf61bcf1..a059409243 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -183,7 +183,7 @@ void pc_memory_init(PCMachineState *pcms,
+                     MemoryRegion *rom_memory,
+                     uint64_t pci_hole64_size);
+ uint64_t pc_pci_hole64_start(void);
+-DeviceState *pc_vga_init(ISABus *isa_bus, PCIBus *pci_bus);
++DeviceState *pc_vga_init(Object *parent, ISABus *isa_bus, PCIBus *pci_bus);
+ void pc_basic_device_init(struct PCMachineState *pcms,
+                           ISABus *isa_bus, qemu_irq *gsi,
+                           ISADevice *rtc_state,
+diff --git a/include/hw/isa/isa.h b/include/hw/isa/isa.h
+index af8e07c253..9e35d88b1e 100644
+--- a/include/hw/isa/isa.h
++++ b/include/hw/isa/isa.h
+@@ -89,7 +89,7 @@ ISADevice *isa_try_new_orphan(const char *name);
+ bool isa_realize_and_unref(ISADevice *dev, ISABus *bus, Error **errp);
+ ISADevice *isa_create_simple_orphan(ISABus *bus, const char *name);
  
--    pci_create_simple_orphan(pci->bus, -1, "bochs-display");
-+    pci_create_simple(OBJECT(sms), "bochs-display", pci->bus, -1, "bochs-display");
+-ISADevice *isa_vga_init(ISABus *bus);
++ISADevice *isa_vga_init(Object *parent, ISABus *bus);
  
-     create_smmu(sms, pci->bus, sysmem, secure_sysmem);
- }
-@@ -709,12 +709,14 @@ static void *sbsa_ref_dtb(const struct arm_boot_info *binfo, int *fdt_size)
-     return board->fdt;
- }
+ qemu_irq isa_get_irq(ISADevice *dev, unsigned isairq);
+ void isa_connect_gpio_out(ISADevice *isadev, int gpioirq, unsigned isairq);
+diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+index cbbb6a3756..9c6bcc0b96 100644
+--- a/include/hw/pci/pci.h
++++ b/include/hw/pci/pci.h
+@@ -337,9 +337,9 @@ void pci_device_set_intx_routing_notifier(PCIDevice *dev,
+ void pci_device_reset(PCIDevice *dev);
  
--static void create_secure_ec(MemoryRegion *mem)
-+static void create_secure_ec(Object *parent, MemoryRegion *mem)
+ void pci_init_nic_devices(PCIBus *bus, const char *default_model);
+-bool pci_init_nic_in_slot(PCIBus *rootbus, const char *default_model,
++bool pci_init_nic_in_slot(Object *parent, PCIBus *rootbus, const char *default_model,
+                           const char *alias, const char *devaddr);
+-PCIDevice *pci_vga_init(PCIBus *bus);
++PCIDevice *pci_vga_init(Object *parent, PCIBus *bus);
+ 
+ static inline PCIBus *pci_get_bus(const PCIDevice *dev)
  {
-     hwaddr base = sbsa_ref_memmap[SBSA_SECURE_EC].base;
--    DeviceState *dev = qdev_new_orphan("sbsa-ec");
-+    DeviceState *dev = qdev_new(parent, "sbsa-ec", "sbsa-ec");
-     SysBusDevice *s = SYS_BUS_DEVICE(dev);
- 
-+    sysbus_realize(s, &error_fatal);
-+
-     memory_region_add_subregion(mem, base,
-                                 sysbus_mmio_get_region(s, 0));
- }
-@@ -835,7 +837,7 @@ static void sbsa_ref_init(MachineState *machine)
- 
-     create_pcie(sms, sysmem, secure_sysmem);
- 
--    create_secure_ec(secure_sysmem);
-+    create_secure_ec(OBJECT(sms), secure_sysmem);
- 
-     sms->bootinfo.ram_size = machine->ram_size;
-     sms->bootinfo.board_id = -1;
 -- 
 2.47.1
 
