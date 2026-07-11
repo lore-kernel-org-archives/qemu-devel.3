@@ -4,48 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 152C7C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:06:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E2FFC44506
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:06:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifpw-0000LA-T5; Sat, 11 Jul 2026 18:06:17 -0400
+	id 1wifoa-0003aq-EM; Sat, 11 Jul 2026 18:04:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifpt-00007d-Vj; Sat, 11 Jul 2026 18:06:14 -0400
+ id 1wifoX-0003XS-KA; Sat, 11 Jul 2026 18:04:49 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifps-0000l6-5v; Sat, 11 Jul 2026 18:06:13 -0400
+ id 1wifoW-0000Ny-4N; Sat, 11 Jul 2026 18:04:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807181; bh=PIjGoZxGK9PyFlLzxsQlfXOKSZkQMgPlbyXy9RaZ+44=;
+ t=1783807181; bh=iHYQpyNPdzXsG1Hyh5gnLv5dtisLNiUhnurAc4Ozgf4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=O98fOe2DOVlSaYKfhWT87dq8L3epb9ZJGdQ2ZhlPCAKKqWzMJ7P5p6rHlSkYZhai+
- kCfTW0FPZA7JmgImvYPochafMPQJaHUJGIJsB1a4oSjjtXCSN5zHhkIYwNsEtk91Ml
- x/83+lYoM5CtqZpQpVqa/CSV3OrJ0oLSetPijXT0gCNm31v7y8zfrM/tUDLBgK3XNm
- BUfrLYtx2D7Po7Yj/OEirjQOgGkZZoFcH/gElsLldDysWp08WdtavavMwsAVEa8Gmz
- qWp8cQI92uDEq+5qFmfgjQCr+urn+oRSLyLo0Yce1EpG59GXUpoEX2XHVa8PTpoopr
- bXw0itZgntlqQ==
+ b=BoCDjQhe8Gab3YpeDs7i0Pk/wxSBGKfv3g55VyZ2GnQkIyi3CjGvdlXt7IkC6Cdef
+ LIVOUnCCBibC9Mjg8Iw7ZwYhZoFcuTAVYS1pAZlNZaGC/FiP+PlKRSx9Xv3X6gQ+r2
+ MD2HSkjZma9/V2u0QwRZ4vzEpt0KAEaKOKcahmZLTYg5tONPfGFAvueZCTSMVQTEFu
+ 4YF0xvk0FMtFVf7Mf1HU+wccsbEJghcyko74MjyXbhvpHTx3jSiDZGLI7Krpznur23
+ Ay9UJS2ppP+BPAcojS1MgL7Bl2bGvgQh8vfWfzTH1aQYr5dc5hr4Poaa4ShMRT2vpR
+ rP6J4e/xPn9hA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B121C1C0AD0;
+ by isrv.corpit.ru (Postfix) with ESMTP id 5E8781C0AC2;
  Sun, 12 Jul 2026 00:59:41 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6893D3EAF5B;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 15A103EAF4D;
  Sun, 12 Jul 2026 00:59:51 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id DEAFC1336D; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id BBECA13351; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Nutty Liu <nutty.liu@hotmail.com>, Chao Liu <chao.liu.zevorn@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 69/81] hw/riscv/riscv-iommu.c: fault when !PTE_U and
- no priv access
-Date: Sun, 12 Jul 2026 00:58:47 +0300
-Message-ID: <20260711215904.3757-69-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Nathan Chen <nathanc@nvidia.com>,
+ Shameer Kolothum <skolothumtho@nvidia.com>,
+ Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 55/81] hw/arm/smmuv3: Update ATC invalidation check
+Date: Sun, 12 Jul 2026 00:58:33 +0300
+Message-ID: <20260711215904.3757-55-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
@@ -74,67 +72,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Nathan Chen <nathanc@nvidia.com>
 
-All IOMMU accesses are assumed to be user mode unless told otherwise,
-i.e. we have a process_id.  In case we have a non-user mode leaf PTE
-(PTE_U isn't set) and we are running in user mode, we need to throw a
-fault.
+Use smmuv3_ats_enabled() to determine whether ATS is enabled for the
+guest when handling an ATC invalidation command, as setting the ATS
+property value to 'auto' will resolve to ATS being detected as
+enabled in the ATC invalidation check otherwise.
 
-This also reflects on qos-riscv-iommu tests: the tests always run in
-user mode so our PTEs must have PTE_U (bit 0x10) set.
-
-Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3553
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Message-ID: <20260701121111.537654-3-daniel.barboza@oss.qualcomm.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit b795ea0ba4715182805994db0cdabd2650a553a7)
+Fixes: f7f5013a55a3 ("hw/arm/smmuv3-accel: Add support for ATS")
+Reported-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Signed-off-by: Nathan Chen <nathanc@nvidia.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Message-id: 20260608174900.2227340-2-nathanc@nvidia.com
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 8addbdb793b783228ab22867ac5e2d59ea6662a7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 8e86e9150cc..021176e3df8 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -288,6 +288,7 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-         G_STAGE = 1,
-     } pass;
-     MemTxResult ret;
-+    bool pv = !!ctx->process_id;
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index 7fead1c3cff..4e4b79c0f1c 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -1528,7 +1528,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp)
+         {
+             SMMUDevice *sdev = smmu_find_sdev(bs, CMD_SID(&cmd));
  
-     satp = get_field(ctx->satp, RISCV_IOMMU_ATP_MODE_FIELD);
-     gatp = get_field(ctx->gatp, RISCV_IOMMU_ATP_MODE_FIELD);
-@@ -461,6 +462,13 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-             break;                /* Invalid PTE */
-         } else if (pte & PTE_RESERVED(false)) {
-             break;                /* Reserved PTE bits set */
-+        } else if (!(pte & PTE_U) && !pv) {
-+            /*
-+             * All accesses are assumed to be User mode unless
-+             * process_id is valid (pv).  In case we have a
-+             * non-user mode PTE and !pv we need to fault.
-+             */
-+            break;
-         } else if (!(pte & (PTE_R | PTE_W | PTE_X))) {
-             base = PPN_PHYS(ppn); /* Inner PTE, continue walking */
-         } else if ((pte & (PTE_R | PTE_W | PTE_X)) == PTE_W) {
-diff --git a/tests/qtest/libqos/qos-riscv-iommu.h b/tests/qtest/libqos/qos-riscv-iommu.h
-index 90e69a5d731..c218e9d66db 100644
---- a/tests/qtest/libqos/qos-riscv-iommu.h
-+++ b/tests/qtest/libqos/qos-riscv-iommu.h
-@@ -54,8 +54,8 @@
-  * PTE masks for RISC-V IOMMU page tables.
-  * Values match PTE_V, PTE_R, PTE_W, PTE_A, PTE_D in target/riscv/cpu_bits.h
-  */
--#define QRIOMMU_NON_LEAF_PTE_MASK   0x001  /* PTE_V */
--#define QRIOMMU_LEAF_PTE_RW_MASK    0x0c7  /* V|R|W|A|D */
-+#define QRIOMMU_NON_LEAF_PTE_MASK   0x011  /* PTE_V | PTE_U */
-+#define QRIOMMU_LEAF_PTE_RW_MASK    0x0d7  /* V | R | W | A | D | PTE_U */
- #define QRIOMMU_PTE_PPN_MASK        0x003ffffffffffc00ull
- 
- /* Address-space base offset for test tables */
+-            if (!sdev || !s->ats) {
++            if (!sdev || !smmuv3_ats_enabled(s)) {
+                 trace_smmuv3_unhandled_cmd(type);
+                 break;
+             }
 -- 
 2.47.3
 
