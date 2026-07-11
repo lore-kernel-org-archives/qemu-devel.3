@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59647C44506
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:08:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73D5EC43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:08:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifqx-00075j-EC; Sat, 11 Jul 2026 18:07:19 -0400
+	id 1wifrF-0000Ym-Kt; Sat, 11 Jul 2026 18:07:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifqp-0006n2-E7; Sat, 11 Jul 2026 18:07:11 -0400
+ id 1wifrE-0000LF-1b; Sat, 11 Jul 2026 18:07:36 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifqn-000126-GK; Sat, 11 Jul 2026 18:07:11 -0400
+ id 1wifrC-00013M-18; Sat, 11 Jul 2026 18:07:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807181; bh=IIyXBgs7Q7EyMmBK59bS0SPSGlYTJC1VKc2b5fdm0AI=;
+ t=1783807182; bh=tP/CrzL07NHSuDze/u6Nu7yKAkynHCESZWIV2L/jryM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=DVANpb/PFByeaC1VptCQ/2CSMAyGZBsiHtdgXXmdGEg0Yp/p51r2vkjp3GLVv9fEK
- 54E1+RZQ4ugjruGnRH0r51LjYWaahPAw9TDT/3mizTHu9M3oCb7RnXtVj/V+6jKmj+
- x2Mx1xOvJI80MVZR5OpJSYxouxlOkMt58TqExdAuO+us/ghPV5W6LZx2KiPmQ1JjSW
- QGgDuPLo6gWlVQu+oJAncnol4udLD4kEJ0CwTBeuILVgyEpsRUiNt/pjvLE8k1clmc
- eAASH5nnHkURLjyezZo3fNMpibYDrnUSBzo89Q+BqT6g12mKDMZQR4xKEd/Nk1tQX9
- 4mvgHEbDJSCVA==
+ b=LFLdjyxWXXnbHjagdGqz0JuhoLssgN8CaSDaSFCsib0Jenmd2O/KEfAXJU/A0Jxp9
+ GnBg6phPYqz+SZw4tFN+ZLSqhk8sZdvOUYd+RbvxgP7oTatqCjH0msRg2dRYPAQnIB
+ xZkAj02aUaMOi5T9VuA73vZhKsWeAtJA4JFeVQnJ6rKN9tuqI1uFHuSv6YI35tNF5m
+ Obp/okPs5MiD5nMwntklAf8RyxV5Wn7OsIMyccGPsw+evRslPHdfCfEIKX79GtfmQ4
+ Llz8SdGQD7PsqWKrj/2fje4so2DXB1WwXlk8RlGup+eoaP+3iTXYxrmaUId180EP24
+ ewmWAvtbQRl+A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E6D8D1C0AD9;
- Sun, 12 Jul 2026 00:59:41 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 039951C0ADC;
+ Sun, 12 Jul 2026 00:59:42 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9DFD43EAF64;
+ by tsrv.corpit.ru (Postfix) with ESMTP id AF0CF3EAF67;
  Sun, 12 Jul 2026 00:59:51 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 00E931337F; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id 07F3713385; Sun, 12 Jul 2026 00:59:51 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Tao Tang <tangtao1634@phytium.com.cn>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 78/81] hw/pci/pcie_doe: Check mailbox length for
- overflows
-Date: Sun, 12 Jul 2026 00:58:56 +0300
-Message-ID: <20260711215904.3757-78-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 81/81] tests: update SPCR loongarch64 and riscv64 test
+ data
+Date: Sun, 12 Jul 2026 00:58:59 +0300
+Message-ID: <20260711215904.3757-81-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,80 +73,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair.francis@wdc.com>
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 
-It was possible that a guest could overflow the `doe_cap->write_mbox`
-buffer by writing more then PCI_DOE_DW_SIZE_MAX dwords.
-`doe_cap->write_mbox_len` would continue to increment and there were no
-bounds checks on the length when offsetting into doe_cap->write_mbox.
+On LoongArch and RISC-V the SPCR test data contained:
 
-This patch adds a check and reports a guest error if we would overflow.
+    Terminal Type : 00
+    Language : 03
 
-On an overflow we also silenty discard the entire object as instructed
-to do in the PCIe spec when the length specified in the header
-(up to PCI_DOE_DW_SIZE_MAX dwords) doesn't match the length of the
-object.
+The corrected values are:
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3679
+    Terminal Type : 03
+    Language : 00
+
+See the specification of the table in
+https://learn.microsoft.com/en-us/windows-hardware/drivers/bringup/serial-port-console-redirection-table
+
+The ACPI table data was rebuilt with
+tests/data/acpi/rebuild-expected-aml.sh.
+
+Remove SPCR expections from tests/qtest/bios-tables-test-allowed-diff.h.
+
+Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260705063147.199732-4-heinrich.schuchardt@canonical.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Tao Tang <tangtao1634@phytium.com.cn>
-Message-ID: <20260707020750.788960-1-alistair.francis@wdc.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit c7e61854544be3ebcc001a33d41807947866a739)
+(cherry picked from commit ec7d32428757d5813935cbe099449f6201980d80)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/pci/pcie_doe.c b/hw/pci/pcie_doe.c
-index 2210f869681..1bc2b457816 100644
---- a/hw/pci/pcie_doe.c
-+++ b/hw/pci/pcie_doe.c
-@@ -78,14 +78,21 @@ static bool pcie_doe_discovery(DOECap *doe_cap)
-     return true;
- }
- 
-+static void pcie_doe_reset_write_mbox(DOECap *st)
-+{
-+    st->write_mbox_len = 0;
-+
-+    memset(st->write_mbox, 0, PCI_DOE_DW_SIZE_MAX * DWORD_BYTE);
-+}
-+
- static void pcie_doe_reset_mbox(DOECap *st)
- {
-     st->read_mbox_idx = 0;
-     st->read_mbox_len = 0;
--    st->write_mbox_len = 0;
- 
-     memset(st->read_mbox, 0, PCI_DOE_DW_SIZE_MAX * DWORD_BYTE);
--    memset(st->write_mbox, 0, PCI_DOE_DW_SIZE_MAX * DWORD_BYTE);
-+
-+    pcie_doe_reset_write_mbox(st);
- }
- 
- void pcie_doe_init(PCIDevice *dev, DOECap *doe_cap, uint16_t offset,
-@@ -356,8 +363,20 @@ void pcie_doe_write_config(DOECap *doe_cap,
-         if (size != DWORD_BYTE) {
-             return;
-         }
--        doe_cap->write_mbox[doe_cap->write_mbox_len] = val;
--        doe_cap->write_mbox_len++;
-+        if (doe_cap->write_mbox_len < PCI_DOE_DW_SIZE_MAX) {
-+            doe_cap->write_mbox[doe_cap->write_mbox_len] = val;
-+            doe_cap->write_mbox_len++;
-+        } else {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "Mailbox write length (%d) overflow\n",
-+                          doe_cap->write_mbox_len);
-+            /*
-+             * Too much data has been written, it can't
-+             * "match the Length indicated in DOE Data Object Header 2"
-+             * so we drop the entire object.
-+             */
-+            pcie_doe_reset_write_mbox(doe_cap);
-+        }
-         break;
-     case PCI_EXP_DOE_CAP:
-         /* fallthrough */
+diff --git a/tests/data/acpi/loongarch64/virt/SPCR b/tests/data/acpi/loongarch64/virt/SPCR
+index 3cc9bbcfb80..7bb819cd0d2 100644
+Binary files a/tests/data/acpi/loongarch64/virt/SPCR and b/tests/data/acpi/loongarch64/virt/SPCR differ
+diff --git a/tests/data/acpi/riscv64/virt/SPCR b/tests/data/acpi/riscv64/virt/SPCR
+index 09617f8793a..59d2c8f7f21 100644
+Binary files a/tests/data/acpi/riscv64/virt/SPCR and b/tests/data/acpi/riscv64/virt/SPCR differ
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index 2c7086d9de1..dfb8523c8bf 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,3 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/loongarch64/virt/SPCR",
+-"tests/data/acpi/riscv64/virt/SPCR",
 -- 
 2.47.3
 
