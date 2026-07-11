@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 726E0C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:46:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02903C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:46:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigSl-0007Nn-Tz; Sat, 11 Jul 2026 18:46:23 -0400
+	id 1wigTG-0008Bq-Uf; Sat, 11 Jul 2026 18:46:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigSk-0007LD-2i; Sat, 11 Jul 2026 18:46:22 -0400
-Received: from pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([44.246.1.125])
+ id 1wigTF-0008B3-0B; Sat, 11 Jul 2026 18:46:53 -0400
+Received: from pdx-out-012.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([35.162.73.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigSi-0007Hp-0x; Sat, 11 Jul 2026 18:46:21 -0400
+ id 1wigTC-0007N8-BP; Sat, 11 Jul 2026 18:46:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783809980; x=1815345980;
+ t=1783810010; x=1815346010;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=DJ7wiGvOgW4gc9fKCfQnMYcFVdq/tDyb3nan26r8gls=;
- b=rgC1cUs1aEIO4oHXeJyRAiLLXhYSx5vSow9s9guBn0KD7TwvyXmhV1gN
- sC/hQGnOomJyvCaR8d++iBZbN1oEUhuLHVGdFRK2zzDCK2RKOC7DIYbvO
- B7C1JC3ESWwevY/80RuzLoO7lG3ttbY0VGIpAp/dK1jISysgnj8uW+p20
- LIB50tk7oRi/li/DYA8LtHbjtMdzRCiKJ3zxC487iFEYl+fAzDxLhQJZk
- lO6FQLOEtkm67BGd5H09p5ph9qjuM3UMslMtBAAzcPm+B4kKLhyaEFbS2
- cKaHY4YKTsfH4hEp7bvNNlxK115lMEmHwchouoRNmvhlCghu06rY60L4A w==;
-X-CSE-ConnectionGUID: el7eHBM/R3WGXSxn/yiagQ==
-X-CSE-MsgGUID: 2qqDFmA2Th2D4ub2tYuq4w==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23505558"
+ bh=meFsLf47H5P+7QoX1jJ2rNzaffdsteXUDRvG8BWlryM=;
+ b=gF8nPVo10cbk50q81vlv7h705yGfLC+S9Rag3flHCwdvDC5s2c/dlNG+
+ dYf1Vbh6gddBRCXqKIjwstL0Hq1/R/X+kEy5WyQCgmBRglT+5+eQAm9oB
+ l0Sku0NeIaa02fj4CMoo12Dz7Vg70w+QLArMdqmI2RV1YnikYYhRoyaX5
+ kjnH7P671uIxMDnfSM2tfeApRrIstqdBgLWzIJyLunrks95VmQpOGPrGy
+ I/HFUf95DCoalk334VF5t/Q9d7EPfDcFNt6F2LLA5BegnsDtyrIzMtkvS
+ t8tyTu7yMLaRsXWQZeehPsQh++YKHJQkUTB6lWVExYHidn41GQPaKX7E5 w==;
+X-CSE-ConnectionGUID: nqogrhn+R9yzWAPUXMxucg==
+X-CSE-MsgGUID: w4WGZkGoQDyXp/ZeTWooMw==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23293923"
 Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
  smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
- by internal-pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:46:16 +0000
-Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.51:12579]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.40.123:2525]
+ by internal-pdx-out-012.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:46:46 +0000
+Received: from EX19MTAUWC002.ant.amazon.com [205.251.233.51:24258]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.51.175:2525]
  with esmtp (Farcaster)
- id 2842525a-634b-4bb0-a76a-0d6edd1c4d44; Sat, 11 Jul 2026 22:46:16 +0000 (UTC)
-X-Farcaster-Flow-ID: 2842525a-634b-4bb0-a76a-0d6edd1c4d44
+ id 736a152e-b649-4d60-a25a-67d8e3159c80; Sat, 11 Jul 2026 22:46:46 +0000 (UTC)
+X-Farcaster-Flow-ID: 736a152e-b649-4d60-a25a-67d8e3159c80
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
+ EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:46:15 +0000
+ Sat, 11 Jul 2026 22:46:46 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:46:07 +0000
+ Sat, 11 Jul 2026 22:46:37 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,9 +91,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 035/134] hw/dma: Give onboard devices a QOM parent
-Date: Sat, 11 Jul 2026 22:35:28 +0000
-Message-ID: <20260711223707.42139-36-graf@amazon.com>
+Subject: [RFC PATCH 036/134] hw/misc: Give onboard devices a QOM parent
+Date: Sat, 11 Jul 2026 22:35:29 +0000
+Message-ID: <20260711223707.42139-37-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -101,18 +101,18 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D036UWB002.ant.amazon.com (10.13.139.139) To
+X-ClientProxiedBy: EX19D031UWC001.ant.amazon.com (10.13.139.241) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=44.246.1.125;
+Received-SPF: pass client-ip=35.162.73.231;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-012.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
 X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
  HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
+ SPF_HELO_NONE=0.001, T_FILL_THIS_FORM_SHORT=0.01, T_SPF_PERMERROR=0.01,
  UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,7 +129,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the *_orphan() device-creation calls in hw/dma to the new
+Convert the *_orphan() device-creation calls in hw/misc to the new
 parented API introduced earlier in this series, so every onboard
 device gets a stable path in the composition tree instead of landing
 in /machine/unattached with an unstable device[N] name.
@@ -140,97 +140,268 @@ composite children.  Names follow existing QOM conventions.
 
 Per-site rationale (reviewers: dispute the modeling here):
 
-hw/dma/i8257.c:654 | isa_new | parent | "dma[*]" | helper already receives Object *parent; collapse existing add_child, keep name; drop _and_unref
-hw/dma/i8257.c:663 | isa_new | parent | "dma[*]" | helper already receives Object *parent; collapse existing add_child, keep name; drop _and_unref
-hw/dma/rc4030.c:750 | qdev_new | parent | "rc4030" | thread Object *parent from single caller mips_jazz_init(machine); update header + caller; drop _and_unref
+hw/misc/empty_slot.c:61 | qdev_new | parent | name | thread Object *parent as first arg; use existing name arg as child name; 7 callers updated (m68k next-cube, sparc sun4m, gt64120 realize)
+hw/misc/led.c:144 | qdev_new | parentobj | name | already receives parentobj; collapse existing object_property_add_child(); compute name before create
+hw/misc/sifive_e_prci.c:120 | qdev_new | parent | "prci" | thread Object *parent as first arg; single caller in sifive_e_soc_realize passes OBJECT(dev)
+hw/misc/sifive_test.c:100 | qdev_new | parent | "test" | thread Object *parent as first arg; 2 callers (riscv virt, or1k virt) pass machine-state
 
 Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/dma/i8257.c         | 10 ++++------
- hw/dma/rc4030.c        |  7 ++++---
- hw/mips/jazz.c         |  2 +-
- include/hw/mips/mips.h |  3 ++-
- 4 files changed, 11 insertions(+), 11 deletions(-)
+ hw/m68k/next-cube.c             |  6 +++---
+ hw/misc/empty_slot.c            |  7 ++++---
+ hw/misc/led.c                   | 15 ++++++++-------
+ hw/misc/sifive_e_prci.c         |  6 +++---
+ hw/misc/sifive_test.c           |  6 +++---
+ hw/or1k/virt.c                  |  2 +-
+ hw/pci-host/gt64120.c           |  2 +-
+ hw/riscv/sifive_e.c             |  2 +-
+ hw/riscv/virt.c                 |  2 +-
+ hw/sparc/sun4m.c                |  7 ++++---
+ include/hw/misc/empty_slot.h    |  3 ++-
+ include/hw/misc/sifive_e_prci.h |  2 +-
+ include/hw/misc/sifive_test.h   |  2 +-
+ 13 files changed, 33 insertions(+), 29 deletions(-)
 
-diff --git a/hw/dma/i8257.c b/hw/dma/i8257.c
-index d1ab17b80d..735d7ca9a7 100644
---- a/hw/dma/i8257.c
-+++ b/hw/dma/i8257.c
-@@ -651,23 +651,21 @@ void i8257_dma_init(Object *parent, ISABus *bus, bool high_page_enable)
-     ISADevice *isa1, *isa2;
-     DeviceState *d;
+diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
+index d97168d9f3..530dc1ab59 100644
+--- a/hw/m68k/next-cube.c
++++ b/hw/m68k/next-cube.c
+@@ -1292,9 +1292,9 @@ static void next_cube_init(MachineState *machine)
+     sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 1, 0x02106000);
  
--    isa1 = isa_new_orphan(TYPE_I8257);
--    object_property_add_child(parent, "dma[*]", OBJECT(isa1));
-+    isa1 = isa_new(parent, "dma[*]", TYPE_I8257);
-     d = DEVICE(isa1);
-     qdev_prop_set_int32(d, "base", 0x00);
-     qdev_prop_set_int32(d, "page-base", 0x80);
-     qdev_prop_set_int32(d, "pageh-base", high_page_enable ? 0x480 : -1);
-     qdev_prop_set_int32(d, "dshift", 0);
--    isa_realize_and_unref(isa1, bus, &error_fatal);
-+    qdev_realize(d, BUS(bus), &error_fatal);
+     /* unknown: Brightness control register? */
+-    empty_slot_init("next.unknown.0", 0x02110000, 0x10);
++    empty_slot_init(OBJECT(machine), "next.unknown.0", 0x02110000, 0x10);
+     /* unknown: Magneto-Optical drive controller? */
+-    empty_slot_init("next.unknown.1", 0x02112000, 0x10);
++    empty_slot_init(OBJECT(machine), "next.unknown.1", 0x02112000, 0x10);
  
--    isa2 = isa_new_orphan(TYPE_I8257);
--    object_property_add_child(parent, "dma[*]", OBJECT(isa2));
-+    isa2 = isa_new(parent, "dma[*]", TYPE_I8257);
-     d = DEVICE(isa2);
-     qdev_prop_set_int32(d, "base", 0xc0);
-     qdev_prop_set_int32(d, "page-base", 0x88);
-     qdev_prop_set_int32(d, "pageh-base", high_page_enable ? 0x488 : -1);
-     qdev_prop_set_int32(d, "dshift", 1);
--    isa_realize_and_unref(isa2, bus, &error_fatal);
-+    qdev_realize(d, BUS(bus), &error_fatal);
+     /* SCSI */
+     sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 2, 0x02114000);
+@@ -1304,7 +1304,7 @@ static void next_cube_init(MachineState *machine)
+     sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 4, 0x02118000);
  
-     isa_bus_dma(bus, ISADMA(isa1), ISADMA(isa2));
- }
-diff --git a/hw/dma/rc4030.c b/hw/dma/rc4030.c
-index ab8aaf7da4..800cdfb42d 100644
---- a/hw/dma/rc4030.c
-+++ b/hw/dma/rc4030.c
-@@ -743,12 +743,13 @@ static void rc4030_register_types(void)
+     /* unknown: Serial clock configuration register? */
+-    empty_slot_init("next.unknown.2", 0x02118004, 0x10);
++    empty_slot_init(OBJECT(machine), "next.unknown.2", 0x02118004, 0x10);
  
- type_init(rc4030_register_types)
+     /* Timer */
+     sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 5, 0x0211a000);
+diff --git a/hw/misc/empty_slot.c b/hw/misc/empty_slot.c
+index 182211fdcc..64764dfd92 100644
+--- a/hw/misc/empty_slot.c
++++ b/hw/misc/empty_slot.c
+@@ -52,16 +52,17 @@ static const MemoryRegionOps empty_slot_ops = {
+     .endianness = DEVICE_NATIVE_ENDIAN,
+ };
  
--DeviceState *rc4030_init(rc4030_dma **dmas, IOMMUMemoryRegion **dma_mr)
-+DeviceState *rc4030_init(Object *parent, rc4030_dma **dmas,
-+                         IOMMUMemoryRegion **dma_mr)
+-void empty_slot_init(const char *name, hwaddr addr, uint64_t slot_size)
++void empty_slot_init(Object *parent, const char *name, hwaddr addr,
++                     uint64_t slot_size)
  {
+     if (slot_size > 0) {
+         /* Only empty slots larger than 0 byte need handling. */
+         DeviceState *dev;
+ 
+-        dev = qdev_new_orphan(TYPE_EMPTY_SLOT);
++        dev = qdev_new(parent, name, TYPE_EMPTY_SLOT);
+ 
+         qdev_prop_set_uint64(dev, "size", slot_size);
+-        sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++        sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+ 
+         sysbus_mmio_map_overlap(SYS_BUS_DEVICE(dev), 0, addr, -10000);
+     }
+diff --git a/hw/misc/led.c b/hw/misc/led.c
+index 620284063b..bed85ec3c6 100644
+--- a/hw/misc/led.c
++++ b/hw/misc/led.c
+@@ -141,20 +141,21 @@ LEDState *led_create_simple(Object *parentobj,
+     g_autofree char *name = NULL;
      DeviceState *dev;
  
--    dev = qdev_new_orphan(TYPE_RC4030);
+-    dev = qdev_new_orphan(TYPE_LED);
+-    qdev_prop_set_bit(dev, "gpio-active-high",
+-                      gpio_polarity == GPIO_POLARITY_ACTIVE_HIGH);
+-    qdev_prop_set_string(dev, "color", led_color_name[color]);
+     if (!description) {
+         static unsigned undescribed_led_id;
+         name = g_strdup_printf("undescribed-led-#%u", undescribed_led_id++);
+     } else {
+-        qdev_prop_set_string(dev, "description", description);
+         name = g_ascii_strdown(description, -1);
+         name = g_strdelimit(name, " #", '-');
+     }
+-    object_property_add_child(parentobj, name, OBJECT(dev));
+-    qdev_realize_and_unref(dev, NULL, &error_fatal);
++    dev = qdev_new(parentobj, name, TYPE_LED);
++    qdev_prop_set_bit(dev, "gpio-active-high",
++                      gpio_polarity == GPIO_POLARITY_ACTIVE_HIGH);
++    qdev_prop_set_string(dev, "color", led_color_name[color]);
++    if (description) {
++        qdev_prop_set_string(dev, "description", description);
++    }
++    qdev_realize(dev, NULL, &error_fatal);
+ 
+     return LED(dev);
+ }
+diff --git a/hw/misc/sifive_e_prci.c b/hw/misc/sifive_e_prci.c
+index 7ac5db5933..a466d37735 100644
+--- a/hw/misc/sifive_e_prci.c
++++ b/hw/misc/sifive_e_prci.c
+@@ -115,10 +115,10 @@ type_init(sifive_e_prci_register_types)
+ /*
+  * Create PRCI device.
+  */
+-DeviceState *sifive_e_prci_create(hwaddr addr)
++DeviceState *sifive_e_prci_create(Object *parent, hwaddr addr)
+ {
+-    DeviceState *dev = qdev_new_orphan(TYPE_SIFIVE_E_PRCI);
 -    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    dev = qdev_new(parent, "rc4030", TYPE_RC4030);
++    DeviceState *dev = qdev_new(parent, "prci", TYPE_SIFIVE_E_PRCI);
 +    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, addr);
+     return dev;
+ }
+diff --git a/hw/misc/sifive_test.c b/hw/misc/sifive_test.c
+index f861858d9b..81ae00a110 100644
+--- a/hw/misc/sifive_test.c
++++ b/hw/misc/sifive_test.c
+@@ -95,10 +95,10 @@ type_init(sifive_test_register_types)
+ /*
+  * Create Test device.
+  */
+-DeviceState *sifive_test_create(hwaddr addr)
++DeviceState *sifive_test_create(Object *parent, hwaddr addr)
+ {
+-    DeviceState *dev = qdev_new_orphan(TYPE_SIFIVE_TEST);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    DeviceState *dev = qdev_new(parent, "test", TYPE_SIFIVE_TEST);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, addr);
+     return dev;
+ }
+diff --git a/hw/or1k/virt.c b/hw/or1k/virt.c
+index 7362433a02..276be32648 100644
+--- a/hw/or1k/virt.c
++++ b/hw/or1k/virt.c
+@@ -264,7 +264,7 @@ static void openrisc_virt_test_init(OR1KVirtState *state, hwaddr base,
+     char *nodename;
  
-     *dmas = rc4030_allocate_dmas(dev, 4);
-     *dma_mr = &RC4030(dev)->dma_mr;
-diff --git a/hw/mips/jazz.c b/hw/mips/jazz.c
-index 5e34a6582d..62f2350d36 100644
---- a/hw/mips/jazz.c
-+++ b/hw/mips/jazz.c
-@@ -261,7 +261,7 @@ static void mips_jazz_init(MachineState *machine,
-     cpu_mips_clock_init(cpu);
+     /* SiFive Test MMIO device */
+-    sifive_test_create(base);
++    sifive_test_create(OBJECT(state), base);
  
-     /* Chipset */
--    rc4030 = rc4030_init(&dmas, &rc4030_dma_mr);
-+    rc4030 = rc4030_init(OBJECT(machine), &dmas, &rc4030_dma_mr);
-     sysbus = SYS_BUS_DEVICE(rc4030);
-     sysbus_connect_irq(sysbus, 0, env->irq[6]);
-     sysbus_connect_irq(sysbus, 1, env->irq[3]);
-diff --git a/include/hw/mips/mips.h b/include/hw/mips/mips.h
-index cd0ccb4e5d..7fa32eab38 100644
---- a/include/hw/mips/mips.h
-+++ b/include/hw/mips/mips.h
-@@ -17,6 +17,7 @@ typedef struct rc4030DMAState *rc4030_dma;
- void rc4030_dma_read(void *dma, uint8_t *buf, int len);
- void rc4030_dma_write(void *dma, uint8_t *buf, int len);
+     /* SiFive Test MMIO Reset device FDT */
+     nodename = g_strdup_printf("/soc/test@%" HWADDR_PRIx, base);
+diff --git a/hw/pci-host/gt64120.c b/hw/pci-host/gt64120.c
+index 780c86cd9a..0c49e51ad0 100644
+--- a/hw/pci-host/gt64120.c
++++ b/hw/pci-host/gt64120.c
+@@ -1224,7 +1224,7 @@ static void gt64120_realize(DeviceState *dev, Error **errp)
+      * exception when accessing invalid memory. Create an empty slot to
+      * emulate this feature.
+      */
+-    empty_slot_init("GT64120", 0, 0x20000000);
++    empty_slot_init(OBJECT(dev), "GT64120", 0, 0x20000000);
+ }
  
--DeviceState *rc4030_init(rc4030_dma **dmas, IOMMUMemoryRegion **dma_mr);
-+DeviceState *rc4030_init(Object *parent, rc4030_dma **dmas,
-+                         IOMMUMemoryRegion **dma_mr);
+ static void gt64120_pci_realize(PCIDevice *d, Error **errp)
+diff --git a/hw/riscv/sifive_e.c b/hw/riscv/sifive_e.c
+index dfdb7ae4c1..d07edde237 100644
+--- a/hw/riscv/sifive_e.c
++++ b/hw/riscv/sifive_e.c
+@@ -233,7 +233,7 @@ static void sifive_e_soc_realize(DeviceState *dev, Error **errp)
+         RISCV_ACLINT_DEFAULT_MTIMER_SIZE, 0, ms->smp.cpus,
+         RISCV_ACLINT_DEFAULT_MTIMECMP, RISCV_ACLINT_DEFAULT_MTIME,
+         SIFIVE_E_LFCLK_DEFAULT_FREQ, false);
+-    sifive_e_prci_create(memmap[SIFIVE_E_DEV_PRCI].base);
++    sifive_e_prci_create(OBJECT(dev), memmap[SIFIVE_E_DEV_PRCI].base);
+ 
+     /* AON */
+ 
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 3ceb476b84..d7ce57069a 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -1477,7 +1477,7 @@ static void virt_machine_init(MachineState *machine)
+     rom_set_fw(s->fw_cfg);
+ 
+     /* SiFive Test MMIO device */
+-    sifive_test_create(s->memmap[VIRT_TEST].base);
++    sifive_test_create(OBJECT(machine), s->memmap[VIRT_TEST].base);
+ 
+     /* VirtIO MMIO devices */
+     for (i = 0; i < VIRTIO_COUNT; i++) {
+diff --git a/hw/sparc/sun4m.c b/hw/sparc/sun4m.c
+index 80e37555b1..52627dbdec 100644
+--- a/hw/sparc/sun4m.c
++++ b/hw/sparc/sun4m.c
+@@ -842,7 +842,7 @@ static void sun4m_hw_init(MachineState *machine)
+ 
+     /* models without ECC don't trap when missing ram is accessed */
+     if (!hwdef->ecc_base) {
+-        empty_slot_init("ecc", machine->ram_size,
++        empty_slot_init(OBJECT(machine), "ecc", machine->ram_size,
+                         hwdef->max_mem - machine->ram_size);
+     }
+ 
+@@ -875,7 +875,7 @@ static void sun4m_hw_init(MachineState *machine)
+            Software shouldn't use aliased addresses, neither should it crash
+            when does. Using empty_slot instead of aliasing can help with
+            debugging such accesses */
+-        empty_slot_init("iommu.alias",
++        empty_slot_init(OBJECT(machine), "iommu.alias",
+                         hwdef->iommu_pad_base, hwdef->iommu_pad_len);
+     }
+ 
+@@ -937,7 +937,8 @@ static void sun4m_hw_init(MachineState *machine)
+         /* vsimm registers probed by OBP */
+         if (hwdef->vsimm[i].reg_base) {
+             char *name = g_strdup_printf("vsimm[%d]", i);
+-            empty_slot_init(name, hwdef->vsimm[i].reg_base, 0x2000);
++            empty_slot_init(OBJECT(machine), name,
++                            hwdef->vsimm[i].reg_base, 0x2000);
+             g_free(name);
+         }
+     }
+diff --git a/include/hw/misc/empty_slot.h b/include/hw/misc/empty_slot.h
+index dec56e56ae..12f03aa16a 100644
+--- a/include/hw/misc/empty_slot.h
++++ b/include/hw/misc/empty_slot.h
+@@ -14,6 +14,7 @@
+ 
+ #include "exec/hwaddr.h"
+ 
+-void empty_slot_init(const char *name, hwaddr addr, uint64_t slot_size);
++void empty_slot_init(Object *parent, const char *name, hwaddr addr,
++                     uint64_t slot_size);
+ 
+ #endif
+diff --git a/include/hw/misc/sifive_e_prci.h b/include/hw/misc/sifive_e_prci.h
+index d0abd59f4b..6221e95d36 100644
+--- a/include/hw/misc/sifive_e_prci.h
++++ b/include/hw/misc/sifive_e_prci.h
+@@ -69,6 +69,6 @@ struct SiFiveEPRCIState {
+     uint32_t plloutdiv;
+ };
+ 
+-DeviceState *sifive_e_prci_create(hwaddr addr);
++DeviceState *sifive_e_prci_create(Object *parent, hwaddr addr);
+ 
+ #endif
+diff --git a/include/hw/misc/sifive_test.h b/include/hw/misc/sifive_test.h
+index 85afd35263..fd079cfd4c 100644
+--- a/include/hw/misc/sifive_test.h
++++ b/include/hw/misc/sifive_test.h
+@@ -42,6 +42,6 @@ enum {
+     FINISHER_RESET = 0x7777
+ };
+ 
+-DeviceState *sifive_test_create(hwaddr addr);
++DeviceState *sifive_test_create(Object *parent, hwaddr addr);
  
  #endif
 -- 
