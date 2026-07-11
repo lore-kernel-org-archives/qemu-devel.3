@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A772C44501
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:58:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B667EC43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:59:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigeu-0006MY-OA; Sat, 11 Jul 2026 18:58:56 -0400
+	id 1wigf6-0006t4-JD; Sat, 11 Jul 2026 18:59:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wiges-0006Kg-HR; Sat, 11 Jul 2026 18:58:54 -0400
-Received: from pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.35.192.45])
+ id 1wigf5-0006ie-0k; Sat, 11 Jul 2026 18:59:07 -0400
+Received: from pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([44.245.243.92])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigep-0001Zt-76; Sat, 11 Jul 2026 18:58:54 -0400
+ id 1wigex-0001b6-9I; Sat, 11 Jul 2026 18:59:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783810731; x=1815346731;
+ t=1783810739; x=1815346739;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Bpy5yBiEIPzPgbN3jgoAzDiUtVXWrivdLqr1ylj3zY4=;
- b=LpT1U50sQba07gcESAt3zlXu26X0g61jRPKKgvVZismVjVCv60PXMd7U
- I+jVsVRSh1BXOKi+J+8W0rSZyuKqQxu4cDfb8/TFFl2tLc42nzkfk7dXo
- G8CVynVUV9aSN4+RvfK6wpOU/YKk54hTroV+Fu1vdEIbiIuVpc6MI/tiu
- G7wgtl42PIs7k0RoPdrA4nLtv+B9shxpZfksFN8eq/CXXWc0SUJnJTJNd
- wji26tV3akt6upXl7bpkPi7dWgqpOUMfXufvHsT6gz/D+PaUrPwted4fA
- mGKQWwNkgUq4L4wg9W39dZJtxnuMwPv5s0mlv5OmWf9jvP9x19FVP8nTo A==;
-X-CSE-ConnectionGUID: 7GKSmgS3RACyROZ1Lkaddg==
-X-CSE-MsgGUID: iEV5PWG1Q/OnjxbVvM4SgA==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23269904"
-Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
- by internal-pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:58:47 +0000
-Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.178:12981]
+ bh=5wJX8HTlMWOp+CthdhWDxuxqwHRCoNy4439GbPHkYpo=;
+ b=LptMTme+m0VP3RaEsLxStA1JAYk5FIRr0Bh3hbGA6zgBiIUeuPXuaaSe
+ EN14Yp7ND6xqaCn3ZrVxuOo8w5/rD0MSUunatCeiAbXoJlG0zFyVIDpyx
+ hTyn1m+VaF4sPEJ6sU25b+ru2ShS0kjjo/Ny56/U9BGGMhlogOZ1xRjio
+ FE53JbN5A2AnNaUiz9jKVWCX7ZTdGcnO1i4Lt74E/xNPuWTIIHy/MIEsh
+ IzeVj7a1Ltd837wMIGTFy/S1ASL5W3GtvYx0GwYqxpifPcrLSQbQuznlm
+ /qy7uq+BYFyS6HgTC5PNkpCLbU/xFnKRa3yDtaJQS8b6pQ1P3xvuSeJFB g==;
+X-CSE-ConnectionGUID: tyYwmJWCSuS6lTSk5SivTw==
+X-CSE-MsgGUID: p/V0nDvLSw+97JVEWtpETg==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="22997678"
+Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
+ by internal-pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:58:55 +0000
+Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.51:5669]
  by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.31.54:2525]
  with esmtp (Farcaster)
- id 4ebafdc3-ad62-4714-8592-e74dc4c4194b; Sat, 11 Jul 2026 22:58:47 +0000 (UTC)
-X-Farcaster-Flow-ID: 4ebafdc3-ad62-4714-8592-e74dc4c4194b
+ id 3046c674-944c-4dc9-9a2e-17595cc7fb99; Sat, 11 Jul 2026 22:58:55 +0000 (UTC)
+X-Farcaster-Flow-ID: 3046c674-944c-4dc9-9a2e-17595cc7fb99
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
+ EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:58:46 +0000
+ Sat, 11 Jul 2026 22:58:55 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:58:38 +0000
+ Sat, 11 Jul 2026 22:58:46 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,10 +91,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 082/134] net,
- target/mips: Give -nic and CPU-with-clock helpers a QOM parent
-Date: Sat, 11 Jul 2026 22:36:15 +0000
-Message-ID: <20260711223707.42139-83-graf@amazon.com>
+Subject: [RFC PATCH 083/134] usb, ssi, i2c: Remove *_orphan() creator variants
+Date: Sat, 11 Jul 2026 22:36:16 +0000
+Message-ID: <20260711223707.42139-84-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -104,9 +103,9 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D036UWC003.ant.amazon.com (10.13.139.214) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=52.35.192.45;
+Received-SPF: pass client-ip=44.245.243.92;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
@@ -130,412 +129,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu_create_nic_device() and qemu_create_nic_bus_devices() are the
-board-side and bus-side halves of the '-nic' command-line path.
-Thread an explicit parent through the former (each of the seven
-callers now supplies the machine or SoC that owns the on-board NIC)
-and let the latter place devices under /machine/peripheral-anon
-like -device does.  s390 was already parenting the returned device
-by hand; drop that now-redundant open-coding.
+All external callers now go through the parented usb_new()/
+usb_create_simple(), ssi_create_peripheral(), i2c_slave_new()/
+i2c_slave_create_simple() introduced earlier in the series.
+Remove the transitional *_orphan() spellings.
 
-mips_cpu_create_with_clock() likewise gains an explicit parent; the
-four MIPS boards pass the machine and name the CPU cpu[*].
-xtensa_cpu_create_with_clock() has no callers, so just remove it.
-
-For linux-user/bsd-user there is no machine and hence no composition
-tree; open-code object_new()+qdev_realize() where cpu_create_orphan()
-used to be.
-
-While at it, fix a stale doc reference in migration.c.
+The corresponding *_realize_and_unref() helpers stay for now: they
+are still valid for callers that reach for object_new() directly
+and hold a floating reference (qdev_device_add() being the primary
+example one layer down).
 
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- bsd-user/main.c            |  3 ++-
- hw/arm/exynos4_boards.c    |  4 ++--
- hw/hppa/machine.c          |  4 ++--
- hw/m68k/mcf5208.c          |  4 ++--
- hw/mips/fuloong2e.c        |  3 ++-
- hw/mips/jazz.c             |  2 +-
- hw/mips/loongson3_virt.c   |  3 ++-
- hw/mips/malta.c            |  2 +-
- hw/or1k/or1k-sim.c         |  4 ++--
- hw/s390x/s390-virtio-ccw.c |  8 +++-----
- hw/vmapple/vmapple.c       |  5 +++--
- hw/xtensa/xtfpga.c         |  4 ++--
- include/net/net.h          |  5 ++++-
- linux-user/main.c          |  6 ++++--
- migration/migration.c      |  2 +-
- net/net.c                  | 10 ++++++----
- target/mips/cpu.c          |  5 +++--
- target/mips/cpu.h          |  3 ++-
- target/xtensa/cpu.c        | 11 -----------
- target/xtensa/cpu.h        |  2 --
- 20 files changed, 44 insertions(+), 46 deletions(-)
+ hw/i2c/core.c        | 18 ------------------
+ hw/ssi/ssi.c         |  8 --------
+ include/hw/i2c/i2c.h | 31 ++++---------------------------
+ include/hw/ssi/ssi.h |  5 ++---
+ include/hw/usb/usb.h |  9 ---------
+ 5 files changed, 6 insertions(+), 65 deletions(-)
 
-diff --git a/bsd-user/main.c b/bsd-user/main.c
-index 618b1adf4d..d686c413a5 100644
---- a/bsd-user/main.c
-+++ b/bsd-user/main.c
-@@ -475,7 +475,8 @@ int main(int argc, char **argv)
-     set_preferred_target_page_bits(ctz32(host_page_size));
-     finalize_target_page_bits();
- 
--    cpu = cpu_create_orphan(cpu_type);
-+    cpu = CPU(object_new(cpu_type));
-+    qdev_realize(DEVICE(cpu), NULL, &error_fatal);
-     env = cpu_env(cpu);
-     cpu_reset(cpu);
-     thread_cpu = cpu;
-diff --git a/hw/arm/exynos4_boards.c b/hw/arm/exynos4_boards.c
-index 1b8c9b618f..dce2c24860 100644
---- a/hw/arm/exynos4_boards.c
-+++ b/hw/arm/exynos4_boards.c
-@@ -78,11 +78,11 @@ static void lan9215_init(uint32_t base, qemu_irq irq)
-     SysBusDevice *s;
- 
-     /* This should be a 9215 but the 9118 is close enough */
--    dev = qemu_create_nic_device(TYPE_LAN9118, true, NULL);
-+    dev = qemu_create_nic_device(qdev_get_machine(), "lan9215", TYPE_LAN9118, true, NULL);
-     if (dev) {
-         qdev_prop_set_uint32(dev, "mode_16bit", 1);
-         s = SYS_BUS_DEVICE(dev);
--        sysbus_realize_and_unref(s, &error_fatal);
-+        sysbus_realize(s, &error_fatal);
-         sysbus_mmio_map(s, 0, base);
-         sysbus_connect_irq(s, 0, irq);
+diff --git a/hw/i2c/core.c b/hw/i2c/core.c
+index fba21fdfad..f333df3760 100644
+--- a/hw/i2c/core.c
++++ b/hw/i2c/core.c
+@@ -364,15 +364,6 @@ const VMStateDescription vmstate_i2c_slave = {
      }
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index d52f27c51c..4fcb3e5e37 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -640,9 +640,9 @@ static void machine_HP_715_init(MachineState *machine)
-     }
+ };
  
-     /* LASI i82596 network */
--    dev = qemu_create_nic_device(TYPE_LASI_82596, true, "lasi");
-+    dev = qemu_create_nic_device(OBJECT(machine), "lan", TYPE_LASI_82596, true, "lasi");
-     if (dev) {
--        sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+        sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
-         sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
-                            qdev_get_gpio_in(lasi_dev, LASI_IRQ_LAN_HPA));
-         memory_region_add_subregion(addr_space,
-diff --git a/hw/m68k/mcf5208.c b/hw/m68k/mcf5208.c
-index f305478b8d..a955efebeb 100644
---- a/hw/m68k/mcf5208.c
-+++ b/hw/m68k/mcf5208.c
-@@ -260,13 +260,13 @@ static void mcf_fec_init(MemoryRegion *sysmem, hwaddr base, DeviceState *intc)
-     SysBusDevice *s;
-     int i;
- 
--    dev = qemu_create_nic_device(TYPE_MCF_FEC_NET, true, NULL);
-+    dev = qemu_create_nic_device(qdev_get_machine(), "fec", TYPE_MCF_FEC_NET, true, NULL);
-     if (!dev) {
-         return;
-     }
- 
-     s = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
-     for (i = 0; i < FEC_NUM_IRQ; i++) {
-         sysbus_connect_irq(s, i, qdev_get_gpio_in(intc, i + 36));
-     }
-diff --git a/hw/mips/fuloong2e.c b/hw/mips/fuloong2e.c
-index 477ad99c87..1b105ca37c 100644
---- a/hw/mips/fuloong2e.c
-+++ b/hw/mips/fuloong2e.c
-@@ -231,7 +231,8 @@ static void mips_fuloong2e_init(MachineState *machine)
-     clock_set_hz(cpuclk, 533080000); /* ~533 MHz */
- 
-     /* init CPUs */
--    cpu = mips_cpu_create_with_clock(machine->cpu_type, cpuclk, false);
-+    cpu = mips_cpu_create_with_clock(OBJECT(machine), "cpu[*]",
-+                                     machine->cpu_type, cpuclk, false);
-     env = &cpu->env;
- 
-     qemu_register_reset(main_cpu_reset, cpu);
-diff --git a/hw/mips/jazz.c b/hw/mips/jazz.c
-index 8c52608913..cb24d8c00d 100644
---- a/hw/mips/jazz.c
-+++ b/hw/mips/jazz.c
-@@ -209,7 +209,7 @@ static void mips_jazz_init(MachineState *machine,
-                          * ext_clk[jazz_model].pll_mult);
- 
-     /* init CPUs */
--    cpu = mips_cpu_create_with_clock(machine->cpu_type, cpuclk,
-+    cpu = mips_cpu_create_with_clock(OBJECT(machine), "cpu[*]", machine->cpu_type, cpuclk,
-                                      TARGET_BIG_ENDIAN);
-     env = &cpu->env;
-     qemu_register_reset(main_cpu_reset, cpu);
-diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
-index 8d8430562c..93c14026ab 100644
---- a/hw/mips/loongson3_virt.c
-+++ b/hw/mips/loongson3_virt.c
-@@ -552,7 +552,8 @@ static void mips_loongson3_virt_init(MachineState *machine)
-         hwaddr ipi_base = ((hwaddr)node << 44) + virt_memmap[VIRT_IPI].base;
- 
-         /* init CPUs */
--        cpu = mips_cpu_create_with_clock(machine->cpu_type, cpuclk, false);
-+        cpu = mips_cpu_create_with_clock(OBJECT(machine), "cpu[*]",
-+                                         machine->cpu_type, cpuclk, false);
- 
-         /* Init internal devices */
-         cpu_mips_irq_init_cpu(cpu);
-diff --git a/hw/mips/malta.c b/hw/mips/malta.c
-index e8c130d5bb..72bc97625f 100644
---- a/hw/mips/malta.c
-+++ b/hw/mips/malta.c
-@@ -1027,7 +1027,7 @@ static void create_cpu_without_cps(MachineState *ms, MaltaState *s,
-     int i;
- 
-     for (i = 0; i < ms->smp.cpus; i++) {
--        cpu = mips_cpu_create_with_clock(ms->cpu_type, s->cpuclk,
-+        cpu = mips_cpu_create_with_clock(OBJECT(ms), "cpu[*]", ms->cpu_type, s->cpuclk,
-                                          TARGET_BIG_ENDIAN);
- 
-         /* Init internal devices */
-diff --git a/hw/or1k/or1k-sim.c b/hw/or1k/or1k-sim.c
-index 7ea61327c3..293970f156 100644
---- a/hw/or1k/or1k-sim.c
-+++ b/hw/or1k/or1k-sim.c
-@@ -178,13 +178,13 @@ static void openrisc_sim_net_init(Or1ksimState *state, hwaddr base, hwaddr size,
-     char *nodename;
-     int i;
- 
--    dev = qemu_create_nic_device("open_eth", true, NULL);
-+    dev = qemu_create_nic_device(OBJECT(state), "eth", "open_eth", true, NULL);
-     if (!dev) {
-         return;
-     }
- 
-     s = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
-     if (num_cpus > 1) {
-         DeviceState *splitter = qdev_new(OBJECT(state), "irq-splitter[*]",
-                                          TYPE_SPLIT_IRQ);
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index 1848cde0c4..037cb6eb5e 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -237,12 +237,10 @@ static void s390_init_ipl_dev(const char *kernel_filename,
- static void s390_create_virtio_net(BusState *bus, const char *name)
- {
-     DeviceState *dev;
--    int cnt = 0;
- 
--    while ((dev = qemu_create_nic_device(name, true, "virtio"))) {
--        g_autofree char *childname = g_strdup_printf("%s[%d]", name, cnt++);
--        object_property_add_child(OBJECT(bus), childname, OBJECT(dev));
--        qdev_realize_and_unref(dev, bus, &error_fatal);
-+    while ((dev = qemu_create_nic_device(qdev_get_machine(), "nic[*]",
-+                                         name, true, "virtio"))) {
-+        qdev_realize(dev, bus, &error_fatal);
-     }
- }
- 
-diff --git a/hw/vmapple/vmapple.c b/hw/vmapple/vmapple.c
-index 60c7dab89b..67e499b74a 100644
---- a/hw/vmapple/vmapple.c
-+++ b/hw/vmapple/vmapple.c
-@@ -416,8 +416,9 @@ static void create_pcie(VMAppleMachineState *vms)
-     vms->bus = pci->bus;
-     g_assert(vms->bus);
- 
--    while ((dev = qemu_create_nic_device("virtio-net-pci", true, NULL))) {
--        qdev_realize_and_unref(dev, BUS(vms->bus), &error_fatal);
-+    while ((dev = qemu_create_nic_device(OBJECT(vms), "nic[*]",
-+                                         "virtio-net-pci", true, NULL))) {
-+        qdev_realize(dev, BUS(vms->bus), &error_fatal);
-     }
- 
-     if (defaults_enabled()) {
-diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
-index 10bbc34399..1c48283f5d 100644
---- a/hw/xtensa/xtfpga.c
-+++ b/hw/xtensa/xtfpga.c
-@@ -149,13 +149,13 @@ static void xtfpga_net_init(MemoryRegion *address_space,
-     SysBusDevice *s;
-     MemoryRegion *ram;
- 
--    dev = qemu_create_nic_device("open_eth", true, NULL);
-+    dev = qemu_create_nic_device(qdev_get_machine(), "eth", "open_eth", true, NULL);
-     if (!dev) {
-         return;
-     }
- 
-     s = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
-     sysbus_connect_irq(s, 0, irq);
-     memory_region_add_subregion(address_space, base,
-             sysbus_mmio_get_region(s, 0));
-diff --git a/include/net/net.h b/include/net/net.h
-index 45bc86fc86..3bba6e8c11 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -243,6 +243,8 @@ bool qemu_configure_nic_device(DeviceState *dev, bool match_default,
- 
- /**
-  * qemu_create_nic_device: Create a NIC device if a configuration exists for it
-+ * @parent: QOM parent of the created device
-+ * @id: child<> property name
-  * @typename: Object typename of network device
-  * @match_default: Match NIC configurations with no model specified
-  * @alias: Additional model string to match
-@@ -250,7 +252,8 @@ bool qemu_configure_nic_device(DeviceState *dev, bool match_default,
-  * Search for a NIC configuration for the provided device type. If found,
-  * create an object of the corresponding type and return it.
-  */
--DeviceState *qemu_create_nic_device(const char *typename, bool match_default,
-+DeviceState *qemu_create_nic_device(Object *parent, const char *id,
-+                                    const char *typename, bool match_default,
-                                     const char *alias);
- 
- /*
-diff --git a/linux-user/main.c b/linux-user/main.c
-index 53c7768a5e..512335a4c0 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -237,7 +237,8 @@ void init_task_state(TaskState *ts)
- CPUArchState *cpu_copy(CPUArchState *env)
- {
-     CPUState *cpu = env_cpu(env);
--    CPUState *new_cpu = cpu_create_orphan(cpu_type);
-+    CPUState *new_cpu = CPU(object_new(cpu_type));
-+    qdev_realize(DEVICE(new_cpu), NULL, &error_fatal);
-     CPUArchState *new_env = cpu_env(new_cpu);
-     CPUBreakpoint *bp;
- 
-@@ -819,7 +820,8 @@ int main(int argc, char **argv, char **envp)
-     set_preferred_target_page_bits(ctz32(host_page_size));
-     finalize_target_page_bits();
- 
--    cpu = cpu_create_orphan(cpu_type);
-+    cpu = CPU(object_new(cpu_type));
-+    qdev_realize(DEVICE(cpu), NULL, &error_fatal);
-     env = cpu_env(cpu);
-     cpu_reset(cpu);
-     thread_cpu = cpu;
-diff --git a/migration/migration.c b/migration/migration.c
-index bdd163b65d..9736c14458 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -4076,7 +4076,7 @@ static const TypeInfo migration_type = {
-     .name = TYPE_MIGRATION,
-     /*
-      * NOTE: TYPE_MIGRATION is not really a device, as the object is
--     * not created using qdev_new_orphan(), it is not attached to the qdev
-+     * not created using qdev_new(), it is not attached to the qdev
-      * device tree, and it is never realized.
-      *
-      * TODO: Make this TYPE_OBJECT once QOM provides something like
-diff --git a/net/net.c b/net/net.c
-index e09f0c0d4f..2224367523 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -1204,7 +1204,8 @@ bool qemu_configure_nic_device(DeviceState *dev, bool match_default,
- }
- 
- /* "Please create a device, if you have a configuration for it" */
--DeviceState *qemu_create_nic_device(const char *typename, bool match_default,
-+DeviceState *qemu_create_nic_device(Object *parent, const char *id,
-+                                    const char *typename, bool match_default,
-                                     const char *alias)
- {
-     NICInfo *nd = qemu_find_nic_info(typename, match_default, alias);
-@@ -1214,7 +1215,7 @@ DeviceState *qemu_create_nic_device(const char *typename, bool match_default,
-         return NULL;
-     }
- 
--    dev = qdev_new_orphan(typename);
-+    dev = qdev_new(parent, id, typename);
-     qdev_set_nic_properties(dev, nd);
-     return dev;
- }
-@@ -1264,9 +1265,10 @@ void qemu_create_nic_bus_devices(BusState *bus, const char *parent_type,
-             continue;
-         }
- 
--        dev = qdev_new_orphan(model);
-+        dev = qdev_new(machine_get_container("peripheral-anon"),
-+                       "nic[*]", model);
-         qdev_set_nic_properties(dev, nd);
--        qdev_realize_and_unref(dev, bus, &error_fatal);
-+        qdev_realize(dev, bus, &error_fatal);
-     }
- 
-     g_ptr_array_free(nic_models, true);
-diff --git a/target/mips/cpu.c b/target/mips/cpu.c
-index 9ad1b4177d..735a2041b7 100644
---- a/target/mips/cpu.c
-+++ b/target/mips/cpu.c
-@@ -751,12 +751,13 @@ static void mips_cpu_register_types(void)
- type_init(mips_cpu_register_types)
- 
- /* Could be used by generic CPU object */
--MIPSCPU *mips_cpu_create_with_clock(const char *cpu_type, Clock *cpu_refclk,
-+MIPSCPU *mips_cpu_create_with_clock(Object *parent, const char *id,
-+                                    const char *cpu_type, Clock *cpu_refclk,
-                                     bool is_big_endian)
- {
-     DeviceState *cpu;
- 
--    cpu = qdev_new_orphan(cpu_type);
-+    cpu = qdev_new(parent, id, cpu_type);
-     qdev_connect_clock_in(cpu, "clk-in", cpu_refclk);
-     object_property_set_bool(OBJECT(cpu), "big-endian", is_big_endian,
-                              &error_abort);
-diff --git a/target/mips/cpu.h b/target/mips/cpu.h
-index 319147a948..491a190271 100644
---- a/target/mips/cpu.h
-+++ b/target/mips/cpu.h
-@@ -1429,7 +1429,8 @@ void cpu_mips_restore_fp_status(CPUMIPSState *env);
-  *
-  * Returns: A #CPUState or %NULL if an error occurred.
-  */
--MIPSCPU *mips_cpu_create_with_clock(const char *cpu_type, Clock *cpu_refclk,
-+MIPSCPU *mips_cpu_create_with_clock(Object *parent, const char *id,
-+                                    const char *cpu_type, Clock *cpu_refclk,
-                                     bool is_big_endian);
- 
- #endif /* MIPS_CPU_H */
-diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
-index 8e888a19d1..7573c1d67b 100644
---- a/target/xtensa/cpu.c
-+++ b/target/xtensa/cpu.c
-@@ -284,17 +284,6 @@ static void xtensa_cpu_initfn(Object *obj)
- #endif
- }
- 
--XtensaCPU *xtensa_cpu_create_with_clock(const char *cpu_type, Clock *cpu_refclk)
+-I2CSlave *i2c_slave_new_orphan(const char *name, uint8_t addr)
 -{
--    DeviceState *cpu;
+-    DeviceState *dev;
 -
--    cpu = qdev_new_orphan(cpu_type);
--    qdev_connect_clock_in(cpu, "clk-in", cpu_refclk);
--    qdev_realize(cpu, NULL, &error_abort);
--
--    return XTENSA_CPU(cpu);
+-    dev = qdev_new_orphan(name);
+-    qdev_prop_set_uint8(dev, "address", addr);
+-    return I2C_SLAVE(dev);
 -}
 -
- #ifndef CONFIG_USER_ONLY
- static const VMStateDescription vmstate_xtensa_cpu = {
-     .name = "cpu",
-diff --git a/target/xtensa/cpu.h b/target/xtensa/cpu.h
-index 442e98bd1b..019d0b56c1 100644
---- a/target/xtensa/cpu.h
-+++ b/target/xtensa/cpu.h
-@@ -736,8 +736,6 @@ static inline uint32_t xtensa_replicate_windowstart(CPUXtensaState *env)
- #define XTENSA_CSBASE_LBEG_OFF_MASK 0x00ff0000
- #define XTENSA_CSBASE_LBEG_OFF_SHIFT 16
+ I2CSlave *i2c_slave_new(Object *parent, const char *id,
+                         const char *type, uint8_t addr)
+ {
+@@ -398,15 +389,6 @@ bool i2c_slave_realize_and_unref(I2CSlave *dev, I2CBus *bus, Error **errp)
+     return qdev_realize_and_unref(&dev->qdev, &bus->qbus, errp);
+ }
  
--XtensaCPU *xtensa_cpu_create_with_clock(const char *cpu_type,
--                                        Clock *cpu_refclk);
+-I2CSlave *i2c_slave_create_simple_orphan(I2CBus *bus, const char *name, uint8_t addr)
+-{
+-    I2CSlave *dev = i2c_slave_new_orphan(name, addr);
+-
+-    i2c_slave_realize_and_unref(dev, bus, &error_abort);
+-
+-    return dev;
+-}
+-
+ static bool i2c_slave_match(I2CSlave *candidate, uint8_t address,
+                             bool broadcast, I2CNodeList *current_devs)
+ {
+diff --git a/hw/ssi/ssi.c b/hw/ssi/ssi.c
+index 6031cde7b0..07188d87bb 100644
+--- a/hw/ssi/ssi.c
++++ b/hw/ssi/ssi.c
+@@ -147,14 +147,6 @@ DeviceState *ssi_create_peripheral(Object *parent, const char *id,
+     return dev;
+ }
  
- /*
-  * Set the NaN propagation rule for future FPU operations:
+-DeviceState *ssi_create_peripheral_orphan(SSIBus *bus, const char *name)
+-{
+-    DeviceState *dev = qdev_new_orphan(name);
+-
+-    ssi_realize_and_unref(dev, bus, &error_fatal);
+-    return dev;
+-}
+-
+ SSIBus *ssi_create_bus(DeviceState *parent, const char *name)
+ {
+     BusState *bus;
+diff --git a/include/hw/i2c/i2c.h b/include/hw/i2c/i2c.h
+index 0bba1a7c20..c0829edf8f 100644
+--- a/include/hw/i2c/i2c.h
++++ b/include/hw/i2c/i2c.h
+@@ -154,17 +154,6 @@ uint8_t i2c_recv(I2CBus *bus);
+ bool i2c_scan_bus(I2CBus *bus, uint8_t address, bool broadcast,
+                   I2CNodeList *current_devs);
+ 
+-/**
+- * Create an I2C slave device on the heap.
+- * @name: a device type name
+- * @addr: I2C address of the slave when put on a bus
+- *
+- * This only initializes the device state structure and allows
+- * properties to be set. Type @name must exist. The device still
+- * needs to be realized. See qdev-core.h.
+- */
+-I2CSlave *i2c_slave_new_orphan(const char *name, uint8_t addr);
+-
+ /**
+  * Create a parented I2C slave device on the heap.
+  * @parent: the QOM parent
+@@ -172,24 +161,12 @@ I2CSlave *i2c_slave_new_orphan(const char *name, uint8_t addr);
+  * @type: I2C slave device type name
+  * @addr: I2C address of the slave when put on a bus
+  *
+- * Like i2c_slave_new_orphan(), but the returned device is owned by
++ * Like i2c_slave_new(), but the returned device is owned by
+  * @parent's child<> property.  Pair with qdev_realize().
+  */
+ I2CSlave *i2c_slave_new(Object *parent, const char *id,
+                         const char *type, uint8_t addr);
+ 
+-/**
+- * Create and realize an I2C slave device on the heap.
+- * @bus: I2C bus to put it on
+- * @name: I2C slave device type name
+- * @addr: I2C address of the slave when put on a bus
+- *
+- * Create the device state structure, initialize it, put it on the
+- * specified @bus, and drop the reference to it (the device is realized).
+- */
+-I2CSlave *i2c_slave_create_simple_orphan(I2CBus *bus, const char *name,
+-                                         uint8_t addr);
+-
+ /**
+  * Create, parent and realize an I2C slave device on the heap.
+  * @parent: the QOM parent
+@@ -218,11 +195,11 @@ I2CSlave *i2c_slave_create_simple(Object *parent, const char *id,
+  * Call 'realize' on @dev, put it on the specified @bus, and drop the
+  * reference to it.
+  *
+- * This function is useful if you have created @dev via qdev_new_orphan(),
+- * i2c_slave_new_orphan() or i2c_slave_try_new() (which take a reference to
++ * This function is useful if you have created @dev via qdev_new(),
++ * i2c_slave_new() or i2c_slave_try_new() (which take a reference to
+  * the device it returns to you), so that you can set properties on it
+  * before realizing it. If you don't need to set properties then
+- * i2c_slave_create_simple_orphan() is probably better (as it does the create,
++ * i2c_slave_create_simple() is probably better (as it does the create,
+  * init and realize in one step).
+  *
+  * If you are embedding the I2C slave into another QOM device and
+diff --git a/include/hw/ssi/ssi.h b/include/hw/ssi/ssi.h
+index 36ed002281..b2a264bb55 100644
+--- a/include/hw/ssi/ssi.h
++++ b/include/hw/ssi/ssi.h
+@@ -83,7 +83,6 @@ extern const VMStateDescription vmstate_ssi_peripheral;
+ 
+ DeviceState *ssi_create_peripheral(Object *parent, const char *id,
+                                     SSIBus *bus, const char *type);
+-DeviceState *ssi_create_peripheral_orphan(SSIBus *bus, const char *name);
+ /**
+  * ssi_realize_and_unref: realize and unref an SSI peripheral
+  * @dev: SSI peripheral to realize
+@@ -94,10 +93,10 @@ DeviceState *ssi_create_peripheral_orphan(SSIBus *bus, const char *name);
+  * reference to it. Errors are reported via @errp and by returning
+  * false.
+  *
+- * This function is useful if you have created @dev via qdev_new_orphan()
++ * This function is useful if you have created @dev via qdev_new()
+  * (which takes a reference to the device it returns to you), so that
+  * you can set properties on it before realizing it. If you don't need
+- * to set properties then ssi_create_peripheral_orphan() is probably better (as it
++ * to set properties then ssi_create_peripheral() is probably better (as it
+  * does the create, init and realize in one step).
+  *
+  * If you are embedding the SSI peripheral into another QOM device and
+diff --git a/include/hw/usb/usb.h b/include/hw/usb/usb.h
+index 1ae1f40aa9..d2e59bc83b 100644
+--- a/include/hw/usb/usb.h
++++ b/include/hw/usb/usb.h
+@@ -599,13 +599,4 @@ static inline USBDevice *usb_create_simple(Object *parent, const char *id,
+     return dev;
+ }
+ 
+-static inline USBDevice *usb_create_simple_orphan(USBBus *bus,
+-                                                    const char *name)
+-{
+-    USBDevice *dev = USB_DEVICE(qdev_new_orphan(name));
+-
+-    usb_realize_and_unref(dev, bus, &error_abort);
+-    return dev;
+-}
+-
+ #endif
 -- 
 2.47.1
 
