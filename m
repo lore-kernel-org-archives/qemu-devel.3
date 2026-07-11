@@ -4,52 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F12DBC43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:06:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8B18C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:06:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifnj-0001Fk-77; Sat, 11 Jul 2026 18:03:59 -0400
+	id 1wifky-0003uw-AF; Sat, 11 Jul 2026 18:01:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifng-00016N-P9; Sat, 11 Jul 2026 18:03:56 -0400
+ id 1wifkv-0003mP-Ro; Sat, 11 Jul 2026 18:01:06 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifnf-0000Fk-5r; Sat, 11 Jul 2026 18:03:56 -0400
+ id 1wifkt-0008Bw-Rq; Sat, 11 Jul 2026 18:01:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807181; bh=FaJS5R+gKCiWVlVkXPRzdxDXSytnyRiohqszJtJk9MQ=;
+ t=1783807180; bh=mgz9KPo36yVybz3BRKy7LOPgUWf/XYfzKKRqtf9ovaw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=TApWUXKCEF+8DLiou+0SebQXoGrvCv6tBmdtMbjjWWWFXUjyf7PkZQcQTegF6Bf75
- dXbcvz3KO4y5wDXf5VEeBKRAa+r/5nKQXovIIlKoftBXgBF3Xx8u8GNqsqwdt83Bs6
- jXWBKLyVkdj6oZSSbhIiHh9V9pgK7iK/KH84Wm/C+++oEn/Aya1K4eKx/9QU+VS2cE
- CcFI5fW3vTQ0kcaR/47LXLQQarkSLSF/1CSkXsa3F7hRoGad4iYFjTS79TkuFKAQ4K
- pa57HaTE335xRFh9NhhnNmwAa4EFQoEjmgpG9eXTay+QG+Hth4WIqFHwUjgtl8fBUl
- 1Tt0Igc39xTwg==
+ b=ARYLCBjr5x8ZENIqs0z7Hp4qMTsEkay/JufTLDS8rXJx8akGkDShtULvhvO2O4DAN
+ 1Qu8nNN+AJ2xAtBx2682B0WnJg/678EBFhc+5I/6OW3Oht2T2vmmGwpT822PDvHpZG
+ mtV8KyQ3w4ilFcIUvYIFVod4IGiwEK7FcDjXQjl+4upIX25FMr+Y4D0x+FFPthH4QD
+ 7uaZ/kEHuMgFn4Yq+qj7IaGGvkEu5Ww1pxf7O+zkgzas9Pu8bVRGdzYZJo7BJx0EfF
+ LQkbro3IWBe7giy17/KmGAvo0FaXm8IMimAnXEVKcyRKFyO+WHG3a48zaTrRftKZqe
+ DCjlNhOmpqcGw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 336131C0ABA;
- Sun, 12 Jul 2026 00:59:41 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7AC961C0A9D;
+ Sun, 12 Jul 2026 00:59:40 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id DE8D93EAF45;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 324973EAF28;
  Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A8C4913341; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id 601F513307; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@intel.com>,
- Feifan Qian <bea1e@proton.me>, Chad Jablonski <chad@jablonski.xyz>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 47/81] hw/display/ati: guard against zero bpp in
- ati_host_data_flush
-Date: Sun, 12 Jul 2026 00:58:25 +0300
-Message-ID: <20260711215904.3757-47-mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 18/81] hw/9pfs: enable xattr (mockup) support for
+ synth fs driver
+Date: Sun, 12 Jul 2026 00:57:56 +0300
+Message-ID: <20260711215904.3757-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,48 +71,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-ati_bpp_from_datatype() returns 0 for unrecognized dp_datatype nibble
-values (0, 1, or >= 7). ati_host_data_flush() only guards against the
-bpp == 24 case but not bpp == 0, leading to:
+The synth backend is used for testing only. Enable xattr operations
+by making lsetxattr and lremovexattr callbacks to return success
+result.
 
-  1. Division by zero at "pix_count /= ctx.bpp" (SIGFPE) when
-     src_datatype is SRC_COLOR.
-  2. g_assert_not_reached() in stn_he_p() when bypp (= bpp/8 = 0)
-     hits the default case of the size switch.
+They are still actually not doing anything, they just pretend to be
+working to prevent 9pfs server from erroring out on xattr requests.
 
-Both are guest-triggerable via MMIO writes to the dp_datatype register
-while a HOST_DATA blit is active.
+This allows the subsequent test case patches to verify xattr FID
+limit enforcement.
 
-Add an explicit bpp == 0 check with LOG_GUEST_ERROR before proceeding
-with the blit, consistent with the existing check in ati_2d_do_blt().
-
-Cc: qemu-stable@nongnu.org
-Reported-by: Feifan Qian <bea1e@proton.me>
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Reviewed-by: Chad Jablonski <chad@jablonski.xyz>
-Message-ID: <20260519023937.439077-3-junjie.cao@intel.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit 90f8e5c307679b7468f73924e63682567a10564d)
+Link: https://lore.kernel.org/qemu-devel/9c1c7128135f3bd9c2f62a3f64bb730b6a94ec7a.1781361555.git.qemu_oss@crudebyte.com
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+(cherry picked from commit 0e3085ddc7fb137b727829913c20ad9d08577bdb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-index 8ef82bb87fd..22dd811bd85 100644
---- a/hw/display/ati_2d.c
-+++ b/hw/display/ati_2d.c
-@@ -377,6 +377,11 @@ bool ati_host_data_flush(ATIVGAState *s)
+diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
+index 322dc3bb690..4b0732e0936 100644
+--- a/hw/9pfs/9p-synth.c
++++ b/hw/9pfs/9p-synth.c
+@@ -477,15 +477,15 @@ static int synth_lsetxattr(FsContext *ctx, V9fsPath *path,
+                                 const char *name, void *value,
+                                 size_t size, int flags)
+ {
+-    errno = ENOTSUP;
+-    return -1;
++    /* pretend it worked */
++    return 0;
+ }
  
-     setup_2d_blt_ctx(s, &ctx);
+ static int synth_lremovexattr(FsContext *ctx,
+                                    V9fsPath *path, const char *name)
+ {
+-    errno = ENOTSUP;
+-    return -1;
++    /* pretend it worked */
++    return 0;
+ }
  
-+    if (!ctx.bpp) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "host_data_blt: invalid bpp from datatype\n");
-+        return false;
-+    }
-     if (ctx.bpp == 24) {
-         qemu_log_mask(LOG_UNIMP,
-                       "host_data_blt: unsupported in 24 bits mode\n");
+ static int synth_name_to_path(FsContext *ctx, V9fsPath *dir_path,
 -- 
 2.47.3
 
