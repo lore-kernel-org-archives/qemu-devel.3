@@ -4,49 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFC6AC44501
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:00:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 535C3C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:00:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifjp-0001Ve-A5; Sat, 11 Jul 2026 17:59:57 -0400
+	id 1wifjn-0001UF-Lg; Sat, 11 Jul 2026 17:59:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifjo-0001Uu-0c; Sat, 11 Jul 2026 17:59:56 -0400
+ id 1wifjl-0001SG-PF; Sat, 11 Jul 2026 17:59:53 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifjm-0007sB-Ca; Sat, 11 Jul 2026 17:59:55 -0400
+ id 1wifjk-0007rn-71; Sat, 11 Jul 2026 17:59:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807180; bh=E+6M2++zhHXz9evVcOLfdVYmxUtwqBWe2V3SJ0PWycQ=;
+ t=1783807180; bh=cRqFZhGYk+df7EhwaJgQoo4SDHPelSPyyPedQ0gNe6Y=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=xhwBAErkMZM2ePz3YL/m5Jt3MGo46R94Vp2cnZb3t1pGZnkD8GIwAUPv/X+hWeP3z
- hAYvLrMi8jph7/B00x1ZxYge/nM/CUjSotETr9/ut5DAq78XHA3X1G+lKyD9cWtXkf
- WzDORCKI3JhV0XbzOskJGdV8gt9TmMhm6r5PtEe3ZS1we+/GNA2X27MZ1e6cRTYpFg
- B1P5gLeIT0ygqUGfNWsBPGy2gIkhxX1knQX99/eJ/fF7EqnJqr9bh/4xjexjYNIJoI
- 5jYe5kgV4TihfVtPovBKoXl6lsr0PsO8o+3gNI08z79zyNnwAQuU6z89yJz6OyfIpc
- 23vlUbZSlnJ8w==
+ b=Z/dpPSWpyLFLg1pkNXJScQA7ehx5bFdnKluWHpeY+tdYNc7TrTCnHlMwWD2QAzMHo
+ hc/sVkKvzYUeBN4jqDEtriO/uwrEARfWiqAi0v83gY8ob7WeSg7ouGbU8fDglElzQq
+ oTGX4c8Sdo+asQWpSiMvRRjxI/q3XKZ3KoGCFIR+m/uQJD/jebN3UB5xHauOhG/HDQ
+ +RBYeyEfTVdumjd3Z0KE/mJ5qV9uj2i7TakEw80kbWdlargVtZ5IZm6opiEboGhK6A
+ 2Yz+VIR77VDGoTSAva3e9HOWJ/hgCn3sLUREl9dJDo14iPUSGGFzaU2TX9CW3y4Ft1
+ y91anzFZFTcCw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 181241C0A8E;
+ by isrv.corpit.ru (Postfix) with ESMTP id 12FAB1C0A8D;
  Sun, 12 Jul 2026 00:59:40 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C38163EAF19;
+ by tsrv.corpit.ru (Postfix) with ESMTP id BE7AA3EAF18;
  Sun, 12 Jul 2026 00:59:49 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 3DCF9132E9; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id 3B43D132E7; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 03/81] s390x/kvm: clamp stsi 3.2.2 size
-Date: Sun, 12 Jul 2026 00:57:41 +0300
-Message-ID: <20260711215904.3757-3-mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 02/81] ui/gtk: fix bad widget realize on non-GFX VC
+Date: Sun, 12 Jul 2026 00:57:40 +0300
+Message-ID: <20260711215904.3757-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,41 +74,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The stsi 3.2.2 page is being prepared by the kvm module and the size is
-clamped by the kernel. As the memory is mapped in the guest, another
-guest VCPU could race and overwrite the count and messing up the move
-operation. For any out of bound count, fall back to the kernel buffer.
+The GTK VirtualConsole is a union, it may be .gfx or .vte depending on
+the type.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Message-ID: <20260622092035.400959-1-borntraeger@linux.ibm.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-(cherry picked from commit a57e4612b61da20ddab196502c76b4dc05da1de8)
+Fixes: 565f85a9c2 ("ui/gtk: force realization of drawing area")
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260623-b4-ui-v4-1-4656aec3398d@redhat.com>
+(cherry picked from commit 27f6d5ba9c97f57d1c7ce67bc01ffe8df0e11c34)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-index 54d28e37d4d..6b6700f759c 100644
---- a/target/s390x/kvm/kvm.c
-+++ b/target/s390x/kvm/kvm.c
-@@ -1791,6 +1791,15 @@ static void insert_stsi_3_2_2(S390CPU *cpu, __u64 addr, uint8_t ar)
-     } else if (s390_cpu_virt_mem_read(cpu, addr, ar, &sysib, sizeof(sysib))) {
-         return;
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 9ebe7e8df0d..c2443fab9ad 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -2574,7 +2574,9 @@ static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
+         if (!con) {
+             break;
+         }
+-        gtk_widget_realize(s->vc[idx].gfx.drawing_area);
++        if (s->vc[idx].type == GD_VC_GFX) {
++            gtk_widget_realize(s->vc[idx].gfx.drawing_area);
++        }
      }
-+
-+    /*
-+     * The memory was filled by the kernel but mapped into the guest.
-+     * If something is fishy, do not touch the buffer.
-+     */
-+    if (sysib.count == 0 || sysib.count > ARRAY_SIZE(sysib.ext_names)) {
-+        return;
-+    }
-+
-     /* Shift the stack of Extended Names to prepare for our own data */
-     memmove(&sysib.ext_names[1], &sysib.ext_names[0],
-             sizeof(sysib.ext_names[0]) * (sysib.count - 1));
+ 
+     if (opts->u.gtk.has_show_menubar &&
 -- 
 2.47.3
 
