@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D931BC43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:05:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48051C44501
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:05:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifnR-0008R2-Pp; Sat, 11 Jul 2026 18:03:42 -0400
+	id 1wifoY-0003Y0-9A; Sat, 11 Jul 2026 18:04:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifn6-0007dc-CA; Sat, 11 Jul 2026 18:03:22 -0400
+ id 1wifoW-0003Vx-JE; Sat, 11 Jul 2026 18:04:48 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifn4-0008UH-LK; Sat, 11 Jul 2026 18:03:20 -0400
+ id 1wifoU-0000N8-UU; Sat, 11 Jul 2026 18:04:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807180; bh=uslL7lUFm6NS/mScZulwl1QVvrIBrXr6yCUQtg7VLUo=;
+ t=1783807181; bh=FbLxTK3dK0Ntfc0GcAK6KQwuQ6t1UT4nBw08tUjanLI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=kLfdURWH4D6ChfvRO/OUZucBCpfMhF2N3yhYPyzYbX9P40afrK5sL6zz/JMILAX3b
- LgCC/bwM7ka70DKQrUggNZ6KRWT3STaECx0daDmptpnU4YcLZTVYPYJJyl4wFJapou
- vyZ3SKNpJ7G/gqQENgoj3rPx68FWjG4MvWQBd/Xzp8SoeWJhti4DvRX/OpN/jRtXP5
- gQqw/naTlG/OIl+u0oRVSVFlc9z4K21eUMj4vnO1+IRoJJdZX+99znlph79kJGVAH8
- yGUomiJtGWLEa4oOY9nrLKxbNaAGjt7eKG2DGSMV5GJ9TupfpHaS4nFuCWOUzLfgN5
- EStjU3e0O3Z+A==
+ b=ntiUsc/8baZ/Gr0foerPunaVO2vkLGqFSFHiY2tNyADtmz8eK/BovmbwTQ4XsK7jv
+ +V8C+jYYCF+3Gm3soY7DodBQsNUGAeflHjYgOGZNv9fBQl+OzqI1BSkUOMLGf/bse2
+ /DAIimG/cYyurrYO67BUV+k5WAO+yOd3HbhYfNHu1+pkK+GkYfoQahhjJPxFlNO2Qg
+ XyQVkW92WWrmKQt6OjXf7yTDgHsjiE4fdjjwnXl2Ro09BvsuhaOWr3aPiE2hmTFnx4
+ 44nbJvPeIMl0CeiTcHIPdcjxEXCNJvixnSkIA3xmd73iiT3EFqYfT0AD8LQsJJuvZ7
+ ZhJfOkDLb9Oow==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F38131C0AB1;
- Sun, 12 Jul 2026 00:59:40 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 594CE1C0AC1;
+ Sun, 12 Jul 2026 00:59:41 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id AA65D3EAF3C;
- Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 105773EAF4C;
+ Sun, 12 Jul 2026 00:59:51 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 919D31332F; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id B977C1334F; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Keith Busch <kbusch@kernel.org>,
- Feifan Qian <bea1e@proton.me>, boy juju <agx1657748706@gmail.com>,
- Klaus Jensen <k.jensen@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 38/81] hw/nvme: ensure sgl forward progress
-Date: Sun, 12 Jul 2026 00:58:16 +0300
-Message-ID: <20260711215904.3757-38-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, lizhaoxin04 <lizhaoxin04@baidu.com>,
+ Miao Kezhan <miaokezhan@baidu.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 54/81] vdpa: fix use-after-free of vqs in
+ vhost_vdpa_device_unrealize
+Date: Sun, 12 Jul 2026 00:58:32 +0300
+Message-ID: <20260711215904.3757-54-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
@@ -71,56 +72,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Keith Busch <kbusch@kernel.org>
+From: lizhaoxin04 <lizhaoxin04@baidu.com>
 
-A degenerate host can create segment loops of zero-byte data descriptors
-that the controller never breaks out of. While the spec allows zero
-length segments, it provides no guidance on handling loops. It
-makes no sense for a host to submit such a descriptor anyway since it
-can and trivially should point to the next transfer segment, so don't
-even try to work with such behavior. Just reject the command,
-terminating the loop.
+vhost_vdpa_device_unrealize() frees s->dev.vqs before
+vhost_dev_cleanup(), but vhost_dev_cleanup() still accesses hdev->vqs
+while tearing down virtqueues. This leads to a use-after-free and may
+crash QEMU with SIGSEGV during vDPA hot-unplug.
 
-Cc: qemu-stable@nongnu.org
-Reported-by: Feifan Qian <bea1e@proton.me>
-Reported-by: boy juju <agx1657748706@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit 034baf047fe143c2713f35fa640407d9da2f6fc3)
+Save the vqs pointer in a local variable, call vhost_dev_cleanup(),
+and free it afterward. This matches the cleanup pattern used by
+vhost-scsi.
+
+Fixes: b430a2bd23 ("vdpa: add vdpa-dev support")
+Co-developed-by: Miao Kezhan <miaokezhan@baidu.com>
+Signed-off-by: Li Zhaoxin <lizhaoxin04@baidu.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260622100145.18924-1-lizhaoxin04@baidu.com>
+(cherry picked from commit e03463812e74d1befc8d7f6f158eca531e2d6406)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 28cc8d0e7dc..76d024c81e5 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -1088,6 +1088,8 @@ static uint16_t nvme_map_sgl(NvmeCtrl *n, NvmeSg *sg, NvmeSglDescriptor sgl,
-     }
+diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
+index 4532d63653e..7d98b23b471 100644
+--- a/hw/virtio/vdpa-dev.c
++++ b/hw/virtio/vdpa-dev.c
+@@ -173,6 +173,7 @@ static void vhost_vdpa_device_unrealize(DeviceState *dev)
+ {
+     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+     VhostVdpaDevice *s = VHOST_VDPA_DEVICE(vdev);
++    struct vhost_virtqueue *vqs = s->dev.vqs;
+     int i;
  
-     for (;;) {
-+        size_t prev_len = len;
-+
-         switch (NVME_SGL_TYPE(sgld->type)) {
-         case NVME_SGL_DESCR_TYPE_SEGMENT:
-         case NVME_SGL_DESCR_TYPE_LAST_SEGMENT:
-@@ -1168,6 +1170,17 @@ static uint16_t nvme_map_sgl(NvmeCtrl *n, NvmeSg *sg, NvmeSglDescriptor sgl,
-         if (status) {
-             goto unmap;
-         }
-+
-+        /*
-+         * Reject if this segment made no forward progress. The host should
-+         * have skipped linking an empty segment. While not strictly spec
-+         * compliant, allowing this makes it easy for a pathological host to
-+         * create an infinite loop.
-+         */
-+        if (len == prev_len) {
-+            status = NVME_INVALID_SGL_SEG_DESCR | NVME_DNR;
-+            goto unmap;
-+        }
-     }
+     virtio_set_status(vdev, 0);
+@@ -184,8 +185,8 @@ static void vhost_vdpa_device_unrealize(DeviceState *dev)
+     virtio_cleanup(vdev);
  
- out:
+     g_free(s->config);
+-    g_free(s->dev.vqs);
+     vhost_dev_cleanup(&s->dev);
++    g_free(vqs);
+     g_free(s->vdpa.shared);
+     qemu_close(s->vhostfd);
+     s->vhostfd = -1;
 -- 
 2.47.3
 
