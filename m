@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D88AC44506
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 23:00:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EEF2C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 23:00:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigfn-0007nt-DW; Sat, 11 Jul 2026 18:59:51 -0400
+	id 1wiggP-0000hH-UX; Sat, 11 Jul 2026 19:00:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigfk-0007ll-Az; Sat, 11 Jul 2026 18:59:49 -0400
-Received: from pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.35.192.45])
+ id 1wiggN-0000X3-Oc; Sat, 11 Jul 2026 19:00:27 -0400
+Received: from pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([44.246.77.92])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigfi-0001k0-Ly; Sat, 11 Jul 2026 18:59:48 -0400
+ id 1wiggL-00023V-O9; Sat, 11 Jul 2026 19:00:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783810786; x=1815346786;
+ t=1783810825; x=1815346825;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=fGAsGEmjfX3MBpOp6h3ry6kdNBxY7rLmYSvCKtAP6K8=;
- b=sNmYG+4yIGGNhrX4qdAeyBFQi1biajHUT7Mav40qPWBI3rp5bNqSj7bd
- kamYrGV3ySBoYLEiCsh/NFLjJCBdNPZf1GxFG9fNZGZBunf7U2Z7qkfXC
- 4oy0kWYt8bMb5A/nESeaHNqTewBXGJR3zODpkgO6OOqeVnoAdCPKSBV+M
- gGcgImZHA7g4jKd0/1kH7Fz0zxthJa+HKzW+q2OOLzkvPm08EXin+0Cgv
- MxONYH9bqLD77sILnPd/JSQD4OAp1f4E/ykFJgFePh1q+q69+o848sCfA
- 6xhhaGzc/gHtwbI/TX65dt6mtEG0bz9UbkGsyc5d8NYoYoTtdTLBivwh5 A==;
-X-CSE-ConnectionGUID: Ji1NepCmRmK8JLTtELBBXQ==
-X-CSE-MsgGUID: 1Wa+D6v3SvOFDfHTF6lPYg==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23269909"
-Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
- by internal-pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:59:43 +0000
-Received: from EX19MTAUWC001.ant.amazon.com [205.251.233.53:13464]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.47.135:2525]
+ bh=+NW1ede9jkU8iAzaiVlSKGRb2pU5g+Y9Xr/bJHaR448=;
+ b=Rys3SkRwUoX0MoipnvTdznOY5Zzt50+QyEWhYEWo7sLCO8btHWHxr6cK
+ 5/yj2iigetIxT2NtN/oUthA9Q6lT29XcFDNe5qMZe1eUiODxTQDEdMNr+
+ pjoqMexrnUUCZFHb4Y/pXOSjmMJRKdB6AKn2tVuaVEShA+0sWKBe60Cfz
+ ZsfnSlFQxjClfoRosbsumQFMvsUcpUKV4F0LXgZyKoIFoqRe5YfnvRSU4
+ QCr8WVpw0xeoaHqhS/hDTJ8SZdUox/3iNHOtGu3zHyzJZKqDNkVynbdAd
+ 040bMY+Qv4mUgh+hddxbXKCm5hh6hDCNHiDGwPkeuTOWJTZs//Wrftnlm g==;
+X-CSE-ConnectionGUID: eX6CSNs4Ququ9+xsBVz6eQ==
+X-CSE-MsgGUID: rgVFLvIETs6RKI+BR4UKzg==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23493273"
+Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
+ by internal-pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 23:00:21 +0000
+Received: from EX19MTAUWB002.ant.amazon.com [205.251.233.48:8893]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.35.214:2525]
  with esmtp (Farcaster)
- id cf93b9d5-a49c-4a91-9642-236675a40b9d; Sat, 11 Jul 2026 22:59:42 +0000 (UTC)
-X-Farcaster-Flow-ID: cf93b9d5-a49c-4a91-9642-236675a40b9d
+ id 472d9e64-4c19-49da-9c5e-f3552fdb6959; Sat, 11 Jul 2026 23:00:21 +0000 (UTC)
+X-Farcaster-Flow-ID: 472d9e64-4c19-49da-9c5e-f3552fdb6959
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
+ EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:59:42 +0000
+ Sat, 11 Jul 2026 23:00:21 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:59:34 +0000
+ Sat, 11 Jul 2026 23:00:12 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,9 +91,10 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 086/134] cpu: Remove cpu_create_orphan()
-Date: Sat, 11 Jul 2026 22:36:19 +0000
-Message-ID: <20260711223707.42139-87-graf@amazon.com>
+Subject: [RFC PATCH 088/134] qdev: Remove qdev_new_orphan() and
+ qdev_try_new_orphan()
+Date: Sat, 11 Jul 2026 22:36:21 +0000
+Message-ID: <20260711223707.42139-89-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -101,18 +102,18 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D031UWA004.ant.amazon.com (10.13.139.19) To
+X-ClientProxiedBy: EX19D037UWB004.ant.amazon.com (10.13.138.84) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=52.35.192.45;
+Received-SPF: pass client-ip=44.246.77.92;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
 X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
  HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
+ RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
  UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,59 +130,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All targets create their CPUs with an explicit parent now.
+Every bus-layer *_orphan() wrapper is gone and the last direct
+caller, qdev_device_add_from_qdict(), now uses object_new() plus
+qdev_set_id() to place -device instances under
+/machine/peripheral{,-anon} as before.  There is no remaining
+legitimate way to create a device without picking its parent, so
+drop the transitional *_orphan() spellings and update the doc
+comments that still referenced them.
 
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/core/cpu-common.c  | 12 ------------
- include/hw/core/cpu.h | 10 ----------
- 2 files changed, 22 deletions(-)
+ hw/core/qdev.c         | 13 -------------
+ include/hw/core/qdev.h | 30 +++---------------------------
+ system/qdev-monitor.c  |  2 +-
+ 3 files changed, 4 insertions(+), 41 deletions(-)
 
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index eef243c1ad..829a044e9e 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -68,18 +68,6 @@ CPUState *cpu_create(Object *parent, const char *id, const char *typename)
-     return cpu;
+diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+index d2c89d0310..f7b512eb35 100644
+--- a/hw/core/qdev.c
++++ b/hw/core/qdev.c
+@@ -164,19 +164,6 @@ DeviceState *qdev_try_new(Object *parent, const char *id, const char *type)
+     return DEVICE(obj);
  }
  
--CPUState *cpu_create_orphan(const char *typename)
+-DeviceState *qdev_new_orphan(const char *name)
 -{
--    Error *err = NULL;
--    CPUState *cpu = CPU(object_new(typename));
--    if (!qdev_realize(DEVICE(cpu), NULL, &err)) {
--        error_report_err(err);
--        object_unref(OBJECT(cpu));
--        exit(EXIT_FAILURE);
--    }
--    return cpu;
+-    return DEVICE(object_new(name));
 -}
 -
- void cpu_reset_interrupt(CPUState *cpu, int mask)
- {
-     qatomic_and(&cpu->interrupt_request, ~mask);
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 1b2ec1ab1e..544740a699 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -857,16 +857,6 @@ char *cpu_model_from_type(const char *typename);
+-DeviceState *qdev_try_new_orphan(const char *name)
+-{
+-    ObjectClass *oc = module_object_class_by_name(name);
+-    if (!oc) {
+-        return NULL;
+-    }
+-    return DEVICE(object_new_with_class(oc));
+-}
+ 
+ static QTAILQ_HEAD(, DeviceListener) device_listeners
+     = QTAILQ_HEAD_INITIALIZER(device_listeners);
+diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
+index e692a1d48e..9220e9e3b1 100644
+--- a/include/hw/core/qdev.h
++++ b/include/hw/core/qdev.h
+@@ -440,30 +440,6 @@ DeviceState *qdev_new(Object *parent, const char *id, const char *type);
   */
- CPUState *cpu_create(Object *parent, const char *id, const char *typename);
+ DeviceState *qdev_try_new(Object *parent, const char *id, const char *type);
  
 -/**
-- * cpu_create_orphan:
-- * @typename: The CPU type.
+- * qdev_new_orphan: Create a device on the heap
+- * @name: device type to create (we assert() that this type exists)
 - *
-- * Instantiates a CPU and realizes the CPU.
+- * This only allocates the memory and initializes the device state
+- * structure, ready for the caller to set properties if they wish.
+- * The device still needs to be realized.
 - *
-- * Returns: A #CPUState or %NULL if an error occurred.
+- * Return: a derived DeviceState object with a reference count of 1.
 - */
--CPUState *cpu_create_orphan(const char *typename);
+-DeviceState *qdev_new_orphan(const char *name);
+-
+-/**
+- * qdev_try_new_orphan: Try to create a device on the heap
+- * @name: device type to create
+- *
+- * This is like qdev_new_orphan(), except it returns %NULL when type @name
+- * does not exist, rather than asserting.
+- *
+- * Return: a derived DeviceState object with a reference count of 1 or
+- * NULL if type @name does not exist.
+- */
+-DeviceState *qdev_try_new_orphan(const char *name);
 -
  /**
-  * parse_cpu_option:
-  * @cpu_option: The -cpu option including optional parameters.
+  * qdev_is_realized() - check if device is realized
+  * @dev: The device to check.
+@@ -488,8 +464,8 @@ static inline bool qdev_is_realized(DeviceState *dev)
+  * If @bus, plug @dev into @bus.  This takes a reference to @dev.
+  * If @dev has no QOM parent, make one up, taking another reference.
+  *
+- * If you created @dev using qdev_new_orphan(), you probably want to use
+- * qdev_realize_and_unref() instead.
++ * If you created @dev via object_new() directly (holding a floating
++ * reference), you probably want to use qdev_realize_and_unref() instead.
+  *
+  * Return: true on success, else false setting @errp with error
+  */
+@@ -506,7 +482,7 @@ bool qdev_realize(DeviceState *dev, BusState *bus, Error **errp);
+  * (private) reference, which is dropped on return regardless of
+  * success or failure.  Intended use::
+  *
+- *     dev = qdev_new_orphan();
++ *     dev = DEVICE(object_new(TYPE_FOO));
+  *     [...]
+  *     qdev_realize_and_unref(dev, bus, errp);
+  *
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index adc37d6a89..0e13b1540c 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -707,7 +707,7 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
+     }
+ 
+     /* create device */
+-    dev = qdev_new_orphan(driver);
++    dev = DEVICE(object_new(driver));
+ 
+     /* Check whether the hotplug is allowed by the machine */
+     if (phase_check(PHASE_MACHINE_READY) &&
 -- 
 2.47.1
 
