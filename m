@@ -4,49 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4272C44501
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:07:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4882C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:07:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifkx-0003rq-Ae; Sat, 11 Jul 2026 18:01:07 -0400
+	id 1wifpW-0006Sy-Bm; Sat, 11 Jul 2026 18:05:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifku-0003jl-RE; Sat, 11 Jul 2026 18:01:04 -0400
+ id 1wifpR-00062y-UH; Sat, 11 Jul 2026 18:05:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifkt-0008Bm-0j; Sat, 11 Jul 2026 18:01:04 -0400
+ id 1wifpP-0000h2-T4; Sat, 11 Jul 2026 18:05:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807180; bh=9UdAnkZwEqHrYu4VUtdYR8CUvmU8vYUaplzEWlVnJMU=;
+ t=1783807181; bh=Qr/i8I8IBEHoW3K54fVf/nBkolXXzPDq4ww5nE4cG6g=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=onYuOlpPmmGOD9r/V5Qa0YTZTiegnFXycc33PIYqW7XfGhflAZIvX9FgYGBT8RttQ
- o7roEQeMQbRIA77tN+ql30C7/1vBMNRVXOtSH7vCMD2xctl53rL6hhCoAragbxr+ze
- ZKxdpPd/Hjhlay+KV1Z9ElfKmxn7823h/bMpDtlL8cpSpd+Txw3942uyT3hJf8KN22
- 4MHQJOuoKx3IQZPPVKciInybj5MjwOF9M8cFUP1drQ24wRi8cqQDwD9VryEjNn0oVT
- mnnz/6bioHWLJZ6tza5s5Gtb5NFSe+vOe55SWh6CPQAcMtV53tRTf1t2J+ZaCH96Df
- gFg8sev9Xclag==
+ b=FIwlp9q4GeyqAkNgaLJYqJXK7F7f60twtZxoPxY4k7JbX3Tznj4dslOvP/pqAJ0La
+ l0mCmSpEwhuDxXxpd+L5QNL4S05TU67yUSlS6987Bt68pnvv0eGN1acn60D0rz2gXN
+ 8fRlE1MPH/54hKuPxhw9KYqQ7ff98z2A1PjwSfKifgHNinEsM0ABpmAC7/llK2ojQW
+ YSlkshuz+wP89UJTBe28m2OHF3/Q6/2iBoiAZkISHjjSw++3/q9mJdMT3NY6AQmL0N
+ rFw0PQnp9QGU0I9cVSKm9QRLItmEiUYlIZqbzvVYQXROtI2F5PXeIevty0AbZnwiZ3
+ 7LZKwfICbD6jA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6D9031C0A9C;
- Sun, 12 Jul 2026 00:59:40 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 90FEC1C0ACB;
+ Sun, 12 Jul 2026 00:59:41 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2258E3EAF27;
- Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4788B3EAF56;
+ Sun, 12 Jul 2026 00:59:51 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 5DEE913305; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id D1B3713363; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+Cc: qemu-stable@nongnu.org, Randy Schifflin <randy.schifflin@gmail.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 17/81] tests/9p: add Txattrcreate / Rxattrcreate test
- client functions
-Date: Sun, 12 Jul 2026 00:57:55 +0300
-Message-ID: <20260711215904.3757-17-mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 64/81] target/sh4: fixup tcg for sh4 fipr/ftrv
+ instructions
+Date: Sun, 12 Jul 2026 00:58:42 +0300
+Message-ID: <20260711215904.3757-64-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,135 +74,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Randy Schifflin <randy.schifflin@gmail.com>
 
-Add v9fs_txattrcreate() and v9fs_rxattrcreate() functions to the
-9P test client for testing creation of xattrs with 9pfs server.
+Fixes TCG generation for sh4 `fipr` and `ftrv` instructions.
+Updates the current logic for these instructions to check the
+FPSCR register appropriately (according to the sh4 cpu manual, `fipr`
+and `ftrv` are only defined when the FPSCR register PR flag is 0).
+Also fixes the mth/nth-vector operands by multiplying by 4 to convert
+to the correct floating point register offset.
 
-Link: https://lore.kernel.org/qemu-devel/5dbc5061dab1f7829fffc40bf89d7ff443e4bcab.1781361555.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit 7664feb26fef19caa4d72e07a9097fa625b593e5)
+Signed-off-by: Randy Schifflin <randy.schifflin@gmail.com>
+Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
+Message-ID: <20260629-fixup-sh4-tcg-fpu-instructions-b4-v1-2-4356b305f971@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit 614a52cf549e6aefa656634b4d3fa0d4686125c6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
-index 83af6dab5d1..305b0dac63a 100644
---- a/tests/qtest/libqos/virtio-9p-client.c
-+++ b/tests/qtest/libqos/virtio-9p-client.c
-@@ -243,6 +243,7 @@ static const char *rmessage_name(uint8_t id)
-         id == P9_RREADDIR ? "RREADDIR" :
-         id == P9_RREAD ? "RREAD" :
-         id == P9_RCLUNK ? "RCLUNK" :
-+        id == P9_RXATTRCREATE ? "RXATTRCREATE" :
-         "<unknown>";
- }
+diff --git a/target/sh4/op_helper.c b/target/sh4/op_helper.c
+index cf0f80e4a54..7f8b27eabee 100644
+--- a/target/sh4/op_helper.c
++++ b/target/sh4/op_helper.c
+@@ -487,7 +487,7 @@ void helper_ftrv(CPUSH4State *env, uint32_t n)
+     float32 p;
  
-@@ -1182,3 +1183,47 @@ void v9fs_rclunk(P9Req *req)
-     v9fs_req_recv(req, P9_RCLUNK);
-     v9fs_req_free(req);
- }
-+
-+/* size[4] Txattrcreate tag[2] fid[4] name[s] attr_size[8] flags[4] */
-+TXattrCreateRes v9fs_txattrcreate(TXattrCreateOpt opt)
-+{
-+    P9Req *req;
-+    uint32_t err;
-+
-+    g_assert(opt.client);
-+    g_assert(opt.name);
-+
-+    uint32_t body_size = 4 + 8 + 4;
-+    uint16_t string_size = v9fs_string_size(opt.name);
-+
-+    g_assert_cmpint(body_size, <=, UINT32_MAX - string_size);
-+    body_size += string_size;
-+
-+    req = v9fs_req_init(opt.client, body_size, P9_TXATTRCREATE, opt.tag);
-+    v9fs_uint32_write(req, opt.fid);
-+    v9fs_string_write(req, opt.name);
-+    v9fs_uint64_write(req, opt.size);
-+    v9fs_uint32_write(req, opt.flags);
-+    v9fs_req_send(req);
-+
-+    err = 0;
-+    if (!opt.requestOnly) {
-+        v9fs_req_wait_for_reply(req, NULL);
-+        if (opt.expectErr) {
-+            v9fs_rlerror(req, &err);
-+            g_assert_cmpint(err, ==, opt.expectErr);
-+        } else {
-+            v9fs_rxattrcreate(req);
-+        }
-+        req = NULL; /* request was freed */
-+    }
-+
-+    return (TXattrCreateRes) { .req = req, .err = err };
-+}
-+
-+/* size[4] Rxattrcreate tag[2] */
-+void v9fs_rxattrcreate(P9Req *req)
-+{
-+    v9fs_req_recv(req, P9_RXATTRCREATE);
-+    v9fs_req_free(req);
-+}
-diff --git a/tests/qtest/libqos/virtio-9p-client.h b/tests/qtest/libqos/virtio-9p-client.h
-index f7ef7f00679..c432b0daee4 100644
---- a/tests/qtest/libqos/virtio-9p-client.h
-+++ b/tests/qtest/libqos/virtio-9p-client.h
-@@ -524,6 +524,34 @@ typedef struct TClunkRes {
-     P9Req *req;
- } TClunkRes;
+     bank_matrix = (env->sr & FPSCR_FR) ? 0 : 16;
+-    bank_vector = (env->sr & FPSCR_FR) ? 16 : 0;
++    bank_vector = (env->sr & FPSCR_FR) ? 16 + n : n;
+     set_float_exception_flags(0, &env->fp_status);
+     for (i = 0 ; i < 4 ; i++) {
+         r[i] = float32_zero;
+diff --git a/target/sh4/translate.c b/target/sh4/translate.c
+index b1057727c55..3f018611316 100644
+--- a/target/sh4/translate.c
++++ b/target/sh4/translate.c
+@@ -377,11 +377,6 @@ static inline void gen_store_fpr64(DisasContext *ctx, TCGv_i64 t, int reg)
+         goto do_illegal;                    \
+     }
  
-+/* options for 'Txattrcreate' 9p request */
-+typedef struct TXattrCreateOpt {
-+    /* 9P client being used (mandatory) */
-+    QVirtio9P *client;
-+    /* user supplied tag number being returned with response (optional) */
-+    uint16_t tag;
-+    /* file ID to convert to xattr fid (required) */
-+    uint32_t fid;
-+    /* name of the xattr (required) */
-+    const char *name;
-+    /* size of the xattr value (required) */
-+    uint64_t size;
-+    /* flags: P9_XATTR_CREATE or P9_XATTR_REPLACE (optional) */
-+    uint32_t flags;
-+    /* only send Txattrcreate request but not wait for a reply? (optional) */
-+    bool requestOnly;
-+    /* do we expect an Rlerror response, if yes which error code? (optional) */
-+    uint32_t expectErr;
-+} TXattrCreateOpt;
-+
-+/* result of 'Txattrcreate' 9p request */
-+typedef struct TXattrCreateRes {
-+    /* if requestOnly was set: request object for further processing */
-+    P9Req *req;
-+    /* error code if Rlerror received */
-+    uint32_t err;
-+} TXattrCreateRes;
-+
- void v9fs_set_allocator(QGuestAllocator *t_alloc);
- void v9fs_memwrite(P9Req *req, const void *addr, size_t len);
- void v9fs_memskip(P9Req *req, size_t len);
-@@ -579,5 +607,7 @@ TReadRes v9fs_tread(TReadOpt opt);
- void v9fs_rread(P9Req *req, uint32_t *count, void *data);
- TClunkRes v9fs_tclunk(TClunkOpt opt);
- void v9fs_rclunk(P9Req *req);
-+TXattrCreateRes v9fs_txattrcreate(TXattrCreateOpt opt);
-+void v9fs_rxattrcreate(P9Req *req);
- 
- #endif
-diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
-index 099c5e0ca05..99a897b1585 100644
---- a/tests/qtest/virtio-9p-test.c
-+++ b/tests/qtest/virtio-9p-test.c
-@@ -33,6 +33,7 @@
- #define tunlinkat(...) v9fs_tunlinkat((TunlinkatOpt) __VA_ARGS__)
- #define tread(...) v9fs_tread((TReadOpt) __VA_ARGS__)
- #define tclunk(...) v9fs_tclunk((TClunkOpt) __VA_ARGS__)
-+#define txattrcreate(...) v9fs_txattrcreate((TXattrCreateOpt) __VA_ARGS__)
- 
- static void pci_config(void *obj, void *data, QGuestAllocator *t_alloc)
- {
+-#define CHECK_FPSCR_PR_1 \
+-    if (!(ctx->tbflags & FPSCR_PR)) {       \
+-        goto do_illegal;                    \
+-    }
+-
+ #define CHECK_SH4A \
+     if (!(ctx->features & SH_FEATURE_SH4A)) { \
+         goto do_illegal;                      \
+@@ -1740,22 +1735,22 @@ static void _decode_opc(DisasContext * ctx)
+         return;
+     case 0xf0ed: /* fipr FVm,FVn */
+         CHECK_FPU_ENABLED
+-        CHECK_FPSCR_PR_1
++        CHECK_FPSCR_PR_0
+         {
+-            TCGv m = tcg_constant_i32((ctx->opcode >> 8) & 3);
+-            TCGv n = tcg_constant_i32((ctx->opcode >> 10) & 3);
++            TCGv m = tcg_constant_i32(((ctx->opcode >> 8) & 3) << 2);
++            TCGv n = tcg_constant_i32(((ctx->opcode >> 10) & 3) << 2);
+             gen_helper_fipr(tcg_env, m, n);
+             return;
+         }
+         break;
+     case 0xf0fd: /* ftrv XMTRX,FVn */
+         CHECK_FPU_ENABLED
+-        CHECK_FPSCR_PR_1
++        CHECK_FPSCR_PR_0
+         {
+             if ((ctx->opcode & 0x0300) != 0x0100) {
+                 goto do_illegal;
+             }
+-            TCGv n = tcg_constant_i32((ctx->opcode >> 10) & 3);
++            TCGv n = tcg_constant_i32(((ctx->opcode >> 10) & 3) << 2);
+             gen_helper_ftrv(tcg_env, n);
+             return;
+         }
 -- 
 2.47.3
 
