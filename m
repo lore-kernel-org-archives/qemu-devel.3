@@ -4,106 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EB96C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 07:48:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AF21C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 08:01:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiSR1-00078p-Gp; Sat, 11 Jul 2026 03:47:39 -0400
+	id 1wiSdP-00062Q-Dh; Sat, 11 Jul 2026 04:00:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wiSQz-00078X-Vf; Sat, 11 Jul 2026 03:47:38 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wiSdN-00061m-0m
+ for qemu-devel@nongnu.org; Sat, 11 Jul 2026 04:00:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wiSQw-0005OM-Mt; Sat, 11 Jul 2026 03:47:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783756041; bh=0LXG6DgFh5qLxzkbcW2qQygnF4AbrnSqdes4fG1hweo=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=d3eE/jIuqb/QTazblY+x5/+YcLGigAARMyTIIJD7ijtNbwvi46j6zH1dg+upeBjbO
- k0MSdp2o1Bc715ohZpk4b2ORpsXDotwKuhwRnRRJdIzl2nDN5/Ke1GvaDLjnR8n3t/
- 8GgXEUsy/VAxcaN1cMi//T9ULrJzGsBDYznh025s6VgtDceAaUCyS+l3ApgdsY4nvD
- 9Nl5sbsSZw8HehyMEzDp0OCs9Pzt5HV1ac1BUHD8ut6NLhHrAcJDAOxAT5Z+atcgvx
- vM1YAlKJsvDka9TsfPrc3Ubvm0mgkg9B1IZYrbS25aqdtBaXYYeb5JdwUeCzTId4Q2
- SwIJoyxeNEBFA==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 348711C0703;
- Sat, 11 Jul 2026 10:47:21 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 874A13EAA7E;
- Sat, 11 Jul 2026 10:47:29 +0300 (MSK)
-Message-ID: <59d0a99c-8eb2-4192-a388-331d0dd93358@tls.msk.ru>
-Date: Sat, 11 Jul 2026 10:47:29 +0300
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wiSdK-0007Bt-MV
+ for qemu-devel@nongnu.org; Sat, 11 Jul 2026 04:00:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783756820;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=CYVTOBlmUklmpZLG1jFyXhs1sQxjfRtp4qnO7JRT+Bk=;
+ b=Hole68P7Ojln+FlULa0ZqlzzQZbreoo+DobluyJPnF1HjIcWy8VLYB5GlUD51YG9fSV4bI
+ heQRt1eCCorvqxf+BpcOPV5CGvUW3FFgHfTIfMk9Re9ThgcI5U64LsJfue6pPSQeyBYG5c
+ W1G+GM06vh61il3Fs7froSI6Vsi2Frc=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-178-DAoM8qG9Plu2bDfUaOA2uw-1; Sat, 11 Jul 2026 04:00:16 -0400
+X-MC-Unique: DAoM8qG9Plu2bDfUaOA2uw-1
+X-Mimecast-MFC-AGG-ID: DAoM8qG9Plu2bDfUaOA2uw_1783756816
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-c15ce19923fso196161866b.3
+ for <qemu-devel@nongnu.org>; Sat, 11 Jul 2026 01:00:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1783756815; x=1784361615; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=CYVTOBlmUklmpZLG1jFyXhs1sQxjfRtp4qnO7JRT+Bk=;
+ b=WGBsQcksRDetdVhbtWEXdi0ziSScj4QDabHqPwxt8k/30NH4294+iQqeEA0Tn7D9qf
+ P48GlH3oE/Fx/eqIWesm5N5JIltwHkrxn7+tRR1Smuj5N2uVxFynuqysn/Fd2b/DmIt4
+ LnBT/WwKr/QkSKhUQfMktlPLSx4ZLxjuyqiGLm8Lgxs4TMvsJLJ2RrgAIx+Fdj+UAWGE
+ OnbBYlOpYdTo3ERiWHzlh0/mfjej7hKX/pkWLNC+Tr/dOLwnRrH9PLqIQnyNFhynja+4
+ dPa06NioUVcvnS53+8A6zhxxjKRDiOsBMtO+nPTeCeYnYslA9M6Z/56XC1F6LueZA9ru
+ 11Fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783756815; x=1784361615;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=CYVTOBlmUklmpZLG1jFyXhs1sQxjfRtp4qnO7JRT+Bk=;
+ b=YV6t6donBKet9lBY2C5gQF0ELso6msfrLyOcv8DOVrSLLlePAJhmJ9DTDVJJHZujMT
+ 8Dv9LBJ2w88S2Xe+z+3zgLyOnuMG6dj1MXQXZD0V2yAq9S50KUVnvWNGhetOgHzvOUrg
+ SBaxbuh/3sCTAvLfXTYm0C815TCByL8GcgAt4bw4Nr9Zu5UbdsV2TNpFm1Us1iMplv6x
+ inheMs+06xR+aRmXGCm1tQn4+TABSpjA/wz07MEHTIdJGbhYubEX48qkZYJXZoX96AoE
+ 0Gl8cJxshUlnNwNoSwY1LBAjkl8QTOy8wQuP0i5Vso5ktiV1GMZXhrpJKS7UP93I0jaE
+ yLNQ==
+X-Gm-Message-State: AOJu0Yzfy2SaCXygdydo3aB3T1Mwuio1QPuvrUa5sTyZ3u9/AWiUWG7t
+ QI4v3A2D/1KnHgTztUh6WQT4192di0AGcae6CFqQBQfOvYyLfA4Ohs2WySk+dTeN13pLJwYblY4
+ rQrq+gwVOD6mgVYK18Hj2FrNY4HWLrd5RupsN69Cf8GJufQ08UIH7CTqT
+X-Gm-Gg: AfdE7clfsvVwpLBCcsqwU9yvkt51VvM4x6CggSqLw9CQmU8USulv7nR3TTc1oJwbchS
+ B0gCtZSCZHcYljLDRfxme4NSdw+UT7hsEJWeDRuHJEjtMljjIY+pycvQkzsNCKiPdUsPK0+nGGN
+ Sa/8an9kRFjNvEPJuWW2CYPYDhTwfS3iNqtR7irZrAFcDi+gxEvCmfgmIruK2Zb+cDBWOAxnvcg
+ TDI7Db7U2Bh2q06UAjHKz3PZIuHGt4vUuZhPZrnq4asK6K7DyJcn1Zr++qXcbij/qd6CfCyOWD3
+ UQGOghNBa4FaFT4ZRtSl9u3j5XuNa8D4hBGuuNcthg3z8EpCLiz81Ya8NXky3Ecb3hkWzW99Cye
+ m48cm/H7pEz6oSbrwktD+OPsCOnh5Dmm5IIjui7LutQ==
+X-Received: by 2002:a05:6938:a08e:10b0:c12:7512:18de with SMTP id
+ a640c23a62f3a-c161f3cedd3mr49638166b.57.1783756815548; 
+ Sat, 11 Jul 2026 01:00:15 -0700 (PDT)
+X-Received: by 2002:a05:6938:a08e:10b0:c12:7512:18de with SMTP id
+ a640c23a62f3a-c161f3cedd3mr49637166b.57.1783756814914; 
+ Sat, 11 Jul 2026 01:00:14 -0700 (PDT)
+Received: from redhat.com (bzq-79-177-145-168.red.bezeqint.net.
+ [79.177.145.168]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c15d5739621sm470316866b.32.2026.07.11.01.00.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 11 Jul 2026 01:00:13 -0700 (PDT)
+Date: Sat, 11 Jul 2026 04:00:10 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, alistair23@gmail.com, qemu-riscv@nongnu.org,
+ bin.meng@processmission.com, mzamazal@redhat.com, sgarzare@redhat.com
+Subject: Re: [PATCH 2/2] MAINTAINERS: Mark "vhost-user-scmi" orphaned
+Message-ID: <20260711035848-mutt-send-email-mst@kernel.org>
+References: <20260710114305.2961898-1-armbru@redhat.com>
+ <20260710114305.2961898-3-armbru@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/riscv/riscv-iommu.c: set ftype and iova in
- riscv_iommu_ctx()
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- andrew.jones@oss.qualcomm.com, Palmer Dabbelt <palmer@dabbelt.com>,
- Chengbo Gao <gaochengbo@bosc.ac.cn>, qemu-stable <qemu-stable@nongnu.org>,
- Frank Chang <frank.chang@sifive.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-References: <20260701092241.307801-1-daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260701092241.307801-1-daniel.barboza@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260710114305.2961898-3-armbru@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,53 +118,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/1/26 12:22, Daniel Henrique Barboza wrote:
-> We're hardcoding faulting type as READ, where it could very well be a
-> write access, and we're not recording the faulting addr/iova.
+On Fri, Jul 10, 2026 at 01:43:05PM +0200, Markus Armbruster wrote:
+> Commit a5dab090e1 (hw/virtio: Add boilerplate for vhost-user-scmi
+> device, 2023-06-28) added the section with S: Supported, but no M:.
+> This makes no sense.  Downgrade to S: Orphan.
 > 
-> A note was added in the fault_type logic because I wasn't able to
-> trivially handle a probable code repeitition it in this same patch.
-> Something to do in a later date.
-> 
-> Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3564
-> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+
+
+No, this makes sense. The reason this section was added is so that Milan can
+get copied on vhost-user-scmi but not other virtio stuff:
+
+./scripts/get_maintainer.pl -f hw/virtio/vhost-user-scmi.c
+Milan Zamazal <mzamazal@redhat.com> (reviewer:vhost-user-scmi)
+"Michael S. Tsirkin" <mst@redhat.com> (supporter:vhost)
+Stefano Garzarella <sgarzare@redhat.com> (reviewer:vhost)
+qemu-devel@nongnu.org (open list:All patches CC here)
+
+Pls drop this patch.
+
 > ---
->   hw/riscv/riscv-iommu.c | 29 +++++++++++++++++++++++------
->   1 file changed, 23 insertions(+), 6 deletions(-)
-
-For the stable qemu series (currently 10.0.x-LTS and 11.0.x), in order
-to pick this commit, I also picked v11.0.0-1212-gca7bac51e04
-"hw/riscv/riscv-iommu: Avoid caching PCI device IDs" by Chengbo Gao
-(Cc'ed) - because it touched the same code and there's a merge conflict.
-I can edit this patch ("set ftype and iova in riscv_iommu_ctx()") instead,
-but it felt that ca7bac51e04 is also a good pick for the stable series.
-
-Additionally for 10.0.x-LTS series, I also picked 2 more commits:
-
-v10.2.0-323-g15406cc593a "hw/riscv: riscv-iommu: Don't look up DDT cache
-  in Off and Bare modes" by Frank Chang (Cc'ed), which avoids a merge
-  conflict and also looks like a (maybe missing) bugfix.
-
-v10.2.0-312-gc497ef6739c "hw/riscv/riscv-iommu: Fix MemoryRegion owner"
-  by Akihiko Odaki, which I spotted when looking for the history of
-  changes, and which looked like an obvious bugfix.
-
-Hopefully this is okay.  Unfortunately even the simpler changes brings
-up quite a lot of missing fixes just by a chance - this means that we
-either not doing a good job keeping stable series up to date (by marking
-commits fixing stuff for-stable), or we should not try fixing stuff in
-previous series for a too-fast-moving target.
-
-I'm sorry I'm bringing up this more general question in a very narrow
-context of this particular fix (which might not even be important
-enough).  Maybe I should discuss this separately.  Overall, I'm
-having some.. issues with riscv pullreqs in context of stable series,
-it's always more time-consuming to handle these and a bit more difficult
-to decide what is imortant and what can be skipped.
-
-Thanks,
-
-/mjt
+>  MAINTAINERS | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index aa2df9cbe3..4d558ddee9 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2622,7 +2622,7 @@ F: include/hw/virtio/vhost-user-snd.h
+>  
+>  vhost-user-scmi
+>  R: Milan Zamazal <mzamazal@redhat.com>
+> -S: Supported
+> +S: Orphan
+>  F: hw/virtio/vhost-user-scmi*
+>  F: include/hw/virtio/vhost-user-scmi.h
+>  F: tests/qtest/libqos/virtio-scmi.*
+> -- 
+> 2.54.0
 
 
