@@ -4,49 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A21C4C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:06:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F12DBC43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:06:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifju-0001ZT-20; Sat, 11 Jul 2026 18:00:02 -0400
+	id 1wifnj-0001Fk-77; Sat, 11 Jul 2026 18:03:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifjs-0001Xo-4k; Sat, 11 Jul 2026 18:00:00 -0400
+ id 1wifng-00016N-P9; Sat, 11 Jul 2026 18:03:56 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifjq-0007t5-Fj; Sat, 11 Jul 2026 17:59:59 -0400
+ id 1wifnf-0000Fk-5r; Sat, 11 Jul 2026 18:03:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807180; bh=e2VW6vmH7t+84sHdy5ff5CdzavXHV34+NrbC9Nnc0bo=;
+ t=1783807181; bh=FaJS5R+gKCiWVlVkXPRzdxDXSytnyRiohqszJtJk9MQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Hlxl1rGTWlHgRcgFFflvBcmqC3Da7Ir6GhLrhyk0pvFPHy2QDzNcYodcPelOgik7G
- H4O3WH3naIuHGCdt7fAgtUa91Q0sK6lQ+dpx9T9opGbcsjlZCYKxzQbaa9jlUhP2Vs
- 6+mFMNijA52E+iXyudmpZ1INq8sXLaugd5SEPSM6cHquJg9TXjTU9tO0nr3U/AHLO3
- Jsu4HjrH58ipNcGH4LFlycQQS11Yb+4AHIOh5Hkbq0g9X+6F8/Asdiyij6EdeBzoR6
- mKkP++SxxBC55yIu3MeFMvkJ64QrgDK4y/orucrPXSFjACZXhoIglRn8eHTlFmwGPk
- D05ZdsX3Y0m3A==
+ b=TApWUXKCEF+8DLiou+0SebQXoGrvCv6tBmdtMbjjWWWFXUjyf7PkZQcQTegF6Bf75
+ dXbcvz3KO4y5wDXf5VEeBKRAa+r/5nKQXovIIlKoftBXgBF3Xx8u8GNqsqwdt83Bs6
+ jXWBKLyVkdj6oZSSbhIiHh9V9pgK7iK/KH84Wm/C+++oEn/Aya1K4eKx/9QU+VS2cE
+ CcFI5fW3vTQ0kcaR/47LXLQQarkSLSF/1CSkXsa3F7hRoGad4iYFjTS79TkuFKAQ4K
+ pa57HaTE335xRFh9NhhnNmwAa4EFQoEjmgpG9eXTay+QG+Hth4WIqFHwUjgtl8fBUl
+ 1Tt0Igc39xTwg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 295EF1C0A91;
- Sun, 12 Jul 2026 00:59:40 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 336131C0ABA;
+ Sun, 12 Jul 2026 00:59:41 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D4D133EAF1C;
- Sun, 12 Jul 2026 00:59:49 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id DE8D93EAF45;
+ Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 44A8F132EF; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id A8C4913341; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
+Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@intel.com>,
+ Feifan Qian <bea1e@proton.me>, Chad Jablonski <chad@jablonski.xyz>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 06/81] 9pfs/xen: implement msize_limit callback
-Date: Sun, 12 Jul 2026 00:57:44 +0300
-Message-ID: <20260711215904.3757-6-mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 47/81] hw/display/ati: guard against zero bpp in
+ ati_host_data_flush
+Date: Sun, 12 Jul 2026 00:58:25 +0300
+Message-ID: <20260711215904.3757-47-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,59 +74,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Junjie Cao <junjie.cao@intel.com>
 
-Add and implement the msize_limit callback for the Xen transport.
+ati_bpp_from_datatype() returns 0 for unrecognized dp_datatype nibble
+values (0, 1, or >= 7). ati_host_data_flush() only guards against the
+bpp == 24 case but not bpp == 0, leading to:
 
-The limit is calculated using XEN_FLEX_RING_SIZE() based on the
-negotiated ring_order. For the theoretical maximum ring_order of 9,
-this results in a maximum 'msize' of 1048576 bytes (1 MiB).
+  1. Division by zero at "pix_count /= ctx.bpp" (SIGFPE) when
+     src_datatype is SRC_COLOR.
+  2. g_assert_not_reached() in stn_he_p() when bypp (= bpp/8 = 0)
+     hits the default case of the size switch.
 
-The minimum limit of all rings is picked, because multiple rings
-could theoretically have different ring_orders.
+Both are guest-triggerable via MMIO writes to the dp_datatype register
+while a HOST_DATA blit is active.
 
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Link: https://lore.kernel.org/qemu-devel/9471786bc47b93e822f6c6233a83f2b9f61e6c82.1781287774.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit 815d1799c3d3d6cd058cb4634392ca5a34830450)
+Add an explicit bpp == 0 check with LOG_GUEST_ERROR before proceeding
+with the blit, consistent with the existing check in ati_2d_do_blt().
+
+Cc: qemu-stable@nongnu.org
+Reported-by: Feifan Qian <bea1e@proton.me>
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Reviewed-by: Chad Jablonski <chad@jablonski.xyz>
+Message-ID: <20260519023937.439077-3-junjie.cao@intel.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit 90f8e5c307679b7468f73924e63682567a10564d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
-index ca0fff5fa9b..e31124bcf51 100644
---- a/hw/9pfs/xen-9p-backend.c
-+++ b/hw/9pfs/xen-9p-backend.c
-@@ -250,12 +250,31 @@ static void xen_9pfs_push_and_notify(V9fsPDU *pdu)
-     qemu_bh_schedule(ring->bh);
- }
+diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
+index 8ef82bb87fd..22dd811bd85 100644
+--- a/hw/display/ati_2d.c
++++ b/hw/display/ati_2d.c
+@@ -377,6 +377,11 @@ bool ati_host_data_flush(ATIVGAState *s)
  
-+static size_t xen_9p_msize_limit(V9fsState *s)
-+{
-+    Xen9pfsDev *xen_9pfs = container_of(s, Xen9pfsDev, state);
-+    size_t limit;
-+    int i;
-+
-+    if (!xen_9pfs->num_rings) {
-+        return 0;
-+    }
-+
-+    limit = XEN_FLEX_RING_SIZE(xen_9pfs->rings[0].ring_order);
-+    for (i = 1; i < xen_9pfs->num_rings; i++) {
-+        limit = MIN(limit, XEN_FLEX_RING_SIZE(xen_9pfs->rings[i].ring_order));
-+    }
-+
-+    return limit;
-+}
-+
- static const V9fsTransport xen_9p_transport = {
-     .pdu_vmarshal = xen_9pfs_pdu_vmarshal,
-     .pdu_vunmarshal = xen_9pfs_pdu_vunmarshal,
-     .init_in_iov_from_pdu = xen_9pfs_init_in_iov_from_pdu,
-     .init_out_iov_from_pdu = xen_9pfs_init_out_iov_from_pdu,
-     .push_and_notify = xen_9pfs_push_and_notify,
-+    .msize_limit = xen_9p_msize_limit,
- };
+     setup_2d_blt_ctx(s, &ctx);
  
- static int xen_9pfs_init(struct XenLegacyDevice *xendev)
++    if (!ctx.bpp) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "host_data_blt: invalid bpp from datatype\n");
++        return false;
++    }
+     if (ctx.bpp == 24) {
+         qemu_log_mask(LOG_UNIMP,
+                       "host_data_blt: unsupported in 24 bits mode\n");
 -- 
 2.47.3
 
