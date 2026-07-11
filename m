@@ -4,45 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 421D4C44506
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFF1EC43458
 	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:04:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifmw-0007PG-Hm; Sat, 11 Jul 2026 18:03:10 -0400
+	id 1wifmH-0006yD-2w; Sat, 11 Jul 2026 18:02:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifmd-00077Q-3H; Sat, 11 Jul 2026 18:02:52 -0400
+ id 1wiflx-0006w5-LK; Sat, 11 Jul 2026 18:02:09 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifmb-0008Si-8h; Sat, 11 Jul 2026 18:02:50 -0400
+ id 1wiflv-0008QN-TI; Sat, 11 Jul 2026 18:02:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807180; bh=N6CrWlcueapDe57i8B21TJMFx1p1nROoiikxrxvS2aY=;
+ t=1783807180; bh=bgD0VM6AM50Vd6jB3em1zGjC4SlfPpGE69p3UfF72yo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=RLiFjxvdyMOuyfSXZNQDIYmAdTA3rMQWavHK4ZEXI8y2z7xN+hQtvrj6Xk1DLlrko
- 0YxvPDoUKqUiiLI4SjQZAmr0ZMkfW4JrX+xBgtAQ8qm6SMuZlyK3i2opawUcq/Xp8q
- scP/lHjp21BZXj4mzRPZRAz54HwiyO7j1FTgWkpftMe7KOJXgsNk0qxk67cQXVeRno
- iZ610ERfSkb4dGzkBr5lR2yojcJlnDCDbuqKg7HzhDZzXlvCgdRJZ+jFrLGcN43979
- I3omPS67wHaQuDH44z9SdG4YQiFAtkq0qZ7+AEEcBWdSOnzkZdPa7HX0zgWNp7ZC5S
- SsIhA3asgeqcA==
+ b=IDm3lgvK4IboV+pfPVEXP43Ab1/+N8cv3mQTwPsGgiJoeBrxJEcBpU0n+Ku/Y5vsG
+ f8XZYy5Eug8j68hov05BdIcARy6C9hV4u482LMekvC6QhPZOGoILtK1XNKtuzQHJ5t
+ 8AueF6NyKXrsDCj6R4fRQ1mpJ9ppWKr5I1ZCpW4D3ZZcYQHqVCQSTOB2vxcNec+JYf
+ ZYJD7XGe+xGkrH4h1XV1nQKKyp9+iRrgxOplLXsPYHd+YhxvCaNSUZQRNtgPxmolZX
+ fcIRWyaO/VIVmLVA+B4Vy/6PtynIww/gEjwhEKmBoc3RXPrMay3PDvL6x84ljTt0o7
+ cjiwcexQH7lvw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DBA6F1C0AAD;
+ by isrv.corpit.ru (Postfix) with ESMTP id BE5291C0AA8;
  Sun, 12 Jul 2026 00:59:40 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 91D0C3EAF38;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7530E3EAF33;
  Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 87A1713327; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id 7B3531331D; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Feifan Qian <bea1e@proton.me>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 34/81] hw/net/fsl_etsec: validate FCB offsets in
- process_tx_fcb()
-Date: Sun, 12 Jul 2026 00:58:12 +0300
-Message-ID: <20260711215904.3757-34-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, ZhengXiang Qin <qinzhengxiang@foxmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 29/81] target/riscv: avoid abort when reading vtype
+ before env->xl is set
+Date: Sun, 12 Jul 2026 00:58:07 +0300
+Message-ID: <20260711215904.3757-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
@@ -71,83 +73,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Feifan Qian <bea1e@proton.me>
+From: ZhengXiang Qin <qinzhengxiang@foxmail.com>
 
-The TX Frame Control Block (FCB) is prepended to a TX frame when
-BD_TX_TOEUN is set. It contains two guest-controlled u8 offset
-fields that process_tx_fcb() uses to locate L3/L4 headers within
-the frame buffer:
+TCG plugins may read registers from the vcpu_init_cb() callback.  For
+vtype, this reaches read_vtype() before env->xl has been initialized.
 
-  l3_header_offset = FCB byte 3 (0..255)
-  l4_header_offset = FCB byte 2 (0..255)
+In that case read_vtype() currently hits g_assert_not_reached() because
+env->xl is zero.  Fall back to the CPU's maximum XLEN only for this
+early-init case.
 
-These offsets are applied without any bounds check. When the
-UDP-no-CTU branch is taken, the function writes zero to
-l4_header[6] and l4_header[7]. With both offsets set to 0xFF the
-write target is:
-
-  tx_buffer + 8 + 255 + 255 + 6/7 = tx_buffer + 525
-
-A malicious guest can therefore corrupt up to 509 bytes of heap
-memory beyond a minimally-sized (16 B) TX frame.
-
-Fix: reject the frame and log a guest error when the minimum
-required buffer length
-
-  8 (FCB) + l3_header_offset + l4_header_offset + 8
-
-exceeds tx_buffer_len. Move the l3_header and l4_header pointer
-declarations past the new guard so that out-of-bounds pointers
-are never materialised.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3517
-Signed-off-by: Feifan Qian <bea1e@proton.me>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit bc22c7e4187a619bf9ff7776288b588322e9ee41)
+Fixes: 638181a180bd ("core/cpu-common: initialise plugin state before thread creation")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3545
+Signed-off-by: ZhengXiang Qin <qinzhengxiang@foxmail.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <tencent_FB929239B227F05F30D62745E38BA01D4307@qq.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 46d96da1309869af6261d1997623b7a5212814d8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/fsl_etsec/rings.c b/hw/net/fsl_etsec/rings.c
-index 22660c32b84..e60303f52cf 100644
---- a/hw/net/fsl_etsec/rings.c
-+++ b/hw/net/fsl_etsec/rings.c
-@@ -176,15 +176,30 @@ static void tx_padding_and_crc(eTSEC *etsec, uint32_t min_frame_len)
- static void process_tx_fcb(eTSEC *etsec)
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 60dba08b99c..c8f510709ae 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -919,7 +919,16 @@ static RISCVException read_vtype(CPURISCVState *env, int csrno,
+                                  target_ulong *val)
  {
-     uint8_t flags = (uint8_t)(*etsec->tx_buffer);
--    /* L3 header offset from start of frame */
-+    /* L3 header offset from start of frame (FCB byte 3) */
-     uint8_t l3_header_offset = (uint8_t)*(etsec->tx_buffer + 3);
--    /* L4 header offset from start of L3 header */
-+    /* L4 header offset from start of L3 header (FCB byte 2) */
-     uint8_t l4_header_offset = (uint8_t)*(etsec->tx_buffer + 2);
-+    uint8_t *l3_header;
-+    uint8_t *l4_header;
-+    int csum = 0;
-+
+     uint64_t vill;
+-    switch (env->xl) {
++    int xl = env->xl;
 +    /*
-+     * Validate FCB header offsets before pointer arithmetic. The highest
-+     * byte accessed is l4_header[7], at offset
-+     *   8 (FCB size) + l3_header_offset + l4_header_offset + 7
-+     * from tx_buffer. Drop the frame if this exceeds the buffer length.
++     * TCG plugins can read registers before env->xl is initialized.
++     * Fall back to the CPU's maximum XLEN in that early-init case.
 +     */
-+    if (etsec->tx_buffer_len < 8u + l3_header_offset + l4_header_offset + 8u) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "eTSEC: FCB offsets exceed frame length, dropping\n");
-+        return;
++    if (xl == 0) {
++        xl = riscv_cpu_mxl(env);
 +    }
 +
-     /* L3 header */
--    uint8_t *l3_header = etsec->tx_buffer + 8 + l3_header_offset;
-+    l3_header = etsec->tx_buffer + 8 + l3_header_offset;
-     /* L4 header */
--    uint8_t *l4_header = l3_header + l4_header_offset;
--    int csum = 0;
-+    l4_header = l3_header + l4_header_offset;
- 
-     /* if packet is IP4 and IP checksum is requested */
-     if (flags & FCB_TX_IP && flags & FCB_TX_CIP) {
++    switch (xl) {
+     case MXL_RV32:
+         vill = (uint32_t)env->vill << 31;
+         break;
 -- 
 2.47.3
 
