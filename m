@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B057AC43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:04:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32C1BC43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:05:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifnf-00014b-TU; Sat, 11 Jul 2026 18:03:56 -0400
+	id 1wiflR-0005R2-4Y; Sat, 11 Jul 2026 18:01:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifnd-000132-PO; Sat, 11 Jul 2026 18:03:53 -0400
+ id 1wiflO-0005KI-Ve; Sat, 11 Jul 2026 18:01:35 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifnc-0000Cv-7m; Sat, 11 Jul 2026 18:03:53 -0400
+ id 1wiflM-0008HW-UV; Sat, 11 Jul 2026 18:01:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807181; bh=sOb7KOaB9Fa5lT3CgCH9pL8kdvFT6gD12EgC3VN22GE=;
+ t=1783807180; bh=QONICYvc3aooVcn8WP9NviLmeUnqTcw8CveB6thepP8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ECAKRPbDnYFMhwWCJa14wpzEst2uQtxdYdla2e9MoMSdnbqF82woyemPfwOhlsIOD
- 4gLmb+x9/NBsrGfzMViP3co6jK+T9cD/omg57XjmmdhmgVlaP+9HI5PS7KlNDVGWAV
- U3b0EY2PIs0f5HPH0Fx+RymjQuui2E3rGLxAUnvl5ELFnurvFKyShyW29kZ1on2Gi4
- F9r7xSGwUw8HyhcARa48R+MxRz00xseTVmLG9JHN6y67Dhh73E/oVE/Pl4b7A3WCey
- I9wvnRgOwvA2GJBMAqxZwpbl4N5/vo11HzxgtVy1cTFl4Qaph/cy8u48s7fO/WQgrl
- 4GPJTy9OSqStg==
+ b=oqrJU71ytJBS+mXzsNqpqa3oH9CMyeKi/sGDBYrzTgWkOGYbKNudl/ErYxcaAoEDN
+ emPI42cP6m+YsbeHCTIHtPlcRp6qI9CAZBoY+yTL6PGjmpsLcLr5S7nhOXYxMleF3+
+ JxLQ6nAvUc/r4J9rK83yoC658BlFPEbjom6Z43gqDF5CDWYnmbEBqvJKKw2LENr2ql
+ Hr2n+AzL2p+B9TCH26x9VAWB8rOfwg2s8ZWNvlaLeRdE/YWRUnL8n5s44M17NOYrO9
+ T73QPo5d58qAQ3Yb+B3LIl67sy8rXVe+2bTfp9Wy6zK5px7BS53PPs/z4Lw5HcdlLs
+ gg7ogeUXt1b2A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 222A31C0AB7;
- Sun, 12 Jul 2026 00:59:41 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9676A1C0AA2;
+ Sun, 12 Jul 2026 00:59:40 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id CD16E3EAF42;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4DFEA3EAF2D;
  Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A0DDD1333B; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id 6BA5313311; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Miao Wang <shankerwangmiao@gmail.com>,
- Song Gao <gaosong@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 44/81] target/loongarch: Enable TARGET_PAGE_BITS_VARY
- for loongarch64 user-only
-Date: Sun, 12 Jul 2026 00:58:22 +0300
-Message-ID: <20260711215904.3757-44-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 23/81] tests/9p: add 3 xattr FID limit test cases
+ (local fs driver)
+Date: Sun, 12 Jul 2026 00:58:01 +0300
+Message-ID: <20260711215904.3757-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
@@ -71,38 +71,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Miao Wang <shankerwangmiao@gmail.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-Hard coding PAGE_SIZE to 4K will prevent user-only emulation from
-working on hosts with 16K page size.
+Analogue to the previously added 3 synth tests, add (similar) 3 test
+cases using the "local" fs driver to verify correct xattr FID limit
+enforcement of 9pfs server with a real filesystem.
 
-Fixes: 1d832c19db1e ("target/loongarch: Support 4K page size")
-Fixes: qemu-project/qemu#3651
+These 3 new local tests use the shared test code of the previously
+added 3 synth tests. The only difference is that the local fs driver
+does not expose the current internal xattr FID counter, so we can't
+verify this with the local tests.
 
-Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-Message-ID: <20260630-loong64-vary-page-sz-v1-1-1d1a894674be@gmail.com>
-Signed-off-by: Song Gao <gaosong@loongson.cn>
-(cherry picked from commit e819c126a8d9629f57deef31689f3a7fc476fa45)
+This is a slow test (may take several seconds) and therefore
+registered as "slow" test and not running by default.
+
+Use -m slow to run this test.
+
+Link: https://lore.kernel.org/qemu-devel/d23fa874df4f474ee7cbe738a35c1483426057f0.1781361555.git.qemu_oss@crudebyte.com
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+(cherry picked from commit 04a62cdfe873d07a5f264d03372bfc34bbcdddf0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/loongarch/cpu-param.h b/target/loongarch/cpu-param.h
-index 3bcf77b3755..6abe72ff5ca 100644
---- a/target/loongarch/cpu-param.h
-+++ b/target/loongarch/cpu-param.h
-@@ -10,6 +10,11 @@
+diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
+index 2e88429dfa1..cfd3c02da45 100644
+--- a/tests/qtest/virtio-9p-test.c
++++ b/tests/qtest/virtio-9p-test.c
+@@ -395,6 +395,19 @@ static void do_xattr_limit(QVirtio9P *v9p, int max_xattr, bool check_counter)
+     }
+ }
  
- #define TARGET_VIRT_ADDR_SPACE_BITS 48
++static void do_local_xattr_limit(QVirtio9P *v9p, int max_xattr)
++{
++    g_autofree char *test_file = virtio_9p_test_path("WRITE");
++
++    /*
++     * this file must be created for the test to work with the 'local' fs driver
++     */
++    g_file_set_contents(test_file, "", 0, NULL);
++
++    /* the actual test code shared with the 'synth' fs driver tests */
++    do_xattr_limit(v9p, max_xattr, false);
++}
++
+ static void fs_walk_no_slash(void *obj, void *data, QGuestAllocator *t_alloc)
+ {
+     QVirtio9P *v9p = obj;
+@@ -990,6 +1003,27 @@ static void fs_deep_absolute_path(void *obj, void *data,
+     g_string_free(path, TRUE);
+ }
  
--#define TARGET_PAGE_BITS 12
-+#ifdef CONFIG_USER_ONLY
-+/* Allow user-only to vary page size from 4k */
-+# define TARGET_PAGE_BITS_VARY
-+#else
-+# define TARGET_PAGE_BITS 12
-+#endif
++static void fs_local_xattr_limit_default(void *obj, void *data,
++                                         QGuestAllocator *t_alloc)
++{
++    v9fs_set_allocator(t_alloc);
++    do_local_xattr_limit(obj, V9FS_MAX_XATTR_DEFAULT);
++}
++
++static void fs_local_xattr_limit_custom(void *obj, void *data,
++                                        QGuestAllocator *t_alloc)
++{
++    v9fs_set_allocator(t_alloc);
++    do_local_xattr_limit(obj, 100);
++}
++
++static void fs_local_xattr_limit_unlimited(void *obj, void *data,
++                                           QGuestAllocator *t_alloc)
++{
++    v9fs_set_allocator(t_alloc);
++    do_local_xattr_limit(obj, -1);
++}
++
+ static void *synth_max_xattr_custom_opt(GString *cmd_line, void *arg)
+ {
+     virtio_9p_add_synth_driver_args(cmd_line, "max_xattr=100");
+@@ -1008,20 +1042,42 @@ static void cleanup_9p_local_driver(void *data)
+     virtio_9p_remove_local_test_dir();
+ }
  
- #endif
+-static void *assign_9p_local_driver(GString *cmd_line, void *arg)
++static void assign_9p_local_driver_with_args(GString *cmd_line,
++                                             const char *extra_opts)
+ {
+     /* make sure test dir for the 'local' tests exists */
+     virtio_9p_create_local_test_dir();
+ 
+-    virtio_9p_assign_local_driver(cmd_line, "security_model=mapped-xattr");
++    g_autofree char *opts =
++        (extra_opts) ?
++            g_strdup_printf("security_model=mapped-xattr,%s", extra_opts) :
++            g_strdup("security_model=mapped-xattr");
++
++    virtio_9p_assign_local_driver(cmd_line, opts);
+ 
+     g_test_queue_destroy(cleanup_9p_local_driver, NULL);
++}
++
++static void *assign_9p_local_driver(GString *cmd_line, void *arg)
++{
++    assign_9p_local_driver_with_args(cmd_line, NULL);
+     return arg;
+ }
+ 
+-static void register_virtio_9p_test(void)
++static void *local_max_xattr_custom_opt(GString *cmd_line, void *arg)
+ {
++    assign_9p_local_driver_with_args(cmd_line, "max_xattr=100");
++    return arg;
++}
+ 
++static void *local_max_xattr_unlimited_opt(GString *cmd_line, void *arg)
++{
++    assign_9p_local_driver_with_args(cmd_line, "max_xattr=0");
++    return arg;
++}
++
++static void register_virtio_9p_test(void)
++{
+     QOSGraphTestOptions opts = {
+     };
+ 
+@@ -1078,6 +1134,14 @@ static void register_virtio_9p_test(void)
+                  &opts);
+     qos_add_test("local/deep_absolute_path", "virtio-9p",
+                  fs_deep_absolute_path, &opts);
++    qos_add_test("local/xattr_limit/default", "virtio-9p",
++                 fs_local_xattr_limit_default, &opts);
++    opts.before = local_max_xattr_custom_opt;
++    qos_add_test("local/xattr_limit/custom", "virtio-9p",
++                 fs_local_xattr_limit_custom, &opts);
++    opts.before = local_max_xattr_unlimited_opt;
++    qos_add_test("local/xattr_limit/unlimited", "virtio-9p",
++                 fs_local_xattr_limit_unlimited, &opts);
+ }
+ 
+ libqos_init(register_virtio_9p_test);
 -- 
 2.47.3
 
