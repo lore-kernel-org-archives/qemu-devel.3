@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8193C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:45:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32E80C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:45:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigRt-0005Oc-Hs; Sat, 11 Jul 2026 18:45:29 -0400
+	id 1wigS1-0005bG-N6; Sat, 11 Jul 2026 18:45:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigRr-0005Ln-Fi; Sat, 11 Jul 2026 18:45:28 -0400
-Received: from pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.34.181.151])
+ id 1wigRz-0005Y5-A4; Sat, 11 Jul 2026 18:45:35 -0400
+Received: from pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.42.203.116])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigRp-00077s-Bt; Sat, 11 Jul 2026 18:45:27 -0400
+ id 1wigRx-00078c-5x; Sat, 11 Jul 2026 18:45:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783809925; x=1815345925;
+ t=1783809933; x=1815345933;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=pIYExrBVqffjhEmg/kIfnd01/Jqg+0TepAxoq/TOvVc=;
- b=hBBGkDpyyAqlKN3mwvyyI9y11y+xlc70wtDO3CfWSf9BHT66KhQ0YPDQ
- bxcYd+dxXQrhTnXS2hFUFuQx/hd9M4/N+CLx3iWHIkTncXVG3+Ji060kZ
- mi7VBrALI/Q1o+13TlkoywbLZGTg4tzotHTCnWta6R3J1ah5SkUE1Dxij
- GfxLH6qak2TNY+3+l2gf2l+9dI6D+l3MH7a5imRJgia8SGQ56tdRailcQ
- Qhblzn4PNi2cyyaaCQ9LnBciNU9L9yooF/dBlJt/XzIpFFC3IOWOb92DR
- AxhzmF+3h8PmDXivbPLvoUBNiV4Qi54hZBhCNwkH8qJh1GEMULQmdTSW2 w==;
-X-CSE-ConnectionGUID: 4WeAthXyRSONiHU8rXEi1g==
-X-CSE-MsgGUID: dcBEp1CjSOCDapYOSFOMsg==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23483294"
-Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
- by internal-pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:45:20 +0000
-Received: from EX19MTAUWA001.ant.amazon.com [205.251.233.236:19708]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.11.115:2525]
+ bh=Yjj6bjc52hJrvGNoYEgZZOaZL70oE4aLasfwIgRs9Yc=;
+ b=YIE93Qpj7iHJbINzEhNK5gGNeOxyB230xUi6YGu4DMTLQcONVsazxvgt
+ bcRxEY1EN6Dmgmdj2U3GesiplqS+6SqDdbXCcGwOVyFGg0LxMT/VWErpn
+ 5FfGhgO1wGtcVOclPXOjYD3vT/lvk2B9yAqLMLbVO7/DF0gUBCEVYUZG2
+ YyFl/mqN742Feea17hBnfBolphjgfITv0oTq7SN0fTs1bGUSWYeq4xB/F
+ z1n63vTPSl3hAgav8ohcyqvZCBY6lj1xXe0Tpqzx6/lwG92PAOl5KWTLC
+ 8CIGgLg07J73q4Ch+UbTOBgW1wmr9+YA0ed19hSB1TsTOcRZ4/rNhLGaN w==;
+X-CSE-ConnectionGUID: 9aEUzVSDQJefVn+WDWwBBQ==
+X-CSE-MsgGUID: nqWeb9+BSrSaT3C9ZULJig==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23517779"
+Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
+ by internal-pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:45:29 +0000
+Received: from EX19MTAUWC001.ant.amazon.com [205.251.233.53:19086]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.58.33:2525]
  with esmtp (Farcaster)
- id 7e4c701f-53ba-4fb4-884d-d862a854859a; Sat, 11 Jul 2026 22:45:20 +0000 (UTC)
-X-Farcaster-Flow-ID: 7e4c701f-53ba-4fb4-884d-d862a854859a
+ id 727577cc-1245-4712-83ba-d12936fa9405; Sat, 11 Jul 2026 22:45:29 +0000 (UTC)
+X-Farcaster-Flow-ID: 727577cc-1245-4712-83ba-d12936fa9405
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA001.ant.amazon.com (10.250.64.217) with Microsoft SMTP Server
+ EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:45:20 +0000
+ Sat, 11 Jul 2026 22:45:28 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:45:11 +0000
+ Sat, 11 Jul 2026 22:45:20 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,9 +91,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 031/134] hw/hexagon: Give onboard devices a QOM parent
-Date: Sat, 11 Jul 2026 22:35:24 +0000
-Message-ID: <20260711223707.42139-32-graf@amazon.com>
+Subject: [RFC PATCH 032/134] hw/xen: Give onboard devices a QOM parent
+Date: Sat, 11 Jul 2026 22:35:25 +0000
+Message-ID: <20260711223707.42139-33-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -103,9 +103,9 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D032UWB001.ant.amazon.com (10.13.139.152) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=52.34.181.151;
+Received-SPF: pass client-ip=52.42.203.116;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
@@ -129,7 +129,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the *_orphan() device-creation calls in hw/hexagon to the new
+Convert the *_orphan() device-creation calls in hw/xen to the new
 parented API introduced earlier in this series, so every onboard
 device gets a stable path in the composition tree instead of landing
 in /machine/unattached with an unstable device[N] name.
@@ -140,97 +140,102 @@ composite children.  Names follow existing QOM conventions.
 
 Per-site rationale (reviewers: dispute the modeling here):
 
-hw/hexagon/hexagon_dsp.c:134 | qdev_new | OBJECT(machine) | "global-regs" | board init helper; collapse existing object_property_add_child()
-hw/hexagon/hexagon_dsp.c:141 | qdev_new | OBJECT(machine) | "tlb" | board init helper; collapse existing object_property_add_child()
-hw/hexagon/virt.c:132 | qdev_new | OBJECT(vms) | "uart" | board-init helper receives HexagonVirtMachineState*; drop const on vms
-hw/hexagon/virt.c:271 | qdev_new | OBJECT(ms) | "global-regs" | board init; collapse existing object_property_add_child()
-hw/hexagon/virt.c:277 | qdev_new | OBJECT(ms) | "tlb" | board init; collapse existing object_property_add_child()
+hw/xen/xen-bus.c:1152 | qdev_new | qdev_get_machine() | "xen-bridge" | init helper called from 3 board paths with no parent arg; use qdev_get_machine() (already used in this subsystem)
+hw/xen/xen-legacy-backend.c:601 | qdev_new | qdev_get_machine() | "xen-sysdev" | init helper with no parent arg; qdev_get_machine() already used just above in xen_set_dynamic_sysbus()
+hw/xen/xen-pvh-common.c:176 | sysbus_create_simple | OBJECT(s) | "virtio-mmio[*]" | board-init helper receives XenPVHMachineState *s; loop-created
+hw/xen/xen-pvh-common.c:196 | qdev_new | OBJECT(s) | "tpm" | board-init helper receives XenPVHMachineState *s
+hw/xen/xen_pt_graphics.c:402 | pci_create_simple | OBJECT(s) | "isa-bridge" | called from XenPCIPassthroughState realize; s is the composite passthrough device
 
 Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/hexagon/hexagon_dsp.c | 12 +++++-------
- hw/hexagon/virt.c        | 16 +++++++---------
- 2 files changed, 12 insertions(+), 16 deletions(-)
+ hw/xen/xen-bus.c            | 5 +++--
+ hw/xen/xen-legacy-backend.c | 5 +++--
+ hw/xen/xen-pvh-common.c     | 7 ++++---
+ hw/xen/xen_pt_graphics.c    | 3 ++-
+ 4 files changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/hw/hexagon/hexagon_dsp.c b/hw/hexagon/hexagon_dsp.c
-index 712749cda8..ccd9a06f51 100644
---- a/hw/hexagon/hexagon_dsp.c
-+++ b/hw/hexagon/hexagon_dsp.c
-@@ -131,18 +131,16 @@ static void hexagon_common_init(MachineState *machine, Rev_t rev,
-                            machine->ram_size, &error_fatal);
-     memory_region_add_subregion(address_space, 0x0, &hms->ram);
+diff --git a/hw/xen/xen-bus.c b/hw/xen/xen-bus.c
+index 746014416b..934ff33402 100644
+--- a/hw/xen/xen-bus.c
++++ b/hw/xen/xen-bus.c
+@@ -1149,10 +1149,11 @@ type_init(xen_register_types)
  
--    glob_regs_dev = qdev_new_orphan(TYPE_HEXAGON_GLOBALREG);
--    object_property_add_child(OBJECT(machine), "global-regs",
--                              OBJECT(glob_regs_dev));
-+    glob_regs_dev = qdev_new(OBJECT(machine), "global-regs",
-+                             TYPE_HEXAGON_GLOBALREG);
-     qdev_prop_set_uint64(glob_regs_dev, "config-table-addr", m_cfg->cfgbase);
-     qdev_prop_set_uint32(glob_regs_dev, "dsp-rev", rev);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(glob_regs_dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(glob_regs_dev), &error_fatal);
- 
--    tlb_dev = qdev_new_orphan(TYPE_HEXAGON_TLB);
--    object_property_add_child(OBJECT(machine), "tlb", OBJECT(tlb_dev));
-+    tlb_dev = qdev_new(OBJECT(machine), "tlb", TYPE_HEXAGON_TLB);
-     qdev_prop_set_uint32(tlb_dev, "num-entries",
-                          m_cfg->cfgtable.jtlb_size_entries);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(tlb_dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(tlb_dev), &error_fatal);
- 
-     for (int i = 0; i < machine->smp.cpus; i++) {
-         HexagonCPU *cpu = HEXAGON_CPU(object_new(machine->cpu_type));
-diff --git a/hw/hexagon/virt.c b/hw/hexagon/virt.c
-index a7a6a8fbeb..0619f06c41 100644
---- a/hw/hexagon/virt.c
-+++ b/hw/hexagon/virt.c
-@@ -116,7 +116,7 @@ static int32_t fdt_add_clocks(const HexagonVirtMachineState *vms)
-     return clk_phandle;
- }
- 
--static void fdt_add_uart(const HexagonVirtMachineState *vms, int uart,
-+static void fdt_add_uart(HexagonVirtMachineState *vms, int uart,
-                          int32_t clk_phandle)
+ void xen_bus_init(void)
  {
-     char *nodename;
-@@ -129,11 +129,11 @@ static void fdt_add_uart(const HexagonVirtMachineState *vms, int uart,
-     DeviceState *dev;
-     SysBusDevice *s;
+-    DeviceState *dev = qdev_new_orphan(TYPE_XEN_BRIDGE);
++    DeviceState *dev = qdev_new(qdev_get_machine(), "xen-bridge",
++                                TYPE_XEN_BRIDGE);
+     BusState *bus = qbus_new(TYPE_XEN_BUS, dev, NULL);
  
--    dev = qdev_new_orphan(TYPE_PL011);
-+    dev = qdev_new(OBJECT(vms), "uart", TYPE_PL011);
-     s = SYS_BUS_DEVICE(dev);
-     qdev_prop_set_chr(dev, "chardev", serial_hd(0));
-     qdev_connect_clock_in(dev, "clk", vms->apb_clk);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
-     sysbus_mmio_map(s, 0, base);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     qbus_set_bus_hotplug_handler(bus);
  
-     nodename = g_strdup_printf("/pl011@%" PRIx64, base);
-@@ -268,17 +268,15 @@ static void virt_init(MachineState *ms)
-                                 &vms->parent_obj.cfgtable_rom);
-     fdt_add_hvx(vms, m_cfg);
+     qemu_create_nic_bus_devices(bus, TYPE_XEN_DEVICE, "xen-net-device",
+diff --git a/hw/xen/xen-legacy-backend.c b/hw/xen/xen-legacy-backend.c
+index 29c90a388c..0e1da18d12 100644
+--- a/hw/xen/xen-legacy-backend.c
++++ b/hw/xen/xen-legacy-backend.c
+@@ -598,8 +598,9 @@ void xen_be_init(void)
+         exit(1);
+     }
  
--    gsregs_dev = qdev_new_orphan(TYPE_HEXAGON_GLOBALREG);
--    object_property_add_child(OBJECT(ms), "global-regs", OBJECT(gsregs_dev));
-+    gsregs_dev = qdev_new(OBJECT(ms), "global-regs", TYPE_HEXAGON_GLOBALREG);
-     qdev_prop_set_uint64(gsregs_dev, "config-table-addr", m_cfg->cfgbase);
-     qdev_prop_set_uint32(gsregs_dev, "dsp-rev", v68_rev);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(gsregs_dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(gsregs_dev), &error_fatal);
+-    xen_sysdev = qdev_new_orphan(TYPE_XENSYSDEV);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(xen_sysdev), &error_fatal);
++    xen_sysdev = qdev_new(qdev_get_machine(), "xen-sysdev",
++                          TYPE_XENSYSDEV);
++    sysbus_realize(SYS_BUS_DEVICE(xen_sysdev), &error_fatal);
+     xen_sysbus = qbus_new(TYPE_XENSYSBUS, xen_sysdev, "xen-sysbus");
+     qbus_set_bus_hotplug_handler(xen_sysbus);
  
--    tlb_dev = qdev_new_orphan(TYPE_HEXAGON_TLB);
--    object_property_add_child(OBJECT(ms), "tlb", OBJECT(tlb_dev));
-+    tlb_dev = qdev_new(OBJECT(ms), "tlb", TYPE_HEXAGON_TLB);
-     qdev_prop_set_uint32(tlb_dev, "num-entries",
-                          m_cfg->cfgtable.jtlb_size_entries);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(tlb_dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(tlb_dev), &error_fatal);
+diff --git a/hw/xen/xen-pvh-common.c b/hw/xen/xen-pvh-common.c
+index 17f545d07c..dae523f723 100644
+--- a/hw/xen/xen-pvh-common.c
++++ b/hw/xen/xen-pvh-common.c
+@@ -173,7 +173,8 @@ static void xen_create_virtio_mmio_devices(XenPVHMachineState *s)
+         qemu_irq irq = qemu_allocate_irq(xen_set_irq, NULL,
+                                          s->cfg.virtio_mmio_irq_base + i);
  
-     cpu0 = NULL;
-     for (int i = 0; i < ms->smp.cpus; i++) {
+-        sysbus_create_simple_orphan("virtio-mmio", base, irq);
++        sysbus_create_simple(OBJECT(s), "virtio-mmio[*]", "virtio-mmio",
++                             base, irq);
+ 
+         trace_xen_create_virtio_mmio_devices(i,
+                                              s->cfg.virtio_mmio_irq_base + i,
+@@ -193,7 +194,7 @@ static void xen_enable_tpm(XenPVHMachineState *s)
+         error_report("Couldn't find tmp0 backend");
+         return;
+     }
+-    dev = qdev_new_orphan(TYPE_TPM_TIS_SYSBUS);
++    dev = qdev_new(OBJECT(s), "tpm", TYPE_TPM_TIS_SYSBUS);
+     /*
+      * FIXME This use of &err is is wrong.  If both calls fail, the
+      * second will trip error_setv()'s assertion.  If just one call
+@@ -204,7 +205,7 @@ static void xen_enable_tpm(XenPVHMachineState *s)
+     object_property_set_link(OBJECT(dev), "tpmdev", OBJECT(be), &err);
+     object_property_set_str(OBJECT(dev), "tpmdev", be->id, &err);
+     busdev = SYS_BUS_DEVICE(dev);
+-    sysbus_realize_and_unref(busdev, &error_fatal);
++    sysbus_realize(busdev, &error_fatal);
+     sysbus_mmio_map(busdev, 0, s->cfg.tpm.base);
+ 
+     trace_xen_enable_tpm(s->cfg.tpm.base);
+diff --git a/hw/xen/xen_pt_graphics.c b/hw/xen/xen_pt_graphics.c
+index 4457209e83..2841b45ca1 100644
+--- a/hw/xen/xen_pt_graphics.c
++++ b/hw/xen/xen_pt_graphics.c
+@@ -399,7 +399,8 @@ void xen_igd_passthrough_isa_bridge_create(XenPCIPassthroughState *s,
+     }
+ 
+     /* Currently IGD drivers always need to access PCH by 1f.0. */
+-    bridge_dev = pci_create_simple_orphan(bus, PCI_DEVFN(0x1f, 0),
++    bridge_dev = pci_create_simple(OBJECT(s), "isa-bridge", bus,
++                                   PCI_DEVFN(0x1f, 0),
+                                    "igd-passthrough-isa-bridge");
+ 
+     /*
 -- 
 2.47.1
 
