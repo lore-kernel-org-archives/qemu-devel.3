@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01620C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:40:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36829C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:40:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigMY-0002u3-1a; Sat, 11 Jul 2026 18:39:58 -0400
+	id 1wigMg-00035I-J5; Sat, 11 Jul 2026 18:40:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigMV-0002q4-P0; Sat, 11 Jul 2026 18:39:55 -0400
-Received: from pdx-out-010.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.12.53.23])
+ id 1wigMe-00030G-1a; Sat, 11 Jul 2026 18:40:04 -0400
+Received: from pdx-out-003.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([44.246.68.102])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigMT-0005PG-Ps; Sat, 11 Jul 2026 18:39:55 -0400
+ id 1wigMb-0005Sw-UM; Sat, 11 Jul 2026 18:40:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783809593; x=1815345593;
+ t=1783809601; x=1815345601;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=MEhdqOfPkkhqCMQm9ucJ2rRitXNb0sc0jREmbOfT4hA=;
- b=Ia+/epJTaCpegrLY100cB09P2JxrQwu74JF5Jbh2b9h0JmpNQ3jaAPrV
- k3SdV6FfedvmR6Y87L22ud15zyAL0YGfLlpHWi4808Oe0KMt+LZGqVpVx
- BgAvSdRqJxdmBF9B4jiYUcdF2BXhRIbQyBlYm55ZNjunQwm3dyPFiNTSf
- 7bLjWFJXh7QRaF9mjd0mixqxVQGy0qq5fD1fUhRPnz0ayRw9lJTJQ+1E+
- PJQoOH1B4BOo/h4osJnTPZIrE2bEiD5PrTOvayWDklcH5jca/2toZIZpW
- +6DmKyA7ZQXVKn07jol4QJe1EAknIX4CylC6HvRq1xQjlHXDPsTfERzEK A==;
-X-CSE-ConnectionGUID: deYkzdk0Qj6o3oXBvmMsYg==
-X-CSE-MsgGUID: 7wc9fV8YQquLtQE2jbrTzg==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23369659"
-Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
- by internal-pdx-out-010.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:39:50 +0000
-Received: from EX19MTAUWB002.ant.amazon.com [205.251.233.111:6067]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.11.115:2525]
+ bh=pS7iG2bsIwkaLvQewcv7m52mBuYuTvRxQA0zQErAcsM=;
+ b=lwrJ5jbFjBINMTdA1IYKTHwORHACy5B3c5WLubzKXYa1CSKMJDe2CZd+
+ mk5VuUFInHX3dA5lP4GT9zCneBjIOz/8MypSH/vm11NQk95oS8FfZgJoj
+ 6Kw2iPkey8nHnTkKziyIyv3bFs2KKuQqQNeJxVmJbUsFULvqp6vzO+WL6
+ MzOYBs13rsQzWun+hT/dYrsvNJdc3yd6w1ZSmYlLPoh6CUUBP8gc46Yrg
+ 42gXcRrtr/qzJr02yReyHq9pTBX5QDMD22ykKNYPMzYo0XAjuN6vwfQTf
+ NO6rmju/zdPTvvlUzALPlFGytZ0BKrXyj6q/g5eqgAAFfrZAPpK9YDM3J w==;
+X-CSE-ConnectionGUID: BzEh911sT7uHA1IuDS8Whw==
+X-CSE-MsgGUID: gFPIJ2TTS/mF2zw0ChF3hA==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23517006"
+Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
+ by internal-pdx-out-003.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:39:58 +0000
+Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.178:18359]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.11.68:2525]
  with esmtp (Farcaster)
- id 11688c6e-7d1d-4082-8f33-6052c953fb94; Sat, 11 Jul 2026 22:39:49 +0000 (UTC)
-X-Farcaster-Flow-ID: 11688c6e-7d1d-4082-8f33-6052c953fb94
+ id dd6e14e6-0b00-46aa-b610-7ced99dedd08; Sat, 11 Jul 2026 22:39:58 +0000 (UTC)
+X-Farcaster-Flow-ID: dd6e14e6-0b00-46aa-b610-7ced99dedd08
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
+ EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:39:49 +0000
+ Sat, 11 Jul 2026 22:39:57 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:39:41 +0000
+ Sat, 11 Jul 2026 22:39:49 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,9 +91,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 010/134] hw/avr: Give onboard devices a QOM parent
-Date: Sat, 11 Jul 2026 22:35:03 +0000
-Message-ID: <20260711223707.42139-11-graf@amazon.com>
+Subject: [RFC PATCH 011/134] hw/tricore: Give onboard devices a QOM parent
+Date: Sat, 11 Jul 2026 22:35:04 +0000
+Message-ID: <20260711223707.42139-12-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -103,9 +103,9 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D039UWA004.ant.amazon.com (10.13.139.68) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=52.12.53.23;
+Received-SPF: pass client-ip=44.246.68.102;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-010.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-003.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
@@ -129,7 +129,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the *_orphan() device-creation calls in hw/avr to the new
+Convert the *_orphan() device-creation calls in hw/tricore to the new
 parented API introduced earlier in this series, so every onboard
 device gets a stable path in the composition tree instead of landing
 in /machine/unattached with an unstable device[N] name.
@@ -140,33 +140,49 @@ composite children.  Names follow existing QOM conventions.
 
 Per-site rationale (reviewers: dispute the modeling here):
 
-  file:line       | parent       | name | rationale
-  atmega.c:287    | OBJECT(dev)  | "io" | unimplemented I/O placeholder is a fixed child of the Atmega SoC; SoC realize() creates it, SoC owns it
+  file:line                | parent           | name         | rationale
+  tricore_testboard.c:70   | OBJECT(machine)  | "cpu"        | single CPU created by board init(); machine owns it
+  tricore_testboard.c:92   | OBJECT(machine)  | "testdevice" | onboard test device created by board init()
 
 Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/avr/atmega.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/tricore/tricore_testboard.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/hw/avr/atmega.c b/hw/avr/atmega.c
-index a85bdf929a..5eb640f628 100644
---- a/hw/avr/atmega.c
-+++ b/hw/avr/atmega.c
-@@ -284,10 +284,10 @@ static void atmega_realize(DeviceState *dev, Error **errp)
-      * 0x20 - 0x5f: I/O memory
-      * 0x60 - 0xff: Extended I/O
-      */
--    s->io = qdev_new_orphan(TYPE_UNIMPLEMENTED_DEVICE);
-+    s->io = qdev_new(OBJECT(dev), "io", TYPE_UNIMPLEMENTED_DEVICE);
-     qdev_prop_set_string(s->io, "name", "I/O");
-     qdev_prop_set_uint64(s->io, "size", mc->io_size);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(s->io), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(s->io), &error_fatal);
-     sysbus_mmio_map_overlap(SYS_BUS_DEVICE(s->io), 0, OFFSET_DATA, -1234);
+diff --git a/hw/tricore/tricore_testboard.c b/hw/tricore/tricore_testboard.c
+index 69794d3445..9e8cccbd59 100644
+--- a/hw/tricore/tricore_testboard.c
++++ b/hw/tricore/tricore_testboard.c
+@@ -55,6 +55,7 @@ static void tricore_load_kernel(CPUTriCoreState *env)
  
-     /* Power Reduction */
+ static void tricore_testboard_init(MachineState *machine, int board_id)
+ {
++    Object *mo = OBJECT(machine);
+     TriCoreCPU *cpu;
+     CPUTriCoreState *env;
+     TriCoreTestDeviceState *test_dev;
+@@ -67,7 +68,7 @@ static void tricore_testboard_init(MachineState *machine, int board_id)
+     MemoryRegion *pcp_data = g_new(MemoryRegion, 1);
+     MemoryRegion *pcp_text = g_new(MemoryRegion, 1);
+ 
+-    cpu = TRICORE_CPU(cpu_create_orphan(machine->cpu_type));
++    cpu = TRICORE_CPU(cpu_create(mo, "cpu", machine->cpu_type));
+     env = &cpu->env;
+     memory_region_init_ram(ext_cram, NULL, "powerlink_ext_c.ram",
+                            2 * MiB, &error_fatal);
+@@ -89,7 +90,9 @@ static void tricore_testboard_init(MachineState *machine, int board_id)
+     memory_region_add_subregion(sysmem, 0xf0050000, pcp_data);
+     memory_region_add_subregion(sysmem, 0xf0060000, pcp_text);
+ 
+-    test_dev = TRICORE_TESTDEVICE(qdev_new_orphan(TYPE_TRICORE_TESTDEVICE));
++    test_dev = TRICORE_TESTDEVICE(qdev_new(mo, "testdevice",
++                                           TYPE_TRICORE_TESTDEVICE));
++    sysbus_realize(SYS_BUS_DEVICE(test_dev), &error_fatal);
+     memory_region_add_subregion(sysmem, 0xf0000000, &test_dev->iomem);
+ 
+ 
 -- 
 2.47.1
 
