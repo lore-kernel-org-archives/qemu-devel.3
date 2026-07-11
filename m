@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B7AEC43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 23:10:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E395C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 23:10:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigpq-0002Yp-Rx; Sat, 11 Jul 2026 19:10:17 -0400
+	id 1wigqG-0003mY-7K; Sat, 11 Jul 2026 19:10:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigpf-0002Fp-1e; Sat, 11 Jul 2026 19:10:04 -0400
-Received: from pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([34.218.115.239])
+ id 1wigqB-0003lq-8e; Sat, 11 Jul 2026 19:10:35 -0400
+Received: from pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([44.246.1.125])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigpd-0004N4-9B; Sat, 11 Jul 2026 19:10:02 -0400
+ id 1wigq7-0004ia-S1; Sat, 11 Jul 2026 19:10:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783811401; x=1815347401;
+ t=1783811431; x=1815347431;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=PCLiHy2ikf9kRMhXikNxxqklGGiobt+RYZp6/ywkvrY=;
- b=HFfXUSBBKEgCwJOZ3KOCBjkhF9855RcRIB9BqPaC53zYixaSzoDRe+pM
- eDLIjCkF/4vGkvWWgV8vzYH8qWt+jcG7b7PYGq3YauZ3/irX8scGh6Rv4
- jepx/j3sJoJmkwGuortBjeUsOSKXbiXzXT5OJgtdMlRpJhMIaZ5iQ5idH
- qh/GH28/g2wr+JgOdEh7zPLBXl9tQ9yRilKO5g5QbTJXG/vHB638+P6Cx
- LAdA9HH25WIbtXTnI+WQE1OGbI1C3r2s4GOplNRezaZ7SY0xoUSDV0I5G
- OnCl+xoVA/j4FXmE0ARCirUJFwtjLMbOFmXIray7B+M1N2nTxyJQ16L0d Q==;
-X-CSE-ConnectionGUID: k60gy1S8Tda0ViQDo61fAA==
-X-CSE-MsgGUID: 8w+Ae/Q+QAug0SSur9PzGw==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23296968"
-Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
- by internal-pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 23:09:57 +0000
-Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.178:28049]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.58.33:2525]
+ bh=oAsTJm8UePllS+N3B1DT86A+5/4rIAv8xkaDDvGLiWo=;
+ b=sXMzt1AQSnJCtDjhbpU/lx1fgiYe3kM2Jp8JxyrRpm+xKaxXNDKfHiyS
+ PSo7HlYo6Mj+joJvJk0MtinSwFTV5F7YK6hc/b8Q3XCTreR2cB7Mu8faN
+ ifAIF4yj9OGqSYhU0YUB+IjY/k/NPTMNfg3VGmrOxY7IZRLglfc/Ciuoj
+ wOgmHJUOlgeYEy3/tQ5BUZqOwW7erU78PRy2NCbmrlDLou1fnqba8KLjz
+ KwvJL758S7Wa0V9a2HBozA8It3n5s4UKFVZM94QiJaNPWKRRWCs6NSYSm
+ k66mG65n7AtosB1itilZo0g8dzpb8ww83cyX2Us8iODaVcf1gG205qOXv g==;
+X-CSE-ConnectionGUID: kpVH7fgiQOq7TiazCDKBHQ==
+X-CSE-MsgGUID: iILQwvX+SG+AXb7FylCt5A==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23506063"
+Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
+ by internal-pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 23:10:27 +0000
+Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.51:20036]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.26.212:2525]
  with esmtp (Farcaster)
- id f64789d4-9c06-4ff1-99e4-b6cb0505e4f7; Sat, 11 Jul 2026 23:09:57 +0000 (UTC)
-X-Farcaster-Flow-ID: f64789d4-9c06-4ff1-99e4-b6cb0505e4f7
+ id 6ee212c7-23a7-4427-9277-35f30099ae79; Sat, 11 Jul 2026 23:10:27 +0000 (UTC)
+X-Farcaster-Flow-ID: 6ee212c7-23a7-4427-9277-35f30099ae79
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
+ EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 23:09:57 +0000
+ Sat, 11 Jul 2026 23:10:27 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 23:09:48 +0000
+ Sat, 11 Jul 2026 23:10:18 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,10 +91,10 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 125/134] hw/arm/mps2: Parent the OR-IRQ gates under the
+Subject: [RFC PATCH 126/134] hw/arm/digic: Parent the DIGIC SoC under the
  machine
-Date: Sat, 11 Jul 2026 22:36:58 +0000
-Message-ID: <20260711223707.42139-126-graf@amazon.com>
+Date: Sat, 11 Jul 2026 22:36:59 +0000
+Message-ID: <20260711223707.42139-127-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -102,11 +102,11 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D036UWC004.ant.amazon.com (10.13.139.205) To
+X-ClientProxiedBy: EX19D044UWB002.ant.amazon.com (10.13.139.188) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=34.218.115.239;
+Received-SPF: pass client-ip=44.246.1.125;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
@@ -130,59 +130,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The mps2 board creates several TYPE_OR_IRQ gates for UART overflow,
-per-UART tx/rx, and SPI interrupts.  Parent them under the machine
-so they get canonical paths.  The 282/325 pair sit on
-mutually-exclusive switch arms, so a single "uart-orgate" name is
-sufficient; the loop-created gates use "[*]" auto-indexing.
+Bring digic in line with cubieboard/orangepi/bpim2u/imx6ul/imx7,
+which all parent their SoC as /machine/soc.
 
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/arm/mps2.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ hw/arm/digic_boards.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/arm/mps2.c b/hw/arm/mps2.c
-index 1dec4a5d4d..1032f47cb8 100644
---- a/hw/arm/mps2.c
-+++ b/hw/arm/mps2.c
-@@ -279,7 +279,7 @@ static void mps2_common_init(MachineState *machine)
-         Object *orgate;
-         DeviceState *orgate_dev;
+diff --git a/hw/arm/digic_boards.c b/hw/arm/digic_boards.c
+index 92b66f34f7..bdc5f7324b 100644
+--- a/hw/arm/digic_boards.c
++++ b/hw/arm/digic_boards.c
+@@ -50,7 +50,8 @@ typedef struct DigicBoard {
+ static void digic4_board_init(MachineState *machine, DigicBoard *board)
+ {
+     Error *err = NULL;
+-    DigicState *s = DIGIC(object_new(TYPE_DIGIC));
++    DigicState *s = DIGIC(object_new_child(OBJECT(machine), "soc",
++                                           TYPE_DIGIC));
+     MachineClass *mc = MACHINE_GET_CLASS(machine);
  
--        orgate = object_new(TYPE_OR_IRQ);
-+        orgate = object_new_child(OBJECT(mms), "uart-orgate", TYPE_OR_IRQ);
-         object_property_set_int(orgate, "num-lines", 6, &error_fatal);
-         qdev_realize(DEVICE(orgate), NULL, &error_fatal);
-         orgate_dev = DEVICE(orgate);
-@@ -322,7 +322,7 @@ static void mps2_common_init(MachineState *machine)
-         Object *orgate;
-         DeviceState *orgate_dev;
- 
--        orgate = object_new(TYPE_OR_IRQ);
-+        orgate = object_new_child(OBJECT(mms), "uart-orgate", TYPE_OR_IRQ);
-         object_property_set_int(orgate, "num-lines", 10, &error_fatal);
-         qdev_realize(DEVICE(orgate), NULL, &error_fatal);
-         orgate_dev = DEVICE(orgate);
-@@ -338,7 +338,8 @@ static void mps2_common_init(MachineState *machine)
-             DeviceState *txrx_orgate_dev, *dev;
-             SysBusDevice *s;
- 
--            txrx_orgate = object_new(TYPE_OR_IRQ);
-+            txrx_orgate = object_new_child(OBJECT(mms), "uart-txrx-orgate[*]",
-+                                           TYPE_OR_IRQ);
-             object_property_set_int(txrx_orgate, "num-lines", 2, &error_fatal);
-             qdev_realize(DEVICE(txrx_orgate), NULL, &error_fatal);
-             txrx_orgate_dev = DEVICE(txrx_orgate);
-@@ -430,7 +431,7 @@ static void mps2_common_init(MachineState *machine)
-         Object *orgate;
-         int j;
- 
--        orgate = object_new(TYPE_OR_IRQ);
-+        orgate = object_new_child(OBJECT(mms), "spi-orgate[*]", TYPE_OR_IRQ);
-         object_property_set_int(orgate, "num-lines", 2, &error_fatal);
-         orgate_dev = DEVICE(orgate);
-         qdev_realize(orgate_dev, NULL, &error_fatal);
+     if (machine->ram_size != mc->default_ram_size) {
 -- 
 2.47.1
 
