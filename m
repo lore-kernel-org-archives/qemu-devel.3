@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20F07C44507
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:09:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3049C44501
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:09:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifrG-0000cv-24; Sat, 11 Jul 2026 18:07:38 -0400
+	id 1wifps-0008PC-HR; Sat, 11 Jul 2026 18:06:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifrE-0000LE-1O; Sat, 11 Jul 2026 18:07:36 -0400
+ id 1wifpq-0008Dd-M0; Sat, 11 Jul 2026 18:06:10 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifrA-000130-Qv; Sat, 11 Jul 2026 18:07:34 -0400
+ id 1wifpo-0000hx-Km; Sat, 11 Jul 2026 18:06:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807181; bh=LhMEjECC19NqCfjz4bsEL2lMdROA/kxQbdUHACIOSac=;
+ t=1783807181; bh=B7KsRGNyVEEYDlbiHI4fiED6oJQOw9Errnr9ooRgBG0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=roJ5NhzhymicRNXHyrxJfsaYosHRV2qQ+vCTyvSVZtOVe7j+56kZyRGvokM2gu+rk
- dI/LyUEejHzHKnOg4xetEmsCSF+v9YYkoH/2GN8K14Ly1V3RETdsv208BeIIjhNt0Q
- VncfHxXtRN5oFUcNlrmxaq+9G6IGuUwk8Yy0hU1ghFyPqClgErVXVsCuatwdvHrGee
- Bc3beYpThEX+NBPJrd12nBBllqEIupTLcqkNtFfKrVFSsZf79yLpaYtrdtPb4BEuY2
- jepT1NR9+5T/gt12uXsFgLl//9ykr/lNtNsetazbhmMWFmPs/u//nYcyjs2c/b/Ajm
- Yp8II18sQEvKg==
+ b=B70TzBkR2R80Xrl310rZ57fbsJPgoLn0pAuCzG5a6G/kAV+xzL2ypBZ02qWwLPYRP
+ ZCrX3EQ5YrbEtbsjPJAGB8p+eM4AWt6prgdacmfEyjtCXeyeVix/A7zwHTVVHPJwlK
+ we1xr2C4QYrVc07TDL1X+IS3094FZirwf6MTgzH8UBsVMLbg0mJ2Fh4Hw1BTTjzGiS
+ S06gGS0E+69UjukRgh6Ujna3IU3iTblHkizAfz7U0D0ff0sdEK/D7VjoXM+lbEUJhS
+ pGR4o66Okvrc4U9aGedcwhX3sT1OLsxpNRlcjrFqR0YdIg319JaWXObZKVe52p44yX
+ z5689m/20QwzQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F270C1C0ADB;
+ by isrv.corpit.ru (Postfix) with ESMTP id A27A31C0ACE;
  Sun, 12 Jul 2026 00:59:41 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A8BE33EAF66;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 596943EAF59;
  Sun, 12 Jul 2026 00:59:51 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 0595113383; Sun, 12 Jul 2026 00:59:51 +0300 (MSK)
+ id D969213369; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
- Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 80/81] hw/acpi: correct field sequence in SPCR table
-Date: Sun, 12 Jul 2026 00:58:58 +0300
-Message-ID: <20260711215904.3757-80-mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 67/81] hw/riscv/riscv-iommu.c: fix fault type for
+ spa_fetch() faults
+Date: Sun, 12 Jul 2026 00:58:45 +0300
+Message-ID: <20260711215904.3757-67-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
@@ -72,57 +73,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-On LoongArch and RISC-V invalid SPCR tables are created:
+Under certain circunstances, like the one described in [1] and [2],
+a read operation that faults will be logged as a write fault instead,
+and vice-versa, if they happen after the translation phase in
+riscv_iommu_spa_fetch().
 
-    Terminal Type : 00
-    Language : 03
+The first problem is that we're overwriting iotlb->perm with PTE flags,
+so an IOMMU_RO access flag can be overwritten by whatever flags
+the PTE has.  This will cause the wrong fault type to be thrown at
+the end of the function in case a fault happens.
 
-The correct values are:
+To solve the iotlb->perm overwrite we'll bit_and the original
+iotlb->perm access flags with the PTE access flags, preserving the
+original access type.  So a IOMMU_RO access in a R+W PTE will result in
+a IOMMU_RO perm.
 
-    Terminal Type : 03
-    Language : 00
+Second, the resulting fault is received by riscv_iommu_translate(), which
+will then report the fault.  To do that we require a transaction type
+(ttype).  We're prioritizing checking "perm & IOMMU_RW" to set a
+UADDR_WR ttype, and then checking "perm & IOMMU_RO" to set UADDR_RD
+ttype.  The issue with that is IOMMU_RO=1 and IOMMU_RW=3, thus checking
+"perm & IOMMU_RW" for a write then "perm & IOMMU_RO" for a read will
+cause the read fault to always be diagnosed as write.
 
-This is due to commit 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate
-SPCR creation to common location") that swapped the fields.
+Make the iotlb->perm matches more strict: "perm & IOMMU_RW" must be
+exactly IOMMU_RW, ensuring that 'perm' has both flags.  Then we can
+check perm & IOMMU_WO and perm & IOMMU_RO without worrying about
+overlapping with the RW flag.
 
-See the specification of the table in
-https://learn.microsoft.com/en-us/windows-hardware/drivers/bringup/serial-port-console-redirection-table
+[1] https://gitlab.com/qemu-project/qemu/-/work_items/3557
+[2] https://gitlab.com/qemu-project/qemu/-/work_items/3577
 
-This page shows version 1.10. But the sequence of the fields was not changed
-since version 1.0.
-
-Our LoongArch and ARM code uses version 1.07 of the specification.
-Our RISC-V code uses version 1.10 of the specification.
-
-Fixes: 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate SPCR creation to common location")
-Origin: https://lore.kernel.org/qemu-devel/20260326121947.51200-1-heinrich.schuchardt@canonical.com/T/#u
-Bug-Ubuntu: https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2146419
-Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260705063147.199732-3-heinrich.schuchardt@canonical.com>
+Fixes: 69a9ae4836 ("hw/riscv/riscv-iommu: add ATS support")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3557
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3577
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260701124034.552271-1-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 15c73b0f17d27956b47812124b646d52181517bf)
+(cherry picked from commit b18e3f0e2d0f301952ff3ae4cb73d0e9eb4ee697)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-index 4b374050881..a999320e61e 100644
---- a/hw/acpi/aml-build.c
-+++ b/hw/acpi/aml-build.c
-@@ -2115,10 +2115,10 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
-     build_append_int_noprefix(table_data, f->stop_bits, 1);
-     /* Flow Control */
-     build_append_int_noprefix(table_data, f->flow_control, 1);
--    /* Language */
--    build_append_int_noprefix(table_data, f->language, 1);
-     /* Terminal Type */
-     build_append_int_noprefix(table_data, f->terminal_type, 1);
-+    /* Language */
-+    build_append_int_noprefix(table_data, f->language, 1);
-     /* PCI Device ID  */
-     build_append_int_noprefix(table_data, f->pci_device_id, 2);
-     /* PCI Vendor ID */
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index b2e2ee486e9..b16a53294dd 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -272,6 +272,7 @@ static hwaddr riscv_iommu_napot_page_mask(hwaddr ppn, hwaddr addr, hwaddr *out)
+ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+     IOMMUTLBEntry *iotlb)
+ {
++    IOMMUAccessFlags pte_perm;
+     dma_addr_t addr, base;
+     uint64_t satp, gatp, pte;
+     bool en_s, en_g;
+@@ -499,8 +500,16 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+             }
+             /* Translation phase completed (GPA or SPA) */
+             iotlb->translated_addr = base;
+-            iotlb->perm = (pte & PTE_W) ? ((pte & PTE_R) ? IOMMU_RW : IOMMU_WO)
+-                                                         : IOMMU_RO;
++
++            /*
++             * Do a bit_and between the PTE bits and the original
++             * request flags to determine the exact permission we
++             * need, i.e. if the original request is RO and the
++             * PTE has RW flags the actual perm is RO.
++             */
++            pte_perm = (pte & PTE_W) ? ((pte & PTE_R) ? IOMMU_RW : IOMMU_WO)
++                                     : IOMMU_RO;
++            iotlb->perm &= pte_perm;
+ 
+             /* Check MSI GPA address match */
+             if (pass == S_STAGE && (iotlb->perm & IOMMU_WO) &&
+@@ -1682,7 +1691,8 @@ done:
+     if (fault) {
+         unsigned ttype = RISCV_IOMMU_FQ_TTYPE_PCIE_ATS_REQ;
+ 
+-        if (iotlb->perm & IOMMU_RW) {
++        if ((iotlb->perm & IOMMU_RW) == IOMMU_RW
++            || iotlb->perm & IOMMU_WO) {
+             ttype = RISCV_IOMMU_FQ_TTYPE_UADDR_WR;
+         } else if (iotlb->perm & IOMMU_RO) {
+             ttype = RISCV_IOMMU_FQ_TTYPE_UADDR_RD;
 -- 
 2.47.3
 
