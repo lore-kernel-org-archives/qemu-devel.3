@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7616C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:53:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82597C44501
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:53:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigZ1-0001ag-Uq; Sat, 11 Jul 2026 18:52:52 -0400
+	id 1wigZZ-0002cj-Ql; Sat, 11 Jul 2026 18:53:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigYt-0001RB-Th; Sat, 11 Jul 2026 18:52:46 -0400
-Received: from pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([34.218.115.239])
+ id 1wigZO-0002Mq-VV; Sat, 11 Jul 2026 18:53:15 -0400
+Received: from pdx-out-010.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.12.53.23])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigYp-00005D-H9; Sat, 11 Jul 2026 18:52:43 -0400
+ id 1wigZK-0000Ac-4k; Sat, 11 Jul 2026 18:53:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783810359; x=1815346359;
+ t=1783810390; x=1815346390;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=x64G1LOo/IZxfcfgxloLJYmHOl8JxhgRbwhywuYkk6E=;
- b=QqWPNsJKeJTaFindRYGHWgHKmo6s7d6tZiq8Vg5WaMKYtUFR3+ue/H0h
- qQP9sSviLVRYp44NT1Mp5X49roBISJD+z56gl7RVrnXt+NpyRkbiqXGKS
- 7nRzqqph1TJnpf4rHt0HDtX4Va0YQTb0L9Gg9Vae1bIO6Kt/7BdcfP5KN
- 3vcQDPl984O1u7YA1o1r+89HzAXH1UW/ttT+ZgKmApkFgRqh6lpgsIfDr
- f3WLV1p5X5gfGP/khMzxHAFzWbgSq1Q0P24RBXgbqmTtXCe68Ro5tMrKt
- NhOsxG1ndQUkhG3T8bkAdRWx+7aKsp3X3yczq7qRryPM9I0+IlFPCcYP5 A==;
-X-CSE-ConnectionGUID: JiEGBP5HQDqSVV3+Btndvw==
-X-CSE-MsgGUID: QtvTYtU3RQeKfcXZ7HnLCw==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23296764"
+ bh=vwkgnduj/+HXlS+7CWphWPURMwYQ0I314noMXbvQwxY=;
+ b=h3HejtJxBmgsGAVi7MPAOye7AwRCuYAiymdsDYbuEZ4My+tzxpYqmROk
+ /ltb72+q+FBMt41dwwUg/zpfaREHtyjWTjG5FPYVzr6dbITsMts+mQmUE
+ vkDpLR8vb6E66yyotAZWQM9elIkp8DtHgT9lWv09NTpRU9HqW00wILXq/
+ 8LI9jBqHCoAwBLi33Qbs+iaB7QcLrz5cmzLo3VpiCx+Fhpg0ofm97FCPj
+ jgomy9UQ+7jILrJarIdS6mLFE/dJnPi6BlYaiOpod8m3T6tN+DRmU8BGE
+ 1hE3MTmtWNnNEqj99P6WbRgtvrTKihSZXhvfI9Rhk9BaAWzJfUlirn98z Q==;
+X-CSE-ConnectionGUID: hCgQ2S8kSt2IE28oI9mdWg==
+X-CSE-MsgGUID: hOHBdJVASk+ZPinhqPy6hg==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23369899"
 Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
  smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
- by internal-pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:52:35 +0000
-Received: from EX19MTAUWC001.ant.amazon.com [205.251.233.53:16179]
+ by internal-pdx-out-010.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:53:06 +0000
+Received: from EX19MTAUWB002.ant.amazon.com [205.251.233.48:22626]
  by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.47.135:2525]
  with esmtp (Farcaster)
- id cd9713c6-a5a9-479d-922e-3783c6bc2873; Sat, 11 Jul 2026 22:52:35 +0000 (UTC)
-X-Farcaster-Flow-ID: cd9713c6-a5a9-479d-922e-3783c6bc2873
+ id 60bd7a42-b55d-44a5-9f8c-19f21ed63b41; Sat, 11 Jul 2026 22:53:06 +0000 (UTC)
+X-Farcaster-Flow-ID: 60bd7a42-b55d-44a5-9f8c-19f21ed63b41
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
+ EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:52:35 +0000
+ Sat, 11 Jul 2026 22:53:05 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:52:26 +0000
+ Sat, 11 Jul 2026 22:52:56 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,22 +91,22 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 059/134] hw/arm/xlnx-versal,
- xlnx-zynqmp: Give onboard devices a QOM parent
-Date: Sat, 11 Jul 2026 22:35:52 +0000
-Message-ID: <20260711223707.42139-60-graf@amazon.com>
+Subject: [RFC PATCH 060/134] hw/arm/realview,
+ integratorcp: Give onboard devices a QOM parent
+Date: Sat, 11 Jul 2026 22:35:53 +0000
+Message-ID: <20260711223707.42139-61-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D043UWA003.ant.amazon.com (10.13.139.31) To
+X-ClientProxiedBy: EX19D037UWB004.ant.amazon.com (10.13.138.84) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=34.218.115.239;
+Received-SPF: pass client-ip=52.12.53.23;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-010.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
@@ -130,7 +130,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the *_orphan() device-creation calls in the hw/arm xlnx-versal, xlnx-zynqmp
+Convert the *_orphan() device-creation calls in the hw/arm realview, integratorcp
 board files to the new parented API introduced earlier in this
 series, so every onboard device gets a stable path in the
 composition tree instead of landing in /machine/unattached with an
@@ -142,717 +142,345 @@ composite children.  Names follow existing QOM conventions.
 
 Per-site rationale (reviewers: dispute the modeling here):
 
-hw/arm/xlnx-versal.c:517 | qdev_new | container | name | SoC realize helper; collapse existing add_child(container,name); drop _and_unref
-hw/arm/xlnx-versal.c:565 | qdev_new | container | name | SoC realize helper; collapse existing add_child(container,name); drop _and_unref
-hw/arm/xlnx-versal.c:667 | qdev_new | parent | name | helper already receives parent+name; collapse add_child; drop _and_unref
-hw/arm/xlnx-versal.c:716 | qdev_new | OBJECT(gic) | "its" | collapse existing add_child(gic,"its"); sysbus_realize
-hw/arm/xlnx-versal.c:758 | qdev_new | OBJECT(s) | name | SoC realize; hoist name printf, collapse add_child; sysbus_realize
-hw/arm/xlnx-versal.c:762 | qdev_new | OBJECT(s) | name | SoC realize; hoist name printf, collapse add_child; sysbus_realize
-hw/arm/xlnx-versal.c:912 | qdev_new | OBJECT(qemu_cluster) | name | hoist name printf; collapse add_child; qdev_realize
-hw/arm/xlnx-versal.c:963 | qdev_new | OBJECT(s) | name | hoist name printf; collapse add_child; qdev_realize
-hw/arm/xlnx-versal.c:1031 | qdev_new | OBJECT(s) | "uart[*]" | collapse add_child; sysbus_realize
-hw/arm/xlnx-versal.c:1070 | qdev_new | OBJECT(s) | "canfd[*]" | collapse add_child; sysbus_realize
-hw/arm/xlnx-versal.c:1110 | qdev_new | OBJECT(s) | "usb[*]" | collapse add_child; sysbus_realize
-hw/arm/xlnx-versal.c:1170 | qdev_new | OBJECT(s) | "gem[*]" | collapse add_child; sysbus_realize
-hw/arm/xlnx-versal.c:1254 | qdev_new | OBJECT(s) | name | collapse add_child; sysbus_realize
-hw/arm/xlnx-versal.c:1289 | qdev_new | OBJECT(s) | "sdhci[*]" | collapse add_child; sysbus_realize
-hw/arm/xlnx-versal.c:1323 | qdev_new | OBJECT(s) | "rtc" | collapse add_child; sysbus_realize
-hw/arm/xlnx-versal.c:1352 | qdev_new | OBJECT(s) | "trng" | collapse add_child; sysbus_realize
-hw/arm/xlnx-versal.c:1373 | qdev_new | OBJECT(s) | "xram[*]" | collapse add_child; sysbus_realize
-hw/arm/xlnx-versal.c:1395 | qdev_new | OBJECT(s) | "bbram" | collapse add_child; sysbus_realize
-hw/arm/xlnx-versal.c:1418 | qdev_new | OBJECT(s) | "efuse-ctrl" | collapse add_child; sysbus_realize
-hw/arm/xlnx-versal.c:1419 | qdev_new | OBJECT(s) | "efuse-cache" | collapse add_child; sysbus_realize
-hw/arm/xlnx-versal.c:1420 | qdev_new | OBJECT(s) | "efuse" | collapse add_child; qdev_realize
-hw/arm/xlnx-versal.c:1454 | qdev_new | OBJECT(s) | "pmc-iou-slcr" | collapse add_child; sysbus_realize
-hw/arm/xlnx-versal.c:1476 | qdev_new | OBJECT(s) | "ospi" | collapse add_child; sysbus_realize
-hw/arm/xlnx-versal.c:1485 | qdev_new | OBJECT(dev) | "dma-dst-dev" | collapse add_child under ospi; sysbus_realize
-hw/arm/xlnx-versal.c:1497 | qdev_new | OBJECT(dev) | "dma-src-dev" | collapse add_child under ospi; sysbus_realize
-hw/arm/xlnx-versal.c:1551 | qdev_new | container | "cfu-fdro" | collapse add_child; sysbus_realize
-hw/arm/xlnx-versal.c:1560 | qdev_new | container | "cframe-bcast" | collapse add_child; sysbus_realize
-hw/arm/xlnx-versal.c:1564 | qdev_new | container | "cfu-apb" | collapse add_child; sysbus_realize
-hw/arm/xlnx-versal.c:1568 | qdev_new | container | "cframe-irq-or-gate" | collapse add_child; qdev_realize
-hw/arm/xlnx-versal.c:1583 | qdev_new | container | "cframe[*]" | collapse add_child; sysbus_realize
-hw/arm/xlnx-versal.c:1635 | qdev_new | container | "cfu-sfr" | collapse add_child; sysbus_realize
-hw/arm/xlnx-versal.c:1679 | qdev_new | OBJECT(s) | "crl" | collapse add_child; sysbus_realize
-hw/arm/xlnx-versal.c:1764 | qdev_new | OBJECT(s) | name | collapse add_child; sysbus_realize
-hw/arm/xlnx-versal.c:1975 | qdev_new | OBJECT(sdhci) | "card[*]" | collapse add_child; qdev_realize
-hw/arm/xlnx-versal.c:2018 | qdev_new | OBJECT(ospi) | "flash[*]" | flash on OSPI SPI bus; parent under ospi; qdev_realize
-hw/arm/xlnx-versal-virt.c:146 | qdev_new | OBJECT(s) | "virtio-mmio[*]" | machine init helper; collapse add_child; sysbus_realize
-hw/arm/xlnx-zcu102.c:190 | qdev_new | OBJECT(machine) | "sd-card[*]" | board init; qdev_realize
-hw/arm/xlnx-zcu102.c:205 | qdev_new | OBJECT(machine) | "spi-flash[*]" | board init; qdev_realize
-hw/arm/xlnx-zcu102.c:229 | qdev_new | OBJECT(machine) | "qspi-flash[*]" | board init; qdev_realize
-hw/arm/xlnx-zynqmp.c:368 | qdev_new | OBJECT(s) | info->name | SoC realize; collapse add_child; sysbus_realize
+hw/arm/integratorcp.c:624 | qdev_new | OBJECT(machine) | "core" | board init; single core module
+hw/arm/integratorcp.c:629 | sysbus_create_varargs | OBJECT(machine) | "pic" | board init; primary PIC
+hw/arm/integratorcp.c:636 | sysbus_create_simple | OBJECT(machine) | "sic" | board init; secondary PIC
+hw/arm/integratorcp.c:637 | sysbus_create_varargs | OBJECT(machine) | "pit" | board init; single PIT
+hw/arm/integratorcp.c:639 | sysbus_create_simple | OBJECT(machine) | "rtc" | board init; single pl031 RTC
+hw/arm/integratorcp.c:642 | sysbus_create_simple | OBJECT(machine) | "icp" | board init; ICP control regs
+hw/arm/integratorcp.c:644 | sysbus_create_simple | OBJECT(machine) | "keyboard" | board init; pl050 KMI0
+hw/arm/integratorcp.c:645 | sysbus_create_simple | OBJECT(machine) | "mouse" | board init; pl050 KMI1
+hw/arm/integratorcp.c:646 | sysbus_create_simple | OBJECT(machine) | "debug" | board init; single debug LEDs
+hw/arm/integratorcp.c:648 | sysbus_create_varargs | OBJECT(machine) | "mmc" | board init; single pl181 MMC
+hw/arm/integratorcp.c:657 | qdev_new | OBJECT(machine) | "sd-card" | board init; single SD card
+hw/arm/integratorcp.c:664 | qdev_new | OBJECT(machine) | "aaci" | board init; single pl041 audio
+hw/arm/integratorcp.c:676 | qdev_new | OBJECT(machine) | "clcd" | board init; single pl110 CLCD
+hw/arm/realview.c:64 | qdev_new | parent | "split-irq[*]" | helper: threaded Object *parent from board init; called twice → auto-index
+hw/arm/realview.c:183 | qdev_new | OBJECT(machine) | "sysctl" | board init; single sysctl
+hw/arm/realview.c:191 | qdev_new | OBJECT(machine) | "mpcore" | board init; A9 mpcore (excl. w/ 194,209)
+hw/arm/realview.c:194 | qdev_new | OBJECT(machine) | "mpcore" | board init; 11MP mpcore (excl. w/ 191,209)
+hw/arm/realview.c:203 | sysbus_create_varargs | OBJECT(machine) | "l2x0" | board init; single L2 cache ctlr
+hw/arm/realview.c:209 | sysbus_create_simple | OBJECT(machine) | "gic" | board init; single GIC (excl. w/ 191,194)
+hw/arm/realview.c:215 | qdev_new | OBJECT(machine) | "aaci" | board init; single pl041 audio
+hw/arm/realview.c:224 | sysbus_create_simple | OBJECT(machine) | "keyboard" | board init; pl050 KMI0
+hw/arm/realview.c:225 | sysbus_create_simple | OBJECT(machine) | "mouse" | board init; pl050 KMI1
+hw/arm/realview.c:233 | qdev_new | OBJECT(machine) | "dma" | board init; single pl081 DMA
+hw/arm/realview.c:241 | sysbus_create_simple | OBJECT(machine) | "timer[*]" | board init; 2× sp804 → auto-index
+hw/arm/realview.c:242 | sysbus_create_simple | OBJECT(machine) | "timer[*]" | board init; 2× sp804 → auto-index
+hw/arm/realview.c:244 | sysbus_create_simple | OBJECT(machine) | "gpio[*]" | board init; 3× pl061 → auto-index
+hw/arm/realview.c:245 | sysbus_create_simple | OBJECT(machine) | "gpio[*]" | board init; 3× pl061 → auto-index
+hw/arm/realview.c:246 | sysbus_create_simple | OBJECT(machine) | "gpio[*]" | board init; 3× pl061 → auto-index
+hw/arm/realview.c:248 | qdev_new | OBJECT(machine) | "clcd" | board init; single pl111 CLCD
+hw/arm/realview.c:255 | sysbus_create_varargs | OBJECT(machine) | "mmc" | board init; single pl181 MMC
+hw/arm/realview.c:274 | qdev_new | OBJECT(machine) | "sd-card" | board init; single SD card
+hw/arm/realview.c:281 | sysbus_create_simple | OBJECT(machine) | "rtc" | board init; single pl031 RTC
+hw/arm/realview.c:284 | qdev_new | OBJECT(machine) | "pci-host" | board init; single PCI host bridge
+hw/arm/realview.c:300 | pci_create_simple | OBJECT(machine) | "ohci" | board init; single OHCI USB
+hw/arm/realview.c:304 | pci_create_simple | OBJECT(machine) | "scsi[*]" | board init; loop → auto-index
+hw/arm/realview.c:322 | sysbus_create_simple | OBJECT(machine) | "i2c" | board init; single SBCon I2C
+hw/arm/realview.c:324 | i2c_slave_create_simple | OBJECT(machine) | "ds1338" | board init; single DS1338 RTC
 
 Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/arm/xlnx-versal-virt.c |   5 +-
- hw/arm/xlnx-versal.c      | 197 ++++++++++++++++----------------------
- hw/arm/xlnx-zcu102.c      |  14 +--
- hw/arm/xlnx-zynqmp.c      |   6 +-
- 4 files changed, 98 insertions(+), 124 deletions(-)
+ hw/arm/integratorcp.c | 45 ++++++++++++----------
+ hw/arm/realview.c     | 87 +++++++++++++++++++++++++------------------
+ 2 files changed, 76 insertions(+), 56 deletions(-)
 
-diff --git a/hw/arm/xlnx-versal-virt.c b/hw/arm/xlnx-versal-virt.c
-index 48f6e6d463..88bebf1f87 100644
---- a/hw/arm/xlnx-versal-virt.c
-+++ b/hw/arm/xlnx-versal-virt.c
-@@ -143,9 +143,8 @@ static void create_virtio_regions(VersalVirt *s)
-         qemu_irq pic_irq;
+diff --git a/hw/arm/integratorcp.c b/hw/arm/integratorcp.c
+index 7560ad5983..ed715a3eb8 100644
+--- a/hw/arm/integratorcp.c
++++ b/hw/arm/integratorcp.c
+@@ -621,31 +621,38 @@ static void integratorcp_init(MachineState *machine)
+                              0, ram_size);
+     memory_region_add_subregion(address_space_mem, 0x80000000, ram_alias);
  
-         pic_irq = versal_get_reserved_irq(&s->soc, i, &dtb_irq);
--        dev = qdev_new_orphan("virtio-mmio");
--        object_property_add_child(OBJECT(s), "virtio-mmio[*]", OBJECT(dev));
--        sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+        dev = qdev_new(OBJECT(s), "virtio-mmio[*]", "virtio-mmio");
-+        sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
-         sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, pic_irq);
-         mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
-         memory_region_add_subregion(&s->soc.mr_ps, base, mr);
-diff --git a/hw/arm/xlnx-versal.c b/hw/arm/xlnx-versal.c
-index 7cb95a4ff8..bf125d6f32 100644
---- a/hw/arm/xlnx-versal.c
-+++ b/hw/arm/xlnx-versal.c
-@@ -514,10 +514,9 @@ static qemu_irq versal_get_gic_irq(Versal *s, int irq_idx)
-     if (split == NULL) {
-         size_t i;
+-    dev = qdev_new_orphan(TYPE_INTEGRATOR_CM);
++    dev = qdev_new(OBJECT(machine), "core", TYPE_INTEGRATOR_CM);
+     qdev_prop_set_uint32(dev, "memsz", ram_size >> 20);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map((SysBusDevice *)dev, 0, 0x10000000);
  
--        split = qdev_new_orphan(TYPE_SPLIT_IRQ);
-+        split = qdev_new(container, name, TYPE_SPLIT_IRQ);
-         qdev_prop_set_uint16(split, "num-lines", s->intc->len);
--        object_property_add_child(container, name, OBJECT(split));
--        qdev_realize_and_unref(split, NULL, &error_abort);
-+        qdev_realize(split, NULL, &error_abort);
- 
-         for (i = 0; i < s->intc->len; i++) {
-             DeviceState *gic;
-@@ -562,10 +561,9 @@ static qemu_irq versal_get_irq_or_gate_in(Versal *s, int irq_idx,
-     dev = DEVICE(object_resolve_path_at(container, name));
- 
-     if (dev == NULL) {
--        dev = qdev_new_orphan(TYPE_OR_IRQ);
--        object_property_add_child(container, name, OBJECT(dev));
-+        dev = qdev_new(container, name, TYPE_OR_IRQ);
-         qdev_prop_set_uint16(dev, "num-lines", 1 << R_VERSAL_IRQ_OR_IDX_LENGTH);
--        qdev_realize_and_unref(dev, NULL, &error_abort);
-+        qdev_realize(dev, NULL, &error_abort);
-         qdev_connect_gpio_out(dev, 0, target_irq);
+-    dev = sysbus_create_varargs_orphan(TYPE_INTEGRATOR_PIC, 0x14000000,
++    dev = sysbus_create_varargs(OBJECT(machine), "pic",
++                                TYPE_INTEGRATOR_PIC, 0x14000000,
+                                 qdev_get_gpio_in(DEVICE(cpu), ARM_CPU_IRQ),
+                                 qdev_get_gpio_in(DEVICE(cpu), ARM_CPU_FIQ),
+                                 NULL);
+     for (i = 0; i < 32; i++) {
+         pic[i] = qdev_get_gpio_in(dev, i);
      }
- 
-@@ -664,10 +662,9 @@ static inline DeviceState *create_or_gate(Versal *s, Object *parent,
- {
-     DeviceState *or;
- 
--    or = qdev_new_orphan(TYPE_OR_IRQ);
-+    or = qdev_new(parent, name, TYPE_OR_IRQ);
-     qdev_prop_set_uint16(or, "num-lines", num_lines);
--    object_property_add_child(parent, name, OBJECT(or));
--    qdev_realize_and_unref(or, NULL, &error_abort);
-+    qdev_realize(or, NULL, &error_abort);
-     versal_qdev_connect_gpio_out(s, or, 0, irq_idx);
- 
-     return or;
-@@ -713,14 +710,13 @@ static void versal_create_gic_its(Versal *s,
-         return;
-     }
- 
--    dev = qdev_new_orphan(TYPE_ARM_GICV3_ITS);
-+    dev = qdev_new(OBJECT(gic), "its", TYPE_ARM_GICV3_ITS);
-     sbd = SYS_BUS_DEVICE(dev);
- 
--    object_property_add_child(OBJECT(gic), "its", OBJECT(dev));
-     object_property_set_link(OBJECT(dev), "parent-gicv3", OBJECT(gic),
-                              &error_abort);
- 
--    sysbus_realize_and_unref(sbd, &error_abort);
-+    sysbus_realize(sbd, &error_abort);
- 
-     memory_region_add_subregion(mr, map->gic.its,
-                                 sysbus_mmio_get_region(sbd, 0));
-@@ -753,21 +749,21 @@ static DeviceState *versal_create_gic(Versal *s,
-     const char gicv3_compat[] = "arm,gic-v3";
-     const char gicv2_compat[] = "arm,cortex-a15-gic";
- 
-+    name = g_strdup_printf("%s-gic[*]", map->name);
+-    sic = sysbus_create_simple_orphan(TYPE_INTEGRATOR_PIC, 0xca000000, pic[26]);
+-    sysbus_create_varargs_orphan("integrator_pit", 0x13000000,
++    sic = sysbus_create_simple(OBJECT(machine), "sic",
++                               TYPE_INTEGRATOR_PIC, 0xca000000, pic[26]);
++    sysbus_create_varargs(OBJECT(machine), "pit", "integrator_pit", 0x13000000,
+                           pic[5], pic[6], pic[7], NULL);
+-    sysbus_create_simple_orphan("pl031", 0x15000000, pic[8]);
++    sysbus_create_simple(OBJECT(machine), "rtc", "pl031", 0x15000000, pic[8]);
+     pl011_create(OBJECT(machine), 0x16000000, pic[1], serial_hd(0));
+     pl011_create(OBJECT(machine), 0x17000000, pic[2], serial_hd(1));
+-    icp = sysbus_create_simple_orphan(TYPE_ICP_CONTROL_REGS, 0xcb000000,
++    icp = sysbus_create_simple(OBJECT(machine), "icp",
++                               TYPE_ICP_CONTROL_REGS, 0xcb000000,
+                                qdev_get_gpio_in(sic, 3));
+-    sysbus_create_simple_orphan("pl050_keyboard", 0x18000000, pic[3]);
+-    sysbus_create_simple_orphan("pl050_mouse", 0x19000000, pic[4]);
+-    sysbus_create_simple_orphan(TYPE_INTEGRATOR_DEBUG, 0x1a000000, 0);
+-
+-    dev = sysbus_create_varargs_orphan("pl181", 0x1c000000, pic[23], pic[24], NULL);
++    sysbus_create_simple(OBJECT(machine), "keyboard",
++                         "pl050_keyboard", 0x18000000, pic[3]);
++    sysbus_create_simple(OBJECT(machine), "mouse",
++                         "pl050_mouse", 0x19000000, pic[4]);
++    sysbus_create_simple(OBJECT(machine), "debug",
++                         TYPE_INTEGRATOR_DEBUG, 0x1a000000, 0);
 +
-     switch (map->gic.version) {
-     case 2:
--        dev = qdev_new_orphan(gic_class_name());
-+        dev = qdev_new(OBJECT(s), name, gic_class_name());
-         break;
++    dev = sysbus_create_varargs(OBJECT(machine), "mmc", "pl181",
++                                0x1c000000, pic[23], pic[24], NULL);
+     qdev_connect_gpio_out_named(dev, "card-read-only", 0,
+                           qdev_get_gpio_in_named(icp, ICP_GPIO_MMC_WPROT, 0));
+     qdev_connect_gpio_out_named(dev, "card-inserted", 0,
+@@ -654,18 +661,18 @@ static void integratorcp_init(MachineState *machine)
+     if (dinfo) {
+         DeviceState *card;
  
-     case 3:
--        dev = qdev_new_orphan(gicv3_class_name());
-+        dev = qdev_new(OBJECT(s), name, gicv3_class_name());
-         break;
- 
-     default:
-         g_assert_not_reached();
+-        card = qdev_new_orphan(TYPE_SD_CARD);
++        card = qdev_new(OBJECT(machine), "sd-card", TYPE_SD_CARD);
+         qdev_prop_set_drive_err(card, "drive", blk_by_legacy_dinfo(dinfo),
+                                 &error_fatal);
+-        qdev_realize_and_unref(card, qdev_get_child_bus(dev, "sd-bus"),
+-                               &error_fatal);
++        qdev_realize(card, qdev_get_child_bus(dev, "sd-bus"),
++                     &error_fatal);
      }
  
--    name = g_strdup_printf("%s-gic[*]", map->name);
--    object_property_add_child(OBJECT(s), name, OBJECT(dev));
-     sbd = SYS_BUS_DEVICE(dev);
-     qdev_prop_set_uint32(dev, "revision", map->gic.version);
-     qdev_prop_set_uint32(dev, "num-cpu", num_cpu);
-@@ -787,7 +783,7 @@ static DeviceState *versal_create_gic(Versal *s,
+-    dev = qdev_new_orphan("pl041");
++    dev = qdev_new(OBJECT(machine), "aaci", "pl041");
+     if (machine->audiodev) {
+         qdev_prop_set_string(dev, "audiodev", machine->audiodev);
+     }
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0x1d000000);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, pic[25]);
  
+@@ -673,10 +680,10 @@ static void integratorcp_init(MachineState *machine)
+         smc91c111_init(OBJECT(machine), 0xc8000000, pic[27]);
      }
  
--    sysbus_realize_and_unref(sbd, &error_fatal);
-+    sysbus_realize(sbd, &error_fatal);
+-    dev = qdev_new_orphan("pl110");
++    dev = qdev_new(OBJECT(machine), "clcd", "pl110");
+     object_property_set_link(OBJECT(dev), "framebuffer-memory",
+                              OBJECT(address_space_mem), &error_fatal);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0xc0000000);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, pic[22]);
  
-     memory_region_add_subregion(mr, map->gic.dist,
-                                 sysbus_mmio_get_region(sbd, 0));
-@@ -909,13 +905,13 @@ static DeviceState *versal_create_cpu(Versal *s,
-                                       size_t cluster_idx,
-                                       size_t core_idx)
- {
--    DeviceState *cpu = qdev_new_orphan(map->cpu_model);
--    ARMCPU *arm_cpu = ARM_CPU(cpu);
--    Object *obj = OBJECT(cpu);
-+    DeviceState *cpu;
-+    ARMCPU *arm_cpu;
-+    Object *obj;
-     uint64_t affinity;
-     bool start_off;
-     size_t idx = cluster_idx * map->num_core + core_idx;
--    g_autofree char *name;
-+    g_autofree char *name = g_strdup_printf("%s[*]", map->name);
-     g_autofree char *node = NULL;
+diff --git a/hw/arm/realview.c b/hw/arm/realview.c
+index 965fef4fcf..2441137222 100644
+--- a/hw/arm/realview.c
++++ b/hw/arm/realview.c
+@@ -59,13 +59,14 @@ static const int realview_board_id[] = {
+     0x76d
+ };
  
-     affinity = map->mp_affinity.base;
-@@ -926,14 +922,15 @@ static DeviceState *versal_create_cpu(Versal *s,
-         || ((map->start_powered_off == SPO_SECONDARIES)
-             && (cluster_idx || core_idx));
+-static void split_irq_from_named(DeviceState *src, const char* outname,
+-                                 qemu_irq out1, qemu_irq out2) {
+-    DeviceState *splitter = qdev_new_orphan(TYPE_SPLIT_IRQ);
++static void split_irq_from_named(Object *parent, DeviceState *src,
++                                  const char *outname,
++                                  qemu_irq out1, qemu_irq out2) {
++    DeviceState *splitter = qdev_new(parent, "split-irq[*]", TYPE_SPLIT_IRQ);
  
--    name = g_strdup_printf("%s[*]", map->name);
--    object_property_add_child(OBJECT(qemu_cluster), name, obj);
-+    cpu = qdev_new(OBJECT(qemu_cluster), name, map->cpu_model);
-+    arm_cpu = ARM_CPU(cpu);
-+    obj = OBJECT(cpu);
-     object_property_set_bool(obj, "start-powered-off", start_off,
-                              &error_abort);
-     qdev_prop_set_uint64(cpu, "mp-affinity", affinity);
-     qdev_prop_set_int32(cpu, "core-count",  map->num_core);
-     object_property_set_link(obj, "memory", OBJECT(cpu_mr), &error_abort);
--    qdev_realize_and_unref(cpu, NULL, &error_fatal);
-+    qdev_realize(cpu, NULL, &error_fatal);
+     qdev_prop_set_uint32(splitter, "num-lines", 2);
  
-     if (!map->dtb_expose) {
-         return cpu;
-@@ -955,15 +952,13 @@ static void versal_create_cpu_cluster(Versal *s, const VersalCpuClusterMap *map)
-     size_t i, j;
-     DeviceState *cluster;
-     MemoryRegion *mr;
--    char *name;
-+    g_autofree char *name = g_strdup_printf("%s-cluster", map->name);
-     g_autofree DeviceState **cpus;
-     const char compatible[] = "arm,armv8-timer";
-     bool has_gtimer;
+-    qdev_realize_and_unref(splitter, NULL, &error_fatal);
++    qdev_realize(splitter, NULL, &error_fatal);
  
--    cluster = qdev_new_orphan(TYPE_CPU_CLUSTER);
--    name = g_strdup_printf("%s-cluster", map->name);
--    object_property_add_child(OBJECT(s), name, OBJECT(cluster));
--    g_free(name);
-+    cluster = qdev_new(OBJECT(s), name, TYPE_CPU_CLUSTER);
-+
-     qdev_prop_set_uint32(cluster, "cluster-id", map->qemu_cluster_id);
+     qdev_connect_gpio_out(splitter, 0, out1);
+     qdev_connect_gpio_out(splitter, 1, out2);
+@@ -180,49 +181,53 @@ static void realview_init(MachineState *machine,
+     }
  
-     mr = create_cpu_mr(s, cluster, map);
-@@ -989,7 +984,7 @@ static void versal_create_cpu_cluster(Versal *s, const VersalCpuClusterMap *map)
+     sys_id = is_pb ? 0x01780500 : 0xc1400400;
+-    sysctl = qdev_new_orphan("realview_sysctl");
++    sysctl = qdev_new(OBJECT(machine), "sysctl", "realview_sysctl");
+     qdev_prop_set_uint32(sysctl, "sys_id", sys_id);
+     qdev_prop_set_uint32(sysctl, "proc_id", proc_id);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(sysctl), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(sysctl), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(sysctl), 0, 0x10000000);
+ 
+     if (is_mpcore) {
+         if (is_pb) {
+-            dev = qdev_new_orphan(TYPE_A9MPCORE_PRIV);
++            dev = qdev_new(OBJECT(machine), "mpcore", TYPE_A9MPCORE_PRIV);
+             qdev_prop_set_uint32(dev, "num-irq", GIC_EXT_IRQS + GIC_INTERNAL);
+         } else {
+-            dev = qdev_new_orphan("realview_mpcore");
++            dev = qdev_new(OBJECT(machine), "mpcore", "realview_mpcore");
          }
+         qdev_prop_set_uint32(dev, "num-cpu", smp_cpus);
+         busdev = SYS_BUS_DEVICE(dev);
+-        sysbus_realize_and_unref(busdev, &error_fatal);
++        sysbus_realize(busdev, &error_fatal);
+         sysbus_mmio_map(busdev, 0, periphbase);
+         for (n = 0; n < smp_cpus; n++) {
+             sysbus_connect_irq(busdev, n, cpu_irq[n]);
+         }
+-        sysbus_create_varargs_orphan("l2x0", periphbase + 0x2000, NULL);
++        sysbus_create_varargs(OBJECT(machine), "l2x0", "l2x0",
++                              periphbase + 0x2000, NULL);
+         /* Both A9 and 11MPCore put the GIC CPU i/f at base + 0x100 */
+         realview_binfo.gic_cpu_if_addr = periphbase + 0x100;
+     } else {
+         uint32_t gic_addr = is_pb ? 0x1e000000 : 0x10040000;
+         /* For now just create the nIRQ GIC, and ignore the others.  */
+-        dev = sysbus_create_simple_orphan(TYPE_REALVIEW_GIC, gic_addr, cpu_irq[0]);
++        dev = sysbus_create_simple(OBJECT(machine), "gic",
++                                   TYPE_REALVIEW_GIC, gic_addr, cpu_irq[0]);
+     }
+     for (n = 0; n < GIC_EXT_IRQS; n++) {
+         pic[n] = qdev_get_gpio_in(dev, n);
      }
  
--    qdev_realize_and_unref(cluster, NULL, &error_fatal);
-+    qdev_realize(cluster, NULL, &error_fatal);
+-    pl041 = qdev_new_orphan("pl041");
++    pl041 = qdev_new(OBJECT(machine), "aaci", "pl041");
+     qdev_prop_set_uint32(pl041, "nc_fifo_depth", 512);
+     if (machine->audiodev) {
+         qdev_prop_set_string(pl041, "audiodev", machine->audiodev);
+     }
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(pl041), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(pl041), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(pl041), 0, 0x10004000);
+     sysbus_connect_irq(SYS_BUS_DEVICE(pl041), 0, pic[19]);
  
-     if (!map->per_cluster_gic) {
-         versal_create_and_connect_gic(s, map, mr, cpus,
-@@ -1028,10 +1023,9 @@ static void versal_create_uart(Versal *s,
-     const char compatible[] = "arm,pl011\0arm,sbsa-uart";
-     const char clocknames[] = "uartclk\0apb_pclk";
+-    sysbus_create_simple_orphan("pl050_keyboard", 0x10006000, pic[20]);
+-    sysbus_create_simple_orphan("pl050_mouse", 0x10007000, pic[21]);
++    sysbus_create_simple(OBJECT(machine), "keyboard",
++                         "pl050_keyboard", 0x10006000, pic[20]);
++    sysbus_create_simple(OBJECT(machine), "mouse",
++                         "pl050_mouse", 0x10007000, pic[21]);
  
--    dev = qdev_new_orphan(TYPE_PL011);
--    object_property_add_child(OBJECT(s), "uart[*]", OBJECT(dev));
-+    dev = qdev_new(OBJECT(s), "uart[*]", TYPE_PL011);
-     qdev_prop_set_chr(dev, "chardev", serial_hd(chardev_idx));
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     pl011_create(OBJECT(machine), 0x10009000, pic[12], serial_hd(0));
+     pl011_create(OBJECT(machine), 0x1000a000, pic[13], serial_hd(1));
+@@ -230,40 +235,46 @@ static void realview_init(MachineState *machine,
+     pl011_create(OBJECT(machine), 0x1000c000, pic[15], serial_hd(3));
  
-     mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
-     memory_region_add_subregion(&s->mr_ps, map->addr, mr);
-@@ -1067,8 +1061,7 @@ static void versal_create_canfd(Versal *s, const VersalSimplePeriphMap *map,
-     const char compatible[] = "xlnx,canfd-2.0";
-     const char clocknames[] = "can_clk\0s_axi_aclk";
- 
--    sbd = SYS_BUS_DEVICE(qdev_new_orphan(TYPE_XILINX_CANFD));
--    object_property_add_child(OBJECT(s), "canfd[*]", OBJECT(sbd));
-+    sbd = SYS_BUS_DEVICE(qdev_new(OBJECT(s), "canfd[*]", TYPE_XILINX_CANFD));
- 
-     object_property_set_int(OBJECT(sbd), "ext_clk_freq",
-                             25 * 1000 * 1000 , &error_abort);
-@@ -1076,7 +1069,7 @@ static void versal_create_canfd(Versal *s, const VersalSimplePeriphMap *map,
-     object_property_set_link(OBJECT(sbd), "canfdbus", OBJECT(bus),
-                              &error_abort);
- 
--    sysbus_realize_and_unref(sbd, &error_fatal);
-+    sysbus_realize(sbd, &error_fatal);
- 
-     mr = sysbus_mmio_get_region(sbd, 0);
-     memory_region_add_subregion(&s->mr_ps, map->addr, mr);
-@@ -1107,15 +1100,14 @@ static void versal_create_usb(Versal *s,
-     const char compat_versal_dwc3[] = "xlnx,versal-dwc3";
-     const char compat_dwc3[] = "snps,dwc3";
- 
--    dev = qdev_new_orphan(TYPE_XILINX_VERSAL_USB2);
--    object_property_add_child(OBJECT(s), "usb[*]", OBJECT(dev));
-+    dev = qdev_new(OBJECT(s), "usb[*]", TYPE_XILINX_VERSAL_USB2);
- 
-     object_property_set_link(OBJECT(dev), "dma", OBJECT(&s->mr_ps),
-                              &error_abort);
-     qdev_prop_set_uint32(dev, "intrs", 1);
-     qdev_prop_set_uint32(dev, "slots", 2);
- 
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
- 
-     mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
-     memory_region_add_subregion(&s->mr_ps, map->xhci, mr);
-@@ -1167,8 +1159,7 @@ static void versal_create_gem(Versal *s,
-     DeviceState *or;
-     int i;
- 
--    dev = qdev_new_orphan(TYPE_CADENCE_GEM);
--    object_property_add_child(OBJECT(s), "gem[*]", OBJECT(dev));
-+    dev = qdev_new(OBJECT(s), "gem[*]", TYPE_CADENCE_GEM);
- 
-     qemu_configure_nic_device(dev, true, NULL);
-     object_property_set_int(OBJECT(dev), "phy-addr", 23, &error_abort);
-@@ -1177,7 +1168,7 @@ static void versal_create_gem(Versal *s,
- 
-     object_property_set_link(OBJECT(dev), "dma", OBJECT(&s->mr_ps),
-                              &error_abort);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
- 
-     mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
-     memory_region_add_subregion(&s->mr_ps, map->map.addr, mr);
-@@ -1251,12 +1242,11 @@ static void versal_create_zdma(Versal *s,
-         int irq = map->map.irq + map->irq_stride * i;
-         g_autofree char *node;
- 
--        dev = qdev_new_orphan(TYPE_XLNX_ZDMA);
--        object_property_add_child(OBJECT(s), name, OBJECT(dev));
-+        dev = qdev_new(OBJECT(s), name, TYPE_XLNX_ZDMA);
-         object_property_set_int(OBJECT(dev), "bus-width", 128, &error_abort);
-         object_property_set_link(OBJECT(dev), "dma",
-                                  OBJECT(get_system_memory()), &error_fatal);
--        sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+        sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
- 
-         mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
-         memory_region_add_subregion(&s->mr_ps, addr, mr);
-@@ -1286,15 +1276,14 @@ static void versal_create_sdhci(Versal *s,
-     const char compatible[] = "arasan,sdhci-8.9a";
-     const char clocknames[] = "clk_xin\0clk_ahb";
- 
--    dev = qdev_new_orphan(TYPE_SYSBUS_SDHCI);
--    object_property_add_child(OBJECT(s), "sdhci[*]", OBJECT(dev));
-+    dev = qdev_new(OBJECT(s), "sdhci[*]", TYPE_SYSBUS_SDHCI);
- 
-     object_property_set_uint(OBJECT(dev), "sd-spec-version", 3,
+     /* DMA controller is optional, apparently.  */
+-    dev = qdev_new_orphan("pl081");
++    dev = qdev_new(OBJECT(machine), "dma", "pl081");
+     object_property_set_link(OBJECT(dev), "downstream", OBJECT(sysmem),
                               &error_fatal);
-     object_property_set_uint(OBJECT(dev), "capareg", SDHCI_CAPABILITIES,
-                              &error_fatal);
-     object_property_set_uint(OBJECT(dev), "uhs", UHS_I, &error_fatal);
+     busdev = SYS_BUS_DEVICE(dev);
+-    sysbus_realize_and_unref(busdev, &error_fatal);
++    sysbus_realize(busdev, &error_fatal);
+     sysbus_mmio_map(busdev, 0, 0x10030000);
+     sysbus_connect_irq(busdev, 0, pic[24]);
+ 
+-    sysbus_create_simple_orphan("sp804", 0x10011000, pic[4]);
+-    sysbus_create_simple_orphan("sp804", 0x10012000, pic[5]);
++    sysbus_create_simple(OBJECT(machine), "timer[*]",
++                         "sp804", 0x10011000, pic[4]);
++    sysbus_create_simple(OBJECT(machine), "timer[*]",
++                         "sp804", 0x10012000, pic[5]);
+ 
+-    sysbus_create_simple_orphan("pl061", 0x10013000, pic[6]);
+-    sysbus_create_simple_orphan("pl061", 0x10014000, pic[7]);
+-    gpio2 = sysbus_create_simple_orphan("pl061", 0x10015000, pic[8]);
++    sysbus_create_simple(OBJECT(machine), "gpio[*]",
++                         "pl061", 0x10013000, pic[6]);
++    sysbus_create_simple(OBJECT(machine), "gpio[*]",
++                         "pl061", 0x10014000, pic[7]);
++    gpio2 = sysbus_create_simple(OBJECT(machine), "gpio[*]",
++                                 "pl061", 0x10015000, pic[8]);
+ 
+-    dev = qdev_new_orphan("pl111");
++    dev = qdev_new(OBJECT(machine), "clcd", "pl111");
+     object_property_set_link(OBJECT(dev), "framebuffer-memory",
+                              OBJECT(sysmem), &error_fatal);
 -    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
 +    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0x10020000);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, pic[23]);
  
-     mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
-     memory_region_add_subregion(&s->mr_ps, map->addr, mr);
-@@ -1320,9 +1309,8 @@ static void versal_create_rtc(Versal *s, const struct VersalRtcMap *map)
-     const char compatible[] = "xlnx,zynqmp-rtc";
-     const char interrupt_names[] = "alarm\0sec";
+-    dev = sysbus_create_varargs_orphan("pl181", 0x10005000, pic[17], pic[18], NULL);
++    dev = sysbus_create_varargs(OBJECT(machine), "mmc", "pl181",
++                                0x10005000, pic[17], pic[18], NULL);
+     /* Wire up MMC card detect and read-only signals. These have
+      * to go to both the PL061 GPIO and the sysctl register.
+      * Note that the PL181 orders these lines (readonly,inserted)
+      * and the PL061 has them the other way about. Also the card
+      * detect line is inverted.
+      */
+-    split_irq_from_named(dev, "card-read-only",
++    split_irq_from_named(OBJECT(machine), dev, "card-read-only",
+                    qdev_get_gpio_in(sysctl, ARM_SYSCTL_GPIO_MMC_WPROT),
+                    qdev_get_gpio_in(gpio2, 1));
  
--    sbd = SYS_BUS_DEVICE(qdev_new_orphan(TYPE_XLNX_ZYNQMP_RTC));
--    object_property_add_child(OBJECT(s), "rtc", OBJECT(sbd));
--    sysbus_realize_and_unref(sbd, &error_abort);
-+    sbd = SYS_BUS_DEVICE(qdev_new(OBJECT(s), "rtc", TYPE_XLNX_ZYNQMP_RTC));
-+    sysbus_realize(sbd, &error_abort);
+-    split_irq_from_named(dev, "card-inserted",
++    split_irq_from_named(OBJECT(machine), dev, "card-inserted",
+                    qdev_get_gpio_in(sysctl, ARM_SYSCTL_GPIO_MMC_CARDIN),
+                    qemu_irq_invert(qdev_get_gpio_in(gpio2, 0)));
  
-     mr = sysbus_mmio_get_region(sbd, 0);
-     memory_region_add_subregion(&s->mr_ps, map->map.addr, mr);
-@@ -1349,9 +1337,8 @@ static void versal_create_trng(Versal *s, const VersalSimplePeriphMap *map)
-     SysBusDevice *sbd;
-     MemoryRegion *mr;
+@@ -271,19 +282,19 @@ static void realview_init(MachineState *machine,
+     if (dinfo) {
+         DeviceState *card;
  
--    sbd = SYS_BUS_DEVICE(qdev_new_orphan(TYPE_XLNX_VERSAL_TRNG));
--    object_property_add_child(OBJECT(s), "trng", OBJECT(sbd));
--    sysbus_realize_and_unref(sbd, &error_abort);
-+    sbd = SYS_BUS_DEVICE(qdev_new(OBJECT(s), "trng", TYPE_XLNX_VERSAL_TRNG));
-+    sysbus_realize(sbd, &error_abort);
- 
-     mr = sysbus_mmio_get_region(sbd, 0);
-     memory_region_add_subregion(&s->mr_ps, map->addr, mr);
-@@ -1370,9 +1357,9 @@ static void versal_create_xrams(Versal *s, const struct VersalXramMap *map)
-     for (i = 0; i < map->num; i++) {
-         hwaddr ctrl, mem;
- 
--        sbd = SYS_BUS_DEVICE(qdev_new_orphan(TYPE_XLNX_XRAM_CTRL));
--        object_property_add_child(OBJECT(s), "xram[*]", OBJECT(sbd));
--        sysbus_realize_and_unref(sbd, &error_fatal);
-+        sbd = SYS_BUS_DEVICE(qdev_new(OBJECT(s), "xram[*]",
-+                                      TYPE_XLNX_XRAM_CTRL));
-+        sysbus_realize(sbd, &error_fatal);
- 
-         ctrl = map->ctrl + map->ctrl_stride * i;
-         mem = map->mem + map->mem_stride * i;
-@@ -1392,12 +1379,11 @@ static void versal_create_bbram(Versal *s,
-     DeviceState *dev;
-     SysBusDevice *sbd;
- 
--    dev = qdev_new_orphan(TYPE_XLNX_BBRAM);
-+    dev = qdev_new(OBJECT(s), "bbram", TYPE_XLNX_BBRAM);
-     sbd = SYS_BUS_DEVICE(dev);
- 
--    object_property_add_child(OBJECT(s), "bbram", OBJECT(dev));
-     qdev_prop_set_uint32(dev, "crc-zpads", 0);
--    sysbus_realize_and_unref(sbd, &error_abort);
-+    sysbus_realize(sbd, &error_abort);
-     memory_region_add_subregion(&s->mr_ps, map->addr,
-                                 sysbus_mmio_get_region(sbd, 0));
-     versal_sysbus_connect_irq(s, sbd, 0, map->irq);
-@@ -1415,26 +1401,24 @@ static void versal_create_efuse(Versal *s,
-         return;
+-        card = qdev_new_orphan(TYPE_SD_CARD);
++        card = qdev_new(OBJECT(machine), "sd-card", TYPE_SD_CARD);
+         qdev_prop_set_drive_err(card, "drive", blk_by_legacy_dinfo(dinfo),
+                                 &error_fatal);
+-        qdev_realize_and_unref(card, qdev_get_child_bus(dev, "sd-bus"),
+-                               &error_fatal);
++        qdev_realize(card, qdev_get_child_bus(dev, "sd-bus"),
++                     &error_fatal);
      }
  
--    ctrl = qdev_new_orphan(TYPE_XLNX_VERSAL_EFUSE_CTRL);
--    cache = qdev_new_orphan(TYPE_XLNX_VERSAL_EFUSE_CACHE);
--    bits = qdev_new_orphan(TYPE_XLNX_EFUSE);
-+    ctrl = qdev_new(OBJECT(s), "efuse-ctrl", TYPE_XLNX_VERSAL_EFUSE_CTRL);
-+    cache = qdev_new(OBJECT(s), "efuse-cache",
-+                     TYPE_XLNX_VERSAL_EFUSE_CACHE);
-+    bits = qdev_new(OBJECT(s), "efuse", TYPE_XLNX_EFUSE);
+-    sysbus_create_simple_orphan("pl031", 0x10017000, pic[10]);
++    sysbus_create_simple(OBJECT(machine), "rtc", "pl031", 0x10017000, pic[10]);
  
-     qdev_prop_set_uint32(bits, "efuse-nr", 3);
-     qdev_prop_set_uint32(bits, "efuse-size", 8192);
- 
--    object_property_add_child(OBJECT(s), "efuse", OBJECT(bits));
--    qdev_realize_and_unref(bits, NULL, &error_abort);
-+    qdev_realize(bits, NULL, &error_abort);
- 
-     object_property_set_link(OBJECT(ctrl), "efuse", OBJECT(bits), &error_abort);
- 
-     object_property_set_link(OBJECT(cache), "efuse", OBJECT(bits),
-                              &error_abort);
- 
--    object_property_add_child(OBJECT(s), "efuse-cache", OBJECT(cache));
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(cache), &error_abort);
-+    sysbus_realize(SYS_BUS_DEVICE(cache), &error_abort);
- 
--    object_property_add_child(OBJECT(s), "efuse-ctrl", OBJECT(ctrl));
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(ctrl), &error_abort);
-+    sysbus_realize(SYS_BUS_DEVICE(ctrl), &error_abort);
- 
-     memory_region_add_subregion(&s->mr_ps, map->ctrl,
-                                 sysbus_mmio_get_region(SYS_BUS_DEVICE(ctrl),
-@@ -1451,11 +1435,11 @@ static DeviceState *versal_create_pmc_iou_slcr(Versal *s,
-     SysBusDevice *sbd;
-     DeviceState *dev;
- 
--    dev = qdev_new_orphan(TYPE_XILINX_VERSAL_PMC_IOU_SLCR);
--    object_property_add_child(OBJECT(s), "pmc-iou-slcr", OBJECT(dev));
-+    dev = qdev_new(OBJECT(s), "pmc-iou-slcr",
-+                   TYPE_XILINX_VERSAL_PMC_IOU_SLCR);
- 
-     sbd = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(sbd, &error_fatal);
-+    sysbus_realize(sbd, &error_fatal);
- 
-     memory_region_add_subregion(&s->mr_ps, map->addr,
-                                 sysbus_mmio_get_region(sbd, 0));
-@@ -1473,8 +1457,7 @@ static DeviceState *versal_create_ospi(Versal *s,
-     DeviceState *dev, *dma_dst, *dma_src, *orgate;
-     MemoryRegion *linear_mr = g_new(MemoryRegion, 1);
- 
--    dev = qdev_new_orphan(TYPE_XILINX_VERSAL_OSPI);
--    object_property_add_child(OBJECT(s), "ospi", OBJECT(dev));
-+    dev = qdev_new(OBJECT(s), "ospi", TYPE_XILINX_VERSAL_OSPI);
- 
-     memory_region_init(linear_mr, OBJECT(dev), "linear-mr", map->dac_sz);
- 
-@@ -1482,20 +1465,18 @@ static DeviceState *versal_create_ospi(Versal *s,
-     memory_region_add_subregion(linear_mr, 0x0, mr_dac);
- 
-     /* Create the OSPI destination DMA */
--    dma_dst = qdev_new_orphan(TYPE_XLNX_CSU_DMA);
--    object_property_add_child(OBJECT(dev), "dma-dst-dev", OBJECT(dma_dst));
-+    dma_dst = qdev_new(OBJECT(dev), "dma-dst-dev", TYPE_XLNX_CSU_DMA);
-     object_property_set_link(OBJECT(dma_dst), "dma",
-                              OBJECT(get_system_memory()), &error_abort);
- 
-     sbd = SYS_BUS_DEVICE(dma_dst);
--    sysbus_realize_and_unref(sbd, &error_fatal);
-+    sysbus_realize(sbd, &error_fatal);
- 
-     memory_region_add_subregion(&s->mr_ps, map->dma_dst,
-                                 sysbus_mmio_get_region(sbd, 0));
- 
-     /* Create the OSPI source DMA */
--    dma_src = qdev_new_orphan(TYPE_XLNX_CSU_DMA);
--    object_property_add_child(OBJECT(dev), "dma-src-dev", OBJECT(dma_src));
-+    dma_src = qdev_new(OBJECT(dev), "dma-src-dev", TYPE_XLNX_CSU_DMA);
- 
-     object_property_set_bool(OBJECT(dma_src), "is-dst", false, &error_abort);
- 
-@@ -1506,7 +1487,7 @@ static DeviceState *versal_create_ospi(Versal *s,
-                              OBJECT(dma_dst), &error_abort);
- 
-     sbd = SYS_BUS_DEVICE(dma_src);
--    sysbus_realize_and_unref(sbd, &error_fatal);
-+    sysbus_realize(sbd, &error_fatal);
- 
-     memory_region_add_subregion(&s->mr_ps, map->dma_src,
-                                 sysbus_mmio_get_region(sbd, 0));
-@@ -1516,7 +1497,7 @@ static DeviceState *versal_create_ospi(Versal *s,
-                              OBJECT(dma_src), &error_abort);
- 
-     sbd = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(sbd, &error_fatal);
-+    sysbus_realize(sbd, &error_fatal);
- 
-     memory_region_add_subregion(&s->mr_ps, map->ctrl,
-                                 sysbus_mmio_get_region(sbd, 0));
-@@ -1548,28 +1529,24 @@ static void versal_create_cfu(Versal *s, const struct VersalCfuMap *map)
-     object_unref(container);
- 
-     /* CFU FDRO */
--    cfu_fdro = qdev_new_orphan(TYPE_XLNX_VERSAL_CFU_FDRO);
--    object_property_add_child(container, "cfu-fdro", OBJECT(cfu_fdro));
-+    cfu_fdro = qdev_new(container, "cfu-fdro", TYPE_XLNX_VERSAL_CFU_FDRO);
-     sbd = SYS_BUS_DEVICE(cfu_fdro);
- 
--    sysbus_realize_and_unref(sbd, &error_fatal);
-+    sysbus_realize(sbd, &error_fatal);
-     memory_region_add_subregion(&s->mr_ps, map->cfu_fdro,
-                                 sysbus_mmio_get_region(sbd, 0));
- 
-     /* cframe bcast */
--    cframe_bcast = qdev_new_orphan(TYPE_XLNX_VERSAL_CFRAME_BCAST_REG);
--    object_property_add_child(container, "cframe-bcast", OBJECT(cframe_bcast));
-+    cframe_bcast = qdev_new(container, "cframe-bcast",
-+                            TYPE_XLNX_VERSAL_CFRAME_BCAST_REG);
- 
-     /* CFU APB */
--    cfu_apb = qdev_new_orphan(TYPE_XLNX_VERSAL_CFU_APB);
--    object_property_add_child(container, "cfu-apb", OBJECT(cfu_apb));
-+    cfu_apb = qdev_new(container, "cfu-apb", TYPE_XLNX_VERSAL_CFU_APB);
- 
-     /* IRQ or gate for cframes */
--    cframe_irq_or = qdev_new_orphan(TYPE_OR_IRQ);
--    object_property_add_child(container, "cframe-irq-or-gate",
--                              OBJECT(cframe_irq_or));
-+    cframe_irq_or = qdev_new(container, "cframe-irq-or-gate", TYPE_OR_IRQ);
-     qdev_prop_set_uint16(cframe_irq_or, "num-lines", map->num_cframe);
--    qdev_realize_and_unref(cframe_irq_or, NULL, &error_abort);
-+    qdev_realize(cframe_irq_or, NULL, &error_abort);
-     versal_qdev_connect_gpio_out(s, cframe_irq_or, 0, map->cframe_irq);
- 
-     /* cframe reg */
-@@ -1580,8 +1557,8 @@ static void versal_create_cfu(Versal *s, const struct VersalCfuMap *map)
-         g_autofree char *prop_name;
-         size_t j;
- 
--        dev = qdev_new_orphan(TYPE_XLNX_VERSAL_CFRAME_REG);
--        object_property_add_child(container, "cframe[*]", OBJECT(dev));
-+        dev = qdev_new(container, "cframe[*]",
-+                       TYPE_XLNX_VERSAL_CFRAME_REG);
- 
-         sbd = SYS_BUS_DEVICE(dev);
- 
-@@ -1597,7 +1574,7 @@ static void versal_create_cfu(Versal *s, const struct VersalCfuMap *map)
-         object_property_set_link(OBJECT(dev), "cfu-fdro",
-                                  OBJECT(cfu_fdro), &error_abort);
- 
--        sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_abort);
-+        sysbus_realize(SYS_BUS_DEVICE(dev), &error_abort);
- 
-         reg_base = map->cframe_base + i * map->cframe_stride * 2;
-         fdri_base = reg_base + map->cframe_stride;
-@@ -1615,14 +1592,14 @@ static void versal_create_cfu(Versal *s, const struct VersalCfuMap *map)
-     }
- 
-     sbd = SYS_BUS_DEVICE(cframe_bcast);
--    sysbus_realize_and_unref(sbd, &error_abort);
-+    sysbus_realize(sbd, &error_abort);
-     memory_region_add_subregion(&s->mr_ps, map->cframe_bcast_reg,
-                                 sysbus_mmio_get_region(sbd, 0));
-     memory_region_add_subregion(&s->mr_ps, map->cframe_bcast_fdri,
-                                 sysbus_mmio_get_region(sbd, 1));
- 
-     sbd = SYS_BUS_DEVICE(cfu_apb);
--    sysbus_realize_and_unref(sbd, &error_fatal);
-+    sysbus_realize(sbd, &error_fatal);
-     memory_region_add_subregion(&s->mr_ps, map->cfu_apb,
-                                 sysbus_mmio_get_region(sbd, 0));
-     memory_region_add_subregion(&s->mr_ps, map->cfu_stream,
-@@ -1632,13 +1609,12 @@ static void versal_create_cfu(Versal *s, const struct VersalCfuMap *map)
-     versal_sysbus_connect_irq(s, sbd, 0, map->cfu_apb_irq);
- 
-     /* CFU SFR */
--    cfu_sfr = qdev_new_orphan(TYPE_XLNX_VERSAL_CFU_SFR);
--    object_property_add_child(container, "cfu-sfr", OBJECT(cfu_sfr));
-+    cfu_sfr = qdev_new(container, "cfu-sfr", TYPE_XLNX_VERSAL_CFU_SFR);
-     sbd = SYS_BUS_DEVICE(cfu_sfr);
- 
-     object_property_set_link(OBJECT(cfu_sfr),
-                             "cfu", OBJECT(cfu_apb), &error_abort);
--    sysbus_realize_and_unref(sbd, &error_fatal);
-+    sysbus_realize(sbd, &error_fatal);
-     memory_region_add_subregion(&s->mr_ps, map->cfu_sfr,
-                                 sysbus_mmio_get_region(sbd, 0));
- }
-@@ -1676,9 +1652,8 @@ static inline void versal_create_crl(Versal *s)
-     ver = versal_get_version(s);
- 
-     crl_class = xlnx_versal_crl_class_name(ver);
--    dev = qdev_new_orphan(crl_class);
-+    dev = qdev_new(OBJECT(s), "crl", crl_class);
-     obj = OBJECT(dev);
--    object_property_add_child(OBJECT(s), "crl", obj);
- 
-     /*
-      * The 3rd GEM controller on versal2 is in the MMI subsystem.
-@@ -1694,7 +1669,7 @@ static inline void versal_create_crl(Versal *s)
-     crl_connect_dev_by_name(s, obj, "gem", num_gem);
-     crl_connect_dev_by_name(s, obj, "usb", map->num_usb);
- 
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_abort);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_abort);
- 
-     memory_region_add_subregion(&s->mr_ps, map->crl.addr,
-                                 sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0));
-@@ -1761,13 +1736,12 @@ static void versal_unimp_area(Versal *s, const char *name,
-                                 MemoryRegion *mr,
-                                 hwaddr base, hwaddr size)
- {
--    DeviceState *dev = qdev_new_orphan(TYPE_UNIMPLEMENTED_DEVICE);
-+    DeviceState *dev = qdev_new(OBJECT(s), name, TYPE_UNIMPLEMENTED_DEVICE);
-     MemoryRegion *mr_dev;
- 
-     qdev_prop_set_string(dev, "name", name);
-     qdev_prop_set_uint64(dev, "size", size);
--    object_property_add_child(OBJECT(s), name, OBJECT(dev));
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
- 
-     mr_dev = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
-     memory_region_add_subregion(mr, base, mr_dev);
-@@ -1972,11 +1946,10 @@ void versal_sdhci_plug_card(Versal *s, int sd_idx, BlockBackend *blk)
-         return;
-     }
- 
--    card = qdev_new_orphan(TYPE_SD_CARD);
--    object_property_add_child(OBJECT(sdhci), "card[*]", OBJECT(card));
-+    card = qdev_new(OBJECT(sdhci), "card[*]", TYPE_SD_CARD);
-     qdev_prop_set_drive_err(card, "drive", blk, &error_fatal);
--    qdev_realize_and_unref(card, qdev_get_child_bus(DEVICE(sdhci), "sd-bus"),
--                           &error_fatal);
-+    qdev_realize(card, qdev_get_child_bus(DEVICE(sdhci), "sd-bus"),
-+                 &error_fatal);
- }
- 
- void versal_efuse_attach_drive(Versal *s, BlockBackend *blk)
-@@ -2015,13 +1988,13 @@ void versal_ospi_create_flash(Versal *s, int flash_idx, const char *flash_mdl,
-     ospi = DEVICE(versal_get_child(s, "ospi"));
-     spi_bus = qdev_get_child_bus(ospi, "spi0");
- 
--    flash = qdev_new_orphan(flash_mdl);
-+    flash = qdev_new(OBJECT(ospi), "flash[*]", flash_mdl);
- 
-     if (blk) {
-         qdev_prop_set_drive_err(flash, "drive", blk, &error_fatal);
-     }
-     qdev_prop_set_uint8(flash, "cs", flash_idx);
--    qdev_realize_and_unref(flash, spi_bus, &error_fatal);
-+    qdev_realize(flash, spi_bus, &error_fatal);
- 
-     cs_line = qdev_get_gpio_in_named(flash, SSI_GPIO_CS, 0);
- 
-diff --git a/hw/arm/xlnx-zcu102.c b/hw/arm/xlnx-zcu102.c
-index adff52eaf6..473acad060 100644
---- a/hw/arm/xlnx-zcu102.c
-+++ b/hw/arm/xlnx-zcu102.c
-@@ -187,9 +187,9 @@ static void xlnx_zcu102_init(MachineState *machine)
-             error_report("No SD bus found for SD card %d", i);
-             exit(1);
+     if (!is_pb) {
+-        dev = qdev_new_orphan("realview_pci");
++        dev = qdev_new(OBJECT(machine), "pci-host", "realview_pci");
+         busdev = SYS_BUS_DEVICE(dev);
+-        sysbus_realize_and_unref(busdev, &error_fatal);
++        sysbus_realize(busdev, &error_fatal);
+         sysbus_mmio_map(busdev, 0, 0x10019000); /* PCI controller registers */
+         sysbus_mmio_map(busdev, 1, 0x60000000); /* PCI self-config */
+         sysbus_mmio_map(busdev, 2, 0x61000000); /* PCI config */
+@@ -297,11 +308,12 @@ static void realview_init(MachineState *machine,
+         sysbus_connect_irq(busdev, 3, pic[51]);
+         pci_bus = (PCIBus *)qdev_get_child_bus(dev, "pci");
+         if (machine_usb(machine)) {
+-            pci_create_simple_orphan(pci_bus, -1, "pci-ohci");
++            pci_create_simple(OBJECT(machine), "ohci", pci_bus, -1, "pci-ohci");
          }
--        carddev = qdev_new_orphan(TYPE_SD_CARD);
-+        carddev = qdev_new(OBJECT(machine), "sd-card[*]", TYPE_SD_CARD);
-         qdev_prop_set_drive_err(carddev, "drive", blk, &error_fatal);
--        qdev_realize_and_unref(carddev, bus, &error_fatal);
-+        qdev_realize(carddev, bus, &error_fatal);
+         n = drive_get_max_bus(IF_SCSI);
+         while (n >= 0) {
+-            dev = DEVICE(pci_create_simple_orphan(pci_bus, -1, "lsi53c895a"));
++            dev = DEVICE(pci_create_simple(OBJECT(machine), "scsi[*]",
++                                           pci_bus, -1, "lsi53c895a"));
+             lsi53c8xx_handle_legacy_cmdline(dev);
+             n--;
+         }
+@@ -319,9 +331,10 @@ static void realview_init(MachineState *machine,
+         pci_init_nic_devices(pci_bus, "rtl8139");
      }
  
-     for (i = 0; i < XLNX_ZYNQMP_NUM_SPIS; i++) {
-@@ -202,13 +202,14 @@ static void xlnx_zcu102_init(MachineState *machine)
-         spi_bus = qdev_get_child_bus(DEVICE(&s->soc), bus_name);
-         g_free(bus_name);
+-    dev = sysbus_create_simple_orphan(TYPE_ARM_SBCON_I2C, 0x10002000, NULL);
++    dev = sysbus_create_simple(OBJECT(machine), "i2c",
++                               TYPE_ARM_SBCON_I2C, 0x10002000, NULL);
+     i2c = (I2CBus *)qdev_get_child_bus(dev, "i2c");
+-    i2c_slave_create_simple_orphan(i2c, "ds1338", 0x68);
++    i2c_slave_create_simple(OBJECT(machine), "ds1338", i2c, "ds1338", 0x68);
  
--        flash_dev = qdev_new_orphan("sst25wf080");
-+        flash_dev = qdev_new(OBJECT(machine), "spi-flash[*]",
-+                             "sst25wf080");
-         if (dinfo) {
-             qdev_prop_set_drive_err(flash_dev, "drive",
-                                     blk_by_legacy_dinfo(dinfo), &error_fatal);
-         }
-         qdev_prop_set_uint8(flash_dev, "cs", i);
--        qdev_realize_and_unref(flash_dev, spi_bus, &error_fatal);
-+        qdev_realize(flash_dev, spi_bus, &error_fatal);
- 
-         cs_line = qdev_get_gpio_in_named(flash_dev, SSI_GPIO_CS, 0);
- 
-@@ -226,13 +227,14 @@ static void xlnx_zcu102_init(MachineState *machine)
-         spi_bus = qdev_get_child_bus(DEVICE(&s->soc), bus_name);
-         g_free(bus_name);
- 
--        flash_dev = qdev_new_orphan("n25q512a11");
-+        flash_dev = qdev_new(OBJECT(machine), "qspi-flash[*]",
-+                             "n25q512a11");
-         if (dinfo) {
-             qdev_prop_set_drive_err(flash_dev, "drive",
-                                     blk_by_legacy_dinfo(dinfo), &error_fatal);
-         }
-         qdev_prop_set_uint8(flash_dev, "cs", i);
--        qdev_realize_and_unref(flash_dev, spi_bus, &error_fatal);
-+        qdev_realize(flash_dev, spi_bus, &error_fatal);
- 
-         cs_line = qdev_get_gpio_in_named(flash_dev, SSI_GPIO_CS, 0);
- 
-diff --git a/hw/arm/xlnx-zynqmp.c b/hw/arm/xlnx-zynqmp.c
-index 861ee35839..e4a10861a8 100644
---- a/hw/arm/xlnx-zynqmp.c
-+++ b/hw/arm/xlnx-zynqmp.c
-@@ -365,15 +365,15 @@ static void xlnx_zynqmp_create_unimp_mmio(XlnxZynqMPState *s)
- 
-     for (nr = 0; nr < ARRAY_SIZE(unimp_areas); nr++) {
-         const struct UnimpInfo *info = &unimp_areas[nr];
--        DeviceState *dev = qdev_new_orphan(TYPE_UNIMPLEMENTED_DEVICE);
-+        DeviceState *dev = qdev_new(OBJECT(s), info->name,
-+                                    TYPE_UNIMPLEMENTED_DEVICE);
-         SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
- 
-         assert(info->name && info->base && info->size > 0);
-         qdev_prop_set_string(dev, "name", info->name);
-         qdev_prop_set_uint64(dev, "size", info->size);
--        object_property_add_child(OBJECT(s), info->name, OBJECT(dev));
- 
--        sysbus_realize_and_unref(sbd, &error_fatal);
-+        sysbus_realize(sbd, &error_fatal);
-         sysbus_mmio_map(sbd, 0, info->base);
-     }
- }
+     /* Memory map for RealView Emulation Baseboard:  */
+     /* 0x10000000 System registers.  */
 -- 
 2.47.1
 
