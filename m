@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED2B4C44506
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:47:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D49EC43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:48:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigTX-0008O1-Cy; Sat, 11 Jul 2026 18:47:11 -0400
+	id 1wigTP-0008Ia-Ag; Sat, 11 Jul 2026 18:47:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigTV-0008Mx-N8; Sat, 11 Jul 2026 18:47:09 -0400
-Received: from pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.26.1.71])
+ id 1wigTN-0008Fr-3j; Sat, 11 Jul 2026 18:47:01 -0400
+Received: from pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([44.245.243.92])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigTT-0007Pe-8A; Sat, 11 Jul 2026 18:47:09 -0400
+ id 1wigTK-0007Nw-Qc; Sat, 11 Jul 2026 18:47:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783810027; x=1815346027;
+ t=1783810018; x=1815346018;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=qrYU/6J9K1fxb4U0qKmY9Ctb2pPuWEVVahf8vltU/98=;
- b=jaxT+XebPBZf4q2mP4nb4H92Lm4EDYzWct3iEZFPmQoucJn8C3dCi5JD
- tl20tOWvZPJux4+FcZpUQVRPXR09N8kS4/r0vkHm7DNpUcUpky+gj11b8
- ghqphEYwmdju5boj3nuhD57EbGimsm/8I3bFb0SVnH3tpFvCBY0bCwxYg
- 0Qma1gU9WJ/gHJAtY9GhxEAwFuO35/qH2LL5rygtHJ0APSdcUABvOtJWY
- 6INCClbCMpS3YrupR00QDkFLgLTxJAO601cZWizw84cAIhU5BLIyD/BDG
- T3g5Qmf+pLI8jWkT9zs+f4eaxr4Xp37e+wH7C1NsE+NCG1Qg12RGqdegG Q==;
-X-CSE-ConnectionGUID: LO/MXiafRO23K8nPh9ACug==
-X-CSE-MsgGUID: MGRPoYV+TcO1LqeTHP7r8A==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23522206"
+ bh=mdOsMUFO/NU8q1XiktFg86KqJ+PNpvF4Jt1vctgje9g=;
+ b=ObryqyVo8GEJ3cOwN26wJ40kDjRNdoLU4jr5ztoK9Qzb+OJO0qbAsPNZ
+ BDyR7sxXDxYA0EE+UFDQjVGHE47NbNsd9md8V/fFHyLCcrMjsCaD1k0C3
+ Gk1pBxLOvmt8VSXdmXdZsMBR/mwRV+gFnLg0b/HlFe7IOe30oVgxI/Aa9
+ dBDNsTwduD8ynNNXzTn7K60FFqLLNAm8e7o6HHGVn0g2z+E/6JWw9+7BL
+ R1VLD0hSAfunVQEdkCIWBzxvE0exn5ZFLgVdaMioHc50Xwn6HH+PE3joc
+ gkdiwgVT4+rPA3GDd4CJLUYxHAaZ/weoVExqkfuGBjRu/89H43IXLIsfM Q==;
+X-CSE-ConnectionGUID: 0qfZ9PztQ1Wo4RbpC6xzmw==
+X-CSE-MsgGUID: wxTjDXMFTPOf4o53CSElRw==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="22997502"
 Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
  smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
- by internal-pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:47:03 +0000
-Received: from EX19MTAUWC001.ant.amazon.com [205.251.233.53:5753]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.47.135:2525]
+ by internal-pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:46:55 +0000
+Received: from EX19MTAUWA001.ant.amazon.com [205.251.233.236:24563]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.51.175:2525]
  with esmtp (Farcaster)
- id 4c311944-0553-4620-a794-e087afeeb4e7; Sat, 11 Jul 2026 22:47:03 +0000 (UTC)
-X-Farcaster-Flow-ID: 4c311944-0553-4620-a794-e087afeeb4e7
+ id 1c2cdcaf-e3c4-4985-b77a-d079dffc5609; Sat, 11 Jul 2026 22:46:55 +0000 (UTC)
+X-Farcaster-Flow-ID: 1c2cdcaf-e3c4-4985-b77a-d079dffc5609
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
+ EX19MTAUWA001.ant.amazon.com (10.250.64.217) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:47:03 +0000
+ Sat, 11 Jul 2026 22:46:54 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:46:54 +0000
+ Sat, 11 Jul 2026 22:46:46 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,9 +91,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 038/134] hw/net: Give onboard devices a QOM parent
-Date: Sat, 11 Jul 2026 22:35:31 +0000
-Message-ID: <20260711223707.42139-39-graf@amazon.com>
+Subject: [RFC PATCH 037/134] hw/scsi: Give onboard devices a QOM parent
+Date: Sat, 11 Jul 2026 22:35:30 +0000
+Message-ID: <20260711223707.42139-38-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -103,9 +103,9 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D031UWC001.ant.amazon.com (10.13.139.241) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=52.26.1.71;
+Received-SPF: pass client-ip=44.245.243.92;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
@@ -129,7 +129,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the *_orphan() device-creation calls in hw/net to the new
+Convert the *_orphan() device-creation calls in hw/scsi to the new
 parented API introduced earlier in this series, so every onboard
 device gets a stable path in the composition tree instead of landing
 in /machine/unattached with an unstable device[N] name.
@@ -140,244 +140,217 @@ composite children.  Names follow existing QOM conventions.
 
 Per-site rationale (reviewers: dispute the modeling here):
 
-hw/net/lan9118.c:1342 | qdev_new | parent | "eth" | thread Object *parent as first arg; 5 board-init callers pass OBJECT(machine)
-hw/net/smc91c111.c:957 | qdev_new | parent | "eth" | thread Object *parent as first arg; 3 board-init callers pass OBJECT(machine)
-hw/net/spapr_llan.c:374 | qdev_new | parent | "vlan[*]" | thread Object *parent as first arg; single caller in hw/ppc/spapr.c board-init loop passes OBJECT(spapr)
-hw/net/xen_nic.c:622 | qdev_new | ORPHAN-JUSTIFIED | - | XenBackendOps.create hotplug callback driven by xenstore watch; dynamic device with no board owner (same pattern as xen-block/xen_console)
+hw/scsi/lasi_ncr710.c:234 | qdev_new | parent | "scsi" | thread Object *parent as first arg; single caller in hw/hppa/machine.c board init passes OBJECT(machine)
+hw/scsi/ncr53c710.c:2379 | qdev_new | parent | "scsi" | thread Object *parent as first arg; no in-tree callers, header updated
+hw/scsi/ncr53c710.c:2397 | qdev_new | parent | "scsi" | thread Object *parent as first arg; no in-tree callers, header updated
+hw/scsi/scsi-bus.c:448 | qdev_new | OBJECT(bus) | name | collapse existing object_property_add_child(OBJECT(bus), name, dev); keep dynamic legacy[%d] name
+hw/scsi/spapr_vscsi.c:1238 | qdev_new | parent | "vscsi[*]" | thread Object *parent as first arg; single caller in hw/ppc/spapr.c board init loop passes OBJECT(spapr)
 
 Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/arm/integratorcp.c      | 2 +-
- hw/arm/kzm.c               | 2 +-
- hw/arm/mps2.c              | 2 +-
- hw/arm/mps3r.c             | 2 +-
- hw/arm/realview.c          | 4 ++--
- hw/arm/versatilepb.c       | 2 +-
- hw/arm/vexpress.c          | 2 +-
- hw/net/lan9118.c           | 6 +++---
- hw/net/smc91c111.c         | 6 +++---
- hw/net/spapr_llan.c        | 6 +++---
- hw/ppc/spapr.c             | 2 +-
- include/hw/net/lan9118.h   | 2 +-
- include/hw/net/smc91c111.h | 2 +-
- include/hw/ppc/spapr_vio.h | 2 +-
- 14 files changed, 21 insertions(+), 21 deletions(-)
+ hw/hppa/machine.c          |  2 +-
+ hw/ppc/spapr.c             |  2 +-
+ hw/scsi/lasi_ncr710.c      |  8 ++++----
+ hw/scsi/lasi_ncr710.h      |  4 ++--
+ hw/scsi/ncr53c710.c        | 15 ++++++++-------
+ hw/scsi/ncr53c710.h        |  7 ++++---
+ hw/scsi/scsi-bus.c         |  5 ++---
+ hw/scsi/spapr_vscsi.c      |  6 +++---
+ include/hw/ppc/spapr_vio.h |  2 +-
+ 9 files changed, 26 insertions(+), 25 deletions(-)
 
-diff --git a/hw/arm/integratorcp.c b/hw/arm/integratorcp.c
-index 3df488921a..163012a7bf 100644
---- a/hw/arm/integratorcp.c
-+++ b/hw/arm/integratorcp.c
-@@ -670,7 +670,7 @@ static void integratorcp_init(MachineState *machine)
-     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, pic[25]);
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index e50f9adf41..e3c9053bf2 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -631,7 +631,7 @@ static void machine_HP_715_init(MachineState *machine)
+                                                        1));
+     /* SCSI disk setup. */
+     if (drive_get_max_bus(IF_SCSI) >= 0) {
+-        dev = lasi_ncr710_init(addr_space,
++        dev = lasi_ncr710_init(OBJECT(machine), addr_space,
+                                translate(NULL, LASI_HPA_715 + 0x6000),
+                                qdev_get_gpio_in(lasi_dev, LASI_IRQ_SCSI_HPA));
+         assert(dev);
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index e09b529ebc..91f9d873b8 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -3062,7 +3062,7 @@ static void spapr_machine_init(MachineState *machine)
+     pci_init_nic_devices(phb->bus, NULL);
  
-     if (qemu_find_nic_info("smc91c111", true, NULL)) {
--        smc91c111_init(0xc8000000, pic[27]);
-+        smc91c111_init(OBJECT(machine), 0xc8000000, pic[27]);
+     for (i = 0; i <= drive_get_max_bus(IF_SCSI); i++) {
+-        spapr_vscsi_create(spapr->vio_bus);
++        spapr_vscsi_create(OBJECT(spapr), spapr->vio_bus);
      }
  
-     dev = qdev_new_orphan("pl110");
-diff --git a/hw/arm/kzm.c b/hw/arm/kzm.c
-index 168ecf35d0..de9919c8cb 100644
---- a/hw/arm/kzm.c
-+++ b/hw/arm/kzm.c
-@@ -115,7 +115,7 @@ static void kzm_init(MachineState *machine)
+     /* Graphics */
+diff --git a/hw/scsi/lasi_ncr710.c b/hw/scsi/lasi_ncr710.c
+index e1a1f68aaa..d40bc62157 100644
+--- a/hw/scsi/lasi_ncr710.c
++++ b/hw/scsi/lasi_ncr710.c
+@@ -224,18 +224,18 @@ void lasi_ncr710_handle_legacy_cmdline(DeviceState *lasi_dev)
      }
+ }
  
-     if (qemu_find_nic_info("lan9118", true, NULL)) {
--        lan9118_init(KZM_LAN9118_ADDR,
-+        lan9118_init(OBJECT(machine), KZM_LAN9118_ADDR,
-                      qdev_get_gpio_in(DEVICE(&s->soc.avic), 52));
+-DeviceState *lasi_ncr710_init(MemoryRegion *addr_space, hwaddr hpa,
+-                               qemu_irq irq)
++DeviceState *lasi_ncr710_init(Object *parent, MemoryRegion *addr_space,
++                              hwaddr hpa, qemu_irq irq)
+ {
+     DeviceState *dev;
+     LasiNCR710State *s;
+     SysBusDevice *sbd;
+ 
+-    dev = qdev_new_orphan(TYPE_LASI_NCR710);
++    dev = qdev_new(parent, "scsi", TYPE_LASI_NCR710);
+     s = LASI_NCR710(dev);
+     sbd = SYS_BUS_DEVICE(dev);
+     s->lasi_irq = irq;
+-    sysbus_realize_and_unref(sbd, &error_fatal);
++    sysbus_realize(sbd, &error_fatal);
+     memory_region_add_subregion(addr_space, hpa,
+                                sysbus_mmio_get_region(sbd, 0));
+     return dev;
+diff --git a/hw/scsi/lasi_ncr710.h b/hw/scsi/lasi_ncr710.h
+index 450fb7e1c3..e963a6511f 100644
+--- a/hw/scsi/lasi_ncr710.h
++++ b/hw/scsi/lasi_ncr710.h
+@@ -48,8 +48,8 @@ typedef struct LasiNCR710State {
+     NCR710State ncr710;
+ } LasiNCR710State;
+ 
+-DeviceState *lasi_ncr710_init(MemoryRegion *addr_space, hwaddr hpa,
+-                               qemu_irq irq);
++DeviceState *lasi_ncr710_init(Object *parent, MemoryRegion *addr_space,
++                              hwaddr hpa, qemu_irq irq);
+ void lasi_ncr710_handle_legacy_cmdline(DeviceState *lasi_dev);
+ 
+ #endif
+diff --git a/hw/scsi/ncr53c710.c b/hw/scsi/ncr53c710.c
+index 54ce2df641..633a76c70b 100644
+--- a/hw/scsi/ncr53c710.c
++++ b/hw/scsi/ncr53c710.c
+@@ -2371,22 +2371,23 @@ static const VMStateDescription vmstate_sysbus_ncr710 = {
      }
+ };
  
-diff --git a/hw/arm/mps2.c b/hw/arm/mps2.c
-index 5a0384a412..e646c7c71e 100644
---- a/hw/arm/mps2.c
-+++ b/hw/arm/mps2.c
-@@ -461,7 +461,7 @@ static void mps2_common_init(MachineState *machine)
-     /* In hardware this is a LAN9220; the LAN9118 is software compatible
-      * except that it doesn't support the checksum-offload feature.
-      */
--    lan9118_init(mmc->ethernet_base,
-+    lan9118_init(OBJECT(machine), mmc->ethernet_base,
-                  qdev_get_gpio_in(armv7m,
-                                   mmc->fpga_type == FPGA_AN511 ? 47 : 13));
+-DeviceState *ncr710_device_create_sysbus(hwaddr addr, qemu_irq irq)
++DeviceState *ncr710_device_create_sysbus(Object *parent, hwaddr addr,
++                                          qemu_irq irq)
+ {
+     DeviceState *dev;
+     SysBusDevice *sysbus;
  
-diff --git a/hw/arm/mps3r.c b/hw/arm/mps3r.c
-index caad820d3b..8e249c9b9d 100644
---- a/hw/arm/mps3r.c
-+++ b/hw/arm/mps3r.c
-@@ -549,7 +549,7 @@ static void mps3r_common_init(MachineState *machine)
-      * In hardware this is a LAN9220; the LAN9118 is software compatible
-      * except that it doesn't support the checksum-offload feature.
-      */
--    lan9118_init(0xe0300000,
-+    lan9118_init(OBJECT(machine), 0xe0300000,
-                  qdev_get_gpio_in(gicdev, 18));
+-    dev = qdev_new_orphan(TYPE_SYSBUS_NCR710_SCSI);
++    dev = qdev_new(parent, "scsi", TYPE_SYSBUS_NCR710_SCSI);
+     sysbus = SYS_BUS_DEVICE(dev);
  
-     create_unimplemented_device("usb", 0xe0301000, 0x1000);
-diff --git a/hw/arm/realview.c b/hw/arm/realview.c
-index f37ddf8073..f51730c487 100644
---- a/hw/arm/realview.c
-+++ b/hw/arm/realview.c
-@@ -309,9 +309,9 @@ static void realview_init(MachineState *machine,
+-    qdev_realize_and_unref(dev, NULL, &error_abort);
++    qdev_realize(dev, NULL, &error_abort);
+     sysbus_mmio_map(sysbus, 0, addr);
+     sysbus_connect_irq(sysbus, 0, irq);
+     return dev;
+ }
  
-     if (qemu_find_nic_info(is_pb ? "lan9118" : "smc91c111", true, NULL)) {
-         if (is_pb) {
--            lan9118_init(0x4e000000, pic[28]);
-+            lan9118_init(OBJECT(machine), 0x4e000000, pic[28]);
-         } else {
--            smc91c111_init(0x4e000000, pic[28]);
-+            smc91c111_init(OBJECT(machine), 0x4e000000, pic[28]);
+-DeviceState *ncr53c710_init(MemoryRegion *address_space, hwaddr addr,
+-                             qemu_irq irq)
++DeviceState *ncr53c710_init(Object *parent, MemoryRegion *address_space,
++                            hwaddr addr, qemu_irq irq)
+ {
+     DeviceState *dev;
+     SysBusDevice *sysbus;
+@@ -2394,10 +2395,10 @@ DeviceState *ncr53c710_init(MemoryRegion *address_space, hwaddr addr,
+ 
+     /* trace_ncr710_device_init(addr); */
+ 
+-    dev = qdev_new_orphan(TYPE_SYSBUS_NCR710_SCSI);
++    dev = qdev_new(parent, "scsi", TYPE_SYSBUS_NCR710_SCSI);
+     sysbus = SYS_BUS_DEVICE(dev);
+ 
+-    qdev_realize_and_unref(dev, NULL, &error_abort);
++    qdev_realize(dev, NULL, &error_abort);
+     sysbus_mmio_map(sysbus, 0, addr);
+     sysbus_connect_irq(sysbus, 0, irq);
+ 
+diff --git a/hw/scsi/ncr53c710.h b/hw/scsi/ncr53c710.h
+index 00b6a01577..6e466d6a36 100644
+--- a/hw/scsi/ncr53c710.h
++++ b/hw/scsi/ncr53c710.h
+@@ -229,9 +229,10 @@ static inline SysBusNCR710State *sysbus_from_ncr710(NCR710State *s)
+     return container_of(s, SysBusNCR710State, ncr710);
+ }
+ 
+-DeviceState *ncr53c710_init(MemoryRegion *address_space, hwaddr addr,
+-                             qemu_irq irq);
+-DeviceState *ncr710_device_create_sysbus(hwaddr addr, qemu_irq irq);
++DeviceState *ncr53c710_init(Object *parent, MemoryRegion *address_space,
++                            hwaddr addr, qemu_irq irq);
++DeviceState *ncr710_device_create_sysbus(Object *parent, hwaddr addr,
++                                          qemu_irq irq);
+ void ncr710_reg_write(void *opaque, hwaddr addr, uint64_t val, unsigned size);
+ uint64_t ncr710_reg_read(void *opaque, hwaddr addr, unsigned size);
+ void ncr710_soft_reset(NCR710State *s);
+diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
+index 806a20baee..bc7cfea6ed 100644
+--- a/hw/scsi/scsi-bus.c
++++ b/hw/scsi/scsi-bus.c
+@@ -445,9 +445,8 @@ SCSIDevice *scsi_bus_legacy_add_drive(SCSIBus *bus, BlockBackend *blk,
+             driver = "scsi-hd";
          }
      }
+-    dev = qdev_new_orphan(driver);
+     name = g_strdup_printf("legacy[%d]", unit);
+-    object_property_add_child(OBJECT(bus), name, OBJECT(dev));
++    dev = qdev_new(OBJECT(bus), name, driver);
+     g_free(name);
  
-diff --git a/hw/arm/versatilepb.c b/hw/arm/versatilepb.c
-index dcc7b7debd..5de99cb854 100644
---- a/hw/arm/versatilepb.c
-+++ b/hw/arm/versatilepb.c
-@@ -265,7 +265,7 @@ static void versatile_init(MachineState *machine, int board_id)
-     pci_bus = (PCIBus *)qdev_get_child_bus(dev, "pci");
- 
-     if (qemu_find_nic_info("smc91c111", true, NULL)) {
--        smc91c111_init(0x10010000, sic[25]);
-+        smc91c111_init(OBJECT(machine), 0x10010000, sic[25]);
-     }
-     pci_init_nic_devices(pci_bus, "rtl8139");
- 
-diff --git a/hw/arm/vexpress.c b/hw/arm/vexpress.c
-index ffd3c52d4f..5cbb2c44cb 100644
---- a/hw/arm/vexpress.c
-+++ b/hw/arm/vexpress.c
-@@ -694,7 +694,7 @@ static void vexpress_common_init(MachineState *machine)
- 
-     /* 0x4e000000 LAN9118 Ethernet */
-     if (qemu_find_nic_info("lan9118", true, NULL)) {
--        lan9118_init(map[VE_ETHERNET], pic[15]);
-+        lan9118_init(OBJECT(machine), map[VE_ETHERNET], pic[15]);
+     s = SCSI_DEVICE(dev);
+@@ -473,7 +472,7 @@ SCSIDevice *scsi_bus_legacy_add_drive(SCSIBus *bus, BlockBackend *blk,
+         return NULL;
      }
  
-     /* VE_USB: not modelled */
-diff --git a/hw/net/lan9118.c b/hw/net/lan9118.c
-index 87213c0d8d..91c3533702 100644
---- a/hw/net/lan9118.c
-+++ b/hw/net/lan9118.c
-@@ -1334,15 +1334,15 @@ static void lan9118_register_types(void)
- 
- /* Legacy helper function.  Should go away when machine config files are
-    implemented.  */
--void lan9118_init(uint32_t base, qemu_irq irq)
-+void lan9118_init(Object *parent, uint32_t base, qemu_irq irq)
- {
-     DeviceState *dev;
-     SysBusDevice *s;
- 
--    dev = qdev_new_orphan(TYPE_LAN9118);
-+    dev = qdev_new(parent, "eth", TYPE_LAN9118);
-     qemu_configure_nic_device(dev, true, NULL);
-     s = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
-     sysbus_mmio_map(s, 0, base);
-     sysbus_connect_irq(s, 0, irq);
- }
-diff --git a/hw/net/smc91c111.c b/hw/net/smc91c111.c
-index 6186d88717..85f3d4d34a 100644
---- a/hw/net/smc91c111.c
-+++ b/hw/net/smc91c111.c
-@@ -949,15 +949,15 @@ static void smc91c111_register_types(void)
- 
- /* Legacy helper function.  Should go away when machine config files are
-    implemented.  */
--void smc91c111_init(uint32_t base, qemu_irq irq)
-+void smc91c111_init(Object *parent, uint32_t base, qemu_irq irq)
- {
-     DeviceState *dev;
-     SysBusDevice *s;
- 
--    dev = qdev_new_orphan(TYPE_SMC91C111);
-+    dev = qdev_new(parent, "eth", TYPE_SMC91C111);
-     qemu_configure_nic_device(dev, true, NULL);
-     s = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
-     sysbus_mmio_map(s, 0, base);
-     sysbus_connect_irq(s, 0, irq);
- }
-diff --git a/hw/net/spapr_llan.c b/hw/net/spapr_llan.c
-index f10ea64798..1d5637f294 100644
---- a/hw/net/spapr_llan.c
-+++ b/hw/net/spapr_llan.c
-@@ -367,15 +367,15 @@ static void spapr_vlan_instance_finalize(Object *obj)
+-    if (!qdev_realize_and_unref(dev, &bus->qbus, errp)) {
++    if (!qdev_realize(dev, &bus->qbus, errp)) {
+         object_unparent(OBJECT(dev));
+         return NULL;
      }
+diff --git a/hw/scsi/spapr_vscsi.c b/hw/scsi/spapr_vscsi.c
+index 492d7d18a2..95cd21ffbb 100644
+--- a/hw/scsi/spapr_vscsi.c
++++ b/hw/scsi/spapr_vscsi.c
+@@ -1231,13 +1231,13 @@ static void spapr_vscsi_realize(SpaprVioDevice *dev, Error **errp)
+     qbus_set_hotplug_handler(BUS(&s->bus), NULL);
  }
  
--void spapr_vlan_create(SpaprVioBus *bus, NICInfo *nd)
-+void spapr_vlan_create(Object *parent, SpaprVioBus *bus, NICInfo *nd)
+-void spapr_vscsi_create(SpaprVioBus *bus)
++void spapr_vscsi_create(Object *parent, SpaprVioBus *bus)
  {
      DeviceState *dev;
  
--    dev = qdev_new_orphan("spapr-vlan");
-+    dev = qdev_new(parent, "vlan[*]", "spapr-vlan");
- 
-     qdev_set_nic_properties(dev, nd);
+-    dev = qdev_new_orphan("spapr-vscsi");
++    dev = qdev_new(parent, "vscsi[*]", "spapr-vscsi");
  
 -    qdev_realize_and_unref(dev, &bus->bus, &error_fatal);
 +    qdev_realize(dev, &bus->bus, &error_fatal);
+     scsi_bus_legacy_handle_cmdline(&VIO_SPAPR_VSCSI_DEVICE(dev)->bus);
  }
  
- static int spapr_vlan_devnode(SpaprVioDevice *dev, void *fdt, int node_off)
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 91f9d873b8..b81db9e8f3 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -3056,7 +3056,7 @@ static void spapr_machine_init(MachineState *machine)
-     phb = spapr_create_default_phb();
- 
-     while ((nd = qemu_find_nic_info("spapr-vlan", true, "ibmveth"))) {
--        spapr_vlan_create(spapr->vio_bus, nd);
-+        spapr_vlan_create(OBJECT(spapr), spapr->vio_bus, nd);
-     }
- 
-     pci_init_nic_devices(phb->bus, NULL);
-diff --git a/include/hw/net/lan9118.h b/include/hw/net/lan9118.h
-index 4bf9da7a63..b199f1912f 100644
---- a/include/hw/net/lan9118.h
-+++ b/include/hw/net/lan9118.h
-@@ -15,6 +15,6 @@
- 
- #define TYPE_LAN9118 "lan9118"
- 
--void lan9118_init(uint32_t, qemu_irq);
-+void lan9118_init(Object *parent, uint32_t, qemu_irq);
- 
- #endif
-diff --git a/include/hw/net/smc91c111.h b/include/hw/net/smc91c111.h
-index dba32a233f..788f12678e 100644
---- a/include/hw/net/smc91c111.h
-+++ b/include/hw/net/smc91c111.h
-@@ -13,6 +13,6 @@
- 
- #include "net/net.h"
- 
--void smc91c111_init(uint32_t, qemu_irq);
-+void smc91c111_init(Object *parent, uint32_t, qemu_irq);
- 
- #endif
 diff --git a/include/hw/ppc/spapr_vio.h b/include/hw/ppc/spapr_vio.h
-index 72baef6919..fcb29aebff 100644
+index 0ea0dbae8b..72baef6919 100644
 --- a/include/hw/ppc/spapr_vio.h
 +++ b/include/hw/ppc/spapr_vio.h
-@@ -138,7 +138,7 @@ int spapr_vio_send_crq(SpaprVioDevice *dev, uint8_t *crq);
- SpaprVioDevice *vty_lookup(SpaprMachineState *spapr, target_ulong reg);
+@@ -139,7 +139,7 @@ SpaprVioDevice *vty_lookup(SpaprMachineState *spapr, target_ulong reg);
  void vty_putchars(SpaprVioDevice *sdev, uint8_t *buf, int len);
  void spapr_vty_create(SpaprVioBus *bus, Chardev *chardev);
--void spapr_vlan_create(SpaprVioBus *bus, NICInfo *nd);
-+void spapr_vlan_create(Object *parent, SpaprVioBus *bus, NICInfo *nd);
- void spapr_vscsi_create(Object *parent, SpaprVioBus *bus);
+ void spapr_vlan_create(SpaprVioBus *bus, NICInfo *nd);
+-void spapr_vscsi_create(SpaprVioBus *bus);
++void spapr_vscsi_create(Object *parent, SpaprVioBus *bus);
  
  SpaprVioDevice *spapr_vty_get_default(SpaprVioBus *bus);
+ 
 -- 
 2.47.1
 
