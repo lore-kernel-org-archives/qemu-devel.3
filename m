@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1011DC43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 09:49:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DCF8C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 09:49:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiUKA-0004jf-Oq; Sat, 11 Jul 2026 05:48:42 -0400
+	id 1wiUKG-00050X-Cd; Sat, 11 Jul 2026 05:48:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rdmitry0911@gmail.com>)
- id 1wiUK8-0004cx-L0
- for qemu-devel@nongnu.org; Sat, 11 Jul 2026 05:48:40 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1wiUKF-0004zM-Fw
+ for qemu-devel@nongnu.org; Sat, 11 Jul 2026 05:48:47 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <rdmitry0911@gmail.com>)
- id 1wiUK6-0002w6-UQ
- for qemu-devel@nongnu.org; Sat, 11 Jul 2026 05:48:40 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-493f4638f4aso15714165e9.3
- for <qemu-devel@nongnu.org>; Sat, 11 Jul 2026 02:48:38 -0700 (PDT)
+ id 1wiUKD-0002wc-H9
+ for qemu-devel@nongnu.org; Sat, 11 Jul 2026 05:48:47 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-47362928f65so1653839f8f.2
+ for <qemu-devel@nongnu.org>; Sat, 11 Jul 2026 02:48:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783763317; x=1784368117; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1783763324; x=1784368124; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=XkzcBXaxEquIecTbbUMZNZVgd4+W1KBWYyNUxpYAGEs=;
- b=K9DDSaD83f0VFHeaC7wcGhEZwRC/tuXc/tDLqp/LPf+/WhQqwD6H2/NrQZ9sGLLUZ1
- LzcL0/RKLPH3vSeqQnZeu47vJH2ibBW4BX4lW/arPsYLt8XboHK29UcoN5yJ2f4E0pZU
- 14GMy8rAyZxzkUUjY8lb++ckPfqGGex/NFfmvxogx8nopIfUdpRwQN1ZEXXxgRS5Swud
- Zp25nfiZzXRZfrYqfGkywQdcT4D3BeYnBam2vyVIOi93UePFvC2uWSGj8+9Miw+DFM2a
- YfqhGMYyqcraFWTuaNIUttaa/QZJ2yZvB5m2Qi2YEKHD+TlyBRAxkpdnJO+InXBZRh5r
- bznw==
+ bh=Gi7c1MfU7nbcJC21lIHFYt2wXJwMDStiiHNF/L/LY0E=;
+ b=soSUgd0e99FeSlSdo/NsC8mWGGL/aardELi4P5YtWhINuJhdqTMt3h/wpR5U1a8ixU
+ n+lsSh4dHdsI7CRgWlEeL2wes3xmzI7wAQ3eqmC3K8gBlnc4y0OPXgaj0fIorQo8xw8S
+ 0W/w8Ksgoa+XT9gP7xs9uL/YHsbGJBWnTtgxnOr5UcoxiaLG3uWYYfSzDvl1Nhe+/Mbl
+ FXNG/hjQQLLr8hE2NXF5tghju05dJlzaHWDC43u7GxaBMl6Tklhe1OADSPZYC8p58wY6
+ nq5F8mzYOgY8X8hv1w6SwUCT41p0DUx4kmSw1hMT+HOzhbCUCYk+2Gudn+UvzGSsb8Xs
+ l7QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783763317; x=1784368117;
+ d=1e100.net; s=20251104; t=1783763324; x=1784368124;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=XkzcBXaxEquIecTbbUMZNZVgd4+W1KBWYyNUxpYAGEs=;
- b=nwfWMwWdaY8zg/BLveewzAlouLIDqtIeCIonlGxR71LcRuzpLwfZ/nTj/7e+pEppDO
- HOV6niwMhfwXuN688vp3EKgCot3flNonbNsnX/5ZN8pTAc+oP6DSEWVmK8CCmdifeJix
- K+/DPf9QBnBLw/XjaFOE/W6a0x1mpwnASmhBrcZr5H8NrKdaOhoxcTJViOpaZJjYQuZx
- T8oB2N2FLeyK+a0226PQ522oBopWdabHHSW1lZQiyfuzzuMhXM1K3HQjT+9jsVoNJbp8
- ZAaMaWdyFAXnu1o9bLqkGOqlMOLYV36cWc2rUnHWoRRmc1iNDfzrCP15j+VCbFDwiiS/
- ODLA==
-X-Gm-Message-State: AOJu0Yw9StmcIJ4J0WTgFhYdrxv7H8YrcXitXh47VBCxZFXacvrfytcT
- skyipOtBPSGhqRJAWaQhoik5tZOskFxCnxR7NrTCqAnyyKnHELSgcEu/IoiAaMV3
-X-Gm-Gg: AfdE7cncbFPN+LexNIK1ppdTPLHA5p9Z/3bpCZdxun5/7JCwebdbK9YSXbgkIdI/tIc
- 89Xk8VfrPxGmvqrGKDRduyDoRQavy3ZQKMYwcL6CK0laJEghksLr5h3v6NqPo9fkkjDV9Su0sPE
- RTq8BjJjKVFqsuFo690V5Vj8FTUqfR+CV/9j+9mkqn/8Sr5ckhNbQ1OTdnDv7BafKLhdsHvxyiT
- y8wzcAWuAiJ5m60z85YUXjL3lybBXCQv01aTwML9+O+Q4c0dXJy8aSmKz4WDxJcCZqB2Y28hcL2
- d8qccKyhkh07gT28W02gqAnFM19Yf0FYLXm3r0Vs4txSaD4z5XxIcrVeoozXQjujFmJyAeVu1ZE
- tIoh+DnJCmofBLdIt/XFb8ic6JJc1MxmityPJcKZ/L8kziRUbAR8wfZOIeknPx3c+uAoo5YzMET
- Y6my2qHB7/0jjrL/wvsANElwiGqwpl9LX1OwTkvnw8Pa/0rKyFH1x3tep8JwL+wjmg4VKg0D5R0
- /sIjxY67aPuCs+sIMUg5iDmmjO+qQ==
-X-Received: by 2002:a05:6000:2689:b0:474:cd60:1160 with SMTP id
- ffacd0b85a97d-47f2dd081aemr2292189f8f.46.1783763317245; 
- Sat, 11 Jul 2026 02:48:37 -0700 (PDT)
+ bh=Gi7c1MfU7nbcJC21lIHFYt2wXJwMDStiiHNF/L/LY0E=;
+ b=VoVZRQbH2rhfHAEjiZYZhFBLk9cGLIZiInoABtk5MTGq7SbCU41pz1x0lGN37IWQz3
+ G6Z0DzMlltCTW9h6VkPoZzMLX2nYReM8TWy8LqGHTRoOE7Ax6dNZwZ9ROeJy+vAd059Q
+ mdRL7SMtQQlhWYcIvYAI3bXmSugKjjMVyVs6S4gN1GBoiynOMchFolQmXmBy7iYBBn1p
+ GH2+SZ1c98ih1CANpJROAifnxvFX9enOfzSPWbYbvK5iSIQkfqrIvlQg6dvDZnF1z2zx
+ QKFWqrbQVDxCJMrpKy5JzQplJostlyLkcuMxFAhMfuorErpflkidGqj2Uaezafcf1TH5
+ /91w==
+X-Gm-Message-State: AOJu0YwOILlRjOik6T3NmN/wOlX7EV0nrVp04QwBH+O8Q8keMh5/vErb
+ 5dvqaGfy6pp0cbQHOydxyvVvAtFVaqEidH3FQtsPzWm2+E8HI5ec33fi2zewyenM
+X-Gm-Gg: AfdE7cn7D4mGVNomG3qQNYRM8iXIDbz6JoDYIPTMRFY/gP/UaLEExFuCkEOr61biK8t
+ yqFnpqDW4PLk16R0vI2PiTgbT0Hqa33vkoJ9mP3EubaVhWtJTu36ygHmFC9SmidbR4F7N2V4i2H
+ 5BRXOMGfI7PJC75JKoHZ7RONqtGVGHoldng81iTk080oPVGG4MvOrG7INGJ8sPQ79njcjIzVdAC
+ ZhWJbe+oErJ5uTrfbaodNQHdb1emBQcGiCAM8roC+xmVo+JS7TQt9STNnZRJN/r/pdg7qLTdPNO
+ 1jlHZt/sl1AYVV7MWcs4NoqVBPFU2Tiphqlf3WLQ4nTxv4zpl3SSEXxvzygf6YwmKwr456JvDGh
+ xxwIMz+XAsETeJcruRpWwClfBQloUvkYeEIACZu7nUZpDnGUgVnR0Mme0h6nF4SPSzbJGXEAZ0D
+ uipZM84YiLjfXTwKtPfOPWKj/lRKB+ZS9VUcrrqstHSI7IWQM+wAJJeGt3u75+DlsrD0I/qAxCu
+ +mAE5QIi+pTI9q896g=
+X-Received: by 2002:a05:6000:2f86:b0:475:c578:b619 with SMTP id
+ ffacd0b85a97d-47f2dcd71ccmr2111570f8f.30.1783763323810; 
+ Sat, 11 Jul 2026 02:48:43 -0700 (PDT)
 Received: from debian-for-building.localdomain
  (static.244.71.243.136.clients.your-server.de. [136.243.71.244])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47aa039ad21sm66558181f8f.20.2026.07.11.02.48.36
+ ffacd0b85a97d-47aa039ad21sm66558181f8f.20.2026.07.11.02.48.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 11 Jul 2026 02:48:36 -0700 (PDT)
+ Sat, 11 Jul 2026 02:48:43 -0700 (PDT)
 From: Dmitry R <rdmitry0911@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Dmitry R <rdmitry0911@gmail.com>, "Michael S . Tsirkin" <mst@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [RFC PATCH v2 2/5] hw/pci-bridge: add Thunderbolt PCIe-to-PCI bridge
-Date: Sat, 11 Jul 2026 12:47:58 +0300
-Message-ID: <20260711094803.3589239-3-rdmitry0911@gmail.com>
+Subject: [RFC PATCH v2 5/5] docs: document Thunderbolt PCIe hotplug layer
+Date: Sat, 11 Jul 2026 12:48:01 +0300
+Message-ID: <20260711094803.3589239-6-rdmitry0911@gmail.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260711094803.3589239-1-rdmitry0911@gmail.com>
 References: <20260710133440.2845828-1-rdmitry0911@gmail.com>
  <20260711094803.3589239-1-rdmitry0911@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=rdmitry0911@gmail.com; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=rdmitry0911@gmail.com; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -106,191 +106,255 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add thunderbolt-pcie-pci-bridge for PCI endpoints tunnelled through the
-Thunderbolt PCIe layer. The bridge exposes Thunderbolt-related ACPI
-properties while leaving downstream PCI devices as regular QEMU devices.
+Add documentation and usage examples for the Thunderbolt PCIe hotplug
+layer, including VGA, USB storage, and NVMe hotplug flows.
+
+Add a MAINTAINERS entry for the Thunderbolt PCIe files with Dmitry R as
+reviewer, while keeping the files under the existing PCI area through
+their paths.
 
 Signed-off-by: Dmitry R <rdmitry0911@gmail.com>
 ---
- hw/pci-bridge/meson.build                   |   1 +
- hw/pci-bridge/thunderbolt_pcie_pci_bridge.c | 156 ++++++++++++++++++++
- 2 files changed, 157 insertions(+)
- create mode 100644 hw/pci-bridge/thunderbolt_pcie_pci_bridge.c
+ MAINTAINERS                             |  7 ++
+ README.md                               | 91 +++++++++++++++++++++++
+ docs/specs/index.rst                    |  1 +
+ docs/specs/thunderbolt-pcie-hotplug.rst | 99 +++++++++++++++++++++++++
+ 4 files changed, 198 insertions(+)
+ create mode 100644 README.md
+ create mode 100644 docs/specs/thunderbolt-pcie-hotplug.rst
 
-diff --git a/hw/pci-bridge/meson.build b/hw/pci-bridge/meson.build
-index fd0698fb33..8bb58ec84c 100644
---- a/hw/pci-bridge/meson.build
-+++ b/hw/pci-bridge/meson.build
-@@ -5,6 +5,7 @@ pci_ss.add(when: 'CONFIG_IOH3420', if_true: files('ioh3420.c'))
- pci_ss.add(when: 'CONFIG_PCIE_PORT', if_true: files('pcie_root_port.c', 'gen_pcie_root_port.c'))
- pci_ss.add(when: 'CONFIG_PCIE_PORT', if_true: files('thunderbolt_root_port.c'))
- pci_ss.add(when: 'CONFIG_PCIE_PCI_BRIDGE', if_true: files('pcie_pci_bridge.c'))
-+pci_ss.add(when: 'CONFIG_PCIE_PCI_BRIDGE', if_true: files('thunderbolt_pcie_pci_bridge.c'))
- pci_ss.add(when: 'CONFIG_PXB', if_true: files('pci_expander_bridge.c'),
-                                if_false: files('pci_expander_bridge_stubs.c'))
- pci_ss.add(when: 'CONFIG_XIO3130', if_true: files('xio3130_upstream.c', 'xio3130_downstream.c'))
-diff --git a/hw/pci-bridge/thunderbolt_pcie_pci_bridge.c b/hw/pci-bridge/thunderbolt_pcie_pci_bridge.c
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 6171cc7494..0be88e77fa 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2223,6 +2223,13 @@ F: docs/pci*
+ F: docs/specs/*pci*
+ F: docs/system/sriov.rst
+ 
++Thunderbolt PCIe
++R: Dmitry R <rdmitry0911@gmail.com>
++S: Maintained
++F: docs/specs/thunderbolt-pcie-hotplug.rst
++F: hw/display/thunderbolt-vga.c
++F: hw/pci-bridge/thunderbolt*.c
++
+ ARM PCI Hotplug
+ M: Gustavo Romero <gustavo.romero@linaro.org>
+ L: qemu-arm@nongnu.org
+diff --git a/README.md b/README.md
 new file mode 100644
-index 0000000000..afbf4871f4
+index 0000000000..1115c9db82
 --- /dev/null
-+++ b/hw/pci-bridge/thunderbolt_pcie_pci_bridge.c
-@@ -0,0 +1,156 @@
-+/*
-+ * Thunderbolt PCI Express to PCI Bridge
-+ *
-+ * This is the regular generic PCIe-to-PCI bridge used as a Thunderbolt PCIe
-+ * tunnel endpoint. Downstream PCI devices are described normally so existing
-+ * macOS drivers that are not IOPCITunnelCompatible can still bind to them.
-+ *
-+ * Copyright (C) 2026
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
++++ b/README.md
+@@ -0,0 +1,91 @@
++SPDX-License-Identifier: GPL-2.0-or-later
 +
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qemu/module.h"
-+#include "hw/acpi/aml-build.h"
-+#include "hw/acpi/pcihp.h"
-+#include "hw/acpi/acpi_aml_interface.h"
-+#include "hw/pci/pci.h"
-+#include "hw/pci/pci_bridge.h"
-+#include "qom/object.h"
++# QEMU Thunderbolt PCIe hotplug layer
 +
-+#define TYPE_THUNDERBOLT_PCIE_PCI_BRIDGE "thunderbolt-pcie-pci-bridge"
++This branch adds a Thunderbolt-flavoured PCIe hotplug layer for QEMU
++experiments.  The implementation keeps normal QEMU PCI devices intact and
++adds a new Thunderbolt bus/root-port layer around them.
 +
-+static Aml *build_device_properties_dsd(Aml *properties)
-+{
-+    Aml *dsd;
++The primary goal is to provide hotplug and hot-unplug for real and virtual
++devices in guests that do not support those devices being added or removed
++directly.  macOS is the main validation target for this path: devices can be
++tunnelled through a guest-visible Thunderbolt layer even when direct PCIe
++hotplug for the same endpoint is not usable.
 +
-+    dsd = aml_package(2);
-+    aml_append(dsd, aml_touuid("DAFFD814-6EBA-4D8C-8A91-BC9BBF4AA301"));
-+    aml_append(dsd, properties);
++The regular QEMU `VGA` device is not changed and is not made hotpluggable.
++Thunderbolt display experiments use a separate `thunderbolt-vga` device type.
 +
-+    return aml_name_decl("_DSD", dsd);
-+}
++## Added device types
 +
-+static void append_bool_property(Aml *properties, const char *name)
-+{
-+    Aml *property = aml_package(2);
++- `thunderbolt-root-port`: a PCIe root port that creates a `thunderbolt-bus`.
++  Its `connected` QOM property controls guest-visible link presence.
++- `thunderbolt-pcie-pci-bridge`: a PCIe-to-PCI bridge for tunnelled PCI
++  endpoints with Thunderbolt-related ACPI properties.
++- `thunderbolt-vga`: a hotpluggable stdvga-compatible endpoint with constrained
++  default EDID settings for guest hotplug tests.
 +
-+    aml_append(property, aml_string("%s", name));
-+    aml_append(property, aml_int(1));
-+    aml_append(properties, property);
-+}
++## Basic boot example
 +
-+static void build_tunnelled_device_dsd(Aml *scope)
-+{
-+    Aml *properties = aml_package(1);
++Start the guest with its normal boot display and an empty Thunderbolt root
++port:
 +
-+    append_bool_property(properties, "IOPCITunnelled");
++```sh
++qemu-system-x86_64 \
++  -machine q35 \
++  -device VGA,id=bootvga,bus=pcie.0,addr=0x06,vgamem_mb=4,xres=1280,yres=800,xmax=1280,ymax=800,refresh_rate=60000 \
++  -device thunderbolt-root-port,id=tbrp0,bus=pcie.0,chassis=1,slot=1,addr=0x05 \
++  ...
++```
 +
-+    aml_append(scope, build_device_properties_dsd(properties));
-+}
++Hotplug and remove a Thunderbolt VGA endpoint through the QEMU monitor:
 +
-+static void build_tunnelled_device_acpi_properties(Aml *scope)
-+{
-+    build_tunnelled_device_dsd(scope);
-+}
++```text
++(qemu) device_add thunderbolt-vga,id=tbvga0,bus=tbrp0,addr=0x00
++(qemu) device_del tbvga0
++```
 +
-+static Aml *build_pci_static_endpoint_dsm(PCIDevice *pdev)
-+{
-+    Aml *method;
-+    Aml *params;
-+    Aml *pkg;
++Disconnect or reconnect the whole Thunderbolt root port:
 +
-+    g_assert(pdev->acpi_index != 0);
++```text
++(qemu) qom-set /machine/peripheral/tbrp0 connected false
++(qemu) qom-set /machine/peripheral/tbrp0 connected true
++```
 +
-+    method = aml_method("_DSM", 4, AML_SERIALIZED);
-+    params = aml_local(0);
-+    pkg = aml_package(1);
-+    aml_append(pkg, aml_int(pdev->acpi_index));
-+    aml_append(method, aml_store(pkg, params));
-+    aml_append(method,
-+        aml_return(aml_call5("EDSM", aml_arg(0), aml_arg(1), aml_arg(2),
-+                             aml_arg(3), params)));
++## USB storage example
 +
-+    return method;
-+}
++Attach a USB controller behind the Thunderbolt root port, then attach USB mass
++storage to that controller:
 +
-+static bool thunderbolt_bridge_devfn_ignored(int devfn, const PCIBus *bus)
-+{
-+    const PCIDevice *pdev = bus->devices[devfn];
++```text
++(qemu) device_add qemu-xhci,id=tbxhci0,bus=tbrp0,addr=0x00
++(qemu) drive_add 0 if=none,id=TBUSB,file=TBUSB.raw,format=raw,cache=writeback,aio=threads
++(qemu) device_add usb-storage,id=tbusb0,bus=tbxhci0.0,drive=TBUSB,serial=tb-usb-stick0
++```
 +
-+    if (PCI_FUNC(devfn) && IS_PCI_BRIDGE(pdev) && DEVICE(pdev)->hotplugged) {
-+        return true;
-+    }
++After the guest ejects or unmounts the disk, remove the device and controller:
 +
-+    return false;
-+}
++```text
++(qemu) device_del tbusb0
++(qemu) device_del tbxhci0
++```
 +
-+static void build_tunnelled_pci_bus_devices(Aml *parent_scope, PCIBus *bus)
-+{
-+    int devfn;
++## NVMe example
 +
-+    for (devfn = 0; devfn < ARRAY_SIZE(bus->devices); devfn++) {
-+        PCIDevice *pdev = bus->devices[devfn];
-+        int adr = PCI_SLOT(devfn) << 16 | PCI_FUNC(devfn);
-+        Aml *dev;
++```text
++(qemu) drive_add 0 if=none,id=TBNVME,file=TBNVME.qcow2,format=qcow2
++(qemu) device_add nvme,id=tbnvme0,bus=tbrp0,addr=0x00,serial=tb-nvme0,drive=TBNVME
++(qemu) device_del tbnvme0
++```
 +
-+        if (!pdev || thunderbolt_bridge_devfn_ignored(devfn, bus)) {
-+            continue;
-+        }
++## Validation status
 +
-+        dev = aml_device("S%.02X", devfn);
-+        aml_append(dev, aml_name_decl("_ADR", aml_int(adr)));
++The development validation used macOS guests booted from overlay disk images so
++the base images stayed immutable.  The tested hotplug flows covered:
 +
-+        call_dev_aml_func(DEVICE(pdev), dev);
++- `thunderbolt-vga` detection and removal while the standard boot VGA remained.
++- NVMe controller hotplug and driver instance disappearance after unplug.
++- USB controller hotplug, USB storage mount/write/eject, controller removal,
++  replug, and data persistence verification.
 +
-+        if (pdev->acpi_index &&
-+            !object_property_get_bool(OBJECT(pdev), "hotpluggable",
-+                                      &error_abort)) {
-+            aml_append(dev, build_pci_static_endpoint_dsm(pdev));
-+        }
++The qtest coverage checks that regular `VGA` hotplug still fails while
++`thunderbolt-vga` can be hotplugged behind `thunderbolt-root-port`.
+diff --git a/docs/specs/index.rst b/docs/specs/index.rst
+index b7909a108a..1f0d3e4b4a 100644
+--- a/docs/specs/index.rst
++++ b/docs/specs/index.rst
+@@ -31,6 +31,7 @@ guest hardware that is specific to QEMU.
+    pvpanic
+    spdm
+    standard-vga
++   thunderbolt-pcie-hotplug
+    virt-ctlr
+    vmcoreinfo
+    vmgenid
+diff --git a/docs/specs/thunderbolt-pcie-hotplug.rst b/docs/specs/thunderbolt-pcie-hotplug.rst
+new file mode 100644
+index 0000000000..f14c64b181
+--- /dev/null
++++ b/docs/specs/thunderbolt-pcie-hotplug.rst
+@@ -0,0 +1,99 @@
++.. SPDX-License-Identifier: GPL-2.0-or-later
 +
-+        aml_append(parent_scope, dev);
-+    }
-+}
++Thunderbolt PCIe hotplug layer
++==============================
 +
-+static void build_thunderbolt_pcie_pci_bridge_aml(AcpiDevAmlIf *adev,
-+                                                  Aml *scope)
-+{
-+    PCIBridge *br = PCI_BRIDGE(adev);
++This series adds a Thunderbolt-flavoured PCIe layer for experiments with
++guest-visible PCIe tunnelling.  Devices behind the layer remain normal QEMU
++PCI devices; the Thunderbolt root port provides the guest-visible connection
++state, ACPI properties, and PCIe hotplug notifications.
 +
-+    build_tunnelled_device_acpi_properties(scope);
++The main use case is hotplug and hot-unplug of real and virtual devices in
++guests that cannot use direct hotplug for those devices.  For example, a macOS
++guest can observe the endpoint through a guest-visible Thunderbolt layer when
++direct PCIe hotplug for the same endpoint is not supported or not usable.
 +
-+    if (!DEVICE(br)->hotplugged) {
-+        PCIBus *sec_bus = pci_bridge_get_sec_bus(br);
++The implementation adds three user-visible device types:
 +
-+        build_tunnelled_pci_bus_devices(scope, sec_bus);
++``thunderbolt-root-port``
++  PCIe root port that creates a ``thunderbolt-bus`` secondary bus.  The
++  ``connected`` QOM property controls whether devices behind the port are
++  reported as present to the guest.
 +
-+        if (object_property_find(OBJECT(sec_bus), ACPI_PCIHP_PROP_BSEL)) {
-+            build_append_pcihp_slots(scope, sec_bus);
-+        }
-+    }
-+}
++``thunderbolt-pcie-pci-bridge``
++  PCIe-to-PCI bridge for tunnelled PCI endpoints.  It adds Thunderbolt-related
++  ACPI properties while leaving downstream PCI devices otherwise normal.
 +
-+static void thunderbolt_pcie_pci_bridge_class_init(ObjectClass *klass,
-+                                                   const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    AcpiDevAmlIfClass *adevc = ACPI_DEV_AML_IF_CLASS(klass);
++``thunderbolt-vga``
++  Hotpluggable stdvga-compatible device for Thunderbolt experiments.  The
++  regular ``VGA`` device is not made hotpluggable and its defaults are not
++  changed.
 +
-+    dc->desc = "Thunderbolt PCI Express to PCI Bridge";
-+    adevc->build_dev_aml = build_thunderbolt_pcie_pci_bridge_aml;
-+}
++Basic launch example
++--------------------
 +
-+static const TypeInfo thunderbolt_pcie_pci_bridge_info = {
-+    .name       = TYPE_THUNDERBOLT_PCIE_PCI_BRIDGE,
-+    .parent     = "pcie-pci-bridge",
-+    .class_init = thunderbolt_pcie_pci_bridge_class_init,
-+};
++Start the guest with its normal boot display and an empty Thunderbolt root
++port:
 +
-+static void thunderbolt_pcie_pci_bridge_register_types(void)
-+{
-+    type_register_static(&thunderbolt_pcie_pci_bridge_info);
-+}
++::
 +
-+type_init(thunderbolt_pcie_pci_bridge_register_types)
++  qemu-system-x86_64 \
++      -machine q35 \
++      -device VGA,id=bootvga,bus=pcie.0,addr=0x06,vgamem_mb=4,xres=1280,yres=800,xmax=1280,ymax=800,refresh_rate=60000 \
++      -device thunderbolt-root-port,id=tbrp0,bus=pcie.0,chassis=1,slot=1,addr=0x05 \
++      ...
++
++Hotplug a Thunderbolt VGA endpoint after the guest has booted:
++
++::
++
++  (qemu) device_add thunderbolt-vga,id=tbvga0,bus=tbrp0,addr=0x00
++  (qemu) device_del tbvga0
++
++Temporarily disconnect and reconnect the whole Thunderbolt port:
++
++::
++
++  (qemu) qom-set /machine/peripheral/tbrp0 connected false
++  (qemu) qom-set /machine/peripheral/tbrp0 connected true
++
++USB storage example
++-------------------
++
++Attach a USB controller to the Thunderbolt root port, then attach USB mass
++storage to that controller:
++
++::
++
++  (qemu) device_add qemu-xhci,id=tbxhci0,bus=tbrp0,addr=0x00
++  (qemu) drive_add 0 if=none,id=TBUSB,file=TBUSB.raw,format=raw,cache=writeback,aio=threads
++  (qemu) device_add usb-storage,id=tbusb0,bus=tbxhci0.0,drive=TBUSB,serial=tb-usb-stick0
++
++After the guest ejects or unmounts the disk, remove the USB device and the
++controller:
++
++::
++
++  (qemu) device_del tbusb0
++  (qemu) device_del tbxhci0
++
++NVMe example
++------------
++
++Attach an NVMe controller behind the Thunderbolt root port:
++
++::
++
++  (qemu) drive_add 0 if=none,id=TBNVME,file=TBNVME.qcow2,format=qcow2
++  (qemu) device_add nvme,id=tbnvme0,bus=tbrp0,addr=0x00,serial=tb-nvme0,drive=TBNVME
++  (qemu) device_del tbnvme0
++
++Notes for review
++----------------
++
++The regular QEMU ``VGA`` type is intentionally left non-hotpluggable.  Tests
++check that hotplugging ``VGA`` behind a Thunderbolt root port still fails, and
++that ``thunderbolt-vga`` can be hotplugged with constrained display defaults.
++
++The macOS validation flow used QCOW2 overlays for all mutable disks so the base
++guest images remained unchanged.
 -- 
 2.47.3
 
