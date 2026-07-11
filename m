@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34890C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:03:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF004C44501
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:03:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifl1-00046S-94; Sat, 11 Jul 2026 18:01:11 -0400
+	id 1wifmm-0007Bq-IZ; Sat, 11 Jul 2026 18:03:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifkz-0003x7-7S; Sat, 11 Jul 2026 18:01:09 -0400
+ id 1wifmU-000759-Gd; Sat, 11 Jul 2026 18:02:48 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifkx-0008GV-C6; Sat, 11 Jul 2026 18:01:08 -0400
+ id 1wifmL-0008RN-9x; Sat, 11 Jul 2026 18:02:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807180; bh=tKbQKlDOKGMFUfgf+hbmUB5/Y9LfVcWerKrcFBBY0gY=;
+ t=1783807180; bh=lqu+kprOeII3+eEnwuEAvOlbZGnBz2nwZfl6x19HGcM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=h016JflZobmKGlaUgL+znVy228BM1Wv1EUMtP8PX96NNQ4AJSrmQxomHKCSD5rwHE
- Mm4avxjcDkM3ybahfTFx7QRwxY29b3IQ28aZqF/+GDF/6UXqwr6rTYot2ja1K+nFmj
- wkT3aSDSlh3BmLc5hdCJN07x25IOT80lMDXs55fIWY7HJc6yfnIeTYV5FBoOJoICBC
- /qznQiHSvxf8m0qwdg+mhQ/P78dSwAWs7NpRtFkpq0bG5mAku33GXJAB6NHaZCgWC7
- /eJ7KQh3BQ8gYeI9UNZnKwRDpJjJX4+ie4lRQfoFRlhY7WQhW0N2NiWcSIWrtri3sq
- k3y4MgZExwV3A==
+ b=tVCifyZO0GmhP/IbKb34Qv2MBCGQ4SguKsHW60HonSb95vEI82VUci/t6JU1aCQc8
+ WAvfEONwL0XNw5TJGp8v13YUVB4Rh3s454tsOZsew/KJaC+HfHnaDPZxfHe2WxmEBU
+ AWWEmMIwxrfTMbuXGjEmSkRqpc8L5p+pbvVQKk58Fv5Ydqi6iE4qL41xle3F3fEEoH
+ JwFSjcXm6hK29NYWPOVx64tRNpy3Eb2sNK2qofKIfi0DpVKtLSEwhOXkHYufOEb5K3
+ 39ZckbMEyqpg7agzesDHUJMidQDnqygqApGJ++WXnjngSE2vMB6iFmSJ/UntQSXgFQ
+ FiQ/X73eeePog==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 858041C0A9F;
+ by isrv.corpit.ru (Postfix) with ESMTP id D051F1C0AAB;
  Sun, 12 Jul 2026 00:59:40 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3C6AE3EAF2A;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 86F8A3EAF36;
  Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 64AB61330B; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id 82C4813323; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 20/81] tests/9p: increase P9_MAX_SIZE for test client
-Date: Sun, 12 Jul 2026 00:57:58 +0300
-Message-ID: <20260711215904.3757-20-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 32/81] hw/char/virtio-serial-bus: fix
+ guest-triggerable OOM in control_out()
+Date: Sun, 12 Jul 2026 00:58:10 +0300
+Message-ID: <20260711215904.3757-32-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
@@ -70,38 +71,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Laurent Vivier <lvivier@redhat.com>
 
-Increase the maximum 9P message size ('msize') of 9p test client from
-4k to 32k to support larger messages.
+A malicious guest can craft virtqueue descriptors with arbitrary lengths.
+control_out() calls iov_size() on the guest-supplied scatter-gather list
+and passes the result directly to g_malloc(), allowing a guest to force
+QEMU to attempt multi-gigabyte allocations and crash the host process.
 
-This is needed for the xattr tests being added with the subsequent
-patches which are going to transmit xattrs of size 8k. It would have
-also been possible to send them in multiple chunks, however let's not
-overcomplicate things.
+Fix this by copying at most sizeof(struct virtio_console_control) into a
+stack-local variable instead of allocating a buffer sized by the guest.
+handle_control_message() only accesses the fixed-size id, event, and
+value fields, so no data beyond the struct was ever needed.
 
-This new msize is still reasonable small compared to common msize
-values on production systems.
-
-Link: https://lore.kernel.org/qemu-devel/2dcb1243c80ea97d085af5171785850cf012be36.1781361555.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit df88255543667e7f14ac34d97e0ced142af18bdf)
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3585
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260622161144.2883799-1-lvivier@redhat.com>
+(cherry picked from commit 36b37f8494800ed9c5d4b6ef03924bd1636cb810)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/libqos/virtio-9p-client.h b/tests/qtest/libqos/virtio-9p-client.h
-index c432b0daee4..4b043245034 100644
---- a/tests/qtest/libqos/virtio-9p-client.h
-+++ b/tests/qtest/libqos/virtio-9p-client.h
-@@ -21,7 +21,8 @@
- #include "qgraph.h"
- #include "tests/qtest/libqtest-single.h"
+diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
+index cd234dc6db1..c1973f0248f 100644
+--- a/hw/char/virtio-serial-bus.c
++++ b/hw/char/virtio-serial-bus.c
+@@ -344,22 +344,16 @@ void virtio_serial_throttle_port(VirtIOSerialPort *port, bool throttle)
+ }
  
--#define P9_MAX_SIZE 4096 /* Max size of a T-message or R-message */
-+/* Max size of a T-message or R-message */
-+#define P9_MAX_SIZE (32 * 1024)
+ /* Guest wants to notify us of some event */
+-static void handle_control_message(VirtIOSerial *vser, void *buf, size_t len)
++static void handle_control_message(VirtIOSerial *vser,
++                                   struct virtio_console_control *gcpkt)
+ {
+     VirtIODevice *vdev = VIRTIO_DEVICE(vser);
+     struct VirtIOSerialPort *port;
+     VirtIOSerialPortClass *vsc;
+-    struct virtio_console_control cpkt, *gcpkt;
++    struct virtio_console_control cpkt;
+     uint8_t *buffer;
+     size_t buffer_len;
  
- typedef struct {
-     QTestState *qts;
+-    gcpkt = buf;
+-
+-    if (len < sizeof(cpkt)) {
+-        /* The guest sent an invalid control packet */
+-        return;
+-    }
+-
+     cpkt.event = virtio_lduw_p(vdev, &gcpkt->event);
+     cpkt.value = virtio_lduw_p(vdev, &gcpkt->value);
+ 
+@@ -457,41 +451,27 @@ static void control_in(VirtIODevice *vdev, VirtQueue *vq)
+ 
+ static void control_out(VirtIODevice *vdev, VirtQueue *vq)
+ {
++    struct virtio_console_control cpkt;
+     VirtQueueElement *elem;
+     VirtIOSerial *vser;
+-    uint8_t *buf;
+     size_t len;
+ 
+     vser = VIRTIO_SERIAL(vdev);
+ 
+-    len = 0;
+-    buf = NULL;
+     for (;;) {
+-        size_t cur_len;
+-
+         elem = virtqueue_pop(vq, sizeof(VirtQueueElement));
+         if (!elem) {
+             break;
+         }
+ 
+-        cur_len = iov_size(elem->out_sg, elem->out_num);
+-        /*
+-         * Allocate a new buf only if we didn't have one previously or
+-         * if the size of the buf differs
+-         */
+-        if (cur_len > len) {
+-            g_free(buf);
+-
+-            buf = g_malloc(cur_len);
+-            len = cur_len;
++        len = iov_to_buf(elem->out_sg, elem->out_num, 0, &cpkt, sizeof(cpkt));
++        if (len == sizeof(cpkt)) {
++            handle_control_message(vser, &cpkt);
+         }
+-        iov_to_buf(elem->out_sg, elem->out_num, 0, buf, cur_len);
+ 
+-        handle_control_message(vser, buf, cur_len);
+         virtqueue_push(vq, elem, 0);
+         g_free(elem);
+     }
+-    g_free(buf);
+     virtio_notify(vdev, vq);
+ }
+ 
 -- 
 2.47.3
 
