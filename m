@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8B18C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:06:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54FE0C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:06:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifky-0003uw-AF; Sat, 11 Jul 2026 18:01:08 -0400
+	id 1wifpB-0004eI-VA; Sat, 11 Jul 2026 18:05:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifkv-0003mP-Ro; Sat, 11 Jul 2026 18:01:06 -0400
+ id 1wifoy-0004PS-5C; Sat, 11 Jul 2026 18:05:17 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifkt-0008Bw-Rq; Sat, 11 Jul 2026 18:01:05 -0400
+ id 1wifow-0000az-HI; Sat, 11 Jul 2026 18:05:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807180; bh=mgz9KPo36yVybz3BRKy7LOPgUWf/XYfzKKRqtf9ovaw=;
+ t=1783807181; bh=0wUaGL+SyRk9TslpNYgpAnx7XjUEd1F+xd6GutZPLCI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ARYLCBjr5x8ZENIqs0z7Hp4qMTsEkay/JufTLDS8rXJx8akGkDShtULvhvO2O4DAN
- 1Qu8nNN+AJ2xAtBx2682B0WnJg/678EBFhc+5I/6OW3Oht2T2vmmGwpT822PDvHpZG
- mtV8KyQ3w4ilFcIUvYIFVod4IGiwEK7FcDjXQjl+4upIX25FMr+Y4D0x+FFPthH4QD
- 7uaZ/kEHuMgFn4Yq+qj7IaGGvkEu5Ww1pxf7O+zkgzas9Pu8bVRGdzYZJo7BJx0EfF
- LQkbro3IWBe7giy17/KmGAvo0FaXm8IMimAnXEVKcyRKFyO+WHG3a48zaTrRftKZqe
- DCjlNhOmpqcGw==
+ b=A2OHmoBIv8yLReZRU1GAR7tdHfYQjlsVfQ0Du6H+V0O5zSNwE2rkGN8ZLZIMF6xSI
+ Ucw+mAULe2Gi+7/5xz+k2IP5iXCbyiRyiozTvVNtfPuxSGDjOrTmzi1pVgU81nIi6k
+ Tvi1cjkdxK4Azcv3F2GLVDbnosQTYUDyR51trf7yeCpYL7OgJ67kWnboFdczrnCOFV
+ DHt0vCc5Bsjlek1oKzrWEy2qiifkOaR3LZWPI9iuldWIGtR17Yh8sCU2etdnqSqTg8
+ 2w6zDDZC+Cj8mUDFQC8Y1r+4eyWuxK59OD/7NWoaBLp/0LIRNh+lH9ZCOEiMvzZCMG
+ jp6KLmTMTKc3Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7AC961C0A9D;
- Sun, 12 Jul 2026 00:59:40 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7433E1C0AC6;
+ Sun, 12 Jul 2026 00:59:41 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 324973EAF28;
- Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2B1E73EAF51;
+ Sun, 12 Jul 2026 00:59:51 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 601F513307; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id C540013359; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 18/81] hw/9pfs: enable xattr (mockup) support for
- synth fs driver
-Date: Sun, 12 Jul 2026 00:57:56 +0300
-Message-ID: <20260711215904.3757-18-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 59/81] scsi: register again after PREEMPT without
+ reservation
+Date: Sun, 12 Jul 2026 00:58:37 +0300
+Message-ID: <20260711215904.3757-59-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
@@ -71,47 +71,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-The synth backend is used for testing only. Enable xattr operations
-by making lsetxattr and lremovexattr callbacks to return success
-result.
+The SCSI specification says PREEMPT without a reservation removes all
+registrations with the given key. Try to register again after PREEMPT
+since our key will have been removed.
 
-They are still actually not doing anything, they just pretend to be
-working to prevent 9pfs server from erroring out on xattr requests.
+In practice some SCSI targets keep the calling I_T nexus' registration
+instead of removing it. Therefore we need to handle both the
+spec-compliant and the non-compliant behavior.
 
-This allows the subsequent test case patches to verify xattr FID
-limit enforcement.
-
-Link: https://lore.kernel.org/qemu-devel/9c1c7128135f3bd9c2f62a3f64bb730b6a94ec7a.1781361555.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit 0e3085ddc7fb137b727829913c20ad9d08577bdb)
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
+Link: https://lore.kernel.org/r/20260401171927.396672-4-stefanha@redhat.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit b9a3b329d09dea5a4692de483419693ef0e23052)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
-index 322dc3bb690..4b0732e0936 100644
---- a/hw/9pfs/9p-synth.c
-+++ b/hw/9pfs/9p-synth.c
-@@ -477,15 +477,15 @@ static int synth_lsetxattr(FsContext *ctx, V9fsPath *path,
-                                 const char *name, void *value,
-                                 size_t size, int flags)
- {
--    errno = ENOTSUP;
--    return -1;
-+    /* pretend it worked */
-+    return 0;
+diff --git a/hw/scsi/scsi-generic.c b/hw/scsi/scsi-generic.c
+index 349dea6bddf..5182f9236da 100644
+--- a/hw/scsi/scsi-generic.c
++++ b/hw/scsi/scsi-generic.c
+@@ -513,6 +513,16 @@ bool scsi_generic_pr_state_preempt(SCSIDevice *s, Error **errp)
+         if (!scsi_generic_pr_preempt(s, key, resv_type, errp)) {
+             return false;
+         }
++
++        /*
++         * Some SCSI targets, like the Linux LIO target, remove our
++         * registration when preempting without a reservation (resv_type is 0).
++         * Try to register again but ignore the error since a RESERVATION
++         * CONFLICT is expected if our registration remained in place.
++         */
++        if (resv_type == 0) {
++            scsi_generic_pr_register(s, key, NULL);
++        }
+     }
+     return true;
  }
- 
- static int synth_lremovexattr(FsContext *ctx,
-                                    V9fsPath *path, const char *name)
- {
--    errno = ENOTSUP;
--    return -1;
-+    /* pretend it worked */
-+    return 0;
- }
- 
- static int synth_name_to_path(FsContext *ctx, V9fsPath *dir_path,
 -- 
 2.47.3
 
