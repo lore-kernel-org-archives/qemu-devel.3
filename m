@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4230AC43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 23:03:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E02FC43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 23:03:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigj9-0005UR-PX; Sat, 11 Jul 2026 19:03:19 -0400
+	id 1wigjB-0005WA-Sv; Sat, 11 Jul 2026 19:03:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigil-0005PW-6T; Sat, 11 Jul 2026 19:02:56 -0400
-Received: from pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.13.214.179])
+ id 1wigik-0005PS-GD; Sat, 11 Jul 2026 19:02:56 -0400
+Received: from pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.34.181.151])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigih-0002YQ-51; Sat, 11 Jul 2026 19:02:54 -0400
+ id 1wigie-0002ae-8I; Sat, 11 Jul 2026 19:02:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783810971; x=1815346971;
+ t=1783810968; x=1815346968;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Gmd15+SAabzX07bY28nlbu8cJDEIsIgNIuco93iaCqQ=;
- b=F88hCuDiu8RIudgXO4Y7Fs7+DqV7NZ+IB9NkB/SDb1xn2qMxZTzPxNT5
- U6z/2/I6zvbRzyukDWLC3hsqmxzuNDHqo6DI46MmqaoRemqaqPU0mH1/2
- BS61OlQsAiMjP1TOSHFdYLh0rmtCfE8Dd7tBLQCaj19qE29ZAWVdbbVMV
- DH73aLFzuQKdPWu/+hvFHiCcxmWG5KazSShzDVsYIt7wW/DcAdobFsVmm
- LDwBfRIx5OurB3fBh+U8oLeRVqy1JC2+5Qw8+QSaz+vULzlaX4igFIusa
- HsEBBquRpLrAmKZTohYOZDge4nDAoMKomBuCcU5SqfWmCE/eOJI4qfKMq A==;
-X-CSE-ConnectionGUID: MeB5+qhvQF2Rr25YL0++zQ==
-X-CSE-MsgGUID: orOXU9YyQrWoBFg4QEyMuA==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23479679"
-Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
- by internal-pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 23:02:35 +0000
-Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.51:6838]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.58.33:2525]
+ bh=kIRDMMYQoAbVbR+Yb/nq/CG8IV16g3zCWr2Me2GLW6M=;
+ b=sUfzUOvrQkXfianEQf6XpKIjfw6GTnGndKfxbQuP6PAG9P8W7x3ao94L
+ a+ut8WNGBUf7Jczye+n/vGYRFnd7TWecy0XZr9aB0/gx2iDK7UYFuT3F6
+ 7o6zysR+mmUYqDKgvxwXiOs41NS8+wBypuVomJ+oam3Ws6AsndFzfgHXt
+ MsJrXIm+NygTZxrfX1y8LOPbLidZFtlP8rVKPclFVDIkMSepmHHrTLs1b
+ 09L7EeEER0EvOztkwOOmI5UDwHTWiuAWzIU726QhdD/H/d3eTyESzX0du
+ o22ZFYDN1HJcCRad7iKlLyfW1xH0ReufgQiS6mzEuInq0wFEB6JfF3q60 g==;
+X-CSE-ConnectionGUID: UnS3OulPSI22PLwrbrOoMw==
+X-CSE-MsgGUID: rqh8YVmBRDC1yM2K3LZ0kg==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23483611"
+Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
+ by internal-pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 23:02:44 +0000
+Received: from EX19MTAUWC002.ant.amazon.com [205.251.233.111:23292]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.47.135:2525]
  with esmtp (Farcaster)
- id e319b4ac-40a7-4496-a248-a2413f3e68db; Sat, 11 Jul 2026 23:02:35 +0000 (UTC)
-X-Farcaster-Flow-ID: e319b4ac-40a7-4496-a248-a2413f3e68db
+ id c3cb8fca-4aa2-4924-8f15-6db4f3d24a39; Sat, 11 Jul 2026 23:02:44 +0000 (UTC)
+X-Farcaster-Flow-ID: c3cb8fca-4aa2-4924-8f15-6db4f3d24a39
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
+ EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 23:02:35 +0000
+ Sat, 11 Jul 2026 23:02:43 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 23:02:26 +0000
+ Sat, 11 Jul 2026 23:02:35 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,9 +91,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 096/134] hw/sh4: Give memory regions an explicit owner
-Date: Sat, 11 Jul 2026 22:36:29 +0000
-Message-ID: <20260711223707.42139-97-graf@amazon.com>
+Subject: [RFC PATCH 097/134] hw/m68k: Give memory regions an explicit owner
+Date: Sat, 11 Jul 2026 22:36:30 +0000
+Message-ID: <20260711223707.42139-98-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -103,9 +103,9 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D046UWA003.ant.amazon.com (10.13.139.18) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=52.13.214.179;
+Received-SPF: pass client-ip=52.34.181.151;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
@@ -129,272 +129,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert memory_region_init*() calls in the SH7750 SoC model and
-its non-QOM sub-block helpers (tmu012_init, sh_intc_init,
-r2d_fpga_init) to pass an explicit owner instead of NULL.
+Convert memory_region_init*() calls that pass NULL owner to pass
+the enclosing machine or device instead.
 
-Thread Object *owner as the first argument through tmu012_init(),
-sh_intc_init() and its static sh_intc_register() helper, and
-r2d_fpga_init(). sh7750_init() already carries an Object *parent
-from the earlier device conversion; pass it through.
+Thread Object *owner through the static mcf5208_sys_init() helper. mcf5206_mbar_realize() already has DeviceState *dev in scope.
 
 No functional change intended.
 
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/intc/sh_intc.c         | 19 ++++++++++---------
- hw/sh4/r2d.c              |  9 +++++----
- hw/sh4/sh7750.c           | 22 +++++++++++-----------
- hw/timer/sh_timer.c       |  9 +++++----
- include/hw/sh4/sh_intc.h  |  3 ++-
- include/hw/timer/tmu012.h |  3 ++-
- 6 files changed, 35 insertions(+), 30 deletions(-)
+ hw/m68k/an5206.c    |  2 +-
+ hw/m68k/mcf5206.c   |  2 +-
+ hw/m68k/mcf5208.c   | 15 ++++++++-------
+ hw/m68k/next-cube.c | 10 +++++-----
+ hw/m68k/q800.c      | 10 +++++-----
+ 5 files changed, 20 insertions(+), 19 deletions(-)
 
-diff --git a/hw/intc/sh_intc.c b/hw/intc/sh_intc.c
-index 0da82f9d5e..37feb6a813 100644
---- a/hw/intc/sh_intc.c
-+++ b/hw/intc/sh_intc.c
-@@ -349,7 +349,8 @@ void sh_intc_register_sources(struct intc_desc *desc,
-     }
- }
+diff --git a/hw/m68k/an5206.c b/hw/m68k/an5206.c
+index 5027311cad..6c6c7d7248 100644
+--- a/hw/m68k/an5206.c
++++ b/hw/m68k/an5206.c
+@@ -60,7 +60,7 @@ static void an5206_init(MachineState *machine)
+     memory_region_add_subregion(address_space_mem, 0, machine->ram);
  
--static unsigned int sh_intc_register(MemoryRegion *sysmem,
-+static unsigned int sh_intc_register(Object *owner,
-+                                     MemoryRegion *sysmem,
-                                      struct intc_desc *desc,
-                                      const unsigned long address,
-                                      const char *type,
-@@ -368,18 +369,18 @@ static unsigned int sh_intc_register(MemoryRegion *sysmem,
-     iomem_a7 = iomem_p4 + 1;
+     /* Internal SRAM.  */
+-    memory_region_init_ram(sram, NULL, "an5206.sram", 512, &error_fatal);
++    memory_region_init_ram(sram, OBJECT(machine), "an5206.sram", 512, &error_fatal);
+     memory_region_add_subregion(address_space_mem, AN5206_RAMBAR_ADDR, sram);
  
-     snprintf(name, sizeof(name), "intc-%s-%s-%s", type, action, "p4");
--    memory_region_init_alias(iomem_p4, NULL, name, iomem, A7ADDR(address), 4);
-+    memory_region_init_alias(iomem_p4, owner, name, iomem, A7ADDR(address), 4);
-     memory_region_add_subregion(sysmem, P4ADDR(address), iomem_p4);
+     mcf5206_init(OBJECT(machine), cpu, address_space_mem, AN5206_MBAR_ADDR);
+diff --git a/hw/m68k/mcf5206.c b/hw/m68k/mcf5206.c
+index b3c745d3f9..ee39a6ac30 100644
+--- a/hw/m68k/mcf5206.c
++++ b/hw/m68k/mcf5206.c
+@@ -589,7 +589,7 @@ static void mcf5206_mbar_realize(DeviceState *dev, Error **errp)
+ {
+     m5206_mbar_state *s = MCF5206_MBAR(dev);
  
-     snprintf(name, sizeof(name), "intc-%s-%s-%s", type, action, "a7");
--    memory_region_init_alias(iomem_a7, NULL, name, iomem, A7ADDR(address), 4);
-+    memory_region_init_alias(iomem_a7, owner, name, iomem, A7ADDR(address), 4);
-     memory_region_add_subregion(sysmem, A7ADDR(address), iomem_a7);
+-    memory_region_init_io(&s->iomem, NULL, &m5206_mbar_ops, s,
++    memory_region_init_io(&s->iomem, OBJECT(dev), &m5206_mbar_ops, s,
+                           "mbar", 0x00001000);
+     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->iomem);
  
-     /* used to increment aliases index */
-     return 2;
- }
- 
--int sh_intc_init(MemoryRegion *sysmem,
-+int sh_intc_init(Object *owner, MemoryRegion *sysmem,
-                  struct intc_desc *desc,
-                  int nr_sources,
-                  struct intc_mask_reg *mask_regs,
-@@ -403,15 +404,15 @@ int sh_intc_init(MemoryRegion *sysmem,
-         desc->sources[i].parent = desc;
-     }
-     desc->irqs = qemu_allocate_irqs(sh_intc_set_irq, desc, nr_sources);
--    memory_region_init_io(&desc->iomem, NULL, &sh_intc_ops, desc, "intc",
-+    memory_region_init_io(&desc->iomem, owner, &sh_intc_ops, desc, "intc",
-                           0x100000000ULL);
-     j = 0;
-     if (desc->mask_regs) {
-         for (i = 0; i < desc->nr_mask_regs; i++) {
-             struct intc_mask_reg *mr = &desc->mask_regs[i];
- 
--            j += sh_intc_register(sysmem, desc, mr->set_reg, "mask", "set", j);
--            j += sh_intc_register(sysmem, desc, mr->clr_reg, "mask", "clr", j);
-+            j += sh_intc_register(owner, sysmem, desc, mr->set_reg, "mask", "set", j);
-+            j += sh_intc_register(owner, sysmem, desc, mr->clr_reg, "mask", "clr", j);
-         }
-     }
- 
-@@ -419,8 +420,8 @@ int sh_intc_init(MemoryRegion *sysmem,
-         for (i = 0; i < desc->nr_prio_regs; i++) {
-             struct intc_prio_reg *pr = &desc->prio_regs[i];
- 
--            j += sh_intc_register(sysmem, desc, pr->set_reg, "prio", "set", j);
--            j += sh_intc_register(sysmem, desc, pr->clr_reg, "prio", "clr", j);
-+            j += sh_intc_register(owner, sysmem, desc, pr->set_reg, "prio", "set", j);
-+            j += sh_intc_register(owner, sysmem, desc, pr->clr_reg, "prio", "clr", j);
-         }
-     }
- 
-diff --git a/hw/sh4/r2d.c b/hw/sh4/r2d.c
-index 6154aed2c4..8deda6e5f4 100644
---- a/hw/sh4/r2d.c
-+++ b/hw/sh4/r2d.c
-@@ -187,7 +187,8 @@ static const MemoryRegionOps r2d_fpga_ops = {
-     .endianness = DEVICE_NATIVE_ENDIAN,
+diff --git a/hw/m68k/mcf5208.c b/hw/m68k/mcf5208.c
+index a955efebeb..93aee5ebd5 100644
+--- a/hw/m68k/mcf5208.c
++++ b/hw/m68k/mcf5208.c
+@@ -227,7 +227,8 @@ static const MemoryRegionOps m5208_rcm_ops = {
+     .endianness = DEVICE_BIG_ENDIAN,
  };
  
--static r2d_fpga_t *r2d_fpga_init(MemoryRegion *sysmem,
-+static r2d_fpga_t *r2d_fpga_init(Object *owner,
-+                                 MemoryRegion *sysmem,
-                                  hwaddr base, qemu_irq irl)
+-static void mcf5208_sys_init(MemoryRegion *address_space, DeviceState *intc,
++static void mcf5208_sys_init(Object *owner, MemoryRegion *address_space,
++                             DeviceState *intc,
+                              M68kCPU *cpu)
  {
-     r2d_fpga_t *s;
-@@ -196,7 +197,7 @@ static r2d_fpga_t *r2d_fpga_init(MemoryRegion *sysmem,
+     MemoryRegion *iomem = g_new(MemoryRegion, 1);
+@@ -236,17 +237,17 @@ static void mcf5208_sys_init(MemoryRegion *address_space, DeviceState *intc,
+     int i;
  
-     s->irl = irl;
+     /* RCM */
+-    memory_region_init_io(iomem_rcm, NULL, &m5208_rcm_ops, cpu,
++    memory_region_init_io(iomem_rcm, owner, &m5208_rcm_ops, cpu,
+                           "m5208-rcm", 0x00000080);
+     memory_region_add_subregion(address_space, 0xfc0a0000, iomem_rcm);
+     /* SDRAMC.  */
+-    memory_region_init_io(iomem, NULL, &m5208_sys_ops, NULL, "m5208-sys", 0x00004000);
++    memory_region_init_io(iomem, owner, &m5208_sys_ops, NULL, "m5208-sys", 0x00004000);
+     memory_region_add_subregion(address_space, 0xfc0a8000, iomem);
+     /* Timers.  */
+     for (i = 0; i < 2; i++) {
+         s = g_new0(m5208_timer_state, 1);
+         s->timer = ptimer_init(m5208_timer_trigger, s, PTIMER_POLICY_LEGACY);
+-        memory_region_init_io(&s->iomem, NULL, &m5208_timer_ops, s,
++        memory_region_init_io(&s->iomem, owner, &m5208_timer_ops, s,
+                               "m5208-timer", 0x00004000);
+         memory_region_add_subregion(address_space, 0xfc080000 + 0x4000 * i,
+                                     &s->iomem);
+@@ -296,14 +297,14 @@ static void mcf5208evb_init(MachineState *machine)
+     /* TODO: Configure BARs.  */
  
--    memory_region_init_io(&s->iomem, NULL, &r2d_fpga_ops, s, "r2d-fpga", 0x40);
-+    memory_region_init_io(&s->iomem, owner, &r2d_fpga_ops, s, "r2d-fpga", 0x40);
-     memory_region_add_subregion(sysmem, base, &s->iomem);
+     /* ROM at 0x00000000 */
+-    memory_region_init_rom(rom, NULL, "mcf5208.rom", ROM_SIZE, &error_fatal);
++    memory_region_init_rom(rom, OBJECT(machine), "mcf5208.rom", ROM_SIZE, &error_fatal);
+     memory_region_add_subregion(address_space_mem, 0x00000000, rom);
  
-     qemu_init_irqs(s->irq, NR_IRQS, r2d_fpga_irq_set, s);
-@@ -261,11 +262,11 @@ static void r2d_init(MachineState *machine)
-     qemu_register_reset(main_cpu_reset, reset_info);
+     /* DRAM at 0x40000000 */
+     memory_region_add_subregion(address_space_mem, 0x40000000, machine->ram);
  
-     /* Allocate memory space */
--    memory_region_init_ram(sdram, NULL, "r2d.sdram", SDRAM_SIZE, &error_fatal);
-+    memory_region_init_ram(sdram, OBJECT(machine), "r2d.sdram", SDRAM_SIZE, &error_fatal);
-     memory_region_add_subregion(address_space_mem, SDRAM_BASE, sdram);
-     /* Register peripherals */
-     s = sh7750_init(OBJECT(machine), cpu, address_space_mem);
--    fpga = r2d_fpga_init(address_space_mem, 0x04000000, sh7750_irl(s));
-+    fpga = r2d_fpga_init(OBJECT(machine), address_space_mem, 0x04000000, sh7750_irl(s));
+     /* Internal SRAM.  */
+-    memory_region_init_ram(sram, NULL, "mcf5208.sram", 16 * KiB, &error_fatal);
++    memory_region_init_ram(sram, OBJECT(machine), "mcf5208.sram", 16 * KiB, &error_fatal);
+     memory_region_add_subregion(address_space_mem, 0x80000000, sram);
  
-     dev = qdev_new(OBJECT(machine), "pci-host", "sh_pci");
-     busdev = SYS_BUS_DEVICE(dev);
-diff --git a/hw/sh4/sh7750.c b/hw/sh4/sh7750.c
-index ff9724fadf..ea55a3a9cc 100644
---- a/hw/sh4/sh7750.c
-+++ b/hw/sh4/sh7750.c
-@@ -721,38 +721,38 @@ SH7750State *sh7750_init(Object *parent, SuperHCPU *cpu,
-     s = g_new0(SH7750State, 1);
-     s->cpu = cpu;
-     s->periph_freq = 60000000; /* 60MHz */
--    memory_region_init_io(&s->iomem, NULL, &sh7750_mem_ops, s,
-+    memory_region_init_io(&s->iomem, parent, &sh7750_mem_ops, s,
-                           "memory", 0x1fc01000);
+     /* Internal peripherals.  */
+@@ -316,7 +317,7 @@ static void mcf5208evb_init(MachineState *machine)
+     mcf_uart_create_mmap(OBJECT(machine), 0xfc068000,
+                          qdev_get_gpio_in(intc, 28), serial_hd(2));
  
--    memory_region_init_alias(&s->iomem_1f0, NULL, "memory-1f0",
-+    memory_region_init_alias(&s->iomem_1f0, parent, "memory-1f0",
-                              &s->iomem, 0x1f000000, 0x1000);
-     memory_region_add_subregion(sysmem, 0x1f000000, &s->iomem_1f0);
+-    mcf5208_sys_init(address_space_mem, intc, cpu);
++    mcf5208_sys_init(OBJECT(machine), address_space_mem, intc, cpu);
  
--    memory_region_init_alias(&s->iomem_ff0, NULL, "memory-ff0",
-+    memory_region_init_alias(&s->iomem_ff0, parent, "memory-ff0",
-                              &s->iomem, 0x1f000000, 0x1000);
-     memory_region_add_subregion(sysmem, 0xff000000, &s->iomem_ff0);
+     mcf_fec_init(address_space_mem, 0xfc030000, intc);
  
--    memory_region_init_alias(&s->iomem_1f8, NULL, "memory-1f8",
-+    memory_region_init_alias(&s->iomem_1f8, parent, "memory-1f8",
-                              &s->iomem, 0x1f800000, 0x1000);
-     memory_region_add_subregion(sysmem, 0x1f800000, &s->iomem_1f8);
+diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
+index c80d32ef29..564a10a69e 100644
+--- a/hw/m68k/next-cube.c
++++ b/hw/m68k/next-cube.c
+@@ -1310,11 +1310,11 @@ static void next_cube_init(MachineState *machine)
+     sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 5, 0x0211a000);
  
--    memory_region_init_alias(&s->iomem_ff8, NULL, "memory-ff8",
-+    memory_region_init_alias(&s->iomem_ff8, parent, "memory-ff8",
-                              &s->iomem, 0x1f800000, 0x1000);
-     memory_region_add_subregion(sysmem, 0xff800000, &s->iomem_ff8);
+     /* BMAP memory */
+-    memory_region_init_ram_flags_nomigrate(&m->bmapm1, NULL, "next.bmapmem",
++    memory_region_init_ram_flags_nomigrate(&m->bmapm1, OBJECT(machine), "next.bmapmem",
+                                            64, RAM_SHARED, &error_fatal);
+     memory_region_add_subregion(sysmem, 0x020c0000, &m->bmapm1);
+     /* The Rev_2.5_v66.bin firmware accesses it at 0x820c0020, too */
+-    memory_region_init_alias(&m->bmapm2, NULL, "next.bmapmem2", &m->bmapm1,
++    memory_region_init_alias(&m->bmapm2, OBJECT(machine), "next.bmapmem2", &m->bmapm1,
+                              0x0, 64);
+     memory_region_add_subregion(sysmem, 0x820c0000, &m->bmapm2);
  
--    memory_region_init_alias(&s->iomem_1fc, NULL, "memory-1fc",
-+    memory_region_init_alias(&s->iomem_1fc, parent, "memory-1fc",
-                              &s->iomem, 0x1fc00000, 0x1000);
-     memory_region_add_subregion(sysmem, 0x1fc00000, &s->iomem_1fc);
+@@ -1322,9 +1322,9 @@ static void next_cube_init(MachineState *machine)
+     sysbus_create_simple(OBJECT(machine), "kbd", TYPE_NEXTKBD, 0x0200e000, NULL);
  
--    memory_region_init_alias(&s->iomem_ffc, NULL, "memory-ffc",
-+    memory_region_init_alias(&s->iomem_ffc, parent, "memory-ffc",
-                              &s->iomem, 0x1fc00000, 0x1000);
-     memory_region_add_subregion(sysmem, 0xffc00000, &s->iomem_ffc);
- 
--    memory_region_init_io(&s->mmct_iomem, NULL, &sh7750_mmct_ops, s,
-+    memory_region_init_io(&s->mmct_iomem, parent, &sh7750_mmct_ops, s,
-                           "cache-and-tlb", 0x08000000);
-     memory_region_add_subregion(sysmem, 0xf0000000, &s->mmct_iomem);
- 
--    sh_intc_init(sysmem, &s->intc, NR_SOURCES,
-+    sh_intc_init(parent, sysmem, &s->intc, NR_SOURCES,
-                  _INTC_ARRAY(mask_registers),
-                  _INTC_ARRAY(prio_registers));
- 
-@@ -797,7 +797,7 @@ SH7750State *sh7750_init(Object *parent, SuperHCPU *cpu,
-     qdev_connect_gpio_out_named(dev, "txi", 0, s->intc.irqs[SCIF_TXI]);
-     qdev_connect_gpio_out_named(dev, "bri", 0, s->intc.irqs[SCIF_BRI]);
- 
--    tmu012_init(sysmem, 0x1fd80000,
-+    tmu012_init(parent, sysmem, 0x1fd80000,
-                 TMU012_FEAT_TOCR | TMU012_FEAT_3CHAN | TMU012_FEAT_EXTCLK,
-                 s->periph_freq,
-                 s->intc.irqs[TMU0],
-@@ -821,7 +821,7 @@ SH7750State *sh7750_init(Object *parent, SuperHCPU *cpu,
-         sh_intc_register_sources(&s->intc,
-                                  _INTC_ARRAY(vectors_tmu34),
-                                  NULL, 0);
--        tmu012_init(sysmem, 0x1e100000, 0, s->periph_freq,
-+        tmu012_init(parent, sysmem, 0x1e100000, 0, s->periph_freq,
-                     s->intc.irqs[TMU3],
-                     s->intc.irqs[TMU4],
-                     NULL, NULL);
-diff --git a/hw/timer/sh_timer.c b/hw/timer/sh_timer.c
-index 41ece9c613..ac71d11a0a 100644
---- a/hw/timer/sh_timer.c
-+++ b/hw/timer/sh_timer.c
-@@ -344,7 +344,8 @@ static const MemoryRegionOps tmu012_ops = {
-     .endianness = DEVICE_NATIVE_ENDIAN,
- };
- 
--void tmu012_init(MemoryRegion *sysmem, hwaddr base, int feat, uint32_t freq,
-+void tmu012_init(Object *owner, MemoryRegion *sysmem, hwaddr base,
-+                 int feat, uint32_t freq,
-                  qemu_irq ch0_irq, qemu_irq ch1_irq,
-                  qemu_irq ch2_irq0, qemu_irq ch2_irq1)
- {
-@@ -360,13 +361,13 @@ void tmu012_init(MemoryRegion *sysmem, hwaddr base, int feat, uint32_t freq,
-                                     ch2_irq0); /* ch2_irq1 not supported */
+     /* Load ROM here */
+-    memory_region_init_rom(&m->rom, NULL, "next.rom", 0x20000, &error_fatal);
++    memory_region_init_rom(&m->rom, OBJECT(machine), "next.rom", 0x20000, &error_fatal);
+     memory_region_add_subregion(sysmem, 0x01000000, &m->rom);
+-    memory_region_init_alias(&m->rom2, NULL, "next.rom2", &m->rom, 0x0,
++    memory_region_init_alias(&m->rom2, OBJECT(machine), "next.rom2", &m->rom, 0x0,
+                              0x20000);
+     memory_region_add_subregion(sysmem, 0x0, &m->rom2);
+     Error *local_err = NULL;
+@@ -1352,7 +1352,7 @@ static void next_cube_init(MachineState *machine)
      }
  
--    memory_region_init_io(&s->iomem, NULL, &tmu012_ops, s, "timer", 0x30);
-+    memory_region_init_io(&s->iomem, owner, &tmu012_ops, s, "timer", 0x30);
+     /* DMA */
+-    memory_region_init_io(&m->dmamem, NULL, &next_dma_ops, machine,
++    memory_region_init_io(&m->dmamem, OBJECT(machine), &next_dma_ops, machine,
+                           "next.dma", 0x5000);
+     memory_region_add_subregion(sysmem, 0x02000000, &m->dmamem);
+ }
+diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
+index 15b3bcab5f..954cdf8489 100644
+--- a/hw/m68k/q800.c
++++ b/hw/m68k/q800.c
+@@ -309,7 +309,7 @@ static void q800_machine_init(MachineState *machine)
+     memory_region_add_subregion(get_system_memory(), IO_BASE + IO_SLICE,
+                                 &m->macio_alias);
  
--    memory_region_init_alias(&s->iomem_p4, NULL, "timer-p4",
-+    memory_region_init_alias(&s->iomem_p4, owner, "timer-p4",
-                              &s->iomem, 0, memory_region_size(&s->iomem));
-     memory_region_add_subregion(sysmem, P4ADDR(base), &s->iomem_p4);
+-    memory_region_init_io(&m->machine_id, NULL, &machine_id_ops, NULL,
++    memory_region_init_io(&m->machine_id, OBJECT(machine), &machine_id_ops, NULL,
+                           "Machine ID", 4);
+     memory_region_add_subregion(get_system_memory(), 0x5ffffffc,
+                                 &m->machine_id);
+@@ -407,7 +407,7 @@ static void q800_machine_init(MachineState *machine)
+     sysbus_connect_irq(sysbus, 0,
+                        qdev_get_gpio_in(DEVICE(&m->glue), GLUE_IRQ_IN_SONIC));
  
--    memory_region_init_alias(&s->iomem_a7, NULL, "timer-a7",
-+    memory_region_init_alias(&s->iomem_a7, owner, "timer-a7",
-                              &s->iomem, 0, memory_region_size(&s->iomem));
-     memory_region_add_subregion(sysmem, A7ADDR(base), &s->iomem_a7);
-     /* ??? Save/restore.  */
-diff --git a/include/hw/sh4/sh_intc.h b/include/hw/sh4/sh_intc.h
-index 94f183121e..d391710987 100644
---- a/include/hw/sh4/sh_intc.h
-+++ b/include/hw/sh4/sh_intc.h
-@@ -2,6 +2,7 @@
- #define SH_INTC_H
+-    memory_region_init_rom(&m->dp8393x_prom, NULL, "dp8393x-q800.prom",
++    memory_region_init_rom(&m->dp8393x_prom, OBJECT(machine), "dp8393x-q800.prom",
+                            SONIC_PROM_SIZE, &error_fatal);
+     memory_region_add_subregion(get_system_memory(), SONIC_PROM_BASE,
+                                 &m->dp8393x_prom);
+@@ -606,7 +606,7 @@ static void q800_machine_init(MachineState *machine)
+         BOOTINFO1(param_ptr, BI_MAC_VROW, macfb_mode->stride);
+         BOOTINFO1(param_ptr, BI_MAC_SCCBASE, SCC_BASE);
  
- #include "system/memory.h"
-+#include "qom/object.h"
+-        memory_region_init_ram_ptr(&m->rom, NULL, "m68k_fake_mac.rom",
++        memory_region_init_ram_ptr(&m->rom, OBJECT(machine), "m68k_fake_mac.rom",
+                                    sizeof(fake_mac_rom), fake_mac_rom);
+         memory_region_set_readonly(&m->rom, true);
+         memory_region_add_subregion(get_system_memory(), MACROM_ADDR, &m->rom);
+@@ -651,12 +651,12 @@ static void q800_machine_init(MachineState *machine)
+     } else {
+         uint8_t *ptr;
+         /* allocate and load BIOS */
+-        memory_region_init_rom(&m->rom, NULL, "m68k_mac.rom", MACROM_SIZE,
++        memory_region_init_rom(&m->rom, OBJECT(machine), "m68k_mac.rom", MACROM_SIZE,
+                                &error_abort);
+         filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
+         memory_region_add_subregion(get_system_memory(), MACROM_ADDR, &m->rom);
  
- typedef unsigned char intc_enum;
- 
-@@ -68,7 +69,7 @@ void sh_intc_register_sources(struct intc_desc *desc,
-                               struct intc_group *groups,
-                               int nr_groups);
- 
--int sh_intc_init(MemoryRegion *sysmem,
-+int sh_intc_init(Object *owner, MemoryRegion *sysmem,
-                  struct intc_desc *desc,
-                  int nr_sources,
-                  struct intc_mask_reg *mask_regs,
-diff --git a/include/hw/timer/tmu012.h b/include/hw/timer/tmu012.h
-index 808ed8de1d..fb24c00d3b 100644
---- a/include/hw/timer/tmu012.h
-+++ b/include/hw/timer/tmu012.h
-@@ -10,12 +10,13 @@
- #define HW_TIMER_TMU012_H
- 
- #include "exec/hwaddr.h"
-+#include "qom/object.h"
- 
- #define TMU012_FEAT_TOCR   (1 << 0)
- #define TMU012_FEAT_3CHAN  (1 << 1)
- #define TMU012_FEAT_EXTCLK (1 << 2)
- 
--void tmu012_init(MemoryRegion *sysmem, hwaddr base,
-+void tmu012_init(Object *owner, MemoryRegion *sysmem, hwaddr base,
-                  int feat, uint32_t freq,
-                  qemu_irq ch0_irq, qemu_irq ch1_irq,
-                  qemu_irq ch2_irq0, qemu_irq ch2_irq1);
+-        memory_region_init_alias(&m->rom_alias, NULL, "m68k_mac.rom-alias",
++        memory_region_init_alias(&m->rom_alias, OBJECT(machine), "m68k_mac.rom-alias",
+                                  &m->rom, 0, MACROM_SIZE);
+         memory_region_add_subregion(get_system_memory(), 0x40000000,
+                                     &m->rom_alias);
 -- 
 2.47.1
 
