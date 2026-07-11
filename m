@@ -4,65 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1385C44501
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 08:48:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA58AC43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 09:19:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiTNQ-0006vA-GA; Sat, 11 Jul 2026 04:48:00 -0400
+	id 1wiTqa-0004NT-UU; Sat, 11 Jul 2026 05:18:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wiTNC-0006tC-ER; Sat, 11 Jul 2026 04:47:46 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wiTqY-0004Mz-KS
+ for qemu-devel@nongnu.org; Sat, 11 Jul 2026 05:18:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wiTN8-00021H-1f; Sat, 11 Jul 2026 04:47:44 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66B8lCIF059829
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 11 Jul 2026 17:47:12 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=oLHuqQNm7x08Ep5efDS1zs9hdSdwQTbHqCe/xY3u7GE=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1783759632; v=1;
- b=wJcnK17Cv+8oMMt+KCTXmROyrljZPy7nl15jNHVJsAORYGvVLaVBryOfcO+z9rH6
- oD0jUi4NTzB2ZjqtyMwN7P+82IpaScgxvaKgAk8dkntDam/sQfbOQkLvK1rrHIAt
- iFtncK1XDAy6rJw6h2KIUTX+rC/dPluKmSd1xx7krcgmcxb0NP+Xqg53IokBqXlm
- dJ2Dc9lEnyZCQ3ZUPNvB7GUoe9KX41T69SUL2q+LUsvVl9jN3xLfu+R+tiMqf1JE
- CB/v33MTy5apwcAlrZy3vW4F6ybpJAY7xq9wi/D3EXCGpMFMiV1Wbw+LylU5FZ9p
- 9BdmusMzEzPPXQwezQgKsQ==
-Message-ID: <6b4f41b6-6a72-4378-950d-b8884e7dd839@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 11 Jul 2026 17:47:11 +0900
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wiTqV-0006OV-VF
+ for qemu-devel@nongnu.org; Sat, 11 Jul 2026 05:18:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783761481;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=hqa3Fti5lDoVW8M1AaaqRu4tCVXidwxyx3HFQzJHhfU=;
+ b=YxC0KwLY3K96rcGKBkwNEAr7B6MQPqIHSle8bW1QeJjPAEApHHhtJMkBI9d33MxL8znOuo
+ /RLTRS6XDlTTYn/B7u4o3BvV3MCl2RAGwZFRAhSdibpwIQlWSHd6pQxnQqfzTFWaclurMR
+ 09CziVb7ns2yFl8+Q3LyjLqvkw8piJY=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-523-XqVfm0APPU2Y37EPU2_soQ-1; Sat, 11 Jul 2026 05:17:59 -0400
+X-MC-Unique: XqVfm0APPU2Y37EPU2_soQ-1
+X-Mimecast-MFC-AGG-ID: XqVfm0APPU2Y37EPU2_soQ_1783761478
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-695bbac451bso2059279a12.1
+ for <qemu-devel@nongnu.org>; Sat, 11 Jul 2026 02:17:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1783761478; x=1784366278; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=hqa3Fti5lDoVW8M1AaaqRu4tCVXidwxyx3HFQzJHhfU=;
+ b=GrJawlTxofGfSGnao0gYhGAYyAJzbKK4/pXXXicmu46ucmbVKHUoN6h5uGnATNj4rK
+ yAQHIkP1weV4p7WcRJ2HoGUfwrqmntHIW5uEGPahFJhF8QgUvE47ERYTXLc/iDejHBSe
+ 2rn3HR2p/ccPRjMrCaYt3vtwZ7jmfjXlFBnsOf8ZIkbqk0dOlZ3Hbm0mS2Cs0Rpym4wC
+ /wHMpMW2N1v8hF6PEgbHYSDhdUpjnChfVW6dy2YUNSzkS+6zzteXy+dzzUj4oaCJ0L9E
+ +3DDdonCeAQ8oW1ie+uF5KhCcBuTQ/h41BvakBR8Zm92eOQnO7ebKF4XUUliErw0XK31
+ OGNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783761478; x=1784366278;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=hqa3Fti5lDoVW8M1AaaqRu4tCVXidwxyx3HFQzJHhfU=;
+ b=adSX3wUM6J9bCkwqDrcQALZgffAHk4jhnDurXxMg2JO0EDPx8+FE15Xq4ggzFM9kxQ
+ SzrBOL8P/NYtL0EostzFuGW+RO6WoC4zo/w4MTxgBt33HwsOxyZyP0JBC2EMD3ttqtUk
+ q2ztN8/5Rhd+cZ969ESYwYBMLPeg5qAFARCB9aSzWzSiHxlYPQ8pOPY+n3PpSx1JShdm
+ J5eHGGUz1+AhMbVnKHNGPKKpw4kXdbzEWagjwmAo6fFdjJTvfTjlgzi4XZMsnUxbDQIR
+ Qgd6L74q8znUqRiiNSHEuCaSeEfILIKIE7Myc4xAPv3SOkNnh3ZMR4qgcGdqnqqYJh41
+ 16bQ==
+X-Gm-Message-State: AOJu0YythLZqrGC7LQV/h/RZ5CYW1iI1ibDAs3OViCdYiHk75fulTONH
+ SeBX83To+zcgelsqGyw+jFgEK8dT+1RYWr9KarRHaDRsbwlovdrY6kxnpF7pLuHftdWIcSO9PM5
+ sKvGhukoP/iBR1EUPrxKF+C8wryPXMyb0qWAmizd0QqTsLehW9hsubL+I
+X-Gm-Gg: AfdE7cmFcGnc02sX+qgpf9DUP/UuwL5JOciuKkK+jaHTsRO50/qCEe5FiSUqW9gjFNN
+ X8AUlv7rbLIPDHN77ZDxHKMnVCK9r0lJFaCspTEoUvnWyEZuOJ5lUZw45FfavzdQohRlFlzL8+l
+ 9vRvHWEJOM55juiG6xRVmsOszdYMZEMIY10wViNnMUYYDJY5JvVEMxiV3LDYPryGljrvbCNAVMT
+ donWBIoNtXOwuDE5WxXcaF9W0bBs1gyDRP7dr0kcuJ99QPbPsfDtev7dE95KOQseGCh8dwa8HoX
+ isCLYdQDwYvl1MY5AQT2/y/LETFapMZwAXKA+qIz7see2dDfVe09aULcvdhLlwfYL935Z+gBAhM
+ GYvfxR0g/c7w5mjrMifOZrNwIa7KZIEeNupncER8zxQ==
+X-Received: by 2002:a05:6402:1e8c:b0:697:8d48:7fa7 with SMTP id
+ 4fb4d7f45d1cf-69c5f2302a5mr1208177a12.22.1783761478225; 
+ Sat, 11 Jul 2026 02:17:58 -0700 (PDT)
+X-Received: by 2002:a05:6402:1e8c:b0:697:8d48:7fa7 with SMTP id
+ 4fb4d7f45d1cf-69c5f2302a5mr1208171a12.22.1783761477718; 
+ Sat, 11 Jul 2026 02:17:57 -0700 (PDT)
+Received: from redhat.com (bzq-79-177-145-168.red.bezeqint.net.
+ [79.177.145.168]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-69a19ce4a60sm11985302a12.8.2026.07.11.02.17.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 11 Jul 2026 02:17:56 -0700 (PDT)
+Date: Sat, 11 Jul 2026 05:17:53 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Dmitry R <rdmitry0911@gmail.com>
+Cc: qemu-devel@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [RFC PATCH v1 0/1] Thunderbolt PCIe hotplug layer
+Message-ID: <20260711051514-mutt-send-email-mst@kernel.org>
+References: <20260710133440.2845828-1-rdmitry0911@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/riscv/riscv-iommu.c: set ftype and iova in
- riscv_iommu_ctx()
-To: Michael Tokarev <mjt@tls.msk.ru>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- andrew.jones@oss.qualcomm.com, Palmer Dabbelt <palmer@dabbelt.com>,
- Chengbo Gao <gaochengbo@bosc.ac.cn>, qemu-stable <qemu-stable@nongnu.org>,
- Frank Chang <frank.chang@sifive.com>
-References: <20260701092241.307801-1-daniel.barboza@oss.qualcomm.com>
- <59d0a99c-8eb2-4192-a388-331d0dd93358@tls.msk.ru>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <59d0a99c-8eb2-4192-a388-331d0dd93358@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260710133440.2845828-1-rdmitry0911@gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,80 +119,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On Fri, Jul 10, 2026 at 04:34:37PM +0300, Dmitry R wrote:
+> This RFC adds a Thunderbolt-flavoured PCIe hotplug layer for QEMU.
+> 
+> The main goal is hotplug and hot-unplug of real and virtual devices in
+> guests where direct hotplug for those devices is not supported or not
+> usable.  macOS is the main validation target for this path: the guest can
+> observe endpoints through a guest-visible Thunderbolt layer even when direct
+> PCIe hotplug for the same endpoint is not usable.
 
-First, thank you for your work maintaining the stable series.
 
-On 2026/07/11 16:47, Michael Tokarev wrote:
-> On 7/1/26 12:22, Daniel Henrique Barboza wrote:
->> We're hardcoding faulting type as READ, where it could very well be a
->> write access, and we're not recording the faulting addr/iova.
->>
->> A note was added in the fault_type logic because I wasn't able to
->> trivially handle a probable code repeitition it in this same patch.
->> Something to do in a later date.
->>
->> Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
->> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3564
->> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
->> ---
->>   hw/riscv/riscv-iommu.c | 29 +++++++++++++++++++++++------
->>   1 file changed, 23 insertions(+), 6 deletions(-)
-> 
-> For the stable qemu series (currently 10.0.x-LTS and 11.0.x), in order
-> to pick this commit, I also picked v11.0.0-1212-gca7bac51e04
-> "hw/riscv/riscv-iommu: Avoid caching PCI device IDs" by Chengbo Gao
-> (Cc'ed) - because it touched the same code and there's a merge conflict.
-> I can edit this patch ("set ftype and iova in riscv_iommu_ctx()") instead,
-> but it felt that ca7bac51e04 is also a good pick for the stable series.
-> 
-> Additionally for 10.0.x-LTS series, I also picked 2 more commits:
-> 
-> v10.2.0-323-g15406cc593a "hw/riscv: riscv-iommu: Don't look up DDT cache
->   in Off and Bare modes" by Frank Chang (Cc'ed), which avoids a merge
->   conflict and also looks like a (maybe missing) bugfix.
-> 
-> v10.2.0-312-gc497ef6739c "hw/riscv/riscv-iommu: Fix MemoryRegion owner"
->   by Akihiko Odaki, which I spotted when looking for the history of
->   changes, and which looked like an obvious bugfix.
+Very happy to see this.
 
-This particular change is somewhat orthogonal to the broader issue you 
-describe with RISC-V patches. I found it through a codebase-wide search 
-for incorrect MemoryRegion ownership, rather than while following the 
-evolution of the RISC-V code. The same search found a similar issue 
-elsewhere, which you have already picked up:
 
-https://lore.kernel.org/qemu-devel/20251121184424.1137669-18-mjt@tls.msk.ru/
-("[Stable-10.0.7 18/81] hw/nvram/ds1225y: Fix nvram MemoryRegion owner")
+> The series intentionally keeps regular QEMU PCI endpoint devices intact.
+> Devices behind the new layer remain normal QEMU PCI devices; the
+> Thunderbolt root port controls guest-visible link presence, publishes ACPI
+> properties, and emits PCIe hotplug notifications.
+> 
+> The patch adds:
+> 
+> * thunderbolt-root-port, creating a thunderbolt-bus secondary bus.
+> * thunderbolt-pcie-pci-bridge for tunnelled PCI endpoints.
+> * thunderbolt-vga, a separate stdvga-compatible hotpluggable endpoint.
+> * README/specs documentation with VGA, USB storage, and NVMe examples.
+> * qtest coverage for the Thunderbolt VGA hotplug path.
+> 
+> The regular QEMU VGA device is not changed and remains non-hotpluggable.
+> The Thunderbolt display path uses the separate thunderbolt-vga device type.
+> 
+> Runtime validation performed so far:
+> 
+> * macOS guest booted from QCOW2 overlays over immutable base disk images.
+> * Thunderbolt VGA hotplug/removal while the standard boot VGA remains.
+> * NVMe hotplug/removal with guest driver instance checks.
+> * USB controller hotplug, USB storage mount/write/eject, controller removal,
+>   replug, and data persistence verification.
+> 
+> Build/test validation:
+> 
+> * ninja -C build qemu-system-x86_64 tests/qtest/display-vga-test
+> * meson test -C build qtest-x86_64/display-vga-test --print-errorlogs
+> * scripts/checkpatch.pl --no-tree --no-signoff on the full diff:
+>   0 errors, with expected warnings for MIT inheritance in thunderbolt-vga.c
+>   and possible MAINTAINERS coverage.
+> 
+> Open questions:
+> 
+> * Whether this should be split into smaller review patches after the overall
+>   Thunderbolt modelling direction is accepted.
 
-Unfortunately, there are several recurring patterns of MemoryRegion 
-misuse, and in some cases I am not entirely sure what the correct 
-ownership should be. In any case, this is separate from the concerns 
-around fast-moving RISC-V development.
+I'd prefer a split up version, as it is, I'm not ever
+sure which part of the  patch does modeling refer to.
 
-This particular change is trivial; it corrects semantically incorrect 
-code, but I am not sure whether the bug has any user-visible effect.
 
-Regards,
-Akihiko Odaki
+> * Which MAINTAINERS entry should own the Thunderbolt PCIe layer.
 
+Are you going to be available long term for review?
+if yes you can add an entry with yourself as reviewer,
+and it will inherit maintainer from pci-bridge
+
+> * Whether the guest-visible properties are sufficient for non-macOS guests
+>   that may also benefit from Thunderbolt-style tunnelling.
 > 
-> Hopefully this is okay.  Unfortunately even the simpler changes brings
-> up quite a lot of missing fixes just by a chance - this means that we
-> either not doing a good job keeping stable series up to date (by marking
-> commits fixing stuff for-stable), or we should not try fixing stuff in
-> previous series for a too-fast-moving target.
+> Dmitry R (1):
+>   hw/pci-bridge: add Thunderbolt PCIe hotplug layer
 > 
-> I'm sorry I'm bringing up this more general question in a very narrow
-> context of this particular fix (which might not even be important
-> enough).  Maybe I should discuss this separately.  Overall, I'm
-> having some.. issues with riscv pullreqs in context of stable series,
-> it's always more time-consuming to handle these and a bit more difficult
-> to decide what is imortant and what can be skipped.
+>  README.md                                   |  91 ++++
+>  docs/specs/index.rst                        |   1 +
+>  docs/specs/thunderbolt-pcie-hotplug.rst     |  99 ++++
+>  hw/display/meson.build                      |   1 +
+>  hw/display/thunderbolt-vga.c                | 275 ++++++++++
+>  hw/pci-bridge/meson.build                   |   2 +
+>  hw/pci-bridge/thunderbolt_pcie_pci_bridge.c | 156 ++++++
+>  hw/pci-bridge/thunderbolt_root_port.c       | 565 ++++++++++++++++++++
+>  tests/qtest/display-vga-test.c              |  68 +++
+>  9 files changed, 1258 insertions(+)
+>  create mode 100644 README.md
+>  create mode 100644 docs/specs/thunderbolt-pcie-hotplug.rst
+>  create mode 100644 hw/display/thunderbolt-vga.c
+>  create mode 100644 hw/pci-bridge/thunderbolt_pcie_pci_bridge.c
+>  create mode 100644 hw/pci-bridge/thunderbolt_root_port.c
 > 
-> Thanks,
-> 
-> /mjt
-> 
+> -- 
+> 2.47.3
 
 
