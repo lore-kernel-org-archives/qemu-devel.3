@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76C9BC44506
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:01:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06A3FC43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:01:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifjz-0001fh-GM; Sat, 11 Jul 2026 18:00:07 -0400
+	id 1wifkc-0002rK-PD; Sat, 11 Jul 2026 18:00:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifjv-0001bZ-DT; Sat, 11 Jul 2026 18:00:03 -0400
+ id 1wifkY-0002UX-D5; Sat, 11 Jul 2026 18:00:42 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifjt-0007u9-NO; Sat, 11 Jul 2026 18:00:03 -0400
+ id 1wifkW-0008BM-De; Sat, 11 Jul 2026 18:00:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807180; bh=hsiOAVI1pxA6gsTTT3L+Qtz9jOIhe5gxKl4Fs1a8qgU=;
+ t=1783807180; bh=xA2Gopna+kxDiA387Lx+Wiz1oEVOGKXE6yw2AYBa9xk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=he50b1ylsyRDgnHpoEHSM2Dv3ca1G5/hvZJvmMSDOzGrsMu8f7DMpGvxpW5P7hq2h
- dVV7uKkfEYcHgQBE/0vdnIZbutmH7ZVSJBdE58vj5GdTTUv/lTE5Cy3KI9GG+nkQCZ
- OAffiLpTsV4WfB+X66r/OM0sM1KVWd/673DFiJWvGeoxqaiE83uaVasK6Mcycf+vkx
- bhDzZlrx6pJSu7Kp26gBelOl09d+tb+LSIyko3pborFv+EGE2REr+IXaMwGfDaOWp9
- zQ342easLnIjJ4h72nkVh9bpFsYw4Cd3jkPe30s039w9yiGfp506jyu4BVk/rRrz+Y
- tWVPGE+iH+KNQ==
+ b=AzcZ2V5ObcPuOnZIOP3Zm6/uTyRwVcYlcl/gJ04GrIEbzokqrcJlhUBLNa4GzbF6a
+ n5SQkTaVT4I/+c95bkRwZA/JW44+eUezLB+/eGAKWekaeE2QS4GqLj6U8onB5hOjz/
+ AYLYekCU89g2U5LEqc8RQDFRilOBRNCN2jpJgDDEGqHR7gY1BGKpwqsFWUMFbe8wf7
+ Rv/pmq74NTle8jVKWNr3craRgXNlYD6X7Tfnn0caAS/DClTWBlxRFJUmJmNzKJC8Mq
+ YNhOK5MSUkhFrpDhl+7TsY3NiRjzFBBpmLF8VXM+j7qwz+3iN8V7QlsnQ0BJRtSk3X
+ fD81gzgfIuSTQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 33EFE1C0A93;
+ by isrv.corpit.ru (Postfix) with ESMTP id 63F7D1C0A9B;
  Sun, 12 Jul 2026 00:59:40 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id DF6713EAF1E;
- Sun, 12 Jul 2026 00:59:49 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1AC863EAF26;
+ Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 49341132F3; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
+ id 5BB5113303; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 08/81] hw/9pfs: add response_buffer_size transport
- callback
-Date: Sun, 12 Jul 2026 00:57:46 +0300
-Message-ID: <20260711215904.3757-8-mjt@tls.msk.ru>
+Subject: [Stable-11.0.3 16/81] tests/9p: add Tclunk / Rclunk test client
+ functions
+Date: Sun, 12 Jul 2026 00:57:54 +0300
+Message-ID: <20260711215904.3757-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
 References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
@@ -73,36 +73,114 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-Add a new callback to the V9fsTransport interface that allows each transport
-to provide the real size of its current response buffer.
+Add v9fs_tclunk() and v9fs_rclunk() functions to the 9P test client
+for closing file handles (or "FIDs") in test cases.
 
-This is needed for subsequent safety guards that will limit generated
-responses appropriately before trying to allocate, generate, and send a
-response to guest.
-
-This is especially required for request handlers that need to allocate
-dynamic and potentially large host memory for generating a response. These
-safety guards are mandatory to counter bad clients that try to trick server
-by supplying response buffers being smaller than the previously negotiated
-msize value.
-
-Link: https://lore.kernel.org/qemu-devel/703ed8ce4401c4550ef2cd99f30ab808665d6e85.1781287774.git.qemu_oss@crudebyte.com
+Link: https://lore.kernel.org/qemu-devel/d53f0337eb7f8525a14e394599d809ecf6805e5e.1781361555.git.qemu_oss@crudebyte.com
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit 4b615eaa1be4a54fb677c302e1a86fe09a94aecd)
+(cherry picked from commit c46150530b3dd6370affa3422f2175ac4668836a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p.h b/hw/9pfs/9p.h
-index d8f364fafdb..1a309664f6e 100644
---- a/hw/9pfs/9p.h
-+++ b/hw/9pfs/9p.h
-@@ -482,6 +482,7 @@ struct V9fsTransport {
-                                          unsigned int *pniov, size_t size);
-     void        (*push_and_notify)(V9fsPDU *pdu);
-     size_t      (*msize_limit)(V9fsState *s);
-+    size_t      (*response_buffer_size)(V9fsPDU *pdu);
- };
+diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
+index b9785ef8cb7..83af6dab5d1 100644
+--- a/tests/qtest/libqos/virtio-9p-client.c
++++ b/tests/qtest/libqos/virtio-9p-client.c
+@@ -242,6 +242,7 @@ static const char *rmessage_name(uint8_t id)
+         id == P9_RFLUSH ? "RFLUSH" :
+         id == P9_RREADDIR ? "RREADDIR" :
+         id == P9_RREAD ? "RREAD" :
++        id == P9_RCLUNK ? "RCLUNK" :
+         "<unknown>";
+ }
+ 
+@@ -1148,3 +1149,36 @@ void v9fs_rread(P9Req *req, uint32_t *count, void *data)
+     }
+     v9fs_req_free(req);
+ }
++
++/* size[4] Tclunk tag[2] fid[4] */
++TClunkRes v9fs_tclunk(TClunkOpt opt)
++{
++    P9Req *req;
++    uint32_t err;
++
++    g_assert(opt.client);
++
++    req = v9fs_req_init(opt.client, 4, P9_TCLUNK, opt.tag);
++    v9fs_uint32_write(req, opt.fid);
++    v9fs_req_send(req);
++
++    if (!opt.requestOnly) {
++        v9fs_req_wait_for_reply(req, NULL);
++        if (opt.expectErr) {
++            v9fs_rlerror(req, &err);
++            g_assert_cmpint(err, ==, opt.expectErr);
++        } else {
++            v9fs_rclunk(req);
++        }
++        req = NULL; /* request was freed */
++    }
++
++    return (TClunkRes) { .req = req };
++}
++
++/* size[4] Rclunk tag[2] */
++void v9fs_rclunk(P9Req *req)
++{
++    v9fs_req_recv(req, P9_RCLUNK);
++    v9fs_req_free(req);
++}
+diff --git a/tests/qtest/libqos/virtio-9p-client.h b/tests/qtest/libqos/virtio-9p-client.h
+index 37f2517cff1..f7ef7f00679 100644
+--- a/tests/qtest/libqos/virtio-9p-client.h
++++ b/tests/qtest/libqos/virtio-9p-client.h
+@@ -504,6 +504,26 @@ typedef struct TReadRes {
+     uint32_t count;
+ } TReadRes;
+ 
++/* options for 'Tclunk' 9p request */
++typedef struct TClunkOpt {
++    /* 9P client being used (mandatory) */
++    QVirtio9P *client;
++    /* user supplied tag number being returned with response (optional) */
++    uint16_t tag;
++    /* file ID to clunk (required) */
++    uint32_t fid;
++    /* only send Tclunk request but not wait for a reply? (optional) */
++    bool requestOnly;
++    /* do we expect an Rlerror response, if yes which error code? (optional) */
++    uint32_t expectErr;
++} TClunkOpt;
++
++/* result of 'Tclunk' 9p request */
++typedef struct TClunkRes {
++    /* if requestOnly was set: request object for further processing */
++    P9Req *req;
++} TClunkRes;
++
+ void v9fs_set_allocator(QGuestAllocator *t_alloc);
+ void v9fs_memwrite(P9Req *req, const void *addr, size_t len);
+ void v9fs_memskip(P9Req *req, size_t len);
+@@ -557,5 +577,7 @@ TunlinkatRes v9fs_tunlinkat(TunlinkatOpt);
+ void v9fs_runlinkat(P9Req *req);
+ TReadRes v9fs_tread(TReadOpt opt);
+ void v9fs_rread(P9Req *req, uint32_t *count, void *data);
++TClunkRes v9fs_tclunk(TClunkOpt opt);
++void v9fs_rclunk(P9Req *req);
  
  #endif
+diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
+index 8ccec77e706..099c5e0ca05 100644
+--- a/tests/qtest/virtio-9p-test.c
++++ b/tests/qtest/virtio-9p-test.c
+@@ -32,6 +32,7 @@
+ #define tlink(...) v9fs_tlink((TlinkOpt) __VA_ARGS__)
+ #define tunlinkat(...) v9fs_tunlinkat((TunlinkatOpt) __VA_ARGS__)
+ #define tread(...) v9fs_tread((TReadOpt) __VA_ARGS__)
++#define tclunk(...) v9fs_tclunk((TClunkOpt) __VA_ARGS__)
+ 
+ static void pci_config(void *obj, void *data, QGuestAllocator *t_alloc)
+ {
 -- 
 2.47.3
 
