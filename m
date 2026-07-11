@@ -4,48 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98808C43458
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CA59C44506
 	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:09:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wifpt-0008Sw-1O; Sat, 11 Jul 2026 18:06:13 -0400
+	id 1wifsr-0006w0-T1; Sat, 11 Jul 2026 18:09:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifpq-0008Af-9N; Sat, 11 Jul 2026 18:06:10 -0400
+ id 1wifsa-0006ZD-2V; Sat, 11 Jul 2026 18:09:03 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wifpn-0000hh-I9; Sat, 11 Jul 2026 18:06:09 -0400
+ id 1wifsU-0001Sj-TE; Sat, 11 Jul 2026 18:08:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783807181; bh=OyyLouD3KzjMvGtRSL93d2KC9SpgmZJSaUXwj8zN9Qc=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Q9PMXdCSBiiYlQQ5nb7L37BBxBKjQUKtSZZ6lzHUTI0mTig6vXnwxya/uIZTCWNLX
- FXImsWfebK+oznKr5sF6OplrzzhOUf3cUTDt3/N1x/XF+kaI1fOGHPOXQFR7tC5jQK
- KsaiDggiZ3KrS++UFomegghZ+vduELwocLQJeyf5rR8iCRbJQ+h/+cVCZ5uVn0z4Pc
- 1Fncl0ZXHutvdpxQMFyLCsrAuGedvbqpUWf0kzuYyWDX7SB8zVTcCFXMj5JwKhPp8h
- sc1D1Dj8f48n0P4ytjarBH26z4g2vh3pX7stCp26h4jWF5xlF+jlvPh7+dK+kuBD8h
- yHSrLAeVP+xeA==
+ t=1783807721; bh=SJq5Z5NjEbxFtsS4GR1oGKNAnvmy40ucyh7dAmUf35M=;
+ h=Date:Subject:From:To:Cc:References:In-Reply-To;
+ b=XwzBasEb1xZwW83HAVJjHp+pX/u39QImGKeBJDtLkVQ/fz9o2mgWUCqkMg96+tDnd
+ yA4saffZMpVfaGd9QrXQIMTh5aOB98HbHsMHl3Z4UzDIS5sxdHYLJ7R832iDhyRCJI
+ 67qpjw/SUDmqC7q8helJ3pOkNzVASerkLED8M7e4PEKzg6Uq0lk5cUf8O5mIYLDC2r
+ Ehf/ssuTqGvZU3GH9TqUcGU6888+R/Tohyjo9I49DfMPm+mfE7m0JjCSKbzgOLEdst
+ G4t1KNO4WtjORmqTlM59on6Ywxog0RPBsAv0r5BmgqB4s6YG9i2JiA2r0moR2NtcGS
+ lvvM7WE/2h6Pg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9C1271C0ACD;
- Sun, 12 Jul 2026 00:59:41 +0300 (MSK)
-Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 538213EAF58;
- Sun, 12 Jul 2026 00:59:51 +0300 (MSK)
-Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id D6C8313367; Sun, 12 Jul 2026 00:59:50 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jia Jia <physicalmtea@gmail.com>,
- Jeuk Kim <jeuk20.kim@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.3 66/81] hw/ufs: avoid double unref of wrapped scsi-hd
-Date: Sun, 12 Jul 2026 00:58:44 +0300
-Message-ID: <20260711215904.3757-66-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
-References: <qemu-stable-11.0.3-20260712005649@cover.tls.msk.ru>
+ by isrv.corpit.ru (Postfix) with ESMTP id 038771C0AEC;
+ Sun, 12 Jul 2026 01:08:41 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 83E413EAF73;
+ Sun, 12 Jul 2026 01:08:50 +0300 (MSK)
+Message-ID: <a1d7b003-4a4e-44ec-b240-be4edd263387@tls.msk.ru>
+Date: Sun, 12 Jul 2026 01:08:50 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] hw/riscv/riscv-iommu.c: fault when !PTE_U and no
+ priv access
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ andrew.jones@oss.qualcomm.com, nutty.liu@hotmail.com,
+ Palmer Dabbelt <palmer@dabbelt.com>, Tao Tang <tangtao1634@phytium.com.cn>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20260701121111.537654-1-daniel.barboza@oss.qualcomm.com>
+ <20260701121111.537654-3-daniel.barboza@oss.qualcomm.com>
+ <731566cb-bbdd-418f-b80e-f68750f24212@tls.msk.ru>
+Content-Language: en-US, ru-RU
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <731566cb-bbdd-418f-b80e-f68750f24212@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,100 +121,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jia Jia <physicalmtea@gmail.com>
+On 7/11/26 11:30, Michael Tokarev wrote:
+> On 7/1/26 15:11, Daniel Henrique Barboza wrote:
+>> All IOMMU accesses are assumed to be user mode unless told otherwise,
+>> i.e. we have a process_id.  In case we have a non-user mode leaf PTE
+>> (PTE_U isn't set) and we are running in user mode, we need to throw a
+>> fault.
+>>
+>> This also reflects on qos-riscv-iommu tests: the tests always run in
+>> user mode so our PTEs must have PTE_U (bit 0x10) set.
+>>
+>> Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3553
+>> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+>> Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+>> Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+> 
+> ...
+>> --- a/tests/qtest/libqos/qos-riscv-iommu.h
+>> +++ b/tests/qtest/libqos/qos-riscv-iommu.h
+>> @@ -54,8 +54,8 @@
+>>    * PTE masks for RISC-V IOMMU page tables.
+>>    * Values match PTE_V, PTE_R, PTE_W, PTE_A, PTE_D in target/riscv/cpu_bits.h
+>>    */
+>> -#define QRIOMMU_NON_LEAF_PTE_MASK   0x001  /* PTE_V */
+>> -#define QRIOMMU_LEAF_PTE_RW_MASK    0x0c7  /* V|R|W|A|D */
+>> +#define QRIOMMU_NON_LEAF_PTE_MASK   0x011  /* PTE_V | PTE_U */
+>> +#define QRIOMMU_LEAF_PTE_RW_MASK    0x0d7  /* V | R | W | A | D | PTE_U */
+>>   #define QRIOMMU_PTE_PPN_MASK        0x003ffffffffffc00ull
+>>   /* Address-space base offset for test tables */
+> 
+> So, this patch adds a fix for the testing bits.
+> 
+> When trying to pick this one up for 10.0.x (LTS) series, I've another doubt.
+> This testing fix fixes v10.2.0-1299-g9d8ffbfc1d3 "tests/qtest/libqos: Add RISC-V
+> IOMMU helper library".  Quite some tests were added based on that library.
+> It doesn't exist in 10.0.x, and neither is v10.2.0-656-g489812e32df
+> "tests/qtest/libqos: Add SMMUv3 helper library".
+> Sure I can drop the parts of this change which touches the tests.  But this
+> means we don't have tests to cover the issues being fixed, and I don't know
+> if the result of these fixes actually works or not.
+> 
+> Should we pick up some testing bits in this area for 10.0.x (especially
+> 9d8ffbfc1d3 and some subsequent commits which use this library)?  Or just
+> ignore all riscv iommu patches in there?
 
-ufs_init_scsi_device() creates an internal scsi-hd and adds it as a
-child of lu->bus. qdev_realize_and_unref() then drops the construction
-reference, leaving the bus child ownership to tear it down.
+I've dropped this patch from 10.0.x (lts) series for now,
+while picking up other patches - in order to go with this
+at least somewhere.  But I really don't know what to do
+with all this :)  Lemme sleep on that for some time :)
 
-ufs_lu_unrealize() still unrefs lu->scsi_dev directly. If the UFS
-controller is ejected through ACPI PCI hotplug, the scsi-hd object can be
-finalized there and then the bus child removal RCU callback later unrefs
-the same object again.
+Thanks,
 
-Keep lu->scsi_dev as a borrowed pointer and clear it during unrealize
-without unreffing it.
-
-Add a qtest that ejects the UFS controller through the x86 ACPI PCI
-hotplug eject register. On an ASAN build, the test reproduces the UAF
-before the fix.
-
-Fixes: 096434fea13a ("hw/ufs: Modify lu.c to share codes with SCSI subsystem")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Jia Jia <physicalmtea@gmail.com>
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
-(cherry picked from commit 90aacd5bc405cb71f77472616093f9e5ad9afd2b)
-(Mjt: tests/qtest/ufs-test.c: context fixup)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/hw/ufs/lu.c b/hw/ufs/lu.c
-index 709d6adcf68..ebaf979313e 100644
---- a/hw/ufs/lu.c
-+++ b/hw/ufs/lu.c
-@@ -416,10 +416,7 @@ static void ufs_lu_unrealize(DeviceState *dev)
- {
-     UfsLu *lu = DO_UPCAST(UfsLu, qdev, dev);
- 
--    if (lu->scsi_dev) {
--        object_unref(OBJECT(lu->scsi_dev));
--        lu->scsi_dev = NULL;
--    }
-+    lu->scsi_dev = NULL;
- }
- 
- static void ufs_lu_class_init(ObjectClass *oc, const void *data)
-diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
-index 7f999441552..564202e5849 100644
---- a/tests/qtest/ufs-test.c
-+++ b/tests/qtest/ufs-test.c
-@@ -34,6 +34,8 @@
- #define TEST_QID 0
- #define QUEUE_SIZE 32
- #define UFS_MCQ_MAX_QNUM 32
-+#define ACPI_PCIHP_ADDR 0xae00
-+#define PCI_EJ_BASE 0x0008
- 
- typedef struct QUfs QUfs;
- 
-@@ -635,6 +637,17 @@ static void ufstest_reg_read(void *obj, void *data, QGuestAllocator *alloc)
-     qpci_iounmap(&ufs->dev, ufs->bar);
- }
- 
-+static void ufstest_acpi_eject(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QUfs *ufs = obj;
-+    QTestState *qts = ufs->dev.bus->qts;
-+
-+    qtest_outl(qts, ACPI_PCIHP_ADDR + PCI_EJ_BASE, 1 << 4);
-+    qtest_qmp_assert_success(qts, "{ 'execute': 'query-status' }");
-+    g_usleep(3 * G_USEC_PER_SEC);
-+    qtest_qmp_assert_success(qts, "{ 'execute': 'query-status' }");
-+}
-+
- static void ufstest_init(void *obj, void *data, QGuestAllocator *alloc)
- {
-     QUfs *ufs = obj;
-@@ -1234,6 +1247,8 @@ static void ufs_register_nodes(void)
-                                           .edge.extra_device_opts =
-                                               "mcq=true,mcq-maxq=1" };
- 
-+    QOSGraphTestOptions acpi_eject_test_opts = { .subprocess = true };
-+
-     add_qpci_address(&edge_opts, &(QPCIAddress){ .devfn = QPCI_DEVFN(4, 0) });
- 
-     qos_node_create_driver("ufs", ufs_create);
-@@ -1251,6 +1266,10 @@ static void ufs_register_nodes(void)
-         g_test_message("Skipping ufs io tests for ppc64");
-         return;
-     }
-+    if (!strcmp(arch, "i386") || !strcmp(arch, "x86_64")) {
-+        qos_add_test("acpi-eject", "ufs", ufstest_acpi_eject,
-+                     &acpi_eject_test_opts);
-+    }
-     qos_add_test("init", "ufs", ufstest_init, NULL);
-     qos_add_test("legacy-read-write", "ufs", ufstest_read_write, &io_test_opts);
-     qos_add_test("mcq-read-write", "ufs", ufstest_read_write, &mcq_test_opts);
--- 
-2.47.3
-
+/mjt
 
