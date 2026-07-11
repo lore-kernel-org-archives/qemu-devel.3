@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CF8FC44506
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:46:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 726E0C43458
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 22:46:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wigSc-000719-N6; Sat, 11 Jul 2026 18:46:14 -0400
+	id 1wigSl-0007Nn-Tz; Sat, 11 Jul 2026 18:46:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigSb-0006y2-Fm; Sat, 11 Jul 2026 18:46:13 -0400
-Received: from pdx-out-012.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([35.162.73.231])
+ id 1wigSk-0007LD-2i; Sat, 11 Jul 2026 18:46:22 -0400
+Received: from pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([44.246.1.125])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=645f258d4=graf@amazon.de>)
- id 1wigSZ-0007Gk-HS; Sat, 11 Jul 2026 18:46:13 -0400
+ id 1wigSi-0007Hp-0x; Sat, 11 Jul 2026 18:46:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1783809971; x=1815345971;
+ t=1783809980; x=1815345980;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=goVJTOZupBwkEhMS9Yju3RkGQaRc92WiMVd2TVX+nUY=;
- b=G7X/deFCJIJ98VKOHy+gykzA375qD7HsObT8E1lUyCYJ86s70obT4dwh
- CQkV2QHBc6ZQeq9GvCGzk9l2/79JPydPQvD9dpkBmUDxNIOvgv3axYptd
- stIBiQBGbHJX4bGG3L+DJooSOfTAFCHnY18AJFyhv+pQ4HmzPopIv4fKa
- Pc3aeB7vAahQZEpAAmevBUGl67zx8OTGyxiT2ji+lFGCNW3LWa4mExInD
- M4KfV9zlr57dEPszLUiUxRwR1B92Xi84SrUzOr2XgCbzsYPAje9K1Qt2Q
- TEX0ZbSq3EOiaZtfBI3T6wtDHnDV0pbcvCK/sudWWz5Z6+uaOc7mlZfag A==;
-X-CSE-ConnectionGUID: 5Q7+aEGkS12fF9K2vtLUyw==
-X-CSE-MsgGUID: x68shg5QRVa8riM9NftNWA==
-X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23293890"
+ bh=DJ7wiGvOgW4gc9fKCfQnMYcFVdq/tDyb3nan26r8gls=;
+ b=rgC1cUs1aEIO4oHXeJyRAiLLXhYSx5vSow9s9guBn0KD7TwvyXmhV1gN
+ sC/hQGnOomJyvCaR8d++iBZbN1oEUhuLHVGdFRK2zzDCK2RKOC7DIYbvO
+ B7C1JC3ESWwevY/80RuzLoO7lG3ttbY0VGIpAp/dK1jISysgnj8uW+p20
+ LIB50tk7oRi/li/DYA8LtHbjtMdzRCiKJ3zxC487iFEYl+fAzDxLhQJZk
+ lO6FQLOEtkm67BGd5H09p5ph9qjuM3UMslMtBAAzcPm+B4kKLhyaEFbS2
+ cKaHY4YKTsfH4hEp7bvNNlxK115lMEmHwchouoRNmvhlCghu06rY60L4A w==;
+X-CSE-ConnectionGUID: el7eHBM/R3WGXSxn/yiagQ==
+X-CSE-MsgGUID: 2qqDFmA2Th2D4ub2tYuq4w==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779148800"; d="scan'208";a="23505558"
 Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
  smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
- by internal-pdx-out-012.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:46:07 +0000
-Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.234:1354]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.51.175:2525]
+ by internal-pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2026 22:46:16 +0000
+Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.51:12579]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.40.123:2525]
  with esmtp (Farcaster)
- id 5e910636-6c1e-4158-a380-33c2166b98b7; Sat, 11 Jul 2026 22:46:07 +0000 (UTC)
-X-Farcaster-Flow-ID: 5e910636-6c1e-4158-a380-33c2166b98b7
+ id 2842525a-634b-4bb0-a76a-0d6edd1c4d44; Sat, 11 Jul 2026 22:46:16 +0000 (UTC)
+X-Farcaster-Flow-ID: 2842525a-634b-4bb0-a76a-0d6edd1c4d44
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
+ EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:46:07 +0000
+ Sat, 11 Jul 2026 22:46:15 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 11 Jul 2026 22:45:58 +0000
+ Sat, 11 Jul 2026 22:46:07 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -91,9 +91,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  <th.huth+qemu@posteo.eu>, "Ran Wang" <wangran@bosc.ac.cn>, Hao Wu
  <wuhaotsh@google.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: [RFC PATCH 034/134] hw/nvram: Give onboard devices a QOM parent
-Date: Sat, 11 Jul 2026 22:35:27 +0000
-Message-ID: <20260711223707.42139-35-graf@amazon.com>
+Subject: [RFC PATCH 035/134] hw/dma: Give onboard devices a QOM parent
+Date: Sat, 11 Jul 2026 22:35:28 +0000
+Message-ID: <20260711223707.42139-36-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260711223707.42139-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -103,9 +103,9 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D036UWB002.ant.amazon.com (10.13.139.139) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=35.162.73.231;
+Received-SPF: pass client-ip=44.246.1.125;
  envelope-from=prvs=645f258d4=graf@amazon.de;
- helo=pdx-out-012.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
@@ -129,7 +129,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the *_orphan() device-creation calls in hw/nvram to the new
+Convert the *_orphan() device-creation calls in hw/dma to the new
 parented API introduced earlier in this series, so every onboard
 device gets a stable path in the composition tree instead of landing
 in /machine/unattached with an unstable device[N] name.
@@ -140,59 +140,99 @@ composite children.  Names follow existing QOM conventions.
 
 Per-site rationale (reviewers: dispute the modeling here):
 
-hw/nvram/eeprom_at24c.c:151 | i2c_slave_new | ORPHAN-JUSTIFIED | - | public helper with ~80 callers in hw/arm board files; parent threading deferred to per-board conversion to keep patch scoped to hw/nvram
-hw/nvram/fw_cfg.c:1032 | qdev_new | OBJECT(qdev_get_machine()) | TYPE_FW_CFG | collapse existing add_child(machine, TYPE_FW_CFG, dev); drop _and_unref
-hw/nvram/fw_cfg.c:1064 | qdev_new | OBJECT(qdev_get_machine()) | TYPE_FW_CFG | collapse existing add_child(machine, TYPE_FW_CFG, dev); drop _and_unref
+hw/dma/i8257.c:654 | isa_new | parent | "dma[*]" | helper already receives Object *parent; collapse existing add_child, keep name; drop _and_unref
+hw/dma/i8257.c:663 | isa_new | parent | "dma[*]" | helper already receives Object *parent; collapse existing add_child, keep name; drop _and_unref
+hw/dma/rc4030.c:750 | qdev_new | parent | "rc4030" | thread Object *parent from single caller mips_jazz_init(machine); update header + caller; drop _and_unref
 
 Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
 Assisted-by: Kiro
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/nvram/fw_cfg.c | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ hw/dma/i8257.c         | 10 ++++------
+ hw/dma/rc4030.c        |  7 ++++---
+ hw/mips/jazz.c         |  2 +-
+ include/hw/mips/mips.h |  3 ++-
+ 4 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
-index 01fba1c6f6..d3f055718c 100644
---- a/hw/nvram/fw_cfg.c
-+++ b/hw/nvram/fw_cfg.c
-@@ -1029,13 +1029,11 @@ FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, AddressSpace *dma_as)
+diff --git a/hw/dma/i8257.c b/hw/dma/i8257.c
+index d1ab17b80d..735d7ca9a7 100644
+--- a/hw/dma/i8257.c
++++ b/hw/dma/i8257.c
+@@ -651,23 +651,21 @@ void i8257_dma_init(Object *parent, ISABus *bus, bool high_page_enable)
+     ISADevice *isa1, *isa2;
+     DeviceState *d;
  
-     assert(dma_as);
+-    isa1 = isa_new_orphan(TYPE_I8257);
+-    object_property_add_child(parent, "dma[*]", OBJECT(isa1));
++    isa1 = isa_new(parent, "dma[*]", TYPE_I8257);
+     d = DEVICE(isa1);
+     qdev_prop_set_int32(d, "base", 0x00);
+     qdev_prop_set_int32(d, "page-base", 0x80);
+     qdev_prop_set_int32(d, "pageh-base", high_page_enable ? 0x480 : -1);
+     qdev_prop_set_int32(d, "dshift", 0);
+-    isa_realize_and_unref(isa1, bus, &error_fatal);
++    qdev_realize(d, BUS(bus), &error_fatal);
  
--    dev = qdev_new_orphan(TYPE_FW_CFG_IO);
--
--    object_property_add_child(OBJECT(qdev_get_machine()), TYPE_FW_CFG,
--                              OBJECT(dev));
-+    dev = qdev_new(OBJECT(qdev_get_machine()), TYPE_FW_CFG,
-+                   TYPE_FW_CFG_IO);
+-    isa2 = isa_new_orphan(TYPE_I8257);
+-    object_property_add_child(parent, "dma[*]", OBJECT(isa2));
++    isa2 = isa_new(parent, "dma[*]", TYPE_I8257);
+     d = DEVICE(isa2);
+     qdev_prop_set_int32(d, "base", 0xc0);
+     qdev_prop_set_int32(d, "page-base", 0x88);
+     qdev_prop_set_int32(d, "pageh-base", high_page_enable ? 0x488 : -1);
+     qdev_prop_set_int32(d, "dshift", 1);
+-    isa_realize_and_unref(isa2, bus, &error_fatal);
++    qdev_realize(d, BUS(bus), &error_fatal);
  
-     sbd = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(sbd, &error_fatal);
-+    sysbus_realize(sbd, &error_fatal);
-     ios = FW_CFG_IO(dev);
-     memory_region_add_subregion(iomem, iobase, &ios->comb_iomem);
+     isa_bus_dma(bus, ISADMA(isa1), ISADMA(isa2));
+ }
+diff --git a/hw/dma/rc4030.c b/hw/dma/rc4030.c
+index ab8aaf7da4..800cdfb42d 100644
+--- a/hw/dma/rc4030.c
++++ b/hw/dma/rc4030.c
+@@ -743,12 +743,13 @@ static void rc4030_register_types(void)
  
-@@ -1061,17 +1059,15 @@ static FWCfgState *fw_cfg_init_mem_internal(hwaddr ctl_addr,
-     FWCfgState *s;
-     bool dma_requested = dma_addr && dma_as;
+ type_init(rc4030_register_types)
  
--    dev = qdev_new_orphan(TYPE_FW_CFG_MEM);
-+    dev = qdev_new(OBJECT(qdev_get_machine()), TYPE_FW_CFG,
-+                   TYPE_FW_CFG_MEM);
-     qdev_prop_set_uint32(dev, "data_width", data_width);
-     if (!dma_requested) {
-         qdev_prop_set_bit(dev, "dma_enabled", false);
-     }
+-DeviceState *rc4030_init(rc4030_dma **dmas, IOMMUMemoryRegion **dma_mr)
++DeviceState *rc4030_init(Object *parent, rc4030_dma **dmas,
++                         IOMMUMemoryRegion **dma_mr)
+ {
+     DeviceState *dev;
  
--    object_property_add_child(OBJECT(qdev_get_machine()), TYPE_FW_CFG,
--                              OBJECT(dev));
--
-     sbd = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(sbd, &error_fatal);
-+    sysbus_realize(sbd, &error_fatal);
-     sysbus_mmio_map(sbd, 0, ctl_addr);
-     sysbus_mmio_map(sbd, 1, data_addr);
+-    dev = qdev_new_orphan(TYPE_RC4030);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    dev = qdev_new(parent, "rc4030", TYPE_RC4030);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
  
+     *dmas = rc4030_allocate_dmas(dev, 4);
+     *dma_mr = &RC4030(dev)->dma_mr;
+diff --git a/hw/mips/jazz.c b/hw/mips/jazz.c
+index 5e34a6582d..62f2350d36 100644
+--- a/hw/mips/jazz.c
++++ b/hw/mips/jazz.c
+@@ -261,7 +261,7 @@ static void mips_jazz_init(MachineState *machine,
+     cpu_mips_clock_init(cpu);
+ 
+     /* Chipset */
+-    rc4030 = rc4030_init(&dmas, &rc4030_dma_mr);
++    rc4030 = rc4030_init(OBJECT(machine), &dmas, &rc4030_dma_mr);
+     sysbus = SYS_BUS_DEVICE(rc4030);
+     sysbus_connect_irq(sysbus, 0, env->irq[6]);
+     sysbus_connect_irq(sysbus, 1, env->irq[3]);
+diff --git a/include/hw/mips/mips.h b/include/hw/mips/mips.h
+index cd0ccb4e5d..7fa32eab38 100644
+--- a/include/hw/mips/mips.h
++++ b/include/hw/mips/mips.h
+@@ -17,6 +17,7 @@ typedef struct rc4030DMAState *rc4030_dma;
+ void rc4030_dma_read(void *dma, uint8_t *buf, int len);
+ void rc4030_dma_write(void *dma, uint8_t *buf, int len);
+ 
+-DeviceState *rc4030_init(rc4030_dma **dmas, IOMMUMemoryRegion **dma_mr);
++DeviceState *rc4030_init(Object *parent, rc4030_dma **dmas,
++                         IOMMUMemoryRegion **dma_mr);
+ 
+ #endif
 -- 
 2.47.1
 
