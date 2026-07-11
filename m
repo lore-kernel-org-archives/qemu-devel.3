@@ -4,65 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B6B8C43458
-	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 05:06:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDAFAC44501
+	for <qemu-devel@archiver.kernel.org>; Sat, 11 Jul 2026 06:33:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiPuh-0000q0-7H; Sat, 11 Jul 2026 01:06:07 -0400
+	id 1wiRGn-00081m-Lg; Sat, 11 Jul 2026 02:33:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1wiPue-0000ps-RT
- for qemu-devel@nongnu.org; Sat, 11 Jul 2026 01:06:04 -0400
-Received: from smtp186.sjtu.edu.cn ([202.120.2.186])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wiRGl-00081H-MX; Sat, 11 Jul 2026 02:32:59 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1wiPua-0003wm-LQ
- for qemu-devel@nongnu.org; Sat, 11 Jul 2026 01:06:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sjtu.edu.cn;
- s=default; t=1783746349;
- bh=Q7FuBRKB6UcRVF5SG8jdFX5zpQxwxYAdgPRRvH7+wdE=;
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wiRGi-00067l-VT; Sat, 11 Jul 2026 02:32:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1783751554; bh=k5ep+H2PNQsks8+RzDzUuJRXIcNxDyXh01gSuuRxwVg=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=DPaVoctlCwag12J2rYNsHqxotl87wxOaHxGGgjVQOTbtrdpCd37bFAnHNRcI89/PK
- +jPyWTOKdDpQk4JWC0IefG+hvhxjCq3T1TG/GlRRCQtdJ0Rbou/dPSukmWu2s33Il9
- +7y5bBXWD1ywnA6lBEP4bMTrVpHz+SAtUwC1CN3T3TMya3oV9KIlnhfECagCYge0Cr
- rriDVQLXTKhWfSNCTmhlhqfX1F7ybOTxID3dlVGnBilJM5m1CwYAoF61fLuNsmNmOq
- WNLtplFcwAcTuu7lFQhlva3x469RAjYcJxo0n92jtbnFQTKsP/dTiflaWpv1Vbw+d5
- X04L11y2wx13w==
-Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
- by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id AFC202FF3B9;
- Sat, 11 Jul 2026 05:05:49 +0000 (UTC)
-Received: from [10.0.1.62] (unknown [202.120.40.100])
- by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 8D816380C9A;
- Sat, 11 Jul 2026 13:05:18 +0800 (CST)
-Message-ID: <5a303ce5-cb6f-43b9-857f-39cffc8c7d67@sjtu.edu.cn>
-Date: Sat, 11 Jul 2026 13:05:17 +0800
+ b=oRSdbNR9K4WdWCd7VCoq19JRgUGNCDLKkMuIhISJ4Xt9TVj6oqhygy4f5RB/n2oDn
+ 8rH9GtDUDJhm93P6rF+3Eq8go/6A7oqQKNJcR63yucLii0NRD6gzAWAcsQQHniFhbU
+ sSBLOdzSGngFxXtNiTkaSywoodnytXQ/TsxzjYswu1b/lQlQPzMmwQdVBDPKtmh/9u
+ 4aee3t5vyZ+XjcbFG9MnwnP8PJrCgSWRdP391MT+NMaIwqz7oske0Y//FxqP2LKdOA
+ niWXYdtGXrWPPG5p2tBLIEmQDXinMbOzKXTTZSHaRj32JfxZyx7h/WOP718WthKy60
+ iLq5mS0qGAbPg==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 0D15A1C06DB;
+ Sat, 11 Jul 2026 09:32:34 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 451063EAA31;
+ Sat, 11 Jul 2026 09:32:42 +0300 (MSK)
+Message-ID: <76408ad0-1950-438f-92ab-62b20f0fa03e@tls.msk.ru>
+Date: Sat, 11 Jul 2026 09:32:42 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 2/2] docs/about/emulation: document the dlcall plugin
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-devel <qemu-devel@nongnu.org>
-Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
- Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
- Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
-References: <20260710212601.583352-1-functioner@sjtu.edu.cn>
- <20260710212601.583352-3-functioner@sjtu.edu.cn>
- <990f11f5-c8fd-4cf6-b186-180e24452ff3@oss.qualcomm.com>
-From: Ziyang Zhang <functioner@sjtu.edu.cn>
-In-Reply-To: <990f11f5-c8fd-4cf6-b186-180e24452ff3@oss.qualcomm.com>
+Subject: Re: [PULL 00/40] riscv-to-apply queue
+To: alistair23@gmail.com, qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20260710025525.1704417-1-alistair.francis@wdc.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260710025525.1704417-1-alistair.francis@wdc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.120.2.186;
- envelope-from=functioner@sjtu.edu.cn; helo=smtp186.sjtu.edu.cn
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,111 +114,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On 7/10/26 05:54, alistair23@gmail.com wrote:
+> From: Alistair Francis <alistair.francis@wdc.com>
 
-On Fri, 10 Jul 2026 15:57:52 -0700, Pierrick Bouvier wrote:
-> Great work, the workflow is now ready!
+> RISC-V PR for 11.1
 > 
-> A few small issues are left with lib dependencies.
-> 
-> libstdc++
-> ---------
-> 
-> LD_LIBRARY_PATH=$DEVKIT/lib:build/host \
-> ./build/qemu-x86_64 -plugin ./build/contrib/plugins/libdlcall.so \
-> -E LD_LIBRARY_PATH=$DEVKIT/x86_64/lib:thunks/x86_64 \
-> -L /usr/x86_64-linux-gnu/ \
-> build/guest/main
-> build/guest/main: error while loading shared libraries: libstdc++.so.6:
-> cannot open shared object file: No such file or directory
-> 
-> Indeed, libstc++ is not available in machine's x86_64 sysroot by
-> default. It works with -L $DEVKIT/x86_64/sysroot but as mentioned
-> previously, we don't want to use another sysroot than the one that user
-> has, since it can contain extra libraries we are not aware about (or
-> Lorelei one can bring extra dependencies that we don't want).
-> 
-> So the last thing needed is to link statically libstdc++ for guest thunk
-> and host thunk. In addition, you can do it for lorelei .so (I mean .so
-> included in devkit), so thunking is fully self contained and does not
-> require extra dependencies from the system where it runs.
-> Same for libgcc.
-> Link parameters you need are -static-libstdc++ -static-libgcc.
-> Once added, all thunks and lorelei devkit should be portable between
-> different machines 👍.
-> 
-> The only base dependency we can assume will be present is libc (which
-> also includes libm.so).
-> We could argue if c++ should be considered as a base dependency also.
-> For debian (+ubuntu), fedora and archlinux, it's not.
-> See what is included in debian libc package. For instance, in our case:
-> https://packages.debian.org/trixie/all/libc6-amd64-cross/filelist
-> 
-> doc
-> ---
-> 
-> While at it, please add -L /usr/x86_64-linux-gnu/ to command line so it
-> matches the default people will use.
-> 
-> rpath
-> -----
-> 
-> It seems that .so in thunks have rpath set to $ORIGIN:$ORIGIN/../../lib,
-> which should not be needed. LD_LIBRARY_PATH will specify where to find
-> the correct libraries, please remove it.
-> 
-> You can use this command to double check this:
-> readelf -d thunks/libhello_HTL.so thunks/x86_64/libhello.so
-> No RUNPATH should be present.
-> 
-> thunks/libhello_HTL.so has an explicit dependency to
-> build/host/libhello.so. It should not include build/host and just link
-> to libhello.so. Remove rpath also.
-> 
-> thunks/x86_64/libhello.so, remove rpath.
-> 
-> To clarify, lorelei-devkit-*/*/lib/* can use rpath since devkit itself
-> is self contained. Thunks can not.
-> 
-> -----
-> 
-> Once solved, we'll have a clean and minimal workflow, which ensure
-> thunks do not require any extra dependency.
-> 
-> With this, any user will be able to grab a lorelei devkit + a thunk
-> tarball and use it as a drag and drop replacement for their system
-> libraries, as long as it matches their version of course.
-> 
-> Keep up the good work!
-> Pierrick
+> * Fix IOMMU fault type for spa_fetch() faults
+> * Check IOMMU for reserved PTE bits
+> * Fault when IOMMU !PTE_U and no priv access
+> * Fault IOMMU for non-user PTE in G_STAGE
+> * Check IOMMU reserved MSI PTE basic bits
+> * Record fault on IOMMU-generated MSI write
+> * Move RISC-V TCG files and fix --disable-tcg
+> * Check for misaligned IOMMU IOHGATP_PPN
+> * Update IOMMU ioval2 when faulting in spa_fetch()
+> * Forbid IOMMU GATE/SADE if caps.AMO_HWADD is zero
+> * Set IOMMU ftype and iova in riscv_iommu_ctx()
+> * Check PCIe DOE mailbox length for overflows
+> * Add extensions after v7.1-rc4 update
+> * Remove job building OpenSBI firmware binaries
+> * Correct ACPI field sequence in SPCR table
 
-Thanks for the careful review.
+Is it the same as usual for riscv pull requests, -- everything with
+Fixes: or Resolves: tag should be picked up for the current qemu stable
+releases?
 
-On libstdcxx / libgcc: rather than static-linking them into every thunk, I'd
-prefer to bundle the shared libraries in the devkit and let the thunks link
-against them dynamically. The reasoning:
+(Cc'ing Daniel too since he has largest share of contributions here).
 
-The devkit already has to carry libstdcxx for LoreTLC itself, which is a 
-large
-C++ program. Shipping it once as a shared library and having the guest and
-host thunks link that same copy avoids baking a static libstdc++ into every
-thunk, and keeps LoreTLC and the thunks on one runtime.
+Thanks,
 
-The portability you're after is preserved. libstdc++.so.6 and libgcc_s.so.1
-sit beside the lorelei runtimes (the devkit's host lib/ and guest 
-x86_64/lib/),
-so they are found on the same LD_LIBRARY_PATH the run already sets. A clean
-Fedora or Arch container with only libc installed runs a devkit + thunk pack
-directly, nothing else needed. The one base dependency we assume is still
-libc. The devkit brings its own libstdcxx and libgcc.
+/mjt
 
-So static vs dynamic doesn't change what the user must have installed. I 
-went
-with dynamic because it's the smaller and simpler of the two here.
-
-For the rest: I'll drop the RPATH from the thunk libraries, make the host
-thunk record its real library's SONAME (libfoo.so) instead of the build 
-path,
-and add -L /usr/x86_64-linux-gnu/ to the documented command.
+> ----------------------------------------------------------------
+> Alistair Francis (1):
+>        hw/pci/pcie_doe: Check mailbox length for overflows
+> 
+> Bin Meng (1):
+>        gitlab-ci: Remove job building OpenSBI firmware binaries
+> 
+> Daniel Henrique Barboza (32):
+>        hw/riscv/riscv-iommu.c: fix fault type for spa_fetch() faults
+>        hw/riscv/riscv-iommu.c: check for reserved PTE bits
+>        hw/riscv/riscv-iommu.c: fault when !PTE_U and no priv access
+>        hw/riscv/riscv-iommu.c: fault for non-user PTE in G_STAGE
+>        hw/riscv/riscv-iommu.c: check reserved MSI PTE basic bits
+>        hw/riscv/riscv-iommu-sys.c: record fault on IOMMU-generated MSI write
+>        target/riscv: move valid_vm_* satp arrays to cpu.c
+>        hw/riscv, target/riscv: move pmu fdt function to fdt-common.c
+>        target/riscv: move TCG only files to tcg subdir
+>        target/riscv/machine.c: do not migrate pmp state with kvm
+>        target/riscv: move pmp files to tcg subdir
+>        target/riscv: tidy up riscv_sysemu_ops
+>        target/riscv: move debug.h to tcg subdir
+>        target/riscv: remove csr.h from kvm-cpu.c
+>        target/riscv: move csr.h to tcg subdir
+>        target/riscv: move custom_csrs logic to tcg-cpu.c
+>        target/riscv: move riscv_cpu_set_nmi() to tcg-cpu.c
+>        target/riscv: move some irq helpers to cpu.c
+>        target/riscv: move riscv_cpu_claim_interrupts to cpu.c
+>        target/riscv/cpu.c: handle TCG bits of riscv_cpu_dump_state
+>        target/riscv: gate riscv_cpu_update_mip with tcg_enabled()
+>        target/riscv/cpu.c: filter TCG only bits in riscv_cpu_reset_hold()
+>        hw/riscv/riscv_hart.c isolate tcg only bits
+>        target/riscv/gdbstub.c: isolate TCG only checks
+>        target/riscv: move riscv_cpu_set_rdtime_fn to riscv_aclint
+>        target/riscv/tcg: remove unused riscv_cpu_get_geilen()
+>        target/riscv: move riscv_cpu_set_geilen() to riscv-imsic
+>        target/riscv: move riscv_cpu_set_aia_ireg_rmw_cb() to riscv_imsic
+>        hw/riscv/riscv-iommu.c: check for misaligned IOHGATP_PPN
+>        hw/riscv/riscv-iommu.c: update ioval2 when faulting in spa_fetch()
+>        hw/riscv/riscv-iommu: forbid GATE/SADE if caps.AMO_HWADD is zero
+>        hw/riscv/riscv-iommu.c: set ftype and iova in riscv_iommu_ctx()
+> 
+> Heinrich Schuchardt (3):
+>        tests: allow differences in SPCR
+>        hw/acpi: correct field sequence in SPCR table
+>        tests: update SPCR loongarch64 and riscv64 test data
+> 
+> Wang Yechao (1):
+>        target/riscv/kvm: add extensions after v7.1-rc4 update
+> 
+> Zephyr Li (2):
+>        target/riscv: Remove unused tcg/tcg.h include
+>        gitlab-ci.d/crossbuilds: add riscv64 KVM-only build job
 
 
