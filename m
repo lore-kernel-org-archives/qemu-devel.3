@@ -4,52 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B4BEC43458
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:24:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22D8CC44501
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:24:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wilgk-0001nU-Ny; Sun, 12 Jul 2026 00:21:10 -0400
+	id 1wileI-00056Q-2o; Sun, 12 Jul 2026 00:18:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilgj-0001gO-CY; Sun, 12 Jul 2026 00:21:09 -0400
+ id 1wildv-0004QA-JG; Sun, 12 Jul 2026 00:18:18 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilgh-000761-JZ; Sun, 12 Jul 2026 00:21:09 -0400
+ id 1wildt-0006Vm-RQ; Sun, 12 Jul 2026 00:18:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829781; bh=GGl6GRvdpGpHwh79NUY1VdcPFATPO+2uyHh7V8lOcJw=;
+ t=1783829781; bh=ZDD45Ac+9TANBLbwYfP8sJUJkq3AvyVrE4IvIKkGe4U=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ROj06CfWlM1/F6Sh1t4ihFA6eG6L6PYHUYO+CCZOx73H3W4dUJvMjp33M5RQtyR13
- KHSWOsVxyw0BaPWv84+QtTivEGglxS1MJEOdp07uHJBG5AH3VWEtBJAKZKyd1pPdO2
- UPBBSKg20JvfLhyUnnG2DqcVNvjS5vleDDk9pJdbKughhKRI7Jqpsp2JAalLEaNxcu
- kx5zy/TxIcMT7wNg6wpQr6JaM1290bWHHcJC8SthEFq6mjcUfEIZ23CJjFce8jxeTn
- vUpKIKQLKnwdBT0ryNRticu6f5ih274h3jabPfVezFnXim7OfC09oE7yvo/BpZLwt8
- pTlJYyNyo2VxA==
+ b=MMfVbIFqN0YeaEGDf+NlnOf1hPT0NUeHbNqjtlB10BcgVSJLJRQOV6GWh7UosSZvl
+ HX3QLpTLQwVN2dLk9dkKQNwrqNkSXJpuYprCPL6UUUsfZw0TYIgXbF6z9nUiDkvcHA
+ Gh69zv4Lto1saIMkqXPkL+3LaEEj5byZFcnO11ojazCflXbTpi8wM6U/Ppp0OyDN/6
+ 30oCpwas3ofYQ40J88mMaIQtAC0fUhpnbm/fk7R1a+I6jZxDDaxj/xGswWheNovSzX
+ 7SR78VOc3/mHxiCGcWu6sI/k3CQbPoAq7Cyx4uajzJcpGdSQHCpc07zVOXUBA7y+PD
+ toFZ1YQaHANpQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F1D7D1C0C10;
+ by isrv.corpit.ru (Postfix) with ESMTP id 3D4151C0BF3;
  Sun, 12 Jul 2026 07:16:21 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 30CCE3EB970;
- Sun, 12 Jul 2026 07:16:32 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 712B33EB953;
+ Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 921CC13423; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id 4CBA4133E9; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 53/75] accel/tcg: Use TLB_FORCE_SLOW not TLB_MMIO for
- user-only plugins
-Date: Sun, 12 Jul 2026 07:15:11 +0300
-Message-ID: <20260712041539.108341-53-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 24/75] tests/9p: add 3 xattr FID limit test cases
+ (local fs driver)
+Date: Sun, 12 Jul 2026 07:14:42 +0300
+Message-ID: <20260712041539.108341-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,77 +71,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-In 6d03226b422 we set TLB_MMIO to a non-zero value for user-only
-so that we could return a non-zero value from probe_* functions
-so that we could force callers like Arm SVE vector moves to use
-the slow path rather than direct access.  All for the sake of
-exposing these accesses to plugins.
+Analogue to the previously added 3 synth tests, add (similar) 3 test
+cases using the "local" fs driver to verify correct xattr FID limit
+enforcement of 9pfs server with a real filesystem.
 
-Back then, TLB_FORCE_SLOW did not exist, so TLB_MMIO seemed like
-a reasonable solution.  However, user-only doesn't really have
-MMIO and this has knock-on effects, like forcing Arm SVE first-fault
-vector loads to stop.  Better to use TLB_FORCE_SLOW as a more exact
-trigger for plugins.
+These 3 new local tests use the shared test code of the previously
+added 3 synth tests. The only difference is that the local fs driver
+does not expose the current internal xattr FID counter, so we can't
+verify this with the local tests.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 6d03226b422 ("plugins: force slow path when plugins instrument memory ops")
-Acked-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260702171057.47998-1-richard.henderson@linaro.org>
-(cherry picked from commit b79a9b6e5b5657534615dd8e574d58305e16841c)
-(Mjt: backport to 10.0.x, move changes from include/exec/tlb-flags.h to cpu-all.h
- across v10.0.0-145-g4d43552abe "exec/cpu-all: extract tlb flags defines to exec/tlb-flags.h"
- and adjust for lack of subsequent changes in this area)
+This is a slow test (may take several seconds) and therefore
+registered as "slow" test and not running by default.
+
+Use -m slow to run this test.
+
+Link: https://lore.kernel.org/qemu-devel/d23fa874df4f474ee7cbe738a35c1483426057f0.1781361555.git.qemu_oss@crudebyte.com
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+(cherry picked from commit 04a62cdfe873d07a5f264d03372bfc34bbcdddf0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index 2322181b151..b3a2b0697ef 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -807,7 +807,7 @@ static int probe_access_internal(CPUArchState *env, vaddr addr,
-         if (page_flags & acc_flag) {
-             if (access_type != MMU_INST_FETCH
-                 && cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
--                return TLB_MMIO;
-+                return TLB_FORCE_SLOW;
-             }
-             return 0; /* success */
-         }
-@@ -842,7 +842,7 @@ void *probe_access(CPUArchState *env, vaddr addr, int size,
- 
-     g_assert(-(addr | TARGET_PAGE_MASK) >= size);
-     flags = probe_access_internal(env, addr, size, access_type, false, ra);
--    g_assert((flags & ~TLB_MMIO) == 0);
-+    g_assert((flags & ~TLB_FORCE_SLOW) == 0);
- 
-     return size ? g2h(env_cpu(env), addr) : NULL;
+diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
+index eaab379df33..ba607f1d98b 100644
+--- a/tests/qtest/virtio-9p-test.c
++++ b/tests/qtest/virtio-9p-test.c
+@@ -394,6 +394,19 @@ static void do_xattr_limit(QVirtio9P *v9p, int max_xattr, bool check_counter)
+     }
  }
-diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
-index 47b14446b8f..808f79663a4 100644
---- a/include/exec/cpu-all.h
-+++ b/include/exec/cpu-all.h
-@@ -105,12 +105,14 @@ CPUArchState *cpu_copy(CPUArchState *env);
- static inline int cpu_mmu_index(CPUState *cs, bool ifetch);
  
- /*
-- * Allow some level of source compatibility with softmmu.  We do not
-- * support any of the more exotic features, so only invalid pages may
-- * be signaled by probe_access_flags().
-+ * Allow some level of source compatibility with softmmu.
-+ * Invalid is set when the page does not have requested permissions.
-+ * MMIO is set when we want the target helper to use the functional
-+ * interface for load/store so that plugins see the access.
-  */
- #define TLB_INVALID_MASK    (1 << (TARGET_PAGE_BITS_MIN - 1))
--#define TLB_MMIO            (1 << (TARGET_PAGE_BITS_MIN - 2))
-+#define TLB_FORCE_SLOW      (1 << (TARGET_PAGE_BITS_MIN - 2))
-+#define TLB_MMIO            0
- #define TLB_WATCHPOINT      0
++static void do_local_xattr_limit(QVirtio9P *v9p, int max_xattr)
++{
++    g_autofree char *test_file = virtio_9p_test_path("WRITE");
++
++    /*
++     * this file must be created for the test to work with the 'local' fs driver
++     */
++    g_file_set_contents(test_file, "", 0, NULL);
++
++    /* the actual test code shared with the 'synth' fs driver tests */
++    do_xattr_limit(v9p, max_xattr, false);
++}
++
+ static void fs_walk_no_slash(void *obj, void *data, QGuestAllocator *t_alloc)
+ {
+     QVirtio9P *v9p = obj;
+@@ -975,6 +988,27 @@ static void fs_deep_absolute_path(void *obj, void *data,
+     g_string_free(path, TRUE);
+ }
  
- static inline int cpu_mmu_index(CPUState *cs, bool ifetch)
++static void fs_local_xattr_limit_default(void *obj, void *data,
++                                         QGuestAllocator *t_alloc)
++{
++    v9fs_set_allocator(t_alloc);
++    do_local_xattr_limit(obj, V9FS_MAX_XATTR_DEFAULT);
++}
++
++static void fs_local_xattr_limit_custom(void *obj, void *data,
++                                        QGuestAllocator *t_alloc)
++{
++    v9fs_set_allocator(t_alloc);
++    do_local_xattr_limit(obj, 100);
++}
++
++static void fs_local_xattr_limit_unlimited(void *obj, void *data,
++                                           QGuestAllocator *t_alloc)
++{
++    v9fs_set_allocator(t_alloc);
++    do_local_xattr_limit(obj, -1);
++}
++
+ static void *synth_max_xattr_custom_opt(GString *cmd_line, void *arg)
+ {
+     virtio_9p_add_synth_driver_args(cmd_line, "max_xattr=100");
+@@ -993,20 +1027,42 @@ static void cleanup_9p_local_driver(void *data)
+     virtio_9p_remove_local_test_dir();
+ }
+ 
+-static void *assign_9p_local_driver(GString *cmd_line, void *arg)
++static void assign_9p_local_driver_with_args(GString *cmd_line,
++                                             const char *extra_opts)
+ {
+     /* make sure test dir for the 'local' tests exists */
+     virtio_9p_create_local_test_dir();
+ 
+-    virtio_9p_assign_local_driver(cmd_line, "security_model=mapped-xattr");
++    g_autofree char *opts =
++        (extra_opts) ?
++            g_strdup_printf("security_model=mapped-xattr,%s", extra_opts) :
++            g_strdup("security_model=mapped-xattr");
++
++    virtio_9p_assign_local_driver(cmd_line, opts);
+ 
+     g_test_queue_destroy(cleanup_9p_local_driver, NULL);
++}
++
++static void *assign_9p_local_driver(GString *cmd_line, void *arg)
++{
++    assign_9p_local_driver_with_args(cmd_line, NULL);
+     return arg;
+ }
+ 
+-static void register_virtio_9p_test(void)
++static void *local_max_xattr_custom_opt(GString *cmd_line, void *arg)
+ {
++    assign_9p_local_driver_with_args(cmd_line, "max_xattr=100");
++    return arg;
++}
+ 
++static void *local_max_xattr_unlimited_opt(GString *cmd_line, void *arg)
++{
++    assign_9p_local_driver_with_args(cmd_line, "max_xattr=0");
++    return arg;
++}
++
++static void register_virtio_9p_test(void)
++{
+     QOSGraphTestOptions opts = {
+     };
+ 
+@@ -1063,6 +1119,14 @@ static void register_virtio_9p_test(void)
+                  &opts);
+     qos_add_test("local/deep_absolute_path", "virtio-9p",
+                  fs_deep_absolute_path, &opts);
++    qos_add_test("local/xattr_limit/default", "virtio-9p",
++                 fs_local_xattr_limit_default, &opts);
++    opts.before = local_max_xattr_custom_opt;
++    qos_add_test("local/xattr_limit/custom", "virtio-9p",
++                 fs_local_xattr_limit_custom, &opts);
++    opts.before = local_max_xattr_unlimited_opt;
++    qos_add_test("local/xattr_limit/unlimited", "virtio-9p",
++                 fs_local_xattr_limit_unlimited, &opts);
+ }
+ 
+ libqos_init(register_virtio_9p_test);
 -- 
 2.47.3
 
