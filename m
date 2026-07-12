@@ -4,45 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA1A6C44501
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:24:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EE35C44506
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:24:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wileP-0006Qx-Tn; Sun, 12 Jul 2026 00:18:46 -0400
+	id 1wilgh-0001Zf-V0; Sun, 12 Jul 2026 00:21:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wileN-00063Q-V2; Sun, 12 Jul 2026 00:18:43 -0400
+ id 1wilgf-0001Tb-Me; Sun, 12 Jul 2026 00:21:05 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wileK-0006Zh-UB; Sun, 12 Jul 2026 00:18:43 -0400
+ id 1wilge-00075Z-0I; Sun, 12 Jul 2026 00:21:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829781; bh=7CkpURgUQObkG1LyBH77Mo2ekz62gASGNgmcwBX63Sc=;
+ t=1783829781; bh=M061+QEFVIGf6r7gv0s1GTPbsJs+oT8h+D5narosSDs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=dCx1iqRjETY9J9FEuzCZx6DMrKsBo6tLzgxomGsrMYYnNwzGzM3mG15mylFqmwoZY
- w5QOAcmUlv8E0GLlzSzYb67tNL0z6ulcSJ1BKaO+QNCLTZp/Jd7BnGne5xX5Dzu8I5
- hSM+KU7bs6Bu6Lbtw5v9Uqppg+k6p34m2RgY6EfO+mMSZa+CGHZzWQnDKeOAjgCVIY
- cHGxvp9ll5Dhqcq5R0ZMyJVewa3Ywxjm7F49qoCwcZdBmZJk3XAks/08eL4zZ6c4WG
- LMAUhkh7nv8kw72Lh3wlVd0pC37DrkQVs1blgh9/b3yIiG3uEwyOKXimNMz8P6kvix
- 98e0TF64CVxjw==
+ b=qJGYiGJPXmETj8rAlXiv9HUrxsxLssQX0Ll3oOO+ksz3S4HJpCrCTdqvTamqE/p8R
+ WyA/+//lyzEwHMtLxLigctwQjidfOGcE7Iad/6xPqjIAw3s96u/bqj9Xp2rlYTaXTX
+ 5FZUVNkJLP/2zsFU/JcmhKKiuU703DRepRRqAx9zYprIfWbpHqfbHKVxP9kdUqE427
+ qZJdrw10o/JPrAMzyTWI4gLPFBJ0bSDaKRT+61EvOX5P6A3bUgGG0hNla0mBEACrkG
+ F2ud9WL/QvGreR1YW6ZbsJJ43/dds8Pi1I94JWkyYkIuSi5m9osHAlcXNgSt7ZUeBJ
+ 5cKJ6HkmCSPmg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 54BF21C0BF7;
+ by isrv.corpit.ru (Postfix) with ESMTP id E75B21C0C0E;
  Sun, 12 Jul 2026 07:16:21 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 88CBC3EB957;
- Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 26A983EB96E;
+ Sun, 12 Jul 2026 07:16:32 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 55C46133F1; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id 8D5191341F; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Inochi Amaoto <inochiama@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org,
+ "hemanshu.khilari.foss" <hemanshu.khilari.foss@gmail.com>, luc@lmichel.fr,
+ peter.maydell@linaro.org, hemanshu_dev@proton.me,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 28/75] target/riscv: Check PMP before updating PTE
-Date: Sun, 12 Jul 2026 07:14:46 +0300
-Message-ID: <20260712041539.108341-28-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 51/75] hw/core/qdev-clock: Fix potential null pointer
+ dereference
+Date: Sun, 12 Jul 2026 07:15:09 +0300
+Message-ID: <20260712041539.108341-51-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
@@ -71,43 +73,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Inochi Amaoto <inochiama@gmail.com>
+From: "hemanshu.khilari.foss" <hemanshu.khilari.foss@gmail.com>
 
-According to the RISC-V spec, the PTE update is a supervisor write
-operations, and it should also follow the CPU PMP configuration like
-the PTE read.
+qdev_get_clocklist() function returns a pointer to the NamedClockList
+struct. This function is called in qdev_alias_clock() and the returned
+pointer is immediately dereferenced without a null check.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260622113402.563196-1-inochiama@gmail.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit fa2cf7488379d9b14041a7bcd76867c9bdad2b5e)
+Passing a clock name that doesn't exist to qdev_get_clocklist() is a
+programming error, and so this change is not fixing a bug, only making
+the reporting of that programming error a bit more helpful and bringing
+it in to line with qdev_get_clock_in() and qdev_get_clock_out().
+
+Cc: luc@lmichel.fr
+Cc: peter.maydell@linaro.org
+Cc: hemanshu_dev@proton.me
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2342
+Signed-off-by: hemanshu.khilari.foss <hemanshu.khilari.foss@gmail.com>
+Message-id: 20260531153354.88909-2-hemanshu.khilari.foss@gmail.com
+Reviewed-by: Luc Michel <luc@lmichel.fr>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 7913b3b9463ffb4078d33c7ddaeacd1bb38aae3e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 5e0d436c73a..0ac10835fed 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1695,10 +1695,18 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
- 
-     /* Page table updates need to be atomic with MTTCG enabled */
-     if (updated_pte != pte && !is_debug) {
-+        int pmp_prot, pmp_ret;
+diff --git a/hw/core/qdev-clock.c b/hw/core/qdev-clock.c
+index dacafa4e036..968cf04e51d 100644
+--- a/hw/core/qdev-clock.c
++++ b/hw/core/qdev-clock.c
+@@ -157,7 +157,14 @@ Clock *qdev_alias_clock(DeviceState *dev, const char *name,
+                         DeviceState *alias_dev, const char *alias_name)
+ {
+     NamedClockList *ncl = qdev_get_clocklist(dev, name);
+-    Clock *clk = ncl->clock;
++    Clock *clk;
 +
-         if (!adue) {
-             return TRANSLATE_FAIL;
-         }
++    if (!ncl) {
++        error_report("Can not find clock '%s' for device type '%s'",
++                     name, object_get_typename(OBJECT(dev)));
++        abort();
++    }
++    clk = ncl->clock;
  
-+        pmp_ret = get_physical_address_pmp(env, &pmp_prot, pte_addr,
-+                                           sxlen_bytes, MMU_DATA_STORE, PRV_S);
-+        if (pmp_ret != TRANSLATE_SUCCESS) {
-+            return TRANSLATE_PMP_FAIL;
-+        }
-+
-         /*
-          * - if accessed or dirty bits need updating, and the PTE is
-          *   in RAM, then we do so atomically with a compare and swap.
+     ncl = qdev_init_clocklist(alias_dev, alias_name, true, ncl->output, clk);
+ 
 -- 
 2.47.3
 
