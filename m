@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75BD9C44507
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:21:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5D81C43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:21:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wilcj-0001yY-Qd; Sun, 12 Jul 2026 00:17:03 -0400
+	id 1wilgf-0001TR-OJ; Sun, 12 Jul 2026 00:21:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilcL-0001at-7V; Sun, 12 Jul 2026 00:16:37 -0400
+ id 1wilge-0001Rk-Pn; Sun, 12 Jul 2026 00:21:04 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilcJ-0006Eq-Pt; Sun, 12 Jul 2026 00:16:36 -0400
+ id 1wilgd-00074C-69; Sun, 12 Jul 2026 00:21:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829780; bh=NbeN2u3UDyR2EUcnxTJxRfHiBeXPCU5gXQbgJwpyrb8=;
+ t=1783829781; bh=2ZISP6v2jbn29AWFCGr+JsNW11hGlzIZ1/YbC/iUG2s=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=kNk0edk2LkSbgs6Fs/KHK3Yk33CKThytCsbS0JQeF9H8gY+VX/9xxe4153ssPBNv6
- h3tOcqAUz7nslZxo/bTbPUz/UEXFr64cH6f9zy1nG+2cdhWxJ7/04p/Dg677CLgQUJ
- pQagwKr74LUKNkV7H8bVAlbHz+++afbQYk+w9aFBR6s81NqvBRcUGFvJwAvghyYEuc
- OAagh4vsCFe5hERJ7gKBxR66DVEdZEo9QMQ+Fg1vzoLpPIv6j2e/Ac4MCA7zTgeG6w
- YWkNNFGlkDwwxfRcjj4Hg+AGDx2EDP9X6bB7CTcD0zEabNloCbjzHpk+u9Gw3Vq0u0
- XN7tMasXPJiqQ==
+ b=ZJ6jfbqjN3SLrFSwA6hqpOphcEPFAYmJtvSJkdo+V47vDxbSAD9nCOyEyEOjybubE
+ yIgqaoZoZ+KMBxiOuruGGndy2uWzw44w4+EL/hulmDIl27t8zEsorH5cXqCyCv+bY/
+ +VjiwgZvouZQCvlFNmTstp+q3+Ncx1OG0l3ZzRFiTUoyoLx6g56rEg7/OtSAnmecDT
+ J7fs6n0y0f/ouavTuyNtxYUctqNl32jhU/42ifbXMQ35HTBEXZx2FE8w6bq2z7LXHb
+ GQ2ZXWDUqqemhBByxksbJ7uWT9sdfZ5aoUVej8uRWgMWvUuIiDFMq0rx1TI9d9BcbB
+ 3kaIYbb3XFtzQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AFCAD1C0BDF;
- Sun, 12 Jul 2026 07:16:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E13191C0C0D;
+ Sun, 12 Jul 2026 07:16:21 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id DFB823EB93F;
- Sun, 12 Jul 2026 07:16:30 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 210793EB96D;
+ Sun, 12 Jul 2026 07:16:32 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 1E923133C1; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id 8ADED1341D; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
+Cc: qemu-stable@nongnu.org, lizhaoxin04 <lizhaoxin04@baidu.com>,
+ Miao Kezhan <miaokezhan@baidu.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 04/75] 9pfs: local : Introduce local_fid_fd() helper
-Date: Sun, 12 Jul 2026 07:14:22 +0300
-Message-ID: <20260712041539.108341-4-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 50/75] vdpa: fix use-after-free of vqs in
+ vhost_vdpa_device_unrealize
+Date: Sun, 12 Jul 2026 07:15:08 +0300
+Message-ID: <20260712041539.108341-50-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
@@ -71,63 +72,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Greg Kurz <groug@kaod.org>
+From: lizhaoxin04 <lizhaoxin04@baidu.com>
 
-Factor out duplicated code to a single helper. More users to come.
+vhost_vdpa_device_unrealize() frees s->dev.vqs before
+vhost_dev_cleanup(), but vhost_dev_cleanup() still accesses hdev->vqs
+while tearing down virtqueues. This leads to a use-after-free and may
+crash QEMU with SIGSEGV during vDPA hot-unplug.
 
-Signed-off-by: Greg Kurz <groug@kaod.org>
-Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Message-Id: <20250312152933.383967-2-groug@kaod.org>
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit 4f82ce8cd94f2601fb2b2e4cfe0cf5b44131817e)
-(Mjt: pick this one up so subsequent commits are applied cleanly)
+Save the vqs pointer in a local variable, call vhost_dev_cleanup(),
+and free it afterward. This matches the cleanup pattern used by
+vhost-scsi.
+
+Fixes: b430a2bd23 ("vdpa: add vdpa-dev support")
+Co-developed-by: Miao Kezhan <miaokezhan@baidu.com>
+Signed-off-by: Li Zhaoxin <lizhaoxin04@baidu.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260622100145.18924-1-lizhaoxin04@baidu.com>
+(cherry picked from commit e03463812e74d1befc8d7f6f158eca531e2d6406)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
-index c5309c5ba45..cba3e945f99 100644
---- a/hw/9pfs/9p-local.c
-+++ b/hw/9pfs/9p-local.c
-@@ -766,16 +766,19 @@ out:
-     return err;
- }
- 
--static int local_fstat(FsContext *fs_ctx, int fid_type,
--                       V9fsFidOpenState *fs, struct stat *stbuf)
-+static int local_fid_fd(int fid_type, V9fsFidOpenState *fs)
+diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
+index a7e73b1c992..ee228af66f2 100644
+--- a/hw/virtio/vdpa-dev.c
++++ b/hw/virtio/vdpa-dev.c
+@@ -173,6 +173,7 @@ static void vhost_vdpa_device_unrealize(DeviceState *dev)
  {
--    int err, fd;
--
-     if (fid_type == P9_FID_DIR) {
--        fd = dirfd(fs->dir.stream);
-+        return dirfd(fs->dir.stream);
-     } else {
--        fd = fs->fd;
-+        return fs->fd;
-     }
-+}
-+
-+static int local_fstat(FsContext *fs_ctx, int fid_type,
-+                       V9fsFidOpenState *fs, struct stat *stbuf)
-+{
-+    int err, fd = local_fid_fd(fid_type, fs);
+     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+     VhostVdpaDevice *s = VHOST_VDPA_DEVICE(vdev);
++    struct vhost_virtqueue *vqs = s->dev.vqs;
+     int i;
  
-     err = fstat(fd, stbuf);
-     if (err) {
-@@ -1167,13 +1170,7 @@ out:
- static int local_fsync(FsContext *ctx, int fid_type,
-                        V9fsFidOpenState *fs, int datasync)
- {
--    int fd;
--
--    if (fid_type == P9_FID_DIR) {
--        fd = dirfd(fs->dir.stream);
--    } else {
--        fd = fs->fd;
--    }
-+    int fd = local_fid_fd(fid_type, fs);
+     virtio_set_status(vdev, 0);
+@@ -184,8 +185,8 @@ static void vhost_vdpa_device_unrealize(DeviceState *dev)
+     virtio_cleanup(vdev);
  
-     if (datasync) {
-         return qemu_fdatasync(fd);
+     g_free(s->config);
+-    g_free(s->dev.vqs);
+     vhost_dev_cleanup(&s->dev);
++    g_free(vqs);
+     g_free(s->vdpa.shared);
+     qemu_close(s->vhostfd);
+     s->vhostfd = -1;
 -- 
 2.47.3
 
