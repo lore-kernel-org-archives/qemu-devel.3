@@ -4,107 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46E62C43458
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 14:16:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9418C43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 14:20:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiuyv-0007sw-QX; Sun, 12 Jul 2026 10:16:33 -0400
+	id 1wiv2p-0000BE-63; Sun, 12 Jul 2026 10:20:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wiuyt-0007sD-U5
- for qemu-devel@nongnu.org; Sun, 12 Jul 2026 10:16:31 -0400
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wiuyr-0000D5-OJ
- for qemu-devel@nongnu.org; Sun, 12 Jul 2026 10:16:31 -0400
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-664cdeab266so3704406d50.3
- for <qemu-devel@nongnu.org>; Sun, 12 Jul 2026 07:16:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783865788; cv=none;
- d=google.com; s=arc-20260327;
- b=qfJ+/3VMKh1XLetb5+GdkHZY3v45auW4vWowJ5HjxZkZihNBVTD36v3W74iIsV5KdV
- EtdNMF9RIPuivRIxiVHkZBwgwF6oo3KroW2Ef3ZTPKZAp6G53pgvWzM7l+zUAUem1pQp
- WGYR6WCNBrhfpkNztjkvqtm9ZjrQvbbBKAjeasK0BcimX1Ey0qYzgdBaJIr93My5+k2J
- wQezF3H1MizfH8XUcue00Tc7TLmvt6DW4buNPwoHlj6ZyOLtMZk01zPV7FEGb08vdSCT
- 539OuECS5FyA5o/iLYnoGnaKuhEQ9sdlncNbPHryUrALk0doVRZgoe4lLmvhOb5oWD+B
- e2xQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=wk0xlH/ukr0omBAS1oPZkfx7QlVDNCg1cc09vb9wvRA=;
- fh=iDp5i+ro4oOWeHQdE5F92zc2sb8szbNgm/kYGOQWLcY=;
- b=cP+i800UxeXFzuFrBnuQsJDkwxW4xLP7h6OfItIaJPyK5NDRKsQiuYhEMcEeGCsaUc
- BjOwgx8V7iifYNu0k4+Rr1RS0qhAgbfdAfMd3Mb6PVbpJAnN9fTwfhruQOZgtd9tP5+w
- Nv/4Kj7q/XLGfci8ikH7tty3qOWC44rLn0xrBTeHVPRl5HcqIvrF9UQtf6sHeKe1akdz
- hQIH4ZQEi+hCARvUhq12Er+oeIuWpEHdJRRlDI3L8/J87+DamT4/DTVzbO1KtUVpatIs
- 3CdW4YYIgTUjTbuyNv8Cyufqhev+3CFqLPLlf8zpJBEXv/kM30VIKh4Tsz/kkYhCRnf9
- K4mQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783865788; x=1784470588; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=wk0xlH/ukr0omBAS1oPZkfx7QlVDNCg1cc09vb9wvRA=;
- b=g/eeHig9NdJbZxYcoW6zQqLvTAG5BCwuzUlmvdPcVTc/XT9ZK5YgFOzGP6opYLiLT7
- Vq9d1e6fSI+fdH1gfWFA2PXdFFYUTEfwk36mmWsGrCnFAs6jGicp3ejO1DvOwArMtMXG
- 9Tn5Z+RmVJu4lq7LdzzHEHsFpJ4OXgk/lZFmEHKsE0/GrhAzTLT7cfNlTrSNQ3PAoTeK
- i7Kcf0XgshPwbTE/dPY2Gzm0m5sewTWTVt1ZLa/PZubCmwLQfVpOjmOBr9XW9PoUdCsB
- 8lzT/SrWK80GTlXdq+y4Dl2Jga/9rR96AEFzmtUrT5B7CVhJ8uToN/ethMwt1R/taeJV
- pvoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783865788; x=1784470588;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=wk0xlH/ukr0omBAS1oPZkfx7QlVDNCg1cc09vb9wvRA=;
- b=dDWuVaNycbcnDjZ/LfATFJMcXUpsIwxHHdGDd72cp3rJM7pQ94yeMcibq37cGShhof
- vmpXW78h13EauAGaNEKDzQ7cPEpUuRvr7MG+pw/42ltJNyBzuWSI1ZoyXQvBVkWznaRY
- nkjCZPBvdUyUGLF2H1/lZhSooNiYg4LURiHCzzY6Cc+2/0gJxXrvtSRY5I7VP1z8RHV2
- S16ADMEJ/ZiAJJql2ffp5PUxffO3br3X8ZQ4yfRdaZLvm//+4/RpsQIzc26fblaD5JYw
- inH1uSdR3T/yt1ypkhGltEm0Q84bRjW48bsxmf6Gz0go0BUcmmiMrXO5BGs+TbC6HJN+
- FM0w==
-X-Gm-Message-State: AOJu0YxmseJf9acDKE04+yz0IUDb0aZR48b4UTochAfWIqL9iydC1yod
- POApGnEvzP25Xj6gfB1TLHUw5fThE1Y+3TWT/SF11aepEEoeqQzjcw8HZf7r+6jWeyB7G4uwUWp
- /v2xOriIX8iGBVsNYnNJSXKRiqO75iHw=
-X-Gm-Gg: AfdE7cnnJiVdcHew3A9nOqsKnsfFf1A8DOSqimrugx46A1RHWpTV8FYpgnCIQcsO+sJ
- U2Etqb1klzWgDlQkBe3pXriU1TEmF949I6WrHoG3bQI/7VX4dsPUtW4oZE+SR1RHtt6KbO17HX4
- 83eeX9iWpzmwKoT2VUSEn+RwKshXJeX0Y9bEC7B6bdjR94fI9d4L075VVO0Dv4HPag4xb6+CLJS
- z+pUNuWaAtiQ9iLuVFq/2D5MfXcY5F6p0uiiTsZpOERMo0RAFgxAdql+Bg0i8UcrvMpSmLH
-X-Received: by 2002:a05:690e:e0b:b0:667:bdcb:c5d5 with SMTP id
- 956f58d0204a3-667d7c49099mr2757708d50.62.1783865788381; Sun, 12 Jul 2026
- 07:16:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <th.huth+qemu@posteo.eu>)
+ id 1wiv2m-0000Ar-Tz
+ for qemu-devel@nongnu.org; Sun, 12 Jul 2026 10:20:32 -0400
+Received: from mout01.posteo.de ([185.67.36.65])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <th.huth+qemu@posteo.eu>)
+ id 1wiv2j-0000VB-PX
+ for qemu-devel@nongnu.org; Sun, 12 Jul 2026 10:20:32 -0400
+Received: from submission (posteo.de [185.67.36.169]) 
+ by mout01.posteo.de (Postfix) with ESMTPS id 1EB68240027
+ for <qemu-devel@nongnu.org>; Sun, 12 Jul 2026 16:20:27 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.eu;
+ s=1984.8680eb; t=1783866027;
+ bh=6KwDOECpo/0liihAJYga30ayba+aWphtaUbJh/2XdRY=;
+ h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+ Content-Transfer-Encoding:From;
+ b=V9vs/WwGGSXibXru0GsbSahU/R5WqY4Z0spyJg/i5CyXWDT28yMg9PtHBFyFw4eq6
+ O6FdLhwKWj6pk8+xBazNXQ9imqG5azRSKDDfvqydQiAChVTRBTyf58K4LPm8caCG5a
+ D4UMXimzOX6LHj8lgpqqSV0EIaWpe3EWv4ioWqRP7tEbO3cEhT/1PNrZg68FPDQe67
+ n7YAkYGEyqh6+0GDj3HthyhIAZP3gowdeOoZAwpItXtrVqZxEomWlHXce35UXZPoh5
+ Nqtlw++mLyesTq4PpzjrhKOgJ4oAkei7wrKSxqQVKJ/nk9VOHScqPpa2igph+7J+uL
+ dqBzLntYD4E5A==
+Received: from customer (localhost [127.0.0.1])
+ by submission (posteo.de) with ESMTPSA id 4gynld1kGbz6tvm;
+ Sun, 12 Jul 2026 16:20:13 +0200 (CEST)
+Date: Sun, 12 Jul 2026 14:20:23 +0000
+From: Thomas Huth <th.huth+qemu@posteo.eu>
+To: Alexander Graf <graf@amazon.com>
+Cc: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>,
+ <qemu-riscv@nongnu.org>, <qemu-s390x@nongnu.org>, Song Gao
+ <17746591750@163.com>, Aditya Gupta <adityag@linux.ibm.com>, Alexey
+ Kardashevskiy <aik@ozlabs.ru>, Farhan Ali <alifm@linux.ibm.com>, Alistair
+ Francis <alistair.francis@wdc.com>, "Alistair Francis"
+ <alistair@alistair23.me>, Antony Pavlov <antonynpavlov@gmail.com>, Markus
+ Armbruster <armbru@redhat.com>, Artyom Tarasenko <atar4qemu@gmail.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Felipe Balbi <balbi@kernel.org>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>, "Brian Cain"
+ <brian.cain@oss.qualcomm.com>, Hendrik Brueckner <brueckner@linux.ibm.com>,
+ Chao Liu <chao.liu@processmission.com>, "Huacai Chen"
+ <chenhuacai@kernel.org>, =?UTF-8?B?Q2zDqW1lbnQ=?= Chigot
+ <chigot@adacore.com>, =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@kaod.org>,
+ Helge Deller <deller@gmx.de>, Dorjoy Chowdhury <dorjoychy111@gmail.com>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, Alexandre Iooss
+ <erdnaxe@crans.org>, Eric Farman <farman@linux.ibm.com>, Francisco Iglesias
+ <francisco.iglesias@amd.com>, Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ "Gautam Gala" <ggala@linux.ibm.com>, Harsh Prateek Bora
+ <harshpb@linux.ibm.com>, =?UTF-8?B?SGVydsOp?= Poussineau
+ <hpoussin@reactos.org>, Jan Kiszka <jan.kiszka@web.de>, Max Filippov
+ <jcmvbkbc@gmail.com>, Joel Stanley <joel@jms.id.au>, Jared Rossi
+ <jrossi@linux.ibm.com>, Tyrone Ting <kfting@nuvoton.com>, Frederic Konrad
+ <konrad.frederic@yahoo.fr>, "Laurent Vivier" <laurent@vivier.eu>, Manos
+ Pitsidianakis <manos.pitsidianakis@linaro.org>, Bibo Mao
+ <maobibo@loongson.cn>, "Mark Cave-Ayland" <mark.cave-ayland@ilande.co.uk>,
+ Glenn Miles <milesg@linux.ibm.com>, Matthew Rosato
+ <mjrosato@linux.ibm.com>, "Michael Rolnik" <mrolnik@gmail.com>, "Michael S
+ . Tsirkin" <mst@redhat.com>, "Niek Linnenbank" <nieklinnenbank@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Halil Pasic <pasic@linux.ibm.com>, "Paolo Bonzini" <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Philippe =?UTF-8?B?TWF0aGlldS1E?=
+ =?UTF-8?B?YXVkw6k=?= <philmd@mailo.com>, "Pierrick Bouvier"
+ <pierrick.bouvier@oss.qualcomm.com>, Richard Henderson
+ <richard.henderson@linaro.org>, Sai Pavan Boddu <sai.pavan.boddu@amd.com>,
+ Samuel Tardieu <sam@rfc1149.net>, Bernhard Beschow <shentey@gmail.com>,
+ Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>,
+ "Subbaraya Sundeep" <sundeep.lkml@gmail.com>, "Ran Wang"
+ <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>, "Daniel P .
+ =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>
+Subject: Re: [RFC PATCH 097/134] hw/m68k: Give memory regions an explicit owner
+Message-ID: <20260712162012.4c620021@tpx1>
+In-Reply-To: <20260711223707.42139-98-graf@amazon.com>
+References: <20260711223707.42139-1-graf@amazon.com>
+ <20260711223707.42139-98-graf@amazon.com>
 MIME-Version: 1.0
-References: <20260707170457.11659-1-dingtao0430@163.com>
- <20260707170457.11659-2-dingtao0430@163.com>
- <CAEUhbmVHOaFK0jwsE2XVG-ofyu7SeF6LkwAbXNFoYVokDu1ADA@mail.gmail.com>
-In-Reply-To: <CAEUhbmVHOaFK0jwsE2XVG-ofyu7SeF6LkwAbXNFoYVokDu1ADA@mail.gmail.com>
-From: Bin Meng <bmeng.cn@gmail.com>
-Date: Sun, 12 Jul 2026 22:16:16 +0800
-X-Gm-Features: AVVi8CcM67eso67pk2qjYtIUGO40InEyc6BxYjAk5EFADDrXmW_rFsmUbsJieL4
-Message-ID: <CAEUhbmXJaqRUFmqDHFsXr9QJTfeC7f733Po_MbmmQ6Ru9Qb4_w@mail.gmail.com>
-Subject: Re: [PATCH v5 1/2] hw/sd: sdhci: Fix SDMA boundary bug
-To: Tao Ding <dingtao0430@163.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- qemu-block@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yx1-xb129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=185.67.36.65; envelope-from=th.huth+qemu@posteo.eu;
+ helo=mout01.posteo.de
+X-Spam_score_int: -53
+X-Spam_score: -5.4
+X-Spam_bar: -----
+X-Spam_report: (-5.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,233 +111,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Jul 12, 2026 at 9:38=E2=80=AFPM Bin Meng <bmeng.cn@gmail.com> wrote=
-:
->
-> On Wed, Jul 8, 2026 at 1:05=E2=80=AFAM Tao Ding <dingtao0430@163.com> wro=
-te:
-> >
-> > During SDMA transfers, the controller raises an interrupt at buffer bou=
-ndaries
-> > to request a system address update. The host driver will rewrite the SD=
-HC_SYSAD register.
-> > (according to PartA2_SD_Host_Controller_Simplified_Specification_Ver2.0=
-0.pdf section 2.2.1)
-> > However, the current code will ignore write operations to SDHC_SYSAD.
-> >
-> > To fix this bug, when SDMA encounters a boundary, a state is set to rec=
-ord it.
-> > In this state, SDHC_SYSAD can be written. In other cases, it is still p=
-rotected by TRANSFERRING_DATA.
-> >
-> > Version_id change to 2 for migration.
-> >
-> > Suggested-by: Bin Meng <bmeng.cn@gmail.com>
-> > Signed-off-by: Tao Ding <dingtao0430@163.com>
-> > ---
-> > The reviewer pointed out an issue in patch v3. When s->blkcnt decreases=
- to 1 the logic goes to
-> > sdhci_sdma_transfer_single_block() where s->sdma_boundary_paused should=
- be cleared too.
-> >
-> > This bug may be encountered when using uboot with SDMA functionality, a=
-nd can be reproduced by following the steps below.
-> > Uboot test:
-> >     1. Prepare zImage, uboot and rootfs.cpio.gz, make sure uboot config=
- (MMC_SDHCI_SDMA=3Dy).
-> >         for more detail, can obtained
-> >         "https://lore.kernel.org/qemu-devel/20260617155857.7451-1-dingt=
-ao0430@163.com/T/#mcdf231e6bd762903f8393bf93253cbcb12ececcf"
-> >     2. ./qemu-system-aarch64 -M xilinx-zynq-a9 -machine boot-mode=3Dsd =
--m 1024 -display none -serial null -serial stdio -monitor none \
-> >         -device loader,file=3Du-boot-dtb.bin,addr=3D0x04000000,cpu-num=
-=3D0  \
-> >         -drive file=3Dzynq-sd.img,format=3Draw,if=3Dsd -D qemu.log
-> >
-> >
-> > After applying the fix, success load sd card:
-> >
-> > U-Boot 2026.07-rc4-g1e80ee41441c (Jun 15 2026 - 19:05:05 +0800)
-> >
-> > Model: Xilinx ZC702 board
-> > DRAM:  ECC disabled 1 GiB
-> > Core:  33 devices, 21 uclasses, devicetree: board
-> > Flash: 0 Bytes
-> > NAND:  0 MiB
-> > MMC:   mmc@e0100000: 0
-> > Loading Environment from FAT... *** Error - No Valid Environment Area f=
-ound
-> > *** Warning - bad env area, using default environment
-> >
-> > In:    serial@e0001000
-> > Out:   serial@e0001000
-> > Err:   serial@e0001000
-> > Net:
-> > ZYNQ GEM: e000b000, mdio bus e000b000, phyaddr 7, interface rgmii-id
-> >
-> > Warning: ethernet@e000b000 (eth0) using random MAC address - 4a:63:5a:a=
-4:d3:6b
-> > eth0: ethernet@e000b000
-> > Hit any key to stop autoboot: 0
-> > Zynq> fatload mmc 0 ${kernel_addr_r} zImage
-> > 10838528 bytes read in 4316 ms (2.4 MiB/s)
-> > Zynq> fatload mmc 0 ${ramdisk_addr_r} rootfs-arm32.cpio.gz
-> > 406531 bytes read in 199 ms (1.9 MiB/s)
-> > Zynq> setenv ramdisk_size ${filesize}
-> > Zynq> fatload mmc 0 ${fdt_addr_r} zynq-zc702.dtb
-> > 15754 bytes read in 21 ms (732.4 KiB/s)
-> > Zynq> setenv bootargs console=3DttyPS0,115200 earlycon ignore_loglevel =
-rdinit=3D/init
-> > Zynq> bootz ${kernel_addr_r} ${ramdisk_addr_r}:${ramdisk_size} ${fdt_ad=
-dr_r}
-> > Kernel image @ 0x2000000 [ 0x000000 - 0xa56200 ]
-> > ## Flattened Device Tree blob at 01f00000
-> >    Booting using the fdt blob at 0x1f00000
-> > Working FDT set to 1f00000
-> >    Loading Ramdisk to 2ff9c000, end 2ffff403 ... OK
-> >    Loading Device Tree to 2ff95000, end 2ff9bd89 ... OK
-> > Working FDT set to 2ff95000
-> >
-> > Starting kernel ...
-> >
-> >  hw/sd/sdhci.c         | 14 +++++++++++---
-> >  include/hw/sd/sdhci.h |  2 ++
-> >  2 files changed, 13 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-> > index c86dfa281f..dc774fdf21 100644
-> > --- a/hw/sd/sdhci.c
-> > +++ b/hw/sd/sdhci.c
-> > @@ -307,6 +307,7 @@ static void sdhci_reset(SDHCIState *s)
-> >      s->data_count =3D 0;
-> >      s->stopped_state =3D sdhc_not_stopped;
-> >      s->pending_insert_state =3D false;
-> > +    s->sdma_boundary_paused =3D false;
-> >      if (object_dynamic_cast(OBJECT(s), TYPE_FSL_ESDHC_BE) ||
-> >              object_dynamic_cast(OBJECT(s), TYPE_FSL_ESDHC_LE)) {
-> >          s->norintstsen =3D 0x013f;
-> > @@ -620,6 +621,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIS=
-tate *s)
-> >      }
-> >
-> >      s->prnsts |=3D SDHC_DATA_INHIBIT | SDHC_DAT_LINE_ACTIVE;
-> > +    s->sdma_boundary_paused =3D false;
-> >      if (s->trnmod & SDHC_TRNS_READ) {
-> >          s->prnsts |=3D SDHC_DOING_READ;
-> >          while (s->blkcnt) {
-> > @@ -644,6 +646,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIS=
-tate *s)
-> >                  s->data_count =3D 0;
-> >              }
-> >              if (page_aligned && boundary_count =3D=3D 0) {
-> > +                s->sdma_boundary_paused =3D true;
-> >                  break;
-> >              }
-> >          }
-> > @@ -669,6 +672,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIS=
-tate *s)
-> >                  }
-> >              }
-> >              if (page_aligned && boundary_count =3D=3D 0) {
-> > +                s->sdma_boundary_paused =3D true;
-> >                  break;
-> >              }
-> >          }
-> > @@ -679,6 +683,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIS=
-tate *s)
-> >      }
-> >
-> >      if (s->blkcnt =3D=3D 0) {
-> > +        s->sdma_boundary_paused =3D false;
-> >          sdhci_end_transfer(s);
-> >      } else {
-> >          sdhci_update_irq(s);
-> > @@ -690,6 +695,7 @@ static void sdhci_sdma_transfer_single_block(SDHCIS=
-tate *s)
-> >  {
-> >      uint32_t datacnt =3D s->blksize & BLOCK_SIZE_MASK;
-> >
-> > +    s->sdma_boundary_paused =3D false;
-> >      if (s->trnmod & SDHC_TRNS_READ) {
-> >          sdbus_read_data(&s->sdbus, s->fifo_buffer, datacnt);
-> >          dma_memory_write(s->dma_as, s->sdmasysad, s->fifo_buffer, data=
-cnt,
-> > @@ -1164,6 +1170,7 @@ static inline void sdhci_reset_write(SDHCIState *=
-s, uint8_t value)
-> >                  SDHC_DATA_INHIBIT | SDHC_DAT_LINE_ACTIVE);
-> >          s->blkgap &=3D ~(SDHC_STOP_AT_GAP_REQ | SDHC_CONTINUE_REQ);
-> >          s->stopped_state =3D sdhc_not_stopped;
-> > +        s->sdma_boundary_paused =3D false;
-> >          s->norintsts &=3D ~(SDHC_NIS_WBUFRDY | SDHC_NIS_RBUFRDY |
-> >                  SDHC_NIS_DMA | SDHC_NIS_TRSCMP | SDHC_NIS_BLKGAP);
-> >          break;
-> > @@ -1185,7 +1192,7 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t=
- val, unsigned size)
-> >
-> >      switch (offset & ~0x3) {
-> >      case SDHC_SYSAD:
-> > -        if (!TRANSFERRING_DATA(s->prnsts)) {
-> > +        if (!TRANSFERRING_DATA(s->prnsts) || s->sdma_boundary_paused) =
-{
-> >              s->sdmasysad =3D (s->sdmasysad & mask) | value;
-> >              MASKED_WRITE(s->sdmasysad, mask, value);
-> >              /* Writing to last byte of sdmasysad might trigger transfe=
-r */
-> > @@ -1477,8 +1484,8 @@ static const VMStateDescription sdhci_pending_ins=
-ert_vmstate =3D {
-> >
-> >  const VMStateDescription sdhci_vmstate =3D {
-> >      .name =3D "sdhci",
-> > -    .version_id =3D 1,
-> > -    .minimum_version_id =3D 1,
-> > +    .version_id =3D 2,
-> > +    .minimum_version_id =3D 2,
-> >      .fields =3D (const VMStateField[]) {
-> >          VMSTATE_UINT32(sdmasysad, SDHCIState),
-> >          VMSTATE_UINT16(blksize, SDHCIState),
-> > @@ -1508,6 +1515,7 @@ const VMStateDescription sdhci_vmstate =3D {
-> >          VMSTATE_VBUFFER_UINT32(fifo_buffer, SDHCIState, 1, NULL, buf_m=
-axsz),
-> >          VMSTATE_TIMER_PTR(insert_timer, SDHCIState),
-> >          VMSTATE_TIMER_PTR(transfer_timer, SDHCIState),
-> > +        VMSTATE_BOOL(sdma_boundary_paused, SDHCIState),
-> >          VMSTATE_END_OF_LIST()
-> >      },
-> >      .subsections =3D (const VMStateDescription * const []) {
-> > diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
-> > index a9da6203fc..c485277744 100644
-> > --- a/include/hw/sd/sdhci.h
-> > +++ b/include/hw/sd/sdhci.h
-> > @@ -103,6 +103,8 @@ struct SDHCIState {
-> >       * to be protected. Set wp_inverted to invert the signal.
-> >       */
-> >      bool wp_inverted;
-> > +    /* Indicate that SDMA transfer is paused due to hitting the bounda=
-ry */
-> > +    bool sdma_boundary_paused;
->
-> It looks we can eliminate the need of introducing a new state to
-> represent this scenario, instead we can do:
->
-> static bool sdhci_sdma_transfer_active(SDHCIState *s)
-> {
->     return TRANSFERRING_DATA(s->prnsts) && s->blkcnt &&
->            (s->blksize & BLOCK_SIZE_MASK) &&
->            SDHC_DMA_TYPE(s->hostctl1) =3D=3D SDHC_CTRL_SDMA;
-> }
->
-> and add such a condition in SYSAD handling:
->
-> if (!TRANSFERRING_DATA() || sdhci_sdma_transfer_active())
+Am Sat, 11 Jul 2026 22:36:30 +0000
+schrieb Alexander Graf <graf@amazon.com>:
 
-This logic has a flaw. Please ignore. The introduction of a new state
-seems inevitable.
+> Convert memory_region_init*() calls that pass NULL owner to pass
+> the enclosing machine or device instead.
+> 
+> Thread Object *owner through the static mcf5208_sys_init() helper. mcf5206_mbar_realize() already has DeviceState *dev in scope.
+> 
+> No functional change intended.
+> 
+> Assisted-by: Kiro
+> Signed-off-by: Alexander Graf <graf@amazon.com>
+> ---
+>  hw/m68k/an5206.c    |  2 +-
+>  hw/m68k/mcf5206.c   |  2 +-
+>  hw/m68k/mcf5208.c   | 15 ++++++++-------
+>  hw/m68k/next-cube.c | 10 +++++-----
+>  hw/m68k/q800.c      | 10 +++++-----
+>  5 files changed, 20 insertions(+), 19 deletions(-)
 
->
-> >  };
-> >  typedef struct SDHCIState SDHCIState;
->
+For the coldfire and next-cube machine:
 
-Regards,
-Bin
+Reviewed-by: Thomas Huth <th.huth+qemu@posteo.eu>
+
+q800 is a versioned machine type, though, so I hope Laurent can give some
+guidance here whether it's ok to change the QOM tree here or not with
+regards to migration.
+
+ Thomas
 
