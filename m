@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D68FFC44506
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:23:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D881AC43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:24:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wilhA-0003oz-I4; Sun, 12 Jul 2026 00:21:36 -0400
+	id 1wilgj-0001fs-A0; Sun, 12 Jul 2026 00:21:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilh6-0003eS-Kh; Sun, 12 Jul 2026 00:21:33 -0400
+ id 1wilgh-0001bx-WA; Sun, 12 Jul 2026 00:21:08 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilh4-000774-Td; Sun, 12 Jul 2026 00:21:32 -0400
+ id 1wilgg-00075q-9I; Sun, 12 Jul 2026 00:21:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829782; bh=qTlKMcp1/538st1InQe/VhKhpqkwgvvEzQtkZKNKcj4=;
+ t=1783829781; bh=7HMKc60spAKEu7etDQ7jsCDcdQ3mD5HIQYRCuhKKk/o=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=B9Pm5nFOvMP6FH/sTAABJ1tFPkt0tvhTrxekXGVcD18mHp7ofLG497S45Iwif9k7O
- HE/4GBAEbDwhEsl0FC3hPt4dSa1bl/ANT98OAlHfVZc3z81BpjVovKqGyL8jlEMosk
- oAv6ihSPcBXrCL1tPJYKue5y9c7OZfoNayHH8XxxIeKIptY13xzU2BrP1wEA9WEp7x
- GiGLuqRGKukfbxXPSSf7OjLIHXISlXssbIp0ZfP8SFeiQtM57uegdlwgaMkJSX3Mkc
- TNSLtuHjQT3JQY9gbZt6emNyfNQNm57IVemJfV9oB/AG7ZHDXwXnnms3RydcpkNzIe
- 63P54yVvvmKeQ==
+ b=Jh2VX2Ka82tMM27v7uZ5a7vLlDsqy0PWg/7Hb66EaDRq2bEfmVRvFhhOXdTh24mqm
+ 8sO5rWADgLFRfWf9dbfesguJuDiNhdAGEKovluEnRMXqTanI+tnSVkuVAJl4diaOaa
+ 7eBKi5QHv4Knq5tinhl3/sNj/07rsymlxHKQ+YotdHMl5xlaiNF6UqTBVLfu86pSYs
+ 84p5pncda8T7mEX7d2MF+S5tncHQsN2t2VGtCoDHMD5fbag5sigSKbYZaRrHhpQ3aM
+ HzoDJpX01Dd1pZlcMSbcuLckS07mn5Im80LvKlHyNIsAAnCtYMD4A/8becf0iwOeNy
+ SHptkW+Tyj75Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0964B1C0C12;
- Sun, 12 Jul 2026 07:16:22 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id EC4611C0C0F;
+ Sun, 12 Jul 2026 07:16:21 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3C6CA3EB972;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2C2BD3EB96F;
  Sun, 12 Jul 2026 07:16:32 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 971EF13427; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id 8F9CE13421; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 55/75] tcg/loongarch64: Fix vec_val computation in
- tcg_target_const_match
-Date: Sun, 12 Jul 2026 07:15:13 +0300
-Message-ID: <20260712041539.108341-55-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 52/75] hw/net: fix e1000e/igb ip_len inflation by
+ Ethernet minimum-frame padding
+Date: Sun, 12 Jul 2026 07:15:10 +0300
+Message-ID: <20260712041539.108341-52-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
@@ -73,41 +74,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>
 
-Only use vece for a vector constant.  This avoids an assertion
-failure in sextract64 when vece contains garbage.
+When a guest transmits a short Ethernet frame, iov_size() returns the
+padded wire length including any bytes added to reach the Ethernet
+minimum frame size of 60 bytes.  net_tx_pkt_rebuild_payload() uses
+this inflated size as payload_len.  net_tx_pkt_update_ip_hdr_checksum()
+then overwrites the IPv4 Total Length field with payload_len +
+l3_hdr_len, inflating it by the padding.  The receiver interprets
+Ethernet padding as IP payload, producing a malformed packet.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit a079836005fb92eb1fee19e59654b337a41fd0ff)
+Fix by removing the ip_len write from net_tx_pkt_update_ip_hdr_checksum()
+so it only recomputes the checksum, and moving the ip_len assignment
+into net_tx_pkt_update_ip_checksums() where it is only performed for
+TSO (where ip_len must be derived from payload_len since the guest sets
+ip_len=0 per Intel 82574 datasheet §7.3.4 for super-packets the host
+will segment).
+
+Both e1000e and igb already call net_tx_pkt_update_ip_hdr_checksum()
+from their IXSM paths, so both are corrected by this single common-
+layer change.
+
+Signed-off-by: Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>
+Reivewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20260629-net-tx-pkt-ip-length-padding-v5-1-16760e30252e@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit 9e41b5d22aeb942ad6ecc3174504ff645a10da6a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-index cbd7642b58a..740b7c264d6 100644
---- a/tcg/loongarch64/tcg-target.c.inc
-+++ b/tcg/loongarch64/tcg-target.c.inc
-@@ -211,12 +211,14 @@ static bool tcg_target_const_match(int64_t val, int ct,
-     if ((ct & TCG_CT_CONST_WSZ) && val == (type == TCG_TYPE_I32 ? 32 : 64)) {
-         return true;
-     }
--    int64_t vec_val = sextract64(val, 0, 8 << vece);
--    if ((ct & TCG_CT_CONST_VCMP) && -0x10 <= vec_val && vec_val <= 0x1f) {
--        return true;
--    }
--    if ((ct & TCG_CT_CONST_VADD) && -0x1f <= vec_val && vec_val <= 0x1f) {
--        return true;
-+    if (ct & (TCG_CT_CONST_VCMP | TCG_CT_CONST_VADD)) {
-+        int64_t vec_val = sextract64(val, 0, 8 << vece);
-+        if ((ct & TCG_CT_CONST_VCMP) && -0x10 <= vec_val && vec_val <= 0x1f) {
-+            return true;
-+        }
-+        if ((ct & TCG_CT_CONST_VADD) && -0x1f <= vec_val && vec_val <= 0x1f) {
-+            return true;
-+        }
-     }
-     return false;
- }
+diff --git a/hw/net/net_tx_pkt.c b/hw/net/net_tx_pkt.c
+index 903238dca24..b134348fe80 100644
+--- a/hw/net/net_tx_pkt.c
++++ b/hw/net/net_tx_pkt.c
+@@ -93,9 +93,6 @@ void net_tx_pkt_update_ip_hdr_checksum(struct NetTxPkt *pkt)
+     uint16_t csum;
+     assert(pkt);
+ 
+-    pkt->l3_hdr.ip.ip_len = cpu_to_be16(pkt->payload_len +
+-        pkt->vec[NET_TX_PKT_L3HDR_FRAG].iov_len);
+-
+     pkt->l3_hdr.ip.ip_sum = 0;
+     csum = net_raw_checksum(pkt->l3_hdr.octets,
+         pkt->vec[NET_TX_PKT_L3HDR_FRAG].iov_len);
+@@ -117,7 +114,9 @@ void net_tx_pkt_update_ip_checksums(struct NetTxPkt *pkt)
+ 
+     if (gso_type == VIRTIO_NET_HDR_GSO_TCPV4 ||
+         gso_type == VIRTIO_NET_HDR_GSO_UDP) {
+-        /* Calculate IP header checksum */
++        /* Set ip_len and calculate IP header checksum */
++        pkt->l3_hdr.ip.ip_len = cpu_to_be16(pkt->payload_len +
++            pkt->vec[NET_TX_PKT_L3HDR_FRAG].iov_len);
+         net_tx_pkt_update_ip_hdr_checksum(pkt);
+ 
+         /* Calculate IP pseudo header checksum */
 -- 
 2.47.3
 
