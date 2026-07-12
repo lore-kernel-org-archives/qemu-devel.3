@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04509C44507
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:17:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1AE0C43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:18:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wilcL-0001ap-8I; Sun, 12 Jul 2026 00:16:37 -0400
+	id 1wildg-0004Cx-Cv; Sun, 12 Jul 2026 00:18:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilcI-0001ZR-Au; Sun, 12 Jul 2026 00:16:34 -0400
+ id 1wildY-000470-0A; Sun, 12 Jul 2026 00:17:52 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilcG-0006EK-Pc; Sun, 12 Jul 2026 00:16:34 -0400
+ id 1wildV-0006UH-V9; Sun, 12 Jul 2026 00:17:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829780; bh=GZZXjdQ7qK8evYR70ND7UaRLPa6dfHqrQe3CEWX6Glk=;
+ t=1783829781; bh=yirnsgBYBP+P5LTosEOX+6NsSsAkf1u82Z1cRgXB6/w=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=RHexoCaLfrdkNhGbhp/a9rUbLhay1fzgfWxfYYbZUjYPngsDdyPmO/7MQYcEjaZsg
- LDn6+9C66OF6NZODscGn/61l366Tv7AN27p27wyPv22mKrBUWueukmBY5QPf811owM
- LF7UDy+uFTaNt0/Rw6nYHTMmkdrYIjmg1hWVzDirx8+Lnko8wVOTXzLhZsiUExwmBE
- TKE+s5qzedzbyA+5O/F7Ru3gu5vs/LTuB9QqTLkW+OiocB4M9UopAd6OA/Gsi8fRkK
- YilOOioQqsXL6Tof8N1bRJ53zgQPsSmQ9P7blsh87AB1lDBB44pjN55PhO12BE+zdx
- HpoV3xw7dWG0g==
+ b=JCLjtJPtP0bQYM2EAvFxGxOYVliVTFoJg5qPMrf3ZTZQSOU3IvIKtBl5fCe/mpxL4
+ ruhqwqSQ8ubh3AQ/QtI5iDcbWHKHtCc6LeyzCEbpNU71kXdUzdRAm9/evIcTcCCiNQ
+ uwk6+GlQf9EYkFvA7cx7miSRUQjKWyFE7UEKc+kfnDeoomuz8EBk00D3973+ZGicpl
+ 3i4DcaZmSfCrwZCJ8+ad7XISEzJI/hYyUNQMcm/KsVAu0S+UZY9CiVHNLIL5YkPGpO
+ y5T2RezdNTfP6Qmr2gsFdDtaCAzIgtRsAvC7Fjut5xgJRvAAq/sHOJZHnG6Y+B7fkQ
+ 4K3DRmZVZ9UaA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9CEAB1C0BDD;
- Sun, 12 Jul 2026 07:16:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2A7991C0BF0;
+ Sun, 12 Jul 2026 07:16:21 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id CC7B03EB93D;
- Sun, 12 Jul 2026 07:16:30 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5B8F13EB950;
+ Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 19B5D133BD; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id 45E55133E3; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 02/75] s390x/kvm: clamp stsi 3.2.2 size
-Date: Sun, 12 Jul 2026 07:14:20 +0300
-Message-ID: <20260712041539.108341-2-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 21/75] tests/9p: increase P9_MAX_SIZE for test client
+Date: Sun, 12 Jul 2026 07:14:39 +0300
+Message-ID: <20260712041539.108341-21-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
@@ -71,41 +70,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-The stsi 3.2.2 page is being prepared by the kvm module and the size is
-clamped by the kernel. As the memory is mapped in the guest, another
-guest VCPU could race and overwrite the count and messing up the move
-operation. For any out of bound count, fall back to the kernel buffer.
+Increase the maximum 9P message size ('msize') of 9p test client from
+4k to 32k to support larger messages.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Message-ID: <20260622092035.400959-1-borntraeger@linux.ibm.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-(cherry picked from commit a57e4612b61da20ddab196502c76b4dc05da1de8)
+This is needed for the xattr tests being added with the subsequent
+patches which are going to transmit xattrs of size 8k. It would have
+also been possible to send them in multiple chunks, however let's not
+overcomplicate things.
+
+This new msize is still reasonable small compared to common msize
+values on production systems.
+
+Link: https://lore.kernel.org/qemu-devel/2dcb1243c80ea97d085af5171785850cf012be36.1781361555.git.qemu_oss@crudebyte.com
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+(cherry picked from commit df88255543667e7f14ac34d97e0ced142af18bdf)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-index 4d56e653ddf..81b8282939c 100644
---- a/target/s390x/kvm/kvm.c
-+++ b/target/s390x/kvm/kvm.c
-@@ -1792,6 +1792,15 @@ static void insert_stsi_3_2_2(S390CPU *cpu, __u64 addr, uint8_t ar)
-     } else if (s390_cpu_virt_mem_read(cpu, addr, ar, &sysib, sizeof(sysib))) {
-         return;
-     }
-+
-+    /*
-+     * The memory was filled by the kernel but mapped into the guest.
-+     * If something is fishy, do not touch the buffer.
-+     */
-+    if (sysib.count == 0 || sysib.count > ARRAY_SIZE(sysib.ext_names)) {
-+        return;
-+    }
-+
-     /* Shift the stack of Extended Names to prepare for our own data */
-     memmove(&sysib.ext_names[1], &sysib.ext_names[0],
-             sizeof(sysib.ext_names[0]) * (sysib.count - 1));
+diff --git a/tests/qtest/libqos/virtio-9p-client.h b/tests/qtest/libqos/virtio-9p-client.h
+index aa7276d2c3a..cbd298cc401 100644
+--- a/tests/qtest/libqos/virtio-9p-client.h
++++ b/tests/qtest/libqos/virtio-9p-client.h
+@@ -21,7 +21,8 @@
+ #include "qgraph.h"
+ #include "tests/qtest/libqtest-single.h"
+ 
+-#define P9_MAX_SIZE 4096 /* Max size of a T-message or R-message */
++/* Max size of a T-message or R-message */
++#define P9_MAX_SIZE (32 * 1024)
+ 
+ typedef struct {
+     QTestState *qts;
 -- 
 2.47.3
 
