@@ -4,52 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 181C9C43458
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:25:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A921DC43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:25:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiliE-00066Z-Uw; Sun, 12 Jul 2026 00:22:44 -0400
+	id 1wiljp-0007Xk-OK; Sun, 12 Jul 2026 00:24:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wili3-0005zj-53; Sun, 12 Jul 2026 00:22:32 -0400
+ id 1wilie-0006SQ-MQ; Sun, 12 Jul 2026 00:23:10 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilhz-0007Fy-LV; Sun, 12 Jul 2026 00:22:30 -0400
+ id 1wilic-0007OT-V8; Sun, 12 Jul 2026 00:23:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829782; bh=JANuhaWL2mWhp4BYpDrM0vxeLlVfhr+iERJocLJ2TDg=;
+ t=1783829782; bh=IIyXBgs7Q7EyMmBK59bS0SPSGlYTJC1VKc2b5fdm0AI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Gdnuf6/x5viCUqKXWU8BxFgrNBjO6HocqEYVu4LEJJc58TCT8/T4FLzp+raZcf6yv
- ZGJE2OiukLK7UVd5KNr/+fYizwN53Vo8nOaokoR77dqm/GOL7BDfgmvRlLGVQy63SS
- aGw7HM4knVHNDHvAORXts2KFW5l3VfLbjC5WYDS3682+69SzLaaE633ZPejC2khBLN
- H68BEfhds3cNOVgyhq5ABOZznA2JuaO0TomukRl9D1kQQJ0QyPYU4duthC/K8ISjgd
- K1Z/vJJXgVLwxR2uDdv9bAaBd3MvQk049G5yXdAp6ruhhVhBcQf0BHJV0Fgq7e8HzU
- h5EUMZoZfq7nQ==
+ b=gxfkh7nZyDMHlZXxREu9k/BRcwQo5ZqaX7Ty6WTQtDNMdF4LGyjQRIRgvKAKDnpTg
+ g7sQ3gP2j145oD24B3fztgsW6lxDRnUZxBwSTSjZ9z+h4j0nnwlzKU7CxGjesSDQUW
+ lYYrfs7ZKbt+E5GusSZgk7f7S4LJU/qNKVsQXGrCLNnbpqYcx7xgbDOGs4Nic8lkPS
+ XAm/Djq74KNOfMfZL9mzxejZKRzwGH6r0YSpVGmVAZC+Y8nVqIraSudD8jcRMcwkUT
+ 5B+KU8BZPjxu1/ABi8dMHrrrbEbHwL/8DuOJenN7iBR39X67j5kCbL6VqhQaaSubRQ
+ L15sEg+BkvBVA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 416D51C0C1B;
+ by isrv.corpit.ru (Postfix) with ESMTP id 6E7AD1C0C23;
  Sun, 12 Jul 2026 07:16:22 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 752203EB97B;
+ by tsrv.corpit.ru (Postfix) with ESMTP id A18783EB983;
  Sun, 12 Jul 2026 07:16:32 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id ACE3E13439; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id C0E8313449; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Nutty Liu <nutty.liu@hotmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 64/75] hw/riscv/riscv-iommu-sys.c: record fault on
- IOMMU-generated MSI write
-Date: Sun, 12 Jul 2026 07:15:22 +0300
-Message-ID: <20260712041539.108341-64-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Tao Tang <tangtao1634@phytium.com.cn>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 72/75] hw/pci/pcie_doe: Check mailbox length for
+ overflows
+Date: Sun, 12 Jul 2026 07:15:30 +0300
+Message-ID: <20260712041539.108341-72-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,81 +73,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Alistair Francis <alistair.francis@wdc.com>
 
-The riscv-iommu spec requires that the IOMMU records its own generated
-MSI write faults.
+It was possible that a guest could overflow the `doe_cap->write_mbox`
+buffer by writing more then PCI_DOE_DW_SIZE_MAX dwords.
+`doe_cap->write_mbox_len` would continue to increment and there were no
+bounds checks on the length when offsetting into doe_cap->write_mbox.
 
-Fixes: 01c1caa9d1 ("hw/riscv/virt.c, riscv-iommu-sys.c: add MSIx support")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3572
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Message-ID: <20260629165954.1018123-1-daniel.barboza@oss.qualcomm.com>
+This patch adds a check and reports a guest error if we would overflow.
+
+On an overflow we also silenty discard the entire object as instructed
+to do in the PCIe spec when the length specified in the header
+(up to PCI_DOE_DW_SIZE_MAX dwords) doesn't match the length of the
+object.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3679
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 58e801f74e6a4ebd3a0cf3ab1a96e1676b263efd)
-(Mjt: include list context fixup in hw/riscv/riscv-iommu-sys.c)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Tao Tang <tangtao1634@phytium.com.cn>
+Message-ID: <20260707020750.788960-1-alistair.francis@wdc.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit c7e61854544be3ebcc001a33d41807947866a739)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/riscv/riscv-iommu-sys.c b/hw/riscv/riscv-iommu-sys.c
-index 65b24fb07de..c40b89d3d20 100644
---- a/hw/riscv/riscv-iommu-sys.c
-+++ b/hw/riscv/riscv-iommu-sys.c
-@@ -27,6 +27,7 @@
- #include "qemu/module.h"
- #include "qom/object.h"
- #include "exec/exec-all.h"
-+#include "target/riscv/cpu_bits.h"
- #include "trace.h"
- 
- #include "riscv-iommu.h"
-@@ -150,7 +151,20 @@ static void riscv_iommu_sysdev_send_MSI(RISCVIOMMUStateSys *s,
- 
-     address_space_stl_le(&address_space_memory, msi_addr,
-                          msi_data, MEMTXATTRS_UNSPECIFIED, &result);
--    trace_riscv_iommu_sys_msi_sent(vector, msi_addr, msi_data, result);
-+
-+    if (result == MEMTX_OK) {
-+        trace_riscv_iommu_sys_msi_sent(vector, msi_addr, msi_data, result);
-+    } else {
-+        /* Record an access fault error in the fault queue */
-+        struct riscv_iommu_fq_record ev = { 0 };
-+        RISCVIOMMUState *iommu = &s->iommu;
-+
-+        ev.hdr = set_field(ev.hdr, RISCV_IOMMU_FQ_HDR_CAUSE,
-+                           RISCV_IOMMU_FQ_CAUSE_MSI_WR_FAULT);
-+        ev.hdr = set_field(ev.hdr, RISCV_IOMMU_FQ_HDR_TTYPE,
-+                           RISCV_IOMMU_FQ_TTYPE_UADDR_WR);
-+        riscv_iommu_fault(iommu, &ev);
-+    }
+diff --git a/hw/pci/pcie_doe.c b/hw/pci/pcie_doe.c
+index 2210f869681..1bc2b457816 100644
+--- a/hw/pci/pcie_doe.c
++++ b/hw/pci/pcie_doe.c
+@@ -78,14 +78,21 @@ static bool pcie_doe_discovery(DOECap *doe_cap)
+     return true;
  }
  
- static void riscv_iommu_sysdev_notify(RISCVIOMMUState *iommu,
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 8055c6d707d..9ba7cfaea6f 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -105,8 +105,7 @@ void riscv_iommu_notify(RISCVIOMMUState *s, int vec_type)
-     }
- }
- 
--static void riscv_iommu_fault(RISCVIOMMUState *s,
--                              struct riscv_iommu_fq_record *ev)
-+void riscv_iommu_fault(RISCVIOMMUState *s, struct riscv_iommu_fq_record *ev)
++static void pcie_doe_reset_write_mbox(DOECap *st)
++{
++    st->write_mbox_len = 0;
++
++    memset(st->write_mbox, 0, PCI_DOE_DW_SIZE_MAX * DWORD_BYTE);
++}
++
+ static void pcie_doe_reset_mbox(DOECap *st)
  {
-     uint32_t ctrl = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_FQCSR);
-     uint32_t head = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_FQH) & s->fq_mask;
-diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
-index a31aa62144f..c4d5c73aa8b 100644
---- a/hw/riscv/riscv-iommu.h
-+++ b/hw/riscv/riscv-iommu.h
-@@ -98,6 +98,7 @@ void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
- void riscv_iommu_set_cap_igs(RISCVIOMMUState *s, riscv_iommu_igs_mode mode);
- void riscv_iommu_reset(RISCVIOMMUState *s);
- void riscv_iommu_notify(RISCVIOMMUState *s, int vec_type);
-+void riscv_iommu_fault(RISCVIOMMUState *s, struct riscv_iommu_fq_record *ev);
+     st->read_mbox_idx = 0;
+     st->read_mbox_len = 0;
+-    st->write_mbox_len = 0;
  
- typedef struct RISCVIOMMUContext RISCVIOMMUContext;
- /* Device translation context state. */
+     memset(st->read_mbox, 0, PCI_DOE_DW_SIZE_MAX * DWORD_BYTE);
+-    memset(st->write_mbox, 0, PCI_DOE_DW_SIZE_MAX * DWORD_BYTE);
++
++    pcie_doe_reset_write_mbox(st);
+ }
+ 
+ void pcie_doe_init(PCIDevice *dev, DOECap *doe_cap, uint16_t offset,
+@@ -356,8 +363,20 @@ void pcie_doe_write_config(DOECap *doe_cap,
+         if (size != DWORD_BYTE) {
+             return;
+         }
+-        doe_cap->write_mbox[doe_cap->write_mbox_len] = val;
+-        doe_cap->write_mbox_len++;
++        if (doe_cap->write_mbox_len < PCI_DOE_DW_SIZE_MAX) {
++            doe_cap->write_mbox[doe_cap->write_mbox_len] = val;
++            doe_cap->write_mbox_len++;
++        } else {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "Mailbox write length (%d) overflow\n",
++                          doe_cap->write_mbox_len);
++            /*
++             * Too much data has been written, it can't
++             * "match the Length indicated in DOE Data Object Header 2"
++             * so we drop the entire object.
++             */
++            pcie_doe_reset_write_mbox(doe_cap);
++        }
+         break;
+     case PCI_EXP_DOE_CAP:
+         /* fallthrough */
 -- 
 2.47.3
 
