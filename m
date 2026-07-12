@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CF42C43458
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:27:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19F5FC43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:27:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wileL-0005ds-6d; Sun, 12 Jul 2026 00:18:41 -0400
+	id 1wileu-0007W7-8D; Sun, 12 Jul 2026 00:19:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wileJ-0005Nt-CN; Sun, 12 Jul 2026 00:18:39 -0400
+ id 1wiler-0007Tz-O9; Sun, 12 Jul 2026 00:19:13 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wileH-0006WH-8l; Sun, 12 Jul 2026 00:18:39 -0400
+ id 1wilep-0006ei-V2; Sun, 12 Jul 2026 00:19:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829781; bh=30XHb7JEmG+SgbZ3jo4sw/f8oaEHifujpMYdiu7biGE=;
+ t=1783829781; bh=QYHQ7G2YuETgliYXSQgUncOsag2yxaK68Try0VpqxXU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=UV+9zqVsZZloz3TZBLAZyORsC/oDh8Y+DmFJ30ExQSxLIJYL9rhenl9mUQ0kJ86IL
- IBSLoOwRu4s5oApmLsvxX1ZfT9oF0xyolEnhJZ302FCYqL9twRGWmSjCJx/cXndCgQ
- OUHQoW75j9JFvCFZAbuiWFgFYY5tcrbnEHNesg3iDQO/fB985s5KziJLV4hbX7WWTu
- QU+BN+t3iWJ4Dsx8pTIP28TEZ4lmhhAxuq0kM8KXRD+vNsvUDRq22khJ3rFZvmpsQo
- X7JT3hynGrxOilqeA2nmeOpkr1Qw8gVODr3pfDBUsIPWPifZBR5JUPEcj+yDhsQ7mS
- iEL14RDHEeyqQ==
+ b=UUelikT68/qWNzboY9V69NYkkzx1iEoG8e+OGNnFw0ueiLm/WOT0UyN1xDHPXE+Lu
+ KTagu0K5EhLRebY0sKc+CEAbzhpxiAIwBBig5WNd7J/J6l2uLitXzK6GFA+DX7ipUx
+ X2GEgbaZQTQgTbMzCV4MPzLV8pTVqfN5bcxWfCzV5RxxObuTtItZgoJU9AWIiOnYn9
+ hHblFlQfEua7imc8leUjQsIN1O3q3VGCWJ6lap3IS1mW23/BeNN3tpKg33drRfIGPN
+ NPhZJGw988Lhu7oquw8D3rPi1fd7uJgMrd6vd4yGRNwXnhDDK6ldprkQMFtiqOkx7V
+ V4EK5W7cEVauw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 497461C0BF5;
+ by isrv.corpit.ru (Postfix) with ESMTP id 78F3C1C0BFD;
  Sun, 12 Jul 2026 07:16:21 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7CB7B3EB955;
+ by tsrv.corpit.ru (Postfix) with ESMTP id AD0B03EB95D;
  Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 5141B133ED; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id 63FEC133FD; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 26/75] hw/9pfs: fix invalid union access by
- v9fs_co_fstat()
-Date: Sun, 12 Jul 2026 07:14:44 +0300
-Message-ID: <20260712041539.108341-26-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 34/75] virtio-net: validate RSS indirections_len in
+ post_load
+Date: Sun, 12 Jul 2026 07:14:52 +0300
+Message-ID: <20260712041539.108341-34-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,48 +72,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Junjie Cao <junjie.cao@intel.com>
 
-The individual FID types (P9_FID_NONE, P9_FID_FILE, P9_FID_DIR, P9_FID_XATTR)
-share union V9fsFidOpenState with FID-type specific fields. Accessing any of
-the union fields must comply with the FID-type to avoid undefined behaviour
-or information disclosure.
+virtio_net_handle_rss() enforces that indirections_len is a non-zero
+power of two no larger than VIRTIO_NET_RSS_MAX_TABLE_LEN, but
+virtio_net_rss_post_load() applies none of these checks to values
+restored from the migration stream.
 
-Fix this in v9fs_lock() and v9fs_getlock() by checking if FID has a valid
-file descriptor before calling v9fs_co_fstat().
+A corrupted save file or crafted migration stream can set
+indirections_len to 0.  Even if it also clears redirect,
+virtio_load() calls set_features_nocheck() after the device vmstate
+(including the RSS subsection and its post_load) has already been
+loaded, re-deriving redirect from the negotiated guest features.
+When VIRTIO_NET_F_RSS was negotiated, redirect is set back to true
+regardless of the migration stream value.  The receive path then
+computes
 
-Fixes: 10b468bdc533 ("virtio-9p: Implement TXATTRCREATE")
-Link: https://lore.kernel.org/qemu-devel/4b33cd1aaa2551efda220a6f651e3660d27f4746.1781621428.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit c3aa2491cd2cd89e2f484d32f323ee447e782984)
+    hash & (indirections_len - 1)   /* wraps to 0xFFFFFFFF via int promotion */
+
+and uses the result to index into indirections_table, which was not
+allocated by the VMState loader when the element count is zero (see
+vmstate_handle_alloc()), resulting in a NULL pointer dereference that
+crashes QEMU:
+
+  #0  virtio_net_process_rss    ../hw/net/virtio-net.c:1901
+  #1  virtio_net_receive_rcu    ../hw/net/virtio-net.c:1921
+  #2  virtio_net_do_receive     ../hw/net/virtio-net.c:2061
+  #3  nc_sendv_compat           ../net/net.c:823
+  #4  qemu_deliver_packet_iov   ../net/net.c:870
+
+The RSS subsection is only loaded when rss_data.enabled is true (via
+virtio_net_rss_needed()), and the command path always produces
+indirections_len in {1, 2, 4, …, 128}, so an unconditional check
+cannot reject a legitimate migration stream.
+
+Factor the validation into virtio_net_rss_indirections_len_valid()
+and call it from both virtio_net_handle_rss() and
+virtio_net_rss_post_load().
+
+Fixes: e41b711485e5 ("virtio-net: add migration support for RSS and hash report")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260324060100.1997-1-junjie.cao@intel.com>
+(cherry picked from commit 32a90850e1e4222091df07b4b46d5f46a8b90d24)
+(Mjt: backport to 10.0.x series, introducing small parts of commit
+ v10.0.0-2242-g7b6e7e4990 "virtio-net: Retrieve peer hashing capability"
+ which added virtio_net_rss_post_load() method to vmstate_virtio_net_rss)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 06ee09cccbe..e337b45517f 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -3907,6 +3907,10 @@ static void coroutine_fn v9fs_lock(void *opaque)
-         err = -ENOENT;
-         goto out_nofid;
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 8a0ea4cff58..c04626dd3bf 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -1380,6 +1380,11 @@ static void virtio_net_unload_ebpf(VirtIONet *n)
+     ebpf_rss_unload(&n->ebpf_rss);
+ }
+ 
++static bool virtio_net_rss_indirections_len_valid(uint16_t len)
++{
++    return is_power_of_2(len) && len <= VIRTIO_NET_RSS_MAX_TABLE_LEN;
++}
++
+ static uint16_t virtio_net_handle_rss(VirtIONet *n,
+                                       struct iovec *iov,
+                                       unsigned int iov_cnt,
+@@ -1417,14 +1422,9 @@ static uint16_t virtio_net_handle_rss(VirtIONet *n,
+     if (!do_rss) {
+         n->rss_data.indirections_len = 0;
      }
-+    if (!fid_has_valid_file_handle(pdu->s, fidp)) {
-+        err = -EBADF;
-+        goto out;
-+    }
-     err = v9fs_co_fstat(pdu, fidp, &stbuf);
-     if (err < 0) {
-         goto out;
-@@ -3952,6 +3956,10 @@ static void coroutine_fn v9fs_getlock(void *opaque)
-         err = -ENOENT;
-         goto out_nofid;
+-    if (n->rss_data.indirections_len >= VIRTIO_NET_RSS_MAX_TABLE_LEN) {
+-        err_msg = "Too large indirection table";
+-        err_value = n->rss_data.indirections_len;
+-        goto error;
+-    }
+     n->rss_data.indirections_len++;
+-    if (!is_power_of_2(n->rss_data.indirections_len)) {
+-        err_msg = "Invalid size of indirection table";
++    if (!virtio_net_rss_indirections_len_valid(n->rss_data.indirections_len)) {
++        err_msg = "Invalid indirection table length";
+         err_value = n->rss_data.indirections_len;
+         goto error;
      }
-+    if (!fid_has_valid_file_handle(pdu->s, fidp)) {
-+        err = -EBADF;
-+        goto out;
+@@ -3311,6 +3311,20 @@ static const VMStateDescription vmstate_virtio_net_has_vnet = {
+     },
+ };
+ 
++static int virtio_net_rss_post_load(void *opaque, int version_id)
++{
++    VirtIONet *n = VIRTIO_NET(opaque);
++
++    if (!virtio_net_rss_indirections_len_valid(n->rss_data.indirections_len)) {
++        error_report("virtio-net: saved image has invalid RSS "
++                     "indirections_len: %u",
++                     n->rss_data.indirections_len);
++        return -EINVAL;
 +    }
-     err = v9fs_co_fstat(pdu, fidp, &stbuf);
-     if (err < 0) {
-         goto out;
++
++    return 0;
++}
++
+ static bool virtio_net_rss_needed(void *opaque)
+ {
+     return VIRTIO_NET(opaque)->rss_data.enabled;
+@@ -3320,6 +3334,7 @@ static const VMStateDescription vmstate_virtio_net_rss = {
+     .name      = "virtio-net-device/rss",
+     .version_id = 1,
+     .minimum_version_id = 1,
++    .post_load = virtio_net_rss_post_load,
+     .needed = virtio_net_rss_needed,
+     .fields = (const VMStateField[]) {
+         VMSTATE_BOOL(rss_data.enabled, VirtIONet),
 -- 
 2.47.3
 
