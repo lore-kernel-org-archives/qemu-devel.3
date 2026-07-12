@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15C26C43458
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:21:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 601C9C43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:22:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wilgQ-0000PE-Ve; Sun, 12 Jul 2026 00:20:51 -0400
+	id 1wilgK-00008w-Hc; Sun, 12 Jul 2026 00:20:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilgB-0008QQ-CX; Sun, 12 Jul 2026 00:20:36 -0400
+ id 1wilfr-0008Kh-1P; Sun, 12 Jul 2026 00:20:17 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilg9-00070d-M0; Sun, 12 Jul 2026 00:20:35 -0400
+ id 1wilfo-00070R-28; Sun, 12 Jul 2026 00:20:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829781; bh=2rvXVRXM8ntr2Y84KJr8fZ5CcUZdKIMTJqDNb+YFNuI=;
+ t=1783829781; bh=ePzxAoLhO6DGp9DA26gIEJ0w+f878SHmY7UHPwbdxu4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=j1zhzdGXIJiDrWC0O1ETipI+U5J4HagikVloNo+vfEV7JMKZcHVSQK67pHInQLegt
- uuJ9iscjfInCEtS06dGqLfBQWUW4PHIiaMdHsnvEt3+8LJ9W+QnfcYooOBO22zPeuJ
- ijYyBnwwxNZIprSfWkafZQ52pQBEAACyYZFS+VAnVg7KMmpWpdnjcEvXeUW4mgtufc
- GvxJM+lbtzoeoc3+y9tZXObI1kRej6xP0nWlrQQLq+KDJcTD2ldLuyO2BU5yBtWpFr
- ZBvqeG5NV3iqFd9NOXeIgy1RATypp1ER7E5QTNGePi5QIZWh0rN/RV6LMFi4yqSV27
- lKO0TIOG+ZCrw==
+ b=ZA0vpMxtCWs8WMcujVLv+rF/rTvjvCJLjfMyHWEJoTdmgIg6sseFjI2QrLAupsIEw
+ 6nlJkGGfii0+cVpzNvpkJZh95N6RNu8jHCpr/ggsOrUf2MaIsnAHlBFsr9WaH3XOF1
+ DBZfBi17uxQMLL3oER2alXG3zn7rJWC+GGtA5ReLcIMR3WAzfBjNZA+hYsPwwUwD3y
+ xoAYv84FCjuCFNwlWLRtfngj88ZipcMjomPjPsMvCVwN7KTcU8M2QJpR2wo5C1GUrS
+ ytXA+vPPg5W2D/5p/dRyCieibzdl+bpiWPg+wfhhQWId3DMsNz9KQ8dnAcTQRUdV9L
+ nAc65nUj9LZ8w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BD0361C0C08;
+ by isrv.corpit.ru (Postfix) with ESMTP id B6ADC1C0C07;
  Sun, 12 Jul 2026 07:16:21 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id EFF713EB968;
+ by tsrv.corpit.ru (Postfix) with ESMTP id EAADB3EB967;
  Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 7EDDA13413; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id 7C81013411; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+Cc: qemu-stable@nongnu.org, Torin Carey <torin@tcarey.uk>,
+ Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 45/75] hw/ide/ahci: cancel in-flight buffered reads
- on command engine restart
-Date: Sun, 12 Jul 2026 07:15:03 +0300
-Message-ID: <20260712041539.108341-45-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 44/75] hw/misc/edu: restrict dma access to dma buffer
+Date: Sun, 12 Jul 2026 07:15:02 +0300
+Message-ID: <20260712041539.108341-44-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
@@ -73,61 +73,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Torin Carey <torin@tcarey.uk>
 
-ATAPI CD reads are issued through ide_buffered_readv()
-(cd_read_sector() and ide_atapi_cmd_read_dma_cb() in hw/ide/atapi.c).
-The PIO path discards the returned aiocb; the DMA path stores it in
-s->bus->dma->aiocb.
+The EDU device doesn't enforce any bound checks on the addresses provided,
+allowing users of the device to perform arbitrary reads and writes to QEMU's
+address space.
 
-A guest can stop and restart a port's command engine
-(PxCMD.ST 1 -> 0 -> 1) while such a read is still in flight. Stopping
-the engine unmaps the command list (ahci_unmap_clb_address()) and
-restarting it re-maps the list and clears AHCIDevice.cur_cmd to NULL,
-but nothing tears down the outstanding read. This path does not run
-ide_reset(), so the drive's transfer state is preserved and the read
-still completes. Its callbacks then dereference the stale or NULL
-cur_cmd in the AHCI transfer helpers:
-
-  PIO: cd_read_sector_cb() -> ide_atapi_cmd_reply_end() ->
-       ide_transfer_start_norecurse() -> ahci_pio_transfer()
-
-  DMA: ide_atapi_cmd_read_dma_cb() -> ahci_dma_rw_buf() ->
-       ahci_populate_sglist()
-
-Both crash with a NULL cur_cmd; the PIO variant has been seen in the
-field.
-
-Cancel the outstanding I/O when the command list is unmapped, reusing
-ide_cancel_dma_sync() as the ATAPI DEVICE RESET command does. It runs
-the completion callback with -ECANCELED (which tears down
-s->bus->dma->aiocb for the DMA case) and orphans the buffered request,
-so the eventual asynchronous completion is a no-op. Merely setting the
-orphaned flag is not enough: it would leave s->bus->dma->aiocb pointing
-at a freed aiocb that a later reset would cancel.
-
-Fixes: 1d8c11d63154 ("ide: add support for IDEBufferedRequest")
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Message-ID: <20260619112158.304782-2-den@openvz.org>
-[PMD: Use ide_bus_active_if()]
+Signed-off-by: Torin Carey <torin@tcarey.uk>
+Cc: qemu-stable@nongnu.org
+Fixes: 7b608e5d6c1 ("hw: misc: edu: use qemu_log_mask instead of hw_error")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3852
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-ID: <aQtAotYvzFY0Vpft@tcarey.uk>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit d9f78431d8ebdc2d03ad74461138c1c9eb076aa5)
+(cherry picked from commit 42f599172ae023924f288e20af0ceed681674747)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
-index 1303c21cb70..8a8c28698ce 100644
---- a/hw/ide/ahci.c
-+++ b/hw/ide/ahci.c
-@@ -740,6 +740,9 @@ static bool ahci_map_clb_address(AHCIDevice *ad)
+diff --git a/hw/misc/edu.c b/hw/misc/edu.c
+index 504178b4a22..41f1fe99499 100644
+--- a/hw/misc/edu.c
++++ b/hw/misc/edu.c
+@@ -103,7 +103,7 @@ static void edu_lower_irq(EduState *edu, uint32_t val)
+     }
+ }
  
- static void ahci_unmap_clb_address(AHCIDevice *ad)
+-static void edu_check_range(uint64_t xfer_start, uint64_t xfer_size,
++static bool edu_check_range(uint64_t xfer_start, uint64_t xfer_size,
+                 uint64_t dma_start, uint64_t dma_size)
  {
-+    /* Cancel in-flight reads that would complete against a cleared cur_cmd. */
-+    ide_cancel_dma_sync(ide_bus_active_if(&ad->port));
+     uint64_t xfer_end = xfer_start + xfer_size;
+@@ -115,13 +115,15 @@ static void edu_check_range(uint64_t xfer_start, uint64_t xfer_size,
+      */
+     if (dma_end >= dma_start && xfer_end >= xfer_start &&
+         xfer_start >= dma_start && xfer_end <= dma_end) {
+-        return;
++        return true;
+     }
+ 
+     qemu_log_mask(LOG_GUEST_ERROR,
+                   "EDU: DMA range 0x%016"PRIx64"-0x%016"PRIx64
+                   " out of bounds (0x%016"PRIx64"-0x%016"PRIx64")!",
+                   xfer_start, xfer_end - 1, dma_start, dma_end - 1);
 +
-     if (ad->lst == NULL) {
-         trace_ahci_unmap_clb_address_null(ad->hba, ad->port_no);
-         return;
++    return false;
+ }
+ 
+ static dma_addr_t edu_clamp_addr(const EduState *edu, dma_addr_t addr)
+@@ -148,16 +150,18 @@ static void edu_dma_timer(void *opaque)
+ 
+     if (EDU_DMA_DIR(edu->dma.cmd) == EDU_DMA_FROM_PCI) {
+         uint64_t dst = edu->dma.dst;
+-        edu_check_range(dst, edu->dma.cnt, DMA_START, DMA_SIZE);
+-        dst -= DMA_START;
+-        pci_dma_read(&edu->pdev, edu_clamp_addr(edu, edu->dma.src),
+-                edu->dma_buf + dst, edu->dma.cnt);
++        if (edu_check_range(dst, edu->dma.cnt, DMA_START, DMA_SIZE)) {
++            dst -= DMA_START;
++            pci_dma_read(&edu->pdev, edu_clamp_addr(edu, edu->dma.src),
++                         edu->dma_buf + dst, edu->dma.cnt);
++        }
+     } else {
+         uint64_t src = edu->dma.src;
+-        edu_check_range(src, edu->dma.cnt, DMA_START, DMA_SIZE);
+-        src -= DMA_START;
+-        pci_dma_write(&edu->pdev, edu_clamp_addr(edu, edu->dma.dst),
+-                edu->dma_buf + src, edu->dma.cnt);
++        if (edu_check_range(src, edu->dma.cnt, DMA_START, DMA_SIZE)) {
++            src -= DMA_START;
++            pci_dma_write(&edu->pdev, edu_clamp_addr(edu, edu->dma.dst),
++                          edu->dma_buf + src, edu->dma.cnt);
++        }
+     }
+ 
+     edu->dma.cmd &= ~EDU_DMA_RUN;
 -- 
 2.47.3
 
