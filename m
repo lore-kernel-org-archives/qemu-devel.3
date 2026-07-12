@@ -4,48 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22885C43458
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:21:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15C26C43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:21:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wilfG-0007jr-IT; Sun, 12 Jul 2026 00:19:40 -0400
+	id 1wilgQ-0000PE-Ve; Sun, 12 Jul 2026 00:20:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilfE-0007jJ-UR; Sun, 12 Jul 2026 00:19:37 -0400
+ id 1wilgB-0008QQ-CX; Sun, 12 Jul 2026 00:20:36 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilfD-0006fJ-73; Sun, 12 Jul 2026 00:19:36 -0400
+ id 1wilg9-00070d-M0; Sun, 12 Jul 2026 00:20:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829781; bh=rwHB9Wx6/k3yBTD97O4Rs3DdBFw05JDK0wI7ZDLgj9E=;
+ t=1783829781; bh=2rvXVRXM8ntr2Y84KJr8fZ5CcUZdKIMTJqDNb+YFNuI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=LCHrnpXXdgT6Bnmuqc9pPUTyncaBxWgrJCvHPNc9dtpvHEPiZSSemwTgklo15pakW
- dNVDX0xN47a2/ty6QRjDCjAZNhISbqf3P8ljrqCW8vkhl7efK2MIYvI5yu3idW9w2i
- hvGAMYfraSF469AxDgmzUR69sQPqmjEHUfAYtYjRpmMpDW4UG6m/bn8t96UccaEpQ/
- tmAYTcmMpWR0RvUugYUqb1O08HTru+2eKqjkvzSd018Q3H7+SYoc2ab9AZWxe0lMSl
- eM2+8R2CeMWX96GnHcQEnfrWg1k5R2k73NbGL/Zz1+gejjloprBUcfCmFHCCmp5p9v
- WHHagqKDZG/YQ==
+ b=j1zhzdGXIJiDrWC0O1ETipI+U5J4HagikVloNo+vfEV7JMKZcHVSQK67pHInQLegt
+ uuJ9iscjfInCEtS06dGqLfBQWUW4PHIiaMdHsnvEt3+8LJ9W+QnfcYooOBO22zPeuJ
+ ijYyBnwwxNZIprSfWkafZQ52pQBEAACyYZFS+VAnVg7KMmpWpdnjcEvXeUW4mgtufc
+ GvxJM+lbtzoeoc3+y9tZXObI1kRej6xP0nWlrQQLq+KDJcTD2ldLuyO2BU5yBtWpFr
+ ZBvqeG5NV3iqFd9NOXeIgy1RATypp1ER7E5QTNGePi5QIZWh0rN/RV6LMFi4yqSV27
+ lKO0TIOG+ZCrw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 844E41C0BFF;
+ by isrv.corpit.ru (Postfix) with ESMTP id BD0361C0C08;
  Sun, 12 Jul 2026 07:16:21 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id B84843EB95F;
+ by tsrv.corpit.ru (Postfix) with ESMTP id EFF713EB968;
  Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 68DE513401; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id 7EDDA13413; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Arnd Bergmann <arnd@arndb.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 36/75] hw/arm: use cortex-a9 mpcore base for CBAR on
- npcm7xx machines
-Date: Sun, 12 Jul 2026 07:14:54 +0300
-Message-ID: <20260712041539.108341-36-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 45/75] hw/ide/ahci: cancel in-flight buffered reads
+ on command engine restart
+Date: Sun, 12 Jul 2026 07:15:03 +0300
+Message-ID: <20260712041539.108341-45-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
@@ -75,49 +73,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: "Denis V. Lunev" <den@openvz.org>
 
-CBAR is an IMPDEF register and according to the A9 TRM [1]:
+ATAPI CD reads are issued through ide_buffered_readv()
+(cd_read_sector() and ide_atapi_cmd_read_dma_cb() in hw/ide/atapi.c).
+The PIO path discards the returned aiocb; the DMA path stores it in
+s->bus->dma->aiocb.
 
-  In Cortex-A9 MPCore implementations, the base address is reset to
-  PERIPHBASE[31:13] so that software can determine the location of the
-  private memory region [2].
+A guest can stop and restart a port's command engine
+(PxCMD.ST 1 -> 0 -> 1) while such a read is still in flight. Stopping
+the engine unmaps the command list (ahci_unmap_clb_address()) and
+restarting it re-maps the list and clears AHCIDevice.cur_cmd to NULL,
+but nothing tears down the outstanding read. This path does not run
+ide_reset(), so the drive's transfer state is preserved and the read
+still completes. Its callbacks then dereference the stale or NULL
+cur_cmd in the AHCI transfer helpers:
 
-If it doesn't we will confuse the Linux kernel as it probes the system
-SCU registers [3] and erroneously assumes the system is a buggy Aegis SOC
-and nerf the emission of SEV instructions, deadlocking any WFE's in
-the kernel (or QEMU smpboot code).
+  PIO: cd_read_sector_cb() -> ide_atapi_cmd_reply_end() ->
+       ide_transfer_start_norecurse() -> ahci_pio_transfer()
 
-[1] https://developer.arm.com/documentation/ddi0388/i/system-control/register-descriptions/configuration-base-address-register
-[2] https://developer.arm.com/documentation/ddi0407/g/Introduction/Private-Memory-Region
-[3] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm/kernel/head.S?h=v7.1#n550
+  DMA: ide_atapi_cmd_read_dma_cb() -> ahci_dma_rw_buf() ->
+       ahci_populate_sglist()
 
-Fixes: 2d8f048c25ab ("hw/arm: Add NPCM730 and NPCM750 SoC models")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260624103049.884930-2-alex.bennee@linaro.org
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 62b425bec3d52a326781025d1c51eb4d65ece49e)
+Both crash with a NULL cur_cmd; the PIO variant has been seen in the
+field.
+
+Cancel the outstanding I/O when the command list is unmapped, reusing
+ide_cancel_dma_sync() as the ATAPI DEVICE RESET command does. It runs
+the completion callback with -ECANCELED (which tears down
+s->bus->dma->aiocb for the DMA case) and orphans the buffered request,
+so the eventual asynchronous completion is a no-op. Merely setting the
+orphaned flag is not enough: it would leave s->bus->dma->aiocb pointing
+at a freed aiocb that a later reset would cancel.
+
+Fixes: 1d8c11d63154 ("ide: add support for IDEBufferedRequest")
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Message-ID: <20260619112158.304782-2-den@openvz.org>
+[PMD: Use ide_bus_active_if()]
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit d9f78431d8ebdc2d03ad74461138c1c9eb076aa5)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/arm/npcm7xx.c b/hw/arm/npcm7xx.c
-index 2d6e08b72ba..92767209d56 100644
---- a/hw/arm/npcm7xx.c
-+++ b/hw/arm/npcm7xx.c
-@@ -492,7 +492,7 @@ static void npcm7xx_realize(DeviceState *dev, Error **errp)
-     /* CPUs */
-     for (i = 0; i < nc->num_cpus; i++) {
-         object_property_set_int(OBJECT(&s->cpu[i]), "reset-cbar",
--                                NPCM7XX_GIC_CPU_IF_ADDR, &error_abort);
-+                                NPCM7XX_CPUP_BA, &error_abort);
-         object_property_set_bool(OBJECT(&s->cpu[i]), "reset-hivecs", true,
-                                  &error_abort);
+diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
+index 1303c21cb70..8a8c28698ce 100644
+--- a/hw/ide/ahci.c
++++ b/hw/ide/ahci.c
+@@ -740,6 +740,9 @@ static bool ahci_map_clb_address(AHCIDevice *ad)
  
+ static void ahci_unmap_clb_address(AHCIDevice *ad)
+ {
++    /* Cancel in-flight reads that would complete against a cleared cur_cmd. */
++    ide_cancel_dma_sync(ide_bus_active_if(&ad->port));
++
+     if (ad->lst == NULL) {
+         trace_ahci_unmap_clb_address_null(ad->hba, ad->port_no);
+         return;
 -- 
 2.47.3
 
