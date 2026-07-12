@@ -4,110 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85E33C43458
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 23:23:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 362D1C43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 23:47:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wj3V2-0005VK-5Z; Sun, 12 Jul 2026 19:22:16 -0400
+	id 1wj3sq-0008JJ-EN; Sun, 12 Jul 2026 19:46:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wj3Ur-0005Uo-Ok
- for qemu-devel@nongnu.org; Sun, 12 Jul 2026 19:22:07 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wj3Uq-0001uF-BP
- for qemu-devel@nongnu.org; Sun, 12 Jul 2026 19:22:05 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-664db84f074so4111879d50.0
- for <qemu-devel@nongnu.org>; Sun, 12 Jul 2026 16:22:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783898523; cv=none;
- d=google.com; s=arc-20260327;
- b=jhIJHmcbvJUiOkCsY6+0VCcVn6SDKif/igXiznwUVIIcfG2P0F4d9gkXi7R2EWSC9s
- OnluE9r36vbeLLVv+hkAjtKM8O9q11Cee35no1kPLewPcUGNedXGXqXONVk6QvZSNxS4
- 5I9e7LT6xqg3+8Zdz9sFpT6GSbdTpTBT/+5GCnH9NYVI2pR9m1ZFFZ/C3kQydk8iy4RO
- P4poNviGoItcomYr++Gp2rR/xze807gn+g2hK8HGFUVuCtAzLfAMFKl3ZjatnWIh5kEt
- wb2lNNvhbFINqoG2ZwVuE9lKvpd4zOuwArlRrIGlTu7XFAyPv7hsXDDqhTHuRRkNcaHI
- rxfw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=M3QbxB16zYHmA8LvrOxVawLXVLl9lp/I3a8ub6IlgLQ=;
- fh=GV+U9xY2fsngz0eILCgAR6kP07wTihCJE3EC5W2zarE=;
- b=pmrLKLpVMVTJyIlNHqmOV3wssH9VYVNJB2E86xGBaBL4QJ319A0v5nl3D9hy2DNXTi
- hU9c0GXz+SjXRh5PCkGXJNwkHAFB0/W+LS5py6BD5A9f9VF3fP5eMuWj7hsqIPlqrCVA
- ONnQSAVb9xHAc6x+XKpckh3fMrMz64PP/b65To5p22Yrm1b/T+euVp1SjbUnmV6WSWsU
- o9WFGhs3SSvn8ZDC06bF/lcjFngEXtKPP9fWDvw6pRNJ9t/pKhKiHO15DBPaw+DtqNFD
- l+5PzX93XswUO4g6Tfo0TIGVj0i1vh5SM40O+2ev7iunzQiH9d860mZOyHCu8RFNlROw
- NExg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783898523; x=1784503323; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=M3QbxB16zYHmA8LvrOxVawLXVLl9lp/I3a8ub6IlgLQ=;
- b=L9Hj4K0lDRQilZGG1o8As2vB04rRtRx//SmUXbokviUjCtG++vHSF1e8qmN5+iq5eW
- aqnDmYPVP4oAaJvIDJyEj0LII6PxSiOFwFsq1Jzjo3XhFUhoxCcRVr9B4alYDsrK9ZF1
- EgHMAvFKk8F5dS79Bfhp7eIPLJQ2bMrY/f6CnkfZpMMFv74PBEIhPnmYf1FGOtj8zUuV
- X376eZY4a8/vHCn+3zSHwX/HodTcN3E9WzzVnbBwBS9J8r2FT5Ptde57b+d0+U+0ZA1P
- 8EmEaVBeQ6hy33kY/kZtaRgo2E5wujqcEuNhsZjowuV9LgkIaAQkqBYfx6BZvfr472Ue
- MGyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783898523; x=1784503323;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=M3QbxB16zYHmA8LvrOxVawLXVLl9lp/I3a8ub6IlgLQ=;
- b=Nv72q0PBHJ22zGN4t8SKFYanlSbb8jPTGH8za4QoAJxVHcMR3XWwXG0hpYpVAufp/e
- 6AnmYD1kwio6ATjO2vmpSKcfEAY0Z9iCw15H/lAJBkomkTgpJ8thogQ+h3fHLbWhVsOH
- 4U7ATxzMHkqCZjXhUs+I7aw5zDuXeeih474CViTkKil+xUhv3HnXTMMMZ83eXfVcAl5k
- aKQpckmuE9QTUNI/a61YxY0qckR67O+5LiLnxtG8VH/QL1ZeRaJdsERt1OMCiZsrK40s
- hNcR3SYOKZj3y0vx0Tjb8RxZy96OabU+QPIJ8QL1/lV1nX9xT7n0cqOoc7ZzHp/QCX5L
- Tggg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpoNVBhcNPjNmh2x/6XdmowiTYX/uoxWbHCKIJdr8s2B4gLRllnWksl7jrrfFDsJdYUm056lJqvp95b@nongnu.org
-X-Gm-Message-State: AOJu0Yw1CPVJFIL6aK73qDIHT3T2nzAFY4YLUeVGBaC4dznhpxJ25Tyt
- y4onP5e7kaHJDFJ4MxnddAq1UtKC2CJyFZKZmP6uUcuv2+17vV2P5Ijw76AcGTUbQB/5tHfw11T
- eYnPEYBBhIGFGZFtnk51NXtHeVWFz1UI=
-X-Gm-Gg: AfdE7cneFkUjoOfyiRAgPkwfN/ulZFm9U1L+GUhwqNL2HBlUn9IxZYHwvwa8SFRrca7
- AioN2u0/B8eu3zYMb/aVPW5cyrqeQZnXgfNP72RK0+uBy07KbGnycYQ/MOA5JIG+gBXPjRWbhYx
- fTcWLkktRO0x0l0x44Ko1t9bZPLSjiT5c15v2OobSYPv9c3n01E8dYfqksfo/i2bWoeVNfuK8+i
- V8SqDrCVQIw2dS1OSwpLJE4WfbTBUmsXzka73wHrGkSaZf1z/zP3ns959qNjOhfnySar9Qn
-X-Received: by 2002:a53:cf0e:0:b0:667:8b91:244c with SMTP id
- 956f58d0204a3-667d7f17737mr3832417d50.99.1783898523053; Sun, 12 Jul 2026
- 16:22:03 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260710114305.2961898-1-armbru@redhat.com>
- <20260710114305.2961898-2-armbru@redhat.com>
- <CAEUhbmXaA6wpyUeVGL4Vn-zaP9LBFfmpTuWxDB=aMaXez_p=1w@mail.gmail.com>
- <20260712-prodigal-subscribe-759f57ab6d4e@spud>
-In-Reply-To: <20260712-prodigal-subscribe-759f57ab6d4e@spud>
-From: Bin Meng <bmeng.cn@gmail.com>
-Date: Mon, 13 Jul 2026 07:21:50 +0800
-X-Gm-Features: AVVi8CfIcyyJwlOa9l0DbbGVlRctTot5epZaAhMqqxRLM3fWDdUcdbMHkkEEbqA
-Message-ID: <CAEUhbmU66PUcuuWSL8i040XOU6j184ga-huToOULfEFrTrUp5g@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wj3sp-0008J7-3V; Sun, 12 Jul 2026 19:46:51 -0400
+Received: from fout-b2-smtp.messagingengine.com ([202.12.124.145])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wj3sn-000627-4Z; Sun, 12 Jul 2026 19:46:50 -0400
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+ by mailfout.stl.internal (Postfix) with ESMTP id 3AFCB1D00069;
+ Sun, 12 Jul 2026 19:46:45 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-04.internal (MEProxy); Sun, 12 Jul 2026 19:46:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+ t=1783900005; x=1783986405; bh=SRAtrCakcqo7/XMmGEUMB0yu0A7/gzIJ
+ 5q/0d3TSsxM=; b=WbkbTRjjjjBwK2MQW2NlX/gJM28P87WuPjv7zcoyIolTBPoh
+ AVw29NXIL0IzukaeGOPLzQZnjquEaR94EK3wVbAFF2vrrjvmB8OgFqWaru0WL6pc
+ YYG2KO25zygXQnVa0VGvi8GdqElVHtZxYRDzeeuYkKMHiQEEvETeb2KP06lj0wD+
+ X9+xLEKuubc/lbGjJCLrpW/YfrGg2rSZ7s8icBSzkpTGFMv1GlJWfqkzH7RMryBz
+ ngjiYMgwXnsHPFcNXXplXIJZW9Mov9BxHQnyQNLI5ArScFxt6P84db22P5/qaIKC
+ MVTMb/I2BPnI0mZXvVdH8n4zzdAcH7A5yXzZBw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783900005; x=
+ 1783986405; bh=SRAtrCakcqo7/XMmGEUMB0yu0A7/gzIJ5q/0d3TSsxM=; b=W
+ LONF7JLgkDOzU8wDQN3Jbwmqw5DYeWh+2e1HInISkGSWfenJhfOfyt0SycWUfes1
+ EHGBAPopvVfQEIMCNlQCJ+le6mxkEOFEyYBfnOrBEQTr18Lx1WI9mDFH5aqfbYMs
+ jF6kwbmHtd0rfRZF/9OkWrCg9dftR/vvoMJlGF5PnXkumD8Mv79W2fFyiT/DGo+M
+ ZzakPZW995vmn5voUSTDi3RvUuw7ON2FEN1CbIjTK1GrS+FO8FkYeGvgQhFJs7oW
+ BiolRJmMfI4ICtfJ6dRHrD6nFyW5XdFWowo4Fha/0NhgtK4T08MkKqP1rYhiDtLj
+ LwYae+fdKjI49z6SYe3xw==
+X-ME-Sender: <xms:ZCdUatk2Sncu00QWLpAElf-fQagbHLkeS9FeTktBH-NoO4lDQYAc4g>
+ <xme:ZCdUak1OpBYq_-Dbrkh9mT54ugmEd8eH1PPspunBsghiiv-6afmUPlSK2WTxzoB65
+ 8JCaS2g2pAiACNu6izrLAAQOeILro0Wao9D6diSDI5C3BfgGwX9ZKrg>
+X-ME-Received: <xmr:ZCdUal3VDbpQ8ClH5lyXDi-4lL4ZP3ZelDyuiTccThbep-LEe4NOo35lY3dVvt9EdgCsKUovlBOitS-FsQTZtlCYjMU>
+X-ME-Proxy-Cause: dmFkZTEzPjkHUBPedLGHdEtadZHHynQQMyvytMPKexs1lJU4KUcsozmsCTdm6N1t74pq0i
+ 4ZKZSZr6RalImGVmo2KQE+imAIp4dP5HlhnDaAHbajN7teG942vr7TYsyC7qtZxcQ1FGc8
+ USOAR1Or/NaQy942BnQuTxxwp4i/n/uRNFw059patH/7lYuiYd7evA7zVeGox2jTTpmQLq
+ Ksy6dRe7GrYwRSF2d+Tuw8mA/jVj/tQfMBf7JFOHSLbTmGPKbsIpR9IFT4+VxTjggfZVb+
+ cqGpcFU/AL+m8RFQ4rW5Y3HsqlijX6MzKcSZRx6JbknQHBum2AWUgMXQTjlWwn3O5B/BBS
+ NgmxclshVmDS6HhXnGfQrcjmoUdJXjugLqP7B5y/LnxsZ3L7B99C90FqlWSlgrMXn4lMG4
+ 4TzcEu/tuRj/BbmYNfgBygNj/cEICbZ5zXb19Hu7XdgZtYsmOxrPJewleDQX/k963ia5jn
+ sf3tzNJ7Yiid3w5c3j5K5xuP9qIW5otv+gIx9FMHxnAqK94/7d28e1rsHwOps0HWN8fveK
+ H9rKne26OAIqge/QUR1q7/Jo2OeF07mJ7YYQX6ZucXe8shZyLcrHNc72JTuKlgxML6UK0c
+ 9sx1QU9TY/nLVzX69ULkEntSZGDXTpNZc/f9isitNy5dUvP+yXcn4CUckUPQ
+X-ME-Proxy: <xmx:ZCdUaupGBTBPmmfX8tUKuC3wLvyXdGioFNtfG8ytFh0Dy1M5MiRP4A>
+ <xmx:ZCdUaphCywKUuVBjRYVXLmV9PWNjAC3R7WCrigb9qCxc6L_WpXERuQ>
+ <xmx:ZCdUai-gDBDb9ryTKPkyxrcX2FM-_aHjosgh7zq0_vElIBxidwmsbA>
+ <xmx:ZCdUatWdHhwIDa4zesxAMg7tMgdFHVOcHeMHvIGXX2PZJA2xzgcD3Q>
+ <xmx:ZSdUaiLhDJBQvERm-UpIyettg9MlSOR_d8lLclb-Z3TU4kB3W-zq0E3W>
+Feedback-ID: ifd214418:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 12 Jul 2026 19:46:42 -0400 (EDT)
+Message-ID: <14e03e0ad01262333268b51efc512ae8d97d95f2.camel@alistair23.me>
 Subject: Re: [PATCH 1/2] MAINTAINERS: Mark "Microchip PolarFire SoC Icicle
  Kit" orphaned
-To: Conor Dooley <conor@kernel.org>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- alistair23@gmail.com, 
- qemu-riscv@nongnu.org, bin.meng@processmission.com, mzamazal@redhat.com, 
- mst@redhat.com, sgarzare@redhat.com
+From: Alistair <alistair@alistair23.me>
+To: Conor Dooley <conor@kernel.org>, Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, alistair23@gmail.com, qemu-riscv@nongnu.org, 
+ bin.meng@processmission.com, mzamazal@redhat.com, mst@redhat.com, 
+ sgarzare@redhat.com
+Date: Mon, 13 Jul 2026 09:46:39 +1000
+In-Reply-To: <20260712-divided-cork-204b87d9651a@spud>
+References: <20260710114305.2961898-1-armbru@redhat.com>
+ <20260710114305.2961898-2-armbru@redhat.com>
+ <20260712-divided-cork-204b87d9651a@spud>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yx1-xb133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Evolution 3.60.2 (by Flathub.org) 
+MIME-Version: 1.0
+Received-SPF: pass client-ip=202.12.124.145;
+ envelope-from=alistair@alistair23.me; helo=fout-b2-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,46 +110,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 13, 2026 at 5:51=E2=80=AFAM Conor Dooley <conor@kernel.org> wro=
-te:
->
-> On Sat, Jul 11, 2026 at 07:04:14PM +0800, Bin Meng wrote:
-> > On Fri, Jul 10, 2026 at 7:44=E2=80=AFPM Markus Armbruster <armbru@redha=
-t.com> wrote:
-> > >
-> > > Commit 4a16a1a7ad (MAINTAINERS: Remove Bin Meng from RISC-V
-> > > maintainers, 2025-01-28) removed the only M:, but left S: Supported.
-> > > This makes no sense.  Downgrade to S: Orphan.
-> > >
-> > > Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> > > ---
-> > >  MAINTAINERS | 2 +-
-> > >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > >
-> > > diff --git a/MAINTAINERS b/MAINTAINERS
-> > > index 576ef6fff5..aa2df9cbe3 100644
-> > > --- a/MAINTAINERS
-> > > +++ b/MAINTAINERS
-> > > @@ -1761,7 +1761,7 @@ F: tests/tcg/riscv64/test-crc32.S
-> > >
-> > >  Microchip PolarFire SoC Icicle Kit
-> > >  L: qemu-riscv@nongnu.org
-> > > -S: Supported
-> > > +S: Orphan
-> > >  F: docs/system/riscv/microchip-icicle-kit.rst
-> > >  F: hw/riscv/microchip_pfsoc.c
-> > >  F: hw/char/mchp_pfsoc_mmuart.c
-> > > --
-> >
-> > I plan to send a patch series to resurrect PolarFire SoC support.
->
-> What does this resurrection constitute? The files aren't gone anywhere
-> (yet, at least), so I take it you mean you'll be actively working on the
-> platform?
+On Sun, 2026-07-12 at 22:47 +0100, Conor Dooley wrote:
+> On Fri, Jul 10, 2026 at 01:43:04PM +0200, Markus Armbruster wrote:
+> > Commit 4a16a1a7ad (MAINTAINERS: Remove Bin Meng from RISC-V
+> > maintainers, 2025-01-28) removed the only M:, but left S:
+> > Supported.
+> > This makes no sense.=C2=A0 Downgrade to S: Orphan.
+> >=20
+> > Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> > ---
+> > =C2=A0MAINTAINERS | 2 +-
+> > =C2=A01 file changed, 1 insertion(+), 1 deletion(-)
+> >=20
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index 576ef6fff5..aa2df9cbe3 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -1761,7 +1761,7 @@ F: tests/tcg/riscv64/test-crc32.S
+> > =C2=A0
+> > =C2=A0Microchip PolarFire SoC Icicle Kit
+> > =C2=A0L: qemu-riscv@nongnu.org
+> > -S: Supported
+> > +S: Orphan
+>=20
+> This should have been updated in:
+> https://lore.kernel.org/qemu-devel/20260513023859.518484-1-alistair.franc=
+is@wdc.com/
+>=20
+> Alistair said he applied that patch, so I'm guessing whatever tree
+> you've
+> based on doesn't include it yet?
 
-Yes, I will rework HSS boot support to accommodate newer versions,
-just as HSS was originally supported years ago.
+Yeah, I thought I applied it. But somehow it seems to have
+disappeared....
 
-Regards,
-Bin
+
+I think this patch should be dropped and I'll actually apply:
+https://lore.kernel.org/qemu-devel/20260513023859.518484-1-alistair.francis=
+@wdc.com/
+
+Then Bin can update this in the future if you want to.
+
+Sorry about the confusion here
+
+Alistair
+
+>=20
+> Cheers,
+> Conor.
+>=20
+> > =C2=A0F: docs/system/riscv/microchip-icicle-kit.rst
+> > =C2=A0F: hw/riscv/microchip_pfsoc.c
+> > =C2=A0F: hw/char/mchp_pfsoc_mmuart.c
+> > --=20
+> > 2.54.0
+> >=20
+> >=20
 
