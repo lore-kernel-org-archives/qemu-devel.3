@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 961FEC43458
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:17:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C846DC43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:17:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wilcf-0001im-DI; Sun, 12 Jul 2026 00:16:58 -0400
+	id 1wilcu-0002a3-65; Sun, 12 Jul 2026 00:17:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilcO-0001d0-Le; Sun, 12 Jul 2026 00:16:41 -0400
+ id 1wilcT-0001gj-3f; Sun, 12 Jul 2026 00:16:47 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilcM-0006Fa-Mn; Sun, 12 Jul 2026 00:16:40 -0400
+ id 1wilcQ-0006G9-3R; Sun, 12 Jul 2026 00:16:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829780; bh=zRD+QVA80sL83toDeo+Ol2aI282UyE5YlSlhUqOBuWg=;
+ t=1783829780; bh=jQZ6mYPMk9HPQRINxHHqnJ2IAXWLkbOOp0Mtbm4nOIY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=oMWMeTtbRBqiGBGXD53edSe4kJEcLqySw2sR9Djknmq9h/BUNV29JT2l+URpoOkqC
- 6gNvWoAUtMX/9pm/4O2bxlih/qa2jxIcJzpdts/FWAFPIqLUynBMc746C5T2MMBapK
- 4F3wLAHXjqGbTSSYryWov9At6XpFHmsfXXxXJSC9uCt1UpgfA8n6PLHc+2DiFoI50R
- bK0cy5awgPWygokeuwJLrou31yIivnZt02v/8H70lxBwxMIuVv2XmmSZzHRZozAUhB
- GSLz7VdRlaKyDKKqqbCofFj9cCXCB8JT2Xm3J3SKjddd5Y2uj5PIkMZ/2HYUPgzkDz
- lCJjh8MDgHSmw==
+ b=xWifgLVc6hw937ZHolMxtV0XdHw1vSJKBoWkAurcbNqWr5FWUL9hW4j4dT1KEO3g3
+ tIYfKSd3h+a1l0O7LyWT3udDjCAgNEls4r+U0zB2arinfWo/shln/sLuA1+7TJjMM/
+ S4L0UX5uJR32fg3EoW1JtDSlH31uY3+53fa5GOCw5sbFBsWKwWlLmmSUz2BDpKBBul
+ KqtuFtIDe63h5k6et4fky9UZdU8U41Nd+nXMMhW/jQsBEWey/FmFCONJoOIOxlRNdO
+ SjLzPf0E0godvM5Mh7WMvVvRKQqTEpsC+XbzSACV5tz0Aork2T9a3jgsMNFdC86OpL
+ 4iwUzyBOS4Sng==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B8EF61C0BE1;
+ by isrv.corpit.ru (Postfix) with ESMTP id C59E11C0BE3;
  Sun, 12 Jul 2026 07:16:20 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id EBC173EB941;
- Sun, 12 Jul 2026 07:16:30 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0400E3EB943;
+ Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 22E06133C5; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id 2760A133C9; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 06/75] 9pfs/virtio: implement msize_limit callback
-Date: Sun, 12 Jul 2026 07:14:24 +0300
-Message-ID: <20260712041539.108341-6-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 08/75] hw/9pfs: cap negotiated msize to transport
+ limit
+Date: Sun, 12 Jul 2026 07:14:26 +0300
+Message-ID: <20260712041539.108341-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
@@ -72,58 +73,47 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-Add and implement the msize_limit callback for the virtio transport.
+The 'msize' parameter negotiated during Tversion handshake can be
+arbitrarily large as requested by the guest. So far 9p server accepted
+any msize value suggested by guest, i.e. server did not cap it at all,
+no matter how large, as in practice the upper limit of msize is a client
+capability. But as subsequent's security patch shows, capping msize on
+server side makes sense as additional safety-net.
 
-This new callback function provides the theoretical maximum 'msize'
-value supported by this virtio transport.
+Let's cap msize to transport's theoretical limit for msize, mainly to
+prevent a bad client from triggering excessive host memory allocations
+throughout the session.
 
-The limit is calculated as (VIRTQUEUE_MAX_SIZE - 2) * 4096 bytes,
-where 2 virtio descriptors are lost exactly for:
+We intentionally don't cap msize to transport's current, real response
+buffer size, as the response buffer size may vary between individual
+requests.
 
-  - 1 descriptor for the original request (typically being small)
-
-  - 1 descriptor as indirect table pointer (when used), which just
-    contains a pointer to the separate sglist containing the
-    response's actual payload data
-
-And 4096 bytes are assumed as standard page size used by Linux 9p
-client. This results in a maximum 'msize' of 4186112 bytes.
-
-Theoretically Linux client could support a much larger size, e.g. by
-using multiple consecutive pages per sg entry / descriptor. However
-that's currently not the case and unlikely to change any time soon.
-And due to recent security issues, let's handle this limit
-conservatively until really necessary to be raised.
-
-Link: https://lore.kernel.org/qemu-devel/4c34426bc906e19423e7e2389c419c2e972d9b9b.1781287774.git.qemu_oss@crudebyte.com
+Link: https://lore.kernel.org/qemu-devel/2105e9a3578c6f751bb64af55c16dd953f393f20.1781287774.git.qemu_oss@crudebyte.com
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit 4a1a2fa4d351ba85628064e4a2a9cbc0c72cdbd4)
+(cherry picked from commit bb5ab96e35a1b13a2485d239a44ff2d040e9b337)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/virtio-9p-device.c b/hw/9pfs/virtio-9p-device.c
-index bb2843da0f6..c795afa6440 100644
---- a/hw/9pfs/virtio-9p-device.c
-+++ b/hw/9pfs/virtio-9p-device.c
-@@ -192,12 +192,19 @@ static void virtio_init_out_iov_from_pdu(V9fsPDU *pdu, struct iovec **piov,
-     *pniov = elem->out_num;
- }
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index 52806670235..f0bc1d71706 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -1459,6 +1459,16 @@ static void coroutine_fn v9fs_version(void *opaque)
+         goto out;
+     }
  
-+static size_t virtio_9p_msize_limit(V9fsState *s)
-+{
-+    const size_t guestPageSize = 4096;
-+    return (VIRTQUEUE_MAX_SIZE - 2) * guestPageSize;
-+}
++    /* cap msize to transport's theoretical limit */
++    if (s->transport->msize_limit) {
++        size_t limit = s->transport->msize_limit(s);
++        if (s->msize > limit) {
++            s->msize = limit;
++            warn_report_once("9p: client msize capped to %zu (transport limit)",
++                             limit);
++        }
++    }
 +
- static const V9fsTransport virtio_9p_transport = {
-     .pdu_vmarshal = virtio_pdu_vmarshal,
-     .pdu_vunmarshal = virtio_pdu_vunmarshal,
-     .init_in_iov_from_pdu = virtio_init_in_iov_from_pdu,
-     .init_out_iov_from_pdu = virtio_init_out_iov_from_pdu,
-     .push_and_notify = virtio_9p_push_and_notify,
-+    .msize_limit = virtio_9p_msize_limit,
- };
- 
- static void virtio_9p_device_realize(DeviceState *dev, Error **errp)
+     /* 8192 is the default msize of Linux clients */
+     if (s->msize <= 8192 && !(s->ctx.export_flags & V9FS_NO_PERF_WARN)) {
+         warn_report_once(
 -- 
 2.47.3
 
