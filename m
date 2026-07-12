@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0527DC44501
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:25:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AC5BC44506
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:25:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wilhg-0005Yl-1T; Sun, 12 Jul 2026 00:22:08 -0400
+	id 1wiljp-0007Y3-NB; Sun, 12 Jul 2026 00:24:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilhe-0005Sy-5n; Sun, 12 Jul 2026 00:22:06 -0400
+ id 1wilj7-0006ot-QU; Sun, 12 Jul 2026 00:23:38 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilhc-0007FC-BO; Sun, 12 Jul 2026 00:22:05 -0400
+ id 1wilj3-0007P6-Gc; Sun, 12 Jul 2026 00:23:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829782; bh=CkkvqrKkJMDykCzjeUSkvz1Eoq0QCZHXo1uQ0Sycca8=;
+ t=1783829782; bh=wlooV9fJ8IftEORL9kCTKCepGrzG41THZk7fKbV7OAs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=OFi7x56iOkn2253X9uUw1k3x6jWGef53k8qz86QK+k66N2ZbjLxzzUCann8g2NSFo
- wMrBSCsffW8tzhE30JJXyMWimSn++boz1nNOld1JK84spqLWbre0cXl0Sm7SKWKlyq
- U6XXKytrC0Miu/j8g+OJSEUFwe3UVdpHpBZwF+t0W7pwvheDcB4cxXIKHwj1aK14q3
- PIv2aInan3Hs7JOnDvj4zLCEnDwkzm81t6yE6bZSzItBnoA5zDuI4RMYoSU2Hiwp/W
- IBVeP/gsKxFl3LoioQtJZsgCuf3E5pyUCGurZydNK1yQISWWDfLV52Y2HerJjqrfvp
- V3FkpQZPmsCHw==
+ b=BmKelAQSE6gYdkwIsnQ3UW16fHtFyLaCNrJy4vRPld/qJhZWB/TANTLicnvEsL3sz
+ F2N79p4VWhYD5boK4tRs7lKUAUBnXMrCHxbgmY6q9o/GaPOVW4qigSBiXPiwMt5j2I
+ 4qX/IIfUp82/ZFB76FGY9UZ81HdILdiPovyL0isSiMphK45rtf8Xvgr1uBiCuBvV/1
+ Simxp0R7UFOEpyO4LgM1S8m0U66HCXR0Zb7rEL2HeX/dW7XOPIVxXyd/SZD18VzaXK
+ WwrrmXXwoW1o+y4XL0FIiGPNljuVv/nay/dkp6QgiNw97+DX7duIL58Ff9g+oA1XRl
+ 2OQ3r8tZmhyUg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 348BE1C0C19;
+ by isrv.corpit.ru (Postfix) with ESMTP id 7D9D01C0C26;
  Sun, 12 Jul 2026 07:16:22 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 681563EB979;
+ by tsrv.corpit.ru (Postfix) with ESMTP id B12143EB986;
  Sun, 12 Jul 2026 07:16:32 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A7D8F13435; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id C86191344F; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 62/75] hw/riscv/riscv-iommu.c: fault for non-user PTE
- in G_STAGE
-Date: Sun, 12 Jul 2026 07:15:20 +0300
-Message-ID: <20260712041539.108341-62-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 75/75] tests: update SPCR loongarch64 and riscv64
+ test data
+Date: Sun, 12 Jul 2026 07:15:33 +0300
+Message-ID: <20260712041539.108341-75-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
@@ -73,45 +73,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 
-riscv-iommu spec 1.0 says:
+On LoongArch and RISC-V the SPCR test data contained:
 
-"When checking the U bit in a second-stage PTE, the transaction
- is treated as not requesting supervisor privilege."
+    Terminal Type : 00
+    Language : 03
 
-We need to *always* fault in case we're on G_STAGE and PTE_U is cleared
-since we can't be on supervisor mode at this point.
+The corrected values are:
 
-Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3555
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Message-ID: <20260701121111.537654-4-daniel.barboza@oss.qualcomm.com>
+    Terminal Type : 03
+    Language : 00
+
+See the specification of the table in
+https://learn.microsoft.com/en-us/windows-hardware/drivers/bringup/serial-port-console-redirection-table
+
+The ACPI table data was rebuilt with
+tests/data/acpi/rebuild-expected-aml.sh.
+
+Remove SPCR expections from tests/qtest/bios-tables-test-allowed-diff.h.
+
+Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260705063147.199732-4-heinrich.schuchardt@canonical.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 9158c900ab308cbb8a70edcc7358efab7b34730e)
+(cherry picked from commit ec7d32428757d5813935cbe099449f6201980d80)
+(Mjt: for 10.0.x, keep risv table only, loongarch is not there yet)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index ca2c6f93572..3e357c0b39c 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -474,6 +474,16 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-             break;                /* Access bit not set */
-         } else if ((iotlb->perm & IOMMU_WO) && !ade && !(pte & PTE_D)) {
-             break;                /* Dirty bit not set */
-+        } else if (pass == G_STAGE && !(pte & PTE_U)) {
-+            /*
-+             * riscv-iommu spec 1.0: "When checking the U bit in a
-+             * second-stage PTE, the transaction is treated as
-+             * not requesting supervisor privilege."
-+             *
-+             * I.e. we need to fault if this is a non-user PTE since
-+             * we are always in user mode at this point.
-+             */
-+            break;
-         } else {
-             /* Leaf PTE, translation completed. */
-             sc[pass].step = sc[pass].levels;
+diff --git a/tests/data/acpi/riscv64/virt/SPCR b/tests/data/acpi/riscv64/virt/SPCR
+index 09617f8793a..59d2c8f7f21 100644
+Binary files a/tests/data/acpi/riscv64/virt/SPCR and b/tests/data/acpi/riscv64/virt/SPCR differ
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index 2c7086d9de1..dfb8523c8bf 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,3 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/loongarch64/virt/SPCR",
+-"tests/data/acpi/riscv64/virt/SPCR",
 -- 
 2.47.3
 
