@@ -4,47 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47862C44506
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:21:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75BD9C44507
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:21:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wilg3-0008LA-EB; Sun, 12 Jul 2026 00:20:30 -0400
+	id 1wilcj-0001yY-Qd; Sun, 12 Jul 2026 00:17:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilfj-00089t-2I; Sun, 12 Jul 2026 00:20:07 -0400
+ id 1wilcL-0001at-7V; Sun, 12 Jul 2026 00:16:37 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilfh-0006rn-93; Sun, 12 Jul 2026 00:20:06 -0400
+ id 1wilcJ-0006Eq-Pt; Sun, 12 Jul 2026 00:16:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829781; bh=n/A//FhHq1qbkUfYPXbXVdYtFXN3CmgO/rsZi5KqWUE=;
+ t=1783829780; bh=NbeN2u3UDyR2EUcnxTJxRfHiBeXPCU5gXQbgJwpyrb8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=iU1/r9LtEpLNzCf4QwXZoCYvL9kiwm/syKsRgdwADbnioZWsdI5rksoReLcqnYNHO
- H/YOM1V3QjvK5EwitEGwur3VXkN8+s7VjsAColxudNQz2bzcCTk+CwxF3P9D7x8YoD
- e7FdBh11CdIsSsS4Li9rLOg1kFUompjnnowQpqf4ffmNyCTg2AgbpdSvqj60vNjH+C
- kp3FrobyhUauCngqBHZ51OZemcMUnT9ngRPI79PhkMXWTD7F8ijw/WKtslXPKail3u
- twhgRsQ1A1nAwKwTI5ZNibbWCR3DexIa+ZYb8FXgJfkJAVI0hgWAlPTT4vR8w8UDZF
- HQU8LMB5FTuTw==
+ b=kNk0edk2LkSbgs6Fs/KHK3Yk33CKThytCsbS0JQeF9H8gY+VX/9xxe4153ssPBNv6
+ h3tOcqAUz7nslZxo/bTbPUz/UEXFr64cH6f9zy1nG+2cdhWxJ7/04p/Dg677CLgQUJ
+ pQagwKr74LUKNkV7H8bVAlbHz+++afbQYk+w9aFBR6s81NqvBRcUGFvJwAvghyYEuc
+ OAagh4vsCFe5hERJ7gKBxR66DVEdZEo9QMQ+Fg1vzoLpPIv6j2e/Ac4MCA7zTgeG6w
+ YWkNNFGlkDwwxfRcjj4Hg+AGDx2EDP9X6bB7CTcD0zEabNloCbjzHpk+u9Gw3Vq0u0
+ XN7tMasXPJiqQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AA56C1C0C05;
- Sun, 12 Jul 2026 07:16:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AFCAD1C0BDF;
+ Sun, 12 Jul 2026 07:16:20 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id DDB7A3EB965;
- Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id DFB823EB93F;
+ Sun, 12 Jul 2026 07:16:30 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 779D21340D; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id 1E923133C1; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Farhan Ali <alifm@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 42/75] s390x/ioinst: Require strict length and format
- for SEI CHSC handler
-Date: Sun, 12 Jul 2026 07:15:00 +0300
-Message-ID: <20260712041539.108341-42-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 04/75] 9pfs: local : Introduce local_fid_fd() helper
+Date: Sun, 12 Jul 2026 07:14:22 +0300
+Message-ID: <20260712041539.108341-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
@@ -73,68 +71,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matthew Rosato <mjrosato@linux.ibm.com>
+From: Greg Kurz <groug@kaod.org>
 
-Ensure SEI commands that are received are of the appropriate length and
-format before handling.
+Factor out duplicated code to a single helper. More users to come.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 8cba80c3a0 ("s390: Add PCI bus support")
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Message-ID: <20260707070728.147203-5-borntraeger@linux.ibm.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-(cherry picked from commit 386268daea86e53d90baf99df5c7b8e2727ea783)
+Signed-off-by: Greg Kurz <groug@kaod.org>
+Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Message-Id: <20250312152933.383967-2-groug@kaod.org>
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+(cherry picked from commit 4f82ce8cd94f2601fb2b2e4cfe0cf5b44131817e)
+(Mjt: pick this one up so subsequent commits are applied cleanly)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/s390x/ioinst.c b/target/s390x/ioinst.c
-index a944f16c254..2f94a29ac27 100644
---- a/target/s390x/ioinst.c
-+++ b/target/s390x/ioinst.c
-@@ -601,13 +601,27 @@ static int chsc_sei_nt2_have_event(void)
- 
- #define CHSC_SEI_NT0    (1ULL << 63)
- #define CHSC_SEI_NT2    (1ULL << 61)
-+#define CHSC_SEI_0_FMT 0x0f000000
- static void ioinst_handle_chsc_sei(ChscReq *req, ChscResp *res)
- {
-     uint64_t selection_mask = ldq_be_p(&req->param1);
-+    uint32_t param0 = be32_to_cpu(req->param0);
-     uint8_t *res_flags = (uint8_t *)res->data;
-+    uint16_t len = be16_to_cpu(req->len);
-+    uint16_t resp_code;
-     int have_event = 0;
-     int have_more = 0;
- 
-+    if (len != 0x0010) {
-+        resp_code = 0x0003;
-+        goto out_err;
-+    }
-+
-+    if (param0 & CHSC_SEI_0_FMT) {
-+        resp_code = 0x0007;
-+        goto out_err;
-+    }
-+
-     /* regarding architecture nt0 can not be masked */
-     have_event = !chsc_sei_nt0_get_event(res);
-     have_more = chsc_sei_nt0_have_event();
-@@ -634,6 +648,12 @@ static void ioinst_handle_chsc_sei(ChscReq *req, ChscResp *res)
-         res->code = cpu_to_be16(0x0005);
-         res->len = cpu_to_be16(CHSC_MIN_RESP_LEN);
-     }
-+    return;
-+
-+ out_err:
-+    res->code = cpu_to_be16(resp_code);
-+    res->len = cpu_to_be16(CHSC_MIN_RESP_LEN);
-+    res->param = 0;
+diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
+index c5309c5ba45..cba3e945f99 100644
+--- a/hw/9pfs/9p-local.c
++++ b/hw/9pfs/9p-local.c
+@@ -766,16 +766,19 @@ out:
+     return err;
  }
  
- static void ioinst_handle_chsc_unimplemented(ChscResp *res)
+-static int local_fstat(FsContext *fs_ctx, int fid_type,
+-                       V9fsFidOpenState *fs, struct stat *stbuf)
++static int local_fid_fd(int fid_type, V9fsFidOpenState *fs)
+ {
+-    int err, fd;
+-
+     if (fid_type == P9_FID_DIR) {
+-        fd = dirfd(fs->dir.stream);
++        return dirfd(fs->dir.stream);
+     } else {
+-        fd = fs->fd;
++        return fs->fd;
+     }
++}
++
++static int local_fstat(FsContext *fs_ctx, int fid_type,
++                       V9fsFidOpenState *fs, struct stat *stbuf)
++{
++    int err, fd = local_fid_fd(fid_type, fs);
+ 
+     err = fstat(fd, stbuf);
+     if (err) {
+@@ -1167,13 +1170,7 @@ out:
+ static int local_fsync(FsContext *ctx, int fid_type,
+                        V9fsFidOpenState *fs, int datasync)
+ {
+-    int fd;
+-
+-    if (fid_type == P9_FID_DIR) {
+-        fd = dirfd(fs->dir.stream);
+-    } else {
+-        fd = fs->fd;
+-    }
++    int fd = local_fid_fd(fid_type, fs);
+ 
+     if (datasync) {
+         return qemu_fdatasync(fd);
 -- 
 2.47.3
 
