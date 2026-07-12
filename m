@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8248C44501
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:26:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A09E1C43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:27:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wilii-0006XS-D3; Sun, 12 Jul 2026 00:23:13 -0400
+	id 1wiliW-0006KL-7O; Sun, 12 Jul 2026 00:23:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wili7-00062B-W8; Sun, 12 Jul 2026 00:22:38 -0400
+ id 1wiliD-00069j-CE; Sun, 12 Jul 2026 00:22:42 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wili6-0007Hk-4Y; Sun, 12 Jul 2026 00:22:35 -0400
+ id 1wiliB-0007MD-NE; Sun, 12 Jul 2026 00:22:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829782; bh=y22mYGO/rUPwIWi0Va28U51rFgUaApaVa61QR2s7Eec=;
+ t=1783829782; bh=LUsT4hMutUyFKLtzirU44K1z143A6xYWET/Tns34LWk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Yuj30K+OIIjs29Hhhp7cSBl0QytQqWJJjQMrQqSycZGkYqrQ2zXGm//uq08hMFfaN
- /jVvfaqyJ3g9OvytwAqaHLIMYa+xbJrJ06HFVIPQ1P/FAIBUJxKXICD+SwHQlrhxwH
- bl7P9aSfprxPrpTzw6PHZx8h81/LwkOn99BJfF5ahAi3L/sN6WztNl/pZLRkfYOldb
- l6uZ8av4GwfG9KrnBnwWo5mLNxorwA9XyXKyPDxtgGhwf0Ve1V9W8XG0hzR99P1Ubz
- nlBVW3s2ujVMf9pLq9K8aaAL0zFfsY9n8wu6JO3KeWDhnDq3NwRdU+rSV8ygvT7DVp
- vgHe4mpIM6zWg==
+ b=Nh5GTvjf7M8mC/EwOU42Yv9jAQAvA0JOcVmLy7rLkLET1NaO9MPjq1s9xBdluBpen
+ jfTwTgjI2pihPaVdgOzvk0iulipiNdvHRSjdkIFAX84i7Rdkzwbp55OjqiZa/C4UFv
+ bzJk6Ppio+VExPTd2IlVKbdlKPO76y1zD0gMOCWyQI/NLFpDbbykZvCJGEj6WgSJn+
+ BLIeagVqMh2BNMAEjr+NLGRs9O8TNlW3cPSNK05psuKuChWBciVvHsyAxh0pzjPMfh
+ hOXHjdNpTjQ784Hn6Se+//jAK1/aR4DVVN55iLx66LuJ4d/vi3aTNckmEhJyDypKvK
+ zkGg5QoUXmnyQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 462A61C0C1C;
+ by isrv.corpit.ru (Postfix) with ESMTP id 5CEB61C0C20;
  Sun, 12 Jul 2026 07:16:22 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7A7613EB97C;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9128F3EB980;
  Sun, 12 Jul 2026 07:16:32 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id AF7741343B; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id B980013443; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Nutty Liu <nutty.liu@hotmail.com>,
+Cc: qemu-stable@nongnu.org, Frank Chang <frank.chang@sifive.com>,
  Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 65/75] hw/riscv/riscv-iommu.c: check for misaligned
- IOHGATP_PPN
-Date: Sun, 12 Jul 2026 07:15:23 +0300
-Message-ID: <20260712041539.108341-65-mjt@tls.msk.ru>
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Jim Shu <jim.shu@sifive.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 69/75] hw/riscv: riscv-iommu: Don't look up DDT cache
+ in Off and Bare modes
+Date: Sun, 12 Jul 2026 07:15:27 +0300
+Message-ID: <20260712041539.108341-69-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
@@ -74,46 +73,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Frank Chang <frank.chang@sifive.com>
 
-We must check if IOHGATP_PPN is 16kb aligned for non-bare GATP modes.
+According to the RISC-V IOMMU specification:
 
-Fixes: 69a9ae4836 ("hw/riscv/riscv-iommu: add ATS support")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3550
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Message-ID: <20260702203616.1795588-2-daniel.barboza@oss.qualcomm.com>
+* When ddtp.iommu_mode is set to Off, there is no DDT look-up, and an "All
+  inbound transactions disallowed" fault (cause = 256) is reported for any
+  inbound transaction.
+
+* When ddtp.iommu_mode is set to Bare, there is no DDT look-up, and the
+  translated address is the same as the IOVA, unless the transaction type
+  is disallowed (cause = 260).
+
+In the current implementation, the DDT cache is incorrectly looked up
+even when ddtp.iommu_mode is set to Off or Bare. This may result in
+unintended cache hits.
+
+Therefore, the DDT cache must not be looked up when ddtp.iommu_mode is
+set to Off or Bare. For other modes, software is required to issue cache
+invalidation commands before any inbound transactions.
+
+Signed-off-by: Frank Chang <frank.chang@sifive.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Jim Shu <jim.shu@sifive.com>
+Message-ID: <20251028085032.2053569-1-frank.chang@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit bf274c54295c81aeda3835e2e0bc971f0bd57f47)
+(cherry picked from commit 15406cc593a76f075f23e4113b2723190e6a0d1a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 9ba7cfaea6f..b8120efc5ab 100644
+index 8e649b77752..f11698f02f0 100644
 --- a/hw/riscv/riscv-iommu.c
 +++ b/hw/riscv/riscv-iommu.c
-@@ -818,6 +818,21 @@ static bool riscv_iommu_validate_device_ctx(RISCVIOMMUState *s,
-         return false;
+@@ -1404,13 +1404,18 @@ static RISCVIOMMUContext *riscv_iommu_ctx(RISCVIOMMUState *s,
+         .devid = devid,
+         .process_id = process_id,
+     };
++    unsigned mode = get_field(s->ddtp, RISCV_IOMMU_DDTP_MODE);
+ 
+     ctx_cache = g_hash_table_ref(s->ctx_cache);
+-    ctx = g_hash_table_lookup(ctx_cache, &key);
+ 
+-    if (ctx && (ctx->tc & RISCV_IOMMU_DC_TC_V)) {
+-        *ref = ctx_cache;
+-        return ctx;
++    if (mode != RISCV_IOMMU_DDTP_MODE_OFF &&
++        mode != RISCV_IOMMU_DDTP_MODE_BARE) {
++        ctx = g_hash_table_lookup(ctx_cache, &key);
++
++        if (ctx && (ctx->tc & RISCV_IOMMU_DC_TC_V)) {
++            *ref = ctx_cache;
++            return ctx;
++        }
      }
  
-+    if (gatp != RISCV_IOMMU_DC_IOHGATP_MODE_BARE) {
-+        uint64_t iohgatp_ppn = get_field(ctx->gatp,
-+                                         RISCV_IOMMU_DC_IOHGATP_PPN);
-+
-+        /*
-+         * One of the conditions for a misconfigured DDT entry
-+         * according to the riscv-spec: "DC.iohgatp.MODE is not
-+         * Bare and the root page table (address) determined by
-+         * DC.iohgatp.PPN is not aligned to a 16-KiB boundary."
-+         */
-+        if (PPN_PHYS(iohgatp_ppn) & ((1ULL << 14) - 1)) {
-+            return false;
-+        }
-+    }
-+
-     fsc_mode = get_field(ctx->satp, RISCV_IOMMU_DC_FSC_MODE);
- 
-     if (ctx->tc & RISCV_IOMMU_DC_TC_PDTV) {
+     ctx = g_new0(RISCVIOMMUContext, 1);
 -- 
 2.47.3
 
