@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD674C43458
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:26:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38278C43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:26:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiljo-0007OK-P9; Sun, 12 Jul 2026 00:24:20 -0400
+	id 1wiles-0007Uo-KL; Sun, 12 Jul 2026 00:19:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilii-0006Zm-3H; Sun, 12 Jul 2026 00:23:12 -0400
+ id 1wiler-0007TK-AR; Sun, 12 Jul 2026 00:19:13 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilig-0007Or-8H; Sun, 12 Jul 2026 00:23:11 -0400
+ id 1wilep-0006eZ-IY; Sun, 12 Jul 2026 00:19:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829782; bh=4EY9QpGglyE7INnukWKzC/c7sRDlWWVeoZ4CT5WSZ0A=;
+ t=1783829781; bh=SYI3iUcKaL4s5MTd7299MvGnOPoQEPZa6++hzhNoVho=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=UCjvB9H3n7CRql2s9KizcON4PQIGB+Bi7FmGDQFB0TWENLyFy/tG8yBaeasSP8O60
- N+fDRDdqBgeI9pifYhRwhTIdX9zFJFs7a/8JN6Mxbp8lqKXrY4V2xPTN/hgwthsPjr
- qilYyRYbBIBX1fTFl2jR6HMHK6HFZ58KbtJP79zG3hFPfTi1gt36szH+ByVgYMDDDb
- 6T0mJxzEafIP7uwI0woSEL+YXt2L7hbExk5Q4YGiKOusY7JHqR7WGpx2btpWc8lfpK
- RA3d6FSj4hUXz/m9nmRdaqJK1lHX5cXznYo439JVOOdc5jZAH9T3/1gKuwT8RGzeOp
- IAgZ16hMrzDbQ==
+ b=HMeUUSBZ9zRsFI/H60TmhQSIkOtjrdej3P/b7JIQq7f+2bhFLRkZt56Nkrw2mnIpv
+ 7o7Nop05aYtgEKDrv8GcjuSApptgNuPqTT+UvALQK9zDDdTi87XdCEOZsHbEHTT/FV
+ nN8QpnYX8lzM1xxgKoDvt0MzGVtSDkQAqHiAy87gOVV9/AI7rDTqlZWjFslo5kvOw+
+ goujc0oMYVCmAyUlzbSC9wK7mDfjGVHBq5NE4pc0uDIUo1lgKs5aaO47wHo+gPiHJJ
+ fdAb4rbpbRkMXuvIxx5LbY1woFX3yv/A5PiXnbU+vwdTgvfgkJWG/AVIHNQS/7F0hY
+ NXqj+mbwcqCkg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 77ECB1C0C25;
- Sun, 12 Jul 2026 07:16:22 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 737A11C0BFC;
+ Sun, 12 Jul 2026 07:16:21 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id ABDDE3EB985;
- Sun, 12 Jul 2026 07:16:32 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id A6DBC3EB95C;
+ Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id C5D3D1344D; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id 61935133FB; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 74/75] hw/acpi: correct field sequence in SPCR table
-Date: Sun, 12 Jul 2026 07:15:32 +0300
-Message-ID: <20260712041539.108341-74-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 33/75] hw/char/virtio-serial-bus: fix
+ guest-triggerable OOM in control_out()
+Date: Sun, 12 Jul 2026 07:14:51 +0300
+Message-ID: <20260712041539.108341-33-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
@@ -72,57 +71,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+From: Laurent Vivier <lvivier@redhat.com>
 
-On LoongArch and RISC-V invalid SPCR tables are created:
+A malicious guest can craft virtqueue descriptors with arbitrary lengths.
+control_out() calls iov_size() on the guest-supplied scatter-gather list
+and passes the result directly to g_malloc(), allowing a guest to force
+QEMU to attempt multi-gigabyte allocations and crash the host process.
 
-    Terminal Type : 00
-    Language : 03
+Fix this by copying at most sizeof(struct virtio_console_control) into a
+stack-local variable instead of allocating a buffer sized by the guest.
+handle_control_message() only accesses the fixed-size id, event, and
+value fields, so no data beyond the struct was ever needed.
 
-The correct values are:
-
-    Terminal Type : 03
-    Language : 00
-
-This is due to commit 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate
-SPCR creation to common location") that swapped the fields.
-
-See the specification of the table in
-https://learn.microsoft.com/en-us/windows-hardware/drivers/bringup/serial-port-console-redirection-table
-
-This page shows version 1.10. But the sequence of the fields was not changed
-since version 1.0.
-
-Our LoongArch and ARM code uses version 1.07 of the specification.
-Our RISC-V code uses version 1.10 of the specification.
-
-Fixes: 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate SPCR creation to common location")
-Origin: https://lore.kernel.org/qemu-devel/20260326121947.51200-1-heinrich.schuchardt@canonical.com/T/#u
-Bug-Ubuntu: https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2146419
-Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260705063147.199732-3-heinrich.schuchardt@canonical.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 15c73b0f17d27956b47812124b646d52181517bf)
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3585
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260622161144.2883799-1-lvivier@redhat.com>
+(cherry picked from commit 36b37f8494800ed9c5d4b6ef03924bd1636cb810)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-index f8f93a9f66c..dc17f47b9b9 100644
---- a/hw/acpi/aml-build.c
-+++ b/hw/acpi/aml-build.c
-@@ -2106,10 +2106,10 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
-     build_append_int_noprefix(table_data, f->stop_bits, 1);
-     /* Flow Control */
-     build_append_int_noprefix(table_data, f->flow_control, 1);
--    /* Language */
--    build_append_int_noprefix(table_data, f->language, 1);
-     /* Terminal Type */
-     build_append_int_noprefix(table_data, f->terminal_type, 1);
-+    /* Language */
-+    build_append_int_noprefix(table_data, f->language, 1);
-     /* PCI Device ID  */
-     build_append_int_noprefix(table_data, f->pci_device_id, 2);
-     /* PCI Vendor ID */
+diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
+index b6d2743a9c6..0c180646c86 100644
+--- a/hw/char/virtio-serial-bus.c
++++ b/hw/char/virtio-serial-bus.c
+@@ -344,22 +344,16 @@ void virtio_serial_throttle_port(VirtIOSerialPort *port, bool throttle)
+ }
+ 
+ /* Guest wants to notify us of some event */
+-static void handle_control_message(VirtIOSerial *vser, void *buf, size_t len)
++static void handle_control_message(VirtIOSerial *vser,
++                                   struct virtio_console_control *gcpkt)
+ {
+     VirtIODevice *vdev = VIRTIO_DEVICE(vser);
+     struct VirtIOSerialPort *port;
+     VirtIOSerialPortClass *vsc;
+-    struct virtio_console_control cpkt, *gcpkt;
++    struct virtio_console_control cpkt;
+     uint8_t *buffer;
+     size_t buffer_len;
+ 
+-    gcpkt = buf;
+-
+-    if (len < sizeof(cpkt)) {
+-        /* The guest sent an invalid control packet */
+-        return;
+-    }
+-
+     cpkt.event = virtio_lduw_p(vdev, &gcpkt->event);
+     cpkt.value = virtio_lduw_p(vdev, &gcpkt->value);
+ 
+@@ -457,41 +451,27 @@ static void control_in(VirtIODevice *vdev, VirtQueue *vq)
+ 
+ static void control_out(VirtIODevice *vdev, VirtQueue *vq)
+ {
++    struct virtio_console_control cpkt;
+     VirtQueueElement *elem;
+     VirtIOSerial *vser;
+-    uint8_t *buf;
+     size_t len;
+ 
+     vser = VIRTIO_SERIAL(vdev);
+ 
+-    len = 0;
+-    buf = NULL;
+     for (;;) {
+-        size_t cur_len;
+-
+         elem = virtqueue_pop(vq, sizeof(VirtQueueElement));
+         if (!elem) {
+             break;
+         }
+ 
+-        cur_len = iov_size(elem->out_sg, elem->out_num);
+-        /*
+-         * Allocate a new buf only if we didn't have one previously or
+-         * if the size of the buf differs
+-         */
+-        if (cur_len > len) {
+-            g_free(buf);
+-
+-            buf = g_malloc(cur_len);
+-            len = cur_len;
++        len = iov_to_buf(elem->out_sg, elem->out_num, 0, &cpkt, sizeof(cpkt));
++        if (len == sizeof(cpkt)) {
++            handle_control_message(vser, &cpkt);
+         }
+-        iov_to_buf(elem->out_sg, elem->out_num, 0, buf, cur_len);
+ 
+-        handle_control_message(vser, buf, cur_len);
+         virtqueue_push(vq, elem, 0);
+         g_free(elem);
+     }
+-    g_free(buf);
+     virtio_notify(vdev, vq);
+ }
+ 
 -- 
 2.47.3
 
