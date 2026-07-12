@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4FC4C44506
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:27:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F994C43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:27:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wilha-0005NN-GM; Sun, 12 Jul 2026 00:22:02 -0400
+	id 1wilfa-0007uX-J5; Sun, 12 Jul 2026 00:19:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilhY-0005HL-B8; Sun, 12 Jul 2026 00:22:00 -0400
+ id 1wilfH-0007kB-SM; Sun, 12 Jul 2026 00:19:42 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilhW-0007CN-M1; Sun, 12 Jul 2026 00:22:00 -0400
+ id 1wilfG-0006kK-Br; Sun, 12 Jul 2026 00:19:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829782; bh=Y82Aw5CHAWvj9oN/jQLzTCIqlkxiicEpPapUu3oe3hA=;
+ t=1783829781; bh=Tu4H6AL24DwgGEbdDrKHT1Zb5tAk0N4S6Vikx02tcNw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=jCZxo/Yh6oMJh308TiWUGWGh527mx4RM6vnNXEieqM3lTInXY9nH15zT7i5cobuPN
- oZ8+XwZ5orHLCjgvsTFp1esWLvqFRp+AMT3zd5S5ALe5ggJf3Wq5KfdNyjRgJhyvfg
- sZ87vkizORsYVjZ95dCmY1Bn6SMhc69RIHWg9arxdYnLbj+a4f7LIyEDpEel5jLOc+
- rfgJ2DH737dTMXp/U397wUgt02ZxcoEdcoOTmGH8yu0aSNczSuHaRQn/5Ez4PshlWv
- csuzewdgBpiwzgVHmunotcCJTBrJpr/BS2hA7govX4V40IjjFKbtRIU39ovZkQ6QqR
- OEN5YFt7Tds6w==
+ b=nPaCCDk/TXrJ6/2Qxn8nduXkCsUeW4+yJH9bPK1hH/k3/DCBIOcp65E5ZxWWSnWXb
+ jFQTPghYXd43SdDu+6nUd4Jec+c2qNBMxgilR6IBzMbqu0V6c6MqqG1f/nQZfcER49
+ k0TiNqLPVIHLJwExP3i2yN36T4JbOFgI1yyKnoUjSXcRD6ou+DhLiM1zQ/BJatC3D7
+ e3J6kf2DZfgr2zMPC7DhXciZYYTCV5OXZkLDeVS+uxStdtlLKQMN0wG54NuJw3T1U5
+ +8I4IEK9UUhQgcO3mTUY8QkkslWAvbu3ILkNJrSi07dM1NcFKFFbqDhQy0RWJ98l/R
+ Mw1gOdlr6xY1Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 254981C0C16;
- Sun, 12 Jul 2026 07:16:22 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 904DC1C0C01;
+ Sun, 12 Jul 2026 07:16:21 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 58FEB3EB976;
- Sun, 12 Jul 2026 07:16:32 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C2E2F3EB961;
+ Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A098D1342F; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id 6DD0513405; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jia Jia <physicalmtea@gmail.com>,
- Jeuk Kim <jeuk20.kim@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 59/75] hw/ufs: avoid double unref of wrapped scsi-hd
-Date: Sun, 12 Jul 2026 07:15:17 +0300
-Message-ID: <20260712041539.108341-59-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Keith Busch <kbusch@kernel.org>,
+ Feifan Qian <bea1e@proton.me>, boy juju <agx1657748706@gmail.com>,
+ Klaus Jensen <k.jensen@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 38/75] hw/nvme: ensure sgl forward progress
+Date: Sun, 12 Jul 2026 07:14:56 +0300
+Message-ID: <20260712041539.108341-38-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
@@ -70,99 +71,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jia Jia <physicalmtea@gmail.com>
+From: Keith Busch <kbusch@kernel.org>
 
-ufs_init_scsi_device() creates an internal scsi-hd and adds it as a
-child of lu->bus. qdev_realize_and_unref() then drops the construction
-reference, leaving the bus child ownership to tear it down.
+A degenerate host can create segment loops of zero-byte data descriptors
+that the controller never breaks out of. While the spec allows zero
+length segments, it provides no guidance on handling loops. It
+makes no sense for a host to submit such a descriptor anyway since it
+can and trivially should point to the next transfer segment, so don't
+even try to work with such behavior. Just reject the command,
+terminating the loop.
 
-ufs_lu_unrealize() still unrefs lu->scsi_dev directly. If the UFS
-controller is ejected through ACPI PCI hotplug, the scsi-hd object can be
-finalized there and then the bus child removal RCU callback later unrefs
-the same object again.
-
-Keep lu->scsi_dev as a borrowed pointer and clear it during unrealize
-without unreffing it.
-
-Add a qtest that ejects the UFS controller through the x86 ACPI PCI
-hotplug eject register. On an ASAN build, the test reproduces the UAF
-before the fix.
-
-Fixes: 096434fea13a ("hw/ufs: Modify lu.c to share codes with SCSI subsystem")
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Jia Jia <physicalmtea@gmail.com>
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
-(cherry picked from commit 90aacd5bc405cb71f77472616093f9e5ad9afd2b)
-(Mjt: tests/qtest/ufs-test.c: context fixup)
+Reported-by: Feifan Qian <bea1e@proton.me>
+Reported-by: boy juju <agx1657748706@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit 034baf047fe143c2713f35fa640407d9da2f6fc3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ufs/lu.c b/hw/ufs/lu.c
-index a16fe34e502..50549d35a0b 100644
---- a/hw/ufs/lu.c
-+++ b/hw/ufs/lu.c
-@@ -412,10 +412,7 @@ static void ufs_lu_unrealize(DeviceState *dev)
- {
-     UfsLu *lu = DO_UPCAST(UfsLu, qdev, dev);
- 
--    if (lu->scsi_dev) {
--        object_unref(OBJECT(lu->scsi_dev));
--        lu->scsi_dev = NULL;
--    }
-+    lu->scsi_dev = NULL;
- }
- 
- static void ufs_lu_class_init(ObjectClass *oc, void *data)
-diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
-index ff9835735c3..eccf151c41a 100644
---- a/tests/qtest/ufs-test.c
-+++ b/tests/qtest/ufs-test.c
-@@ -33,6 +33,8 @@
- #define TEST_QID 0
- #define QUEUE_SIZE 32
- #define UFS_MCQ_MAX_QNUM 32
-+#define ACPI_PCIHP_ADDR 0xae00
-+#define PCI_EJ_BASE 0x0008
- 
- typedef struct QUfs QUfs;
- 
-@@ -634,6 +636,17 @@ static void ufstest_reg_read(void *obj, void *data, QGuestAllocator *alloc)
-     qpci_iounmap(&ufs->dev, ufs->bar);
- }
- 
-+static void ufstest_acpi_eject(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QUfs *ufs = obj;
-+    QTestState *qts = ufs->dev.bus->qts;
-+
-+    qtest_outl(qts, ACPI_PCIHP_ADDR + PCI_EJ_BASE, 1 << 4);
-+    qtest_qmp_assert_success(qts, "{ 'execute': 'query-status' }");
-+    g_usleep(3 * G_USEC_PER_SEC);
-+    qtest_qmp_assert_success(qts, "{ 'execute': 'query-status' }");
-+}
-+
- static void ufstest_init(void *obj, void *data, QGuestAllocator *alloc)
- {
-     QUfs *ufs = obj;
-@@ -1233,6 +1246,8 @@ static void ufs_register_nodes(void)
-                                           .edge.extra_device_opts =
-                                               "mcq=true,mcq-maxq=1" };
- 
-+    QOSGraphTestOptions acpi_eject_test_opts = { .subprocess = true };
-+
-     add_qpci_address(&edge_opts, &(QPCIAddress){ .devfn = QPCI_DEVFN(4, 0) });
- 
-     qos_node_create_driver("ufs", ufs_create);
-@@ -1250,6 +1265,10 @@ static void ufs_register_nodes(void)
-         g_test_message("Skipping ufs io tests for ppc64");
-         return;
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 559d1c5d6c7..a43407e37cd 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -1085,6 +1085,8 @@ static uint16_t nvme_map_sgl(NvmeCtrl *n, NvmeSg *sg, NvmeSglDescriptor sgl,
      }
-+    if (!strcmp(arch, "i386") || !strcmp(arch, "x86_64")) {
-+        qos_add_test("acpi-eject", "ufs", ufstest_acpi_eject,
-+                     &acpi_eject_test_opts);
-+    }
-     qos_add_test("init", "ufs", ufstest_init, NULL);
-     qos_add_test("legacy-read-write", "ufs", ufstest_read_write, &io_test_opts);
-     qos_add_test("mcq-read-write", "ufs", ufstest_read_write, &mcq_test_opts);
+ 
+     for (;;) {
++        size_t prev_len = len;
++
+         switch (NVME_SGL_TYPE(sgld->type)) {
+         case NVME_SGL_DESCR_TYPE_SEGMENT:
+         case NVME_SGL_DESCR_TYPE_LAST_SEGMENT:
+@@ -1165,6 +1167,17 @@ static uint16_t nvme_map_sgl(NvmeCtrl *n, NvmeSg *sg, NvmeSglDescriptor sgl,
+         if (status) {
+             goto unmap;
+         }
++
++        /*
++         * Reject if this segment made no forward progress. The host should
++         * have skipped linking an empty segment. While not strictly spec
++         * compliant, allowing this makes it easy for a pathological host to
++         * create an infinite loop.
++         */
++        if (len == prev_len) {
++            status = NVME_INVALID_SGL_SEG_DESCR | NVME_DNR;
++            goto unmap;
++        }
+     }
+ 
+ out:
 -- 
 2.47.3
 
