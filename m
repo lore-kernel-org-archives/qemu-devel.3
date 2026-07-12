@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60A72C43458
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:19:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 168A4C43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:19:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wile5-0004ZK-Ic; Sun, 12 Jul 2026 00:18:26 -0400
+	id 1wildW-0003zr-8F; Sun, 12 Jul 2026 00:17:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wildr-0004Lc-K4; Sun, 12 Jul 2026 00:18:13 -0400
+ id 1wildU-0003on-C0; Sun, 12 Jul 2026 00:17:48 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wildq-0006UJ-0I; Sun, 12 Jul 2026 00:18:11 -0400
+ id 1wildS-0006Tq-Ji; Sun, 12 Jul 2026 00:17:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829781; bh=zubOijMCLi0QNYNubzThb5FX/Xsi0gKQolCwoOQOe9M=;
+ t=1783829781; bh=pe6ySvDiYfQAWynecStyW+Y8/yvqsIdBFLAlAEz5dFY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fX/SKPqZ1aruGflCx6jIimx5+ePGcMbafCbt2wR4is9jiMhz5HFzKbOJuMg63qWBX
- BK7Heu5Nc8J+vcIHGwGR7YjHX7sEL6EPlronKot9Mdd3PwlA03yxG9b42vQhtSWrkp
- gZEs6esGtw3Keviukx6yKD5LiL+MNGiA4Iox6FNDPID1z14CsaQsddaLXh0uOGUl7c
- FB9ugpw4qByf1vcv9i8V1CWlxFCHa+8aUsPnl6Id/Vwmkw6/YF7QXezvdr36cu6sHC
- 2U58eRt/PE6KQS/yizAvcPZXViEInQpQJduhD4i+pgUcXExNuEotxVtyShBEUpMF2t
- PTS3BFZ45mpZg==
+ b=tOCRwWeKNRzTKqiWsBiBCx+8pgmAXFfjEnDgbMG8sGE3oW+HFOCd5P27cGc0zRmoe
+ bwEzcwXSdzaGnNvjsQSTwrDl5uFMlyE8AyCcYP0RCe2C6JffckMFPYT8JSoFZsIZJN
+ 75C/HerqHohosf6xOP4Xww1FrGbRx5DP0mKRiWg9RvbohtlI4qQNywVSH7CpAAU8ho
+ 0KrG3/g55CYso7qRb+tKldH9ccvbOFwGrTu9q8YRkWo+/43K9sIvH6cQGf5C1CkeJs
+ s0AADuaZgajO1/xuGJPQWIL05vc4Z7J7FKrfSw9O3UidWr+KQMX9KWQukdjs+9YwVD
+ qWlHRj+qODhgQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 309F01C0BF1;
+ by isrv.corpit.ru (Postfix) with ESMTP id 221351C0BEF;
  Sun, 12 Jul 2026 07:16:21 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 640273EB951;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 555663EB94F;
  Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 48181133E5; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id 43935133E1; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 22/75] tests/9p: add
- virtio_9p_add_synth_driver_args() test client function
-Date: Sun, 12 Jul 2026 07:14:40 +0300
-Message-ID: <20260712041539.108341-22-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 20/75] hw/9pfs: add xattr count query interface to fs
+ synth driver
+Date: Sun, 12 Jul 2026 07:14:38 +0300
+Message-ID: <20260712041539.108341-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
@@ -73,48 +73,62 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-Add virtio_9p_add_synth_driver_args() to allow appending custom
-QEMU options for individual 9p synth tests.
+Add a synthetic "/stat/xattr_count" file path that, if being read
+by 9p client, returns the 9p server internal xattr FID counter to
+client.
 
-Link: https://lore.kernel.org/qemu-devel/7fe3eca5d17292464676b68d0513052564cd432a.1781361555.git.qemu_oss@crudebyte.com
+This allows to test and verify that the xattr FID limit is being
+enforced correctly.
+
+Link: https://lore.kernel.org/qemu-devel/357c20fc244c04dcbd36b13aa20a5c9b2034e9f0.1781361555.git.qemu_oss@crudebyte.com
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit 84525ece6817f4e9760a1d484cab01123a546e92)
+(cherry picked from commit 7e42d569a68aec6b0b6f1f068328c5c4ff20bc72)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/libqos/virtio-9p.c b/tests/qtest/libqos/virtio-9p.c
-index 186fcc1141a..823756de8c4 100644
---- a/tests/qtest/libqos/virtio-9p.c
-+++ b/tests/qtest/libqos/virtio-9p.c
-@@ -228,6 +228,12 @@ static void regex_replace(GString *haystack, const char *pattern,
-     g_string_assign(haystack, s);
+diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
+index af8b0474cf9..4f22bdacc3c 100644
+--- a/hw/9pfs/9p-synth.c
++++ b/hw/9pfs/9p-synth.c
+@@ -551,6 +551,19 @@ static ssize_t v9fs_synth_qtest_flush_write(void *buf, int len, off_t offset,
+     return 1;
  }
  
-+void virtio_9p_add_synth_driver_args(GString *cmd_line, const char *args)
++/* transmits internal xattr counter to client */
++static ssize_t v9fs_synth_read_xattr_count(void *buf, int len, off_t offset,
++                                           void *arg)
 +{
-+    /* append passed args to '-fsdev ...' group */
-+    regex_replace(cmd_line, "(-fsdev \\w[^ ]*)", "\\1,%s", args);
++    FsContext *ctx = arg;
++    size_t local_count = ctx->xattr_fid_count;
++    if (len < (int)sizeof(size_t)) {
++        return -ENOSPC;
++    }
++    memcpy(buf, &local_count, sizeof(size_t));
++    return sizeof(size_t);
 +}
 +
- void virtio_9p_assign_local_driver(GString *cmd_line, const char *args)
+ static int synth_init(FsContext *ctx, Error **errp)
  {
-     g_assert_nonnull(local_test_path);
-diff --git a/tests/qtest/libqos/virtio-9p.h b/tests/qtest/libqos/virtio-9p.h
-index 480727120ea..e7efeef7a1d 100644
---- a/tests/qtest/libqos/virtio-9p.h
-+++ b/tests/qtest/libqos/virtio-9p.h
-@@ -44,6 +44,12 @@ struct QVirtio9PDevice {
-     QVirtio9P v9p;
- };
- 
-+/**
-+ * Add required test specific args to the QEMU command line for the 9pfs
-+ * 'synth' fs driver.
-+ */
-+void virtio_9p_add_synth_driver_args(GString *cmd_line, const char *args);
+     QLIST_INIT(&synth_root.child);
+@@ -612,6 +625,19 @@ static int synth_init(FsContext *ctx, Error **errp)
+                 g_free(name);
+             }
+         }
 +
- /**
-  * Creates the directory for the 9pfs 'local' filesystem driver to access.
-  */
++        /* Directory for internal statistic queries */
++        {
++            V9fsSynthNode *stat_dir = NULL;
++            ret = qemu_v9fs_synth_mkdir(NULL, 0755, "stat", &stat_dir);
++            assert(!ret);
++
++            /* File for internal xattr count query */
++            ret = qemu_v9fs_synth_add_file(stat_dir, 0444, "xattr_count",
++                                           v9fs_synth_read_xattr_count,
++                                           NULL, ctx);
++            assert(!ret);
++        }
+     }
+ 
+     return 0;
 -- 
 2.47.3
 
