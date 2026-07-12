@@ -4,49 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38278C43458
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:26:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF33DC43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:26:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiles-0007Uo-KL; Sun, 12 Jul 2026 00:19:14 -0400
+	id 1wiljW-00073j-DU; Sun, 12 Jul 2026 00:24:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wiler-0007TK-AR; Sun, 12 Jul 2026 00:19:13 -0400
+ id 1wilie-0006SP-1w; Sun, 12 Jul 2026 00:23:10 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilep-0006eZ-IY; Sun, 12 Jul 2026 00:19:13 -0400
+ id 1wilic-0007OQ-DQ; Sun, 12 Jul 2026 00:23:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829781; bh=SYI3iUcKaL4s5MTd7299MvGnOPoQEPZa6++hzhNoVho=;
+ t=1783829782; bh=sI8JXGq3VqxVi4Opq2z8HbORYmN7Lmcw/PF0bnI3xeI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=HMeUUSBZ9zRsFI/H60TmhQSIkOtjrdej3P/b7JIQq7f+2bhFLRkZt56Nkrw2mnIpv
- 7o7Nop05aYtgEKDrv8GcjuSApptgNuPqTT+UvALQK9zDDdTi87XdCEOZsHbEHTT/FV
- nN8QpnYX8lzM1xxgKoDvt0MzGVtSDkQAqHiAy87gOVV9/AI7rDTqlZWjFslo5kvOw+
- goujc0oMYVCmAyUlzbSC9wK7mDfjGVHBq5NE4pc0uDIUo1lgKs5aaO47wHo+gPiHJJ
- fdAb4rbpbRkMXuvIxx5LbY1woFX3yv/A5PiXnbU+vwdTgvfgkJWG/AVIHNQS/7F0hY
- NXqj+mbwcqCkg==
+ b=C4asYaPiC5elTfkKnMjYfv1epIJuz5AujAeXYjNqmlGb3AehpL9aIFzshVOa+S4Zd
+ Po9/XYcz7npGvSxeQO3Q1L9euRCdtLDg6Y9Ibls9h8tkqSbMyh+wiCI8WKgpu7h4S6
+ sPu+N5sJuTgPj2cfmuHtmgLr1JWg/JRnkyo/M6IdTjKm13YrZ5ABR6qU3NDrvJKk1I
+ HqTRj2BICpzjkG8ptykzn2G95hF6UGzwzcBkarV7D0jpZvQ8jHjgdI/a4KkauNFtYW
+ 1PJUs6nGD4c5owaFYJ04DQx6msO5OwkxLsJLktwVLAvHUhhaE1iYOoRR2fi38cCE4D
+ pm0lAGLnNMDoA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 737A11C0BFC;
- Sun, 12 Jul 2026 07:16:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 683E51C0C22;
+ Sun, 12 Jul 2026 07:16:22 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A6DBC3EB95C;
- Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9B8413EB982;
+ Sun, 12 Jul 2026 07:16:32 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 61935133FB; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id BE83C13447; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 33/75] hw/char/virtio-serial-bus: fix
- guest-triggerable OOM in control_out()
-Date: Sun, 12 Jul 2026 07:14:51 +0300
-Message-ID: <20260712041539.108341-33-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Nutty Liu <nutty.liu@hotmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 71/75] hw/riscv/riscv-iommu: Fix MemoryRegion owner
+Date: Sun, 12 Jul 2026 07:15:29 +0300
+Message-ID: <20260712041539.108341-71-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,103 +75,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-A malicious guest can craft virtqueue descriptors with arbitrary lengths.
-control_out() calls iov_size() on the guest-supplied scatter-gather list
-and passes the result directly to g_malloc(), allowing a guest to force
-QEMU to attempt multi-gigabyte allocations and crash the host process.
+as points to the MemoryRegion itself. s is the device that owns the
+MemoryRegion.
 
-Fix this by copying at most sizeof(struct virtio_console_control) into a
-stack-local variable instead of allocating a buffer sized by the guest.
-handle_control_message() only accesses the fixed-size id, event, and
-value fields, so no data beyond the struct was ever needed.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3585
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260622161144.2883799-1-lvivier@redhat.com>
-(cherry picked from commit 36b37f8494800ed9c5d4b6ef03924bd1636cb810)
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20251027-iommu-v1-1-0fc52a02a273@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit c497ef6739cfb44b4fdb410ad997e3d2ea506788)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
-index b6d2743a9c6..0c180646c86 100644
---- a/hw/char/virtio-serial-bus.c
-+++ b/hw/char/virtio-serial-bus.c
-@@ -344,22 +344,16 @@ void virtio_serial_throttle_port(VirtIOSerialPort *port, bool throttle)
- }
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 4ba4164df41..5a7f3c783dc 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -1495,7 +1495,7 @@ static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, PCIBus *bus,
+         /* IOVA address space, untranslated addresses */
+         memory_region_init_iommu(&as->iova_mr, sizeof(as->iova_mr),
+             TYPE_RISCV_IOMMU_MEMORY_REGION,
+-            OBJECT(as), "riscv_iommu", UINT64_MAX);
++            OBJECT(s), "riscv_iommu", UINT64_MAX);
+         address_space_init(&as->iova_as, MEMORY_REGION(&as->iova_mr), name);
  
- /* Guest wants to notify us of some event */
--static void handle_control_message(VirtIOSerial *vser, void *buf, size_t len)
-+static void handle_control_message(VirtIOSerial *vser,
-+                                   struct virtio_console_control *gcpkt)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(vser);
-     struct VirtIOSerialPort *port;
-     VirtIOSerialPortClass *vsc;
--    struct virtio_console_control cpkt, *gcpkt;
-+    struct virtio_console_control cpkt;
-     uint8_t *buffer;
-     size_t buffer_len;
- 
--    gcpkt = buf;
--
--    if (len < sizeof(cpkt)) {
--        /* The guest sent an invalid control packet */
--        return;
--    }
--
-     cpkt.event = virtio_lduw_p(vdev, &gcpkt->event);
-     cpkt.value = virtio_lduw_p(vdev, &gcpkt->value);
- 
-@@ -457,41 +451,27 @@ static void control_in(VirtIODevice *vdev, VirtQueue *vq)
- 
- static void control_out(VirtIODevice *vdev, VirtQueue *vq)
- {
-+    struct virtio_console_control cpkt;
-     VirtQueueElement *elem;
-     VirtIOSerial *vser;
--    uint8_t *buf;
-     size_t len;
- 
-     vser = VIRTIO_SERIAL(vdev);
- 
--    len = 0;
--    buf = NULL;
-     for (;;) {
--        size_t cur_len;
--
-         elem = virtqueue_pop(vq, sizeof(VirtQueueElement));
-         if (!elem) {
-             break;
-         }
- 
--        cur_len = iov_size(elem->out_sg, elem->out_num);
--        /*
--         * Allocate a new buf only if we didn't have one previously or
--         * if the size of the buf differs
--         */
--        if (cur_len > len) {
--            g_free(buf);
--
--            buf = g_malloc(cur_len);
--            len = cur_len;
-+        len = iov_to_buf(elem->out_sg, elem->out_num, 0, &cpkt, sizeof(cpkt));
-+        if (len == sizeof(cpkt)) {
-+            handle_control_message(vser, &cpkt);
-         }
--        iov_to_buf(elem->out_sg, elem->out_num, 0, buf, cur_len);
- 
--        handle_control_message(vser, buf, cur_len);
-         virtqueue_push(vq, elem, 0);
-         g_free(elem);
-     }
--    g_free(buf);
-     virtio_notify(vdev, vq);
- }
- 
+         QLIST_INSERT_HEAD(&s->spaces, as, list);
 -- 
 2.47.3
 
