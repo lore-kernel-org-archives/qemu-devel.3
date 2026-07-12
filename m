@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA1A6C43458
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:24:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2CB3C43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:24:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiliU-0006HO-RK; Sun, 12 Jul 2026 00:22:58 -0400
+	id 1wileS-0006fe-VU; Sun, 12 Jul 2026 00:18:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wili6-000610-NU; Sun, 12 Jul 2026 00:22:35 -0400
+ id 1wileR-0006bg-B4; Sun, 12 Jul 2026 00:18:47 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wili5-0007Hf-2h; Sun, 12 Jul 2026 00:22:34 -0400
+ id 1wileP-0006an-KG; Sun, 12 Jul 2026 00:18:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829782; bh=gGkAMl1Z6zPv1Q5fbIBJQaI9b4jZnu2XGQ1emVPJGys=;
+ t=1783829781; bh=8tvbo7R8D3FJVz7Rst07ERGgZegYTk/poZ6DLCMFnQc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=asd8QqvECHBCkoiV+dg/UUZCDQ/DhQD4SECEmYv9yU7udHSpEOlE7dg+2eOwcB7xB
- 4Krq6IC2ezw7DRL2Z9WgKCYlK63bpz9yYNFBOlVXcD2NLcr2IIK3uTxl/LhcQV6NZt
- pTTRSodEDgW/KJGwRAzEsA3Nfdu26MPeLUS+NyprW4tTQ4bUoZyF8rSLJRhZJMd4PR
- srznHmVuRpODBZZ5H1eVsbRE57aYVFuzjy4BNoDZzV4B0b6GUYjfwXaOK3KSqmMHBl
- NT2zeD21b1mo8zODP8Cbc/JSk1SCx8aXGdJ9WkGr6IfsyOFdEJkYyTlKGAwbyBi9mo
- KwTsWHLfgsexA==
+ b=L9NF39jUBZQl8AMzkJqy8atwHaZXabeQ0X1hVWV8uaLHtacHhSS4aC+R3GhAY4ny4
+ 9/03KM6oBIQ59ilIZ6apwrVgVqtsSyWV4n5JuvP+7H/qudx5wtP7jBn9bdr1dAPlnt
+ XejAkelp19eoaIDfpvqKiZqYqGsIl9vJDr9NakgmKdS1Z6nwbk9yeDIzq1yM6P8Jmi
+ I4gd890klgiZBx4JaS5aDhdARnINxvW+FqP1oUIDdfXgxMMD86y6QxHYKTwWX3kGx+
+ 3XGoK6xkjXBx7XqyItMWX4uq5lZgn/vczInRSXCjOMzaczZdVwwHffxQYxuKveq3zz
+ tNpb2OZ37kKqA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4B8E61C0C1D;
- Sun, 12 Jul 2026 07:16:22 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 608BC1C0BF9;
+ Sun, 12 Jul 2026 07:16:21 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7F2573EB97D;
- Sun, 12 Jul 2026 07:16:32 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 947F03EB959;
+ Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id B1EA01343D; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id 5A854133F5; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
+Cc: qemu-stable@nongnu.org, ZhengXiang Qin <qinzhengxiang@foxmail.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 66/75] hw/riscv/riscv-iommu.c: update ioval2 when
- faulting in spa_fetch()
-Date: Sun, 12 Jul 2026 07:15:24 +0300
-Message-ID: <20260712041539.108341-66-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 30/75] target/riscv: avoid abort when reading vtype
+ before env->xl is set
+Date: Sun, 12 Jul 2026 07:14:48 +0300
+Message-ID: <20260712041539.108341-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
@@ -73,48 +73,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: ZhengXiang Qin <qinzhengxiang@foxmail.com>
 
-riscv_iommu_translate(), the only caller of riscv_iommu_spa_fetch(),
-will use riscv_iommu_report_fault() for all faults it detects.  And it
-will use iotlb->translated_addr as 'iotval2' every time.
+TCG plugins may read registers from the vcpu_init_cb() callback.  For
+vtype, this reaches read_vtype() before env->xl has been initialized.
 
-At this moment we're updating iotlb->translated_addr only after a
-translation step is completed, meaning any fault that occur before that
-will have a zeroed iotlb->translated_addr, and as a result iotval2 will
-also be zero later on.
+In that case read_vtype() currently hits g_assert_not_reached() because
+env->xl is zero.  Fall back to the CPU's maximum XLEN only for this
+early-init case.
 
-Keep iotlb->translated_addr updated with the latest translated addr we
-have.
-
-Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3559
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260702171202.1322493-1-daniel.barboza@oss.qualcomm.com>
+Fixes: 638181a180bd ("core/cpu-common: initialise plugin state before thread creation")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3545
+Signed-off-by: ZhengXiang Qin <qinzhengxiang@foxmail.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <tencent_FB929239B227F05F30D62745E38BA01D4307@qq.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 79616dd6e499c4eed0af534872f3ff0e3c133c04)
+(cherry picked from commit 46d96da1309869af6261d1997623b7a5212814d8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index b8120efc5ab..9dd2cb3715b 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -553,6 +553,14 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-         }
-     } while (1);
- 
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index a5c1143a7b4..607dd385d69 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -914,7 +914,16 @@ static RISCVException read_vtype(CPURISCVState *env, int csrno,
+                                  target_ulong *val)
+ {
+     uint64_t vill;
+-    switch (env->xl) {
++    int xl = env->xl;
 +    /*
-+     * riscv_iommu_translate() will receive a fault and then call
-+     * riscv_iommu_report_fault() using iotlb->translated_addr
-+     * as iotval2.  Update translated_addr it with the latest
-+     * translated addr we have.
++     * TCG plugins can read registers before env->xl is initialized.
++     * Fall back to the CPU's maximum XLEN in that early-init case.
 +     */
-+    iotlb->translated_addr = addr;
++    if (xl == 0) {
++        xl = riscv_cpu_mxl(env);
++    }
 +
-     return (iotlb->perm & IOMMU_WO) ?
-                 (pass ? RISCV_IOMMU_FQ_CAUSE_WR_FAULT_VS :
-                         RISCV_IOMMU_FQ_CAUSE_WR_FAULT_S) :
++    switch (xl) {
+     case MXL_RV32:
+         vill = (uint32_t)env->vill << 31;
+         break;
 -- 
 2.47.3
 
