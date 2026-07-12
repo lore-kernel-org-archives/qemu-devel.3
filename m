@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1FAAC43458
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D68FFC44506
 	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:23:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wileR-0006d8-Vb; Sun, 12 Jul 2026 00:18:48 -0400
+	id 1wilhA-0003oz-I4; Sun, 12 Jul 2026 00:21:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wileR-0006am-3Z; Sun, 12 Jul 2026 00:18:47 -0400
+ id 1wilh6-0003eS-Kh; Sun, 12 Jul 2026 00:21:33 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wileP-0006ag-Ft; Sun, 12 Jul 2026 00:18:46 -0400
+ id 1wilh4-000774-Td; Sun, 12 Jul 2026 00:21:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829781; bh=+FR8wz4KKUliuwCuouh/wAFEggyzulrk6oUFPWA1z5w=;
+ t=1783829782; bh=qTlKMcp1/538st1InQe/VhKhpqkwgvvEzQtkZKNKcj4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=MeaY17z36ehtBMB2KOKMd114h4J/9gSRsGvIzG4iOnVKX9NPkP2DoqJt2gh82yuy0
- 3tfhneN7p8V8bDSF5o0GBfEwUuzVHsnlrpDDexU+See4H2UNefhJKQGLbjpKCjzTfQ
- wdZfR6Q7EzBSeDwkNapAILojSFvVMLeaothIQl/+srasY5eUku4oTvsVJxsA8vvM4f
- lwNg96ii4NuoA4rJQ+z0o8+/vnCdJX8j2hod3t57LSjM8QmApZbXDY6GTxLkGbgzTl
- 1MxWSj31lQfIBKDUggbY8Y36BJ4p8kU06h+JqI+jrDJ66BuSmX9veTWge50fRS5A1V
- NrKAwpxOaLtcA==
+ b=B9Pm5nFOvMP6FH/sTAABJ1tFPkt0tvhTrxekXGVcD18mHp7ofLG497S45Iwif9k7O
+ HE/4GBAEbDwhEsl0FC3hPt4dSa1bl/ANT98OAlHfVZc3z81BpjVovKqGyL8jlEMosk
+ oAv6ihSPcBXrCL1tPJYKue5y9c7OZfoNayHH8XxxIeKIptY13xzU2BrP1wEA9WEp7x
+ GiGLuqRGKukfbxXPSSf7OjLIHXISlXssbIp0ZfP8SFeiQtM57uegdlwgaMkJSX3Mkc
+ TNSLtuHjQT3JQY9gbZt6emNyfNQNm57IVemJfV9oB/AG7ZHDXwXnnms3RydcpkNzIe
+ 63P54yVvvmKeQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5B3301C0BF8;
- Sun, 12 Jul 2026 07:16:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0964B1C0C12;
+ Sun, 12 Jul 2026 07:16:22 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8DF443EB958;
- Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3C6CA3EB972;
+ Sun, 12 Jul 2026 07:16:32 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 58363133F3; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id 971EF13427; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Qingwei Hu <qingwei.hu@bytedance.com>,
- Nutty Liu <nutty.liu@hotmail.com>, Sunil V L <sunilvl@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 29/75] hw/riscv/virt-acpi-build: Fix RINTC PLIC
- context ID for KVM
-Date: Sun, 12 Jul 2026 07:14:47 +0300
-Message-ID: <20260712041539.108341-29-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 55/75] tcg/loongarch64: Fix vec_val computation in
+ tcg_target_const_match
+Date: Sun, 12 Jul 2026 07:15:13 +0300
+Message-ID: <20260712041539.108341-55-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,48 +73,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Qingwei Hu <qingwei.hu@bytedance.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Each RISC-V MADT RINTC entry contains an External Interrupt Controller
-ID field. On the virt machine without AIA, this field identifies the
-S-mode PLIC context associated with the hart.
+Only use vece for a vector constant.  This avoids an assertion
+failure in sextract64 when vece contains garbage.
 
-TCG virt has both M-mode and S-mode PLIC contexts, so the S-mode context
-ID is odd and 2 * local_cpu_id + 1 is correct. KVM virt exposes only
-S-mode PLIC contexts, and those contexts are numbered contiguously from
-0. Reporting the TCG context ID for KVM makes the guest enable a
-different PLIC context from the one used by QEMU.
-
-With ACPI enabled, this can leave PCI INTx interrupts pending in QEMU
-while the guest-programmed PLIC context remains disabled. A virtio-blk
-root disk can then stall during boot because its first interrupt is never
-delivered.
-
-Use local_cpu_id for KVM and keep the existing odd S-mode context ID for
-TCG.
-
-Fixes: d641da6ed43 ("hw/riscv/virt-acpi-build.c: Add PLIC in MADT")
-Signed-off-by: Qingwei Hu <qingwei.hu@bytedance.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Reviewed-by: Sunil V L <sunilvl@oss.qualcomm.com>
-Message-ID: <20260604120017.398890-1-qingwei.hu@bytedance.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit fdfcd98f6656b0cf425475bd8ce7f4c08adf8ca6)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit a079836005fb92eb1fee19e59654b337a41fd0ff)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-index e2b8229168d..b14c1c8e8c5 100644
---- a/hw/riscv/virt-acpi-build.c
-+++ b/hw/riscv/virt-acpi-build.c
-@@ -100,6 +100,8 @@ static void riscv_acpi_madt_add_rintc(uint32_t uid,
-         build_append_int_noprefix(entry,
-                                   ACPI_BUILD_INTC_ID(
-                                       arch_ids->cpus[uid].props.node_id,
-+                                      kvm_enabled() ?
-+                                      local_cpu_id :
-                                       2 * local_cpu_id + 1),
-                                   4);
-     } else {
+diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
+index cbd7642b58a..740b7c264d6 100644
+--- a/tcg/loongarch64/tcg-target.c.inc
++++ b/tcg/loongarch64/tcg-target.c.inc
+@@ -211,12 +211,14 @@ static bool tcg_target_const_match(int64_t val, int ct,
+     if ((ct & TCG_CT_CONST_WSZ) && val == (type == TCG_TYPE_I32 ? 32 : 64)) {
+         return true;
+     }
+-    int64_t vec_val = sextract64(val, 0, 8 << vece);
+-    if ((ct & TCG_CT_CONST_VCMP) && -0x10 <= vec_val && vec_val <= 0x1f) {
+-        return true;
+-    }
+-    if ((ct & TCG_CT_CONST_VADD) && -0x1f <= vec_val && vec_val <= 0x1f) {
+-        return true;
++    if (ct & (TCG_CT_CONST_VCMP | TCG_CT_CONST_VADD)) {
++        int64_t vec_val = sextract64(val, 0, 8 << vece);
++        if ((ct & TCG_CT_CONST_VCMP) && -0x10 <= vec_val && vec_val <= 0x1f) {
++            return true;
++        }
++        if ((ct & TCG_CT_CONST_VADD) && -0x1f <= vec_val && vec_val <= 0x1f) {
++            return true;
++        }
+     }
+     return false;
+ }
 -- 
 2.47.3
 
