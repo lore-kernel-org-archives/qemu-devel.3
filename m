@@ -4,44 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A4F6C43458
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:25:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0527DC44501
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:25:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wilhC-0003wo-EQ; Sun, 12 Jul 2026 00:21:38 -0400
+	id 1wilhg-0005Yl-1T; Sun, 12 Jul 2026 00:22:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilh9-0003mG-W3; Sun, 12 Jul 2026 00:21:36 -0400
+ id 1wilhe-0005Sy-5n; Sun, 12 Jul 2026 00:22:06 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilh8-0007BX-91; Sun, 12 Jul 2026 00:21:35 -0400
+ id 1wilhc-0007FC-BO; Sun, 12 Jul 2026 00:22:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829782; bh=7sn6D8T0oh26eT6b9Kq8wyK87q1ciKICgmcw/SvJuVQ=;
+ t=1783829782; bh=CkkvqrKkJMDykCzjeUSkvz1Eoq0QCZHXo1uQ0Sycca8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=P6AkqhljPYp4MHYgTFm2HU2XIcQMeY954oxORYb/QK/TvGfMReCqQskdQKjKjwCkH
- eNLwEy3TnpySypTqFjfTEshwEjs9bL8wOZDKVJl7AiqJJo6V4McXUaxkht4hMlHjgM
- ThkEcCKqMQMOivdabUI8KGjd3HK2BMQjtmLAUAhWbUWpDwO+J39aLJ/IHRe8kmqlKp
- /wBXTskspBd36qlMn0kwDV9tTZeTSb/R5whvV7LP+4Hi22w7VUAHAE3XvaF+aVQVkK
- AEdlUXs8p/S6o1xiSD7I6eGEL9UUhhIk5ZkCj0Pjq1L2rwevA+KnN2l5lFksGZV0Lm
- f7mAt3ydDUPMA==
+ b=OFi7x56iOkn2253X9uUw1k3x6jWGef53k8qz86QK+k66N2ZbjLxzzUCann8g2NSFo
+ wMrBSCsffW8tzhE30JJXyMWimSn++boz1nNOld1JK84spqLWbre0cXl0Sm7SKWKlyq
+ U6XXKytrC0Miu/j8g+OJSEUFwe3UVdpHpBZwF+t0W7pwvheDcB4cxXIKHwj1aK14q3
+ PIv2aInan3Hs7JOnDvj4zLCEnDwkzm81t6yE6bZSzItBnoA5zDuI4RMYoSU2Hiwp/W
+ IBVeP/gsKxFl3LoioQtJZsgCuf3E5pyUCGurZydNK1yQISWWDfLV52Y2HerJjqrfvp
+ V3FkpQZPmsCHw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 159F71C0C14;
+ by isrv.corpit.ru (Postfix) with ESMTP id 348BE1C0C19;
  Sun, 12 Jul 2026 07:16:22 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 494D73EB974;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 681563EB979;
  Sun, 12 Jul 2026 07:16:32 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 9BD0F1342B; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id A7D8F13435; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 57/75] tcg/loongarch64: Fix cmp_vec with TCG_COND_NE
-Date: Sun, 12 Jul 2026 07:15:15 +0300
-Message-ID: <20260712041539.108341-57-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 62/75] hw/riscv/riscv-iommu.c: fault for non-user PTE
+ in G_STAGE
+Date: Sun, 12 Jul 2026 07:15:20 +0300
+Message-ID: <20260712041539.108341-62-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
@@ -70,68 +73,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-For NE we need to invert EQ, not swap operands.
+riscv-iommu spec 1.0 says:
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3589
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260623140609.645445-1-richard.henderson@linaro.org>
-(cherry picked from commit c56ebd64b82aa4d4a4e2144abbf9568ef593b836)
+"When checking the U bit in a second-stage PTE, the transaction
+ is treated as not requesting supervisor privilege."
+
+We need to *always* fault in case we're on G_STAGE and PTE_U is cleared
+since we can't be on supervisor mode at this point.
+
+Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3555
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260701121111.537654-4-daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 9158c900ab308cbb8a70edcc7358efab7b34730e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-index 879f66f2555..743a6838392 100644
---- a/tcg/loongarch64/tcg-target.c.inc
-+++ b/tcg/loongarch64/tcg-target.c.inc
-@@ -2054,19 +2054,36 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
-                 default:
-                     g_assert_not_reached();
-                 }
--                break;
--            }
--
--            insn = cmp_vec_insn[cond][lasx][vece];
--            if (insn == 0) {
--                TCGArg t;
--                t = a1, a1 = a2, a2 = t;
--                cond = tcg_swap_cond(cond);
--                insn = cmp_vec_insn[cond][lasx][vece];
--                tcg_debug_assert(insn != 0);
-+            } else {
-+                switch (cond) {
-+                case TCG_COND_EQ:
-+                case TCG_COND_LE:
-+                case TCG_COND_LEU:
-+                case TCG_COND_LT:
-+                case TCG_COND_LTU:
-+                    insn = cmp_vec_insn[cond][lasx][vece];
-+                    tcg_out32(s, encode_vdvjvk_insn(insn, a0, a1, a2));
-+                    break;
-+                case TCG_COND_GE:
-+                case TCG_COND_GEU:
-+                case TCG_COND_GT:
-+                case TCG_COND_GTU:
-+                    insn = cmp_vec_insn[tcg_swap_cond(cond)][lasx][vece];
-+                    tcg_out32(s, encode_vdvjvk_insn(insn, a0, a2, a1));
-+                    break;
-+                case TCG_COND_NE:
-+                    /* ne -> not(eq) */
-+                    insn = cmp_vec_insn[TCG_COND_EQ][lasx][vece];
-+                    tcg_out32(s, encode_vdvjvk_insn(insn, a0, a1, a2));
-+                    insn = lasx ? OPC_XVNOR_V : OPC_VNOR_V;
-+                    tcg_out32(s, encode_vdvjvk_insn(insn, a0, a0, a0));
-+                    break;
-+                default:
-+                    g_assert_not_reached();
-+                }
-             }
-         }
--        goto vdvjvk;
-+        break;
-     case INDEX_op_add_vec:
-         tcg_out_addsub_vec(s, lasx, vece, a0, a1, a2, const_args[2], true);
-         break;
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index ca2c6f93572..3e357c0b39c 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -474,6 +474,16 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+             break;                /* Access bit not set */
+         } else if ((iotlb->perm & IOMMU_WO) && !ade && !(pte & PTE_D)) {
+             break;                /* Dirty bit not set */
++        } else if (pass == G_STAGE && !(pte & PTE_U)) {
++            /*
++             * riscv-iommu spec 1.0: "When checking the U bit in a
++             * second-stage PTE, the transaction is treated as
++             * not requesting supervisor privilege."
++             *
++             * I.e. we need to fault if this is a non-user PTE since
++             * we are always in user mode at this point.
++             */
++            break;
+         } else {
+             /* Leaf PTE, translation completed. */
+             sc[pass].step = sc[pass].levels;
 -- 
 2.47.3
 
