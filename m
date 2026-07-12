@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BA81C43458
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:26:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD674C43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:26:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wilcr-0002TO-SN; Sun, 12 Jul 2026 00:17:10 -0400
+	id 1wiljo-0007OK-P9; Sun, 12 Jul 2026 00:24:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilcZ-0001lg-Or; Sun, 12 Jul 2026 00:16:55 -0400
+ id 1wilii-0006Zm-3H; Sun, 12 Jul 2026 00:23:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilcX-0006Hc-JO; Sun, 12 Jul 2026 00:16:51 -0400
+ id 1wilig-0007Or-8H; Sun, 12 Jul 2026 00:23:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829780; bh=0LzW0jaYKGDQ4dkWaUYbNxBbsZkh2/L8H26i3L4a8Rc=;
+ t=1783829782; bh=4EY9QpGglyE7INnukWKzC/c7sRDlWWVeoZ4CT5WSZ0A=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=kDK0v/7dIFie0LCVUKzgAHk4b61Yt7n0ared8qCKXU4Xc0gZF/xeb3GMW8DBtE8Pl
- WUaOXEEfhN44QWYk4mL/yyMNFGDOzDBiSjoAs4+z9hYPeGz9Ajjk366Y/HL3zj0EKM
- l9vI6tg+yW0MuDAJHviMKUXtYUA33FVWqNPoTbq8ax/m/jRKPbbUWFXFC17j2gxnQF
- EfiWrD8n7fk6/8sIo3Ksp1DrDsITgdN3LGDfHOfFw1oRfftG0QGaXd3V7H3/YE9ULM
- w1UvPqdOnaQmgeOrvhEI1r++knqidGVwCNeG74Akzb2CNn0RzAGLoYi+6CIdnX7pOt
- RwKdjGUBPSEPA==
+ b=UCjvB9H3n7CRql2s9KizcON4PQIGB+Bi7FmGDQFB0TWENLyFy/tG8yBaeasSP8O60
+ N+fDRDdqBgeI9pifYhRwhTIdX9zFJFs7a/8JN6Mxbp8lqKXrY4V2xPTN/hgwthsPjr
+ qilYyRYbBIBX1fTFl2jR6HMHK6HFZ58KbtJP79zG3hFPfTi1gt36szH+ByVgYMDDDb
+ 6T0mJxzEafIP7uwI0woSEL+YXt2L7hbExk5Q4YGiKOusY7JHqR7WGpx2btpWc8lfpK
+ RA3d6FSj4hUXz/m9nmRdaqJK1lHX5cXznYo439JVOOdc5jZAH9T3/1gKuwT8RGzeOp
+ IAgZ16hMrzDbQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DB2AF1C0BE6;
- Sun, 12 Jul 2026 07:16:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 77ECB1C0C25;
+ Sun, 12 Jul 2026 07:16:22 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 190483EB946;
- Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id ABDDE3EB985;
+ Sun, 12 Jul 2026 07:16:32 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 2EA1B133CF; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id C5D3D1344D; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
+Cc: qemu-stable@nongnu.org,
+ Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 11/75] 9pfs/xen: implement response_buffer_size
- callback
-Date: Sun, 12 Jul 2026 07:14:29 +0300
-Message-ID: <20260712041539.108341-11-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 74/75] hw/acpi: correct field sequence in SPCR table
+Date: Sun, 12 Jul 2026 07:15:32 +0300
+Message-ID: <20260712041539.108341-74-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
@@ -72,57 +72,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 
-Add and implement the response_buffer_size callback for the Xen
-transport.
+On LoongArch and RISC-V invalid SPCR tables are created:
 
-Returns the size of the response buffer from the rings in_sg, as limit
-for 9p server while generating a response for supplied PDU.
+    Terminal Type : 00
+    Language : 03
 
-We use a local iovec array variable in_sg[2] instead of ring->sg, as
-ring->sg is only allocated by init_in_iov_from_pdu() and
-init_out_iov_from_pdu() during request / response processing.
-response_buffer_size() however may be called before those allocators,
-which would dereference ring->sg as NULL pointer. The local array
-avoids this.
+The correct values are:
 
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Link: https://lore.kernel.org/qemu-devel/3b139769eb1d3f9d91ee5281228e6467f9a08b99.1781287774.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit 69c8f5e6946f76a70b141a340c7aeb9d6a8e3c27)
+    Terminal Type : 03
+    Language : 00
+
+This is due to commit 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate
+SPCR creation to common location") that swapped the fields.
+
+See the specification of the table in
+https://learn.microsoft.com/en-us/windows-hardware/drivers/bringup/serial-port-console-redirection-table
+
+This page shows version 1.10. But the sequence of the fields was not changed
+since version 1.0.
+
+Our LoongArch and ARM code uses version 1.07 of the specification.
+Our RISC-V code uses version 1.10 of the specification.
+
+Fixes: 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate SPCR creation to common location")
+Origin: https://lore.kernel.org/qemu-devel/20260326121947.51200-1-heinrich.schuchardt@canonical.com/T/#u
+Bug-Ubuntu: https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2146419
+Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260705063147.199732-3-heinrich.schuchardt@canonical.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 15c73b0f17d27956b47812124b646d52181517bf)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
-index f168c6ef0ee..029a623bf76 100644
---- a/hw/9pfs/xen-9p-backend.c
-+++ b/hw/9pfs/xen-9p-backend.c
-@@ -268,6 +268,17 @@ static size_t xen_9p_msize_limit(V9fsState *s)
-     return limit;
- }
- 
-+static size_t xen_9pfs_response_buffer_size(V9fsPDU *pdu)
-+{
-+    Xen9pfsDev *priv = container_of(pdu->s, Xen9pfsDev, state);
-+    Xen9pfsRing *ring = &priv->rings[pdu->tag % priv->num_rings];
-+    struct iovec in_sg[2];
-+    int num;
-+
-+    xen_9pfs_in_sg(ring, in_sg, &num, pdu->idx, 0);
-+    return iov_size(in_sg, num);
-+}
-+
- static const V9fsTransport xen_9p_transport = {
-     .pdu_vmarshal = xen_9pfs_pdu_vmarshal,
-     .pdu_vunmarshal = xen_9pfs_pdu_vunmarshal,
-@@ -275,6 +286,7 @@ static const V9fsTransport xen_9p_transport = {
-     .init_out_iov_from_pdu = xen_9pfs_init_out_iov_from_pdu,
-     .push_and_notify = xen_9pfs_push_and_notify,
-     .msize_limit = xen_9p_msize_limit,
-+    .response_buffer_size = xen_9pfs_response_buffer_size,
- };
- 
- static int xen_9pfs_init(struct XenLegacyDevice *xendev)
+diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+index f8f93a9f66c..dc17f47b9b9 100644
+--- a/hw/acpi/aml-build.c
++++ b/hw/acpi/aml-build.c
+@@ -2106,10 +2106,10 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
+     build_append_int_noprefix(table_data, f->stop_bits, 1);
+     /* Flow Control */
+     build_append_int_noprefix(table_data, f->flow_control, 1);
+-    /* Language */
+-    build_append_int_noprefix(table_data, f->language, 1);
+     /* Terminal Type */
+     build_append_int_noprefix(table_data, f->terminal_type, 1);
++    /* Language */
++    build_append_int_noprefix(table_data, f->language, 1);
+     /* PCI Device ID  */
+     build_append_int_noprefix(table_data, f->pci_device_id, 2);
+     /* PCI Vendor ID */
 -- 
 2.47.3
 
