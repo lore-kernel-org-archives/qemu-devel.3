@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16F40C44506
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:21:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE9EDC43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:21:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wild1-0002uf-HJ; Sun, 12 Jul 2026 00:17:19 -0400
+	id 1wilfY-0007oJ-0i; Sun, 12 Jul 2026 00:19:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilcx-0002jX-Sk; Sun, 12 Jul 2026 00:17:15 -0400
+ id 1wilfH-0007kA-Rp; Sun, 12 Jul 2026 00:19:42 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilcw-0006RA-2c; Sun, 12 Jul 2026 00:17:15 -0400
+ id 1wilfG-0006fc-0t; Sun, 12 Jul 2026 00:19:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829780; bh=IMJf4l+7Nr4BDxzrgD6Hd3D8zLEjhRubAybnYMg/eGI=;
+ t=1783829781; bh=rTbqI+rqzA3GF2F4gQQ3jRLOngJrG9OCYTzCL0FpM2U=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=DPIMyl3n4R8uInX82Xx3TRZNAz71DGAvg1VCvHHtEh31qpoYo2bwfzFKARyBjB+5W
- 5CIlb/nLgdSSZOidwqjy+cCYVHGJh5R0dvwdVkIzZZs6em8luMw5P7Y5e+sYLSO3JG
- GPGMFWPdnu9/C330Kpkw9wgCA9haHnXMPJ2Lk1AI3MyAK2PYi6lQEcqdw1MI3lPjLr
- XcDiayByvwcZJ7R93SSVpTY/QZdWEEKQANj5HxqJgDu5sO6C500JZ81spYjyNam3Jk
- IEqe8jWF6hzlQfrx5OrufIW9pIJejJDEoxBBvMbgPtO6cJ/kmmTs2BqfwqotxNUsMV
- EtKvWTe4xsOwQ==
+ b=ENH72WOmFyzmIfuNU779s6FQ6umbnFo3HoUt4ZmoiOwXm4pT2md8GYWym5Jtob617
+ p8Pan81WE3ssXn9uPSeWNKwkzOje63x7Pr01X0eBurvdTDw14wDSLZaNDXKiSFA4Vg
+ 2SaMhm3ZobdEWeItD1t2BYFj+U8XX3Iwnd9lX+gLVdo0BE+Ic++wv0ywHvGyNQPJ9G
+ JkquVFDnZ0yshg5rhGx/bquv/D1MTl4dTQagxEEAjgOwAmWKsJarWVTZqMpRVzwgu4
+ qTeSrj0tr10sQwIcUHlr9K7l3z2d3+hoKEgmpt3Bitk5h5eBlAm29af0YrMfhNe4SO
+ ZfLKQU78vhl6A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EF1801C0BE9;
- Sun, 12 Jul 2026 07:16:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8A0D01C0C00;
+ Sun, 12 Jul 2026 07:16:21 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2E63C3EB949;
+ by tsrv.corpit.ru (Postfix) with ESMTP id BDA8E3EB960;
  Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 35C99133D5; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id 6B5CD13403; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 14/75] hw/9pfs: add max_xattr option
-Date: Sun, 12 Jul 2026 07:14:32 +0300
-Message-ID: <20260712041539.108341-14-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jesper Wendel Devantier <j.devantier@samsung.com>,
+ jaeyeong <fin@spl.team>, Jesper Wendel Devantier <foss@defmacro.it>,
+ Klaus Jensen <k.jensen@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 37/75] hw/nvme: fix FDP set FDP events
+Date: Sun, 12 Jul 2026 07:14:55 +0300
+Message-ID: <20260712041539.108341-37-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
@@ -70,178 +71,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Jesper Wendel Devantier <j.devantier@samsung.com>
 
-Previous patch introduced a limit of max. 1024 simultaneous xattr FIDs.
+Addresses an issue reported whereby user-provided event type values
+could trigger two issues:
 
-This patch introduces an option "max_attr" that allows to override this
-limit, just for the case that some user might run into this limit for
-some reason, even if unlikely; or for reducing the limit further down
-(e.g. that default limit of 1024 would cap at max. 64 MiB host memory,
-at least on Linux hosts where the limit per xattr is 64k).
+ 1. if provided event_type == 0xff -> out-of-bounds access
 
-This new "max_xattr" option can be specified with both -fsdev and
--virtfs command line options, with the "local" and the "synth" fs
-drivers.
+ 2. if provided event_type > 7 -> generate a value too large for the
+    u8 event mask.
 
-The previous limit of 1024 is preserved as the default value.
+This patch fixes (1) by correctly adjusting the length of the look-up
+array to be 256 values.
+This patch fixes (2) by:
+  a. changing the event_type mask to 64bit, matching
+     NvmeRuHandle.event_filter
+  b. Matching the behavior of Get Feature - FDP Events by skipping
+     event type values which we do not support.
+     5.2.26.1.21 of the 2.3 Base specification does not explicitly
+     tell us to reject unsupported event type values.
+  c. Documenting in the event type lookup table, that supporting
+     event types greater than 63 requires refactoring the masking
+     code.
 
-Link: https://lore.kernel.org/qemu-devel/b7631ac0d8dde0629bc7c4f2c4185d9f57b962b4.1781361555.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit e6116a81f04c48af9530d984d16ef4ed4346e865)
+Cc: qemu-stable@nongnu.org
+Reported-by: jaeyeong <fin@spl.team>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3631
+Signed-off-by: Jesper Wendel Devantier <foss@defmacro.it>
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit ec917cd49918b6135546b4f6c02658a1913e3d7c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
-index f3800018954..d32fd9dafd0 100644
---- a/fsdev/file-op-9p.h
-+++ b/fsdev/file-op-9p.h
-@@ -99,6 +99,8 @@ typedef struct FsDriverEntry {
-     FsThrottle fst;
-     mode_t fmode;
-     mode_t dmode;
-+    /* temporary storage for parse_opts only */
-+    uint32_t max_xattr;
- } FsDriverEntry;
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 27ade1c14f8..559d1c5d6c7 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -6240,10 +6240,6 @@ static uint16_t nvme_get_feature_fdp_events(NvmeCtrl *n, NvmeNamespace *ns,
+     for (uint8_t event_type = 0; event_type < FDP_EVT_MAX; event_type++) {
+         uint8_t shift = nvme_fdp_evf_shifts[event_type];
+         if (!shift && event_type) {
+-            /*
+-             * only first entry (event_type == 0) has a shift value of 0
+-             * other entries are simply unpopulated.
+-             */
+             continue;
+         }
  
- struct FsContext {
-diff --git a/fsdev/qemu-fsdev-opts.c b/fsdev/qemu-fsdev-opts.c
-index 07a18c6e48d..c2c1e83611b 100644
---- a/fsdev/qemu-fsdev-opts.c
-+++ b/fsdev/qemu-fsdev-opts.c
-@@ -46,6 +46,9 @@ static QemuOptsList qemu_fsdev_opts = {
-         }, {
-             .name = "dmode",
-             .type = QEMU_OPT_NUMBER,
-+        }, {
-+            .name = "max_xattr",
-+            .type = QEMU_OPT_NUMBER,
-         },
+@@ -6488,9 +6484,9 @@ static uint16_t nvme_set_feature_fdp_events(NvmeCtrl *n, NvmeNamespace *ns,
+     uint8_t noet = (cdw11 >> 16) & 0xff;
+     uint16_t ret, ruhid;
+     uint8_t enable = le32_to_cpu(cmd->cdw12) & 0x1;
+-    uint8_t event_mask = 0;
++    uint64_t event_mask = 0;
+     unsigned int i;
+-    g_autofree uint8_t *events = g_malloc0(noet);
++    g_autofree uint8_t *events = NULL;
+     NvmeRuHandle *ruh = NULL;
  
-         THROTTLE_OPTS,
-@@ -92,6 +95,9 @@ static QemuOptsList qemu_virtfs_opts = {
-         }, {
-             .name = "dmode",
-             .type = QEMU_OPT_NUMBER,
-+        }, {
-+            .name = "max_xattr",
-+            .type = QEMU_OPT_NUMBER,
-         },
+     assert(ns);
+@@ -6503,15 +6499,29 @@ static uint16_t nvme_set_feature_fdp_events(NvmeCtrl *n, NvmeNamespace *ns,
+         return NVME_INVALID_FIELD | NVME_DNR;
+     }
  
-         { /*End of list */ }
-diff --git a/fsdev/qemu-fsdev.c b/fsdev/qemu-fsdev.c
-index 57877dad0a7..f97103cf442 100644
---- a/fsdev/qemu-fsdev.c
-+++ b/fsdev/qemu-fsdev.c
-@@ -45,7 +45,7 @@ typedef struct FsDriverListEntry {
- static QTAILQ_HEAD(, FsDriverListEntry) fsdriver_entries =
-     QTAILQ_HEAD_INITIALIZER(fsdriver_entries);
- 
--#define COMMON_FS_DRIVER_OPTIONS "id", "fsdriver", "readonly"
-+#define COMMON_FS_DRIVER_OPTIONS "id", "fsdriver", "readonly", "max_xattr"
- 
- static FsDriverTable FsDrivers[] = {
-     {
-diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
-index cba3e945f99..7c07e237378 100644
---- a/hw/9pfs/9p-local.c
-+++ b/hw/9pfs/9p-local.c
-@@ -1506,6 +1506,15 @@ static int local_parse_opts(QemuOpts *opts, FsDriverEntry *fse, Error **errp)
-     const char *path = qemu_opt_get(opts, "path");
-     const char *multidevs = qemu_opt_get(opts, "multidevs");
- 
-+    uint64_t val = qemu_opt_get_number(opts, "max_xattr",
-+                                       V9FS_MAX_XATTR_DEFAULT);
-+    if (val > UINT32_MAX) {
-+        error_setg(errp, "max_xattr value '%s' too large",
-+                   qemu_opt_get(opts, "max_xattr"));
-+        return -1;
++    if (unlikely(noet == 0)) {
++        return NVME_SUCCESS;
 +    }
-+    fse->max_xattr = val;
 +
-     if (!sec_model) {
-         error_setg(errp, "security_model property not set");
-         error_append_security_model_hint(errp);
-diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
-index be0492b400e..4d1ddb9979a 100644
---- a/hw/9pfs/9p-synth.c
-+++ b/hw/9pfs/9p-synth.c
-@@ -25,6 +25,8 @@
- #include "qemu/rcu_queue.h"
- #include "qemu/cutils.h"
- #include "system/qtest.h"
-+#include "qapi/error.h"
-+#include "qemu/option.h"
+     ruhid = ns->fdp.phs[ph];
+     ruh = &n->subsys->endgrp.fdp.ruhs[ruhid];
  
- /* Root node for synth file system */
- static V9fsSynthNode synth_root = {
-@@ -615,12 +617,27 @@ static int synth_init(FsContext *ctx, Error **errp)
-     return 0;
- }
- 
-+static int synth_parse_opts(QemuOpts *opts, FsDriverEntry *fse, Error **errp)
-+{
-+    uint64_t val = qemu_opt_get_number(opts, "max_xattr",
-+                                       V9FS_MAX_XATTR_DEFAULT);
-+    if (val > UINT32_MAX) {
-+        error_setg(errp, "max_xattr value '%s' too large",
-+                   qemu_opt_get(opts, "max_xattr"));
-+        return -1;
-+    }
-+    fse->max_xattr = val;
++    events = g_malloc0(noet);
 +
-+    return 0;
-+}
-+
- static bool synth_has_valid_file_handle(int fid_type, V9fsFidOpenState *fs)
- {
-     return false;
- }
+     ret = nvme_h2c(n, events, noet, req);
+     if (ret) {
+         return ret;
+     }
  
- FileOperations synth_ops = {
-+    .parse_opts   = synth_parse_opts,
-     .init         = synth_init,
-     .lstat        = synth_lstat,
-     .readlink     = synth_readlink,
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 1255f4ff920..51de5b8aa92 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -4478,8 +4478,8 @@ int v9fs_device_realize_common(V9fsState *s, const V9fsTransport *t,
+     for (i = 0; i < noet; i++) {
++        /*
++         * We ignore requests to enable tracking of unsupported FDP event types
++         */
++        uint8_t event_type = events[i];
++        uint8_t shift = nvme_fdp_evf_shifts[event_type];
++        if (!shift && event_type) {
++            continue;
++        }
+         event_mask |= (1 << nvme_fdp_evf_shifts[events[i]]);
+     }
  
-     s->reclaiming = false;
+diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
+index 4bd64ae718b..bb0d369c28e 100644
+--- a/hw/nvme/nvme.h
++++ b/hw/nvme/nvme.h
+@@ -160,7 +160,14 @@ typedef struct NvmeZone {
+ #define NVME_FDP_MAX_NS_RUHS 32u
+ #define FDPVSS 0
  
--    /* init xattr FID limit */
--    s->ctx.xattr_fid_limit = V9FS_MAX_XATTR_DEFAULT;
-+    /* init xattr FID limit from fsdev config */
-+    s->ctx.xattr_fid_limit = fse->max_xattr;
-     s->ctx.xattr_fid_count = 0;
- 
-     rc = 0;
-diff --git a/system/vl.c b/system/vl.c
-index ec93988a03a..37524179d86 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -3256,7 +3256,7 @@ void qemu_init(int argc, char **argv)
-                 QemuOpts *fsdev;
-                 QemuOpts *device;
-                 const char *writeout, *sock_fd, *socket, *path, *security_model,
--                           *multidevs;
-+                           *multidevs, *max_xattr_str;
- 
-                 olist = qemu_find_opts("virtfs");
-                 if (!olist) {
-@@ -3320,6 +3320,11 @@ void qemu_init(int argc, char **argv)
-                 if (multidevs) {
-                     qemu_opt_set(fsdev, "multidevs", multidevs, &error_abort);
-                 }
-+                max_xattr_str = qemu_opt_get(opts, "max_xattr");
-+                if (max_xattr_str) {
-+                    qemu_opt_set(fsdev, "max_xattr", max_xattr_str,
-+                                 &error_abort);
-+                }
-                 device = qemu_opts_create(qemu_find_opts("device"), NULL, 0,
-                                           &error_abort);
-                 qemu_opt_set(device, "driver", "virtio-9p-pci", &error_abort);
+-static const uint8_t nvme_fdp_evf_shifts[FDP_EVT_MAX] = {
++/*
++ * NOTE: Apart from event type 0, any event type with a shift value of 0 is
++ * considered unsupported and thus skipped in get/set features calls.
++ *
++ * NOTE: NvmeRuHandle uses a 64bit event mask - refactor to support event types
++ *       of 63 or greater.
++ */
++static const uint8_t nvme_fdp_evf_shifts[FDP_EVT_MAX + 1] = {
+     /* Host events */
+     [FDP_EVT_RU_NOT_FULLY_WRITTEN]      = 0,
+     [FDP_EVT_RU_ATL_EXCEEDED]           = 1,
 -- 
 2.47.3
 
