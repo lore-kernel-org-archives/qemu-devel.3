@@ -4,60 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96A9DC43458
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 08:13:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A979C44506
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 08:47:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wipId-0005fh-Pk; Sun, 12 Jul 2026 04:12:31 -0400
+	id 1wippT-0001Oa-Rc; Sun, 12 Jul 2026 04:46:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth+qemu@posteo.eu>)
- id 1wipIb-0005fY-Ri
- for qemu-devel@nongnu.org; Sun, 12 Jul 2026 04:12:29 -0400
-Received: from mout01.posteo.de ([185.67.36.65])
+ (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
+ id 1wippQ-0001Ns-Gy; Sun, 12 Jul 2026 04:46:25 -0400
+Received: from out162-62-57-64.mail.qq.com ([162.62.57.64])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth+qemu@posteo.eu>)
- id 1wipIZ-000318-Rx
- for qemu-devel@nongnu.org; Sun, 12 Jul 2026 04:12:29 -0400
-Received: from submission (posteo.de [185.67.36.169]) 
- by mout01.posteo.de (Postfix) with ESMTPS id 3E112240028
- for <qemu-devel@nongnu.org>; Sun, 12 Jul 2026 10:11:17 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.eu;
- s=1984.8680eb; t=1783843877;
- bh=Do4WGfkX7XQkPnqf+Zd29nZs0vb7wDmt6eAQj82SDHE=;
- h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
- Content-Transfer-Encoding:From;
- b=DQaG3nZ9ATbSRYN5+3Ii9GQANok/+yrBQi2ZqHJ5KGSzLJl/EByl6ZKTaNPznAF8j
- +/Xx5kYtRKXMeBn0bCPpXQq4uH3ALBadH1+OaUtCJc/NVIg+AvQyEJELHp4bo5x2Yz
- PXjeWyPhlVrB+9jgh7PIkiifkGNaIZGubDCAGj6iUvYMvbd4oOyOkiGm8C8lrpbtON
- QJxvfdV78PtwJeVwtstNgu6kq0lgFN4HjWthWtQdf5509VQE9PwWGu+T8AeRc7/zNm
- WvyI2L7HC29+uwq2yuemAHJLiJr7/BK6bqLDMkqU1TcxsAPVaH7tjiwVrVd7Kgkte9
- AShyFQEHsOZ5w==
-Received: from customer (localhost [127.0.0.1])
- by submission (posteo.de) with ESMTPSA id 4gydYv6gRzz9rxB;
- Sun, 12 Jul 2026 10:11:15 +0200 (CEST)
-Date: Sun, 12 Jul 2026 08:11:16 +0000
-From: Thomas Huth <th.huth+qemu@posteo.eu>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, philmd@mailo.com,
- ganeshredcobra@gmail.com
-Subject: Re: [PATCH] tests/functional: fix querying available machines
-Message-ID: <20260712101114.618e74f9@tpx1>
-In-Reply-To: <20260710090317.498350-1-vsementsov@yandex-team.ru>
-References: <20260710090317.498350-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
+ id 1wippH-0006W4-9N; Sun, 12 Jul 2026 04:46:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1783845959; bh=tIyBoHf8hCygG64lLbiB7PHGpQj5vYvBFiB0gG4+0mo=;
+ h=From:To:Cc:Subject:Date;
+ b=WE50viD/f+upav8kKFOGQg1F9QmSsLW/LBjlNIBPSluBvgS6CdUIXPdvq2bcHOBvl
+ LAxrO1yCDamUyynxBY5q+iQ+wjWV9YCWFbNsAVkLy/CPIek25zCuvNTZjwJeBPs3uL
+ oEivSJyhNsd/LvmQuSlOT9K6HC1+3DW/GAF6v3a4=
+Received: from qq.com ([125.69.26.119])
+ by newxmesmtplogicsvrszb51-0.qq.com (NewEsmtp) with SMTP
+ id B788DC29; Sun, 12 Jul 2026 16:45:56 +0800
+X-QQ-mid: xmsmtpt1783845956trs47i4pw
+Message-ID: <tencent_E17E8F6494EE130F71527C6BCE481AF33E08@qq.com>
+X-QQ-XMAILINFO: ORaMKMferCiA4x1ImdjLE6WMn4e5k0Qo3Omhia1aKi68X01F+j8PACFQXJ+OyX
+ gWM2IfTY2Vyry+vyoCawPRJSA0a5+21J3V1xG0FMzxvF92+rVCiuIJ1DbOxk40BBIVMXj12Ti7r5
+ UV9NUFwwGT2cXvhqdAOCEgDAzXN7toR/KvfQmtkPnIuWZaSGvb0mRxLNa+4P/X3TQ9ZnrPPpyRyL
+ Z2rPdMdLmDPX5DOY+YQsc8RNpN3bLaL80XCkTCE+CPFiYxCkESAu+NT+K35qnvcRAAGxmmkKpoZJ
+ dgoFLUavJIsddFLLMAhKrlH7sOu5MGqr85qfGVwo5gDalceOgtJUnNi1/2SUhoSHX5FleNYTUKxc
+ x/P9C77AdQeDL/ntfqQCAFc31gwfbUGvrFAqzzj3LlSrdQvlpzCJLNrqQMbpdXpQaZMjyhzeRC4X
+ zQ75lu40IMsyP5VMGahwRvMfTFE0JaV5IuWmjM3U3WG+0j9wT3T68/VBoKr4MJJ3UVmAQul42tAg
+ //q69IpS6zAdhgaoDoFb22d+Bi7+WaGY2l1EExTw1pyU89pu3B1Qnsd047XY7D6y2dIF6V9TeQ62
+ f1tUwIalZjt/Ddrd3q0GPFW84abipPYpebb7cTlhCTnqjWmr36NHS7KXHMgojpd+uYYoYlfbIo2C
+ Je+TSbZIaZzawsETrMuU9CMo/B4OwdfmBUwtZqdieZFksJZ8iPROR1FUJ7lr70LBtOiZ8LOtabpH
+ rz8O3pRM4ZwtHE2piDV6uMHBOBxG5RUXEXvHB7rPP+nFRQ+1sIQkpOlgUlmVI0TtFQRYg9DB4yvZ
+ K9sa9QTqCFoeBMJHWZsC8hZltS+DXu1YyUe8MTzWeHdI1DClpP6iwoS9EL80EzwdffagQ9QFpvYK
+ lFY/k7tS2vXeOW8A2gdLjxcSN47TDdQfiweSZ9FIKDfVWmUsU7p547THC/lKpovv4sRuWb9gVw4s
+ bGrHHViD2zTcpfYjgNm72XD0uxe7jXPOvGNgVOvesDZ+rccyFYggW5PdEhypcE3xRILRWqEv97Xb
+ m/0B0fReSfTSW/o3CPEEXgH90DMRMKrDy499xpItalF4Kcl+q9brimFj7MdEGBaUTmLL1OLw==
+X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
+From: Yanfeng Liu <yfliu2008@qq.com>
+To: qemu-riscv@nongnu.org
+Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, erdnaxe@crans.org,
+ pierrick.bouvier@oss.qualcomm.com, Yanfeng Liu <yfliu2008@qq.com>
+Subject: [PATCH v1] uftrace: riscv privilege level
+Date: Sun, 12 Jul 2026 16:45:53 +0800
+X-OQ-MSGID: <20260712084553.2945-1-yfliu2008@qq.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=185.67.36.65; envelope-from=th.huth+qemu@posteo.eu;
- helo=mout01.posteo.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=162.62.57.64; envelope-from=yfliu2008@qq.com;
+ helo=out162-62-57-64.mail.qq.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HELO_STATIC_HOST=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,46 +80,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Fri, 10 Jul 2026 12:03:17 +0300
-schrieb Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>:
+This adds RiscV virtual user and supervisor privilege levels to
+uftrace plugin to avoid crashing with H extension guests.
 
-> Aliases are not handled, and that's why tests used them
-> are skipped, like this:
-> 
->     PYTHONPATH=python:tests/functional \
->     QEMU_TEST_QEMU_BINARY=$PWD/build/qemu-system-x86_64 \
->     MESON_BUILD_ROOT=$PWD/build \
->     ./build/pyvenv/bin/python3 tests/functional/x86_64/test_hotplug_blk.py
-> 
-> TAP version 13
-> ok 1 test_hotplug_blk.HotPlugBlk.test # SKIP no support for machine q35
-> 1..1
-> 
-> Fixes: 0e7aa78b0bee50 ("tests/functional: use QMP to query available machines")
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->  tests/functional/qemu_test/testcase.py | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
-> 
-> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-> index 4912a47a464..e4179d165c0 100644
-> --- a/tests/functional/qemu_test/testcase.py
-> +++ b/tests/functional/qemu_test/testcase.py
-> @@ -325,9 +325,12 @@ def set_machine(self, machinename):
->                  resp = tmp_vm.qmp('query-machines')
->  
->                  machines = resp.get('return', [])
-> -                cls._machines = [
-> -                    m.get('name') for m in machines if 'name' in m
-> -                ]
-> +                cls._machines = []
-> +                for m in machines:
-> +                    if 'name' in m:
-> +                        cls._machines.append(m['name'])
-> +                    if 'alias' in m:
-> +                        cls._machines.append(m['alias'])
+Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
+---
+ contrib/plugins/uftrace.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-Thanks for the fix!
+diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
+index 9b0a4963ae..063e32220b 100644
+--- a/contrib/plugins/uftrace.c
++++ b/contrib/plugins/uftrace.c
+@@ -109,6 +109,8 @@ typedef enum {
+     RISCV64_SUPERVISOR,
+     RISCV64_RESERVED,
+     RISCV64_MACHINE,
++    RISCV64_VUSER,
++    RISCV64_VSUPERVISOR,
+     RISCV64_PRIVILEGE_LEVEL_MAX,
+ } Riscv64PrivilegeLevel;
+ 
+@@ -153,8 +155,10 @@ static void uftrace_write_map(bool system_emulation)
+     const char *path = "./uftrace.data/sid-0.map";
+ 
+     if (system_emulation && access(path, F_OK) == 0) {
+-        /* do not erase existing map in system emulation, as a custom one might
+-         * already have been generated by uftrace_symbols.py */
++        /*
++         * do not erase existing map in system emulation, as a custom one might
++         * already have been generated by uftrace_symbols.py
++         */
+         return;
+     }
+ 
+@@ -706,6 +710,8 @@ static const char *riscv64_get_privilege_level_name(uint8_t pl)
+     case RISCV64_SUPERVISOR: return "Supervisor";
+     case RISCV64_RESERVED: return "Unknown";
+     case RISCV64_MACHINE: return "Machine";
++    case RISCV64_VUSER: return "VUser";
++    case RISCV64_VSUPERVISOR: return "VSupervisor";
+     default:
+         g_assert_not_reached();
+     }
+@@ -986,7 +992,8 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+ 
+     score = qemu_plugin_scoreboard_new(sizeof(Cpu));
+     qemu_plugin_register_vcpu_init_cb(id, vcpu_init, NULL);
+-    qemu_plugin_register_atexit_cb(id, at_exit, (void *) info->system_emulation);
++    qemu_plugin_register_atexit_cb(id, at_exit,
++                                   (void *) info->system_emulation);
+     qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
+ 
+     return 0;
+-- 
+2.34.1
 
-Reviewed-by: Thomas Huth <th.huth+qemu@posteo.eu>
 
