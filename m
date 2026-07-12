@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AC5BC44506
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:25:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D9A2C43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:25:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiljp-0007Y3-NB; Sun, 12 Jul 2026 00:24:21 -0400
+	id 1wiljs-0007nV-1x; Sun, 12 Jul 2026 00:24:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilj7-0006ot-QU; Sun, 12 Jul 2026 00:23:38 -0400
+ id 1wilib-0006PI-0B; Sun, 12 Jul 2026 00:23:05 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilj3-0007P6-Gc; Sun, 12 Jul 2026 00:23:37 -0400
+ id 1wiliY-0007M0-Cm; Sun, 12 Jul 2026 00:23:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829782; bh=wlooV9fJ8IftEORL9kCTKCepGrzG41THZk7fKbV7OAs=;
+ t=1783829782; bh=SHH8SSUEZ0aYdLzJIEDv3hjtuTI4QUCllenGHZLjTHE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=BmKelAQSE6gYdkwIsnQ3UW16fHtFyLaCNrJy4vRPld/qJhZWB/TANTLicnvEsL3sz
- F2N79p4VWhYD5boK4tRs7lKUAUBnXMrCHxbgmY6q9o/GaPOVW4qigSBiXPiwMt5j2I
- 4qX/IIfUp82/ZFB76FGY9UZ81HdILdiPovyL0isSiMphK45rtf8Xvgr1uBiCuBvV/1
- Simxp0R7UFOEpyO4LgM1S8m0U66HCXR0Zb7rEL2HeX/dW7XOPIVxXyd/SZD18VzaXK
- WwrrmXXwoW1o+y4XL0FIiGPNljuVv/nay/dkp6QgiNw97+DX7duIL58Ff9g+oA1XRl
- 2OQ3r8tZmhyUg==
+ b=EBeJFJ10rFgPDD50Jq+nAsNGwGuf8mrQEIOHYDkUSC7AKD+y4XuLnlTWvEb/FdzLl
+ u78ohX4u24kvpWls8unbNgBP1F8ADYk39F1nGXJgMtTMPl8bflr+WBruPAf5Mz77cH
+ QknyF6L1cznjj2YX2tY1Xmkny4WeKka5cZtG6P/m19vFMYHpgaGsJqZaZswBTrMTwn
+ IWrkxRlGyzC83ofYa7aabee0lIvHREIx4Wn1TE/6LY2XehfCpMB+slGR4tA+7CyLVh
+ 2gQO9+RvjjGMWXYegJt23y1XqcCMtg0Cbm4+sgLvmnz11u1pimkRy9rNkWY3Z6QmzQ
+ Tp6Wbb+tXVZsQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7D9D01C0C26;
+ by isrv.corpit.ru (Postfix) with ESMTP id 5776B1C0C1F;
  Sun, 12 Jul 2026 07:16:22 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id B12143EB986;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8B2383EB97F;
  Sun, 12 Jul 2026 07:16:32 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id C86191344F; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id B70E513441; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
+Cc: qemu-stable@nongnu.org, Chengbo Gao <gaochengbo@bosc.ac.cn>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 75/75] tests: update SPCR loongarch64 and riscv64
- test data
-Date: Sun, 12 Jul 2026 07:15:33 +0300
-Message-ID: <20260712041539.108341-75-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 68/75] hw/riscv/riscv-iommu: Avoid caching PCI device
+ IDs
+Date: Sun, 12 Jul 2026 07:15:26 +0300
+Message-ID: <20260712041539.108341-68-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
@@ -73,45 +73,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+From: Chengbo Gao <gaochengbo@bosc.ac.cn>
 
-On LoongArch and RISC-V the SPCR test data contained:
+PCI bus numbers may still be unassigned when QEMU initializes a PCI
+device's bus-master address space.  For devices behind bridges,
+pci_bus_num() can return 0 at that point because the guest has not yet
+programmed the bridge Secondary Bus Number register.
 
-    Terminal Type : 00
-    Language : 03
+The RISC-V IOMMU currently stores a fixed device_id in RISCVIOMMUSpace
+when the address space is created.  If the guest later enumerates the
+device on a non-zero bus, DMA translation still uses the stale device_id
+and may look up the wrong device context in the DDT.
 
-The corrected values are:
+Store the stable PCIBus pointer and devfn in RISCVIOMMUSpace instead,
+and compute the device_id from the current bus number when it is needed.
+This keeps DMA translation and ATS invalidation in sync with guest PCI
+bus enumeration.
 
-    Terminal Type : 03
-    Language : 00
-
-See the specification of the table in
-https://learn.microsoft.com/en-us/windows-hardware/drivers/bringup/serial-port-console-redirection-table
-
-The ACPI table data was rebuilt with
-tests/data/acpi/rebuild-expected-aml.sh.
-
-Remove SPCR expections from tests/qtest/bios-tables-test-allowed-diff.h.
-
-Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260705063147.199732-4-heinrich.schuchardt@canonical.com>
+Signed-off-by: Chengbo Gao <gaochengbo@bosc.ac.cn>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260514020637.2819308-1-gaochengbo@bosc.ac.cn>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit ec7d32428757d5813935cbe099449f6201980d80)
-(Mjt: for 10.0.x, keep risv table only, loongarch is not there yet)
+(cherry picked from commit ca7bac51e04fa1ad384963577fabd3a58355ae23)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/data/acpi/riscv64/virt/SPCR b/tests/data/acpi/riscv64/virt/SPCR
-index 09617f8793a..59d2c8f7f21 100644
-Binary files a/tests/data/acpi/riscv64/virt/SPCR and b/tests/data/acpi/riscv64/virt/SPCR differ
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index 2c7086d9de1..dfb8523c8bf 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,3 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/loongarch64/virt/SPCR",
--"tests/data/acpi/riscv64/virt/SPCR",
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index a7b0ab6d887..8e649b77752 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -46,7 +46,8 @@ struct RISCVIOMMUSpace {
+     IOMMUMemoryRegion iova_mr;  /* IOVA memory region for attached device */
+     AddressSpace iova_as;       /* IOVA address space for attached device */
+     RISCVIOMMUState *iommu;     /* Managing IOMMU device state */
+-    uint32_t devid;             /* Requester identifier, AKA device_id */
++    PCIBus *bus;                /* PCI bus of the requester */
++    uint8_t devfn;              /* Requester identifier, AKA device_id */
+     bool notifier;              /* IOMMU unmap notifier enabled */
+     QLIST_ENTRY(RISCVIOMMUSpace) list;
+ };
+@@ -71,6 +72,15 @@ struct RISCVIOMMUEntry {
+ /* IOMMU index for transactions without process_id specified. */
+ #define RISCV_IOMMU_NOPROCID 0
+ 
++static uint32_t riscv_iommu_space_devid(RISCVIOMMUSpace *as)
++{
++    uint32_t devid = PCI_BUILD_BDF(pci_bus_num(as->bus), as->devfn);
++
++    /* FIXME: PCIe bus remapping for attached endpoints. */
++    devid |= as->iommu->bus << 8;
++    return devid;
++}
++
+ static uint8_t riscv_iommu_get_icvec_vector(uint32_t icvec, uint32_t vec_type)
+ {
+     switch (vec_type) {
+@@ -1440,15 +1450,13 @@ static void riscv_iommu_ctx_put(RISCVIOMMUState *s, void *ref)
+ }
+ 
+ /* Find or allocate address space for a given device */
+-static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, uint32_t devid)
++static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, PCIBus *bus,
++                                            int devfn)
+ {
+     RISCVIOMMUSpace *as;
+ 
+-    /* FIXME: PCIe bus remapping for attached endpoints. */
+-    devid |= s->bus << 8;
+-
+     QLIST_FOREACH(as, &s->spaces, list) {
+-        if (as->devid == devid) {
++        if (as->bus == bus && as->devfn == devfn) {
+             break;
+         }
+     }
+@@ -1458,10 +1466,11 @@ static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, uint32_t devid)
+         as = g_new0(RISCVIOMMUSpace, 1);
+ 
+         as->iommu = s;
+-        as->devid = devid;
++        as->bus = bus;
++        as->devfn = devfn;
+ 
+         snprintf(name, sizeof(name), "riscv-iommu-%04x:%02x.%d-iova",
+-            PCI_BUS_NUM(as->devid), PCI_SLOT(as->devid), PCI_FUNC(as->devid));
++            pci_bus_num(bus), PCI_SLOT(devfn), PCI_FUNC(devfn));
+ 
+         /* IOVA address space, untranslated addresses */
+         memory_region_init_iommu(&as->iova_mr, sizeof(as->iova_mr),
+@@ -1471,8 +1480,8 @@ static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, uint32_t devid)
+ 
+         QLIST_INSERT_HEAD(&s->spaces, as, list);
+ 
+-        trace_riscv_iommu_new(s->parent_obj.id, PCI_BUS_NUM(as->devid),
+-                PCI_SLOT(as->devid), PCI_FUNC(as->devid));
++        trace_riscv_iommu_new(s->parent_obj.id, pci_bus_num(bus),
++                PCI_SLOT(devfn), PCI_FUNC(devfn));
+     }
+     return &as->iova_as;
+ }
+@@ -1797,7 +1806,7 @@ static void riscv_iommu_ats(RISCVIOMMUState *s,
+     pid = get_field(cmd->dword0, RISCV_IOMMU_CMD_ATS_PID);
+ 
+     QLIST_FOREACH(as, &s->spaces, list) {
+-        if (as->devid == devid) {
++        if (riscv_iommu_space_devid(as) == devid) {
+             break;
+         }
+     }
+@@ -2800,8 +2809,9 @@ static IOMMUTLBEntry riscv_iommu_memory_region_translate(
+         .addr_mask = ~0ULL,
+         .perm = flag,
+     };
++    uint32_t devid = riscv_iommu_space_devid(as);
+ 
+-    ctx = riscv_iommu_ctx(as->iommu, as->devid, iommu_idx, &ref);
++    ctx = riscv_iommu_ctx(as->iommu, devid, iommu_idx, &ref);
+     if (ctx == NULL) {
+         /* Translation disabled or invalid. */
+         iotlb.addr_mask = 0;
+@@ -2813,8 +2823,8 @@ static IOMMUTLBEntry riscv_iommu_memory_region_translate(
+     }
+ 
+     /* Trace all dma translations with original access flags. */
+-    trace_riscv_iommu_dma(as->iommu->parent_obj.id, PCI_BUS_NUM(as->devid),
+-                          PCI_SLOT(as->devid), PCI_FUNC(as->devid), iommu_idx,
++    trace_riscv_iommu_dma(as->iommu->parent_obj.id, PCI_BUS_NUM(devid),
++                          PCI_SLOT(devid), PCI_FUNC(devid), iommu_idx,
+                           IOMMU_FLAG_STR[flag & IOMMU_RW], iotlb.iova,
+                           iotlb.translated_addr);
+ 
+@@ -2862,7 +2872,7 @@ static AddressSpace *riscv_iommu_find_as(PCIBus *bus, void *opaque, int devfn)
+ 
+     /* Find first matching IOMMU */
+     while (s != NULL && as == NULL) {
+-        as = riscv_iommu_space(s, PCI_BUILD_BDF(pci_bus_num(bus), devfn));
++        as = riscv_iommu_space(s, bus, devfn);
+         s = s->iommus.le_next;
+     }
+ 
 -- 
 2.47.3
 
