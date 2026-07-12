@@ -4,52 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13E79C44501
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:21:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCA91C43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:21:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wilcI-0001ZZ-PW; Sun, 12 Jul 2026 00:16:34 -0400
+	id 1wilew-0007Wc-2S; Sun, 12 Jul 2026 00:19:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilcH-0001ZG-TC; Sun, 12 Jul 2026 00:16:33 -0400
+ id 1wileu-0007WF-HW; Sun, 12 Jul 2026 00:19:16 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilcG-0006EH-D7; Sun, 12 Jul 2026 00:16:33 -0400
+ id 1wiles-0006f7-Pk; Sun, 12 Jul 2026 00:19:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829780; bh=YhgUOMCovio1tSVnOLU0Wg0SjUUuqrQZhhnk1E6pEcU=;
+ t=1783829781; bh=ecttReK+P46PyGJqyXiC1PlVTFgf1qDWXVT0lWQTRRc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=RzqfP1UjgmlPnxb9EAsWkzvfhriQjyzE1ut2iTctSCjrygvnqPgKYy3vwNr9lDWMS
- khkoAO+U8YvpkRiZ/o41M2LksyHzlXL6/h3Vw0pJIx9Z+Zql+szhExZ6e/rqWQO0YK
- 6Stc8GDLhDY8VTHk7557Fo/eagl1Ja+BF9aGKDi/Di2qXrOFGSfG4PiaOmxH/IWF67
- +6IfjCYraTpTrNgiQVqe7adr/VfilSIcDSM2i8kVQXfNT5kFVzU4s8maKPjU4TdvlN
- vpZssfgkq7ol/r/dUPYayR5+Lef2thff5oa5HZ1c2jq9TsEq09dyMDHw/6KGGdokpw
- hFQWy8YoLCqQA==
+ b=JhGJrshZICZg8AqPyscgDgw49DyQXLT9VUoJbX0SolJrrtrbx7qm2anS3Gx4mnZcl
+ Oczg8TKywSKZFeNbz/NjuQtl3hL3SF/qNepuXuTJbDu/1RSxcXdlpCaHOCi+Rhqfu1
+ nowNjKh4m7JL+epu23BY57u3GyxhqhcbHioptL26vkMTzHWYq0CZ/Fy8ZKpqGRwuTC
+ aDyc42sXY3/fmPaiuNdIrEs9fKL0N3yOeq6q9w59VBbCCDbi9hf+y95PgetWBPi0jj
+ IGt4tPCUA4oG23T7YGp1MJdlblt3y0OsGOTokDm994r0V0yitIoJyiJNdya9llo5Nq
+ 7y1MF+Ek6qVZw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8B2B21C0BDC;
- Sun, 12 Jul 2026 07:16:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7F1431C0BFE;
+ Sun, 12 Jul 2026 07:16:21 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id BF0073EB93C;
- Sun, 12 Jul 2026 07:16:30 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B29C63EB95E;
+ Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 17015133BB; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id 66612133FF; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 01/75] ui/gtk: fix bad widget realize on non-GFX VC
-Date: Sun, 12 Jul 2026 07:14:19 +0300
-Message-ID: <20260712041539.108341-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Feifan Qian <bea1e@proton.me>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 35/75] hw/net/fsl_etsec: validate FCB offsets in
+ process_tx_fcb()
+Date: Sun, 12 Jul 2026 07:14:53 +0300
+Message-ID: <20260712041539.108341-35-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,34 +71,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Feifan Qian <bea1e@proton.me>
 
-The GTK VirtualConsole is a union, it may be .gfx or .vte depending on
-the type.
+The TX Frame Control Block (FCB) is prepended to a TX frame when
+BD_TX_TOEUN is set. It contains two guest-controlled u8 offset
+fields that process_tx_fcb() uses to locate L3/L4 headers within
+the frame buffer:
 
-Fixes: 565f85a9c2 ("ui/gtk: force realization of drawing area")
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260623-b4-ui-v4-1-4656aec3398d@redhat.com>
-(cherry picked from commit 27f6d5ba9c97f57d1c7ce67bc01ffe8df0e11c34)
+  l3_header_offset = FCB byte 3 (0..255)
+  l4_header_offset = FCB byte 2 (0..255)
+
+These offsets are applied without any bounds check. When the
+UDP-no-CTU branch is taken, the function writes zero to
+l4_header[6] and l4_header[7]. With both offsets set to 0xFF the
+write target is:
+
+  tx_buffer + 8 + 255 + 255 + 6/7 = tx_buffer + 525
+
+A malicious guest can therefore corrupt up to 509 bytes of heap
+memory beyond a minimally-sized (16 B) TX frame.
+
+Fix: reject the frame and log a guest error when the minimum
+required buffer length
+
+  8 (FCB) + l3_header_offset + l4_header_offset + 8
+
+exceeds tx_buffer_len. Move the l3_header and l4_header pointer
+declarations past the new guard so that out-of-bounds pointers
+are never materialised.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3517
+Signed-off-by: Feifan Qian <bea1e@proton.me>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit bc22c7e4187a619bf9ff7776288b588322e9ee41)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/gtk.c b/ui/gtk.c
-index fe0a2249ffb..86ee8df2d5e 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -2552,7 +2552,9 @@ static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
-         if (!con) {
-             break;
-         }
--        gtk_widget_realize(s->vc[idx].gfx.drawing_area);
-+        if (s->vc[idx].type == GD_VC_GFX) {
-+            gtk_widget_realize(s->vc[idx].gfx.drawing_area);
-+        }
-     }
+diff --git a/hw/net/fsl_etsec/rings.c b/hw/net/fsl_etsec/rings.c
+index 42216de6c9a..7dd364364ea 100644
+--- a/hw/net/fsl_etsec/rings.c
++++ b/hw/net/fsl_etsec/rings.c
+@@ -175,15 +175,30 @@ static void tx_padding_and_crc(eTSEC *etsec, uint32_t min_frame_len)
+ static void process_tx_fcb(eTSEC *etsec)
+ {
+     uint8_t flags = (uint8_t)(*etsec->tx_buffer);
+-    /* L3 header offset from start of frame */
++    /* L3 header offset from start of frame (FCB byte 3) */
+     uint8_t l3_header_offset = (uint8_t)*(etsec->tx_buffer + 3);
+-    /* L4 header offset from start of L3 header */
++    /* L4 header offset from start of L3 header (FCB byte 2) */
+     uint8_t l4_header_offset = (uint8_t)*(etsec->tx_buffer + 2);
++    uint8_t *l3_header;
++    uint8_t *l4_header;
++    int csum = 0;
++
++    /*
++     * Validate FCB header offsets before pointer arithmetic. The highest
++     * byte accessed is l4_header[7], at offset
++     *   8 (FCB size) + l3_header_offset + l4_header_offset + 7
++     * from tx_buffer. Drop the frame if this exceeds the buffer length.
++     */
++    if (etsec->tx_buffer_len < 8u + l3_header_offset + l4_header_offset + 8u) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "eTSEC: FCB offsets exceed frame length, dropping\n");
++        return;
++    }
++
+     /* L3 header */
+-    uint8_t *l3_header = etsec->tx_buffer + 8 + l3_header_offset;
++    l3_header = etsec->tx_buffer + 8 + l3_header_offset;
+     /* L4 header */
+-    uint8_t *l4_header = l3_header + l4_header_offset;
+-    int csum = 0;
++    l4_header = l3_header + l4_header_offset;
  
-     if (opts->u.gtk.has_show_menubar &&
+     /* if packet is IP4 and IP checksum is requested */
+     if (flags & FCB_TX_IP && flags & FCB_TX_CIP) {
 -- 
 2.47.3
 
