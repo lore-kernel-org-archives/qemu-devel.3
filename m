@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB0CBC44506
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04509C44507
 	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:17:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wilcN-0001bv-KS; Sun, 12 Jul 2026 00:16:40 -0400
+	id 1wilcL-0001ap-8I; Sun, 12 Jul 2026 00:16:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilcL-0001au-7d; Sun, 12 Jul 2026 00:16:37 -0400
+ id 1wilcI-0001ZR-Au; Sun, 12 Jul 2026 00:16:34 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilcJ-0006Eh-HC; Sun, 12 Jul 2026 00:16:36 -0400
+ id 1wilcG-0006EK-Pc; Sun, 12 Jul 2026 00:16:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829780; bh=cGtgySVNMmES5ZCARjyRWzqDlJ9yTk1+cOw7Ki4QPLw=;
+ t=1783829780; bh=GZZXjdQ7qK8evYR70ND7UaRLPa6dfHqrQe3CEWX6Glk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=AhpcJWfkZoZBL1BxpxCNuHm5P4or3v3I8kP9z1oDi+CIQIpBl3yK04CIjRp0FesDD
- w73CLam66/IPK6funDbexaDSmKk16Hn2YbdHPyB603GMH3ZEUt2kwFKU9OdPYJM3Q+
- bJFVCceG1mRtryqB5twPmJzXfMOURepHUesg1fZzb5nQlgewGxHWmxc2qPpOsN6Xb8
- RVF6BsCXxfCYtxNJpDemFwzaRZPK8FH5CvUyPruh1PzDtJ9hpRq2I8qRTAjjJc1fnI
- KHdKu3cfEKzfZqHDPKHRE/znShCvFU9N3rjdb+QakCrWiZsv+uOtCA+60YE0xqMZjz
- 6hafsT2idCdGQ==
+ b=RHexoCaLfrdkNhGbhp/a9rUbLhay1fzgfWxfYYbZUjYPngsDdyPmO/7MQYcEjaZsg
+ LDn6+9C66OF6NZODscGn/61l366Tv7AN27p27wyPv22mKrBUWueukmBY5QPf811owM
+ LF7UDy+uFTaNt0/Rw6nYHTMmkdrYIjmg1hWVzDirx8+Lnko8wVOTXzLhZsiUExwmBE
+ TKE+s5qzedzbyA+5O/F7Ru3gu5vs/LTuB9QqTLkW+OiocB4M9UopAd6OA/Gsi8fRkK
+ YilOOioQqsXL6Tof8N1bRJ53zgQPsSmQ9P7blsh87AB1lDBB44pjN55PhO12BE+zdx
+ HpoV3xw7dWG0g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A88FF1C0BDE;
+ by isrv.corpit.ru (Postfix) with ESMTP id 9CEAB1C0BDD;
  Sun, 12 Jul 2026 07:16:20 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D92ED3EB93E;
+ by tsrv.corpit.ru (Postfix) with ESMTP id CC7B03EB93D;
  Sun, 12 Jul 2026 07:16:30 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 1C4C4133BF; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id 19B5D133BD; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
+Cc: qemu-stable@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 03/75] 9pfs: Don't use file descriptors in core code
-Date: Sun, 12 Jul 2026 07:14:21 +0300
-Message-ID: <20260712041539.108341-3-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 02/75] s390x/kvm: clamp stsi 3.2.2 size
+Date: Sun, 12 Jul 2026 07:14:20 +0300
+Message-ID: <20260712041539.108341-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
@@ -55,8 +55,7 @@ X-Spam_score: -2.0
 X-Spam_bar: --
 X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_MSPIKE_H2=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_PDS_OTHER_BAD_TLD=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,108 +71,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Greg Kurz <groug@kaod.org>
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-v9fs_getattr() currently peeks into V9fsFidOpenState to know if a fid
-has a valid file descriptor or directory stream. Even though the fields
-are accessible, this is an implementation detail of the local backend
-that should not be manipulated directly by the server code.
+The stsi 3.2.2 page is being prepared by the kvm module and the size is
+clamped by the kernel. As the memory is mapped in the guest, another
+guest VCPU could race and overwrite the count and messing up the move
+operation. For any out of bound count, fall back to the kernel buffer.
 
-Abstract that with a new has_valid_file_handle() backend operation.
-
-Signed-off-by: Greg Kurz <groug@kaod.org>
-Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Message-Id: <20250312152933.383967-3-groug@kaod.org>
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit f2bb367d2b265c6c0ead1e0d4a8f7c43310b3107)
-(Mjt: pick this one up so subsequent commits are applied cleanly)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Message-ID: <20260622092035.400959-1-borntraeger@linux.ibm.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+(cherry picked from commit a57e4612b61da20ddab196502c76b4dc05da1de8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
-index c453b6494be..29057d0d363 100644
---- a/fsdev/file-op-9p.h
-+++ b/fsdev/file-op-9p.h
-@@ -164,6 +164,7 @@ struct FileOperations {
-     int (*renameat)(FsContext *ctx, V9fsPath *olddir, const char *old_name,
-                     V9fsPath *newdir, const char *new_name);
-     int (*unlinkat)(FsContext *ctx, V9fsPath *dir, const char *name, int flags);
-+    bool (*has_valid_file_handle)(int fid_type, V9fsFidOpenState *fs);
- };
- 
- #endif
-diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
-index 5167c43609b..c5309c5ba45 100644
---- a/hw/9pfs/9p-local.c
-+++ b/hw/9pfs/9p-local.c
-@@ -1584,6 +1584,13 @@ static int local_parse_opts(QemuOpts *opts, FsDriverEntry *fse, Error **errp)
-     return 0;
- }
- 
-+static bool local_has_valid_file_handle(int fid_type, V9fsFidOpenState *fs)
-+{
-+    return
-+        (fid_type == P9_FID_FILE && fs->fd != -1) ||
-+        (fid_type == P9_FID_DIR && fs->dir.stream != NULL);
-+}
-+
- FileOperations local_ops = {
-     .parse_opts = local_parse_opts,
-     .init  = local_init,
-@@ -1621,4 +1628,5 @@ FileOperations local_ops = {
-     .name_to_path = local_name_to_path,
-     .renameat  = local_renameat,
-     .unlinkat = local_unlinkat,
-+    .has_valid_file_handle = local_has_valid_file_handle,
- };
-diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
-index 2abaf3a2918..be0492b400e 100644
---- a/hw/9pfs/9p-synth.c
-+++ b/hw/9pfs/9p-synth.c
-@@ -615,6 +615,11 @@ static int synth_init(FsContext *ctx, Error **errp)
-     return 0;
- }
- 
-+static bool synth_has_valid_file_handle(int fid_type, V9fsFidOpenState *fs)
-+{
-+    return false;
-+}
-+
- FileOperations synth_ops = {
-     .init         = synth_init,
-     .lstat        = synth_lstat,
-@@ -650,4 +655,5 @@ FileOperations synth_ops = {
-     .name_to_path = synth_name_to_path,
-     .renameat     = synth_renameat,
-     .unlinkat     = synth_unlinkat,
-+    .has_valid_file_handle = synth_has_valid_file_handle,
- };
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 34ac2c3c9af..52806670235 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -1607,6 +1607,11 @@ out_nofid:
-     pdu_complete(pdu, err);
- }
- 
-+static bool fid_has_valid_file_handle(V9fsState *s, V9fsFidState *fidp)
-+{
-+    return s->ops->has_valid_file_handle(fidp->fid_type, &fidp->fs);
-+}
-+
- static void coroutine_fn v9fs_getattr(void *opaque)
- {
-     int32_t fid;
-@@ -1629,9 +1634,7 @@ static void coroutine_fn v9fs_getattr(void *opaque)
-         retval = -ENOENT;
-         goto out_nofid;
+diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
+index 4d56e653ddf..81b8282939c 100644
+--- a/target/s390x/kvm/kvm.c
++++ b/target/s390x/kvm/kvm.c
+@@ -1792,6 +1792,15 @@ static void insert_stsi_3_2_2(S390CPU *cpu, __u64 addr, uint8_t ar)
+     } else if (s390_cpu_virt_mem_read(cpu, addr, ar, &sysib, sizeof(sysib))) {
+         return;
      }
--    if ((fidp->fid_type == P9_FID_FILE && fidp->fs.fd != -1) ||
--        (fidp->fid_type == P9_FID_DIR && fidp->fs.dir.stream))
--    {
-+    if (fid_has_valid_file_handle(pdu->s, fidp)) {
-         retval = v9fs_co_fstat(pdu, fidp, &stbuf);
-     } else {
-         retval = v9fs_co_lstat(pdu, &fidp->path, &stbuf);
++
++    /*
++     * The memory was filled by the kernel but mapped into the guest.
++     * If something is fishy, do not touch the buffer.
++     */
++    if (sysib.count == 0 || sysib.count > ARRAY_SIZE(sysib.ext_names)) {
++        return;
++    }
++
+     /* Shift the stack of Extended Names to prepare for our own data */
+     memmove(&sysib.ext_names[1], &sysib.ext_names[0],
+             sizeof(sysib.ext_names[0]) * (sysib.count - 1));
 -- 
 2.47.3
 
