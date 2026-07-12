@@ -4,44 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07053C43458
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1FAAC43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:23:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wilcn-00029K-R5; Sun, 12 Jul 2026 00:17:06 -0400
+	id 1wileR-0006d8-Vb; Sun, 12 Jul 2026 00:18:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilcO-0001d1-Mj; Sun, 12 Jul 2026 00:16:41 -0400
+ id 1wileR-0006am-3Z; Sun, 12 Jul 2026 00:18:47 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilcM-0006FZ-Mo; Sun, 12 Jul 2026 00:16:40 -0400
+ id 1wileP-0006ag-Ft; Sun, 12 Jul 2026 00:18:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829780; bh=hU82KUVs7r0uV1CuQQBBYe00HlzyamewboyrZdlPX8c=;
+ t=1783829781; bh=+FR8wz4KKUliuwCuouh/wAFEggyzulrk6oUFPWA1z5w=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=X2TkcpS8TGU298/I6kZ2X/vepZrXnd7VaOnJZivdziwWCh5VILA2EErciN/MlsW8l
- JQQK/TApS1KTh0ss13ScxKu33NbDEFJjX426O7i1A4e0w6oSBoquQG+99x/78944AK
- EVfgB9RtOFDKkVoNfXPvje7sayxpxA42zLvkqUWqec86wjolG1xADVdNxvmxkIzU8c
- R+nqUkF3ETSbogKD+eDOQufY89uofyfrL2Cqn3mYbxhW3PycMF9rrmV56MJDCnlcf/
- qJuda4bJlzoY3FkFMH4TYzhyOlzUn+I3J69A/3sw/WPVAR8G/w6xVghlccQ8ZO3cfa
- 2zlnxlvDSZGkQ==
+ b=MeaY17z36ehtBMB2KOKMd114h4J/9gSRsGvIzG4iOnVKX9NPkP2DoqJt2gh82yuy0
+ 3tfhneN7p8V8bDSF5o0GBfEwUuzVHsnlrpDDexU+See4H2UNefhJKQGLbjpKCjzTfQ
+ wdZfR6Q7EzBSeDwkNapAILojSFvVMLeaothIQl/+srasY5eUku4oTvsVJxsA8vvM4f
+ lwNg96ii4NuoA4rJQ+z0o8+/vnCdJX8j2hod3t57LSjM8QmApZbXDY6GTxLkGbgzTl
+ 1MxWSj31lQfIBKDUggbY8Y36BJ4p8kU06h+JqI+jrDJ66BuSmX9veTWge50fRS5A1V
+ NrKAwpxOaLtcA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B39481C0BE0;
- Sun, 12 Jul 2026 07:16:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5B3301C0BF8;
+ Sun, 12 Jul 2026 07:16:21 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E53B83EB940;
- Sun, 12 Jul 2026 07:16:30 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8DF443EB958;
+ Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 20CCB133C3; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id 58363133F3; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+Cc: qemu-stable@nongnu.org, Qingwei Hu <qingwei.hu@bytedance.com>,
+ Nutty Liu <nutty.liu@hotmail.com>, Sunil V L <sunilvl@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 05/75] hw/9pfs: add msize_limit transport callback
-Date: Sun, 12 Jul 2026 07:14:23 +0300
-Message-ID: <20260712041539.108341-5-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 29/75] hw/riscv/virt-acpi-build: Fix RINTC PLIC
+ context ID for KVM
+Date: Sun, 12 Jul 2026 07:14:47 +0300
+Message-ID: <20260712041539.108341-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
@@ -70,31 +73,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Qingwei Hu <qingwei.hu@bytedance.com>
 
-Add a new callback 'msize_limit' to the V9fsTransport structure.
+Each RISC-V MADT RINTC entry contains an External Interrupt Controller
+ID field. On the virt machine without AIA, this field identifies the
+S-mode PLIC context associated with the hart.
 
-This allows each transport implementation to provide its theoretical
-maximum 'msize' value, which will be used to cap the negotiated
-msize during Tversion handshake.
+TCG virt has both M-mode and S-mode PLIC contexts, so the S-mode context
+ID is odd and 2 * local_cpu_id + 1 is correct. KVM virt exposes only
+S-mode PLIC contexts, and those contexts are numbered contiguously from
+0. Reporting the TCG context ID for KVM makes the guest enable a
+different PLIC context from the one used by QEMU.
 
-Link: https://lore.kernel.org/qemu-devel/7c4e53eb73c0580d7a321dbf3823ba5647652298.1781287774.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit a1c0e5a73740566d4b9eac1f97f78b8ce470116a)
+With ACPI enabled, this can leave PCI INTx interrupts pending in QEMU
+while the guest-programmed PLIC context remains disabled. A virtio-blk
+root disk can then stall during boot because its first interrupt is never
+delivered.
+
+Use local_cpu_id for KVM and keep the existing odd S-mode context ID for
+TCG.
+
+Fixes: d641da6ed43 ("hw/riscv/virt-acpi-build.c: Add PLIC in MADT")
+Signed-off-by: Qingwei Hu <qingwei.hu@bytedance.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Reviewed-by: Sunil V L <sunilvl@oss.qualcomm.com>
+Message-ID: <20260604120017.398890-1-qingwei.hu@bytedance.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit fdfcd98f6656b0cf425475bd8ce7f4c08adf8ca6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p.h b/hw/9pfs/9p.h
-index b2df659b0e8..d8f364fafdb 100644
---- a/hw/9pfs/9p.h
-+++ b/hw/9pfs/9p.h
-@@ -481,6 +481,7 @@ struct V9fsTransport {
-     void        (*init_out_iov_from_pdu)(V9fsPDU *pdu, struct iovec **piov,
-                                          unsigned int *pniov, size_t size);
-     void        (*push_and_notify)(V9fsPDU *pdu);
-+    size_t      (*msize_limit)(V9fsState *s);
- };
- 
- #endif
+diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+index e2b8229168d..b14c1c8e8c5 100644
+--- a/hw/riscv/virt-acpi-build.c
++++ b/hw/riscv/virt-acpi-build.c
+@@ -100,6 +100,8 @@ static void riscv_acpi_madt_add_rintc(uint32_t uid,
+         build_append_int_noprefix(entry,
+                                   ACPI_BUILD_INTC_ID(
+                                       arch_ids->cpus[uid].props.node_id,
++                                      kvm_enabled() ?
++                                      local_cpu_id :
+                                       2 * local_cpu_id + 1),
+                                   4);
+     } else {
 -- 
 2.47.3
 
