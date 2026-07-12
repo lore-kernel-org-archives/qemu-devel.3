@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80A4AC43458
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95439C44501
 	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:26:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wilhD-00043A-Gt; Sun, 12 Jul 2026 00:21:39 -0400
+	id 1wilhc-0005Qk-MC; Sun, 12 Jul 2026 00:22:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilh9-0003iy-IA; Sun, 12 Jul 2026 00:21:35 -0400
+ id 1wilha-0005Ng-GE; Sun, 12 Jul 2026 00:22:02 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilh7-0007BM-FK; Sun, 12 Jul 2026 00:21:34 -0400
+ id 1wilhY-0007CZ-JA; Sun, 12 Jul 2026 00:22:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829782; bh=sYKxVmO4YQTW0XtW00B+Xbv/33ZASvJMvAu41p8l4W4=;
+ t=1783829782; bh=aED+lkJdX8ThkfnqKjLoXN1kQq35jFVwegSiVR4Y/ww=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=AghFx8MG7E5q/g89epeRgoUjhOzNbpRUw2i4KqOtaZxdNoZn4o4pFy1jcZ56WAXz/
- zFGv22tkYNgTZVu2TySuOybV/CIJPIzs4LLIqs+fotCmZxdjNlfu97Tw70dQq4Rvg7
- fDqT5shcE8wA0mPk8+950AqDoh3UeXYbEAPxOBd0kLZ3Y/bPkv8LgZi1L4Ac+tyj9y
- VHoKk6vuX2WpQqujXHd6cxvj+BFoxEJA5YWar62f7LaQ3yCXzEv7Eil9EdnUeixm/7
- oiKzNieMlLrhRyTezrmoL7ML10OUeM2bRynqaNVrhcRUonc31gmDv5aaI0DCMjM+CL
- SnrQRikpvXvqw==
+ b=psoHIh2eIXcgP/qXncCwHaJM6HNAdcde1BnRMYT9R98h3UounVmy5aWz23Yx0QAgx
+ hHJw/s0HA6DQipmPMu83atPnmdxsNpjCnuEN6EBuN4gtyymBcjqs4e7mGHboIbq8pz
+ o/7LobHlgYak1Zrx3QFmtREZUFUMY9JCEr6P8qDZFfx1R5HJil0fiQ5XyK2pbglY4c
+ EF0DYMX/sz/AIAie0Lu13K0BFB/Tq//VCJHDe90fVSdLQeIhmb8Nm8VZFi8sl8Uqp+
+ 2PidjhmbOhR0uJRxiLALg23EAupId/LqzCCG4eAVwCyWh4LkTRd/MITi13R9EXNnPq
+ +kUesLossRoPw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0F7C11C0C13;
+ by isrv.corpit.ru (Postfix) with ESMTP id 29F321C0C17;
  Sun, 12 Jul 2026 07:16:22 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 41DBD3EB973;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5E04D3EB977;
  Sun, 12 Jul 2026 07:16:32 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 9978A13429; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id A318813431; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 56/75] tcg/loongarch64: Improve constraints for
- TCG_CT_CONST_VCMP
-Date: Sun, 12 Jul 2026 07:15:14 +0300
-Message-ID: <20260712041539.108341-56-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 60/75] hw/riscv/riscv-iommu.c: fix fault type for
+ spa_fetch() faults
+Date: Sun, 12 Jul 2026 07:15:18 +0300
+Message-ID: <20260712041539.108341-60-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,81 +73,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-Use the TCGCond given to tcg_target_const_match to exactly match
-the supported constant.  Adjust the code generation to assume this
-has been done -- recall that encode_*_insn contain assertions that
-the constants are valid.
+Under certain circunstances, like the one described in [1] and [2],
+a read operation that faults will be logged as a write fault instead,
+and vice-versa, if they happen after the translation phase in
+riscv_iommu_spa_fetch().
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 911f7328e9e9de80bf6b1a4697ecf83cc3661f5f)
+The first problem is that we're overwriting iotlb->perm with PTE flags,
+so an IOMMU_RO access flag can be overwritten by whatever flags
+the PTE has.  This will cause the wrong fault type to be thrown at
+the end of the function in case a fault happens.
+
+To solve the iotlb->perm overwrite we'll bit_and the original
+iotlb->perm access flags with the PTE access flags, preserving the
+original access type.  So a IOMMU_RO access in a R+W PTE will result in
+a IOMMU_RO perm.
+
+Second, the resulting fault is received by riscv_iommu_translate(), which
+will then report the fault.  To do that we require a transaction type
+(ttype).  We're prioritizing checking "perm & IOMMU_RW" to set a
+UADDR_WR ttype, and then checking "perm & IOMMU_RO" to set UADDR_RD
+ttype.  The issue with that is IOMMU_RO=1 and IOMMU_RW=3, thus checking
+"perm & IOMMU_RW" for a write then "perm & IOMMU_RO" for a read will
+cause the read fault to always be diagnosed as write.
+
+Make the iotlb->perm matches more strict: "perm & IOMMU_RW" must be
+exactly IOMMU_RW, ensuring that 'perm' has both flags.  Then we can
+check perm & IOMMU_WO and perm & IOMMU_RO without worrying about
+overlapping with the RW flag.
+
+[1] https://gitlab.com/qemu-project/qemu/-/work_items/3557
+[2] https://gitlab.com/qemu-project/qemu/-/work_items/3577
+
+Fixes: 69a9ae4836 ("hw/riscv/riscv-iommu: add ATS support")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3557
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3577
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260701124034.552271-1-daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit b18e3f0e2d0f301952ff3ae4cb73d0e9eb4ee697)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-index 740b7c264d6..879f66f2555 100644
---- a/tcg/loongarch64/tcg-target.c.inc
-+++ b/tcg/loongarch64/tcg-target.c.inc
-@@ -213,8 +213,18 @@ static bool tcg_target_const_match(int64_t val, int ct,
-     }
-     if (ct & (TCG_CT_CONST_VCMP | TCG_CT_CONST_VADD)) {
-         int64_t vec_val = sextract64(val, 0, 8 << vece);
--        if ((ct & TCG_CT_CONST_VCMP) && -0x10 <= vec_val && vec_val <= 0x1f) {
--            return true;
-+        if (ct & TCG_CT_CONST_VCMP) {
-+            switch (cond) {
-+            case TCG_COND_EQ:
-+            case TCG_COND_LE:
-+            case TCG_COND_LT:
-+                return -0x10 <= vec_val && vec_val <= 0x0f;
-+            case TCG_COND_LEU:
-+            case TCG_COND_LTU:
-+                return 0x00 <= vec_val && vec_val <= 0x1f;
-+            default:
-+                return false;
-+            }
-         }
-         if ((ct & TCG_CT_CONST_VADD) && -0x1f <= vec_val && vec_val <= 0x1f) {
-             return true;
-@@ -2029,28 +2039,22 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
-                  * Try vseqi/vslei/vslti
-                  */
-                 int64_t value = sextract64(a2, 0, 8 << vece);
--                if ((cond == TCG_COND_EQ ||
--                     cond == TCG_COND_LE ||
--                     cond == TCG_COND_LT) &&
--                    (-0x10 <= value && value <= 0x0f)) {
-+                switch (cond) {
-+                case TCG_COND_EQ:
-+                case TCG_COND_LE:
-+                case TCG_COND_LT:
-                     insn = cmp_vec_imm_insn[cond][lasx][vece];
-                     tcg_out32(s, encode_vdvjsk5_insn(insn, a0, a1, value));
-                     break;
--                } else if ((cond == TCG_COND_LEU ||
--                            cond == TCG_COND_LTU) &&
--                           (0x00 <= value && value <= 0x1f)) {
-+                case TCG_COND_LEU:
-+                case TCG_COND_LTU:
-                     insn = cmp_vec_imm_insn[cond][lasx][vece];
-                     tcg_out32(s, encode_vdvjuk5_insn(insn, a0, a1, value));
-                     break;
-+                default:
-+                    g_assert_not_reached();
-                 }
--
--                /*
--                 * Fallback to:
--                 * dupi_vec temp, a2
--                 * cmp_vec a0, a1, temp, cond
--                 */
--                tcg_out_dupi_vec(s, type, vece, TCG_VEC_TMP0, a2);
--                a2 = TCG_VEC_TMP0;
-+                break;
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index d7ae03246fd..38af4aea906 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -269,6 +269,7 @@ static hwaddr riscv_iommu_napot_page_mask(hwaddr ppn, hwaddr addr, hwaddr *out)
+ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+     IOMMUTLBEntry *iotlb)
+ {
++    IOMMUAccessFlags pte_perm;
+     dma_addr_t addr, base;
+     uint64_t satp, gatp, pte;
+     bool en_s, en_g;
+@@ -496,8 +497,16 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
              }
+             /* Translation phase completed (GPA or SPA) */
+             iotlb->translated_addr = base;
+-            iotlb->perm = (pte & PTE_W) ? ((pte & PTE_R) ? IOMMU_RW : IOMMU_WO)
+-                                                         : IOMMU_RO;
++
++            /*
++             * Do a bit_and between the PTE bits and the original
++             * request flags to determine the exact permission we
++             * need, i.e. if the original request is RO and the
++             * PTE has RW flags the actual perm is RO.
++             */
++            pte_perm = (pte & PTE_W) ? ((pte & PTE_R) ? IOMMU_RW : IOMMU_WO)
++                                     : IOMMU_RO;
++            iotlb->perm &= pte_perm;
  
-             insn = cmp_vec_insn[cond][lasx][vece];
+             /* Check MSI GPA address match */
+             if (pass == S_STAGE && (iotlb->perm & IOMMU_WO) &&
+@@ -1674,7 +1683,8 @@ done:
+     if (fault) {
+         unsigned ttype = RISCV_IOMMU_FQ_TTYPE_PCIE_ATS_REQ;
+ 
+-        if (iotlb->perm & IOMMU_RW) {
++        if ((iotlb->perm & IOMMU_RW) == IOMMU_RW
++            || iotlb->perm & IOMMU_WO) {
+             ttype = RISCV_IOMMU_FQ_TTYPE_UADDR_WR;
+         } else if (iotlb->perm & IOMMU_RO) {
+             ttype = RISCV_IOMMU_FQ_TTYPE_UADDR_RD;
 -- 
 2.47.3
 
