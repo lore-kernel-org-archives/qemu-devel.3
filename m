@@ -4,48 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 525C3C43458
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:25:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A4F6C43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:25:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wiliQ-0006EV-CC; Sun, 12 Jul 2026 00:22:54 -0400
+	id 1wilhC-0003wo-EQ; Sun, 12 Jul 2026 00:21:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wili2-0005zi-SP; Sun, 12 Jul 2026 00:22:32 -0400
+ id 1wilh9-0003mG-W3; Sun, 12 Jul 2026 00:21:36 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilhy-0007FW-8W; Sun, 12 Jul 2026 00:22:30 -0400
+ id 1wilh8-0007BX-91; Sun, 12 Jul 2026 00:21:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829782; bh=oHZsVuUaD+VJpQ0q2utAt7WKxN8bxXBK+Damo+PTnpI=;
+ t=1783829782; bh=7sn6D8T0oh26eT6b9Kq8wyK87q1ciKICgmcw/SvJuVQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=aEOD/zi29UhnmZCX/7eWAqh1vyTyn3PDZ/Mf++Wx/tJis6BdJmslWq2/KVb5Ym6kc
- uRsi167r2mVEA4ZdpBGr+v5uPe0qS4agl1+T73oKrRG50Ri2jiiDBOzYAm0++YcWDk
- ZpJV+I/dyTWSLPMV9JsoXtmiqufm1azGxDTMAMo/Scs7hQUQsTciZW+zBvXB9yFB6w
- 1NIPYAQXDq0/cpn1IQcCh1i7ergRGmbKbsTMAWtmrGtASGqpEszlwgW4Y9APBkjQKU
- 24fZGt+Ub1txhyD2JHnfh3bJ79pBL4IFL017lVI+ZZTYInbcwB6zlYvQLq0UDz09YH
- q6Ob0ZW60C3Lg==
+ b=P6AkqhljPYp4MHYgTFm2HU2XIcQMeY954oxORYb/QK/TvGfMReCqQskdQKjKjwCkH
+ eNLwEy3TnpySypTqFjfTEshwEjs9bL8wOZDKVJl7AiqJJo6V4McXUaxkht4hMlHjgM
+ ThkEcCKqMQMOivdabUI8KGjd3HK2BMQjtmLAUAhWbUWpDwO+J39aLJ/IHRe8kmqlKp
+ /wBXTskspBd36qlMn0kwDV9tTZeTSb/R5whvV7LP+4Hi22w7VUAHAE3XvaF+aVQVkK
+ AEdlUXs8p/S6o1xiSD7I6eGEL9UUhhIk5ZkCj0Pjq1L2rwevA+KnN2l5lFksGZV0Lm
+ f7mAt3ydDUPMA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3C2AA1C0C1A;
+ by isrv.corpit.ru (Postfix) with ESMTP id 159F71C0C14;
  Sun, 12 Jul 2026 07:16:22 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6E3793EB97A;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 494D73EB974;
  Sun, 12 Jul 2026 07:16:32 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id AA67C13437; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id 9BD0F1342B; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Nutty Liu <nutty.liu@hotmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 63/75] hw/riscv/riscv-iommu.c: check reserved MSI PTE
- basic bits
-Date: Sun, 12 Jul 2026 07:15:21 +0300
-Message-ID: <20260712041539.108341-63-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 57/75] tcg/loongarch64: Fix cmp_vec with TCG_COND_NE
+Date: Sun, 12 Jul 2026 07:15:15 +0300
+Message-ID: <20260712041539.108341-57-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
@@ -74,52 +70,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-We need to throw an MSI_MISCONFIGURED error when any of the reserved PTE
-bits (first doubleword only) are set.
+For NE we need to invert EQ, not swap operands.
 
-Fixes: Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3563
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Message-ID: <20260629125719.679626-1-daniel.barboza@oss.qualcomm.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 11486349ad9b8858d3f45a540fd48b7a15b2b61d)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3589
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260623140609.645445-1-richard.henderson@linaro.org>
+(cherry picked from commit c56ebd64b82aa4d4a4e2144abbf9568ef593b836)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 3e357c0b39c..8055c6d707d 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -656,6 +656,27 @@ static MemTxResult riscv_iommu_msi_write(RISCVIOMMUState *s,
- 
-     switch (get_field(pte[0], RISCV_IOMMU_MSI_PTE_M)) {
-     case RISCV_IOMMU_MSI_PTE_M_BASIC:
-+        /*
-+         * riscv-iommu spec MSI PTE basic translate mode:
-+         * "When an MSI PTE has fields V = 1, C = 0, and M = 3
-+         *  (basic translate mode), the PTE's complete format is:
-+         *  First doubleword:  bit 63      C, = 0
-+         *                     bits 53:10  PPN
-+         *                     bits 2:1    M, = 3
-+         *                     bit 0       V, = 1
-+         *  All other bits of the first doubleword are reserved
-+         *  and must be set to zeros by software.  The second
-+         *  doubleword is ignored by an IOMMU so is free for
-+         *  software to use."
-+         *
-+         * In other words, bits 62:54 and 9:3 of pte[0] are reserved.
-+         */
-+        if (pte[0] & (GENMASK_ULL(62, 54) | GENMASK_ULL(9, 3))) {
-+            res = MEMTX_DECODE_ERROR;
-+            cause = RISCV_IOMMU_FQ_CAUSE_MSI_MISCONFIGURED;
-+            goto err;
-+        }
-+
-         /* MSI Pass-through mode */
-         addr = PPN_PHYS(get_field(pte[0], RISCV_IOMMU_MSI_PTE_PPN));
- 
+diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
+index 879f66f2555..743a6838392 100644
+--- a/tcg/loongarch64/tcg-target.c.inc
++++ b/tcg/loongarch64/tcg-target.c.inc
+@@ -2054,19 +2054,36 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
+                 default:
+                     g_assert_not_reached();
+                 }
+-                break;
+-            }
+-
+-            insn = cmp_vec_insn[cond][lasx][vece];
+-            if (insn == 0) {
+-                TCGArg t;
+-                t = a1, a1 = a2, a2 = t;
+-                cond = tcg_swap_cond(cond);
+-                insn = cmp_vec_insn[cond][lasx][vece];
+-                tcg_debug_assert(insn != 0);
++            } else {
++                switch (cond) {
++                case TCG_COND_EQ:
++                case TCG_COND_LE:
++                case TCG_COND_LEU:
++                case TCG_COND_LT:
++                case TCG_COND_LTU:
++                    insn = cmp_vec_insn[cond][lasx][vece];
++                    tcg_out32(s, encode_vdvjvk_insn(insn, a0, a1, a2));
++                    break;
++                case TCG_COND_GE:
++                case TCG_COND_GEU:
++                case TCG_COND_GT:
++                case TCG_COND_GTU:
++                    insn = cmp_vec_insn[tcg_swap_cond(cond)][lasx][vece];
++                    tcg_out32(s, encode_vdvjvk_insn(insn, a0, a2, a1));
++                    break;
++                case TCG_COND_NE:
++                    /* ne -> not(eq) */
++                    insn = cmp_vec_insn[TCG_COND_EQ][lasx][vece];
++                    tcg_out32(s, encode_vdvjvk_insn(insn, a0, a1, a2));
++                    insn = lasx ? OPC_XVNOR_V : OPC_VNOR_V;
++                    tcg_out32(s, encode_vdvjvk_insn(insn, a0, a0, a0));
++                    break;
++                default:
++                    g_assert_not_reached();
++                }
+             }
+         }
+-        goto vdvjvk;
++        break;
+     case INDEX_op_add_vec:
+         tcg_out_addsub_vec(s, lasx, vece, a0, a1, a2, const_args[2], true);
+         break;
 -- 
 2.47.3
 
