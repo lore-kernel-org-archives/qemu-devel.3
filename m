@@ -4,54 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12027C43458
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47862C44506
 	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:21:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wilfY-0007of-3W; Sun, 12 Jul 2026 00:19:57 -0400
+	id 1wilg3-0008LA-EB; Sun, 12 Jul 2026 00:20:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilfL-0007kL-1e; Sun, 12 Jul 2026 00:19:44 -0400
+ id 1wilfj-00089t-2I; Sun, 12 Jul 2026 00:20:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilfJ-0006kj-9j; Sun, 12 Jul 2026 00:19:42 -0400
+ id 1wilfh-0006rn-93; Sun, 12 Jul 2026 00:20:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829781; bh=mFsIrytqWquiBVni1uJmX1hOaQaKDbrkSNEfcG/ULyY=;
+ t=1783829781; bh=n/A//FhHq1qbkUfYPXbXVdYtFXN3CmgO/rsZi5KqWUE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=SpJlrokgL9i1Y6ehIb2dus5NxrNs2GIwAsCfubzaYUo0fFFFMlZdbOUmw2FJVT+UY
- 1Fxll7VGjxZhOXCiAoudOA/yOmydaKejzTuOAhYvAFpA9rbgSq0ssddxYMnM6Gv13F
- 8002sAB60tO2MnApEwXoI2rSwaqVnwUx7lPUJ1EnTFBzqZPFHybX6x3WpqwDq1XWxb
- bL1wVKrgC2IXBFksYEiFfMdy1kKgSePXlXfHXr61d0n7J46PTU/Uxnoj9q9iv3Ipls
- Nl0dRIECLwiCcNDu0MFL2Gx5wJt0R1K9I+fr0Euj0mPNSr8VMZq6bbdDZQ6xHhi5zp
- rFnDRUvOq/5Gg==
+ b=iU1/r9LtEpLNzCf4QwXZoCYvL9kiwm/syKsRgdwADbnioZWsdI5rksoReLcqnYNHO
+ H/YOM1V3QjvK5EwitEGwur3VXkN8+s7VjsAColxudNQz2bzcCTk+CwxF3P9D7x8YoD
+ e7FdBh11CdIsSsS4Li9rLOg1kFUompjnnowQpqf4ffmNyCTg2AgbpdSvqj60vNjH+C
+ kp3FrobyhUauCngqBHZ51OZemcMUnT9ngRPI79PhkMXWTD7F8ijw/WKtslXPKail3u
+ twhgRsQ1A1nAwKwTI5ZNibbWCR3DexIa+ZYb8FXgJfkJAVI0hgWAlPTT4vR8w8UDZF
+ HQU8LMB5FTuTw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9538C1C0C02;
+ by isrv.corpit.ru (Postfix) with ESMTP id AA56C1C0C05;
  Sun, 12 Jul 2026 07:16:21 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C82643EB962;
+ by tsrv.corpit.ru (Postfix) with ESMTP id DDB7A3EB965;
  Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 704E913407; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id 779D21340D; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
- Hendrik Brueckner <brueckner@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Farhan Ali <alifm@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
  Cornelia Huck <cohuck@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 39/75] s390x/sclp: reject invalid write event data
- headers
-Date: Sun, 12 Jul 2026 07:14:57 +0300
-Message-ID: <20260712041539.108341-39-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 42/75] s390x/ioinst: Require strict length and format
+ for SEI CHSC handler
+Date: Sun, 12 Jul 2026 07:15:00 +0300
+Message-ID: <20260712041539.108341-42-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -76,50 +73,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
+From: Matthew Rosato <mjrosato@linux.ibm.com>
 
-If a guest submits an sccb with a tiny header length but a large number
-of event mask entries, the write_event_mask handler will
-1. return the wrong RC (ok instead of error)
-2. write to memory after the allocated sccb in qemu host memory.
-
-Add the necessary checks.
+Ensure SEI commands that are received are of the appropriate length and
+format before handling.
 
 Cc: qemu-stable@nongnu.org
-Reviewed-by: Hendrik Brueckner <brueckner@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Fixes: 8cba80c3a0 ("s390: Add PCI bus support")
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
 Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
 Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Message-ID: <20260707070728.147203-2-borntraeger@linux.ibm.com>
+Message-ID: <20260707070728.147203-5-borntraeger@linux.ibm.com>
 Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-(cherry picked from commit d88cd8f5570f4d6e08d62e098a8b7f53cdc75536)
+(cherry picked from commit 386268daea86e53d90baf99df5c7b8e2727ea783)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/event-facility.c b/hw/s390x/event-facility.c
-index 2b0332c20e2..18361a3bf45 100644
---- a/hw/s390x/event-facility.c
-+++ b/hw/s390x/event-facility.c
-@@ -291,6 +291,7 @@ static void read_event_data(SCLPEventFacility *ef, SCCB *sccb)
- static void write_event_mask(SCLPEventFacility *ef, SCCB *sccb)
+diff --git a/target/s390x/ioinst.c b/target/s390x/ioinst.c
+index a944f16c254..2f94a29ac27 100644
+--- a/target/s390x/ioinst.c
++++ b/target/s390x/ioinst.c
+@@ -601,13 +601,27 @@ static int chsc_sei_nt2_have_event(void)
+ 
+ #define CHSC_SEI_NT0    (1ULL << 63)
+ #define CHSC_SEI_NT2    (1ULL << 61)
++#define CHSC_SEI_0_FMT 0x0f000000
+ static void ioinst_handle_chsc_sei(ChscReq *req, ChscResp *res)
  {
-     WriteEventMask *we_mask = (WriteEventMask *) sccb;
-+    uint16_t sccb_length = be16_to_cpu(sccb->h.length);
-     uint16_t mask_length = be16_to_cpu(we_mask->mask_length);
-     sccb_mask_t tmp_mask;
+     uint64_t selection_mask = ldq_be_p(&req->param1);
++    uint32_t param0 = be32_to_cpu(req->param0);
+     uint8_t *res_flags = (uint8_t *)res->data;
++    uint16_t len = be16_to_cpu(req->len);
++    uint16_t resp_code;
+     int have_event = 0;
+     int have_more = 0;
  
-@@ -300,6 +301,11 @@ static void write_event_mask(SCLPEventFacility *ef, SCCB *sccb)
-         return;
-     }
- 
-+    if (sccb_length < sizeof(WriteEventMask) + 4 * mask_length) {
-+        sccb->h.response_code = cpu_to_be16(SCLP_RC_INSUFFICIENT_SCCB_LENGTH);
-+        return;
++    if (len != 0x0010) {
++        resp_code = 0x0003;
++        goto out_err;
 +    }
 +
-     /*
-      * Note: We currently only support masks up to 8 byte length;
-      *       the remainder is filled up with zeroes. Older Linux
++    if (param0 & CHSC_SEI_0_FMT) {
++        resp_code = 0x0007;
++        goto out_err;
++    }
++
+     /* regarding architecture nt0 can not be masked */
+     have_event = !chsc_sei_nt0_get_event(res);
+     have_more = chsc_sei_nt0_have_event();
+@@ -634,6 +648,12 @@ static void ioinst_handle_chsc_sei(ChscReq *req, ChscResp *res)
+         res->code = cpu_to_be16(0x0005);
+         res->len = cpu_to_be16(CHSC_MIN_RESP_LEN);
+     }
++    return;
++
++ out_err:
++    res->code = cpu_to_be16(resp_code);
++    res->len = cpu_to_be16(CHSC_MIN_RESP_LEN);
++    res->param = 0;
+ }
+ 
+ static void ioinst_handle_chsc_unimplemented(ChscResp *res)
 -- 
 2.47.3
 
