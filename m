@@ -4,51 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64990C43458
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 21:47:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CA84C43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 21:52:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wj21E-0004Lx-FK; Sun, 12 Jul 2026 17:47:26 -0400
+	id 1wj25N-0006GK-M3; Sun, 12 Jul 2026 17:51:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <conor@kernel.org>)
- id 1wj214-0004Ll-2P; Sun, 12 Jul 2026 17:47:14 -0400
+ id 1wj25L-0006G2-7e; Sun, 12 Jul 2026 17:51:39 -0400
 Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <conor@kernel.org>)
- id 1wj212-0007Rj-FH; Sun, 12 Jul 2026 17:47:13 -0400
+ id 1wj25J-000062-L1; Sun, 12 Jul 2026 17:51:38 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id E9C3D42D55;
- Sun, 12 Jul 2026 21:47:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 398041F000E9;
- Sun, 12 Jul 2026 21:47:02 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 54F32408F4;
+ Sun, 12 Jul 2026 21:51:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C24A1F000E9;
+ Sun, 12 Jul 2026 21:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1783892823;
- bh=AH9sHZqiZnrU64VKuEgL1kJNEloFav+z0XsixA3WpHE=;
+ s=k20260515; t=1783893095;
+ bh=A9n1BEpWhqHpYygTsFwbnOybhz0/906mV3g0e3Z6UNw=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To;
- b=UXTIhlP/SMqtLO6BnHatS4tCUYuMr1/LHoW71t5zvAYupULuFondRMGjYYGE/SsFV
- CxMNv/BNGD+djyFZYeMWwnosXtouOWkEzUkuHdVTaVmqNAYn0IcaxHtfpPF4Q6JfEb
- SQz7c1F/nlgGe1tu4cpwFM0eoglicDqIL/3ny+ria2ybAi7NAm9M12OpYl0HfPrKLp
- OLubbC5Xna2690lOBjX4hKOeT/tiWlgyrF2Y4+eQMOu99CoHLQUjtf4RQOYSlBC5Ct
- fPPgwD95f6cOJ3WxbjCqQZpCOQuQ4Tamc5bzOdmrfqHYfC4tW88k/EYDElXRPaOtaq
- ejxtuaANKLuZg==
-Date: Sun, 12 Jul 2026 22:47:00 +0100
+ b=c1bjYv5AuKPfuiSrDn2P+JabgyyQpzqhIJdOIKL0Q/QhjguV0U2d5jSD3TkFjmIR6
+ HZ9YVELJU7NRBh+8otaBXYYgAiduKxheYwqhF5n3rIM1WFS4VVBa6uxlbkrZkUrcDI
+ W5Q1DbKvGqPSAPGuddrdKBQbTlVmXF0W+4LS1mKuu9ulFOK0GxbbKXYOYZ/WpMrWoi
+ M6t9PpbhwnABJiITDogQyT11p9ZFZdCPL0wzx/0lwIXScenzVl+xXutxpTRRdMPbyK
+ 3HfIFqrpCWD1DQAUQwIF9+uyoSfx06PUzwP4tC3brtAYzdjhwEyVd2pRqyT9Tyy6dn
+ afohbeNEtCEmg==
+Date: Sun, 12 Jul 2026 22:51:31 +0100
 From: Conor Dooley <conor@kernel.org>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, alistair23@gmail.com, qemu-riscv@nongnu.org,
+To: Bin Meng <bmeng.cn@gmail.com>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ alistair23@gmail.com, qemu-riscv@nongnu.org,
  bin.meng@processmission.com, mzamazal@redhat.com, mst@redhat.com,
  sgarzare@redhat.com
 Subject: Re: [PATCH 1/2] MAINTAINERS: Mark "Microchip PolarFire SoC Icicle
  Kit" orphaned
-Message-ID: <20260712-divided-cork-204b87d9651a@spud>
+Message-ID: <20260712-prodigal-subscribe-759f57ab6d4e@spud>
 References: <20260710114305.2961898-1-armbru@redhat.com>
  <20260710114305.2961898-2-armbru@redhat.com>
+ <CAEUhbmXaA6wpyUeVGL4Vn-zaP9LBFfmpTuWxDB=aMaXez_p=1w@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="RD9QCCXpaqjQxBKL"
+ protocol="application/pgp-signature"; boundary="qbYE7kE2imTRRLTU"
 Content-Disposition: inline
-In-Reply-To: <20260710114305.2961898-2-armbru@redhat.com>
+In-Reply-To: <CAEUhbmXaA6wpyUeVGL4Vn-zaP9LBFfmpTuWxDB=aMaXez_p=1w@mail.gmail.com>
 Received-SPF: pass client-ip=172.234.252.31; envelope-from=conor@kernel.org;
  helo=sea.source.kernel.org
 X-Spam_score_int: -20
@@ -72,60 +74,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---RD9QCCXpaqjQxBKL
-Content-Type: text/plain; charset=us-ascii
+--qbYE7kE2imTRRLTU
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jul 10, 2026 at 01:43:04PM +0200, Markus Armbruster wrote:
-> Commit 4a16a1a7ad (MAINTAINERS: Remove Bin Meng from RISC-V
-> maintainers, 2025-01-28) removed the only M:, but left S: Supported.
-> This makes no sense.  Downgrade to S: Orphan.
+On Sat, Jul 11, 2026 at 07:04:14PM +0800, Bin Meng wrote:
+> On Fri, Jul 10, 2026 at 7:44=E2=80=AFPM Markus Armbruster <armbru@redhat.=
+com> wrote:
+> >
+> > Commit 4a16a1a7ad (MAINTAINERS: Remove Bin Meng from RISC-V
+> > maintainers, 2025-01-28) removed the only M:, but left S: Supported.
+> > This makes no sense.  Downgrade to S: Orphan.
+> >
+> > Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> > ---
+> >  MAINTAINERS | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index 576ef6fff5..aa2df9cbe3 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -1761,7 +1761,7 @@ F: tests/tcg/riscv64/test-crc32.S
+> >
+> >  Microchip PolarFire SoC Icicle Kit
+> >  L: qemu-riscv@nongnu.org
+> > -S: Supported
+> > +S: Orphan
+> >  F: docs/system/riscv/microchip-icicle-kit.rst
+> >  F: hw/riscv/microchip_pfsoc.c
+> >  F: hw/char/mchp_pfsoc_mmuart.c
+> > --
 >=20
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> ---
->  MAINTAINERS | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 576ef6fff5..aa2df9cbe3 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1761,7 +1761,7 @@ F: tests/tcg/riscv64/test-crc32.S
-> =20
->  Microchip PolarFire SoC Icicle Kit
->  L: qemu-riscv@nongnu.org
-> -S: Supported
-> +S: Orphan
+> I plan to send a patch series to resurrect PolarFire SoC support.
 
-This should have been updated in:
-https://lore.kernel.org/qemu-devel/20260513023859.518484-1-alistair.francis=
-@wdc.com/
+What does this resurrection constitute? The files aren't gone anywhere
+(yet, at least), so I take it you mean you'll be actively working on the
+platform?
 
-Alistair said he applied that patch, so I'm guessing whatever tree you've
-based on doesn't include it yet?
-
-Cheers,
-Conor.
-
->  F: docs/system/riscv/microchip-icicle-kit.rst
->  F: hw/riscv/microchip_pfsoc.c
->  F: hw/char/mchp_pfsoc_mmuart.c
-> --=20
-> 2.54.0
->=20
->=20
-
---RD9QCCXpaqjQxBKL
+--qbYE7kE2imTRRLTU
 Content-Type: application/pgp-signature; name=signature.asc
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCalQLUwAKCRB4tDGHoIJi
-0nZuAQCbpwmWA1uUKpMkeqvcSrahJgm1U8IhPJgYFUIACDYw7wD/XdsCT1xDOb87
-9RCsMsmPyBu247FaA99peru1u5M5aQw=
-=URx1
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCalQMYwAKCRB4tDGHoIJi
+0vl3AP9n83nAGcfTZQz2iK/Etu7xjYtgg0G0FAtxrDLQVC+BogD/fvgTh/zUgSqf
+KgtTh/5sFATDdxI3Op8fd4FDlYjLRQ8=
+=bque
 -----END PGP SIGNATURE-----
 
---RD9QCCXpaqjQxBKL--
+--qbYE7kE2imTRRLTU--
 
