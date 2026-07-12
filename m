@@ -4,52 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09D5DC43458
-	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:22:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07053C43458
+	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:23:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wilgd-0001Nf-Pz; Sun, 12 Jul 2026 00:21:03 -0400
+	id 1wilcn-00029K-R5; Sun, 12 Jul 2026 00:17:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilgc-0001Gy-2S; Sun, 12 Jul 2026 00:21:02 -0400
+ id 1wilcO-0001d1-Mj; Sun, 12 Jul 2026 00:16:41 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilga-00073u-8D; Sun, 12 Jul 2026 00:21:01 -0400
+ id 1wilcM-0006FZ-Mo; Sun, 12 Jul 2026 00:16:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829781; bh=x+PfetWz0JUn+OwM6oI/vUJA8aiYexVFJ80TaWlBdP0=;
+ t=1783829780; bh=hU82KUVs7r0uV1CuQQBBYe00HlzyamewboyrZdlPX8c=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=npW87S9wrhP/EmXsUpzcae6GszUagX32GEFBcKVBVNoPUkHPZIQH8eWnxpONh+mmJ
- PirG6hIUQGCDqSCFwk/fy/cBNRqjx36yxNnpILYmVnNRqFOq1OBL0vZCeoH+XCpwbW
- 6QWyx5jRNaF+HotSC77PbSSMF1r3p2VWRwB2op7dZsMPxMd+Lk75aDLqtFByUSQ2xV
- Fc/xv573fVS4flqt6yKQUe/7NmnZ8CsDVT1mOt0k3Ri0xs4k3x6cbgar6G/oiQ4qcC
- z6+TmDh6eUlbDEwwwcUqjXkR4jJ5R8pcLrWIiYYnjl7+6QhJ3JGLlZdS+eoUAoyNtQ
- eHUT24iAInTSQ==
+ b=X2TkcpS8TGU298/I6kZ2X/vepZrXnd7VaOnJZivdziwWCh5VILA2EErciN/MlsW8l
+ JQQK/TApS1KTh0ss13ScxKu33NbDEFJjX426O7i1A4e0w6oSBoquQG+99x/78944AK
+ EVfgB9RtOFDKkVoNfXPvje7sayxpxA42zLvkqUWqec86wjolG1xADVdNxvmxkIzU8c
+ R+nqUkF3ETSbogKD+eDOQufY89uofyfrL2Cqn3mYbxhW3PycMF9rrmV56MJDCnlcf/
+ qJuda4bJlzoY3FkFMH4TYzhyOlzUn+I3J69A/3sw/WPVAR8G/w6xVghlccQ8ZO3cfa
+ 2zlnxlvDSZGkQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DB9261C0C0C;
- Sun, 12 Jul 2026 07:16:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B39481C0BE0;
+ Sun, 12 Jul 2026 07:16:20 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1B1923EB96C;
- Sun, 12 Jul 2026 07:16:32 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E53B83EB940;
+ Sun, 12 Jul 2026 07:16:30 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 888791341B; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id 20CCB133C3; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 49/75] hw/display/qxl: Fix mono cursor validation
- that can read past a cursor chunk
-Date: Sun, 12 Jul 2026 07:15:07 +0300
-Message-ID: <20260712041539.108341-49-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 05/75] hw/9pfs: add msize_limit transport callback
+Date: Sun, 12 Jul 2026 07:14:23 +0300
+Message-ID: <20260712041539.108341-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,52 +70,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-qxl_render_cursor() maps the guest-provided QXLCursor object using the
-guest-controlled cursor->chunk.data_size.
-For a mono cursor, qxl_cursor() then validates the expected bitmap size
-against cursor->data_size, but it does not validate that the first chunk
-actually contains that many bytes.
-A guest could set cursor->data_size to the correct full mono cursor size
-while setting cursor->chunk.data_size to zero. In that case, cursor_set_mono()
-reads the AND/XOR masks starting at cursor->chunk.data. If the cursor object
-is placed at the end of the QXL RAM BAR, those reads cross the mapped RAM
-region and could crash the QEMU process (e.g. under ASan).
+Add a new callback 'msize_limit' to the V9fsTransport structure.
 
-Fix it by double-checking cursor->chunk.data_size for the correct size.
+This allows each transport implementation to provide its theoretical
+maximum 'msize' value, which will be used to cap the negotiated
+msize during Tversion handshake.
 
-This patch is based on the suggested changes by the reporter in the bug
-ticket.
-
-Reported-by: huntr bubble
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3646
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260630101022.379057-1-thuth@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit 0e51b71c7b7706923536c1f7923cace82877932b)
+Link: https://lore.kernel.org/qemu-devel/7c4e53eb73c0580d7a321dbf3823ba5647652298.1781287774.git.qemu_oss@crudebyte.com
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+(cherry picked from commit a1c0e5a73740566d4b9eac1f97f78b8ce470116a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/qxl-render.c b/hw/display/qxl-render.c
-index c6a9ac1da10..1fe63b6f5ca 100644
---- a/hw/display/qxl-render.c
-+++ b/hw/display/qxl-render.c
-@@ -272,9 +272,11 @@ static QEMUCursor *qxl_cursor(PCIQXLDevice *qxl, QXLCursor *cursor,
-     case SPICE_CURSOR_TYPE_MONO:
-         /* Assume that the full cursor is available in a single chunk. */
-         size = 2 * cursor_get_mono_bpl(c) * c->height;
--        if (size != cursor->data_size) {
--            fprintf(stderr, "%s: bad monochrome cursor %ux%u with size %u\n",
--                    __func__, c->width, c->height, cursor->data_size);
-+        if (size != cursor->data_size || cursor->chunk.data_size < size) {
-+            qxl_set_guest_bug(qxl, "%s: bad monochrome cursor %ux%u"
-+                              " data_size %u chunk_size %u",
-+                              __func__, c->width, c->height,
-+                              cursor->data_size, cursor->chunk.data_size);
-             goto fail;
-         }
-         and_mask = cursor->chunk.data;
+diff --git a/hw/9pfs/9p.h b/hw/9pfs/9p.h
+index b2df659b0e8..d8f364fafdb 100644
+--- a/hw/9pfs/9p.h
++++ b/hw/9pfs/9p.h
+@@ -481,6 +481,7 @@ struct V9fsTransport {
+     void        (*init_out_iov_from_pdu)(V9fsPDU *pdu, struct iovec **piov,
+                                          unsigned int *pniov, size_t size);
+     void        (*push_and_notify)(V9fsPDU *pdu);
++    size_t      (*msize_limit)(V9fsState *s);
+ };
+ 
+ #endif
 -- 
 2.47.3
 
