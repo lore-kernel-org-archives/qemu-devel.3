@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01C71C44501
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1816C43458
 	for <qemu-devel@archiver.kernel.org>; Sun, 12 Jul 2026 04:20:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wilgF-0008S6-2E; Sun, 12 Jul 2026 00:20:39 -0400
+	id 1wilep-0007PM-K9; Sun, 12 Jul 2026 00:19:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilfn-0008Gi-VE; Sun, 12 Jul 2026 00:20:15 -0400
+ id 1wileo-0007Le-2t; Sun, 12 Jul 2026 00:19:10 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wilfl-0006zi-Tv; Sun, 12 Jul 2026 00:20:11 -0400
+ id 1wilem-0006bB-Hg; Sun, 12 Jul 2026 00:19:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1783829781; bh=X2ep3Dgk2ND6fHIDdJKHfl3xtB71BL6tY0g4Gj3tTTQ=;
+ t=1783829781; bh=EptcEFh39e78+w7OE7pe9PJs66bWeotQHn82eKcHa4A=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=QtiPxGHRSPF/tJE5a0KMTjmPwsrjYgM4sUVK6MP4LLmMwicgbAYMP3ugQdpzwdF3l
- h4eoY88eX0OmrHe/1rwDAxIEXIjfNEn/EB8VvKI4PHYHUTS/NV3Sl5tmWlNn5NuRIt
- 81yiEI2An45vmpvHH7g2CYfxtijHxEIbY/jZk8REZY/AemCD6IHmAN9bG+aHxm+I02
- SiFYRfpzxwwsk5ykaK9G2UyrPpZzZzGRTjBVPRcR2gAbB4zFGpzWfFLofDhRDvgdu7
- HOATUW27QxMo2d7NUM8J1IjJbgI99CFheNvexC3kTcGwgIA1mwLv+0/bBJLjOA4xC9
- nf5yfW9pTQS5A==
+ b=KMrB6kyM1B/h0B+4jQ+994xUQbIKvI6t51gVtBW/XsOuDKatRONPoHMFRu06cUZJf
+ vnCH30l/Ox0MaBnkxUzSBg32NOd7t6j+Xyu0Yx74VpeeSvB/wE5Z2SlKOHGRrTxO0e
+ Ci5EPW+KWj8KqBa8gMQ5LquR1VMCI3n6g9J/5NotfaXk2uQ5mhkqCwCLjydnGU/sEw
+ BOyFALQHvSjF+Jsoj0S+LmDbhznkAfcekslXA1xcOxq2FXAYmriW3uB8mt0CZaM6BD
+ 1wmkienU2gK6tLXSmmS8Vbt0jGOD+ohP6Q9w8UHMhr6CitJFGvVAA+hcJzFk/cojl2
+ Yz/RqHMIi3ywg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B15171C0C06;
+ by isrv.corpit.ru (Postfix) with ESMTP id 693081C0BFA;
  Sun, 12 Jul 2026 07:16:21 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E42343EB966;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 99E6A3EB95A;
  Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 7A1001340F; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
+ id 5CE7E133F7; Sun, 12 Jul 2026 07:16:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+Cc: qemu-stable@nongnu.org, SeungJu Cheon <suunj1331@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.12 43/75] s390x/css: limit number of CHPIDs in
- description
-Date: Sun, 12 Jul 2026 07:15:01 +0300
-Message-ID: <20260712041539.108341-43-mjt@tls.msk.ru>
+Subject: [Stable-10.0.12 31/75] target/riscv: Apply UXL WARL handling to
+ vsstatus
+Date: Sun, 12 Jul 2026 07:14:49 +0300
+Message-ID: <20260712041539.108341-31-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
 References: <qemu-stable-10.0.12-20260712071526@cover.tls.msk.ru>
@@ -73,64 +73,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Farman <farman@linux.ibm.com>
+From: SeungJu Cheon <suunj1331@gmail.com>
 
-virtio-ccw uses a single virtual CHPID for all devices and
-device-types, but vfio-ccw (passthrough) shares real CHPID
-information with the guest. A sufficiently large passthrough
-configuration would exceed the defined response payload.
+write_mstatus() already handles the reserved UXL value by writing a
+legal value instead.
 
-Fix this by limiting the number of CHPID descriptions that
-are returned based on the given response format.
+Apply the same handling when writing vsstatus so that reserved UXL
+values follow the same WARL behavior.
 
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Message-ID: <20260707070728.147203-6-borntraeger@linux.ibm.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-(cherry picked from commit 22f2da06a8b291c975a7caf05dbd3b180c856741)
+Factor the common logic into a local helper riscv_write_uxl() and use
+it for both mstatus and vsstatus.
+
+Suggested-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Fixes: f310df58bd2 ("target/riscv: Enable uxl field write")
+Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260625081521.595683-1-suunj1331@gmail.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit dcd028517749835a618bb1fe8dca32d82318e1c1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/css.c b/hw/s390x/css.c
-index 738800c98df..38d2d90028c 100644
---- a/hw/s390x/css.c
-+++ b/hw/s390x/css.c
-@@ -1900,6 +1900,7 @@ int css_collect_chp_desc(int m, uint8_t cssid, uint8_t f_chpid, uint8_t l_chpid,
-     int i, desc_size;
-     uint32_t words[8];
-     uint32_t chpid_type_word;
-+    uint32_t max_chpids, chpid_count = 0;
-     CssImage *css;
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 607dd385d69..c41f23c0f96 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -1978,6 +1978,20 @@ static target_ulong legalize_mpp(CPURISCVState *env, target_ulong old_mpp,
+     return val;
+ }
  
-     if (!m && !cssid) {
-@@ -1910,9 +1911,25 @@ int css_collect_chp_desc(int m, uint8_t cssid, uint8_t f_chpid, uint8_t l_chpid,
-     if (!css) {
-         return 0;
-     }
++static uint64_t riscv_write_uxl(CPURISCVState *env, uint64_t val,
++                                uint64_t field)
++{
++    RISCVMXL xl = riscv_cpu_mxl(env);
++    uint64_t uxl = get_field(val, field);
 +
-+    if (rfmt == 0) {
-+        max_chpids = 256;
-+    } else if (rfmt == 1) {
-+        max_chpids = 127;
-+    } else {
-+        /* Should be rejected by caller */
-+        return 0;
++    if (uxl == MXL_RV128) {
++        uxl = xl == MXL_RV128 ? MXL_RV64 : xl;
++        val = set_field(val, field, uxl);
 +    }
 +
-     desc_size = 0;
-     for (i = f_chpid; i <= l_chpid; i++) {
-         if (css->chpids[i].in_use) {
-+            /* Limit number of CHPIDs sent back */
-+            if (chpid_count == max_chpids) {
-+                break;
-+            }
++    return val;
++}
 +
-+            chpid_count++;
-             chpid_type_word = 0x80000000 | (css->chpids[i].type << 8) | i;
-             if (rfmt == 0) {
-                 words[0] = cpu_to_be32(chpid_type_word);
+ static RISCVException write_mstatus(CPURISCVState *env, int csrno,
+                                     target_ulong val)
+ {
+@@ -2024,17 +2038,8 @@ static RISCVException write_mstatus(CPURISCVState *env, int csrno,
+ 
+     if (xl != MXL_RV32 || env->debugger) {
+         if ((val & MSTATUS64_UXL) != 0) {
+-            uint64_t uxl = val & MSTATUS64_UXL >> 32;
+             mask |= MSTATUS64_UXL;
+-
+-            /*
+-             * uxl = 3 is reserved so write the current xl instead.
+-             * In case xl = MXL_RV128 (3) write MXL_RV64.
+-             */
+-            if (uxl == 3) {
+-                uxl = xl == MXL_RV128 ? MXL_RV64 : xl;
+-                val = deposit64(val, 32, 2, uxl);
+-            }
++            val = riscv_write_uxl(env, val, MSTATUS64_UXL);
+         }
+     }
+ 
+@@ -5109,6 +5114,8 @@ static RISCVException write_vsstatus(CPURISCVState *env, int csrno,
+     uint64_t mask = (target_ulong)-1;
+     if ((val & VSSTATUS64_UXL) == 0) {
+         mask &= ~VSSTATUS64_UXL;
++    } else {
++        val = riscv_write_uxl(env, val, VSSTATUS64_UXL);
+     }
+     if ((env->henvcfg & HENVCFG_DTE)) {
+         if ((val & SSTATUS_SDT) != 0) {
 -- 
 2.47.3
 
