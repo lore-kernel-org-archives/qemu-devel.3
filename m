@@ -4,155 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31388C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 18:16:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6960BC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 18:38:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjLBw-00073k-BJ; Mon, 13 Jul 2026 14:15:44 -0400
+	id 1wjLXp-0008VP-Lw; Mon, 13 Jul 2026 14:38:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wjLBt-00073O-MH
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 14:15:41 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wjLXm-0008VE-1B
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 14:38:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wjLBn-0007ss-8W
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 14:15:41 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66DF84xQ1887697
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 18:15:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- chVVcX+KUqotC1ZDGE9xlTiP8TMMgvd5gPtn6HPnqhg=; b=dKqZ4L11tNLCWKc7
- bHn2wIkHUxXhyIdZGsivS1YEiXW70X571SFaa1C+KfJIyXR6IotmvZXp/wXcGCmr
- 2o7pNffS9JLFWzSa9n8x2iAlG5xLvR+HAfGZe4yCrwi5nMcdBttjWXa7BIqvqgqX
- tXbfWmjOtboiGi1tadciMb8hzreo2IuULYpaYWnOcJgImKGSWHimmDWBGw3DeHc9
- cR4UrZPEkHMlTPHUH7EY199ssC+rvjI52cfBDwbHGYDak72Py9fB77nK/yHnTvTn
- MW6IrXIaUBn8etMcro2aUMk907c4+MzZHT5jKk5Krq9PjBBHMEDJ0/avqZZNH3lq
- 1KZ80g==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcwavt54f-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 18:15:32 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-ca8aee88725so4901157a12.3
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 11:15:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783966532; x=1784571332; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=chVVcX+KUqotC1ZDGE9xlTiP8TMMgvd5gPtn6HPnqhg=;
- b=hubf2TINE3vrVpwd3P3XDW+Rn3JiX4a9zS8xB5VoCAcDqL+UZQ+8qrYGjnL/elMI8h
- HuDh8yRO1wVuT1PZPtegTdIm2unB03P8Il7ji8Xy0gzKtn0BMmgdVUF8EUL+Krp1q8Ev
- rUjet/+Ak3SbCf3HKZBTe8msMw24avaOhHTM2y3oIGeiLemqku2VOI7bgHMqLu0VWhXK
- f2Y+q4BUpQnNDqwQmYqrDakZAmgTM/HychZKmAw5YPZtHzWxYL2lIgXkSxU3K1vFfajR
- 6kKbEwwPjHKyCfuR+XQyuBc2NSUyhm8hg1WRb8q17X8OM6uMKmJQxpt8VL0LH90VWh9B
- 2tkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783966532; x=1784571332;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=chVVcX+KUqotC1ZDGE9xlTiP8TMMgvd5gPtn6HPnqhg=;
- b=PT+qnkjyOwAhRsYTdrCnN0FKgqwYGEJD/zoZdYjwpu5ZVNFBsKJmtm0XbA1EHrdiBt
- s9t8aBpiDrrdIyHe8ltIMVpZJSdmhz2RYI8IgT1AObrdSBjdTLBCdJzIyZ2uwhxAdB9d
- Iwox1gfr9+MHQ8PWOLWmpHGP8ydHMIZ6ilQoV/Xp2a0unf7SlN55Ilw2Wl0xrR60/7/P
- XnlYQR8extlFkHMxUqUlKsWeKHkklYEnUMVWUgddJ1WMFLpMD+6ueoXkoA8r8cKVH3df
- QGBaLcUEUls/I/9HmqB92m9GohBden98ZKyY1XnVlZz/e4C+oJaGXuNFLsQh7oR3Lkzk
- yL4g==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rrwx9fMPU+KVeeu4j7mFwCkBZcFleiD26IU0XFHxIgLB4tGxrIBw1ysPbMX3uSWo4OKfDdDWxgmXO0M@nongnu.org
-X-Gm-Message-State: AOJu0YzMGaQZkH/UNKhOym5iP6fs5nZ9WfnMU5fPsl4u0ol/lRxRUg7B
- KRYfdaJLBR+xWDgoUPwpes/PVyODqZ8xuBJSbvBcfzOgRGLG3TdKZfoNCyDX4qOZSggHayl2OyL
- N7ydVWcA/H6VHosowodTlD0F9In5u2suZOJWeIfG56ys0CO+agn4t3eCYqA==
-X-Gm-Gg: AfdE7cnnyEtAC37i4r7I1bxsQxRrqHbRxUuKa2V/kjuozw9cOhzDqILVhF2zKlJYV3C
- zKvCB9wvFfLXON7mCsUMl+pu1ll+Gddmuhqlp6yvU5kyXuts3n03FKRsnDFdNbu2AsCzFPEYgX4
- SxObNHcFFaGXbl4AV9aSW+/EuxR/jFnqadatrjegTaT81ZikHOdGvmUMKKcpBaLYkckapw+Tch9
- tKKQ4aWo8vTV0tNtEwh7l45PolsKMKlf24fmC41zWAGbO6iAiAY3Ab1GwZPGZu/w8mKx92Qz7sx
- QJS1dSYsNEi6LpR5mRQfYH2lpEArfJCoOC8SCyX/0VzWAo1MxHk8cghoM6IBF3LQTQNQEBB3gUF
- zZRLSOuYpUFMcWzKq7gRwCpaLxH1fDf8xtwRpt6UsycorKmyza+IchNCNu9F41TVWJzSB03bOdk
- ASH0w=
-X-Received: by 2002:a05:6a21:6b0f:b0:3bf:6c05:aa with SMTP id
- adf61e73a8af0-3c34d8935c4mr438563637.57.1783966531730; 
- Mon, 13 Jul 2026 11:15:31 -0700 (PDT)
-X-Received: by 2002:a05:6a21:6b0f:b0:3bf:6c05:aa with SMTP id
- adf61e73a8af0-3c34d8935c4mr438527637.57.1783966531084; 
- Mon, 13 Jul 2026 11:15:31 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13b9081d5c3sm22874685c88.9.2026.07.13.11.15.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Jul 2026 11:15:30 -0700 (PDT)
-Message-ID: <4b825174-6ba6-49c5-b135-be611a4cf04a@oss.qualcomm.com>
-Date: Mon, 13 Jul 2026 11:15:29 -0700
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wjLXa-0001j3-8W
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 14:38:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783967884;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6yngjYaZLXJGmfqSKjJQIi/LZe3hW7VOv6sUvCb/1kQ=;
+ b=CGPqL9/8fujQ9hZw/fnMWPgt53t8pkXgHASh+J8ix59LFcYj4+vclXT1pWW6T7UAqCBd5Z
+ 9QhJ4N9gQv7S9P2UWUwMX+prdDXhxygM+Kac5KRJeL9fhPsnsEt2jx9tz8ydsPsXIj3hav
+ y5lqzDouQ7OzF8R5gJbd6fOKYhPfFUY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-604-I52ay6JmPEuFIHk58SgXgg-1; Mon,
+ 13 Jul 2026 14:38:01 -0400
+X-MC-Unique: I52ay6JmPEuFIHk58SgXgg-1
+X-Mimecast-MFC-AGG-ID: I52ay6JmPEuFIHk58SgXgg_1783967880
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2E3261955DC1; Mon, 13 Jul 2026 18:37:59 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.50.22])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5B8AE180065F; Mon, 13 Jul 2026 18:37:53 +0000 (UTC)
+Date: Mon, 13 Jul 2026 19:37:50 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: jasowang@redhat.com, mst@redhat.com, armbru@redhat.com,
+ peterx@redhat.com, farosas@suse.de, raphael.s.norwitz@gmail.com,
+ bchaney@akamai.com, qemu-devel@nongnu.org, pbonzini@redhat.com,
+ yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
+ Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH v18 09/14] qapi: add local migration parameter
+Message-ID: <alUwflog7Xd34Vd4@redhat.com>
+References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
+ <20260710191809.721154-10-vsementsov@yandex-team.ru>
+ <alS1DMD_pRrklFRb@redhat.com>
+ <05c89310-7bec-4aac-addc-b5ef377e09a7@yandex-team.ru>
+ <alTKMA87h9x951Ei@redhat.com>
+ <25b5e9a6-e563-4ab0-9075-04a3a00d3b33@yandex-team.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 2/2] docs/about/emulation: document the dlcall plugin
-To: Ziyang Zhang <functioner@sjtu.edu.cn>, qemu-devel <qemu-devel@nongnu.org>
-Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
- Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
- Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
-References: <20260710212601.583352-1-functioner@sjtu.edu.cn>
- <20260710212601.583352-3-functioner@sjtu.edu.cn>
- <990f11f5-c8fd-4cf6-b186-180e24452ff3@oss.qualcomm.com>
- <5a303ce5-cb6f-43b9-857f-39cffc8c7d67@sjtu.edu.cn>
- <8c2aa5fe-026e-45c2-a908-5f6c245b2993@oss.qualcomm.com>
- <2c57e188-b9f5-45b9-90b3-81a3d128254a@sjtu.edu.cn>
- <69924eee-ba12-4a3e-baff-8ecb86d1ce77@oss.qualcomm.com>
- <37b40d64-aaa7-4358-ad5d-70c15dc05cba@sjtu.edu.cn>
- <9b8f79c7-1f30-4036-ba05-22d390a22410@oss.qualcomm.com>
- <e46324ae-0853-422d-aa45-11d73b4b3a18@sjtu.edu.cn>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <e46324ae-0853-422d-aa45-11d73b4b3a18@sjtu.edu.cn>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: fIpWiUoUcrEHqJX2AV1MEvKAN5JWWpUe
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDE4OSBTYWx0ZWRfXwz5Hk3eb+Yvg
- CdadlrDEYiNoo2jgJZX4M3EiBaFoOrfXAxSbuOVa5XpqYiaqlrN1sOPB6Ulc/uapjeQPajg8MVu
- hH5fRPyjdhC762exGyUUpH61lwMn6B+flRVXw8V9Y435tUiybcd96VW4gn4Ts3cOL0DqayOVJLk
- 57bOD2JJJPxux+LSoCQvu6j3BPr1S6AKRRn9kfJDrBqB9kYdkyG8MGkRQX9b6Rkl6h8/3DnuYN2
- EzsZfcZSmamat+MO1Hngi0ieXkbhsZ38A75LRm2vZrJ22ee/KbD3YOIc+aRwrknRXhJYBMZ+SVU
- dtD8geg6iyoVVQrPhWjubEb9angN7tt2acV4OjDovBmP6BdGDdSR1QBxr1dFOoT797KoiMJsExo
- QbqUVvwz7JEnvnrEiV83rHjQYhL9MjqcNVN8KoOUDkv/9Hu4NArE0lYCCfAUpSzDRPhU5c/OxHB
- gu4MRo7eXkNEDqP7+LQ==
-X-Proofpoint-ORIG-GUID: fIpWiUoUcrEHqJX2AV1MEvKAN5JWWpUe
-X-Authority-Analysis: v=2.4 cv=dZSwG3Xe c=1 sm=1 tr=0 ts=6a552b44 cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=0YVlk87hHFAOU0yzomgA:9 a=QEXdDO2ut3YA:10 a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDE4OSBTYWx0ZWRfX/NWiEjCLV+kx
- 9NxqxnBOHpZCsfKxSp1hr0uhFXMOAdlI7hvGEJMOjrPDJh+CxrGNdtvMpAAeQICEFgsKWb5g318
- SElcm0F/0+hU9/QLlON40Faz4JXg8SI=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-13_04,2026-07-10_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 priorityscore=1501 adultscore=0 malwarescore=0 spamscore=0
- phishscore=0 impostorscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607130189
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <25b5e9a6-e563-4ab0-9075-04a3a00d3b33@yandex-team.ru>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: permerror client-ip=170.10.133.124;
+ envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,185 +93,123 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/13/2026 11:07 AM, Ziyang Zhang wrote:
-> On Mon, 13 Jul 2026 11:03:23 -0700, Pierrick Bouvier wrote:
->> On 7/13/2026 10:56 AM, Ziyang Zhang wrote:
->>> On Mon, 13 Jul 2026 10:53:56 -0700, Pierrick Bouvier wrote:
->>>> On 7/13/2026 9:34 AM, Ziyang Zhang wrote:
->>>>> On Mon, 13 Jul 2026 08:31:18 -0700, Pierrick Bouvier wrote:
->>>>>> The problem is that if that the guest program, or the host library
->>>>>> (host
->>>>>> libhello) may depend on libstdc++. If they do and if they depend on a
->>>>>> (newer) symbol not present in lorelei libstdc++, we break ABI. Same
->>>>>> goes
->>>>>> for libgcc.
->>>>>>
->>>>>> By not doing this, you'll be forced to provide a lorelei devkit
->>>>>> everytime a new libstdc++ is published, or a distribution updates its
->>>>>> gcc.
->>>>>>
->>>>>> The only solution is to embed libstd++ and libgcc statically, or
->>>>>> rely on
->>>>>> host libraries. If you choose the second option, you know have the
->>>>>> opposite problem. So I think the only way to solve it is really
->>>>>> static
->>>>>> linking, even if it will slightly increase binaries size.
->>>>>>
->>>>>
->>>>> The devkit already ships libstdc++ and libgcc anyway: its own clang/
->>>>> LoreTLC link them dynamically, and we bundle them so the toolchain
->>>>> even
->>>>> starts. So bundling libstdc++ for the thunk flow adds no new
->>>>> dependency,
->>>>> it just reuses one the devkit must carry. Static-linking the thunks
->>>>> wouldn't make the devkit any smaller or more self-contained either,
->>>>> since clang still needs the dynamic libstdc++; we'd only be adding
->>>>> static copies on top of it.
->>>>>
->>>>
->>>> There is a difference between the toolchain dependencies, and thunks
->>>> dependency. For the first one, it's perfectly find to provide
->>>> libstdc++,
->>>> for the second, it can create conflicts at runtime that may be very
->>>> hard
->>>> to diagnose and solve.
->>>>
->>>>> On the ABI risk itself: libstdc++ keeps a backward-compatible ABI, and
->>>>> the copy we bundle is recent, so a thunked host library only breaks if
->>>>> it was built against a strictly newer libstdc++ and references a new
->>>>> symbol. Even then it needs no new devkit, because the resolution order
->>>>> is the integrator's to choose. On a host newer than our bundle,
->>>>> putting
->>>>> the system libstdc++ ahead of the devkit's on LD_LIBRARY_PATH lets the
->>>>> host library bind the newest one, while clang and the Lorelei runtime
->>>>> keep working against it by backward compatibility. So a gcc update on
->>>>> the host doesn't force us to reship.
->>>>>
->>>>
->>>> Sure can choose indeed. However, he has to find where such libraries
->>>> are
->>>> located on his system, and prepend that to LD_LIBRARY_PATH. Not the
->>>> most
->>>> user-friendly thing to guess and debug IMHO.
->>>>
->>>>> There's also an active reason not to static-link. Both the Lorelei
->>>>> runtime and the generated thunk libraries depend on libstdc++. If we
->>>>> statically link libstdc++ into a thunk while the host library it
->>>>> dispatches to links the system libstdc++ dynamically, the process ends
->>>>> up with two libstdc++ copies on the host side, right across the
->>>>> boundary
->>>>> where C++ objects and exceptions pass between the thunk and the real
->>>>> library. That can break:
->>>>>
->>>>> - Exceptions: one thrown in the host library may not be caught in the
->>>>> thunk. The two copies have different std::type_info for the same type,
->>>>> so the match fails and it hits std::terminate.
->>>>> - dynamic_cast / typeid across the boundary: they assume a single
->>>>> type_info per type, so they can start returning null or misidentifying
->>>>> types.
->>>>> - Duplicated global state: two sets of the iostream objects, the
->>>>> locale/
->>>>> facets, and the exception emergency buffer.
->>>>>
->>>>
->>>> That's a good point, but does lorelei even provide a solution for that?
->>>> I guess that exception raised from an host library and sent back to
->>>> guest binary with target specific types will not result in what is
->>>> expected at the moment.
->>>>
->>>>> Based on the above reasons, I prefer to do that than statically
->>>>> link and
->>>>> grow the big artifact. Does that hold for you?
->>>>>
->>>>
->>>> Ok.
->>>>
->>>>> Thanks,
->>>>> Ziyang Zhang
->>>>>
->>>>
->>>> Regards,
->>>> Pierrick
->>>
->>>
->>> Wait a second. I missed something.
->>>
->>> Sorry, last time I answered without actually checking the libstdc++
->>> situation on the four distros. You were right to push on it, so I looked
->>> properly.
->>>
->>> You were right that the x86_64 sysroot is the crux: libc6-amd64-cross
->>> gives /usr/x86_64-linux-gnu/ a libc but no libstdc++, so the guest side
->>> has no system libstdc++ to fall back on. That's the side we should keep
->>> providing ourselves, and the devkit already ships the x86_64 libstdc++
->>> next to the guest runtime for exactly that. It's only a default, though:
->>> if a guest executable needs a newer libstdc++, the user can put a newer
->>> x86_64 libstdc++.so ahead of ours on the guest LD_LIBRARY_PATH (the -E
->>> one) and it takes precedence, while our runtime keeps working against it
->>> by backward compatibility. So we are not locking anyone to our version.
->>>
->>> The host side is different, there libstdc++ is reliably present. I
->>> checked each distro's stock minimal base image, with nothing installed
->>> on top:
->>>
->>> Debian 12: libstdc++6 12.2.0-14+deb12u1
->>> Ubuntu 24.04: libstdc++6 14.2.0-4ubuntu2~24.04.1
->>> Fedora 40: libstdc++-14.2.1-3.fc40
->>> Arch (2024-08 snapshot): libstdc++.so.6 from gcc-libs 14.2.1
->>> It ships out of the box on all four, and the C compiler pulls it in on
->>> Debian, Ubuntu and Arch.
->>>
->>> So the split I'd propose: provide libstdc++ only on the guest side (the
->>> x86_64 sysroot has none), and on the host side rely on the system's, so
->>> the host thunk and the real host library both bind the host's own
->>> libstdc++ rather than a copy we ship. That directly addresses the ABI
->>> point you raised: nothing we ship shadows the host's libstdc++, so a
->>> thunk never forces an older libstdc++ onto a host library built against
->>> a newer one.
->>>
->>> Does that split sound right to you?
->>>
->>
->> That's a reasonable default, and Lorelei can be updated for this without
->> having to update anything on QEMU side (or its documentation).
->>
->> If I had to choose, I would still do static linking for guest and host
->> thunks, because I don't think we can handle exceptions correctly anyway.
->> But the most important is that current example already works out of the
->> box, which makes this series ready for upstream.
->>
->> Regards,
->> Pierrick
+On Mon, Jul 13, 2026 at 08:55:37PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> On 13.07.26 14:21, Daniel P. Berrangé wrote:
+> > On Mon, Jul 13, 2026 at 01:55:48PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> > > On 13.07.26 12:51, Daniel P. Berrangé wrote:
+> > > > On Fri, Jul 10, 2026 at 10:17:58PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> > > > > We are going to implement local-migration feature: some devices will be
+> > > > > able to transfer open file descriptors through migration stream (which
+> > > > > must UNIX domain socket for that purpose).  This allows to transfer the
+> > > > > whole backend state without reconnecting and restarting the backend
+> > > > > service. For example, virtio-net will migrate its attached TAP netdev,
+> > > > > together with its connected file descriptors.
+> > > > > 
+> > > > > In this commit we introduce a migration parameter, which enables
+> > > > > the feature for devices that support it (none at the moment).
+> > > > > 
+> > > > > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> > > > > Acked-by: Markus Armbruster <armbru@redhat.com>
+> > > > > Acked-by: Peter Xu <peterx@redhat.com>
+> > > > > Reviewed-by: Ben Chaney <bchaney@akamai.com>
+> > > > > ---
+> > > > >    include/migration/misc.h |  2 ++
+> > > > >    migration/options.c      | 18 +++++++++++++++++-
+> > > > >    qapi/migration.json      | 12 ++++++++++--
+> > > > >    3 files changed, 29 insertions(+), 3 deletions(-)
+> > > > 
+> > > > 
+> > > > > diff --git a/qapi/migration.json b/qapi/migration.json
+> > > > > index 66bd900465a..03bdf19f3a6 100644
+> > > > > --- a/qapi/migration.json
+> > > > > +++ b/qapi/migration.json
+> > > > > @@ -830,7 +830,8 @@
+> > > > >               'zero-page-detection',
+> > > > >               'direct-io',
+> > > > >               { 'name': 'x-rdma-chunk-size', 'features': [ 'unstable' ] },
+> > > > > -           'cpr-exec-command'] }
+> > > > > +           'cpr-exec-command',
+> > > > > +           'local'] }
+> > > > >    ##
+> > > > >    # @migrate-set-parameters:
+> > > > > @@ -1012,6 +1013,12 @@
+> > > > >    #     Must be set to the same value on both source and destination
+> > > > >    #     before migration starts.  (Since 11.1)
+> > > > >    #
+> > > > > +# @local: Enable local migration for devices that support it.  Backend
+> > > > > +#     state and its file descriptors can then be passed to the
+> > > > > +#     destination in the migration channel.  The migration channel
+> > > > > +#     must be a Unix domain socket.  Usually needs to be enabled per
+> > > > > +#     device.  (Since 11.2)
+> > > > 
+> > > > What happens when this is enabled and there are devices which
+> > > > don't support it ?
+> > > 
+> > > These devices are migrated as usual, ignoring "local" option.
+> > > 
+> > > > 
+> > > > What happens when this is enabled and a device on the src
+> > > > does not support it but a device on the (newer) QEMU dest
+> > > > does support it ?  How does the mgmt app know which devices
+> > > > support it ?
+> > > 
+> > > The only supporting device (TAP-backend) declares support by
+> > > "local-migration-supported", so mgmt app should care to set
+> > > same value for it on host and target (like for other options
+> > > actually). Or simply relay on default, which is true starting
+> > > from 11.2 Machine Type.
+> > > 
+> > > > 
+> > > > Can we document the semantics in these cases.
+> > > 
+> > > That's: "Usually needs to be enabled per device."
+> > 
+> > ....except that we have it enabled by default for TAP backends
+> > in new machine types.... except that it will then break if the
+> > app/user has enabled any of the "forbidden" options.
+> > 
+> > The way this doc is written makes it sound like "local" is an
+> > optimization you can turn on in any scenario, and it will do
+> > the right thing if the device supports it. That is very much
+> > not the case - enabling this flag will definitely break many
+> > configs out of the box, with new machine types due to the TAP
+> > device defaults & incompatible options.
 > 
-> Thank you, and thanks for the thorough review across all the revisions.
-> Your feedback made both the plugin and the walkthrough much better than
-> where they started.
->
-
-I know it can be frustrating to address all the picky comments, but in
-this case, I really think it makes Lorelei better and easier to use, and
-not just to accommodate my personal taste. Hopefully it will help to
-make it more popular and integrated with other emulators also!
-
-> The libstdc++ discussion was valuable too. I'll keep static linking for
-> the thunks in mind, and the exception-across-the-boundary case is a fair
-> point I want to revisit properly. Since all of that lives on the Lorelei
-> side, we can iterate on it without touching QEMU.
->
-
-Yes, the important was to have the simplest example possible, without
-requiring any external dependency. I hope you can use it on Lorelei side
-as a minimal CI test to keep things working as they are.
-> Thanks,
-> Ziyang Zhang
+> Ok, now we decided to NOT make default support for TAP in newer
+> machine types.
 > 
+> So, enabling "local" is safe in existing scenarios, only explicit
+> enabling TAP.local-migration-supported will change the behavior.
+> 
+> Keep "local" documentation as is?
+> 
+> I see the only way to make it more informative: directly describe
+> connection with TAP.local-migration-supported, without general
+> phrases about "devices that support" and "usual". We'll have to
+> update it when more devices added (my next step is vhost-user-blk),
+> but at least, it would be absolutely correct at the moment.
 
-Congrats again for your work on Lorelei!
-You're welcome to share your paper here once it will be published :).
+How about....
 
-Cheers,
-Pierrick
+ # @local: Permit the use of optimizations for local migration.
+ #     This must only be set when both the source and destination
+ #     QEMU processes are on the same OS and directly connected
+ #     with a UNIX domain socket as the migration channel to enable
+ #     use of file descriptor passing. Individual device backends
+ #     may need additional configuration flags set  to enable local
+ #     migration optimizations. This will be documented against the
+ #     device backends where it applies. (Since 11.2)
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
