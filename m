@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C39F4C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:33:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C30EAC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:33:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjIeK-0008SU-L5; Mon, 13 Jul 2026 11:32:52 -0400
+	id 1wjIek-0000bY-Dz; Mon, 13 Jul 2026 11:33:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjIeA-0008QB-DQ
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:46 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1wjIeK-0008Ss-Ug
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:52 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjIe7-000169-Tz
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:41 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-47df440fcd5so1793346f8f.3
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:32:38 -0700 (PDT)
+ id 1wjIeI-00019G-0T
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:52 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-493bb510ce4so23509365e9.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:32:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783956757; x=1784561557; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=N4As0Neyy8YrD6FVFm9+Tt3dYT2Qlni3lX7+Dk5wYWk=;
- b=pWW9u/Q4kZ5rgdKUZP/ozg5WRBCjv6xu2Xwaqf8MvvxyFR/cOAaEkZKQ2d5A/yQMly
- q85n63sytobUmOQuG/5VAPv4M9MJo3Os8/qMquz1P/Mf0ixMN8PyDK4eHQnQ+FqtGcZ5
- /ecA/F2SMROj+oiECPMAfepIECKWCDGmZloWFzEKeZDGiKeM4Qk8k9sX27xSzlHSouru
- N3dNL0VeNW085j3gU85EHZN3ffL3k/Q6ckLnWcEkeXaott7uMNzZ++prFFfYCfFkLTLz
- wLW+E8BLnOqoHFBxLqc8W4onn70Q1rdLHSbJfkAC3Qy4T2r3fme6zLd7MfcZ+K0u3Ts6
- Ai9Q==
+ d=linaro.org; s=google; t=1783956768; x=1784561568; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=K8ImuL8sE4fwwihfUxdtRBCshDkOb3mVVTN5ujtcTjk=;
+ b=ggXzxRtBYf3eS6X8GkDSVuNrZUgzTjhQ2nBoXA6cFvGUNjx/EiMD3tXCREk/A4OKNE
+ rS8v47fJQw8RV4BrzI5NGj77JmnALrcOPBFEDFa94Hvio38B9E/0crlBcHLk5sSBN0+Q
+ ih+nUIpAm1abIyJ+W1D42s22NofXE87yhY26K9rz9auQww8Gv2a1qWXj47YFqte42BC2
+ aULxrkLRrpcF7vybyrH6hJWykv9N0QVEBwBAPkzFXTuFV+fqqd2dqJxVw0E01qZH4rEE
+ h2eTILxXVPkedkEKAkgmBcxx1gior1ScsgJnsW8j1MfDN87sI5EYUxlTwkMPIcT8YuKT
+ MfgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783956757; x=1784561557;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=N4As0Neyy8YrD6FVFm9+Tt3dYT2Qlni3lX7+Dk5wYWk=;
- b=Ge4FbbEXC9Xbri8hJkbDW5FYMrG7KcfW5VvAU4Wu3KWJs8/R68HTAnjaFpoWdP9n7M
- pSQEoJqw4USkYKViFVwPdUSeaYFg7wHeufFEpTYbj0tE04onPC50zlkSD4iaVFBV9ugg
- /lc4JxjOHyi/fqS7gTJKZz4WHVngSOIMOogUDTmEJ6jUaOg/YOt4vJR6VoWGWdQafajU
- JQdq94dG3hV7ckqfKZXTrypB/q6ZWP8MRobAUwCvfy+S4brDw6MLstC2u942y9qT6d44
- ZsazIzSyDzd4A4Lb6pUr0ARlVNNOUJnPKjgXYr5cxtL+JDYR3ob8lDIIQ4BdmJNIqcxv
- c4CQ==
-X-Gm-Message-State: AOJu0YxfBD82onA7UEujp5HxkP9jB1wW2piUqBUpBIv0VA6wBdRIhh75
- RPI+oO+O0hx22xqf5hRG30AUvJ03GRiI23jPIour7G7V8+J1yDcIfX3p6n04k1Sz+VTgU/qJaA+
- ZbhT8zHLGfQ==
-X-Gm-Gg: AfdE7ckahksdLp4qeDZZBRLZAGFzkYhO/Mm8aNKz6eUgw3IEXMkWHJfhtnT4HEOiUiu
- /etnAXzxNh6IR97ZpbdDE2lRYixc2W61pKLnx98zw9LuJUGVwJC3anLndBZJ/cwdTP7U+byhzZu
- jS4BK+SwLeWQuKvj657omXz3ErVUAE0dWFZar9+6Zm0oA4J+KVeIkMDji74YLcGlkFn/oXbF0Qq
- km+PFph1Uuc9NPIqvPUcuWE9qw0JS4QSsrv6/L0evlGyQ4LnQYKHOThLGquyYCeOrr+pEkXo4in
- +pudOPHd7GKmRKxAmwwde1/Vi9p6NVPg7yb37RHW/W7ciU4Q9VHHdifqipY/T5cfNY4Cz648Jrg
- Q9Vj9FCRnx153hKoH1oad/ucsIPbG5Tri3BJcA4LvB07UuX9cGXTmZW05xp8239kLQqnOJRPxqr
- RT4HkscEKwswOimiMrwh0uznn9DDRuUmoWUSPZDHJxbe+81ELz+qmWKkbpndYDub/e1cAbbBCay
- oGo74aI9v4mO/tXCtMAZg==
-X-Received: by 2002:a05:600c:348e:b0:492:40a1:1e16 with SMTP id
- 5b1f17b1804b1-493f87dc629mr96515855e9.8.1783956757215; 
- Mon, 13 Jul 2026 08:32:37 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783956768; x=1784561568;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=K8ImuL8sE4fwwihfUxdtRBCshDkOb3mVVTN5ujtcTjk=;
+ b=fwcxHj5x5cnfPUAiFOdceOpGZJZjiWDFOwD16iPZXo3eMCOz59lxlJf7Fm7ribu9Ew
+ 0db84bxlZFMMApCcyJkGSBc+RZaVm8JISOcFTMsNH6N51fpw745dBERYLv3pPPbIpRac
+ aS/L2geAK1GVSr2GwP1rjVsTyE2qbgj2jnzgulzAo7isus9cnmMXFfd/PjjySkP1wkZT
+ R/3oj6IZAus0nQS5sWikySjvgDQsIj5o3iQWRF1FueZv6JF3hrqEym5LaU4O4ym9jRNW
+ kfujILw11Pk75Qf6752H+4Mz3DB8BCcasY31O0mnR9U8aM4l0dErNJNT2Oghv6Q8/BCI
+ Wkgg==
+X-Gm-Message-State: AOJu0YzzfMFPyNyL/gjVCKvAYErYSRpf13ENMOFbpwvTWDppKP3fWpIp
+ n2AF84regysSt1dXVrCJ2sv92dfNSqfaNFADrjXZbhEGIgZKpzgQu/rJMuVRnD6XFvsW6sY0IAS
+ xQ8Ow42re8g==
+X-Gm-Gg: AfdE7cmDwZeUqNK5rj/DILTVUahvbEvscrTa5FyeK098XrVrQIuDNXgy4RYLDpwp8kJ
+ M/FFZvAmKM7PLy5X8wYt0DRmZPMjTqiD83P1BOQWbO+4gcrwSZYndS5VdZjTqBu3qet8F52qt2M
+ SVcZjsLVUYRiRaYAfqGK9zqTNoKE//UF1iKKuIQR+ptQfaG6WRNZBAPcRsjqlhlx6XhgA3uhsf6
+ 5FDqsAIboDPpBedkcYoB7mG4kOdt0ichBLWSVWR26ySLszTGQPwmXbEa0daDKYxc7+FQGdbhzKr
+ 1wsFIVNZIt3Z9Y2f+wTtXkXMISfY3i1q5WVUvYvgSc3bMhejjV+Cl+V7vof7+ypyGXwEj8FUpDv
+ SazMKYtXxcJl1JR6bN1aiqfOqwTbZWzT6I1A6t89hPtqwV+RLmNfWO49fJU1myrvnbbo8uGQcGI
+ owF2KGcmWn/INlbu7peqph1OLZmA3isUxVMWEjAQma2Z3/a5kxCclbelrWO1PcSOSNxypLSIsag
+ XFebtyaipESuk20ctWOcg==
+X-Received: by 2002:a05:600c:c166:b0:493:f262:cc4c with SMTP id
+ 5b1f17b1804b1-493f881907amr98332225e9.23.1783956768215; 
+ Mon, 13 Jul 2026 08:32:48 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49508727f7dsm3825985e9.4.2026.07.13.08.32.36
+ 5b1f17b1804b1-49508727f7dsm3825985e9.4.2026.07.13.08.32.47
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jul 2026 08:32:36 -0700 (PDT)
+ Mon, 13 Jul 2026 08:32:47 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/26] hw/arm/tegra241-cmdqv: Do not sync GERRORN on VCMDQ
- allocation
-Date: Mon, 13 Jul 2026 16:32:09 +0100
-Message-ID: <20260713153233.3391818-3-peter.maydell@linaro.org>
+Subject: [PULL 14/26] docs/system: fix sorting of FEAT_S2[PIE|FWB]
+Date: Mon, 13 Jul 2026 16:32:21 +0100
+Message-ID: <20260713153233.3391818-15-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260713153233.3391818-1-peter.maydell@linaro.org>
 References: <20260713153233.3391818-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,59 +103,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shameer Kolothum <skolothumtho@nvidia.com>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-When a guest hits a command error, the hardware sets GERROR and the guest
-acknowledges it by writing GERRORN to match. These registers use toggle
-semantics, and since GERROR is read-only, both GERROR and GERRORN may
-remain set after an error has been handled. As long as they stay equal
-there is no pending error, so a subsequent VM is unaffected.
-
-When a new VM starts, QEMU allocates the hardware VCMDQ and flushes its
-cached GERRORN of zero, while the hardware may still have both GERROR and
-GERRORN set from an error the previous guest acknowledged. This makes them
-differ again, so the hardware sees a pending error and stall the VCMDQ,
-leading to CMD_SYNC timeouts.
-
-Do not sync GERRORN when allocating a hardware VCMDQ.
-
-Fixes: 1d0f77535417 ("hw/arm/tegra241-cmdqv: Route allocated VCMDQ Page0 accesses to the mmap'd host VINTF page0")
-Suggested-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Message-id: 20260707112450.111178-1-skolothumtho@nvidia.com
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260708145841.3032079-7-alex.bennee@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/tegra241-cmdqv.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ docs/system/arm/emulation.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
-index 7223aa9d1d9..273633e6293 100644
---- a/hw/arm/tegra241-cmdqv.c
-+++ b/hw/arm/tegra241-cmdqv.c
-@@ -212,7 +212,9 @@ static inline uint32_t *tegra241_cmdqv_vintf_lvcmdq_ptr(Tegra241CMDQV *cmdqv,
- /*
-  * Flush cached register writes into the mmap'd host VINTF page0 after a
-  * successful HW_QUEUE_ALLOC, so the guest's earlier writes survive
-- * the cache-to-hardware transition.
-+ * the cache-to-hardware transition. GERRORN is intentionally not synced,
-+ * as overwriting it with the cached value could recreate a GERROR != GERRORN
-+ * mismatch and stall the VCMDQ.
-  */
- static void tegra241_cmdqv_sync_vcmdq(Tegra241CMDQV *cmdqv, int index)
- {
-@@ -229,9 +231,6 @@ static void tegra241_cmdqv_sync_vcmdq(Tegra241CMDQV *cmdqv, int index)
- 
-     ptr = tegra241_cmdqv_vintf_lvcmdq_ptr(cmdqv, index, A_VCMDQ0_CONFIG);
-     *ptr = cmdqv->vcmdq_config[index];
--
--    ptr = tegra241_cmdqv_vintf_lvcmdq_ptr(cmdqv, index, A_VCMDQ0_GERRORN);
--    *ptr = cmdqv->vcmdq_gerrorn[index];
- }
- 
- /*
+diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+index 7806982e0d6..b4b65694ff5 100644
+--- a/docs/system/arm/emulation.rst
++++ b/docs/system/arm/emulation.rst
+@@ -160,8 +160,8 @@ the following architecture extensions:
+ - FEAT_RNG_TRAP (Trapping support for RNDR/RNDRRS)
+ - FEAT_RPRES (Increased precision of FRECPE and FRSQRTE)
+ - FEAT_S1PIE (Stage 1 permission indirections)
+-- FEAT_S2PIE (Stage 2 permission indirections)
+ - FEAT_S2FWB (Stage 2 forced Write-Back)
++- FEAT_S2PIE (Stage 2 permission indirections)
+ - FEAT_SB (Speculation Barrier)
+ - FEAT_SCTLR2 (Extension to SCTLR_ELx)
+ - FEAT_Secure (Support for Secure state)
 -- 
 2.43.0
 
