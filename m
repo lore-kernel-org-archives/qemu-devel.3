@@ -4,112 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E43E3C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 06:53:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85F06C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 07:03:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjAXG-00065D-Oy; Mon, 13 Jul 2026 02:53:02 -0400
+	id 1wjAgt-0007Mr-PO; Mon, 13 Jul 2026 03:02:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wjAX2-00064k-Kz
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 02:52:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wjAX1-00048r-46
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 02:52:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783925565;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=D0ZFEGQgLUrEEMAXipHw/EG2/+KkMcSNIs9r1La8aBo=;
- b=GevrpGCPmBmfgUWPsgMqF7g5PaBMxLk18xSecP/P9aUApO3UFU8I1GAB3OAynvqYzB+bN5
- CjFsa6/FPclf8ZAX3260sQ6MY8tbu/2ICved7i/mGXHvRInrEu0+kbAk2ppClmXGz8BR8b
- zpMKNIoVfVVkEu28TobYlNjuVAJzAIs=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-505-XU9elJOPOPOAV9poiQ5Xew-1; Mon, 13 Jul 2026 02:52:43 -0400
-X-MC-Unique: XU9elJOPOPOAV9poiQ5Xew-1
-X-Mimecast-MFC-AGG-ID: XU9elJOPOPOAV9poiQ5Xew_1783925563
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-493bc2b376fso21261765e9.3
- for <qemu-devel@nongnu.org>; Sun, 12 Jul 2026 23:52:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1783925563; x=1784530363; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=D0ZFEGQgLUrEEMAXipHw/EG2/+KkMcSNIs9r1La8aBo=;
- b=tGaFnnMT13PwP9OeLFmIhpneg/BHAT+aRAKJTq+6ya8iK12W+bwf4o4dPIRRl3/tGQ
- jzmUCHHfRN5zRgNahIA1MhFus/HmIQ/1GkUpwR0J17e70ARyQIlOHV1y1jU01Rq3aH4U
- KcSobM+Plzz6bIuhcuka87MFnKQa3TMc0ulF9YjcJnEwcMcOa78hWcdp5rdxJBx8UB0v
- jMDfQnh5FyF0+VB6CEzQtRE5SSA2l08yimlsfYqgdA7HzhBTrwF9DgI/gIy2kHEibCC7
- NVtRCcekAROt81E9+RFkfkJU41CYufVqoODTTSmS3S9yoMu1x/GqBdLqQ4sEktTvVb8y
- zqxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783925563; x=1784530363;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=D0ZFEGQgLUrEEMAXipHw/EG2/+KkMcSNIs9r1La8aBo=;
- b=bnuehXNWqNO5mrQJR9RH6ioi4DYEYygqSoeKE7vPVcpthfXSFmnUGzQW7yIF1ASKhB
- e9Atc1zBjBZcbkXX5ZvOboQQjKMu656CSB/U8BwXokP8F6e9gr/NflcoJYbvbdkOx40D
- CJVI+2KBqIzAsmq0X6uRf0PsGwKulI47qO9/526rFBu1ofesjgO7b+LgJ81dtBwIhPCj
- Ve2zD5LFjGe7J4NsZocJ2cealC19I17VGvPZtErVF3qMyzoFqmcXAQ3UlmVmopw3Cvzd
- RuTmfYmtVybZRrdjEfIXOwCGPspuZVf8jm4oN/gPkXovLSEr2PwZ585rMzr0tSRO8Lzb
- fHxw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrHIUW1iHDOi3gEQaVZydR0dMGEJJooo7IMKagBuSrSpqkRn4SUsXU2IeU/ZeH+6u1AJFRIdjWpyvIV@nongnu.org
-X-Gm-Message-State: AOJu0Yx7brHLsFzMJDHuccr6j6pvrvXvOtffVrV7Roi9vT3hbDBs+foh
- i69pmk+ypQc9HJdoINX5hjaZ4/p0Z047rdOGlsqVZYX8VddTk5FRAuG8ZDTU078dXC1rsFuAOXT
- sCnr8XVENHNJ/4Vy7HuZjNM+bfuCSyw/ig/jwPX5df/me9e6E7SMnWGwp
-X-Gm-Gg: AfdE7cmDuUITDWZKE31DAsDG2zMSDG+ynkUlcIoe86uGmDmb92cRebGVCcIvK6u8mRS
- g3JhtDnEls9hRjJmlMtbn3jBDvrPukWcY5sQLU5Y9FGT1eEqdBud8p+ea8Gq84e101P1N1ERuMK
- v14pMgkbgfeKauGdxOkBAlFR9sAPdYR7rDDeXahCIMmpstAUimCeBq5pPdw0RJ/lMiTenRs8sC3
- 34dAyVh+Z5g1ku8TkiHmlD/Zy96wLGDcrrOJuZqh1fiNGDH4L1cvDvGfleR095ccf2Xg2Wj9ZYf
- F6QFP5Ntp9K/pJi7DxDSkm6dzGaOQTqOoUrmjHFWXCATCZ4dQ59btnUDMsH42Rj+dNhSC84uSOF
- pU98=
-X-Received: by 2002:a05:600c:c166:b0:493:cc25:85cb with SMTP id
- 5b1f17b1804b1-493f87d620emr82164415e9.8.1783925562632; 
- Sun, 12 Jul 2026 23:52:42 -0700 (PDT)
-X-Received: by 2002:a05:600c:c166:b0:493:cc25:85cb with SMTP id
- 5b1f17b1804b1-493f87d620emr82164255e9.8.1783925562192; 
- Sun, 12 Jul 2026 23:52:42 -0700 (PDT)
-Received: from redhat.com ([178.132.109.84]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493eb74835esm364623285e9.14.2026.07.12.23.52.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 12 Jul 2026 23:52:41 -0700 (PDT)
-Date: Mon, 13 Jul 2026 02:52:37 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- alistair23@gmail.com, qemu-riscv@nongnu.org,
- bin.meng@processmission.com, mzamazal@redhat.com, sgarzare@redhat.com
-Subject: Re: [PATCH 2/2] MAINTAINERS: Mark "vhost-user-scmi" orphaned
-Message-ID: <20260713025003-mutt-send-email-mst@kernel.org>
-References: <20260710114305.2961898-1-armbru@redhat.com>
- <20260710114305.2961898-3-armbru@redhat.com>
- <20260711035848-mutt-send-email-mst@kernel.org>
- <65079ad4-3ab9-4ad6-b683-09d46c72b266@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1wjAgh-0007MB-Gl
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 03:02:47 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1wjAge-0005Wy-0y
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 03:02:47 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8AxuvCEjVRqJvMCAA--.11927S3;
+ Mon, 13 Jul 2026 15:02:28 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJBxb8eBjVRqALMLAA--.55056S2;
+ Mon, 13 Jul 2026 15:02:27 +0800 (CST)
+Subject: Re: [PATCH v3 5/8] target/loongarch: Dump host CSRs with LVZ state
+To: SignKirigami <prcups@krgm.moe>, qemu-devel@nongnu.org
+Cc: xianglai li <lixianglai@loongson.cn>,
+ Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+References: <cover.1783673526.git.prcups@krgm.moe>
+ <647e3a352d4b0fc41e983d674ab599898275cd07.1783673526.git.prcups@krgm.moe>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <f2289e1b-6692-9a78-9f65-f92351976797@loongson.cn>
+Date: Mon, 13 Jul 2026 15:02:18 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+In-Reply-To: <647e3a352d4b0fc41e983d674ab599898275cd07.1783673526.git.prcups@krgm.moe>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <65079ad4-3ab9-4ad6-b683-09d46c72b266@oss.qualcomm.com>
-Received-SPF: permerror client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=unavailable autolearn_force=no
+X-CM-TRANSID: qMiowJBxb8eBjVRqALMLAA--.55056S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7urykGF1xGw43XFy8WryDArc_yoW8Cw1fpr
+ W8u3yj9F1xGrZ2ya92qan8XFyDXF1xG3429ayFkryIyr45Xry3uF1kK34aqF4kJ34agw1r
+ Xan3uF1UZa10vacCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE
+ 14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+ AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
+ rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
+ CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
+ 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr
+ 0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8P5
+ r7UUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.494,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,55 +82,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 13, 2026 at 08:13:38AM +0200, Philippe Mathieu-Daud� wrote:
-> On 11/7/26 10:00, Michael S. Tsirkin wrote:
-> > On Fri, Jul 10, 2026 at 01:43:05PM +0200, Markus Armbruster wrote:
-> > > Commit a5dab090e1 (hw/virtio: Add boilerplate for vhost-user-scmi
-> > > device, 2023-06-28) added the section with S: Supported, but no M:.
-> > > This makes no sense.  Downgrade to S: Orphan.
-> > > 
-> > > Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> > 
-> > 
-> > No, this makes sense. The reason this section was added is so that Milan can
-> > get copied on vhost-user-scmi but not other virtio stuff:
-> > 
-> > ./scripts/get_maintainer.pl -f hw/virtio/vhost-user-scmi.c
-> > Milan Zamazal <mzamazal@redhat.com> (reviewer:vhost-user-scmi)
-> > "Michael S. Tsirkin" <mst@redhat.com> (supporter:vhost)
-> > Stefano Garzarella <sgarzare@redhat.com> (reviewer:vhost)
-> > qemu-devel@nongnu.org (open list:All patches CC here)
-> > 
-> > Pls drop this patch.
-> > 
-> > > ---
-> > >   MAINTAINERS | 2 +-
-> > >   1 file changed, 1 insertion(+), 1 deletion(-)
-> > > 
-> > > diff --git a/MAINTAINERS b/MAINTAINERS
-> > > index aa2df9cbe3..4d558ddee9 100644
-> > > --- a/MAINTAINERS
-> > > +++ b/MAINTAINERS
-> > > @@ -2622,7 +2622,7 @@ F: include/hw/virtio/vhost-user-snd.h
-> > >   vhost-user-scmi
-> 
-> So what we want is to add here:
-> 
->   M: Michael S. Tsirkin <mst@redhat.com>
->   R: Stefano Garzarella <sgarzare@redhat.com>
 
-But these files already get M from the match against hw/virtio/ -
-what am I missing?
 
-> > >   R: Milan Zamazal <mzamazal@redhat.com>
-> > > -S: Supported
-> > > +S: Orphan
-> > >   F: hw/virtio/vhost-user-scmi*
-> > >   F: include/hw/virtio/vhost-user-scmi.h
-> > >   F: tests/qtest/libqos/virtio-scmi.*
-> > > -- 
-> > > 2.54.0
-> > 
-> > 
+On 2026/7/10 下午5:00, SignKirigami wrote:
+> Update LoongArch ELF note generation to read ERA and BADV from the host
+> CSR bank directly, avoiding dependence on the currently selected system
+> state once LVZ adds a separate guest CSR bank.
+> 
+> Signed-off-by: SignKirigami <prcups@krgm.moe>
+> Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+> ---
+>   target/loongarch/arch_dump.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/target/loongarch/arch_dump.c b/target/loongarch/arch_dump.c
+> index 9d84faef96..13472188ae 100644
+> --- a/target/loongarch/arch_dump.c
+> +++ b/target/loongarch/arch_dump.c
+> @@ -116,7 +116,7 @@ int loongarch_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
+>   {
+>       struct loongarch_note note;
+>       CPULoongArchState *env = &LOONGARCH_CPU(cs)->env;
+> -    CPUSysState *sys = env_sys(env);
+> +    CPUSysState *host = &env->sys_states[LOONGARCH_VM_LEVEL_HOST];
+It will be better if there is wrapped function such as get_sys_state(),
+static inline CPUSysState get_sys_state(CPULoongArchState *env, int vm)
+{
+     return &env->sys_states[vm];
+}
+
+     CPUSysState *sys = get_sys_state(env, LOONGARCH_VM_LEVEL_HOST);
+
+Regards
+Bibo Mao
+
+>       int ret, i;
+>   
+>       loongarch_note_init(&note, s, "CORE", 5, NT_PRSTATUS,
+> @@ -127,8 +127,8 @@ int loongarch_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
+>       for (i = 0; i < 32; ++i) {
+>           note.prstatus.pr_reg.gpr[i] = cpu_to_dump64(s, env->gpr[i]);
+>       }
+> -    note.prstatus.pr_reg.csr_era  = cpu_to_dump64(s, sys->CSR_ERA);
+> -    note.prstatus.pr_reg.csr_badv = cpu_to_dump64(s, sys->CSR_BADV);
+> +    note.prstatus.pr_reg.csr_era  = cpu_to_dump64(s, host->CSR_ERA);
+> +    note.prstatus.pr_reg.csr_badv = cpu_to_dump64(s, host->CSR_BADV);
+>       ret = f(&note, LOONGARCH_PRSTATUS_NOTE_SIZE, s);
+>       if (ret < 0) {
+>           return -1;
+> 
 
 
