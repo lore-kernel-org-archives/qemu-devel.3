@@ -4,104 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43E06C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 01:42:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92BB9C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 02:31:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wj5gA-0005YT-4V; Sun, 12 Jul 2026 21:41:54 -0400
+	id 1wj6Rq-0005W2-EF; Sun, 12 Jul 2026 22:31:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wj5g7-0005YE-6u
- for qemu-devel@nongnu.org; Sun, 12 Jul 2026 21:41:51 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wj5g5-0002rT-8r
- for qemu-devel@nongnu.org; Sun, 12 Jul 2026 21:41:50 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-698ae09e356so3236046a12.2
- for <qemu-devel@nongnu.org>; Sun, 12 Jul 2026 18:41:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783906907; cv=none;
- d=google.com; s=arc-20260327;
- b=pMtimZYqaofK7kqai5f1W0hXboWK8YAWZo5WpytT/30JpF9k5nHLT1K+2Lobok19ZE
- ZBSh7aFEDBVK2hkJtRvBcMpUiIIVUay2VtZRDnyBnuvZqCu252gSZZjydgZ+SVfvLZjO
- LnN1sF9lKFHVKLQiMKMA6kZp5sDOMnrUTFsieh3oCZ58Nc6eKXg3UpDy3wQtqkO3Sx/0
- 2pZaq44FRybydpPXX62DmZPbXaHGa6pWVEFYB1fqqc9pBBfvvU3h4nZOm0BehPVOMxLG
- 55L/Rw0Ie8gd2K0nIZ0+Y/U6OCXtNwY2e28Yz56Xd5oT/TQmHLfmd/8dfjOKaI2/MucZ
- rBmw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=AwiOiCRt16pAPXIUqFNZHyYJIYj5AYW+wnMPM6QVZ2g=;
- fh=HMEqSDohimyZm5k0RbcfuA7BILj2eRFccruQ6ZFulDM=;
- b=mhUD6/1+5BBHWvOW+D1CTDCgSZlwdcB7Ya0KZl2DEkpeTUTCj9uSWt3MccmueeV1CR
- AmAy/+ycJccywuHRSW/qWa4Wgsx8jdkdZlT1bg/0HET/nr7NCfz05UVpfLMq33N/fmeB
- aCC29pD20eRb9TwEVM6KyKN91ffZE25I8/x+uZ0CP1OFKGn6bK/4O6bDGeZiORVAceA4
- ukq5X7QCNeHSLYAIhQBiVDcH//0HNUjqHeRli4AeESmyouxJjYqFwY6geBY26K3s4PU4
- qPBJxWtdlw5imij3HZhXH+QzwPSZkIa5eIfWSo2IvSFH1I3V0B4JnkUI8No4FNu0oh7t
- nDZg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783906907; x=1784511707; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=AwiOiCRt16pAPXIUqFNZHyYJIYj5AYW+wnMPM6QVZ2g=;
- b=b4Sdejsyh5CkIaFPhCUA9/BTUsbM9sDVe/75PoARL+RTM5dRzB6lQ1jJo85Nx4QwdZ
- 7DuYkEi/uq2iAd28e3SDRdeWRdx6mtTy9qwMkfpiUKAs7LN0K9u66nqRSGNhJVIG/SUP
- AyY+BokCLxNYbnDFG6EwC71eaQoehP9RLe8UrUjQMTLJb3QJ5LJ10GC7+LkEkMN6jNhq
- DlBgp5foHr4Boqc270/hspGt85GluyEdl2mq5YSLoQR64DLupItzRRCqOtVR3cgjKibR
- nfOZxhkb2lvkt8pFszBdZXzvCXXPdXeZUPqiXBRlxsix0I3To/x4WkiJ0EhdAJsDyM3L
- eKKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783906907; x=1784511707;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=AwiOiCRt16pAPXIUqFNZHyYJIYj5AYW+wnMPM6QVZ2g=;
- b=EBTZ9W8CkwlAhEoeMtOUXyAd5a3sHfS+4SWgSkf/xfi46kPRrE9Up3AQn0C6YGhvMC
- nbWK6O/IC6RDCChp7XSR+9Jj+46Tm0DTM2LEc7NYxmJafyv4Zi02e7IBPKIeMk84MaIG
- 0qRMBzDIJngiXc41cgQjgJ9RwDGXFB+NOowi77DDNH/KelCyGk9sOYztWbF1KxBbCzA3
- /yoU66RfJ90V7Ra07QaU32qYmngGBIk+wdTfUwXhbuD0jbO6OynxuGmjRq8+Tmus8ZHt
- sOZghBMt8IA94brFeMOru/OaLyGJHMCy73ndY5qR+Fwrm+VU/McoQNyfGNFkly6BTvB0
- vPew==
-X-Gm-Message-State: AOJu0YzWkVJY5ba2Qu1hqkENR37ElRm392JqbI/NlM47xO3iK+v2tijH
- NSKICJ5dRADXUYFOl4WzOh9PZtF/IS9IquBkDcGZAFaOoca8twDporNy85/IwXKvP5GPStO3qbQ
- jOSj9W+LuaQlWW3FomCLTQ0o2CCNO33JYKj533bg=
-X-Gm-Gg: AfdE7cl8DMlPpH5DBqlJDx8XLQr4/QGVCDU2oQHIZ1wTvdQTZch7uR9TlBePfnBEOlK
- 8KgQn0rHLfkQXYJ74UWltfqC5uqbdKyInGyq0zQ9DJerVGLkxpf51H3bvPiSy/jKSvGKqefQw6K
- 9Zc0eeKnL9WPADTQ2jyFWxJm4WDH9Ztnujmf/QVcxF0Kj0DVDn82X6ei+jKu6c+vQygrUbJq623
- moHjiWuKanh9eVw4z2tdbki9cVGx88s1RUE+qo05ocwCd5l9cBwGOKNzfaEUfTTJ1F4zMN3vxM3
- j1FX9x4RBsbcOX74tvY+GoPN9Bn8KoW3XWEN7g==
-X-Received: by 2002:a05:6402:50cf:b0:691:7054:8c6b with SMTP id
- 4fb4d7f45d1cf-69c5f102c59mr2950055a12.19.1783906906758; Sun, 12 Jul 2026
- 18:41:46 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1783660209.git.subrahmanya.lingappa@oss.qualcomm.com>
- <1f2732b7220280efc1b5f69ae022b318dbbc3827.1783660209.git.subrahmanya.lingappa@oss.qualcomm.com>
-In-Reply-To: <1f2732b7220280efc1b5f69ae022b318dbbc3827.1783660209.git.subrahmanya.lingappa@oss.qualcomm.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 13 Jul 2026 11:41:19 +1000
-X-Gm-Features: AUfX_mwdNliS1jq6559CIVZKK_7V2Vmm4eGtJiu0dVX8FuL7alxmj_nRYDNgeD0
-Message-ID: <CAKmqyKPQj8wWC_f4xL9sJVg-CKb3FPG-or=34B2tF4i-pRjnZA@mail.gmail.com>
-Subject: Re: [PATCH v2 01/10] build: add optional librpmi dependency
-To: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <sundayjiang@tencent.com>)
+ id 1wj6Rp-0005Vu-0b
+ for qemu-devel@nongnu.org; Sun, 12 Jul 2026 22:31:09 -0400
+Received: from smtpbgsg2.qq.com ([54.254.200.128])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sundayjiang@tencent.com>)
+ id 1wj6Ri-0000S9-MU
+ for qemu-devel@nongnu.org; Sun, 12 Jul 2026 22:31:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tencent.com;
+ s=s201512; t=1783909835;
+ bh=vmmKe66BMLYRpqIvOWRU0hcETJ7n0K2ErpIzqcfjAAE=;
+ h=From:To:Subject:Mime-Version:Date:Message-ID;
+ b=kOFLsQzjNwNwikNQDVF0nG0g90SyeFGs8ljQr7e5wpxhRXvDuWicvP2lFRBExR55b
+ 6Kurm6Ola6Y/6f7ONGAUi1B9OyUh8hcKFLliHWoJtZBAl80aog1G/VvcSzQNUOf7mc
+ 1xRQ4smuALVYM8RpRPtgGV95IJOS/bjevA0zWO1A=
+EX-QQ-RecipientCnt: 3
+X-QQ-GoodBg: 2
+X-QQ-SSF: 00400000000000F0
+X-QQ-FEAT: D4aqtcRDiqT5qm0zBSmG5FbNe3wMN8qyxgqthGmOr2I=
+X-QQ-BUSINESS-ORIGIN: 2
+X-QQ-Originating-IP: 6QPM+uvMU21RwI4gKCCXcnm6tFZ2r93e3bkqH/5752k=
+X-Originating-IP: 119.147.144.189
+X-QQ-STYLE: 
+X-QQ-mid: lv5gz3a-0t1783909831t9eb88e85
+From: "=?utf-8?B?c3VuZGF5amlhbmco6JKL5rWp5aSpKQ==?=" <sundayjiang@tencent.com>
+To: "=?utf-8?B?cWVtdS1kZXZlbA==?=" <qemu-devel@nongnu.org>
+Cc: "=?utf-8?B?amljMjM=?=" <jic23@kernel.org>,
+ "=?utf-8?B?bGludXgtY3hs?=" <linux-cxl@vger.kernel.org>
+Subject: [PATCH] hw/cxl: Check mailbox payload length does not exceed max size
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="----=_NextPart_6A544DC6_DBF2D0C0_72A7271D"
+Content-Transfer-Encoding: 8Bit
+Date: Mon, 13 Jul 2026 10:30:30 +0800
+X-Priority: 3
+Message-ID: <tencent_3567767806E594D030BB7C9E@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+X-BIZMAIL-ID: 13489422398211606666
+X-Address-Ticket: version=; type=; ticket_id=; id_list=; display_name=;
+ session_id=; 
+X-QQ-SENDSIZE: 520
+Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
+ id ; Mon, 13 Jul 2026 10:30:31 +0800 (CST)
+Feedback-ID: lv:tencent.com:qybglogicsvrgz:qybglogicsvrgz5b-1
+X-QQ-XMAILINFO: N2K7JO7TcIoEC2mUiKTLzqz7mvASQ92Dcr3OvnJsIYocloq7d4kAeo0E
+ yBbXls8iERgerJrVn3kzJ4Tc+qC1aOJYukpDekmxQyY37R3eBCyQFZmwzxtXRqj+BeLcIL8
+ 5MqSdzNH0YW8kC+MmqArOUwT3gnWev0XdLcq8L3uNDjQsq8qnWqv4xKCg77MjdWotQ9n7tU
+ Sk97QyycDXHrkv1wgz3gqeXxoMxNbZ8sKn01N/CH8JK7a7i8NIJdlv5dRm0w9E8M0tW7+DK
+ 6enR8UrsF3P88TGCiyeS4VHO09XgQpIG2M5SYkCurdu7wvIbtBPsftANBSxsDKQZbYA9AF5
+ DnihV+opQ7pdOEQo+md2Zbx+uHxl+FEYAnNrFZ0ca3/+GvR/P8gbm3aMEc50ObonfEskyKa
+ 7IEzaCQAxiLk2G/8PawzHuMXNLOBnP9zXKoE1B/NyZBWkIjPnYdwqYlPqR6ImD3DL+Ii8RU
+ LqSgsj1VZiIQMClxFIk3wluli4CT6NyxQ1LG/HRjBEMQG5q4mqcieI0jM/GNWCaq31mBCYi
+ dqIkqlDJUiEMPlo86uHWqzxKgDp+YNmqOsaXooEzR8Ib8uTQzXJkJwdISCRdZaRdBrO9Kx4
+ g0e7w0bBqaYkROAdixA/xG4wro6qmhtEjRH/4ZpzZUpYosHpxkL7fFS5Oq25YPqZ513rCva
+ CaJozVe87wua2IK6Ij526+W1QPbqO6uZ3UeSVqfBozD/VXXj5L7dzsPbXXIgH/kpPr6wyAX
+ O+2cHd1Sk+tSJ9hC9wZTCkvSU4abF6D9AUFI1CQZM6V1dW3vwHgaSz+le0LOz71xdOAuPnL
+ vba+WnmjOyjv2umPU9q/eYCKn76NiXOz0z27wh3DGsw/RjEXWU+zu9uh9IbXa1830yLJkE1
+ oxXZTcONjAquIJ2TLe0qb9l82ssect/PjRPp+paqcVBHwuy2TuXSyF54yC0hCqSp+LV0K+5
+ rCUm2BSAV3JJEP01ZGTAgWjjUi+CXhAlp5bAJaPRPxyE4MilFodRlpJEcevYob52eIE37Qf
+ NtOQUVuhX2hIDuYwe0xRoF9oDT0LgSlqJNz+Ihpw==
+X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
+X-QQ-RECHKSPAM: 0
+Received-SPF: pass client-ip=54.254.200.128;
+ envelope-from=sundayjiang@tencent.com; helo=smtpbgsg2.qq.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ MSGID_FROM_MTA_HEADER=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,131 +101,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 10, 2026 at 10:23=E2=80=AFPM Subrahmanya Lingappa
-<subrahmanya.lingappa@oss.qualcomm.com> wrote:
->
-> From: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
->
-> Add a meson option and config probe for librpmi so RISC-V machines can
-> opt into RPMI support when the library is available. Keep the dependency
-> optional so default builds without librpmi continue to work.
->
-> Signed-off-by: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.co=
-m>
+This is a multi-part message in MIME format.
 
-Can we add some documentation of how get librpmi support to work? Do I
-just apt/dnf/pacman/apk install it? Do I need a certain version?
+------=_NextPart_6A544DC6_DBF2D0C0_72A7271D
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Alistair
+RnJvbSA2NmEwOTc2OTQ0ZDdkNDE1YmM3ZWQxMjVlN2M1NWY1MmQ2ODZiNTJmIE1vbiBTZXAg
+MTcgMDA6MDA6MDAgMjAwMUZyb206IEhhb3RpYW4gSmlhbmcgPHN1bmRheWppYW5nQHRlbmNl
+bnQuY29tJmd0Ow0KRGF0ZTogVGh1LCA5IEp1bCAyMDI2IDExOjA5OjExICswODAwDQpTdWJq
+ZWN0OiBbUEFUQ0hdIGh3L2N4bDogcmVqZWN0IG1haWxib3ggY29tbWFuZHMgd2l0aCBwYXls
+b2FkIGV4Y2VlZGluZyBtYXgNCiZuYnNwO3NpemUNCg0KDQptYWlsYm94X3JlZ193cml0ZSgp
+IGNhbGxzIGdfbWVtZHVwMihwbCwgbGVuX2luKSB3aGVyZSBsZW5faW4gaXMNCnRha2VuIGZy
+b20gdGhlIENYTF9ERVZfTUFJTEJPWF9DTUQuTEVOR1RIIGZpZWxkLCBhIDIwLWJpdCB2YWx1
+ZQ0KdGhhdCBjYW4gc3BlY2lmeSB1cCB0byB+MSBNQi4gVGhlIHBheWxvYWQgYnVmZmVyIHBs
+IHBvaW50cyBpbnRvDQptYm94X3JlZ19zdGF0ZSwgd2hpY2ggaGFzIG9ubHkgQ1hMX01BSUxC
+T1hfTUFYX1BBWUxPQURfU0laRSAoMjA0OCkNCmJ5dGVzIG9mIHBheWxvYWQgc3BhY2UuIFdo
+ZW4gbGVuX2luIGV4Y2VlZHMgMjA0OCwgZ19tZW1kdXAyIHJlYWRzDQpwYXN0IHRoZSBwYXls
+b2FkIGFyZWEgaW50byBhZGphY2VudCBDWExEZXZpY2VTdGF0ZSBmaWVsZHMsDQppbmNsdWRp
+bmcgaG9zdCBoZWFwIHBvaW50ZXJzIGluIGV2ZW50X2xvZ3MuDQoNCg0KQSBndWVzdCBjYW4g
+Y29tYmluZSB0aGlzIHdpdGggU0VUX0xTQSAodmFyaWFibGUtbGVuZ3RoLCBpbj1+MCkgdG8N
+CndyaXRlIHRoZSBvdmVyLXJlYWQgZGF0YSBpbnRvIExTQSBiYWNraW5nIG1lbW9yeSwgdGhl
+biByZWFkIGl0IGJhY2sNCndpdGggR0VUX0xTQSwgbGVha2luZyBob3N0IGhlYXAgYWRkcmVz
+c2VzIHRvIHRoZSBndWVzdC4gVGhpcyBicmVha3MNCkFTTFIgaXNvbGF0aW9uIGJldHdlZW4g
+Z3Vlc3QgYW5kIGhvc3QuDQoNCg0KUmVqZWN0IGNvbW1hbmRzIHdpdGggbGVuX2luICZndDsg
+Q1hMX01BSUxCT1hfTUFYX1BBWUxPQURfU0laRSBieQ0KcmV0dXJuaW5nIENYTF9NQk9YX0lO
+VkFMSURfUEFZTE9BRF9MRU5HVEggYmVmb3JlIGNhbGxpbmcgZ19tZW1kdXAyLg0KDQoNCkZp
+eGVzOiBjOTQ2MDU2MWVkICgiaHcvY3hsL21ib3g6IEdlbmVyYWxpemUgdGhlIENDSSBjb21t
+YW5kIHByb2Nlc3NpbmciKQ0KUmVwb3J0ZWQtYnk6IEhhb3RpYW4gSmlhbmcgb2YgVGVuY2Vu
+dCBTZWN1cml0eSAoWXVuZGluZyBMYWIpIDxzdW5kYXlqaWFuZ0B0ZW5jZW50LmNvbSZndDsN
+ClNpZ25lZC1vZmYtYnk6IEhhb3RpYW4gSmlhbmcgPHN1bmRheWppYW5nQHRlbmNlbnQuY29t
+Jmd0Ow0KQ2M6IHFlbXUtc3RhYmxlQG5vbmdudS5vcmcNCkxpbms6IGh0dHBzOi8vZ2l0bGFi
+LmNvbS9xZW11LXByb2plY3QvcWVtdS8tL3dvcmtfaXRlbXMvMzk2Nw0KLS0tDQombmJzcDto
+dy9jeGwvY3hsLWRldmljZS11dGlscy5jIHwgMjIgKysrKysrKysrKysrKysrLS0tLS0tLQ0K
+Jm5ic3A7MSBmaWxlIGNoYW5nZWQsIDE1IGluc2VydGlvbnMoKyksIDcgZGVsZXRpb25zKC0p
+DQoNCg0KZGlmZiAtLWdpdCBhL2h3L2N4bC9jeGwtZGV2aWNlLXV0aWxzLmMgYi9ody9jeGwv
+Y3hsLWRldmljZS11dGlscy5jDQppbmRleCBlMTUwZDc0NDU3Li5lNDgyNWY2YWQ2IDEwMDY0
+NA0KLS0tIGEvaHcvY3hsL2N4bC1kZXZpY2UtdXRpbHMuYw0KKysrIGIvaHcvY3hsL2N4bC1k
+ZXZpY2UtdXRpbHMuYw0KQEAgLTIwMiwxNCArMjAyLDIyIEBAIHN0YXRpYyB2b2lkIG1haWxi
+b3hfcmVnX3dyaXRlKHZvaWQgKm9wYXF1ZSwgaHdhZGRyIG9mZnNldCwgdWludDY0X3QgdmFs
+dWUsDQombmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7Ym9vbCBiZ19zdGFydGVk
+ID0gZmFsc2U7DQombmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7aW50IHJjOw0K
+Jm5ic3A7DQotICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO3BsX2luX2NvcHkgPSBnX21l
+bWR1cDIocGwsIGxlbl9pbik7DQotICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO2lmIChs
+ZW5faW4gPT0gMCB8fCBwbF9pbl9jb3B5KSB7DQotICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZu
+YnNwOyAmbmJzcDsgJm5ic3A7LyogQXZvaWQgc3RhbGUgZGF0YSAmbmJzcDstIGluY2x1ZGlu
+ZyBmcm9tIGVhcmxpZXIgY21kcyAqLw0KLSAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsg
+Jm5ic3A7ICZuYnNwO21lbXNldChwbCwgMCwgQ1hMX01BSUxCT1hfTUFYX1BBWUxPQURfU0la
+RSk7DQotICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7cmMgPSBj
+eGxfcHJvY2Vzc19jY2lfbWVzc2FnZShjY2ksIGNtZF9zZXQsIGNtZCwgbGVuX2luLCBwbF9p
+bl9jb3B5LA0KLSAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAm
+bmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7
+ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZhbXA7bGVuX291
+dCwgcGwsICZhbXA7Ymdfc3RhcnRlZCk7DQorICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNw
+O2lmIChsZW5faW4gJmd0OyBDWExfTUFJTEJPWF9NQVhfUEFZTE9BRF9TSVpFKSB7DQorICZu
+YnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7cWVtdV9sb2dfbWFzayhM
+T0dfR1VFU1RfRVJST1IsDQorICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsg
+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNw
+OyJDWEwgbWFpbGJveDogcGF5bG9hZCBsZW5ndGggJWx1IGV4Y2VlZHMgbWF4ICV1XG4iLA0K
+KyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5i
+c3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsodW5zaWduZWQgbG9uZyls
+ZW5faW4sIENYTF9NQUlMQk9YX01BWF9QQVlMT0FEX1NJWkUpOw0KKyAmbmJzcDsgJm5ic3A7
+ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO3JjID0gQ1hMX01CT1hfSU5WQUxJRF9QQVlM
+T0FEX0xFTkdUSDsNCiZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDt9IGVsc2Ug
+ew0KLSAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO3JjID0gQ1hM
+X01CT1hfSU5URVJOQUxfRVJST1I7DQorICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAm
+bmJzcDsgJm5ic3A7cGxfaW5fY29weSA9IGdfbWVtZHVwMihwbCwgbGVuX2luKTsNCisgJm5i
+c3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDtpZiAobGVuX2luID09IDAg
+fHwgcGxfaW5fY29weSkgew0KKyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7
+ICZuYnNwOyAmbmJzcDsgJm5ic3A7LyogQXZvaWQgc3RhbGUgZGF0YSAmbmJzcDstIGluY2x1
+ZGluZyBmcm9tIGVhcmxpZXIgY21kcyAqLw0KKyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJz
+cDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7bWVtc2V0KHBsLCAwLCBDWExfTUFJTEJP
+WF9NQVhfUEFZTE9BRF9TSVpFKTsNCisgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZu
+YnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO3JjID0gY3hsX3Byb2Nlc3NfY2NpX21lc3NhZ2Uo
+Y2NpLCBjbWRfc2V0LCBjbWQsIGxlbl9pbiwNCisgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5i
+c3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAm
+bmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7
+ICZuYnNwOyAmbmJzcDsgJm5ic3A7IHBsX2luX2NvcHksICZhbXA7bGVuX291dCwgcGwsDQor
+ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJz
+cDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZu
+YnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmYW1wO2Jn
+X3N0YXJ0ZWQpOw0KKyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNw
+O30gZWxzZSB7DQorICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7
+ICZuYnNwOyAmbmJzcDtyYyA9IENYTF9NQk9YX0lOVEVSTkFMX0VSUk9SOw0KKyAmbmJzcDsg
+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO30NCiZuYnNwOyAmbmJzcDsgJm5i
+c3A7ICZuYnNwOyAmbmJzcDt9DQombmJzcDsNCiZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNw
+OyAmbmJzcDsvKiBTZXQgYmcgYW5kIHRoZSByZXR1cm4gY29kZSAqLw0KLS0gDQoyLjM0LjE=
 
-> ---
->  Kconfig.host                  |  3 +++
->  meson.build                   | 14 ++++++++++++++
->  meson_options.txt             |  2 ++
->  scripts/meson-buildoptions.sh |  3 +++
->  4 files changed, 22 insertions(+)
->
-> diff --git a/Kconfig.host b/Kconfig.host
-> index 933425c74b..6f98dadb2e 100644
-> --- a/Kconfig.host
-> +++ b/Kconfig.host
-> @@ -8,6 +8,9 @@ config LINUX
->  config LIBCBOR
->      bool
->
-> +config LIBRPMI
-> +    bool
-> +
->  config GNUTLS
->      bool
->
-> diff --git a/meson.build b/meson.build
-> index 19e123423b..103b4649b8 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -2005,6 +2005,17 @@ if lzo.found() and not cc.links('''
->    endif
->  endif
->
-> +librpmi =3D not_found
-> +if not get_option('librpmi').auto() or have_system
-> +  librpmi =3D dependency('librpmi', required: get_option('librpmi'),
-> +                       method: 'pkg-config')
-> +  if librpmi.found() and not cc.has_header_symbol('librpmi.h',
-> +                                                  'rpmi_service_group_lo=
-gging_create',
-> +                                                  dependencies: librpmi)
-> +    error('librpmi support requires the RPMI logging service group API')
-> +  endif
-> +endif
-> +
->  numa =3D not_found
->  if not get_option('numa').auto() or have_system or have_tools
->    numa =3D cc.find_library('numa', has_headers: ['numa.h'],
-> @@ -2427,6 +2438,7 @@ config_host_data.set('CONFIG_LINUX', host_os =3D=3D=
- 'linux')
->  config_host_data.set('CONFIG_POSIX', host_os !=3D 'windows')
->  config_host_data.set('CONFIG_WIN32', host_os =3D=3D 'windows')
->  config_host_data.set('CONFIG_LZO', lzo.found())
-> +config_host_data.set('CONFIG_LIBRPMI', librpmi.found())
->  config_host_data.set('CONFIG_MPATH', mpathpersist.found())
->  config_host_data.set('CONFIG_BLKIO', blkio.found())
->  if blkio.found()
-> @@ -3258,6 +3270,7 @@ host_kconfig =3D \
->    (multiprocess_allowed ? ['CONFIG_MULTIPROCESS_ALLOWED=3Dy'] : []) + \
->    (vfio_user_server_allowed ? ['CONFIG_VFIO_USER_SERVER_ALLOWED=3Dy'] : =
-[]) + \
->    (hv_balloon ? ['CONFIG_HV_BALLOON_POSSIBLE=3Dy'] : []) + \
-> +  (librpmi.found() ? ['CONFIG_LIBRPMI=3Dy'] : []) + \
->    (have_rust ? ['CONFIG_HAVE_RUST=3Dy'] : [])
->
->  ignored =3D [ 'TARGET_XML_FILES', 'TARGET_ABI_DIR' ]
-> @@ -4971,6 +4984,7 @@ summary_info +=3D {'TPM support':       have_tpm}
->  summary_info +=3D {'IGVM support':      igvm}
->  summary_info +=3D {'libssh support':    libssh}
->  summary_info +=3D {'lzo support':       lzo}
-> +summary_info +=3D {'librpmi support':   librpmi}
->  summary_info +=3D {'snappy support':    snappy}
->  summary_info +=3D {'bzip2 support':     libbzip2}
->  summary_info +=3D {'lzfse support':     liblzfse}
-> diff --git a/meson_options.txt b/meson_options.txt
-> index a07cb47d35..9f773a7886 100644
-> --- a/meson_options.txt
-> +++ b/meson_options.txt
-> @@ -204,6 +204,8 @@ option('lzfse', type : 'feature', value : 'auto',
->         description: 'lzfse support for DMG images')
->  option('lzo', type : 'feature', value : 'auto',
->         description: 'lzo compression support')
-> +option('librpmi', type : 'feature', value : 'auto',
-> +       description: 'RISC-V RPMI support')
->  option('pvg', type: 'feature', value: 'auto',
->         description: 'macOS paravirtualized graphics support')
->  option('rbd', type : 'feature', value : 'auto',
-> diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.s=
-h
-> index c003985047..e8a20068e7 100644
-> --- a/scripts/meson-buildoptions.sh
-> +++ b/scripts/meson-buildoptions.sh
-> @@ -140,6 +140,7 @@ meson_options_help() {
->    printf "%s\n" '  libkeyutils     Linux keyutils support'
->    printf "%s\n" '  libnfs          libnfs block device driver'
->    printf "%s\n" '  libpmem         libpmem support'
-> +  printf "%s\n" '  librpmi         RISC-V RPMI support'
->    printf "%s\n" '  libssh          ssh block device support'
->    printf "%s\n" '  libudev         Use libudev to enumerate host devices=
-'
->    printf "%s\n" '  libusb          libusb support for USB passthrough'
-> @@ -376,6 +377,8 @@ _meson_option_parse() {
->      --disable-libnfs) printf "%s" -Dlibnfs=3Ddisabled ;;
->      --enable-libpmem) printf "%s" -Dlibpmem=3Denabled ;;
->      --disable-libpmem) printf "%s" -Dlibpmem=3Ddisabled ;;
-> +    --enable-librpmi) printf "%s" -Dlibrpmi=3Denabled ;;
-> +    --disable-librpmi) printf "%s" -Dlibrpmi=3Ddisabled ;;
->      --enable-libssh) printf "%s" -Dlibssh=3Denabled ;;
->      --disable-libssh) printf "%s" -Dlibssh=3Ddisabled ;;
->      --enable-libudev) printf "%s" -Dlibudev=3Denabled ;;
-> --
-> 2.43.0
->
->
+------=_NextPart_6A544DC6_DBF2D0C0_72A7271D
+Content-Type: text/html;
+	charset="utf-8"
+Content-Transfer-Encoding: base64
+
+PGRpdiBzdHlsZT0iZm9udC1zaXplOiAxNC42NjY3cHg7IGZvbnQtZmFtaWx5OiAtYXBwbGUt
+c3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsICZxdW90O1BpbmdGYW5nIFNDJnF1b3Q7LCAm
+cXVvdDtNaWNyb3NvZnQgWWFIZWkmcXVvdDs7IiBkYXRhLW1haWwtZnJvbT0id2VtYWlsLXBj
+Ij48ZGl2IGlkPSJ3ZW1haWxfcGxhY2Vob2xkZXJfc3BhY2UiPjxkaXY+PC9kaXY+PC9kaXY+
+PGRpdiBjbGFzcz0icXFtYWlsX3NpZ24iIGlkPSJ3ZW1haWxzaWdjb250ZW50IiBzaWduaWQ9
+IjUwMSI+PGRpdj5Gcm9tIDY2YTA5NzY5NDRkN2Q0MTViYzdlZDEyNWU3YzU1ZjUyZDY4NmI1
+MmYgTW9uIFNlcCAxNyAwMDowMDowMCAyMDAxPGRpdj5Gcm9tOiBIYW90aWFuIEppYW5nICZs
+dDtzdW5kYXlqaWFuZ0B0ZW5jZW50LmNvbSZndDs8L2Rpdj48ZGl2PkRhdGU6IFRodSwgOSBK
+dWwgMjAyNiAxMTowOToxMSArMDgwMDwvZGl2PjxkaXY+U3ViamVjdDogW1BBVENIXSBody9j
+eGw6IHJlamVjdCBtYWlsYm94IGNvbW1hbmRzIHdpdGggcGF5bG9hZCBleGNlZWRpbmcgbWF4
+PC9kaXY+PGRpdj4mbmJzcDtzaXplPC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5tYWlsYm94
+X3JlZ193cml0ZSgpIGNhbGxzIGdfbWVtZHVwMihwbCwgbGVuX2luKSB3aGVyZSBsZW5faW4g
+aXM8L2Rpdj48ZGl2PnRha2VuIGZyb20gdGhlIENYTF9ERVZfTUFJTEJPWF9DTUQuTEVOR1RI
+IGZpZWxkLCBhIDIwLWJpdCB2YWx1ZTwvZGl2PjxkaXY+dGhhdCBjYW4gc3BlY2lmeSB1cCB0
+byB+MSBNQi4gVGhlIHBheWxvYWQgYnVmZmVyIHBsIHBvaW50cyBpbnRvPC9kaXY+PGRpdj5t
+Ym94X3JlZ19zdGF0ZSwgd2hpY2ggaGFzIG9ubHkgQ1hMX01BSUxCT1hfTUFYX1BBWUxPQURf
+U0laRSAoMjA0OCk8L2Rpdj48ZGl2PmJ5dGVzIG9mIHBheWxvYWQgc3BhY2UuIFdoZW4gbGVu
+X2luIGV4Y2VlZHMgMjA0OCwgZ19tZW1kdXAyIHJlYWRzPC9kaXY+PGRpdj5wYXN0IHRoZSBw
+YXlsb2FkIGFyZWEgaW50byBhZGphY2VudCBDWExEZXZpY2VTdGF0ZSBmaWVsZHMsPC9kaXY+
+PGRpdj5pbmNsdWRpbmcgaG9zdCBoZWFwIHBvaW50ZXJzIGluIGV2ZW50X2xvZ3MuPC9kaXY+
+PGRpdj48YnI+PC9kaXY+PGRpdj5BIGd1ZXN0IGNhbiBjb21iaW5lIHRoaXMgd2l0aCBTRVRf
+TFNBICh2YXJpYWJsZS1sZW5ndGgsIGluPX4wKSB0bzwvZGl2PjxkaXY+d3JpdGUgdGhlIG92
+ZXItcmVhZCBkYXRhIGludG8gTFNBIGJhY2tpbmcgbWVtb3J5LCB0aGVuIHJlYWQgaXQgYmFj
+azwvZGl2PjxkaXY+d2l0aCBHRVRfTFNBLCBsZWFraW5nIGhvc3QgaGVhcCBhZGRyZXNzZXMg
+dG8gdGhlIGd1ZXN0LiBUaGlzIGJyZWFrczwvZGl2PjxkaXY+QVNMUiBpc29sYXRpb24gYmV0
+d2VlbiBndWVzdCBhbmQgaG9zdC48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PlJlamVjdCBj
+b21tYW5kcyB3aXRoIGxlbl9pbiAmZ3Q7IENYTF9NQUlMQk9YX01BWF9QQVlMT0FEX1NJWkUg
+Ynk8L2Rpdj48ZGl2PnJldHVybmluZyBDWExfTUJPWF9JTlZBTElEX1BBWUxPQURfTEVOR1RI
+IGJlZm9yZSBjYWxsaW5nIGdfbWVtZHVwMi48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PkZp
+eGVzOiBjOTQ2MDU2MWVkICgiaHcvY3hsL21ib3g6IEdlbmVyYWxpemUgdGhlIENDSSBjb21t
+YW5kIHByb2Nlc3NpbmciKTwvZGl2PjxkaXY+UmVwb3J0ZWQtYnk6IEhhb3RpYW4gSmlhbmcg
+b2YgVGVuY2VudCBTZWN1cml0eSAoWXVuZGluZyBMYWIpICZsdDtzdW5kYXlqaWFuZ0B0ZW5j
+ZW50LmNvbSZndDs8L2Rpdj48ZGl2PlNpZ25lZC1vZmYtYnk6IEhhb3RpYW4gSmlhbmcgJmx0
+O3N1bmRheWppYW5nQHRlbmNlbnQuY29tJmd0OzwvZGl2PjxkaXY+Q2M6IHFlbXUtc3RhYmxl
+QG5vbmdudS5vcmc8L2Rpdj48ZGl2Pkxpbms6IDxhIGluc2VydC1saW5rPSJ0cnVlIiBkcmFn
+Z2FibGU9ImZhbHNlIiBocmVmPSJodHRwczovL2dpdGxhYi5jb20vcWVtdS1wcm9qZWN0L3Fl
+bXUvLS93b3JrX2l0ZW1zLzM5NjciIGRhdGEtc2ltcGxlLWxpbms9InRydWUiIGRhdGEtcGx1
+Z2luLXVybHR5cGU9ImRlZmF1bHQiIHN0eWxlPSJjb2xvcjogcmdiKDM4LCAxMjYsIDI0MCk7
+dGV4dC1kZWNvcmF0aW9uOiBub25lOyBvdXRsaW5lOiBub25lO2Rpc3BsYXk6IGlubGluZTsg
+Y3Vyc29yOiBwb2ludGVyOyB0ZXh0LWRlY29yYXRpb246IHVuZGVybGluZTsgY29sb3I6IHJn
+YigzOCwgMTI2LCAyNDApOyI+aHR0cHM6Ly9naXRsYWIuY29tL3FlbXUtcHJvamVjdC9xZW11
+Ly0vd29ya19pdGVtcy8zOTY3PC9hPjwvZGl2PjxkaXY+LS0tPC9kaXY+PGRpdj4mbmJzcDto
+dy9jeGwvY3hsLWRldmljZS11dGlscy5jIHwgMjIgKysrKysrKysrKysrKysrLS0tLS0tLTwv
+ZGl2PjxkaXY+Jm5ic3A7MSBmaWxlIGNoYW5nZWQsIDE1IGluc2VydGlvbnMoKyksIDcgZGVs
+ZXRpb25zKC0pPC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5kaWZmIC0tZ2l0IGEvaHcvY3hs
+L2N4bC1kZXZpY2UtdXRpbHMuYyBiL2h3L2N4bC9jeGwtZGV2aWNlLXV0aWxzLmM8L2Rpdj48
+ZGl2PmluZGV4IGUxNTBkNzQ0NTcuLmU0ODI1ZjZhZDYgMTAwNjQ0PC9kaXY+PGRpdj4tLS0g
+YS9ody9jeGwvY3hsLWRldmljZS11dGlscy5jPC9kaXY+PGRpdj4rKysgYi9ody9jeGwvY3hs
+LWRldmljZS11dGlscy5jPC9kaXY+PGRpdj5AQCAtMjAyLDE0ICsyMDIsMjIgQEAgc3RhdGlj
+IHZvaWQgbWFpbGJveF9yZWdfd3JpdGUodm9pZCAqb3BhcXVlLCBod2FkZHIgb2Zmc2V0LCB1
+aW50NjRfdCB2YWx1ZSw8L2Rpdj48ZGl2PiZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAm
+bmJzcDtib29sIGJnX3N0YXJ0ZWQgPSBmYWxzZTs8L2Rpdj48ZGl2PiZuYnNwOyAmbmJzcDsg
+Jm5ic3A7ICZuYnNwOyAmbmJzcDtpbnQgcmM7PC9kaXY+PGRpdj4mbmJzcDs8L2Rpdj48ZGl2
+Pi0gJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7cGxfaW5fY29weSA9IGdfbWVtZHVwMihw
+bCwgbGVuX2luKTs8L2Rpdj48ZGl2Pi0gJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7aWYg
+KGxlbl9pbiA9PSAwIHx8IHBsX2luX2NvcHkpIHs8L2Rpdj48ZGl2Pi0gJm5ic3A7ICZuYnNw
+OyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsvKiBBdm9pZCBzdGFsZSBkYXRhICZuYnNw
+Oy0gaW5jbHVkaW5nIGZyb20gZWFybGllciBjbWRzICovPC9kaXY+PGRpdj4tICZuYnNwOyAm
+bmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7bWVtc2V0KHBsLCAwLCBDWExfTUFJ
+TEJPWF9NQVhfUEFZTE9BRF9TSVpFKTs8L2Rpdj48ZGl2Pi0gJm5ic3A7ICZuYnNwOyAmbmJz
+cDsgJm5ic3A7ICZuYnNwOyAmbmJzcDtyYyA9IGN4bF9wcm9jZXNzX2NjaV9tZXNzYWdlKGNj
+aSwgY21kX3NldCwgY21kLCBsZW5faW4sIHBsX2luX2NvcHksPC9kaXY+PGRpdj4tICZuYnNw
+OyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5i
+c3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAm
+bmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJmFtcDtsZW5fb3V0LCBwbCwgJmFtcDtiZ19z
+dGFydGVkKTs8L2Rpdj48ZGl2PisgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7aWYgKGxl
+bl9pbiAmZ3Q7IENYTF9NQUlMQk9YX01BWF9QQVlMT0FEX1NJWkUpIHs8L2Rpdj48ZGl2Pisg
+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDtxZW11X2xvZ19tYXNr
+KExPR19HVUVTVF9FUlJPUiw8L2Rpdj48ZGl2PisgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5i
+c3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAm
+bmJzcDsgJm5ic3A7IkNYTCBtYWlsYm94OiBwYXlsb2FkIGxlbmd0aCAlbHUgZXhjZWVkcyBt
+YXggJXVcbiIsPC9kaXY+PGRpdj4rICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJz
+cDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZu
+YnNwOyh1bnNpZ25lZCBsb25nKWxlbl9pbiwgQ1hMX01BSUxCT1hfTUFYX1BBWUxPQURfU0la
+RSk7PC9kaXY+PGRpdj4rICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5i
+c3A7cmMgPSBDWExfTUJPWF9JTlZBTElEX1BBWUxPQURfTEVOR1RIOzwvZGl2PjxkaXY+Jm5i
+c3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO30gZWxzZSB7PC9kaXY+PGRpdj4tICZu
+YnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7cmMgPSBDWExfTUJPWF9J
+TlRFUk5BTF9FUlJPUjs8L2Rpdj48ZGl2PisgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7
+ICZuYnNwOyAmbmJzcDtwbF9pbl9jb3B5ID0gZ19tZW1kdXAyKHBsLCBsZW5faW4pOzwvZGl2
+PjxkaXY+KyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO2lmIChs
+ZW5faW4gPT0gMCB8fCBwbF9pbl9jb3B5KSB7PC9kaXY+PGRpdj4rICZuYnNwOyAmbmJzcDsg
+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsvKiBBdm9pZCBzdGFs
+ZSBkYXRhICZuYnNwOy0gaW5jbHVkaW5nIGZyb20gZWFybGllciBjbWRzICovPC9kaXY+PGRp
+dj4rICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAm
+bmJzcDttZW1zZXQocGwsIDAsIENYTF9NQUlMQk9YX01BWF9QQVlMT0FEX1NJWkUpOzwvZGl2
+PjxkaXY+KyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJz
+cDsgJm5ic3A7cmMgPSBjeGxfcHJvY2Vzc19jY2lfbWVzc2FnZShjY2ksIGNtZF9zZXQsIGNt
+ZCwgbGVuX2luLDwvZGl2PjxkaXY+KyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5i
+c3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAm
+bmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7
+ICZuYnNwOyAmbmJzcDsgcGxfaW5fY29weSwgJmFtcDtsZW5fb3V0LCBwbCw8L2Rpdj48ZGl2
+PisgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZu
+YnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsg
+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZhbXA7
+Ymdfc3RhcnRlZCk7PC9kaXY+PGRpdj4rICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAm
+bmJzcDsgJm5ic3A7fSBlbHNlIHs8L2Rpdj48ZGl2PisgJm5ic3A7ICZuYnNwOyAmbmJzcDsg
+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO3JjID0gQ1hMX01CT1hfSU5URVJO
+QUxfRVJST1I7PC9kaXY+PGRpdj4rICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJz
+cDsgJm5ic3A7fTwvZGl2PjxkaXY+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNw
+O308L2Rpdj48ZGl2PiZuYnNwOzwvZGl2PjxkaXY+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5i
+c3A7ICZuYnNwOy8qIFNldCBiZyBhbmQgdGhlIHJldHVybiBjb2RlICovPC9kaXY+PGRpdj4t
+LSA8L2Rpdj48ZGl2PjIuMzQuMTwvZGl2PjxkaXY+PGJyPjwvZGl2PjwvZGl2PjwvZGl2Pjxk
+aXY+PC9kaXY+PC9kaXY+
+
+------=_NextPart_6A544DC6_DBF2D0C0_72A7271D--
+
 
