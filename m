@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C30EAC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:33:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3A1AC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:33:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjIek-0000bY-Dz; Mon, 13 Jul 2026 11:33:18 -0400
+	id 1wjIea-0000Ax-I4; Mon, 13 Jul 2026 11:33:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjIeK-0008Ss-Ug
+ id 1wjIeK-0008Sm-Rc
  for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:52 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjIeI-00019G-0T
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:52 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-493bb510ce4so23509365e9.1
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:32:49 -0700 (PDT)
+ id 1wjIeG-00018Q-3J
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:51 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-493f140ca8eso20758975e9.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:32:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783956768; x=1784561568; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783956764; x=1784561564; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=K8ImuL8sE4fwwihfUxdtRBCshDkOb3mVVTN5ujtcTjk=;
- b=ggXzxRtBYf3eS6X8GkDSVuNrZUgzTjhQ2nBoXA6cFvGUNjx/EiMD3tXCREk/A4OKNE
- rS8v47fJQw8RV4BrzI5NGj77JmnALrcOPBFEDFa94Hvio38B9E/0crlBcHLk5sSBN0+Q
- ih+nUIpAm1abIyJ+W1D42s22NofXE87yhY26K9rz9auQww8Gv2a1qWXj47YFqte42BC2
- aULxrkLRrpcF7vybyrH6hJWykv9N0QVEBwBAPkzFXTuFV+fqqd2dqJxVw0E01qZH4rEE
- h2eTILxXVPkedkEKAkgmBcxx1gior1ScsgJnsW8j1MfDN87sI5EYUxlTwkMPIcT8YuKT
- MfgQ==
+ bh=sLAxkDoYmmtjAx4obGT3sDZ/SgJ7OVZp4P5X+krvfFw=;
+ b=gBaVa3sQ7Nhf8AaKUaQd2wf5TLzA4NmG9u/exKjLR3gIKiz8vC//BmK2zzrW2JzRgv
+ 5sSAuX31KW0ABtiJ/oFOZXQisw0K+vgKVI07dDMm1aLi1MvrmGr8PhYsJgQyUTrGMTs5
+ 9T2kv4WoMfI471MlZ7T77Z7DcqP8RSS6ypRhlwvcVK3hUbJdDAXNSbwKnYdozqMlTual
+ DSB7hehvcekDoDpAqS4TEQNXunouLc6XWfEMTWbk0TGp5iPkhkeoIqZYgGTWpHAqWLLV
+ zrEb6BwEuDdGxcbkxlAXDwizLX2gV+QGjxdNYutm4S/jsYq1W6lnMVy7M8x4XLc4Z6XW
+ ezYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783956768; x=1784561568;
+ d=1e100.net; s=20251104; t=1783956764; x=1784561564;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=K8ImuL8sE4fwwihfUxdtRBCshDkOb3mVVTN5ujtcTjk=;
- b=fwcxHj5x5cnfPUAiFOdceOpGZJZjiWDFOwD16iPZXo3eMCOz59lxlJf7Fm7ribu9Ew
- 0db84bxlZFMMApCcyJkGSBc+RZaVm8JISOcFTMsNH6N51fpw745dBERYLv3pPPbIpRac
- aS/L2geAK1GVSr2GwP1rjVsTyE2qbgj2jnzgulzAo7isus9cnmMXFfd/PjjySkP1wkZT
- R/3oj6IZAus0nQS5sWikySjvgDQsIj5o3iQWRF1FueZv6JF3hrqEym5LaU4O4ym9jRNW
- kfujILw11Pk75Qf6752H+4Mz3DB8BCcasY31O0mnR9U8aM4l0dErNJNT2Oghv6Q8/BCI
- Wkgg==
-X-Gm-Message-State: AOJu0YzzfMFPyNyL/gjVCKvAYErYSRpf13ENMOFbpwvTWDppKP3fWpIp
- n2AF84regysSt1dXVrCJ2sv92dfNSqfaNFADrjXZbhEGIgZKpzgQu/rJMuVRnD6XFvsW6sY0IAS
- xQ8Ow42re8g==
-X-Gm-Gg: AfdE7cmDwZeUqNK5rj/DILTVUahvbEvscrTa5FyeK098XrVrQIuDNXgy4RYLDpwp8kJ
- M/FFZvAmKM7PLy5X8wYt0DRmZPMjTqiD83P1BOQWbO+4gcrwSZYndS5VdZjTqBu3qet8F52qt2M
- SVcZjsLVUYRiRaYAfqGK9zqTNoKE//UF1iKKuIQR+ptQfaG6WRNZBAPcRsjqlhlx6XhgA3uhsf6
- 5FDqsAIboDPpBedkcYoB7mG4kOdt0ichBLWSVWR26ySLszTGQPwmXbEa0daDKYxc7+FQGdbhzKr
- 1wsFIVNZIt3Z9Y2f+wTtXkXMISfY3i1q5WVUvYvgSc3bMhejjV+Cl+V7vof7+ypyGXwEj8FUpDv
- SazMKYtXxcJl1JR6bN1aiqfOqwTbZWzT6I1A6t89hPtqwV+RLmNfWO49fJU1myrvnbbo8uGQcGI
- owF2KGcmWn/INlbu7peqph1OLZmA3isUxVMWEjAQma2Z3/a5kxCclbelrWO1PcSOSNxypLSIsag
- XFebtyaipESuk20ctWOcg==
-X-Received: by 2002:a05:600c:c166:b0:493:f262:cc4c with SMTP id
- 5b1f17b1804b1-493f881907amr98332225e9.23.1783956768215; 
- Mon, 13 Jul 2026 08:32:48 -0700 (PDT)
+ bh=sLAxkDoYmmtjAx4obGT3sDZ/SgJ7OVZp4P5X+krvfFw=;
+ b=JUtSXw2PNJIiSSJFJfFheXHe0YaW+R3BLTm5cc8NQnC8O5Ml6EZggFCVIhBFCy43+l
+ VH+kKCQ+eiZW1HW76kcUO+OxxWphBqyoEIdtJMP6edzFBObpvqAPhBg0mbQZgoeoQs2o
+ /HvPJwQeHXKeJbg4qEYQcbfsr3Jur+TkbT8gACu0eNFyMND1OwjcEUd3VGZq6/DB1NOk
+ hseeZlznpbYwffhUZ//v1f2ThTrW4oMKzNxjdmIjnvJGti1o+gR8pT6fIxP+f00SX4Qt
+ IWl46pXqMaaKt1I7tuIuUsEESSXygKRAuqC6BVBsU5sGKKwF4Jh1Pz+q23aRsCxbVRIN
+ 8ecg==
+X-Gm-Message-State: AOJu0Yxhp5BpFBWjOIgyXFazXqiEJ4Gd8Y/Wkw6Z7MMrBsJ6sDpaKiPG
+ B4xLujavNQZQyIaEBOlkz9vzhYy2C2IP5MeyvVHbM25GIdlAMd4G0zV2iM9LpIOPaOYWPPhSpje
+ 8q7JDsuODMA==
+X-Gm-Gg: AfdE7ckUbzh5EAi4iY0OyN/DePLL7uqJi555sfcfCfFxGF2RS0mKhDG/RKpcqqwnTT9
+ DwMp8PyzEtaxi2pNrgexPtCekQRXlXlDVKYMoCVy0kz/j/BMJ8RWEu+kSkn0qnqqJXxIZHYhVo4
+ WxaoowweUo72M447PGjR3oVinbmfdJCzjh1jOgfWCpRt8XjDTqrV/HBt0O7FP6UFg4aPen7t8oc
+ 2+28B83E8n8VZCfa+bretCo1XQdkYTkZJ8EXIUwy1cLfJ2VoPoeRwRXGbxvJzcF+3Jso6byv9De
+ yXY5LM63bXBEdSGfQt91oy2ClrcFBbzTIdbSyzYKIxURmOfMSC9azBEblE0rTxzorpAl7nXPoLC
+ 2VPSx40xuw3ibe47lHRsVShKHYrh+tmIeyKakwIdI8AFytdEfFRKks1TpNwv6x5CW7YWG7lYSPa
+ AMmhJ6jBVyjDrnjibai+Gfr0ZGN4TRfjhmYvV+SXeLr0XEB0Sz4z5kSPfBLlwHeB4znh9+xZxsW
+ 28pfDJ7EYK7lPBEu1C7faSyVQyci9x6
+X-Received: by 2002:a05:600c:8718:b0:493:c1a1:68f0 with SMTP id
+ 5b1f17b1804b1-493f881f0f1mr92509095e9.20.1783956764439; 
+ Mon, 13 Jul 2026 08:32:44 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49508727f7dsm3825985e9.4.2026.07.13.08.32.47
+ 5b1f17b1804b1-49508727f7dsm3825985e9.4.2026.07.13.08.32.43
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jul 2026 08:32:47 -0700 (PDT)
+ Mon, 13 Jul 2026 08:32:43 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 14/26] docs/system: fix sorting of FEAT_S2[PIE|FWB]
-Date: Mon, 13 Jul 2026 16:32:21 +0100
-Message-ID: <20260713153233.3391818-15-peter.maydell@linaro.org>
+Subject: [PULL 10/26] docs/system: add big and little endian features names
+Date: Mon, 13 Jul 2026 16:32:17 +0100
+Message-ID: <20260713153233.3391818-11-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260713153233.3391818-1-peter.maydell@linaro.org>
 References: <20260713153233.3391818-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,28 +105,39 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alex Bennée <alex.bennee@linaro.org>
 
+We've always supported these features but they have official feature
+names in the Arm ARM now so we should declare them for completeness.
+
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260708145841.3032079-7-alex.bennee@linaro.org
+Message-id: 20260708145841.3032079-3-alex.bennee@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- docs/system/arm/emulation.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ docs/system/arm/emulation.rst | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index 7806982e0d6..b4b65694ff5 100644
+index fb8d263db49..d19b6c04429 100644
 --- a/docs/system/arm/emulation.rst
 +++ b/docs/system/arm/emulation.rst
-@@ -160,8 +160,8 @@ the following architecture extensions:
- - FEAT_RNG_TRAP (Trapping support for RNDR/RNDRRS)
- - FEAT_RPRES (Increased precision of FRECPE and FRSQRTE)
- - FEAT_S1PIE (Stage 1 permission indirections)
--- FEAT_S2PIE (Stage 2 permission indirections)
- - FEAT_S2FWB (Stage 2 forced Write-Back)
-+- FEAT_S2PIE (Stage 2 permission indirections)
- - FEAT_SB (Speculation Barrier)
- - FEAT_SCTLR2 (Extension to SCTLR_ELx)
- - FEAT_Secure (Support for Secure state)
+@@ -31,6 +31,8 @@ the following architecture extensions:
+ - FEAT_BBML1 (Translation table break-before-make level 1)
+ - FEAT_BBML2 (Translation table break-before-make level 2)
+ - FEAT_BF16 (AArch64 BFloat16 instructions)
++- FEAT_BigEnd (Support for big-endian at EL1 and above)
++- FEAT_BigEndEL0 (Support for big-endian at EL0)
+ - FEAT_BTI (Branch Target Identification)
+ - FEAT_CCIDX (Extended cache index)
+ - FEAT_CHK (Check Feature Status)
+@@ -103,6 +105,8 @@ the following architecture extensions:
+ - FEAT_IDST (ID space trap handling)
+ - FEAT_IESB (Implicit error synchronization event)
+ - FEAT_JSCVT (JavaScript conversion instructions)
++- FEAT_LittleEnd (Support for little-endian at EL1 and above)
++- FEAT_LittleEndEL0 (Support for little-endian at EL0)
+ - FEAT_LOR (Limited ordering regions)
+ - FEAT_LPA (Large Physical Address space)
+ - FEAT_LPA2 (Large Physical and virtual Address space v2)
 -- 
 2.43.0
 
