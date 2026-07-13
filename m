@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B591CC44501
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 10:06:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 606AFC44506
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 10:08:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjDXV-0006M1-QX; Mon, 13 Jul 2026 06:05:29 -0400
+	id 1wjDa1-0000hO-La; Mon, 13 Jul 2026 06:08:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wjDXT-0006Ku-EF
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 06:05:27 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wjDZy-0000gm-9I
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 06:08:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wjDXR-0006SY-Ks
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 06:05:27 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wjDZu-0006l2-53
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 06:08:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783937124;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ s=mimecast20190719; t=1783937276;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vu5+x+nHAb3ctlgrRKS2jMLxdHzuLJf8Jvx8rPiRhkE=;
- b=ZYsy0Bgjgu9M1MDTZEikdfhMHUZVgsnL6+s3/yISEGmyZmA1NIQIg/K11BZ5dxRh5RKSq8
- U3wfz/mPEO8N1QoEE1zjsUfMzmbjXX1z09RLPXdwdBavBN8xC3tazOXIXNtMPQ/je/r1d6
- +XLyBUJ8wt0lIMGrdGehf4/VA58nss4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=SzmqswxmBb5euHwr1t3hKHm1YKJaitdYsaG92hlpL18=;
+ b=VZEHNMcOaOn+WNkfNhk3S1DRa46Qs3c7AmHdTyYkmGZ0uLGCefZhV0ZbcTR084ITS6cVbS
+ zK0KYrc5GrZWznahWN6dzi4TF7C9JisiZz2EHNnHZWxtRl9+K0C1ddh/Z9k0zIgEwQCFBL
+ J08ChuxiZyKZ4FCp3QHwfcPZ76tnEb4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-287-BR4si9kjNQaazprRvy6OHw-1; Mon,
- 13 Jul 2026 06:05:20 -0400
-X-MC-Unique: BR4si9kjNQaazprRvy6OHw-1
-X-Mimecast-MFC-AGG-ID: BR4si9kjNQaazprRvy6OHw_1783937119
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-gYKW8HeYMyazJGCsdeBXBA-1; Mon,
+ 13 Jul 2026 06:07:54 -0400
+X-MC-Unique: gYKW8HeYMyazJGCsdeBXBA-1
+X-Mimecast-MFC-AGG-ID: gYKW8HeYMyazJGCsdeBXBA_1783937273
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CFFE11955DB3; Mon, 13 Jul 2026 10:05:19 +0000 (UTC)
-Received: from thuth-p1g4.redhat.corp
- (headnet03.pony-001.prod.iad2.dc.redhat.com [10.2.32.114])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 537881686; Mon, 13 Jul 2026 10:05:17 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org,
-	Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-trivial@nongnu.org,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v3 2/3] hw/usb/hcd-xhci: Remove the FIXME macro
-Date: Mon, 13 Jul 2026 12:05:07 +0200
-Message-ID: <20260713100508.123623-3-thuth@redhat.com>
-In-Reply-To: <20260713100508.123623-1-thuth@redhat.com>
-References: <20260713100508.123623-1-thuth@redhat.com>
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8D5C318002C3
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 10:07:53 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.50.22])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 53987180059F; Mon, 13 Jul 2026 10:07:51 +0000 (UTC)
+Date: Mon, 13 Jul 2026 11:07:48 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] ui/vnc: validate SetPixelFormat field ranges
+Message-ID: <alS49FlxfpXVgheR@redhat.com>
+References: <20260713100056.4104383-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+In-Reply-To: <20260713100056.4104383-1-marcandre.lureau@redhat.com>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: permerror client-ip=170.10.129.124;
- envelope-from=thuth@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,48 +84,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+On Mon, Jul 13, 2026 at 02:00:56PM +0400, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> The VNC SetPixelFormat message carries red/green/blue_max as 16-bit
+> values, but PixelFormat stores them as uint8_t. A client sending a
+> max value above 255 (e.g. 0x0100) passes the existing non-zero check
+> but silently truncates to 0 on assignment, leading to a division by
+> zero in the Tight PNG palette path.
+> 
+> Similarly, the shift values are read as uint8_t from the wire but
+> used in left-shift expressions (red_max << red_shift). Shifts >= 32
+> are undefined behavior in C for 32-bit operands.
+> 
+> Add explicit range checks for both: reject the connection if any
+> channel max exceeds UINT8_MAX, or any shift is >= 32.
+> 
+> Fixes: CVE-2026-15578
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3976
+> Reported-by: dong ling
+> Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+> ---
+>  ui/vnc.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
 
-The FIXME macro is only used in one case, which should hopefully
-never trigger: The containing function handles all the USB_RET_*
-values except for USB_RET_ADD_TO_QUEUE and USB_RET_REMOVE_FROM_QUEUE,
-which are both internal return values for when an async packet needs
-to be queued or dequeued, and which shouldn't still be the status by
-the time we get to this function. Thus let's simplify this spot
-and use a g_assert_not_reached() instead.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- hw/usb/hcd-xhci.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+> 
+> diff --git a/ui/vnc.c b/ui/vnc.c
+> index dfc8262d42a..c4ee4738b28 100644
+> --- a/ui/vnc.c
+> +++ b/ui/vnc.c
+> @@ -2276,6 +2276,16 @@ static void set_pixel_format(VncState *vs, int bits_per_pixel,
+>          return;
+>      }
+>  
+> +    if (red_max > UINT8_MAX || green_max > UINT8_MAX || blue_max > UINT8_MAX) {
+> +        vnc_client_error(vs);
+> +        return;
+> +    }
+> +
+> +    if (red_shift >= 32 || green_shift >= 32 || blue_shift >= 32) {
+> +        vnc_client_error(vs);
+> +        return;
+> +    }
+> +
+>      vs->client_pf.rmax = red_max ? red_max : 0xFF;
+>      vs->client_pf.rbits = ctpopl(red_max);
+>      vs->client_pf.rshift = red_shift;
 
-diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
-index f5bb7d25600..ee913d5c4d5 100644
---- a/hw/usb/hcd-xhci.c
-+++ b/hw/usb/hcd-xhci.c
-@@ -39,8 +39,6 @@
- #else
- #define DPRINTF(...) do {} while (0)
- #endif
--#define FIXME(_msg) do { fprintf(stderr, "FIXME %s:%d %s\n", \
--                                 __func__, __LINE__, _msg); abort(); } while (0)
- 
- #define TRB_LINK_LIMIT  32
- #define COMMAND_LIMIT   256
-@@ -1675,7 +1673,7 @@ static int xhci_try_complete_packet(XHCITransfer *xfer)
-     default:
-         DPRINTF("%s: FIXME: status = %d\n", __func__,
-                 xfer->packet.status);
--        FIXME("unhandled USB_RET_*");
-+        g_assert_not_reached();
-     }
-     return 0;
- }
+With regards,
+Daniel
 -- 
-2.55.0
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
