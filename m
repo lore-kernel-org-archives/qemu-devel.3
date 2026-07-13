@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7386C44507
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 11:17:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BAA8C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 11:20:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjEf5-0007DO-6V; Mon, 13 Jul 2026 07:17:23 -0400
+	id 1wjEi3-0008PE-5J; Mon, 13 Jul 2026 07:20:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wjEf2-0007B8-NB
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:17:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjEhz-0008J9-AV
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:20:23 -0400
+Received: from mx2.catap.net ([65.21.79.163])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wjEez-0007W1-T1
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:17:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783941435;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=Wbr/j82XNz3gM7Y00bVUoE2cfM3TocKiEt1Ib3xDUPk=;
- b=Wce3cKg0B419I4UpoUbvVwYytmIRqYiLYEsCwMCdp3If35/LEmTNIt22ebiaZNIHMEyYoO
- 6tumdmU9AcPqRicFVURKPMYtTWaPIBhrIl6VdHAE8KwfPE8VoTpf1jqA8JYnHxvf+OSV7x
- EJ01+vwz2EcjaSg+LtZr92oM5z/meMs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-272-8rhYMQesO4S1iMYbAz8Bag-1; Mon,
- 13 Jul 2026 07:17:12 -0400
-X-MC-Unique: 8rhYMQesO4S1iMYbAz8Bag-1
-X-Mimecast-MFC-AGG-ID: 8rhYMQesO4S1iMYbAz8Bag_1783941430
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C46ED1956041; Mon, 13 Jul 2026 11:17:09 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.50.22])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3908C180059F; Mon, 13 Jul 2026 11:17:03 +0000 (UTC)
-Date: Mon, 13 Jul 2026 12:17:00 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: jasowang@redhat.com, mst@redhat.com, armbru@redhat.com,
- peterx@redhat.com, farosas@suse.de, raphael.s.norwitz@gmail.com,
- bchaney@akamai.com, qemu-devel@nongnu.org, pbonzini@redhat.com,
- yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Zhao Liu <zhao1.liu@intel.com>, Jason Wang <jasowangio@gmail.com>,
- Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v18 12/14] net/tap: support local migration with virtio-net
-Message-ID: <alTJLI3EWU96Ks61@redhat.com>
-References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
- <20260710191809.721154-13-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjEhw-00080U-C6
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:20:22 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=IdUbyZH
+ 19RVhzZP+Fho6cj2E414zU20HyK050h3y1UAEAluEsTkx86P+TW8PymoM3L/AbMviwJGBu
+ EHdZw9OAJwtkC+wwgWggvMxn4C1JFbkmYPmPIxXgx3HNaM7X8yae0ON/fFzXIyfo5zovU2
+ JMMisjKiGYrmzk7hdRt/mhOPLxS+NckA0wiXkoiyDr2+NLLBWffwLCyWoDfcrX6BUcIo9b
+ jbhHNG714raQ+LtH6lz7tueQ2l/mLGUG3BPrOHSdcA/Z73S6HuZkyGmdopipYJ8iVpCx8h
+ XILbejuMsPiWp8qm9JKOGp2svWCGWd9kwns1XjMc72AhZ4PG2uOvUIQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=G
+ HiidZPiKTLxR2F5vDvIzmTqt+7dH1VyozQ+gXLxlpo=;
+ h=references:in-reply-to:
+ date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
+ b=Phx+04CMypDPfogZhOIJDOWwZUOe/fUTwxgL1jIsIj9MiD6IRDldVXkCEGBudIOrgMj+
+ 469JuBLgS32rEvcIzHDrgGMeO4pypE5dh/vaLyT9N1g/nZ9YBN6fG4MAq+weDtzgEKt2M6
+ LcA4NiHND6TBN+2J9jcOm37EIrEK2VWCR8mby+Gh5gNKrw2Yhz/TQQkNeAIlX8i71a/tAi
+ /PQoO6XuMdsDdXdsvnG32k7cKZdmy7qbJb2N/KgyOpiME+6oXnOyjcAqX/U0RpWyN3a48O
+ Fy8FOodPFTQEumAiBFG1G6As9ALsdj6E1fvj7rRW+Ftik5wB/JHlHo52gQQvIY1Q==
+ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
+ header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
+ header.b=wS9fQJ45; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=NTdCWoep;
+ arc=none; iprev=pass; spf=none
+ smtp.helo=postmaster@matebook.home.arpa; spf=softfail
+ smtp.mailfrom=kirill@korins.ky
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=GHiidZPi
+ KTLxR2F5vDvIzmTqt+7dH1VyozQ+gXLxlpo=;
+ h=references:in-reply-to:date:
+ subject:cc:to:from; d=korins.ky; b=wS9fQJ45g2PJpaTP0k5EVe5g9P/Yrmr4H3L
+ Lnkz95DEFAA5gSSno7/REl2T3EfkDombEhz8nex+L/S1Y3x+pp+9FBiwypoXzmjC51eNtw
+ qG56Hy0htjNRPOiut7iTrhFbqmllj0gh9aNv7BRKcjACRCLFmNxv5Lc+iA9sYDvyu8quj5
+ cKYgvSy6l9KQwySirL0U5Q0kvodk6vGKLe+vKe5FQNK7OUtQ6x1FboflxpJYH8LJ6WTr4K
+ BJQ4cHuXfKTjbsDIpzqbBFK1DmPzoeKRb2ViJw6LtAzwK5QaLCsXZTC7ZxIya9XH1co82H
+ hWbczBlnuGYK8w5A/i+2OMqHvxQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
+ bh=GHiidZPiKTLxR2F5vDvIzmTqt+7dH1VyozQ+gXLxlpo=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=NTdCWoepznJkTEO/nP
+ sSJCQHJ5BctEyvWt+2cAo29VKYNC3Jp3lxdxLVBXE/nj32y1QVtdAz2K5B70IbP6v8Bg==
+Received: by mx2.catap.net (OpenSMTPD) with ESMTPSA id 8a3d94d0
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Mon, 13 Jul 2026 13:20:16 +0200 (CEST)
+Received: from localhost (matebook.home.arpa [local])
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id 98abd146;
+ Mon, 13 Jul 2026 13:20:13 +0200 (CEST)
+From: "Kirill A. Korinsky" <kirill@korins.ky>
+To: qemu-devel@nongnu.org
+Cc: "Kirill A. Korinsky" <kirill@korins.ky>
+Subject: [PATCH 2/9] target/mips: make CP0 interrupt state atomic
+Date: Mon, 13 Jul 2026 13:16:30 +0200
+Message-ID: <20260713112004.4956-3-kirill@korins.ky>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260713112004.4956-1-kirill@korins.ky>
+References: <20260713112004.4956-1-kirill@korins.ky>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260710191809.721154-13-vsementsov@yandex-team.ru>
-User-Agent: Mutt/2.3.2 (2026-04-26)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: permerror client-ip=170.10.133.124;
- envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=65.21.79.163; envelope-from=kirill@korins.ky;
+ helo=mx2.catap.net
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,212 +91,405 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 10, 2026 at 10:18:01PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> Support transferring of TAP state (including open fd).
-> 
-> Add new property "local-migration-supported", which defines
-> whether local-migration is actually supported for this TAP device.
-> Starting from 11.2 QEMU Machine Types it's enabled by default.
-> 
-> Note, that local-migration (including migrating opened FDs
-> through migration channel, which must be UNIX socket), is
-> enabled by global "local" migration parameters. But individual
-> devices may have additional options to enable/disable it
-> per device.
-> 
-> The tricky thing, is that we need to know, should we do
-> call open/connect in TAP initialization code. That means,
-> that on incoming migration we want to know status of
-> "local" migration parameter at time of creating TAP device.
-> So, currently, for incoming local migration only TAP device
-> created through QMP is supported, as you need to set migration
-> parameter first (through QMP as well).
-> 
-> So the full picture is:
-> 
-> On source, to start outgoing "local" migration you need:
-> 
->  - migration parameter "local" set to true
->  - "local-migration-supported" TAP option set to true (the
->    default, starting from 11.2 QEMU Machine Types)
-> 
-> If at least one of these options is not set, TAP backend
-> doesn't participate in migration.
-> 
-> On target, things are more difficult:
-> 
-> Same, you need both "local" and "local-migration-supported"
-> be set. And same, if one of them is not set, TAP backend
-> is initialized as usual, and doesn't accept any incoming
-> state.
-> 
-> Additionally, if you are going to set "local", it must be
-> set before creating the TAP device. If TAP device created
-> with "local" unset, it initializes as usual. If you enable
-> "local" after it and start incoming migration, it will fail
-> in .pre_load handler of TAP backend.
-> 
-> Moreover, there are interface restrictions: if you create TAP
-> device when QEMU is in INCOMING state, and both "local"
-> and "local-migration-supported" set, most of TAP options are
-> not allowed, and script/downscript are required to be explicitly
-> unset (set to "" or "no").
-> 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
-> 
-> In v17 thread we considered making new qapi parameters "unstable".
-> Still, it was because of doubtful "incoming-fds" parameter. In this
-> v18 it's completely removed, and we may live only with "local"
-> migration parameter + "local-migration-supported" TAP option.
-> This way the series doesn't conflict with suggested by Peter
->   [PATCH RFC 0/2] migration/vl: new -incoming config:* for early migration parameters
-> So, I think, worth making one more iteration as "stable candidate".
-> If still some doubts, not problem for me to resend with "unstable" features.
-> 
->  hw/core/machine.c |   7 ++
->  net/tap.c         | 162 ++++++++++++++++++++++++++++++++++++++++++++--
->  qapi/net.json     |  23 ++++++-
->  3 files changed, 185 insertions(+), 7 deletions(-)
-> 
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index 15886a56b19..2a1abb29041 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -36,10 +36,16 @@
->  #include "hw/virtio/virtio-pci.h"
->  #include "hw/virtio/virtio-net.h"
->  #include "hw/virtio/virtio-iommu.h"
-> +#include "net/tap.h"
->  #include "hw/acpi/generic_event_device.h"
->  #include "qemu/audio.h"
->  #include "hw/arm/smmuv3.h"
->  
-> +/*
-> + * TODO: When hw_compat_11_1 appears, local-migration-supported=false
-> + * for TYPE_TAP_NETDEV should be move to it from hw_compat_11_0.
-> + */
-> +
->  GlobalProperty hw_compat_11_0[] = {
->      { "chardev-vc", "encoding", "cp437" },
->      { "tpm-crb", "cap-chunk", "off" },
-> @@ -49,6 +55,7 @@ GlobalProperty hw_compat_11_0[] = {
->      { TYPE_ARM_SMMUV3, "ssidsize", "0" },
->      { TYPE_ARM_SMMUV3, "oas", "44" },
->      { "migration", "switchover-ack-legacy", "on" },
-> +    { TYPE_TAP_NETDEV, "local-migration-supported", "false" },
+MTTCG lets interrupt inputs and timer callbacks update CP0_Cause,
+CP0_Status, and CP0_Count while a vCPU checks interrupt state.
 
-So disabled by default for historical machines type versions, but....
+Use qatomic accessors for CP0 fields that participate in interrupt and
+timer decisions, and kick remote CPUs explicitly after raising a hard
+interrupt; MIPS interrupt line updates no longer depend on taking the
+BQL.
 
-> +static void tap_instance_init(Object *obj)
-> +{
-> +    TAPState *s = TAP_NETDEV(obj);
-> +    s->local_migration_supported = true;
-> +}
+Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
+---
+ hw/mips/mips_int.c                      | 17 +++++++------
+ target/mips/internal.h                  | 13 ++++++----
+ target/mips/system/cp0.c                | 27 +++++++++++++--------
+ target/mips/system/cp0_timer.c          | 32 ++++++++++++++-----------
+ target/mips/tcg/system/special_helper.c | 17 +++++++------
+ target/mips/tcg/system/tlb_helper.c     | 21 +++++++++-------
+ 6 files changed, 75 insertions(+), 52 deletions(-)
 
-..enabled by default for all future machine type versions, but...
-
-
-> @@ -1005,6 +1123,23 @@ int net_init_tap(const Netdev *netdev, const char *name,
->          return -1;
->      }
->  
-> +    incoming_fds = tap->local_migration_supported && migrate_local() &&
-> +                   runstate_check(RUN_STATE_INMIGRATE);
-> +
-> +    if (incoming_fds &&
-> +        (tap->fd || tap->fds || tap->helper || tap->br || tap->ifname ||
-> +         tap->has_sndbuf || tap->has_vnet_hdr ||
-> +         !tap_is_explicit_no_script(tap->script) ||
-> +         !tap_is_explicit_no_script(tap->downscript))) {
-> +        error_setg(errp, "Local incoming migration of TAP device (-incoming, "
-> +                   "migration parameter @local is set, "
-> +                   "TAP parameter @local-migration-supported is set) "
-> +                   "is incompatible with "
-> +                   "fd=, fds=, helper=, br=, ifname=, sndbuf= and vnet_hdr=, "
-> +                   "and requires explicit empty script= and downscript=");
-> +        return -1;
-> +    }
-
-...not usable by default unless the mgmt app knows to avoid these settings,
-but the user won't find out about this limit until they try to migrate and
-it fails at runtime, months or years after the VM was first configured &
-launched :-(
-
-AFAICT, there's also no way for mgmt apps to determine which parameters
-are forbidden, because it is merely exposed in API docs text, no way to
-introspect
-
-IMHO the sane way to do this is to not have any "local-migration-supported"
-device flag at all, and also no "local" migration parameter. The src & dst
-QEMU's so badly need to be able to auto-negotiate and just do the right
-thing, otherwise this local migration optimization becomes a mgmt nightmare
-long term :-(
-
-And yet we don't have any auto-negotiate mechanism, and I don't want to
-block your work :-(
-
-I'm annoyed that we keep creating more and more pain for both ourselves
-and our mgmt apps in migration for as long as we don't address this
-fundamental migration protocol design flaw.
-
-> diff --git a/qapi/net.json b/qapi/net.json
-> index ada0329ef9d..2070979f20e 100644
-> --- a/qapi/net.json
-> +++ b/qapi/net.json
-> @@ -435,6 +435,26 @@
->  # @poll-us: maximum number of microseconds that could be spent on busy
->  #     polling for tap (since 2.7)
->  #
-> +# @local-migration-supported: enable local migration for this TAP
-> +#     backend.  When set, local migration is enabled/disabled by
-> +#     migration parameter @local for this TAP backend.  When unset,
-> +#     migration parameter @local is ignored for this TAP backend.
-> +#     To be able to do incoming local migration of TAP backend,
-> +#     migration parameter @local must be set _before_ creating the
-> +#     TAP backend.  Otherwise, TAP backend is initialized as usual,
-> +#     opening/creating TAP devices in kernel.  In this case further
-> +#     local incoming migration (with migration parameter @local set
-> +#     after creating TAP backend with @local-migration-supporeted
-> +#     parameter set) will simply fail.
-> +#     Moreover, when QEMU is in incoming migration state, migration
-> +#     parameter @local is set and @local-migration-supported is set,
-> +#     following options are not supported and must not be set:
-> +#     @ds, @fds, @helper, @br, @ifname, @sndbuf, @vnet_hdr.
-> +#     Additionally in this case @script and @downscipt must be
-> +#     explicitly disabled (empty strings or "no").
-> +#     (Since 11.2.  Defaults to true for QEMU Machine Types >= 11.2,
-> +#     and to false for QEMU Machine Types < 11.2)
-
-
-
-> +#
->  # Since: 1.2
->  ##
->  { 'struct': 'NetdevTapOptions',
-> @@ -453,7 +473,8 @@
->      '*vhostfds':   'str',
->      '*vhostforce': 'bool',
->      '*queues':     'uint32',
-> -    '*poll-us':    'uint32'} }
-> +    '*poll-us':    'uint32',
-> +    '*local-migration-supported': 'bool' } }
->  
->  ##
->  # @NetdevSocketOptions:
-> -- 
-> 2.43.0
-> 
-
-With regards,
-Daniel
+diff --git a/hw/mips/mips_int.c b/hw/mips/mips_int.c
+index 26e7dd6d5f..537394c8fd 100644
+--- a/hw/mips/mips_int.c
++++ b/hw/mips/mips_int.c
+@@ -21,30 +21,33 @@
+  */
+ 
+ #include "qemu/osdep.h"
+-#include "qemu/main-loop.h"
+ #include "hw/core/irq.h"
+ #include "target/mips/cpu.h"
++#include "target/mips/internal.h"
+ 
+ static void cpu_mips_irq_request(void *opaque, int irq, int level)
+ {
+     MIPSCPU *cpu = opaque;
+     CPUMIPSState *env = &cpu->env;
+     CPUState *cs = CPU(cpu);
++    int32_t irq_bit;
+ 
+     if (irq < 0 || irq > 7) {
+         return;
+     }
+ 
+-    BQL_LOCK_GUARD();
+-
++    irq_bit = 1 << (irq + CP0Ca_IP);
+     if (level) {
+-        env->CP0_Cause |= 1 << (irq + CP0Ca_IP);
++        qatomic_or(&env->CP0_Cause, irq_bit);
+     } else {
+-        env->CP0_Cause &= ~(1 << (irq + CP0Ca_IP));
++        qatomic_and(&env->CP0_Cause, ~irq_bit);
+     }
+ 
+-    if (env->CP0_Cause & CP0Ca_IP_mask) {
+-        cpu_interrupt(cs, CPU_INTERRUPT_HARD);
++    if (qatomic_read(&env->CP0_Cause) & CP0Ca_IP_mask) {
++        cpu_set_interrupt(cs, CPU_INTERRUPT_HARD);
++        if (!qemu_cpu_is_self(cs)) {
++            qemu_cpu_kick(cs);
++        }
+     } else {
+         cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+     }
+diff --git a/target/mips/internal.h b/target/mips/internal.h
+index c5c286872e..cd06d84140 100644
+--- a/target/mips/internal.h
++++ b/target/mips/internal.h
+@@ -8,6 +8,7 @@
+ #ifndef MIPS_INTERNAL_H
+ #define MIPS_INTERNAL_H
+ 
++#include "qemu/atomic.h"
+ #include "exec/memattrs.h"
+ #ifdef CONFIG_TCG
+ #include "tcg/tcg-internal.h"
+@@ -167,9 +168,11 @@ extern const VMStateDescription vmstate_mips_cpu;
+ 
+ static inline bool cpu_mips_hw_interrupts_enabled(CPUMIPSState *env)
+ {
+-    return (env->CP0_Status & (1 << CP0St_IE)) &&
+-        !(env->CP0_Status & (1 << CP0St_EXL)) &&
+-        !(env->CP0_Status & (1 << CP0St_ERL)) &&
++    int32_t status = qatomic_read(&env->CP0_Status);
++
++    return (status & (1 << CP0St_IE)) &&
++        !(status & (1 << CP0St_EXL)) &&
++        !(status & (1 << CP0St_ERL)) &&
+         !(env->hflags & MIPS_HFLAG_DM) &&
+         /*
+          * Note that the TCStatus IXMT field is initialized to zero,
+@@ -186,8 +189,8 @@ static inline bool cpu_mips_hw_interrupts_pending(CPUMIPSState *env)
+     int32_t status;
+     bool r;
+ 
+-    pending = env->CP0_Cause & CP0Ca_IP_mask;
+-    status = env->CP0_Status & CP0Ca_IP_mask;
++    pending = qatomic_read(&env->CP0_Cause) & CP0Ca_IP_mask;
++    status = qatomic_read(&env->CP0_Status) & CP0Ca_IP_mask;
+ 
+     if (env->CP0_Config3 & (1 << CP0C3_VEIC)) {
+         /*
+diff --git a/target/mips/system/cp0.c b/target/mips/system/cp0.c
+index ff7d3db00c..6f222ad586 100644
+--- a/target/mips/system/cp0.c
++++ b/target/mips/system/cp0.c
+@@ -22,6 +22,7 @@
+ #include "cpu.h"
+ #include "internal.h"
+ #include "exec/cputlb.h"
++#include "qemu/atomic.h"
+ 
+ /* Called for updates to CP0_Status.  */
+ void sync_c0_status(CPUMIPSState *env, CPUMIPSState *cpu, int tc)
+@@ -61,7 +62,8 @@ void sync_c0_status(CPUMIPSState *env, CPUMIPSState *cpu, int tc)
+ void cpu_mips_store_status(CPUMIPSState *env, target_ulong val)
+ {
+     uint32_t mask = env->CP0_Status_rw_bitmask;
+-    target_ulong old = env->CP0_Status;
++    target_ulong old;
++    target_ulong status;
+ 
+     if (env->insn_flags & ISA_MIPS_R6) {
+         bool has_supervisor = extract32(mask, CP0St_KSU, 2) == 0x3;
+@@ -77,9 +79,11 @@ void cpu_mips_store_status(CPUMIPSState *env, target_ulong val)
+         mask &= ~(((1 << CP0St_SR) | (1 << CP0St_NMI)) & val);
+     }
+ 
+-    env->CP0_Status = (old & ~mask) | (val & mask);
++    old = qatomic_read(&env->CP0_Status);
++    status = (old & ~mask) | (val & mask);
++    qatomic_set(&env->CP0_Status, status);
+ #if defined(TARGET_MIPS64)
+-    if ((env->CP0_Status ^ old) & (old & (7 << CP0St_UX))) {
++    if ((status ^ old) & (old & (7 << CP0St_UX))) {
+         /* Access to at least one of the 64-bit segments has been disabled */
+         tlb_flush(env_cpu(env));
+     }
+@@ -93,8 +97,9 @@ void cpu_mips_store_status(CPUMIPSState *env, target_ulong val)
+ 
+ void cpu_mips_store_cause(CPUMIPSState *env, target_ulong val)
+ {
+-    uint32_t mask = 0x00C00300;
+-    uint32_t old = env->CP0_Cause;
++    int32_t mask = 0x00C00300;
++    int32_t old;
++    int32_t cause;
+     int i;
+ 
+     if (env->insn_flags & ISA_MIPS_R2) {
+@@ -104,10 +109,12 @@ void cpu_mips_store_cause(CPUMIPSState *env, target_ulong val)
+         mask &= ~((1 << CP0Ca_WP) & val);
+     }
+ 
+-    env->CP0_Cause = (env->CP0_Cause & ~mask) | (val & mask);
++    old = qatomic_fetch_and(&env->CP0_Cause, ~mask);
++    qatomic_or(&env->CP0_Cause, (int32_t)(val & mask));
++    cause = qatomic_read(&env->CP0_Cause);
+ 
+-    if ((old ^ env->CP0_Cause) & (1 << CP0Ca_DC)) {
+-        if (env->CP0_Cause & (1 << CP0Ca_DC)) {
++    if ((old ^ cause) & (1 << CP0Ca_DC)) {
++        if (cause & (1 << CP0Ca_DC)) {
+             cpu_mips_stop_count(env);
+         } else {
+             cpu_mips_start_count(env);
+@@ -116,8 +123,8 @@ void cpu_mips_store_cause(CPUMIPSState *env, target_ulong val)
+ 
+     /* Set/reset software interrupts */
+     for (i = 0 ; i < 2 ; i++) {
+-        if ((old ^ env->CP0_Cause) & (1 << (CP0Ca_IP + i))) {
+-            cpu_mips_soft_irq(env, i, env->CP0_Cause & (1 << (CP0Ca_IP + i)));
++        if ((old ^ cause) & (1 << (CP0Ca_IP + i))) {
++            cpu_mips_soft_irq(env, i, cause & (1 << (CP0Ca_IP + i)));
+         }
+     }
+ }
+diff --git a/target/mips/system/cp0_timer.c b/target/mips/system/cp0_timer.c
+index 6aed5d3af2..622fee357d 100644
+--- a/target/mips/system/cp0_timer.c
++++ b/target/mips/system/cp0_timer.c
+@@ -23,6 +23,7 @@
+ #include "qemu/osdep.h"
+ #include "hw/core/irq.h"
+ #include "qemu/timer.h"
++#include "qemu/atomic.h"
+ #include "internal.h"
+ 
+ /* MIPS R4K timer */
+@@ -31,7 +32,7 @@ static uint32_t cpu_mips_get_count_val(CPUMIPSState *env)
+     MIPSCPU *cpu = env_archcpu(env);
+     int64_t now_ns;
+     now_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+-    return env->CP0_Count +
++    return qatomic_read(&env->CP0_Count) +
+             (uint32_t)clock_ns_to_ticks(cpu->count_clock, now_ns);
+ }
+ 
+@@ -56,15 +57,15 @@ static void cpu_mips_timer_expire(CPUMIPSState *env)
+ {
+     cpu_mips_timer_update(env);
+     if (env->insn_flags & ISA_MIPS_R2) {
+-        env->CP0_Cause |= 1 << CP0Ca_TI;
++        qatomic_or(&env->CP0_Cause, 1 << CP0Ca_TI);
+     }
+     qemu_irq_raise(env->irq[(env->CP0_IntCtl >> CP0IntCtl_IPTI) & 0x7]);
+ }
+ 
+ uint32_t cpu_mips_get_count(CPUMIPSState *env)
+ {
+-    if (env->CP0_Cause & (1 << CP0Ca_DC)) {
+-        return env->CP0_Count;
++    if (qatomic_read(&env->CP0_Cause) & (1 << CP0Ca_DC)) {
++        return qatomic_read(&env->CP0_Count);
+     } else {
+         uint64_t now_ns;
+ 
+@@ -86,12 +87,13 @@ void cpu_mips_store_count(CPUMIPSState *env, uint32_t count)
+      * So env->timer may be NULL, so treat timer as disabled in that case.
+      */
+     MIPSCPU *cpu = env_archcpu(env);
+-    if (env->CP0_Cause & (1 << CP0Ca_DC) || !env->timer) {
+-        env->CP0_Count = count;
++    if ((qatomic_read(&env->CP0_Cause) & (1 << CP0Ca_DC)) || !env->timer) {
++        qatomic_set(&env->CP0_Count, count);
+     } else {
+         /* Store new count register */
+-        env->CP0_Count = count - (uint32_t)clock_ns_to_ticks(cpu->count_clock,
+-                        qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
++        qatomic_set(&env->CP0_Count,
++                    count - (uint32_t)clock_ns_to_ticks(cpu->count_clock,
++                            qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL)));
+         /* Update timer timer */
+         cpu_mips_timer_update(env);
+     }
+@@ -100,26 +102,28 @@ void cpu_mips_store_count(CPUMIPSState *env, uint32_t count)
+ void cpu_mips_store_compare(CPUMIPSState *env, uint32_t value)
+ {
+     env->CP0_Compare = value;
+-    if (!(env->CP0_Cause & (1 << CP0Ca_DC))) {
++    if (!(qatomic_read(&env->CP0_Cause) & (1 << CP0Ca_DC))) {
+         cpu_mips_timer_update(env);
+     }
+     if (env->insn_flags & ISA_MIPS_R2) {
+-        env->CP0_Cause &= ~(1 << CP0Ca_TI);
++        qatomic_and(&env->CP0_Cause, ~(1 << CP0Ca_TI));
+     }
+     qemu_irq_lower(env->irq[(env->CP0_IntCtl >> CP0IntCtl_IPTI) & 0x7]);
+ }
+ 
+ void cpu_mips_start_count(CPUMIPSState *env)
+ {
+-    cpu_mips_store_count(env, env->CP0_Count);
++    cpu_mips_store_count(env, qatomic_read(&env->CP0_Count));
+ }
+ 
+ void cpu_mips_stop_count(CPUMIPSState *env)
+ {
+     /* Store the current value */
+     MIPSCPU *cpu = env_archcpu(env);
+-    env->CP0_Count += (uint32_t)clock_ns_to_ticks(cpu->count_clock,
+-                        qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
++
++    qatomic_add(&env->CP0_Count,
++                (uint32_t)clock_ns_to_ticks(cpu->count_clock,
++                        qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL)));
+ }
+ 
+ static void mips_timer_cb(void *opaque)
+@@ -128,7 +132,7 @@ static void mips_timer_cb(void *opaque)
+ 
+     env = opaque;
+ 
+-    if (env->CP0_Cause & (1 << CP0Ca_DC)) {
++    if (qatomic_read(&env->CP0_Cause) & (1 << CP0Ca_DC)) {
+         return;
+     }
+ 
+diff --git a/target/mips/tcg/system/special_helper.c b/target/mips/tcg/system/special_helper.c
+index b54cbe88a3..04ae0bc6c3 100644
+--- a/target/mips/tcg/system/special_helper.c
++++ b/target/mips/tcg/system/special_helper.c
+@@ -24,21 +24,22 @@
+ #include "exec/helper-proto.h"
+ #include "exec/translation-block.h"
+ #include "internal.h"
++#include "qemu/atomic.h"
+ 
+ /* Specials */
+ target_ulong helper_di(CPUMIPSState *env)
+ {
+-    target_ulong t0 = env->CP0_Status;
++    target_ulong t0 = qatomic_read(&env->CP0_Status);
+ 
+-    env->CP0_Status = t0 & ~(1 << CP0St_IE);
++    qatomic_set(&env->CP0_Status, t0 & ~(1 << CP0St_IE));
+     return t0;
+ }
+ 
+ target_ulong helper_ei(CPUMIPSState *env)
+ {
+-    target_ulong t0 = env->CP0_Status;
++    target_ulong t0 = qatomic_read(&env->CP0_Status);
+ 
+-    env->CP0_Status = t0 | (1 << CP0St_IE);
++    qatomic_set(&env->CP0_Status, t0 | (1 << CP0St_IE));
+     return t0;
+ }
+ 
+@@ -103,13 +104,15 @@ bool mips_io_recompile_replay_branch(CPUState *cs, const TranslationBlock *tb)
+ 
+ static inline void exception_return(CPUMIPSState *env)
+ {
++    target_ulong status = qatomic_read(&env->CP0_Status);
++
+     debug_pre_eret(env);
+-    if (env->CP0_Status & (1 << CP0St_ERL)) {
++    if (status & (1 << CP0St_ERL)) {
+         mips_env_set_pc(env, env->CP0_ErrorEPC);
+-        env->CP0_Status &= ~(1 << CP0St_ERL);
++        qatomic_set(&env->CP0_Status, status & ~(1 << CP0St_ERL));
+     } else {
+         mips_env_set_pc(env, env->CP0_EPC);
+-        env->CP0_Status &= ~(1 << CP0St_EXL);
++        qatomic_set(&env->CP0_Status, status & ~(1 << CP0St_EXL));
+     }
+     compute_hflags(env);
+     debug_post_eret(env);
+diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
+index 4398c6f80b..9772df5d6c 100644
+--- a/target/mips/tcg/system/tlb_helper.c
++++ b/target/mips/tcg/system/tlb_helper.c
+@@ -1106,7 +1106,7 @@ void mips_cpu_do_interrupt(CPUState *cs)
+         env->hflags &= ~(MIPS_HFLAG_KSU);
+         /* EJTAG probe trap enable is not implemented... */
+         if (!(env->CP0_Status & (1 << CP0St_EXL))) {
+-            env->CP0_Cause &= ~(1U << CP0Ca_BD);
++            qatomic_and(&env->CP0_Cause, (int32_t)~(1U << CP0Ca_BD));
+         }
+         env->active_tc.PC = env->exception_base + 0x480;
+         set_hflags_for_handler(env);
+@@ -1134,7 +1134,7 @@ void mips_cpu_do_interrupt(CPUState *cs)
+         env->hflags |= MIPS_HFLAG_CP0;
+         env->hflags &= ~(MIPS_HFLAG_KSU);
+         if (!(env->CP0_Status & (1 << CP0St_EXL))) {
+-            env->CP0_Cause &= ~(1U << CP0Ca_BD);
++            qatomic_and(&env->CP0_Cause, (int32_t)~(1U << CP0Ca_BD));
+         }
+         env->active_tc.PC = env->exception_base;
+         set_hflags_for_handler(env);
+@@ -1148,7 +1148,9 @@ void mips_cpu_do_interrupt(CPUState *cs)
+                 offset = 0x200;
+             } else {
+                 uint32_t vector = 0;
+-                uint32_t pending = (env->CP0_Cause & CP0Ca_IP_mask) >> CP0Ca_IP;
++                uint32_t pending =
++                    (qatomic_read(&env->CP0_Cause) & CP0Ca_IP_mask) >>
++                    CP0Ca_IP;
+ 
+                 if (env->CP0_Config3 & (1 << CP0C3_VEIC)) {
+                     /*
+@@ -1246,8 +1248,9 @@ void mips_cpu_do_interrupt(CPUState *cs)
+     case EXCP_CpU:
+         cause = 11;
+         update_badinstr = 1;
+-        env->CP0_Cause = (env->CP0_Cause & ~(0x3 << CP0Ca_CE)) |
+-                         (env->error_code << CP0Ca_CE);
++        qatomic_and(&env->CP0_Cause, (int32_t)~(0x3U << CP0Ca_CE));
++        qatomic_or(&env->CP0_Cause,
++                   (int32_t)(env->error_code << CP0Ca_CE));
+         goto set_EPC;
+     case EXCP_OVERFLOW:
+         cause = 12;
+@@ -1305,9 +1308,9 @@ void mips_cpu_do_interrupt(CPUState *cs)
+                 set_badinstr_registers(env);
+             }
+             if (env->hflags & MIPS_HFLAG_BMASK) {
+-                env->CP0_Cause |= (1U << CP0Ca_BD);
++                qatomic_or(&env->CP0_Cause, (int32_t)(1U << CP0Ca_BD));
+             } else {
+-                env->CP0_Cause &= ~(1U << CP0Ca_BD);
++                qatomic_and(&env->CP0_Cause, (int32_t)~(1U << CP0Ca_BD));
+             }
+             env->CP0_Status |= (1 << CP0St_EXL);
+             if (env->insn_flags & ISA_MIPS3) {
+@@ -1333,8 +1336,8 @@ void mips_cpu_do_interrupt(CPUState *cs)
+ 
+         env->active_tc.PC += offset;
+         set_hflags_for_handler(env);
+-        env->CP0_Cause = (env->CP0_Cause & ~(0x1f << CP0Ca_EC)) |
+-                         (cause << CP0Ca_EC);
++        qatomic_and(&env->CP0_Cause, (int32_t)~(0x1f << CP0Ca_EC));
++        qatomic_or(&env->CP0_Cause, cause << CP0Ca_EC);
+         break;
+     default:
+         abort();
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.54.0
 
 
