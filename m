@@ -4,82 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FCE0C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:06:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AE68C4450B
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:07:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjIER-0007sP-IR; Mon, 13 Jul 2026 11:06:07 -0400
+	id 1wjIFK-0008Fb-Rd; Mon, 13 Jul 2026 11:07:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wjIEP-0007rd-NY
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:06:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wjIEN-0005dy-Fl
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:06:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783955162;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Sn3bUaBkr2kNAt8/n911dVSyIHCUGlrCqpdgE7JFuGY=;
- b=DY5KA0lm0pC60Vwkfke0D2g0wHKILnLxA7fCVgr6IOgBDRA3qH4GIefbWEm6hTFDFmRSGp
- Vq8Wr1iNidxm18dw/s0g8U0tOrmv9a7b9KqTsQvz0DA8zzOznp9yf/jkO5HpzO5ZRRB0Zo
- p0XDZQ2L32AGNydlYQtU3adI/H9Jgj8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-691-xlOja55gPDmhjSGXSJ77PQ-1; Mon,
- 13 Jul 2026 11:05:59 -0400
-X-MC-Unique: xlOja55gPDmhjSGXSJ77PQ-1
-X-Mimecast-MFC-AGG-ID: xlOja55gPDmhjSGXSJ77PQ_1783955157
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3C1FE1800D92; Mon, 13 Jul 2026 15:05:57 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.50.22])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 57FFA1800676; Mon, 13 Jul 2026 15:05:50 +0000 (UTC)
-Date: Mon, 13 Jul 2026 16:05:47 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: jasowang@redhat.com, mst@redhat.com, armbru@redhat.com,
- peterx@redhat.com, farosas@suse.de, raphael.s.norwitz@gmail.com,
- bchaney@akamai.com, qemu-devel@nongnu.org, pbonzini@redhat.com,
- yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Zhao Liu <zhao1.liu@intel.com>, Jason Wang <jasowangio@gmail.com>,
- Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v18 12/14] net/tap: support local migration with virtio-net
-Message-ID: <alT-y6A4hBjHPc82@redhat.com>
-References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
- <20260710191809.721154-13-vsementsov@yandex-team.ru>
- <alTJLI3EWU96Ks61@redhat.com>
- <f5178fb9-d3d1-4ed1-8f0e-98f4d95be2d6@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wjIFJ-0008F4-Eh
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:07:01 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wjIFH-0005iQ-PE
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:07:01 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2ce98cb8165so29517055ad.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:06:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1783955218; x=1784560018; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Cbeza0JweGBXswVZVljcfaCOtYAgEqnMzf8MThDE64g=;
+ b=LXfpuhmz6Zvfd16jtDCNucbGSd5YZQiW3R1P4wQMPn0wzhWi+4roKeKi9aV+vNttYt
+ 4ts8F7yVoJ7B2Ogccka7G2J9xEbQZNiVXnD4X9pRGxI/1BRe4GuhsCWZUUNYvbgWwq/3
+ W518rzlG8ee0DnxiOi7tXErD9Eo7+XPUU67Ym7DwvpbxSOhKmeJ7qW6+WEWfWBbQcIUh
+ 7pnsv+0Lt+C2hf7vaHMGru+DoOC58QdtO5cUVz4fIoOuwCSqYjqEcEKu/FA8u2Hs2K5k
+ 7fxHmJW8jbXM011W+s8pYKK/RoIG8MZ+VybB1CNj1y9uolgmjZA0vE0l5sv0WgPpKQ6D
+ +W/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783955218; x=1784560018;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=Cbeza0JweGBXswVZVljcfaCOtYAgEqnMzf8MThDE64g=;
+ b=HVGMpBxPUmyNwk+ytJOhKZRkDUORSUzk9Oq1fv2GPzeUsrIqV+wHN1fC9xZVvCc0Ye
+ nKc84+vc+91ttYA4OqSJMIWDjp/Or+d+9MrVOb4CClEuZ3Uc9Ob8Y6B9kq0gGSUPeTt7
+ t60E8nHkMv4+nV0xGG0eeIET6YCVxUr8Jy0CmUNwwxdNMI56CK/ctb2i0SymmmCCyg/w
+ vXDTGU7gFKLV4o/To/qBP2DAnfu9jGzpfcjWnxUGKleRwjgphUl3aHEw/0AChTWV7ix8
+ rOukv8XMj+qbnGx5wWe07utjKaFE9NMyFjKMbZKb1xYDVq7ENciU4e+QQm/sjnHixure
+ 80eg==
+X-Gm-Message-State: AOJu0YxRK3AskqXZTeNDZfrU/OrA5QcmGphZ/VHR2tJyOE4TLHG8Fw7C
+ xbbNML6efTMXxMw9xU1F3sRgo4q4z2tgrErQ37mzLzGDZmirYvVF5CBEK6tbNbjo9k9GZKUCeQn
+ FU9P3
+X-Gm-Gg: AfdE7cnvAQJ6EXbRGP1ucj+AdWfzu9ZgOF/WsHVCHV0nHOxtX7pERDIX2JLio6mFTHt
+ 4wF6fAl3ivi5Ag9jOPbFCPXbj52PMLHFtj2gB5d3bnQ9Ztd1+k4o0he9kJnctbKndOiM0XuJxVL
+ pKtvNsjg5HLHOVbZ2KcdII7cXGWq2NlRyalM3kNfbgZTDHhVc5rZ3r9gt3rpOOLtLmMCs8/9/+c
+ AhqS2McobqEFem9KbtqOmmF4zXuZkiwwtenokw8fU7W4iRYCu/H5CicdgBbeDibJNhXzjC3ahhe
+ iYrhErxUGncQsLhhF2zb4uXjFo/NVAKhWwEcR0ExisynQnIqw3okF/TIr1UeYXfLUHGPGWLPAYV
+ eIe5i9ejh2/QlCJUHitVfud1z09/N+SclaybIlTBTexbLBGrcIudYSGf/wCcsiKucRvJo7pxOwV
+ db/zgg/MzU0qPAesk/tXohdMeyDg==
+X-Received: by 2002:a17:903:1b08:b0:2c9:ed2e:b8c1 with SMTP id
+ d9443c01a7336-2cea17f82a7mr90421545ad.12.1783955217641; 
+ Mon, 13 Jul 2026 08:06:57 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.146.49])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2cee5ccb56esm2395115ad.84.2026.07.13.08.06.57
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 13 Jul 2026 08:06:57 -0700 (PDT)
+Message-ID: <c20d55d9-6563-417a-9df9-25a93c6641cd@linaro.org>
+Date: Mon, 13 Jul 2026 08:06:55 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <f5178fb9-d3d1-4ed1-8f0e-98f4d95be2d6@yandex-team.ru>
-User-Agent: Mutt/2.3.2 (2026-04-26)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: permerror client-ip=170.10.129.124;
- envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] linux-user/sparc: Take pending signals in
+ sparc64_set_context()
+To: qemu-devel@nongnu.org
+References: <20260713141429.3387066-1-peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260713141429.3387066-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,184 +101,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 13, 2026 at 03:35:06PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> On 13.07.26 14:17, Daniel P. Berrangé wrote:
-> > On Fri, Jul 10, 2026 at 10:18:01PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> > > Support transferring of TAP state (including open fd).
-> > > 
-> > > Add new property "local-migration-supported", which defines
-> > > whether local-migration is actually supported for this TAP device.
-> > > Starting from 11.2 QEMU Machine Types it's enabled by default.
-> > > 
-> > > Note, that local-migration (including migrating opened FDs
-> > > through migration channel, which must be UNIX socket), is
-> > > enabled by global "local" migration parameters. But individual
-> > > devices may have additional options to enable/disable it
-> > > per device.
-> > > 
-> > > The tricky thing, is that we need to know, should we do
-> > > call open/connect in TAP initialization code. That means,
-> > > that on incoming migration we want to know status of
-> > > "local" migration parameter at time of creating TAP device.
-> > > So, currently, for incoming local migration only TAP device
-> > > created through QMP is supported, as you need to set migration
-> > > parameter first (through QMP as well).
-> > > 
-> > > So the full picture is:
-> > > 
-> > > On source, to start outgoing "local" migration you need:
-> > > 
-> > >   - migration parameter "local" set to true
-> > >   - "local-migration-supported" TAP option set to true (the
-> > >     default, starting from 11.2 QEMU Machine Types)
-> > > 
-> > > If at least one of these options is not set, TAP backend
-> > > doesn't participate in migration.
-> > > 
-> > > On target, things are more difficult:
-> > > 
-> > > Same, you need both "local" and "local-migration-supported"
-> > > be set. And same, if one of them is not set, TAP backend
-> > > is initialized as usual, and doesn't accept any incoming
-> > > state.
-> > > 
-> > > Additionally, if you are going to set "local", it must be
-> > > set before creating the TAP device. If TAP device created
-> > > with "local" unset, it initializes as usual. If you enable
-> > > "local" after it and start incoming migration, it will fail
-> > > in .pre_load handler of TAP backend.
-> > > 
-> > > Moreover, there are interface restrictions: if you create TAP
-> > > device when QEMU is in INCOMING state, and both "local"
-> > > and "local-migration-supported" set, most of TAP options are
-> > > not allowed, and script/downscript are required to be explicitly
-> > > unset (set to "" or "no").
-> > > 
-> > > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> > > ---
-> > > 
-> > > In v17 thread we considered making new qapi parameters "unstable".
-> > > Still, it was because of doubtful "incoming-fds" parameter. In this
-> > > v18 it's completely removed, and we may live only with "local"
-> > > migration parameter + "local-migration-supported" TAP option.
-> > > This way the series doesn't conflict with suggested by Peter
-> > >    [PATCH RFC 0/2] migration/vl: new -incoming config:* for early migration parameters
-> > > So, I think, worth making one more iteration as "stable candidate".
-> > > If still some doubts, not problem for me to resend with "unstable" features.
-> > > 
-> > >   hw/core/machine.c |   7 ++
-> > >   net/tap.c         | 162 ++++++++++++++++++++++++++++++++++++++++++++--
-> > >   qapi/net.json     |  23 ++++++-
-> > >   3 files changed, 185 insertions(+), 7 deletions(-)
-> > > 
-> > > diff --git a/hw/core/machine.c b/hw/core/machine.c
-> > > index 15886a56b19..2a1abb29041 100644
-> > > --- a/hw/core/machine.c
-> > > +++ b/hw/core/machine.c
-> > > @@ -36,10 +36,16 @@
-> > >   #include "hw/virtio/virtio-pci.h"
-> > >   #include "hw/virtio/virtio-net.h"
-> > >   #include "hw/virtio/virtio-iommu.h"
-> > > +#include "net/tap.h"
-> > >   #include "hw/acpi/generic_event_device.h"
-> > >   #include "qemu/audio.h"
-> > >   #include "hw/arm/smmuv3.h"
-> > > +/*
-> > > + * TODO: When hw_compat_11_1 appears, local-migration-supported=false
-> > > + * for TYPE_TAP_NETDEV should be move to it from hw_compat_11_0.
-> > > + */
-> > > +
-> > >   GlobalProperty hw_compat_11_0[] = {
-> > >       { "chardev-vc", "encoding", "cp437" },
-> > >       { "tpm-crb", "cap-chunk", "off" },
-> > > @@ -49,6 +55,7 @@ GlobalProperty hw_compat_11_0[] = {
-> > >       { TYPE_ARM_SMMUV3, "ssidsize", "0" },
-> > >       { TYPE_ARM_SMMUV3, "oas", "44" },
-> > >       { "migration", "switchover-ack-legacy", "on" },
-> > > +    { TYPE_TAP_NETDEV, "local-migration-supported", "false" },
-> > 
-> > So disabled by default for historical machines type versions, but....
-> > 
-> > > +static void tap_instance_init(Object *obj)
-> > > +{
-> > > +    TAPState *s = TAP_NETDEV(obj);
-> > > +    s->local_migration_supported = true;
-> > > +}
-> > 
-> > ..enabled by default for all future machine type versions, but...
-> > 
-> > 
-> > > @@ -1005,6 +1123,23 @@ int net_init_tap(const Netdev *netdev, const char *name,
-> > >           return -1;
-> > >       }
-> > > +    incoming_fds = tap->local_migration_supported && migrate_local() &&
-> > > +                   runstate_check(RUN_STATE_INMIGRATE);
-> > > +
-> > > +    if (incoming_fds &&
-> > > +        (tap->fd || tap->fds || tap->helper || tap->br || tap->ifname ||
-> > > +         tap->has_sndbuf || tap->has_vnet_hdr ||
-> > > +         !tap_is_explicit_no_script(tap->script) ||
-> > > +         !tap_is_explicit_no_script(tap->downscript))) {
-> > > +        error_setg(errp, "Local incoming migration of TAP device (-incoming, "
-> > > +                   "migration parameter @local is set, "
-> > > +                   "TAP parameter @local-migration-supported is set) "
-> > > +                   "is incompatible with "
-> > > +                   "fd=, fds=, helper=, br=, ifname=, sndbuf= and vnet_hdr=, "
-> > > +                   "and requires explicit empty script= and downscript=");
-> > > +        return -1;
-> > > +    }
-> > 
-> > ...not usable by default unless the mgmt app knows to avoid these settings,
-> > but the user won't find out about this limit until they try to migrate and
-> > it fails at runtime, months or years after the VM was first configured &
-> > launched :-(
+On 7/13/26 07:14, Peter Maydell wrote:
+> Every callsite of block_signals() checks its return value, except
+> the one in sparc64_set_context(). Generally you need to check,
+> because the standard pattern is:
 > 
-> No, it fail only for RUN_STATE_INMIGRATE, and only if "local" is enabled.
-> If mgmt enables "local" it must know about the restrictions of using it.
-
-This implies that with new machine types, mgmt has to know to turn
-off the local migration feature which is rather unfortunate.
-
-> > IMHO the sane way to do this is to not have any "local-migration-supported"
-> > device flag at all, and also no "local" migration parameter. The src & dst
-> > QEMU's so badly need to be able to auto-negotiate and just do the right
-> > thing, otherwise this local migration optimization becomes a mgmt nightmare
-> > long term :-(
+>      if (block_signals()) {
+>          return -QEMU_ERESTARTSYS;
+>      }
+>      /* do some blocking syscall */
 > 
-> "local" is needed because we can't know, does transfer support fd-passing.
-> To auto-negotiate it, we probably need to pass a test FD to the target, as
-> simply checking "is it a UNIX socket" may not be enough.
-
-Oh, true, I forget that the UNIX socket could just be a local conenction
-to a MITM proxy 
-
-> > And yet we don't have any auto-negotiate mechanism, and I don't want to
-> > block your work :-(
-> > 
+> and we need to take any pending signal before we do the blocking
+> operation, not afterwards.
 > 
-> Thanks) But finally, in short term, could we proceed with it as is, or not?
+> The use in sparc64_set_context() doesn't do this.  It doesn't have to
+> because the operations it is doing aren't blocking, so it won't get
+> into "we didn't take the signal that we should have" races that
+> blocking syscalls do.  But it does make this way of updating the
+> signal mask inconsistent with how we do it in do_sigprocmask().
+> do_sigprocmask() does the usual "return -QEMU_ERESTARTSYS", so a
+> pending signal that was not blocked by the old signal mask and which
+> will be blocked by the new mask we're about to install will be taken
+> before we change the mask.  sparc64_set_context() doesn't check the
+> return value, so we won't take that pending signal.  That's not
+> wrong, because it just means the signal lost the race with the
+> executing code.  But it seems clearer to behave the same way as
+> do_sigprocmask(), not differently.
 > 
-> Would it be better, if I drop the default =true for new machine types, keeping
-> it false?
+> Make sparc64_set_context() check the return value of block_signals()
+> and return early if there's a pending signal to take.  We don't need
+> to return a separate return code to indicate this because the main
+> loop handles it the same either way.
+> 
+> Coverity CID: 1660058
+> Fixes: e0f0ce88eb9 ("linux-user/sparc: call block_signals() before set_sigmask() in setcontext")
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> ---
+> I thought about just adding a comment about why we're OK to ignore
+> the return value, but eventually decided that consistency with how
+> other parts of the linux-user code handle setting the signal mask
+> was better. This was originally flagged up by Coverity, not by any
+> actual observed problem.
+> 
+> Disclaimer: checked the original repro test case that prompted
+> e0f0ce88eb9, and ran 'make check-tcg', but no other testing.
+> 
+> ---
+>   linux-user/sparc/cpu_loop.c | 10 ++++++++++
+>   linux-user/sparc/signal.c   | 30 +++++++++++++++++++++---------
+>   2 files changed, 31 insertions(+), 9 deletions(-)
 
-I think I'd be more comfortable with this as non-default
-in the machine type. As you say, the mgmt has to know
-the limitations, so at that point having them turn on
-the device property fits with the knowledge requirement.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Auto-enabling something is more applicable when the
-behaviour is seemless without caveats.
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+r~
 
