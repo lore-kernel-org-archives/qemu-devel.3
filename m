@@ -4,72 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3CD1C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 18:09:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DCEDC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 18:09:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjL5R-0004V9-BQ; Mon, 13 Jul 2026 14:09:01 -0400
+	id 1wjL6A-0004j2-Ub; Mon, 13 Jul 2026 14:09:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1wjL52-0004U4-H5
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 14:08:38 -0400
-Received: from smtp186.sjtu.edu.cn ([202.120.2.186])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wjL63-0004ho-Hv
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 14:09:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1wjL4x-0006tI-Cd
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 14:08:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sjtu.edu.cn;
- s=default; t=1783966102;
- bh=+JPk+yOw8YGif9e8jPi7w8+hCHRyYgMzs4fdcV4W2zs=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=EMitZLv5gQiBf6V4XHYrMdKX6BZ8LgO2rnTJNCX+zlG+3G6TGxmnMCY95ool205qx
- 0PCJ7XPCgqbfHObM6pdTOY9PEczZjZ8mvSNFTqSq1LDq3ceYszRK98n5HzWplyhfU2
- XFFt3oh5eqD1dTRVXFKY587SdwSYQvA+upp1xyezbviY1nEnk25WG5GPxz2/olxBTq
- YsNescQAOCaHpuc3v3AyCf/Lo9QBs9pb4wL6PFuu7MlEmeBEyvvG0k1m+OnpMNX66R
- kL9VkNk2IukMKiSGVl0HF/F2HPTMgaoLXyyHP/Iitg46c42uKJJgZY620udldF0FAg
- iCpycMQQQfhXQ==
-Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
- by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id 5EE3D2FF3B9;
- Mon, 13 Jul 2026 18:08:22 +0000 (UTC)
-Received: from [10.0.1.62] (unknown [202.120.40.100])
- by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 45F4D37C8C7;
- Tue, 14 Jul 2026 02:07:51 +0800 (CST)
-Message-ID: <e46324ae-0853-422d-aa45-11d73b4b3a18@sjtu.edu.cn>
-Date: Tue, 14 Jul 2026 02:07:49 +0800
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wjL61-00077c-F7
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 14:09:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783966176;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=XJzNZVBzm0p+zNKgNuGwiiBlfxocU2VnvfvufnLPBS0=;
+ b=TDXDxetkGQ7+SZIlqGoM324mK99vu5BVx3K/s9QtEGZSvklgAeI2jJaICPrTdfzMdWf0yI
+ /E/joc9031xr+7rEGn94cMq/83uE3TGe5Ro4H6U/0c4HkSE0bHwSWT97ZE1AT15v2ga2gL
+ l7nVbDdQP7s1Vz7jaAEsI3iPsdShKzE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-310-cj0lTyjxOMORbXuxsHTSkw-1; Mon,
+ 13 Jul 2026 14:09:32 -0400
+X-MC-Unique: cj0lTyjxOMORbXuxsHTSkw-1
+X-Mimecast-MFC-AGG-ID: cj0lTyjxOMORbXuxsHTSkw_1783966171
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B875F1801379; Mon, 13 Jul 2026 18:09:30 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B44BA3000B4B; Mon, 13 Jul 2026 18:09:29 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 658CA21E6920; Mon, 13 Jul 2026 20:09:27 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>,  Peter Maydell
+ <peter.maydell@linaro.org>,  QEMU Developers <qemu-devel@nongnu.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,  Pedro Barbuda
+ <pbarbuda@microsoft.com>,  Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Nicholas Piggin <npiggin@gmail.com>,  Harsh Prateek Bora
+ <harshpb@linux.ibm.com>,  Cornelia Huck <cohuck@redhat.com>,  Eric Farman
+ <farman@linux.ibm.com>,  Matthew Rosato <mjrosato@linux.ibm.com>
+Subject: Re: what is qemu_system_guest_panicked() for?
+In-Reply-To: <alT-BXlG2EmIS-pD@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Mon, 13 Jul 2026 16:02:29 +0100")
+References: <CAFEAcA_zmc=Vvs38Qos_gecCmGAbRgDQF-0+x85Ja66nsqrHxA@mail.gmail.com>
+ <alSkWHw6ryhEEaDf@redhat.com> <87cxwrtgfd.fsf@pond.sub.org>
+ <alSqlDRT9L8OqAso@redhat.com> <87se5ngln1.fsf@pond.sub.org>
+ <alTWn2xq4FfdxnE4@redhat.com> <87bjcbf0vu.fsf@pond.sub.org>
+ <alT-BXlG2EmIS-pD@redhat.com>
+Date: Mon, 13 Jul 2026 20:09:27 +0200
+Message-ID: <874ii2ep7s.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 2/2] docs/about/emulation: document the dlcall plugin
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-devel <qemu-devel@nongnu.org>
-Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
- Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
- Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
-References: <20260710212601.583352-1-functioner@sjtu.edu.cn>
- <20260710212601.583352-3-functioner@sjtu.edu.cn>
- <990f11f5-c8fd-4cf6-b186-180e24452ff3@oss.qualcomm.com>
- <5a303ce5-cb6f-43b9-857f-39cffc8c7d67@sjtu.edu.cn>
- <8c2aa5fe-026e-45c2-a908-5f6c245b2993@oss.qualcomm.com>
- <2c57e188-b9f5-45b9-90b3-81a3d128254a@sjtu.edu.cn>
- <69924eee-ba12-4a3e-baff-8ecb86d1ce77@oss.qualcomm.com>
- <37b40d64-aaa7-4358-ad5d-70c15dc05cba@sjtu.edu.cn>
- <9b8f79c7-1f30-4036-ba05-22d390a22410@oss.qualcomm.com>
-From: Ziyang Zhang <functioner@sjtu.edu.cn>
-In-Reply-To: <9b8f79c7-1f30-4036-ba05-22d390a22410@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=202.120.2.186;
- envelope-from=functioner@sjtu.edu.cn; helo=smtp186.sjtu.edu.cn
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: permerror client-ip=170.10.133.124;
+ envelope-from=armbru@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,154 +96,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 13 Jul 2026 11:03:23 -0700, Pierrick Bouvier wrote:
-> On 7/13/2026 10:56 AM, Ziyang Zhang wrote:
->> On Mon, 13 Jul 2026 10:53:56 -0700, Pierrick Bouvier wrote:
->>> On 7/13/2026 9:34 AM, Ziyang Zhang wrote:
->>>> On Mon, 13 Jul 2026 08:31:18 -0700, Pierrick Bouvier wrote:
->>>>> The problem is that if that the guest program, or the host library
->>>>> (host
->>>>> libhello) may depend on libstdc++. If they do and if they depend on a
->>>>> (newer) symbol not present in lorelei libstdc++, we break ABI. Same
->>>>> goes
->>>>> for libgcc.
->>>>>
->>>>> By not doing this, you'll be forced to provide a lorelei devkit
->>>>> everytime a new libstdc++ is published, or a distribution updates its
->>>>> gcc.
->>>>>
->>>>> The only solution is to embed libstd++ and libgcc statically, or
->>>>> rely on
->>>>> host libraries. If you choose the second option, you know have the
->>>>> opposite problem. So I think the only way to solve it is really static
->>>>> linking, even if it will slightly increase binaries size.
->>>>>
->>>>
->>>> The devkit already ships libstdc++ and libgcc anyway: its own clang/
->>>> LoreTLC link them dynamically, and we bundle them so the toolchain even
->>>> starts. So bundling libstdc++ for the thunk flow adds no new dependency,
->>>> it just reuses one the devkit must carry. Static-linking the thunks
->>>> wouldn't make the devkit any smaller or more self-contained either,
->>>> since clang still needs the dynamic libstdc++; we'd only be adding
->>>> static copies on top of it.
->>>>
->>>
->>> There is a difference between the toolchain dependencies, and thunks
->>> dependency. For the first one, it's perfectly find to provide libstdc++,
->>> for the second, it can create conflicts at runtime that may be very hard
->>> to diagnose and solve.
->>>
->>>> On the ABI risk itself: libstdc++ keeps a backward-compatible ABI, and
->>>> the copy we bundle is recent, so a thunked host library only breaks if
->>>> it was built against a strictly newer libstdc++ and references a new
->>>> symbol. Even then it needs no new devkit, because the resolution order
->>>> is the integrator's to choose. On a host newer than our bundle, putting
->>>> the system libstdc++ ahead of the devkit's on LD_LIBRARY_PATH lets the
->>>> host library bind the newest one, while clang and the Lorelei runtime
->>>> keep working against it by backward compatibility. So a gcc update on
->>>> the host doesn't force us to reship.
->>>>
->>>
->>> Sure can choose indeed. However, he has to find where such libraries are
->>> located on his system, and prepend that to LD_LIBRARY_PATH. Not the most
->>> user-friendly thing to guess and debug IMHO.
->>>
->>>> There's also an active reason not to static-link. Both the Lorelei
->>>> runtime and the generated thunk libraries depend on libstdc++. If we
->>>> statically link libstdc++ into a thunk while the host library it
->>>> dispatches to links the system libstdc++ dynamically, the process ends
->>>> up with two libstdc++ copies on the host side, right across the boundary
->>>> where C++ objects and exceptions pass between the thunk and the real
->>>> library. That can break:
->>>>
->>>> - Exceptions: one thrown in the host library may not be caught in the
->>>> thunk. The two copies have different std::type_info for the same type,
->>>> so the match fails and it hits std::terminate.
->>>> - dynamic_cast / typeid across the boundary: they assume a single
->>>> type_info per type, so they can start returning null or misidentifying
->>>> types.
->>>> - Duplicated global state: two sets of the iostream objects, the locale/
->>>> facets, and the exception emergency buffer.
->>>>
->>>
->>> That's a good point, but does lorelei even provide a solution for that?
->>> I guess that exception raised from an host library and sent back to
->>> guest binary with target specific types will not result in what is
->>> expected at the moment.
->>>
->>>> Based on the above reasons, I prefer to do that than statically link and
->>>> grow the big artifact. Does that hold for you?
->>>>
->>>
->>> Ok.
->>>
->>>> Thanks,
->>>> Ziyang Zhang
->>>>
->>>
->>> Regards,
->>> Pierrick
->>
->>
->> Wait a second. I missed something.
->>
->> Sorry, last time I answered without actually checking the libstdc++
->> situation on the four distros. You were right to push on it, so I looked
->> properly.
->>
->> You were right that the x86_64 sysroot is the crux: libc6-amd64-cross
->> gives /usr/x86_64-linux-gnu/ a libc but no libstdc++, so the guest side
->> has no system libstdc++ to fall back on. That's the side we should keep
->> providing ourselves, and the devkit already ships the x86_64 libstdc++
->> next to the guest runtime for exactly that. It's only a default, though:
->> if a guest executable needs a newer libstdc++, the user can put a newer
->> x86_64 libstdc++.so ahead of ours on the guest LD_LIBRARY_PATH (the -E
->> one) and it takes precedence, while our runtime keeps working against it
->> by backward compatibility. So we are not locking anyone to our version.
->>
->> The host side is different, there libstdc++ is reliably present. I
->> checked each distro's stock minimal base image, with nothing installed
->> on top:
->>
->> Debian 12: libstdc++6 12.2.0-14+deb12u1
->> Ubuntu 24.04: libstdc++6 14.2.0-4ubuntu2~24.04.1
->> Fedora 40: libstdc++-14.2.1-3.fc40
->> Arch (2024-08 snapshot): libstdc++.so.6 from gcc-libs 14.2.1
->> It ships out of the box on all four, and the C compiler pulls it in on
->> Debian, Ubuntu and Arch.
->>
->> So the split I'd propose: provide libstdc++ only on the guest side (the
->> x86_64 sysroot has none), and on the host side rely on the system's, so
->> the host thunk and the real host library both bind the host's own
->> libstdc++ rather than a copy we ship. That directly addresses the ABI
->> point you raised: nothing we ship shadows the host's libstdc++, so a
->> thunk never forces an older libstdc++ onto a host library built against
->> a newer one.
->>
->> Does that split sound right to you?
->>
-> 
-> That's a reasonable default, and Lorelei can be updated for this without
-> having to update anything on QEMU side (or its documentation).
-> 
-> If I had to choose, I would still do static linking for guest and host
-> thunks, because I don't think we can handle exceptions correctly anyway.
-> But the most important is that current example already works out of the
-> box, which makes this series ready for upstream.
-> 
-> Regards,
-> Pierrick
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Thank you, and thanks for the thorough review across all the revisions. 
-Your feedback made both the plugin and the walkthrough much better than 
-where they started.
+> On Mon, Jul 13, 2026 at 03:57:25PM +0200, Markus Armbruster wrote:
+>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-The libstdc++ discussion was valuable too. I'll keep static linking for 
-the thunks in mind, and the exception-across-the-boundary case is a fair 
-point I want to revisit properly. Since all of that lives on the Lorelei 
-side, we can iterate on it without touching QEMU.
+[...]
 
-Thanks,
-Ziyang Zhang
+>> > When libvirt see a GUEST_PANICKED, it will transition the state to
+>> > "CRASHED" and assign a reason of "PANICKED" as the trigger / cause.
+>> >
+>> > Then depending on the guest XML config for <on_crash> it will do one
+>> > of
+>> >
+>> >  * Take a core dump of QEMU
+>> >  * Terminate QEMU
+>> >  * Restart QEMU
+>> >  * Take a core dump of QEMU and restart
+>> >  * Leave it in crashed state (to allow a debugger to attach)
+>> >
+>> >
+>> > The "machine check" and "unknown VM exit" scenarios, would still map
+>> > to libvirt's "CRASHED" state, but we would want to assign distinct
+>> > "cause" for each of them.
+>>=20
+>> Say we add event GUEST_MACHINE_CHECK, then send it instead of
+>> GUEST_PANICKED on a machine check.
+>>=20
+>> With an updated version of libvirt, this changes exactly the "cause"
+>> recorded for a machine check in the "CRASHED" state.  This change is
+>> desirable.
+>>=20
+>> Older versions of libvirt ignore the unknown GUEST_MACHINE_CHECK event.
+>> They therefore no longer take the <on_crash> action.  This is
+>> undesirable, I'm afraid.  Is it?
+>>=20
+>> An orderly transition could look like this:
+>>=20
+>> 1. Add a new event for each distinct cause, and emit the appropriate
+>>    event in addition to GUEST_PANICKED.
+>>=20
+>> 2. Deprecate GUEST_PANICKED.
+>>=20
+>> 3. Remove GUEST_PANICKED after a suitable grace period.
+>
+> Another option is to accept  "GUEST_PANICKED" as a sub-optimal name
+> forever and add a "source" field to the event to explain what actually
+> triggered it, where "source" can be  "guest-os", "machine-check", ...
+> etc...
+
+Yes, that's a compatible extension.
+
+> Which would probably be better compatible with libvirt too
+>
+> With regards,
+> Daniel
 
 
