@@ -4,100 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8969C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 11:12:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 897D3C44501
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 11:13:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjEZT-0004Aj-5b; Mon, 13 Jul 2026 07:11:35 -0400
+	id 1wjEak-0004gv-Q9; Mon, 13 Jul 2026 07:12:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wjEZR-0004AR-6s
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:11:33 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wjEZP-0006ex-8R
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:11:32 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-476d8e647e9so3088887f8f.0
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 04:11:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wjEak-0004gY-0h
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:12:54 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wjEai-0006iw-Cd
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:12:53 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66D9ucY01089701
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 11:12:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 7XsYLOkFKPevp72S9kIelJJc5OWBLLgZB83vPXvaDng=; b=NfPGmmLuQecF+Ihc
+ NPW8D3RkCMUN34Gi83IF95YT1JtRl7pEPbBnUktLR8ijsVvcsjH2Iq5T+ybIcN9t
+ kr5cBGWCwXGGTR0kQ822toW34tlRQcwiLDqWycmU16wmS/4eVHpFpXNAY/LI0Kmy
+ Aw7MCBs9/kipKuGKhP/XbdA5ctVT6dTImPfrjFkp48ms/ZEh372naAbFqq1zE5Zv
+ wDs3GTmXWB2BYLWG1TTLY8H/e5TWwBiutA6vHClPajZyquj44eo1kNRsXDyeIXSt
+ FP+LhDslpfkcmhTvir5L8AXSoWXZGd+gcAzuLJesHRMSbUPab+jPOdd7b2Wz506d
+ HZscRA==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcwu4r8k3-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 11:12:50 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-51c0e702df8so32273721cf.2
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 04:12:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783941089; x=1784545889; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=9cvW9Hj8m088+L/Cb6813m3dv+GkmPK+BWsRpFGbdKo=;
- b=HdfjJREwPS+geZcnnRlyB+eTpuSgkO+Yh4fp2yICH052ZvcqtVUzdZvWGiGOU3YAmC
- aJ1XHBQ07CHMR5TqvRjlm88LwTRTYsI3vKjQW1nwp2f9TmOXuYozXaZSiWofoe9LFotB
- tzHs4HtgwyezK7Mc/1ZKEi29nIcNiDnajwhSWD8oUzIjn//MtjHnMp49AoWEQjB+75CN
- QrUiaukPh90S1ACXZOHcs6c0YWdg6TpOdDRVYaJH01i/ckoGrCqX9qSp5I/fASwXwYxG
- tdDCzNM6Go88ApWNUO4iBTq7WyIlDwpEp3/0ko0CpljmMi4Qdp1sxCHrny2QfVgUQCQg
- O3BQ==
+ d=oss.qualcomm.com; s=google; t=1783941170; x=1784545970; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=7XsYLOkFKPevp72S9kIelJJc5OWBLLgZB83vPXvaDng=;
+ b=FXgJAP98j/ehaDEhZxzA6IkLtTYF/GNDfpIVbnA8RiJ2VCS5DKnZNmYkCmM0V2NEMC
+ rM62lg+h2sEQ47dPUbawa/X1HS1jkEQ7BAcjlDjKB04AtedaQl4VFjCPOt5Mf1P5xvr7
+ H/vN/EiStJ9p2qFiYPVhOuOVLOqjxLJ/JqFTjqsHRKz9Fegff0bhV9CyEH2dtiETt3qM
+ aVUK4QAkk8vhj4Zz/Clhg5xM31UhtBG2WBQdo4pFJ/K3i8atCP9HZvGFA7HkPw0GJ2Vv
+ ZnHvxf7gS16cyId4Sa+Ohkb0n9oRSjmK1Yo+ALPYrSB4YyTocZ/WsEf2E/fVBh+d5K4w
+ ueig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783941089; x=1784545889;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=9cvW9Hj8m088+L/Cb6813m3dv+GkmPK+BWsRpFGbdKo=;
- b=E3rEz6+rT3saFIc0dQ3+s0VlJ2D2FMOye5zsjic+WDa5n8rE7bXCdHzf8xM34zMY3e
- ZsxT8ptKsL2n0DopbRtkRprxyMxpvkilf6iHjbv2m/me/19pbG0gE4LOQFWRLLVoSuVC
- Bku4oUwJaqPXVOGduW4TN2PqH4R5mEwVp7fZC/zGU3yL74ncQSN6KYYbEuQ3RYI4t+Jq
- viUxiPEHrWD/LRFqFk1LvFS3XboMS5IMlL1okHEKN4RVOtGLhg3/oqPpbE5jcS9dLajA
- P6foRTl/MNBWh/oel7oWfT7ktq/YoyhB54Ay4GrUnEYEiGCpcXCZo+OJdvKH7bfeK7dI
- fOeg==
+ d=1e100.net; s=20251104; t=1783941170; x=1784545970;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=7XsYLOkFKPevp72S9kIelJJc5OWBLLgZB83vPXvaDng=;
+ b=j/+1zPh7JlnWYJqhi8Eq8o4ZrUJpG4SRZTRM19Mg4YSmuTCXsm4JoNGXp+KB8rgFxl
+ xa4jtH3qItB2Wmaev016c6CjpgJeb0oAnRIXHD6S/gg001h3UppMkOxGdBDi9dMpAXpN
+ bSAgAZG7qoaLoYWquIoz7lbcS9StWWHV4uIDqVVQwqouf1Lh9bMEyNCYkGQ1uCZ62htI
+ PDCOEA+U3nY6nWuoBOuSHDGvUWH+N6XyGI6dttQaEUNFMWcLxbM0fYTRNGIjSk+q9Hr0
+ ItA9csN+YnHTqdjAW2qHcXHsijE3/lFk3C9nuZlM3YDZ8M9MgHdkpN2kZLXltR1TNxIm
+ NMRg==
 X-Forwarded-Encrypted: i=1;
- AHgh+RozUP/7zaufC1gtczlL1ujdpP8y6yCjRPj6SoX4fPRYvgF+TF/IIYjs2oU4YqSlrb5e1ndskL7qm5j5@nongnu.org
-X-Gm-Message-State: AOJu0Yxk0xgqZhSd7jzS5RHpAATjOEafR4jfCFAkfiQ4/SPWyp3gZUvX
- MGSwO9zpFxHFlcrm78K+b6etEzoxRhzHBOolBJITp8vgxgKh2AAwwmU3fLhjqqFuH6c=
-X-Gm-Gg: AfdE7ck3Nz4FhwKFw/t1YZgcc9DrzbyIoCkT/+MDdzWUi2dTokFxYNQETE33q/HQJQp
- U+ueUrroExcn16cradiI9kpGb+e8pqepxwbjZgwPzJ68DEDejTtz4E19K1dbtVqucdfYDNo7QAw
- XD85zkOEgUxa1qbpLrKAdhEUs5YdnN1Vz846y6wd4ZIKClT5UNS7nD/LmX1FdMdWA9mFi6IwltA
- Wty27Smk69n06j/NbvD3nJ5d/23SuXQyrsHYvpK68wCcILqzlTadEAv6DjOHKTWJslQki3bflTb
- IvfSwHamAps86ydW64bvrj4RLTIrmuEcnJTg/KBLxKO4zUsyLQ3RLNfELRDj75RVlQRZsku5gSe
- UIG1YuS1HCGyQ/g8XOb8G1uKmAR1QGuQT9vUw5AlEcEyKDNbC4dVNHGcLZnrO9K9T/hTjXW/zMs
- S9Wfowt4Kmk+bT
-X-Received: by 2002:a05:6000:22c7:b0:472:8343:7f5e with SMTP id
- ffacd0b85a97d-47f2dc8ce54mr9392571f8f.5.1783941088926; 
- Mon, 13 Jul 2026 04:11:28 -0700 (PDT)
-Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47a9de1e6ccsm85132232f8f.5.2026.07.13.04.11.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jul 2026 04:11:28 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0D80C5F7F1;
- Mon, 13 Jul 2026 12:11:27 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: gilles grimaud <gilles.grimaud@univ-lille.fr>
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,  Peter Maydell
- <peter.maydell@linaro.org>,  Richard Henderson
- <richard.henderson@linaro.org>,  qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Subject: Re: [RFC PATCH] target/arm: report M-profile BKPT to gdbstub when
- attached
-In-Reply-To: <354DA850-F992-40A9-A143-F061C6D516F6@univ-lille.fr> (gilles
- grimaud's message of "Sat, 11 Jul 2026 00:19:11 +0200")
-References: <20260705224407.32464-1-gilles.grimaud@univ-lille.fr>
- <CAFEAcA9Heev=ydTzO2u3EzeF_2q7dytOF8=67qF8ZMMY6Ky2Tw@mail.gmail.com>
- <a14481eb-9eed-43c0-a29c-187798f7f769@linaro.org>
- <CAFEAcA9x7tjW9xuT_XwNntdvoVtLrCL_PB+50tfhiW2XDvsCiw@mail.gmail.com>
- <F797F544-7BE3-4478-B319-0D4843095731@unpredictable.fr>
- <354DA850-F992-40A9-A143-F061C6D516F6@univ-lille.fr>
-User-Agent: mu4e 1.14.2; emacs 30.1
-Date: Mon, 13 Jul 2026 12:11:26 +0100
-Message-ID: <87ech7cffl.fsf@draig.linaro.org>
+ AHgh+RpLBDFTxe8JoDuI6CCyf34c2GqHjF1g4dML9DpohOemdXk6T10ICUWEssNrtCnnUrEUu7yoBQlMeD7S@nongnu.org
+X-Gm-Message-State: AOJu0YziViDee37fXYsWcz9thbJH/a2NjT54A0MHhUmOoBoDXtb++1c7
+ JYdkTNLr/ZiNsjNKDD2bpJACvT56l3LBxJi+6ay7aX9crtcP1w8j+cxofqQrf5ygSxn9cymPuY6
+ o4tYoklrtNtfaG3oscTqtphfgnS72ughJW6/U4y3kirBmAFm8MH7kactfJA==
+X-Gm-Gg: AfdE7cmYpw8YnTh9QI3x8LZXMl27V4bbjsNXGA9uLGXGxUwDvk04SbLQ1ra4+gelWUm
+ v9gvww9b1LDW/4KGzqYdYosdNlLhZ6fkk+ENy+UlflVYA63FRjmwVSq6uaWjXuULceWkR3lQ+mL
+ wSHre4BhUHEkne28YMjpdjErQbIKN3oNBtjHeUN7/lnrJXIi+9OJPMJKmauCVHNCIIRzHt6zeaN
+ NUS4da1qSRizMokvV+t6/eTpcjAiPXqBMw0s6h37cspQkYCdYz9aVK5Z5C5jOMS7evY0lXpyU9D
+ 09VJEBf3QuL7lS7JmyZDlvC2E1j/SJ3TqiPpNsKzOxoyViu0RABA0c5rJeZXuCiY4rCJwtca6i3
+ t7kin2m/QrnswHh71U0U/XitiEj386kKK+kqZ1CDEye5huRtTh0jiKcVa4Mr1wA==
+X-Received: by 2002:ac8:7f8c:0:b0:51c:135a:5b49 with SMTP id
+ d75a77b69052e-51cbf0468ccmr92571831cf.4.1783941169671; 
+ Mon, 13 Jul 2026 04:12:49 -0700 (PDT)
+X-Received: by 2002:ac8:7f8c:0:b0:51c:135a:5b49 with SMTP id
+ d75a77b69052e-51cbf0468ccmr92571541cf.4.1783941169191; 
+ Mon, 13 Jul 2026 04:12:49 -0700 (PDT)
+Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493eb6ccaf1sm632165655e9.2.2026.07.13.04.12.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 13 Jul 2026 04:12:48 -0700 (PDT)
+Message-ID: <61fcf3c5-6233-4100-96b3-00e8b0732893@oss.qualcomm.com>
+Date: Mon, 13 Jul 2026 13:12:47 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/5] i386/tdx: fix uninitialized variable warning in
+ tdx_check_features
+Content-Language: en-US
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti
+ <mtosatti@redhat.com>, kvm@vger.kernel.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20260706-fix-v1-0-4b83a70e9f3b@redhat.com>
+ <20260706-fix-v1-1-4b83a70e9f3b@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260706-fix-v1-1-4b83a70e9f3b@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=FMErAeos c=1 sm=1 tr=0 ts=6a54c832 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=LfsA7Cq2GQzuzbZ-N0YA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDExNiBTYWx0ZWRfX+jLcRkhY2tgS
+ tcrfDQrFkqfPWIyjRX5fSG8uqUiCLSI//ukKArbYYlGbgK+H0dcz7Js5zQAtSL3qRutnadWqQNs
+ HbMumnlaxg/Ig1q3Xpz4PtEelKE8RX4=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDExNiBTYWx0ZWRfXweBS4MN3L8NM
+ ovDkZuM1mwSymqppj4wgaY3QEs2It+uNjTqMRY7mot5qyEM9hDIdBWq5ynDfQT6as2cYPoLzRwK
+ bXZ3/a4xCXe8qPtmMt2B+iCqJDDx4fTcGtR7OeYUP3kDFZ05dwUjRiCMxZoPTk6S8M8S9p1nCf7
+ 6GG6JRenrKJid6Og2nVyM2wCaqWQWjLWiwdPtbDRZIxj7a1gzmKKnkxHqPAtJB79LxV/6VkxExY
+ 1YV5Zvw7FIk0icggm0CXMPVhpFM6Kms/PnWqWJRtD7mB8vkvOaAL8Ch6HadTTWIcSB40LONPG8h
+ SRxaZYDehBVep7hlpvJlzoYiJFtv6aPGbtZuoxuyoM1KyuQwRLGp+m8CE4i2ZjYxv5kc3+jkxCs
+ GWen/zvkfzkDyzywsvPquvVjeWnujAGHne/nDExJl01mItzJRxgthu+DtuRTZXEUYe42UCM0H8f
+ bpl5NUiBSzGqf7oOiXg==
+X-Proofpoint-ORIG-GUID: l0Wbltkrj3WYnbCjIxsrk5eOxz029t8W
+X-Proofpoint-GUID: l0Wbltkrj3WYnbCjIxsrk5eOxz029t8W
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-13_02,2026-07-10_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 adultscore=0 bulkscore=0 malwarescore=0 impostorscore=0
+ suspectscore=0 priorityscore=1501 phishscore=0 spamscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607130116
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,140 +158,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-gilles grimaud <gilles.grimaud@univ-lille.fr> writes:
+On 6/7/26 14:53, Marc-AndrÃ© Lureau wrote:
+> tdx_fetch_cpuid() only sets the output ret parameter on the error
+> path. GCC cannot prove that r is always initialized before use in
+> the caller, triggering -Werror=maybe-uninitialized.
+> 
+> Initialize r to -1 to silence the warning.
+> 
+> Fixes: 228e40f33048 ("i386/tdx: Fetch and validate CPUID of TD guest")
+> Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+> ---
+>   target/i386/kvm/tdx.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+> index c9c3b05d5fe..8294dbde3aa 100644
+> --- a/target/i386/kvm/tdx.c
+> +++ b/target/i386/kvm/tdx.c
+> @@ -887,7 +887,7 @@ static int tdx_check_features(X86ConfidentialGuest *cg, CPUState *cs)
+>       FeatureWordInfo *wi;
+>       FeatureWord w;
+>       bool mismatch = false;
+> -    int r;
+> +    int r = -1;
+>   
+>       fetch_cpuid = tdx_fetch_cpuid(cs, &r);
+>       if (!fetch_cpuid) {
 
-> Thanks everyone for the detailed comments.
->
-> Let me try to summarize where I think the discussion stands, and then go =
-through the questions that have emerged, from the most
-> specific ones to the more general and still unresolved ones.
->
-> My RFC originally came from reading QEMU's gdbstub as, at least conceptua=
-lly, an analogue of an external low-level debugger such as
-> a JTAG-attached debugger. From that perspective, having an attached GDB c=
-lient consume a guest BKPT used as an external
-> debugger stop point seemed natural.
->
-<snip>
->
-> ```
-> Should the external debugger get a first chance to consume the debug even=
-t,
-> and if it does not, should the event be reinjected into the guest?
-> ```
->
-> For Cortex-M, a rule that simply maps every BKPT to EXCP_DEBUG whenever G=
-DB is attached could clearly steal an exception that
-> should have remained guest-visible.
->
-> This means that any generic abstraction would need to define not only whe=
-n an external debugger may intercept a guest breakpoint
-> instruction, but also what happens when it does not consume it.
->
-> 5. Should QEMU's gdbstub be modelled as an external debug monitor?
->
-> This now seems to me to be the most general question behind the RFC.
->
-> If the answer is yes, then some variant of the behaviour I proposed seems=
- natural: a breakpoint instruction that would be consumed
-> by an external debugger on real hardware should be reportable to an attac=
-hed GDB client.
->
-> If the answer is no, then I think we need to clarify what the intended re=
-lationship is between QEMU's gdbstub and the architecture's
-> external debug facilities.
->
-> Alex's remark captures the current situation well:
->
->> "We could treat gdbstub as an external debug monitor but we don't curren=
-tly model it as such."
->
-> So perhaps the main remaining design question is where this abstraction s=
-hould live.
->
-> Should target-specific code directly know whether GDB is attached, as in =
-my RFC?
->
-> Or should there be a generic QEMU debug layer representing an external de=
-bugger, with target code only reporting
-> architecture-specific debug events and deciding, from architectural state=
-, whether they are eligible for external interception?
->
-> The latter seems cleaner to me, especially if the same issue exists for A=
-rm BKPT, RISC-V EBREAK, and breakpoint instructions on other
-> architectures.
->
-> My current feeling is therefore that the original RFC probably puts the f=
-ix too low and too specifically in the Arm code, but that the
-> underlying problem remains real: QEMU does not appear to have a clearly d=
-efined generic model for what should happen when guest
-> code deliberately executes a breakpoint instruction while an external GDB=
- client is attached.
->
-> ----
->
-> I have tried to summarize the discussion as faithfully as possible, as I =
-was beginning to lose track of the different points and positions.
->
-> This leaves me with one final question, which may actually be the key to =
-choosing between the possible models discussed above.
->
-> Even if you decide that QEMU's gdbstub should represent an external debug=
-ger, what exactly should that imply?
->
-> Does attaching a GDB client itself mean that architectural external halti=
-ng debug is active, so that eligible guest breakpoint instructions
-> should naturally be consumed by the external debugger?
->
-> Or does it only mean that an external debugger is available, while actual=
- interception must still depend on the architectural debug
-> state, such as DHCSR.C_DEBUGEN and the relevant architecture-specific con=
-figuration?
->
-> My original patch implicitly assumes the first model:
->
-> GDB attached
->     =3D> external halting debug active
->     =3D> M-profile BKPT is reported to GDB
->
-> But the discussion around DHCSR, DEMCR, self-hosted debugging, and the ro=
-le of the gdbstub suggests that this equivalence may be
-> exactly what needs to be decided first.
->
-> Perhaps answering this question would also tell us where the abstraction =
-should live: either directly in target-specific exception
-> handling, or in a more generic QEMU external-debug layer with
-> architecture-specific eligibility rules.
+Alternatively, 'return -1;' here.
 
-I think if the gdbstub is going to intercept what would otherwise be
-guest visible exceptions then that should be opt-in behaviour via some
-sort of flag for gdbstub. Otherwise guests will get confused when they
-miss them. For example we know Windows uses breakpoints during its
-boot-up for some sort of internal book keeping.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
-While giving the option to intercept guest visible exceptions in gdbstub
-could be done globally if we want to properly model the external debug
-interface we probably need to come up with some new API's between
-gdbstub and the guest architecture.
-
-For example on ARM the guest can make changes to register state to limit
-what the external debugger can do. I see arm_debug_check_breakpoints
-does call arm_generate_debug_exceptions which takes into account the
-state of OSLAR_EL1. Would anyone actually want to model
-DBGAUTHSTATUS_EL1 which can limit which worlds the debugger can see?
-Generally the big benefit of using gdbstub with emulation is you do get
-full visibility of the system which is helpful when debugging low level
-code. Also most of this stuff seems to be very IMPDEF which is not
-normally something QEMU needs to worry about.
-
-
->
-> Have I missed an important case or misunderstood the emerging consensus h=
-ere?
->
-> Thanks again for the discussion,
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
