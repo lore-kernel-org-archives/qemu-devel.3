@@ -4,129 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A8BCC43458
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3548C44507
 	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 20:09:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjMwT-0005kp-5v; Mon, 13 Jul 2026 16:07:53 -0400
+	id 1wjMwY-0005mx-0c; Mon, 13 Jul 2026 16:07:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1wjMwS-0005kK-1j
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 16:07:52 -0400
+ id 1wjMwW-0005m8-8F
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 16:07:56 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1wjMwQ-0006SD-4q
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 16:07:51 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ id 1wjMwU-0006Sv-Bx
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 16:07:55 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66DJ9NuS2256630
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 20:07:39 GMT
+ 66DJ9GJj2470611
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 20:07:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=Yy8dOIOB+33
- 6SIHq6eUNR+XTxPZtumtAG2yz21hK1Sg=; b=T8fDh57Tf0TOwp6DL66RmmPIhIS
- xSxZpbIJfLgIbBHzQcc2h6dTHSbcn48FHsjWUIqxNfw2Ev+Fx5T96M0qHuwQWA+6
- fsIThOigRzqZHZyha8rFoyHab4yuCbFfk4kr+s2/KUbBmcllVT/7gFmq9MibWCkW
- smKm3XdHdhnfaFUK6IZxu5L5yMQg0tkY3NtM22MlM2FUaF9XxyY6b0HzumP77Uw0
- F/dC+hO86RAs9VfR3MrsLaFLJTgHZ/++IwZRyIQfdVDvI3JePnIAzn/pCt1CSgCD
- ginFaYwx9vWcrdmRZMqsF+Zf/1/iR0/u0aBmTNd9xbgtTAfDpASFbLvMA1Q==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcwk9tdx2-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=oy22ab/xlCe
+ at2wkPKsuZ5LNgXAzntyzHrFtr8M6THM=; b=lISCpM/ckY7zzdNFWhxLy4lbDV5
+ 79cyJ8OhW7l3yi7DNpcyINziQ8hxmAnZTlz0r7Sr7KE6kmiNQpVLgNwAaGvPwbL2
+ yc8ziHoaArNJh4Lr3iIHilQc9shYN4bm0l2dQlg5EUsFjwIpck0oFVlnT2RvvmLN
+ xtpkL5uDuL4HpokmewT3VnRzA6vhwPb/ixFuUJb8exl49NxNjtPTiAupYXqFvwH+
+ hThgPaJGMSVfuFsiVDEg2FZyQY2kqBuCvKaudenPNpIMHYQsUme7/J/kjbH8ue7T
+ yT/5873G+PjHM7qe0Ef0TzH0s+gLOChvO7+BR9J/EnJrnjLLdFpI1gOTBRg==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fd44jrmf9-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 20:07:39 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-cab041eced3so3458866a12.1
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 13:07:39 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 20:07:43 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-c890bac374eso9022970a12.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 13:07:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783973258; x=1784578058; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783973262; x=1784578062; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Yy8dOIOB+336SIHq6eUNR+XTxPZtumtAG2yz21hK1Sg=;
- b=a+WCgull6kh47nW0tiRr45kXDWEhEGfqtAloJsMz+sBaQBWtn8KTcnd26rCbXZ3JAf
- w2dLQBRN32LDPKqjMV0Vg0eoGx1q/M11tt3hdpKMBiVIivzeKJJW1NRRaq692075eL9f
- oVT77Pgi+QM6jrbsPrTBN48FTjM6csU4YA5RWrZ+0kqyrTYBNpPt1uTnfTxvsc+mYBCk
- 8iqff8lyQy6C7vVpUjgQhjRp0FsC6LoqrMkcNbqUN9ZiWu3W/wEFOr6MFP2Pa8zDVKMG
- y5SZ226qSaufi0jTExyW5ToQOYbYumGXl04RFsAChmoh1mD4g/tGP6dvlzbBmE2ytSBJ
- Wo8w==
+ bh=oy22ab/xlCeat2wkPKsuZ5LNgXAzntyzHrFtr8M6THM=;
+ b=XDCJVvZis2us+QDd+Y6h73qyNnL62yP2IvZc7n9/kabe/QKv6aniEo47aBj/EKBadV
+ 0W572Al+ykr66XJJa8vgg7I40486zLPFDadxS/KgRl+YuAIvVe/FTtmuULRrOTS43BmY
+ 2qn7E33ASSm81NZFzS7KTozLWF8X4UDY+6JW1kasTbYOwyvq65LhhjarFJC4xcknoZnh
+ xDA5KMWzro/w+KSpN1Mq3xZyQYSIdI3x9F/XOE+qVSr8u3ZZvOUyHS7bn8pE7mllR909
+ 59TQ0tfpcOTFXjFlHZhz8Fy6WhJejrBtMSeDMu/4pyJYBuVI3rjY0g31fRlACTLra+Ea
+ 8/Lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783973258; x=1784578058;
+ d=1e100.net; s=20251104; t=1783973262; x=1784578062;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Yy8dOIOB+336SIHq6eUNR+XTxPZtumtAG2yz21hK1Sg=;
- b=QAJhoK0bUt6u199PaZbX+/z9So5VpAwj0v+g3CR4XsaEDU432pCFkQlLBW5cNFGeXt
- P10dPu1G0SXHAcIouxk3vgmJaTAJIh3iH/D3zLq0cuUexAhy3o5zg++kBVge8qOg8+eh
- mzWc/eQLC+ZpL01VpRqDBRp1VVEfwmhHNuNWLDI5TVETcpwfFg3YOKxcf/vVR01Pko9E
- 37wRE7MiC0h8mRUP7VuJAmQfTi57SHPS7ylwBQb4pDdosXrfYB5EwTT6yyYp/TY0EgVh
- e1/jbtqXkMKgZr+F3NchvZtIxO4TD8VmA3O6wiCPuJ4OUsGcSd7LicYG3SQfkBAXDSGN
- bTTQ==
-X-Gm-Message-State: AOJu0YwGCavGqmuolCOUF1FCGSykDTXArel5k5F0CY1DfMrwn4v/ho2r
- gxqdbtOXs6g0EIugBfswy6eUfS+qTXuooADccKqScZwRf021G1gvC3PRkOzgDO8QOkJRrpPPj1V
- sCqVGlGRGyvVYdku7DnKCZAMdhD63r+LlWLw6w3az9tYDD8tWiCB9M//Sl6bU4N1XnCX9
-X-Gm-Gg: AfdE7ckura4+wsz76mGNb53Ms7KL0DUppYlvyuYXi/+2A9s/OxOtELaznBpZiQaxkU3
- 7UV0sSwVw95n+juutzyE3n/LsazfPXByNVJZIvRkdVgJo1o3J7eHU2s8ScTpqYwCsWOd3xKjTAs
- JSdLw2WJ4yhDyJwWJojieqUcP1tbPzBMUbgXMQymRF8/RNPUarBzz/D84ws/KC/1lcP6jJkWIXg
- KYbsXpmEf2Vv+5wu7yjWhgA9oT5BMAhY8TDEr3tTRb/EPn7Mn4GX9cpuhHkXtwgbL3HHvRvgB3Y
- 3ck+btqy7MIe3VLPVO3xzcDwKkNLT+qYJ/1pwP2kpV2pY4MaTkac7OeD4rKAgDlggWNFzNahwyQ
- qew8v7DZK9MbUSSU59/UB8TWvolD4I0Q3178A+0+0T6xrCcMCfk2elZO5DYzyi/iyyuO60UQSoQ
+ bh=oy22ab/xlCeat2wkPKsuZ5LNgXAzntyzHrFtr8M6THM=;
+ b=VLFardiz/RAYRmFEFJ83sf2zi64fBcGeVA0LldBsmGjNCnwDtwGNpamF3nwBED3ObV
+ ljSlv0oMUIJu/7igePyw7gCCU6+ZIwLfI/OpGNJK/STJZa3OIhp2o0KCrhaqbrgJ8UQK
+ 0si/6abInM7Wj637jXAq8DxX1JAkRFFGJQm2JyMNb17xndkcs91AfA1Dy69FC0/0tdQY
+ 6QFUJHzBxnueouCGnBATsZToWoGxiy5SvrdH1GrEPX8wLCjaEer9+CL3GtIkdLAlQp6s
+ WFFCHCcn5AzYyoZu9nDJLq+agspCyBfzzyM7d6Lu6WgU53uW3eJjhgQnVFNYpkHmRtxR
+ k5vg==
+X-Gm-Message-State: AOJu0YwbPgjxtgpc1Knsi2Jb2p9YLLqEyFp9e79GLAei5HuDqLMhjhLR
+ rIesQfuFfRFtnv6NWcacEPOLTMW7zUR5mEVzlI7FCh8K2TwBGCwk1a5cG8i13ioyz+LUPGCZo4J
+ 9tBI44MCAY8a2O0OZ7otZz+0wfua1f3DjrpVjEC9hMX9vo2fmF8GsDY6vRKIRc/I1iG6d
+X-Gm-Gg: AfdE7ckCCPD3KWHBczmZ1QWahUYw/3LEfc1z8CdM1zyapOyt3gHjGuW65pf98BUZEE6
+ oAm1B7sODf1kOR6Tnrus8CSAnDEjkrDIuVeQyK1c+NRAx6X6mkUQC89Di/+7IyrG9JOmEaX85qN
+ 7Mq3WzD0oNwgs/c38+ra9Vg0of4VzeDK1CLEtkqt592KOL2RdpcWycy/rM+Z2mP5f7cPF4Ep7sq
+ EBzgYTwSUmdxr9ciVe9GCWnB2YFibPfJXsDMz1IF4FwOFDKF1RzBL2Qs+oG3aZaEesd2qLHgBwz
+ wkC6TCUf/T/G0ziiMJ9Ffz6hUVP+qfB2F1HSQHbtvvHSNEyNkjiYbGqJOlcXVS1xMRSzaH42AqF
+ ReY//IdwtXkQdZ3VVT6wYxRgPdip6CZ3poHXw3u1zlTq+NGWzWK5PCEge9cdsrgwDBFh4IVN68g
  ==
-X-Received: by 2002:a17:90b:3903:b0:381:e73:3c2e with SMTP id
- 98e67ed59e1d1-38dc7758d29mr10010013a91.24.1783973258222; 
- Mon, 13 Jul 2026 13:07:38 -0700 (PDT)
-X-Received: by 2002:a17:90b:3903:b0:381:e73:3c2e with SMTP id
- 98e67ed59e1d1-38dc7758d29mr10009979a91.24.1783973257780; 
- Mon, 13 Jul 2026 13:07:37 -0700 (PDT)
+X-Received: by 2002:a17:90b:3947:b0:38d:e28e:a639 with SMTP id
+ 98e67ed59e1d1-38de28ec303mr6457042a91.24.1783973262500; 
+ Mon, 13 Jul 2026 13:07:42 -0700 (PDT)
+X-Received: by 2002:a17:90b:3947:b0:38d:e28e:a639 with SMTP id
+ 98e67ed59e1d1-38de28ec303mr6457023a91.24.1783973262043; 
+ Mon, 13 Jul 2026 13:07:42 -0700 (PDT)
 Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-313cb804197sm24106543eec.13.2026.07.13.13.07.36
+ 5a478bee46e88-313cb804197sm24106543eec.13.2026.07.13.13.07.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jul 2026 13:07:37 -0700 (PDT)
+ Mon, 13 Jul 2026 13:07:41 -0700 (PDT)
 From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: brian.cain@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
  marco.liebel@oss.qualcomm.com, philmd@oss.qualcomm.com, ale@rev.ng,
- anjo@rev.ng, Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
-Subject: [PATCH 10/14] target/hexagon: add COREDUMP semihosting operation
-Date: Mon, 13 Jul 2026 13:07:18 -0700
-Message-Id: <a2e686ac0ba95d33760e6f83dae711ca30a0914f.1783973054.git.matheus.bernardino@oss.qualcomm.com>
+ anjo@rev.ng, Thomas Huth <th.huth+qemu@posteo.eu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 14/14] tests/functional: Add hexagon semihosting systests
+Date: Mon, 13 Jul 2026 13:07:22 -0700
+Message-Id: <da280da8fec576b2cc59e7bf48a2845312ee50cc.1783973054.git.matheus.bernardino@oss.qualcomm.com>
 X-Mailer: git-send-email 2.37.2
 In-Reply-To: <cover.1783973054.git.matheus.bernardino@oss.qualcomm.com>
 References: <cover.1783973054.git.matheus.bernardino@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDIwOCBTYWx0ZWRfX/kHee7AO5qMu
- MLJGJVYc/iFD2d/nc4klOTuex1O1fUMT+oog0NQZVKTI9l5wImT8EYPGJszxdcvI0FQ6T3aza9I
- 25gA2m6C/jiaQLWiWVMC380Z9GXwCRr6H8PJ1UzWKkigHCtmlTaJYuD1t5RXulpS+xv7jc30YLx
- PTbGRzHGu3SFhQjXDodblX3yrrbrWNpkwxfEqqVW/3k4tcTBrHJ0h8K/YPZeyxEoOAjedZqifm0
- CdPCqbvMk3pVc9mFK6Web054ugxisP27ZprTw6T7E+JToqOVwm8u5xg/TOJjKT272Pi4O2NukN/
- LvugAJ9gbYqJVeI8zhYHdcHNYLpwx6CJhnPz5wrOfgvkJBydEawnCXnARNtPKaQuVCXPN3WjTV9
- eUY2zvoFPw4nRuRGwUv132CwAOQfZCWLRLWdlnysBLQrydxF6tk/sT9Ckorhtxr5QVcwkJ0DiO7
- RU4lik/0dI+FzYQVEsQ==
-X-Proofpoint-ORIG-GUID: QNrQ7jBGpvuperOUj_xQRg2OhsjHiL2v
-X-Authority-Analysis: v=2.4 cv=UMHt2ify c=1 sm=1 tr=0 ts=6a55458b cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-GUID: qZcxUOwxVwp7oTWXWQic1WbAk1ubIN1H
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDIwOCBTYWx0ZWRfX5MSBd5XQmMk/
+ a+raieVZZtd5tUQ/Vx/kGr96pIBDJK/lB+qKqCyGSqnsP5WSIFDvCErIotC/52bj6j9MOQLe4E2
+ g0nyIYlFLW829cylGSiTYuSJltsNfYo3jSPtmqNzb8sDhVBRPF7qgAdzmZUBVdhgIMWTdmsEk+u
+ 0jpET+srPV0kZ5AHBqnGjCUF9VeXrmmasfz62C0HWkCxvIBKGcGKoEynYEKd2FzLN+rKtyB1JBo
+ EZJNlHqVEknuwIv9JyroxREwPPLJ5vMzLthg5UBKO4XDy/fTdNK0Ig7Zh8FQ2Cve2pHRQfGmxRz
+ 5QzzaZmxlkJgUpm3oNU244rAI1hq6CqE6jU0Syog95fupNdKYh84uKm6xUp7ToGsQS2/P491HnI
+ FqCR4an970SFm5h7+A+Fpa6rN98bDKA9eMn+EVroyf1fV+EROgnjGDbgfKhMVpP4FkTH5Dlw7VR
+ iGXG3yqHGY3QrwpsQPw==
+X-Authority-Analysis: v=2.4 cv=XonK/1F9 c=1 sm=1 tr=0 ts=6a55458f cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=COk6AnOGAAAA:8
- a=EUspDBNiAAAA:8 a=BE4lvaXKYeXNScGiURoA:9 a=bFCP_H2QrGi7Okbo017w:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: QNrQ7jBGpvuperOUj_xQRg2OhsjHiL2v
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDIwOCBTYWx0ZWRfXxNXBtApU5Rcb
- hYw6fJbgcgfANlyAZ2BB7rs88igYpdGWpOZWXlFx7H0KeeRDGcQd0P9gmVlTsHB3UJDTiHnATdm
- lVQSQFZkZJahIyw2YZIPlkD4RgxkRUQ=
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=5vFef2XoAAAA:20
+ a=EUspDBNiAAAA:8 a=VJmjIbDfMbkIIiVV3KYA:9 a=_Vgx9l1VpLgwpw_dHYaR:22
+ a=bA3UWDv6hWIuX7UZL3qL:22
+X-Proofpoint-ORIG-GUID: qZcxUOwxVwp7oTWXWQic1WbAk1ubIN1H
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDIwOCBTYWx0ZWRfX++CwaN2O51Z4
+ 5U2dSP6uQYYKbSTMpuk23peAQH3Y+30TSZI3ikLSC0prdEtUJaStldeBjvokMGUe1TziRcOJgZB
+ o5Ioy2WgIF35OEiWHrnhRg5h+k65O4Q=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-13_05,2026-07-10_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 spamscore=0 clxscore=1015 adultscore=0
- malwarescore=0 lowpriorityscore=0 phishscore=0 suspectscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607130208
+ spamscore=0 clxscore=1015 impostorscore=0 malwarescore=0 priorityscore=1501
+ adultscore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607130208
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=matheus.bernardino@oss.qualcomm.com;
  helo=mx0b-0031df01.pphosted.com
@@ -152,207 +153,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+From: Brian Cain <brian.cain@oss.qualcomm.com>
 
-Baremetal Hexagon programs invoke SYS_COREDUMP (0xCD)
-through semihosting to dump CPU state on a fatal exception.
-Implement the handler to decode the SSR cause field and
-print the full register file, matching hexagon-sim behavior.
-
-Signed-off-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
 Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 ---
- target/hexagon/internal.h |   1 +
- target/hexagon/cpu.c      |   2 +-
- target/hexagon/hexswi.c   | 143 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 145 insertions(+), 1 deletion(-)
+ tests/functional/hexagon/meson.build      |   9 ++
+ tests/functional/hexagon/test_systests.py | 133 ++++++++++++++++++++++
+ tests/functional/meson.build              |   1 +
+ 3 files changed, 143 insertions(+)
+ create mode 100644 tests/functional/hexagon/meson.build
+ create mode 100644 tests/functional/hexagon/test_systests.py
 
-diff --git a/target/hexagon/internal.h b/target/hexagon/internal.h
-index 00b37aea7af..05d1129916e 100644
---- a/target/hexagon/internal.h
-+++ b/target/hexagon/internal.h
-@@ -28,6 +28,7 @@ int hexagon_hvx_gdb_write_register(CPUState *env, uint8_t *mem_buf, int n);
- void hexagon_debug_vreg(CPUHexagonState *env, int regnum);
- void hexagon_debug_qreg(CPUHexagonState *env, int regnum);
- void hexagon_debug(CPUHexagonState *env);
-+void hexagon_dump(CPUHexagonState *env, FILE *f, int flags);
- 
- extern const char * const hexagon_regnames[TOTAL_PER_THREAD_REGS];
- #ifndef CONFIG_USER_ONLY
-diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-index 028cfe9edde..8be4097ecdb 100644
---- a/target/hexagon/cpu.c
-+++ b/target/hexagon/cpu.c
-@@ -232,7 +232,7 @@ void hexagon_debug_qreg(CPUHexagonState *env, int regnum)
-     print_qreg(stdout, env, regnum, false);
- }
- 
--static void hexagon_dump(CPUHexagonState *env, FILE *f, int flags)
-+void hexagon_dump(CPUHexagonState *env, FILE *f, int flags)
- {
-     HexagonCPU *cpu = env_archcpu(env);
- 
-diff --git a/target/hexagon/hexswi.c b/target/hexagon/hexswi.c
-index 2c60e4d9e9f..7efd33d3533 100644
---- a/target/hexagon/hexswi.c
-+++ b/target/hexagon/hexswi.c
-@@ -127,6 +127,145 @@ static void common_semi_ftell_cb(CPUState *cs, uint64_t ret, int err)
-     common_semi_cb(cs, ret, err);
- }
- 
-+static void coredump(CPUHexagonState *env)
-+{
-+    uint32_t ssr = arch_get_system_reg(env, HEX_SREG_SSR);
-+    FILE *f = qemu_log_trylock();
+diff --git a/tests/functional/hexagon/meson.build b/tests/functional/hexagon/meson.build
+new file mode 100644
+index 00000000000..6cd684b0df7
+--- /dev/null
++++ b/tests/functional/hexagon/meson.build
+@@ -0,0 +1,9 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+    if (!f) {
-+        return;
-+    }
-+
-+    fprintf(f, "CRASH!\n");
-+    fprintf(f, "I think the exception was: ");
-+    switch (GET_SSR_FIELD(SSR_CAUSE, ssr)) {
-+    case 0x43:
-+        fprintf(f, "0x43, NMI");
-+        break;
-+    case 0x42:
-+        fprintf(f, "0x42, Data abort");
-+        break;
-+    case 0x44:
-+        fprintf(f, "0x44, Multi TLB match");
-+        break;
-+    case HEX_CAUSE_BIU_PRECISE:
-+        fprintf(f, "0x%x, Bus Error (Precise BIU error)",
-+                HEX_CAUSE_BIU_PRECISE);
-+        break;
-+    case HEX_CAUSE_DOUBLE_EXCEPT:
-+        fprintf(f, "0x%x, Exception observed when EX = 1"
-+                " (double exception)",
-+                HEX_CAUSE_DOUBLE_EXCEPT);
-+        break;
-+    case HEX_CAUSE_FETCH_NO_XPAGE:
-+        fprintf(f, "0x%x, Privilege violation: User/Guest mode execute"
-+                " to page with no execute permissions",
-+                HEX_CAUSE_FETCH_NO_XPAGE);
-+        break;
-+    case HEX_CAUSE_FETCH_NO_UPAGE:
-+        fprintf(f, "0x%x, Privilege violation: "
-+                "User mode execute to page with no user permissions",
-+                HEX_CAUSE_FETCH_NO_UPAGE);
-+        break;
-+    case HEX_CAUSE_INVALID_PACKET:
-+        fprintf(f, "0x%x, Invalid packet",
-+                HEX_CAUSE_INVALID_PACKET);
-+        break;
-+    case HEX_CAUSE_PRIV_USER_NO_GINSN:
-+        fprintf(f, "0x%x, Privilege violation:"
-+                " guest mode insn in user mode",
-+                HEX_CAUSE_PRIV_USER_NO_GINSN);
-+        break;
-+    case HEX_CAUSE_PRIV_USER_NO_SINSN:
-+        fprintf(f, "0x%x, Privilege violation: "
-+                "monitor mode insn in user/guest mode",
-+                HEX_CAUSE_PRIV_USER_NO_SINSN);
-+        break;
-+    case HEX_CAUSE_REG_WRITE_CONFLICT:
-+        fprintf(f, "0x%x, Multiple writes to same register",
-+                HEX_CAUSE_REG_WRITE_CONFLICT);
-+        break;
-+    case HEX_CAUSE_PC_NOT_ALIGNED:
-+        fprintf(f, "0x%x, PC not aligned",
-+                HEX_CAUSE_PC_NOT_ALIGNED);
-+        break;
-+    case HEX_CAUSE_MISALIGNED_LOAD:
-+        fprintf(f, "0x%x, Misaligned Load @ 0x%" PRIx32,
-+                HEX_CAUSE_MISALIGNED_LOAD,
-+                arch_get_system_reg(env, HEX_SREG_BADVA));
-+        break;
-+    case HEX_CAUSE_MISALIGNED_STORE:
-+        fprintf(f, "0x%x, Misaligned Store @ 0x%" PRIx32,
-+                HEX_CAUSE_MISALIGNED_STORE,
-+                arch_get_system_reg(env, HEX_SREG_BADVA));
-+        break;
-+    case HEX_CAUSE_PRIV_NO_READ:
-+        fprintf(f, "0x%x, Privilege violation: "
-+                "user/guest read permission @ 0x%" PRIx32,
-+                HEX_CAUSE_PRIV_NO_READ,
-+                arch_get_system_reg(env, HEX_SREG_BADVA));
-+        break;
-+    case HEX_CAUSE_PRIV_NO_WRITE:
-+        fprintf(f, "0x%x, Privilege violation: "
-+                "user/guest write permission @ 0x%" PRIx32,
-+                HEX_CAUSE_PRIV_NO_WRITE,
-+                arch_get_system_reg(env, HEX_SREG_BADVA));
-+        break;
-+    case HEX_CAUSE_PRIV_NO_UREAD:
-+        fprintf(f, "0x%x, Privilege violation:"
-+                " user read permission @ 0x%" PRIx32,
-+                HEX_CAUSE_PRIV_NO_UREAD,
-+                arch_get_system_reg(env, HEX_SREG_BADVA));
-+        break;
-+    case HEX_CAUSE_PRIV_NO_UWRITE:
-+        fprintf(f, "0x%x, Privilege violation:"
-+                " user write permission @ 0x%" PRIx32,
-+                HEX_CAUSE_PRIV_NO_UWRITE,
-+                arch_get_system_reg(env, HEX_SREG_BADVA));
-+        break;
-+    case HEX_CAUSE_COPROC_LDST:
-+        fprintf(f, "0x%x, Coprocessor VMEM address error @ 0x%" PRIx32,
-+                HEX_CAUSE_COPROC_LDST,
-+                arch_get_system_reg(env, HEX_SREG_BADVA));
-+        break;
-+    case HEX_CAUSE_STACK_LIMIT:
-+        fprintf(f, "0x%x, Stack limit check error",
-+                HEX_CAUSE_STACK_LIMIT);
-+        break;
-+    case HEX_CAUSE_FPTRAP_CAUSE_BADFLOAT:
-+        fprintf(f, "0x%x, Floating-Point: Execution of Floating-Point "
-+                "instruction resulted in exception",
-+                HEX_CAUSE_FPTRAP_CAUSE_BADFLOAT);
-+        break;
-+    case HEX_CAUSE_NO_COPROC_ENABLE:
-+        fprintf(f, "0x%x, Illegal Execution of Coprocessor Instruction",
-+                HEX_CAUSE_NO_COPROC_ENABLE);
-+        break;
-+    case HEX_CAUSE_NO_COPROC2_ENABLE:
-+        fprintf(f, "0x%x, Illegal Execution of Secondary"
-+                " Coprocessor Instruction",
-+                HEX_CAUSE_NO_COPROC2_ENABLE);
-+        break;
-+    case HEX_CAUSE_UNSUPPORTED_HVX_64B:
-+        fprintf(f, "0x%x, Unsupported Execution of"
-+                " Coprocessor Instruction with 64bits Mode On",
-+                HEX_CAUSE_UNSUPPORTED_HVX_64B);
-+        break;
-+    case HEX_CAUSE_VWCTRL_WINDOW_MISS:
-+        fprintf(f, "0x%x, Thread accessing a region"
-+                " outside VWCTRL window",
-+                HEX_CAUSE_VWCTRL_WINDOW_MISS);
-+        break;
-+    default:
-+        fprintf(f, "unknown cause 0x%" PRIx32,
-+                GET_SSR_FIELD(SSR_CAUSE, ssr));
-+        break;
-+    }
-+    fprintf(f, "\nRegister Dump:\n");
-+    hexagon_dump(env, f, 0);
-+    qemu_log_unlock(f);
++test_hexagon_timeouts = {
++  'systests': 180,
 +}
 +
- static void sim_handle_trap0(CPUHexagonState *env)
- {
-     target_ulong what_swi, swi_info;
-@@ -427,6 +566,10 @@ static void sim_handle_trap0(CPUHexagonState *env)
-     }
-     break;
- 
-+    case HEX_SYS_COREDUMP:
-+        coredump(env);
-+        break;
++tests_hexagon_system_thorough = [
++  'systests',
++]
+diff --git a/tests/functional/hexagon/test_systests.py b/tests/functional/hexagon/test_systests.py
+new file mode 100644
+index 00000000000..b20b9fc56cc
+--- /dev/null
++++ b/tests/functional/hexagon/test_systests.py
+@@ -0,0 +1,133 @@
++#!/usr/bin/env python3
++#
++# Copyright(c) Qualcomm Innovation Center, Inc. All Rights Reserved.
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
-     case HEX_SYS_FTELL:
-     {
-         int fd;
++import os
++import re
++import time
++import unittest
++
++from qemu_test import QemuSystemTest, Asset, wait_for_console_pattern
++
++
++_TARBALL_BIN_PATH = os.path.join(
++    "systests_standalone_package",
++    "StandaloneSysTests_6.4.0.2_v68",
++    "bin",
++)
++
++
++class SysTestsStandaloneTests(QemuSystemTest):
++    SYSTEST_TIMEOUT_SEC = 30
++
++    ASSET_TARBALL = Asset(
++        "https://github.com/qualcomm/qemu-hexagon-testing/releases/download/v0.2.9/systests_standalone.tar.gz",
++        "db961ea3fcc389b478b3d5c2f3bac60bec87e7f3d7efef5e58a9ae8ee78d0e40",
++    )
++
++    def setUp(self):
++        super().setUp()
++        self.archive_extract(self.ASSET_TARBALL)
++        self.bin_dir = os.path.join(self.workdir, _TARBALL_BIN_PATH)
++        self._orig_cwd = os.getcwd()
++        os.chdir(self.workdir)
++        self.addCleanup(os.chdir, self._orig_cwd)
++
++    def tearDown(self):
++        if hasattr(self, "_orig_cwd"):
++            os.chdir(self._orig_cwd)
++        super().tearDown()
++
++    def binary(self, name):
++        """Return the full path to binary *name* inside bin_dir."""
++        return os.path.join(self.bin_dir, name)
++
++    def run_exit_zero(self, binary_name, *extra_args, machine="V66G_1024"):
++        """Launch *binary_name* and assert it exits with code 0.
++
++        :param binary_name: name of the binary inside bin_dir.
++        :param extra_args: optional pairs of (flag, value) strings passed
++            to set_vm_arg(), e.g. ('-append', 'myarg').
++        :param machine: QEMU machine type (default "V66G_1024").
++        """
++        self.set_machine(machine)
++        self.set_vm_arg("-display", "none")
++        self.set_vm_arg("-kernel", self.binary(binary_name))
++        for flag, value in zip(extra_args[::2], extra_args[1::2]):
++            self.set_vm_arg(flag, value)
++        self.vm.launch()
++        self.vm.wait(timeout=60.0)
++        self.assertEqual(self.vm.exitcode(), 0,
++                         f"Test {binary_name} exited with "
++                         f"code {self.vm.exitcode()}, expected 0")
++
++    def run_console_pattern(self, binary_name, pattern, *extra_args,
++                            machine="V66G_1024"):
++        """Launch *binary_name* and wait for *pattern* on the semihosting console.
++
++        :param binary_name: name of the binary inside bin_dir.
++        :param pattern: string pattern to wait for via wait_for_console_pattern.
++        :param extra_args: optional pairs of (flag, value) strings passed
++            to set_vm_arg(), e.g. ('-append', 'myarg').
++        :param machine: QEMU machine type (default "V66G_1024").
++        """
++        self.set_machine(machine)
++        self.set_vm_arg("-display", "none")
++        self.set_vm_arg("-kernel", self.binary(binary_name))
++        for flag, value in zip(extra_args[::2], extra_args[1::2]):
++            self.set_vm_arg(flag, value)
++        self.vm.set_console(semihosting=True)
++        self.vm.launch()
++        try:
++            wait_for_console_pattern(self, pattern)
++        finally:
++            self.vm.kill()
++
++    def test_fopen(self):
++        """fopen reads a file passed via --append and verifies its contents."""
++        with open(os.path.join(self.workdir, "dummy.so"), "w") as f:
++            f.write("valid\n")
++        self.run_exit_zero("fopen", "-append", "dummy.so")
++
++    def test_ftrunc(self):
++        """ftrunc truncates _testfile_ftrunc from 6 bytes to 1 byte."""
++        ftrunc_path = os.path.join(self.workdir, "_testfile_ftrunc")
++        with open(ftrunc_path, "w") as f:
++            f.write("valid\n")
++        # Sleep 1 s so mtime change is observable
++        time.sleep(1)
++        self.run_exit_zero("ftrunc")
++        self.assertEqual(
++            os.path.getsize(ftrunc_path),
++            1,
++            "_testfile_ftrunc should be 1 byte after ftrunc",
++        )
++
++    def test_dirent(self):
++        """dirent lists a directory passed via --append; output must be
++        '. .. fileA fileB'."""
++        dirent_dir = os.path.join(self.workdir, "_dirent_testdir")
++        os.makedirs(dirent_dir, exist_ok=True)
++        open(os.path.join(dirent_dir, "fileA"), "w").close()
++        open(os.path.join(dirent_dir, "fileB"), "w").close()
++        self.run_console_pattern(
++            "dirent", ". .. fileA fileB", "-append", "_dirent_testdir"
++        )
++
++    def test_access(self):
++        """access checks R_OK|W_OK on _testfile_access."""
++        with open(os.path.join(self.workdir, "_testfile_access"), "w") as f:
++            f.write("valid\n")
++        self.run_exit_zero("access")
++
++    def test_semihost(self):
++        semihost_dir = os.path.join(self.workdir, "_semihost_dir")
++        os.makedirs(semihost_dir, exist_ok=True)
++        open(os.path.join(semihost_dir, "fileA"), "w").close()
++        open(os.path.join(semihost_dir, "fileB"), "w").close()
++        self.run_console_pattern("semihost", "PASS", "-append", "arg1", "arg2")
++
++if __name__ == "__main__":
++    QemuSystemTest.main()
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index c158197c4b7..c7362dd00ef 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -14,6 +14,7 @@ subdir('aarch64')
+ subdir('alpha')
+ subdir('arm')
+ subdir('avr')
++subdir('hexagon')
+ subdir('hppa')
+ subdir('i386')
+ subdir('loongarch64')
 -- 
 2.37.2
 
