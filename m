@@ -4,98 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BEA6C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 08:44:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB836C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 08:48:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjCFz-0004Qa-Jr; Mon, 13 Jul 2026 04:43:19 -0400
+	id 1wjCKw-0008W9-11; Mon, 13 Jul 2026 04:48:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wjCFw-0004PR-Kb
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 04:43:16 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wjCFu-0003BN-2V
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 04:43:16 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-493f60208a5so24519165e9.3
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 01:43:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1783932192; x=1784536992; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=CoiX3AkoQfEaEDjWQ5NbxeW2v726cSYjIdNAYVmf5XA=;
- b=iM9k+g8V5BV3gEAbUk49NVEhiVS5gLCtACHg2UEaBh6QG2bR3J08HFjtTnrMmU2Pgp
- jyHln9dXOPv0vLrwhJDOiQr4pBDD4YOnuXIsfbVNHWBFd6ipQGHWKyTib6BY4YwHFYcO
- aO2YN5rs1Cy1R8lk7tEF/RL96T4sx0NB8gvDk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783932192; x=1784536992;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=CoiX3AkoQfEaEDjWQ5NbxeW2v726cSYjIdNAYVmf5XA=;
- b=pkbvlBbUaQygyyqdjcE9hLVpWft1ljpjKoSBoikJAc6DpdSWWJZeyQAIo5TyGmzgzp
- 3eUe5amBOZ80oL3tUHsmo+tlj2o0qDqBv80IzFl9L3UEPkHjjnS4dnJjoREH3VR9yXRt
- DCXqF6ptiqw3OmhJOpCSOeZAEzf3C55eR1Z7ORwiEghuM3S9PyfFFNU4ZgChWJ/3uG8T
- YUXynwRJk3sPh+nEDxyJtDgkLqIFcqdKh+NND1h460/goeQ2n0XUVxakCuGsdotnRzv5
- KA8DJYWwJtiykgXYvyO9wFYRD6jFOUCXiZZxecoVm9H2gA5dFU8VSXUeSJ6dLlzgKTMA
- sSYg==
-X-Gm-Message-State: AOJu0YxT1PKORHGcUshz/A8HVqlEkzoCCDKv2CBObigWUBGRBSZr4AAr
- R2Ftnbl7WxgrTFuNPl83mNz6swVhZOV9rAFz5rdUw8u8s013Xx47nChkJUC1S0CrGPxQKvy2Y8g
- TnbcR/oMGbw==
-X-Gm-Gg: AfdE7cnHA95wddycL5L2d5At3VkRkV2R+m+z4IC5LcNWXoxXBV3kUrhDMfG8I5pHZJM
- +YmSn3iLKFrGk8xpmDszXOZExTxFH6JHBBRLd+sBQPlNQqIbPKGzKv+zF9kIKJq8hO2iPJMB7n2
- I3SCNbY24Kc7JS/oDvctWlcSSs5Oj3Ng6jjkQTh8VIvgzuFqGEj0F2eS5SzvA2QnWQSVZZroXVR
- fDq0xrtVr6zPbT9Tq/wLHntOGxo1Nh6IaJ4OGiFxS1RSGIHDJIqhHH4oUCy8HbB2d50Qt5rymbG
- shsX+2gMfwyxuft8pLfoYAzUW1FZNsp3/39jsNTe0f90g/91Q8axBovMo3fi/cCan3rdXZn83cf
- KuMK0oT+icOWzYlG04siEPDwUWFHCtuSEsKMYqLyU3qcrYtdg1D3tv7r3WHV4jv4MtokTbRuQyQ
- qq4HU8sCGo1+iB+mlHkrVVcZMlewDr3O6WO4YsvfaajCQyL7WmiZERTcv0Ljov2kcJLGb4ueS24
- o1S+EoKsvX1
-X-Received: by 2002:a05:600c:2247:b0:493:e79e:da63 with SMTP id
- 5b1f17b1804b1-493f8834ea6mr59072105e9.34.1783932192235; 
- Mon, 13 Jul 2026 01:43:12 -0700 (PDT)
-Received: from alex-laptop.lan
- (p200300cf574a7200912ca59176a42017.dip0.t-ipconnect.de.
- [2003:cf:574a:7200:912c:a591:76a4:2017])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493f2d97527sm287254815e9.2.2026.07.13.01.43.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jul 2026 01:43:11 -0700 (PDT)
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-To: qemu-devel@nongnu.org
-Cc: Alexander Mikhalitsyn <alexander@mihalicyn.com>,
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wjCKt-0008Uy-S4
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 04:48:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wjCKq-0003cf-Tb
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 04:48:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783932500;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=qMDuP99hm05XASl30clnhd/u3iIISBQAVW4YZaf2S2M=;
+ b=Oi1djaqMRO5hp4Yv9HeCqeSYM1W3ZhQ2GAVgwrqQ8cdfAXpvPyA2hLlynVQEeHBf5se6Lw
+ 3rpOPxNi7PP7wjxNIIy8sHFq9UJGa+5gvm5ITLkCw682AUPaEXlokXErWnwLMgvEBX+2s9
+ aYmtwRuEQfY4JpvkRz94pQ4482ftnBM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-619-e5c9qKsSNf6YDubF-Ca3gg-1; Mon,
+ 13 Jul 2026 04:48:15 -0400
+X-MC-Unique: e5c9qKsSNf6YDubF-Ca3gg-1
+X-Mimecast-MFC-AGG-ID: e5c9qKsSNf6YDubF-Ca3gg_1783932490
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1638618052FE; Mon, 13 Jul 2026 08:48:08 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.50.22])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 139703000B4C; Mon, 13 Jul 2026 08:47:45 +0000 (UTC)
+Date: Mon, 13 Jul 2026 09:47:42 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Alexander Graf <graf@amazon.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
+ qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
+ Song Gao <17746591750@163.com>, Aditya Gupta <adityag@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>, Farhan Ali <alifm@linux.ibm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ Antony Pavlov <antonynpavlov@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Felipe Balbi <balbi@kernel.org>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Huacai Chen <chenhuacai@kernel.org>,
+ =?utf-8?Q?Cl=C3=A9ment?= Chigot <chigot@adacore.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+ Helge Deller <deller@gmx.de>, Dorjoy Chowdhury <dorjoychy111@gmail.com>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Eric Farman <farman@linux.ibm.com>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>, Gautam Gala <ggala@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?utf-8?B?SGVydsOp?= Poussineau <hpoussin@reactos.org>,
+ Jan Kiszka <jan.kiszka@web.de>, Max Filippov <jcmvbkbc@gmail.com>,
+ Joel Stanley <joel@jms.id.au>, Jared Rossi <jrossi@linux.ibm.com>,
+ Tyrone Ting <kfting@nuvoton.com>,
+ Frederic Konrad <konrad.frederic@yahoo.fr>,
+ Laurent Vivier <laurent@vivier.eu>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH v4 03/10] hw/audio/virtio-sound: remove command and stream
- mutexes
-Date: Mon, 13 Jul 2026 10:43:00 +0200
-Message-ID: <20260713084307.79593-4-alexander@mihalicyn.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260713084307.79593-1-alexander@mihalicyn.com>
-References: <20260713084307.79593-1-alexander@mihalicyn.com>
+ Bibo Mao <maobibo@loongson.cn>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Michael Rolnik <mrolnik@gmail.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Halil Pasic <pasic@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>,
+ Samuel Tardieu <sam@rfc1149.net>, Bernhard Beschow <shentey@gmail.com>,
+ Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>,
+ Subbaraya Sundeep <sundeep.lkml@gmail.com>,
+ Thomas Huth <th.huth+qemu@posteo.eu>, Ran Wang <wangran@bosc.ac.cn>,
+ Hao Wu <wuhaotsh@google.com>
+Subject: Re: [RFC PATCH 001/134] qom: Introduce object_new_child()
+Message-ID: <alSmLv3qq6kl3o2i@redhat.com>
+References: <20260711223707.42139-1-graf@amazon.com>
+ <20260711223707.42139-2-graf@amazon.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x32f.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260711223707.42139-2-graf@amazon.com>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: permerror client-ip=170.10.129.124;
+ envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,419 +129,115 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Volker Rümelin <vr_qemu@t-online.de>
+On Sat, Jul 11, 2026 at 10:34:54PM +0000, Alexander Graf wrote:
+> We already have two ways of creating a QOM object with a parent set
+> from birth: object_initialize_child() for objects embedded in the
+> parent struct, and object_new_with_props() for heap-allocated objects
+> that also want a list of string properties applied.  What we do not
+> have is the plain heap-allocated dual of object_initialize_child():
+> create the object, add it as a child<> of a given parent under a given
+> name, and hand the reference to the parent.
+> 
+> Board and composite-device code that heap-allocates children today
+> therefore either open-codes object_new()+object_property_add_child()
+> +object_unref(), or skips the parenting step entirely and lets
+> device_set_realized() dump the object into /machine/unattached.
+> 
+> Add object_new_child(parent, id, typename) as that missing primitive.
+> The reference created by object_new() is transferred to the parent's
+> child<> property, so on return the sole reference is held by @parent
+> and the caller does not need to unref.  Later patches build the qdev
+> and per-bus creation helpers on top of this.
+> 
+> Suggested-by: Markus Armbruster <armbru@redhat.com>
+> Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
+> Assisted-by: Kiro
 
-All code in virtio-snd.c runs with the BQL held. Remove the
-command queue mutex and the stream queue mutexes. The qatomic
-functions are also not needed.
+QEMU does not currently permit contributions assisted by AI
+coding tools.
 
-Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
-[AM: there were too many conflicts, I did `git checkout --ours -- <.>`
-     and then reimplemented the patch idea
-/AM]
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
----
- hw/audio/virtio-snd.c         | 248 +++++++++++++++-------------------
- include/hw/audio/virtio-snd.h |   3 -
- 2 files changed, 110 insertions(+), 141 deletions(-)
+There is an open discussion about altering the policy but that
+is not conclude with agreement yet.
 
-diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index 82b6dabac89..27018df8485 100644
---- a/hw/audio/virtio-snd.c
-+++ b/hw/audio/virtio-snd.c
-@@ -19,7 +19,6 @@
- #include "qemu/iov.h"
- #include "qemu/log.h"
- #include "qemu/error-report.h"
--#include "qemu/lockable.h"
- #include "system/runstate.h"
- #include "trace.h"
- #include "qapi/error.h"
-@@ -442,7 +441,6 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound *s, uint32_t stream_id)
-         stream->id = stream_id;
-         stream->s = s;
-         stream->latency_bytes = 0;
--        qemu_mutex_init(&stream->queue_mutex);
-         QSIMPLEQ_INIT(&stream->queue);
- 
-         /*
-@@ -566,9 +564,7 @@ static void virtio_snd_handle_pcm_start_stop(VirtIOSound *s,
- 
-     stream = virtio_snd_pcm_get_stream(s, stream_id);
-     if (stream) {
--        WITH_QEMU_LOCK_GUARD(&stream->queue_mutex) {
--            stream->active = start;
--        }
-+        stream->active = start;
-         if (stream->info.direction == VIRTIO_SND_D_OUTPUT) {
-             audio_be_set_active_out(s->audio_be, stream->voice.out, start);
-         } else {
-@@ -592,10 +588,8 @@ static size_t virtio_snd_pcm_get_io_msgs_count(VirtIOSoundPCMStream *stream)
-     VirtIOSoundPCMBuffer *buffer, *next;
-     size_t count = 0;
- 
--    WITH_QEMU_LOCK_GUARD(&stream->queue_mutex) {
--        QSIMPLEQ_FOREACH_SAFE(buffer, &stream->queue, entry, next) {
--            count += 1;
--        }
-+    QSIMPLEQ_FOREACH_SAFE(buffer, &stream->queue, entry, next) {
-+        count += 1;
-     }
-     return count;
- }
-@@ -737,23 +731,15 @@ static void virtio_snd_process_cmdq(VirtIOSound *s)
- {
-     virtio_snd_ctrl_command *cmd;
- 
--    if (unlikely(qatomic_read(&s->processing_cmdq))) {
--        return;
--    }
--
--    WITH_QEMU_LOCK_GUARD(&s->cmdq_mutex) {
--        qatomic_set(&s->processing_cmdq, true);
--        while (!QTAILQ_EMPTY(&s->cmdq)) {
--            cmd = QTAILQ_FIRST(&s->cmdq);
-+    while (!QTAILQ_EMPTY(&s->cmdq)) {
-+        cmd = QTAILQ_FIRST(&s->cmdq);
- 
--            /* process command */
--            process_cmd(s, cmd);
-+        /* process command */
-+        process_cmd(s, cmd);
- 
--            QTAILQ_REMOVE(&s->cmdq, cmd, next);
-+        QTAILQ_REMOVE(&s->cmdq, cmd, next);
- 
--            virtio_snd_ctrl_cmd_free(cmd);
--        }
--        qatomic_set(&s->processing_cmdq, false);
-+        virtio_snd_ctrl_cmd_free(cmd);
-     }
- }
- 
-@@ -890,19 +876,17 @@ static void virtio_snd_handle_tx_xfer(VirtIODevice *vdev, VirtQueue *vq)
-             goto tx_err;
-         }
- 
--        WITH_QEMU_LOCK_GUARD(&stream->queue_mutex) {
--            size = iov_size(elem->out_sg, elem->out_num) - msg_sz;
-+        size = iov_size(elem->out_sg, elem->out_num) - msg_sz;
- 
--            buffer = g_malloc0(sizeof(VirtIOSoundPCMBuffer) + size);
--            buffer->elem = elem;
--            buffer->populated = false;
--            buffer->vq = vq;
--            buffer->size = size;
--            buffer->offset = 0;
--            stream->latency_bytes += size;
-+        buffer = g_malloc0(sizeof(VirtIOSoundPCMBuffer) + size);
-+        buffer->elem = elem;
-+        buffer->populated = false;
-+        buffer->vq = vq;
-+        buffer->size = size;
-+        buffer->offset = 0;
-+        stream->latency_bytes += size;
- 
--            QSIMPLEQ_INSERT_TAIL(&stream->queue, buffer, entry);
--        }
-+        QSIMPLEQ_INSERT_TAIL(&stream->queue, buffer, entry);
-         continue;
- 
- tx_err:
-@@ -971,16 +955,15 @@ static void virtio_snd_handle_rx_xfer(VirtIODevice *vdev, VirtQueue *vq)
-         if (stream == NULL || stream->info.direction != VIRTIO_SND_D_INPUT) {
-             goto rx_err;
-         }
--        WITH_QEMU_LOCK_GUARD(&stream->queue_mutex) {
--            size = iov_size(elem->in_sg, elem->in_num) -
--                sizeof(virtio_snd_pcm_status);
--            buffer = g_malloc0(sizeof(VirtIOSoundPCMBuffer) + size);
--            buffer->elem = elem;
--            buffer->vq = vq;
--            buffer->size = 0;
--            buffer->offset = 0;
--            QSIMPLEQ_INSERT_TAIL(&stream->queue, buffer, entry);
--        }
-+
-+        size = iov_size(elem->in_sg, elem->in_num) -
-+            sizeof(virtio_snd_pcm_status);
-+        buffer = g_malloc0(sizeof(VirtIOSoundPCMBuffer) + size);
-+        buffer->elem = elem;
-+        buffer->vq = vq;
-+        buffer->size = 0;
-+        buffer->offset = 0;
-+        QSIMPLEQ_INSERT_TAIL(&stream->queue, buffer, entry);
-         continue;
- 
- rx_err:
-@@ -1084,7 +1067,6 @@ static void virtio_snd_realize(DeviceState *dev, Error **errp)
-         virtio_add_queue(vdev, 64, virtio_snd_handle_tx_xfer);
-     vsnd->queues[VIRTIO_SND_VQ_RX] =
-         virtio_add_queue(vdev, 64, virtio_snd_handle_rx_xfer);
--    qemu_mutex_init(&vsnd->cmdq_mutex);
-     QTAILQ_INIT(&vsnd->cmdq);
-     QSIMPLEQ_INIT(&vsnd->invalid);
- 
-@@ -1152,52 +1134,50 @@ static void virtio_snd_pcm_out_cb(void *data, int available)
-     VirtIOSoundPCMBuffer *buffer;
-     size_t size;
- 
--    WITH_QEMU_LOCK_GUARD(&stream->queue_mutex) {
--        while (!QSIMPLEQ_EMPTY(&stream->queue)) {
--            buffer = QSIMPLEQ_FIRST(&stream->queue);
--            if (!virtio_queue_ready(buffer->vq)) {
--                return;
-+    while (!QSIMPLEQ_EMPTY(&stream->queue)) {
-+        buffer = QSIMPLEQ_FIRST(&stream->queue);
-+        if (!virtio_queue_ready(buffer->vq)) {
-+            return;
-+        }
-+        if (!stream->active) {
-+            /* Stream has stopped, so do not perform audio_be_write. */
-+            return_tx_buffer(stream, buffer);
-+            continue;
-+        }
-+        if (!buffer->populated) {
-+            iov_to_buf(buffer->elem->out_sg,
-+                        buffer->elem->out_num,
-+                        sizeof(virtio_snd_pcm_xfer),
-+                        buffer->data,
-+                        buffer->size);
-+            buffer->populated = true;
-+        }
-+        for (;;) {
-+            size = audio_be_write(stream->s->audio_be,
-+                                stream->voice.out,
-+                                buffer->data + buffer->offset,
-+                                MIN(buffer->size, available));
-+            assert(size <= MIN(buffer->size, available));
-+            if (size == 0) {
-+                /* break out of both loops */
-+                available = 0;
-+                break;
-             }
--            if (!stream->active) {
--                /* Stream has stopped, so do not perform audio_be_write. */
-+            buffer->size -= size;
-+            buffer->offset += size;
-+            available -= size;
-+            update_latency(stream, size);
-+            if (buffer->size < 1) {
-                 return_tx_buffer(stream, buffer);
--                continue;
--            }
--            if (!buffer->populated) {
--                iov_to_buf(buffer->elem->out_sg,
--                           buffer->elem->out_num,
--                           sizeof(virtio_snd_pcm_xfer),
--                           buffer->data,
--                           buffer->size);
--                buffer->populated = true;
--            }
--            for (;;) {
--                size = audio_be_write(stream->s->audio_be,
--                                 stream->voice.out,
--                                 buffer->data + buffer->offset,
--                                 MIN(buffer->size, available));
--                assert(size <= MIN(buffer->size, available));
--                if (size == 0) {
--                    /* break out of both loops */
--                    available = 0;
--                    break;
--                }
--                buffer->size -= size;
--                buffer->offset += size;
--                available -= size;
--                update_latency(stream, size);
--                if (buffer->size < 1) {
--                    return_tx_buffer(stream, buffer);
--                    break;
--                }
--                if (!available) {
--                    break;
--                }
-+                break;
-             }
-             if (!available) {
-                 break;
-             }
-         }
-+        if (!available) {
-+            break;
-+        }
-     }
- }
- 
-@@ -1248,55 +1228,53 @@ static void virtio_snd_pcm_in_cb(void *data, int available)
-     VirtIOSoundPCMBuffer *buffer;
-     size_t size, max_size, to_read;
- 
--    WITH_QEMU_LOCK_GUARD(&stream->queue_mutex) {
--        while (!QSIMPLEQ_EMPTY(&stream->queue)) {
--            buffer = QSIMPLEQ_FIRST(&stream->queue);
--            if (!virtio_queue_ready(buffer->vq)) {
--                return;
--            }
--            if (!stream->active) {
--                /* Stream has stopped, so do not perform audio_be_read. */
--                return_rx_buffer(stream, buffer);
--                continue;
--            }
-+    while (!QSIMPLEQ_EMPTY(&stream->queue)) {
-+        buffer = QSIMPLEQ_FIRST(&stream->queue);
-+        if (!virtio_queue_ready(buffer->vq)) {
-+            return;
-+        }
-+        if (!stream->active) {
-+            /* Stream has stopped, so do not perform audio_be_read. */
-+            return_rx_buffer(stream, buffer);
-+            continue;
-+        }
-+
-+        max_size = iov_size(buffer->elem->in_sg, buffer->elem->in_num);
-+        if (max_size <= sizeof(virtio_snd_pcm_status)) {
-+            return_rx_buffer(stream, buffer);
-+            continue;
-+        }
-+        max_size -= sizeof(virtio_snd_pcm_status);
- 
--            max_size = iov_size(buffer->elem->in_sg, buffer->elem->in_num);
--            if (max_size <= sizeof(virtio_snd_pcm_status)) {
-+        for (;;) {
-+            if (buffer->size >= max_size) {
-                 return_rx_buffer(stream, buffer);
--                continue;
-+                break;
-             }
--            max_size -= sizeof(virtio_snd_pcm_status);
--
--            for (;;) {
--                if (buffer->size >= max_size) {
--                    return_rx_buffer(stream, buffer);
--                    break;
--                }
--                to_read = stream->params.period_bytes - buffer->size;
--                to_read = MIN(to_read, available);
--                to_read = MIN(to_read, max_size - buffer->size);
--                size = audio_be_read(stream->s->audio_be,
--                                     stream->voice.in,
--                                     buffer->data + buffer->size,
--                                     to_read);
--                if (!size) {
--                    available = 0;
--                    break;
--                }
--                buffer->size += size;
--                available -= size;
--                if (buffer->size >= stream->params.period_bytes) {
--                    return_rx_buffer(stream, buffer);
--                    break;
--                }
--                if (!available) {
--                    break;
--                }
-+            to_read = stream->params.period_bytes - buffer->size;
-+            to_read = MIN(to_read, available);
-+            to_read = MIN(to_read, max_size - buffer->size);
-+            size = audio_be_read(stream->s->audio_be,
-+                                    stream->voice.in,
-+                                    buffer->data + buffer->size,
-+                                    to_read);
-+            if (!size) {
-+                available = 0;
-+                break;
-+            }
-+            buffer->size += size;
-+            available -= size;
-+            if (buffer->size >= stream->params.period_bytes) {
-+                return_rx_buffer(stream, buffer);
-+                break;
-             }
-             if (!available) {
-                 break;
-             }
-         }
-+        if (!available) {
-+            break;
-+        }
-     }
- }
- 
-@@ -1313,11 +1291,9 @@ static inline void virtio_snd_pcm_flush(VirtIOSoundPCMStream *stream)
-         (stream->info.direction == VIRTIO_SND_D_OUTPUT) ? return_tx_buffer :
-         return_rx_buffer;
- 
--    WITH_QEMU_LOCK_GUARD(&stream->queue_mutex) {
--        while (!QSIMPLEQ_EMPTY(&stream->queue)) {
--            buffer = QSIMPLEQ_FIRST(&stream->queue);
--            cb(stream, buffer);
--        }
-+    while (!QSIMPLEQ_EMPTY(&stream->queue)) {
-+        buffer = QSIMPLEQ_FIRST(&stream->queue);
-+        cb(stream, buffer);
-     }
- }
- 
-@@ -1336,14 +1312,12 @@ static void virtio_snd_unrealize(DeviceState *dev)
-             if (stream) {
-                 virtio_snd_process_cmdq(stream->s);
-                 virtio_snd_pcm_close(stream);
--                qemu_mutex_destroy(&stream->queue_mutex);
-                 g_free(stream);
-             }
-         }
-         g_free(vsnd->pcm.streams);
-     }
-     g_free(vsnd->pcm.pcm_params);
--    qemu_mutex_destroy(&vsnd->cmdq_mutex);
-     virtio_delete_queue(vsnd->queues[VIRTIO_SND_VQ_CONTROL]);
-     virtio_delete_queue(vsnd->queues[VIRTIO_SND_VQ_EVENT]);
-     virtio_delete_queue(vsnd->queues[VIRTIO_SND_VQ_TX]);
-@@ -1364,12 +1338,10 @@ static void virtio_snd_reset(VirtIODevice *vdev)
-      */
-     g_assert(QSIMPLEQ_EMPTY(&vsnd->invalid));
- 
--    WITH_QEMU_LOCK_GUARD(&vsnd->cmdq_mutex) {
--        while (!QTAILQ_EMPTY(&vsnd->cmdq)) {
--            cmd = QTAILQ_FIRST(&vsnd->cmdq);
--            QTAILQ_REMOVE(&vsnd->cmdq, cmd, next);
--            virtio_snd_ctrl_cmd_free(cmd);
--        }
-+    while (!QTAILQ_EMPTY(&vsnd->cmdq)) {
-+        cmd = QTAILQ_FIRST(&vsnd->cmdq);
-+        QTAILQ_REMOVE(&vsnd->cmdq, cmd, next);
-+        virtio_snd_ctrl_cmd_free(cmd);
-     }
- }
- 
-diff --git a/include/hw/audio/virtio-snd.h b/include/hw/audio/virtio-snd.h
-index b60b098ccd8..884c475ffd9 100644
---- a/include/hw/audio/virtio-snd.h
-+++ b/include/hw/audio/virtio-snd.h
-@@ -143,7 +143,6 @@ struct VirtIOSoundPCMStream {
-         SWVoiceIn *in;
-         SWVoiceOut *out;
-     } voice;
--    QemuMutex queue_mutex;
-     bool active;
-     uint32_t latency_bytes;
-     QSIMPLEQ_HEAD(, VirtIOSoundPCMBuffer) queue;
-@@ -215,9 +214,7 @@ struct VirtIOSound {
-     AudioBackend *audio_be;
-     VMChangeStateEntry *vmstate;
-     virtio_snd_config snd_conf;
--    QemuMutex cmdq_mutex;
-     QTAILQ_HEAD(, virtio_snd_ctrl_command) cmdq;
--    bool processing_cmdq;
-     /*
-      * Convenience queue to keep track of invalid tx/rx queue messages inside
-      * the tx/rx callbacks.
+> Signed-off-by: Alexander Graf <graf@amazon.com>
+> ---
+>  include/qom/object.h | 25 +++++++++++++++++++++++++
+>  qom/object.c         | 13 +++++++++++++
+>  2 files changed, 38 insertions(+)
+> 
+> diff --git a/include/qom/object.h b/include/qom/object.h
+> index 11f55613fc..ce6a23b5a1 100644
+> --- a/include/qom/object.h
+> +++ b/include/qom/object.h
+> @@ -632,6 +632,31 @@ Object *object_new_with_class(ObjectClass *klass);
+>   */
+>  Object *object_new(const char *typename);
+>  
+> +/**
+> + * object_new_child:
+> + * @parent: the QOM composition-tree parent
+> + * @id: the child<> property name; the object's canonical QOM path
+> + *      becomes @parent's path plus "/" plus @id
+> + * @typename: the name of the type of the object to instantiate
+> + *
+> + * Create a heap-allocated object and immediately add it to the QOM
+> + * composition tree as a child of @parent.
+> + *
+> + * This is the heap-allocated dual of object_initialize_child(): use
+> + * this when the child is a pointer member of the parent, and use
+> + * object_initialize_child() when the child is embedded in the parent
+> + * struct.  See also object_new_with_props() for the variant that
+> + * additionally sets a list of properties.
+> + *
+> + * The reference returned by object_new() is transferred to the child<>
+> + * property of @parent, so the object has a reference count of 1 held
+> + * by @parent, and the caller does not need to unref.
+> + *
+> + * Returns: the newly allocated, instantiated and parented object.
+> + */
+> +Object *object_new_child(Object *parent, const char *id,
+> +                         const char *typename);
+> +
+>  /**
+>   * object_new_with_props:
+>   * @typename:  The name of the type of the object to instantiate.
+> diff --git a/qom/object.c b/qom/object.c
+> index f79b2cf361..b4d181b617 100644
+> --- a/qom/object.c
+> +++ b/qom/object.c
+> @@ -718,6 +718,19 @@ Object *object_new(const char *typename)
+>      return object_new_with_type(ti);
+>  }
+>  
+> +Object *object_new_child(Object *parent, const char *id,
+> +                          const char *typename)
+> +{
+> +    Object *obj;
+> +
+> +    g_assert(parent);
+> +    g_assert(id);
+> +
+> +    obj = object_new(typename);
+> +    object_property_add_child(parent, id, obj);
+> +    object_unref(obj);
+> +    return obj;
+> +}
+>  
+>  Object *object_new_with_props(const char *typename,
+>                                Object *parent,
+> -- 
+> 2.47.1
+> 
+
+With regards,
+Daniel
 -- 
-2.47.3
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
