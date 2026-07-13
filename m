@@ -4,106 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 052ECC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:52:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19C6FC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 16:00:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjIxJ-0007qh-AT; Mon, 13 Jul 2026 11:52:29 -0400
+	id 1wjJ4R-00018d-GE; Mon, 13 Jul 2026 11:59:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imbrenda@linux.ibm.com>)
- id 1wjIxI-0007qL-3U; Mon, 13 Jul 2026 11:52:28 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wjJ4Q-00018U-9b
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:59:50 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imbrenda@linux.ibm.com>)
- id 1wjIxF-0003aE-Sj; Mon, 13 Jul 2026 11:52:27 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66DFEWob2770761; Mon, 13 Jul 2026 15:52:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=sHB23fdt0lCd1Y8YP05MfTNHMFuKALrucSg3NY1E1
- I4=; b=fOBm3GpfM5bD0TfcAT6ndmGbsVVKxRyl6QqLePUKwrCWT1eOAqITRqY97
- 0IRh1gpKg1IzR7BzXoG7f4pOMzJhnIyMn/Bdulff3pHBkAKzWa4kZWj7Ztd9bMMC
- AxbLPAbBsk1WC1t3lHqAiKdNgzsRyeQ+rcIXi/KFgPsNrgoMZ9/jqMyIQ0G3zSVY
- rhbhHPxyLBvbXx3Mv3aXusWVNqy2xiUQKeb3308Z7lW0n0C5FP0dvNgztBAtQqG1
- O6Pr5pJeiXUc3A2rl/D9DPStvk52A9KzkdbKZYfDaMzUcb+tU8Y5Obao+1CC3IaZ
- X+YVE/8G/6IAo4uo9KlH0UjgB2YIQ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbexwh4mt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 13 Jul 2026 15:52:20 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66DFnpBx007904;
- Mon, 13 Jul 2026 15:52:20 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fc05pxkr5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 13 Jul 2026 15:52:20 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66DFqEII41484792
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 13 Jul 2026 15:52:14 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0998A20040;
- Mon, 13 Jul 2026 15:52:14 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 152C120043;
- Mon, 13 Jul 2026 15:52:13 +0000 (GMT)
-Received: from p-imbrenda.ibmuc.com (unknown [9.87.153.197])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 13 Jul 2026 15:52:12 +0000 (GMT)
-From: Claudio Imbrenda <imbrenda@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, borntraeger@de.ibm.com, frankja@linux.ibm.com,
- pasic@linux.ibm.com, mhartmay@linux.ibm.com, david@kernel.org,
- farman@linux.ibm.com, mjrosato@linux.ibm.com,
- richard.henderson@linaro.org, iii@linux.ibm.com, cohuck@redhat.com
-Subject: [PATCH v1 1/1] target/s390x: Allow 2G hugepages guest backing
-Date: Mon, 13 Jul 2026 17:52:12 +0200
-Message-ID: <20260713155212.287444-1-imbrenda@linux.ibm.com>
-X-Mailer: git-send-email 2.55.0
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wjJ4N-0004VX-Nq
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:59:49 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66DF8MME1709355
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 15:59:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 5XGWAXlmBj+DYiOqhlUA2DBl6zFdr2IWLooI5QodJ5E=; b=kCwZJ3af5hsiutWH
+ TqRdqNf+5vOVW5eVEN/nebQu603RhgwILnKwJi6WrirwxwldPdLVsowC0bWOTqez
+ TO1NyHcc18XEoRNpBMrChrHgikSMblxV3CQ+JihooBe6W/uVbWYL5ix9oYRNOBSk
+ +c6AVkz+n0qh0R4VGnaYhVqhX7UcwTxptU9GK5cQ8TA+x0Hyi80jomrEIG1i54Pd
+ bAgM6EsrsfiJnMJBep8vyqjQs96r/mjq8wZWS8vlBC989Aqwdid3VbTrj2A+FPhB
+ XzsjsysN2hgzvB4bycK6TluiqYpTrN8nLmdhTztjAf/yZcjrf6IX5jK0I+ssPLpR
+ mdAA8Q==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcwk9sgb5-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 15:59:45 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-c88aab7c1fcso7576492a12.3
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:59:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1783958384; x=1784563184; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=5XGWAXlmBj+DYiOqhlUA2DBl6zFdr2IWLooI5QodJ5E=;
+ b=gfhVdWIZEJUuTKUIGP/2tqgefAX8/Vn8etxH4fFMLTqJpRPHPm+OGtuEYF98aOH4+Q
+ pGf/SW3UUzrrEp7f1CksVQz/mUU1seNa1inZDPPCu1DRXn1NKEX9vfv6uGUFZb1TuLAA
+ sS6HCj4RHzCfTBFXZCTwTI24sxZYFtyu5Q+lWab1S/0xbCqOD+PVG4Loms/Fq/c4Wp6N
+ 4eP+/CwdIbCJDsapUID5vGtPJk/prWhT23+1NklrxtyoKg0wWTXEzSGBFdoj2L+DO6lN
+ KbCq5hhQKVrJUO+m59iIp+UBQTy18TKifbzMAkV7GZQnI/0ehaZqY++EnxYjdasAa3Vv
+ /HWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783958384; x=1784563184;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=5XGWAXlmBj+DYiOqhlUA2DBl6zFdr2IWLooI5QodJ5E=;
+ b=bPuShHxeCtR1sV31BoaQGXjrRduRhcs9emXB3ZBvUE8smERo9bysY1GbtsLpkPaf+A
+ k1SP7R3zOMR5HKGD7m8GxM+oFSrIGyFVC0xyshMaGVFeWtTLkVFdazU9KRo8yhIEN6yQ
+ QZMtum/MvSeO/14VknvOc/Zp6/XpakSSjYWpNqk/brTXHmoEMfsm7NRpk6xVY0UYLewB
+ tSw+UPc8n7bs2jItal7XAsEf2h3JIqi54/hOIHQbp5qQTMzFozFrEJkVKqyjSnt/fHcB
+ 4j9pROruiabN5+H5/1ZsxLH+FH1UlT6aRL0o1vHJRyMrOZmhET1KuiksK+nTbyiwne8e
+ PN/Q==
+X-Gm-Message-State: AOJu0YzBUbm+5eLZ/3+45RPxh4dWXr/nklC5aSoD4fokpPM/JqI98AMO
+ 4TFVqdoMaXsdOhC3psZvRrryAML7mD1iLXz9wPFFJNRQciNGggMQkL4A5uOxgT3b9w2SvEmAozL
+ 3vtsczJ1b9U9C/RAXh8gwPLyZMiWHjuLVaG+7zmysN4KneOtrfqHsYljTkA==
+X-Gm-Gg: AfdE7cnSa8ViwmwK+k/9VGLx72CVRRiaDrBWXzEKLKlOcW52Bejr18mzsCLPq3buQO0
+ FiMaHptOqA24D38XckN0e4szEHByMsZ2zCryj3CVOByf+9BfNWLVmzVpRyGDRijL8iFNBni0Qfr
+ mdfyrE4ia144y96urL2HBS7ZJRyOp7lB+c54LAmXgltCpRJPfXEKw2e6qZ+MX/beMd6XIxr2SOr
+ 4kqqo2hEO8cyDPVuKAj+gilTuVAvASz/w+d+Q54IGqvOflg4Xo/NTAuJtTfAtazkSrAEuCJlgc2
+ Mnc3VERQvhY2vTFFFJreHb+ublxXaoIEhsDvmCXgAJww3P828Af2qGmy+yP88aSsJKoDQ4IxODo
+ yMBnLPJe+21GiaFFrhiNbtBtYDRyfnvkEWrxmMXSc4aTp23njJDAerF4SH+289b92u8ahhj5H3q
+ 82sVc=
+X-Received: by 2002:a05:6a21:6b12:b0:3b4:6f7e:d0f4 with SMTP id
+ adf61e73a8af0-3c1109e29c6mr9694451637.15.1783958384073; 
+ Mon, 13 Jul 2026 08:59:44 -0700 (PDT)
+X-Received: by 2002:a05:6a21:6b12:b0:3b4:6f7e:d0f4 with SMTP id
+ adf61e73a8af0-3c1109e29c6mr9694423637.15.1783958383599; 
+ Mon, 13 Jul 2026 08:59:43 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-311747f7293sm69276381eec.3.2026.07.13.08.59.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 13 Jul 2026 08:59:43 -0700 (PDT)
+Message-ID: <ae18fa27-a1c7-42d1-864e-5a9a30c1215f@oss.qualcomm.com>
+Date: Mon, 13 Jul 2026 08:59:41 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 0bQj_9KOn0ROPDlNjDON1xrbULu_cNeH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDE2MyBTYWx0ZWRfX7vlw8bKrgzNj
- 5NuvZDHK0KiDEOY/KaK+88cqarkpQ3k0x6q9b2GY9YeznKLjUh8/KRcPBkANgNWE7uheVkgvuIM
- 7FqiJPR4UHEY/Ua9EMQTm1DQPI0zl2CQ3cPGhTZn0J1kNmAvkKJkVDbt4fI5dpr/fe+LZMTHIWq
- xJEzQQQH9tO7+6LGEuwTyfX4CGjnfZpy2HAmL5dZoG9wJ/5FBDBeN5qkBvmzXC2XCqzhc4vEFcu
- wup2zAvT8JrCfZrwWTKP1L13GGdIMp2Y9TUB/W6Ven39mD0/rh5cOt9xFeC1KRmAquWZf4ov44c
- sZUdBDQPeG45rncJxjpcAImfZzQUyGW/CPBOR1RuGAjR9TabvaXDhzKKC5pXnvX900/NjyFcdRs
- ucHmF8zQrYJgO6VwnyYG9tV1QOdk1R+f4i26t13n2B5rDCDtOi2Du/SMhcE/HfoYhQdxwZbFlHy
- MUduWAqUGH1rYKBShWg==
-X-Authority-Analysis: v=2.4 cv=XJoAjwhE c=1 sm=1 tr=0 ts=6a5509b4 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=opN3AfycTWIiqetEv7YA:9
-X-Proofpoint-ORIG-GUID: 0bQj_9KOn0ROPDlNjDON1xrbULu_cNeH
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDE2MyBTYWx0ZWRfX+XB0+ioQ5NIF
- LzwZInR3V1LshYbR/G2/SkePzhesbGsObakw6PVzs5bx2MksYWzE0xvmSPo3nwzMQd2H1jtkfCk
- XHEnRIkzJZPlfFHDlt1k3wfn2iOJ1+c=
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] uftrace: riscv privilege level
+To: Yanfeng Liu <yfliu2008@qq.com>, qemu-riscv@nongnu.org
+Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, erdnaxe@crans.org
+References: <tencent_E17E8F6494EE130F71527C6BCE481AF33E08@qq.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <tencent_E17E8F6494EE130F71527C6BCE481AF33E08@qq.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDE2NiBTYWx0ZWRfX4S4F9eJYGG9P
+ eyCO8sK4Mv1eMhUKqtJ8pNjPEDg4p3IJu0aKVMt4gJwjLAB13y3Ormz6Gnxndz5aCjTUZm7XlnW
+ ql8IOL556wmTvDehGu6hI2i4BtmuAsOKiSGnMsMe1cE5We5y8qIR/m/+759agvXl3uPrHNioky1
+ 04u0vurA14xvROElIao8uq8FSrwiEkAIos+ZtMLInHNWnpLHZ2RaOP33MkYyyWrta/5A1hVnx3y
+ FQhvD5q4jYDlB40K4H+LbzTP9zNhcGrgT23tTO300b4B9eEILlMQtMKuJfKxsw1aj+5B7Clxon0
+ o84vLrE7rFzLn9X36RrB5xJR8EKW5tDlK7P74SY88m/iDQParJDe+MBSzE2/06UK53gorUlyY+2
+ KbjRoVnaysEiIN/9wmbueTamAneHfLcvjXyEnE75u6syF9tUMVVe3FJ2nB7lVeel25HJCKbON2Y
+ 0P7U5Xmlfbxn0fW89eA==
+X-Proofpoint-ORIG-GUID: jixhQPdkPuLATsip7-bsgwb2Tn22V1A7
+X-Authority-Analysis: v=2.4 cv=UMHt2ify c=1 sm=1 tr=0 ts=6a550b71 cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=dZbOZ2KzAAAA:8 a=2EAK0dWcFSsNEvSIV9MA:9 a=QEXdDO2ut3YA:10
+ a=3WC7DwWrALyhR5TkjVHa:22
+X-Proofpoint-GUID: jixhQPdkPuLATsip7-bsgwb2Tn22V1A7
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDE2NiBTYWx0ZWRfX0ME2oaI7lasg
+ ja4vTVeAG4XkHEQ5LGj2M7msZ3MK8FwcoWkXMFAZYIEsV3Auecbg+R3bnuzTAN7TXMt/INy343n
+ X0s5Vj1J5S79cSuhBqL0ZAol01s2aAM=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-13_04,2026-07-10_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0
- priorityscore=1501 impostorscore=0 clxscore=1011 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607130163
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=imbrenda@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ bulkscore=0 impostorscore=0 spamscore=0 clxscore=1015 adultscore=0
+ malwarescore=0 lowpriorityscore=0 phishscore=0 suspectscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607130166
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,36 +154,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow mapping guest with 2G hugepages on hosts that support it.
+Hi,
 
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
----
- target/s390x/kvm/kvm.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+On 7/12/2026 1:45 AM, Yanfeng Liu wrote:
+> This adds RiscV virtual user and supervisor privilege levels to
+> uftrace plugin to avoid crashing with H extension guests.
+> 
+> Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
+> ---
+>  contrib/plugins/uftrace.c | 13 ++++++++++---
+>  1 file changed, 10 insertions(+), 3 deletions(-)
+> 
+> diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
+> index 9b0a4963ae..063e32220b 100644
+> --- a/contrib/plugins/uftrace.c
+> +++ b/contrib/plugins/uftrace.c
+> @@ -109,6 +109,8 @@ typedef enum {
+>      RISCV64_SUPERVISOR,
+>      RISCV64_RESERVED,
+>      RISCV64_MACHINE,
+> +    RISCV64_VUSER,
+> +    RISCV64_VSUPERVISOR,
+>      RISCV64_PRIVILEGE_LEVEL_MAX,
+>  } Riscv64PrivilegeLevel;
+>  
+> @@ -153,8 +155,10 @@ static void uftrace_write_map(bool system_emulation)
+>      const char *path = "./uftrace.data/sid-0.map";
+>  
+>      if (system_emulation && access(path, F_OK) == 0) {
+> -        /* do not erase existing map in system emulation, as a custom one might
+> -         * already have been generated by uftrace_symbols.py */
+> +        /*
+> +         * do not erase existing map in system emulation, as a custom one might
+> +         * already have been generated by uftrace_symbols.py
+> +         */
+>          return;
+>      }
+>  
+> @@ -706,6 +710,8 @@ static const char *riscv64_get_privilege_level_name(uint8_t pl)
+>      case RISCV64_SUPERVISOR: return "Supervisor";
+>      case RISCV64_RESERVED: return "Unknown";
+>      case RISCV64_MACHINE: return "Machine";
+> +    case RISCV64_VUSER: return "VUser";
+> +    case RISCV64_VSUPERVISOR: return "VSupervisor";
+>      default:
+>          g_assert_not_reached();
+>      }
+> @@ -986,7 +992,8 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>  
+>      score = qemu_plugin_scoreboard_new(sizeof(Cpu));
+>      qemu_plugin_register_vcpu_init_cb(id, vcpu_init, NULL);
+> -    qemu_plugin_register_atexit_cb(id, at_exit, (void *) info->system_emulation);
+> +    qemu_plugin_register_atexit_cb(id, at_exit,
+> +                                   (void *) info->system_emulation);
+>      qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
+>  
+>      return 0;
 
-diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-index 72031a5714..23fa714b69 100644
---- a/target/s390x/kvm/kvm.c
-+++ b/target/s390x/kvm/kvm.c
-@@ -298,13 +298,13 @@ void kvm_s390_set_max_pagesize(uint64_t pagesize, Error **errp)
-         return;
-     }
- 
--    if (pagesize != 1 * MiB) {
-+    if ((pagesize == 2 * GiB) &&
-+        kvm_vm_enable_cap(kvm_state, KVM_CAP_S390_HPAGE_2G, 0)) {
-         error_setg(errp, "Memory backing with 2G pages was specified, "
-                    "but KVM does not support this memory backing");
-         return;
--    }
--
--    if (kvm_vm_enable_cap(kvm_state, KVM_CAP_S390_HPAGE_1M, 0)) {
-+    } else if ((pagesize == MiB) &&
-+               kvm_vm_enable_cap(kvm_state, KVM_CAP_S390_HPAGE_1M, 0)) {
-         error_setg(errp, "Memory backing with 1M pages was specified, "
-                    "but KVM does not support this memory backing");
-         return;
--- 
-2.55.0
 
+Is that something we have implemented in upstream QEMU for riscv64
+target? From what I can see, priv register only can have M,S,U values.
+
+Regards,
+Pierrick
 
