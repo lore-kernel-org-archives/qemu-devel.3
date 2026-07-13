@@ -4,83 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6960BC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 18:38:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA3FBC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 18:47:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjLXp-0008VP-Lw; Mon, 13 Jul 2026 14:38:22 -0400
+	id 1wjLga-0002Jt-T0; Mon, 13 Jul 2026 14:47:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wjLXm-0008VE-1B
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 14:38:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wjLgZ-0002Jl-R3
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 14:47:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wjLXa-0001j3-8W
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 14:38:08 -0400
+ id 1wjLgX-0003JR-Ey
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 14:47:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783967884;
+ s=mimecast20190719; t=1783968439;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6yngjYaZLXJGmfqSKjJQIi/LZe3hW7VOv6sUvCb/1kQ=;
- b=CGPqL9/8fujQ9hZw/fnMWPgt53t8pkXgHASh+J8ix59LFcYj4+vclXT1pWW6T7UAqCBd5Z
- 9QhJ4N9gQv7S9P2UWUwMX+prdDXhxygM+Kac5KRJeL9fhPsnsEt2jx9tz8ydsPsXIj3hav
- y5lqzDouQ7OzF8R5gJbd6fOKYhPfFUY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=mjhRDodkmWkvClauBbn2nqHfOdYpd+vtUuhIy5i7sl8=;
+ b=BddNwqRorJleEIuWweG0HJvT0gKwyTWKkm3BNwvKazqH3Ck+NDEkHs9EdO4/mviH4eMHJy
+ q6dOZnowumMmmNirTbapT78UsBNFWbLtLs8SMLQdfpbxm6c0FvsN4o298Ktpol0oSEPCHR
+ oMOdZf/R1HNRSwO51F/uIWO20vB/eNk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-604-I52ay6JmPEuFIHk58SgXgg-1; Mon,
- 13 Jul 2026 14:38:01 -0400
-X-MC-Unique: I52ay6JmPEuFIHk58SgXgg-1
-X-Mimecast-MFC-AGG-ID: I52ay6JmPEuFIHk58SgXgg_1783967880
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-319-_QKDMgtwMTCFhO00pWW0PA-1; Mon,
+ 13 Jul 2026 14:47:15 -0400
+X-MC-Unique: _QKDMgtwMTCFhO00pWW0PA-1
+X-Mimecast-MFC-AGG-ID: _QKDMgtwMTCFhO00pWW0PA_1783968434
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2E3261955DC1; Mon, 13 Jul 2026 18:37:59 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 898851955D75; Mon, 13 Jul 2026 18:47:14 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.50.22])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5B8AE180065F; Mon, 13 Jul 2026 18:37:53 +0000 (UTC)
-Date: Mon, 13 Jul 2026 19:37:50 +0100
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C13BD1800348; Mon, 13 Jul 2026 18:47:12 +0000 (UTC)
+Date: Mon, 13 Jul 2026 19:47:09 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: jasowang@redhat.com, mst@redhat.com, armbru@redhat.com,
- peterx@redhat.com, farosas@suse.de, raphael.s.norwitz@gmail.com,
- bchaney@akamai.com, qemu-devel@nongnu.org, pbonzini@redhat.com,
- yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
- Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v18 09/14] qapi: add local migration parameter
-Message-ID: <alUwflog7Xd34Vd4@redhat.com>
-References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
- <20260710191809.721154-10-vsementsov@yandex-team.ru>
- <alS1DMD_pRrklFRb@redhat.com>
- <05c89310-7bec-4aac-addc-b5ef377e09a7@yandex-team.ru>
- <alTKMA87h9x951Ei@redhat.com>
- <25b5e9a6-e563-4ab0-9075-04a3a00d3b33@yandex-team.ru>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Alexander Graf <graf@amazon.com>, qemu-devel@nongnu.org
+Subject: Re: [RFC PATCH 001/134] qom: Introduce object_new_child()
+Message-ID: <alUyrS2ViWMswx82@redhat.com>
+References: <20260711223707.42139-1-graf@amazon.com>
+ <20260711223707.42139-2-graf@amazon.com>
+ <12d544b3-5c68-488a-91e5-ac64d1a27338@linaro.org>
+ <CAFEAcA9wRhZPyiAym26DQWEyb2AS=QBpvRi9wBEJKsHEw+j0sQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <25b5e9a6-e563-4ab0-9075-04a3a00d3b33@yandex-team.ru>
+In-Reply-To: <CAFEAcA9wRhZPyiAym26DQWEyb2AS=QBpvRi9wBEJKsHEw+j0sQ@mail.gmail.com>
 User-Agent: Mutt/2.3.2 (2026-04-26)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: permerror client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: permerror client-ip=170.10.129.124;
  envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,113 +88,62 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 13, 2026 at 08:55:37PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> On 13.07.26 14:21, Daniel P. Berrangé wrote:
-> > On Mon, Jul 13, 2026 at 01:55:48PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> > > On 13.07.26 12:51, Daniel P. Berrangé wrote:
-> > > > On Fri, Jul 10, 2026 at 10:17:58PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> > > > > We are going to implement local-migration feature: some devices will be
-> > > > > able to transfer open file descriptors through migration stream (which
-> > > > > must UNIX domain socket for that purpose).  This allows to transfer the
-> > > > > whole backend state without reconnecting and restarting the backend
-> > > > > service. For example, virtio-net will migrate its attached TAP netdev,
-> > > > > together with its connected file descriptors.
-> > > > > 
-> > > > > In this commit we introduce a migration parameter, which enables
-> > > > > the feature for devices that support it (none at the moment).
-> > > > > 
-> > > > > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> > > > > Acked-by: Markus Armbruster <armbru@redhat.com>
-> > > > > Acked-by: Peter Xu <peterx@redhat.com>
-> > > > > Reviewed-by: Ben Chaney <bchaney@akamai.com>
-> > > > > ---
-> > > > >    include/migration/misc.h |  2 ++
-> > > > >    migration/options.c      | 18 +++++++++++++++++-
-> > > > >    qapi/migration.json      | 12 ++++++++++--
-> > > > >    3 files changed, 29 insertions(+), 3 deletions(-)
-> > > > 
-> > > > 
-> > > > > diff --git a/qapi/migration.json b/qapi/migration.json
-> > > > > index 66bd900465a..03bdf19f3a6 100644
-> > > > > --- a/qapi/migration.json
-> > > > > +++ b/qapi/migration.json
-> > > > > @@ -830,7 +830,8 @@
-> > > > >               'zero-page-detection',
-> > > > >               'direct-io',
-> > > > >               { 'name': 'x-rdma-chunk-size', 'features': [ 'unstable' ] },
-> > > > > -           'cpr-exec-command'] }
-> > > > > +           'cpr-exec-command',
-> > > > > +           'local'] }
-> > > > >    ##
-> > > > >    # @migrate-set-parameters:
-> > > > > @@ -1012,6 +1013,12 @@
-> > > > >    #     Must be set to the same value on both source and destination
-> > > > >    #     before migration starts.  (Since 11.1)
-> > > > >    #
-> > > > > +# @local: Enable local migration for devices that support it.  Backend
-> > > > > +#     state and its file descriptors can then be passed to the
-> > > > > +#     destination in the migration channel.  The migration channel
-> > > > > +#     must be a Unix domain socket.  Usually needs to be enabled per
-> > > > > +#     device.  (Since 11.2)
-> > > > 
-> > > > What happens when this is enabled and there are devices which
-> > > > don't support it ?
-> > > 
-> > > These devices are migrated as usual, ignoring "local" option.
-> > > 
-> > > > 
-> > > > What happens when this is enabled and a device on the src
-> > > > does not support it but a device on the (newer) QEMU dest
-> > > > does support it ?  How does the mgmt app know which devices
-> > > > support it ?
-> > > 
-> > > The only supporting device (TAP-backend) declares support by
-> > > "local-migration-supported", so mgmt app should care to set
-> > > same value for it on host and target (like for other options
-> > > actually). Or simply relay on default, which is true starting
-> > > from 11.2 Machine Type.
-> > > 
-> > > > 
-> > > > Can we document the semantics in these cases.
-> > > 
-> > > That's: "Usually needs to be enabled per device."
-> > 
-> > ....except that we have it enabled by default for TAP backends
-> > in new machine types.... except that it will then break if the
-> > app/user has enabled any of the "forbidden" options.
-> > 
-> > The way this doc is written makes it sound like "local" is an
-> > optimization you can turn on in any scenario, and it will do
-> > the right thing if the device supports it. That is very much
-> > not the case - enabling this flag will definitely break many
-> > configs out of the box, with new machine types due to the TAP
-> > device defaults & incompatible options.
+On Mon, Jul 13, 2026 at 07:15:34PM +0100, Peter Maydell wrote:
+> On Mon, 13 Jul 2026 at 17:50, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+> >
+> > On 7/11/26 15:34, Alexander Graf wrote:
+> > > We already have two ways of creating a QOM object with a parent set
+> > > from birth: object_initialize_child() for objects embedded in the
+> > > parent struct, and object_new_with_props() for heap-allocated objects
+> > > that also want a list of string properties applied.  What we do not
+> > > have is the plain heap-allocated dual of object_initialize_child():
+> > > create the object, add it as a child<> of a given parent under a given
+> > > name, and hand the reference to the parent.
+> > >
+> > > Board and composite-device code that heap-allocates children today
+> > > therefore either open-codes object_new()+object_property_add_child()
+> > > +object_unref(), or skips the parenting step entirely and lets
+> > > device_set_realized() dump the object into /machine/unattached.
+> > >
+> > > Add object_new_child(parent, id, typename) as that missing primitive.
+> > > The reference created by object_new() is transferred to the parent's
+> > > child<> property, so on return the sole reference is held by @parent
+> > > and the caller does not need to unref.  Later patches build the qdev
+> > > and per-bus creation helpers on top of this.
+> > >
+> > > Suggested-by: Markus Armbruster <armbru@redhat.com>
+> > > Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
+> > > Assisted-by: Kiro
+> > > Signed-off-by: Alexander Graf <graf@amazon.com>
+> > > ---
+> > >   include/qom/object.h | 25 +++++++++++++++++++++++++
+> > >   qom/object.c         | 13 +++++++++++++
+> > >   2 files changed, 38 insertions(+)
+> >
+> > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> >
+> > > +Object *object_new_child(Object *parent, const char *id,
+> > > +                          const char *typename)
+> > > +{
+> > > +    Object *obj;
+> > > +
+> > > +    g_assert(parent);
+> > > +    g_assert(id);
+> >
+> > Of course, typename can't be null either.
 > 
-> Ok, now we decided to NOT make default support for TAP in newer
-> machine types.
-> 
-> So, enabling "local" is safe in existing scenarios, only explicit
-> enabling TAP.local-migration-supported will change the behavior.
-> 
-> Keep "local" documentation as is?
-> 
-> I see the only way to make it more informative: directly describe
-> connection with TAP.local-migration-supported, without general
-> phrases about "devices that support" and "usual". We'll have to
-> update it when more devices added (my next step is vhost-user-blk),
-> but at least, it would be absolutely correct at the moment.
+> These asserts are of the "not very useful" kind, as well --
+> if either of these are NULL we're going to crash pretty quickly,
+> and then the debugger backtrace will point you at your programming
+> error. Asserts are most useful when they turn non-obvious bugs
+> into obvious bugs or turn "happens a long time later than when the
+> problem is" bugs into "happens very close to when the problem is".
+> bugs.
 
-How about....
-
- # @local: Permit the use of optimizations for local migration.
- #     This must only be set when both the source and destination
- #     QEMU processes are on the same OS and directly connected
- #     with a UNIX domain socket as the migration channel to enable
- #     use of file descriptor passing. Individual device backends
- #     may need additional configuration flags set  to enable local
- #     migration optimizations. This will be documented against the
- #     device backends where it applies. (Since 11.2)
-
+For the 'id', we ought to call  id_wellformed, and report an error
+if it fails, which implies  an "Error **errp" arg for this method
+too.
 
 With regards,
 Daniel
