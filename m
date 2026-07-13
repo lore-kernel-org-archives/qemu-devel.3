@@ -4,125 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 893E3C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 05:10:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D5BDC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 05:14:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wj8v3-0007Yv-Kq; Mon, 13 Jul 2026 01:09:29 -0400
+	id 1wj8zu-0001Hs-VY; Mon, 13 Jul 2026 01:14:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1wj8v1-0007Yd-TJ; Mon, 13 Jul 2026 01:09:27 -0400
-Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
- ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wj8zk-0001Go-W1
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 01:14:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1wj8uw-00031Q-Nw; Mon, 13 Jul 2026 01:09:24 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=XuhyltcgXp24nYAS9YxkwNXCifzLBbAAApAobl4QnpHaio92/HJGZR/oU0wyx7Y4/0XDOOUzEj6WSgrFoS/IWeGDZiLu2kaFYiSM29hG987e6U+xZK0EriXBmYfid5MhMD2A/7FNUiV2lBxsGx9PgBCXkFPj5FKyCv8b3RgNXKgztXNLWlSnEK16W79Tur0r7E6J/q+gFNMagVNQrv3+OpNNvOKWM9jx1NmJNahjYMUVL8MI3DOKJvYCcpRwesU33Mo5gEQamQjL/+gv07ARc1j+drnSpIlkm/pc/Dorjhf2+FpubY2i+AlSYgRpd2CQ7olwmtRJvhjIelSOxt3r7g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=PXHTstgUIMUalJZ6wDo/TXxE45to7aH1XIeR6kBmWhc=;
- b=RBdhm0hsl+pF7HhwNsbmI9GsuGYJpba7PEg3xBFV1NrZXmqU5s8Hi2SzjLrfoRTsNAVAg4IJTPh5DlA0Wj9wK9vRLpBrZaAtwmanysvqaBx6Mq3LZnUInXuGGCMf+WOMtHeAO/u4BjaAxw0nh9DMg0xPhXr9+uMndiW2xfymkpTlgz2I5MKFUUr+3+OevCUmm+/5gUoyHMgI5yaDzkzCDh36yaluZ+O1bRamsSMDarIb67mX6wOBgyvRAM2P/YDqD4GdQ02AZAyxtuGTP2eq1jyahLXX9wEfjyvkq+udPmMfHFETz98LoIilMKEX7uBHiXh/48/fdvU1bylB4zN/9g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PXHTstgUIMUalJZ6wDo/TXxE45to7aH1XIeR6kBmWhc=;
- b=JwfHXaNfWCalFn0ITTTHu/cW+F3Dz5xdw3Ths1yKMxHQj5bumkYBUFBQkdUm1DrdbmkJX/D7O8epCf3U4Ylp4Reja5g+bWRx39w8T7Q2yPiI3rs2pMeSa7p1gnCrT5DrENIB/AXkTgbXmSvN8zBwn4VR+GAdNwwRlDdl4yu0YNonBq2omOALGO2frzTyfP73FqMRSPaTDSFyYoS2Sw6XX1bgS8x2R/kw7C6tSC+i+I5+QP9Mm7ULKK3hvKtxXzV49AE5MEUIIWAcCF+ZOSLiQS75Mx2qrmdi5acgyvLbZVWLC2OpCK8LVYU9FbQyRzJo/Ab/FUKTd3SdKVcYUsQw4Q==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
- by KU4PR02MB9259.apcprd02.prod.outlook.com (2603:1096:d10:79::10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.19; Mon, 13 Jul
- 2026 05:09:13 +0000
-Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
- ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
- ([fe80::e5f3:5fb7:3d29:5934%4]) with mapi id 15.21.0181.014; Mon, 13 Jul 2026
- 05:09:13 +0000
-Date: Mon, 13 Jul 2026 13:09:07 +0800
-From: Chao Liu <chao.liu@processmission.com>
-To: Junze Cao <caojunze424@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- th.huth+qemu@posteo.eu
-Subject: Re: [PATCH] tests/functional/riscv64: Add K230 Linux boot tests
-Message-ID: <alRyubVpxE1MCoyW@ChaodeMacBook-Pro.local>
-References: <20260711131834.98422-1-caojunze424@gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260711131834.98422-1-caojunze424@gmail.com>
-X-ClientProxiedBy: PH8PR07CA0005.namprd07.prod.outlook.com
- (2603:10b6:510:2cd::29) To TYNPR02MB9351.apcprd02.prod.outlook.com
- (2603:1096:405:3d0::15)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wj8zi-0003cj-W1
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 01:14:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783919657;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Pd7YyxNvDAuEnjFNK+Ewr3cRxfagtzALbzN/XiFNig4=;
+ b=SOZqtyxMyyqbyC546TvoIIny3UcSZf4tmNLdDNsIm6H67dR3lwsUI8pHHCoWubNH23Uzix
+ DKH2r8rUBkReIpKrgDq42JZduKcXK/q2ljG98hsCqJMa5p5U/OyZtcUQRQvGZlIEjNarHZ
+ qaIRj7aprBUyej6a4AgVbKQRQ24vekY=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-689-rTItQ3xbOqGrVUytvvPe1Q-1; Mon, 13 Jul 2026 01:14:15 -0400
+X-MC-Unique: rTItQ3xbOqGrVUytvvPe1Q-1
+X-Mimecast-MFC-AGG-ID: rTItQ3xbOqGrVUytvvPe1Q_1783919655
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-38dc101287aso2453394a91.0
+ for <qemu-devel@nongnu.org>; Sun, 12 Jul 2026 22:14:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1783919655; x=1784524455; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=Pd7YyxNvDAuEnjFNK+Ewr3cRxfagtzALbzN/XiFNig4=;
+ b=dtdlB2pT3DOxdHcbp92TKlc5pdt8N6j/+PDQirb2kd8Yef0x6fruUijg9L174wzgcW
+ fzvIPwD6qIS8h7i0v1Q96mIwciqSU7ZnB11o2fTAW7683MHCjBINOIzdONVEorgMLSap
+ 5V6iE3OWF+OqeFNF2/1+3n1phHgep2LNydbiGAlOhHef9viv3s8bG0/ENlsGcLHujkS7
+ GgcKBa/0QvZg1N1KpnN9MxZ51E3TqIKJ/YEMVgi3h60MD5y8VpxpZa84/1qoa4nxKa3f
+ ridKCQhBvFEjmt+/F81CmGGD61YDGElZyjbD9R0xV2lGfQnaBsEm4JTNpgLFOGcwgfJt
+ OMyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783919655; x=1784524455;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Pd7YyxNvDAuEnjFNK+Ewr3cRxfagtzALbzN/XiFNig4=;
+ b=SlaBqgU4GQqVi8DQadSBTWrllhDubjqu+oktccvpBBZ0lwmU69sDRZus6BofMAgrN2
+ NhfhZscUjTLWF/2TBukORLlqajCnzQxx+MEK7k9Ymor5UiPjfrBLy9UzNPJqrx1x0qQb
+ gEskIjK5HpvctnDv06b8MgI4MvM8wRSsg18DqraJsecWjmpGKbFvc/TrgRIWTjFdHif4
+ uU83HyKbGIFTB8862BkW9MS41oPnuDIQi7tZB9qcvjT0ZbC/A+++t0sWk3SctQSO2Wkc
+ tEPvvMdGFEDXjk2Jd0BII3qheyujidYyNM9za3Vg7Yxu0A+6qBQ/lOGyG5CQaZOGqzkX
+ 93PQ==
+X-Gm-Message-State: AOJu0YzRlxOB/UEGh2XRVEjy7UISYwZwIXiwMFiupUwRlhYTj2GMOlMa
+ VYJd+UfNeNKQtWYBLm9LUMuZgSkvuDU+EY6Sn8pExeGrlYlcMYr+grQx1/hhV03yePb42f4j2ca
+ ii8/fuKr7f+eYCzCt1aElT5XvingBWxNzMCRjb1rCs4VnMAue+09/usnd
+X-Gm-Gg: AfdE7ckAkqvtei41+OF7EdETSxeG7mS22UkHujodoEBAoLsfJOn+586z9VBSSzcGdGN
+ rbb48c9MRnE2Jb+GUXYCMsZfkgzy5f72XFgy35l1atyzTTvD+hGDDN9AQ61kQgpxUYpP33CZmeT
+ iYOoLUMYbaWmWG48yrd0XvoynDeuSaO63pyOxPSY9F5t3jhsvgPFCEQ6uPzy8nJr+SD8FdP27Tz
+ c+z5eH3p9Cj5mMVj+HW6g4/gLYhpRsvi/DXKbVMmEYqHIQVUNeOO367iksbj7e8mDgo63u94ukp
+ 2NfikEoVwRTrlvl2enruF6Kdp3/mtLy+64FolMVoq/4EhWi9wPc1bKqv3nX5LH5mBEmyBWk5Y4L
+ /NCfb64q8LZn6PUOLIf7ex+SAJ8QHU5f4vzc40gaaOimZ3ezUxcjPJQ==
+X-Received: by 2002:a17:903:2a88:b0:2c0:b5c1:8e22 with SMTP id
+ d9443c01a7336-2ce9e9b9691mr77163615ad.12.1783919654724; 
+ Sun, 12 Jul 2026 22:14:14 -0700 (PDT)
+X-Received: by 2002:a17:903:2a88:b0:2c0:b5c1:8e22 with SMTP id
+ d9443c01a7336-2ce9e9b9691mr77163245ad.12.1783919654157; 
+ Sun, 12 Jul 2026 22:14:14 -0700 (PDT)
+Received: from [192.168.68.51] (n175-34-8-244.mrk21.qld.optusnet.com.au.
+ [175.34.8.244]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ccc99cc5aasm93166495ad.0.2026.07.12.22.14.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 12 Jul 2026 22:14:13 -0700 (PDT)
+Message-ID: <618fa1ec-c986-4075-9b6f-c720b48d75ce@redhat.com>
+Date: Mon, 13 Jul 2026 15:14:05 +1000
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|KU4PR02MB9259:EE_
-X-MS-Office365-Filtering-Correlation-Id: e21a1af8-9743-4185-c994-08dee09ce151
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|34096008|366016|23010399003|376014|1800799024|13003099007|18002099003|3023799007|22082099003|56012099006;
-X-Microsoft-Antispam-Message-Info: ZUpXrJBBrHXUd6rMxFAwKrX8rptGjnss5C9rxEvGb3xtaoteaKsWYxRI+5wcopYsXiH2xfF3bc41FiDSdgi+VkZtuag1uR9PsZgr6BwUVXoRTcqDEUFDoRltLDHUBlgpHeIwrnu4GyFIgtSOvb3CvMqcL1mVjwZ23veBXOPNrFWE+8QRRwx3XddRAUP8uK4+cP5Xa8vS/nFsxWOZL5PMdym0oq5etjVWtRI0MMs6WUOGkm8fJA8EFkfJPD9q6JQQDOlSBtOhCVLBXFObgCUl/p8iLhc8BghmSVdaqYyaX3i69fnbhSgexy9Jn0RTpCfHNtW2rngpl6jh1ptn0uCz/ZjI1JLaOmyMpwWMqvEuMk3L1GOQuMSOmCt70yYlIM+wWDwr8bCBMSK9gj4/kXfBGO4OEnQTZuCrm67kRPsYxIG4ymd89enzLxeT+yFT/2za3/LjoLZRHXsLo0rC92+wCNGkA/e2BZVWTbsKm60+lUUXD9PHarEJXBdLKcCBLnBbgSImv69UTJ6MJFzuxi+Wt+VnetwlD1Q98zjdsNwQ8dFfSrgteSfDPZ8Up/sNEuaY1NHJy6BHktI4SOzeWR2Cvi0c3Jfu4/s1Hnvi9I6ETDk=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(34096008)(366016)(23010399003)(376014)(1800799024)(13003099007)(18002099003)(3023799007)(22082099003)(56012099006);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?RoqLla1uhBNQHxEU4c21BgmzpxNVwtmPa0rbtseWxg62Bxh3QiEdQomoZPtM?=
- =?us-ascii?Q?PI23Q5ZIX8pr6PUDbeWI2QD0/jP3FzoR2PvuCAAPWxDY4v/HogJ3Y2yvgj+9?=
- =?us-ascii?Q?WDZ40ZCULk0+aGw2RoKeaR4/Jhlk9gf1cWFB29nehxFXYX8ObccACtUr+Rro?=
- =?us-ascii?Q?m42uBz2xrnA1iK9MCCe8v10fs4n3oPGB3tvXKWc9AueDbhbLmTFfsEMFGSZZ?=
- =?us-ascii?Q?wLfXKIQMqt3hvUnfoXrZOxVEcQGue0Sl/DHwhMziSfZ+DTJpYls2fTm/T1Dy?=
- =?us-ascii?Q?Ta1tLDkDTB4wAsDau0eDShSZFXCZisOJJXvP6H81utvjqRMxJsXHkBIemHYx?=
- =?us-ascii?Q?jlU1FVIEbPHTn2o4m/eLLmkKyHJ2opvnEJrr+L4erdILYKgUbzZBxVfCjihs?=
- =?us-ascii?Q?lvUAAWBn7JhWQmORaIe6nym9D213DBcD0AP/pufkUs8+xXjtHvAbDR5mF9II?=
- =?us-ascii?Q?o3X0ph6k1cI2IUAth/cTNBFWdhUkGZ1YMU3XESxL95SRyFDq1cem8F2XQFvq?=
- =?us-ascii?Q?CgouqhnLao7vdZ12RLJ1TiY6z7MMsxGVfokqOIxrrgHhn8XLzJq0NQa4KaYU?=
- =?us-ascii?Q?eTIwwUtd7OV/cvPhiIOfA6xE+Bdssqwotyh9y+3HcubxDdSyZUw+W/UppyPh?=
- =?us-ascii?Q?Ai64xzDxBeTCeC/ILrE7KsrPYw/DZJuslCREpnhNPNbYmcLCmXBEO3UmcBwH?=
- =?us-ascii?Q?rpzaHSL9D5+MiH6r631UpFf8c0ej04GPATqti+jOr6IR3zLCrF8u1ER81MLv?=
- =?us-ascii?Q?nWg+l+eLXAkkQL9X8lZo9C227IiBhLVp/t94bzxRcIDFTds6ve4yAHVTtXUD?=
- =?us-ascii?Q?PUl7MuSxGE1mTKdgDSZH5Ezrwzoqz9mjn9QNYrgD/2Ok4F7AskV8FjnDAzQC?=
- =?us-ascii?Q?/K5YqqiUW4B8cGKrmuCWnlIFX+EvfhMv9iscGZIPaggDla+2M898XlIRCN0o?=
- =?us-ascii?Q?SoqUSGq/sewLX1rqLlZYgCVNN6jeZFZR0/UWL0fvV3PFNH9Ad0yYCB8xpxgl?=
- =?us-ascii?Q?U9CZAusPvSHbbrOFJMv5tOYjIqzKJgHN5ZxbLMBbljfgAWFc//omZD7zFnE8?=
- =?us-ascii?Q?HxTslJPVa3Utyn8niPr58xnBsFWlAftDRnq10krrVyMJnqM5AuxvLgdgpNup?=
- =?us-ascii?Q?3DmN2qKs4/IU7ugRy6jlqA5PmgqVQKLqZ/s+hAyf9zFfcVk0NaUxCNHQ9m+k?=
- =?us-ascii?Q?0smBUGyRuCkX/1RZKxjH80xMTMNBh5jph5F391uBVWt/fBLmhwfad3hfo/dj?=
- =?us-ascii?Q?+XCl8mLfN0eHvoLyI/eEtw1CovcXG8GyyyGyfx46/EP+Eics9f9zFCEc2IpO?=
- =?us-ascii?Q?ZWlFtiBEnd2R76V/kOLYK718k8i4r3l5ENO7qQqUFv9I7CcmY8ahjw60Qnfz?=
- =?us-ascii?Q?2uDQ/cz3HGsQVhlWnCzOjysb0aiiA7pdhInQc2O2dq0K9zwOYqa2OF+u5fA8?=
- =?us-ascii?Q?avhRbC73kWXEhjX9WRbrZcTaLwQfyqepQMGN8O9sOzDp5owJLlRkveqWLIt1?=
- =?us-ascii?Q?dmKDl6OfFwnPT4icGOrtDiraYJwHEmYDH/7+2urFoC0AZXOpQqTV6RQXgkvu?=
- =?us-ascii?Q?vrBhrx/ij2edSR0eyD0NsPZK4o2/POtnwPJoT4koAMZp9mm1q4ljb1T2+fBN?=
- =?us-ascii?Q?vpyYfqrld0ql9pqJP0UmOq9YlRLjliWMNn/jc0qt9F8hJ7MK4pl/GNsxmzoD?=
- =?us-ascii?Q?xuYTzA/FqW9ncutucGlq5QDuaklk0vzZQ+1+Hmjq34Stlh+HH4vOTNZj1Dma?=
- =?us-ascii?Q?th75IRj8RvHFWIwVn0mwp4pukMtWvyo=3D?=
-X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e21a1af8-9743-4185-c994-08dee09ce151
-X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jul 2026 05:09:13.3656 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: jYfTS3XBKLwlK2m5dytVutFHeCMfajTRXMEC42WK+sD78tNpxVILLZjY/fp9NEksOCuC7IAt600mpe84wE7OPUXDPeaZFFAy4j+A47ZzFkA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KU4PR02MB9259
-Received-SPF: pass client-ip=2a01:111:f403:c406::3;
- envelope-from=chao.liu@processmission.com;
- helo=OS8PR02CU002.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v1 04/25] target/arm/kvm-rme: Add mechanic to initialize
+ realms
+To: Mathieu Poirier <mathieu.poirier@linaro.org>, berrange@redhat.com,
+ kchamart@redhat.com, pierrick.bouvier@oss.qualcomm.com,
+ peter.maydell@linaro.org, mst@redhat.com, cohuck@redhat.com,
+ pbonzini@redhat.com, eblake@redhat.com, armbru@redhat.com, jpb@kernel.org,
+ lorenzo.pieralisi@linaro.org
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvm@vger.kernel.org
+References: <20260707224306.1202330-1-mathieu.poirier@linaro.org>
+ <20260707224306.1202330-5-mathieu.poirier@linaro.org>
+Content-Language: en-US
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <20260707224306.1202330-5-mathieu.poirier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: permerror client-ip=170.10.129.124;
+ envelope-from=gshan@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,176 +125,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Jul 11, 2026 at 09:18:34PM +0800, Junze Cao wrote:
-> The K230 machine supports direct Linux boot and firmware boot through
-> the SDK U-Boot, but neither path has functional test coverage.
+On 7/8/26 8:42 AM, Mathieu Poirier wrote:
+> From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 > 
-> Add one test for each boot path. Both tests use the Yocto initramfs
-> assets and wait for the shell prompt to confirm a successful boot.
+> Initialise an @rme_guest object and install a handler to get notified
+> when the Realm is ready to start.  That way we can finish reading the
+> Realm once we know everything is in place.
 > 
-> Fetch the boot assets from the k230-boot-assets repository maintained
-> by Chao Liu. Pin the URLs to a repository commit and verify each asset
-> with its SHA-256 digest.
+> Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+> ---
+>   target/arm/kvm-rme.c  | 50 +++++++++++++++++++++++++++++++++++++++++++
+>   target/arm/kvm-stub.c |  5 +++++
+>   target/arm/kvm.c      |  7 +++++-
+>   target/arm/kvm_arm.h  |  9 ++++++++
+>   4 files changed, 70 insertions(+), 1 deletion(-)
 > 
-> Signed-off-by: Junze Cao <caojunze424@gmail.com>
-Reviewed-by: Chao Liu <chao.liu@processmission.com>
+> diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
+> index 42e1d1e7b859..b86b9d6a25cb 100644
+> --- a/target/arm/kvm-rme.c
+> +++ b/target/arm/kvm-rme.c
+> @@ -13,6 +13,7 @@
+>   #include "kvm_arm.h"
+>   #include "migration/blocker.h"
+>   #include "qapi/error.h"
+> +#include "qemu/error-report.h"
+>   #include "qom/object_interfaces.h"
+>   #include "system/confidential-guest-support.h"
+>   #include "system/kvm.h"
+> @@ -29,14 +30,63 @@ OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RmeGuest, rme_guest, RME_GUEST,
+>                                             CONFIDENTIAL_GUEST_SUPPORT,
+>                                             { TYPE_USER_CREATABLE }, { })
+>   
+> +static RmeGuest *rme_guest;
+> +
+> +static void rme_vm_state_change(void *opaque, bool running, RunState state)
+> +{
+> +    if (!running) {
+> +        return;
+> +    }
+> +
+> +    kvm_mark_guest_state_protected();
+> +}
+> +
+>   static void rme_guest_class_init(ObjectClass *oc, const void *data)
+>   {
+>   }
+>   
+>   static void rme_guest_init(Object *obj)
+>   {
+> +    if (rme_guest) {
+> +        error_report("a single instance of RmeGuest is supported");
+> +        exit(1);
+> +    }
+> +    rme_guest = RME_GUEST(obj);
+>   }
+>   
+>   static void rme_guest_finalize(Object *obj)
+>   {
+>   }
+> +
+> +int kvm_arm_rme_init(MachineState *ms, KVMState *s)
+> +{
+> +    static Error *rme_mig_blocker;
+> +    ConfidentialGuestSupport *cgs = ms->cgs;
+> +
+> +    if (!rme_guest) {
+> +        return 0;
+> +    }
+> +
+> +    if (!cgs) {
+> +        error_report("missing -machine confidential-guest-support parameter");
+> +        return -EINVAL;
+> +    }
+> +
+> +    if (!kvm_vm_check_extension(s, KVM_CAP_ARM_RMI)) {
+> +        error_report("KVM doesn't support Realms");
+> +        return -ENODEV;
+> +    }
+> +
+> +    error_setg(&rme_mig_blocker, "RME: migration is not implemented");
+> +    migrate_add_blocker(&rme_mig_blocker, &error_fatal);
+> +
+> +    /*
+> +     * The realm activation is done last, when the VM starts, after all images
+> +     * have been loaded and all vcpus finalized.
+> +     */
+> +    qemu_add_vm_change_state_handler(rme_vm_state_change, NULL);
+> +
+> +    cgs->require_guest_memfd = true;
+> +    cgs->ready = true;
+> +    return 0;
+> +}
+
+I think it's more reasonable to set ConfidentialGuestSupportClass::kvm_init to
+kvm_arm_rme_init in rme_guest_class_init(). confidential_guest_kvm_init()
+gets called in target/arm/kvm.c::kvm_arch_init(). With this, the pattern matches
+with that for x86.
+
+More details can be found from commit 631a2ac5a4be ("i386/tdx: Implement tdx_kvm_init()
+to initialize TDX VM context").
 
 Thanks,
-Chao
-> ---
->  MAINTAINERS                           |   1 +
->  tests/functional/riscv64/meson.build  |   2 +
->  tests/functional/riscv64/test_k230.py | 108 ++++++++++++++++++++++++++
->  3 files changed, 111 insertions(+)
->  create mode 100755 tests/functional/riscv64/test_k230.py
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 6171cc7494..fcf87609cb 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1828,6 +1828,7 @@ F: hw/riscv/k230.c
->  F: hw/watchdog/k230_wdt.c
->  F: include/hw/riscv/k230.h
->  F: include/hw/watchdog/k230_wdt.h
-> +F: tests/functional/riscv64/test_k230.py
->  F: tests/qtest/k230-wdt-test.c
->  
->  RX Machines
-> diff --git a/tests/functional/riscv64/meson.build b/tests/functional/riscv64/meson.build
-> index c9d4c090fb..d1a3e6c2bf 100644
-> --- a/tests/functional/riscv64/meson.build
-> +++ b/tests/functional/riscv64/meson.build
-> @@ -2,6 +2,7 @@
->  
->  test_riscv64_timeouts = {
->    'boston' : 120,
-> +  'k230' : 120,
->    'tuxrun' : 120,
->  }
->  
-> @@ -13,6 +14,7 @@ tests_riscv64_system_quick = [
->  tests_riscv64_system_thorough = [
->    'endianness',
->    'boston',
-> +  'k230',
->    'sifive_u',
->    'tt_atlantis',
->    'tuxrun',
-> diff --git a/tests/functional/riscv64/test_k230.py b/tests/functional/riscv64/test_k230.py
-> new file mode 100755
-> index 0000000000..6ccbf2d581
-> --- /dev/null
-> +++ b/tests/functional/riscv64/test_k230.py
-> @@ -0,0 +1,108 @@
-> +#!/usr/bin/env python3
-> +#
-> +# Functional tests that boot Linux on a Kendryte K230 machine.
-> +#
-> +# The direct boot test lets QEMU load OpenSBI, Linux, the device tree, and the
-> +# initramfs.  The firmware boot test starts the K230 SDK U-Boot and uses bootm
-> +# to launch OpenSBI and Linux from images preloaded into RAM.
-> +#
-> +# Author:
-> +#  Junze Cao
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
+Gavin
+
+> diff --git a/target/arm/kvm-stub.c b/target/arm/kvm-stub.c
+> index 88cbe8d85c41..eec1ca3dd2e5 100644
+> --- a/target/arm/kvm-stub.c
+> +++ b/target/arm/kvm-stub.c
+> @@ -119,3 +119,8 @@ char *kvm_print_register_name(uint64_t regidx)
+>   {
+>       g_assert_not_reached();
+>   }
 > +
-> +import os
+> +int kvm_arm_rme_init(MachineState *ms, KVMState *s)
+> +{
+> +    g_assert_not_reached();
+> +}
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index ed99be7fd80c..28d5643d6779 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -660,7 +660,12 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+>       hw_breakpoints = g_array_sized_new(true, true,
+>                                          sizeof(HWBreakpoint), max_hw_bps);
+>   
+> -    return 0;
+> +    ret = kvm_arm_rme_init(ms, s);
+> +    if (ret) {
+> +        error_report("Failed to enable RME: %s", strerror(-ret));
+> +    }
 > +
-> +from qemu_test import Asset, LinuxKernelTest
-> +from qemu_test import exec_command_and_wait_for_pattern
-> +from qemu_test import interrupt_interactive_console_until_pattern
+> +    return ret;
+>   }
+>   
+>   unsigned long kvm_arch_vcpu_id(CPUState *cpu)
+> diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+> index e7c40fb003e4..6d058b0e08a2 100644
+> --- a/target/arm/kvm_arm.h
+> +++ b/target/arm/kvm_arm.h
+> @@ -240,4 +240,13 @@ void arm_gic_cap_kvm_probe(GICCapability *v2, GICCapability *v3);
+>    */
+>   char *kvm_print_register_name(uint64_t regidx);
+>   
+> +/**
+> + * kvm_arm_rme_init
+> + * @ms: the machine state
+> + * @s: State of KVM
+> + *
+> + * Prepare the machine to be a Realm, if the user enabled it.
+> + */
+> +int kvm_arm_rme_init(MachineState *ms, KVMState *s);
 > +
-> +
-> +class K230Machine(LinuxKernelTest):
-> +
-> +    ASSET_KERNEL = Asset(
-> +        ('https://raw.githubusercontent.com/zevorn/k230-boot-assets/'
-> +         'c3c32fb46e8307c5063f13e8f367c98bf9273cd1/'
-> +         'yocto/direct-boot/Image'),
-> +        '3a44970213fa68ad318d308518adfc0bf4bee72ed1b2926f9b468f82ef7d7829')
-> +    ASSET_DTB = Asset(
-> +        ('https://raw.githubusercontent.com/zevorn/k230-boot-assets/'
-> +         'c3c32fb46e8307c5063f13e8f367c98bf9273cd1/'
-> +         'yocto/direct-boot/k230-canmv.dtb'),
-> +        '5050240b48ce0988c73eaefa73e4945a40abca503cf488d22a3adf6ef50bbe4c')
-> +    ASSET_INITRD = Asset(
-> +        ('https://raw.githubusercontent.com/zevorn/k230-boot-assets/'
-> +         'c3c32fb46e8307c5063f13e8f367c98bf9273cd1/'
-> +         'yocto/direct-boot/rootfs.cpio.gz'),
-> +        '4e1869a99a232ee60324f71f3a9e84a79b03ccabb5b73f8a727c5ff5be5c0914')
-> +    ASSET_UBOOT = Asset(
-> +        ('https://raw.githubusercontent.com/zevorn/k230-boot-assets/'
-> +         'c3c32fb46e8307c5063f13e8f367c98bf9273cd1/common/u-boot'),
-> +        '0915b9a92a7c911846a8cf691866ef14ef050a51d04209f884ae8e9ec33f36d2')
-> +    ASSET_FW_JUMP = Asset(
-> +        ('https://raw.githubusercontent.com/zevorn/k230-boot-assets/'
-> +         'c3c32fb46e8307c5063f13e8f367c98bf9273cd1/'
-> +         'common/fw_jump.uImage'),
-> +        'cf7788e470f1d6e8c85491ecdc2705518db1b6af54080e8c7a3464bad0d902b7')
-> +
-> +    def wait_for_linux_shell(self):
-> +        self.wait_for_console_pattern('meta-k230 initramfs starting...')
-> +        self.wait_for_console_pattern('~ #')
-> +
-> +    def test_k230_direct_boot(self):
-> +        self.set_machine('k230')
-> +        kernel_path = self.ASSET_KERNEL.fetch()
-> +        dtb_path = self.ASSET_DTB.fetch()
-> +        initrd_path = self.ASSET_INITRD.fetch()
-> +
-> +        self.vm.set_console()
-> +        self.vm.add_args('-kernel', kernel_path,
-> +                         '-dtb', dtb_path,
-> +                         '-initrd', initrd_path,
-> +                         '-append', 'console=ttyS0,115200 earlycon=sbi',
-> +                         '-no-reboot')
-> +        self.vm.launch()
-> +        self.wait_for_linux_shell()
-> +
-> +    def test_k230_uboot_boot(self):
-> +        self.set_machine('k230')
-> +        kernel_path = self.ASSET_KERNEL.fetch()
-> +        dtb_path = self.ASSET_DTB.fetch()
-> +        initrd_path = self.ASSET_INITRD.fetch()
-> +        uboot_path = self.ASSET_UBOOT.fetch()
-> +        fw_jump_path = self.ASSET_FW_JUMP.fetch()
-> +        initrd_end = 0x0a100000 + os.path.getsize(initrd_path)
-> +
-> +        self.vm.set_console()
-> +        self.vm.add_args(
-> +            '-bios', uboot_path,
-> +            '-device',
-> +            f'loader,file={fw_jump_path},addr=0xc100000,force-raw=on',
-> +            '-device',
-> +            f'loader,file={kernel_path},addr=0x8200000,force-raw=on',
-> +            '-device',
-> +            f'loader,file={initrd_path},addr=0xa100000,force-raw=on',
-> +            '-device',
-> +            f'loader,file={dtb_path},addr=0xa000000,force-raw=on',
-> +            '-no-reboot')
-> +        self.vm.launch()
-> +
-> +        interrupt_interactive_console_until_pattern(self, 'K230#')
-> +        commands = (
-> +            'setenv bootargs console=ttyS0,115200 earlycon=sbi',
-> +            'fdt addr 0xa000000',
-> +            'fdt resize 8192',
-> +            'fdt set /chosen linux,initrd-start <0x0 0xa100000>',
-> +            f'fdt set /chosen linux,initrd-end <0x0 0x{initrd_end:x}>',
-> +        )
-> +        for command in commands:
-> +            exec_command_and_wait_for_pattern(self, command, 'K230#')
-> +
-> +        exec_command_and_wait_for_pattern(
-> +            self, 'bootm 0xc100000 - 0xa000000',
-> +            'Starting kernel ...', failure_message='ERROR')
-> +        self.wait_for_linux_shell()
-> +
-> +
-> +if __name__ == '__main__':
-> +    LinuxKernelTest.main()
-> -- 
-> 2.53.0
-> 
+>   #endif
+
 
