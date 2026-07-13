@@ -4,64 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 494E2C44501
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 12:40:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1395EC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 12:52:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjFww-0008Qs-1Z; Mon, 13 Jul 2026 08:39:54 -0400
+	id 1wjG8P-00046d-JW; Mon, 13 Jul 2026 08:51:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wjFwt-0008QQ-VP
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 08:39:51 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wjG8M-00046P-3W
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 08:51:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wjFwq-0003mZ-MQ
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 08:39:51 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66DCdWCa092104
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 13 Jul 2026 21:39:32 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=73iPlgnWxGJ6HmiB0uiRa/+NLtyeKlqyZB0v9wXDOrg=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1783946372; v=1;
- b=TYwQtsjnlAGslfL9C37kNf73D3qKZHIf0OqRkgb4JY32fCn5C2xLkuSFdolo6umv
- BmbRy/MB3ku01F6DngZpWY6eR/4xjUy/c5f/IonHPiY3f9aPXtbzGoa9M84n9Gcd
- RIFVTJunFe9KMM+k1N0TT8aJdWB+Hj4lCNUDT7HcBjlWah3usPJeKaefubgnMFpz
- OyxYUacNntp17e/L0CSFSLDMLS8etE0TLm4DkvkU2HPtz0BgS680iKNj1HgFgEhM
- Sy23NnYQnHjZltsdve5NDk+iij7jVN4IGXa2h3UFAEqdKWv6oMnnjCihS8NF0pPQ
- FUEZ1PeBWAUrkRoEbnIO3A==
-Message-ID: <c8ab2417-3b0e-4652-93fd-d7c4bb1eaad8@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 13 Jul 2026 21:39:31 +0900
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wjG8K-0005mR-89
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 08:51:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783947099;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=xBCRhKksK85VC4gIzUEZycAGMGy0x9PL2hAUdX3iQeM=;
+ b=Df7G0gSv5pbjYlOY8FJEvYX2TIhwNaKJa1SRLVh7CyNmElU9Kt58jOZaEBUtW4Yj5xwQul
+ IyZgpsaSNdJq+Vk+lJrbBAJKUjb/lrCOfBiL1Gz76uxl7Te16p/P0xP5wWsEWbZVZbwme+
+ v8gyygIKttalehX83WT9krWcesRktKU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-508-YFtPgcdUMSy1AtU948EdFQ-1; Mon,
+ 13 Jul 2026 08:51:36 -0400
+X-MC-Unique: YFtPgcdUMSy1AtU948EdFQ-1
+X-Mimecast-MFC-AGG-ID: YFtPgcdUMSy1AtU948EdFQ_1783947096
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E44D51955D5E
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 12:51:35 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.3])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5735936F29; Mon, 13 Jul 2026 12:51:33 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PATCH] hw/display/vhost-user-gpu: validate message payload sizes
+Date: Mon, 13 Jul 2026 16:51:30 +0400
+Message-ID: <20260713125130.101787-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] qdev: Clarify instantiation and realization
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, BALATON Zoltan <balaton@eik.bme.hu>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
-References: <20260629-qdev-v2-1-8cd1d9be0d8d@rsg.ci.i.u-tokyo.ac.jp>
- <CAFEAcA9QJCfeBTi4GdatY0Ci7no8BQETxHd7i6TtJ7SFxEtjjA@mail.gmail.com>
- <2c996e76-72a9-4e3f-b732-3cac1554be6b@rsg.ci.i.u-tokyo.ac.jp>
- <CAFEAcA_E=okeaQ=P4qW7_NE0dZPANYU7QXiC0N-kSqvwahwD1Q@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <CAFEAcA_E=okeaQ=P4qW7_NE0dZPANYU7QXiC0N-kSqvwahwD1Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: permerror client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,165 +85,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/07/13 20:33, Peter Maydell wrote:
-> On Mon, 13 Jul 2026 at 12:21, Akihiko Odaki
-> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->>
->> On 2026/07/13 18:13, Peter Maydell wrote:
->>> On Mon, 29 Jun 2026 at 09:18, Akihiko Odaki
->>> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->>>>
->>>> The distinction of instantiation and realization was vague in the old
->>>> documentation so this change clarifies it.
->>>>
->>>> The old documentation said:
->>>>> The former may not fail (and must not abort or exit, since it is
->>>>> called during device introspection already), and the latter may return
->>>>> error information to the caller and must be re-entrant.
->>>>> Trivial field initializations should go into #TypeInfo.instance_init.
->>>>> Operations depending on @props static properties should go into
->>>>> @realize.
->>>>
->>>> The first problem with the old documentation is that it is unclear what
->>>> "trivial field initializations" means and why triviality makes
->>>> initialization appropriate for #TypeInfo.instance_init. Another problem
->>>> is that the documentation is not comprehensive enough; for example, it
->>>> mentions @props static properties, but it does not say anything about
->>>> the other properties.
->>>>
->>>> The keys to distinguish instantiation and realization are property
->>>> setting and device introspection. The fact that property setting happens
->>>> after #TypeInfo.instance_init and before realization implies that
->>>> operations depending on properties should go into @realize.
->>>>
->>>> The fact that instantiation happens during device introspection but
->>>> realization does not implies:
->>>> - Instance properties should be added in #TypeInfo.instance_init.
->>>> - Instantiation must not have any side effect not contained in the
->>>>     instance.
->>>> - Any operations without special requirements should go into @realize so
->>>>     that they can be skipped during device introspection.
->>>>
->>>> Note these two facts to guide appropriate instantiation and realization.
->>>
->>> Thanks for sending this. I think we definitely need to try to be
->>> clearer about what to do in instance_init and what to do in realize.
->>>
->>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>
->>>>     * Realization
->>>>     * -----------
->>>>     *
->>>> - * Devices are constructed in two stages:
->>>> - *
->>>> - * 1) object instantiation via object_initialize() and
->>>> - * 2) device realization via the #DeviceState.realized property
->>>> - *
->>>> - * The former may not fail (and must not abort or exit, since it is called
->>>> - * during device introspection already), and the latter may return error
->>>> - * information to the caller and must be re-entrant.
->>>> - * Trivial field initializations should go into #TypeInfo.instance_init.
->>>> - * Operations depending on @props static properties should go into @realize.
->>>> + * Devices are constructed in the following order:
->>>> + *
->>>> + * 1) #TypeInfo.instance_init
->>>> + * 2) pre-realize property value setting
->>>> + * 3) device realization via the #DeviceState.realized property
->>>> + *
->>>> + * #TypeInfo.instance_init may not fail, and realization may return
->>>> + * error information to the caller and must be re-entrant.
->>>
->>> I know this is in the existing text, but what do we mean by
->>> "must be re-entrant" here ? Does this mean "even if you return
->>> a failure from your realize method you must be able to handle the
->>> caller retrying the realize operation" ?  (I'm not sure why that's
->>> a useful thing for the caller to be able to do...)>
->>> I assume we don't mean "even if you successfully realize you must
->>> handle (and treat as a no-op) a second call to realize", because
->>> none of our devices do that :-)
->>
->> If you take the code literally, device_set_realized() indeed avoids
->> calling realize after successful realization, but it doesn't report an
->> error when retrying, so I think this means to allow that.
->>
->> I don't think it's that useful, and it is likely to cause bunch of bugs.
->> I can also imagine that careful developers have written device code that
->> preserves this contract, though the added complexity is useless in practice.
->>
->> In my opinion, the property should be tristate: initialized, realized,
->> or retired. Then we would have only the following state transitions:
->>
->> Successful realization: initialized -> realized
->> Failed realization: initialized -> retired
->> Unrealization: realized -> retired
->>
->> This is another opportunity for refactoring, but for this particular
->> patch I'm planning to keep it out of scope.
-> 
-> OK. We could make the text clearer then, I think. Maybe
-> 
-> "#TypeInfo.instance_init may not fail. #DeviceClass.realize can
-> fail, returning error information to the caller. A device realize
-> method should handle being called again after it has failed once."
-> 
-> ?
-> 
->>>
->>>> + * #TypeInfo.instance_init should add instance properties but must not
->>>> + * have any side effect not contained in the instance, since it happens
->>>> + * during device introspection already. Any operations without special
->>>> + * requirements should go @realize so that they can be skipped during
->>>> + * device introspection.
->>>>     * After successful realization, setting static properties will fail.
->>>>     *
->>>>     * As an interim step, the #DeviceState.realized property can also be
->>>> @@ -40,9 +43,8 @@
->>>>     * point in time will be deferred to machine creation, so that values
->>>>     * set in @realize will not be introspectable beforehand. Therefore
->>>>     * devices must not create children during @realize; they should
->>>> - * initialize them via object_initialize() in their own
->>>> - * #TypeInfo.instance_init and forward the realization events
->>>> - * appropriately.
->>>> + * initialize them via #TypeInfo.instance_init and forward the
->>>> + * realization events appropriately.
->>>
->>> This change doesn't seem to me to match the paragraph it's in.
->>> The intent of the paragraph is clearly "initialize child objects in
->>> your own instance_init method", so we want to say "in" the method.
->>> "via" here is for "how you do it"; we could make that say
->>> "initialize them (e.g. by calling object_initialize())" to be
->>> a bit clearer, something like:
->>>
->>> "Therefore
->>> devices must not create children during @realize; they should
->>> initialize them (e.g. by calling object_initialize_child()) in their
->>> own #TypeInfo.instance_init method, and then realize them (e.g. by
->>> calling qdev_realize()) in their own #DeviceClass.realize method."
->>
->> That looks better. I'll use it for the next version.
->>
->>>
->>> This whole paragraph is one of those we sometimes like to put in,
->>> which is sketching out a design idea or direction we have not
->>> actually managed to achieve. So it's part aspiration and part
->>> reality. In particular, the flat "must not create children during
->>> realize" statement clashes with "operations depending on static
->>> properties should go into realize", because occasionally we need
->>> to create or not create children based on the value of a property...
->>
->> Honestly I would just replace "must" with "should". Hopefully people
->> would understand.
-> 
-> We could maybe say "should not" and add an extra sentence at the end:
-> 
-> "Occasionally a device may need to decide whether or not to create
-> a child object based on the value of a property. In this case it
-> will need to both create and realize the child in its realize method,
-> because the property value is not known until that point."
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Thank you for suggestions; both of them are nice improvements. I'll 
-incorporate them in the next version.
+A malicious or buggy vhost-user-gpu backend can send messages with
+undersized payloads, leading to out-of-bounds reads when the handler
+accesses struct fields beyond the allocated buffer. However,
+vhost-user-gpu is considered trusted by QEMU by design (it has access to
+shared memory etc).
 
-Regards,
-Akihiko Odaki
+Add a centralized minimum payload size check in vhost_user_gpu_chr_read()
+that rejects messages before dispatch, and a per-pixel bounds check in
+the VHOST_USER_GPU_UPDATE handler to ensure the variable-length data
+covers the declared width x height.
+
+Fixes: 267f66465 ("hw/display: add vhost-user-vga & gpu-pci")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3866
+Reported-by: Feifan Qian <bea1e@proton.me>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ hw/display/vhost-user-gpu.c | 38 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
+
+diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
+index 57360898ca0..cd684d63639 100644
+--- a/hw/display/vhost-user-gpu.c
++++ b/hw/display/vhost-user-gpu.c
+@@ -119,6 +119,31 @@ static VhostUserGpuMsg m __attribute__ ((unused));
+ 
+ static void vhost_user_gpu_update_blocked(VhostUserGPU *g, bool blocked);
+ 
++static size_t
++vhost_user_gpu_min_payload_size(VhostUserGpuRequest request)
++{
++    switch (request) {
++    case VHOST_USER_GPU_CURSOR_POS:
++    case VHOST_USER_GPU_CURSOR_POS_HIDE:
++        return sizeof(VhostUserGpuCursorPos);
++    case VHOST_USER_GPU_CURSOR_UPDATE:
++        return sizeof(VhostUserGpuCursorUpdate);
++    case VHOST_USER_GPU_GET_EDID:
++        return sizeof(VhostUserGpuEdidRequest);
++    case VHOST_USER_GPU_SCANOUT:
++        return sizeof(VhostUserGpuScanout);
++    case VHOST_USER_GPU_DMABUF_SCANOUT:
++        return sizeof(VhostUserGpuDMABUFScanout);
++    case VHOST_USER_GPU_DMABUF_SCANOUT2:
++        return sizeof(VhostUserGpuDMABUFScanout2);
++    case VHOST_USER_GPU_DMABUF_UPDATE:
++    case VHOST_USER_GPU_UPDATE:
++        return sizeof(VhostUserGpuUpdate);
++    default:
++        return 0;
++    }
++}
++
+ static void
+ vhost_user_gpu_handle_cursor(VhostUserGPU *g, VhostUserGpuMsg *msg)
+ {
+@@ -322,6 +347,14 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
+         if (m->scanout_id >= g->parent_obj.conf.max_outputs) {
+             break;
+         }
++
++        if ((uint64_t)m->width * m->height >
++            (msg->size - sizeof(VhostUserGpuUpdate)) / sizeof(uint32_t)) {
++            error_report("vhost-user-gpu: update payload too small"
++                         " for %ux%u", m->width, m->height);
++            break;
++        }
++
+         s = &g->parent_obj.scanout[m->scanout_id];
+         con = s->con;
+         pixman_image_t *image =
+@@ -396,6 +429,11 @@ vhost_user_gpu_chr_read(void *opaque)
+     msg->flags = flags;
+     msg->size = size;
+ 
++    if (size < vhost_user_gpu_min_payload_size(request)) {
++        error_report("vhost-user-gpu: message %d payload too small", request);
++        goto end;
++    }
++
+     if (request == VHOST_USER_GPU_CURSOR_UPDATE ||
+         request == VHOST_USER_GPU_CURSOR_POS ||
+         request == VHOST_USER_GPU_CURSOR_POS_HIDE) {
+-- 
+2.55.0
+
 
