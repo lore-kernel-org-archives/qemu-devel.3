@@ -4,112 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC4FCC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 11:44:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57356C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 11:47:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjF4x-00037d-A8; Mon, 13 Jul 2026 07:44:07 -0400
+	id 1wjF7Q-00046i-I5; Mon, 13 Jul 2026 07:46:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wjF4v-000370-PS
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:44:05 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wjF4u-0003Ux-BI
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:44:05 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-47f365afc5aso646340f8f.0
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 04:44:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783943042; cv=none;
- d=google.com; s=arc-20260327;
- b=b7sIIz40Nwaqej/qM6FAr5lFYDAQ47VWVHR8brEogos5sEL24g95FXydjdNuWRf+KI
- ZDDgTKJXhFkpE/CAjWYtrY36rmjxdCmsMIjsVUEqoCnhAZxICGXKu+mdkfiRUYHUH0xD
- CR0Gst7cX6zvs2sys0MWHzlC25GyQAyPyOepH4C39+2DPA8d294+uftTzi+7dYhtGFQ4
- NDpxbmbv2dw+UiqXX0ezhLeRi58DNN/+aU6LwIAYV+w3n2nXxUJu/fXqY+IfSt3KDl52
- xC/NQKpzmKrJqS2lWGNB6GWpndsC8Ew9BNJzJhYF28h32nGWwJlqg+SSNVeU6qbjPnGM
- tZ5Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=LT9W4I7jLxPnX9fLtL+DaSfDgdiHLdTNHZNrepeHftU=;
- fh=GauA/jLFjWCuHvu1zU+hzihpiTaSiuhEybDxxqOTQGk=;
- b=Lyb/JvGY8O8VvkeJQ2mfocuak24WHoddt9ss+wa9q6vLn6mcZ6EjIaIQEznGko45Od
- AfA8bx84w+0TwTblMcbf5/s16pVl/lA61Iq1fnSWbT5I0JB0gPic73i5e/g2LBJeLs6R
- i4BodaSi+UbUKBJH/OGniHZf2SCKFXwmlfQv3h3sRFbEDTOtb51u8YXRpnoR1rPiDnGj
- n6b4N1WX3AAuZx29Hwv8p0yxU/X0CHBW6MDDc9/5N7o2gHKdnv3JQbCWYDqrX1kFjtt9
- W74j5/+dCFhu2slyJp8BV63mzkQHX2unbiiSCLxEe7iQXq2dQrVnaXNQdXG3G8G7hlVy
- ogNQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wjF7L-000469-R8
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:46:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wjF7I-0003ox-Mp
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:46:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783943187;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=e4It8u2KpKs1trJIciaJQ4z1TShGKaqnv60R8EDCtCA=;
+ b=G/iMVdF3Jn7WtuelmVTsKlQmaoBQbR9n2zEzxNoRe7jwwW2a0HDqKesFcpdVIgF9ZsSBCl
+ ZwZVrhXr/va8ZagwZDy5BeAMdvLX4gIcbUX0nA3AZlKEBsrVhaWKwUmKRpaRlA3uhSHODC
+ aSuAAjAYDNLaVkaeX7AoUoPz/vf0wZA=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-586-V8856LaiOhKitwxspZFuBg-1; Mon, 13 Jul 2026 07:46:26 -0400
+X-MC-Unique: V8856LaiOhKitwxspZFuBg-1
+X-Mimecast-MFC-AGG-ID: V8856LaiOhKitwxspZFuBg_1783943185
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-472bdd6f529so1840705f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 04:46:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783943042; x=1784547842; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=LT9W4I7jLxPnX9fLtL+DaSfDgdiHLdTNHZNrepeHftU=;
- b=Yb627mSkTccjshnG8kBNZe+a3ReynsAldJcEFhwdSDxOeVXd8jtiF4wbc3HLRNQgRP
- R5MW5T0q38ARdQdmMlT8bZhjfsF5z+3+AwHu6zk58fWMz85DMCiTGwn2kfjma2sVQLMo
- GRq6ah/sC2ymmYOj/eRPik/t0MgF2gmA/b027AaNkNgTwO51bCkKoPlSBqHolc4UvnB3
- CMk8dHWT4Z7Wc+E4o0eEkHRpoKSM3WzvxT6tvdgvcCqRs4p8Wse0fc6iRmX/RYxlvZNG
- OMU0ayvLX8wINF365vH6OMH4Wp6jTKMCPd/nl1vX3DizIoTHd6c077TVZloyYB13nmHI
- Mwfg==
+ d=redhat.com; s=google; t=1783943185; x=1784547985; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=e4It8u2KpKs1trJIciaJQ4z1TShGKaqnv60R8EDCtCA=;
+ b=lO+EX0VveK4dbAw3kT4G4HQVuCX6+17F+u14LfW5QbhlB41N5xYsTWDsKdCu+WVgyQ
+ yMNwTBKbjPw7f1PJ/cyoUcjRtjGGgqcq3CB7xjUau7MDyXtBxi0qWmyORVYrRuAdNcjI
+ LMbPspz1n4aPf09Ix4R+SHDBRPcKvvMbZV/TVg36VPZvtUDd1ZKx+GvtKZfD2LeKA0c2
+ whPcaf8oCqAXhRymalfyGfkD9qmRoibQv+PaGdj7c6k2hmDrTJd73CVoLIVwtlHPQudC
+ 1FD0/NaFnsfxoBfXZ0c528RhfNIZSet9Y2logydIawjGcqUhXzY29v77i7we3ETDisrE
+ +OaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783943042; x=1784547842;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=LT9W4I7jLxPnX9fLtL+DaSfDgdiHLdTNHZNrepeHftU=;
- b=Xfp+SDE+t0UULkIuZs8RbSoEaZqR0i6PllRZ+N8ssFFUJAF+qaNzbmRQeNkQLTdkAP
- BwUiivI5CGXjWpr4O4Fpf/uXqiEMe4MXTzED6vlPO1ZWF6/KiusgqpTQ9uopqTKK6lwu
- oQOa9RXF4sjSIYTsz/cb5yM1fh4882HWlRRafqPptFXnCA3sjOcAHZR+IYHN+vdmvoTo
- +QghAE7MNBETG/mXr3ph2P55+gFWfJnRCvgb2GZs3E+fpN01oj/I5/nGIAEEmaXx4uqg
- 6fDYD6Y2HzigytCNQMFvQZabAohU4xBuGdLZLq87XB4zdplFywbywNkHu9AOJz3I9ptj
- ab1g==
-X-Gm-Message-State: AOJu0YzLDya3QRV97KWhF9QB89PnWofLNqDWehu2ZIZEZBt/dcCml3PW
- yfDP3M0JyEkMFthVLHyK7IUOu2Ekhax3kx2dwRAaBb/yxQ3eQD15dWhWt+98BuLUyi0PMOMnTzw
- OvjIUsfYcLTPXNEylh19DMUBL6RHBFFYTsITImwWjVA==
-X-Gm-Gg: AfdE7cneGUmLtpUdeKUolH2MAtqAq4BPelDFZKTTdqawS6azFY3aO0+suDhCYgFDa8a
- u0F4npMclykB5Zw+VVqsozhhewn6iEW97FN2AOy2cVbYKuwyhLkFuJPOhNw5VNChCf9SUPvfJBQ
- ODqTqzC2sK/vnwXfcZkpaGdUwPdVwZB6QgX61/0y7er8OOr6VKrYyqA5wJedzjyWzxSew1BXvkx
- bf29hUNRiypGlq/KAlaX5iGlg21m67ITodyCojLSAnres/M5KqGy+s7/SY+JbLZExo9C/3/CoTq
- exgYJEypQQrU6DRaxjqPb0xhOKRjaP8506v42BeDE2mAh4nrOAlZii+TZ2ofZqygjI4DZZiXuPr
- BdyygUMPXM9yrsApJG3or4OX3yoHvlYOPnaQWI8ntRXFl0dd3y7e6
-X-Received: by 2002:a5d:5f90:0:b0:478:33fe:f987 with SMTP id
- ffacd0b85a97d-47f2dc95d57mr9205801f8f.23.1783943041701; Mon, 13 Jul 2026
- 04:44:01 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783943185; x=1784547985;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=e4It8u2KpKs1trJIciaJQ4z1TShGKaqnv60R8EDCtCA=;
+ b=a/QHBWPNMqE5dJ/Ygzmd8PWFjYdOtuCWC4FYHPXcRM7i/6uHc8WIzvuLD2/Q0SF4RU
+ QPmHk5H5pJY0FZXcLVtLA1Uk/qiVSrYcMc+N6GaAPRbrFWNVKRT3N8AfOlb+rrJjllMb
+ Fs6rKxRRUWN+jRXk1Kldp4G4x7Q9RKA6P8u70xdM2w3/Ad902mrcrjv2IpVEFW2XJ5sx
+ T/WZt6TwZ557bkcwxdJQmgEBivF+kM2j/EtnqFbQeTUCre107wx2hxOs9230Tttmqy22
+ 3IrFYs9hoWLLvddn4okbQACG3dietw+PPIRwrUbbJasc/uPAw9vVXCzGanu4BdW/n3L1
+ 5+5g==
+X-Gm-Message-State: AOJu0YyOBE7Zb64ow9VLkPyvaolIVi+7qbDHBpDPss4qtqyUcaSNmFEJ
+ p4mvhVKLfNsX0fe/bJ09tgWMgg+YX+Wafz5n0kRgJuwcRpSNC4HA4ySYQk02xZtuZp1t8GIeF8y
+ xD89ikLLrt6K8zlDp6dIhXl0MiSA46QM3g3fTVIm7QiU4nU9/PixQGk8+Y0nkSYTChQi088Yhbm
+ rpagYnk8CyAmtROyaw8RnTaObEbRZexGtJD6qgMlYP
+X-Gm-Gg: AfdE7cmoSYfoMGkAC5RWWPhew3nn+WxisXGjaNiJUwtVjPiZIDaewXJfsPb0Z1L1V0H
+ 5eFA6lEnQ5K1izfkYDOYdenQkAUUVa5qv3nMGlkUSGhY7ccM1r3nXuoQakPwOqkXD/J1xfaEFUm
+ zq2qhRz9LD1KlC8dt5KmStTm0ACxHkB2aRFZjUKwa8B03wVmi8lPKtqQq4RH4hJwQ5uUWNfYkU8
+ oi526tQi3+wSt5eeM3XJb0YpzNDuwdjyzygtEnmMUnwIuW4vmCkMg/3YPqL0aDfYV3mWMYySDFd
+ JUKiSBUc+pqSYW8xe9DmD1Xj8E6JOn3lFgsW7g/+xraCZQCuv/l5JfsdtjM2+j4dHV+WKlEYuIh
+ r0KxvD6oSvrhT//WWC9kbuZpcPektRv+Pz7+Z7b79fj+wKzpqsXdRm3L+ppdpbfkEfPExZLcIW6
+ Y+tZDTaJ0OSQU+I9c=
+X-Received: by 2002:a05:6000:2086:b0:47d:d812:e067 with SMTP id
+ ffacd0b85a97d-47f2dcc5bfcmr9576233f8f.29.1783943184759; 
+ Mon, 13 Jul 2026 04:46:24 -0700 (PDT)
+X-Received: by 2002:a05:6000:2086:b0:47d:d812:e067 with SMTP id
+ ffacd0b85a97d-47f2dcc5bfcmr9576194f8f.29.1783943184315; 
+ Mon, 13 Jul 2026 04:46:24 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.48.175])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f273195d9sm24938600f8f.3.2026.07.13.04.46.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 13 Jul 2026 04:46:23 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: armbru@redhat.com,
+	qemu-trivial@nongnu.org
+Subject: [PATCH] json-parser: fix formatting of comment
+Date: Mon, 13 Jul 2026 13:46:22 +0200
+Message-ID: <20260713114622.1950506-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
-References: <20260713084307.79593-1-alexander@mihalicyn.com>
- <20260713084307.79593-3-alexander@mihalicyn.com>
-In-Reply-To: <20260713084307.79593-3-alexander@mihalicyn.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Mon, 13 Jul 2026 14:43:35 +0300
-X-Gm-Features: AUfX_myKpXvOMmru-CDCYEYtnlD9euf_CpJWIg6rAEOcTVIoJTHC-0vDZcKp68s
-Message-ID: <CAAjaMXZuMEmZ0S6+2LyWP6j_RFRDO7VyztfjjYPLMxg3vMw+ew@mail.gmail.com>
-Subject: Re: [PATCH v4 02/10] hw/audio/virtio-sound: drop unused struct
- VirtIOSoundPCMStream.flushing field
-To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>, 
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x42c.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: permerror client-ip=170.10.133.124;
+ envelope-from=pbonzini@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,39 +118,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 13, 2026 at 11:43=E2=80=AFAM Alexander Mikhalitsyn
-<alexander@mihalicyn.com> wrote:
->
-> From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
->
-> Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.i=
-o>
-> ---
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ qobject/json-parser.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+diff --git a/qobject/json-parser.c b/qobject/json-parser.c
+index 5935730c0c7..6b1b4762bda 100644
+--- a/qobject/json-parser.c
++++ b/qobject/json-parser.c
+@@ -29,9 +29,10 @@
+  * object, an error, or NULL (if the object is incomplete and no error
+  * happened) after every token.  Therefore it has an explicit
+  * representation of its parser stack; each stack entry consists of a
+- * parser state and a QObject: - a QList, for an array that is being
+- * added to - a QDict, for a dictionary that is being added to - a
+- * QString, for the key of the next pair that will be added to a QDict
++ * parser state and a QObject:
++ * - a QList, for an array that is being added to
++ * - a QDict, for a dictionary that is being added to
++ * - a QString, for the key of the next pair that will be added to a QDict
+  *
+  * The stack represents an arbitrary nesting of arrays and dictionaries
+  * (whose next key has been parsed); it can also have a dictionary whose
+-- 
+2.54.0
 
-> v4:
->         - this commit was split from
->           "hw/audio/virtio-sound: add stream state variable"
->           (suggested by Manos Pitsidianakis)
-> ---
->  include/hw/audio/virtio-snd.h | 1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/include/hw/audio/virtio-snd.h b/include/hw/audio/virtio-snd.=
-h
-> index f8bb5c95b97..b60b098ccd8 100644
-> --- a/include/hw/audio/virtio-snd.h
-> +++ b/include/hw/audio/virtio-snd.h
-> @@ -138,7 +138,6 @@ struct VirtIOSoundPCMStream {
->      virtio_snd_pcm_set_params params;
->      uint32_t id;
->      VirtIOSound *s;
-> -    bool flushing;
->      audsettings as;
->      union {
->          SWVoiceIn *in;
-> --
-> 2.47.3
->
 
