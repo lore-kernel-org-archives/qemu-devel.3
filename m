@@ -4,51 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79350C44507
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 14:36:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 686F3C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 14:36:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjHlG-0008AG-1Z; Mon, 13 Jul 2026 10:35:58 -0400
+	id 1wjHlD-00089X-R9; Mon, 13 Jul 2026 10:35:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wjHl1-00088L-U7
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wjHl1-00088M-Uj
  for qemu-devel@nongnu.org; Mon, 13 Jul 2026 10:35:46 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wjHkx-0001u7-UG
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wjHkz-0001uF-QQ
  for qemu-devel@nongnu.org; Mon, 13 Jul 2026 10:35:43 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 4981F40107;
+ by sea.source.kernel.org (Postfix) with ESMTP id 19E3140139;
+ Mon, 13 Jul 2026 14:35:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99EA21F000E9;
  Mon, 13 Jul 2026 14:35:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB7F31F000E9;
- Mon, 13 Jul 2026 14:35:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1783953338;
- bh=YRwJLocGlcoYlaaTPE4IjhqLICavZEbrDlqYevfC/QY=;
+ s=k20260515; t=1783953340;
+ bh=T8p4n2eSgA6Zg6pqEnfewKH6Qm0lGS/uzGWFa5oza50=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=e6NkguFZ0aktHnjn4uJOAUCErDLy+AdH0yHaaX81yZFdk1aIYq8rOHThE97TXUKfS
- D/9i12Itoy3BF5l3EwzAv2Hd73liTMT0rCfmM90FZWi8IfCV3laBRwVBdoiAV8GT4O
- JiOsLpF7Tfp+EvlYGOaAnkuBMwfqCCHKQ+AhV1KNpkJQ328bLdj2vUaJi9cXLT77RB
- 0mZnkbXDLzQs1i9YcSWrwVQSTDDNpQoRujiuoP0XnIr5kV9yUWkCVSLzmlgSK6cDW0
- N2bNopRytKPM+aVDU6f3/9jv0X0Y9mLvF3E+LZjbQy7/T8gCaMn6Q8CaVj+PE8m3Sh
- 9c4YTyz74EtdA==
+ b=QVGW/YoKQfDspsaGeSUp7vOdzX6XeVf3N925i47STxxm9NL/BMSp1bxraLHaNcjAy
+ ik1N8TsilBB9rCVBa1dnva0K+J5PwlQ+wVLCkwo0+a3i4G9v7c2MJYq1ehwxlxoBuQ
+ nH0/APo/W4K813l2xy/pVt/0vwBZPmJLvOXAAS/kCmpg16o2a+LOj5/4W+GqhvuW/x
+ O3eR5h9LkYzsrVIhK/GkTB96dXwGIoCsZ82Povk0+GFWY2zp+WoYx1YDHnWh53KwCM
+ lne+HyV08sMtV29DieYz84oRJtOP4TwfvWzXuxbJ1JQgrL5VYFqWUiB+kRs4ypnH7v
+ ZpNMbW0n2YKPg==
 From: Helge Deller <deller@kernel.org>
 To: Stefan Hajnoczi <stefanha@gmail.com>,
 	qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Helge Deller <deller@gmx.de>, Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 1/2] linux-user: Validate guest-passed dm_ioctl data_size
-Date: Mon, 13 Jul 2026 16:35:30 +0200
-Message-ID: <20260713143533.4641-2-deller@kernel.org>
+ Helge Deller <deller@gmx.de>, Matt Turner <mattst88@gmail.com>
+Subject: [PULL 2/2] linux-user/alpha: populate AT_HWCAP from env->amask
+Date: Mon, 13 Jul 2026 16:35:31 +0200
+Message-ID: <20260713143533.4641-3-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260713143533.4641-1-deller@kernel.org>
 References: <20260713143533.4641-1-deller@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -70,94 +71,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Matt Turner <mattst88@gmail.com>
 
-In do_ioctl_dm() we work with a struct dm_ioctl from the guest.  This
-has a fixed initial part, and then a variable data part; the guest
-tells us how long that part is by setting the data_size field.  The
-data_size is supposed to include the length of the fixed parts of the
-struct dm_ioctl.  Currently we don't validate anything about the
-guest-provided data_size, and we use it to allocate a buffer which we
-then copy the fixed part of the dm_ioctl struct into.  This means
-that if the guest passes a very small data_size the copy of the fixed
-part will overrun the buffer.
+Alpha has never set AT_HWCAP in linux-user emulation, so getauxval(AT_HWCAP)
+always returned 0 regardless of the emulated CPU model.
 
-Perform the same sanitizing of the minimum and maximum limits of the
-data_size that the kernel does in drivers/md/dm-ioctl.c in the
-copy_params() function.
+The Linux kernel computes ELF_HWCAP as ~amask(-1), i.e. the set of ISA
+extension bits that the amask instruction reports as supported (cleared in
+its output).  env->amask stores exactly those bits with the same layout
+(BWX=0x1, FIX=0x2, CIX=0x4, MVI=0x100, TRAP=0x200, PREFETCH=0x1000), so
+returning it directly from get_elf_hwcap matches the kernel convention.
 
+Add HAVE_ELF_HWCAP to target_elf.h and implement get_elf_hwcap() in
+elfload.c to expose the emulated CPU's capability mask to user-space
+programs via the auxiliary vector.
+
+Without this fix, programs using getauxval(AT_HWCAP) to detect BWX/FIX/CIX
+(such as glibc's memcpy or JIT compilers targeting Alpha) incorrectly
+concluded that no extensions were available even when emulating ev56+.
+
+Signed-off-by: Matt Turner <mattst88@gmail.com>
 Cc: qemu-stable@nongnu.org
-Fixes: 56e904ecb2018 ("linux-user: implement device mapper ioctls")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3736
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/syscall.c | 30 ++++++++++++++++++++++++++----
- 1 file changed, 26 insertions(+), 4 deletions(-)
+ linux-user/alpha/elfload.c    | 11 +++++++++++
+ linux-user/alpha/target_elf.h |  1 +
+ 2 files changed, 12 insertions(+)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index d257fb9ca9..3f060ee8b6 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -5088,6 +5088,9 @@ do_ioctl_usbdevfs_submiturb(const IOCTLEntry *ie, uint8_t *buf_temp,
- }
- #endif /* CONFIG_USBFS */
+diff --git a/linux-user/alpha/elfload.c b/linux-user/alpha/elfload.c
+index 1969f620a5..7be9e466b6 100644
+--- a/linux-user/alpha/elfload.c
++++ b/linux-user/alpha/elfload.c
+@@ -6,6 +6,17 @@
+ #include "target_elf.h"
  
-+#define DM_MAX_TARGETS                  1048576
-+#define DM_MAX_TARGET_PARAMS            1024
-+
- static abi_long do_ioctl_dm(const IOCTLEntry *ie, uint8_t *buf_temp, int fd,
-                             int cmd, abi_long arg)
- {
-@@ -5100,6 +5103,7 @@ static abi_long do_ioctl_dm(const IOCTLEntry *ie, uint8_t *buf_temp, int fd,
-     abi_long ret;
-     void *big_buf = NULL;
-     char *host_data;
-+    const size_t minimum_data_size = offsetof(struct dm_ioctl, data);
  
-     arg_type++;
-     target_size = thunk_type_size(arg_type, 0);
-@@ -5111,9 +5115,26 @@ static abi_long do_ioctl_dm(const IOCTLEntry *ie, uint8_t *buf_temp, int fd,
-     thunk_convert(buf_temp, argptr, arg_type, THUNK_HOST);
-     unlock_user(argptr, arg, 0);
- 
--    /* buf_temp is too small, so fetch things into a bigger buffer */
--    big_buf = g_malloc0(((struct dm_ioctl*)buf_temp)->data_size * 2);
--    memcpy(big_buf, buf_temp, target_size);
-+    /* At this point this includes the size of the fixed dm_ioctl parts */
-+    guest_data_size = ((struct dm_ioctl *)buf_temp)->data_size;
-+
-+    if (guest_data_size < minimum_data_size ||
-+        guest_data_size > DM_MAX_TARGETS * DM_MAX_TARGET_PARAMS) {
-+        ret = -TARGET_EINVAL;
-+        goto out;
-+    }
-+
++abi_ulong get_elf_hwcap(CPUState *cs)
++{
 +    /*
-+     * buf_temp is too small, so fetch things into a bigger buffer. Here
-+     * we copy all of the fixed parts of struct dm_ioctl but not the
-+     * data at the end (which in the struct is "char data[7]" but in
-+     * reality is command-specific and might be nothing or might be
-+     * much larger, as defined by data_size). We know struct dm_ioctl's
-+     * size is not target specific so we don't need to distinguish between
-+     * its minimum size for the host vs the target.
++     * The Linux kernel computes ELF_HWCAP as ~amask(-1), which clears a bit
++     * for each supported ISA extension.  env->amask stores exactly those bits
++     * set for the extensions supported by the emulated CPU model, matching
++     * the kernel's convention: bit set in AT_HWCAP ↔ extension present.
 +     */
-+    big_buf = g_malloc0(guest_data_size * 2);
-+    memcpy(big_buf, buf_temp, minimum_data_size);
-     buf_temp = big_buf;
-     host_dm = big_buf;
++    return cpu_env(cs)->amask;
++}
++
+ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUAlphaState *env)
+ {
+     int i;
+diff --git a/linux-user/alpha/target_elf.h b/linux-user/alpha/target_elf.h
+index 4987ae3944..dd90c6f783 100644
+--- a/linux-user/alpha/target_elf.h
++++ b/linux-user/alpha/target_elf.h
+@@ -12,6 +12,7 @@
+ #define ELF_MACHINE             EM_ALPHA
  
-@@ -5122,7 +5143,8 @@ static abi_long do_ioctl_dm(const IOCTLEntry *ie, uint8_t *buf_temp, int fd,
-         ret = -TARGET_EINVAL;
-         goto out;
-     }
--    guest_data_size = host_dm->data_size - host_dm->data_start;
-+    /* Adjust down to only the size of the payload */
-+    guest_data_size -= host_dm->data_start;
-     host_data = (char*)host_dm + host_dm->data_start;
+ #define HAVE_ELF_CORE_DUMP      1
++#define HAVE_ELF_HWCAP          1
  
-     argptr = lock_user(VERIFY_READ, guest_data, guest_data_size, 1);
+ /*
+  * Matches the kernel's elf_gregset_t (ELF_NGREG = 33):
 -- 
 2.54.0
 
