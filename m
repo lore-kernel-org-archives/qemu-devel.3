@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD0A6C44501
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA3C9C43458
 	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 10:05:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjDXS-0006K8-TK; Mon, 13 Jul 2026 06:05:26 -0400
+	id 1wjDXY-0006MS-P2; Mon, 13 Jul 2026 06:05:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wjDXM-0006JF-40
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 06:05:22 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wjDXT-0006Kx-Lb
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 06:05:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wjDXK-0006RO-86
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 06:05:19 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wjDXS-0006Sf-6c
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 06:05:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783937117;
+ s=mimecast20190719; t=1783937125;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=smXRNmIobHT+PzvirzhoAg9BKEYHtr0phoO/vcsc8tQ=;
- b=d6gjUt7Pe5VQT3ue2WprFCaztzuoOOjfuFiNvnjbcFBYM0El8/m7DJhTrWGZxjqymBwVMr
- Vdo6ICZ/T2DjF3pJmNoPLr6fG53zH4rTkqLUDhOdxYM8qC5xgfs4aGsfbv9Rzlq37bJyVT
- MD6Sf9HF/stWHMe0txGcttTVVkWPWDI=
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VOJwklUEQ8Mub0KPu+2trNh461ZWY5s7bnxYeKpK3vE=;
+ b=YVPEMr/XzspK+KOVR+AGSAnomcsXZuaqUIa8ZvbC4G74LcEktA8L0IRCZT+/EGG3Oqu+aM
+ TJfBSgWHVDHaasXSOb6kkMlC4pWYyC0Ip7hpASHFLUtOl2WGDPeOpR6gnQwdGPTffnlKM9
+ ybvd4tQCkbibrPCIbC1ziMI4BFVIDHc=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-561-s8GAFqPMM2qulRuwcQzHCw-1; Mon,
- 13 Jul 2026 06:05:15 -0400
-X-MC-Unique: s8GAFqPMM2qulRuwcQzHCw-1
-X-Mimecast-MFC-AGG-ID: s8GAFqPMM2qulRuwcQzHCw_1783937114
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-609-8SIJIqQVPuuYwc0XKp7tWw-1; Mon,
+ 13 Jul 2026 06:05:23 -0400
+X-MC-Unique: 8SIJIqQVPuuYwc0XKp7tWw-1
+X-Mimecast-MFC-AGG-ID: 8SIJIqQVPuuYwc0XKp7tWw_1783937122
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1DC3A1800658; Mon, 13 Jul 2026 10:05:14 +0000 (UTC)
+ id 94B0118009F0; Mon, 13 Jul 2026 10:05:22 +0000 (UTC)
 Received: from thuth-p1g4.redhat.corp
  (headnet03.pony-001.prod.iad2.dc.redhat.com [10.2.32.114])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4F1C71686; Mon, 13 Jul 2026 10:05:10 +0000 (UTC)
+ id 59EBC36919; Mon, 13 Jul 2026 10:05:20 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Peter Maydell <peter.maydell@linaro.org>
@@ -52,11 +53,13 @@ Cc: qemu-trivial@nongnu.org,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v3 0/3] Rework FIXMEs and fprintfs in hcd-xhci.c
-Date: Mon, 13 Jul 2026 12:05:05 +0200
-Message-ID: <20260713100508.123623-1-thuth@redhat.com>
+Subject: [PATCH v3 3/3] hw/usb/hcd-xhci: Use qemu_log_mask() instead of
+ fprintf() statement
+Date: Mon, 13 Jul 2026 12:05:08 +0200
+Message-ID: <20260713100508.123623-4-thuth@redhat.com>
+In-Reply-To: <20260713100508.123623-1-thuth@redhat.com>
+References: <20260713100508.123623-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: permerror client-ip=170.10.129.124;
@@ -83,17 +86,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the local FIXME macro and fprintf statement with
-qemu_log_mask() and g_assert_not_reached().
+From: Thomas Huth <thuth@redhat.com>
 
-Thomas Huth (3):
-  hw/usb/hcd-xhci: Turn guest-triggerable abort() into qemu_log_mask()
-  hw/usb/hcd-xhci: Remove the FIXME macro
-  hw/usb/hcd-xhci: Use qemu_log_mask() instead of fprintf() statement
+We've got a proper way for logging unimplemented hardware features,
+so use qemu_log_mask() instead of the fprintf() here now.
 
- hw/usb/hcd-xhci.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ hw/usb/hcd-xhci.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+index ee913d5c4d5..527910d92d2 100644
+--- a/hw/usb/hcd-xhci.c
++++ b/hw/usb/hcd-xhci.c
+@@ -1017,7 +1017,8 @@ static XHCIStreamContext *xhci_find_stream(XHCIEPContext *epctx,
+         }
+         sctx = epctx->pstreams + streamid;
+     } else {
+-        fprintf(stderr, "xhci: FIXME: secondary streams not implemented yet");
++        qemu_log_mask(LOG_UNIMP,
++                      "xhci: secondary streams not implemented yet");
+         *cc_error = CC_INVALID_STREAM_TYPE_ERROR;
+         return NULL;
+     }
 -- 
 2.55.0
 
