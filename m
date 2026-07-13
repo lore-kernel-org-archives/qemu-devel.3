@@ -4,58 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7405C44506
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 08:14:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A8BAC44501
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 08:18:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjBnW-0006a6-Us; Mon, 13 Jul 2026 04:13:54 -0400
+	id 1wjBrZ-0000Fu-OO; Mon, 13 Jul 2026 04:18:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1wjBnM-0006QY-CK; Mon, 13 Jul 2026 04:13:50 -0400
-Received: from apollo.dupie.be ([2001:bc8:3f2a:101::1])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wjBqp-0000B3-Bx
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 04:17:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1wjBnC-0006xG-Rb; Mon, 13 Jul 2026 04:13:44 -0400
-Received: from lt-jeanlouis (unknown
- [IPv6:2a02:a03f:fafb:301:46c3:62e6:fe62:23a1])
- by apollo.dupie.be (Postfix) with ESMTPSA id 51B161520F75;
- Mon, 13 Jul 2026 10:13:27 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
- t=1783930407;
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wjBql-0000HC-48
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 04:17:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783930633;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oHvdZ4QXwg5tsTGPKn5aT8Ew9GbiFOg2iCrJuLWkoRw=;
- b=jmJaE0VVMKjmfgZKDQJt64JMtc8WE0Dz93S2lp0nkd5B7ML28zo3VjRmaysJWUWgiy6U3J
- Bsc+Y789QYOkm9L+95m2rAt+nPZf5FNKB/S6iU2XRV2+N1VsABZNwkOaLi3bu97yPH97nd
- ghzjCyyD8Pg3HC2QljFOvx+KSFdhU4en8j0s3nGHVg4rkN435Fc77VI0zadbos5/eCqeex
- ldhYiiE8f4xyuFBtY1DjgnvmHdlJ5lZrlphlccaUpVVrlbP5dTg8vo1OsQoCtxT7Yxz4TF
- AB0SXJaSpKOiSf65br3VDXX62UJ5hULHT388g9bE9JEqx+8MFYs4riITEgegoQ==
-From: Jean-Louis Dupond <jean-louis@dupond.be>
-To: qemu-devel@nongnu.org
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Hanna Reitz <hreitz@redhat.com>, Eric Blake <eblake@redhat.com>,
- qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Jean-Louis Dupond <jean-louis@dupond.be>
-Subject: [PATCH v6 1/1] qcow2: add functionality to repair bitmaps
-Date: Mon, 13 Jul 2026 10:13:04 +0200
-Message-ID: <20260713081304.84812-2-jean-louis@dupond.be>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260713081304.84812-1-jean-louis@dupond.be>
-References: <20260713081304.84812-1-jean-louis@dupond.be>
+ bh=n7+cgzFKPkYQX3yBAkydO3mKZsnuRctVg0sZJ8aNOkI=;
+ b=aOJNFPFhbAa63PZBLjtDBV6xT2j/FTthgEjTT2vgaxVJ9Xf4YrS9laH0WhKvXvKn5iWgWV
+ aouCx3LerSi6TOYudNhs/4Zx5EBnY57uhjdNms85XGudZ92fwbOJ6irlwlgs+odgCnP1hQ
+ GglwrEnVfajxnUPFYQZnrVorz18fAZY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-180-VlHAnnX3MxWTkaYABm_7jQ-1; Mon,
+ 13 Jul 2026 04:17:12 -0400
+X-MC-Unique: VlHAnnX3MxWTkaYABm_7jQ-1
+X-Mimecast-MFC-AGG-ID: VlHAnnX3MxWTkaYABm_7jQ_1783930631
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 13B7B180064A; Mon, 13 Jul 2026 08:17:11 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 66EDF30001A1; Mon, 13 Jul 2026 08:17:10 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id EA00221E6920; Mon, 13 Jul 2026 10:17:07 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,  qemu-devel@nongnu.org,
+ alistair23@gmail.com,  qemu-riscv@nongnu.org,
+ bin.meng@processmission.com,  mzamazal@redhat.com,  sgarzare@redhat.com
+Subject: Re: [PATCH 2/2] MAINTAINERS: Mark "vhost-user-scmi" orphaned
+In-Reply-To: <650b9d5c-ca79-447c-b91d-a83d017f42a6@oss.qualcomm.com>
+ ("Philippe =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Mon, 13 Jul 2026
+ 09:11:34 +0200")
+References: <20260710114305.2961898-1-armbru@redhat.com>
+ <20260710114305.2961898-3-armbru@redhat.com>
+ <20260711035848-mutt-send-email-mst@kernel.org>
+ <65079ad4-3ab9-4ad6-b683-09d46c72b266@oss.qualcomm.com>
+ <20260713025003-mutt-send-email-mst@kernel.org>
+ <650b9d5c-ca79-447c-b91d-a83d017f42a6@oss.qualcomm.com>
+Date: Mon, 13 Jul 2026 10:17:07 +0200
+Message-ID: <87mrvvtibg.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:bc8:3f2a:101::1;
- envelope-from=jean-louis@dupond.be; helo=apollo.dupie.be
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: permerror client-ip=170.10.133.124;
+ envelope-from=armbru@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,216 +93,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In some cases, it might happen that bitmaps become corrupt.
-For example when adding/removing bitmaps on a live image.
+Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com> writes:
 
-Of course this should not happen, but in case this happens, the image is
-corrupt and even cannot be opened anymore. You'll get something like the
-following:
-qemu-img: Could not open 'disk.qcow2': Bitmap '' doesn't satisfy the constraints
+> On 13/7/26 08:52, Michael S. Tsirkin wrote:
+>> On Mon, Jul 13, 2026 at 08:13:38AM +0200, Philippe Mathieu-Daud=C3=A9 wr=
+ote:
+>>> On 11/7/26 10:00, Michael S. Tsirkin wrote:
+>>>> On Fri, Jul 10, 2026 at 01:43:05PM +0200, Markus Armbruster wrote:
+>>>>> Commit a5dab090e1 (hw/virtio: Add boilerplate for vhost-user-scmi
+>>>>> device, 2023-06-28) added the section with S: Supported, but no M:.
+>>>>> This makes no sense.  Downgrade to S: Orphan.
+>>>>>
+>>>>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+>>>>
+>>>>
+>>>> No, this makes sense. The reason this section was added is so that Mil=
+an can
+>>>> get copied on vhost-user-scmi but not other virtio stuff:
+>>>>
+>>>> ./scripts/get_maintainer.pl -f hw/virtio/vhost-user-scmi.c
+>>>> Milan Zamazal <mzamazal@redhat.com> (reviewer:vhost-user-scmi)
+>>>> "Michael S. Tsirkin" <mst@redhat.com> (supporter:vhost)
+>>>> Stefano Garzarella <sgarzare@redhat.com> (reviewer:vhost)
+>>>> qemu-devel@nongnu.org (open list:All patches CC here)
+>>>>
+>>>> Pls drop this patch.
+>>>>
+>>>>> ---
+>>>>>    MAINTAINERS | 2 +-
+>>>>>    1 file changed, 1 insertion(+), 1 deletion(-)
+>>>>>
+>>>>> diff --git a/MAINTAINERS b/MAINTAINERS
+>>>>> index aa2df9cbe3..4d558ddee9 100644
+>>>>> --- a/MAINTAINERS
+>>>>> +++ b/MAINTAINERS
+>>>>> @@ -2622,7 +2622,7 @@ F: include/hw/virtio/vhost-user-snd.h
+>>>>>    vhost-user-scmi
+>>>
+>>> So what we want is to add here:
+>>>
+>>>    M: Michael S. Tsirkin <mst@redhat.com>
+>>>    R: Stefano Garzarella <sgarzare@redhat.com>
+>>
+>> But these files already get M from the match against hw/virtio/ -
+>> what am I missing?
+>
+> Yeah, just trying to make Markus script happy ;)
 
-So the image becomes useless, and cannot be repaired. This while in fact
-only (one) bitmap entry is corrupt, and the rest of the data is just
-intact.
+Appreciate the kindness!
 
-This commit adds a way to fix this corruption, by just replacing the
-bitmap list in the qcow2 image with the valid bitmaps, and dropping the
-bitmaps that are corrupt.
+In decreasing importance:
 
-$ qemu-img check disk.qcow2
-qemu-img: Check failed: Invalid argument
-qemu-img: Lost persistent bitmaps during inactivation of node '#block147': Bitmap '' doesn't satisfy the constraints
+1. Correct get_maintainers.pl output
 
-$ qemu-img check -r all disk.qcow2
-qcow2_free_clusters failed: Invalid argument
-Leaked cluster 3 refcount=1 reference=0
-Leaked cluster 26 refcount=1 reference=0
-ERROR cluster 983214 refcount=0 reference=1
-Rebuilding refcount structure
-Repairing cluster 1 refcount=1 reference=0
-Repairing cluster 2 refcount=1 reference=0
-Repairing cluster 32768 refcount=1 reference=0
-....
-Repairing cluster 983214 refcount=1 reference=0
-The following inconsistencies were found and repaired:
+2. Legible MAINTAINERS
 
-    2 leaked clusters
-    3 corruptions
+99. My script is happy.
 
-Double checking the fixed image now...
-No errors were found on the image.
-983056/1048576 = 93.75% allocated, 0.05% fragmented, 0.00% compressed clusters
-Image end offset: 64437878784
-
-And the image is valid again!
-Worst case you lose all bitmaps, but at least the image and the data
-itself is useable again.
-
-Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
----
- block/qcow2-bitmap.c   | 42 +++++++++++++++++++++++++++++++++++++++---
- block/qcow2-refcount.c |  3 ++-
- block/qcow2.c          | 16 ++++++++++++----
- block/qcow2.h          |  3 ++-
- 4 files changed, 55 insertions(+), 9 deletions(-)
-
-diff --git a/block/qcow2-bitmap.c b/block/qcow2-bitmap.c
-index 256ec99878..91bd82a9f5 100644
---- a/block/qcow2-bitmap.c
-+++ b/block/qcow2-bitmap.c
-@@ -100,6 +100,9 @@ typedef enum BitmapType {
-     BT_DIRTY_TRACKING_BITMAP = 1
- } BitmapType;
- 
-+static int GRAPH_RDLOCK
-+update_ext_header_and_dir(BlockDriverState *bs, Qcow2BitmapList *bm_list);
-+
- static inline bool can_write(BlockDriverState *bs)
- {
-     return !bdrv_is_read_only(bs) && !(bdrv_get_flags(bs) & BDRV_O_INACTIVE);
-@@ -655,12 +658,14 @@ fail:
- int coroutine_fn
- qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
-                               void **refcount_table,
--                              int64_t *refcount_table_size)
-+                              int64_t *refcount_table_size,
-+                              BdrvCheckMode fix)
- {
-     int ret;
-     BDRVQcow2State *s = bs->opaque;
-     Qcow2BitmapList *bm_list;
--    Qcow2Bitmap *bm;
-+    Qcow2Bitmap *bm, *bm_next;
-+    bool bitmap_modified = false;
- 
-     if (s->nb_bitmaps == 0) {
-         return 0;
-@@ -677,12 +682,21 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
-                                s->bitmap_directory_size, NULL);
-     if (bm_list == NULL) {
-         res->corruptions++;
-+
-+        if (fix & BDRV_FIX_ERRORS) {
-+            ret = update_ext_header_and_dir(bs, NULL);
-+            if (ret >= 0) {
-+                res->corruptions_fixed++;
-+            }
-+            goto out;
-+        }
-         return -EINVAL;
-     }
- 
--    QSIMPLEQ_FOREACH(bm, bm_list, entry) {
-+    QSIMPLEQ_FOREACH_SAFE(bm, bm_list, entry, bm_next) {
-         uint64_t *bitmap_table = NULL;
-         int i;
-+        bool bitmap_valid = true;
- 
-         ret = qcow2_inc_refcounts_imrt(bs, res,
-                                        refcount_table, refcount_table_size,
-@@ -695,6 +709,12 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
-         ret = bitmap_table_load(bs, &bm->table, &bitmap_table);
-         if (ret < 0) {
-             res->corruptions++;
-+            if (fix & BDRV_FIX_ERRORS) {
-+                QSIMPLEQ_REMOVE(bm_list, bm, Qcow2Bitmap, entry);
-+                bitmap_free(bm);
-+                bitmap_modified = true;
-+                continue;
-+            }
-             goto out;
-         }
- 
-@@ -704,6 +724,7 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
- 
-             if (check_table_entry(entry, s->cluster_size) < 0) {
-                 res->corruptions++;
-+                bitmap_valid = false;
-                 continue;
-             }
- 
-@@ -720,9 +741,24 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
-             }
-         }
- 
-+        if ((fix & BDRV_FIX_ERRORS) && !bitmap_valid) {
-+            QSIMPLEQ_REMOVE(bm_list, bm, Qcow2Bitmap, entry);
-+            bitmap_free(bm);
-+            bitmap_modified = true;
-+        }
-+
-         g_free(bitmap_table);
-     }
- 
-+    /* If fixing, update the bitmap directory with the repaired list */
-+    if ((fix & BDRV_FIX_ERRORS) && bitmap_modified) {
-+        uint32_t initial_bitmaps = s->nb_bitmaps;
-+        ret = update_ext_header_and_dir(bs, bm_list);
-+        if (ret >= 0) {
-+            res->corruptions_fixed += initial_bitmaps - s->nb_bitmaps;
-+        }
-+    }
-+
- out:
-     bitmap_list_free(bm_list);
- 
-diff --git a/block/qcow2-refcount.c b/block/qcow2-refcount.c
-index 6512cda407..df7f6d2f23 100644
---- a/block/qcow2-refcount.c
-+++ b/block/qcow2-refcount.c
-@@ -2305,7 +2305,8 @@ calculate_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
-     }
- 
-     /* bitmaps */
--    ret = qcow2_check_bitmaps_refcounts(bs, res, refcount_table, nb_clusters);
-+    ret = qcow2_check_bitmaps_refcounts(bs, res, refcount_table,
-+                                        nb_clusters, fix);
-     if (ret < 0) {
-         return ret;
-     }
-diff --git a/block/qcow2.c b/block/qcow2.c
-index 19271b10a4..d6aa1cd3a4 100644
---- a/block/qcow2.c
-+++ b/block/qcow2.c
-@@ -1927,11 +1927,19 @@ qcow2_do_open(BlockDriverState *bs, QDict *options, int flags,
-     if (!(bdrv_get_flags(bs) & BDRV_O_INACTIVE)) {
-         /* It's case 1, 2 or 3.2. Or 3.1 which is BUG in management layer. */
-         bool header_updated;
--        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, errp)) {
--            ret = -EINVAL;
--            goto fail;
-+        Error *local_err = NULL;
-+        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, &local_err)) {
-+            /*
-+             * Allow this to fail in check mode
-+             * because otherwise we can't open the image at all.
-+             */
-+            if (!(flags & BDRV_O_CHECK)) {
-+                ret = -EINVAL;
-+                error_propagate(errp, local_err);
-+                goto fail;
-+            }
-+            error_free(local_err);
-         }
--
-         update_header = update_header && !header_updated;
-     }
- 
-diff --git a/block/qcow2.h b/block/qcow2.h
-index ce517040c4..ba9fe68130 100644
---- a/block/qcow2.h
-+++ b/block/qcow2.h
-@@ -1038,7 +1038,8 @@ void qcow2_cache_discard(Qcow2Cache *c, void *table);
- int coroutine_fn GRAPH_RDLOCK
- qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
-                               void **refcount_table,
--                              int64_t *refcount_table_size);
-+                              int64_t *refcount_table_size,
-+                              BdrvCheckMode fix);
- 
- bool coroutine_fn GRAPH_RDLOCK
- qcow2_load_dirty_bitmaps(BlockDriverState *bs, bool *header_updated,
--- 
-2.55.0
+[...]
 
 
