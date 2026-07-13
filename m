@@ -4,154 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AB01C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 07:20:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28353C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 07:31:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjAxN-0002J7-MF; Mon, 13 Jul 2026 03:20:01 -0400
+	id 1wjB8C-0003v6-4P; Mon, 13 Jul 2026 03:31:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wjAxM-0002Ir-5b
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 03:20:00 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wjB89-0003uT-Lo
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 03:31:10 -0400
+Received: from mail-southcentralusazlp170130001.outbound.protection.outlook.com
+ ([2a01:111:f403:c10c::1] helo=SA9PR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wjAxH-0008S0-Ct
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 03:19:58 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66D6Nu15568057
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 07:19:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 6ERFB8oxOn2Uo4ck1nsBITHX8wsLlxjU1fYVMhozEz8=; b=cuBJkwp+gYPngkq4
- tHjUtvmXnHznkPLE2HGD397SO4jfryvbm6hsruSziIRs0Q4SA5lY5saMyVLEayzW
- n3i3dg/ApOn868ftOEIajPGLVQzY3dl6ygRz/UW4yOsY593j6JOMv2GvtaEQrjWB
- b9cetJPoZG7x4EzfRRuCMBXeecYkpfWuW3FG7UN1LMjj+SJaXpCpcLtTnKZkzhpn
- e9yVKquldRTK2imljLSuKd/W3RHvdLO2xxwtVFEk6svXItJoGsTHRqe4YQzeWTYj
- rNtqSzyb+IFBJ+Cq6N+cOtj9xgJO67sbAvl+F4x6+cXjlUOYlbWz3d+p5KS6wCk6
- i5BTRQ==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fbe914x79-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 07:19:52 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51c1a9764f0so46923991cf.1
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 00:19:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783927192; x=1784531992; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=6ERFB8oxOn2Uo4ck1nsBITHX8wsLlxjU1fYVMhozEz8=;
- b=i40paQWoCLs0DokX3sTNumak0eBgQWIvg/BBaDHDcnLyu9UUXE4iWjaKQcRhHzVJ+9
- 0hj/UVV/6yR8oDZ25ntHFqQOFqIDncjCPphlBBgiSf7gZsamuwYys2bfz6YHAgz1IFo5
- tcxiwZ5AxJ4rMbaKP/dUGiTtDkAS+2YYXvM5N0FqaXh2ilM8qo0MJyS9WTxCj9jjGHMC
- NQV284oXrZoKZH1bCh6YKQbGCmtLHlD+30yMzTumsq+RmoTpcA/LD9CdKshadcBOY6OE
- 9Ei1J426YOzScPUSAkAKuwFxH0s3U4RfdefxS8cetu/fgq2KS7Z2G0pe7rH+3FeoS5SL
- lyKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783927192; x=1784531992;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=6ERFB8oxOn2Uo4ck1nsBITHX8wsLlxjU1fYVMhozEz8=;
- b=dhXx1T3PflOy02vh0rXWnsBbNjG9i6v+OvqaTJCTtv+xxee6eKfhqEam/jVtIpoZfr
- aUpwVysRF9WfkM7Y29VMAOrBR4wmlIfkCQ2IUbuurCfrwBcm3gGnBh2WHml/uGqbG4Qe
- dWGgQ8Nkwe/TabL3XkNfItnPK3lu5Cc5IrDWQMf7svcr7RcELz/C+FkxbbqFBUXJb+OX
- 1t/A1tnyG1/Az6R/ZAsneOflNfJfat+CKtNIAdiVIlwrV1gRKFWoyoRXxrCFfK6O1b8m
- EqCLubapqq2RnbGTbU5ut2LmT3B1Ikkn8nQdFcYhpiUC5MlKJfdYgExOE75BY0Uu2yfd
- cghw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqxxnwzbJHb3OBB8W5Z2UbZ+p68WQ79AdScImQbG49DGFSbfhKRD7ojJxrIkzC6zQGTmiN3gE2hWijq@nongnu.org
-X-Gm-Message-State: AOJu0Yx1MRgK10173W5xhAESUqxVr9YYg38UyaKJuzypy+kLAJ8WLME3
- UnQPNIBow3UwXT5WHeGxScTB5hnGeiU8iFADSPZZR6VBpzdWBM0sKpy05WAwWtDi/Uv3tncWvpy
- A4VvRChem4WyrAc5bnZjj8FgHhcVbjt5zsjNiXbLDb+Uccp01uIfhT63Pqw==
-X-Gm-Gg: AfdE7ckAGZQ3vbfPG6FXRVotALo48lDLAHkEN0fR9MwJWuXjLsc3UFaGbiZKa6sTNn5
- DL6DfP1Sfd4n3JzPZ7paIynxpH/bjNMkMbNSHM5qpwWKLFVVNC7BD9YU2no7rsS6BGpt2Jw85QR
- Wa/vd314FmFTnoZUO+0MjdJn/dhy+mIhc+R6QhSKljVked65n9gAeqmWoiU5aYhdrxGPAimK71G
- pUg4+OGRCoztccwBQaCK4Zb4sY2jfujqf3Aq8CptxA/z6YaeXlpyCAoKbdV6Y35+ehw6GDyCkJ2
- KPFYFD5D/AM1HkdVEpmjp62kOKnZuv5gLVxXczlkbzR+D6R5aqaCn+UZJ6Px7Qu6Q6jeCQYygdj
- M2dX2nfRwYjtUsifYtpYtcVevdWu41KNP8W8EjHBm61ZFdXlDPWNKHgyIX0lIgA==
-X-Received: by 2002:ac8:5f51:0:b0:51c:1cf8:ca4d with SMTP id
- d75a77b69052e-51cbf171caemr83469401cf.13.1783927191914; 
- Mon, 13 Jul 2026 00:19:51 -0700 (PDT)
-X-Received: by 2002:ac8:5f51:0:b0:51c:1cf8:ca4d with SMTP id
- d75a77b69052e-51cbf171caemr83469221cf.13.1783927191483; 
- Mon, 13 Jul 2026 00:19:51 -0700 (PDT)
-Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493eb6f373csm570076305e9.14.2026.07.13.00.19.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Jul 2026 00:19:50 -0700 (PDT)
-Message-ID: <fcbe651b-d7b3-4080-8f86-f3ffd40a0087@oss.qualcomm.com>
-Date: Mon, 13 Jul 2026 09:19:49 +0200
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wjB86-0001XQ-Ph
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 03:31:09 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=bWb6xoVgS2ZHj1ibzEBUPMu85UBXHdz7Wla0kZwUQ/aG2JAyKzDwfYJZlifubf+fNb4KHcNSVjmPllEDx46HNqxGnnx7f21AMFLOrypKd/oJKprw1QczFGtqfZxbanuJxEgMEkOxt27lpeGX5cNhXx0ZWhTymzDkfEibtYM1LTWQozDIZuL+2CY9Vq64kwBdGHIGuThixbIDhegyKAUh9uP7Jd/YPSfhax9NijYbdTyfCzokh7ch5ma+inICtfkbm2gODTnCAzlOPv8rofKSgJRsg5LaeVhwfH+AJMm/laAZoSgqM2qXOFdFzIxUNVGLVxO2yc4ATNo4bY/2xfHj8A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=QAqwSo78GuiQT+2UFgtQyuOChkoelUNYwzQ5G4wlqzQ=;
+ b=Wv6wuWunKXQHFhXzn21reWWQJvTy9gA7HAmwaOO21kgEIxDSMxC2Yh25bwNWMWkULTN93icvDzlPraT3jxRn56Xn1y7tngU188EX0AWWJq7ZkZAqrcwRCIO8yOE5PztH/aonlTnDjO2RJcAgcmGnv+3dWwtaDbh3EuAXsfGpsqnRNWX4YUAq5N85bxUsjAOjSuY3rcy9qbW0qPpOOj3Q692/GfYJGY/Ap/r48xaeh1zW1witb1tIS1erojYevbNRuJYtGcuVn+WEeCh1UOO3UXbyeSxQlV7R9DtPBFe07qSLXjipVHw/FOmKiwjsrkBF/3XWa86X0NkgtMG4vEO1zQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 64.62.143.114) smtp.rcpttodomain=axiado.com smtp.mailfrom=axiado.com;
+ dmarc=none action=none header.from=axiado.com; dkim=none (message not
+ signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=QAqwSo78GuiQT+2UFgtQyuOChkoelUNYwzQ5G4wlqzQ=;
+ b=hWTZj5gWk2CCa9s5Lxjk7CCvsm5Dzy7JO2YL76lbY4O5JlyBoqdiZ2zlLRlHuEaMeTjfF/YG8qJ2cpXs/fgnO6L+LSoezdCz/h9XwIVh/CpwRocko7Cb/ljgzLNZyoSlB8DBoCX20qoDp9qSibEGLerCxET5N61BixIK8iFNAVpT48YOdjpzGGSdsijsqTr2Mf06KI1VuzVr19qmb5biLjaH0Nk6s1A15jSu5N3VRpLIY40VuBWS4nO5zo1RVlkn+IIsPaz5p/69w611Dksjl2oRlOfJHsXODkBtHSQRnQ3lGmnjXEQ52ZQPbLQ23ApfVGSdiyqiR5Yvb0FTkb/7+Q==
+Received: from BN9PR03CA0730.namprd03.prod.outlook.com (2603:10b6:408:110::15)
+ by PH7PR18MB5646.namprd18.prod.outlook.com (2603:10b6:510:2ef::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.22; Mon, 13 Jul
+ 2026 07:31:01 +0000
+Received: from BN3PEPF0000B075.namprd04.prod.outlook.com
+ (2603:10b6:408:110:cafe::aa) by BN9PR03CA0730.outlook.office365.com
+ (2603:10b6:408:110::15) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.202.19 via Frontend Transport; Mon,
+ 13 Jul 2026 07:31:01 +0000
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 64.62.143.114)
+ smtp.mailfrom=axiado.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=axiado.com;
+Received-SPF: Fail (protection.outlook.com: domain of axiado.com does not
+ designate 64.62.143.114 as permitted sender) receiver=protection.outlook.com; 
+ client-ip=64.62.143.114; helo=smtp.corp.axiado.com;
+Received: from smtp.corp.axiado.com (64.62.143.114) by
+ BN3PEPF0000B075.mail.protection.outlook.com (10.167.243.120) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.223.9
+ via Frontend Transport; Mon, 13 Jul 2026 07:31:00 +0000
+Received: from axiado.com (unknown [10.4.1.181])
+ by smtp.corp.axiado.com (Postfix) with ESMTP id D8D8840BFE10;
+ Mon, 13 Jul 2026 00:30:59 -0700 (PDT)
+From: Kuan-Jui Chiu <kchiu@axiado.com>
+To: qemu-devel@nongnu.org, peter.maydell@linaro.org, philmd@oss.qualcomm.com
+Cc: Kuan-Jui Chiu <kchiu@axiado.com>
+Subject: [PATCH v7 6/8] hw/arm: Add Axiado EVK SCM3003
+Date: Mon, 13 Jul 2026 00:30:31 -0700
+Message-Id: <20260713073033.3883619-7-kchiu@axiado.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260713073033.3883619-1-kchiu@axiado.com>
+References: <20260713073033.3883619-1-kchiu@axiado.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 01/10] hw/usb/hcd-ehci: Change descriptor addresses to
- 64-bit with migration compatibility
-Content-Language: en-US
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- "peterx@redhat.com" <peterx@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Zhao Liu <zhao1.liu@intel.com>, "open list:ASPEED BMCs"
- <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>, "flwu@google.com" <flwu@google.com>,
- "nabihestefan@google.com" <nabihestefan@google.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-References: <20260713032704.3583103-1-jamin_lin@aspeedtech.com>
- <20260713032704.3583103-2-jamin_lin@aspeedtech.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260713032704.3583103-2-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=TbymcxQh c=1 sm=1 tr=0 ts=6a549198 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=V2NxCb60AAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=GfncpqaTsXqTwz3xVyUA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
- a=3L6qF29SlnrayQqPM2jZ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDA3NCBTYWx0ZWRfXx8KhVXniMhDF
- MIfGqGo4YZOWGlbPchPDlgdlKsqvGRhwvw1ygoOJ9zn3dcPNH46/ZRnER5zvjHQCmXUEUJjhyMX
- jh+SDKEoFl5daCZwf20d8aLf/2d3EpA=
-X-Proofpoint-GUID: NaoLUSBjDE5dS0_WJ7mUr_or6aY1nwRf
-X-Proofpoint-ORIG-GUID: NaoLUSBjDE5dS0_WJ7mUr_or6aY1nwRf
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDA3NCBTYWx0ZWRfX2B4Wx5r0caOX
- feW36IvF1ekPO/oqUZ/CfqtI778qrwTcy89zqamkIEelKziP3BnHvaavh2jzbf07ioPMbp+IsYE
- zL6yDKUIGCw1gQtxOLwT8HtTcAGxQdDuxPmy+QzpcMff4BdNUL37Z2/JrUR2TbatRv8gnpivuDQ
- ZM/kaQGDqsZTplbDjGs5asjiY9lfxWJNcHG4XLenBoUcGRcSHYATKncC4tOS1bi47rWATS7SoXV
- CElvGwz3kCWV98068dkwTWFgk5bLWCaglV6MffLLN+JD3ucgqDs9RKwoBkbktYcSfdzYKLQOxPC
- nEOFKY5YdK6vXmuzu5TzpG5tB2It6IMFzs15Ju3jsLCG8r9eENTvtntXT0rMRI5RTkgC58KKbdf
- 3cz90WkKXUPUsXmR8EXzQ5L8bZSJRkuIJIYRYQSwRO6zVlfyiISKSDZuwlRydzG9xUejfcRg8F6
- l4Qi+B9oq/WTGNI8X9Q==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-13_02,2026-07-10_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 bulkscore=0 priorityscore=1501 suspectscore=0 impostorscore=0
- adultscore=0 lowpriorityscore=0 phishscore=0 spamscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607130074
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN3PEPF0000B075:EE_|PH7PR18MB5646:EE_
+Content-Type: text/plain
+X-MS-Office365-Filtering-Correlation-Id: 03d36de9-bfc3-4bc6-0faa-08dee0b0b04e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|36860700016|23010399003|82310400026|1800799024|56012099006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: ZU51sflZ2cil9UCHz9iSCINpEDTIw/sD065flmGEeuAgBEplNuunWaheOGWdNWPNoUOmZrjNSGYICnUcpCB4jZv9+X4sNqIOWQZn+6Q8ph99VwRYkVOEAtYVmhVec6fYrENgaz7Uy2NMj7YneuZQM3tshgWX+VMUrWzD1FnZTeix7hvch2FKy7ulj/OYLT2+hcTvp8t+oTXjHTnn+9QBWqftMfCEU37+ldeEiKyW+z+83aRsILid++xqVQd7lylIxDMkAaSt30aDBY6QFmbMGIBDEVCoAW0xCjfV4VA/9HF0r6+R9OUT22yvlgPhAikZ4FloLOhNf5auFmv4KYLOK4cnaCZQWyThuqqFzyxyU7g/ywTW96vPXZL6fozIsKnQZnStO1ap8eqU60yAX9bYbNDf4r88mA7MRZ6y7bDiBGwx7GrZ0FplQ4LNrb9nHvV6XgsKiqfy/j8ollGgLw8MCT7PcYNrSdwoCVHZwn5w78lzY+DcSkQnR7K6c4DLWZixz5IziqZVYQkXbQFmyHmF8V/J/0Qk66KQ7ybJ+4ds/6J8jMiFE29jIYVvStdvMPEvGGnncyCJ+BN5KD8o9WXeVxtwt9oMTU1BuhqCs0eQQTohlCAZbnYNuArgZ3Vzkg4VZt4ccsxRK3R+yNztnzCGJBOOMLfksUH6SaK2YcFIAFNOhZKhwytmARpZckOoBFvbJ96ZXCdYmqeg3cyXerUjBw==
+X-Forefront-Antispam-Report: CIP:64.62.143.114; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:smtp.corp.axiado.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(36860700016)(23010399003)(82310400026)(1800799024)(56012099006)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: IXSIVm7VkDmsea7y2EplvAnbx1eSPGfgGjFZ3NCK9vFPOfoWv+pT1oIYcKeNPdMtMbfUG+o+WDTyHs8ST/8NR4xehU/d1YEtGdG1LL16EQcnNjFmpVasY4ZLmBn9sf4Auj0UJ27QCUQdvYgaBIBGUJkPxPOWWnunzENmwAeQGDUG7A8cKbn0SychZ7HhdeLarJ6AZ64Rj1fVCnkvjhtrmO6Q8bXtADAiDPLbe7FBrXrQsvrLGOimMk3nFPPxqzqhum71keENGKGp3UiRhr+7KevVZijGhJZEOpggRFCs2EkpZlM2b1ET3o+hWRK/I5oRkrVK7tji8chDZhcOq7mUxKQD7P+mJwCVQ14rQMz1J9bRx4fULg97tIslqQzW07USYWf2SUP8RKFLQp8D+LIF1XHBWgxzLslxzSv7Z+LJ7iD8eB/7Jz0KjfCdcJCAd4hJ
+X-OriginatorOrg: axiado.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jul 2026 07:31:00.8297 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 03d36de9-bfc3-4bc6-0faa-08dee0b0b04e
+X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=ff2db17c-4338-408e-9036-2dee8e3e17d7; Ip=[64.62.143.114];
+ Helo=[smtp.corp.axiado.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B075.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR18MB5646
+Received-SPF: pass client-ip=2a01:111:f403:c10c::1;
+ envelope-from=kchiu@axiado.com;
+ helo=SA9PR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -168,63 +119,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/7/26 05:27, Jamin Lin wrote:
-> Change internal EHCI descriptor addresses from uint32_t to uint64_t.
-> 
-> The following fields are updated:
-> - EHCIPacket::qtdaddr
-> - EHCIQueue::{qhaddr, qtdaddr}
-> - EHCIState::{a_fetch_addr, p_fetch_addr}
-> 
-> Update get_dwords() and put_dwords() to take 64-bit addresses and
-> propagate the type change through the descriptor traversal paths.
-> 
-> Adjust NLPTR_GET() to operate on 64-bit values:
-> 
->      #define NLPTR_GET(x) ((x) & ~0x1fULL)
-> 
-> so that link pointer masking works correctly when descriptor
-> addresses exceed 32-bit space. The previous mask (0xffffffe0)
-> implicitly truncated addresses to 32 bits.
-> 
-> This patch does not change the on-wire descriptor layout yet.
-> It only removes the internal 32-bit address limit and prepares
-> for later patches that will add full 64-bit QH/qTD/iTD/siTD support.
-> 
-> Update the EHCI trace-events prototypes for QH, qTD, iTD, and siTD to
-> use uint64_t for the address argument and print it with PRIx64. This
-> ensures full 64-bit addresses are shown in trace output and improves
-> debugging of queue heads and transfer descriptors.
-> 
-> Migration compatibility:
-> 
-> To preserve backward migration compatibility, keep the legacy 32-bit
-> fetch address fields (a_fetch_addr_32, p_fetch_addr_32) alongside the
-> new 64-bit fields.
-> 
-> Migration format is selected using a machine compat property
-> "x-migrate-fetch-addr-64bit":
-> 
-> - Old machine types migrate 32-bit fetch addresses
-> - New machine types migrate full 64-bit fetch addresses
-> 
-> This is implemented using VMSTATE_UINT32_TEST() and
-> VMSTATE_UINT64_TEST() so that only the appropriate format is migrated.
-> 
-> In pre_save, the 32-bit shadow fields are populated when migrating
-> to old machine types. In post_load, the 32-bit values are restored
-> into the 64-bit fields when loading old migration streams.
-> 
-> No functional change.
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> Reviewed-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   hw/usb/hcd-ehci.h   | 30 +++++++++++++-----
->   hw/core/machine.c   |  2 ++
->   hw/usb/hcd-ehci.c   | 74 +++++++++++++++++++++++++++++++--------------
->   hw/usb/trace-events | 24 +++++++--------
->   4 files changed, 89 insertions(+), 41 deletions(-)
+Add EVK axiado-scm3003 built with AX3000 SoC
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
+---
+ hw/arm/Kconfig                 |  5 +++
+ hw/arm/ax3000-boards.c         | 56 ++++++++++++++++++++++++++++++++++
+ hw/arm/ax3000-evk.c            | 27 ++++++++++++++++
+ hw/arm/meson.build             |  3 ++
+ include/hw/arm/ax3000-boards.h | 28 +++++++++++++++++
+ 5 files changed, 119 insertions(+)
+ create mode 100644 hw/arm/ax3000-boards.c
+ create mode 100644 hw/arm/ax3000-evk.c
+ create mode 100644 include/hw/arm/ax3000-boards.h
+
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 411ea90bfe..6ca172d750 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -732,3 +732,8 @@ config AXIADO_SOC
+     select AXIADO_CLK
+     select AXIADO_SDHCI
+     select UNIMP
++
++config AXIADO_EVK
++    bool
++    default y
++    select AXIADO_SOC
+diff --git a/hw/arm/ax3000-boards.c b/hw/arm/ax3000-boards.c
+new file mode 100644
+index 0000000000..4b8deec15c
+--- /dev/null
++++ b/hw/arm/ax3000-boards.c
+@@ -0,0 +1,56 @@
++/*
++ * Axiado Boards
++ *
++ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/arm/ax3000-boards.h"
++#include "hw/arm/boot.h"
++#include "hw/arm/machines-qom.h"
++#include "qemu/error-report.h"
++#include "qom/object.h"
++
++static struct arm_boot_info ax3000_binfo = {
++    .loader_start = AX3000_DRAM0_BASE,
++    .board_id = -1,
++};
++
++static void ax3000_machine_init(MachineState *machine)
++{
++    Ax3000MachineState *ams = AX3000_MACHINE(machine);
++
++    ams->soc = AX3000_SOC(object_new(TYPE_AX3000_SOC));
++    object_property_add_child(OBJECT(machine), "soc", OBJECT(ams->soc));
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(ams->soc), &error_fatal);
++
++    ax3000_binfo.ram_size = machine->ram_size;
++    arm_load_kernel(&ams->soc->cpu[0], machine, &ax3000_binfo);
++}
++
++static void ax3000_machine_class_init(ObjectClass *oc, const void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++
++    mc->init = ax3000_machine_init;
++    mc->default_cpus = AX3000_NUM_CPUS;
++    mc->min_cpus = AX3000_NUM_CPUS;
++    mc->max_cpus = AX3000_NUM_CPUS;
++    mc->default_cpu_type = ARM_CPU_TYPE_NAME("cortex-a53");
++}
++
++static const TypeInfo ax3000_machine_types[] = {
++    {
++        .name          = TYPE_AX3000_MACHINE,
++        .parent        = TYPE_MACHINE,
++        .instance_size = sizeof(Ax3000MachineState),
++        .class_size    = sizeof(Ax3000MachineClass),
++        .class_init    = ax3000_machine_class_init,
++        .interfaces    = aarch64_machine_interfaces,
++        .abstract      = true,
++    }
++};
++
++DEFINE_TYPES(ax3000_machine_types)
+diff --git a/hw/arm/ax3000-evk.c b/hw/arm/ax3000-evk.c
+new file mode 100644
+index 0000000000..a170848871
+--- /dev/null
++++ b/hw/arm/ax3000-evk.c
+@@ -0,0 +1,27 @@
++/*
++ * Axiado Evaluation Kit Emulation
++ *
++ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/arm/ax3000-boards.h"
++
++static void axiado_scm3003_class_init(ObjectClass *oc, const void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++
++    mc->desc = "Axiado SCM3003 EVK Board";
++}
++
++static const TypeInfo ax3000_evk_types[] = {
++    {
++        .name          = MACHINE_TYPE_NAME("axiado-scm3003"),
++        .parent        = TYPE_AX3000_MACHINE,
++        .class_init    = axiado_scm3003_class_init,
++    }
++};
++
++DEFINE_TYPES(ax3000_evk_types)
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 0254b82df1..8ee5307a91 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -112,6 +112,9 @@ arm_common_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
+ 
+ arm_common_ss.add(when: ['CONFIG_AXIADO_SOC', 'TARGET_AARCH64'], if_true: files(
+   'ax3000-soc.c'))
++arm_common_ss.add(when: ['CONFIG_AXIADO_EVK', 'TARGET_AARCH64'], if_true: files(
++  'ax3000-boards.c',
++  'ax3000-evk.c'))
+ 
+ arm_common_ss.add(files('boot.c'))
+ 
+diff --git a/include/hw/arm/ax3000-boards.h b/include/hw/arm/ax3000-boards.h
+new file mode 100644
+index 0000000000..4a632661e1
+--- /dev/null
++++ b/include/hw/arm/ax3000-boards.h
+@@ -0,0 +1,28 @@
++/*
++ * Axiado Boards
++ *
++ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef AXIADO_BOARD_H
++#define AXIADO_BOARD_H
++
++#include "hw/core/boards.h"
++#include "hw/arm/ax3000-soc.h"
++
++#define TYPE_AX3000_MACHINE       MACHINE_TYPE_NAME("ax3000")
++OBJECT_DECLARE_TYPE(Ax3000MachineState, Ax3000MachineClass, AX3000_MACHINE)
++
++typedef struct Ax3000MachineState {
++    MachineState parent;
++
++    Ax3000SoCState *soc;
++} Ax3000MachineState;
++
++typedef struct Ax3000MachineClass {
++    MachineClass parent;
++
++} Ax3000MachineClass;
++#endif
+-- 
+2.34.1
+
 
