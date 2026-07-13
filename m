@@ -4,82 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D74DC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 10:22:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5649DC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 10:25:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjDnn-00055u-Tg; Mon, 13 Jul 2026 06:22:19 -0400
+	id 1wjDqk-0005x4-B0; Mon, 13 Jul 2026 06:25:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wjDnm-00055m-Iy
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 06:22:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wjDqc-0005tv-Vs; Mon, 13 Jul 2026 06:25:15 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wjDnk-000850-HB
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 06:22:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783938134;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PAOrQ4OSPood1KI/btVIPlkPlUdv5TvfCmfqhB9g5ns=;
- b=LMakvKRNclbdN5VlH/b0FYto5f9Lv/gsSnNx2AwLKJ2+y9kt/LWEaHD0+9xbCnlHC5MaZN
- tzv9Hefnq+6GbBMGGGJ1kL2DzZk0KQ/G+CJXx00xpmLQea7aoWuyn11B2VNJdj6MDY0srX
- XRngede6RNkzrhlHABPJOcgJAtl2IRM=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-lsehzDiDMaKxFrEcX2TKbg-1; Mon,
- 13 Jul 2026 06:22:11 -0400
-X-MC-Unique: lsehzDiDMaKxFrEcX2TKbg-1
-X-Mimecast-MFC-AGG-ID: lsehzDiDMaKxFrEcX2TKbg_1783938130
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6F7C918052F1; Mon, 13 Jul 2026 10:22:09 +0000 (UTC)
-Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 483AC19560AB; Mon, 13 Jul 2026 10:22:08 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>, QEMU Developers
- <qemu-devel@nongnu.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Pedro Barbuda
- <pbarbuda@microsoft.com>, Mohamed Mediouni <mohamed@unpredictable.fr>,
- Nicholas Piggin <npiggin@gmail.com>, Harsh Prateek Bora
- <harshpb@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, Matthew
- Rosato <mjrosato@linux.ibm.com>, "Daniel P. Berrange" <berrange@redhat.com>
-Subject: Re: what is qemu_system_guest_panicked() for?
-In-Reply-To: <CAFEAcA_zmc=Vvs38Qos_gecCmGAbRgDQF-0+x85Ja66nsqrHxA@mail.gmail.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Avril Crosse O'Flaherty"
-References: <CAFEAcA_zmc=Vvs38Qos_gecCmGAbRgDQF-0+x85Ja66nsqrHxA@mail.gmail.com>
-User-Agent: Notmuch/0.40 (https://notmuchmail.org)
-Date: Mon, 13 Jul 2026 12:22:06 +0200
-Message-ID: <87ik6ji3zl.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wjDqa-00009W-BS; Mon, 13 Jul 2026 06:25:14 -0400
+Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
+ by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id E245480A6F;
+ Mon, 13 Jul 2026 13:25:06 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:c5a::1:8] (unknown [2a02:6bf:8080:c5a::1:8])
+ by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id 5PLwO20aCOs0-DjAPAf6i; Mon, 13 Jul 2026 13:25:06 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1783938306;
+ bh=Xb6lTjMjgoo21SCvMGQmRN28gYkol6ja+M50LeEPL2Y=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=n9xOuQpm6GoMlPI1FK7FCzud2bBqTOOjHsNOgKE4vGLewqx7WWln0nMUBvZLnFPCU
+ F1/+B1MVtUNPVonAy3O/5V90V9eJkcpbzi9EZXBqqGAXrLOR/a2/y0lD0ozskJLxif
+ 25nRapiDDO3NFqrsQwZdhPAl7mUnlxtFtPioRJkM=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <4062b9a2-be54-4a32-8d7d-8eb101576afb@yandex-team.ru>
+Date: Mon, 13 Jul 2026 13:25:05 +0300
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: permerror client-ip=170.10.133.124;
- envelope-from=cohuck@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v18 03/14] net/tap: deprecate "no" as special value for
+ script/downscript
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>, jasowang@redhat.com,
+ mst@redhat.com, peterx@redhat.com, farosas@suse.de,
+ raphael.s.norwitz@gmail.com, bchaney@akamai.com, qemu-devel@nongnu.org,
+ pbonzini@redhat.com, yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Sergio Lopez <slp@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Bernhard Beschow <shentey@gmail.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Jason Wang <jasowangio@gmail.com>,
+ Eric Blake <eblake@redhat.com>,
+ "open list:Incompatible changes" <devel@lists.libvirt.org>,
+ "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>,
+ "open list:e500" <qemu-ppc@nongnu.org>,
+ "open list:Microchip PolarFi..." <qemu-riscv@nongnu.org>
+References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
+ <20260710191809.721154-4-vsementsov@yandex-team.ru>
+ <87ech7uycy.fsf@pond.sub.org>
+ <d1ea2c42-7990-4529-b9f8-d0d9e35ffd51@yandex-team.ru>
+ <alS0RZqeyEOVy6e8@redhat.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <alS0RZqeyEOVy6e8@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -91,50 +94,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 10 2026, Peter Maydell <peter.maydell@linaro.org> wrote:
+On 13.07.26 12:47, Daniel P. Berrangé wrote:
+> On Mon, Jul 13, 2026 at 12:37:54PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>> On 13.07.26 10:45, Markus Armbruster wrote:
+>>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+>>>
+>>>> The interface is ambiguous, as "no" is valid file name. So,
+>>>> using "no" as a special value to disable script is deprecated.
+>>>> Use an empty string ("script=" / "downscript=") instead.
+>>>>
+>>>> In a future version, "no" will be treated as a plain file name, just
+>>>> like any other non-empty value.
+>>>>
+>>>> Document the deprecation in docs/about/deprecated.rst, qapi/net.json,
+>>>> and qemu-options.hx. Update other docs to use empty string instead of
+>>>> "no". Add a warning.
+>>>>
+>>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>>>
+>>> [...]
+>>>
+>>>> diff --git a/net/tap.c b/net/tap.c
+>>>> index fedd48c48d2..1ec9e5ebe6f 100644
+>>>> --- a/net/tap.c
+>>>> +++ b/net/tap.c
+>>>> @@ -103,6 +103,8 @@ static bool tap_is_explicit_no_script(const char *script_arg)
+>>>>        }
+>>>>        if (strcmp(script_arg, "no") == 0) {
+>>>> +        warn_report("script=no/downscript=no is deprecated; "
+>>>> +                    "use script=/downscript= instead");
+>>>
+>>> net_init_tap() could pass the parameter name for a simpler error
+>>> message.  Probably not worth the bother.
+>>>
+>>>>            return true;
+>>>>        }
+>>>
+>>> In net_init_tap_one():
+>>>
+>>>              qemu_set_info_str(&s->nc, "ifname=%s,script=%s,downscript=%s", ifname,
+>>>                                script ?: "no", downscript ?: "no");
+>>>
+>>> This sets nc->info_str, which is shown by "info network".  Should we
+>>> replace "no" by ""?
+>>>
+>>
+>> Agree, will do.
+> 
+> Would it be better to not include the script/downscript parameters at
+> all if they're disabled ?
+> 
 
-> (cc list is a random mix of maintainers of code that calls this
-> function, Paolo as "main loop maintainer" and a few others who
-> I thought might have an opinion.)
->
-> We have a qemu_system_guest_panicked() function which causes QEMU
-> to report this to the user and do one of a couple of possible options
-> (shutdown, pause the VM, do nothing). This seems mostly intended for
-> "the guest OS told us by some mechanism that it just panicked". But
-> we use it more widely than that...
->
-> Cases which are "the guest told us about a panic":
->  - accel/kvm/kvm-all.c handling of the KVM_EXIT_SYSTEM_EVENT SEV_TERM
->    and CRASH subtypes
+Unfortunately current default is: use <sysconfdir>/qemu-ifup and
+<sysconfdir>/qemu-ifdown if these options are unset. So, omitting
+them in info-string would be ambiguous.
 
-These two events seem to be x86 only.
-
->  - the pvpanic device
->  - the spapr ibm,os-term RTAS call
->  - x86 kvm: tdx_panicked_on_fatal_error()
->  - x86 xen: the SHUTDOWN_crash shutdown subtype
->
-> Cases which are not:
->  - hw/spapr/rtas.c: if the FDT has no RTAS address during system reset
->  - hw/spapr/spapr_events.c: if we wanted to deliver a machine check
->    exception to the guest but the FDT has no RTAS address
->  - hw/spapr/spapr_events.c: if we want to deliver a machine check
->    but the guest is still dealing with a previous machine check
->  - arm whpx, if we get an unknown/unexpected exit code trying to run the VM
->  - x86 nvmm, for an unknown/unexpected VM exit code
->  - ppc TCG, in powerpc_checkstop(), for a machine check exception I think
->  - s390_handle_wait(): not sure exactly what this is
-
-Loading a "disabled wait PSW" (waiting for interrupts with no interrupts
-enabled) is basically the way for an OS to "panic". (The "special wait
-PSW" is for signifying that a cpu has been shut down.) IOW, this is
-indeed the "panic" case for s390x.
-
->  - s390 unmanageable_intercept(): again not sure, think this is where
->    the guest has gone off the rails and we can't keep running
-
-It's basically "the handling code for an exception immediately leads to
-the same exception", the cpu has gone into a loop and can't get out of
-it again. Not sure if that should be getting some different handling.
-
+-- 
+Best regards,
+Vladimir
 
