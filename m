@@ -4,71 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52DEDC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:08:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19663C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:20:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjIGs-0000CF-6X; Mon, 13 Jul 2026 11:08:38 -0400
+	id 1wjIRs-00055B-60; Mon, 13 Jul 2026 11:20:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wjIGq-0000Bu-Jr
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:08:36 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ id 1wjIRq-00054v-HP
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:19:58 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wjIGn-0005mc-NR
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:08:36 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:2a25:0:640:ba29:0])
- by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 08E598083F;
- Mon, 13 Jul 2026 18:08:29 +0300 (MSK)
+ id 1wjIRn-0007Vn-FB
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:19:58 -0400
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
+ by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id D1BDDC08E4;
+ Mon, 13 Jul 2026 18:19:50 +0300 (MSK)
 Received: from [IPV6:2a02:6bf:8080:c5a::1:8] (unknown [2a02:6bf:8080:c5a::1:8])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id Q8Qg050aEa60-NNvqnWYP; Mon, 13 Jul 2026 18:08:28 +0300
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id nJQO180XEGk0-j6uNM34L; Mon, 13 Jul 2026 18:19:50 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1783955308;
- bh=5kFLsTktGoitj7aDDhchk1Cs8Kz54gKYodU78kmpQHc=;
+ s=default; t=1783955990;
+ bh=QpEGrVuL0+/pMKpVJ1V2Bzaohn6yPovMG5Ioj4sSOXA=;
  h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=t9Kj04W4MZkTqd1nJYnPuwwguutZicBThVDKg4s7id3R3okJcH9TTPXceJM4Oo9Ok
- R15Jd1fufYKl0YvhNwv5RexfEyZ8fSNt9CPknwa/xZpbWELWvpZ643F9mymjn7PvLC
- EE36hUo8b/BpQjNQHe7LfshwPXhDFCJpIuuzRux8=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ b=wELZgldGKSFX9WCFSwV5Z0Am9jyV1Z2lD1DyL+zdBmzvlrveehPI8gUp6yz2tYBVC
+ W6MLn65INPbQum7KGqUqPqjopkLabqeCQt5/3Iiu6wbAzBMatcrzGr2XxoTUu7itc9
+ E8dIOdmF2ocd7VA+GQo1+FmHxWrPbpVhPVcyIidA=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-Message-ID: <5af44296-ea89-402c-b4fb-b9b0acee3b54@yandex-team.ru>
-Date: Mon, 13 Jul 2026 18:08:26 +0300
+Message-ID: <1c3cc2da-d7ab-4906-8562-14a727c8803a@yandex-team.ru>
+Date: Mon, 13 Jul 2026 18:19:49 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v18 12/14] net/tap: support local migration with virtio-net
-To: Markus Armbruster <armbru@redhat.com>
-Cc: jasowang@redhat.com, mst@redhat.com, peterx@redhat.com, farosas@suse.de,
- raphael.s.norwitz@gmail.com, bchaney@akamai.com, qemu-devel@nongnu.org,
- berrange@redhat.com, pbonzini@redhat.com, yc-core@yandex-team.ru,
- mark.caveayland@nutanix.com, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>, Zhao Liu <zhao1.liu@intel.com>,
- Jason Wang <jasowangio@gmail.com>, Eric Blake <eblake@redhat.com>
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: jasowang@redhat.com, mst@redhat.com, armbru@redhat.com,
+ peterx@redhat.com, farosas@suse.de, raphael.s.norwitz@gmail.com,
+ bchaney@akamai.com, qemu-devel@nongnu.org, pbonzini@redhat.com,
+ yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Jason Wang <jasowangio@gmail.com>,
+ Eric Blake <eblake@redhat.com>
 References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
  <20260710191809.721154-13-vsementsov@yandex-team.ru>
- <875x2juxru.fsf@pond.sub.org>
- <0fd09b96-068f-415d-9bd8-0506958710f1@yandex-team.ru>
- <87y0fff25t.fsf@pond.sub.org>
+ <alTJLI3EWU96Ks61@redhat.com>
+ <f5178fb9-d3d1-4ed1-8f0e-98f4d95be2d6@yandex-team.ru>
+ <alT-y6A4hBjHPc82@redhat.com>
 Content-Language: en-US
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <87y0fff25t.fsf@pond.sub.org>
+In-Reply-To: <alT-y6A4hBjHPc82@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,12 +86,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13.07.26 16:29, Markus Armbruster wrote:
-> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
-> 
->> On 13.07.26 10:57, Markus Armbruster wrote:
->>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
->>>
+On 13.07.26 18:05, Daniel P. Berrangé wrote:
+> On Mon, Jul 13, 2026 at 03:35:06PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>> On 13.07.26 14:17, Daniel P. Berrangé wrote:
+>>> On Fri, Jul 10, 2026 at 10:18:01PM +0300, Vladimir Sementsov-Ogievskiy wrote:
 >>>> Support transferring of TAP state (including open fd).
 >>>>
 >>>> Add new property "local-migration-supported", which defines
@@ -97,39 +97,18 @@ On 13.07.26 16:29, Markus Armbruster wrote:
 >>>> Starting from 11.2 QEMU Machine Types it's enabled by default.
 >>>>
 >>>> Note, that local-migration (including migrating opened FDs
->>>
->>> Scratch the comma after "Note", ...
->>>
 >>>> through migration channel, which must be UNIX socket), is
->>>
->>> ... and the one before "is".
->>>
 >>>> enabled by global "local" migration parameters. But individual
 >>>> devices may have additional options to enable/disable it
 >>>> per device.
 >>>>
 >>>> The tricky thing, is that we need to know, should we do
->>>
->>> Do you mean "The tricky thing is that we ween to know whether to call"?
->>
->> yes
->>
->>>
 >>>> call open/connect in TAP initialization code. That means,
 >>>> that on incoming migration we want to know status of
 >>>> "local" migration parameter at time of creating TAP device.
 >>>> So, currently, for incoming local migration only TAP device
 >>>> created through QMP is supported, as you need to set migration
 >>>> parameter first (through QMP as well).
-> 
-> Possibly clearer:
-> 
->      The tricky thing is that we need to know whether to call open/connect
->      in TAP initialization code, i.e. we need to know the value of
->      migration parameter "local" when creating the TAP device.  For
->      incoming migration, we can know only for TAP devices created with QMP
->      after setting the migration parameter with QMP.
-> 
 >>>>
 >>>> So the full picture is:
 >>>>
@@ -154,54 +133,7 @@ On 13.07.26 16:29, Markus Armbruster wrote:
 >>>> with "local" unset, it initializes as usual. If you enable
 >>>> "local" after it and start incoming migration, it will fail
 >>>> in .pre_load handler of TAP backend.
->>>
->>> Out of curiosity, how would such a failure look like?
->>
->> TAP is initialized as usual, so the answer depends on the options.
->>
->> For incoming migration we should open TAP without "ifname" argument.
->> If so (and "local" is not set), new TAP device will be created. It
->> shouldn't trigger any additional problems I think.
->>
->>
->> Checking with test:
->>
->>     diff --git a/tests/functional/x86_64/test_tap_migration.py b/tests/functional/x86_64/test_tap_migration.py
->>     index bcc0a60dfe9..94982bc7b55 100755
->>     --- a/tests/functional/x86_64/test_tap_migration.py
->>     +++ b/tests/functional/x86_64/test_tap_migration.py
->>     @@ -316,8 +316,8 @@ def prepare_and_launch_vm(
->>              else:
->>                  tap_name = TAP_ID
->>
->>     -        self.set_migration_capabilities(vm, local)
->>              self.add_virtio_net(vm, vhost, tap_name, local, incoming)
->>     +        self.set_migration_capabilities(vm, local)
->>
->>          def add_virtio_net(
->>              self, vm, vhost: bool, tap_name: str, local: bool, incoming: bool
->>
->>
->> Leads to
->>
->> qemu-system-x86_64: TAP is already initialized and cannot receive incoming fd
->> qemu-system-x86_64: warning: qemu_fclose: received fd 27 was never claimed
->> qemu-system-x86_64: load of migration failed: Invalid argument: error while loading state for instance 0x0 of device 'netdev.1/0/net-tap': pre load hook failed for: 'net-tap', version_id: 0, minimum version_id: 0, ret: -22
->>
->> on target, and failed migration, as expected.
-> 
-> How is the user supposed to reason their way from here to "oh, I need to
-> create my TAP device with QMP and after setting @local"?
-
-Not trivial, yes.
-
-I can update error message to
-
-    TAP is already initialized and cannot receive incoming fd. For local migration, "local" migration parameter must be set _before_ creating TAP device.
-
-> 
->>
->>>
+>>>>
 >>>> Moreover, there are interface restrictions: if you create TAP
 >>>> device when QEMU is in INCOMING state, and both "local"
 >>>> and "local-migration-supported" set, most of TAP options are
@@ -209,9 +141,139 @@ I can update error message to
 >>>> unset (set to "" or "no").
 >>>>
 >>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>>>> ---
+>>>>
+>>>> In v17 thread we considered making new qapi parameters "unstable".
+>>>> Still, it was because of doubtful "incoming-fds" parameter. In this
+>>>> v18 it's completely removed, and we may live only with "local"
+>>>> migration parameter + "local-migration-supported" TAP option.
+>>>> This way the series doesn't conflict with suggested by Peter
+>>>>     [PATCH RFC 0/2] migration/vl: new -incoming config:* for early migration parameters
+>>>> So, I think, worth making one more iteration as "stable candidate".
+>>>> If still some doubts, not problem for me to resend with "unstable" features.
+>>>>
+>>>>    hw/core/machine.c |   7 ++
+>>>>    net/tap.c         | 162 ++++++++++++++++++++++++++++++++++++++++++++--
+>>>>    qapi/net.json     |  23 ++++++-
+>>>>    3 files changed, 185 insertions(+), 7 deletions(-)
+>>>>
+>>>> diff --git a/hw/core/machine.c b/hw/core/machine.c
+>>>> index 15886a56b19..2a1abb29041 100644
+>>>> --- a/hw/core/machine.c
+>>>> +++ b/hw/core/machine.c
+>>>> @@ -36,10 +36,16 @@
+>>>>    #include "hw/virtio/virtio-pci.h"
+>>>>    #include "hw/virtio/virtio-net.h"
+>>>>    #include "hw/virtio/virtio-iommu.h"
+>>>> +#include "net/tap.h"
+>>>>    #include "hw/acpi/generic_event_device.h"
+>>>>    #include "qemu/audio.h"
+>>>>    #include "hw/arm/smmuv3.h"
+>>>> +/*
+>>>> + * TODO: When hw_compat_11_1 appears, local-migration-supported=false
+>>>> + * for TYPE_TAP_NETDEV should be move to it from hw_compat_11_0.
+>>>> + */
+>>>> +
+>>>>    GlobalProperty hw_compat_11_0[] = {
+>>>>        { "chardev-vc", "encoding", "cp437" },
+>>>>        { "tpm-crb", "cap-chunk", "off" },
+>>>> @@ -49,6 +55,7 @@ GlobalProperty hw_compat_11_0[] = {
+>>>>        { TYPE_ARM_SMMUV3, "ssidsize", "0" },
+>>>>        { TYPE_ARM_SMMUV3, "oas", "44" },
+>>>>        { "migration", "switchover-ack-legacy", "on" },
+>>>> +    { TYPE_TAP_NETDEV, "local-migration-supported", "false" },
+>>>
+>>> So disabled by default for historical machines type versions, but....
+>>>
+>>>> +static void tap_instance_init(Object *obj)
+>>>> +{
+>>>> +    TAPState *s = TAP_NETDEV(obj);
+>>>> +    s->local_migration_supported = true;
+>>>> +}
+>>>
+>>> ..enabled by default for all future machine type versions, but...
+>>>
+>>>
+>>>> @@ -1005,6 +1123,23 @@ int net_init_tap(const Netdev *netdev, const char *name,
+>>>>            return -1;
+>>>>        }
+>>>> +    incoming_fds = tap->local_migration_supported && migrate_local() &&
+>>>> +                   runstate_check(RUN_STATE_INMIGRATE);
+>>>> +
+>>>> +    if (incoming_fds &&
+>>>> +        (tap->fd || tap->fds || tap->helper || tap->br || tap->ifname ||
+>>>> +         tap->has_sndbuf || tap->has_vnet_hdr ||
+>>>> +         !tap_is_explicit_no_script(tap->script) ||
+>>>> +         !tap_is_explicit_no_script(tap->downscript))) {
+>>>> +        error_setg(errp, "Local incoming migration of TAP device (-incoming, "
+>>>> +                   "migration parameter @local is set, "
+>>>> +                   "TAP parameter @local-migration-supported is set) "
+>>>> +                   "is incompatible with "
+>>>> +                   "fd=, fds=, helper=, br=, ifname=, sndbuf= and vnet_hdr=, "
+>>>> +                   "and requires explicit empty script= and downscript=");
+>>>> +        return -1;
+>>>> +    }
+>>>
+>>> ...not usable by default unless the mgmt app knows to avoid these settings,
+>>> but the user won't find out about this limit until they try to migrate and
+>>> it fails at runtime, months or years after the VM was first configured &
+>>> launched :-(
+>>
+>> No, it fail only for RUN_STATE_INMIGRATE, and only if "local" is enabled.
+>> If mgmt enables "local" it must know about the restrictions of using it.
 > 
-> [...]
+> This implies that with new machine types, mgmt has to know to turn
+> off the local migration feature which is rather unfortunate.
+
+Not sure I understand.
+
+"local" migration parameter is disabled by default, regardless machine type.
+
+Assume we are in a new machine type, and "local-migration-supported" is enabled
+by default.
+
+So, to enable "local" mgmt must know the details about restrictions in TAP
+(which are now hidden under machine type). Is that what you mean?
+
+It's a bit irrelevant now, as the only supporting device is TAP, and if
+mgmt enables "local", it means that it want enable it exactly for TAP
+device. Still in generic case (assume we already have some supporting
+devices) it's a bad thing of course.
+
 > 
+>>> IMHO the sane way to do this is to not have any "local-migration-supported"
+>>> device flag at all, and also no "local" migration parameter. The src & dst
+>>> QEMU's so badly need to be able to auto-negotiate and just do the right
+>>> thing, otherwise this local migration optimization becomes a mgmt nightmare
+>>> long term :-(
+>>
+>> "local" is needed because we can't know, does transfer support fd-passing.
+>> To auto-negotiate it, we probably need to pass a test FD to the target, as
+>> simply checking "is it a UNIX socket" may not be enough.
+> 
+> Oh, true, I forget that the UNIX socket could just be a local conenction
+> to a MITM proxy
+> 
+>>> And yet we don't have any auto-negotiate mechanism, and I don't want to
+>>> block your work :-(
+>>>
+>>
+>> Thanks) But finally, in short term, could we proceed with it as is, or not?
+>>
+>> Would it be better, if I drop the default =true for new machine types, keeping
+>> it false?
+> 
+> I think I'd be more comfortable with this as non-default
+> in the machine type. As you say, the mgmt has to know
+> the limitations, so at that point having them turn on
+> the device property fits with the knowledge requirement.
+> 
+> Auto-enabling something is more applicable when the
+> behaviour is seemless without caveats.
+> 
+
+OK, that works for me, if no more opinions on that, I'll simply drop
+machine-type-default in v19.
 
 
 -- 
