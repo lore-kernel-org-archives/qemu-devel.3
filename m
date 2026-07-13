@@ -4,84 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0F0FC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 16:17:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0B26C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 16:18:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjJLv-0001y4-7X; Mon, 13 Jul 2026 12:17:55 -0400
+	id 1wjJME-0002Ly-C1; Mon, 13 Jul 2026 12:18:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wjJLr-0001vx-Pj
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 12:17:51 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1wjJLt-0001y3-Ej
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 12:17:54 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wjJLp-0008VY-RZ
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 12:17:51 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-493b7612475so26556185e9.3
+ id 1wjJLq-0008Vj-7a
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 12:17:53 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-47dec32798aso3443069f8f.1
  for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 09:17:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783959468; x=1784564268; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=bLcty5828NfzvVAqvyUVuUlUIpIVjjLhuUFw0yq++bk=;
- b=GzVtg4mTZb5HFkWWIFDZTgmzsMUG/dwD08cSWZLaWtBHhdZzGqoQT7VQDgMU1b8n+F
- WPT6whxghVJgJMUzK8vMSksQZ/VZjF2WCjzdZ87i4hEhhAVNsm/4sMJDRMsvkkxN5Pct
- hac+u8yAeAe9FMo0hvHmieKgd5HG2M3sbTL6waIYSKS77i213m1CgT/VdThPx/6zq8j6
- nDgxFlyxxOcpchvsS4HBy6Kr8LuWO3c9BHxfObZZZpoPdTN+xZc3R6iHwwHtHz48vEfW
- yXjDyISxn7Ft61XJ9aHh+D1XWmX3WWlH0JrXWmat9KSK9aTQj9ZAPWEFevYIT0ea2lnx
- GN6g==
+ d=linaro.org; s=google; t=1783959469; x=1784564269; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=N7uGcJeREMWLTkeTLdpRAqEh/loC4iEhaX1xc+4Q7oY=;
+ b=v4Vgpz0jBAEZ5T8/xs8g3csBjTd3mzoWl2VvQbTDt8IBWWfY3DdZiVNv7FU7KZtNCM
+ wfFeWcpCueinDBv7buAJ4Aco7ZRMy8Mq38rlEaWcyawWZ5usy0czd9bVGAlhUEi+xmFa
+ K5Rkkec5ms+pUeY375vlWcYZXQkB4tLg/BjQSOrH7QNhG6ix64P+YWluLz/8Xicgg/2K
+ QEKV/+cI2l5BEZPCqtKfebAI6ecCSLn4dU+VbRfShqGaBiSX5iUsfVZZJ82cjxd9vU0W
+ P3ZKoUaTJP3noJEQ4SasQzPuVsEZfMcVrfqz2pRKZzGz/Iw+sKsS4swmgoaKBWZ9Sgrf
+ Vs5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783959468; x=1784564268;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=bLcty5828NfzvVAqvyUVuUlUIpIVjjLhuUFw0yq++bk=;
- b=YFbO3NGuUUZeviyEFeb2n9abS+DdKZU4YPsYJ4dLjt5A487XXuyUDgYCaCvvqFgfXy
- djJomTEWOenkwX6647KQhed+jLDbdxcSgQaEfMrOnNhryZMcLUwhEmQrP+WC2brhpkUT
- HsSOJJHFNv3nB/6/m5vC2wQ7PlTO/rTH2c42yMjP+bhrOwuhYRvt3mGeLNHx/z+CijwN
- 8qgCOXiNaEeT4a6sARh5xzG70ZdWkw9cWA+S2kU0qRuQ8SWHo7txWVN6/rKWKQ7KBmpP
- mYZ5CDcw/QSBzb6sM8Mrv98y/z7hbDYNTop0D8NGJerWXAqcxuowonWHhvRxrPShDfrl
- Y5eg==
-X-Gm-Message-State: AOJu0YwKUGPxaRgWCT1Qccnsmt7Ake0DTZS7G5XXA11Sjylso91WshtS
- GOixZcs7Cv7U8hgjgj2fa9/aCMWLpsIadzWyLd3NYr+q5B/56+cVu0vR5x1STTGu0do=
-X-Gm-Gg: AfdE7cnp0LQkPKfSbIRRDUsaXZvRm+zF3rBnhj3vG+sNYtKgp/RRcVvSMsHwqIm/pe/
- 5X48aN49ZC33LAMDIAnrO9Rg+1xm6g9MYN4sM82dKyec2yjr2IwC+krOPMNLDI91ZWJ8XMI7D0P
- /gibpJc0HYeCWnLJATc0zrbdQDfy/Tt8tET/uKsRendC/r+M417QvTB+ElMgsUJsvwduQ6NjSya
- UvcwuEkAPinoBZSXCCwJGwmcsFuOWfp95oy9ZlZ/vjczkBeAZw7c0Kqy9TKfAv9RGcRnSTMnnYD
- BI2Uj6UCwvgQX+7br0PQGh1Vi+tBePf16FPjNtbmBLu3jU13Wgxl0AK+DyNQkDs8exwUD0sawIc
- MDUsjA8eWLOdslubfvxovnz6WSKfhoGtInUtWJVbR89qHoYydqfGsQrdO1sHA61Lx4c591GOQJB
- qDgIzhBQ4mmB+k
-X-Received: by 2002:a05:600c:524b:b0:490:44eb:c1ea with SMTP id
- 5b1f17b1804b1-495159060f6mr529645e9.24.1783959468167; 
+ d=1e100.net; s=20251104; t=1783959469; x=1784564269;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=N7uGcJeREMWLTkeTLdpRAqEh/loC4iEhaX1xc+4Q7oY=;
+ b=HuHZImGCX/YoBLdES93rsoGehDnKn4M8+UL7sSW2lcwHKwHwsHKsDC5ZBpHgN6WzKq
+ kIV7M3hw5SWSWEcxBRSOfzCxN3R/tqnEbZ/2CtO3c/Zx9u1F+4RDaFCpeKioE192X4i2
+ 4NpzPeaubLKzVjcv1SVNkQzktFhIvMZdhp3Sl3wHvbYSAGQ5n/L4pZIXmUM9ZZNao7yu
+ HmWLkfw88qXNT/mGDrN7qmTvJRky2vvWu8jC24xxtb08dU/wOxgv4ddzK0RZqA7aOruv
+ BQIF1ph+HkC6IOXAKkmjUooNtZB+EbhDUEEnrtp+a9wzYnvt2fJahtObnGTA3i3FxlXf
+ VMag==
+X-Gm-Message-State: AOJu0YxIQMqk73SfjHu7pqo7B2hcbdJHaoycXyFAUQkWGJkPy1I+xrW+
+ 14WMib3aef+hvPXdXxzDgmDmec/LcvWWn8/euuOsRmzwXg4a4pen9hzRhJVewnpt4n5JvvyMBox
+ gOH9U3yQ=
+X-Gm-Gg: AfdE7cn4qqVd93oPPJg3IZ2o4RjpNzqwwl4brfeMrZ4Rkz20uO38Lc8VEOzkDJXUBdM
+ 4Vuel6/qXWaTfxeRnENdWA+HIWqfjHEqVyu8YcxMc2V1Oz7Fx4anGVUjCgnCsAdIG1jVlkBIdMC
+ mKLyGpC6Id7Wb6u3BTomYsonPQj7Y5Rx/aostP+vetDbikHZtsGi6fZxSQeikJvmzlg8EKQhD4C
+ ZXGShv3dsf6GHUYLKl3ECJ5EHJypji54mDzgtwMPTOPpfT0f/bmT56M0m/tC20hGutaZbBAiT+8
+ LUB9iv0A3YG/nAgfRx3SgliDkO+Cy4L/JzDAAlWDVOovPCGxpYW3QFdEHQ+HxVClDVoMsxNYHUR
+ jfBt3zUcGY42BiRT8wvSbuA6rnTTIbnmkirha3TkCNjFDe0MdOmUsFHUnoefh4golHx9+O/jZae
+ mmLYb+RoMoSuBH
+X-Received: by 2002:a05:6000:2f86:b0:475:c578:b619 with SMTP id
+ ffacd0b85a97d-47f2dcd71ccmr10639121f8f.30.1783959468692; 
  Mon, 13 Jul 2026 09:17:48 -0700 (PDT)
 Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4950a2e98b0sm11232215e9.8.2026.07.13.09.17.47
+ ffacd0b85a97d-47f4634e5c3sm483561f8f.1.2026.07.13.09.17.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Mon, 13 Jul 2026 09:17:47 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B29345F856;
+ by draig.lan (Postfix) with ESMTP id 8814B5F80F;
  Mon, 13 Jul 2026 17:17:45 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 2/7] mailmap: add email mapping for Alexander Mikhalitsyn
-Date: Mon, 13 Jul 2026 17:17:40 +0100
-Message-ID: <20260713161745.53889-3-alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 0/7] gitdm metadata updates
+Date: Mon, 13 Jul 2026 17:17:38 +0100
+Message-ID: <20260713161745.53889-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260713161745.53889-1-alex.bennee@linaro.org>
-References: <20260713161745.53889-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,44 +100,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+The following changes since commit 499039798cdad7d86b787fec0eaf1da4151c0f05:
 
-I use my company's email to sign-off patches, but send them from my
-personal email cause it's Gmail hosted and works much better than Outlook.
+  Merge tag 'pull-request-2026-07-12' of https://gitlab.com/huth/qemu into staging (2026-07-12 21:49:04 +0200)
 
-It causes some misunderstanding and inconvenience for maintainers sometimes [1].
-So I would like to add this email mapping to clear out all possible confusion here.
+are available in the Git repository at:
 
-Link: https://lore.kernel.org/qemu-devel/CAAjaMXabXNmh1UZ5wnpX4wucnC+yWvMo2-jr2XBTby4zqf6CTA@mail.gmail.com/ [1]
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Message-ID: <20260708134744.169452-1-alexander@mihalicyn.com>
-Message-ID: <20260709080040.4157324-3-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+  https://gitlab.com/stsquad/qemu.git tags/pull-11.1-gitdm-updates-130726-1
 
-diff --git a/.mailmap b/.mailmap
-index 7665ea87562..9ad072234ff 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -123,6 +123,7 @@ Stefan Weil <sw@weilnetz.de> Stefan Weil <stefan@weilnetz.de>
- Song Gao <17746591750@163.com> <gaosong@loongson.cn>
- Taylor Simpson <ltaylorsimpson@gmail.com> <tsimpson@quicinc.com>
- Yongbok Kim <yongbok.kim@mips.com> <yongbok.kim@imgtec.com>
-+Alexander Mikhalitsyn <alexander@mihalicyn.com> <aleksandr.mikhalitsyn@futurfusion.io>
- 
- # Also list preferred name forms where people have changed their
- # git author config, or had utf8/latin1 encoding issues.
-diff --git a/contrib/gitdm/aliases b/contrib/gitdm/aliases
-index e26b00a71d7..f838768792a 100644
---- a/contrib/gitdm/aliases
-+++ b/contrib/gitdm/aliases
-@@ -33,6 +33,7 @@ malc@c046a42c-6fe2-441c-8c8c-71466251a162 av1474@comtv.ru
- 
- # canonical emails
- liq3ea@163.com liq3ea@gmail.com
-+aleksandr.mikhalitsyn@futurfusion.io alexander@mihalicyn.com
- 
- # some broken DCO tags
- yuval.shaia.ml.gmail.com yuval.shaia.ml@gmail.com
+for you to fetch changes up to 651c451c8e576989e3086a2915c50a9a72356cb4:
+
+  scripts/gitdm: migrate from contrib (2026-07-13 17:13:11 +0100)
+
+----------------------------------------------------------------
+gitdm updates
+
+  - various mailmap fixes
+  - update IBM gitdm map
+  - add more individual contributors to gitdm
+  - update Qualcomm entries
+  - migrate gitdm to scripts/
+
+----------------------------------------------------------------
+Alex Bennée (3):
+      mailmap: add fix for Zhongyao Chen
+      contrib/gitdm: add more individual contributors
+      scripts/gitdm: migrate from contrib
+
+Alexander Mikhalitsyn (1):
+      mailmap: add email mapping for Alexander Mikhalitsyn
+
+Joel Stanley (1):
+      contrib/gitdm: Update IBM map
+
+Philippe Mathieu-Daudé (2):
+      mailmap: Fix Ryan Zhang email address
+      contrib/gitdm: Update Qualcomm entries
+
+ MAINTAINERS                                      |  2 +-
+ .mailmap                                         |  3 ++
+ contrib/gitdm/group-map-ibm                      | 15 ----------
+ gitdm.config                                     | 38 ++++++++++++------------
+ {contrib => scripts}/gitdm/aliases               |  1 +
+ {contrib => scripts}/gitdm/domain-map            |  3 +-
+ {contrib => scripts}/gitdm/filetypes.txt         |  0
+ {contrib => scripts}/gitdm/group-map-academics   |  0
+ {contrib => scripts}/gitdm/group-map-alibaba     |  0
+ {contrib => scripts}/gitdm/group-map-amd         |  0
+ {contrib => scripts}/gitdm/group-map-cadence     |  0
+ {contrib => scripts}/gitdm/group-map-codeweavers |  0
+ {contrib => scripts}/gitdm/group-map-facebook    |  0
+ {contrib => scripts}/gitdm/group-map-huawei      |  0
+ scripts/gitdm/group-map-ibm                      |  7 +++++
+ {contrib => scripts}/gitdm/group-map-individuals |  2 ++
+ {contrib => scripts}/gitdm/group-map-interns     |  0
+ {contrib => scripts}/gitdm/group-map-janustech   |  0
+ {contrib => scripts}/gitdm/group-map-microsoft   |  0
+ {contrib => scripts}/gitdm/group-map-netflix     |  0
+ {contrib => scripts}/gitdm/group-map-redhat      |  0
+ {contrib => scripts}/gitdm/group-map-robots      |  0
+ {contrib => scripts}/gitdm/group-map-wavecomp    |  0
+ 23 files changed, 35 insertions(+), 36 deletions(-)
+ delete mode 100644 contrib/gitdm/group-map-ibm
+ rename {contrib => scripts}/gitdm/aliases (97%)
+ rename {contrib => scripts}/gitdm/domain-map (94%)
+ rename {contrib => scripts}/gitdm/filetypes.txt (100%)
+ rename {contrib => scripts}/gitdm/group-map-academics (100%)
+ rename {contrib => scripts}/gitdm/group-map-alibaba (100%)
+ rename {contrib => scripts}/gitdm/group-map-amd (100%)
+ rename {contrib => scripts}/gitdm/group-map-cadence (100%)
+ rename {contrib => scripts}/gitdm/group-map-codeweavers (100%)
+ rename {contrib => scripts}/gitdm/group-map-facebook (100%)
+ rename {contrib => scripts}/gitdm/group-map-huawei (100%)
+ create mode 100644 scripts/gitdm/group-map-ibm
+ rename {contrib => scripts}/gitdm/group-map-individuals (96%)
+ rename {contrib => scripts}/gitdm/group-map-interns (100%)
+ rename {contrib => scripts}/gitdm/group-map-janustech (100%)
+ rename {contrib => scripts}/gitdm/group-map-microsoft (100%)
+ rename {contrib => scripts}/gitdm/group-map-netflix (100%)
+ rename {contrib => scripts}/gitdm/group-map-redhat (100%)
+ rename {contrib => scripts}/gitdm/group-map-robots (100%)
+ rename {contrib => scripts}/gitdm/group-map-wavecomp (100%)
+
 -- 
 2.47.3
 
