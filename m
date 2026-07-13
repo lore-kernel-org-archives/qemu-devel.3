@@ -4,128 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3548C44507
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 20:09:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8DD1C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 20:09:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjMwY-0005mx-0c; Mon, 13 Jul 2026 16:07:58 -0400
+	id 1wjMwC-0005gW-Ld; Mon, 13 Jul 2026 16:07:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1wjMwW-0005m8-8F
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 16:07:56 -0400
+ id 1wjMwA-0005fi-Kf
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 16:07:34 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1wjMwU-0006Sv-Bx
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 16:07:55 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ id 1wjMw8-0006Pa-Pm
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 16:07:34 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66DJ9GJj2470611
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 20:07:43 GMT
+ 66DJ9Y1U2356001
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 20:07:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=oy22ab/xlCe
- at2wkPKsuZ5LNgXAzntyzHrFtr8M6THM=; b=lISCpM/ckY7zzdNFWhxLy4lbDV5
- 79cyJ8OhW7l3yi7DNpcyINziQ8hxmAnZTlz0r7Sr7KE6kmiNQpVLgNwAaGvPwbL2
- yc8ziHoaArNJh4Lr3iIHilQc9shYN4bm0l2dQlg5EUsFjwIpck0oFVlnT2RvvmLN
- xtpkL5uDuL4HpokmewT3VnRzA6vhwPb/ixFuUJb8exl49NxNjtPTiAupYXqFvwH+
- hThgPaJGMSVfuFsiVDEg2FZyQY2kqBuCvKaudenPNpIMHYQsUme7/J/kjbH8ue7T
- yT/5873G+PjHM7qe0Ef0TzH0s+gLOChvO7+BR9J/EnJrnjLLdFpI1gOTBRg==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fd44jrmf9-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=8xGofNjm/bn
+ pWgg3lP/oqijw7mdLM5SH/24RznCSq3I=; b=UZa8nEJlTg1zhxb3W5byiu0tt/K
+ KayTAB4eN8TlYlD+vp+4i6/TL/N2E2xcSrnHoS90zsZV2eNXXvSaBbqg6cu5dMTb
+ 3soN+ZsneD2EpwflZsSLzQ4koHOmQDkuzqMLImgj6usY+/8U9XPxBeNSeK4dSy5c
+ gu8xDT+tlORnbrS4SY5cwfSpcpw7xnYwWt3TB22CLnADzyF2KEDWzcAno0mAuNdX
+ vVLumPaCsE74LXvz8+EMawIx6ntk2TTcG/xB15qsiq26pCtFDwXTzX4zbH8sLJP3
+ eo654wKJg/4nuaqWwIUQYLkdy/wTP2XzK50KDJGYarO9xwlsSvA6v/a5llg==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcwu4tcqv-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 20:07:43 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-c890bac374eso9022970a12.1
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 13:07:43 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 20:07:31 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-38dbf293831so490646a91.3
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 13:07:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783973262; x=1784578062; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783973251; x=1784578051; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=oy22ab/xlCeat2wkPKsuZ5LNgXAzntyzHrFtr8M6THM=;
- b=XDCJVvZis2us+QDd+Y6h73qyNnL62yP2IvZc7n9/kabe/QKv6aniEo47aBj/EKBadV
- 0W572Al+ykr66XJJa8vgg7I40486zLPFDadxS/KgRl+YuAIvVe/FTtmuULRrOTS43BmY
- 2qn7E33ASSm81NZFzS7KTozLWF8X4UDY+6JW1kasTbYOwyvq65LhhjarFJC4xcknoZnh
- xDA5KMWzro/w+KSpN1Mq3xZyQYSIdI3x9F/XOE+qVSr8u3ZZvOUyHS7bn8pE7mllR909
- 59TQ0tfpcOTFXjFlHZhz8Fy6WhJejrBtMSeDMu/4pyJYBuVI3rjY0g31fRlACTLra+Ea
- 8/Lw==
+ bh=8xGofNjm/bnpWgg3lP/oqijw7mdLM5SH/24RznCSq3I=;
+ b=WF3Pvo/8AmTfNDhBSYxGOzGPdyTvQfOm/fDJtiM40ceJZC80tCgDatemvgVYWrsv8h
+ CGauXw2xT8mKAazSF9+bxiiOJBGvUEItWkYTRLLgdlF9SmVrMf3+PVqrS1Ej0CUPVlB7
+ 7Bl947Z7ykOd8H36bp2D1yLZxAnkw79QxRieOjvqPJf0oCSZghH8B4yiKqXXRYbyFpTu
+ 6GsPSkBw+e8w0AWp9lbLIbnc00otD8w1yX/d9tlFvLtANIzkWbEJpSjVeDyLYgFY4r33
+ ERwrzq+yee0ZBRI2vtJPntnA44oG1aoTT7qke75PbNXWf24TXvNQ+JqbfacvgA/7dfog
+ 351g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783973262; x=1784578062;
+ d=1e100.net; s=20251104; t=1783973251; x=1784578051;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=oy22ab/xlCeat2wkPKsuZ5LNgXAzntyzHrFtr8M6THM=;
- b=VLFardiz/RAYRmFEFJ83sf2zi64fBcGeVA0LldBsmGjNCnwDtwGNpamF3nwBED3ObV
- ljSlv0oMUIJu/7igePyw7gCCU6+ZIwLfI/OpGNJK/STJZa3OIhp2o0KCrhaqbrgJ8UQK
- 0si/6abInM7Wj637jXAq8DxX1JAkRFFGJQm2JyMNb17xndkcs91AfA1Dy69FC0/0tdQY
- 6QFUJHzBxnueouCGnBATsZToWoGxiy5SvrdH1GrEPX8wLCjaEer9+CL3GtIkdLAlQp6s
- WFFCHCcn5AzYyoZu9nDJLq+agspCyBfzzyM7d6Lu6WgU53uW3eJjhgQnVFNYpkHmRtxR
- k5vg==
-X-Gm-Message-State: AOJu0YwbPgjxtgpc1Knsi2Jb2p9YLLqEyFp9e79GLAei5HuDqLMhjhLR
- rIesQfuFfRFtnv6NWcacEPOLTMW7zUR5mEVzlI7FCh8K2TwBGCwk1a5cG8i13ioyz+LUPGCZo4J
- 9tBI44MCAY8a2O0OZ7otZz+0wfua1f3DjrpVjEC9hMX9vo2fmF8GsDY6vRKIRc/I1iG6d
-X-Gm-Gg: AfdE7ckCCPD3KWHBczmZ1QWahUYw/3LEfc1z8CdM1zyapOyt3gHjGuW65pf98BUZEE6
- oAm1B7sODf1kOR6Tnrus8CSAnDEjkrDIuVeQyK1c+NRAx6X6mkUQC89Di/+7IyrG9JOmEaX85qN
- 7Mq3WzD0oNwgs/c38+ra9Vg0of4VzeDK1CLEtkqt592KOL2RdpcWycy/rM+Z2mP5f7cPF4Ep7sq
- EBzgYTwSUmdxr9ciVe9GCWnB2YFibPfJXsDMz1IF4FwOFDKF1RzBL2Qs+oG3aZaEesd2qLHgBwz
- wkC6TCUf/T/G0ziiMJ9Ffz6hUVP+qfB2F1HSQHbtvvHSNEyNkjiYbGqJOlcXVS1xMRSzaH42AqF
- ReY//IdwtXkQdZ3VVT6wYxRgPdip6CZ3poHXw3u1zlTq+NGWzWK5PCEge9cdsrgwDBFh4IVN68g
+ bh=8xGofNjm/bnpWgg3lP/oqijw7mdLM5SH/24RznCSq3I=;
+ b=A9sJURmpCZUP91ZJencARYRuV4bIg4a4YLjyF9uPshH3GmiMNs4hfupM/cvhY9Lvs7
+ cU7mlZ3pRl7a9A0IEmxRQ+myDblEMMXXxOIFCaL59hDm6HSGXElufSW4/CZGXqZRGwaI
+ OxejOXaXJgi1PiVehGYZvr89H/T+CqHIAobMet/SVGbWTOFvIi82tbsene5nZ3KAa+qL
+ e9SH2l5WTWH/SmUcwAjEdPDlPR89quuEE2Nwu4TjJ/SHVZSqvb39MaGIBtLZLjiiorSY
+ ps+/JgH+MNutPRAKk/ugZFJ2i1l/5rk0pWuCN8FhwaQNHaXwcCKhy3sl7bxDFn1b5sOD
+ VYMg==
+X-Gm-Message-State: AOJu0YyTJ1mYi3oo+dGfiTYCEc3RmivxXd7ee2R0tvOugc9nU+7a+DlO
+ ee3ATTMl8WVfUk7GPpxmxbB6kHjVn2Q0frIhBMPPXhWE44piIsBnaRqZzZdkt7L48nAI5fwDSna
+ kFtsCHKO1mYBygXI3Zlhs0LblbjqFPScMygL5D+FoQEVJ93kRREVs5hH6chh0xKwZSHVt
+X-Gm-Gg: AfdE7cnwlIZOc7byUDJZ2yJD8qBgtN4YD9AnbH4hLfvOYz82fEwAhkQiJpuvaMqjW5S
+ LtrLVTbmbpmy6AUJqrY6FG4xNiTF/siH02q0Vo0AjkD3U8tdzoCIN1MAPrCyHDTEoCQ1V0Fkjli
+ PHUaQYcamshWES41ryfzSpqgJ/GrV2JaXRndZ1QpQKSNJ7kIkQe5F6qMKZxQGCjkpYtZnFo3ptY
+ weCVJncStSJKyOwCrFu9LcT+EwIZvgRm616C5nj4U7ayj4HhkiQIGZdJxIsgCsV07v2V77Q/r2+
+ k+cM/l2Axy8FNfTgm89MxGHpCIwPf4jYB+RcbXdcpVz5GYIDThfq8AXAYNF0YIsHycIc9vncVXG
+ CtzvJ2Hi/yzYEwkNbekjvk1SblG8fWPryxHmu7Qsruil+YGV1u/1AvrDuHuXtBJ8TR00SesDwZg
  ==
-X-Received: by 2002:a17:90b:3947:b0:38d:e28e:a639 with SMTP id
- 98e67ed59e1d1-38de28ec303mr6457042a91.24.1783973262500; 
- Mon, 13 Jul 2026 13:07:42 -0700 (PDT)
-X-Received: by 2002:a17:90b:3947:b0:38d:e28e:a639 with SMTP id
- 98e67ed59e1d1-38de28ec303mr6457023a91.24.1783973262043; 
- Mon, 13 Jul 2026 13:07:42 -0700 (PDT)
+X-Received: by 2002:a05:6300:2290:b0:3c0:9c1b:d0c1 with SMTP id
+ adf61e73a8af0-3c110a535a4mr10458314637.76.1783973250771; 
+ Mon, 13 Jul 2026 13:07:30 -0700 (PDT)
+X-Received: by 2002:a05:6300:2290:b0:3c0:9c1b:d0c1 with SMTP id
+ adf61e73a8af0-3c110a535a4mr10458290637.76.1783973250313; 
+ Mon, 13 Jul 2026 13:07:30 -0700 (PDT)
 Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-313cb804197sm24106543eec.13.2026.07.13.13.07.41
+ 5a478bee46e88-313cb804197sm24106543eec.13.2026.07.13.13.07.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jul 2026 13:07:41 -0700 (PDT)
+ Mon, 13 Jul 2026 13:07:29 -0700 (PDT)
 From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: brian.cain@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
  marco.liebel@oss.qualcomm.com, philmd@oss.qualcomm.com, ale@rev.ng,
- anjo@rev.ng, Thomas Huth <th.huth+qemu@posteo.eu>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 14/14] tests/functional: Add hexagon semihosting systests
-Date: Mon, 13 Jul 2026 13:07:22 -0700
-Message-Id: <da280da8fec576b2cc59e7bf48a2845312ee50cc.1783973054.git.matheus.bernardino@oss.qualcomm.com>
+ anjo@rev.ng, Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+Subject: [PATCH 03/14] target/hexagon: add aux functions for guest mem
+ load/store
+Date: Mon, 13 Jul 2026 13:07:11 -0700
+Message-Id: <9cdc7c7f27a70257276119e485a55674bf5f2551.1783973054.git.matheus.bernardino@oss.qualcomm.com>
 X-Mailer: git-send-email 2.37.2
 In-Reply-To: <cover.1783973054.git.matheus.bernardino@oss.qualcomm.com>
 References: <cover.1783973054.git.matheus.bernardino@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: qZcxUOwxVwp7oTWXWQic1WbAk1ubIN1H
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDIwOCBTYWx0ZWRfX5MSBd5XQmMk/
- a+raieVZZtd5tUQ/Vx/kGr96pIBDJK/lB+qKqCyGSqnsP5WSIFDvCErIotC/52bj6j9MOQLe4E2
- g0nyIYlFLW829cylGSiTYuSJltsNfYo3jSPtmqNzb8sDhVBRPF7qgAdzmZUBVdhgIMWTdmsEk+u
- 0jpET+srPV0kZ5AHBqnGjCUF9VeXrmmasfz62C0HWkCxvIBKGcGKoEynYEKd2FzLN+rKtyB1JBo
- EZJNlHqVEknuwIv9JyroxREwPPLJ5vMzLthg5UBKO4XDy/fTdNK0Ig7Zh8FQ2Cve2pHRQfGmxRz
- 5QzzaZmxlkJgUpm3oNU244rAI1hq6CqE6jU0Syog95fupNdKYh84uKm6xUp7ToGsQS2/P491HnI
- FqCR4an970SFm5h7+A+Fpa6rN98bDKA9eMn+EVroyf1fV+EROgnjGDbgfKhMVpP4FkTH5Dlw7VR
- iGXG3yqHGY3QrwpsQPw==
-X-Authority-Analysis: v=2.4 cv=XonK/1F9 c=1 sm=1 tr=0 ts=6a55458f cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Authority-Analysis: v=2.4 cv=FMErAeos c=1 sm=1 tr=0 ts=6a554583 cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=5vFef2XoAAAA:20
- a=EUspDBNiAAAA:8 a=VJmjIbDfMbkIIiVV3KYA:9 a=_Vgx9l1VpLgwpw_dHYaR:22
- a=bA3UWDv6hWIuX7UZL3qL:22
-X-Proofpoint-ORIG-GUID: qZcxUOwxVwp7oTWXWQic1WbAk1ubIN1H
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDIwOCBTYWx0ZWRfX++CwaN2O51Z4
- 5U2dSP6uQYYKbSTMpuk23peAQH3Y+30TSZI3ikLSC0prdEtUJaStldeBjvokMGUe1TziRcOJgZB
- o5Ioy2WgIF35OEiWHrnhRg5h+k65O4Q=
+ a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=COk6AnOGAAAA:8
+ a=EUspDBNiAAAA:8 a=f3xLiZNeclign1bWSxgA:9 a=mQ_c8vxmzFEMiUWkPHU9:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDIwOCBTYWx0ZWRfXy3bkwKi6ZyAB
+ e4yCdWrv0Uf5Aj9RYNUBjMqeHxHCynfMebagSWfhYFzibckRehXnD9W+jvC48iQq2mtbjIE7hyO
+ k2OtAtZWeu36ZtOHq+8jWI//pBTJxxA=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDIwOCBTYWx0ZWRfX+/5p539FMO9t
+ uxxQVAFginPRjcXX59oi5lb6MwUcdUuk6ZQ/syoRT+m1YK+LZQHjYO1vrYZRk1KDOWRXmtp1kxJ
+ QRVbUPvtNoApvSH5+cjLC8nsdiaJVNtCexz8S1BfgxhrjU8xwkvz3qOkzfuf1+GMQWb+pXBSqxk
+ 2n3GfExSp7PDrmoHedief2OFYdKTv07qoZ9c/BEmsn0y+KR29EQ6cBmGJcf+I0lWW9HVMj+y1OE
+ 3lBW97TxVYbtaWgdhefQ/Sqf0f+h5/hRx9WinxDu4NEI4OCcloKnXLFHDx2eDUhFrX816W7x1L5
+ +YFQEhKr/HyC2DcBpN7QwKOFrneLtWGdNeNV1T6J/jY3Tj+N2HMPBeuefhI7AzL+czMHoz8Iyuf
+ i4MTQjnHiWpwMNSElsfJbwlXfpokngohqtSwXVBvy0o2Al4EpRiIQCVaFtGtoZ2fPdMkPREekjG
+ YbA+js6+fEjby1bKzjw==
+X-Proofpoint-ORIG-GUID: t3oAN8iYSdNy15a8PqK69p4sppclorKy
+X-Proofpoint-GUID: t3oAN8iYSdNy15a8PqK69p4sppclorKy
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-13_05,2026-07-10_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 impostorscore=0 malwarescore=0 priorityscore=1501
- adultscore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0
+ clxscore=1015 adultscore=0 bulkscore=0 malwarescore=0 impostorscore=0
+ suspectscore=0 priorityscore=1501 phishscore=0 spamscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607130208
 Received-SPF: pass client-ip=205.220.180.131;
@@ -153,184 +152,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Brian Cain <brian.cain@oss.qualcomm.com>
+From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
 
+Will be used for semihosting.
+
+Signed-off-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
 Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 ---
- tests/functional/hexagon/meson.build      |   9 ++
- tests/functional/hexagon/test_systests.py | 133 ++++++++++++++++++++++
- tests/functional/meson.build              |   1 +
- 3 files changed, 143 insertions(+)
- create mode 100644 tests/functional/hexagon/meson.build
- create mode 100644 tests/functional/hexagon/test_systests.py
+ target/hexagon/cpu_helper.h |   6 ++
+ target/hexagon/cpu_helper.c | 133 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 139 insertions(+)
 
-diff --git a/tests/functional/hexagon/meson.build b/tests/functional/hexagon/meson.build
-new file mode 100644
-index 00000000000..6cd684b0df7
---- /dev/null
-+++ b/tests/functional/hexagon/meson.build
-@@ -0,0 +1,9 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/target/hexagon/cpu_helper.h b/target/hexagon/cpu_helper.h
+index d1767503156..f6a31ecbab0 100644
+--- a/target/hexagon/cpu_helper.h
++++ b/target/hexagon/cpu_helper.h
+@@ -7,6 +7,12 @@
+ #ifndef HEXAGON_CPU_HELPER_H
+ #define HEXAGON_CPU_HELPER_H
+ 
++void hexagon_read_memory(CPUHexagonState *env, target_ulong vaddr, int size,
++                         void *retptr, uintptr_t retaddr);
++void hexagon_write_memory(CPUHexagonState *env, target_ulong vaddr,
++                          int size, uint64_t data, uintptr_t retaddr);
++void hexagon_touch_memory(CPUHexagonState *env, uint32_t start_addr,
++                          uint32_t length, uintptr_t retaddr);
+ uint32_t hexagon_get_pmu_counter(CPUHexagonState *cur_env, int index);
+ void hexagon_modify_ssr(CPUHexagonState *env, uint32_t new, uint32_t old);
+ int get_cpu_mode(CPUHexagonState *env);
+diff --git a/target/hexagon/cpu_helper.c b/target/hexagon/cpu_helper.c
+index 64c5746c6d9..1ab2564e3dc 100644
+--- a/target/hexagon/cpu_helper.c
++++ b/target/hexagon/cpu_helper.c
+@@ -25,6 +25,139 @@
+ #include "sys_macros.h"
+ #include "arch.h"
+ 
++#ifndef CONFIG_USER_ONLY
 +
-+test_hexagon_timeouts = {
-+  'systests': 180,
++static bool hexagon_read_memory_small(CPUHexagonState *env, target_ulong addr,
++                                      int byte_count, unsigned char *dstbuf,
++                                      int mmu_idx, uintptr_t retaddr)
++ {
++    /* handle small sizes */
++    switch (byte_count) {
++    case 1:
++        *dstbuf = cpu_ldub_mmuidx_ra(env, addr, mmu_idx, retaddr);
++        return true;
++
++    case 2:
++        if (QEMU_IS_ALIGNED(addr, 2)) {
++            *(unsigned short *)dstbuf =
++                cpu_lduw_le_mmuidx_ra(env, addr, mmu_idx, retaddr);
++            return true;
++        }
++        break;
++
++    case 4:
++        if (QEMU_IS_ALIGNED(addr, 4)) {
++            *(uint32_t *)dstbuf =
++                cpu_ldl_le_mmuidx_ra(env, addr, mmu_idx, retaddr);
++            return true;
++        }
++        break;
++
++    case 8:
++        if (QEMU_IS_ALIGNED(addr, 8)) {
++            *(uint64_t *)dstbuf =
++                cpu_ldq_le_mmuidx_ra(env, addr, mmu_idx, retaddr);
++            return true;
++        }
++        break;
++
++    default:
++        /* larger request, handle elsewhere */
++        return false;
++    }
++
++    /* not aligned, copy bytes */
++    for (int i = 0; i < byte_count; ++i) {
++        *dstbuf++ = cpu_ldub_mmuidx_ra(env, addr++, mmu_idx, retaddr);
++    }
++    return true;
 +}
 +
-+tests_hexagon_system_thorough = [
-+  'systests',
-+]
-diff --git a/tests/functional/hexagon/test_systests.py b/tests/functional/hexagon/test_systests.py
-new file mode 100644
-index 00000000000..b20b9fc56cc
---- /dev/null
-+++ b/tests/functional/hexagon/test_systests.py
-@@ -0,0 +1,133 @@
-+#!/usr/bin/env python3
-+#
-+# Copyright(c) Qualcomm Innovation Center, Inc. All Rights Reserved.
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
++void hexagon_read_memory(CPUHexagonState *env, target_ulong vaddr, int size,
++                         void *retptr, uintptr_t retaddr)
++{
++    BQL_LOCK_GUARD();
++    CPUState *cs = env_cpu(env);
++    unsigned mmu_idx = cpu_mmu_index(cs, false);
++    if (!hexagon_read_memory_small(env, vaddr, size, retptr, mmu_idx,
++                                   retaddr)) {
++        cpu_abort(cs, "%s: ERROR: bad size = %d!\n", __func__, size);
++    }
++}
 +
-+import os
-+import re
-+import time
-+import unittest
++static bool hexagon_write_memory_small(CPUHexagonState *env, target_ulong addr,
++                                       int byte_count, unsigned char *srcbuf,
++                                       int mmu_idx, uintptr_t retaddr)
++{
++    /* handle small sizes */
++    switch (byte_count) {
++    case 1:
++        cpu_stb_mmuidx_ra(env, addr, *srcbuf, mmu_idx, retaddr);
++        return true;
 +
-+from qemu_test import QemuSystemTest, Asset, wait_for_console_pattern
++    case 2:
++        if (QEMU_IS_ALIGNED(addr, 2)) {
++            cpu_stw_le_mmuidx_ra(env, addr, *(uint16_t *)srcbuf, mmu_idx, retaddr);
++            return true;
++        }
++        break;
 +
++    case 4:
++        if (QEMU_IS_ALIGNED(addr, 4)) {
++            cpu_stl_le_mmuidx_ra(env, addr, *(uint32_t *)srcbuf, mmu_idx, retaddr);
++            return true;
++        }
++        break;
 +
-+_TARBALL_BIN_PATH = os.path.join(
-+    "systests_standalone_package",
-+    "StandaloneSysTests_6.4.0.2_v68",
-+    "bin",
-+)
++    case 8:
++        if (QEMU_IS_ALIGNED(addr, 8)) {
++            cpu_stq_le_mmuidx_ra(env, addr, *(uint64_t *)srcbuf, mmu_idx, retaddr);
++            return true;
++        }
++        break;
 +
++    default:
++        /* larger request, handle elsewhere */
++        return false;
++    }
 +
-+class SysTestsStandaloneTests(QemuSystemTest):
-+    SYSTEST_TIMEOUT_SEC = 30
++    /* not aligned, copy bytes */
++    for (int i = 0; i < byte_count; ++i) {
++        cpu_stb_mmuidx_ra(env, addr++, *srcbuf++, mmu_idx, retaddr);
++    }
 +
-+    ASSET_TARBALL = Asset(
-+        "https://github.com/qualcomm/qemu-hexagon-testing/releases/download/v0.2.9/systests_standalone.tar.gz",
-+        "db961ea3fcc389b478b3d5c2f3bac60bec87e7f3d7efef5e58a9ae8ee78d0e40",
-+    )
++    return true;
++}
 +
-+    def setUp(self):
-+        super().setUp()
-+        self.archive_extract(self.ASSET_TARBALL)
-+        self.bin_dir = os.path.join(self.workdir, _TARBALL_BIN_PATH)
-+        self._orig_cwd = os.getcwd()
-+        os.chdir(self.workdir)
-+        self.addCleanup(os.chdir, self._orig_cwd)
++void hexagon_write_memory(CPUHexagonState *env, target_ulong vaddr,
++                          int size, uint64_t data, uintptr_t retaddr)
++{
++    CPUState *cs = env_cpu(env);
++    unsigned mmu_idx = cpu_mmu_index(cs, false);
++    if (!hexagon_write_memory_small(env, vaddr, size, (unsigned char *)&data,
++                                   mmu_idx, retaddr)) {
++        cpu_abort(cs, "%s: ERROR: bad size = %d!\n", __func__, size);
++    }
++}
 +
-+    def tearDown(self):
-+        if hasattr(self, "_orig_cwd"):
-+            os.chdir(self._orig_cwd)
-+        super().tearDown()
++static inline uint32_t page_start(uint32_t addr)
++{
++    uint32_t page_align = ~(TARGET_PAGE_SIZE - 1);
++    return addr & page_align;
++}
 +
-+    def binary(self, name):
-+        """Return the full path to binary *name* inside bin_dir."""
-+        return os.path.join(self.bin_dir, name)
++void hexagon_touch_memory(CPUHexagonState *env, uint32_t start_addr,
++                          uint32_t length, uintptr_t retaddr)
++{
++    unsigned int warm;
++    uint32_t first = page_start(start_addr);
++    uint32_t last = page_start(start_addr + length - 1);
++    for (uint32_t page = first; page <= last; page += TARGET_PAGE_SIZE) {
++        hexagon_read_memory(env, page, 1, &warm, retaddr);
++    }
++}
 +
-+    def run_exit_zero(self, binary_name, *extra_args, machine="V66G_1024"):
-+        """Launch *binary_name* and assert it exits with code 0.
-+
-+        :param binary_name: name of the binary inside bin_dir.
-+        :param extra_args: optional pairs of (flag, value) strings passed
-+            to set_vm_arg(), e.g. ('-append', 'myarg').
-+        :param machine: QEMU machine type (default "V66G_1024").
-+        """
-+        self.set_machine(machine)
-+        self.set_vm_arg("-display", "none")
-+        self.set_vm_arg("-kernel", self.binary(binary_name))
-+        for flag, value in zip(extra_args[::2], extra_args[1::2]):
-+            self.set_vm_arg(flag, value)
-+        self.vm.launch()
-+        self.vm.wait(timeout=60.0)
-+        self.assertEqual(self.vm.exitcode(), 0,
-+                         f"Test {binary_name} exited with "
-+                         f"code {self.vm.exitcode()}, expected 0")
-+
-+    def run_console_pattern(self, binary_name, pattern, *extra_args,
-+                            machine="V66G_1024"):
-+        """Launch *binary_name* and wait for *pattern* on the semihosting console.
-+
-+        :param binary_name: name of the binary inside bin_dir.
-+        :param pattern: string pattern to wait for via wait_for_console_pattern.
-+        :param extra_args: optional pairs of (flag, value) strings passed
-+            to set_vm_arg(), e.g. ('-append', 'myarg').
-+        :param machine: QEMU machine type (default "V66G_1024").
-+        """
-+        self.set_machine(machine)
-+        self.set_vm_arg("-display", "none")
-+        self.set_vm_arg("-kernel", self.binary(binary_name))
-+        for flag, value in zip(extra_args[::2], extra_args[1::2]):
-+            self.set_vm_arg(flag, value)
-+        self.vm.set_console(semihosting=True)
-+        self.vm.launch()
-+        try:
-+            wait_for_console_pattern(self, pattern)
-+        finally:
-+            self.vm.kill()
-+
-+    def test_fopen(self):
-+        """fopen reads a file passed via --append and verifies its contents."""
-+        with open(os.path.join(self.workdir, "dummy.so"), "w") as f:
-+            f.write("valid\n")
-+        self.run_exit_zero("fopen", "-append", "dummy.so")
-+
-+    def test_ftrunc(self):
-+        """ftrunc truncates _testfile_ftrunc from 6 bytes to 1 byte."""
-+        ftrunc_path = os.path.join(self.workdir, "_testfile_ftrunc")
-+        with open(ftrunc_path, "w") as f:
-+            f.write("valid\n")
-+        # Sleep 1 s so mtime change is observable
-+        time.sleep(1)
-+        self.run_exit_zero("ftrunc")
-+        self.assertEqual(
-+            os.path.getsize(ftrunc_path),
-+            1,
-+            "_testfile_ftrunc should be 1 byte after ftrunc",
-+        )
-+
-+    def test_dirent(self):
-+        """dirent lists a directory passed via --append; output must be
-+        '. .. fileA fileB'."""
-+        dirent_dir = os.path.join(self.workdir, "_dirent_testdir")
-+        os.makedirs(dirent_dir, exist_ok=True)
-+        open(os.path.join(dirent_dir, "fileA"), "w").close()
-+        open(os.path.join(dirent_dir, "fileB"), "w").close()
-+        self.run_console_pattern(
-+            "dirent", ". .. fileA fileB", "-append", "_dirent_testdir"
-+        )
-+
-+    def test_access(self):
-+        """access checks R_OK|W_OK on _testfile_access."""
-+        with open(os.path.join(self.workdir, "_testfile_access"), "w") as f:
-+            f.write("valid\n")
-+        self.run_exit_zero("access")
-+
-+    def test_semihost(self):
-+        semihost_dir = os.path.join(self.workdir, "_semihost_dir")
-+        os.makedirs(semihost_dir, exist_ok=True)
-+        open(os.path.join(semihost_dir, "fileA"), "w").close()
-+        open(os.path.join(semihost_dir, "fileB"), "w").close()
-+        self.run_console_pattern("semihost", "PASS", "-append", "arg1", "arg2")
-+
-+if __name__ == "__main__":
-+    QemuSystemTest.main()
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index c158197c4b7..c7362dd00ef 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -14,6 +14,7 @@ subdir('aarch64')
- subdir('alpha')
- subdir('arm')
- subdir('avr')
-+subdir('hexagon')
- subdir('hppa')
- subdir('i386')
- subdir('loongarch64')
++#endif
+ 
+ uint32_t hexagon_get_pmu_counter(CPUHexagonState *cur_env, int index)
+ {
 -- 
 2.37.2
 
