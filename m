@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55ED4C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:34:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4915C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:34:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjIed-0000KI-3g; Mon, 13 Jul 2026 11:33:11 -0400
+	id 1wjIek-0000bd-EV; Mon, 13 Jul 2026 11:33:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjIeI-0008S7-93
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:50 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1wjIeO-0008US-Si
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:33:04 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjIeB-00017h-Ts
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:49 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-493f4638f4aso394045e9.3
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:32:42 -0700 (PDT)
+ id 1wjIeK-00019U-7G
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:54 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-493f431e317so602305e9.0
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:32:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783956762; x=1784561562; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=LsLbQ+QRPhQlpy01lQawniYUzJdZ1vrNpWmjnr/ayAY=;
- b=R+C7lEVBSxSvDqH3ERj+4dyyWVGrRB1LkvLyE0su7+9lUksRfiO37EB3iroya43UIT
- RtoSrAwwxFsm48UMp4tzpRq1e4SYSrjyDLyBynF4YoXMG4DpyUtB8mXLFiEwH+etPmqc
- xiIiZA4jdg+B67t8tLKeZF/ILK/OfFTrGtsmxzolR+UB2Ir8JqtErrle6UTQ8MXnODw8
- 9WUYYEKu7zrEVBAsugWZgp801UaODBUynGh16OL+dLN6nBhp+vRUH9O0r0Y2hnM99Bly
- /gVcWC8fw18/KRS1EBU+9ZcMFNSmfHBsCDOexjO8blGwXeAl3t/vyJZtYrf1fC52+w+5
- YEMw==
+ d=linaro.org; s=google; t=1783956769; x=1784561569; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=AXZ0eN7Zo0Hlbw2MrFqxIJVvcQpJCtShcmKJD0GREgw=;
+ b=V4Yzs4UfWeaokjlGgRGEd+75VheTGEtcFweXK6GTFSPXx7eWjuPN2+QQ0H33BxVp1M
+ 4r2OB/tpzv/iob5tDIBnR2ZGBofylG9tFs224v2Wx+Gp27WgY6LwzwTkebHfl7cCnTP7
+ L+u484qCmJzewUiou7YAYuYJvEcMzlEsVKMQMfvxo9lIOrz+eCZ+BSVYV8RsoZNQDwgp
+ oHg2MbZxMoaUyURK+TpZ4aRpY7/Gu/IMiR35JQyFBgw3wDOP8R1DpFPoXqEyQcD93tQP
+ TAtoniSYSC4PC8TmiQ9XLlndKMg9rFFTTBXz/RDRnQJQlWoW7fCQHIVb+gSyWMxta8Lx
+ fuBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783956762; x=1784561562;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=LsLbQ+QRPhQlpy01lQawniYUzJdZ1vrNpWmjnr/ayAY=;
- b=l60uCw4iRfUmAWnHPmiMyPo4Jni+5ccp2suee6QQGQ0RY50x8KE8peOpBuqhP3XOGP
- Uyf4n/yZ1oN6jYva0vegLsZAfOBPa12WXn/a4zSmag6GEHu/GDxmGrn+jQ41sqRGt4aB
- nzB8tKB0hiBwO5VOQzAIgzpTtqfBQqvh31ORMPXQAXg1BJUkCIBVw4xYsKglWJEinKWu
- S0ZL5pyViRBg28EwKjxun1lZ0vDU7FMdPbSKkQd2ggn+7wx2Gf9+N5KGqGt6KbZ4wCJU
- Pr7foufN3vnNMwLpg3R9njnxS8YSNctNy8OKQEynsKhdYuNTgGykjfY39EOx9FpcuOFf
- 4Mrw==
-X-Gm-Message-State: AOJu0YyxKmVxbq/YLmiJZNQX8vO1ZKWujGboLNgkYYXVE0nnFNaQXo6G
- DZuY4PuucMwKZkmorLNA0mlxyvkRfV4F+Verv/l5Knfa1xes01onhQJYuPAnUpKWPtQW5ZWE9PA
- kF4NVxQzlzA==
-X-Gm-Gg: AfdE7clLdlkQZ+jfwvy72z7AmPtx3WhY7kxLFQThjQzPATFPsxHB3CZJ3WJBejdslvM
- kO8pIhMoKKDTpzizoSGtH21hfHaVSjlr6rbFO0kyQascOuWkXWt1oyOYkgMoWg+jRx8vp0VqloA
- XwXYMWBJ5ej9fta3fCRpw2pQXqjCyUvid+3lMOHxRQeQkGyfgdJjwYlF6/pTKBe1GkmFLvgYrRy
- HPiw4nVfKFhlMK/0d6rAePdxIkKVIfulMknGy04tevrTrmf/BV0KVxWPWoG2tK/aqtL9k1/v7uw
- ZVD7crO4ImERYlxMDbGgD5dfxNNvncOLycSXWO0JwsErJaNw0n+hDFEB1iomkOrYHtQsZk3As6B
- SRpJqjxMNzzFDbqXgF2LvzV+Wq60EM4ZJLdUWM6ju5E/UDxebAhUimSicUwD/g97bhnfp0Kz9gW
- 6clwLLFShhqxQbV2itl5+k73mBVoH868G/LNqiz2PPfaz+f3N+SD7xAp4mGaWtTHet0CtRi16Uq
- D/pRVsHMiSOMjOhGgx+nQ==
-X-Received: by 2002:a05:600c:310f:b0:493:d115:d835 with SMTP id
- 5b1f17b1804b1-493f87d5800mr98491115e9.8.1783956761803; 
- Mon, 13 Jul 2026 08:32:41 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783956769; x=1784561569;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=AXZ0eN7Zo0Hlbw2MrFqxIJVvcQpJCtShcmKJD0GREgw=;
+ b=qKAJTYbWccBNjkTQIwiPcLG5NsPUrtievwIzRXe6eRwBC/65qi7SBj5BnUdLkMhkz8
+ wb7msh/pygfIqlXUlJ+mHExiDrBYdmuANjkTfSIxOPCS4aBap2anwLRkWntADoZjzv8s
+ SLrziSz1Jp0aNjl6DlgLMp0M2M/4NtIzrrlSSb6W3cC8iQpJACUMKTc5L/i4fzAqi8+A
+ zAr1b69pkY+cbFKhNO+++IWCz9NgJDVfg8K9SWij5r1qcFlANFBAaLsw7HY/e+wF/vNe
+ j3zniNFO8nVZpIl6rU/BUA/AnRPDCHynylJU0WlI+lU7FlHCav3dJSek0OhcYjTC/Jp0
+ H/XA==
+X-Gm-Message-State: AOJu0YzApZfL5vBHB0FN9WAOuJSr9ALIQpjagskHec8MD+pYlo3njO3d
+ 4378NoOaRv0cf+jwe8/yQ3GdPASbsfgExt9Vc68m0kjq9ndrqUAzbh6Zz8sJbOUC1cQCREmb5OG
+ qrJOCqVVfyg==
+X-Gm-Gg: AfdE7clMOfEIMS2gx7u+cPt1a4RJkjE8W5OLPlyHiQwto1/JQI37OGDaZr4MKn8R+h+
+ w0Fi64TH+XLB1Q6HvlJVefaaJVBYL/ee60gP0RoBY5rbXPrLd+9fXRSRLRhNKiJpGgaLifSlR66
+ +LIhLyYoGtZN6qteUO0aJRWj/U36CqkSlpRri32KZ75dydD/3gQB3G0x5afh02dJSiv1Oc+gi35
+ sVe3daC8sekY2BcS7hpVrc3V2sFYe+GWAwG17KLRD/xpBbmI0EaaNBcfUenDdsB+tB6E2JBu7ob
+ vwAeVjiqP6VVgrJzQYxzwPURCRed9xxB9VvGS3sb6JQW24LtDOBmkSZXo06bXDlpZPCywln+Q3R
+ yNpfB3dT0qm5XAGEoTS7r5whsik9wRoElVEo3OrYn3UStsMNsvPU/nDYrcLr0Rmi/8I3CDuBeL8
+ KHZoxObCaQwUOV8WRbHhyDO+w3bqPyo+K1SRxwBpqbTKI3H8llftLJJiwQzxDXaSbWMce571dr0
+ q1LUVw=
+X-Received: by 2002:a05:600c:16ca:b0:493:c1bc:79bd with SMTP id
+ 5b1f17b1804b1-493f88180f9mr61437695e9.20.1783956769085; 
+ Mon, 13 Jul 2026 08:32:49 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49508727f7dsm3825985e9.4.2026.07.13.08.32.40
+ 5b1f17b1804b1-49508727f7dsm3825985e9.4.2026.07.13.08.32.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jul 2026 08:32:41 -0700 (PDT)
+ Mon, 13 Jul 2026 08:32:48 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/26] hw/arm/smmuv3: Enforce alignment of L2Ptr according to
- the span
-Date: Mon, 13 Jul 2026 16:32:14 +0100
-Message-ID: <20260713153233.3391818-8-peter.maydell@linaro.org>
+Subject: [PULL 15/26] docs/system: add FEAT_S2TGran[4|16|64]K features
+Date: Mon, 13 Jul 2026 16:32:22 +0100
+Message-ID: <20260713153233.3391818-16-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260713153233.3391818-1-peter.maydell@linaro.org>
 References: <20260713153233.3391818-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,34 +103,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-Spec says: Bits L2Ptr[N:0] are treated as 0 by the SMMU, where
-N == 5 + (Span - 1).
+We already have the logic to handle these granule sizes in our stage 2
+page table walk code.
 
-Let's enforce this alignment.
-
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Message-id: 20260707085028.165557-6-eric.auger@redhat.com
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260708145841.3032079-8-alex.bennee@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/smmuv3.c | 2 ++
- 1 file changed, 2 insertions(+)
+ docs/system/arm/emulation.rst | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index 9008ba7acd9..ed19536a4dc 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -728,6 +728,8 @@ int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event)
- 
-         max_l2_ste = (1 << span) - 1;
-         l2ptr = l1std_l2ptr(&l1std);
-+
-+        l2ptr &= ~MAKE_64BIT_MASK(0, 6 + (span - 1));
-         trace_smmuv3_find_ste_2lvl(s->strtab_base, l1ptr, l1_ste_offset,
-                                    l2ptr, l2_ste_offset, max_l2_ste);
-         if (l2_ste_offset > max_l2_ste) {
+diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+index b4b65694ff5..903a5f90880 100644
+--- a/docs/system/arm/emulation.rst
++++ b/docs/system/arm/emulation.rst
+@@ -162,6 +162,9 @@ the following architecture extensions:
+ - FEAT_S1PIE (Stage 1 permission indirections)
+ - FEAT_S2FWB (Stage 2 forced Write-Back)
+ - FEAT_S2PIE (Stage 2 permission indirections)
++- FEAT_S2TGran16K (Support for 16KB memory translation granule size at stage 2)
++- FEAT_S2TGran4K (Support for 4KB memory translation granule size at stage 2)
++- FEAT_S2TGran64K (Support for 64KB memory translation granule size at stage 2)
+ - FEAT_SB (Speculation Barrier)
+ - FEAT_SCTLR2 (Extension to SCTLR_ELx)
+ - FEAT_Secure (Support for Secure state)
 -- 
 2.43.0
 
