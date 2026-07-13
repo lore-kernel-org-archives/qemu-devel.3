@@ -4,89 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECF36C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 20:33:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDA7AC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 20:34:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjNKR-0007kB-GX; Mon, 13 Jul 2026 16:32:40 -0400
+	id 1wjNMB-0000AB-1i; Mon, 13 Jul 2026 16:34:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rohit.kuma1313@gmail.com>)
- id 1wjMal-0000Ou-KC
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 15:45:31 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rohit.kuma1313@gmail.com>)
- id 1wjMaf-0003TM-63
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 15:45:22 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-47f3e6cc44aso1337155f8f.3
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 12:45:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wjNMA-00009v-8l
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 16:34:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wjNM8-0002cs-5R
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 16:34:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783974862;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=gYnN9/ZnNvCiHJFphpM9o0uEDJtBWzbnzlpkMTNiE+A=;
+ b=N5VqqMwT/v6G6rVl7UzRoxpZvL4Wtb2kMmUTcyGsuTcR8QFO/GDhe6kZpFsEKRgNXHYpGS
+ +Tw1VBJe/OXfqbIQYxpSGN41PlF3F2rFvzYDaFjPxrrPwC5R1FjfckbUScsA+YHscbaIpW
+ D5VvJoaOlKFeFVXZ6ZrxiBno9d4LOSg=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-391-jJ8pajUcOQOSXAJ9n1MHRA-1; Mon, 13 Jul 2026 16:34:20 -0400
+X-MC-Unique: jJ8pajUcOQOSXAJ9n1MHRA-1
+X-Mimecast-MFC-AGG-ID: jJ8pajUcOQOSXAJ9n1MHRA_1783974860
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-92e63df032bso31614085a.0
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 13:34:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783974860; cv=none;
+ d=google.com; s=arc-20260327;
+ b=peHjkgyy9TKestw8Y4YlwYl0ZZtthlOMMdzWfCKfkkk+gkHRpBbUWNlWUp9l+i/2gu
+ ZvD+8E1Tj63CPFi97nF2WlcyVKRRRWdT3kV5p3ai6BrngvkmEptkZf8bhQD/SryEWFJk
+ 7U4Aq1LBrG1THQU1o5BDA1J7iCY84uNyfdeOp974xXvnNAVNKXDtN5ZQF3vIRTnU8Ez5
+ VJ60qw+1gOjf/kbplblUyHbrOw3NnqLwuAYzJrKVQ2MU6ab992JCtBQjO5hp4YM25dfp
+ Th8648O2aCX1lRr2SKwd6x78SMchgGMUtcRu89E8P+Z9zP9TVc2O1B9KMYZB5vVIfanM
+ 3rZw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=gYnN9/ZnNvCiHJFphpM9o0uEDJtBWzbnzlpkMTNiE+A=;
+ fh=EH3eS9/+kZbdk6NcbVNzfPP4D1laeF23n7kmjXi9qoM=;
+ b=H2Sahx0K+6OXAGjk5XZtx7DjizPab8rl06klSMpZm8X3nW0zxsWDUo46iHirqg83Pz
+ +swisgdt4PaWALL5xPVeoCDo7DO1VsfwLVupvQl0WsywIg3DCin6icBRYqiJYKeT0IST
+ KS+FEwAXjF4qmoX7XpSOglp6uvWJFLOi95J8By1jHXNuJR+IAVJ8U13pCfb1ewoIi37n
+ zhupsldjCK9HWfYCaLZKg2ABvv38ZCcDzKSMGZ9X9FomBDwAdAQ1f9Cj6wpwW755R6UO
+ Q2kA1gHBbHTiy/FC7ukFmgAlnuTwywNnmQLE15zU25TjZPV1/b6Uf2l6+IceqwYNTDV4
+ JAaw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1783971917; x=1784576717; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=nIKPn37ekPjotsQBGbChfqYBuVfdRftV02OfijT9yAY=;
- b=WxSZ0+NFHwvt8iO4O3Ijw6i53vwikihmuF0oyGqa1Gtu+L311orQ+CaUDgTh4cm0MS
- mhNj1Vly6twdrgOtxVAAZ/SpGtqR4uMF5eomYkolKCtSpoHGGXZVmFHkVuLC78X1A4JV
- QVIUa9OrNyh26lGnHOtUAunfV+v27PPYT1iMFx2+5m8baHqsRaTuHRbdrE5Yg66f2Hx9
- Ux5o/zidyIbrN4JCga3saiRXaAmMVgGdHRG5tm2GhxlclxLy7hsL2lFxUl1ccZx//j6Q
- jpo3igw1jiFhuoEpm0suv7nolWp0XGQZQSfhaMPiOpEWPGPEoNOgbQkOK0PnWoRZTHKf
- uFYg==
+ d=redhat.com; s=google; t=1783974860; x=1784579660; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=gYnN9/ZnNvCiHJFphpM9o0uEDJtBWzbnzlpkMTNiE+A=;
+ b=icNcBsT9agIpygztsjWSpS0R8GGL458GvgVgmmR7QtFVS+r2RItKzQItzQkOyV3niV
+ hgEcHCAKJGCXps7qCTzOK0aWlKJcI9sj/gOxPkLmlmN5fCEnv5STtTTXC0hL5hU24MbU
+ +RLAswE0ARTax2cxQ0mt3HuSYzyNQI26v/CyT4QA9UG+/VMY5+SJbLw/43RYS8Vl5pP/
+ twktsCLM2j6dEGhKcSg9hmlORY0Y14CAs94pS5S205+TQh8qFwlfIiYc0dnTxXPjp/a4
+ eTkcatDODCPEFgIDL4gPww3uXe9k/ISWkVJnDq/OtcwJ7+fUbcpZSArkVL92HpHhygyt
+ 1jvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783971917; x=1784576717;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=nIKPn37ekPjotsQBGbChfqYBuVfdRftV02OfijT9yAY=;
- b=Vi8lBvtOP6voxiJ63ENMmUZMy7ClNHHBhsTO8Jb/Fk3l4RBEFo7UTB2UjPF9ccsJTL
- r/rdtXuJ6ih0wuwUw6r+ctbJwt69q6ThSsdU3YRH9zEeS6A34FwGso7eRJNhlJ2iXqOn
- A2RH/r8y+ndxaYy1ZqBcH3C+ujNkpJxQNdCpM9OTPNT2ta1X237anR8kvPUpiRIINA2b
- oMRweKw6SWMi5CQBhS/9VNV4HIoLj/jmnHYCTN6Xh0wPiaSiLi1VAVpjN/1RHwdCoxrF
- sETbgdEml8qP//K4FtmxPbXkHNaBKbVc0TnbAs8wD+1nnPcrPkqiYczPGCpG0oCfP0BO
- WuCA==
-X-Gm-Message-State: AOJu0YxW/YAyWnXCmEQ+566EgCSaj6KUtorLQ34638ea53Kdmeb52OIm
- 6hI4ydhhXfsk7AXWGtpCX/GB1ZkhSkueyrzXC5iWJNWH9IEMHFRfV8bLFvKYAXbfPgs=
-X-Gm-Gg: AfdE7cn1W+WoBGpETl9Rd9Sl0TQfjCCrVtIdOnMliBHcu6BT6cNYxw5M95yVZeq65kQ
- CXV6XHcsSYvm1KpjUadHGA+DK8BLa4GnpJ2yyt1dzFQ5W3jNul/r5OHoJVkK9/WuF3M/b+E5pxP
- McHU0LMJnXncT/Y38I+krvh0BbbDDmhQUVD9AS1PLzNGYYuyQnja2Eclsh7IdIi7+OV40dncShO
- 82AEdewS+iWkWK1ZsUYweSHwM389oUOqs8AuSJx0fI8R5m4ava7cQTdbhEwhO2HNO1Iyg5vkVxu
- GYG6fUjiRDCLWE1a0g5VNYQU+4iFVJ0UTy2yEIX53lvju5cSropBLS18qyiHeZ+LbUKjA6b0nPG
- P48kEeaXuapj+c+smHuD3W73g5cfkRUurfw5UOt4gAgAPijBPi9mZImOCRdDFCSdLbmO+pLX/tY
- sPydIrUKBkd4OVyrTMQ0KKHOLLIYP3mCPK1I6e6iU6AffwXVpyBhooevRSsw5rSOidinQE1ces6
- VIa4xcarLFhn2k/TdxAKTIemJsU/0iwTrzv3IkgTlk/xHxUCBIlWIiosPUFqQ==
-X-Received: by 2002:a05:6000:4906:b0:47d:f02a:99c8 with SMTP id
- ffacd0b85a97d-47f2dc9bdd2mr10999394f8f.23.1783971916429; 
- Mon, 13 Jul 2026 12:45:16 -0700 (PDT)
-Received: from ip-172-31-13-20.eu-central-1.compute.internal
- (ec2-18-198-207-175.eu-central-1.compute.amazonaws.com. [18.198.207.175])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f464a96fdsm2052990f8f.24.2026.07.13.12.45.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jul 2026 12:45:16 -0700 (PDT)
-From: Rohitashv Kumar <rohit.kuma1313@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Jason Wang <jasowangio@gmail.com>,
-	Rohitashv Kumar <roohiit@amazon.de>
-Subject: [PATCH] net: only advertise passt in netdev help when CONFIG_PASST
-Date: Mon, 13 Jul 2026 19:45:11 +0000
-Message-ID: <20260713194511.1058450-1-rohit.kuma1313@gmail.com>
-X-Mailer: git-send-email 2.50.1
+ d=1e100.net; s=20251104; t=1783974860; x=1784579660;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=gYnN9/ZnNvCiHJFphpM9o0uEDJtBWzbnzlpkMTNiE+A=;
+ b=RbkDcg1sunYHTM3D/q6QU7sJIyxWn+l3hT8xWioPvMqbi7BUuB7w4y2YiceqInV+f6
+ dIQuhSmtCTCQwRIGx1/TyRUlfrGP4ZlwqT9DnMIRab1qsBAsIGGf61AC9njckx8UY6uu
+ UEtWeNjpBG75MAYhZDdCa/NKvTUO3OnWvY14FJa44adn1QwPWVk16qMP2CitstzCEPSy
+ 5tfJI5CikNSRm5FaDoKcyuNJouFTp0fOg61rljrjv2mEAnRuSyX2L7k7S7r6bBuPLdKu
+ s3vd0fFnFWcZm6kWVo20LXX/f37kYP2oPh8mJzlwb8gwns3nPtwVbiOtAy6S8QaE8YZW
+ MTdA==
+X-Gm-Message-State: AOJu0YxcekpFL5KiU+fFFmuKe4Tbhue1WydvqeImsycpZohqsIl6bCUK
+ HqGl+V/zHtaPZA/5z8HOggvCK+C6KG06Od9xQawkeARyShVUY2RM7whw7YGsEVRL+isXOsgOfz/
+ /RmJS5gtCDYg+EOGiTmBP8nONfUe2hLAJKixrIKIEbrpdg/7es+qz0J3KwaBq9E1rz6j7C4LM22
+ ZrU10ZtHfzXZ/o/h9gJeUQ+mzzivfSieA=
+X-Gm-Gg: AfdE7cmugAZEewiUxi2I7EWgPH0jyS8cXHxZd3uADJyK03aE8CKlsAp80qYr/vBJkX4
+ HTXQ6U2mj1/xHaZVQuVxq1UuS0ik3Tt3UHJ7HEWG11Ls8NPCuhroH/BSmWDgQvmYkZSxuH+FR5s
+ HE3tDnWenHBC6/0Lv/HzWNCAsk3sdSisNxWKaBuOza9K/sdFzQOVZsxPrk+6VYsJSm9nLtNyQnT
+ szNqBMBxbCHsdsf8sWYZrlJGpE=
+X-Received: by 2002:a05:620a:838e:b0:91e:df9f:7804 with SMTP id
+ af79cd13be357-92ee4cdaf91mr1584217285a.38.1783974859951; 
+ Mon, 13 Jul 2026 13:34:19 -0700 (PDT)
+X-Received: by 2002:a05:620a:838e:b0:91e:df9f:7804 with SMTP id
+ af79cd13be357-92ee4cdaf91mr1584215485a.38.1783974859515; Mon, 13 Jul 2026
+ 13:34:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=rohit.kuma1313@gmail.com; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260629213624.936258-1-jsnow@redhat.com>
+ <87ech7gi45.fsf@pond.sub.org>
+In-Reply-To: <87ech7gi45.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Mon, 13 Jul 2026 16:34:07 -0400
+X-Gm-Features: AUfX_mwuwbfAs_MoPHnjnqOa4fh9GUzDICRCNcIN6bbmYIckyG1oo5JkOenzDZo
+Message-ID: <CAFn=p-Yu9OV0LJN8rGrc6GTkJZ38XAvP296tfwBxU6CnhLYR7A@mail.gmail.com>
+Subject: Re: [PATCH 00/14] qapi: convert to explicit intro section syntax
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ linux-edac@vger.kernel.org,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, 
+ Alex Williamson <alex@shazbot.org>, Paolo Bonzini <pbonzini@redhat.com>, 
+ zhenwei pi <zhenwei.pi@linux.dev>, "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Eric Blake <eblake@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Zhao Liu <zhao1.liu@intel.com>, Lukas Straub <lukasstraub2@web.de>, 
+ Stefan Hajnoczi <stefanha@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: permerror client-ip=170.10.129.124;
+ envelope-from=jsnow@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 13 Jul 2026 16:32:38 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,39 +145,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Rohitashv Kumar <roohiit@amazon.de>
+On Mon, Jul 13, 2026 at 9:00=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+>
+> John Snow <jsnow@redhat.com> writes:
+>
+> > GitLab CI: https://gitlab.com/jsnow/qemu/-/pipelines/2638342206
+> >
+> > Hi, this patchset converts some of the most trivial modules to use the
+> > new explicit intro syntax. This particular patchset does not
+> > differentiate between "trivial" conversions and those that take
+> > slightly more liberty in refactoring, but there are (debatably?) no
+> > such cases in this patchset.
+>
+> Looks entirely mechanical to me.  Am I missing anything?
 
-show_netdevs() lists each conditionally-compiled netdev backend behind
-its CONFIG_* guard (CONFIG_SLIRP for "user", CONFIG_L2TPV3 for
-"l2tpv3", CONFIG_NET_BRIDGE for "bridge", ...). The "passt" entry was
-added unconditionally, so "-netdev help" advertises passt even in
-builds configured with --disable-passt. Trying to use it then fails
-with "Parameter 'type' does not accept value 'passt'", since the QAPI
-NetClientDriver enum member "passt" is gated by 'if': 'CONFIG_PASST'.
+Honest answer: I am not sure; I have edited so many QAPI files that I
+cannot remember what is and what is not mechanical anymore. If there
+are instances of "non-mechanical" changes, it would be for cases where
+I decide to indent some paragraphs, but not others, effectively
+introducing a new split as to what appears before and what appears
+after the tabular data.
 
-Guard the help entry with CONFIG_PASST so the advertised backends match
-those actually compiled into the binary.
-
-Signed-off-by: Rohitashv Kumar <roohiit@amazon.de>
----
- net/net.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/net/net.c b/net/net.c
-index 2892f17..5c39f8e 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -1385,7 +1385,9 @@ void show_netdevs(void)
-         "dgram",
-         "hubport",
-         "tap",
-+#ifdef CONFIG_PASST
-         "passt",
-+#endif
- #ifdef CONFIG_SLIRP
-         "user",
- #endif
--- 
-2.50.1
+I genuinely do not recall if there are any such cases in this mini-series.
 
 
