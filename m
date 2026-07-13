@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E31AFC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 11:21:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AEDBC44507
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 11:21:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjEiA-0000CF-2f; Mon, 13 Jul 2026 07:20:34 -0400
+	id 1wjEiC-0000Ek-Ol; Mon, 13 Jul 2026 07:20:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjEi1-0008NU-KQ
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:20:26 -0400
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjEi4-0008UJ-8k
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:20:28 -0400
 Received: from mx1.catap.net ([162.55.82.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjEhz-00080r-Oo
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:20:25 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=NL/Oapy
- lCbwPqAkSIyq0jJKHji1dGAkrtCY0Wcvvvb32A+3/nFOh5skAkmQllvlOWSxsk41+hSH7/
- p8+0FaObt9qEyrTZT1iQfHs/bQJmd6PYJKoALiHJhjNbG6rP1RMec0K9kBUJ1MsN+WD1pQ
- OMk0PuNhOQ6Lu2IIevM7ixgQiu1vmEiqNcDn0iBMnYjkixc2tGi+IixEZLOlxdBKO7OpyX
- py0U/5nLb+wHs5y6pkpowrWnWio9VgrbP81w8hhjgnf2xsVOk0aJLDVUv6QXOCCnJ5rPb6
- gem/Y4hReh0L1lM1O3xgRG2kp/xL+MfICKIsnI9o/ek/vUFP1JpfFNA==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=O
- nOzc/xFLlIzWsGfWekLrWErwBi3UvwPP5rpaHa7JzY=;
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjEi1-00080r-Vf
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:20:27 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=RuiDCDN
+ XvJ7ewXGm8VFy+l4r6gHjMLne1t005d4DC1VRLQ8jzmNTR/eeC1u0yDnTCUeW+M+ia/Ygr
+ EsoTnVKi0SduGYboZnoi5WS6fUkQWnldIfNOzUe86mk77wQCOq1ba/0Q8Pr09D91uM0s2Q
+ bu3e4MGQZSZ/NAqrdI7Za5rdRavKKetfYkSOBSQ3WDJmefgXEznOFoCOrLYewMvhWWS/nN
+ eLnRiaS2KAx9SVt/ctn3YMj9lLKQKZ/AjBK3JFKW8uMFyQdRBPEjmOTuLdD47fyBjMfalp
+ 34aQC8Cd6clu5MVs9UrOwrQ3YFeadOk0aJBEnExhyMPd96Hoq484SPg==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=8
+ EKocf+kGlaTuXdnno/LPGcAjHf3KPZivbjcNNvd8k4=;
  h=references:in-reply-to:
  date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=vtU4n8WsNoRR1LH6jxVNbItIxhttRuIX8LnbN+ALp73MCXklDCONeE+8wKAx6GMG+Hqj
- 53a4+8gD3UXlTxd+NRCSfIrGYa0OUlpyQh2fA7DYPmINIQlqpsYAPrmu3zVMEE8NY+qZTs
- tMTu8cNW4juUmV75Q0c8ucpR65wzECebkDswgSjM1bNo3mjIpB4PdszsrqPaM7uUxoV1iX
- pT9icZ983cyNULvSfAKNzp/piGi4KJIAxTdHYrtcvhi/FrQJZ68CqOKFi++CwyDfr3u7PX
- KNxJMV707PbbMyLeZer/kxxG0uY6F+7aYBTqfKd5/mfhXqb+oaFWyae2PcIYcR+w==
+ b=HI+su3HKeUF6hz+zNLtksq55mtsOsQj7yZSOYzzc2c0Y2KKpTQg7gEW8gWynq4P0SdYR
+ 8dSWJn/G4PcFtcBL2c8xazDVSwuRYCbGzkv11rQi2sMT3hw9E7cXuBjugmbmvgYtW1jlDc
+ 0lAEMU4+ZM/l+NJpzWKqcOnfHMJjUNn0qyRHouSoWWwB67jyoJlRrmT0vG711Vpc9cTy/a
+ bzarRjlFjY5KYFsR6DJbZjzHKvD6jWyGIr4iNQrDUacRiZlARzkyYHSo+dHV1nf7xiPeQT
+ rxtuBSDG6t+Y9BKH/qmKzwF1N2VJj7iHS55riKsygLefy/bTLoxIfha9SsBwvbdg==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=pKG0g+7a; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=ApZiVVbi;
+ header.b=GjVJFMk5; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=ffhMTbkc;
  arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=OnOzc/xF
- LlIzWsGfWekLrWErwBi3UvwPP5rpaHa7JzY=;
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=8EKocf+k
+ GlaTuXdnno/LPGcAjHf3KPZivbjcNNvd8k4=;
  h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=pKG0g+7aJKDqTRkJKU/Ri58DYi0P5S/USnJ
- JcgaU8qoa8jAi04z5vGGaby8g8KGLpI71fvxHHeab1j8jY08dTPXXLBFrges+ZCfkO6WMr
- Jmq15DgUrGhf9t8LQoi3Mvde8ESicU8ahbgtPjpFZT98uzTTb39YOGlXHFlfmM0ze+2DAp
- nvpD91EJQvgyqAYyLHuF4KBuHB3fFTqVrdGZVUrkzKtbrz3gZN4LWPSQ2QIdC2LnBuCjC/
- NqyAbE3Zr6JV2kqjACnTH71pXerENA69SPpM3JayZZ6MGT11dCoSW06AiO2fKU/Epda/EE
- w5UZVshhRGIHsyLMPb3czI8DGyw==
+ subject:cc:to:from; d=korins.ky; b=GjVJFMk5UiP5gvM5sMOS4WlzFXZOUEzfX3F
+ PSTXe6o6JsxoK07LIrKCyH9mjU+jY+l49UNckCEAavMs1w5eNkQUT0f+OYgEJfr9QBqQaU
+ bhF3LBBmyPgGvzX/swcyido7Mm65NIzBk/to3yllX1b3ScQQQFMNBcEXsEMe548k0uQ9dE
+ QwJlF9IYYVPjUs49qsG6mfxcwOBspgHjmFmtJyduAbGqehVXURKtrihKFpOhrky88j7G+K
+ S+trksvZ1rQ1eQNnZOMsubwVk7UoXu6AOBgCeIqvivSdWU9pp88ouFmTCFasAlLl7EJ6Dt
+ 9xxn4S386iYRHOOG9TFtxbhFtcg==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=OnOzc/xFLlIzWsGfWekLrWErwBi3UvwPP5rpaHa7JzY=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=ApZiVVbiwSEunlu8W3
- s8X/ze+vUdGIYLUqaCll25heumRDY3wPlPqnOtqXK0DtkMrkso3Abq5KKCkPYGXLZwBw==
-Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id c61819eb
+ bh=8EKocf+kGlaTuXdnno/LPGcAjHf3KPZivbjcNNvd8k4=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=ffhMTbkcUpp8gjVZTC
+ NTC99IQcWtqIndexhAot1eedv1p5UGeWCwTezs4wGIrPipj/dqii+rKSL+UsOcruqZCA==
+Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id 04e8c581
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
  Mon, 13 Jul 2026 13:20:16 +0200 (CEST)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id 2364ce22;
- Mon, 13 Jul 2026 13:20:13 +0200 (CEST)
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id d2362b45;
+ Mon, 13 Jul 2026 13:20:14 +0200 (CEST)
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 To: qemu-devel@nongnu.org
 Cc: "Kirill A. Korinsky" <kirill@korins.ky>
-Subject: [PATCH 3/9] target/mips: fix MIPS64 segment access checks
-Date: Mon, 13 Jul 2026 13:16:31 +0200
-Message-ID: <20260713112004.4956-4-kirill@korins.ky>
+Subject: [PATCH 7/9] target/mips: accept Octeon PageMask encodings
+Date: Mon, 13 Jul 2026 13:16:35 +0200
+Message-ID: <20260713112004.4956-8-kirill@korins.ky>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260713112004.4956-1-kirill@korins.ky>
 References: <20260713112004.4956-1-kirill@korins.ky>
@@ -94,44 +94,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The xuseg and xsseg checks only tested UX and SX respectively; kernel
-and supervisor accesses must instead use the mode bit that applies to
-the current execution mode.
+Octeon firmware programs contiguous PageMask values that do not follow
+the generic R4K even maskbits rule.
 
-Allow supervisor and kernel mode to use xuseg when SX or KX is set, and
-allow kernel mode to use xsseg when KX is set.
+Keep the generic validation rule for other MIPS CPUs, while allowing
+Octeon CPUs to use the contiguous masks accepted by hardware.
 
 Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
 ---
- target/mips/system/physaddr.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ target/mips/tcg/system/cp0_helper.c | 15 ++++++++++-----
+ target/mips/tcg/system/tlb_helper.c |  2 +-
+ target/mips/tcg/tcg-internal.h      |  2 +-
+ 3 files changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/target/mips/system/physaddr.c b/target/mips/system/physaddr.c
-index 746dbf8aa4..626d7ccc4c 100644
---- a/target/mips/system/physaddr.c
-+++ b/target/mips/system/physaddr.c
-@@ -143,7 +143,9 @@ int get_physical_address(CPUMIPSState *env, hwaddr *physical,
- #if defined(TARGET_MIPS64)
-     } else if (address < 0x4000000000000000ULL) {
-         /* xuseg */
--        if (UX && address <= (0x3FFFFFFFFFFFFFFFULL & env->SEGMask)) {
-+        if (((user_mode && UX) || (supervisor_mode && SX) ||
-+             (kernel_mode && KX)) &&
-+            address <= (0x3FFFFFFFFFFFFFFFULL & env->SEGMask)) {
-             ret = env->tlb->map_address(env, physical, prot,
-                                         real_address, access_type);
-         } else {
-@@ -151,8 +153,8 @@ int get_physical_address(CPUMIPSState *env, hwaddr *physical,
+diff --git a/target/mips/tcg/system/cp0_helper.c b/target/mips/tcg/system/cp0_helper.c
+index 1c23d2a525..40a41805fa 100644
+--- a/target/mips/tcg/system/cp0_helper.c
++++ b/target/mips/tcg/system/cp0_helper.c
+@@ -882,14 +882,19 @@ void helper_mtc0_memorymapid(CPUMIPSState *env, target_ulong arg1)
+     }
+ }
+ 
+-uint32_t compute_pagemask(uint32_t val)
++uint32_t compute_pagemask(CPUMIPSState *env, uint32_t val)
+ {
+     /* Don't care MASKX as we don't support 1KB page */
+-    uint32_t mask = extract32(val, CP0PM_MASK, 16);
++    uint32_t mask = val >> CP0PM_MASK;
+     int maskbits = cto32(mask);
+ 
+-    /* Ensure no more set bit after first zero, and maskbits even. */
+-    if ((mask >> maskbits) == 0 && maskbits % 2 == 0) {
++    /*
++     * Generic R4K PageMask values use two mask bits per size step.
++     * Octeon accepts contiguous byte masks such as 0x003fffff for
++     * two 2 MiB pages.
++     */
++    if ((mask & (mask + 1)) == 0 &&
++        ((env->insn_flags & INSN_OCTEON) || maskbits % 2 == 0)) {
+         return mask << CP0PM_MASK;
+     } else {
+         /* When invalid, set to default target page size. */
+@@ -899,7 +904,7 @@ uint32_t compute_pagemask(uint32_t val)
+ 
+ void helper_mtc0_pagemask(CPUMIPSState *env, target_ulong arg1)
+ {
+-    env->CP0_PageMask = compute_pagemask(arg1);
++    env->CP0_PageMask = compute_pagemask(env, arg1);
+ }
+ 
+ void helper_mtc0_pagegrain(CPUMIPSState *env, target_ulong arg1)
+diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
+index 4c0a25e622..ae805bff28 100644
+--- a/target/mips/tcg/system/tlb_helper.c
++++ b/target/mips/tcg/system/tlb_helper.c
+@@ -877,7 +877,7 @@ refill:
          }
-     } else if (address < 0x8000000000000000ULL) {
-         /* xsseg */
--        if ((supervisor_mode || kernel_mode) &&
--            SX && address <= (0x7FFFFFFFFFFFFFFFULL & env->SEGMask)) {
-+        if (((supervisor_mode && SX) || (kernel_mode && KX)) &&
-+            address <= (0x7FFFFFFFFFFFFFFFULL & env->SEGMask)) {
-             ret = env->tlb->map_address(env, physical, prot,
-                                         real_address, access_type);
-         } else {
+     }
+     pw_pagemask = m >> TARGET_PAGE_BITS;
+-    pw_pagemask = compute_pagemask(pw_pagemask << CP0PM_MASK);
++    pw_pagemask = compute_pagemask(env, pw_pagemask << CP0PM_MASK);
+     pw_entryhi = (address & ~0x1fff) | (env->CP0_EntryHi & 0xFF);
+     {
+         target_ulong tmp_entryhi = env->CP0_EntryHi;
+diff --git a/target/mips/tcg/tcg-internal.h b/target/mips/tcg/tcg-internal.h
+index 950e6afc3f..66ae39551e 100644
+--- a/target/mips/tcg/tcg-internal.h
++++ b/target/mips/tcg/tcg-internal.h
+@@ -47,7 +47,7 @@ bool mips_cpu_exec_interrupt(CPUState *cpu, int int_req);
+ 
+ void mmu_init(CPUMIPSState *env, const mips_def_t *def);
+ 
+-uint32_t compute_pagemask(uint32_t val);
++uint32_t compute_pagemask(CPUMIPSState *env, uint32_t val);
+ 
+ void r4k_invalidate_tlb(CPUMIPSState *env, int idx, int use_extra);
+ uint32_t cpu_mips_get_random(CPUMIPSState *env);
 -- 
 2.54.0
 
