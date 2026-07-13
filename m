@@ -4,143 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B9F0C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 11:02:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43574C44507
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 11:06:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjEQS-0007Yp-Ov; Mon, 13 Jul 2026 07:02:16 -0400
+	id 1wjEUj-0002Of-Vf; Mon, 13 Jul 2026 07:06:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wjEQR-0007YH-Ip
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:02:15 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wjEQQ-0005J7-4Q
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:02:15 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66D9eJ3a956861
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 11:02:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- drB+GG8NgNwugYA6Uxxh4gQQaa9y7YYwX/UZWEPF3tY=; b=o8r4aIoJmUbc+a1/
- f4OQMQFKWKaLDFtoaihHQcF7HqCisW1RMVuOe9FoCO2aFzHtIyh8eyfyxTVdmRQP
- ECjJIuBhEQCJEi+i1NLedYjqejf/UeTdR89lqd6indoTNDtaap7zmwzu8h7niFWf
- GY4WfELtibIINGsgTxpK1zxaoGqvvdxciKwF5aPCrtJ2bsQ2pQR58zRJjcidmFuZ
- pbmmux8JALzfCINgsndfRnhz+ec3hOFa84NggJCu49J3Ucu8vy1sdTH54/oCXmSW
- fhdf+8bwk3Co8cZXMS2Q8XKQl1ZzHETQbQngpD3LgqIqbkXz3NVSrj3ANP0oLhq3
- flUgqQ==
-Received: from mail-vk1-f197.google.com (mail-vk1-f197.google.com
- [209.85.221.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcwk9r98w-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 11:02:13 +0000 (GMT)
-Received: by mail-vk1-f197.google.com with SMTP id
- 71dfb90a1353d-5bfc75c9fbfso2000114e0c.2
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 04:02:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wjEUi-0002Jb-RS
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:06:40 -0400
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wjEUg-0005rF-RZ
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:06:40 -0400
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-c9e30214d8fso2083974a12.3
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 04:06:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783940796; cv=none;
+ d=google.com; s=arc-20260327;
+ b=PdGaaX9Vm/Vfo2fhG2VgD0tYuvrULiIEt9vkRN5mnuDccUYpoVa+eArXqnCSJ/HAWm
+ Z1yI4TrHuvFDFVUiMKlnMA1ycduz8WRKJ6I2kSOYzOKFz8n3KZjM/81y5CNevFtiHvEI
+ SHwfr+a8lUQWozbRgGBPD+PRmTyMPuPCqT1BhCBqt3Uz9Zw81KRb1KFbJFRAimr7c/Y9
+ 9YR1FFpWFkEmbaeDJaNSfpj4+rQAbWauyu31WdfB5ZkGNKgH4TV5GOvqGrCwcz5B5JPR
+ siAGjUm/uXuanA3heeZdXS8GVz5dQY0IBMcmq/ZI5MrpY0M6bc24b4I89MTzVwjcYJj8
+ qBWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=niKMadT/pElSr4cVTmCi+NPc9jojzrBp4LzQqVPLQe4=;
+ fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
+ b=bHk2i3sWhnl8rEBUreWBixoDWj7dIHbnfLxSMwzi2xr+WXyvkw7jnP5x2U/4WhgLFg
+ Byi6iSipKQ89uiy9Nn8Ps5AxFSmfaBS0Y2hboBhpYII8Gb6gtaQiuCBEp4j5jdcB7RGa
+ RUPggVLzw4c1IrK4Dw9XbYLbTawioHU29vof+kMc1qm1Omqxxn0x1SBA8G6kuZLK0ZES
+ dw4JI7iM4efq8qMWvAShjxTG5XAN/RCNzoEQ7KZlgjb0r1vGcwsMw/fUvqhR1CjEWf8e
+ sGts/CYqO+Dti5dnBm1XVFokMe3nKYTFxWEnD7N1Nd0dUhDE/BLOie7MuATI10gzKFR3
+ lyMw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783940532; x=1784545332; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=drB+GG8NgNwugYA6Uxxh4gQQaa9y7YYwX/UZWEPF3tY=;
- b=Upn/THC9ndmkZX6Qw3M2QSwbVFCfl9k7uXVdgwWBCozrN1ye9RUAlM1vRNhRtTy/P9
- zt1Pwg7y/6g61R9mrOsxNzvou4Medupi/NlP6uz0qjFABxRFtgBzHSpkrEyRgfFEJICe
- FLJDLHvcOjhsLO8HuZWz+wn++o15gseYOf82TKIGQigFeU8bKOcdPykkif9DfDUgU0Y7
- M8fFvBIbmE4VLudZrj5ztF472DC5+O8Hyhp7ESaj7cdDl62PXJ47NOkwe3JOQm/v70W+
- d3cjzHYpUgTFEg3sI1Aj0nl5ku7tf7M3NZQ23ICGYIMKSVb5j6XABeEq3l6oT0FMVCLA
- 4QdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783940532; x=1784545332;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1783940796; x=1784545596; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:to:subject:message-id:date
+ :from:in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=drB+GG8NgNwugYA6Uxxh4gQQaa9y7YYwX/UZWEPF3tY=;
- b=rBl1DHRYP7cYOnaFZrFH+fy/eqqRPpinjv6eSK4OxEdWrV2tAY4WXdEQY7CofiM0Vk
- Qtr9LUMJpg5L+vkF6DihucgsbzeNpSW3OoMwCT91l0k7MN15ullpodwPKvTT8uCi/AmD
- S9typHeQs32LSLHZJuczsYgfdFmQqsUNz2ZNrswA3Xr94KdR4Obatfr8stJbD1J+4r6i
- E/Sic94xN7GGQ2kxLPpi1fA4IHhy4a8rTXP3yBM6UUj/Nv+8ubi3L6OmmJ1kwHo16h/7
- ysbFpGjju3HPV33ggbysCOs6Q52WqzIM4ehZ/g5eQyv5A1wMrPUtIdRm3BRjzbmOVEeo
- eWZw==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rr9N4ADRoLml0JZOe7m3C5kmsvagbAudeny7s95QDHXgK3gy9VUY7ObPjXiGuaJ5uQsw62ap10RJNl5@nongnu.org
-X-Gm-Message-State: AOJu0YzDejHkuGYkgLJMZgIQI4pF3S6xMwionvo5h9m/T0w+LUVjLsJL
- qCdnmgttV1386WdT1T62V2zimVlHIrzUQ5K4EZ7p8oNY4dM81++8ljc7t08Hqlv9uZYtxgM0Cmo
- fcObTwABLpwWS8v5Emdh1x/MUNDhdw8J6MRsaKy6ww54wO5vojZVyehfM3g==
-X-Gm-Gg: AfdE7ckSJs23GWr8/CkExU0ptV5Q9lhXgroIhcKmSKUDk+rPpO1Zl46xFm1VFtiGOzd
- TT96pyDAN7X/xKgE+nfuU+74+mdNGxsvPqAceqeW7y1MB1VQCDwZEljWRqweE82oRHIuP7k4eJ1
- A0FAEi4gW0D6iPHMnRZsekknAl0IrsR935OyMK82ElW55j+HV13UWBHLUng8ifYoj1SSqHqa4Py
- 4EsWxSKzTBdpNb5Vz4Z6Aw4UnrFJTPBItUzsKlpQAqfWq0A9r/8jvyruNYJwZZsEJq9zumHTN3B
- gJ9Dc09nR/iJ16RGLv89h3FKdjTnZyxgFGqdPhad3UaTqifhVIV5qn+rvuBpXVVs0WOth/7/zMv
- TaclNmwXVOEz4JNVbPewrVQG041sbOo4uO+5TcTjNTlEHABaodlVbLNQ+JuU1pg==
-X-Received: by 2002:a05:6122:20a5:b0:5bf:5edc:9aa0 with SMTP id
- 71dfb90a1353d-5bfbf185dfcmr5206762e0c.7.1783940531947; 
- Mon, 13 Jul 2026 04:02:11 -0700 (PDT)
-X-Received: by 2002:a05:6122:20a5:b0:5bf:5edc:9aa0 with SMTP id
- 71dfb90a1353d-5bfbf185dfcmr5206727e0c.7.1783940531333; 
- Mon, 13 Jul 2026 04:02:11 -0700 (PDT)
-Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47aa039b0cesm87000517f8f.22.2026.07.13.04.02.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Jul 2026 04:02:10 -0700 (PDT)
-Message-ID: <f2f9ab6d-7ab5-4bbc-bc35-a577af4e953a@oss.qualcomm.com>
-Date: Mon, 13 Jul 2026 13:02:09 +0200
+ bh=niKMadT/pElSr4cVTmCi+NPc9jojzrBp4LzQqVPLQe4=;
+ b=P1jusTuQQGStYKwap84EdmKWG34AVumAuOhpPb8v7MU8c6aLx2vplsdFA0+E21xNWN
+ AuHEG2QWSuBbxRpl7RGmZevq6EZWHgwC1Fmy4L3OdN08VopIDsloiLWvEqRZOzUZONgd
+ ovfBLDh+vRf770QRDtJmkMWGVP/X6dyz37av0tGJGiRs6Bz/92WBcNt9IA0KekHF7gr8
+ Pgd0PGH3gZ7USNR71dp/GRtDd4ocHKhLrnmuTp94Q8Cx3kZ16MGdY394XqSSrs3Us/Ub
+ O9TfWE6E03owDTa0o6JnRuYgJo74tKmwgVwyk2lsy5OcSYznVAsAfLkGZWO4ydalk0Jq
+ rSQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783940796; x=1784545596;
+ h=content-transfer-encoding:content-type:to:subject:message-id:date
+ :from:in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=niKMadT/pElSr4cVTmCi+NPc9jojzrBp4LzQqVPLQe4=;
+ b=HTLp++MeDKnmOPUSc9Ti0P2u4KCxS1Ue0Zpmavcp/1ussUYP+IrEP7YhtkAcT2a+sU
+ DNZN4nJusyZRdeZ1fytgkqGBdxkf87OGYMbnM4hrjbo4gou1nmWujZ/1o6dj0AszvyUN
+ aEKy9oXxcOjfqrRbGzRlpHoUPMtTv9FN9lvucBwfa/Rjvvivx4y9bmzGz8Be99ObgF75
+ EBKAmQLFZYRuQUL44N03+cVdHDJCpcZf76kivlkXzW71dy4P+x3u20QHjX4hUIgdRY0Q
+ X9G1z7EunXyMOtGeVG870OeokMhkPcZ38tcG2anyAMJq4cwmL5qad9siFDoyHJGuiz9Q
+ h7lw==
+X-Gm-Message-State: AOJu0Ywb5XzeYDi+6tK7uSYZvIX7w6QG34Z1hyJSCgW0COJJfFgsYX3K
+ vaJPYSbozkRPfwKpXp6myojDvVLstJ+rxZgVbdFQ9J36awy1Zc5R5S/UGh6afnUVywWS+HE80Nx
+ smE9xvm2CnJE3A7JSFmsFBvW73FfIMZV8v6Aalzh3IA==
+X-Gm-Gg: AfdE7ckVvLXFgyGVVkjOLVgGZHbCH8VeOj0CyocnYe3BTctUW1DcP3hNHPKAN7dul36
+ P/d70m5YoC+uicr0PyPK3dxQdbqPNOVQH5MPM2rOfkTbORTrAWxhuZ7bec6XDD7sgJMm624IJYb
+ pDVVmiLFeH3vLEji9IxtNWWygZRyBLTgmWT1n/ATLxtXhfF0GR+OfefGr4JTTGuOJtSYPG8gp0Q
+ ESyFE0oY4s6kKtl11tAzbClYgU5OUVR2mfuL+LyEUGIFc2eWT3wQWWKAZlxJitvPLgIqf4+Qc/N
+ W/ywt7ZqPzmiZrWS5X856paLt1In
+X-Received: by 2002:a05:6a21:7d02:b0:3c0:e552:f2d with SMTP id
+ adf61e73a8af0-3c1104eb7d8mr8929395637.34.1783940796398; Mon, 13 Jul 2026
+ 04:06:36 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/9] hw/dma/soc_dma: Remove unused mem.base, paddr fields
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Jim MacArthur <jim.macarthur@linaro.org>
-References: <20260710105907.2570621-1-peter.maydell@linaro.org>
- <20260710105907.2570621-8-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260710105907.2570621-8-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDExNCBTYWx0ZWRfX51hoF6bkGI8Z
- PXaox8LD3UKQwfZn4EbStm4z+EdSaq/2PJQUv/OXY/f/2tzE9mDim9ktm+TyuF3nW45BwA6BDhT
- YJrH7s8Bh3hjjX+4b6WzpBJB4R48U5lbEMxr4m5zu6U4zuj22M/lwJbiwpHI/yKFMNfgkQJonq+
- 2iFdINzoM9f/v75OMxUDH9tr7GUj4o5ih8LvelhU0/r9iCaqBOqgbklGXLjqHFK8iNCC4vzots7
- fxAomcwtefdzy9u+rUkDl4BUqoZkYhu+0dm+sULBHQb9djIizEXBQn+NM0aMFmhhQ/HlW9EMbdb
- Hh9zJE9lMocRVKm3Uga+e6Jkmp1v5A5kH1J8WA/VNrP0aTV+wuSknuUD/jGWbfSY2q+KcbGpxU/
- jvWtMgl8n7x+5EigUL9u1QBNo7jS8Ct1MFd7S7bgdlOeHwwibDzHergKkNWC0UbwUb13ngXNal+
- zKfuTwol5sIJM8VU1YQ==
-X-Proofpoint-ORIG-GUID: QftwmgXCwypTjd3TKEWcTFJ_lTAvTY-f
-X-Authority-Analysis: v=2.4 cv=UMHt2ify c=1 sm=1 tr=0 ts=6a54c5b5 cx=c_pps
- a=JIY1xp/sjQ9K5JH4t62bdg==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=tNoRWFLymzeba-QzToBc:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: QftwmgXCwypTjd3TKEWcTFJ_lTAvTY-f
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDExNCBTYWx0ZWRfX3zSRolV6ki6Z
- yGqLnd9y7mBeKRB+bqBFfAGamNUS0J2L/u0A6asa0P799lGr5ZLOvzP+LFY790O8xUvkeEqvaSo
- iCNUKXF3ssYnyXDuHFEY7ICTR4zRJMA=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-13_02,2026-07-10_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 spamscore=0 clxscore=1015 adultscore=0
- malwarescore=0 lowpriorityscore=0 phishscore=0 suspectscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607130114
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260713100056.4104383-1-marcandre.lureau@redhat.com>
+In-Reply-To: <20260713100056.4104383-1-marcandre.lureau@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Mon, 13 Jul 2026 15:06:24 +0400
+X-Gm-Features: AUfX_mwsGxP20e9t1pkVtXGGLl-Hr-nLo1T6BhXIb_FCixlCxeD1Y5M9OEMASXg
+Message-ID: <CAJ+F1CLapvuAO-Y_wXy-dGJe2dAwmVMCy7JL4uokLTDqMBcz9A@mail.gmail.com>
+Subject: Re: [PATCH] ui/vnc: validate SetPixelFormat field ranges
+To: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-pg1-x531.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,19 +115,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/7/26 12:59, Peter Maydell wrote:
-> Now that transfer_mem2mem() uses physical_memory_map(), the
-> soc_dma_ch_s::paddr field is unused; remove it, and the code that set
-> it, and the memmap_entry_s::mem.base and the soc_dma_port_add_mem()
-> phys_base argument that were passing around host pointers to use for
-> setting paddr.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   hw/arm/omap1.c           | 6 ++----
->   hw/dma/soc_dma.c         | 9 +--------
->   include/hw/arm/soc_dma.h | 7 ++-----
->   3 files changed, 5 insertions(+), 17 deletions(-)
+Hi
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+On Mon, Jul 13, 2026 at 2:02=E2=80=AFPM <marcandre.lureau@redhat.com> wrote=
+:
+>
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> The VNC SetPixelFormat message carries red/green/blue_max as 16-bit
+> values, but PixelFormat stores them as uint8_t. A client sending a
+> max value above 255 (e.g. 0x0100) passes the existing non-zero check
+> but silently truncates to 0 on assignment, leading to a division by
+> zero in the Tight PNG palette path.
+>
+> Similarly, the shift values are read as uint8_t from the wire but
+> used in left-shift expressions (red_max << red_shift). Shifts >=3D 32
+> are undefined behavior in C for 32-bit operands.
+>
+> Add explicit range checks for both: reject the connection if any
+> channel max exceeds UINT8_MAX, or any shift is >=3D 32.
+>
+> Fixes: CVE-2026-15578
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3976
+> Reported-by: dong ling
+> Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+> ---
+>  ui/vnc.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+>
+> diff --git a/ui/vnc.c b/ui/vnc.c
+> index dfc8262d42a..c4ee4738b28 100644
+> --- a/ui/vnc.c
+> +++ b/ui/vnc.c
+> @@ -2276,6 +2276,16 @@ static void set_pixel_format(VncState *vs, int bit=
+s_per_pixel,
+>          return;
+>      }
+>
+> +    if (red_max > UINT8_MAX || green_max > UINT8_MAX || blue_max > UINT8=
+_MAX) {
+> +        vnc_client_error(vs);
+> +        return;
+> +    }
+> +
+> +    if (red_shift >=3D 32 || green_shift >=3D 32 || blue_shift >=3D 32) =
+{
+> +        vnc_client_error(vs);
+> +        return;
+> +    }
+
+I am dropping this block, it's already covered by earlier patch:
+https://patchew.org/QEMU/20260706-fix-v1-0-4b83a70e9f3b@redhat.com/20260706=
+-fix-v1-3-4b83a70e9f3b@redhat.com/
+
+> +
+>      vs->client_pf.rmax =3D red_max ? red_max : 0xFF;
+>      vs->client_pf.rbits =3D ctpopl(red_max);
+>      vs->client_pf.rshift =3D red_shift;
+> --
+> 2.55.0
+>
+>
 
