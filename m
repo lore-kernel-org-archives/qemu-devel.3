@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9C25C44501
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:36:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE01CC44501
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:36:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjIec-0000GB-8M; Mon, 13 Jul 2026 11:33:10 -0400
+	id 1wjIef-0000Ww-Mj; Mon, 13 Jul 2026 11:33:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjIeC-0008QP-5m
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:46 -0400
+ id 1wjIeS-0008Um-O9
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:33:06 -0400
 Received: from mail-wm2-x0b.google.com ([2a00:1450:4864:31::b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjIe8-00016c-Iw
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:42 -0400
+ id 1wjIeP-0001Cp-Ig
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:59 -0400
 Received: by mail-wm2-x0b.google.com with SMTP id
- 5b1f17b1804b1-493d43b6c28so178185e9.1
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:32:40 -0700 (PDT)
+ 5b1f17b1804b1-493f17dc838so11291005e9.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:32:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783956759; x=1784561559; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783956776; x=1784561576; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=39AA7WPmxRp4YCKAHA7xgB02rdXN+HLANX0oQbIqL8E=;
- b=xId33aINYE/AOeGHHLuj6mGYwhZC5wRWJRFARAoZKibhdLClFnbKS6vukqso5URmYL
- phhMs5vBH2+eGRfNUBDUqjEEGEyd7rISBNJHMdlLek7AG6Dane1detH6X3s9he+DX2Th
- 7yD9Tt5DrsQ6oAZ/3iWkrxK2bEvr5V8R2xlZ0lvO+BhLJtGGm1B3iIUlZQ1GpWpQn3aj
- 5ZJztpOjl/rgHU2R8DzoBNe2QlIgrVdEXBhnOa6jLdpI3wYR74wHAxkQpsDpz0Wa2DyM
- 0ZDvxfxbiMKtuYvE7PnUQ/jCvzzQg7ESYnZ/7aOV9pQ9cE3icNIYz9xcLCcSxWOK/FZk
- CXlQ==
+ bh=ieQsAJoqFn50qrRvzEKESxTia16D/RzkytXdep5v5mI=;
+ b=ZIeQXp/jpMZ8smUDN8KHZsZ9H0soYcVoDj4E5I3LDrrg7P2QMFzNG8Zb+nyLn6SxPA
+ yXG///AbA8u6e2PCdoGkZGLlZOegqZterQoPnZvZTE8HfsR2xg0PwG3PkqlRBgPA8gwx
+ ksN7G0h51p67D80OLrs1neYDggrN5GMlV8tGreSVpC16CtcIPeVE+VPlf9BXyJGAFngT
+ j1Oq1C0KSwDjBrbVF/FDLdpgeMHkuQQVoKPpFOnx4lV3deP421lwLhgZRnUluXVmoJSx
+ JiZ10c6Te0Jt7daDBuIJPfjYWZAn9h14CkrT4gu22fuaHOA5aiUeDDNLJtg0aQhFM45L
+ uzQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783956759; x=1784561559;
+ d=1e100.net; s=20251104; t=1783956776; x=1784561576;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=39AA7WPmxRp4YCKAHA7xgB02rdXN+HLANX0oQbIqL8E=;
- b=SiDwe3RLeWUcETE0v3BlBHSFXxgXjCeTxjMYH1j0FjWk7Mh/NEwBcXfJZe8hk9PSek
- TWkCpV6W8awEyFr08N0Mk49FNeL5gvDVRNyaA4PnRXq0Cxt9kC5C9HBAUx77h+bFiiBe
- VJzZ9tNip6q+2vMmG4qc2vntkYYmNoQtK1beY12bbQBA3blmLi5OlFO/EgnoanffT+0U
- gA5tqPyEULVtNoiHTVgCZO866I4mzn9XBx1QOEvKQq+nRDFeEaifME+FDlBhPxFbHVPP
- oevQKagbN2BIt/PGIZxDFPBx2QDhTLuLNnbBECy7nKcM2gmk7JAdbETjbqBDJGuR/Vrp
- Gy+w==
-X-Gm-Message-State: AOJu0Yx1emr9XWzWyaKGW5VCiN2CItiV8yLpT+oaNPLch8e4ARoIYp76
- 3UZfMaEQV9AwdIpvAyBy6as74CWGjxQm3lI0iqTxBW5K21q0I+QjgJgEQ1Q3BPQrHkBVqxgC50Z
- wAeETQbqyixPE
-X-Gm-Gg: AfdE7cn5Jv6+JE3idnY5yowNZqvK6Mlw4siIy6l+2lcqTDK9MjGkQLMfp9dpqc80zeY
- u1Vi9ShTsIP88aWxP9s5cuvKHsw5xhVnDFike7yjW9Q/r1d4bAOEpRydC+dF+k/IqaHp4Rbztpz
- AkGH1jYOtfgewuo1YL+769rwoa67HBQBrLGocz6imdBu02D8D1G0gXMPZpbF4lnN/ToG1y3cof9
- vs7AgW5M0r6LfDaB34u/3EPhj9LP7VCJNAXzk9UBD8LnQPPj74XaUjLrSESawapaJac7RvsZdpP
- i1uS8ylqANcCfjl7+dfzy1EyYBJ2yj4TQBktuPL9RHz6jJiz05hCQAURNbu5wqegd/PNtz+3pCU
- bQ9VT3rHYcisuMLOW//8468o0fyEvxbLV5xIYpL0LRVqeEtSHFrFhhYrS94CJfz/HCUjfU+lR2+
- aLyxXdPmgBeBspduJQ1a7BtgSFLBRCDd1C2zaXj+uHVIlfOOmzIHhv5rYVczw1lkLTSR8UBi95U
- KzulpS8e0TCJ/YeE2fmrQ==
-X-Received: by 2002:a05:600c:5489:b0:493:e97c:216e with SMTP id
- 5b1f17b1804b1-493f8851d4emr98418335e9.39.1783956759112; 
- Mon, 13 Jul 2026 08:32:39 -0700 (PDT)
+ bh=ieQsAJoqFn50qrRvzEKESxTia16D/RzkytXdep5v5mI=;
+ b=L0y984mGzOqlPLhMj8wTLwSMR0jT75pTTlcRb6CyF7+pfS9hsLEqrCp8Try+GNIJFV
+ YBEIzLnUVb85CJx0FuogEvFHw8Ul2zvQSHoHYh77ptHwiAfeiPIKdMOcWaeFOtfODbOC
+ N0p5VdN1taHVzWXycUJsQ+JtmkcmGxlJXfRSrWxLfSdEJIi0Hk//Bho8qjSHr2i4fMGS
+ hihsO7HJFuvWMoy/AzFMAXT+jAKzZelqwzgS8nrRxWgevhFYgLHkFft7Qn0dbVNKTIvr
+ qm8ku/7yYn6P6cFsCrwBdMYnJdA0wY6BdYWcujWArn9C4MWvOGVST4Qbt0ZBYPvAbz06
+ zJ2A==
+X-Gm-Message-State: AOJu0Yw5nQVTSt9edbZNzlLJeggg6rRvww6dziCMdgd90EK6nOChqg6B
+ F+0qjhpjaEMy5T6jcYkaxzlWVZ9VRinZTEZwwsX6KECeHNfs9eHckGG+USEGAxmN63O+hOTWdEd
+ RdxifhU7KfSpS
+X-Gm-Gg: AfdE7clz7yP18+hXPIp/ZG1X5KP/j/kW3XuYjiJVjZBFo16RRoNmrVM4KWQpoOiDKWV
+ ybFJUJ8wfcfDK1d+n9r7vonohdlXiVgxMElI1LC/n0lt5qpQKdpHHBvw2oo+D1CaIiEPlb4FKGr
+ ePRNbJeYEIwoO1MNKS1tNaULAgao03dm64cTeEkQQSnXRH3j9ijylMTR/pVE/jsx0Wd+rAbohaW
+ z3Ha8X2E9fG0irk0yTSg1boQKj3DD+C1L8O7QOrh4edR4TeQzPBKsO+umGeT2zJNE8fJ/T930c3
+ n8L/kXf17Hgw/yXslATVA/o5iRaTs6fDLdDfGGdlxKosNnQ1LbB5Dg+5AGT+tvyQ9NYWVa1lqFN
+ RzN/gVzBOZZxECxtqOpcXNTifWS/6a2lUIRh5WJ1Js7NgiSPQRwpwqNT975PL/iM9C5u5wdZuTt
+ jGmpQolsR0lqzURVCWDcx/DuusAlOX0j8S9FOMiQe3tk1b5q3ioytvkiR1ALGExVci5Nq8O5jxg
+ dl/CKFcOimQZGUizT5sbw==
+X-Received: by 2002:a05:600c:4fca:b0:492:437a:a653 with SMTP id
+ 5b1f17b1804b1-493f8826c59mr97760855e9.26.1783956776189; 
+ Mon, 13 Jul 2026 08:32:56 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49508727f7dsm3825985e9.4.2026.07.13.08.32.38
+ 5b1f17b1804b1-49508727f7dsm3825985e9.4.2026.07.13.08.32.55
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jul 2026 08:32:38 -0700 (PDT)
+ Mon, 13 Jul 2026 08:32:55 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 04/26] hw/arm/smmuv3: Sanitize SMMU_S_STRTAB_BASE_CFG.SPLIT
-Date: Mon, 13 Jul 2026 16:32:11 +0100
-Message-ID: <20260713153233.3391818-5-peter.maydell@linaro.org>
+Subject: [PULL 23/26] hw/display/sm501: Avoid overflow problems in bounds
+ check calculations
+Date: Mon, 13 Jul 2026 16:32:30 +0100
+Message-ID: <20260713153233.3391818-24-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260713153233.3391818-1-peter.maydell@linaro.org>
 References: <20260713153233.3391818-1-peter.maydell@linaro.org>
@@ -100,39 +101,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+When we check that a 2D rectangle operation isn't going to run off
+the end of video RAM, we do the calculations as 32 bit arithmetic.
+This means that carefully chosen guest register values can cause an
+overflow so we don't detect that the operation is going to go outside
+video memory.
 
-Currently the guest value for the SPLIT field is not checked.
-Also the spec says that values different from 6, 8, 10, respectively
-meaning 4KB, 16kB and 64kB leaf tables are reserved and behave as 6.
+Abstract the check out into a function, do the calculations as
+64-bit arithmetic, and add assertions about the ranges of the
+inputs.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3632
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Message-id: 20260707085028.165557-3-eric.auger@redhat.com
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3584
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+Message-id: 20260707150933.1410507-3-peter.maydell@linaro.org
 ---
- hw/arm/smmuv3.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ hw/display/sm501.c | 32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index 10c67645a57..c2946d8d23c 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -1688,6 +1688,13 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
-         s->strtab_base_cfg = data;
-         if (FIELD_EX32(data, STRTAB_BASE_CFG, FMT) == 1) {
-             s->sid_split = FIELD_EX32(data, STRTAB_BASE_CFG, SPLIT);
-+            if (s->sid_split != 6 && s->sid_split != 8 && s->sid_split != 10) {
-+                /* Other values are reserved, behave as 6 */
-+                qemu_log_mask(LOG_GUEST_ERROR,
-+                              "Invalid STRTAB_BASE_CFG.SPLIT=%u, use 6 instead\n",
-+                              s->sid_split);
-+                s->sid_split = 6;
-+            }
-             s->features |= SMMU_FEATURE_2LVL_STE;
+diff --git a/hw/display/sm501.c b/hw/display/sm501.c
+index 0da25477bcc..d5e165daefc 100644
+--- a/hw/display/sm501.c
++++ b/hw/display/sm501.c
+@@ -682,6 +682,28 @@ static inline void hwc_invalidate(SM501State *s, int crt)
+                             get_fb_addr(s, crt) + start, end - start);
+ }
+ 
++static bool sm501_rect_outside_vram(SM501State *s, uint32_t base,
++                                    uint32_t x, uint32_t y,
++                                    uint32_t width, uint32_t height,
++                                    uint32_t pitch, uint32_t bypp)
++{
++    /*
++     * Return true if the 2D area specified by the arguments is
++     * partially or completely outside the VRAM (a guest error)
++     *
++     * Limits on the input sizes mean we can't overflow as long as
++     * we do all the arithmetic at 64 bits.
++     */
++    uint64_t rect_size, last_addr;
++
++    assert(x <= UINT16_MAX && y <= UINT16_MAX && height <= UINT16_MAX &&
++           pitch <= UINT16_MAX && bypp <= 8);
++    rect_size = (((uint64_t)y + height) * pitch + x + width) * bypp;
++    last_addr = base + rect_size;
++
++    return last_addr >= get_local_mem_size(s);
++}
++
+ static void sm501_2d_operation(SM501State *s)
+ {
+     int cmd = (s->twoD_control >> 16) & 0x1F;
+@@ -731,9 +753,8 @@ static void sm501_2d_operation(SM501State *s)
+         dst_y -= height - 1;
+     }
+ 
+-    if (dst_base >= get_local_mem_size(s) ||
+-        dst_base + (dst_x + width + (dst_y + height) * dst_pitch) * bypp >=
+-        get_local_mem_size(s)) {
++    if (sm501_rect_outside_vram(s, dst_base, dst_x, dst_y, width, height,
++                                dst_pitch, bypp)) {
+         qemu_log_mask(LOG_GUEST_ERROR, "sm501: 2D op dest is outside vram.\n");
+         return;
+     }
+@@ -760,9 +781,8 @@ static void sm501_2d_operation(SM501State *s)
+             src_y -= height - 1;
          }
-         break;
+ 
+-        if (src_base >= get_local_mem_size(s) ||
+-            src_base + (src_x + width + (src_y + height) * src_pitch) * bypp >=
+-            get_local_mem_size(s)) {
++        if (sm501_rect_outside_vram(s, src_base, src_x, src_y, width, height,
++                                    src_pitch, bypp)) {
+             qemu_log_mask(LOG_GUEST_ERROR,
+                           "sm501: 2D op src is outside vram.\n");
+             return;
 -- 
 2.43.0
 
