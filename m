@@ -4,109 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B401C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 13:36:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BBE4C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 13:53:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjGpd-0006co-0j; Mon, 13 Jul 2026 09:36:25 -0400
+	id 1wjH63-0000Zb-EI; Mon, 13 Jul 2026 09:53:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wjGpY-0006c8-6r
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 09:36:20 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wjGpV-00038h-SL
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 09:36:19 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 4ECE0778D1;
- Mon, 13 Jul 2026 13:36:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1783949776; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/7xmby3RNEVfHYO4Vikv7VUi48YAA8qi8QQM5SirDl4=;
- b=kT5v+s5BQFXi0QSz7ndoc+mZuioSoX58dyK5GX3F0Lta2ZHDyZ1hSzR+HzwyE3zozEfcQ1
- NZ/LUtd8KWLC0KDlsrO72SsSJZ5Mik9CvhNNdNf5UoDAd9wgdqIo6I8XNHadLo4DJ68/4V
- GplrohCJjHuxbwKYW5YSGoAWUwvZ1Ek=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1783949776;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/7xmby3RNEVfHYO4Vikv7VUi48YAA8qi8QQM5SirDl4=;
- b=HR9UowxDvUXoXhAdp7xlmMjCt0PqjjzGsgxvwm1lhuEvzaSZYZGfHMM8oF82trHvFSaacQ
- OmhxKg2LG85JdXDQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1783949775; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/7xmby3RNEVfHYO4Vikv7VUi48YAA8qi8QQM5SirDl4=;
- b=Wvapq7WNhyGA+hANAVbh7wOi3yn6Ianp7ye0xaxgECK9rW5/onJ4vb9bZv1BSM8urFiR54
- IelwwhpbhstsIy1NOqd71cEMQDhVHVoHZ1n7T7h0BX97eot7FPvY9N/IRh3RHJq1HLAjq8
- lKBMuKFAxYEBTIMnKExu543nzrTCMaw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1783949775;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/7xmby3RNEVfHYO4Vikv7VUi48YAA8qi8QQM5SirDl4=;
- b=CT9i/a/xmIRGbKgDbwLEUKDLTUVWSjquPQ6qIs8651Jixm3hlhBrGM/gxZtFAdrdGqKg+Y
- 666f17ApevPIeDBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D464A779AF;
- Mon, 13 Jul 2026 13:36:14 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id yIb2KM7pVGozdgAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 13 Jul 2026 13:36:14 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Maydell <peter.maydell@linaro.org>, QEMU Developers
- <qemu-devel@nongnu.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Pedro Barbuda
- <pbarbuda@microsoft.com>, Mohamed Mediouni <mohamed@unpredictable.fr>,
- Nicholas Piggin <npiggin@gmail.com>, Harsh Prateek Bora
- <harshpb@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>, Eric Farman
- <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>, "Daniel
- P. Berrange" <berrange@redhat.com>
-Subject: Re: what is qemu_system_guest_panicked() for?
-In-Reply-To: <CAFEAcA_zmc=Vvs38Qos_gecCmGAbRgDQF-0+x85Ja66nsqrHxA@mail.gmail.com>
-References: <CAFEAcA_zmc=Vvs38Qos_gecCmGAbRgDQF-0+x85Ja66nsqrHxA@mail.gmail.com>
-Date: Mon, 13 Jul 2026 10:36:12 -0300
-Message-ID: <87pl0rdnar.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1wjH60-0000ZG-UF
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 09:53:21 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1wjH5y-00057V-OD
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 09:53:20 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66DCDASt2434128; Mon, 13 Jul 2026 13:53:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=HvD10D
+ /7FFLhX6UC+OkK36xu6mlfEmvR/IMsU3CEHGg=; b=Hz9lQwSo46wLJjrEyKLK6A
+ 9BGpbDcRwB7tOzO9tgm9Gz5sWw4LsyIByblCd7ZoldW/fE0ACHOecBcvLUKmncUD
+ 6KmHMsUz8Q6Tkp1OTJJRZklYZRCsRxrzD1AqRRicAcRlic9snYVuaVdUb+H9f6Sg
+ Et1yXFPwyW/oi5Jv/VAQdJZlF1tVI4ArwlnP9zIFmjddEPskxnOdDTRPu1/pF1GK
+ +b9RC5P9mZKxaTgjlWmeTPevelWF79/rHijBAeAdcThfB38CKN8c82g0+WDAvrH9
+ fA5zlOTUGTkPbx84rjSatkqHpVto3401mM9B3B0N+zylpnT16G59LnqsckF1iNvQ
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbegbgmmc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 13 Jul 2026 13:53:15 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66DDnt6R023050;
+ Mon, 13 Jul 2026 13:53:15 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc1nh5u5n-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 13 Jul 2026 13:53:15 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66DDrBXR23200102
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 13 Jul 2026 13:53:11 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E7A1E20043;
+ Mon, 13 Jul 2026 13:53:10 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7BD0420040;
+ Mon, 13 Jul 2026 13:53:10 +0000 (GMT)
+Received: from [9.111.32.211] (unknown [9.111.32.211])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 13 Jul 2026 13:53:10 +0000 (GMT)
+Message-ID: <1e02ef6d-2f36-4219-9c1d-680fd6426a67@linux.ibm.com>
+Date: Mon, 13 Jul 2026 15:53:09 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- SUBJECT_ENDS_QUESTION(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCVD_VIA_SMTP_AUTH(0.00)[]; RCPT_COUNT_SEVEN(0.00)[11];
- MISSING_XM_UA(0.00)[]; ARC_NA(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid];
- FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[redhat.com,microsoft.com,unpredictable.fr,gmail.com,linux.ibm.com];
- MIME_TRACE(0.00)[0:+]; FROM_EQ_ENVFROM(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_DN_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, imap1.dmz-prg2.suse.org:helo,
- linaro.org:email]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: what is qemu_system_guest_panicked() for?
+To: Cornelia Huck <cohuck@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>
+References: <CAFEAcA_zmc=Vvs38Qos_gecCmGAbRgDQF-0+x85Ja66nsqrHxA@mail.gmail.com>
+ <87ik6ji3zl.fsf@redhat.com>
+Content-Language: en-US
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
+In-Reply-To: <87ik6ji3zl.fsf@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=fOcJG5ae c=1 sm=1 tr=0 ts=6a54edcc cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=KRiwUzRM81OJinXqfTIA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDE0MyBTYWx0ZWRfXzcmR5lp/J55d
+ uur9nLju9GTJ6HuIK7Ru19rEMR9/gxxkuGHTXx5DLTk8c8ezXvGlZ889EzVi8Y+lSMsrL8D5uQE
+ cVVYr8W9xleBSAiFH6xRQQeh382gCd3+/S2UCD5DoMHUs1wmFbfXJleh5z7GRsXfOdTazCWK2ui
+ D+ioc6+i1rld//CVx/rZE2AJ2IEbQK01LWOLhjU/8TlxnppxCFAMdN6OAuhM3/X5ff0toceDqyM
+ 7A3p4gbHJAtVL+16tgOOcYfzsoIJcbDpSc0iwvSl6/SlDe7nTFc6mHk2pH9FsZScz8HoQDsJGnc
+ 90ExxReM5hbzda2+TCY1AuVICIDES6xlcucnW5oqi6UaqDIdyluKmlGLxMnxtF4cGsSHEZQ46Oz
+ +t4FJr4K8bN5QFarZIWmu/+P5MWMaJj08R9uXfK3QG6CEb3Mww+xyxjWDTtfG9iWM1PKWyrEJsY
+ Hs50i1Ha340l5eTST6Q==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDE0MyBTYWx0ZWRfXycd8hmgsSYMJ
+ gpuudUUtAwORLzwbYBa/m1rG8B72hWNToFWH2ZHPAmlPlwL7AQFHbcLgb5s0hJHeNPx1kwK5VY+
+ u5AptHt23J0Y2IffOEclpYVgR726Ibc=
+X-Proofpoint-GUID: WRGCKFOLzLpMvalWkLQObb2fiwuvVAXL
+X-Proofpoint-ORIG-GUID: kwAA1LAZ_OWBVWh1-wtS33fmLVvDMXwb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-13_03,2026-07-10_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 impostorscore=0 suspectscore=0 adultscore=0
+ priorityscore=1501 malwarescore=0 clxscore=1011 phishscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607130143
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=borntraeger@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,77 +136,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
-
-> (cc list is a random mix of maintainers of code that calls this
-> function, Paolo as "main loop maintainer" and a few others who
-> I thought might have an opinion.)
->
-> We have a qemu_system_guest_panicked() function which causes QEMU
-> to report this to the user and do one of a couple of possible options
-> (shutdown, pause the VM, do nothing). This seems mostly intended for
-> "the guest OS told us by some mechanism that it just panicked". But
-> we use it more widely than that...
->
-> Cases which are "the guest told us about a panic":
->  - accel/kvm/kvm-all.c handling of the KVM_EXIT_SYSTEM_EVENT SEV_TERM
->    and CRASH subtypes
->  - the pvpanic device
->  - the spapr ibm,os-term RTAS call
-
-I think I remember this one is arbitrary and the spec doesn't really
-interprets this as an error state of any sort. It's just that this is
-the way it has been used.
-
-I had to comment that qemu_system_guest_panicked line a few times when
-experimenting with using os-term to do a clean termination _from_ the
-guest code.
-
-PPC folks, please confirm, it's been years since I looked at this.
-
->  - x86 kvm: tdx_panicked_on_fatal_error()
->  - x86 xen: the SHUTDOWN_crash shutdown subtype
->
-> Cases which are not:
->  - hw/spapr/rtas.c: if the FDT has no RTAS address during system reset
->  - hw/spapr/spapr_events.c: if we wanted to deliver a machine check
->    exception to the guest but the FDT has no RTAS address
->  - hw/spapr/spapr_events.c: if we want to deliver a machine check
->    but the guest is still dealing with a previous machine check
->  - arm whpx, if we get an unknown/unexpected exit code trying to run the VM
->  - x86 nvmm, for an unknown/unexpected VM exit code
->  - ppc TCG, in powerpc_checkstop(), for a machine check exception I think
->  - s390_handle_wait(): not sure exactly what this is
->  - s390 unmanageable_intercept(): again not sure, think this is where
->    the guest has gone off the rails and we can't keep running
->
-> At least one or two of the above have comments to the effect that
-> they don't want to use e.g. cpu_abort() because they want to give
-> the user the ability to examine the VM after this unrecoverable
-> guest error, rather than just exiting QEMU.
->
-> So I guess my question is, is it OK to mash these two categories of
-> "we can't keep running the VM" together, or should we define a new
-> one for the "unrecoverable guest error" case, or do we already have
-> some better thing to do that I missed?
->
-> In particular, "do nothing" might be a reasonable response for the
-> user to configure to a guest panic notification, since the guest will
-> presumably stick the vcpu into a do-nothing loop, but "do nothing"
-> doesn't make sense for "unrecoverable guest error" because we'll
-> probably then sit in QEMU in a tight loop retrying whatever it
-> was that failed.
->
-> If we had some kind of qemu_system_unrecoverable_guest_error() then
-> we could maybe convert some uses of cpu_abort() over to that (though
-> uses of cpu_abort() are a very mixed bunch, some of which should be
-> LOG_UNIMP or LOG_GUEST_ERROR and continue and some of which should
-> be straightforward assertions, as well as some which might be this
-> new exit case).
->
-> (This query was prompted by a patch for arm whpx which adds a new
-> qemu_system_guest_panicked() call for an unhandled VM exit situation.)
->
-> thanks
-> -- PMM
+Am 13.07.26 um 12:22 schrieb Cornelia Huck:
+>> Cases which are not:
+[...]
+>>   - s390_handle_wait(): not sure exactly what this is
+> 
+> Loading a "disabled wait PSW" (waiting for interrupts with no interrupts
+> enabled) is basically the way for an OS to "panic". (The "special wait
+> PSW" is for signifying that a cpu has been shut down.) IOW, this is
+> indeed the "panic" case for s390x.
+[...]
+>>   - s390 unmanageable_intercept(): again not sure, think this is where
+>>     the guest has gone off the rails and we can't keep running
+> 
+> It's basically "the handling code for an exception immediately leads to
+> the same exception", the cpu has gone into a loop and can't get out of
+> it again. Not sure if that should be getting some different handling.
+Right. I think having both cases in the same bucket makes sense.
 
