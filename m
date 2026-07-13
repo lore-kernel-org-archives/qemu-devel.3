@@ -4,94 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 101BCC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 08:51:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 277B4C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 08:54:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjCNg-0001yZ-EI; Mon, 13 Jul 2026 04:51:16 -0400
+	id 1wjCQf-00009g-Bk; Mon, 13 Jul 2026 04:54:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjCNf-0001vp-CQ
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 04:51:15 -0400
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ id 1wjCQb-0008S6-Av
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 04:54:17 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjCNc-00042p-UC
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 04:51:15 -0400
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-667b76205f1so2331780d50.1
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 01:51:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783932672; cv=none;
+ id 1wjCQY-0004GA-LS
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 04:54:16 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-6649ffb1d01so3751364d50.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 01:54:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783932853; cv=none;
  d=google.com; s=arc-20260327;
- b=qLJUmpJlesB1iCRXol8LfW0X4kL3wBZIrUGs8O7SWAbnxcRLjiWLel+NJ+RaNI8Ng7
- /wBh4xKdjv2ZIcasI20muXQCDdWef9MWAimAKQyAIigT/DtOisyXK1GZixT+7kbyeOYS
- i8C3TDuYqywRKScrUbPEer6sTncGgp408heHiL8LjW6ScGgAHkkVXJFdZhvRTZpjBBHU
- GbzujUw93yf8ZugXrn/XwUCH67I6c5KXM6TSZvtmhIzFRpN9lWeWZd1l8LK4kTFrPKAB
- BnusQqRDhLj1VWZeF8Yrg8zRrlojTWiOgAiBGk8sOfIQhax2y84hC3ipRZFeI6nahVWw
- TuOw==
+ b=FZmFR+ZmBzcvwt3dPSaT+fneIVbH9TrH8bE+CESF3Q5ivfRtDaUcY2zRqDRa79b6cT
+ qqrAMa/DPig7hRzyv7T5CnYDNe95t0Xi6AUHm2UTTvLa6VRdxOAi3E6Fl2c4Fj1fM3zN
+ WeOcgeCryfrxV0d6Lzrn4gxnZB7R4xvYBFQtfZ2M+x9Q/YsmvQRAVJnbjalF6SVVfubu
+ cWpX05h08fgYgKOz/HlzbS21uRsinqPPMgy/VPfktCtgduZnoM4KZx2lPS2PFEph9+KR
+ 5EuzBVMu/BaBwaILlSL7ln7VfaQ5ZWyRTuhT1/8n3I13NmqRUOYEPD6kwNvWO9UNp0pW
+ MssA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=sQlT3EamjD68u+9QT9LalK+PZcnYjXGD0CPM12MbDeE=;
- fh=GRGAhYIRyJLIexm/SQeD/ONQMnKo+TSDqNowgo15cfY=;
- b=OKziotoFRcykOMMgBu7TMqGmXj0gnbUArYeVt0n6+BXhVeGknEyb3PsKw2Uvnm2pyQ
- 30bfHr+ReD3JJzd8vQwgRGZg7AKzjczXT0mnq80+gJXGzE9gc8IiIw5Lt5nbNEezxZsZ
- os2lJ2/l6D1MiJLb1GPTdnqOnewVsQ0ciMGng+NYamohqOxzyL90WK4+UrVLbyBE2TWO
- PD7o3Hc3bNlLzKat3lLUCXlWB6ShVfU7NmLW+61HIjxwwtBYb8T7ENztWQIFeJSRjal6
- 9qfuqaBVGvx5aB8KvzyK5pWZAZY0pR1fLj9m+B5NHw79OPhTecD6xaHl9htiRjPvKvP4
- z40A==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=hzak/7szTjivZFmxhLRh8gDxneB6K69+JW+oJN1FumQ=;
+ fh=1F2N8ZB6PoyCVvvlfy0Uq2OMiNwo7c4n8YKM5X087GM=;
+ b=CBlyOQsiNncgEsAusLJGbCq9LxHugccAIqLJ2quoFFZZfE/8fNmGTK83UkGo0y7INX
+ VQXw+DTnobT124X/q2hmGUrox9j1d2cW3s/xN6YOCzkWzUlI5ohpI3GhsSKynwQq1j9V
+ F8GKPXG4Om64I5TfrtDg/sNY8O6NWARW9uqFnCw0DW8Lzkt1yNENnRv/jIDMKFXtSpK/
+ 5zM1w8oo+Jb/O6ohZ9unbvdC9p8gCu8YU3efqWhXXUUYWcGHdXd7xdUaXFgG2DIguXcB
+ 0yc8jhpLz16wX1lnQ6eM6yNa7iBKq0a0OgyHOX5rbmBi/WDSwOThc9su5kKwlUfG37F1
+ I8pQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783932672; x=1784537472; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=sQlT3EamjD68u+9QT9LalK+PZcnYjXGD0CPM12MbDeE=;
- b=jw6drx4Ut7OkHFbkMQ4tCgbJgVtmz5qh2zfrQypUlIXyFXmI3vcojs6ISYNUi97d7R
- g1mvXMrBjBiFH3q3xWKlH+9bPcMoe1Y8iQ6GF4vIicEK/LDGA5eFU30K6R8Dh8KiskTA
- erY1z2tu3qlBCsrvZ3Y4/PB20mapkJyKOmfDvDCUI4jK1b8i+9Y/d9Og4HcFkc2CZGsG
- kLESIfkVkjK+GcEufOlsHTD4Bj3ss0pakzrasgFA2W4Nd5v+5v0SRQvT/SqyvMfG9zHj
- kpe7fVr59L6aPuL+xpuI8jkBkVnb2LTBOVo0l7YW8xqmvToS+etRbutQUKA+8rdsLkQt
- ZC0Q==
+ d=linaro.org; s=google; t=1783932853; x=1784537653; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=hzak/7szTjivZFmxhLRh8gDxneB6K69+JW+oJN1FumQ=;
+ b=rqIIcv0NOfBFpUVMcYuhBWP0QNGlSPn5nZ8SHkcpXUipTlCrH2VoSmiBjv+uJB9p1p
+ fRMZuwRRDAatZMi3Z+sEhD/iHfstIvPrn6NblKiQv6kp+AWMxW+hMXpC8B/sahvngYmb
+ iwMTAR2nhiySnacldB45IjTA/7sKrvDjD5/X0QcZvIBzuBBf/Dqc8HShM6V5RCSmjYNc
+ OVH1rYp+KxhzK8n3tznu65keRV6HcvP+7X0islvYWIoF2UTdr5i8vs5swxVGvhTPIfOk
+ vnm81rP3o9NFUxVAGIxDe81dYvMkqogLn2QFP8ofuIToFB+qB7Kxo4uvYx1NE3rrEBGB
+ qBxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783932672; x=1784537472;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=sQlT3EamjD68u+9QT9LalK+PZcnYjXGD0CPM12MbDeE=;
- b=sXaA3Xh+EKakk1d5yabftCA88yRK2eEe8DFZOAepK6QXbzDVu00+1j9ECwk+MGzt73
- HFzxK/SwGh7PBLkajlPkvdQMu2JjfRNmMBL4fCXBKIQY1WKv8v6rfDylYVG937itCjSw
- 6a7Ql8FFX9sbR0tS0QzpRG5ZQhHER61NmNpuIbGYQR5nJ39A63tZXdH4O+LHRdxLZY/h
- srDrFb3G+yhTKTlMV6E48B8aP+MBuz4P/6qHKUwTdVeA30PIzvnswUT3+SIUp4NVOBY8
- nqmkXv9esWkvyAPuvqdZJyxbfDhlGSZXFp4ruPuKZvYzJg0CV16OWRFM6difMCu/zAkP
- C0/g==
-X-Gm-Message-State: AOJu0Yw5iOlyh+H7CI/3t0QcSmBkIgGqazq4mwh+TMXc6LcsDDBnba+c
- APNxsvSwFTMNevNytscC5Civ2UeHSm8gIBxpU1m2hHGR2hAn1JPZ8gKlK1PdzWz77KcdyP8U1JB
- lL7xalJqgbzGgxqVbR95VrFJPIchSJnM3/aRvUamAi/k8ixVHUOTN
-X-Gm-Gg: AfdE7clpc6BjPs++YGV4UthSkxJemownjfVJBeNEdeu+YrK+sxD3+Mv2agfOn9KyCuK
- LGjl+uWVHqmV3ce7zYC9Uzs2c3hsxLvj7wDB302cUSXS/vsrT7/yznz4GLtvHxdaUlclb1Cwr1u
- lLkqTQT1gAZOthY1N0ifGuEAmYUjvp8DvrBZJD2lXWui+RGtT14lRwmaOi2Si4vjI4UT4C4FKUS
- OTHET1O2fN6l4cOoVlWH+ImqpNizlV+TTxschf3VOplZGCRoOSpqBggXxa7o79xd9Hhr7Qal935
- ESOc86ijsXa8eYLL+qcXuNf68gvGjvcBJGWyiFBUDd0CbJjrj9WQrF5X
-X-Received: by 2002:a05:690e:1446:b0:667:e2e1:44 with SMTP id
- 956f58d0204a3-667e2e130c1mr4071305d50.22.1783932671687; Mon, 13 Jul 2026
- 01:51:11 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783932853; x=1784537653;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=hzak/7szTjivZFmxhLRh8gDxneB6K69+JW+oJN1FumQ=;
+ b=f0e42+6a/pfHK1o9mocUFCIO7j8LsV93XL5Ag0aEd1LOMKFyrVqUFR2ldgArLJEJoe
+ i8fz4jQ+E/yqcP7Nu9TNtoH7WJPSh3ueb3gjJHsf2t3ErkClKlQlbQhqvhvMPeM6wsby
+ UMyN67UqWOUiF/p8nk+JhDRlJ0xNsGr3XfhT+sr8JzhheFKk9iwY6ZxN2v+8Oz8ZP0rS
+ n/nEEo+wUlLVIcwWdM+ryxybGyD4W5RKD7pw5ls9Ecm78V1cbsgw6JfifD1cWaZBXpnR
+ D+OfwGEwhjocZ2w0TR0rRZkX8asDlJfqYxZpsMNcfF0H9Z/oyM/2TBF8wJWCc4kCIrJu
+ Ln6A==
+X-Gm-Message-State: AOJu0YxodneKdWK4WW0p3w+eF4elE32IPs13PWPSV/ql1RUMMHZ9qe2m
+ Km3p9azC+iZQRTOlaa8P1Kl/ePbEn+oQuFKYNKeTMwvYFAUhepD0YY8oL7zk04xErzegyu5ykWD
+ VoBUadNv+XE6P5gWD5KBoDXWhzVFpccPwNQttKJw9Eg==
+X-Gm-Gg: AfdE7ckHNllQW1vr4clC+dez1efAVe9KzY93mDWxjp84E9hMZ+yINF/5FBhh/Xxg5z8
+ BJ/H9J6F7cFZbVcVTSY0Z8uyBtADW1l1bGynMe67s/5b7g6wfIJ+2lCCnnrNacoUtTTTXwt1XO8
+ LVa74lqdr0jhJPfAxuXFEj3PWKbHPLo5BKNHo1QVOqNac2A8Ucqkimx8kTrWtuJ3DL2LTNHi4ar
+ a2+knJZ7GM2PyFiP5Aof35h8AVzoU7w0MAyGYZvsrQSVzDTXUH9vxq28ZdfrbKuBNNH80OP0Rh+
+ pCGar1eDlRU4DebJzqneRdFtgW95KIC/dN1ZhOx1J84qNg045gLnfnni
+X-Received: by 2002:a05:690e:439a:b0:667:9980:6d82 with SMTP id
+ 956f58d0204a3-667d7c0d51fmr3828385d50.87.1783932852927; Mon, 13 Jul 2026
+ 01:54:12 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260710175818.528974-1-richard.henderson@linaro.org>
-In-Reply-To: <20260710175818.528974-1-richard.henderson@linaro.org>
+References: <20260710131500.2323848-1-alex.bennee@linaro.org>
+In-Reply-To: <20260710131500.2323848-1-alex.bennee@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 13 Jul 2026 09:51:00 +0100
-X-Gm-Features: AVVi8CcaXN8HVh-MZrReoWelY0YIbYhcOFtn-wGy6WzjjhZqQBWYtscYwM08W8g
-Message-ID: <CAFEAcA_er-_1VAmokZWygtFAwJbiHRiJ3rrRdF94tV4hQwBB+A@mail.gmail.com>
-Subject: Re: [PATCH for-11.1] target/arm: Be more defensive for invalid
- tlbi_aa64_get_range
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-stable@nongnu.org
+Date: Mon, 13 Jul 2026 09:54:00 +0100
+X-Gm-Features: AVVi8Cc_8RswlPwKavUF182A0n0boDX02Ce1rviWFbndFUOc5NI28ny_29kaF7Q
+Message-ID: <CAFEAcA-ob0rVwKY6AQ2hzfp4oPFJAVB=EjVXWjCjLHxwROGcQg@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/dma: don't allow weird transfer lengths for bcm2835
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ "open list:Raspberry Pi" <qemu-arm@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,17 +118,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 10 Jul 2026 at 18:58, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+On Fri, 10 Jul 2026 at 14:15, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
 >
-> It's possible to program TCR_ELx with an invalid granule size,
-> which could match passing an invalid granule size to TLBI RVA,
-> which would then fall through to assert in arm_granule_bits.
+> The datasheet doesn't explicitly say that TXFR_LEN has to be word
+> aligned but the fact there is a DMA_D_WIDTH flag to select between 32
+> bit and 128 bit strongly implies that is how it works. The downstream
+> rpi kernel also goes to efforts to not write sub-4 byte lengths so
+> lets:
 >
-> Cc: qemu-stable@nongnu.org
-> Fixes: 3c003f7029e ("target/arm: Use ARMGranuleSize in ARMVAParameters")
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
+>   - fail when mis-programmed and report GUEST_ERROR
+>   - catch setting D_WIDTH for 128 bit and report UNIMP
+>   - add comments that the DEBUG register isn't a straight write
+
+You dropped the comments in v2, so I've dropped this line from
+the commit message.
+
+> Yodel did some digging into the specs (see discussion link):
+>
+> {A} AMBA AXI Protocol Version: 2.0 Specification
+>     https://documentation-service.arm.com/static/64256e84314e245d086bc88f
+>
+> {B} BCM2835 ARM Peripherals
+>     https://datasheets.raspberrypi.com/bcm2835/bcm2835-peripherals.pdf
+>
+> [1] {A} (p. 10-2)
+> [2] {B} (p. 51)
+> [3] {A} (p. 14-5)
+> [4] {A} (p. 4-3)
+> [5] {A} (p. 9-4)
+> [6] {B} (p. 53)
+>
+> However was unable to come up with an unambiguous conclusion without
+> testing on the real hardware. So in the absence of certainty and for
+> the sake of addressing the DoS I suggest we merge as is for now.
+>
+> Link: https://lore.kernel.org/all/20251111105429.3993300-1-alex.bennee@li=
+naro.org/
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3201
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>
 
 
 
