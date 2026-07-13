@@ -4,95 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AE68C4450B
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:07:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52DEDC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:08:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjIFK-0008Fb-Rd; Mon, 13 Jul 2026 11:07:02 -0400
+	id 1wjIGs-0000CF-6X; Mon, 13 Jul 2026 11:08:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wjIFJ-0008F4-Eh
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:07:01 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wjIFH-0005iQ-PE
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:07:01 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2ce98cb8165so29517055ad.1
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:06:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783955218; x=1784560018; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Cbeza0JweGBXswVZVljcfaCOtYAgEqnMzf8MThDE64g=;
- b=LXfpuhmz6Zvfd16jtDCNucbGSd5YZQiW3R1P4wQMPn0wzhWi+4roKeKi9aV+vNttYt
- 4ts8F7yVoJ7B2Ogccka7G2J9xEbQZNiVXnD4X9pRGxI/1BRe4GuhsCWZUUNYvbgWwq/3
- W518rzlG8ee0DnxiOi7tXErD9Eo7+XPUU67Ym7DwvpbxSOhKmeJ7qW6+WEWfWBbQcIUh
- 7pnsv+0Lt+C2hf7vaHMGru+DoOC58QdtO5cUVz4fIoOuwCSqYjqEcEKu/FA8u2Hs2K5k
- 7fxHmJW8jbXM011W+s8pYKK/RoIG8MZ+VybB1CNj1y9uolgmjZA0vE0l5sv0WgPpKQ6D
- +W/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783955218; x=1784560018;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=Cbeza0JweGBXswVZVljcfaCOtYAgEqnMzf8MThDE64g=;
- b=HVGMpBxPUmyNwk+ytJOhKZRkDUORSUzk9Oq1fv2GPzeUsrIqV+wHN1fC9xZVvCc0Ye
- nKc84+vc+91ttYA4OqSJMIWDjp/Or+d+9MrVOb4CClEuZ3Uc9Ob8Y6B9kq0gGSUPeTt7
- t60E8nHkMv4+nV0xGG0eeIET6YCVxUr8Jy0CmUNwwxdNMI56CK/ctb2i0SymmmCCyg/w
- vXDTGU7gFKLV4o/To/qBP2DAnfu9jGzpfcjWnxUGKleRwjgphUl3aHEw/0AChTWV7ix8
- rOukv8XMj+qbnGx5wWe07utjKaFE9NMyFjKMbZKb1xYDVq7ENciU4e+QQm/sjnHixure
- 80eg==
-X-Gm-Message-State: AOJu0YxRK3AskqXZTeNDZfrU/OrA5QcmGphZ/VHR2tJyOE4TLHG8Fw7C
- xbbNML6efTMXxMw9xU1F3sRgo4q4z2tgrErQ37mzLzGDZmirYvVF5CBEK6tbNbjo9k9GZKUCeQn
- FU9P3
-X-Gm-Gg: AfdE7cnvAQJ6EXbRGP1ucj+AdWfzu9ZgOF/WsHVCHV0nHOxtX7pERDIX2JLio6mFTHt
- 4wF6fAl3ivi5Ag9jOPbFCPXbj52PMLHFtj2gB5d3bnQ9Ztd1+k4o0he9kJnctbKndOiM0XuJxVL
- pKtvNsjg5HLHOVbZ2KcdII7cXGWq2NlRyalM3kNfbgZTDHhVc5rZ3r9gt3rpOOLtLmMCs8/9/+c
- AhqS2McobqEFem9KbtqOmmF4zXuZkiwwtenokw8fU7W4iRYCu/H5CicdgBbeDibJNhXzjC3ahhe
- iYrhErxUGncQsLhhF2zb4uXjFo/NVAKhWwEcR0ExisynQnIqw3okF/TIr1UeYXfLUHGPGWLPAYV
- eIe5i9ejh2/QlCJUHitVfud1z09/N+SclaybIlTBTexbLBGrcIudYSGf/wCcsiKucRvJo7pxOwV
- db/zgg/MzU0qPAesk/tXohdMeyDg==
-X-Received: by 2002:a17:903:1b08:b0:2c9:ed2e:b8c1 with SMTP id
- d9443c01a7336-2cea17f82a7mr90421545ad.12.1783955217641; 
- Mon, 13 Jul 2026 08:06:57 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.146.49])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2cee5ccb56esm2395115ad.84.2026.07.13.08.06.57
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Jul 2026 08:06:57 -0700 (PDT)
-Message-ID: <c20d55d9-6563-417a-9df9-25a93c6641cd@linaro.org>
-Date: Mon, 13 Jul 2026 08:06:55 -0700
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wjIGq-0000Bu-Jr
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:08:36 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wjIGn-0005mc-NR
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:08:36 -0400
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:2a25:0:640:ba29:0])
+ by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 08E598083F;
+ Mon, 13 Jul 2026 18:08:29 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:c5a::1:8] (unknown [2a02:6bf:8080:c5a::1:8])
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id Q8Qg050aEa60-NNvqnWYP; Mon, 13 Jul 2026 18:08:28 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1783955308;
+ bh=5kFLsTktGoitj7aDDhchk1Cs8Kz54gKYodU78kmpQHc=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=t9Kj04W4MZkTqd1nJYnPuwwguutZicBThVDKg4s7id3R3okJcH9TTPXceJM4Oo9Ok
+ R15Jd1fufYKl0YvhNwv5RexfEyZ8fSNt9CPknwa/xZpbWELWvpZ643F9mymjn7PvLC
+ EE36hUo8b/BpQjNQHe7LfshwPXhDFCJpIuuzRux8=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <5af44296-ea89-402c-b4fb-b9b0acee3b54@yandex-team.ru>
+Date: Mon, 13 Jul 2026 18:08:26 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user/sparc: Take pending signals in
- sparc64_set_context()
-To: qemu-devel@nongnu.org
-References: <20260713141429.3387066-1-peter.maydell@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v18 12/14] net/tap: support local migration with virtio-net
+To: Markus Armbruster <armbru@redhat.com>
+Cc: jasowang@redhat.com, mst@redhat.com, peterx@redhat.com, farosas@suse.de,
+ raphael.s.norwitz@gmail.com, bchaney@akamai.com, qemu-devel@nongnu.org,
+ berrange@redhat.com, pbonzini@redhat.com, yc-core@yandex-team.ru,
+ mark.caveayland@nutanix.com, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Jason Wang <jasowangio@gmail.com>, Eric Blake <eblake@redhat.com>
+References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
+ <20260710191809.721154-13-vsementsov@yandex-team.ru>
+ <875x2juxru.fsf@pond.sub.org>
+ <0fd09b96-068f-415d-9bd8-0506958710f1@yandex-team.ru>
+ <87y0fff25t.fsf@pond.sub.org>
 Content-Language: en-US
-In-Reply-To: <20260713141429.3387066-1-peter.maydell@linaro.org>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <87y0fff25t.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -104,57 +84,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/13/26 07:14, Peter Maydell wrote:
-> Every callsite of block_signals() checks its return value, except
-> the one in sparc64_set_context(). Generally you need to check,
-> because the standard pattern is:
+On 13.07.26 16:29, Markus Armbruster wrote:
+> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 > 
->      if (block_signals()) {
->          return -QEMU_ERESTARTSYS;
->      }
->      /* do some blocking syscall */
+>> On 13.07.26 10:57, Markus Armbruster wrote:
+>>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+>>>
+>>>> Support transferring of TAP state (including open fd).
+>>>>
+>>>> Add new property "local-migration-supported", which defines
+>>>> whether local-migration is actually supported for this TAP device.
+>>>> Starting from 11.2 QEMU Machine Types it's enabled by default.
+>>>>
+>>>> Note, that local-migration (including migrating opened FDs
+>>>
+>>> Scratch the comma after "Note", ...
+>>>
+>>>> through migration channel, which must be UNIX socket), is
+>>>
+>>> ... and the one before "is".
+>>>
+>>>> enabled by global "local" migration parameters. But individual
+>>>> devices may have additional options to enable/disable it
+>>>> per device.
+>>>>
+>>>> The tricky thing, is that we need to know, should we do
+>>>
+>>> Do you mean "The tricky thing is that we ween to know whether to call"?
+>>
+>> yes
+>>
+>>>
+>>>> call open/connect in TAP initialization code. That means,
+>>>> that on incoming migration we want to know status of
+>>>> "local" migration parameter at time of creating TAP device.
+>>>> So, currently, for incoming local migration only TAP device
+>>>> created through QMP is supported, as you need to set migration
+>>>> parameter first (through QMP as well).
 > 
-> and we need to take any pending signal before we do the blocking
-> operation, not afterwards.
+> Possibly clearer:
 > 
-> The use in sparc64_set_context() doesn't do this.  It doesn't have to
-> because the operations it is doing aren't blocking, so it won't get
-> into "we didn't take the signal that we should have" races that
-> blocking syscalls do.  But it does make this way of updating the
-> signal mask inconsistent with how we do it in do_sigprocmask().
-> do_sigprocmask() does the usual "return -QEMU_ERESTARTSYS", so a
-> pending signal that was not blocked by the old signal mask and which
-> will be blocked by the new mask we're about to install will be taken
-> before we change the mask.  sparc64_set_context() doesn't check the
-> return value, so we won't take that pending signal.  That's not
-> wrong, because it just means the signal lost the race with the
-> executing code.  But it seems clearer to behave the same way as
-> do_sigprocmask(), not differently.
+>      The tricky thing is that we need to know whether to call open/connect
+>      in TAP initialization code, i.e. we need to know the value of
+>      migration parameter "local" when creating the TAP device.  For
+>      incoming migration, we can know only for TAP devices created with QMP
+>      after setting the migration parameter with QMP.
 > 
-> Make sparc64_set_context() check the return value of block_signals()
-> and return early if there's a pending signal to take.  We don't need
-> to return a separate return code to indicate this because the main
-> loop handles it the same either way.
+>>>>
+>>>> So the full picture is:
+>>>>
+>>>> On source, to start outgoing "local" migration you need:
+>>>>
+>>>>    - migration parameter "local" set to true
+>>>>    - "local-migration-supported" TAP option set to true (the
+>>>>      default, starting from 11.2 QEMU Machine Types)
+>>>>
+>>>> If at least one of these options is not set, TAP backend
+>>>> doesn't participate in migration.
+>>>>
+>>>> On target, things are more difficult:
+>>>>
+>>>> Same, you need both "local" and "local-migration-supported"
+>>>> be set. And same, if one of them is not set, TAP backend
+>>>> is initialized as usual, and doesn't accept any incoming
+>>>> state.
+>>>>
+>>>> Additionally, if you are going to set "local", it must be
+>>>> set before creating the TAP device. If TAP device created
+>>>> with "local" unset, it initializes as usual. If you enable
+>>>> "local" after it and start incoming migration, it will fail
+>>>> in .pre_load handler of TAP backend.
+>>>
+>>> Out of curiosity, how would such a failure look like?
+>>
+>> TAP is initialized as usual, so the answer depends on the options.
+>>
+>> For incoming migration we should open TAP without "ifname" argument.
+>> If so (and "local" is not set), new TAP device will be created. It
+>> shouldn't trigger any additional problems I think.
+>>
+>>
+>> Checking with test:
+>>
+>>     diff --git a/tests/functional/x86_64/test_tap_migration.py b/tests/functional/x86_64/test_tap_migration.py
+>>     index bcc0a60dfe9..94982bc7b55 100755
+>>     --- a/tests/functional/x86_64/test_tap_migration.py
+>>     +++ b/tests/functional/x86_64/test_tap_migration.py
+>>     @@ -316,8 +316,8 @@ def prepare_and_launch_vm(
+>>              else:
+>>                  tap_name = TAP_ID
+>>
+>>     -        self.set_migration_capabilities(vm, local)
+>>              self.add_virtio_net(vm, vhost, tap_name, local, incoming)
+>>     +        self.set_migration_capabilities(vm, local)
+>>
+>>          def add_virtio_net(
+>>              self, vm, vhost: bool, tap_name: str, local: bool, incoming: bool
+>>
+>>
+>> Leads to
+>>
+>> qemu-system-x86_64: TAP is already initialized and cannot receive incoming fd
+>> qemu-system-x86_64: warning: qemu_fclose: received fd 27 was never claimed
+>> qemu-system-x86_64: load of migration failed: Invalid argument: error while loading state for instance 0x0 of device 'netdev.1/0/net-tap': pre load hook failed for: 'net-tap', version_id: 0, minimum version_id: 0, ret: -22
+>>
+>> on target, and failed migration, as expected.
 > 
-> Coverity CID: 1660058
-> Fixes: e0f0ce88eb9 ("linux-user/sparc: call block_signals() before set_sigmask() in setcontext")
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
-> I thought about just adding a comment about why we're OK to ignore
-> the return value, but eventually decided that consistency with how
-> other parts of the linux-user code handle setting the signal mask
-> was better. This was originally flagged up by Coverity, not by any
-> actual observed problem.
-> 
-> Disclaimer: checked the original repro test case that prompted
-> e0f0ce88eb9, and ran 'make check-tcg', but no other testing.
-> 
-> ---
->   linux-user/sparc/cpu_loop.c | 10 ++++++++++
->   linux-user/sparc/signal.c   | 30 +++++++++++++++++++++---------
->   2 files changed, 31 insertions(+), 9 deletions(-)
+> How is the user supposed to reason their way from here to "oh, I need to
+> create my TAP device with QMP and after setting @local"?
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Not trivial, yes.
 
-r~
+I can update error message to
+
+    TAP is already initialized and cannot receive incoming fd. For local migration, "local" migration parameter must be set _before_ creating TAP device.
+
+> 
+>>
+>>>
+>>>> Moreover, there are interface restrictions: if you create TAP
+>>>> device when QEMU is in INCOMING state, and both "local"
+>>>> and "local-migration-supported" set, most of TAP options are
+>>>> not allowed, and script/downscript are required to be explicitly
+>>>> unset (set to "" or "no").
+>>>>
+>>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> 
+> [...]
+> 
+
+
+-- 
+Best regards,
+Vladimir
 
