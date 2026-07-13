@@ -4,97 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7E89C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 09:43:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32AF7C44501
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 09:45:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjDCR-0000O1-Ox; Mon, 13 Jul 2026 05:43:43 -0400
+	id 1wjDEH-0001KW-Tq; Mon, 13 Jul 2026 05:45:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjDCL-0000Lx-GZ
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 05:43:37 -0400
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
+ id 1wjDEF-0001KD-QG
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 05:45:36 -0400
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjDCK-000396-1J
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 05:43:37 -0400
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-664ce3000e6so2831762d50.0
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 02:43:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783935815; cv=none;
+ id 1wjDEE-0003RC-2Z
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 05:45:35 -0400
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-667f29dc8a4so594284d50.3
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 02:45:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783935932; cv=none;
  d=google.com; s=arc-20260327;
- b=nzn9SDKwoQmx9eEkskFdh4A4PCFuqbkbVPz0ZYx9ryLNJ7KdanONUwsQKvCHOk5CN7
- DJ5vKH0Aiv0l1Mf3bxbz1HjbDASsPQw6vGmIlFDXYzlwvt7UTHkPQzGVbzWoLdwH4WTt
- iQXfkt2x2T78ZBVdRtCuKJvhyUzt7q0IjhGPhkh5xZZs+Ne3lmV7UYU4W0bNJSNknzMI
- r46Dr0v2aVnx18DxL/8O0IquNYwwRyqbEo7RGRPnieWNBSq9cyffEe4Vbmt4ATHPIzWK
- 2TfAw0Ag78lolrvB4lKPaOtLaqe1eK16T43YvNtybUrd+E+Qf+9jf4ZYafr34gW3AMlZ
- w66g==
+ b=H8vg0y9pBEbWQY9M+TLqeTBEHkjL6XDf272bhnIuxjaYTU6AAtNX9kytE8zh2Vso7V
+ hinUB4KGhwbLmyRrVrJy3ldmjWl6gxmzV676v6+gRrkF3gW+se5DGpAa9xGsobldF/Qy
+ y33EJ10kEU30Skg63XnZN1Fb3vuNpVNLnnBou/iuYTWojqeNDySu0/d0FgdYoI24sPEB
+ ur+oUTAw8isOB95PU9wVMyMbDGsT3haBKHfcxFFMbHQbcDq3J5+xIw0BjAhM4BQ4p4JF
+ Da5t06Do6Ni0IZLVJCCtQT8VjoFcyFKH6XnvdpD3g/wU5nWxOo2DxKXc9MgJdMYEmN9a
+ 7iUg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=vFtGvgLS19/Qe5KFs3oSzMCJS2MF91MVGVg+0hALwyE=;
- fh=56a+Y8tG+YxKAFxOna2v4CZJWV92x/DWXGaEICSsUpg=;
- b=ju4/gpk8e2TunjcXeHRhc0U0DvTAohrRPamLFb52A282D7ROf+zuVB3Vo+L5qfs4UQ
- Rn1+8GsWfWrpmwHPyHCW5FQ2JqA1JQptK87kAGVza3bmckvB2MmqPmYSDZJVM0RHg81/
- dnPlaqTqOAol3sNvWZOl1ke3PJBGcPFoPzzbZ5vminfalqhUUV18sYvloi5YCii/Sx1g
- 0JdvTpGkhFeeoPGcszlIzEszW/FLK9WCQv9FgwQHZpzNWOIl/zmfJTrdGq3tQAY6kezC
- xQFidqCNDyf37yuAFOCuB9OURVqe/+PL1jjufRHSnXIpt7xHA/uwq+5UG+c4rPtwDVaR
- l9Fw==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=JthaUCckQgCMr9uXBaUB+OpK2U9tcXLXBYXNR6iKG0k=;
+ fh=bMrxbIIdcP3dNETLFknNoaH4segOK4xPdkiRZAq3Dng=;
+ b=UceJtBOyGEphKEYmMVGRqIq6lNoEVeA19JS4snhLGnJLjJIUvpACLgltEMWiU6VCbR
+ Ls6or5pjmeCYgfQD6Y27jz92WQ/s5lrnNHXQOpNLIE0WSbkHpz4r+TkjsZu+8L/KhhSK
+ JgQpMVhxMIFtfXQh9BQz4+RiHv58Rl4OL0MNaWF2aPrnMBg/tw3yFustC9ZvFmhJd7lL
+ 3Wmc/yu5hoiOTyuZLWZDqBnIYexi7mzxxublQz+9erZUx/zC6nv5IxPnlbbi9GOsJxXH
+ yL9ia+D20MreLJYsf6LdwEKvAy32OniW9akl9Up4qVyobtMr0eKZjOalMeExKdojy/46
+ efCA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783935815; x=1784540615; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=vFtGvgLS19/Qe5KFs3oSzMCJS2MF91MVGVg+0hALwyE=;
- b=GtoSWhnDtooJ1lt4RpPj9pVKR+XpJAuhxpm/LTw2MdCpcqfvv7kMPTVcuuhGgO8vN1
- +P+2llBeggjfBet1zAfp0pYXaAYIAE3r4BT/9PR1lL6qbvzylIxdwxqX57JVpiT7Oqt0
- vraq2mSY9BJnolkKGb63CTuCc1muH44ygIEgpCw/NgFyuVRIzcXI3PR+3nczWIXnEfve
- AXlREJZVWrxSHuMRpa4YEbx2Ch6lnxYuaDyUiPmEulld4qukSd3RXBs2z4t3wsb6ziWA
- bbdkb/WUy3fCtPOhY362DaRU2HAm8+Jjuvjm/pZ72uENgqnFJZ6PLMMW3pfKJookZ5rC
- MxUw==
+ d=linaro.org; s=google; t=1783935932; x=1784540732; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=JthaUCckQgCMr9uXBaUB+OpK2U9tcXLXBYXNR6iKG0k=;
+ b=g0kJjjfq68zLlx8iLToSJ56Oth7b+9/u8A0nxC9GeHvapwBkTvSaMrpyiPsyBuOxwo
+ TolwZtCqa6U3XD2H/qtvNgAqn3ehHNjRh/+61U0y9IZxMfxGhTzep2D9ugrgD50TtIg2
+ /HdAdedtWEzYKHp02vj4pBZazMzVgalwimiM6yzwlGzLID+jZ7ztZdpzwORLjiE754mN
+ ufh8Y1Usj4SmMGpvsNM907tV5aw8dUMfJqksTRscU8SPBI25aQxUlS0xlrfG7UBVC/ma
+ 2ByM02/j3cXzWiR+yPnxdclSlW5EyJGZkFLNxxvQ1mDTicifMqYgroU1CT0mS8Ifip7I
+ nNeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783935815; x=1784540615;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=vFtGvgLS19/Qe5KFs3oSzMCJS2MF91MVGVg+0hALwyE=;
- b=Ik+i7jbmSQ7bnC9P/MM0YfPcxj25+JFq/vEp4bt3orTemntpGUhuWXIDWq3BGqxqEa
- Y2Vq0e2bYjioi8zGLXcOs3W/V+oT+mv5zBtEAdE9IciOgkttFexFYRpSlP5uZXZqTagc
- wdMAdqAG4VL6F5uxg8DHeDnHajU/IDi+y2UjbWXepxx8aSq6+a9LEQpthNBF31lUqiuv
- Q4Cbn1Bq02/WwFskP6DMC8pKVngB4DqLTuYNdaN5lJrSk7cf30DYdAHB6zuTqoV8DjFo
- mFrEgnRPw7n8ACZSWWPw9iZWEq0Gn7dTh/e77LfHrqZW3/6NQYYVAU+2xO1SMNSnplC2
- zXww==
-X-Gm-Message-State: AOJu0YxzRR5E3btSw6MsdITlhMXKnhZtdU5KCUuoPucCqpAMKTrBKgeB
- SSOiYr8iFx4j93VJTkuBJ+k68vdzqYMcgpECoKQ47tNJvy/4LjVpBVGSnKnewduF6AN3vpn722v
- yGmXdOU0L2Ozew7N0iyvtbKN/ZULBY6CF3YZso4HCpg==
-X-Gm-Gg: AfdE7cmk9Ib8MVq1aHRBXM4INXEE+O6/2sk1rRmceGWMmsdx3BLBIjFGUYHdIUMqGWD
- MyGpWIHAtnadLUAi74FK9cppfAsHDU0uo9B33jxBvMT8PUmtQq9mMn8rwYfN+4gtjsZIQZAIOWE
- 0JClRkW4icRFes3Rgze3FsId01p0+fnPc8hJ2wjHnzPi/xYmT/bBhzemjJO9nvGID2tesDY7hle
- PqReHa9Ce/qw+6H+C628TR0zD7yZF38rY0rkVaHTfPOAiaxgNm5YFAWOxHy2ZEhSqDffBvTdEaR
- 7kroMM/QOFTSxz9dTDaImQCvLs23shN09oj7Oa/8ihLH7cn/x642Mixc
-X-Received: by 2002:a53:be45:0:b0:667:8b91:242d with SMTP id
- 956f58d0204a3-667d7c71ce3mr3825488d50.92.1783935814566; Mon, 13 Jul 2026
- 02:43:34 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783935932; x=1784540732;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=JthaUCckQgCMr9uXBaUB+OpK2U9tcXLXBYXNR6iKG0k=;
+ b=Z0/yCFuyoyMa885InPJ0+MGbAq9uBPVVzeGE747PUtf5zVv3mB+5+EwafHHhM876Ul
+ Qzik70Zj+CsPOmH6r3om3Dz+FliOMZz3gVpoSWEssC+o/NqZTRqOrg5a80ztBU7+nxen
+ VXjYfurx7QuTIQkAJKNpCwtd6gw1uq0XNgjedLv87ZXqGJUaUah7wVCCYU4RfJ1PyRdP
+ Yd1V2BXrmxzlUw2+iDMxnZUH9wssOSjAdyqPEj0s1XxR2+KEDo8OBaRnNCCYcQ+RLgN4
+ /GvkKiQoJNjUXtwLHCQzG2DcdQ+bB2Lp9wLapn1fnWsOOfMLOOaftZtaxsfP57m91xrm
+ V+Ig==
+X-Gm-Message-State: AOJu0YzpZj7mAMLVXj60LUTscLpkRPYuqmRaB6ZgG5EfRAX+GN5HNfv8
+ 0QPnnGseM6gplDsjpDnOErZi6R/7upbNS6pxG+dkJiQtkYTwWyLITUZhu0YBq3rZf83VfCFDoA8
+ EtAzTiu/VKHvzKcVl52RxdmGXniRERNVMyY8ELhfqqv1uIfi72xeJ
+X-Gm-Gg: AfdE7clP6TuPlDSE0+cFwFyrrmDHcdPb+EdT3j6qwtd4GJU1ct1rreOLKG6raoyk5h4
+ v3RRn9/N9ur33jrKv2efrz6YPeTXtDaGOz9pzRvIZ+9Hy7asBVTsApnp7n69Ux8aFmtHbYUrjwi
+ iNJXplm4Dv9l26JL3AhEm7G67YwMNnVjDU8pGQmXoOhpux+X+VHwuBRA2pLTvX2iBr88UCFiqRv
+ 6rYQsVLZWXYnyDxpKgLole0Oddf8dIRin9w8h64+Mbmc7OftQJJ6iwG/AaHxwcZW8SGXRGiNpf+
+ oVA98w+CV5vvSGYXgsclZNDRwzZkH9pOGVNZkxGwiz9ovFKj2MLVFgQr
+X-Received: by 2002:a05:690e:11c3:b0:667:f9ed:9766 with SMTP id
+ 956f58d0204a3-667f9ed9dadmr720360d50.108.1783935932447; Mon, 13 Jul 2026
+ 02:45:32 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260706182034.1003176-1-peter.maydell@linaro.org>
- <aaee2b54-01df-48ca-9c83-796069767ca1@oss.qualcomm.com>
-In-Reply-To: <aaee2b54-01df-48ca-9c83-796069767ca1@oss.qualcomm.com>
+References: <20260707150933.1410507-1-peter.maydell@linaro.org>
+ <dd2048ff-9521-7f3d-313d-be2b2ff9c278@eik.bme.hu>
+ <CAFEAcA83Un_7=YLHXgwUfK=kyW4LP0dptDAWZRHadsOydN8vrA@mail.gmail.com>
+In-Reply-To: <CAFEAcA83Un_7=YLHXgwUfK=kyW4LP0dptDAWZRHadsOydN8vrA@mail.gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 13 Jul 2026 10:43:23 +0100
-X-Gm-Features: AVVi8Cdc8GKMtE2UbOqKqqkunpyrDtbyCGU_dUMflwp0uhY_StmvAu23cR9JVeg
-Message-ID: <CAFEAcA_7m47nAAENT7c0bPHt+YBi-cWFXD1L7buV0YqqyXjndQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/usb/dev-wacom: Don't write off end of buffer
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Date: Mon, 13 Jul 2026 10:45:20 +0100
+X-Gm-Features: AVVi8CfLE8s6_CPGxX-toUKovYMhgPmR6kjg01vBL2l255YrmQtAx8IkZOEEPL0
+Message-ID: <CAFEAcA9HWn7VkhyV4PuuRJ=zon8qazObAfVtTpu-paYPzJnfoA@mail.gmail.com>
+Subject: Re: [PATCH 0/3] hw/display/sm501: Fix various error-checks
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,45 +115,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 6 Jul 2026 at 21:43, Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
+On Fri, 10 Jul 2026 at 09:56, Peter Maydell <peter.maydell@linaro.org> wrote:
 >
-> On 6/7/26 20:20, Peter Maydell wrote:
-> > In usb_wacom_handle_data() we allocate a buffer with a size
-> > determined by the transfer size requested by the guest.  We then fill
-> > it in by calling either usb_mouse_poll() or usb_wacom_poll(), both of
-> > which functions take a length and return an actual length, which we
-> > pass to usb_packet_copy().  However, usb_mouse_poll() doesn't check
-> > the buffer size as it fills in the buffer, so if the guest passes an
-> > overly short transfer size then it will write off the end of the
-> > allocated buffer.
+> On Thu, 9 Jul 2026 at 21:35, BALATON Zoltan <balaton@eik.bme.hu> wrote:
 > >
-> > Check the length is at least big enough for the minimum 3 byte
-> > packet and return nothing if it is not, as usb_wacom_poll() does.
+> > On Tue, 7 Jul 2026, Peter Maydell wrote:
+> > > This set of patches fixes three bugs discovered recently in the sm501
+> > > device. They're all of the form "guest can misprogram registers in a
+> > > way that defeats the bounds-checks on the 2D graphics ops".
+> > >
+> > > thanks
+> > > -- PMM
+> > >
+> > > Peter Maydell (3):
+> > >  hw/display/sm501: Catch bad coordinates for RTL operations
+> > >  hw/display/sm501: Avoid overflow problems in bounds check calculations
+> > >  hw/display/sm501: Don't allow guest to set ram size larger than it is
+> > >
+> > > hw/display/sm501.c | 64 +++++++++++++++++++++++++++++++++++++++-------
+> > > 1 file changed, 55 insertions(+), 9 deletions(-)
 > >
-> > Cc: qemu-stable@nongnu.org
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3672
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> >   hw/usb/dev-wacom.c | 4 ++++
-> >   1 file changed, 4 insertions(+)
+> > Thank you for fixing these.
 > >
-> > diff --git a/hw/usb/dev-wacom.c b/hw/usb/dev-wacom.c
-> > index c69e247f7b..895edcc17e 100644
-> > --- a/hw/usb/dev-wacom.c
-> > +++ b/hw/usb/dev-wacom.c
-> > @@ -285,6 +285,10 @@ static int usb_mouse_poll(USBWacomState *s, uint8_=
-t *buf, int len)
-> >           b |=3D 0x04;
-> >       }
+> > Series:
+> > Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
+> > Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
 > >
-> > +    if (len < 3) {
+> > I think patch 2 should have:
+> > "Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3584" instead
+> > of work_items/3920.
 >
-> Maybe log GUEST_ERROR? Anyway:
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+> Yes, thanks for that catch and for the testing; I cut and pasted
+> the wrong URL there.
 
-Thanks; I'll take this via target-arm.next as I'm putting
-together a pullreq anyway.
+As I'm putting together a target-arm pullreq, I'll take these
+patches through that, unless somebody from the ppc side would
+prefer to take them via another route.
 
 -- PMM
 
