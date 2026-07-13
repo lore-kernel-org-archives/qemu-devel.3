@@ -4,101 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C56E9C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 09:13:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6F48C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 09:20:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjCjO-0003oA-Sp; Mon, 13 Jul 2026 05:13:42 -0400
+	id 1wjCph-0004qY-AJ; Mon, 13 Jul 2026 05:20:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjCjM-0003o1-9Z
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 05:13:41 -0400
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
+ id 1wjCpd-0004n3-Dx
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 05:20:10 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjCjJ-0007rS-Ui
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 05:13:40 -0400
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-664d78637f8so5205129d50.3
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 02:13:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783934015; cv=none;
- d=google.com; s=arc-20260327;
- b=dV81a2TF8sG4qXVbppr1lJPYFJlXbZWicJDt8uPwH06IrbkzsZDa8w8STOu3hKPhA2
- TbMSqUtq7jKX3VNVk6qthQDgVwbTMz1LGGxUSoCdgj7PytJfoBADskNjbZ09H7/Hb210
- +fgbcYkWzQIM1cHs2UUFFLIASIOAJlbByEarNC8c/p/3qi1Ls6tTboHdgO0w+UIWChex
- zcnZdDGNBMQgkqqkXrapXUIDXUs39tQG5k4x1a9RxSrJzC8AOBAv5giMqRbvxOYZWgyd
- ficLSHoQIhtUp/2u+0M9+clbENl8B0CDTzPsVlSvLjyYvpvl50/yNVG4nYcw6hwv1rL0
- ePow==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=gPtkeW5vH3sEM2hInBuwK3qacB4iKnDBmzk3NN8u+Po=;
- fh=T1/5tW/0AFabgXjVfN1oQcjrKFuFlu2yKSj7FNrdTus=;
- b=rgxkc9rjbS+is1gtuQiUwUPo+Cwx3N6vpCmnJ4ul00meAwlnq1lDb/BHZlZCpvPoS2
- 8byCP4zxZ0ZN7fDWhAd4vEMkYd/xSnug0pRj8LmRfwN6RMfYDdjt81UuPcMLB+5mJpTm
- OjRiC3NC6LBG81WTwhDe0LvWq775Anro01jskzdte9YA2QxN8MtVasYuNY+/j6i90+pX
- UBrWfXsKI3weAAYdz0cSy1VqzEDV/7mnQx4iaS3wIgigSQQ6kp82PLvsmWmf1m1rW6Wk
- /A537fEEDdESC/97R1PkKvMPRsbPcsVq8QeRv+R5hc4ie/VVlevXyOtY113o2vsSSJXJ
- qdFg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
+ id 1wjCpb-0000Bh-Bl
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 05:20:08 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2c7c61b5292so47705805ad.0
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 02:20:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783934015; x=1784538815; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=gPtkeW5vH3sEM2hInBuwK3qacB4iKnDBmzk3NN8u+Po=;
- b=KLEGhmzVPFEYLrqWQt2IAXJUF0/tk6qkJRDgjVQW3Krp14uqGW46MRh8fTGelAW9E/
- tPg4Yg+W34A/x/CuJuGZmeGqvpZ5XbsfdGtgHgrX7klyD9lUiJAJMb/17bSlPf7zamRZ
- /8qPBYjeYsFdm5XdKo/7oeEC2XkSGVPfPFM3eKfYIhlLJJQV7olxoGXTooQjyQQf+Ibj
- V/W+ZlEaGn2ev3yyVUfbaiRv7yIMwB7VNOyYqDM/+uj1Nw+AI13ICHfc7qirTh1LCXPc
- HKo/z1+TpK35vQVWNT8yoL9m9t784tBbzEguc97SX2kiPHltw51Ukc+wya4kGwyKaYD3
- 8xiw==
+ d=gmail.com; s=20251104; t=1783934405; x=1784539205; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=szpUosI0Ux6fAvyTNgtgdyDheXrY/JuC0PaiDomHClU=;
+ b=cPt2PkrXHUa540UZk5gCMkFe/MpOiQGZEGB8Poq98MyLOcDPe0gBAqWD9g4QBht6U+
+ 46DgasmDR7QvNtdpdKPjgVLxmQ9FeDWUfDgR1zXpBzV64u+E62Kz7xjFZ6zBYYuJcxEi
+ MhV1rhb1oFgDGFOKlSM8LxzvFNBP5yhgB5YjnI/zcU0ubyZFLZ+06QLDwSvgM8f0J1SZ
+ zlH7bfbkDcwHkbOO4qmJpmfBlrIRfqTHydr6nAV863ZAft+JwDChK2odkL541D862fV5
+ 4K3biE6u83W2V+9JTitW8DwuaFQFwVPGFMPjHER5TDsemq5J5+pR2o7MFBLZ+VVHVF/i
+ y9Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783934015; x=1784538815;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=gPtkeW5vH3sEM2hInBuwK3qacB4iKnDBmzk3NN8u+Po=;
- b=Yunj/ft/n2pWFWIy7joiaKjJ/v8EmPpFcje4HcNPtaYG7KWO8EkgxvXDgtXdz5lpqd
- KMQs0PDrxsIbFohvMRKWlnDe9VEn1MdTIBvgE+mMpaFuFvnSFHdEhBk3kKaCcMbu3x7Z
- BRBOzM+Cz70eiyBU09YmFRym8ZYxkBxf/Zt6aLr2NRF8qqdBxZSPxVwIzXpueFS1TFRO
- D/Nx9qpsPwQnVXsthel8a+C2RKtGMeJf9srhe5xS4wpDckqSwvnXFqYuJOeA83hvxXyM
- ruvUjSmigX31lFVaVnjXmV+HllF/fMPGX7eU9g4y6DbtRf8Yzi4ely4c7PioZWTMBXJx
- MBYQ==
-X-Gm-Message-State: AOJu0YyHVQ5t4UalU6BmtzbJX0HFFWxv5rF9zMwD4mmQmLThfxyKXvgA
- D6udi1OobezIExpzG2NX0RzdW2yH9h5vzta7ekxMX5Qt21yINizlSiZD/jBP769H5kkU1BzrZce
- 7lIj3KYzuJ7ACxtEPSPMDobLGIVhYBH7YTdOwlOmtNQ==
-X-Gm-Gg: AfdE7ckg82SZ+rNGorkASWhX2X/o3kbZ+Mr4whrwl3Xjb5c1NK/tZP2x/gR3EQBAVee
- ckbPf3RXgac9we7HrkStpZzgpw8u8usKy0L5W8aSj/mYI3vWtfda7GEUD/m6Vo7TuVzOy7gn2Kh
- QkyLlRH8tnD6VMACd7F9w1cZHuHG+m9gRuIGbOvmdRIXgaygSCUNnWbDIbc0KR51kTCaihAMDpt
- ycHsiry4vkPDJ01c1XL5oKNjGgRAXRCI0+MnYmNCfRcR/JH6dlXFApRyTa6ZDBXe5Sj3j4a8D67
- indHrtk9S/XqzJM/UbBRjKyFBHh+M2VZX9LS6aecQC0RzXFFllq69EBU
-X-Received: by 2002:a53:db43:0:b0:667:aec2:a905 with SMTP id
- 956f58d0204a3-667d7c46a21mr4547877d50.53.1783934014710; Mon, 13 Jul 2026
- 02:13:34 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783934405; x=1784539205;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=szpUosI0Ux6fAvyTNgtgdyDheXrY/JuC0PaiDomHClU=;
+ b=Iir2PLd8E93L2OVjfrjSEFzHdu8TfHvUXPbfSjlFvehlZlJZTriGPxHfD8vrAUZvjW
+ 6Vg8DWlCopw5hGjEHrv5CLNU1maSh6Zpj8VEQ8d5I2w76WnWGlU2e31WmWqCV9SCQMkn
+ FvcgSpTBYz7fGcxZgTcMzohGIFKCmEuHYQq+MOYb1f3haAbt5Dh9h0YypSnr+wd81ka5
+ ickjEUcEP0dEq9tgvhYWubNrYP2b7dTEqEBsipf5J+GIqBUH/ib3C+U2inXYDOHkVtmx
+ oEdudOLxnb5VZJIbeCqZlu2C6VJMdVxPoPqM91T8++aMpa8+VrULeifKj240yCPmSjgg
+ oSBg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqaItzjc66j7uAkbew61BbndOrMB+Q/KPJJWHWAGqlqh2ZkgUgLixCqQzNUjGsyxYY+1bOq5bXWa70G@nongnu.org
+X-Gm-Message-State: AOJu0YztMfyZM4G3ehBIiMUCbIi37Ohc0X86geZlJKkHsnlrh9zcdzUu
+ M5rNsWnI22zLH8wzh634MCh2A5tmtHXwsDhz7aif+OZRzE+VqsBZ4ntx
+X-Gm-Gg: AfdE7cnfO1vMWpPpW8P7ZbjlFXZ0OyqDi/Hcfq9ugOZskca1E758WRM1NvrnOUGtr8S
+ vBMkPy/YxjXu94rAB8ac6XopzcLrBei2x1wIPKB8igNxOSbuv66JUR96T7qXjk2BsuluAIjUGpn
+ TJMrmLkvrS1j7rxcCHw9+Ja0uLLxU+VI8YNbUyGsoSPo2UiPQmbEzWyCDiqR5+eJ4V4tXAnOlDh
+ PjmKl1VbwcNSFB9SOzeuMH2o4Me5R/uuQRCEDzZrgmi3m6tIi6PVFp3rrO2k1+IsGpVMzuJXPjf
+ i1Pm0AvpFlOeqdNe9pDzH/+00kYbNu6h6SqtVtw6jhW9qwEq3ZtNIYxbWaptI5KUieiybrEBKPG
+ HFfjJox5YZRtowWd7Xxr4t6nUhdi15zWHsedeXxheVEPzCcdeclRyA4qpS1L/PExsOanOTUaFOt
+ w7VDlf3HIwZTU6LunSQSngQIuQHzpOWOXh6ISa4z4k
+X-Received: by 2002:a17:903:32ce:b0:2c0:b6c7:2271 with SMTP id
+ d9443c01a7336-2ce9e59ec18mr84764445ad.4.1783934404679; 
+ Mon, 13 Jul 2026 02:20:04 -0700 (PDT)
+Received: from LAPTOP-CS7CB8K1.localdomain
+ ([2409:8900:98e:d38:2ced:eaa8:9646:31a3])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ccc9d3bc1fsm96021445ad.55.2026.07.13.02.20.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 13 Jul 2026 02:20:04 -0700 (PDT)
+From: Kangjie Huang <flamboyant.h.01@gmail.com>
+To: Alistair Francis <alistair.francis@wdc.com>
+Cc: Chao Liu <chao.liu@processmission.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>
+Subject: Re: [PATCH RFC 1/1] hw/riscv/k230: add IOMUX register block model
+Date: Mon, 13 Jul 2026 17:19:04 +0800
+Message-ID: <20260713091904.719480-1-flamboyant.h.01@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <4f853faa294e5005fe38b5f0a28a62032ac4f8d9.camel@wdc.com>
+References: <4f853faa294e5005fe38b5f0a28a62032ac4f8d9.camel@wdc.com>
 MIME-Version: 1.0
-References: <20260629-qdev-v2-1-8cd1d9be0d8d@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260629-qdev-v2-1-8cd1d9be0d8d@rsg.ci.i.u-tokyo.ac.jp>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 13 Jul 2026 10:13:23 +0100
-X-Gm-Features: AVVi8CcnwcVSkGLUcvfhNiWsJnoti3TzV_Q3YizNrYwBQb5oXjquP7Hcemz2Tz8
-Message-ID: <CAFEAcA9QJCfeBTi4GdatY0Ci7no8BQETxHd7i6TtJ7SFxEtjjA@mail.gmail.com>
-Subject: Re: [PATCH v2] qdev: Clarify instantiation and realization
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, BALATON Zoltan <balaton@eik.bme.hu>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=flamboyant.h.01@gmail.com; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -116,118 +110,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 29 Jun 2026 at 09:18, Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->
-> The distinction of instantiation and realization was vague in the old
-> documentation so this change clarifies it.
->
-> The old documentation said:
-> > The former may not fail (and must not abort or exit, since it is
-> > called during device introspection already), and the latter may return
-> > error information to the caller and must be re-entrant.
-> > Trivial field initializations should go into #TypeInfo.instance_init.
-> > Operations depending on @props static properties should go into
-> > @realize.
->
-> The first problem with the old documentation is that it is unclear what
-> "trivial field initializations" means and why triviality makes
-> initialization appropriate for #TypeInfo.instance_init. Another problem
-> is that the documentation is not comprehensive enough; for example, it
-> mentions @props static properties, but it does not say anything about
-> the other properties.
->
-> The keys to distinguish instantiation and realization are property
-> setting and device introspection. The fact that property setting happens
-> after #TypeInfo.instance_init and before realization implies that
-> operations depending on properties should go into @realize.
->
-> The fact that instantiation happens during device introspection but
-> realization does not implies:
-> - Instance properties should be added in #TypeInfo.instance_init.
-> - Instantiation must not have any side effect not contained in the
->   instance.
-> - Any operations without special requirements should go into @realize so
->   that they can be skipped during device introspection.
->
-> Note these two facts to guide appropriate instantiation and realization.
+Hi Alistair and Chao,
 
-Thanks for sending this. I think we definitely need to try to be
-clearer about what to do in instance_init and what to do in realize.
+Thank you both very much for the reviews and references.
 
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+I will split v2 into three patches: one adding the IOMUX device model,
+one wiring it into the K230 SoC, and one adding the qtest coverage.
 
->   * Realization
->   * -----------
->   *
-> - * Devices are constructed in two stages:
-> - *
-> - * 1) object instantiation via object_initialize() and
-> - * 2) device realization via the #DeviceState.realized property
-> - *
-> - * The former may not fail (and must not abort or exit, since it is called
-> - * during device introspection already), and the latter may return error
-> - * information to the caller and must be re-entrant.
-> - * Trivial field initializations should go into #TypeInfo.instance_init.
-> - * Operations depending on @props static properties should go into @realize.
-> + * Devices are constructed in the following order:
-> + *
-> + * 1) #TypeInfo.instance_init
-> + * 2) pre-realize property value setting
-> + * 3) device realization via the #DeviceState.realized property
-> + *
-> + * #TypeInfo.instance_init may not fail, and realization may return
-> + * error information to the caller and must be re-entrant.
+I will also remove the explicit offset, size, and alignment checks from
+the read and write callbacks, since the MemoryRegion size and
+MemoryRegionOps access constraints already enforce the valid MMIO range
+and aligned 32-bit accesses.
 
-I know this is in the existing text, but what do we mean by
-"must be re-entrant" here ? Does this mean "even if you return
-a failure from your realize method you must be able to handle the
-caller retrying the realize operation" ?  (I'm not sure why that's
-a useful thing for the caller to be able to do...)
+For the currently modeled and tested use cases, the device only needs
+register-backed storage. The SDK U-Boot pinctrl-single driver and the
+SDK Linux IOMUX-related code paths I checked use 32-bit
+read-modify-write accesses and require the configuration values to be
+retained.
 
-I assume we don't mean "even if you successfully realize you must
-handle (and treat as a no-op) a second call to realize", because
-none of our devices do that :-)
+On real hardware, writing these registers changes the pin function and
+electrical configuration. However, the current K230 machine does not
+model physical pin routing or electrical characteristics, and I have
+not found any additional register side effects required by the U-Boot
+or Linux code paths I tested.
 
-> + * #TypeInfo.instance_init should add instance properties but must not
-> + * have any side effect not contained in the instance, since it happens
-> + * during device introspection already. Any operations without special
-> + * requirements should go @realize so that they can be skipped during
-> + * device introspection.
->   * After successful realization, setting static properties will fail.
->   *
->   * As an interim step, the #DeviceState.realized property can also be
-> @@ -40,9 +43,8 @@
->   * point in time will be deferred to machine creation, so that values
->   * set in @realize will not be introspectable beforehand. Therefore
->   * devices must not create children during @realize; they should
-> - * initialize them via object_initialize() in their own
-> - * #TypeInfo.instance_init and forward the realization events
-> - * appropriately.
-> + * initialize them via #TypeInfo.instance_init and forward the
-> + * realization events appropriately.
+I will update v2 to follow the documented bit-level access permissions:
+bit 31 (DI) is read-only, bits 30 through 14 are read-only reserved bits,
+and bits 13 through 0 are read-write configuration fields. Guest writes
+will use a 0x00003fff writable mask, so they cannot modify bit 31 or the
+reserved bits. I will also add qtests covering writable fields,
+read-only fields, reserved bits, and normal read-modify-write accesses.
 
-This change doesn't seem to me to match the paragraph it's in.
-The intent of the paragraph is clearly "initialize child objects in
-your own instance_init method", so we want to say "in" the method.
-"via" here is for "how you do it"; we could make that say
-"initialize them (e.g. by calling object_initialize())" to be
-a bit clearer, something like:
+The SoC memory map reserves a 0x800-byte window for the Main IOMUX, but
+the documentation defines only 64 pin registers at offsets 0x00 through
+0xfc. I will model only these documented registers in v2 and leave
+offsets 0x100 through 0x7ff reserved/unimplemented.
 
-"Therefore
-devices must not create children during @realize; they should
-initialize them (e.g. by calling object_initialize_child()) in their
-own #TypeInfo.instance_init method, and then realize them (e.g. by
-calling qdev_realize()) in their own #DeviceClass.realize method."
+I will include these changes in v2.
 
-This whole paragraph is one of those we sometimes like to put in,
-which is sketching out a design idea or direction we have not
-actually managed to achieve. So it's part aspiration and part
-reality. In particular, the flat "must not create children during
-realize" statement clashes with "operations depending on static
-properties should go into realize", because occasionally we need
-to create or not create children based on the value of a property...
+Thanks,
+Kangjie
 
-thanks
--- PMM
+
 
