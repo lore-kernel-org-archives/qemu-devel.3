@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1447AC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:36:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFDABC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:37:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjIef-0000Uh-8e; Mon, 13 Jul 2026 11:33:13 -0400
+	id 1wjIee-0000Tx-V6; Mon, 13 Jul 2026 11:33:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjIeO-0008UU-Tz
+ id 1wjIeO-0008UT-T1
  for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:33:04 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjIeM-0001AY-GL
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:56 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-493bc8fda98so454965e9.0
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:32:52 -0700 (PDT)
+ id 1wjIeK-0001AO-H4
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:54 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-493ec555a26so21576715e9.0
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:32:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783956772; x=1784561572; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783956771; x=1784561571; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=ajrBT9nquBJGmemt6AIpUXqNFeuhFS97gkkTM0m0NeU=;
- b=pgj8ziM1r9MqibaT9NC/WYlJAS4Kj7QB+G+uBqTIrdUdFvTQ4KIuNeEpJTg++fCR91
- 8CuHD5RI6o78J64RnN+dNKvLxQxJ2G1gpArbv4VNuC9cXyg6wiZD2aqtwS35BG5nrhlb
- pO2Ygm+iJH9q6dvi7VBRxEHF3aO5XLTsHrV7il5zsPyao5hHuXez+l4S9NfubbQBCDh+
- lvFoGXEVejimTnhALGZ4ygfG+Re6rnzYjnPXzkLdy9AOFC2cwxHPTPqWPOljUWeTcbfH
- SXF0Tj9dtfL+WYDbLcX6NPmXIsOi160E1K2OEIT00tkqjqjk2J+zEOEDaY6q4G2/rNO0
- zHxQ==
+ bh=bkzleIr6QtX2FYwb1SY9PNRHwo9lxQmQ1xA229dq5sE=;
+ b=wAKqczvJrZE1QkUav6meZ4dptMIpFkrdakgq0xHa1wZ2jgq9y55UK7msayhu3yCUo+
+ 9JBFD9HTvjVfVvznZYfycCtblKE/emNwKculC6XkYgsij3BO+ttdB9daLHxVMywXFmPy
+ zl7rV0ce8z/vRWXMpZHXz6TEglDeCnZrlvk8uAMfqNcOEIvhcOVkmFnOuW1/3Ytcn8wk
+ 4QH1iMOnmxIekGrxOO3Z9+5uw1gMPBUxi4M/TX+991fosemAH+BFJtlCEi/ffUJmQAJ1
+ VaJgIns0hdjBHnjk3QI0e/lcUfUtyzDbqc7zmnmxi01JV+Ipc0RBGySiRjnrtA309NZj
+ 50aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783956772; x=1784561572;
+ d=1e100.net; s=20251104; t=1783956771; x=1784561571;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=ajrBT9nquBJGmemt6AIpUXqNFeuhFS97gkkTM0m0NeU=;
- b=IqxWtYrgcg42m5OLzyGrdVQUYc+jOXy45Xt8KD+clvlkpjAdaIR66W9rwyEHeS2K7o
- 8OXTdMn3SFbiU1lPmIc8BA7fSx20uoEHpDRNG6ATcSyEZbMgarysXAN6NNGtWtmtkKXt
- 24ZfFYDGSu0bFte54N+UljAPOoV5QU6BCxglnEFnbSQ/qL5l/wRUDzsFSc1zCrQGGTaB
- dlf8zE6TsDMrrPIdWltIRXt8Sz+8jaq+fCPmEVjfUPrcp7xRidGdgfHWllFl6iKLL8Rs
- xlVqE+aFh2vVtX9P3c6yeiAu+t7KadgpuDj0mOWidzoOFi4qpYnhPS/RXlsTm/J8LKCz
- 03bA==
-X-Gm-Message-State: AOJu0YxdiIwuy9PBfT7kBe7B6m/Ui+cSzlBmlEt1Z7zFBJAKuo2IrtLR
- WTClTdbnIPH7jgy4LV/j/nIDqHYB/Bw4qg/LnVysT6wIKM0AYLRrTplsEVBMgBzMQoAoFj7NyS+
- /EuMShlT1Wg==
-X-Gm-Gg: AfdE7cm18VJYBUvcFVGLWtlLzu4/GYNScHbpmFlrEuHthozb8IMhsPb2kCeHkbgIqUB
- KjpJv6UF41c2BXNts9AkjnlknGJ+hT0C2nrJcwdMGYvQTGWJVDRIWvBeYV3fs8djrZEsIEAnxfw
- OGhH9CfKc9rCyZ1if5fhOcspZrmyfpNsPMGHvHEAYUtYn3y0D4h8vp5mltN7c9KUGfKiL9YPMJi
- qGgAYgSFJWi07hJUilPvHAdSGM3qFtrKLdgHGh00NO1S7igD/VKEbRpuNSRREm/OQ4l6TStowYI
- A8yjxuYYysTRoZ0ztmRcg6pUHaoeiX/krpo7vURv8iMTRLslxhMuUByE/DhpyTgeqPMBtvvWN0s
- +LckZRlpPiO+iSuNOok62ZUFLF9Kl7dGADpQUpD0RH0UI0jwZ27z2XyzvBQic67wfVjn9Nd9FOU
- KbOGNDg4v62eNpemMz8g66I0j4Os51yWyaW/XqgdpMs2HlnvWvjXSMIp6V92LNGTTc2qLnJZliT
- HmCDlT2QBiDBz9GjMcv5Q==
-X-Received: by 2002:a05:600c:1914:b0:492:7019:caca with SMTP id
- 5b1f17b1804b1-493f882911fmr100644755e9.26.1783956771731; 
- Mon, 13 Jul 2026 08:32:51 -0700 (PDT)
+ bh=bkzleIr6QtX2FYwb1SY9PNRHwo9lxQmQ1xA229dq5sE=;
+ b=ZWTMUD+zG87MqWQbRiT6MZbLxTH7Lr11IQ0CDX79MBOht4kAZoiC/kXryXn80+Rq9D
+ X+4wI+cHkxD3ovecWVEjNpOtpXpA8a5g9U75HoJwZQh51ACKjyrEZRNOAucg618iZDku
+ JWbhQmrWexwQgwa5+o5E91JWqz0+3aIFIGmp9SI0AxqpQ6C0gDkbMfawB4/ceojbdMfz
+ JjgZcaSSuZHtlTKPYtc6QR6U2U/pFP8ohmScm6vpPPlL88ohgSk0Ll9l2nl+en/msB3y
+ XembGHprIxcR7YFpNYJCMaYAfma+sFlqpvrdGtvLOThGNvHqK+eP6G7HKwPCf3LwUJ0D
+ 1mWA==
+X-Gm-Message-State: AOJu0Yzavt+4tns1KtToqQZFVToIqzs9z08kDUAgwj3sNhPcReVLdhZb
+ PSq26tNtOriM0RCmSXMRmy7hPnIjZGy5dfwn4qNT48ITmrGwAI5R00QuFzL6EFgKCR3orlxg6FW
+ l635Byi5XkQ==
+X-Gm-Gg: AfdE7cn0ZtbuaaoULdRy0igJ2vrfF94JR8ULLfh1iGTMVQyzYtDQbDD2ZEeb3JaffdE
+ w6EKLYeSO8+I/LnZIsDfVPiUG9zg9skH6LJy6oW4FjWD4//cNzE8xudSc41/V7H2ySa6Hm7n9So
+ P55anOog6qorg3hQ01qSY5iH2y//E1Bjps/kmTZuuK1wbaCqEoaYQ4xTnZtu8R20wB8gp0pNElb
+ zi6csvb0ZSNX4nQPPuw365novZVmmMhH6l01pJUhLv23FmvDq+sxzPlQYronYpjTIc9slLzzPsa
+ BZ9oFdmq2RP4DkC71Q5o1/SAyIQClRUM74KnJs3MVKh3qWJ9K2X+aPHfsoXIUezg+dc14DOwNsU
+ rQgTdIYFx+S3gtEkhsxTqd+NmMHmua09Ls/HB6dMCx7a2n5LI6gjYqiC8mpeA+L80xkgDluNRup
+ PjvDUC58yHtYb1My8iyauJWDu4+S2Ki649kgxSiRLevqKbIBAYu8VLllTNPm5kslkTLL+Vx4+rR
+ wdL7II/r+UzwblKKBytTA==
+X-Received: by 2002:a05:600c:4e46:b0:493:efcd:b809 with SMTP id
+ 5b1f17b1804b1-49401d2d054mr42817155e9.6.1783956770905; 
+ Mon, 13 Jul 2026 08:32:50 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49508727f7dsm3825985e9.4.2026.07.13.08.32.51
+ 5b1f17b1804b1-49508727f7dsm3825985e9.4.2026.07.13.08.32.49
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jul 2026 08:32:51 -0700 (PDT)
+ Mon, 13 Jul 2026 08:32:50 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 18/26] target/arm: Be more defensive for invalid
- tlbi_aa64_get_range
-Date: Mon, 13 Jul 2026 16:32:25 +0100
-Message-ID: <20260713153233.3391818-19-peter.maydell@linaro.org>
+Subject: [PULL 17/26] arm/virt: fix smmuv3_devices leak
+Date: Mon, 13 Jul 2026 16:32:24 +0100
+Message-ID: <20260713153233.3391818-18-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260713153233.3391818-1-peter.maydell@linaro.org>
 References: <20260713153233.3391818-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,35 +103,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-It's possible to program TCR_ELx with an invalid granule size,
-which could match passing an invalid granule size to TLBI RVA,
-which would then fall through to assert in arm_granule_bits.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 3c003f7029e ("target/arm: Use ARMGranuleSize in ARMVAParameters")
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260710175818.528974-1-richard.henderson@linaro.org
+Fixes: 92e340997f861 ("hw/arm/virt: Use stored SMMUv3 device list for IORT build")
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-id: 20260709111225.1106856-1-marcandre.lureau@redhat.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/tlb-insns.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/arm/virt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/arm/tcg/tlb-insns.c b/target/arm/tcg/tlb-insns.c
-index 1a0a3325836..b24eb57788b 100644
---- a/target/arm/tcg/tlb-insns.c
-+++ b/target/arm/tcg/tlb-insns.c
-@@ -854,7 +854,7 @@ static TLBIRange tlbi_aa64_get_range(CPUARMState *env, ARMMMUIdx mmuidx,
-     gran = tlbi_range_tg_to_gran_size(page_size_granule);
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 6a3c69ba8f9..219597cabd0 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -4417,6 +4417,7 @@ static void virt_instance_finalize(Object *obj)
+     }
+     g_free(vms->oem_id);
+     g_free(vms->oem_table_id);
++    g_ptr_array_free(vms->smmuv3_devices, TRUE);
+ }
  
-     /* The granule encoded in value must match the granule in use. */
--    if (gran != param.gran) {
-+    if (gran != param.gran || gran == GranInvalid) {
-         qemu_log_mask(LOG_GUEST_ERROR, "Invalid tlbi page size granule %d\n",
-                       page_size_granule);
-         return ret;
+ static const TypeInfo virt_machine_info = {
 -- 
 2.43.0
 
