@@ -4,145 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74A82C44501
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 11:17:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7386C44507
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 11:17:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjEeW-0006sK-Ls; Mon, 13 Jul 2026 07:16:48 -0400
+	id 1wjEf5-0007DO-6V; Mon, 13 Jul 2026 07:17:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wjEeT-0006ri-S4
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:16:45 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wjEf2-0007B8-NB
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:17:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wjEeS-0007Rc-7D
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:16:45 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66DASOX9507024
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 11:16:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- xyErPye3cFw9bWjqscackmWoqS9hSImRguTgCL92V+c=; b=oV2htQlcnyRpUOfP
- YPRcldT64hGiVbzsbn9nFvbUo5J5z7zMM16npeleCkOP+vlcJ8bKEa4C/q9i7wLw
- Wh3YTIeoEbUgMEZDCIZz0wqJkC4YGefgzyo2H9gIEHTh4X6gENdAa21Hg1o4Eho2
- AZ5XbVvhxgR5FPY/9tkFzZRHKH8cFjC0ausbEwRQxgoYFLY5msAnYGkkXtNFCfsq
- oyPFcvm0/SeXcIuCbf47guqJwgkCAajh7JvIVpi6/Pw/EoYPtEYG8e5kEg5xYVnV
- tFd7UkMUYkoeZkQdQAUlLeWnHPN/zxnsTGiMPZ9t+Zm7Xwun0v6KPVbu8VxzSQ3f
- OoJ8wQ==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fctc8h70y-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 11:16:41 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-51c0ab07320so37681991cf.2
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 04:16:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783941401; x=1784546201; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=xyErPye3cFw9bWjqscackmWoqS9hSImRguTgCL92V+c=;
- b=Q5Re9/kP5ou8GWTyFHAYuD/MQiSxp9XJ0skzkSmzjiQ5FRgxADnMFbXAB1VvSU/Myw
- zDo8cVJxPCIzAv091ZDHkOxZBaDG44u+MScdOPru+sIQyEZDY3yCoTvM7CLC8TpuSPIO
- Gstkl9xNCfVeY+tYRcuHdH+J42IoVv7Zeqi2whdSbmFU6fv2z90blDeTK6QZcC8Rrsmx
- bmx3SpBnT1i4KD1PNqpDEYSEqMbaSXVcH+yLctlKRNjoGWFGO/qSEy3nD6bBYc1IHM6k
- xzwMLxBaxEG5TB3TG2+GMo1UAdnIjNd1ndvkXsaGnkMYY1v3UGJoMGx85SdjY3AImfa8
- q4Bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783941401; x=1784546201;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=xyErPye3cFw9bWjqscackmWoqS9hSImRguTgCL92V+c=;
- b=MKqF9qxh51j193Zv1z0p+hNsdzgQc6JEyrBevn3LLJNbJ+WPNs+foSYCL8q9XQTbXc
- cq89OSZUTixPT+ciKTpmxPcsrHkqvXmijkgBUEXx31Aa8ZYuKpDafYM0jcvWv3XsiCaR
- zGk0H8akq8HroC663PwR0V4XUrlQCf+jDliFAcwKO69kK+p30yfroa7vLLn+6qAWZevR
- aunmI7Lv0TZ4C00TiKa7k0dZJZog6CLtO8mMBdogNfJfNzcW6r2BJkObzbPWxIzmcZ9L
- VQCIJuiO6rzHr2VA4yOrYxHE0Ugyrv2Kbm99hwdYS+D18EiuCVLmTPd/VhCemNeC+6F7
- fGJQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoYMWMjjdwSCiixt6HRvHXF0QbilNueExxF/ilsnXZWpOXMFi4kReGvDjN8X+3t9GuKRFZYqCfg+X4j@nongnu.org
-X-Gm-Message-State: AOJu0YzDdqUAzK9ewta8Ul0gF/fDPsfjKdCml/CoEsZ1RnQqBcBUmiF9
- mvp6C39ETE4XZtBbVp0ZwTp63QMwdYSuwES9DCAZE2V/6N/6ZPl7LZmb4egefziPLnvWofVAukj
- 6P+zl0uUEc+NXvkPmjb74XtZnBwWD8WpP3EV6D3d+IW8tVKEWiiDICoxAOhjPq9f4lg==
-X-Gm-Gg: AfdE7cloDBt8xFJHhjdE7VziwASLAHN8dHqo60wodMmKC/bZUbGdiU52vvnh9CsbjR4
- 02DlP+nOPwNDoAgVfqWjqOOXD0fbjbaQdBEkBZnnf9o3NPTec0Pn5Q2GkQwI1A+MM7B1W6xNJm/
- JGGNOX4PKZJbLkKnjJSEkY+aotBVO8SKgsor1ftCtLw6rAptgu07q5O8c7xHQ7/fQjButOFWrPg
- LxgA9shBclto5oC+XHEShxg79mLKOCdVGGu8XNsTVT1FOGL3YFIf6afLlxdl/6aw5o8JFOUubzD
- qKuEvWtHpbJsnbpDrI1MwEIZ2TSkL9d4DpuOdK0FyovUi8q7NgCiYKcGmNWpa9t10CDmKCd6ZM6
- 3fgYpWAjYGif6PwlT9/xjCnVrFees3HAGnB41nomUB1dujqcMi/46mA/Nt4oFNg==
-X-Received: by 2002:a05:622a:552:b0:51c:963:cafc with SMTP id
- d75a77b69052e-51cbf3153b9mr81924881cf.41.1783941400629; 
- Mon, 13 Jul 2026 04:16:40 -0700 (PDT)
-X-Received: by 2002:a05:622a:552:b0:51c:963:cafc with SMTP id
- d75a77b69052e-51cbf3153b9mr81924691cf.41.1783941400292; 
- Mon, 13 Jul 2026 04:16:40 -0700 (PDT)
-Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47a9e4d8410sm85251462f8f.15.2026.07.13.04.16.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Jul 2026 04:16:39 -0700 (PDT)
-Message-ID: <37cd41d4-cd36-420e-b6d7-a0bcc1590b96@oss.qualcomm.com>
-Date: Mon, 13 Jul 2026 13:16:38 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wjEez-0007W1-T1
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:17:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783941435;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=Wbr/j82XNz3gM7Y00bVUoE2cfM3TocKiEt1Ib3xDUPk=;
+ b=Wce3cKg0B419I4UpoUbvVwYytmIRqYiLYEsCwMCdp3If35/LEmTNIt22ebiaZNIHMEyYoO
+ 6tumdmU9AcPqRicFVURKPMYtTWaPIBhrIl6VdHAE8KwfPE8VoTpf1jqA8JYnHxvf+OSV7x
+ EJ01+vwz2EcjaSg+LtZr92oM5z/meMs=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-272-8rhYMQesO4S1iMYbAz8Bag-1; Mon,
+ 13 Jul 2026 07:17:12 -0400
+X-MC-Unique: 8rhYMQesO4S1iMYbAz8Bag-1
+X-Mimecast-MFC-AGG-ID: 8rhYMQesO4S1iMYbAz8Bag_1783941430
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C46ED1956041; Mon, 13 Jul 2026 11:17:09 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.50.22])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3908C180059F; Mon, 13 Jul 2026 11:17:03 +0000 (UTC)
+Date: Mon, 13 Jul 2026 12:17:00 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: jasowang@redhat.com, mst@redhat.com, armbru@redhat.com,
+ peterx@redhat.com, farosas@suse.de, raphael.s.norwitz@gmail.com,
+ bchaney@akamai.com, qemu-devel@nongnu.org, pbonzini@redhat.com,
+ yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Jason Wang <jasowangio@gmail.com>,
+ Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH v18 12/14] net/tap: support local migration with virtio-net
+Message-ID: <alTJLI3EWU96Ks61@redhat.com>
+References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
+ <20260710191809.721154-13-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] ui/input-barrier: fix off-by-one in keycode bounds
- check
-Content-Language: en-US
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, kvm@vger.kernel.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20260706-fix-v1-0-4b83a70e9f3b@redhat.com>
- <20260706-fix-v1-5-4b83a70e9f3b@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260706-fix-v1-5-4b83a70e9f3b@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: VCZju68ZJqiHEPkOSrjUj5w2EF_GRtln
-X-Proofpoint-ORIG-GUID: VCZju68ZJqiHEPkOSrjUj5w2EF_GRtln
-X-Authority-Analysis: v=2.4 cv=UtRT8ewB c=1 sm=1 tr=0 ts=6a54c919 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=p0WdMEafAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDExNyBTYWx0ZWRfX6TFCTDvG1o6x
- 3K5M4Dece0Cfw1yGnWm7T7UWPDbjaV3dQc5p6yMfE9WmcRUSCd3Kre/GH2scecHEjF4VMNbq43k
- sgntoAk9Mrkxv4OGfnibUtLn80ydVPI=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDExNyBTYWx0ZWRfX3fQZZqpR1jR2
- sfC8V8qPgLKdB2S4z+lU8YEtw3W8pPVHBVo6se8MZoXNlAKrgEbVBvKgciGuyKDZ46p/aM17f5X
- caADmuL/dvDxXYI7xCKQcXsZskYrykqZLxUrkF1rq1fYOQyHnU9Bt29l1U+ZD7rBsIHwSz9MWHI
- DlFfWhHL4F2ANwqnHT/i/AaLQrf2yQc1MmFR6HkI5xPxd97g/ozJtN25yaKfpYYwQ80cvAwb0uX
- HXtgNWY/ho0lnAoTo/qawO9pi3rV1FBCl30/Lqt4Ges0ohVbrMWrzENTOvqV+vT3b7B0IDuqlZ9
- uP6vbNJ/P6Eg9bosrVYP27KsFbFfFwNhheTkS3QmpVGotVa3PkgNKp6KOJyhjrBe2ZNbC7HQrk6
- OJI9ZluXL+/ft5AMRYcyE37P4Lude5COhpHfuq5TGmbIFwXyBj0jvwyhfe7qUF4xXT98iNqJXnw
- jcZhL9qOmEzyEou309g==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-13_02,2026-07-10_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 suspectscore=0 bulkscore=0 clxscore=1015
- impostorscore=0 lowpriorityscore=0 adultscore=0 malwarescore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607130117
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260710191809.721154-13-vsementsov@yandex-team.ru>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: permerror client-ip=170.10.133.124;
+ envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,19 +88,212 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/7/26 14:53, Marc-AndrÃ© Lureau wrote:
-> Use strict "<" to fix the off-by-one.
+On Fri, Jul 10, 2026 at 10:18:01PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> Support transferring of TAP state (including open fd).
 > 
-> Fixes: 6105683da35b ("ui: add an embedded Barrier client")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3951
-> Reported-by: huntr bubble
-> Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+> Add new property "local-migration-supported", which defines
+> whether local-migration is actually supported for this TAP device.
+> Starting from 11.2 QEMU Machine Types it's enabled by default.
+> 
+> Note, that local-migration (including migrating opened FDs
+> through migration channel, which must be UNIX socket), is
+> enabled by global "local" migration parameters. But individual
+> devices may have additional options to enable/disable it
+> per device.
+> 
+> The tricky thing, is that we need to know, should we do
+> call open/connect in TAP initialization code. That means,
+> that on incoming migration we want to know status of
+> "local" migration parameter at time of creating TAP device.
+> So, currently, for incoming local migration only TAP device
+> created through QMP is supported, as you need to set migration
+> parameter first (through QMP as well).
+> 
+> So the full picture is:
+> 
+> On source, to start outgoing "local" migration you need:
+> 
+>  - migration parameter "local" set to true
+>  - "local-migration-supported" TAP option set to true (the
+>    default, starting from 11.2 QEMU Machine Types)
+> 
+> If at least one of these options is not set, TAP backend
+> doesn't participate in migration.
+> 
+> On target, things are more difficult:
+> 
+> Same, you need both "local" and "local-migration-supported"
+> be set. And same, if one of them is not set, TAP backend
+> is initialized as usual, and doesn't accept any incoming
+> state.
+> 
+> Additionally, if you are going to set "local", it must be
+> set before creating the TAP device. If TAP device created
+> with "local" unset, it initializes as usual. If you enable
+> "local" after it and start incoming migration, it will fail
+> in .pre_load handler of TAP backend.
+> 
+> Moreover, there are interface restrictions: if you create TAP
+> device when QEMU is in INCOMING state, and both "local"
+> and "local-migration-supported" set, most of TAP options are
+> not allowed, and script/downscript are required to be explicitly
+> unset (set to "" or "no").
+> 
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
->   ui/input-barrier.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> In v17 thread we considered making new qapi parameters "unstable".
+> Still, it was because of doubtful "incoming-fds" parameter. In this
+> v18 it's completely removed, and we may live only with "local"
+> migration parameter + "local-migration-supported" TAP option.
+> This way the series doesn't conflict with suggested by Peter
+>   [PATCH RFC 0/2] migration/vl: new -incoming config:* for early migration parameters
+> So, I think, worth making one more iteration as "stable candidate".
+> If still some doubts, not problem for me to resend with "unstable" features.
+> 
+>  hw/core/machine.c |   7 ++
+>  net/tap.c         | 162 ++++++++++++++++++++++++++++++++++++++++++++--
+>  qapi/net.json     |  23 ++++++-
+>  3 files changed, 185 insertions(+), 7 deletions(-)
+> 
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index 15886a56b19..2a1abb29041 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -36,10 +36,16 @@
+>  #include "hw/virtio/virtio-pci.h"
+>  #include "hw/virtio/virtio-net.h"
+>  #include "hw/virtio/virtio-iommu.h"
+> +#include "net/tap.h"
+>  #include "hw/acpi/generic_event_device.h"
+>  #include "qemu/audio.h"
+>  #include "hw/arm/smmuv3.h"
+>  
+> +/*
+> + * TODO: When hw_compat_11_1 appears, local-migration-supported=false
+> + * for TYPE_TAP_NETDEV should be move to it from hw_compat_11_0.
+> + */
+> +
+>  GlobalProperty hw_compat_11_0[] = {
+>      { "chardev-vc", "encoding", "cp437" },
+>      { "tpm-crb", "cap-chunk", "off" },
+> @@ -49,6 +55,7 @@ GlobalProperty hw_compat_11_0[] = {
+>      { TYPE_ARM_SMMUV3, "ssidsize", "0" },
+>      { TYPE_ARM_SMMUV3, "oas", "44" },
+>      { "migration", "switchover-ack-legacy", "on" },
+> +    { TYPE_TAP_NETDEV, "local-migration-supported", "false" },
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+So disabled by default for historical machines type versions, but....
+
+> +static void tap_instance_init(Object *obj)
+> +{
+> +    TAPState *s = TAP_NETDEV(obj);
+> +    s->local_migration_supported = true;
+> +}
+
+..enabled by default for all future machine type versions, but...
+
+
+> @@ -1005,6 +1123,23 @@ int net_init_tap(const Netdev *netdev, const char *name,
+>          return -1;
+>      }
+>  
+> +    incoming_fds = tap->local_migration_supported && migrate_local() &&
+> +                   runstate_check(RUN_STATE_INMIGRATE);
+> +
+> +    if (incoming_fds &&
+> +        (tap->fd || tap->fds || tap->helper || tap->br || tap->ifname ||
+> +         tap->has_sndbuf || tap->has_vnet_hdr ||
+> +         !tap_is_explicit_no_script(tap->script) ||
+> +         !tap_is_explicit_no_script(tap->downscript))) {
+> +        error_setg(errp, "Local incoming migration of TAP device (-incoming, "
+> +                   "migration parameter @local is set, "
+> +                   "TAP parameter @local-migration-supported is set) "
+> +                   "is incompatible with "
+> +                   "fd=, fds=, helper=, br=, ifname=, sndbuf= and vnet_hdr=, "
+> +                   "and requires explicit empty script= and downscript=");
+> +        return -1;
+> +    }
+
+...not usable by default unless the mgmt app knows to avoid these settings,
+but the user won't find out about this limit until they try to migrate and
+it fails at runtime, months or years after the VM was first configured &
+launched :-(
+
+AFAICT, there's also no way for mgmt apps to determine which parameters
+are forbidden, because it is merely exposed in API docs text, no way to
+introspect
+
+IMHO the sane way to do this is to not have any "local-migration-supported"
+device flag at all, and also no "local" migration parameter. The src & dst
+QEMU's so badly need to be able to auto-negotiate and just do the right
+thing, otherwise this local migration optimization becomes a mgmt nightmare
+long term :-(
+
+And yet we don't have any auto-negotiate mechanism, and I don't want to
+block your work :-(
+
+I'm annoyed that we keep creating more and more pain for both ourselves
+and our mgmt apps in migration for as long as we don't address this
+fundamental migration protocol design flaw.
+
+> diff --git a/qapi/net.json b/qapi/net.json
+> index ada0329ef9d..2070979f20e 100644
+> --- a/qapi/net.json
+> +++ b/qapi/net.json
+> @@ -435,6 +435,26 @@
+>  # @poll-us: maximum number of microseconds that could be spent on busy
+>  #     polling for tap (since 2.7)
+>  #
+> +# @local-migration-supported: enable local migration for this TAP
+> +#     backend.  When set, local migration is enabled/disabled by
+> +#     migration parameter @local for this TAP backend.  When unset,
+> +#     migration parameter @local is ignored for this TAP backend.
+> +#     To be able to do incoming local migration of TAP backend,
+> +#     migration parameter @local must be set _before_ creating the
+> +#     TAP backend.  Otherwise, TAP backend is initialized as usual,
+> +#     opening/creating TAP devices in kernel.  In this case further
+> +#     local incoming migration (with migration parameter @local set
+> +#     after creating TAP backend with @local-migration-supporeted
+> +#     parameter set) will simply fail.
+> +#     Moreover, when QEMU is in incoming migration state, migration
+> +#     parameter @local is set and @local-migration-supported is set,
+> +#     following options are not supported and must not be set:
+> +#     @ds, @fds, @helper, @br, @ifname, @sndbuf, @vnet_hdr.
+> +#     Additionally in this case @script and @downscipt must be
+> +#     explicitly disabled (empty strings or "no").
+> +#     (Since 11.2.  Defaults to true for QEMU Machine Types >= 11.2,
+> +#     and to false for QEMU Machine Types < 11.2)
+
+
+
+> +#
+>  # Since: 1.2
+>  ##
+>  { 'struct': 'NetdevTapOptions',
+> @@ -453,7 +473,8 @@
+>      '*vhostfds':   'str',
+>      '*vhostforce': 'bool',
+>      '*queues':     'uint32',
+> -    '*poll-us':    'uint32'} }
+> +    '*poll-us':    'uint32',
+> +    '*local-migration-supported': 'bool' } }
+>  
+>  ##
+>  # @NetdevSocketOptions:
+> -- 
+> 2.43.0
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
