@@ -4,130 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5DEDC44501
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 12:11:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0657AC44507
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 12:11:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjFVR-0000t8-P5; Mon, 13 Jul 2026 08:11:29 -0400
+	id 1wjFV3-0000oZ-Gn; Mon, 13 Jul 2026 08:11:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wjFVQ-0000qW-8H
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 08:11:28 -0400
+ id 1wjFV0-0000o9-TH
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 08:11:02 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wjFVO-0006eZ-T3
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 08:11:28 -0400
+ id 1wjFUz-0006dH-1P
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 08:11:02 -0400
 Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66D9RAlr1123001
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 12:11:26 GMT
+ 66D9RAr41122973
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 12:10:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- GF1nzRiJdqWJEt6VpXrCC9Dp7BJLUS11lP9x00Lf9es=; b=JRrKhPpb9X4N9Ll9
- 0cpLZfiCWIHZZhURaxWRVC4U/iNq96Q5O/Bvy91UNhqs5TH8WdEXA03kTQqlq7DA
- ogIGast/ACPhvEZe0SjhL05UewOziNks8j6J3HKCcylbxkUnVlMX7ucg4Wij9Fo1
- mRyofhnpJ5Awq0y9W7qQkmJUgQZxG7QnCWsfj4yLVTWo8zuFir39nqJSQ5rppa8i
- O8Qgy+0bTe/E4/iInTAlbD9BDsUkhfx+Eiy/E+01HeqYIf5Y9MrlaQdBhd5Ni4SW
- tuRB3Nzg8Crv28ufa+tog/PbTBPE1Ge2n7pzMgPjewTs7B2jMReoAXTl1TI7G/V9
- ticFQQ==
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcwda0k79-1
+ ++CTcPEgNp9u0LBfWzgu3ue0NvUSQ3WiOpSOdNWCYAM=; b=UnJKdHWBHR8yPFmP
+ lSaYn2yvQ/jHEZo0q0J/M9UZ34mUpKyLl51s8GFNXzCgVZpxI+YPTW2Mpfy3O//J
+ AX4yp1J2xjsjt1NreTGTUa45EblIzlX5B14B9uRVm6kFMLQN89g4xIY4YexpmEar
+ XTaOEg8O13AhZf9UTkwaN5o8wEHYjMG7Z9tRrojKkGje3G0Etrepmr4RhATysCWW
+ iqtWmXo94FrP4JbIoqlEgESVgcmFNhLOhuwcmYoyaLlUqa2FmwpwXqLAwzO++rvp
+ voh5RqQhXatSKBWsrn5z7xjMeZgJEV9oKxS0DsuRoR7rbEE41nez2Sg/IVpfbNKU
+ Ebv28g==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcwda0k68-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 12:11:25 +0000 (GMT)
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-904ee4473a8so26268196d6.2
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 05:11:25 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 12:10:59 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-51c1b4d961dso30307481cf.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 05:10:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783944685; x=1784549485; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
+ d=oss.qualcomm.com; s=google; t=1783944659; x=1784549459; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:references:cc:to
+ :from:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=GF1nzRiJdqWJEt6VpXrCC9Dp7BJLUS11lP9x00Lf9es=;
- b=krXoG/K1EBbIQ8KqlN+Mt4ysNJehJpD2ghSC9ma/EBftiRwqlQtNW3/OWPJ6Lo949f
- agEebloMm+AXrLxYuDVj9Bck7CiWw9F7GoyacknqWIfUGClU0JVYqUzIGI7wMimZDcw+
- m60YxwTRG3gJj/rsRoVCftYgAs+4ZbA2qJqDuZwkqNvmZxpc9vtJVYuktPCC2rw2VBQe
- YJ/SMelPmjebcjFHTc+OVhJhPnPWa6z7RqHhELecUPqftDQMVAS03ulhInZq1/Rk9wcO
- EqG1MR4gBDIb2ExWJYyeL3gmKHNqN+j/uJkWj1Q/TCh8mzl16Wo0Qzh96lLGuQ9klyTK
- mqpw==
+ bh=++CTcPEgNp9u0LBfWzgu3ue0NvUSQ3WiOpSOdNWCYAM=;
+ b=XRdqIrDr01oUwPTEEOcq/XlaoN2UUBE1Wea0hbn3MbGykZykauzRMSxtPC6Z5SPtte
+ fzIyOuPN0mKmFMdwbn6PJ79lmSlU9/ebddN4xdnDYeHIwUrIsa2IFGRlzTeD+75fF7RU
+ u1OsVPJ3TMK8B2hbhqRPezCmzgmNQjyNUqjA0K5TFb962OHSLYLbCCC80knW1kSYjmwk
+ p44W1ZIBlgUVj5KAa5zxEH/gZ6wSjXweD1W33eSTcNXEO4l+L9Mdqr4vAKTKhR+Ex5fS
+ OFQGuPO0FG2F3jzMPLdUcNpr+EBpDejObvI88l54IsuHPlsMgFHAjudtxQszTRugFZ9e
+ 14Vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783944685; x=1784549485;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
+ d=1e100.net; s=20251104; t=1783944659; x=1784549459;
+ h=content-transfer-encoding:content-type:in-reply-to:references:cc:to
+ :from:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=GF1nzRiJdqWJEt6VpXrCC9Dp7BJLUS11lP9x00Lf9es=;
- b=dO505PMId9YadbErwoN6R2FD8EuuvOKdTX0lqY5GnNT3DVuSHjH4RCV07+yXdGJmwZ
- h0XJJ4GGDvya1o1KK3y0PYXOqUIUCfK+4TkBORCvhg8Jo/UvpQl3zWWmpRbIWbUOzC0l
- GzV/N/EnUhAyxnRUBodjH+fD8iK7AtnJCMeALTGvbBuleg06uOKrj/yv/R6L4XuoC9Oy
- 5sjk4Zzker3+Syo0kbiwYiNVk2CfrjZT/U9n2MNaEw39PFUB8c5/yWefJ6dpj7wDGmax
- 5u1rPanhr/yiVKmiHLItMc9BhmViCJBs2OJBlpdD35VTsiZLUIDnqqkQoZe/CrSdr8c5
- GfiQ==
+ bh=++CTcPEgNp9u0LBfWzgu3ue0NvUSQ3WiOpSOdNWCYAM=;
+ b=jzwtL1Z0kaBWX029LevrHR/9+O45iX0Kt3MNtfNEds/A0IJ3XvZQfgBAUmNBVTIV8X
+ rWdkkvY57DlmFT0IVmTP7AImKO+PZg4uKYqb8P5Bkd0GWFM1zw9oM/1ZWb1EcHIwPx97
+ 57WmHvvhyUbh+29w6ZoBdFL+6T7AjxrQ7YJHTzwcY1id03/MPR0UbWm51WKDfT2YJTio
+ 47sM4c2B9/wLsXJE8T5I6fMm85av/ZkaGvSgrlMHoV9cK1GqZWiGY5Wnl21rZ/Qv11d2
+ FMGZAxYaE+yCIguBHZ/fc2V4AK601DkJgQ0txNNK8TUt46XFkGVfQY7ncTsnhceAfa1Z
+ LMjw==
 X-Forwarded-Encrypted: i=1;
- AHgh+RoOazhxInb8JC8CR1zCHJTJ3dNmhGRwJaJqPnbnyLs76ZCePCbwl8LBn7IIBiTPI1WCt/9uBs1Ab7/3@nongnu.org
-X-Gm-Message-State: AOJu0YxLo+4jhRL4jWLJX5EoaPbCMtybCpMVYaICogUxJpje8c1AFx/Z
- /teF97nSV34hjI8urPAO4Fh2NpjjAU7oxUprJw91CAL5yRhtmhOkUEj7OwtsX1GOcpMOkznwSbe
- 0rQZMkqXYMV+6cD3iHoP2ExnrAhf2uaf7x/vVqNcY2ihNQrQW8f6vrmOXJw==
-X-Gm-Gg: AfdE7cnjstQj9X1NPQaoNGFCDvRboYHagOt+QGIo6BToqXlH/wuVoaRApst21wrZcvS
- XutHFpvGGJk9yB9SFm4MokduNC+2Fs8Sp5b0Dmpl/KUeHPd0aFfyRlK8Zx7T+721HNYxfQdVrwo
- ptkpi8Hzr+PgvSaaUjfec75SnWs+lZrJXLGLfQcj3GKbqKgg+D4i0oivDNxyk8O6pApPF8zOyw0
- NDnPlkLj+eSjquGbbU8V5pheVDSyXbzA2TB425i03Q8MkBZjWuJZDgUB3BwTSYFTMsLUBporNmV
- JBwX5y8g6PDR77/s8xwRHq5FA77va/kEPbtddwkjrzZpDZdQFKP5riBnvonUUOJiDJyikafIZx1
- peogJuFjoDTbiBdpiUrUDCZurk3SDIwVPxKarWH/MVGhyAZcljFKAfkFMWmynMA==
-X-Received: by 2002:a05:622a:5a05:b0:51c:e14:87a7 with SMTP id
- d75a77b69052e-51cbf1628d3mr88398781cf.28.1783944685356; 
- Mon, 13 Jul 2026 05:11:25 -0700 (PDT)
-X-Received: by 2002:a05:622a:5a05:b0:51c:e14:87a7 with SMTP id
- d75a77b69052e-51cbf1628d3mr88398531cf.28.1783944684932; 
- Mon, 13 Jul 2026 05:11:24 -0700 (PDT)
+ AHgh+RqyzIj9i/8BwStlZYpEvipEutzIsRvo5lLQIxmevhUNRRJsQEtr0SdhiXGtwd3p25nuqern6PxYcpD3@nongnu.org
+X-Gm-Message-State: AOJu0YxT6dUxCVWt2xLH1ANdagFe/5VKFT+ntRpByU+zFwffy03gYLcO
+ ePcxr/t9T6hzPOJdJrJ7Hhk0qmMLOOcp0cZMnmFGCqovRWp97hDmylH+0RU0UX4jRLRKEILb1kY
+ eZkLisDsIBwPnalOk2t4vZ9FUVjP6MJnifL7gSbEchUVwUvCA+9YXGqX3MA==
+X-Gm-Gg: AfdE7ckcXCODSA+/2VabZShDQquia7cLNN9PIK/aHFRc1cSITG+oWZbOOYvf9d7LoE6
+ We3fS7GQkZhhYlhd5l/2ePURgTbufH8/k8o1//enQgSjeorC81xSgxrD/nChPEcqqc2h8/qIs0A
+ qU1NTMvkJCjdAeahERjvvIaLeZRO2MDS0xujJmDG8ECPcgX7Qtm4r8COtPQUMrQ8fgh4qgQQ+9d
+ erOLjVHoxto3I6cfkrWIdc/b6V0L6AT0pOvdjfUKtCKbanjGGMdDYE4W3dasqmi3VpiUvRtpdAt
+ bbj6okNZHSytu3UGgJpzsnth616EvUGBUhbHtsF3tJeK/XFeeqj4za21o58BGUbg8mG3iU6iF4G
+ pLON5/Cp3pOp16vvt+To+JaLEzG/05TQdAvReoOxgWojHu9BKdjptmG1hbrDeSQ==
+X-Received: by 2002:a05:622a:1813:b0:51a:8691:4427 with SMTP id
+ d75a77b69052e-51ca9eb3ad7mr134654021cf.0.1783944658629; 
+ Mon, 13 Jul 2026 05:10:58 -0700 (PDT)
+X-Received: by 2002:a05:622a:1813:b0:51a:8691:4427 with SMTP id
+ d75a77b69052e-51ca9eb3ad7mr134653721cf.0.1783944658124; 
+ Mon, 13 Jul 2026 05:10:58 -0700 (PDT)
 Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493eb6f3b85sm581267955e9.2.2026.07.13.05.11.23
+ ffacd0b85a97d-47a9e4d843csm84127537f8f.14.2026.07.13.05.10.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Jul 2026 05:11:24 -0700 (PDT)
-Message-ID: <cff0ca65-ced2-4304-83dd-c2786a2297e0@oss.qualcomm.com>
-Date: Mon, 13 Jul 2026 14:11:23 +0200
+ Mon, 13 Jul 2026 05:10:57 -0700 (PDT)
+Message-ID: <d1a5abca-18c2-4b07-ac77-cc8f9a4fefc1@oss.qualcomm.com>
+Date: Mon, 13 Jul 2026 14:10:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional/riscv64: sifive_u: Fix kernel command
- line
+Subject: Re: [PATCH v2] hw/sparc64/sun4u: Mark unusable PCI busses as full to
+ ease device plugging
 Content-Language: en-US
-To: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>
-Cc: Alistair Francis <Alistair.Francis@wdc.com>,
- Chao Liu <chao.liu@processmission.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
- qemu-riscv@nongnu.org
-References: <20260713120245.781959-1-bin.meng@processmission.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260713120245.781959-1-bin.meng@processmission.com>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
+ QEMU Trivial <qemu-trivial@nongnu.org>, Michael Tokarev <mjt@tls.msk.ru>
+References: <20260309181452.83702-1-thuth@redhat.com>
+ <00c4ab4b-a58b-4de4-8e41-566b2cb7f920@redhat.com>
+ <124bd918-f2ab-43e2-bd2d-fc824de62c40@tls.msk.ru>
+ <fcbe3d7f-64d4-4b13-b930-a81e77db4784@ilande.co.uk>
+ <df7a091c-a8a1-416a-acf3-28a0cbd8dd2f@redhat.com>
+ <c7d6b801-449e-4f55-9c1d-ebec7a0e9595@redhat.com>
+ <c0cd50bd-e054-48b6-af54-1050e13bb720@ilande.co.uk>
+ <baf0b727-d53c-4717-b4e8-9c8603b2fa75@oss.qualcomm.com>
+In-Reply-To: <baf0b727-d53c-4717-b4e8-9c8603b2fa75@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDEyNyBTYWx0ZWRfXwPoz0DWeUOxi
- A8+Rrukhsi7+wv8++H1JJnmdVCpBrKvlKXYr4cqojfMxEzR2vCfGBU0HhGxSjbggPxO67bme693
- wRF+CnYGl/SRwRyue2CrhpgZxm349hA=
-X-Authority-Analysis: v=2.4 cv=cNbQdFeN c=1 sm=1 tr=0 ts=6a54d5ee cx=c_pps
- a=wEM5vcRIz55oU/E2lInRtA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDEyNyBTYWx0ZWRfX2/bfgQq+SK+5
+ wWfQtINW4wNnduIdNnGMbV1vkaG/nXQeV68zpbkl2n/zDZIksigT9OGsljylpT8+n3RVyjjCMAB
+ ku0W+1mF5ovQo7CNJ15E7oK0I1Wh+Os=
+X-Authority-Analysis: v=2.4 cv=cNbQdFeN c=1 sm=1 tr=0 ts=6a54d5d3 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=FRSEYCzRAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=zgiPjhLxNE0A:10 a=OIgjcC2v60KrkQgK7BGD:22
- a=H4N_Y-AU75W7NKDNhZlT:22
-X-Proofpoint-GUID: ittcGUnOdHxVLwlRQ2XHHxjPk-kCPKbr
-X-Proofpoint-ORIG-GUID: ittcGUnOdHxVLwlRQ2XHHxjPk-kCPKbr
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDEyNyBTYWx0ZWRfX5OwHqKQjX7eM
- uq0S6NIifcaA6pOrrlstRJoTF3fqGhN/hepP3ptjQGgUvM4137f9YLRxlxFJZQOb50TBPYAxsPT
- 7rlEY1Vi4Wek17Pt1/vf5jlA6UvC2/s9jB39CW8YUECENPCmcTO1hQreTogwyQ3tyko3KXaBmoV
- HLGbFLH1fOiTH+kfoY/npe+lPKjEmVsXggpD84c6GPYnEpYAcv3L9sHoX5NrqLqlY0WaBQY1ta6
- M/d6DyIt+BMu5KUyztSdfc80CXg8Z3Z1EWwZku6u0Gv2jiHDOSrjYzaniynAH38dZrFHoTugUIA
- w4oqATNTJeMt0xtih83sHiIXF1SJxNuMexDYubMl4MAlZGI7igIPDLj8uihaA6LAoxhtEHRRJ5F
- i4+mltMhqdbi4M60d/RY5TpzqSWgel8rrRsACsesA0uhlpdy/QeS/fZP+ZyqULza3yA0aD3yrGN
- FzT9pYFxNfLSuMqcweA==
+ a=20KFwNOVAAAA:8 a=4xvnQyb7TYxaWbKgc8MA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-GUID: vVHAZ-OZOTwUBJByV-ao5asOwIBE2ZUA
+X-Proofpoint-ORIG-GUID: vVHAZ-OZOTwUBJByV-ao5asOwIBE2ZUA
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDEyNyBTYWx0ZWRfX6Vh7dljnAolQ
+ yZZgh4++kctJ58IXmOMl2dlB1uA/fhvwHSnHTfo4W8Vodd6mr9CqKjhHahRZRfzbuMD5oIyUvUi
+ OC5R0KnmQW/t8y6MJCqt/1eOvJddJnBhii16sMXH9gNOcgR0FXvPi2xU18VGj3M+HU6D55pOPYO
+ 907Xx9klRJnlgzoZAzwBrwkV36kS+ku3uIEp640FGCLBiMyTI1fOs8gmCKyra2G1e3jB34yOKx+
+ kbzJNRSM7N8CmTb3NFHSv0YelkBvbTPpJJg2MhNZlICQVe/iYCf0mHMA8OELO1ZN+kPXPJwKgGU
+ 7cf9kdXET7qe3DJ8+dMpku+rczxFsQtfeRexuFAswXk1M1vZujOqy4a8IAHJVrFIKqeUP1rOXmA
+ H9h8ViLaMQR1c4joS7zn8ly21k+BlrWRUj71betYKZiawhbS/Dxrykrq6o9zLM3EHdW0GCramnP
+ P6YaoL8oicUBMvpVF3g==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-13_02,2026-07-10_01,2025-10-01_01
@@ -160,18 +164,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/7/26 14:02, Bin Meng wrote:
-> Build the complete kernel command line before adding it to the QEMU
-> arguments. This ensures the panic, noreboot and rootwait options are
-> passed to the guest.
+On 6/7/26 19:29, Philippe Mathieu-DaudÃ© wrote:
+> Hi,
 > 
-> Fixes: 7db162fa0138 ("tests/functional: Test SPI-SD adapter without SD card connected")
-> Signed-off-by: Bin Meng <bin.meng@processmission.com>
+> On 30/6/26 00:20, Mark Cave-Ayland wrote:
+>> On 29/06/2026 14:43, Thomas Huth wrote:
+>>
+>>> On 09/06/2026 08.02, Thomas Huth wrote:
+>>>> On 08/06/2026 23.29, Mark Cave-Ayland wrote:
+>>>>> On 08/06/2026 09:26, Michael Tokarev wrote:
+>>>>>
+>>>>>> On 30.04.2026 12:50, Thomas Huth wrote:
+>>>>>>> On 09/03/2026 19.14, Thomas Huth wrote:
+>>>>>>>> From: Thomas Huth <thuth@redhat.com>
+>>>>>>>>
+>>>>>>>> When trying to plug a PCI device to a Sparc64 machine, you 
+>>>>>>>> currently
+>>>>>>>> have to specify the right bus ("bus=pciB"), otherwise you get 
+>>>>>>>> this error:
+>>>>>>>>
+>>>>>>>>   $ qemu-system-sparc64 -device virtio-scsi-pci
+>>>>>>>>   qemu-system-sparc64: -device virtio-scsi-pci: PCI: no slot/ 
+>>>>>>>> function
+>>>>>>>>   available for virtio-scsi-pci, all in use or reserved
+>>>>>>>>
+>>>>>>>> This is quite annoying for the unexperienced users, and it also 
+>>>>>>>> breaks
+>>>>>>>> e.g. the iotests ("make check-block") when running with qemu- 
+>>>>>>>> system- sparc64.
+>>>>>>>>
+>>>>>>>> Mark the non-usable PCI busses as full now, so that QEMU can 
+>>>>>>>> automatically
+>>>>>>>> plug new PCI devices to the right "pciB" bus.
+>>>>>>>>
+>>>>>>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>>>>>>> ---
+>>>>>>>>   v2: Do the change in the machine code, not in the sabre device
+>>>>>>>>
+>>>>>>>>   hw/sparc64/sun4u.c | 7 +++++++
+>>>>>>>>   1 file changed, 7 insertions(+)
+>>>>>>>>
+>>>>>>>> diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
+>>>>>>>> index b8bda1eb816..37539535c6c 100644
+>>>>>>>> --- a/hw/sparc64/sun4u.c
+>>>>>>>> +++ b/hw/sparc64/sun4u.c
+>>>>>>>> @@ -723,6 +723,13 @@ static void sun4uv_init(MemoryRegion 
+>>>>>>>> *address_space_mem,
+>>>>>>>>       fw_cfg_add_i16(fw_cfg, FW_CFG_SPARC64_DEPTH, graphic_depth);
+>>>>>>>>       qemu_register_boot_set(fw_cfg_boot_set, fw_cfg);
+>>>>>>>> +
+>>>>>>>> +    /*
+>>>>>>>> +     * Mark internal PCI busses as full so that the plugging of 
+>>>>>>>> additional
+>>>>>>>> +     * PCI devices happens on the right bus that still has free 
+>>>>>>>> slots:
+>>>>>>>> +     */
+>>>>>>>> +    qbus_mark_full(&pci_bus->qbus);
+>>>>>>>> +    qbus_mark_full(&pci_busA->qbus);
+>>>>>>>>   }
+>>>>>>>>   enum {
+>>>>>>>
+>>>>>>> Friendly ping!
+>>>>>>
+>>>>>> This, being a simple change, somehow has not been reviewed still, so
+>>>>>> it's sitting in the queue...
+>>>>>
+>>>>> Yes, apologies - I've been absolutely flat out recently, and I've 
+>>>>> got a note to take a look at this and Peter's patch as soon as I can.
+>>>>>
+>>>>> Is this fixing an urgent issue with "make check-block" or similar?
+>>>>
+>>>> It's not urgent since this has been broken forever, but yes, it 
+>>>> fixes "make check- block" for the case where sparc64 is the only 
+>>>> available target during "configure -- target-list=sparc64-softmmu" 
+>>>> and thus the iotests run with qemu-system-sparc64.
+>>> Ping!
+>>>
+>>> While it's not urgent, soft-freeze date is in a week, so it would be 
+>>> nice to get this merged before it misses another release ... WDYT?
+>>
+>> Hi Thomas,
+>>
+>> I'm still playing catch-up a bit here, but I can't immediately find my 
+>> notes on using pciA under QEMU. I think if it fixes the iotests then 
+>> go ahead and merge it for now, which gives me time in freeze to 
+>> investigate any reported issues.
 > 
-> ---
+> I wasn't sure whether merging this patch now or wait for your update
+> during the freeze so hold my PR for a bit; today I looked a bit at it.
 > 
->   tests/functional/riscv64/test_sifive_u.py | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
+> Some notes:
+> 
+> - pci_bus_*_slot_reserved_mask() API isn't much used. I supposed it
+>    worked for a pair of corner cases but doesn't scale (I expect it
+>    to be called in more code paths).
+> 
+> - Bus capacity is odd. We have a generic Bus-class @max_dev field but
+>    do not use it with PCI variants. If set, it limit the instances
+>    capacity. The capacity is tracked in the instance state, and when
+>    no @max_dev is set the only way to mark a bus full is using the
+>    qbus_mark_full() helper. Then if we remove devices, the bus remains
+>    full, and there is no helper to restore available slots.
+> 
+> 
+> Anyway, back to the problem here, the first part is indeed as noticed
+> Thomas to use qbus_mark_full() for the root bus:
+> 
+> -- >8 --
+> diff --git a/hw/pci-host/sabre.c b/hw/pci-host/sabre.c
+> index cd2328ad53f..6a8d0b6c6d2 100644
+> --- a/hw/pci-host/sabre.c
+> +++ b/hw/pci-host/sabre.c
+> @@ -400,6 +400,9 @@ static void sabre_realize(DeviceState *dev, Error 
+> **errp)
+>       s->bridgeA = PCI_BRIDGE(pci_dev);
+>       pci_bridge_map_irq(s->bridgeA, "pciA", pci_simbaA_map_irq);
+>       pci_realize_and_unref(pci_dev, phb->bus, &error_fatal);
+> +
+> +    /* Only in-built Simba APBs can exist on the root bus */
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Per the manual "Up to four Advanced PCI Bridge ASICs (APB)s may be used
+with the UltraSPARC-IIi".
+
+> +    qbus_mark_full(&phb->bus->qbus);
+>   }
+
 
