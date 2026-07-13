@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BC9CC44501
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 11:21:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E31AFC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 11:21:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjEiA-0000Cf-7W; Mon, 13 Jul 2026 07:20:34 -0400
+	id 1wjEiA-0000CF-2f; Mon, 13 Jul 2026 07:20:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjEi5-0008Uh-Dl
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:20:30 -0400
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjEi1-0008NU-KQ
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:20:26 -0400
 Received: from mx1.catap.net ([162.55.82.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjEi3-00080G-KM
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:20:29 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=Fjlc31f
- 1QAY8DVNww2O6PDsOaYsaRRayc8OQcf0AIMhL6rJQrU+whpj9gxfkg8cGQjN5Xu0i2nRsS
- KLbDSZ38Q7laYLzA9u+9rXUXc9YY+rGT+5K3FCcusnzeRvX8xF/j1WknPOEzj0ZaAp6YwI
- j/B3K8NYDxTtQU98VGzm/VpAtus8EMYezDs2QtelcXygXTE7GugPPIfV3qtiUIqZ8AqVEm
- 1rHoqBFsD7L4bkKy/IKEGt8rJDL+ZmKN3RyVDICpuHBYfnsXqeKzO0C+YBoYEwXrpTMVdw
- 2EoPezSnBlKiB3rBJDQdZI/h1Xs6aylmvUHsHAkvkYfOiQ8jhnYxHwA==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=o
- Lwt71prGK6I83sbfOW6rxv5mtmxp7hjhNlN3IYrmsM=;
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjEhz-00080r-Oo
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:20:25 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=NL/Oapy
+ lCbwPqAkSIyq0jJKHji1dGAkrtCY0Wcvvvb32A+3/nFOh5skAkmQllvlOWSxsk41+hSH7/
+ p8+0FaObt9qEyrTZT1iQfHs/bQJmd6PYJKoALiHJhjNbG6rP1RMec0K9kBUJ1MsN+WD1pQ
+ OMk0PuNhOQ6Lu2IIevM7ixgQiu1vmEiqNcDn0iBMnYjkixc2tGi+IixEZLOlxdBKO7OpyX
+ py0U/5nLb+wHs5y6pkpowrWnWio9VgrbP81w8hhjgnf2xsVOk0aJLDVUv6QXOCCnJ5rPb6
+ gem/Y4hReh0L1lM1O3xgRG2kp/xL+MfICKIsnI9o/ek/vUFP1JpfFNA==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=O
+ nOzc/xFLlIzWsGfWekLrWErwBi3UvwPP5rpaHa7JzY=;
  h=references:in-reply-to:
  date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=XS0ywIBDS5Wau57egXQsz51xcg8q9GWj4MEsyZH5nKTloW8i4Cd5lxoIpXjF8B35UFYM
- prHnoS6F2xcCh+3ayU/T4JzhEh2mddYqXXHO8pQZCddqelkNnnSfW57cOMzXM/D12tek1M
- YNX5DucWPDPiUhjVZu/NhNBv4Dv8PhlaHCw9zuLYa337BiCmQoQ8tYUWDZuBKQMYPM+M47
- gP/v8W7hnNRR3ROqng0QqwHkqpchNR+pcW7pJ79uHspCmLgUOd62HqJ9heEp/kvl4MDjz/
- PcX37cDSWAiSkJ/1pfZ+00OVmYX0y/X2trB31X522CLwSwNjCKmeoOClMXp2s6DQ==
+ b=vtU4n8WsNoRR1LH6jxVNbItIxhttRuIX8LnbN+ALp73MCXklDCONeE+8wKAx6GMG+Hqj
+ 53a4+8gD3UXlTxd+NRCSfIrGYa0OUlpyQh2fA7DYPmINIQlqpsYAPrmu3zVMEE8NY+qZTs
+ tMTu8cNW4juUmV75Q0c8ucpR65wzECebkDswgSjM1bNo3mjIpB4PdszsrqPaM7uUxoV1iX
+ pT9icZ983cyNULvSfAKNzp/piGi4KJIAxTdHYrtcvhi/FrQJZ68CqOKFi++CwyDfr3u7PX
+ KNxJMV707PbbMyLeZer/kxxG0uY6F+7aYBTqfKd5/mfhXqb+oaFWyae2PcIYcR+w==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=Vwo/iDP3; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=/R/dGq+O;
+ header.b=pKG0g+7a; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=ApZiVVbi;
  arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=oLwt71pr
- GK6I83sbfOW6rxv5mtmxp7hjhNlN3IYrmsM=;
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=OnOzc/xF
+ LlIzWsGfWekLrWErwBi3UvwPP5rpaHa7JzY=;
  h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=Vwo/iDP3IAABSyS5Oeg7kQB2Ee4EVDkgxYF
- GCSBqNTZd1xkWkmjYqbmEfKk764Z9h/JikLIJBdZ5tfcI3jm+TuMGTZyXEf6XxYi0KlM2B
- sJGPD+eN+ZXwJcQTc5P2uGUwQlDCGvchKaXCHqPPUgk/zAJTm112YjYkJAaC5GAljBj4KC
- X7uJFWcTA1YaHzT/qL7nyUZ16TZpZfquBZB7661EFs9gAWgEBHYw7GpIdfWh9MG8qPZs/m
- b9/U12ROQdjPemJ49wjAft/HDs3rmw88C107WCvT30GIGtzzGCQ/iXwGq3eqH22jKyVkq+
- fxntXRDmUiZeQmGxJnmnKKTszRg==
+ subject:cc:to:from; d=korins.ky; b=pKG0g+7aJKDqTRkJKU/Ri58DYi0P5S/USnJ
+ JcgaU8qoa8jAi04z5vGGaby8g8KGLpI71fvxHHeab1j8jY08dTPXXLBFrges+ZCfkO6WMr
+ Jmq15DgUrGhf9t8LQoi3Mvde8ESicU8ahbgtPjpFZT98uzTTb39YOGlXHFlfmM0ze+2DAp
+ nvpD91EJQvgyqAYyLHuF4KBuHB3fFTqVrdGZVUrkzKtbrz3gZN4LWPSQ2QIdC2LnBuCjC/
+ NqyAbE3Zr6JV2kqjACnTH71pXerENA69SPpM3JayZZ6MGT11dCoSW06AiO2fKU/Epda/EE
+ w5UZVshhRGIHsyLMPb3czI8DGyw==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=oLwt71prGK6I83sbfOW6rxv5mtmxp7hjhNlN3IYrmsM=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=/R/dGq+OVmH8+5+bxB
- P+AciCjQs2lGBfbx295hGqbf32v7LCEmN+uqYGEQ79fHVohjGs/LOwdHwEIyAlpPv9Cw==
-Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id 655b3f44
+ bh=OnOzc/xFLlIzWsGfWekLrWErwBi3UvwPP5rpaHa7JzY=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=ApZiVVbiwSEunlu8W3
+ s8X/ze+vUdGIYLUqaCll25heumRDY3wPlPqnOtqXK0DtkMrkso3Abq5KKCkPYGXLZwBw==
+Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id c61819eb
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Mon, 13 Jul 2026 13:20:17 +0200 (CEST)
+ Mon, 13 Jul 2026 13:20:16 +0200 (CEST)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id 9fabe162;
- Mon, 13 Jul 2026 13:20:14 +0200 (CEST)
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id 2364ce22;
+ Mon, 13 Jul 2026 13:20:13 +0200 (CEST)
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 To: qemu-devel@nongnu.org
 Cc: "Kirill A. Korinsky" <kirill@korins.ky>
-Subject: [PATCH 8/9] target/mips: allow Octeon unaligned accesses
-Date: Mon, 13 Jul 2026 13:16:36 +0200
-Message-ID: <20260713112004.4956-9-kirill@korins.ky>
+Subject: [PATCH 3/9] target/mips: fix MIPS64 segment access checks
+Date: Mon, 13 Jul 2026 13:16:31 +0200
+Message-ID: <20260713112004.4956-4-kirill@korins.ky>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260713112004.4956-1-kirill@korins.ky>
 References: <20260713112004.4956-1-kirill@korins.ky>
@@ -94,29 +94,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Octeon firmware performs unaligned memory accesses during early DDR
-setup.
+The xuseg and xsseg checks only tested UX and SX respectively; kernel
+and supervisor accesses must instead use the mode bit that applies to
+the current execution mode.
 
-Use QEMU's unaligned memory operation mode for Octeon translations,
-matching the existing treatment for MIPS R6 and Loongson3A.
+Allow supervisor and kernel mode to use xuseg when SX or KX is set, and
+allow kernel mode to use xsseg when KX is set.
 
 Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
 ---
- target/mips/tcg/translate.c | 1 +
- 1 file changed, 1 insertion(+)
+ target/mips/system/physaddr.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index 123ba6aecd..d83f76e514 100644
---- a/target/mips/tcg/translate.c
-+++ b/target/mips/tcg/translate.c
-@@ -15193,6 +15193,7 @@ static void mips_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
- #endif
-     ctx->default_tcg_memop_mask = (!(ctx->insn_flags & ISA_NANOMIPS32) &&
-                                   (ctx->insn_flags & (ISA_MIPS_R6 |
-+                                  INSN_OCTEON |
-                                   INSN_LOONGSON3A))) ? MO_UNALN : MO_ALIGN;
-     if (tb_flags & TB_FLAG_MIPS_FIXADE) {
-         ctx->default_tcg_memop_mask = MO_UNALN;
+diff --git a/target/mips/system/physaddr.c b/target/mips/system/physaddr.c
+index 746dbf8aa4..626d7ccc4c 100644
+--- a/target/mips/system/physaddr.c
++++ b/target/mips/system/physaddr.c
+@@ -143,7 +143,9 @@ int get_physical_address(CPUMIPSState *env, hwaddr *physical,
+ #if defined(TARGET_MIPS64)
+     } else if (address < 0x4000000000000000ULL) {
+         /* xuseg */
+-        if (UX && address <= (0x3FFFFFFFFFFFFFFFULL & env->SEGMask)) {
++        if (((user_mode && UX) || (supervisor_mode && SX) ||
++             (kernel_mode && KX)) &&
++            address <= (0x3FFFFFFFFFFFFFFFULL & env->SEGMask)) {
+             ret = env->tlb->map_address(env, physical, prot,
+                                         real_address, access_type);
+         } else {
+@@ -151,8 +153,8 @@ int get_physical_address(CPUMIPSState *env, hwaddr *physical,
+         }
+     } else if (address < 0x8000000000000000ULL) {
+         /* xsseg */
+-        if ((supervisor_mode || kernel_mode) &&
+-            SX && address <= (0x7FFFFFFFFFFFFFFFULL & env->SEGMask)) {
++        if (((supervisor_mode && SX) || (kernel_mode && KX)) &&
++            address <= (0x7FFFFFFFFFFFFFFFULL & env->SEGMask)) {
+             ret = env->tlb->map_address(env, physical, prot,
+                                         real_address, access_type);
+         } else {
 -- 
 2.54.0
 
