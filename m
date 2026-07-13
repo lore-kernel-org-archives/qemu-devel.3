@@ -4,105 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CDA3C44501
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 10:18:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D74DC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 10:22:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjDjm-0002mT-KX; Mon, 13 Jul 2026 06:18:10 -0400
+	id 1wjDnn-00055u-Tg; Mon, 13 Jul 2026 06:22:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjDji-0002lk-P1
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 06:18:06 -0400
-Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjDjf-0007hr-Sf
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 06:18:05 -0400
-Received: by mail-yx1-xb12c.google.com with SMTP id
- 956f58d0204a3-6626b5ace23so5809107d50.0
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 03:18:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783937883; cv=none;
- d=google.com; s=arc-20260327;
- b=FF195Mu7wLEsR9rok7jB6ynooBC/8tKKDIz7gyvlJskqQV31PRpBUazdmOXunz6K2A
- zQZkekvNPucB6sK4+COxrjyJe4tmZXB5gziKP099O78u8bRKvdj/QNnmEisAzhjZLVrG
- pdQP/fDu3iki7ktbxHYBmtkGllsRxmP1gTvaURXR8u8336jQrAljb5QD94xu/q5gUUcw
- yPB7nfdGr1yXgB4olha/eLVEemQPMKbIB89NuH/alOHG0NLeQrOfv8es5LVwK4RETGd0
- OX3M/CIHe/zxte6c9vCNsCcvG+b1t0qLgYw9qJ7fYmolc5P2kKRbCaf5kxK5jGDuLAgA
- kYKw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=bjCwi4kyQywSiEC5ILPY3B6gCFupp4Tt8f85lXOyU0g=;
- fh=Qa2OkYOPFog+x1G5mA4V31494fitPWoGQxwY2RYXA+M=;
- b=EDqYE6DIhmyxbIoT0nRncKhgJwJ8qjdrcpfJNmETEQPlvrlnVxnWeYWTfLH0l78zcD
- YR6eZVkfJx73mA2glmanjLIcYVEt86A2/3fKXk6z26WXi5Ald2zr9nzsHXkxKdfL++GC
- 8eA77Loxyn/cww/lpFFwUurH4VoViwANWoixTWy8WxNWKyu5UdqiIVqYnvrVrTNK9VNo
- 3NxmXrT3zETWVK7n09HgqWwh+ZzH6JbI+KfVYNVoM61OGwFZcIGE1CjsCOqg2p77uG2C
- g9hmSKMp3616uRKC8atAUOMdjBoshQ8aiaaAIoTdybHgdAjNKgtV+cupJ6tAxUJ0spJF
- v3jw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783937883; x=1784542683; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=bjCwi4kyQywSiEC5ILPY3B6gCFupp4Tt8f85lXOyU0g=;
- b=coMdSLlNmNuvm9aeE+H7qq+/2/COZcKSFqElKEZzFxaslEx1cBeL94wFHu2Sm3xbEN
- S6OM/jxmOSlg6/6PAxgJA6YZ1qSIH24wW9WDwLtxqQbqPsxOygd1gGl8xcDGd4rxSpNM
- 9NOD6GJlvGCvp947Bwio3yoP1ri/u/RYGeOJ5lLdtYPze90h0/4GFoPqWuFjTqLRiDDf
- mtnO8mQylkSrrSkbE24MlF22Mj6ToSB5olY/rJ11zAicFyeNTG4D2GSTIK9sQ0Gt8NkJ
- p3DlNlHLtfYdx3euvBRFrVXYKQVAP99f0YchY9ypc5K7JL3XkYdt4MrxDvvcbWQCw3Kn
- 6VMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783937883; x=1784542683;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=bjCwi4kyQywSiEC5ILPY3B6gCFupp4Tt8f85lXOyU0g=;
- b=YzsIp7F5x/LrCnBjVeFc/zxZGempkCASieST9SKNHeojAtv2LviWDTTaADVU1I3MPe
- +4tWnOeWEDq0RGTH0TIGy7kYXGK5naTcwc9PBTe39ZROU+1Iq1Fxyt8ifzIKRezrByNZ
- /ruIsbo/yqhn0EHVWEIJpc054pHdqFYkfnLVCt6Ap11Mm3MqlHnI9UX797lTPTv6EQOH
- nWfiv8XIWNCO9Wn+SiQiXIerqy+Nz+iiKytUlvt+C3bGSJk2EXz0C/uB8yzlpCzP5lwS
- BtdzULRSz+KjTJzvyMEWAvTA+Nm0fd9UloVJOwMK/89h8N2+FtRvGJqItjV2MvKyqZKd
- kUfQ==
-X-Gm-Message-State: AOJu0Yyx0IIOI3tImER4kT5rGUT4b6qJVxior0jlD3T/y8Cf70Mv695H
- vWLE6dtcqTyXIXeT82jAhQldKXYBWCy+r1VoTPIahQUp3QX9KjICbemD9PvvMPOfoQEPHDdXO0o
- 2PT2RRZz+bxvk34qKz9/IkBzzp+d7LzCGQYyUh9WB6A==
-X-Gm-Gg: AfdE7clCL0mmHWB5Y9vSl2pZhEMBCnl7dpSTp0pFK+nXSSwcwtJxKY3SiWcLO+NcoY/
- YS6R0z8pjjdzc+qRPLv+CNGS40s8+QpQCcBZM/Wk3qyLbnLilLZuwCAeYsuH2PoPGX9u6VGwp5E
- gSH8YpKHpk7gngdVFK+p6Mti6UnurRF1aNq/lv0UKN1N2yZoHXqiLj1s8mAxRr/0o5ffxuG8TE+
- NPQEWOhmKX5df+oFP4csn0QGi+IPQe1GG7b9je+bcA0g42B54n71wtTmvzMXMH96bXi1bqgN3bz
- oQgGZVHMaYLGO27SzPsKg/QG4u4ighN7SN7WhRfV+CQsUbZskcSEZVJpVKjUHlxoKg8=
-X-Received: by 2002:a05:690e:1918:b0:664:b3c0:653e with SMTP id
- 956f58d0204a3-667d98ec083mr5163887d50.29.1783937882619; Mon, 13 Jul 2026
- 03:18:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wjDnm-00055m-Iy
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 06:22:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wjDnk-000850-HB
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 06:22:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783938134;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=PAOrQ4OSPood1KI/btVIPlkPlUdv5TvfCmfqhB9g5ns=;
+ b=LMakvKRNclbdN5VlH/b0FYto5f9Lv/gsSnNx2AwLKJ2+y9kt/LWEaHD0+9xbCnlHC5MaZN
+ tzv9Hefnq+6GbBMGGGJ1kL2DzZk0KQ/G+CJXx00xpmLQea7aoWuyn11B2VNJdj6MDY0srX
+ XRngede6RNkzrhlHABPJOcgJAtl2IRM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-lsehzDiDMaKxFrEcX2TKbg-1; Mon,
+ 13 Jul 2026 06:22:11 -0400
+X-MC-Unique: lsehzDiDMaKxFrEcX2TKbg-1
+X-Mimecast-MFC-AGG-ID: lsehzDiDMaKxFrEcX2TKbg_1783938130
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6F7C918052F1; Mon, 13 Jul 2026 10:22:09 +0000 (UTC)
+Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 483AC19560AB; Mon, 13 Jul 2026 10:22:08 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>, QEMU Developers
+ <qemu-devel@nongnu.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Pedro Barbuda
+ <pbarbuda@microsoft.com>, Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Nicholas Piggin <npiggin@gmail.com>, Harsh Prateek Bora
+ <harshpb@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, Matthew
+ Rosato <mjrosato@linux.ibm.com>, "Daniel P. Berrange" <berrange@redhat.com>
+Subject: Re: what is qemu_system_guest_panicked() for?
+In-Reply-To: <CAFEAcA_zmc=Vvs38Qos_gecCmGAbRgDQF-0+x85Ja66nsqrHxA@mail.gmail.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Avril Crosse O'Flaherty"
+References: <CAFEAcA_zmc=Vvs38Qos_gecCmGAbRgDQF-0+x85Ja66nsqrHxA@mail.gmail.com>
+User-Agent: Notmuch/0.40 (https://notmuchmail.org)
+Date: Mon, 13 Jul 2026 12:22:06 +0200
+Message-ID: <87ik6ji3zl.fsf@redhat.com>
 MIME-Version: 1.0
-References: <20260713100508.123623-1-thuth@redhat.com>
- <20260713100508.123623-4-thuth@redhat.com>
-In-Reply-To: <20260713100508.123623-4-thuth@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 13 Jul 2026 11:17:51 +0100
-X-Gm-Features: AVVi8Ce9GmRshp3IUMcZ1Y13AORWJqj1xe1dCEhzz3DZOTynbYlV5S12XSAOhy0
-Message-ID: <CAFEAcA8=_3Ofp3KnOXgfk6OSRHZtvSF6L2pb47XfC8b5TTZo+w@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] hw/usb/hcd-xhci: Use qemu_log_mask() instead of
- fprintf() statement
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: permerror client-ip=170.10.133.124;
+ envelope-from=cohuck@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,40 +91,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 13 Jul 2026 at 11:05, Thomas Huth <thuth@redhat.com> wrote:
->
-> From: Thomas Huth <thuth@redhat.com>
->
-> We've got a proper way for logging unimplemented hardware features,
-> so use qemu_log_mask() instead of the fprintf() here now.
->
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  hw/usb/hcd-xhci.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
-> index ee913d5c4d5..527910d92d2 100644
-> --- a/hw/usb/hcd-xhci.c
-> +++ b/hw/usb/hcd-xhci.c
-> @@ -1017,7 +1017,8 @@ static XHCIStreamContext *xhci_find_stream(XHCIEPContext *epctx,
->          }
->          sctx = epctx->pstreams + streamid;
->      } else {
-> -        fprintf(stderr, "xhci: FIXME: secondary streams not implemented yet");
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "xhci: secondary streams not implemented yet");
->          *cc_error = CC_INVALID_STREAM_TYPE_ERROR;
->          return NULL;
->      }
+On Fri, Jul 10 2026, Peter Maydell <peter.maydell@linaro.org> wrote:
 
-qemu_log_mask() strings need a trailing "\n" (as of course does
-printing messages to stderr :-)).
+> (cc list is a random mix of maintainers of code that calls this
+> function, Paolo as "main loop maintainer" and a few others who
+> I thought might have an opinion.)
+>
+> We have a qemu_system_guest_panicked() function which causes QEMU
+> to report this to the user and do one of a couple of possible options
+> (shutdown, pause the VM, do nothing). This seems mostly intended for
+> "the guest OS told us by some mechanism that it just panicked". But
+> we use it more widely than that...
+>
+> Cases which are "the guest told us about a panic":
+>  - accel/kvm/kvm-all.c handling of the KVM_EXIT_SYSTEM_EVENT SEV_TERM
+>    and CRASH subtypes
 
-Otherwise
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+These two events seem to be x86 only.
 
-thanks
--- PMM
+>  - the pvpanic device
+>  - the spapr ibm,os-term RTAS call
+>  - x86 kvm: tdx_panicked_on_fatal_error()
+>  - x86 xen: the SHUTDOWN_crash shutdown subtype
+>
+> Cases which are not:
+>  - hw/spapr/rtas.c: if the FDT has no RTAS address during system reset
+>  - hw/spapr/spapr_events.c: if we wanted to deliver a machine check
+>    exception to the guest but the FDT has no RTAS address
+>  - hw/spapr/spapr_events.c: if we want to deliver a machine check
+>    but the guest is still dealing with a previous machine check
+>  - arm whpx, if we get an unknown/unexpected exit code trying to run the VM
+>  - x86 nvmm, for an unknown/unexpected VM exit code
+>  - ppc TCG, in powerpc_checkstop(), for a machine check exception I think
+>  - s390_handle_wait(): not sure exactly what this is
+
+Loading a "disabled wait PSW" (waiting for interrupts with no interrupts
+enabled) is basically the way for an OS to "panic". (The "special wait
+PSW" is for signifying that a cpu has been shut down.) IOW, this is
+indeed the "panic" case for s390x.
+
+>  - s390 unmanageable_intercept(): again not sure, think this is where
+>    the guest has gone off the rails and we can't keep running
+
+It's basically "the handling code for an exception immediately leads to
+the same exception", the cpu has gone into a loop and can't get out of
+it again. Not sure if that should be getting some different handling.
+
 
