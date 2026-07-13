@@ -4,117 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9C46C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 20:22:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 138DFC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 20:23:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjNAO-0004jI-MA; Mon, 13 Jul 2026 16:22:16 -0400
+	id 1wjNBa-00052m-GY; Mon, 13 Jul 2026 16:23:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wjNAN-0004ix-K4
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 16:22:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wjNBY-00052Y-Cv
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 16:23:28 -0400
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wjNAL-0001Tp-6s
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 16:22:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783974131;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=X37tg6xaiqQrNkzkLwXV64QQxDF0bDFORgAU6jUvxUk=;
- b=Qb9spWkJOwMASyVTWjgdGPA96P5GQDoySk+Czf3PXQCwQBVC93qaYhy6wxnRRenonLkLD/
- sjqn13ZcLrugrGAjFX2COqD0LbxwykyQzmAqVEudFYL7DIdkJz18oKzrIDY0eTFoa1Dq4k
- AfR4oungqnwK6+pmnHk8jGfd6FOcAeI=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-275-3B0uaI7LNiaLElORqz42Hg-1; Mon, 13 Jul 2026 16:22:10 -0400
-X-MC-Unique: 3B0uaI7LNiaLElORqz42Hg-1
-X-Mimecast-MFC-AGG-ID: 3B0uaI7LNiaLElORqz42Hg_1783974129
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-493f75ebec5so21988115e9.1
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 13:22:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1783974129; x=1784578929; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=X37tg6xaiqQrNkzkLwXV64QQxDF0bDFORgAU6jUvxUk=;
- b=PfTrqEdEPQqzOZiu2bAK/WzM38q0bZg96Zit1uUBotkERX8urtdKGva+wihtv005pr
- 20Ut1SpGpft3ghqPlX2LpA5pW181W6/LrHoxMOxJtanDfPaZlYB66EnZugcjHHOyxrV1
- O8hyxCYhOFDdLegdG7BWOz8KOB/QvfsRQ2CA/FWwLLcca31Vo8RwCp7o/ukqLbkX11po
- +jXRM328lIztHnKY9ODp+qqH0rx7mhLakC6Tc0qR9Jh17hRk9gKQYmS6EaLkVKz3DBlC
- i/AP67bNTt1fCYeid8hmjhTcujv66nhZ/F2Zp1Qa4+BgkQFZ0a9fKt2x4rM1OL7DxiKr
- yasA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783974129; x=1784578929;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=X37tg6xaiqQrNkzkLwXV64QQxDF0bDFORgAU6jUvxUk=;
- b=Yc2uE7XH+9Nd01rA6S0YzYnEhYYloE3ujvGfzQAXjJveyqKblCwvLeoiea5o7JodAe
- 4nBZqSPLts4J3xT5qyaR0RHP0E2ZXP4BYhwM1poatMiE1S7Hf6qJz3ph15fyqLhHF4pM
- jMSq/Trjpqgts+TKyLmgPzcBZRFrjY5NWt1JJtXoBnxCEIX4XM9FhRf4J6oswyKt6WPU
- PfToIhsojO3gmegnuI1qzbWFQWHLinTeYzpF4NND1XULP7dCEUY3KPyPytp+zqgS2Wtd
- QziG+tHn2qxnIeSjE7/dzaIZjKD3362U9ZxzULgv5VVaVTvBGvGsMKr9BAYOg2Mr6Cdd
- +nvA==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqGM3I/jk9Xj6sgVG8Mk3S2xjbkj3qCaS7m+TXiTCukw1uKab3GYESPvCvKHRmFarovNOYy22cVn+0g@nongnu.org
-X-Gm-Message-State: AOJu0Yy1a0Jm0vMRya+CtWngCwwer5f3jmjuer2AJ5vhFr6WTGsSr0NF
- X1iNhz9Bf6EbhjNgmcFMJTuA/FymMmxpFIu4xGh/yhZlfCFvLkTTWlJZ1vaU2iSPWMpKzKsieN1
- /la/jgRnPfbePpVw522JHhFR94AF5AgBdwjwJcEwwuZJeY74F+RCu84T/
-X-Gm-Gg: AfdE7cngDNcxUsNZmdwYNF4w2mzKaUqJbtg3zISJHbTsDrSKuXd2CJIi5gskR/bmWAe
- dZUOhmYEgx1ZVnVvPuvx9H6Wu/BBoC25v99U3SEnPCFUs5V4yNQ7xh7FhP/gpbbWUhG2MX/OKw/
- VIJvbAHLVeEm7OYs5EwCVVk2xz02KSpLEmt7Wcrk+U5Qx5DQZygbNnJpyu8qWOjir4UR0OTs3c+
- dvbd4wMfLjRfcRjyP71Qirq7DQjTXbsEGhJCtG4h4k/3iEHr/JqNkCJWqTjFXT5HPAgFuWn5PNZ
- 6QMHVoXwfh4vcgZZaXzWz2y78srkJunLjy+i+YbzBKJEXi6DjAJKsZI0vn0M+XNwZhfkpJ7MeMe
- WPp0XiwxmFrgi/nNkXgHC+cAjW5tjh9tBhDQ=
-X-Received: by 2002:a05:600c:3143:b0:493:b87c:c87d with SMTP id
- 5b1f17b1804b1-493f87e9f43mr107559695e9.11.1783974128594; 
- Mon, 13 Jul 2026 13:22:08 -0700 (PDT)
-X-Received: by 2002:a05:600c:3143:b0:493:b87c:c87d with SMTP id
- 5b1f17b1804b1-493f87e9f43mr107559285e9.11.1783974127966; 
- Mon, 13 Jul 2026 13:22:07 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-24-117.inter.net.il. [80.230.24.117])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493f2a38b19sm219251325e9.0.2026.07.13.13.22.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jul 2026 13:22:07 -0700 (PDT)
-Date: Mon, 13 Jul 2026 16:22:03 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- jasowang@redhat.com, armbru@redhat.com, peterx@redhat.com,
- farosas@suse.de, raphael.s.norwitz@gmail.com, bchaney@akamai.com,
- qemu-devel@nongnu.org, pbonzini@redhat.com, yc-core@yandex-team.ru,
- mark.caveayland@nutanix.com, Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v18 09/14] qapi: add local migration parameter
-Message-ID: <20260713162057-mutt-send-email-mst@kernel.org>
-References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
- <20260710191809.721154-10-vsementsov@yandex-team.ru>
- <alS1DMD_pRrklFRb@redhat.com>
- <05c89310-7bec-4aac-addc-b5ef377e09a7@yandex-team.ru>
- <alTKMA87h9x951Ei@redhat.com>
- <25b5e9a6-e563-4ab0-9075-04a3a00d3b33@yandex-team.ru>
- <alUwflog7Xd34Vd4@redhat.com>
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wjNBW-0001Vb-7d
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 16:23:28 -0400
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wjNBJ-00000000OI1-0Kqx; Mon, 13 Jul 2026 22:23:13 +0200
+Message-ID: <e602d0cd-dfc2-441d-a017-067e55418dad@maciej.szmigiero.name>
+Date: Mon, 13 Jul 2026 22:23:07 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <alUwflog7Xd34Vd4@redhat.com>
-Received-SPF: permerror client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] vfio/migration: Parallelize device state transitions
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
+ qemu-devel@nongnu.org
+References: <cover.1779217494.git.maciej.szmigiero@oracle.com>
+ <743f03758d2a30df4093db140ccdd0f91f69bd7e.1779217494.git.maciej.szmigiero@oracle.com>
+ <871peqtm5t.fsf@suse.de> <ah3eheRXN1QJAGj_@x1.local>
+ <ac677bf9-1372-4905-a0b8-874a74be07be@maciej.szmigiero.name>
+ <ah86Z0r5sMnxwgo-@x1.local>
+ <c739f4fe-1f43-45c4-b98f-109366526405@maciej.szmigiero.name>
+ <e79a3746-9c7e-46a5-ad81-537b9d3affdb@maciej.szmigiero.name>
+ <akvWlciUvxjDbBBZ@x1.local>
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Content-Language: en-US, pl-PL
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <akvWlciUvxjDbBBZ@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,123 +111,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 13, 2026 at 07:37:50PM +0100, Daniel P. Berrangé wrote:
-> On Mon, Jul 13, 2026 at 08:55:37PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> > On 13.07.26 14:21, Daniel P. Berrangé wrote:
-> > > On Mon, Jul 13, 2026 at 01:55:48PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> > > > On 13.07.26 12:51, Daniel P. Berrangé wrote:
-> > > > > On Fri, Jul 10, 2026 at 10:17:58PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> > > > > > We are going to implement local-migration feature: some devices will be
-> > > > > > able to transfer open file descriptors through migration stream (which
-> > > > > > must UNIX domain socket for that purpose).  This allows to transfer the
-> > > > > > whole backend state without reconnecting and restarting the backend
-> > > > > > service. For example, virtio-net will migrate its attached TAP netdev,
-> > > > > > together with its connected file descriptors.
-> > > > > > 
-> > > > > > In this commit we introduce a migration parameter, which enables
-> > > > > > the feature for devices that support it (none at the moment).
-> > > > > > 
-> > > > > > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> > > > > > Acked-by: Markus Armbruster <armbru@redhat.com>
-> > > > > > Acked-by: Peter Xu <peterx@redhat.com>
-> > > > > > Reviewed-by: Ben Chaney <bchaney@akamai.com>
-> > > > > > ---
-> > > > > >    include/migration/misc.h |  2 ++
-> > > > > >    migration/options.c      | 18 +++++++++++++++++-
-> > > > > >    qapi/migration.json      | 12 ++++++++++--
-> > > > > >    3 files changed, 29 insertions(+), 3 deletions(-)
-> > > > > 
-> > > > > 
-> > > > > > diff --git a/qapi/migration.json b/qapi/migration.json
-> > > > > > index 66bd900465a..03bdf19f3a6 100644
-> > > > > > --- a/qapi/migration.json
-> > > > > > +++ b/qapi/migration.json
-> > > > > > @@ -830,7 +830,8 @@
-> > > > > >               'zero-page-detection',
-> > > > > >               'direct-io',
-> > > > > >               { 'name': 'x-rdma-chunk-size', 'features': [ 'unstable' ] },
-> > > > > > -           'cpr-exec-command'] }
-> > > > > > +           'cpr-exec-command',
-> > > > > > +           'local'] }
-> > > > > >    ##
-> > > > > >    # @migrate-set-parameters:
-> > > > > > @@ -1012,6 +1013,12 @@
-> > > > > >    #     Must be set to the same value on both source and destination
-> > > > > >    #     before migration starts.  (Since 11.1)
-> > > > > >    #
-> > > > > > +# @local: Enable local migration for devices that support it.  Backend
-> > > > > > +#     state and its file descriptors can then be passed to the
-> > > > > > +#     destination in the migration channel.  The migration channel
-> > > > > > +#     must be a Unix domain socket.  Usually needs to be enabled per
-> > > > > > +#     device.  (Since 11.2)
-> > > > > 
-> > > > > What happens when this is enabled and there are devices which
-> > > > > don't support it ?
-> > > > 
-> > > > These devices are migrated as usual, ignoring "local" option.
-> > > > 
-> > > > > 
-> > > > > What happens when this is enabled and a device on the src
-> > > > > does not support it but a device on the (newer) QEMU dest
-> > > > > does support it ?  How does the mgmt app know which devices
-> > > > > support it ?
-> > > > 
-> > > > The only supporting device (TAP-backend) declares support by
-> > > > "local-migration-supported", so mgmt app should care to set
-> > > > same value for it on host and target (like for other options
-> > > > actually). Or simply relay on default, which is true starting
-> > > > from 11.2 Machine Type.
-> > > > 
-> > > > > 
-> > > > > Can we document the semantics in these cases.
-> > > > 
-> > > > That's: "Usually needs to be enabled per device."
-> > > 
-> > > ....except that we have it enabled by default for TAP backends
-> > > in new machine types.... except that it will then break if the
-> > > app/user has enabled any of the "forbidden" options.
-> > > 
-> > > The way this doc is written makes it sound like "local" is an
-> > > optimization you can turn on in any scenario, and it will do
-> > > the right thing if the device supports it. That is very much
-> > > not the case - enabling this flag will definitely break many
-> > > configs out of the box, with new machine types due to the TAP
-> > > device defaults & incompatible options.
-> > 
-> > Ok, now we decided to NOT make default support for TAP in newer
-> > machine types.
-> > 
-> > So, enabling "local" is safe in existing scenarios, only explicit
-> > enabling TAP.local-migration-supported will change the behavior.
-> > 
-> > Keep "local" documentation as is?
-> > 
-> > I see the only way to make it more informative: directly describe
-> > connection with TAP.local-migration-supported, without general
-> > phrases about "devices that support" and "usual". We'll have to
-> > update it when more devices added (my next step is vhost-user-blk),
-> > but at least, it would be absolutely correct at the moment.
+On 6.07.2026 18:23, Peter Xu wrote:
+> On Thu, Jul 02, 2026 at 08:36:32PM +0200, Maciej S. Szmigiero wrote:
+>> I looked more deeply into this and even prototyped a similar new design.
 > 
-> How about....
-> 
->  # @local: Permit the use of optimizations for local migration.
->  #     This must only be set when both the source and destination
->  #     QEMU processes are on the same OS and directly connected
->  #     with a UNIX domain socket as the migration channel to enable
->  #     use of file descriptor passing. Individual device backends
->  #     may need additional configuration flags set  to enable local
->  #     migration optimizations. This will be documented against the
->  #     device backends where it applies. (Since 11.2)
-> 
+> Sorry for a late response; off work most of last week.
 
-BTW surely qemu can just detect this? getsockname maybe?
+Also sorry for my late response - was extremely busy the entire previous week.
+
+>>
+>> However, in the end I think that running VFIO state transitions in
+>> parallel with other non-VFIO cb() handlers just isn't safe.
+>>
+>> For example, on the migration source, the second transition is
+>> PRE_COPY_P2P -> STOP_COPY.
+>> PRE_COPY_P2P is the last state during migration that still allows the
+>> device to accept DMA and similar interactions, while STOP_COPY is
+>> already the "quiescent" state.
+>>
+>> So if a VFIO has already reached STOP_COPY but a non-VFIO device
+>> callback still hasn't finished, then any DMA/MMIO/P2P transaction from
+>> that "unfinished" device to the VFIO device would now hit a VFIO device
+>> that no longer can accept such transactions.
+>> This may result in hard-to-debug memory corruption during live migration.
+> 
+> Do you have any solid example of this problem?
+> 
+> AFAIU, P2P in VFIO state's term only means P2P DMAs _between_ host VFIO
+> devices, nothing to do with emulated.
+
+I presume that quiescent VFIO devices can't accept *any* DMA, the spec (vfio.h)
+even says that:
+> The user should take steps to restrict access to vfio device regions while
+> the device is in STOP_COPY or risk corruption of the device migration data
+> stream.
+
+Correspondingly, I think the same goes for RESUMING state on the migration
+target since it is described there as:
+> The device is *stopped* and is loading a new internal state
+
+While you are right that the spec only talks about P2P DMA I don't see how
+host-initiated DMA would be different here - after all, it's about changing
+internal device state in a state where the device can't accept that anymore/yet.
+
+> I am not aware of any P2P that can be initiated from emulated devices, even
+> if it exists, it is only P2P from guest perspective not host: it will
+> become host operations finally from processor side.  I really don't think
+> it's a concern.
+
+Yeah, it's normal DMA from the VFIO device perspective.
+  > My limited understanding of VFIO's P2P state is: when switching to P2P
+> state, the VFIO device can still accept P2P DMA from other devices, but
+> never initiating P2P DMAs, and the latter sentence is critical, it means
+> the real quiecent state of the whole system happens after the last VFIO
+> device switching to P2P state: then it means none of the VFIO devices can
+> initiate P2P DMA anymore, whole system is quiesced. 
+
+Just having the VFIO devices in the system prevented from being able to
+initiate DMA is not enough for them to reach "quiecent" or fully stable
+state as long as there are other possible sources of DMA transactions
+targeting them in the system.
+
+Glancing at the existing vm_state_change handlers there are some
+concerning ones there:
+* vhost-net (called via virtio_vmstate_change() in base virtio-net),
+
+In the vhost-net case the vm_state_change handler for this device
+ultimately reaches vhost_net_stop() and do_vhost_dev_stop() and these
+seem to stop this network device rings at this point.
+
+Now, having vhost-net packet buffers in a VFIO device MMIO BAR would
+be rather atypical configuration, but nevertheless letting VFIO
+device possibly reach "quiecent" state before this handler finishes
+would theoretically be a regression.
+
+* virtio-blk virtio_blk_dma_restart_cb() vm_state_change handler
+submits some block requests to its (possibly dedicated) IOThread.
+
+Again, having block device request buffers in a VFIO device MMIO BAR
+would not be a typical configuration, however letting this handler
+run before making sure that VFIO devices can accept DMA would
+theoretically make a regression too.
+
+* same for scsi-bus scsi_dma_restart_cb() that does
+scsi_dma_restart_req() for each pending request.
 
 
-> With regards,
-> Daniel
-> -- 
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+The above is not an exhaustive list, these are only the cases
+I was able to identify relatively easily by going through the
+code.
+And I think that with possible memory corruption issues its better
+to be safe than sorry, as they are pain to debug.
+
+The only real non-VFIO cost of being safe about all of this is
+~15 code lines addition to vm-change-state-handler.c, all the
+remaining complexity is already on the VFIO side of things.
+> That happens earlier
+> than reaching any of the cb()s here, because VFIO's prepare_cb() does that
+> P2P state switch.
+
+I thought your proposed design was to launch (per-VFIO device)
+device state changing thread in prepare_cb(), make it do *both*
+VFIO device state transitions and collect it in cb()?
+
+In this case the transitions are *NOT* ordered with respect to
+other cb() handlers (besides them being finished by the time
+the VFIO device qdev tree depth cb() handlers are reached by
+virtue of the threads being collected at this point - this is
+actually necessary in order to preserve proper ordering with
+respect to some types of interrupt controllers on the source).
+
+So on the migration source the thread could already put device
+into "quiecent" state by the time other cb() handlers could run
+and on the migration target the device could still be
+in an "unprepared" state by the time other cb() handlers are called.
+
+> 
+> Thanks,
+> 
+
+Thanks,
+Maciej
 
 
