@@ -4,74 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3F18C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 11:52:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68D29C44509
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 12:04:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjFCd-00057j-61; Mon, 13 Jul 2026 07:52:03 -0400
+	id 1wjFNV-000769-49; Mon, 13 Jul 2026 08:03:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wjFCZ-00057b-K4
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:51:59 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
+ id 1wjFNS-00075l-MJ; Mon, 13 Jul 2026 08:03:14 -0400
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wjFCW-0004L8-Di
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:51:59 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id 8E634C08D2;
- Mon, 13 Jul 2026 14:51:51 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:c5a::1:8] (unknown [2a02:6bf:8080:c5a::1:8])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id npM9u30XNa60-Dzzdd1Pg; Mon, 13 Jul 2026 14:51:50 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1783943510;
- bh=TLgr1zTyECeXaT+uy0DYzNN/6wj0MU32S51f++8cXeI=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=Z27ufDZls3FCfi93ZqSzGSxmlXc1BhI97ThYrxwXr12lCrAddPQkU7ODj3srbC4Sa
- TOwTGNGxseImtIjRjs6MwqGI72GW6ong0cRaBTw8q3qYiEGYSw4ZkFlTsHGzOVWa2g
- +4njZCI1MKOkqlyam9ls2c+yN4LMVKvkOpzMQT6s=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <0fd09b96-068f-415d-9bd8-0506958710f1@yandex-team.ru>
-Date: Mon, 13 Jul 2026 14:51:49 +0300
+ (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
+ id 1wjFNR-0005bn-1D; Mon, 13 Jul 2026 08:03:14 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Zsg7xe1obnD1/1WgwT6UPUzlYZgIIl/P9olPFcPpIHweEJmfSR/aWu8zE2/lOkySWLx8yJegauR/gROuFp2D18jtHohPLxnHQnS+riauMa8HTKwAY9n6oJHROxMLDd4sNdR79xLMEPUrepBAkQIa5ezWEEyHs5BrP6ftHjovyxaRjTdDm/Hpj9QEcjbnsDLTntfPljdIS4aHgEwQrTaCAZSdj/wAIDK4pOCHzJBI88OEke0AePXWRwc9uFq0nx/gK3Uz0p+03sdgPRGEdvOcNGEUyQF2eK8hD8bylxgfbtw6E5+4dmqlehfkGFMeqeeaZFhzaM9j03CNyYnQMdT5eg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ltYObs53du3reAhlAkewgRUST/IgwpzhJT/qTN66TkI=;
+ b=wrCubOcrJpidt3yZGjvcGoBIV1wCB9Z4aAD/sBpjSNyXQpn63f1zKcHZ6FW0c/JnkMDckx6eya/Nd7P9rE4aoWGrXzf+Rs830KhA4aEs1i2irU/IVc03pOObQqiEBUUpAX6+yDR92xN6QZL6haPoBgW4DS1FzDxQq74xOTECCffBYarfN0maK4Q2GBDbWpNHe9N9on6xnYm0Vl/FFA8vFPQja5Wc1zzmAtMTrOYx7pysHwOEQNgJlS2gynErC6iSO1jUzpNWCR+FJGsnkdKxw/L990LS6h1mhCtO1iGfyYyqSR25bM+8N2NS4WMy5C0nQyvjdY2Ju85uGyYzdF8HTA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=processmission.com; dmarc=pass action=none
+ header.from=processmission.com; dkim=pass header.d=processmission.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ltYObs53du3reAhlAkewgRUST/IgwpzhJT/qTN66TkI=;
+ b=QlPblmKNrpdp7BQ5STM+xg3pDP1WMp5ONzcmXA6/sRRHMwe3A4TodN+wV30Tu9i6GK5PIEK78Smb/IyPpVrtJQBxkBC5d6v6v6QaW/mlSRH1ooaD6BWUmwfR7rk9+7TL1zioExdwlJiEkRb+7hpOKQmMTHNgUe2XlJsHAaehzGV7znL/YKT+vxtZa7WLu6R6b97lGAeu4y3T2OVAC1twGmVrp/GWrx6DUOYHxT08YHcNpRd6/AzZ2PUKYkO1cwVcs4vlPeglyAMG7miOGlieYy8xPM7xjDIX6uJnTg5d0RlLU6lliOj5e6jPoObv6eg9dqYPE3q0y+2Qn1LbNpkOHA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=processmission.com;
+Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
+ by SEZPR02MB6411.apcprd02.prod.outlook.com (2603:1096:101:126::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.18; Mon, 13 Jul
+ 2026 12:03:02 +0000
+Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
+ ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
+ ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0202.014; Mon, 13 Jul 2026
+ 12:03:02 +0000
+From: Bin Meng <bin.meng@processmission.com>
+To: QEMU <qemu-devel@nongnu.org>
+Cc: Alistair Francis <Alistair.Francis@wdc.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ qemu-riscv@nongnu.org
+Subject: [PATCH] tests/functional/riscv64: sifive_u: Fix kernel command line
+Date: Mon, 13 Jul 2026 20:02:44 +0800
+Message-ID: <20260713120245.781959-1-bin.meng@processmission.com>
+X-Mailer: git-send-email 2.53.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: SL2P216CA0073.KORP216.PROD.OUTLOOK.COM (2603:1096:101:2::6)
+ To KL1PR02MB4977.apcprd02.prod.outlook.com
+ (2603:1096:820:71::8)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v18 12/14] net/tap: support local migration with virtio-net
-To: Markus Armbruster <armbru@redhat.com>
-Cc: jasowang@redhat.com, mst@redhat.com, peterx@redhat.com, farosas@suse.de,
- raphael.s.norwitz@gmail.com, bchaney@akamai.com, qemu-devel@nongnu.org,
- berrange@redhat.com, pbonzini@redhat.com, yc-core@yandex-team.ru,
- mark.caveayland@nutanix.com, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>, Zhao Liu <zhao1.liu@intel.com>,
- Jason Wang <jasowangio@gmail.com>, Eric Blake <eblake@redhat.com>
-References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
- <20260710191809.721154-13-vsementsov@yandex-team.ru>
- <875x2juxru.fsf@pond.sub.org>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <875x2juxru.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|SEZPR02MB6411:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8e59cb10-f6db-422a-af4f-08dee0d6b05b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|34096008|23010399003|1800799024|366016|376014|56012099006|5023799004|18002099003;
+X-Microsoft-Antispam-Message-Info: T39CVyvYXmEBWvskgmDSx2/Awfi0vC5kXHizL2y71Aa+2YiewixvaWXghrR6lqk1GslngOylvZQ9v1A6b3rk4per8b3ByrOPsPOP/gwedClW1zxtAclm7iFiEU32ggLFI0CIwG6tZNXeZD8F/n6ZwVEYBEBjIkVWBH95U+j1G/zs32Y+aiKacLz3F954Cf3D8G+pVUIbCLAbUfRRr02h+qmg9wwfvbUEcY3cOMxFSKjlrv6VKcwR+3xTRzoVjZf75dHI/2tdjgbMNIv7B2YvVRCYnUKkBg42FzfsUB2uX+d9mmhpk29+bt2b0RHs0qf/3QhYvtAEHXJuMTVbQV0YsGL1e3vYEIjk5TLlCdEsJW2UG+EmpGpPxJ0uxWBMkQjQxxfU90q0LMZB7Le5tu5ycpGuzfTYQg/rrHzPC+Owax/Ewr7AcEW3mb9sFCyPJdFTXOIZySso+jQwIJL8urd1NVMTKUVi6rrdnH0UrkEl753Uz4Y7LjI1+PQeMXzQwn6WrWSOyyRR5+nLrRte+cA69b/oMN6njUAg46yi6Lea3nykJbQKq/iRuBOLx0BstFzqj8GuI+jLA7Bdg72+pZV4xhvZrV3bWpIjf+269RyNe7D3PSaoYqk+SmWtSeTfmgkjrmT0VYqReNJJfZShH/1g6ZqqdBFc9+k32406zXKDRXE=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(34096008)(23010399003)(1800799024)(366016)(376014)(56012099006)(5023799004)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?rUNcFBO3HlUM7hRnBwBGxJp2cb6SPdlA5kOafCgnwBy5YTmp4+w6N7KG/zch?=
+ =?us-ascii?Q?3KMwD+aIwoUZyLKO3SGNQwOnjC3juZEez4NmwuJFkWrxoWHhiPgyJVR0EtlK?=
+ =?us-ascii?Q?flmoAQvgQzlXTPGkiQkBsI6/6IiRhgv5yekkjqvPESO2tD7FXZX1jYx5fRXm?=
+ =?us-ascii?Q?RNHggeHtRqCcHKEL+l58DnWnapNt+4KQAscnUtcmRAYDJLYtXBzBo7WNG4dB?=
+ =?us-ascii?Q?SiYA07/zNPdjQlwH2CElLwzGeZOwDaEi7SfI1zP3JFYxIZ8ZMKcjW+jXT4gf?=
+ =?us-ascii?Q?py/raO2LIyyws8AyH/DZaNZQ1O776jqPrfXmc4lWYdJzy0FJdObwn2kjuqji?=
+ =?us-ascii?Q?XlELBakwRsExSep6nJwa9IraYWze1mZ+bOiVWRjAjpHvzlRQh0FSfGH9T3tW?=
+ =?us-ascii?Q?jt/9koX4ylp77cswrlm6tt6k1wYug7RHU2WOpQRA1NOL83RamJN9FlPbgY5C?=
+ =?us-ascii?Q?g5f+S4ojY9XlnsYXB/BNAFm6mBe5BWEgYGeB+MNV6FaO8srsCKhCoTGKypkD?=
+ =?us-ascii?Q?5stU5TeSul1BVUFo5oXukk7MEvTSMAgq17t0B0Rceei6kk3rtOYDFTHg0cw8?=
+ =?us-ascii?Q?5iyJa1Hlivfob6Hgpv4FCRwBRWnj5W8UVkLsRhbKSufoRYXKs9urfc9ZuEGQ?=
+ =?us-ascii?Q?nnBwbX51S7AEFg2FoAab/pNC5iZFcoDHIsmMLXT3yI4aHRidewW9iu5izCfi?=
+ =?us-ascii?Q?17EpEynRT2G84oFN4ZaFGOSeGf8OhVlwQjY9UkAmeYLk7ma9zu1wb7VZwFvs?=
+ =?us-ascii?Q?BUaLi3bjxB/5SLkpnAy6XDsbOTK8wvgu9HBPDeTaeUC3xcyiGV6IiMbqCES3?=
+ =?us-ascii?Q?5F12SLpqT3oYjMKph96Kb5EfaS/OZN5BippziaeNuzX5Wm4XWL0H8D6actNw?=
+ =?us-ascii?Q?shbrL1146Xbp4HikmexIA4U+a4f5y/8mVuIvYiGtnol/plKzFfYvQJm8NXGQ?=
+ =?us-ascii?Q?aSlB8VLib2vUhoN440PiwmmfYzH8eta45OaLG+Ogj2psa0yPcNSdvUjvWAv0?=
+ =?us-ascii?Q?IM13o8rsV6HUE5yvloaihjK4gshwzzPO0Q0PYf71DikiBkZEVCGs2YLJTDp+?=
+ =?us-ascii?Q?1iVg/S8VIpexdn/NO+ZDuG6gOsWyHHsZsWWalEAOU8h4qY3EbFk99J8xfYpx?=
+ =?us-ascii?Q?b4+0qF/P5fqhC4wrLQEsJ9+rqg3Rviu93h2bHaB1ZYpKCRBE6VtTTjQGQcEX?=
+ =?us-ascii?Q?vOPpFMe8j+NSuLkF7usVF8vZF17rml+71KwcsMd5WwIL6g9PM2BTaMC8yX1k?=
+ =?us-ascii?Q?2Kh7DQagbclpCQ4SA8CIwl9qV7++M7eE26WOJQjAgAZJOX4lj51YAsFWzfNR?=
+ =?us-ascii?Q?cNjUU7zFzO1G7xStL341ZAiOYjWKnLUWXcGloiJoGkcUn+bEQHmG8AzpZ1Om?=
+ =?us-ascii?Q?kG70B/KVKimc/yDAHrSFZHW6yABIDYUcKEqsFsHEGVo7i11DXx6NwOBLB1Sj?=
+ =?us-ascii?Q?oDAEsSj6W50gc1U01rbnjhiiMKOt4MeLKn642bOoao50NpV4M7XdU68nEGSD?=
+ =?us-ascii?Q?QjJIy5xjLs9wQlxePXiy98VV6zcr4PSTCUpqoGqqkt/yGAb2qqwuZaF8/yTe?=
+ =?us-ascii?Q?rYgqVsLJ7E1eu83txhDQwkw3oGKA9N/QXqJey+Thw2wkiUhIKJnBdJpN16Hg?=
+ =?us-ascii?Q?vi7mrS/FjNYk9CDSeD1XA5AStIhy0CiO2M17LKcJ9hRpY81atVyeXwUIYZyp?=
+ =?us-ascii?Q?LHY8Q0UtDHFaDXsdV74lbRsjBMkMLG/6zL6HtYy9eOoB+nqBwwXt/IPheIQD?=
+ =?us-ascii?Q?IrAHKPC8RU8ohROFmIT7tawuVBvAAAw=3D?=
+X-OriginatorOrg: processmission.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8e59cb10-f6db-422a-af4f-08dee0d6b05b
+X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jul 2026 12:03:02.2174 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: mOjzL3ixovO04/XkD3nXLHU+Fmw0aRxgo37hOEMXMqnIa8McJzeuff0DBY47HbPhEwTjuEFLtaTUEr1WgBb0dp1EPDUphcm5htzppALA74c=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR02MB6411
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+ envelope-from=bin.meng@processmission.com;
+ helo=SEYPR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -83,197 +141,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13.07.26 10:57, Markus Armbruster wrote:
-> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
-> 
->> Support transferring of TAP state (including open fd).
->>
->> Add new property "local-migration-supported", which defines
->> whether local-migration is actually supported for this TAP device.
->> Starting from 11.2 QEMU Machine Types it's enabled by default.
->>
->> Note, that local-migration (including migrating opened FDs
-> 
-> Scratch the comma after "Note", ...
-> 
->> through migration channel, which must be UNIX socket), is
-> 
-> ... and the one before "is".
-> 
->> enabled by global "local" migration parameters. But individual
->> devices may have additional options to enable/disable it
->> per device.
->>
->> The tricky thing, is that we need to know, should we do
-> 
-> Do you mean "The tricky thing is that we ween to know whether to call"?
+Build the complete kernel command line before adding it to the QEMU
+arguments. This ensures the panic, noreboot and rootwait options are
+passed to the guest.
 
-yes
+Fixes: 7db162fa0138 ("tests/functional: Test SPI-SD adapter without SD card connected")
+Signed-off-by: Bin Meng <bin.meng@processmission.com>
 
-> 
->> call open/connect in TAP initialization code. That means,
->> that on incoming migration we want to know status of
->> "local" migration parameter at time of creating TAP device.
->> So, currently, for incoming local migration only TAP device
->> created through QMP is supported, as you need to set migration
->> parameter first (through QMP as well).
->>
->> So the full picture is:
->>
->> On source, to start outgoing "local" migration you need:
->>
->>   - migration parameter "local" set to true
->>   - "local-migration-supported" TAP option set to true (the
->>     default, starting from 11.2 QEMU Machine Types)
->>
->> If at least one of these options is not set, TAP backend
->> doesn't participate in migration.
->>
->> On target, things are more difficult:
->>
->> Same, you need both "local" and "local-migration-supported"
->> be set. And same, if one of them is not set, TAP backend
->> is initialized as usual, and doesn't accept any incoming
->> state.
->>
->> Additionally, if you are going to set "local", it must be
->> set before creating the TAP device. If TAP device created
->> with "local" unset, it initializes as usual. If you enable
->> "local" after it and start incoming migration, it will fail
->> in .pre_load handler of TAP backend.
-> 
-> Out of curiosity, how would such a failure look like?
+---
 
-TAP is initialized as usual, so the answer depends on the options.
+ tests/functional/riscv64/test_sifive_u.py | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-For incoming migration we should open TAP without "ifname" argument.
-If so (and "local" is not set), new TAP device will be created. It
-shouldn't trigger any additional problems I think.
-
-
-Checking with test:
-
-   diff --git a/tests/functional/x86_64/test_tap_migration.py b/tests/functional/x86_64/test_tap_migration.py
-   index bcc0a60dfe9..94982bc7b55 100755
-   --- a/tests/functional/x86_64/test_tap_migration.py
-   +++ b/tests/functional/x86_64/test_tap_migration.py
-   @@ -316,8 +316,8 @@ def prepare_and_launch_vm(
-            else:
-                tap_name = TAP_ID
-
-   -        self.set_migration_capabilities(vm, local)
-            self.add_virtio_net(vm, vhost, tap_name, local, incoming)
-   +        self.set_migration_capabilities(vm, local)
-
-        def add_virtio_net(
-            self, vm, vhost: bool, tap_name: str, local: bool, incoming: bool
-
-
-Leads to
-
-qemu-system-x86_64: TAP is already initialized and cannot receive incoming fd
-qemu-system-x86_64: warning: qemu_fclose: received fd 27 was never claimed
-qemu-system-x86_64: load of migration failed: Invalid argument: error while loading state for instance 0x0 of device 'netdev.1/0/net-tap': pre load hook failed for: 'net-tap', version_id: 0, minimum version_id: 0, ret: -22
-
-on target, and failed migration, as expected.
-
-
-> 
->> Moreover, there are interface restrictions: if you create TAP
->> device when QEMU is in INCOMING state, and both "local"
->> and "local-migration-supported" set, most of TAP options are
->> not allowed, and script/downscript are required to be explicitly
->> unset (set to "" or "no").
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> ---
->>
->> In v17 thread we considered making new qapi parameters "unstable".
->> Still, it was because of doubtful "incoming-fds" parameter. In this
->> v18 it's completely removed, and we may live only with "local"
->> migration parameter + "local-migration-supported" TAP option.
->> This way the series doesn't conflict with suggested by Peter
->>    [PATCH RFC 0/2] migration/vl: new -incoming config:* for early migration parameters
->> So, I think, worth making one more iteration as "stable candidate".
->> If still some doubts, not problem for me to resend with "unstable" features.
-> 
-> Up to the migration maintainers, I think.
-> 
-> [...]
-> 
->> diff --git a/qapi/net.json b/qapi/net.json
->> index ada0329ef9d..2070979f20e 100644
->> --- a/qapi/net.json
->> +++ b/qapi/net.json
->> @@ -435,6 +435,26 @@
->>   # @poll-us: maximum number of microseconds that could be spent on busy
->>   #     polling for tap (since 2.7)
->>   #
->> +# @local-migration-supported: enable local migration for this TAP
->> +#     backend.  When set, local migration is enabled/disabled by
->> +#     migration parameter @local for this TAP backend.  When unset,
->> +#     migration parameter @local is ignored for this TAP backend.
->> +#     To be able to do incoming local migration of TAP backend,
-> 
-> Suggest "of a TAP backend", or maybe "of any TAP backend".
-> 
->> +#     migration parameter @local must be set _before_ creating the
->> +#     TAP backend.  Otherwise, TAP backend is initialized as usual,
->> +#     opening/creating TAP devices in kernel.  In this case further
->> +#     local incoming migration (with migration parameter @local set
->> +#     after creating TAP backend with @local-migration-supporeted
->> +#     parameter set) will simply fail.
->> +#     Moreover, when QEMU is in incoming migration state, migration
->> +#     parameter @local is set and @local-migration-supported is set,
->> +#     following options are not supported and must not be set:
-> 
-> the following options
-> 
->> +#     @ds, @fds, @helper, @br, @ifname, @sndbuf, @vnet_hdr.
-> 
-> @ds does not exist.  Do you mean @fd?
-
-yes
-
-> 
->> +#     Additionally in this case @script and @downscipt must be
->> +#     explicitly disabled (empty strings or "no").
-> 
-> "no" is deprecated.  Scratch the parenthesis?
-
-Unsure. I'd keep until it finally removed after deprecation period.
-
-> 
->> +#     (Since 11.2.  Defaults to true for QEMU Machine Types >= 11.2,
->> +#     and to false for QEMU Machine Types < 11.2)
-> 
-> We commonly write this like
-> 
->     #     Defaults to true for QEMU Machine Types >= 11.2, and to false
->     #     for QEMU Machine Types < 11.2.  (Since 11.2)
-
-ok.
-
-> 
->> +#
->>   # Since: 1.2
->>   ##
->>   { 'struct': 'NetdevTapOptions',
->> @@ -453,7 +473,8 @@
->>       '*vhostfds':   'str',
->>       '*vhostforce': 'bool',
->>       '*queues':     'uint32',
->> -    '*poll-us':    'uint32'} }
->> +    '*poll-us':    'uint32',
->> +    '*local-migration-supported': 'bool' } }
->>   
->>   ##
->>   # @NetdevSocketOptions:
-> 
-
-Thanks!
+diff --git a/tests/functional/riscv64/test_sifive_u.py b/tests/functional/riscv64/test_sifive_u.py
+index 847f709da1..54a0f9c648 100755
+--- a/tests/functional/riscv64/test_sifive_u.py
++++ b/tests/functional/riscv64/test_sifive_u.py
+@@ -35,9 +35,6 @@ def do_test_riscv64_sifive_u_mmc_spi(self, connect_card):
+         kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
+                                'earlycon=sbi console=ttySIF0 '
+                                'root=/dev/mmcblk0 ')
+-        self.vm.add_args('-kernel', kernel_path,
+-                         '-append', kernel_command_line,
+-                         '-no-reboot')
+         if connect_card:
+             kernel_command_line += 'panic=-1 noreboot rootwait '
+             self.vm.add_args('-drive', f'file={rootfs_path},if=sd,format=raw')
+@@ -46,6 +43,9 @@ def do_test_riscv64_sifive_u_mmc_spi(self, connect_card):
+             kernel_command_line += 'panic=0 noreboot '
+             pattern = 'Cannot open root device "mmcblk0" or unknown-block(0,0)'
+ 
++        self.vm.add_args('-kernel', kernel_path,
++                         '-append', kernel_command_line,
++                         '-no-reboot')
+         self.vm.launch()
+         self.wait_for_console_pattern(pattern)
+ 
+---
+base-commit: a759542a2c62f0fd3b65f5a66ad9868201014669
+branch: sifive_u
 
 -- 
-Best regards,
-Vladimir
+2.53.0
+
 
