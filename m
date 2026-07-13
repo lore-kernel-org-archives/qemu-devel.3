@@ -4,147 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF52CC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 22:34:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0805BC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 22:45:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjPDL-0007WB-KC; Mon, 13 Jul 2026 18:33:27 -0400
+	id 1wjPNx-0000Oy-Bg; Mon, 13 Jul 2026 18:44:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wjPDJ-0007Ux-PT
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 18:33:25 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wjPDI-0002Pa-2P
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 18:33:25 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66DJ9XfR2389510
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 22:33:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 0+Q3hEuX6J3+GgqW6FseDoKE8vErqp0huU/OBhqj3j0=; b=X/G/53KoEWV+wfyI
- td0QAoea7bwP9xDQ1WumHDEEBI2EhUzTw3qIrj5+ump+/PN1Mr0ODjuiuKAvfM8o
- udNfYN4w+0P0je+/Od95DmaO5MLRFCnkJHr3tErEWxt2Ia39LSQdKwmJ98QEwuni
- cR/SsR4aL3N7a4Or8zJ3NPeEx6m5BWN96XxOTIwzSCTW+1WpTpFwl0UAasVfn+hx
- Sgvd1hi+huB92pETeo5km80laFRr9uBijR6YTB4Ran3o+8UaDx3LioWoUMWsNsjA
- 70owdw2wqMQMCn7er+X+qqz9wdXXeDHFRWgVloX+rU6vejLdMvGv2PrzbxOm7zof
- Bgyx4A==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fd44j11au-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 22:33:22 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-37fca5f21b1so380078a91.0
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 15:33:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
+ id 1wjPNv-0000Oi-6P
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 18:44:23 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
+ id 1wjPNt-0003gP-97
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 18:44:22 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-84a2c90e383so291608b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 15:44:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783982001; x=1784586801; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=0+Q3hEuX6J3+GgqW6FseDoKE8vErqp0huU/OBhqj3j0=;
- b=O9dxBcQ7BJ9S6u8VF/96Q3E1xGPIstYBNP4eSWhfqI2siT3Mb3DBKJTt1z8sg3bXCc
- Ms2wZMaFk9zTMKistYGT7to9MBjs6Ui4efUJ24/ZkehdN9shdFNZVvFPEhF9zVeeaTDh
- JcbxblVzj0og8wWB8zvShnSIQZhJHp2c/PchSU8KFg8fFwrPlL9L+arULXenYLEOdFu7
- kCG9qls5KMmyNCWzRxpzK7ln3mqOkVBTDpKvA1TkjNwZskTYCwnvTqnSrGlVGyRIgHF/
- wA493iJGxeQa3TkbMDhZVl8clOyzmVKPBKZ5zrXDufILHYdJID9NPhtopFT6fqcrEgzn
- w5Tg==
+ d=linaro.org; s=google; t=1783982659; x=1784587459; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=LgcBlPclbkMdbp/HtCXTu51Kc/xPI2S2dvfoAEfAMNM=;
+ b=q9YWIdnIjpolD3h27FlGF4kg5T4lJ/zBASnjK0MyFDVCvnv1DnlPap/PelQkghu3w2
+ NkRDWf3KPrB9W6tQHyiUASRecPsKJ/xaXpV6D3sGCwxNtUyvW3Q1fDj5a4iJzlPOJl6E
+ K9EkOfongAOwCWz22diJ+QGOSifTpeLVAvtA0SftqEW2tui1gTN6L4/NHUFU4AF6h80Q
+ qlSICvznxBbGj/Ue8Nxj/2SXXRN98XWHSpjP7HRMNubiBP9P/D6bOsahC0Z3ODQ/ZFA3
+ qRPzuk1c4NB5bZSZ9aOW28loirkQrWNddSBrXWZdxXZpZjHrwxN1uJhmGHOvR/Q6APLs
+ XGjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783982001; x=1784586801;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=0+Q3hEuX6J3+GgqW6FseDoKE8vErqp0huU/OBhqj3j0=;
- b=Prtl2wRwNhpqqKOAx/d2GMXYFBeCzL+pAaJKfsJm/ODBPFwyOD4TGehicjrOlV1Cb9
- geGw9fQ4RVGDMJK9iYZqNyhU8JmWnd30T8OSyYTWn0jzWNRy50jAPFisZL5aCt1BMxXr
- DoQ8X6kMJR747ADlb/0rIa/uI6W94YxbHoc047pDrSlirrfI/3w1Lra7JtwkxQeRuxZ4
- K1zwXtNvcZCNryFJKXdDSoDlxKfX3EnL3DGUccWaqgkOBkZ+WaQvmeBGUj30B1+iAOPx
- xKFIfUR5Z1pchwdezOhxH6BVXWM9ANEuQU605GD8ylLH5mFs5oHPvrQwd6ZTBnq5WJgL
- BPpQ==
+ d=1e100.net; s=20251104; t=1783982659; x=1784587459;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=LgcBlPclbkMdbp/HtCXTu51Kc/xPI2S2dvfoAEfAMNM=;
+ b=WgWTvMgLckENz6nnVUsxjIq2o7Hlb6TE3Z0XV9IwIqzw2/HeJDNDNwMNsZGrETtu3K
+ EkD4C4GuOezvY/Cnqrv7DBxIDQIlPsdkXqMmo1L6x2weLgN1AcAsCmaske25ev5lFqKA
+ ku1dxVoaHd1iGYcBWzLSm9DWCy7PIGen4Jxe5Pg9YERdEP4UNNnpfhWw04KdGnCIIWxw
+ /Z2z2p9HWCto7aTdLr/CFXMwc3Q5FqTUjaxpXJ4DiKU392Z7GZCioJ2BhwZ2pdjRG48f
+ n/QAGBK3xwWKPUx6KR8FagQAXevbAFBxCO1XO0b/7K5GeJ0sgZVM/aE3BNLA2XxuGT9V
+ 4xhg==
 X-Forwarded-Encrypted: i=1;
- AHgh+RpiA/7xIXRYGf4ESIHBneUti8l/DHDcO1nvyFouEmgkcCTu0s6PY316CSdvrsdGtiPZk/FpFerqbzjG@nongnu.org
-X-Gm-Message-State: AOJu0Ywc54kibChiwE9F/BqXnr5sbAu5b72fole363gWWDSrxagSEeoo
- BzH7XbEErvr+OV3Pq6G3+/loL7MFYKAsBBX1mG737ZenWkaFjCvC6P6p79GlGtAS75CzFLq/zHx
- e1mxrJR45konEOFzvs4WUUgcIWKp5WeaePewEaabn1c1uhxHd7PkDiQW6EOhs+sWTIg==
-X-Gm-Gg: AfdE7clKA2lBi3ROnbBYB+sPqgJayAoAZMjOFLFb0BMaQaiZk1Cz7iCh2Gg1WO5o8/2
- +CxcShM6TIUXjRXBV95965CZL3ky0LCZOUu2ApfvQfqdnvvNJwa2pRsLR4Z8T1i82L2XYiOfGYT
- /5SeIQQKuFeizOwHTvQ0xrFwXvCwMDveqwXbXnnbyxHvQZUoazMTI5AZ//l+DRgZkALdglNJY8g
- xWXb5vFQNmWOmi1zlKslPyhOcN6VH17vdqBTfl7sgW+p/Xqk1xG31ecx51BvkIuTgKuiPpbqrJH
- zQ5xg/78Olv7i1hL01DwcuOoND/H0SPfnpYSBNabI9ydEazWEYur3TXiG1Ua7rPsLwpSWXtWjux
- Spzohmn8FN5E16cpmpGWonO8rgL6Vzl3LJATqTAioWtA/Pz0E03kkq6u0NjJRhGyWgGBoZCDmhU
- SmycE=
-X-Received: by 2002:a17:90b:5607:b0:37f:e5b1:ec4b with SMTP id
- 98e67ed59e1d1-38d13c60530mr15793225a91.5.1783982001523; 
- Mon, 13 Jul 2026 15:33:21 -0700 (PDT)
-X-Received: by 2002:a17:90b:5607:b0:37f:e5b1:ec4b with SMTP id
- 98e67ed59e1d1-38d13c60530mr15793210a91.5.1783982001119; 
- Mon, 13 Jul 2026 15:33:21 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3118389d9bcsm62565830eec.20.2026.07.13.15.33.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Jul 2026 15:33:20 -0700 (PDT)
-Message-ID: <b9cb8831-aaed-4220-a389-f3a8259b81a6@oss.qualcomm.com>
-Date: Mon, 13 Jul 2026 15:33:19 -0700
+ AHgh+Rp8UCgptGAoWPErQPxryLwC44dwnIUf4X4VZNdLQ7U5gio+i4MWV2KpuFxvewH4xTeyxDzZKPg5n/tk@nongnu.org
+X-Gm-Message-State: AOJu0YycSwrNup87sNpI45ShqGc8XtH9ILTh8/7cSbfMc1OgCCqtLcR5
+ ZDrA+HdZaLTRFL1PNtDymqlw+YDNKA4FsnqLM05QEnx+pqcdZsUWH/Ow8QMI1Z3m1hM=
+X-Gm-Gg: AfdE7cmOjIGfe7UBCm+PBJ80nyaFxYV5LzG9s5WuFnb6I0BAa2dyP0InLeqPtfQG5IP
+ Ofvl+fjdmusiM5dE4JRmeMQEbLeB69Asmlyzw3QwMdWN1UHQuL518x4hAm+zVWbS8kuJf1wdpge
+ Xh2m4j1tUHUi7OHT95TL0aUAH7WboE/t8ZOVAQndKh9c7FXjQ6QmOIaEsVf+eb+KNEitwQJafF6
+ bhMMQnug769q0tXv8ch8x5ZC01BzeAcUKVflm2ngu849bfZf52j2B5ZnqFWDPZDao55Uez2KrTW
+ n8Jcp+Td+B3mZ02FXYpl3J/GA6ryS4jdk3G8uFEXDgFdZ0EgqmNkCFhAFakAH601xnn9puRzx/C
+ oVS124yGWw/PfZ/oRcg5/WlYPwqNp/tSzl9ACDArx7qx6Lxp4NjISiKcyhYIgBIqu74uioQU+LD
+ t1VTnB3j3BpqQyZgQG
+X-Received: by 2002:a05:6a00:2286:b0:845:d2e3:b9c8 with SMTP id
+ d2e1a72fcca58-8488acd5302mr8622187b3a.28.1783982658927; 
+ Mon, 13 Jul 2026 15:44:18 -0700 (PDT)
+Received: from p14s ([2604:3d09:148c:c800:3ead:2a56:27bf:77cb])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-84a4f238f75sm464398b3a.9.2026.07.13.15.44.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 13 Jul 2026 15:44:18 -0700 (PDT)
+Date: Mon, 13 Jul 2026 16:44:15 -0600
+From: Mathieu Poirier <mathieu.poirier@linaro.org>
+To: Gavin Shan <gshan@redhat.com>
+Cc: berrange@redhat.com, kchamart@redhat.com,
+ pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
+ mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
+ eblake@redhat.com, armbru@redhat.com, jpb@kernel.org,
+ lorenzo.pieralisi@linaro.org, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvm@vger.kernel.org
+Subject: Re: [RFC v1 04/25] target/arm/kvm-rme: Add mechanic to initialize
+ realms
+Message-ID: <alVqP3H9N5Hh5jyF@p14s>
+References: <20260707224306.1202330-1-mathieu.poirier@linaro.org>
+ <20260707224306.1202330-5-mathieu.poirier@linaro.org>
+ <618fa1ec-c986-4075-9b6f-c720b48d75ce@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/14] target/hexagon: add OPEN/READ/CLOSE_DIR semihosting
- operations
-To: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: brian.cain@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
- philmd@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng,
- Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
-References: <cover.1783973054.git.matheus.bernardino@oss.qualcomm.com>
- <db95d3b7af7b0f64102866ce046ad773a2b391b9.1783973054.git.matheus.bernardino@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <db95d3b7af7b0f64102866ce046ad773a2b391b9.1783973054.git.matheus.bernardino@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDIzMSBTYWx0ZWRfX3+iPlcjXoH4Z
- SPz6qroyFYDdRIxv66hDP1kEhNfV0zJpdflYN6nZDdq0i2gc6Zm0o1/TkU/x5j1CYBmzKynDUcL
- mvxX70jcGogoJ1XOpBzg6m7B6QaBWYo=
-X-Authority-Analysis: v=2.4 cv=N4UZ0W9B c=1 sm=1 tr=0 ts=6a5567b2 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=j-2ieXHuSseVZ7EA7hQA:9 a=QEXdDO2ut3YA:10
- a=mQ_c8vxmzFEMiUWkPHU9:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: 6NFGXtVsf0_EVIHhC0-xHDyKrStL6UUy
-X-Proofpoint-ORIG-GUID: 6NFGXtVsf0_EVIHhC0-xHDyKrStL6UUy
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDIzMSBTYWx0ZWRfX5atcgyUCg5gy
- itsdhaHMYZWgNjEkhar0uWZys6Bsd37RcSYs8ghs3PVAFZ8baBqKyBhVSTVFTkewosDKzi634Gb
- HSsB1IKykXO7+KvC9uj+UvfPZKP/h+jDw44XB0piFXHJJ5soCqgD5KJ2kxgCAvyik/2e+8WdUL1
- zHCisTD4lNNiiJ/BzE2lkdtcsRVGZEEVV16HyL2wJxV4PrQycZNNb789/w1oyKECmPJG0hiyAhj
- 45t9cki04IfDkya491//x5KcokrCl2EGKVwXCRLjW1KNwswgZB6zIqvVGhrG6xAhZxWrpIoMvxr
- d+AIvhFQ3pJw/eG/NyrVK7PkiJk9/deCOiEHBfAKTjAa1rDqH+/iny0shEz0zrwjAEEX8izbPqb
- ZivVp4MQpZzpn6jfbKZWWxVH3ownagx7Ae+5cEs4b4QRarH55ekW3/dlZ5yQmB7kTuyqZAzc9RT
- 0eOlHWDgVOTAhtQM62Q==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-13_05,2026-07-10_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 phishscore=0 priorityscore=1501 suspectscore=0
- bulkscore=0 malwarescore=0 adultscore=0 lowpriorityscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607130231
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <618fa1ec-c986-4075-9b6f-c720b48d75ce@redhat.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=mathieu.poirier@linaro.org; helo=mail-pf1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,23 +110,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/13/2026 1:07 PM, Matheus Tavares Bernardino wrote:
-> From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+On Mon, Jul 13, 2026 at 03:14:05PM +1000, Gavin Shan wrote:
+> On 7/8/26 8:42 AM, Mathieu Poirier wrote:
+> > From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> > 
+> > Initialise an @rme_guest object and install a handler to get notified
+> > when the Realm is ready to start.  That way we can finish reading the
+> > Realm once we know everything is in place.
+> > 
+> > Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> > Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+> > ---
+> >   target/arm/kvm-rme.c  | 50 +++++++++++++++++++++++++++++++++++++++++++
+> >   target/arm/kvm-stub.c |  5 +++++
+> >   target/arm/kvm.c      |  7 +++++-
+> >   target/arm/kvm_arm.h  |  9 ++++++++
+> >   4 files changed, 70 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
+> > index 42e1d1e7b859..b86b9d6a25cb 100644
+> > --- a/target/arm/kvm-rme.c
+> > +++ b/target/arm/kvm-rme.c
+> > @@ -13,6 +13,7 @@
+> >   #include "kvm_arm.h"
+> >   #include "migration/blocker.h"
+> >   #include "qapi/error.h"
+> > +#include "qemu/error-report.h"
+> >   #include "qom/object_interfaces.h"
+> >   #include "system/confidential-guest-support.h"
+> >   #include "system/kvm.h"
+> > @@ -29,14 +30,63 @@ OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RmeGuest, rme_guest, RME_GUEST,
+> >                                             CONFIDENTIAL_GUEST_SUPPORT,
+> >                                             { TYPE_USER_CREATABLE }, { })
+> > +static RmeGuest *rme_guest;
+> > +
+> > +static void rme_vm_state_change(void *opaque, bool running, RunState state)
+> > +{
+> > +    if (!running) {
+> > +        return;
+> > +    }
+> > +
+> > +    kvm_mark_guest_state_protected();
+> > +}
+> > +
+> >   static void rme_guest_class_init(ObjectClass *oc, const void *data)
+> >   {
+> >   }
+> >   static void rme_guest_init(Object *obj)
+> >   {
+> > +    if (rme_guest) {
+> > +        error_report("a single instance of RmeGuest is supported");
+> > +        exit(1);
+> > +    }
+> > +    rme_guest = RME_GUEST(obj);
+> >   }
+> >   static void rme_guest_finalize(Object *obj)
+> >   {
+> >   }
+> > +
+> > +int kvm_arm_rme_init(MachineState *ms, KVMState *s)
+> > +{
+> > +    static Error *rme_mig_blocker;
+> > +    ConfidentialGuestSupport *cgs = ms->cgs;
+> > +
+> > +    if (!rme_guest) {
+> > +        return 0;
+> > +    }
+> > +
+> > +    if (!cgs) {
+> > +        error_report("missing -machine confidential-guest-support parameter");
+> > +        return -EINVAL;
+> > +    }
+> > +
+> > +    if (!kvm_vm_check_extension(s, KVM_CAP_ARM_RMI)) {
+> > +        error_report("KVM doesn't support Realms");
+> > +        return -ENODEV;
+> > +    }
+> > +
+> > +    error_setg(&rme_mig_blocker, "RME: migration is not implemented");
+> > +    migrate_add_blocker(&rme_mig_blocker, &error_fatal);
+> > +
+> > +    /*
+> > +     * The realm activation is done last, when the VM starts, after all images
+> > +     * have been loaded and all vcpus finalized.
+> > +     */
+> > +    qemu_add_vm_change_state_handler(rme_vm_state_change, NULL);
+> > +
+> > +    cgs->require_guest_memfd = true;
+> > +    cgs->ready = true;
+> > +    return 0;
+> > +}
 > 
-> Baremetal Hexagon programs use semihosting to enumerate host
-> directories via OPENDIR, READDIR, and CLOSEDIR calls.  Track
-> open directory handles per-CPU in a GList so that guest
-> index values map back to host DIR pointers across calls.
-> 
-> Signed-off-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  target/hexagon/cpu.h     |  1 +
->  hw/hexagon/hexagon_dsp.c |  5 +++
->  hw/hexagon/virt.c        |  5 +++
->  target/hexagon/hexswi.c  | 79 ++++++++++++++++++++++++++++++++++++++++
->  4 files changed, 90 insertions(+)
-> 
+> I think it's more reasonable to set ConfidentialGuestSupportClass::kvm_init to
+> kvm_arm_rme_init in rme_guest_class_init(). confidential_guest_kvm_init()
+> gets called in target/arm/kvm.c::kvm_arch_init(). With this, the pattern matches
+> with that for x86.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+I agree, it would be nice to align Arm with the other architectures that
+support confidential guests.  Let me see what I can do.
+
+Thanks for the review, I'll look at your other comment tomorrow.
+
+Mathieu
+
+> 
+> More details can be found from commit 631a2ac5a4be ("i386/tdx: Implement tdx_kvm_init()
+> to initialize TDX VM context").
+> 
+> Thanks,
+> Gavin
+> 
+> > diff --git a/target/arm/kvm-stub.c b/target/arm/kvm-stub.c
+> > index 88cbe8d85c41..eec1ca3dd2e5 100644
+> > --- a/target/arm/kvm-stub.c
+> > +++ b/target/arm/kvm-stub.c
+> > @@ -119,3 +119,8 @@ char *kvm_print_register_name(uint64_t regidx)
+> >   {
+> >       g_assert_not_reached();
+> >   }
+> > +
+> > +int kvm_arm_rme_init(MachineState *ms, KVMState *s)
+> > +{
+> > +    g_assert_not_reached();
+> > +}
+> > diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> > index ed99be7fd80c..28d5643d6779 100644
+> > --- a/target/arm/kvm.c
+> > +++ b/target/arm/kvm.c
+> > @@ -660,7 +660,12 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+> >       hw_breakpoints = g_array_sized_new(true, true,
+> >                                          sizeof(HWBreakpoint), max_hw_bps);
+> > -    return 0;
+> > +    ret = kvm_arm_rme_init(ms, s);
+> > +    if (ret) {
+> > +        error_report("Failed to enable RME: %s", strerror(-ret));
+> > +    }
+> > +
+> > +    return ret;
+> >   }
+> >   unsigned long kvm_arch_vcpu_id(CPUState *cpu)
+> > diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+> > index e7c40fb003e4..6d058b0e08a2 100644
+> > --- a/target/arm/kvm_arm.h
+> > +++ b/target/arm/kvm_arm.h
+> > @@ -240,4 +240,13 @@ void arm_gic_cap_kvm_probe(GICCapability *v2, GICCapability *v3);
+> >    */
+> >   char *kvm_print_register_name(uint64_t regidx);
+> > +/**
+> > + * kvm_arm_rme_init
+> > + * @ms: the machine state
+> > + * @s: State of KVM
+> > + *
+> > + * Prepare the machine to be a Realm, if the user enabled it.
+> > + */
+> > +int kvm_arm_rme_init(MachineState *ms, KVMState *s);
+> > +
+> >   #endif
+> 
 
