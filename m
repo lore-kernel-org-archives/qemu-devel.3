@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6BFEC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:33:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8602FC44507
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:33:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjIeR-0008UQ-4o; Mon, 13 Jul 2026 11:33:06 -0400
+	id 1wjIef-0000Wr-Mb; Mon, 13 Jul 2026 11:33:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjIeI-0008S6-8O
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:50 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1wjIeS-0008Ul-O3
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:33:06 -0400
+Received: from mail-wm2-x01.google.com ([2a00:1450:4864:31::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjIeB-00017D-Tb
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:49 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-493ba701891so383195e9.3
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:32:41 -0700 (PDT)
+ id 1wjIeO-0001CC-RR
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:59 -0400
+Received: by mail-wm2-x01.google.com with SMTP id
+ 5b1f17b1804b1-493b567a019so29914175e9.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:32:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783956761; x=1784561561; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783956775; x=1784561575; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=Iw0DAfgObCHFOCOXoM5lfjnjSDz7e/AvrJLIEvX5AMU=;
- b=ddQRUGihm4fnsFioAoT+3eVR5EwFRvIjhKSi172J9VpIQFxevoIuXfrg6QL42lRKr/
- 5FLgMsfuFbYPzqbLxESPqsTp4fdnkjvBGkjFqgcZzKTKCxZMmzGPCG8PuZTxpEdHttYe
- 3jreGdLY2zYZsBXk3p6vgkzSfi82Ehwb5WmVJxDJQ+LgFIxqk2wSgBu72Dj5vtZC3vup
- wENdCp2Su0KGZdI/++Oa8bvQP9hZOnPQjo3HFHoTWj9nhg82eR7ZpvAbrvNHZkk3vvK2
- Wk9094s3ZEnXuv3aYbzd/SE7PyUieC2+6LOIvdKWWZucFpY6uw6xdF5Js4ztK4WHuoDk
- aYmw==
+ bh=QgPJk4BUyDewH+3y3PFKAK0sU7NiiLGvTpgnWeYce3Y=;
+ b=Sc1sPpf4volGJXJGzHIlgF8/E8HV/5PrFPItqfBQe0umQlb8ZbYnanhs0ltNCTT8BF
+ 22ScZGSW2krxJpHilUllkcy/qZav2ZOW7q5zsnxvgMWXmYVXcFUuGv9EcS9R8hWsKXo8
+ pvR4R3yYOOizSaiP3F5pgjtcX24S/ZSMXi8WKgAueQzcDf6KRm/x93NzJcvgSIEbYWlW
+ 4RS1qp6mIMBTjP9WfIwqS6jm/Yra5Ob15ypM50fOjA5p5CnnRiLkrL3xaCRL5PztRtkL
+ dCRDKicgxIw38v6/lIISYXR9eH4IwtPvjcj6hMDTakPgjArjiyIqFNzT4A3ViEYVbU3K
+ exNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783956761; x=1784561561;
+ d=1e100.net; s=20251104; t=1783956775; x=1784561575;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=Iw0DAfgObCHFOCOXoM5lfjnjSDz7e/AvrJLIEvX5AMU=;
- b=LFFgZs3aIzBsz+hgUaxOVTJY7sKJcGnKQ+BaxxJf03Aze3nDOyuZXGwcJFKDLkpWSi
- OIq3VA61Q4panvzzvBSRVRXJihfhvDSwLHW8LCk2XkSlPBfWVyfZbwPHIh/Wi9f+s3C2
- 9tYQ4B5557rXKypVyo6V+xocs69ElPaYxLPUs+QLmg8DMp8euSRRBd73zhfeR6+Rr07f
- 65ZI7cXz3zgKACzaxG3/hN/21MoB9tCLZu12yuu4+eVXnODO1GT8FfMsd8cQd1YhEN9X
- n2kVjKNU0Cd0rprmpHZPThackVUKHPNSJ8EUxhaieHxEIxFVAQvpa0gOThZEqt41Uk2X
- 2k6Q==
-X-Gm-Message-State: AOJu0YxW9RQrmrMPpHVVQaPfY7fIhvO0t1bNJONKIwnvJFUWN29KniVS
- /QK6HUtyQX0NIsLZ+KjWsqZvtNh5F08NB+sglLxWSXT1E/XEvt7PzEPVbVHBaljlcGojM4vF2Sm
- pBl4JCSgA1w==
-X-Gm-Gg: AfdE7ckPQr6DKb5SzXOOgzdfrHyLN2eAGO2tOAVvCJP8265d9VxyMOn4OWoFOszXfwh
- 5f4JVUZ/VfmFl+Qrlz5ZyRUmioYVrKKc+Kmqr+ySpErYyS/bH7NNy1Ca9FZYspwWWXb61GjdOIZ
- 2TaTcCf0p3B0Te73FsVyDaBBfbyTAbWSAB61lPtFFgHz4AAK+L/ILgm9t6swF4dSKEgxqfSWFQm
- gKmCvt+zyVW0VQ6T6VoiXER1BSrVoF5uErLbvDADCNh7A0SCqvtiD/954+qkoVdLNI7yqEKzUfZ
- xBLozvyZMBB0HEjGJXA9FpXakSqQYJCgh93+5okh6NsxqFplb0dVTx3AuvRrm+xUoxtqE4fmVYX
- awbUm/6kmNvbePtxorEGnabEzYeRAZThyzwPocTzY+l2jhwKpBjGjIhY0Mv2wYTB4FMQJEh1dfA
- mfni9vydl2BIYyZ+w8veAS80UI8XtiUW6gwMNOskEDOjezAbdFzkSekZ2RFRxRiq5EMiW9zxLbx
- OFPhboxWD02LnYU3xENyw==
-X-Received: by 2002:a05:600c:6387:b0:492:3e69:a86f with SMTP id
- 5b1f17b1804b1-493f87d89d2mr91973655e9.1.1783956760820; 
- Mon, 13 Jul 2026 08:32:40 -0700 (PDT)
+ bh=QgPJk4BUyDewH+3y3PFKAK0sU7NiiLGvTpgnWeYce3Y=;
+ b=GVs608kXnNcFFuwfr0TmeSEm6yDTh0Ul3FGFVu6aWg9wm8pyFbYYXwFUV255e3dEHL
+ JrEjk4HTdcYqFD+9wC1pPdrSwCAk66dHZLmHySRoQtIwtMl5zAuAtGl6kLaROnIRzxc+
+ ZCXjNMbdWD0qOPIRoP6UA17gQbS6jH9E7SltgKmrSTqBUe+o9+MEOY6/HA6/XtHaF8gb
+ nnkGhm4iLlK24Xd9y7BMzhpl4sdhQ2GLyjoRR0eKM/xuOwOOEKgzxga6CVE+zdFjVhRW
+ umK9RLZ5G2Aj4Ey+CYuwix8oyb0pFs7Clrf6Cq0mJJHvddki5pW0Ta1Xg+kbVxK5HWxT
+ AXOg==
+X-Gm-Message-State: AOJu0YwdPdMShOGcIDWDAMrZqMTn3kzOTf/SZKd9Fkvaa15VrnbpF8Hu
+ h983VubWT1o8VFj3MuhAngY0Z8uy7ou49t3STV8QWKo/6Jof0bxQe+GyHx4sAnj7ityay8XYvHO
+ yyZ8edYl3i3yt
+X-Gm-Gg: AfdE7cl4blViZixwnqQI8vcrx87wOsAwAk1i5OHotz847WPSVRYY/5Mw22qSegJzlHd
+ Z3/7iY/HNVtmsL7eajyCwW2PiE4IJHKSBFeXg29dUCuPl/JGFIsDPVMgEcAlqmWyyH6tbWGDfoi
+ V4+79hANwQIe0ZYoqJxHgyt5WPSPJbUC2FstNfLPeyi7LkJfTROb8EGTe2y9sjAq9XZ+4GS8uYG
+ MXWXGCd0igC7RX6T00FYumnyYtzcYjz27NHVXOaOrftQuL1RioV6+ZQPbd45HA7UhMeNVzrPfTa
+ n9zsqfcgGE2Djf1alNf3/Hs92ZhUdX2U731avnxSazsMTWs4FeIjZpX2sFf8iDoGMQwW6fAjVcV
+ BbTN91eEvQDhGI/8Lm3GM98r+mwW7YL6CbGj3HchogwUs5V0FnqYtJJLKR7Ptxciu3c3EFXq7rU
+ Za/1PhxRYrzmp0Z4ZAxjSfLu8aYxPFFwLEiEYFb32k2cXpnbF22i90XB6re6HsHyGBG4n2CbyyE
+ p5X3Yf8o1bni8NDsZKE6w==
+X-Received: by 2002:a05:600c:6048:b0:493:e97d:97e3 with SMTP id
+ 5b1f17b1804b1-493f883e9aamr74956195e9.39.1783956775362; 
+ Mon, 13 Jul 2026 08:32:55 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49508727f7dsm3825985e9.4.2026.07.13.08.32.40
+ 5b1f17b1804b1-49508727f7dsm3825985e9.4.2026.07.13.08.32.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jul 2026 08:32:40 -0700 (PDT)
+ Mon, 13 Jul 2026 08:32:54 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/26] hw/arm/smmuv3: Check L1STD.SPAN
-Date: Mon, 13 Jul 2026 16:32:13 +0100
-Message-ID: <20260713153233.3391818-7-peter.maydell@linaro.org>
+Subject: [PULL 22/26] hw/display/sm501: Catch bad coordinates for RTL
+ operations
+Date: Mon, 13 Jul 2026 16:32:29 +0100
+Message-ID: <20260713153233.3391818-23-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260713153233.3391818-1-peter.maydell@linaro.org>
 References: <20260713153233.3391818-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:31::1;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm2-x01.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,51 +102,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+The sm501 code doesn't check whether a right-to-left operation has
+specified a width greater than the x-coordinate (which would make it
+extend off the left edge of the screen), or similarly a height
+greater than the y-coordinate.  This means the guest can misprogram
+the device so that we underflow when calculating the address of the
+top left pixel, which might result in accessing out of bounds
+memory.  Catch this as a guest error and ignore the operation.
 
-Span values above 11 are reserved and behave as 0.
-
-Also span must be within the range of 0 to (SMMU_STRTAB_BASE_CFG.SPLIT + 1),
-ie. it must stay within the bounds of the stream table split point.
-
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Message-id: 20260707085028.165557-5-eric.auger@redhat.com
+Reported-by: Yannick Wang
+Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260707150933.1410507-2-peter.maydell@linaro.org
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3920
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/smmuv3.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ hw/display/sm501.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index 3fd1dd7cf81..9008ba7acd9 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -707,7 +707,7 @@ int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event)
+diff --git a/hw/display/sm501.c b/hw/display/sm501.c
+index af870048372..0da25477bcc 100644
+--- a/hw/display/sm501.c
++++ b/hw/display/sm501.c
+@@ -723,6 +723,10 @@ static void sm501_2d_operation(SM501State *s)
+     }
  
-         span = L1STD_SPAN(&l1std);
- 
--        if (!span) {
-+        if (!span || span > 11) {
-             /* l2ptr is not valid */
-             if (!event->inval_ste_allowed) {
-                 qemu_log_mask(LOG_GUEST_ERROR,
-@@ -716,6 +716,16 @@ int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event)
-             event->type = SMMU_EVT_C_BAD_STREAMID;
-             return -EINVAL;
-         }
-+
-+        if (span > s->sid_split + 1) {
-+            if (!event->inval_ste_allowed) {
-+                qemu_log_mask(LOG_GUEST_ERROR,
-+                              "invalid span (0x%x)\n", span);
-+            }
-+            event->type = SMMU_EVT_C_BAD_STREAMID;
-+            return -EINVAL;
+     if (rtl) {
++        if (dst_x < (width - 1) || dst_y < (height - 1)) {
++            qemu_log_mask(LOG_GUEST_ERROR, "sm501: RTL op out of bounds\n");
++            return;
 +        }
-+
-         max_l2_ste = (1 << span) - 1;
-         l2ptr = l1std_l2ptr(&l1std);
-         trace_smmuv3_find_ste_2lvl(s->strtab_base, l1ptr, l1_ste_offset,
+         dst_x -= width - 1;
+         dst_y -= height - 1;
+     }
+@@ -748,6 +752,10 @@ static void sm501_2d_operation(SM501State *s)
+         }
+ 
+         if (rtl) {
++            if (src_x < (width - 1) || src_y < (height - 1)) {
++                qemu_log_mask(LOG_GUEST_ERROR, "sm501: RTL op out of bounds\n");
++                return;
++            }
+             src_x -= width - 1;
+             src_y -= height - 1;
+         }
 -- 
 2.43.0
 
