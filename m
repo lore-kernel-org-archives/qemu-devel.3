@@ -4,58 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 686F3C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 14:36:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CB7EC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 14:50:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjHlD-00089X-R9; Mon, 13 Jul 2026 10:35:55 -0400
+	id 1wjHyk-0003gV-7E; Mon, 13 Jul 2026 10:49:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wjHl1-00088M-Uj
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 10:35:46 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wjHkz-0001uF-QQ
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 10:35:43 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 19E3140139;
- Mon, 13 Jul 2026 14:35:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99EA21F000E9;
- Mon, 13 Jul 2026 14:35:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1783953340;
- bh=T8p4n2eSgA6Zg6pqEnfewKH6Qm0lGS/uzGWFa5oza50=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=QVGW/YoKQfDspsaGeSUp7vOdzX6XeVf3N925i47STxxm9NL/BMSp1bxraLHaNcjAy
- ik1N8TsilBB9rCVBa1dnva0K+J5PwlQ+wVLCkwo0+a3i4G9v7c2MJYq1ehwxlxoBuQ
- nH0/APo/W4K813l2xy/pVt/0vwBZPmJLvOXAAS/kCmpg16o2a+LOj5/4W+GqhvuW/x
- O3eR5h9LkYzsrVIhK/GkTB96dXwGIoCsZ82Povk0+GFWY2zp+WoYx1YDHnWh53KwCM
- lne+HyV08sMtV29DieYz84oRJtOP4TwfvWzXuxbJ1JQgrL5VYFqWUiB+kRs4ypnH7v
- ZpNMbW0n2YKPg==
-From: Helge Deller <deller@kernel.org>
-To: Stefan Hajnoczi <stefanha@gmail.com>,
-	qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Helge Deller <deller@gmx.de>, Matt Turner <mattst88@gmail.com>
-Subject: [PULL 2/2] linux-user/alpha: populate AT_HWCAP from env->amask
-Date: Mon, 13 Jul 2026 16:35:31 +0200
-Message-ID: <20260713143533.4641-3-deller@kernel.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260713143533.4641-1-deller@kernel.org>
-References: <20260713143533.4641-1-deller@kernel.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wjHyc-0003g9-Gk
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 10:49:46 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wjHyX-0003wo-6h
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 10:49:46 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id DD62077850;
+ Mon, 13 Jul 2026 14:49:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1783954170; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0X6i1wnA4/raU3f6T+TJY55lEM9bojBYnvrY3ES2it0=;
+ b=FFCHInTtHO4BgbNDQDmWz114/gfIh8a6GWRM72hHU/OdL992TOlyy4Y2vFmQmBWpQIpH6X
+ M44dZcdMCQXXvP3vrwZwW25/jDOxCJxbcjs/EXqwURkiCPJCA+SelWKa5o0BKZmtZyKRqQ
+ 56t6eS0yZ9lkPBkWq5E9xoQVEcmgs4c=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1783954170;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0X6i1wnA4/raU3f6T+TJY55lEM9bojBYnvrY3ES2it0=;
+ b=5sUnfN8txGxqDfp6V5/Zci2bFgG4GHZXSsK7krgKLNbKx/Bk9AIy8CpZp+KEA0IRucqUow
+ Zl24nfRJTi2m3bCQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1783954169; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0X6i1wnA4/raU3f6T+TJY55lEM9bojBYnvrY3ES2it0=;
+ b=Ld4Mq2Lbhdt4UJ8g3yGTluDtf0csZc9zWGKumdPhNZ0RmbEEBLlnf98xZ1uD/lQriwAxyH
+ ErDG9n07ulIR7urp4f9BIwZnV+DWiQjSwcKJ+RUWP+OcWMXXoWSKZytaibFnKjd6S7HsO8
+ WF5rhGtVnJE4/vezNKWlrAGU8ixQmSc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1783954169;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0X6i1wnA4/raU3f6T+TJY55lEM9bojBYnvrY3ES2it0=;
+ b=3g+QuseTjUKw9eDLzGfdPCygUNrAtvc+IA77IlwNVdKL+TyXiT3cJPUGt1NtwfuTf0Mzt/
+ zpi8OQTx5IO1WVBg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 75738779AE;
+ Mon, 13 Jul 2026 14:49:29 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 8uDWEfn6VGpKQgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 13 Jul 2026 14:49:29 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Maydell <peter.maydell@linaro.org>, QEMU Developers
+ <qemu-devel@nongnu.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Pedro Barbuda
+ <pbarbuda@microsoft.com>, Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Nicholas Piggin <npiggin@gmail.com>, Harsh Prateek Bora
+ <harshpb@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>, Eric Farman
+ <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>, "Daniel
+ P. Berrange" <berrange@redhat.com>
+Subject: Re: what is qemu_system_guest_panicked() for?
+In-Reply-To: <CAFEAcA_zmc=Vvs38Qos_gecCmGAbRgDQF-0+x85Ja66nsqrHxA@mail.gmail.com>
+References: <CAFEAcA_zmc=Vvs38Qos_gecCmGAbRgDQF-0+x85Ja66nsqrHxA@mail.gmail.com>
+Date: Mon, 13 Jul 2026 11:49:26 -0300
+Message-ID: <877bmz54i1.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; SUBJECT_ENDS_QUESTION(1.00)[];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ FREEMAIL_CC(0.00)[redhat.com,microsoft.com,unpredictable.fr,gmail.com,linux.ibm.com];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; TO_DN_ALL(0.00)[];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCVD_COUNT_TWO(0.00)[2]; RCPT_COUNT_SEVEN(0.00)[11];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, imap1.dmz-prg2.suse.org:helo,
+ linaro.org:email]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,69 +122,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-Alpha has never set AT_HWCAP in linux-user emulation, so getauxval(AT_HWCAP)
-always returned 0 regardless of the emulated CPU model.
+> (cc list is a random mix of maintainers of code that calls this
+> function, Paolo as "main loop maintainer" and a few others who
+> I thought might have an opinion.)
+>
+> We have a qemu_system_guest_panicked() function which causes QEMU
+> to report this to the user and do one of a couple of possible options
+> (shutdown, pause the VM, do nothing). This seems mostly intended for
+> "the guest OS told us by some mechanism that it just panicked". But
+> we use it more widely than that...
+>
+> Cases which are "the guest told us about a panic":
+>  - accel/kvm/kvm-all.c handling of the KVM_EXIT_SYSTEM_EVENT SEV_TERM
+>    and CRASH subtypes
+>  - the pvpanic device
+>  - the spapr ibm,os-term RTAS call
+>  - x86 kvm: tdx_panicked_on_fatal_error()
+>  - x86 xen: the SHUTDOWN_crash shutdown subtype
+>
+> Cases which are not:
+>  - hw/spapr/rtas.c: if the FDT has no RTAS address during system reset
+>  - hw/spapr/spapr_events.c: if we wanted to deliver a machine check
+>    exception to the guest but the FDT has no RTAS address
+>  - hw/spapr/spapr_events.c: if we want to deliver a machine check
+>    but the guest is still dealing with a previous machine check
+>  - arm whpx, if we get an unknown/unexpected exit code trying to run the VM
+>  - x86 nvmm, for an unknown/unexpected VM exit code
+>  - ppc TCG, in powerpc_checkstop(), for a machine check exception I think
 
-The Linux kernel computes ELF_HWCAP as ~amask(-1), i.e. the set of ISA
-extension bits that the amask instruction reports as supported (cleared in
-its output).  env->amask stores exactly those bits with the same layout
-(BWX=0x1, FIX=0x2, CIX=0x4, MVI=0x100, TRAP=0x200, PREFETCH=0x1000), so
-returning it directly from get_elf_hwcap matches the kernel convention.
+1) The Checkstop state is the state the (modern) architecture prescribes
+the machine transitions to when: a) machine check happens but machine
+check exceptions are disabled or b) hard-to-recover storage errors. On
+older user manuals I also see occurrences of checkstop when (a) above
+happens and a "debug bit" is also set.
 
-Add HAVE_ELF_HWCAP to target_elf.h and implement get_elf_hwcap() in
-elfload.c to expose the emulated CPU's capability mask to user-space
-programs via the auxiliary vector.
+  603 UM:
+  "[cpu] must terminate operation by internally gating off all clocks, and
+  release all outputs to the high impedance state"
+  
+  750cx UM:
+  "When a processor is in checkstop state, instruction processing is
+  suspended and generally cannot resume without the processor being
+  reset."
 
-Without this fix, programs using getauxval(AT_HWCAP) to detect BWX/FIX/CIX
-(such as glibc's memcpy or JIT compilers targeting Alpha) incorrectly
-concluded that no extensions were available even when emulating ev56+.
+2) There's also a QEMU-specific usage when handling the processor
+implementation specific 'attn' instruction. The instruction is
+originally designed to allow the OS to poke the hardware or service
+processor for debugging purposes. I think in practice this ends up being
+very similar (or possibly the same) as checkstop so QEMU does the same
+as the previous case.
 
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
----
- linux-user/alpha/elfload.c    | 11 +++++++++++
- linux-user/alpha/target_elf.h |  1 +
- 2 files changed, 12 insertions(+)
-
-diff --git a/linux-user/alpha/elfload.c b/linux-user/alpha/elfload.c
-index 1969f620a5..7be9e466b6 100644
---- a/linux-user/alpha/elfload.c
-+++ b/linux-user/alpha/elfload.c
-@@ -6,6 +6,17 @@
- #include "target_elf.h"
- 
- 
-+abi_ulong get_elf_hwcap(CPUState *cs)
-+{
-+    /*
-+     * The Linux kernel computes ELF_HWCAP as ~amask(-1), which clears a bit
-+     * for each supported ISA extension.  env->amask stores exactly those bits
-+     * set for the extensions supported by the emulated CPU model, matching
-+     * the kernel's convention: bit set in AT_HWCAP ↔ extension present.
-+     */
-+    return cpu_env(cs)->amask;
-+}
-+
- void elf_core_copy_regs(target_elf_gregset_t *r, const CPUAlphaState *env)
- {
-     int i;
-diff --git a/linux-user/alpha/target_elf.h b/linux-user/alpha/target_elf.h
-index 4987ae3944..dd90c6f783 100644
---- a/linux-user/alpha/target_elf.h
-+++ b/linux-user/alpha/target_elf.h
-@@ -12,6 +12,7 @@
- #define ELF_MACHINE             EM_ALPHA
- 
- #define HAVE_ELF_CORE_DUMP      1
-+#define HAVE_ELF_HWCAP          1
- 
- /*
-  * Matches the kernel's elf_gregset_t (ELF_NGREG = 33):
--- 
-2.54.0
-
+>  - s390_handle_wait(): not sure exactly what this is
+>  - s390 unmanageable_intercept(): again not sure, think this is where
+>    the guest has gone off the rails and we can't keep running
+>
+> At least one or two of the above have comments to the effect that
+> they don't want to use e.g. cpu_abort() because they want to give
+> the user the ability to examine the VM after this unrecoverable
+> guest error, rather than just exiting QEMU.
+>
+> So I guess my question is, is it OK to mash these two categories of
+> "we can't keep running the VM" together, or should we define a new
+> one for the "unrecoverable guest error" case, or do we already have
+> some better thing to do that I missed?
+>
+> In particular, "do nothing" might be a reasonable response for the
+> user to configure to a guest panic notification, since the guest will
+> presumably stick the vcpu into a do-nothing loop, but "do nothing"
+> doesn't make sense for "unrecoverable guest error" because we'll
+> probably then sit in QEMU in a tight loop retrying whatever it
+> was that failed.
+>
+> If we had some kind of qemu_system_unrecoverable_guest_error() then
+> we could maybe convert some uses of cpu_abort() over to that (though
+> uses of cpu_abort() are a very mixed bunch, some of which should be
+> LOG_UNIMP or LOG_GUEST_ERROR and continue and some of which should
+> be straightforward assertions, as well as some which might be this
+> new exit case).
+>
+> (This query was prompted by a patch for arm whpx which adds a new
+> qemu_system_guest_panicked() call for an unhandled VM exit situation.)
+>
+> thanks
+> -- PMM
 
