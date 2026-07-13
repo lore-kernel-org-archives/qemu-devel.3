@@ -4,83 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B666C44501
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 13:58:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D3B4C44507
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 13:59:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjHAK-0001HR-1T; Mon, 13 Jul 2026 09:57:48 -0400
+	id 1wjHBL-0001dk-Iq; Mon, 13 Jul 2026 09:58:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wjHAD-0001H8-KR
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 09:57:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wjHAA-0005hJ-Ep
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 09:57:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783951057;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=vprLLMxMgkmFZoq3V9aPKpeT/lbh9F4mkQAmNb309qM=;
- b=cA4jxBYY5xSivW+8ln5Bx5zVh+2hb0sVRffV4v+2tnRA+6GDO57jTB+6hTv4kd5c7+gV6K
- UPCNakbykQEQypt7d1b8vv2ThUoKs/WK+i7AnpAGDWKecjWSX8Y/cli+Y/3DMRTfO1KuYf
- EwtGArt04fU08IqZrutiW+muNiQIduo=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-680-DWkiaYvDOEe2l8jlDnUVFw-1; Mon,
- 13 Jul 2026 09:57:33 -0400
-X-MC-Unique: DWkiaYvDOEe2l8jlDnUVFw-1
-X-Mimecast-MFC-AGG-ID: DWkiaYvDOEe2l8jlDnUVFw_1783951052
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 14C6319300F1; Mon, 13 Jul 2026 13:57:29 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 07E9C3000B4C; Mon, 13 Jul 2026 13:57:28 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 943A821E6920; Mon, 13 Jul 2026 15:57:25 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,  QEMU Developers
- <qemu-devel@nongnu.org>,  Paolo Bonzini <pbonzini@redhat.com>,  Pedro
- Barbuda <pbarbuda@microsoft.com>,  Mohamed Mediouni
- <mohamed@unpredictable.fr>,  Nicholas Piggin <npiggin@gmail.com>,  Harsh
- Prateek Bora <harshpb@linux.ibm.com>,  Cornelia Huck <cohuck@redhat.com>,
- Eric Farman <farman@linux.ibm.com>,  Matthew Rosato
- <mjrosato@linux.ibm.com>
-Subject: Re: what is qemu_system_guest_panicked() for?
-In-Reply-To: <alTWn2xq4FfdxnE4@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Mon, 13 Jul 2026 13:14:23 +0100")
-References: <CAFEAcA_zmc=Vvs38Qos_gecCmGAbRgDQF-0+x85Ja66nsqrHxA@mail.gmail.com>
- <alSkWHw6ryhEEaDf@redhat.com> <87cxwrtgfd.fsf@pond.sub.org>
- <alSqlDRT9L8OqAso@redhat.com> <87se5ngln1.fsf@pond.sub.org>
- <alTWn2xq4FfdxnE4@redhat.com>
-Date: Mon, 13 Jul 2026 15:57:25 +0200
-Message-ID: <87bjcbf0vu.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wjHBJ-0001dY-8V
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 09:58:49 -0400
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wjHBH-0005jo-Hm
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 09:58:48 -0400
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-667971437d6so5145229d50.2
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 06:58:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783951126; cv=none;
+ d=google.com; s=arc-20260327;
+ b=IMVicQhzV/+r1Pbc4PaleGacC+TKcy0eZd+QmrcVfprXC2y8x0Jb/G3GqF4v33ffo2
+ 9gwGkSwATZhdGOaM/7aKFdrXptWa4h1ZeLqqBYSqjqmyaXNSfIIice2tkusEXHnF/T9t
+ i5ZmchuefES48/aqdLSNh4kDXz8NxHYO4+t+EW7Yy1XFAcDq5ScYGz6bbsTJ/dOX/d3y
+ 2ntBg5aPpCtSNBSavSQmy1Ll8uIDjNI3mCHMu4id3sd7Oul69URMfUZjTpF+6zDd8NBw
+ jBhlbMS0DwV4xHMG8u6yzKdq79ZFjMH/IOwEXLLB2VuH7kpZ9rxzNVBUtrKxD/0bWxEq
+ 7TNA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=Km1QzDBNX52F6CG6DupUkf0a4mF2wNnjrwNaRsms6aU=;
+ fh=WoKYLnaPVahO/vQJOSbKBeDgsKDuzfrb1tBWIwoH2D0=;
+ b=rTQMU9gfnxp810JyYwYdwgeYKY/EdhNq3Z1Y4uoJJGJLdnxQa6pky2+A6pzk3KnXPX
+ lztATMqn/UMJ7uza5qMNsa4n4kv/P7p4VyTLdc8z5WzCN8fYC8+xrsday1MKP6rzkosP
+ fU0NvNWt+ODCQ2opRGhnvGnjr2oJOmi446SS665swN45eH35QfJ+ZZYcWrcygOhpjxWi
+ DuNcfLJosbbLlfIBhwMeHbjfSZl6bDqA6Cz6zsrT/zMOhAvFCw2mk4DCPXwUXhCp976a
+ 5M3d50h0RiKRKoAZSL5TxkIGbbww6bnqyDk5DIjYELmd9l5gBGOg2ccfoN2Ussu9zz4l
+ o+YA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1783951126; x=1784555926; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=Km1QzDBNX52F6CG6DupUkf0a4mF2wNnjrwNaRsms6aU=;
+ b=jsNMp7P+08sCOru+neduqsNEVP4ihSo+JQ/AdRO25nFpf988eGzQf/k+/h6InEZTfA
+ UsTTiJ983seYB9Asnotf/HSs9/CsFM2WUAw24nq6bPMeSiln6drTrckiJIskSsvCJQpC
+ us/2to78QlsvcY6Y6qy6qaNy3TnAjXOJxmiOdTNd42IxSpCSi2+/gda0Vd6FEbLQ5Ais
+ SH9iKteHKzPkl6AOs9/RReTBzxAvGK5w2I6wZDEhihU2VwnDdR4Tkdepz9dCIF9Tnqwj
+ ubtf9vnU/tsvtYXHU38PEBTSIaRkjOSIa43RMfuP55RrYf6kCZ3LC55xVLoU9fhzLXX3
+ DNXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783951126; x=1784555926;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=Km1QzDBNX52F6CG6DupUkf0a4mF2wNnjrwNaRsms6aU=;
+ b=O8pKvkkUtWeJbRcGqTxL52k6Rx/kL6qCmsg0oLo7jjAx0p9RfOj8+TOC4erdm2+2pR
+ B+x2QVmECRxAMWdO3IqFHjgsu2L0KVQUxoQP05ahFkCMMERI1VqC1QCsVEJNqXo+Cae9
+ G1Ug21VEppnHPRHK0jRuUI8qbAL31UXWcK9KqdqGfNK0bJdbxbK2sWdADRsJofPDmrK0
+ ofF74eLWSlBr7opFvyNjnQBM77/K/RLc21IuaXZthPZeC3e9ju9DVVx5xilscnvxzmUl
+ M9Kzi/4j4FQqJ9mPpfeegmAMKXdybFO7RlEaiZHt8hnkd98JBbqWwxZn3hvhNR3pNUCK
+ xY7g==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrKmpwH4Wib+G+mduj6nurJGQSV9z16OYt9/fLYstnnSvxHgtCt3wbCLV4hxlgpB/YiSFnf3L9JF26j@nongnu.org
+X-Gm-Message-State: AOJu0YxmsbSRsi7rcnf2uPvaLRTryYcvk3Mq6RFgxGrpPh0tpENNXl1U
+ nVUqwXuo2mblPgRNKbKHgf5WddMSeVKkjP8wJUlZprliPGhnHYGj0MXnT3Q0eBbQGhhz5brD0zh
+ zWLsmJD5RfhNkCpXt6SO18lyhc3zHoffDdMvgas4l0A==
+X-Gm-Gg: AfdE7cmd+FB90xPUIvdcnJCFo0Qgpner1N10xfkIQ+850f6PqTuqTq952ZfGBsx0fWd
+ osYno4gn1gI5GAgO7Roa/DU0/AowI7jzUaFVlvfkA7AcYrsrnoSp1BQUi8C1NJcwO2aOaxf5I1N
+ UWWGcr4P4onEuQ5yQ5NBNjejGhfl6TTl+JjHpF4LrHDeMs/Y85oE5PLtC2keUgtlQ34NIOhq5y4
+ 7GsUU2vgUGApYSbs4ZzzVkN/Hsh3tH+A8IfWBgICweXy6C2IhqQuKjMxZ+y6tNsJhbNxzwLNDH5
+ LVjLMUMr4Qyr8nwOyfCTQXQ6mvICESqDTtxQXLlZR2WStOTGU/jaFT92
+X-Received: by 2002:a53:acd9:0:20b0:667:8b91:2445 with SMTP id
+ 956f58d0204a3-667d7eebf16mr5379893d50.92.1783951126085; Mon, 13 Jul 2026
+ 06:58:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: permerror client-ip=170.10.133.124;
- envelope-from=armbru@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+References: <20260629-qdev-v2-1-8cd1d9be0d8d@rsg.ci.i.u-tokyo.ac.jp>
+ <CAFEAcA9QJCfeBTi4GdatY0Ci7no8BQETxHd7i6TtJ7SFxEtjjA@mail.gmail.com>
+ <2c996e76-72a9-4e3f-b732-3cac1554be6b@rsg.ci.i.u-tokyo.ac.jp>
+ <CAFEAcA_E=okeaQ=P4qW7_NE0dZPANYU7QXiC0N-kSqvwahwD1Q@mail.gmail.com>
+ <874ii3gh5x.fsf@pond.sub.org>
+In-Reply-To: <874ii3gh5x.fsf@pond.sub.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 13 Jul 2026 14:58:34 +0100
+X-Gm-Features: AVVi8Cf3T_pipmZcAkNSK0J4-VY9wkAFEqqzNMxQ0Ahif11KzOQIj4q_hXJUjQg
+Message-ID: <CAFEAcA-rv3ZCBjUc3Z42NkQFV1wHWrxocCeCNAd1Eov7HUxrYg@mail.gmail.com>
+Subject: Re: [PATCH v2] qdev: Clarify instantiation and realization
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org, 
+ BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,124 +122,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
-
-> On Mon, Jul 13, 2026 at 01:43:46PM +0200, Markus Armbruster wrote:
->> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->>=20
->> > On Mon, Jul 13, 2026 at 10:57:58AM +0200, Markus Armbruster wrote:
->> >> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->> >>=20
->> >> > On Fri, Jul 10, 2026 at 05:02:53PM +0100, Peter Maydell wrote:
->> >>=20
->> >> [...]
->> >>=20
->> >> >> So I guess my question is, is it OK to mash these two categories of
->> >> >> "we can't keep running the VM" together, or should we define a new
->> >> >> one for the "unrecoverable guest error" case, or do we already have
->> >> >> some better thing to do that I missed?
->> >> >
->> >> > IMHO we should NOT be abusing "panicked" for cases which are
->> >> > not guest OS panics.
->> >>=20
->> >> Point.
->> >>=20
->> >> > Adding new QMP events is cheap and we should do so.
->> >>=20
->> >> Changing the event sent on a certain situation is technically a
->> >> compatibility break.  Would it matter here?
->> >
->> > What wins "compat break" or "bug fix" ? A strict POV prevents almost
->> > any bug fixes, if you want to remain bug-for-bug compatible with
->> > old QEMU.
->>=20
->> There is no hard and fast rule.
->>=20
->> If a patch changes behavior, and no one is around to observe it, should
->> we still treat it as compatibility break?  The pragmatic answer is no.
->>=20
->> It's of course hard to be sure about non-observation.  The pragmatic
->> answer to that is "we use the best available data, and where it is
->> lacking, reasonably conservative guesses."
->>=20
->> How likely is it that the fix breaks something else, and how painful
->> could such breakage be?  Again, hard to be sure, thus reasonably
->> conservative guesses.
->>=20
->> > With my "management app" hat on, I want QEMU to stop sending panic
->> > events for things that are not panics, as that is triggering incorrect
->> > actions / admin activities. ie on a panic, I'm going to take a guest
->> > memory dump and try to analyse what is broken in the guest kernel.
->> >
->> > The QAPI spec says:
->> >
->> >   ##
->> >   # @GUEST_PANICKED:
->> >   #
->> >   # Emitted when guest OS panic is detected
->> >
->> >
->> > and
->> >
->> >   ##
->> >   # @RunState:
->> >   #
->> >   # An enumeration of VM run states.
->> >   #
->> >   ..
->> >   # @guest-panicked: guest has been panicked as a result of guest OS
->> >   #     panic
->> >
->> >
->> > I don't think "machine check exception" or "unknown VM exit"
->> > can be said to match either of those docs, and thus fixing
->> > compliance should trump bug-for-bug compatibility IMHO.
->>=20
->> I'm not objecting, I just want the compatibility issues considered.
->>=20
->> What are the known observers of GUEST_PANICKED?  How would they be
->> affected by the change?
->>=20
->> What are the use cases for observing GUEST_PANICKED?  How could they be
->> affected?
->>=20
->> Reasonably conservative guesses will do.
+On Mon, 13 Jul 2026 at 14:20, Markus Armbruster <armbru@redhat.com> wrote:
 >
-> When libvirt see a GUEST_PANICKED, it will transition the state to
-> "CRASHED" and assign a reason of "PANICKED" as the trigger / cause.
+> Peter Maydell <peter.maydell@linaro.org> writes:
+> > OK. We could make the text clearer then, I think. Maybe
+> >
+> > "#TypeInfo.instance_init may not fail. #DeviceClass.realize can
+> > fail, returning error information to the caller. A device realize
+> > method should handle being called again after it has failed once."
+> >
+> > ?
 >
-> Then depending on the guest XML config for <on_crash> it will do one
-> of
+> In general, a function should either do its job, or fail cleanly,
+> i.e. without side effects.
 >
->  * Take a core dump of QEMU
->  * Terminate QEMU
->  * Restart QEMU
->  * Take a core dump of QEMU and restart
->  * Leave it in crashed state (to allow a debugger to attach)
+> For .realize() "without side effects" includes:
 >
+> * The failed call is invisible to the guest.
 >
-> The "machine check" and "unknown VM exit" scenarios, would still map
-> to libvirt's "CRASHED" state, but we would want to assign distinct
-> "cause" for each of them.
+> * The device behaves as if the failed call never happened.  This means
+>   you can try .realize() again.
+>
+> Does the comment need to spell this out?
 
-Say we add event GUEST_MACHINE_CHECK, then send it instead of
-GUEST_PANICKED on a machine check.
+If we want that, I think we should spell it out. I have generally
+assumed when writing realize functions that the semantics are
+"if this fails, the only thing the caller can usefully do with
+the object is destroy it". Realize code very very rarely attempts
+to cleanly unwind if it finds an error partway through. I would
+expect the only cases where it works at all are the ones where
+the only errors are "sanity check of property values etc" that
+happens up front.
 
-With an updated version of libvirt, this changes exactly the "cause"
-recorded for a machine check in the "CRASHED" state.  This change is
-desirable.
+I would prefer it if we did not require this, because I think
+it imposes extra burden on implementations in order to provide
+something that is not of any benefit to anybody.
 
-Older versions of libvirt ignore the unknown GUEST_MACHINE_CHECK event.
-They therefore no longer take the <on_crash> action.  This is
-undesirable, I'm afraid.  Is it?
+Analogy: for unix sockets, you need to first open() and then
+connect(). The connect() manpage and the POSIX spec say that if
+connect() fails the only thing you can validly do with the socket
+is call close(): you're not allowed to keep it around and try
+connect() or some other operation on it.
 
-An orderly transition could look like this:
+(We also undoubtedly have a lot of bugs where an error in realize
+leaves bits of the device visible to the emulation, or doesn't
+free things that were allocated, etc. But that's a separate and
+uncontroversial kind of bug. We don't notice these because for
+almost all devices the response to "realize failed" is that we're
+going to exit QEMU, because the device is part of the machine.)
 
-1. Add a new event for each distinct cause, and emit the appropriate
-   event in addition to GUEST_PANICKED.
-
-2. Deprecate GUEST_PANICKED.
-
-3. Remove GUEST_PANICKED after a suitable grace period.
-
+-- PMM
 
