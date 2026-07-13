@@ -4,136 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 897D3C44501
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 11:13:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 123E2C44501
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 11:15:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjEak-0004gv-Q9; Mon, 13 Jul 2026 07:12:54 -0400
+	id 1wjEcu-0005vV-Ro; Mon, 13 Jul 2026 07:15:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wjEak-0004gY-0h
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:12:54 -0400
+ id 1wjEcs-0005uo-AH
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:15:06 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wjEai-0006iw-Cd
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:12:53 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1wjEcq-00075N-Kn
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:15:06 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66D9ucY01089701
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 11:12:50 GMT
+ 66D77Rlg810576
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 11:15:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 7XsYLOkFKPevp72S9kIelJJc5OWBLLgZB83vPXvaDng=; b=NfPGmmLuQecF+Ihc
- NPW8D3RkCMUN34Gi83IF95YT1JtRl7pEPbBnUktLR8ijsVvcsjH2Iq5T+ybIcN9t
- kr5cBGWCwXGGTR0kQ822toW34tlRQcwiLDqWycmU16wmS/4eVHpFpXNAY/LI0Kmy
- Aw7MCBs9/kipKuGKhP/XbdA5ctVT6dTImPfrjFkp48ms/ZEh372naAbFqq1zE5Zv
- wDs3GTmXWB2BYLWG1TTLY8H/e5TWwBiutA6vHClPajZyquj44eo1kNRsXDyeIXSt
- FP+LhDslpfkcmhTvir5L8AXSoWXZGd+gcAzuLJesHRMSbUPab+jPOdd7b2Wz506d
- HZscRA==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcwu4r8k3-1
+ TtcZIW0RVQhI1EPYeIxA3PQCxlLwT+Z7i7ldq6o96HM=; b=GtEOk4JZ1fFlQjRX
+ VvXMsijxF3uoS4zbi69e+X8KXeQbYBvPuL+TZeugtHF3AXo7W5QN4tALYROwAeni
+ hJECesxH8ha4y5HA86gMRYyBp0ViWdPBNINENgwmMLonp3K2GPmRwmGtaEd2+9n8
+ gd+mEAzGAmkDY+V3jlDmg0cGMPBG1OFctaqScxN1AYMfSyhbmy5KFL/IunFeyJ9g
+ 3aPHJq5DRlOFNsKoOIJ3Oxst6F3ucMeLDZEzupJs0HEvi9IU6G+ra9BFvc1wL0y3
+ pD0PftWSAhB4nmEfv9IwvrtBXjCXEjMISFBXeuk00d3YXx3LSofTiGfeL+QLCaRB
+ ECvM6g==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcubsrvx1-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 11:12:50 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51c0e702df8so32273721cf.2
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 04:12:50 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 11:15:01 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-51bf321d786so36176051cf.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 04:15:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783941170; x=1784545970; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783941301; x=1784546101; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=7XsYLOkFKPevp72S9kIelJJc5OWBLLgZB83vPXvaDng=;
- b=FXgJAP98j/ehaDEhZxzA6IkLtTYF/GNDfpIVbnA8RiJ2VCS5DKnZNmYkCmM0V2NEMC
- rM62lg+h2sEQ47dPUbawa/X1HS1jkEQ7BAcjlDjKB04AtedaQl4VFjCPOt5Mf1P5xvr7
- H/vN/EiStJ9p2qFiYPVhOuOVLOqjxLJ/JqFTjqsHRKz9Fegff0bhV9CyEH2dtiETt3qM
- aVUK4QAkk8vhj4Zz/Clhg5xM31UhtBG2WBQdo4pFJ/K3i8atCP9HZvGFA7HkPw0GJ2Vv
- ZnHvxf7gS16cyId4Sa+Ohkb0n9oRSjmK1Yo+ALPYrSB4YyTocZ/WsEf2E/fVBh+d5K4w
- ueig==
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=TtcZIW0RVQhI1EPYeIxA3PQCxlLwT+Z7i7ldq6o96HM=;
+ b=gxfQMp2EH1tGB4FMdIgtlgAW6s41dOZekB4Y8jotBwGxawE0GqkwDct1Tz9EwEWQBE
+ 9WUeQDDBHfSSMv+jrBmczCzjIKoiM/9wUsb6sKZS7YNwWUlEFw3NpZpaJ38IbXe8y6+Q
+ QgNFo4zQ2F01RnO9qFfB4d2Z1BCNvRxqxFvGCXnVHr+FYiElXZ6uiAQnvFUBWDvV63dr
+ srImqgB1oK0b+ue+jnyqnOigqYGMfZ85ZWWfI8bddbLqNf/8OMLw+IVKyUvJRb66PWLv
+ RbQ0rFLX1BcjGs6CTiLgxTRIaq/VMZndQddS24pZtH1G2iBJymlZVXai0aO03+Dv/+o/
+ iRMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783941170; x=1784545970;
+ d=1e100.net; s=20251104; t=1783941301; x=1784546101;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=7XsYLOkFKPevp72S9kIelJJc5OWBLLgZB83vPXvaDng=;
- b=j/+1zPh7JlnWYJqhi8Eq8o4ZrUJpG4SRZTRM19Mg4YSmuTCXsm4JoNGXp+KB8rgFxl
- xa4jtH3qItB2Wmaev016c6CjpgJeb0oAnRIXHD6S/gg001h3UppMkOxGdBDi9dMpAXpN
- bSAgAZG7qoaLoYWquIoz7lbcS9StWWHV4uIDqVVQwqouf1Lh9bMEyNCYkGQ1uCZ62htI
- PDCOEA+U3nY6nWuoBOuSHDGvUWH+N6XyGI6dttQaEUNFMWcLxbM0fYTRNGIjSk+q9Hr0
- ItA9csN+YnHTqdjAW2qHcXHsijE3/lFk3C9nuZlM3YDZ8M9MgHdkpN2kZLXltR1TNxIm
- NMRg==
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=TtcZIW0RVQhI1EPYeIxA3PQCxlLwT+Z7i7ldq6o96HM=;
+ b=EVxFvEVOnIIogrnOWtZYpdCaYKlJyc3aB4yuFHfqRRfZPWatwN4cNT/70eNouDikDe
+ tW2PCughDgvOMCRg+dmh6YvqIyKDULuUtSI6G+HK7+m4rmZmTXAvsy/jiXaYBYRNbJgz
+ 0mp4OSmcNzoTBd10AvvxKiQVICukzBPSqv9Mc5QF8H0dobN+W/QI4k8xCma/oeJcjkP4
+ KZTbket6cLOmfvKXX+zDCXUZQhU7Hh84+S4KWANGEJda9dcGavciBEx25EwtTdDlqqTR
+ e6DW5JQ/NjWK9NXumWst2NeAOk07rXGWZa3FDDLkKSYd5GqvKC26U4AmNNW+QSF05tng
+ aWvQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RpLBDFTxe8JoDuI6CCyf34c2GqHjF1g4dML9DpohOemdXk6T10ICUWEssNrtCnnUrEUu7yoBQlMeD7S@nongnu.org
-X-Gm-Message-State: AOJu0YziViDee37fXYsWcz9thbJH/a2NjT54A0MHhUmOoBoDXtb++1c7
- JYdkTNLr/ZiNsjNKDD2bpJACvT56l3LBxJi+6ay7aX9crtcP1w8j+cxofqQrf5ygSxn9cymPuY6
- o4tYoklrtNtfaG3oscTqtphfgnS72ughJW6/U4y3kirBmAFm8MH7kactfJA==
-X-Gm-Gg: AfdE7cmYpw8YnTh9QI3x8LZXMl27V4bbjsNXGA9uLGXGxUwDvk04SbLQ1ra4+gelWUm
- v9gvww9b1LDW/4KGzqYdYosdNlLhZ6fkk+ENy+UlflVYA63FRjmwVSq6uaWjXuULceWkR3lQ+mL
- wSHre4BhUHEkne28YMjpdjErQbIKN3oNBtjHeUN7/lnrJXIi+9OJPMJKmauCVHNCIIRzHt6zeaN
- NUS4da1qSRizMokvV+t6/eTpcjAiPXqBMw0s6h37cspQkYCdYz9aVK5Z5C5jOMS7evY0lXpyU9D
- 09VJEBf3QuL7lS7JmyZDlvC2E1j/SJ3TqiPpNsKzOxoyViu0RABA0c5rJeZXuCiY4rCJwtca6i3
- t7kin2m/QrnswHh71U0U/XitiEj386kKK+kqZ1CDEye5huRtTh0jiKcVa4Mr1wA==
-X-Received: by 2002:ac8:7f8c:0:b0:51c:135a:5b49 with SMTP id
- d75a77b69052e-51cbf0468ccmr92571831cf.4.1783941169671; 
- Mon, 13 Jul 2026 04:12:49 -0700 (PDT)
-X-Received: by 2002:ac8:7f8c:0:b0:51c:135a:5b49 with SMTP id
- d75a77b69052e-51cbf0468ccmr92571541cf.4.1783941169191; 
- Mon, 13 Jul 2026 04:12:49 -0700 (PDT)
+ AHgh+Rqs4mkQCjB0wsq3rMimJ/w3uuhWhEOVI5WHJvkyrz+REEL8d7AaRRq171JffIfd6IEF6XlZZxOMFyGu@nongnu.org
+X-Gm-Message-State: AOJu0YwxcDoRpkNSnzGveVFeHrWcryeLzbtXOVdfIQxKfHx1GXYU4/Vd
+ rxsvU/Vu13S77RC2Zim2IzlYLoEFGaC+FLKTHjJ14a3VCHtfyj14blKWuuGUslLMyad8CMtvwL/
+ xjQL+nESDw25BkzJsQ7iAwye5MoMhNrN3GN3OnmNmiLvdkQGPMDVckFJoJpKVnmD2Jg==
+X-Gm-Gg: AfdE7cki57djj+2ShTnCySVQQclLYsyxEjQ6HB9qzryJlNkm+7GZXu3HId7Bn91lcMl
+ DEd+7tEu7B37mmf9Bu4AGYbV+mFojDlhswlE6J3YuxAkKb+4jHAs3uTg17FxHMfWvj5zXU9ERVe
+ /oB8dvnEOF3VST2DCFc6zO7RxTzjvHWVPOU5sYbuWdi2pIbdb5lyLtM0paPio/CHAnk8kY8vePk
+ K9bzHmTFtLRA7eBrOSivISg7y8eizxmcyF/+CyJitGDn4ml5hg1JZwhL8YlhtC0lHm3ysEB1lmk
+ CfjWipha7dkaJdj7Z9XG2o59BTez+rYXMaqiw+ynYgb6GZGBzwrlMZInkCVsamEKE60+WOV9K/W
+ cQ5VQQMpSuci1luukX2gswTBT+zQHMfSPaN82mh5ua41tl/FR1a39pNIV/Di1yg==
+X-Received: by 2002:a05:622a:2cd:b0:516:cee1:4727 with SMTP id
+ d75a77b69052e-51cbf05c1ecmr83526561cf.14.1783941301184; 
+ Mon, 13 Jul 2026 04:15:01 -0700 (PDT)
+X-Received: by 2002:a05:622a:2cd:b0:516:cee1:4727 with SMTP id
+ d75a77b69052e-51cbf05c1ecmr83526361cf.14.1783941300768; 
+ Mon, 13 Jul 2026 04:15:00 -0700 (PDT)
 Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-493eb6ccaf1sm632165655e9.2.2026.07.13.04.12.48
+ a640c23a62f3a-c15fd50d411sm485511066b.37.2026.07.13.04.14.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Jul 2026 04:12:48 -0700 (PDT)
-Message-ID: <61fcf3c5-6233-4100-96b3-00e8b0732893@oss.qualcomm.com>
-Date: Mon, 13 Jul 2026 13:12:47 +0200
+ Mon, 13 Jul 2026 04:14:59 -0700 (PDT)
+Message-ID: <37a4571f-95d4-4578-9ad1-791680b7bfff@oss.qualcomm.com>
+Date: Mon, 13 Jul 2026 13:14:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] i386/tdx: fix uninitialized variable warning in
- tdx_check_features
+Subject: Re: [PATCH] ui/vnc: fix out-of-bounds write in lossy refresh dirty
+ marking
 Content-Language: en-US
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, kvm@vger.kernel.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20260706-fix-v1-0-4b83a70e9f3b@redhat.com>
- <20260706-fix-v1-1-4b83a70e9f3b@redhat.com>
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+References: <20260710134921.2321027-1-marcandre.lureau@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260706-fix-v1-1-4b83a70e9f3b@redhat.com>
+In-Reply-To: <20260710134921.2321027-1-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=FMErAeos c=1 sm=1 tr=0 ts=6a54c832 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Authority-Analysis: v=2.4 cv=Oq9/DS/t c=1 sm=1 tr=0 ts=6a54c8b5 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=LfsA7Cq2GQzuzbZ-N0YA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDExNiBTYWx0ZWRfX+jLcRkhY2tgS
- tcrfDQrFkqfPWIyjRX5fSG8uqUiCLSI//ukKArbYYlGbgK+H0dcz7Js5zQAtSL3qRutnadWqQNs
- HbMumnlaxg/Ig1q3Xpz4PtEelKE8RX4=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDExNiBTYWx0ZWRfXweBS4MN3L8NM
- ovDkZuM1mwSymqppj4wgaY3QEs2It+uNjTqMRY7mot5qyEM9hDIdBWq5ynDfQT6as2cYPoLzRwK
- bXZ3/a4xCXe8qPtmMt2B+iCqJDDx4fTcGtR7OeYUP3kDFZ05dwUjRiCMxZoPTk6S8M8S9p1nCf7
- 6GG6JRenrKJid6Og2nVyM2wCaqWQWjLWiwdPtbDRZIxj7a1gzmKKnkxHqPAtJB79LxV/6VkxExY
- 1YV5Zvw7FIk0icggm0CXMPVhpFM6Kms/PnWqWJRtD7mB8vkvOaAL8Ch6HadTTWIcSB40LONPG8h
- SRxaZYDehBVep7hlpvJlzoYiJFtv6aPGbtZuoxuyoM1KyuQwRLGp+m8CE4i2ZjYxv5kc3+jkxCs
- GWen/zvkfzkDyzywsvPquvVjeWnujAGHne/nDExJl01mItzJRxgthu+DtuRTZXEUYe42UCM0H8f
- bpl5NUiBSzGqf7oOiXg==
-X-Proofpoint-ORIG-GUID: l0Wbltkrj3WYnbCjIxsrk5eOxz029t8W
-X-Proofpoint-GUID: l0Wbltkrj3WYnbCjIxsrk5eOxz029t8W
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=p0WdMEafAAAA:8 a=20KFwNOVAAAA:8 a=6b3zXhvIAAAA:8 a=EUspDBNiAAAA:8
+ a=LfsA7Cq2GQzuzbZ-N0YA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=dawVfQjAaf238kedN5IG:22 a=vnv6_c11HO5uxQbMB8V9:22
+X-Proofpoint-ORIG-GUID: QVfoG351xQKZSuWIQwFzPIckEqNlYhy7
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDExNyBTYWx0ZWRfX0aNCXeDmtYjV
+ WQBPnp7TuwEHi0urYeeDz2nqqmc1sQEa4IzGqwX2mIIgzIl0BDM35Ha+oW2gSYeNtf8PcXcMXdF
+ Mf0JP6L+M/Q25Kt/g7xnzx6r13qH76o=
+X-Proofpoint-GUID: QVfoG351xQKZSuWIQwFzPIckEqNlYhy7
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDExNyBTYWx0ZWRfX1WJDqcPBT43a
+ OdxYry3lnQ02GeZ4MPhBqoYXPuNbj7/P7GHRWLsxsxW6WJNvkQ6t+JpAFoni0+4Ef2w1njb/sR0
+ j4UjI4CNBnwImY2+NOUXUBgzeo1cGV2j/dVirsFCjeVeDAuUJ5p4E4r9BGTqCAMIS3Bm1KIjOgc
+ X3X+9jN8sGEXNipnPXvXSBAWQ6b/xg4/qeTtMgKHn3AVktXJCrnWALkvhPEuH+5NzngSzeDL7hm
+ L3Kj1DJjv1kw389oLhyL5KmXVmHOaT14JmrgoIgMYSMzeoxOp7VbHPg2q9mr+9IPmyZqivTCVFS
+ VPuwLm5RfuaN7qPw393uQr9LIeKAjkOM2lnbiX10uLnJWPzNnCNT4Dwlpv6UYmsv6miOOpX6r3B
+ +lZpjqyWMP33t35CZEWAW3UOSa17F630W0qYrqgaiMvKTF4GewM/H6CqKPBQbozpoFBR30i8K3i
+ qt8qHwzxhEGXBcMlKpQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-13_02,2026-07-10_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0 bulkscore=0 malwarescore=0 impostorscore=0
- suspectscore=0 priorityscore=1501 phishscore=0 spamscore=0 lowpriorityscore=0
+ lowpriorityscore=0 impostorscore=0 spamscore=0 malwarescore=0 bulkscore=0
+ adultscore=0 clxscore=1015 phishscore=0 suspectscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607130116
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607130117
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -158,35 +154,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/7/26 14:53, Marc-AndrÃ© Lureau wrote:
-> tdx_fetch_cpuid() only sets the output ret parameter on the error
-> path. GCC cannot prove that r is always initialized before use in
-> the caller, triggering -Werror=maybe-uninitialized.
+On 10/7/26 15:49, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> Initialize r to -1 to silence the warning.
+> vnc_refresh_lossy_rect() marks a full VNC_STAT_RECT (64) rows of the
+> dirty bitmap when refreshing a lossy tile. When the display height is
+> not a multiple of VNC_STAT_RECT, the last tile row is a partial tile and
+> the loop writes past the end of vs->dirty[VNC_MAX_HEIGHT].
 > 
-> Fixes: 228e40f33048 ("i386/tdx: Fetch and validate CPUID of TD guest")
+> For example, with a 2160-pixel-high display (VNC_MAX_HEIGHT), the last
+> stat tile starts at y=2112. The unconditional 64-row loop writes rows
+> 2112..2175, overflowing 16 rows (640 bytes) past the dirty bitmap into
+> subsequent VncState fields.
+> 
+> Fix by passing the effective display height into
+> vnc_refresh_lossy_rect() and clamping the inner loop.
+> 
+> Fixes: CVE-2026-61475
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3935
+> Reported-by: "Vulnerability Report" <vr@darknavy.com>
 > Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
 > ---
->   target/i386/kvm/tdx.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-> index c9c3b05d5fe..8294dbde3aa 100644
-> --- a/target/i386/kvm/tdx.c
-> +++ b/target/i386/kvm/tdx.c
-> @@ -887,7 +887,7 @@ static int tdx_check_features(X86ConfidentialGuest *cg, CPUState *cs)
->       FeatureWordInfo *wi;
->       FeatureWord w;
->       bool mismatch = false;
-> -    int r;
-> +    int r = -1;
->   
->       fetch_cpuid = tdx_fetch_cpuid(cs, &r);
->       if (!fetch_cpuid) {
-
-Alternatively, 'return -1;' here.
+>   ui/vnc.c | 9 ++++++---
+>   1 file changed, 6 insertions(+), 3 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-
 
