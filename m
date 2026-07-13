@@ -4,128 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F8FEC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 21:42:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB29AC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 21:52:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjOPX-0005TN-Oy; Mon, 13 Jul 2026 17:41:59 -0400
+	id 1wjOYp-0007nY-CG; Mon, 13 Jul 2026 17:51:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wjOPV-0005T7-Ug
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 17:41:57 -0400
+ id 1wjOYn-0007nG-Ee
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 17:51:33 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wjOPU-0002yj-88
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 17:41:57 -0400
+ id 1wjOYl-0004W5-Jh
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 17:51:33 -0400
 Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66DJ9Q4w2256830
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 21:41:54 GMT
+ 66DJ9QLK2256819
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 21:51:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Nw0Re6ybYmhcZlR6aRDV6iPkXzUArsolrWZWMDxCg6Q=; b=R2y2/39u/QNEIwWD
- vJGJoks3GIhDB2k4j9KLVoh9PDgiFZLrHGtkNSpNXEHwwLSAEwcl2HyrRnnDcbdQ
- EaGrgRUACI8H2m96l0c22ajm6HbXDr73laJV2h6k2uiKni1SPRuCdaNtoQnsY7wd
- G/rhXOJjUOR44zm/7un9IJyKHkEHrgs0rmFHFts9XxC5KSWXTgLNxcnm2n7/iVTu
- em362ZVEYAJG954O4bSJBJ8ZMTlxNJnXmyO8QmmLV0B4Kkgnt26+c8y26uI/ayZZ
- uHO40v7V45OQ4UMGkYSKjfP3dlBiD2mw/1udFvZDUgNPvSvdizTGgPOZzdZPAbXH
- 3Sv9eg==
+ KKHMr9bFfcq/0D6lX10S27Fe3wdgOv4r77LhsbDFkEY=; b=N0p122fl+53n3oe5
+ Lkw3xESCcdCJa0dgZapXtvnC0WkDJtr4n3ntWpA0o6YuG0+tTH31uOKIyy4ZQ7tM
+ /AZ/O3iwr7CDCqE+6HKNXGW60hXE8kubsD4B8pR1LAhw0VCzZbBmNcCYxC8QvJ4n
+ gT3JQ6GCtiGoKxUQUJVn1sgB24BPzLt1Z8lG1yx38AeSkk2hEZCyyXnBdEJ37amZ
+ eb7irZmkJMTQAOIWnyqUiCMwtGeKgL07O3mnLJkkxzk9dNWl/JSJcYRzLewDYIQC
+ LWVRb9l1d5TZ09KATeIAUj/jLLN2ifDw+Rl2D5l/XebT/0Cx57494nqs3IU/zvG8
+ eA5jXg==
 Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
  [209.85.216.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcwk9tnf2-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcwk9tp6p-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 21:41:54 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 21:51:29 +0000 (GMT)
 Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-3812b0c6f23so263512a91.1
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 14:41:54 -0700 (PDT)
+ 98e67ed59e1d1-3810960140eso3861290a91.2
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 14:51:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783978913; x=1784583713; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783979489; x=1784584289; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Nw0Re6ybYmhcZlR6aRDV6iPkXzUArsolrWZWMDxCg6Q=;
- b=F6jkc6VT/8qfYWyJLUF3TPhIf+LPiNATb5VrYaPNcJ/ThJct7h4k8qV9zRWaUU7X1C
- IB+ixz40wCNkBWjbcYH0HFyv2W/MlZUuKQJ/rbYGYa4ZZmOWE0J7HPD+lsQYEIs5Bok4
- oJraTrP/osGa1wWe6qb9vxfTWq/qCsg3NjIbFTaXCzeUPN6cXvCGyive0BtbtDVLZCik
- IZMgEn2GiPb2Tkx7pJavzSPaLYJJAo0Z2cp2fRVJrzRLZjz7knt02lNxuCneQ78xXWm3
- NxDktdr2Mht+jRj9f3b6tcFbgEDHUciFaMAuimSq9QpVof0TQBs+QZoPgJGEk49G6ZBt
- mVGQ==
+ bh=KKHMr9bFfcq/0D6lX10S27Fe3wdgOv4r77LhsbDFkEY=;
+ b=TWDUS79EPidG7xH+i2Vo9cNMl6+WGJ7E29HT6GrJ548nViHJAOlbNDfwgNSqyMxeVW
+ V5ITrfRSgO0zIVnn3c+wyzsQjqXelzA6SSRbbjAgANii94bkZcsTHz6wZlOSrsq1WUhh
+ Po4XfQ1yHSy5savCdZCs234vq0jdWQKW99raJlxZLYRp7kH+xmHzB0imLafduN71tkB2
+ Ex1DU+GPKwDmFHFG5DimmjEd4JK4XzSK8CXYNWBLkOtrG/VzjTflHDsUMKPRJ7a0cBeO
+ SjXgBBOLwV64/F0FtrGbVMtyfLTjSCn9jcw3rR+HT7oDCpbHsgK15xKXB/0hw8BsoAEh
+ 4rFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783978913; x=1784583713;
+ d=1e100.net; s=20251104; t=1783979489; x=1784584289;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Nw0Re6ybYmhcZlR6aRDV6iPkXzUArsolrWZWMDxCg6Q=;
- b=dJ9cRaJfzfid2PrgUu/kEi0xsu3vHKPWTH1Hq2d05LAtsSoMZj/hDnOZpVevbZiRJn
- 8Sz4h2ZZw9fZ1U9gUNWZRLL24dWP7pdqn+mWue6iPxLkbW7IQPU2evobSLKStf+542Mt
- oRzrU9oUlb+djB3Bun/z4REbuHn19dIXSNunMQ1LeZpZJHHb7WEeVGghS5sC0QwNTZL4
- AWk6hj+xRMuKt2zpMkBMjt0dnVS+6lSLwxiKufNfSsW4esM+IcAU17gUPwWm3rVlm+6r
- zG8VAgEiFddF+lS0WO9+6WIR9M0HgrrSy+qM5sdY5rAV0CAnR9t4bF0cbOkjlfBKpjNr
- f5UA==
+ bh=KKHMr9bFfcq/0D6lX10S27Fe3wdgOv4r77LhsbDFkEY=;
+ b=Qom2on8ADYDlG9CVooWnASGi0LvE68xGltIxlAIt6CbuLeXeOTDzz8CUVFD+0vzTqv
+ IRsfWdMM81ytAL0oR5xEon/Xy4XYUNE9X3t0PPEWSofrQ++0tYxGgmkFNs0U8nZs0dgJ
+ 2PM39LQx/IS6jmWqhEgYK4evQ4qYtvb+2WeAH8NO29qNNo1KEyKsmoQZ6tYRCiKDE4kQ
+ KJOa/7Um/BSwsFqOdOfjyCN179UYesu5f4ii0RsY+qFjGT5TFpNiPEolKH3SdPHe2HIt
+ 8gTD78pNtI6drFIvPe6DT9L9b64DY/BbOMn7vJN2Ja7Vvpu/gz5lP1z0/nfMZGgruFJP
+ N6Eg==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rpo/5gmp0BxoNT3uO7Y4CpTEami2dFbl8QBe10jyjObm8lDok2EBOJWmG6B6pzlyR/8DJaq04G24Gz4@nongnu.org
-X-Gm-Message-State: AOJu0YxVFv+liiCdjeVH2HNCMyFEs3d2cHrt+ZXOR3a0r03I6SLwVdBL
- CPqxQZD1sQ2yFolTmrijEzHmOUWD7rSRCtgQyV2L7sTcll80Q3ZWuJw/hUYdcMlw2qeNW+3YR/9
- ptdbwnH5cjWuIGZtKZOuruLhbVnD0d9uNHa3LN0/SOTB398knR+gEhhrX1w==
-X-Gm-Gg: AfdE7ckamRP57PjN7ijPmbQYXoiFaCCGlhUX/ECTRQCy0m9jYkopTwd2M6P9O2GMjJe
- aO04shVGksIvQxdZbqzmkbPucLj/7rmlB2iFmviXW19IyNRpHOqxBApAMd3jUhWke+w8GhOhk/G
- ZML64WoDaOmiQioCE3umXU8EZ1JsmDv8MB2uil3kIxQKwfmguB0nsva+sfn6A6HZbDg2QBN6r+U
- pSPflkI/DDNh/56a3thwyRdHmnpkxCNr8tyFKPMEwcBLxjifj1MqRa58PN4vsXCKhxbJCBnH4LV
- 4lIaFroTDZeRIdKSZVRAdCxGkAHv1OBBC7IrIRY/aHfkWmlQjyud0HbLhL9/weh7DbVu1ujgUoJ
- EU+28UIRsLhr5FhsiCKfTFIplS7H92XdDhHpgXtkGzAEHeDbLicqVU1kq8LFOuYmJ4c1l5Q7O+U
- ReKEM=
-X-Received: by 2002:a05:6a21:6e0c:b0:3c1:85d:fa22 with SMTP id
- adf61e73a8af0-3c110bcce4emr10728153637.65.1783978913479; 
- Mon, 13 Jul 2026 14:41:53 -0700 (PDT)
-X-Received: by 2002:a05:6a21:6e0c:b0:3c1:85d:fa22 with SMTP id
- adf61e73a8af0-3c110bcce4emr10728130637.65.1783978913006; 
- Mon, 13 Jul 2026 14:41:53 -0700 (PDT)
+ AHgh+Ro7+UB3joTZ7SInKAjfMoKNLYx3EXVFvQQjkG0ejoELmB444EhxYSgeuLN6nGtA3m/aSfflN1J+CRZz@nongnu.org
+X-Gm-Message-State: AOJu0Yx6WvkFwcFuZpt4KloQNJbrPy8eZrLk8urHQq68IQMas12Nmxke
+ UXpf7cgUsWViVns5VC9xKiX1PqvKC4NptPXZPf6kRhLmzbtI1Fs9vtof/ANLVs6ixI97kDYz8fq
+ i0BCRfdNTzc3iYGKonROlR7EXJxZg3NQmG3G9NxOEENmDhL2ZWWx9dix8Zg==
+X-Gm-Gg: AfdE7cmFaI5tKkVLFKWbrF89rr/AfiRq1PsZnBhSZzZ3qytjulsDUTVU9x+mcYt6Fxx
+ XZlaNa794Bg+1HapP2JtN++SvldiNWVbi+IXGhwqnHQGjesgOHjLscd5GoGw3w8QL4Z7rzvSDiV
+ L5QSi/u3Wix/4rHcbXw7M2YeR+K9doV3ZYlDbCDuq44GBPi+FiczznSkDUm2AZISYhTXEZI0R2n
+ nTOxB/KWuDCgYR2U/sHRAHiNJBGTJpjiTaLxWLojRgkw+kZWcGtzttnQyEkJtS9Sf/dd7KXoAlM
+ +HmTE2s0loML3doRhZ6BFEu5DQkaphnAI75blAd73h6JzpuXC68pP6e7Rp7rkp2NQpLtu8hSZk6
+ 3RlkSVyNsM3BvanzP2KPzLnec0IYEA8J6Utjs5OZ4yz9oOiwrNCwfouCyJEb99NCPtXjyVMwcHS
+ BKn5Y=
+X-Received: by 2002:a05:6a20:6a11:b0:3b4:8f2c:6805 with SMTP id
+ adf61e73a8af0-3c34d719ccdmr1126471637.42.1783979488699; 
+ Mon, 13 Jul 2026 14:51:28 -0700 (PDT)
+X-Received: by 2002:a05:6a20:6a11:b0:3b4:8f2c:6805 with SMTP id
+ adf61e73a8af0-3c34d719ccdmr1126425637.42.1783979488119; 
+ Mon, 13 Jul 2026 14:51:28 -0700 (PDT)
 Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13ba45b7049sm7282839c88.12.2026.07.13.14.41.51
+ a92af1059eb24-13b659d8da9sm125969373c88.14.2026.07.13.14.51.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Jul 2026 14:41:52 -0700 (PDT)
-Message-ID: <8aa04066-49a1-4053-9407-2403a3b368d7@oss.qualcomm.com>
-Date: Mon, 13 Jul 2026 14:41:51 -0700
+ Mon, 13 Jul 2026 14:51:27 -0700 (PDT)
+Message-ID: <810b6cc9-1691-4671-9acc-15e42193a386@oss.qualcomm.com>
+Date: Mon, 13 Jul 2026 14:51:26 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/14] target/hexagon: fix get_phys_addr_debug with
- in-page offset
+Subject: Re: [PATCH 00/14] hexagon: add semihosting support
 To: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>,
  qemu-devel@nongnu.org
 Cc: brian.cain@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
  philmd@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng
 References: <cover.1783973054.git.matheus.bernardino@oss.qualcomm.com>
- <dd52bfe14af72beffce026a67e930b68dd6a67e7.1783973054.git.matheus.bernardino@oss.qualcomm.com>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <dd52bfe14af72beffce026a67e930b68dd6a67e7.1783973054.git.matheus.bernardino@oss.qualcomm.com>
+In-Reply-To: <cover.1783973054.git.matheus.bernardino@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDIyMiBTYWx0ZWRfX3KQW6QgwgF8r
- WlINiDewPJncNBxVgreXw2tT4wDyRrzgdP9c5rlUE5pHryxFHTTQsMdEaYxz51Zn7rbiL6cwaIQ
- aLK8iehKed16DXw5AtA7Atb1ZrEVbGrbb/i8ykhKr+BRpv7Q8pMVRHFi98f3EAAJgNoW+znR/6d
- E63cJikACXXGaw9g3odc9wzcxc0y5RgYmLT3HOG0jeZwyVZbob/W0nBvIy9093N1lSusLC50z6z
- e1mjEZujKq/hf3oH9G4tQCo8/bXv5dLTfL4SxR8mvRsTmMMnAbhCCUCTsLRZ9uNTpfMhtGhhPFH
- X5Y4xNHoYcOfEaTefC46VmH3rDj6hrz/amt7qnf07eDX5nkCqMe4oyGV9Wwl1SxTMUa6oOgD3Em
- 2qaqZ5Qd7YdLY5xS1z5IRXwIi9sC5IASBlXEZjsmhBmLGhQqGry2nno//i5ZyBtbDSxC5Vlho8A
- ScAyf+9GuUdvAelwg6Q==
-X-Proofpoint-ORIG-GUID: iueKvrAxfpVav5BsgkbhKKkEcUUQsycx
-X-Authority-Analysis: v=2.4 cv=UMHt2ify c=1 sm=1 tr=0 ts=6a555ba2 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDIyMyBTYWx0ZWRfX919+NMSfLEdv
+ rYOqcnB2A6qsVYPK0j0eIGoYIro7neS/AEaTs87l3aBSL2LU3yp9ha5zulshVgrP82Sbhs/NQut
+ GUDDp0f/0/gsCcfcqOTSwRV/gNbjIo5u9yNO8qvYSDXMtxGVoPHYKMK0U9urWuvxiZewjloDPml
+ ZaT/p9vmfc7PXGfQ+KfdBgsytg1iEwSESpUGx9H/3c65TlYmmgPaScH52L3t1Ddkz/JoBEBQO6a
+ jwHHOMApnCBRO5gWMOkzbfPIwTLPOVobYHwrTJNBs1cZDG6swwdscv+Jmk/aeIatAafV35cKubg
+ sCipD6wxttqvGOyk/0Ct3iYnb9f+Bii4tlcKA8TJbrJKneyFkUTKU1VzPkYLhJMTTWGSo3JD4UL
+ y4DumOmMkNPNbe96Z6SoSCloWLpdESBa2r1fsaqv2UZxv1ZtELMePMEDjnCoBClxvJ4K5R0GoMq
+ LqDdVguqBKfkqRHYLNw==
+X-Proofpoint-ORIG-GUID: RN5E5h6MyITf4_8gDzAv1ZDqgHybu6k_
+X-Authority-Analysis: v=2.4 cv=UMHt2ify c=1 sm=1 tr=0 ts=6a555de1 cx=c_pps
  a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=EUspDBNiAAAA:8 a=a7JpWODm79vIuW5QHDsA:9 a=QEXdDO2ut3YA:10
+ a=EUspDBNiAAAA:8 a=NEAV23lmAAAA:8 a=qvhtsxRReycOrm-o9RwA:9 a=QEXdDO2ut3YA:10
  a=uKXjsCUrEbL0IQVhDsJ9:22
-X-Proofpoint-GUID: iueKvrAxfpVav5BsgkbhKKkEcUUQsycx
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDIyMiBTYWx0ZWRfX94efToUUulEM
- xv+pIfSJpKcr6ZUlpBMNV3daBc1Y0LgpU638uhoyq32UAlwLb2/FN0Jsf1O/MPK+BtQONYUR7U+
- Eu2kXLm3g38N5LOvAfY2mZf8++n1IgM=
+X-Proofpoint-GUID: RN5E5h6MyITf4_8gDzAv1ZDqgHybu6k_
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDIyMyBTYWx0ZWRfXw8ZBML6weItM
+ beb1Qv2rY5K/oF9NSgiUEFzvRiz4kPWLepJjUB+oMDfkS6lCFgg+ZsBiH0FMmB+wpCebOAzdkU0
+ M0pm6dOjoctdZjnm8Jo/fBsvj/jPYyU=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-13_05,2026-07-10_01,2025-10-01_01
@@ -134,7 +132,7 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  malwarescore=0 lowpriorityscore=0 phishscore=0 suspectscore=0
  priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607130222
+ definitions=main-2607130223
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0b-0031df01.pphosted.com
@@ -160,25 +158,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Matheus,
+
 On 7/13/2026 1:07 PM, Matheus Tavares Bernardino wrote:
-> As documented:
+> This series adds semihosting support to hexagon system emulation,
+> together with functional tests for the added operations.
 > 
->      * @get_phys_addr_debug: Callback for obtaining a physical address.
->      * This must be able to handle a non-page-aligned address, and will
->      * return the physical address corresponding to that address.
+> The Hexagon semihosting spec can be found at:
+> https://docs.qualcomm.com/doc/80-N2040-101_102648/topic/semihosting-specification.html
 > 
-> When MMU is enabled, hexagon_cpu_get_phys_addr_debug() returns the
-> physical address page-aligned, not corrected to reflect the exact byte
-> the virtual addr maps to within the page. Let's fix that. The
-> MMU-disabled case is already correct.
+> Brian Cain (4):
+>   semihosting: add APIs for chardev-aware guest fd routing
+>   target/hexagon: Add an errno mapping
+>   python/machine: support routing semihosting output to the test console
+>   tests/functional: Add hexagon semihosting systests
 > 
-> This would break semihosting argument reads when it is added for Hexagon.
+> Matheus Tavares Bernardino (10):
+>   target/hexagon: fix get_phys_addr_debug with in-page offset
+>   target/hexagon: fix PC advancement for non-COF TB terminators
+>   target/hexagon: add aux functions for guest mem load/store
+>   hexagon: cpu_helper: add reg reading/writing helpers
+>   semihosting: add callback to set error
+>   target/hexagon: add semihosting support
+>   semihosting: add ftruncate helper (to be used for hexagon)
+>   target/hexagon: add main arch-specific semihosting operations
+>   target/hexagon: add COREDUMP semihosting operation
+>   target/hexagon: add OPEN/READ/CLOSE_DIR semihosting operations
 > 
-> Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-> ---
->  target/hexagon/cpu.c | 2 ++
->  1 file changed, 2 insertions(+)
+>  configs/targets/hexagon-softmmu.mak       |   2 +
+>  include/semihosting/common-semi.h         |   2 +
+>  include/semihosting/console.h             |   9 +
+>  include/semihosting/guestfd.h             |   9 +
+>  include/semihosting/syscalls.h            |   2 +
+>  target/hexagon/cpu.h                      |   1 +
+>  target/hexagon/cpu_helper.h               |  24 +
+>  target/hexagon/internal.h                 |   1 +
+>  hw/hexagon/hexagon_dsp.c                  |   7 +
+>  hw/hexagon/virt.c                         |   5 +
+>  semihosting/arm-compat-semi.c             |   3 +-
+>  semihosting/console.c                     |   5 +
+>  semihosting/guestfd.c                     |   8 +
+>  semihosting/syscalls.c                    |  29 +
+>  target/arm/common-semi-target.c           |   4 +
+>  target/hexagon/common-semi-target.c       |  51 ++
+>  target/hexagon/cpu.c                      |   4 +-
+>  target/hexagon/cpu_helper.c               | 173 +++++
+>  target/hexagon/hexswi.c                   | 728 +++++++++++++++++++++-
+>  target/hexagon/op_helper.c                |  18 +-
+>  target/hexagon/translate.c                |  13 +-
+>  target/riscv/common-semi-target.c         |   4 +
+>  hw/hexagon/Kconfig                        |   1 +
+>  python/qemu/machine/machine.py            |  10 +-
+>  qemu-options.hx                           |   8 +-
+>  target/hexagon/meson.build                |   3 +
+>  tests/functional/hexagon/meson.build      |   9 +
+>  tests/functional/hexagon/test_systests.py | 133 ++++
+>  tests/functional/meson.build              |   1 +
+>  29 files changed, 1236 insertions(+), 31 deletions(-)
+>  create mode 100644 target/hexagon/common-semi-target.c
+>  create mode 100644 tests/functional/hexagon/meson.build
+>  create mode 100644 tests/functional/hexagon/test_systests.py
 > 
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+see some build failures on windows and macos.
+(feel free to ignore other one, seems to be a network outage issue).
+Also, a few checkpatch style issues.
+https://github.com/p-b-o/qemu-ci/actions/runs/29283651823
+
+Regards,
+Pierrick
 
