@@ -4,138 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFAC9C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 11:27:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B71BAC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 11:28:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjEoc-0006Yw-1N; Mon, 13 Jul 2026 07:27:14 -0400
+	id 1wjEpi-00070u-3y; Mon, 13 Jul 2026 07:28:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wjEoa-0006Ye-AX
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:27:12 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wjEph-00070j-6c
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:28:21 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wjEoY-0000IV-9p
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:27:12 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ id 1wjEpf-0000Px-Da
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 07:28:20 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66DAQp42507388
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 11:27:08 GMT
+ 66D9R6eT1122891
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 11:28:18 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- RTjzMXsLBbJ0LOu77n6+XLc2W3meQJWwjiZ9dKgFbWg=; b=iDq6iiYxuBQ7p1Q5
- vDHAi9+Rfl9zJ6WqMq3Iv80y34norXsOHOpi72/p99gpidooLNZ2m6/qQi+LryHq
- f6BNeh9B9HluOOphzYbz9c+YRzpWGOqZSkCKHPy+e9nsCFfEqozIlACtcfsM3hXk
- 452fgqw6hQ5+6cZY5h/OUf9T0aHRwISEW2WmTBWuHLTtcGqDP1WUK1Q4pkct1nS+
- HvIdvY2NvwJp5XKGGo9WwxGQM9zbcCrW/5rJFipLSMzY7OL9iO/i1k2KtM3ddqAv
- /dKJs/ANPDcM7CdsIuHursMi4ivEd4d3e/qiCblkqAkfFo/GwVOyq7nG55K/uV5f
- czPfiA==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fctc8h859-1
+ glcDPzcN1WLQPiWVuwh3aPS8v2o+iRyjebLoh+k+vl0=; b=PMEG1vuEmINSfp5D
+ LWk7/yEHIXd33tPI9M+Vosex0ald//v3Q+TChukuJXz1036uS8xAc75BbrJ17WF6
+ ORfPO5ehhd5FH23LoPKHou6eJqxYBaG05gTwsLquJHzcJOvdo1wDS9Ls4CZon4m1
+ lSVD8CWf9rrw8wuICGHujLJQ1xWukkqBcNJbNKsFSv2rnHYMXEwNxcxUCxNP28af
+ nYgBbft91G3jj3WQ8iFubDyerqR29yRejFVrl/jvg/KkEYRcFBg85IfNUS4z3Zle
+ dSoqjsi9mqkRsLCHNwbvTVwkBzIIRB10ZlrWK3txcBN3GHalnp5SJuLOpE+0JjcG
+ Jx20Gw==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcwda0du7-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 11:27:08 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51a8c689b5fso44673541cf.0
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 04:27:08 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 11:28:17 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-51c1a9764f0so51713741cf.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 04:28:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783942027; x=1784546827; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:references:cc:to
- :from:content-language:subject:user-agent:mime-version:date
+ d=oss.qualcomm.com; s=google; t=1783942097; x=1784546897; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=RTjzMXsLBbJ0LOu77n6+XLc2W3meQJWwjiZ9dKgFbWg=;
- b=CvUkUYA8Atb5dnt5FcSIgkFe3JbrvR/7QUfsx6S8mMXDeFucA0wkVzswSUS4r5cDES
- JsVni7hHoyeE8B/t5ubaHgQWpDBnKIPvwtBDfgVMzbkAuu/I4YUWyp1cJrTaFlEq4O9k
- g3Fi/oTLyv0TitwtIhAQ+qmAJpZetK7iIN3aTReBxvD0KIVKRClVJdJAfiLRDZFL2qw3
- jhnBhGnV/xxAgpMTgsyw7bdiY0ehWT9mnlU529ruUcWbWLlKZRRjRFlU/dpVzYRLgVTl
- aI/ZFOPGlRvg2g8xiKdKqkmKr0m+G4NLvWVn1OFovtvhyV9DEfnlGva1svHuyTEnJl4X
- zOMA==
+ bh=glcDPzcN1WLQPiWVuwh3aPS8v2o+iRyjebLoh+k+vl0=;
+ b=YZGqj3dPqUFpIPSTrWbLURIVWbOBVuZYuZpUrDhDd0faEP0DShM/aflTXcM5gC0uxy
+ qnXDPWT5vlF87BxirCmqhb7T936MJ/Vznm8npjVuVGrZlbuHXbRRiXstuyTNxmNS9LE6
+ IpfegJXD5jkZnYitgAvOW/QkH2cdhy1Z0y9Bmt5o2VO4pLGI/2cZGqrlk48p7FJGSQwO
+ RljcyacSIjoSP8Y5BAQZNYlk4xa9FtSEJsSEgqPYMxIuTD90nzcV1Q25K33hNOdtQRtA
+ KupOyutpIPQ7GLKxz/c/kYi2HxCbDwcxVWvyq7c/9NOYmN+o/VDAX1iZrW5FYECxyMCV
+ qtng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783942027; x=1784546827;
- h=content-transfer-encoding:content-type:in-reply-to:references:cc:to
- :from:content-language:subject:user-agent:mime-version:date
+ d=1e100.net; s=20251104; t=1783942097; x=1784546897;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=RTjzMXsLBbJ0LOu77n6+XLc2W3meQJWwjiZ9dKgFbWg=;
- b=ECX7R61QjSoLzv3orf1f9/CJrl629WXdPb0+jTAxtOhehg+Pt9LnI+SLOoao4XR4BY
- /EPkw7cdpUnxjWx9Xvd2EfGvE2oUGPr5Nf6wViqeG4nZieLsYzflj+aqNQTEEJhA6TbP
- /vSb71AUnKiTxcrfs/69p48RPBXLCuNoGn062z3Sbw84i1OplBXc/wAmfDyMoyFtJRrP
- nQGi/ewCtzk5cwW2IyG39Kv9pq5BLngAOKQ23n/xtuaMeOxW+c/Qh42XYMJll5Dc1rCG
- EPSkkLBAvL3AEfrBJg42cxiSwJwTiF97Ei3KqWHB1u8lzvOG6+1hdhdF22ABqsr9tSnD
- Zu8Q==
+ bh=glcDPzcN1WLQPiWVuwh3aPS8v2o+iRyjebLoh+k+vl0=;
+ b=fIO4SBBZgnAOHRPJGtpDgsu15sHJNz5CA8HDnXrYNJjDvPivXEMiWU3G/u5GvSE6sS
+ jA3zOBw2fq/v+1sS4hn+0+LCZq77i5CVyKrinUUoOy53ALDovFSorUIBKAxgB9nlw+Oy
+ 3lKFZSY86X1DJznN7TQf1mMQyDFVaYrY/XoOBLXlq5OREUDC1SGco5j85XyfRrWf/okG
+ blab3eur9mdJzZKxWh9YJcCmF9cCP5WXO0RMzfn0sx8K9HTAQNfP3cTZir31dCsdl8fL
+ ye2pcoWcHh1iR/AyNpgb8k/ALGCbolrkxrdRroD6OI9TZou65RGGbw7PK+27c91MLYTC
+ 0wWA==
 X-Forwarded-Encrypted: i=1;
- AHgh+RpQRYcbDuJbZ9d6QHEecAalStul8arVo3VqQaAmyaIPUwHGnY4/BRSNqfdleHbZ93P1Oe3/W8MmPSKM@nongnu.org
-X-Gm-Message-State: AOJu0YxoO2yKq89WIt/jfZLOBTdj6bPwB/D+G5fbUb0h93dvJorU2c8r
- 64rO6u+cGemAa9pf+xYrjx5m2svzryODcks8Ty+taWckDHo9pZxWXbGE6+xAPm2APj1w3wcKiI9
- hqxWU7hMasvfFQzi8q7F3ZssO/c80LEMm1COqZ+FJoz65qa0srvPBfZUeDw==
-X-Gm-Gg: AfdE7cmIrKgHGhHfx2XO0DuMPM/1kDUUgNTtC/vlWOdXYPs/YmoAwUdj07VDOcwyf/p
- j4/jbSDwumi1xpSw1jKmJarHKcVGRKEOAEG0YFM6S1AUNwhZVOS6Up8uz2MsqkKjwIkpjpPitsO
- FUuk2ZlU3hE7Wh6EjMdsPkEpT03Ru4kthLZWsuZ8+ue26mbv2kLwgTviRsvT3VJ/EGhsdteCyAU
- ygzm/7IV2t5X6x06AGbsRkCiFDZDXamTLcittWeLT/U2U/cCh/aP6bo0S2htGWhW1RYhQOsqY+0
- FTzbHSwIQEt+7vYRseV/x3IEK5pMDoIm25GNPuTH/CkRCKfky9XK1pFPOctsgaUO0omduvima/g
- 6AhcMDt+O7Oap7gccWUn6Cr1ET56QTf1SBIsKlu0WOa3N5LsnSqMyeFPc+fF6wQ==
-X-Received: by 2002:a05:622a:115:b0:51c:7b11:41af with SMTP id
- d75a77b69052e-51cbf2e0d38mr85008461cf.75.1783942027386; 
- Mon, 13 Jul 2026 04:27:07 -0700 (PDT)
-X-Received: by 2002:a05:622a:115:b0:51c:7b11:41af with SMTP id
- d75a77b69052e-51cbf2e0d38mr85008101cf.75.1783942026920; 
- Mon, 13 Jul 2026 04:27:06 -0700 (PDT)
+ AHgh+RoCTP18cY/GTjISdZcnCFri8cIyYr/Rnisth83cgDAabbDYTY03wPO2rAY6vS9d1sYjessP+zahSknI@nongnu.org
+X-Gm-Message-State: AOJu0YxCJmAOzTEiKRs/wfqSw0s9Xu8116oBuqIY0DMNNnuG6re1sFw0
+ 7gn9qcQs3RdvhNKlrH74flPuU5Wfck7nMUIpBYMrRyKoafjShXf28dnNLaGH0HybWTNlvjsjWCv
+ VxysFJFI0N1zDcQFpUwtpP0lUvGPcoh3ya8oZ2NDANaY2IxRHQ0N6a6UneQ==
+X-Gm-Gg: AfdE7cmcT4MtTOds2E6nS20g7Y+tUwv+46kJFsLRFSkTwlhQNwUW0mZgdBEdFwYyYl8
+ WM/uA2FyuL/G+7jME602AELZEEfRSD1zdt6yfq2QADISPlW4XM629cBv6BlbuLPMlxRTd9eIZ1o
+ XCjfdC4o0WbGqz8EKfXjrFGH8stpn/27/3519wAqwOaiR2knESQjUK3abGVYHaieQU2Ww8zOqaX
+ ikLadI8e2UR9/PV+nQOXHhHOW6GxmPFiZKXXPK8OmHV4RyNTtaV18LMF7I9c/dHXo6HgTsOCqUm
+ R9zHygilJZV+dud6aRwjbcXW3L1ByTMg62jV4wijxF/r/TRPXRk8wlWEwBZDArZnWdVbLibh2uP
+ mrt0AvkihAmizJu1h+35QWg3D8GVdrjOJNWkVwX8q6wpOVUeLMHo5+QzzHua3bA==
+X-Received: by 2002:ac8:7dce:0:b0:51c:f8f:13d with SMTP id
+ d75a77b69052e-51cbf247d0fmr83784451cf.37.1783942097355; 
+ Mon, 13 Jul 2026 04:28:17 -0700 (PDT)
+X-Received: by 2002:ac8:7dce:0:b0:51c:f8f:13d with SMTP id
+ d75a77b69052e-51cbf247d0fmr83784241cf.37.1783942096953; 
+ Mon, 13 Jul 2026 04:28:16 -0700 (PDT)
 Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47df6a31dd5sm41878791f8f.16.2026.07.13.04.27.05
+ ffacd0b85a97d-47a9e4d83bdsm82553610f8f.13.2026.07.13.04.28.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Jul 2026 04:27:06 -0700 (PDT)
-Message-ID: <7a7985b6-2a62-4159-8d22-d11d0739d843@oss.qualcomm.com>
-Date: Mon, 13 Jul 2026 13:27:05 +0200
+ Mon, 13 Jul 2026 04:28:16 -0700 (PDT)
+Message-ID: <cd0495e5-e63f-4931-ab57-fcf213cb164d@oss.qualcomm.com>
+Date: Mon, 13 Jul 2026 13:28:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] ui/vnc: validate color shifts in SetPixelFormat
+Subject: Re: [PATCH 4/5] ui/vnc: use RFB wire types for client message handlers
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti
  <mtosatti@redhat.com>, kvm@vger.kernel.org,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 References: <20260706-fix-v1-0-4b83a70e9f3b@redhat.com>
- <20260706-fix-v1-3-4b83a70e9f3b@redhat.com>
- <98e1bdb8-2cfb-4661-8189-9071b09e2629@oss.qualcomm.com>
-In-Reply-To: <98e1bdb8-2cfb-4661-8189-9071b09e2629@oss.qualcomm.com>
+ <20260706-fix-v1-4-4b83a70e9f3b@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260706-fix-v1-4-4b83a70e9f3b@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: ShYsMDxFlb-anCvJEyOQ2M-ZMgOtLq09
-X-Proofpoint-ORIG-GUID: ShYsMDxFlb-anCvJEyOQ2M-ZMgOtLq09
-X-Authority-Analysis: v=2.4 cv=UtRT8ewB c=1 sm=1 tr=0 ts=6a54cb8c cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDEyMCBTYWx0ZWRfX7uvUMGXu23Xn
+ 0skAU+RteTe7w36QO8qQDfxF9fMcG6Pee+CaoZh0TW+Bi3+L3+RbqDQsCjbZsR7wqbsJEc9IJv1
+ cVvVb62vlr7ZTEDoPpLpIIM4tJ9tieg=
+X-Authority-Analysis: v=2.4 cv=cNbQdFeN c=1 sm=1 tr=0 ts=6a54cbd2 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=p0WdMEafAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=QD95cOeK318sXTfxYfAA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDExOSBTYWx0ZWRfX62DdzR9e26mG
- d4d4I8QWBiKaaiEw7PCimIvUkj1kikrcbqLzZxl6d9mYaKJj1F8ZR4k22jvyAxrV/3VQWqCRiYS
- KzCwcFzFiDw1xijntKJriLV7ql/UJsw=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDExOSBTYWx0ZWRfXwvML+WLXvwI8
- FTSUwGIP4LnBdtf7w6zjyhSu5KJCVQCJcjQJdOZtn6X8cbNoiwG9ZTlUHIefFqimWaYnlHsOqi/
- KD8XRIaF/6SUBAKv/hBDOOIV4dqrROuDz5nxJHjPhGCaT+Pjt4t4eEHb/CZa+lcfA6U05o32leG
- MzjBoSGm+OBbdG0OSC67NPscKPSNMjql1WkSk+9KR5Bv5Kl8uLJ9IKuI/TRuKljcVD7uHTscfiO
- hjiowPU4LRpjKvv5kXqu5J+wUdZ9Uu2ETsP4Aw5V2HZgmL0MgkjP9HIwl0u9aE7KC8sHnvOa77O
- hMY994Q17d+6dlUA4sp7PISyu80DVWLeqkBZYLyzd2sGZ1LDA5YRV7tv1b8/yb0um+GhMZDufd1
- KahUTNMLLvOhD2Vm2qAUhj+abE7a93f9AD+vmISAJYi1aKqSwNsMF8gKQ3GvD9qeXdbcTXpIGjS
- Q228wspbeFI1ng+HaSg==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=r0bVYnQz3-FgjroSeqQA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-GUID: MxlHVJmQ9w-aOK35Oc14cqRq-JPfeZQy
+X-Proofpoint-ORIG-GUID: MxlHVJmQ9w-aOK35Oc14cqRq-JPfeZQy
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDEyMCBTYWx0ZWRfXy+Vb7xKJwnlX
+ UfJABqNzukWjx4RDnrFE/0gt7n0YfssbXJB9PRBmUGgtiR1jw+CMGES5wDR/6hilfKARhh9N3mk
+ Eyko2EQF0sMhDYTr4u4AcWRIQUiOgKBI1fvSA676VdlLfKgFAPg+q3fj5hgQYUmHTExT8Z/qMHD
+ 2J/FttOaMM2u1wW0gcWr1wXixw7qM1gLhFYyNSfXulG9gU40LsLFAEoal6xIMNzgqmake1UpRim
+ FdHcVQ6pELC8MP2Os+ZY8fbNNNbdo3BqYWALql2seh1GyE9RFVoy9JpzrrdX+6byp8sEfZlD9gC
+ UP2sd2rSXK/5n3E5XFinsmDP6ZDxupOdArPUQoIlESWlW8ubJqLY3Uu9MoDajHfAEdguRjeMtYp
+ EAsm+wcGKme5UGkWhOCy8T4uEWnG/opl7jjL2Dy8BiskVNI8NcqRTQpPm9/3xS8+Hn5Ibrtt5Si
+ scypMgRCi7ZqA7WSAcw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-13_02,2026-07-10_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 suspectscore=0 bulkscore=0 clxscore=1015
- impostorscore=0 lowpriorityscore=0 adultscore=0 malwarescore=0 spamscore=0
+ priorityscore=1501 bulkscore=0 spamscore=0 suspectscore=0 impostorscore=0
+ phishscore=0 clxscore=1015 adultscore=0 malwarescore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607130119
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607130120
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -158,80 +157,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/7/26 13:23, Philippe Mathieu-DaudÃ© wrote:
-> On 6/7/26 14:53, Marc-AndrÃ© Lureau wrote:
->> A malicious VNC client can send a SetPixelFormat message with shift
->> values >= 32, causing UB mask computation
->> (e.g. red_max << red_shift where red_shift is 255). Apparently, this is
->> not covered by -fwrapv.
->>
->> Reject color shifts >= bits_per_pixel before computing masks, and cast
->> the max values to uint32_t to avoid signed integer overflow when a
->> valid shift (e.g. 24) would set bit 31 of a signed int.
->>
->> Fixes: 9f64916da20 ("pixman/vnc: use pixman images in vnc.")
->> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3948
->> Reported-by: huntr bubble
->> Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
->> ---
->>   ui/vnc.c | 13 ++++++++++---
->>   1 file changed, 10 insertions(+), 3 deletions(-)
->>
->> diff --git a/ui/vnc.c b/ui/vnc.c
->> index 559d3954b87..94a38242c56 100644
->> --- a/ui/vnc.c
->> +++ b/ui/vnc.c
->> @@ -2276,18 +2276,25 @@ static void set_pixel_format(VncState *vs, int 
->> bits_per_pixel,
->>           return;
->>       }
->> +    if (red_shift >= bits_per_pixel ||
->> +        green_shift >= bits_per_pixel ||
->> +        blue_shift >= bits_per_pixel) {
->> +        vnc_client_error(vs);
->> +        return;
->> +    }
->> +
->>       vs->client_pf.rmax = red_max ? red_max : 0xFF;
->>       vs->client_pf.rbits = ctpopl(red_max);
->>       vs->client_pf.rshift = red_shift;
->> -    vs->client_pf.rmask = red_max << red_shift;
->> +    vs->client_pf.rmask = (uint32_t)red_max << red_shift;
->>       vs->client_pf.gmax = green_max ? green_max : 0xFF;
->>       vs->client_pf.gbits = ctpopl(green_max);
->>       vs->client_pf.gshift = green_shift;
->> -    vs->client_pf.gmask = green_max << green_shift;
->> +    vs->client_pf.gmask = (uint32_t)green_max << green_shift;
->>       vs->client_pf.bmax = blue_max ? blue_max : 0xFF;
->>       vs->client_pf.bbits = ctpopl(blue_max);
->>       vs->client_pf.bshift = blue_shift;
->> -    vs->client_pf.bmask = blue_max << blue_shift;
->> +    vs->client_pf.bmask = (uint32_t)blue_max << blue_shift;
->>       vs->client_pf.bits_per_pixel = bits_per_pixel;
->>       vs->client_pf.bytes_per_pixel = bits_per_pixel / 8;
->>       vs->client_pf.depth = bits_per_pixel == 32 ? 24 : bits_per_pixel;
->>
+On 6/7/26 14:53, Marc-AndrÃ© Lureau wrote:
+> Use exact-width unsigned types for the static functions that process
+> RFB client messages, matching the types returned by read_u8(),
+> read_u16(), and read_u32():
 > 
-> What about instead of the casts (keeping the if(shift) block):
+>   - set_pixel_format: uint8_t/uint16_t for pixel format fields
+>   - pointer_event: uint8_t button_mask, uint16_t x/y
+>   - key_event/ext_key_event: bool down, uint32_t sym/keycode
+>   - do_key_event: uint32_t sym
+>   - framebuffer_update_request: uint8_t incremental, uint16_t x/y/w/h
 > 
+> Drop needless declarations.
+> 
+> Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+> ---
+>   ui/vnc.c | 33 ++++++++++++++-------------------
+>   1 file changed, 14 insertions(+), 19 deletions(-)
+> 
+> diff --git a/ui/vnc.c b/ui/vnc.c
+> index 94a38242c56..14ce2816907 100644
+> --- a/ui/vnc.c
+> +++ b/ui/vnc.c
+> @@ -608,15 +608,7 @@ bool vnc_display_reload_certs(const char *id, Error **errp)
+>      3) resolutions > 1024
+>   */
+>   
+> -static int vnc_update_client(VncState *vs, int has_dirty);
+> -static void vnc_disconnect_start(VncState *vs);
+> -
+>   static void vnc_colordepth(VncState *vs);
+> -static void framebuffer_update_request(VncState *vs, int incremental,
+> -                                       int x_position, int y_position,
+> -                                       int w, int h);
+> -static void vnc_refresh(DisplayChangeListener *dcl);
+> -static int vnc_refresh_server_surface(VncDisplay *vd);
+>   
+>   static int vnc_width(VncDisplay *vd)
+>   {
+> @@ -1763,7 +1755,8 @@ static void check_pointer_type_change(Notifier *notifier, void *data)
+>       vs->absolute = absolute;
+>   }
+>   
+> -static void pointer_event(VncState *vs, int button_mask, int x, int y)
+> +static void pointer_event(VncState *vs, uint8_t button_mask,
+> +                          uint16_t x, uint16_t y)
+>   {
+>       static uint32_t bmap[INPUT_BUTTON__MAX] = {
+>           [INPUT_BUTTON_LEFT]       = 0x01,
+> @@ -1841,7 +1834,7 @@ static void kbd_leds(Notifier *notifier, void *data)
+>       }
+>   }
+>   
+> -static void do_key_event(VncState *vs, int down, int keycode, int sym)
+> +static void do_key_event(VncState *vs, int down, int keycode, uint32_t sym)
+
+bool down.
+
+>   {
+>       unsigned int lnx = qemu_input_key_number_to_linux(keycode);
+>   
+> @@ -2019,7 +2012,7 @@ static const char *code2name(int keycode)
+>       return QKeyCode_str(qemu_input_key_number_to_qcode(keycode));
+>   }
+>   
+> -static void key_event(VncState *vs, int down, uint32_t sym)
+> +static void key_event(VncState *vs, bool down, uint32_t sym)
+>   {
+>       int keycode;
+>       int lsym = sym;
+> @@ -2034,8 +2027,8 @@ static void key_event(VncState *vs, int down, uint32_t sym)
+>       do_key_event(vs, down, keycode, sym);
+>   }
+>   
+> -static void ext_key_event(VncState *vs, int down,
+> -                          uint32_t sym, uint16_t keycode)
+> +static void ext_key_event(VncState *vs, bool down,
+> +                          uint32_t sym, uint32_t keycode)
+>   {
+>       /* if the user specifies a keyboard layout, always use it */
+>       if (keyboard_layout) {
+> @@ -2046,8 +2039,9 @@ static void ext_key_event(VncState *vs, int down,
+>       }
+>   }
+>   
+> -static void framebuffer_update_request(VncState *vs, int incremental,
+> -                                       int x, int y, int w, int h)
+> +static void framebuffer_update_request(VncState *vs, uint8_t incremental,
+> +                                       uint16_t x, uint16_t y,
+> +                                       uint16_t w, uint16_t h)
+>   {
+>       if (incremental) {
+>           if (vs->update != VNC_STATE_UPDATE_FORCE) {
+> @@ -2250,10 +2244,11 @@ static void send_color_map(VncState *vs)
+>       vnc_unlock_output(vs);
+>   }
+>   
 > -static void set_pixel_format(VncState *vs, int bits_per_pixel,
-> -                             int big_endian_flag, int true_color_flag,
-> -                             int red_max, int green_max, int blue_max,
-> -                             int red_shift, int green_shift, int 
-> blue_shift)
+> -                             int big_endian_flag, int true_color_flag,
+> -                             int red_max, int green_max, int blue_max,
+> -                             int red_shift, int green_shift, int blue_shift)
 > +static void set_pixel_format(VncState *vs, uint8_t bits_per_pixel,
-> +                             bool big_endian_flag, bool true_color_flag,
-> +                             uint16_t red_max, uint16_t green_max, 
-> uint16_t blue_max,
-> +                             uint8_t red_shift, uint8_t green_shift, 
-> uint8_t blue_shift)
+> +                             uint8_t big_endian_flag, uint8_t true_color_flag,
+
+bool flag, bool flag.
+
+> +                             uint16_t red_max, uint16_t green_max,
+> +                             uint16_t blue_max, uint8_t red_shift,
+> +                             uint8_t green_shift, uint8_t blue_shift)
+>   {
+>       if (!true_color_flag) {
+>           /* Expose a reasonable default 256 color map */
 > 
-> ?
 
-Haha this is what the next patch does ;) I got confused by the
-(uint32_t) casts, they belong to the next patch.
-
-So with only the if(shift) here:
+Including the (uint32_t) casts in this patch:
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-
 
