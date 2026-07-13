@@ -4,141 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35090C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 16:21:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FD7DC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 16:21:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjJPA-0006AI-SK; Mon, 13 Jul 2026 12:21:16 -0400
+	id 1wjJPM-0006D0-1J; Mon, 13 Jul 2026 12:21:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wjJP9-0006A1-M0
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 12:21:15 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
+ id 1wjJPK-0006CP-FW; Mon, 13 Jul 2026 12:21:26 -0400
+Received: from m16.mail.163.com ([220.197.31.3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wjJP7-0000bS-P4
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 12:21:15 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66DF8Kks1803547
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 16:21:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Krn3tzVrZJ4N/DCZB1Q68dPT9Olm1TwknBosVKTxMO0=; b=mtk935J8IcWKhOS5
- xPVztX3U+PwcrCn5d8OORte7TTUkTnokq7mSt6hzHUoGWlD4TichwtDmFFgLdLAG
- iFo+cLGSZfPyClZtII3NyyDkJA3rABGqEiYbDO/PowBq5TpUsMWgMK1gh9YnktMo
- E7oK3jqI2md2aJQafNeZbn3WjK4YU1FGHs+XJ/yUI1XdKi0RZXCTkCexzwwoXIEu
- w8Jdk5sv8mSkCyyk9zhOD1KgDKH4PCGjPK9Vfw2uhKXSA2jGF3CCzFAZIi/JO2Le
- PxEvQpsCTanQgXKdI4ltK1/MxOy56RN7+nHEBakrppkSpTlyZmxpHduNuPkzlRSC
- SGB9fw==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcwu4shcx-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 16:21:12 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-38dbf293831so127860a91.3
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 09:21:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783959671; x=1784564471; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Krn3tzVrZJ4N/DCZB1Q68dPT9Olm1TwknBosVKTxMO0=;
- b=DIpKCvnehhFydwpT16v1V9hCASD3+AB0nOfTwCdFjgBLjEuI03JE960EQxb7yB9wyX
- jgskXvOe4+XwkghTXtAkmnEcVLuuC4kFwJSciXrskdSCwMm1+eofAciqTBnGl4ETHqU8
- gkkvQFd202+W7xGMr0d3dl7+wmN6214c4HGnIe46VJmn0l7IercaOvXZCBNpoRGyd27f
- jdNgw35cFykNF/6peW25bPBGc5Tl6HAQ8cUJdZacP2cjfspDf1k9b/8N4FL/3FCKo5uU
- mXy4/WdIsU1P9Y3DpJ1xo2wkAveufDPeQ/LPdz2Kk7ojJYWKJZcvDzYbyKkz12ipGFSC
- N43w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783959671; x=1784564471;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Krn3tzVrZJ4N/DCZB1Q68dPT9Olm1TwknBosVKTxMO0=;
- b=KzLA6lOM3HDfRttBqKytVlVq9P/FcW1xFWflrYGB/p/SQISh7qvMchbJ9dU5YloFby
- pbi3TQg/LZVpKbyjkWkNW+SH7VuFMqSJdnetsUzOMpy2swi1G4IsYJtVXFGmaxTEy9Qf
- eD803UrwFQppg82S+nfvDyIIbJp6w1TApoQtiwvXpbveos4Wkh4nSJyvSUaxxlACJv66
- Jx1X3LGylfbexeRlv0SLt5wszx9Dtzd6aFRvGBuNPw+3tFDPQhBpDeWtpCuEQb0bnRiB
- em83zu5aX2nZq8iiMB76vNo4MwONpdJbZ/agSGt7OhmWrsYbqHoon91JkiA+IWBCF/R4
- dslQ==
-X-Gm-Message-State: AOJu0Yw14m0jSGXdtolAg6S7szlH3tQDuLdl52+lM8ThlPWXa+1Otp7C
- +MnHoh3lvhDy/P8uRLOXsHjXvvE3Mrj0Lk6oVZCsws0ycNZccTdR7ET2D3H4NLNp2+GkWjrPJ3H
- WEGOfvo9CgawTtQpwAHCNAll7jxH1UNgqclviSVDzZjm5fQVPeLeUaUAV8A==
-X-Gm-Gg: AfdE7cnkRcW8X0+lcCKLzfH+YEllQ1yVZpNDRmgB2tnWZ+5vWoVmDIzDsbeHViWi9Ip
- 4Z37J1sgUENQYqcsEiUxavam+wNwxrl821yRB2Ygy9pSwauc7RjZBWijjmqfn0RxxGi3dgjmlQQ
- NTRWCExbXmSaH22ccBDlOaUyYixc2frbUoZfXcKNzQzjIEuV2ME/fUlkti1GHVdq1NSMm1uZ4qf
- vyth5F+0vBAOQGzOBqhA8Z4SsSMXqro2dBJ1DP3TM+XKm+pnG2OSl9U0beaO2SwgvF68y05YI04
- i2sO0GVL1O0TWxOLtotN52Z5WUKDXw1WTD9lW2kIUbwuEMS3N3sFSUKSrrSIYKEQnDuCKvsomze
- +J4P6cIOii1BaeIxd7FA7ZHXTtQBfKvB6yBEmMklsMs9eLyEUJk4DLulo/SeIabeZSFle8soNP7
- ORzq8=
-X-Received: by 2002:a17:90b:3b89:b0:387:e0db:3fad with SMTP id
- 98e67ed59e1d1-38dc7778aedmr9114810a91.38.1783959671440; 
- Mon, 13 Jul 2026 09:21:11 -0700 (PDT)
-X-Received: by 2002:a17:90b:3b89:b0:387:e0db:3fad with SMTP id
- 98e67ed59e1d1-38dc7778aedmr9114784a91.38.1783959671001; 
- Mon, 13 Jul 2026 09:21:11 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-313b4b97661sm39477855eec.7.2026.07.13.09.21.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Jul 2026 09:21:10 -0700 (PDT)
-Message-ID: <3b076336-95e0-47bf-8eb0-37a54e594ee0@oss.qualcomm.com>
-Date: Mon, 13 Jul 2026 09:21:09 -0700
+ (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
+ id 1wjJPG-0000fM-GM; Mon, 13 Jul 2026 12:21:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=zO
+ eUvR+KCloUQ9JBTcycPFWmCXukO2RkOFeD1a1nKmQ=; b=FbODNCjFiWUFBjbBwQ
+ YVF1GH8suvV+oi95WF3apZOkc4ipKeKUIwpwybGFn9bJl2XgFcttPNpwBKKKCIdi
+ wpMIVBLpPrHHTkAuKTrJI+e+1Ptq6vlfDnVRPvdVrjIeGX/0A5FkWRH3z4Gak654
+ 6vXbyMzXJ32koIBd3qinZ9BlI=
+Received: from dt-VM.localdomain (unknown [])
+ by gzsmtp1 (Coremail) with SMTP id PCgvCgDHn6V0D1Vqlt9mGA--.65356S3;
+ Tue, 14 Jul 2026 00:16:54 +0800 (CST)
+From: Tao Ding <dingtao0430@163.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Tao Ding <dingtao0430@163.com>
+Subject: [PATCH v6 1/2] hw/sd: sdhci: Fix SDMA boundary bug
+Date: Tue, 14 Jul 2026 00:16:46 +0800
+Message-ID: <20260713161647.20211-2-dingtao0430@163.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260713161647.20211-1-dingtao0430@163.com>
+References: <20260713161647.20211-1-dingtao0430@163.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] uftrace: riscv privilege level
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-To: Yanfeng Liu <yfliu2008@qq.com>, qemu-riscv@nongnu.org
-Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, erdnaxe@crans.org
-References: <tencent_E17E8F6494EE130F71527C6BCE481AF33E08@qq.com>
- <ae18fa27-a1c7-42d1-864e-5a9a30c1215f@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <ae18fa27-a1c7-42d1-864e-5a9a30c1215f@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=FMErAeos c=1 sm=1 tr=0 ts=6a551078 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=p0WdMEafAAAA:8 a=dZbOZ2KzAAAA:8 a=EUspDBNiAAAA:8 a=qEAdaA6whk2plPOlQVsA:9
- a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDE2OSBTYWx0ZWRfX923hOaAP2gQd
- a4X8lzDCYoWVN8O//mvodDh85qHtTvgHaVuKpijAHTEfqpcQea6Hmz3X3gTt/g3oIGG6YN3XCJZ
- gQhrpG7Pvd7l/VxNehSqGH0fclNc2wQ=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDE2OSBTYWx0ZWRfX3bqSAxZg2rQb
- dQW7PHGjNe7/V08i43LbtLxxI7Kny7vIGW2SUofQSg9imKB55pl9p9JON6Jj/9oHkbPdVGVvZNp
- up1inRXd348WpFW36ndpF8LJxNeSVqcJ8ps2ngSZ45k78QAQREYw0QwKq7qSwV/FagNETL8RvX4
- /VnscWPOar4Iz3lcBLi1cEcOm5Ho8qD32CpivJp0L6qZtxvYSnIwgIld5nEVBt8P7XBZkQ36Qhu
- AoFk+IJDt34wiUFU666JESa4UnKcaf9K8JF7K6owam3SFX8zWMLsR0zHmql05qLl/+Ax3wU4sQc
- AxdPswBfkQEPvxGAtjZzlaVYf4gKiMwj/x/P7gycfp+AYwjpIdIaxAHpLuOAx5Iyj+DdfXdoB+Y
- MhUL2RGql0aoXyAxnrxoTuCh1h58g4Kv97gB/okfLxDYKVYV4HwTf4BYr+YWxHhBSX9YqbWWcOp
- lRmDx/oyj5KzORVBvZg==
-X-Proofpoint-ORIG-GUID: Ht8YOrqCb5ssUSduUFzhTfdTcdN9nxkd
-X-Proofpoint-GUID: Ht8YOrqCb5ssUSduUFzhTfdTcdN9nxkd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-13_04,2026-07-10_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0 bulkscore=0 malwarescore=0 impostorscore=0
- suspectscore=0 priorityscore=1501 phishscore=0 spamscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607130169
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: PCgvCgDHn6V0D1Vqlt9mGA--.65356S3
+X-Coremail-Antispam: 1Uf129KBjvJXoWxtr13Ar4DZrWrZry7Aw1DKFg_yoWxGFWDpF
+ Zakr4rKrs7Kr1fuF4rJ3W3AF4F9r4xuasrKr43GwnagFZxKFyFvwsFka4UKr10yryxZr12
+ 9rWUJr909a4UA3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0piOBMtUUUUU=
+X-Originating-IP: [119.4.20.225]
+X-CM-SenderInfo: pglqw3tdrqkjqq6rljoofrz/xtbC-hbQD2pVD3ZpQQAA3Z
+Received-SPF: pass client-ip=220.197.31.3; envelope-from=dingtao0430@163.com;
+ helo=m16.mail.163.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,74 +73,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/13/2026 8:59 AM, Pierrick Bouvier wrote:
-> Hi,
-> 
-> On 7/12/2026 1:45 AM, Yanfeng Liu wrote:
->> This adds RiscV virtual user and supervisor privilege levels to
->> uftrace plugin to avoid crashing with H extension guests.
->>
->> Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
->> ---
->>  contrib/plugins/uftrace.c | 13 ++++++++++---
->>  1 file changed, 10 insertions(+), 3 deletions(-)
->>
->> diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
->> index 9b0a4963ae..063e32220b 100644
->> --- a/contrib/plugins/uftrace.c
->> +++ b/contrib/plugins/uftrace.c
->> @@ -109,6 +109,8 @@ typedef enum {
->>      RISCV64_SUPERVISOR,
->>      RISCV64_RESERVED,
->>      RISCV64_MACHINE,
->> +    RISCV64_VUSER,
->> +    RISCV64_VSUPERVISOR,
->>      RISCV64_PRIVILEGE_LEVEL_MAX,
->>  } Riscv64PrivilegeLevel;
->>  
->> @@ -153,8 +155,10 @@ static void uftrace_write_map(bool system_emulation)
->>      const char *path = "./uftrace.data/sid-0.map";
->>  
->>      if (system_emulation && access(path, F_OK) == 0) {
->> -        /* do not erase existing map in system emulation, as a custom one might
->> -         * already have been generated by uftrace_symbols.py */
->> +        /*
->> +         * do not erase existing map in system emulation, as a custom one might
->> +         * already have been generated by uftrace_symbols.py
->> +         */
->>          return;
->>      }
->>  
->> @@ -706,6 +710,8 @@ static const char *riscv64_get_privilege_level_name(uint8_t pl)
->>      case RISCV64_SUPERVISOR: return "Supervisor";
->>      case RISCV64_RESERVED: return "Unknown";
->>      case RISCV64_MACHINE: return "Machine";
->> +    case RISCV64_VUSER: return "VUser";
->> +    case RISCV64_VSUPERVISOR: return "VSupervisor";
->>      default:
->>          g_assert_not_reached();
->>      }
->> @@ -986,7 +992,8 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
->>  
->>      score = qemu_plugin_scoreboard_new(sizeof(Cpu));
->>      qemu_plugin_register_vcpu_init_cb(id, vcpu_init, NULL);
->> -    qemu_plugin_register_atexit_cb(id, at_exit, (void *) info->system_emulation);
->> +    qemu_plugin_register_atexit_cb(id, at_exit,
->> +                                   (void *) info->system_emulation);
->>      qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
->>  
->>      return 0;
-> 
-> 
-> Is that something we have implemented in upstream QEMU for riscv64
-> target? From what I can see, priv register only can have M,S,U values.
->
+During SDMA transfers, the controller raises an interrupt at buffer boundaries
+to request a system address update. The host driver will rewrite the SDHC_SYSAD register. 
+(according to PartA2_SD_Host_Controller_Simplified_Specification_Ver2.00.pdf section 2.2.1)
+However, the current code will ignore write operations to SDHC_SYSAD. 
 
-Found the answer here:
-https://gitlab.com/qemu-project/qemu/-/blob/master/target/riscv/gdbstub.c?ref_type=heads#L213
+To fix this bug, when SDMA encounters a boundary, a state is set to record it. 
+In this state, SDHC_SYSAD can be written. In other cases, it is still protected by TRANSFERRING_DATA.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Meanwhile, a subsection has been added for migration.
 
-I'll pull this, thanks.
-Pierrick
+Suggested-by: Bin Meng <bmeng.cn@gmail.com>
+Signed-off-by: Tao Ding <dingtao0430@163.com>
+---
+This bug may be encountered when using uboot with SDMA functionality, and can be reproduced by following the steps below.
+Uboot test:
+    1. Prepare zImage, uboot and rootfs.cpio.gz, make sure uboot config (MMC_SDHCI_SDMA=y).
+        for more detail, can obtained 
+        "https://lore.kernel.org/qemu-devel/20260617155857.7451-1-dingtao0430@163.com/T/#mcdf231e6bd762903f8393bf93253cbcb12ececcf"
+    2. ./qemu-system-aarch64 -M xilinx-zynq-a9 -machine boot-mode=sd -m 1024 -display none -serial null -serial stdio -monitor none \
+        -device loader,file=u-boot-dtb.bin,addr=0x04000000,cpu-num=0  \
+        -drive file=zynq-sd.img,format=raw,if=sd -D qemu.log
+
+
+After applying the fix, success load sd card:
+  
+U-Boot 2026.07-rc4-g1e80ee41441c (Jun 15 2026 - 19:05:05 +0800)
+
+Model: Xilinx ZC702 board
+DRAM:  ECC disabled 1 GiB
+Core:  33 devices, 21 uclasses, devicetree: board
+Flash: 0 Bytes
+NAND:  0 MiB
+MMC:   mmc@e0100000: 0
+Loading Environment from FAT... *** Error - No Valid Environment Area found
+*** Warning - bad env area, using default environment
+
+In:    serial@e0001000
+Out:   serial@e0001000
+Err:   serial@e0001000
+Net:   
+ZYNQ GEM: e000b000, mdio bus e000b000, phyaddr 7, interface rgmii-id
+
+Warning: ethernet@e000b000 (eth0) using random MAC address - 4a:63:5a:a4:d3:6b
+eth0: ethernet@e000b000
+Hit any key to stop autoboot: 0
+Zynq> fatload mmc 0 ${kernel_addr_r} zImage
+10838528 bytes read in 4316 ms (2.4 MiB/s)
+Zynq> fatload mmc 0 ${ramdisk_addr_r} rootfs-arm32.cpio.gz
+406531 bytes read in 199 ms (1.9 MiB/s)
+Zynq> setenv ramdisk_size ${filesize}
+Zynq> fatload mmc 0 ${fdt_addr_r} zynq-zc702.dtb
+15754 bytes read in 21 ms (732.4 KiB/s)
+Zynq> setenv bootargs console=ttyPS0,115200 earlycon ignore_loglevel rdinit=/init
+Zynq> bootz ${kernel_addr_r} ${ramdisk_addr_r}:${ramdisk_size} ${fdt_addr_r}
+Kernel image @ 0x2000000 [ 0x000000 - 0xa56200 ]
+## Flattened Device Tree blob at 01f00000
+   Booting using the fdt blob at 0x1f00000
+Working FDT set to 1f00000
+   Loading Ramdisk to 2ff9c000, end 2ffff403 ... OK
+   Loading Device Tree to 2ff95000, end 2ff9bd89 ... OK
+Working FDT set to 2ff95000
+
+Starting kernel ...
+
+ hw/sd/sdhci.c         | 25 ++++++++++++++++++++++++-
+ include/hw/sd/sdhci.h |  2 ++
+ 2 files changed, 26 insertions(+), 1 deletion(-)
+
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index c86dfa281f..e614afa346 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -307,6 +307,7 @@ static void sdhci_reset(SDHCIState *s)
+     s->data_count = 0;
+     s->stopped_state = sdhc_not_stopped;
+     s->pending_insert_state = false;
++    s->sdma_boundary_paused = false;
+     if (object_dynamic_cast(OBJECT(s), TYPE_FSL_ESDHC_BE) ||
+             object_dynamic_cast(OBJECT(s), TYPE_FSL_ESDHC_LE)) {
+         s->norintstsen = 0x013f;
+@@ -414,6 +415,7 @@ static void sdhci_end_transfer(SDHCIState *s)
+         s->norintsts |= SDHC_NIS_TRSCMP;
+     }
+ 
++    s->sdma_boundary_paused = false;
+     sdhci_update_irq(s);
+ }
+ 
+@@ -681,6 +683,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
+     if (s->blkcnt == 0) {
+         sdhci_end_transfer(s);
+     } else {
++        s->sdma_boundary_paused = true;
+         sdhci_update_irq(s);
+     }
+ }
+@@ -1164,6 +1167,7 @@ static inline void sdhci_reset_write(SDHCIState *s, uint8_t value)
+                 SDHC_DATA_INHIBIT | SDHC_DAT_LINE_ACTIVE);
+         s->blkgap &= ~(SDHC_STOP_AT_GAP_REQ | SDHC_CONTINUE_REQ);
+         s->stopped_state = sdhc_not_stopped;
++        s->sdma_boundary_paused = false;
+         s->norintsts &= ~(SDHC_NIS_WBUFRDY | SDHC_NIS_RBUFRDY |
+                 SDHC_NIS_DMA | SDHC_NIS_TRSCMP | SDHC_NIS_BLKGAP);
+         break;
+@@ -1185,7 +1189,7 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
+ 
+     switch (offset & ~0x3) {
+     case SDHC_SYSAD:
+-        if (!TRANSFERRING_DATA(s->prnsts)) {
++        if (!TRANSFERRING_DATA(s->prnsts) || s->sdma_boundary_paused) {
+             s->sdmasysad = (s->sdmasysad & mask) | value;
+             MASKED_WRITE(s->sdmasysad, mask, value);
+             /* Writing to last byte of sdmasysad might trigger transfer */
+@@ -1464,6 +1468,13 @@ static bool sdhci_pending_insert_vmstate_needed(void *opaque)
+     return s->pending_insert_state;
+ }
+ 
++static bool sdhci_sdma_boundary_paused_vmstate_needed(void *opaque)
++{
++    SDHCIState *s = opaque;
++
++    return s->sdma_boundary_paused;
++}
++
+ static const VMStateDescription sdhci_pending_insert_vmstate = {
+     .name = "sdhci/pending-insert",
+     .version_id = 1,
+@@ -1475,6 +1486,17 @@ static const VMStateDescription sdhci_pending_insert_vmstate = {
+     },
+ };
+ 
++static const VMStateDescription sdhci_sdma_boundary_paused_vmstate = {
++    .name = "sdhci/sdma_boundary_paused",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = sdhci_sdma_boundary_paused_vmstate_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_BOOL(sdma_boundary_paused, SDHCIState),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
+ const VMStateDescription sdhci_vmstate = {
+     .name = "sdhci",
+     .version_id = 1,
+@@ -1512,6 +1534,7 @@ const VMStateDescription sdhci_vmstate = {
+     },
+     .subsections = (const VMStateDescription * const []) {
+         &sdhci_pending_insert_vmstate,
++        &sdhci_sdma_boundary_paused_vmstate,
+         NULL
+     },
+ };
+diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
+index a9da6203fc..c485277744 100644
+--- a/include/hw/sd/sdhci.h
++++ b/include/hw/sd/sdhci.h
+@@ -103,6 +103,8 @@ struct SDHCIState {
+      * to be protected. Set wp_inverted to invert the signal.
+      */
+     bool wp_inverted;
++    /* Indicate that SDMA transfer is paused due to hitting the boundary */
++    bool sdma_boundary_paused;
+ };
+ typedef struct SDHCIState SDHCIState;
+ 
+-- 
+2.43.0
+
 
