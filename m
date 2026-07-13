@@ -4,110 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03A5EC44507
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D000DC43458
 	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 19:08:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjM00-0007rs-30; Mon, 13 Jul 2026 15:07:28 -0400
+	id 1wjM0I-0007tW-6h; Mon, 13 Jul 2026 15:07:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjLzy-0007rR-DW
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 15:07:26 -0400
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjLzw-0006Fh-Sl
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 15:07:26 -0400
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-6679d88abdcso312141d50.2
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 12:07:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783969643; cv=none;
- d=google.com; s=arc-20260327;
- b=hX0cFlCPoy4p/kynFLlPsS1UVV6J1GSxA4noMDEEQtxDLx1MybXWzgTOQ6JcNXOq18
- MTD8+BrleMFyevMM+xbJYFzA42OQoBk5dfJnmDfziDDr8NotnncZL16QxJqmvCD5A0yW
- +XIwrucOgtFmLvJ8dZNw6bmZawukxACLxWSlDQ/ipAiWZXkCn0NLxyFJtVYQ3BtT/oIO
- aKk7VmI9BUHf58qH+cdQgh+frBuOOj6sKS/Vvpft7RdteVjtaXp8BwSR00xLlb3ehHj2
- FZwErEORSAlu59qf/GUQI2j78gsgrpKiXJGC4XD5Ycnp5DuGTeJUAUjNh1DTrbWrj5Pq
- Bglg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=8c1q+Mm8YUtk8pcWMZL5rWZQ8eLadIHz0F9+PTsbMhY=;
- fh=xIzkOXaMnwCyK+79XPvHULmSvwh/A95GFxEh//hHlPE=;
- b=M74vJ6kfOaquBrb85YPpbhtxj3QYbNMZ8QyTm1fes9eq61pL1Z6o7T/9yP0BCNyN8s
- DPXtlRPFXE8yE64NVK2Fmg3aLSb81UzbiscliAuI4mQ5D8nkJmhNn0+XGggcmZ3hgal2
- y5W/BAJ0j0+D0rN2ycAFgaGUeL3ocMlw8lQl+hXpGrjABpNq+//Gg6glCc6UcUOHWebK
- z01+c4kbmJPLoUyCdGXAjslf/CDpyITly8MfO1w88LrZCuhDM4pWS3KXIZAQYd4JfmJF
- rx9/Sa3MGscS6NtCMFUqQGixhGjD7DEWlRMWAxecLF/4aWfNUEkiPeUcai5Cdsg5WFTw
- 1tRQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783969643; x=1784574443; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=8c1q+Mm8YUtk8pcWMZL5rWZQ8eLadIHz0F9+PTsbMhY=;
- b=P4yFLFMoccjTX/u0q4O45/BzwcyJEKBXBHO6Gn+c9TMCkpSn0JyoBxFiuFsoUePR/i
- V6GcOfWjumc2kdijKC5vAM3pwGC35WpNcH+5DNZN90Rm5vTlKyIppg3G/bPIJCO9wVFn
- XWQt7GC5tkGN4r9nd4hoQyNAKHHuX7M64S1RLk8GTGvKiY3MAUOZk5qc9y42twvJ5uvb
- 8mGpph6S7PgyB5uK4TZpO4NlSNDhpxevaUb7lJgkDe8fjqGzewjOj5P/zLs0dtBy8fDX
- a/sHe0Rv4GtmnSKWZWk6bztBAn8+jjoWPfmFvYBb9vG1Ce+qJ8L4zFdS0UUWvqf8yJoE
- pK1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783969643; x=1784574443;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=8c1q+Mm8YUtk8pcWMZL5rWZQ8eLadIHz0F9+PTsbMhY=;
- b=ckKiP6moMF81qVnas61PDlWGvdzm2gR3QYW02PeC19YpDBbP9ia3jK/S8Y/a9acJjb
- YQPD7Ukah4LHVFudOFeB/44oi9VZ9AbQ/aCMHIXvWOBMnP3ulM8ncM5vSN0elKTqaNgH
- 5f5ypTlza1A99ggqa3tuiSL+UI1oDjp3FTEH7camZXXCzJW7dw3qvK0C3HFQ40XcwUj5
- xbcjDU5ce+hY8FGuidU4z+nztLD4iUrrWmRNRBNrIQwWoSyE7+0/cIRtXuYBZJtuPg4p
- 0koJtkioa5FMIMjFiPz8bPfG7GdFZwOAXfoahtqr3Z3nJswh752M1vB5KldM5UW3WDPR
- BCwg==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rqmai6NkYNL90GxIhnuavj65hQiNbnzZj9A3QzToqLvrVZxPSxXqljQaqkqBQFVLuX7x8yMFQWvzyfr@nongnu.org
-X-Gm-Message-State: AOJu0Yx8oP+Ty6iWj1hdHS1Q91rSgfn0b3/GJKnAFH6mm0yqynqzE9iH
- hWg2M51NoVJLSYhhx9LXVsFUoiUcoq2np0uYeCnoSx5qarY5UW04/54dcPz7DDvK54h0Sc4sugg
- LM6R3wc5SJLvoAN6ypaChOAb6ZIvnvFLvn3zZBjJxYQ==
-X-Gm-Gg: AfdE7clmv1LZ0RiaWZ3z0kpoCfGXxFUBsLE7HojyrI4UAuWFk9MjcmHbh5n+Pzcnl+m
- nTGtfs7+GbKfDL6VheiYcTi2EVQdBS2PPTsn1E9znuXYFhx4LNWY6vojK9ZzMR+Gg9mK8O00CPT
- 4BXK6QmV7ycihi+c4MNls27vYvrmbDXWfd8GV7ZUBz+vYe18B0BG0t5ZimfQ9Iyhg2mmifIrPV1
- NeD/4fxdS1XR0XA/BCnHkdCKacjHv7MGkxFX66f6rQAMYJ3FiLBfXr/yiGFDT732OZAW0IhHQjr
- NxHaUlYzJVLX9cVplnlys7GfKAJntjpp27bs2KZkw0EzVZDdKWFzFyi2p0EdTSx+Sgc=
-X-Received: by 2002:a53:bf0d:0:b0:667:8b9c:e6bd with SMTP id
- 956f58d0204a3-667d7cb361dmr5018774d50.97.1783969643477; Mon, 13 Jul 2026
- 12:07:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kernel@0in.de>) id 1wjM0E-0007tE-In
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 15:07:43 -0400
+Received: from mout-p-101.mailbox.org ([80.241.56.151])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
+ (Exim 4.90_1) (envelope-from <kernel@0in.de>) id 1wjM0B-0006H2-Aj
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 15:07:42 -0400
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [10.196.197.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA512)
+ (No client certificate requested)
+ by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4gzX4j3mfxz8sYP;
+ Mon, 13 Jul 2026 21:07:33 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=0in.de; s=MBO0001;
+ t=1783969653;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=K2D5KzhgtzOWVpAh40HG1UrFqlC5+h1KGVbBsTIt3mI=;
+ b=dtsMy7pD0Fs5JJhIgC2BO2agjKNqnihocYAaKypyv8MUksGngqdYnSdsYHVMaxz6aps6BQ
+ jyCxazUJWxSq0w7lgFk92k1M/tyVr/53fxYo8Cs9HaHa+c6TXgq/h6edi/ebQN4wKjMFrI
+ zfBqrBbh/w9n9C98fIux6mnl4C05K7PlXP+8ydQJaZYaMi05kEv/hBrrTHd1iAWXEzeAX3
+ Lw9GyA64hGc+g6qNSNXjKDDudBXiPhP+Wdq7qS1d1rlXJJMeoykSELPJrKFRcpgrv/QuwN
+ WJcNZIeu8xPOnOGYA6VUK5rLSVGkEUxqbzYVmLySyv1QDDTOStYIFtYT2z24jg==
+Date: Mon, 13 Jul 2026 21:07:30 +0200 (CEST)
+From: Maximilian Senftleben <kernel@0in.de>
+To: qemu-devel@nongnu.org
+cc: Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ "Daniel P. Berrange" <berrange@redhat.com>, 
+ Marc-Andre Lureau <marcandre.lureau@redhat.com>, 
+ Justinien Bouron <justinien.bouron@gmail.com>, 
+ Maximilian Senftleben <kernel@0in.de>
+Subject: [PATCH v5] input-linux: Add option to not grab a device upon guest
+ startup
+Message-ID: <05e99ebc-5108-b2f1-4b1f-14e8715d0bf4@0in.de>
 MIME-Version: 1.0
-References: <20260711223707.42139-1-graf@amazon.com>
- <20260711223707.42139-2-graf@amazon.com>
- <12d544b3-5c68-488a-91e5-ac64d1a27338@linaro.org>
- <CAFEAcA9wRhZPyiAym26DQWEyb2AS=QBpvRi9wBEJKsHEw+j0sQ@mail.gmail.com>
- <alUyrS2ViWMswx82@redhat.com>
-In-Reply-To: <alUyrS2ViWMswx82@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 13 Jul 2026 20:07:12 +0100
-X-Gm-Features: AVVi8Ce-i6UDhemFzB6dZL9LpkrxteBrXjJ2QBuCgLYAcPKGEz1rVC0c_m-kyH4
-Message-ID: <CAFEAcA-ntJmOH_OaCAqanfHtG+fHwS+5RgXbuQOK4j95nMwsZA@mail.gmail.com>
-Subject: Re: [RFC PATCH 001/134] qom: Introduce object_new_child()
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Alexander Graf <graf@amazon.com>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=US-ASCII
+Received-SPF: pass client-ip=80.241.56.151; envelope-from=kernel@0in.de;
+ helo=mout-p-101.mailbox.org
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,41 +72,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 13 Jul 2026 at 19:47, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
->
-> On Mon, Jul 13, 2026 at 07:15:34PM +0100, Peter Maydell wrote:
-> > On Mon, 13 Jul 2026 at 17:50, Richard Henderson
-> > <richard.henderson@linaro.org> wrote:
-> > >
-> > > On 7/11/26 15:34, Alexander Graf wrote:
-> > > > +Object *object_new_child(Object *parent, const char *id,
-> > > > +                          const char *typename)
-> > > > +{
-> > > > +    Object *obj;
-> > > > +
-> > > > +    g_assert(parent);
-> > > > +    g_assert(id);
-> > >
-> > > Of course, typename can't be null either.
-> >
-> > These asserts are of the "not very useful" kind, as well --
-> > if either of these are NULL we're going to crash pretty quickly,
-> > and then the debugger backtrace will point you at your programming
-> > error. Asserts are most useful when they turn non-obvious bugs
-> > into obvious bugs or turn "happens a long time later than when the
-> > problem is" bugs into "happens very close to when the problem is".
-> > bugs.
->
-> For the 'id', we ought to call  id_wellformed, and report an error
-> if it fails, which implies  an "Error **errp" arg for this method
-> too.
+Some workflows start a guest in the background and do not want evdev
+devices to be grabbed immediately.  In that case, the current behavior
+is annoying because the host loses control of the keyboard or mouse
+before the user actually wants to interact with the guest.
 
-That would be a programming error, which we should assert() on
-if we want to check it. Adding an Error* argument just for that
-would be forcing all the (many many) callsites to add extra
-error handling code for a can't-happen case. QOM error-handling
-boilerplate is bad enough already.
+Add a new boolean input-linux property, grab-on-startup.  When true,
+the device is grabbed during initialization, which keeps the existing
+behavior.  When false, the device remains ungrabbed until the toggle
+key combination is entered.
 
--- PMM
+Also make sure startup grabbing is skipped entirely when
+grab-on-startup is false, even if keys are already pressed during
+device initialization.  Without this, QEMU could still perform a delayed
+grab once those keys are released.
+
+This revives an earlier patch originally posted by Justinien Bouron and
+incorporates the follow-up review feedback.
+
+Link: 
+https://patchew.org/QEMU/20240403055002.890760-1-justinien.bouron@gmail.com/
+Link: https://lists.gnu.org/archive/html/qemu-devel/2024-03/msg04004.html
+Signed-off-by: Maximilian Senftleben <kernel@0in.de>
+---
+This revives Justinien Bouron's earlier input-linux grab-on-startup
+patch:
+
+     
+https://patchew.org/QEMU/20240403055002.890760-1-justinien.bouron@gmail.com/
+
+Last known review state:
+- Marc-Andre Lureau asked for a resend with an updated commit message:
+     https://lists.gnu.org/archive/html/qemu-devel/2024-03/msg04003.html
+- Markus Armbruster reviewed the QAPI schema and pointed out that the
+     delayed-grab path still needed to be skipped when keys are already
+     pressed at startup and grab-on-startup is false:
+     https://lists.gnu.org/archive/html/qemu-devel/2024-03/msg04004.html
+- Daniel P. Berrange asked for a clearer motivation for the feature:
+     https://lists.gnu.org/archive/html/qemu-devel/2024-03/msg01969.html
+
+Changes since v4:
+- Fixed patch indentation
+
+ qapi/qom.json    | 14 +++++++++++++-
+ ui/input-linux.c | 27 +++++++++++++++++++++++++++
+ 2 files changed, 40 insertions(+), 1 deletion(-)
+
+diff --git a/qapi/qom.json b/qapi/qom.json
+index dd45ac1087..e3eda5c1ec 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -558,13 +558,25 @@
+ # @grab-toggle: the key or key combination that toggles device grab
+ #     (default: ctrl-ctrl)
+ #
++# @grab-on-startup: if true, grab the device immediately upon starting
++#     the guest.  Otherwise, don't grab the device until the
++#     combination is entered.  This does not influence other devices
++#     even if grab_all is true, i.e. in the unlikely scenario where
++#     device1 has grab_all=true + grab-on-startup=true and device2 has
++#     grab-on-startup=false, only device1 is grabbed on startup, then,
++#     once the grab combination is entered, grabbing is toggled off
++#     for both devices (because device1 enforces the grab_all
++#     property) until the combination is entered again at which point
++#     both devices will be grabbed.  (default: true)  (since 11.1).
++#
+ # Since: 2.6
+ ##
+ { 'struct': 'InputLinuxProperties',
+   'data': { 'evdev': 'str',
+             '*grab_all': 'bool',
+             '*repeat': 'bool',
+-            '*grab-toggle': 'GrabToggleKeys' },
++            '*grab-toggle': 'GrabToggleKeys',
++            '*grab-on-startup': 'bool' },
+   'if': 'CONFIG_LINUX' }
+ 
+ ##
+diff --git a/ui/input-linux.c b/ui/input-linux.c
+index f4eee1ffd7..767374e99a 100644
+--- a/ui/input-linux.c
++++ b/ui/input-linux.c
+@@ -43,6 +43,7 @@ struct InputLinux {
+     bool        grab_request;
+     bool        grab_active;
+     bool        grab_all;
++    bool        grab_on_startup;
+     bool        keydown[KEY_CNT];
+     int         keycount;
+     int         wheel;
+@@ -394,12 +395,17 @@ static void input_linux_complete(UserCreatable *uc, 
+Error **errp)
+     }
+ 
+     qemu_set_fd_handler(il->fd, input_linux_event, NULL, il);
++    if (!il->grab_on_startup) {
++        goto skip_grab;
++    }
+     if (il->keycount) {
+         /* delay grab until all keys are released */
+         il->grab_request = true;
+     } else {
+         input_linux_toggle_grab(il);
+     }
++
++skip_grab:
+     QTAILQ_INSERT_TAIL(&inputs, il, next);
+     il->initialized = true;
+     return;
+@@ -487,6 +493,21 @@ static void input_linux_set_grab_toggle(Object *obj, 
+int value,
+     il->grab_toggle = value;
+ }
+ 
++static bool input_linux_get_grab_on_startup(Object *obj, Error **errp)
++{
++    InputLinux *il = INPUT_LINUX(obj);
++
++    return il->grab_on_startup;
++}
++
++static void input_linux_set_grab_on_startup(Object *obj, bool value,
++                                            Error **errp)
++{
++    InputLinux *il = INPUT_LINUX(obj);
++
++    il->grab_on_startup = value;
++}
++
+ static void input_linux_instance_init(Object *obj)
+ {
+ }
+@@ -494,6 +515,7 @@ static void input_linux_instance_init(Object *obj)
+ static void input_linux_class_init(ObjectClass *oc, const void *data)
+ {
+     UserCreatableClass *ucc = USER_CREATABLE_CLASS(oc);
++    ObjectProperty *grab_on_startup_prop;
+ 
+     ucc->complete = input_linux_complete;
+ 
+@@ -510,6 +532,11 @@ static void input_linux_class_init(ObjectClass *oc, 
+const void *data)
+                                    &GrabToggleKeys_lookup,
+                                    input_linux_get_grab_toggle,
+                                    input_linux_set_grab_toggle);
++    grab_on_startup_prop = object_class_property_add_bool(
++        oc, "grab-on-startup",
++        input_linux_get_grab_on_startup,
++        input_linux_set_grab_on_startup);
++    object_property_set_default_bool(grab_on_startup_prop, true);
+ }
+ 
+ static const TypeInfo input_linux_info = {
+--
+2.53.0
+
 
