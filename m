@@ -4,141 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19C6FC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 16:00:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEB0BC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 16:04:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjJ4R-00018d-GE; Mon, 13 Jul 2026 11:59:51 -0400
+	id 1wjJ70-0002M3-OB; Mon, 13 Jul 2026 12:02:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wjJ4Q-00018U-9b
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:59:50 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wjJ6W-0002CQ-Gx
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 12:02:04 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wjJ4N-0004VX-Nq
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:59:49 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ id 1wjJ6U-000532-4j
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 12:02:00 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66DF8MME1709355
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 15:59:45 GMT
+ 66DF85WY1887762
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 16:01:56 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 5XGWAXlmBj+DYiOqhlUA2DBl6zFdr2IWLooI5QodJ5E=; b=kCwZJ3af5hsiutWH
- TqRdqNf+5vOVW5eVEN/nebQu603RhgwILnKwJi6WrirwxwldPdLVsowC0bWOTqez
- TO1NyHcc18XEoRNpBMrChrHgikSMblxV3CQ+JihooBe6W/uVbWYL5ix9oYRNOBSk
- +c6AVkz+n0qh0R4VGnaYhVqhX7UcwTxptU9GK5cQ8TA+x0Hyi80jomrEIG1i54Pd
- bAgM6EsrsfiJnMJBep8vyqjQs96r/mjq8wZWS8vlBC989Aqwdid3VbTrj2A+FPhB
- XzsjsysN2hgzvB4bycK6TluiqYpTrN8nLmdhTztjAf/yZcjrf6IX5jK0I+ssPLpR
- mdAA8Q==
+ QaDCy/qGhgdFsIDajvawO0hK1bDj9PIQxqghEF9qMdk=; b=V2kJLBqL72Ph00DH
+ dpFMH5H6yaif8LS0MKinw/7+QO+W5AmdAsOVG+IYHIes3M53XQN0dnka9xIbFFYi
+ 6mhKw5/3NbnaYwzTljadd5RzdunMGi8di024LQhQ3RPonLTl4ZysxL05qxh6OYzY
+ jtzKT861zwZFwElFBxrqeF+mfbKVArpPUhjSTXM4PyGuVRxCQGRsiF0mmKsr9ib/
+ EYB+XG4RLFWa+6j0fTsNMLbzygDpV5OY/Se22xRBQ8HFaOAQD55h6cF5xptPjyQZ
+ lXqX9/iMoNISNHX/f3pQtZTTtEgfFzr5rYhM4r1EnTqo6kk6xony/W0+75xrWsDW
+ Dg+ekA==
 Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
  [209.85.215.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcwk9sgb5-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcwavskse-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 15:59:45 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 16:01:56 +0000 (GMT)
 Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-c88aab7c1fcso7576492a12.3
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:59:44 -0700 (PDT)
+ 41be03b00d2f7-c88ad1558f4so8493935a12.2
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 09:01:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783958384; x=1784563184; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783958515; x=1784563315; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=5XGWAXlmBj+DYiOqhlUA2DBl6zFdr2IWLooI5QodJ5E=;
- b=gfhVdWIZEJUuTKUIGP/2tqgefAX8/Vn8etxH4fFMLTqJpRPHPm+OGtuEYF98aOH4+Q
- pGf/SW3UUzrrEp7f1CksVQz/mUU1seNa1inZDPPCu1DRXn1NKEX9vfv6uGUFZb1TuLAA
- sS6HCj4RHzCfTBFXZCTwTI24sxZYFtyu5Q+lWab1S/0xbCqOD+PVG4Loms/Fq/c4Wp6N
- 4eP+/CwdIbCJDsapUID5vGtPJk/prWhT23+1NklrxtyoKg0wWTXEzSGBFdoj2L+DO6lN
- KbCq5hhQKVrJUO+m59iIp+UBQTy18TKifbzMAkV7GZQnI/0ehaZqY++EnxYjdasAa3Vv
- /HWg==
+ bh=QaDCy/qGhgdFsIDajvawO0hK1bDj9PIQxqghEF9qMdk=;
+ b=a42/tmlLSQZxqtqShaKueipYT73StLkjhDFVYmrwc1DFaKhRy+tuj5A6Pf1Qzsm8+7
+ B6vFyOggvGe8vo6r0D8m7JFXJpu0akYhZ3AH1C+qp+VafTkD24j9AAvNO39vrHfdAtex
+ aC+7wBK/QhwRiY98LBDvcMXvZ3cX4HDcQq8jBG1BtMgVjdkfS5OYTSvZCjgayATtjDvw
+ 2pX+X/0WbtqY8cXTp/9zhteSOhmeIUzJaX9qTf0dyDvUBUPwHG2tfb9K1fe/qFiNuEep
+ FdhsNMGTZeOZrLV9uCZlKqwiU9xBsqG3ubkG1evW1AyhlDMp5stPqPafLlYjauWIhhTI
+ DJ8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783958384; x=1784563184;
+ d=1e100.net; s=20251104; t=1783958515; x=1784563315;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=5XGWAXlmBj+DYiOqhlUA2DBl6zFdr2IWLooI5QodJ5E=;
- b=bPuShHxeCtR1sV31BoaQGXjrRduRhcs9emXB3ZBvUE8smERo9bysY1GbtsLpkPaf+A
- k1SP7R3zOMR5HKGD7m8GxM+oFSrIGyFVC0xyshMaGVFeWtTLkVFdazU9KRo8yhIEN6yQ
- QZMtum/MvSeO/14VknvOc/Zp6/XpakSSjYWpNqk/brTXHmoEMfsm7NRpk6xVY0UYLewB
- tSw+UPc8n7bs2jItal7XAsEf2h3JIqi54/hOIHQbp5qQTMzFozFrEJkVKqyjSnt/fHcB
- 4j9pROruiabN5+H5/1ZsxLH+FH1UlT6aRL0o1vHJRyMrOZmhET1KuiksK+nTbyiwne8e
- PN/Q==
-X-Gm-Message-State: AOJu0YzBUbm+5eLZ/3+45RPxh4dWXr/nklC5aSoD4fokpPM/JqI98AMO
- 4TFVqdoMaXsdOhC3psZvRrryAML7mD1iLXz9wPFFJNRQciNGggMQkL4A5uOxgT3b9w2SvEmAozL
- 3vtsczJ1b9U9C/RAXh8gwPLyZMiWHjuLVaG+7zmysN4KneOtrfqHsYljTkA==
-X-Gm-Gg: AfdE7cnSa8ViwmwK+k/9VGLx72CVRRiaDrBWXzEKLKlOcW52Bejr18mzsCLPq3buQO0
- FiMaHptOqA24D38XckN0e4szEHByMsZ2zCryj3CVOByf+9BfNWLVmzVpRyGDRijL8iFNBni0Qfr
- mdfyrE4ia144y96urL2HBS7ZJRyOp7lB+c54LAmXgltCpRJPfXEKw2e6qZ+MX/beMd6XIxr2SOr
- 4kqqo2hEO8cyDPVuKAj+gilTuVAvASz/w+d+Q54IGqvOflg4Xo/NTAuJtTfAtazkSrAEuCJlgc2
- Mnc3VERQvhY2vTFFFJreHb+ublxXaoIEhsDvmCXgAJww3P828Af2qGmy+yP88aSsJKoDQ4IxODo
- yMBnLPJe+21GiaFFrhiNbtBtYDRyfnvkEWrxmMXSc4aTp23njJDAerF4SH+289b92u8ahhj5H3q
- 82sVc=
-X-Received: by 2002:a05:6a21:6b12:b0:3b4:6f7e:d0f4 with SMTP id
- adf61e73a8af0-3c1109e29c6mr9694451637.15.1783958384073; 
- Mon, 13 Jul 2026 08:59:44 -0700 (PDT)
-X-Received: by 2002:a05:6a21:6b12:b0:3b4:6f7e:d0f4 with SMTP id
- adf61e73a8af0-3c1109e29c6mr9694423637.15.1783958383599; 
- Mon, 13 Jul 2026 08:59:43 -0700 (PDT)
+ bh=QaDCy/qGhgdFsIDajvawO0hK1bDj9PIQxqghEF9qMdk=;
+ b=CDCWcNg+nKWhGyFqYOps14usc/wsZwUVaV+Xdl+M69oi6Hy+00ChhoFjpn9ZZEM/Ah
+ oApmG7rToUC9GCk6kV9/rqX5XnlqJoLaSfcoHvap01vsFWcQng7iy95BVo8ijdmSUxek
+ FvcnXUFUDymtqyrO0V8M6d3SojMfGIwPf1TDUtx9aX6JYTWdK7J0AAGMV+iC6arIFyhO
+ 6VozArYbb66LN5Xa2bqeXTFRNjOrryKkvmcaHoCeI3ZksJn/6YNFImyODJ5ikHOyyUWf
+ CdSQdPxrsft31NluAIQ65LBdb68XP7sU1DHKHJzUxswam50I3ZItBN5uNAkNd22w61m3
+ vyZA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoBdryLLdj0X12+7MWCjd0vrvrrvQkl0dOD9Wb3yVZKN6magSblTvwM0IIOrSZ7hrK3u4dMqAxur26D@nongnu.org
+X-Gm-Message-State: AOJu0YyG7wyOW75vLQ2iweU/higHzVJ2+zfPKaqxMSCeiYumhELDQEt4
+ Zu4Ozuuzqvc5aCT78vIi5L4897NAR5NKANDpLjsuGLPLno6VMWT5XttltYvTx43Rrk2YOVfdkgq
+ /hxy8LHmPmMx5eV1mKYDNosawT3PxMVZr/GsWd89JZNMDZtZAWbjK0kW9bq9/cEA6jA==
+X-Gm-Gg: AfdE7cmdYi4L/r75ntvnqBXS86G1ZSR2rcb89ngPrykUW0iZjsLK2lvxyfu6yG0pNoI
+ ZHQQXdAKzc9btZ6jzi3M3KX/2kH2WcDSJEfctYHNazmgYdLWmUmlTtykBtT7EBuKVnQYs9XepX7
+ e1Nx8ngpMxVyIecJQgI+b+DnHZUg2Q7BFVy2830ujswafQmdulzSEcPTqEYqkDUnZdhAVhl7/k9
+ h5eDNNjVEMX5J3CkBwKPpsM7Auq6t93v9Ijud9HnTDjrANY+PFBZuQxqsCSbIGhZ9LDoLh5ycHr
+ ppFsDNtEbbjewP3VOxbxsqVHd3aGlcthK+2NN2ls25uOEj99lzHWNEPVseWi6+XMYUcm4yvXhjO
+ QbkTIKO71mrqY8oPP8zVnC8+qcNOlpS9mnCR27bxRsll50GaxB4Pqab1CuLM5guZxMbGNUe4jxl
+ 6FU08=
+X-Received: by 2002:a05:6a20:d49a:b0:3bf:6c08:fba2 with SMTP id
+ adf61e73a8af0-3c110ba295dmr11101419637.54.1783958515312; 
+ Mon, 13 Jul 2026 09:01:55 -0700 (PDT)
+X-Received: by 2002:a05:6a20:d49a:b0:3bf:6c08:fba2 with SMTP id
+ adf61e73a8af0-3c110ba295dmr11101357637.54.1783958514781; 
+ Mon, 13 Jul 2026 09:01:54 -0700 (PDT)
 Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-311747f7293sm69276381eec.3.2026.07.13.08.59.42
+ a92af1059eb24-13b87b92b27sm29397321c88.6.2026.07.13.09.01.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Jul 2026 08:59:43 -0700 (PDT)
-Message-ID: <ae18fa27-a1c7-42d1-864e-5a9a30c1215f@oss.qualcomm.com>
-Date: Mon, 13 Jul 2026 08:59:41 -0700
+ Mon, 13 Jul 2026 09:01:54 -0700 (PDT)
+Message-ID: <8f547a1d-a20a-4de5-8a61-b3e3967c755c@oss.qualcomm.com>
+Date: Mon, 13 Jul 2026 09:01:52 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] uftrace: riscv privilege level
-To: Yanfeng Liu <yfliu2008@qq.com>, qemu-riscv@nongnu.org
-Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, erdnaxe@crans.org
-References: <tencent_E17E8F6494EE130F71527C6BCE481AF33E08@qq.com>
+Subject: Re: [PATCH v2 2/4] tests/docker: add support for podman remote access
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, "Edgar E . Iglesias" <edgar.iglesias@amd.com>
+References: <20260210163556.713841-1-berrange@redhat.com>
+ <20260210163556.713841-3-berrange@redhat.com>
+ <cbc2e0d7-72d6-4350-a906-e0003e8b5964@oss.qualcomm.com>
+ <ak_IsMGkkMY8wERc@redhat.com>
+ <947a4843-34ae-43f7-8fbc-80109bc0c077@oss.qualcomm.com>
+ <alCoHiXzBAcwnOxJ@redhat.com> <87ldbjqd67.fsf@draig.linaro.org>
+ <alDdCh7zfJvdD0tn@redhat.com>
+ <2bbe43b8-2654-40f3-ac7f-c68ab6ebdcce@oss.qualcomm.com>
+ <alSf7zSuHok2RKqp@redhat.com>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <tencent_E17E8F6494EE130F71527C6BCE481AF33E08@qq.com>
+In-Reply-To: <alSf7zSuHok2RKqp@redhat.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDE2NiBTYWx0ZWRfX4S4F9eJYGG9P
- eyCO8sK4Mv1eMhUKqtJ8pNjPEDg4p3IJu0aKVMt4gJwjLAB13y3Ormz6Gnxndz5aCjTUZm7XlnW
- ql8IOL556wmTvDehGu6hI2i4BtmuAsOKiSGnMsMe1cE5We5y8qIR/m/+759agvXl3uPrHNioky1
- 04u0vurA14xvROElIao8uq8FSrwiEkAIos+ZtMLInHNWnpLHZ2RaOP33MkYyyWrta/5A1hVnx3y
- FQhvD5q4jYDlB40K4H+LbzTP9zNhcGrgT23tTO300b4B9eEILlMQtMKuJfKxsw1aj+5B7Clxon0
- o84vLrE7rFzLn9X36RrB5xJR8EKW5tDlK7P74SY88m/iDQParJDe+MBSzE2/06UK53gorUlyY+2
- KbjRoVnaysEiIN/9wmbueTamAneHfLcvjXyEnE75u6syF9tUMVVe3FJ2nB7lVeel25HJCKbON2Y
- 0P7U5Xmlfbxn0fW89eA==
-X-Proofpoint-ORIG-GUID: jixhQPdkPuLATsip7-bsgwb2Tn22V1A7
-X-Authority-Analysis: v=2.4 cv=UMHt2ify c=1 sm=1 tr=0 ts=6a550b71 cx=c_pps
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: UVvMzjYdqNNs69ZZeZzusm_MABwSV5X0
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDE2NiBTYWx0ZWRfX7KzM8XsJtO63
+ m5Bs2EhYCgPtbg3R55boHSE5PmMh8moajDWLTqKpwIO7MrfuQ0YQcsUl39sIH2HybRayovGEqlf
+ w8AUenHu6spzxhmKWfjORmAambymOpgvLGBch3egAlLDLfrOTtMiQggXE86efS7UBv0vwN1Umg5
+ cpc8Dr7KCEvfJ3PWzp3Q1AolHGYs+6dO5+YcfwYxQnynhZ3mtjm3dA0aMiUr+AMFKV1nKCYtQKH
+ 88oKAdjL6RIv02hxvTT38y3zkmbfb0j8cmXn5A6qDTPE6dtfLOahRQZApjBCn+X7pzn8onXMsHP
+ 0hSVwoVehBVhiWBQVtspvE91l13BECsUwLHamX5medVDCdCMEJFr3kKXxkDYc7pBqxxRsQrH/9e
+ R2i+4KiqrsjQaSvujuckTRkA6XDyA3sknPvzras5KhmKNUALU+3MaDDpFBM/1dB7kd0oktMhTDk
+ Ggj0DT+ja/Nx7IpdpDg==
+X-Proofpoint-ORIG-GUID: UVvMzjYdqNNs69ZZeZzusm_MABwSV5X0
+X-Authority-Analysis: v=2.4 cv=dZSwG3Xe c=1 sm=1 tr=0 ts=6a550bf4 cx=c_pps
  a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=dZbOZ2KzAAAA:8 a=2EAK0dWcFSsNEvSIV9MA:9 a=QEXdDO2ut3YA:10
- a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-GUID: jixhQPdkPuLATsip7-bsgwb2Tn22V1A7
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDE2NiBTYWx0ZWRfX0ME2oaI7lasg
- ja4vTVeAG4XkHEQ5LGj2M7msZ3MK8FwcoWkXMFAZYIEsV3Auecbg+R3bnuzTAN7TXMt/INy343n
- X0s5Vj1J5S79cSuhBqL0ZAol01s2aAM=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=p0WdMEafAAAA:8 a=20KFwNOVAAAA:8 a=6LfTF1G-ki2SUvDdRMIA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=3WC7DwWrALyhR5TkjVHa:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDE2NiBTYWx0ZWRfX6LpeS16948QE
+ /th5oaNUBao2OBBBxA2Yp/QhbP+jXDxhS6Da9FqlvtBMRZSa178cUsy1cxCJE6gUszevZV4bifO
+ nnYLmtXkyZ4abls5ZOU3bHVLlMJVP3k=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-13_04,2026-07-10_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 spamscore=0 clxscore=1015 adultscore=0
- malwarescore=0 lowpriorityscore=0 phishscore=0 suspectscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607130166
-Received-SPF: pass client-ip=205.220.180.131;
+ bulkscore=0 priorityscore=1501 adultscore=0 malwarescore=0 spamscore=0
+ phishscore=0 impostorscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607130166
+Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,67 +166,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-On 7/12/2026 1:45 AM, Yanfeng Liu wrote:
-> This adds RiscV virtual user and supervisor privilege levels to
-> uftrace plugin to avoid crashing with H extension guests.
+On 7/13/2026 1:32 AM, Daniel P. Berrangé wrote:
+> On Fri, Jul 10, 2026 at 11:20:37AM -0700, Pierrick Bouvier wrote:
+>> On 7/10/2026 4:52 AM, Daniel P. Berrangé wrote:
+>>> On Fri, Jul 10, 2026 at 12:47:28PM +0100, Alex Bennée wrote:
+>>>> Daniel P. Berrangé <berrange@redhat.com> writes:
+>>>>
+>>>> (added Edgar for Microblaze)
+>>>>
+>>>>> On Thu, Jul 09, 2026 at 09:24:12AM -0700, Pierrick Bouvier wrote:
+>>>>>> On 7/9/2026 9:13 AM, Daniel P. Berrangé wrote:
+>>>>>>> On Thu, Jul 09, 2026 at 07:48:14AM -0700, Pierrick Bouvier wrote:
+>>>>>>>> On 2/10/2026 8:35 AM, Daniel P. Berrangé wrote:
+>>>>>>>>> When a developer's environment is already within a podman container it
+>>>>>>>>> is not possible to use 'podman' again to create containers. It will
+>>>>>>>>> usually result in wierd errors such as:
+>>>>>>>>>
+>>>>>>>>>   Error: fatal error, invalid internal status, unable to create a new pause process: cannot re-exec process to join the existing user namespace. Try running "podman system migrate" and if that doesn't work reboot to recover
+>>>>>>>>>
+>>>>>>>>> Podman offers the ability to talk to a daemon outside the container,
+>>>>>>>>> however, which could be leveraged by QEMU.
+>>>>>>>>>
+>>>> <snip>
+>>>>>>>> Taking a look at why tcg tests are slow to compile, I reached this
+>>>>>>>> commit. It seems like that calling 'podman info' is 5 to 10 times slower
+>>>>>>>> than calling 'podman version'.
+>>>>>>>> Thus, a container run now takes +1s when it was 0.2 before.
+>>>>>>>
+>>>>>>> Hmmm, but we call 'docker.py probe' in configure and cache the result,
+>>>>>>> so that probe should only be done once.  0.2 vs 1s is just noise in
+>>>>>>> the context of configure.
+>>>>>>>
+>>>>>>> That you're seeing any negative effects suggests that we've got
+>>>>>>> something not using the cached probe result, which we should fix.
+>>>>>>>
+>>>>>>
+>>>>>> Not really, docker.py --engine X still calls X info.
+>>>>>>
+>>>>>> https://gitlab.com/qemu-project/qemu/-/blob/master/tests/docker/docker.py#L675
+>>>>>> https://gitlab.com/qemu-project/qemu/-/blob/master/tests/docker/docker.py#L78
+>>>>>>
+>>>>>> Maybe the fix is to remove the check if user specified an explicit
+>>>>>> engine. But in this case, there is a problem with podman-remote not
+>>>>>> being detected anymore.
+>>>>>>
+>>>>>> We can fix this by introducing engine=podman-remote, and skip the check
+>>>>>> if engine is explicitly set.
+>>>>>> What do you think?
+>>>>>
+>>>>> Urgh, so i see now we have two code paths / make variables
+>>>>>
+>>>>>   RUNC=podman --remote
+>>>>>   CONTAINER_ENGINE=auto
+>>>>>
+>>>>> Sometimes we'll invoke docker.py --engine $(CONTAINER_ENGINE)
+>>>>> and sometimes we'll directly invoke $(RUNC).
+>>>>
+>>>> Yeah that could do with cleaning up. I suspect the only places we
+>>>> actually still need the script is where we are doing binfmt_misc enabled
+>>>> containers unless there is a way to emulate the copying of qemu into the
+>>>> container with a plain call? Maybe all the systems now have the
+>>>> persistent flags which would skip this.
+>>>
+>>> Yeah, I'd be inclined to say this is a job for the distros to have
+>>> qemu-user integration, and simplify our life. THe docker.py script
+>>> always confuses me.  We could choose podman vs podman --remote vs
+>>> docker simply in the meson.build file, as we do for other dev env
+>>> choices.
+>>>
+>>>> The toolchain case could be skipped if we could find hosted compilers
+>>>> for microblaze. However I do see we have a patch in there.
+>>>>
+>>>>>
+>>>>> The result of "probe" cannot be fed back in to "--engine" which
+>>>>> is a bit of a mess. I think the "engine" concept should not be
+>>>>> exposed on the cli, and instead have a "--runc" arg which takes
+>>>>> the full arg(s), since we need probe to report the runc args
+>>>>> for other reasons.
+>>>>>
+>>>>> With regards,
+>>>>> Daniel
+>>>>
+>>>> -- 
+>>>> Alex Bennée
+>>>> Virtualisation Tech Lead @ Linaro
+>>>>
+>>>
+>>> With regards,
+>>> Daniel
+>>
+>> Is it me or did we incredibly derailed from original issue which was:
+>> "It was fast to query which container engine is available, and now it's
+>> 5-10 times slower to accommodate toolbox workflow where podman is
+>> available but not really available?"
+>> I agree it's sad to have several ways to set container engine, but it's
+>> absolutely not related to the current issue.
 > 
-> Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
-> ---
->  contrib/plugins/uftrace.c | 13 ++++++++++---
->  1 file changed, 10 insertions(+), 3 deletions(-)
+> It is relevant because that difference in speed is not something that
+> should be noticable unless something is repeatedly probing over & over
+> again which should not be done.
 > 
-> diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
-> index 9b0a4963ae..063e32220b 100644
-> --- a/contrib/plugins/uftrace.c
-> +++ b/contrib/plugins/uftrace.c
-> @@ -109,6 +109,8 @@ typedef enum {
->      RISCV64_SUPERVISOR,
->      RISCV64_RESERVED,
->      RISCV64_MACHINE,
-> +    RISCV64_VUSER,
-> +    RISCV64_VSUPERVISOR,
->      RISCV64_PRIVILEGE_LEVEL_MAX,
->  } Riscv64PrivilegeLevel;
->  
-> @@ -153,8 +155,10 @@ static void uftrace_write_map(bool system_emulation)
->      const char *path = "./uftrace.data/sid-0.map";
->  
->      if (system_emulation && access(path, F_OK) == 0) {
-> -        /* do not erase existing map in system emulation, as a custom one might
-> -         * already have been generated by uftrace_symbols.py */
-> +        /*
-> +         * do not erase existing map in system emulation, as a custom one might
-> +         * already have been generated by uftrace_symbols.py
-> +         */
->          return;
->      }
->  
-> @@ -706,6 +710,8 @@ static const char *riscv64_get_privilege_level_name(uint8_t pl)
->      case RISCV64_SUPERVISOR: return "Supervisor";
->      case RISCV64_RESERVED: return "Unknown";
->      case RISCV64_MACHINE: return "Machine";
-> +    case RISCV64_VUSER: return "VUser";
-> +    case RISCV64_VSUPERVISOR: return "VSupervisor";
->      default:
->          g_assert_not_reached();
->      }
-> @@ -986,7 +992,8 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
->  
->      score = qemu_plugin_scoreboard_new(sizeof(Cpu));
->      qemu_plugin_register_vcpu_init_cb(id, vcpu_init, NULL);
-> -    qemu_plugin_register_atexit_cb(id, at_exit, (void *) info->system_emulation);
-> +    qemu_plugin_register_atexit_cb(id, at_exit,
-> +                                   (void *) info->system_emulation);
->      qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
->  
->      return 0;
+>> Daniel, since you introduced the slow check path with podman info for
+>> your personal need, I would appreciate if it's something you could fix also.
+> 
+> I'll looking into the missing caching.
+>
 
+Thanks!
 
-Is that something we have implemented in upstream QEMU for riscv64
-target? From what I can see, priv register only can have M,S,U values.
-
-Regards,
-Pierrick
+> With regards,
+> Daniel
 
