@@ -4,91 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A49BC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 06:46:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A4E3C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 06:51:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjAQw-00050Q-Gl; Mon, 13 Jul 2026 02:46:30 -0400
+	id 1wjAVH-0005gk-IA; Mon, 13 Jul 2026 02:50:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1wjAQt-0004zj-4w
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 02:46:27 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1wjAQr-0003FK-Dx
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 02:46:26 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-38dc4553f62so1564616a91.0
- for <qemu-devel@nongnu.org>; Sun, 12 Jul 2026 23:46:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1783925184; x=1784529984; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ZpoN550kNPQMyUpmD2Q/rsY1LHXm3CjmEsFP04Om5/8=;
- b=edFjIXN+u7m9B22oc1IP9cb+qPNICSDvROrgcNo2IA4TYwVa7Qo5t6OhR6PztSC2HU
- 3JFNXFuRnxk/33+Xc6FeRpLZiyin/4YDa/lem/9jTweq2VAUVhu6uIrPBc5Ggl5vTHWm
- 4WG45OzQVEpHJ+OyJ12+BQHJPrfBKhy2mfqUk0vxXJ8pNq9V39jC6bKZU2y3TwtHYRvI
- gwMqjdK27d2WEifLVuXZ43didCl2KSEZhu0mHoo+QGSL9qjux29txQZD0HXCAlVvl7en
- 7oUQ7/1TGzuVqzFx9bGXzF8t1rXizClV2FmJzlwi+CJ8S1C+jl6VsJ77qkJMF4YPmNlF
- B5gA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783925184; x=1784529984;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ZpoN550kNPQMyUpmD2Q/rsY1LHXm3CjmEsFP04Om5/8=;
- b=LQ5lSceYbrEqQV3BI9tz/Q+o0ofXVA21MqYwGh/f0lHZclUUyf6ODRMAsqLhUiSCcu
- KsVyA98exYW9PCQzkUf5udrNoqFV042Q4Y9IUgAJLEzUcWhwhNxalSfxQFKbHi2Nrn+y
- 4LoS+cOs/YImN02cEf42iVgDtSWv2eamFyY2BzUi2UAwOVIXvnAgHWPF1ggzWeAZ1AGz
- VJ502JOK3YLyjb9MXsX3sPrH4gS+S08F83x2GL1lhIt77e83EbnyiiVL7dA/QsohRLfN
- +M80uF4WEKnnewSbL4Xado3WWzODp6lcjBzt5U67PrEZIEQNc2mSlW+PZjBGOdIBfmo6
- 0Pww==
-X-Gm-Message-State: AOJu0YzVORFytlfdZ/sYabqPH81IW7vdlA6vNrZP77CdNw2y4Cc+VWM4
- ZQ+z1+FazZ4qj7gD8HqnIDAapEoDnXdcH6NheU4ae/JwIWxet1uqA+5rCHu9s7o5dU+gPlALDLp
- fDutZ5bmttbOnpJHZfKpaZ3mvYhDSPTIe068PX/A6MX13X+WeaMIgH0aYhD/0S7p1y/jkVmkP59
- 1pFH87rySFiUBw6AcghLS+mc2a+ZiB0EyDlNhpozhLQ7M=
-X-Gm-Gg: AfdE7cmkuH1kPkcrBL4YC/2NXk59PDvzUpSns8/5syU+PE/8YOt/3wFgHz2pkvr6ppj
- m8puDWu7tzL3a0LDtCDFrn5Mk/9BXbQvgcTDFMWPa8GErinMbEVnLgB8NW2g8VBYwMAtJBN+KNl
- qRBBxxO31ndwpyi9KhA+dn0tkPgtTCUN5OGWqs9en9G7QWPh9aa/Whqp2C3bfsZJ2hGVuHXc8YZ
- 5qkxIF3zqKB63WrJ5AlCGY7QqjpJP4ZEuHzO3c7PTYG5HNokb5LN6s6rS4S/e5pcqBMBrwwV/s6
- sO/nblg6HUhny1268hBEAn2zA5Bko1d5qltvbgtMnZDk+GGwnmTHipYDtCYGoZJ9BPjPVvnb4wo
- qzZz7doB+UVVYQkZFxqCd9Ggi9otJb8EpAVDfcL+AWnzzz6uw7Mg9+nWAR7f35chajQsT+2rs+j
- 6rnIRue2Y+Y6pyoonzdB+fsL1CdVkMWV+/qwxButTGYmfw7HvgXSo=
-X-Received: by 2002:a17:90b:180c:b0:38e:fbe:b67b with SMTP id
- 98e67ed59e1d1-38e0fbeb818mr54199a91.0.1783925183563; 
- Sun, 12 Jul 2026 23:46:23 -0700 (PDT)
-Received: from jchang-1875.internal.sifive.com ([136.226.240.163])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38a5516ad85sm6004910a91.2.2026.07.12.23.46.21
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 12 Jul 2026 23:46:22 -0700 (PDT)
-From: Jay Chang <jay.chang@sifive.com>
-To: qemu-devel@nongnu.org
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>,
- Jason Wang <jasowangio@gmail.com>,
- qemu-arm@nongnu.org (open list:Xilinx Zynq),
- Jay Chang <jay.chang@sifive.com>, Frank Chang <frank.chang@sifive.com>
-Subject: [PATCH] hw/net/xilinx_axienet: Fix PHY register 17 link status
- reporting
-Date: Mon, 13 Jul 2026 14:46:17 +0800
-Message-ID: <20260713064617.85374-1-jay.chang@sifive.com>
-X-Mailer: git-send-email 2.48.1
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1wjAVE-0005gV-Ns
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 02:50:56 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1wjAVB-00040D-9d
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 02:50:56 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8BxVerGilRqYPICAA--.10504S3;
+ Mon, 13 Jul 2026 14:50:46 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJDxDcfDilRq77ALAA--.54623S2;
+ Mon, 13 Jul 2026 14:50:45 +0800 (CST)
+Subject: Re: [PATCH v3 4/8] target/loongarch: Add LVZ guest CSR tables
+To: SignKirigami <prcups@krgm.moe>, qemu-devel@nongnu.org
+Cc: xianglai li <lixianglai@loongson.cn>,
+ Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+References: <cover.1783673526.git.prcups@krgm.moe>
+ <0bcc5d30b6495f266413e773a4c1bbe203ac0b68.1783673526.git.prcups@krgm.moe>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <77945892-2f6d-51ac-dde0-7083cb41afe3@loongson.cn>
+Date: Mon, 13 Jul 2026 14:50:36 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <0bcc5d30b6495f266413e773a4c1bbe203ac0b68.1783673526.git.prcups@krgm.moe>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=jay.chang@sifive.com; helo=mail-pj1-x1033.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-CM-TRANSID: qMiowJDxDcfDilRq77ALAA--.54623S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3uw43JF4DWr1fWr17Aw1fAFc_yoWDtF1rpr
+ srWFWUKFW5tas5X3ykG3WYk3W5Xr1xK3y2qasIyry8CFW8Jr1FgFWFkF1Ygr15JF1rZrW0
+ vFWkAr18ZF42gFgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE
+ 14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+ AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
+ rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
+ CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
+ 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
+ 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUcVc_
+ UUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.494,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,33 +82,337 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Marvell 88E1111 PHY register 17 (PHY Specific Status Register)
-bit 10 reports real-time link status. Previously, this register
-returned a fixed value of 0x8800 with bit 10 always cleared,
-causing U-Boot to always detect "No link" even when the link
-was up.
 
-Signed-off-by: Jay Chang <jay.chang@sifive.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
----
- hw/net/xilinx_axienet.c | 3 +++
- 1 file changed, 3 insertions(+)
 
-diff --git a/hw/net/xilinx_axienet.c b/hw/net/xilinx_axienet.c
-index 970732b162..9f5f65ecfa 100644
---- a/hw/net/xilinx_axienet.c
-+++ b/hw/net/xilinx_axienet.c
-@@ -103,6 +103,9 @@ static unsigned int tdk_read(struct PHY *phy, unsigned int req)
-         case 17:
-             /* Marvell PHY on many xilinx boards.  */
-             r = 0x8000; /* 1000Mb  */
-+            if (phy->link) {
-+                r |= 0x0400; /* Link is up */
-+            }
-             break;
-         case 18:
-             {
--- 
-2.48.1
+On 2026/7/10 下午5:00, SignKirigami wrote:
+> Add the guest CSR lookup table and get_gcsr() helper, mark guest
+> read-only registers and guest sensitive privileged resources, and store
+> host and guest CSRInfo offsets relative to CPULoongArchState so CSR
+> access generation can select the host or guest table directly.
+> 
+> Signed-off-by: SignKirigami <prcups@krgm.moe>
+> Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+> ---
+>   target/loongarch/cpu.c                        |   2 +-
+>   target/loongarch/csr.c                        | 124 +++++++++++++++++-
+>   target/loongarch/csr.h                        |  12 +-
+>   .../tcg/insn_trans/trans_extra.c.inc          |   2 +-
+>   .../tcg/insn_trans/trans_privileged.c.inc     |  16 +--
+>   5 files changed, 133 insertions(+), 23 deletions(-)
+> 
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index fb03424ffa..492b17e136 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -783,7 +783,7 @@ static void loongarch_cpu_dump_csr(CPUState *cs, FILE *f)
+>               qemu_fprintf(f, " CSR%03d:", col);
+>           }
+>   
+> -        addr = (void *)env + get_csr_offset(csr_info, 0);
+> +        addr = (void *)env + csr_info->offset;
+>           qemu_fprintf(f, " %s ", csr_info->name);
+>           len = strlen(csr_info->name);
+>           for (; len < 6; len++) {
+> diff --git a/target/loongarch/csr.c b/target/loongarch/csr.c
+> index 309b826ca9..ed9d25edf2 100644
+> --- a/target/loongarch/csr.c
+> +++ b/target/loongarch/csr.c
+> @@ -9,19 +9,34 @@
+>   #define CSR_OFF_FUNCS(NAME, FL, RD, WR)                    \
+>       [LOONGARCH_CSR_##NAME] = {                             \
+>           .name   = (stringify(NAME)),                       \
+> -        .offset = CSR_OFFSET(CSR_##NAME),                  \
+> +        .offset = CSR_OFFSET(CSR_##NAME, 0),               \
+>           .flags = FL, .readfn = RD, .writefn = WR           \
+>       }
+>   
+>   #define CSR_OFF_ARRAY(NAME, N)                                \
+>       [LOONGARCH_CSR_##NAME(N)] = {                             \
+>           .name   = (stringify(NAME##N)),                       \
+> -        .offset = CSR_OFFSET(CSR_##NAME[N]),                  \
+> -        .flags = CSRFL_BASIC, .readfn = NULL, .writefn = NULL           \
+> +        .offset = CSR_OFFSET(CSR_##NAME[N], 0),               \
+> +        .flags = CSRFL_BASIC, .readfn = NULL, .writefn = NULL \
+>       }
+>   
+>   #define CSR_OFF_FLAGS(NAME, FL)   CSR_OFF_FUNCS(NAME, FL, NULL, NULL)
+>   #define CSR_OFF(NAME)             CSR_OFF_FLAGS(NAME, CSRFL_BASIC)
+> +#define GCSR_OFF_FUNCS(NAME, FL, RD, WR)                  \
+> +    [LOONGARCH_CSR_##NAME] = {                            \
+> +        .name   = (stringify(GCSR_##NAME)),               \
+> +        .offset = CSR_OFFSET(CSR_##NAME, 1),              \
+> +        .flags = FL, .readfn = RD, .writefn = WR          \
+> +    }
+> +#define GCSR_OFF_ARRAY(NAME, N)                               \
+> +    [LOONGARCH_CSR_##NAME(N)] = {                             \
+> +        .name   = (stringify(GCSR_##NAME##N)),                \
+> +        .offset = CSR_OFFSET(CSR_##NAME[N], 1),               \
+> +        .flags = CSRFL_BASIC, .readfn = NULL, .writefn = NULL \
+> +    }
+> +#define GCSR_OFF_FLAGS(NAME, FL) GCSR_OFF_FUNCS(NAME, FL, NULL, NULL)
+> +#define GCSR_OFF(NAME) GCSR_OFF_FLAGS(NAME, CSRFL_BASIC)
+> +#define GCSR_GSPR(NAME) GCSR_OFF_FLAGS(NAME, CSRFL_GSPR)
+>   
+>   static CSRInfo csr_info[] = {
+>       CSR_OFF_FLAGS(CRMD, CSRFL_EXITTB),
+> @@ -35,6 +50,8 @@ static CSRInfo csr_info[] = {
+>       CSR_OFF_FLAGS(BADI, CSRFL_READONLY),
+>       CSR_OFF(EENTRY),
+>       CSR_OFF(TLBIDX),
+> +    CSR_OFF(GTLBC),
+> +    CSR_OFF(TRGP),
+>       CSR_OFF(TLBEHI),
+>       CSR_OFF(TLBELO0),
+>       CSR_OFF(TLBELO1),
+> @@ -71,6 +88,10 @@ static CSRInfo csr_info[] = {
+>       CSR_OFF_FLAGS(TVAL, CSRFL_READONLY | CSRFL_IO),
+>       CSR_OFF(CNTC),
+>       CSR_OFF_FLAGS(TICLR, CSRFL_IO),
+> +    CSR_OFF(GSTAT),
+> +    CSR_OFF(GCFG),
+> +    CSR_OFF_FLAGS(GINTC, CSRFL_IO),
+> +    CSR_OFF(GCNTC),
+>       CSR_OFF(LLBCTL),
+>       CSR_OFF(IMPCTL1),
+>       CSR_OFF(IMPCTL2),
+> @@ -135,6 +156,87 @@ static CSRInfo csr_info[] = {
+>       CSR_OFF(MSGIR),
+>   };
+>   
+> +static CSRInfo gcsr_info[] = {
+> +    GCSR_OFF_FLAGS(CRMD, CSRFL_EXITTB),
+> +    GCSR_OFF(PRMD),
+> +    GCSR_OFF_FLAGS(EUEN, CSRFL_EXITTB),
+> +    GCSR_OFF_FLAGS(MISC, CSRFL_GUEST_READONLY),
+> +    GCSR_OFF(ECFG),
+> +    GCSR_OFF_FLAGS(ESTAT, CSRFL_EXITTB),
+> +    GCSR_OFF(ERA),
+> +    GCSR_OFF(BADV),
+> +    GCSR_OFF_FLAGS(BADI, CSRFL_GUEST_READONLY),
+> +    GCSR_OFF(EENTRY),
+> +    GCSR_OFF(TLBIDX),
+> +    GCSR_GSPR(GTLBC),
+> +    GCSR_GSPR(TRGP),
+> +    GCSR_OFF(TLBEHI),
+> +    GCSR_OFF(TLBELO0),
+> +    GCSR_OFF(TLBELO1),
+> +    GCSR_OFF_FLAGS(ASID, CSRFL_EXITTB),
+> +    GCSR_OFF(PGDL),
+> +    GCSR_OFF(PGDH),
+> +    GCSR_OFF_FLAGS(PGD, CSRFL_GUEST_READONLY),
+> +    GCSR_OFF(PWCL),
+> +    GCSR_OFF(PWCH),
+> +    GCSR_OFF(STLBPS),
+> +    GCSR_OFF(RVACFG),
+> +    GCSR_OFF_FLAGS(CPUID, CSRFL_GUEST_READONLY),
+> +    GCSR_OFF_FLAGS(PRCFG1, CSRFL_GUEST_READONLY),
+> +    GCSR_OFF_FLAGS(PRCFG2, CSRFL_GUEST_READONLY),
+> +    GCSR_OFF_FLAGS(PRCFG3, CSRFL_GUEST_READONLY),
+> +    GCSR_OFF_ARRAY(SAVE, 0),
+> +    GCSR_OFF_ARRAY(SAVE, 1),
+> +    GCSR_OFF_ARRAY(SAVE, 2),
+> +    GCSR_OFF_ARRAY(SAVE, 3),
+> +    GCSR_OFF_ARRAY(SAVE, 4),
+> +    GCSR_OFF_ARRAY(SAVE, 5),
+> +    GCSR_OFF_ARRAY(SAVE, 6),
+> +    GCSR_OFF_ARRAY(SAVE, 7),
+> +    GCSR_OFF_ARRAY(SAVE, 8),
+> +    GCSR_OFF_ARRAY(SAVE, 9),
+> +    GCSR_OFF_ARRAY(SAVE, 10),
+> +    GCSR_OFF_ARRAY(SAVE, 11),
+> +    GCSR_OFF_ARRAY(SAVE, 12),
+> +    GCSR_OFF_ARRAY(SAVE, 13),
+> +    GCSR_OFF_ARRAY(SAVE, 14),
+> +    GCSR_OFF_ARRAY(SAVE, 15),
+> +    GCSR_OFF(TID),
+> +    GCSR_OFF_FLAGS(TCFG, CSRFL_IO),
+> +    GCSR_OFF_FLAGS(TVAL, CSRFL_GUEST_READONLY | CSRFL_IO),
+> +    GCSR_OFF(CNTC),
+> +    GCSR_OFF_FLAGS(TICLR, CSRFL_IO),
+> +    GCSR_GSPR(GSTAT),
+> +    GCSR_GSPR(GCFG),
+> +    GCSR_GSPR(GINTC),
+> +    GCSR_GSPR(GCNTC),
+> +    GCSR_OFF(LLBCTL),
+> +    GCSR_GSPR(IMPCTL1),
+> +    GCSR_GSPR(IMPCTL2),
+> +    GCSR_OFF(TLBRENTRY),
+> +    GCSR_OFF(TLBRBADV),
+> +    GCSR_OFF(TLBRERA),
+> +    GCSR_OFF(TLBRSAVE),
+> +    GCSR_OFF(TLBRELO0),
+> +    GCSR_OFF(TLBRELO1),
+> +    GCSR_OFF(TLBREHI),
+> +    GCSR_OFF(TLBRPRMD),
+> +    GCSR_GSPR(MERRCTL),
+> +    GCSR_GSPR(MERRINFO1),
+> +    GCSR_GSPR(MERRINFO2),
+> +    GCSR_GSPR(MERRENTRY),
+> +    GCSR_GSPR(MERRERA),
+> +    GCSR_GSPR(MERRSAVE),
+> +    GCSR_GSPR(CTAG),
+> +    GCSR_OFF_ARRAY(DMW, 0),
+> +    GCSR_OFF_ARRAY(DMW, 1),
+> +    GCSR_OFF_ARRAY(DMW, 2),
+> +    GCSR_OFF_ARRAY(DMW, 3),
+> +    GCSR_GSPR(DBG),
+> +    GCSR_GSPR(DERA),
+> +    GCSR_GSPR(DSAVE),
+> +};
+> +
+>   CSRInfo *get_csr(unsigned int csr_num)
+>   {
+>       CSRInfo *csr;
+> @@ -151,6 +253,22 @@ CSRInfo *get_csr(unsigned int csr_num)
+>       return csr;
+>   }
+>   
+> +CSRInfo *get_gcsr(unsigned int csr_num)
+> +{
+> +    CSRInfo *csr;
+> +
+> +    if (csr_num >= ARRAY_SIZE(gcsr_info)) {
+> +        return NULL;
+> +    }
+> +
+> +    csr = &gcsr_info[csr_num];
+> +    if (csr->flags == 0) {
+> +        return NULL;
+> +    }
+> +
+> +    return csr;
+> +}
+> +
+>   bool set_csr_flag(unsigned int csr_num, int flag)
+>   {
+>       CSRInfo *csr;
+> diff --git a/target/loongarch/csr.h b/target/loongarch/csr.h
+> index c2b6b882bc..c39230f30c 100644
+> --- a/target/loongarch/csr.h
+> +++ b/target/loongarch/csr.h
+> @@ -8,10 +8,9 @@
+>   
+>   #include "cpu-csr.h"
+>   
+> -#define CSR_OFFSET(id)                  offsetof(CPUSysState, id)
+> -#define CPU_CSR_OFFSET(id, vm_level)                                     \
+> +#define CSR_OFFSET(id, vm_level)                                     \
+>                       (offsetof(CPULoongArchState, sys_states[vm_level])   \
+> -                             + CSR_OFFSET(id))
+> +                    + offsetof(CPUSysState, id))
+>   
+>   typedef void (*GenCSRFunc)(void);
+>   enum {
+> @@ -20,6 +19,8 @@ enum {
+>       CSRFL_IO       = (1 << 2),
+>       CSRFL_UNUSED   = (1 << 3),
+>       CSRFL_BASIC    = (1 << 4),
+> +    CSRFL_GUEST_READONLY = (1 << 5),
+> +    CSRFL_GSPR     = (1 << 6),
+>   };
+>   
+>   typedef struct {
+> @@ -31,9 +32,6 @@ typedef struct {
+>   } CSRInfo;
+>   
+>   CSRInfo *get_csr(unsigned int csr_num);
+> +CSRInfo *get_gcsr(unsigned int csr_num);
+>   bool set_csr_flag(unsigned int csr_num, int flag);
+> -static inline unsigned int get_csr_offset(const CSRInfo *csr, int vm_level)
+> -{
+> -    return csr->offset + offsetof(CPULoongArchState, sys_states[vm_level]);
+> -}
+>   #endif /* TARGET_LOONGARCH_CSR_H */
+> diff --git a/target/loongarch/tcg/insn_trans/trans_extra.c.inc b/target/loongarch/tcg/insn_trans/trans_extra.c.inc
+> index 655dce329e..5a404632f5 100644
+> --- a/target/loongarch/tcg/insn_trans/trans_extra.c.inc
+> +++ b/target/loongarch/tcg/insn_trans/trans_extra.c.inc
+> @@ -55,7 +55,7 @@ static bool gen_rdtime(DisasContext *ctx, arg_rr *a,
+>           tcg_gen_sextract_tl(dst1, dst1, high ? 32 : 0, 32);
+>       }
+>   
+> -    offset = CPU_CSR_OFFSET(CSR_TID, 0);
+> +    offset = CSR_OFFSET(CSR_TID, 0);
+>       tcg_gen_ld_i64(dst2, tcg_env, offset);
+>   
+>       return true;
+> diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> index 6728ce5ec9..2094d182ac 100644
+> --- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> +++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> @@ -106,7 +106,6 @@ static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
+>       TCGv dest;
+>       const CSRInfo *csr;
+>       GenCSRRead readfn;
+> -    tcg_target_long offset;
+>   
+>       if (check_plv(ctx)) {
+>           return false;
+> @@ -122,8 +121,7 @@ static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
+>           if (readfn) {
+>               readfn(dest, tcg_env);
+>           } else {
+> -            offset = get_csr_offset(csr, 0);
+> -            tcg_gen_ld_tl(dest, tcg_env, offset);
+> +            tcg_gen_ld_tl(dest, tcg_env, csr->offset);
+>           }
+how about something like this:
+     offset = get_csr_offset(csr, ctx->guest_mode == true);
+
+>       }
+>       gen_set_gpr(a->rd, dest, EXT_NONE);
+> @@ -135,7 +133,6 @@ static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
+>       TCGv dest, src1;
+>       const CSRInfo *csr;
+>       GenCSRWrite writefn;
+> -    tcg_target_long offset;
+>   
+>       if (check_plv(ctx)) {
+>           return false;
+> @@ -157,9 +154,8 @@ static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
+>           writefn(dest, tcg_env, src1);
+>       } else {
+>           dest = tcg_temp_new();
+> -        offset = get_csr_offset(csr, 0);
+> -        tcg_gen_ld_tl(dest, tcg_env, offset);
+> -        tcg_gen_st_tl(src1, tcg_env, offset);
+> +        tcg_gen_ld_tl(dest, tcg_env, csr->offset);
+> +        tcg_gen_st_tl(src1, tcg_env, csr->offset);
+Ditto, offset = get_csr_offset(csr, ctx->guest_mode == true);
+>       }
+>       gen_set_gpr(a->rd, dest, EXT_NONE);
+>       return true;
+> @@ -170,7 +166,6 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
+>       TCGv src1, mask, oldv, newv, temp;
+>       const CSRInfo *csr;
+>       GenCSRWrite writefn;
+> -    tcg_target_long offset;
+>   
+>       if (check_plv(ctx)) {
+>           return false;
+> @@ -196,8 +191,7 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
+>       newv = tcg_temp_new();
+>       temp = tcg_temp_new();
+>   
+> -    offset = get_csr_offset(csr, 0);
+Ditto, offset = get_csr_offset(csr, ctx->guest_mode == true);
+
+Regards
+Bibo Mao
+> -    tcg_gen_ld_tl(oldv, tcg_env, offset);
+> +    tcg_gen_ld_tl(oldv, tcg_env, csr->offset);
+>       tcg_gen_and_tl(newv, src1, mask);
+>       tcg_gen_andc_tl(temp, oldv, mask);
+>       tcg_gen_or_tl(newv, newv, temp);
+> @@ -206,7 +200,7 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
+>       if (writefn) {
+>           writefn(oldv, tcg_env, newv);
+>       } else {
+> -        tcg_gen_st_tl(newv, tcg_env, offset);
+> +        tcg_gen_st_tl(newv, tcg_env, csr->offset);
+>       }
+>       gen_set_gpr(a->rd, oldv, EXT_NONE);
+>       return true;
+> 
 
 
