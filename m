@@ -4,57 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1395EC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 12:52:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 480B6C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 12:54:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjG8P-00046d-JW; Mon, 13 Jul 2026 08:51:45 -0400
+	id 1wjGAw-0004lE-VK; Mon, 13 Jul 2026 08:54:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wjG8M-00046P-3W
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 08:51:42 -0400
+ id 1wjGAv-0004kh-0g
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 08:54:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wjG8K-0005mR-89
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 08:51:41 -0400
+ id 1wjGAt-0006AV-AA
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 08:54:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783947099;
+ s=mimecast20190719; t=1783947258;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding;
- bh=xBCRhKksK85VC4gIzUEZycAGMGy0x9PL2hAUdX3iQeM=;
- b=Df7G0gSv5pbjYlOY8FJEvYX2TIhwNaKJa1SRLVh7CyNmElU9Kt58jOZaEBUtW4Yj5xwQul
- IyZgpsaSNdJq+Vk+lJrbBAJKUjb/lrCOfBiL1Gz76uxl7Te16p/P0xP5wWsEWbZVZbwme+
- v8gyygIKttalehX83WT9krWcesRktKU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=LSEdgwftzglGFzLwr5Qy8jMdq22XlZhEuXWxQ0FbgUo=;
+ b=eUbYngzQWAUUV3EQA5Cl8zQ60onsI2liStso4bVJasHroNF7INUlGQpCOQ9rq8k3ioevhn
+ RCylOPV5BoSPF3Rnly0rViiF2ezClSacAWC8iiv/Mkqw82aXESw8O56Y9zyah/dJVNFK0K
+ +e3fW8VDHMWtYzzmTxbaoJGxLrAIHP8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-508-YFtPgcdUMSy1AtU948EdFQ-1; Mon,
- 13 Jul 2026 08:51:36 -0400
-X-MC-Unique: YFtPgcdUMSy1AtU948EdFQ-1
-X-Mimecast-MFC-AGG-ID: YFtPgcdUMSy1AtU948EdFQ_1783947096
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-632-4OmrPq-pNXyL2WE0KCmCmw-1; Mon,
+ 13 Jul 2026 08:54:16 -0400
+X-MC-Unique: 4OmrPq-pNXyL2WE0KCmCmw-1
+X-Mimecast-MFC-AGG-ID: 4OmrPq-pNXyL2WE0KCmCmw_1783947255
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E44D51955D5E
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 12:51:35 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 14F541955D95; Mon, 13 Jul 2026 12:54:15 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.3])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5735936F29; Mon, 13 Jul 2026 12:51:33 +0000 (UTC)
+ id 922F536F29; Mon, 13 Jul 2026 12:54:13 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PATCH] hw/display/vhost-user-gpu: validate message payload sizes
-Date: Mon, 13 Jul 2026 16:51:30 +0400
-Message-ID: <20260713125130.101787-1-marcandre.lureau@redhat.com>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: [PATCH] hw/display/virtio-gpu: validate command buffer size in
+ submit_3d
+Date: Mon, 13 Jul 2026 16:54:10 +0400
+Message-ID: <20260713125410.105653-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -87,88 +89,51 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-A malicious or buggy vhost-user-gpu backend can send messages with
-undersized payloads, leading to out-of-bounds reads when the handler
-accesses struct fields beyond the allocated buffer. However,
-vhost-user-gpu is considered trusted by QEMU by design (it has access to
-shared memory etc).
+virgl_cmd_submit_3d() passes the guest-controlled cs.size directly to
+g_malloc() without any bounds check. A malicious guest can set this
+field to an arbitrarily large value (up to 4GB), causing an OOM abort
+that crashes the QEMU process.
 
-Add a centralized minimum payload size check in vhost_user_gpu_chr_read()
-that rejects messages before dispatch, and a per-pixel bounds check in
-the VHOST_USER_GPU_UPDATE handler to ensure the variable-length data
-covers the declared width x height.
+Validate cs.size against the actual descriptor payload size before
+allocating, rejecting values that exceed what the virtqueue entry
+can carry.
 
-Fixes: 267f66465 ("hw/display: add vhost-user-vga & gpu-pci")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3866
-Reported-by: Feifan Qian <bea1e@proton.me>
+Fixes: 9d9e152136bd ("virtio-gpu: add 3d mode and virgl rendering support.")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3776
+Reported-by: admin@fluentlogic.org
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/display/vhost-user-gpu.c | 38 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
+ hw/display/virtio-gpu-virgl.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
-index 57360898ca0..cd684d63639 100644
---- a/hw/display/vhost-user-gpu.c
-+++ b/hw/display/vhost-user-gpu.c
-@@ -119,6 +119,31 @@ static VhostUserGpuMsg m __attribute__ ((unused));
- 
- static void vhost_user_gpu_update_blocked(VhostUserGPU *g, bool blocked);
- 
-+static size_t
-+vhost_user_gpu_min_payload_size(VhostUserGpuRequest request)
-+{
-+    switch (request) {
-+    case VHOST_USER_GPU_CURSOR_POS:
-+    case VHOST_USER_GPU_CURSOR_POS_HIDE:
-+        return sizeof(VhostUserGpuCursorPos);
-+    case VHOST_USER_GPU_CURSOR_UPDATE:
-+        return sizeof(VhostUserGpuCursorUpdate);
-+    case VHOST_USER_GPU_GET_EDID:
-+        return sizeof(VhostUserGpuEdidRequest);
-+    case VHOST_USER_GPU_SCANOUT:
-+        return sizeof(VhostUserGpuScanout);
-+    case VHOST_USER_GPU_DMABUF_SCANOUT:
-+        return sizeof(VhostUserGpuDMABUFScanout);
-+    case VHOST_USER_GPU_DMABUF_SCANOUT2:
-+        return sizeof(VhostUserGpuDMABUFScanout2);
-+    case VHOST_USER_GPU_DMABUF_UPDATE:
-+    case VHOST_USER_GPU_UPDATE:
-+        return sizeof(VhostUserGpuUpdate);
-+    default:
-+        return 0;
-+    }
-+}
-+
- static void
- vhost_user_gpu_handle_cursor(VhostUserGPU *g, VhostUserGpuMsg *msg)
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 60c78af06a4..2a07dd2431f 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -601,12 +601,23 @@ static void virgl_cmd_submit_3d(VirtIOGPU *g,
+                                 struct virtio_gpu_ctrl_command *cmd)
  {
-@@ -322,6 +347,14 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
-         if (m->scanout_id >= g->parent_obj.conf.max_outputs) {
-             break;
-         }
-+
-+        if ((uint64_t)m->width * m->height >
-+            (msg->size - sizeof(VhostUserGpuUpdate)) / sizeof(uint32_t)) {
-+            error_report("vhost-user-gpu: update payload too small"
-+                         " for %ux%u", m->width, m->height);
-+            break;
-+        }
-+
-         s = &g->parent_obj.scanout[m->scanout_id];
-         con = s->con;
-         pixman_image_t *image =
-@@ -396,6 +429,11 @@ vhost_user_gpu_chr_read(void *opaque)
-     msg->flags = flags;
-     msg->size = size;
+     struct virtio_gpu_cmd_submit cs;
++    size_t iov_len;
+     void *buf;
+     size_t s;
  
-+    if (size < vhost_user_gpu_min_payload_size(request)) {
-+        error_report("vhost-user-gpu: message %d payload too small", request);
-+        goto end;
+     VIRTIO_GPU_FILL_CMD(cs);
+     trace_virtio_gpu_cmd_ctx_submit(cs.hdr.ctx_id, cs.size);
+ 
++    iov_len = iov_size(cmd->elem.out_sg, cmd->elem.out_num);
++    if (cs.size == 0 || iov_len < sizeof(cs) ||
++        cs.size > iov_len - sizeof(cs)) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: size out of range (%u/%zu)",
++                      __func__, cs.size, iov_len);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++        return;
 +    }
 +
-     if (request == VHOST_USER_GPU_CURSOR_UPDATE ||
-         request == VHOST_USER_GPU_CURSOR_POS ||
-         request == VHOST_USER_GPU_CURSOR_POS_HIDE) {
+     buf = g_malloc(cs.size);
+     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+                    sizeof(cs), buf, cs.size);
 -- 
 2.55.0
 
