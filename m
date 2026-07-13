@@ -4,97 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56CDCC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 17:54:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93D69C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 17:55:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjKr3-0007Iw-N3; Mon, 13 Jul 2026 13:54:11 -0400
+	id 1wjKrn-0007Rm-Mr; Mon, 13 Jul 2026 13:54:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wjKr0-0007Io-DD
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 13:54:06 -0400
+ id 1wjKrm-0007RR-HD
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 13:54:54 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wjKqx-0004f4-Al
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 13:54:05 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1wjKrk-0004j6-Rx
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 13:54:54 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66DF85bY1701330
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 17:54:00 GMT
+ 66DF8Bor1611572
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 17:54:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- CS6FEFXx1rvIdSLicJDciYbvQCGW9gD85N5LeMBi0E0=; b=ik/ocJrjM+UL5c+D
- R7wQYY1ziNXEbLBGQDbfUm6t+4kewBNN22dFQwu9Xx81E0fwFConvZ4Doe9T9k9M
- Q9jExpbtD8f5zqMAuktFlBzewjydYvFH7ZXglI34Q4EFn6dCwJF9EFY83BUv137x
- C6B8okWytmqn8iPrE3hX9WPUZ1OZa1lw+e7JZpBmAOam9Q1m4KM5yztfYYsTom4P
- UD9G33adJQtggMy0IeuXChoizfjIs3RswbQmvRRdkz946yRgOy2wpD0myl4nyTgE
- 4Y7+cUbNTOkRxRQlKNuI7FatMxzCyvp4ycLWpRQxzyUW9C/4ervpUJDda/R5oyWh
- kL3SUw==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcwk3hyrd-1
+ XudDL8/DOlqgEpdtbTXMimingHtN7ympSyhXeOtKK1U=; b=PZWD44XpZP+VLv4C
+ gBMqaAUiQQHZ3tOKyf3uY9o6FT7wlF4Z7KfS+jcVQmEmjnmj+UxLTQuYeabGEpYy
+ zEjYj04vUj6GQWrsZPTYFYGDSrfJirb6HWgNzO1DkT2MaULG+CmmLcu9WHTqrLtZ
+ RyaBtZIa3SsM4IIjCEJuF6q/He2AUXE1tGwVGV4PBoLVbGczWRNTrp+GqEKOQWHq
+ XxCvfM1H05mb4zIAmJg/h6VPoyCmKgRjcVcM02048bXsglXPTGDvfol9QKQ3ZAPP
+ 2nJ1BirzZNdz3L5ZrDlZFuWsebF3pOS9FfB50hnNSZ+STKI4uQjzvrLqq72Sx83E
+ a9+CBA==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
+ [209.85.210.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcw4qt3m7-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 17:53:59 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-c85798977dcso2259794a12.0
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 10:53:59 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 17:54:51 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id
+ d2e1a72fcca58-848544a8496so148354b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 10:54:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783965239; x=1784570039; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1783965291; x=1784570091; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=CS6FEFXx1rvIdSLicJDciYbvQCGW9gD85N5LeMBi0E0=;
- b=EwF/zD5HLn8AMxo7s/F0AMYKoJ0VeOJbVYsHCCxuz0//O1zcO0DFUFC4O1JsP/SjAO
- gOjYB7VmCGboTcg6Y3aioWhJl4rP7E9OoBxLIusrzNqtJZhcDbRqzpyJ7Har/ctPkpea
- ADJiNZH0Hq68122Gy9RHfComquWQBVOqBlNSLkj2AW52RFXZqKSeWbHC04jHrEeVWrpO
- ukIzCpanLpOzoiPLQckS9z0dqdMbRtJiMV9TXv0ODpXR9+51Nkd5wbZLQNK6Jq3q0ruP
- CQIWoGXw5vgMZGi2PMebUpe6OC4ZjrmEodcrdtO7qQ6iaTAaTUTAdEaxWuFCsZq2JHvl
- b0IQ==
+ bh=XudDL8/DOlqgEpdtbTXMimingHtN7ympSyhXeOtKK1U=;
+ b=YmWi/hY8tIrFI6GTmiN5SSa1WzBFyi/2YB7nq6PIxd0HJeOtiyDnU//LaztaXKxc3M
+ UNSlHi3vaGGRShNbri+c1X0CI9votC8bLUiJYffgPfYY9LNzetfIo8irEr+bJZYvcwnw
+ O1CXLKP89bcGdJ7xMX8nNl79+M6regalZr4qIGi9hQnUirebYkZPd/pINPxBAorSGR69
+ bct02/cn2A95/h+4ffzqguKrrII629h2YSBuPcVhDhgrABuO7JwUzIqDCwtD2PnVB55q
+ cAF2mXOdvFnMN7g4Ny+ljN6LRvxJJmZw3qSv1mVvHty5Nup/6nAanZdYVmyqO+BevPm1
+ Cpbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783965239; x=1784570039;
+ d=1e100.net; s=20251104; t=1783965291; x=1784570091;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=CS6FEFXx1rvIdSLicJDciYbvQCGW9gD85N5LeMBi0E0=;
- b=Ndkj/ZtikG+HOvkxFsS6a6bznpyPn4/Yn0aXr0hks3fwiCzf3bfzNWbYHNAAmarPSa
- r920NpRevwTwSIGrpp1g6O0gZ0I/zjmS7YVnyAsebhtFzEmo1PbXzRudiVPk4KPJwJBb
- /wssPBffoZiAGNgjCQ1pzx88G97qJnqnIECl8u+HNNafKyi0oEJUZvCKx3z+g8bGn46S
- OWItQ+WB3Ih7TmV+N5yd5izJI//ec6STVnkOPC7RRnKAkybowiPdywkTG4VBthPnA0pG
- 0fkuaWQmfdxwzRrsByGCK9UViDD7Rvmc8RJnets6mUzJ2+p3EO9UPRpWboMrgRwqjcVO
- 735Q==
+ bh=XudDL8/DOlqgEpdtbTXMimingHtN7ympSyhXeOtKK1U=;
+ b=F2wnNkAbrZjuSgf8uqel43W/N/qi1b5Gdal6TrCNi+ukf8UsHLn6jLGbqmNy1fRYh7
+ T8BO4nwlbu46jm/13R0kpE3y2uDwJrdgvAJFIfDbX8IllD1XRCxQ7o6xi8ERGZxjZXRq
+ ZepZ1gBMjGCw1DfcIhCyF1uB1cxIBECf6zDruItGanjGVHxFJH9zX5Db7AIX2LoMSPAM
+ zXiTJhAW0NEmELY6/lYY3whlhMKAM+MNNDdEeurFThU8AdfhTSt9ZbfVr8EhRAo43wdS
+ 1gd3Ex1vUdwBG44MmgbiuBPvk8P66Ko80vz2VvqqrhIAw46ntCV2uz1SVfilRSNjU6KV
+ W24A==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rrnvmw9wjmv+oarTlO75uPAfRgAqQU6AsVYA24nSntTRZOmNuQ70s/kDy0PapGfVfENmR2LqV8AymTs@nongnu.org
-X-Gm-Message-State: AOJu0YzyKXYzS0LvcyOVDPIdhUBo64JTPxd/K9pNQdENPC3rXm5J93D4
- Js/nY2i6mHcCfqAAONb3AVZ8VMFrP+M76ZOlfcNCALMIY46To4IcDKP7SCGM9XgFa/ihwSsA0q4
- wLv7O31WhZJikqFRF8JlfqqdWE847OQps4KJbm7xI5fOR26a+u+BUYp+Zkg==
-X-Gm-Gg: AfdE7clDM91Vlco+5K1L1S0gkDQn9Weubtm9G+Csl3A3HvqJKvgGrnwr6479pqHaROW
- CmF/5fKkWfgYFJ7fNeqbYdXoIBA0Qo90yr1aFELJHuAwlJoORuibBPYs1GjaaFhELPnGSyCg2EU
- atn1BCQPC55rsdbrSSC0U37a/07tqt/TtxliqMllnYxngGituwVD32qUUoCGaSP4joGPe/rDEaa
- Ej+KBAERsIYoS+Lt5gACw/tVWIFQldkOipDbACRaXADEF0yY2oK1DbCc1NkRWaoXegpcKjWKDJY
- 1iG+inZmRRFe+4KOBPNmveyT4TTRA1kS+1yVJy21u9bEqYbC3jKLJMi51XWixSErU9txwDpjMdI
- NQLZSb3l49kwuqLlTI13tHELChLCBVQBVpTT4McepA5Q+mQnzsYFAENZCADTbZoixE4Z7m4mhRj
- zelRY=
-X-Received: by 2002:a05:6a21:7a43:b0:3c0:9c19:65b4 with SMTP id
- adf61e73a8af0-3c110a7b347mr11045893637.76.1783965239082; 
- Mon, 13 Jul 2026 10:53:59 -0700 (PDT)
-X-Received: by 2002:a05:6a21:7a43:b0:3c0:9c19:65b4 with SMTP id
- adf61e73a8af0-3c110a7b347mr11045864637.76.1783965238592; 
- Mon, 13 Jul 2026 10:53:58 -0700 (PDT)
+ AHgh+RoVQ3QJLiOgekDU+6vnvAbkugPTJ3PrEyjV1BORnge4DyHhgAm3NR2FnIUDMKmzOiFkbHoLX8Izsdul@nongnu.org
+X-Gm-Message-State: AOJu0Yypd7IWvMJLY0xyshBUO6RVtg8ZKttz2CHoAebKNWf1LAma3GRX
+ ArdCe6EPIwryfwJfz1YJFfUGjNVtoqp6zWDwGAx5SafozISikilwM3RJt51KvzWVCzVHEyIeDhQ
+ v6Mf9Z7jdxMvRo2fyPjO7VfpdEMTiQnkVf93oMZ45Zp/F0fezC8iLk1Ns/w==
+X-Gm-Gg: AfdE7clr2arm1EaWRKWieLSZwwx9vLBLWPumhCscJuoAQYAwDZdqtwS6rku6riV4g03
+ buQxtznV3Vza3F+zYnleoLms1vNbm0HWbs4E2mW7rL9cx0n7jd+KlBsgs7RmVSml7Deh10JO6jH
+ 7IUA9RaxYih2pYSQi0Y0/A80XK8U79dUUP6XthbDdHkEBi0w73WGQWuu3oC5ngwZgjyESknSg6p
+ HSktTaQo5F2XEw+2T1NoGM+SvdlMoeJfaPv1CidCIeNlegE2CmBYZqftt14dRFXdwTUqroUa+Xm
+ TumPSojv51tkDA2Tk0MFJIb/FhRrXm0d7LxEzusONszYxzhLHw6jDGyz/lrWcYrHoI+6c4MmFww
+ e2YrSkbaosbZyLVSjcxqYNmOyCnpFXnNs8zAg6EW2FwvN1BqWgHdS1cOMAbH/ZRsymsu/xqRm6R
+ 2rGvk=
+X-Received: by 2002:a05:6a21:458f:b0:3c0:9c19:b277 with SMTP id
+ adf61e73a8af0-3c110bd5d17mr8803827637.69.1783965290718; 
+ Mon, 13 Jul 2026 10:54:50 -0700 (PDT)
+X-Received: by 2002:a05:6a21:458f:b0:3c0:9c19:b277 with SMTP id
+ adf61e73a8af0-3c110bd5d17mr8803801637.69.1783965290277; 
+ Mon, 13 Jul 2026 10:54:50 -0700 (PDT)
 Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13b659d8da9sm123735548c88.14.2026.07.13.10.53.57
+ a92af1059eb24-13b987fc629sm26506426c88.0.2026.07.13.10.54.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Jul 2026 10:53:58 -0700 (PDT)
-Message-ID: <69924eee-ba12-4a3e-baff-8ecb86d1ce77@oss.qualcomm.com>
-Date: Mon, 13 Jul 2026 10:53:56 -0700
+ Mon, 13 Jul 2026 10:54:49 -0700 (PDT)
+Message-ID: <a9725e6d-8d2d-483a-8cc5-1b80e845c3a9@oss.qualcomm.com>
+Date: Mon, 13 Jul 2026 10:54:48 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 2/2] docs/about/emulation: document the dlcall plugin
+Subject: Re: [PATCH v12 1/2] contrib/plugins: add a minimal dlcall plugin
 To: Ziyang Zhang <functioner@sjtu.edu.cn>, qemu-devel <qemu-devel@nongnu.org>
 Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
  Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
@@ -102,41 +102,38 @@ Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
  Richard Henderson <richard.henderson@linaro.org>,
  Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
  Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
-References: <20260710212601.583352-1-functioner@sjtu.edu.cn>
- <20260710212601.583352-3-functioner@sjtu.edu.cn>
- <990f11f5-c8fd-4cf6-b186-180e24452ff3@oss.qualcomm.com>
- <5a303ce5-cb6f-43b9-857f-39cffc8c7d67@sjtu.edu.cn>
- <8c2aa5fe-026e-45c2-a908-5f6c245b2993@oss.qualcomm.com>
- <2c57e188-b9f5-45b9-90b3-81a3d128254a@sjtu.edu.cn>
+References: <20260711094523.622997-1-functioner@sjtu.edu.cn>
+ <20260711094523.622997-2-functioner@sjtu.edu.cn>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <2c57e188-b9f5-45b9-90b3-81a3d128254a@sjtu.edu.cn>
+In-Reply-To: <20260711094523.622997-2-functioner@sjtu.edu.cn>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: Bh8z7mvWSIjRazWLpf2WyP_y1JCgj9sg
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDE4NiBTYWx0ZWRfX2V0XrRV32kH5
- UWQZdboOuRl++sj+fqhtJG3HN3SIB1KbnZVjE3Kt2oaxo4/BAio0UX2AEJV7FkIwazPCsuVj6u9
- rpdHu6Fm8YnwLZfleZ+ArSWUGvYOEo0=
-X-Authority-Analysis: v=2.4 cv=e6c2j6p/ c=1 sm=1 tr=0 ts=6a552637 cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDE4NiBTYWx0ZWRfX9bbIDank4MeT
+ dY2Pt0U6qO45j/neS4AtK1a9fvs35aeXdwakojZMnc5+zwxHDwEuel/BGJSKGze2J13pyrCcSD+
+ SCfLe6lvLo/7xgoo537njESaanZ7xRVILpzsE6wH9MqMZVdAQxKFD8+FrxEntRNF4sEQr3M5ShG
+ FIs6H+sYDAs3S0VPSgqK1R7Pxl7jUAP8zaAjkRdeDFAt03XnVxlYehEAWCVqmqODiQXHfvtik4D
+ CPZEav7TjXr+amXuQKk9opebuc8koATI18W/aKYI/rPttSm2ITK9kO/eTGSBd4KUdBhT+xk9LPm
+ HRwbLePRhXsXcYId/H68ywrQDYRr+nm4+2t/pivTcGRa8PBKlI1WjintV9AQMHqlOrvuYeU9vWr
+ nacNDK/YOcXV+b7NBIO5Uz+Yd9UqZs1ABaTDmm14OM+1OHf9GE7dmXDAHBLscxHz5hOOz35VbS2
+ I9LBTZhzg54GrqS32CA==
+X-Authority-Analysis: v=2.4 cv=HJrz0Itv c=1 sm=1 tr=0 ts=6a55266b cx=c_pps
+ a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=xwSr5YbGb3vt4MF34V0A:9 a=QEXdDO2ut3YA:10 a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDE4NiBTYWx0ZWRfX5qMuX/7xiX33
- JgIp3GqEXOy2ZIf2xnPhbscgTIB4SjZd+YAgIKBX0ciIXjlCUZAxMrIQsptKzn3suxr7OAlaYbF
- ituZ/zZ62/6tluQy7nkvNOnQwP8Kp8aSyQqbTWZyavBdRtK+LgokKeXriHAxzp9Q5EknIsD3JBO
- 6dr++TUS9E0WCFbjvnWBBOt/jY+qcntfT3XsUYxqnfqHbVm3ovRiP0Ug9SZL26/C3K2pnWG6EjC
- oXYHs73EFyQJMy3rfdDN8rRk/pC4gwVCeGfkLJpMrhoEhuqhidNQws10Q35KT5aA/ro+boMk5Bp
- wf/HOrvIz2BzabDiBtD1cyF7TPSQaZ5eTci5WyKarUV1mUNj5yN6Dm2E/x0hoUcYgZuP2c/xzAy
- ySOpwutfWviSleT7hTh8bymwiVyNLSYYfn1QpyjMACnzfg2whwlW5V50ZonThbvHnu4biyEoUht
- ui3txUPGQLvabjjH+sQ==
-X-Proofpoint-GUID: Bh8z7mvWSIjRazWLpf2WyP_y1JCgj9sg
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=Lx1EvxgrAAAA:8 a=EUspDBNiAAAA:8 a=tWNmVKoxF6QGbF0OZH8A:9 a=QEXdDO2ut3YA:10
+ a=OpyuDcXvxspvyRM73sMx:22 a=ZFi1QaP_tuf8dODdgmj-:22
+X-Proofpoint-GUID: sMDA3yWTTjnoDFd-7SXSetUxTajth55e
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDE4NiBTYWx0ZWRfXzZhUdKnmjIFT
+ Q8iH+qWHNuj3qk/GfFSLw/tahDy7eESI8QgfIBsImzlUuTLU3F4lgrGPdTPcNX+6iI7sLBuzFiF
+ eAahpgRF6QOwQipiwBV+oZJX3n9Ehdw=
+X-Proofpoint-ORIG-GUID: sMDA3yWTTjnoDFd-7SXSetUxTajth55e
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-13_04,2026-07-10_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 phishscore=0 lowpriorityscore=0 spamscore=0
- adultscore=0 malwarescore=0 impostorscore=0 suspectscore=0 bulkscore=0
+ spamscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0 adultscore=0
+ clxscore=1015 malwarescore=0 priorityscore=1501 suspectscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607130186
 Received-SPF: pass client-ip=205.220.168.131;
@@ -164,85 +161,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/13/2026 9:34 AM, Ziyang Zhang wrote:
-> On Mon, 13 Jul 2026 08:31:18 -0700, Pierrick Bouvier wrote:
->> The problem is that if that the guest program, or the host library (host
->> libhello) may depend on libstdc++. If they do and if they depend on a
->> (newer) symbol not present in lorelei libstdc++, we break ABI. Same goes
->> for libgcc.
->>
->> By not doing this, you'll be forced to provide a lorelei devkit
->> everytime a new libstdc++ is published, or a distribution updates its
->> gcc.
->>
->> The only solution is to embed libstd++ and libgcc statically, or rely on
->> host libraries. If you choose the second option, you know have the
->> opposite problem. So I think the only way to solve it is really static
->> linking, even if it will slightly increase binaries size.
->>
+On 7/11/2026 2:45 AM, Ziyang Zhang wrote:
+> Add a minimal dlcall plugin that lets the guest invoke host functions
+> through magic system calls. The plugin registers a vCPU syscall filter
+> callback that intercepts a reserved syscall number and dispatches a set
+> of pass-through operations: querying host attributes, loading and freeing
+> shared libraries, resolving symbols, retrieving the last library error,
+> and invoking a host function through a common interface.
 > 
-> The devkit already ships libstdc++ and libgcc anyway: its own clang/
-> LoreTLC link them dynamically, and we bundle them so the toolchain even
-> starts. So bundling libstdc++ for the thunk flow adds no new dependency,
-> it just reuses one the devkit must carry. Static-linking the thunks
-> wouldn't make the devkit any smaller or more self-contained either,
-> since clang still needs the dynamic libstdc++; we'd only be adding
-> static copies on top of it.
->
-
-There is a difference between the toolchain dependencies, and thunks
-dependency. For the first one, it's perfectly find to provide libstdc++,
-for the second, it can create conflicts at runtime that may be very hard
-to diagnose and solve.
-
-> On the ABI risk itself: libstdc++ keeps a backward-compatible ABI, and
-> the copy we bundle is recent, so a thunked host library only breaks if
-> it was built against a strictly newer libstdc++ and references a new
-> symbol. Even then it needs no new devkit, because the resolution order
-> is the integrator's to choose. On a host newer than our bundle, putting
-> the system libstdc++ ahead of the devkit's on LD_LIBRARY_PATH lets the
-> host library bind the newest one, while clang and the Lorelei runtime
-> keep working against it by backward compatibility. So a gcc update on
-> the host doesn't force us to reship.
->
-
-Sure can choose indeed. However, he has to find where such libraries are
-located on his system, and prepend that to LD_LIBRARY_PATH. Not the most
-user-friendly thing to guess and debug IMHO.
-
-> There's also an active reason not to static-link. Both the Lorelei
-> runtime and the generated thunk libraries depend on libstdc++. If we
-> statically link libstdc++ into a thunk while the host library it
-> dispatches to links the system libstdc++ dynamically, the process ends
-> up with two libstdc++ copies on the host side, right across the boundary
-> where C++ objects and exceptions pass between the thunk and the real
-> library. That can break:
+> The magic syscall number defaults to 4096 and can be overridden at load
+> time with the "syscall_num=N" argument; values low enough to clash with a
+> real syscall are rejected.
 > 
-> - Exceptions: one thrown in the host library may not be caught in the
-> thunk. The two copies have different std::type_info for the same type,
-> so the match fails and it hits std::terminate.
-> - dynamic_cast / typeid across the boundary: they assume a single
-> type_info per type, so they can start returning null or misidentifying
-> types.
-> - Duplicated global state: two sets of the iostream objects, the locale/
-> facets, and the exception emergency buffer.
->
-
-That's a good point, but does lorelei even provide a solution for that?
-I guess that exception raised from an host library and sent back to
-guest binary with target specific types will not result in what is
-expected at the moment.
-
-> Based on the above reasons, I prefer to do that than statically link and
-> grow the big artifact. Does that hold for you?
->
-
-Ok.
-
-> Thanks,
-> Ziyang Zhang
+> Co-authored-by: Kailiang Xu <xukl2019@sjtu.edu.cn>
+> Co-authored-by: Mingyuan Xia <xiamy@ultrarisc.com>
+> Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
+> ---
+>  contrib/plugins/dlcall.c    | 248 ++++++++++++++++++++++++++++++++++++
+>  contrib/plugins/meson.build |   5 +
+>  2 files changed, 253 insertions(+)
+>  create mode 100644 contrib/plugins/dlcall.c
 > 
 
-Regards,
-Pierrick
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
