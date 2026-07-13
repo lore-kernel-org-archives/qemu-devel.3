@@ -4,112 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FC85C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 00:44:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2856EC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 00:45:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wj4m1-0001JB-5W; Sun, 12 Jul 2026 20:43:53 -0400
+	id 1wj4mk-0001rA-T6; Sun, 12 Jul 2026 20:44:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wj4lz-0001Hw-DU
- for qemu-devel@nongnu.org; Sun, 12 Jul 2026 20:43:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wj4mi-0001qT-Ij; Sun, 12 Jul 2026 20:44:36 -0400
+Received: from fhigh-b1-smtp.messagingengine.com ([202.12.124.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wj4lx-0004oe-Lu
- for qemu-devel@nongnu.org; Sun, 12 Jul 2026 20:43:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783903428;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ZcmQ/kaPfeKQ7YJOUmwuqtIspVQgNQK5b+PB69aVoBY=;
- b=Q+nKWTpwVL4dGfJgpPQZrvo+3eVuvMDOY+ELfR0qvsHzxtewgEyJ0LZ9TQMz8iAmmGBlWw
- SLAfvDqmWknJ2+Fd2r4+KLsoNIGikW0Ab3n/XJAanT5Nat6anWl+8cq4Kf6RgeqfNRmi/N
- jU8RRGgSpEIjACDEGgyF4xske2/BPxM=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-648-Z5biyVTuOWap57p2GeOWbA-1; Sun, 12 Jul 2026 20:43:47 -0400
-X-MC-Unique: Z5biyVTuOWap57p2GeOWbA-1
-X-Mimecast-MFC-AGG-ID: Z5biyVTuOWap57p2GeOWbA_1783903427
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-2ce7dff6253so24174625ad.1
- for <qemu-devel@nongnu.org>; Sun, 12 Jul 2026 17:43:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1783903426; x=1784508226; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=ZcmQ/kaPfeKQ7YJOUmwuqtIspVQgNQK5b+PB69aVoBY=;
- b=cmvpOFWQizQ7rnv28DDB07s+WGtS54YRFKJzBIPmT1HFWVoeQ6JDUzrsYs/JzkL1Lu
- pUO+rq2qFnJbUDkIeZTFjmUl9s5LFRZTJ47FqzMGy2mLlbYGhuWHbU1Ud2fMEnNDJFOr
- /yHJUBQyntaOOKEoNR8bcf2R193QofNTPOP/Sk+P1HDDULHm78t+0uHi7Y8hQzv55o60
- tdsGyHqtaujaVmO20Xd7yq0adG3TII2psxXE0dZAoLIES2yV7sTXXXXkWPFDRIGUZKUx
- 5oDnAmyLnN2pJWRZtFYKHZU0DISNrBjSNAEYDE+IUGaoN9Vx/2TEEVdMSDlkmtpfn8CR
- RrIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783903426; x=1784508226;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ZcmQ/kaPfeKQ7YJOUmwuqtIspVQgNQK5b+PB69aVoBY=;
- b=BJDuj6b3gjIqXeJlrcDgND28hipgGKliCQr1qStn88RasO9c67z0c7/q8q0K2fBXI9
- C1N48NmZPn4bWcnHfXUpFdNABr0iYlpbihLpEM8SPi5to0HHR2xhe3QWfqoI/vUWSOoi
- g7uM1M6PRCdN2YAKoGtRQ6xxAWvrF4CA0LytKFpLupiEaVR0mRl2BuvDg8EdRlq08atm
- hJbpizoJd4B0hToMMKiqNfTiaNmA91akJQl7cQZYQJDMGZfnc99z7R7JjEjYy8ddk5sy
- ynTU8r4vmMCnnhAzX98fLjjlaAsUAyKsfUfB3jbragGb/r9uO0SsHkXQwFsmS94mqHUf
- hp0g==
-X-Gm-Message-State: AOJu0YyqmwzBjPHVylBVAxBSV34asJygx/HwdHDBTutAGNZfqh0A96UE
- c6BWfCfH5lEX+y0whlQk2VlH7VdJKlklfoLsZ22gjw9J0ChtrFvdzoRUTAY0pwUDEG+J4vqB10g
- 6NkcVlH0PcfSlKIpQaAzZOv8FL4byiFO1auRBP2pgoi8RRJP/6GWNIyWq
-X-Gm-Gg: AfdE7ckv9VF8qyJICTUWIutPKCehzM4PPklJNeC0efQKTPA+YCn6dweiCa6musFgvCj
- CJxQXwyNEIhlgWWVGwWmiFKqMPiCwcv3Pto2TWwCPP+Gs9d0BK0uRfPTcIWo/Ebu0yzZqUsztA5
- p1aeWNVKo0pAhDtRHlnsp+YdpqF8qyf2Dg8ITHJIIX8rsSPH1j4bcZGUXryzawv6kXf6riQirPC
- rQPCJZmWzaNP7ZBWZm4HcwMfv5GcqurrvXYBn+TCATuOqwpj6B0dLJD6CIDuFwkqtsY9aleegSx
- nMaLkhSWQwmGcoYA8fJGaaQmsBW0IREdvrl311nl3lRnpofJQIpq0vAkFJPLfwdRXygCG+n71cA
- Vn+bTx5WAmeLsS16KtdupWwDzMNZmlbtZCQMIfJgnWGCH1JCLATK/tQ==
-X-Received: by 2002:a17:90b:2248:b0:37f:fd70:6790 with SMTP id
- 98e67ed59e1d1-38dc81c1b09mr5083870a91.9.1783903426260; 
- Sun, 12 Jul 2026 17:43:46 -0700 (PDT)
-X-Received: by 2002:a17:90b:2248:b0:37f:fd70:6790 with SMTP id
- 98e67ed59e1d1-38dc81c1b09mr5083849a91.9.1783903425797; 
- Sun, 12 Jul 2026 17:43:45 -0700 (PDT)
-Received: from [192.168.68.51] (n175-34-8-244.mrk21.qld.optusnet.com.au.
- [175.34.8.244]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38d2fdd777csm3075407a91.1.2026.07.12.17.43.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 12 Jul 2026 17:43:45 -0700 (PDT)
-Message-ID: <3ac5a5b7-e41d-499e-a4d2-e9a5a78f8c0c@redhat.com>
-Date: Mon, 13 Jul 2026 10:43:37 +1000
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wj4mg-0004pX-SM; Sun, 12 Jul 2026 20:44:36 -0400
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 6A98E7A006D;
+ Sun, 12 Jul 2026 20:44:33 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-01.internal (MEProxy); Sun, 12 Jul 2026 20:44:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+ t=1783903473; x=1783989873; bh=7ljbM1Tq11CuMRhFo9yPphc6IGE1YEp4
+ 7Oyg45UL9aE=; b=c5Tz/bn6GTYHSypAMCuy5d7wTKYNgNZvBJjQfND9MlSPy1Mf
+ poTT07tQCUsgZeNY02gSrk18Wc5tR7kakiOdiTVcsSeMoXQXF7myRPuR4mTXwzV+
+ npamw1omrCaEDnHDYkHq+NYJNIMTmSXeLHXHcT0oiL79Sr1Qqn4eM/eQhHYDCr1d
+ bGPZQ8F7y2NoUSZowuC5En4pcpof4T5pyKPc3SXlL1bfj97uGikQqRP4KzCkWbpg
+ hJ3LjGPU92BIVn/+X+6QfpmhTh09PWcZHyRLyRj5jF8euvEbTc7wbt80Bx+6l8hP
+ 81M38LrvVNZ+/FNjqEIs5fszXCiQUhDsPMSjZw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783903473; x=
+ 1783989873; bh=7ljbM1Tq11CuMRhFo9yPphc6IGE1YEp47Oyg45UL9aE=; b=L
+ p6l8dGby5ym/1fQLj/G2FLrHyjEeOdV3CWE6xszQoaS9tnkkDJ9lgOKsnu/BnlbC
+ LAg5+gdCBdPp9OUUdyFo8CjfAejldaYYJHvwbxf8dztFalav4zTHYp8a+kE7o5zU
+ wphBUbTi9l6QhYvHC1j/UfiCB+RVBmVq+7j9jbmUSTySve97qCdUzchHiz/0NYT9
+ OquQvhNUSFm2OZM0xU2putpXh429Gb7SFvgFpSeTaSempcYxtCPn66LOUGoZIJVE
+ dW5VBvQ5Rrtjp38PqVoCKA/eXDWIipRq0iaBE9OKEG5i/veGytZC394qLrW2vBay
+ fLYllqT1NrdrFLLmH7IKQ==
+X-ME-Sender: <xms:8DRUaqNdSyeihQikh7Ud1Dkp6KDVynotMoJ2aeSzNnTlpy6reqMeig>
+ <xme:8DRUasqR7BSD0F4s9jGO9bLsu3FwE2G3dKMuy21YBiXIri0msoTvu7fIKCgJIR_K6
+ HvXZuwCQsgD620MvSY3PQsGvT1ciZiCvFiy3idNkWzVdBhzpGN86_Y>
+X-ME-Received: <xmr:8DRUarHpsE7VUpycw3sOV0DdLfev_hiRWZ2Pv8yCxZDjz-cIp8ntuZU8TDj4-WM9_rKb7LR8c0iEHcKCe2kzJ-jP_6o>
+X-ME-Proxy-Cause: dmFkZTGY6qCnpNnF6r1vy2X7vhAtoK3BUOlBzzxMzKrBfhSPLZeZQWStPXnvoGm5AMXVcA
+ NHtdGoktbqWtiLuUP/NNziVDty+J9YUoeatGWJqzPKSjEadKGCtDq4V8K6YxS6dizflpjC
+ /F76Y3ScBU3AWZ1NHvxVQwcKZ1Dk5MUWDKeouyi5QQH4453/gmz+hEmFGqhRv+5zKDxX1a
+ vEGS8b0/o424W8cGimYMaQs75YUqO2ZMRDgExZvHfs2mYFGNINdFkG5q25IezavukwgpA8
+ dXADL5JOo0ASufJkaBqRe/ZBvATLZaahdygu0EnXH6TunkVhTp0BLOWV5l1XZ9fyPldkuM
+ FsAu84bN5f/q1uselsvux5oribVP9DGFGPeBxr2jB/lQnNdIn+pYeH3McjwFxqKRcERhHe
+ Wpy/l49Q1fsEYmrANWgW4lHIYuZa6dbY5MyCRVGtGusDEUleJYIvhf/lb+mKnYS1i5pT5T
+ DOPWfTUt9EcDVZgGlU2M1m3tR9GPrUPPPmJoK6TYcHwjHI4yBrE0btvnF1orZ9DSSnucoF
+ qHhsN/AZ0bwKbJiXCTafOYbm4xR2ALsF/GJ4mWksCp5owAJd3Nc3dr516XlnM0P1NijkOs
+ ZynbitkpDdi+ATmkOiOaTJA9QgYNNjVb/A9xQ6ZXQCqTBc1niKsPQZlknHjw
+X-ME-Proxy: <xmx:8DRUahr2YURLwUvnWjIDUyyGedbIp2lwtyCHRwQGvtY36zcAlyu2YA>
+ <xmx:8DRUakb0PvMJF6WNxe0tggPw6dbLWY_jfBfstmVQldecJM9OFgNoMw>
+ <xmx:8DRUaqUE_ZQvu346uT1wssUJ0qvwywXIXyPf4BiwTrRA8OGPc5JeVA>
+ <xmx:8DRUat-uCy7JfU1PP0QjFr_cY72Ll5-7skI8MYxVNWSKtoXRQwMl4w>
+ <xmx:8TRUaowZTQ_HFpgoeeh3ra7A59TWfG7XxHowzOrxcYdhpSj4bx8r9GVP>
+Feedback-ID: ifd214418:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 12 Jul 2026 20:44:30 -0400 (EDT)
+Message-ID: <0b6bc61eb4ac1f9ae0189ce172b053f83cd214ff.camel@alistair23.me>
+Subject: Re: [PATCH v1] uftrace: riscv privilege level
+From: Alistair <alistair@alistair23.me>
+To: Yanfeng Liu <yfliu2008@qq.com>, qemu-riscv@nongnu.org
+Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, erdnaxe@crans.org, 
+ pierrick.bouvier@oss.qualcomm.com
+Date: Mon, 13 Jul 2026 10:44:28 +1000
+In-Reply-To: <tencent_E17E8F6494EE130F71527C6BCE481AF33E08@qq.com>
+References: <tencent_E17E8F6494EE130F71527C6BCE481AF33E08@qq.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.2 (by Flathub.org) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v1 08/25] target/arm/kvm: Use kvm_vm_check_extension() where
- necessary
-To: Mathieu Poirier <mathieu.poirier@linaro.org>, berrange@redhat.com,
- kchamart@redhat.com, pierrick.bouvier@oss.qualcomm.com,
- peter.maydell@linaro.org, mst@redhat.com, cohuck@redhat.com,
- pbonzini@redhat.com, eblake@redhat.com, armbru@redhat.com, jpb@kernel.org,
- lorenzo.pieralisi@linaro.org
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvm@vger.kernel.org
-References: <20260707224306.1202330-1-mathieu.poirier@linaro.org>
- <20260707224306.1202330-9-mathieu.poirier@linaro.org>
-Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <20260707224306.1202330-9-mathieu.poirier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: permerror client-ip=170.10.133.124;
- envelope-from=gshan@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=202.12.124.152;
+ envelope-from=alistair@alistair23.me; helo=fhigh-b1-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,73 +106,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/8/26 8:42 AM, Mathieu Poirier wrote:
-> From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> 
-> The Arm KVM code can return different values from KVM_CHECK_EXTENSION
-> depending on the VM type. Use kvm_vm_check_extension() where necessary
-> to ensure we get the right response from KVM.
-> 
-> Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+On Sun, 2026-07-12 at 16:45 +0800, Yanfeng Liu wrote:
+> This adds RiscV virtual user and supervisor privilege levels to
+> uftrace plugin to avoid crashing with H extension guests.
+>=20
+> Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
+
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+
+Alistair
+
 > ---
->   target/arm/kvm.c | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-
-I'm putting a note here so that we won't forget. The following changes are needed
-so that capability KVM_CAP_ARM_NISV_TO_USER won't be enabled for realm guest since
-it has been hidden from the realm guest in (v14) host series.
-
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 3d5e16a21c..4c52ee7e1b 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -623,7 +623,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-          return -EINVAL;
-      }
-  
--    if (kvm_check_extension(s, KVM_CAP_ARM_NISV_TO_USER)) {
-+    if (kvm_vm_check_extension(s, KVM_CAP_ARM_NISV_TO_USER)) {
-          if (kvm_vm_enable_cap(s, KVM_CAP_ARM_NISV_TO_USER, 0)) {
-              error_report("Failed to enable KVM_CAP_ARM_NISV_TO_USER cap");
-          } else {
-
-> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index 6aa1cd04e484..c69b5310c184 100644
-> --- a/target/arm/kvm.c
-> +++ b/target/arm/kvm.c
-> @@ -328,7 +328,7 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
->                                1 << KVM_ARM_VCPU_PTRAUTH_GENERIC);
->       }
->   
-> -    if (kvm_check_extension(kvm_state, KVM_CAP_ARM_PMU_V3)) {
-> +    if (kvm_vm_check_extension(kvm_state, KVM_CAP_ARM_PMU_V3)) {
->           init.features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
->           pmu_supported = true;
->           features |= 1ULL << ARM_FEATURE_PMU;
-> @@ -654,11 +654,11 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
->           }
->       }
->   
-> -    max_hw_wps = kvm_check_extension(s, KVM_CAP_GUEST_DEBUG_HW_WPS);
-> +    max_hw_wps = kvm_vm_check_extension(s, KVM_CAP_GUEST_DEBUG_HW_WPS);
->       hw_watchpoints = g_array_sized_new(true, true,
->                                          sizeof(HWWatchpoint), max_hw_wps);
->   
-> -    max_hw_bps = kvm_check_extension(s, KVM_CAP_GUEST_DEBUG_HW_BPS);
-> +    max_hw_bps = kvm_vm_check_extension(s, KVM_CAP_GUEST_DEBUG_HW_BPS);
->       hw_breakpoints = g_array_sized_new(true, true,
->                                          sizeof(HWBreakpoint), max_hw_bps);
->   
-> @@ -1905,7 +1905,7 @@ void kvm_arm_pvtime_init(ARMCPU *cpu, uint64_t ipa)
->   
->   void kvm_arm_steal_time_finalize(ARMCPU *cpu, Error **errp)
->   {
-> -    bool has_steal_time = kvm_check_extension(kvm_state, KVM_CAP_STEAL_TIME);
-> +    bool has_steal_time = kvm_vm_check_extension(kvm_state, KVM_CAP_STEAL_TIME);
->   
->       if (cpu->kvm_steal_time == ON_OFF_AUTO_AUTO) {
->           if (!has_steal_time || !arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
-
+> =C2=A0contrib/plugins/uftrace.c | 13 ++++++++++---
+> =C2=A01 file changed, 10 insertions(+), 3 deletions(-)
+>=20
+> diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
+> index 9b0a4963ae..063e32220b 100644
+> --- a/contrib/plugins/uftrace.c
+> +++ b/contrib/plugins/uftrace.c
+> @@ -109,6 +109,8 @@ typedef enum {
+> =C2=A0=C2=A0=C2=A0=C2=A0 RISCV64_SUPERVISOR,
+> =C2=A0=C2=A0=C2=A0=C2=A0 RISCV64_RESERVED,
+> =C2=A0=C2=A0=C2=A0=C2=A0 RISCV64_MACHINE,
+> +=C2=A0=C2=A0=C2=A0 RISCV64_VUSER,
+> +=C2=A0=C2=A0=C2=A0 RISCV64_VSUPERVISOR,
+> =C2=A0=C2=A0=C2=A0=C2=A0 RISCV64_PRIVILEGE_LEVEL_MAX,
+> =C2=A0} Riscv64PrivilegeLevel;
+> =C2=A0
+> @@ -153,8 +155,10 @@ static void uftrace_write_map(bool
+> system_emulation)
+> =C2=A0=C2=A0=C2=A0=C2=A0 const char *path =3D "./uftrace.data/sid-0.map";
+> =C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0 if (system_emulation && access(path, F_OK) =3D=
+=3D 0) {
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* do not erase existing map =
+in system emulation, as a
+> custom one might
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * already have been gen=
+erated by uftrace_symbols.py */
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /*
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * do not erase existing=
+ map in system emulation, as a
+> custom one might
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * already have been gen=
+erated by uftrace_symbols.py
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 */
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
+> =C2=A0=C2=A0=C2=A0=C2=A0 }
+> =C2=A0
+> @@ -706,6 +710,8 @@ static const char
+> *riscv64_get_privilege_level_name(uint8_t pl)
+> =C2=A0=C2=A0=C2=A0=C2=A0 case RISCV64_SUPERVISOR: return "Supervisor";
+> =C2=A0=C2=A0=C2=A0=C2=A0 case RISCV64_RESERVED: return "Unknown";
+> =C2=A0=C2=A0=C2=A0=C2=A0 case RISCV64_MACHINE: return "Machine";
+> +=C2=A0=C2=A0=C2=A0 case RISCV64_VUSER: return "VUser";
+> +=C2=A0=C2=A0=C2=A0 case RISCV64_VSUPERVISOR: return "VSupervisor";
+> =C2=A0=C2=A0=C2=A0=C2=A0 default:
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 g_assert_not_reached();
+> =C2=A0=C2=A0=C2=A0=C2=A0 }
+> @@ -986,7 +992,8 @@ QEMU_PLUGIN_EXPORT int
+> qemu_plugin_install(qemu_plugin_id_t id,
+> =C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0 score =3D qemu_plugin_scoreboard_new(sizeof(Cpu)=
+);
+> =C2=A0=C2=A0=C2=A0=C2=A0 qemu_plugin_register_vcpu_init_cb(id, vcpu_init,=
+ NULL);
+> -=C2=A0=C2=A0=C2=A0 qemu_plugin_register_atexit_cb(id, at_exit, (void *) =
+info-
+> >system_emulation);
+> +=C2=A0=C2=A0=C2=A0 qemu_plugin_register_atexit_cb(id, at_exit,
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (void *) info->sy=
+stem_emulation);
+> =C2=A0=C2=A0=C2=A0=C2=A0 qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_t=
+b_trans, NULL);
+> =C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0 return 0;
 
