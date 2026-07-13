@@ -4,114 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37674C44501
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 07:16:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AB01C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 07:20:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjAto-0001iv-1U; Mon, 13 Jul 2026 03:16:20 -0400
+	id 1wjAxN-0002J7-MF; Mon, 13 Jul 2026 03:20:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wjAtm-0001i2-89
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 03:16:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wjAxM-0002Ir-5b
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 03:20:00 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wjAtk-00087w-DL
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 03:16:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783926975;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=0K03lVwcJ5+dIuuvpDGtvoD8RHBphbmWnFeGuzmS9yY=;
- b=d0NGXopfUjIzRIx7CY1ZWjnlfxBJYWWOs3baVZUdebEvRyC8rLvG14bjJ5tKWQ+kBAEPge
- pFGFlM1qa3izrcPFYxUkhl8MW8aBxeHUbVu5IehNCO6C3xKqykVgMUhuEBnZrxqdrRD6v+
- QgKHqxyOIgqF3cN0E3x+QcZSSDPQexM=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-56-9cm3cpYlMgmjqx5ZP4ouWg-1; Mon, 13 Jul 2026 03:16:13 -0400
-X-MC-Unique: 9cm3cpYlMgmjqx5ZP4ouWg-1
-X-Mimecast-MFC-AGG-ID: 9cm3cpYlMgmjqx5ZP4ouWg_1783926973
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-47f3e6cc5c4so708806f8f.3
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 00:16:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wjAxH-0008S0-Ct
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 03:19:58 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66D6Nu15568057
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 07:19:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 6ERFB8oxOn2Uo4ck1nsBITHX8wsLlxjU1fYVMhozEz8=; b=cuBJkwp+gYPngkq4
+ tHjUtvmXnHznkPLE2HGD397SO4jfryvbm6hsruSziIRs0Q4SA5lY5saMyVLEayzW
+ n3i3dg/ApOn868ftOEIajPGLVQzY3dl6ygRz/UW4yOsY593j6JOMv2GvtaEQrjWB
+ b9cetJPoZG7x4EzfRRuCMBXeecYkpfWuW3FG7UN1LMjj+SJaXpCpcLtTnKZkzhpn
+ e9yVKquldRTK2imljLSuKd/W3RHvdLO2xxwtVFEk6svXItJoGsTHRqe4YQzeWTYj
+ rNtqSzyb+IFBJ+Cq6N+cOtj9xgJO67sbAvl+F4x6+cXjlUOYlbWz3d+p5KS6wCk6
+ i5BTRQ==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fbe914x79-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 07:19:52 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-51c1a9764f0so46923991cf.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 00:19:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1783926972; x=1784531772; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=0K03lVwcJ5+dIuuvpDGtvoD8RHBphbmWnFeGuzmS9yY=;
- b=UmUpdsdLKHs7tTE28U2P5gFPPcXyLTM7vU5UwtXyMN707mXdwHQo2EOdhmPOVQKK3C
- ZROCkd+rLITFkXrj3tQdmvviAEQoFLwF/DF9oaF3yxkZbMdcYm6Sd80rTp126SFBV8iA
- ktNMJpGYFK2YpXvTtMvdvoGDvU9ajyVxBkxzxBlzXu6enY5R+5aCz/MBWC1wz8cyOMbO
- qSzjl9aQ87QVvA6XFcukrS7zkGTAd4NMFNzh1Otj6g6Xz32v8uQYtbc4iJ9I6ZHl5eUG
- yHdD7S/XNUbR2QKspGArQ+2PaJE7fvFJXouNjp/CaB2EDswz/fO/17iKXJsk7/6Dv9SE
- 6ztw==
+ d=oss.qualcomm.com; s=google; t=1783927192; x=1784531992; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=6ERFB8oxOn2Uo4ck1nsBITHX8wsLlxjU1fYVMhozEz8=;
+ b=i40paQWoCLs0DokX3sTNumak0eBgQWIvg/BBaDHDcnLyu9UUXE4iWjaKQcRhHzVJ+9
+ 0hj/UVV/6yR8oDZ25ntHFqQOFqIDncjCPphlBBgiSf7gZsamuwYys2bfz6YHAgz1IFo5
+ tcxiwZ5AxJ4rMbaKP/dUGiTtDkAS+2YYXvM5N0FqaXh2ilM8qo0MJyS9WTxCj9jjGHMC
+ NQV284oXrZoKZH1bCh6YKQbGCmtLHlD+30yMzTumsq+RmoTpcA/LD9CdKshadcBOY6OE
+ 9Ei1J426YOzScPUSAkAKuwFxH0s3U4RfdefxS8cetu/fgq2KS7Z2G0pe7rH+3FeoS5SL
+ lyKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783926972; x=1784531772;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=0K03lVwcJ5+dIuuvpDGtvoD8RHBphbmWnFeGuzmS9yY=;
- b=VSjXgBjUzomY7WByvuS5Lt5bXsJLMLSYUbCrZac9e68UzuZ+7x3pYzTZrZAKgx10y3
- o5znx9UUA+hAbLDNpCKAL4NmBup9IjW7UcBHqPH+VU7iIEWLlJKkr98XsH2lmZrlcp7v
- Cr26DRcVpZJD1Y6DdsfaPIxJND9etWfvPvlsleIHPwzi15Jr/jRc4gtzUis4ew+NHibm
- 3ugjdkiXqIWfEYxgtT2fgGw4OYMHPx5FPRnoZixwXw8srhQH0Sq6yQzIPPLnT1snjtZ5
- +VdaBd6vVcQ30lH92Mm0k/SgUFpfK0SZ82/GIrixcZB27ZhvPmfOMcSZ0IsXY8sDNC/9
- OhzA==
+ d=1e100.net; s=20251104; t=1783927192; x=1784531992;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=6ERFB8oxOn2Uo4ck1nsBITHX8wsLlxjU1fYVMhozEz8=;
+ b=dhXx1T3PflOy02vh0rXWnsBbNjG9i6v+OvqaTJCTtv+xxee6eKfhqEam/jVtIpoZfr
+ aUpwVysRF9WfkM7Y29VMAOrBR4wmlIfkCQ2IUbuurCfrwBcm3gGnBh2WHml/uGqbG4Qe
+ dWGgQ8Nkwe/TabL3XkNfItnPK3lu5Cc5IrDWQMf7svcr7RcELz/C+FkxbbqFBUXJb+OX
+ 1t/A1tnyG1/Az6R/ZAsneOflNfJfat+CKtNIAdiVIlwrV1gRKFWoyoRXxrCFfK6O1b8m
+ EqCLubapqq2RnbGTbU5ut2LmT3B1Ikkn8nQdFcYhpiUC5MlKJfdYgExOE75BY0Uu2yfd
+ cghw==
 X-Forwarded-Encrypted: i=1;
- AHgh+RpzeN3iTghnbfFSZJc3kj6YcwUKOS/BfmUA6zqOs9dN/MgrI7w+AkP4fFofnIHAK/ffLPsCb1ChhTWx@nongnu.org
-X-Gm-Message-State: AOJu0YyTMiLGMQxPFhSa+88qcyOFc7y5ZbnPwD+bwL+W8tcGX27S4Lgd
- SJFEL92oK3I7RUc7ePXlED9BExE7LVJQ5qZHNkj+LqTidFJg/bTNkjwzNAaXI/ZK3zawHbNMqda
- Yzfdk5Kzpe8gKE8Eup9wOf78MRUfMqrMiyk+uxsnsW7FkE9Sbnu3n2RVq
-X-Gm-Gg: AfdE7cmvTrNUux+goYLB0JQ2Zm58w/A+zzgXp3gTsYihj6IfKUfqXJ9MFx241/6DyXI
- xnja7Cxf48XI4j+M3vWr89LWdseDGEzw/kPzeOq765x7C9syLMPu43N2YWy6QBniacs2rjRxOd5
- Br0Jnr4Tgpiseq0VCYQyrozfjGaMrzjLROT1+sZ7e8y4vealhmcXzcH6CyQ17cfZ0e9Jy1WeRIi
- Ow9yWvGuecDqx2trSnBiZ4b1ajdN9qi9jpCKjyoufvN/aQ3nQd8ztxdCIv+nwLn12Jwhqx3+u41
- rG2At5hekPSfECs3ytsQ5mnmSkewKmvzKG2Nd8iCOkCe2O4767or92YwxKGyMPX8j6JF1azMVcU
- xAZc=
-X-Received: by 2002:a05:600c:310f:b0:493:ee3a:f05b with SMTP id
- 5b1f17b1804b1-493f87d7fcdmr76616285e9.7.1783926972421; 
- Mon, 13 Jul 2026 00:16:12 -0700 (PDT)
-X-Received: by 2002:a05:600c:310f:b0:493:ee3a:f05b with SMTP id
- 5b1f17b1804b1-493f87d7fcdmr76615965e9.7.1783926971864; 
- Mon, 13 Jul 2026 00:16:11 -0700 (PDT)
-Received: from redhat.com ([178.132.109.84]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47aa0a558easm84840339f8f.27.2026.07.13.00.16.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jul 2026 00:16:11 -0700 (PDT)
-Date: Mon, 13 Jul 2026 03:16:07 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- alistair23@gmail.com, qemu-riscv@nongnu.org,
- bin.meng@processmission.com, mzamazal@redhat.com, sgarzare@redhat.com
-Subject: Re: [PATCH 2/2] MAINTAINERS: Mark "vhost-user-scmi" orphaned
-Message-ID: <20260713031514-mutt-send-email-mst@kernel.org>
-References: <20260710114305.2961898-1-armbru@redhat.com>
- <20260710114305.2961898-3-armbru@redhat.com>
- <20260711035848-mutt-send-email-mst@kernel.org>
- <65079ad4-3ab9-4ad6-b683-09d46c72b266@oss.qualcomm.com>
- <20260713025003-mutt-send-email-mst@kernel.org>
- <650b9d5c-ca79-447c-b91d-a83d017f42a6@oss.qualcomm.com>
+ AHgh+RqxxnwzbJHb3OBB8W5Z2UbZ+p68WQ79AdScImQbG49DGFSbfhKRD7ojJxrIkzC6zQGTmiN3gE2hWijq@nongnu.org
+X-Gm-Message-State: AOJu0Yx1MRgK10173W5xhAESUqxVr9YYg38UyaKJuzypy+kLAJ8WLME3
+ UnQPNIBow3UwXT5WHeGxScTB5hnGeiU8iFADSPZZR6VBpzdWBM0sKpy05WAwWtDi/Uv3tncWvpy
+ A4VvRChem4WyrAc5bnZjj8FgHhcVbjt5zsjNiXbLDb+Uccp01uIfhT63Pqw==
+X-Gm-Gg: AfdE7ckAGZQ3vbfPG6FXRVotALo48lDLAHkEN0fR9MwJWuXjLsc3UFaGbiZKa6sTNn5
+ DL6DfP1Sfd4n3JzPZ7paIynxpH/bjNMkMbNSHM5qpwWKLFVVNC7BD9YU2no7rsS6BGpt2Jw85QR
+ Wa/vd314FmFTnoZUO+0MjdJn/dhy+mIhc+R6QhSKljVked65n9gAeqmWoiU5aYhdrxGPAimK71G
+ pUg4+OGRCoztccwBQaCK4Zb4sY2jfujqf3Aq8CptxA/z6YaeXlpyCAoKbdV6Y35+ehw6GDyCkJ2
+ KPFYFD5D/AM1HkdVEpmjp62kOKnZuv5gLVxXczlkbzR+D6R5aqaCn+UZJ6Px7Qu6Q6jeCQYygdj
+ M2dX2nfRwYjtUsifYtpYtcVevdWu41KNP8W8EjHBm61ZFdXlDPWNKHgyIX0lIgA==
+X-Received: by 2002:ac8:5f51:0:b0:51c:1cf8:ca4d with SMTP id
+ d75a77b69052e-51cbf171caemr83469401cf.13.1783927191914; 
+ Mon, 13 Jul 2026 00:19:51 -0700 (PDT)
+X-Received: by 2002:ac8:5f51:0:b0:51c:1cf8:ca4d with SMTP id
+ d75a77b69052e-51cbf171caemr83469221cf.13.1783927191483; 
+ Mon, 13 Jul 2026 00:19:51 -0700 (PDT)
+Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-493eb6f373csm570076305e9.14.2026.07.13.00.19.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 13 Jul 2026 00:19:50 -0700 (PDT)
+Message-ID: <fcbe651b-d7b3-4080-8f86-f3ffd40a0087@oss.qualcomm.com>
+Date: Mon, 13 Jul 2026 09:19:49 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 01/10] hw/usb/hcd-ehci: Change descriptor addresses to
+ 64-bit with migration compatibility
+Content-Language: en-US
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ "peterx@redhat.com" <peterx@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Zhao Liu <zhao1.liu@intel.com>, "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>, "flwu@google.com" <flwu@google.com>,
+ "nabihestefan@google.com" <nabihestefan@google.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+References: <20260713032704.3583103-1-jamin_lin@aspeedtech.com>
+ <20260713032704.3583103-2-jamin_lin@aspeedtech.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260713032704.3583103-2-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <650b9d5c-ca79-447c-b91d-a83d017f42a6@oss.qualcomm.com>
-Received-SPF: permerror client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Authority-Analysis: v=2.4 cv=TbymcxQh c=1 sm=1 tr=0 ts=6a549198 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=V2NxCb60AAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=GfncpqaTsXqTwz3xVyUA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
+ a=3L6qF29SlnrayQqPM2jZ:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDA3NCBTYWx0ZWRfXx8KhVXniMhDF
+ MIfGqGo4YZOWGlbPchPDlgdlKsqvGRhwvw1ygoOJ9zn3dcPNH46/ZRnER5zvjHQCmXUEUJjhyMX
+ jh+SDKEoFl5daCZwf20d8aLf/2d3EpA=
+X-Proofpoint-GUID: NaoLUSBjDE5dS0_WJ7mUr_or6aY1nwRf
+X-Proofpoint-ORIG-GUID: NaoLUSBjDE5dS0_WJ7mUr_or6aY1nwRf
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDA3NCBTYWx0ZWRfX2B4Wx5r0caOX
+ feW36IvF1ekPO/oqUZ/CfqtI778qrwTcy89zqamkIEelKziP3BnHvaavh2jzbf07ioPMbp+IsYE
+ zL6yDKUIGCw1gQtxOLwT8HtTcAGxQdDuxPmy+QzpcMff4BdNUL37Z2/JrUR2TbatRv8gnpivuDQ
+ ZM/kaQGDqsZTplbDjGs5asjiY9lfxWJNcHG4XLenBoUcGRcSHYATKncC4tOS1bi47rWATS7SoXV
+ CElvGwz3kCWV98068dkwTWFgk5bLWCaglV6MffLLN+JD3ucgqDs9RKwoBkbktYcSfdzYKLQOxPC
+ nEOFKY5YdK6vXmuzu5TzpG5tB2It6IMFzs15Ju3jsLCG8r9eENTvtntXT0rMRI5RTkgC58KKbdf
+ 3cz90WkKXUPUsXmR8EXzQ5L8bZSJRkuIJIYRYQSwRO6zVlfyiISKSDZuwlRydzG9xUejfcRg8F6
+ l4Qi+B9oq/WTGNI8X9Q==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-13_02,2026-07-10_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 bulkscore=0 priorityscore=1501 suspectscore=0 impostorscore=0
+ adultscore=0 lowpriorityscore=0 phishscore=0 spamscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607130074
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,65 +168,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 13, 2026 at 09:11:34AM +0200, Philippe Mathieu-DaudÈ wrote:
-> On 13/7/26 08:52, Michael S. Tsirkin wrote:
-> > On Mon, Jul 13, 2026 at 08:13:38AM +0200, Philippe Mathieu-DaudÈ wrote:
-> > > On 11/7/26 10:00, Michael S. Tsirkin wrote:
-> > > > On Fri, Jul 10, 2026 at 01:43:05PM +0200, Markus Armbruster wrote:
-> > > > > Commit a5dab090e1 (hw/virtio: Add boilerplate for vhost-user-scmi
-> > > > > device, 2023-06-28) added the section with S: Supported, but no M:.
-> > > > > This makes no sense.  Downgrade to S: Orphan.
-> > > > > 
-> > > > > Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> > > > 
-> > > > 
-> > > > No, this makes sense. The reason this section was added is so that Milan can
-> > > > get copied on vhost-user-scmi but not other virtio stuff:
-> > > > 
-> > > > ./scripts/get_maintainer.pl -f hw/virtio/vhost-user-scmi.c
-> > > > Milan Zamazal <mzamazal@redhat.com> (reviewer:vhost-user-scmi)
-> > > > "Michael S. Tsirkin" <mst@redhat.com> (supporter:vhost)
-> > > > Stefano Garzarella <sgarzare@redhat.com> (reviewer:vhost)
-> > > > qemu-devel@nongnu.org (open list:All patches CC here)
-> > > > 
-> > > > Pls drop this patch.
-> > > > 
-> > > > > ---
-> > > > >    MAINTAINERS | 2 +-
-> > > > >    1 file changed, 1 insertion(+), 1 deletion(-)
-> > > > > 
-> > > > > diff --git a/MAINTAINERS b/MAINTAINERS
-> > > > > index aa2df9cbe3..4d558ddee9 100644
-> > > > > --- a/MAINTAINERS
-> > > > > +++ b/MAINTAINERS
-> > > > > @@ -2622,7 +2622,7 @@ F: include/hw/virtio/vhost-user-snd.h
-> > > > >    vhost-user-scmi
-> > > 
-> > > So what we want is to add here:
-> > > 
-> > >    M: Michael S. Tsirkin <mst@redhat.com>
-> > >    R: Stefano Garzarella <sgarzare@redhat.com>
-> > 
-> > But these files already get M from the match against hw/virtio/ -
-> > what am I missing?
+On 13/7/26 05:27, Jamin Lin wrote:
+> Change internal EHCI descriptor addresses from uint32_t to uint64_t.
 > 
-> Yeah, just trying to make Markus script happy ;)
+> The following fields are updated:
+> - EHCIPacket::qtdaddr
+> - EHCIQueue::{qhaddr, qtdaddr}
+> - EHCIState::{a_fetch_addr, p_fetch_addr}
+> 
+> Update get_dwords() and put_dwords() to take 64-bit addresses and
+> propagate the type change through the descriptor traversal paths.
+> 
+> Adjust NLPTR_GET() to operate on 64-bit values:
+> 
+>      #define NLPTR_GET(x) ((x) & ~0x1fULL)
+> 
+> so that link pointer masking works correctly when descriptor
+> addresses exceed 32-bit space. The previous mask (0xffffffe0)
+> implicitly truncated addresses to 32 bits.
+> 
+> This patch does not change the on-wire descriptor layout yet.
+> It only removes the internal 32-bit address limit and prepares
+> for later patches that will add full 64-bit QH/qTD/iTD/siTD support.
+> 
+> Update the EHCI trace-events prototypes for QH, qTD, iTD, and siTD to
+> use uint64_t for the address argument and print it with PRIx64. This
+> ensures full 64-bit addresses are shown in trace output and improves
+> debugging of queue heads and transfer descriptors.
+> 
+> Migration compatibility:
+> 
+> To preserve backward migration compatibility, keep the legacy 32-bit
+> fetch address fields (a_fetch_addr_32, p_fetch_addr_32) alongside the
+> new 64-bit fields.
+> 
+> Migration format is selected using a machine compat property
+> "x-migrate-fetch-addr-64bit":
+> 
+> - Old machine types migrate 32-bit fetch addresses
+> - New machine types migrate full 64-bit fetch addresses
+> 
+> This is implemented using VMSTATE_UINT32_TEST() and
+> VMSTATE_UINT64_TEST() so that only the appropriate format is migrated.
+> 
+> In pre_save, the 32-bit shadow fields are populated when migrating
+> to old machine types. In post_load, the 32-bit values are restored
+> into the 64-bit fields when loading old migration streams.
+> 
+> No functional change.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> Reviewed-by: C√©dric Le Goater <clg@redhat.com>
+> ---
+>   hw/usb/hcd-ehci.h   | 30 +++++++++++++-----
+>   hw/core/machine.c   |  2 ++
+>   hw/usb/hcd-ehci.c   | 74 +++++++++++++++++++++++++++++++--------------
+>   hw/usb/trace-events | 24 +++++++--------
+>   4 files changed, 89 insertions(+), 41 deletions(-)
 
-I don't mind though the duplication is a bit annoying.
-But let's pls document what the rules are somewhere then.
-
-> > 
-> > > > >    R: Milan Zamazal <mzamazal@redhat.com>
-> > > > > -S: Supported
-> > > > > +S: Orphan
-> > > > >    F: hw/virtio/vhost-user-scmi*
-> > > > >    F: include/hw/virtio/vhost-user-scmi.h
-> > > > >    F: tests/qtest/libqos/virtio-scmi.*
-> > > > > -- 
-> > > > > 2.54.0
-> > > > 
-> > > > 
-> > 
-> > 
-
+Reviewed-by: Philippe Mathieu-Daud√© <philmd@oss.qualcomm.com>
 
