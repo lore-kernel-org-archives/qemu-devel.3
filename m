@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 950D1C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:35:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA642C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:35:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjIee-0000Sm-G0; Mon, 13 Jul 2026 11:33:12 -0400
+	id 1wjIec-0000Fr-4U; Mon, 13 Jul 2026 11:33:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjIeQ-0008Ui-QJ
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:33:06 -0400
-Received: from mail-wm2-x08.google.com ([2a00:1450:4864:31::8])
+ id 1wjIeC-0008QQ-60
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:46 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjIeO-0001C2-Fx
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:58 -0400
-Received: by mail-wm2-x08.google.com with SMTP id
- 5b1f17b1804b1-493e63f4ef6so11485715e9.0
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:32:55 -0700 (PDT)
+ id 1wjIe7-00016T-Uc
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:42 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-493e8d4f4dcso26321285e9.0
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:32:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783956774; x=1784561574; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=mWc7rsld2U2uyI88Tyd1TA6QGlFezkeW+Ay+JQzr2Ig=;
- b=xsilXu9Zuv0rkTCAa1zOEDdZispio5OGDEZMOtBv0XDC1WHb335qaSfLtAckGoOebT
- NAAP2fLCgLNvXpSCxcJ91T6i6ymNYwnM12Bm/p3g3s3sXtuJql3s1pPfvU/KMGLJ0APa
- mQb4pu1u15NPYbQnrRYHMxl/tsT3rKDDGfRKuNguyIRLk+SlGZ0h4W1xnXXZDZKdAGfP
- VbnTojstoRPuVlAyKCav+Zi4bvuSvvWCgmldzq5My+H2/PzjiRG1WY5e7+QeOu+udjo0
- eApysIsLkyGuRlE9lMK0uzo70vYa9pk6koasdi/wpuB21jgDEJJmzPJoNtKVH4DKFRCD
- 55nQ==
+ d=linaro.org; s=google; t=1783956758; x=1784561558; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=RylEd29WcoS/OyUEgnd0qftfI8x/CGruWSkN5SctWWY=;
+ b=y7G8XLPaM3IbMi7AVcgugCNVXTdum0gpHkByaZhpJ9XzlL1azGPLzbO0AVJz/8Qp6E
+ hu7ZBZZVeK9uaNIa0Z+HsT+8W5fQirqFVrKgOpIpXWBgUZ6xowp7cuTJE3xkBdTPoVbb
+ KwGnBauYiWqNPF08w1v9oK4QhVWOkCxDIeeeCY4zzULQkprItrlm6Fvw5ETX4zw19OnD
+ e6Y2DKOhcbq5p90xeWBaC2lh1KNvHuBKRD0/zZnc+CTtDCRcjDPtZG1n7mv8FvDdPvK7
+ ksUZFiH4zu0/v4lpc9E43U5jaWolcxD8Bj7oUW8p8uDD/d5ILEU+bvk0MfILTEd/w/8M
+ ubbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783956774; x=1784561574;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=mWc7rsld2U2uyI88Tyd1TA6QGlFezkeW+Ay+JQzr2Ig=;
- b=YKYkT56nYuhYzBuI4DA/nfsTKEjDQkt5A9ZNmQCsy/88SFu/ofqHnf1Kvww1xg5fez
- rQuHdyYNsbzsaE3OMC++J2SDo0VWgQsPP5LyuOd5UseWVCdVXagiMpcGWcBl7zMKwTkc
- IR2eJCMMP8mibEVNuNcjVhixQ02S98uPLqY3ZYE+N9yE8jv839Ag0X5uMKBvWFpegUfp
- 6UED2vMwckU7hzyoxNc11hu56G5HrBMmDvPE4A04vES5eE3DbJwmL4bHMBeYksZjA79s
- xdCM7Dga2xtKh6ipwZQxgOiJQEszcZv/+PHuq+RJBHynnAqr2BDkmVkO/uq9d+1U26RX
- LDFQ==
-X-Gm-Message-State: AOJu0Yy+NAZUviac6pOq0TKTICWhdpDXCd9p60q96m9KO8DxlFf+BZel
- GCbYV14j8TpSblM70L2GFFzwFpmihUhSzRy+xunFuf33VHYcgJbNIlhqiW+3ryn0hE6huAGpUNb
- 78FhtEb/6QTkt
-X-Gm-Gg: AfdE7cmdcP5R4JQbqohjuYATX1sLB3BwYw4WZgOR/TFDOyuh6pxRcj4PKiyFdsgddL4
- afISQlwK9aBT7vuzAoS9KdGkbqBHNe9ZCGs+9UatNqGm1jta9yPC8M8Pzxowy5RizP6c3CfB18v
- jqXRVjPbl0nwfXuO1CwJ2xH5r7QNVf2s+MiU6itiQ6lMiClqSqdZ+EqUr99c0d5h8cZsfC+Ig8t
- bExw3xZK6Bdll4loWRtGttZ5HX8u1OpkFJGSfeY6X64noop3xdnrZby6Ip934c3L2CKBxjIcpZz
- tV57EI9ACCTFZmiyOLbneicGCu9H0Gwdw9YsiCMUu3MB7Uk3GnGiChEwp3haVyzFeApFvsStVQb
- 8ZVf7rhE6X3FtF/r04rQo64iL/QXegrn7YuJMZGaTzx+WxtjX5v8ykvSuCLfx60HFgXihOmRFGa
- 45XuYExN59w+8X6c0gei/92CypzGbbNuKNqupWnadOJe58Q26QUVBqvl32Pt2dvw9M4NveXuWT6
- uwhSty2O/H6WVKDX87GykomgfdoZD/d
-X-Received: by 2002:a7b:ce97:0:b0:493:c2cc:aecb with SMTP id
- 5b1f17b1804b1-493f8839b4bmr76651895e9.38.1783956774444; 
- Mon, 13 Jul 2026 08:32:54 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783956758; x=1784561558;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=RylEd29WcoS/OyUEgnd0qftfI8x/CGruWSkN5SctWWY=;
+ b=XhlR/W7cK6PFd93ikOQwQvEXUnKclRmsZm+jajpNd0YcOjNVhPbNdfubUHiKwUTuHs
+ /tJolPlFtW6JPMgY5R20B53Zk/FK0Q9j08XsDCZ1UZdj9nOI+VBNWjtF4TvgvLAQWx87
+ v07TPfIdzVdh8ycUFumRxr02U4Eu05oR3yu0AKReClGCtrH9vRZdCWp2NS7sdGb31Xh6
+ GexYxxQxBQF6B1vslafU3z41ASil9xqYOOUZ8U2NEOHdCpWCc8eYsdaUo1XcYjf2KtGr
+ lSKfa99Btnelqh5UwHUosg7WXoPyFrh55MFonxloqhK5d8OFE0EV+mhbG8vU/jTRFduC
+ Kanw==
+X-Gm-Message-State: AOJu0Yw6a3n/aoQyf5qbt9JhLogv3TaSEWyPoOyPX/EoLxUEFdnjYa0A
+ hV2Zgt51aLgw7NGSQcqE2Sh8gCfhKPT3RKl05HquEhM6yYmbDCMovY00aV8fcSceWEQz0mklJyV
+ ZJXgQivDe4w==
+X-Gm-Gg: AfdE7ck8bQXlzRb/pk7pZA/PSDfonL/Hnt1ErsPGp/Rp8g1SDJgQAKTcv/y1NtoHLx4
+ AAw3m2NS6eD+HhoPOd0mvgAZNaeWxZiETN3c5vFrrTHPBC45D+84sWznn0xhlTQZW7vFurNsKS7
+ MxiAIxnMxy87NftJXoz0J1N7D1mOOswlnvfTEzeW3LW7Gpe9v/27EvahFsrteI8bnurwzkCYeNf
+ a9Z5zQ67r6M1Spig5kjTif+S6MOlxpsmihal2Pw+3Z+fO/QntneVPKFY4STdf/Of1ScjAkagB1v
+ lMr0T4exdp1OQtMnKrW3M6E0ThasmMbBJNYuXYIjLwAmIdosz1MrZOK9JoXtZIYoCYMYpJuSOw+
+ 1PkE976A3lv5J8gtzndvUyojAxNef8ZFiCHMVwPFSRv3M3435xbSRD8H3gHb5bFBrYG70Je49rV
+ FQWxUFoRUrSYTQDUocz/LIc8NJQMi1BnU3BtRRISBeD4BUUtA3WyDuI16k5r3Oe2uYTWKHUm4Px
+ qYTw/BnepmGs69t1lOI9w==
+X-Received: by 2002:a05:600c:828d:b0:493:b307:6777 with SMTP id
+ 5b1f17b1804b1-493f8824389mr86992825e9.22.1783956758226; 
+ Mon, 13 Jul 2026 08:32:38 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49508727f7dsm3825985e9.4.2026.07.13.08.32.53
+ 5b1f17b1804b1-49508727f7dsm3825985e9.4.2026.07.13.08.32.37
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jul 2026 08:32:53 -0700 (PDT)
+ Mon, 13 Jul 2026 08:32:37 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 21/26] hw/usb/dev-wacom: Don't write off end of buffer
-Date: Mon, 13 Jul 2026 16:32:28 +0100
-Message-ID: <20260713153233.3391818-22-peter.maydell@linaro.org>
+Subject: [PULL 03/26] hw/arm/smmuv3: Fix off-by-one bug in alignment strtab
+ mask
+Date: Mon, 13 Jul 2026 16:32:10 +0100
+Message-ID: <20260713153233.3391818-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260713153233.3391818-1-peter.maydell@linaro.org>
 References: <20260713153233.3391818-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:31::8;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm2-x08.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,42 +102,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In usb_wacom_handle_data() we allocate a buffer with a size
-determined by the transfer size requested by the guest.  We then fill
-it in by calling either usb_mouse_poll() or usb_wacom_poll(), both of
-which functions take a length and return an actual length, which we
-pass to usb_packet_copy().  However, usb_mouse_poll() doesn't check
-the buffer size as it fills in the buffer, so if the guest passes an
-overly short transfer size then it will write off the end of the
-allocated buffer.
+From: Eric Auger <eric.auger@redhat.com>
 
-Check the length is at least big enough for the minimum 3 byte
-packet and return nothing if it is not, as usb_wacom_poll() does.
+The stream table base address needs to be aligned to its size.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3672
+With FMT == 0 (linear stream table), the table size is log2size *
+STE_SIZE (2^6). So the spec says the base address
+must have ADDR[LOG2SIZE + 5:0] = 0.
+
+With FMT == 1 (2 level stream table), the table size is
+(log2size - split) * L1STD_SIZE (2^3) So the spec days
+the effective base address is aligned by the SMMU to the larger of
+64 bytes or the first-level table size:
+ADDR[MAX(5, (LOG2SIZE - SPLIT - 1 + 3)):0] = 0.
+
+MAKE_64BIT_MASK() second argument is a size and not a shift, so
+fix this off-by-one computation.
+
+Subsequent patches will fix the risk of overflow in MAKE_64BIT_MASK()
+
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Message-id: 20260707085028.165557-2-eric.auger@redhat.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260706182034.1003176-1-peter.maydell@linaro.org
 ---
- hw/usb/dev-wacom.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ hw/arm/smmuv3-internal.h |  3 +++
+ hw/arm/smmuv3.c          | 10 +++++-----
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/hw/usb/dev-wacom.c b/hw/usb/dev-wacom.c
-index c69e247f7b7..895edcc17e7 100644
---- a/hw/usb/dev-wacom.c
-+++ b/hw/usb/dev-wacom.c
-@@ -285,6 +285,10 @@ static int usb_mouse_poll(USBWacomState *s, uint8_t *buf, int len)
-         b |= 0x04;
+diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
+index eb482c7000f..0819a4b2e8d 100644
+--- a/hw/arm/smmuv3-internal.h
++++ b/hw/arm/smmuv3-internal.h
+@@ -359,6 +359,9 @@ void smmuv3_record_event(SMMUv3State *s, SMMUEventInfo *event);
+ void smmuv3_propagate_event(SMMUv3State *s, Evt *evt);
+ int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event);
+ 
++#define STE_SIZE 6
++#define L1STD_SIZE 3
++
+ static inline int oas2bits(int oas_field)
+ {
+     switch (oas_field) {
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index 5e5a6a960c9..10c67645a57 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -664,7 +664,7 @@ int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event)
+ {
+     dma_addr_t addr, strtab_base;
+     uint32_t log2size;
+-    int strtab_size_shift;
++    int strtab_size;
+     int ret;
+ 
+     trace_smmuv3_find_ste(sid, s->features, s->sid_split);
+@@ -685,9 +685,9 @@ int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event)
+          * Align strtab base address to table size. For this purpose, assume it
+          * is not bounded by SMMU_IDR1_SIDSIZE.
+          */
+-        strtab_size_shift = MAX(5, (int)log2size - s->sid_split - 1 + 3);
++        strtab_size = MAX(6, (int)log2size - s->sid_split + L1STD_SIZE);
+         strtab_base = s->strtab_base & SMMU_BASE_ADDR_MASK &
+-                      ~MAKE_64BIT_MASK(0, strtab_size_shift);
++                      ~MAKE_64BIT_MASK(0, strtab_size);
+         l1_ste_offset = sid >> s->sid_split;
+         l2_ste_offset = sid & ((1 << s->sid_split) - 1);
+         l1ptr = (dma_addr_t)(strtab_base + l1_ste_offset * sizeof(l1std));
+@@ -729,9 +729,9 @@ int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event)
+         }
+         addr = l2ptr + l2_ste_offset * sizeof(*ste);
+     } else {
+-        strtab_size_shift = log2size + 5;
++        strtab_size = log2size + STE_SIZE;
+         strtab_base = s->strtab_base & SMMU_BASE_ADDR_MASK &
+-                      ~MAKE_64BIT_MASK(0, strtab_size_shift);
++                      ~MAKE_64BIT_MASK(0, strtab_size);
+         addr = strtab_base + sid * sizeof(*ste);
      }
  
-+    if (len < 3) {
-+        return 0;
-+    }
-+
-     buf[0] = b;
-     buf[1] = dx;
-     buf[2] = dy;
 -- 
 2.43.0
 
