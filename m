@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFDABC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:37:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC7C3C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:37:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjIee-0000Tx-V6; Mon, 13 Jul 2026 11:33:12 -0400
+	id 1wjIen-0000nO-Jc; Mon, 13 Jul 2026 11:33:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjIeO-0008UT-T1
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:33:04 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1wjIeS-0008Un-OW
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:33:06 -0400
+Received: from mail-wm2-x0b.google.com ([2a00:1450:4864:31::b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjIeK-0001AO-H4
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:54 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-493ec555a26so21576715e9.0
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:32:51 -0700 (PDT)
+ id 1wjIeO-0001Bb-IP
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:59 -0400
+Received: by mail-wm2-x0b.google.com with SMTP id
+ 5b1f17b1804b1-493d43b6c28so178765e9.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:32:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783956771; x=1784561571; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783956772; x=1784561572; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=bkzleIr6QtX2FYwb1SY9PNRHwo9lxQmQ1xA229dq5sE=;
- b=wAKqczvJrZE1QkUav6meZ4dptMIpFkrdakgq0xHa1wZ2jgq9y55UK7msayhu3yCUo+
- 9JBFD9HTvjVfVvznZYfycCtblKE/emNwKculC6XkYgsij3BO+ttdB9daLHxVMywXFmPy
- zl7rV0ce8z/vRWXMpZHXz6TEglDeCnZrlvk8uAMfqNcOEIvhcOVkmFnOuW1/3Ytcn8wk
- 4QH1iMOnmxIekGrxOO3Z9+5uw1gMPBUxi4M/TX+991fosemAH+BFJtlCEi/ffUJmQAJ1
- VaJgIns0hdjBHnjk3QI0e/lcUfUtyzDbqc7zmnmxi01JV+Ipc0RBGySiRjnrtA309NZj
- 50aA==
+ bh=mmr/j5Sdb8E/oADRlX/72Tk23KUJknScj9a13d2/X5s=;
+ b=usOVg4RhDC4EsmJzHPVD/RFVLrW8vstJ+BfSuMU++WB3T/BSbY/wEsdRBLLyHbUovw
+ SIzaKGixAoW0hG+70dGhq7PVn2HZa5jaJuIJSVG3LuMZ/VY08ZKAe7LcwCrGXSsWo0Qa
+ b7PMEk60ye3EZP8B/Y6w1VGi5rHiC4uYJ2gJ6osXLjXOvXbBufrjVBUyxIu4STH3/wuH
+ foX2Gywap8bLkc7MAehhv9asBQS8wyPRFQ1lfSi6EZWAM2w9YdebPnvZMMtuaLPnSzWk
+ JHVtSNYOooOIDHkgkWpGJr/4fpeZJQaMiqu9jPhZsAmweijNSKeVjf2s1P8Ae5+2EH5m
+ 3pVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783956771; x=1784561571;
+ d=1e100.net; s=20251104; t=1783956772; x=1784561572;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=bkzleIr6QtX2FYwb1SY9PNRHwo9lxQmQ1xA229dq5sE=;
- b=ZWTMUD+zG87MqWQbRiT6MZbLxTH7Lr11IQ0CDX79MBOht4kAZoiC/kXryXn80+Rq9D
- X+4wI+cHkxD3ovecWVEjNpOtpXpA8a5g9U75HoJwZQh51ACKjyrEZRNOAucg618iZDku
- JWbhQmrWexwQgwa5+o5E91JWqz0+3aIFIGmp9SI0AxqpQ6C0gDkbMfawB4/ceojbdMfz
- JjgZcaSSuZHtlTKPYtc6QR6U2U/pFP8ohmScm6vpPPlL88ohgSk0Ll9l2nl+en/msB3y
- XembGHprIxcR7YFpNYJCMaYAfma+sFlqpvrdGtvLOThGNvHqK+eP6G7HKwPCf3LwUJ0D
- 1mWA==
-X-Gm-Message-State: AOJu0Yzavt+4tns1KtToqQZFVToIqzs9z08kDUAgwj3sNhPcReVLdhZb
- PSq26tNtOriM0RCmSXMRmy7hPnIjZGy5dfwn4qNT48ITmrGwAI5R00QuFzL6EFgKCR3orlxg6FW
- l635Byi5XkQ==
-X-Gm-Gg: AfdE7cn0ZtbuaaoULdRy0igJ2vrfF94JR8ULLfh1iGTMVQyzYtDQbDD2ZEeb3JaffdE
- w6EKLYeSO8+I/LnZIsDfVPiUG9zg9skH6LJy6oW4FjWD4//cNzE8xudSc41/V7H2ySa6Hm7n9So
- P55anOog6qorg3hQ01qSY5iH2y//E1Bjps/kmTZuuK1wbaCqEoaYQ4xTnZtu8R20wB8gp0pNElb
- zi6csvb0ZSNX4nQPPuw365novZVmmMhH6l01pJUhLv23FmvDq+sxzPlQYronYpjTIc9slLzzPsa
- BZ9oFdmq2RP4DkC71Q5o1/SAyIQClRUM74KnJs3MVKh3qWJ9K2X+aPHfsoXIUezg+dc14DOwNsU
- rQgTdIYFx+S3gtEkhsxTqd+NmMHmua09Ls/HB6dMCx7a2n5LI6gjYqiC8mpeA+L80xkgDluNRup
- PjvDUC58yHtYb1My8iyauJWDu4+S2Ki649kgxSiRLevqKbIBAYu8VLllTNPm5kslkTLL+Vx4+rR
- wdL7II/r+UzwblKKBytTA==
-X-Received: by 2002:a05:600c:4e46:b0:493:efcd:b809 with SMTP id
- 5b1f17b1804b1-49401d2d054mr42817155e9.6.1783956770905; 
- Mon, 13 Jul 2026 08:32:50 -0700 (PDT)
+ bh=mmr/j5Sdb8E/oADRlX/72Tk23KUJknScj9a13d2/X5s=;
+ b=sDn1SgUyWZyZ21dpURdIYPC69v975wtP2AANiEAUUSgrUELtBVq3PEmwDds5Mk/xpN
+ M5amX2VjbFVes7XfzDpMXQwnTNhY0rQwP8sNIIrwzNEiMZhCtDNGXGMCzM4lfFVuroU8
+ Bp+95OQFkc1FMOdXejOjZmICEwZwcFv0yyfGet2NWYoEkFoLeTsYwMLGRRLQFjn3Se0d
+ YRMmytCq/UQw+nGs1m+LBOLRVbEZORCfZ9PMpyc4jn74a/KqyZQjfU8ddZxQP5GzZuXo
+ bceI2/cAwRsZmhBWMh7GK1fyK6ydIoa2t7hQKbKMlGaQoQtI8mTl/bCoht9n1MlXLbqd
+ q1iA==
+X-Gm-Message-State: AOJu0YxWXz901RlyKxbqGeiw+t1pIds8JXVl+wtsOXnhOVG90DNZc/py
+ boGj/H20R9zLWYnWYJW8Jg6SuKUSyw+99ezjTeh9pLEd/POfMrj8bKBKjusxgQhjGkvW/Txq+ol
+ AR/IdonoGq6OO
+X-Gm-Gg: AfdE7clbXKmgWLN8n1qb7R/7YPFcOHLrIeuCi8gQDWPCRaiiKBSJC06oHkEtA+tLImD
+ I3HY3yidessGg7wCNW8SGwjD7WufIW9iool3mLvf9ip5t1iSH9YSgqTiU+YRvHwxlG5mR90lGbX
+ jrGMe1/WCn95GUF8CnsD+Gc7Hh8kUeWx0o/zB8GyPpvjSRM3f9C4Lxp3i5RkGj0fulDKp8H5O26
+ vuZJ/CkOf+NYDSzTReb1CoD/WqjJmGYQ2OFVoJHO+n3vy7A18e6DQf5DTzog9Y0Gm6RHCwjHPcT
+ C4TSNCMVZLH9sUFeDH2WwF9uqekNh76PCvCjFkGZQyeoJxupSSB0jz3Wtxkx/apDmwKIJ88fGVJ
+ b1ZKJGoe1/ICLpeWtftAoWEzcjWv+WXwOvdRdsBJcQKEynR6oUyt61ZMBesXzynvun3PsjEaUkQ
+ yfVzWRsE2P6XvC4UvLwqEC5vd2ge9XYYE2n2PRJpRgdkGlFrm6j9WGFWLwKVrWc0QHTAr47Vwux
+ bk6c/kr60pK9mqDW0cSZw==
+X-Received: by 2002:a05:600c:4e0b:b0:493:bc4a:c6b4 with SMTP id
+ 5b1f17b1804b1-493f8851d13mr94451805e9.38.1783956772573; 
+ Mon, 13 Jul 2026 08:32:52 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49508727f7dsm3825985e9.4.2026.07.13.08.32.49
+ 5b1f17b1804b1-49508727f7dsm3825985e9.4.2026.07.13.08.32.51
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jul 2026 08:32:50 -0700 (PDT)
+ Mon, 13 Jul 2026 08:32:51 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 17/26] arm/virt: fix smmuv3_devices leak
-Date: Mon, 13 Jul 2026 16:32:24 +0100
-Message-ID: <20260713153233.3391818-18-peter.maydell@linaro.org>
+Subject: [PULL 19/26] hw/dma: don't allow weird transfer lengths for bcm2835
+Date: Mon, 13 Jul 2026 16:32:26 +0100
+Message-ID: <20260713153233.3391818-20-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260713153233.3391818-1-peter.maydell@linaro.org>
 References: <20260713153233.3391818-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:31::b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm2-x0b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,29 +102,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-Fixes: 92e340997f861 ("hw/arm/virt: Use stored SMMUv3 device list for IORT build")
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-id: 20260709111225.1106856-1-marcandre.lureau@redhat.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+The datasheet doesn't explicitly say that TXFR_LEN has to be word
+aligned but the fact there is a DMA_D_WIDTH flag to select between 32
+bit and 128 bit strongly implies that is how it works. The downstream
+rpi kernel also goes to efforts to not write sub-4 byte lengths so
+lets:
+
+  - fail when mis-programmed and report GUEST_ERROR
+  - catch setting D_WIDTH for 128 bit and report UNIMP
+
+Yodel did some digging into the specs (see discussion link):
+
+{A} AMBA AXI Protocol Version: 2.0 Specification
+    https://documentation-service.arm.com/static/64256e84314e245d086bc88f
+
+{B} BCM2835 ARM Peripherals
+    https://datasheets.raspberrypi.com/bcm2835/bcm2835-peripherals.pdf
+
+[1] {A} (p. 10-2)
+[2] {B} (p. 51)
+[3] {A} (p. 14-5)
+[4] {A} (p. 4-3)
+[5] {A} (p. 9-4)
+[6] {B} (p. 53)
+
+However was unable to come up with an unambiguous conclusion without
+testing on the real hardware. So in the absence of certainty and for
+the sake of addressing the DoS I suggest we merge as is for now.
+
+Link: https://lore.kernel.org/all/20251111105429.3993300-1-alex.bennee@linaro.org/
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3201
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-id: 20260710131500.2323848-1-alex.bennee@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/virt.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/dma/bcm2835_dma.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 6a3c69ba8f9..219597cabd0 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -4417,6 +4417,7 @@ static void virt_instance_finalize(Object *obj)
-     }
-     g_free(vms->oem_id);
-     g_free(vms->oem_table_id);
-+    g_ptr_array_free(vms->smmuv3_devices, TRUE);
- }
+diff --git a/hw/dma/bcm2835_dma.c b/hw/dma/bcm2835_dma.c
+index d07459de2d0..b842aef4b74 100644
+--- a/hw/dma/bcm2835_dma.c
++++ b/hw/dma/bcm2835_dma.c
+@@ -86,6 +86,23 @@ static void bcm2835_dma_update(BCM2835DMAState *s, unsigned c)
+         }
+         xlen_td = xlen;
  
- static const TypeInfo virt_machine_info = {
++        if (ch->ti & BCM2708_DMA_D_WIDTH) {
++            qemu_log_mask(LOG_UNIMP, "%s: 128bit transfers not yet supported", __func__);
++            ch->cs |= BCM2708_DMA_ERR;
++            break;
++        }
++
++        /*
++         * Datasheet implies 32bit or 128bit transfers only
++         *
++         * TODO: test on real HW and report back.
++         */
++        if (xlen & 0x3) {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: bad transfer size\n", __func__);
++            ch->cs |= BCM2708_DMA_ERR;
++            break;
++        }
++
+         while (ylen != 0) {
+             /* Normal transfer mode */
+             while (xlen != 0) {
 -- 
 2.43.0
 
