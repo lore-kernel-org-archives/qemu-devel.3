@@ -4,108 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CB7EC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 14:50:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1973DC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 14:59:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjHyk-0003gV-7E; Mon, 13 Jul 2026 10:49:54 -0400
+	id 1wjI7g-0005AF-6H; Mon, 13 Jul 2026 10:59:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wjHyc-0003g9-Gk
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 10:49:46 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wjI7e-00059r-Io
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 10:59:06 -0400
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wjHyX-0003wo-6h
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 10:49:46 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id DD62077850;
- Mon, 13 Jul 2026 14:49:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1783954170; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0X6i1wnA4/raU3f6T+TJY55lEM9bojBYnvrY3ES2it0=;
- b=FFCHInTtHO4BgbNDQDmWz114/gfIh8a6GWRM72hHU/OdL992TOlyy4Y2vFmQmBWpQIpH6X
- M44dZcdMCQXXvP3vrwZwW25/jDOxCJxbcjs/EXqwURkiCPJCA+SelWKa5o0BKZmtZyKRqQ
- 56t6eS0yZ9lkPBkWq5E9xoQVEcmgs4c=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1783954170;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0X6i1wnA4/raU3f6T+TJY55lEM9bojBYnvrY3ES2it0=;
- b=5sUnfN8txGxqDfp6V5/Zci2bFgG4GHZXSsK7krgKLNbKx/Bk9AIy8CpZp+KEA0IRucqUow
- Zl24nfRJTi2m3bCQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1783954169; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0X6i1wnA4/raU3f6T+TJY55lEM9bojBYnvrY3ES2it0=;
- b=Ld4Mq2Lbhdt4UJ8g3yGTluDtf0csZc9zWGKumdPhNZ0RmbEEBLlnf98xZ1uD/lQriwAxyH
- ErDG9n07ulIR7urp4f9BIwZnV+DWiQjSwcKJ+RUWP+OcWMXXoWSKZytaibFnKjd6S7HsO8
- WF5rhGtVnJE4/vezNKWlrAGU8ixQmSc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1783954169;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0X6i1wnA4/raU3f6T+TJY55lEM9bojBYnvrY3ES2it0=;
- b=3g+QuseTjUKw9eDLzGfdPCygUNrAtvc+IA77IlwNVdKL+TyXiT3cJPUGt1NtwfuTf0Mzt/
- zpi8OQTx5IO1WVBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 75738779AE;
- Mon, 13 Jul 2026 14:49:29 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 8uDWEfn6VGpKQgAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 13 Jul 2026 14:49:29 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Maydell <peter.maydell@linaro.org>, QEMU Developers
- <qemu-devel@nongnu.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Pedro Barbuda
- <pbarbuda@microsoft.com>, Mohamed Mediouni <mohamed@unpredictable.fr>,
- Nicholas Piggin <npiggin@gmail.com>, Harsh Prateek Bora
- <harshpb@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>, Eric Farman
- <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>, "Daniel
- P. Berrange" <berrange@redhat.com>
-Subject: Re: what is qemu_system_guest_panicked() for?
-In-Reply-To: <CAFEAcA_zmc=Vvs38Qos_gecCmGAbRgDQF-0+x85Ja66nsqrHxA@mail.gmail.com>
-References: <CAFEAcA_zmc=Vvs38Qos_gecCmGAbRgDQF-0+x85Ja66nsqrHxA@mail.gmail.com>
-Date: Mon, 13 Jul 2026 11:49:26 -0300
-Message-ID: <877bmz54i1.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wjI7d-0004it-3c
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 10:59:06 -0400
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-6647bc8f900so5347221d50.0
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 07:59:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783954744; cv=none;
+ d=google.com; s=arc-20260327;
+ b=e0z+M3MZcJj17LJA8UfJfQZlklI22FlBaO19RKxmNmSB5DzXQ8HcAxYhpHJP7h7dTI
+ H7rgpMDuD2WtXaghi9Ekerq1gToqf/+w8s+iZjJGrP/PeRYDrEpLXe4mMCgfy5l4RIgt
+ EcNE6mL4sHg432u2IF3X6cF0q9GWWYZqOxV+e96abxv35UnD0wxsjLv0Lobl4fJKM2UA
+ bnqAU+ZHJaJ0bIZ4G/s7oqHxt3GtCANSV7N83UBUabtB/AqFrFGJpPuoDUuRS2oGmxVu
+ otkO/emshAFPmxixwSm/w14sK1/F9Qtqn3VBaPzm/cn24ss8Myddamwe2Z09DPB/20qN
+ HHaA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=c5BYm9w4yqyN/YvHb+KsJEZ8MQzP936ynUUDjI51L6k=;
+ fh=9jvu9sb98tMkv3eZc8YkNKxrKg31/dCzrqGIUZZi0dw=;
+ b=pJ0S78pfbRqi2LE62IHFbJBb5I/pLYg/OqpK4T7cLP31ita60xZaFY5ywMcX+PBJbw
+ YodtKwPGcc0DR9RwV72/e90qcMUhxX2lrRLM16ENBjWVh1R6CweCuhEPiwf1ZjGgqBnP
+ pJsN3hSJR1NVsvaiYFCV+cVL01GTmKYrBGRsd6R7BQjU9pEEOEXgff6EaYuvyKzUAgaO
+ +mZK4NRlYpTA+Rpf3boeR02kA6jWcSlpEavqSnbodtE0NHqdblMi8C6KYNjqvrMBto/v
+ 1/vkL8D2DuBS+8EpNxSKqRP6DvWDxln7dgfBVvStemtvhT1BmiJZh+wBoIBpZGjIoT0A
+ sDcA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1783954744; x=1784559544; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=c5BYm9w4yqyN/YvHb+KsJEZ8MQzP936ynUUDjI51L6k=;
+ b=FuuADT9GrPLNBxlmS7JJ6OGz6uCqLyzZCAa+tnaeKgtxEcnzhJZmRD4S5rTh+hQZL/
+ Y5WEq4aRkhlBEA6u6BUibQk61sc4li2QUUtvwER4Ysnlhxw7YYu42NtIvs6zvX5tjwUK
+ zuJEuixFjCW4KZDW9BCunG0yKyXwjJoi+NPJmDH/k0rVNTG2IS+EI/kD7tZN97Gf7Q8t
+ ZWxPpM+Z/Jl77Fg8kG/TxXmSHemZxhc2KHFy0YKY67dH7HTvI7Yum+BCUrjkDTmlvI+p
+ KYBCGzL4AvvWYReTspesNelcAelO3TvwUdK9ugbUsXjEUZTs9N2mcnANpxqxuXsnoJBM
+ rJUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783954744; x=1784559544;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=c5BYm9w4yqyN/YvHb+KsJEZ8MQzP936ynUUDjI51L6k=;
+ b=RqApFKzy7Ch4qcVuI2s45bABgwfo1cPCyrfQcOispOrwmWHj1AIDZcO42quWrAkhwk
+ uzujHBz+343c++sS0X9JH2qwBTbPFORucqsCCp6E9PZliaM08h47ckApauDkK9OzB2To
+ dsOXBZAd3jI5B6Gs7Kr/s4O4YoyX07l5nouS6db/2D3TkBg8dmxgING5v0LUbcGO3Fex
+ PaH4/TU1hFRya2Np5J7lQOed2eR4YBnBvsCzkamXe1sBFUpkn6VhUjtfxC8I0VrLgcKW
+ 9Hsg/atDFafdQdInxZcaGhhCS1p5NRtwBR6RQDIhFfGYnvakm1zIuP8DXPQqs7nUQUGP
+ E6zg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RovVoat3lGVXfrnASI5QRpxo4/X5LvLPD4je9u9qcCzf988SNmGi0s6UYKFmjc2ZGKIQaYeCzdzptRq@nongnu.org
+X-Gm-Message-State: AOJu0YwA0oPdgfggitd2ccqlElqHR0fSb6/rlZnfULy02H8FBBxCtwzP
+ Fca9zc5f+F//oGluD52LeDlz6rpPNw164j8MUBrh+bOAb75bHAjlYfGh3F1T58M4LRkQ3+SM8Q0
+ IbDnIU7fRGL/3ITQGzomydLdEAtP5INr3eZEUSRWs7A==
+X-Gm-Gg: AfdE7ck5NRkqlYKVNE9JhGPElvg5pv3+WomF0euG4fJuO7xv9swINN5ySY5voQhDVNe
+ BNp018KgxzpIvGUQsWrlfiJpi3zKzaLV92TwXgk2quGiu8cAhGQoASxkdthDJ6GZQncMZzbWVLw
+ ixmnaKYrfePL2rRx+UJBlT4ZIpNRn/VbjA0a6oxhs11PcaAGJBTDb8uDaOS2+1Mqt4YjbQHmvzF
+ Ti09Jq4dKoH7Skh9cADCCpXDlR64Tb+W+9O1ftRtL2e/BKIHoYDYZB7qpjp9Op2XtIbMt24rLH1
+ Y3ubMloidVIibTCq78CRSpAOMXH0jD3UXcZUgDxY1z3GcgGhX/BbhH1D
+X-Received: by 2002:a53:d018:0:b0:664:aeda:bfd9 with SMTP id
+ 956f58d0204a3-667d7afc08emr6245685d50.7.1783954743629; Mon, 13 Jul 2026
+ 07:59:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; SUBJECT_ENDS_QUESTION(1.00)[];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- FREEMAIL_CC(0.00)[redhat.com,microsoft.com,unpredictable.fr,gmail.com,linux.ibm.com];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; TO_DN_ALL(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCVD_COUNT_TWO(0.00)[2]; RCPT_COUNT_SEVEN(0.00)[11];
- MID_RHS_MATCH_FROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, imap1.dmz-prg2.suse.org:helo,
- linaro.org:email]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260226220226.20164-1-philmd@linaro.org>
+ <20260226220226.20164-8-philmd@linaro.org>
+ <aah7i1iaoRb9yh7X@x1.local>
+ <ec368507-fe6c-4d6c-ac37-d13b9cb7f46e@oss.qualcomm.com>
+In-Reply-To: <ec368507-fe6c-4d6c-ac37-d13b9cb7f46e@oss.qualcomm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 13 Jul 2026 15:58:52 +0100
+X-Gm-Features: AVVi8Ccl0ZmN6-xx8sg091n9EdSPRhGPb80NP9ylQ7dclT8Je-9-7RAj30DD5IQ
+Message-ID: <CAFEAcA-JW3vAmUWObx+WLhKdMbXdjq7+oNKzTUSCvoQww4sZuA@mail.gmail.com>
+Subject: Re: [PATCH 7/7] system/memory: Have 'info mtree' display addresses
+ nicely
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,89 +126,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+On Mon, 13 Jul 2026 at 15:27, Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+>
+> On 4/3/26 19:35, Peter Xu wrote:
+> > On Thu, Feb 26, 2026 at 11:02:25PM +0100, Philippe Mathieu-Daud=C3=A9 w=
+rote:
+> >>   #define MR_SIZE(size) (int128_nz(size) ? (hwaddr)int128_get64( \
+> >>                              int128_sub((size), int128_one())) : 0)
+> >> -#define MR_ADDR_WIDTH   16
+> >> +
+> >> +static unsigned mr_addr_fmt_width(const MemoryRegion *mr)
+> >> +{
+> >> +    const unsigned int bits =3D 127 - clz128(mr->size);
+> >> +    unsigned int width;
+> >> +
+> >> +    if (bits <=3D 8) {
+> >> +        width =3D 2;
+> >> +    } else if (bits <=3D 16) {
+> >> +        width =3D 4;
+> >> +    } else if (bits <=3D 32) {
+> >> +        width =3D 8;
+> >> +    } else if (bits <=3D 64) {
+> >> +        width =3D 16;
+> >> +    } else {
+> >> +        width =3D 20;
+> >
+> > Is there any case this can happen?  I thought we don't have MR larger t=
+han
+> > 1<<64.  Not a huge deal, though.
+> >
+> > Reviewed-by: Peter Xu <peterx@redhat.com>
+>
+> There are few uses of 0x1.0000.0000.0000.0000:
 
-> (cc list is a random mix of maintainers of code that calls this
-> function, Paolo as "main loop maintainer" and a few others who
-> I thought might have an opinion.)
->
-> We have a qemu_system_guest_panicked() function which causes QEMU
-> to report this to the user and do one of a couple of possible options
-> (shutdown, pause the VM, do nothing). This seems mostly intended for
-> "the guest OS told us by some mechanism that it just panicked". But
-> we use it more widely than that...
->
-> Cases which are "the guest told us about a panic":
->  - accel/kvm/kvm-all.c handling of the KVM_EXIT_SYSTEM_EVENT SEV_TERM
->    and CRASH subtypes
->  - the pvpanic device
->  - the spapr ibm,os-term RTAS call
->  - x86 kvm: tdx_panicked_on_fatal_error()
->  - x86 xen: the SHUTDOWN_crash shutdown subtype
->
-> Cases which are not:
->  - hw/spapr/rtas.c: if the FDT has no RTAS address during system reset
->  - hw/spapr/spapr_events.c: if we wanted to deliver a machine check
->    exception to the guest but the FDT has no RTAS address
->  - hw/spapr/spapr_events.c: if we want to deliver a machine check
->    but the guest is still dealing with a previous machine check
->  - arm whpx, if we get an unknown/unexpected exit code trying to run the VM
->  - x86 nvmm, for an unknown/unexpected VM exit code
->  - ppc TCG, in powerpc_checkstop(), for a machine check exception I think
+Yes; that's the largest possible MR size: exactly 2^64. Inside
+MemoryRegion we keep the size in an Int128; in some APIs
+(e.g. the ones for creating an MR, and the return value
+of memory_region_size()) we represent a size as a uint64_t,
+with UINT64_MAX being a special case meaning "actually 2^64".
+So here the largest possible value of 'bits' is 64: anything
+else would mean some bug elsewhere in QEMU resulting in an
+invalid mr->size somehow, I think.
 
-1) The Checkstop state is the state the (modern) architecture prescribes
-the machine transitions to when: a) machine check happens but machine
-check exceptions are disabled or b) hard-to-recover storage errors. On
-older user manuals I also see occurrences of checkstop when (a) above
-happens and a "debug bit" is also set.
-
-  603 UM:
-  "[cpu] must terminate operation by internally gating off all clocks, and
-  release all outputs to the high impedance state"
-  
-  750cx UM:
-  "When a processor is in checkstop state, instruction processing is
-  suspended and generally cannot resume without the processor being
-  reset."
-
-2) There's also a QEMU-specific usage when handling the processor
-implementation specific 'attn' instruction. The instruction is
-originally designed to allow the OS to poke the hardware or service
-processor for debugging purposes. I think in practice this ends up being
-very similar (or possibly the same) as checkstop so QEMU does the same
-as the previous case.
-
->  - s390_handle_wait(): not sure exactly what this is
->  - s390 unmanageable_intercept(): again not sure, think this is where
->    the guest has gone off the rails and we can't keep running
->
-> At least one or two of the above have comments to the effect that
-> they don't want to use e.g. cpu_abort() because they want to give
-> the user the ability to examine the VM after this unrecoverable
-> guest error, rather than just exiting QEMU.
->
-> So I guess my question is, is it OK to mash these two categories of
-> "we can't keep running the VM" together, or should we define a new
-> one for the "unrecoverable guest error" case, or do we already have
-> some better thing to do that I missed?
->
-> In particular, "do nothing" might be a reasonable response for the
-> user to configure to a guest panic notification, since the guest will
-> presumably stick the vcpu into a do-nothing loop, but "do nothing"
-> doesn't make sense for "unrecoverable guest error" because we'll
-> probably then sit in QEMU in a tight loop retrying whatever it
-> was that failed.
->
-> If we had some kind of qemu_system_unrecoverable_guest_error() then
-> we could maybe convert some uses of cpu_abort() over to that (though
-> uses of cpu_abort() are a very mixed bunch, some of which should be
-> LOG_UNIMP or LOG_GUEST_ERROR and continue and some of which should
-> be straightforward assertions, as well as some which might be this
-> new exit case).
->
-> (This query was prompted by a patch for arm whpx which adds a new
-> qemu_system_guest_panicked() call for an unhandled VM exit situation.)
->
-> thanks
-> -- PMM
+-- PMM
 
