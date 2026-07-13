@@ -4,67 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19663C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:20:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E0AEC44501
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:25:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjIRs-00055B-60; Mon, 13 Jul 2026 11:20:01 -0400
+	id 1wjIXB-0006Jt-BX; Mon, 13 Jul 2026 11:25:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wjIRq-00054v-HP
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:19:58 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1wjIX5-0006GQ-IY
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:25:25 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wjIRn-0007Vn-FB
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:19:58 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id D1BDDC08E4;
- Mon, 13 Jul 2026 18:19:50 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:c5a::1:8] (unknown [2a02:6bf:8080:c5a::1:8])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id nJQO180XEGk0-j6uNM34L; Mon, 13 Jul 2026 18:19:50 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1783955990;
- bh=QpEGrVuL0+/pMKpVJ1V2Bzaohn6yPovMG5Ioj4sSOXA=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=wELZgldGKSFX9WCFSwV5Z0Am9jyV1Z2lD1DyL+zdBmzvlrveehPI8gUp6yz2tYBVC
- W6MLn65INPbQum7KGqUqPqjopkLabqeCQt5/3Iiu6wbAzBMatcrzGr2XxoTUu7itc9
- E8dIOdmF2ocd7VA+GQo1+FmHxWrPbpVhPVcyIidA=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <1c3cc2da-d7ab-4906-8562-14a727c8803a@yandex-team.ru>
-Date: Mon, 13 Jul 2026 18:19:49 +0300
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1wjIX2-00005u-P0
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:25:22 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66DF8PVc1922812
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 15:25:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=WvwvHWzeI96
+ UjZGLN64TQU17neeFRMrq6IWL2n2yYl8=; b=gGWH91GXSxuZssEwxwuq7+3mFav
+ bQyLy7AcAcD3mCj3UgAJcBkou31JlIjX5as/O/IPU4+5S3xKaRIWejZS/itDcdNf
+ dO9s/gb8LcWwxi0LM0VFaruVAFte4HjB6HIE10CYQtp+HW3o9oHjw7mrxsjKfhpA
+ KS1zYoMid6PywygMK7tVh31XR+cU8CnQkVLsSLZfXIFTfM3HOPpt0DwdU/N6GPG7
+ viOVACwlpfQyl7ZliILHf4d9keW2pHMFM0kkfLe+W8+7t61fsC603DALZt6NXGUK
+ s3eyvZNs3jWtDIJTLu/Q5V3j3NRtPs6jauc59Xwbx8kEgLa1iodBDkjQxEw==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcubssx49-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 15:25:17 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-2c7f385887bso80008955ad.0
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:25:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1783956316; x=1784561116; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=WvwvHWzeI96UjZGLN64TQU17neeFRMrq6IWL2n2yYl8=;
+ b=XKXod8+ro+Np5irH2GSxHFL/HD8yY+NOpcJnmVLmar4ywrJ2ksSwpTxGwdGpr3KQiS
+ FmXcxsmf5FRCTG4YttwlvY6CUcXLSHuQdMOI2M1yNR/otCHvMc4BHGNry6IyYXcH+qK0
+ 90Wa81m+pshqyMNaDHENPR/4aIaowhJMiQN8nZycnzD64owLLZ0RHwQgzeJAPp9Yf+mG
+ 3kb/Tu7xr9Wwed+QSifZxHNkTeLJl0L7LYvbO0BpG3HRF0z/jbLUBaVwN2OXFiIl47+F
+ svd1MmpMrt3P3M2q8kFRKEBMpjJAXlpOFfTZQvgQmL40e+OlcaP/Re/ZFg5YcAS69V5e
+ K9lA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783956316; x=1784561116;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=WvwvHWzeI96UjZGLN64TQU17neeFRMrq6IWL2n2yYl8=;
+ b=Zg9YjFEy43KlTB4P+Z+3b8JIdy69etxhx3cGcLG0cF2ZQxX63tIJb9x9rV5Y5qdJz3
+ pq0xEYstrlZEehqVPIF0WBE/qSnRqOcvwKum3bzzjbt7CJtAjzk0EdEeFrfALjFF3HZl
+ AOEggEUDPvGsU9WhFgvd0dLJPla5EBJp4/Ek5LaSOvMlrH5UbJCDU4FZQVxkIhTGVg/M
+ atqmskwfJ1PrNGc2Nq0N+gYCC073XW3jpSPxNIYG84J937NFR3VHYHQ1FEdT4J2reLFg
+ liwHAOSGFceJcTeBkvyuxz9XgnSzwffs7v3eaH+V2Yq1k9qXDP26hf3MNSLb7vZLMQ5w
+ tWRg==
+X-Gm-Message-State: AOJu0YxmEbDA4JrSjLR6jnxDsiTd/uqS2Ds3GPPCElkfU16miuePxfmX
+ +fac4hXkfv+Wbs3zO8Uq12RRKD5YInEkIE/DkLAWDhpnXmO7hmKg03W1uz0JxhTJCu7EjrS/iM5
+ 9tzNMrDlWsY8RY6TDrWthA0P0ogbaDD+ewUD4kH3aW1LEQPxxirp5QBOqsQ==
+X-Gm-Gg: AfdE7ck8kH+wec7jmpZqwdgtaHm2f8TGoXDmFgS6uHBXpm4iMHI/uG17sWCZPdeZnXY
+ drFjVaOslL6m3mFLVf/g9bZb37yxz4Gutnb/BZH/3fhz64TIPKjUtTxoCrrddCF0I1adPsHDElS
+ g9aiKrbS2zDaqBmdF94DjIav21JZ/nxH5KRCsO9Zgwaq0rNq1e24ypcxIF2A6UNrcdlMObYPJ7R
+ fVGQAyEpzriFQybdevPz+Lw3jByG/chbZWMcPTcNm49P/0uMCxP1boXi3d5TsC1WVcciMDcqaWC
+ vu2GHcsmrikqOIvysaQhGqDYHv2+UZOAp8kx26h5BFaXyN2pGins3d/MS9woXl+x7C2gJDV7oS/
+ MfjaWUgmJj/3FrcFL4OuB2ma2G98+fTcNGTgHbm04dPHz0Dke2LBTkuatPZXui5SPhgO/yR9fwA
+ ==
+X-Received: by 2002:a05:6a21:d82:b0:3bf:6c08:fb98 with SMTP id
+ adf61e73a8af0-3c110a1b5d2mr10762987637.58.1783956316096; 
+ Mon, 13 Jul 2026 08:25:16 -0700 (PDT)
+X-Received: by 2002:a05:6a21:d82:b0:3bf:6c08:fb98 with SMTP id
+ adf61e73a8af0-3c110a1b5d2mr10762956637.58.1783956315644; 
+ Mon, 13 Jul 2026 08:25:15 -0700 (PDT)
+Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-31198cb2b99sm47607270eec.26.2026.07.13.08.25.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 13 Jul 2026 08:25:15 -0700 (PDT)
+From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+To: brian.cain@oss.qualcomm.com
+Cc: qemu-devel@nongnu.org, pierrick.bouvier@oss.qualcomm.com,
+ matheus.bernardino@oss.qualcomm.com, alex.bennee@linaro.org,
+ Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+Subject: Re: [PATCH v3 1/1] tests/docker: hexagon fix podman untar, 22.1.8
+Date: Mon, 13 Jul 2026 08:25:13 -0700
+Message-Id: <20260713152513.4039197-1-matheus.bernardino@oss.qualcomm.com>
+X-Mailer: git-send-email 2.37.2
+In-Reply-To: <20260711185433.2021691-2-brian.cain@oss.qualcomm.com>
+References: <20260711185433.2021691-2-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v18 12/14] net/tap: support local migration with virtio-net
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: jasowang@redhat.com, mst@redhat.com, armbru@redhat.com,
- peterx@redhat.com, farosas@suse.de, raphael.s.norwitz@gmail.com,
- bchaney@akamai.com, qemu-devel@nongnu.org, pbonzini@redhat.com,
- yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Zhao Liu <zhao1.liu@intel.com>, Jason Wang <jasowangio@gmail.com>,
- Eric Blake <eblake@redhat.com>
-References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
- <20260710191809.721154-13-vsementsov@yandex-team.ru>
- <alTJLI3EWU96Ks61@redhat.com>
- <f5178fb9-d3d1-4ed1-8f0e-98f4d95be2d6@yandex-team.ru>
- <alT-y6A4hBjHPc82@redhat.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <alT-y6A4hBjHPc82@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Authority-Analysis: v=2.4 cv=Oq9/DS/t c=1 sm=1 tr=0 ts=6a55035d cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=EUspDBNiAAAA:8
+ a=Twlkf-z8AAAA:8 a=COk6AnOGAAAA:8 a=RSCZe5YiV2fdLCBOu88A:9
+ a=324X-CrmTo6CU4MGRt3R:22 a=-74SuR6ZdpOK_LpdRCUo:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: zYmJrXkJlpbC7UrPCvoZ_Odtw5Sr6ton
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDE2MCBTYWx0ZWRfX7PIZ6HfV90zj
+ RPAsVyKz/knahBkV3U+u/RNa+fYW0AGRw7FdzaSWZyWw+nGJaIIB7vBJBVpjUH+rgERQPShtZo2
+ XSbRuYu3gh6hhNH1PumPPgjapnACsdI=
+X-Proofpoint-GUID: zYmJrXkJlpbC7UrPCvoZ_Odtw5Sr6ton
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDE2MCBTYWx0ZWRfX2XXKpA/0UarF
+ kcEm0RyAPIlpNSb1DlGiFzUaEtQUf4H0F0ud6P0yE5qzgaaStzm3l9mHzp+kBsQh4xpPrQjIIzN
+ PkqxzhE7znpyVSSaNGhQVH3cQW+vpBTpmX+yvSi1lK4gIt/FGe2DHn1Q5rFwFTojZkROc0/epqK
+ 7TVLqR/Q/wrBuDdS8D0TpaPzwDQPLQQeuie5jtfLHhY5iCKboCJe9FDH1163dF/LEeXzMGslmQS
+ WWkVt3SO/q1wkv0St+yEKGes8dIp33D8Leh/Jv2Dtc4wAVaCaH0oH7Tz3D913GtO/ZX6OLHVGIV
+ nMkl49axt271brg98L+/LQ8y7AIBHaC8jz7l/3KqLNfS6OlrBc6NNeIAJo891GlYvAKi+L5hCbt
+ W94elMKNk68NkUHG9j4bRosNiRhlobEgppaxA9R+5O/3JncUvp6WjqgTVr/hrc0RPTXZWlriKw2
+ JiMVKzXIf53dEBbOVUQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-13_04,2026-07-10_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 impostorscore=0 spamscore=0 malwarescore=0 bulkscore=0
+ adultscore=0 clxscore=1015 phishscore=0 suspectscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607130160
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=matheus.bernardino@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -75,6 +139,7 @@ X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -86,197 +151,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13.07.26 18:05, Daniel P. Berrangé wrote:
-> On Mon, Jul 13, 2026 at 03:35:06PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> On 13.07.26 14:17, Daniel P. Berrangé wrote:
->>> On Fri, Jul 10, 2026 at 10:18:01PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->>>> Support transferring of TAP state (including open fd).
->>>>
->>>> Add new property "local-migration-supported", which defines
->>>> whether local-migration is actually supported for this TAP device.
->>>> Starting from 11.2 QEMU Machine Types it's enabled by default.
->>>>
->>>> Note, that local-migration (including migrating opened FDs
->>>> through migration channel, which must be UNIX socket), is
->>>> enabled by global "local" migration parameters. But individual
->>>> devices may have additional options to enable/disable it
->>>> per device.
->>>>
->>>> The tricky thing, is that we need to know, should we do
->>>> call open/connect in TAP initialization code. That means,
->>>> that on incoming migration we want to know status of
->>>> "local" migration parameter at time of creating TAP device.
->>>> So, currently, for incoming local migration only TAP device
->>>> created through QMP is supported, as you need to set migration
->>>> parameter first (through QMP as well).
->>>>
->>>> So the full picture is:
->>>>
->>>> On source, to start outgoing "local" migration you need:
->>>>
->>>>    - migration parameter "local" set to true
->>>>    - "local-migration-supported" TAP option set to true (the
->>>>      default, starting from 11.2 QEMU Machine Types)
->>>>
->>>> If at least one of these options is not set, TAP backend
->>>> doesn't participate in migration.
->>>>
->>>> On target, things are more difficult:
->>>>
->>>> Same, you need both "local" and "local-migration-supported"
->>>> be set. And same, if one of them is not set, TAP backend
->>>> is initialized as usual, and doesn't accept any incoming
->>>> state.
->>>>
->>>> Additionally, if you are going to set "local", it must be
->>>> set before creating the TAP device. If TAP device created
->>>> with "local" unset, it initializes as usual. If you enable
->>>> "local" after it and start incoming migration, it will fail
->>>> in .pre_load handler of TAP backend.
->>>>
->>>> Moreover, there are interface restrictions: if you create TAP
->>>> device when QEMU is in INCOMING state, and both "local"
->>>> and "local-migration-supported" set, most of TAP options are
->>>> not allowed, and script/downscript are required to be explicitly
->>>> unset (set to "" or "no").
->>>>
->>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->>>> ---
->>>>
->>>> In v17 thread we considered making new qapi parameters "unstable".
->>>> Still, it was because of doubtful "incoming-fds" parameter. In this
->>>> v18 it's completely removed, and we may live only with "local"
->>>> migration parameter + "local-migration-supported" TAP option.
->>>> This way the series doesn't conflict with suggested by Peter
->>>>     [PATCH RFC 0/2] migration/vl: new -incoming config:* for early migration parameters
->>>> So, I think, worth making one more iteration as "stable candidate".
->>>> If still some doubts, not problem for me to resend with "unstable" features.
->>>>
->>>>    hw/core/machine.c |   7 ++
->>>>    net/tap.c         | 162 ++++++++++++++++++++++++++++++++++++++++++++--
->>>>    qapi/net.json     |  23 ++++++-
->>>>    3 files changed, 185 insertions(+), 7 deletions(-)
->>>>
->>>> diff --git a/hw/core/machine.c b/hw/core/machine.c
->>>> index 15886a56b19..2a1abb29041 100644
->>>> --- a/hw/core/machine.c
->>>> +++ b/hw/core/machine.c
->>>> @@ -36,10 +36,16 @@
->>>>    #include "hw/virtio/virtio-pci.h"
->>>>    #include "hw/virtio/virtio-net.h"
->>>>    #include "hw/virtio/virtio-iommu.h"
->>>> +#include "net/tap.h"
->>>>    #include "hw/acpi/generic_event_device.h"
->>>>    #include "qemu/audio.h"
->>>>    #include "hw/arm/smmuv3.h"
->>>> +/*
->>>> + * TODO: When hw_compat_11_1 appears, local-migration-supported=false
->>>> + * for TYPE_TAP_NETDEV should be move to it from hw_compat_11_0.
->>>> + */
->>>> +
->>>>    GlobalProperty hw_compat_11_0[] = {
->>>>        { "chardev-vc", "encoding", "cp437" },
->>>>        { "tpm-crb", "cap-chunk", "off" },
->>>> @@ -49,6 +55,7 @@ GlobalProperty hw_compat_11_0[] = {
->>>>        { TYPE_ARM_SMMUV3, "ssidsize", "0" },
->>>>        { TYPE_ARM_SMMUV3, "oas", "44" },
->>>>        { "migration", "switchover-ack-legacy", "on" },
->>>> +    { TYPE_TAP_NETDEV, "local-migration-supported", "false" },
->>>
->>> So disabled by default for historical machines type versions, but....
->>>
->>>> +static void tap_instance_init(Object *obj)
->>>> +{
->>>> +    TAPState *s = TAP_NETDEV(obj);
->>>> +    s->local_migration_supported = true;
->>>> +}
->>>
->>> ..enabled by default for all future machine type versions, but...
->>>
->>>
->>>> @@ -1005,6 +1123,23 @@ int net_init_tap(const Netdev *netdev, const char *name,
->>>>            return -1;
->>>>        }
->>>> +    incoming_fds = tap->local_migration_supported && migrate_local() &&
->>>> +                   runstate_check(RUN_STATE_INMIGRATE);
->>>> +
->>>> +    if (incoming_fds &&
->>>> +        (tap->fd || tap->fds || tap->helper || tap->br || tap->ifname ||
->>>> +         tap->has_sndbuf || tap->has_vnet_hdr ||
->>>> +         !tap_is_explicit_no_script(tap->script) ||
->>>> +         !tap_is_explicit_no_script(tap->downscript))) {
->>>> +        error_setg(errp, "Local incoming migration of TAP device (-incoming, "
->>>> +                   "migration parameter @local is set, "
->>>> +                   "TAP parameter @local-migration-supported is set) "
->>>> +                   "is incompatible with "
->>>> +                   "fd=, fds=, helper=, br=, ifname=, sndbuf= and vnet_hdr=, "
->>>> +                   "and requires explicit empty script= and downscript=");
->>>> +        return -1;
->>>> +    }
->>>
->>> ...not usable by default unless the mgmt app knows to avoid these settings,
->>> but the user won't find out about this limit until they try to migrate and
->>> it fails at runtime, months or years after the VM was first configured &
->>> launched :-(
->>
->> No, it fail only for RUN_STATE_INMIGRATE, and only if "local" is enabled.
->> If mgmt enables "local" it must know about the restrictions of using it.
+On Sat, 11 Jul 2026 11:54:33 -0700 Brian Cain <brian.cain@oss.qualcomm.com> wrote:
+>
+> The debian-hexagon-cross image previously unpacked the codelinaro
+> clang+llvm hexagon toolchain by piping a .tar.zst archive straight
+> into "tar --zstd -xC". GNU tar restores the archive's stored file
+> modes on extraction, including lchmod() on symlinks. Under rootless
+> podman, where the build runs in a user namespace on overlay storage,
+> those chmod()/lchmod() calls are rejected with EPERM:
 > 
-> This implies that with new machine types, mgmt has to know to turn
-> off the local migration feature which is rather unfortunate.
-
-Not sure I understand.
-
-"local" migration parameter is disabled by default, regardless machine type.
-
-Assume we are in a new machine type, and "local-migration-supported" is enabled
-by default.
-
-So, to enable "local" mgmt must know the details about restrictions in TAP
-(which are now hidden under machine type). Is that what you mean?
-
-It's a bit irrelevant now, as the only supporting device is TAP, and if
-mgmt enables "local", it means that it want enable it exactly for TAP
-device. Still in generic case (assume we already have some supporting
-devices) it's a bad thing of course.
-
+>   tar: .../libclang_rt.builtins.a: Cannot change mode to rwxrwxrwx: \
+>        Operation not permitted
+>   tar: .../x86_64-linux-gnu: Cannot change mode to rwxr-xr-x: \
+>        Operation not permitted
+>   tar: Exiting with failure status due to previous errors
 > 
->>> IMHO the sane way to do this is to not have any "local-migration-supported"
->>> device flag at all, and also no "local" migration parameter. The src & dst
->>> QEMU's so badly need to be able to auto-negotiate and just do the right
->>> thing, otherwise this local migration optimization becomes a mgmt nightmare
->>> long term :-(
->>
->> "local" is needed because we can't know, does transfer support fd-passing.
->> To auto-negotiate it, we probably need to pass a test FD to the target, as
->> simply checking "is it a UNIX socket" may not be enough.
+> tar then exits non-zero and aborts the build, so debian-hexagon-cross
+> only builds reliably under docker, not rootless podman.
 > 
-> Oh, true, I forget that the UNIX socket could just be a local conenction
-> to a MITM proxy
+> So instead we can switch to a different packaging.  clang, lld
+> come from LLVM Debian builds from apt.llvm.org, instead of custom ones for
+> hexagon.  And only the hexagon linux sysroot is required, avoiding the
+> tar issues.
 > 
->>> And yet we don't have any auto-negotiate mechanism, and I don't want to
->>> block your work :-(
->>>
->>
->> Thanks) But finally, in short term, could we proceed with it as is, or not?
->>
->> Would it be better, if I drop the default =true for new machine types, keeping
->> it false?
-> 
-> I think I'd be more comfortable with this as non-default
-> in the machine type. As you say, the mgmt has to know
-> the limitations, so at that point having them turn on
-> the device property fits with the knowledge requirement.
-> 
-> Auto-enabling something is more applicable when the
-> behaviour is seemless without caveats.
-> 
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
 
-OK, that works for me, if no more opinions on that, I'll simply drop
-machine-type-default in v19.
-
-
--- 
-Best regards,
-Vladimir
+Reviewed-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
 
