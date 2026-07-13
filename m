@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4679EC44501
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 17:56:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 310AEC43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 17:57:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjKsh-00005K-DR; Mon, 13 Jul 2026 13:55:53 -0400
+	id 1wjKtp-00011H-Dq; Mon, 13 Jul 2026 13:57:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wjKsd-0008Vi-1G
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 13:55:47 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
+ id 1wjKtm-000112-Km
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 13:56:59 -0400
+Received: from smtp186.sjtu.edu.cn ([202.120.2.186])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wjKsZ-00050D-Ee
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 13:55:46 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id 0E4F8C08CD;
- Mon, 13 Jul 2026 20:55:39 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:c5a::1:8] (unknown [2a02:6bf:8080:c5a::1:8])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id btSRMB0XGuQ0-idUowOsI; Mon, 13 Jul 2026 20:55:38 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1783965338;
- bh=nz2l5jN2QkQtdNKtEycPqNtFsGFb6nJVU7KahWQz5rs=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=g5YnA1jzwjCeFIa0iX7p19yAie0GrgQB3pzehKMMTepvIwn253EJAxDoHVDnPrXCa
- xbF/fs2lRQu9RQ22Di8Ho/xDdMDIRHAkVL/WN9GmsVcFuCs7Pf5XiF1R71pSmnb2oT
- WyPtb+d/Lmp7Pk1L1BxsoY0nk8fdbE5ZJNl6O0hA=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <25b5e9a6-e563-4ab0-9075-04a3a00d3b33@yandex-team.ru>
-Date: Mon, 13 Jul 2026 20:55:37 +0300
+ (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
+ id 1wjKtj-00053T-BF
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 13:56:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sjtu.edu.cn;
+ s=default; t=1783965404;
+ bh=ccJTLNQ3W7+iSP2sg8o+Gm0l+NeKXNFTBSuABlh0NSY=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=S4JEQRnO6GrA/hTPCinO196nUU3stwfr4wBVLImnaCoJwEFCIkrTcDRzfXxPp/WH2
+ fvJCraX1uIQVuCB8csnCjrvs8yTsqey4UTskJjj1h5Ay7+tefk6IfF/wBApNyZR43h
+ YOwqJ6dGyZuXqzS0u20FtnMK9jlcFPTY5CmZQlsjx8zWTenMNGD1OQcJP373dZNkjQ
+ xQncDoFcyi6+OgZtIdse3Wsrtvgvm1gI4KG6Ukav1YgSO/NYEqo+h0RypqvkkvJ4Ca
+ rkkfPOrlNq5evzFYMmunMVVjHr3p/T6HTLNWPgCWPdfii/TFdAHaFVPjnzufzJwp/G
+ bZU3dQE6W/Inw==
+Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
+ by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id 41BAD2FF367;
+ Mon, 13 Jul 2026 17:56:44 +0000 (UTC)
+Received: from [10.0.1.62] (unknown [202.120.40.100])
+ by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 538E437C91E;
+ Tue, 14 Jul 2026 01:56:13 +0800 (CST)
+Message-ID: <37b40d64-aaa7-4358-ad5d-70c15dc05cba@sjtu.edu.cn>
+Date: Tue, 14 Jul 2026 01:56:11 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v18 09/14] qapi: add local migration parameter
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: jasowang@redhat.com, mst@redhat.com, armbru@redhat.com,
- peterx@redhat.com, farosas@suse.de, raphael.s.norwitz@gmail.com,
- bchaney@akamai.com, qemu-devel@nongnu.org, pbonzini@redhat.com,
- yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
- Eric Blake <eblake@redhat.com>
-References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
- <20260710191809.721154-10-vsementsov@yandex-team.ru>
- <alS1DMD_pRrklFRb@redhat.com>
- <05c89310-7bec-4aac-addc-b5ef377e09a7@yandex-team.ru>
- <alTKMA87h9x951Ei@redhat.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <alTKMA87h9x951Ei@redhat.com>
+Subject: Re: [PATCH v11 2/2] docs/about/emulation: document the dlcall plugin
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ qemu-devel <qemu-devel@nongnu.org>
+Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
+ Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
+ Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
+References: <20260710212601.583352-1-functioner@sjtu.edu.cn>
+ <20260710212601.583352-3-functioner@sjtu.edu.cn>
+ <990f11f5-c8fd-4cf6-b186-180e24452ff3@oss.qualcomm.com>
+ <5a303ce5-cb6f-43b9-857f-39cffc8c7d67@sjtu.edu.cn>
+ <8c2aa5fe-026e-45c2-a908-5f6c245b2993@oss.qualcomm.com>
+ <2c57e188-b9f5-45b9-90b3-81a3d128254a@sjtu.edu.cn>
+ <69924eee-ba12-4a3e-baff-8ecb86d1ce77@oss.qualcomm.com>
+From: Ziyang Zhang <functioner@sjtu.edu.cn>
+In-Reply-To: <69924eee-ba12-4a3e-baff-8ecb86d1ce77@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=202.120.2.186;
+ envelope-from=functioner@sjtu.edu.cn; helo=smtp186.sjtu.edu.cn
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -71,6 +71,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -82,134 +83,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13.07.26 14:21, Daniel P. Berrangé wrote:
-> On Mon, Jul 13, 2026 at 01:55:48PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> On 13.07.26 12:51, Daniel P. Berrangé wrote:
->>> On Fri, Jul 10, 2026 at 10:17:58PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->>>> We are going to implement local-migration feature: some devices will be
->>>> able to transfer open file descriptors through migration stream (which
->>>> must UNIX domain socket for that purpose).  This allows to transfer the
->>>> whole backend state without reconnecting and restarting the backend
->>>> service. For example, virtio-net will migrate its attached TAP netdev,
->>>> together with its connected file descriptors.
->>>>
->>>> In this commit we introduce a migration parameter, which enables
->>>> the feature for devices that support it (none at the moment).
->>>>
->>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->>>> Acked-by: Markus Armbruster <armbru@redhat.com>
->>>> Acked-by: Peter Xu <peterx@redhat.com>
->>>> Reviewed-by: Ben Chaney <bchaney@akamai.com>
->>>> ---
->>>>    include/migration/misc.h |  2 ++
->>>>    migration/options.c      | 18 +++++++++++++++++-
->>>>    qapi/migration.json      | 12 ++++++++++--
->>>>    3 files changed, 29 insertions(+), 3 deletions(-)
+On Mon, 13 Jul 2026 10:53:56 -0700, Pierrick Bouvier wrote:
+> On 7/13/2026 9:34 AM, Ziyang Zhang wrote:
+>> On Mon, 13 Jul 2026 08:31:18 -0700, Pierrick Bouvier wrote:
+>>> The problem is that if that the guest program, or the host library (host
+>>> libhello) may depend on libstdc++. If they do and if they depend on a
+>>> (newer) symbol not present in lorelei libstdc++, we break ABI. Same goes
+>>> for libgcc.
 >>>
+>>> By not doing this, you'll be forced to provide a lorelei devkit
+>>> everytime a new libstdc++ is published, or a distribution updates its
+>>> gcc.
 >>>
->>>> diff --git a/qapi/migration.json b/qapi/migration.json
->>>> index 66bd900465a..03bdf19f3a6 100644
->>>> --- a/qapi/migration.json
->>>> +++ b/qapi/migration.json
->>>> @@ -830,7 +830,8 @@
->>>>               'zero-page-detection',
->>>>               'direct-io',
->>>>               { 'name': 'x-rdma-chunk-size', 'features': [ 'unstable' ] },
->>>> -           'cpr-exec-command'] }
->>>> +           'cpr-exec-command',
->>>> +           'local'] }
->>>>    ##
->>>>    # @migrate-set-parameters:
->>>> @@ -1012,6 +1013,12 @@
->>>>    #     Must be set to the same value on both source and destination
->>>>    #     before migration starts.  (Since 11.1)
->>>>    #
->>>> +# @local: Enable local migration for devices that support it.  Backend
->>>> +#     state and its file descriptors can then be passed to the
->>>> +#     destination in the migration channel.  The migration channel
->>>> +#     must be a Unix domain socket.  Usually needs to be enabled per
->>>> +#     device.  (Since 11.2)
+>>> The only solution is to embed libstd++ and libgcc statically, or rely on
+>>> host libraries. If you choose the second option, you know have the
+>>> opposite problem. So I think the only way to solve it is really static
+>>> linking, even if it will slightly increase binaries size.
 >>>
->>> What happens when this is enabled and there are devices which
->>> don't support it ?
 >>
->> These devices are migrated as usual, ignoring "local" option.
+>> The devkit already ships libstdc++ and libgcc anyway: its own clang/
+>> LoreTLC link them dynamically, and we bundle them so the toolchain even
+>> starts. So bundling libstdc++ for the thunk flow adds no new dependency,
+>> it just reuses one the devkit must carry. Static-linking the thunks
+>> wouldn't make the devkit any smaller or more self-contained either,
+>> since clang still needs the dynamic libstdc++; we'd only be adding
+>> static copies on top of it.
 >>
->>>
->>> What happens when this is enabled and a device on the src
->>> does not support it but a device on the (newer) QEMU dest
->>> does support it ?  How does the mgmt app know which devices
->>> support it ?
+> 
+> There is a difference between the toolchain dependencies, and thunks
+> dependency. For the first one, it's perfectly find to provide libstdc++,
+> for the second, it can create conflicts at runtime that may be very hard
+> to diagnose and solve.
+> 
+>> On the ABI risk itself: libstdc++ keeps a backward-compatible ABI, and
+>> the copy we bundle is recent, so a thunked host library only breaks if
+>> it was built against a strictly newer libstdc++ and references a new
+>> symbol. Even then it needs no new devkit, because the resolution order
+>> is the integrator's to choose. On a host newer than our bundle, putting
+>> the system libstdc++ ahead of the devkit's on LD_LIBRARY_PATH lets the
+>> host library bind the newest one, while clang and the Lorelei runtime
+>> keep working against it by backward compatibility. So a gcc update on
+>> the host doesn't force us to reship.
 >>
->> The only supporting device (TAP-backend) declares support by
->> "local-migration-supported", so mgmt app should care to set
->> same value for it on host and target (like for other options
->> actually). Or simply relay on default, which is true starting
->> from 11.2 Machine Type.
+> 
+> Sure can choose indeed. However, he has to find where such libraries are
+> located on his system, and prepend that to LD_LIBRARY_PATH. Not the most
+> user-friendly thing to guess and debug IMHO.
+> 
+>> There's also an active reason not to static-link. Both the Lorelei
+>> runtime and the generated thunk libraries depend on libstdc++. If we
+>> statically link libstdc++ into a thunk while the host library it
+>> dispatches to links the system libstdc++ dynamically, the process ends
+>> up with two libstdc++ copies on the host side, right across the boundary
+>> where C++ objects and exceptions pass between the thunk and the real
+>> library. That can break:
 >>
->>>
->>> Can we document the semantics in these cases.
+>> - Exceptions: one thrown in the host library may not be caught in the
+>> thunk. The two copies have different std::type_info for the same type,
+>> so the match fails and it hits std::terminate.
+>> - dynamic_cast / typeid across the boundary: they assume a single
+>> type_info per type, so they can start returning null or misidentifying
+>> types.
+>> - Duplicated global state: two sets of the iostream objects, the locale/
+>> facets, and the exception emergency buffer.
 >>
->> That's: "Usually needs to be enabled per device."
 > 
-> ....except that we have it enabled by default for TAP backends
-> in new machine types.... except that it will then break if the
-> app/user has enabled any of the "forbidden" options.
+> That's a good point, but does lorelei even provide a solution for that?
+> I guess that exception raised from an host library and sent back to
+> guest binary with target specific types will not result in what is
+> expected at the moment.
 > 
-> The way this doc is written makes it sound like "local" is an
-> optimization you can turn on in any scenario, and it will do
-> the right thing if the device supports it. That is very much
-> not the case - enabling this flag will definitely break many
-> configs out of the box, with new machine types due to the TAP
-> device defaults & incompatible options.
-
-Ok, now we decided to NOT make default support for TAP in newer
-machine types.
-
-So, enabling "local" is safe in existing scenarios, only explicit
-enabling TAP.local-migration-supported will change the behavior.
-
-Keep "local" documentation as is?
-
-I see the only way to make it more informative: directly describe
-connection with TAP.local-migration-supported, without general
-phrases about "devices that support" and "usual". We'll have to
-update it when more devices added (my next step is vhost-user-blk),
-but at least, it would be absolutely correct at the moment.
-
-> 
-> 
->> So, we (may) have three types of devices:
+>> Based on the above reasons, I prefer to do that than statically link and
+>> grow the big artifact. Does that hold for you?
 >>
->> 1. Not supporting "local" migration: they just ignore "local" migration
->> parameter.
 > 
-> Yep, the easy case.
+> Ok.
 > 
+>> Thanks,
+>> Ziyang Zhang
 >>
->> 2. Supporting "local" from the beginning (not such devices for now):
->> they simply do "local" migration when "local" is set, and "usual"
->> migration when "local" is not set.
 > 
-> ...except that abort the migration if you used any forbidden options.
-> I really dislike this as default out of the box behaviour for the
-> TAP backend.
-> 
->> 3. Support for "local" appears at some moment (like TAP in this series).
->> Such devices should have a possibility to enable/disable the "support
->> for local" by hand, to be able to migrate betweend supporting and
->> not supporting QEMU versions.
-> 
-> If the mgmt app is manually enabling the feature, then mitigates
-> the problem of forbidden options, as they should be aware of
-> whether their config is safe to enable or not.
-> 
-> 
-> With regards,
-> Daniel
+> Regards,
+> Pierrick
 
 
--- 
-Best regards,
-Vladimir
+Wait a second. I missed something.
+
+Sorry, last time I answered without actually checking the libstdc++ 
+situation on the four distros. You were right to push on it, so I looked 
+properly.
+
+You were right that the x86_64 sysroot is the crux: libc6-amd64-cross 
+gives /usr/x86_64-linux-gnu/ a libc but no libstdc++, so the guest side 
+has no system libstdc++ to fall back on. That's the side we should keep 
+providing ourselves, and the devkit already ships the x86_64 libstdc++ 
+next to the guest runtime for exactly that. It's only a default, though: 
+if a guest executable needs a newer libstdc++, the user can put a newer 
+x86_64 libstdc++.so ahead of ours on the guest LD_LIBRARY_PATH (the -E 
+one) and it takes precedence, while our runtime keeps working against it 
+by backward compatibility. So we are not locking anyone to our version.
+
+The host side is different, there libstdc++ is reliably present. I 
+checked each distro's stock minimal base image, with nothing installed 
+on top:
+
+Debian 12: libstdc++6 12.2.0-14+deb12u1
+Ubuntu 24.04: libstdc++6 14.2.0-4ubuntu2~24.04.1
+Fedora 40: libstdc++-14.2.1-3.fc40
+Arch (2024-08 snapshot): libstdc++.so.6 from gcc-libs 14.2.1
+It ships out of the box on all four, and the C compiler pulls it in on 
+Debian, Ubuntu and Arch.
+
+So the split I'd propose: provide libstdc++ only on the guest side (the 
+x86_64 sysroot has none), and on the host side rely on the system's, so 
+the host thunk and the real host library both bind the host's own 
+libstdc++ rather than a copy we ship. That directly addresses the ABI 
+point you raised: nothing we ship shadows the host's libstdc++, so a 
+thunk never forces an older libstdc++ onto a host library built against 
+a newer one.
+
+Does that split sound right to you?
+
 
