@@ -4,85 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2FEAC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 07:46:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76C52C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 07:48:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjBM6-0000Mk-Tu; Mon, 13 Jul 2026 03:45:35 -0400
+	id 1wjBO5-0000vM-JC; Mon, 13 Jul 2026 03:47:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wjBM4-0000MQ-Fk
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 03:45:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1wjBO2-0000uP-3M; Mon, 13 Jul 2026 03:47:34 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wjBM2-0003p5-Fn
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 03:45:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783928728;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mKVnbI611gExUMjuzjUm1eZVIqPdwDXtnBh9poHdS4c=;
- b=OS6s4xl3cFcNsGf2w5FGUFhmRAGTUlk3zbHPcVR69Z1WNZFXYbbpP4dkqzEZG8SPVhGmEH
- FEAnqWrodniOl/417mu6arLDpvHfDPHo2xvBceZhxMHK3UXylV5bnTSwJfdqL/Mu6n0OxF
- hF1DaOpL4RV6836ABC6Lsd/nE2mZwic=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-245-IZooiFzcPA6IroMRGoyIwg-1; Mon,
- 13 Jul 2026 03:45:24 -0400
-X-MC-Unique: IZooiFzcPA6IroMRGoyIwg-1
-X-Mimecast-MFC-AGG-ID: IZooiFzcPA6IroMRGoyIwg_1783928722
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4EE9B18002C3; Mon, 13 Jul 2026 07:45:21 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1509E765; Mon, 13 Jul 2026 07:45:20 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A638D21E6920; Mon, 13 Jul 2026 09:45:17 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: jasowang@redhat.com,  mst@redhat.com,  peterx@redhat.com,
- farosas@suse.de,  raphael.s.norwitz@gmail.com,  bchaney@akamai.com,
- qemu-devel@nongnu.org,  berrange@redhat.com,  pbonzini@redhat.com,
- yc-core@yandex-team.ru,  mark.caveayland@nutanix.com,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Sergio Lopez <slp@redhat.com>,  Zhao
- Liu <zhao1.liu@intel.com>,  Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>,  "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>,  Bernhard Beschow <shentey@gmail.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,  Palmer Dabbelt
- <palmer@dabbelt.com>,  Jason Wang <jasowangio@gmail.com>,  Eric Blake
- <eblake@redhat.com>,  devel@lists.libvirt.org (open list:Incompatible
- changes),  xen-devel@lists.xenproject.org (open list:X86 Xen CPUs),
- qemu-ppc@nongnu.org (open list:e500),  qemu-riscv@nongnu.org (open
- list:Microchip PolarFi...)
-Subject: Re: [PATCH v18 03/14] net/tap: deprecate "no" as special value for
- script/downscript
-In-Reply-To: <20260710191809.721154-4-vsementsov@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Fri, 10 Jul 2026 22:17:52 +0300")
-References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
- <20260710191809.721154-4-vsementsov@yandex-team.ru>
-Date: Mon, 13 Jul 2026 09:45:17 +0200
-Message-ID: <87ech7uycy.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1wjBNv-0003tJ-4P; Mon, 13 Jul 2026 03:47:28 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66D6fl9M1731613; Mon, 13 Jul 2026 07:47:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=iVSQ/Tn/JlRifT74A0xNyuQcZchtpH0rVbgcrD3PF
+ Z0=; b=bt0Bj1lqEAp6T+0vb/s21Xn5055/mPrSpV2xOry54iRCJMm3i+wJPrG2J
+ uukcRXQjOW1AAAvBLSlzdbvjulXM120qISIN7qcy51KTlEFHiedK1Ajh5zlWNQfO
+ IrOPRalhoqhWtsH7jN4jedw/nHJHOzkMdSvugFARyoDh7MzXgwWHnpAhePsW6Lhu
+ +tFdinWUvyOftbzlT7WwXOFJAU8U6f/54jwLV8gygkRcrD0NheuP8vRMhxs06T9J
+ TX+6+Qb5xtzolhFqKgKO1SGYEt6X8uzFmBBCiEgg7Q2jjdW95B4cAcd5d4cGzaRw
+ mRo6Cmymg40YrC34D/pCysc3neBXw==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbegbf56t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 13 Jul 2026 07:47:15 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66D7Ye0Z004416;
+ Mon, 13 Jul 2026 07:47:15 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fc2uxvbfd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 13 Jul 2026 07:47:15 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66D7lEkR23069248
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 13 Jul 2026 07:47:14 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2950C5805D;
+ Mon, 13 Jul 2026 07:47:14 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 21A2858061;
+ Mon, 13 Jul 2026 07:47:12 +0000 (GMT)
+Received: from b35lp69.lnxne.boe (unknown [9.87.84.240])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 13 Jul 2026 07:47:11 +0000 (GMT)
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
+To: Cornelia Huck <cohuck@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
+ Halil Pasic <pasic@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>, qemu-stable@nongnu.org
+Subject: [PATCH] s390x/css: firm up handling of chained TIC CCWs
+Date: Mon, 13 Jul 2026 09:47:08 +0200
+Message-ID: <20260713074708.884282-1-borntraeger@linux.ibm.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: permerror client-ip=170.10.129.124;
- envelope-from=armbru@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=fOcJG5ae c=1 sm=1 tr=0 ts=6a549804 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
+ a=HhwtMAblLGFdMxaO47IA:9 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDA3OSBTYWx0ZWRfXyNtF9NaQmb4K
+ NJHlY+WBhiXXruSIRK6/G8+iP7EksAcOmZv4jfbPYjvYB6zdtE3GZrkXdRwYZqQQN68TBEOqNgy
+ 9TVIOJk/CsiFnnLRfEX3kNQ6LOuWL9WNt6oN7XEBOauah6VEZvw/Lgb4gpNDXVPjLuEnfEK3+lq
+ FUVKjuHU2+v+DJ+IPFWeH85O2mROEntUYoooTkWD2kvCTsxofwGEtcg1lwU3vOAAN89ND6/tYcC
+ E7Uo92RO9FbOU9PzIQudQUIK6DrwMPhkiIIbtU34dlhONgt1LsfmsXSGZ9TnMEJO1CglSeXASkX
+ edRY3tZ3h47qmjMOmUixlaOB3Ccn9rMwEVC/iQxvokXlxgJlJvh3Dx8dzbY1Sn4aqfT30Y5wGhf
+ mpEVM0EgJJu0IItWjehJKBDj8KGzMHlQtd1PeqhjExwQvGa01uw7PSmfFQSaTx+ORhckp+VMzll
+ 6xPn/Pgc2F24Egg9+0w==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDA3OSBTYWx0ZWRfX/xYvBF9xD6+l
+ xSy5T2ehew9H1CuRBrNSZSQQLaJ7OE68FEqIcmOHwBEZbFmviHKP4yazYJKWRpQXsizihm7AViu
+ ftSWuIJ5/V2tDAvdQNaOCDRa5Fl94rI=
+X-Proofpoint-GUID: Loj5k4xVWAI_MRmMllJKsxYN2h0Utwm7
+X-Proofpoint-ORIG-GUID: Loj5k4xVWAI_MRmMllJKsxYN2h0Utwm7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-13_02,2026-07-10_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 impostorscore=0 suspectscore=0 adultscore=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 phishscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607130079
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=borntraeger@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,49 +125,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+From: Eric Farman <farman@linux.ibm.com>
 
-> The interface is ambiguous, as "no" is valid file name. So,
-> using "no" as a special value to disable script is deprecated.
-> Use an empty string ("script=" / "downscript=") instead.
->
-> In a future version, "no" will be treated as a plain file name, just
-> like any other non-empty value.
->
-> Document the deprecation in docs/about/deprecated.rst, qapi/net.json,
-> and qemu-options.hx. Update other docs to use empty string instead of
-> "no". Add a warning.
->
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+The logic in css_interpret_ccw() correctly returns -EINVAL if a
+Transfer-In-Channel (TIC) CCW is command chained to another TIC CCW.
+The same routine also correctly returns -EINVAL if 256 CCWs do not
+perform a data transfer as part of the I/O operation [0].
 
-[...]
+What is missing, however, is a combination of these two, where a loop
+can be generated that will continue processing CCWs but without
+providing an opportunity to catch a breath. Fix this by capping
+the number of TIC CCWs in a channel program at the same limit as
+the CCWs without data transfer.
 
-> diff --git a/net/tap.c b/net/tap.c
-> index fedd48c48d2..1ec9e5ebe6f 100644
-> --- a/net/tap.c
-> +++ b/net/tap.c
-> @@ -103,6 +103,8 @@ static bool tap_is_explicit_no_script(const char *script_arg)
->      }
->  
->      if (strcmp(script_arg, "no") == 0) {
-> +        warn_report("script=no/downscript=no is deprecated; "
-> +                    "use script=/downscript= instead");
+[0] See "Invalid Sequence" in z/Architecture Principles of Operation
+    (SA22-7832-14), p16-27
 
-net_init_tap() could pass the parameter name for a simpler error
-message.  Probably not worth the bother.
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+---
+ hw/s390x/css.c         | 7 +++++++
+ include/hw/s390x/css.h | 1 +
+ 2 files changed, 8 insertions(+)
 
->          return true;
->      }
->  
-
-In net_init_tap_one():
-
-           qemu_set_info_str(&s->nc, "ifname=%s,script=%s,downscript=%s", ifname,
-                             script ?: "no", downscript ?: "no");
-
-This sets nc->info_str, which is shown by "info network".  Should we
-replace "no" by ""?
-
-[...]
+diff --git a/hw/s390x/css.c b/hw/s390x/css.c
+index 29ba39f79e..3a67b67053 100644
+--- a/hw/s390x/css.c
++++ b/hw/s390x/css.c
+@@ -1078,6 +1078,12 @@ static int css_interpret_ccw(SubchDev *sch, hwaddr ccw_addr,
+             ret = -EINVAL;
+             break;
+         }
++        /* Limit the number of TICs in a given channel program */
++        if (sch->ccw_tic_cnt == 255) {
++            ret = -EINVAL;
++            break;
++        }
++        sch->ccw_tic_cnt++;
+         sch->channel_prog = ccw.cda;
+         ret = -EAGAIN;
+         break;
+@@ -1129,6 +1135,7 @@ static void sch_handle_start_func_virtual(SubchDev *sch)
+         sch->ccw_fmt_1 = !!(orb->ctrl0 & ORB_CTRL0_MASK_FMT);
+         schib->scsw.flags |= (sch->ccw_fmt_1) ? SCSW_FLAGS_MASK_FMT : 0;
+         sch->ccw_no_data_cnt = 0;
++        sch->ccw_tic_cnt = 0;
+         suspend_allowed = !!(orb->ctrl0 & ORB_CTRL0_MASK_SPND);
+     } else {
+         /* Start Function resumed via rsch */
+diff --git a/include/hw/s390x/css.h b/include/hw/s390x/css.h
+index d3326237c9..79b41f305e 100644
+--- a/include/hw/s390x/css.h
++++ b/include/hw/s390x/css.h
+@@ -132,6 +132,7 @@ struct SubchDev {
+     bool ccw_fmt_1;
+     bool thinint_active;
+     uint8_t ccw_no_data_cnt;
++    uint8_t ccw_tic_cnt;
+     uint16_t migrated_schid; /* used for mismatch detection */
+     CcwDataStream cds;
+     /* transport-provided data: */
+-- 
+2.53.0
 
 
