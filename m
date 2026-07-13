@@ -4,89 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91C94C43458
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFC5DC44501
 	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:33:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjIeG-0008Q9-3q; Mon, 13 Jul 2026 11:32:48 -0400
+	id 1wjIeI-0008S8-GU; Mon, 13 Jul 2026 11:32:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjIe8-0008Pi-72
+ id 1wjIe8-0008Ph-6R
  for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:40 -0400
-Received: from mail-wr2-x02.google.com ([2a00:1450:4864:30::2])
+Received: from mail-wm2-x01.google.com ([2a00:1450:4864:31::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjIe6-00015s-4c
+ id 1wjIe5-00015l-Sz
  for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:39 -0400
-Received: by mail-wr2-x02.google.com with SMTP id
- ffacd0b85a97d-4744516a312so526565f8f.1
+Received: by mail-wm2-x01.google.com with SMTP id
+ 5b1f17b1804b1-493b4e7be03so175505e9.1
  for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:32:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783956756; x=1784561556; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=j/FNYb+MXYMHJHLPxbhC8lFmm+mlt3LYTkPOncRVq40=;
- b=AfPfh1Zrik4xEOICCV5RlRKuneD2Uk27ZjUJyUiGA9FpyxGZnIhwBRkf+KEy7Rt4ij
- wj8JT71sOEF5AZrsKp0tc67Oz14D3ds6JVB0eWJsNmAsJz1YlyL45cUzuYNyC3debhL0
- d+LN4OhO/xkRO5B9DGfQI1hH7AYONwglIB+Kio+0Zx8akpT1i3G6WEin7Cr1RGFjifcv
- I3kAdtzM90ilbAhR9rEYnzGKJup3ZUc0q3ydIK7Q5K/wTIaVmgc78gz9jeFRYabCYXsd
- 5SViiBxIoxEm0piXcbNlj9Ok2OrMZ1wkNDis+cIjAz7FACVRewNl9QsFr/98/bFod4UI
- s5Kw==
+ d=linaro.org; s=google; t=1783956755; x=1784561555; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=mGwNmsnFNYS4uKMqaZS+vAeRGRayVktiMo+FBV6fPiE=;
+ b=BBqRI6N81rOECkfNzqesS8UPgC9/owbhZpJlxcoEipZ/aVnRt/dgCY4bdEBsFqXq7O
+ d8u+Q9fUmEbyrz4sRARon/iMzhlAext2lZta6rFjHAlND2513ELlojX8xv2tsN4g2BxC
+ 190cuCEdKaAbLUppydEgzEbrWblOsOXdkLphrTTP7c9G5qNCTrEPxcGnDlhopeckxNN0
+ PyxvRxFcyvDbm+CDW+JP0NNIo09/FFy1WOaPok0vlohd8QE73chAjJGfYMfrkaPOysvR
+ Gh1eXoX2jKy4BOi82nZaTtKEU8jCV0NVw29EDKyXeCfnNhOxE8TYCkvXr+MaZl7MBOzf
+ DGUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783956756; x=1784561556;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=j/FNYb+MXYMHJHLPxbhC8lFmm+mlt3LYTkPOncRVq40=;
- b=dfLPXBmTbMJ9MIoNK2dYUOuI9FcV6rdW7OM+g5ORfftc0mSLmmzCUizFaA2LEFN0Ni
- zZaz0V/+Dlx0GuYgKYjGT1RdbWs0zTB7T6lJrPRHTgDGeB/ns32MeCSOqbquSUlo1odo
- 8m+XC1XI8r3u2awHd7SwEpl7iwSUWfKCGzTIaeeD50YlAcirVZfPmHcdwxhuGZVMMNw5
- smngKXmQm+ljG5/3OuB3TBhKD4nZOBpXAcg4J8M8Yv9BJ4LVmOzGc8rBXg4+dm6TsMP5
- gOXoiyrJ3JkVhTgwEmHsahE+P4C5VSZVaEvvpTM5tfIG80Ltes0vat2/8PIiFGE7KOTp
- WIhQ==
-X-Gm-Message-State: AOJu0YyILaqKvyD1BzxTim1vQ7x0bwzxtqq+eH/vvUdeStgxiuG0yKgL
- nT9L6peYrC7kbhV+sH1jLzYC/QOUQbBQluoKIhT+GMBeoBPM7efrxG99Pny9/GCI0SLkluTWr2S
- bBG4ce45Hy/dU
-X-Gm-Gg: AfdE7ckBP6ko0r89JaRK1dAf1ndNJHRgFB0I3wbao6NMCPDD8YtdRMvLkOuEzp4E1pu
- XE/0DNe7Y57t5t7QKRc0d11IogBBE9Jix500XdwkrK+q4pVPljxoWHC3fsLnBvfWhXXKfcbEJiT
- i9fTHGfx5WG0jkAdUB3poXKEXWe5VXjhgHrMyhK5no2wPAYj48rWdULVmgGCjGRbTmt5PxLSKEh
- 8dPf/q4sOYH+wo6uRabLkdyT55aERYighsmMNW6Cm7FTGb7t6Whrw6c0F0hEMVbo3MI89KzJML5
- 8Ef4i/xTjFgCZ1QB1DXU0OEG3X8cuTwECsKNfllGkTGuadyXgzvxbFN+hxVKxUIi6QKJAXHUpgK
- mC2xNbw7Jf+e4VXlGLSYyuAw2gqQMDl23TLlPZI+WbAyjjzwqUcZ1ADjXBHmD926IHS/Uq1AM1Q
- hhdArrLO8zliTIlyHg5UVE6wyhj428KFl0QtylVz0ZLe7OxfCnNaT3Q/BDOQrKU/DiVBzWX6bCj
- b6OPhqE8MnEuc8btGUyxA==
-X-Received: by 2002:a05:600c:c8f:b0:493:ee34:d875 with SMTP id
- 5b1f17b1804b1-493f88bd7famr94758655e9.10.1783956756211; 
- Mon, 13 Jul 2026 08:32:36 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783956755; x=1784561555;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=mGwNmsnFNYS4uKMqaZS+vAeRGRayVktiMo+FBV6fPiE=;
+ b=dOIu5xZiA/ZJa4gmuFNqHBnIICd7Zen1Sc8T541EVjxCOWMa/QHIyOEPQFgfF6W95O
+ K+1Hv8F4FZNI94DtDtXueVim8c9CzzpvFAnk2A64l+s25xXa/coLVyoFiYentCq9mJBx
+ ywpR96qX83CiCwRRVr8fBzvJECOeN6a0LG7wUgyNXOB+RGCBcMcL99KhtZAby8rcnDjb
+ 9ChwKtooqsU7Vccl3DqZXeEteUskyu8Zo146Z7RYegEbprsH5VUvJ2KyTCsy+W2GGeA/
+ anLqE8LZX02PfrHp339kVDCfCs7ehMEJmMnxTGzgWezHdbuo29DX2WAz8eq/iOFtlKZS
+ s6Fw==
+X-Gm-Message-State: AOJu0YziuwC0UaXEP5jgAYmrm9JN9LtA55b2BWuzP534xzxYiCZ/cYuQ
+ bFiyp28FRnGBisRO79NHVmDLRA9yH/MvUYA/gpqfL5hoRO7Z9R/V4uUIQY98a6GNCB7miv+Cy1m
+ yQYP2FU3/wNWU
+X-Gm-Gg: AfdE7clH6bA+MV0muJP5qGYwLtqc2asqoxqRFKgS5Y1dsf6i80ZI7zkdbBLZAnDvGtE
+ pK8AthTkNXW2JhO2DXG1GpStisnf1H/d6V2/d7M4cnfBkrgbf2LJVY0Gc9qlwsaJK2QsgSfxJN2
+ M/5kecIRKaC7OF9Kxv0uFCtCSHR7txwkUlRqMFQlnNm7mAl+2+zQ4Tr0L3QBf82dPXRtRXimPrr
+ UyIxnGtMIxXH6pc8Njfh0Y6NsA2ukH4r/4xxMkoHRMXhQxSavPDnVbiK3yfBlT9M48s8ZKF/hLV
+ 3vuzQan+c/OaufV3b6Tof9krvRTFA+LpMlzG+Dcq95YrJ9tjE8WXBfyh4E7XBnM4pjp6+Cz1j2y
+ F5RMxDvE3OGvT3S/0g7w5yx3hmRkdUixvqkz8uDk7CU5Nikt05m8T1tXPysmOxgx1Yx2h/lfspm
+ 5+YhiPmsJUCvBkrzBI9fOirZXbT51LWAlLGGePbDbtQctfR/ajrMQRullBE5t2bvQPGw1XuwIeQ
+ ejDPjm+yEW+qCWj5u5TXQ==
+X-Received: by 2002:a05:600c:16ca:b0:493:c1bc:79bd with SMTP id
+ 5b1f17b1804b1-493f88180f9mr61431205e9.20.1783956755213; 
+ Mon, 13 Jul 2026 08:32:35 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49508727f7dsm3825985e9.4.2026.07.13.08.32.35
+ 5b1f17b1804b1-49508727f7dsm3825985e9.4.2026.07.13.08.32.34
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jul 2026 08:32:35 -0700 (PDT)
+ Mon, 13 Jul 2026 08:32:34 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 01/26] hw/misc/zynq_slcr.c: drop duplicate reset value for
- DDRIOB_DCI_CTRL
-Date: Mon, 13 Jul 2026 16:32:08 +0100
-Message-ID: <20260713153233.3391818-2-peter.maydell@linaro.org>
+Subject: [PULL 00/26] target-arm queue
+Date: Mon, 13 Jul 2026 16:32:07 +0100
+Message-ID: <20260713153233.3391818-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260713153233.3391818-1-peter.maydell@linaro.org>
-References: <20260713153233.3391818-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:30::2;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr2-x02.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:31::1;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm2-x01.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,40 +99,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Corvin Köhne <c.koehne@beckhoff.com>
+Hi; here's an arm pullreq. These are all bugfixes and minor docs updates.
 
-When adding a reset value for DDRIOB_DCI_CTRL in c8ba862dbfdc, we haven't
-noticed that a reset value already exists. DDRIOB is a 32 bit register, so
-incrementing it by 12 will access the DDRIOB_DCI_CTRL register. According to
-the manual [1] the correct reset value is 0x00000020. Additionally,
-c8ba862dbfdc won't work with a reset value of 0x00000021 because it tries to
-detect a toggle of the reset bit (bit 0). Therefore, we drop the old reset
-value and keep the new one introduced in c8ba862dbfdc.
+thanks
+-- PMM
 
-[1] https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/Register-slcr-DDRIOB_DCI_CTRL
+The following changes since commit 499039798cdad7d86b787fec0eaf1da4151c0f05:
 
-Fixes: c8ba862dbfdc ("hw/misc/zynq_slcr: Add logic for DCI configuration")
-Signed-off-by: Corvin Köhne <c.koehne@beckhoff.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-id: 20260707145407.70287-1-corvin.koehne@gmail.com
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/misc/zynq_slcr.c | 1 -
- 1 file changed, 1 deletion(-)
+  Merge tag 'pull-request-2026-07-12' of https://gitlab.com/huth/qemu into staging (2026-07-12 21:49:04 +0200)
 
-diff --git a/hw/misc/zynq_slcr.c b/hw/misc/zynq_slcr.c
-index 0ae5d607be9..d0f899c3be4 100644
---- a/hw/misc/zynq_slcr.c
-+++ b/hw/misc/zynq_slcr.c
-@@ -427,7 +427,6 @@ static void zynq_slcr_reset_init(Object *obj, ResetType type)
-                           = s->regs[R_DDRIOB + 3] = 0x00000e00;
-     s->regs[R_DDRIOB + 4] = s->regs[R_DDRIOB + 5] = s->regs[R_DDRIOB + 6]
-                           = 0x00000e00;
--    s->regs[R_DDRIOB + 12] = 0x00000021;
- 
-     s->regs[R_DDRIOB_DCI_CTRL] = 0x00000020;
- }
--- 
-2.43.0
+are available in the Git repository at:
 
+  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260713
+
+for you to fetch changes up to 3c2749443429a2a6b60bfa5c32964628631dfa23:
+
+  hw/misc/stm32_rcc: Correct offset-to-irq calculation (2026-07-13 12:34:17 +0100)
+
+----------------------------------------------------------------
+target-arm queue:
+ * hw/misc/zynq_slcr.c: drop duplicate reset value for DDRIOB_DCI_CTRL
+ * hw/arm/tegra241-cmdqv: Do not sync GERRORN on VCMDQ allocation
+ * hw/arm/smmuv3: Sanitize fields provided by guest
+ * hw/i2c: pmbus: clear output buffer on write
+ * docs/system/arm: Add some missing FEAT_FOO we already implement
+ * arm/virt: fix smmuv3_devices leak
+ * target/arm: Be more defensive for invalid tlbi_aa64_get_range
+ * hw/dma: don't allow weird transfer lengths for bcm2835
+ * hw/net/vmxnet3: Correct bounds check on tx queue index
+ * hw/usb/dev-wacom: Don't write off end of buffer
+ * hw/display/sm501: Don't let guest write off end of buffer
+ * hw/misc/allwinner-r40-ccu.c: Correct handling of out of range accesses
+ * hw/misc/stm32_rcc: Correct offset-to-irq calculation
+
+----------------------------------------------------------------
+Alex Bennée (9):
+      docs/system: declare support for FEAT_EVT2
+      docs/system: add big and little endian features names
+      docs/system: document FEAT_Secure
+      docs/system: document FEAT_MTE4
+      docs/system: document FEAT_IVIPT
+      docs/system: fix sorting of FEAT_S2[PIE|FWB]
+      docs/system: add FEAT_S2TGran[4|16|64]K features
+      docs/system: add FEAT_HAF
+      hw/dma: don't allow weird transfer lengths for bcm2835
+
+Corvin Köhne (1):
+      hw/misc/zynq_slcr.c: drop duplicate reset value for DDRIOB_DCI_CTRL
+
+Eric Auger (5):
+      hw/arm/smmuv3: Fix off-by-one bug in alignment strtab mask
+      hw/arm/smmuv3: Sanitize SMMU_S_STRTAB_BASE_CFG.SPLIT
+      hw/arm/smmuv3: Fix possible overflow in strtab_base computation
+      hw/arm/smmuv3: Check L1STD.SPAN
+      hw/arm/smmuv3: Enforce alignment of L2Ptr according to the span
+
+Marc-André Lureau (1):
+      arm/virt: fix smmuv3_devices leak
+
+Peter Maydell (7):
+      hw/net/vmxnet3: Correct bounds check on tx queue index
+      hw/usb/dev-wacom: Don't write off end of buffer
+      hw/display/sm501: Catch bad coordinates for RTL operations
+      hw/display/sm501: Avoid overflow problems in bounds check calculations
+      hw/display/sm501: Don't allow guest to set ram size larger than it is
+      hw/misc/allwinner-r40-ccu.c: Correct handling of out of range accesses
+      hw/misc/stm32_rcc: Correct offset-to-irq calculation
+
+Richard Henderson (1):
+      target/arm: Be more defensive for invalid tlbi_aa64_get_range
+
+Shameer Kolothum (1):
+      hw/arm/tegra241-cmdqv: Do not sync GERRORN on VCMDQ allocation
+
+titusr (1):
+      hw/i2c: pmbus: clear output buffer on write
+
+ docs/system/arm/emulation.rst | 14 +++++++++-
+ hw/arm/smmuv3-internal.h      |  3 ++
+ hw/arm/smmuv3.c               | 32 ++++++++++++++++++----
+ hw/arm/tegra241-cmdqv.c       |  7 ++---
+ hw/arm/virt.c                 |  1 +
+ hw/display/sm501.c            | 64 +++++++++++++++++++++++++++++++++++++------
+ hw/dma/bcm2835_dma.c          | 17 ++++++++++++
+ hw/i2c/pmbus_device.c         | 10 +++++++
+ hw/misc/allwinner-r40-ccu.c   |  6 ++--
+ hw/misc/stm32_rcc.c           | 31 ++++++++++++++++++---
+ hw/misc/zynq_slcr.c           |  1 -
+ hw/net/vmxnet3.c              |  2 +-
+ hw/usb/dev-wacom.c            |  4 +++
+ include/hw/misc/stm32_rcc.h   |  6 +++-
+ target/arm/cpu-max.c          |  2 +-
+ target/arm/tcg/tlb-insns.c    |  2 +-
+ tests/qtest/adm1266-test.c    | 10 ++++---
+ 17 files changed, 176 insertions(+), 36 deletions(-)
 
