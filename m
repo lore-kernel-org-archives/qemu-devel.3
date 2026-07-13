@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48826C43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:34:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 531D2C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:34:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjIeb-0000Dg-HH; Mon, 13 Jul 2026 11:33:09 -0400
+	id 1wjIeb-0000D0-F5; Mon, 13 Jul 2026 11:33:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjIeS-0008Uk-Nf
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:33:06 -0400
-Received: from mail-wm2-x01.google.com ([2a00:1450:4864:31::1])
+ id 1wjIeO-0008UR-Q9
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:33:02 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjIeO-0001BZ-Ho
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:58 -0400
-Received: by mail-wm2-x01.google.com with SMTP id
- 5b1f17b1804b1-493b4af7976so26011555e9.1
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:32:54 -0700 (PDT)
+ id 1wjIeK-0001A9-Fa
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:54 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-493f45e206dso16252225e9.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:32:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783956773; x=1784561573; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783956770; x=1784561570; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=lKAMocpTV8X4I38gyaYAm08wo6o7waa7S4QxCfCs1Ls=;
- b=vVPc62G1YA80WIxZOGvNH/yUMOE/6EyELQgtQnYUMJZMeTs1DgMyy6hZ7CdQ1uSo9a
- vd9dToSjX2qFA8u95cuH7YGmgRkQ5zJ5V5cMRwInQaxK/Y0oxd2+8eImSCrD0AVvcrzs
- 3rbvbjT6JZ019RDsAnH3V/Gu5Nb1L3hfYIa21ZimQBd8iq7tA6V8kBdbQxly0+9frRCP
- bkt8YtVN1OA8QV3Cmxf5K1JpSC+zl/wyblHJ/S7b08QLBLCodfXMUSyXmkZAkDbqZM3w
- hO1U0/c5grcpAM3V+yFrNUxPTt8rywgswoM0/6yvV3GJUWNMafQhLsRZRpOSQ06ExBd6
- vF4A==
+ bh=DoDTO26KrouGuDQsepvCm3zXNuI374PRo/EHI06RfAM=;
+ b=GUTRxNf0LSkgm0BNhrbelE3hy0eDcTuzbSpaPLbFyYOu0E9J4Me5QTyxpUeAY155x8
+ 9B4E4rLut2e/pdFSH6/7zNzlp+ADgOjAFljuVv6wFEveepJLTEIUEW0Jq3Qms4wD72bu
+ A6jL5rdl2Nyl7lyiLYX3B2erzdcGLrGrVSVPfZWpCc6aC2ySWTC5Ka+6cnKdgMRUPVhb
+ a8zilW+ZPN9ORi9G9gLqc+CCjfNRbfQDlFQfhfdjWrDdBZnOVXERxg/2MJqof5gartb9
+ 3n7sT32+pKXugmG3Op9H7sK+0KDqyM8G64uz3d2IxBQEgYYx2zIIz54KRy2wL3ofr14O
+ RGjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783956773; x=1784561573;
+ d=1e100.net; s=20251104; t=1783956770; x=1784561570;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=lKAMocpTV8X4I38gyaYAm08wo6o7waa7S4QxCfCs1Ls=;
- b=IegaYu5bd3RIoZcb8jUkbDBMuX5vsygTwXet1bjVyqN25V3tkE1ofF6VvWQOPvWCPa
- mJ1z6b2TnDLTHM3fF6l1NWnhzV2dh6go3GWGGpOaxkwJfP6jPE3yMB43VSFFGan3LWVI
- F/TcqWHSNBbWMUiETHhi0NFiJh756E3/GiXTO9Y45tC+uWX6XiZOJBi4OPmZs4Vcoc8v
- JR/dj2YT4sKnsDEpCJ8yxIbn9hjbKzFeN0L0t406xJg0myCr6AMyAVLEKuHSjHu82UQj
- b7qa+eawlGAAbkzoTtkXlanPWErOrPOdMZXjQksOL7HiL4z2ehAqqHm5jN+oiL9gZ0NX
- A4sQ==
-X-Gm-Message-State: AOJu0YzCHHsbyOkXk74VUv/okldOLmESTMJF+SMJPc5U0uOZ2UYw/RHL
- s3jIysBwIKaHA3a6hh0iw2s2wV07FNyxFJ6Iu52n1qGu8jgkDhvkHCut0DYEl/9suQlPGDxYXCe
- QiapOY3oLXyue
-X-Gm-Gg: AfdE7ckAWIPL9Y0QwLZgNBRmm2RNEOVQKo3oy29gd8+xe9QcyCqjvvMyadBgsdqqblm
- /ufVS1f2SruPWSSRj8IbdY83EQs44cHhJqteKhv/6F0d7hfzLvDeYwraV/Daw3NKX6xW/QphEbp
- XCJVdL0V+77N3CgKKQA9Ud811c2dk+GyzNqKvtmSL1qXlRxUnpGrGVDxnbxOSjGW5evCrVkxVgD
- 16BY0/fEB/mx48UtYrs4I4VpUVdtQu0nQcjpSb1kZgr8ICXdiRgd1+G/qY+S9rPIyHA6hb31YTF
- mCpQw94w3RImUC5aq+GF8GN7E5Gc8LFfm8p9jEB+VY4gbnOfKeofh6SiMXzoYYPAVpo+bPWPwsk
- zwaZHmEGYquV60UAfW6J0GaqC2QPVMEaDPDWO+Izg7yjFKoMb+Xf5zqfYcHfWGc2T4p4qCyJocS
- RA8CsVlj5OcxRcpTqTxbE34dK/vnQ9Cc69pLbpdj9BvWvRGpYGxZ7pVEiTuYxmKf4xtwYeh+YOZ
- 9LTTJIbd+WSKULGUesIpw==
-X-Received: by 2002:a05:600c:4ca4:b0:493:e974:41ac with SMTP id
- 5b1f17b1804b1-493f87ebbf4mr60655775e9.16.1783956773374; 
- Mon, 13 Jul 2026 08:32:53 -0700 (PDT)
+ bh=DoDTO26KrouGuDQsepvCm3zXNuI374PRo/EHI06RfAM=;
+ b=ZReMQLxmAmIGbWHFbd1lJbKRQpwzKiL7GrUGlQufDK0QR7cg+JcPK8E2H81Ff1vHa0
+ 8Z83XhrVIko0bKDiyynTa6pVp5DVdwOCF/7vuZkMXiq+E8cdzifz2YLzu6LXwBL5kDvq
+ FODXq44OXaSaMX2xf886lqD+V77Q0Dh9On9x/MTJHIGhsR2lpdy3xZGHhnwnuMljoU0b
+ 0AoXBm6zNEnoURME8NmrNm/qGrwSpnNmrlQv/psq5yx3Ue7AmQv4/ojxyrn6b5P27s/W
+ XNFAWawLMPYlFqDiKZwLdu/xukR6BzccpSu6iPUADfKg9PShhbi4JV8hWRRcG8fKjPN2
+ VSSQ==
+X-Gm-Message-State: AOJu0YxYV8qBkBppywbZ6x5kVS1B6vK2R9HGjwwTHG4EocYJxqANOCbf
+ 04b5d52H+PDL62mXspvrswuDzyZDw1TFbuxSK9HhMJeBxUZ6zmEXc6lhu31hniueWrDqTgu70co
+ Ct0t2be7+5Q==
+X-Gm-Gg: AfdE7clO7E2IRQZo3wDKabgiyk7ObNvj+vPaw5MLXpZLnJZWuViPIFMwkLUZw7zHTaE
+ 9uYocOq9fRZ4uRBvEZUZgpbokrRRZWfUDQ5D8zVkIMA1cPLf4xYhhTkS/sCyo276y1sfdqa5ZHH
+ GR8M8cESA5/u5U1lu0PD5Bez7A6jRyN2nWF5qJ89zsLjMdZGZwkFswrV3CkvpWIihHutGf4OU6b
+ ntlTV10+cNmytAtHuSj+tVebu5TwMT9O0jmmNj2D5cpKZd1d2224qQS9ZKZeMeHQGNHcfMwkMgT
+ a3s1rBkY+cW8A6thqp5tmTottTZlieuAUrMhjlZzZJaUXiWPbGCqeRUI4W7WQ22UxudUqQTeDCB
+ HKxVxWRAE36ZHn2NZfhmpFp8Jm2noESOho4hkkLK90q0ywv8HIwbkMCS2wykR1BruRtU+y6xHvz
+ nEzTo4jfXSIBK7e+tx3IN08mp5SJfeemChjiyf7ejFibMi2UAwyY3aBnEhyp8n+wQV4OL9vz3R8
+ bVhbbx4p2m2Gdpx1aXbRg==
+X-Received: by 2002:a05:600c:8b53:b0:493:f13c:9c03 with SMTP id
+ 5b1f17b1804b1-493f88dc201mr91004205e9.19.1783956769912; 
+ Mon, 13 Jul 2026 08:32:49 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49508727f7dsm3825985e9.4.2026.07.13.08.32.52
+ 5b1f17b1804b1-49508727f7dsm3825985e9.4.2026.07.13.08.32.49
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jul 2026 08:32:52 -0700 (PDT)
+ Mon, 13 Jul 2026 08:32:49 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 20/26] hw/net/vmxnet3: Correct bounds check on tx queue index
-Date: Mon, 13 Jul 2026 16:32:27 +0100
-Message-ID: <20260713153233.3391818-21-peter.maydell@linaro.org>
+Subject: [PULL 16/26] docs/system: add FEAT_HAF
+Date: Mon, 13 Jul 2026 16:32:23 +0100
+Message-ID: <20260713153233.3391818-17-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260713153233.3391818-1-peter.maydell@linaro.org>
 References: <20260713153233.3391818-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:31::1;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm2-x01.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,33 +103,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In vmxnet3_io_bar0_write(), we try to bounds-check the TX queue index
-provided by the guest against the total number of queues.  However,
-we have an off-by-one error: the valid indexes are from 0 to
-txq_num-1, so we need a "<" comparison, not "<=".
+From: Alex Bennée <alex.bennee@linaro.org>
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3780
+This is a subset of FEAT_HAFDBS which we have already implemented.
+
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260708145841.3032079-9-alex.bennee@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260706175408.905362-1-peter.maydell@linaro.org
 ---
- hw/net/vmxnet3.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ docs/system/arm/emulation.rst | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/net/vmxnet3.c b/hw/net/vmxnet3.c
-index 97156dd33b9..8569484b2f2 100644
---- a/hw/net/vmxnet3.c
-+++ b/hw/net/vmxnet3.c
-@@ -1079,7 +1079,7 @@ vmxnet3_io_bar0_write(void *opaque, hwaddr addr,
-         int tx_queue_idx =
-             VMW_MULTIREG_IDX_BY_ADDR(addr, VMXNET3_REG_TXPROD,
-                                      VMXNET3_REG_ALIGN);
--        if (tx_queue_idx <= s->txq_num) {
-+        if (tx_queue_idx < s->txq_num) {
-             vmxnet3_process_tx_queue(s, tx_queue_idx);
-         } else {
-             qemu_log_mask(LOG_GUEST_ERROR, "vmxnet3: Illegal TX queue %d/%d\n",
+diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+index 903a5f90880..9930974a501 100644
+--- a/docs/system/arm/emulation.rst
++++ b/docs/system/arm/emulation.rst
+@@ -95,6 +95,7 @@ the following architecture extensions:
+ - FEAT_FlagM2 (Enhancements to flag manipulation instructions)
+ - FEAT_GCS (Guarded Control Stack Extension)
+ - FEAT_GTG (Guest translation granule size)
++- FEAT_HAF (Hardware management of the Access flag)
+ - FEAT_HAFDBS (Hardware management of the access flag and dirty bit state)
+ - FEAT_HBC (Hinted conditional branches)
+ - FEAT_HCX (Support for the HCRX_EL2 register)
 -- 
 2.43.0
 
