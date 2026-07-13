@@ -4,91 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E67AC44507
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 16:19:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35090C43458
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 16:21:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjJMo-0002mj-RT; Mon, 13 Jul 2026 12:18:51 -0400
+	id 1wjJPA-0006AI-SK; Mon, 13 Jul 2026 12:21:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wjJLw-000250-2O
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 12:17:56 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wjJLt-000055-QQ
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 12:17:55 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-47f36a122fdso12989f8f.2
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 09:17:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wjJP9-0006A1-M0
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 12:21:15 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wjJP7-0000bS-P4
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 12:21:15 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66DF8Kks1803547
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 16:21:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ Krn3tzVrZJ4N/DCZB1Q68dPT9Olm1TwknBosVKTxMO0=; b=mtk935J8IcWKhOS5
+ xPVztX3U+PwcrCn5d8OORte7TTUkTnokq7mSt6hzHUoGWlD4TichwtDmFFgLdLAG
+ iFo+cLGSZfPyClZtII3NyyDkJA3rABGqEiYbDO/PowBq5TpUsMWgMK1gh9YnktMo
+ E7oK3jqI2md2aJQafNeZbn3WjK4YU1FGHs+XJ/yUI1XdKi0RZXCTkCexzwwoXIEu
+ w8Jdk5sv8mSkCyyk9zhOD1KgDKH4PCGjPK9Vfw2uhKXSA2jGF3CCzFAZIi/JO2Le
+ PxEvQpsCTanQgXKdI4ltK1/MxOy56RN7+nHEBakrppkSpTlyZmxpHduNuPkzlRSC
+ SGB9fw==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcwu4shcx-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 16:21:12 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-38dbf293831so127860a91.3
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 09:21:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783959472; x=1784564272; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=QYQ6I8YjnDUt1gVcOj8gOZ1mMNMmK3qD7Twk5bpgblY=;
- b=VdFWJYMTp6+fLSZQmBZlMVZgYr6H702Wf9qZ1zg8SEbiLuaukQ261sCWsLAJS2N+DQ
- zufWqdFO1tmYQQuCdupZDKvm1SQRsJqYd3aWroANI9zSBCmvCTpUYqFZmYhK7rwxxume
- 3zRbTKUEMtm687LwSO2m14IucsG4qadDTyAetNILHmM808HjeosUJ9MIf461yxXiEJLH
- u3zsQWh1shSqtToM0mSagXnwSK0JPzpoRmA1+pLoJbdquzMSmHdj9n7hSIKklOcA5h6/
- 6CO8suzXt2425F+ez3ku7YBbdlSylEo9WUlLpZZaOZYEp/rn2CnU6CXet0oySYr6v9rB
- Af+w==
+ d=oss.qualcomm.com; s=google; t=1783959671; x=1784564471; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Krn3tzVrZJ4N/DCZB1Q68dPT9Olm1TwknBosVKTxMO0=;
+ b=DIpKCvnehhFydwpT16v1V9hCASD3+AB0nOfTwCdFjgBLjEuI03JE960EQxb7yB9wyX
+ jgskXvOe4+XwkghTXtAkmnEcVLuuC4kFwJSciXrskdSCwMm1+eofAciqTBnGl4ETHqU8
+ gkkvQFd202+W7xGMr0d3dl7+wmN6214c4HGnIe46VJmn0l7IercaOvXZCBNpoRGyd27f
+ jdNgw35cFykNF/6peW25bPBGc5Tl6HAQ8cUJdZacP2cjfspDf1k9b/8N4FL/3FCKo5uU
+ mXy4/WdIsU1P9Y3DpJ1xo2wkAveufDPeQ/LPdz2Kk7ojJYWKJZcvDzYbyKkz12ipGFSC
+ N43w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783959472; x=1784564272;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=QYQ6I8YjnDUt1gVcOj8gOZ1mMNMmK3qD7Twk5bpgblY=;
- b=sKOnfBoVhqdA31nowcG1tTJfmQXL3QM/IGCf7eWEcs7xm9V+XxZHeBiynOhBa+svDI
- xnpZVh5UdIj2FD+QwQgwQogSVfbrbSFbIk26T6tHDjbLT8lR/PqxAhHi+5h18tv3iCed
- PQ0QD/6yzuxWNBlbLilCr4j910b2jUaFGYv0B8mprXYhI2FQRfh2z4JPAtb9jMwBEv38
- iCcFvxCtExbrW2hSB/72SOifSwYeD8/sGCFXZSD4JkZ5oWVNZCgRptYBHklNEJRB6ej2
- OaI2xJCP/i8GPFrKZ2bE3vbcWyiHSJ2iDToycrbFXhF8SOsvmkKiWI4R5NcEOZ0bZIIH
- k2xg==
-X-Gm-Message-State: AOJu0Yx0xUnncmb7cuM4ihlbYe7hapryvHr/8KmBeJ+3K0kj0+twwH/6
- OmLyd/6N5gKhKParbekzi2jJZb5L0wk1NKxeaT0oL62qPtF5aVWLY+4ywfp3qeLoeZE=
-X-Gm-Gg: AfdE7clV0R9Hc5q+Pks8Zh2J257qjkJW3KqotpDPqlIZouGWxZsa/mbaFAnogMKz/ok
- y/kNEv5XOSvkpwV+u+B5heX8u7s60Oy8jAjEybfaV5UJNt+J4K4eOKuCQ7CeZITckZMpcgDsn+8
- YZ6IMmE7dEpLTMs3/umQX6kruPxONE5C2frPPSMbIb6Cj/MQl+WgJyQBX+088/TOZSdoBONvPQn
- Gv7Fcx2ag5JrdAEVNGjsiJHg77dVI2d76RGNgu4o3KtsqBbzWLTzON2OMqmoxYYyouSblz78NzF
- 7VY2bX+q6DxM5YcQWaTdQMQBGItcgV2NvFOCFS1OhNjbIUJoCh+JrwnMs39KLOT3aMntdPSyZiE
- 4rBVHSYO6qBZAW2xwhFh0ideW5J6Xaa3CFFKvVGl3x1gTYAfL/pTHYbZ07Lt4sK+wpePCEg0B5W
- HooHgTEF/MwOXA
-X-Received: by 2002:a05:600c:8518:b0:493:d100:b487 with SMTP id
- 5b1f17b1804b1-493f8780997mr96302295e9.0.1783959472032; 
- Mon, 13 Jul 2026 09:17:52 -0700 (PDT)
-Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4950871cbd6sm7774515e9.3.2026.07.13.09.17.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jul 2026 09:17:50 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2F0405F9CD;
- Mon, 13 Jul 2026 17:17:46 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 7/7] scripts/gitdm: migrate from contrib
-Date: Mon, 13 Jul 2026 17:17:45 +0100
-Message-ID: <20260713161745.53889-8-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260713161745.53889-1-alex.bennee@linaro.org>
-References: <20260713161745.53889-1-alex.bennee@linaro.org>
+ d=1e100.net; s=20251104; t=1783959671; x=1784564471;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Krn3tzVrZJ4N/DCZB1Q68dPT9Olm1TwknBosVKTxMO0=;
+ b=KzLA6lOM3HDfRttBqKytVlVq9P/FcW1xFWflrYGB/p/SQISh7qvMchbJ9dU5YloFby
+ pbi3TQg/LZVpKbyjkWkNW+SH7VuFMqSJdnetsUzOMpy2swi1G4IsYJtVXFGmaxTEy9Qf
+ eD803UrwFQppg82S+nfvDyIIbJp6w1TApoQtiwvXpbveos4Wkh4nSJyvSUaxxlACJv66
+ Jx1X3LGylfbexeRlv0SLt5wszx9Dtzd6aFRvGBuNPw+3tFDPQhBpDeWtpCuEQb0bnRiB
+ em83zu5aX2nZq8iiMB76vNo4MwONpdJbZ/agSGt7OhmWrsYbqHoon91JkiA+IWBCF/R4
+ dslQ==
+X-Gm-Message-State: AOJu0Yw14m0jSGXdtolAg6S7szlH3tQDuLdl52+lM8ThlPWXa+1Otp7C
+ +MnHoh3lvhDy/P8uRLOXsHjXvvE3Mrj0Lk6oVZCsws0ycNZccTdR7ET2D3H4NLNp2+GkWjrPJ3H
+ WEGOfvo9CgawTtQpwAHCNAll7jxH1UNgqclviSVDzZjm5fQVPeLeUaUAV8A==
+X-Gm-Gg: AfdE7cnkRcW8X0+lcCKLzfH+YEllQ1yVZpNDRmgB2tnWZ+5vWoVmDIzDsbeHViWi9Ip
+ 4Z37J1sgUENQYqcsEiUxavam+wNwxrl821yRB2Ygy9pSwauc7RjZBWijjmqfn0RxxGi3dgjmlQQ
+ NTRWCExbXmSaH22ccBDlOaUyYixc2frbUoZfXcKNzQzjIEuV2ME/fUlkti1GHVdq1NSMm1uZ4qf
+ vyth5F+0vBAOQGzOBqhA8Z4SsSMXqro2dBJ1DP3TM+XKm+pnG2OSl9U0beaO2SwgvF68y05YI04
+ i2sO0GVL1O0TWxOLtotN52Z5WUKDXw1WTD9lW2kIUbwuEMS3N3sFSUKSrrSIYKEQnDuCKvsomze
+ +J4P6cIOii1BaeIxd7FA7ZHXTtQBfKvB6yBEmMklsMs9eLyEUJk4DLulo/SeIabeZSFle8soNP7
+ ORzq8=
+X-Received: by 2002:a17:90b:3b89:b0:387:e0db:3fad with SMTP id
+ 98e67ed59e1d1-38dc7778aedmr9114810a91.38.1783959671440; 
+ Mon, 13 Jul 2026 09:21:11 -0700 (PDT)
+X-Received: by 2002:a17:90b:3b89:b0:387:e0db:3fad with SMTP id
+ 98e67ed59e1d1-38dc7778aedmr9114784a91.38.1783959671001; 
+ Mon, 13 Jul 2026 09:21:11 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-313b4b97661sm39477855eec.7.2026.07.13.09.21.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 13 Jul 2026 09:21:10 -0700 (PDT)
+Message-ID: <3b076336-95e0-47bf-8eb0-37a54e594ee0@oss.qualcomm.com>
+Date: Mon, 13 Jul 2026 09:21:09 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] uftrace: riscv privilege level
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+To: Yanfeng Liu <yfliu2008@qq.com>, qemu-riscv@nongnu.org
+Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, erdnaxe@crans.org
+References: <tencent_E17E8F6494EE130F71527C6BCE481AF33E08@qq.com>
+ <ae18fa27-a1c7-42d1-864e-5a9a30c1215f@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <ae18fa27-a1c7-42d1-864e-5a9a30c1215f@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=FMErAeos c=1 sm=1 tr=0 ts=6a551078 cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=p0WdMEafAAAA:8 a=dZbOZ2KzAAAA:8 a=EUspDBNiAAAA:8 a=qEAdaA6whk2plPOlQVsA:9
+ a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDE2OSBTYWx0ZWRfX923hOaAP2gQd
+ a4X8lzDCYoWVN8O//mvodDh85qHtTvgHaVuKpijAHTEfqpcQea6Hmz3X3gTt/g3oIGG6YN3XCJZ
+ gQhrpG7Pvd7l/VxNehSqGH0fclNc2wQ=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDE2OSBTYWx0ZWRfX3bqSAxZg2rQb
+ dQW7PHGjNe7/V08i43LbtLxxI7Kny7vIGW2SUofQSg9imKB55pl9p9JON6Jj/9oHkbPdVGVvZNp
+ up1inRXd348WpFW36ndpF8LJxNeSVqcJ8ps2ngSZ45k78QAQREYw0QwKq7qSwV/FagNETL8RvX4
+ /VnscWPOar4Iz3lcBLi1cEcOm5Ho8qD32CpivJp0L6qZtxvYSnIwgIld5nEVBt8P7XBZkQ36Qhu
+ AoFk+IJDt34wiUFU666JESa4UnKcaf9K8JF7K6owam3SFX8zWMLsR0zHmql05qLl/+Ax3wU4sQc
+ AxdPswBfkQEPvxGAtjZzlaVYf4gKiMwj/x/P7gycfp+AYwjpIdIaxAHpLuOAx5Iyj+DdfXdoB+Y
+ MhUL2RGql0aoXyAxnrxoTuCh1h58g4Kv97gB/okfLxDYKVYV4HwTf4BYr+YWxHhBSX9YqbWWcOp
+ lRmDx/oyj5KzORVBvZg==
+X-Proofpoint-ORIG-GUID: Ht8YOrqCb5ssUSduUFzhTfdTcdN9nxkd
+X-Proofpoint-GUID: Ht8YOrqCb5ssUSduUFzhTfdTcdN9nxkd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-13_04,2026-07-10_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 adultscore=0 bulkscore=0 malwarescore=0 impostorscore=0
+ suspectscore=0 priorityscore=1501 phishscore=0 spamscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607130169
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,174 +154,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As discussed previously it was suggested scripts might be a better
-location for this meta data.
+On 7/13/2026 8:59 AM, Pierrick Bouvier wrote:
+> Hi,
+> 
+> On 7/12/2026 1:45 AM, Yanfeng Liu wrote:
+>> This adds RiscV virtual user and supervisor privilege levels to
+>> uftrace plugin to avoid crashing with H extension guests.
+>>
+>> Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
+>> ---
+>>  contrib/plugins/uftrace.c | 13 ++++++++++---
+>>  1 file changed, 10 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
+>> index 9b0a4963ae..063e32220b 100644
+>> --- a/contrib/plugins/uftrace.c
+>> +++ b/contrib/plugins/uftrace.c
+>> @@ -109,6 +109,8 @@ typedef enum {
+>>      RISCV64_SUPERVISOR,
+>>      RISCV64_RESERVED,
+>>      RISCV64_MACHINE,
+>> +    RISCV64_VUSER,
+>> +    RISCV64_VSUPERVISOR,
+>>      RISCV64_PRIVILEGE_LEVEL_MAX,
+>>  } Riscv64PrivilegeLevel;
+>>  
+>> @@ -153,8 +155,10 @@ static void uftrace_write_map(bool system_emulation)
+>>      const char *path = "./uftrace.data/sid-0.map";
+>>  
+>>      if (system_emulation && access(path, F_OK) == 0) {
+>> -        /* do not erase existing map in system emulation, as a custom one might
+>> -         * already have been generated by uftrace_symbols.py */
+>> +        /*
+>> +         * do not erase existing map in system emulation, as a custom one might
+>> +         * already have been generated by uftrace_symbols.py
+>> +         */
+>>          return;
+>>      }
+>>  
+>> @@ -706,6 +710,8 @@ static const char *riscv64_get_privilege_level_name(uint8_t pl)
+>>      case RISCV64_SUPERVISOR: return "Supervisor";
+>>      case RISCV64_RESERVED: return "Unknown";
+>>      case RISCV64_MACHINE: return "Machine";
+>> +    case RISCV64_VUSER: return "VUser";
+>> +    case RISCV64_VSUPERVISOR: return "VSupervisor";
+>>      default:
+>>          g_assert_not_reached();
+>>      }
+>> @@ -986,7 +992,8 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>>  
+>>      score = qemu_plugin_scoreboard_new(sizeof(Cpu));
+>>      qemu_plugin_register_vcpu_init_cb(id, vcpu_init, NULL);
+>> -    qemu_plugin_register_atexit_cb(id, at_exit, (void *) info->system_emulation);
+>> +    qemu_plugin_register_atexit_cb(id, at_exit,
+>> +                                   (void *) info->system_emulation);
+>>      qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
+>>  
+>>      return 0;
+> 
+> 
+> Is that something we have implemented in upstream QEMU for riscv64
+> target? From what I can see, priv register only can have M,S,U values.
+>
 
-Link: https://lore.kernel.org/all/CAFEAcA_5HvGriDsWnb1ALuA_dgG320eKv7yuM2kThv=rfOSZQA@mail.gmail.com/
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260709080040.4157324-10-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Found the answer here:
+https://gitlab.com/qemu-project/qemu/-/blob/master/target/riscv/gdbstub.c?ref_type=heads#L213
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index e25df9493c5..0be68396e9e 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4611,7 +4611,7 @@ GIT Data Mining Config
- M: Alex Bennée <alex.bennee@linaro.org>
- S: Odd Fixes
- F: gitdm.config
--F: contrib/gitdm/*
-+F: scripts/gitdm/*
- 
- Incompatible changes
- L: devel@lists.libvirt.org
-diff --git a/gitdm.config b/gitdm.config
-index 8764bf2f9ff..b9627de5eac 100644
---- a/gitdm.config
-+++ b/gitdm.config
-@@ -17,13 +17,13 @@
- # the information in the existing .mailmap but in a slightly different
- # form.
- #
--EmailAliases contrib/gitdm/aliases
-+EmailAliases scripts/gitdm/aliases
- 
- #
- # EmailMap does the main work of mapping addresses onto
- # employers.
- #
--EmailMap contrib/gitdm/domain-map
-+EmailMap scripts/gitdm/domain-map
- 
- #
- # Use GroupMap to map a file full of addresses to the
-@@ -31,31 +31,31 @@ EmailMap contrib/gitdm/domain-map
- # identifiable corporate emails. Please keep this list sorted.
- #
- 
--GroupMap contrib/gitdm/group-map-alibaba Alibaba
--GroupMap contrib/gitdm/group-map-amd AMD
--GroupMap contrib/gitdm/group-map-cadence Cadence Design Systems
--GroupMap contrib/gitdm/group-map-codeweavers CodeWeavers
--GroupMap contrib/gitdm/group-map-facebook Facebook
--GroupMap contrib/gitdm/group-map-huawei Huawei
--GroupMap contrib/gitdm/group-map-ibm IBM
--GroupMap contrib/gitdm/group-map-janustech Janus Technologies
--GroupMap contrib/gitdm/group-map-microsoft Microsoft
--GroupMap contrib/gitdm/group-map-netflix Netflix
--GroupMap contrib/gitdm/group-map-redhat Red Hat
--GroupMap contrib/gitdm/group-map-wavecomp Wave Computing
-+GroupMap scripts/gitdm/group-map-alibaba Alibaba
-+GroupMap scripts/gitdm/group-map-amd AMD
-+GroupMap scripts/gitdm/group-map-cadence Cadence Design Systems
-+GroupMap scripts/gitdm/group-map-codeweavers CodeWeavers
-+GroupMap scripts/gitdm/group-map-facebook Facebook
-+GroupMap scripts/gitdm/group-map-huawei Huawei
-+GroupMap scripts/gitdm/group-map-ibm IBM
-+GroupMap scripts/gitdm/group-map-janustech Janus Technologies
-+GroupMap scripts/gitdm/group-map-microsoft Microsoft
-+GroupMap scripts/gitdm/group-map-netflix Netflix
-+GroupMap scripts/gitdm/group-map-redhat Red Hat
-+GroupMap scripts/gitdm/group-map-wavecomp Wave Computing
- 
- # Also group together our prolific individual contributors
- # and those working under academic or intern auspices
--GroupMap contrib/gitdm/group-map-individuals (None)
--GroupMap contrib/gitdm/group-map-academics Academics (various)
--GroupMap contrib/gitdm/group-map-interns GSoC/Outreachy Interns
-+GroupMap scripts/gitdm/group-map-individuals (None)
-+GroupMap scripts/gitdm/group-map-academics Academics (various)
-+GroupMap scripts/gitdm/group-map-interns GSoC/Outreachy Interns
- 
- # Group together robots and other auto-reporters
--GroupMap contrib/gitdm/group-map-robots Robots (various)
-+GroupMap scripts/gitdm/group-map-robots Robots (various)
- 
- #
- #
- # Use FileTypeMap to map a file types to file names using regular
- # regular expressions.
- #
--FileTypeMap contrib/gitdm/filetypes.txt
-+FileTypeMap scripts/gitdm/filetypes.txt
-diff --git a/contrib/gitdm/aliases b/scripts/gitdm/aliases
-similarity index 100%
-rename from contrib/gitdm/aliases
-rename to scripts/gitdm/aliases
-diff --git a/contrib/gitdm/domain-map b/scripts/gitdm/domain-map
-similarity index 100%
-rename from contrib/gitdm/domain-map
-rename to scripts/gitdm/domain-map
-diff --git a/contrib/gitdm/filetypes.txt b/scripts/gitdm/filetypes.txt
-similarity index 100%
-rename from contrib/gitdm/filetypes.txt
-rename to scripts/gitdm/filetypes.txt
-diff --git a/contrib/gitdm/group-map-academics b/scripts/gitdm/group-map-academics
-similarity index 100%
-rename from contrib/gitdm/group-map-academics
-rename to scripts/gitdm/group-map-academics
-diff --git a/contrib/gitdm/group-map-alibaba b/scripts/gitdm/group-map-alibaba
-similarity index 100%
-rename from contrib/gitdm/group-map-alibaba
-rename to scripts/gitdm/group-map-alibaba
-diff --git a/contrib/gitdm/group-map-amd b/scripts/gitdm/group-map-amd
-similarity index 100%
-rename from contrib/gitdm/group-map-amd
-rename to scripts/gitdm/group-map-amd
-diff --git a/contrib/gitdm/group-map-cadence b/scripts/gitdm/group-map-cadence
-similarity index 100%
-rename from contrib/gitdm/group-map-cadence
-rename to scripts/gitdm/group-map-cadence
-diff --git a/contrib/gitdm/group-map-codeweavers b/scripts/gitdm/group-map-codeweavers
-similarity index 100%
-rename from contrib/gitdm/group-map-codeweavers
-rename to scripts/gitdm/group-map-codeweavers
-diff --git a/contrib/gitdm/group-map-facebook b/scripts/gitdm/group-map-facebook
-similarity index 100%
-rename from contrib/gitdm/group-map-facebook
-rename to scripts/gitdm/group-map-facebook
-diff --git a/contrib/gitdm/group-map-huawei b/scripts/gitdm/group-map-huawei
-similarity index 100%
-rename from contrib/gitdm/group-map-huawei
-rename to scripts/gitdm/group-map-huawei
-diff --git a/contrib/gitdm/group-map-ibm b/scripts/gitdm/group-map-ibm
-similarity index 100%
-rename from contrib/gitdm/group-map-ibm
-rename to scripts/gitdm/group-map-ibm
-diff --git a/contrib/gitdm/group-map-individuals b/scripts/gitdm/group-map-individuals
-similarity index 100%
-rename from contrib/gitdm/group-map-individuals
-rename to scripts/gitdm/group-map-individuals
-diff --git a/contrib/gitdm/group-map-interns b/scripts/gitdm/group-map-interns
-similarity index 100%
-rename from contrib/gitdm/group-map-interns
-rename to scripts/gitdm/group-map-interns
-diff --git a/contrib/gitdm/group-map-janustech b/scripts/gitdm/group-map-janustech
-similarity index 100%
-rename from contrib/gitdm/group-map-janustech
-rename to scripts/gitdm/group-map-janustech
-diff --git a/contrib/gitdm/group-map-microsoft b/scripts/gitdm/group-map-microsoft
-similarity index 100%
-rename from contrib/gitdm/group-map-microsoft
-rename to scripts/gitdm/group-map-microsoft
-diff --git a/contrib/gitdm/group-map-netflix b/scripts/gitdm/group-map-netflix
-similarity index 100%
-rename from contrib/gitdm/group-map-netflix
-rename to scripts/gitdm/group-map-netflix
-diff --git a/contrib/gitdm/group-map-redhat b/scripts/gitdm/group-map-redhat
-similarity index 100%
-rename from contrib/gitdm/group-map-redhat
-rename to scripts/gitdm/group-map-redhat
-diff --git a/contrib/gitdm/group-map-robots b/scripts/gitdm/group-map-robots
-similarity index 100%
-rename from contrib/gitdm/group-map-robots
-rename to scripts/gitdm/group-map-robots
-diff --git a/contrib/gitdm/group-map-wavecomp b/scripts/gitdm/group-map-wavecomp
-similarity index 100%
-rename from contrib/gitdm/group-map-wavecomp
-rename to scripts/gitdm/group-map-wavecomp
--- 
-2.47.3
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
+I'll pull this, thanks.
+Pierrick
 
