@@ -4,141 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61EDDC44507
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 18:04:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17AB3C44501
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 18:07:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjL0R-0002P6-E4; Mon, 13 Jul 2026 14:03:51 -0400
+	id 1wjL3M-00037Q-Rg; Mon, 13 Jul 2026 14:06:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wjL0F-0002OC-6O
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 14:03:39 -0400
+ id 1wjL3K-00036q-Gz
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 14:06:50 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wjL0A-00068c-Vj
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 14:03:37 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ id 1wjL3I-0006e2-1a
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 14:06:50 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66DF8lVx1908363
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 18:03:28 GMT
+ 66DH6O2H2107720
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 18:06:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- cEuhgnV7xYD81IYPAYx/edZ0pk9O8g1yBlSzlqCgr/Y=; b=Mddjsk5lHYpPEvVG
- tJiP3kXNUBc4XLSjyvGxfIOjRglzZFPjUZfmufwW3YIpLT3/lSQy3w/gHCiVMYZY
- qQck+5srfe4frrJi/eKyl0AH20KPyxd8WERp+Ehq3nIy5RTTKzLZZtKicjYZAF35
- ywJTNHhVf6854nH/IOnuTVVoQgQnFRZNxP69gFN3F3BBXW9+aLlN4upURmt8YNCb
- V2Tp/Btux88pYS08PyNNqf52c+0zvhVnAaxBECL9WVTtn9y5rJ5eJe6STmCQhTQr
- mLRFnNi1FGKXdOVjX2LQOn+l3a/LQRVRRfTk4trKZE9sWGzpeEUHun3mx+1E/8a/
- 7Q4O3g==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcwda22da-1
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=AeYNuaxl3yH
+ NN0qU6rIsG/7D7pj6cWSHdttKSmt5/N8=; b=hrlgOM8fr7RcCy6VuBk3G9GSYZn
+ yf9aeZ/zoR+kIqr0rTNnlQA6TRoa5xDoHT1w/QWb9CHoKrQuX+U6VbDgU6EM4R/f
+ UfHUireTNG7N7X++YI8bHBKLMciQLQ4Xr3v5fhGv93ijrR0CUcj++XTW+WpDAxSc
+ baXuFaohvweWOrBPg5XfDYlQ7FCS9m/EpteHVhBh2qfDYJwCQgAu9QD1+f7F2bxw
+ ApKSWUboOEZ+c7ztL8WBuX0i3LuwExWqoISlvhSky5OLPDT0oWn5ZmOwwSyzQgQy
+ C0OvJL5WVxHFJwh8HB+Uvz8gyZ/g8P5hJwwIt9K3QUHhQUVMxOqBJFEf/pg==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
+ [209.85.210.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fd44j07xg-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 18:03:27 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-380b630c505so4179243a91.1
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 11:03:27 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 18:06:46 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id
+ d2e1a72fcca58-84857446424so7049720b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 11:06:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783965807; x=1784570607; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=cEuhgnV7xYD81IYPAYx/edZ0pk9O8g1yBlSzlqCgr/Y=;
- b=T37XWqHjQujYaxBfIFb54FRn/PRoGjFuXbYMbkGireurj8XjHVE28I0TiIa9bs1hfK
- Mrwc0rDZqhmjJltS8LUcLx60RSaMCnU7c6Zc/99CZq/qRqmbOdPX5LSI0YairGd5K0d7
- CsXWNWblyCR1MAkcxajboYF06r53k4krmmhCxnErAxOHAe6CAt0dALzYsWLsvjDjClQu
- 8byjfRyggj3sDFovRVgOLIegZt7Myp1b44LipEWFieC5ApyF77E6aqb2EWqWab8+T8GH
- qfmii6SvmmzRsnrm/twzPZMW9SpBZxt71c7RakwyBLE8iX9EnRRTIHP3QRxUcTnDGlNg
- PbkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783965807; x=1784570607;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1783966006; x=1784570806; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=cEuhgnV7xYD81IYPAYx/edZ0pk9O8g1yBlSzlqCgr/Y=;
- b=DFCkIgSKAX4x/Kuml0YoyCuTNla/TBhsVlm1hNbNbJG+yiNhq0HS28wTQxHUneqISX
- MKDKXyZjDpSkuHSLTy7P6uWLWJpzdonJjcuo0cMO0ZQ95HHkpMd4t4ZPTZ2oxPez/Fks
- baF7QJcAAE/dM1yE9q5Svex3P6KHn5/mUbJyuaad5P1bqs6RL94DaM0fIazqUBd5H/+w
- v9+cPc9Ca1qIsv96jrjn0C7dZGysM5YISM7zZ56dAVeiVZFGdk0HQn0Oq3s4vVTmuJ5N
- Oj1DtwUgEhTlS0iWNHqdBPjw38c0/E4kwnymainX6yyLgG+tz7ffi1K31Q/0MF5xRyTj
- VmXg==
-X-Forwarded-Encrypted: i=1;
- AHgh+Ros0GFM8Ln57xA6ee8N20IX4CWzTqrZ3rw0FfuY4Gs1XrgdIk1+ev+EOm0SALUJokcISTN5jx9y+o9g@nongnu.org
-X-Gm-Message-State: AOJu0YxT9zhUhm2zFc0k1/KQN0HcQjkBUS3i4Xpr6vOrjC6AjeLaNN0S
- 2eq4mwmp9QUaZiOPo3Q5Lnvwzkq4rszIhucp6j/bwN+CpezzGEI/6z0xHDZGz9t7Pv+njbSJkxU
- enBkWYzJdMNpZ2TfmZJHZer995t+ScSGaGtS+q7rmfjffXSrQT0MuUcm05w==
-X-Gm-Gg: AfdE7ckzzXUZ81F30cQAlpgBi2mT5jz2YVbkpGbP1JxSNkS44nLguhsqcNif0Yq+4+2
- eeFvkHmj2pqkkpCdhirShZm2+qodaxnOmUiwh6bo4Pw8S9gB4lX+YPLo+Fjrj6DfwqAKq9CHnzk
- CayozhYRZbKOi6aOSzVhIn+vPB6YPfGj/YVrYJS+krm2vxm2tYZH1xbfPZ5gMu8RbhofqTcVj1z
- d9FedcVHFb9MPEEIIcg/eElDgJRjRnbQI6VF4fRD36lD1Ajy1GOoDKiycLX8vm3Y8Gw/IBdLUW3
- p1+zUdvpzck3ct4pD2U0ebkTOy6oT0Up98wvCS4KVWWxQb4HLL50rURB1lqs1BIGbCIKWXncpj4
- K2HJu6KhWocir05DF6Cj0XRrj9+lzULnCJ+doMBy0CN9G5ru0r34yxB8zTXyY6BsklQPGCZuNpM
- TG6/Y=
-X-Received: by 2002:a17:90b:5103:b0:368:9da3:c496 with SMTP id
- 98e67ed59e1d1-38dc774d032mr10126443a91.24.1783965806669; 
- Mon, 13 Jul 2026 11:03:26 -0700 (PDT)
-X-Received: by 2002:a17:90b:5103:b0:368:9da3:c496 with SMTP id
- 98e67ed59e1d1-38dc774d032mr10126391a91.24.1783965805885; 
- Mon, 13 Jul 2026 11:03:25 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ bh=AeYNuaxl3yHNN0qU6rIsG/7D7pj6cWSHdttKSmt5/N8=;
+ b=CWm+9Bp6X1XT2nWzZi1w1uZ+vKiFHUDgqNoihg+yOklx97gP3m06+DFURKQW83vRM6
+ NG11LMVOKyUBV5TTHJIXnXmNe3lQKCrmV3zRKVTdLG0q/MXlaks/BzQ7Qg/8GsLyc09e
+ zwqvl5ESNMCSmAdnExR6A+bWphRtc+g3UWK8HnRZ48t4lr3/B8pV+hVt9PtTJpdfgbMC
+ S7T2hERafcp4vHPOZuwwNs5/4OnTTJxywq3+ND7too3gtOGIDbUM4tjDBfnTUHudzeqt
+ nY4SkF5rlueQ9eTeqvouBYrPffopWjIfoQ0R8d5To9I35Yylf8RyDksENL9YWDpJ9vTq
+ metw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1783966006; x=1784570806;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=AeYNuaxl3yHNN0qU6rIsG/7D7pj6cWSHdttKSmt5/N8=;
+ b=TGWkBV+6xuSJK65QrnXvxwgvn8At+3efwPBFxyqoUwPmZRU6Zr9nQ9tTLj1bmE6Uj2
+ JAFL/spYGTAaDp4L5w59gsFBi5zGH2eC8jkgC3118WEqWtzo9Y6OeQXr7vLMxfQ+q/Y9
+ ZMR00BZ3LlIlWiyhF4XiObHOCOwPN9/Aw2uP2slRwB2/yvVG9g8Qt3fApUp+JRaxm0ts
+ BGpan5ZkxE6PWEC6XG8SK+VkRkaBDYBZj/3rQJBnu4eRWSzZLqGWijIhq1pzevMorTHz
+ vGp72k2nnGIC9FLDKoR8a5d52I/HBiueOezD49O5sXiLTliTLqJHxtFlskHlcQvWpcGO
+ GdUw==
+X-Gm-Message-State: AOJu0Yz+TgRz60Oh+ELEAVd6DijRVk0c1G9OUiA+9r5U5Wkp5zw+X3dp
+ LZhl7ruQ5ZJG6BYFEvqyHIgTCUGSbTq+Rxr3/6P5uT1Gtu68aLrg1YDV0NRH5F4M53YJEsx5tHz
+ Bql2fKXPE6QmEnZuTDNFBeTeOgKbxrDjmT3KGtNwLf2nU7dsf/TosLtgcYrptZkCDKQ==
+X-Gm-Gg: AfdE7clikxI4hFlq3rapfzQ9uJTF1wBlascl/EPetO+xF30ZLVhsfr9AYfMY9Dd+yUq
+ tEmHB4l90Zs5lMU063i4JfFC6OO/KXmoIspevGEwUYxi9RBL/LP+s4ikswcmYCt6UQ3z5mV6Gy+
+ AS492Oz+hVxUNsUJjmbiPewJ84Em0p0NqMBbWrtFjSPVRk0xss32OwbbOpUFYYn4flOiEY/2G2w
+ TN75UEgPVpugKGqUJbLkxUjwSGuaPoUtYypsJVf/jFe6fyWRInOCWRT/Gwapp42u5AnNE1rKE3p
+ iEAJ32E+z0kDKOpHlKYXlZ/oRmCJ3WBhGMQ+sYqUqGQMcNLUIC77pf+U9rrvEAA84e6ihKiAK//
+ hX690VlQ5jsDnsob8RqgSMO0yo3k+c7BcUoVShXR1HYz9mtKFkKa2SIUQfHMwHTH6Owc9MgXcDk
+ Kqr7q9aw==
+X-Received: by 2002:a05:6300:2204:b0:3c0:9c19:65b0 with SMTP id
+ adf61e73a8af0-3c110a57dcfmr11300373637.72.1783966005788; 
+ Mon, 13 Jul 2026 11:06:45 -0700 (PDT)
+X-Received: by 2002:a05:6300:2204:b0:3c0:9c19:65b0 with SMTP id
+ adf61e73a8af0-3c110a57dcfmr11300334637.72.1783966005261; 
+ Mon, 13 Jul 2026 11:06:45 -0700 (PDT)
+Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-313b4b97661sm40081151eec.7.2026.07.13.11.03.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Jul 2026 11:03:25 -0700 (PDT)
-Message-ID: <9b8f79c7-1f30-4036-ba05-22d390a22410@oss.qualcomm.com>
-Date: Mon, 13 Jul 2026 11:03:23 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 2/2] docs/about/emulation: document the dlcall plugin
-To: Ziyang Zhang <functioner@sjtu.edu.cn>, qemu-devel <qemu-devel@nongnu.org>
-Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
- Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
- Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
-References: <20260710212601.583352-1-functioner@sjtu.edu.cn>
- <20260710212601.583352-3-functioner@sjtu.edu.cn>
- <990f11f5-c8fd-4cf6-b186-180e24452ff3@oss.qualcomm.com>
- <5a303ce5-cb6f-43b9-857f-39cffc8c7d67@sjtu.edu.cn>
- <8c2aa5fe-026e-45c2-a908-5f6c245b2993@oss.qualcomm.com>
- <2c57e188-b9f5-45b9-90b3-81a3d128254a@sjtu.edu.cn>
- <69924eee-ba12-4a3e-baff-8ecb86d1ce77@oss.qualcomm.com>
- <37b40d64-aaa7-4358-ad5d-70c15dc05cba@sjtu.edu.cn>
+ a92af1059eb24-13b8a5992c9sm27501109c88.4.2026.07.13.11.06.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 13 Jul 2026 11:06:44 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <37b40d64-aaa7-4358-ad5d-70c15dc05cba@sjtu.edu.cn>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDE4NyBTYWx0ZWRfX3/8B3A13ES+u
- FaUMISvz9nL1fpnt0o6CL7+ZAwt6gv4GO9Yz5xPSuHdXW1y5YYR6BGt0++uvjgIPd8VUct/U2uz
- pdv/+LLoclM+A8+h3pipIxW5Jap2Jw0=
-X-Authority-Analysis: v=2.4 cv=cNbQdFeN c=1 sm=1 tr=0 ts=6a55286f cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=DeBbWu-sujYPe9ffx0AA:9 a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-GUID: lNPfsrTKo96vOApkDdB_0yV_bmWuk3-3
-X-Proofpoint-ORIG-GUID: lNPfsrTKo96vOApkDdB_0yV_bmWuk3-3
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDE4NyBTYWx0ZWRfX5kbxPtQefiFX
- FtK1lhxxIakikWw3iCdIIgwWJt5ZOoos8ZoLlLTf2jGIxXE9RuU8H/nVMwEXr2KQ83Pp9C+Wt+F
- 6vAzF/rsK2gJromar3DZKIvbfPiOtYlz8pHBSF8czMa2HU+Zel48D1YqTzEcVDHk23Erfyc+CUf
- tyJb7BBO2JRh6syot94Hvlhi6onEVLR1TDjWY7iQA/f29q9WRbiMGXnzHkP0WmMPvdz1voJ9Rhi
- ao6YbuovDAndoSrCuAfc0rpmqBxKwO68AxxquaMf+IbVJV7uExkvDsserP8h1/vMFNa4ilvp1Nd
- rkdZ7i82iWy1rtk2xwgi1XgOc//OA3iBoc8Oi36dxHWUcbqTADcpfk6+mAsempat1vWyCqOiv6A
- U639j5dZm8JUF7fHELEwPvxZ0ZkB33QMwh50Ua5lG9BmTYQAiy5pGFfA+EwxsLLgSej7210T6a9
- hV9e4aC2pH6VAg9Bsjg==
+To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
+Cc: pierrick.bouvier@oss.qualcomm.com
+Subject: [PULL 2/3] contrib/plugins: add a minimal dlcall plugin
+Date: Mon, 13 Jul 2026 11:06:37 -0700
+Message-ID: <20260713180638.2228609-3-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260713180638.2228609-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20260713180638.2228609-1-pierrick.bouvier@oss.qualcomm.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDE4NyBTYWx0ZWRfX4kNKrq/R6KAu
+ cMuoCDtSeUf5273Ki4fy0pDl5X27VQeTOi1Z3hVAPmb8oroIXRsxzVydIZcrQeSu6hE739wE228
+ htVhBej8lDCNHf4VbKZul2Rx+3S5a7s=
+X-Authority-Analysis: v=2.4 cv=N4UZ0W9B c=1 sm=1 tr=0 ts=6a552936 cx=c_pps
+ a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22 a=VwQbUJbxAAAA:8
+ a=NEAV23lmAAAA:8 a=Lx1EvxgrAAAA:8 a=EUspDBNiAAAA:8 a=TBq7--GwHvIaXDVWMgMA:9
+ a=OpyuDcXvxspvyRM73sMx:22 a=ZFi1QaP_tuf8dODdgmj-:22
+X-Proofpoint-GUID: gSWT0NcL9rb-p5W0NZjfAHDJJIlwU-5a
+X-Proofpoint-ORIG-GUID: gSWT0NcL9rb-p5W0NZjfAHDJJIlwU-5a
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDE4NyBTYWx0ZWRfXwGAkViTbkbFF
+ dwRZg8X6vPE+1U6BkENTnzP4ZqYoyDibvLYH/REY90slIX5pedEm+YBVnmUxs88xMun/0YY0u+r
+ sLlimJXkPYWqR9Y4b2zMNtY56r98pOQqmUniI+hZru/v+BQbkMl9UAXhRevSMQJ4HH/QQIOdg41
+ 5Xwq9rJLPlZzZIhY/RzWE2BYhgQMw8ZNQxAbdWMsAo32iKQ9uzqb5M+QpFOi+bDnN5o4LW1XrN3
+ 8Dkq8orGGLMfXeIvfOmfdV1Oxcs5KC4W9bZtL8B/C+PBdhQcwMxA5scAcErf/lVpi5hpOaUdsOY
+ I9ILgWGKj4CbcmK1wMw3ATOf7Hy9gOHUkSzywnFph/GsniVqUX4Auf1E33YoevD9N1/kTfOI9AA
+ 5/hImPw0l3eUd5NTOLJPTXcSSLHbFdZB9xUUSonsCTuBRyEIDshMoFBiXZ14woQBneJ7wgtW1nd
+ AquYUy1hiHetKAc2xpA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-13_04,2026-07-10_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 spamscore=0 suspectscore=0 impostorscore=0
- phishscore=0 clxscore=1015 adultscore=0 malwarescore=0 lowpriorityscore=0
+ clxscore=1015 spamscore=0 phishscore=0 priorityscore=1501 suspectscore=0
+ bulkscore=0 malwarescore=0 adultscore=0 lowpriorityscore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607130187
 Received-SPF: pass client-ip=205.220.180.131;
@@ -166,140 +150,302 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/13/2026 10:56 AM, Ziyang Zhang wrote:
-> On Mon, 13 Jul 2026 10:53:56 -0700, Pierrick Bouvier wrote:
->> On 7/13/2026 9:34 AM, Ziyang Zhang wrote:
->>> On Mon, 13 Jul 2026 08:31:18 -0700, Pierrick Bouvier wrote:
->>>> The problem is that if that the guest program, or the host library
->>>> (host
->>>> libhello) may depend on libstdc++. If they do and if they depend on a
->>>> (newer) symbol not present in lorelei libstdc++, we break ABI. Same
->>>> goes
->>>> for libgcc.
->>>>
->>>> By not doing this, you'll be forced to provide a lorelei devkit
->>>> everytime a new libstdc++ is published, or a distribution updates its
->>>> gcc.
->>>>
->>>> The only solution is to embed libstd++ and libgcc statically, or
->>>> rely on
->>>> host libraries. If you choose the second option, you know have the
->>>> opposite problem. So I think the only way to solve it is really static
->>>> linking, even if it will slightly increase binaries size.
->>>>
->>>
->>> The devkit already ships libstdc++ and libgcc anyway: its own clang/
->>> LoreTLC link them dynamically, and we bundle them so the toolchain even
->>> starts. So bundling libstdc++ for the thunk flow adds no new dependency,
->>> it just reuses one the devkit must carry. Static-linking the thunks
->>> wouldn't make the devkit any smaller or more self-contained either,
->>> since clang still needs the dynamic libstdc++; we'd only be adding
->>> static copies on top of it.
->>>
->>
->> There is a difference between the toolchain dependencies, and thunks
->> dependency. For the first one, it's perfectly find to provide libstdc++,
->> for the second, it can create conflicts at runtime that may be very hard
->> to diagnose and solve.
->>
->>> On the ABI risk itself: libstdc++ keeps a backward-compatible ABI, and
->>> the copy we bundle is recent, so a thunked host library only breaks if
->>> it was built against a strictly newer libstdc++ and references a new
->>> symbol. Even then it needs no new devkit, because the resolution order
->>> is the integrator's to choose. On a host newer than our bundle, putting
->>> the system libstdc++ ahead of the devkit's on LD_LIBRARY_PATH lets the
->>> host library bind the newest one, while clang and the Lorelei runtime
->>> keep working against it by backward compatibility. So a gcc update on
->>> the host doesn't force us to reship.
->>>
->>
->> Sure can choose indeed. However, he has to find where such libraries are
->> located on his system, and prepend that to LD_LIBRARY_PATH. Not the most
->> user-friendly thing to guess and debug IMHO.
->>
->>> There's also an active reason not to static-link. Both the Lorelei
->>> runtime and the generated thunk libraries depend on libstdc++. If we
->>> statically link libstdc++ into a thunk while the host library it
->>> dispatches to links the system libstdc++ dynamically, the process ends
->>> up with two libstdc++ copies on the host side, right across the boundary
->>> where C++ objects and exceptions pass between the thunk and the real
->>> library. That can break:
->>>
->>> - Exceptions: one thrown in the host library may not be caught in the
->>> thunk. The two copies have different std::type_info for the same type,
->>> so the match fails and it hits std::terminate.
->>> - dynamic_cast / typeid across the boundary: they assume a single
->>> type_info per type, so they can start returning null or misidentifying
->>> types.
->>> - Duplicated global state: two sets of the iostream objects, the locale/
->>> facets, and the exception emergency buffer.
->>>
->>
->> That's a good point, but does lorelei even provide a solution for that?
->> I guess that exception raised from an host library and sent back to
->> guest binary with target specific types will not result in what is
->> expected at the moment.
->>
->>> Based on the above reasons, I prefer to do that than statically link and
->>> grow the big artifact. Does that hold for you?
->>>
->>
->> Ok.
->>
->>> Thanks,
->>> Ziyang Zhang
->>>
->>
->> Regards,
->> Pierrick
-> 
-> 
-> Wait a second. I missed something.
-> 
-> Sorry, last time I answered without actually checking the libstdc++
-> situation on the four distros. You were right to push on it, so I looked
-> properly.
-> 
-> You were right that the x86_64 sysroot is the crux: libc6-amd64-cross
-> gives /usr/x86_64-linux-gnu/ a libc but no libstdc++, so the guest side
-> has no system libstdc++ to fall back on. That's the side we should keep
-> providing ourselves, and the devkit already ships the x86_64 libstdc++
-> next to the guest runtime for exactly that. It's only a default, though:
-> if a guest executable needs a newer libstdc++, the user can put a newer
-> x86_64 libstdc++.so ahead of ours on the guest LD_LIBRARY_PATH (the -E
-> one) and it takes precedence, while our runtime keeps working against it
-> by backward compatibility. So we are not locking anyone to our version.
-> 
-> The host side is different, there libstdc++ is reliably present. I
-> checked each distro's stock minimal base image, with nothing installed
-> on top:
-> 
-> Debian 12: libstdc++6 12.2.0-14+deb12u1
-> Ubuntu 24.04: libstdc++6 14.2.0-4ubuntu2~24.04.1
-> Fedora 40: libstdc++-14.2.1-3.fc40
-> Arch (2024-08 snapshot): libstdc++.so.6 from gcc-libs 14.2.1
-> It ships out of the box on all four, and the C compiler pulls it in on
-> Debian, Ubuntu and Arch.
-> 
-> So the split I'd propose: provide libstdc++ only on the guest side (the
-> x86_64 sysroot has none), and on the host side rely on the system's, so
-> the host thunk and the real host library both bind the host's own
-> libstdc++ rather than a copy we ship. That directly addresses the ABI
-> point you raised: nothing we ship shadows the host's libstdc++, so a
-> thunk never forces an older libstdc++ onto a host library built against
-> a newer one.
-> 
-> Does that split sound right to you?
-> 
+From: Ziyang Zhang <functioner@sjtu.edu.cn>
 
-That's a reasonable default, and Lorelei can be updated for this without
-having to update anything on QEMU side (or its documentation).
+Add a minimal dlcall plugin that lets the guest invoke host functions
+through magic system calls. The plugin registers a vCPU syscall filter
+callback that intercepts a reserved syscall number and dispatches a set
+of pass-through operations: querying host attributes, loading and freeing
+shared libraries, resolving symbols, retrieving the last library error,
+and invoking a host function through a common interface.
 
-If I had to choose, I would still do static linking for guest and host
-thunks, because I don't think we can handle exceptions correctly anyway.
-But the most important is that current example already works out of the
-box, which makes this series ready for upstream.
+The magic syscall number defaults to 4096 and can be overridden at load
+time with the "syscall_num=N" argument; values low enough to clash with a
+real syscall are rejected.
 
-Regards,
-Pierrick
+Co-authored-by: Kailiang Xu <xukl2019@sjtu.edu.cn>
+Co-authored-by: Mingyuan Xia <xiamy@ultrarisc.com>
+Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Link: https://lore.kernel.org/qemu-devel/20260711094523.622997-2-functioner@sjtu.edu.cn
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ contrib/plugins/dlcall.c    | 248 ++++++++++++++++++++++++++++++++++++
+ contrib/plugins/meson.build |   5 +
+ 2 files changed, 253 insertions(+)
+ create mode 100644 contrib/plugins/dlcall.c
+
+diff --git a/contrib/plugins/dlcall.c b/contrib/plugins/dlcall.c
+new file mode 100644
+index 00000000000..9d2230b2d1a
+--- /dev/null
++++ b/contrib/plugins/dlcall.c
+@@ -0,0 +1,248 @@
++/*
++ * Copyright (C) 2026, Ziyang Zhang <functioner@sjtu.edu.cn>
++ *
++ * dlcall (Dynamic Linking Call) plugin: lets a linux-user guest invoke host
++ * functions by issuing a magic system call. The guest can ask QEMU to dlopen()
++ * a host shared library, dlsym() a symbol, and call it with guest-supplied
++ * arguments.
++ *
++ * The plugin intentionally keeps the QEMU side lightweight and prescribes
++ * nothing about how a library is thunked. Any toolchain can implement the
++ * userspace side. Lorelei is one end-to-end implementation (guest/host
++ * runtimes plus a thunk compiler that generates thunks from a library's
++ * headers):
++ * https://github.com/rover2024/lorelei
++ *
++ * See docs/about/emulation.rst|Dynamic Linking Call for details and examples.
++ *
++ * WARNING: trusted guests only. The guest can load arbitrary host libraries
++ * and execute arbitrary host code with arbitrary arguments, i.e. full code
++ * execution in the QEMU host process. It is NOT a sandbox and provides no
++ * isolation; only load it for guests you fully trust.
++ *
++ * WARNING: requires guest_base == 0, which is qemu-user's default. Pointer
++ * operands are dereferenced as host addresses directly, and the invoked host
++ * functions dereference guest pointers with no address translation, so guest
++ * and host must share a single address space. A non-zero guest_base (e.g. set
++ * via -B/-R) would make every pointer off by guest_base and hit unrelated
++ * host memory.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include <assert.h>
++#include <errno.h>
++#include <string.h>
++#include <stdio.h>
++#include <glib.h>
++#include <dlfcn.h>
++
++#include <qemu-plugin.h>
++
++QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
++
++/*
++ * The magic system call number for dlcall.
++ *
++ * It defaults to DLCALL_SYSCALL_DEFAULT and can be overridden at load time
++ * with the "syscall_num=N" argument. To avoid hijacking a real syscall the
++ * guest might issue, N must be at least DLCALL_SYSCALL_MIN: every Linux ABI
++ * keeps its syscall numbers well below this; numbers from here up are free.
++ */
++enum {
++    DLCALL_SYSCALL_DEFAULT = 4096,
++    DLCALL_SYSCALL_MIN = 4096,
++};
++
++static int64_t dlcall_syscall_num = DLCALL_SYSCALL_DEFAULT;
++
++/*
++ * dlcall calling convention.
++ *
++ * The guest issues the magic system call (dlcall_syscall_num). The first
++ * argument (a1) is one of the call IDs below; the remaining arguments (a2, a3,
++ * a4, ...) are that ID's operands. All pointer operands are guest virtual
++ * addresses that the plugin dereferences as host addresses directly (see the
++ * guest_base requirement above). Results are written back through
++ * caller-provided "out" pointers rather than returned in the syscall value.
++ *
++ * The syscall return value (*sysret) only reports dispatch status: 0 on a
++ * recognised ID, -EINVAL for an unknown one. The actual success/failure of an
++ * operation (e.g. a NULL handle from dlopen) is delivered through its out
++ * pointer, exactly like the underlying libdl call.
++ *
++ * Operands per ID:
++ *
++ *   DLCALL_ID_GET_HOST_ATTRIBUTE
++ *     a2  const char *key        in:  attribute name to query
++ *     a3  const char **attr_ptr  out: matching value, or NULL if unknown
++ *
++ *   DLCALL_ID_LOAD_LIBRARY                            (wraps dlopen)
++ *     a2  const char *path       in:  library path
++ *     a3  int flags              in:  dlopen() flags (e.g. RTLD_NOW)
++ *     a4  void **handle_ptr      out: library handle, or NULL on failure
++ *
++ *   DLCALL_ID_GET_PROC_ADDRESS                        (wraps dlsym)
++ *     a2  void *handle           in:  library handle
++ *     a3  const char *name       in:  symbol name
++ *     a4  void **entry_ptr       out: symbol address, or NULL if not found
++ *
++ *   DLCALL_ID_FREE_LIBRARY                            (wraps dlclose)
++ *     a2  void *handle           in:  library handle
++ *     a3  int *ret_ptr           out: dlclose() return value (0 on success)
++ *
++ *   DLCALL_ID_GET_LIBRARY_ERROR                       (wraps dlerror)
++ *     a2  const char **error_ptr out: last libdl error string, or NULL
++ *
++ *   DLCALL_ID_INVOKE_PROC                             (calls the symbol)
++ *     a2  void *proc             in:  function pointer, signature
++ *                                     void (*)(void *arg1, void *arg2)
++ *     a3  void *arg1             in:  first argument forwarded to proc
++ *     a4  void *arg2             in:  second argument forwarded to proc
++ */
++enum DlcallID {
++    DLCALL_ID_GET_HOST_ATTRIBUTE,
++    DLCALL_ID_LOAD_LIBRARY,
++    DLCALL_ID_GET_PROC_ADDRESS,
++    DLCALL_ID_FREE_LIBRARY,
++    DLCALL_ID_GET_LIBRARY_ERROR,
++    DLCALL_ID_INVOKE_PROC,
++};
++
++static inline const char *query_host_attribute(const char *key)
++{
++    if (strcmp(key, "emu") == 0) {
++        return "qemu";
++    }
++    return NULL;
++}
++
++static inline void invoke_proc(void *proc, void *arg1, void *arg2)
++{
++    typedef void (*Func)(void * /*arg1*/, void * /*arg2*/);
++    Func func = (Func) proc;
++    func(arg1, arg2);
++}
++
++static bool vcpu_syscall_filter(unsigned int vcpu_index,
++                                int64_t num, uint64_t a1, uint64_t a2,
++                                uint64_t a3, uint64_t a4, uint64_t a5,
++                                uint64_t a6, uint64_t a7, uint64_t a8,
++                                int64_t *sysret, void *userdata)
++{
++    if (num == dlcall_syscall_num) {
++        switch (a1) {
++        /* Query host attribute by a reserved key. */
++        case DLCALL_ID_GET_HOST_ATTRIBUTE: {
++            const char *key = (const char *) a2;
++            const char **attr_ptr = (const char **) a3;
++            assert(attr_ptr);
++            *attr_ptr = query_host_attribute(key);
++            *sysret = 0;
++            break;
++        }
++
++        /* Load a shared library. */
++        case DLCALL_ID_LOAD_LIBRARY: {
++            const char *path = (const char *) a2;
++            int flags = (int) a3;
++            void **handle_ptr = (void **) a4;
++            assert(handle_ptr);
++            *handle_ptr = dlopen(path, flags);
++            *sysret = 0;
++            break;
++        }
++
++        /* Get the address of a function in a shared library. */
++        case DLCALL_ID_GET_PROC_ADDRESS: {
++            void *handle = (void *) a2;
++            const char *name = (const char *) a3;
++            void **entry_ptr = (void **) a4;
++            assert(entry_ptr);
++            *entry_ptr = dlsym(handle, name);
++            *sysret = 0;
++            break;
++        }
++
++        /* Free a shared library. */
++        case DLCALL_ID_FREE_LIBRARY: {
++            void *handle = (void *) a2;
++            int *ret_ptr = (int *) a3;
++            *ret_ptr = dlclose(handle);
++            *sysret = 0;
++            break;
++        }
++
++        /* Get the last error message for a library event. */
++        case DLCALL_ID_GET_LIBRARY_ERROR: {
++            const char **error_ptr = (const char **) a2;
++            *error_ptr = dlerror();
++            *sysret = 0;
++            break;
++        }
++
++        /* Invoke a function of a common interface. */
++        case DLCALL_ID_INVOKE_PROC: {
++            void *proc = (void *) a2;
++            void *arg1 = (void *) a3;
++            void *arg2 = (void *) a4;
++            assert(proc);
++            invoke_proc(proc, arg1, arg2);
++            *sysret = 0;
++            break;
++        }
++
++        default:
++            *sysret = -EINVAL;
++            break;
++        }
++        return true;
++    }
++    return false;
++}
++
++QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
++                                           const qemu_info_t *info,
++                                           int argc, char **argv)
++{
++    if (info->system_emulation) {
++        fprintf(stderr, "plugin dlcall: only useful for user emulation\n");
++        return -1;
++    }
++
++    for (int i = 0; i < argc; i++) {
++        char *opt = argv[i];
++        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
++        if (g_strcmp0(tokens[0], "syscall_num") == 0) {
++            const char *val = tokens[1];
++            char *endptr = NULL;
++            guint64 num;
++            if (!val || *val == '\0') {
++                fprintf(stderr,
++                        "plugin dlcall: missing value for syscall_num\n");
++                return -1;
++            }
++            num = g_ascii_strtoull(val, &endptr, 0);
++            if (*endptr != '\0' || g_strrstr(val, "-") != NULL) {
++                fprintf(stderr,
++                        "plugin dlcall: invalid syscall_num '%s'\n", val);
++                return -1;
++            }
++            if (num < DLCALL_SYSCALL_MIN || num > G_MAXINT64) {
++                fprintf(stderr,
++                        "plugin dlcall: syscall_num %s is out of range; "
++                        "it must be >= %d to avoid clashing with a real "
++                        "syscall\n", val, DLCALL_SYSCALL_MIN);
++                return -1;
++            }
++            dlcall_syscall_num = (int64_t) num;
++        } else {
++            fprintf(stderr, "plugin dlcall: unknown option '%s'\n", opt);
++            return -1;
++        }
++    }
++
++    qemu_plugin_register_vcpu_syscall_filter_cb(id, vcpu_syscall_filter, NULL);
++
++    return 0;
++}
+diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
+index 099319e7a17..e7fc4d6d8f5 100644
+--- a/contrib/plugins/meson.build
++++ b/contrib/plugins/meson.build
+@@ -19,6 +19,11 @@ if host_os != 'windows'
+   contrib_plugins += 'lockstep.c'
+ endif
+ 
++if host_os == 'linux'
++  # dlcall passes guest calls through to host libraries; linux-user only
++  contrib_plugins += 'dlcall.c'
++endif
++
+ if 'cpp' in all_languages
+   contrib_plugins += 'cpp.cpp'
+ endif
+-- 
+2.47.3
+
 
