@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C495AC43458
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:34:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D0ACC44507
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 15:34:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjIeb-0000DY-G6; Mon, 13 Jul 2026 11:33:09 -0400
+	id 1wjIea-0000BP-Pe; Mon, 13 Jul 2026 11:33:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjIeK-0008Sr-Uq
+ id 1wjIeK-0008Sn-TX
  for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:52 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjIeF-00018M-UF
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:50 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4921eed3fa2so30154415e9.0
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:32:44 -0700 (PDT)
+ id 1wjIeH-00019K-VE
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 11:32:52 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4938d5f86f3so25057025e9.1
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 08:32:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1783956764; x=1784561564; darn=nongnu.org;
+ d=linaro.org; s=google; t=1783956768; x=1784561568; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=qsZ/7tauraUAl70i9C1jrCqQWXHx1WoT3zxM8mgFt04=;
- b=HN+Q9++Sb4AST0rB0fN91ajU8trHbQl5R4m+awMxqcwaqYH67yQDRIoOKk6LExjSvD
- H+zVIQtZyMo4LbzhsDGKftt7JFNdJnYO3iK6NCNa2zFCPaW7mX+K5zDl4JGZra/6ralU
- ttTHdnyZ6sZoh8QrMtfTsjslNn5DsyNuXKpFett09aGSEzlLMaU4mvhsG1HQsdtGJt8w
- g2fUOt3j/0zPi1jzCamLzEF+9CLs+HQfZZRZdbnbjq0Qaz96wDZ32iOAVUR9q+Q5NJ1/
- BMQmmuuW80KFs6V8iTtdveuxkb+zVqKgjeYI6yeSz9dTpMgoKdSSbRKpc+0gt6Cmf8IF
- RwyQ==
+ bh=H10FEuulm4nuHT4cz8qHX6pRrD8O9NpO5njTcbHZkv0=;
+ b=emq6UEKK5UHLwNXxmFrm8e3J7rZB1/9qcY07x1jOJoKAbZEHn0RbkIlUJFl9BOtoMJ
+ woPKKR9UloNWhoXLiUD8nMA8r0cBw1sfm14dT+FTKucxsY2NNsYYMkwRClKnYQZU7+OF
+ pGjLUR8hqax7hUSlkmXCg0339XHF5DtVNIwtD774JGuGiaNOmg69px2peqPTETFaT6AU
+ tehlcTiKzfMY95pXokk2fUQ741fA1M063E+A3kAuQHbs/LBmeM57pQGVt8DEQ2bshqhW
+ xHwVyVdqwnwSLjhnuoNCsl9PRlLcdYPNVdWI02Y31WubYm4hZgntic0JzC+Xfaihj3N2
+ Fstg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783956764; x=1784561564;
+ d=1e100.net; s=20251104; t=1783956768; x=1784561568;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=qsZ/7tauraUAl70i9C1jrCqQWXHx1WoT3zxM8mgFt04=;
- b=C3hCnZMBTSDwQjH0Y3jt4Ur8/ZWLJkbofkjkruOj9TU6UdyBlGO4R8E2VMTCTpBwlH
- VZor+4Ci1vnMRdVqgoWHWMay5B2JznjZ1T7oGjHjbigkg29p0G0eWNS4DUlMekzai894
- N2PQBz/nzx+7JbwpdwonYXTOR8K0Jmix37M6qnvzckkTXWzY13DkqONYOnDRM3m6Wzma
- WEtp/Ir6DbV1KJoluAo9O6JgIdTC/v+66OHTIP+kXczGuvHjUizFsIQVXA/UarHES8Jl
- a6AoUOoYiikl2Gr8bCpd+I0xjRoxuPJo05DcSo2EUoNZpRDV0v4flWltV4B9Jzl87n8e
- H96Q==
-X-Gm-Message-State: AOJu0Yxxy7qgbDBsuPZdPQCE/5Zq0cFYYm4jT6CdeHEW91fgGjo6JA1M
- C7Ac1cs98uPkxfIg0G8yHekbbz2UEWccgk11870YA2fBoZrLxHJKjW0dfugojXIfhjaEgMkANWp
- SEVlT5+f9Sg==
-X-Gm-Gg: AfdE7ckpv9Ko+4jD9ewM79s02F9P5iPS+QLI/BnOhrOgSbviywY+Dre34l9RQ/QUjG0
- 1jkNRbiI8DUSYHcEFmhbA4rG3RiTXQGTfZgSxywBN7qm/zlD5EgUKpQ7qCkikBzQiYgIfvaI42q
- 1EX/oLn3RQUagr7tLBuS2pLTJ29BjWdaV7Xe03Tuqr7qtLJ5xaFIbaqx7EF4Qf0aiiJrc3sK3Rd
- aHOui0W4SWfBDIT9elcWmR+VTcXVZpYYqNV1i+fCc9t2PiqglTxyVHvmXhZ71VFa0UMdYTkIQ6g
- HKj1IIx4KFPC8zSK2Ap19nOybFNPfJ0PIzEPs/MUrCB2r3irkgCq4LLtWXfV5TMOMwlmeUkHq9p
- kvizwr30AH5lhtrxp3EnRS56/va4dqL2nyTigM18YTbbTejF/jTWl1UAxKZSME3d89w+RyWYWD4
- yXo8lP5X/6ZXG8f3tuz40BqTY8UPpa7pJvHbnGxaPGu+/4lBMEV8aV1BikRxEBjnO0+cK8pOLKE
- N2byjSPHNSmwJXfj7E76g==
-X-Received: by 2002:a05:600c:3b03:b0:493:bcba:46a4 with SMTP id
- 5b1f17b1804b1-493f8818cedmr94817735e9.20.1783956763641; 
- Mon, 13 Jul 2026 08:32:43 -0700 (PDT)
+ bh=H10FEuulm4nuHT4cz8qHX6pRrD8O9NpO5njTcbHZkv0=;
+ b=rDjGOtx273L5XLKI6YpVIe3G2MLL0tC696rWFSKrfmPTQa6U3thzEU4vhGi/S1g61d
+ B+7odUsVmuLdle3LJYMeytFUAimhYJQRbpYV3xFSqTJBrTs0OL2Cdn18Yz7Zl2BgHyeW
+ fhXlE52JeMcMkDTfKYw+YeOogrG980BOKCXwgmXQvCuV4GHqKjP3z2NtTn+WL3HhrNPR
+ Hayn05LYTguLtwl9W/e1p0AfYbVwjTkp+8IHVAqNnw5kWMWhm82MB0PkczR180R6Y9G2
+ 1lWoZV/ZjM+b3IyP1rz6fRc5Pey4K5FQLY5YoUpJzmBieVU5YhaOGGUvKruwu+Can+WI
+ KZig==
+X-Gm-Message-State: AOJu0YzlQnR5lGFFb3S0wZ4JAASWnjAmye6F7fY2st99cMipapoXweio
+ EAV1odUHytKPaGD8FSQDwCATm63HjSLGJGVBVJYhAFh/tc920HmOapY7xNgU2umtKBJ9yi7ZJnC
+ 198bsjQsk4g==
+X-Gm-Gg: AfdE7cmOCqpqR1PkM9P72ixOdOFG+reIFiNMnOmYcW7IKkodTactxcRvzmeTCUhLUhd
+ hs6zOrHWvwc599Sl4wWA3JjHgax/PRh7rT7ykH7bYyY9oNL7zvplFI20UFinjE2iTKFtVBcVhHB
+ FYpDiNNHJQ+acqZAl4406Q9LD4W64ab+tupxiPfNSxw2b7v3UN4fuNtltItOoEtQzbPgTnULoPv
+ 0+r154ogotFHjrYVr2m7Niptt6lqRnuf7Th05f8Jikc16JSqJqBJ6ce01OvujP4IuTBBIUbzpAf
+ Z2iDsFfoSSbysYYFqqkjjnA5pjdvWe2MKTy+fr+3UiHe54KsAFOHja4L4m/vVyeWtLGPFmSxvzT
+ vpJ/6AiJCAxQ/EpkIEdgCnT/gBNdWtEQzf2/J+IAhCERNL1gPli5tx2qq1RCD2pGvCHrDCnJQPB
+ 6OzRGSsDZ5ICEHDaR29FQj5btQtOCk0ZXroRp/y7VFywSDTeKxzdvxFAJ8HGLimW9vHCaTqRGUn
+ Gqg0KSKJjCq+vRO8UnmSxYLxcpWST5y
+X-Received: by 2002:a05:600c:6749:b0:493:edde:54c8 with SMTP id
+ 5b1f17b1804b1-493f8885b92mr105539245e9.8.1783956767050; 
+ Mon, 13 Jul 2026 08:32:47 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49508727f7dsm3825985e9.4.2026.07.13.08.32.42
+ 5b1f17b1804b1-49508727f7dsm3825985e9.4.2026.07.13.08.32.46
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jul 2026 08:32:43 -0700 (PDT)
+ Mon, 13 Jul 2026 08:32:46 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/26] docs/system: declare support for FEAT_EVT2
-Date: Mon, 13 Jul 2026 16:32:16 +0100
-Message-ID: <20260713153233.3391818-10-peter.maydell@linaro.org>
+Subject: [PULL 13/26] docs/system: document FEAT_IVIPT
+Date: Mon, 13 Jul 2026 16:32:20 +0100
+Message-ID: <20260713153233.3391818-14-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260713153233.3391818-1-peter.maydell@linaro.org>
 References: <20260713153233.3391818-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,44 +105,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alex Bennée <alex.bennee@linaro.org>
 
-The actual implementation supports the additional trapping registers
-of HCR_TTLBIS | HCR_TTLBOS. We already set the value to 2 for -cpu max
-and don't currently model any CPUs that only have FEAT_EVT.
+This is for documentation completeness - a system implements
+FEAT_IVIPT if it implements any permitted instruction cache
+implementation. QEMU doesn't model caches which is a
+permitted (non)implementation.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260708145841.3032079-2-alex.bennee@linaro.org
+Message-id: 20260708145841.3032079-6-alex.bennee@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
  docs/system/arm/emulation.rst | 1 +
- target/arm/cpu-max.c          | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ 1 file changed, 1 insertion(+)
 
 diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index 4f413d69efc..fb8d263db49 100644
+index 05e85d7a367..7806982e0d6 100644
 --- a/docs/system/arm/emulation.rst
 +++ b/docs/system/arm/emulation.rst
-@@ -68,6 +68,7 @@ the following architecture extensions:
- - FEAT_EPAC (Enhanced pointer authentication)
- - FEAT_ETS2 (Enhanced Translation Synchronization)
- - FEAT_EVT (Enhanced Virtualization Traps)
-+- FEAT_EVT2 (Enhanced Virtualization Traps 2)
- - FEAT_F8F16MM (8-bit floating-point matrix multiply-accumulate to half-precision)
- - FEAT_F8F32MM (8-bit floating-point matrix multiply-accumulate to single-precision)
- - FEAT_F32MM (Single-precision Matrix Multiplication)
-diff --git a/target/arm/cpu-max.c b/target/arm/cpu-max.c
-index d38bdfcf811..88b7c046333 100644
---- a/target/arm/cpu-max.c
-+++ b/target/arm/cpu-max.c
-@@ -130,7 +130,7 @@ void aa32_max_features(ARMCPU *cpu)
-     t = FIELD_DP32(t, ID_MMFR4, AC2, 1);          /* ACTLR2, HACTLR2 */
-     t = FIELD_DP32(t, ID_MMFR4, CNP, 1);          /* FEAT_TTCNP */
-     t = FIELD_DP32(t, ID_MMFR4, XNX, 1);          /* FEAT_XNX */
--    t = FIELD_DP32(t, ID_MMFR4, EVT, 2);          /* FEAT_EVT */
-+    t = FIELD_DP32(t, ID_MMFR4, EVT, 2);          /* FEAT_EVT2 */
-     SET_IDREG(isar, ID_MMFR4, t);
- 
-     FIELD_DP32_IDREG(isar, ID_MMFR5, ETS, 2);          /* FEAT_ETS2 */
+@@ -104,6 +104,7 @@ the following architecture extensions:
+ - FEAT_I8MM (AArch64 Int8 matrix multiplication instructions)
+ - FEAT_IDST (ID space trap handling)
+ - FEAT_IESB (Implicit error synchronization event)
++- FEAT_IVIPT (The IVIPT Extension)
+ - FEAT_JSCVT (JavaScript conversion instructions)
+ - FEAT_LittleEnd (Support for little-endian at EL1 and above)
+ - FEAT_LittleEndEL0 (Support for little-endian at EL0)
 -- 
 2.43.0
 
