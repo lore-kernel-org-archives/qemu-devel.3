@@ -4,113 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2CF0C44501
-	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 13:02:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6A74C4450A
+	for <qemu-devel@archiver.kernel.org>; Mon, 13 Jul 2026 13:21:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjGHp-0000Kj-BE; Mon, 13 Jul 2026 09:01:29 -0400
+	id 1wjGaN-0003ij-Ht; Mon, 13 Jul 2026 09:20:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wjGHM-0000GW-Js
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 09:01:07 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wjGHK-0007Lp-NY
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 09:01:00 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wjGaM-0003iN-2m
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 09:20:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wjGaJ-00014H-O9
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 09:20:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1783948833;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=4ortu8WwD+9/M1jD0N3jV0kgeZzrEOBK+w9x5k8sKI4=;
+ b=TU8yLJcZjHy9c7KO+m+QB7zn6NPPhznmiuNAjXz1nbrfChEzHD/canFzM8kCjTal5GdOkT
+ xcI+3M84TOWfUlEyH50tOsliUkVB1U2ENfAQx0EiSrswhv7KWB6Mo9eNDqpNDIxZVUqC9o
+ jTv+NKPkkV6yrSEajxgBlx+NSxdb8Mc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-549-9_U7AZHcOtqYvI3ZT5U0dg-1; Mon,
+ 13 Jul 2026 09:20:31 -0400
+X-MC-Unique: 9_U7AZHcOtqYvI3ZT5U0dg-1
+X-Mimecast-MFC-AGG-ID: 9_U7AZHcOtqYvI3ZT5U0dg_1783948830
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id CF8C57781A;
- Mon, 13 Jul 2026 13:00:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1783947650; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Qv96/5guzHxPYoLinf47l1CjzkjcX3/nWNpsisGpUIo=;
- b=iyP+EEKaY2yKlNq4O4UJ13JnEHHLaJU9Evzv3v/ImMeJdFmJvqYl1OKJA/FRfBRyJcxtKE
- rs/H3rpJZwWPllYn9zE1VL7KkFotjiwplnfYQqiVqtb36fD9J5sSS/Awp36tddUZEoqfTl
- zplsyuHyQZWMkwCMffSVsA1OhcopeFE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1783947650;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Qv96/5guzHxPYoLinf47l1CjzkjcX3/nWNpsisGpUIo=;
- b=9U0Yd/Lw7ojpASCpwhp5fwXho8BoBUxo+PixMKWTlNdBlPUzx96aAfwgcWFbk9QksRAlUO
- u3nIEOvC0vQR1CBw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1783947645; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Qv96/5guzHxPYoLinf47l1CjzkjcX3/nWNpsisGpUIo=;
- b=VJZxZaKwD/WzCN1wNcYcO+6pzqJ4DJ0YejsMikDjvpS17GP37neOcsmakD4TwgK73Ln7eg
- jXzuI9dL+yL7BEqZMZ7+bVb5j4mDYhpySri3TnWAu8EdP616tdqU7stSbGbKxDSSXwWBJu
- bL192Ybi9hElszv1YuC5xa7VuuUVcPM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1783947645;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Qv96/5guzHxPYoLinf47l1CjzkjcX3/nWNpsisGpUIo=;
- b=0gFxOXzjCWvk0lbyGdxmAdRndcpwwjbMJIUafot4UDWlsne3Ot+tcp0QaZ38M8lRxQC9Yv
- m6Nc196Rs27vqGCg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 676DD779AE;
- Mon, 13 Jul 2026 13:00:45 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id dkh9Dn3hVGp9UQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 13 Jul 2026 13:00:45 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Michael Tokarev <mjt@tls.msk.ru>, Daniel Henrique Barboza
- <daniel.barboza@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- andrew.jones@oss.qualcomm.com, nutty.liu@hotmail.com, Palmer Dabbelt
- <palmer@dabbelt.com>, Tao Tang <tangtao1634@phytium.com.cn>, Laurent
- Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-stable <qemu-stable@nongnu.org>
-Subject: Re: [PATCH v2 2/3] hw/riscv/riscv-iommu.c: fault when !PTE_U and no
- priv access
-In-Reply-To: <731566cb-bbdd-418f-b80e-f68750f24212@tls.msk.ru>
-References: <20260701121111.537654-1-daniel.barboza@oss.qualcomm.com>
- <20260701121111.537654-3-daniel.barboza@oss.qualcomm.com>
- <731566cb-bbdd-418f-b80e-f68750f24212@tls.msk.ru>
-Date: Mon, 13 Jul 2026 10:00:43 -0300
-Message-ID: <87tsq3doxw.fsf@suse.de>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F1DB71955D97; Mon, 13 Jul 2026 13:20:29 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 498BF1800348; Mon, 13 Jul 2026 13:20:29 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id BC9EB21E6920; Mon, 13 Jul 2026 15:20:26 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,  qemu-devel@nongnu.org,
+ BALATON Zoltan <balaton@eik.bme.hu>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH v2] qdev: Clarify instantiation and realization
+In-Reply-To: <CAFEAcA_E=okeaQ=P4qW7_NE0dZPANYU7QXiC0N-kSqvwahwD1Q@mail.gmail.com>
+ (Peter Maydell's message of "Mon, 13 Jul 2026 12:33:08 +0100")
+References: <20260629-qdev-v2-1-8cd1d9be0d8d@rsg.ci.i.u-tokyo.ac.jp>
+ <CAFEAcA9QJCfeBTi4GdatY0Ci7no8BQETxHd7i6TtJ7SFxEtjjA@mail.gmail.com>
+ <2c996e76-72a9-4e3f-b732-3cac1554be6b@rsg.ci.i.u-tokyo.ac.jp>
+ <CAFEAcA_E=okeaQ=P4qW7_NE0dZPANYU7QXiC0N-kSqvwahwD1Q@mail.gmail.com>
+Date: Mon, 13 Jul 2026 15:20:26 +0200
+Message-ID: <874ii3gh5x.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- FREEMAIL_ENVRCPT(0.00)[gmail.com,hotmail.com];
- MISSING_XM_UA(0.00)[]; TAGGED_RCPT(0.00)[]; ARC_NA(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[15]; MIME_TRACE(0.00)[0:+];
- RCVD_TLS_ALL(0.00)[]; SUBJECT_HAS_EXCLAIM(0.00)[];
- TO_DN_SOME(0.00)[]; FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[nongnu.org,wdc.com,gmail.com,linux.alibaba.com,oss.qualcomm.com,hotmail.com,dabbelt.com,phytium.com.cn,redhat.com];
- MID_RHS_MATCH_FROM(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, gitlab.com:url,
- qualcomm.com:email, suse.de:mid]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: permerror client-ip=170.10.129.124;
+ envelope-from=armbru@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,72 +89,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Michael Tokarev <mjt@tls.msk.ru> writes:
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-> On 7/1/26 15:11, Daniel Henrique Barboza wrote:
->> All IOMMU accesses are assumed to be user mode unless told otherwise,
->> i.e. we have a process_id.  In case we have a non-user mode leaf PTE
->> (PTE_U isn't set) and we are running in user mode, we need to throw a
->> fault.
->> 
->> This also reflects on qos-riscv-iommu tests: the tests always run in
->> user mode so our PTEs must have PTE_U (bit 0x10) set.
->> 
->> Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
->> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3553
->> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
->> Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
->> Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
->
-> ...
->> --- a/tests/qtest/libqos/qos-riscv-iommu.h
->> +++ b/tests/qtest/libqos/qos-riscv-iommu.h
->> @@ -54,8 +54,8 @@
->>    * PTE masks for RISC-V IOMMU page tables.
->>    * Values match PTE_V, PTE_R, PTE_W, PTE_A, PTE_D in target/riscv/cpu_bits.h
->>    */
->> -#define QRIOMMU_NON_LEAF_PTE_MASK   0x001  /* PTE_V */
->> -#define QRIOMMU_LEAF_PTE_RW_MASK    0x0c7  /* V|R|W|A|D */
->> +#define QRIOMMU_NON_LEAF_PTE_MASK   0x011  /* PTE_V | PTE_U */
->> +#define QRIOMMU_LEAF_PTE_RW_MASK    0x0d7  /* V | R | W | A | D | PTE_U */
->>   #define QRIOMMU_PTE_PPN_MASK        0x003ffffffffffc00ull
->>   
->>   /* Address-space base offset for test tables */
->
-> So, this patch adds a fix for the testing bits.
->
-> When trying to pick this one up for 10.0.x (LTS) series, I've another doubt.
-> This testing fix fixes v10.2.0-1299-g9d8ffbfc1d3 "tests/qtest/libqos: Add RISC-V
-> IOMMU helper library".  Quite some tests were added based on that library.
-> It doesn't exist in 10.0.x, and neither is v10.2.0-656-g489812e32df
-> "tests/qtest/libqos: Add SMMUv3 helper library".
-> Sure I can drop the parts of this change which touches the tests.  But this
-> means we don't have tests to cover the issues being fixed, and I don't know
-> if the result of these fixes actually works or not.
->
-> Should we pick up some testing bits in this area for 10.0.x (especially
-> 9d8ffbfc1d3 and some subsequent commits which use this library)?  Or just
-> ignore all riscv iommu patches in there?
->
+> On Mon, 13 Jul 2026 at 12:21, Akihiko Odaki
+> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>>
+>> On 2026/07/13 18:13, Peter Maydell wrote:
+>> > On Mon, 29 Jun 2026 at 09:18, Akihiko Odaki
+>> > <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>> >>
+>> >> The distinction of instantiation and realization was vague in the old
+>> >> documentation so this change clarifies it.
+>> >>
+>> >> The old documentation said:
+>> >>> The former may not fail (and must not abort or exit, since it is
+>> >>> called during device introspection already), and the latter may return
+>> >>> error information to the caller and must be re-entrant.
+>> >>> Trivial field initializations should go into #TypeInfo.instance_init.
+>> >>> Operations depending on @props static properties should go into
+>> >>> @realize.
+>> >>
+>> >> The first problem with the old documentation is that it is unclear what
+>> >> "trivial field initializations" means and why triviality makes
+>> >> initialization appropriate for #TypeInfo.instance_init. Another problem
+>> >> is that the documentation is not comprehensive enough; for example, it
+>> >> mentions @props static properties, but it does not say anything about
+>> >> the other properties.
+>> >>
+>> >> The keys to distinguish instantiation and realization are property
+>> >> setting and device introspection. The fact that property setting happens
+>> >> after #TypeInfo.instance_init and before realization implies that
+>> >> operations depending on properties should go into @realize.
+>> >>
+>> >> The fact that instantiation happens during device introspection but
+>> >> realization does not implies:
+>> >> - Instance properties should be added in #TypeInfo.instance_init.
+>> >> - Instantiation must not have any side effect not contained in the
+>> >>    instance.
+>> >> - Any operations without special requirements should go into @realize so
+>> >>    that they can be skipped during device introspection.
+>> >>
+>> >> Note these two facts to guide appropriate instantiation and realization.
+>> >
+>> > Thanks for sending this. I think we definitely need to try to be
+>> > clearer about what to do in instance_init and what to do in realize.
+>> >
+>> >> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>> >
+>> >>    * Realization
+>> >>    * -----------
+>> >>    *
+>> >> - * Devices are constructed in two stages:
+>> >> - *
+>> >> - * 1) object instantiation via object_initialize() and
+>> >> - * 2) device realization via the #DeviceState.realized property
+>> >> - *
+>> >> - * The former may not fail (and must not abort or exit, since it is called
+>> >> - * during device introspection already), and the latter may return error
+>> >> - * information to the caller and must be re-entrant.
+>> >> - * Trivial field initializations should go into #TypeInfo.instance_init.
+>> >> - * Operations depending on @props static properties should go into @realize.
+>> >> + * Devices are constructed in the following order:
+>> >> + *
+>> >> + * 1) #TypeInfo.instance_init
+>> >> + * 2) pre-realize property value setting
 
-I worry picking tests for stable could become a development task,
-requiring new code to make tests suitable for an older codebase/test
-codebase.
+I find "pre-realize" confusing.  Suggest
 
-The test frameworks and their supporting infrastructure (such as the
-riscv iommu lib) don't ensure a stable abi so that a test from one
-version will run without issues when backported to an earlier
-version.
+          2) Set property values
 
-Also, the tests are usually not structured in a way that allow us to
-pick just the part that tests the code fixes being backported, so we
-risk trying to test in an earlier version features that don't even exist
-at that point. There could also exist a complex graph of what's broken
-vs. what is being tested (e.g. broken in v10, fixed partially in v11,
-then test needs change, then fixed properly in v12, test needs change
-again, etc).
+>> >> + * 3) device realization via the #DeviceState.realized property
 
-> Thanks,
+"via the #DeviceState.realized property" feels like detail.
+
+>> >> + *
+>> >> + * #TypeInfo.instance_init may not fail, and realization may return
+>> >> + * error information to the caller and must be re-entrant.
+>> >
+>> > I know this is in the existing text, but what do we mean by
+>> > "must be re-entrant" here ? Does this mean "even if you return
+>> > a failure from your realize method you must be able to handle the
+>> > caller retrying the realize operation" ?  (I'm not sure why that's
+>> > a useful thing for the caller to be able to do...)>
+>> > I assume we don't mean "even if you successfully realize you must
+>> > handle (and treat as a no-op) a second call to realize", because
+>> > none of our devices do that :-)
+>>
+>> If you take the code literally, device_set_realized() indeed avoids
+>> calling realize after successful realization, but it doesn't report an
+>> error when retrying, so I think this means to allow that.
+
+Note that device_set_realized() is the setter of device property
+"realized".
+
+Setting a property to the value it already has is commonly a no-op, not
+an error.
+
+>> I don't think it's that useful, and it is likely to cause bunch of bugs.
+>> I can also imagine that careful developers have written device code that
+>> preserves this contract, though the added complexity is useless in practice.
+>>
+>> In my opinion, the property should be tristate: initialized, realized,
+>> or retired. Then we would have only the following state transitions:
+>>
+>> Successful realization: initialized -> realized
+>> Failed realization: initialized -> retired
+>> Unrealization: realized -> retired
+
+Maybe, but this is not the state machine we have.
+
+>> This is another opportunity for refactoring, but for this particular
+>> patch I'm planning to keep it out of scope.
 >
-> /mjt
+> OK. We could make the text clearer then, I think. Maybe
+>
+> "#TypeInfo.instance_init may not fail. #DeviceClass.realize can
+> fail, returning error information to the caller. A device realize
+> method should handle being called again after it has failed once."
+>
+> ?
+
+In general, a function should either do its job, or fail cleanly,
+i.e. without side effects.
+
+For .realize() "without side effects" includes:
+
+* The failed call is invisible to the guest.
+
+* The device behaves as if the failed call never happened.  This means
+  you can try .realize() again.
+
+Does the comment need to spell this out?
+
+[...]
+
 
