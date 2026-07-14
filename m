@@ -4,114 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7D58C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 12:24:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D7BFC43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 12:27:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjcBm-0001kd-JQ; Tue, 14 Jul 2026 08:24:42 -0400
+	id 1wjcEe-0002m8-Lr; Tue, 14 Jul 2026 08:27:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wjcBk-0001jl-1o; Tue, 14 Jul 2026 08:24:40 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1wjcEb-0002lf-Qa
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 08:27:37 -0400
+Received: from sender4-op-o11.zoho.com ([136.143.188.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wjcBi-0004I3-Gz; Tue, 14 Jul 2026 08:24:39 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66EBfw8g1195038; Tue, 14 Jul 2026 12:24:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=PAn9Td
- 5BwZ35p3wpwvjx7zPLmEJRjVV09LdreRzigrs=; b=TM+FxWaZUpPxbwF40bZzob
- vCB+V/v+Z/Nr9x5/KoX2Av6rCX1wiWo8WI+W7U63bHi5s3nlXulDZFFObjkwhlbt
- GPIJMs9dDDUqkN8TJQKtfUwKjO1d7mydjJbc4sWActd9TIF9P6nQ6AFMG9wpGyAl
- lh+fVLc610x5ZyWE257zs6hfkCUjSHV4u0XDQHmNelPhKZdRBeaJFRyvIwq66iQ7
- S9KrjSJwnopOM6D53WrrdPizI3zfI4BNtrrwA8lr1GMvim+/2PDovA/EBTT7BjW2
- DqV/NigC1osyf/bNzf1+/n/2CbKs3WNksb5cahNKrvCKv0Bp7pDLExLkgLFvNxIg
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbegbnm2v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 Jul 2026 12:24:35 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66ECJiLO011115;
- Tue, 14 Jul 2026 12:24:34 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fc2cgag9b-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 Jul 2026 12:24:34 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66ECOWD762456128
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 14 Jul 2026 12:24:32 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9A5C220043;
- Tue, 14 Jul 2026 12:24:32 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 624CB20040;
- Tue, 14 Jul 2026 12:24:32 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.111.75.242])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 14 Jul 2026 12:24:32 +0000 (GMT)
-Message-ID: <f63144de-b3e9-4752-8110-14e1efb14fd7@linux.ibm.com>
-Date: Tue, 14 Jul 2026 14:24:32 +0200
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1wjcEZ-0004qV-FK
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 08:27:37 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1784032038; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=XrGknWSlCT/oKVVNrxscq/o6dkhXMhZzuvF3R7ZaAD0TfA2WMQSYGs9wWzDAfZa0vIPS53yNZ3+VyR0iZxYePuwRp/hzOHn3mQocsG8tF5Uz8NsMkI2wI3tJ/mHWQ2cOwv9a5GKP3E6yQe2cZrk3IF1EZrxJouBycq9PwNhRfLs=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1784032038;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=oOdH9LoOupZMpMZ9LBs87vrCbvCVqZPBqxyVe7bsEwI=; 
+ b=k5pNhGu+unruKGAMjVQxNgVlkbCkk7Uul0EK3I7WYEK0MU+s38E7VDMRqfPGFuQeM4huirITuyjuaTCpIB1bkwQdrhsT4bTlwsd7OYAGppGsGZv6r/HGmlXo8PUuS/n9sOwHgTGt8DBVF3XwtQ3lr5PoqhA8wkzA5osr2uamZ5s=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1784032038; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=oOdH9LoOupZMpMZ9LBs87vrCbvCVqZPBqxyVe7bsEwI=;
+ b=K6aGSQ3x+ZVcwhlGmrwJ7y/6zwU6povN25hF5Rnflvs7730EtTsdkG7Lhqs21s9h
+ qIgVRONoS0VPU6ddMehJIEFq32jxbWF6ukoZB+mgWzcDVIQ4YMDIwVN0GF/gVTbx6fd
+ EJWWm61JWz2aoIcW1yS/0embmgM0dNyGDt5rssOs=
+Received: by mx.zohomail.com with SMTPS id 1784032036269316.86138990018605;
+ Tue, 14 Jul 2026 05:27:16 -0700 (PDT)
+Message-ID: <1f4d45f7-b60f-46e5-9295-5251908989bf@collabora.com>
+Date: Tue, 14 Jul 2026 15:27:12 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/51] exec/breakpoint: Add CPUBreakpoint.id
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
- qemu-s390x@nongnu.org, jcmvbkbc@gmail.com
-References: <20260710205401.836304-1-richard.henderson@linaro.org>
- <20260710205401.836304-7-richard.henderson@linaro.org>
+Subject: Re: [PATCH] hw/display/virtio-gpu: fix dmabuf_fd leak on remap failure
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+References: <20260713125622.111513-1-marcandre.lureau@redhat.com>
 Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <20260710205401.836304-7-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=fOcJG5ae c=1 sm=1 tr=0 ts=6a562a83 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=KKAkSRfTAAAA:8
- a=VnNF1IyMAAAA:8 a=Bs_vCHwtGeDls6627E8A:9 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDEyNyBTYWx0ZWRfXwmdN94Dkc9qE
- +Ad/BJB3z0OFB3M7R4LHRydBkcIB7gebmEpO0vFTo/yOtzDjZS8JB8UsgMk5FjjnEbAPR2/guoN
- VKX7kdyZDwyDXpopujxwsjfqGeO02hLUIvkfuUIXJyfBbtxwOocIxXOyYTL+aQKVO/A5eiYSF7Q
- xcRhimNuWruYOOFP0hm0OmoA139TYs/CH5gj36F5uu/lnDzVSuwqxbgOUFyYSs07NDz+9ueKEvc
- eMr+RwNw4EIAH9G94w9nuUxp4z1LJp2c/RLd4Vm0ND0/BZtzxH91P4NwhcvqQWyNI7GQjBP/jmw
- cDBrWQV3YPZcazaNLn/9LeDhuZOQR9vEK/QnGyiLpSnXZGfoPjpMy+kwbxyvOnKEKDnLi8lFtZE
- If+b83WXShGyUQPIhMfcqF8M3LlruRW/QP1iUyX1o6anwFJpAzMDv7tqi/5uz+ShQWOeUDFdCVH
- m5QSVK7921P2A5heyIQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDEyNyBTYWx0ZWRfXwyV7C2Tr55S6
- OwAuop5A0p/ezcnsxaBNTca66eIFWMi1TDEkM26YN6Qx4UBA8lSZeJ9cdoAI+K9zKR4bP7CdDMt
- qy+LlV0qEAXHJqmBRyzvx23AX02p+AE=
-X-Proofpoint-GUID: UyiUUfxNdLlAoYOZuwdmWmRf-qqPl1iG
-X-Proofpoint-ORIG-GUID: 72uItAVi1DbkKGAu7GT962278mcby9eU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-14_03,2026-07-10_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 impostorscore=0 suspectscore=0 adultscore=0
- priorityscore=1501 malwarescore=0 clxscore=1015 phishscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607140127
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <20260713125622.111513-1-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.11;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-op-o11.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,25 +81,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 7/10/26 22:53, Richard Henderson wrote:
-> Add an identifier for use by targets with BP_CPU.  For all targets
-> the index of the hardware breakpoint resource is to hand.
+On 7/13/26 15:56, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> When virtio_gpu_create_udmabuf() succeeds but virtio_gpu_remap_udmabuf()
+> fails (mmap returns MAP_FAILED), virtio_gpu_init_udmabuf() returns early
+> without closing the dmabuf fd. Since res->blob is never set in this
+> path, later cleanup via virtio_gpu_cleanup_mapping() skips
+> virtio_gpu_fini_udmabuf() entirely, leaking the file descriptor.
+> 
+> Call virtio_gpu_destroy_udmabuf() before the early return to close
+> the fd. This function already handles partial state correctly: it
+> skips the munmap when res->remapped is NULL and closes the fd when
+> res->dmabuf_fd >= 0.
+> 
+> Fixes: 9b60cdf98723 ("virtio-gpu: Add udmabuf helpers")
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   include/exec/breakpoint.h           | 3 ++-
->   accel/tcg/tcg-accel-ops.c           | 2 +-
->   cpu-common.c                        | 3 ++-
->   gdbstub/user.c                      | 2 +-
->   linux-user/main.c                   | 2 +-
->   target/arm/tcg/debug.c              | 2 +-
->   target/i386/tcg/system/bpt_helper.c | 2 +-
->   target/ppc/cpu.c                    | 2 +-
->   target/riscv/debug.c                | 5 +++--
->   target/xtensa/dbg_helper.c          | 4 ++--
->   10 files changed, 15 insertions(+), 12 deletions(-)
+>  hw/display/virtio-gpu-udmabuf.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
+> index d5ac1cfca0e..5f08c855dde 100644
+> --- a/hw/display/virtio-gpu-udmabuf.c
+> +++ b/hw/display/virtio-gpu-udmabuf.c
+> @@ -143,6 +143,7 @@ void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res)
+>          }
+>          virtio_gpu_remap_udmabuf(res);
+>          if (!res->remapped) {
+> +            virtio_gpu_destroy_udmabuf(res);
+>              return;
+>          }
+>          pdata = res->remapped;
 
-Reviewed-by: Ilya Leoskevich <iii@linux.ibm.com>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+
+-- 
+Best regards,
+Dmitry
 
