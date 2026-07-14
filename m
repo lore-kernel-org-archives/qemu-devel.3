@@ -4,78 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37C16C44501
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 14:17:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BFA4C4450A
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 14:17:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjdwQ-00066h-KA; Tue, 14 Jul 2026 10:16:58 -0400
+	id 1wjdwx-0006f1-V1; Tue, 14 Jul 2026 10:17:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wjdwM-000668-BO
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:16:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wjdwJ-0002aB-Dj
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:16:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784038609;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VSjvs6rJvMUrMM1YGxxPDKDn1Jwp5ESxUXKK0qLqD0w=;
- b=Hwrxz3xRNwrVxw4+Wvv1J/qENZhlYupVWLfNgKj/5deravAdYpTQ+yRo2TRa6+8nH1QYS8
- JAcBoOser4Gtx+Kx6sakKBq5XnOhC4hw4h4crowm/i3AztGqsvIHO7tJSZJW2aeRm4zNZ6
- KXZwWRCJPTUWlILSej6WFFUA4xqKJ10=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-145-tW77gdX2M4KDKllxaQ6qyw-1; Tue,
- 14 Jul 2026 10:16:41 -0400
-X-MC-Unique: tW77gdX2M4KDKllxaQ6qyw-1
-X-Mimecast-MFC-AGG-ID: tW77gdX2M4KDKllxaQ6qyw_1784038592
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0876F197768D; Tue, 14 Jul 2026 14:16:18 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.163])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CADB936918; Tue, 14 Jul 2026 14:16:12 +0000 (UTC)
-Date: Tue, 14 Jul 2026 15:16:09 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Harald Freudenberger <freude@linux.ibm.com>
-Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
- thuth@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- linux-s390@vger.kernel.org, dengler@linux.ibm.com,
- borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
-Subject: Re: [PATCH v12 04/17] crypto: Add aes-helpers file to support some
- AES modes
-Message-ID: <alZEqU-d7NTHI1ZF@redhat.com>
-References: <20260710152906.80207-1-freude@linux.ibm.com>
- <20260710152906.80207-5-freude@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
+ id 1wjdwu-0006XX-9N
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:17:28 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
+ id 1wjdws-0002fA-OM
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:17:28 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-38511175ad3so3517081a91.2
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 07:17:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1784038645; x=1784643445; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=mVg3v8CNWYJMVnr2dIbwlnL/I8cway67EWY5NeiWAvo=;
+ b=Trq+jcGFvPJySROpB/D9HvlBINMugKCHXFHuW6WQGA69tLT3vztc7xt0cYFkwOs46D
+ /q8CtqZwtzVhyRTxn/G45XfIg+rnhlzvjPTwlm3BSgOY/stRXA8/wt2Jgti40oC/he5u
+ WeKStIZEyywbLRzBOcsqWGzTv7qEsZuTjPSVd93HdZ8aDFVVH8Ra7rMCb55PhYWOin/S
+ AL9j4VG5hlYUFlOiCJ969MsdazAxoou+C6eabZ/0HDlb+HAmn/cxNTDJsuif7Hnw+bA4
+ kTdTt9w95PFDErFXf5ZeBWy1T1uTrQXvXPfKkiuD5wZW2oP/GaFCAZdGHNOUm1yChIRU
+ ojew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784038645; x=1784643445;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=mVg3v8CNWYJMVnr2dIbwlnL/I8cway67EWY5NeiWAvo=;
+ b=BfPj3214yzLB9fgrWJVqYQAEqCRCSNeMNAJtdQ8G9biMFlsppC9TqLkpwuatDpsvTg
+ yAUHYTzsel04tTwtSm5+tPGQf5vV0fJD2iCM/BstHacCYcewslFmt0DC5caQmYlDi6Au
+ 7cUrbkTKjq8Nh9oh5Bu50x2p8lleQUx761wcHbO7cgHFvH+/3LOMWjl2OX17ce8qmoco
+ /D4uB3JV+adMI95aP7JZLze8q6Z0uQte/bTNBSnfMXacCRxXOWKtIsteWX2NWrxam84s
+ EmMgIeE3nybLCSIutZAcvo8bdZYZ7wxES24O7roSlcTbEGu8kS0L64QzXS3swjrVn8LE
+ GCHA==
+X-Gm-Message-State: AOJu0Ywvr0m3xkXJ1UNk+RL4ufW8dkVaHM408pf6sCh4dajna1YCH01M
+ oI76ruAHDSk9175D65+TItpkfu8A7bSKARo1J0o1dx71F5ro2dt0eNWX76CNZ/6+
+X-Gm-Gg: AfdE7ckxQ2Jy4WW6L5diT8ObrYTtJGRwrmlOgV1deu+6a22EkGUoewselN5k/bGGv7h
+ 04oc3aZ50bNVvHUVJFOK0Leeg1dJT8L0ZUCXSgyy3//AFGOBWYoHJROx1RuO2lf5R/jJSY7hCOb
+ iEIbJ4JFdQSAW/uuxrRxuFg83eQ5VDa8YI6UX83/9bqtKlzKPbGMPxXokb0J/Nzk7oRg2FbojkJ
+ DWpyKApoHDWmX5rSpNFLSaPqGd+0M9ZlwOigOarBqNlIc2Qum/YybYEb8fznr02B3LDIAvEN78H
+ U635rJQqeHH5IGjKVi7MZYzX+R7qRDmpHYRT4SnU7WYrkJEM5sYAtUk8wolSAKilyTgzV5LhDPz
+ bP4ZgMVkomX1YbFAo2t+OqXPV7XP7hFewbQdjsiF/m8IIF11gbxLN/kSFCgb4FhNScOECSq426f
+ azjVT1R7+Zrw7CegKOuTCNExeAoIkOAa1f3umA4MBofxYPmvACeufC
+X-Received: by 2002:a17:90b:1d52:b0:381:a766:efcb with SMTP id
+ 98e67ed59e1d1-38e1ae5f663mr3032527a91.4.1784038645017; 
+ Tue, 14 Jul 2026 07:17:25 -0700 (PDT)
+Received: from setun ([2405:201:502b:3014:cc0c:536:1b1e:6def])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3118ee6091dsm97329733eec.14.2026.07.14.07.17.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 14 Jul 2026 07:17:23 -0700 (PDT)
+From: Aadeshveer Singh <aadeshveer07@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com, farosas@suse.de, pbonzini@redhat.com, philmd@mailo.com,
+ lvivier@redhat.com, ayoub@saferwall.com, pierrick.bouvier@oss.qualcomm.com,
+ Aadeshveer Singh <aadeshveer07@gmail.com>
+Subject: [PATCH v3 10/11] migration/tests: Add test for fast snapshot load
+Date: Tue, 14 Jul 2026 19:45:46 +0530
+Message-ID: <20260714141547.1268000-11-aadeshveer07@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260714141547.1268000-1-aadeshveer07@gmail.com>
+References: <20260714141547.1268000-1-aadeshveer07@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260710152906.80207-5-freude@linux.ibm.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: permerror client-ip=170.10.129.124;
- envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=aadeshveer07@gmail.com; helo=mail-pj1-x1031.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,71 +99,63 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 10, 2026 at 05:28:50PM +0200, Harald Freudenberger wrote:
-> Add a new file crypto/aes-helpers.c with simple functions
-> to support some AES modes:
-> - AES cbc: AES_cbc_encrypt() AES_cbc_decrypt()
-> - AES ctr: AES_ctr_encrypt()
-> - AES xts: AES_xts_encrypt() AES_xts_decrypt()
-> and some AES related helpers:
-> - AES_xor()
-> - AES_xts_prep_next_tweak()
-> Add header file include/crypto/aes-helpers.h for these functions
-> 
-> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-> Reviewed-by: Finn Callies <fcallies@linux.ibm.com>
-> ---
->  crypto/aes-helpers.c         | 106 ++++++++++++++++++++++++++++++++
->  crypto/meson.build           |   1 +
->  include/crypto/aes-helpers.h | 116 +++++++++++++++++++++++++++++++++++
->  3 files changed, 223 insertions(+)
->  create mode 100644 crypto/aes-helpers.c
->  create mode 100644 include/crypto/aes-helpers.h
+Add test_postcopy_file_mapped_ram() to test for saving a snapshot in
+mapped ram format and loading it using postcopy/fast snapshot load.
 
-> diff --git a/include/crypto/aes-helpers.h b/include/crypto/aes-helpers.h
-> new file mode 100644
-> index 0000000000..c1552b0e8f
-> --- /dev/null
-> +++ b/include/crypto/aes-helpers.h
-> @@ -0,0 +1,116 @@
-> +/*
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * AES helper functions and modes
-> + */
-> +
-> +#ifndef QEMU_AES_HELPERS_H
-> +#define QEMU_AES_HELPERS_H
-> +
-> +/**
-> + * AES_xor:
-> + *
-> + * Bitwise XOR operation between two AES blocks.
-> + *
-> + * @src1: first source buffer of AES_BLOCK_SIZE bytes
-> + * @src2: second source buffer of AES_BLOCK_SIZE bytes
-> + * @dst: destination buffer of AES_BLOCK_SIZE bytes
+Test is similar to test_precopy_file_mapped_ram() with additional
+start_hook to set postcopy capabilities on the receiving end.
 
-nit-picking - the list of parameters should normally be at the
-start of the docs comment, immediately after the function name,
-and then the description follows
+Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
+---
+ tests/qtest/migration/file-tests.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-With that change made:
-
-  Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-  Acked-by: Daniel P. Berrangé <berrange@redhat.com>
-
-
-
-With regards,
-Daniel
+diff --git a/tests/qtest/migration/file-tests.c b/tests/qtest/migration/file-tests.c
+index 5118d9dec9..c7e4b05c61 100644
+--- a/tests/qtest/migration/file-tests.c
++++ b/tests/qtest/migration/file-tests.c
+@@ -190,6 +190,25 @@ static void test_multifd_file_mapped_ram_dio(char *name, MigrateCommon *args)
+     test_file_common(args, true);
+ }
+ 
++static void *migrate_hook_start_postcopy_mapped_ram(QTestState *from,
++                                                    QTestState *to)
++{
++    migrate_set_capability(
++        to, MigrationCapability_lookup.array[MIGRATION_CAPABILITY_POSTCOPY_RAM],
++        true);
++
++    return NULL;
++}
++
++static void test_postcopy_file_mapped_ram(char *name, MigrateCommon *args)
++{
++    args->start.caps[MIGRATION_CAPABILITY_MAPPED_RAM] = true;
++
++    args->start_hook = migrate_hook_start_postcopy_mapped_ram;
++
++    test_file_common(args, false);
++}
++
+ #ifndef _WIN32
+ static void migrate_hook_end_multifd_mapped_ram_fdset(QTestState *from,
+                                                       QTestState *to,
+@@ -330,6 +349,11 @@ void migration_test_add_file(MigrationTestEnv *env)
+     migration_test_add("/migration/multifd/file/mapped-ram/live",
+                        test_multifd_file_mapped_ram_live);
+ 
++    if (env->has_uffd) {
++        migration_test_add("/migration/postcopy/file/mapped-ram",
++                           test_postcopy_file_mapped_ram);
++    }
++
+ #ifndef _WIN32
+     migration_test_add("/migration/multifd/file/mapped-ram/fdset",
+                        test_multifd_file_mapped_ram_fdset);
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.55.0
 
 
