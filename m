@@ -4,108 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0465C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 08:53:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D1F2C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 08:54:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjYsh-0007qj-Co; Tue, 14 Jul 2026 04:52:47 -0400
+	id 1wjYuD-0008IA-0S; Tue, 14 Jul 2026 04:54:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjYsf-0007qA-Q4
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 04:52:45 -0400
-Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjYse-0003fS-6e
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 04:52:45 -0400
-Received: by mail-yw1-x112a.google.com with SMTP id
- 00721157ae682-81ea9f974ebso6596207b3.2
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 01:52:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784019162; cv=none;
- d=google.com; s=arc-20260327;
- b=LZzcwEee6G+RtitdKC3Qz0YAKDK3YWYopWPZMKMPjs3kaD6SdJn1tZq7pr7cuz6s+0
- vDP9uKqd16lVADPvVpz+Ely0OUkAThBzgdDYKQ4STQjgJ80tVW48wTnRWYy9j6pjzNuF
- e9sjPfRXB2pQgsCZLLDD5I6oQsUx5s/uruwjNC/mGOlIqz8jcz4Z11aIXrQ0pR5GYRDq
- Fz8yMH3doBt58WRRBvmbzkGr5bFfUW9Rs4B3XVZeEBsiSiWERx0YyZg5dV4AF27Qr2YG
- fRuBTYFUI7o4p0GrHFnPfig/NKtXom8hKx6BA2ChcJDZDJvQARNe2ZAFnXE0UKUxoNE8
- /6Aw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=QL/wKds2Y0rZ11D7iCVe8iDdXFTMhHVl5Zz6gZePVlE=;
- fh=GyGp6ZDplNma4OjAFCTdtediX2M3UMx7SzqwKXy4QJQ=;
- b=rOvmquXZKo1sOJpne5RephPOA5Enmb3sd4UQjYZVRXhbIcurS/ifEaBpSqYFl4ke2S
- 9D+GOChxN63mXEx9h2fSg7auOqeHTY8ubcqKYqb9cnjLSRVoORP40pgPBu5XukfjcNTu
- Ucr6/jT7kLF9fP9IAz1eOBfdIUbUbsQfZ3u7bJQjWWwF1ZJki052mQneT5PgiRK5iwEL
- RyS8UDwfDPHvTKcdl4qxtAyds7K5dxo7+90dK0hOcRixLhLQ+PUrv0HzLEvN5IP0SOpj
- vWlpxwDxLgS73gocCF/bBBUeA+G0TXbkZCNJfW7sJzz3PUXuhnXXjwzU/BBgjZoLu+uO
- H7Yg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784019162; x=1784623962; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=QL/wKds2Y0rZ11D7iCVe8iDdXFTMhHVl5Zz6gZePVlE=;
- b=Bspwyma0H34Vhk10xuNmfQ1mo3eB2DDI/E+a/kXNRHbThDEkNLhqSLxPpn3+jow1Hw
- Ud1SptKermGy7CEsJ82BUpqUmmwr0wZI2nGVrzgrL1RlrkplBLb268Pf4o0XdqepyHsy
- HgnGFQSJRgOx6d9CU9nD93Q/ZCwlC8v9WU5x9wGH0m7+VyM7urEIat5jLWL8xverymap
- SVmxQhCsTvEsxLElIh+tZ9Tx57wv94qJfT6pEWLT7AMy/NrvPypYAIMHi0TL2UBL+IG0
- nCCkYa8q33G8+O5b4jy2Y6qbLYHfG3qUO+yarcnalLmlzWq1jWzwJF2qfCma135EHPuW
- Su8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784019162; x=1784623962;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=QL/wKds2Y0rZ11D7iCVe8iDdXFTMhHVl5Zz6gZePVlE=;
- b=guXmDzTzpeVkL+NStg1jyXgYO+o4fhnAKy5wyJ/7k7KSj4Nip/KPHMxuNN+3RnPoXZ
- eq7pADahsKitBvYPPQa9rCJlYbQDY3LWh9adfqlDB+WOlP7GYvTVQUZG98zPIEscwnER
- pD945nMeo3QuUaS+K8v3OmeGXiFTgfFpfFjY0mhWFs9teMCvzdO4BjAl/8DT7B8unN1F
- XjgMxu2I3/29SveI/hJp51pl7gX/eLN2E0p8qa2CJSZn2+3V6yCzj0YLF9yYACavzRfu
- TmujE4uLPtHcDMBxlNIazS1OUULXpBtu+Y/1Cz7sywxec5ZOE+u/oK31HR4shQP9ntgc
- v0eA==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoCsXMN3+dLMnLW0qpMHsZpSbcSWV35FCFa09CDf6RHRQApcSgWPM0MrlM6fzlE47OGQgCpg0UOzcDL@nongnu.org
-X-Gm-Message-State: AOJu0Yxuevzw4+Jfd1QUN+WT8ORSnDarLN+E6eYG5bECIKamWbcxiz93
- bSupDwsIYG9zAnbenWsPDVkUAL6dMu0Q56gK2OeHIkHV6v4t9/BSjpJDByxARlWLzjKsCmiQjYf
- q2pW6aN9Msi7JSoAcHfpX/ciZgIhpNJoSTLxD9lFjTg==
-X-Gm-Gg: AfdE7ckj2M73sXYycIdl+aCl0Swps52xTWekkNrezeCaFsQAsa1+QgIauayHY44J3Gd
- vVor5uTLamkK5QhdxvcgjlASD3Nqf2ALQfOo29ruauNDxHKqOW4OmQcaVZJN9krzOzcWH1+RhiB
- s9/Ai7I8PMpMeh6JGvdO+XfAGKcW+uv/aVv2m+VzwqLVuNNezZ0xC8F248s4ohQx9qIEfhXpbD0
- UeBMXR/zRFbZedgSeBb0V5WFrurka25ZW1ZG2mbgsu1v0zwp6G1sjO/SWrWBtpJGbmCIUdyRPxn
- FBys2uDcMRBMZdrYHedz2DZIqbCzypUpFFFpNNIQIQ8OmOib5V5uE2/b
-X-Received: by 2002:a05:690c:3603:b0:81c:e8ab:c4ed with SMTP id
- 00721157ae682-81e90181e3bmr93385797b3.51.1784019162146; Tue, 14 Jul 2026
- 01:52:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1wjYuC-0008I1-7M
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 04:54:20 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1wjYuA-0003iw-HP
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 04:54:20 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66E6fs00559242; Tue, 14 Jul 2026 08:54:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=A5+9GL
+ x0ehNvR7jjsbz1ogatgHSuV77L6wqcR8au/n8=; b=QcMgPfPdBrg7J15v4m1uOk
+ rtAvU8K5JMFqP9a6mrD1AM3rXIZibOc7oT7ZrZcK5kZdhEcPvZ+Zo4M8k0HD6Psl
+ 6YGzLsYyEFTCgeNo7pFNZzeH/ScgmI0Md5K8RQaKVUMVOndRxii3WYHfnluhB331
+ g0h1x6XVPJxrPiqQOqUMM3xBwZdUEbvUVKs7W4DfQ+lT31xlj7aLPAJqvHxplqhK
+ j0XCDs2xVgmixyNw3wnXn6MAPF9tRauotwK8Cj9zZlGNaEWDtf4Dzw1lYM5+YFg5
+ 4LLo+AF8iRR1boCgdM0ZuN8rFdCglX3S2wN5hNFcKjsPmhnwKWOgoFuvGjnu9wOQ
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbepxd5kx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 14 Jul 2026 08:54:14 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66E8ncIa019754;
+ Tue, 14 Jul 2026 08:54:13 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fc2uy1jsj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 14 Jul 2026 08:54:13 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66E8sBpm15270180
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 14 Jul 2026 08:54:11 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A750320049;
+ Tue, 14 Jul 2026 08:54:11 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3781C2004D;
+ Tue, 14 Jul 2026 08:54:11 +0000 (GMT)
+Received: from [0.0.0.0] (unknown [9.111.75.242])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 14 Jul 2026 08:54:11 +0000 (GMT)
+Message-ID: <584dbebe-6105-45a6-ae4d-d0fb4fc6eaaf@linux.ibm.com>
+Date: Tue, 14 Jul 2026 10:54:10 +0200
 MIME-Version: 1.0
-References: <tencent_06551FAEA44CD75E915AE611FCA0C99CDD09@qq.com>
- <24329582-f5cf-41de-aabe-c2c3d54f03ea@oss.qualcomm.com>
- <tencent_3045B23CF7A9872F29FC351E24D8F9373F07@qq.com>
- <6c0ff642-8125-4c35-8ed0-8f89da555ee9@oss.qualcomm.com>
-In-Reply-To: <6c0ff642-8125-4c35-8ed0-8f89da555ee9@oss.qualcomm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 14 Jul 2026 09:52:30 +0100
-X-Gm-Features: AUfX_mzDxOCUO2U47PkEe6TS2caoUo6qynmsAPH3uE3iZ1T4Mvu6THCAwsO2iPY
-Message-ID: <CAFEAcA-AqgGDgRkkc4MzCcE1zeMT-aWbYoyPYsUJsYShy0-0dA@mail.gmail.com>
-Subject: Re: [PATCH v2] riscv/virt: Add optional UART1
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: Yanfeng Liu <yfliu2008@qq.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 82/98] tests/tcg/s390x: user tests
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>, Helge Deller <deller@gmx.de>
+References: <20260710214343.2065491-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260710214343.2065491-83-pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+In-Reply-To: <20260710214343.2065491-83-pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: VMqU-6jC1czyDztAcJeOfZ9WBMe9QnzB
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDA5MCBTYWx0ZWRfX72hAIkh5cO8Z
+ BnVmCf3/rySKVpej0IzrAfk4Fcc9sgq/zfNZI1FIh7ISfSjaGyD1Wanis5VPuMHx9bahwxVJiAg
+ DJMoUhVqIeRUQw6Zck36YvX3on701dk=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDA5MCBTYWx0ZWRfXy0gFn/GCnJoW
+ 4RjUI8E3QN5RA1ZTOmhyptW5mxa37CtCxEf1EdxpkConWNoS22qp2nW/tx0WRdAPYUjtPBjDRL1
+ QEJcMPIZc/gU/pdsEwyv++1fPhgeXCXKy6vBezViJchK5lJ+Tz8p8YReqJTRdHxqRcu63C4gTGT
+ nY4EWZv4iSb7l7ZQYZK8KhOL4g1GxxblzkHUw/NiT5gWwM+8MDGHchfpznXB/UmZVZ2jkGZ1O9C
+ aAtP8fznYTDD5fdRCZrXmu6a0w6biaZqW8/Q0Ukn9UIQbl90gatp9lqfbocedOtkdCvf9l7zRK0
+ 8Tgu2tb6MArjcuOJDt665GWtqCoObwX69Maz69CHzg/xylZ+yagLFWiCPGj18X1skmqb3acoZVd
+ zE/Q/yFKxXV+olqyf+BepK5lIcsDw0hQINITPMeovdZU4iKwmSANueEIicTE6CUe61DgK3CnGOP
+ 7+7zVJcNEw40PijEShg==
+X-Authority-Analysis: v=2.4 cv=XbS5Co55 c=1 sm=1 tr=0 ts=6a55f937 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=EUspDBNiAAAA:8
+ a=r4FInzllVyHwdzRR_9EA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: U3smGnKz6fUilXaGmQKFWGjkWvKUHeSZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-14_02,2026-07-10_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 spamscore=0 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 adultscore=0 malwarescore=0 impostorscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607140090
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,42 +133,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 5 Jul 2026 at 23:05, Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> On 4/7/26 03:41, Yanfeng Liu wrote:
-> >
-> > Philippe,
-> >
-> > The v1 always creates UART1 carelessly, then Peter suggested following
-> > 5d8a250f9068 (openrisc) and e7100972f2 (arm) to reduce guest breakage.
->
-> Oh I missed that. I'm confused because I thought not checking for
-> backend use of a chardev (in particular calling serial_hd) was part
-> of Peter's recommendations, since he did that cleanup years ago.
 
-Where we're modelling a real piece of hardware that always has,
-say, two UARTs, we want to always create both UARTs (because they're
-always there in the real hardware, whether there's a serial cable
-plugged into them or not). Having the chardev code handle "backend
-is NULL" as equivalent to "this is the do-nothing backend" lets us
-avoid unnecessary conditionals in the board code.
 
-For "virtual" board types where it's QEMU defining what they are,
-the situation is a little different. Ideally we'd do the simple
-thing, i.e. "just create all the devices", but where there's
-existing guest software that makes assumptions about how older
-versions of QEMU used to behave and the number of users of the
-board type is big enough that we care about not breaking that,
-we sometimes need to do something else. The "only create the
-second UART if the user puts another -serial option on the
-command line" was the best idea I could come up with for letting
-the user opt into the extra functionality if they needed it.
+On 7/10/26 23:43, Pierrick Bouvier wrote:
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+>   tests/tcg/meson.build           |   1 +
+>   tests/tcg/s390x/Makefile.target | 127 -----------------------------
+>   tests/tcg/s390x/meson.build     | 138 ++++++++++++++++++++++++++++++++
+>   3 files changed, 139 insertions(+), 127 deletions(-)
+>   delete mode 100644 tests/tcg/s390x/Makefile.target
+>   create mode 100644 tests/tcg/s390x/meson.build
 
-(If we have another future architecture that creates a "virt"
-board type we should make sure we have it create at least two
-UARTs right from the beginning, because we've now made this
-mistake twice :-))
+In general the s390x tests work now, however, I get:
 
--- PMM
+155/164 tcg+tcg-s390x-linux-user - qemu:s390x-linux-user-fma 
+                                         SKIP             0.09s   exit 
+status 77
+156/164 tcg+tcg-s390x-linux-user - qemu:s390x-linux-user-vfminmax 
+                                         SKIP             0.07s   exit 
+status 77
+157/164 tcg+tcg-s390x-linux-user - qemu:s390x-linux-user-vxeh2_vs 
+                                         SKIP             0.06s   exit 
+status 77
+158/164 tcg+tcg-s390x-linux-user - qemu:s390x-linux-user-vxeh2_vcvt 
+                                         SKIP             0.06s   exit 
+status 77
+159/164 tcg+tcg-s390x-linux-user - qemu:s390x-linux-user-vxeh2_vlstr 
+                                         SKIP             0.05s   exit 
+status 77
+160/164 tcg+tcg-s390x-linux-user - qemu:s390x-linux-user-vxeh2_vstrs 
+                                         SKIP             0.04s   exit 
+status 77
+
+with the series. Without the series these tests do run:
+
+   TEST    fma on s390x
+   TEST    vfminmax on s390x
+   TEST    vxeh2_vcvt on s390x
+   TEST    vxeh2_vlstr on s390x
+   TEST    vxeh2_vstrs on s390x
+   TEST    vxeh2_vs on s390x
+
 
