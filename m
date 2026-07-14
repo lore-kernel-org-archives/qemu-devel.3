@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE289C44508
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 15:44:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6830C44501
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 15:44:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjfHm-0001Oo-N1; Tue, 14 Jul 2026 11:43:06 -0400
+	id 1wjfHi-0001MO-SC; Tue, 14 Jul 2026 11:43:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wjfHi-0001M0-A0
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 11:43:02 -0400
+ id 1wjfHd-0001Jx-TO
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 11:42:57 -0400
 Received: from forwardcorp1b.mail.yandex.net
  ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wjfHg-00084l-L4
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 11:43:02 -0400
+ id 1wjfHc-00082n-0c
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 11:42:57 -0400
 Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c1b:16:0:640:bc52:0])
- by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 535F680B08;
- Tue, 14 Jul 2026 18:42:59 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 38A4B80B07;
+ Tue, 14 Jul 2026 18:42:53 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:c5a::1:8])
  by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id lgRdV71YDKo0-ary5JxKO; Tue, 14 Jul 2026 18:42:58 +0300
+ id lgRdV71YDKo0-eIyARavf; Tue, 14 Jul 2026 18:42:52 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1784043778;
- bh=1PX2vBoRGZeYNspGNRll0bOioKyDsX3GvadATn1+q6U=;
+ s=default; t=1784043772;
+ bh=nyaOtAoZp38CbIxdsrle7YhyXg8JDrhTW626amNya7w=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=GoTjSqOtn37922OdgWdDxAckohfp4SB7C+a5eAyMThsdbFy7B6jccHqW+CEh/C63Y
- x1IFxUY2WbX5jtZk1h2X6JcIRXFA4qvT5A0j13pMaDz3OuBxSxbOUEq5j1Wm7RxQKu
- h9brrDMGvgQSQjFvcoW85Z1nLZquIdRe6JJrO3l0=
+ b=OFrlhyhkVl/vbw4InYmJsAivP7siFES7KZG3DtI8zp5BysfoDcrnxbroXHqeIH3Fn
+ FwqVpHHtI94wxg1E/A1kdnVjRakDsbUkqhPYA3WvpQRg7p1d1RBO/9Ebt4d0FfB6Oa
+ uDVTOAj1GovKVkLaMUp98oIcXhyJ/Tb2y1239D8w=
 Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -48,9 +48,10 @@ Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
  qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
  yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
  Jason Wang <jasowangio@gmail.com>
-Subject: [PATCH v19 12/15] net/tap: disable read polling for stopped VM
-Date: Tue, 14 Jul 2026 18:42:40 +0300
-Message-ID: <20260714154246.1242856-13-vsementsov@yandex-team.ru>
+Subject: [PATCH v19 04/15] net/tap: move vhost-net open() calls to
+ tap_parse_vhost_fds()
+Date: Tue, 14 Jul 2026 18:42:32 +0300
+Message-ID: <20260714154246.1242856-5-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260714154246.1242856-1-vsementsov@yandex-team.ru>
 References: <20260714154246.1242856-1-vsementsov@yandex-team.ru>
@@ -78,88 +79,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Polling when VM is stopped doesn't make real sense, as stopped VM can't
-handle incoming traffic anyway.
+1. Simplify code path: get vhostfds for all cases in one function.
 
-And it's critical for introduction of local TAP migration
-feature in the next commit: the TAP device will be transferred
-to the target (open fd will be passed through migration channel),
-and if we continue polling on source, we may get a package, which
-we'll never handle on source (already stopped), it will be lost.
-Better is save this package for target VM to handle.
+2. Prepare for further tap-fd-migraton feature, when we'll need to
+postpone vhost initialization up to post-load stage.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Ben Chaney <bchaney@akamai.com>
 ---
- net/tap.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ net/tap.c | 39 ++++++++++++++++++++++-----------------
+ 1 file changed, 22 insertions(+), 17 deletions(-)
 
 diff --git a/net/tap.c b/net/tap.c
-index 95bcfaaf1ea..2bd4b089573 100644
+index 2e94b4015f6..dcc914ffdf2 100644
 --- a/net/tap.c
 +++ b/net/tap.c
-@@ -36,6 +36,7 @@
- #include "net/net.h"
- #include "clients.h"
- #include "monitor/monitor.h"
-+#include "system/runstate.h"
- #include "system/system.h"
- #include "qapi/error.h"
- #include "qemu/cutils.h"
-@@ -92,6 +93,8 @@ struct TAPState {
-     Notifier exit;
- 
-     int queue_index;
-+    bool read_poll_detached;
-+    VMChangeStateEntry *vmstate;
- };
- 
- static void launch_script(const char *setup_script, const char *ifname,
-@@ -150,6 +153,23 @@ static void tap_read_poll(TAPState *s, bool enable)
-     tap_update_fd_handler(s);
- }
- 
-+static void tap_vm_state_change(void *opaque, bool running, RunState state)
-+{
-+    TAPState *s = opaque;
-+
-+    if (running) {
-+        if (s->read_poll_detached) {
-+            tap_read_poll(s, true);
-+            s->read_poll_detached = false;
-+        }
-+    } else if (state == RUN_STATE_FINISH_MIGRATE) {
-+        if (s->read_poll) {
-+            s->read_poll_detached = true;
-+            tap_read_poll(s, false);
-+        }
-+    }
-+}
-+
- static void tap_write_poll(TAPState *s, bool enable)
- {
-     s->write_poll = enable;
-@@ -380,6 +400,11 @@ static void tap_cleanup(NetClientState *nc)
-         s->exit.notify = NULL;
+@@ -757,8 +757,7 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+         }
      }
  
-+    if (s->vmstate) {
-+        qemu_del_vm_change_state_handler(s->vmstate);
-+        s->vmstate = NULL;
-+    }
-+
-     tap_read_poll(s, false);
-     tap_write_poll(s, false);
-     close(s->fd);
-@@ -819,6 +844,9 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
-     int sndbuf =
-         (tap->has_sndbuf && tap->sndbuf) ? MIN(tap->sndbuf, INT_MAX) : INT_MAX;
+-    if (tap->has_vhost ? tap->vhost :
+-        (vhostfd != -1) || (tap->has_vhostforce && tap->vhostforce)) {
++    if (vhostfd != -1) {
+         VhostNetOptions options;
  
-+    s->read_poll_detached = false;
-+    s->vmstate = qemu_add_vm_change_state_handler(tap_vm_state_change, s);
+         options.backend_type = VHOST_BACKEND_TYPE_KERNEL;
+@@ -768,17 +767,6 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+         } else {
+             options.busyloop_timeout = 0;
+         }
+-
+-        if (vhostfd == -1) {
+-            vhostfd = open("/dev/vhost-net", O_RDWR);
+-            if (vhostfd < 0) {
+-                error_setg_file_open(errp, errno, "/dev/vhost-net");
+-                goto failed;
+-            }
+-            if (!qemu_set_blocking(vhostfd, false, errp)) {
+-                goto failed;
+-            }
+-        }
+         options.opaque = (void *)(uintptr_t)vhostfd;
+         options.nvqs = 2;
+         options.feature_bits = kernel_feature_bits;
+@@ -864,14 +852,31 @@ static int tap_parse_fds_and_queues(const NetdevTapOptions *tap, int **fds,
+ static bool tap_parse_vhost_fds(const NetdevTapOptions *tap, int **vhost_fds,
+                                 int queues, Error **errp)
+ {
+-    if (!(tap->vhostfd || tap->vhostfds)) {
++    bool need_vhost = tap->has_vhost ? tap->vhost :
++        ((tap->vhostfd || tap->vhostfds) ||
++         (tap->has_vhostforce && tap->vhostforce));
 +
-     if (!tap_set_sndbuf(fd, sndbuf, sndbuf_required ? errp : NULL) &&
-         sndbuf_required) {
-         goto failed;
++    if (!need_vhost) {
+         *vhost_fds = NULL;
+         return true;
+     }
+ 
+-    if (net_parse_fds(tap->vhostfd ?: tap->vhostfds,
+-                      vhost_fds, queues, errp) < 0) {
+-        return false;
++    if (tap->vhostfd || tap->vhostfds) {
++        if (net_parse_fds(tap->vhostfd ?: tap->vhostfds,
++                          vhost_fds, queues, errp) < 0) {
++            return false;
++        }
++    } else {
++        *vhost_fds = g_new(int, queues);
++        for (int i = 0; i < queues; i++) {
++            int vhostfd = open("/dev/vhost-net", O_RDWR);
++            if (vhostfd < 0) {
++                error_setg_file_open(errp, errno, "/dev/vhost-net");
++                net_free_fds(*vhost_fds, i);
++                return false;
++            }
++            (*vhost_fds)[i] = vhostfd;
++        }
+     }
+ 
+     if (!unblock_fds(*vhost_fds, queues, errp)) {
 -- 
 2.43.0
 
