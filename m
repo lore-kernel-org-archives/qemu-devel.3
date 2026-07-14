@@ -4,145 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACB06C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 08:01:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BF95C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 08:03:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjY1u-0002aK-Oj; Tue, 14 Jul 2026 03:58:14 -0400
+	id 1wjY6G-0007si-Nc; Tue, 14 Jul 2026 04:02:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
- id 1wjY1t-0002Zb-5t
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 03:58:13 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wjY6F-0007sN-5Y
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 04:02:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
- id 1wjY1r-0003c9-At
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 03:58:12 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66E7YGGM4101711
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 07:58:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=tR7Hnu4ouM3
- whMRJ8HksXJ0KwuYzLO9YLeNEosavEDA=; b=gG5xDzhbOKzp+jgDt21f0MgZxp6
- cH50c0y50jHk+/BGmU0GYJBe+8ezIRkke7Doknac5gB+6PaszWziGFhv+ICYi0YU
- QZEBOCueNDuYAbK0bvNUOsaoP0EW+i85bghtsbXtGbPpLvTGUegMpiuZGcM3tOJj
- 4Y8rAZx7Iql/LFtRRufRt1yP3PpcmfcWa8YNSRkijLnU2UIsAJdtHwI02lrbLGca
- xVTBaLSJktHI0ozypSWe5tx+ZVMs7XdzBJRXh286/Bl+AUxSBHAi5Ggz0vDeW9wL
- 4Tlk2FzUhmpkMJ/AL2A9BF4qszRKkOReK3Jl1LmiyQwU01QQ2O5Kk3mmSCA==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fdgudg301-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 07:58:10 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-3883dc4ad23so1484928a91.0
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 00:58:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wjY6C-0004Fs-7O
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 04:02:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784016157;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SWVFMPsOp0q/GB1rZbN3lvYM1v6exgL1r3bquD/XSJg=;
+ b=PWtQunCmWYLWabvCddmRJNdRY5hkHGE4Qj12QdsiW43GwcYn+3Kp1asMYGe6FxIC12iFaj
+ 5FO6ky0h4ZxlTXN9XD9iQyz0qf7fSP9XuQtSG9+pxWBoN34GuB7Fn3tjs7sSfqhfWQCmwP
+ 7p6YZgOxQrxTW66hUyMAV6hTD3B6DA4=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-132-gyRMiSqUMbiAmLC_POb1Tw-1; Tue, 14 Jul 2026 04:02:35 -0400
+X-MC-Unique: gyRMiSqUMbiAmLC_POb1Tw-1
+X-Mimecast-MFC-AGG-ID: gyRMiSqUMbiAmLC_POb1Tw_1784016154
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-47eaa4006a1so367532f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 01:02:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784015889; x=1784620689; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=tR7Hnu4ouM3whMRJ8HksXJ0KwuYzLO9YLeNEosavEDA=;
- b=SPNwYvQZ2Vq0R5iml5Ue7X51C12OkTPZEhXdl9ILYzVgAYvWH4v/6OgHMc55Fl2BFQ
- WUCd881Ox37N9zKVGqqoPGy8Cf85+t+jebuyuwK/BwkUZLcidl7mWOk9O/P3tLElmzQN
- mlD1xtWVeC/nz/BLgNdMA4CE9qnjQs8NP5MGxBCH31HYBjEJQtOpOJMjPytO83tnERg9
- qggQCVbOJM/bTxTvUYRHYZ7MqCZN60CCV3W+VdF7VPSIdc6cVmlLzFpXeYdIQd0/OSEC
- O+uy2ja+Qq5MaaoUL+pymokOvIea7Uk3V+HZCu84UuBJJgnPeWpTs4ED5LRaoCTSsaTg
- 9f5A==
+ d=redhat.com; s=google; t=1784016154; x=1784620954; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=SWVFMPsOp0q/GB1rZbN3lvYM1v6exgL1r3bquD/XSJg=;
+ b=lp8kQYQjXoWcpCFPjoSUbZAy2E1HPkKjhoHUekjitnwcOzAEqY7kpxYfuZ7n5c0Gs3
+ L8FSb6cbpcfH4G0XvrZMV846j4CGYJItIb9eyKaGX5Vm/48YaEQ7MmmxA7+F0tV9BTet
+ fJZbsLLWopOISBRfKx/P3KNGjBBb0sCDlxxjfOqAOCUut1tgPnJKIkeRFWbTUy2diqR+
+ qVpp+du8EWVOT12Y8RG80sNWZlmq6ZGWenxnK9lIQtthNXkCKopLvcWmWfkFo23vVf8m
+ VSwitix4rrO5bQsJVecx4yVbmUjPS280JadntpFDHkU9iA2qig9zWv7CzRp44bDoI4Zj
+ zsPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784015889; x=1784620689;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=tR7Hnu4ouM3whMRJ8HksXJ0KwuYzLO9YLeNEosavEDA=;
- b=qNRdi+gbWRElYFA7r6w17X7nEkdFjyJ7nx+fxGYA1IRn5ZdrLm2U+un9zKb3Btcg1i
- PmzAF9zeZ8NnIPlfVFsAxk5GKOy9qZ/1VIWK1UYIy+CsL6qP8binS9jrpAlfLkxLot9t
- v6aIYvtN4J//HS8gM70YNtCKK7pXgbtnNRfJSfqbZv8mamUMUjS8iHvleGcEJo0hcyak
- NvzqPmE2gmiq4tKBQ92P/pVzWrznnl5DCK9H4n4g2sF6o1oNKxGK294+70U93EyDlk7R
- BTWmVhgno6tu5kD7tAAEwPfwIChLE0P7lc9EE7eqw0qLoCiy3aA8x7Cm4BSmgNnyNbS6
- NDfg==
+ d=1e100.net; s=20251104; t=1784016154; x=1784620954;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=SWVFMPsOp0q/GB1rZbN3lvYM1v6exgL1r3bquD/XSJg=;
+ b=Rzm7sraESXIMJW0/0vJ0N4ebjKYquSaPiCxjn1emg6/jedKZbkuGgGf0dAXEtylLSK
+ 0CXlDIkSorXW4CArP/X1LuV5mro0lfYahk4ppzdMYXZKyva2TId0X0c4KCHiYhSgwXZl
+ GPqmZrplCb7XJwWR7zSn298Cqdn00pPZHIWNYeznhdp6/vEs8kgZ1gN9P70IOo5LfMm6
+ raiJKip386nPlfz/5PZCjMIi4cpewXE1FwlfCN1V5fXw54Q+7Hh8UQTLar/i+HU7KaEB
+ uZ9w9Sf8Nv1zYtGH41p091tNAeIsBlXt5h2HdQuLG6GNdro6Oyi9VJW9SwXQFRgibYgi
+ 3Iuw==
 X-Forwarded-Encrypted: i=1;
- AHgh+RpBgkhpX/IpL81YjMwb/yQZ6vVm2oF2IuaLJCySjm1QT8AboYdfLSjLuhcRP+USZKf8/u6w/Fq/XW1+@nongnu.org
-X-Gm-Message-State: AOJu0YyJ0e0q9DXmnIgWYLAP74DAgr/AVffSgVJVFH45xnCH2vn03Cpn
- 4M4NpmILztwZ2/I6ovp4CIaLlR++T6ACk+0VbPbceMxNBtJ6e8PLn9z3vzGpRkfxbwkO6ZNkhCq
- K2Veln+T+rEcVcjMxjnvDbFvR2uJCib5TrD6vixd7SXdvyaxwo5OgTjkMWw==
-X-Gm-Gg: AfdE7clF5SYBGSgY8JKVCT8Kr1vfn5nVaLIAGDTiMzdA/6A/dlwn4t8F8DDcXkaZQki
- HR1hFUJHqvY7Om9ruTZnEdFJNHdMtUWI8wOzl4Pak1tEEVz0TaiMNg0RwnhlyBLHnpTjXizAYr4
- VYcuL6odD5493rGZaHCDOlmFezgN4R/VnykIY/0+LrwIX02FU51pqwDe6GrAyaJ9TfFU/lqZmRe
- 5sYBDQWp9M/cteWHCTk3jiikci+caI7+I/hdMH8sbr/7mAkQDMTQb9s5NgGp4kZGw2lHuQZfzoc
- kB4opoaE6m+SoTlzjEeyB6rTLoJeOYM2R0mM+vEBELy258aYis71XQ8q66TdsxapNXIbeB3DQGH
- uTKaabBVFOaMzFSNNs5xgsTY3sSyD4ytLF+iQ2qMJI3Y1OnKf5Ub9fxUrzxN/sA7dcOGYmPU6wr
- th026C/280A+qFaLSg2xdIkw8UgdxWLN86V0Jz1oANvA==
-X-Received: by 2002:a17:90b:564c:b0:37f:eda5:516f with SMTP id
- 98e67ed59e1d1-38dc760604fmr8906827a91.0.1784015889325; 
- Tue, 14 Jul 2026 00:58:09 -0700 (PDT)
-X-Received: by 2002:a17:90b:564c:b0:37f:eda5:516f with SMTP id
- 98e67ed59e1d1-38dc760604fmr8906814a91.0.1784015888829; 
- Tue, 14 Jul 2026 00:58:08 -0700 (PDT)
-Received: from hu-slingapp-blr.qualcomm.com
- (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
+ AHgh+RoKhMdDvQ/u22mhaR02Cxv2Ut/Xdj7h/VqyX51u9qNKa8pBf99AC956O1qjDafnqZc8HUI2+DYy1n2S@nongnu.org
+X-Gm-Message-State: AOJu0Yxkv2ECfly/0aUwmYZfAXFNAvGdgVcveA0f0XmN0/2XSKXH5ZxP
+ z9JX9YOsHALrtpUKRpqJOgJSTVbIQ9verfn5NbwMRquTbBSAM6Ozaggeg0fP7t8uxCaORx7pLJ5
+ ZEuW+sjuHLRcdgty39DrDzGxKcV3u7Mjki7WleamhTPw0ReEZi7A71ahG
+X-Gm-Gg: AfdE7cnLDzwjR6F5EaCU3/v//3PDBWKsk0WdEE81Kkw9mWW7FgG8LvAqUVK5MoR6zhj
+ g6Rx1HCQ8s3hwK0KWPI74UwX6tPVfAk9CuQbXsAvLgjhWOCXauGw9/KTlyeyClLTGP5FiRbsfIk
+ xj6vK3XMkDJhnU+PWgOjm5RPA2/J4CwS7BDX/90FCaaOyOTBHyX8Yw/q1jXvzu6gNph4m3T8pe4
+ 8qXEgCMLG8y3hvHPN765yC4YSI4sQ5IzrBwbbpq2Auk4C70zdgfm4PL1bjGXdsl8s0fLobhMgrT
+ g8G6FypfLvgq7tLwYwyTOSz28d1zVQha6YxJgCYIOXMGw62UMzC3rrWOC2ntk25fUz1Ir61+XST
+ nWsZRstfIF5+AVZ0TmEV5GSn3LzJq7GfkkZ4=
+X-Received: by 2002:a05:6000:29d8:b0:47f:40f3:88bc with SMTP id
+ ffacd0b85a97d-47f40f38950mr4921017f8f.19.1784016154069; 
+ Tue, 14 Jul 2026 01:02:34 -0700 (PDT)
+X-Received: by 2002:a05:6000:29d8:b0:47f:40f3:88bc with SMTP id
+ ffacd0b85a97d-47f40f38950mr4920959f8f.19.1784016153360; 
+ Tue, 14 Jul 2026 01:02:33 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-24-117.inter.net.il. [80.230.24.117])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-311950eb930sm55606355eec.8.2026.07.14.00.58.05
+ ffacd0b85a97d-47f464a974csm7533090f8f.18.2026.07.14.01.02.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jul 2026 00:58:08 -0700 (PDT)
-From: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
-To: qemu-riscv@nongnu.org
-Cc: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>,
- qemu-devel@nongnu.org (open list:All patches CC here)
-Subject: [PATCH v3 03/10] hw/riscv: add RPMI FDT helpers
-Date: Tue, 14 Jul 2026 13:26:52 +0530
-Message-ID: <20260714075659.2258023-4-subrahmanya.lingappa@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260714075659.2258023-1-subrahmanya.lingappa@oss.qualcomm.com>
-References: <20260714075659.2258023-1-subrahmanya.lingappa@oss.qualcomm.com>
+ Tue, 14 Jul 2026 01:02:32 -0700 (PDT)
+Date: Tue, 14 Jul 2026 04:02:29 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ jasowang@redhat.com, armbru@redhat.com, peterx@redhat.com,
+ farosas@suse.de, raphael.s.norwitz@gmail.com, bchaney@akamai.com,
+ qemu-devel@nongnu.org, pbonzini@redhat.com, yc-core@yandex-team.ru,
+ mark.caveayland@nutanix.com, Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH v18 09/14] qapi: add local migration parameter
+Message-ID: <20260714035918-mutt-send-email-mst@kernel.org>
+References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
+ <20260710191809.721154-10-vsementsov@yandex-team.ru>
+ <alS1DMD_pRrklFRb@redhat.com>
+ <05c89310-7bec-4aac-addc-b5ef377e09a7@yandex-team.ru>
+ <alTKMA87h9x951Ei@redhat.com>
+ <25b5e9a6-e563-4ab0-9075-04a3a00d3b33@yandex-team.ru>
+ <alUwflog7Xd34Vd4@redhat.com>
+ <20260713162057-mutt-send-email-mst@kernel.org>
+ <alXiLqaMV6v73O2E@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: o_C6nX27AROKEb3-ZZLUwZZ_AE3vxWxS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDA4MSBTYWx0ZWRfX/7c3Dmhmu6w1
- MGSozVW7v7lwZozgacboXvM0g1bT0nEEVPjcoQBhVn6run+jxX/sQ/FVWbScQZAoo19bmRjri1G
- yrQ4lOtlVQpVx3pvdND4va8iEo6NYxlPrRcRbiiYjYhJADk2GLobm1H8ipTYfBZYRtkNNDZeU50
- Z3w/Gpz2tO5NEWMFvR7+LL9Ba8uXAHjv+ekCCjwkskF3Is/ipZADFiqMGf8GJ8W5ktCes7bburx
- 9hvBIkpt1KqVnsTkOF/VjXD8Ns8JBm3Qc62xJXbXQ/s95uJqfD6wjf+BTJaQV1JJsyN/0gjWY2B
- BvqrRyQcTpkgyBWHYFz7HOLDtyXpVHY+j10lWxScaqtLgI/x9nHR9H6Gwm9vcNpoUOnnbswb+kC
- 1FfD8XlzZEpBzxQ9iGlunlCrOLBZL+/X016MgRSSuSMa/HPwUxgpq3n/y/C2qqYGPuB94qnJ54d
- BtPJIYVTzPBG3fltsaw==
-X-Authority-Analysis: v=2.4 cv=T/O8ifKQ c=1 sm=1 tr=0 ts=6a55ec12 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=EUspDBNiAAAA:8
- a=jHWy4UxqgUe44QwoGJQA:9 a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDA4MSBTYWx0ZWRfXzGINx5bSbzai
- 7Hn94INpkpo9rhlPOyB1TpkeIGHiyNP34iyE9yfQi8wn2+Vop8ojwOxgf2SepHmQV4pY+wM2GSv
- +fnYt/1QOGV51lsMTGR6VJrAUSCv+ZM=
-X-Proofpoint-ORIG-GUID: o_C6nX27AROKEb3-ZZLUwZZ_AE3vxWxS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-14_02,2026-07-10_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 malwarescore=0 adultscore=0 spamscore=0 phishscore=0
- clxscore=1015 bulkscore=0 suspectscore=0 impostorscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607140081
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=subrahmanya.lingappa@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+In-Reply-To: <alXiLqaMV6v73O2E@redhat.com>
+Received-SPF: permerror client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,180 +132,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add helper routines for describing RPMI shared-memory mailbox transports
-and service child nodes in the RISC-V virt device tree.
+On Tue, Jul 14, 2026 at 08:55:28AM +0100, Daniel P. Berrangé wrote:
+> On Mon, Jul 13, 2026 at 04:22:03PM -0400, Michael S. Tsirkin wrote:
+> > On Mon, Jul 13, 2026 at 07:37:50PM +0100, Daniel P. Berrangé wrote:
+> > > On Mon, Jul 13, 2026 at 08:55:37PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> > > > On 13.07.26 14:21, Daniel P. Berrangé wrote:
+> > > > > On Mon, Jul 13, 2026 at 01:55:48PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> > > > > > On 13.07.26 12:51, Daniel P. Berrangé wrote:
+> > > > > > > On Fri, Jul 10, 2026 at 10:17:58PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> > > > > > > > We are going to implement local-migration feature: some devices will be
+> > > > > > > > able to transfer open file descriptors through migration stream (which
+> > > > > > > > must UNIX domain socket for that purpose).  This allows to transfer the
+> > > > > > > > whole backend state without reconnecting and restarting the backend
+> > > > > > > > service. For example, virtio-net will migrate its attached TAP netdev,
+> > > > > > > > together with its connected file descriptors.
+> > > > > > > > 
+> > > > > > > > In this commit we introduce a migration parameter, which enables
+> > > > > > > > the feature for devices that support it (none at the moment).
+> > > > > > > > 
+> > > > > > > > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> > > > > > > > Acked-by: Markus Armbruster <armbru@redhat.com>
+> > > > > > > > Acked-by: Peter Xu <peterx@redhat.com>
+> > > > > > > > Reviewed-by: Ben Chaney <bchaney@akamai.com>
+> > > > > > > > ---
+> > > > > > > >    include/migration/misc.h |  2 ++
+> > > > > > > >    migration/options.c      | 18 +++++++++++++++++-
+> > > > > > > >    qapi/migration.json      | 12 ++++++++++--
+> > > > > > > >    3 files changed, 29 insertions(+), 3 deletions(-)
+> > > > > > > 
+> > > > > > > 
+> > > > > > > > diff --git a/qapi/migration.json b/qapi/migration.json
+> > > > > > > > index 66bd900465a..03bdf19f3a6 100644
+> > > > > > > > --- a/qapi/migration.json
+> > > > > > > > +++ b/qapi/migration.json
+> > > > > > > > @@ -830,7 +830,8 @@
+> > > > > > > >               'zero-page-detection',
+> > > > > > > >               'direct-io',
+> > > > > > > >               { 'name': 'x-rdma-chunk-size', 'features': [ 'unstable' ] },
+> > > > > > > > -           'cpr-exec-command'] }
+> > > > > > > > +           'cpr-exec-command',
+> > > > > > > > +           'local'] }
+> > > > > > > >    ##
+> > > > > > > >    # @migrate-set-parameters:
+> > > > > > > > @@ -1012,6 +1013,12 @@
+> > > > > > > >    #     Must be set to the same value on both source and destination
+> > > > > > > >    #     before migration starts.  (Since 11.1)
+> > > > > > > >    #
+> > > > > > > > +# @local: Enable local migration for devices that support it.  Backend
+> > > > > > > > +#     state and its file descriptors can then be passed to the
+> > > > > > > > +#     destination in the migration channel.  The migration channel
+> > > > > > > > +#     must be a Unix domain socket.  Usually needs to be enabled per
+> > > > > > > > +#     device.  (Since 11.2)
+> > > > > > > 
+> > > > > > > What happens when this is enabled and there are devices which
+> > > > > > > don't support it ?
+> > > > > > 
+> > > > > > These devices are migrated as usual, ignoring "local" option.
+> > > > > > 
+> > > > > > > 
+> > > > > > > What happens when this is enabled and a device on the src
+> > > > > > > does not support it but a device on the (newer) QEMU dest
+> > > > > > > does support it ?  How does the mgmt app know which devices
+> > > > > > > support it ?
+> > > > > > 
+> > > > > > The only supporting device (TAP-backend) declares support by
+> > > > > > "local-migration-supported", so mgmt app should care to set
+> > > > > > same value for it on host and target (like for other options
+> > > > > > actually). Or simply relay on default, which is true starting
+> > > > > > from 11.2 Machine Type.
+> > > > > > 
+> > > > > > > 
+> > > > > > > Can we document the semantics in these cases.
+> > > > > > 
+> > > > > > That's: "Usually needs to be enabled per device."
+> > > > > 
+> > > > > ....except that we have it enabled by default for TAP backends
+> > > > > in new machine types.... except that it will then break if the
+> > > > > app/user has enabled any of the "forbidden" options.
+> > > > > 
+> > > > > The way this doc is written makes it sound like "local" is an
+> > > > > optimization you can turn on in any scenario, and it will do
+> > > > > the right thing if the device supports it. That is very much
+> > > > > not the case - enabling this flag will definitely break many
+> > > > > configs out of the box, with new machine types due to the TAP
+> > > > > device defaults & incompatible options.
+> > > > 
+> > > > Ok, now we decided to NOT make default support for TAP in newer
+> > > > machine types.
+> > > > 
+> > > > So, enabling "local" is safe in existing scenarios, only explicit
+> > > > enabling TAP.local-migration-supported will change the behavior.
+> > > > 
+> > > > Keep "local" documentation as is?
+> > > > 
+> > > > I see the only way to make it more informative: directly describe
+> > > > connection with TAP.local-migration-supported, without general
+> > > > phrases about "devices that support" and "usual". We'll have to
+> > > > update it when more devices added (my next step is vhost-user-blk),
+> > > > but at least, it would be absolutely correct at the moment.
+> > > 
+> > > How about....
+> > > 
+> > >  # @local: Permit the use of optimizations for local migration.
+> > >  #     This must only be set when both the source and destination
+> > >  #     QEMU processes are on the same OS and directly connected
+> > >  #     with a UNIX domain socket as the migration channel to enable
+> > >  #     use of file descriptor passing. Individual device backends
+> > >  #     may need additional configuration flags set  to enable local
+> > >  #     migration optimizations. This will be documented against the
+> > >  #     device backends where it applies. (Since 11.2)
+> > > 
+> > 
+> > BTW surely qemu can just detect this? getsockname maybe?
+> 
+> QEMU might be given a UNIX socket that connects to a MITM proxy
+> that then uses TCP to reach the dest QEMU.
 
-The helpers keep RPMI node construction in one place so the virt machine
-can add service groups without open-coding compatible strings, channel
-IDs, interrupts, and shared-memory references at each call site.
+We could try to exchange FDs and see it it works I guess.
 
-Signed-off-by: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
----
- hw/riscv/meson.build        |   1 +
- hw/riscv/rpmi-fdt.c         | 103 ++++++++++++++++++++++++++++++++++++
- include/hw/riscv/rpmi-fdt.h |  30 +++++++++++
- 3 files changed, 134 insertions(+)
- create mode 100644 hw/riscv/rpmi-fdt.c
- create mode 100644 include/hw/riscv/rpmi-fdt.h
+But anyway, my point is QEMU should validate it,
+even if that's not enough of a signal to fully trust.
 
-diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
-index b70a054579..529ec273fd 100644
---- a/hw/riscv/meson.build
-+++ b/hw/riscv/meson.build
-@@ -3,6 +3,7 @@ riscv_ss.add(files('boot.c'))
- riscv_ss.add(files('fdt-common.c'))
- riscv_ss.add(when: 'CONFIG_RISCV_NUMA', if_true: files('numa.c'))
- riscv_ss.add(files('riscv_hart.c'))
-+riscv_ss.add(files('rpmi-fdt.c'))
- riscv_ss.add(when: 'CONFIG_OPENTITAN', if_true: files('opentitan.c'))
- riscv_ss.add(when: 'CONFIG_RISCV_VIRT', if_true: files('virt.c'))
- riscv_ss.add(when: 'CONFIG_SHAKTI_C', if_true: files('shakti_c.c'))
-diff --git a/hw/riscv/rpmi-fdt.c b/hw/riscv/rpmi-fdt.c
-new file mode 100644
-index 0000000000..b2b3daea1c
---- /dev/null
-+++ b/hw/riscv/rpmi-fdt.c
-@@ -0,0 +1,103 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * RISC-V RPMI device-tree helpers
-+ *
-+ * Copyright (c) 2026 Qualcomm Technologies, Inc.
-+ * Author:
-+ *  Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/bswap.h"
-+#include "hw/riscv/rpmi-fdt.h"
-+#include "hw/misc/riscv_rpmi.h"
-+#include "system/device_tree.h"
-+
-+void riscv_rpmi_fdt_add_mbox(void *fdt,
-+                             const RiscvRpmiFdtMboxConfig *cfg,
-+                             uint32_t *phandle,
-+                             uint32_t *mbox_handle)
-+{
-+    g_autofree char *name = NULL;
-+    hwaddr a2p_req_base, p2a_ack_base, p2a_req_base, a2p_ack_base;
-+    static const char * const regnames_all[RPMI_ALL_NUM_REGS] = {
-+        "a2p-req", "p2a-ack", "p2a-req", "a2p-ack", "a2p-doorbell"
-+    };
-+    static const char * const regnames_a2p[RPMI_A2P_NUM_REGS] = {
-+        "a2p-req", "p2a-ack", "a2p-doorbell"
-+    };
-+
-+    a2p_req_base = cfg->shmem_base;
-+    p2a_ack_base = a2p_req_base + cfg->a2p_req_size;
-+    p2a_req_base = p2a_ack_base + cfg->a2p_req_size;
-+    a2p_ack_base = p2a_req_base + cfg->p2a_req_size;
-+
-+    *mbox_handle = (*phandle)++;
-+    name = g_strdup_printf("/soc/mailbox@%" HWADDR_PRIx, cfg->shmem_base);
-+    qemu_fdt_add_subnode(fdt, name);
-+    qemu_fdt_setprop_string(fdt, name, "compatible", "riscv,rpmi-shmem-mbox");
-+    qemu_fdt_setprop_cell(fdt, name, "riscv,slot-size", RPMI_QUEUE_SLOT_SIZE);
-+    qemu_fdt_setprop_cell(fdt, name, "#mbox-cells", 1);
-+
-+    if (cfg->p2a_req_size) {
-+        qemu_fdt_setprop_string_array(fdt, name, "reg-names",
-+                                      (char **)&regnames_all,
-+                                      ARRAY_SIZE(regnames_all));
-+        qemu_fdt_setprop_cells(fdt, name, "reg",
-+            (uint32_t)(a2p_req_base >> 32), (uint32_t)a2p_req_base,
-+            0x0, cfg->a2p_req_size,
-+            (uint32_t)(p2a_ack_base >> 32), (uint32_t)p2a_ack_base,
-+            0x0, cfg->a2p_req_size,
-+            (uint32_t)(p2a_req_base >> 32), (uint32_t)p2a_req_base,
-+            0x0, cfg->p2a_req_size,
-+            (uint32_t)(a2p_ack_base >> 32), (uint32_t)a2p_ack_base,
-+            0x0, cfg->p2a_req_size,
-+            (uint32_t)(cfg->doorbell_base >> 32), (uint32_t)cfg->doorbell_base,
-+            0x0, cfg->doorbell_size);
-+    } else {
-+        qemu_fdt_setprop_string_array(fdt, name, "reg-names",
-+                                      (char **)&regnames_a2p,
-+                                      ARRAY_SIZE(regnames_a2p));
-+        qemu_fdt_setprop_cells(fdt, name, "reg",
-+            (uint32_t)(a2p_req_base >> 32), (uint32_t)a2p_req_base,
-+            0x0, cfg->a2p_req_size,
-+            (uint32_t)(p2a_ack_base >> 32), (uint32_t)p2a_ack_base,
-+            0x0, cfg->a2p_req_size,
-+            (uint32_t)(cfg->doorbell_base >> 32), (uint32_t)cfg->doorbell_base,
-+            0x0, cfg->doorbell_size);
-+    }
-+
-+    qemu_fdt_setprop_cells(fdt, name, "phandle", *mbox_handle);
-+}
-+
-+void riscv_rpmi_fdt_add_service(void *fdt, hwaddr shmem_base,
-+                                const char *node_name,
-+                                const char *compatible,
-+                                uint32_t mbox_handle,
-+                                uint32_t service_group,
-+                                bool has_mpxy_channel,
-+                                uint32_t mpxy_channel)
-+{
-+    g_autofree char *name = g_strdup_printf("/soc/mailbox@%" HWADDR_PRIx "/%s",
-+                                            shmem_base, node_name);
-+
-+    qemu_fdt_add_subnode(fdt, name);
-+    qemu_fdt_setprop_string(fdt, name, "compatible", compatible);
-+    qemu_fdt_setprop_cells(fdt, name, "mboxes", mbox_handle, service_group);
-+    if (has_mpxy_channel) {
-+        qemu_fdt_setprop_cell(fdt, name, "riscv,sbi-mpxy-channel-id",
-+                              mpxy_channel);
-+    }
-+}
-+
-+void riscv_rpmi_fdt_add_service_node(void *fdt, hwaddr shmem_base,
-+                                     const RiscvRpmiServiceConfig *service,
-+                                     uint32_t mbox_handle)
-+{
-+    riscv_rpmi_fdt_add_service(fdt, shmem_base, service->node_name,
-+                               service->compatible, mbox_handle,
-+                               service->service_group,
-+                               service->has_mpxy_channel,
-+                               service->mpxy_channel);
-+}
-diff --git a/include/hw/riscv/rpmi-fdt.h b/include/hw/riscv/rpmi-fdt.h
-new file mode 100644
-index 0000000000..f053ae5d57
---- /dev/null
-+++ b/include/hw/riscv/rpmi-fdt.h
-@@ -0,0 +1,30 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * RISC-V RPMI device-tree helpers
-+ *
-+ * Copyright (c) 2026 Qualcomm Technologies, Inc.
-+ * Author:
-+ *  Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
-+ */
-+
-+#ifndef HW_RISCV_RPMI_FDT_H
-+#define HW_RISCV_RPMI_FDT_H
-+
-+#include "exec/hwaddr.h"
-+#include "hw/misc/riscv_rpmi.h"
-+
-+typedef struct RiscvRpmiFdtMboxConfig {
-+    hwaddr shmem_base;
-+    hwaddr doorbell_base;
-+    uint32_t a2p_req_size;
-+    uint32_t p2a_req_size;
-+    uint32_t doorbell_size;
-+} RiscvRpmiFdtMboxConfig;
-+
-+void riscv_rpmi_fdt_add_mbox(void *fdt,
-+                             const RiscvRpmiFdtMboxConfig *cfg,
-+                             uint32_t *phandle,
-+                             uint32_t *mbox_handle);
-+
-+#endif
--- 
-2.43.0
+> With regards,
+> Daniel
+> -- 
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
