@@ -4,105 +4,171 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48F78C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 01:14:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D228CC43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 01:14:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjRiv-0002kP-Gk; Mon, 13 Jul 2026 21:14:13 -0400
+	id 1wjRix-0002lF-U0; Mon, 13 Jul 2026 21:14:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <m@maowtm.org>) id 1wjRiu-0002kF-6o
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 21:14:12 -0400
-Received: from fhigh-b8-smtp.messagingengine.com ([202.12.124.159])
+ (Exim 4.90_1)
+ (envelope-from <prvs=648e1bbf7=Alistair.Francis@wdc.com>)
+ id 1wjRiv-0002kN-Ar; Mon, 13 Jul 2026 21:14:13 -0400
+Received: from esa1.hgst.iphmx.com ([68.232.141.245])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <m@maowtm.org>) id 1wjRir-0004TT-0M
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 21:14:11 -0400
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
- by mailfhigh.stl.internal (Postfix) with ESMTP id D0D7D7A00F7;
- Mon, 13 Jul 2026 21:14:05 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-09.internal (MEProxy); Mon, 13 Jul 2026 21:14:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=maowtm.org; h=cc
- :cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm2; t=1783991645;
- x=1784078045; bh=S2pqMWowWzQ6MNdiH9Q6Z+rqNFVuPd2h08eAPsWdfRQ=; b=
- mjJsbxRZUT/bhthYTq0hpMPGg5zy5Wehaf3IuTNbHdOZ4C9Ea/QP+yZyRmqTcRvi
- jmdWtFOgfsps5bZGpkQ3OYmgLPdswsLq1/ol5rwkoL0KQuaqJYCHJksGYtIU0z/9
- WaleLr8Y90H/kEZ2EtngOTf/LtYErP0sIxZpN0d3/y/XUmFYROTWKX7pNgPcaYLf
- D7oAIoTc9GmAr4/y20sx+9MFSE2WMUAC1/BFEVgeEw8/ExvIW/4pMvsoj9qJ9V7/
- AsOR5liiCLJqhEutVdUrVLo/lz4eJGfHm1xkC3lMzSGgqjRAiuvlPm+kGXaXNDCA
- FgJKYC5ggyRZtIcUTwSZtA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783991645; x=
- 1784078045; bh=S2pqMWowWzQ6MNdiH9Q6Z+rqNFVuPd2h08eAPsWdfRQ=; b=n
- c3T8+endDFmXilfhQp1U87fVwCrc4hz41TJo7ux+ivdvSsbNlVKITA/gsDq/9m1j
- emjDEb+jK+AjEFOKBRoYdE9VHWLFGLt9Wd2d4p+2IOoWFuanSe5le6GVLrOLcZl7
- 5NrOhFXv9KpsKo4IhkTKiRdMcuOzQC1mr4Zqw1MSPp7Wr+ElPfq2EGhrj6AMhT6R
- PaCitoJL9z9a1S8UivqmBtEaDSyCYnmkGnObkX10W5nwM4JsHGehul0dLfOh0xnt
- scCWKq4Dxk0smi8OTCauMLW433uf23GSNPlC48o7nSmOcsupFn0OsUunQB1/OS7c
- xvPch+wP2oWF/MoYgeL8g==
-X-ME-Sender: <xms:XI1VahqugtXpTLLUNqwKwj4BcMUOt1EmIvpIVsNEZy4IeQ54u2NWWg>
- <xme:XI1Vavk7TKb2pseAb45darl3paznpJdxtrNfzS3hbBgDD60Hf8ceQU_svpu1dhomA
- uWFRTh559UPxQ457ztV-NmcFulDMKHVIXHy9jmVwA2lGFBcRqHljO8>
-X-ME-Received: <xmr:XI1VakXbxEZ027MwGSMT-GlqLZjC5BnshtXpCiVYJLL--ScZcEyfxXtY_pm0n842VD02AaqUaYm7cMiTBg>
-X-ME-Proxy-Cause: dmFkZTErpNzkTprmTtvfc1brby2UL4Ca5IYSgXLJJtiYywn9eVrD46+FCuJSpWF7olJYWE
- dUM2pWzBinoGYmIxStumDdvv3xljktI19lgDFn4WkDQsNzzxmNMW00y9ekouyJ0hCo4w3s
- MQ9NBHGn4D+V9NVH4exwqFxhQ0AB0s5t8z48kW5NEf0QVnYgBNcU3q4nFCp/npQVmIhYuT
- AXz/a2NY26QfpTsqLePgVnG7rz1Io/4Sa9ZCf5e0g740fD7AzEXU8uV7OcMISh3YCHDTOL
- n1X8dto4eps2FxMINRJsUlQooxBmS20Rn7hJZ8mQGOhtSIzquGhYvqynq3Xfr1LKoXAscj
- kk6jKm7MuJvx/w8cOVqvpygABZLeYzoqhxkIofsDknbk5IK3qboaEiwba1BBBJMj31aut9
- gyqvBAq8oWe4yHtKsEPb2kwmcpDzLuPB5/BKXLNRMRfuCqbyxaTXvzQSXgn0Y8Kq/tdm/R
- 61RYOqdm1X84kty0lM3AK1e8DY25NXao6TnggNPzUSZLtLy1u9o5RfJVTrg1Pe/n3gXC/a
- byOLE+VyD0LB51wGZ774Pt57QyHUnsnJY8TpslO9kAL+A9wTZ5cSOmRga1EckU/ZsgozAx
- lEy1Z6oAoTtAUAiRuD//QBSB4JAiBtigvziAx5+NOL0R9b26JJhlD8W8bTHw
-X-ME-Proxy: <xmx:XI1VajQzExtFqG_LYhibTu4camZmMRZt8SDv9T9yqvYPBuFjYFOE3A>
- <xmx:XI1VavA33R8t76Jz8hGbN4b3eacowGclXUhAfUL4vy9FIcinFt4bdg>
- <xmx:XI1VauQM25-eyuwv9KB4P4Rovxqrnz5wl684tk6JqCt32VUrhese1g>
- <xmx:XI1VapR0qMKRi2Vl_ZaYTDPoUOOdwYzka5e4yh80RJwWbjTvGetYCA>
- <xmx:XY1Vanliwn2FQ4oovpuvx9PlJX2RI1VWLVaVQdEUKlSJxziokAx8G8Sj>
-Feedback-ID: i580e4893:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Jul 2026 21:14:01 -0400 (EDT)
-Message-ID: <15ccd30e-e5f2-4612-b0ac-e495748732e6@maowtm.org>
-Date: Tue, 14 Jul 2026 02:14:00 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Tingmao Wang <m@maowtm.org>
-Subject: Re: [PATCH v2 0/7] fs/9p: Reuse inode based on path (in addition to
- qid)
-To: Greg Kurz <groug@kaod.org>,
- Christian Schoenebeck <linux_oss@crudebyte.com>,
- =?UTF-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>,
- Dominique Martinet <asmadeus@codewreck.org>
-Cc: qemu-devel@nongnu.org, Eric Van Hensbergen <ericvh@kernel.org>,
- Latchesar Ionkov <lucho@ionkov.net>, v9fs@lists.linux.dev,
- =?UTF-8?Q?G=C3=BCnther_Noack?= <gnoack@google.com>,
- linux-security-module@vger.kernel.org, Jan Kara <jack@suse.cz>,
- Amir Goldstein <amir73il@gmail.com>, Matthew Bobrowski <repnop@google.com>,
- Al Viro <viro@zeniv.linux.org.uk>, Christian Brauner <brauner@kernel.org>,
- linux-fsdevel@vger.kernel.org, Justin Suess <utilityemal77@gmail.com>
-References: <aMih5XYYrpP559de@codewreck.org>
- <20250917.Eip1ahj6neij@digikod.net>
- <f1228978-dac0-4d1a-a820-5ac9562675d0@maowtm.org> <3061192.c3ltI2prpg@silver>
- <20251013112424.6b93659c@bahia>
+ (Exim 4.90_1)
+ (envelope-from <prvs=648e1bbf7=Alistair.Francis@wdc.com>)
+ id 1wjRis-0004TX-Hv; Mon, 13 Jul 2026 21:14:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
+ t=1783991650; x=1815527650;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=9hSD3MbD/26e1mlO0UNmU/1eDRVpUl45xpBciSzvtio=;
+ b=FW+P6Y6wD1QL+efIWCJ3AfJCCJO/M9e5BNoJzqz4cIV1iWflqtQL55sH
+ W+qCL0H3atsKP6sEaXkESQgjWame4XZCue2GTsoRvzPd1KzsFwGJNKfex
+ AjP1mQ5V/B4/xvnI3QcatLa4+N7mbul4FRZSKGB71dJFj9hcLwxPS720w
+ u/twt34+GNfuyomy5cQEFMua2VYdxHP64ZxRunqoXlCYeraLkEZdOB5ib
+ 80ARYA5QxbzLF205d9o3Cnc4n+qOP/unJGXeDUxz1ah2mrKIh9fKnY6z5
+ TWemDYMZnFTq6GiLe0W7ue64OUIYjid0RgblvsHEJSFgxlhBnYHqAN4Xr w==;
+X-CSE-ConnectionGUID: uXmu5rtrTEmE7fzT+mYUYA==
+X-CSE-MsgGUID: CiiIvzb2S6O9UcoL84T+8A==
+X-IronPort-AV: E=Sophos;i="6.25,154,1779120000"; d="scan'208";a="150672644"
+Received: from mail-southcentralusazon11011019.outbound.protection.outlook.com
+ (HELO SN4PR0501CU005.outbound.protection.outlook.com) ([40.93.194.19])
+ by ob1.hgst.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
+ 14 Jul 2026 09:14:06 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=JranU1/kBZ+WVfpLEMmOiRanANeoQoTuL4v9c4LefHdvcKVG472Mb2pZ81NnwmOHGowZ7hMlLAlppJIlvhvGGGbQ42yXulo8MCSVoawqjDrBFqzQXlooNwJB4tCM5j0SUacDaoO1RpAOWL5LleYg6YfXDEniY5isuw4kKNUK/Qh82wjEcQDLzQqVe0NuaZAEQTodigASgO509VVE/TtrV4t+Q24jExxBv6jdRgICawOFGNzjEsW/qJp6SsGhK/OOKnTtRPSmMVEBCqbX7xT98zt0nv7gv0JD/lo7gCpxB5eVe8OruurdWIJrFagHDnManuh5cSvQVdNZzfIq18ArNQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9hSD3MbD/26e1mlO0UNmU/1eDRVpUl45xpBciSzvtio=;
+ b=PVYATOwljAMiIoAX9+8CbqKsTPzV4HLV5f1suzCcIGYInGRUI+px8a+Gawz5X7pcR/5PqWFYnRCvj3FZZLbmApZFqsnnDH/w5GbMsRSnYVWrN+I1chMWDdmIq2F+3vD1P5HWZJEGddTKJ/fqy0VKWF/UIgbVX9fVvmCn3KB4g7LydFdcWcQt4gAa5rpwGKbP+Zn15h0KX4eZcnAv/nW5oQJUMkCO9WGhXrbHqyd+0xIslrHA310ofR0L8qEnrPXqKhs4fbou4sFVVgv9xZ/uOkFepU5wEmhjQZTdRnK7RhPi/Y6U7zAXXQVDz0hFdCNlEPnRVvan2YFFNPU9YfpFOg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
+ header.d=wdc.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9hSD3MbD/26e1mlO0UNmU/1eDRVpUl45xpBciSzvtio=;
+ b=eJDYFZt4e7P/dTC3ThGA7zV6uqKTBfJdhjxecVQKt8ChvGEuLEhsMZjahfGhfNGZyQ3cEG2i1wAUVXBUvEppzho5HsJrmqMRqmLyX6tXtPacZJuCsN9cEyShBDfj8GB6J6WZQJN0rtOewlnsSloq2gQd359WXngHXxaTphhCCIw=
+Received: from BY1PR04MB9561.namprd04.prod.outlook.com (2603:10b6:a03:5b6::11)
+ by CH7PR04MB9594.namprd04.prod.outlook.com (2603:10b6:610:250::6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.18; Tue, 14 Jul
+ 2026 01:14:04 +0000
+Received: from BY1PR04MB9561.namprd04.prod.outlook.com
+ ([fe80::3869:e494:2fa8:9888]) by BY1PR04MB9561.namprd04.prod.outlook.com
+ ([fe80::3869:e494:2fa8:9888%5]) with mapi id 15.21.0202.014; Tue, 14 Jul 2026
+ 01:13:59 +0000
+From: Alistair Francis <Alistair.Francis@wdc.com>
+To: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "yfliu2008@qq.com"
+ <yfliu2008@qq.com>
+CC: "sunilvl@ventanamicro.com" <sunilvl@ventanamicro.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "daniel.barboza@oss.qualcomm.com" <daniel.barboza@oss.qualcomm.com>,
+ "chao.liu.zevorn@gmail.com" <chao.liu.zevorn@gmail.com>, "palmer@dabbelt.com"
+ <palmer@dabbelt.com>, "zhiwei_liu@linux.alibaba.com"
+ <zhiwei_liu@linux.alibaba.com>, "pierrick.bouvier@oss.qualcomm.com"
+ <pierrick.bouvier@oss.qualcomm.com>, "liwei1518@gmail.com"
+ <liwei1518@gmail.com>
+Subject: Re: [PATCH v2] riscv/virt: Add optional UART1
+Thread-Topic: [PATCH v2] riscv/virt: Add optional UART1
+Thread-Index: AQHdCqPyswyLVqTwaEWDWK7Nw33uwLZsRs8A
+Date: Tue, 14 Jul 2026 01:13:59 +0000
+Message-ID: <f3999d13e4cf6e470d7761be01d1291944ae0e9b.camel@wdc.com>
+References: <tencent_06551FAEA44CD75E915AE611FCA0C99CDD09@qq.com>
+In-Reply-To: <tencent_06551FAEA44CD75E915AE611FCA0C99CDD09@qq.com>
+Accept-Language: en-US
 Content-Language: en-US
-In-Reply-To: <20251013112424.6b93659c@bahia>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.159; envelope-from=m@maowtm.org;
- helo=fhigh-b8-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Evolution 3.60.2 (by Flathub.org) 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=wdc.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BY1PR04MB9561:EE_|CH7PR04MB9594:EE_
+x-ms-office365-filtering-correlation-id: 7022b558-60d2-4c77-dd3d-08dee1452f4d
+wdcipoutbound: EOP-TRUE
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|366016|1800799024|7416014|19092799006|10070799003|23010399003|38070700021|22082099003|18002099003|6133799003|11063799006|56012099006;
+x-microsoft-antispam-message-info: 4v/jlNzovKNH3KrUhxZ4YTbJ+WFOUUiXQQUEY4/wBHdvk3swNEr8wGKmFeUjguWTiJ6vX4nOb6C/FSSrZQ5kQ8/j1/M/0/ekT+hC/kTo3HfGafkgEazJSFxU269mcmSjvo4LRo1ARl7CZXZ2NFlFXJ+ujpdEqVgVVvWiZBkw0F6LOyIJWlRJr8R0jE5SlxK5977SGftuiVGfZuYTrJOF3IvtghBURdeonmC8h3p/wpCKE5cJUZZjQTTrqpo88ABf1f/bhYAEYy1zMJEvWDffOG7eLep0DzPDuv37muRI0Ol6/S154iQe98ugv7Q/MPuqMxiU4npH9TCwQiIBk5m2HG816ZFpTEhdl4AinJ/89hLtSFxVi/dtxrYAd5122LuOBlO6QHeTGgHOHiBvR1KCxcNSG6X+NDDdipvXdRN/Cq5kyJmXVBS+2x4UwLpB+Xp3UvnBmZsi9bn7G5aAOKogAwmHU+hefDR0Oe0CXbufd8FbCTxJKO/WThQAQuo2+lEGGyltlqpvzIBTMYHHt+qPUMbIOzWze1UIXLRvXeLMlKa/Qe07QDHxyG+BTABh9/8G6pZbE05W82OqerSIiE44Pfv0vBUbJHJ39rsTl71kCcU57eIhhGusRWilgKPfvE5UpAyICXoiqVd4y/Oi/8gKYxIcrXa2F/IA/zA5K1p/YyHsWyZhe1K0kG/OVgZWSBwIBeZ7eSH3eT4o1y+AcCQ8U7TJ0YbDPgEecOi2UcPtmqU=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BY1PR04MB9561.namprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(7416014)(19092799006)(10070799003)(23010399003)(38070700021)(22082099003)(18002099003)(6133799003)(11063799006)(56012099006);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 2
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?WFEyQ1J4Q3diY0FXc3ZrdXpLd282TW9SaFZNWHN1eUNJOFk2Z0lhelkvemhw?=
+ =?utf-8?B?RmJ0T2J6ZVNTM1BmSnV6MzVyMXRUa29JQnBFT1NXS3VCYVhoamV6ejkwczMx?=
+ =?utf-8?B?enpZUzQzUTVOUFVkN0M3TEQ3ODQ0amZ1eGlub1RHWGgyOWFKeEladUc1VTUv?=
+ =?utf-8?B?T1o1bjkvTW5BUEVxYmdlTTJVcm9iUUxSS1IwNysvL2VPanZob0FKV2EyblpP?=
+ =?utf-8?B?Q0JRbGJDSTZMdVp4OE1oOHBhV050a2tiSWcxNkdaUWlTWFJFSHl4d2gwSFM3?=
+ =?utf-8?B?Y1lrTGJ0aEM5ckRIdnMxZDZJb1RCOVV3SkNMbk1jT1d6TXRpTWpJQUNpWTIr?=
+ =?utf-8?B?L01qS0VwYWlQcGUwL3RXVXdkci9rMjVjQVNYb2V6OGlKdUVsYW5sVWQ0bnhu?=
+ =?utf-8?B?MFdzOUdrSENIVlZGSDRUTEJLblMxWWFVTWVlR2M4TTNvaktxbExZYTZtOUNr?=
+ =?utf-8?B?SjlreUR2RkZnQ1RsV0FURHA3V1EzWkhHM0ZZOHhScGlEVmJVME4vV0xTSkxh?=
+ =?utf-8?B?YWlLaWYvU1BZbWdMbURFTkUzKzhWYnhlOERRK3krbzd4cTExSmp4TW1TelQ0?=
+ =?utf-8?B?M0ZFUU5MNXdmdVRVbGMxbEw0di8yOGU0OUhTZzVYV3c4TldHWjUzTFkxM0NI?=
+ =?utf-8?B?dW1rQnR6SGhMMCtoNDBNNjU0RlcwcEt3L25BeUc5ZEFsb3NPRVp1d1VCZXJw?=
+ =?utf-8?B?ZFNDUGlabEJYVUlTZk1aTVdUN3l0MklVUjBWaU96SjVpZlh5TDF3WkFuS0dK?=
+ =?utf-8?B?eXZXQmZMazVpWjVzVjlQQ0FVOVlMeENWUksvYlRTR0VVcE1CNUVIdWs4eUxx?=
+ =?utf-8?B?QTJ0MTl4Y3p5aUpGcVVRUXFkaXUxanB6WmhjLzRlMzlpbVM1dDFzNGhqK3Y0?=
+ =?utf-8?B?WlViTGszNkRxMzY2Qkg0VTcvM0NxbHdrY1JsUDQwb21sQTAxQzdnQ1F0VWNZ?=
+ =?utf-8?B?ZU55U0NRRE1OWmwyYlhnKzN6ZlNaRVZsTGxWU0QxRHZCQUdZNGpIWW1ya2Fx?=
+ =?utf-8?B?MlMra3J5Z3pmSUpFRjJSSFdnNG9pbmtoVThpdzJpb21zTS9PRFJQL2RGSnV4?=
+ =?utf-8?B?Zm1GdmRYM1pVY2NESmhsM01iTUg0TFQxWkYvUE05dXJpUVNHVFkvM2RoYWs4?=
+ =?utf-8?B?ait2R2IzMCtZa3NJR2NEU2ZtdkF2c2xTUm4rU2JCdTd0V2pMblN6eUIyR0ZX?=
+ =?utf-8?B?TnEwaVJycU5qc05wMGpvYWpGMmpoMXFpN1NEL0RNajE1ZUFUVVlaQmZwcFZk?=
+ =?utf-8?B?dE1YcStWNmRBaHZmYVB4VGlBNGkrN3VsSFI5eHk5VmhMSVF2RTlaRXBoNGs3?=
+ =?utf-8?B?Uys3L2ZrN2ZuQTJ5eG9sc0RnVEZObC9iMnJUSFVMOTBHU0g5NlUwOGV1KzNV?=
+ =?utf-8?B?dTkycGNaT2xBbzFVMVhHUHJCZVE3c3g5UW5hNnNVa0FnRnQ1anFMaWg0QmJW?=
+ =?utf-8?B?NEtGRlVISFZrNjJBODdsc3JCaDZVS0JQNVVIdDhrb3RlYzBscnJ0Z1FBa1hh?=
+ =?utf-8?B?dHVGZ0c1MHFuTm5nMjFjaUV2MG5PYmtFdE5DMnM1Q1FWUnpJZ3YrWXpja1VP?=
+ =?utf-8?B?cXdjSkdoc1lpMW1IUGR3c2MyYTdBekZEcGttTFRQNW9GaTBSaDVzOSs1ZTIv?=
+ =?utf-8?B?b3BVenRSb0FhaWp5U2N6bkRRMUYrcFU3UDY4YmwzWDVzSjV1WjlvbFBFMVdp?=
+ =?utf-8?B?UUw5TzBvSXdoWTdWdDhEUGYzM3BvY0pjS29IdFdyRS84THJMS29PYm45UHRW?=
+ =?utf-8?B?Tm1vakdXRnBpVm5JZXdVT0F3ZnlqaU9kdFZUWnA5WmxWNjRyNE1NeDNKeWJD?=
+ =?utf-8?B?Y3Q4WWRkajFObzhYa0lMazd2US9HWDc2amg5TkZzMDNGY016MStGZEVydnJF?=
+ =?utf-8?B?aGNRaWEzNDlCcGN0d2ZhZVB0MXVOZ2hqWFJaYW0wczlkL2xFTk9uQ1FsSmE3?=
+ =?utf-8?B?enNucWFJT3p6WURHK013SDhSUDl1THdBbnIxSzE4NW1TbjltTldpdkJUSVdU?=
+ =?utf-8?B?OGo0WlFrdXpEL0YxSWFRRlNrWC8vNUNVNDFWdmNUMTRuRkRhdmNzaTJQK0NE?=
+ =?utf-8?B?MDY4aUw1a0J1eEFPVzRHOTJKTTJXQlpxT2IwTTM5ckxZT205QXlraFR0a1Rs?=
+ =?utf-8?B?SlYwZ3dvMDJ6U2NzQUlvRytKSERKTnFDQlYzT3VlcHdxbHF5QUFBZzNNbXIx?=
+ =?utf-8?B?dXdBaC9aRVJNRGFuTTU1Rm9rR21pSDNUeS9qUVB1SjlZNmZObCtUZkRpclU3?=
+ =?utf-8?B?T0Vjc0JRVjBnTkM5NlJhZHVhV05SSmhJVWdQZzRHK1NPQ3NWSDlNMUdyQWda?=
+ =?utf-8?B?VWxSMTFvUHhscHBqejI4WjlWNzA3czVieS96eE5QK2thdXJFbFNXQ1JHMU9J?=
+ =?utf-8?Q?vC7ulLLBPaoHOLXOfNKUvbbIUIk5Nzxj421I+U8p6CvHR?=
+x-ms-exchange-antispam-messagedata-1: gWyWSybvDNw0GoTMYQbXY6bbmtt2tk3sBQU=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <CA6D086A7551ED4083F0F73357F70575@namprd04.prod.outlook.com>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-Exchange-RoutingPolicyChecked: WCEZ0GKxaf+3KGDYynBLAeag83INVwytb6PsRjNM4PqicqZu8+vbFFzsLYVsd7tY4yHvUWlkzRMJaIM3S78falC5U8hhS4mhv84TlJKqmvp/WAOmalChwl89oAyqiEpbaw7cM7G+I43IpQ293fTBsIUvIFq1b1K6kUi0ZSQfMXeo6mx0s9C6T4TixHEVYYG+iLD49sYTBuWd5qStaWF6uBGm8uYBw+CGT2zPEhvLcDfrjGRhS+LaIML0GOkTsvYwL1WnVEQZyBWMBWainCfuCb2gYOtil2cX2j3SZnK2frvLbb3ZrW0qODMzNP6EZfrev3d140Erz4K8gXrgmr8ctA==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: IbB6KDpN9XbfDd0blhEc4IY4LdstGX+R6WXqg2ue8nbkhacWCxj0LS24lFkwtQmXkujE5jgegc1UR03T/lpHP1/ll0TAqwEgUUw07WnhgVbH4U/NeAGiEuoh1/UMASdg1EyylXdyUSev/nApwZ0afojDUVxyBfEqcKLguF2lN5WBk6+vgT/mg7OR3hHDTRvZWW8+mzXn4piqA58ROvosnjBV+Exke8Pos5udU61BdtawfNXibhWi+O5nLwFf4qHN5PZY527nnQr3VB5cSMSZl/KjvIKULJp3LzJIn6lKzP1L1GQnaIIrL/K5eecjpndEd4q3skZ8pxdb9y12z+QpmDEvKMV0cna/dZPIyW+26CjYhkiCdTU+eFURelyChs3eOkFXd5euQbo/4KrNTQK8LkY57rUI5HYIx3iiN/6L17W/wlyTYoDKS6Hs9ZS2l/1LCj3+dvz7qvBP+E6Ny6mbF+CC9lCZsQYuKTNlOK0z4/bzWxcIrADPwQNv7G7lWUhDAvBXEiP6rTryL9fAt7CisSTcqApetOuMyxK9Y/yyj28Xruevlb7uNu72R2L59JFU53s3+6OOsc8TPUyiOnId0c+JA8bS32/6axHuWGhPaIRgQ6tuXBAWOByTawevThd1
+X-OriginatorOrg: wdc.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BY1PR04MB9561.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7022b558-60d2-4c77-dd3d-08dee1452f4d
+X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Jul 2026 01:13:59.5629 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: C5atCjDheQaKCK3haHM2lik7sL0q1UFITTB0CQPEqac5gIQ71ZT+5BCtYXazlgLYyzfUbXM+185sNvcWsRLZjJlQhxbYgN48AUva4rOeWIU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH7PR04MB9594
+Received-SPF: pass client-ip=68.232.141.245;
+ envelope-from=prvs=648e1bbf7=Alistair.Francis@wdc.com;
+ helo=esa1.hgst.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,369 +185,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Christian, Greg, Dominique,
-
-Trying to revive this discussion, some answers to Greg's questions below,
-then more thoughts on this series and alternatives.
-
-On 10/13/25 10:24, Greg Kurz wrote:
-> On Mon, 29 Sep 2025 15:06:59 +0200
-> Christian Schoenebeck <linux_oss@crudebyte.com> wrote:
-> 
->> On Sunday, September 21, 2025 6:24:49 PM CEST Tingmao Wang wrote:
->>> On 9/17/25 16:00, Mickaël Salaün wrote:
->> [...]
->>
->> Hi Greg,
->>
-> 
-> Hi Christian,
-> 
->> I'd appreciate comments from your side as well, as you are much on longer on
->> the QEMU 9p front than me.
->>
->> I know you won't have the time to read up on the entire thread so I try to
->> summarize: basically this is yet another user-after-unlink issue, this time on
->> directories instead of files.
->>
-> 
-> Thread that never landed in my mailbox actually and it is quite
-> hard to understand the root problem with the content of this
-> e-mail actually ;-)
-> 
->>> So I did some quick debugging and realized that I had a wrong
->>> understanding of how fids relates to opened files on the host, under QEMU.
->>> It turns out that in QEMU's 9p server implementation, a fid does not
->>> actually correspond to any opened file descriptors - it merely represents
->>> a (string-based) path that QEMU stores internally.  It only opens the
->>> actual file if the client actually does an T(l)open, which is in fact
->>> separate from acquiring the fid with T(l)walk.  The reason why renaming
->>> file/dirs from the client doesn't break those fids is because QEMU will
->>> actually fix those paths when a rename request is processed - c.f.
->>> v9fs_fix_fid_paths [1].
->>
->> Correct, that's based on what the 9p protocols define: a FID does not exactly
->> translate to what a file handle is on a local system. Even after acquiring a
->> new FID by sending a Twalk request, subsequently client would still need to
->> send a Topen for server to actually open that file/directory.
->>
->> And yes, QEMU's 9p server "fixes" the path string of a FID if it was moved
->> upon client request. If the move happened on host side, outside of server's
->> knowledge, then this won't happen ATM and hence it would break your use
->> case.
->>
->>> It turns out that even if a guest process opens the file with O_PATH, that
->>> file descriptor does not cause an actual Topen, and therefore QEMU does
->>> not open the file on the host, and later on reopening that fd with another
->>> mode (via e.g. open("/proc/self/fd/...", O_RDONLY)) will fail if the file
->>> has moved on the host without QEMU's knowledge.  Also, openat will fail if
->>> provided with a dir fd that "points" to a moved directory, regardless of
->>> whether the fd is opened with O_PATH or not, since path walk in QEMU is
->>> completely string-based and does not actually issue openat on the host fs
->>> [2].
->>
->> I don't think the problem here is the string based walk per se, but rather
->> that the string based walk always starts from the export root:
->>
->> https://github.com/qemu/qemu/blob/4975b64efb5aa4248cbc3760312bbe08d6e71638/hw/9pfs/9p-local.c#L64
->>
->> I guess that's something that could be changed in QEMU such that the walk
->> starts from FID's fs point, as the code already uses openat() to walk relative
->> to a file descriptor (for security reasons actually), Greg?
->>
-> 
-> Yes this was introduced for security reasons. In a nutshell, the idea is
-> to *not* follow symlinks in any element of the path being opened. It thus
-> naturally starts at the export root for which we have an fd.
-> 
->> That alone would still not fix your use case though: things being moved on
->> host side. For this to work, it would require to already have a fd open on
->> host for the FID. This could be done by server for each FID as you suggested,
->> or it could be done by client by opening the FID.
->>
-> 
-> Can you elaborate on the "things being move on host side" ? With
-> an example of code that breaks on the client side ?
-
-There are two cases where things break: openat() with a previously opened
-dir fd, and re-open()ing an O_PATH fd as readable or writable with
-/proc/self/fd.
-
-For the first case,
-https://fileshare.maowtm.org/9pfs-landlock-fix/20250921/openat.c
-is an example program that demonstrates that in QEMU, path walk always
-starts from the export root.  The breakage is when the dir is moved on the
-host, even if the file still exists within the dir with the same name, the
-openat() with the opened dir fd (which translates to a fid in v9fs)
-breaks:
-
-    (Host tmpfs exported as 9p to guest /tmp/9p)
-    root@7-2-0-rc2-dev:/# ./openat /tmp/9p/dir file
-    [   12.264880][  T183] 9pnet: (00000183) >>> TWALK fids 1,2 nwname 1d wname[0] dir
-    [   12.265156][  T183] 9pnet: (00000183) >>> size=22 type: 110 tag: 0
-    [   12.265466][  T183] 9pnet: (00000183) <<< size=22 type: 111 tag: 0
-    [   12.265590][  T183] 9pnet: (00000183) <<< RWALK nwqid 1:
-    [   12.265675][  T183] 9pnet: (00000183) <<<     [0] 80.6d10.6a53fe73
-    [   12.265781][  T183] 9pnet: (00000183) >>> TGETATTR fid 2, request_mask 6143
-    [   12.265903][  T183] 9pnet: (00000183) >>> size=19 type: 24 tag: 0
-    [   12.266062][  T183] 9pnet: (00000183) <<< size=160 type: 25 tag: 0
-    [   12.266148][  T183] 9pnet: (00000183) <<< RGETATTR st_result_mask=6143
-    [   12.266148][  T183] <<< qid=80.6d10.6a53fe73
-    [   12.266148][  T183] <<< st_mode=000041e8 st_nlink=2
-    [   12.266148][  T183] <<< st_uid=1000 st_gid=1000
-    [   12.266148][  T183] <<< st_rdev=0 st_size=3c st_blksize=131072 st_blocks=0
-    [   12.266148][  T183] <<< st_atime_sec=1783874216 st_atime_nsec=302475718
-    [   12.266148][  T183] <<< st_mtime_sec=1783874163 st_mtime_nsec=254338030
-    [   12.266148][  T183] <<< st_ctime_sec=1783874163 st_ctime_nsec=254338030
-    [   12.266148][  T183] <<< st_btime_sec=0 st_btime_nsec=0
-    [   12.266148][  T183] <<< st_gen=0 st_data_version=0
-    [   12.266932][  T183] 9pnet: (00000183) >>> TWALK fids 2,3 nwname 0d wname[0] (null)
-    [   12.267038][  T183] 9pnet: (00000183) >>> size=17 type: 110 tag: 0
-    [   12.267189][  T183] 9pnet: (00000183) <<< size=9 type: 111 tag: 0
-    [   12.267300][  T183] 9pnet: (00000183) <<< RWALK nwqid 0:
-    [   12.267368][  T183] 9pnet: (00000183) >>> TLOPEN fid 3 mode 98304
-    [   12.267530][  T183] 9pnet: (00000183) >>> size=15 type: 12 tag: 0
-    [   12.267779][  T183] 9pnet: (00000183) <<< size=24 type: 13 tag: 0
-    [   12.267867][  T183] 9pnet: (00000183) <<< RLOPEN qid 80.6d10.6a53fe73 iounit 0
-    Opened /tmp/9p/dir with fd 3
-    [   12.268713][  T183] 9pnet: (00000183) >>> TWALK fids 2,4 nwname 1d wname[0] file
-    [   12.268816][  T183] 9pnet: (00000183) >>> size=23 type: 110 tag: 0
-    [   12.268961][  T183] 9pnet: (00000183) <<< size=22 type: 111 tag: 0
-    [   12.269051][  T183] 9pnet: (00000183) <<< RWALK nwqid 1:
-    [   12.269116][  T183] 9pnet: (00000183) <<<     [0] 0.6d11.6a53c273
-    [   12.269198][  T183] 9pnet: (00000183) >>> TGETATTR fid 4, request_mask 6143
-    [   12.269305][  T183] 9pnet: (00000183) >>> size=19 type: 24 tag: 0
-    [   12.269454][  T183] 9pnet: (00000183) <<< size=160 type: 25 tag: 0
-    [   12.269538][  T183] 9pnet: (00000183) <<< RGETATTR st_result_mask=6143
-    [   12.269538][  T183] <<< qid=0.6d11.6a53c273
-    [   12.269538][  T183] <<< st_mode=000081a0 st_nlink=1
-    [   12.269538][  T183] <<< st_uid=1000 st_gid=1000
-    [   12.269538][  T183] <<< st_rdev=0 st_size=0 st_blksize=131072 st_blocks=0
-    [   12.269538][  T183] <<< st_atime_sec=1783874265 st_atime_nsec=602603686
-    [   12.269538][  T183] <<< st_mtime_sec=1783874163 st_mtime_nsec=254338030
-    [   12.269538][  T183] <<< st_ctime_sec=1783874163 st_ctime_nsec=254338030
-    [   12.269538][  T183] <<< st_btime_sec=0 st_btime_nsec=0
-    [   12.269538][  T183] <<< st_gen=0 st_data_version=0
-    [   12.270149][  T183] 9pnet: (00000183) >>> TWALK fids 4,5 nwname 0d wname[0] (null)
-    [   12.270249][  T183] 9pnet: (00000183) >>> size=17 type: 110 tag: 0
-    [   12.270406][  T183] 9pnet: (00000183) <<< size=9 type: 111 tag: 0
-    [   12.270497][  T183] 9pnet: (00000183) <<< RWALK nwqid 0:
-    [   12.270561][  T183] 9pnet: (00000183) >>> TLOPEN fid 5 mode 32768
-    [   12.270696][  T183] 9pnet: (00000183) >>> size=15 type: 12 tag: 0
-    [   12.270879][  T183] 9pnet: (00000183) <<< size=24 type: 13 tag: 0
-    [   12.270962][  T183] 9pnet: (00000183) <<< RLOPEN qid 0.6d11.6a53c273 iounit 20000
-    Opened file with fd 4
-    [   12.271278][  T183] 9pnet: (00000183) >>> TREAD fid 5 offset 0 255
-    [   12.271393][  T183] 9pnet: (00000183) >>> size=23 type: 116 tag: 0
-    [   12.271577][  T183] 9pnet: (00000183) <<< size=11 type: 117 tag: 0
-    [   12.271667][  T183] 9pnet: (00000183) <<< RREAD count 0
-    Read 0 bytes:
-
-    [   12.271843][  T183] 9pnet: (00000183) >>> TCLUNK fid 5 (try 0)
-    [   12.271978][  T183] 9pnet: (00000183) >>> size=11 type: 120 tag: 0
-    [   12.272128][  T183] 9pnet: (00000183) <<< size=7 type: 121 tag: 0
-    [   12.272212][  T183] 9pnet: (00000183) <<< RCLUNK fid 5
-    [   12.272309][  T183] 9pnet: (00000183) >>> TCLUNK fid 4 (try 0)
-    [   12.272407][  T183] 9pnet: (00000183) >>> size=11 type: 120 tag: 0
-    [   12.272535][  T183] 9pnet: (00000183) <<< size=7 type: 121 tag: 0
-    [   12.272618][  T183] 9pnet: (00000183) <<< RCLUNK fid 4
-    Press Enter to openat again or Ctrl-C to exit
-
-    (at this point dir is moved to dir1 on the host, then Enter is pressed here)
-
-    [   32.441881][  T183] 9pnet: (00000183) >>> TWALK fids 2,4 nwname 1d wname[0] file
-    [   32.442038][  T183] 9pnet: (00000183) >>> size=23 type: 110 tag: 0
-    [   32.442330][  T183] 9pnet: (00000183) <<< size=11 type: 7 tag: 0
-    [   32.442438][  T183] 9pnet: (00000183) <<< RLERROR (-2)
-    openat: No such file or directory
-    [   32.443619][  T183] 9pnet: (00000183) >>> TCLUNK fid 3 (try 0)
-    [   32.443790][  T183] 9pnet: (00000183) >>> size=11 type: 120 tag: 0
-    [   32.443942][  T183] 9pnet: (00000183) <<< size=7 type: 121 tag: 0
-    [   32.444037][  T183] 9pnet: (00000183) <<< RCLUNK fid 3
-    [   32.444127][  T183] 9pnet: (00000183) >>> TCLUNK fid 2 (try 0)
-    [   32.444235][  T183] 9pnet: (00000183) >>> size=11 type: 120 tag: 0
-    [   32.444364][  T183] 9pnet: (00000183) <<< size=7 type: 121 tag: 0
-    [   32.444450][  T183] 9pnet: (00000183) <<< RCLUNK fid 2
-
-In this case QEMU does hold a fd for the dir (since the dir is opened with
-O_RDONLY, causing a TLOPEN), but as Christian mentioned, it always starts
-the path walk from root, rather than using that fd.
-
-QEMU git commit a759542a2c (today's master)
-
-For the second case,
-https://fileshare.maowtm.org/9pfs-landlock-fix/20250921/open_procselffd.c
-reproduces it:
-
-    (Host tmpfs exported as 9p to guest /tmp/9p)
-    root@7-2-0-rc2-dev:/# ./open_procselffd /tmp/9p/dir/file
-    [   24.243001][  T188] 9pnet: (00000188) >>> TWALK fids 1,2 nwname 1d wname[0] dir
-    [   24.243305][  T188] 9pnet: (00000188) >>> size=22 type: 110 tag: 0
-    [   24.243659][  T188] 9pnet: (00000188) <<< size=22 type: 111 tag: 0
-    [   24.243855][  T188] 9pnet: (00000188) <<< RWALK nwqid 1:
-    [   24.243983][  T188] 9pnet: (00000188) <<<     [0] 80.6d10.6a53fe73
-    [   24.244124][  T188] 9pnet: (00000188) >>> TGETATTR fid 2, request_mask 6143
-    [   24.244270][  T188] 9pnet: (00000188) >>> size=19 type: 24 tag: 0
-    [   24.244460][  T188] 9pnet: (00000188) <<< size=160 type: 25 tag: 0
-    [   24.244599][  T188] 9pnet: (00000188) <<< RGETATTR st_result_mask=6143
-    [   24.244599][  T188] <<< qid=80.6d10.6a53fe73
-    [   24.244599][  T188] <<< st_mode=000041e8 st_nlink=2
-    [   24.244599][  T188] <<< st_uid=1000 st_gid=1000
-    [   24.244599][  T188] <<< st_rdev=0 st_size=3c st_blksize=131072 st_blocks=0
-    [   24.244599][  T188] <<< st_atime_sec=1783874216 st_atime_nsec=302475718
-    [   24.244599][  T188] <<< st_mtime_sec=1783874163 st_mtime_nsec=254338030
-    [   24.244599][  T188] <<< st_ctime_sec=1783875959 st_ctime_nsec=665487467
-    [   24.244599][  T188] <<< st_btime_sec=0 st_btime_nsec=0
-    [   24.244599][  T188] <<< st_gen=0 st_data_version=0
-    [   24.245601][  T188] 9pnet: (00000188) >>> TWALK fids 2,3 nwname 1d wname[0] file
-    [   24.245754][  T188] 9pnet: (00000188) >>> size=23 type: 110 tag: 0
-    [   24.245936][  T188] 9pnet: (00000188) <<< size=22 type: 111 tag: 0
-    [   24.246070][  T188] 9pnet: (00000188) <<< RWALK nwqid 1:
-    [   24.246165][  T188] 9pnet: (00000188) <<<     [0] 0.6d11.6a53c273
-    [   24.246287][  T188] 9pnet: (00000188) >>> TGETATTR fid 3, request_mask 6143
-    [   24.246484][  T188] 9pnet: (00000188) >>> size=19 type: 24 tag: 0
-    [   24.246661][  T188] 9pnet: (00000188) <<< size=160 type: 25 tag: 0
-    [   24.246780][  T188] 9pnet: (00000188) <<< RGETATTR st_result_mask=6143
-    [   24.246780][  T188] <<< qid=0.6d11.6a53c273
-    [   24.246780][  T188] <<< st_mode=000081a0 st_nlink=1
-    [   24.246780][  T188] <<< st_uid=1000 st_gid=1000
-    [   24.246780][  T188] <<< st_rdev=0 st_size=0 st_blksize=131072 st_blocks=0
-    [   24.246780][  T188] <<< st_atime_sec=1783875507 st_atime_nsec=502397563
-    [   24.246780][  T188] <<< st_mtime_sec=1783874163 st_mtime_nsec=254338030
-    [   24.246780][  T188] <<< st_ctime_sec=1783874163 st_ctime_nsec=254338030
-    [   24.246780][  T188] <<< st_btime_sec=0 st_btime_nsec=0
-    [   24.246780][  T188] <<< st_gen=0 st_data_version=0
-    Opened /tmp/9p/dir/file with fd 3 (O_PATH)
-    Press Enter to reopen
-
-    (at this point dir/file is moved to dir/file2 on the host, then Enter is pressed here)
-    (result is the same if instead dir is renamed)
-
-    [   34.725233][  T188] 9pnet: (00000188) >>> TWALK fids 3,4 nwname 0d wname[0] (null)
-    [   34.725619][  T188] 9pnet: (00000188) >>> size=17 type: 110 tag: 0
-    [   34.726067][  T188] 9pnet: (00000188) <<< size=11 type: 7 tag: 0
-    [   34.726241][  T188] 9pnet: (00000188) <<< RLERROR (-2)
-    Failed to open /proc/self/fd/3: No such file or directory
-    Press Enter to exit
-
-With this case, there is no TLOPEN, only TWALK, so QEMU does not hold a fd
-for the file.  (This means that, for Landlock, merely holding a fid is not
-enough to prevent inode number reuse on QEMU)
-
-> 
->> Also keep in mind: once the open file descriptor limit on host is exhausted,
->> QEMU is forced to close older open file desciptors to keep the QEMU process
->> alive. So this might still break what you are trying to achieve there.
->>
-> 
-> Correct.
-> 
->> Having said that, I wonder whether it'd be simpler for server to track for
->> file tree changes (inotify API) and fix the pathes accordingly for host
->> side changes as well?
->>
-> 
-> The problem is how to have the guest know about such changes, e.g. in
-> order to invalidate a stale cache entry. 9P doesn't provide any way for
-> host->client notification.
-
-I think there are two separate problems here - the server using inotify to
-"fixup" its own tracked path of each fids, and the client being notified
-of changes.  With what Christian suggested, the above two cases will not
-break even without any client notification, since the client (in this case
-the kernel) already re-uses previously obtained fids to avoid redoing the
-path walk from root.
-
-Having client notification might be useful for other cases tho.  Aside
-from supporting things like inotify triggered from server-side
-notification, it also looks like if a fd is passed to another user, on
-access=user or access=client 9pfs will in fact re-do the path walk from
-root (v9fs_fid_lookup_with_uid), and so having notification could let us
-know what the expected path has changed to in order to correctly re-open a
-(stale) dentry that may have been moved on the host.
-
-> 
->> /Christian
->>
->>
-> 
-> Cheers,
-> 
-
-I think overall there are still largely two directions, and I'm unclear
-which way is best, but some recent testing has made me realize that the
-second approach might be simpler than I thought:
-
-- One is to continue with this path-based approach implemented in this RFC
-  series.  The main issue I can see of doing this is the somewhat unwieldy
-  path tracking, and handling of parent renames (with the current
-  implementation it would need to recursively update all child ino_paths).
-  However, from a correctness point of view, inodeident=path proposed here
-  really means that both the path, qid.path, and inode type has to match,
-  and so the risk of "false inode matches" like the kind observed earlier,
-  leading to the revert of 724a08450f74 ("fs/9p: simplify iget to remove
-  unnecessary paths") and various related commits, should be low.
-
-  This also has the benefit of making i/fanotify on a cache=none 9pfs work
-  again (for local changes), aside from Landlock.
-
-- The other is to have special handling in Landlock: Landlock would key
-  its rules on 9pfs based on some 9p-exposed identifier, such as the
-  fhandle as proposed by Dominique.  Through testing I realized that we
-  could use st_gen to distinguish inodes with the same ino, and QEMU does
-  expose the st_gen to the guest when the backing fs is something like
-  ext4, so in fact this approach might be simplified (although I've only
-  realized this today and probably need to try this out on more
-  filesystems):
-
-                                     v qid.path
-                                       vvvvvvvv qid.version aka mtime
-    [   78.617306][  T183] <<< qid=0.e.6a558647
-    [   78.617306][  T183] <<< st_mode=000081a0 st_nlink=1
-    [   78.617306][  T183] <<< st_uid=1000 st_gid=1000
-    [   78.617306][  T183] <<< st_rdev=0 st_size=0 st_blksize=131072 st_blocks=0
-    [   78.617306][  T183] <<< st_atime_sec=1783989831 st_atime_nsec=576593826
-    [   78.617306][  T183] <<< st_mtime_sec=1783989831 st_mtime_nsec=576593826
-    [   78.617306][  T183] <<< st_ctime_sec=1783989831 st_ctime_nsec=576593826
-    [   78.617306][  T183] <<< st_btime_sec=0 st_btime_nsec=0
-    [   78.617306][  T183] <<< st_gen=3634407333 st_data_version=0
-
-  After rm + touch:
-
-                                     v qid.path
-                                       vvvvvvvv qid.version aka mtime
-    [  100.234598][  T184] <<< qid=0.e.6a558659
-    [  100.234598][  T184] <<< st_mode=000081a0 st_nlink=1
-    [  100.234598][  T184] <<< st_uid=1000 st_gid=1000
-    [  100.234598][  T184] <<< st_rdev=0 st_size=0 st_blksize=131072 st_blocks=0
-    [  100.234598][  T184] <<< st_atime_sec=1783989849 st_atime_nsec=5600077
-    [  100.234598][  T184] <<< st_mtime_sec=1783989849 st_mtime_nsec=5600077
-    [  100.234598][  T184] <<< st_ctime_sec=1783989849 st_ctime_nsec=5600077
-    [  100.234598][  T184] <<< st_btime_sec=0 st_btime_nsec=0
-    [  100.234598][  T184] <<< st_gen=4062134779 st_data_version=0
-                                      ^ this is different
-
-  Previously I proposed that Landlock would need to hold a fid to keep the
-  inode alive on the server side, to prevent inode number reuse when using
-  qid.path as the rule key, but if the 9pfs-exposed fhandle includes this
-  inode generation number, and Landlock uses that instead, then inode
-  reuse is no longer an issue, without Landlock having to do anything
-  special.
-
-  (we can't use qid.version since that is mtime, which will change on
-  modification / files added or removed in a directory)
-  
-Does anyone have preferences / suggestions on whether to keep going with
-the path-tracking based approach (perhaps subject to figuring out a way to
-handle parent renames), or an approach where Landlock simply stores the
-fhandle (or (i_ino, i_generation (but this is u32 whereas st_gen within 9p
-is u64))) as the rule key?
-
-If I find some time over the next couple of weeks I will try out the
-second approach since it might be turning out to be the simpler option,
-but the drawback is that it doesn't enable i/fanotify on 9pfs, which I
-originally hoped to achieve together with fixing Landlock on 9pfs.
-
-Kind regards,
-Tingmao
+T24gRnJpLCAyMDI2LTA3LTAzIGF0IDEyOjI0ICswODAwLCBZYW5mZW5nIExpdSB3cm90ZToKPiBU
+aGlzIGFkZHMgb3B0aW9uYWwgVUFSVDEgdG8gUmlzY1YgdmlydCBib2FyZCBpZiByZXF1aXJlZCBh
+dAo+IHJ1bnRpbWUgdG8gc2ltcGxpZnkgbXVsdGljb3JlIGRldmVsb3BtZW50Lgo+IAo+IE5vdGUg
+dGhhdCBVQVJUMCByZW1haW5zIGRlZmF1bHQgc2VyaWFsX2hkKDApIGFuZCBpdCBpczoKPiAKPiAt
+IHRoZSBsb3dlc3QgYWRkcmVzcyBVQVJUCj4gLSBmaXJzdCBzZXJpYWwgaW4gRFRCCj4gLSBiZWhp
+bmQgL2FsaWFzZXMvc2VyaWFsMCBpbiBEVEIKPiAtIHRoZSAvY2hvc2VuL3N0ZG91dC1wYXRoIGlu
+IERUQgo+IAo+IFNpZ25lZC1vZmYtYnk6IFlhbmZlbmcgTGl1IDx5ZmxpdTIwMDhAcXEuY29tPgo+
+IC0tLQo+IMKgZG9jcy9zeXN0ZW0vcmlzY3YvdmlydC5yc3QgfMKgIDUgKysrKy0KPiDCoGh3L3Jp
+c2N2L3ZpcnQtYWNwaS1idWlsZC5jIHwgMTIgKysrKysrKystLS0tCj4gwqBody9yaXNjdi92aXJ0
+LmPCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHwgMzkgKysrKysrKysrKysrKysrKysrKysrKysrKysr
+Ky0tLS0tLS0tCj4gLS0KPiDCoGluY2x1ZGUvaHcvcmlzY3YvdmlydC5owqDCoMKgIHzCoCAzICsr
+Kwo+IMKgNCBmaWxlcyBjaGFuZ2VkLCA0NCBpbnNlcnRpb25zKCspLCAxNSBkZWxldGlvbnMoLSkK
+PiAKPiBkaWZmIC0tZ2l0IGEvZG9jcy9zeXN0ZW0vcmlzY3YvdmlydC5yc3QgYi9kb2NzL3N5c3Rl
+bS9yaXNjdi92aXJ0LnJzdAo+IGluZGV4IDYwODUwOTcwY2UuLjQ1YWM2M2FjNzcgMTAwNjQ0Cj4g
+LS0tIGEvZG9jcy9zeXN0ZW0vcmlzY3YvdmlydC5yc3QKPiArKysgYi9kb2NzL3N5c3RlbS9yaXNj
+di92aXJ0LnJzdAo+IEBAIC0xNiw3ICsxNiw3IEBAIFRoZSBgYHZpcnRgYCBtYWNoaW5lIHN1cHBv
+cnRzIHRoZSBmb2xsb3dpbmcKPiBkZXZpY2VzOgo+IMKgKiBDb3JlIExvY2FsIEludGVycnVwdG9y
+IChDTElOVCkKPiDCoCogUGxhdGZvcm0tTGV2ZWwgSW50ZXJydXB0IENvbnRyb2xsZXIgKFBMSUMp
+Cj4gwqAqIENGSSBwYXJhbGxlbCBOT1IgZmxhc2ggbWVtb3J5Cj4gLSogMSBOUzE2NTUwIGNvbXBh
+dGlibGUgVUFSVAo+ICsqIEVpdGhlciAxIG9yIDIgTlMxNjU1MCBjb21wYXRpYmxlIFVBUlRzCj4g
+wqAqIDEgR29vZ2xlIEdvbGRmaXNoIFJUQwo+IMKgKiAxIFNpRml2ZSBUZXN0IGRldmljZQo+IMKg
+KiA4IHZpcnRpby1tbWlvIHRyYW5zcG9ydCBkZXZpY2VzCj4gQEAgLTI3LDYgKzI3LDkgQEAgVGhl
+IGh5cGVydmlzb3IgZXh0ZW5zaW9uIGhhcyBiZWVuIGVuYWJsZWQgZm9yIHRoZQo+IGRlZmF1bHQg
+Q1BVLCBzbyB2aXJ0dWFsCj4gwqBtYWNoaW5lcyB3aXRoIGh5cGVydmlzb3IgZXh0ZW5zaW9uIGNh
+biBzaW1wbHkgYmUgdXNlZCB3aXRob3V0Cj4gZXhwbGljaXRseQo+IMKgZGVjbGFyaW5nLgo+IMKg
+Cj4gK1RoZSBzZWNvbmQgVUFSVCBvbmx5IGV4aXN0cyBpZiBhIGJhY2tlbmQgaXMgY29uZmlndXJl
+ZCBleHBsaWNpdGx5Cj4gKGUuZy4KPiArd2l0aCBhIHNlY29uZCBgLXNlcmlhbGAgY29tbWFuZCBs
+aW5lIG9wdGlvbikuCj4gKwo+IMKgSGFyZHdhcmUgY29uZmlndXJhdGlvbiBpbmZvcm1hdGlvbgo+
+IMKgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQo+IMKgCj4gZGlmZiAtLWdpdCBh
+L2h3L3Jpc2N2L3ZpcnQtYWNwaS1idWlsZC5jIGIvaHcvcmlzY3YvdmlydC1hY3BpLWJ1aWxkLmMK
+PiBpbmRleCA0MTNkNDdkNzBlLi41OTc3NTFjODRhIDEwMDY0NAo+IC0tLSBhL2h3L3Jpc2N2L3Zp
+cnQtYWNwaS1idWlsZC5jCj4gKysrIGIvaHcvcmlzY3YvdmlydC1hY3BpLWJ1aWxkLmMKPiBAQCAt
+MTY5LDExICsxNjksMTEgQEAgc3RhdGljIHZvaWQgYWNwaV9kc2R0X2FkZF9wbGljX2FwbGljKEFt
+bAo+ICpzY29wZSwgdWludDhfdCBzb2NrZXRfY291bnQsCj4gwqAKPiDCoHN0YXRpYyB2b2lkCj4g
+wqBhY3BpX2RzZHRfYWRkX3VhcnQoQW1sICpzY29wZSwgY29uc3QgTWVtTWFwRW50cnkgKnVhcnRf
+bWVtbWFwLAo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB1aW50MzJf
+dCB1YXJ0X2lycSkKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdWlu
+dDMyX3QgdWFydF9pcnEsIGludCB1YXJ0aWR4KQo+IMKgewo+IC3CoMKgwqAgQW1sICpkZXYgPSBh
+bWxfZGV2aWNlKCJDT00wIik7Cj4gK8KgwqDCoCBBbWwgKmRldiA9IGFtbF9kZXZpY2UoIkNPTSVk
+IiwgdWFydGlkeCk7Cj4gwqDCoMKgwqAgYW1sX2FwcGVuZChkZXYsIGFtbF9uYW1lX2RlY2woIl9I
+SUQiLCBhbWxfc3RyaW5nKCJSU0NWMDAwMyIpKSk7Cj4gLcKgwqDCoCBhbWxfYXBwZW5kKGRldiwg
+YW1sX25hbWVfZGVjbCgiX1VJRCIsIGFtbF9pbnQoMCkpKTsKPiArwqDCoMKgIGFtbF9hcHBlbmQo
+ZGV2LCBhbWxfbmFtZV9kZWNsKCJfVUlEIiwgYW1sX2ludCh1YXJ0aWR4KSkpOwo+IMKgCj4gwqDC
+oMKgwqAgQW1sICpjcnMgPSBhbWxfcmVzb3VyY2VfdGVtcGxhdGUoKTsKPiDCoMKgwqDCoCBhbWxf
+YXBwZW5kKGNycywgYW1sX21lbW9yeTMyX2ZpeGVkKHVhcnRfbWVtbWFwLT5iYXNlLAo+IEBAIC00
+NzksNyArNDc5LDExIEBAIHN0YXRpYyB2b2lkIGJ1aWxkX2RzZHQoR0FycmF5ICp0YWJsZV9kYXRh
+LAo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoCBtZW1tYXBbVklSVF9BUExJQ19TXS5zaXplLAo+ICJSU0NWMDAwMiIpOwo+
+IMKgwqDCoMKgIH0KPiDCoAo+IC3CoMKgwqAgYWNwaV9kc2R0X2FkZF91YXJ0KHNjb3BlLCAmbWVt
+bWFwW1ZJUlRfVUFSVDBdLCBVQVJUMF9JUlEpOwo+ICvCoMKgwqAgYWNwaV9kc2R0X2FkZF91YXJ0
+KHNjb3BlLCAmbWVtbWFwW1ZJUlRfVUFSVDBdLCBVQVJUMF9JUlEsIDApOwo+ICvCoMKgwqAgaWYg
+KHMtPnVhcnQxX3ByZXNlbnQpIHsKPiArwqDCoMKgwqDCoMKgwqAgYWNwaV9kc2R0X2FkZF91YXJ0
+KHNjb3BlLCAmbWVtbWFwW1ZJUlRfVUFSVDFdLCBVQVJUMV9JUlEsCj4gMSk7Cj4gK8KgwqDCoCB9
+Cj4gKwo+IMKgwqDCoMKgIGlmICh2aXJ0X2lzX2lvbW11X3N5c19lbmFibGVkKHMpKSB7Cj4gwqDC
+oMKgwqDCoMKgwqDCoCBhY3BpX2RzZHRfYWRkX2lvbW11X3N5cyhzY29wZSwgJm1lbW1hcFtWSVJU
+X0lPTU1VX1NZU10sCj4gSU9NTVVfU1lTX0lSUSk7Cj4gwqDCoMKgwqAgfQo+IGRpZmYgLS1naXQg
+YS9ody9yaXNjdi92aXJ0LmMgYi9ody9yaXNjdi92aXJ0LmMKPiBpbmRleCAzMzc3NWE2MWZkLi45
+YTExMmNjZGVmIDEwMDY0NAo+IC0tLSBhL2h3L3Jpc2N2L3ZpcnQuYwo+ICsrKyBiL2h3L3Jpc2N2
+L3ZpcnQuYwo+IEBAIC05Niw2ICs5Niw3IEBAIHN0YXRpYyBjb25zdCBNZW1NYXBFbnRyeSB2aXJ0
+X21lbW1hcFtdID0gewo+IMKgwqDCoMKgIFtWSVJUX0FQTElDX1NdID3CoMKgwqDCoMKgIHvCoCAw
+eGQwMDAwMDAsIEFQTElDX1NJWkUoVklSVF9DUFVTX01BWCkgfSwKPiDCoMKgwqDCoCBbVklSVF9V
+QVJUMF0gPcKgwqDCoMKgwqDCoMKgIHsgMHgxMDAwMDAwMCzCoMKgwqDCoMKgwqDCoMKgIDB4MTAw
+IH0sCj4gwqDCoMKgwqAgW1ZJUlRfVklSVElPXSA9wqDCoMKgwqDCoMKgIHsgMHgxMDAwMTAwMCzC
+oMKgwqDCoMKgwqDCoCAweDEwMDAgfSwKPiArwqDCoMKgIFtWSVJUX1VBUlQxXSA9wqDCoMKgwqDC
+oMKgwqAgeyAweDEwMDBhMDAwLMKgwqDCoMKgwqDCoMKgwqAgMHgxMDAgfSwKClRoaXMgY291bGQg
+YmUgYXQgYWRkcmVzcyAweDEwMDAwMTAwIGluc3RlYWQgYW5kIHNxdWlzaCB1cCBhZ2FpbnN0ClVB
+UlQwLgoKT3RoZXJ3aXNlOgoKUmV2aWV3ZWQtYnk6IEFsaXN0YWlyIEZyYW5jaXMgPGFsaXN0YWly
+LmZyYW5jaXNAd2RjLmNvbT4KCkFsaXN0YWlyCgo+IMKgwqDCoMKgIFtWSVJUX0ZXX0NGR10gPcKg
+wqDCoMKgwqDCoCB7IDB4MTAxMDAwMDAswqDCoMKgwqDCoMKgwqDCoMKgIDB4MTggfSwKPiDCoMKg
+wqDCoCBbVklSVF9GTEFTSF0gPcKgwqDCoMKgwqDCoMKgIHsgMHgyMDAwMDAwMCzCoMKgwqDCoCAw
+eDQwMDAwMDAgfSwKPiDCoMKgwqDCoCBbVklSVF9JTVNJQ19NXSA9wqDCoMKgwqDCoCB7IDB4MjQw
+MDAwMDAsIFZJUlRfSU1TSUNfTUFYX1NJWkUgfSwKPiBAQCAtMTg2LDcgKzE4Nyw4IEBAIHN0YXRp
+YyB2b2lkIGNyZWF0ZV9wY2llX2lycV9tYXAoUklTQ1ZWaXJ0U3RhdGUKPiAqcywgdm9pZCAqZmR0
+LCBjaGFyICpub2RlbmFtZSwKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgIEZEVF9NQVhfSU5UX01BUF9XSURUSF0gPSB7fTsKPiDCoMKgwqDCoCB1
+aW50MzJfdCAqaXJxX21hcCA9IGZ1bGxfaXJxX21hcDsKPiDCoAo+IC3CoMKgwqAgLyogVGhpcyBj
+b2RlIGNyZWF0ZXMgYSBzdGFuZGFyZCBzd2l6emxlIG9mIGludGVycnVwdHMgc3VjaCB0aGF0Cj4g
+K8KgwqDCoCAvKgo+ICvCoMKgwqDCoCAqIFRoaXMgY29kZSBjcmVhdGVzIGEgc3RhbmRhcmQgc3dp
+enpsZSBvZiBpbnRlcnJ1cHRzIHN1Y2ggdGhhdAo+IMKgwqDCoMKgwqAgKiBlYWNoIGRldmljZSdz
+IGZpcnN0IGludGVycnVwdCBpcyBiYXNlZCBvbiBpdCdzIFBDSV9TTE9UCj4gbnVtYmVyLgo+IMKg
+wqDCoMKgwqAgKiAoU2VlIHBjaV9zd2l6emxlX21hcF9pcnFfZm4oKSkKPiDCoMKgwqDCoMKgICoK
+PiBAQCAtODMyLDI4ICs4MzQsMzggQEAgc3RhdGljIHZvaWQgY3JlYXRlX2ZkdF9yZXNldChSSVND
+VlZpcnRTdGF0ZSAqcywKPiB1aW50MzJfdCAqcGhhbmRsZSkKPiDCoH0KPiDCoAo+IMKgc3RhdGlj
+IHZvaWQgY3JlYXRlX2ZkdF91YXJ0KFJJU0NWVmlydFN0YXRlICpzLAo+IC3CoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdWludDMyX3QgaXJxX21t
+aW9fcGhhbmRsZSkKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgIHVpbnQzMl90IGlycV9tbWlvX3BoYW5kbGUsIGludCBtZW1JZCwKPiBpbnQg
+aXJxTm8pCj4gwqB7Cj4gwqDCoMKgwqAgZ19hdXRvZnJlZSBjaGFyICpuYW1lID0gTlVMTDsKPiDC
+oMKgwqDCoCBNYWNoaW5lU3RhdGUgKm1zID0gTUFDSElORShzKTsKPiDCoAo+IMKgwqDCoMKgIG5h
+bWUgPSBnX3N0cmR1cF9wcmludGYoIi9zb2Mvc2VyaWFsQCUiSFdBRERSX1BSSXgsCj4gLcKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgcy0+bWVtbWFw
+W1ZJUlRfVUFSVDBdLmJhc2UpOwo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgIHMtPm1lbW1hcFttZW1JZF0uYmFzZSk7Cj4gwqDCoMKgwqAgcWVt
+dV9mZHRfYWRkX3N1Ym5vZGUobXMtPmZkdCwgbmFtZSk7Cj4gwqDCoMKgwqAgcWVtdV9mZHRfc2V0
+cHJvcF9zdHJpbmcobXMtPmZkdCwgbmFtZSwgImNvbXBhdGlibGUiLAo+ICJuczE2NTUwYSIpOwo+
+IMKgwqDCoMKgIHFlbXVfZmR0X3NldHByb3Bfc2l6ZWRfY2VsbHMobXMtPmZkdCwgbmFtZSwgInJl
+ZyIsCj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqAgMiwgcy0+bWVtbWFwW1ZJUlRfVUFSVDBdLmJhc2UsCj4gLcKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
+Miwgcy0+bWVtbWFwW1ZJUlRfVUFSVDBdLnNpemUpOwo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIDIsIHMtPm1lbW1hcFtt
+ZW1JZF0uYmFzZSwKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAyLCBzLT5tZW1tYXBbbWVtSWRdLnNpemUpOwo+IMKgwqDC
+oMKgIHFlbXVfZmR0X3NldHByb3BfY2VsbChtcy0+ZmR0LCBuYW1lLCAiY2xvY2stZnJlcXVlbmN5
+IiwKPiAzNjg2NDAwKTsKPiDCoMKgwqDCoCBxZW11X2ZkdF9zZXRwcm9wX2NlbGwobXMtPmZkdCwg
+bmFtZSwgImludGVycnVwdC1wYXJlbnQiLAo+IGlycV9tbWlvX3BoYW5kbGUpOwo+IMKgwqDCoMKg
+IGlmIChzLT5haWFfdHlwZSA9PSBWSVJUX0FJQV9UWVBFX05PTkUpIHsKPiAtwqDCoMKgwqDCoMKg
+wqAgcWVtdV9mZHRfc2V0cHJvcF9jZWxsKG1zLT5mZHQsIG5hbWUsICJpbnRlcnJ1cHRzIiwKPiBV
+QVJUMF9JUlEpOwo+ICvCoMKgwqDCoMKgwqDCoCBxZW11X2ZkdF9zZXRwcm9wX2NlbGwobXMtPmZk
+dCwgbmFtZSwgImludGVycnVwdHMiLCBpcnFObyk7Cj4gwqDCoMKgwqAgfSBlbHNlIHsKPiAtwqDC
+oMKgwqDCoMKgwqAgcWVtdV9mZHRfc2V0cHJvcF9jZWxscyhtcy0+ZmR0LCBuYW1lLCAiaW50ZXJy
+dXB0cyIsCj4gVUFSVDBfSVJRLCAweDQpOwo+ICvCoMKgwqDCoMKgwqDCoCBxZW11X2ZkdF9zZXRw
+cm9wX2NlbGxzKG1zLT5mZHQsIG5hbWUsICJpbnRlcnJ1cHRzIiwgaXJxTm8sCj4gMHg0KTsKPiAr
+wqDCoMKgIH0KPiArCj4gK8KgwqDCoCBpZiAoVklSVF9VQVJUMCA9PSBtZW1JZCkgewo+ICvCoMKg
+wqDCoMKgwqDCoCBxZW11X2ZkdF9zZXRwcm9wX3N0cmluZyhtcy0+ZmR0LCAiL2Nob3NlbiIsICJz
+dGRvdXQtcGF0aCIsCj4gbmFtZSk7Cj4gK8KgwqDCoMKgwqDCoMKgIHFlbXVfZmR0X3NldHByb3Bf
+c3RyaW5nKG1zLT5mZHQsICIvYWxpYXNlcyIsICJzZXJpYWwwIiwKPiBuYW1lKTsKPiDCoMKgwqDC
+oCB9Cj4gK30KPiDCoAo+IC3CoMKgwqAgcWVtdV9mZHRfc2V0cHJvcF9zdHJpbmcobXMtPmZkdCwg
+Ii9jaG9zZW4iLCAic3Rkb3V0LXBhdGgiLAo+IG5hbWUpOwo+IC3CoMKgwqAgcWVtdV9mZHRfc2V0
+cHJvcF9zdHJpbmcobXMtPmZkdCwgIi9hbGlhc2VzIiwgInNlcmlhbDAiLCBuYW1lKTsKPiArc3Rh
+dGljIHZvaWQgY3JlYXRlX2ZkdF91YXJ0cyhSSVNDVlZpcnRTdGF0ZSAqcywgdWludDMyX3QKPiBp
+cnFfbW1pb19waGFuZGxlKQo+ICt7Cj4gK8KgwqDCoCBpZiAocy0+dWFydDFfcHJlc2VudCkgewo+
+ICvCoMKgwqDCoMKgwqDCoCBjcmVhdGVfZmR0X3VhcnQocywgaXJxX21taW9fcGhhbmRsZSwgVklS
+VF9VQVJUMSwgVUFSVDFfSVJRKTsKPiArwqDCoMKgIH0KPiArwqDCoMKgIGNyZWF0ZV9mZHRfdWFy
+dChzLCBpcnFfbW1pb19waGFuZGxlLCBWSVJUX1VBUlQwLCBVQVJUMF9JUlEpOwo+IMKgfQo+IMKg
+Cj4gwqBzdGF0aWMgdm9pZCBjcmVhdGVfZmR0X3J0YyhSSVNDVlZpcnRTdGF0ZSAqcywKPiBAQCAt
+MTAyMyw3ICsxMDM1LDcgQEAgc3RhdGljIHZvaWQgZmluYWxpemVfZmR0KFJJU0NWVmlydFN0YXRl
+ICpzKQo+IMKgCj4gwqDCoMKgwqAgY3JlYXRlX2ZkdF9yZXNldChzLCAmcGhhbmRsZSk7Cj4gwqAK
+PiAtwqDCoMKgIGNyZWF0ZV9mZHRfdWFydChzLCBpcnFfbW1pb19waGFuZGxlKTsKPiArwqDCoMKg
+IGNyZWF0ZV9mZHRfdWFydHMocywgaXJxX21taW9fcGhhbmRsZSk7Cj4gwqAKPiDCoMKgwqDCoCBj
+cmVhdGVfZmR0X3J0YyhzLCBpcnFfbW1pb19waGFuZGxlKTsKPiDCoH0KPiBAQCAtMTU2Nyw2ICsx
+NTc5LDEzIEBAIHN0YXRpYyB2b2lkIHZpcnRfbWFjaGluZV9pbml0KE1hY2hpbmVTdGF0ZQo+ICpt
+YWNoaW5lKQo+IMKgwqDCoMKgwqDCoMKgwqAgMCwgcWRldl9nZXRfZ3Bpb19pbihtbWlvX2lycWNo
+aXAsIFVBUlQwX0lSUSksIDM5OTE5MywKPiDCoMKgwqDCoMKgwqDCoMKgIHNlcmlhbF9oZCgwKSwg
+REVWSUNFX0xJVFRMRV9FTkRJQU4pOwo+IMKgCj4gK8KgwqDCoCBpZiAoc2VyaWFsX2hkKDEpKSB7
+Cj4gK8KgwqDCoMKgwqDCoMKgIHNlcmlhbF9tbV9pbml0KHN5c3RlbV9tZW1vcnksIHMtPm1lbW1h
+cFtWSVJUX1VBUlQxXS5iYXNlLAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIDAsIHFkZXZfZ2V0
+X2dwaW9faW4obW1pb19pcnFjaGlwLCBVQVJUMV9JUlEpLCAzOTkxOTMsCj4gK8KgwqDCoMKgwqDC
+oMKgwqDCoMKgwqAgc2VyaWFsX2hkKDEpLCBERVZJQ0VfTElUVExFX0VORElBTik7Cj4gK8KgwqDC
+oMKgwqDCoMKgIHMtPnVhcnQxX3ByZXNlbnQgPSB0cnVlOwo+ICvCoMKgwqAgfQo+ICsKPiDCoMKg
+wqDCoCBzeXNidXNfY3JlYXRlX3NpbXBsZSgiZ29sZGZpc2hfcnRjIiwgcy0+bWVtbWFwW1ZJUlRf
+UlRDXS5iYXNlLAo+IMKgwqDCoMKgwqDCoMKgwqAgcWRldl9nZXRfZ3Bpb19pbihtbWlvX2lycWNo
+aXAsIFJUQ19JUlEpKTsKPiDCoAo+IGRpZmYgLS1naXQgYS9pbmNsdWRlL2h3L3Jpc2N2L3ZpcnQu
+aCBiL2luY2x1ZGUvaHcvcmlzY3YvdmlydC5oCj4gaW5kZXggMThhMmEzMjNhMy4uN2Q1N2M4Mjky
+ZSAxMDA2NDQKPiAtLS0gYS9pbmNsdWRlL2h3L3Jpc2N2L3ZpcnQuaAo+ICsrKyBiL2luY2x1ZGUv
+aHcvcmlzY3YvdmlydC5oCj4gQEAgLTU5LDYgKzU5LDcgQEAgc3RydWN0IFJJU0NWVmlydFN0YXRl
+IHsKPiDCoMKgwqDCoCBpbnQgYWlhX2d1ZXN0czsKPiDCoMKgwqDCoCBjaGFyICpvZW1faWQ7Cj4g
+wqDCoMKgwqAgY2hhciAqb2VtX3RhYmxlX2lkOwo+ICvCoMKgwqAgYm9vbCB1YXJ0MV9wcmVzZW50
+Owo+IMKgwqDCoMKgIE9uT2ZmQXV0byBhY3BpOwo+IMKgwqDCoMKgIGNvbnN0IE1lbU1hcEVudHJ5
+ICptZW1tYXA7Cj4gwqDCoMKgwqAgc3RydWN0IEdQRVhIb3N0ICpncGV4X2hvc3Q7Cj4gQEAgLTc4
+LDYgKzc5LDcgQEAgZW51bSB7Cj4gwqDCoMKgwqAgVklSVF9BUExJQ19TLAo+IMKgwqDCoMKgIFZJ
+UlRfVUFSVDAsCj4gwqDCoMKgwqAgVklSVF9WSVJUSU8sCj4gK8KgwqDCoCBWSVJUX1VBUlQxLAo+
+IMKgwqDCoMKgIFZJUlRfRldfQ0ZHLAo+IMKgwqDCoMKgIFZJUlRfSU1TSUNfTSwKPiDCoMKgwqDC
+oCBWSVJUX0lNU0lDX1MsCj4gQEAgLTkzLDYgKzk1LDcgQEAgZW51bSB7Cj4gwqBlbnVtIHsKPiDC
+oMKgwqDCoCBVQVJUMF9JUlEgPSAxMCwKPiDCoMKgwqDCoCBSVENfSVJRID0gMTEsCj4gK8KgwqDC
+oCBVQVJUMV9JUlEgPSAxMiwKPiDCoMKgwqDCoCBWSVJUSU9fSVJRID0gMSwgLyogMSB0byA4ICov
+Cj4gwqDCoMKgwqAgVklSVElPX0NPVU5UID0gOCwKPiDCoMKgwqDCoCBQQ0lFX0lSUSA9IDB4MjAs
+IC8qIDMyIHRvIDM1ICovCg==
 
