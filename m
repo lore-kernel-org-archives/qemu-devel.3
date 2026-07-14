@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01A11C44501
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 07:30:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E346C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 07:30:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjXZy-0005n2-V6; Tue, 14 Jul 2026 03:29:22 -0400
+	id 1wjXa2-0005oh-4h; Tue, 14 Jul 2026 03:29:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wjXZy-0005mf-Bs; Tue, 14 Jul 2026 03:29:22 -0400
+ id 1wjXa0-0005oC-NJ; Tue, 14 Jul 2026 03:29:24 -0400
 Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
  ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wjXZw-0006VZ-H3; Tue, 14 Jul 2026 03:29:22 -0400
+ id 1wjXZz-0006VZ-AS; Tue, 14 Jul 2026 03:29:24 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=uuwk1DMbckP6lQ6y+J5RnmvWguTCEupZSxbsWy2eSjL9txPCHBEMrFGGHS3EZUEbWeGV0Bw1kLDyzcW+BMVaZhGXnh0fITwyz5HJCS/LXrIjyLs4rWwCuaj+tvTP7aQXRMbAUiyQrk+kir6pV2nDJD97q4E9WLCVPnQJda1YmuoUIzO43q7VpMTG2JAfTmH6D4ZQGwGd5SIvhBTQNcUnUAF1a6qSaXf9fTE36qYOnlyX3nOqN8C8yfpEGEjMq67/REH618YrZk5hh7QpLGoZ+m2EJrd3AQ2uLkFDIODMU7EvDjW3CUTUoZSnQxkeENqkp7/IJpN0qihKmStyjPC3CQ==
+ b=HM1qm4FY4ZTo3W2zQUhcvTheUxt00pUAg+Aj9e69EEuIrGc6xlYq9mW+r0GCUf9YmZW8PiPHk7y6oDcrncPKAOzNIpQMVqmWL+uDWcFjJ9EMAVDh0nQtrBmthLPWXieqZfD4uynOa1vYB7OXc36FHrE/GO+apgXMAgOJBBK9VDf5dU4teIsHcy+0lco0nDOUEup/ZuVjo72JsrlUpEjfXWaSgmW2Kp3jN+XtcUo5t+jfHAxZff1Rn3G3eH3hX3TYE+DfVcFBEG/MYWat+o9eh68QCDRrx0eWW+FF7Wewu0prPejgHiCMBaxPZeDWNS8FyoiVbBInjcMPVqr4iHY/GA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=K8w9MhG11Sg/3XvS5/wrYdwpT8uCxyGYK1UPeCsrLm0=;
- b=VVwTtkK6nJZFqYMfpTUFzC4lJIwQer4cvJd13jdMjCn22lmCixnMdgtd9pUXX3EeswY43Ffje8WCilHOcIn/0wh4v+6XfmK/fkOF/EpwEPrV8KTYTouc7vFaxzdtnbMMK2d4L1FmXjL+oUsRhREupTTtO+qPHXvlOyID03365IiSMc0I2mBzEgrUtRSClGVe+v1pboqKf0NhUSBMzBtgD9MpVRmkvCTMWJpoAU14MuhjFngfiPdEHDrHF1maZng20DnXVDvb2v3ZGWOvH1Xkrph4nSr5HV/yxk1bPplIsQV0pwCIyfXabnBFfrLKvUFeVygH5REBpBptYOlY9iJjUA==
+ bh=7vYymTcfbT4ZnzdcQ6MVVHEzqJaTpni97oWsQ5UIO/Q=;
+ b=HdOd4XYryonXSzdSlxTDNLzyuUIdImpEsbNjx4w043FUaReAlAOVjrslswbsx6gTGrnIN06rRViDlCFmGrWpVwSSP78r0nIsh50ENAVhwhZjqs7D/e3ZXIjvBh9Om3iAwPKLsldFwvNAqAJXJ+Jwr09SYXHfZ+vPqgtJN0DXExVzicJFRUXs2KTI1HgN0T7T5qY4lqNZA6pSSM3X8LWorkwHsBzoekI0KGZYQGoQ2OFy5SqHWbEoL87rLSHcqS7z1theAchg3mI27vngP4gSssQ5bOG0GQL6YmFDv+Qaxkx8Srdrvr8Dccw/XTgkz8f3b/K5TUrA+auM0NM62hd6aw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=K8w9MhG11Sg/3XvS5/wrYdwpT8uCxyGYK1UPeCsrLm0=;
- b=g2Ms/S6vKrWvcgMVwNeeI9SlrbAEbvLWuWpWyO4nsYndH1Nx1l89bthLiXJpQfYn9HLlY4D7aB57gXh5AQj/tG7frolkG/npi2CVg6cW3smOAaP/9Ya8dSen33VbigCxijurs9gK22YV2SYoMrHtPdfpANy2VfJIHkIRB/Mq6K1XYKZN+od6qRpRPfE4E+hKJB35EGZltLDjIC8vj3wKnQQ3lvKnsw9iIPZEypHGBv5OvM+LI6cvDLDj/gKWGKLixJM6Ktr/qkVCjsZf5hV+hjsx+/8rQkXoKA++vQsZ/bnwCvY/IM7O5OrJ/+fiysxOlIiyQNtYn7sqRom5yEwAlQ==
+ bh=7vYymTcfbT4ZnzdcQ6MVVHEzqJaTpni97oWsQ5UIO/Q=;
+ b=rGLAILtA9l3WNB3dEVtRQqdX8eisoGkHQdPYzcTMtJXcRBiGE4pWQ/FyJv77mM+x9zmyN1B1bn1/kZ4AqsdenOT/DRCILEsm/Ol2nSO7s0vYlsmBmg1XCfi6YaW+xaRV0wmEwXoUajWRkQa8Sk8eFN+l4sMMPfEyaF+qWa+tTMRzCJu79eoPQ+2p0hFBF+gzGuDl+h3j3bfIaJrPIXcrDg93Qqy/YomGXWEfUEtojUy5odatafobQuGE+nvQfoj7dnMEjR7FyFTRI7yR/rZ1NHGDGPMA8EJlUsJStaRSPuvUqf/SWzjl834Yxyuyn/CO6pVS9YEHFwH5S7JqHpJNdg==
 Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
  by SEZPR06MB6117.apcprd06.prod.outlook.com (2603:1096:101:f3::7) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.18; Tue, 14 Jul
- 2026 07:29:07 +0000
+ 2026 07:29:10 +0000
 Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
  ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
  ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0202.014; Tue, 14 Jul 2026
- 07:29:07 +0000
+ 07:29:10 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: =?iso-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
  =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
@@ -54,13 +54,13 @@ To: =?iso-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
  <pbonzini@redhat.com>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v1 04/15] hw/misc/aspeed_hace: Support the CTR mode for the
- crypto command
-Thread-Topic: [PATCH v1 04/15] hw/misc/aspeed_hace: Support the CTR mode for
- the crypto command
-Thread-Index: AQHdE2J0ntHAR2TdNUOCTUkdS2OGrQ==
-Date: Tue, 14 Jul 2026 07:29:07 +0000
-Message-ID: <20260714072900.3023742-5-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 06/15] tests/qtest/aspeed-hace: Test the crypto command on
+ the AST1030
+Thread-Topic: [PATCH v1 06/15] tests/qtest/aspeed-hace: Test the crypto
+ command on the AST1030
+Thread-Index: AQHdE2J2mS7tMOuEIkC/BrlDuj8+bw==
+Date: Tue, 14 Jul 2026 07:29:10 +0000
+Message-ID: <20260714072900.3023742-7-jamin_lin@aspeedtech.com>
 References: <20260714072900.3023742-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20260714072900.3023742-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -71,61 +71,61 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|SEZPR06MB6117:EE_
-x-ms-office365-filtering-correlation-id: c42894c5-c2b9-479a-f092-08dee1799714
+x-ms-office365-filtering-correlation-id: f9a5e4d0-2e42-48bd-4832-08dee17998cd
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|23010399003|7416014|376014|1800799024|921020|38070700021|3023799007|18002099003|22082099003|56012099006;
-x-microsoft-antispam-message-info: kgUye6yvR1OC5PrWzuu3jaDF1mwTKgeZ4xm7kg2w0i+z2Dx4E83t4elyd0dhEKKLnc9DTOvWCmf2k290E6VQgD+VE8jbM+RF0hV9zf5UkE6uuMw2qTOQw6E9xjlljx6JKjt4HsBcQF1V0T4UI+k7FX6QAHD6ytOB6295Gc7PgyCkJwR6NSJuZ7ecMad7Kei5cPGT3T39qJFZHO8EZ0JIa3tRpYLAb74kTZydseEktL8/F/pSy3mStXv98+CwjK3NvaI0hSsXH/FwE5rhUXTX/bhzgpo88nqOM8JXHlMcKLhn+wJJsxqf5yh38GgabYN3YiumkiUlJcqJcBbjipCLuKhILixdUSTsKo5CaGJ9UO3jOUVJz/2ArJyKkamVAWL2Liq65zpRAURJfPqC1ZX6ownJsk2UHIq3czsb8QmhW2SnAzfFzKbCpW3P60EwNIqGT96uK2GpWQT0KEv/KqgEO88NFZKMHRwUT0+/zpkmJGMypN9mvmSoKehI4m6/2lNLEVAsC39U8mZNMK61T5X3/4i86+tbhilMz8uBZGG63teADGYZ/L8omR1H5nvGAXodZzEK/TNtRJYrxKVuq5BxDpMcunSWcP7BpoXbQA2vxRezeWPFpnjq0FlplsNjcQVzXt4cjxa0XqpstqLZrWyUCc4SXtsOIY48Oy9rgfV8rBEng1BaIRYOLbYwDwSv4PXLzikBSzrARYpKuNkgdXJGjPFsM3dKR2vQIU4/KoY6TKqJXK7QIYlX1qFP0211rqrZ
+ ARA:13230040|366016|23010399003|7416014|376014|1800799024|921020|38070700021|18002099003|22082099003|56012099006;
+x-microsoft-antispam-message-info: RCpOUm2PjItTBH49xnNpnLKpzoihiNikGnl7r7mlquHNbMRxgpQXKr754X1FXeLVYzT1hO5ahKfzGuMFrBqOu20k0rS4IVuuAOM11ksvt+JlhkHv/uwKhvXTqFgZqx7D5vLsqTQ943pzR8Q3wZ5n3YMSgG/RMJNGD2lS3dmUVfZaC+4xY+vcehg8d1qyHU3fkPvm2EsUR2CHD7YWtesT2fplBX6S5IpajOLfCBvNF/xlEw8nISdbCitn6EnXXqJxvs8PAnhAQ1cc92AZWxr0rbBfAo+GbC6nF9RENorWbeYTJV99/rGc9t2DT5WuKJJmemh1CR8iW+OmVH6veiphPCEnjFHryYkHm96FDRKHZqj9B00e9mGK3JjIx2GAClmJKwttGvA9xtjwr1TBzo+jgiPi5PV/NRydVdqH8RF7Mh6bv72kWKFUygudZMYVCuUB6h6iX5w8z718bER9eH+QB/hSIvOZS6f6dUm8XKdQty7AoZCfBuHpcxrjiXGDgjZ1DbAlrGY+p7NyCOVIywbDmeQbBmA1EBdoss3onwD81ijethqcQ1FoBFYGr+HW8RqI/xIkTmaABsk9N/Q3N0LWpj8FwBq+zFRmtjE6zmuEB2wSHHce/qURNojJsdsOS+yFHUPMcDhtUSmFVKapAi/1mMPeKa7pbODvuh0iSy74WpWkvGWnC0gatcr1QctQwxToFRtPKuBCxn68YTHXOsbChGkOLMTczxwAbAO0XfCblGnPVxnovoSy3U1et4HFx4gy
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(23010399003)(7416014)(376014)(1800799024)(921020)(38070700021)(3023799007)(18002099003)(22082099003)(56012099006);
+ SFS:(13230040)(366016)(23010399003)(7416014)(376014)(1800799024)(921020)(38070700021)(18002099003)(22082099003)(56012099006);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?c+TLNhodiyTZ43zeWiZrK9eD3S9tLQ5FcoQxHtf+gqzyrMsk4g1Lfu6qe9?=
- =?iso-8859-1?Q?kOu6Na+KomiIj/Iu63AxBpveW6cO8QD/p1EcqxXbPlqOEwppWxOsxRJLAy?=
- =?iso-8859-1?Q?mzrPhfxF+iFByxUQr2wg6ZkUUXs5GpeLpCgLFQwRgrpgmOY3WCAYFRM1iM?=
- =?iso-8859-1?Q?O9gJSMXCM2wZ4adGByZX2MHDU3WKm1RGnAOFD0N38mpaXGvf0OSRaA3h12?=
- =?iso-8859-1?Q?F/qgp5aKX7HVlTiOx1qac2mnF6pHAclw2Q/p4fld8dUi5gTmkp4E0D4mWV?=
- =?iso-8859-1?Q?PJvEEUaRiQ9N68ssgcuffh1f9Xbce59OXHZjsNi/8Z1vlJuKjPDm0yjjr8?=
- =?iso-8859-1?Q?2eSmErgO/Oo0/Yqvnr12jy2oGdURyTj4eNeO+DgGsN/bPZCagTu3VQJKVw?=
- =?iso-8859-1?Q?c2TJ+JsprI6Tgu76AIgJvN6NsIPoEKP2oMuovndia79fEHqvgn/RDSNzkk?=
- =?iso-8859-1?Q?d4HtoE5ZHbpDjoc4d7k61Iv6Ex2aujYeUhb9yfG3Og07c7FY3TzJEhf4bo?=
- =?iso-8859-1?Q?wjGvHcvhcEt0UcYsnkmxz37K49S9/SpXjaICdEhX4rOz8YH2G+M0+S4Poq?=
- =?iso-8859-1?Q?SIOgOiAYQQLnjQSM9bUDJrlPC0YUNglWxV+U+o7nbFAtljKgAOpF8As28k?=
- =?iso-8859-1?Q?+HVz/z8HmyR4ixjtgEpk2sY5hcc3uMR8jJKGwBrtbKy5FMZn4CwQKQ+DpL?=
- =?iso-8859-1?Q?loPJveMd5Mr4fyMAHS4UFvj13WvnAXUcZ9aWNKLJcXzQrRX19ZK+GBHisX?=
- =?iso-8859-1?Q?b/96hPZuHPjKGyrI9yPFzZQ/bdml7iZ+TGnRlWwvSlpPmFsH7iuySAMfYy?=
- =?iso-8859-1?Q?xW3meNyWLO75cU4hr7vopnZv5a/NWknpOx/b5r1qyCUoy4HfLCLMoqb+wi?=
- =?iso-8859-1?Q?CFP26ziMAs0DMo+DK8Yh2vYT2PeGm5a7teXz9ZHuaOfSLGFLahF8+Nh1U8?=
- =?iso-8859-1?Q?t51nitc0G9Di85vDqKV+40a9AXzABlDRZzJOino4t+ZuZRN9GSRt6VItWw?=
- =?iso-8859-1?Q?7CEge3UOemdF6gS0dJyAnxkjJPD9pSJ1Q1Szjk1ptT5rZBNOW/WyYxoU5U?=
- =?iso-8859-1?Q?iMzATrX9TMXINkx7jA85tuygHemnoi/jQ4yr8PGCK8aUTiqe4UpPVFHDNc?=
- =?iso-8859-1?Q?FC3Xev1VW5cXkW51Jvd9i9eNwWBNtrN2KVfc6GCNuXNjGwGDLb3Ust9MQm?=
- =?iso-8859-1?Q?5iF3hDaFCfGhN6QWlHQi1lhAy2nJ3AE1QCQtbM2bkFDUbIpWtHYTQVI/Bv?=
- =?iso-8859-1?Q?roc+fqWV6a54bK7wJ4kjMxbTRBzc1oaoCjPywuQGzCVpIGEpFWkAVyG5Bz?=
- =?iso-8859-1?Q?4o82mxe5kDqAVb6EO9xY2R/0sPdxCtJ/0mObqS/eLD0tJW+TRmvUhhgjSw?=
- =?iso-8859-1?Q?47FkdBnZoEkWwd96JBDPRW8RJD/OlY3XiOrb2gjDRjfZBwpTl7gXJvNyvW?=
- =?iso-8859-1?Q?czR2UPPlNicKRYiiT5g7mqLhWl169KKxyRdMX/M2vML571j/A+gEEHD0Tc?=
- =?iso-8859-1?Q?8bpW3xeCz4qEXLB2PzkEou5pX8vrd/P+V6Mv4GnD6xAf9df2L2CzvCtmtd?=
- =?iso-8859-1?Q?KgnCsifYC7qXTdc26ZnsmrjzlF0mCvdBig/1qJir7VmtMjZjoXoktUH99L?=
- =?iso-8859-1?Q?cuNDm6fsEjUJVVth2mNx5FHz8uyMyPXAj0W/i5IGJNujdubZ9OEIIMHCJ2?=
- =?iso-8859-1?Q?KAFJDYPFO9Yni61kfYtMg8hayW5gxR8V7PErnWRcBA70QAdfRD0M2KYzeS?=
- =?iso-8859-1?Q?gA0Mt4KMIpFxpzh/rjiOHx/U5b2BlT201BvtFWHwpWSiBs1eOffi3T8vAT?=
- =?iso-8859-1?Q?xRLGXGzGXQ=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?R+EhHgtpxbskT7slYWgZiJjH9YzrTzkfMNZP2U/ImdU5mf5lxyVQzPnHyT?=
+ =?iso-8859-1?Q?SJJiKrRenwAIH3qvuZYaPyViWqTo+p1/a2U3lvVXRxaYDC2K4+o6JLaY5i?=
+ =?iso-8859-1?Q?XjGxalN6wriXaOtdQdlHujAdUgHbRn7JCK98MF+BwFQl+FfzD0alRb51fe?=
+ =?iso-8859-1?Q?PUpLmHzNOg4XJ1qMfxzy84z9F9y6cYaa3vhPqF8LgDc4MeRHAWhYxgIPHf?=
+ =?iso-8859-1?Q?WxEB3NZ4J+d/6rgoVTZuLW+QoEkzWRnAyDd5IibEIylPiFHEJjKbEZZzzy?=
+ =?iso-8859-1?Q?A921PBtWQNKfVm1TsZKvI5fHPKE1HHKYZBXHS1713WnWfNZlxx5ZiIWaNX?=
+ =?iso-8859-1?Q?VdVXah3syf4CcRvDw0mTeyfkaeNVCYqQSpBFvnxDtkC3luBH0L5JR9hXcj?=
+ =?iso-8859-1?Q?DmppZpDhB6+xGDRV3ol2s3vj3K9vmxrPu7zoi5V2p/cSGpOa1oJdZDxjRw?=
+ =?iso-8859-1?Q?72+kA2hDCGCOmfP75AMuXGpX2qboGnmExZKUlwZuZvvv/G2x0Mp3tSR5zk?=
+ =?iso-8859-1?Q?9TozopKIcbTOvQCmQ3e2YegOYF09c1DvsniNbd/G53r9AQnVfkxweNjYoE?=
+ =?iso-8859-1?Q?dwNVvz//K2+l3anVxM674PaSL3ca5j/aEKFTSSzsIYTjL0NDqSjZf5VQWv?=
+ =?iso-8859-1?Q?du9EZckYPV0gUC7pzkROvxBpatIxh3l1Wv1lk2nNqunRZsP/IZDe8VoX76?=
+ =?iso-8859-1?Q?COmiKeNpbtzUZTZ5UW36fpFdjFmzBxLdTAydBW7knilO7J+DZ0YLVBwzxB?=
+ =?iso-8859-1?Q?pBS2eYayQL3qIon4oKQO3ORZYtQdZBqUwWu1RaouAZXh2OFY+IgPhnzEot?=
+ =?iso-8859-1?Q?ytPpjIz5k+7qSfZXYej1EekaoFP4R0GD2+abr95gVyR3SxcHBnFAA01ccj?=
+ =?iso-8859-1?Q?0OzCX+bkydd5g8HtOfLoKK6cazcYYr1TxDwwATrta29WTekQoXl8RQtee8?=
+ =?iso-8859-1?Q?a6HBXrBPQcLwq5lgR1+XCWz3Vngz4ZSW2mZjHre0wMc06LB9D5tu1Sbp+f?=
+ =?iso-8859-1?Q?MpYIXRzWZtzmJ8puOL5G5GcfKSnoEtZQfepurJeUflRfTyh972WImPWRTP?=
+ =?iso-8859-1?Q?EoEz5qDSGnyUBnwwdxQz+xNV5TizQ9PxOp7BkCIySCKF5hGjGyH7LK9/PW?=
+ =?iso-8859-1?Q?VN4jbkRD5j+0ctiTSmFr9rrNhrLIRzQUGMSECxGoJzsLN6xztMWZj/WUxG?=
+ =?iso-8859-1?Q?pw9H5kJA/vTBBFOIax+e+ctyy6JOzxc9Jodt5wC7XXKAs0dUSbYCa/HP/b?=
+ =?iso-8859-1?Q?j7rEMF+5PPWGRl6trwesC5MHdDs97xca3jeOl2znTVXFwFwGUGxwuKwbh1?=
+ =?iso-8859-1?Q?XJXI4KO4quX7ci3MaNMjnbt6nbq17dmd8aLyKHIqNB+G9VgQtlkWaUCScL?=
+ =?iso-8859-1?Q?1I6AfRnUkZzQMMMEul4ZYYf9rx93vpoYlhC41XPZlIPDKF7gEbVqkXFmrS?=
+ =?iso-8859-1?Q?449JxefQgep29+7zTlqL9QYvoR9RjTtHk4hmJcQs9bir5iiaiRCB0zaiHC?=
+ =?iso-8859-1?Q?ysfZX/8f0D3JkTKhqvoBG0YXU4qKWu+digD2U38505B8xsflnfzovZQSSo?=
+ =?iso-8859-1?Q?wPhOymXcGnlBFtyFcjXbbqDhYrp+XgnUko1St6XriII2UMm2KJel9HniEk?=
+ =?iso-8859-1?Q?oWNYyU6uy/tJ8/moVzaQcKSY1foXxD8Y/YACQbijjMCM/LA3Uj3cfiiBv8?=
+ =?iso-8859-1?Q?7vsXXHFOsbLisEb6J9n/7CwA7T5ZaFutnWHJxrN8BNkufLApjhK/5yKKnn?=
+ =?iso-8859-1?Q?YaXZ8l1/fZ7qr1YT3bNnhayvOcOX3SfuxE7fIlYtRcVAg4x/aIeJo03lal?=
+ =?iso-8859-1?Q?m6FEdePNcw=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: GPbLJZEBHw8agm2bjkEdqLLFcMVjnRhsuzQ57+cPgN1DSWeH/bnzrIkBy3oGz/bdetrN7L06ROceCYA6T8FWVdAdmLq0hM91Ov7lMKYdMYQIMkCTqMmLTtIOMz4MDpELVaL3tn5ZrfRYrxG+TEmIJjBpd0xgAgQrJmKHtuwv1z37cBJNCUFoZtquZe0JHBvl9ODyrArMwy5rxrQjzAXDHHDYhdjOEzFY+8dwWJye6jKrHVB8sQIGioD/yajxoi8E3LsKjd4BINV0a1t+Rxj7xieqG5G6oLNauSk6fAqNo2PWgbvL7c2E6YGKx7SQEqpZei2KUQxw2Fvv/tXzmJfr1Q==
+X-Exchange-RoutingPolicyChecked: mpR5M+tRyuBjKTFvJKk8I6A27YEzUBXG6NiSdwuSUczD/zvJvHIm+XR72HXCy0av4AVQ84nZwxCYkqHr/SWFkslkYyKfgjFPwz2FxCHBcMiAK2Hj+JWaR7iA5705Q1Zp9DEOsnGZmRbNdoYKwPRhnOxotZ45F/KSkDCU6Zag+TTBW5QTgtA5zngQDlNCKIZSqbWHZJsxztYQKWwoDRnYZdvAXYzEFg23GjNQAMBEFFG37eEVNBHq+IZYy+IYiVeUksGnK7kYaBPBlDzBqsY2QUODtRFaFeCl+TixnsnSzbJIZ00T+ND+YNxnENeiIgsxCrBiTBTTj7/qL6BUNQqKfQ==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c42894c5-c2b9-479a-f092-08dee1799714
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Jul 2026 07:29:07.4804 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: f9a5e4d0-2e42-48bd-4832-08dee17998cd
+X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Jul 2026 07:29:10.3573 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: CUEFZBDkfMRh2VpVtD40ksROYxKOinKyH72V57AdFVOg9rxOFkVTHi8q8N0RglJbaiGc4VWT+j0DJu8OBGItfMC/5CQVqYMu4kEdYfkRPBU=
+X-MS-Exchange-CrossTenant-userprincipalname: ZReixSxjHByS98K8zeWwliXBqPD654huAMM/VTky0kYtcLtmieOJcBzagj2dSnrZi7pC9tejGzb3/rKcpR69iKy1eYoVjDfAxgpuB7RRck0=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB6117
 Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=jamin_lin@aspeedtech.com;
@@ -152,155 +152,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The AST2600, AST1030 and later crypto engines add AES/DES/3DES CTR mode=0A=
-(HACE10[6:4] =3D 0b100) on top of the ECB/CBC modes shared with the=0A=
-AST2500. Decode the CTR selection, round the working buffers up to a=0A=
-whole block so the stream-like final block is still processed a block at=0A=
-a time, and write the counter advanced by the number of blocks consumed=0A=
-back to the context buffer so the driver can continue across requests.=0A=
+The AST1030 reuses the AST2600 crypto engine, so it drives the same=0A=
+scatter-gather transfers and supports the same ECB/CBC/CTR modes. Reuse=0A=
+the crypto known-answer tests to cover it, registering the AST1030 with=0A=
+the same modes and scatter-gather flag as the AST2600.=0A=
 =0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 ---=0A=
- hw/misc/aspeed_hace.c | 50 ++++++++++++++++++++++++++++++++++++++-----=0A=
- 1 file changed, 45 insertions(+), 5 deletions(-)=0A=
+ tests/qtest/aspeed_hace-test.c | 6 ++++++=0A=
+ 1 file changed, 6 insertions(+)=0A=
 =0A=
-diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c=0A=
-index 59eb1aeae3..b7a7c0b7ff 100644=0A=
---- a/hw/misc/aspeed_hace.c=0A=
-+++ b/hw/misc/aspeed_hace.c=0A=
-@@ -42,6 +42,7 @@=0A=
- #define  CRYPT_CMD_OP_MODE_MASK     (0x7 << 4)=0A=
- #define  CRYPT_CMD_ECB              (0x0 << 4)=0A=
- #define  CRYPT_CMD_CBC              (0x1 << 4)=0A=
-+#define  CRYPT_CMD_CTR              (0x4 << 4)=0A=
- /* AES key length HACE10[3:2] */=0A=
- #define  CRYPT_CMD_AES_KEY_LEN_MASK (0x3 << 2)=0A=
- #define  CRYPT_CMD_AES256           (0x2 << 2)=0A=
-@@ -589,6 +590,9 @@ static bool crypt_decode_cmd(uint32_t cmd, QCryptoCiphe=
-rAlgo *alg,=0A=
-     case CRYPT_CMD_CBC:=0A=
-         *mode =3D QCRYPTO_CIPHER_MODE_CBC;=0A=
-         break;=0A=
-+    case CRYPT_CMD_CTR:=0A=
-+        *mode =3D QCRYPTO_CIPHER_MODE_CTR;=0A=
-+        break;=0A=
-     default:=0A=
-         return false;=0A=
-     }=0A=
-@@ -652,6 +656,22 @@ static bool crypt_prepare_sg(AspeedHACEState *s, uint6=
-4_t addr,=0A=
-     return copied =3D=3D len;=0A=
- }=0A=
+diff --git a/tests/qtest/aspeed_hace-test.c b/tests/qtest/aspeed_hace-test.=
+c=0A=
+index 61a3e3feb5..42130df1e2 100644=0A=
+--- a/tests/qtest/aspeed_hace-test.c=0A=
++++ b/tests/qtest/aspeed_hace-test.c=0A=
+@@ -210,6 +210,12 @@ int main(int argc, char **argv)=0A=
+     qtest_add_func("ast1030/hace/sha384_accum", test_sha384_accum_ast1030)=
+;=0A=
+     qtest_add_func("ast1030/hace/sha256_accum", test_sha256_accum_ast1030)=
+;=0A=
  =0A=
-+/*=0A=
-+ * Add @add to the big-endian counter block @ctr (@len bytes) in place, so=
- the=0A=
-+ * CTR mode counter can be advanced by the number of blocks just consumed.=
++    /* The AST1030 reuses the AST2600 crypto engine (scatter-gather, CTR).=
+ */=0A=
++    aspeed_add_crypto_tests("ast1030", "-machine ast1030-evb", 0x7e6d0000,=
 =0A=
-+ */=0A=
-+static void crypt_be_add(uint8_t *ctr, size_t len, uint64_t add)=0A=
-+{=0A=
-+    size_t i =3D len;=0A=
++                            0x00000000,=0A=
++                            CRYPT_MODE_ECB | CRYPT_MODE_CBC | CRYPT_MODE_C=
+TR,=0A=
++                            true);=0A=
 +=0A=
-+    while (i > 0 && add) {=0A=
-+        i--;=0A=
-+        add +=3D ctr[i];=0A=
-+        ctr[i] =3D add & 0xff;=0A=
-+        add >>=3D 8;=0A=
-+    }=0A=
-+}=0A=
-+=0A=
- /*=0A=
-  * Perform an AES/DES/3DES ECB/CBC operation. The source and destination a=
-re=0A=
-  * either single contiguous buffers (direct access mode) or scatter-gather=
-=0A=
-@@ -677,6 +697,7 @@ static void do_crypt_operation(AspeedHACEState *s, uint=
-32_t cmd)=0A=
-     uint64_t dst_addr;=0A=
-     size_t iv_offset;=0A=
-     size_t blocklen;=0A=
-+    size_t buf_len;=0A=
-     size_t keylen;=0A=
-     bool status;=0A=
- =0A=
-@@ -722,8 +743,14 @@ static void do_crypt_operation(AspeedHACEState *s, uin=
-t32_t cmd)=0A=
-         return;=0A=
-     }=0A=
- =0A=
--    src_buf =3D g_malloc0(len);=0A=
--    dst_buf =3D g_malloc0(len);=0A=
-+    /*=0A=
-+     * Round the working buffers up to a whole block. Block modes are alre=
-ady=0A=
-+     * block-aligned; the stream-like CTR mode may leave a partial final b=
-lock=0A=
-+     * that the engine still processes a full block at a time.=0A=
-+     */=0A=
-+    buf_len =3D QEMU_ALIGN_UP(len, blocklen);=0A=
-+    src_buf =3D g_malloc0(buf_len);=0A=
-+    dst_buf =3D g_malloc0(buf_len);=0A=
- =0A=
-     /* Gather the source into the bounce buffer, per the selected mode. */=
-=0A=
-     src_addr =3D s->regs[R_CRYPT_SRC];=0A=
-@@ -744,7 +771,7 @@ static void do_crypt_operation(AspeedHACEState *s, uint=
-32_t cmd)=0A=
-     }=0A=
- =0A=
-     if (encrypt) {=0A=
--        if (qcrypto_cipher_encrypt(cipher, src_buf, dst_buf, len,=0A=
-+        if (qcrypto_cipher_encrypt(cipher, src_buf, dst_buf, buf_len,=0A=
-                                    &local_err) < 0) {=0A=
-             qemu_log_mask(LOG_GUEST_ERROR, "%s: encrypt failed: %s\n",=0A=
-                           __func__, error_get_pretty(local_err));=0A=
-@@ -752,7 +779,7 @@ static void do_crypt_operation(AspeedHACEState *s, uint=
-32_t cmd)=0A=
-             return;=0A=
-         }=0A=
-     } else {=0A=
--        if (qcrypto_cipher_decrypt(cipher, src_buf, dst_buf, len,=0A=
-+        if (qcrypto_cipher_decrypt(cipher, src_buf, dst_buf, buf_len,=0A=
-                                    &local_err) < 0) {=0A=
-             qemu_log_mask(LOG_GUEST_ERROR, "%s: decrypt failed: %s\n",=0A=
-                           __func__, error_get_pretty(local_err));=0A=
-@@ -785,13 +812,26 @@ static void do_crypt_operation(AspeedHACEState *s, ui=
-nt32_t cmd)=0A=
-          * output when encrypting, or of the input when decrypting. Write =
-it=0A=
-          * back as the IV for the next request.=0A=
-          */=0A=
--        next_iv =3D (encrypt ? dst_buf : src_buf) + len - blocklen;=0A=
-+        next_iv =3D (encrypt ? dst_buf : src_buf) + buf_len - blocklen;=0A=
-         if (address_space_write(&s->dram_as, ctx_addr + iv_offset,=0A=
-                                 MEMTXATTRS_UNSPECIFIED, next_iv, blocklen)=
-) {=0A=
-             qemu_log_mask(LOG_GUEST_ERROR,=0A=
-                           "%s: Failed to write IV, addr=3D0x%" HWADDR_PRIx=
- "\n",=0A=
-                           __func__, ctx_addr + iv_offset);=0A=
-         }=0A=
-+    } else if (mode =3D=3D QCRYPTO_CIPHER_MODE_CTR) {=0A=
-+        /*=0A=
-+         * CTR chains on the counter, which advances by one per block. Add=
- the=0A=
-+         * number of blocks processed (buf_len / blocklen) and write it ba=
-ck.=0A=
-+         */=0A=
-+        crypt_be_add(ctx + iv_offset, blocklen, buf_len / blocklen);=0A=
-+        if (address_space_write(&s->dram_as, ctx_addr + iv_offset,=0A=
-+                                MEMTXATTRS_UNSPECIFIED, ctx + iv_offset,=
-=0A=
-+                                blocklen)) {=0A=
-+            qemu_log_mask(LOG_GUEST_ERROR,=0A=
-+                          "%s: Failed to write IV, addr=3D0x%" HWADDR_PRIx=
- "\n",=0A=
-+                          __func__, ctx_addr + iv_offset);=0A=
-+        }=0A=
-     }=0A=
- }=0A=
- =0A=
+     qtest_add_func("ast2600/hace/addresses", test_addresses_ast2600);=0A=
+     qtest_add_func("ast2600/hace/sha512", test_sha512_ast2600);=0A=
+     qtest_add_func("ast2600/hace/sha384", test_sha384_ast2600);=0A=
 -- =0A=
 2.43.0=0A=
 
