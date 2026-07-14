@@ -4,131 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 266B4C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 08:00:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACB06C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 08:01:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjY2L-00036w-4E; Tue, 14 Jul 2026 03:58:41 -0400
+	id 1wjY1u-0002aK-Oj; Tue, 14 Jul 2026 03:58:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
- id 1wjY2K-00036G-FU
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 03:58:40 -0400
+ id 1wjY1t-0002Zb-5t
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 03:58:13 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
- id 1wjY2I-0003el-NR
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 03:58:40 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ id 1wjY1r-0003c9-At
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 03:58:12 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66E6SdVd3887433
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 07:58:28 GMT
+ 66E7YGGM4101711
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 07:58:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=U6y6SilO1AV
- 1Q+WR8PyeRQ5YjxreSiS9tob5zKwbsaM=; b=haVMKRcDZvGTVOC/YsCOIN9/tE6
- JyYgaW7wyL9TAaOsPnU4JJQ06O0D31baVN+bo8aWXPpS5H6Z1YKMXEcWmeZvTJO9
- HPVsgDVYLJInVfgfAJhPKhvWz1mNxpTpArVW6CudlNFNETd+6RM6FQ8QvQKQJHjd
- 0ATH4dHOyA5AmvDhio8/0acvpdMLX1ISzoqK7KieyHoNGzB9OqyIR1fTJgg5H9nL
- ncmv9lDwGNzRSdmAcoFA375TeF8EYcYM7XW+22L6NBRgQrpsZG6lqrI0kkVOIERM
- oV8SFtRYO9t4tcAnCMpgs5wyPXTl6oZ62tO4UNCIrScrBRS2E0CyTMJMl5w==
+ :mime-version:references:subject:to; s=qcppdkim1; bh=tR7Hnu4ouM3
+ whMRJ8HksXJ0KwuYzLO9YLeNEosavEDA=; b=gG5xDzhbOKzp+jgDt21f0MgZxp6
+ cH50c0y50jHk+/BGmU0GYJBe+8ezIRkke7Doknac5gB+6PaszWziGFhv+ICYi0YU
+ QZEBOCueNDuYAbK0bvNUOsaoP0EW+i85bghtsbXtGbPpLvTGUegMpiuZGcM3tOJj
+ 4Y8rAZx7Iql/LFtRRufRt1yP3PpcmfcWa8YNSRkijLnU2UIsAJdtHwI02lrbLGca
+ xVTBaLSJktHI0ozypSWe5tx+ZVMs7XdzBJRXh286/Bl+AUxSBHAi5Ggz0vDeW9wL
+ 4Tlk2FzUhmpkMJ/AL2A9BF4qszRKkOReK3Jl1LmiyQwU01QQ2O5Kk3mmSCA==
 Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
  [209.85.216.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fdbr4983r-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fdgudg301-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 07:58:27 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 07:58:10 +0000 (GMT)
 Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-380f3670853so1309309a91.1
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 00:58:27 -0700 (PDT)
+ 98e67ed59e1d1-3883dc4ad23so1484928a91.0
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 00:58:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784015907; x=1784620707; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1784015889; x=1784620689; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=U6y6SilO1AV1Q+WR8PyeRQ5YjxreSiS9tob5zKwbsaM=;
- b=ihV44B1kYadGEiVruWXRdvgp1I78aWPz88yS1lVQ35JT6dtUjAP6ilZwYkB3DztJtz
- 9NhrTdWhOFKQVYD9Yh+W7gZm5iDJQBlMH3ruLyLzsm6HAP9gMjYqZPh3SXk0yUrx9yEj
- la8hPvjoUJuhfOhvCZEps154BpFa+Z9loCGWC7DGz2yd6X3Az/6pIFzUBAqWoY7e5Ffs
- muTFT45NYG/j9fUD985AzG8JsC0Ba0WSHZEGWNhtiJacVR8TR7wIBL3KkM/xRjgy11Il
- vRV2El1NcUJViAh5w1KgjpTkRgW6rG7jHYp8PAu+J6jLYsYC5kmjqO+OCLv5O/p3kJHa
- cO9Q==
+ bh=tR7Hnu4ouM3whMRJ8HksXJ0KwuYzLO9YLeNEosavEDA=;
+ b=SPNwYvQZ2Vq0R5iml5Ue7X51C12OkTPZEhXdl9ILYzVgAYvWH4v/6OgHMc55Fl2BFQ
+ WUCd881Ox37N9zKVGqqoPGy8Cf85+t+jebuyuwK/BwkUZLcidl7mWOk9O/P3tLElmzQN
+ mlD1xtWVeC/nz/BLgNdMA4CE9qnjQs8NP5MGxBCH31HYBjEJQtOpOJMjPytO83tnERg9
+ qggQCVbOJM/bTxTvUYRHYZ7MqCZN60CCV3W+VdF7VPSIdc6cVmlLzFpXeYdIQd0/OSEC
+ O+uy2ja+Qq5MaaoUL+pymokOvIea7Uk3V+HZCu84UuBJJgnPeWpTs4ED5LRaoCTSsaTg
+ 9f5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784015907; x=1784620707;
+ d=1e100.net; s=20251104; t=1784015889; x=1784620689;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=U6y6SilO1AV1Q+WR8PyeRQ5YjxreSiS9tob5zKwbsaM=;
- b=DSj/9SVO/iPRl3YXVzYckCMpmD2eA4RMQCKb3CZ1eBBWij/GkPKk8CVPpN5dRKIBBF
- vghCWla0FtXHbKcZxHp8Nv0rhnPUrwzkCSRYqzvPX5yZBKAtsFuDyN3k7Rucr9xbq2K6
- pMs1z+0o6dnv8M8zDLmXV5jScin4WyEfQM2+8xFAkC+ru1/IWBQafgi54IlDp8kAxpRy
- H5htvAhqvkSornLTTVXcrIOrOBSRLciqxCNpuh3NYHtb7XLHYj+qXDYd+2nImmyAbwLf
- OmdH2Xu8dwFG8L425R+qpG1Ag8BTcQPy44ORmb6CjaLawxSgVu6ReNa7G2DeJoe6BRgJ
- HsHg==
+ bh=tR7Hnu4ouM3whMRJ8HksXJ0KwuYzLO9YLeNEosavEDA=;
+ b=qNRdi+gbWRElYFA7r6w17X7nEkdFjyJ7nx+fxGYA1IRn5ZdrLm2U+un9zKb3Btcg1i
+ PmzAF9zeZ8NnIPlfVFsAxk5GKOy9qZ/1VIWK1UYIy+CsL6qP8binS9jrpAlfLkxLot9t
+ v6aIYvtN4J//HS8gM70YNtCKK7pXgbtnNRfJSfqbZv8mamUMUjS8iHvleGcEJo0hcyak
+ NvzqPmE2gmiq4tKBQ92P/pVzWrznnl5DCK9H4n4g2sF6o1oNKxGK294+70U93EyDlk7R
+ BTWmVhgno6tu5kD7tAAEwPfwIChLE0P7lc9EE7eqw0qLoCiy3aA8x7Cm4BSmgNnyNbS6
+ NDfg==
 X-Forwarded-Encrypted: i=1;
- AHgh+RquJ7Qcy7Q8UwlzAqFXzTi20TwRUhJXNtjM9+nIRGBouh0nA9xnmsh5eL1IJFMekBKsX0SBVO0BLiYM@nongnu.org
-X-Gm-Message-State: AOJu0YwRNfzgR2b3Nwn+SAEukG5lmMOm2qAkcTGMLgXL+hh7zwMhzEPL
- nDhXHpor4DI1hRV/Lb6IVgIUYnFwBfQ09yXdjPSHcEr1Axn8huF0oeq4upVToQO5RE2jsUUadHv
- +WunG8g8Xor8hRrjzAPhZjHCDQAP9dnJm/zoAqoL4CXfeq4Z83JD5C3hnkR1i4pVpjA==
-X-Gm-Gg: AfdE7cn+ywBjJvCYpYI1xfewz/Fo7nC0b8p6pTvpwBQi+jk/SvT4/6B/qfeMtnNBK6N
- OviulbGM2exEwYhmaRS1mwvtkAojAYCX/0cvFWwwqsr05+FJyf1Wkl0O5rNS0Tsr4BK9GQ+Rz4C
- nhIgMcZZqoabzAQUFKCOlEtnhaEMdKGA3mEoKavKSHxiJOHQQCSikYHh0LfjlUET+fXMC2902+U
- XzPkdxj57zGVXsBmymHX9w9FxJC8yilnUXIL0ggHCCCvIyc3R3QvORBwAWJMB22xHUUVIFCQQgq
- nfytGCjUYtXvz5vMdkXFggp8hxmVpvtzZy9yoxgQTSk96of08+h4pSID+MhIANE5GvdSBYzJs3U
- 9D+cHI+RNcZLpecimi30nwfote0iR8F3MIS4qZiTECgi1q0kwEhNWXpmnHVaOiLo03s6MtvtU0L
- gadBaNaX75RxbVcxSyT+9Ab+49vR5KqOwpM+jNYZBF4g==
-X-Received: by 2002:a17:90b:3d87:b0:381:fa5:5217 with SMTP id
- 98e67ed59e1d1-38dc7848a6amr10094126a91.7.1784015906750; 
- Tue, 14 Jul 2026 00:58:26 -0700 (PDT)
-X-Received: by 2002:a17:90b:3d87:b0:381:fa5:5217 with SMTP id
- 98e67ed59e1d1-38dc7848a6amr10094106a91.7.1784015906177; 
- Tue, 14 Jul 2026 00:58:26 -0700 (PDT)
+ AHgh+RpBgkhpX/IpL81YjMwb/yQZ6vVm2oF2IuaLJCySjm1QT8AboYdfLSjLuhcRP+USZKf8/u6w/Fq/XW1+@nongnu.org
+X-Gm-Message-State: AOJu0YyJ0e0q9DXmnIgWYLAP74DAgr/AVffSgVJVFH45xnCH2vn03Cpn
+ 4M4NpmILztwZ2/I6ovp4CIaLlR++T6ACk+0VbPbceMxNBtJ6e8PLn9z3vzGpRkfxbwkO6ZNkhCq
+ K2Veln+T+rEcVcjMxjnvDbFvR2uJCib5TrD6vixd7SXdvyaxwo5OgTjkMWw==
+X-Gm-Gg: AfdE7clF5SYBGSgY8JKVCT8Kr1vfn5nVaLIAGDTiMzdA/6A/dlwn4t8F8DDcXkaZQki
+ HR1hFUJHqvY7Om9ruTZnEdFJNHdMtUWI8wOzl4Pak1tEEVz0TaiMNg0RwnhlyBLHnpTjXizAYr4
+ VYcuL6odD5493rGZaHCDOlmFezgN4R/VnykIY/0+LrwIX02FU51pqwDe6GrAyaJ9TfFU/lqZmRe
+ 5sYBDQWp9M/cteWHCTk3jiikci+caI7+I/hdMH8sbr/7mAkQDMTQb9s5NgGp4kZGw2lHuQZfzoc
+ kB4opoaE6m+SoTlzjEeyB6rTLoJeOYM2R0mM+vEBELy258aYis71XQ8q66TdsxapNXIbeB3DQGH
+ uTKaabBVFOaMzFSNNs5xgsTY3sSyD4ytLF+iQ2qMJI3Y1OnKf5Ub9fxUrzxN/sA7dcOGYmPU6wr
+ th026C/280A+qFaLSg2xdIkw8UgdxWLN86V0Jz1oANvA==
+X-Received: by 2002:a17:90b:564c:b0:37f:eda5:516f with SMTP id
+ 98e67ed59e1d1-38dc760604fmr8906827a91.0.1784015889325; 
+ Tue, 14 Jul 2026 00:58:09 -0700 (PDT)
+X-Received: by 2002:a17:90b:564c:b0:37f:eda5:516f with SMTP id
+ 98e67ed59e1d1-38dc760604fmr8906814a91.0.1784015888829; 
+ Tue, 14 Jul 2026 00:58:08 -0700 (PDT)
 Received: from hu-slingapp-blr.qualcomm.com
  (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-311950eb930sm55606355eec.8.2026.07.14.00.58.24
+ 5a478bee46e88-311950eb930sm55606355eec.8.2026.07.14.00.58.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jul 2026 00:58:25 -0700 (PDT)
+ Tue, 14 Jul 2026 00:58:08 -0700 (PDT)
 From: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
 To: qemu-riscv@nongnu.org
 Cc: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
  qemu-devel@nongnu.org (open list:All patches CC here)
-Subject: [PATCH v3 08/10] docs/system/riscv: document initial virt RPMI support
-Date: Tue, 14 Jul 2026 13:26:57 +0530
-Message-ID: <20260714075659.2258023-9-subrahmanya.lingappa@oss.qualcomm.com>
+Subject: [PATCH v3 03/10] hw/riscv: add RPMI FDT helpers
+Date: Tue, 14 Jul 2026 13:26:52 +0530
+Message-ID: <20260714075659.2258023-4-subrahmanya.lingappa@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260714075659.2258023-1-subrahmanya.lingappa@oss.qualcomm.com>
 References: <20260714075659.2258023-1-subrahmanya.lingappa@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 50EwWwV-EMXyhuo2Y9Yx7ETXqGO6g1d8
-X-Proofpoint-ORIG-GUID: 50EwWwV-EMXyhuo2Y9Yx7ETXqGO6g1d8
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDA4MiBTYWx0ZWRfX3zstgYWXXQTu
- rTLnFlGk9/+/luUOcFZBL3ZigyrgY49aYm3bJR8VSUf1t+BafuDAXzZLGOhuj8M0O7QC4S6w76B
- 9NS6daNhIEQ+mGpPfI+7HvX36RWJx1QDdjdqHtIjfwgaltYW4xZOfw63bVLa+trshe8250jtQCx
- 1xl7DOSH7DBIMF8tTJgrInfWvri3O/v4CehFjHZbr9MCjVafGndnR1X2FnFUiMLEKFO/Uvxk6ds
- xz+Z865hHKgGTAcljwHd+H1TVlqPynB9UQ2MAvqotYmBJ3OZZvfHtFePLmLXq8FixXRFLjrgqxM
- rhvy7KiHFOeRC62Fkf00v4VpeyPlX7J10RoVwfBYR52IuBjbpqaGqmS+CHz6EI4CL7yNuN9oBOs
- byq9bbmqPk+uFmI6qla8jDXw8oUc3FYwWOIf85cDb3WHqyzPFARfybwTiZtURww+Q4mcqKAuYLf
- wuDhXfiASeNoY/10hGg==
-X-Authority-Analysis: v=2.4 cv=F5hnsKhN c=1 sm=1 tr=0 ts=6a55ec23 cx=c_pps
+X-Proofpoint-GUID: o_C6nX27AROKEb3-ZZLUwZZ_AE3vxWxS
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDA4MSBTYWx0ZWRfX/7c3Dmhmu6w1
+ MGSozVW7v7lwZozgacboXvM0g1bT0nEEVPjcoQBhVn6run+jxX/sQ/FVWbScQZAoo19bmRjri1G
+ yrQ4lOtlVQpVx3pvdND4va8iEo6NYxlPrRcRbiiYjYhJADk2GLobm1H8ipTYfBZYRtkNNDZeU50
+ Z3w/Gpz2tO5NEWMFvR7+LL9Ba8uXAHjv+ekCCjwkskF3Is/ipZADFiqMGf8GJ8W5ktCes7bburx
+ 9hvBIkpt1KqVnsTkOF/VjXD8Ns8JBm3Qc62xJXbXQ/s95uJqfD6wjf+BTJaQV1JJsyN/0gjWY2B
+ BvqrRyQcTpkgyBWHYFz7HOLDtyXpVHY+j10lWxScaqtLgI/x9nHR9H6Gwm9vcNpoUOnnbswb+kC
+ 1FfD8XlzZEpBzxQ9iGlunlCrOLBZL+/X016MgRSSuSMa/HPwUxgpq3n/y/C2qqYGPuB94qnJ54d
+ BtPJIYVTzPBG3fltsaw==
+X-Authority-Analysis: v=2.4 cv=T/O8ifKQ c=1 sm=1 tr=0 ts=6a55ec12 cx=c_pps
  a=0uOsjrqzRL749jD1oC5vDA==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
  a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=NEAV23lmAAAA:8
- a=V1jnuoLLAAAA:20 a=EUspDBNiAAAA:8 a=RyhCfiGMEKD-kOZgqhYA:9
- a=mQ_c8vxmzFEMiUWkPHU9:22 a=bA3UWDv6hWIuX7UZL3qL:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDA4MiBTYWx0ZWRfX34ND8uvgF++d
- cNmdAN79JJQcwcOhWdrhlI5S2IdHSCpjOW95f0z1AkF0BTuJyeJM5o64V+NX9Dw4M00KfavMKcZ
- Sj2ohLBlCrc8Hzwa4M9TWQUk1zd8AtQ=
+ a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=EUspDBNiAAAA:8
+ a=jHWy4UxqgUe44QwoGJQA:9 a=mQ_c8vxmzFEMiUWkPHU9:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDA4MSBTYWx0ZWRfXzGINx5bSbzai
+ 7Hn94INpkpo9rhlPOyB1TpkeIGHiyNP34iyE9yfQi8wn2+Vop8ojwOxgf2SepHmQV4pY+wM2GSv
+ +fnYt/1QOGV51lsMTGR6VJrAUSCv+ZM=
+X-Proofpoint-ORIG-GUID: o_C6nX27AROKEb3-ZZLUwZZ_AE3vxWxS
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-14_02,2026-07-10_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 malwarescore=0 priorityscore=1501 suspectscore=0
- clxscore=1015 adultscore=0 impostorscore=0 lowpriorityscore=0 spamscore=0
+ lowpriorityscore=0 malwarescore=0 adultscore=0 spamscore=0 phishscore=0
+ clxscore=1015 bulkscore=0 suspectscore=0 impostorscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607140082
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607140081
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=subrahmanya.lingappa@oss.qualcomm.com;
  helo=mx0b-0031df01.pphosted.com
@@ -154,90 +158,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Document the opt-in virt RPMI transport and the initial HSM, system
-reset, and system suspend service groups.
+Add helper routines for describing RPMI shared-memory mailbox transports
+and service child nodes in the RISC-V virt device tree.
+
+The helpers keep RPMI node construction in one place so the virt machine
+can add service groups without open-coding compatible strings, channel
+IDs, interrupts, and shared-memory references at each call site.
 
 Signed-off-by: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
 ---
- docs/system/riscv/virt.rst | 65 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 65 insertions(+)
+ hw/riscv/meson.build        |   1 +
+ hw/riscv/rpmi-fdt.c         | 103 ++++++++++++++++++++++++++++++++++++
+ include/hw/riscv/rpmi-fdt.h |  30 +++++++++++
+ 3 files changed, 134 insertions(+)
+ create mode 100644 hw/riscv/rpmi-fdt.c
+ create mode 100644 include/hw/riscv/rpmi-fdt.h
 
-diff --git a/docs/system/riscv/virt.rst b/docs/system/riscv/virt.rst
-index 60850970ce..31cd945a3b 100644
---- a/docs/system/riscv/virt.rst
-+++ b/docs/system/riscv/virt.rst
-@@ -146,6 +146,71 @@ The following machine-specific options are supported:
- 
-   Enables the riscv-iommu-sys platform device. Defaults to 'off'.
- 
-+- rpmi=[on|off]
+diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+index b70a054579..529ec273fd 100644
+--- a/hw/riscv/meson.build
++++ b/hw/riscv/meson.build
+@@ -3,6 +3,7 @@ riscv_ss.add(files('boot.c'))
+ riscv_ss.add(files('fdt-common.c'))
+ riscv_ss.add(when: 'CONFIG_RISCV_NUMA', if_true: files('numa.c'))
+ riscv_ss.add(files('riscv_hart.c'))
++riscv_ss.add(files('rpmi-fdt.c'))
+ riscv_ss.add(when: 'CONFIG_OPENTITAN', if_true: files('opentitan.c'))
+ riscv_ss.add(when: 'CONFIG_RISCV_VIRT', if_true: files('virt.c'))
+ riscv_ss.add(when: 'CONFIG_SHAKTI_C', if_true: files('shakti_c.c'))
+diff --git a/hw/riscv/rpmi-fdt.c b/hw/riscv/rpmi-fdt.c
+new file mode 100644
+index 0000000000..b2b3daea1c
+--- /dev/null
++++ b/hw/riscv/rpmi-fdt.c
+@@ -0,0 +1,103 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * RISC-V RPMI device-tree helpers
++ *
++ * Copyright (c) 2026 Qualcomm Technologies, Inc.
++ * Author:
++ *  Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
++ */
 +
-+  Enables the RISC-V RPMI shared-memory transport. This option defaults to
-+  "off", is TCG-only, and is available only when QEMU is built with librpmi
-+  support. This support targets the RISC-V Platform Management Interface
-+  (RPMI) Specification v1.0 Ratified (`RPMI v1.0 specification`_). The initial
-+  ``virt`` implementation exposes RPMI system reset, system suspend, and HSM
-+  service groups. System reset can request shutdown or cold reboot through
-+  RPMI. HSM uses the ``virt`` hart IDs and supports hart discovery, status,
-+  start, stop, and suspend commands. System suspend uses QEMU's suspend and
-+  wakeup path. Migration is currently blocked while RPMI transport and service
-+  VMState support is being designed.
++#include "qemu/osdep.h"
++#include "qemu/bswap.h"
++#include "hw/riscv/rpmi-fdt.h"
++#include "hw/misc/riscv_rpmi.h"
++#include "system/device_tree.h"
 +
-+  The build dependency is provided by `librpmi`_. QEMU requires librpmi 1.0.0
-+  or newer. If the host distribution does not provide a librpmi development
-+  package, build and install it from the upstream source tree so that
-+  ``pkg-config`` can find ``librpmi.pc``:
++void riscv_rpmi_fdt_add_mbox(void *fdt,
++                             const RiscvRpmiFdtMboxConfig *cfg,
++                             uint32_t *phandle,
++                             uint32_t *mbox_handle)
++{
++    g_autofree char *name = NULL;
++    hwaddr a2p_req_base, p2a_ack_base, p2a_req_base, a2p_ack_base;
++    static const char * const regnames_all[RPMI_ALL_NUM_REGS] = {
++        "a2p-req", "p2a-ack", "p2a-req", "a2p-ack", "a2p-doorbell"
++    };
++    static const char * const regnames_a2p[RPMI_A2P_NUM_REGS] = {
++        "a2p-req", "p2a-ack", "a2p-doorbell"
++    };
 +
-+  .. code-block:: bash
++    a2p_req_base = cfg->shmem_base;
++    p2a_ack_base = a2p_req_base + cfg->a2p_req_size;
++    p2a_req_base = p2a_ack_base + cfg->a2p_req_size;
++    a2p_ack_base = p2a_req_base + cfg->p2a_req_size;
 +
-+    $ git clone https://github.com/riscv-software-src/librpmi.git
-+    $ cd librpmi
-+    $ make
-+    $ make install I=/usr/local
-+    $ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
-+    $ pkg-config --modversion librpmi
++    *mbox_handle = (*phandle)++;
++    name = g_strdup_printf("/soc/mailbox@%" HWADDR_PRIx, cfg->shmem_base);
++    qemu_fdt_add_subnode(fdt, name);
++    qemu_fdt_setprop_string(fdt, name, "compatible", "riscv,rpmi-shmem-mbox");
++    qemu_fdt_setprop_cell(fdt, name, "riscv,slot-size", RPMI_QUEUE_SLOT_SIZE);
++    qemu_fdt_setprop_cell(fdt, name, "#mbox-cells", 1);
 +
-+  The librpmi repository can also generate installable ``librpmi-dev`` Debian
-+  packages with ``make deb-pkg`` and ``librpmi-devel`` RPM packages with
-+  ``make rpm-pkg``. After installing librpmi, configure QEMU with
-+  ``--enable-librpmi`` or ``-Dlibrpmi=enabled``.
++    if (cfg->p2a_req_size) {
++        qemu_fdt_setprop_string_array(fdt, name, "reg-names",
++                                      (char **)&regnames_all,
++                                      ARRAY_SIZE(regnames_all));
++        qemu_fdt_setprop_cells(fdt, name, "reg",
++            (uint32_t)(a2p_req_base >> 32), (uint32_t)a2p_req_base,
++            0x0, cfg->a2p_req_size,
++            (uint32_t)(p2a_ack_base >> 32), (uint32_t)p2a_ack_base,
++            0x0, cfg->a2p_req_size,
++            (uint32_t)(p2a_req_base >> 32), (uint32_t)p2a_req_base,
++            0x0, cfg->p2a_req_size,
++            (uint32_t)(a2p_ack_base >> 32), (uint32_t)a2p_ack_base,
++            0x0, cfg->p2a_req_size,
++            (uint32_t)(cfg->doorbell_base >> 32), (uint32_t)cfg->doorbell_base,
++            0x0, cfg->doorbell_size);
++    } else {
++        qemu_fdt_setprop_string_array(fdt, name, "reg-names",
++                                      (char **)&regnames_a2p,
++                                      ARRAY_SIZE(regnames_a2p));
++        qemu_fdt_setprop_cells(fdt, name, "reg",
++            (uint32_t)(a2p_req_base >> 32), (uint32_t)a2p_req_base,
++            0x0, cfg->a2p_req_size,
++            (uint32_t)(p2a_ack_base >> 32), (uint32_t)p2a_ack_base,
++            0x0, cfg->a2p_req_size,
++            (uint32_t)(cfg->doorbell_base >> 32), (uint32_t)cfg->doorbell_base,
++            0x0, cfg->doorbell_size);
++    }
 +
-+.. _RPMI v1.0 specification: https://github.com/riscv-non-isa/riscv-rpmi/releases/download/v1.0/riscv-rpmi.pdf
-+.. _librpmi: https://github.com/riscv-software-src/librpmi
++    qemu_fdt_setprop_cells(fdt, name, "phandle", *mbox_handle);
++}
 +
-+RPMI firmware and guest smoke
-+-----------------------------
++void riscv_rpmi_fdt_add_service(void *fdt, hwaddr shmem_base,
++                                const char *node_name,
++                                const char *compatible,
++                                uint32_t mbox_handle,
++                                uint32_t service_group,
++                                bool has_mpxy_channel,
++                                uint32_t mpxy_channel)
++{
++    g_autofree char *name = g_strdup_printf("/soc/mailbox@%" HWADDR_PRIx "/%s",
++                                            shmem_base, node_name);
 +
-+A firmware-level RPMI smoke test can be run with OpenSBI, a Linux kernel, and a
-+RISC-V disk image:
++    qemu_fdt_add_subnode(fdt, name);
++    qemu_fdt_setprop_string(fdt, name, "compatible", compatible);
++    qemu_fdt_setprop_cells(fdt, name, "mboxes", mbox_handle, service_group);
++    if (has_mpxy_channel) {
++        qemu_fdt_setprop_cell(fdt, name, "riscv,sbi-mpxy-channel-id",
++                              mpxy_channel);
++    }
++}
 +
-+.. code-block:: bash
++void riscv_rpmi_fdt_add_service_node(void *fdt, hwaddr shmem_base,
++                                     const RiscvRpmiServiceConfig *service,
++                                     uint32_t mbox_handle)
++{
++    riscv_rpmi_fdt_add_service(fdt, shmem_base, service->node_name,
++                               service->compatible, mbox_handle,
++                               service->service_group,
++                               service->has_mpxy_channel,
++                               service->mpxy_channel);
++}
+diff --git a/include/hw/riscv/rpmi-fdt.h b/include/hw/riscv/rpmi-fdt.h
+new file mode 100644
+index 0000000000..f053ae5d57
+--- /dev/null
++++ b/include/hw/riscv/rpmi-fdt.h
+@@ -0,0 +1,30 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * RISC-V RPMI device-tree helpers
++ *
++ * Copyright (c) 2026 Qualcomm Technologies, Inc.
++ * Author:
++ *  Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
++ */
 +
-+  $ qemu-system-riscv64 \
-+      -machine virt,rpmi=on \
-+      -cpu rv64 -smp 4 -m 4G -nographic \
-+      -bios /path/to/fw_jump.bin \
-+      -kernel /path/to/Image \
-+      -append "root=/dev/vda rw console=ttyS0 earlycon=sbi" \
-+      -drive file=/path/to/rootfs.img,format=raw,if=virtio,snapshot=on
++#ifndef HW_RISCV_RPMI_FDT_H
++#define HW_RISCV_RPMI_FDT_H
 +
-+The OpenSBI banner should report RPMI-backed HSM and system suspend support.
-+After the guest reaches a shell, normal guest reboot/poweroff commands exercise
-+the RPMI system reset path.
++#include "exec/hwaddr.h"
++#include "hw/misc/riscv_rpmi.h"
 +
-+RPMI device tree policy
-+-----------------------
++typedef struct RiscvRpmiFdtMboxConfig {
++    hwaddr shmem_base;
++    hwaddr doorbell_base;
++    uint32_t a2p_req_size;
++    uint32_t p2a_req_size;
++    uint32_t doorbell_size;
++} RiscvRpmiFdtMboxConfig;
 +
-+RPMI is currently described through FDT only; no ACPI representation is emitted
-+for the RPMI transport or service groups. The ``virt`` machine uses the
-+``riscv,rpmi-shmem-mbox`` shared-memory mailbox node plus child service nodes
-+with ``riscv,rpmi-*`` compatible strings. These binding names are part of the
-+RPMI RFC surface and may be revised if the RISC-V RPMI bindings change during
-+review.
++void riscv_rpmi_fdt_add_mbox(void *fdt,
++                             const RiscvRpmiFdtMboxConfig *cfg,
++                             uint32_t *phandle,
++                             uint32_t *mbox_handle);
 +
- Running Linux kernel
- --------------------
- 
++#endif
 -- 
 2.43.0
 
