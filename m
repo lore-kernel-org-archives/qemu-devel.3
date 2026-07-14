@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAAF1C44501
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 10:23:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8184C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 10:23:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjaIA-0002cZ-QH; Tue, 14 Jul 2026 06:23:10 -0400
+	id 1wjaHr-0002Uc-Au; Tue, 14 Jul 2026 06:22:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
- id 1wjaI9-0002cB-QY
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 06:23:09 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ id 1wjaHp-0002Ti-H4
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 06:22:49 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
- id 1wjaI7-0007hI-Q0
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 06:23:09 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-38e071ed6aeso1340549a91.0
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 03:23:07 -0700 (PDT)
+ id 1wjaHn-0007gA-Dc
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 06:22:49 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2cce6a0c9c3so36598525ad.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 03:22:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784024586; x=1784629386; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1784024566; x=1784629366; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=RJ4n0pKDBLEuU0sSi4l36zr8h0d3e9krCQHDQBpmEWg=;
- b=TXdtmJ6lP3VKD3LqopMwLKaoZZIGlg28UuKg4G/P1t2IqgR/pJL97qIY1niOlDQBOf
- BFlOKMm1V49Ub6Us5JUXR6gahShlsIyNXysekHcnISNX6Osx4ox7gm/cm4fERZYx0cIg
- So0bNjrd5j3Adsbu6xhVSSZdd9o0qDtYjDc7QI/uJeBi31IoaqOSqxS8eZ++mALPmKpw
- NiTbf08Cb48MAc4DsFO7Z2HBkeWlOwiFaT0TzF8qsWFN3/LCljqhUv5vN9QiJTNuDVSR
- CT8O+8dBiqQBdWuCsMDLtTZY1pCNgQCR6DFnn7KU8T63MUDq6boSk3sFm+QFs82GcWrm
- +d+g==
+ bh=tImCMss+EyAVl/qbOct1/xumOzcwCGhwiEJBodVqCX0=;
+ b=p5NGBhJeL9Jj2Q26/EP6jHirw7K1gjeorfxHcuN2C3Py37bdOh18Eond2AMqVCwLIZ
+ WrFrRp2CmvfBe4Onbq7hjcPJ6hIfqqFsGgdO4HyLniWzkKqi8OaA2ohh5Af5xKOnde1e
+ 3zPZmXUyhTSZooXRzHqhcnr0uN9GFf1a6UguddAP2anczWqOX5R6bots5cr8IA4BdCjP
+ cLRdsfG9HOCEgzv7xMzoDVKEuOI7qLzrTib3yhPp9J9QYoPQAvhbmxcldhvJm/Cf9qmU
+ D34x9GjNDnqVxOKqS3KNtwwbeynUO4I0rrbp+h4s4/JrdxeuwlIpUbak+1c1U/aiXnnI
+ MXNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784024586; x=1784629386;
+ d=1e100.net; s=20251104; t=1784024566; x=1784629366;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=RJ4n0pKDBLEuU0sSi4l36zr8h0d3e9krCQHDQBpmEWg=;
- b=GScKt4ZKay3Kso0btAgFNK3mC4Qpa0+rvpgAfS24wmoMehFRMPHEm5Jfyk8e8ztaAf
- yuCMsYqFARG2Wo7S9Virwqv80pgixaceavW35yoYw7xJ1eBaqRXlVjv4ucrXkuBBGxW0
- xrpe6EySqIc+2Z0KN6AKDW9zqwsC7jimbZrvptkwqgaRMFy6nxu5rBtL+Cs1yw4zeEsv
- EirBzDseu98xlbGtGypJR6Q1NDZ6iIMJJZBFPx2FZWoPYkowxX2PrnhY9OW4+WMZ84xb
- KflsOCImEkgJ/saQ8t4pq9DTkqv8iF8FViMqoMwBs3Eui9eWnYzh0vm1WyZGsITHQA6U
- dwsw==
-X-Gm-Message-State: AOJu0Yz2Bqw+ccidnONoRig0hKdko8tINRoot+yeGnGTcgpvsBa38pQy
- VhupEq7mMQrnYQHk5Mp53F0JjGOPyMIGZHvvfR+KlcJREDbGWzhoK/b8sHxmoaUeuqJ1eQ==
-X-Gm-Gg: AfdE7cmE54+oRgiUSzQmIgcof7BcQv7yyesOlr24Lw9G1/db2aroXemaIU94w8P0Two
- sO8gkP1/2XNa7L5MzHNO8+1XgM+VsHtTXAnRpAWDKX/u/PFMZzbIaMLTLyk56GBwonr0UUk/074
- l6Z52qL+64VUykw4uAyocLGQLd2kn39Epuxti+qHFgM8RE9eFLnyp/mCHHVjn8ifvZ2klRQ9PlD
- 9mpttDNAelU/dgRsUijaxmYI3Y0x/99WK8M+HF63zLPyECOWuoXs+BlCCS1pdnT71jfcoMkLqVR
- GqOChIcP9aYcrZE29zJXGMlylVLxS5jtDZqI+IVISV1H51QeB0cRwIuFEmPAjXkURCoHC/QsWV4
- L30/miMbjZEey41ULEfALK7RCdz+pI6gJsStb5C0WiPZ8jy8UJMtPFI3W8dgFighFgfCVKWrnu6
- yCl230DyRAkqs/7S4WnlFPoxFWtfFr88BjcbVZzQWeSg==
-X-Received: by 2002:a17:90b:3c8a:b0:38d:858c:834d with SMTP id
- 98e67ed59e1d1-38dc7605fd3mr11823736a91.17.1784024586190; 
- Tue, 14 Jul 2026 03:23:06 -0700 (PDT)
+ bh=tImCMss+EyAVl/qbOct1/xumOzcwCGhwiEJBodVqCX0=;
+ b=dlaO5GT4U+QXb7/17RXndfyrNReoi5L+66oUjn5CNgH62u6DGNosZdpu0g4ZrGrr2q
+ OcNnkpJgoRMRSetUR6cDGGFhyGdZi0AaBB97Vgnj1YCWPCB1Wlh56VYF76DVzuPI/a4m
+ j3N8uxTwaOD1AHqJDUnOpiYBkWDLG87rnNqRja85DN28B6Y2F1sr0085DkHdiJO2EsGj
+ TX4xbKG3EmpNoBWIx/cbl/RSuJ8j85XW/AyO3jFojhxNsdZxWaQ/8eoc6Lw73Knem79Y
+ r6RFBpT3eBO3YurKG/8FA1o5uRmYV2wnEeDjeAFh/iGhNYZhBnOVHIHSMA7cPstIkOUm
+ OhPA==
+X-Gm-Message-State: AOJu0YxNLHTIiiF0MXr4APlJ9vABWx6Iel2zt+SCFsC5WsRIzUJuz97n
+ rr95+QPYDywNURa4DOx2jibksJiR7NEPalLCZD44ESf1QGplmjfNjueluJtRtbapbCNzqQ==
+X-Gm-Gg: AfdE7clgEQhVLUhJ2baD0bJkt6FP5iZlQXWMvyiE2AKxKkV6IokwUsI3KuarLmTln2O
+ jr0KBlfTBAMoF7m+nnudAHSSH1mAE6B4Kx4joeDo9YDncqs3K0pDngAQliSVDNY2z7VYvy3eyvl
+ IZbIQ8/eytXPnpDGZ2En7giQn9erIPhIJV3hEHrejBW0/Fdz4l6d+Zks608yE63hV8ZPixTTF4S
+ x+AFkRr9CG6WXAZhjlnabyANjBatMS5SoQRJuubfTTi1adWs9WQ2IT6VeOuDu39PvRWaSMCspW1
+ U7Gtu40LrY4PXAySY4Xcc/uDe9S83g1401Wqi0e3St7RtiEFgys6bGwf3oI6PGcp6pnTxB9bHCE
+ au1pRXfF9UbUvqijOBiSWWyK78ZrmRUvQ38K94kMpAGNmU71km/K5BjqIsniOvUsWZRm4AxW872
+ FsSqVHvHcn3x9D4SoHzU8PhnoCmmPX8lPvDfS6qIxEGg==
+X-Received: by 2002:a17:903:41cf:b0:2cb:3f5b:6663 with SMTP id
+ d9443c01a7336-2cef11cc5eamr18323995ad.11.1784024565889; 
+ Tue, 14 Jul 2026 03:22:45 -0700 (PDT)
 Received: from LAPTOP-CS7CB8K1.localdomain
  ([2409:8900:9fe:241d:8c09:365b:5b34:d891])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ccc9d3bc1fsm113824285ad.55.2026.07.14.03.23.02
+ d9443c01a7336-2ccc9d3bc1fsm113824285ad.55.2026.07.14.03.22.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jul 2026 03:23:05 -0700 (PDT)
+ Tue, 14 Jul 2026 03:22:45 -0700 (PDT)
 From: Kangjie Huang <flamboyant.h.01@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, Chao Liu <chao.liu@processmission.com>,
@@ -76,16 +76,16 @@ Cc: qemu-riscv@nongnu.org, Chao Liu <chao.liu@processmission.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Laurent Vivier <lvivier@redhat.com>,
  Kangjie Huang <flamboyant.h.01@gmail.com>
-Subject: [PATCH v2 3/3] tests/qtest: add test for K230 IOMUX
-Date: Tue, 14 Jul 2026 18:22:02 +0800
-Message-ID: <8986fd154ff098dc843f0ab2a4cbcf9a6c07b343.1784022244.git.flamboyant.h.01@gmail.com>
+Subject: [PATCH v2 1/3] hw/misc/k230_iomux: add Kendryte K230 IOMUX model
+Date: Tue, 14 Jul 2026 18:22:00 +0800
+Message-ID: <42d005d6e530e2cf2c7df8634e8b82c0f77d1702.1784022244.git.flamboyant.h.01@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1784022244.git.flamboyant.h.01@gmail.com>
 References: <cover.1784022244.git.flamboyant.h.01@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=flamboyant.h.01@gmail.com; helo=mail-pj1-x102a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=flamboyant.h.01@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -93,7 +93,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,31 +109,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cover the 64 documented reset values, writable field storage and
-masking, read-modify-write accesses, the final IO63 register, reserved
-offsets, and system reset.
+Add a SysBus model for the 64 K230 Function IO configuration
+registers documented by the K230 Technical Reference Manual.
+
+Preserve the writable configuration fields across aligned 32-bit
+accesses, apply the documented reset values, and ignore writes to
+read-only and reserved fields. Offsets outside the documented register
+list read as zero and ignore writes.
+
+This provides the register behavior used by the Kendryte SDK U-Boot
+pinctrl-single driver and Linux IOMUX configuration code.
 
 Signed-off-by: Kangjie Huang <flamboyant.h.01@gmail.com>
 ---
- tests/qtest/k230-iomux-test.c | 155 ++++++++++++++++++++++++++++++++++
- tests/qtest/meson.build       |   5 +-
- 2 files changed, 159 insertions(+), 1 deletion(-)
- create mode 100644 tests/qtest/k230-iomux-test.c
+ hw/misc/Kconfig              |   3 +
+ hw/misc/k230_iomux.c         | 124 +++++++++++++++++++++++++++++++++++
+ hw/misc/meson.build          |   2 +
+ hw/misc/trace-events         |   4 ++
+ include/hw/misc/k230_iomux.h |  34 ++++++++++
+ 5 files changed, 167 insertions(+)
+ create mode 100644 hw/misc/k230_iomux.c
+ create mode 100644 include/hw/misc/k230_iomux.h
 
-diff --git a/tests/qtest/k230-iomux-test.c b/tests/qtest/k230-iomux-test.c
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index 1543ee6653..573d24a9df 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -257,4 +257,7 @@ config XLNX_VERSAL_TRNG
+ config XLNX_ZYNQ_DDRC
+     bool
+ 
++config K230_IOMUX
++    bool
++
+ source macio/Kconfig
+diff --git a/hw/misc/k230_iomux.c b/hw/misc/k230_iomux.c
 new file mode 100644
-index 0000000000..39653cf832
+index 0000000000..cc40dc8ae4
 --- /dev/null
-+++ b/tests/qtest/k230-iomux-test.c
-@@ -0,0 +1,155 @@
++++ b/hw/misc/k230_iomux.c
+@@ -0,0 +1,124 @@
 +/*
-+ * QTest testcase for Kendryte K230 IOMUX
++ * Kendryte K230 IOMUX
 + *
 + * Copyright (c) 2026 Kangjie Huang <flamboyant.h.01@gmail.com>
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
-+ * Provides test coverage for the Function IO configuration registers.
++ * Provides the Function IO configuration registers documented by the K230
++ * Technical Reference Manual.
 + *
 + * K230 Technical Reference Manual V0.3.1 (2024-11-18):
 + * https://github.com/revyos/external-docs/blob/master/K230/en-us/K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
@@ -142,19 +166,12 @@ index 0000000000..39653cf832
 + */
 +
 +#include "qemu/osdep.h"
-+#include "libqtest.h"
 +#include "hw/misc/k230_iomux.h"
++#include "migration/vmstate.h"
++#include "qemu/module.h"
++#include "trace.h"
 +
-+#define K230_IOMUX_BASE 0x91105000
-+#define K230_IOMUX_IO0  (K230_IOMUX_BASE + 0x00)
-+#define K230_IOMUX_IO1  (K230_IOMUX_BASE + 0x04)
-+#define K230_IOMUX_IO63 (K230_IOMUX_BASE + 0xfc)
-+#define K230_IOMUX_RESERVED_FIRST (K230_IOMUX_BASE + 0x100)
-+#define K230_IOMUX_RESERVED_LAST \
-+    (K230_IOMUX_BASE + K230_IOMUX_MMIO_SIZE - 4)
-+#define K230_IOMUX_IO_SEL_MASK (0x7 << 11)
-+#define K230_IOMUX_IO_SEL(value) ((value) << 11)
-+
++/* TRM V0.3.1 section 12.9.2.1 Function IO register list. */
 +static const uint32_t k230_iomux_reset_values[K230_IOMUX_NUM_REGS] = {
 +    0x944, 0x944, 0x929, 0x908, 0x888, 0x908, 0x948, 0x890,
 +    0x890, 0x890, 0x910, 0x890, 0x890, 0x8a9, 0xa9e, 0xabf,
@@ -166,137 +183,161 @@ index 0000000000..39653cf832
 +    0x99e, 0x99e, 0x99e, 0x99e, 0x890, 0x890, 0x8a9, 0x8a9,
 +};
 +
-+static void test_reset_values(void)
++static void k230_iomux_reset(DeviceState *dev)
 +{
-+    QTestState *qts = qtest_init("-machine k230");
++    K230IomuxState *s = K230_IOMUX(dev);
 +
-+    for (size_t i = 0; i < G_N_ELEMENTS(k230_iomux_reset_values); i++) {
-+        g_assert_cmphex(qtest_readl(qts, K230_IOMUX_BASE +
-+                                    i * sizeof(uint32_t)), ==,
-+                        k230_iomux_reset_values[i]);
++    memcpy(s->regs, k230_iomux_reset_values,
++           sizeof(k230_iomux_reset_values));
++}
++
++static uint64_t k230_iomux_read(void *opaque, hwaddr offset, unsigned size)
++{
++    K230IomuxState *s = K230_IOMUX(opaque);
++    uint32_t value = 0;
++
++    if (offset < K230_IOMUX_REGS_SIZE) {
++        value = s->regs[offset >> 2];
 +    }
 +
-+    qtest_quit(qts);
++    trace_k230_iomux_read(offset, value);
++    return value;
 +}
 +
-+static void test_rw(void)
++static void k230_iomux_write(void *opaque, hwaddr offset,
++                             uint64_t value, unsigned size)
 +{
-+    QTestState *qts = qtest_init("-machine k230");
++    K230IomuxState *s = K230_IOMUX(opaque);
 +
-+    qtest_writel(qts, K230_IOMUX_IO0, 0x00001234);
-+    g_assert_cmphex(qtest_readl(qts, K230_IOMUX_IO0), ==, 0x00001234);
-+
-+    qtest_writel(qts, K230_IOMUX_IO1, 0x00002abc);
-+    g_assert_cmphex(qtest_readl(qts, K230_IOMUX_IO1), ==, 0x00002abc);
-+    g_assert_cmphex(qtest_readl(qts, K230_IOMUX_IO0), ==, 0x00001234);
-+
-+    qtest_quit(qts);
++    trace_k230_iomux_write(offset, value);
++    if (offset < K230_IOMUX_REGS_SIZE) {
++        s->regs[offset >> 2] = value & K230_IOMUX_WRITABLE_MASK;
++    }
 +}
 +
-+static void test_write_mask(void)
++static const MemoryRegionOps k230_iomux_ops = {
++    .read = k230_iomux_read,
++    .write = k230_iomux_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++        .unaligned = false,
++    },
++    .impl = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++        .unaligned = false,
++    },
++};
++
++static void k230_iomux_init(Object *obj)
 +{
-+    QTestState *qts = qtest_init("-machine k230");
++    K230IomuxState *s = K230_IOMUX(obj);
 +
-+    qtest_writel(qts, K230_IOMUX_IO0, UINT32_MAX);
-+    g_assert_cmphex(qtest_readl(qts, K230_IOMUX_IO0), ==,
-+                    K230_IOMUX_WRITABLE_MASK);
-+
-+    qtest_quit(qts);
++    memory_region_init_io(&s->mmio, obj, &k230_iomux_ops, s,
++                          TYPE_K230_IOMUX, K230_IOMUX_MMIO_SIZE);
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
 +}
 +
-+static void test_rmw(void)
++static const VMStateDescription vmstate_k230_iomux = {
++    .name = "k230.iomux",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32_ARRAY(regs, K230IomuxState, K230_IOMUX_NUM_REGS),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static void k230_iomux_class_init(ObjectClass *klass, const void *data)
 +{
-+    QTestState *qts = qtest_init("-machine k230");
-+    uint32_t value;
++    DeviceClass *dc = DEVICE_CLASS(klass);
 +
-+    value = qtest_readl(qts, K230_IOMUX_IO0);
-+    value = (value & ~K230_IOMUX_IO_SEL_MASK) | K230_IOMUX_IO_SEL(3);
-+    qtest_writel(qts, K230_IOMUX_IO0, value);
-+
-+    g_assert_cmphex(qtest_readl(qts, K230_IOMUX_IO0), ==,
-+                    (k230_iomux_reset_values[0] &
-+                     ~K230_IOMUX_IO_SEL_MASK) | K230_IOMUX_IO_SEL(3));
-+
-+    qtest_quit(qts);
++    dc->desc = "Kendryte K230 IOMUX";
++    dc->vmsd = &vmstate_k230_iomux;
++    device_class_set_legacy_reset(dc, k230_iomux_reset);
 +}
 +
-+static void test_io63_rw(void)
++static const TypeInfo k230_iomux_info = {
++    .name          = TYPE_K230_IOMUX,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(K230IomuxState),
++    .instance_init = k230_iomux_init,
++    .class_init    = k230_iomux_class_init,
++};
++
++static void k230_iomux_register_types(void)
 +{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    qtest_writel(qts, K230_IOMUX_IO63, 0x00000abc);
-+    g_assert_cmphex(qtest_readl(qts, K230_IOMUX_IO63), ==, 0x00000abc);
-+
-+    qtest_quit(qts);
++    type_register_static(&k230_iomux_info);
 +}
 +
-+static void test_reserved_offsets(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    qtest_writel(qts, K230_IOMUX_RESERVED_FIRST, 0x00001234);
-+    g_assert_cmphex(qtest_readl(qts, K230_IOMUX_RESERVED_FIRST), ==, 0);
-+
-+    qtest_writel(qts, K230_IOMUX_RESERVED_LAST, 0x00002abc);
-+    g_assert_cmphex(qtest_readl(qts, K230_IOMUX_RESERVED_LAST), ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_reset_after_write(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    qtest_writel(qts, K230_IOMUX_IO0, 0x00001234);
-+    qtest_writel(qts, K230_IOMUX_IO1, 0x00002abc);
-+    qtest_writel(qts, K230_IOMUX_IO63, 0x00000abc);
-+
-+    g_assert_cmphex(qtest_readl(qts, K230_IOMUX_IO0), ==, 0x00001234);
-+    g_assert_cmphex(qtest_readl(qts, K230_IOMUX_IO1), ==, 0x00002abc);
-+    g_assert_cmphex(qtest_readl(qts, K230_IOMUX_IO63), ==, 0x00000abc);
-+
-+    qtest_system_reset(qts);
-+
-+    g_assert_cmphex(qtest_readl(qts, K230_IOMUX_IO0), ==,
-+                    k230_iomux_reset_values[0]);
-+    g_assert_cmphex(qtest_readl(qts, K230_IOMUX_IO1), ==,
-+                    k230_iomux_reset_values[1]);
-+    g_assert_cmphex(qtest_readl(qts, K230_IOMUX_IO63), ==,
-+                    k230_iomux_reset_values[63]);
-+
-+    qtest_quit(qts);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    qtest_add_func("/k230-iomux/reset", test_reset_values);
-+    qtest_add_func("/k230-iomux/rw", test_rw);
-+    qtest_add_func("/k230-iomux/write-mask", test_write_mask);
-+    qtest_add_func("/k230-iomux/rmw", test_rmw);
-+    qtest_add_func("/k230-iomux/io63-rw", test_io63_rw);
-+    qtest_add_func("/k230-iomux/reserved-offsets", test_reserved_offsets);
-+    qtest_add_func("/k230-iomux/reset-after-write", test_reset_after_write);
-+
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 56ff860e21..cb8001ecbf 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -297,7 +297,10 @@ qtests_riscv64 = ['riscv-csr-test'] + \
-   (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
-    config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
-    ['iommu-riscv-test'] : []) + \
--  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test'] : [])
-+  (config_all_devices.has_key('CONFIG_K230') ? [
-+    'k230-wdt-test',
-+    'k230-iomux-test',
-+  ] : [])
++type_init(k230_iomux_register_types)
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 23265f6035..31e5145a35 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -168,3 +168,5 @@ system_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa_ec.c'))
  
- qtests_hexagon = ['boot-serial-test']
+ # HPPA devices
+ system_ss.add(when: 'CONFIG_LASI', if_true: files('lasi.c'))
++
++system_ss.add(when: 'CONFIG_K230_IOMUX', if_true: files('k230_iomux.c'))
+diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+index c9a868b3ef..388967c9e1 100644
+--- a/hw/misc/trace-events
++++ b/hw/misc/trace-events
+@@ -405,6 +405,10 @@ djmemc_write(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRI
+ iosb_read(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRIx64" size=%u"
+ iosb_write(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRIx64" size=%u"
  
++# k230_iomux.c
++k230_iomux_read(uint64_t offset, uint32_t value) "offset=0x%" PRIx64 " value=0x%" PRIx32
++k230_iomux_write(uint64_t offset, uint64_t value) "offset=0x%" PRIx64 " value=0x%" PRIx64
++
+ # aspeed_sli.c
+ aspeed_sli_write(uint64_t offset, unsigned int size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
+ aspeed_sli_read(uint64_t offset, unsigned int size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
+diff --git a/include/hw/misc/k230_iomux.h b/include/hw/misc/k230_iomux.h
+new file mode 100644
+index 0000000000..15a16ef4de
+--- /dev/null
++++ b/include/hw/misc/k230_iomux.h
+@@ -0,0 +1,34 @@
++/*
++ * Kendryte K230 IOMUX
++ *
++ * K230 Technical Reference Manual V0.3.1 (2024-11-18):
++ * https://github.com/revyos/external-docs/blob/master/K230/en-us/K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
++ *
++ * Copyright (c) 2026 Kangjie Huang <flamboyant.h.01@gmail.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_MISC_K230_IOMUX_H
++#define HW_MISC_K230_IOMUX_H
++
++#include "hw/core/sysbus.h"
++#include "qom/object.h"
++
++#define TYPE_K230_IOMUX "riscv.k230.iomux"
++OBJECT_DECLARE_SIMPLE_TYPE(K230IomuxState, K230_IOMUX)
++
++#define K230_IOMUX_MMIO_SIZE 0x800
++#define K230_IOMUX_NUM_REGS 64
++#define K230_IOMUX_REGS_SIZE \
++    (K230_IOMUX_NUM_REGS * sizeof(uint32_t))
++#define K230_IOMUX_WRITABLE_MASK 0x00003fff
++
++struct K230IomuxState {
++    SysBusDevice parent_obj;
++
++    MemoryRegion mmio;
++    uint32_t regs[K230_IOMUX_NUM_REGS];
++};
++
++#endif /* HW_MISC_K230_IOMUX_H */
 -- 
 2.43.0
 
