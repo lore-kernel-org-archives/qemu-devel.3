@@ -4,120 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D82E1C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 10:55:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FB41C44507
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 10:57:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjanT-0000Yd-82; Tue, 14 Jul 2026 06:55:31 -0400
+	id 1wjaow-000153-It; Tue, 14 Jul 2026 06:57:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1wjanS-0000YQ-4Q
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 06:55:30 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wjaou-00014H-5z
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 06:57:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1wjanQ-0003u3-L9
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 06:55:29 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66E6fjD5481952; Tue, 14 Jul 2026 10:55:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=hrqlII
- 5rsadG7peficm9aeq9F3lmSiKpbkVg2UAJ0QI=; b=GBwc5b/4ZwJLM4goeX0gvn
- zr+yOagLHEOdaldh2l3xvZFUfftBBevfu79nO9eBg6MLrXbShYQnM54l9mV5o3UU
- MIMwja2PkaxyfvqzKLWG351zGCa+El7we1WwdgHXmDWOf3xCXHi2Zn32EdbvNHEW
- dv2PZYtHeXVS89YBqCvl1xLPYiqp0vRgYm3+dYRINYbLDbrbi3C4WJUVhKKAhf3v
- PUBUNLaV94uIU7JulOmsIL0Pjw2W1sBLccKf9/0p6DN9WR+puZvmwMLIGLTfLcW3
- YT8QksXomuXfgm02bzthNEcnYkLBJ04AEPz7j75kBAapV6Vmhv83mc+fO1D1ZyyA
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbexwn6s3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 Jul 2026 10:55:26 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66EAnl8r000933;
- Tue, 14 Jul 2026 10:55:26 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc1nhaa48-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 Jul 2026 10:55:25 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66EAtNLZ26804844
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 14 Jul 2026 10:55:23 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A455220040;
- Tue, 14 Jul 2026 10:55:23 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4387F2004B;
- Tue, 14 Jul 2026 10:55:23 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.111.75.242])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 14 Jul 2026 10:55:23 +0000 (GMT)
-Message-ID: <982adc65-5439-489e-9214-417b6fe64d96@linux.ibm.com>
-Date: Tue, 14 Jul 2026 12:55:23 +0200
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wjaos-00040j-D1
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 06:56:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784026616;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DGmtfTaKNjnVMCFoWirR8Pe5xgMzaRCEBNCSNOefk+U=;
+ b=fu+YGLcHLq/aEJWYFdaaHc/Wc2E2qPBCo0XuD6Gi+fISC9M0g/Q1zflcsVLcePRGCCjVpT
+ 47rTTaf6DufvP/yQk+DxIDQHcNLHBq7KaAdz+VeKVY5aBZW1R9gH+aV6RB/mdLokhMDrBU
+ WRDLJAXdKjgnVWF654BogPKecHlRiM0=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-179-kutLpW4jNVaI3oau_kZ9LA-1; Tue, 14 Jul 2026 06:56:55 -0400
+X-MC-Unique: kutLpW4jNVaI3oau_kZ9LA-1
+X-Mimecast-MFC-AGG-ID: kutLpW4jNVaI3oau_kZ9LA_1784026614
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2cefa1a2be6so1917735ad.0
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 03:56:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1784026614; x=1784631414; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=DGmtfTaKNjnVMCFoWirR8Pe5xgMzaRCEBNCSNOefk+U=;
+ b=Wg47yV4sAOO6IRnWcfn3L4hsT86ehr++urywlr8meMSz+G3oLiQp/13ul/+O2bCFtT
+ g6cBrssRsBeW/GgL7CXtHFa0gHQbGtWke7IWTswvuqRqQGc3mOSXI+QckioCKHEr7ne/
+ zHCS2pv7/kjVDTdQbfxsKmanxEddBpyfVR1mgtgM1+O3Bt/ig2kP+nds1YYwhtuJP5XI
+ Ffe3KsYJwjyfzAG2EqB4djLU3nKBOp3nm4CWdbw0dozBmXk2cvkp7EbTtuHFca1G6zmk
+ fs7d3p4vXXh5pMZDid2vOKQH/ARqqgBs1ulKIPm/jmacEh/HqyDExi8IsR0uBH/DW1Ez
+ muug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784026614; x=1784631414;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=DGmtfTaKNjnVMCFoWirR8Pe5xgMzaRCEBNCSNOefk+U=;
+ b=TLJ9HvDf0RhMp2WRiZ9d3WElqgz+T6DZyArU3M3+vQMlbw07Kt/P0rLQS1u4P3jWuu
+ SI/Q+uGNlwJAtlTpIJkSpl6CfvnVXRKDF0E5O11je9N9xzLnDwBMA+V0aeUpa3V7w+FN
+ T+vqsTn6alTvNktD+urazTo4t3Z9TfdqoJ8KRlkJz0jjhOytYJ8LyXPDJVN1N49OPhR4
+ dn1S9KlegcUL00+npgt+nCM9ATucFJeRJKK6YwbUnsZInFnKwZSY2c/vtfX663Aktk0w
+ i7ZaU8MFp/dR45nbb/6jz97xBwFNx2Yy6RfpfPtZeobbIWlPsvCcsPK+WDk20OdSgWqz
+ pQAw==
+X-Gm-Message-State: AOJu0YzbQrYRqqtKYK2O2TkQuqJhtZX9FW72ocmE+fc7YgojF5ckJg7b
+ POt1f3o3HY7/dpxnCbSwuKg085zkJa30l06AdDh77q+55tC6SOJyqswoMA7QfLgMo7lSv8wnGDM
+ jQgQPWJfHZ46g6FRaKpO3fkKXQARRTUHIJsddcDPcf4K5Qut6OUMmC3bs
+X-Gm-Gg: AfdE7clWf9WtoILgmFC02sVWI1DbsdJDh8PtlNSetJbNDMzNWajPAMIzZy3aJuN7Nqr
+ AqFiGMAHH6Lqg3u93IBScoamthGlqdABHDWp18EBk2O2ekbJZ5MPHHPduHRDI5OFbLqR8ndlkRm
+ KiffOsKn3/w8LKs/ZE2c4SD8Stw00+KXLB8AuvXl3B0W/WE5uArbjPzO2WDg+3HTYwklluZtd4M
+ 7eSiMr8hH1PhVsBU6zJpvjQmC83JZAsMQd6IflrOY/CScplT57in99iHxsSTrsUiGMI2d6cT0Gd
+ sZh2B+aSjMiPAmOwHzoQb4f0ZFPeR7dOHjymCDQ3aFduHf7dXxDxiXKqWFasMzXz2oqTH6a4SSr
+ D4v0sV1NxYZYSJ9D2vOiSiZT3a0cvzR9BJweDf263Ppvh9JoYHYeikg==
+X-Received: by 2002:a17:902:c946:b0:2c9:97a8:aff0 with SMTP id
+ d9443c01a7336-2ce9f3d32f3mr117741825ad.41.1784026614237; 
+ Tue, 14 Jul 2026 03:56:54 -0700 (PDT)
+X-Received: by 2002:a17:902:c946:b0:2c9:97a8:aff0 with SMTP id
+ d9443c01a7336-2ce9f3d32f3mr117741485ad.41.1784026613721; 
+ Tue, 14 Jul 2026 03:56:53 -0700 (PDT)
+Received: from [192.168.68.51] (n175-34-8-244.mrk21.qld.optusnet.com.au.
+ [175.34.8.244]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ccc9bdb56fsm115846435ad.15.2026.07.14.03.56.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 14 Jul 2026 03:56:52 -0700 (PDT)
+Message-ID: <1bd09a58-a207-46ba-a470-f67cc8509f07@redhat.com>
+Date: Tue, 14 Jul 2026 20:56:44 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 84/98] tests/tcg/s390x: system tests
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
- Gustavo Romero <gustavo.romero@linaro.org>, Helge Deller <deller@gmx.de>
-References: <20260710214343.2065491-1-pierrick.bouvier@oss.qualcomm.com>
- <20260710214343.2065491-85-pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [RFC v1 12/25] target/arm/kvm-rme: Populate Realm with runtime
+ images
+To: Mathieu Poirier <mathieu.poirier@linaro.org>, berrange@redhat.com,
+ kchamart@redhat.com, pierrick.bouvier@oss.qualcomm.com,
+ peter.maydell@linaro.org, mst@redhat.com, cohuck@redhat.com,
+ pbonzini@redhat.com, eblake@redhat.com, armbru@redhat.com, jpb@kernel.org,
+ lorenzo.pieralisi@linaro.org
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvm@vger.kernel.org
+References: <20260707224306.1202330-1-mathieu.poirier@linaro.org>
+ <20260707224306.1202330-13-mathieu.poirier@linaro.org>
 Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <20260710214343.2065491-85-pierrick.bouvier@oss.qualcomm.com>
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <20260707224306.1202330-13-mathieu.poirier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: -kOeYF9t_VOOkjEc3f3wt9vJXejbH8Qv
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDExMSBTYWx0ZWRfXziLn22IzVvVK
- SwFXaINPmyadmR5HgDgbKQoj9lQywXips1ac8Fg5vLYB8a1nV0GS9p9sApTIN6znf9bKjM5WlbS
- cRV3j+ybSfFMt5V64hCjSNiSc/xId9ECCJl5cZBT1/aJbOCeA+xKQUslCG3TRsK3+d9mUPAOwJE
- gWzI4P33VOwusKvFWfkdk1mtNYPvASd/zDO0uSAbR9GAz68yo+nhqIuqI+FzEoKKWwJ0b9o3qGF
- 3cg6uPIDww1rPNNl8WNDuK719DsPLbJlMuDMByvH5xgbGr6hIG31YnHJrvbt03zMeGn8dV98G/9
- LcD4YLG6Up+8KngItpfVKJ0o3v/UyGp1lAbbogJE11tN75eMkgIeByEUa4rCaftP3EijKtzgXq/
- wUDQkcLzQOVmgngA/PKQExWfk6LuajQB0oHWJttIp8rPtWGbcgUsVgpsaJTKsg+FTUoxQ6WEIQs
- SH+I3a2ZbuFjeQ3vtHw==
-X-Authority-Analysis: v=2.4 cv=XJoAjwhE c=1 sm=1 tr=0 ts=6a56159f cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=EUspDBNiAAAA:8
- a=VnNF1IyMAAAA:8 a=Fx7vqVy711-cX3CUekUA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: 42XqsfOdgNc_f4lCLIfCCf3PB0yB6CSZ
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDExMSBTYWx0ZWRfX//0Kxar4EvZ7
- wZhTaS0X7e7KtMgMUltqg5vV92sKLm4k9QLHRpaVOWPGDuUxE7OnXgW45QlMS+c2c2vV6b+T46R
- r3UIUe2xSADuzIiOm+WYC1EZi4aBzkA=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-14_02,2026-07-10_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0
- priorityscore=1501 impostorscore=0 clxscore=1015 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607140111
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: permerror client-ip=170.10.129.124;
+ envelope-from=gshan@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,20 +125,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 7/10/26 23:43, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+On 7/8/26 8:42 AM, Mathieu Poirier wrote:
+> From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> 
+> Once the Realm descriptor has been created, tell KVM to transfer runtime
+> images (kernel, DT, and rootfs) from guest memory to Realm memory.
+> 
+> Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 > ---
->   tests/tcg/s390x/Makefile.softmmu-target | 57 ----------------
->   tests/tcg/s390x/meson.build             |  2 +
->   tests/tcg/s390x/system/meson.build      | 90 +++++++++++++++++++++++++
->   3 files changed, 92 insertions(+), 57 deletions(-)
->   delete mode 100644 tests/tcg/s390x/Makefile.softmmu-target
->   create mode 100644 tests/tcg/s390x/system/meson.build
+>   target/arm/kvm-rme.c | 56 ++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 56 insertions(+)
+> 
+> diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
+> index 97ec7c8934c9..58669f4a50f1 100644
+> --- a/target/arm/kvm-rme.c
+> +++ b/target/arm/kvm-rme.c
+> @@ -44,12 +44,68 @@ OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RmeGuest, rme_guest, RME_GUEST,
+>   
+>   static RmeGuest *rme_guest;
+>   
+> +static int rme_populate_range(const RmeRamRegion *region, bool measure,
+> +                              Error **errp)
+> +{
+> +    int ret;
+> +    void *host_ua;
+> +    hwaddr size = region->size;
+> +    hwaddr base = region->base;
+> +    hwaddr start = QEMU_ALIGN_DOWN(base, RME_PAGE_SIZE);
+> +    hwaddr end = QEMU_ALIGN_UP(base + size, RME_PAGE_SIZE);
+> +    struct kvm_arm_rmi_populate populate_args;
+> +
+> +    host_ua = address_space_map(region->as, base, &size, false,
+> +                                MEMTXATTRS_UNSPECIFIED);
+> +
+> +    populate_args = (struct kvm_arm_rmi_populate) {
+> +        .base = start,
+> +        .size = end - start,
+> +        .source_uaddr = (uintptr_t)host_ua,
+> +        .flags = measure ? KVM_ARM_RMI_POPULATE_FLAGS_MEASURE : 0,
+> +    };
+> +
+> +    while (populate_args.size > 0) {
+> +        ret = kvm_vm_ioctl(kvm_state, KVM_ARM_RMI_POPULATE, &populate_args, 0);
+> +        if (ret) {
+> +            error_setg_errno(errp, -ret,
+> +                "failed to populate realm [0x%"HWADDR_PRIx", 0x%"HWADDR_PRIx")",
+> +                start, end);
+> +            break;
+> +        }
+> +    }
+> +
+> +    address_space_unmap(region->as, host_ua, size, false, 0);
+> +
+> +    return ret;
+> +}
+> +
 
-Can we delete pgm-specification.mak now that both linux-user and softmmu
-users are gone? With that:
+Nit: The argument @measure isn't needed as it's always true, passed
+by its only caller rme_populate_range(). I guess it's leftover for
+the earlier host series.
 
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+
+> +static void rme_populate_ram_region(gpointer data, gpointer err)
+> +{
+> +    Error **errp = err;
+> +    const RmeRamRegion *region = data;
+> +
+> +    if (*errp) {
+> +        return;
+> +    }
+> +
+> +    rme_populate_range(region, /* measure */ true, errp);
+> +}
+> +
+>   static void rme_vm_state_change(void *opaque, bool running, RunState state)
+>   {
+> +    Error *errp = NULL;
+> +
+>       if (!running) {
+>           return;
+>       }
+>   
+> +    g_slist_foreach(rme_guest->ram_regions, rme_populate_ram_region, &errp);
+> +    g_slist_free_full(g_steal_pointer(&rme_guest->ram_regions), g_free);
+> +    if (errp) {
+> +        return;
+> +    }
+> +
+>       kvm_mark_guest_state_protected();
+>   }
+>   
+
+Thanks,
+Gavin
+
 
