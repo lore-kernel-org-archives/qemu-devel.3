@@ -4,95 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F0D4C44501
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 15:40:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B062AC44501
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 15:43:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjfFM-0000ot-2K; Tue, 14 Jul 2026 11:40:36 -0400
+	id 1wjfHg-0001LE-Vp; Tue, 14 Jul 2026 11:43:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <devnull+shankerwangmiao.gmail.com@kernel.org>)
- id 1wjfFK-0000ol-Ra
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 11:40:34 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wjfHe-0001KQ-MF
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 11:42:58 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <devnull+shankerwangmiao.gmail.com@kernel.org>)
- id 1wjfFI-0007aK-JP
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 11:40:34 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 8CA9B4099D;
- Tue, 14 Jul 2026 15:40:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 6CCCEC2BCB8;
- Tue, 14 Jul 2026 15:40:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1784043629;
- bh=jzalEuqQmgfjIjTDyacrkbipmaq+mizkVzuEZhGodg8=;
- h=From:Date:Subject:To:Cc:Reply-To:From;
- b=G8efqVUmL7zPWQxexUB5PppGuKaflNszeN0Y8OVZj5BGC3J0RPi001NS3x+zsAfwf
- W9J2in6lOdO/PmyaCrOZbnF8cJ4DXaReWOERK6em5OcrUVPDpUJmChoM7bAMo4a26Z
- 0A3nNbGJpgP2Erlqy1LQmKdA6Qg7za37dmsOqm4k6DNVE03MQ22cs7WsbAsef41Oh5
- 5b7kRp67gr1SKqbfhawnbpXVwLuw+wjEE+mKuD6eaP0HNdrGpe0N3B+nUwg3G6UXAG
- SsUFq9RORow0a+GXpx++HQAY4F2OzV4YWVjcZZcN8CqUPRHkL0/STBQJWd9GgazSEo
- 7qZLke8p/+yeA==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org
- (localhost.localdomain [127.0.0.1])
- by smtp.lore.kernel.org (Postfix) with ESMTP id 47634C44508;
- Tue, 14 Jul 2026 15:40:29 +0000 (UTC)
-From: Miao Wang via B4 Relay <devnull+shankerwangmiao.gmail.com@kernel.org>
-Date: Tue, 14 Jul 2026 23:40:15 +0800
-Subject: [PATCH] target/loongarch: fix data race in CSR_ESTAT
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wjfHc-000839-Ru
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 11:42:58 -0400
+Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1b:16:0:640:bc52:0])
+ by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 8B2C980B08;
+ Tue, 14 Jul 2026 18:42:55 +0300 (MSK)
+Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:c5a::1:8])
+ by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id lgRdV71YDKo0-8OYkTVPk; Tue, 14 Jul 2026 18:42:55 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1784043775;
+ bh=YsRS8Z2tp1PC14mEkhgyKVR5oLh/1sNAa7JkijtPoIY=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=R69TI9PjnuUppsnW9z+7crINd6bSSzi3RPnVO/JT+1cN4rc0zaBHa0BU7zzsu6v/F
+ K6n8ThgUBwhCtv65SDXweWkekp519Pqbgzi8jtC7JbZdH10okKcKfu7yPBhHgC7H0C
+ Qpo1RC8lIgn3cGICQm7PNRhjOW87w4+bqP6jYruM=
+Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: jasowang@redhat.com,
+	mst@redhat.com
+Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
+ raphael.s.norwitz@gmail.com, bchaney@akamai.com, vsementsov@yandex-team.ru,
+ qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
+ yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
+ Jason Wang <jasowangio@gmail.com>
+Subject: [PATCH v19 07/15] net/tap: QOMify tap backend
+Date: Tue, 14 Jul 2026 18:42:35 +0300
+Message-ID: <20260714154246.1242856-8-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260714154246.1242856-1-vsementsov@yandex-team.ru>
+References: <20260714154246.1242856-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260714-loong-race-v1-1-54111549c95e@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAF5YVmoC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDcwNz3Zz8/Lx03aLE5FRdM2MzY8tUizTTxLQkJaCGgqLUtMwKsGHRsbW
- 1ACVye/dcAAAA
-X-Change-ID: 20260707-loong-race-63639e8f5afb
-To: qemu-devel@nongnu.org
-Cc: Song Gao <17746591750@163.com>, Bibo Mao <maobibo@loongson.cn>,
- Xianglai Li <lixianglai@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Xi Ruoyao <xry111@xry111.site>, b4-sent@kernel.org,
- Miao Wang <shankerwangmiao@gmail.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=11865;
- i=shankerwangmiao@gmail.com; s=20250715; h=from:subject:message-id;
- bh=26m/D8Nn8FBL6ASV4PW3nCdwwQJNgRyJtYWGM2ZFKX4=;
- b=owEBbQKS/ZANAwAKAbAx48p7/tluAcsmYgBqVlhhJT+idv3rV7TICfNeWT9dWKT242xqI2CX3
- SqLlhq8op2JAjMEAAEKAB0WIQREqPWPgPJBxluezBOwMePKe/7ZbgUCalZYYQAKCRCwMePKe/7Z
- blGREACaIoI04vRX8AnwQA3Zxim+z6PqIA6JcqObuAeUUAh5Rt73FjvjioeLXOJhEVwgjVaQ5Jx
- ZOB62gGhKXdr+mSUxO0bw7A2CoyZeJ+JltfdC63toesz+cWjcz2W5/BxHtD3QP4SnlxHojEKqbw
- w32v3wuWc8okjelgRQyCsxPrxUkuessk7xtcaqQCtZ/924QKcLq+2Q/AXzJeV9NUfCsgnzYogfg
- gCh8fUszHJpdAcYQZBfaXU8OOoZycfyHwvzucuqLQFGEkkyry8w4xOtKjXvjv3aY8FsfQnGCS1V
- B8n2gU5ZRLCxjXjbXGkY2JI2kT17s2NMDdYaIcOf/KBTSfOqtbzSuJBOrTxF2F6v/CHdkiVAcsR
- NfCbnfdJtjRJF2KZILj5AFJpXbexofeBxos3SxS1kWvggWwNpwDJM1gX1PQGxp4lAN8FctsJAYq
- 8ZgLlnXNe3VKB/0XNfQ2nEa6NngE49TelUmHI7PNVf0zIIRKecBsEKGLMEAfAEU+A/oKj3bkR1Q
- Bll/bpsjmiBvVeUvwX4YxxR5z47YxMnIbEewRmOMfTY5Wjn0kvDDW5ghn1iFqPxG3Ci5eiQwfs2
- Zrf5iO7kcgI+RAr7DxaKQodO7SYbQuN994uAEKoTGj8R+KNwlYrXyMDSNgMJ2CGRnLeeNdzHgf/
- OnXjGFRwuf8MF+w==
-X-Developer-Key: i=shankerwangmiao@gmail.com; a=openpgp;
- fpr=6FAEFF06B7D212A774C60BFDFA0D166D6632EF4A
-X-Endpoint-Received: by B4 Relay for shankerwangmiao@gmail.com/20250715
- with auth_id=462
-X-Original-From: Miao Wang <shankerwangmiao@gmail.com>
-Received-SPF: pass client-ip=172.234.252.31;
- envelope-from=devnull+shankerwangmiao.gmail.com@kernel.org;
- helo=sea.source.kernel.org
-X-Spam_score_int: 0
-X-Spam_score: -0.0
-X-Spam_bar: /
-X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_FORGED_REPLYTO=2.095, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -101,280 +74,176 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: shankerwangmiao@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Miao Wang <shankerwangmiao@gmail.com>
+We prepare for being able to migrate TAP backend. We'll need a
+user change-able property for it, which can be set from machine
+type. So, let's QOMify it first.
 
-The CSR_ESTAT register of a CPU can be read and written by both the
-CPU thread and other threads (e.g., the interrupt controller thread).
-Currently the possible readers and writers of CSR_ESTAT are:
-
-- Readers
-  - tcg generated by trans_csrrd(, CSR_ESTAT)
-  - loongarch_cpu_has_work()
-
-- Writers
-  - tcg generated by trans_csrxchg(, CSR_ESTAT)
-  - helper_csrwr_estat()
-  - helper_csrrd_msgir()
-  - loongarch_cpu_set_irq()
-  - loongarch_cpu_do_interrupt()
-  - loongarch_cpu_exec_interrupt()
-
-The access from the CPU thread is not synchronized with the access from
-other threads, which may lead to data races. To fix this, use atomic
-operations to read and write CSR_ESTAT.
-
-The data race has been identified while running the test cases from
-dracut, which is using QEMU to boot a LoongArch guest. By running the
-tests repeatedly (about 30 times) in the following conditions, the
-guest will hang in the middle of booting:
-
-- Host architecture: LoongArch64 or Aarch64
-- Guest kernel: 7.1.3+deb14-loong64
-- Number of vCPUs: 1 or 2
-- CPU Features: max, la464,msgint=off,ptw=off, or la464,msgint=off,ptw=on
-- Accelerator: tcg
-
-When the guest hangs, the guest kernel log shows various errors related
-to RCU stalls or other Soft Lockup or Hard Lockup issues. When running
-with 1 vCPU and the guest hangs, the guest kernel directly hangs without
-any messages and stucks at idle_exit.
-
-With this patch, the guest can boot successfully without any hangs
-during repeated runs of the test cases.
-
-Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- target/loongarch/cpu.c                             |  8 +++----
- target/loongarch/internals.h                       | 27 +++++++++++++++++++++
- target/loongarch/tcg/csr_helper.c                  | 28 +++++++++++++++++-----
- target/loongarch/tcg/helper.h                      |  2 ++
- .../tcg/insn_trans/trans_privileged.c.inc          | 13 ++++++++--
- target/loongarch/tcg/tcg_cpu.c                     | 12 ++++------
- 6 files changed, 71 insertions(+), 19 deletions(-)
+ include/net/net.h |  7 +++++++
+ include/net/tap.h |  2 ++
+ net/net.c         | 14 +++++++-------
+ net/tap.c         | 48 +++++++++++++++++++++++++++++++++++++++--------
+ 4 files changed, 56 insertions(+), 15 deletions(-)
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index fb03424ffa8cd5e5d250531cc2a36fa789fc25a9..be53307997d60ceaa404a6187eedf96dc51d82ff 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -71,8 +71,8 @@ void loongarch_cpu_set_irq(void *opaque, int irq, int level)
-     if (kvm_enabled()) {
-         kvm_loongarch_set_interrupt(cpu, irq, level);
-     } else if (tcg_enabled()) {
--        sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, irq, 1, level != 0);
--        if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
-+        cpu_csr_estat_deposit64(sys, irq, 1, level != 0);
-+        if (FIELD_EX64(cpu_csr_estat_get(sys), CSR_ESTAT, IS)) {
-             cpu_interrupt(cs, CPU_INTERRUPT_HARD);
-         } else {
-             cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
-@@ -87,7 +87,7 @@ bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env)
-     uint32_t status;
-     CPUSysState *sys = env_sys(env);
+diff --git a/include/net/net.h b/include/net/net.h
+index 45bc86fc86b..bdf16bb3e64 100644
+--- a/include/net/net.h
++++ b/include/net/net.h
+@@ -160,6 +160,13 @@ char *qemu_mac_strdup_printf(const uint8_t *macaddr);
+ NetClientState *qemu_find_netdev(const char *id);
+ int qemu_find_net_clients_except(const char *id, NetClientState **ncs,
+                                  NetClientDriver type, int max);
++void qemu_net_client_setup(NetClientState *nc,
++                           NetClientInfo *info,
++                           NetClientState *peer,
++                           const char *model,
++                           const char *name,
++                           NetClientDestructor *destructor,
++                           bool is_datapath);
+ NetClientState *qemu_new_net_client(NetClientInfo *info,
+                                     NetClientState *peer,
+                                     const char *model,
+diff --git a/include/net/tap.h b/include/net/tap.h
+index 6f34f13eae4..268570571f4 100644
+--- a/include/net/tap.h
++++ b/include/net/tap.h
+@@ -28,6 +28,8 @@
  
--    pending = FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS);
-+    pending = FIELD_EX64(cpu_csr_estat_get(sys), CSR_ESTAT, IS);
-     status  = FIELD_EX64(sys->CSR_ECFG, CSR_ECFG, LIE);
+ #include "standard-headers/linux/virtio_net.h"
  
-     return (pending & status) != 0;
-@@ -641,7 +641,7 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
-     sys->CSR_ECFG = FIELD_DP64(sys->CSR_ECFG, CSR_ECFG, VS, 0);
-     sys->CSR_ECFG = FIELD_DP64(sys->CSR_ECFG, CSR_ECFG, LIE, 0);
- 
--    sys->CSR_ESTAT = sys->CSR_ESTAT & (~MAKE_64BIT_MASK(0, 2));
-+    qatomic_and(&sys->CSR_ESTAT, ~MAKE_64BIT_MASK(0, 2));
-     sys->CSR_RVACFG = FIELD_DP64(sys->CSR_RVACFG, CSR_RVACFG, RBITS, 0);
-     sys->CSR_CPUID = cs->cpu_index;
-     sys->CSR_TCFG = FIELD_DP64(sys->CSR_TCFG, CSR_TCFG, EN, 0);
-diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
-index e01dbed40f6c7d02d2180d9dd5e17dacdd31755a..b94d229b2e0a4d48a5b712ad5ee364fb4a402055 100644
---- a/target/loongarch/internals.h
-+++ b/target/loongarch/internals.h
-@@ -28,6 +28,33 @@ int ieee_ex_to_loongarch(int xcpt);
- void restore_fp_status(CPULoongArchState *env);
- #endif
- 
-+static inline uint64_t cpu_csr_estat_get(CPUSysState *sys)
-+{
-+    return qatomic_read(&sys->CSR_ESTAT);
-+}
++#define TYPE_TAP_NETDEV "tap-netdev"
 +
-+#define cpu_csr_estat_set(sys, field, val) \
-+    do { \
-+        uint64_t _estat = cpu_csr_estat_get(sys); \
-+        uint64_t _new = FIELD_DP64(_estat, CSR_ESTAT, field, (val)); \
-+        if (qatomic_cmpxchg(&(sys)->CSR_ESTAT, _estat, _new) == _estat) { \
-+            break; \
-+        } \
-+    } while (1)
-+
-+static inline uint64_t cpu_csr_estat_deposit64(CPUSysState *sys, int start,
-+                                               int len, uint64_t val)
-+{
-+    do {
-+        uint64_t _estat = cpu_csr_estat_get(sys);
-+        uint64_t _new = deposit64(_estat, start, len, val);
-+        if (qatomic_cmpxchg(&(sys)->CSR_ESTAT, _estat, _new) == _estat) {
-+            return _estat;
-+        }
-+    } while (1);
-+}
-+
-+
- #ifndef CONFIG_USER_ONLY
- extern const VMStateDescription vmstate_loongarch_cpu;
+ int tap_enable(NetClientState *nc);
+ int tap_disable(NetClientState *nc);
  
-diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
-index 7dc33bc1802e5d4efc72648174bbf5e9baeaea54..023a6b1dc44f0df38c8c2f46b0b07eda88ddb3de 100644
---- a/target/loongarch/tcg/csr_helper.c
-+++ b/target/loongarch/tcg/csr_helper.c
-@@ -90,7 +90,7 @@ target_ulong helper_csrrd_msgir(CPULoongArchState *env)
-             return irq;
-         }
+diff --git a/net/net.c b/net/net.c
+index 2892f1730d1..a06558b75bf 100644
+--- a/net/net.c
++++ b/net/net.c
+@@ -261,13 +261,13 @@ static ssize_t qemu_deliver_packet_iov(NetClientState *sender,
+                                        int iovcnt,
+                                        void *opaque);
  
--        sys->CSR_ESTAT = FIELD_DP64(sys->CSR_ESTAT, CSR_ESTAT, MSGINT, 0);
-+        cpu_csr_estat_set(sys, MSGINT, 0);
-     } else {
-         /* bit 31 set 1 for no invalid irq */
-         irq = BIT(31);
-@@ -99,15 +99,31 @@ target_ulong helper_csrrd_msgir(CPULoongArchState *env)
-     return irq;
+-static void qemu_net_client_setup(NetClientState *nc,
+-                                  NetClientInfo *info,
+-                                  NetClientState *peer,
+-                                  const char *model,
+-                                  const char *name,
+-                                  NetClientDestructor *destructor,
+-                                  bool is_datapath)
++void qemu_net_client_setup(NetClientState *nc,
++                           NetClientInfo *info,
++                           NetClientState *peer,
++                           const char *model,
++                           const char *name,
++                           NetClientDestructor *destructor,
++                           bool is_datapath)
+ {
+     nc->info = info;
+     nc->model = g_strdup(model);
+diff --git a/net/tap.c b/net/tap.c
+index 0679580fcaf..8ba48180b01 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -43,6 +43,7 @@
+ #include "qemu/main-loop.h"
+ #include "qemu/sockets.h"
+ #include "hw/virtio/vhost.h"
++#include "qom/object.h"
+ 
+ #include "net/tap.h"
+ #include "net/util.h"
+@@ -68,7 +69,11 @@ static const int kernel_feature_bits[] = {
+     VHOST_INVALID_FEATURE_BIT
+ };
+ 
+-typedef struct TAPState {
++OBJECT_DECLARE_SIMPLE_TYPE(TAPState, TAP_NETDEV)
++
++struct TAPState {
++    Object parent_obj;
++
+     NetClientState nc;
+     int fd;
+     int vhostfd;
+@@ -86,7 +91,7 @@ typedef struct TAPState {
+     VHostNetState *vhost_net;
+     unsigned host_vnet_hdr_len;
+     Notifier exit;
+-} TAPState;
++};
+ 
+ static void launch_script(const char *setup_script, const char *ifname,
+                           int fd, Error **errp);
+@@ -414,6 +419,19 @@ static VHostNetState *tap_get_vhost_net(NetClientState *nc)
+     return s->vhost_net;
  }
  
--target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
-+target_ulong helper_csrrd_estat(CPULoongArchState *env)
- {
-     CPUSysState *sys = env_sys(env);
--    int64_t old_v = sys->CSR_ESTAT;
-+    return cpu_csr_estat_get(sys);
-+}
- 
--    /* Only IS[1:0] can be written */
--    sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, 0, 2, val);
-+target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
++
++static const TypeInfo tap_netdev_info = {
++    .name = TYPE_TAP_NETDEV,
++    .parent = TYPE_OBJECT,
++    .instance_size = sizeof(TAPState),
++};
++
++static void tap_net_client_destructor(NetClientState *nc)
 +{
-+    CPUSysState *sys = env_sys(env);
-+    return cpu_csr_estat_deposit64(sys, 0, 2, val);
++    TAPState *s = container_of(nc, TAPState, nc);
++    object_unref(OBJECT(s));
 +}
++
+ /* fd support */
  
--    return old_v;
-+target_ulong helper_csrxhg_estat(CPULoongArchState *env, target_ulong val,
-+                                 target_ulong mask)
+ static NetClientInfo net_tap_info = {
+@@ -436,6 +454,18 @@ static NetClientInfo net_tap_info = {
+     .get_vhost_net = tap_get_vhost_net,
+ };
+ 
++static TAPState *new_tap(NetClientState *peer,
++                         const char *model,
++                         const char *name)
 +{
-+    CPUSysState *sys = env_sys(env);
-+    mask &= MAKE_64BIT_MASK(0, 2);
-+    val &= mask;
-+    do {
-+        uint64_t _estat = cpu_csr_estat_get(sys);
-+        uint64_t _new = (_estat & ~mask) | val;
-+        if (qatomic_cmpxchg(&(sys)->CSR_ESTAT, _estat, _new) == _estat) {
-+            return _estat;
-+        }
-+    } while (1);
- }
- 
- target_ulong helper_csrwr_asid(CPULoongArchState *env, target_ulong val)
-diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
-index 8a6c62f11618d7125122831f4a9fe0d0fab73364..58089e84c60fa49524b4705981d0f677cfb439d2 100644
---- a/target/loongarch/tcg/helper.h
-+++ b/target/loongarch/tcg/helper.h
-@@ -101,8 +101,10 @@ DEF_HELPER_1(csrrd_pgd, i64, env)
- DEF_HELPER_1(csrrd_cpuid, i64, env)
- DEF_HELPER_1(csrrd_tval, i64, env)
- DEF_HELPER_1(csrrd_msgir, i64, env)
-+DEF_HELPER_1(csrrd_estat, i64, env)
- DEF_HELPER_2(csrwr_stlbps, i64, env, tl)
- DEF_HELPER_2(csrwr_estat, i64, env, tl)
-+DEF_HELPER_3(csrxhg_estat, i64, env, tl, tl)
- DEF_HELPER_2(csrwr_asid, i64, env, tl)
- DEF_HELPER_2(csrwr_tcfg, i64, env, tl)
- DEF_HELPER_2(csrwr_ticlr, i64, env, tl)
-diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-index 6728ce5ec9387d1f66d68cf36abbe6e0997c639a..e6e9072518767479f66bae1cf1c72844df4343d4 100644
---- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-@@ -75,7 +75,7 @@ static bool set_csr_trans_func(unsigned int csr_num, GenCSRRead readfn,
- void loongarch_csr_translate_init(void)
++    TAPState *s = TAP_NETDEV(object_new(TYPE_TAP_NETDEV));
++
++    qemu_net_client_setup(&s->nc, &net_tap_info, peer, model, name,
++                          tap_net_client_destructor, true);
++
++    return s;
++}
++
+ static TAPState *net_tap_fd_init(NetClientState *peer,
+                                  const char *model,
+                                  const char *name,
+@@ -443,12 +473,7 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
+                                  int vnet_hdr)
  {
-     SET_CSR_FUNC(STLBPS, NULL, gen_helper_csrwr_stlbps);
--    SET_CSR_FUNC(ESTAT, NULL, gen_helper_csrwr_estat);
-+    SET_CSR_FUNC(ESTAT, gen_helper_csrrd_estat, gen_helper_csrwr_estat);
-     SET_CSR_FUNC(ASID,  NULL, gen_helper_csrwr_asid);
-     SET_CSR_FUNC(PGD,   gen_helper_csrrd_pgd, NULL);
-     SET_CSR_FUNC(PWCL,  NULL, gen_helper_csrwr_pwcl);
-@@ -187,7 +187,16 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
-         return false;
+     NetOffloads ol = {};
+-    NetClientState *nc;
+-    TAPState *s;
+-
+-    nc = qemu_new_net_client(&net_tap_info, peer, model, name);
+-
+-    s = container_of(nc, TAPState, nc);
++    TAPState *s = new_tap(peer, model, name);
+ 
+     s->fd = fd;
+     s->host_vnet_hdr_len = vnet_hdr ? sizeof(struct virtio_net_hdr) : 0;
+@@ -1049,3 +1074,10 @@ int tap_disable(NetClientState *nc)
+         return ret;
      }
- 
--    /* So far only readonly csrs have readfn. */
-+    if (a->csr == LOONGARCH_CSR_ESTAT) {
-+        src1 = gpr_src(ctx, a->rd, EXT_NONE);
-+        mask = gpr_src(ctx, a->rj, EXT_NONE);
-+        oldv = tcg_temp_new();
-+        gen_helper_csrxhg_estat(oldv, tcg_env, src1, mask);
-+        gen_set_gpr(a->rd, oldv, EXT_NONE);
-+        return true;
-+    }
+ }
 +
-+    /* So far only readonly csrs have readfn, except ESTAT. */
-     assert(csr->readfn == NULL);
- 
-     src1 = gpr_src(ctx, a->rd, EXT_NONE);
-diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
-index 4b1d44a16445841de8b9a7d69d8f389c357e6abf..64a28c7dcbbce2f2ce47640471602485344ca8e3 100644
---- a/target/loongarch/tcg/tcg_cpu.c
-+++ b/target/loongarch/tcg/tcg_cpu.c
-@@ -160,10 +160,8 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
-         sys->CSR_TLBRERA = FIELD_DP64(sys->CSR_TLBRERA, CSR_TLBRERA,
-                                       PC, (env->pc >> 2));
-     } else {
--        sys->CSR_ESTAT = FIELD_DP64(sys->CSR_ESTAT, CSR_ESTAT, ECODE,
--                                    EXCODE_MCODE(cause));
--        sys->CSR_ESTAT = FIELD_DP64(sys->CSR_ESTAT, CSR_ESTAT, ESUBCODE,
--                                    EXCODE_SUBCODE(cause));
-+        cpu_csr_estat_set(sys, ECODE, EXCODE_MCODE(cause));
-+        cpu_csr_estat_set(sys, ESUBCODE, EXCODE_SUBCODE(cause));
-         sys->CSR_PRMD = FIELD_DP64(sys->CSR_PRMD, CSR_PRMD, PPLV,
-                                    FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, PLV));
-         sys->CSR_PRMD = FIELD_DP64(sys->CSR_PRMD, CSR_PRMD, PIE,
-@@ -181,7 +179,7 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
-     if  (cs->exception_index == EXCCODE_INT) {
-         /* Interrupt */
-         uint32_t vector = 0;
--        uint32_t pending = FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS);
-+        uint32_t pending = FIELD_EX64(cpu_csr_estat_get(sys), CSR_ESTAT, IS);
-         pending &= FIELD_EX64(sys->CSR_ECFG, CSR_ECFG, LIE);
- 
-         /* Find the highest-priority interrupt. */
-@@ -195,7 +193,7 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
-                       TARGET_FMT_lx "\n",
-                       __func__, env->pc, sys->CSR_ERA,
-                       cause, sys->CSR_BADV, sys->CSR_DERA, vector,
--                      sys->CSR_ECFG, sys->CSR_ESTAT);
-+                      sys->CSR_ECFG, cpu_csr_estat_get(sys));
-         qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
-     } else {
-         if (tlbfill) {
-@@ -210,7 +208,7 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
-                       "BADI " TARGET_FMT_lx " SYS_NUM " TARGET_FMT_lu
-                       " cpu %d asid " TARGET_FMT_lx "\n", __func__, env->pc,
-                       tlbfill ? sys->CSR_TLBRERA : sys->CSR_ERA,
--                      cause, tlbfill ? "(refill)" : "", sys->CSR_ESTAT,
-+                      cause, tlbfill ? "(refill)" : "", cpu_csr_estat_get(sys),
-                       sys->CSR_ECFG,
-                       tlbfill ? sys->CSR_TLBRBADV : sys->CSR_BADV,
-                       sys->CSR_BADI, env->gpr[11], cs->cpu_index,
-
----
-base-commit: 499039798cdad7d86b787fec0eaf1da4151c0f05
-change-id: 20260707-loong-race-63639e8f5afb
-
-Best regards,
++static void tap_register_types(void)
++{
++    type_register_static(&tap_netdev_info);
++}
++
++type_init(tap_register_types)
 -- 
-Miao Wang <shankerwangmiao@gmail.com>
-
+2.43.0
 
 
