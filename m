@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86E05C44501
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 14:37:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23C0EC44508
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 14:38:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjeG3-0006Lp-2X; Tue, 14 Jul 2026 10:37:15 -0400
+	id 1wjeGt-0006hS-Qp; Tue, 14 Jul 2026 10:38:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wjeG0-0006LL-JI
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:37:12 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1wjeGt-0006ej-2b
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:38:07 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wjeFx-0006CJ-EA
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:37:11 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-38dd55ad76cso791593a91.1
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 07:37:08 -0700 (PDT)
+ id 1wjeGr-0006FO-0G
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:38:06 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-37e0a189b0bso946741a91.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 07:38:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784039827; x=1784644627; darn=nongnu.org;
+ d=linaro.org; s=google; t=1784039883; x=1784644683; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=tL5FWT+1l3XDdM5rt0ZW1QNmGgGxdSRMzn/Q9zeEy3A=;
- b=Q60Uuf14koAKVsuwYQ5jv23Nbcw9p6ZpfJF2GFRLYMboJzLZsExn8ReNZHOgvoqXCf
- 34Nc0ubFygYfRyvB4PKhYZG/Y/ivxssLbttpZc4nlmK0Vy3vZbAmzDfDyZ+hPq1qOoN/
- CEeAVX+kzfpopWEPW1+Yddlre2aX6WdEiYmvpkDBQxuRo+HhRcKxNWquvU67Tb6JSbBo
- qASNp1jp0z7Wp6sq7pw3hVKD0yMbRNYeujJdd50/Qd/0N4lZ9KGNkYcVLsqy0bfwUSct
- r4SMIpzB+A68xzH2dTDvIOZ+No+qtcTLPPXWXHGJwr/ZSjOXRei9BBmyaBwoZKCzKnn+
- OQPA==
+ bh=IhizC0UMQxD3S+L7Didm1/5n4/tgK4DYc3dRNl57wzk=;
+ b=j01Ps1PKg4Q1Q4cbx7s08RvKuJztDQdZNSU5CNfwSyZCPVrv3kgg7+enRFaouCt1Yi
+ jZsPSmX0T+rYP2AT/kHlvqu/+u9Nn4OJS87zqsfnJjR9XDaoLFaKWRcutzx9/jWJQeny
+ Pxv8HN19IG/WqHUEljLF3n6fk95RdJks+AgOgm+rWKjZ8iG7JxRSRoWBN9u3Mh+EC+nr
+ S0hBS13vWuB2+7TxtUifYzqV5tVFAbAxoIsPou+c1S5R1FsqIebnYokTn7VUNOSqrbro
+ /ZjtKKNtaX48Zl5Jp0jo/koYhxxkY2g0mZF0Tm8qDif1NeruNhol+xhkQKN65WjgKLRF
+ NIMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784039827; x=1784644627;
+ d=1e100.net; s=20251104; t=1784039883; x=1784644683;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=tL5FWT+1l3XDdM5rt0ZW1QNmGgGxdSRMzn/Q9zeEy3A=;
- b=QEon1tSbxDHFKwPGf8IcZossG/H3vMjTZa68RjfHY2HFMy6r0JSD8F4FBu+VKHBK18
- zh9/NLXmMRmRQqQM+rJdUo1BdfBosW1KsifpbGIr1uvTW9uGJuA2LFCKr4XxUyfn0vNF
- Kl7pw+Di9MrkODpGi5sZe/I8kanaSJjE8tSm8iVCxkzNCStDIeH9mcpzT4x409Co8cQb
- Ies3q6Qs6FSTK3RdQoidwHYtxo/5oYGI8L1XUHELilLzzTKdDstL5f8xHM8z5oO8gw4g
- 9aHVgVhWZwyryd9hYPw9a22n1C9r0PhVJ/V5ZwarFfTvm8A94gO3GL3t2sXUXeNfNzS5
- TqYw==
-X-Gm-Message-State: AOJu0YySIuvqfova3sI2y7KmI1/Mhd69Ht20rb5TJ0anQ/JpEnAMbsxz
- e/Gb4gT+uVk6x4kjGNiDLttkernsHWl7+brT/ATYEThVojSs0xAYceJxCuDsBm6dylodRn/mVBu
- 6Wh70
-X-Gm-Gg: AfdE7cmIAju3JCgwAaAnU9H7N8JdimGvo7HUArAbXLQ0DCpUxuYf1lZvnnptl5KXU4K
- POBZz6TtX30L5RK3QkiQxRqBTtkSrIMq41fHSbnPx6oRkRvh1jbxa6WiYMt0J84Ac9HofS2KXke
- 3uYUhmay/IY7CFPWX4XJRB9Pla43ZFPkgyqS8h0dQ1Oc9SZKBbyQ3xrfv4DptYA0/EeS7xGK0G3
- MTpcPj3UDdXeVDWD9KhkckpMZS+3XN0sVnMv5Cgvsd6r/KWp+iMSaY7Ffe2OK+Urvwz/9944udd
- DKKKfVfIbjvGTEV+lZGGlxip6RcaIYJOxdJtGxvFSvHbDc9MKHWp6+KKLFsd/lcQrgYZGNJKJ6M
- Uo+Ykf/KW49Ph/fMAZbV6NfhaUIlWzXFFxELkqi4s/deAmFP85iTw8lGA1l4ccfOhtA3sJrCC0n
- 9yyF3qz1w6XfzVoDNzlLZxYtPHig==
-X-Received: by 2002:a17:90b:35c9:b0:380:8bb9:aba9 with SMTP id
- 98e67ed59e1d1-38d13767fa7mr18146882a91.3.1784039827429; 
- Tue, 14 Jul 2026 07:37:07 -0700 (PDT)
+ bh=IhizC0UMQxD3S+L7Didm1/5n4/tgK4DYc3dRNl57wzk=;
+ b=PfyQu1xy0UtVYbsdqruq1lnGqKVL60foiC4DybiKY1U3QKVJc9iVlavLa5UReOKffM
+ hVGLGap3LwZe3cyzp8xwMtEtL1kYkls+VPaLOP6sjxGB4vokPHfpEvxFwWfteZSvtCZB
+ s60JXu1qQD2NxLIb+4uumAW06iCP81HDYBqvjTvE0FNnWbSwG7LdaHH45Om8QM9i2EH0
+ s9//hmRAt4oSvT+SluQ3nX3nZxIlJ1AMAelZB1d4e9iHgOkpwFxxe4viWQE/UxNtpZxD
+ ilVbMnN+3Yqbmh2Ph9KpAI4vauR7Ebtdt6Usx0KAQ5Yxktd7pK3U5qc0W4BE5dUb0Yo0
+ qzKQ==
+X-Gm-Message-State: AOJu0YzSuO+KwyrgPSVzun0JQTCkhSl8j/Lu11lbzoDDkYcT2JDv+ROo
+ pDU6C3B02JHlghCYsPd275kRHfflobsycs2VRP5ET6ZwSMefEJEuDoD8b4iiyjocwg4vknkWUft
+ af6Z9
+X-Gm-Gg: AfdE7clZvreAvwIj8m8DK4Nj6f+gffvareLDLeaWWt3/yfCZmQAabXK3USP6bzd1Qk6
+ H9H0TCYyNRBqFXfjYx5NBEBCEXP6t8MP1gGbA3S7cRrVjQDfPr1+qCMbEdkwUmOeghVnq800k2Z
+ 0uaf+RjxVHTnBWRGTllzB3ZSjztaljyx5sTkqhLJ558BsDJN/khVGvywhUgIxX6+YZrFRK4Ve2M
+ gqn2obUunt+fZTLRJjtc1ic3kvXeBIWUtT0QN883VenUr95TBX91oW0K2E6c94KkNRRelS8nOQ5
+ 7IkNS8Rl75WvVt/LEqV0b1nlfk6ibZa8blSG97vPudySKtBZBUp8cWA8G9LYS/1vqCpAcp/5hji
+ p6vX8/oVLNBBR9r/YXjrT2VYlq9F1INvC0AsL6Al0bUzJLmaiIoLecEGFo9F1BfChM83fkVJ71Q
+ w7rSC3m8k1du5wU0tP0e1SHGEVrO47BTYWaSyc9KCwIoCRj/s=
+X-Received: by 2002:a17:90b:3d90:b0:381:973e:fa08 with SMTP id
+ 98e67ed59e1d1-38dc7a49f4emr13189122a91.18.1784039883524; 
+ Tue, 14 Jul 2026 07:38:03 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.146.49])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38e172dc530sm1602518a91.8.2026.07.14.07.37.06
+ 98e67ed59e1d1-38e172b8020sm1625305a91.3.2026.07.14.07.38.03
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Jul 2026 07:37:06 -0700 (PDT)
-Message-ID: <42e2bce6-199c-4f71-95b8-67c8ee7df466@linaro.org>
-Date: Tue, 14 Jul 2026 07:37:05 -0700
+ Tue, 14 Jul 2026 07:38:03 -0700 (PDT)
+Message-ID: <4e046322-2a83-41ba-8eb2-fb932ccc4703@linaro.org>
+Date: Tue, 14 Jul 2026 07:38:01 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/arm: GICv5 cpuif: gicr_cdia_read() ppibit
- should be 64 bits
+Subject: Re: [PATCH 2/2] target/arm: GICv5 cpuif: Writes to ICC_APR_EL1 can
+ change IRQ/FIQ
 To: qemu-devel@nongnu.org
 References: <20260714091806.3568281-1-peter.maydell@linaro.org>
- <20260714091806.3568281-2-peter.maydell@linaro.org>
+ <20260714091806.3568281-3-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260714091806.3568281-2-peter.maydell@linaro.org>
+In-Reply-To: <20260714091806.3568281-3-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,27 +106,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/14/26 02:18, Peter Maydell wrote:
-> In gicr_cdia_read() we turn a PPI interrupt ID into a register
-> index and a bit mask with a 1 for the bit we want to change:
+> The ICC_APR_EL1 register values change the current running priority,
+> which we use in our calculations in gic_hppi().  Changing them can
+> affect whether we have a HPPI, and so the value of the IRQ/FIQ
+> outputs.  We need to trigger an update in the register writefn.
 > 
->          ppireg = id / 64;
->          ppibit = 1ULL << (id % 64);
-> 
-> However, we used the wrong type for ppibit, making it a uint32_t.  If
-> 'id' is too large we'll shift off the end, so we won't ever update
-> the state of PPIs with indexes above 31.
-> 
-> This didn't have any visible effects because the currently allocated
-> architected PPIs are indexes 0..31, so you'd only see this if for
-> some reason a guest was manually marking as pending a PPI in 32..63.
-> 
-> Fix the type of ppibit to the intended 64 bit width.
-> 
-> Fixes: 3f79212abae89 ("target/arm: GICv5 cpuif: Implement GICR CDIA command")
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Fixes: 9bd90bddb79 ("target/arm: GICv5 cpuif: Signal IRQ or FIQ")
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   target/arm/tcg/gicv5-cpuif.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+>   target/arm/tcg/gicv5-cpuif.c | 1 +
+>   1 file changed, 1 insertion(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
