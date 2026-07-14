@@ -4,106 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE53DC43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 20:33:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B525BC43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 21:44:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjjnn-0006mK-Kg; Tue, 14 Jul 2026 16:32:27 -0400
+	id 1wjkuz-0000Ff-SH; Tue, 14 Jul 2026 17:43:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wjjnl-0006lw-Pn; Tue, 14 Jul 2026 16:32:26 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1wjkux-0000FS-T4
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 17:43:55 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wjjnk-00055M-Ck; Tue, 14 Jul 2026 16:32:25 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66EJBkud2116293; Tue, 14 Jul 2026 20:32:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=iVmOD+E2KXl45OzVCscLedQsr/iM1JPo5Z2b1jDl8
- EY=; b=U08Qtol4o4pyeEYxzdgIF7rJnPVsTr/BmbgMlEkLDjkF5vVnVTbo5SoWw
- aZtFYYkV7QTzEloVwIqJL5nJgm5cknysRrxm/+6eRkcXAvdH3fo/rN1EOWJzGbD4
- 4WsiEZ/nPS7ATFuIuH4FBqnuqDqUPe+UF/zf1xKco+0fxZXRJl96seEgaxi5181a
- BA+3MF9K5k+mThEW1wx/0REXoJ52BFNwNMllbt9AlWa6tpCWEctfau2oZ7APtWMR
- L0QnA0HfxkfwhhWZ0PXMXCSo2riNcsOPYcTqKQePYTQr7wePRCYb6UUlEluKQTvP
- Xb5UUPS4PBB89IFv6MzKBTDyn2LvQ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbf2a7nhk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 Jul 2026 20:32:20 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66EKJgim018705;
- Tue, 14 Jul 2026 20:32:19 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc15jvmgr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 Jul 2026 20:32:19 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66EKWA6F41353678
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 14 Jul 2026 20:32:11 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9AC502008A;
- Tue, 14 Jul 2026 20:32:10 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A5BC020078;
- Tue, 14 Jul 2026 20:32:09 +0000 (GMT)
-Received: from li-d2cd37cc-2ca3-11b2-a85c-84ed3706e5a0.ibm.com (unknown
- [9.111.27.233]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 14 Jul 2026 20:32:09 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Richard Henderson <richard.henderson@linaro.org>,
- Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>
-Cc: David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v2 0/2] target/s390x/tcg: Set STCK/STCKF condition code after
- the store
-Date: Tue, 14 Jul 2026 22:29:53 +0200
-Message-ID: <20260714203206.363028-1-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.55.0
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1wjkuw-00007P-1s
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 17:43:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=oyNP+TMz9Rg5rPnY5RpnXoU3d2NpBRzPjMH+K9lsAJc=; b=AMW/LEkMwdSdrCrHh1eTC8p4xT
+ VUkBVb8ynI38K8NrNmCiOqYfRko6rhzyE8dW8Yc1yXSqFm6FSFRBt3XUpEs87hiNsobyAy+UV2694
+ Edi+Iseoti8xBlGAr7vmtx2cJ2ZJFxYDxaCG3S0c9SkWYssf5cMEYE/qv1AVzoT+pS4OckWXh2r4O
+ kHSHugRthSvPoPONVQe1vPp4k5TT0qbAyJn2ATuR8ZsdnbT9B2feIXj5XiSDI/7ZMioZzPa6EO/qm
+ iaM/sXkOOJHwT5FYP1RCPTVpApuQH8GRl33lmRQXFXzBtVdGDBOGT8f6IGFhsFO8VyuSLUvgsjacZ
+ 1RiB4ZK+8PxiVqyT3Us86lNdNpw+ploUM5ltC+JrRN5OhCAOpy8qyA6mt5qz8lm1omJOiNj2zPFU8
+ HElCjEXoCAZ+YmvruoZAma25tBgK1cE2SksA3ZjNzJNLLgWhzcE8I1bDcT4fdO2AWooskX6ThcZra
+ bvuwOi5ErpnwodAMgUznqeoRSiqFgm0mCrOzVkq1nvws/2URa+U6aeOCg/jGt0sirZX5kQVDWSPpf
+ Q74muQllXTR4dKY9ivjSYLZVBOInE35cHMGp9Ua3ymMQqvHfcxMkxoWv97+Q8VY3TLeJcpeATp3Lq
+ 0AOBjmDyZlvZRj98oEjF5EV8YyJk7gUp1RaPZefOE=;
+Received: from [2a02:8012:2f01:0:15be:353c:5920:3156]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1wjkuk-002fYC-Pl; Tue, 14 Jul 2026 22:43:43 +0100
+Message-ID: <648c72c6-48bd-4725-b9d9-862c0dd95e73@ilande.co.uk>
+Date: Tue, 14 Jul 2026 22:43:45 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDIwOCBTYWx0ZWRfXz4XW/Dq9wVki
- ZpLIUPmx96umLOS5g1h32S1sRk5afnqOPe/vLzSyurjiZoq9SdfywLDK9j2ptLQM52aRAFDux5F
- LUFCc1pwFN4lsOUJaFE4/eEyYatrYtQ=
-X-Proofpoint-GUID: ziehbq3Nk9x2ostE98JPe69c1iM5oKZx
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDIwOCBTYWx0ZWRfX2CHSOAAttEjp
- pffb7uovyf+97DS3Ewe5GMAHNbNecNADmlEUzXJSuV0N8YS1ml8azpWQKiFgkzH/pEYgLEOi073
- wYla48sWmrGywgNEAIorn9mxz10MOsbBSuMtayZVn2o90JMClUiIt884oJuUNBSzmjDBsDn+ssq
- lXHkqlbv2lI/DaMYXcsyLZnHpcXcajkVKg9ts2/xnZ278aSvch9kV/z2J8puIdwsChX1D4ZaNDF
- WeM4YINnHaLOqvca4/Xm0wsnA4VGSBJSXBNf/STom46T922xYBMIsNRjv44MP0q7sK9HAt7EO2R
- h5iU9T8Kv0SzXeew6EOlq2hVDk9nk01DqzlYtRsS9Qn1dboaNB79WZ6Pqj0m4hJyMu0WDSIjihD
- xqavrjNps0uLrVFuAoctZnWsq+qHUXeSwCFcXqUHyrHBVM1LSFtGC7sFk9Vo/bnn9Q0R2hW+zDl
- ltxsB7H5FiEpTAZ4GVA==
-X-Proofpoint-ORIG-GUID: ziehbq3Nk9x2ostE98JPe69c1iM5oKZx
-X-Authority-Analysis: v=2.4 cv=PvajqQM3 c=1 sm=1 tr=0 ts=6a569cd4 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=Y2IxJ9c9Rs8Kov3niI8_:22 a=Bcv-tN_rAcf9K7wvu9IA:9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-14_05,2026-07-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 bulkscore=0 impostorscore=0 adultscore=0
- clxscore=1015 lowpriorityscore=0 spamscore=0 suspectscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607140208
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+To: Keith Monahan <keith@techtravels.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>, BALATON Zoltan <balaton@eik.bme.hu>
+References: <20260701213359.1855870-1-keith@techtravels.org>
+ <20260701213359.1855870-4-keith@techtravels.org>
+ <CAFEAcA_3vf5vrwoO0cGcdTsykU8uTf8386oyWki3iQ3Bje9Trw@mail.gmail.com>
+ <8d3f679a-3039-404e-879d-b97e1b58e090@techtravels.org>
+ <CAFEAcA-s2xYKG5PiUqFufdgJgMxD1OccbHO9zcCH2+aXwkK70Q@mail.gmail.com>
+ <74e5958d-58d8-4519-82dc-52e598eb6d68@techtravels.org>
+ <da5290cf-f695-4107-abb6-63d435fefc9f@techtravels.org>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <da5290cf-f695-4107-abb6-63d435fefc9f@techtravels.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:15be:353c:5920:3156
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH v2 3/4] hw/scsi/ncr53c710: rewrite the SCRIPTS engine
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,28 +113,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On 04/07/2026 18:17, Keith Monahan wrote:
 
-Ido reported an assertion failure after failing STCKF and provided a
-small assembly snippet that causes it.
+> Can I get some eyes on this approach please?
+> 
+> Here's my proposal to break up this large rewrite in reviewable sized chunks:
+> 
+> 1. lasi_ncr710: remove dead and shadowing defines
+> 2. lasi_ncr710: compute hw identifiers instead of caching them
+> 3. ncr53c710: remove the redundant standalone SysBus device
+> 4. ncr53c710: prepare state, register names and tracepoints
+> 5. ncr53c710: rewrite the status and message phase handlers
+> 6. ncr53c710: rewrite reselection, queueing and the data completion path
+> 7. ncr53c710: rewrite the register read path
+> 8. ncr53c710: rewrite the register write path and soft reset
+> 9. ncr53c710: rewrite the SCRIPTS execution engine
+> 10. ncr53c710: complete cached-backend transfers asynchronously
+> 11. ncr53c710: support HP-UX overlapped tagged commands
+> 12. ncr53c710: extend MESSAGE REJECT handling for HP-UX
+> 
+> To be clear, I will be modifying ncr53c710.c in place. And, of course, modifying the 
+> other files as necessary. Those changes are minimal.
+> 
+> Every patch will buildable. There is a non-booting window between patches 5-8 as the 
+> new helpers must land before the new loop that matches them, so the device compiles 
+> but can't drive I/O until they reconverge.
+> 
+> How does this sound?
+> 
+> Keith
 
-This series fixes the issue and adds a test based on that snippet.
+Hi Keith,
 
-Best regards,
-Ilya
+Thank you for your contribution to QEMU. I found myself in a similar situation a 
+couple of years back when I ended up reworking a large part of the ESP SCSI emulation 
+to fix some fairly obscure edge cases booting Classic MacOS, so I understand how 
+difficult a task this can be.
 
-Ilya Leoshkevich (2):
-  target/s390x/tcg: Set STCK/STCKF condition code after the store
-  tests/tcg/s390x: Test STCKF condition code on a faulting store
+If you would like to take a look at my series and cover letter then you can find it 
+at https://patchew.org/QEMU/20240112125420.514425-1-mark.cave-ayland@ilande.co.uk/, 
+but I've summarised some thoughts below based upon my experience:
 
- target/s390x/tcg/insn-data.h.inc |  4 +--
- target/s390x/tcg/translate.c     |  2 ++
- tests/tcg/s390x/Makefile.target  |  1 +
- tests/tcg/s390x/stckf.c          | 44 ++++++++++++++++++++++++++++++++
- 4 files changed, 49 insertions(+), 2 deletions(-)
- create mode 100644 tests/tcg/s390x/stckf.c
+   - I focused on using a small set of reference images and made sure they would
+     boot upon every commit. This was really helpful as sometimes even a subtle code
+     movement would cause something to break unexpectedly, and helped me to find
+     extra edge cases I had missed.
 
--- 
-2.55.0
+   - Keep changes to individual devices in separate commits where possible, and also
+     the same goes for refactoring/renaming commits and changes to the device
+     logic/functionality. Often these commits can be merged earlier than later
+     patches in the series where the reviewer may have more questions.
+
+   - Not all reviewers are familiar with SCSI, so writing a good cover letter
+     explaining each part of the series will help reviewers understand the changes
+     during review.
+
+   - Run your local tests in both a normal and --enable-debug build, and also with
+     asan (--enable-asan) to catch any memory errors
+
+   - Adding a functional test if possible would help prevent future regressions.
+
+Similarly for reviewers I should note that the LSI SCRIPTS engine is quite complex: 
+in effect it is almost like a separate processor executing its own programs (SCRIPTS) 
+to perform I/O.
+
+As I remarked in my ESP series cover letter, it is almost impossible for someone to 
+perform a comprehensive review without being very familiar with the controller and 
+its datasheet, so when attempting to review the series, I would probably focus on 
+looking how it compares with the existing lsi53c895a code which is mature and working 
+well. For me this would mean that adding notes explaining any unusual differences 
+between the two devices on the commit message would be extremely helpful during review.
+
+You mentioned above the problem with implementing new helpers causing boot to break 
+between patches 5 and 8: is it possible to bring in the new logic/helpers a phase at 
+a time (like I did with ESP) to help keep things working? Perhaps a temporary lock to 
+enable the async helpers to work in a sync manner temporarily could also help?
+
+
+ATB,
+
+Mark.
 
 
