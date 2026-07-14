@@ -4,111 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7226EC43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 10:53:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D82E1C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 10:55:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjal4-0008Kb-Qf; Tue, 14 Jul 2026 06:53:02 -0400
+	id 1wjanT-0000Yd-82; Tue, 14 Jul 2026 06:55:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wjal2-0008KE-VE
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 06:53:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1wjanS-0000YQ-4Q
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 06:55:30 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wjakz-0003Fb-QK
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 06:53:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784026377;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=a2PTzILu9qclnqywy4EwJ0RRR+3PTplTn770qnj4URY=;
- b=ZGk1YCtL6SrAj8QGAe1I7l3fvKyHKvQQCfF9PT7ftPSsxqhdaze+zeASX3jzcFWeTImg+Z
- fWJxL1p/2Q75dlhT6Qrv6FY0JRpMih21G0rQBHpyF1mrT91IHRQq5IX6/g45y5L5COH4WA
- mPXjqBuCKwc1e3qFP4IlkQKs10dikIY=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-669-aCRqS7ydP8uAvezyjzqIhg-1; Tue, 14 Jul 2026 06:52:53 -0400
-X-MC-Unique: aCRqS7ydP8uAvezyjzqIhg-1
-X-Mimecast-MFC-AGG-ID: aCRqS7ydP8uAvezyjzqIhg_1784026373
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-38dc4401dc7so1001140a91.2
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 03:52:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784026373; x=1784631173; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=a2PTzILu9qclnqywy4EwJ0RRR+3PTplTn770qnj4URY=;
- b=CEf8hjVFbVo7PxO006jBtayhKpU4k3ew6xYTvZlA6ZzG+WDapgRpEmJg2skbrh5C4k
- N86v8EvYiC33QJMU+1ACR1pKUqd2HnrV9e7oxFPGeMZAiLaJYHDEfFEAPht3IzZaVVVi
- zhVn2w0jYUUH5XRJnYhzSA+Mv6zE3x6pvLJ/Qh/vea+qda4JkIZogrC0fOS/Tv96rohq
- 43M6zM1vFolxn1OCZVVP9iq53BCaHJzVKkwtxh1oeVN1n1y2polImGZuv41eV683WO/q
- xpTEg9au0ay/8MS15FWDnHK8nu5E+r731Q8SFgL1jlk8Byk5Lk+BnSDgZ6gyMgx22OdW
- 3XLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784026373; x=1784631173;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=a2PTzILu9qclnqywy4EwJ0RRR+3PTplTn770qnj4URY=;
- b=jxaeXJswVaVCc+chLFF1WN1TtT8ot8uZBtZlFNMEkTSlzbQkk/CMlNFdVUpYitadtr
- D/rPvaKtalPNMHX6DglD4LSy7eQprfDDFtFn1+OTCASHPTcncIVdpKj5cNyTcia4csnN
- vwzRybycFjCOZGQmgSHtguj408EOIfWYjqtTesFPdByUOvmvj4qQtr/U8LMpDt+LvWkF
- ExWykVaiiOSaYLuMMkb2KMTk9VnV96oej3Z9NSbCNg+tVaxpmmnEOl7bDyFP17PurUtc
- AXUBR9wS2jC5sq0vx6t6sjVAkx3OIoaWB5kb8M0k4mHV2tY8EVrDpbz3l8KsF/2vPn6X
- VLQA==
-X-Gm-Message-State: AOJu0YzwwRJT7AkVzsJwGPjZEAS5tv6oeaLAGWP3dYefrWLFSIpmRXJQ
- uD5nD7x5w6QUVZ7oi1DxnE5/haZHX0kgM+1xwaLdL/qa31gjcnF7VanD7XaVA/pxjJWrCJIZDrh
- YUcbrHc2vU/aXLGqxzx+/ytmlIL/U+m04p3NGSuc+A/LskITNs/emhA/G
-X-Gm-Gg: AfdE7cmojOOe2RlSUyO0pv6uY7Foj3v5wwRzZqg59XpUTWYrm/KtOtCWD5SAkFeWCoA
- oWsuarnpDIJNfIhC1xsa1fUiKigZweMJheitQPf6YtbI3y6E+b1yiKrMrMs89CWLDdAPQ0Dy94P
- bdqGNewi4FqJ84xysmhKIum1YYgLz0IsUogYnI3jwlgLq94VR5VJoUIhYQnENrlxfCIJT6TOHvz
- R2XAsN6BchMdSmZ6rEc4cQqbb/mT55bSJrCeR4ZNbXqDa0vDdjGgoI7/rG8XVrv333sco1XmCa/
- P4O5/z6ZwvR6Cwp0yCZ1FC7XwRp/wmN8Fj5AKpStQIVxAoJfh4VG0Qlax08gp/HdN4ate+V6g9/
- UA98wfRu1X7foVeuwyV55IMVvtynqXPRXqRufIkbl84TYRa9Tq6i2oA==
-X-Received: by 2002:a17:90b:3e44:b0:38e:21da:9257 with SMTP id
- 98e67ed59e1d1-38e21da9302mr743564a91.37.1784026372673; 
- Tue, 14 Jul 2026 03:52:52 -0700 (PDT)
-X-Received: by 2002:a17:90b:3e44:b0:38e:21da:9257 with SMTP id
- 98e67ed59e1d1-38e21da9302mr743524a91.37.1784026372146; 
- Tue, 14 Jul 2026 03:52:52 -0700 (PDT)
-Received: from [192.168.68.51] (n175-34-8-244.mrk21.qld.optusnet.com.au.
- [175.34.8.244]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38e172cf625sm1297479a91.7.2026.07.14.03.52.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Jul 2026 03:52:51 -0700 (PDT)
-Message-ID: <47136344-8e15-498a-a4fb-0dbbb0c71861@redhat.com>
-Date: Tue, 14 Jul 2026 20:52:43 +1000
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1wjanQ-0003u3-L9
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 06:55:29 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66E6fjD5481952; Tue, 14 Jul 2026 10:55:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=hrqlII
+ 5rsadG7peficm9aeq9F3lmSiKpbkVg2UAJ0QI=; b=GBwc5b/4ZwJLM4goeX0gvn
+ zr+yOagLHEOdaldh2l3xvZFUfftBBevfu79nO9eBg6MLrXbShYQnM54l9mV5o3UU
+ MIMwja2PkaxyfvqzKLWG351zGCa+El7we1WwdgHXmDWOf3xCXHi2Zn32EdbvNHEW
+ dv2PZYtHeXVS89YBqCvl1xLPYiqp0vRgYm3+dYRINYbLDbrbi3C4WJUVhKKAhf3v
+ PUBUNLaV94uIU7JulOmsIL0Pjw2W1sBLccKf9/0p6DN9WR+puZvmwMLIGLTfLcW3
+ YT8QksXomuXfgm02bzthNEcnYkLBJ04AEPz7j75kBAapV6Vmhv83mc+fO1D1ZyyA
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbexwn6s3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 14 Jul 2026 10:55:26 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66EAnl8r000933;
+ Tue, 14 Jul 2026 10:55:26 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc1nhaa48-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 14 Jul 2026 10:55:25 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66EAtNLZ26804844
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 14 Jul 2026 10:55:23 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A455220040;
+ Tue, 14 Jul 2026 10:55:23 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4387F2004B;
+ Tue, 14 Jul 2026 10:55:23 +0000 (GMT)
+Received: from [0.0.0.0] (unknown [9.111.75.242])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 14 Jul 2026 10:55:23 +0000 (GMT)
+Message-ID: <982adc65-5439-489e-9214-417b6fe64d96@linux.ibm.com>
+Date: Tue, 14 Jul 2026 12:55:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v1 10/25] hw/core/loader: Add a ROM loader notifier
-To: Mathieu Poirier <mathieu.poirier@linaro.org>, berrange@redhat.com,
- kchamart@redhat.com, pierrick.bouvier@oss.qualcomm.com,
- peter.maydell@linaro.org, mst@redhat.com, cohuck@redhat.com,
- pbonzini@redhat.com, eblake@redhat.com, armbru@redhat.com, jpb@kernel.org,
- lorenzo.pieralisi@linaro.org
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvm@vger.kernel.org
-References: <20260707224306.1202330-1-mathieu.poirier@linaro.org>
- <20260707224306.1202330-11-mathieu.poirier@linaro.org>
+Subject: Re: [PATCH v5 84/98] tests/tcg/s390x: system tests
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>, Helge Deller <deller@gmx.de>
+References: <20260710214343.2065491-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260710214343.2065491-85-pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <20260707224306.1202330-11-mathieu.poirier@linaro.org>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+In-Reply-To: <20260710214343.2065491-85-pierrick.bouvier@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: permerror client-ip=170.10.129.124;
- envelope-from=gshan@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: -kOeYF9t_VOOkjEc3f3wt9vJXejbH8Qv
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDExMSBTYWx0ZWRfXziLn22IzVvVK
+ SwFXaINPmyadmR5HgDgbKQoj9lQywXips1ac8Fg5vLYB8a1nV0GS9p9sApTIN6znf9bKjM5WlbS
+ cRV3j+ybSfFMt5V64hCjSNiSc/xId9ECCJl5cZBT1/aJbOCeA+xKQUslCG3TRsK3+d9mUPAOwJE
+ gWzI4P33VOwusKvFWfkdk1mtNYPvASd/zDO0uSAbR9GAz68yo+nhqIuqI+FzEoKKWwJ0b9o3qGF
+ 3cg6uPIDww1rPNNl8WNDuK719DsPLbJlMuDMByvH5xgbGr6hIG31YnHJrvbt03zMeGn8dV98G/9
+ LcD4YLG6Up+8KngItpfVKJ0o3v/UyGp1lAbbogJE11tN75eMkgIeByEUa4rCaftP3EijKtzgXq/
+ wUDQkcLzQOVmgngA/PKQExWfk6LuajQB0oHWJttIp8rPtWGbcgUsVgpsaJTKsg+FTUoxQ6WEIQs
+ SH+I3a2ZbuFjeQ3vtHw==
+X-Authority-Analysis: v=2.4 cv=XJoAjwhE c=1 sm=1 tr=0 ts=6a56159f cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=EUspDBNiAAAA:8
+ a=VnNF1IyMAAAA:8 a=Fx7vqVy711-cX3CUekUA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: 42XqsfOdgNc_f4lCLIfCCf3PB0yB6CSZ
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDExMSBTYWx0ZWRfX//0Kxar4EvZ7
+ wZhTaS0X7e7KtMgMUltqg5vV92sKLm4k9QLHRpaVOWPGDuUxE7OnXgW45QlMS+c2c2vV6b+T46R
+ r3UIUe2xSADuzIiOm+WYC1EZi4aBzkA=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-14_02,2026-07-10_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 impostorscore=0 clxscore=1015 spamscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607140111
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,113 +133,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/8/26 8:42 AM, Mathieu Poirier wrote:
-> From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> 
-> Add a function to register a notifier that is invoked when ROMs get
-> loaded into guest memory.
-> 
-> It will be used by Arm confidential guest support, in order to register
-> all blobs loaded into memory with KVM, so that their content is moved
-> into Realm state and measured into the initial VM state.
-> 
-> Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+
+
+On 7/10/26 23:43, Pierrick Bouvier wrote:
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 > ---
->   hw/core/loader.c         | 15 +++++++++++++++
->   include/hw/core/loader.h | 17 +++++++++++++++++
->   2 files changed, 32 insertions(+)
-> 
-> diff --git a/hw/core/loader.c b/hw/core/loader.c
-> index 5cbfba0a86d2..b3d769bec5cb 100644
-> --- a/hw/core/loader.c
-> +++ b/hw/core/loader.c
-> @@ -74,6 +74,8 @@
->   #endif
->   
+>   tests/tcg/s390x/Makefile.softmmu-target | 57 ----------------
+>   tests/tcg/s390x/meson.build             |  2 +
+>   tests/tcg/s390x/system/meson.build      | 90 +++++++++++++++++++++++++
+>   3 files changed, 92 insertions(+), 57 deletions(-)
+>   delete mode 100644 tests/tcg/s390x/Makefile.softmmu-target
+>   create mode 100644 tests/tcg/s390x/system/meson.build
 
-The (edk2) firmware for the realm guest can be specified by the legacy
-'-drive if=pflash' or '-bios'. The memory region corresponding to the
-firmware image specified by '-bios' is recorded by the newly added notifier
-and populated to TF-RMM properly.
+Can we delete pgm-specification.mak now that both linux-user and softmmu
+users are gone? With that:
 
-I don't see how the memory region corresponding to (edk2) firmware image
-specified by '-drive if=pflash' is recorded and populated to TF-RMM
-accordingly in this series. So I guess '-drive if=pflash' isn't supported
-yet?
-
-Note that I didn't give '-drive if=pflash' a try yet.
-
->   static int roms_loaded;
-> +static NotifierList rom_loader_notifier =
-> +    NOTIFIER_LIST_INITIALIZER(rom_loader_notifier);
->   
->   /* return the size or -1 if error */
->   int64_t get_image_size(const char *filename, Error **errp)
-> @@ -1201,6 +1203,11 @@ MemoryRegion *rom_add_blob(const char *name, const void *blob, size_t len,
->       return mr;
->   }
->   
-> +void rom_add_load_notifier(Notifier *notifier)
-> +{
-> +    notifier_list_add(&rom_loader_notifier, notifier);
-> +}
-> +
->   /* This function is specific for elf program because we don't need to allocate
->    * all the rom. We just allocate the first part and the rest is just zeros. This
->    * is why romsize and datasize are different. Also, this function takes its own
-> @@ -1242,6 +1249,7 @@ ssize_t rom_add_option(const char *file, int32_t bootindex)
->   static void rom_reset(void *unused)
->   {
->       Rom *rom;
-> +    RomLoaderNotifyData notify;
->   
->       QTAILQ_FOREACH(rom, &roms, next) {
->           if (rom->fw_file) {
-> @@ -1290,6 +1298,13 @@ static void rom_reset(void *unused)
->           address_space_flush_icache_range(rom->as, rom->addr, rom->datasize);
->   
->           trace_loader_write_rom(rom->name, rom->addr, rom->datasize, rom->isrom);
-> +
-> +        notify = (RomLoaderNotifyData) {
-> +            .addr = rom->addr,
-> +            .len = rom->datasize,
-> +            .as = rom->as,
-> +        };
-> +        notifier_list_notify(&rom_loader_notifier, &notify);
->       }
->   }
->   
-> diff --git a/include/hw/core/loader.h b/include/hw/core/loader.h
-> index d9431e8a8d12..94cf6ad2e26b 100644
-> --- a/include/hw/core/loader.h
-> +++ b/include/hw/core/loader.h
-> @@ -342,6 +342,23 @@ void *rom_ptr_for_as(AddressSpace *as, hwaddr addr, size_t size);
->   ssize_t rom_add_vga(const char *file);
->   ssize_t rom_add_option(const char *file, int32_t bootindex);
->   
-> +typedef struct RomLoaderNotifyData {
-> +    /* Address of the blob in guest memory */
-> +    hwaddr addr;
-> +    /* Length of the blob */
-> +    size_t len;
-> +    /* Address space of the blob */
-> +    AddressSpace *as;
-> +} RomLoaderNotifyData;
-> +
-> +/**
-> + * rom_add_load_notifier - Add a notifier for loaded images
-> + *
-> + * Add a notifier that will be invoked with a RomLoaderNotifyData structure for
-> + * each blob loaded into guest memory, after the blob is loaded.
-> + */
-> +void rom_add_load_notifier(Notifier *notifier);
-> +
->   /* This is the usual maximum in uboot, so if a uImage overflows this, it would
->    * overflow on real hardware too. */
->   #define UBOOT_MAX_DECOMPRESSED_BYTES (64 << 20)
-
-Thanks,
-Gavin
-
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
