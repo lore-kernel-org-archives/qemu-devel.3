@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E24D4C44501
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 14:18:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DF1EC44508
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 14:18:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjdwV-00068C-1q; Tue, 14 Jul 2026 10:17:03 -0400
+	id 1wjdxD-0007AU-2b; Tue, 14 Jul 2026 10:17:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wjdwR-00067M-K2
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:17:00 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1wjdwy-0006gQ-Lu
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:17:33 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wjdwP-0002b9-Vl
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:16:59 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-381018b9375so4908146a91.0
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 07:16:57 -0700 (PDT)
+ id 1wjdww-0002fq-RU
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:17:32 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-38dc4553f62so3023016a91.0
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 07:17:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784038616; x=1784643416; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1784038649; x=1784643449; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=kvprChN59fHuKDQMM7n4kbzrx/TIXJdQx0Uf4S5KvaQ=;
- b=kO6RA/rF3dKlzb2kTwHQj+tXBWTf+I847Z011AvU3i2PTjmWwUR9Nmxi7lJZtJ6cXy
- jIdvn9QWOPUBKCeOiz/D1RpftJ7eotUN3n5XRxf3b+lvAAs9CZSKgyAQlfMbblXaVd5U
- xsmqcav77+pS3hlmh3M/jwcaUd/M8jzYv591wzSWsiGlWlPthzD5U3nkHtr0k6UDQzT4
- 8y977uXlw3Sz+yhOwdpTvlpvlDajszcQp8RFp26HWXB79SBIKoS9mnzBG40k2t3m+JkS
- c3ct5Mc+ukyRd6xFBDdCUrZlhLavHg5DP+ZE2Xo+eXaxYFD+boUJKSgl890JE4P4FrNp
- pLCw==
+ bh=PqcGrgmKaIPs+t/tbnDgVo9n56qGlWCzwPaKeCT0WGA=;
+ b=lobb+ABQjyXq8+S1hXA6tu5Z7NHMxUHwQKeEgqAhpW0+ecbHiItHF5vs7ZUaXcbBLF
+ xD+1SyCaG8/9TO+dXbPAVQUB3GQNfqzWkAyK4oS5rc27XUIQrctt11Iv7scUxlcuOBWT
+ YgzAZdiZBj6nstJIflP2CaplGjEDZbZtj/S0buY/L8kD14gnI4vPYSyT7xgpva9TRt9k
+ RCah1bj9d7c6nwTVPG61vxVQDKuCab3eiHHNDj8aY8TcpfTzq8Ak2/JrNwcEkCvAk6GT
+ HM78at/13ZWa/AjzuY6NUxcf8U6IKneVgRpyQpwRZGn/szbnwS91WkpFc329rstjVJhN
+ IGog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784038616; x=1784643416;
+ d=1e100.net; s=20251104; t=1784038649; x=1784643449;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=kvprChN59fHuKDQMM7n4kbzrx/TIXJdQx0Uf4S5KvaQ=;
- b=WV6uJLf7krt6WmUXob9Gelv8AdK9OXU2D2Is2mjNpyrlVczgsDmnImhJhT7GxGpuZP
- Q28XO7sSFeA47dHKkG/dx1x7gt2gMdgGTFnvbKKoiLyTBcDuep2+VHj5GeB5YD5bPYSK
- mfVyhPYYXZC3QEgp7cUON2tlVK47dwqzBBRa8/wFM3kyr3XosgMHk5mkVMAmN7uvgg+l
- WHpTIjGwb4gek8YR2lU2i//kF5wLHbzmb7hIFHDvYIJqWC/lcB3/AgnPloP2ZMrFx9hM
- D1tUL0+FT6u2rTmLgK/65GKQccr0mGJHt1NRfDfoL6ElnjhhJq01iv1Ahe/DPB4wr4Ds
- ebbg==
-X-Gm-Message-State: AOJu0YzuOzG+5vX997n2FK1Rxijvw+HeaqERZc6JF0Q9z09WWqDBDKIA
- XKpSIBQ5WMvhNYiA0KFjjXzMTpqzAamCUkf+CBmPRTGh0z2m18F88O93TlbY9r1A
-X-Gm-Gg: AfdE7ckloyM/A10U+6jmIJmoQhkwqo7ITdugZp0V3yUmNBqGQV1JrvtFVcf9uU2OHog
- euFAiTntdaWD9cBU7vigqKMjaam5fQxq2TnHNc7vT457TyYf6xmKwI12zIxvZw2jntrDOOUWOY+
- hihXmREv/2ztdaBrKkDk5vpZmjcU4XvPoW9OIrqT946AhwXcpaqo68phBlJfobQgI2ry55O6IwJ
- E4f9khIJgaYf6aeQJ0lhBZ5f1xVPbULW21EgONxBXj3MAiZ/5ESvxlDoVVBPhRIRBE/QMfLOegy
- +DVzxXHQ0wZMhlk/cvzScUvetkjscFaNLZzkNEmQ8IhO4/SLK4UfwaIvzsa3y1ij4ap9yAhVsB/
- BWRpk35YK1zjPdwRPxZeOSr2RPcifXo83tfRxRDgulpWjq8r477wgi5v8xBwMDJ7S79USgPYdSu
- MGiF3xl33Gys4huiAmGnvvXmhQ43t3EhHtTcMQBqusxA==
-X-Received: by 2002:a17:90b:3903:b0:387:df8f:1409 with SMTP id
- 98e67ed59e1d1-38dc77d8a8fmr12051304a91.42.1784038616520; 
- Tue, 14 Jul 2026 07:16:56 -0700 (PDT)
+ bh=PqcGrgmKaIPs+t/tbnDgVo9n56qGlWCzwPaKeCT0WGA=;
+ b=DjY12wvhhjruhk6160kJAMx9jLLcUPlLeBKpc3UjAarmIaPYaHiYm2yfK5AlvM6DCb
+ UDQR7566dtz2YzKe3xkiaN4d7WMj98zQxm7dFc64vg2E/CHyCEgNkzOh1bQrntrAKe61
+ uFGXtjPyxSqXf0Vym/5434jbQAmkwNtm1P0YpOC52hWxGZ71DPMzSMj18mj6518xYYBz
+ Nb3ShoTmOxazBQZTvaAAC3VabDgl5wLPWOHLo0YIcX2kLRy9NVggeX9Fb58RflTL8qfn
+ /Y5E6fW+dp/GR59Cv+sfWEc4Sgyf1wuVHy7SfyKngPspifyMMvngZn4ng0vLoCCgA/+I
+ dwhg==
+X-Gm-Message-State: AOJu0Yzc4Dpcb7C9rKsdAJV5ExpJdZOEn4h2t9xm6v7S1h990AxBwfp2
+ UFp0LhAxTgQDqx2th+3S45YkYgDbQ1LAvqR/TPdPBqH4uc77j/Y6bYOi+dh8S/xs
+X-Gm-Gg: AfdE7cleRc2Lfusq4imlJrI2wR/nxxXr7Eyha54mVT+svKGt4BYpqBBshKk9DakAN+v
+ qnR7Hok7Q6JhM0uvXBZEEix0znj7eJY2RjDRH5xuQZfjGyrCLXIaahB0u4UP2T9+p2w4ARMzJid
+ UaAHSfPEkB8j07vJnewJfCiY+3HjyJORvwgskVZA8QPe6URrcH3XhCq3wJAo7wozH6pY38ua36w
+ AF+1rUgGAJQARh2RP3mfvloX3nLhL4sm4pE802fsek6YECzVqFS8OBThVvE3r19TaGmd3rIdA2S
+ tNTVfhh9N5z/ZENQx57AeIFuThwJ5yMmhc2epLTqGuuKpwbv1bJepLWoTT3Ss73kVCG9TSZph+1
+ 4dWMFyeU5QDtMpcR4OLbvqRup97lgFDRqEUISFZhowgNrIJjL5INgI7UjtIodG7nYhuIc01hFB8
+ ywD6iC48eomNTSx3Np6NQ4eMCxVGeE0ZHFbK8pcpRsNQ==
+X-Received: by 2002:a17:90b:2e47:b0:35f:b6a1:8d27 with SMTP id
+ 98e67ed59e1d1-38e1af04765mr2489114a91.18.1784038649337; 
+ Tue, 14 Jul 2026 07:17:29 -0700 (PDT)
 Received: from setun ([2405:201:502b:3014:cc0c:536:1b1e:6def])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3118ee6091dsm97329733eec.14.2026.07.14.07.16.51
+ 5a478bee46e88-3118ee6091dsm97329733eec.14.2026.07.14.07.17.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jul 2026 07:16:55 -0700 (PDT)
+ Tue, 14 Jul 2026 07:17:28 -0700 (PDT)
 From: Aadeshveer Singh <aadeshveer07@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, farosas@suse.de, pbonzini@redhat.com, philmd@mailo.com,
  lvivier@redhat.com, ayoub@saferwall.com, pierrick.bouvier@oss.qualcomm.com,
  Aadeshveer Singh <aadeshveer07@gmail.com>
-Subject: [PATCH v3 04/11] migration: Use file_bmap for RAMBlock during
- incoming file load
-Date: Tue, 14 Jul 2026 19:45:40 +0530
-Message-ID: <20260714141547.1268000-5-aadeshveer07@gmail.com>
+Subject: [PATCH v3 11/11] docs/migration: Add documentation for fast snapshot
+ load feature
+Date: Tue, 14 Jul 2026 19:45:47 +0530
+Message-ID: <20260714141547.1268000-12-aadeshveer07@gmail.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260714141547.1268000-1-aadeshveer07@gmail.com>
 References: <20260714141547.1268000-1-aadeshveer07@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=aadeshveer07@gmail.com; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=aadeshveer07@gmail.com; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,103 +103,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the temporary bitmap with the existing file_bmap attribute of
-the RAMBlock. This acts as a preparatory change for the upcoming fast
-snapshot load feature.
-
-Reusing this bitmap allows the destination to track page types during
-a postcopy load, enabling faster, direct placement of zero pages.
-
-Since file_bmap is currently only utilized during the migration save
-phase, it can be safely repurposed during the load phase without
-introducing conflicts.
+Add documenatation for fast snapshot load covering an overview, the
+architecture, usage and limitations.
 
 Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
 ---
- migration/ram.c | 33 +++++++++++++++++++++++++++------
- 1 file changed, 27 insertions(+), 6 deletions(-)
+ docs/devel/migration/fast-snapshot-load.rst | 81 +++++++++++++++++++++
+ docs/devel/migration/features.rst           |  1 +
+ 2 files changed, 82 insertions(+)
+ create mode 100644 docs/devel/migration/fast-snapshot-load.rst
 
-diff --git a/migration/ram.c b/migration/ram.c
-index fc38ffbf8a..4728f14d73 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -252,6 +252,17 @@ int foreach_not_ignored_block(RAMBlockIterFunc func, void *opaque)
-     return ret;
- }
- 
-+static void ramblock_file_bmap_init(void)
-+{
-+    RAMBlock *rb;
+diff --git a/docs/devel/migration/fast-snapshot-load.rst b/docs/devel/migration/fast-snapshot-load.rst
+new file mode 100644
+index 0000000000..0c0dc676fb
+--- /dev/null
++++ b/docs/devel/migration/fast-snapshot-load.rst
+@@ -0,0 +1,81 @@
++==================
++Fast Snapshot Load
++==================
 +
-+    RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
-+        assert(!rb->file_bmap);
-+        size_t size = rb->max_length >> qemu_target_page_bits();
-+        rb->file_bmap = bitmap_new(size);
-+    }
-+}
++Overview
++========
++Fast snapshot load is an extension of the postcopy migration feature
++to disk loads.
 +
- static void ramblock_recv_map_init(void)
- {
-     RAMBlock *rb;
-@@ -3749,6 +3760,9 @@ static int ram_load_setup(QEMUFile *f, void *opaque, Error **errp)
- {
-     xbzrle_load_setup();
-     ramblock_recv_map_init();
-+    if (migrate_mapped_ram()) {
-+        ramblock_file_bmap_init();
-+    }
- 
-     return 0;
- }
-@@ -3766,8 +3780,8 @@ static int ram_load_cleanup(void *opaque)
-     xbzrle_load_cleanup();
- 
-     RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
--        g_free(rb->receivedmap);
--        rb->receivedmap = NULL;
-+        g_clear_pointer(&rb->receivedmap, g_free);
-+        g_clear_pointer(&rb->file_bmap, g_free);
-     }
- 
-     return 0;
-@@ -4142,11 +4156,18 @@ err:
- static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
-                                       ram_addr_t length, Error **errp)
- {
--    g_autofree unsigned long *bitmap = NULL;
-     MappedRamHeader header;
-     size_t bitmap_size;
-     long num_pages;
- 
-+    if (length > block->max_length) {
-+        error_setg(errp,
-+                   "mapped-ram header length %" PRIu64 " exceeds "
-+                   "RAMBlock(\"%s\") max_length %" PRIu64,
-+                   (uint64_t)length, block->idstr, (uint64_t)block->max_length);
-+        return;
-+    }
++Unlike a usual snapshot load, which requires all VM data (RAM as well
++as device states) to be loaded into host RAM from the snapshot file
++for the guest to run, fast snapshot load uses postcopy infrastructure
++to load in only the required device states and load RAM pages on
++demand. The idea is to start the guest and serve its page faults on
++the go, reducing the perceived resume time for large snapshots.
 +
-     if (!mapped_ram_read_header(f, &header, errp)) {
-         return;
-     }
-@@ -4174,14 +4195,14 @@ static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
-     num_pages = length / header.page_size;
-     bitmap_size = BITS_TO_LONGS(num_pages) * sizeof(unsigned long);
- 
--    bitmap = g_malloc0(bitmap_size);
--    if (qemu_get_buffer_at(f, (uint8_t *)bitmap, bitmap_size,
-+    if (qemu_get_buffer_at(f, (uint8_t *)block->file_bmap, bitmap_size,
-                            header.bitmap_offset) != bitmap_size) {
-         error_setg(errp, "Error reading dirty bitmap");
-         return;
-     }
- 
--    if (!read_ramblock_mapped_ram(f, block, num_pages, bitmap, errp)) {
-+    if (!read_ramblock_mapped_ram(f, block, num_pages, block->file_bmap,
-+                                  errp)) {
-         return;
-     }
- 
++Architecture
++============
++This feature combines postcopy migration and mapped-ram capabilities
++to load RAM pages on demand. It is done by catching guest faults using
++Linux ``userfaultfd`` and loading the page by calculating the offset
++of its location in the snapshot file using mapped-ram capabilities.
++
++Fault Thread
++------------
++The fault thread uses Linux ``userfaultfd`` to catch page faults caused
++by guest and directly load the page from the snapshot file. It is
++very similar to network postcopy fault thread, with primary difference
++being it loads pages directly by reading from the snapshot file.
++
++Eager Thread
++------------
++Eager thread iterates over all pages in RAM and loads each page not
++yet loaded by fault thread. It is required as unlike network postcopy
++where majority of RAM has already been loaded via precopy, here entire
++RAM is waiting to be loaded. If there is no eager loading thread each
++page will only be loaded when it is required by guest. In case there
++are some background pages that are never/rarely accessed by guest,
++the system will be locked in migration state indefinitely.
++
++Synchronization
++---------------
++In order to make sure both of these threads do not load the same page
++twice potentially overwriting and corrupting user RAM, a bitmap is
++used (``RAMBlock->pending_bmap``) which tracks the pages claimed to
++be loaded by threads. This prevents race condition when one thread
++is loading the page and other one tries to do the same.
++
++Usage
++=====
++
++Simply enable ``mapped-ram`` and ``postcopy-ram`` capabilities on
++the destination:
++
++.. code-block:: text
++
++    migrate_set_capability mapped-ram on
++    migrate_set_capability postcopy-ram on
++
++Use a ``file:`` URI for migration:
++
++.. code-block:: text
++
++    migrate_incoming file:/path/to/snapshot/file
++
++Limitations
++===========
++
++ - Multifd
++    Fast snapshot load is currently incompatible with ``multifd``
++    capability. While ``mapped-ram`` allows for parallel disk I/O,
++    coupling it with ``postcopy`` capability requires additional
++    infrastructure.
++
++ - Host OS support
++    Because this feautre essentially depends on ``userfaultfd``
++    to trap page faults, it is supported only on Linux hosts.
++
++ - vhost-user
++    Fast snapshot load does not currently support ``vhost-user``
++    backends.
+diff --git a/docs/devel/migration/features.rst b/docs/devel/migration/features.rst
+index 9aef79e7fa..23c2a93173 100644
+--- a/docs/devel/migration/features.rst
++++ b/docs/devel/migration/features.rst
+@@ -11,6 +11,7 @@ Migration has plenty of features to support different use cases.
+    vfio
+    virtio
+    mapped-ram
++   fast-snapshot-load
+    CPR
+    qpl-compression
+    uadk-compression
 -- 
 2.55.0
 
