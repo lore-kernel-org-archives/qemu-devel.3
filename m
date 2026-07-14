@@ -4,115 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDB55C44501
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 12:17:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC77AC43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 12:17:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjc47-0006MY-1t; Tue, 14 Jul 2026 08:16:47 -0400
+	id 1wjc54-0006vU-6P; Tue, 14 Jul 2026 08:17:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wjc45-0006LL-3i; Tue, 14 Jul 2026 08:16:45 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1wjc52-0006t8-Tv; Tue, 14 Jul 2026 08:17:44 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wjc43-0002o3-LA; Tue, 14 Jul 2026 08:16:44 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1wjc51-00032A-6l; Tue, 14 Jul 2026 08:17:44 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66EBgdS51196871; Tue, 14 Jul 2026 12:16:40 GMT
+ 66EBfgGi1222315; Tue, 14 Jul 2026 12:17:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=/qLONk
- PUmjl9Ki6HC3IUv6hZhgXooLUNlr6AfjCPRmc=; b=pfzSMu0Y54vxUcNQ20E71f
- QNuF9PdJVn3TteYg2TQVKJgFKIMTZBE2B59+MunHfopVGI5xEk6i5KhiLL8wadcH
- lWf3j9I6lNEZJ9nvBMhTJ13T9YT01wloFSS901icYgtzDpYqmceGtKB++2Xqf5j3
- rvCk5ljU3eEh+pkeNJMPHmne7FlQxIdP977fwZWTqB6JrHg1UZEUAa0bXlEBLCIy
- d9N+1w6G447M9ueDl7dtZ/27STEugdPzr4uyBo81+E5R9li3kItco8wMx8+uez5m
- 5r2/J/CUmIVB85IrgZeCIgPO9XNkRwVsPhoFOmcR7ezWlFg8wOU0V6MD6X8Uhuxg
+ :message-id:mime-version:references:subject:to; s=pp1; bh=I4v65e
+ mijr7vvK5PCZzx/BQl6e2KrK0ztu/OrMm5Y/c=; b=U9D8ZFmfMh9StW+S+qRoOB
+ G3zh6DqeAy/Y8YWjhTaYiMWIjrNV8uMdAhwNq/ersbCwvJSZABRToYTZnHOmRA7c
+ lQrR7/JzmYWr6eOVu9DSYLYcZk49w3hCNQbGajL1jKYDddNWkOUXwMFxURqRHUEF
+ 7LTjrficESqGMzffOgtgBU7KqaDLeG2xDbduN8YHczY2U8kGaUOoYpzk2qT3eYa4
+ uyqAV9itPW/ThBxGXGgFJV0kkwnLIerTl0MxuORqg/uaRhy9vTK+FeFFIz3vIH6T
+ T5APnRqHICL6ANrAJz2fYUixlX67q1nEb7ZqS/YoUaU9QkTc4TxrY3cBdLEy6gSQ
  ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbegbnk3c-1
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbegt62rq-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 Jul 2026 12:16:40 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66EC4ePd003061;
- Tue, 14 Jul 2026 12:16:39 GMT
+ Tue, 14 Jul 2026 12:17:39 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66EC4cCX013831;
+ Tue, 14 Jul 2026 12:17:38 GMT
 Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fc05q2ve5-1
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc1nhakat-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 Jul 2026 12:16:39 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
+ Tue, 14 Jul 2026 12:17:38 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
  by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66ECGbLH46793192
+ 66ECHaNM49349028
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 14 Jul 2026 12:16:37 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9019D20043;
- Tue, 14 Jul 2026 12:16:37 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4257020040;
- Tue, 14 Jul 2026 12:16:37 +0000 (GMT)
+ Tue, 14 Jul 2026 12:17:36 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1F5FC20043;
+ Tue, 14 Jul 2026 12:17:36 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DBB2F20040;
+ Tue, 14 Jul 2026 12:17:35 +0000 (GMT)
 Received: from [0.0.0.0] (unknown [9.111.75.242])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 14 Jul 2026 12:16:37 +0000 (GMT)
-Message-ID: <57680fd9-2193-4cf8-8cf4-4c191d45f80e@linux.ibm.com>
-Date: Tue, 14 Jul 2026 14:16:37 +0200
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 14 Jul 2026 12:17:35 +0000 (GMT)
+Message-ID: <2caf2627-f1e3-48b5-b29a-0cd5ac3b74b6@linux.ibm.com>
+Date: Tue, 14 Jul 2026 14:17:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 01/51] cpu: Define BreakpointFlags type
+Subject: Re: [PATCH v3 02/51] exec/breakpoint: Move BP declarations from
+ hw/core/cpu.h
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
- qemu-s390x@nongnu.org, jcmvbkbc@gmail.com,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+ qemu-s390x@nongnu.org, jcmvbkbc@gmail.com
 References: <20260710205401.836304-1-richard.henderson@linaro.org>
- <20260710205401.836304-2-richard.henderson@linaro.org>
+ <20260710205401.836304-3-richard.henderson@linaro.org>
 Content-Language: en-US
 From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <20260710205401.836304-2-richard.henderson@linaro.org>
+In-Reply-To: <20260710205401.836304-3-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=fOcJG5ae c=1 sm=1 tr=0 ts=6a5628a8 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+X-Proofpoint-ORIG-GUID: XWo6DM3pgynHg_k5bcEfFEpwD9zDYlBH
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDEyNyBTYWx0ZWRfX54/IEJznKXgx
+ 0bQxbM57K/dN2GNEEbg47aAesM9hzGcJYWI+bb8GNwi9ILa+3lVlgjdNV0vvAuP8dUm038akiMb
+ 3rWULwFt3HS4yK3ON9fPwIANLQ/fp9s=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDEyNyBTYWx0ZWRfX5Kuif2cKQCZl
+ N82+z2VuLFPzHETvLsm0NyunfnUciHzHmqFL/dRRIS//km4Vx8HlLeAaMwtlr3JL6gPTSJCzt0T
+ xTuhcg5dJ6gDeW+DPLC+so2qhESLfdlKECPlySWBoSHeeD3MIGa8pS2DOktQ/cvFemttr7gltu9
+ uEjYPefrV4K206seoZ2n68lJLklpMvgNPCgE8cud57Liut04cs9NwRtioqMry5iQ0xg6xVacNJX
+ xxdjmDWYSyxWYcCfo73g7f/HZLSEsJDMtuw6ZpieF/SNMC7YIZEfoPv/9XKpfnNDMV2zwlL3YPS
+ PIho/Bp7LZIVyIYSbSxvIvyJwHSeKdlP/SEjgeajWcDNWwNuGrsbr7ePb0X90RmhNV1Zb8/qrUB
+ jsvZJIuPktKf7RoQLBLZ13WxHig3Jx5xI5VONlLysddH9fNqYtyD92WbeDDByt0qV3huQc4MiNM
+ 8hCnaXBbNkjpW0ROMhA==
+X-Authority-Analysis: v=2.4 cv=IqMutr/g c=1 sm=1 tr=0 ts=6a5628e3 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=EUspDBNiAAAA:8
- a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=6XGGRaPhJGb0HrX91toA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDEyNyBTYWx0ZWRfXySD8NyH0z6Fj
- cFHGZohAp7C20HtScpvClfyN/rfgLH4fpstlXaUPy1QDqVHQ50m+g/0CBHB3YTvkKQ5FvGhoM5l
- UfPDqlZR+fjGGh2LGU6aM7lgKYs9wWFtu7CEA8/K5SauoFRuTYGaq6sK0OeYMBVe6OrBZejA92R
- 8QbrEkY1GlYsD+aZo1yC5YvuOZZJXTrzLMd2LhMUJ8u1zLwUVyM1XG6kOQIrHyr2bjBXU2w0hH9
- jj2f8cUg5bH42XO8lpJw5ERD/Kc9xpqbBUtDRJCY4El7r6qEosxxGcDrmllOzhzUYDego6JUqqu
- nNGDVIsI886h6AMhE1ywuJTnQDBFGqRREPNwphU43miSQsf7cSftUbzGwn1Tznf+84Z7d3Mp/4v
- HqGsqtxMWpxwpUeV+9EXO5fxr5Og+Dct1gyc/Qo0X0tRbX+Ia1CdqGvkmFjI/EAeHQZ7umaApNK
- 2qRtNQFYDzgjklS9+GA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDEyNyBTYWx0ZWRfX93L3WaUTTMzf
- 1BKuSi/qiOyvoGejwOljE8+eibFSpzUl9V5OvurHULUZhN18D53od7lNULb70qoEDcXo9hq+VcO
- Aw9nIIXMj9TPC9fpIHA2useQtM0Fj2E=
-X-Proofpoint-GUID: WCR0GtaBdGrn5o-mlI0gXFrpd2CoGFWG
-X-Proofpoint-ORIG-GUID: 0gt0PVvgtPpCam2Ft-Ceanm8q36w3Y9H
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=KKAkSRfTAAAA:8
+ a=VnNF1IyMAAAA:8 a=0P3Jjsb5eW0RbDK5GlwA:9 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: i-eXzegv58ew60bzr9_WT-vQGU6sdY6n
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-14_03,2026-07-10_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 impostorscore=0 suspectscore=0 adultscore=0
- priorityscore=1501 malwarescore=0 clxscore=1011 phishscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607140127
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ spamscore=0 clxscore=1011 impostorscore=0 malwarescore=0 adultscore=0
+ phishscore=0 suspectscore=0 priorityscore=1501 bulkscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607140127
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -132,38 +130,12 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 7/10/26 22:53, Richard Henderson wrote:
-> From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> Move cpu_breakpoint_* declarations to exec/breakpoint.h.
 > 
-> Use the BreakpointFlags typedef to better follow when
-> we deal with breakpoint flags (BP_*).
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> [rth: Don't rename mask variables to flags]
-> Message-ID: <20260630220100.1289-19-philmd@oss.qualcomm.com>
 > ---
->   include/accel/tcg/cpu-ops.h |  6 ++++--
->   include/exec/breakpoint.h   |  4 +++-
->   include/exec/watchpoint.h   |  8 +++++---
->   include/hw/core/cpu.h       |  8 ++++----
->   accel/tcg/cputlb.c          | 12 +++++++-----
->   accel/tcg/tcg-accel-ops.c   | 10 +++++-----
->   accel/tcg/user-exec-stub.c  | 11 ++++++-----
->   accel/tcg/watchpoint.c      |  9 +++++----
->   cpu-common.c                |  8 ++++----
->   system/watchpoint.c         |  6 +++---
->   target/arm/tcg/debug.c      |  4 ++--
->   target/arm/tcg/mte_helper.c |  3 ++-
->   target/ppc/cpu.c            |  2 +-
->   target/ppc/kvm.c            |  5 +++--
->   target/riscv/cpu_helper.c   |  2 +-
->   target/riscv/debug.c        |  6 +++---
->   target/s390x/tcg/debug.c    |  3 ++-
->   target/xtensa/dbg_helper.c  |  2 +-
->   18 files changed, 61 insertions(+), 48 deletions(-)
-
+>   include/exec/breakpoint.h | 7 +++++++
+>   include/hw/core/cpu.h     | 7 -------
+>   2 files changed, 7 insertions(+), 7 deletions(-)
 Reviewed-by: Ilya Leoskevich <iii@linux.ibm.com>
-
 
