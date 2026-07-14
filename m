@@ -4,132 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25012C4450A
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 19:36:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 452CBC44507
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 19:36:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjiur-0001XR-NM; Tue, 14 Jul 2026 15:35:43 -0400
+	id 1wjiv5-0001ZE-Oy; Tue, 14 Jul 2026 15:35:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wjiuk-0001X1-6B
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 15:35:35 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wjiv4-0001Z6-V0
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 15:35:54 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wjiuh-00050m-LS
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 15:35:33 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ id 1wjiv3-00055l-2x
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 15:35:54 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66EIw8MH1136452
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 19:35:29 GMT
+ 66EIxKaF1481546
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 19:35:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- l6jvJ2jQtDw58F2tcQ2rADAmzFepgy9g+HQwh2b/wLw=; b=BBTZLfCcafzIuXR8
- HEWWTa9m4TBrupuyuwIpWDDekRH8XsC6eL+BtEMOqZ1oSViZED54HtQMrwhICFa6
- Hy+/7jhQmMGbErKJmJ9wbIIyC+CpTlcJ0nKYCy1M+uJjIK6sqio9ygtSn0CHgYyk
- R2Yrq2CNTt5TGWwB4zaMN2eY0BLB1wGfOiKYfbWDpBdjWc+HZM2m9Pj6RBP9kRhw
- AZths37xPEkznE0OLx3NLCLG/3dQA0hEalLX5fNPW8h1JDQjOTY6XWZgQPS4xPxq
- ErUJO6ldm1Aqw43VFTMRhwFyvzrhKtTZeoKT8L/8ITixSExc6IxwNz1x8l/I3PXH
- 0FFu7w==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fds9mgfrd-1
+ Wi/yH2BAkmWSY8q/5WbL83633G2Lv6HztDay1MN7yEE=; b=Z/6heRxQMkB5oRYY
+ 1CiCqcVIVKK7uH+M6nnS6pazAL5wVgVYwFDoUzIRM0fIO05lYvNT1xy3GCkK5ew1
+ g2MR7gmo7Fr1NQqmzmDnUj9/iy4JQDrlM8BL6iFyIw28Rl9yFKIV8x8tvh2sfnhQ
+ qBijrInN/Jl5++cMLlnPDBjwAzstTFhCpP5x3iShIjuJ8XDX8uxWqlEFzaMP58EK
+ wMP2GSMKGg28+AU6eieFKgnIKug457eTXQ/ubNjY+K9vU9nZ7ghrAhyQfRCWsyJf
+ PXqu0nWj2PBJvWHge4cl6GPXeMTk4UKkCBQW6FhsWTVDeFWsJw1hef75EO8n08nE
+ aJaptQ==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fdgudjt14-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 19:35:29 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8ea75996387so116102886d6.1
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 12:35:29 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 19:35:51 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-51c0d6a2f4cso73393831cf.3
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 12:35:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784057728; x=1784662528; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1784057751; x=1784662551; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=l6jvJ2jQtDw58F2tcQ2rADAmzFepgy9g+HQwh2b/wLw=;
- b=CXPYhOVmQI5E/y3lYLhPYQKuAHXUKgFw5yczbLkMHzRT4LHMX0TzHlWew92lJjuvOy
- HcKf/6sw6iAiWU7boKLG4nrTYI9ak2mXsz4XEz306GGt75zF5X8c4yccg6e/2U/m1eXk
- P/1w7vNE4oEmuOOUtoF0MXpBXXxNGT+NmnarbETX2dUgurmJFGIFFo5Y+LOZaZEN9YdM
- rr5KPpfeKtQdAKi29dYefOXV/Z1UBvfkHclGvsf1hS+36DF1RksPtinkmKmRZz06QHZD
- NYviv77byVEmSIXaytOgw5gqL1f+3psn3c4dR919DkfsC0mZJOH/pOwhu5JsZ8TvtXUI
- l6Ow==
+ bh=Wi/yH2BAkmWSY8q/5WbL83633G2Lv6HztDay1MN7yEE=;
+ b=jW1flvxqCqVIX4Ge1qWaiP91Sxu11F+Pq+VWtkPTOGxM7Vpu08zuqvzSX8ikaOwIeI
+ 3MAYKx7yJqWkYKbpc6H6l7y4k/3nTllQoKxJZkpPEgNJEHz0Izq16ZF9F7wiRNg0oeeJ
+ E9rg7NuNR+bnNBgzRU1fBTtn4VRd7KpTDVk2oh5Ps+FncH2OEx7crv2aqRfidsqyOwPR
+ rT/DOPp0MwZMfQMXD/oZCHYrP/7Ze99e26rlfnvxZjnC4YJFGyUp9cDz3CBeAL117Iqo
+ YFrzJLT7WJb3wbmfFW3sdd9Db5fMEE7cJvDBO6juvUuXUWmEAdzpHAoT0sDIQcJtI0KH
+ pYKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784057728; x=1784662528;
+ d=1e100.net; s=20251104; t=1784057751; x=1784662551;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=l6jvJ2jQtDw58F2tcQ2rADAmzFepgy9g+HQwh2b/wLw=;
- b=WnP5zEeRmGlY/U8/YnZrhuDx8r7TiiWFyLfCVulCQwAuzUP3p9PFtFzNUoD3UUdpxm
- pHTNJNfgNvzlIQKfikAVY48sIJPD6Wt+W28ajYWAwN/nc4Z04Ms/9aiJ7YmQCnPupcFg
- UIKIjoMvgTxM7tz+80OoF1OwHH7fnNgBbYAeEs80V8ZnnTEzqQKJvwRX6qnbGgtCl0QP
- Y0rH3btMZwcjf5KbCpcMx57H3PVmm6bNCsPdy3Yen3W1sGkX3c9OA682rav+zs8cX1sm
- lhEZn7ZnMnE7zV8Fxl3D1bxsAR3QSALgmPtklFYdk7A1f5qMrzaOaXUyfsEJAkI1N5v5
- WzXQ==
-X-Gm-Message-State: AOJu0Yx8dOtv5UaWArFmpNmahOk4gdqM7gSeRCqRqLoHiDQHYDdpo9Y4
- b+4Pw2ZSpWxWqUMa30iGjVvGony3tcOtU6bHyPcHDJMLC4q2rMnwrii7f9lp4kgakKRkOX8EF9/
- hCAUOpd2K5J2cbpscGa2AlS9g22lwZ8V3pXo1hWZmFalB3baFNNmFBhv2EUx/IYkurQ==
-X-Gm-Gg: AfdE7clu8bYOwByutnRYAynmKSOKtcDS0u0TOSXBXmrDyJl7Bcg1blPT0HECzlT+hcY
- A+fIIRRMlde6GupHUsoKOQY+pz7YsCTMKzfCJi+otjbate8qRGEFKiOrGzB/nEeJOQAqVRghGsa
- Xg389I7Z8W2z6nwIvWJdPd+ZSygQqYir9rGhH6U2RhqUsd/XaEWmxRlIRp3wzaw8jtX7/fhIwec
- 1i06vttW6paj0DZP6FaffDfglrmGXJ/HNiLbhSXWFr11dJlwPLZOCUABgMFFNulctB06wKmvDwX
- TF8WM4PyIcvynACkAmHg7fPjdqqyNFcPqWOYq2Qo3pzr08Tnqp5cjG4zpK6Jdv4X1onHcPAxBSa
- SmXsuS8emsPLyHFqd8fJKVa5UF4YsnMypOsAfM87LU+VQdxBwpxpPt4zsSdv71ZofNBI5
-X-Received: by 2002:ac8:5889:0:b0:519:f02b:45cb with SMTP id
- d75a77b69052e-51e4eff6d4amr483481cf.26.1784057728370; 
- Tue, 14 Jul 2026 12:35:28 -0700 (PDT)
-X-Received: by 2002:ac8:5889:0:b0:519:f02b:45cb with SMTP id
- d75a77b69052e-51e4eff6d4amr483211cf.26.1784057727819; 
- Tue, 14 Jul 2026 12:35:27 -0700 (PDT)
+ bh=Wi/yH2BAkmWSY8q/5WbL83633G2Lv6HztDay1MN7yEE=;
+ b=SqI9UiW3Tpnov1c9pTCbpCL3Ddue/fn/NEctmwGh41QRDdugjEwJBPh13BQ120iL/C
+ wtWIHa4CsulIq1uOv/2zwHjdkFrFMkbGGV2EqkT9hETNvcUXngjJnpgq9iFdK7ZAf1tY
+ IYAoN5IfD6d5VGGBVxe94ZXHizvQYR5X/dCW7k1GsuKv4PDU9eQgXrOoiUaOGM1KZ8Ue
+ NcHUNSN+gizD2pbSZzrW2K1LIEatbSbfoL9WikySMhHJd69ze37cQIjW2szJsjrKiz8o
+ fV35g5exYkF9jor0PMTuqwuXJxp8NOPtzLXMeEx89bpFDfr9OKniva/Cm49y9TqcLb8n
+ ao4A==
+X-Gm-Message-State: AOJu0YwTj4Sk38rtEzAx2FhKXHEVWa+2oMmOMUPMyD2wYqqCRyG22WTy
+ lbFGRHidihT83WO06itZMV4AOAgpk0kVN5c7JBik1VFdEj6AykyrF9hOs1GbTNNz1PeR0eNZIYF
+ Kczcd/YL/pcXAgYFCO1ePCRxCQ/keTncFw704J2N8s9i7UdhTFBTWUKhQiPNctilFow==
+X-Gm-Gg: AfdE7cm0SRTP5tUW/glrCBpDlPpMe5pDfhZGQRMvHlxF5bldC3eGR7Mpj5eEHsDQPD5
+ jAbjlxePWJHE/WKU8SqgSINm/OjeI6It/i3QGuHFu3dUJveU0npyExNsAfJouIapxCebmTKXErW
+ G9rB0AbP/Irwh2IoEgDTjCIJgdZZVlHYwfL+ZaaTusHWHvLnHRp+7mZ+V1mS0iz3dDmi/WIncev
+ N7FhyY7dFSZ6fJIRCFGydTIqvCWcbiGT906+q6zSxr64sVjUU6f5KbkIV2J4Mgg8SKdRlJ7dd1j
+ ppHMO8LFN0Uli+WuM0uZfIQgvpDyN7JI+Vdy8t1K8FUKlmFDDq/KR9S6rhfZr6sKxv6p+5L5PgH
+ RVMC+I/5tWwRiVjs6SC+iMBVxLfhixpW+nGEKUTX65taCvVjNCLlQU9LxaURVlZVJapkk
+X-Received: by 2002:a05:622a:1c18:b0:51c:7b12:6000 with SMTP id
+ d75a77b69052e-51e4f22de1fmr204061cf.76.1784057751247; 
+ Tue, 14 Jul 2026 12:35:51 -0700 (PDT)
+X-Received: by 2002:a05:622a:1c18:b0:51c:7b12:6000 with SMTP id
+ d75a77b69052e-51e4f22de1fmr203671cf.76.1784057750475; 
+ Tue, 14 Jul 2026 12:35:50 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4950a2f9402sm99863185e9.13.2026.07.14.12.35.26
+ 5b1f17b1804b1-4950873270esm89620715e9.6.2026.07.14.12.35.49
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 14 Jul 2026 12:35:27 -0700 (PDT)
+ Tue, 14 Jul 2026 12:35:49 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 01/13] hw/sparc64/sun4u: Mark unusable PCI busses as full to
- ease device plugging
-Date: Tue, 14 Jul 2026 21:35:05 +0200
-Message-ID: <20260714193517.60708-2-philmd@oss.qualcomm.com>
+Subject: [PULL 04/13] hw/scsi/vmw_pvscsi: translate data endianness
+Date: Tue, 14 Jul 2026 21:35:08 +0200
+Message-ID: <20260714193517.60708-5-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260714193517.60708-1-philmd@oss.qualcomm.com>
 References: <20260714193517.60708-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDIwMiBTYWx0ZWRfX6crcJZqJZsLZ
- w+/X6cGUoBkr2oPHl2kSjI20zZcaedABu9WLn0FII+iKr2xSIPqioSS5/y2tH+/euespxDnByPj
- JQP4jGk3Czn1ZAtbkABo1dqNs8j5Tl34nwP6xeqg9sxHnrS641/jdQhBMIerVbptSfir93Nh/SY
- VsSNgn/Io5Ru+lYjdDkSBd3GGqVtGqzxGf1Yh8+iKW7e1L2dhrwT1WiXcuv9WBl+nwSpx7XV2oa
- M+OlLnP77Y3LsbsPDQg4/JcBWxwq37h1kJj4VInFQeJ9UYDZwMepot+tTaDe4fwWZbydze4okVB
- ncwuQG420Fcq9+jzZcvpyGZmGIPxcg3OdF3GdqsyKGafhLNYXuPCcV42s+uOSgNwl5e+a1DMDku
- wK6B+XyCO8cqEdiW9hzEEkV1WzuephzWi4Ej4feW4STdsljwDOVbZdx+/svfaSFPA1ulQfbgMQN
- vQTbmgLcnFrzjzf5WCg==
-X-Proofpoint-ORIG-GUID: sBWckII6mFn7SwP1JSL22moD2Ke7huJF
-X-Proofpoint-GUID: sBWckII6mFn7SwP1JSL22moD2Ke7huJF
-X-Authority-Analysis: v=2.4 cv=E+79Y6dl c=1 sm=1 tr=0 ts=6a568f81 cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-GUID: UGqz76woKj9P9O-5XoTnNlrvPo6Nm1wP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDIwMiBTYWx0ZWRfX3EdIwhDXHxBm
+ thXJYykuU/I+W2qEke8/3wNyYbXPmBF4ChlazK4XjOOu9eNHIpeND/HUR6ymn1dOVSWyCWET1U3
+ x5yq4SADWJqp5Ir93OVGBddDSLuBLqqPTnZX/321ylvqTG5SUI3RZI33+rvgWYsfAyMsumI5nkj
+ jhWx5n0yNEbUconf5r0sW1lUagJnQq+BmJ22aKeTashVcx2thWANTZC4DbGyjYYdgyZcgC/b3+j
+ a3z9loZQW+dmKEtnQSfSj52oUjDKquPwrFg9sSsdbXyGr6cs5Mi2V7dzrNXwJ7HGB2wQaq36sek
+ OCaDRFksUjRHqMgP5ajAt6/Uq/TJbXWP46s217WDfqaDiUG0MraHQREo3RzmuzbdyLqhdh6wKSD
+ HT1k13Rc0lAhXRbRlXA2zEOWvA9j2woTRuzLp2cK1yWFWWxey3tLHzcQLdmm4RGClWkGp1UtrcO
+ fk+Xt8DyHSn9AOAtMpg==
+X-Authority-Analysis: v=2.4 cv=T/O8ifKQ c=1 sm=1 tr=0 ts=6a568f98 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=07aRgWtaSAiwv9DsM3QA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDIwMiBTYWx0ZWRfX9am6hmmnjf+l
- Y9ZcfZNd5T8y2d9AtrJjyaOiFvvLf0nY/Y96kDT1VgmoS/wo1L/NL2fWwd849FaIJg3WMapCYx3
- 9U96GOnxEH7NRkwYUwH+PXHYXv/sS0U=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=bo06jjfrt4HcdEXMXB8A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDIwMiBTYWx0ZWRfX3pgsqJ019/Fe
+ TqZ9ih24ChMdj1FsLMhcKDoiwWSb+EQbEyVBgiuTX+pOBV5+85EdfackqWIGG2HTiBhCrPLyZeW
+ V2fHqC31ieoiwry7jgdEkAgDGjJzkxo=
+X-Proofpoint-ORIG-GUID: UGqz76woKj9P9O-5XoTnNlrvPo6Nm1wP
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-14_05,2026-07-14_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 clxscore=1015
- lowpriorityscore=0 spamscore=0 impostorscore=0 adultscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607140202
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ lowpriorityscore=0 malwarescore=0 adultscore=0 spamscore=0 phishscore=0
+ clxscore=1015 bulkscore=0 suspectscore=0 impostorscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607140202
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -152,46 +150,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Miao Wang <shankerwangmiao@gmail.com>
 
-When trying to plug a PCI device to a Sparc64 machine, you currently
-have to specify the right bus ("bus=pciB"), otherwise you get this error:
+This patch improves the implementation of the pvscsi device by
+translating the endianness of the data sent or received from the guest.
+This ensures pvscsi can work on big-endian hosts with little-endian
+guests.
 
- $ qemu-system-sparc64 -device virtio-scsi-pci
- qemu-system-sparc64: -device virtio-scsi-pci: PCI: no slot/function
- available for virtio-scsi-pci, all in use or reserved
+This patch assumes, although not having found any specifications, that
+the pvscsi device is little-endian, since pvscsi seems to be used only
+on x86 platforms, which are little-endian.
 
-This is quite annoying for the unexperienced users, and it also breaks
-e.g. the iotests ("make check-block") when running with qemu-system-sparc64.
-
-Mark the non-usable PCI busses as full now, so that QEMU can automatically
-plug new PCI devices to the right "pciB" bus.
-
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260309181452.83702-1-thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
+Message-ID: <20260710-pvscsi-endianness-v3-1-27fe1c4d1f6e@gmail.com>
+[PMD: Rebased on top of commit cb30b8758d4 physmem API conversion]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/sparc64/sun4u.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ hw/scsi/vmw_pvscsi.c | 57 +++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 56 insertions(+), 1 deletion(-)
 
-diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
-index d69ed9a81ac..a348096aee6 100644
---- a/hw/sparc64/sun4u.c
-+++ b/hw/sparc64/sun4u.c
-@@ -719,6 +719,13 @@ static void sun4uv_init(MemoryRegion *address_space_mem,
-     fw_cfg_add_i16(fw_cfg, FW_CFG_SPARC64_DEPTH, graphic_depth);
+diff --git a/hw/scsi/vmw_pvscsi.c b/hw/scsi/vmw_pvscsi.c
+index 4398aa54990..05f93171cd7 100644
+--- a/hw/scsi/vmw_pvscsi.c
++++ b/hw/scsi/vmw_pvscsi.c
+@@ -392,9 +392,18 @@ static void
+ pvscsi_cmp_ring_put(PVSCSIState *s, struct PVSCSIRingCmpDesc *cmp_desc)
+ {
+     hwaddr cmp_descr_pa;
++    PVSCSIRingCmpDesc cmp_desc_conv;
  
-     qemu_register_boot_set(fw_cfg_boot_set, fw_cfg);
-+
-+    /*
-+     * Mark internal PCI busses as full so that the plugging of additional
-+     * PCI devices happens on the right bus that still has free slots:
-+     */
-+    qbus_mark_full(&pci_bus->qbus);
-+    qbus_mark_full(&pci_busA->qbus);
+     cmp_descr_pa = pvscsi_ring_pop_cmp_descr(&s->rings);
+     trace_pvscsi_cmp_ring_put(cmp_descr_pa);
++    cmp_desc_conv = (struct PVSCSIRingCmpDesc) {
++        .context = cpu_to_le64(cmp_desc->context),
++        .dataLen = cpu_to_le64(cmp_desc->dataLen),
++        .senseLen = cpu_to_le32(cmp_desc->senseLen),
++        .hostStatus = cpu_to_le16(cmp_desc->hostStatus),
++        .scsiStatus = cpu_to_le16(cmp_desc->scsiStatus),
++    };
++    cmp_desc = &cmp_desc_conv;
+     physical_memory_write(cmp_descr_pa, cmp_desc, sizeof(*cmp_desc));
  }
  
- enum {
+@@ -402,9 +411,18 @@ static void
+ pvscsi_msg_ring_put(PVSCSIState *s, struct PVSCSIRingMsgDesc *msg_desc)
+ {
+     hwaddr msg_descr_pa;
++    PVSCSIRingMsgDesc msg_desc_conv;
++    int i;
+ 
+     msg_descr_pa = pvscsi_ring_pop_msg_descr(&s->rings);
+     trace_pvscsi_msg_ring_put(msg_descr_pa);
++    msg_desc_conv = (PVSCSIRingMsgDesc) {
++        .type = cpu_to_le32(msg_desc->type),
++    };
++    for (i = 0; i < ARRAY_SIZE(msg_desc->args); i++) {
++        msg_desc_conv.args[i] = cpu_to_le32(msg_desc->args[i]);
++    }
++    msg_desc = &msg_desc_conv;
+     physical_memory_write(msg_descr_pa, msg_desc, sizeof(*msg_desc));
+ }
+ 
+@@ -481,6 +499,9 @@ pvscsi_get_next_sg_elem(PVSCSISGState *sg)
+     struct PVSCSISGElement elem;
+ 
+     physical_memory_read(sg->elemAddr, &elem, sizeof(elem));
++    elem.addr = le64_to_cpu(elem.addr);
++    elem.length = le32_to_cpu(elem.length);
++    elem.flags = le32_to_cpu(elem.flags);
+     if ((elem.flags & ~PVSCSI_KNOWN_FLAGS) != 0) {
+         /*
+             * There is PVSCSI_SGE_FLAG_CHAIN_ELEMENT flag described in
+@@ -759,6 +780,12 @@ pvscsi_process_io(PVSCSIState *s)
+ 
+         trace_pvscsi_process_io(next_descr_pa);
+         physical_memory_read(next_descr_pa, &descr, sizeof(descr));
++        descr.context = le64_to_cpu(descr.context);
++        descr.dataAddr = le64_to_cpu(descr.dataAddr);
++        descr.dataLen = le64_to_cpu(descr.dataLen);
++        descr.senseAddr = le64_to_cpu(descr.senseAddr);
++        descr.senseLen = le32_to_cpu(descr.senseLen);
++        descr.flags = le32_to_cpu(descr.flags);
+         pvscsi_process_request_descriptor(s, &descr);
+     }
+ 
+@@ -808,6 +835,17 @@ pvscsi_on_cmd_setup_rings(PVSCSIState *s)
+ {
+     PVSCSICmdDescSetupRings *rc =
+         (PVSCSICmdDescSetupRings *) s->curr_cmd_data;
++    PVSCSICmdDescSetupRings translated;
++    int i;
++
++    translated.reqRingNumPages = le32_to_cpu(rc->reqRingNumPages);
++    translated.cmpRingNumPages = le32_to_cpu(rc->cmpRingNumPages);
++    translated.ringsStatePPN = le64_to_cpu(rc->ringsStatePPN);
++    for (i = 0; i < PVSCSI_SETUP_RINGS_MAX_NUM_PAGES; i++) {
++        translated.reqRingPPNs[i] = le64_to_cpu(rc->reqRingPPNs[i]);
++        translated.cmpRingPPNs[i] = le64_to_cpu(rc->cmpRingPPNs[i]);
++    }
++    rc = &translated;
+ 
+     trace_pvscsi_on_cmd_arrived("PVSCSI_CMD_SETUP_RINGS");
+ 
+@@ -831,6 +869,11 @@ pvscsi_on_cmd_abort(PVSCSIState *s)
+     PVSCSICmdDescAbortCmd *cmd = (PVSCSICmdDescAbortCmd *) s->curr_cmd_data;
+     PVSCSIRequest *r, *next;
+ 
++    PVSCSICmdDescAbortCmd translated = *cmd;
++    translated.context = le32_to_cpu(cmd->context);
++    translated.target = le32_to_cpu(cmd->target);
++    cmd = &translated;
++
+     trace_pvscsi_on_cmd_abort(cmd->context, cmd->target);
+ 
+     QTAILQ_FOREACH_SAFE(r, &s->pending_queue, next, next) {
+@@ -862,6 +905,10 @@ pvscsi_on_cmd_reset_device(PVSCSIState *s)
+         (struct PVSCSICmdDescResetDevice *) s->curr_cmd_data;
+     SCSIDevice *sdev;
+ 
++    PVSCSICmdDescResetDevice translated = *cmd;
++    translated.target = le32_to_cpu(cmd->target);
++    cmd = &translated;
++
+     sdev = pvscsi_device_find(s, 0, cmd->target, cmd->lun, &target_lun);
+ 
+     trace_pvscsi_on_cmd_reset_dev(cmd->target, (int) target_lun, sdev);
+@@ -892,6 +939,14 @@ pvscsi_on_cmd_setup_msg_ring(PVSCSIState *s)
+ {
+     PVSCSICmdDescSetupMsgRing *rc =
+         (PVSCSICmdDescSetupMsgRing *) s->curr_cmd_data;
++    PVSCSICmdDescSetupMsgRing translated = *rc;
++    int i;
++
++    translated.numPages = le32_to_cpu(rc->numPages);
++    for (i = 0; i < PVSCSI_SETUP_MSG_RING_MAX_NUM_PAGES; i++) {
++        translated.ringPPNs[i] = le64_to_cpu(rc->ringPPNs[i]);
++    }
++    rc = &translated;
+ 
+     trace_pvscsi_on_cmd_arrived("PVSCSI_CMD_SETUP_MSG_RING");
+ 
+@@ -994,7 +1049,7 @@ pvscsi_on_command_data(PVSCSIState *s, uint32_t value)
+     size_t bytes_arrived = s->curr_cmd_data_cntr * sizeof(uint32_t);
+ 
+     assert(bytes_arrived < sizeof(s->curr_cmd_data));
+-    s->curr_cmd_data[s->curr_cmd_data_cntr++] = value;
++    s->curr_cmd_data[s->curr_cmd_data_cntr++] = cpu_to_le32(value);
+ 
+     pvscsi_do_command_processing(s);
+ }
 -- 
 2.53.0
 
