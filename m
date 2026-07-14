@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5499C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 11:40:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEF12C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 11:40:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjbUZ-0003FP-0r; Tue, 14 Jul 2026 07:40:03 -0400
+	id 1wjbUW-0003DZ-1S; Tue, 14 Jul 2026 07:40:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wjbUW-0003Dp-IN; Tue, 14 Jul 2026 07:40:00 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1wjbUU-0003CS-Gr; Tue, 14 Jul 2026 07:39:58 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wjbUU-0003kL-Td; Tue, 14 Jul 2026 07:40:00 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ id 1wjbUS-0003jx-Ur; Tue, 14 Jul 2026 07:39:58 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66E6gD2n2860262; Tue, 14 Jul 2026 11:39:55 GMT
+ 66E6fkGV487869; Tue, 14 Jul 2026 11:39:53 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=Pz0IxQS4TCsskW5+b
- RjwlEEVwQ/C4mNq4ojIyQfm7Y0=; b=d2O18G1Pe5Ecw77aeN293M8GUvRGuW9jY
- BZTHUXVzehwBwdtZ8UfAReuAOZbqDIM5nZWBWK69l/sjmJE0nQ601nA8FKVLB6T5
- pnoctTXlRuZg8jimPsC7RXHWFMWN6DYyNqfKS4xCrMIrSU8Kl/+2jQLjdE3JppI1
- 5dtJq4xhA2HyhuVf5TAGSeiGYUgvJndhMYQfksCPph0+KHeTP6k9La0EV8pJa2ZB
- VkLyv8mqNiS3cL0YyvjTJ2L0qeB6Prhn3U41y7r61D/PS4WLfDW/qMU7cHB+gR1n
- aklwgYYJPvXWS+Ocmuwj0I00cSFzBOCfhoqRHrQjD9ACJK3VqrMUw==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fcv336dhq-1
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=TRWsmXpdk5GBQkZaGWi3dDh0Zo+6fjCgdHSJK+5Jp
+ WY=; b=iTkmiug38h+VVxWVW8LTjpAELoSDflZGWSbr0g37NX87VG5l3tv760z+Q
+ OopyBRxmMtd6zuY8V7wjLJaiiKAvKBKbUAtfaqG+Dq5gKqWhPfV6MktSHoYay1Zv
+ 8EDKV1KEKk9eISz1IBsXW7Y6+glolDHzglqA1t5snKORSV7pHJtWXffIYz16SVRA
+ VKtWX3p5y1ZIGC43HPENoohtZyrECdjgdfMZ0PMva5lUaJVAtzliDTmJKqr8QVlR
+ ZXWU+Zhlr4Fo55fXJZiOunNnoVMwPeZ2DGCRJLe7E0v3HAp/bGDfSkopvjSFv+JJ
+ Ha57H/Mimz1vyfhqE+MlBP/FP8/tw==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbf2a5d2v-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 Jul 2026 11:39:54 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66EBYxIT025989;
- Tue, 14 Jul 2026 11:39:53 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc15jthr8-1
+ Tue, 14 Jul 2026 11:39:52 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66EBYtPR008500;
+ Tue, 14 Jul 2026 11:39:52 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fc2uy285g-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 Jul 2026 11:39:53 +0000 (GMT)
+ Tue, 14 Jul 2026 11:39:52 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
  [10.20.54.105])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66EBdnvA51708290
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66EBdmOl62456242
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 14 Jul 2026 11:39:49 GMT
+ Tue, 14 Jul 2026 11:39:48 GMT
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2CCC920049;
- Tue, 14 Jul 2026 11:39:49 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 6C8202004D;
+ Tue, 14 Jul 2026 11:39:48 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D99552004F;
+ by IMSVA (Postfix) with ESMTP id 199A220049;
  Tue, 14 Jul 2026 11:39:48 +0000 (GMT)
 Received: from li-d2cd37cc-2ca3-11b2-a85c-84ed3706e5a0.ibm.com (unknown
  [9.111.75.242]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
@@ -64,48 +64,46 @@ To: Richard Henderson <richard.henderson@linaro.org>,
 Cc: David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org, Harald Freudenberger <freude@linux.ibm.com>,
  Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH 2/2] tests/tcg/s390x: Test PRNO TRNG interruptibility
-Date: Tue, 14 Jul 2026 13:34:51 +0200
-Message-ID: <20260714113946.275122-3-iii@linux.ibm.com>
+Subject: [PATCH 0/2] target/s390x: Make PRNO TRNG interruptible
+Date: Tue, 14 Jul 2026 13:34:49 +0200
+Message-ID: <20260714113946.275122-1-iii@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260714113946.275122-1-iii@linux.ibm.com>
-References: <20260714113946.275122-1-iii@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDExNiBTYWx0ZWRfX94G6XyNwZgYL
- Zk0tfoI/XQ6kY8HwLvxneH37N/LNAcjuVaV7OUzhnLibCId/F+vzDOnTVe+H8Nw0iWJosj32oxB
- yorfujqBk3ClegefYXqt6rUYNe9yh4o=
-X-Authority-Analysis: v=2.4 cv=Mp1iLWae c=1 sm=1 tr=0 ts=6a56200a cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDExNiBTYWx0ZWRfX50eTKoAiHh8l
+ fGf8ZYdg6q1WPN4MaYsxc4wpPSdtI0PyxPE/1sffYdG80JVPiBiYYMfDDNkypNpU/kQcWCxkaQu
+ l6pu00qgW7w9ekzm1+1wZ0D7TPT1+mY=
+X-Proofpoint-GUID: BqdOTIaYGRw8hzrHzarwlqF2wau69A9p
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDExNiBTYWx0ZWRfX/QJuB16zDmtr
+ cazJktvvyNaxY5LZJr3L3FFeZntuy1xUVqk1Be6zQjPixv52h3jod/ZsH/55U4C32v9dPsMU4Tp
+ WtEe+CXNv5log4QIDYyqjRbcNeFeE8b1j8P85oNCWPAw+Lu16+8W+xinx0RrJeYfFtQz/hIoEx/
+ WZ4Dn3V2qyJ+pfAHAVqfqQ8QE9Sip8C9qTz+b1Cc+Oj9B2LtV7u6MWeP7787di3o1K6wwcrzOjN
+ dSskQrj6ZweANqpCMIUcW5c3OQLDFkgsg57yamBeGLPIFOy7OyqiviSKUkeFBwp3WW7NMEvkKvb
+ vdC3MEIEtpov8TL/096xA33NU8/HLi8ClYPwDHM8XTnbou64GHyGJGvk6uSZ8NHYAcCrTKC9Q2S
+ LPRKjZRlwMYwU3IhrMm2/n1Qz9m3dqljS1EYBXchUlo6MuMiWrEDEKCDztYLczEywhUZGUBHN18
+ fy9TFZW/p4E0o1LM4Cg==
+X-Proofpoint-ORIG-GUID: BqdOTIaYGRw8hzrHzarwlqF2wau69A9p
+X-Authority-Analysis: v=2.4 cv=PvajqQM3 c=1 sm=1 tr=0 ts=6a562009 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=p6xrlejl6-JkR3ofBtoA:9
-X-Proofpoint-GUID: y7Y9-S95eAGOVfdauieh9cSruWADjx-N
-X-Proofpoint-ORIG-GUID: y7Y9-S95eAGOVfdauieh9cSruWADjx-N
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDExNiBTYWx0ZWRfXx9ihT9iRGfHb
- RkNwxMoxJgpl/a51bSkZ6oXtWBmM6XAJAa7yLiyPUdH0dBYE1IpoUd0y+Oj+72HICVdnVnbgQeH
- wVcLnSDWKUdxH2ECiHqq51Jw/bQ8oHpKcxNzsvwRa8PzX4kwSDSjdvM4BtxqoBM3dJiKRGHWvsO
- oqPnwCwAza3UptsF6pJzd9Nl3hGF6d9OFKl93CLxavvsm8sHWA8EZRmfyhkudHtw1vzKHtgEfui
- M6wEOhf1QFHgzLpJ6+pbdADkwsiyfrUSFqd30g2FWQhwKrcG2PHvMhaxQ6XBxHHA8h5nTrxzf/G
- A99kNEBEBleiXpDsA+43BGwcMT0YcoQj1FNC0QxkMvw0aF81UsMCVLghOfIeTI2gXO77Xl8qDM/
- flzOkbnrl0bgUuED6/fxuMAf60xUHnwVdg2uEHqqGux3gZuIjsNjpTraGnZU4uAuxHIiNMT6aFn
- LMSd1xPsd/Cj0QBzmCg==
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=9M258467kB8nMN-SsRoA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-14_02,2026-07-10_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 bulkscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
- impostorscore=0 priorityscore=1501 suspectscore=0 clxscore=1015 phishscore=0
+ priorityscore=1501 malwarescore=0 bulkscore=0 impostorscore=0 adultscore=0
+ clxscore=1015 lowpriorityscore=0 spamscore=0 suspectscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607140116
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,101 +120,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a small test that issues a large PRNO TRNG request while a timer is
-running, and checks that the timer interrupts it several times.
+Hi,
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
- tests/tcg/s390x/Makefile.target |  1 +
- tests/tcg/s390x/prno-trng.c     | 67 +++++++++++++++++++++++++++++++++
- 2 files changed, 68 insertions(+)
+Christian has reported that one can make a TCG guest stuck by running
+PRNO TRNG with a huge buffer. This series fixes this by making PRNO
+TRNG always end after generating 16KB.
+
+Patch 1 is the fix, patch 2 is the test.
+
+Cc: Harald, because this may conflict with the CPACF series.
+
+Best regards,
+Ilya
+
+Ilya Leoshkevich (2):
+  target/s390x: Make PRNO TRNG interruptible
+  tests/tcg/s390x: Test PRNO TRNG interruptibility
+
+ target/s390x/tcg/crypto_helper.c | 25 +++++++++---
+ tests/tcg/s390x/Makefile.target  |  1 +
+ tests/tcg/s390x/prno-trng.c      | 67 ++++++++++++++++++++++++++++++++
+ 3 files changed, 87 insertions(+), 6 deletions(-)
  create mode 100644 tests/tcg/s390x/prno-trng.c
 
-diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
-index 0ca030ded01..48cba4cdfa4 100644
---- a/tests/tcg/s390x/Makefile.target
-+++ b/tests/tcg/s390x/Makefile.target
-@@ -75,6 +75,7 @@ Z13_TESTS+=vcksm
- Z13_TESTS+=vstl
- Z13_TESTS+=vrep
- Z13_TESTS+=precise-smc-user
-+Z13_TESTS+=prno-trng
- $(Z13_TESTS): CFLAGS+=-march=z13 -O2
- TESTS+=$(Z13_TESTS)
- 
-diff --git a/tests/tcg/s390x/prno-trng.c b/tests/tcg/s390x/prno-trng.c
-new file mode 100644
-index 00000000000..43eea5db1dc
---- /dev/null
-+++ b/tests/tcg/s390x/prno-trng.c
-@@ -0,0 +1,67 @@
-+/*
-+ * Test that PERFORM RANDOM NUMBER OPERATION TRNG is interruptible.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include <assert.h>
-+#include <signal.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <sys/time.h>
-+#include <asm/ucontext.h>
-+
-+static unsigned char buf1[16 * 1024 * 1024];
-+static unsigned char buf2[16 * 1024 * 1024];
-+
-+static volatile sig_atomic_t interrupted;
-+
-+static void sigprof_handler(int sig, siginfo_t *info, void *ucontext)
-+{
-+    struct ucontext *uc = ucontext;
-+    unsigned long addr = uc->uc_mcontext.regs.psw.addr;
-+
-+    if (*(unsigned short *)(addr - 4) == 0xb93c) {
-+        interrupted++;
-+    }
-+}
-+
-+static void prno_trng(void *b1, unsigned long l1, void *b2, unsigned long l2)
-+{
-+    register unsigned long r0 asm("r0") = 114;  /* TRNG */
-+    register unsigned long r2 asm("r2") = (unsigned long)b1;
-+    register unsigned long r3 asm("r3") = l1;
-+    register unsigned long r4 asm("r4") = (unsigned long)b2;
-+    register unsigned long r5 asm("r5") = l2;
-+
-+    asm volatile("0: ppno %[r2],%[r4]\n"  /* prno alias for old toolchains */
-+                 "   jo 0b"
-+                 : [r2] "+r" (r2), [r3] "+r" (r3)
-+                 , [r4] "+r" (r4), [r5] "+r" (r5)
-+                 : "r" (r0)
-+                 : "cc", "memory");
-+}
-+
-+int main(void)
-+{
-+    struct itimerval it = {
-+        .it_interval = { .tv_usec = 10000 },  /* 0.01s */
-+        .it_value = { .tv_usec = 10000 },
-+    };
-+    struct sigaction act = {
-+        .sa_sigaction = sigprof_handler,
-+        .sa_flags = SA_SIGINFO,
-+    };
-+    int err;
-+
-+    err = sigaction(SIGPROF, &act, NULL);
-+    assert(err == 0);
-+    err = setitimer(ITIMER_PROF, &it, NULL);
-+    assert(err == 0);
-+
-+    prno_trng(buf1, sizeof(buf1), buf2, sizeof(buf2));
-+    printf("interrupted %d times\n", interrupted);
-+    assert(interrupted >= 3);
-+
-+    return EXIT_SUCCESS;
-+}
 -- 
 2.55.0
 
