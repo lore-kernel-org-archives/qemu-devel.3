@@ -4,92 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23C0EC44508
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 14:38:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6005C44508
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 14:47:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjeGt-0006hS-Qp; Tue, 14 Jul 2026 10:38:07 -0400
+	id 1wjeOx-0002gi-QD; Tue, 14 Jul 2026 10:46:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wjeGt-0006ej-2b
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:38:07 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ id 1wjeOp-0002eg-OW
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:46:19 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wjeGr-0006FO-0G
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:38:06 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-37e0a189b0bso946741a91.1
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 07:38:04 -0700 (PDT)
+ id 1wjeOl-0007cH-LO
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:46:19 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2cc7ef7ec27so49464225ad.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 07:46:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784039883; x=1784644683; darn=nongnu.org;
+ d=linaro.org; s=google; t=1784040373; x=1784645173; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=IhizC0UMQxD3S+L7Didm1/5n4/tgK4DYc3dRNl57wzk=;
- b=j01Ps1PKg4Q1Q4cbx7s08RvKuJztDQdZNSU5CNfwSyZCPVrv3kgg7+enRFaouCt1Yi
- jZsPSmX0T+rYP2AT/kHlvqu/+u9Nn4OJS87zqsfnJjR9XDaoLFaKWRcutzx9/jWJQeny
- Pxv8HN19IG/WqHUEljLF3n6fk95RdJks+AgOgm+rWKjZ8iG7JxRSRoWBN9u3Mh+EC+nr
- S0hBS13vWuB2+7TxtUifYzqV5tVFAbAxoIsPou+c1S5R1FsqIebnYokTn7VUNOSqrbro
- /ZjtKKNtaX48Zl5Jp0jo/koYhxxkY2g0mZF0Tm8qDif1NeruNhol+xhkQKN65WjgKLRF
- NIMA==
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=pEuwMejFowMdCWNPLFyEu643LtN1cXWGJNAAG/USFAQ=;
+ b=IqSsibt16KVed41yGtVKxAGb1XYhHGDCXe7nKaHierpqLoRcOWMN1Gsdok7Axa6BXH
+ FKTALV9W1K6iT6HQU5QyMiNzlsIjtOKLL/nyCu2DY6z/giR1dc1v8TPZ5Zjsy8kjybKx
+ c3SA6tiU3SakhHxjC7MIUw+V6Zg+pHZ6nAPuWLYh22JQv/UkLjIz7nE9IO4+Me+LlsTT
+ PfBBC+3pkT/m275bjQ/incxjgyR9jJLykoAWTzgjaqMukrvpREZRa6yc0xFZ2zKMwR7l
+ QYmvLGl6lzckHH148D7QqNJFzjg7KvBIXDbyFk/B/sVFkee2Rd4AlDwjg2i87iOR/i6X
+ qxyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784039883; x=1784644683;
+ d=1e100.net; s=20251104; t=1784040373; x=1784645173;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=IhizC0UMQxD3S+L7Didm1/5n4/tgK4DYc3dRNl57wzk=;
- b=PfyQu1xy0UtVYbsdqruq1lnGqKVL60foiC4DybiKY1U3QKVJc9iVlavLa5UReOKffM
- hVGLGap3LwZe3cyzp8xwMtEtL1kYkls+VPaLOP6sjxGB4vokPHfpEvxFwWfteZSvtCZB
- s60JXu1qQD2NxLIb+4uumAW06iCP81HDYBqvjTvE0FNnWbSwG7LdaHH45Om8QM9i2EH0
- s9//hmRAt4oSvT+SluQ3nX3nZxIlJ1AMAelZB1d4e9iHgOkpwFxxe4viWQE/UxNtpZxD
- ilVbMnN+3Yqbmh2Ph9KpAI4vauR7Ebtdt6Usx0KAQ5Yxktd7pK3U5qc0W4BE5dUb0Yo0
- qzKQ==
-X-Gm-Message-State: AOJu0YzSuO+KwyrgPSVzun0JQTCkhSl8j/Lu11lbzoDDkYcT2JDv+ROo
- pDU6C3B02JHlghCYsPd275kRHfflobsycs2VRP5ET6ZwSMefEJEuDoD8b4iiyjocwg4vknkWUft
- af6Z9
-X-Gm-Gg: AfdE7clZvreAvwIj8m8DK4Nj6f+gffvareLDLeaWWt3/yfCZmQAabXK3USP6bzd1Qk6
- H9H0TCYyNRBqFXfjYx5NBEBCEXP6t8MP1gGbA3S7cRrVjQDfPr1+qCMbEdkwUmOeghVnq800k2Z
- 0uaf+RjxVHTnBWRGTllzB3ZSjztaljyx5sTkqhLJ558BsDJN/khVGvywhUgIxX6+YZrFRK4Ve2M
- gqn2obUunt+fZTLRJjtc1ic3kvXeBIWUtT0QN883VenUr95TBX91oW0K2E6c94KkNRRelS8nOQ5
- 7IkNS8Rl75WvVt/LEqV0b1nlfk6ibZa8blSG97vPudySKtBZBUp8cWA8G9LYS/1vqCpAcp/5hji
- p6vX8/oVLNBBR9r/YXjrT2VYlq9F1INvC0AsL6Al0bUzJLmaiIoLecEGFo9F1BfChM83fkVJ71Q
- w7rSC3m8k1du5wU0tP0e1SHGEVrO47BTYWaSyc9KCwIoCRj/s=
-X-Received: by 2002:a17:90b:3d90:b0:381:973e:fa08 with SMTP id
- 98e67ed59e1d1-38dc7a49f4emr13189122a91.18.1784039883524; 
- Tue, 14 Jul 2026 07:38:03 -0700 (PDT)
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=pEuwMejFowMdCWNPLFyEu643LtN1cXWGJNAAG/USFAQ=;
+ b=aT30rAF0K9cszvT1irCJIjT6giKFw/JDY89auw1JYXZkG1I8yW4bXN3gqKERFlOBJW
+ L6VkLz+op6glj6U6OHAlljivqFeLGSMlCuLoGuduoURYkwubzkzQ1OFA4vMrjno02JQ8
+ evUNAqoC+wKVY0GtiODH1gVXCYzyeA2YyovkOwZ3vwuA8Ty6i8joQcBS8dGN5hvFcrK7
+ qR0c9xgwpLUqjO1wYMPLJU47B52n7j1XFyFx6xoaIg5jUXgnNCq2CA1qEWa6Q/35OzRi
+ V+LCiQ4EkfzwWLWTHZslByPite0bdKnL/dDQ/B79mVURnSpSttiPdVcCFgN95pTbR0D8
+ SNxg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqUkanNRgMo5LrZ7B0sX3L7K8ix+WEczFyrTBPd/kYUy2H0FTyEHnNfeUXlwXSm0zXPeMTYkAE5wRrR@nongnu.org
+X-Gm-Message-State: AOJu0YzJR6FBR/3Z27ISp3ingwAt3yQFRDHJM0tiIQ4wL/zqtkbixlbE
+ 5UjAs/U4e+szGhGQgxbX/V424Sm05d0VgkgP9XfEM2WLcPZFTJM4CSPxtLJFsy/jaKY=
+X-Gm-Gg: AfdE7cn8CTz6rOcSF8tM5tSMJBMo8Id8AixOrCBfD93BrJC1JO6Q+Ja7Am6poMp6HEh
+ c7/ndwD4cSZCjjWdP88IhiWvvl5s0IriJA6eAQB+MKJvm2zeYubHjiZRp5HSFHck7L2sAE0Ib6H
+ BA5IIUwWaaHqI8Moj7/9LMzpSwUgYB9yn5UvDJgwSGQ9o+RyOOtuFyrcebcp2vkh+F0nDUztaPb
+ DEPj+EODRrBrwO2FzK9f+1TkYOt0K+HkjHDGiXxlv3I763Z7P/MdTuxKfeV5XurWb2tHog3UAaO
+ 4wYwSF1P3vhq/28MVJauacRFII/5+GD/44ZmM3dc6rq0VgRHKY31VBu4TqrFdZsFzrrqaC29Kg4
+ +43rQu7Ze8OddzAns+dtiVBT62v/E3PQ95nfToIAsFlUD4AOWg6DZwrF9xqhL12AzycoX5KY5/J
+ r5O/LLFxQVzDPeP6oPvmp5nJakbg==
+X-Received: by 2002:a17:902:f68b:b0:2cc:7c36:2c23 with SMTP id
+ d9443c01a7336-2ce9f178346mr124367455ad.43.1784040372874; 
+ Tue, 14 Jul 2026 07:46:12 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.146.49])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38e172b8020sm1625305a91.3.2026.07.14.07.38.03
- for <qemu-devel@nongnu.org>
+ d9443c01a7336-2ccc9d1edb0sm116971485ad.53.2026.07.14.07.46.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Jul 2026 07:38:03 -0700 (PDT)
-Message-ID: <4e046322-2a83-41ba-8eb2-fb932ccc4703@linaro.org>
-Date: Tue, 14 Jul 2026 07:38:01 -0700
+ Tue, 14 Jul 2026 07:46:12 -0700 (PDT)
+Message-ID: <b709599a-c1f4-4e24-853b-f7da06981f6b@linaro.org>
+Date: Tue, 14 Jul 2026 07:46:10 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] target/arm: GICv5 cpuif: Writes to ICC_APR_EL1 can
- change IRQ/FIQ
-To: qemu-devel@nongnu.org
-References: <20260714091806.3568281-1-peter.maydell@linaro.org>
- <20260714091806.3568281-3-peter.maydell@linaro.org>
+Subject: Re: [PATCH v3 15/51] cpu: Use interval-tree for CPUBreakpoint
+To: Ilya Leoshkevich <iii@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
+ qemu-s390x@nongnu.org, jcmvbkbc@gmail.com
+References: <20260710205401.836304-1-richard.henderson@linaro.org>
+ <20260710205401.836304-16-richard.henderson@linaro.org>
+ <f64a5bc8-870e-492f-9a89-cbbb4c2e204f@linux.ibm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260714091806.3568281-3-peter.maydell@linaro.org>
+In-Reply-To: <f64a5bc8-870e-492f-9a89-cbbb4c2e204f@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,19 +107,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/14/26 02:18, Peter Maydell wrote:
-> The ICC_APR_EL1 register values change the current running priority,
-> which we use in our calculations in gic_hppi().  Changing them can
-> affect whether we have a HPPI, and so the value of the IRQ/FIQ
-> outputs.  We need to trigger an update in the register writefn.
+On 7/14/26 05:39, Ilya Leoshkevich wrote:
 > 
-> Fixes: 9bd90bddb79 ("target/arm: GICv5 cpuif: Signal IRQ or FIQ")
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
->   target/arm/tcg/gicv5-cpuif.c | 1 +
->   1 file changed, 1 insertion(+)
+> 
+> On 7/10/26 22:53, Richard Henderson wrote:
+>> Use a balanced binary tree rather than a simple list for breakpoints.
+>> Using an interval tree makes it easy to probe for all breakpoints on
+>> a virtual page.
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   include/exec/breakpoint.h   |  4 +--
+>>   include/hw/core/cpu.h       |  3 +-
+>>   accel/tcg/cpu-exec.c        | 58 +++++++++++++++++++++----------------
+>>   accel/whpx/whpx-common.c    |  9 +++---
+>>   cpu-common.c                | 46 +++++++++++++++--------------
+>>   hw/core/cpu-common.c        |  1 -
+>>   linux-user/main.c           | 14 ++++++---
+>>   target/i386/whpx/whpx-all.c | 15 +++++-----
+>>   8 files changed, 84 insertions(+), 66 deletions(-)
+> 
+> [...]
+> 
+>> @@ -312,33 +312,34 @@ static bool check_for_breakpoints_slow(CPUState *cpu, vaddr pc,
+>>           return false;
+>>       }
+>> -    QTAILQ_FOREACH(bp, &cpu->breakpoints, entry) {
+>> -        /*
+>> -         * If we have an exact pc match, trigger the breakpoint.
+>> -         * Otherwise, note matches within the page.
+>> -         */
+>> -        if (pc == bp->pc) {
+>> -            bool match_bp = false;
+>> -
+>> -            if (bp->flags & BP_GDB) {
+>> -                match_bp = true;
+>> -            } else if (bp->flags & BP_CPU) {
+>> +    n = interval_tree_iter_first(&cpu->breakpoints, pc, pc);
+>> +    if (n) {
+>>   #ifdef CONFIG_USER_ONLY
+>> -                g_assert_not_reached();
+>> +        bp = container_of(n, CPUBreakpoint, itree);
+>> +        assert(bp->flags & BP_GDB);
+>> +        goto found;
+>>   #else
+>> -                const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
+>> -                assert(tcg_ops->debug_check_breakpoint);
+>> -                match_bp = tcg_ops->debug_check_breakpoint(cpu, bp);
+>> -#endif
+>> +        /* Prefer GDB breakpoint over architectural breakpoint. */
+>> +        do {
+>> +            bp = container_of(n, CPUBreakpoint, itree);
+>> +            if (bp->flags & BP_GDB) {
+>> +                goto found;
+>>               }
+>> +            n = interval_tree_iter_next(n, pc, pc);
+>> +        } while (n);
+>> -            if (match_bp) {
+>> -                cpu->exception_index = EXCP_DEBUG;
+>> -                return true;
+>> +        const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
+>> +        assert(tcg_ops->debug_check_breakpoint);
+>> +
+>> +        for (n = interval_tree_iter_first(&cpu->breakpoints, pc, pc); n;
+>> +             n = interval_tree_iter_next(n, pc, pc)) {
+>> +            bp = container_of(n, CPUBreakpoint, itree);
+>> +            if ((bp->flags & BP_CPU) &&
+>> +                tcg_ops->debug_check_breakpoint(cpu, bp)) {
+>> +                goto found;
+>>               }
+> 
+> 
+> Walking the tree twice feels slightly inefficient, but the only
+> alternative I can think of entails calling
+> tcg_ops->debug_check_breakpoint() for each node, which may be even
+> worse.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+That's what I thought -- if we ever called debug_check_breakpoint when a gdb breakpoint 
+exists, then we're doing something wrong.  The only alternative is to separate the two 
+types of breakpoints into two different interval trees.
+
 
 r~
+
+> 
+> Reviewed-by: Ilya Leoskevich <iii@linux.ibm.com>
+
 
