@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CE4EC44508
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 14:17:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57E40C44508
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 14:17:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjdwJ-00065x-L9; Tue, 14 Jul 2026 10:16:52 -0400
+	id 1wjdwY-00068W-PZ; Tue, 14 Jul 2026 10:17:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wjdwH-00065M-BQ
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:16:49 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1wjdwW-00068L-Q4
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:17:05 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wjdwF-0002WT-GE
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:16:49 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-38125cebfdaso1261322a91.1
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 07:16:47 -0700 (PDT)
+ id 1wjdwV-0002bu-6n
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:17:04 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-c85b73ffb52so2369737a12.3
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 07:17:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784038606; x=1784643406; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1784038621; x=1784643421; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=8ohUxk5Yj8cqgknphQ2n4dasqiuWoigzJbQ6j1A5+s0=;
- b=OIRfGR+MZ6VoXo+hoYdU52OTy0sccbJFDwb2gQUQio0eWiv0wD/OnKD6qv2ggynZDQ
- /dyYTLufsNviyzy1u2XwR09rG/qLlFWIEfNQECtdJhnSt8g+4SyWqMlQLj1hcBk6oa87
- dxLedWNaaR+jf56852DSxFzl0cd8JsJyAOOETzkkXzpP22M1pD8owuCjGuEti4jFpkTH
- 4wORjQ0Skk/ayTY/Utb6RtqSEmAsnZLy/1tiyTYiS93KUP3IAM1UiZiA1DXx4KlJeO+m
- hqRo/Ar7XSSpe9HRR1T+CyoeKZzDWkiGG6wOTDWOddpWCbvre7t+Hr5npFmypes2Tx69
- vGyw==
+ bh=eYsZovgQobkBQ5sRuVVBlvzxAKOeE/rlJyGitsyhKOw=;
+ b=QQx0IoL8iu+6xXXMnxpd/h3UvdH3jRyiwIs7U2qKDoMWSAlYuSTdrlQkaxpEotOMic
+ VY+5NFV3vznWniUqHUqDCMavFEnNLdTzXcMxRQkIbGBlAMnTOJyr1zlXb/JDydHYyE1d
+ UuPzbvvYim4AjQtJJ7b4MWfXdtwws24bfhkPLJldhW8T4wb0v1lbzJAwLWwKwKxRdFgR
+ xOc7PR4SfWOsREEAOTqDH/+RefXtkj5g/+U6tCLZAoHcGx9WqOaHk5FImJL3b7P83GDt
+ 48pdTR9l+arwlZ1M9Ulr9yTZqeuZU+zbdJOKI/V/Qs2Q4ZZ7Xm+MsvzL9afTFt7nce0e
+ uesw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784038606; x=1784643406;
+ d=1e100.net; s=20251104; t=1784038621; x=1784643421;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=8ohUxk5Yj8cqgknphQ2n4dasqiuWoigzJbQ6j1A5+s0=;
- b=aCyapBHMXDHJf2if6ZrDxe/nALtVVeTdyKiv0/PRKd6iRc3OM3HuiycTEA0KcWgjhq
- 8yWtQAEn5HrGXI3xo0cvTy62Wi25E6bA5mmWdgGB+g/E6MJDM87rNtUw6aKjvm5wNZ+n
- vF+SZOwVqsPJnryfrui6S/FZGWuJHYh9C01Zm1h+YNuqMFD4iHD8h/T4wACkClILT60a
- TgUR1UIuTYgDbVRQCvgRw3c1zC+2WEy83RfoUIAt7OzLBXELAh2HZhvluc6qFEUxtgnK
- Wz5GeeZpGmK2CeEh3pYBnhTvOLv4DY85ARmWmjVxgOLWHBMR9/2+3HSwxDzU0h/fV+KU
- n3DQ==
-X-Gm-Message-State: AOJu0YxZ/FdGBYfX3zQAX7zfDqz2grFYmv9M1b/0jddnVwFiG5EJ9Hdl
- zgT9YCzvh/5eg93OyBv92PzATz4iWtSXGYiBesvomQLcW80vawCHD/6mmAKheyo6
-X-Gm-Gg: AfdE7ckFQOC9GyYzngGzvoSDsDBtLXOcNcrgPnKTAuyhg0Vd9+2roDdHn5dlykb0new
- 7ZHOL3MZn0mKpbDVIARuWJZZbvJZYwSCBCzLH08IvDs5Mkxn6IXPr3q3iqNLTeeB49jvbB2wCgO
- ZPKUf74ckikOqiiEmAcEnHqLy8UtzBspfyf2xFHk2KkkxtqOgh4zgg7TWYl/zjSXcYOAYyJQOGy
- eqDHf02WxmKUzhPDcaAnDy5sgcY/1xkblXZJYL5zC1BX6E6nNg9juMJPSZKQyOI4xsE4d6NYPG1
- OssCX2aTOhGnE/xJDRDTNAr0nTIhInux7nlNd4DrvDGgExGaY2Qy6AGhWsVYjRQOE4Kti9vQfBn
- Sb3Dz74GCF9rLfGRUfQivX2mC0OSzZZRAxg67kpPIamXgScWzTWpkLWS2H/TFkoiVIN0LYq8gdD
- 2xPYT8GGPr3ttTneY0Bt48XEF3AEMV69t2rDGDXZdXsSUbmmxCDxuL
-X-Received: by 2002:a17:90b:4f81:b0:387:e0db:3faa with SMTP id
- 98e67ed59e1d1-38dc7775133mr12097600a91.35.1784038605961; 
- Tue, 14 Jul 2026 07:16:45 -0700 (PDT)
+ bh=eYsZovgQobkBQ5sRuVVBlvzxAKOeE/rlJyGitsyhKOw=;
+ b=Xqc6gSYL6p9YNbb/3a7H6DJsl0msZPfDzNkrPVDq6vOnV80RuLPgSjRYIx0NXFITEQ
+ qwCKhF/lyPuK/Y6G5t3Pw+YomC8C5jhKMHrWdEjKD7qR/DOPgjx1VMZBYUoZUMpnwKJD
+ +wqUUwUqkAAWffkXkgm03W9cNOYNLC9O/flOFJDOpHO/FXRrrgj7c32y+cHQpEp6jeb3
+ 6vjHIyZcFr5wqXTcBDnJpp+GurI0cAZk/NxGgzi69KGg0MF9iaVQPPjw9ZDd8oKscqZi
+ oPK+Xk1o8s2wtgUMc8eNJ7aXwUzbMZk5a9yb9E+STSHJHoNKXWVupAAzdDySjGMIriQW
+ 43XA==
+X-Gm-Message-State: AOJu0YyXWsVfVQ2d4ZwoihbCULSF9EZ+1uxtqHYSwOnoAZJq+ukNOAIM
+ NqLLLrQ4Z5pMVtBCnGNNx/Xe/VtdBlsFavwKmBlL6Kw5Zj+FQgacrTI+fXi738U8
+X-Gm-Gg: AfdE7ck7tNhJFWE/WQV7j3TIQdNp8n2uTqisBKQNFxwqhitlT/OsCq/wfaywq/R2lb2
+ 7JPkZFxeH4pk7sCTcAX1PG0IBxreI9r+aoZZVWjF1YQvag/L9cGwfzrPfVYeFbbDBNxV7Dr2A8L
+ tsNL/svEyJutWe8Y5bpJOVK+mc5qjbLzFOZbAVh2AN2sPU7qbEylEoDuCth2BgdVL7s7uHp2arY
+ 8c+9+fd3krR+Z7gdbg+L3Q5q5BEYqKlECEQHSRFBLH7+Saql6i3kXFkwCvOWk+WQX2Gpivmx7aP
+ 6nIfisEexmYd84i0taXGlBFRsZjL63yJzFxWOe+AZZsBiYswBcsZBEPJ2lKjUlhQVmEoJ8ymIz3
+ U2wrJaejh6HzhO3kSOytxBa+51HZao7A+PCNqxPhxaNTZsKlS1/QQaZX8GUSCRcwKO05kFCIlCM
+ vgchLLxWz7TdFXj5xM7jpZKRVkh9qK/HsaYYzayvh95A==
+X-Received: by 2002:a05:6300:670e:b0:3c0:9c19:659e with SMTP id
+ adf61e73a8af0-3c110b7ee4fmr15291939637.70.1784038621185; 
+ Tue, 14 Jul 2026 07:17:01 -0700 (PDT)
 Received: from setun ([2405:201:502b:3014:cc0c:536:1b1e:6def])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3118ee6091dsm97329733eec.14.2026.07.14.07.16.41
+ 5a478bee46e88-3118ee6091dsm97329733eec.14.2026.07.14.07.16.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jul 2026 07:16:45 -0700 (PDT)
+ Tue, 14 Jul 2026 07:17:00 -0700 (PDT)
 From: Aadeshveer Singh <aadeshveer07@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, farosas@suse.de, pbonzini@redhat.com, philmd@mailo.com,
  lvivier@redhat.com, ayoub@saferwall.com, pierrick.bouvier@oss.qualcomm.com,
  Aadeshveer Singh <aadeshveer07@gmail.com>
-Subject: [PATCH v3 02/11] migration: Extract blocktime marking helper
-Date: Tue, 14 Jul 2026 19:45:38 +0530
-Message-ID: <20260714141547.1268000-3-aadeshveer07@gmail.com>
+Subject: [PATCH v3 05/11] migration: Make qemu_get_buffer_at() thread-safe
+Date: Tue, 14 Jul 2026 19:45:41 +0530
+Message-ID: <20260714141547.1268000-6-aadeshveer07@gmail.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260714141547.1268000-1-aadeshveer07@gmail.com>
 References: <20260714141547.1268000-1-aadeshveer07@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=aadeshveer07@gmail.com; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=aadeshveer07@gmail.com; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,115 +102,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use new function try_mark_postcopy_blocktime_begin() to call
-mark_postcopy_blocktime_begin if page was not received and return if it
-actually marked it.
+Remove the internal QEMUFile error state modification from
+qemu_get_buffer_at(). This function is called by two functions, both of
+which already check for unexpected return values and handle their own
+error reporting.
 
-This will help in having a cleaner API to call
-mark_postcopy_blocktime_begin as it requires the page to not be received
-by asserting on it's existance in RAMBlock->receivedmap.
+Removing this shared state modification makes qemu_get_buffer_at()
+strictly thread-safe for concurrent disk reads, serving as a
+preparatory change for the upcoming fast snapshot load feature.
+
+Removed local error by passing errp to improve on error handling,
+consequently also change caller to use error_prevent and not error_setg.
 
 Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
 ---
- migration/migration.c    | 24 ++----------------------
- migration/postcopy-ram.c | 31 +++++++++++++++++++++++++++++++
- migration/postcopy-ram.h |  3 +++
- 3 files changed, 36 insertions(+), 22 deletions(-)
+ migration/qemu-file.c | 9 +++------
+ migration/qemu-file.h | 4 ++--
+ migration/ram.c       | 6 +++---
+ 3 files changed, 8 insertions(+), 11 deletions(-)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index 074d3f2c69..07394d8eea 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -577,32 +577,12 @@ int migrate_send_rp_req_pages(MigrationIncomingState *mis,
-                               RAMBlock *rb, ram_addr_t start, uint64_t haddr,
-                               uint32_t tid)
+diff --git a/migration/qemu-file.c b/migration/qemu-file.c
+index d5a48115bd..0c28c878a9 100644
+--- a/migration/qemu-file.c
++++ b/migration/qemu-file.c
+@@ -550,17 +550,14 @@ void qemu_put_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
+ }
+ 
+ 
+-size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen,
+-                          off_t pos)
++size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen, off_t pos,
++                          Error **errp)
  {
--    void *aligned = (void *)(uintptr_t)ROUND_DOWN(haddr, qemu_ram_pagesize(rb));
--    bool received = false;
+-    Error *err = NULL;
 -
--    WITH_QEMU_LOCK_GUARD(&mis->page_request_mutex) {
--        received = ramblock_recv_bitmap_test_byte_offset(rb, start);
--        if (!received) {
--            if (!g_tree_lookup(mis->page_requested, aligned)) {
--                /*
--                 * The page has not been received, and it's not yet in the
--                 * page request list.  Queue it.  Set the value of element
--                 * to 1, so that things like g_tree_lookup() will return
--                 * TRUE (1) when found.
--                 */
--                g_tree_insert(mis->page_requested, aligned, (gpointer)1);
--                qatomic_inc(&mis->page_requested_count);
--                trace_postcopy_page_req_add(aligned, mis->page_requested_count);
--            }
--            mark_postcopy_blocktime_begin(haddr, tid, rb);
--        }
--    }
--
-     /*
-+     * If not able to mark page for blocktime it must already be present.
-      * If the page is there, skip sending the message.  We don't even need the
-      * lock because as long as the page arrived, it'll be there forever.
-      */
--    if (received) {
-+    if (!try_mark_postcopy_blocktime_begin(mis, rb, start, haddr, tid)) {
+     if (f->last_error) {
          return 0;
      }
  
-diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-index 96a65aa976..4b8f882e1e 100644
---- a/migration/postcopy-ram.c
-+++ b/migration/postcopy-ram.c
-@@ -1057,6 +1057,37 @@ static void blocktime_fault_inject(PostcopyBlocktimeContext *ctx,
-     trace_postcopy_blocktime_begin(addr, time, cpu, !!head);
- }
+-    if (qio_channel_pread_all(f->ioc, buf, buflen, pos, &err) < 0) {
+-        qemu_file_set_error_obj(f, -EIO, err);
++    if (qio_channel_pread_all(f->ioc, buf, buflen, pos, errp) < 0) {
+         return 0;
+     }
  
-+/*
-+ * Take @page_request_mutex and try marking postcopy blocktime begin.
-+ * Return true if marking is successful and false if page alredy exists.
-+ */
-+bool try_mark_postcopy_blocktime_begin(MigrationIncomingState *mis,
-+                                       RAMBlock *rb, ram_addr_t start,
-+                                       uint64_t haddr, uint32_t tid)
-+{
-+    bool received = false;
-+    void *aligned = (void *)(uintptr_t)ROUND_DOWN(haddr, qemu_ram_pagesize(rb));
-+
-+    WITH_QEMU_LOCK_GUARD(&mis->page_request_mutex) {
-+        received = ramblock_recv_bitmap_test_byte_offset(rb, start);
-+        if (!received) {
-+            if (!g_tree_lookup(mis->page_requested, aligned)) {
-+                /*
-+                 * The page has not been received, and it's not yet in the
-+                 * page request list.  Queue it.  Set the value of element
-+                 * to 1, so that things like g_tree_lookup() will return
-+                 * TRUE (1) when found.
-+                 */
-+                g_tree_insert(mis->page_requested, aligned, (gpointer)1);
-+                qatomic_inc(&mis->page_requested_count);
-+                trace_postcopy_page_req_add(aligned, mis->page_requested_count);
-+            }
-+            mark_postcopy_blocktime_begin((uint64_t)aligned, tid, rb);
-+        }
-+    }
-+    return !received;
-+}
-+
- /*
-  * This function is being called when pagefault occurs. It tracks down vCPU
-  * blocking time.  It's protected by @page_request_mutex.
-diff --git a/migration/postcopy-ram.h b/migration/postcopy-ram.h
-index 98d918713f..ea879f0bc6 100644
---- a/migration/postcopy-ram.h
-+++ b/migration/postcopy-ram.h
-@@ -196,6 +196,9 @@ void postcopy_preempt_new_channel(MigrationIncomingState *mis, QEMUFile *file);
- void postcopy_preempt_setup(MigrationState *s);
- int postcopy_preempt_establish_channel(MigrationState *s);
- bool postcopy_is_paused(MigrationStatus status);
-+bool try_mark_postcopy_blocktime_begin(MigrationIncomingState *mis,
-+                                       RAMBlock *rb, ram_addr_t start,
-+                                       uint64_t haddr, uint32_t tid);
- void mark_postcopy_blocktime_begin(uintptr_t addr, uint32_t ptid,
-                                    RAMBlock *rb);
+diff --git a/migration/qemu-file.h b/migration/qemu-file.h
+index 8f824c124d..966766788d 100644
+--- a/migration/qemu-file.h
++++ b/migration/qemu-file.h
+@@ -76,8 +76,8 @@ void qemu_set_offset(QEMUFile *f, off_t off, int whence);
+ off_t qemu_get_offset(QEMUFile *f);
+ void qemu_put_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
+                         off_t pos);
+-size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen,
+-                          off_t pos);
++size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen, off_t pos,
++                          Error **errp);
+ 
+ QIOChannel *qemu_file_get_ioc(QEMUFile *file);
+ int qemu_file_put_fd(QEMUFile *f, int fd);
+diff --git a/migration/ram.c b/migration/ram.c
+index 4728f14d73..967db7c0db 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -4127,7 +4127,7 @@ static bool read_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
+                                               block->pages_offset + offset);
+             } else {
+                 read = qemu_get_buffer_at(f, host, size,
+-                                          block->pages_offset + offset);
++                                          block->pages_offset + offset, errp);
+             }
+ 
+             if (!read) {
+@@ -4196,8 +4196,8 @@ static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
+     bitmap_size = BITS_TO_LONGS(num_pages) * sizeof(unsigned long);
+ 
+     if (qemu_get_buffer_at(f, (uint8_t *)block->file_bmap, bitmap_size,
+-                           header.bitmap_offset) != bitmap_size) {
+-        error_setg(errp, "Error reading dirty bitmap");
++                           header.bitmap_offset, errp) != bitmap_size) {
++        error_prepend(errp, "Error reading dirty bitmap");
+         return;
+     }
  
 -- 
 2.55.0
