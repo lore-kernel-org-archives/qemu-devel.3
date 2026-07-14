@@ -4,91 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4EDFC44501
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 15:57:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA529C44501
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 16:04:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjfUy-0004MX-DM; Tue, 14 Jul 2026 11:56:44 -0400
+	id 1wjfbq-0007CJ-BZ; Tue, 14 Jul 2026 12:03:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wjfUw-0004Lg-KK
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 11:56:42 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wjfUv-0001Yd-79
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 11:56:42 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-476d8e647e9so4406230f8f.0
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 08:56:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784044599; x=1784649399; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=pO6YrnYZsOpecMewyft93OrYcmGVXrjV/BFO5izC+4g=;
- b=E6TXIsAJv/2g3O/f5pEXHppEA8HSD4/PCtz1lVHYRVlCMN9+fRMjKMUjyduxDoEsiR
- Q2voGanOrFG37ohgHH2BxyU0DM+TayGz2DxG/rRC4dzPBxhyQDzlnO8flLL3qMxFRNCX
- PyYMeX4NQkqJktBcsxvdEgGqj5rgF+n9hEZIN8YmKAkUEyNexNWWy7cY8ws4oWzotEXT
- cYYCgpviiQdq2oQsdb2yQdlLSbA0tGSE8JpZ0ybnZ4XOShhzfrr5slGPRQCs5N5TxMz5
- f3h7o8Aycy+f5xACWtkoIwtirHpaAU4y8uNIOWWsL4iIy7qgMkZssjYmeXHisjZBOYST
- Vy4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784044599; x=1784649399;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=pO6YrnYZsOpecMewyft93OrYcmGVXrjV/BFO5izC+4g=;
- b=oN/Ogtb80XAaRT+hneVB6JD6kqwPaoxJy5xrElzmXQviEgaJSJqlfuO4WzCX0M1Zu+
- XDeyHvQaSAvwif6CGyKUwGRhbqIxEe0CPuNMR5gsrSfSq3/QQTK0MVufuUO6ksZ21Ccx
- WH5jAkst75EqCEpyJyEtt9VrbGX0sDnnecButWZITCR+qYfq5qU6rSZu4azXl8yP3Mki
- GANozQ9fn5RdemzlX2u6Flx7qODvoMprdB47XG49X8Qaydbsjj6TMXGmVGIXRSPeWcl6
- auBbuMz5m3exOpZL8qkGta+tLnw9yZgGcIOVQ/iLZt4b8AJY9IxXc3DUBNStMKbYmlkJ
- pZuA==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoZJYGh7wVKkcRfZp0OFeaFiIDcFwVY72WoDHhVNQcsvb79YAcH7XWBKhhXWvanmwYA8ZCVimNNklHl@nongnu.org
-X-Gm-Message-State: AOJu0Yz1DccqOatKyzrWzSyStQljKd4rF+KyUod+Hg/sVdZ8EHAHIzA8
- sjIQ2ZdTAzkghiT5XI24GSRk66dAvPYRRgo101sOZHo7XORNJcnsMm6fZgzojtUZx4g/gDNi5fl
- qNo2vQM8=
-X-Gm-Gg: AfdE7cmsPD6KviIivAKsSacZ2yXgWJAWcbrx40kBYlFAacgNzrYpCutUwVdsYLM4tfZ
- bQjEXwRCZoaCZXwsgySRVWealYh9EMQMaWHbiEFI33DNmtH/bjDwF78kimOGl38ohYyM6UG/pJ5
- ZP7JTXqskni3uQKKSzxPxJlKjP/0WJUyJ4NLvEbQRPOYkcBtRzXunLM51OWuUW9dHSmaYvBxgBZ
- Je+rTqUUnGGyF9nx6b+8qSdCGkvK/c9LYMtFj5G46axeQVPs2AuQmoqZ7J/E0haab+yrTzvraZt
- Q6RhTT3HzqndoGYA6Gnq9YAZMyWlE+2y6iXkd4c9Isvp7IFqNqRPbr12eO2jKPwrOXhBaMk7uTY
- GuJcqsxfiERGaxL80ouwn7xZWS/2VbnVAJ8kMaoqO0EYb5BPH7rDvZT+nz0pB3Z51LXFSta07JD
- vx/OkBkGPp3/EraoUlmRlrtYY=
-X-Received: by 2002:a05:6000:46c2:b0:47f:48d5:2986 with SMTP id
- ffacd0b85a97d-47f48d52b4bmr2418529f8f.53.1784044599163; 
- Tue, 14 Jul 2026 08:56:39 -0700 (PDT)
-Received: from linaro.org ([2a10:d582:31e:0:c8e:44fa:aef8:4850])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f462e0cb2sm9122294f8f.0.2026.07.14.08.56.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jul 2026 08:56:38 -0700 (PDT)
-Date: Tue, 14 Jul 2026 16:56:37 +0100
-From: Jim MacArthur <jim.macarthur@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH 5/9] hw/dma/soc_dma: dma bytes is uint64_t
-Message-ID: <alZcNcl77Z9Yqicv@linaro.org>
-References: <20260710105907.2570621-1-peter.maydell@linaro.org>
- <20260710105907.2570621-6-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wjfbo-0007Bv-8p
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 12:03:48 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wjfbk-0002Bz-KZ
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 12:03:48 -0400
+Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
+ by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 861EE807CD;
+ Tue, 14 Jul 2026 19:03:39 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:c5a::1:8] (unknown [2a02:6bf:8080:c5a::1:8])
+ by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id c3SW6T0aE0U0-2ALpE0el; Tue, 14 Jul 2026 19:03:39 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1784045019;
+ bh=7nLJlxhCQu2pnZXjIwWghr9zj2wkibDChR7aZ8T72BU=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=e4/PVGguXjUqIVj5a6OXiTZuWS56kDAxPC1zzhyGTX65+vNGGllImEPSQIXeAtTS3
+ R3VafXH716ajCAOx5C4U8Z3OfJJKsDdJLAeRtjF/01F4wVTVX3W3rIVnKI3L1/TK0w
+ oPT7dJcfYLYLkf3OhHYEqoxVhg4jdORd9DOefr9s=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <e8cb2e45-b58b-41f8-a69c-4f3e0f3cdd8d@yandex-team.ru>
+Date: Tue, 14 Jul 2026 19:03:38 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260710105907.2570621-6-peter.maydell@linaro.org>
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wr1-x42a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/7] migration/cpr: support vhost-vsock devices
+To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, qemu-devel@nongnu.org
+Cc: mst@redhat.com, sgarzare@redhat.com, farosas@suse.de, peterx@redhat.com,
+ dongli.zhang@oracle.com, maciej.szmigiero@oracle.com, bchaney@akamai.com,
+ mark.kanda@oracle.com, den@openvz.org
+References: <20260626164643.2526-1-andrey.drobyshev@virtuozzo.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20260626164643.2526-1-andrey.drobyshev@virtuozzo.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,19 +76,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 10, 2026 at 11:59:03AM +0100, Peter Maydell wrote:
-> The worst case number of DMA bytes that omap_dma will ask us to
-> transfer is 0xffff * 0xffff * 4 == 0x3fff80004, which is slightly
-> larger than fits into a uint32_t.  Move the byte count to uint64_t,
-> and adjust code that passes it around to also use uint64_t.
+On 26.06.26 19:46, Andrey Drobyshev wrote:
+> v2 -> v3:
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->  hw/dma/soc_dma.c         | 6 +++++-
->  include/hw/arm/soc_dma.h | 2 +-
->  2 files changed, 6 insertions(+), 2 deletions(-)
+> Re-design device ownership hand-off (suggested by Dongli).  Do not rely
+> on SETUP migration notifiers, as this approach forces us to reorder
+> generic migration code (see v2 discussion).  Instead:
 > 
+>    * .pre_save() releases ownership on the source (RESET_OWNER) once VM
+>      is stopped;
+>    * .realize() is adjusted to defer device ownership acquisition for an
+>      incoming CPR;
+>    * .post_load() actually claims the device (VHOST_SET_OWNER);
+>    * FAILED migration event callback re-aquires the ownership on the
+>      source after re_save released it.
+> 
+> v2:https://lore.kernel.org/qemu-devel/57c9c9b3-d758-489b-95b8-d16c258b9b0c@virtuozzo.com
 
-Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
+Hi!
 
+Two notes:
+
+1. Did you consider migrating needed FDs through main migration channel, without
+use of CPR, like I do in (not yet landed) "[PATCH v19 00/15] virtio-net: live-TAP local migration" [1]
+
+2. I don't know how much vhost-vsock differs from vhost-net, but for vhost-net I remember
+that RESET_OWNER + SET_OWNER is effectively equal to simply recreating vhost device on target,
+because in kernel vhost device is hardly bound to the process itself, and can't be passed to
+another process. So, we can pass only "empty" FD, not the initialized vhost device.
+That's why in [1] I only pass tap-fds (and some additional state), but vhost fds are simply
+reopened on target (or passed by mgmt app).
+Does vhost-vsock work in a different way? Is there real sense in passing vhost fds here?
+
+
+[1] https://lore.kernel.org/qemu-devel/20260714154246.1242856-1-vsementsov@yandex-team.ru/
+
+-- 
+Best regards,
+Vladimir
 
