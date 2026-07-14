@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E350C44501
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 07:30:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EB26C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 07:30:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjXaM-0005y1-TQ; Tue, 14 Jul 2026 03:29:46 -0400
+	id 1wjXaC-0005sk-QH; Tue, 14 Jul 2026 03:29:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wjXa7-0005rF-Cz; Tue, 14 Jul 2026 03:29:31 -0400
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ id 1wjXa8-0005rU-1h; Tue, 14 Jul 2026 03:29:32 -0400
+Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wjXa5-0006WV-CN; Tue, 14 Jul 2026 03:29:31 -0400
+ id 1wjXa6-0006VZ-Gg; Tue, 14 Jul 2026 03:29:31 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gJaUgWUZduLLL58tYuFe/ytKnuBksQkprXNQSUbYL5VY4aDY6jhaMNRYJUzW3XV2UvAX+j4grE8SnQwm3nHNHdfP58fAmnrheJWof7d0iKM3pHGlQVZH4exvMQW3HqlVjiCuUUp+vvfOCxGuMFgsRD2E0HDXKkYcfMiOqPu06gMPD1dy0bOLHClY1NHtfMHWSNwhD8x4ZO9teQQCx2chYgq+T0WuF0f/wD/Se6gSnu6yFrw75E8YKpg7c7gc5BJF44JVX5WsOa04D8AT/duXr7NM+iEkTcK6xaeD1pZaMAbUKP3CaDXdJWZljfag5C2XIzViOfbWtpPzqKfOtTDYlg==
+ b=MJ4bJNQKhttM0Piqm8gPlOD8DK1++OVQ5cBX9lmKcazhCabSPUBuMgRaQ8hLxsFoypz+86/KoApAW+VmiEKmYo3G5KP5kELOTaAVjGDkx6UmpGeCvLEFB4++P386d36yhTWEJzkjv3tEccIOwkdLVM1lgPt+wPpXpiFdiPl1xvw+pcrbpif98To3WXPqC+fkmNmuO9V/wE/7NjJGzi2Kd8eGfQ8IEeZ1ujoODg50BgsT7lyInfxW1OacuboX3JXJhtHDBePDQftnurP0wDBox+Ky3yaf4h6bDPTdsSyUwyq1MfDvqCus0kpGrQ58hVdUWBc3ewnskk9YbR9pdqtkTQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rlBFGs54UoThOO851Ni3gdt9GIL3kDsixPun6fa2TKA=;
- b=MXbC+dPRxV9czBOnGnodSVAVGdrJms1Pba+AgVJq5N+GnYNMESa8YI863w8PE507n0aMPiXvt6QXzijpqpTh2HRZjjVbnudm0/5Tvh9+g+sEyMBdoSO07vQjxZ8QF2/Il7te4jpyKHaNJXfelGeHHNXep+jRNzPjw/EkC83Zkg+PMAaL6SKi3X3ZyfMghW+PQWDJKU2alXGw9FfqjwspFshE0ebFpAVYl5CMrEeQ8Lrexk/H4v1wQXk5ypKbOVSTd0le7h8fA3fVSVbQfZp6v+LxAU9M2WalwqXQnkDdFqJtOib/4Spjeu9Gj/hMixrkcXfKlvE9Y6GzVWReE74iKA==
+ bh=gRpeKPadUDUUwa9D/Gir/KcrurF7Hnmb/9Xt+/KWuNM=;
+ b=oxiJx2JUZBIX9kw993vhQfWqQRBk3uT+Dmst5B2a6M18EmJzxQY14fTtTH7rViFvkXCUdGUS8d2cgobZURcWdDZz/xhllbkF4yieHey+0A4ccGaLPzSBnD+22dzeo0BnomhPa8KWeDRvHt0rSOXG586H2hwk/3rglXt7w+FUFgyAIK1jMcZLO0JTxxh2q1581hVvAQDcoMEuLoE3gquRZ4/Fhj8/Dbue+5mlW2xA2hC4r0fkmDR8/txSGK9kGJ8Vk7YoVDLoyfIZ3o1PnuJE7+IlnMJrj0GpRsx0FhPerzjYgAjiSAabPuMm/4rzB8aDDonscXGjqVW8Ury/B1axZQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rlBFGs54UoThOO851Ni3gdt9GIL3kDsixPun6fa2TKA=;
- b=f/yMp6I23JJtxDrJOz0eJN4RTqLueWfZkwyxIV/Fi5MLPdy4C+Km4pUhOZ+Pdk7LLFrdSQzlmL7kNWyM556HMuWt70LGbpNbSfJUkPbWUVc0O2VWEQllZrg19EjqeH3IUj9elNh4vtSIzsscDOgv3JCYlkVqwCyncrpbVdEkf91Gk3xDE0HZXneKSsYD2JBOgfO1WpS1yH1ogJYdJaVxVQhQEVt4eh2j0q/TTd45aDA9s9zjRPiSSrnXJ3rRYW8Y1T73QxgSYrldYdCwZijzesD4CdnCnxz7609BXKOTElPyerY998Z8AOjJxGza+HOkiYdc9mjuf8tZO9oZazjCDQ==
+ bh=gRpeKPadUDUUwa9D/Gir/KcrurF7Hnmb/9Xt+/KWuNM=;
+ b=g1N5RNnf+BjFAtYS3KBkAFPB+NC+xgRMlqsV+eGwmNSA/v8lcTGFqh7H+9Danv+pHtmC7zwPA2gIieu9dGnAYc9ap2TwH+Frz27k1KxHC0207IpGZyfrxrQpVnSpqp92k1PBTdbBSLoVttZESV9vKOJ5kVwOSZQFTA6ZPKLbdTpdSy9CVmALg9L0nkuV831de/NLpbG5FJdDo9wyL4e+mqgwPfcD6FhopcJXHpXk4KtRGV5v1Pg8EErM1ZKko03owsr+ek2VpdO1FeVmVutCcFelPIc9JgeM0bFg4OvSRYgLU7Wg7JDQat/VV4vFX3AAeh05LZmSIcBx8Edv7CDhjQ==
 Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
  by SEZPR06MB6117.apcprd06.prod.outlook.com (2603:1096:101:f3::7) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.18; Tue, 14 Jul
- 2026 07:29:16 +0000
+ 2026 07:29:19 +0000
 Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
  ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
  ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0202.014; Tue, 14 Jul 2026
- 07:29:16 +0000
+ 07:29:18 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: =?iso-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
  =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
@@ -54,11 +54,13 @@ To: =?iso-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
  <pbonzini@redhat.com>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v1 10/15] tests/unit/test-crypto-cipher: Test AES-GCM mode
-Thread-Topic: [PATCH v1 10/15] tests/unit/test-crypto-cipher: Test AES-GCM mode
-Thread-Index: AQHdE2J505CR9pw4e0ypJ8VqHy00VQ==
-Date: Tue, 14 Jul 2026 07:29:16 +0000
-Message-ID: <20260714072900.3023742-11-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 11/15] hw/misc/aspeed_hace: Support 64-bit DMA for the
+ crypto command
+Thread-Topic: [PATCH v1 11/15] hw/misc/aspeed_hace: Support 64-bit DMA for the
+ crypto command
+Thread-Index: AQHdE2J6V3Z+Ml80FU6fvPn/hNxyJg==
+Date: Tue, 14 Jul 2026 07:29:18 +0000
+Message-ID: <20260714072900.3023742-12-jamin_lin@aspeedtech.com>
 References: <20260714072900.3023742-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20260714072900.3023742-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -69,71 +71,71 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|SEZPR06MB6117:EE_
-x-ms-office365-filtering-correlation-id: b3d1e4fb-ee18-404c-97c1-08dee1799c85
+x-ms-office365-filtering-correlation-id: d1727c11-07c6-4f0c-fe02-08dee1799d6a
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|23010399003|7416014|376014|1800799024|921020|38070700021|6133799003|18002099003|22082099003|56012099006;
-x-microsoft-antispam-message-info: REdITh6RANthFAsrxIYUbqaFx/5APXmuOW0FcOueMD5dODbLQ7LaN2hLHADCqf73tH8FuryPwAFDc3XGd/+mlVeKZt+HXfuym7d2a2Gat/zjQPHHkpc/GxuivlzaJfQbrSavEOf5QiBJ4XramRSS0zLBwoXUWl1VoVSG5qtqxCd5vsQkf4KinNpGpMOM3qXWKeyuhhn8RmyiHjWb7olpTGrTEZrz/fxQa2hB8sfxQtndhEz5lM935t+V1hAwjr7g7J3+blszJPWTFrzMOdu3d++fOABL3MH+W1XmL2y3k7hv3fM6N+wPOf67zGFsOiW6nMMoZzjeYNnLf3+MFSLDD7Ngt6f/GwBJvHMvPDNBFTqpkwhu8jAhLBzjy3CLMXzNSsTsHhtmlTKlKKkT8rz+hgIuhl3gGZo21dE4MQTFgLOy2SdrtcguWGwhWPvocfXDBOACXMj+vZIBQVQfKXO/oi+c6HB48RBozuMZM6AQ+g3ROKMlhr9D2wKCziqEoP3qpWlft2ni79oUEnAOcjZdMf5wKZ8dLrDSoI0AeTNuIcmYiAeDQwDXodrNn/VnyHoGhz7U2bvGz2a5e+fmmZldtGJ5c3xxxPbHuZTjDQLVzZBhzI8zHhhElNWpoohhpb/BIMxUhL15FQCnP8Xn5S3PEiE7VRRENJLAQ3ZCNOtZyYIbVYHcN5BfxuhzTRr1ks9a1atL12nGnINTweTcOUjLNJSU9Mo9rIQ98zGHrTTRCj3Ba+KwnV79f6Ka7UOa4cMZ
+ ARA:13230040|366016|23010399003|7416014|376014|1800799024|921020|38070700021|18002099003|22082099003|56012099006;
+x-microsoft-antispam-message-info: XJ025S9ONNwaMNT3tYN+hPI+3hKfdS4oUfF46oDPMEHsjD2MpSgKDta9AffSN2simuSU09WlG1c052MXmOHjceIyU534wCzk3PMXpQBxNDDTyxjUe1YtgrL4pqsAYYe03W04wJmURpxJMkeKZinZ50+xlB/wF+SaVd5Bhe75hDgiDqzRM57Ek1qfbzFYToWBSL5O83NFeJ+nmQaMZ2oX3aWwOcP2dIqdkV9l34nNjBrU0iEGaYBskg0zbhhxHeN4M6KEvHyhlFqBEITv0aSyjl1f4TYlDh92kPPpuh29n38gISo2Xk0xtn+fMvTfFEglAJs2D2lYa1zXU7SMAET+WIUzzNFVpL3+Mny0Fq8cRd4y3+30mAD1Hv7P5xD5caRrD91k7/5ghUCoIgMX34N9zI5545ykikdMFitdNBD1pjuj1gnNld0Mj0tUcRSNTDjdogAbZ83yERoBDjP5RVjEsGFgWsvFAolkvxh6M4o19LLbs1Kq0Uc/6bjLaBpCOVxHchUPtUli4+2A9ZIzI+N0YGXCWh0Qn+K50kcm8ShqcF2FCxvzILkhO/VSUoZ/awloBj+atvZmSPf9dntuNX/bX/L38cMb599+UcuWFLdY4l14aC4ClWJqeSHzGzGRaU496jXjlSff77VyA9witi+u16Ggm+zPqZNkH3bvTlP9ibXhIGfbcTjIafMHLJQCX7ROPHD9JWp3Kg18WvgKtqZnc/9YoOu5Clnr3kdcdxeujD4=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(23010399003)(7416014)(376014)(1800799024)(921020)(38070700021)(6133799003)(18002099003)(22082099003)(56012099006);
+ SFS:(13230040)(366016)(23010399003)(7416014)(376014)(1800799024)(921020)(38070700021)(18002099003)(22082099003)(56012099006);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?TNz08gIwq8JJXP1JgbdSJgX3iHQLZzatXSj2FkpVvuS8Pb5tnsYcJ19OrI?=
- =?iso-8859-1?Q?zob4OQpZgcZXD8uqasFpIfNeukW1h30eVvtO+OmMWkuqXP+Fo8llljmwdu?=
- =?iso-8859-1?Q?qMFWAFb344qJPNH6QMVQdi2mrxxqvJ6LiWyOJPUI5mIhm3GH6+9qogF2gN?=
- =?iso-8859-1?Q?/RlW9kaDNnYFk7YQMIYSbhBPSEAam2CaV1xBNHTsLzOnWjASrNUziM28IE?=
- =?iso-8859-1?Q?0alrNY7P6EkEsKSCJAu1A0xK4e7pNwb/BeMQMnpLvRJHvjedhsSD5GDWPi?=
- =?iso-8859-1?Q?qMJO2ZMgdla8KU+yKmhPrX1afEy8X4DUuYWUv5Kthfdt+HTZVNZBMes/hs?=
- =?iso-8859-1?Q?Dc+lI1aO5w0L0pMvFNn4hph9rv9yQe77lktVnvSOfUV6CqFslRw300AYkG?=
- =?iso-8859-1?Q?W3PI6z2BP3sVpJqT5L79GYKjP8IZAWIiqWlf5a4Hh1WeAemk9hdW7ByDkS?=
- =?iso-8859-1?Q?GnRj70q71GCk8QhrC+bA7pQ8T4QQ+eqAdtItmVbgsfP/Z1gn62ko7XHJiP?=
- =?iso-8859-1?Q?njCn0sDZJ3csSGuOeu4WaCAlh07yqsKxK70VdkGQebx3RWxoOQe+snrTI3?=
- =?iso-8859-1?Q?hsO96UiotMDI8L9YEXd1WC54ypjh5qtDMmFcWI+KdLBWMgiz40nZs53r44?=
- =?iso-8859-1?Q?FUsQguF8zVKF54rKM3sKhcCb+os75/M5Zy1qZ6t/pSRexi9Xp7GhK7QnsE?=
- =?iso-8859-1?Q?gtqHL+Z+dyCJBXpKFSXtCCIKeeF1FvU9abCDeR9p/oPreG4zpk7z8T0/FU?=
- =?iso-8859-1?Q?3u7/fOuaXVTyQkzEJTs6rbJbi19oDX0tDrjXxxlxmO+MSk1/WBI1fu4Q/e?=
- =?iso-8859-1?Q?OuzvnOGSWIAGf07kepvgl0JgpPykr8BnH6wct7VxhbSYAfISbKZB0HuOb1?=
- =?iso-8859-1?Q?IXM1yYTY1fYyTOF34ChHPln4M/4bP34m6iv4rvdIzcXvttPdWmfiv91yPt?=
- =?iso-8859-1?Q?+vKdHwCBIIEu5j7x0cLpWxak/gN+5HC/O39ykSQ+YDFt5XoUrXDpf++Clf?=
- =?iso-8859-1?Q?rZbfRogdgMOLjfZHjW20pRbkCjFtd80Rj9wudn0gXa6aj7/8cl/nX4Go0n?=
- =?iso-8859-1?Q?1qYrPLUgFPbR/uoaOUokt5/NMPTYDnNqx28qkn5ocvS/pGzGeyOFqn5kLX?=
- =?iso-8859-1?Q?mnrMyh1G+0dkd6xQj58kFL7I5fCPejB+ZQnfUd5WmQAtJ+YUf86+nztPGY?=
- =?iso-8859-1?Q?NrBX9TEdp4YwB/+4WzA6WsyFQbHhnlTKT1iynXFfjS6UMDbdBC/35gj7GY?=
- =?iso-8859-1?Q?sehZ1k8jrDZW2fF9AvwlYWsMJVBjebwjpb3UEa7aDUshChEvgBTiG0a4ja?=
- =?iso-8859-1?Q?VP1qq4e7X2q+1O5JzYIu7G5hFekSQOPGPeo8FHO8y+fSwAL9kOwppfOfxt?=
- =?iso-8859-1?Q?SBU2qpUa58NfG5rqKp3JxQnQfeb409YG/oaXTGlMiFe9lw2pEvC7G12EB8?=
- =?iso-8859-1?Q?pqenFlYiWxYxD8K3nHowyyu1sPcFjIvkgE85XTcjuc0nIctIYiAsgYGt3o?=
- =?iso-8859-1?Q?EbflGAMSVYAOaWA48+bq3TXRltu3LH+BO1t1jsVOImxWpFCkaApOPyaEe6?=
- =?iso-8859-1?Q?dObzfBWvl5BGFF3LmMPcSfY7JxsPo3DDTumhFk8C4s0kV/vgzOjTGtLv3A?=
- =?iso-8859-1?Q?cBjjp5RtFJd8tIZeRmawSbnvlGL8p+p+uvk+vlhWAuH5yf8dV4XCOB9DuP?=
- =?iso-8859-1?Q?NNPTrRK2SooX6YYreReZPa5JPL7s/XoZbbzWcyyNrBXg6dWmxLBQ8rtE/g?=
- =?iso-8859-1?Q?TcakddxxLPwZSfP6JweY/295mOj/5VxlsW4lLfmqT7hGOAjJhgkC9kzaML?=
- =?iso-8859-1?Q?pYeX+kLwqw=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?Lkmhp3JrTdQ4h4x02X0xevHv+Epb/w+gqBa1cwJmpWEiaWgPmG/DORKNLr?=
+ =?iso-8859-1?Q?AWm1Oe3OfTjBBB81Fjp0YGG2DzTqPYBe80c6UcIOgQRC6J6SxkmysOt2cE?=
+ =?iso-8859-1?Q?PvKe5AWdzMgRkA3EnBvs7qglXqNrvfJk48XDRQjYSm5i35F52FfVzUBR2s?=
+ =?iso-8859-1?Q?uBd8Ge4tBAmg5s9Hw5UmgE5d0mRCcGbOHGidLVejeFTYpa++8G+60FPGMZ?=
+ =?iso-8859-1?Q?1xEo/WsY2iFyB41zIkf4Fy7RbG6zB1fsDLQhzBmOCoLd+B0kQtKtquIJCO?=
+ =?iso-8859-1?Q?+72HY9jvg5DUxPa7KqWbnuclbkXTSAJuFos0iR2/ESwGoghTEtdL/xHP+Q?=
+ =?iso-8859-1?Q?fipgrfAiSKmN2NOK3k3JYm3Kl3uK+pIAqrKk6cyoec83Y1y9TnPjxPnash?=
+ =?iso-8859-1?Q?TsKT7aIrvcDpyAtp1NAgk64mFGZNtw/KXIDD4m7bU5KE3GS86bFzr7xU1j?=
+ =?iso-8859-1?Q?XBpN+YsxBRq4RuJM7TwOTc4TkyCISuo+9CwQB24vxlMV3u9BCgGNh/He4e?=
+ =?iso-8859-1?Q?c1WIF+UkvijEjO2bJONIFO+W1RjLLpixsTa6i5r2YlZLG99b/I3W+l+TJ6?=
+ =?iso-8859-1?Q?MQC8VDoTg7NnxmHs09CKzHSvqQntYmUDNS0ZhfLVGN+0p6pkpFR86TyMYv?=
+ =?iso-8859-1?Q?Clfhwxm1icw69z12p+p/H7M8QkeCosD7VmHMS2zCTv6I97b06vxnX8ezh8?=
+ =?iso-8859-1?Q?6S10tU8/XGYAbgXJM2Vx8U6fjPApDYpL2GCvbrs6hLph0WeglQ39goqu13?=
+ =?iso-8859-1?Q?F3HPumSk+6IGV46duOhG+OzyyEmdVf1SMtFYI0ewLdHNxxUNnbrQSvhL5q?=
+ =?iso-8859-1?Q?whfEb3wjYCrNMzm9BSbp4O4UcAC1ghLXOz58DduSvCMu7HQkxjSXgPM5+B?=
+ =?iso-8859-1?Q?a1+DHsrfeGbLRGhCVTgUk10YT+B9pcRcezXFJ43kgdmjeMSZQnDHEGmFBd?=
+ =?iso-8859-1?Q?+IQf1Gzh9pefVDf7Cu+uXsW/V2zqueaZDa4IOBx/+lQImqHEI9tDUgaur+?=
+ =?iso-8859-1?Q?3nu2lyuBgKgelCRuuM05zv/e+x3aQzld2f8W10cAAFFj2yHViz9a3KjZ+X?=
+ =?iso-8859-1?Q?Ran5C6FyXIJjCHgbT4evu2j4IFQ2vJM3xStzKXhwNW7GqeYenQ9/ZBLBIf?=
+ =?iso-8859-1?Q?4VX/Cn0zKq4542wIeG0LIQ4DkXhDaS/VSa4xk0PXSwHwjTQikSFgV4X92q?=
+ =?iso-8859-1?Q?LjjFD1hZCNZao5AZl64yozqIQlRr14ALvGP9kPEVhqgRBkoMMYYuBgz910?=
+ =?iso-8859-1?Q?flZ5MyIfDNM4tCslaIzIe2rrRylANOHRdS5UT/sK46w4tTC2rbbFsO0AaO?=
+ =?iso-8859-1?Q?TTf9qqjLTVUpEtHFywwXhGv1ggwcf08XYR3fx/lwpeeVFHw4+mmjmmMKqj?=
+ =?iso-8859-1?Q?GiKPNQ870j+zBn/I1nH2pDoGTpqqLH6R45+qZ3pwYsuoo6n/p/6Xu2oChS?=
+ =?iso-8859-1?Q?UymJ2KfQmy1MpanGMhqQMC41qlKD1bxve0TCjBJ6eJZoUeiGtFsA7tkThH?=
+ =?iso-8859-1?Q?8buQBWN0p680mablf+zZxe7afAaxtaJAW0eCjEQMKfFYo5i/8lXOvixv2L?=
+ =?iso-8859-1?Q?rWav6WubWUIKZo4gHEV7VFyoHEnMX9pC/gdTn5Lm9aiDvfpMNbYCCmoTgX?=
+ =?iso-8859-1?Q?nx0ngkFNV4CdYl5BYPbNiqlfvsKc93PT23S1FnvQFy73icKy6dY06lIdxY?=
+ =?iso-8859-1?Q?cIP+yT94PFBbgFdXVkske225q+7hbq++4TRwTef5aOx1a1zDtBHWgcjpc1?=
+ =?iso-8859-1?Q?NC0H7uOxZYxko9KUfHoTkVRLs3wa4l1BauceTCM5Ryy3Z1MjXm7OI/c/Yx?=
+ =?iso-8859-1?Q?jL1nfg7YDA=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: DeGsDIjBElf3aKEGSOTLt7+bUTzvZmllmNvhzmVx3lYfo9mA5rhG1BYDShq0VrxtFXiRcoWnVgSZWRZ1cShjoRS5kCZJKlLGKfjjnPWtwleLiYmFedAgWKacb+WB9hSSY2u+tAkn6GpVufs3fZbabSQsQ68rMjX6UdBl7JhqEm+50pULrba/D+0s6g7r4vDyKuYOUpUOdtt2S13m//s8LPEpxqWsZD0j30+RvV2MS5+a26/plbFJ32s94dt2V5u+zA3aR1nqjCRmJnnEabhVzz95+UgqTE53Lc1zyHiWKbFAT5IdbvZJ8bCEpTZqvTnTndU7qoLJIaIrTCzBs0z0Sw==
+X-Exchange-RoutingPolicyChecked: LhusrBrUb50ULusW6bOaSPyICTngmsNyktBEzWDPAOsifrQIHvH5M92pDYwHyPj5i9tWGJhcmyNiAWlbNG7SZhlA/shgq1NhQdcLd5D3H8Dc5tehauX44vCipoAr4JO4oxp1jrivM7oeNUdPmABhelMpVyET8EsOCEsDrDjOPVA5s9nAf3WC17YMQPYuNRFrsSihW0Q+PsZzw1Yagv90nskR+bDiN1YUnAfoqmCXb0CJZm56Ifi6cQUfpc31tn3kpn3Rc+lJOGcgkWnKr2TPiBmg3SH42MkZX+7qpQ/YAgmgTlQcUI0cnLTEKfS25d9VHXq1QD3Y48gO+fjA1ZyTsA==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b3d1e4fb-ee18-404c-97c1-08dee1799c85
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Jul 2026 07:29:16.5492 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d1727c11-07c6-4f0c-fe02-08dee1799d6a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Jul 2026 07:29:18.1471 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: yXVenEcNXU/HvbkofNk80yet4GinIC/wloQnd75R8CbApn2oprcpgQK1vjcFQFXRFCVQ1J78Fl3AJg7dkHSHznO2Kxt9aFOdlRUOpuFGoe4=
+X-MS-Exchange-CrossTenant-userprincipalname: rzNwFJRiJ5HhGBV0OIwuyxN3b1Hx+szs3hFPX70mrkSRED4wkJGR46EwflS+TvFiNPPUfJDMua6UNVviJcHy+a3D5tvwyF6V2mMTQwh8NzU=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB6117
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=jamin_lin@aspeedtech.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
+ helo=TYDPR03CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -150,289 +152,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Exercise the new GCM mode and the setaad/gettag helpers with the=0A=
-canonical AES-GCM test vectors from the GCM specification (McGrew &=0A=
-Viega, also NIST SP 800-38D): AES-128 and AES-256, with and without=0A=
-associated data. Each vector is run through encrypt (checking the=0A=
-ciphertext and the generated tag) and decrypt (checking the recovered=0A=
-plaintext and the recomputed tag).=0A=
+The AST2700 crypto engine addresses DRAM with 64 bits, supplying the high=
+=0A=
+half of the source, destination and context addresses through HACE80,=0A=
+HACE84 and HACE88. Add those registers and a crypt_get_addr() helper that=
+=0A=
+combines the low and high halves when the SoC has 64-bit DMA, mirroring=0A=
+the hash engine. SoCs without 64-bit DMA (AST2500/AST2600/AST1030) ignore=
+=0A=
+the high registers, so their behaviour is unchanged.=0A=
 =0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 ---=0A=
- tests/unit/test-crypto-cipher.c | 240 ++++++++++++++++++++++++++++++++=0A=
- 1 file changed, 240 insertions(+)=0A=
+ hw/misc/aspeed_hace.c | 33 ++++++++++++++++++++++++++++++---=0A=
+ 1 file changed, 30 insertions(+), 3 deletions(-)=0A=
 =0A=
-diff --git a/tests/unit/test-crypto-cipher.c b/tests/unit/test-crypto-ciphe=
-r.c=0A=
-index 1331d558cf..670262b39e 100644=0A=
---- a/tests/unit/test-crypto-cipher.c=0A=
-+++ b/tests/unit/test-crypto-cipher.c=0A=
-@@ -810,6 +810,230 @@ static void test_cipher_short_plaintext(void)=0A=
-     qcrypto_cipher_free(cipher);=0A=
+diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c=0A=
+index b7a7c0b7ff..60dedee6a3 100644=0A=
+--- a/hw/misc/aspeed_hace.c=0A=
++++ b/hw/misc/aspeed_hace.c=0A=
+@@ -58,6 +58,11 @@=0A=
+ #define CRYPT_CTX_KEY_OFFSET        0x10=0A=
+ #define CRYPT_CTX_SIZE              0x30=0A=
+ =0A=
++/* AST2700 64-bit DMA high address registers for the crypto command */=0A=
++#define R_CRYPT_SRC_HI      (0x80 / 4)=0A=
++#define R_CRYPT_DEST_HI     (0x84 / 4)=0A=
++#define R_CRYPT_CONTEXT_HI  (0x88 / 4)=0A=
++=0A=
+ #define R_STATUS        (0x1c / 4)=0A=
+ #define HASH_IRQ        BIT(9)=0A=
+ #define CRYPT_IRQ       BIT(12)=0A=
+@@ -672,6 +677,19 @@ static void crypt_be_add(uint8_t *ctr, size_t len, uin=
+t64_t add)=0A=
+     }=0A=
  }=0A=
  =0A=
-+typedef struct QCryptoCipherGcmTestData QCryptoCipherGcmTestData;=0A=
-+struct QCryptoCipherGcmTestData {=0A=
-+    const char *path;=0A=
-+    QCryptoCipherAlgo alg;=0A=
-+    const char *key;=0A=
-+    const char *iv;=0A=
-+    /* associated data, or NULL for none */=0A=
-+    const char *aad;=0A=
-+    const char *plaintext;=0A=
-+    const char *ciphertext;=0A=
-+    const char *tag;=0A=
-+};=0A=
-+=0A=
-+/*=0A=
-+ * AES-GCM test vectors from "The Galois/Counter Mode of Operation (GCM)"=
-=0A=
-+ * (McGrew & Viega, also NIST SP 800-38D), with a 96-bit IV and a 128-bit=
-=0A=
-+ * tag. Each entry's "Test case N" label is the numbered test case from th=
-at=0A=
-+ * document (Appendix B / the GCM specification's test vectors).=0A=
-+ */=0A=
-+static QCryptoCipherGcmTestData gcm_test_data[] =3D {=0A=
-+    {=0A=
-+        /* Test case 2 */=0A=
-+        .path =3D "/crypto/cipher/aes-128-gcm/2",=0A=
-+        .alg =3D QCRYPTO_CIPHER_ALGO_AES_128,=0A=
-+        .key =3D "00000000000000000000000000000000",=0A=
-+        .iv =3D "000000000000000000000000",=0A=
-+        .plaintext =3D "00000000000000000000000000000000",=0A=
-+        .ciphertext =3D "0388dace60b6a392f328c2b971b2fe78",=0A=
-+        .tag =3D "ab6e47d42cec13bdf53a67b21257bddf",=0A=
-+    },=0A=
-+    {=0A=
-+        /* Test case 3 (no AAD) */=0A=
-+        .path =3D "/crypto/cipher/aes-128-gcm/3",=0A=
-+        .alg =3D QCRYPTO_CIPHER_ALGO_AES_128,=0A=
-+        .key =3D "feffe9928665731c6d6a8f9467308308",=0A=
-+        .iv =3D "cafebabefacedbaddecaf888",=0A=
-+        .plaintext =3D=0A=
-+            "d9313225f88406e5a55909c5aff5269a"=0A=
-+            "86a7a9531534f7da2e4c303d8a318a72"=0A=
-+            "1c3c0c95956809532fcf0e2449a6b525"=0A=
-+            "b16aedf5aa0de657ba637b391aafd255",=0A=
-+        .ciphertext =3D=0A=
-+            "42831ec2217774244b7221b784d0d49c"=0A=
-+            "e3aa212f2c02a4e035c17e2329aca12e"=0A=
-+            "21d514b25466931c7d8f6a5aac84aa05"=0A=
-+            "1ba30b396a0aac973d58e091473f5985",=0A=
-+        .tag =3D "4d5c2af327cd64a62cf35abd2ba6fab4",=0A=
-+    },=0A=
-+    {=0A=
-+        /* Test case 4 (with AAD) */=0A=
-+        .path =3D "/crypto/cipher/aes-128-gcm/4",=0A=
-+        .alg =3D QCRYPTO_CIPHER_ALGO_AES_128,=0A=
-+        .key =3D "feffe9928665731c6d6a8f9467308308",=0A=
-+        .iv =3D "cafebabefacedbaddecaf888",=0A=
-+        .aad =3D "feedfacedeadbeeffeedfacedeadbeefabaddad2",=0A=
-+        .plaintext =3D=0A=
-+            "d9313225f88406e5a55909c5aff5269a"=0A=
-+            "86a7a9531534f7da2e4c303d8a318a72"=0A=
-+            "1c3c0c95956809532fcf0e2449a6b525"=0A=
-+            "b16aedf5aa0de657ba637b39",=0A=
-+        .ciphertext =3D=0A=
-+            "42831ec2217774244b7221b784d0d49c"=0A=
-+            "e3aa212f2c02a4e035c17e2329aca12e"=0A=
-+            "21d514b25466931c7d8f6a5aac84aa05"=0A=
-+            "1ba30b396a0aac973d58e091",=0A=
-+        .tag =3D "5bc94fbc3221a5db94fae95ae7121a47",=0A=
-+    },=0A=
-+    {=0A=
-+        /* Test case 15 (AES-256, no AAD) */=0A=
-+        .path =3D "/crypto/cipher/aes-256-gcm/15",=0A=
-+        .alg =3D QCRYPTO_CIPHER_ALGO_AES_256,=0A=
-+        .key =3D=0A=
-+            "feffe9928665731c6d6a8f9467308308"=0A=
-+            "feffe9928665731c6d6a8f9467308308",=0A=
-+        .iv =3D "cafebabefacedbaddecaf888",=0A=
-+        .plaintext =3D=0A=
-+            "d9313225f88406e5a55909c5aff5269a"=0A=
-+            "86a7a9531534f7da2e4c303d8a318a72"=0A=
-+            "1c3c0c95956809532fcf0e2449a6b525"=0A=
-+            "b16aedf5aa0de657ba637b391aafd255",=0A=
-+        .ciphertext =3D=0A=
-+            "522dc1f099567d07f47f37a32a84427d"=0A=
-+            "643a8cdcbfe5c0c97598a2bd2555d1aa"=0A=
-+            "8cb08e48590dbb3da7b08b1056828838"=0A=
-+            "c5f61e6393ba7a0abcc9f662898015ad",=0A=
-+        .tag =3D "b094dac5d93471bdec1a502270e3cc6c",=0A=
-+    },=0A=
-+    {=0A=
-+        /* Test case 16 (AES-256, with AAD) */=0A=
-+        .path =3D "/crypto/cipher/aes-256-gcm/16",=0A=
-+        .alg =3D QCRYPTO_CIPHER_ALGO_AES_256,=0A=
-+        .key =3D=0A=
-+            "feffe9928665731c6d6a8f9467308308"=0A=
-+            "feffe9928665731c6d6a8f9467308308",=0A=
-+        .iv =3D "cafebabefacedbaddecaf888",=0A=
-+        .aad =3D "feedfacedeadbeeffeedfacedeadbeefabaddad2",=0A=
-+        .plaintext =3D=0A=
-+            "d9313225f88406e5a55909c5aff5269a"=0A=
-+            "86a7a9531534f7da2e4c303d8a318a72"=0A=
-+            "1c3c0c95956809532fcf0e2449a6b525"=0A=
-+            "b16aedf5aa0de657ba637b39",=0A=
-+        .ciphertext =3D=0A=
-+            "522dc1f099567d07f47f37a32a84427d"=0A=
-+            "643a8cdcbfe5c0c97598a2bd2555d1aa"=0A=
-+            "8cb08e48590dbb3da7b08b1056828838"=0A=
-+            "c5f61e6393ba7a0abcc9f662",=0A=
-+        .tag =3D "76fc6ece0f4e1768cddf8853bb2d551b",=0A=
-+    },=0A=
-+};=0A=
-+=0A=
-+static void test_cipher_gcm(const void *opaque)=0A=
++static uint64_t crypt_get_addr(AspeedHACEState *s, int reg, int reg_hi)=0A=
 +{=0A=
-+    const QCryptoCipherGcmTestData *data =3D opaque;=0A=
-+    g_autofree uint8_t *key =3D NULL;=0A=
-+    g_autofree uint8_t *iv =3D NULL;=0A=
-+    g_autofree uint8_t *aad =3D NULL;=0A=
-+    g_autofree uint8_t *ptext =3D NULL;=0A=
-+    g_autofree uint8_t *ctext =3D NULL;=0A=
-+    g_autofree uint8_t *tagexp =3D NULL;=0A=
-+    g_autofree uint8_t *out =3D NULL;=0A=
-+    uint8_t tag[16];=0A=
-+    size_t nkey;=0A=
-+    size_t niv;=0A=
-+    size_t naad =3D 0;=0A=
-+    size_t nptext;=0A=
-+    size_t nctext;=0A=
-+    size_t ntag;=0A=
-+    QCryptoCipher *cipher;=0A=
++    AspeedHACEClass *ahc =3D ASPEED_HACE_GET_CLASS(s);=0A=
++    uint64_t addr;=0A=
 +=0A=
-+    nkey =3D unhex_string(data->key, &key);=0A=
-+    niv =3D unhex_string(data->iv, &iv);=0A=
-+    nptext =3D unhex_string(data->plaintext, &ptext);=0A=
-+    nctext =3D unhex_string(data->ciphertext, &ctext);=0A=
-+    ntag =3D unhex_string(data->tag, &tagexp);=0A=
-+    if (data->aad) {=0A=
-+        naad =3D unhex_string(data->aad, &aad);=0A=
++    addr =3D deposit64(0, 0, 32, s->regs[reg]);=0A=
++    if (ahc->has_dma64) {=0A=
++        addr =3D deposit64(addr, 32, 32, s->regs[reg_hi]);=0A=
 +    }=0A=
 +=0A=
-+    g_assert_cmpint(nptext, =3D=3D, nctext);=0A=
-+    g_assert_cmpint(ntag, =3D=3D, sizeof(tag));=0A=
-+    out =3D g_new0(uint8_t, nptext);=0A=
-+=0A=
-+    /* Encrypt: plaintext -> ciphertext, then read back the tag. */=0A=
-+    cipher =3D qcrypto_cipher_new(data->alg, QCRYPTO_CIPHER_MODE_GCM,=0A=
-+                                key, nkey, &error_abort);=0A=
-+    g_assert(cipher !=3D NULL);=0A=
-+    g_assert(qcrypto_cipher_setiv(cipher, iv, niv, &error_abort) =3D=3D 0)=
-;=0A=
-+    if (naad) {=0A=
-+        g_assert(qcrypto_cipher_setaad(cipher, aad, naad, &error_abort) =
-=3D=3D 0);=0A=
-+    }=0A=
-+    g_assert(qcrypto_cipher_encrypt(cipher, ptext, out, nptext,=0A=
-+                                    &error_abort) =3D=3D 0);=0A=
-+    g_assert_cmpmem(out, nptext, ctext, nctext);=0A=
-+    g_assert(qcrypto_cipher_gettag(cipher, tag, sizeof(tag),=0A=
-+                                   &error_abort) =3D=3D 0);=0A=
-+    g_assert_cmpmem(tag, sizeof(tag), tagexp, ntag);=0A=
-+    qcrypto_cipher_free(cipher);=0A=
-+=0A=
-+    /* Decrypt: ciphertext -> plaintext, recomputed tag must match. */=0A=
-+    memset(out, 0, nptext);=0A=
-+    cipher =3D qcrypto_cipher_new(data->alg, QCRYPTO_CIPHER_MODE_GCM,=0A=
-+                                key, nkey, &error_abort);=0A=
-+    g_assert(cipher !=3D NULL);=0A=
-+    g_assert(qcrypto_cipher_setiv(cipher, iv, niv, &error_abort) =3D=3D 0)=
-;=0A=
-+    if (naad) {=0A=
-+        g_assert(qcrypto_cipher_setaad(cipher, aad, naad, &error_abort) =
-=3D=3D 0);=0A=
-+    }=0A=
-+    g_assert(qcrypto_cipher_decrypt(cipher, ctext, out, nctext,=0A=
-+                                    &error_abort) =3D=3D 0);=0A=
-+    g_assert_cmpmem(out, nctext, ptext, nptext);=0A=
-+    g_assert(qcrypto_cipher_gettag(cipher, tag, sizeof(tag),=0A=
-+                                   &error_abort) =3D=3D 0);=0A=
-+    g_assert_cmpmem(tag, sizeof(tag), tagexp, ntag);=0A=
-+    qcrypto_cipher_free(cipher);=0A=
++    return addr;=0A=
 +}=0A=
 +=0A=
-+/*=0A=
-+ * Corrupt one ciphertext byte and confirm the recomputed GCM tag no longe=
-r=0A=
-+ * matches: the authentication tag must detect tampering.=0A=
-+ */=0A=
-+static void test_cipher_gcm_tamper(const void *opaque)=0A=
-+{=0A=
-+    const QCryptoCipherGcmTestData *data =3D opaque;=0A=
-+    g_autofree uint8_t *key =3D NULL;=0A=
-+    g_autofree uint8_t *iv =3D NULL;=0A=
-+    g_autofree uint8_t *aad =3D NULL;=0A=
-+    g_autofree uint8_t *ctext =3D NULL;=0A=
-+    g_autofree uint8_t *tagexp =3D NULL;=0A=
-+    g_autofree uint8_t *out =3D NULL;=0A=
-+    uint8_t tag[16];=0A=
-+    size_t nkey;=0A=
-+    size_t niv;=0A=
-+    size_t naad =3D 0;=0A=
-+    size_t nctext;=0A=
-+    size_t ntag;=0A=
-+    QCryptoCipher *cipher;=0A=
-+=0A=
-+    nkey =3D unhex_string(data->key, &key);=0A=
-+    niv =3D unhex_string(data->iv, &iv);=0A=
-+    nctext =3D unhex_string(data->ciphertext, &ctext);=0A=
-+    ntag =3D unhex_string(data->tag, &tagexp);=0A=
-+    if (data->aad) {=0A=
-+        naad =3D unhex_string(data->aad, &aad);=0A=
-+    }=0A=
-+    out =3D g_new0(uint8_t, nctext);=0A=
-+=0A=
-+    /* Flip one ciphertext bit before decrypting. */=0A=
-+    ctext[0] ^=3D 0x01;=0A=
-+=0A=
-+    cipher =3D qcrypto_cipher_new(data->alg, QCRYPTO_CIPHER_MODE_GCM,=0A=
-+                                key, nkey, &error_abort);=0A=
-+    g_assert(cipher !=3D NULL);=0A=
-+    g_assert(qcrypto_cipher_setiv(cipher, iv, niv, &error_abort) =3D=3D 0)=
-;=0A=
-+    if (naad) {=0A=
-+        g_assert(qcrypto_cipher_setaad(cipher, aad, naad, &error_abort) =
-=3D=3D 0);=0A=
-+    }=0A=
-+    g_assert(qcrypto_cipher_decrypt(cipher, ctext, out, nctext,=0A=
-+                                    &error_abort) =3D=3D 0);=0A=
-+    g_assert(qcrypto_cipher_gettag(cipher, tag, sizeof(tag),=0A=
-+                                   &error_abort) =3D=3D 0);=0A=
-+    g_assert(memcmp(tag, tagexp, ntag) !=3D 0);=0A=
-+    qcrypto_cipher_free(cipher);=0A=
-+}=0A=
-+=0A=
- int main(int argc, char **argv)=0A=
- {=0A=
-     size_t i;=0A=
-@@ -828,6 +1052,22 @@ int main(int argc, char **argv)=0A=
-         }=0A=
+ /*=0A=
+  * Perform an AES/DES/3DES ECB/CBC operation. The source and destination a=
+re=0A=
+  * either single contiguous buffers (direct access mode) or scatter-gather=
+=0A=
+@@ -712,7 +730,7 @@ static void do_crypt_operation(AspeedHACEState *s, uint=
+32_t cmd)=0A=
      }=0A=
  =0A=
-+    for (i =3D 0; i < G_N_ELEMENTS(gcm_test_data); i++) {=0A=
-+        if (qcrypto_cipher_supports(gcm_test_data[i].alg,=0A=
-+                                    QCRYPTO_CIPHER_MODE_GCM)) {=0A=
-+            g_autofree char *tamper =3D g_strdup_printf("%s/tamper",=0A=
-+                                                      gcm_test_data[i].pat=
-h);=0A=
-+=0A=
-+            g_test_add_data_func(gcm_test_data[i].path, &gcm_test_data[i],=
+     /* Fetch the IV and key from the context buffer in DRAM. */=0A=
+-    ctx_addr =3D s->regs[R_CRYPT_CONTEXT];=0A=
++    ctx_addr =3D crypt_get_addr(s, R_CRYPT_CONTEXT, R_CRYPT_CONTEXT_HI);=
 =0A=
-+                                 test_cipher_gcm);=0A=
-+            g_test_add_data_func(tamper, &gcm_test_data[i],=0A=
-+                                 test_cipher_gcm_tamper);=0A=
-+        } else {=0A=
-+            g_printerr("# skip unsupported %s:gcm\n",=0A=
-+                       QCryptoCipherAlgo_str(gcm_test_data[i].alg));=0A=
-+        }=0A=
-+    }=0A=
-+=0A=
-     if (qcrypto_cipher_supports(QCRYPTO_CIPHER_ALGO_AES_256,=0A=
-                                 QCRYPTO_CIPHER_MODE_CBC)) {=0A=
-         g_test_add_func("/crypto/cipher/null-iv",=0A=
+     if (address_space_read(&s->dram_as, ctx_addr, MEMTXATTRS_UNSPECIFIED,=
+=0A=
+                            ctx, sizeof(ctx))) {=0A=
+         qemu_log_mask(LOG_GUEST_ERROR,=0A=
+@@ -753,7 +771,7 @@ static void do_crypt_operation(AspeedHACEState *s, uint=
+32_t cmd)=0A=
+     dst_buf =3D g_malloc0(buf_len);=0A=
+ =0A=
+     /* Gather the source into the bounce buffer, per the selected mode. */=
+=0A=
+-    src_addr =3D s->regs[R_CRYPT_SRC];=0A=
++    src_addr =3D crypt_get_addr(s, R_CRYPT_SRC, R_CRYPT_SRC_HI);=0A=
+     if (sg_mode) {=0A=
+         status =3D crypt_prepare_sg(s, src_addr, src_buf, len, false);=0A=
+     } else {=0A=
+@@ -789,7 +807,7 @@ static void do_crypt_operation(AspeedHACEState *s, uint=
+32_t cmd)=0A=
+     }=0A=
+ =0A=
+     /* Scatter the result back out, per the selected mode. */=0A=
+-    dst_addr =3D s->regs[R_CRYPT_DEST];=0A=
++    dst_addr =3D crypt_get_addr(s, R_CRYPT_DEST, R_CRYPT_DEST_HI);=0A=
+     if (sg_mode) {=0A=
+         status =3D crypt_prepare_sg(s, dst_addr, dst_buf, len, true);=0A=
+     } else {=0A=
+@@ -953,6 +971,15 @@ static void aspeed_hace_write(void *opaque, hwaddr add=
+r, uint64_t data,=0A=
+     case R_HASH_KEY_BUFF_HI:=0A=
+         data &=3D ahc->key_hi_mask;=0A=
+         break;=0A=
++    case R_CRYPT_SRC_HI:=0A=
++        data &=3D ahc->src_hi_mask;=0A=
++        break;=0A=
++    case R_CRYPT_DEST_HI:=0A=
++        data &=3D ahc->dest_hi_mask;=0A=
++        break;=0A=
++    case R_CRYPT_CONTEXT_HI:=0A=
++        data &=3D ahc->key_hi_mask;=0A=
++        break;=0A=
+     default:=0A=
+         break;=0A=
+     }=0A=
 -- =0A=
 2.43.0=0A=
 
