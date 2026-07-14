@@ -4,80 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6861BC43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 08:47:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0465C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 08:53:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjYnf-0006vj-DQ; Tue, 14 Jul 2026 04:47:35 -0400
+	id 1wjYsh-0007qj-Co; Tue, 14 Jul 2026 04:52:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wjYnV-0006v5-Qx
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 04:47:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wjYnQ-0003IA-EB
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 04:47:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784018839;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=j19jvw+BnhEGZifgQmQ5oQdqvpZXcNwgifkCwiuB1b4=;
- b=fCrNXvwje4dXKiAng3GJA0hSQGysvrLhF97Ocbu6IVuAern7Xn26GMUsl7834eWIvfRied
- CO4ES1DX95bOd377VMWq7KMj2Irxwk1ROcvkX8DgKQRhDSYMSpnihK71BBEJlnaEsf9K+7
- ntulnxtpQFvuiKZr/d/bzWkxHi+NJhQ=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-615-WMXnxL99P3yOmJduoJkIHQ-1; Tue,
- 14 Jul 2026 04:47:15 -0400
-X-MC-Unique: WMXnxL99P3yOmJduoJkIHQ-1
-X-Mimecast-MFC-AGG-ID: WMXnxL99P3yOmJduoJkIHQ_1784018834
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C08D8180047F; Tue, 14 Jul 2026 08:47:13 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.163])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E26611800361; Tue, 14 Jul 2026 08:47:07 +0000 (UTC)
-Date: Tue, 14 Jul 2026 09:47:04 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Jamin Lin <jamin_lin@aspeedtech.com>
-Cc: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>,
- Troy Lee <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- Troy Lee <troy_lee@aspeedtech.com>
-Subject: Re: [PATCH v1 00/15] Support the ASPEED HACE crypto command
-Message-ID: <alX3iFRxRjVN_oSX@redhat.com>
-References: <20260714072900.3023742-1-jamin_lin@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wjYsf-0007qA-Q4
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 04:52:45 -0400
+Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wjYse-0003fS-6e
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 04:52:45 -0400
+Received: by mail-yw1-x112a.google.com with SMTP id
+ 00721157ae682-81ea9f974ebso6596207b3.2
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 01:52:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784019162; cv=none;
+ d=google.com; s=arc-20260327;
+ b=LZzcwEee6G+RtitdKC3Qz0YAKDK3YWYopWPZMKMPjs3kaD6SdJn1tZq7pr7cuz6s+0
+ vDP9uKqd16lVADPvVpz+Ely0OUkAThBzgdDYKQ4STQjgJ80tVW48wTnRWYy9j6pjzNuF
+ e9sjPfRXB2pQgsCZLLDD5I6oQsUx5s/uruwjNC/mGOlIqz8jcz4Z11aIXrQ0pR5GYRDq
+ Fz8yMH3doBt58WRRBvmbzkGr5bFfUW9Rs4B3XVZeEBsiSiWERx0YyZg5dV4AF27Qr2YG
+ fRuBTYFUI7o4p0GrHFnPfig/NKtXom8hKx6BA2ChcJDZDJvQARNe2ZAFnXE0UKUxoNE8
+ /6Aw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=QL/wKds2Y0rZ11D7iCVe8iDdXFTMhHVl5Zz6gZePVlE=;
+ fh=GyGp6ZDplNma4OjAFCTdtediX2M3UMx7SzqwKXy4QJQ=;
+ b=rOvmquXZKo1sOJpne5RephPOA5Enmb3sd4UQjYZVRXhbIcurS/ifEaBpSqYFl4ke2S
+ 9D+GOChxN63mXEx9h2fSg7auOqeHTY8ubcqKYqb9cnjLSRVoORP40pgPBu5XukfjcNTu
+ Ucr6/jT7kLF9fP9IAz1eOBfdIUbUbsQfZ3u7bJQjWWwF1ZJki052mQneT5PgiRK5iwEL
+ RyS8UDwfDPHvTKcdl4qxtAyds7K5dxo7+90dK0hOcRixLhLQ+PUrv0HzLEvN5IP0SOpj
+ vWlpxwDxLgS73gocCF/bBBUeA+G0TXbkZCNJfW7sJzz3PUXuhnXXjwzU/BBgjZoLu+uO
+ H7Yg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1784019162; x=1784623962; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=QL/wKds2Y0rZ11D7iCVe8iDdXFTMhHVl5Zz6gZePVlE=;
+ b=Bspwyma0H34Vhk10xuNmfQ1mo3eB2DDI/E+a/kXNRHbThDEkNLhqSLxPpn3+jow1Hw
+ Ud1SptKermGy7CEsJ82BUpqUmmwr0wZI2nGVrzgrL1RlrkplBLb268Pf4o0XdqepyHsy
+ HgnGFQSJRgOx6d9CU9nD93Q/ZCwlC8v9WU5x9wGH0m7+VyM7urEIat5jLWL8xverymap
+ SVmxQhCsTvEsxLElIh+tZ9Tx57wv94qJfT6pEWLT7AMy/NrvPypYAIMHi0TL2UBL+IG0
+ nCCkYa8q33G8+O5b4jy2Y6qbLYHfG3qUO+yarcnalLmlzWq1jWzwJF2qfCma135EHPuW
+ Su8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784019162; x=1784623962;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=QL/wKds2Y0rZ11D7iCVe8iDdXFTMhHVl5Zz6gZePVlE=;
+ b=guXmDzTzpeVkL+NStg1jyXgYO+o4fhnAKy5wyJ/7k7KSj4Nip/KPHMxuNN+3RnPoXZ
+ eq7pADahsKitBvYPPQa9rCJlYbQDY3LWh9adfqlDB+WOlP7GYvTVQUZG98zPIEscwnER
+ pD945nMeo3QuUaS+K8v3OmeGXiFTgfFpfFjY0mhWFs9teMCvzdO4BjAl/8DT7B8unN1F
+ XjgMxu2I3/29SveI/hJp51pl7gX/eLN2E0p8qa2CJSZn2+3V6yCzj0YLF9yYACavzRfu
+ TmujE4uLPtHcDMBxlNIazS1OUULXpBtu+Y/1Cz7sywxec5ZOE+u/oK31HR4shQP9ntgc
+ v0eA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoCsXMN3+dLMnLW0qpMHsZpSbcSWV35FCFa09CDf6RHRQApcSgWPM0MrlM6fzlE47OGQgCpg0UOzcDL@nongnu.org
+X-Gm-Message-State: AOJu0Yxuevzw4+Jfd1QUN+WT8ORSnDarLN+E6eYG5bECIKamWbcxiz93
+ bSupDwsIYG9zAnbenWsPDVkUAL6dMu0Q56gK2OeHIkHV6v4t9/BSjpJDByxARlWLzjKsCmiQjYf
+ q2pW6aN9Msi7JSoAcHfpX/ciZgIhpNJoSTLxD9lFjTg==
+X-Gm-Gg: AfdE7ckj2M73sXYycIdl+aCl0Swps52xTWekkNrezeCaFsQAsa1+QgIauayHY44J3Gd
+ vVor5uTLamkK5QhdxvcgjlASD3Nqf2ALQfOo29ruauNDxHKqOW4OmQcaVZJN9krzOzcWH1+RhiB
+ s9/Ai7I8PMpMeh6JGvdO+XfAGKcW+uv/aVv2m+VzwqLVuNNezZ0xC8F248s4ohQx9qIEfhXpbD0
+ UeBMXR/zRFbZedgSeBb0V5WFrurka25ZW1ZG2mbgsu1v0zwp6G1sjO/SWrWBtpJGbmCIUdyRPxn
+ FBys2uDcMRBMZdrYHedz2DZIqbCzypUpFFFpNNIQIQ8OmOib5V5uE2/b
+X-Received: by 2002:a05:690c:3603:b0:81c:e8ab:c4ed with SMTP id
+ 00721157ae682-81e90181e3bmr93385797b3.51.1784019162146; Tue, 14 Jul 2026
+ 01:52:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260714072900.3023742-1-jamin_lin@aspeedtech.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: permerror client-ip=170.10.129.124;
- envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+References: <tencent_06551FAEA44CD75E915AE611FCA0C99CDD09@qq.com>
+ <24329582-f5cf-41de-aabe-c2c3d54f03ea@oss.qualcomm.com>
+ <tencent_3045B23CF7A9872F29FC351E24D8F9373F07@qq.com>
+ <6c0ff642-8125-4c35-8ed0-8f89da555ee9@oss.qualcomm.com>
+In-Reply-To: <6c0ff642-8125-4c35-8ed0-8f89da555ee9@oss.qualcomm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 14 Jul 2026 09:52:30 +0100
+X-Gm-Features: AUfX_mzDxOCUO2U47PkEe6TS2caoUo6qynmsAPH3uE3iZ1T4Mvu6THCAwsO2iPY
+Message-ID: <CAFEAcA-AqgGDgRkkc4MzCcE1zeMT-aWbYoyPYsUJsYShy0-0dA@mail.gmail.com>
+Subject: Re: [PATCH v2] riscv/virt: Add optional UART1
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Yanfeng Liu <yfliu2008@qq.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,42 +119,45 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 14, 2026 at 07:29:01AM +0000, Jamin Lin wrote:
->  qapi/crypto.json                              |   4 +-
->  crypto/cipherpriv.h                           |   8 +
->  include/crypto/cipher.h                       |  36 +
->  include/hw/misc/aspeed_hace.h                 |   1 -
->  tests/qtest/aspeed-hace-utils.h               |  20 +
->  crypto/cipher.c                               |  32 +
->  hw/misc/aspeed_hace.c                         | 454 +++++++++++-
->  tests/qtest/aspeed-hace-utils.c               | 662 ++++++++++++++++++
->  tests/qtest/aspeed_hace-test.c                |  18 +
->  tests/qtest/ast2700-hace-test.c               |   9 +
->  tests/unit/test-crypto-cipher.c               | 240 +++++++
->  crypto/cipher-gcrypt.c.inc                    | 101 +++
+On Sun, 5 Jul 2026 at 23:05, Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+>
+> On 4/7/26 03:41, Yanfeng Liu wrote:
+> >
+> > Philippe,
+> >
+> > The v1 always creates UART1 carelessly, then Peter suggested following
+> > 5d8a250f9068 (openrisc) and e7100972f2 (arm) to reduce guest breakage.
+>
+> Oh I missed that. I'm confused because I thought not checking for
+> backend use of a chardev (in particular calling serial_hd) was part
+> of Peter's recommendations, since he did that cleanup years ago.
 
-Both nettle and gnutls also support GCM mode, so can you impl those
-too.
+Where we're modelling a real piece of hardware that always has,
+say, two UARTs, we want to always create both UARTs (because they're
+always there in the real hardware, whether there's a serial cable
+plugged into them or not). Having the chardev code handle "backend
+is NULL" as equivalent to "this is the do-nothing backend" lets us
+avoid unnecessary conditionals in the board code.
 
->  .../aarch64/test_aspeed_ast2700a1.py          |   5 -
->  .../aarch64/test_aspeed_ast2700a2.py          |   5 -
->  .../aarch64/test_aspeed_ast2700fc.py          |   5 -
->  15 files changed, 1563 insertions(+), 37 deletions(-)
-> 
-> -- 
-> 2.43.0
-> 
-> 
+For "virtual" board types where it's QEMU defining what they are,
+the situation is a little different. Ideally we'd do the simple
+thing, i.e. "just create all the devices", but where there's
+existing guest software that makes assumptions about how older
+versions of QEMU used to behave and the number of users of the
+board type is big enough that we care about not breaking that,
+we sometimes need to do something else. The "only create the
+second UART if the user puts another -serial option on the
+command line" was the best idea I could come up with for letting
+the user opt into the extra functionality if they needed it.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+(If we have another future architecture that creates a "virt"
+board type we should make sure we have it create at least two
+UARTs right from the beginning, because we've now made this
+mistake twice :-))
 
+-- PMM
 
