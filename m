@@ -4,130 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 452CBC44507
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 19:36:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEBDCC44507
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 19:36:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjiv5-0001ZE-Oy; Tue, 14 Jul 2026 15:35:55 -0400
+	id 1wjivG-0001aX-QO; Tue, 14 Jul 2026 15:36:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wjiv4-0001Z6-V0
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 15:35:54 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wjivE-0001Zw-8W
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 15:36:04 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wjiv3-00055l-2x
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 15:35:54 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ id 1wjivC-00056A-EF
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 15:36:03 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66EIxKaF1481546
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 19:35:52 GMT
+ 66EIwKiM1137063
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 19:36:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Wi/yH2BAkmWSY8q/5WbL83633G2Lv6HztDay1MN7yEE=; b=Z/6heRxQMkB5oRYY
- 1CiCqcVIVKK7uH+M6nnS6pazAL5wVgVYwFDoUzIRM0fIO05lYvNT1xy3GCkK5ew1
- g2MR7gmo7Fr1NQqmzmDnUj9/iy4JQDrlM8BL6iFyIw28Rl9yFKIV8x8tvh2sfnhQ
- qBijrInN/Jl5++cMLlnPDBjwAzstTFhCpP5x3iShIjuJ8XDX8uxWqlEFzaMP58EK
- wMP2GSMKGg28+AU6eieFKgnIKug457eTXQ/ubNjY+K9vU9nZ7ghrAhyQfRCWsyJf
- PXqu0nWj2PBJvWHge4cl6GPXeMTk4UKkCBQW6FhsWTVDeFWsJw1hef75EO8n08nE
- aJaptQ==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fdgudjt14-1
+ TTTUEP9IQFjwJMoFTOSlQhorz1cluF6zUO4vNlxDSeY=; b=peEAJIgpeXzvdhQU
+ lFBXrHU6l/IOhXhRBZgs5h/vJZgIHYoH1hYcXNHrpDs4h8wYGA69VikiPD4KmKDq
+ pp3J9LCFHonIf0yuWUEIC8pbXrssQJS1Tq+byHLW4/dabI/8hKulkgUeFPICjJcX
+ 2ytvZhQV/ujADybyMh43WZBYIdE4HFSoEQBbfLIEnRnY7g9bgVlkgxW0G+m9e//y
+ c506GdaNuxkU8B/jmb+wf8Fsfa4bzmpsohjG3jZiDnaOD9H3VE0Z2RhoxKof7STx
+ Hxs7qGX97OHkuPGMMlgw+ZsoHnBqJ5qyA1jEHEs8lbE8Y0xeRLkjQLmO87t5AfiX
+ Pbrx9Q==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fds9mgfsv-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 19:35:51 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51c0d6a2f4cso73393831cf.3
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 12:35:51 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 19:36:00 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8f18c4d1f82so93308226d6.2
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 12:36:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784057751; x=1784662551; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1784057760; x=1784662560; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Wi/yH2BAkmWSY8q/5WbL83633G2Lv6HztDay1MN7yEE=;
- b=jW1flvxqCqVIX4Ge1qWaiP91Sxu11F+Pq+VWtkPTOGxM7Vpu08zuqvzSX8ikaOwIeI
- 3MAYKx7yJqWkYKbpc6H6l7y4k/3nTllQoKxJZkpPEgNJEHz0Izq16ZF9F7wiRNg0oeeJ
- E9rg7NuNR+bnNBgzRU1fBTtn4VRd7KpTDVk2oh5Ps+FncH2OEx7crv2aqRfidsqyOwPR
- rT/DOPp0MwZMfQMXD/oZCHYrP/7Ze99e26rlfnvxZjnC4YJFGyUp9cDz3CBeAL117Iqo
- YFrzJLT7WJb3wbmfFW3sdd9Db5fMEE7cJvDBO6juvUuXUWmEAdzpHAoT0sDIQcJtI0KH
- pYKQ==
+ bh=TTTUEP9IQFjwJMoFTOSlQhorz1cluF6zUO4vNlxDSeY=;
+ b=gtYT+5k9sC6Wvt9GfZehzv/G+71oj+IQV63LGmxJGaZXVw8PT3tBQ9G9Y8bahSRJd/
+ TvNAmOvWqOA8Oog+QGFOh4zrb3smHAU3Bc+m5M7Hye4WKmQhICS+PdVdiYxbJwCMnNGL
+ IKLzDz2A1Xo5oxCqkniLU3wGeeLAVp1CdZvcvAggRJvN5KQwJhQcY6jWp18USGTliYyb
+ IKijqsBFQtvIaBmwsmVVVPw9adG9cJhbPimo0cHjmazZDTGTJuZOplx+o6poEJHBATO6
+ YPSsQVIxJK3PS96EGbdTGlsEhfkBeTslpl8ucnuC3/tln5rs5E0hVgDq1gEWjMA20pEy
+ Yk0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784057751; x=1784662551;
+ d=1e100.net; s=20251104; t=1784057760; x=1784662560;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=Wi/yH2BAkmWSY8q/5WbL83633G2Lv6HztDay1MN7yEE=;
- b=SqI9UiW3Tpnov1c9pTCbpCL3Ddue/fn/NEctmwGh41QRDdugjEwJBPh13BQ120iL/C
- wtWIHa4CsulIq1uOv/2zwHjdkFrFMkbGGV2EqkT9hETNvcUXngjJnpgq9iFdK7ZAf1tY
- IYAoN5IfD6d5VGGBVxe94ZXHizvQYR5X/dCW7k1GsuKv4PDU9eQgXrOoiUaOGM1KZ8Ue
- NcHUNSN+gizD2pbSZzrW2K1LIEatbSbfoL9WikySMhHJd69ze37cQIjW2szJsjrKiz8o
- fV35g5exYkF9jor0PMTuqwuXJxp8NOPtzLXMeEx89bpFDfr9OKniva/Cm49y9TqcLb8n
- ao4A==
-X-Gm-Message-State: AOJu0YwTj4Sk38rtEzAx2FhKXHEVWa+2oMmOMUPMyD2wYqqCRyG22WTy
- lbFGRHidihT83WO06itZMV4AOAgpk0kVN5c7JBik1VFdEj6AykyrF9hOs1GbTNNz1PeR0eNZIYF
- Kczcd/YL/pcXAgYFCO1ePCRxCQ/keTncFw704J2N8s9i7UdhTFBTWUKhQiPNctilFow==
-X-Gm-Gg: AfdE7cm0SRTP5tUW/glrCBpDlPpMe5pDfhZGQRMvHlxF5bldC3eGR7Mpj5eEHsDQPD5
- jAbjlxePWJHE/WKU8SqgSINm/OjeI6It/i3QGuHFu3dUJveU0npyExNsAfJouIapxCebmTKXErW
- G9rB0AbP/Irwh2IoEgDTjCIJgdZZVlHYwfL+ZaaTusHWHvLnHRp+7mZ+V1mS0iz3dDmi/WIncev
- N7FhyY7dFSZ6fJIRCFGydTIqvCWcbiGT906+q6zSxr64sVjUU6f5KbkIV2J4Mgg8SKdRlJ7dd1j
- ppHMO8LFN0Uli+WuM0uZfIQgvpDyN7JI+Vdy8t1K8FUKlmFDDq/KR9S6rhfZr6sKxv6p+5L5PgH
- RVMC+I/5tWwRiVjs6SC+iMBVxLfhixpW+nGEKUTX65taCvVjNCLlQU9LxaURVlZVJapkk
-X-Received: by 2002:a05:622a:1c18:b0:51c:7b12:6000 with SMTP id
- d75a77b69052e-51e4f22de1fmr204061cf.76.1784057751247; 
- Tue, 14 Jul 2026 12:35:51 -0700 (PDT)
-X-Received: by 2002:a05:622a:1c18:b0:51c:7b12:6000 with SMTP id
- d75a77b69052e-51e4f22de1fmr203671cf.76.1784057750475; 
- Tue, 14 Jul 2026 12:35:50 -0700 (PDT)
+ bh=TTTUEP9IQFjwJMoFTOSlQhorz1cluF6zUO4vNlxDSeY=;
+ b=ZhP+ayFGFs064S+grXC7to0KTHGbMzVWw8c3ACKDwwDrqGKfglpaAWV9dc1jhCvw9z
+ xJTGmKTZmfdyOS7Zu4p3TMqhvYyqAoGUx2zuwL5YvWSO4yK1bkqNgFEFea1vPSCZ+YFN
+ vpqFA3B8fdVXqTu2ra+1YofyJzpKQNt8CLAu0NE/VvgITkgDCgXyJgBysPpvaFYB1354
+ /3CC0rD45zCS81FS3A2YGXRSVbqbZOCF0TKP79hpf7cvesWt+VF8wbZMqKphHf2RvcPQ
+ wGNFWK7tb9Hdd7NF2DCn7JT1nsuyQr+HNfwoKayReLmi9nuoBdt8Wyu0kgEWUb2tRLRm
+ 8d7g==
+X-Gm-Message-State: AOJu0YwRJISgnUlBObXhCEmDWzEONq+Jgq+Fs1AQRuQ4bs53tPJMOzqt
+ RB+t7zMrPP0F5oy46gJn2L1t7WyMhiC3qYB9aTb5R0eXHUmb4EkDA6wGfMH69C8Clb/1GLKUiMu
+ YMARdO141vOqI4DFVyHCMXz5XMysdEfBi8cu5fn4R6NZ7vg5C56Z8djMNimGK5qW3pg==
+X-Gm-Gg: AfdE7cmsBUFPjKYLqH7w5y6HDBxieSNICeSP4o6//Bc73PHx4fdq11tM+5Mq3+QVzCC
+ 8cpOEbY49HC59sOMWz81tBhn7iZUhBarswAd+B4TckEz3yboW+5lIaCUqU2oPXus7jPbmcPyIut
+ SsAKKyUtsBOgEkIxE99G4+3QbmvilEj9nlp/iJRdSx59hCpPTNJ3VGJ209Yy5CatJ+ZPKlUfI/N
+ EW+MXpWithykhX8TIDgrv/IUn7avydQ0iXpsVWirf97p9ZoEj6ojMLvqBUWV90VSIpfo8XUj/lz
+ xWGwYOg+6BCuj++Elw93JwuT6bN32iX18Vv0BTNhsuiFnUheCttSZrMEAPQsfB2XLZym9A37qsf
+ hPGq7HtFv6nQW/KMU/1M13LMZj39Uv9G85LTEVWUOdI+QyeEgXZtxO9mbuBWkgcD/h4/C
+X-Received: by 2002:a05:622a:2b0a:b0:51a:8c9a:8fad with SMTP id
+ d75a77b69052e-51e4f0fd508mr286731cf.62.1784057759735; 
+ Tue, 14 Jul 2026 12:35:59 -0700 (PDT)
+X-Received: by 2002:a05:622a:2b0a:b0:51a:8c9a:8fad with SMTP id
+ d75a77b69052e-51e4f0fd508mr285961cf.62.1784057758160; 
+ Tue, 14 Jul 2026 12:35:58 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4950873270esm89620715e9.6.2026.07.14.12.35.49
+ 5b1f17b1804b1-4950a32c65asm95707755e9.14.2026.07.14.12.35.56
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 14 Jul 2026 12:35:49 -0700 (PDT)
+ Tue, 14 Jul 2026 12:35:57 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 04/13] hw/scsi/vmw_pvscsi: translate data endianness
-Date: Tue, 14 Jul 2026 21:35:08 +0200
-Message-ID: <20260714193517.60708-5-philmd@oss.qualcomm.com>
+Subject: [PULL 05/13] hw/scsi/vmw_pvscsi: add a comment to explain the
+ endianness
+Date: Tue, 14 Jul 2026 21:35:09 +0200
+Message-ID: <20260714193517.60708-6-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260714193517.60708-1-philmd@oss.qualcomm.com>
 References: <20260714193517.60708-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: UGqz76woKj9P9O-5XoTnNlrvPo6Nm1wP
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDIwMiBTYWx0ZWRfX3EdIwhDXHxBm
- thXJYykuU/I+W2qEke8/3wNyYbXPmBF4ChlazK4XjOOu9eNHIpeND/HUR6ymn1dOVSWyCWET1U3
- x5yq4SADWJqp5Ir93OVGBddDSLuBLqqPTnZX/321ylvqTG5SUI3RZI33+rvgWYsfAyMsumI5nkj
- jhWx5n0yNEbUconf5r0sW1lUagJnQq+BmJ22aKeTashVcx2thWANTZC4DbGyjYYdgyZcgC/b3+j
- a3z9loZQW+dmKEtnQSfSj52oUjDKquPwrFg9sSsdbXyGr6cs5Mi2V7dzrNXwJ7HGB2wQaq36sek
- OCaDRFksUjRHqMgP5ajAt6/Uq/TJbXWP46s217WDfqaDiUG0MraHQREo3RzmuzbdyLqhdh6wKSD
- HT1k13Rc0lAhXRbRlXA2zEOWvA9j2woTRuzLp2cK1yWFWWxey3tLHzcQLdmm4RGClWkGp1UtrcO
- fk+Xt8DyHSn9AOAtMpg==
-X-Authority-Analysis: v=2.4 cv=T/O8ifKQ c=1 sm=1 tr=0 ts=6a568f98 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=bo06jjfrt4HcdEXMXB8A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDIwMiBTYWx0ZWRfX3pgsqJ019/Fe
- TqZ9ih24ChMdj1FsLMhcKDoiwWSb+EQbEyVBgiuTX+pOBV5+85EdfackqWIGG2HTiBhCrPLyZeW
- V2fHqC31ieoiwry7jgdEkAgDGjJzkxo=
-X-Proofpoint-ORIG-GUID: UGqz76woKj9P9O-5XoTnNlrvPo6Nm1wP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDIwMiBTYWx0ZWRfX4hJBWzOJ9Taa
+ wTkyRElQZtT0zmsn465PwFX7+vsOBRzLkjLklsmxbXj+o6SLEh8lIr7WycwIk7r6K34w0xKMsm/
+ 2r62NPA1/plI/eRDf6i5o+jYDiHuGH4cs5hWCdI1BTsMnci9a05w9aNCtL/GF4Vf7JIy9cJcdLb
+ 31obmvXyif6oU50Ba3hsxvJQRNJ46o8s9JDQyR9wNnMUHaL/0cuI6EVhAS2GKM134xFVmK/juKo
+ j1fgFOdLPytwDpb+WtML6vQMH8EbJfjtaFs3zQmb0RNWFPqDL4Z6PsI8XU9+5YkbnyjyQMPjr/h
+ 7UANwyxYdhFBrkJllnCEL5pTEZvG+6dZWWOOaZncBfBMEoeviJOAfK+tELnTTKbmdeDFW6OLgd9
+ GxrQ64w3NcqYZNC4aRdxNqgaHpwSFvIyAGp+yi5uJ7rS56XCHxU7g+FGeKfv0HBNvUUjFTLGjQW
+ O2uH+koyWjgtAa5PeUg==
+X-Proofpoint-ORIG-GUID: noERTdC17n-31Pgis8yP0vVvU2jVEjyK
+X-Proofpoint-GUID: noERTdC17n-31Pgis8yP0vVvU2jVEjyK
+X-Authority-Analysis: v=2.4 cv=E+79Y6dl c=1 sm=1 tr=0 ts=6a568fa0 cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=yIBoU1TpJL-JTJq4:21 a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=DJpcGTmdVt4CTyJn9g5Z:22 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8
+ a=e470PcS5NtvczxIusEMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=pJ04lnu7RYOZP9TFuWaZ:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDIwMiBTYWx0ZWRfX8J88xtr+Y5Pm
+ kVJZL2RD74NablDP3yht9/0eT1IVySncuo53A3S/eSjlu6uRs9jlTe78WssBqeSH/egWwpP6Cem
+ hw1glBzHRs+5uUZLLAGKzm+rCa8BIVU=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-14_05,2026-07-14_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 malwarescore=0 adultscore=0 spamscore=0 phishscore=0
- clxscore=1015 bulkscore=0 suspectscore=0 impostorscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607140202
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 clxscore=1015
+ lowpriorityscore=0 spamscore=0 impostorscore=0 adultscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607140202
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -152,154 +155,45 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Miao Wang <shankerwangmiao@gmail.com>
 
-This patch improves the implementation of the pvscsi device by
-translating the endianness of the data sent or received from the guest.
-This ensures pvscsi can work on big-endian hosts with little-endian
-guests.
+Add a comment to explain the endianness of the pvscsi device. We have
+no information about the endianness should be little-endian or CPU
+native endian because the current driver code is designed to work only
+on x86 and is not endianness aware. We assume that the pvscsi device is
+implicitly little-endian.
 
-This patch assumes, although not having found any specifications, that
-the pvscsi device is little-endian, since pvscsi seems to be used only
-on x86 platforms, which are little-endian.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
-Message-ID: <20260710-pvscsi-endianness-v3-1-27fe1c4d1f6e@gmail.com>
-[PMD: Rebased on top of commit cb30b8758d4 physmem API conversion]
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20260710-pvscsi-endianness-v3-2-27fe1c4d1f6e@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/scsi/vmw_pvscsi.c | 57 +++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 56 insertions(+), 1 deletion(-)
+ hw/scsi/vmw_pvscsi.h | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/hw/scsi/vmw_pvscsi.c b/hw/scsi/vmw_pvscsi.c
-index 4398aa54990..05f93171cd7 100644
---- a/hw/scsi/vmw_pvscsi.c
-+++ b/hw/scsi/vmw_pvscsi.c
-@@ -392,9 +392,18 @@ static void
- pvscsi_cmp_ring_put(PVSCSIState *s, struct PVSCSIRingCmpDesc *cmp_desc)
- {
-     hwaddr cmp_descr_pa;
-+    PVSCSIRingCmpDesc cmp_desc_conv;
+diff --git a/hw/scsi/vmw_pvscsi.h b/hw/scsi/vmw_pvscsi.h
+index a3ae517e199..defff9e179e 100644
+--- a/hw/scsi/vmw_pvscsi.h
++++ b/hw/scsi/vmw_pvscsi.h
+@@ -108,6 +108,20 @@ enum PVSCSICommands {
+ #define PVSCSI_COMMAND_PROCESSING_FAILED     (-1)
+ #define PVSCSI_COMMAND_NOT_ENOUGH_DATA       (-2)
  
-     cmp_descr_pa = pvscsi_ring_pop_cmp_descr(&s->rings);
-     trace_pvscsi_cmp_ring_put(cmp_descr_pa);
-+    cmp_desc_conv = (struct PVSCSIRingCmpDesc) {
-+        .context = cpu_to_le64(cmp_desc->context),
-+        .dataLen = cpu_to_le64(cmp_desc->dataLen),
-+        .senseLen = cpu_to_le32(cmp_desc->senseLen),
-+        .hostStatus = cpu_to_le16(cmp_desc->hostStatus),
-+        .scsiStatus = cpu_to_le16(cmp_desc->scsiStatus),
-+    };
-+    cmp_desc = &cmp_desc_conv;
-     physical_memory_write(cmp_descr_pa, cmp_desc, sizeof(*cmp_desc));
- }
- 
-@@ -402,9 +411,18 @@ static void
- pvscsi_msg_ring_put(PVSCSIState *s, struct PVSCSIRingMsgDesc *msg_desc)
- {
-     hwaddr msg_descr_pa;
-+    PVSCSIRingMsgDesc msg_desc_conv;
-+    int i;
- 
-     msg_descr_pa = pvscsi_ring_pop_msg_descr(&s->rings);
-     trace_pvscsi_msg_ring_put(msg_descr_pa);
-+    msg_desc_conv = (PVSCSIRingMsgDesc) {
-+        .type = cpu_to_le32(msg_desc->type),
-+    };
-+    for (i = 0; i < ARRAY_SIZE(msg_desc->args); i++) {
-+        msg_desc_conv.args[i] = cpu_to_le32(msg_desc->args[i]);
-+    }
-+    msg_desc = &msg_desc_conv;
-     physical_memory_write(msg_descr_pa, msg_desc, sizeof(*msg_desc));
- }
- 
-@@ -481,6 +499,9 @@ pvscsi_get_next_sg_elem(PVSCSISGState *sg)
-     struct PVSCSISGElement elem;
- 
-     physical_memory_read(sg->elemAddr, &elem, sizeof(elem));
-+    elem.addr = le64_to_cpu(elem.addr);
-+    elem.length = le32_to_cpu(elem.length);
-+    elem.flags = le32_to_cpu(elem.flags);
-     if ((elem.flags & ~PVSCSI_KNOWN_FLAGS) != 0) {
-         /*
-             * There is PVSCSI_SGE_FLAG_CHAIN_ELEMENT flag described in
-@@ -759,6 +780,12 @@ pvscsi_process_io(PVSCSIState *s)
- 
-         trace_pvscsi_process_io(next_descr_pa);
-         physical_memory_read(next_descr_pa, &descr, sizeof(descr));
-+        descr.context = le64_to_cpu(descr.context);
-+        descr.dataAddr = le64_to_cpu(descr.dataAddr);
-+        descr.dataLen = le64_to_cpu(descr.dataLen);
-+        descr.senseAddr = le64_to_cpu(descr.senseAddr);
-+        descr.senseLen = le32_to_cpu(descr.senseLen);
-+        descr.flags = le32_to_cpu(descr.flags);
-         pvscsi_process_request_descriptor(s, &descr);
-     }
- 
-@@ -808,6 +835,17 @@ pvscsi_on_cmd_setup_rings(PVSCSIState *s)
- {
-     PVSCSICmdDescSetupRings *rc =
-         (PVSCSICmdDescSetupRings *) s->curr_cmd_data;
-+    PVSCSICmdDescSetupRings translated;
-+    int i;
++/*
++ * About endianess for the below structs:
++ *
++ * These structs are used to describe the data that is exchanged between the
++ * guest and the PVSCSI device. The endianess of the fields in these structs
++ * is not defined by any standard. The current implemented drivers are designed
++ * to only work on x86 architecture, so there is no endianess awareness in the
++ * drivers and thus we have no idea whether the fields should be in little-
++ * endian or target native endian format.
++ *
++ * Considering the above, we assume that PVSCSI is implicitly little-endian and
++ * expect the fields in these structs to be in little-endian format.
++ */
 +
-+    translated.reqRingNumPages = le32_to_cpu(rc->reqRingNumPages);
-+    translated.cmpRingNumPages = le32_to_cpu(rc->cmpRingNumPages);
-+    translated.ringsStatePPN = le64_to_cpu(rc->ringsStatePPN);
-+    for (i = 0; i < PVSCSI_SETUP_RINGS_MAX_NUM_PAGES; i++) {
-+        translated.reqRingPPNs[i] = le64_to_cpu(rc->reqRingPPNs[i]);
-+        translated.cmpRingPPNs[i] = le64_to_cpu(rc->cmpRingPPNs[i]);
-+    }
-+    rc = &translated;
- 
-     trace_pvscsi_on_cmd_arrived("PVSCSI_CMD_SETUP_RINGS");
- 
-@@ -831,6 +869,11 @@ pvscsi_on_cmd_abort(PVSCSIState *s)
-     PVSCSICmdDescAbortCmd *cmd = (PVSCSICmdDescAbortCmd *) s->curr_cmd_data;
-     PVSCSIRequest *r, *next;
- 
-+    PVSCSICmdDescAbortCmd translated = *cmd;
-+    translated.context = le32_to_cpu(cmd->context);
-+    translated.target = le32_to_cpu(cmd->target);
-+    cmd = &translated;
-+
-     trace_pvscsi_on_cmd_abort(cmd->context, cmd->target);
- 
-     QTAILQ_FOREACH_SAFE(r, &s->pending_queue, next, next) {
-@@ -862,6 +905,10 @@ pvscsi_on_cmd_reset_device(PVSCSIState *s)
-         (struct PVSCSICmdDescResetDevice *) s->curr_cmd_data;
-     SCSIDevice *sdev;
- 
-+    PVSCSICmdDescResetDevice translated = *cmd;
-+    translated.target = le32_to_cpu(cmd->target);
-+    cmd = &translated;
-+
-     sdev = pvscsi_device_find(s, 0, cmd->target, cmd->lun, &target_lun);
- 
-     trace_pvscsi_on_cmd_reset_dev(cmd->target, (int) target_lun, sdev);
-@@ -892,6 +939,14 @@ pvscsi_on_cmd_setup_msg_ring(PVSCSIState *s)
- {
-     PVSCSICmdDescSetupMsgRing *rc =
-         (PVSCSICmdDescSetupMsgRing *) s->curr_cmd_data;
-+    PVSCSICmdDescSetupMsgRing translated = *rc;
-+    int i;
-+
-+    translated.numPages = le32_to_cpu(rc->numPages);
-+    for (i = 0; i < PVSCSI_SETUP_MSG_RING_MAX_NUM_PAGES; i++) {
-+        translated.ringPPNs[i] = le64_to_cpu(rc->ringPPNs[i]);
-+    }
-+    rc = &translated;
- 
-     trace_pvscsi_on_cmd_arrived("PVSCSI_CMD_SETUP_MSG_RING");
- 
-@@ -994,7 +1049,7 @@ pvscsi_on_command_data(PVSCSIState *s, uint32_t value)
-     size_t bytes_arrived = s->curr_cmd_data_cntr * sizeof(uint32_t);
- 
-     assert(bytes_arrived < sizeof(s->curr_cmd_data));
--    s->curr_cmd_data[s->curr_cmd_data_cntr++] = value;
-+    s->curr_cmd_data[s->curr_cmd_data_cntr++] = cpu_to_le32(value);
- 
-     pvscsi_do_command_processing(s);
- }
+ /*
+  * Command descriptor for PVSCSI_CMD_RESET_DEVICE --
+  */
 -- 
 2.53.0
 
