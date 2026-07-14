@@ -4,109 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E89AC4450A
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 19:21:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83C76C44507
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 19:23:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjifj-0005Js-NH; Tue, 14 Jul 2026 15:20:03 -0400
+	id 1wjij0-0007Xg-5r; Tue, 14 Jul 2026 15:23:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wjifi-0005IY-1X; Tue, 14 Jul 2026 15:20:02 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wjiiy-0007X1-CE
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 15:23:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wjiff-0002I2-Iv; Tue, 14 Jul 2026 15:20:01 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66EJBrcX2112830; Tue, 14 Jul 2026 19:19:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=Pz0IxQS4TCsskW5+b
- RjwlEEVwQ/C4mNq4ojIyQfm7Y0=; b=NkILq+ntDBmLsf8VGBm521dzS0J7lrbMe
- ErGEDCy+BbxuMfAoNCsOCrdAR1UcisyDoBKHodKXQkIAlRaz6XgFPWWlvfSPj4yU
- YxfYzRa1O9YTA0VjxuwzUC9eQAJuSY0bKxqnF9nTyvKjRHw4dMbDY68CYyvlUlU/
- +8KBfONQnxzNWIJem3PQ/yoxMoM91JszvH5r7MBS5PZjKWK8wGGIwBMK4PTNG6hg
- NWgvNoVG5Q00ofhKH8Shc0IULx1UTgB2Bqi7BGaetQkNlCz+qEAJsuDmuII6n5me
- fb0l2/7ulk8cr+H9OYakCqk+r3rOwyCLxxXsCcmZZFDu6sVQfNQfg==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbexwqck2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 Jul 2026 19:19:56 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66EJJg5J020161;
- Tue, 14 Jul 2026 19:19:55 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc15jvce2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 Jul 2026 19:19:55 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66EJJpEq51118374
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 14 Jul 2026 19:19:51 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2F0122004F;
- Tue, 14 Jul 2026 19:19:51 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B7C4220043;
- Tue, 14 Jul 2026 19:19:50 +0000 (GMT)
-Received: from li-d2cd37cc-2ca3-11b2-a85c-84ed3706e5a0.ibm.com (unknown
- [9.111.27.233]) by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 14 Jul 2026 19:19:50 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Richard Henderson <richard.henderson@linaro.org>,
- Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>
-Cc: David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org, Harald Freudenberger <freude@linux.ibm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v2 2/2] tests/tcg/s390x: Test PRNO TRNG interruptibility
-Date: Tue, 14 Jul 2026 21:17:19 +0200
-Message-ID: <20260714191948.342204-3-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260714191948.342204-1-iii@linux.ibm.com>
-References: <20260714191948.342204-1-iii@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wjiiw-0002nZ-8W
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 15:23:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784057001;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6zWzMgo06kWcGF07rs2Rniq9AIuMujBPGLRe5QvUvGA=;
+ b=G/Rz4Zn4w4XAz9N4OdKGkz+HzueAuARUSBaCEh6Q5Re0b3ShfxGccDpcHYwTGKl3ZmLfoc
+ k5xW62Q25jH6wbwJIPxsMviajty86kUifJNlTRd0DzFHdWfNmAHY7BjghlWum6z9eH0aSO
+ lJG+KDU7jOLdC5XxrvNQps2loz4dxwk=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-453-HTR6R_ykN2-lgWa4NxOFhg-1; Tue, 14 Jul 2026 15:23:19 -0400
+X-MC-Unique: HTR6R_ykN2-lgWa4NxOFhg-1
+X-Mimecast-MFC-AGG-ID: HTR6R_ykN2-lgWa4NxOFhg_1784056998
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-476608a9fefso1126026f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 12:23:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1784056998; x=1784661798; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=6zWzMgo06kWcGF07rs2Rniq9AIuMujBPGLRe5QvUvGA=;
+ b=luVC7RNvn3NkMVm19jABG8bZH89++CDY17HHDZ5ZMhflBq0yLY+exmTfaLkWjTTyQf
+ sbt80NMgqq4jDFdFfi2eXJWRAWoHUxIRUsm6CyYfsZ4VixNocTXBaI3vRabjdBns8zrD
+ RlbKVx43BC4iQ1uKiDuWEPLFQdnjgnW+YStgETDbUd+3LuqfcGEOizpaNhZp5MxA2Vlg
+ 4AxqItteQ6R8j62mTbqvI2wKSQOfP80rdX8V4PxcClcElqiDkB80HFIMohZpyXEn0kjK
+ LVQp/lpr0gTQdI8tAQgb7GLSGtMrTkYmZX3JpIG+/q0CRuIBxIe6arKnL9qlEii7msSF
+ OSSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784056998; x=1784661798;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=6zWzMgo06kWcGF07rs2Rniq9AIuMujBPGLRe5QvUvGA=;
+ b=HfvUYnY1/IfFwDIwbiL/I10+ClFWv0ghX+3io6ELBbwbuL/7JawxCqV8LJu72DdFLx
+ +cR58Au6RAYjb+KCAkW6tx+rUCVBKp8nqVdMDF2rvM4vQU1PYnalUaZZAvg+Cpn5xWCo
+ 0Oyzl8fYbKD0MwEKAAH4cX780xqvVMQkQ/31+mBaxe+MaOu6dKQgh8P/hicl1BWT61uK
+ 6tUJOUno7Npj+vpU1nqo/Hl7tM2Fc/HZiIGMcTBgIp/jmynwsh1Q4br0P7+3AlWD8lvM
+ +qO4JuSV31dtOJeFlZtBTZNoSCP8IQ62l3mdMZnZqV/CByCiVFUQJ9TgjS1FVNNafQ9Z
+ rX+g==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rr1bJDJ26P8JN8HK9eFFiOOlRfwc0+88X2YZWdVaeZATgm53q1sC8QJHtN9OOHHSdVRh2s3gLGwXIeF@nongnu.org
+X-Gm-Message-State: AOJu0YxmCPHHO3JFCkZE2xc7fLvOXfM5anoxwrjDJNOiB8eyGk6FAlg5
+ lzV1ovVjBIR5MqktVuzkRnN0xWx/jBbRh8XAFgUjhhwxwGuoC0hO2wPzz2qsi2tTYrOBJibI5EZ
+ vFRYIrSPkE/W+98Y+Gd8N3OPJE8t1+1PeKQWB3VyB9q3gfro3etUoqnIN
+X-Gm-Gg: AfdE7cmBbuBQjDoMHAazk/CFww0fEbLiwd9Uuol2j/Q8HDT6or4fDU5led1QhYstjUf
+ EpDU2aQQpXvBMR8tlTTENtcLKO49DZFfOmfyoJLSAze3QlPrbLiQphbCxskhBA34bUvo+5ZSpyI
+ K+mR/XmftqR5pYBR9AvGsXk/vWCKnBmlCIHdBU0AW6UTNP+Onw8KCuMJgGs9u13DZddqslZh9Th
+ vKx5H9HhWU0njTj5Mp94tYUZCbQMaXHiMQOFg0+Y/fKV4wU5JNfAVfTvkN7TrQT8fvCjU4CftoV
+ B8L3dZf9kQ+H2ShPggOgnbNSPJlMaBK+g99hNLFk2uO0a3XkML5c1s78tTtoBgz8Uw/kES8+o0U
+ 06dKQNlNk7FsmmTKBP4GWspPEjhqQ+CoLkOE=
+X-Received: by 2002:a05:6000:25e7:b0:46f:8561:fe60 with SMTP id
+ ffacd0b85a97d-47ef697ed0amr20542533f8f.17.1784056997885; 
+ Tue, 14 Jul 2026 12:23:17 -0700 (PDT)
+X-Received: by 2002:a05:6000:25e7:b0:46f:8561:fe60 with SMTP id
+ ffacd0b85a97d-47ef697ed0amr20542512f8f.17.1784056997337; 
+ Tue, 14 Jul 2026 12:23:17 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-24-117.inter.net.il. [80.230.24.117])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f464a973fsm11294876f8f.17.2026.07.14.12.23.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 14 Jul 2026 12:23:16 -0700 (PDT)
+Date: Tue, 14 Jul 2026 15:23:13 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org, alistair23@gmail.com, qemu-riscv@nongnu.org,
+ bin.meng@processmission.com, mzamazal@redhat.com, sgarzare@redhat.com
+Subject: Re: [PATCH 2/2] MAINTAINERS: Mark "vhost-user-scmi" orphaned
+Message-ID: <20260714151629-mutt-send-email-mst@kernel.org>
+References: <20260710114305.2961898-1-armbru@redhat.com>
+ <20260710114305.2961898-3-armbru@redhat.com>
+ <20260711035848-mutt-send-email-mst@kernel.org>
+ <65079ad4-3ab9-4ad6-b683-09d46c72b266@oss.qualcomm.com>
+ <20260713025003-mutt-send-email-mst@kernel.org>
+ <650b9d5c-ca79-447c-b91d-a83d017f42a6@oss.qualcomm.com>
+ <87mrvvtibg.fsf@pond.sub.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: fSJYkY7hDeRVhLJO_NGnkvep2v0BaJu2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDE5OCBTYWx0ZWRfX9DrDDcPuqS9C
- qg+T75109qX4N1XfIj/tGTcKW0LGg9ldieSDQYA1mGm+lufU+8E2cwZBc9+ES1l5x4+2WTpm5tC
- sqyK3XWUxIdxPJFkKXq2COlCv+Vau1D00wT8Pr+knh/AoPF81rg3U5abFTlXW9vgkAg30HmRsJh
- 7iwrptOD2zBqE7oe9N+XPnt9lVdAKt9iVM+ZQD9bGC6hZRFnkxmsCFlBF6ysZnxrhELZNyAZ+pb
- 0MhBFql39DfQA9O0pKaa6XPCH/1J1X8XXwvPI6DQJ+Wm6ghGvawKsALv/GeJ/08PRCvGWmnvcp6
- cBQNscIepXS1pkbn2nwmrzusWPZaJDmLSrh0HNnlnL7rV42Ks2euhjZDain8GzDV05rbDwoCFst
- X4rDp3sJPi9JtMnhqUUbKP9tjVgUpKsmgDPbKPs0PuRLVqQktM/S6n0S9Wk3PO3JFH63dWGeygk
- 40pOPwCqyvTsnBQ+SUg==
-X-Authority-Analysis: v=2.4 cv=XJoAjwhE c=1 sm=1 tr=0 ts=6a568bdc cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=p6xrlejl6-JkR3ofBtoA:9
-X-Proofpoint-ORIG-GUID: fSJYkY7hDeRVhLJO_NGnkvep2v0BaJu2
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDE5OCBTYWx0ZWRfXyL4+xLtXSASr
- ZzceKHnVPcEP9VF/8QCVC1VdoINl3ZHGT/8H1qRjqwx2OnfzMQt2m9exXqM3Bezno08eLEBsOSn
- oSzpsGcezNvQfajcRwtC6sHFXL8QLOM=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-14_05,2026-07-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0
- priorityscore=1501 impostorscore=0 clxscore=1015 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607140198
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+In-Reply-To: <87mrvvtibg.fsf@pond.sub.org>
+Received-SPF: permerror client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,102 +128,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a small test that issues a large PRNO TRNG request while a timer is
-running, and checks that the timer interrupts it several times.
+On Mon, Jul 13, 2026 at 10:17:07AM +0200, Markus Armbruster wrote:
+> Philippe Mathieu-Daudé <philmd@oss.qualcomm.com> writes:
+> 
+> > On 13/7/26 08:52, Michael S. Tsirkin wrote:
+> >> On Mon, Jul 13, 2026 at 08:13:38AM +0200, Philippe Mathieu-Daudé wrote:
+> >>> On 11/7/26 10:00, Michael S. Tsirkin wrote:
+> >>>> On Fri, Jul 10, 2026 at 01:43:05PM +0200, Markus Armbruster wrote:
+> >>>>> Commit a5dab090e1 (hw/virtio: Add boilerplate for vhost-user-scmi
+> >>>>> device, 2023-06-28) added the section with S: Supported, but no M:.
+> >>>>> This makes no sense.  Downgrade to S: Orphan.
+> >>>>>
+> >>>>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> >>>>
+> >>>>
+> >>>> No, this makes sense. The reason this section was added is so that Milan can
+> >>>> get copied on vhost-user-scmi but not other virtio stuff:
+> >>>>
+> >>>> ./scripts/get_maintainer.pl -f hw/virtio/vhost-user-scmi.c
+> >>>> Milan Zamazal <mzamazal@redhat.com> (reviewer:vhost-user-scmi)
+> >>>> "Michael S. Tsirkin" <mst@redhat.com> (supporter:vhost)
+> >>>> Stefano Garzarella <sgarzare@redhat.com> (reviewer:vhost)
+> >>>> qemu-devel@nongnu.org (open list:All patches CC here)
+> >>>>
+> >>>> Pls drop this patch.
+> >>>>
+> >>>>> ---
+> >>>>>    MAINTAINERS | 2 +-
+> >>>>>    1 file changed, 1 insertion(+), 1 deletion(-)
+> >>>>>
+> >>>>> diff --git a/MAINTAINERS b/MAINTAINERS
+> >>>>> index aa2df9cbe3..4d558ddee9 100644
+> >>>>> --- a/MAINTAINERS
+> >>>>> +++ b/MAINTAINERS
+> >>>>> @@ -2622,7 +2622,7 @@ F: include/hw/virtio/vhost-user-snd.h
+> >>>>>    vhost-user-scmi
+> >>>
+> >>> So what we want is to add here:
+> >>>
+> >>>    M: Michael S. Tsirkin <mst@redhat.com>
+> >>>    R: Stefano Garzarella <sgarzare@redhat.com>
+> >>
+> >> But these files already get M from the match against hw/virtio/ -
+> >> what am I missing?
+> >
+> > Yeah, just trying to make Markus script happy ;)
+> 
+> Appreciate the kindness!
+> 
+> In decreasing importance:
+> 
+> 1. Correct get_maintainers.pl output
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
- tests/tcg/s390x/Makefile.target |  1 +
- tests/tcg/s390x/prno-trng.c     | 67 +++++++++++++++++++++++++++++++++
- 2 files changed, 68 insertions(+)
- create mode 100644 tests/tcg/s390x/prno-trng.c
+Is anything wrong with it?
 
-diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
-index 0ca030ded01..48cba4cdfa4 100644
---- a/tests/tcg/s390x/Makefile.target
-+++ b/tests/tcg/s390x/Makefile.target
-@@ -75,6 +75,7 @@ Z13_TESTS+=vcksm
- Z13_TESTS+=vstl
- Z13_TESTS+=vrep
- Z13_TESTS+=precise-smc-user
-+Z13_TESTS+=prno-trng
- $(Z13_TESTS): CFLAGS+=-march=z13 -O2
- TESTS+=$(Z13_TESTS)
- 
-diff --git a/tests/tcg/s390x/prno-trng.c b/tests/tcg/s390x/prno-trng.c
-new file mode 100644
-index 00000000000..43eea5db1dc
---- /dev/null
-+++ b/tests/tcg/s390x/prno-trng.c
-@@ -0,0 +1,67 @@
-+/*
-+ * Test that PERFORM RANDOM NUMBER OPERATION TRNG is interruptible.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include <assert.h>
-+#include <signal.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <sys/time.h>
-+#include <asm/ucontext.h>
-+
-+static unsigned char buf1[16 * 1024 * 1024];
-+static unsigned char buf2[16 * 1024 * 1024];
-+
-+static volatile sig_atomic_t interrupted;
-+
-+static void sigprof_handler(int sig, siginfo_t *info, void *ucontext)
-+{
-+    struct ucontext *uc = ucontext;
-+    unsigned long addr = uc->uc_mcontext.regs.psw.addr;
-+
-+    if (*(unsigned short *)(addr - 4) == 0xb93c) {
-+        interrupted++;
-+    }
-+}
-+
-+static void prno_trng(void *b1, unsigned long l1, void *b2, unsigned long l2)
-+{
-+    register unsigned long r0 asm("r0") = 114;  /* TRNG */
-+    register unsigned long r2 asm("r2") = (unsigned long)b1;
-+    register unsigned long r3 asm("r3") = l1;
-+    register unsigned long r4 asm("r4") = (unsigned long)b2;
-+    register unsigned long r5 asm("r5") = l2;
-+
-+    asm volatile("0: ppno %[r2],%[r4]\n"  /* prno alias for old toolchains */
-+                 "   jo 0b"
-+                 : [r2] "+r" (r2), [r3] "+r" (r3)
-+                 , [r4] "+r" (r4), [r5] "+r" (r5)
-+                 : "r" (r0)
-+                 : "cc", "memory");
-+}
-+
-+int main(void)
-+{
-+    struct itimerval it = {
-+        .it_interval = { .tv_usec = 10000 },  /* 0.01s */
-+        .it_value = { .tv_usec = 10000 },
-+    };
-+    struct sigaction act = {
-+        .sa_sigaction = sigprof_handler,
-+        .sa_flags = SA_SIGINFO,
-+    };
-+    int err;
-+
-+    err = sigaction(SIGPROF, &act, NULL);
-+    assert(err == 0);
-+    err = setitimer(ITIMER_PROF, &it, NULL);
-+    assert(err == 0);
-+
-+    prno_trng(buf1, sizeof(buf1), buf2, sizeof(buf2));
-+    printf("interrupted %d times\n", interrupted);
-+    assert(interrupted >= 3);
-+
-+    return EXIT_SUCCESS;
-+}
--- 
-2.55.0
+> 2. Legible MAINTAINERS
+
+We can always come up with a new rule for such cases,
+where we have a reviewer just for some specific files
+in a project, but the supporters are from the bigger
+project.
+
+How about we drop S: completely in such cases?
+
+We can also tweak the name:
+vhost-user-scmi (part of vhost)
+
+
+> 99. My script is happy.
+> 
+> [...]
 
 
