@@ -4,89 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 254EEC43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 01:10:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 447A9C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 01:11:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjRf1-0000XF-Fm; Mon, 13 Jul 2026 21:10:11 -0400
+	id 1wjReu-0000Mk-4C; Mon, 13 Jul 2026 21:10:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wjRex-0000P8-Gz
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 21:10:08 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wjRes-0000MJ-7n
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 21:10:02 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wjReu-0003k3-V8
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 21:10:07 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ id 1wjReq-0003ib-74
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 21:10:01 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66DNmkd83121245
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 01:10:03 GMT
+ 66DNn9hm3009337
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 01:09:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- evXUyChMcSwZe2zKBJ0MiCF+w52F7L/7q9AWZm+IPtU=; b=AULaNdhAkO44zmic
- BTgx+fBuGdpc1vmM6X3LO01NgzxV4AQrJWvAFsfXzoSIE/FcFq8kQ5TfKeYHDicx
- ecjOah8WpPRfqKwNQmA913IJigma7kP95sn4CllI+xZQjvHCOJlX8flP8k6+pvkL
- qbkcpa5qpTBXoZEmZzexVis8uLoc6nYxbwmd6LrE2LE01uoCWNc61SJtt1Au4uX/
- iIE8HAbKvqJRmYlDjpMLnDNoDDUUZlYTQPw6kc+R9hmkCMVUYhEhFeRA8wEwzD1O
- TuMoYbck86fJ8qdAApenVwxaRDrC8foxYcoRGhi7ma6h9Ej9/qVh6HS+gl+SfSMv
- G3zzjw==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
- [209.85.215.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fd44csc2p-1
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=OZ9qUmNeRak6DWTXq8mJfd
+ Pht7FBlVzj0oRk6p3N0lQ=; b=peLS9mvMsmxcr1YZZ4qyY1cW24V+5c9b/QwhhH
+ UXQPFkQa57bXLXlezZg4YGhSHXK1Valkd5tQOyFkaiKyREfdwEUUKSsH00xMw++9
+ H5wIdcf/iKTzlkUIE9rwAOTYfzY5ftVwXhb2LUfHaD8vPFNfuWe65aAuW5vZ3H2S
+ bwHG7uIWtiyQ/d6czhjZxyXG0M004sGYY8nNVW8qUh+BaKnlmKh5EwR2BPiIchh1
+ T3G3ZUvaKtMZmLBaHy5OHcEfpVoaRBZHlWm3gmL7NKY6MpcIILTwerU9/+O/673p
+ ju1WOZqsBgmIGzJh8mQKYXwfMVaGOjcYeITqxP645D1sZIjA==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcuj03rf1-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 01:10:03 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id
- 41be03b00d2f7-c88fc985a65so4762084a12.2
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 18:10:03 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 01:09:58 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-380a638fb5bso529767a91.0
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 18:09:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1783991403; x=1784596203; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=evXUyChMcSwZe2zKBJ0MiCF+w52F7L/7q9AWZm+IPtU=;
- b=QXTH0GHipVpMGgqw4yWwDiYHT1PuGOXR2izv1jJgyFrzOYz989Xw/JujQIuSLU6fPd
- Vj9tK1P/NVyyoUT7lG/oMSgXmcJ4MbGgwQfexUt1PCcLRCuEhfAAswd5SDMxFluk2qSc
- Ot0x1SHvEan/pStUMOXKy77Rgr64AezM2QOEECkVhRnogf8OXtK+a7pnUlCCzf9TXL5p
- bhfn5DU+KCnOk2lHnxtE4mqc5G+VmkhE/m70CoNQ29tlkpop2wXk8+rP4KuGnKs/wYA3
- Mw5JUH1AQptiBPjvWaHg2dGaBbUa4EZoVMmFqkViEbAguNSA9rnyHmmmlmd9Y/dFl0nX
- kUjg==
+ d=oss.qualcomm.com; s=google; t=1783991397; x=1784596197; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=OZ9qUmNeRak6DWTXq8mJfdPht7FBlVzj0oRk6p3N0lQ=;
+ b=JIy9aILNI3xWSUS7XibhBSBUwKp6QOAExZbVc2yCuJ/tYrvz+IOL293FhiI1om9wUs
+ 0UZYr1/+QkPWDsNtPwYAkvzWZ0OrTNRmHA4FDpADRnBybWYjLEw/yns4SvHYtXSSv0Ut
+ 1N2O04Xbf5Id3YximJrKhhg2CIUNblzOPgzIrOxDi7vOqFuY52UQ5wPIYVLyxpGc2Uju
+ byJeDfLC+Vc0/PARUH1E2LS/TJdwnRmsZKblSQmo3371Xi9ODF1eMIatgNIVPQJKwk/x
+ G66U8ALTxrsRR8J4fohFMeSmHkdGiPJoX4+g/ueUiywqpOlne31huOaj8I6VYhjWYSU9
+ 2eLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783991403; x=1784596203;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=evXUyChMcSwZe2zKBJ0MiCF+w52F7L/7q9AWZm+IPtU=;
- b=qa+xSRnMi821bEKethJHN02d2JpCMFWgLqIUC0r4n1s2EuTe2jcg5eewu25WeZkj2E
- P+pbBDWiHq2p9TGGt3ZgjlkHQrHbfZZFLAOqCt/QVQbYQjdtVFSausNbQ6sCc3XcLkor
- gzpjyUs6jo3HWd3m/nwxwgDKOeXhZ5dqmWVMy6W0GcPp2oYNZ1WixA66B93EPHJ43n/n
- n7uyUFFbhFo4EWiPSirQ4pbykwiV3ra68GQN7lAIPt6DVney+ULbxGc9hJxPOX2nCzpY
- odF8Gb6CNJffKrqzR5HC/cLqKFQ88VD2rxEA0TOzDl532ys+6wuCLw1bIUqynk96Mi22
- IDqg==
-X-Gm-Message-State: AOJu0YzRh87T8OWlqTgqjrzW4/Hjy4aMNq/lJdqUAlrzmf8IHmOJEaTt
- s1ZJm5/EeFqQBMtNhupiBzik2CgKYOVMR7DmvggPaMHY/0YPXGqByVtAU8dz56zHxtAHkTt7l/e
- 6QxA1f6OeqAyVeQzaCXxt9r7ZF0ZA8U8R1kGYDMsQp9Qism6jcpM406k5JsbQjInLkA==
-X-Gm-Gg: AfdE7ckEsUebxovpWJ6iaFgbyK0IlZrFj2/qjMrlL9ZNVgJkm+gqaxfwRI8NvouUHBp
- vie/96cMvAAs9poFhMcxVUYrAeTqC4s7iCX8m0pz9Eg1xjjzbMMUJY1vxwUw5EVt44j4YIokuj4
- Y0z833b+4GG8uALSF3TOsjn3Tc2VSFkc8SSB4/2j4NVLNpOgt/4Hj7D4cI2YjhjsU5tlHGZ7AhK
- gH32jhOpEcxMtgdUKPCI1VW4yLak0OpEPTvAV0weqq9Plz8ERSVdXaINbUa31+RGkCjwEVmm019
- j6etq3qQeopFQSB2C8aT2KZqOXvVbCB4bdAULvoOd9kdm4z4Ij342qcmkBq7s76KI8ViqSpaJot
- JEKvydBmkwr9zZeac/ZUqu2XH2xFQ0LvFNKiJXqZnLFcHVpBg0R5JI0q6Z/E=
-X-Received: by 2002:a05:6a20:6f96:b0:3b4:7b2a:6a0a with SMTP id
- adf61e73a8af0-3c1108982a6mr11468554637.35.1783991402849; 
- Mon, 13 Jul 2026 18:10:02 -0700 (PDT)
-X-Received: by 2002:a05:6a20:6f96:b0:3b4:7b2a:6a0a with SMTP id
- adf61e73a8af0-3c1108982a6mr11468521637.35.1783991402402; 
- Mon, 13 Jul 2026 18:10:02 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1783991397; x=1784596197;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=OZ9qUmNeRak6DWTXq8mJfdPht7FBlVzj0oRk6p3N0lQ=;
+ b=HEaZ/E79cS+TlNLZ9ZfF5L95l2quUrUL8rcaRcUZh0cqmx+HIDY5TL309Bxhdg7ETB
+ 8pFZQw3pH/AalEMgbB9/6oAB3Orj1Pxxvjmd189OyuB7g7b1vspDqUUYwxCpbw55ngDU
+ 9irvpYUaYtR4cr6FEkEH5Fo+hBKQr8rdqbRnxrCJNbWRNKFrCtYHOwZINzxzRUNrSM9W
+ 7MFxgJa2kfd/a09R9qr+UjVio1BnF8Gtu2cWlfCirFmlVjiztZXAwhBzhevqTQpZOjiB
+ Uksi3mjhbX2WDkdFUEmEhkwk/gGUJWBiMsMFRdg/0P7DqLt953E5gRvOQqssSAJqnGct
+ N++A==
+X-Gm-Message-State: AOJu0YxSU0tYtdxdxZSDE0XoWIV49hH6XUfGY0N3Am20qR4VZS/f2DGg
+ RcsiGTOEpH7lLTfn+BQPqgQUCZEEOibpTjifXQ474+cRMCA3nYlbN++Hbl73aUxaKGNZgSvffwT
+ dyv2RbeFS5iVsRhfWsj/v1FlFvqao97XuBp80VIedzEfZgNJJkfgwfhwrMhZ50JZbTQ==
+X-Gm-Gg: AfdE7cnplSy5rn5EJCPlo+SAgqw/eOkuptce+pgXeA/Rz/nF6F771AFtbLAwh951gYL
+ n7G8fCjciHkG1eA1HzAR3sck7baN5/8JzGt2r7Pku2aVBCx+WLLTcVYRd/liaXaRmP1muHF+iO4
+ XTKciqvriVvOcza2+dAh9k1vQvtgBXV55rTVUL9KdDQLV7z/zmeMmr4kuQtPteZ5QZr60j9Dv97
+ vOcXMQUKVDL0Km46dcjxNkwuDZtTqo893QuJ1Isa52dbqSwt4qb/KD9bgRi73yqEm23YiTAaVx0
+ vZejM0gxLAE9bLMGVfj5a2W0AYhwaCVpTYc49kKSFUNkCbqLSbV3cr6ji/MPkdy++DLFQd6mWyD
+ PWX9mXblx8XmWt1ubN+PpHLcU2fGIaD28lfv+PwD5nkCNtNS5kNeekppCnvg=
+X-Received: by 2002:a17:90b:4a4e:b0:380:f85c:94b4 with SMTP id
+ 98e67ed59e1d1-38dc74d04cbmr10023494a91.7.1783991397306; 
+ Mon, 13 Jul 2026 18:09:57 -0700 (PDT)
+X-Received: by 2002:a17:90b:4a4e:b0:380:f85c:94b4 with SMTP id
+ 98e67ed59e1d1-38dc74d04cbmr10023480a91.7.1783991396835; 
+ Mon, 13 Jul 2026 18:09:56 -0700 (PDT)
 Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-31174accb0esm76826246eec.30.2026.07.13.18.10.01
+ 5a478bee46e88-31174accb0esm76826246eec.30.2026.07.13.18.09.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jul 2026 18:10:01 -0700 (PDT)
+ Mon, 13 Jul 2026 18:09:56 -0700 (PDT)
 From: Brian Cain <brian.cain@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: matheus.bernardino@oss.qualcomm.com, Alessandro Di Federico <ale@rev.ng>, 
@@ -94,46 +91,43 @@ Cc: matheus.bernardino@oss.qualcomm.com, Alessandro Di Federico <ale@rev.ng>,
  Laurent Vivier <laurent@vivier.eu>, philmd@oss.qualcomm.com,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v2 4/5] target/hexagon: raise SIGBUS on unaligned data access
- in sysemu
-Date: Mon, 13 Jul 2026 18:09:54 -0700
-Message-Id: <20260714010955.2226493-5-brian.cain@oss.qualcomm.com>
+Subject: [PATCH v2 0/5] Fixes for unaligned scalar accesses
+Date: Mon, 13 Jul 2026 18:09:50 -0700
+Message-Id: <20260714010955.2226493-1-brian.cain@oss.qualcomm.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260714010955.2226493-1-brian.cain@oss.qualcomm.com>
-References: <20260714010955.2226493-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 2ivOrHuoz8KfKxaZ6BkpUPFuYHwD6nW4
-X-Proofpoint-ORIG-GUID: 2ivOrHuoz8KfKxaZ6BkpUPFuYHwD6nW4
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDAwOSBTYWx0ZWRfXx5VxOD87Vwls
- SHMZksSk+oyeNaSdqKaCBdMlSE423M61C7xZ89mE2tYmmfq7ZpSHrWHCXSJ1JoMsVIZvK53++87
- cxA/D4/uiMLdoRmvWy9+RM9SY34k5dk=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDAwOSBTYWx0ZWRfX1nO6JLbIrMvd
- xV5+0i/bJ6j3bO/vEJeuhh0UngOMs8HCNp0Ds3SR4PfcAWhlwFWr016MkqqEIdmc6evlYovdMPR
- la7oQZkayB/4hZ6EBc4Wp0gr66QU6G2tpdKI5LFiELB1cGZVnAqDkQopjYj+kqEzC61BsAE7JJT
- 7CwuMX5rk5ds3c+w+uPZjH3IaI3SpqGTjfJA1o8pm7MWaHDHK/h2t4k5P92jpyBHKvUXsDBF7Po
- AY5Vi7hNKCgSlfb7NITSQKGyAJSfdNBeqI480D20V7zfrlI46ogWYdaMUDdx+TH6OUEktaW3EtD
- ViQ6c7Pr1OJqe9A43SUkRvyjBTfh5a7T0CjCVZG9NPcdHtvbawoRDceJuoBMDXKBDaK5DWm8O/s
- yEZueKDUtfPByJh+anYqZ1reo59G8tceuHOL0Y8wIe6KDTLJdyhoMoRoh06K+zC7bXL4CXsufon
- 0gQ9vybHIKiRhFXZbVw==
-X-Authority-Analysis: v=2.4 cv=P84KQCAu c=1 sm=1 tr=0 ts=6a558c6b cx=c_pps
- a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDAwOSBTYWx0ZWRfX4r7J2CgT7BRS
+ Z0Xwf7fechF0BcGtMMOqRsxFMuixl5I+pDceEzSehcIwiIEYV3mgUYXZboMZ48Drdqbg9HuqEzV
+ vXHefAsIJfVZXMC9a0iZcp4LQAbgV8U=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDAwOSBTYWx0ZWRfX4vowFVFrrbeE
+ v4Qn2RmEYhnZcKT1MsCjOs6Ro7IBpLu3cNKxgjrDys4tcGMObvk1MR96qo/aEJvA+EXt8UrggEC
+ 9DHLP4NR43MdppbOxcz4PFWzPE+14PMrUnOdsbAyYJfPko6t1ghOplux0xhF1O3QAkNqNzECGLw
+ cCcZ5BZoB+t01Yb9ir06p/LPbk2jo3QPljxzuteuIv98NYaoVGfbDNMSnpfBDpA4fXjjlFI22Ls
+ sSEAY9m3aqrpaxRBpqIcjvFGGhn/FvzwBZqbaHMFS7kNSi9jIaBUjiq5KVOdGAadwLJOSblg9R4
+ bxykhLzrkPHSjMQTMDFvn0uwdAzvxnPK+iw/i7KQr8q0dR9k1dMIhaO9gjYthKouuVGxlI0vkNX
+ Y154FyQrV2mlbnMrcMq8RrUDJTqebh17u9x15p3MOa3e0o3OsCkduCBAt+/6Nth6IdyAZ+XT4wd
+ 09YO8JwD7G/jJ+R7odg==
+X-Proofpoint-ORIG-GUID: kpgd7uX8t8he_SZ5BdTmDPw7vz5EZosU
+X-Authority-Analysis: v=2.4 cv=DbcnbPtW c=1 sm=1 tr=0 ts=6a558c66 cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=EUspDBNiAAAA:8 a=QWbXAH-yNWLVfgUa_9MA:9 a=QEXdDO2ut3YA:10
- a=x9snwWr2DeNwDh03kgHS:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=LNw-_RXBXnopCtyx08kA:9 a=QEXdDO2ut3YA:10
+ a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-GUID: kpgd7uX8t8he_SZ5BdTmDPw7vz5EZosU
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-13_06,2026-07-10_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 impostorscore=0 malwarescore=0
- lowpriorityscore=0 phishscore=0 spamscore=0 bulkscore=0 suspectscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ lowpriorityscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
+ phishscore=0 suspectscore=0 bulkscore=0 adultscore=0 spamscore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
  definitions=main-2607140009
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -156,73 +150,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-hexagon-softmmu had no enforcement of alignment for scalar loads and
-stores: the MO_ALIGN flag added by the previous two commits triggers
-TLB_INVALID_MASK/alignment faults in cputlb.c, but Hexagon's
-TCGCPUOps did not implement do_unaligned_access, so the fault was
-never delivered to the guest.
+I took some "working" programs under userspace emulation into a linux
+instance running on a fork with comprehensive system mode support and
+discovered a compiler bug causing unaligned accesses.  This bug had
+gone undetected in userspace tests because they were not handled correctly
+by QEMU.
 
-Add hexagon_cpu_do_unaligned_access(), which raises
-HEX_CAUSE_MISALIGNED_LOAD/_STORE via the existing HEX_EVENT_PRECISE
-path, mirroring raise_tlbmiss_exception()/raise_perm_exception().
+With these patches, unaligned accesses cause an exception that generates
+SIGBUS.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Reviewed-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
----
- target/hexagon/cpu.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+Changes for v2: moved linux-user cpu loop to its own commit.
 
-diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-index 42d93e5da47..e2af736a99d 100644
---- a/target/hexagon/cpu.c
-+++ b/target/hexagon/cpu.c
-@@ -637,6 +637,18 @@ static void raise_perm_exception(CPUState *cs, uint32_t VA, int slot,
-     cs->exception_index = excp;
- }
- 
-+static void raise_misaligned_exception(CPUState *cs, uint32_t VA, int slot,
-+                                       MMUAccessType access_type)
-+{
-+    CPUHexagonState *env = cpu_env(cs);
-+    int32_t excp = (access_type == MMU_DATA_STORE) ?
-+                   HEX_CAUSE_MISALIGNED_STORE : HEX_CAUSE_MISALIGNED_LOAD;
-+
-+    set_badva_regs(env, VA, slot, access_type);
-+    cs->exception_index = HEX_EVENT_PRECISE;
-+    env->cause_code = excp;
-+}
-+
- static const char *access_type_names[] = { "MMU_DATA_LOAD ", "MMU_DATA_STORE",
-                                            "MMU_INST_FETCH" };
- 
-@@ -715,6 +727,18 @@ static vaddr hexagon_pointer_wrap(CPUState *cs, int mmu_idx,
-     return result;
- }
- 
-+static G_NORETURN
-+void hexagon_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
-+                                     MMUAccessType access_type, int mmu_idx,
-+                                     uintptr_t retaddr)
-+{
-+    CPUHexagonState *env = cpu_env(cs);
-+
-+    raise_misaligned_exception(cs, addr, 0, access_type);
-+    do_raise_exception(env, cs->exception_index, env->gpr[HEX_REG_PC],
-+                       retaddr);
-+}
-+
- #endif
- 
- static const TCGCPUOps hexagon_tcg_ops = {
-@@ -732,6 +756,7 @@ static const TCGCPUOps hexagon_tcg_ops = {
-     .pointer_wrap = hexagon_pointer_wrap,
-     .cpu_exec_reset = cpu_reset,
-     .tlb_fill = hexagon_tlb_fill,
-+    .do_unaligned_access = hexagon_cpu_do_unaligned_access,
-     .cpu_exec_halt = hexagon_cpu_has_work,
-     .do_interrupt = hexagon_cpu_do_interrupt,
- #endif /* !CONFIG_USER_ONLY */
+v1: https://lore.kernel.org/qemu-devel/20260709233436.3075100-1-brian.cain@oss.qualcomm.com/
+
+Brian Cain (5):
+  target/hexagon: handle misaligned load/store cause codes in cpu_loop
+  target/hexagon: raise SIGBUS on unaligned scalar loads
+  target/hexagon: raise SIGBUS on unaligned scalar stores
+  target/hexagon: raise SIGBUS on unaligned data access in sysemu
+  tests/tcg/hexagon: add unaligned scalar test
+
+ linux-user/hexagon/cpu_loop.c               |   5 +
+ target/hexagon/cpu.c                        |  25 +++++
+ target/hexagon/genptr.c                     |  10 +-
+ target/hexagon/idef-parser/parser-helpers.c |   2 +-
+ target/hexagon/macros.h                     |  26 +++--
+ target/hexagon/op_helper.c                  |  13 ++-
+ target/hexagon/translate.c                  |   6 +-
+ tests/tcg/hexagon/Makefile.target           |   2 +
+ tests/tcg/hexagon/unaligned_data.c          | 118 ++++++++++++++++++++
+ 9 files changed, 185 insertions(+), 22 deletions(-)
+ create mode 100644 tests/tcg/hexagon/unaligned_data.c
+
 -- 
 2.34.1
 
