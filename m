@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B43F4C44508
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 17:20:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C2F8C44508
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 17:52:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjgn0-0004Cd-Hi; Tue, 14 Jul 2026 13:19:26 -0400
+	id 1wjhI4-000702-65; Tue, 14 Jul 2026 13:51:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wjgmy-0004C8-NI
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 13:19:25 -0400
-Received: from smtpout4.mo540.mail-out.ovh.net ([51.210.91.53])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wjhI2-0006y7-GV
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 13:51:30 -0400
+Received: from smtpout6.mo536.mail-out.ovh.net ([51.210.91.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wjgmv-00070j-OH
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 13:19:24 -0400
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net [79.137.60.36])
- by mo540.mail-out.ovh.net (Postfix) with ESMTPS id 4h05dJ60GDz42Wh;
- Tue, 14 Jul 2026 17:19:16 +0000 (UTC)
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net. [127.0.0.1])
- by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <alistair@alistair23.me>; Tue, 14 Jul 2026 17:19:16 +0000 (UTC)
-Received: from mta3.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.54.70])
- by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4h05dJ4y13z1xqZ;
- Tue, 14 Jul 2026 17:19:16 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.7])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wjhI0-0003JK-6c
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 13:51:30 -0400
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net [51.210.158.128])
+ by mo536.mail-out.ovh.net (Postfix) with ESMTPS id 4h06LM1NsLz81vs;
+ Tue, 14 Jul 2026 17:51:23 +0000 (UTC)
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net. [127.0.0.1])
+ by director1.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <alistair@alistair23.me>; Tue, 14 Jul 2026 17:51:22 +0000 (UTC)
+Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.96.139])
+ by director1.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4h06LL5yggz60Mh; Tue, 14 Jul 2026 17:51:22 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.0])
  (Authenticated sender: clg@kaod.org)
- by mta3.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id DDA3712E3DBE;
- Tue, 14 Jul 2026 17:19:14 +0000 (UTC)
+ by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id A732C1B43DB7;
+ Tue, 14 Jul 2026 17:51:21 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-103G0059b1d7102-6c5c-48e5-915f-b8bac02660d2,
+ (GARM-96R001ca8eaf0f-9935-45ef-84a0-3e080bbf668d,
  14669520E5D5974EABF02A897D6C170CD5935BAD) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.66.77.115
-Message-ID: <52037853-fee5-4b4d-a78b-318fce64acae@kaod.org>
-Date: Tue, 14 Jul 2026 19:19:14 +0200
+Message-ID: <bf6d933b-c15b-45ca-b20f-62b786e3d434@kaod.org>
+Date: Tue, 14 Jul 2026 19:51:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/4] tests/qtest: aspeed_smc: Add fast-read variant
- test coverage
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
+Subject: Re: [PATCH v2 8/8] hw/ssi/aspeed_smc: Add Data FIFO-based flash
+ access support for AST2700
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
  Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
  Alistair Francis <alistair@alistair23.me>,
- Bin Meng <bin.meng@processmission.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-References: <20260714124621.522948-1-clg@redhat.com>
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>
+References: <20260707060919.350637-1-jamin_lin@aspeedtech.com>
+ <20260707060919.350637-9-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -99,23 +98,23 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260714124621.522948-1-clg@redhat.com>
+In-Reply-To: <20260707060919.350637-9-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 8040051237855079469
+Content-Transfer-Encoding: 7bit
+x-ovh-tracer-id: 8582172042081643531
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTESW0yHUPCbhR6HnNtQhSNuu1KPvvPSTnc2pBq6IZZHlVGcMqjgxzIZP6iZx812wk+9DlAhGbzvUPOFv25pM2JIC0lbWeyRe5Tica7uJI50E21xxg4UzWKB2+0IamBEDPN0ZuJgsbk+tQys5yWfbuoQ35SNO8sVwtZuWzyUhlejOnR6rrSL06Jw3/AttEaN7gn2fDQYI0cW6tcUffPJ+2onhZe7MmkCKjXHBRBv9j7urLgnvuGsfaAqFsUEfAaEoMd4lbAizmDlLD1NqQi7925QcsXvm+c1ix5URhSOJxzOh/m5jFSz84LELfcH8dCcDzz1x0OqcfWbmLYkBSO5AlaEa37ltJCIYYCw2OiQOsVGL3cAQD1XRYDVHWA24tvbTGRcsICJg0/Gx5l7ZTChxRnAGUeEIoV9RSrsvFnkt+CEo9ojwhZW7flHuBVD1Axu9ewyLaEgVjfkrqXdUWIXg9nSpAKGRoYa5LlVAu5gU0mzIGuBah9xOfde+7Dhn7PKqMdiszw1C+ZQXRVmEV0LdXKmExS4K/v3v4wd1f0PwdLNYPXoD4cWUmCwfIzza3miVZLfdrVKRR2w5HXDGXhDYQ33298pLfNoD9Td+J+7bXKFd6uHoF7TrH/+dEV51rQCC519ydls2HSkHRn78yjZUxbDitFNuXCMJsatQo0ThLmv+A
-DKIM-Signature: a=rsa-sha256; bh=rs85nv9c2XS1VCJlL18/293vkQl57ZJXAWfMih4xxkk=; 
+X-VR-SPAMCAUSE: dmFkZTFfIzzS3zqmgrRMLNf6yu6wyC2QTl2nu9we2y+oYUZG5CFCe25DD0dvrfG6u4USA4H2paCMPlIZOqfOJ2lq40jsLqWGC8WAvkFj/2CUz/jxYS1+AMjlo+Jy23k/UuojKnB7Lwd7tZt0ujfsolGkU5X2lVZbdVIVB+CCoLTY8sEfbgrzVHDYwuyTh1HsUX4u8dcdWDkpoheMe7OPrNAsjLYN8qGczH3WbpWAP7PT3FBzEYykA7rhnnVP6pWhRjYXg0jNpEHN9+uLYLIjO38IWr7wQbPYIs+SUJTh1QQ9ZSNILnI8RRD3m0dQIb27HqgQJNKt184OHAUGyHG81/Yr5SNnluljfbAoIm8UKZPd5AbMk/8Cgrfx2Vodc/mf3S35u4GDJH9q9O3cThHZlZKM7KsoHU+14jZS+K1ztPkqJz4VUEfl4ZPsR+kUADfrD6id/GMXfYz7ayPSMljfWr2thsSUdmrzq2UCHPD4wl4oIDvPOTOn2BCAkecn0+2K8STKaKDGaMqwKNoAl4/ybvtnLLg2KNN0/qi/XDJdpLA6OYEBAtfDfbU70EsQzSOgLPwle0OwMNohmh7IO8ORSms4dgeOFfoeNz1zOLscymfLjA/6gkYqGY/AelzgvClDVG32ygTlyLN7ZxfMCAtrMmCnY+vvvypDWdgNcBOnHTSlvhdutg
+DKIM-Signature: a=rsa-sha256; bh=NF7ta5Ge37y8HTvpruItz8rSyQ3GmFNStx1K7JhIu9Q=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1784049558; v=1;
- b=YLRE+K2PmH5YiJhhfXxXhzvUafGyM3qu+2jYggnwJXk49ft9RMmJWRbVNX7cWuCyVtobk7bf
- 949eKEOqPfqt3a0BvSkfG7JYQS3zfO+qp6EvI3ixzMN6K6gxsj6WEI8J3RqNbUS9mIaZBzOKQqI
- 4kW2LQXykaBIxthzRqqlU6+tygEzmeVNVFbeMi69JiOAYVnN9Pm70h4Qjr5gh/lFFNKx7LNow1j
- gybrKqU8GSFCPNk2/5ZcYBduBo4sMdm9WvnuB1bkZSrFiqf2DOdIPgvD9RpH6XjiNS0k1/pFkUF
- 416tq+jGV13vPbxTLX1OuSPscFOPgPkU3x6mQ8AiJayHA==
-Received-SPF: pass client-ip=51.210.91.53; envelope-from=clg@kaod.org;
- helo=smtpout4.mo540.mail-out.ovh.net
+ t=1784051485; v=1;
+ b=Q6cE8vgPUn5bDyUJ0vir1OsdQQ977RjPFvR2RHKXQDatWuf5mDR/fcypopPi1vYxhazo1dj3
+ FERB1+sJfU1F6UXrZMEXJ5SzP1tp3A7ZYMKmAkb47mnm4P+4iJOxClQxXPvwUQXJrHkMraWNQQ2
+ UBDLhujtVRXnA+sgMvPhjKG5o0fg2qgqb04yOqtPFID3iio1e3O4kSZm3p3y5KiCCa2Bon7c4Jn
+ 6GfGNq/OrvyoEK3kNaueX1q3BP6n50Fr8DooNsk/bqDsRcujtG44FCiJPbL2sFfOKNx9E4QHb0g
+ u0jLao5rLUSd1zibj/T9/ENoMACEmOyIrqjUCGUz8WOqg==
+Received-SPF: pass client-ip=51.210.91.15; envelope-from=clg@kaod.org;
+ helo=smtpout6.mo536.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -138,47 +137,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/14/26 14:46, Cédric Le Goater wrote:
-> Hello,
+On 7/7/26 08:09, Jamin Lin wrote:
+> AST2700 supports a Data FIFO mode where flash accesses can be performed
+> directly through Data FIFO MMIO offsets. The Data FIFO start offset
+> increments by one for every 16MB of flash address space, allowing the
+> chip select (CS) to be decoded from the Data FIFO offset.
 > 
-> This series extends the Aspeed SMC qtest suite with coverage for
-> fast-read and multi-IO read commands :
->    - Fast Read (single IO with dummy byte)
->    - Dual Output Read (DOR, dual data IO)
->    - Quad Output Read (QOR, quad data IO)
+> This change adds Data FIFO support to the Aspeed SMC model and introduces
+> a class callback to translate Data FIFO offsets into CS indices. For
+> AST2700, the Data FIFO offset is matched against the segment start address
+> of each CS to determine the target flash device.
 > 
-> Each patch tests both the memory-mapped CTRL_FREADMODE path and the
-> user-mode command path, to exercise the dummy cycle handling recently
-> reworked in the m25p80 flash model.
+> The SMC register region size (nregs) is also extended dynamically
+> based on the number of supported chip selects to cover all possible
+> Data FIFO regions.
 > 
-> Thanks,
-> 
-> C.
-> 
-> Changes in v2:
-> 
->    - Introduced spi_ctrl_set_fast_read() helper, replacing open-coded
->      ctrl register setup in read_page_mem_fast_read/dor/qor()
->    - Replaced MIT license boilerplate with SPDX-License-Identifier
->    - Collected Reviewed-by: Bin Meng on patches 1 and 3
-> 
-> Cédric Le Goater (4):
->    tests/qtest: aspeed_smc: Introduce read_page_mem_fn for page read
->      helpers
->    tests/qtest: aspeed_smc: Add fast-read test coverage
->    tests/qtest: aspeed_smc: Add Dual Output Read (DOR) test coverage
->    tests/qtest: aspeed_smc: Add Quad Output Read (QOR) test coverage
-> 
->   tests/qtest/aspeed-smc-utils.h |  31 +++---
->   tests/qtest/aspeed-smc-utils.c | 192 ++++++++++++++++++++++++++++-----
->   tests/qtest/aspeed_smc-test.c  |  71 +++++++++---
->   tests/qtest/ast2700-smc-test.c |  12 +++
->   4 files changed, 247 insertions(+), 59 deletions(-)
-> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   include/hw/ssi/aspeed_smc.h |   3 +-
+>   hw/ssi/aspeed_smc.c         | 113 +++++++++++++++++++++++++++++++++---
+>   2 files changed, 107 insertions(+), 9 deletions(-)
 
-Applied to
+I am looking for a way to test "Data FIFO-based flash access".
+A qtest extension of the ast2700 smc test would be nice to have.
 
-     https://github.com/legoater/qemu aspeed-next
+Is the latest SDK kernel using this feature ?
 
 Thanks,
 
