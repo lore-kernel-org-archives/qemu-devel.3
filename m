@@ -4,115 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A0CBC4450A
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 17:20:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B43F4C44508
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 17:20:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjgnN-0004wf-UD; Tue, 14 Jul 2026 13:19:50 -0400
+	id 1wjgn0-0004Cd-Hi; Tue, 14 Jul 2026 13:19:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wjgnJ-0004tb-PH
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 13:19:47 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wjgnH-000737-FL
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 13:19:45 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id E404977D94;
- Tue, 14 Jul 2026 17:19:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1784049580; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=h5Q1jlxh26EsZfMUiRSf6XbsXoeotepO2u3n4L88H0g=;
- b=T+2CBAClejoazGdOGXZScxl7ZcmV/rakmM9Zi651QCBBEwXbDIbCKM75cpXB/XTK0N8iSS
- 8A9DeyO05Sa/UORLmEcgOxUUtuvGSHBrm2skKix34p1j0GVYH5hmQJ07+qdJt6BwbgDc/5
- 4EK6tLLKok1fsRGaPeybFOd1TUunMg8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1784049580;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=h5Q1jlxh26EsZfMUiRSf6XbsXoeotepO2u3n4L88H0g=;
- b=xaLyTpSM2lkw1OiTYW1QmoYFnQc1YhyI4mc3JIUybtFfhAq2XPr4kt2fHmYnX16K5tnsKb
- zEUJxh4g9ZIiriCA==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1784049579; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=h5Q1jlxh26EsZfMUiRSf6XbsXoeotepO2u3n4L88H0g=;
- b=fFJ4VsmF90k1vQf70i44d9IxR+XlGnGp8yZUZzJkArO0Yd45Y97ENYLXqBRYnaW2a9NUtL
- RylzO6r2hPjC8xwRUpoo8VTtnEbAeaZUXgnAedUm3JG922AIZY66VAWHRd7gij97WkyTWf
- vvLdqMa/xd55ViFIZNbM/EphP7XmoBg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1784049579;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=h5Q1jlxh26EsZfMUiRSf6XbsXoeotepO2u3n4L88H0g=;
- b=3soxYdVPgNisWXmyThDMIFUIZrjH/msl4vlRARWkcOgo+dRrGgjJJGMag66RpjIyI4bmio
- i7aKe6+nR22ymxDA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6EC1F779AE;
- Tue, 14 Jul 2026 17:19:39 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id LCT0D6tvVmqvRwAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 14 Jul 2026 17:19:39 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Shivang Upadhyay <shivangu@linux.ibm.com>, Aditya Gupta
- <adityag@linux.ibm.com>, Peter Maydell <peter.maydell@linaro.org>, QEMU
- Developers <qemu-devel@nongnu.org>, Harsh Prateek Bora
- <harshpb@linux.ibm.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Pedro Barbuda
- <pbarbuda@microsoft.com>, Mohamed Mediouni <mohamed@unpredictable.fr>,
- Nicholas Piggin <npiggin@gmail.com>, Cornelia Huck <cohuck@redhat.com>,
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato
- <mjrosato@linux.ibm.com>, "Daniel P. Berrange" <berrange@redhat.com>
-Subject: Re: what is qemu_system_guest_panicked() for?
-In-Reply-To: <bc94506bd307f3273b199a432a4f6df8c219b212.camel@linux.ibm.com>
-References: <CAFEAcA_zmc=Vvs38Qos_gecCmGAbRgDQF-0+x85Ja66nsqrHxA@mail.gmail.com>
- <87pl0rdnar.fsf@suse.de>
- <0dbbac06-8fdf-45ef-9cd4-eaf2510394d2@linux.ibm.com>
- <bc94506bd307f3273b199a432a4f6df8c219b212.camel@linux.ibm.com>
-Date: Tue, 14 Jul 2026 14:19:37 -0300
-Message-ID: <87v7ah4hg6.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wjgmy-0004C8-NI
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 13:19:25 -0400
+Received: from smtpout4.mo540.mail-out.ovh.net ([51.210.91.53])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wjgmv-00070j-OH
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 13:19:24 -0400
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net [79.137.60.36])
+ by mo540.mail-out.ovh.net (Postfix) with ESMTPS id 4h05dJ60GDz42Wh;
+ Tue, 14 Jul 2026 17:19:16 +0000 (UTC)
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net. [127.0.0.1])
+ by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <alistair@alistair23.me>; Tue, 14 Jul 2026 17:19:16 +0000 (UTC)
+Received: from mta3.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.54.70])
+ by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4h05dJ4y13z1xqZ;
+ Tue, 14 Jul 2026 17:19:16 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.7])
+ (Authenticated sender: clg@kaod.org)
+ by mta3.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id DDA3712E3DBE;
+ Tue, 14 Jul 2026 17:19:14 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-103G0059b1d7102-6c5c-48e5-915f-b8bac02660d2,
+ 14669520E5D5974EABF02A897D6C170CD5935BAD) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.66.77.115
+Message-ID: <52037853-fee5-4b4d-a78b-318fce64acae@kaod.org>
+Date: Tue, 14 Jul 2026 19:19:14 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- SUBJECT_ENDS_QUESTION(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.996]; MIME_GOOD(-0.10)[text/plain];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; RCVD_TLS_ALL(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MISSING_XM_UA(0.00)[];
- ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
- MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_DN_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[redhat.com,microsoft.com,unpredictable.fr,gmail.com,linux.ibm.com];
- RCPT_COUNT_TWELVE(0.00)[13]; FROM_EQ_ENVFROM(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/4] tests/qtest: aspeed_smc: Add fast-read variant
+ test coverage
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ Bin Meng <bin.meng@processmission.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+References: <20260714124621.522948-1-clg@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSBDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQGthb2Qub3JnPsLBeAQTAQIAIgUCW7yjdQIbAwYLCQgHAwIGFQgCCQoL
+ BBYCAwECHgECF4AACgkQUaNDx8/77KGRSxAAuMJJMhJdj7acTcFtwof7CDSfoVX0owE2FJdd
+ M43hNeTwPWlV5oLCj1BOQo0MVilIpSd9Qu5wqRD8KnN2Bv/rllKPqK2+i8CXymi9hsuzF56m
+ 76wiPwbsX54jhv/VYY9Al7NBknh6iLYJiC/pgacRCHtSj/wofemSCM48s61s1OleSPSSvJE/
+ jYRa0jMXP98N5IEn8rEbkPua/yrm9ynHqi4dKEBCq/F7WDQ+FfUaFQb4ey47A/aSHstzpgsl
+ TSDTJDD+Ms8y9x2X5EPKXnI3GRLaCKXVNNtrvbUd9LsKymK3WSbADaX7i0gvMFq7j51P/8yj
+ neaUSKSkktHauJAtBNXHMghWm/xJXIVAW8xX5aEiSK7DNp5AM478rDXn9NZFUdLTAScVf7LZ
+ VzMFKR0jAVG786b/O5vbxklsww+YXJGvCUvHuysEsz5EEzThTJ6AC5JM2iBn9/63PKiS3ptJ
+ QAqzasT6KkZ9fKLdK3qtc6yPaSm22C5ROM3GS+yLy6iWBkJ/nEYh/L/du+TLw7YNbKejBr/J
+ ml+V3qZLfuhDjW0GbeJVPzsENuxiNiBbyzlSnAvKlzda/sBDvxmvWhC+nMRQCf47mFr8Xx3w
+ WtDSQavnz3zTa0XuEucpwfBuVdk4RlPzNPri6p2KTBhPEvRBdC9wNOdRBtsP9rAPjd52d73O
+ wU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhWpOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNL
+ SoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZKXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVU
+ cP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwpbV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+
+ S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc
+ 9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFUCSLB2AE4wXQkJbApye48qnZ09zc929df5gU6
+ hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iSYBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616d
+ tb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6gLxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/
+ t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1c
+ OY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0SdujWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475
+ KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/JxIqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8
+ o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoX
+ ywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjKyKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0
+ IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9jhQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Ta
+ d2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yops302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it
+ +OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/pLHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1n
+ HzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBUwYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVIS
+ l73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lUXOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY
+ 3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
+ ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
+ KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260714124621.522948-1-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+x-ovh-tracer-id: 8040051237855079469
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTESW0yHUPCbhR6HnNtQhSNuu1KPvvPSTnc2pBq6IZZHlVGcMqjgxzIZP6iZx812wk+9DlAhGbzvUPOFv25pM2JIC0lbWeyRe5Tica7uJI50E21xxg4UzWKB2+0IamBEDPN0ZuJgsbk+tQys5yWfbuoQ35SNO8sVwtZuWzyUhlejOnR6rrSL06Jw3/AttEaN7gn2fDQYI0cW6tcUffPJ+2onhZe7MmkCKjXHBRBv9j7urLgnvuGsfaAqFsUEfAaEoMd4lbAizmDlLD1NqQi7925QcsXvm+c1ix5URhSOJxzOh/m5jFSz84LELfcH8dCcDzz1x0OqcfWbmLYkBSO5AlaEa37ltJCIYYCw2OiQOsVGL3cAQD1XRYDVHWA24tvbTGRcsICJg0/Gx5l7ZTChxRnAGUeEIoV9RSrsvFnkt+CEo9ojwhZW7flHuBVD1Axu9ewyLaEgVjfkrqXdUWIXg9nSpAKGRoYa5LlVAu5gU0mzIGuBah9xOfde+7Dhn7PKqMdiszw1C+ZQXRVmEV0LdXKmExS4K/v3v4wd1f0PwdLNYPXoD4cWUmCwfIzza3miVZLfdrVKRR2w5HXDGXhDYQ33298pLfNoD9Td+J+7bXKFd6uHoF7TrH/+dEV51rQCC519ydls2HSkHRn78yjZUxbDitFNuXCMJsatQo0ThLmv+A
+DKIM-Signature: a=rsa-sha256; bh=rs85nv9c2XS1VCJlL18/293vkQl57ZJXAWfMih4xxkk=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1784049558; v=1;
+ b=YLRE+K2PmH5YiJhhfXxXhzvUafGyM3qu+2jYggnwJXk49ft9RMmJWRbVNX7cWuCyVtobk7bf
+ 949eKEOqPfqt3a0BvSkfG7JYQS3zfO+qp6EvI3ixzMN6K6gxsj6WEI8J3RqNbUS9mIaZBzOKQqI
+ 4kW2LQXykaBIxthzRqqlU6+tygEzmeVNVFbeMi69JiOAYVnN9Pm70h4Qjr5gh/lFFNKx7LNow1j
+ gybrKqU8GSFCPNk2/5ZcYBduBo4sMdm9WvnuB1bkZSrFiqf2DOdIPgvD9RpH6XjiNS0k1/pFkUF
+ 416tq+jGV13vPbxTLX1OuSPscFOPgPkU3x6mQ8AiJayHA==
+Received-SPF: pass client-ip=51.210.91.53; envelope-from=clg@kaod.org;
+ helo=smtpout4.mo540.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,88 +138,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Shivang Upadhyay <shivangu@linux.ibm.com> writes:
+On 7/14/26 14:46, Cédric Le Goater wrote:
+> Hello,
+> 
+> This series extends the Aspeed SMC qtest suite with coverage for
+> fast-read and multi-IO read commands :
+>    - Fast Read (single IO with dummy byte)
+>    - Dual Output Read (DOR, dual data IO)
+>    - Quad Output Read (QOR, quad data IO)
+> 
+> Each patch tests both the memory-mapped CTRL_FREADMODE path and the
+> user-mode command path, to exercise the dummy cycle handling recently
+> reworked in the m25p80 flash model.
+> 
+> Thanks,
+> 
+> C.
+> 
+> Changes in v2:
+> 
+>    - Introduced spi_ctrl_set_fast_read() helper, replacing open-coded
+>      ctrl register setup in read_page_mem_fast_read/dor/qor()
+>    - Replaced MIT license boilerplate with SPDX-License-Identifier
+>    - Collected Reviewed-by: Bin Meng on patches 1 and 3
+> 
+> Cédric Le Goater (4):
+>    tests/qtest: aspeed_smc: Introduce read_page_mem_fn for page read
+>      helpers
+>    tests/qtest: aspeed_smc: Add fast-read test coverage
+>    tests/qtest: aspeed_smc: Add Dual Output Read (DOR) test coverage
+>    tests/qtest: aspeed_smc: Add Quad Output Read (QOR) test coverage
+> 
+>   tests/qtest/aspeed-smc-utils.h |  31 +++---
+>   tests/qtest/aspeed-smc-utils.c | 192 ++++++++++++++++++++++++++++-----
+>   tests/qtest/aspeed_smc-test.c  |  71 +++++++++---
+>   tests/qtest/ast2700-smc-test.c |  12 +++
+>   4 files changed, 247 insertions(+), 59 deletions(-)
+> 
 
-> On Tue, 2026-07-14 at 15:54 +0530, Aditya Gupta wrote:
->> > guest code.
->> >=20
->> > PPC folks, please confirm, it's been years since I looked at this.
->> True. The way the spec mentions it seems the OS can get control back
->> after
->> execution of ibm,os-term.
->>=20
->> This difference is noticeable with `panic=3D15`. On an LPAR, this would
->> print the
->> following line and do a reboot after a timeout of 15s (this happens
->> in linux
->> after it has done the os-term call):
->>=20
->> =C2=A0=C2=A0 =C2=A0 [=C2=A0 338.186072] Rebooting in 15 seconds..
->>=20
->> But on QEMU, this isn't printed, and the machine powers down:
->>=20
->> =C2=A0=C2=A0 =C2=A0 qemu-system-ppc64: OS terminated:
->>=20
->> Maybe worth taking a look. Didn't notice this earlier, thanks Fabiano
->> !
->>=20
->
-> Hi Aditya Fabiano,
->  As we register the rtas(os-term) as the panic handler for spapr in
-> linux, I think we expect the machine to be shut-down properly and not
-> handle any of the work. I am not sure how else would we implement this
-> function in qemu without using `qemu_system_guest_panicked`. I mean,
-> the name conveys, the guest has "paniced".
->
-> But then again as per PAPR, we should expected limited number of rtas
-> calls from the OS (the following list).
-> - nvram-fetch
-> - nvram-store
-> - display-character
-> - power-off
-> - ibm,power-off-ups
-> - system-reboot
-> - check-exception
->
-> PAPR reffers to host as "live-halt" after it has called os-term. Not
-> very sure on the meaning of this.
->
-> Maybe other platforms then linux will rely on this? As Fabiano
-> suggested he found some case where he needed to comment it out, That
-> would be interesting scenario to explore.
->
+Applied to
 
-To be clear: I don't know of anything that currently depends on a more
-rigorous behavior of os-term.
+     https://github.com/legoater/qemu aspeed-next
 
-If Linux, and probably other major OSes, use os-term to relay a panic
-state to the hypervisor, this is fine. For the purposes of Peter's
-question I think we can leave it at that.
+Thanks,
 
----
+C.
 
-PS:
-The use-case I had in the past was related to this test suite:
-https://github.com/legoater/pnv-test. I was looking for a way to do
-clean termination of a vm from the guest OS while conveying the test
-output in the message.
-
-E.g:
-
-$ cat slof.s
-li      3,0
-ori     3,3,61440       # H_RTAS
-li      4,argbuf
-.long 0x44000022
-b .
-
-argbuf:
-.long 0x201f    # ibm,os-term
-.long 0x65786974 # "exit"
-.long 0=20
-.long . -8
-
-$ ./qemu-system-ppc64 -bios slof.bin -d guest_errors
-qemu: OS terminated: exit
-Guest crashed
 
