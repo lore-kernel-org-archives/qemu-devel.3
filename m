@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89E34C44501
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 15:44:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1642CC44508
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 15:44:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjfHm-0001OL-0D; Tue, 14 Jul 2026 11:43:06 -0400
+	id 1wjfHh-0001Lp-P3; Tue, 14 Jul 2026 11:43:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wjfHg-0001LF-IM
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 11:43:00 -0400
+ id 1wjfHd-0001Jy-TP
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 11:42:57 -0400
 Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wjfHf-000845-3g
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 11:43:00 -0400
+ id 1wjfHZ-00082B-Az
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 11:42:57 -0400
 Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c1b:16:0:640:bc52:0])
- by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id C4A3E80B07;
- Tue, 14 Jul 2026 18:42:57 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id E2E5680AE1;
+ Tue, 14 Jul 2026 18:42:49 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:c5a::1:8])
  by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id lgRdV71YDKo0-wmPbPaNM; Tue, 14 Jul 2026 18:42:57 +0300
+ id lgRdV71YDKo0-Sfv91pst; Tue, 14 Jul 2026 18:42:49 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1784043777;
- bh=cu73PT7yPvhQWzkPeGOzwE074CR4qAek7bUnSiGJNag=;
+ s=default; t=1784043769;
+ bh=mJdkRWSOhzq8wvcrtU+0pBu22CGS5GmslG9eOtXQXn4=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=XJObylRqL/udHwLiAJhPAitwiKLHo7eMYPxUsFVR3ZUz3240nxasfQyBmRWfOE/Kk
- gV00OKWIVabCdqaTPDXeWFZrQbMWyyniVvAf9qaNoVm8qT44N2heZxRqSBQRS5Ihm0
- oBVgNIJv8g4plrtvMqB4TUD8lCrRUZeLAurEpOZQ=
+ b=K7kmYzl6ygYdFs8T8ts4a9ieE9GFUvGYMSuFGJ8O2a7ouMesn3JvZ+XN7DQK0nwtr
+ W3a2hGQqZM+8WB8vD61XnILPpjseiecj8ZoXS4oG8fvYf5czRK2YWjxw71qK5174Ab
+ 5RG0tVWDkGWF4gTdhGzesJjNmkFqc17/S0ZQy2nk=
 Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -45,11 +45,11 @@ To: jasowang@redhat.com,
 Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
  raphael.s.norwitz@gmail.com, bchaney@akamai.com, vsementsov@yandex-team.ru,
  qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
- yc-core@yandex-team.ru, mark.caveayland@nutanix.com
-Subject: [PATCH v19 10/15] migration/channel: check that transfer is UNIX
- socket when "local" set
-Date: Tue, 14 Jul 2026 18:42:38 +0300
-Message-ID: <20260714154246.1242856-11-vsementsov@yandex-team.ru>
+ yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
+ Jason Wang <jasowangio@gmail.com>
+Subject: [PATCH v19 01/15] net/tap: rework tap_parse_script
+Date: Tue, 14 Jul 2026 18:42:29 +0300
+Message-ID: <20260714154246.1242856-2-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260714154246.1242856-1-vsementsov@yandex-team.ru>
 References: <20260714154246.1242856-1-vsementsov@yandex-team.ru>
@@ -77,51 +77,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As documented, for "local", the migration channel must be direct
-UNIX socket connection from source to target. We can't check for
-it being "direct", but let's at least check that we deal with
-UNIX socket (fd-passing supported).
+Factor out tap_is_explicit_no_script() helper, to simplify
+further changes.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- migration/channel.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ net/tap.c | 27 +++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
 
-diff --git a/migration/channel.c b/migration/channel.c
-index 1e2935f926b..ba00dd1931d 100644
---- a/migration/channel.c
-+++ b/migration/channel.c
-@@ -214,6 +214,13 @@ void migration_channel_process_incoming(QIOChannel *ioc)
-     trace_migration_set_incoming_channel(
-         ioc, object_get_typename(OBJECT(ioc)));
+diff --git a/net/tap.c b/net/tap.c
+index 57ffb09885c..fedd48c48d2 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -92,19 +92,34 @@ static void launch_script(const char *setup_script, const char *ifname,
+ static void tap_send(void *opaque);
+ static void tap_writable(void *opaque);
  
-+    if (migrate_local() &&
-+        !qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_FD_PASS)) {
-+        error_setg(&local_err,
-+                   "local migration requires a UNIX domain socket channel");
-+        goto out;
-+    }
-+
-     if (migrate_channel_requires_tls_upgrade(ioc)) {
-         migration_tls_channel_process_incoming(ioc, &local_err);
-     } else {
-@@ -241,6 +248,16 @@ void migration_channel_connect_outgoing(MigrationState *s, QIOChannel *ioc)
+-static char *tap_parse_script(const char *script_arg, const char *default_path)
++static bool tap_is_explicit_no_script(const char *script_arg)
  {
-     trace_migration_set_outgoing_channel(ioc, object_get_typename(OBJECT(ioc)));
+-    g_autofree char *res = g_strdup(script_arg);
++    if (!script_arg) {
++        return false;
++    }
  
-+    if (migrate_local() &&
-+        !qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_FD_PASS)) {
-+        Error *local_err = NULL;
-+
-+        error_setg(&local_err,
-+                   "local migration requires a UNIX domain socket channel");
-+        migration_connect_error_propagate(s, local_err);
-+        return;
+-    if (!res) {
+-        res = get_relocated_path(default_path);
++    if (script_arg[0] == '\0') {
++        return true;
 +    }
 +
-     if (migrate_channel_requires_tls_upgrade(ioc)) {
-         Error *local_err = NULL;
++    if (strcmp(script_arg, "no") == 0) {
++        return true;
+     }
  
+-    if (res[0] == '\0' || strcmp(res, "no") == 0) {
++    return false;
++}
++
++static char *tap_parse_script(const char *script_arg, const char *default_path)
++{
++    if (tap_is_explicit_no_script(script_arg)) {
+         return NULL;
+     }
+ 
+-    return g_steal_pointer(&res);
++    if (!script_arg) {
++        return get_relocated_path(default_path);
++    }
++
++    return g_strdup(script_arg);
+ }
+ 
+ static void tap_update_fd_handler(TAPState *s)
 -- 
 2.43.0
 
