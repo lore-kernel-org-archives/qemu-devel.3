@@ -4,105 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C442DC43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 20:11:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12F2DC43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 20:23:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjjSy-00076P-OT; Tue, 14 Jul 2026 16:10:56 -0400
+	id 1wjjez-0005RV-CD; Tue, 14 Jul 2026 16:23:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <valentino.paulon88@gmail.com>)
- id 1wjfiZ-0000OV-Vo
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 12:10:48 -0400
-Received: from mail-oi1-x231.google.com ([2607:f8b0:4864:20::231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <valentino.paulon88@gmail.com>)
- id 1wjfiW-00037G-1s
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 12:10:47 -0400
-Received: by mail-oi1-x231.google.com with SMTP id
- 5614622812f47-4a483a552efso264482b6e.1
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 09:10:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784045442; cv=none;
- d=google.com; s=arc-20260327;
- b=pSyUcsCk/UGNXfkxTkkPi/PK+F7kN1IgWqDXU2+5a02FH2jEl0yOQITwqV+08ylq1Y
- IrdDm+aN/X6EbqJdw1FflNqh11BBbI3tM0Hyk8cD9jZlG8XU2LchD/LOJqNj/FHrZJkz
- FXgZ37Um4c4bfnyli4M6rQKvTL9vOoTcVRhUtyMFWPsdQrbtcgwkXJ/Wa7qGcOmlmDOW
- +GIBvb3b8mFmg5RGnrYoL4irmf1kYC28P35sjz1BozejE4xgvRtQuOOzENuH/695GXyO
- RjZxGpz126UaReze0s9vqH6ygPHdJaLrVZXdSs37UL7ZRHlAMjyHXPIcHQFe8UVO6wN9
- /UOw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=NAHbMduCdPTRw4LIzN8jR3UGx8rjDacfsgIeyMlPOnU=;
- fh=UqGKuxG2uuAkcXWun4BvW+vxDhhYyekQMODegFyFMIM=;
- b=dxf5VNqkDNLChQfZQh2Gi3aG1jhYWaQJ5C9u+9NEspGeSEv+X02qef/yF89kCJVG20
- qH+6axvk8sPbBrWP6Aoxc+xh8oYjjCDmx6q3O/sWsNkoJgW8E0PgTAcdUYDv6XMjYTmg
- e3TBkN40xaFFsgJgR3vTe4tcEGaFZ+EcKGdCofnPt+Pkx8E+ktBlKRTj1d0jfWozzHzU
- lvUGdZWPQJCQV58ztITdwvLbByKea13XBSCCt+SuaazpWWA4tNZAPO1BrwRfwqL/f/xf
- CCAlC2sfpUgoS6FxaxZzc5XD34WJF2TZZFDjmKuHH4mM7XDaoGXTJFiO5ORuGwufN8om
- I0fg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784045442; x=1784650242; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=NAHbMduCdPTRw4LIzN8jR3UGx8rjDacfsgIeyMlPOnU=;
- b=XRIVmxLkZDFP2WSst1FZ5hKS7pGEXL4cKupsi3ODY4rx16rnsH7rHeJ2cpMWbTt4mR
- BU7QkqesPRf8BAGWEBchDvsEUbhjuKI0hGWKeNOBggCeoUYejWnBJXs2/qjjUGfJxewl
- oP3FPQnZxGp6ivFHbAXHAmjWROpvT1WHkHC35LQjTVec5znidLkpYRHj2xHt5jahMRUz
- lP+LOHqmKRNIPV0uW9P/BjJnvUDgig2KXRgUeTHWNMLVCuq8rPX0o4h3yqmHhjIXk3lI
- Sh4iAsp1tc4j2DDGvwVO+t3eS305c4A3QaCj9aZx9qxrAFdBRaLKeVJBT4oMnRJqqZUa
- NHeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784045442; x=1784650242;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=NAHbMduCdPTRw4LIzN8jR3UGx8rjDacfsgIeyMlPOnU=;
- b=XC/Eui6pE7xK7hivirliyqcgKvlTxG2dmMhPeBOuQGQYMDcx/92ZjMepWpiKH4jT7U
- cECAIenffjsfh1nppkMGWTcPIdCqL1dXFWVj7Ea5GAl816EkQdNJR3E2k9bVQRruBGKU
- XZNt4neel7APBwvLVDEJZ13QeFQ6n3luuDJPlIDJ8gQpdu3hyYLJ36BZ0Rux9KD0To1e
- /na7RnE2GurwGojEzX8u9ZMrt/M9xPPQV/4kasKQ7YqXK7W4sW1sf2WxwRgRvoMYlN98
- a/euiRL0HWVh6dSKqmhkN/BLdaxLNDNR5UH6tENE1IDJdGfZeDXVJqrGCSOmMVySOH7G
- B0+w==
-X-Gm-Message-State: AOJu0YzA6tRJ1knbtN4cVBvp0LRw5wd4h8u7uGrZSc1mcEhkC+O2cgbv
- GGDu9aqUlBIL2sFq+cCUwYlSdKHQSje3fuLiq55ZazmqvNdTgLcwL4G30lc8G7BU/IMS/tTxMgG
- gmaxG6MaJbAs0ffJJQ0d5AxMBe03pXv9glNKnIHVlB9oC
-X-Gm-Gg: AfdE7ckueFXdOY35GOYgqpEkK23B3tH0BRBaGxLo5Nca/EOTTIvd2vi6hwGnXZ14V+R
- rbc3CmW13tNR23Fxv1Os+iVqjNclXK/3TH2ARTDwEQfIKGHBXuHnOSCTcvNZdbI5ybmFcm3XbTW
- 8DH+XBVROMPMNN9YgnoqY1tfjs4SZi4hsP/l6T/ZZ9sdtm+EhJ5dW6jp9DkOTY8/BWLS51KalfZ
- wLz/NqG6qCxQnyxwTc7TUrmUfpbbYtVThwZXZGv0s8L1r9WXptOXQNzwwRxchSEDpN11yQ=
-X-Received: by 2002:a05:6808:151e:b0:4a4:c12:49d9 with SMTP id
- 5614622812f47-4a42ace0782mr8385541b6e.3.1784045442288; Tue, 14 Jul 2026
- 09:10:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wjjex-0005Mz-Kg
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 16:23:19 -0400
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wjjev-0003rS-A3
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 16:23:19 -0400
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wjjep-00000000Sm0-0Mk2; Tue, 14 Jul 2026 22:23:11 +0200
+Message-ID: <19b76c19-4c7b-4a48-8c77-7db8746ff570@maciej.szmigiero.name>
+Date: Tue, 14 Jul 2026 22:23:05 +0200
 MIME-Version: 1.0
-References: <20260709105707.91209-1-kkostiuk@redhat.com>
- <alYRTj0_B-HA3t_Y@redhat.com>
- <CAPMcbCpHZPMRMFas8FOjNZtohozc96M7pcdce5Xnpur-ThwJQQ@mail.gmail.com>
- <alYdwKHMWoVcay_B@redhat.com>
-In-Reply-To: <alYdwKHMWoVcay_B@redhat.com>
-From: Valentino Paulon <valentino.paulon88@gmail.com>
-Date: Tue, 14 Jul 2026 18:10:30 +0200
-X-Gm-Features: AUfX_myyEDx4o3wqGK4o71lNMmMSqYPZsjlqvfIpsqEG2Awo6WfjVEZ2zm_NX5A
-Message-ID: <CAF2ANE06ah2B37BmL=WQfJYutt1zGP7sPkOWZ+=+-dLdLqZ_MA@mail.gmail.com>
-Subject: Re: [PATCH] qga: Do not follow symlink in guest-ssh-* commands
-To: qemu-devel@nongnu.org, berrange@redhat.com, kkostiuk@redhat.com
-Cc: yvugenfi@redhat.com, michael.roth@amd.com
-Content-Type: multipart/alternative; boundary="000000000000d9cf2d065694722c"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::231;
- envelope-from=valentino.paulon88@gmail.com; helo=mail-oi1-x231.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] vfio/migration: Parallelize device state transitions
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
+ qemu-devel@nongnu.org
+References: <cover.1779217494.git.maciej.szmigiero@oracle.com>
+ <743f03758d2a30df4093db140ccdd0f91f69bd7e.1779217494.git.maciej.szmigiero@oracle.com>
+ <871peqtm5t.fsf@suse.de> <ah3eheRXN1QJAGj_@x1.local>
+ <ac677bf9-1372-4905-a0b8-874a74be07be@maciej.szmigiero.name>
+ <ah86Z0r5sMnxwgo-@x1.local>
+ <c739f4fe-1f43-45c4-b98f-109366526405@maciej.szmigiero.name>
+ <e79a3746-9c7e-46a5-ad81-537b9d3affdb@maciej.szmigiero.name>
+ <akvWlciUvxjDbBBZ@x1.local>
+ <e602d0cd-dfc2-441d-a017-067e55418dad@maciej.szmigiero.name>
+ <alZssI9OmGJyD-rc@x1.local>
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Content-Language: en-US, pl-PL
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <alZssI9OmGJyD-rc@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 14 Jul 2026 16:10:55 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -117,401 +113,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000d9cf2d065694722c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 14.07.2026 19:06, Peter Xu wrote:
+> On Mon, Jul 13, 2026 at 10:23:07PM +0200, Maciej S. Szmigiero wrote:
+>> On 6.07.2026 18:23, Peter Xu wrote:
+>>> On Thu, Jul 02, 2026 at 08:36:32PM +0200, Maciej S. Szmigiero wrote:
+>>>> I looked more deeply into this and even prototyped a similar new design.
+>>>
+>>> Sorry for a late response; off work most of last week.
+>>
+>> Also sorry for my late response - was extremely busy the entire previous week.
+>>
+>>>>
+>>>> However, in the end I think that running VFIO state transitions in
+>>>> parallel with other non-VFIO cb() handlers just isn't safe.
+>>>>
+>>>> For example, on the migration source, the second transition is
+>>>> PRE_COPY_P2P -> STOP_COPY.
+>>>> PRE_COPY_P2P is the last state during migration that still allows the
+>>>> device to accept DMA and similar interactions, while STOP_COPY is
+>>>> already the "quiescent" state.
+>>>>
+>>>> So if a VFIO has already reached STOP_COPY but a non-VFIO device
+>>>> callback still hasn't finished, then any DMA/MMIO/P2P transaction from
+>>>> that "unfinished" device to the VFIO device would now hit a VFIO device
+>>>> that no longer can accept such transactions.
+>>>> This may result in hard-to-debug memory corruption during live migration.
+>>>
+>>> Do you have any solid example of this problem?
+>>>
+>>> AFAIU, P2P in VFIO state's term only means P2P DMAs _between_ host VFIO
+>>> devices, nothing to do with emulated.
+>>
+>> I presume that quiescent VFIO devices can't accept *any* DMA, the spec (vfio.h)
+>> even says that:
+>>> The user should take steps to restrict access to vfio device regions while
+>>> the device is in STOP_COPY or risk corruption of the device migration data
+>>> stream.
+>>
+>> Correspondingly, I think the same goes for RESUMING state on the migration
+>> target since it is described there as:
+>>> The device is *stopped* and is loading a new internal state
+>>
+>> While you are right that the spec only talks about P2P DMA I don't see how
+>> host-initiated DMA would be different here - after all, it's about changing
+>> internal device state in a state where the device can't accept that anymore/yet.
+>>
+>>> I am not aware of any P2P that can be initiated from emulated devices, even
+>>> if it exists, it is only P2P from guest perspective not host: it will
+>>> become host operations finally from processor side.  I really don't think
+>>> it's a concern.
+>>
+>> Yeah, it's normal DMA from the VFIO device perspective.
+>>   > My limited understanding of VFIO's P2P state is: when switching to P2P
+>>> state, the VFIO device can still accept P2P DMA from other devices, but
+>>> never initiating P2P DMAs, and the latter sentence is critical, it means
+>>> the real quiecent state of the whole system happens after the last VFIO
+>>> device switching to P2P state: then it means none of the VFIO devices can
+>>> initiate P2P DMA anymore, whole system is quiesced.
+>>
+>> Just having the VFIO devices in the system prevented from being able to
+>> initiate DMA is not enough for them to reach "quiecent" or fully stable
+>> state as long as there are other possible sources of DMA transactions
+>> targeting them in the system.
+>>
+>> Glancing at the existing vm_state_change handlers there are some
+>> concerning ones there:
+>> * vhost-net (called via virtio_vmstate_change() in base virtio-net),
+>>
+>> In the vhost-net case the vm_state_change handler for this device
+>> ultimately reaches vhost_net_stop() and do_vhost_dev_stop() and these
+>> seem to stop this network device rings at this point.
+>>
+>> Now, having vhost-net packet buffers in a VFIO device MMIO BAR would
+>> be rather atypical configuration, but nevertheless letting VFIO
+>> device possibly reach "quiecent" state before this handler finishes
+>> would theoretically be a regression.
+> 
+> If this is an issue, it was an issue for master branch too, right?  Because
+> the master branch (with prepare_cb()s) already switch to P2P_DMA state for
+> all VFIO devices before invoking any cb().
 
-> > So, you propose to call seteuid/setegid before any I/O operation?
->
-> Yes, specifically for the SSH commands, because they're unusual in
-> that we're doing stuff on behalf of an unprivileged user.
+The VFIO devices in {PRE_COPY,RUNNING}_P2P states can {still,already} accept
+DMA so in the master branch by the time prepare_cb() handlers exit and
+cb() ones start running the VFIO devices are {still,already} capable of
+accepting incoming DMA.
 
-+1 on the euid/egid direction -- as the reporter that's the outcome I
-was hoping for. It confines every step (read, mkdir, create, rename,
-chown) to what the target user could already do himself, which removes
-the whole TOCTOU class instead of chasing one instance of it.
+On the other hand, if you meant the state transition into STOP_COPY on the
+migration source currently initiated from cb() handler then there can be an
+ordering issue in principle.
 
-A few implementation details that tend to bite with this pattern, in
-case they save a round-trip:
+It looks like the current master branch mostly avoids this by registering
+vhost-net vm_state_change handler from VirtIODevice and not from its parent
+PCI device, so with the usual PCI topology vhost-net cb() handler will run
+before the VFIO PCI device one (and so still hit DMA-capable VFIO device)
+due to the vhost-net VirtIODevice being one level deeper in the qdev tree.
+It could theoretically be problem with more complex PCI topology though.
 
-- drop the supplementary groups too, not just egid: initgroups() (or
-setgroups() with the user's list) while still root, otherwise the
-agent's effective access won't match the user's in either direction
--- e.g. group-writable paths under the home.
-- keep the real uid at 0 and change euid/egid only, so it stays
-reversible; setegid() before seteuid() on the way down, restore in
-reverse.
-- effective ids are process-wide, so this assumes the SSH command is
-not doing its I/O from more than one thread concurrently -- worth a
-quick check against the agent's dispatch model.
+> It is also an issue then even before P2P_DMA state introduced, because
+> before that all cb()s can be run at random orders.
 
-The passwd lookup already runs before any of this, so it can stay
-outside the dropped region.
+Technically, the order is based on the device qdev tree depth and within
+the same qdev tree depth level it looks like the handler calling order will
+be dependent on the order the registering devices were instantiated.
 
-Happy to re-run my PoC against the reworked version once it's ready and
-confirm the window is closed.
+This means that even before these P2P states were introduced
+VM configurations that instantiated VFIO/virtio devices in the certain
+"right" order or topology weren't affected.
 
-Regards,
-Valentino Paulon
+So maybe adding these P2P states mostly fixed this issue too?
 
-On Tue, Jul 14, 2026 02:30 PM, "Daniel P. Berrang=C3=A9" <berrange@redhat.c=
-om>
-wrote:
+> What you said might be an issue indeed in that extremely corner case, but I
+> think it still needs some justification, and it's IMHO orthogonal to what
+> we're talking about.  If it's an issue, maybe we want to fix it first
+> before attempting to move further to any concurrent approaches, but is it
+> really an issue is to be better justified.
 
-> On Tue, Jul 14, 2026 at 02:28:35PM +0300, Kostiantyn Kostiuk wrote:
-> > On Tue, Jul 14, 2026 at 1:37=E2=80=AFPM Daniel P. Berrang=C3=A9 <berran=
-ge@redhat.com>
-> > wrote:
-> >
-> > > On Thu, Jul 09, 2026 at 01:57:07PM +0300, Kostiantyn Kostiuk wrote:
-> > > > Before this commit, when qmp_guest_ssh_add_authorized_keys adds an
-> > > > SSH key for an existing local user, the agent (running as root)
-> decides
-> > > > whether to create the user's .ssh directory with a symlink-followin=
-g
-> > > > directory test, and then writes and chowns the authorized_keys file=
-.
-> > > > A local unprivileged user who owns their home directory can pre-sta=
-ge
-> > > > their .ssh directory (or the authorized_keys file) as a symbolic li=
-nk
-> > > > so that, when the host or operator triggers a key add for that user=
-,
-> > > > the root agent follows the link and transfers ownership of an
-> arbitrary
-> > > > root-owned file or directory to the unprivileged user, who can then
-> > > rewrite
-> > > > it to obtain root
-> > > >
-> > > > Fixes: CVE-2026-12080
-> > > > Fixes: https://gitlab.com/qemu-project/qemu/-/work_items/3929
-> > > >
-> > > > Reported-by: Valentino Paulon <valentino.paulon88@gmail.com>
-> > > > Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-> > > > ---
-> > > >  qga/commands-posix-ssh.c | 53
-> ++++++++++++++++++++++++++++++++++------
-> > > >  1 file changed, 45 insertions(+), 8 deletions(-)
-> > > >
-> > > > diff --git a/qga/commands-posix-ssh.c b/qga/commands-posix-ssh.c
-> > > > index 661972e34e..4e717d8ae8 100644
-> > > > --- a/qga/commands-posix-ssh.c
-> > > > +++ b/qga/commands-posix-ssh.c
-> > > > @@ -66,7 +66,7 @@ mkdir_for_user(const char *path, const struct
-> passwd
-> > > *p,
-> > > >          return false;
-> > > >      }
-> > > >
-> > > > -    if (chown(path, p->pw_uid, p->pw_gid) =3D=3D -1) {
-> > > > +    if (lchown(path, p->pw_uid, p->pw_gid) =3D=3D -1) {
-> > > >          error_setg_errno(errp, errno,
-> > > >                           "failed to set ownership of directory
-> '%s'",
-> > > >                           path);
-> > > > @@ -96,7 +96,7 @@ write_authkeys(const char *path, const GStrv keys=
-,
-> > > >          return false;
-> > > >      }
-> > > >
-> > > > -    if (chown(path, p->pw_uid, p->pw_gid) =3D=3D -1) {
-> > > > +    if (lchown(path, p->pw_uid, p->pw_gid) =3D=3D -1) {
-> > > >          error_setg_errno(errp, errno,
-> > > >                           "failed to set ownership of directory
-> '%s'",
-> > > >                           path);
-> > > > @@ -123,6 +123,7 @@ qmp_guest_ssh_add_authorized_keys(const char
-> > > *username, strList *keys,
-> > > >      g_auto(GStrv) authkeys =3D NULL;
-> > > >      strList *k;
-> > > >      size_t nkeys, nauthkeys;
-> > > > +    int fd;
-> > > >
-> > > >      reset =3D has_reset && reset;
-> > > >
-> > > > @@ -138,15 +139,25 @@ qmp_guest_ssh_add_authorized_keys(const char
-> > > *username, strList *keys,
-> > > >      ssh_path =3D g_build_filename(p->pw_dir, ".ssh", NULL);
-> > > >      authkeys_path =3D g_build_filename(ssh_path, "authorized_keys"=
-,
-> NULL);
-> > > >
-> > > > +    fd =3D open(ssh_path, O_DIRECTORY | O_NOFOLLOW);
-> > > > +    if (fd =3D=3D -1) {
-> > > > +        if (errno !=3D ENOENT) {
-> > > > +            error_setg_errno(errp, errno, "failed to open director=
-y
-> > > '%s'", ssh_path);
-> > > > +            return;
-> > > > +        }
-> > > > +    }
-> > >
-> > > IIUC, you're trying to protect against the possbility that
-> /home/fred/.ssh
-> > > is
-> > > a symlink to some other privileged directory.
-> > >
-> > > >      if (!reset) {
-> > > >          authkeys =3D read_authkeys(authkeys_path, NULL);
-> > > >      }
-> > > >      if (authkeys =3D=3D NULL) {
-> > > > -        if (!g_file_test(ssh_path, G_FILE_TEST_IS_DIR) &&
-> > > > -            !mkdir_for_user(ssh_path, p, 0700, errp)) {
-> > > > +        if (fd =3D=3D -1 && !mkdir_for_user(ssh_path, p, 0700, err=
-p)) {
-> > > >              return;
-> > > >          }
-> > > >      }
-> > > > +    if (fd >=3D 0) {
-> > > > +        close(fd);
-> > > > +    }
-> > >
-> > > Does holding open an FD on a directory prevent that directory being
-> > > altered ?  Even if it prevents it being deleted, surely there's still
-> > > a race where the dir could be renamed, andd .ssh turned back into a
-> > > symlink ?
-> > >
-> >
-> > Yes, you are right; race is possible
-> >
-> >
-> > >
-> > > Rather than do these checks and switch chown->lchown, I wonder if we
-> > > are better off having the agent simply change its effective UID/GID
-> > > while it updates the SSH key files ? That way the agent would be
-> > > confined just like the user would be and we don't need to implement
-> > > special cases, nor would we have to think about race conditions.
-> > >
-> > >
-> > So, you propose to call seteuid/setegid before any I/O operation?
->
-> Yes, specifically for the SSH commands, because they're unusual in
-> that we're doing stuff on behalf of an unprivileged user.
->
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
->
->
+As I wrote above, I don't think there's a major ordering issue in the
+current master branch, at least not for P2P-state-capable VFIO devices.
 
---000000000000d9cf2d065694722c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> Applies to all below.
+The above example is about what happens on the migration source, however
+the examples below are about the migration target.
 
-<div dir=3D"ltr"><div dir=3D"ltr"><div><div dir=3D"auto">&gt; &gt; So, you =
-propose to call seteuid/setegid before any I/O operation?<br>&gt;<br>&gt; Y=
-es, specifically for the SSH commands, because they&#39;re unusual in<br>&g=
-t; that we&#39;re doing stuff on behalf of an unprivileged user.<br><br>+1 =
-on the euid/egid direction -- as the reporter that&#39;s the outcome I<br>w=
-as hoping for. It confines every step (read, mkdir, create, rename,<br>chow=
-n) to what the target user could already do himself, which removes<br>the w=
-hole TOCTOU class instead of chasing one instance of it.<br><br>A few imple=
-mentation details that tend to bite with this pattern, in<br>case they save=
- a round-trip:<br><br>  - drop the supplementary groups too, not just egid:=
- initgroups() (or<br>    setgroups() with the user&#39;s list) while still =
-root, otherwise the<br>    agent&#39;s effective access won&#39;t match the=
- user&#39;s in either direction<br>    -- e.g. group-writable paths under t=
-he home.<br>  - keep the real uid at 0 and change euid/egid only, so it sta=
-ys<br>    reversible; setegid() before seteuid() on the way down, restore i=
-n<br>    reverse.<br>  - effective ids are process-wide, so this assumes th=
-e SSH command is<br>    not doing its I/O from more than one thread concurr=
-ently -- worth a<br>    quick check against the agent&#39;s dispatch model.=
-<br><br>The passwd lookup already runs before any of this, so it can stay<b=
-r>outside the dropped region.<br><br>Happy to re-run my PoC against the rew=
-orked version once it&#39;s ready and<br>confirm the window is closed.<br><=
-br>Regards,<br>Valentino Paulon<br></div></div></div><br><div class=3D"gmai=
-l_extra"><div>On Tue, Jul 14, 2026 02:30 PM, &quot;Daniel P. Berrang=C3=A9&=
-quot; &lt;<a href=3D"mailto:berrange@redhat.com" target=3D"_blank">berrange=
-@redhat.com</a>&gt; wrote:<br><blockquote class=3D"gmail_quote" style=3D"ma=
-rgin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:=
-1ex">On Tue, Jul 14, 2026 at 02:28:35PM +0300, Kostiantyn Kostiuk wrote:<br=
->
-&gt; On Tue, Jul 14, 2026 at 1:37=E2=80=AFPM Daniel P. Berrang=C3=A9 &lt;<a=
- href=3D"mailto:berrange@redhat.com" target=3D"_blank">berrange@redhat.com<=
-/a>&gt;<br>
-&gt; wrote:<br>
-&gt; <br>
-&gt; &gt; On Thu, Jul 09, 2026 at 01:57:07PM +0300, Kostiantyn Kostiuk wrot=
-e:<br>
-&gt; &gt; &gt; Before this commit, when qmp_guest_ssh_add_authorized_keys a=
-dds an<br>
-&gt; &gt; &gt; SSH key for an existing local user, the agent (running as ro=
-ot) decides<br>
-&gt; &gt; &gt; whether to create the user&#39;s .ssh directory with a symli=
-nk-following<br>
-&gt; &gt; &gt; directory test, and then writes and chowns the authorized_ke=
-ys file.<br>
-&gt; &gt; &gt; A local unprivileged user who owns their home directory can =
-pre-stage<br>
-&gt; &gt; &gt; their .ssh directory (or the authorized_keys file) as a symb=
-olic link<br>
-&gt; &gt; &gt; so that, when the host or operator triggers a key add for th=
-at user,<br>
-&gt; &gt; &gt; the root agent follows the link and transfers ownership of a=
-n arbitrary<br>
-&gt; &gt; &gt; root-owned file or directory to the unprivileged user, who c=
-an then<br>
-&gt; &gt; rewrite<br>
-&gt; &gt; &gt; it to obtain root<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; Fixes: CVE-2026-12080<br>
-&gt; &gt; &gt; Fixes: <a href=3D"https://gitlab.com/qemu-project/qemu/-/wor=
-k_items/3929" rel=3D"noreferrer" target=3D"_blank">https://gitlab.com/qemu-=
-project/qemu/-/work_items/3929</a><br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; Reported-by: Valentino Paulon &lt;<a href=3D"mailto:valentin=
-o.paulon88@gmail.com" target=3D"_blank">valentino.paulon88@gmail.com</a>&gt=
-;<br>
-&gt; &gt; &gt; Signed-off-by: Kostiantyn Kostiuk &lt;<a href=3D"mailto:kkos=
-tiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.com</a>&gt;<br>
-&gt; &gt; &gt; ---<br>
-&gt; &gt; &gt;=C2=A0 qga/commands-posix-ssh.c | 53 ++++++++++++++++++++++++=
-++++++++++------<br>
-&gt; &gt; &gt;=C2=A0 1 file changed, 45 insertions(+), 8 deletions(-)<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; diff --git a/qga/commands-posix-ssh.c b/qga/commands-posix-s=
-sh.c<br>
-&gt; &gt; &gt; index 661972e34e..4e717d8ae8 100644<br>
-&gt; &gt; &gt; --- a/qga/commands-posix-ssh.c<br>
-&gt; &gt; &gt; +++ b/qga/commands-posix-ssh.c<br>
-&gt; &gt; &gt; @@ -66,7 +66,7 @@ mkdir_for_user(const char *path, const str=
-uct passwd<br>
-&gt; &gt; *p,<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return false;<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; -=C2=A0 =C2=A0 if (chown(path, p-&gt;pw_uid, p-&gt;pw_gid) =
-=3D=3D -1) {<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 if (lchown(path, p-&gt;pw_uid, p-&gt;pw_gid) =
-=3D=3D -1) {<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_errno(errp, err=
-no,<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;failed to set ownership of dire=
-ctory &#39;%s&#39;&quot;,<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0path);<br>
-&gt; &gt; &gt; @@ -96,7 +96,7 @@ write_authkeys(const char *path, const GSt=
-rv keys,<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return false;<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; -=C2=A0 =C2=A0 if (chown(path, p-&gt;pw_uid, p-&gt;pw_gid) =
-=3D=3D -1) {<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 if (lchown(path, p-&gt;pw_uid, p-&gt;pw_gid) =
-=3D=3D -1) {<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_errno(errp, err=
-no,<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;failed to set ownership of dire=
-ctory &#39;%s&#39;&quot;,<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0path);<br>
-&gt; &gt; &gt; @@ -123,6 +123,7 @@ qmp_guest_ssh_add_authorized_keys(const =
-char<br>
-&gt; &gt; *username, strList *keys,<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 g_auto(GStrv) authkeys =3D NULL;<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 strList *k;<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 size_t nkeys, nauthkeys;<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 int fd;<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 reset =3D has_reset &amp;&amp; reset;<br=
->
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; @@ -138,15 +139,25 @@ qmp_guest_ssh_add_authorized_keys(cons=
-t char<br>
-&gt; &gt; *username, strList *keys,<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 ssh_path =3D g_build_filename(p-&gt;pw_d=
-ir, &quot;.ssh&quot;, NULL);<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 authkeys_path =3D g_build_filename(ssh_p=
-ath, &quot;authorized_keys&quot;, NULL);<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 fd =3D open(ssh_path, O_DIRECTORY | O_NOFOLLO=
-W);<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 if (fd =3D=3D -1) {<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (errno !=3D ENOENT) {<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_errno(=
-errp, errno, &quot;failed to open directory<br>
-&gt; &gt; &#39;%s&#39;&quot;, ssh_path);<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 }<br>
-&gt; &gt;<br>
-&gt; &gt; IIUC, you&#39;re trying to protect against the possbility that /h=
-ome/fred/.ssh<br>
-&gt; &gt; is<br>
-&gt; &gt; a symlink to some other privileged directory.<br>
-&gt; &gt;<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 if (!reset) {<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 authkeys =3D read_authkeys=
-(authkeys_path, NULL);<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 if (authkeys =3D=3D NULL) {<br>
-&gt; &gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!g_file_test(ssh_path, G_FI=
-LE_TEST_IS_DIR) &amp;&amp;<br>
-&gt; &gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 !mkdir_for_user(s=
-sh_path, p, 0700, errp)) {<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (fd =3D=3D -1 &amp;&amp; !mk=
-dir_for_user(ssh_path, p, 0700, errp)) {<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 if (fd &gt;=3D 0) {<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 close(fd);<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 }<br>
-&gt; &gt;<br>
-&gt; &gt; Does holding open an FD on a directory prevent that directory bei=
-ng<br>
-&gt; &gt; altered ?=C2=A0 Even if it prevents it being deleted, surely ther=
-e&#39;s still<br>
-&gt; &gt; a race where the dir could be renamed, andd .ssh turned back into=
- a<br>
-&gt; &gt; symlink ?<br>
-&gt; &gt;<br>
-&gt; <br>
-&gt; Yes, you are right; race is possible<br>
-&gt; <br>
-&gt; <br>
-&gt; &gt;<br>
-&gt; &gt; Rather than do these checks and switch chown-&gt;lchown, I wonder=
- if we<br>
-&gt; &gt; are better off having the agent simply change its effective UID/G=
-ID<br>
-&gt; &gt; while it updates the SSH key files ? That way the agent would be<=
-br>
-&gt; &gt; confined just like the user would be and we don&#39;t need to imp=
-lement<br>
-&gt; &gt; special cases, nor would we have to think about race conditions.<=
-br>
-&gt; &gt;<br>
-&gt; &gt;<br>
-&gt; So, you propose to call seteuid/setegid before any I/O operation?<br>
-<br>
-Yes, specifically for the SSH commands, because they&#39;re unusual in<br>
-that we&#39;re doing stuff on behalf of an unprivileged user.<br>
-<br>
-<br>
-With regards,<br>
-Daniel<br>
--- <br>
-|: <a href=3D"https://berrange.com" rel=3D"noreferrer" target=3D"_blank">ht=
-tps://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0~~=C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 <a href=3D"https://hachyderm.io/@berrange" rel=3D"noreferrer" target=3D=
-"_blank">https://hachyderm.io/@berrange</a> :|<br>
-|: <a href=3D"https://libvirt.org" rel=3D"noreferrer" target=3D"_blank">htt=
-ps://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ~~=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 <a href=3D"https://entangle-photo.org" rel=3D"noreferrer"=
- target=3D"_blank">https://entangle-photo.org</a> :|<br>
-|: <a href=3D"https://pixelfed.art/berrange" rel=3D"noreferrer" target=3D"_=
-blank">https://pixelfed.art/berrange</a>=C2=A0 =C2=A0~~=C2=A0 =C2=A0 <a hre=
-f=3D"https://fstop138.berrange.com" rel=3D"noreferrer" target=3D"_blank">ht=
-tps://fstop138.berrange.com</a> :|<br>
-<br>
-</blockquote></div></div></div>
+Here, in the current master branch these non-VFIO cb() handlers are
+guaranteed to hit DMA-capable VFIO device since this switch happened
+in its prepare_cb() handler and VFIO device cb() handler does not
+change its DMA acceptance qualities so its ordering with respect to
+other cb() handlers shouldn't matter.
 
---000000000000d9cf2d065694722c--
+>>
+>> * virtio-blk virtio_blk_dma_restart_cb() vm_state_change handler
+>> submits some block requests to its (possibly dedicated) IOThread.
+>>
+>> Again, having block device request buffers in a VFIO device MMIO BAR
+>> would not be a typical configuration, however letting this handler
+>> run before making sure that VFIO devices can accept DMA would
+>> theoretically make a regression too.
+>>
+>> * same for scsi-bus scsi_dma_restart_cb() that does
+>> scsi_dma_restart_req() for each pending request.
+>>
+>>
+>> The above is not an exhaustive list, these are only the cases
+>> I was able to identify relatively easily by going through the
+>> code.
+>> And I think that with possible memory corruption issues its better
+>> to be safe than sorry, as they are pain to debug.
+>>
+>> The only real non-VFIO cost of being safe about all of this is
+>> ~15 code lines addition to vm-change-state-handler.c, all the
+>> remaining complexity is already on the VFIO side of things.
+>>> That happens earlier
+>>> than reaching any of the cb()s here, because VFIO's prepare_cb() does that
+>>> P2P state switch.
+>>
+>> I thought your proposed design was to launch (per-VFIO device)
+>> device state changing thread in prepare_cb(), make it do *both*
+>> VFIO device state transitions and collect it in cb()?
+> 
+> The idea was only about trying to leverage prepare_cb() to achieve real
+> "prioritized callbacks" for a device, based on patch 1 being problematic.
+> 
+> What prepare_cb() does can be anything.  Certainly, we can make it only do
+> step 1 then in cb() kick all threads to move on to step 2, and sync again.
+> 
+>>
+>> In this case the transitions are *NOT* ordered with respect to
+>> other cb() handlers (besides them being finished by the time
+>> the VFIO device qdev tree depth cb() handlers are reached by
+>> virtue of the threads being collected at this point - this is
+>> actually necessary in order to preserve proper ordering with
+>> respect to some types of interrupt controllers on the source).
+>>
+>> So on the migration source the thread could already put device
+>> into "quiecent" state by the time other cb() handlers could run
+>> and on the migration target the device could still be
+>> in an "unprepared" state by the time other cb() handlers are called.
+> 
+> Thanks,
+> 
+
+Thanks,
+Maciej
+
 
