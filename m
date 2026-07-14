@@ -4,58 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B525BC43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 21:44:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09258C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 21:47:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjkuz-0000Ff-SH; Tue, 14 Jul 2026 17:43:57 -0400
+	id 1wjkxg-0000pP-Rp; Tue, 14 Jul 2026 17:46:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1wjkux-0000FS-T4
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 17:43:55 -0400
+ id 1wjkxf-0000pA-MR
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 17:46:43 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1wjkuw-00007P-1s
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 17:43:55 -0400
+ id 1wjkxe-0000am-6k
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 17:46:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=oyNP+TMz9Rg5rPnY5RpnXoU3d2NpBRzPjMH+K9lsAJc=; b=AMW/LEkMwdSdrCrHh1eTC8p4xT
- VUkBVb8ynI38K8NrNmCiOqYfRko6rhzyE8dW8Yc1yXSqFm6FSFRBt3XUpEs87hiNsobyAy+UV2694
- Edi+Iseoti8xBlGAr7vmtx2cJ2ZJFxYDxaCG3S0c9SkWYssf5cMEYE/qv1AVzoT+pS4OckWXh2r4O
- kHSHugRthSvPoPONVQe1vPp4k5TT0qbAyJn2ATuR8ZsdnbT9B2feIXj5XiSDI/7ZMioZzPa6EO/qm
- iaM/sXkOOJHwT5FYP1RCPTVpApuQH8GRl33lmRQXFXzBtVdGDBOGT8f6IGFhsFO8VyuSLUvgsjacZ
- 1RiB4ZK+8PxiVqyT3Us86lNdNpw+ploUM5ltC+JrRN5OhCAOpy8qyA6mt5qz8lm1omJOiNj2zPFU8
- HElCjEXoCAZ+YmvruoZAma25tBgK1cE2SksA3ZjNzJNLLgWhzcE8I1bDcT4fdO2AWooskX6ThcZra
- bvuwOi5ErpnwodAMgUznqeoRSiqFgm0mCrOzVkq1nvws/2URa+U6aeOCg/jGt0sirZX5kQVDWSPpf
- Q74muQllXTR4dKY9ivjSYLZVBOInE35cHMGp9Ua3ymMQqvHfcxMkxoWv97+Q8VY3TLeJcpeATp3Lq
- 0AOBjmDyZlvZRj98oEjF5EV8YyJk7gUp1RaPZefOE=;
+ bh=FUPzcJaId9mtmCDaK+OOYhhf/A7hOBKj6MYMbe31gnY=; b=LnhqMyUU1NJJX+STWoWHyM3dqY
+ 1RnzRpr+czMC9HBBNuOoTYivCTFWxp86O2jPMR6xGZX/LtvGiqiOkD37g3VVYW6MHB5coRbUIl6u1
+ GKZXNeGqaaDJyPawcdY68i++Q+cuqNhKO2T7gkqTguOx3wLfsgZRolfflsbk/G8HSjJu3nLjxCF9r
+ 3p9D3iaLrZTutwMf1FYPdrwDEBWt+jkyCe5E1Qt13GQTaM2SYyMJ2r6WmacWyxa1uHk8PwX0VCR6B
+ nxw7KdftRiGAN7I1DR5PMhMNl55qZwgJFPYqxl4y6VlMcxM3AZZBrh+RWRr+DyyJDNvPZxnvfEmZ6
+ WnM1lbuyzDSrkO4M2hFLDNshNbEHMdZRd94JUy5EIPn7bUYgbBaSwD7I9UC6L2aVhZE3EbxyEHJ4b
+ p/ssGAL57T8vtJw2YgZSLnH+0sCqN0vYyv/9dl5eyCQIIiSpUkTQiy5XaA9L4no1Q+IibM1Esx6F3
+ wnXOvV2RusuYVWRyUGaF2o85DabM54JDtj5ZCju3LeITYij4gr1Ts2hrSwjHrhIdMdJEN1ZWoWwc3
+ WJFKnw2/ArfC1y87gQbZl8vMapUuVXleqB2sGYB19/MyLvyYvjigvNajJtEerahRNur/bXskuaCGp
+ lDN4yI+zHomaTtYxKumjaA/rCHhVYATWS3xMChe/A=;
 Received: from [2a02:8012:2f01:0:15be:353c:5920:3156]
  by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
  (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1wjkuk-002fYC-Pl; Tue, 14 Jul 2026 22:43:43 +0100
-Message-ID: <648c72c6-48bd-4725-b9d9-862c0dd95e73@ilande.co.uk>
-Date: Tue, 14 Jul 2026 22:43:45 +0100
+ id 1wjkxW-002fZK-D7; Tue, 14 Jul 2026 22:46:34 +0100
+Message-ID: <7ed63c06-7f36-41bd-beae-2e7cef923a88@ilande.co.uk>
+Date: Tue, 14 Jul 2026 22:46:39 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Keith Monahan <keith@techtravels.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Fam Zheng <fam@euphon.net>, BALATON Zoltan <balaton@eik.bme.hu>
-References: <20260701213359.1855870-1-keith@techtravels.org>
- <20260701213359.1855870-4-keith@techtravels.org>
- <CAFEAcA_3vf5vrwoO0cGcdTsykU8uTf8386oyWki3iQ3Bje9Trw@mail.gmail.com>
- <8d3f679a-3039-404e-879d-b97e1b58e090@techtravels.org>
- <CAFEAcA-s2xYKG5PiUqFufdgJgMxD1OccbHO9zcCH2+aXwkK70Q@mail.gmail.com>
- <74e5958d-58d8-4519-82dc-52e598eb6d68@techtravels.org>
- <da5290cf-f695-4107-abb6-63d435fefc9f@techtravels.org>
+To: Dmitry Pimenov <sun4qemu@gmail.com>, qemu-devel@nongnu.org
+Cc: Artyom Tarasenko <atar4qemu@gmail.com>
+References: <20260710222350.9185-1-sun4qemu@gmail.com>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -82,12 +73,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <da5290cf-f695-4107-abb6-63d435fefc9f@techtravels.org>
+In-Reply-To: <20260710222350.9185-1-sun4qemu@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:15be:353c:5920:3156
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v2 3/4] hw/scsi/ncr53c710: rewrite the SCRIPTS engine
+Subject: Re: [PATCH] hw/sparc64/niagara: use int64_t for vdisk size to avoid
+ truncation
 X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -113,81 +105,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/07/2026 18:17, Keith Monahan wrote:
+On 10/07/2026 23:23, Dmitry Pimenov wrote:
 
-> Can I get some eyes on this approach please?
+> blk_getlength() returns int64_t, but niagara_init() stored it in an int,
+> truncating the if=pflash virtual-ramdisk size for images >= 2 GiB. A ~4 GiB
+> image truncated to 0/negative, failed the `size > 0` check, and exit(1)'d
+> before the CPU ran, ending with:
 > 
-> Here's my proposal to break up this large rewrite in reviewable sized chunks:
+>    qemu-system-sparc64: could not load ram disk
 > 
-> 1. lasi_ncr710: remove dead and shadowing defines
-> 2. lasi_ncr710: compute hw identifiers instead of caching them
-> 3. ncr53c710: remove the redundant standalone SysBus device
-> 4. ncr53c710: prepare state, register names and tracepoints
-> 5. ncr53c710: rewrite the status and message phase handlers
-> 6. ncr53c710: rewrite reselection, queueing and the data completion path
-> 7. ncr53c710: rewrite the register read path
-> 8. ncr53c710: rewrite the register write path and soft reset
-> 9. ncr53c710: rewrite the SCRIPTS execution engine
-> 10. ncr53c710: complete cached-backend transfers asynchronously
-> 11. ncr53c710: support HP-UX overlapped tagged commands
-> 12. ncr53c710: extend MESSAGE REJECT handling for HP-UX
-> 
-> To be clear, I will be modifying ncr53c710.c in place. And, of course, modifying the 
-> other files as necessary. Those changes are minimal.
-> 
-> Every patch will buildable. There is a non-booting window between patches 5-8 as the 
-> new helpers must land before the new loop that matches them, so the device compiles 
-> but can't drive I/O until they reconverge.
-> 
-> How does this sound?
-> 
-> Keith
+> AI-used-for: code (bug fix)
+> Signed-off-by: Dmitry Pimenov <sun4qemu@gmail.com>
+> ---
+>   hw/sparc64/niagara.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> diff --git a/hw/sparc64/niagara.c b/hw/sparc64/niagara.c
+> index 1211ecb82d..ad5e5945a8 100644
+> --- a/hw/sparc64/niagara.c
+> +++ b/hw/sparc64/niagara.c
+> @@ -137,7 +137,7 @@ static void niagara_init(MachineState *machine)
+>          outside of the partition RAM */
+>       if (dinfo) {
+>           BlockBackend *blk = blk_by_legacy_dinfo(dinfo);
+> -        int size = blk_getlength(blk);
+> +        int64_t size = blk_getlength(blk);
+>           if (size > 0) {
+>               memory_region_init_ram(&s->vdisk_ram, NULL, "sun4v_vdisk.ram", size,
+>                                      &error_fatal);
+> --
+> 2.43.0
 
-Hi Keith,
+Oh, curious - is this a static/AI analysis find, or are you actively using the sun4v 
+emulation? Anyhow:
 
-Thank you for your contribution to QEMU. I found myself in a similar situation a 
-couple of years back when I ended up reworking a large part of the ESP SCSI emulation 
-to fix some fairly obscure edge cases booting Classic MacOS, so I understand how 
-difficult a task this can be.
-
-If you would like to take a look at my series and cover letter then you can find it 
-at https://patchew.org/QEMU/20240112125420.514425-1-mark.cave-ayland@ilande.co.uk/, 
-but I've summarised some thoughts below based upon my experience:
-
-   - I focused on using a small set of reference images and made sure they would
-     boot upon every commit. This was really helpful as sometimes even a subtle code
-     movement would cause something to break unexpectedly, and helped me to find
-     extra edge cases I had missed.
-
-   - Keep changes to individual devices in separate commits where possible, and also
-     the same goes for refactoring/renaming commits and changes to the device
-     logic/functionality. Often these commits can be merged earlier than later
-     patches in the series where the reviewer may have more questions.
-
-   - Not all reviewers are familiar with SCSI, so writing a good cover letter
-     explaining each part of the series will help reviewers understand the changes
-     during review.
-
-   - Run your local tests in both a normal and --enable-debug build, and also with
-     asan (--enable-asan) to catch any memory errors
-
-   - Adding a functional test if possible would help prevent future regressions.
-
-Similarly for reviewers I should note that the LSI SCRIPTS engine is quite complex: 
-in effect it is almost like a separate processor executing its own programs (SCRIPTS) 
-to perform I/O.
-
-As I remarked in my ESP series cover letter, it is almost impossible for someone to 
-perform a comprehensive review without being very familiar with the controller and 
-its datasheet, so when attempting to review the series, I would probably focus on 
-looking how it compares with the existing lsi53c895a code which is mature and working 
-well. For me this would mean that adding notes explaining any unusual differences 
-between the two devices on the commit message would be extremely helpful during review.
-
-You mentioned above the problem with implementing new helpers causing boot to break 
-between patches 5 and 8: is it possible to bring in the new logic/helpers a phase at 
-a time (like I did with ESP) to help keep things working? Perhaps a temporary lock to 
-enable the async helpers to work in a sync manner temporarily could also help?
+Acked-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
 
 ATB,
