@@ -4,99 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA3E2C44508
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 14:29:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD202C44508
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 14:31:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wje7h-0004iL-AP; Tue, 14 Jul 2026 10:28:37 -0400
+	id 1wjeA9-0005Lm-Lo; Tue, 14 Jul 2026 10:31:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wje7f-0004ht-Ka
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:28:35 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wje7c-0004gg-OE
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:28:34 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-381891a9525so4737401a91.3
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 07:28:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784039311; x=1784644111; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ZkD53N6VfYhC+ccSYYsfDyAI/fc5VzkQVGBAy6ugitI=;
- b=crZ2XGZn+keEMpp7/5+qtfNv/DDzU1ZkQ3H9RIKyR3lpIk7KNeJCAIEB6HZ+3ewfKG
- FnhhMsZ1XUKuGVdt8b4MTFu0j5D4L7kLVaIZdDxVgDl42zcy3nd2X0+v+CID3/dmmxNz
- 9smJ3CmLL0lT/KhwEUn73K6CTKcsQ46FFK6bvsMdq8dWsCtRdYl/Aue2Wnm3B8P51cGG
- Anl9Bq4STGLTasvk75NqkN/UhX+8dg401dQ8jH5tAAvG8Rx5j05CkIQkWdZVM3qcNIHD
- ghryiExoeIroS/gLN36blGj6hcQSfOdbXmkOVCnMuN53GlCPjLXRcuHoL8lT1wNj9xmU
- Vmiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784039311; x=1784644111;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ZkD53N6VfYhC+ccSYYsfDyAI/fc5VzkQVGBAy6ugitI=;
- b=m2f2dnTt6u6gcr20r93VYvtch+GHPgHxRlQiGgM0AQfKl9ABeKrJUmV0w5qiidu6fw
- WGS0BkkFG0wWvOXHu7ZTmKq3lxYUheAR9fAqlPk/9juZfanXsjt4KZ5fXgLLKLwf6QLQ
- STVqq/Z8YlQLs4eA8xGGJaTwekySK+hSVLq+owC44zuE30zliv9cMR2FDph1uvPel8/K
- X9dak3KihSr/ql6jAQ0ZedC4uJZ3h5uZTEICkEt6xTGrjeqMCe3H4qvyeEB2wZ7O7zzk
- /xN+SpkstDOY1OjOwUFLPAxgEDL6SA0eRWvNqOV77hZrVjw1N3yYvLougFPo6rGcxW1/
- qRog==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqVx/EInZBEJmUkt3y0BySQhEVPpwxae+C69WU7M1Wz0uOV/5QHY9Id/Z1/p3LgLJKNO9zwsZ2L+fv3@nongnu.org
-X-Gm-Message-State: AOJu0YztZLmEpmPOggDmdhPpCNXs6SPFmQE6sg0Itw6tb6k2Cut4/kT/
- Ns8i2uba8CmoTcFq6MOtBA8z4gafux6olEAPzJ+4KNJHh5NuoczkdN1JArFiJjg4Xl8=
-X-Gm-Gg: AfdE7cmaJPcUDMr+oaRea4X22Lmu3yK253LB5IzVuPYgm0tkNmHU/j67WW8Jj7Zcyp4
- dfXqc66CVQoAiq92To15gIeIWkas0PkblbrR6tbv+62tGM+aBQxQKzPmgRnu49nuc0T7YDTLP6m
- oRXfrOb3nPx3p9a3PRFIp+eqcTPAQiyYj+ugAu7eLCn3ikC3g0BIbkZXw2pGvWo2+zRIYPLxOhE
- HRjmeKVSxnQp6516RuP0r4CF0zM/DvNriVLO4X5hPTx273HV3nY5yqNo9VmQg6dkEcBkJr04Vgw
- KzGS7qoYfKBLDf/rBXHqvRBH5DMaQanVNQdliC60iOn4wbNVdUX6Ar+uF+nARDQLiWFObXumEoy
- cwIC0adbq+DR3zhugp1z2RYjLjy0ieBPKdBPfWJr9K4VzvtsDjj3HR1awemwIIbYn70tbyTCjtj
- 1/HAY8s2oLdmRHTqhLEebJn4siKg==
-X-Received: by 2002:a17:90b:1646:b0:381:bc4c:da5b with SMTP id
- 98e67ed59e1d1-38e1ae5c1cemr2514776a91.18.1784039310981; 
- Tue, 14 Jul 2026 07:28:30 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.146.49])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38d302d5982sm4551314a91.2.2026.07.14.07.28.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Jul 2026 07:28:30 -0700 (PDT)
-Message-ID: <54396244-4a4f-4d32-8b75-2c0401fc9bfc@linaro.org>
-Date: Tue, 14 Jul 2026 07:28:28 -0700
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wjeA7-0005LP-AP
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:31:07 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wjeA4-0005Kc-J6
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:31:07 -0400
+Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
+ by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 022A68084A;
+ Tue, 14 Jul 2026 17:30:59 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:c5a::1:8] (unknown [2a02:6bf:8080:c5a::1:8])
+ by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id vUQ3j31ZSOs0-VWswQesj; Tue, 14 Jul 2026 17:30:58 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1784039458;
+ bh=41qetMPmVQOo3YS6TDEX0VX/OA8bMXYq3H55cgD4M8M=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=V7c9Yqf/mPYJLw/t4SWr4S/Q1b/j70MBJjrEYcUPxBOJtDypjIbJ6y62FUGKQMDb/
+ bURPsgB6bEitjayNvRWGvVQkK7mUUhLUvg1dlvd680ucraLhG00Zp0RBIZ8OAkDpU4
+ of/SDW06LhsJzudIKOB5bNOPddX3TxqF2hSnSq7c=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <7e2a840a-04e2-4a14-93fe-1a296c78e1bf@yandex-team.ru>
+Date: Tue, 14 Jul 2026 17:30:57 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/s390x: Make PRNO TRNG interruptible
-To: Ilya Leoshkevich <iii@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>
-Cc: David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org, Harald Freudenberger <freude@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>, qemu-stable@nongnu.org
-References: <20260714113946.275122-1-iii@linux.ibm.com>
- <20260714113946.275122-2-iii@linux.ibm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v18 12/14] net/tap: support local migration with virtio-net
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>, jasowang@redhat.com,
+ peterx@redhat.com, farosas@suse.de, raphael.s.norwitz@gmail.com,
+ bchaney@akamai.com, qemu-devel@nongnu.org, berrange@redhat.com,
+ pbonzini@redhat.com, yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Jason Wang <jasowangio@gmail.com>,
+ Eric Blake <eblake@redhat.com>
+References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
+ <20260710191809.721154-13-vsementsov@yandex-team.ru>
+ <875x2juxru.fsf@pond.sub.org>
+ <0fd09b96-068f-415d-9bd8-0506958710f1@yandex-team.ru>
+ <87y0fff25t.fsf@pond.sub.org>
+ <5af44296-ea89-402c-b4fb-b9b0acee3b54@yandex-team.ru>
+ <20260714091858-mutt-send-email-mst@kernel.org>
 Content-Language: en-US
-In-Reply-To: <20260714113946.275122-2-iii@linux.ibm.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20260714091858-mutt-send-email-mst@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -108,59 +87,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/14/26 04:34, Ilya Leoshkevich wrote:
-> fill_buf_random() writes the entire guest-requested amount of random
-> bytes in one go. Since the length is a full 64-bit value, a guest can
-> request several gigabytes and keep the vCPU spinning inside the helper,
-> without a chance to react to interrupts.
+On 14.07.26 16:19, Michael S. Tsirkin wrote:
+> On Mon, Jul 13, 2026 at 06:08:26PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>> On 13.07.26 16:29, Markus Armbruster wrote:
+>>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+>>>
+>>>> On 13.07.26 10:57, Markus Armbruster wrote:
+>>>>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+>>>>>
+>>>>>> Support transferring of TAP state (including open fd).
+>>>>>>
+>>>>>> Add new property "local-migration-supported", which defines
+>>>>>> whether local-migration is actually supported for this TAP device.
+>>>>>> Starting from 11.2 QEMU Machine Types it's enabled by default.
+>>>>>>
+>>>>>> Note, that local-migration (including migrating opened FDs
+>>>>>
+>>>>> Scratch the comma after "Note", ...
+>>>>>
+>>>>>> through migration channel, which must be UNIX socket), is
+>>>>>
+>>>>> ... and the one before "is".
+>>>>>
+>>>>>> enabled by global "local" migration parameters. But individual
+>>>>>> devices may have additional options to enable/disable it
+>>>>>> per device.
+>>>>>>
+>>>>>> The tricky thing, is that we need to know, should we do
+>>>>>
+>>>>> Do you mean "The tricky thing is that we ween to know whether to call"?
+>>>>
+>>>> yes
+>>>>
+>>>>>
+>>>>>> call open/connect in TAP initialization code. That means,
+>>>>>> that on incoming migration we want to know status of
+>>>>>> "local" migration parameter at time of creating TAP device.
+>>>>>> So, currently, for incoming local migration only TAP device
+>>>>>> created through QMP is supported, as you need to set migration
+>>>>>> parameter first (through QMP as well).
+>>>
+>>> Possibly clearer:
+>>>
+>>>       The tricky thing is that we need to know whether to call open/connect
+>>>       in TAP initialization code, i.e. we need to know the value of
+>>>       migration parameter "local" when creating the TAP device.  For
+>>>       incoming migration, we can know only for TAP devices created with QMP
+>>>       after setting the migration parameter with QMP.
+>>>
+>>>>>>
+>>>>>> So the full picture is:
+>>>>>>
+>>>>>> On source, to start outgoing "local" migration you need:
+>>>>>>
+>>>>>>     - migration parameter "local" set to true
+>>>>>>     - "local-migration-supported" TAP option set to true (the
+>>>>>>       default, starting from 11.2 QEMU Machine Types)
+>>>>>>
+>>>>>> If at least one of these options is not set, TAP backend
+>>>>>> doesn't participate in migration.
+>>>>>>
+>>>>>> On target, things are more difficult:
+>>>>>>
+>>>>>> Same, you need both "local" and "local-migration-supported"
+>>>>>> be set. And same, if one of them is not set, TAP backend
+>>>>>> is initialized as usual, and doesn't accept any incoming
+>>>>>> state.
+>>>>>>
+>>>>>> Additionally, if you are going to set "local", it must be
+>>>>>> set before creating the TAP device. If TAP device created
+>>>>>> with "local" unset, it initializes as usual. If you enable
+>>>>>> "local" after it and start incoming migration, it will fail
+>>>>>> in .pre_load handler of TAP backend.
+>>>>>
+>>>>> Out of curiosity, how would such a failure look like?
+>>>>
+>>>> TAP is initialized as usual, so the answer depends on the options.
+>>>>
+>>>> For incoming migration we should open TAP without "ifname" argument.
+>>>> If so (and "local" is not set), new TAP device will be created. It
+>>>> shouldn't trigger any additional problems I think.
+>>>>
+>>>>
+>>>> Checking with test:
+>>>>
+>>>>      diff --git a/tests/functional/x86_64/test_tap_migration.py b/tests/functional/x86_64/test_tap_migration.py
+>>>>      index bcc0a60dfe9..94982bc7b55 100755
+>>>>      --- a/tests/functional/x86_64/test_tap_migration.py
+>>>>      +++ b/tests/functional/x86_64/test_tap_migration.py
+>>>>      @@ -316,8 +316,8 @@ def prepare_and_launch_vm(
+>>>>               else:
+>>>>                   tap_name = TAP_ID
+>>>>
+>>>>      -        self.set_migration_capabilities(vm, local)
+>>>>               self.add_virtio_net(vm, vhost, tap_name, local, incoming)
+>>>>      +        self.set_migration_capabilities(vm, local)
+>>>>
+>>>>           def add_virtio_net(
+>>>>               self, vm, vhost: bool, tap_name: str, local: bool, incoming: bool
+>>>>
+>>>>
+>>>> Leads to
+>>>>
+>>>> qemu-system-x86_64: TAP is already initialized and cannot receive incoming fd
+>>>> qemu-system-x86_64: warning: qemu_fclose: received fd 27 was never claimed
+>>>> qemu-system-x86_64: load of migration failed: Invalid argument: error while loading state for instance 0x0 of device 'netdev.1/0/net-tap': pre load hook failed for: 'net-tap', version_id: 0, minimum version_id: 0, ret: -22
+>>>>
+>>>> on target, and failed migration, as expected.
+>>>
+>>> How is the user supposed to reason their way from here to "oh, I need to
+>>> create my TAP device with QMP and after setting @local"?
+>>
+>> Not trivial, yes.
+>>
+>> I can update error message to
+>>
+>>     TAP is already initialized and cannot receive incoming fd. For local migration, "local" migration parameter must be set _before_ creating TAP device.
 > 
-> Do the same thing as cpacf_sha512(): process only a limited amount of
-> data per instruction execution and report partial completion with
-> condition code 3. This way the guest reissues the instruction, and
-> pending interrupts can be handled in between.
 > 
-> Reported-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-> Fixes: 3dbc5fdacb5a ("target/s390x: support PRNO_TRNG instruction")
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> ---
->   target/s390x/tcg/crypto_helper.c | 25 +++++++++++++++++++------
->   1 file changed, 19 insertions(+), 6 deletions(-)
+> Another reason to just make it a machine property globally
+> and be done with it, maybe?
 > 
-> diff --git a/target/s390x/tcg/crypto_helper.c b/target/s390x/tcg/crypto_helper.c
-> index 8fe0a222198..4902c4e93ba 100644
-> --- a/target/s390x/tcg/crypto_helper.c
-> +++ b/target/s390x/tcg/crypto_helper.c
-> @@ -242,12 +242,13 @@ static int cpacf_sha512(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
->       return !len ? 0 : 3;
->   }
->   
-> -static void fill_buf_random(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-> -                            uint64_t *buf_reg, uint64_t *len_reg)
-> +static int fill_buf_random(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-> +                           uint64_t *buf_reg, uint64_t *len_reg)
->   {
-> +    enum { MAX_BYTES_PER_RUN = 8192 }; /* Arbitrary: keep interactivity. */
->       const MemOpIdx oi = make_memop_idx(MO_8, mmu_idx);
->       uint8_t tmp[256];
-> -    uint64_t len = *len_reg;
-> +    uint64_t len = *len_reg, processed = 0;
->       int buf_reg_len = 64;
->   
->       if (!(env->psw.mask & PSW_MASK_64)) {
-> @@ -258,6 +259,10 @@ static void fill_buf_random(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
->       while (len) {
->           size_t block = MIN(len, sizeof(tmp));
->   
-> +        if (processed >= MAX_BYTES_PER_RUN) {
-> +            break;
-> +        }
 
-Alternately, stop with cpu_loop_exit_requested() at the bottom of the loop.
-
-Either way,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+What do you mean? Making "local" a machine property instead of migration parameter? But this way we'll have
+to change it with qom-set to switch to another type of migration. And, actually same error message here make
+sense any way.
 
 
-r~
+
+-- 
+Best regards,
+Vladimir
 
