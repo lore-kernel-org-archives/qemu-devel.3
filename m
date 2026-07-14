@@ -4,39 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 277F5C4450A
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 15:44:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D839AC44508
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 15:44:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjfHm-0001Op-NP; Tue, 14 Jul 2026 11:43:06 -0400
+	id 1wjfHj-0001Mz-AD; Tue, 14 Jul 2026 11:43:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wjfHi-0001Lx-1K
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 11:43:02 -0400
+ id 1wjfHe-0001KT-Mv; Tue, 14 Jul 2026 11:42:58 -0400
 Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wjfHf-00084S-VO
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 11:43:01 -0400
+ id 1wjfHa-00082l-Di; Tue, 14 Jul 2026 11:42:58 -0400
 Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c1b:16:0:640:bc52:0])
- by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 9CA2780B09;
- Tue, 14 Jul 2026 18:42:58 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 7553980B02;
+ Tue, 14 Jul 2026 18:42:52 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:c5a::1:8])
  by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id lgRdV71YDKo0-oIvU4MyO; Tue, 14 Jul 2026 18:42:58 +0300
+ id lgRdV71YDKo0-yjZTDoCd; Tue, 14 Jul 2026 18:42:51 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1784043778;
- bh=rk3jpiKczHrXG+RJOKOqlMLCq/7RFqs8/9lPtTVxFxo=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=SN4hxk0fN5LZG3ZXKMYe54u7kM0aLEnFp0rfX1skV6qox7DwB8uXpWnXjQg8GBmxt
- LuAfFG5oSlld2tpVo4d5fXfW+n+hFx9e8SIwWRCirnctez3eRD4B6cVfnuCbZ77gI1
- VcNDrQhzMXYYB/0wsmdfe7dz6dn9aJphVj3Nyj9g=
+ s=default; t=1784043771;
+ bh=8IBno91zziUb/fdDS9K9Wa1s/YUk+db4puIIa61K9LM=;
+ h=Cc:Message-ID:References:Date:In-Reply-To:Subject:To:From;
+ b=OD8W5Yad/qB98ASEgLzXI4OGC/Ofal7KTdsGtoMKbIVzXm4YWRfpAp97Q8dm6ZYJU
+ I8B1yuvzZv6GdYn22Jd3+wzMdVJZwHJvaCXcyrWSkiAgutwIMuqjM9xkjpc9A0cnY8
+ fb+6SJ3Y9B6Ii0b0Uj6UNwM/nmci6FM5RSwtbTa0=
 Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -46,14 +44,28 @@ Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
  raphael.s.norwitz@gmail.com, bchaney@akamai.com, vsementsov@yandex-team.ru,
  qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
  yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
- Jason Wang <jasowangio@gmail.com>
-Subject: [PATCH v19 11/15] virtio-net: support local migration of backend
-Date: Tue, 14 Jul 2026 18:42:39 +0300
-Message-ID: <20260714154246.1242856-12-vsementsov@yandex-team.ru>
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Sergio Lopez <slp@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Bernhard Beschow <shentey@gmail.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Jason Wang <jasowangio@gmail.com>,
+ Eric Blake <eblake@redhat.com>,
+ devel@lists.libvirt.org (open list:Incompatible changes),
+ xen-devel@lists.xenproject.org (open list:X86 Xen CPUs),
+ qemu-ppc@nongnu.org (open list:e500),
+ qemu-riscv@nongnu.org (open list:Microchip PolarFi...)
+Subject: [PATCH v19 03/15] net/tap: deprecate "no" as special value for
+ script/downscript
+Date: Tue, 14 Jul 2026 18:42:31 +0300
+Message-ID: <20260714154246.1242856-4-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260714154246.1242856-1-vsementsov@yandex-team.ru>
 References: <20260714154246.1242856-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=178.154.239.136;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
@@ -77,224 +89,276 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Next commit will introduce live-migration (with fd-passing) for
-TAP net backend. So, now we prepare virtio-net for it
-Add virtio-net option local-migration, which is true by default,
-but false for older machine types, which doesn't support the feature.
+The interface is ambiguous, as "no" is valid file name. So,
+using "no" as a special value to disable script is deprecated.
+Use an empty string ("script=" / "downscript=") instead.
 
-We introduce interface for live-migrating backends:
+In a future version, "no" will be treated as a plain file name, just
+like any other non-empty value.
 
-1. ->is_wait_incoming() handler, so that virtio-net knows, that
-   backend is not fully intialized, as it waits for incoming migration
-   stream.
-
-2. MIG_PRI_BACKEND priority: backends should migrate with higher
-   priority than virtio-net, so that we can do final preparations
-   here in post-load handlers and be sure, that backends are already
-   prepared.
+Document the deprecation in docs/about/deprecated.rst, qapi/net.json,
+and qemu-options.hx. Update other docs to use empty string instead of
+"no". Add a warning.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- hw/net/virtio-net.c            | 89 +++++++++++++++++++++++++++++++++-
- include/hw/virtio/virtio-net.h |  1 +
- include/migration/vmstate.h    |  2 +
- include/net/net.h              |  2 +
- 4 files changed, 93 insertions(+), 1 deletion(-)
+ docs/about/deprecated.rst                  | 18 ++++++++++++++
+ docs/system/i386/microvm.rst               |  4 +--
+ docs/system/i386/xenpvh.rst                |  2 +-
+ docs/system/ppc/ppce500.rst                |  4 +--
+ docs/system/riscv/microchip-icicle-kit.rst |  2 +-
+ docs/system/riscv/sifive_u.rst             |  2 +-
+ net/tap.c                                  | 29 ++++++++++++++--------
+ qapi/net.json                              | 12 ++++++---
+ qemu-options.hx                            |  7 ++++--
+ 9 files changed, 56 insertions(+), 24 deletions(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index f0e3beb2903..c6e7f7a370f 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -40,6 +40,7 @@
- #include "migration/misc.h"
- #include "standard-headers/linux/ethtool.h"
- #include "system/system.h"
-+#include "system/runstate.h"
- #include "system/replay.h"
- #include "trace.h"
- #include "monitor/qdev.h"
-@@ -3060,7 +3061,17 @@ static void virtio_net_set_multiqueue(VirtIONet *n, int multiqueue)
-     n->multiqueue = multiqueue;
-     virtio_net_change_num_queues(n, max * 2 + 1);
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 0c656a968fc..c4929317e3a 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -71,6 +71,15 @@ flexible enough. The monitor objects have been converted to QOM, so
+ ``-mon mode=control`` is replaced by ``-object monitor-qmp``. The
+ short convenience options are not deprecated, only ``-mon``.
  
--    virtio_net_set_queue_pairs(n);
-+    /*
-+     * virtio_net_set_multiqueue() called from set_features(0) on early
-+     * reset, when peer may wait for incoming (and is not initialized
-+     * yet).
-+     * Don't worry about it: virtio_net_set_queue_pairs() will be called
-+     * later from virtio_net_post_load_device(), and anyway will be
-+     * no-op for local incoming migration with live backend passing.
-+     */
-+    if (!n->peers_wait_incoming) {
-+        virtio_net_set_queue_pairs(n);
-+    }
- }
- 
- static int virtio_net_pre_load_queues(VirtIODevice *vdev, uint32_t n)
-@@ -3089,6 +3100,17 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
- 
-     virtio_add_feature_ex(features, VIRTIO_NET_F_MAC);
- 
-+    if (n->peers_wait_incoming) {
-+        /*
-+         * Excessive feature set is OK for early initialization when
-+         * we wait for local incoming migration: actual guest-negotiated
-+         * features will come with migration stream anyway. And we are sure
-+         * that we support same host-features as source, because the backend
-+         * is the same (the same TAP device, for example).
-+         */
-+        return;
-+    }
++``script=no`` and ``downscript=no`` for ``-netdev tap`` (since 11.2)
++'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 +
-     if (!peer_has_vnet_hdr(n)) {
-         virtio_clear_feature_ex(features, VIRTIO_NET_F_CSUM);
-         virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_TSO4);
-@@ -3185,6 +3207,7 @@ static int virtio_net_post_load_device(void *opaque, int version_id)
-     VirtIODevice *vdev = VIRTIO_DEVICE(n);
-     int i, link_down;
-     bool has_tunnel_hdr = virtio_has_tunnel_hdr(vdev->guest_features_ex);
-+    Error *local_err = NULL;
++The special value ``"no"`` for the ``script`` and ``downscript``
++parameters of ``-netdev tap`` disables script execution.  This special
++treatment of ``"no"`` is deprecated.  Use an empty string (``script=``
++or ``downscript=``) to disable script execution instead.  In a future
++version, ``"no"`` will be treated as a plain file name.
++
+ QEMU Machine Protocol (QMP) commands
+ ------------------------------------
  
-     trace_virtio_net_post_load_device();
-     virtio_net_set_mrg_rx_bufs(n, n->mergeable_rx_bufs,
-@@ -3242,6 +3265,20 @@ static int virtio_net_post_load_device(void *opaque, int version_id)
+@@ -164,6 +173,15 @@ Use ``job-finalize`` instead.
+ 
+ Use ``query-accelerators`` instead.
+ 
++``"no"`` as value of ``script``/``downscript`` for tap in ``netdev_add`` (since 11.2)
++'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
++
++The special value ``"no"`` for the ``script`` and ``downscript``
++parameters of ``netdev_add`` with ``type=tap`` disables script
++execution.  This special treatment of ``"no"`` is deprecated.  Use an
++empty string instead.  In a future version, ``"no"`` will be treated as
++a plain file name.
++
+ Human Machine Protocol (HMP) commands
+ -------------------------------------
+ 
+diff --git a/docs/system/i386/microvm.rst b/docs/system/i386/microvm.rst
+index 1675e37d3e7..077ea15751e 100644
+--- a/docs/system/i386/microvm.rst
++++ b/docs/system/i386/microvm.rst
+@@ -79,7 +79,7 @@ legacy ``ISA serial`` device as console::
+      -serial stdio \
+      -drive id=test,file=test.img,format=raw,if=none \
+      -device virtio-blk-device,drive=test \
+-     -netdev tap,id=tap0,script=no,downscript=no \
++     -netdev tap,id=tap0,script=,downscript= \
+      -device virtio-net-device,netdev=tap0
+ 
+ While the example above works, you might be interested in reducing the
+@@ -103,7 +103,7 @@ disabled::
+      -device virtconsole,chardev=virtiocon0 \
+      -drive id=test,file=test.img,format=raw,if=none \
+      -device virtio-blk-device,drive=test \
+-     -netdev tap,id=tap0,script=no,downscript=no \
++     -netdev tap,id=tap0,script=,downscript= \
+      -device virtio-net-device,netdev=tap0
+ 
+ 
+diff --git a/docs/system/i386/xenpvh.rst b/docs/system/i386/xenpvh.rst
+index 904778e3f5c..862f38830b1 100644
+--- a/docs/system/i386/xenpvh.rst
++++ b/docs/system/i386/xenpvh.rst
+@@ -42,7 +42,7 @@ case you need to construct one manually:
+       -vnc none                                       \
+       -display none                                   \
+       -device virtio-net-pci,id=nic0,netdev=net0,mac=00:16:3e:5c:81:78 \
+-      -netdev type=tap,id=net0,ifname=vif3.0-emu,br=xenbr0,script=no,downscript=no \
++      -netdev type=tap,id=net0,ifname=vif3.0-emu,br=xenbr0,script=,downscript= \
+       -smp 4,maxcpus=4                                \
+       -nographic                                      \
+       -machine xenpvh,ram-low-base=0,ram-low-size=2147483648,ram-high-base=4294967296,ram-high-size=2147483648,pci-ecam-base=824633720832,pci-ecam-size=268435456,pci-mmio-base=4026531840,pci-mmio-size=33554432,pci-mmio-high-base=824902156288,pci-mmio-high-size=68719476736 \
+diff --git a/docs/system/ppc/ppce500.rst b/docs/system/ppc/ppce500.rst
+index c9fe0915dc5..ec5aaf14fd9 100644
+--- a/docs/system/ppc/ppce500.rst
++++ b/docs/system/ppc/ppce500.rst
+@@ -158,14 +158,14 @@ interface at PCI address 0.1.0, but we can switch that to an e1000 NIC by:
+   $ qemu-system-ppc64 -M ppce500 -smp 4 -m 2G \
+                       -display none -serial stdio \
+                       -bios u-boot \
+-                      -nic tap,ifname=tap0,script=no,downscript=no,model=e1000
++                      -nic tap,ifname=tap0,script=,downscript=,model=e1000
+ 
+ The QEMU ``ppce500`` machine can also dynamically instantiate an eTSEC device
+ if “-device eTSEC” is given to QEMU:
+ 
+ .. code-block:: bash
+ 
+-  -netdev tap,ifname=tap0,script=no,downscript=no,id=net0 -device eTSEC,netdev=net0
++  -netdev tap,ifname=tap0,script=,downscript=,id=net0 -device eTSEC,netdev=net0
+ 
+ Root file system on flash drive
+ -------------------------------
+diff --git a/docs/system/riscv/microchip-icicle-kit.rst b/docs/system/riscv/microchip-icicle-kit.rst
+index 9809e94b84b..7fdb96601ad 100644
+--- a/docs/system/riscv/microchip-icicle-kit.rst
++++ b/docs/system/riscv/microchip-icicle-kit.rst
+@@ -84,7 +84,7 @@ Then we can boot the machine by:
+   $ qemu-system-riscv64 -M microchip-icicle-kit -smp 5 -m 2G \
+       -sd path/to/sdcard.img \
+       -nic user,model=cadence_gem \
+-      -nic tap,ifname=tap,model=cadence_gem,script=no \
++      -nic tap,ifname=tap,model=cadence_gem,script= \
+       -display none -serial stdio \
+       -kernel path/to/u-boot/build/dir/u-boot.bin \
+       -dtb path/to/u-boot/build/dir/u-boot.dtb
+diff --git a/docs/system/riscv/sifive_u.rst b/docs/system/riscv/sifive_u.rst
+index 8f55ae8e313..0e4dcf3e70c 100644
+--- a/docs/system/riscv/sifive_u.rst
++++ b/docs/system/riscv/sifive_u.rst
+@@ -199,7 +199,7 @@ To boot the VxWorks kernel in QEMU with the ``sifive_u`` machine, use:
+ 
+   $ qemu-system-riscv64 -M sifive_u -smp 5 -m 2G \
+       -display none -serial stdio \
+-      -nic tap,ifname=tap0,script=no,downscript=no \
++      -nic tap,ifname=tap0,script=,downscript= \
+       -kernel /path/to/vxWorks \
+       -append "gem(0,0)host:vxWorks h=192.168.200.1 e=192.168.200.2:ffffff00 u=target pw=vxTarget f=0x01"
+ 
+diff --git a/net/tap.c b/net/tap.c
+index fedd48c48d2..2e94b4015f6 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -92,34 +92,40 @@ static void launch_script(const char *setup_script, const char *ifname,
+ static void tap_send(void *opaque);
+ static void tap_writable(void *opaque);
+ 
+-static bool tap_is_explicit_no_script(const char *script_arg)
++static bool tap_is_explicit_no_script(const char *script_arg_name,
++                                      const char *script_arg_value)
+ {
+-    if (!script_arg) {
++    if (!script_arg_value) {
+         return false;
      }
  
-     virtio_net_commit_rss_config(n);
-+
-+    /*
-+     * If live-migration is enabled for some backend, than backend
-+     * has already been migrated at higher priority (MIG_PRI_BACKEND)
-+     * and virtio_net_vnet_post_load() has already called
-+     * peer_test_vnet_hdr().  Recompute host_features so that virtio-net
-+     * reflects the capabilities of the restored backend.
-+     */
-+    virtio_net_get_features(vdev, &vdev->host_features, &local_err);
-+    if (local_err) {
-+        error_report_err(local_err);
-+        return -EINVAL;
-+    }
-+
-     return 0;
- }
- 
-@@ -3392,6 +3429,14 @@ static int virtio_net_vnet_post_load(void *opaque, int version_id)
- {
-     struct VirtIONetMigTmp *tmp = opaque;
- 
-+    /*
-+     * If live-migration is enabled for some backend, than backend
-+     * has already been migrated at higher priority (MIG_PRI_BACKEND),
-+     * so n->has_vnet_hdr can be refreshed from the live backend right
-+     * here.
-+     */
-+    peer_test_vnet_hdr(tmp->parent);
-+
-     if (tmp->has_vnet_hdr && !peer_has_vnet_hdr(tmp->parent)) {
-         error_report("virtio-net: saved image requires vnet_hdr=on");
-         return -EINVAL;
-@@ -3871,6 +3916,42 @@ static bool failover_hide_primary_device(DeviceListener *listener,
-     return qatomic_read(&n->failover_primary_hidden);
- }
- 
-+static bool virtio_net_check_peers_wait_incoming(VirtIONet *n, bool *waiting,
-+                                                 Error **errp)
-+{
-+    bool has_waiting = false;
-+    bool has_not_waiting = false;
-+
-+    for (int i = 0; i < n->max_queue_pairs; i++) {
-+        NetClientState *peer = n->nic->ncs[i].peer;
-+        if (!peer) {
-+            continue;
-+        }
-+
-+        if (peer->info->is_wait_incoming &&
-+            peer->info->is_wait_incoming(peer)) {
-+            has_waiting = true;
-+        } else {
-+            has_not_waiting = true;
-+        }
-+
-+        if (has_waiting && has_not_waiting) {
-+            error_setg(errp, "Mixed peer states: some peers wait for incoming "
-+                       "migration while others don't");
-+            return false;
-+        }
-+    }
-+
-+    if (has_waiting && !runstate_check(RUN_STATE_INMIGRATE)) {
-+        error_setg(errp, "Peers wait for incoming, but it's not an incoming "
-+                   "migration.");
-+        return false;
-+    }
-+
-+    *waiting = has_waiting;
-+    return true;
-+}
-+
- static void virtio_net_device_realize(DeviceState *dev, Error **errp)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-@@ -4008,6 +4089,12 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
-         n->nic->ncs[i].do_not_pad = true;
+-    if (script_arg[0] == '\0') {
++    if (script_arg_value[0] == '\0') {
+         return true;
      }
  
-+    if (!virtio_net_check_peers_wait_incoming(n, &n->peers_wait_incoming,
-+                                              errp)) {
-+        virtio_cleanup(vdev);
-+        return;
-+    }
-+
-     peer_test_vnet_hdr(n);
-     if (peer_has_vnet_hdr(n)) {
-         n->host_hdr_len = sizeof(struct virtio_net_hdr);
-diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
-index 371e3764282..8c967760c2a 100644
---- a/include/hw/virtio/virtio-net.h
-+++ b/include/hw/virtio/virtio-net.h
-@@ -230,6 +230,7 @@ struct VirtIONet {
-     struct EBPFRSSContext ebpf_rss;
-     uint32_t nr_ebpf_rss_fds;
-     char **ebpf_rss_fds;
-+    bool peers_wait_incoming;
- };
+-    if (strcmp(script_arg, "no") == 0) {
++    if (strcmp(script_arg_value, "no") == 0) {
++        warn_report("%s=no is deprecated; use %s= instead "
++                    "(empty string instead of 'no')",
++                    script_arg_name, script_arg_name);
+         return true;
+     }
  
- size_t virtio_net_handle_ctrl_iov(VirtIODevice *vdev,
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 1b7f295417e..bbc569adc52 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -178,6 +178,8 @@ typedef enum {
+     return false;
+ }
  
-     MIG_PRI_LOW,                /* Must happen after default */
-     MIG_PRI_DEFAULT,
-+    MIG_PRI_BACKEND,            /* Must happen before emulated devices, */
-+                                /* e.g. virtio-net */
-     MIG_PRI_IOMMU,              /* Must happen before PCI devices */
-     MIG_PRI_PCI_BUS,            /* Must happen before IOMMU */
-     MIG_PRI_VIRTIO_MEM,         /* Must happen before IOMMU */
-diff --git a/include/net/net.h b/include/net/net.h
-index bdf16bb3e64..658b0d0aaf1 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -81,6 +81,7 @@ typedef void (SocketReadStateFinalize)(SocketReadState *rs);
- typedef void (NetAnnounce)(NetClientState *);
- typedef bool (SetSteeringEBPF)(NetClientState *, int);
- typedef bool (NetCheckPeerType)(NetClientState *, ObjectClass *, Error **);
-+typedef bool (IsWaitIncoming)(NetClientState *);
- typedef struct vhost_net *(GetVHostNet)(NetClientState *nc);
+-static char *tap_parse_script(const char *script_arg, const char *default_path)
++static char *tap_parse_script(const char *script_arg_name,
++                              const char *script_arg_value,
++                              const char *default_path)
+ {
+-    if (tap_is_explicit_no_script(script_arg)) {
++    if (tap_is_explicit_no_script(script_arg_name, script_arg_value)) {
+         return NULL;
+     }
  
- typedef struct NetClientInfo {
-@@ -109,6 +110,7 @@ typedef struct NetClientInfo {
-     NetAnnounce *announce;
-     SetSteeringEBPF *set_steering_ebpf;
-     NetCheckPeerType *check_peer_type;
-+    IsWaitIncoming *is_wait_incoming;
-     GetVHostNet *get_vhost_net;
- } NetClientInfo;
+-    if (!script_arg) {
++    if (!script_arg_value) {
+         return get_relocated_path(default_path);
+     }
  
+-    return g_strdup(script_arg);
++    return g_strdup(script_arg_value);
+ }
+ 
+ static void tap_update_fd_handler(TAPState *s)
+@@ -740,7 +746,7 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+         qemu_set_info_str(&s->nc, "helper=%s", tap->helper);
+     } else {
+         qemu_set_info_str(&s->nc, "ifname=%s,script=%s,downscript=%s", ifname,
+-                          script ?: "no", downscript ?: "no");
++                          script ?: "", downscript ?: "");
+ 
+         if (downscript) {
+             snprintf(s->down_script, sizeof(s->down_script), "%s", downscript);
+@@ -946,9 +952,10 @@ int net_init_tap(const Netdev *netdev, const char *name,
+         }
+     } else {
+         g_autofree char *script =
+-            tap_parse_script(tap->script, DEFAULT_NETWORK_SCRIPT);
++            tap_parse_script("script", tap->script, DEFAULT_NETWORK_SCRIPT);
+         g_autofree char *downscript =
+-            tap_parse_script(tap->downscript, DEFAULT_NETWORK_DOWN_SCRIPT);
++            tap_parse_script("downscript", tap->downscript,
++                             DEFAULT_NETWORK_DOWN_SCRIPT);
+ 
+         if (tap->ifname) {
+             pstrcpy(ifname, sizeof ifname, tap->ifname);
+diff --git a/qapi/net.json b/qapi/net.json
+index 8f0915c4d86..ada0329ef9d 100644
+--- a/qapi/net.json
++++ b/qapi/net.json
+@@ -399,15 +399,19 @@
+ # @fds: multiple file descriptors of already opened multiqueue capable
+ #     tap
+ #
+-# @script: script to initialize the interface.  An empty string or
+-#     "no" disables script execution.  Defaults to
++# @script: script to initialize the interface.  An empty string
++#     disables script execution.  Defaults to
+ #     ``<sysconfdir>/qemu-ifup``, where ``<sysconfdir>`` is the
+ #     system configuration directory at build time (typically /etc).
++#     Using "no" to disable script execution is deprecated (since
++#     11.2); use an empty string instead.
+ #
+-# @downscript: script to shut down the interface.  An empty string or
+-#     "no" disables script execution.  Defaults to
++# @downscript: script to shut down the interface.  An empty string
++#     disables script execution.  Defaults to
+ #     ``<sysconfdir>/qemu-ifdown``, where ``<sysconfdir>`` is the
+ #     system configuration directory at build time (typically /etc).
++#     Using "no" to disable script execution is deprecated (since
++#     11.2); use an empty string instead.
+ #
+ # @br: bridge name (since 2.8)
+ #
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 200949655ea..7b9a14f5b38 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -3014,7 +3014,8 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
+     "                use network scripts 'file' (default=" DEFAULT_NETWORK_SCRIPT ")\n"
+     "                to configure it and 'dfile' (default=" DEFAULT_NETWORK_DOWN_SCRIPT ")\n"
+     "                to deconfigure it\n"
+-    "                use '[down]script=no' or '[down]script=' to disable script execution\n"
++    "                use '[down]script=' to disable script execution\n"
++    "                ('[down]script=no' is deprecated and will be treated as a file name in future)\n"
+     "                use network helper 'helper' (default=" DEFAULT_BRIDGE_HELPER ") to\n"
+     "                configure it\n"
+     "                use 'fd=h' to connect to an already opened TAP interface\n"
+@@ -3553,7 +3554,9 @@ SRST
+     ``<sysconfdir>/qemu-ifup`` and the default network deconfigure script is
+     ``<sysconfdir>/qemu-ifdown``, where ``<sysconfdir>`` is the system
+     configuration directory at build time (typically ``/etc``).
+-    Use ``[down]script=no`` or ``[down]script=`` to disable script execution.
++    Use ``[down]script=`` to disable script execution.
++    Using ``[down]script=no`` is deprecated; in a future version it will
++    be treated as a plain file name.
+ 
+     If running QEMU as an unprivileged user, use the network helper
+     to configure the TAP interface and attach it to the bridge.
 -- 
 2.43.0
 
