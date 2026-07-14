@@ -4,89 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57E40C44508
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 14:17:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37C16C44501
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 14:17:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjdwY-00068W-PZ; Tue, 14 Jul 2026 10:17:07 -0400
+	id 1wjdwQ-00066h-KA; Tue, 14 Jul 2026 10:16:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wjdwW-00068L-Q4
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:17:05 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wjdwV-0002bu-6n
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:17:04 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-c85b73ffb52so2369737a12.3
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 07:17:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784038621; x=1784643421; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=eYsZovgQobkBQ5sRuVVBlvzxAKOeE/rlJyGitsyhKOw=;
- b=QQx0IoL8iu+6xXXMnxpd/h3UvdH3jRyiwIs7U2qKDoMWSAlYuSTdrlQkaxpEotOMic
- VY+5NFV3vznWniUqHUqDCMavFEnNLdTzXcMxRQkIbGBlAMnTOJyr1zlXb/JDydHYyE1d
- UuPzbvvYim4AjQtJJ7b4MWfXdtwws24bfhkPLJldhW8T4wb0v1lbzJAwLWwKwKxRdFgR
- xOc7PR4SfWOsREEAOTqDH/+RefXtkj5g/+U6tCLZAoHcGx9WqOaHk5FImJL3b7P83GDt
- 48pdTR9l+arwlZ1M9Ulr9yTZqeuZU+zbdJOKI/V/Qs2Q4ZZ7Xm+MsvzL9afTFt7nce0e
- uesw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784038621; x=1784643421;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=eYsZovgQobkBQ5sRuVVBlvzxAKOeE/rlJyGitsyhKOw=;
- b=Xqc6gSYL6p9YNbb/3a7H6DJsl0msZPfDzNkrPVDq6vOnV80RuLPgSjRYIx0NXFITEQ
- qwCKhF/lyPuK/Y6G5t3Pw+YomC8C5jhKMHrWdEjKD7qR/DOPgjx1VMZBYUoZUMpnwKJD
- +wqUUwUqkAAWffkXkgm03W9cNOYNLC9O/flOFJDOpHO/FXRrrgj7c32y+cHQpEp6jeb3
- 6vjHIyZcFr5wqXTcBDnJpp+GurI0cAZk/NxGgzi69KGg0MF9iaVQPPjw9ZDd8oKscqZi
- oPK+Xk1o8s2wtgUMc8eNJ7aXwUzbMZk5a9yb9E+STSHJHoNKXWVupAAzdDySjGMIriQW
- 43XA==
-X-Gm-Message-State: AOJu0YyXWsVfVQ2d4ZwoihbCULSF9EZ+1uxtqHYSwOnoAZJq+ukNOAIM
- NqLLLrQ4Z5pMVtBCnGNNx/Xe/VtdBlsFavwKmBlL6Kw5Zj+FQgacrTI+fXi738U8
-X-Gm-Gg: AfdE7ck7tNhJFWE/WQV7j3TIQdNp8n2uTqisBKQNFxwqhitlT/OsCq/wfaywq/R2lb2
- 7JPkZFxeH4pk7sCTcAX1PG0IBxreI9r+aoZZVWjF1YQvag/L9cGwfzrPfVYeFbbDBNxV7Dr2A8L
- tsNL/svEyJutWe8Y5bpJOVK+mc5qjbLzFOZbAVh2AN2sPU7qbEylEoDuCth2BgdVL7s7uHp2arY
- 8c+9+fd3krR+Z7gdbg+L3Q5q5BEYqKlECEQHSRFBLH7+Saql6i3kXFkwCvOWk+WQX2Gpivmx7aP
- 6nIfisEexmYd84i0taXGlBFRsZjL63yJzFxWOe+AZZsBiYswBcsZBEPJ2lKjUlhQVmEoJ8ymIz3
- U2wrJaejh6HzhO3kSOytxBa+51HZao7A+PCNqxPhxaNTZsKlS1/QQaZX8GUSCRcwKO05kFCIlCM
- vgchLLxWz7TdFXj5xM7jpZKRVkh9qK/HsaYYzayvh95A==
-X-Received: by 2002:a05:6300:670e:b0:3c0:9c19:659e with SMTP id
- adf61e73a8af0-3c110b7ee4fmr15291939637.70.1784038621185; 
- Tue, 14 Jul 2026 07:17:01 -0700 (PDT)
-Received: from setun ([2405:201:502b:3014:cc0c:536:1b1e:6def])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3118ee6091dsm97329733eec.14.2026.07.14.07.16.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jul 2026 07:17:00 -0700 (PDT)
-From: Aadeshveer Singh <aadeshveer07@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, farosas@suse.de, pbonzini@redhat.com, philmd@mailo.com,
- lvivier@redhat.com, ayoub@saferwall.com, pierrick.bouvier@oss.qualcomm.com,
- Aadeshveer Singh <aadeshveer07@gmail.com>
-Subject: [PATCH v3 05/11] migration: Make qemu_get_buffer_at() thread-safe
-Date: Tue, 14 Jul 2026 19:45:41 +0530
-Message-ID: <20260714141547.1268000-6-aadeshveer07@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260714141547.1268000-1-aadeshveer07@gmail.com>
-References: <20260714141547.1268000-1-aadeshveer07@gmail.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wjdwM-000668-BO
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:16:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wjdwJ-0002aB-Dj
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:16:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784038609;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VSjvs6rJvMUrMM1YGxxPDKDn1Jwp5ESxUXKK0qLqD0w=;
+ b=Hwrxz3xRNwrVxw4+Wvv1J/qENZhlYupVWLfNgKj/5deravAdYpTQ+yRo2TRa6+8nH1QYS8
+ JAcBoOser4Gtx+Kx6sakKBq5XnOhC4hw4h4crowm/i3AztGqsvIHO7tJSZJW2aeRm4zNZ6
+ KXZwWRCJPTUWlILSej6WFFUA4xqKJ10=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-145-tW77gdX2M4KDKllxaQ6qyw-1; Tue,
+ 14 Jul 2026 10:16:41 -0400
+X-MC-Unique: tW77gdX2M4KDKllxaQ6qyw-1
+X-Mimecast-MFC-AGG-ID: tW77gdX2M4KDKllxaQ6qyw_1784038592
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0876F197768D; Tue, 14 Jul 2026 14:16:18 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.163])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CADB936918; Tue, 14 Jul 2026 14:16:12 +0000 (UTC)
+Date: Tue, 14 Jul 2026 15:16:09 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Harald Freudenberger <freude@linux.ibm.com>
+Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
+ thuth@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
+ linux-s390@vger.kernel.org, dengler@linux.ibm.com,
+ borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
+Subject: Re: [PATCH v12 04/17] crypto: Add aes-helpers file to support some
+ AES modes
+Message-ID: <alZEqU-d7NTHI1ZF@redhat.com>
+References: <20260710152906.80207-1-freude@linux.ibm.com>
+ <20260710152906.80207-5-freude@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=aadeshveer07@gmail.com; helo=mail-pg1-x52a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20260710152906.80207-5-freude@linux.ibm.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: permerror client-ip=170.10.129.124;
+ envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,93 +88,71 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the internal QEMUFile error state modification from
-qemu_get_buffer_at(). This function is called by two functions, both of
-which already check for unexpected return values and handle their own
-error reporting.
+On Fri, Jul 10, 2026 at 05:28:50PM +0200, Harald Freudenberger wrote:
+> Add a new file crypto/aes-helpers.c with simple functions
+> to support some AES modes:
+> - AES cbc: AES_cbc_encrypt() AES_cbc_decrypt()
+> - AES ctr: AES_ctr_encrypt()
+> - AES xts: AES_xts_encrypt() AES_xts_decrypt()
+> and some AES related helpers:
+> - AES_xor()
+> - AES_xts_prep_next_tweak()
+> Add header file include/crypto/aes-helpers.h for these functions
+> 
+> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+> Reviewed-by: Finn Callies <fcallies@linux.ibm.com>
+> ---
+>  crypto/aes-helpers.c         | 106 ++++++++++++++++++++++++++++++++
+>  crypto/meson.build           |   1 +
+>  include/crypto/aes-helpers.h | 116 +++++++++++++++++++++++++++++++++++
+>  3 files changed, 223 insertions(+)
+>  create mode 100644 crypto/aes-helpers.c
+>  create mode 100644 include/crypto/aes-helpers.h
 
-Removing this shared state modification makes qemu_get_buffer_at()
-strictly thread-safe for concurrent disk reads, serving as a
-preparatory change for the upcoming fast snapshot load feature.
+> diff --git a/include/crypto/aes-helpers.h b/include/crypto/aes-helpers.h
+> new file mode 100644
+> index 0000000000..c1552b0e8f
+> --- /dev/null
+> +++ b/include/crypto/aes-helpers.h
+> @@ -0,0 +1,116 @@
+> +/*
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * AES helper functions and modes
+> + */
+> +
+> +#ifndef QEMU_AES_HELPERS_H
+> +#define QEMU_AES_HELPERS_H
+> +
+> +/**
+> + * AES_xor:
+> + *
+> + * Bitwise XOR operation between two AES blocks.
+> + *
+> + * @src1: first source buffer of AES_BLOCK_SIZE bytes
+> + * @src2: second source buffer of AES_BLOCK_SIZE bytes
+> + * @dst: destination buffer of AES_BLOCK_SIZE bytes
 
-Removed local error by passing errp to improve on error handling,
-consequently also change caller to use error_prevent and not error_setg.
+nit-picking - the list of parameters should normally be at the
+start of the docs comment, immediately after the function name,
+and then the description follows
 
-Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
----
- migration/qemu-file.c | 9 +++------
- migration/qemu-file.h | 4 ++--
- migration/ram.c       | 6 +++---
- 3 files changed, 8 insertions(+), 11 deletions(-)
+With that change made:
 
-diff --git a/migration/qemu-file.c b/migration/qemu-file.c
-index d5a48115bd..0c28c878a9 100644
---- a/migration/qemu-file.c
-+++ b/migration/qemu-file.c
-@@ -550,17 +550,14 @@ void qemu_put_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
- }
- 
- 
--size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen,
--                          off_t pos)
-+size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen, off_t pos,
-+                          Error **errp)
- {
--    Error *err = NULL;
--
-     if (f->last_error) {
-         return 0;
-     }
- 
--    if (qio_channel_pread_all(f->ioc, buf, buflen, pos, &err) < 0) {
--        qemu_file_set_error_obj(f, -EIO, err);
-+    if (qio_channel_pread_all(f->ioc, buf, buflen, pos, errp) < 0) {
-         return 0;
-     }
- 
-diff --git a/migration/qemu-file.h b/migration/qemu-file.h
-index 8f824c124d..966766788d 100644
---- a/migration/qemu-file.h
-+++ b/migration/qemu-file.h
-@@ -76,8 +76,8 @@ void qemu_set_offset(QEMUFile *f, off_t off, int whence);
- off_t qemu_get_offset(QEMUFile *f);
- void qemu_put_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
-                         off_t pos);
--size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen,
--                          off_t pos);
-+size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen, off_t pos,
-+                          Error **errp);
- 
- QIOChannel *qemu_file_get_ioc(QEMUFile *file);
- int qemu_file_put_fd(QEMUFile *f, int fd);
-diff --git a/migration/ram.c b/migration/ram.c
-index 4728f14d73..967db7c0db 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -4127,7 +4127,7 @@ static bool read_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
-                                               block->pages_offset + offset);
-             } else {
-                 read = qemu_get_buffer_at(f, host, size,
--                                          block->pages_offset + offset);
-+                                          block->pages_offset + offset, errp);
-             }
- 
-             if (!read) {
-@@ -4196,8 +4196,8 @@ static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
-     bitmap_size = BITS_TO_LONGS(num_pages) * sizeof(unsigned long);
- 
-     if (qemu_get_buffer_at(f, (uint8_t *)block->file_bmap, bitmap_size,
--                           header.bitmap_offset) != bitmap_size) {
--        error_setg(errp, "Error reading dirty bitmap");
-+                           header.bitmap_offset, errp) != bitmap_size) {
-+        error_prepend(errp, "Error reading dirty bitmap");
-         return;
-     }
- 
+  Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+  Acked-by: Daniel P. Berrangé <berrange@redhat.com>
+
+
+
+With regards,
+Daniel
 -- 
-2.55.0
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
