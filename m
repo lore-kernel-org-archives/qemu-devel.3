@@ -4,72 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E4DBC43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 10:45:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68202C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 10:46:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjadg-0003SU-1J; Tue, 14 Jul 2026 06:45:24 -0400
+	id 1wjaem-0003xD-O5; Tue, 14 Jul 2026 06:46:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wjadc-0003RV-5C
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 06:45:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1wjaek-0003wH-Kv
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 06:46:30 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wjadZ-0002l0-9j
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 06:45:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784025915;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=AFe7hA/WBYZiHIqyws4irmWoehXOPCA1w38n98SUMJ0=;
- b=DGFouVuqUr1F5pNtKjDXVC8VbI9Az8PYbrTiWF+0dLCLf7cEs5AIoJ4YBVlEnrBJXbzugl
- 6aHw+8gX7oszEwtF6rGkNj7ELBd4+1zJxK/XR8lQoea4QnXnjFWzFDTJaRcNuuRhyoTqOe
- mwo3rAuWzwvjmawhuz97siruwSEbq9k=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-iMawf5pDPQ2OndDa9bsfKw-1; Tue,
- 14 Jul 2026 06:45:12 -0400
-X-MC-Unique: iMawf5pDPQ2OndDa9bsfKw-1
-X-Mimecast-MFC-AGG-ID: iMawf5pDPQ2OndDa9bsfKw_1784025911
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2FBFA195604D; Tue, 14 Jul 2026 10:45:11 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.163])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D170A765; Tue, 14 Jul 2026 10:45:08 +0000 (UTC)
-Date: Tue, 14 Jul 2026 11:45:05 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Roman Bogorodskiy <bogorodskiy@gmail.com>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- Michael Roth <michael.roth@amd.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>, Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v2] qga: implement 'guest-get-fsinfo' for FreeBSD
-Message-ID: <alYTMRfaGKKri3Lr@redhat.com>
-References: <20260703163107.46469-1-bogorodskiy@gmail.com>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1wjaej-0002mf-4M
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 06:46:30 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66E6gW7t482925; Tue, 14 Jul 2026 10:46:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=TQW11l
+ Kc0xnoG+RxEEsvwudP14icsBtpR5GFqmkYXJg=; b=gTX51MFxtq7gr1xcDYTQbo
+ 0yhjGdxtuYdRQasjFmRp9tsQbvNY5LeWmc7+7SCe2ds/1DQeKpQgS/lvjygUgjCs
+ qA32ZF/l5GrXTIQszbq7abQwhlbumcS5Q0eF+txqekopUaHEyPpmiKjy/P+/pOyl
+ jxXlfLdJlyqMSOyPbla307Kh5C2vYnYLt2/2sh+fDqy1HbzBvGStPb3d+qQxb5Si
+ kTTb1CnAXeGOelEHJsKxt2POa/efddyEnDekbjsJGKzD+whUMte2iJnshzaF7AgM
+ 5VMyvbvdyRt+jH2U8wnNOVgo560VLs+6iPLsRTvP1AmgWRH27IS9xkKu8k1yRf3w
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbexwn5u6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 14 Jul 2026 10:46:26 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66EAYdt3018202;
+ Tue, 14 Jul 2026 10:46:26 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc1nha9ax-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 14 Jul 2026 10:46:26 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66EAkNIX14942526
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 14 Jul 2026 10:46:24 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DC4DE20043;
+ Tue, 14 Jul 2026 10:46:23 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 740CA20040;
+ Tue, 14 Jul 2026 10:46:23 +0000 (GMT)
+Received: from [0.0.0.0] (unknown [9.111.75.242])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 14 Jul 2026 10:46:23 +0000 (GMT)
+Message-ID: <50224f19-0d71-4253-814a-b712e2199301@linux.ibm.com>
+Date: Tue, 14 Jul 2026 12:46:23 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260703163107.46469-1-bogorodskiy@gmail.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: permerror client-ip=170.10.129.124;
- envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 83/98] tests/tcg/s390x/console.c: directly implement
+ memcpy and memset
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>, Helge Deller <deller@gmx.de>
+References: <20260710214343.2065491-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260710214343.2065491-84-pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+In-Reply-To: <20260710214343.2065491-84-pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: cOgt-k9vITX0vjl2LhMOX35hJDb3pFxV
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDExMSBTYWx0ZWRfX+ruB9VFd5/G2
+ 7GZNxR93gHQcZQTFF2ShzsrER6MA24xMWyQOixBgHKfELlU2Ql1/BEYNTA+gAZEhVMuYDOAgKqH
+ 6ah22PhBRZFHsm4NbPKK+/of2u+qOHk0HVGye5WlrtYVhabGKHWLWPlLY4sX4UyPBy9mgaOVpKL
+ F0o2KBw5MFw4QsmHrYhySk5iEHTpfesMMgdgx6Q2uNkKa5RuLPxy0Jdb1nCstr2+aI2cn5Uab/P
+ 8A7LWlOgSlE+PzML5AOieriLDlbRZnfgxQAMy/teaIsIB7hRLfHw10xZOyNwaYMkEOV0HE/Qw3d
+ Wf8Rv0jFz+h8/xX+g0ymIt++eAd5toCrR28aRmVArBu0v2KoXLNL7XTFmGe7XyH1pb1Ku7jn/Ke
+ OWpUHGLQJ/bQ65TMXY8b+1iZwCv60og5uCZMN3R6gSGfxdYizaytf41v0/eKuhWIBD2cSHbbMRl
+ +KrFyVKg647kwBjY7ng==
+X-Authority-Analysis: v=2.4 cv=XJoAjwhE c=1 sm=1 tr=0 ts=6a561383 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=EUspDBNiAAAA:8
+ a=VnNF1IyMAAAA:8 a=Yb_M4-lU1wa4LK9jRa0A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: 4nSKNouiAzIkYoIgvZe5DWzbHkVmSbsD
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDExMSBTYWx0ZWRfX5iHmIIyVE5Li
+ 91OOk158ZC1CSyN/71L9tronjDrQ4RMd2rwrY8Y3s7MiO1MywaqrtcZKKNI5K6TS+dMzqcjjf3J
+ lZNsWOEx88TcLYLK1tGN1mJHfAy08ac=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-14_02,2026-07-10_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 impostorscore=0 clxscore=1015 spamscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607140111
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,113 +131,25 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 03, 2026 at 06:31:07PM +0200, Roman Bogorodskiy wrote:
-> Implement the qmp_guest_get_fsinfo() API for FreeBSD.
-> To implement it, reuse build_fs_mount_list() which is already
-> implemented for FreeBSD. Extend the FsMount type to include
-> a string "fromname" attribute to store the disk the FS is mounted from.
+
+
+On 7/10/26 23:43, Pierrick Bouvier wrote:
+> pc-bios/s390-ccw/sclp.c uses memcpy and memset.
+> pc-bios/s390-ccw is part of QEMU repository.
+> However roms/SLOF is only available if submodules have been
+> initialized, which is not not always the case.
 > 
-> Disk mapping info is not covered by this implementation.
+> To break this dependency, just copy their definition here, and remove
+> include to submodules files.
 > 
-> Signed-off-by: Roman Bogorodskiy <bogorodskiy@gmail.com>
-> Acked-by: Markus Armbruster <armbru@redhat.com>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 > ---
-> Changes since v1:
-> 
->  - Replace g_malloc0() with g_new0(.., 1) for GuestFilesystemInfo
-> 
-> 
->  qga/commands-bsd.c    | 62 ++++++++++++++++++++++++++++++++++++++++++-
->  qga/commands-common.h |  1 +
->  qga/commands-posix.c  |  3 +++
->  qga/qapi-schema.json  | 12 ++++-----
->  4 files changed, 71 insertions(+), 7 deletions(-)
-> 
+>   tests/tcg/s390x/console.c | 30 ++++++++++++++++++++++++++++--
+>   1 file changed, 28 insertions(+), 2 deletions(-)
 
-> +#if defined(__FreeBSD__)
-> +static GuestFilesystemInfo *build_guest_fsinfo(struct FsMount *mount,
-> +                                               Error **errp)
-
-Nothing ever sets 'errp' so this method cannot fail. Drop this
-parameter.
-
-> +{
-> +    GuestFilesystemInfo *fs = g_new0(GuestFilesystemInfo, 1);
-> +    struct statvfs buf;
-> +    unsigned long used, nonroot_total, fr_size;
-> +
-> +    fs->mountpoint = g_strdup(mount->dirname);
-> +    fs->type = g_strdup(mount->devtype);
-> +    fs->name = g_strdup(g_path_get_basename(mount->fromname));
-
-Memoory leak - g_path_get_basename already returns a new heap
-allocated string, so drop the g_strdup:
-
-  https://docs.gtk.org/glib/func.path_get_basename.html
-
-> +
-> +    if (statvfs(fs->mountpoint, &buf) == 0) {
-> +        fr_size = buf.f_frsize;
-> +        used = buf.f_blocks - buf.f_bfree;
-> +        nonroot_total = used + buf.f_bavail;
-> +        fs->used_bytes = used * fr_size;
-> +        fs->total_bytes = nonroot_total * fr_size;
-> +        fs->total_bytes_privileged = buf.f_blocks * fr_size;
-> +
-> +        fs->has_total_bytes = true;
-> +        fs->has_total_bytes_privileged = true;
-> +        fs->has_used_bytes = true;
-> +    }
-> +
-> +    return fs;
-> +}
-> +
-> +GuestFilesystemInfoList *qmp_guest_get_fsinfo(Error **errp)
-> +{
-> +    FsMountList mounts;
-> +    struct FsMount *mount;
-> +    GuestFilesystemInfoList *ret = NULL;
-> +    Error *local_err = NULL;
-> +
-> +    QTAILQ_INIT(&mounts);
-> +    if (!build_fs_mount_list(&mounts, &local_err)) {
-> +        error_propagate(errp, local_err);
-
-Pointless use of local_err - pass errp and drop error_propagate
-
-> +        return NULL;
-> +    }
-> +
-> +    QTAILQ_FOREACH(mount, &mounts, next) {
-> +        g_debug("Building guest fsinfo for '%s'", mount->dirname);
-> +
-> +        QAPI_LIST_PREPEND(ret, build_guest_fsinfo(mount, &local_err));
-> +        if (local_err) {
-> +            error_propagate(errp, local_err);
-> +            qapi_free_GuestFilesystemInfoList(ret);
-> +            ret = NULL;
-> +            break;
-> +        }
-
-build_guest_fsinfo cannot fail so this branch is dead code, which
-means local_err can be entirely dropped.
-
-> +    }
-> +
-> +    free_fs_mount_list(&mounts);
-> +    return ret;
-> +}
-> +#endif /* __FreeBSD__ */
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
 
