@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6668AC43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 11:40:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5499C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 11:40:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjbUW-0003E9-Vp; Tue, 14 Jul 2026 07:40:01 -0400
+	id 1wjbUZ-0003FP-0r; Tue, 14 Jul 2026 07:40:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wjbUU-0003Ck-UX; Tue, 14 Jul 2026 07:39:58 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1wjbUW-0003Dp-IN; Tue, 14 Jul 2026 07:40:00 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wjbUT-0003jy-BK; Tue, 14 Jul 2026 07:39:58 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1wjbUU-0003kL-Td; Tue, 14 Jul 2026 07:40:00 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66E6g9vP547545; Tue, 14 Jul 2026 11:39:53 GMT
+ 66E6gD2n2860262; Tue, 14 Jul 2026 11:39:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=LyEMwWj2OG++A/94D
- kYOO8antjNJ25WWbew+9An2J1A=; b=A41mKdL3MTdTzsU0C3rdbifQhN0KWmoAd
- WMnyFKrq8E3w3lfnsz5DjdwQE0mmAS9fgLGTcqCePHqxRqS33DAAKbWegRc31Pi5
- ttyY54pe8ohwsgQrQwT4OmcrkQ8/CxCumK3irNTMVzDpTflMwr0IdRmmmI4x4mSK
- cmnF2QafMo3PkLaZUiL/MWsnKtu+AtrszuvsE1rtHsecLGyaHf+KG09hGMXtkDtj
- +TjcPtjsqhiMCUJH1RQwFuLV3SBUA4Uemga593YjtBO4QTJNs8f+ui/pxcSliXcQ
- WtY4fe5eVxOrCBHg27vCegAh2vfdKBnY0c4xeaK/fzEjTnta29Dew==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbegbnefw-1
+ :mime-version:references:subject:to; s=pp1; bh=Pz0IxQS4TCsskW5+b
+ RjwlEEVwQ/C4mNq4ojIyQfm7Y0=; b=d2O18G1Pe5Ecw77aeN293M8GUvRGuW9jY
+ BZTHUXVzehwBwdtZ8UfAReuAOZbqDIM5nZWBWK69l/sjmJE0nQ601nA8FKVLB6T5
+ pnoctTXlRuZg8jimPsC7RXHWFMWN6DYyNqfKS4xCrMIrSU8Kl/+2jQLjdE3JppI1
+ 5dtJq4xhA2HyhuVf5TAGSeiGYUgvJndhMYQfksCPph0+KHeTP6k9La0EV8pJa2ZB
+ VkLyv8mqNiS3cL0YyvjTJ2L0qeB6Prhn3U41y7r61D/PS4WLfDW/qMU7cHB+gR1n
+ aklwgYYJPvXWS+Ocmuwj0I00cSFzBOCfhoqRHrQjD9ACJK3VqrMUw==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fcv336dhq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 14 Jul 2026 11:39:54 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66EBYxIT025989;
+ Tue, 14 Jul 2026 11:39:53 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc15jthr8-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Tue, 14 Jul 2026 11:39:53 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66EBZ0B3015614;
- Tue, 14 Jul 2026 11:39:52 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc1nhaf0g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 Jul 2026 11:39:52 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
  [10.20.54.105])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66EBdmO562456244
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66EBdnvA51708290
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
  Tue, 14 Jul 2026 11:39:49 GMT
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CFBCC2004D;
- Tue, 14 Jul 2026 11:39:48 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 2CCC920049;
+ Tue, 14 Jul 2026 11:39:49 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7A8822004E;
+ by IMSVA (Postfix) with ESMTP id D99552004F;
  Tue, 14 Jul 2026 11:39:48 +0000 (GMT)
 Received: from li-d2cd37cc-2ca3-11b2-a85c-84ed3706e5a0.ibm.com (unknown
  [9.111.75.242]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
@@ -63,52 +63,49 @@ To: Richard Henderson <richard.henderson@linaro.org>,
  Matthew Rosato <mjrosato@linux.ibm.com>
 Cc: David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org, Harald Freudenberger <freude@linux.ibm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>, qemu-stable@nongnu.org
-Subject: [PATCH 1/2] target/s390x: Make PRNO TRNG interruptible
-Date: Tue, 14 Jul 2026 13:34:50 +0200
-Message-ID: <20260714113946.275122-2-iii@linux.ibm.com>
+ Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH 2/2] tests/tcg/s390x: Test PRNO TRNG interruptibility
+Date: Tue, 14 Jul 2026 13:34:51 +0200
+Message-ID: <20260714113946.275122-3-iii@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260714113946.275122-1-iii@linux.ibm.com>
 References: <20260714113946.275122-1-iii@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=fOcJG5ae c=1 sm=1 tr=0 ts=6a562009 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDExNiBTYWx0ZWRfX94G6XyNwZgYL
+ Zk0tfoI/XQ6kY8HwLvxneH37N/LNAcjuVaV7OUzhnLibCId/F+vzDOnTVe+H8Nw0iWJosj32oxB
+ yorfujqBk3ClegefYXqt6rUYNe9yh4o=
+X-Authority-Analysis: v=2.4 cv=Mp1iLWae c=1 sm=1 tr=0 ts=6a56200a cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
- a=x4Cszyr3wkYQ39rAaogA:9 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDExNiBTYWx0ZWRfX59+okGRvs34D
- t722Bh+14L6yHgn02KJZeNoHCDNunsqvJCLEtvenhj/q+ymiT5p5XFIUqVI1XP1qbSuR/F0q2KZ
- uby2I+1E+QE1TJpeOy774ROpdwmZCTV4xG8Qkef4Ot3/7XToFWs6GYh4K/n/2Ocq68z3R6akcjd
- eF6YvIDwnHvTuvBo9bvTyv0NqXxmh52vlBZFxrKdetImpdulNRv56dOwgsBr9TmosqUDT/uKuDV
- w6v4rKXV2XWHAghjUZePZylITvjkqSBk8cNi0nUb90zV53LGaa6GF8j+DQqb78FNh8ISFP8J/rm
- JTmHUTpLzjEGRwRtCHZA91VUTzsNiXjFwfKAdyJKhrL6TWY1vUdbBUWxNtGIZBTQ0Xu6uS9itzl
- AhBNcWfNrWY3vmJ1c0hBOTJ446YXACd6eCUKNDKeTlkppBD3ntqz7FoGjaZkKkJl/ckJCQ1cNx0
- dIZciptZAbvkFeCghXg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDExNiBTYWx0ZWRfX0QnSe9ogITXp
- VZWuWn9BVewuMpC82s5yOY8G8YsKH52wH5/FMLm/Mppab6eEg+X5JfaIk/Ps1Ozz8Fk29l66nFv
- JL1o7k+9DXKBjNTua25kk/1QXrMMzVk=
-X-Proofpoint-GUID: gnNys6hW9J-ilE7IymUYmLTGvqfDarRu
-X-Proofpoint-ORIG-GUID: gnNys6hW9J-ilE7IymUYmLTGvqfDarRu
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=p6xrlejl6-JkR3ofBtoA:9
+X-Proofpoint-GUID: y7Y9-S95eAGOVfdauieh9cSruWADjx-N
+X-Proofpoint-ORIG-GUID: y7Y9-S95eAGOVfdauieh9cSruWADjx-N
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDExNiBTYWx0ZWRfXx9ihT9iRGfHb
+ RkNwxMoxJgpl/a51bSkZ6oXtWBmM6XAJAa7yLiyPUdH0dBYE1IpoUd0y+Oj+72HICVdnVnbgQeH
+ wVcLnSDWKUdxH2ECiHqq51Jw/bQ8oHpKcxNzsvwRa8PzX4kwSDSjdvM4BtxqoBM3dJiKRGHWvsO
+ oqPnwCwAza3UptsF6pJzd9Nl3hGF6d9OFKl93CLxavvsm8sHWA8EZRmfyhkudHtw1vzKHtgEfui
+ M6wEOhf1QFHgzLpJ6+pbdADkwsiyfrUSFqd30g2FWQhwKrcG2PHvMhaxQ6XBxHHA8h5nTrxzf/G
+ A99kNEBEBleiXpDsA+43BGwcMT0YcoQj1FNC0QxkMvw0aF81UsMCVLghOfIeTI2gXO77Xl8qDM/
+ flzOkbnrl0bgUuED6/fxuMAf60xUHnwVdg2uEHqqGux3gZuIjsNjpTraGnZU4uAuxHIiNMT6aFn
+ LMSd1xPsd/Cj0QBzmCg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-14_02,2026-07-10_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 impostorscore=0 suspectscore=0 adultscore=0
- priorityscore=1501 malwarescore=0 clxscore=1015 phishscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607140116
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ adultscore=0 bulkscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
+ impostorscore=0 priorityscore=1501 suspectscore=0 clxscore=1015 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607140116
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,92 +122,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-fill_buf_random() writes the entire guest-requested amount of random
-bytes in one go. Since the length is a full 64-bit value, a guest can
-request several gigabytes and keep the vCPU spinning inside the helper,
-without a chance to react to interrupts.
+Add a small test that issues a large PRNO TRNG request while a timer is
+running, and checks that the timer interrupts it several times.
 
-Do the same thing as cpacf_sha512(): process only a limited amount of
-data per instruction execution and report partial completion with
-condition code 3. This way the guest reissues the instruction, and
-pending interrupts can be handled in between.
-
-Reported-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Fixes: 3dbc5fdacb5a ("target/s390x: support PRNO_TRNG instruction")
-Cc: qemu-stable@nongnu.org
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 ---
- target/s390x/tcg/crypto_helper.c | 25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ tests/tcg/s390x/Makefile.target |  1 +
+ tests/tcg/s390x/prno-trng.c     | 67 +++++++++++++++++++++++++++++++++
+ 2 files changed, 68 insertions(+)
+ create mode 100644 tests/tcg/s390x/prno-trng.c
 
-diff --git a/target/s390x/tcg/crypto_helper.c b/target/s390x/tcg/crypto_helper.c
-index 8fe0a222198..4902c4e93ba 100644
---- a/target/s390x/tcg/crypto_helper.c
-+++ b/target/s390x/tcg/crypto_helper.c
-@@ -242,12 +242,13 @@ static int cpacf_sha512(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-     return !len ? 0 : 3;
- }
+diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
+index 0ca030ded01..48cba4cdfa4 100644
+--- a/tests/tcg/s390x/Makefile.target
++++ b/tests/tcg/s390x/Makefile.target
+@@ -75,6 +75,7 @@ Z13_TESTS+=vcksm
+ Z13_TESTS+=vstl
+ Z13_TESTS+=vrep
+ Z13_TESTS+=precise-smc-user
++Z13_TESTS+=prno-trng
+ $(Z13_TESTS): CFLAGS+=-march=z13 -O2
+ TESTS+=$(Z13_TESTS)
  
--static void fill_buf_random(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
--                            uint64_t *buf_reg, uint64_t *len_reg)
-+static int fill_buf_random(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-+                           uint64_t *buf_reg, uint64_t *len_reg)
- {
-+    enum { MAX_BYTES_PER_RUN = 8192 }; /* Arbitrary: keep interactivity. */
-     const MemOpIdx oi = make_memop_idx(MO_8, mmu_idx);
-     uint8_t tmp[256];
--    uint64_t len = *len_reg;
-+    uint64_t len = *len_reg, processed = 0;
-     int buf_reg_len = 64;
- 
-     if (!(env->psw.mask & PSW_MASK_64)) {
-@@ -258,6 +259,10 @@ static void fill_buf_random(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-     while (len) {
-         size_t block = MIN(len, sizeof(tmp));
- 
-+        if (processed >= MAX_BYTES_PER_RUN) {
-+            break;
-+        }
+diff --git a/tests/tcg/s390x/prno-trng.c b/tests/tcg/s390x/prno-trng.c
+new file mode 100644
+index 00000000000..43eea5db1dc
+--- /dev/null
++++ b/tests/tcg/s390x/prno-trng.c
+@@ -0,0 +1,67 @@
++/*
++ * Test that PERFORM RANDOM NUMBER OPERATION TRNG is interruptible.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include <assert.h>
++#include <signal.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include <sys/time.h>
++#include <asm/ucontext.h>
 +
-         qemu_guest_getrandom_nofail(tmp, block);
-         for (size_t i = 0; i < block; ++i) {
-             cpu_stb_mmu(env, wrap_address(env, *buf_reg), tmp[i], oi, ra);
-@@ -265,7 +270,10 @@ static void fill_buf_random(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-             --*len_reg;
-         }
-         len -= block;
-+        processed += block;
-     }
++static unsigned char buf1[16 * 1024 * 1024];
++static unsigned char buf2[16 * 1024 * 1024];
 +
-+    return !len ? 0 : 3;
- }
- 
- uint32_t HELPER(msa)(CPUS390XState *env, uint32_t r1, uint32_t r2, uint32_t r3,
-@@ -278,6 +286,7 @@ uint32_t HELPER(msa)(CPUS390XState *env, uint32_t r1, uint32_t r2, uint32_t r3,
-     uint8_t subfunc[16] = { 0 };
-     uint64_t param_addr;
-     MemOpIdx oi;
-+    int cc;
- 
-     switch (type) {
-     case S390_FEAT_TYPE_KMAC:
-@@ -308,9 +317,13 @@ uint32_t HELPER(msa)(CPUS390XState *env, uint32_t r1, uint32_t r2, uint32_t r3,
-         return cpacf_sha512(env, mmu_idx, ra, env->regs[1], &env->regs[r2],
-                             &env->regs[r2 + 1], type);
-     case 114: /* CPACF_PRNO_TRNG */
--        fill_buf_random(env, mmu_idx, ra, &env->regs[r1], &env->regs[r1 + 1]);
--        fill_buf_random(env, mmu_idx, ra, &env->regs[r2], &env->regs[r2 + 1]);
--        break;
-+        cc = fill_buf_random(env, mmu_idx, ra,
-+                             &env->regs[r1], &env->regs[r1 + 1]);
-+        if (cc == 0) {
-+            cc = fill_buf_random(env, mmu_idx, ra,
-+                                 &env->regs[r2], &env->regs[r2 + 1]);
-+        }
-+        return cc;
-     default:
-         /* we don't implement any other subfunction yet */
-         g_assert_not_reached();
++static volatile sig_atomic_t interrupted;
++
++static void sigprof_handler(int sig, siginfo_t *info, void *ucontext)
++{
++    struct ucontext *uc = ucontext;
++    unsigned long addr = uc->uc_mcontext.regs.psw.addr;
++
++    if (*(unsigned short *)(addr - 4) == 0xb93c) {
++        interrupted++;
++    }
++}
++
++static void prno_trng(void *b1, unsigned long l1, void *b2, unsigned long l2)
++{
++    register unsigned long r0 asm("r0") = 114;  /* TRNG */
++    register unsigned long r2 asm("r2") = (unsigned long)b1;
++    register unsigned long r3 asm("r3") = l1;
++    register unsigned long r4 asm("r4") = (unsigned long)b2;
++    register unsigned long r5 asm("r5") = l2;
++
++    asm volatile("0: ppno %[r2],%[r4]\n"  /* prno alias for old toolchains */
++                 "   jo 0b"
++                 : [r2] "+r" (r2), [r3] "+r" (r3)
++                 , [r4] "+r" (r4), [r5] "+r" (r5)
++                 : "r" (r0)
++                 : "cc", "memory");
++}
++
++int main(void)
++{
++    struct itimerval it = {
++        .it_interval = { .tv_usec = 10000 },  /* 0.01s */
++        .it_value = { .tv_usec = 10000 },
++    };
++    struct sigaction act = {
++        .sa_sigaction = sigprof_handler,
++        .sa_flags = SA_SIGINFO,
++    };
++    int err;
++
++    err = sigaction(SIGPROF, &act, NULL);
++    assert(err == 0);
++    err = setitimer(ITIMER_PROF, &it, NULL);
++    assert(err == 0);
++
++    prno_trng(buf1, sizeof(buf1), buf2, sizeof(buf2));
++    printf("interrupted %d times\n", interrupted);
++    assert(interrupted >= 3);
++
++    return EXIT_SUCCESS;
++}
 -- 
 2.55.0
 
