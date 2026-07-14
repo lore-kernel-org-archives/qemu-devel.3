@@ -4,125 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 357F1C4450B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25012C4450A
 	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 19:36:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjiuh-0001Wk-Vy; Tue, 14 Jul 2026 15:35:33 -0400
+	id 1wjiur-0001XR-NM; Tue, 14 Jul 2026 15:35:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wjiud-0001WU-UV
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 15:35:28 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wjiuk-0001X1-6B
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 15:35:35 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wjiua-0004zn-3j
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 15:35:27 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ id 1wjiuh-00050m-LS
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 15:35:33 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66EIx17d1391016
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 19:35:21 GMT
+ 66EIw8MH1136452
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 19:35:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=xR+SvwFyxqGJjNM1blg2Of
- A3Gz4dDGuc3aBp6MqMbz4=; b=on4+MrYfWP5UgJn0LKULUF+FZ9w93YhkPXZPTA
- H+LXhkcjAWvBOVEPg55C2dO+qbpoxrTW3vjQSRMYWuzOBQAnjOeVMgdGy1bKKuEX
- 0q9/yCkHdFox5KkdGP6OiUFDLlIEEpjUKXfZCtL5sq65+XaPTZlZIs+OTt3IV4T0
- sLVdkWUhgQk0DN8pvqqLcOC8/sOt782YTPRU1G0LtoSKS3wm5op5yE65EVEXs6gZ
- i2aHxGMpYsde5AITFouXuUAyPT/bpqyZTP8AI7cMMyn1Coqp1Kki+xzrb/AmESbb
- nO/N750tHR65iEWB0IYdrVAUbnizjTShmOJch/Dm+sOL2CJA==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fdnnr1hxx-1
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ l6jvJ2jQtDw58F2tcQ2rADAmzFepgy9g+HQwh2b/wLw=; b=BBTZLfCcafzIuXR8
+ HEWWTa9m4TBrupuyuwIpWDDekRH8XsC6eL+BtEMOqZ1oSViZED54HtQMrwhICFa6
+ Hy+/7jhQmMGbErKJmJ9wbIIyC+CpTlcJ0nKYCy1M+uJjIK6sqio9ygtSn0CHgYyk
+ R2Yrq2CNTt5TGWwB4zaMN2eY0BLB1wGfOiKYfbWDpBdjWc+HZM2m9Pj6RBP9kRhw
+ AZths37xPEkznE0OLx3NLCLG/3dQA0hEalLX5fNPW8h1JDQjOTY6XWZgQPS4xPxq
+ ErUJO6ldm1Aqw43VFTMRhwFyvzrhKtTZeoKT8L/8ITixSExc6IxwNz1x8l/I3PXH
+ 0FFu7w==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fds9mgfrd-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 19:35:21 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51a8db414c7so65490061cf.0
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 12:35:21 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 19:35:29 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8ea75996387so116102886d6.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 12:35:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784057721; x=1784662521; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=xR+SvwFyxqGJjNM1blg2OfA3Gz4dDGuc3aBp6MqMbz4=;
- b=UYKSWha9c/iWZ9zx0cb3B4bXLue98dOmu8wsKf75V90f1i+ewGM08lCN8dXZoqu6av
- /CKqckC5ieef5wGihW5i/4xqwdag/rqs3Ee5qvQpx5X+t4ptOqnLLt4/F3S69HowP9bf
- 2lsm6fp6YTtoNnLiHoqfSBOeuaXv1ED4reufVDGJq6dqRBYbyI2vfOI3SaA6t79DclvB
- G00OlBlSI/VmmqeGecPVDpaqCRv/VP4EM54AIhOEYv4RkQTF2p/xouFfw88rJAv4Pa6C
- rRaZFiupvqp+LFb13BnJnOZIZZmIVt4U5wi88Tw9/jl+IsWktfTfGVAWfX/JJzr8f5u7
- awwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784057721; x=1784662521;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1784057728; x=1784662528; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=xR+SvwFyxqGJjNM1blg2OfA3Gz4dDGuc3aBp6MqMbz4=;
- b=hylJt8llV+FQengRiU5opTC+/hlnKKceKQxmn0DebrqNGAMB/DTlJou7AWtC3rrAlF
- N9c51XeJcj1QJuuZZjaEE9DlSHUxuWcWNPGYgY7/+2Mx8kRIJ7K6BuHDgBNtWdX2mm94
- 7wRm9fUIww4eDkoh98QlMGdvWLdp5JVbz5LkUfkWv9wbGFKekr8MFOP2bbViubgHhQSK
- sPbBVgEsLCxLDLVSFUSkyz5wL7ry744w2Zpz2CTVsFwBT3jL4iP3sH7VtVAL8MK+izc6
- rXlh6NP+hFjtA9Q6f3+Z9FdBbPrA/BFLzPQ16dQL6PzS1b6sOU4YabBTfrmRhYSTE6mq
- 6IQg==
-X-Gm-Message-State: AOJu0YxLL1UL/+1A2osaooJfzve10QE0knXZ0VUEvRIz/sCER7GtAGXk
- yCh0eUn/49fjdfjq5X2tuVk71l8WriLbMoz983x1AGAvHNBDjvBrCDNfK5jLuRopTL2ojfjWEnH
- gwHqY/angQIOlvb9F7Uqzulr/ELAkgyBfqduHh3eg+2JhuW7usQWuQCzLQogqOqqA3g==
-X-Gm-Gg: AfdE7ckQ5Et0bqLBWqEbCe9DJiw0EAe8QfNcwHVn4/KRv7wdVJ19w6lUD4K5wdKAXCg
- bAvha7kYHykdKQFdxp7N+ahuNf1AE9s6U/aMm0HA6D9qk3oHHwtcjcELIBDgDUafEaUuMVXOKpG
- Ml75/TDDQsopVQf2yFXi0CdRnouVKrQwM/9+GhYBagRBJAppBNc3PbBgBvM6LSrq4XQBNqjS7/e
- saqjx5qqBCNj0wuaFati4jMM2YLCoxOy7ZhIXuuGyhXKWJgZAdQBwpgKs12eCummuhVQkSmVNEw
- YYRQGTRcSVIs0LcgzIM+egMYboQ/sRYrX40CvmR4Y1zoyoE0PTnisfqoGBADlzO0v6NPgpMG/lH
- kg04ieRzgfYdfhypbkkvtKI9KiY9d65lmA9+76JfPRTD1HmjbAqratUaB9UsRclNDygwM
-X-Received: by 2002:a05:622a:1a82:b0:517:6d82:ceff with SMTP id
- d75a77b69052e-51e4ede1931mr657731cf.13.1784057720885; 
- Tue, 14 Jul 2026 12:35:20 -0700 (PDT)
-X-Received: by 2002:a05:622a:1a82:b0:517:6d82:ceff with SMTP id
- d75a77b69052e-51e4ede1931mr657461cf.13.1784057720432; 
- Tue, 14 Jul 2026 12:35:20 -0700 (PDT)
+ bh=l6jvJ2jQtDw58F2tcQ2rADAmzFepgy9g+HQwh2b/wLw=;
+ b=CXPYhOVmQI5E/y3lYLhPYQKuAHXUKgFw5yczbLkMHzRT4LHMX0TzHlWew92lJjuvOy
+ HcKf/6sw6iAiWU7boKLG4nrTYI9ak2mXsz4XEz306GGt75zF5X8c4yccg6e/2U/m1eXk
+ P/1w7vNE4oEmuOOUtoF0MXpBXXxNGT+NmnarbETX2dUgurmJFGIFFo5Y+LOZaZEN9YdM
+ rr5KPpfeKtQdAKi29dYefOXV/Z1UBvfkHclGvsf1hS+36DF1RksPtinkmKmRZz06QHZD
+ NYviv77byVEmSIXaytOgw5gqL1f+3psn3c4dR919DkfsC0mZJOH/pOwhu5JsZ8TvtXUI
+ l6Ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784057728; x=1784662528;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=l6jvJ2jQtDw58F2tcQ2rADAmzFepgy9g+HQwh2b/wLw=;
+ b=WnP5zEeRmGlY/U8/YnZrhuDx8r7TiiWFyLfCVulCQwAuzUP3p9PFtFzNUoD3UUdpxm
+ pHTNJNfgNvzlIQKfikAVY48sIJPD6Wt+W28ajYWAwN/nc4Z04Ms/9aiJ7YmQCnPupcFg
+ UIKIjoMvgTxM7tz+80OoF1OwHH7fnNgBbYAeEs80V8ZnnTEzqQKJvwRX6qnbGgtCl0QP
+ Y0rH3btMZwcjf5KbCpcMx57H3PVmm6bNCsPdy3Yen3W1sGkX3c9OA682rav+zs8cX1sm
+ lhEZn7ZnMnE7zV8Fxl3D1bxsAR3QSALgmPtklFYdk7A1f5qMrzaOaXUyfsEJAkI1N5v5
+ WzXQ==
+X-Gm-Message-State: AOJu0Yx8dOtv5UaWArFmpNmahOk4gdqM7gSeRCqRqLoHiDQHYDdpo9Y4
+ b+4Pw2ZSpWxWqUMa30iGjVvGony3tcOtU6bHyPcHDJMLC4q2rMnwrii7f9lp4kgakKRkOX8EF9/
+ hCAUOpd2K5J2cbpscGa2AlS9g22lwZ8V3pXo1hWZmFalB3baFNNmFBhv2EUx/IYkurQ==
+X-Gm-Gg: AfdE7clu8bYOwByutnRYAynmKSOKtcDS0u0TOSXBXmrDyJl7Bcg1blPT0HECzlT+hcY
+ A+fIIRRMlde6GupHUsoKOQY+pz7YsCTMKzfCJi+otjbate8qRGEFKiOrGzB/nEeJOQAqVRghGsa
+ Xg389I7Z8W2z6nwIvWJdPd+ZSygQqYir9rGhH6U2RhqUsd/XaEWmxRlIRp3wzaw8jtX7/fhIwec
+ 1i06vttW6paj0DZP6FaffDfglrmGXJ/HNiLbhSXWFr11dJlwPLZOCUABgMFFNulctB06wKmvDwX
+ TF8WM4PyIcvynACkAmHg7fPjdqqyNFcPqWOYq2Qo3pzr08Tnqp5cjG4zpK6Jdv4X1onHcPAxBSa
+ SmXsuS8emsPLyHFqd8fJKVa5UF4YsnMypOsAfM87LU+VQdxBwpxpPt4zsSdv71ZofNBI5
+X-Received: by 2002:ac8:5889:0:b0:519:f02b:45cb with SMTP id
+ d75a77b69052e-51e4eff6d4amr483481cf.26.1784057728370; 
+ Tue, 14 Jul 2026 12:35:28 -0700 (PDT)
+X-Received: by 2002:ac8:5889:0:b0:519:f02b:45cb with SMTP id
+ d75a77b69052e-51e4eff6d4amr483211cf.26.1784057727819; 
+ Tue, 14 Jul 2026 12:35:27 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f4829896asm8683676f8f.23.2026.07.14.12.35.19
+ 5b1f17b1804b1-4950a2f9402sm99863185e9.13.2026.07.14.12.35.26
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 14 Jul 2026 12:35:19 -0700 (PDT)
+ Tue, 14 Jul 2026 12:35:27 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/13] Misc HW patches for 2026-07-14
-Date: Tue, 14 Jul 2026 21:35:04 +0200
-Message-ID: <20260714193517.60708-1-philmd@oss.qualcomm.com>
+Subject: [PULL 01/13] hw/sparc64/sun4u: Mark unusable PCI busses as full to
+ ease device plugging
+Date: Tue, 14 Jul 2026 21:35:05 +0200
+Message-ID: <20260714193517.60708-2-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260714193517.60708-1-philmd@oss.qualcomm.com>
+References: <20260714193517.60708-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDIwMiBTYWx0ZWRfX3eGLNGsFz/Jw
- iS0tbGtsg3ZDb0V1s6++Vw9K9FHPZe91TDKvyR8qzWBNoDgX6xrhFUaqABlWdA9ioHb8zKJfAMa
- GGSeY1g/sm8ExWR7Xts4vD/FvudeeBA=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDIwMiBTYWx0ZWRfX/IJe5y0kqX3O
- IZeiNf4TYVQb4zStpgL8hmrhTBe2Y5+HFQw7FZIeF2PF9RGUZptsvSa99GjbguYS+zhaDi6nuVC
- iEJh8V7B8Q64WX0MW93/wdTxpBQUu44Si24ZVGUoBSRe9nSeLLfgzVLu21cHUsI2n0LbfSw7D9A
- MuNsQH+nYt1kUwSn8+pGHFfi83naRtz3Bl+m3d2RWdRFp1tx1Oztn9GXZpE327SJ/ENebGIlyVN
- gOjHW0tNoiMYSGMNUIGsBjuGA2xyKAIvjtfcGt1MsywwUBcN8YFC6cc15X01t5aMQXa6GSqmuVQ
- /gNYkRHoKdPGSKO0I3WyfnZdK6BFfX/uA7cyTFL4V8sq2aEGX5hzjuZjvryJQCaYXhcyUA/Cn9c
- +HsTis/6a83g6I+s3rqas1Wtkf/ogvuATIUtsjCUZ38Wr7tjjcrpWJI0h+U+UYjSLnf041FLxCp
- RziLnh+D/mZVIwcfcfw==
-X-Proofpoint-ORIG-GUID: DeOTVw2NgW6Mp8cBSHZyEttsEizvBj-B
-X-Authority-Analysis: v=2.4 cv=NfPWEWD4 c=1 sm=1 tr=0 ts=6a568f79 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDIwMiBTYWx0ZWRfX6crcJZqJZsLZ
+ w+/X6cGUoBkr2oPHl2kSjI20zZcaedABu9WLn0FII+iKr2xSIPqioSS5/y2tH+/euespxDnByPj
+ JQP4jGk3Czn1ZAtbkABo1dqNs8j5Tl34nwP6xeqg9sxHnrS641/jdQhBMIerVbptSfir93Nh/SY
+ VsSNgn/Io5Ru+lYjdDkSBd3GGqVtGqzxGf1Yh8+iKW7e1L2dhrwT1WiXcuv9WBl+nwSpx7XV2oa
+ M+OlLnP77Y3LsbsPDQg4/JcBWxwq37h1kJj4VInFQeJ9UYDZwMepot+tTaDe4fwWZbydze4okVB
+ ncwuQG420Fcq9+jzZcvpyGZmGIPxcg3OdF3GdqsyKGafhLNYXuPCcV42s+uOSgNwl5e+a1DMDku
+ wK6B+XyCO8cqEdiW9hzEEkV1WzuephzWi4Ej4feW4STdsljwDOVbZdx+/svfaSFPA1ulQfbgMQN
+ vQTbmgLcnFrzjzf5WCg==
+X-Proofpoint-ORIG-GUID: sBWckII6mFn7SwP1JSL22moD2Ke7huJF
+X-Proofpoint-GUID: sBWckII6mFn7SwP1JSL22moD2Ke7huJF
+X-Authority-Analysis: v=2.4 cv=E+79Y6dl c=1 sm=1 tr=0 ts=6a568f81 cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=NEAV23lmAAAA:8 a=IxW1n1RzZduqmow0te4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-GUID: DeOTVw2NgW6Mp8cBSHZyEttsEizvBj-B
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=07aRgWtaSAiwv9DsM3QA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDIwMiBTYWx0ZWRfX9am6hmmnjf+l
+ Y9ZcfZNd5T8y2d9AtrJjyaOiFvvLf0nY/Y96kDT1VgmoS/wo1L/NL2fWwd849FaIJg3WMapCYx3
+ 9U96GOnxEH7NRkwYUwH+PXHYXv/sS0U=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-14_05,2026-07-14_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 malwarescore=0 phishscore=0 clxscore=1015 spamscore=0
- suspectscore=0 bulkscore=0 impostorscore=0 adultscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607140202
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 clxscore=1015
+ lowpriorityscore=0 spamscore=0 impostorscore=0 adultscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607140202
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -145,69 +152,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 191489ba750f13357ac677fb3b059f6f89ee4287:
+From: Thomas Huth <thuth@redhat.com>
 
-  Merge tag 'pull-riscv-to-apply-20260714' of https://github.com/alistair23/qemu into staging (2026-07-14 07:26:45 +0100)
+When trying to plug a PCI device to a Sparc64 machine, you currently
+have to specify the right bus ("bus=pciB"), otherwise you get this error:
 
-are available in the Git repository at:
+ $ qemu-system-sparc64 -device virtio-scsi-pci
+ qemu-system-sparc64: -device virtio-scsi-pci: PCI: no slot/function
+ available for virtio-scsi-pci, all in use or reserved
 
-  https://github.com/philmd/qemu.git tags/hw-misc-20260714
+This is quite annoying for the unexperienced users, and it also breaks
+e.g. the iotests ("make check-block") when running with qemu-system-sparc64.
 
-for you to fetch changes up to a38455cf9368e7370b0cfea809ef228ffa2e8209:
+Mark the non-usable PCI busses as full now, so that QEMU can automatically
+plug new PCI devices to the right "pciB" bus.
 
-  net: only advertise passt in netdev help when CONFIG_PASST (2026-07-14 21:33:53 +0200)
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260309181452.83702-1-thuth@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+ hw/sparc64/sun4u.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-----------------------------------------------------------------
-Misc HW patches
-
-Various fixes mostly related to misc hardware devices.
-----------------------------------------------------------------
-
-Bin Meng (1):
-  docs/devel: Document SSI dummy-cycle ownership
-
-Dmitry Pimenov (1):
-  hw/sparc64/niagara: use int64_t for vdisk size to avoid truncation
-
-Haotian Jiang (1):
-  hw/misc/ivshmem: clear chardev handlers before freeing peers
-
-Marc-André Lureau (2):
-  hw/display/qxl: fix TOCTOU in cursor chunk data_size handling
-  hw/display/virtio-gpu: fix dmabuf_fd leak on remap failure
-
-Miao Wang (2):
-  hw/scsi/vmw_pvscsi: translate data endianness
-  hw/scsi/vmw_pvscsi: add a comment to explain the endianness
-
-Rohitashv Kumar (1):
-  net: only advertise passt in netdev help when CONFIG_PASST
-
-Thomas Huth (5):
-  hw/sparc64/sun4u: Mark unusable PCI busses as full to ease device
-    plugging
-  hw/usb/hcd-ohci: Make sure that ohci_service_ed_list() cannot loop
-    forever
-  hw/usb/hcd-xhci: Turn guest-triggerable abort() into qemu_log_mask()
-  hw/usb/hcd-xhci: Remove the FIXME macro
-  hw/usb/hcd-xhci: Use qemu_log_mask() instead of fprintf() statement
-
- MAINTAINERS                     |   1 +
- docs/devel/index-internals.rst  |   1 +
- docs/devel/ssi.rst              | 132 ++++++++++++++++++++++++++++++++
- hw/scsi/vmw_pvscsi.h            |  14 ++++
- hw/display/qxl-render.c         |  28 ++++---
- hw/display/virtio-gpu-udmabuf.c |   1 +
- hw/misc/ivshmem-pci.c           |   6 ++
- hw/scsi/vmw_pvscsi.c            |  57 +++++++++++++-
- hw/sparc64/niagara.c            |   2 +-
- hw/sparc64/sun4u.c              |   7 ++
- hw/usb/hcd-ohci.c               |  10 +++
- hw/usb/hcd-xhci.c               |  15 ++--
- net/net.c                       |   2 +
- 13 files changed, 255 insertions(+), 21 deletions(-)
- create mode 100644 docs/devel/ssi.rst
-
+diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
+index d69ed9a81ac..a348096aee6 100644
+--- a/hw/sparc64/sun4u.c
++++ b/hw/sparc64/sun4u.c
+@@ -719,6 +719,13 @@ static void sun4uv_init(MemoryRegion *address_space_mem,
+     fw_cfg_add_i16(fw_cfg, FW_CFG_SPARC64_DEPTH, graphic_depth);
+ 
+     qemu_register_boot_set(fw_cfg_boot_set, fw_cfg);
++
++    /*
++     * Mark internal PCI busses as full so that the plugging of additional
++     * PCI devices happens on the right bus that still has free slots:
++     */
++    qbus_mark_full(&pci_bus->qbus);
++    qbus_mark_full(&pci_busA->qbus);
+ }
+ 
+ enum {
 -- 
 2.53.0
 
