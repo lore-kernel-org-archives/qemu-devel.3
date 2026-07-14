@@ -4,86 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B22E2C44501
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 08:19:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBC1FC43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 08:25:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjYME-000260-2j; Tue, 14 Jul 2026 04:19:15 -0400
+	id 1wjYSK-00037P-CV; Tue, 14 Jul 2026 04:25:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wjYMA-00025l-2S
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 04:19:10 -0400
+ id 1wjYSI-00036l-9b
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 04:25:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wjYM0-0007YS-3P
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 04:19:03 -0400
+ id 1wjYSF-0008Vg-MN
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 04:25:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784017138;
+ s=mimecast20190719; t=1784017526;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ngaVO5UgeulUm/HAC8eIVltc3194YOxQ24ZCC7LfK84=;
- b=FkV+GToMXPTQyuwHX6hbCTbLUrk3II9saPY5lC6BqnSUc/iEvrN1iy/scrpRs9JObETjZ0
- FqTfeLNp9wLdnvGyS/z4qE97L+xITH1y6iT3glU5ELlXjVMGAoxe8fKPS+mNkV5XHrFYbD
- iRuGFnjQDR7WttvT4XKlFuHlvGjRH5o=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=hdKyCPbHxxHsBrbw5EfkS5WKmfTU35zhjuIHhiVoCLI=;
+ b=NiY0fakxtYQV9JFwilrAcZ6wCw46BMjyNnZy+xbHn9e8zjpTJ3uG18J3APDNLTADGSa0YB
+ UfJJWa7jNlYBoPLJvfHDFrQ1URZ5HotIMVzjYb36GEXPq1OIJWNBcqY5lro/Ir54aioA40
+ iXUnkEs5QyDX5B/+UX4eTrvumsMDJyE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-417-UL6FeHSlNreg14oWXjNw-g-1; Tue,
- 14 Jul 2026 04:18:57 -0400
-X-MC-Unique: UL6FeHSlNreg14oWXjNw-g-1
-X-Mimecast-MFC-AGG-ID: UL6FeHSlNreg14oWXjNw-g_1784017135
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-661-y3QeSpxPNVWf53jiwzGkdg-1; Tue,
+ 14 Jul 2026 04:25:19 -0400
+X-MC-Unique: y3QeSpxPNVWf53jiwzGkdg-1
+X-Mimecast-MFC-AGG-ID: y3QeSpxPNVWf53jiwzGkdg_1784017517
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6C29A19560BD; Tue, 14 Jul 2026 08:18:55 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B8C521800597; Tue, 14 Jul 2026 08:25:16 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.33.163])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 44A32180049F; Tue, 14 Jul 2026 08:18:49 +0000 (UTC)
-Date: Tue, 14 Jul 2026 09:18:46 +0100
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 73B15195608A; Tue, 14 Jul 2026 08:25:12 +0000 (UTC)
+Date: Tue, 14 Jul 2026 09:25:08 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- jasowang@redhat.com, armbru@redhat.com, peterx@redhat.com,
- farosas@suse.de, raphael.s.norwitz@gmail.com, bchaney@akamai.com,
- qemu-devel@nongnu.org, pbonzini@redhat.com, yc-core@yandex-team.ru,
- mark.caveayland@nutanix.com, Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v18 09/14] qapi: add local migration parameter
-Message-ID: <alXw5uA9RjQgv-kR@redhat.com>
-References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
- <20260710191809.721154-10-vsementsov@yandex-team.ru>
- <alS1DMD_pRrklFRb@redhat.com>
- <05c89310-7bec-4aac-addc-b5ef377e09a7@yandex-team.ru>
- <alTKMA87h9x951Ei@redhat.com>
- <25b5e9a6-e563-4ab0-9075-04a3a00d3b33@yandex-team.ru>
- <alUwflog7Xd34Vd4@redhat.com>
- <20260713162057-mutt-send-email-mst@kernel.org>
- <alXiLqaMV6v73O2E@redhat.com>
- <20260714035918-mutt-send-email-mst@kernel.org>
+To: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, brian.cain@oss.qualcomm.com,
+ pierrick.bouvier@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
+ philmd@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng,
+ Thomas Huth <th.huth+qemu@posteo.eu>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+Subject: Re: [PATCH 14/14] tests/functional: Add hexagon semihosting systests
+Message-ID: <alXyZCtBmMecWdf1@redhat.com>
+References: <cover.1783973054.git.matheus.bernardino@oss.qualcomm.com>
+ <da280da8fec576b2cc59e7bf48a2845312ee50cc.1783973054.git.matheus.bernardino@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260714035918-mutt-send-email-mst@kernel.org>
+In-Reply-To: <da280da8fec576b2cc59e7bf48a2845312ee50cc.1783973054.git.matheus.bernardino@oss.qualcomm.com>
 User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: permerror client-ip=170.10.129.124;
  envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,129 +89,241 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 14, 2026 at 04:02:29AM -0400, Michael S. Tsirkin wrote:
-> On Tue, Jul 14, 2026 at 08:55:28AM +0100, Daniel P. Berrangé wrote:
-> > On Mon, Jul 13, 2026 at 04:22:03PM -0400, Michael S. Tsirkin wrote:
-> > > On Mon, Jul 13, 2026 at 07:37:50PM +0100, Daniel P. Berrangé wrote:
-> > > > On Mon, Jul 13, 2026 at 08:55:37PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> > > > > On 13.07.26 14:21, Daniel P. Berrangé wrote:
-> > > > > > On Mon, Jul 13, 2026 at 01:55:48PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> > > > > > > On 13.07.26 12:51, Daniel P. Berrangé wrote:
-> > > > > > > > On Fri, Jul 10, 2026 at 10:17:58PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> > > > > > > > > We are going to implement local-migration feature: some devices will be
-> > > > > > > > > able to transfer open file descriptors through migration stream (which
-> > > > > > > > > must UNIX domain socket for that purpose).  This allows to transfer the
-> > > > > > > > > whole backend state without reconnecting and restarting the backend
-> > > > > > > > > service. For example, virtio-net will migrate its attached TAP netdev,
-> > > > > > > > > together with its connected file descriptors.
-> > > > > > > > > 
-> > > > > > > > > In this commit we introduce a migration parameter, which enables
-> > > > > > > > > the feature for devices that support it (none at the moment).
-> > > > > > > > > 
-> > > > > > > > > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> > > > > > > > > Acked-by: Markus Armbruster <armbru@redhat.com>
-> > > > > > > > > Acked-by: Peter Xu <peterx@redhat.com>
-> > > > > > > > > Reviewed-by: Ben Chaney <bchaney@akamai.com>
-> > > > > > > > > ---
-> > > > > > > > >    include/migration/misc.h |  2 ++
-> > > > > > > > >    migration/options.c      | 18 +++++++++++++++++-
-> > > > > > > > >    qapi/migration.json      | 12 ++++++++++--
-> > > > > > > > >    3 files changed, 29 insertions(+), 3 deletions(-)
-> > > > > > > > 
-> > > > > > > > 
-> > > > > > > > > diff --git a/qapi/migration.json b/qapi/migration.json
-> > > > > > > > > index 66bd900465a..03bdf19f3a6 100644
-> > > > > > > > > --- a/qapi/migration.json
-> > > > > > > > > +++ b/qapi/migration.json
-> > > > > > > > > @@ -830,7 +830,8 @@
-> > > > > > > > >               'zero-page-detection',
-> > > > > > > > >               'direct-io',
-> > > > > > > > >               { 'name': 'x-rdma-chunk-size', 'features': [ 'unstable' ] },
-> > > > > > > > > -           'cpr-exec-command'] }
-> > > > > > > > > +           'cpr-exec-command',
-> > > > > > > > > +           'local'] }
-> > > > > > > > >    ##
-> > > > > > > > >    # @migrate-set-parameters:
-> > > > > > > > > @@ -1012,6 +1013,12 @@
-> > > > > > > > >    #     Must be set to the same value on both source and destination
-> > > > > > > > >    #     before migration starts.  (Since 11.1)
-> > > > > > > > >    #
-> > > > > > > > > +# @local: Enable local migration for devices that support it.  Backend
-> > > > > > > > > +#     state and its file descriptors can then be passed to the
-> > > > > > > > > +#     destination in the migration channel.  The migration channel
-> > > > > > > > > +#     must be a Unix domain socket.  Usually needs to be enabled per
-> > > > > > > > > +#     device.  (Since 11.2)
-> > > > > > > > 
-> > > > > > > > What happens when this is enabled and there are devices which
-> > > > > > > > don't support it ?
-> > > > > > > 
-> > > > > > > These devices are migrated as usual, ignoring "local" option.
-> > > > > > > 
-> > > > > > > > 
-> > > > > > > > What happens when this is enabled and a device on the src
-> > > > > > > > does not support it but a device on the (newer) QEMU dest
-> > > > > > > > does support it ?  How does the mgmt app know which devices
-> > > > > > > > support it ?
-> > > > > > > 
-> > > > > > > The only supporting device (TAP-backend) declares support by
-> > > > > > > "local-migration-supported", so mgmt app should care to set
-> > > > > > > same value for it on host and target (like for other options
-> > > > > > > actually). Or simply relay on default, which is true starting
-> > > > > > > from 11.2 Machine Type.
-> > > > > > > 
-> > > > > > > > 
-> > > > > > > > Can we document the semantics in these cases.
-> > > > > > > 
-> > > > > > > That's: "Usually needs to be enabled per device."
-> > > > > > 
-> > > > > > ....except that we have it enabled by default for TAP backends
-> > > > > > in new machine types.... except that it will then break if the
-> > > > > > app/user has enabled any of the "forbidden" options.
-> > > > > > 
-> > > > > > The way this doc is written makes it sound like "local" is an
-> > > > > > optimization you can turn on in any scenario, and it will do
-> > > > > > the right thing if the device supports it. That is very much
-> > > > > > not the case - enabling this flag will definitely break many
-> > > > > > configs out of the box, with new machine types due to the TAP
-> > > > > > device defaults & incompatible options.
-> > > > > 
-> > > > > Ok, now we decided to NOT make default support for TAP in newer
-> > > > > machine types.
-> > > > > 
-> > > > > So, enabling "local" is safe in existing scenarios, only explicit
-> > > > > enabling TAP.local-migration-supported will change the behavior.
-> > > > > 
-> > > > > Keep "local" documentation as is?
-> > > > > 
-> > > > > I see the only way to make it more informative: directly describe
-> > > > > connection with TAP.local-migration-supported, without general
-> > > > > phrases about "devices that support" and "usual". We'll have to
-> > > > > update it when more devices added (my next step is vhost-user-blk),
-> > > > > but at least, it would be absolutely correct at the moment.
-> > > > 
-> > > > How about....
-> > > > 
-> > > >  # @local: Permit the use of optimizations for local migration.
-> > > >  #     This must only be set when both the source and destination
-> > > >  #     QEMU processes are on the same OS and directly connected
-> > > >  #     with a UNIX domain socket as the migration channel to enable
-> > > >  #     use of file descriptor passing. Individual device backends
-> > > >  #     may need additional configuration flags set  to enable local
-> > > >  #     migration optimizations. This will be documented against the
-> > > >  #     device backends where it applies. (Since 11.2)
-> > > > 
-> > > 
-> > > BTW surely qemu can just detect this? getsockname maybe?
-> > 
-> > QEMU might be given a UNIX socket that connects to a MITM proxy
-> > that then uses TCP to reach the dest QEMU.
+On Mon, Jul 13, 2026 at 01:07:22PM -0700, Matheus Tavares Bernardino wrote:
+> From: Brian Cain <brian.cain@oss.qualcomm.com>
 > 
-> We could try to exchange FDs and see it it works I guess.
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+> ---
+>  tests/functional/hexagon/meson.build      |   9 ++
+>  tests/functional/hexagon/test_systests.py | 133 ++++++++++++++++++++++
+>  tests/functional/meson.build              |   1 +
+>  3 files changed, 143 insertions(+)
+>  create mode 100644 tests/functional/hexagon/meson.build
+>  create mode 100644 tests/functional/hexagon/test_systests.py
+> 
+> diff --git a/tests/functional/hexagon/meson.build b/tests/functional/hexagon/meson.build
+> new file mode 100644
+> index 00000000000..6cd684b0df7
+> --- /dev/null
+> +++ b/tests/functional/hexagon/meson.build
+> @@ -0,0 +1,9 @@
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +test_hexagon_timeouts = {
+> +  'systests': 180,
+> +}
+> +
+> +tests_hexagon_system_thorough = [
+> +  'systests',
+> +]
+> diff --git a/tests/functional/hexagon/test_systests.py b/tests/functional/hexagon/test_systests.py
+> new file mode 100644
+> index 00000000000..b20b9fc56cc
 
-See my earlier email response about QEMU live migration protocol being
-awful. This is an example where we need to have a properly designed
-protocol with a bidirectional feature negotation upfront, instead of
-the current piles of hacks. 
+Test files should have execute permissions.
+
+> --- /dev/null
+> +++ b/tests/functional/hexagon/test_systests.py
+> @@ -0,0 +1,133 @@
+> +#!/usr/bin/env python3
+> +#
+> +# Copyright(c) Qualcomm Innovation Center, Inc. All Rights Reserved.
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +import os
+> +import re
+> +import time
+> +import unittest
+> +
+> +from qemu_test import QemuSystemTest, Asset, wait_for_console_pattern
+> +
+> +
+> +_TARBALL_BIN_PATH = os.path.join(
+> +    "systests_standalone_package",
+> +    "StandaloneSysTests_6.4.0.2_v68",
+> +    "bin",
+> +)
+
+Don't use os.path.join to refer to files needed by the test
+suite - always use one of the helper methods on the QemuBaseTest
+class....
+
+> +
+> +
+> +class SysTestsStandaloneTests(QemuSystemTest):
+> +    SYSTEST_TIMEOUT_SEC = 30
+> +
+> +    ASSET_TARBALL = Asset(
+> +        "https://github.com/qualcomm/qemu-hexagon-testing/releases/download/v0.2.9/systests_standalone.tar.gz",
+> +        "db961ea3fcc389b478b3d5c2f3bac60bec87e7f3d7efef5e58a9ae8ee78d0e40",
+> +    )
+> +
+> +    def setUp(self):
+> +        super().setUp()
+> +        self.archive_extract(self.ASSET_TARBALL)
+> +        self.bin_dir = os.path.join(self.workdir, _TARBALL_BIN_PATH)
+
+...so also skip this...
+
+> +        self._orig_cwd = os.getcwd()
+> +        os.chdir(self.workdir)
+> +        self.addCleanup(os.chdir, self._orig_cwd)
+
+Don't change directory during tests - use properly qualified paths
+to files.
+
+> +
+> +    def tearDown(self):
+> +        if hasattr(self, "_orig_cwd"):
+> +            os.chdir(self._orig_cwd)
+> +        super().tearDown()
+> +
+> +    def binary(self, name):
+> +        """Return the full path to binary *name* inside bin_dir."""
+> +        return os.path.join(self.bin_dir, name)
+
+This should be just:
+
+  return self.scratch_file("systests_standalone_package",
+        "StandaloneSysTests_6.4.0.2_v68", "bin", name)
+
+> +
+> +    def run_exit_zero(self, binary_name, *extra_args, machine="V66G_1024"):
+> +        """Launch *binary_name* and assert it exits with code 0.
+> +
+> +        :param binary_name: name of the binary inside bin_dir.
+> +        :param extra_args: optional pairs of (flag, value) strings passed
+> +            to set_vm_arg(), e.g. ('-append', 'myarg').
+> +        :param machine: QEMU machine type (default "V66G_1024").
+> +        """
+> +        self.set_machine(machine)
+> +        self.set_vm_arg("-display", "none")
+> +        self.set_vm_arg("-kernel", self.binary(binary_name))
+> +        for flag, value in zip(extra_args[::2], extra_args[1::2]):
+> +            self.set_vm_arg(flag, value)
+> +        self.vm.launch()
+> +        self.vm.wait(timeout=60.0)
+> +        self.assertEqual(self.vm.exitcode(), 0,
+> +                         f"Test {binary_name} exited with "
+> +                         f"code {self.vm.exitcode()}, expected 0")
+> +
+> +    def run_console_pattern(self, binary_name, pattern, *extra_args,
+> +                            machine="V66G_1024"):
+> +        """Launch *binary_name* and wait for *pattern* on the semihosting console.
+> +
+> +        :param binary_name: name of the binary inside bin_dir.
+> +        :param pattern: string pattern to wait for via wait_for_console_pattern.
+> +        :param extra_args: optional pairs of (flag, value) strings passed
+> +            to set_vm_arg(), e.g. ('-append', 'myarg').
+> +        :param machine: QEMU machine type (default "V66G_1024").
+> +        """
+> +        self.set_machine(machine)
+> +        self.set_vm_arg("-display", "none")
+> +        self.set_vm_arg("-kernel", self.binary(binary_name))
+> +        for flag, value in zip(extra_args[::2], extra_args[1::2]):
+> +            self.set_vm_arg(flag, value)
+> +        self.vm.set_console(semihosting=True)
+> +        self.vm.launch()
+> +        try:
+> +            wait_for_console_pattern(self, pattern)
+> +        finally:
+> +            self.vm.kill()
+> +
+> +    def test_fopen(self):
+> +        """fopen reads a file passed via --append and verifies its contents."""
+> +        with open(os.path.join(self.workdir, "dummy.so"), "w") as f:
+
+  self.scratch_file("dummy.so")
+
+> +            f.write("valid\n")
+> +        self.run_exit_zero("fopen", "-append", "dummy.so")
+
+How is this working ?  You've created a file dummy.so on the host OS,
+and you're passing a filename "dummy.so" to -append which is a kernel
+arg. The implication is the kenrel opens this file, but how is the guest
+kernel accessing the file from the host ?!?!??
+
+> +
+> +    def test_ftrunc(self):
+> +        """ftrunc truncates _testfile_ftrunc from 6 bytes to 1 byte."""
+> +        ftrunc_path = os.path.join(self.workdir, "_testfile_ftrunc")
+
+self.scratch_file("_testfile_ftrunc")
+
+> +        with open(ftrunc_path, "w") as f:
+> +            f.write("valid\n")
+> +        # Sleep 1 s so mtime change is observable
+> +        time.sleep(1)
+> +        self.run_exit_zero("ftrunc")
+> +        self.assertEqual(
+> +            os.path.getsize(ftrunc_path),
+> +            1,
+> +            "_testfile_ftrunc should be 1 byte after ftrunc",
+> +        )
+> +
+> +    def test_dirent(self):
+> +        """dirent lists a directory passed via --append; output must be
+> +        '. .. fileA fileB'."""
+> +        dirent_dir = os.path.join(self.workdir, "_dirent_testdir")
+
+self.scratch_file("_dirent_testdir")
+
+> +        os.makedirs(dirent_dir, exist_ok=True)
+> +        open(os.path.join(dirent_dir, "fileA"), "w").close()
+> +        open(os.path.join(dirent_dir, "fileB"), "w").close()
+
+self.scratch_file("_dirent_testdir", "fileA")
+
+> +        self.run_console_pattern(
+> +            "dirent", ". .. fileA fileB", "-append", "_dirent_testdir"
+
+Again I'm wondering how the guest OS accesses _dirent_testdir which
+is a location on the host OS ?
+
+> +        )
+> +
+> +    def test_access(self):
+> +        """access checks R_OK|W_OK on _testfile_access."""
+> +        with open(os.path.join(self.workdir, "_testfile_access"), "w") as f:
+> +            f.write("valid\n")
+
+self.scratch_file("_testfile_access")
+
+> +        self.run_exit_zero("access")
+> +
+> +    def test_semihost(self):
+> +        semihost_dir = os.path.join(self.workdir, "_semihost_dir")
+> +        os.makedirs(semihost_dir, exist_ok=True)
+> +        open(os.path.join(semihost_dir, "fileA"), "w").close()
+> +        open(os.path.join(semihost_dir, "fileB"), "w").close()
+
+The intermediate dir feels redunddant - why not just create fileA & fileB 
+directly ? ie
+
+self.scratch_file("fileA")
+self.scratch_file("fileB")
+
+> +        self.run_console_pattern("semihost", "PASS", "-append", "arg1", "arg2")
+> +
+> +if __name__ == "__main__":
+> +    QemuSystemTest.main()
+> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+> index c158197c4b7..c7362dd00ef 100644
+> --- a/tests/functional/meson.build
+> +++ b/tests/functional/meson.build
+> @@ -14,6 +14,7 @@ subdir('aarch64')
+>  subdir('alpha')
+>  subdir('arm')
+>  subdir('avr')
+> +subdir('hexagon')
+>  subdir('hppa')
+>  subdir('i386')
+>  subdir('loongarch64')
+> -- 
+> 2.37.2
+> 
 
 With regards,
 Daniel
