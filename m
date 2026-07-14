@@ -4,110 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3BDAC44508
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 18:08:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B3FBC44507
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 18:23:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjhXT-0006yM-Ox; Tue, 14 Jul 2026 14:07:27 -0400
+	id 1wjhmS-00028x-Kf; Tue, 14 Jul 2026 14:22:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wjhXS-0006y9-6Z
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 14:07:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1wjhmI-00028R-GO
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 14:22:47 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wjhXQ-0006NV-4K
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 14:07:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784052441;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=dLs3hG2GiZXkQgy/Xllhir4nGb+PU0Ye8IaBvLL5RWzbQS3aQ4A/uiy+j0s901eAHj4buR
- QS7Bobfvu3Sfutg95dg0fq7p15HWmKacgud25HLj2/mI2XFTjGU4l7Rta2jwiluWtI/cGE
- ZJsqe6COv8BNDtbZXN+1GuKIHHgP4XE=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-338-3KT07xcTMMyoinsn-TtaDA-1; Tue, 14 Jul 2026 14:07:18 -0400
-X-MC-Unique: 3KT07xcTMMyoinsn-TtaDA-1
-X-Mimecast-MFC-AGG-ID: 3KT07xcTMMyoinsn-TtaDA_1784052437
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-493c526df6bso11180695e9.3
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 11:07:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784052437; x=1784657237; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=fjHlPbHuQywrgdYXa7K5QN9xPFYYUe1URCjiLid3N2FjVGKo12eXk8SVCDPy0syAka
- SaVdCiSoJ0FZN8Xvnpb0axNGlW1gNgr3/tDq9cpjH/liQSWKtZOp7/X1cljOBD8iX4GO
- ph0ycntWfVXkEB7Hqz8/Hnzsx+1v13I+HfWAlGv6ivYvxMod4BmyvV21x69Kx84mlIS4
- nZbjKPybeAr1kJvrvibsBfJbovDkb41DhiJwtzfGv7eHVX07sOfgC9RV7365JNLJe4uh
- Acwyizo9mBb+IE0KxYlGDgKQ1jSaXQkFMGUOpAlohMNh2Vvi/sJRzFTZvTU6GsuhV3iH
- 8LdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784052437; x=1784657237;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=U1xq/cxVOFnVT0FG2hHAXUr54vgN4EEy1AI5lRooSSQ07w85jjuIAQuBTVb3CyedfN
- 2t3iwR2g5PXvRdCBV2ktZ4PTbRr2s1k/AFQhK2tkXijrVRdPxLNS/x1E3uQoep9g3xdn
- arWXXnl/h5dJutQsV4W0IcHSTHzggsk1Wq+K9PJOOabxUbiLfxkirZq7y7GLmrxnzWDt
- rsJLvEEtCa3BMf3hmRY54YQuPXM3Y+XfuYIhwKwXtRygBUnc5+UceVUq/zlVn0eXMB/L
- aVzqNci1bdwUyc3/ZCZ6sdsMoMg7/qMg7drndsLVDcUNbqY7sD06f/W+FlRxjK6Md9x8
- U8SA==
-X-Gm-Message-State: AOJu0YzuuPiMDhQuBrI/Hr2WvIM6hZ97d6+35oG7eg3DdxO0ZhmvZ+xR
- iXInXCWVcjEGoN1VeeHStOg6AMGljUCPUujr13QalhmWMjvej/P401xX32xrqEYhtTGzHMcWlQJ
- bmlZyeg1alomPPaB9aI7STUTnjiOSIXUypq3+vVV+dCRE5VestEOS/aM+
-X-Gm-Gg: AfdE7ckwDFwYJfIJAGYZJqmbXorrlTf47TfkCSLI3CSgfhli9kSNJ/wY5QzUMtOgBlJ
- XSWem3kNqgOkkITM9IK9vRcSnwdTKnfJF0FktrC9FO7FDshErkWogZ7jW/Qq/lwyEz2DNpl2v6O
- BOiG0LyAMdDT1OU1C+ZVbf7/mdpkzv///nLVcl87rCW7U+m4tYV+Nsv3rM/XmmXGNE7bp/Ro7NA
- tx6nxkXog3iMTZLjlnRUyFIbGMqy/oVqqrxWpOStE+YIOSaM32hGnEmK3g0XVReFaG9vtz5/Zlc
- 8LJ2LcvSh3+Yq39ry5Ds+pm+foA94AD+8NF4AT5iq0qLQkGpwqEJh5/Bid9TMbxHvDjbliiQOIz
- /dNw2uM4p6Vef3QY2LpIiyKINRP6Bdp2MkHQSNboD2wH4XUM0f5sSQnCcubjILhskiEnVfLlsmm
- UGLzz6mbfchgG3NQ==
-X-Received: by 2002:a05:600c:b90:b0:493:b967:178d with SMTP id
- 5b1f17b1804b1-493f881d05emr151984735e9.19.1784052437076; 
- Tue, 14 Jul 2026 11:07:17 -0700 (PDT)
-X-Received: by 2002:a05:600c:b90:b0:493:b967:178d with SMTP id
- 5b1f17b1804b1-493f881d05emr151984555e9.19.1784052436742; 
- Tue, 14 Jul 2026 11:07:16 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.47.37])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4950871d1bdsm91541055e9.1.2026.07.14.11.07.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jul 2026 11:07:15 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH] meson: propagate qemu_ldflags to Rust link step
-Date: Tue, 14 Jul 2026 20:07:14 +0200
-Message-ID: <20260714180714.143726-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260714021236.2361604-1-brian.cain@oss.qualcomm.com>
-References: 
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1wjhmG-0000Yi-Hl
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 14:22:46 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66EGCIic1727079; Tue, 14 Jul 2026 18:22:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=qVfRHP
+ hUd2dpCr1fyY0KgafGNrF/qRus4pDmgIOhNto=; b=aD0yDai9gs9G89DnHeEc0Q
+ Iu+dztHSIcLMiAmvVWnQJlsrEZWoQelz4qKSQRVo9bB57sfy2XU/XOF3joIBvrv6
+ fnMQBNIfy0VaYRU3puQg+IAU6515DMrW+FswHC3n/hU+l9awQU1xI7XGOf12nZps
+ MRJaELvVkEhPvv27xBXsqipDETrgyzRJDD63cSgdEhzWnPM29n2o2emKDLFKyuM/
+ 8Du4gLauwMgu4ooahyddszXK32DHA5h5eRrs3Qs8xgz6qmcxtgkQBMjXJVK2lWkF
+ hue2sa+xRScXnmQA6Tbyt1zV8dAnhd/9xpJTPZEVVW0P6bIv0CNUL9zWSRnv4nTw
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbf2a75w9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 14 Jul 2026 18:22:41 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66EI4bhI001679;
+ Tue, 14 Jul 2026 18:22:41 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc15jv4yw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 14 Jul 2026 18:22:41 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66EIMduv52166936
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 14 Jul 2026 18:22:39 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1CD9F2004B;
+ Tue, 14 Jul 2026 18:22:39 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4242B20040;
+ Tue, 14 Jul 2026 18:22:38 +0000 (GMT)
+Received: from [0.0.0.0] (unknown [9.111.27.233])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 14 Jul 2026 18:22:38 +0000 (GMT)
+Message-ID: <3a4c0e61-23d3-4baa-878c-a31c7fc2a8c8@linux.ibm.com>
+Date: Tue, 14 Jul 2026 20:22:37 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 82/98] tests/tcg/s390x: user tests
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>, Helge Deller <deller@gmx.de>
+References: <20260710214343.2065491-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260710214343.2065491-83-pierrick.bouvier@oss.qualcomm.com>
+ <584dbebe-6105-45a6-ae4d-d0fb4fc6eaaf@linux.ibm.com>
+ <24690de5-8178-41bf-94f6-cd383f599b2a@oss.qualcomm.com>
+Content-Language: en-US
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+In-Reply-To: <24690de5-8178-41bf-94f6-cd383f599b2a@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: permerror client-ip=170.10.133.124;
- envelope-from=pbonzini@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDE4OCBTYWx0ZWRfX0+TjMwqro1OE
+ YY2g97+M5UVL6wfIysZa+LUuQMLGXg7jZXwSzUzB+98gtrtSAT0em5b+BE626E5Xuo4x+kexYta
+ 4aFWXYXmVzPjMmU+EEimh2E04VYqk5A=
+X-Proofpoint-GUID: ElKVREdY-EhfnTLV7A_EzD68uGbyaTP_
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDE4OCBTYWx0ZWRfX8HfxlUdaQNS3
+ O8f6AzVcZcYTwdLWt85ggpTYHgh7OKOf4uoO3aVExzZQ9JOHDwvhgKZrjKL0rp0vsT+k198APA8
+ ZK9mac/gxHxNMB4up0o8k+2IBybBXxSiaSy65IOm5bxMiOSeSx8xRHdqQxm7LN9uhWehR3upAO/
+ Rq1cOz+FGgLDMMixqp9UfvtzUBvYKjHatL8sAfXlwLayvLhJyTlvuNyL39xvpT/HKpP4EhEqVz5
+ kWfUku2Oo6ChPdZN6JitQkQlHAuF8cE3K5O80vMg/V7kdxUDvpYJLuF1lwntbTjFmHaudl1jMEu
+ gi7xuRODFPLn+2P4yG7KOzJe9d0iuMS+3bEDQauwmhx4OyUcr+CAbhx1daj6Yyg2Rw8GQyYbyLm
+ 2xK8s2vvle0RMmfLu5h2ZQd+djUNI9j1/faNPsrvM1ArnQ96XwpbReJJdJFTygkp10pUBclya+K
+ Vlrff++m+v54xplUdCA==
+X-Proofpoint-ORIG-GUID: DPf7GMGpemC0m_jwVj3M4MQG1bLeGNoC
+X-Authority-Analysis: v=2.4 cv=PvajqQM3 c=1 sm=1 tr=0 ts=6a567e72 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=EUspDBNiAAAA:8
+ a=NNwXQtxxdktGI4-D13UA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-14_04,2026-07-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 malwarescore=0 bulkscore=0 impostorscore=0 adultscore=0
+ clxscore=1015 lowpriorityscore=0 spamscore=0 suspectscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607140188
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,8 +135,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, thanks.
 
-Paolo
+
+On 7/14/26 17:43, Pierrick Bouvier wrote:
+> On 7/14/2026 1:54 AM, Ilya Leoshkevich wrote:
+>>
+>>
+>> On 7/10/26 23:43, Pierrick Bouvier wrote:
+>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>> ---
+>>>    tests/tcg/meson.build           |   1 +
+>>>    tests/tcg/s390x/Makefile.target | 127 -----------------------------
+>>>    tests/tcg/s390x/meson.build     | 138 ++++++++++++++++++++++++++++++++
+>>>    3 files changed, 139 insertions(+), 127 deletions(-)
+>>>    delete mode 100644 tests/tcg/s390x/Makefile.target
+>>>    create mode 100644 tests/tcg/s390x/meson.build
+>>
+>> In general the s390x tests work now, however, I get:
+>>
+>> 155/164 tcg+tcg-s390x-linux-user - qemu:s390x-linux-user-fma
+>>                                          SKIP             0.09s   exit
+>> status 77
+>> 156/164 tcg+tcg-s390x-linux-user - qemu:s390x-linux-user-vfminmax
+>>                                          SKIP             0.07s   exit
+>> status 77
+>> 157/164 tcg+tcg-s390x-linux-user - qemu:s390x-linux-user-vxeh2_vs
+>>                                          SKIP             0.06s   exit
+>> status 77
+>> 158/164 tcg+tcg-s390x-linux-user - qemu:s390x-linux-user-vxeh2_vcvt
+>>                                          SKIP             0.06s   exit
+>> status 77
+>> 159/164 tcg+tcg-s390x-linux-user - qemu:s390x-linux-user-vxeh2_vlstr
+>>                                          SKIP             0.05s   exit
+>> status 77
+>> 160/164 tcg+tcg-s390x-linux-user - qemu:s390x-linux-user-vxeh2_vstrs
+>>                                          SKIP             0.04s   exit
+>> status 77
+>>
+>> with the series. Without the series these tests do run:
+>>
+>>    TEST    fma on s390x
+>>    TEST    vfminmax on s390x
+>>    TEST    vxeh2_vcvt on s390x
+>>    TEST    vxeh2_vlstr on s390x
+>>    TEST    vxeh2_vstrs on s390x
+>>    TEST    vxeh2_vs on s390x
+>>
+> 
+> Can you please run one of the test in verbose?
+> It will print the reason why it was skipped.
+> $ ./build/pyvenv/bin/meson test -C build \
+> s390x-linux-user-vxeh2_vcvt --verbose
+
+$ ./build/pyvenv/bin/meson test -C build \
+s390x-linux-user-vxeh2_vcvt --verbose
+1/1 tcg+tcg-s390x-linux-user - qemu:s390x-linux-user-vxeh2_vcvt RUNNING 
+
+ >>> 
+UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 
+MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 
+ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 
+MESON_TEST_ITERATION=1 RUST_BACKTRACE=1 MALLOC_PERTURB_=146 /usr/bin/env 
+sh -c 'echo "compiler feature z15 not supported" && exit 77'
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― 
+✀ 
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+compiler feature z15 not supported
+
+> I guess the cross compiler is not detected, and we need to find why.
+> With following questions, we should know what's missing.
+> 
+> - Do you have s390x-linux-gnu-gcc installed?
+
+Yes.
+
+> 
+> - Does this command work?
+> $ s390x-linux-gnu-gcc -static -o /dev/null tests/tcg/test_cc.c
+
+$ s390x-linux-gnu-gcc -static -o /dev/null tests/tcg/test_cc.c
+In file included from tests/tcg/test_cc.c:3:
+/usr/lib/gcc/s390x-linux-gnu/16/include/stdint.h:11:16: fatal error: 
+stdint.h: No such file or directory
+    11 | # include_next <stdint.h>
+       |                ^~~~~~~~~~
+
+Apparently it's the same issue. Fedora doesn't ship cross glibc headers.
+
+> - Do you have podman or docker installed?
+
+Yes.
+
+> 
+> - What is the output of this command?
+> $ ./tests/docker/docker.py probe
+
+$ ./tests/docker/docker.py probe
+docker
+
+> 
+> Regards,
+> Pierrick
 
 
