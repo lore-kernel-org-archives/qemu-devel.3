@@ -4,78 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD202C44508
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 14:31:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86E05C44501
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 14:37:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjeA9-0005Lm-Lo; Tue, 14 Jul 2026 10:31:09 -0400
+	id 1wjeG3-0006Lp-2X; Tue, 14 Jul 2026 10:37:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wjeA7-0005LP-AP
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:31:07 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wjeA4-0005Kc-J6
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:31:07 -0400
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
- by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 022A68084A;
- Tue, 14 Jul 2026 17:30:59 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:c5a::1:8] (unknown [2a02:6bf:8080:c5a::1:8])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id vUQ3j31ZSOs0-VWswQesj; Tue, 14 Jul 2026 17:30:58 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1784039458;
- bh=41qetMPmVQOo3YS6TDEX0VX/OA8bMXYq3H55cgD4M8M=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=V7c9Yqf/mPYJLw/t4SWr4S/Q1b/j70MBJjrEYcUPxBOJtDypjIbJ6y62FUGKQMDb/
- bURPsgB6bEitjayNvRWGvVQkK7mUUhLUvg1dlvd680ucraLhG00Zp0RBIZ8OAkDpU4
- of/SDW06LhsJzudIKOB5bNOPddX3TxqF2hSnSq7c=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <7e2a840a-04e2-4a14-93fe-1a296c78e1bf@yandex-team.ru>
-Date: Tue, 14 Jul 2026 17:30:57 +0300
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wjeG0-0006LL-JI
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:37:12 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wjeFx-0006CJ-EA
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:37:11 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-38dd55ad76cso791593a91.1
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 07:37:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1784039827; x=1784644627; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=tL5FWT+1l3XDdM5rt0ZW1QNmGgGxdSRMzn/Q9zeEy3A=;
+ b=Q60Uuf14koAKVsuwYQ5jv23Nbcw9p6ZpfJF2GFRLYMboJzLZsExn8ReNZHOgvoqXCf
+ 34Nc0ubFygYfRyvB4PKhYZG/Y/ivxssLbttpZc4nlmK0Vy3vZbAmzDfDyZ+hPq1qOoN/
+ CEeAVX+kzfpopWEPW1+Yddlre2aX6WdEiYmvpkDBQxuRo+HhRcKxNWquvU67Tb6JSbBo
+ qASNp1jp0z7Wp6sq7pw3hVKD0yMbRNYeujJdd50/Qd/0N4lZ9KGNkYcVLsqy0bfwUSct
+ r4SMIpzB+A68xzH2dTDvIOZ+No+qtcTLPPXWXHGJwr/ZSjOXRei9BBmyaBwoZKCzKnn+
+ OQPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784039827; x=1784644627;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=tL5FWT+1l3XDdM5rt0ZW1QNmGgGxdSRMzn/Q9zeEy3A=;
+ b=QEon1tSbxDHFKwPGf8IcZossG/H3vMjTZa68RjfHY2HFMy6r0JSD8F4FBu+VKHBK18
+ zh9/NLXmMRmRQqQM+rJdUo1BdfBosW1KsifpbGIr1uvTW9uGJuA2LFCKr4XxUyfn0vNF
+ Kl7pw+Di9MrkODpGi5sZe/I8kanaSJjE8tSm8iVCxkzNCStDIeH9mcpzT4x409Co8cQb
+ Ies3q6Qs6FSTK3RdQoidwHYtxo/5oYGI8L1XUHELilLzzTKdDstL5f8xHM8z5oO8gw4g
+ 9aHVgVhWZwyryd9hYPw9a22n1C9r0PhVJ/V5ZwarFfTvm8A94gO3GL3t2sXUXeNfNzS5
+ TqYw==
+X-Gm-Message-State: AOJu0YySIuvqfova3sI2y7KmI1/Mhd69Ht20rb5TJ0anQ/JpEnAMbsxz
+ e/Gb4gT+uVk6x4kjGNiDLttkernsHWl7+brT/ATYEThVojSs0xAYceJxCuDsBm6dylodRn/mVBu
+ 6Wh70
+X-Gm-Gg: AfdE7cmIAju3JCgwAaAnU9H7N8JdimGvo7HUArAbXLQ0DCpUxuYf1lZvnnptl5KXU4K
+ POBZz6TtX30L5RK3QkiQxRqBTtkSrIMq41fHSbnPx6oRkRvh1jbxa6WiYMt0J84Ac9HofS2KXke
+ 3uYUhmay/IY7CFPWX4XJRB9Pla43ZFPkgyqS8h0dQ1Oc9SZKBbyQ3xrfv4DptYA0/EeS7xGK0G3
+ MTpcPj3UDdXeVDWD9KhkckpMZS+3XN0sVnMv5Cgvsd6r/KWp+iMSaY7Ffe2OK+Urvwz/9944udd
+ DKKKfVfIbjvGTEV+lZGGlxip6RcaIYJOxdJtGxvFSvHbDc9MKHWp6+KKLFsd/lcQrgYZGNJKJ6M
+ Uo+Ykf/KW49Ph/fMAZbV6NfhaUIlWzXFFxELkqi4s/deAmFP85iTw8lGA1l4ccfOhtA3sJrCC0n
+ 9yyF3qz1w6XfzVoDNzlLZxYtPHig==
+X-Received: by 2002:a17:90b:35c9:b0:380:8bb9:aba9 with SMTP id
+ 98e67ed59e1d1-38d13767fa7mr18146882a91.3.1784039827429; 
+ Tue, 14 Jul 2026 07:37:07 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.146.49])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-38e172dc530sm1602518a91.8.2026.07.14.07.37.06
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 14 Jul 2026 07:37:06 -0700 (PDT)
+Message-ID: <42e2bce6-199c-4f71-95b8-67c8ee7df466@linaro.org>
+Date: Tue, 14 Jul 2026 07:37:05 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v18 12/14] net/tap: support local migration with virtio-net
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>, jasowang@redhat.com,
- peterx@redhat.com, farosas@suse.de, raphael.s.norwitz@gmail.com,
- bchaney@akamai.com, qemu-devel@nongnu.org, berrange@redhat.com,
- pbonzini@redhat.com, yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Zhao Liu <zhao1.liu@intel.com>, Jason Wang <jasowangio@gmail.com>,
- Eric Blake <eblake@redhat.com>
-References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
- <20260710191809.721154-13-vsementsov@yandex-team.ru>
- <875x2juxru.fsf@pond.sub.org>
- <0fd09b96-068f-415d-9bd8-0506958710f1@yandex-team.ru>
- <87y0fff25t.fsf@pond.sub.org>
- <5af44296-ea89-402c-b4fb-b9b0acee3b54@yandex-team.ru>
- <20260714091858-mutt-send-email-mst@kernel.org>
+Subject: Re: [PATCH 1/2] target/arm: GICv5 cpuif: gicr_cdia_read() ppibit
+ should be 64 bits
+To: qemu-devel@nongnu.org
+References: <20260714091806.3568281-1-peter.maydell@linaro.org>
+ <20260714091806.3568281-2-peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20260714091858-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20260714091806.3568281-2-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -87,135 +105,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14.07.26 16:19, Michael S. Tsirkin wrote:
-> On Mon, Jul 13, 2026 at 06:08:26PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> On 13.07.26 16:29, Markus Armbruster wrote:
->>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
->>>
->>>> On 13.07.26 10:57, Markus Armbruster wrote:
->>>>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
->>>>>
->>>>>> Support transferring of TAP state (including open fd).
->>>>>>
->>>>>> Add new property "local-migration-supported", which defines
->>>>>> whether local-migration is actually supported for this TAP device.
->>>>>> Starting from 11.2 QEMU Machine Types it's enabled by default.
->>>>>>
->>>>>> Note, that local-migration (including migrating opened FDs
->>>>>
->>>>> Scratch the comma after "Note", ...
->>>>>
->>>>>> through migration channel, which must be UNIX socket), is
->>>>>
->>>>> ... and the one before "is".
->>>>>
->>>>>> enabled by global "local" migration parameters. But individual
->>>>>> devices may have additional options to enable/disable it
->>>>>> per device.
->>>>>>
->>>>>> The tricky thing, is that we need to know, should we do
->>>>>
->>>>> Do you mean "The tricky thing is that we ween to know whether to call"?
->>>>
->>>> yes
->>>>
->>>>>
->>>>>> call open/connect in TAP initialization code. That means,
->>>>>> that on incoming migration we want to know status of
->>>>>> "local" migration parameter at time of creating TAP device.
->>>>>> So, currently, for incoming local migration only TAP device
->>>>>> created through QMP is supported, as you need to set migration
->>>>>> parameter first (through QMP as well).
->>>
->>> Possibly clearer:
->>>
->>>       The tricky thing is that we need to know whether to call open/connect
->>>       in TAP initialization code, i.e. we need to know the value of
->>>       migration parameter "local" when creating the TAP device.  For
->>>       incoming migration, we can know only for TAP devices created with QMP
->>>       after setting the migration parameter with QMP.
->>>
->>>>>>
->>>>>> So the full picture is:
->>>>>>
->>>>>> On source, to start outgoing "local" migration you need:
->>>>>>
->>>>>>     - migration parameter "local" set to true
->>>>>>     - "local-migration-supported" TAP option set to true (the
->>>>>>       default, starting from 11.2 QEMU Machine Types)
->>>>>>
->>>>>> If at least one of these options is not set, TAP backend
->>>>>> doesn't participate in migration.
->>>>>>
->>>>>> On target, things are more difficult:
->>>>>>
->>>>>> Same, you need both "local" and "local-migration-supported"
->>>>>> be set. And same, if one of them is not set, TAP backend
->>>>>> is initialized as usual, and doesn't accept any incoming
->>>>>> state.
->>>>>>
->>>>>> Additionally, if you are going to set "local", it must be
->>>>>> set before creating the TAP device. If TAP device created
->>>>>> with "local" unset, it initializes as usual. If you enable
->>>>>> "local" after it and start incoming migration, it will fail
->>>>>> in .pre_load handler of TAP backend.
->>>>>
->>>>> Out of curiosity, how would such a failure look like?
->>>>
->>>> TAP is initialized as usual, so the answer depends on the options.
->>>>
->>>> For incoming migration we should open TAP without "ifname" argument.
->>>> If so (and "local" is not set), new TAP device will be created. It
->>>> shouldn't trigger any additional problems I think.
->>>>
->>>>
->>>> Checking with test:
->>>>
->>>>      diff --git a/tests/functional/x86_64/test_tap_migration.py b/tests/functional/x86_64/test_tap_migration.py
->>>>      index bcc0a60dfe9..94982bc7b55 100755
->>>>      --- a/tests/functional/x86_64/test_tap_migration.py
->>>>      +++ b/tests/functional/x86_64/test_tap_migration.py
->>>>      @@ -316,8 +316,8 @@ def prepare_and_launch_vm(
->>>>               else:
->>>>                   tap_name = TAP_ID
->>>>
->>>>      -        self.set_migration_capabilities(vm, local)
->>>>               self.add_virtio_net(vm, vhost, tap_name, local, incoming)
->>>>      +        self.set_migration_capabilities(vm, local)
->>>>
->>>>           def add_virtio_net(
->>>>               self, vm, vhost: bool, tap_name: str, local: bool, incoming: bool
->>>>
->>>>
->>>> Leads to
->>>>
->>>> qemu-system-x86_64: TAP is already initialized and cannot receive incoming fd
->>>> qemu-system-x86_64: warning: qemu_fclose: received fd 27 was never claimed
->>>> qemu-system-x86_64: load of migration failed: Invalid argument: error while loading state for instance 0x0 of device 'netdev.1/0/net-tap': pre load hook failed for: 'net-tap', version_id: 0, minimum version_id: 0, ret: -22
->>>>
->>>> on target, and failed migration, as expected.
->>>
->>> How is the user supposed to reason their way from here to "oh, I need to
->>> create my TAP device with QMP and after setting @local"?
->>
->> Not trivial, yes.
->>
->> I can update error message to
->>
->>     TAP is already initialized and cannot receive incoming fd. For local migration, "local" migration parameter must be set _before_ creating TAP device.
+On 7/14/26 02:18, Peter Maydell wrote:
+> In gicr_cdia_read() we turn a PPI interrupt ID into a register
+> index and a bit mask with a 1 for the bit we want to change:
 > 
+>          ppireg = id / 64;
+>          ppibit = 1ULL << (id % 64);
 > 
-> Another reason to just make it a machine property globally
-> and be done with it, maybe?
+> However, we used the wrong type for ppibit, making it a uint32_t.  If
+> 'id' is too large we'll shift off the end, so we won't ever update
+> the state of PPIs with indexes above 31.
 > 
+> This didn't have any visible effects because the currently allocated
+> architected PPIs are indexes 0..31, so you'd only see this if for
+> some reason a guest was manually marking as pending a PPI in 32..63.
+> 
+> Fix the type of ppibit to the intended 64 bit width.
+> 
+> Fixes: 3f79212abae89 ("target/arm: GICv5 cpuif: Implement GICR CDIA command")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   target/arm/tcg/gicv5-cpuif.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 
-What do you mean? Making "local" a machine property instead of migration parameter? But this way we'll have
-to change it with qom-set to switch to another type of migration. And, actually same error message here make
-sense any way.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-
-
--- 
-Best regards,
-Vladimir
+r~
 
