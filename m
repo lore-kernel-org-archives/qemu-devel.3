@@ -4,153 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA6E1C44508
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 15:37:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F0D4C44501
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 15:40:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjfCE-0008VI-NB; Tue, 14 Jul 2026 11:37:22 -0400
+	id 1wjfFM-0000ot-2K; Tue, 14 Jul 2026 11:40:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wjfCC-0008V4-Tv
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 11:37:20 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1)
+ (envelope-from <devnull+shankerwangmiao.gmail.com@kernel.org>)
+ id 1wjfFK-0000ol-Ra
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 11:40:34 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wjfCB-0006sn-EQ
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 11:37:20 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66EEcWOY674502
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 15:37:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 6DvHdtxruWPzogbQECRgm2uZ/hauKtiuM4w5wcef7zY=; b=XWZOUB9wldSJUeDD
- +xTNXHlUBJk/i+OJ6eCkDkiOlC4N0wHCnNsN1QCyAAvVYKEotmuE6OGO64W01nMs
- bvGymluXbyobCh26Hf9LgcYyKEsxSz9KeTSdgxIOEQY4YINjSV49ec5CKD99nVx5
- 1pZHKJLf3oKRR05KwgRMs70jIhmLLHdAQtLE66HyxxO/HyR1QhgeBSw+ZtNiP6+6
- +lgltch0Cw4FWlk/r1r87McGDRFGaJDMhiqeqFIup7znRY+cihOKEXc33UF+ih8k
- +zQSYf0OkelaTWTnpGpEzqISldXGnE/Igw6/oh7o6K8wwCoCfJ1n+8u7btDKkXkV
- u3tIiw==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fdnp0gp42-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 15:37:17 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-c894391f000so2456854a12.1
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 08:37:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784043437; x=1784648237; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=6DvHdtxruWPzogbQECRgm2uZ/hauKtiuM4w5wcef7zY=;
- b=IzdCXycBAQY48Wo53nEvVN2GutlVOnd4S5d4BrBjJGbd9DWCpqBBBrRHJMX+AZQ44q
- pz/MaJD+l61c7tdqPhYc8qDoYyeIfPT8qRG64er6bA2Y2PdDmoKlIO0EEEA+U8yn+LA2
- UKtqJ+ZLbQHkR3G76iz73DlI+jXhm/A0oYxK1tEJASjr5stOaExjFBANXvYfDY63UARC
- /1yagMr+h/U2PqZ9y1jOWXSWkW1RjF+yxNskK6a/YUmmQxX/8MqRSqKEejfNxyXEjbGR
- fisN4tfI/3I+Wy+HO+4Z74zSalHSPPLobMs2JpQ0KrrmEOVDxSGWvTvVgGzGDwexYrAg
- eykw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784043437; x=1784648237;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=6DvHdtxruWPzogbQECRgm2uZ/hauKtiuM4w5wcef7zY=;
- b=ETbrZRcY5pj+GjmGsWaj3gRvDLxUD44noVdNbYh0vOk7DPUvAFw+LvhSUwEWHXY4v1
- qjfUuZ8aI4wgoad5+B7/PS22kMYFWFNGkdj0BjLlToUoF3iy22QblJIPE6kxwOCb2DWQ
- mWIGMegUVp8uWtBRI/EbcEgJIleWz+oR7FDlxBJ4tQReHvzFh4WMnFRVvhUaIqibzP3m
- yYJI0IC2GOevZdN3LhOLjZAko76TbN+sHASbji6/f7YSzRj5opcc9ARE8XDTRuDfIY5b
- WeKupK8g+Decq0IHg5gUBLtHOoXJYOXlNDzhT6XY84bG7b0BlWgFfc+EZyMHbfb4HwFP
- 4/Dw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrH7hi6NssA0l3CXiBHQ9FXF4+40DkU6Rq+3yUXMmL3e+hPQZY9G/u4IxmW+crJxGpUgSjmUFfV0+WX@nongnu.org
-X-Gm-Message-State: AOJu0YzvDJtvwej6/UbSwZYQhL1UWnQ9QhVeoEbZz7IR4pS8Jawr3NhC
- I/8hifmM+HCnX6LNPR7KbXhu2KzD1N6rGODZtRKWlyCE/o6hGp1HWRaRmHaWD6e2MhhJ1LpIBa6
- oq9YkG7xorPDUsAvNW/oLI0/VnxeOyh0ICjdbJ7C12criIgBY5wRBfv98Bw==
-X-Gm-Gg: AfdE7ckmqjogTPMQALgkxVpdApc9ZTvd12r0ZAfvnyLDGr4FeJrIF7c5byaQD/BV25H
- eFJUWvavhlhKvzZNwfNZx4w7iXAyDPGMITQvRS4VeB2/qmSNe3AebD/MbWFbVR36jCVkVOfQYaV
- DAZljZChILppBSiNWiZhlHIo1qhDYPSozTWPZ4/rk0IVHz6oGF5WSgdM4mKn2+ebJUekJmnbhTe
- AZTrY8ewoSFJkrkYWCxK97AS9AOKrMMQBVO+0wp2GQhv3xAb9M+mxlWiNjxEWJ+gj4FHTeM6X+l
- Gvhyg5X+3HOI1DHlroG3p9XYIAwDp0yQOYlYZWzplxSN6Udnhr0Xd9WOqlkkLLHPJPR9ugorj3C
- 7dPB49oWdvTGeAeIxz4T8euVBqxQKJ4IJQNoUBGdE5KNWlG+fbEcqLwyp8/zKmZQqGAIa7x5XlW
- LTROs=
-X-Received: by 2002:a05:6a21:4591:b0:3bf:6c08:2841 with SMTP id
- adf61e73a8af0-3c110775a5bmr15217653637.48.1784043437041; 
- Tue, 14 Jul 2026 08:37:17 -0700 (PDT)
-X-Received: by 2002:a05:6a21:4591:b0:3bf:6c08:2841 with SMTP id
- adf61e73a8af0-3c110775a5bmr15217629637.48.1784043436608; 
- Tue, 14 Jul 2026 08:37:16 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13b84d6ce15sm39702663c88.5.2026.07.14.08.37.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Jul 2026 08:37:16 -0700 (PDT)
-Message-ID: <e29c4eaf-b429-4566-a598-9cc18a8d1cee@oss.qualcomm.com>
-Date: Tue, 14 Jul 2026 08:37:14 -0700
+ (Exim 4.90_1)
+ (envelope-from <devnull+shankerwangmiao.gmail.com@kernel.org>)
+ id 1wjfFI-0007aK-JP
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 11:40:34 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id 8CA9B4099D;
+ Tue, 14 Jul 2026 15:40:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 6CCCEC2BCB8;
+ Tue, 14 Jul 2026 15:40:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1784043629;
+ bh=jzalEuqQmgfjIjTDyacrkbipmaq+mizkVzuEZhGodg8=;
+ h=From:Date:Subject:To:Cc:Reply-To:From;
+ b=G8efqVUmL7zPWQxexUB5PppGuKaflNszeN0Y8OVZj5BGC3J0RPi001NS3x+zsAfwf
+ W9J2in6lOdO/PmyaCrOZbnF8cJ4DXaReWOERK6em5OcrUVPDpUJmChoM7bAMo4a26Z
+ 0A3nNbGJpgP2Erlqy1LQmKdA6Qg7za37dmsOqm4k6DNVE03MQ22cs7WsbAsef41Oh5
+ 5b7kRp67gr1SKqbfhawnbpXVwLuw+wjEE+mKuD6eaP0HNdrGpe0N3B+nUwg3G6UXAG
+ SsUFq9RORow0a+GXpx++HQAY4F2OzV4YWVjcZZcN8CqUPRHkL0/STBQJWd9GgazSEo
+ 7qZLke8p/+yeA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org
+ (localhost.localdomain [127.0.0.1])
+ by smtp.lore.kernel.org (Postfix) with ESMTP id 47634C44508;
+ Tue, 14 Jul 2026 15:40:29 +0000 (UTC)
+From: Miao Wang via B4 Relay <devnull+shankerwangmiao.gmail.com@kernel.org>
+Date: Tue, 14 Jul 2026 23:40:15 +0800
+Subject: [PATCH] target/loongarch: fix data race in CSR_ESTAT
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 81/98] tests/tcg/s390x: add float reference files
-To: Ilya Leoshkevich <iii@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
- Gustavo Romero <gustavo.romero@linaro.org>, Helge Deller <deller@gmx.de>
-References: <20260710214343.2065491-1-pierrick.bouvier@oss.qualcomm.com>
- <20260710214343.2065491-82-pierrick.bouvier@oss.qualcomm.com>
- <6738c88e-235f-4912-84a0-fe3acfe50c06@linux.ibm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <6738c88e-235f-4912-84a0-fe3acfe50c06@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDE2MiBTYWx0ZWRfX3hXE90Rl0Jlz
- 31oPmwV/2GAcC0oh/Ann6eynYyAcsC9BWlDchxBEjf4FEa3wYKUbvWhNE5Yh84K9iUaoWiwvI6J
- ALZshqqJhZDNil81xXnNLnNk8lq1lM4=
-X-Proofpoint-GUID: -mRQhkFZDG0T1_maVM1EZgUwjahgBIoB
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDE2MiBTYWx0ZWRfX40QxRMUepucL
- Znl4JhvvEuAI4FA4tjKOuGdaYPv3/kRW+uIr2xF4rmTRu30sNBY9l0QCVsbVJM74Cfdh5+tu0AP
- KLTnI/5tk/MlKIRKATp1eVE0pveCiJa4moFozIy1oI141ui0LjshxZsB6RC+u66wxCKjd7lQ/iC
- MPofS579WxtchqU5pzvqt/94EUiFxa8X44hTdEkO4VR5Pt86cnZlWnNbxs5ojAn+FInKULnlCTH
- jd6vWSBiSd3w93bBnyadkgqsw+q/UHYkLB/icdrpTzpMdtKk5mdMBKwBFBjcKtjQ6mm8HWtyFHq
- 4iJqcTv/GPW9ieeZgMAL32QWLmnvBI4/U5jesmlsefMy/5CXjPu22Y/SJyeX1bSEfutx4h5MoIc
- 4HXINIltUeHrMreR8FCOA5r6NOkdjU0dtLTzLpYJCXDNNVQY24orrbKnp3GbZTbnPaHlo++G3WT
- 4nJyi9ta0FuTtl3nXEQ==
-X-Authority-Analysis: v=2.4 cv=FtM1OWrq c=1 sm=1 tr=0 ts=6a5657ad cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=eL9xj-S0sqmU-GMOW3oA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=3WC7DwWrALyhR5TkjVHa:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: -mRQhkFZDG0T1_maVM1EZgUwjahgBIoB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-14_03,2026-07-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 priorityscore=1501 bulkscore=0 phishscore=0
- clxscore=1015 impostorscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607140162
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260714-loong-race-v1-1-54111549c95e@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAF5YVmoC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDcwNz3Zz8/Lx03aLE5FRdM2MzY8tUizTTxLQkJaCGgqLUtMwKsGHRsbW
+ 1ACVye/dcAAAA
+X-Change-ID: 20260707-loong-race-63639e8f5afb
+To: qemu-devel@nongnu.org
+Cc: Song Gao <17746591750@163.com>, Bibo Mao <maobibo@loongson.cn>,
+ Xianglai Li <lixianglai@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Xi Ruoyao <xry111@xry111.site>, b4-sent@kernel.org,
+ Miao Wang <shankerwangmiao@gmail.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=11865;
+ i=shankerwangmiao@gmail.com; s=20250715; h=from:subject:message-id;
+ bh=26m/D8Nn8FBL6ASV4PW3nCdwwQJNgRyJtYWGM2ZFKX4=;
+ b=owEBbQKS/ZANAwAKAbAx48p7/tluAcsmYgBqVlhhJT+idv3rV7TICfNeWT9dWKT242xqI2CX3
+ SqLlhq8op2JAjMEAAEKAB0WIQREqPWPgPJBxluezBOwMePKe/7ZbgUCalZYYQAKCRCwMePKe/7Z
+ blGREACaIoI04vRX8AnwQA3Zxim+z6PqIA6JcqObuAeUUAh5Rt73FjvjioeLXOJhEVwgjVaQ5Jx
+ ZOB62gGhKXdr+mSUxO0bw7A2CoyZeJ+JltfdC63toesz+cWjcz2W5/BxHtD3QP4SnlxHojEKqbw
+ w32v3wuWc8okjelgRQyCsxPrxUkuessk7xtcaqQCtZ/924QKcLq+2Q/AXzJeV9NUfCsgnzYogfg
+ gCh8fUszHJpdAcYQZBfaXU8OOoZycfyHwvzucuqLQFGEkkyry8w4xOtKjXvjv3aY8FsfQnGCS1V
+ B8n2gU5ZRLCxjXjbXGkY2JI2kT17s2NMDdYaIcOf/KBTSfOqtbzSuJBOrTxF2F6v/CHdkiVAcsR
+ NfCbnfdJtjRJF2KZILj5AFJpXbexofeBxos3SxS1kWvggWwNpwDJM1gX1PQGxp4lAN8FctsJAYq
+ 8ZgLlnXNe3VKB/0XNfQ2nEa6NngE49TelUmHI7PNVf0zIIRKecBsEKGLMEAfAEU+A/oKj3bkR1Q
+ Bll/bpsjmiBvVeUvwX4YxxR5z47YxMnIbEewRmOMfTY5Wjn0kvDDW5ghn1iFqPxG3Ci5eiQwfs2
+ Zrf5iO7kcgI+RAr7DxaKQodO7SYbQuN994uAEKoTGj8R+KNwlYrXyMDSNgMJ2CGRnLeeNdzHgf/
+ OnXjGFRwuf8MF+w==
+X-Developer-Key: i=shankerwangmiao@gmail.com; a=openpgp;
+ fpr=6FAEFF06B7D212A774C60BFDFA0D166D6632EF4A
+X-Endpoint-Received: by B4 Relay for shankerwangmiao@gmail.com/20250715
+ with auth_id=462
+X-Original-From: Miao Wang <shankerwangmiao@gmail.com>
+Received-SPF: pass client-ip=172.234.252.31;
+ envelope-from=devnull+shankerwangmiao.gmail.com@kernel.org;
+ helo=sea.source.kernel.org
+X-Spam_score_int: 0
+X-Spam_score: -0.0
+X-Spam_bar: /
+X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FREEMAIL_FORGED_REPLYTO=2.095, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,40 +101,280 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: shankerwangmiao@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/14/2026 3:47 AM, Ilya Leoshkevich wrote:
-> 
-> 
-> On 7/10/26 23:43, Pierrick Bouvier wrote:
->> Tested-by: Alex Bennée <alex.bennee@linaro.org>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->> ---
->>   tests/tcg/s390x/float_convd.ref | 988 ++++++++++++++++++++++++++++++++
->>   tests/tcg/s390x/float_convs.ref | 748 ++++++++++++++++++++++++
->>   tests/tcg/s390x/float_madds.ref | 768 +++++++++++++++++++++++++
->>   3 files changed, 2504 insertions(+)
->>   create mode 100644 tests/tcg/s390x/float_convd.ref
->>   create mode 100644 tests/tcg/s390x/float_convs.ref
->>   create mode 100644 tests/tcg/s390x/float_madds.ref
-> Would it be possible to add an explanation to the commit message why
-> this is needed now and wasn't needed before?
+From: Miao Wang <shankerwangmiao@gmail.com>
 
-Before the series, we had only some arch that had those files. I have no
-clue why to be very honest, out of "people forgot to add them".
+The CSR_ESTAT register of a CPU can be read and written by both the
+CPU thread and other threads (e.g., the interrupt controller thread).
+Currently the possible readers and writers of CSR_ESTAT are:
 
-Makefiles were "smart" and skipped the output compare when such files
-were not available. This results in arch being very inconsistent with
-some providing all files, some providing no files, and some providing
-some files. There was even one case of a misnamed file that result in a
-skipped check.
+- Readers
+  - tcg generated by trans_csrrd(, CSR_ESTAT)
+  - loongarch_cpu_has_work()
 
-For consistency, the current series adds all missing reference files for
-all arch, and make their presence mandatory.
+- Writers
+  - tcg generated by trans_csrxchg(, CSR_ESTAT)
+  - helper_csrwr_estat()
+  - helper_csrrd_msgir()
+  - loongarch_cpu_set_irq()
+  - loongarch_cpu_do_interrupt()
+  - loongarch_cpu_exec_interrupt()
 
-Does it look like a good reason to you?
+The access from the CPU thread is not synchronized with the access from
+other threads, which may lead to data races. To fix this, use atomic
+operations to read and write CSR_ESTAT.
 
-Regards,
-Pierrick
+The data race has been identified while running the test cases from
+dracut, which is using QEMU to boot a LoongArch guest. By running the
+tests repeatedly (about 30 times) in the following conditions, the
+guest will hang in the middle of booting:
+
+- Host architecture: LoongArch64 or Aarch64
+- Guest kernel: 7.1.3+deb14-loong64
+- Number of vCPUs: 1 or 2
+- CPU Features: max, la464,msgint=off,ptw=off, or la464,msgint=off,ptw=on
+- Accelerator: tcg
+
+When the guest hangs, the guest kernel log shows various errors related
+to RCU stalls or other Soft Lockup or Hard Lockup issues. When running
+with 1 vCPU and the guest hangs, the guest kernel directly hangs without
+any messages and stucks at idle_exit.
+
+With this patch, the guest can boot successfully without any hangs
+during repeated runs of the test cases.
+
+Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
+---
+ target/loongarch/cpu.c                             |  8 +++----
+ target/loongarch/internals.h                       | 27 +++++++++++++++++++++
+ target/loongarch/tcg/csr_helper.c                  | 28 +++++++++++++++++-----
+ target/loongarch/tcg/helper.h                      |  2 ++
+ .../tcg/insn_trans/trans_privileged.c.inc          | 13 ++++++++--
+ target/loongarch/tcg/tcg_cpu.c                     | 12 ++++------
+ 6 files changed, 71 insertions(+), 19 deletions(-)
+
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index fb03424ffa8cd5e5d250531cc2a36fa789fc25a9..be53307997d60ceaa404a6187eedf96dc51d82ff 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -71,8 +71,8 @@ void loongarch_cpu_set_irq(void *opaque, int irq, int level)
+     if (kvm_enabled()) {
+         kvm_loongarch_set_interrupt(cpu, irq, level);
+     } else if (tcg_enabled()) {
+-        sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, irq, 1, level != 0);
+-        if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
++        cpu_csr_estat_deposit64(sys, irq, 1, level != 0);
++        if (FIELD_EX64(cpu_csr_estat_get(sys), CSR_ESTAT, IS)) {
+             cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+         } else {
+             cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+@@ -87,7 +87,7 @@ bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env)
+     uint32_t status;
+     CPUSysState *sys = env_sys(env);
+ 
+-    pending = FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS);
++    pending = FIELD_EX64(cpu_csr_estat_get(sys), CSR_ESTAT, IS);
+     status  = FIELD_EX64(sys->CSR_ECFG, CSR_ECFG, LIE);
+ 
+     return (pending & status) != 0;
+@@ -641,7 +641,7 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+     sys->CSR_ECFG = FIELD_DP64(sys->CSR_ECFG, CSR_ECFG, VS, 0);
+     sys->CSR_ECFG = FIELD_DP64(sys->CSR_ECFG, CSR_ECFG, LIE, 0);
+ 
+-    sys->CSR_ESTAT = sys->CSR_ESTAT & (~MAKE_64BIT_MASK(0, 2));
++    qatomic_and(&sys->CSR_ESTAT, ~MAKE_64BIT_MASK(0, 2));
+     sys->CSR_RVACFG = FIELD_DP64(sys->CSR_RVACFG, CSR_RVACFG, RBITS, 0);
+     sys->CSR_CPUID = cs->cpu_index;
+     sys->CSR_TCFG = FIELD_DP64(sys->CSR_TCFG, CSR_TCFG, EN, 0);
+diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+index e01dbed40f6c7d02d2180d9dd5e17dacdd31755a..b94d229b2e0a4d48a5b712ad5ee364fb4a402055 100644
+--- a/target/loongarch/internals.h
++++ b/target/loongarch/internals.h
+@@ -28,6 +28,33 @@ int ieee_ex_to_loongarch(int xcpt);
+ void restore_fp_status(CPULoongArchState *env);
+ #endif
+ 
++static inline uint64_t cpu_csr_estat_get(CPUSysState *sys)
++{
++    return qatomic_read(&sys->CSR_ESTAT);
++}
++
++#define cpu_csr_estat_set(sys, field, val) \
++    do { \
++        uint64_t _estat = cpu_csr_estat_get(sys); \
++        uint64_t _new = FIELD_DP64(_estat, CSR_ESTAT, field, (val)); \
++        if (qatomic_cmpxchg(&(sys)->CSR_ESTAT, _estat, _new) == _estat) { \
++            break; \
++        } \
++    } while (1)
++
++static inline uint64_t cpu_csr_estat_deposit64(CPUSysState *sys, int start,
++                                               int len, uint64_t val)
++{
++    do {
++        uint64_t _estat = cpu_csr_estat_get(sys);
++        uint64_t _new = deposit64(_estat, start, len, val);
++        if (qatomic_cmpxchg(&(sys)->CSR_ESTAT, _estat, _new) == _estat) {
++            return _estat;
++        }
++    } while (1);
++}
++
++
+ #ifndef CONFIG_USER_ONLY
+ extern const VMStateDescription vmstate_loongarch_cpu;
+ 
+diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+index 7dc33bc1802e5d4efc72648174bbf5e9baeaea54..023a6b1dc44f0df38c8c2f46b0b07eda88ddb3de 100644
+--- a/target/loongarch/tcg/csr_helper.c
++++ b/target/loongarch/tcg/csr_helper.c
+@@ -90,7 +90,7 @@ target_ulong helper_csrrd_msgir(CPULoongArchState *env)
+             return irq;
+         }
+ 
+-        sys->CSR_ESTAT = FIELD_DP64(sys->CSR_ESTAT, CSR_ESTAT, MSGINT, 0);
++        cpu_csr_estat_set(sys, MSGINT, 0);
+     } else {
+         /* bit 31 set 1 for no invalid irq */
+         irq = BIT(31);
+@@ -99,15 +99,31 @@ target_ulong helper_csrrd_msgir(CPULoongArchState *env)
+     return irq;
+ }
+ 
+-target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
++target_ulong helper_csrrd_estat(CPULoongArchState *env)
+ {
+     CPUSysState *sys = env_sys(env);
+-    int64_t old_v = sys->CSR_ESTAT;
++    return cpu_csr_estat_get(sys);
++}
+ 
+-    /* Only IS[1:0] can be written */
+-    sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, 0, 2, val);
++target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
++{
++    CPUSysState *sys = env_sys(env);
++    return cpu_csr_estat_deposit64(sys, 0, 2, val);
++}
+ 
+-    return old_v;
++target_ulong helper_csrxhg_estat(CPULoongArchState *env, target_ulong val,
++                                 target_ulong mask)
++{
++    CPUSysState *sys = env_sys(env);
++    mask &= MAKE_64BIT_MASK(0, 2);
++    val &= mask;
++    do {
++        uint64_t _estat = cpu_csr_estat_get(sys);
++        uint64_t _new = (_estat & ~mask) | val;
++        if (qatomic_cmpxchg(&(sys)->CSR_ESTAT, _estat, _new) == _estat) {
++            return _estat;
++        }
++    } while (1);
+ }
+ 
+ target_ulong helper_csrwr_asid(CPULoongArchState *env, target_ulong val)
+diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
+index 8a6c62f11618d7125122831f4a9fe0d0fab73364..58089e84c60fa49524b4705981d0f677cfb439d2 100644
+--- a/target/loongarch/tcg/helper.h
++++ b/target/loongarch/tcg/helper.h
+@@ -101,8 +101,10 @@ DEF_HELPER_1(csrrd_pgd, i64, env)
+ DEF_HELPER_1(csrrd_cpuid, i64, env)
+ DEF_HELPER_1(csrrd_tval, i64, env)
+ DEF_HELPER_1(csrrd_msgir, i64, env)
++DEF_HELPER_1(csrrd_estat, i64, env)
+ DEF_HELPER_2(csrwr_stlbps, i64, env, tl)
+ DEF_HELPER_2(csrwr_estat, i64, env, tl)
++DEF_HELPER_3(csrxhg_estat, i64, env, tl, tl)
+ DEF_HELPER_2(csrwr_asid, i64, env, tl)
+ DEF_HELPER_2(csrwr_tcfg, i64, env, tl)
+ DEF_HELPER_2(csrwr_ticlr, i64, env, tl)
+diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+index 6728ce5ec9387d1f66d68cf36abbe6e0997c639a..e6e9072518767479f66bae1cf1c72844df4343d4 100644
+--- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+@@ -75,7 +75,7 @@ static bool set_csr_trans_func(unsigned int csr_num, GenCSRRead readfn,
+ void loongarch_csr_translate_init(void)
+ {
+     SET_CSR_FUNC(STLBPS, NULL, gen_helper_csrwr_stlbps);
+-    SET_CSR_FUNC(ESTAT, NULL, gen_helper_csrwr_estat);
++    SET_CSR_FUNC(ESTAT, gen_helper_csrrd_estat, gen_helper_csrwr_estat);
+     SET_CSR_FUNC(ASID,  NULL, gen_helper_csrwr_asid);
+     SET_CSR_FUNC(PGD,   gen_helper_csrrd_pgd, NULL);
+     SET_CSR_FUNC(PWCL,  NULL, gen_helper_csrwr_pwcl);
+@@ -187,7 +187,16 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
+         return false;
+     }
+ 
+-    /* So far only readonly csrs have readfn. */
++    if (a->csr == LOONGARCH_CSR_ESTAT) {
++        src1 = gpr_src(ctx, a->rd, EXT_NONE);
++        mask = gpr_src(ctx, a->rj, EXT_NONE);
++        oldv = tcg_temp_new();
++        gen_helper_csrxhg_estat(oldv, tcg_env, src1, mask);
++        gen_set_gpr(a->rd, oldv, EXT_NONE);
++        return true;
++    }
++
++    /* So far only readonly csrs have readfn, except ESTAT. */
+     assert(csr->readfn == NULL);
+ 
+     src1 = gpr_src(ctx, a->rd, EXT_NONE);
+diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
+index 4b1d44a16445841de8b9a7d69d8f389c357e6abf..64a28c7dcbbce2f2ce47640471602485344ca8e3 100644
+--- a/target/loongarch/tcg/tcg_cpu.c
++++ b/target/loongarch/tcg/tcg_cpu.c
+@@ -160,10 +160,8 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+         sys->CSR_TLBRERA = FIELD_DP64(sys->CSR_TLBRERA, CSR_TLBRERA,
+                                       PC, (env->pc >> 2));
+     } else {
+-        sys->CSR_ESTAT = FIELD_DP64(sys->CSR_ESTAT, CSR_ESTAT, ECODE,
+-                                    EXCODE_MCODE(cause));
+-        sys->CSR_ESTAT = FIELD_DP64(sys->CSR_ESTAT, CSR_ESTAT, ESUBCODE,
+-                                    EXCODE_SUBCODE(cause));
++        cpu_csr_estat_set(sys, ECODE, EXCODE_MCODE(cause));
++        cpu_csr_estat_set(sys, ESUBCODE, EXCODE_SUBCODE(cause));
+         sys->CSR_PRMD = FIELD_DP64(sys->CSR_PRMD, CSR_PRMD, PPLV,
+                                    FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, PLV));
+         sys->CSR_PRMD = FIELD_DP64(sys->CSR_PRMD, CSR_PRMD, PIE,
+@@ -181,7 +179,7 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+     if  (cs->exception_index == EXCCODE_INT) {
+         /* Interrupt */
+         uint32_t vector = 0;
+-        uint32_t pending = FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS);
++        uint32_t pending = FIELD_EX64(cpu_csr_estat_get(sys), CSR_ESTAT, IS);
+         pending &= FIELD_EX64(sys->CSR_ECFG, CSR_ECFG, LIE);
+ 
+         /* Find the highest-priority interrupt. */
+@@ -195,7 +193,7 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+                       TARGET_FMT_lx "\n",
+                       __func__, env->pc, sys->CSR_ERA,
+                       cause, sys->CSR_BADV, sys->CSR_DERA, vector,
+-                      sys->CSR_ECFG, sys->CSR_ESTAT);
++                      sys->CSR_ECFG, cpu_csr_estat_get(sys));
+         qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
+     } else {
+         if (tlbfill) {
+@@ -210,7 +208,7 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+                       "BADI " TARGET_FMT_lx " SYS_NUM " TARGET_FMT_lu
+                       " cpu %d asid " TARGET_FMT_lx "\n", __func__, env->pc,
+                       tlbfill ? sys->CSR_TLBRERA : sys->CSR_ERA,
+-                      cause, tlbfill ? "(refill)" : "", sys->CSR_ESTAT,
++                      cause, tlbfill ? "(refill)" : "", cpu_csr_estat_get(sys),
+                       sys->CSR_ECFG,
+                       tlbfill ? sys->CSR_TLBRBADV : sys->CSR_BADV,
+                       sys->CSR_BADI, env->gpr[11], cs->cpu_index,
+
+---
+base-commit: 499039798cdad7d86b787fec0eaf1da4151c0f05
+change-id: 20260707-loong-race-63639e8f5afb
+
+Best regards,
+-- 
+Miao Wang <shankerwangmiao@gmail.com>
+
+
 
