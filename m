@@ -4,114 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6116C4450A
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 18:34:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AB49C44507
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 18:36:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjhxZ-0007W9-Ms; Tue, 14 Jul 2026 14:34:25 -0400
+	id 1wjhzh-0000jC-VT; Tue, 14 Jul 2026 14:36:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wjhxG-0007LC-Di; Tue, 14 Jul 2026 14:34:08 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1wjhza-0000hv-RW
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 14:36:32 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wjhxB-0002FF-Jw; Tue, 14 Jul 2026 14:34:04 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1wjhzY-0002iy-Rw
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 14:36:30 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66EGBcKF4103608; Tue, 14 Jul 2026 18:33:56 GMT
+ 66EGCDHr1786328; Tue, 14 Jul 2026 18:36:27 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=86qTFA
- K1/QdkfNqPUYdKEPTPi/W5jroQzWFJfYgCnnU=; b=N4xn3AUfTnUnQ6N2VovsgI
- LKjqB4PoBXs57PEaBCyHqedrZ4OX8VI80OJk6AR+B87RNbLIpTJvDihB9sMgRDMd
- 13PTEbaniQEPX94zYvdwOnBfyf7ZcVJVyXo4bHJMFNaTWUcWbnNa5JwdqAJ2iR+R
- pPxgCDO8s74b8b9YQw8gUe2MizaQnsPWPC4SRi6qNkB8Bm3125ZzfI1JMJvodyXo
- LiQHUdX8JbFXY3r4RQ/em26M1KWH9yuNqbkDwXPETHlSkO+KFYWAx3HcdTXSu2wg
- /mcNpDS77OS8p+DIlJjd7tXM86gut5XOzjvWhlWz9cQsAi8DEoU5heu/UuSObxLw
+ :message-id:mime-version:references:subject:to; s=pp1; bh=bw4SjM
+ e4zGF0X+rAm34m0Ay5Q7eTyOU4pydGtNNrRps=; b=bkUhljZZR18B6qQrTiSIJW
+ rSUq37NVTmeHrc9629pc8RA6Nsycr3tBkV9YPX5Tj77yHRq/gTrJJ1phcwbRUA6j
+ XkwY7q6k4em/c1zzdDMmcD2iIvsIwmbnQ7+dkk6/nBJWvaEV6/GbfCheUaHySnZT
+ KwzoI/zR6uEXaSvUscKVh3tZ8b+MlQxqqsc+UN7nXQ+g/ViCoiGLrBntih+2qZAV
+ IqHwyD1ppfOYvmQ73A19fxLWSzKysjzNZVjmVvpC+gbNkCyMEGLelbAPEsMQmTBR
+ ImrtNEV65Q4Sn03kJoI703bKlHKuUxDjZibYJvkQCfi7zL7gvxdU6YJ40MY8R8DQ
  ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fcv3389m9-1
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbegbq8v6-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 Jul 2026 18:33:56 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66EIJh4B007652;
- Tue, 14 Jul 2026 18:33:55 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc1nhc3f3-1
+ Tue, 14 Jul 2026 18:36:26 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66EIYaAC015001;
+ Tue, 14 Jul 2026 18:36:25 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fc2uy3w59-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 Jul 2026 18:33:54 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66EIXqGS47251926
+ Tue, 14 Jul 2026 18:36:25 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66EIaNVM50069940
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 14 Jul 2026 18:33:52 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B2AC320043;
- Tue, 14 Jul 2026 18:33:52 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4A65C20040;
- Tue, 14 Jul 2026 18:33:52 +0000 (GMT)
+ Tue, 14 Jul 2026 18:36:23 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8F31820043;
+ Tue, 14 Jul 2026 18:36:23 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F10CF20040;
+ Tue, 14 Jul 2026 18:36:22 +0000 (GMT)
 Received: from [0.0.0.0] (unknown [9.111.27.233])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 14 Jul 2026 18:33:52 +0000 (GMT)
-Message-ID: <6006c93c-601b-48cc-ab8e-41b66b835fac@linux.ibm.com>
-Date: Tue, 14 Jul 2026 20:33:52 +0200
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 14 Jul 2026 18:36:22 +0000 (GMT)
+Message-ID: <fd573325-c8bc-458a-bbe2-041d4e6e3206@linux.ibm.com>
+Date: Tue, 14 Jul 2026 20:36:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 18/51] cpu: Use interval-tree for CPUWatchpoint
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
- qemu-s390x@nongnu.org, jcmvbkbc@gmail.com
-References: <20260710205401.836304-1-richard.henderson@linaro.org>
- <20260710205401.836304-19-richard.henderson@linaro.org>
- <9aed7950-405a-4414-a951-9d044a8c9d53@linux.ibm.com>
- <01b9590c-2243-46f8-8f5a-de3ba0709ad8@linaro.org>
+Subject: Re: [PATCH v5 82/98] tests/tcg/s390x: user tests
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>, Helge Deller <deller@gmx.de>
+References: <20260710214343.2065491-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260710214343.2065491-83-pierrick.bouvier@oss.qualcomm.com>
+ <584dbebe-6105-45a6-ae4d-d0fb4fc6eaaf@linux.ibm.com>
+ <24690de5-8178-41bf-94f6-cd383f599b2a@oss.qualcomm.com>
+ <3a4c0e61-23d3-4baa-878c-a31c7fc2a8c8@linux.ibm.com>
+ <62ec55ea-59c4-4b70-8e12-c04bb0cb998e@oss.qualcomm.com>
 Content-Language: en-US
 From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <01b9590c-2243-46f8-8f5a-de3ba0709ad8@linaro.org>
+In-Reply-To: <62ec55ea-59c4-4b70-8e12-c04bb0cb998e@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDE4OCBTYWx0ZWRfX2QrKqIVCaCaC
- GbxJ+QMAflzsk6569+TE5l9S4ZsX2yR6rugH25WL2OfBwU2UI3v4hSe/AlP2eSKfH6Se5s+qfSv
- /YlOwIrJI1esSd2O0av9DXzR5v3UilM=
-X-Authority-Analysis: v=2.4 cv=Mp1iLWae c=1 sm=1 tr=0 ts=6a568114 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Authority-Analysis: v=2.4 cv=fOcJG5ae c=1 sm=1 tr=0 ts=6a5681aa cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=KKAkSRfTAAAA:8
- a=rPfxHH-IYxZcdQw-WsUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: NV6cL6hzN0ccdMUW4jG5FpzrfdFFr0_q
-X-Proofpoint-ORIG-GUID: Umx8IPlZnFnj4932mjkz97vqEwyxSm3i
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDE4OCBTYWx0ZWRfXwaoq5LaDLfn6
- AScrOjpgVH5eBrIjAF7La2XaJa49OIgMz57hrVrzX3itfL/Y1M3+4Mghf9I5eSC0WOIBjsbWrIz
- AFlpAO8RgP1MmBdXhB9L3biLsZ7zFeuhNA7tSM1vyP07+fakUdz+0C5emUKFQu5I6nU2pX1uYMt
- meaJWvs5GiuV1v5myNyjeXMoYhv5j1BVM5zF42/YlpLX60KIM2VYqrCFcycbhAw8cVeX6yqfUrB
- Jpb+ndyEQDtExdLM1kEgw/WGo2AmsVCNCom7E2SQqNpmh8mIa7XlkE3zek/PAyGAKmJ2Op5o8fx
- /VzI5G8KOWOHvzZJk1w/6qii/afrMmpShmSv/zzgCr/YBWs6zmsoS0cpHE/mdh+9CIs2+9s3Ax0
- d+ZMYC3SqdSrLNNQwZKMo/k7Vh2B/NOuGtL3BddVQi0ZBfX/x6oaZmtQQpSxkjKAApYuRWuReiZ
- ZojpLnDnnLy64WF6hJg==
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=EUspDBNiAAAA:8
+ a=wS49S6NDasQa3zVQveMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDE4OCBTYWx0ZWRfXzHyz7hPk5GrB
+ 2wEyYkuVXt+GpfYYdEIV8iYMcBnKxSO7rbEclaYN9IzVPozBPfK8k90ZW7kBEie6vCHQ48ISutD
+ OrZXq71N+242RM341BrDNqC1FGIpx7WhMgTE9M+eOsJpM2RxBbmx5z6CNFpmgtVsFHCAFW2Ljcq
+ /9vDRTrdAmFYyzobzBxoWLsaFgqeb74eUNVvjvggFJviSQx83Buj7onR0FfYj+/DVN5auhJK2kJ
+ TN7GGlZsn+VC9cfOjJ/Qkyc5SZZzGyPtEFOxPYHyUUoPybuBxcn4FErRmw9WOQ+HTHWIF3HuzYn
+ RoxowvDK2xB54K7jNjXT5f2MZHBrlCom2z6/1bFzFUO7W73XLhFUMa31wSmk/83DCuYg9LrTz9K
+ GHyCb22vjjGqVJEmAoqIfNhUFUnmdLyXoR4+p6Qkj0upwpBbKP5EQaitWDmHe8mTAAORPT5AAXl
+ Z8690DSgvHUGgKs9Xjw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDE4OCBTYWx0ZWRfXwSGAXYhn+jV3
+ tyzXIx4JaIdAywtDymNKKqi27BaTx89cVyfEKfjMFYExM2A60DjBPUlVIAAAlV+Rl0U+1gdw/g5
+ gYtckeG9d1TAfi8cXleasgvm+Bf4aMo=
+X-Proofpoint-GUID: 1XPV0X2FsKU3nk5DKv2bIsEu3qJX5qcG
+X-Proofpoint-ORIG-GUID: K8oVeSZK0p4lxaCP1xUWxq0rNNegZFyN
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-14_04,2026-07-14_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 bulkscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
- impostorscore=0 priorityscore=1501 suspectscore=0 clxscore=1015 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607140188
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ spamscore=0 bulkscore=0 impostorscore=0 suspectscore=0 adultscore=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 phishscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607140188
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,95 +140,142 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 7/14/26 16:55, Richard Henderson wrote:
-> On 7/14/26 06:02, Ilya Leoshkevich wrote:
+On 7/14/26 20:33, Pierrick Bouvier wrote:
+> On 7/14/2026 11:22 AM, Ilya Leoshkevich wrote:
 >>
 >>
->> On 7/10/26 22:53, Richard Henderson wrote:
->>> Use a balanced binary tree rather than a simple list for watchpoints.
->>> Using an interval tree makes it easy to probe for any overlapping 
->>> address.
+>> On 7/14/26 17:43, Pierrick Bouvier wrote:
+>>> On 7/14/2026 1:54 AM, Ilya Leoshkevich wrote:
+>>>>
+>>>>
+>>>> On 7/10/26 23:43, Pierrick Bouvier wrote:
+>>>>> Signed-off-by: Pierrick Bouvier
+>>>>> <pierrick.bouvier@oss.qualcomm.com> --- tests/tcg/
+>>>>> meson.build           |   1 + tests/tcg/s390x/Makefile.target
+>>>>> | 127 ----------------------------- tests/tcg/s390x/
+>>>>> meson.build     | 138 +++++++++++++++++++++++++++ +++++ 3
+>>>>> files changed, 139 insertions(+), 127 deletions(-) delete mode
+>>>>> 100644 tests/tcg/s390x/Makefile.target create mode 100644
+>>>>> tests/tcg/s390x/meson.build
+>>>>
+>>>> In general the s390x tests work now, however, I get:
+>>>>
+>>>> 155/164 tcg+tcg-s390x-linux-user - qemu:s390x-linux-user-fma
+>>>> SKIP             0.09s   exit status 77 156/164 tcg+tcg-s390x-
+>>>> linux-user - qemu:s390x-linux-user-vfminmax SKIP
+>>>> 0.07s   exit status 77 157/164 tcg+tcg-s390x-linux-user -
+>>>> qemu:s390x-linux-user-vxeh2_vs SKIP             0.06s   exit
+>>>> status 77 158/164 tcg+tcg-s390x-linux-user - qemu:s390x-linux-
+>>>> user-vxeh2_vcvt SKIP             0.06s   exit status 77 159/164
+>>>> tcg+tcg-s390x-linux-user - qemu:s390x-linux-user-vxeh2_vlstr
+>>>> SKIP             0.05s   exit status 77 160/164 tcg+tcg-s390x-
+>>>> linux-user - qemu:s390x-linux-user-vxeh2_vstrs SKIP
+>>>> 0.04s   exit status 77
+>>>>
+>>>> with the series. Without the series these tests do run:
+>>>>
+>>>> TEST    fma on s390x TEST    vfminmax on s390x TEST
+>>>> vxeh2_vcvt on s390x TEST    vxeh2_vlstr on s390x TEST
+>>>> vxeh2_vstrs on s390x TEST    vxeh2_vs on s390x
+>>>>
 >>>
->>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->>> ---
->>>   include/exec/breakpoint.h |   7 +-
->>>   include/hw/core/cpu.h     |   3 +-
->>>   accel/tcg/cpu-exec.c      |   8 +-
->>>   accel/tcg/watchpoint.c    | 155 +++++++++++++++++++++-----------------
->>>   hw/core/cpu-common.c      |   1 -
->>>   system/watchpoint.c       |  43 ++++++-----
->>>   target/arm/hyp_gdbstub.c  |   3 +-
->>>   7 files changed, 119 insertions(+), 101 deletions(-)
+>>> Can you please run one of the test in verbose? It will print the
+>>> reason why it was skipped. $ ./build/pyvenv/bin/meson test -C
+>>> build \ s390x-linux-user-vxeh2_vcvt --verbose
+>>
+>> $ ./build/pyvenv/bin/meson test -C build \ s390x-linux-user-
+>> vxeh2_vcvt --verbose 1/1 tcg+tcg-s390x-linux-user - qemu:s390x-linux-
+>> user-vxeh2_vcvt RUNNING
+>>>>>
+>> UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1
+>> MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1
+>> ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1
+>> MESON_TEST_ITERATION=1 RUST_BACKTRACE=1 MALLOC_PERTURB_=146 /usr/bin/
+>> env sh -c 'echo "compiler feature z15 not supported" && exit 77'
+>> ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+>> ✀
+>> ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+>>   compiler feature z15 not supported
+>>
+>>> I guess the cross compiler is not detected, and we need to find
+>>> why. With following questions, we should know what's missing.
 >>>
->>> diff --git a/include/exec/breakpoint.h b/include/exec/breakpoint.h
->>> index bb7cbc626d..e0826a1a2d 100644
->>> --- a/include/exec/breakpoint.h
->>> +++ b/include/exec/breakpoint.h
->>> @@ -9,7 +9,6 @@
->>>   #define EXEC_BREAKPOINT_H
->>>   #include "qemu/interval-tree.h"
->>> -#include "qemu/queue.h"
->>>   #include "exec/vaddr.h"
->>>   #include "exec/memattrs.h"
->>> @@ -36,13 +35,11 @@ struct CPUBreakpoint {
->>>   };
->>>   struct CPUWatchpoint {
->>> -    vaddr vaddr;
->>> -    vaddr len;
->>> +    IntervalTreeNode itree;
->>>       vaddr hitaddr;
->>>       MemTxAttrs hitattrs;
->>> -    int flags; /* BP_* */
->>> +    BreakpointFlags flags;
+>>> - Do you have s390x-linux-gnu-gcc installed?
 >>
->> Should this go into 1/51?
+>> Yes.
 >>
->>>       unsigned id;
->>> -    QTAILQ_ENTRY(CPUWatchpoint) entry;
->>>   };
->>>   int cpu_breakpoint_insert(CPUState *cpu, vaddr pc, BreakpointFlags 
->>> flags,
->>> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
->>> index b8a1419860..7e19ea418d 100644
->>> --- a/include/hw/core/cpu.h
->>> +++ b/include/hw/core/cpu.h
->>> @@ -525,8 +525,7 @@ struct CPUState {
->>>       /* ice debug support */
->>>       IntervalTreeRoot breakpoints;
->>> -
->>> -    QTAILQ_HEAD(, CPUWatchpoint) watchpoints;
->>> +    IntervalTreeRoot watchpoints;
->>>       CPUWatchpoint *watchpoint_hit;
->>>       void *opaque;
->>> diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
->>> index 2762cf6705..ab299387e3 100644
->>> --- a/accel/tcg/cpu-exec.c
->>> +++ b/accel/tcg/cpu-exec.c
->>> @@ -682,10 +682,12 @@ static inline bool cpu_handle_halt(CPUState *cpu)
->>>   static inline void cpu_handle_debug_exception(CPUState *cpu)
->>>   {
->>>       const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
->>> -    CPUWatchpoint *wp;
->>> +    IntervalTreeNode *n;
->>> -    if (!cpu->watchpoint_hit) {
+>>>
+>>> - Does this command work? $ s390x-linux-gnu-gcc -static -o /dev/
+>>> null tests/tcg/test_cc.c
 >>
->> Isn't it reasonable to continue checking for this, or can it never be
->> NULL if we come here?
+>> $ s390x-linux-gnu-gcc -static -o /dev/null tests/tcg/test_cc.c In
+>> file included from tests/tcg/test_cc.c:3: /usr/lib/gcc/s390x-linux-
+>> gnu/16/include/stdint.h:11:16: fatal error: stdint.h: No such file
+>> or directory 11 | # include_next <stdint.h> |
+>> ^~~~~~~~~~
+>>
+>> Apparently it's the same issue. Fedora doesn't ship cross glibc
+>> headers.
+>>
 > 
-> Intermediate steps.
+> And we should skip using it thus.
 > 
-> Before this patch we walk the entire watchpoint list performing this 
-> same clearing in cpu_check_watchpoint.  With this patch, we no longer 
-> walk every element in cpu_check_watchpoint, but have not yet eliminated 
-> some manual checks for BP_WATCHPOINT_HIT in the target code.  By the end 
-> of the patch series, this loop is gone completely.
+>>> - Do you have podman or docker installed?
+>>
+>> Yes.
+>>
+>>>
+>>> - What is the output of this command? $ ./tests/docker/docker.py
+>>> probe
+>>
+>> $ ./tests/docker/docker.py probe docker
+>>
+>>>
+>>> Regards, Pierrick
+>>
 > 
-> Helpful if I add a /* Will be cleaned up */ comment at this point in the 
-> series?
+> It seems like local compiler was taken even though it's not working,
+> which should not happen.
 > 
+> Double checking the part checking this, there was a typo on my side.
+> Sorry, I checked this in fedora, refactored after and missed it.
 > 
-> r~
+> Could you please try with following change?
+> It should correctly use container version and compile binaries without
+> checking if feature is supported.
+> 
+> ```
+> --- a/tests/tcg/meson.build
+> +++ b/tests/tcg/meson.build
+> @@ -192,7 +192,7 @@ foreach target, plan: tcg_tests
+>       cmd = run_command([cc, files('test_cc.c'), check_flags, '-o', '/
+> dev/null'],
+>                         check: false)
+>       avail = cmd.returncode() == 0
+> -    cc_from_system = has_cc
+> +    cc_from_system = avail
+>       has_cc = avail
+>     endif
+> ```
+> 
+> Regards,
+> Pierrick
 
-I think it's fine as is, I just haven't read the series until the
-end yet. Thanks for the explanation.
+Perfect, now it works. Thanks!
+
+142/164 tcg+tcg-s390x-linux-user - qemu:s390x-linux-user-fma 
+                                         OK               0.04s
+143/164 tcg+tcg-s390x-linux-user - qemu:s390x-linux-user-sha512-mvx 
+                                         OK               0.04s
+144/164 tcg+tcg-s390x-linux-user - qemu:s390x-linux-user-vfminmax 
+                                         OK               0.04s
+145/164 tcg+tcg-s390x-linux-user - qemu:s390x-linux-user-vxeh2_vs 
+                                         OK               0.03s
+146/164 tcg+tcg-s390x-linux-user - qemu:s390x-linux-user-vxeh2_vcvt 
+                                         OK               0.03s
+147/164 tcg+tcg-s390x-linux-user - qemu:s390x-linux-user-vxeh2_vlstr 
+                                         OK               0.02s
+148/164 tcg+tcg-s390x-linux-user - qemu:s390x-linux-user-vxeh2_vstrs 
+                                         OK               0.02s
+
 
