@@ -4,122 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03F96C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 13:11:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EFD7C44501
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 13:20:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjcuM-0005ca-27; Tue, 14 Jul 2026 09:10:46 -0400
+	id 1wjd3S-0008IZ-CF; Tue, 14 Jul 2026 09:20:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wjcuK-0005bv-6l
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 09:10:44 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wjcuI-0005OY-9O
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 09:10:43 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id A2DED77E69;
- Tue, 14 Jul 2026 13:10:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1784034638; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wjd3Q-0008DX-MS
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 09:20:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wjd3N-00088C-3V
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 09:20:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784035203;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=OYlbjUJnEWgZjnu4KdQ0oYnvV7siLWirY008CXmAf/o=;
- b=kHym1ilCmbsZ9n23qZyFc/L8uY9yVoP7Spbx43AlqdWTUHxHGBtSDhhvrdc5rD28wfL7nF
- euTnoFVgpiW1Qs/c0iDfOm/gM0001zQx5nzixVzU8ovS9XChDpvdXP/abt8+6tbeJq2Muu
- 6FPV1Uajrqocvwc7x9tD9iLhnRpZOeo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1784034638;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=OYlbjUJnEWgZjnu4KdQ0oYnvV7siLWirY008CXmAf/o=;
- b=cd8qsQ69bD0rA6F0xpF8uKUXtj6fc6gV6wHsz92VBVDi7ZlMljTvANmcKOjz8awuXrvjol
- dKqdcUErrA+evMBQ==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=GbWXsFsN;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=wxlNae5a
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1784034637; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=OYlbjUJnEWgZjnu4KdQ0oYnvV7siLWirY008CXmAf/o=;
- b=GbWXsFsNwB2Xw061un7Rd6xs62h04fHQmpa3vme2iDx0j9TJODXeCLubGx8EBLbh20NE3g
- Dkj9jg4xU6B3FIefl4di7QDuigUkg7ICwqP/adobzMr66ar1NBHhH+K0jivvIczAXAtLo1
- 51702K5lZ06BwcWbNTLjUthaWkilF+M=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1784034637;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=OYlbjUJnEWgZjnu4KdQ0oYnvV7siLWirY008CXmAf/o=;
- b=wxlNae5a3KBNLkf3tlu9n+FulQcXlLBSrvROPiyIvloVxBtB+TiM0JckE4Rt1Ad0lwMnD1
- Ow4L4W9W4jAlAfCg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3B479779AE;
- Tue, 14 Jul 2026 13:10:37 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id YbWzA001VmquSwAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 14 Jul 2026 13:10:37 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Michael Tokarev <mjt@tls.msk.ru>, Daniel Henrique Barboza
- <daniel.barboza@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- andrew.jones@oss.qualcomm.com, nutty.liu@hotmail.com, Palmer Dabbelt
- <palmer@dabbelt.com>, Tao Tang <tangtao1634@phytium.com.cn>, Laurent
- Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-stable <qemu-stable@nongnu.org>
-Subject: Re: [PATCH v2 2/3] hw/riscv/riscv-iommu.c: fault when !PTE_U and no
- priv access
-In-Reply-To: <c5a9e4fb-5715-4805-8376-8ea13f5b48c5@tls.msk.ru>
-References: <20260701121111.537654-1-daniel.barboza@oss.qualcomm.com>
- <20260701121111.537654-3-daniel.barboza@oss.qualcomm.com>
- <731566cb-bbdd-418f-b80e-f68750f24212@tls.msk.ru> <87tsq3doxw.fsf@suse.de>
- <c5a9e4fb-5715-4805-8376-8ea13f5b48c5@tls.msk.ru>
-Date: Tue, 14 Jul 2026 10:10:26 -0300
-Message-ID: <87zezt4szh.fsf@suse.de>
+ bh=smfGzmt++sYe2uiOzsaJI+8DZ/JIEbxu90paBM6VFpo=;
+ b=EN5RTRo9FAxco4KOR/+920z44UXkRMVQZ/x9hLqCgH48yDnXngSklJcdUgL3tvp3t72xDG
+ kNyErRpCXBPf4sB3RstDQkxoHAVogHT+/nkKClZl4loF9NToGZx5aOYPtVfiutQjNohlfo
+ yzbV3B58zzUKzFdI6XfTHQhRLhrfwTk=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-650-H0hvIwZdN_uL_rcN8hR66Q-1; Tue, 14 Jul 2026 09:20:02 -0400
+X-MC-Unique: H0hvIwZdN_uL_rcN8hR66Q-1
+X-Mimecast-MFC-AGG-ID: H0hvIwZdN_uL_rcN8hR66Q_1784035201
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-492488f8583so62539295e9.2
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 06:20:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1784035201; x=1784640001; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=smfGzmt++sYe2uiOzsaJI+8DZ/JIEbxu90paBM6VFpo=;
+ b=KooB6t7pGrotQ79M5kbNHze1LRGMhNp63dWWjqCRNWqbryC9UANXTGbWEiGl3m+d6W
+ XT9ii/ldfOPoTGU4LdbXvtaE74+rGbth53u1tys9+8YDN7hDx5eArW6sAW4s8Fttv7d/
+ lJ2zof+2Bxf7IHpPO1plN3KFmYmVzAgGyXVzgDS4acYHwuiKaIAC0EFEa4ewfEkHNvIW
+ o9UUfw/4/lWUOwAJ0BMnSyR+SLf10ZzNUCsNEZHIGO0iFY7xBr+lBJsSdA+9HOJ5hKTQ
+ sx4m8duRAoP+qMa/o4WO/VH0PIkJtSXbwLOtJExID7hT2QZ9xvP1Tm6lWlsGMB6D+qM6
+ LyCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784035201; x=1784640001;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=smfGzmt++sYe2uiOzsaJI+8DZ/JIEbxu90paBM6VFpo=;
+ b=kUIDXPLgkDVZCyFsRwCTXlrNY4tayM8oaF4QDDEbvhfOQVY13INSqUi2tn0IDr884u
+ JnVhfymck/O4g9JDzmP9z8LjxjnMEDTSyKUQ/kqU7NP7nhEP+wS04haUvM0V2YtjcsP8
+ yb5AqxeWKoIW+Rcp7nHcsFrh0RIEza4QQjWTrXUxOw6JyvJALSOVUwNd2LmWBM+2NHBT
+ 4y5bjdgp5kHFemPEKw18bn75QLgxebcMdgwP97wFTvZw+AF/0CxqmsPzBROGlTE/koz1
+ GchUc7ByLZDy088j6qRq7VWXIpGyu4zdaNJHMA2sRPeMocCIv1FIzxdA4Fbha3zt0RhJ
+ npTA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpI/5+DyENpLfPCzfMVkRkPj6ZCD+Q8+4dlB2ZJboN7EBM4yqxx6mH+1nVzCC+QWg8p7NEhdN+U13v1@nongnu.org
+X-Gm-Message-State: AOJu0Yz2L5obo+QcuIR9udZCyck/S6ErFgaYj4E6jIG8yxERma8CB/PO
+ edFzR425TFBie9n+aerVzzRzM5ja7JYIqaPaO8h/PrSS60bM+DZCJ0N/g6bCfmdqR341sU4PANF
+ cISglkd7QektMiJEt+zan0ynH3JQ9WhSeIWJknPJ0vpoXu8MozOEwCFN+
+X-Gm-Gg: AfdE7ckR5mvptLFD9bY10bF5L6JQFCsG14rIzKHu9JNTXQlGBReBPniJgwmAxB+S2cu
+ vigmafrzHqubpJiURDJcewBuUrMfY9/2bAoNTIq66AmWSaEuHoSroCZlcJIyY7hgfKm1l/cdedP
+ dAIDyOzBl89GAgJsZretF64HZ/jxmGn9JZo5979vzO6dN/PoAZJ8vXWunF/TNc80A1YlC8qUV5F
+ kf4ComyvucDytiAF1H90zmK1/xGeFhvILbjReSeVPxqtecSdSW46G7b5x8LTXo6PnaKZdztQeVs
+ Ocr6CeeuLt/+tISMd1zvXkOVVeMf4W8kbhwycQ1Rv6pX8AR74WYQnNrzZIHNaePSqYUr/xHEgel
+ 6NtRXTsuOsEOpNYsFWXe1OEaKtOWST0DhuAc=
+X-Received: by 2002:a05:600c:c16a:b0:493:b89b:9a27 with SMTP id
+ 5b1f17b1804b1-495389d2a9cmr25759775e9.9.1784035200430; 
+ Tue, 14 Jul 2026 06:20:00 -0700 (PDT)
+X-Received: by 2002:a05:600c:c16a:b0:493:b89b:9a27 with SMTP id
+ 5b1f17b1804b1-495389d2a9cmr25759095e9.9.1784035199789; 
+ Tue, 14 Jul 2026 06:19:59 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-24-117.inter.net.il. [80.230.24.117])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-495086ca93esm72997645e9.0.2026.07.14.06.19.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 14 Jul 2026 06:19:59 -0700 (PDT)
+Date: Tue, 14 Jul 2026 09:19:55 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Markus Armbruster <armbru@redhat.com>, jasowang@redhat.com,
+ peterx@redhat.com, farosas@suse.de, raphael.s.norwitz@gmail.com,
+ bchaney@akamai.com, qemu-devel@nongnu.org, berrange@redhat.com,
+ pbonzini@redhat.com, yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Jason Wang <jasowangio@gmail.com>,
+ Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH v18 12/14] net/tap: support local migration with virtio-net
+Message-ID: <20260714091858-mutt-send-email-mst@kernel.org>
+References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
+ <20260710191809.721154-13-vsementsov@yandex-team.ru>
+ <875x2juxru.fsf@pond.sub.org>
+ <0fd09b96-068f-415d-9bd8-0506958710f1@yandex-team.ru>
+ <87y0fff25t.fsf@pond.sub.org>
+ <5af44296-ea89-402c-b4fb-b9b0acee3b54@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCPT_COUNT_TWELVE(0.00)[15]; SUBJECT_HAS_EXCLAIM(0.00)[];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com,hotmail.com];
- FREEMAIL_CC(0.00)[nongnu.org,wdc.com,gmail.com,linux.alibaba.com,oss.qualcomm.com,hotmail.com,dabbelt.com,phytium.com.cn,redhat.com];
- RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- MID_RHS_MATCH_FROM(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCVD_VIA_SMTP_AUTH(0.00)[]; TAGGED_RCPT(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:dkim, tls.msk.ru:email,
- imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: A2DED77E69
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5af44296-ea89-402c-b4fb-b9b0acee3b54@yandex-team.ru>
+Received-SPF: permerror client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,92 +129,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Michael Tokarev <mjt@tls.msk.ru> writes:
+On Mon, Jul 13, 2026 at 06:08:26PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> On 13.07.26 16:29, Markus Armbruster wrote:
+> > Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+> > 
+> > > On 13.07.26 10:57, Markus Armbruster wrote:
+> > > > Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+> > > > 
+> > > > > Support transferring of TAP state (including open fd).
+> > > > > 
+> > > > > Add new property "local-migration-supported", which defines
+> > > > > whether local-migration is actually supported for this TAP device.
+> > > > > Starting from 11.2 QEMU Machine Types it's enabled by default.
+> > > > > 
+> > > > > Note, that local-migration (including migrating opened FDs
+> > > > 
+> > > > Scratch the comma after "Note", ...
+> > > > 
+> > > > > through migration channel, which must be UNIX socket), is
+> > > > 
+> > > > ... and the one before "is".
+> > > > 
+> > > > > enabled by global "local" migration parameters. But individual
+> > > > > devices may have additional options to enable/disable it
+> > > > > per device.
+> > > > > 
+> > > > > The tricky thing, is that we need to know, should we do
+> > > > 
+> > > > Do you mean "The tricky thing is that we ween to know whether to call"?
+> > > 
+> > > yes
+> > > 
+> > > > 
+> > > > > call open/connect in TAP initialization code. That means,
+> > > > > that on incoming migration we want to know status of
+> > > > > "local" migration parameter at time of creating TAP device.
+> > > > > So, currently, for incoming local migration only TAP device
+> > > > > created through QMP is supported, as you need to set migration
+> > > > > parameter first (through QMP as well).
+> > 
+> > Possibly clearer:
+> > 
+> >      The tricky thing is that we need to know whether to call open/connect
+> >      in TAP initialization code, i.e. we need to know the value of
+> >      migration parameter "local" when creating the TAP device.  For
+> >      incoming migration, we can know only for TAP devices created with QMP
+> >      after setting the migration parameter with QMP.
+> > 
+> > > > > 
+> > > > > So the full picture is:
+> > > > > 
+> > > > > On source, to start outgoing "local" migration you need:
+> > > > > 
+> > > > >    - migration parameter "local" set to true
+> > > > >    - "local-migration-supported" TAP option set to true (the
+> > > > >      default, starting from 11.2 QEMU Machine Types)
+> > > > > 
+> > > > > If at least one of these options is not set, TAP backend
+> > > > > doesn't participate in migration.
+> > > > > 
+> > > > > On target, things are more difficult:
+> > > > > 
+> > > > > Same, you need both "local" and "local-migration-supported"
+> > > > > be set. And same, if one of them is not set, TAP backend
+> > > > > is initialized as usual, and doesn't accept any incoming
+> > > > > state.
+> > > > > 
+> > > > > Additionally, if you are going to set "local", it must be
+> > > > > set before creating the TAP device. If TAP device created
+> > > > > with "local" unset, it initializes as usual. If you enable
+> > > > > "local" after it and start incoming migration, it will fail
+> > > > > in .pre_load handler of TAP backend.
+> > > > 
+> > > > Out of curiosity, how would such a failure look like?
+> > > 
+> > > TAP is initialized as usual, so the answer depends on the options.
+> > > 
+> > > For incoming migration we should open TAP without "ifname" argument.
+> > > If so (and "local" is not set), new TAP device will be created. It
+> > > shouldn't trigger any additional problems I think.
+> > > 
+> > > 
+> > > Checking with test:
+> > > 
+> > >     diff --git a/tests/functional/x86_64/test_tap_migration.py b/tests/functional/x86_64/test_tap_migration.py
+> > >     index bcc0a60dfe9..94982bc7b55 100755
+> > >     --- a/tests/functional/x86_64/test_tap_migration.py
+> > >     +++ b/tests/functional/x86_64/test_tap_migration.py
+> > >     @@ -316,8 +316,8 @@ def prepare_and_launch_vm(
+> > >              else:
+> > >                  tap_name = TAP_ID
+> > > 
+> > >     -        self.set_migration_capabilities(vm, local)
+> > >              self.add_virtio_net(vm, vhost, tap_name, local, incoming)
+> > >     +        self.set_migration_capabilities(vm, local)
+> > > 
+> > >          def add_virtio_net(
+> > >              self, vm, vhost: bool, tap_name: str, local: bool, incoming: bool
+> > > 
+> > > 
+> > > Leads to
+> > > 
+> > > qemu-system-x86_64: TAP is already initialized and cannot receive incoming fd
+> > > qemu-system-x86_64: warning: qemu_fclose: received fd 27 was never claimed
+> > > qemu-system-x86_64: load of migration failed: Invalid argument: error while loading state for instance 0x0 of device 'netdev.1/0/net-tap': pre load hook failed for: 'net-tap', version_id: 0, minimum version_id: 0, ret: -22
+> > > 
+> > > on target, and failed migration, as expected.
+> > 
+> > How is the user supposed to reason their way from here to "oh, I need to
+> > create my TAP device with QMP and after setting @local"?
+> 
+> Not trivial, yes.
+> 
+> I can update error message to
+> 
+>    TAP is already initialized and cannot receive incoming fd. For local migration, "local" migration parameter must be set _before_ creating TAP device.
 
-> On 7/13/26 16:00, Fabiano Rosas wrote:
->> Michael Tokarev <mjt@tls.msk.ru> writes:
->> 
->
-> [..]
->>> So, this patch adds a fix for the testing bits.
->>>
->>> When trying to pick this one up for 10.0.x (LTS) series, I've another doubt.
->>> This testing fix fixes v10.2.0-1299-g9d8ffbfc1d3 "tests/qtest/libqos: Add RISC-V
->>> IOMMU helper library".  Quite some tests were added based on that library.
->>> It doesn't exist in 10.0.x, and neither is v10.2.0-656-g489812e32df
->>> "tests/qtest/libqos: Add SMMUv3 helper library".
->>> Sure I can drop the parts of this change which touches the tests.  But this
->>> means we don't have tests to cover the issues being fixed, and I don't know
->>> if the result of these fixes actually works or not.
->>>
->>> Should we pick up some testing bits in this area for 10.0.x (especially
->>> 9d8ffbfc1d3 and some subsequent commits which use this library)?  Or just
->>> ignore all riscv iommu patches in there?
->> 
->> I worry picking tests for stable could become a development task,
->> requiring new code to make tests suitable for an older codebase/test
->> codebase.
->> 
->> The test frameworks and their supporting infrastructure (such as the
->> riscv iommu lib) don't ensure a stable abi so that a test from one
->> version will run without issues when backported to an earlier
->> version.
->
->> Also, the tests are usually not structured in a way that allow us to
->> pick just the part that tests the code fixes being backported, so we
->> risk trying to test in an earlier version features that don't even exist
->> at that point. There could also exist a complex graph of what's broken
->> vs. what is being tested (e.g. broken in v10, fixed partially in v11,
->> then test needs change, then fixed properly in v12, test needs change
->> again, etc).
->
-> Things aren't that bad in practice.  Even a large new test lib with
-> some significant amount of tests built on top mostly Just Works (tm).
-> A bigger problem is to pick them up across various restructuring of
-> code, moving and splitting files, etc.
->
 
-Well, for qtest I rely a lot on the maintainers of the actual code being
-tested knowing what they're doing, I can't keep up with every single
-test that's added, so I think even somewhat trivial shuffling of code
-would be disruptive. You're probably quite used to dealing with these
-things during normal (non-test) backporting, so it's probably fine.
+Another reason to just make it a machine property globally
+and be done with it, maybe?
 
-> Also, if a test fails due to old code, we can look and fix it, - it
-> is just a test after all.  Or even mark it as "ok to fail" - if we know
-> it's due to the old code.
->
+> > 
+> > > 
+> > > > 
+> > > > > Moreover, there are interface restrictions: if you create TAP
+> > > > > device when QEMU is in INCOMING state, and both "local"
+> > > > > and "local-migration-supported" set, most of TAP options are
+> > > > > not allowed, and script/downscript are required to be explicitly
+> > > > > unset (set to "" or "no").
+> > > > > 
+> > > > > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> > 
+> > [...]
+> > 
+> 
+> 
+> -- 
+> Best regards,
+> Vladimir
 
-Right, but this requires carrying stable-only patches, which makes me
-confused. Again, my own lack of understanding.
-
-> But having no tests at all - in my view - is worse.  Besides the tests
-> which also needs some back-porting/reviewing work when picked up for
-> older releases, the main code needs the same.  And without the tests
-> in place -- no tests in place at all -- we just don't know if something
-> is broken until users start reporting it.  Provided there *are* users
-> of this code in the older releases to begin with :)
->
-
-Sure, if you think the effort is not that big, having tests makes
-everything easier, I agree.
-
-> And actually, this last one is a good question, I think.  As in - do
-> we really need the fixed iommu stuff in 10.0.x, when a lot of other
-> development happened in this and other parts of riscv64 since then?
-> 10.0.x is used in debian trixie (current stable), and probably that's
-> it, - not even ubuntu uses it (which is derived from debian).  So, I
-> wonder, if this stuff is really interesting to someone outside of the
-> most active riscv community, who most likely uses the current qemu
-> anyway?
->
-> I'll pick this particular change to 10.0.x as the last missing one from
-> this pull request, since all the others has been picked up (but without
-> the change to tests).  Speaking of the future changes, lemme send a
-> separate email summarizing all this in a single place.  It feels like
-> we don't actually need many riscv changes in older 10.0.x at least.
->
-> Thanks,
->
-> /mjt
 
