@@ -4,128 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06BF4C4450A
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 19:37:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75BFBC4450A
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 19:37:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjivN-0001iD-BN; Tue, 14 Jul 2026 15:36:13 -0400
+	id 1wjiwE-0003zc-Qv; Tue, 14 Jul 2026 15:37:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wjivL-0001gD-S8
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 15:36:11 -0400
+ id 1wjiw4-0003nC-Qv
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 15:36:57 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wjivJ-00056v-P0
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 15:36:11 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ id 1wjiw2-0005Cb-DE
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 15:36:56 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66EIwM9r1137082
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 19:36:08 GMT
+ 66EIwLY71448735
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 19:36:53 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- FVZcww5ehdUaMle+W+PQH/YLL7+qw+ENNbaJYAPM3D0=; b=isswnZ+oA8cXg4aO
- F6sU8MluNSUzqpKkKET7q474bu5aU99vysJaVmHDoJHpHb18aSGN/ZiEIe1yvTP8
- oip878n2/WiauQUAE9DpfRBLNMiO4vqapVbVmNy0DpwFUnANZWKWIxvcuRCGY9Fj
- S0YYU2bFQgjJaBSUXZ5SKJttExCOcqLWC09a1ycMaojWxOoUeRzm5RhRoQR4yBjc
- MUWlm1iEqIT0KUP+So6L1q5hb1JK7e0OeltmPDYTDfnu5hJZcX93Gp1UAJk3Cjgn
- MRTXxRg/b81crw/ud/8Rw85PziWAU9Fq09StAqGnPWs+gclXVonW9CgL7Z0W18rs
- FRMeFg==
+ f4An/Dp9OU7pX+6O4ECxohaQMbV12/YnIUigvwhU7RA=; b=fHRKOWIU8lMDxQWv
+ OfEcwHVHr7llg/+by5DIgTKOCU7D3/P8oFfr9TMw+qRyVmnEZOb44AmqkCGkook0
+ IYnGtdny12sGR3njaRArSCmlb9eq8e2rjUx+PlsxRjHSD424gmIPjR+2m70dx18J
+ +FNVRgvcRgG64diON6BXtndnZ4ONmuav9ukNTeXH5CXnf6Kmv4z/NoKH+yaz+iLi
+ 6GNgQKpLJTgjxUeagpWxng0iN1n/L9f4mRCKC/5W9QdP4obpewQwOfPH0yyWOQj3
+ tYEdroQ5itSqEfUwQkEoKUZL4PgzEMVhPmBqZg2/edTnt+1x8mkIbEhM7AtvVb3w
+ BC+d5g==
 Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
  [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fds9mgft4-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fds9hrg1m-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 19:36:08 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 19:36:53 +0000 (GMT)
 Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-51c12e43b98so78861441cf.1
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 12:36:08 -0700 (PDT)
+ d75a77b69052e-51c083f1818so22004621cf.0
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 12:36:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784057767; x=1784662567; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1784057812; x=1784662612; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=FVZcww5ehdUaMle+W+PQH/YLL7+qw+ENNbaJYAPM3D0=;
- b=dFD7pBqAd1pyXVDjhmlCdohPncqKP8aRgdShWV/xOU/dW+1Xcb+WHuPFlLE1C285tX
- f0KDY4lW9/gui9YBzpoKa54vl2x28FxLKt+hp99M6I0s+hhLStHbzbIiHZJUwNCZazOw
- aAyMqvpxwDK91aAwb7x9yAOmUz3tMev/g/wfJBbQ0HOHvLIPkWTRKyjaqB+lZyHAY2Uh
- 2adhMWJAIJ40t1hqH/C1hkX8quFmW2pTViI6zcugsOGqfMUMvwqduJqOX6WwdZ5j70KE
- 9NqSOpLNngTZEOqajb85+Q/y6/+8Tobxv0zk/DPCDPBfz4aEBGbW3fw1kkQ6q8NP5ZFk
- u2EQ==
+ bh=f4An/Dp9OU7pX+6O4ECxohaQMbV12/YnIUigvwhU7RA=;
+ b=RF48lNxYq+/6JR7J1imfCycxATKLsFSdczjSf/FMkotPC5et44OH/sAyHjS/Zad7yo
+ dmk/+ha1CoDaoDmcX/MtcquLtmljCq4IxSRQVM4BWfbMqr7cuQ2W7s8CdkQwqzJcxX/F
+ VBm3P7wxYaAVFGvtl+z5xTX2v9ZR0N9EQ3ksB6KXQP5PtSgVGK9Fqm0kUt9x06vhpEwt
+ DBWL2TieWvANPaHtN1V7zCJ6mcJi5TtWefeEXFcB05s5fdHghzR+5HqOTuEJGrGGrES0
+ bR6J9jF6UIsBmoSrEwniOtdd8//lqhk2sLDJnE4kQxxXeHHKy7zfVqr+OTFrWHSqmc+A
+ lFJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784057767; x=1784662567;
+ d=1e100.net; s=20251104; t=1784057812; x=1784662612;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=FVZcww5ehdUaMle+W+PQH/YLL7+qw+ENNbaJYAPM3D0=;
- b=BCYmxSqQ4IBGhedKcG2WXrclNhLOYmJTPTIsCWTriiDNfOv0i14zIch80CMVQsHgCd
- RiFySl8+6pLRLPhhlzXwBKXyI8qty3U3pBpmUh/qSRu5VNjF1ctjFgwru6U+c1qz0D39
- gwDmch42QOtdc+zk177EdKq97lI3ybyi7K+CijTlxuuW1VxoWWfKUWcLPumRbfvlozdq
- M9VX07pDerx0NFXiuYX9pHgMS4HtL32+piJlFhcK8laeek7x6Gl+Kv4/ys20xWebKgaL
- ETPYkZFUlPPjRxVdvvNtxEMWp+XKtliB1HN+uM5DV9ySzxqewOcznXffL2oiE4ox3PbN
- yNlg==
-X-Gm-Message-State: AOJu0YyfjDICFD70TugF84NA1RzTGxO6dA+u+4r/Ga1nywpkMq1iJfTJ
- FLObZcv7kY+wWMgFozr6LAu+lVIITdSyBgHnKvQdW2Kmm1aI3LW5I6U5vq5Qs0lsOOgITGfGh0c
- Plb5IIomlR8h1fH2eCZrxhd4WvsjK8OXRSm6pDqfdQ7+cnh5KMx6/XVqnfN9G3byIxg==
-X-Gm-Gg: AfdE7cmZPMdTJRrqJL4qwVAPA6ulW4cNBDWqp2KE91LJa9ytr4m7TCyir89bI1e1OMG
- prqj+91hjN18p4Od7sxMc849r8sHb0OMRN9JpHMmZX5+JwkXoPlhvhPnIf3fhd6iP8nwQGlyykp
- nthGvtJ4pHkUL+J4XsgyWKhfHSBN6e3dupCRYBgBa1d0wcfT+CubF35LGpgSwbEWjZqx8C4XgCd
- R6TblPaDkYJgbOW/5qAi/kdsaoawTV3kYnPG21ZfSHjgdq+iWm2xgYG2fLZ6o4LLknCrtJVvPBk
- 7Nqrzvy8Z2eQkdEpmrcXGsP1qjgL9nkU2DpTD+LZ9Plgm8iTg3RpegQ1ux5ad4J5tplR0C6YTsp
- rLa3jqR3J0AJdQh1C+uYFkuTAa4QWVmCo4LTn3OECddPdR932BZ1eth3Ql9DxuLcuYg89
-X-Received: by 2002:ac8:5806:0:b0:519:f420:d780 with SMTP id
- d75a77b69052e-51e3c1ce15emr51666601cf.30.1784057766482; 
- Tue, 14 Jul 2026 12:36:06 -0700 (PDT)
-X-Received: by 2002:ac8:5806:0:b0:519:f420:d780 with SMTP id
- d75a77b69052e-51e3c1ce15emr51666141cf.30.1784057765584; 
- Tue, 14 Jul 2026 12:36:05 -0700 (PDT)
+ bh=f4An/Dp9OU7pX+6O4ECxohaQMbV12/YnIUigvwhU7RA=;
+ b=LGYsjA+6XSulOqaOhB3CewFgF8Mawvb5IdXN92I1llgAuiBUkhKyNF3NvKVkHk7Eq0
+ TR71oMtbZPlBfEs+OC+5cbyQLxxf3d6lNpA0kBXC/fmkugPFz2oefrNBQt8/mxF8vLgJ
+ rIEb4trH7nh7416m1bThUPfULQ1FWVDKwvkV1w9kp4X7pMwSGI3o5pAB13Yt7GuUhxFq
+ K3wJD+5xDjlzUlKuOtpCYpuaZs0/XFgWHQzbFWQE2pDafFUYktFDXjSUM+uNQhZk5RCk
+ b7wp0troJEyCOwzXBy5RmpZQ32wEl7udcmS7oIFeLqSXDEbuQVuY2bSnXu2DMXIS0pGo
+ adGQ==
+X-Gm-Message-State: AOJu0YxTd+ixHQQuV3AWXu+2ktbuZhJCLlawhMRTKICYuUS/FRaU1xaA
+ tgfjXPpJEd7EZGG7sUZywdUo1kEHjzA6HDdG3T/Q9XTYXztXViUnnhfsBKZJwYLdSTnz7ItKTLY
+ zSbVBPYESP/kPLZOqz3Inxk1rlQu1VsdMhQ5q2X8F8ffmFtii7AlMgH0WgmjsRF886w==
+X-Gm-Gg: AfdE7clLChqPQj1K8hJkMszZApNn35HRmN7o10Wq7Phd+u+NeQ5CmJZbfkJor1dZBxU
+ Be8Ab4i+9SWu/CMiBrpEzFEEs0hML44rIN3gfiHTDr/kGB7wRfIXMiWWfSTukfEWA3MwoVJJGjQ
+ C0+NGyoZ1Zv4JuCPqExC687IYrtXOiDGBg882RSfRFHtD4ZTfzLxOplygPRMwpFaA7K6oerHUom
+ J/Kj/4y8tiaG4xfqRgxc8rUsl2fcuoBODJQLAYOmrAqKmkT5WZrz3wCuyyHJHbxepGgoc5km9Pe
+ y0+L6OK8fUXzNuNo4+rmVK4YzzjOqd+bxiQxxa6KDtFfj9hvkKPQb5ZYGTB7R7DN3G0PZzjF1Zu
+ VbXJqqE/LC9dm3od3cS056uvR+5NsPLyd4GhutcGCw3HRRGwDm8uIr8UkYaUBbY2mCGBC
+X-Received: by 2002:a05:622a:144b:b0:51c:1bcd:5cc3 with SMTP id
+ d75a77b69052e-51cbf1ecac8mr145768801cf.25.1784057812163; 
+ Tue, 14 Jul 2026 12:36:52 -0700 (PDT)
+X-Received: by 2002:a05:622a:144b:b0:51c:1bcd:5cc3 with SMTP id
+ d75a77b69052e-51cbf1ecac8mr145767471cf.25.1784057809819; 
+ Tue, 14 Jul 2026 12:36:49 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f464b7e22sm10235028f8f.25.2026.07.14.12.36.04
+ ffacd0b85a97d-47f4635a63esm11016221f8f.9.2026.07.14.12.36.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 14 Jul 2026 12:36:04 -0700 (PDT)
+ Tue, 14 Jul 2026 12:36:49 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/13] hw/display/qxl: fix TOCTOU in cursor chunk data_size
- handling
-Date: Tue, 14 Jul 2026 21:35:10 +0200
-Message-ID: <20260714193517.60708-7-philmd@oss.qualcomm.com>
+Subject: [PULL 12/13] hw/usb/hcd-xhci: Use qemu_log_mask() instead of
+ fprintf() statement
+Date: Tue, 14 Jul 2026 21:35:16 +0200
+Message-ID: <20260714193517.60708-13-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260714193517.60708-1-philmd@oss.qualcomm.com>
 References: <20260714193517.60708-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDIwMiBTYWx0ZWRfX5GnI2aToJD+h
- o6RxPy0IVl5k8REKlwz9BPpPkes64QlNJxolAp2jMdf/t4fkrcn5llw3wsXTX1xM9C11YMByIce
- W6tx8vzZum0gv3IF8FIqSblU2UdyXC7kY0tVAnYsivVWdASe48J8/cmGZWySdyRA9N+GnLE8V6m
- qujhrjkGVocGgqEEjoyRpGXQxYRRtq47en92+ozaW60cI0Gj5UP5GuaWybYNdO9nrNOUkNpV8P+
- 8mnoCs5YAnPqKKaIV6GZG3XfQh4mZDiLXsd3Sc857dpI0bj5sTPJNlShxHplDwEp+XrV2DejDEd
- xp5Ih6fpXaFyInFGtURau5y5GKM3YBBunDhhX4NRnfqyi8J/KWhO7Aq1vQJ8Y6wGh058qYEfb74
- 2pYsrNQ8j0O06dQhRQxdrslPnxkgFz6GEMIa8zUOcJ5Kgxzal3Vb+zBH6GnTwnU0biXO72qTdwE
- Dnu29Bvf1lYQqfIB03A==
-X-Proofpoint-ORIG-GUID: zNEyOE19CURifJ0qGO1-lW8C1UavPTed
-X-Proofpoint-GUID: zNEyOE19CURifJ0qGO1-lW8C1UavPTed
-X-Authority-Analysis: v=2.4 cv=E+79Y6dl c=1 sm=1 tr=0 ts=6a568fa8 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=Ib+3n2qa c=1 sm=1 tr=0 ts=6a568fd5 cx=c_pps
  a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=p0WdMEafAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=csm7OsOMr3LbVpAVGOoA:9
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=20KFwNOVAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=L-Nf6EnhhdU0iNhclOQA:9
  a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDIwMiBTYWx0ZWRfX0uA6azC8oC6W
- rUdr2WAcPwepbOpvMWtOYQMvrDpfQbvd3i310B0D26n/Jci41GMr4L3p/M4fiu9p5feJ7HyozPc
- vO+ZlXgxoLbsl3mdqvEkhu8VpWdu580=
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: PLK1TjKAwH5YwMiyZaYAdik-gJCIsCpB
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE0MDIwMiBTYWx0ZWRfX5xtBvqQdK9XN
+ NWms6ShYmPJXpjm+fDACU40wrMk5T8zqDhabaUghoGJ2mYTlMviDFbafKbIOOLchoA+HYTaCSKX
+ M1Lj+G/0elJ4mmcPEPRLzl1f3DzVdaY=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE0MDIwMiBTYWx0ZWRfX4y4rFDopBk2U
+ b3zuyfzJMgQWrCJzLYFAM0oK1Z6uocCkQP97X2xwl44M6hkpVlqZA5cGw0Y+7fy+dCiQDEBErHi
+ 6W+BfpgerQjpHfKPmp7TllpOxD0vW82r4YABuWN0EAX2HFyrdA9kKxAs+pByGT2BIv/+2aRE8Uy
+ 4JlZBsYaiSmBTJl1C0ziKMODAqPcPci9QNxP39iSQB0o3QPa8QuZxQB29vimO3NMm3LsDXn4EhB
+ +QOjjnOahpznw1Ug+jU+XLSmJD8DqH/fMmU3lZXbbACGasxRE7FMoDdetwN1IYaKQmRyZS3vC2Q
+ SOAafcUpNYZI69HvsYrsz1KCu7a5Jr2+Egm/ZHYuNYvIjm8GKbt653BjV3dMm8Nk/QM8ZK3+dFF
+ FrCqk44ha4DWy/jbF0tHWxerxD63IeKbDtHE0alYTK+bL9Cgh2pNRKbYhod5nI2ZpROqCKhM7X4
+ 5OUW5eijm0twqHi4zyA==
+X-Proofpoint-GUID: PLK1TjKAwH5YwMiyZaYAdik-gJCIsCpB
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-14_05,2026-07-14_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 clxscore=1015
- lowpriorityscore=0 spamscore=0 impostorscore=0 adultscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ bulkscore=0 suspectscore=0 phishscore=0 malwarescore=0 adultscore=0
+ impostorscore=0 clxscore=1015 spamscore=0 priorityscore=1501
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
  definitions=main-2607140202
 Received-SPF: pass client-ip=205.220.168.131;
@@ -152,134 +153,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 
-Snapshot chunk.data_size into a host-local variable before passing it to
-qxl_phys2virt() for validation, and pass it through qxl_cursor() and
-qxl_unpack_chunks() so that no subsequent code re-reads the field.
+We've got a proper way for logging unimplemented hardware features,
+so use qemu_log_mask() instead of the fprintf() here now.
 
-Without this, a racing vCPU can inflate data_size between the
-qxl_phys2virt() validation and the memcpy in qxl_unpack_chunks(),
-causing a source read past the validated region. In practice the read
-stays within the guest's own VRAM mmap, so the impact is limited.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3757
-Reported-by: Feifan Qian <bea1e@proton.me>
-Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260710134352.2313675-1-marcandre.lureau@redhat.com>
+Message-ID: <20260713161406.361197-4-thuth@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/display/qxl-render.c | 28 +++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+ hw/usb/hcd-xhci.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/display/qxl-render.c b/hw/display/qxl-render.c
-index 3bf634ee059..4799c9e8bef 100644
---- a/hw/display/qxl-render.c
-+++ b/hw/display/qxl-render.c
-@@ -217,7 +217,8 @@ void qxl_render_update_area_done(PCIQXLDevice *qxl, QXLCookie *cookie)
- }
- 
- static void qxl_unpack_chunks(void *dest, size_t size, PCIQXLDevice *qxl,
--                              QXLDataChunk *chunk, uint32_t group_id)
-+                              QXLDataChunk *chunk, uint32_t group_id,
-+                              uint32_t chunk_data_size)
- {
-     uint32_t max_chunks = 32;
-     size_t offset = 0;
-@@ -225,22 +226,21 @@ static void qxl_unpack_chunks(void *dest, size_t size, PCIQXLDevice *qxl,
-     QXLPHYSICAL next_chunk_phys = 0;
- 
-     for (;;) {
--        bytes = MIN(size - offset, chunk->data_size);
-+        bytes = MIN(size - offset, chunk_data_size);
-         memcpy(dest + offset, chunk->data, bytes);
-         offset += bytes;
-         if (offset == size) {
-             return;
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+index cc61e28d33b..c7e050e38fd 100644
+--- a/hw/usb/hcd-xhci.c
++++ b/hw/usb/hcd-xhci.c
+@@ -1017,7 +1017,8 @@ static XHCIStreamContext *xhci_find_stream(XHCIEPContext *epctx,
          }
-         next_chunk_phys = chunk->next_chunk;
--        /* fist time, only get the next chunk's data size */
-         chunk = qxl_phys2virt(qxl, next_chunk_phys, group_id,
-                               sizeof(QXLDataChunk));
-         if (!chunk) {
-             return;
-         }
--        /* second time, check data size and get data */
-+        chunk_data_size = chunk->data_size;
-         chunk = qxl_phys2virt(qxl, next_chunk_phys, group_id,
--                              sizeof(QXLDataChunk) + chunk->data_size);
-+                              sizeof(QXLDataChunk) + chunk_data_size);
-         if (!chunk) {
-             return;
-         }
-@@ -252,7 +252,7 @@ static void qxl_unpack_chunks(void *dest, size_t size, PCIQXLDevice *qxl,
- }
- 
- static QEMUCursor *qxl_cursor(PCIQXLDevice *qxl, QXLCursor *cursor,
--                              uint32_t group_id)
-+                              uint32_t group_id, uint32_t chunk_data_size)
- {
-     QEMUCursor *c;
-     uint8_t *and_mask, *xor_mask;
-@@ -272,11 +272,11 @@ static QEMUCursor *qxl_cursor(PCIQXLDevice *qxl, QXLCursor *cursor,
-     case SPICE_CURSOR_TYPE_MONO:
-         /* Assume that the full cursor is available in a single chunk. */
-         size = 2 * cursor_get_mono_bpl(c) * c->height;
--        if (size != cursor->data_size || cursor->chunk.data_size < size) {
-+        if (size != cursor->data_size || chunk_data_size < size) {
-             qxl_set_guest_bug(qxl, "%s: bad monochrome cursor %ux%u"
-                               " data_size %u chunk_size %u",
-                               __func__, c->width, c->height,
--                              cursor->data_size, cursor->chunk.data_size);
-+                              cursor->data_size, chunk_data_size);
-             goto fail;
-         }
-         and_mask = cursor->chunk.data;
-@@ -288,7 +288,8 @@ static QEMUCursor *qxl_cursor(PCIQXLDevice *qxl, QXLCursor *cursor,
-         break;
-     case SPICE_CURSOR_TYPE_ALPHA:
-         size = sizeof(uint32_t) * c->width * c->height;
--        qxl_unpack_chunks(c->data, size, qxl, &cursor->chunk, group_id);
-+        qxl_unpack_chunks(c->data, size, qxl, &cursor->chunk, group_id,
-+                          chunk_data_size);
-         if (qxl->debug > 2) {
-             cursor_print_ascii_art(c, "qxl/alpha");
-         }
-@@ -325,19 +326,23 @@ int qxl_render_cursor(PCIQXLDevice *qxl, QXLCommandExt *ext)
+         sctx = epctx->pstreams + streamid;
+     } else {
+-        fprintf(stderr, "xhci: FIXME: secondary streams not implemented yet");
++        qemu_log_mask(LOG_UNIMP,
++                      "xhci: secondary streams not implemented yet\n");
+         *cc_error = CC_INVALID_STREAM_TYPE_ERROR;
+         return NULL;
      }
-     switch (cmd->type) {
-     case QXL_CURSOR_SET:
-+    {
-+        uint32_t chunk_data_size;
-+
-         /* First read the QXLCursor to get QXLDataChunk::data_size ... */
-         cursor = qxl_phys2virt(qxl, cmd->u.set.shape, ext->group_id,
-                                sizeof(QXLCursor));
-         if (!cursor) {
-             return 1;
-         }
-+        chunk_data_size = cursor->chunk.data_size;
-         /* Then read including the chunked data following QXLCursor. */
-         cursor = qxl_phys2virt(qxl, cmd->u.set.shape, ext->group_id,
--                               sizeof(QXLCursor) + cursor->chunk.data_size);
-+                               sizeof(QXLCursor) + chunk_data_size);
-         if (!cursor) {
-             return 1;
-         }
--        c = qxl_cursor(qxl, cursor, ext->group_id);
-+        c = qxl_cursor(qxl, cursor, ext->group_id, chunk_data_size);
-         if (c == NULL) {
-             c = cursor_builtin_left_ptr();
-         }
-@@ -351,6 +356,7 @@ int qxl_render_cursor(PCIQXLDevice *qxl, QXLCommandExt *ext)
-         qemu_mutex_unlock(&qxl->ssd.lock);
-         qemu_bh_schedule(qxl->ssd.cursor_bh);
-         break;
-+    }
-     case QXL_CURSOR_MOVE:
-         qemu_mutex_lock(&qxl->ssd.lock);
-         qxl->ssd.mouse_x = cmd->u.position.x;
 -- 
 2.53.0
 
