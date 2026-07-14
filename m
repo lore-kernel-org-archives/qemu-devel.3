@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BFA4C4450A
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 14:17:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1480FC44501
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 14:17:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjdwx-0006f1-V1; Tue, 14 Jul 2026 10:17:31 -0400
+	id 1wjdwq-0006OK-Ue; Tue, 14 Jul 2026 10:17:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wjdwu-0006XX-9N
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:17:28 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ id 1wjdwp-0006KU-DY
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:17:23 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wjdws-0002fA-OM
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:17:28 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-38511175ad3so3517081a91.2
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 07:17:26 -0700 (PDT)
+ id 1wjdwn-0002e2-7M
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 10:17:23 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2ccf2360620so8196605ad.3
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 07:17:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784038645; x=1784643445; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1784038640; x=1784643440; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=mVg3v8CNWYJMVnr2dIbwlnL/I8cway67EWY5NeiWAvo=;
- b=Trq+jcGFvPJySROpB/D9HvlBINMugKCHXFHuW6WQGA69tLT3vztc7xt0cYFkwOs46D
- /q8CtqZwtzVhyRTxn/G45XfIg+rnhlzvjPTwlm3BSgOY/stRXA8/wt2Jgti40oC/he5u
- WeKStIZEyywbLRzBOcsqWGzTv7qEsZuTjPSVd93HdZ8aDFVVH8Ra7rMCb55PhYWOin/S
- AL9j4VG5hlYUFlOiCJ969MsdazAxoou+C6eabZ/0HDlb+HAmn/cxNTDJsuif7Hnw+bA4
- kTdTt9w95PFDErFXf5ZeBWy1T1uTrQXvXPfKkiuD5wZW2oP/GaFCAZdGHNOUm1yChIRU
- ojew==
+ bh=HGHpwp6tqTCl74NPIsgt9M/weDmjWAglJt/Lx4OhHJk=;
+ b=AnG9IFywakp7d2PVKePaaZnpS/BoBUt44nzUlPxzXnOg3QRYFxQtalaFqk88yjmGxI
+ pPS0EyqrxLsqj1lOCZOYoODFSnFW0U9HGmf1Imi4ZWM6LdHOKSh7dBFPNq0s/+fA4gRM
+ UJiAaBdBVM6aRbp9RZZF4cptmHpTFE9UP0NJHXDtn/M8BdLK63PA7rBXeAr/vp0gZFJ9
+ /7C+GTpS1KVD4M4hYfMm31mG5KYlrOyxTU6IaofI4HkY/YDh+8gLfHPg3j9XBMEeqTCS
+ Rqc1hi78u6c4Z6//Jgqdc1arVCG/gSBkWxeC4bKAukxMnzSNO59+r7R0gJUBfUpdSvS5
+ Qo3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784038645; x=1784643445;
+ d=1e100.net; s=20251104; t=1784038640; x=1784643440;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=mVg3v8CNWYJMVnr2dIbwlnL/I8cway67EWY5NeiWAvo=;
- b=BfPj3214yzLB9fgrWJVqYQAEqCRCSNeMNAJtdQ8G9biMFlsppC9TqLkpwuatDpsvTg
- yAUHYTzsel04tTwtSm5+tPGQf5vV0fJD2iCM/BstHacCYcewslFmt0DC5caQmYlDi6Au
- 7cUrbkTKjq8Nh9oh5Bu50x2p8lleQUx761wcHbO7cgHFvH+/3LOMWjl2OX17ce8qmoco
- /D4uB3JV+adMI95aP7JZLze8q6Z0uQte/bTNBSnfMXacCRxXOWKtIsteWX2NWrxam84s
- EmMgIeE3nybLCSIutZAcvo8bdZYZ7wxES24O7roSlcTbEGu8kS0L64QzXS3swjrVn8LE
- GCHA==
-X-Gm-Message-State: AOJu0Ywvr0m3xkXJ1UNk+RL4ufW8dkVaHM408pf6sCh4dajna1YCH01M
- oI76ruAHDSk9175D65+TItpkfu8A7bSKARo1J0o1dx71F5ro2dt0eNWX76CNZ/6+
-X-Gm-Gg: AfdE7ckxQ2Jy4WW6L5diT8ObrYTtJGRwrmlOgV1deu+6a22EkGUoewselN5k/bGGv7h
- 04oc3aZ50bNVvHUVJFOK0Leeg1dJT8L0ZUCXSgyy3//AFGOBWYoHJROx1RuO2lf5R/jJSY7hCOb
- iEIbJ4JFdQSAW/uuxrRxuFg83eQ5VDa8YI6UX83/9bqtKlzKPbGMPxXokb0J/Nzk7oRg2FbojkJ
- DWpyKApoHDWmX5rSpNFLSaPqGd+0M9ZlwOigOarBqNlIc2Qum/YybYEb8fznr02B3LDIAvEN78H
- U635rJQqeHH5IGjKVi7MZYzX+R7qRDmpHYRT4SnU7WYrkJEM5sYAtUk8wolSAKilyTgzV5LhDPz
- bP4ZgMVkomX1YbFAo2t+OqXPV7XP7hFewbQdjsiF/m8IIF11gbxLN/kSFCgb4FhNScOECSq426f
- azjVT1R7+Zrw7CegKOuTCNExeAoIkOAa1f3umA4MBofxYPmvACeufC
-X-Received: by 2002:a17:90b:1d52:b0:381:a766:efcb with SMTP id
- 98e67ed59e1d1-38e1ae5f663mr3032527a91.4.1784038645017; 
- Tue, 14 Jul 2026 07:17:25 -0700 (PDT)
+ bh=HGHpwp6tqTCl74NPIsgt9M/weDmjWAglJt/Lx4OhHJk=;
+ b=OiIWWhbd+sh5PBy7xopWjbwxvFNpI+CFViSYIV/NkJAgqspDTZu5F4WK9r1v086hmk
+ VJ8umvF9dDDIVKRx7NY2X1MMRfFoIOtMKNwUb404gh6jAymJq6nzJPEA2uVjEw15JOSa
+ 1TmlnSZC1eMPgWqNzol4m9hB2dCANOoiOk3LH8fFSiFmaOuI3O3KvLEAcFy5vQxvCRGP
+ CE1ecgjE6s/vT6orPquReL2EZpIES4zF+UTl6oyikXfXBwk1GCSBUH718RCwhGnvakC1
+ +sL4fvK0tLUWgcq47z/HG/Oh4hZ2k0w9VhLffVlZ29RrlTIExdvzrQmyamwXhebOtbgV
+ n9yQ==
+X-Gm-Message-State: AOJu0Yx9Tyd9qID3jpVDZokiKA7aQ8I84SuIPzd2TXZK9A5CiB/jvavJ
+ meRGDkRjFOSftia+uyhLGfGhtiEE9KBdYUO1xlP2lRq9ffUzJvBq2/pF1bAaG39M
+X-Gm-Gg: AfdE7cnfDm9LUQHmOkrRx6PVdVwox951WGgi2FOwbk6dFJgnZjhH1ojmXiEsm/rdjF/
+ taFs4Y1527L++6AOYFv02sq+7JFDAyvrsCpzoU6blmZ/wz1mGRwAZ5kUbTojpweILhvRViXicdT
+ D/xjJO4IVr9w8A73ubIuzCpGYrXuE26d7KF6prjeXF6BmnqPlRWT+afZ4BTLYVwb851W+LC85tM
+ jBjetSbEZL6Jib4XLiG0etTnv3mEtRpsNFzOL01KN3UxPMCyTVZYpE8IEOED12IVk4g3CtrdI6W
+ +If9XchU5wHBna0shiZ8gEs+AIPvbG37jDV8eDBVq760k9MOB2EuXyxL8KDBT3dAGj4C3KWtMQH
+ NIAQv7Djfdtv6RJTtxkJHf9qugLp8nRI0iBKUoVu22T7IJKpnYeNKep/7ccMHul2z1IIC6jKO1R
+ DoGnVxGteYrsPzd3oqQUVZJqUjGsag9Ex35jH8x24BJw==
+X-Received: by 2002:a17:90b:58f0:b0:387:e0db:bc23 with SMTP id
+ 98e67ed59e1d1-38dc77b82bemr13324655a91.35.1784038639701; 
+ Tue, 14 Jul 2026 07:17:19 -0700 (PDT)
 Received: from setun ([2405:201:502b:3014:cc0c:536:1b1e:6def])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3118ee6091dsm97329733eec.14.2026.07.14.07.17.20
+ 5a478bee46e88-3118ee6091dsm97329733eec.14.2026.07.14.07.17.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jul 2026 07:17:23 -0700 (PDT)
+ Tue, 14 Jul 2026 07:17:19 -0700 (PDT)
 From: Aadeshveer Singh <aadeshveer07@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, farosas@suse.de, pbonzini@redhat.com, philmd@mailo.com,
  lvivier@redhat.com, ayoub@saferwall.com, pierrick.bouvier@oss.qualcomm.com,
  Aadeshveer Singh <aadeshveer07@gmail.com>
-Subject: [PATCH v3 10/11] migration/tests: Add test for fast snapshot load
-Date: Tue, 14 Jul 2026 19:45:46 +0530
-Message-ID: <20260714141547.1268000-11-aadeshveer07@gmail.com>
+Subject: [PATCH v3 09/11] migration/tests: remove capability conflict test
+ postcopy-ram+mapped-ram
+Date: Tue, 14 Jul 2026 19:45:45 +0530
+Message-ID: <20260714141547.1268000-10-aadeshveer07@gmail.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260714141547.1268000-1-aadeshveer07@gmail.com>
 References: <20260714141547.1268000-1-aadeshveer07@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=aadeshveer07@gmail.com; helo=mail-pj1-x1031.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=aadeshveer07@gmail.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,59 +103,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add test_postcopy_file_mapped_ram() to test for saving a snapshot in
-mapped ram format and loading it using postcopy/fast snapshot load.
+Remove the test test_validate_caps_pair, which asserted postcopy-ram
+and mapped-ram capabilities cannot be active together. The new fast
+snapshot load feature is exactly this pair of capabilities active
+together, with the following patches in this series, this combination
+will now supported and be functional.
 
-Test is similar to test_precopy_file_mapped_ram() with additional
-start_hook to set postcopy capabilities on the receiving end.
+Remove the capability check that rejected mapped-ram and postcopy-ram
+being set simultaneously, as this combination now corresponds to fast
+snapshot load.
+
+Add a capability check against setting multifd when configured for fast
+snapshot load as it is not supported yet. Also add capability check
+against setting postcopy-preempt as it is incompatible.
+
+A smoke test exercising this feature has been added further in this
+series.
 
 Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
 ---
- tests/qtest/migration/file-tests.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ migration/options.c                | 14 ++++++--
+ tests/qtest/migration/misc-tests.c | 52 ------------------------------
+ 2 files changed, 12 insertions(+), 54 deletions(-)
 
-diff --git a/tests/qtest/migration/file-tests.c b/tests/qtest/migration/file-tests.c
-index 5118d9dec9..c7e4b05c61 100644
---- a/tests/qtest/migration/file-tests.c
-+++ b/tests/qtest/migration/file-tests.c
-@@ -190,6 +190,25 @@ static void test_multifd_file_mapped_ram_dio(char *name, MigrateCommon *args)
-     test_file_common(args, true);
+diff --git a/migration/options.c b/migration/options.c
+index 5cbfd29099..d61a10f1c4 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -727,10 +727,20 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
+                        "Mapped-ram migration is incompatible with xbzrle");
+             return false;
+         }
++    }
+ 
+-        if (new_caps[MIGRATION_CAPABILITY_POSTCOPY_RAM]) {
++    if (new_caps[MIGRATION_CAPABILITY_MAPPED_RAM] &&
++        new_caps[MIGRATION_CAPABILITY_POSTCOPY_RAM]) {
++        if (new_caps[MIGRATION_CAPABILITY_MULTIFD]) {
+             error_setg(errp,
+-                       "Mapped-ram migration is incompatible with postcopy");
++                       "Multifd is not supported with fast snapshot load");
++            return false;
++        }
++
++        if (new_caps[MIGRATION_CAPABILITY_POSTCOPY_PREEMPT]) {
++            error_setg(
++                errp,
++                "Postcopy Preempt is incompatible with fast snapshot load");
+             return false;
+         }
+     }
+diff --git a/tests/qtest/migration/misc-tests.c b/tests/qtest/migration/misc-tests.c
+index ec6d438cdc..4e0deb7f18 100644
+--- a/tests/qtest/migration/misc-tests.c
++++ b/tests/qtest/migration/misc-tests.c
+@@ -201,55 +201,6 @@ static void do_test_validate_uri_channel(MigrateCommon *args)
+     migrate_end(from, to, false);
  }
  
-+static void *migrate_hook_start_postcopy_mapped_ram(QTestState *from,
-+                                                    QTestState *to)
-+{
-+    migrate_set_capability(
-+        to, MigrationCapability_lookup.array[MIGRATION_CAPABILITY_POSTCOPY_RAM],
-+        true);
-+
-+    return NULL;
-+}
-+
-+static void test_postcopy_file_mapped_ram(char *name, MigrateCommon *args)
-+{
-+    args->start.caps[MIGRATION_CAPABILITY_MAPPED_RAM] = true;
-+
-+    args->start_hook = migrate_hook_start_postcopy_mapped_ram;
-+
-+    test_file_common(args, false);
-+}
-+
- #ifndef _WIN32
- static void migrate_hook_end_multifd_mapped_ram_fdset(QTestState *from,
-                                                       QTestState *to,
-@@ -330,6 +349,11 @@ void migration_test_add_file(MigrationTestEnv *env)
-     migration_test_add("/migration/multifd/file/mapped-ram/live",
-                        test_multifd_file_mapped_ram_live);
- 
-+    if (env->has_uffd) {
-+        migration_test_add("/migration/postcopy/file/mapped-ram",
-+                           test_postcopy_file_mapped_ram);
-+    }
-+
- #ifndef _WIN32
-     migration_test_add("/migration/multifd/file/mapped-ram/fdset",
-                        test_multifd_file_mapped_ram_fdset);
+-static void validate_caps_pair(QTestState *from,
+-                               const char *first_capability,
+-                               const char *second_capability,
+-                               const char *expected_error)
+-{
+-    QDict *rsp;
+-    const char *error_desc;
+-
+-    migrate_set_capability(from, first_capability, true);
+-
+-    rsp = qtest_qmp_assert_failure_ref(
+-        from,
+-        "{ 'execute': 'migrate-set-capabilities',"
+-        "  'arguments': { 'capabilities': [ { "
+-        "      'capability': %s, 'state': true } ] } }",
+-        second_capability);
+-
+-    error_desc = qdict_get_str(rsp, "desc");
+-    g_assert_cmpstr(error_desc, ==, expected_error);
+-    qobject_unref(rsp);
+-
+-    migrate_set_capability(from, first_capability, false);
+-}
+-
+-static void test_validate_caps_pair(char *test_path, MigrateCommon *args)
+-{
+-    g_autofree char *serial_path = g_strconcat(tmpfs, "/src_serial", NULL);
+-    g_autofree char *cap_pair = g_path_get_basename(test_path);
+-    QTestState *from, *to;
+-
+-    args->start.hide_stderr = true;
+-    args->start.only_source = true;
+-
+-    if (migrate_start(&from, &to, &args->start)) {
+-        return;
+-    }
+-
+-    if (g_str_equal(cap_pair, "mapped_ram_postcopy")) {
+-        const char *error =
+-            "Mapped-ram migration is incompatible with postcopy";
+-
+-        validate_caps_pair(from, "mapped-ram", "postcopy-ram", error);
+-        validate_caps_pair(from, "postcopy-ram", "mapped-ram", error);
+-    }
+-
+-    qtest_quit(from);
+-    unlink(serial_path);
+-}
+-
+ static void test_validate_uri_channels_both_set(char *name, MigrateCommon *args)
+ {
+     args->uri = "tcp:127.0.0.1:0",
+@@ -309,7 +260,4 @@ void migration_test_add_misc(MigrationTestEnv *env)
+                        test_validate_uri_channels_both_set);
+     migration_test_add("/migration/validate_uri/channels/none_set",
+                        test_validate_uri_channels_none_set);
+-    migration_test_add_suffix("/migration/validate_caps/",
+-                              "mapped_ram_postcopy",
+-                              test_validate_caps_pair);
+ }
 -- 
 2.55.0
 
