@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BF95C43458
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 08:03:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02DF9C43458
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 08:03:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjY6G-0007si-Nc; Tue, 14 Jul 2026 04:02:44 -0400
+	id 1wjY6n-00088o-4v; Tue, 14 Jul 2026 04:03:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wjY6F-0007sN-5Y
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 04:02:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wjY6l-00083Y-4Q
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 04:03:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wjY6C-0004Fs-7O
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 04:02:42 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wjY6i-0004LT-AR
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 04:03:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784016157;
+ s=mimecast20190719; t=1784016190;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SWVFMPsOp0q/GB1rZbN3lvYM1v6exgL1r3bquD/XSJg=;
- b=PWtQunCmWYLWabvCddmRJNdRY5hkHGE4Qj12QdsiW43GwcYn+3Kp1asMYGe6FxIC12iFaj
- 5FO6ky0h4ZxlTXN9XD9iQyz0qf7fSP9XuQtSG9+pxWBoN34GuB7Fn3tjs7sSfqhfWQCmwP
- 7p6YZgOxQrxTW66hUyMAV6hTD3B6DA4=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qEGXvmXuRO6w+1cXuRbiLY5ajiZATiFQrDJxRS4ZV6M=;
+ b=cFtQ1W8Pxojm1PGaQDvSTKC6zkU2FygSz2UXHq64myqCpevRTa1qU8sJtHLd8+OYHg821a
+ tFQmbNay8Cxk1FyQ9bBQ7FkRyApLuFA0SJ2MvBpw7uAp67qs2ctx+LqOegHo6qZ7LMEhbN
+ I7V2Zahc3VXyCNm62GCJoyV0NCegDrs=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-132-gyRMiSqUMbiAmLC_POb1Tw-1; Tue, 14 Jul 2026 04:02:35 -0400
-X-MC-Unique: gyRMiSqUMbiAmLC_POb1Tw-1
-X-Mimecast-MFC-AGG-ID: gyRMiSqUMbiAmLC_POb1Tw_1784016154
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-47eaa4006a1so367532f8f.0
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 01:02:35 -0700 (PDT)
+ us-mta-571-IvuYuKADNbG50vkL9sVx6A-1; Tue, 14 Jul 2026 04:03:09 -0400
+X-MC-Unique: IvuYuKADNbG50vkL9sVx6A-1
+X-Mimecast-MFC-AGG-ID: IvuYuKADNbG50vkL9sVx6A_1784016188
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-490a767c7dcso31248695e9.2
+ for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 01:03:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784016154; x=1784620954; darn=nongnu.org;
+ d=redhat.com; s=google; t=1784016188; x=1784620988; darn=nongnu.org;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :content-type:mime-version:references:message-id:subject:cc:to:from
  :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=SWVFMPsOp0q/GB1rZbN3lvYM1v6exgL1r3bquD/XSJg=;
- b=lp8kQYQjXoWcpCFPjoSUbZAy2E1HPkKjhoHUekjitnwcOzAEqY7kpxYfuZ7n5c0Gs3
- L8FSb6cbpcfH4G0XvrZMV846j4CGYJItIb9eyKaGX5Vm/48YaEQ7MmmxA7+F0tV9BTet
- fJZbsLLWopOISBRfKx/P3KNGjBBb0sCDlxxjfOqAOCUut1tgPnJKIkeRFWbTUy2diqR+
- qVpp+du8EWVOT12Y8RG80sNWZlmq6ZGWenxnK9lIQtthNXkCKopLvcWmWfkFo23vVf8m
- VSwitix4rrO5bQsJVecx4yVbmUjPS280JadntpFDHkU9iA2qig9zWv7CzRp44bDoI4Zj
- zsPA==
+ bh=qEGXvmXuRO6w+1cXuRbiLY5ajiZATiFQrDJxRS4ZV6M=;
+ b=WMn2EKxPqbbpcSeFPFoVo/YSbGwoxFSnVU1966SUlaxEv+4KBsuEWiMTdhnrGufWJ/
+ Gkej+T1yo1Vg6+xQPpPanGKzqL+fBUXG08busCpBDvn+eZr//wMU2xKCEigDg9bj3XrT
+ vwAmgViP1R9CBr7gfhhpg1oeVjs8h/rtPmHpRWbXVmsX7bJvAxpApeK01e6SgatE1dYB
+ ej1kHU5KqLCkZmoCoIdAJQc8U2gXcN2XCG3yVjhzMQ4KPlaLbBwlGXPbhzsznrdrdsUz
+ f9IJgOsbkcU90VcsEOyXVzkjVWs6aMfuyuZwOzwKgMznzz0xVmHtaYuzUnXiNAfQqWwU
+ k2yQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784016154; x=1784620954;
+ d=1e100.net; s=20251104; t=1784016188; x=1784620988;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :content-type:mime-version:references:message-id:subject:cc:to:from
  :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=SWVFMPsOp0q/GB1rZbN3lvYM1v6exgL1r3bquD/XSJg=;
- b=Rzm7sraESXIMJW0/0vJ0N4ebjKYquSaPiCxjn1emg6/jedKZbkuGgGf0dAXEtylLSK
- 0CXlDIkSorXW4CArP/X1LuV5mro0lfYahk4ppzdMYXZKyva2TId0X0c4KCHiYhSgwXZl
- GPqmZrplCb7XJwWR7zSn298Cqdn00pPZHIWNYeznhdp6/vEs8kgZ1gN9P70IOo5LfMm6
- raiJKip386nPlfz/5PZCjMIi4cpewXE1FwlfCN1V5fXw54Q+7Hh8UQTLar/i+HU7KaEB
- uZ9w9Sf8Nv1zYtGH41p091tNAeIsBlXt5h2HdQuLG6GNdro6Oyi9VJW9SwXQFRgibYgi
- 3Iuw==
+ bh=qEGXvmXuRO6w+1cXuRbiLY5ajiZATiFQrDJxRS4ZV6M=;
+ b=o7+0LvZEbOoeMMU7HcBYBVaWezvIawq6sT2PjSFaDfXcyatqVWfKbomp6c9eO+7/Pu
+ Bk3A6tPYkx0AWF0EqnMNgSAiRws+bxo5gffdpsP88eWgHr5Uk/SF8+t79HI72XMzAarl
+ T4aOSwPqQBDOVwGZtofxN22mtidEpzwIAqSmM33ATL/UzjRPXsgjP7v5QsbciZGjgN4r
+ /OHwFb3pN+uBsBUkpDzCOH56PbgwiLdFTLzpq5j0d3ARGgRF4i37nor1TFb0wA6gycKo
+ rF3e0z4c48Txd28+jWG03N7D5ZrVn6JZHQtgKHmb9tXtAGihu6El2VmeLMS7GKUjblWq
+ iw2Q==
 X-Forwarded-Encrypted: i=1;
- AHgh+RoKhMdDvQ/u22mhaR02Cxv2Ut/Xdj7h/VqyX51u9qNKa8pBf99AC956O1qjDafnqZc8HUI2+DYy1n2S@nongnu.org
-X-Gm-Message-State: AOJu0Yxkv2ECfly/0aUwmYZfAXFNAvGdgVcveA0f0XmN0/2XSKXH5ZxP
- z9JX9YOsHALrtpUKRpqJOgJSTVbIQ9verfn5NbwMRquTbBSAM6Ozaggeg0fP7t8uxCaORx7pLJ5
- ZEuW+sjuHLRcdgty39DrDzGxKcV3u7Mjki7WleamhTPw0ReEZi7A71ahG
-X-Gm-Gg: AfdE7cnLDzwjR6F5EaCU3/v//3PDBWKsk0WdEE81Kkw9mWW7FgG8LvAqUVK5MoR6zhj
- g6Rx1HCQ8s3hwK0KWPI74UwX6tPVfAk9CuQbXsAvLgjhWOCXauGw9/KTlyeyClLTGP5FiRbsfIk
- xj6vK3XMkDJhnU+PWgOjm5RPA2/J4CwS7BDX/90FCaaOyOTBHyX8Yw/q1jXvzu6gNph4m3T8pe4
- 8qXEgCMLG8y3hvHPN765yC4YSI4sQ5IzrBwbbpq2Auk4C70zdgfm4PL1bjGXdsl8s0fLobhMgrT
- g8G6FypfLvgq7tLwYwyTOSz28d1zVQha6YxJgCYIOXMGw62UMzC3rrWOC2ntk25fUz1Ir61+XST
- nWsZRstfIF5+AVZ0TmEV5GSn3LzJq7GfkkZ4=
-X-Received: by 2002:a05:6000:29d8:b0:47f:40f3:88bc with SMTP id
- ffacd0b85a97d-47f40f38950mr4921017f8f.19.1784016154069; 
- Tue, 14 Jul 2026 01:02:34 -0700 (PDT)
-X-Received: by 2002:a05:6000:29d8:b0:47f:40f3:88bc with SMTP id
- ffacd0b85a97d-47f40f38950mr4920959f8f.19.1784016153360; 
- Tue, 14 Jul 2026 01:02:33 -0700 (PDT)
+ AHgh+Rqv6IIEAAc4NaE7eDRarXZYPrvq3aGggrNyhtVdN5h0W6pvBD71IbNvUOlphzmU6ZZ67Tjx1aBMQ5Ln@nongnu.org
+X-Gm-Message-State: AOJu0YxozZDZ9kH1jT+YNPWYZ/G8zwkGmNYB9qNfOhz5Dx1eWFyBwSiO
+ YHh6KQGTJXOK1nvpGKbxOWqj4AxSu43k7Fz5W9rH+9ny/TyYruiQJxnBk+90TAdcNNOnOVAne7/
+ nv78jbDPLj3ttO92a58LjCZ3e4o1qMAug8lZrwL8GJ9Xyeb5pkHjSd32M
+X-Gm-Gg: AfdE7cnUD9k9kS6vKZ6YOOYD+F4JctZHGXHfgS3X+HxamVLs/LTvd3Brpq5FTLI44lW
+ G6gYA7xwQBbHRKY89xXN5jmEJ57tyz4wMR0gDXAskxL5DoazPG4GFlw9MlPjrl4oEJNfiMgOH0c
+ UwkBbHauvhOiCVaBgNGrguvzUtRuiDQ3gGjXABQMLjEFWoxFXl6wV7lWkG3X1kiUQ963zTg7bm0
+ YCs++5Dl5fQpahyQHjO/31vFu+Iyd3jNgGXJgDgpdxKoUysEkw+XrTXJKDo6fesJ4qjnh9O3TXn
+ vuczojMW3MqazG7vn3jcnCD7BuzuP/o3HzcBfGxibzD2MNCQWXD4uHp3qmwZxvx0vy7075LG279
+ r23c46Awqc0W82CWiTv4QCUoCUyjO2XtWt/0=
+X-Received: by 2002:a05:600c:4693:b0:493:a6b7:cae5 with SMTP id
+ 5b1f17b1804b1-493f883173fmr122350915e9.28.1784016187910; 
+ Tue, 14 Jul 2026 01:03:07 -0700 (PDT)
+X-Received: by 2002:a05:600c:4693:b0:493:a6b7:cae5 with SMTP id
+ 5b1f17b1804b1-493f883173fmr122350105e9.28.1784016187227; 
+ Tue, 14 Jul 2026 01:03:07 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-24-117.inter.net.il. [80.230.24.117])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f464a974csm7533090f8f.18.2026.07.14.01.02.31
+ 5b1f17b1804b1-4950a2e98b0sm107671795e9.8.2026.07.14.01.03.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jul 2026 01:02:32 -0700 (PDT)
-Date: Tue, 14 Jul 2026 04:02:29 -0400
+ Tue, 14 Jul 2026 01:03:06 -0700 (PDT)
+Date: Tue, 14 Jul 2026 04:03:03 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
  jasowang@redhat.com, armbru@redhat.com, peterx@redhat.com,
  farosas@suse.de, raphael.s.norwitz@gmail.com, bchaney@akamai.com,
  qemu-devel@nongnu.org, pbonzini@redhat.com, yc-core@yandex-team.ru,
  mark.caveayland@nutanix.com, Eric Blake <eblake@redhat.com>
 Subject: Re: [PATCH v18 09/14] qapi: add local migration parameter
-Message-ID: <20260714035918-mutt-send-email-mst@kernel.org>
+Message-ID: <20260714040236-mutt-send-email-mst@kernel.org>
 References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
  <20260710191809.721154-10-vsementsov@yandex-team.ru>
  <alS1DMD_pRrklFRb@redhat.com>
@@ -102,21 +102,21 @@ References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
  <25b5e9a6-e563-4ab0-9075-04a3a00d3b33@yandex-team.ru>
  <alUwflog7Xd34Vd4@redhat.com>
  <20260713162057-mutt-send-email-mst@kernel.org>
- <alXiLqaMV6v73O2E@redhat.com>
+ <37a769c6-b70d-4452-bdbc-d37a7ebcc732@yandex-team.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <alXiLqaMV6v73O2E@redhat.com>
-Received-SPF: permerror client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+In-Reply-To: <37a769c6-b70d-4452-bdbc-d37a7ebcc732@yandex-team.ru>
+Received-SPF: permerror client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,8 +132,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 14, 2026 at 08:55:28AM +0100, Daniel P. Berrangé wrote:
-> On Mon, Jul 13, 2026 at 04:22:03PM -0400, Michael S. Tsirkin wrote:
+On Tue, Jul 14, 2026 at 09:50:34AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> On 13.07.26 23:22, Michael S. Tsirkin wrote:
 > > On Mon, Jul 13, 2026 at 07:37:50PM +0100, Daniel P. Berrangé wrote:
 > > > On Mon, Jul 13, 2026 at 08:55:37PM +0300, Vladimir Sementsov-Ogievskiy wrote:
 > > > > On 13.07.26 14:21, Daniel P. Berrangé wrote:
@@ -155,10 +155,10 @@ On Tue, Jul 14, 2026 at 08:55:28AM +0100, Daniel P. Berrangé wrote:
 > > > > > > > > Acked-by: Peter Xu <peterx@redhat.com>
 > > > > > > > > Reviewed-by: Ben Chaney <bchaney@akamai.com>
 > > > > > > > > ---
-> > > > > > > >    include/migration/misc.h |  2 ++
-> > > > > > > >    migration/options.c      | 18 +++++++++++++++++-
-> > > > > > > >    qapi/migration.json      | 12 ++++++++++--
-> > > > > > > >    3 files changed, 29 insertions(+), 3 deletions(-)
+> > > > > > > >     include/migration/misc.h |  2 ++
+> > > > > > > >     migration/options.c      | 18 +++++++++++++++++-
+> > > > > > > >     qapi/migration.json      | 12 ++++++++++--
+> > > > > > > >     3 files changed, 29 insertions(+), 3 deletions(-)
 > > > > > > > 
 > > > > > > > 
 > > > > > > > > diff --git a/qapi/migration.json b/qapi/migration.json
@@ -166,18 +166,18 @@ On Tue, Jul 14, 2026 at 08:55:28AM +0100, Daniel P. Berrangé wrote:
 > > > > > > > > --- a/qapi/migration.json
 > > > > > > > > +++ b/qapi/migration.json
 > > > > > > > > @@ -830,7 +830,8 @@
-> > > > > > > >               'zero-page-detection',
-> > > > > > > >               'direct-io',
-> > > > > > > >               { 'name': 'x-rdma-chunk-size', 'features': [ 'unstable' ] },
+> > > > > > > >                'zero-page-detection',
+> > > > > > > >                'direct-io',
+> > > > > > > >                { 'name': 'x-rdma-chunk-size', 'features': [ 'unstable' ] },
 > > > > > > > > -           'cpr-exec-command'] }
 > > > > > > > > +           'cpr-exec-command',
 > > > > > > > > +           'local'] }
-> > > > > > > >    ##
-> > > > > > > >    # @migrate-set-parameters:
+> > > > > > > >     ##
+> > > > > > > >     # @migrate-set-parameters:
 > > > > > > > > @@ -1012,6 +1013,12 @@
-> > > > > > > >    #     Must be set to the same value on both source and destination
-> > > > > > > >    #     before migration starts.  (Since 11.1)
-> > > > > > > >    #
+> > > > > > > >     #     Must be set to the same value on both source and destination
+> > > > > > > >     #     before migration starts.  (Since 11.1)
+> > > > > > > >     #
 > > > > > > > > +# @local: Enable local migration for devices that support it.  Backend
 > > > > > > > > +#     state and its file descriptors can then be passed to the
 > > > > > > > > +#     destination in the migration channel.  The migration channel
@@ -233,31 +233,28 @@ On Tue, Jul 14, 2026 at 08:55:28AM +0100, Daniel P. Berrangé wrote:
 > > > 
 > > > How about....
 > > > 
-> > >  # @local: Permit the use of optimizations for local migration.
-> > >  #     This must only be set when both the source and destination
-> > >  #     QEMU processes are on the same OS and directly connected
-> > >  #     with a UNIX domain socket as the migration channel to enable
-> > >  #     use of file descriptor passing. Individual device backends
-> > >  #     may need additional configuration flags set  to enable local
-> > >  #     migration optimizations. This will be documented against the
-> > >  #     device backends where it applies. (Since 11.2)
+> > >   # @local: Permit the use of optimizations for local migration.
+> > >   #     This must only be set when both the source and destination
+> > >   #     QEMU processes are on the same OS and directly connected
+> > >   #     with a UNIX domain socket as the migration channel to enable
+> > >   #     use of file descriptor passing. Individual device backends
+> > >   #     may need additional configuration flags set  to enable local
+> > >   #     migration optimizations. This will be documented against the
+> > >   #     device backends where it applies. (Since 11.2)
 > > > 
 > > 
 > > BTW surely qemu can just detect this? getsockname maybe?
+> > 
 > 
-> QEMU might be given a UNIX socket that connects to a MITM proxy
-> that then uses TCP to reach the dest QEMU.
+> Yes, but this doesn't guarantee that it's a direct connection by UNIX
+> socket to target, and it really can pass FDs. UNIX socket may be only
+> a first part of transfer channel to the remote target.
 
-We could try to exchange FDs and see it it works I guess.
+Sure, but that's not a reason not to check so we can fail early.
 
-But anyway, my point is QEMU should validate it,
-even if that's not enough of a signal to fully trust.
 
-> With regards,
-> Daniel
 > -- 
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+> Best regards,
+> Vladimir
 
 
