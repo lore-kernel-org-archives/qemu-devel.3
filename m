@@ -4,100 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CA85C43458
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EDD3C44507
 	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 02:47:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjTAS-0008RA-1T; Mon, 13 Jul 2026 22:46:44 -0400
+	id 1wjTA0-0008Ms-Gv; Mon, 13 Jul 2026 22:46:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wjTAP-0008QS-5C
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 22:46:41 -0400
+ id 1wjT9z-0008Mb-Lo
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 22:46:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wjTAN-0006cq-Ka
- for qemu-devel@nongnu.org; Mon, 13 Jul 2026 22:46:40 -0400
+ id 1wjT9x-0006b6-6A
+ for qemu-devel@nongnu.org; Mon, 13 Jul 2026 22:46:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1783997199;
+ s=mimecast20190719; t=1783997170;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=l1ehNsRYSWhnJLSMyFUakhUmUXHYh8MaiUNq0NwGhXQ=;
- b=JyPSOHLcq3hYy3GxehyY4SrDT355zUv6+QtUbjFGwYq90jx0U2IUN/2/Ql7G0gwbKb7RFu
- SQiXTtJ4JThhQaaciMD+icvAMocNm8/y9yxBgwAmyLpMO/j8EdQugSmp1W5Ovccb4W4T/f
- KR9NBLuMV1+sH6Dfuf1F9MisY7e2Zeg=
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=o4FSaPc2iRCt4tFjCRbhKxD1BOZXi7CsUwqtwp1ugaQ=;
+ b=B1jaE01u2UGpYLLy1zpw5CdIuMzMhob3Vqgnbor2dMishoCSzxHAdE2ZDv4iGxtzK47Lzy
+ DkeDw2iRikkP9xK3tsGy4NA907uoBYCTGtU7tGnwq1kLVBlha/OyoLFO6CkSvAK5Bh0nAP
+ Y27uIHswVSLLAdpPFohytaakbIVGNus=
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-553-Ozazf7R4OQusPG_MWQP4TA-1; Mon, 13 Jul 2026 22:46:35 -0400
-X-MC-Unique: Ozazf7R4OQusPG_MWQP4TA-1
-X-Mimecast-MFC-AGG-ID: Ozazf7R4OQusPG_MWQP4TA_1783997194
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-ca8409ba0easo464026a12.1
- for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 19:46:35 -0700 (PDT)
+ us-mta-353-ZCWPpGZBNqabipVSdbMeNQ-1; Mon, 13 Jul 2026 22:46:07 -0400
+X-MC-Unique: ZCWPpGZBNqabipVSdbMeNQ-1
+X-Mimecast-MFC-AGG-ID: ZCWPpGZBNqabipVSdbMeNQ_1783997166
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-c891ed872ddso6682077a12.2
+ for <qemu-devel@nongnu.org>; Mon, 13 Jul 2026 19:46:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1783997194; x=1784601994; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=l1ehNsRYSWhnJLSMyFUakhUmUXHYh8MaiUNq0NwGhXQ=;
- b=jyG5tHBdDtCA2+wMdCbXMBJh6wbX/x0wj1rD9tKnZFBVL6MXrKFtLXGOiuphkxRNqz
- 5ZDcOVKT903smQPKU3mdZxwqnitYb8FH23LAalGmLGsmx/E9GKKzhQ816Gv3Tf0HSgYs
- VVAFfPxdrAxIHurFoJun7Ve9+gluv1+EuzEhYyJy4JdHxE49fNhrX/oT99h1GzbllNG7
- IMkiznbt+5XdLZ5SnoE8K5zQUa2pVqklnGxicmQFgF10thiCl77hTeXWmHeIBhjgQR+p
- 5Ep67gKqSVPHJrSW8p6sSSY2JV1QsS7lckYs9KjGhrmBzsmLbWE4kbPZejFW/XJF2rp/
- Xd2w==
+ d=redhat.com; s=google; t=1783997166; x=1784601966; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=o4FSaPc2iRCt4tFjCRbhKxD1BOZXi7CsUwqtwp1ugaQ=;
+ b=bNm6ix78ovIGk5RpHfIAjd0+LrQTJczQ+l+VqLHhJtn7UQl2Jae5GPwOy76BK9nY2H
+ ocEgsukGYNIQ/nVQTD/aHj8R8vwV1lheLJtRce32WXtp5AZKERORTb1UxxeTUQM4EBW9
+ +zbzDK4f/y6k4oLvkaVEVwnFLxpztwKHW4Gkqo07PYV9mwaf2DdORBSbBdTRof+gbDYn
+ IQTJuYGuRJRwmv7UIUbm8qO9qgQJeQiRgXo6i0nsoCUuIJNMiZvDx/oeW6bYN4Grjim4
+ jGPHxIs2dYRSt/SFUjN617Fx/Z1tHGpoFy95kzUm6slSGdS3IKymgiursl9bFUOraF4o
+ 9BQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1783997194; x=1784601994;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=l1ehNsRYSWhnJLSMyFUakhUmUXHYh8MaiUNq0NwGhXQ=;
- b=prUQi8IkyodhI4BiWOPLDRxtXJ7ZFRqqPGNG42DbzFRfbPDSi2BAxC5f64dZR4MH2i
- qvRyiErDo/6MQqmReE8GebaVsiXVsqMXELjEOJYVVfHO/e7Nm+jGSoDMKf5r5VNCqS+I
- t7JrwuCUnH+4/0sW9x0q9N52ddJaD7bTpFe0LZwBXMIvKTsUR98OmAgqUudemc7h6J83
- TbEupMLex/JkdKw5Lpq85wEbWpCaURoUGctJHrEym248E/nvL41q3RVn1HyrQPB+/4aW
- MxB0ksiwg71iWNCCBw6FQ0YOaHYdNGDjgukIZUxJWXdWkDTZtGUhaZTKXsgI/ilPbwlH
- 4h8Q==
+ d=1e100.net; s=20251104; t=1783997166; x=1784601966;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=o4FSaPc2iRCt4tFjCRbhKxD1BOZXi7CsUwqtwp1ugaQ=;
+ b=LWYwkFV6cOh3cq24A1uPRKLpDDylA5SIBc04nT4p/nHHUh0oGt8zBC4DllmkyIqzF+
+ Cp7Qohf9ezKepoTNjHditB3B5XTOneAJBfrKgO4AV1wntIhxF3og/wBpzafi2DYSGTVQ
+ ciHgkRBIeVVE8Nb1/77ew2Y4Z9BwaeKEZ5PP92Wqd2dd8PUZLkDaOTmukUPvdL4TGFMK
+ 9d+SZYyTscis0ElFdHNvlAcNZLBVwCOeEeoJVAl2e5uTdl8p8j1X6tx34rq4receW5e0
+ nKfkN7kkcNDuBbJBpY4L/83b40+4tHq0MIuMyY/a9YaW9m0dpTbHpiZPv7Zt1DUyNGBU
+ qFGQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RpHdzZkUu/A0EFp8wmQNDOMmlbxCiwh4punn2VowAGce7bKkUEDya+Mm6zV4YsC2YTH9PURQtBQBfxk@nongnu.org
-X-Gm-Message-State: AOJu0YzR/QuejuZ3Ik2MEmhSsXt93s2SM7AWBg7mBdI4LVf2ks4wS8SG
- 47TImmmbtf1Qi653ZROeutgG9Kmw1rKmOb6QT5DaSRVSvYq9ZrYNx7JzypTSHH0DeEFqTjkgci4
- R6fTj5tavioSZXWS22aKkQJKLx1gdf5Sbhafehm322oVqZdl3J3hsRWfh
-X-Gm-Gg: AfdE7cl+bIWwsHr6HgHr7vV+2iU95TtFCUTou3DpFO9p0QAipIxJcX97NEfMiwhiUkH
- vdxmD6zg3XuKGn0WKxW+6jhBmNOT3Q0up5eC6HHdDeYjvHKfoox1Ks5If7+9an/WDArq+++h96U
- C4kq7Th2KgnkAmA4lGKeAOvHXFwZ7kIC/ALAtngzcs++IHa59qs7otBluCt0ehaC9prpr/Vr/U8
- 6slxkjbGf47hr4Qfb8uxJO6xdd/9TDy6PBeJRbjncCXiog9YR8F2rklGNDGJ17C60VAJaNfRTQE
- 5He6Uz8UnZMB0V4Bu49fDY1EzvXA5d+NGp52ncRCXTI+SQL+uYQEd5cM8W858LHstzyo99OOk7r
- 4yWvE2ItrXg2FY/dIKb+rxrD7QfcReHKH1m7rePPW5IiYfw==
-X-Received: by 2002:a05:6a21:1404:b0:3b4:731e:6fad with SMTP id
- adf61e73a8af0-3c0f094035emr17175332637.16.1783997194121; 
- Mon, 13 Jul 2026 19:46:34 -0700 (PDT)
-X-Received: by 2002:a05:6a21:1404:b0:3b4:731e:6fad with SMTP id
- adf61e73a8af0-3c0f094035emr17175295637.16.1783997193671; 
- Mon, 13 Jul 2026 19:46:33 -0700 (PDT)
+ AHgh+Ro+Wp+4rSXUwUeIg80BylII+C8IGHz+XMKkbFIle0YabME7qRToSni9ovFcGqJYryDqKba2jBmx4Sjo@nongnu.org
+X-Gm-Message-State: AOJu0Yw10rzHuDgS003L6UhbVMbCwf3YlK6MGXrI1X0vPOSsL97H6mbM
+ zbF1cUu4wpOxLv2UkQmJL2Zq70BIqKJkgGzr5Iy7J4de1D7h0fqvQj3hBoVmyvIp8rHWnqUBEmD
+ X9JGDnFNlV6FwBRFsi/jAG7dU/beYE0p7N8ljbBLK8385vLhPqQZi0IJH
+X-Gm-Gg: AfdE7ckImWZ+aZ7FNxxf3OeHulfUvpsdVyFeKWhkDN/PCZy49AvUCteyouJ8GHFbYNF
+ DzCSicXnLArpGWpwjqXCSQu2hS6X7yvzii+5QpLjcZ+KsxOs7y1DAlt/a5gj66+w3TnvDhkWVYq
+ cbtvkAsC2CVgn7NucMNBCwlna5IAzNXOw7zpyG7+4HinUg09qI+mWqiczke2S/hlc3Bgd9LYITl
+ 5OlrZuoauR9DDEhwhU0yrx45vp1OQLOlSmn0kFbmRxw9PbSFkVVNoKa8aX5YTRXspPBN8qZHR4v
+ LApXcWDpIGQwh2pshwSw7MPagsQg91K59R3XvTlSJ9/DK5iJ74HV7XCX/fjm0hh68q8FVLEgQM7
+ 6mSGiA+//s5vGubCTzvsmFbIJD52c5TkzqXCzoj0yl4soiA==
+X-Received: by 2002:a05:6a20:6a0f:b0:3bf:a8d7:4f4a with SMTP id
+ adf61e73a8af0-3c34d71984fmr1904623637.40.1783997165998; 
+ Mon, 13 Jul 2026 19:46:05 -0700 (PDT)
+X-Received: by 2002:a05:6a20:6a0f:b0:3bf:a8d7:4f4a with SMTP id
+ adf61e73a8af0-3c34d71984fmr1904595637.40.1783997165513; 
+ Mon, 13 Jul 2026 19:46:05 -0700 (PDT)
 Received: from rhel9-box.lan ([223.236.229.143])
  by smtp.googlemail.com with ESMTPSA id
- a92af1059eb24-13b924258a2sm60184658c88.1.2026.07.13.19.46.32
+ a92af1059eb24-13b924258a2sm60184658c88.1.2026.07.13.19.46.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Jul 2026 19:46:33 -0700 (PDT)
+ Mon, 13 Jul 2026 19:46:05 -0700 (PDT)
 From: Ani Sinha <anisinha@redhat.com>
 To: 
-Cc: Ani Sinha <anisinha@redhat.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH v2 9/9] Update MAINTAINERS
-Date: Tue, 14 Jul 2026 08:15:28 +0530
-Message-ID: <20260714024557.204578-10-anisinha@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>, Alex Graf <graf@amazon.com>,
+ Gerd Hoffman <kraxel@redhat.com>, qemu-devel@nongnu.org
+Subject: [PATCH v2 0/9] Introducing guest driven VM launch update mechanism
+ (BYOF interface)
+Date: Tue, 14 Jul 2026 08:15:19 +0530
+Message-ID: <20260714024557.204578-1-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20260714024557.204578-1-anisinha@redhat.com>
-References: <20260714024557.204578-1-anisinha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: permerror client-ip=170.10.129.124;
  envelope-from=anisinha@redhat.com; helo=us-smtp-delivery-124.mimecast.com
@@ -123,38 +118,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add maintainers for vm-launch-update device and associated documentation and
-test code.
+This is the resurrection of the work that was previously discussed here:
+https://lists.endsoftwarepatents.org/archive/html/qemu-devel/2025-03/msg05872.html
 
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
----
- MAINTAINERS | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+This relates to the 'bring your own firmware' work that we are driving at Red Hat,
+now with IGVM support.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 6171cc7494..c51eea98b6 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2826,6 +2826,19 @@ F: include/hw/acpi/vmgenid.h
- F: docs/specs/vmgenid.rst
- F: tests/qtest/vmgenid-test.c
- 
-+VM Launch Update
-+M: Ani Sinha <anisinha@redhat.com>
-+M: Gerd Hoffman <kraxel@redhat.com>
-+S: Maintained
-+F: hw/misc/vmlaunchupdate.c
-+F: include/hw/misc/vmlaunchupdate.h
-+F: include/standard-headers/misc/vmlaunchupdate.h
-+F: docs/specs/vmlaunchupdate.rst
-+F: tests/functional/aarch64/test_vm_launch_update_aarch.py
-+F: tests/functional/x86_64/test_vm_launch_update.py
-+F: tests/qtest/launchupdate-test.c
-+F: tests/data/igvm/*
-+
- LED
- M: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Maintained
+The patchset includes a spec doc that has more details.
+
+This patchset implements the hypervisor interface using fw-cfg. Using this interface, the guest
+can pass its own IGVM file to the hypervisor. Upon reset, the hypervisor re-initializes the guest
+using the IGVM file the guest provided.  This is useful in order to have deterministic and trustworthy
+launch measurements, mostly for the cloud confidential guest deployments.
+
+This patchset has added functional and unit tests that exercize the hypervisor interface. It has been
+tested for both confidential guests and non-confidential guests. Gerd has also independently tested
+the patchset.
+
+Changelog:
+v2:
+ - API definitions moved to a separate userland header file.
+ - A new ctrl flag is added that will restore original host provided IGVM. Tests for the same are added as well.
+ - doc updates that describe how the interface works with the new ctrl flag set.
+ - A memory corruption issue is fixed.
+ - total size of test IGVM files reduced to 270 KB.
+ - other review comments addressed.
+ - tags added.
+
+CC: Alex Graf <graf@amazon.com>
+CC: Gerd Hoffman <kraxel@redhat.com>
+CC: qemu-devel@nongnu.org
+
+
+Ani Sinha (6):
+  hw/misc/vmlaunchupdate: add api header
+  hw/misc/vmlaunchupdate: Introduce hypervisor fw-cfg interface support
+  docs/spec: Add a specification document for vm-launch-update device
+  tests/qtest: Add small igvm files for testing purpose
+  Add functional and unit tests for the vm-launch-update device
+  Update MAINTAINERS
+
+Gerd Hoffmann (3):
+  igvm: store IgvmCfg pointer in QIgvm
+  igvm: track memory regions
+  igvm: cleanup memory regions
+
+ MAINTAINERS                                   |  13 +
+ backends/igvm-cfg.c                           |   3 +
+ backends/igvm.c                               |  99 +++--
+ docs/specs/index.rst                          |   1 +
+ docs/specs/vmlaunchupdate.rst                 | 172 ++++++++
+ hw/misc/meson.build                           |   3 +
+ hw/misc/trace-events                          |   6 +
+ hw/misc/vmlaunchupdate.c                      | 307 +++++++++++++
+ include/hw/misc/vmlaunchupdate.h              |  38 ++
+ .../standard-headers/misc/vmlaunchupdate.h    |  73 ++++
+ include/system/igvm-internal.h                |   8 +-
+ include/system/igvm.h                         |   1 +
+ tests/data/igvm/README                        |  24 ++
+ tests/data/igvm/hello.igvm                    | Bin 0 -> 137112 bytes
+ tests/data/igvm/qemuinit.igvm                 | Bin 0 -> 137112 bytes
+ tests/functional/aarch64/meson.build          |   1 +
+ .../aarch64/test_vm_launch_update_aarch.py    |  33 ++
+ tests/functional/x86_64/meson.build           |   1 +
+ .../x86_64/test_vm_launch_update.py           |  48 +++
+ tests/qtest/launchupdate-test.c               | 408 ++++++++++++++++++
+ tests/qtest/meson.build                       |   2 +
+ 21 files changed, 1208 insertions(+), 33 deletions(-)
+ create mode 100644 docs/specs/vmlaunchupdate.rst
+ create mode 100644 hw/misc/vmlaunchupdate.c
+ create mode 100644 include/hw/misc/vmlaunchupdate.h
+ create mode 100644 include/standard-headers/misc/vmlaunchupdate.h
+ create mode 100644 tests/data/igvm/README
+ create mode 100644 tests/data/igvm/hello.igvm
+ create mode 100644 tests/data/igvm/qemuinit.igvm
+ create mode 100755 tests/functional/aarch64/test_vm_launch_update_aarch.py
+ create mode 100755 tests/functional/x86_64/test_vm_launch_update.py
+ create mode 100644 tests/qtest/launchupdate-test.c
+
 -- 
 2.42.0
 
