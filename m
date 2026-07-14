@@ -4,117 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3493C4450A
-	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 17:07:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A0CBC4450A
+	for <qemu-devel@archiver.kernel.org>; Tue, 14 Jul 2026 17:20:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjgbD-0000Fr-Rh; Tue, 14 Jul 2026 13:07:16 -0400
+	id 1wjgnN-0004wf-UD; Tue, 14 Jul 2026 13:19:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wjgb7-0000E5-4Z
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 13:07:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wjgb4-0003wn-32
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 13:07:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784048822;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wjgnJ-0004tb-PH
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 13:19:47 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wjgnH-000737-FL
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 13:19:45 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id E404977D94;
+ Tue, 14 Jul 2026 17:19:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1784049580; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QwGWl11gAh3+SndohW7H1aRAx+s3e94g9KFM1eF5I3o=;
- b=eNhccyyy4b3Td+vrEteAcLlKy6cxaLr8Xi7rzXkJCl4LVN76SXjFL42GM8B9CSCwswpCRx
- BhAUzjETLX39yrjuqHH3eDMEjWytOt0TMatUo42mt9w+eiw19B3T8Db2b5iBMKb4wXT5ih
- +4aVazkfGxJlWI56qi5htGN6GomEEGo=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-422-kAkEvkClPs6GqbjCfCa0sw-1; Tue, 14 Jul 2026 13:07:00 -0400
-X-MC-Unique: kAkEvkClPs6GqbjCfCa0sw-1
-X-Mimecast-MFC-AGG-ID: kAkEvkClPs6GqbjCfCa0sw_1784048820
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-92e66f9e2baso180413085a.0
- for <qemu-devel@nongnu.org>; Tue, 14 Jul 2026 10:07:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784048820; x=1784653620; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=QwGWl11gAh3+SndohW7H1aRAx+s3e94g9KFM1eF5I3o=;
- b=kZgRo49NsJv9IN0fJGXhOj5SkoVHBoowS0seeIRkN5o1VjHf2zF+G6hR8BYsOiKEhn
- nRRhrKXv6IGRLxoaD1pWaGjxYEABfaM4rER/4BW7k+t8yb98IPvfN9e2sAMvaYpE3oM7
- IX6UnaN9NBlPAQ8gdVfQyA9CYCCunGS95ioZ8RdP5mO+Pc1UtvB9tIdRSM87EaUNa/7J
- XMIpqbb7qwe0lijhDaESk5YZ5+RBKlh2DAOgXupyrEYt84KSVcRufnlaON+FMTUasXgn
- E1Xt4eB0x0v1e6snP0k7tbrpGpw9FELAEy3vKEYn1P3hhttgE+ozrECiSTvSGprG1ooR
- pfGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784048820; x=1784653620;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=QwGWl11gAh3+SndohW7H1aRAx+s3e94g9KFM1eF5I3o=;
- b=I3RDJO9UTFHihm/PqXqYPX3nx6Px+GHo/l7C2CCK6tKqh/btxY+NLHY1CR7rekqqLn
- YmXfLBtxZ+LT1RyDg0j/pOZ+oZtp9wwQKUWXGnnLZNjvc36WQmHeLyFdAotMtKFKCyfh
- SBsUuNKdLYYj9wGOr3AN/UOf0Sk0tljiV3hEl9hV+ulsTz+8rfFNalVAMd7krCBHtTUw
- 77/gCEd2LPwrGPyRnCxi/mJl72z/M2sVc4Va82WqaJEnOdK7j9MlP4KUJoYhKjZFYYn3
- aMKqugTEFFcj5LscifacxYJQfyyuPPMbNl89wymaFcWg/5RQjDh9ujAXVKE+MLzFKYb8
- dnjQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rrt1nKxbIZArEGVvoaiYkQgx7NYQT4TWf6jcCMh+ilIYANF7671gsq9iqDS6dUyuJW2QHnbWHJMXWnc@nongnu.org
-X-Gm-Message-State: AOJu0YxWMIX9tSCjcgix167EZQrxVLnY9fOcrlmTJWIUBF4Fgi0KU5Rm
- gQaQRQMJVfUQfjNfba4m+AMjJojMEP3PCJYzgAZ8gUpKbhGolzE4rlOlkDNVHGMTaUVS+bGLoMi
- ooUAgBhH1LEsi6o5HM85YTnEXzdWY+4dwZH9F3RoA6/qQZ9tU2JIxTnTX
-X-Gm-Gg: AfdE7ckL1e9mghM5CzlyrWCNbIOReLHUpj1kJCNSg1pC2zovaLfrcEizaiRjUU/6v1z
- V2Uj41vI/6ik8VT67og8rmANmI18AW8ift8I163tT5Sbj8asb7teSlvIhFP0i2S7ZppeTe4ADu5
- /f2zRVIFG3tCIUz/0EkzFNFSCs+QRheJxDQnXMgTu5Xrt++ufY73wtNAlBUPKXP1E8Qo7cPm6Dl
- +R8Xnh+XEAhwNhj4mgzbW37cdo6UUUlySO6AwqIwtsQZQnie8VIBRCyx2hgFR7prJ3UN9TPaM8u
- Z4NZmAs+kXzzyrPPloeYFdG9OG2MGbDs1q0lamvxFrjQDM9WNmckLdfAXSQTzvs8Ra/XPhhZy+1
- 4OhykqYHiZH8yR63zsvfxFrJqQsnzEOWT0fd2fzcTnVVsv6F2PERwnXCEUTgmpDIuY/eDUw==
-X-Received: by 2002:a05:620a:2601:b0:92e:e314:c9ca with SMTP id
- af79cd13be357-92ef2c1fa96mr1434128085a.52.1784048819752; 
- Tue, 14 Jul 2026 10:06:59 -0700 (PDT)
-X-Received: by 2002:a05:620a:2601:b0:92e:e314:c9ca with SMTP id
- af79cd13be357-92ef2c1fa96mr1434120885a.52.1784048819013; 
- Tue, 14 Jul 2026 10:06:59 -0700 (PDT)
-Received: from x1.local
- (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-92ee5b4920asm1453042985a.4.2026.07.14.10.06.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Jul 2026 10:06:58 -0700 (PDT)
-Date: Tue, 14 Jul 2026 13:06:56 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Fabiano Rosas <farosas@suse.de>, Alex Williamson <alex@shazbot.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/2] vfio/migration: Parallelize device state transitions
-Message-ID: <alZssI9OmGJyD-rc@x1.local>
-References: <cover.1779217494.git.maciej.szmigiero@oracle.com>
- <743f03758d2a30df4093db140ccdd0f91f69bd7e.1779217494.git.maciej.szmigiero@oracle.com>
- <871peqtm5t.fsf@suse.de> <ah3eheRXN1QJAGj_@x1.local>
- <ac677bf9-1372-4905-a0b8-874a74be07be@maciej.szmigiero.name>
- <ah86Z0r5sMnxwgo-@x1.local>
- <c739f4fe-1f43-45c4-b98f-109366526405@maciej.szmigiero.name>
- <e79a3746-9c7e-46a5-ad81-537b9d3affdb@maciej.szmigiero.name>
- <akvWlciUvxjDbBBZ@x1.local>
- <e602d0cd-dfc2-441d-a017-067e55418dad@maciej.szmigiero.name>
+ bh=h5Q1jlxh26EsZfMUiRSf6XbsXoeotepO2u3n4L88H0g=;
+ b=T+2CBAClejoazGdOGXZScxl7ZcmV/rakmM9Zi651QCBBEwXbDIbCKM75cpXB/XTK0N8iSS
+ 8A9DeyO05Sa/UORLmEcgOxUUtuvGSHBrm2skKix34p1j0GVYH5hmQJ07+qdJt6BwbgDc/5
+ 4EK6tLLKok1fsRGaPeybFOd1TUunMg8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1784049580;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=h5Q1jlxh26EsZfMUiRSf6XbsXoeotepO2u3n4L88H0g=;
+ b=xaLyTpSM2lkw1OiTYW1QmoYFnQc1YhyI4mc3JIUybtFfhAq2XPr4kt2fHmYnX16K5tnsKb
+ zEUJxh4g9ZIiriCA==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1784049579; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=h5Q1jlxh26EsZfMUiRSf6XbsXoeotepO2u3n4L88H0g=;
+ b=fFJ4VsmF90k1vQf70i44d9IxR+XlGnGp8yZUZzJkArO0Yd45Y97ENYLXqBRYnaW2a9NUtL
+ RylzO6r2hPjC8xwRUpoo8VTtnEbAeaZUXgnAedUm3JG922AIZY66VAWHRd7gij97WkyTWf
+ vvLdqMa/xd55ViFIZNbM/EphP7XmoBg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1784049579;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=h5Q1jlxh26EsZfMUiRSf6XbsXoeotepO2u3n4L88H0g=;
+ b=3soxYdVPgNisWXmyThDMIFUIZrjH/msl4vlRARWkcOgo+dRrGgjJJGMag66RpjIyI4bmio
+ i7aKe6+nR22ymxDA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6EC1F779AE;
+ Tue, 14 Jul 2026 17:19:39 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id LCT0D6tvVmqvRwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 14 Jul 2026 17:19:39 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Shivang Upadhyay <shivangu@linux.ibm.com>, Aditya Gupta
+ <adityag@linux.ibm.com>, Peter Maydell <peter.maydell@linaro.org>, QEMU
+ Developers <qemu-devel@nongnu.org>, Harsh Prateek Bora
+ <harshpb@linux.ibm.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Pedro Barbuda
+ <pbarbuda@microsoft.com>, Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Nicholas Piggin <npiggin@gmail.com>, Cornelia Huck <cohuck@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>, Matthew Rosato
+ <mjrosato@linux.ibm.com>, "Daniel P. Berrange" <berrange@redhat.com>
+Subject: Re: what is qemu_system_guest_panicked() for?
+In-Reply-To: <bc94506bd307f3273b199a432a4f6df8c219b212.camel@linux.ibm.com>
+References: <CAFEAcA_zmc=Vvs38Qos_gecCmGAbRgDQF-0+x85Ja66nsqrHxA@mail.gmail.com>
+ <87pl0rdnar.fsf@suse.de>
+ <0dbbac06-8fdf-45ef-9cd4-eaf2510394d2@linux.ibm.com>
+ <bc94506bd307f3273b199a432a4f6df8c219b212.camel@linux.ibm.com>
+Date: Tue, 14 Jul 2026 14:19:37 -0300
+Message-ID: <87v7ah4hg6.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <e602d0cd-dfc2-441d-a017-067e55418dad@maciej.szmigiero.name>
-Received-SPF: permerror client-ip=170.10.133.124;
- envelope-from=peterx@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ SUBJECT_ENDS_QUESTION(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.996]; MIME_GOOD(-0.10)[text/plain];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]; RCVD_TLS_ALL(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MISSING_XM_UA(0.00)[];
+ ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_DN_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
+ FREEMAIL_CC(0.00)[redhat.com,microsoft.com,unpredictable.fr,gmail.com,linux.ibm.com];
+ RCPT_COUNT_TWELVE(0.00)[13]; FROM_EQ_ENVFROM(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,148 +129,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 13, 2026 at 10:23:07PM +0200, Maciej S. Szmigiero wrote:
-> On 6.07.2026 18:23, Peter Xu wrote:
-> > On Thu, Jul 02, 2026 at 08:36:32PM +0200, Maciej S. Szmigiero wrote:
-> > > I looked more deeply into this and even prototyped a similar new design.
-> > 
-> > Sorry for a late response; off work most of last week.
-> 
-> Also sorry for my late response - was extremely busy the entire previous week.
-> 
-> > > 
-> > > However, in the end I think that running VFIO state transitions in
-> > > parallel with other non-VFIO cb() handlers just isn't safe.
-> > > 
-> > > For example, on the migration source, the second transition is
-> > > PRE_COPY_P2P -> STOP_COPY.
-> > > PRE_COPY_P2P is the last state during migration that still allows the
-> > > device to accept DMA and similar interactions, while STOP_COPY is
-> > > already the "quiescent" state.
-> > > 
-> > > So if a VFIO has already reached STOP_COPY but a non-VFIO device
-> > > callback still hasn't finished, then any DMA/MMIO/P2P transaction from
-> > > that "unfinished" device to the VFIO device would now hit a VFIO device
-> > > that no longer can accept such transactions.
-> > > This may result in hard-to-debug memory corruption during live migration.
-> > 
-> > Do you have any solid example of this problem?
-> > 
-> > AFAIU, P2P in VFIO state's term only means P2P DMAs _between_ host VFIO
-> > devices, nothing to do with emulated.
-> 
-> I presume that quiescent VFIO devices can't accept *any* DMA, the spec (vfio.h)
-> even says that:
-> > The user should take steps to restrict access to vfio device regions while
-> > the device is in STOP_COPY or risk corruption of the device migration data
-> > stream.
-> 
-> Correspondingly, I think the same goes for RESUMING state on the migration
-> target since it is described there as:
-> > The device is *stopped* and is loading a new internal state
-> 
-> While you are right that the spec only talks about P2P DMA I don't see how
-> host-initiated DMA would be different here - after all, it's about changing
-> internal device state in a state where the device can't accept that anymore/yet.
-> 
-> > I am not aware of any P2P that can be initiated from emulated devices, even
-> > if it exists, it is only P2P from guest perspective not host: it will
-> > become host operations finally from processor side.  I really don't think
-> > it's a concern.
-> 
-> Yeah, it's normal DMA from the VFIO device perspective.
->  > My limited understanding of VFIO's P2P state is: when switching to P2P
-> > state, the VFIO device can still accept P2P DMA from other devices, but
-> > never initiating P2P DMAs, and the latter sentence is critical, it means
-> > the real quiecent state of the whole system happens after the last VFIO
-> > device switching to P2P state: then it means none of the VFIO devices can
-> > initiate P2P DMA anymore, whole system is quiesced.
-> 
-> Just having the VFIO devices in the system prevented from being able to
-> initiate DMA is not enough for them to reach "quiecent" or fully stable
-> state as long as there are other possible sources of DMA transactions
-> targeting them in the system.
-> 
-> Glancing at the existing vm_state_change handlers there are some
-> concerning ones there:
-> * vhost-net (called via virtio_vmstate_change() in base virtio-net),
-> 
-> In the vhost-net case the vm_state_change handler for this device
-> ultimately reaches vhost_net_stop() and do_vhost_dev_stop() and these
-> seem to stop this network device rings at this point.
-> 
-> Now, having vhost-net packet buffers in a VFIO device MMIO BAR would
-> be rather atypical configuration, but nevertheless letting VFIO
-> device possibly reach "quiecent" state before this handler finishes
-> would theoretically be a regression.
+Shivang Upadhyay <shivangu@linux.ibm.com> writes:
 
-If this is an issue, it was an issue for master branch too, right?  Because
-the master branch (with prepare_cb()s) already switch to P2P_DMA state for
-all VFIO devices before invoking any cb().
+> On Tue, 2026-07-14 at 15:54 +0530, Aditya Gupta wrote:
+>> > guest code.
+>> >=20
+>> > PPC folks, please confirm, it's been years since I looked at this.
+>> True. The way the spec mentions it seems the OS can get control back
+>> after
+>> execution of ibm,os-term.
+>>=20
+>> This difference is noticeable with `panic=3D15`. On an LPAR, this would
+>> print the
+>> following line and do a reboot after a timeout of 15s (this happens
+>> in linux
+>> after it has done the os-term call):
+>>=20
+>> =C2=A0=C2=A0 =C2=A0 [=C2=A0 338.186072] Rebooting in 15 seconds..
+>>=20
+>> But on QEMU, this isn't printed, and the machine powers down:
+>>=20
+>> =C2=A0=C2=A0 =C2=A0 qemu-system-ppc64: OS terminated:
+>>=20
+>> Maybe worth taking a look. Didn't notice this earlier, thanks Fabiano
+>> !
+>>=20
+>
+> Hi Aditya Fabiano,
+>  As we register the rtas(os-term) as the panic handler for spapr in
+> linux, I think we expect the machine to be shut-down properly and not
+> handle any of the work. I am not sure how else would we implement this
+> function in qemu without using `qemu_system_guest_panicked`. I mean,
+> the name conveys, the guest has "paniced".
+>
+> But then again as per PAPR, we should expected limited number of rtas
+> calls from the OS (the following list).
+> - nvram-fetch
+> - nvram-store
+> - display-character
+> - power-off
+> - ibm,power-off-ups
+> - system-reboot
+> - check-exception
+>
+> PAPR reffers to host as "live-halt" after it has called os-term. Not
+> very sure on the meaning of this.
+>
+> Maybe other platforms then linux will rely on this? As Fabiano
+> suggested he found some case where he needed to comment it out, That
+> would be interesting scenario to explore.
+>
 
-It is also an issue then even before P2P_DMA state introduced, because
-before that all cb()s can be run at random orders.
+To be clear: I don't know of anything that currently depends on a more
+rigorous behavior of os-term.
 
-What you said might be an issue indeed in that extremely corner case, but I
-think it still needs some justification, and it's IMHO orthogonal to what
-we're talking about.  If it's an issue, maybe we want to fix it first
-before attempting to move further to any concurrent approaches, but is it
-really an issue is to be better justified.
+If Linux, and probably other major OSes, use os-term to relay a panic
+state to the hypervisor, this is fine. For the purposes of Peter's
+question I think we can leave it at that.
 
-Applies to all below.
+---
 
-> 
-> * virtio-blk virtio_blk_dma_restart_cb() vm_state_change handler
-> submits some block requests to its (possibly dedicated) IOThread.
-> 
-> Again, having block device request buffers in a VFIO device MMIO BAR
-> would not be a typical configuration, however letting this handler
-> run before making sure that VFIO devices can accept DMA would
-> theoretically make a regression too.
-> 
-> * same for scsi-bus scsi_dma_restart_cb() that does
-> scsi_dma_restart_req() for each pending request.
-> 
-> 
-> The above is not an exhaustive list, these are only the cases
-> I was able to identify relatively easily by going through the
-> code.
-> And I think that with possible memory corruption issues its better
-> to be safe than sorry, as they are pain to debug.
-> 
-> The only real non-VFIO cost of being safe about all of this is
-> ~15 code lines addition to vm-change-state-handler.c, all the
-> remaining complexity is already on the VFIO side of things.
-> > That happens earlier
-> > than reaching any of the cb()s here, because VFIO's prepare_cb() does that
-> > P2P state switch.
-> 
-> I thought your proposed design was to launch (per-VFIO device)
-> device state changing thread in prepare_cb(), make it do *both*
-> VFIO device state transitions and collect it in cb()?
+PS:
+The use-case I had in the past was related to this test suite:
+https://github.com/legoater/pnv-test. I was looking for a way to do
+clean termination of a vm from the guest OS while conveying the test
+output in the message.
 
-The idea was only about trying to leverage prepare_cb() to achieve real
-"prioritized callbacks" for a device, based on patch 1 being problematic.
+E.g:
 
-What prepare_cb() does can be anything.  Certainly, we can make it only do
-step 1 then in cb() kick all threads to move on to step 2, and sync again.
+$ cat slof.s
+li      3,0
+ori     3,3,61440       # H_RTAS
+li      4,argbuf
+.long 0x44000022
+b .
 
-> 
-> In this case the transitions are *NOT* ordered with respect to
-> other cb() handlers (besides them being finished by the time
-> the VFIO device qdev tree depth cb() handlers are reached by
-> virtue of the threads being collected at this point - this is
-> actually necessary in order to preserve proper ordering with
-> respect to some types of interrupt controllers on the source).
-> 
-> So on the migration source the thread could already put device
-> into "quiecent" state by the time other cb() handlers could run
-> and on the migration target the device could still be
-> in an "unprepared" state by the time other cb() handlers are called.
+argbuf:
+.long 0x201f    # ibm,os-term
+.long 0x65786974 # "exit"
+.long 0=20
+.long . -8
 
-Thanks,
-
--- 
-Peter Xu
-
+$ ./qemu-system-ppc64 -bios slof.bin -d guest_errors
+qemu: OS terminated: exit
+Guest crashed
 
