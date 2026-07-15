@@ -4,101 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 547FDC44508
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 16:00:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2D84C44501
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 16:02:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wk21R-0001x6-K0; Wed, 15 Jul 2026 11:59:45 -0400
+	id 1wk23A-0002m6-C3; Wed, 15 Jul 2026 12:01:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anderson@allelesecurity.com>)
- id 1wk21Q-0001ws-DZ
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 11:59:44 -0400
-Received: from mail-vk1-xa2c.google.com ([2607:f8b0:4864:20::a2c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <anderson@allelesecurity.com>)
- id 1wk21O-000679-6x
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 11:59:44 -0400
-Received: by mail-vk1-xa2c.google.com with SMTP id
- 71dfb90a1353d-5bf9466412fso1406549e0c.1
- for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 08:59:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784131180; cv=none;
- d=google.com; s=arc-20260327;
- b=X2nJ1+UO8hGuuTKnGoBzv+SVm3RcxMvVnJ3tBFliNYpCtPrygVH512xd/VMRPmjSMm
- t6zIikH46QBmahxo1dndmC28mcEBfBXCgNCQrH50ERp771CyMCjyD0UnbdqdVhqMd9jd
- WEBn+F/czIToXF0QmlK+J0zpxAnNPFnomCFywTKxQpr0nO0Ld9eTa1RrkPntsF5oQ+hR
- O9kPkKR4rB1s1eQOx0j/K0vMoaV/5bUNAh6/jYHpOzDXBcvtAZV4azyvFcejo31V65jS
- 7fWo/QKP0JphAir7UIjo5cYbf9uM4oqWLw/+nolG0xuO9HWYFH2s1oMBWJSsr5IbeWjk
- xkMg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=zGnxGAET//9Y4WKMnCX3s20e63rd8ucTUvBb9i7O1uI=;
- fh=dv8mTi9+qPmyO1fqk2LagI0qj6Vd/IYVckCgPdJ8JxM=;
- b=XWoQ/RNWJpCD3Kx2/ms5hz1CiXImMpaVo5NWSf0iEL2Qf95x7oyjsgX8muME63hHv4
- xKOCRn4fEwLFUq2jSN6B52SMQukhXjm/8jqtray/pQWo4q+ddivQFz98oedDjWSSAK2p
- o+Av+VmTu7/MY1EyvHmnU4ydJwg7Kzw0lCxbTeysWFwhXKY4R5i7nRm5prIwjfB6lPJk
- L1f/h2Pj709IyISuGdxs7ftKxNAv+76Yiv2wDkkrZBnlyM9YuNP/6qm+Ede3lSK60NUe
- Pjs1rRALYTcozbFIY8h3JlYg4Ms+sYmlCmtd2nQV0Ns8f5GdiB9gU6VYGihyDuYyEVMl
- 3cdg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wk234-0002kq-P0
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 12:01:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wk231-0006Va-AX
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 12:01:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784131280;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hPq28wTmWk0drLb08pyvoJKK5J9N3ChXU/wNBkg0kdo=;
+ b=btkcpsbVQwMekYggVH15XHLvskbV96iir0CR0vH4b6NbrpZ+/5oJgyuAIf1KvsSPLW1UfO
+ GQpkCNdSq84gTVq/+VgekQBe2Vno1r5nA9MFgFjKXJP+w3aReuohh6T81l+6uYtK9LVlyx
+ iucdIcAiA0tyGoCASp7t91DMrLpYk2k=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-86-pw9IPdnrMWucPHjnW2jIIQ-1; Wed, 15 Jul 2026 12:01:18 -0400
+X-MC-Unique: pw9IPdnrMWucPHjnW2jIIQ-1
+X-Mimecast-MFC-AGG-ID: pw9IPdnrMWucPHjnW2jIIQ_1784131278
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-92e5fc4c7e9so247961585a.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 09:01:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=allelesecurity.com; s=google; t=1784131180; x=1784735980; darn=nongnu.org;
- h=content-transfer-encoding:content-type:to:subject:message-id:date
- :from:in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=zGnxGAET//9Y4WKMnCX3s20e63rd8ucTUvBb9i7O1uI=;
- b=KgG4uScoumepABcN0oN0Cslao/4WysNVGjWj88H68rtJZ1jX3dmtgG5mdxfXDzIzwc
- SQfSPCSkloS0w/wAS8h3cSAt/Ek+C9wtYHARFOFyS9uF1u+YE2VwilhMoKKvGtx/ivvK
- kbRfJRDv5f5MVIdZl/kSf33TFr4LwKBgCnYkg=
+ d=redhat.com; s=google; t=1784131278; x=1784736078; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=hPq28wTmWk0drLb08pyvoJKK5J9N3ChXU/wNBkg0kdo=;
+ b=EQUAMwb6FyI/16V6v8/Tg0r0QuoZLOOfa6UDqTilYgpihJW1IjOAXAN9pRB+kXyqwa
+ nk0rEuIs8OD9vdYwUqpHmgMNxkJRKQFG3E+bm47iz8yPjj1dYfxwuQvYkjW5u2kVxLQZ
+ 14B+ouuV86hpCdmCx/LSzt87vweijsepb8OHxSuuqDZSiIl/ERFCmdHrwSrjWifAQEyo
+ aiaHdQTQn26aS5B69U14PA3bTnMg+dIoIiAVMeHSQqClwMjIXWv+HbJDjU/kYffuxuFl
+ w7ndYDWb1PjhIuapObmlflD/TdM5W06I32YYuDnvOYLmW4N3QRzfq8jQjlDnaOG2WO4Y
+ WkEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784131180; x=1784735980;
- h=content-transfer-encoding:content-type:to:subject:message-id:date
- :from:in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=zGnxGAET//9Y4WKMnCX3s20e63rd8ucTUvBb9i7O1uI=;
- b=BgRrPOcf8JZGhjdodiKQkztj4+jbirj+5o23etbvpyktH+Wqfe14QzQBOEWdDjvA3A
- pfaGpKtulPSN2xbIyRwhmQcdTWTESVe0y5NhpLsxSDqLhzLppQ4h93Dfy212LNQQOLf4
- mCs+m0zbNXu2SWtJqgXeG2LlGf1WmnN9Bi+K2Pr5qoEXDjJX/ZA7iSHua02lU654HVp4
- poPQvkX3L4DKOp2JswDJjb4sqwkPrFsAvZ+OHs59fMhiw4Woj19i72SkKLZOirHYVzoz
- 1m4piUq8A9Jvl0L7Ei1k16NuHU0GptUO8gU58q/q+oIBFdUoqw/w/mYY5W8ZCSKxWvm6
- ohYg==
-X-Gm-Message-State: AOJu0YzBVOaKY23E1fnlnR6R7SWALR7zNHJCRzqISih4tzYKqoxnTtGD
- 8XoNjEG1BSTjVLQF4opE0uOk2t18/EQYTF+PAjgnyrz0ur6ZyXeoJ/A/DyD/mWdlh+3g11KD/yq
- 7XSjEHLfdK2eQEWcuCBJ1T05YGHsz1avvgteMaoMLGoi6YLUP8y2smfs=
-X-Gm-Gg: AfdE7cl4neSElkJemPhcGlHjalrAuTluaLTI0Kq8v0/FBBZ1+gRlkHV4/Z9H5EoxiEb
- 5pXajR724HYXncuLtTRYRtV7WZ/OM2r/fmwVFxKM24mfHcT7caJbi+POWjtVAWXx+uuqZ61bEST
- 3hrO0teG7a5Nbp0s4m2yX85Ac6DDwHvVwSrtiT4HM6gWbUyGlmmG3Ke2tAvD2BPCv7eO4XGJw7b
- GER/l7xIQCxPWrwq69Qu4T5ZQfvM6guheUfjBjvmlD/ZEKg9N0mJJXFNNmlfRITrC70IuCFpdw=
-X-Received: by 2002:a05:6122:83f2:b0:5bd:ecad:8f9c with SMTP id
- 71dfb90a1353d-5bfbf172175mr10635021e0c.6.1784131180332; Wed, 15 Jul 2026
- 08:59:40 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1784131278; x=1784736078;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=hPq28wTmWk0drLb08pyvoJKK5J9N3ChXU/wNBkg0kdo=;
+ b=Te8ruWpCd5f3Xl0Cshit5nUPBnKHjE5Xj2/XDeIgb6vVL/vzQKfJ3YyzfTcYAdYUxf
+ O26lxLeTut3SwfaaCVbid+uGKzfICjOifm/+6vcqw5ldXKl82hrnEaIGxDqXn+j/2nD3
+ EU+eWYmiAHxPWTKU9yYHXXBK7LW0OC5Lf423F6ag66IU2CmmEKVwMz/4IqZoUB9Un4wl
+ zQgRdBQX46yINmu/k1N/7DupqZYSr0yK6m+3mph8UQMajt7mkLrLPU4Y39LYrqgA6lyw
+ 7qtPrUapdng1DEZcDhIBAEbtGLdxeUNHJ4DNktruf5Aro3nnrwF21QAnbnmFiMnl5HzT
+ gtLA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrdKOQnLvlj+AzXL6zU9Uy/IhadG7qAhaxjpWV/Oi8bl6WsDhSamwMUT1OpREdi/CbMR05WF8eiDtlZ@nongnu.org
+X-Gm-Message-State: AOJu0Ywk2S+x0/cex+aQbXb5UAamx4QzBNWF9GM/srVlzi7Finwc7l85
+ uHDRKiMK3DlnQETUBEos58ab0F6l1m/WqEREPZSi7FKM48/PS+6rFosMvAW6hofbIi7vxaMDdry
+ /pY6dywEMkXg03SnT0dtiZizAHXo7p8RutMTLGJ+gpQHPD+hw8KYwfwcv
+X-Gm-Gg: AfdE7cnlg6Tl0QTrRj6NId7D8xNhCMsU0cn5pToBkoIk1vpiqP3T52nITAin7kNtLAQ
+ WQoNj+62s0i2qL0tiwYMcxoe477l8lwE3SVLrsnTvK+atSRt5+ZfsUz9Hf8thHIA7Noh3kHMazj
+ oamEctG+yZcacCBYiK6axhWOADbR+LqVxKzRFIwlVe1FEkP5uQE8BsJtq6zcepuPcQFxSlw+0jJ
+ wlUATC89ZZb/qFxyjvwhzIy5dvShCC13MYigUN9qaEo94rePGQG3LmDRdaXpD8hmwvr5SC7EqP3
+ kEJDuryF3wP7Q2cFT51uV5pb8zO8A8JMsmxJSfZwMJPzQarmCO0B2khqSnxjnoUKs7VE9EZtnuw
+ 6bgWpUB8KXuE4ERmhs/W5ZM8ZsjoLPn8XoPfCUuYAa6A4z4MqkhuQ9w8ZCW5YgmoW7ZNDzg==
+X-Received: by 2002:a05:6214:3b86:b0:8f0:275e:8b3a with SMTP id
+ 6a1803df08f44-904017824b2mr198428596d6.48.1784131277887; 
+ Wed, 15 Jul 2026 09:01:17 -0700 (PDT)
+X-Received: by 2002:a05:6214:3b86:b0:8f0:275e:8b3a with SMTP id
+ 6a1803df08f44-904017824b2mr198413316d6.48.1784131264511; 
+ Wed, 15 Jul 2026 09:01:04 -0700 (PDT)
+Received: from x1.local
+ (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8ffd87cad3csm196768556d6.48.2026.07.15.09.00.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 15 Jul 2026 09:01:00 -0700 (PDT)
+Date: Wed, 15 Jul 2026 12:00:55 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ jasowang@redhat.com, armbru@redhat.com, farosas@suse.de,
+ raphael.s.norwitz@gmail.com, bchaney@akamai.com,
+ qemu-devel@nongnu.org, pbonzini@redhat.com, yc-core@yandex-team.ru,
+ mark.caveayland@nutanix.com
+Subject: Re: [PATCH v19 00/15] virtio-net: live-TAP local migration
+Message-ID: <aleut_YyeS_YeYus@x1.local>
+References: <20260714154246.1242856-1-vsementsov@yandex-team.ru>
+ <fa53bef0-4fbd-445a-9395-379bbfcb3773@tls.msk.ru>
+ <20260715114802-mutt-send-email-mst@kernel.org>
+ <ales0BaHaS0ZgA2d@redhat.com>
 MIME-Version: 1.0
-References: <20260602140348.774203-1-anderson@allelesecurity.com>
- <20260602140348.774203-2-anderson@allelesecurity.com>
- <CAPhRvkygtCgfHaD5eHT-aFKSnQ1OA9-YBDOFNNwX+SukYFrhPA@mail.gmail.com>
-In-Reply-To: <CAPhRvkygtCgfHaD5eHT-aFKSnQ1OA9-YBDOFNNwX+SukYFrhPA@mail.gmail.com>
-From: Anderson Nascimento <anderson@allelesecurity.com>
-Date: Wed, 15 Jul 2026 12:59:29 -0300
-X-Gm-Features: AUfX_mwmwtPYmQoqSteupvHqXSL1ozAcd3PCwNoeSxprkSlYvVt9OGA1dlMAwtA
-Message-ID: <CAPhRvkw2xtE2n5q4cA=0CBxMM_CMdw2n_Z_c6ZdtEJMXhwy6BA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] target/i386: Add support for KVM APERF/MPERF
- passthrough
-To: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com, 
- zhao1.liu@intel.com, mtosatti@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2c;
- envelope-from=anderson@allelesecurity.com; helo=mail-vk1-xa2c.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ales0BaHaS0ZgA2d@redhat.com>
+Received-SPF: permerror client-ip=170.10.133.124;
+ envelope-from=peterx@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,152 +129,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ping
+On Wed, Jul 15, 2026 at 04:52:48PM +0100, Daniel P. Berrangé wrote:
+> On Wed, Jul 15, 2026 at 11:48:40AM -0400, Michael S. Tsirkin wrote:
+> > On Wed, Jul 15, 2026 at 06:01:39PM +0300, Michael Tokarev wrote:
+> > > On 14.07.2026 18:42, Vladimir Sementsov-Ogievskiy wrote:
+> > > > Hi all!
+> > > > 
+> > > > Here is a migration for TAP net backend, including its properties and
+> > > > open fds.
+> > > > 
+> > > > With this new feature, management software doesn't need to initialize
+> > > > new TAP and do a switch to it. Nothing should be done around
+> > > > virtio-net in local migration: it just migrates and continues to use
+> > > > same TAP device. So we avoid extra logic in management software, extra
+> > > > allocations in kernel (for new TAP), and corresponding extra delay in
+> > > > migration downtime.
+> > > 
+> > > This is quite a big patch set, - is this really worth the effort to do
+> > > all this just for *local* migration?  What's the possible use case for
+> > > this in real, - am I right this is just about upgrading the host qemu?
+> > > And with that in mind, isn't it sufficient to use what we already have
+> > > (namely, create new tap, start new qemu instance, and migrate the usual
+> > > way), and tolerate some very minor downtime while the networking code
+> > > learns the new network topology (isn't it happening almost instantly
+> > > anyway, and if not, the management can help by sending gratitious ARP)?
+> > > 
+> > > I wonder what's the use for this at yandex?
+> > > 
+> > > Thanks,
+> > > 
+> > > /mjt
+> > 
+> > Well just theoretically, imagine a big VM, reserving twice the amount
+> > of memory just to migrate is not nice at all.
+> 
+> Don't we already have the ability to skip memory transfer by setting
+> the "x-ignore-shared" capability, assuming the VM RAM has a shared
+> memory backing.
 
-On Thu, Jun 25, 2026 at 9:50=E2=80=AFPM Anderson Nascimento
-<anderson@allelesecurity.com> wrote:
->
-> On Tue, Jun 2, 2026 at 11:05=E2=80=AFAM Anderson Nascimento
-> <anderson@allelesecurity.com> wrote:
-> >
-> > Introduce support for exposing and enabling APERF/MPERF MSR passthrough
-> > for x86 QEMU guests when running under KVM.
-> >
-> > The Linux kernel supports a KVM capability allowing the hypervisor to
-> > disable read intercepts on the IA32_APERF and IA32_MPERF MSRs, enabling
-> > guests to track effective frequency directly without VM-exits. QEMU
-> > currently lacks a native way to request this capability or expose the
-> > corresponding feature bit to the guest.
-> >
-> > This patch adds the `aperfmperf` feature flag via `FEAT_6_ECX`
-> > (CPUID.06H:ECX[bit 0]). To ensure safe tracking across power states,
-> > the flag ties into QEMU's existing host power management framework.
-> > When host CPU power management is explicitly requested by the user
-> > (via `-overcommit cpu-pm=3Don`) and the `+aperfmperf` flag is provided
-> > to the CPU, QEMU will invoke the KVM ioctl to drop the APERF/MPERF
-> > MSR read intercepts.
-> >
-> > This implementation allows guest operating systems (such as FreeBSD
-> > or Linux) to dynamically calculate CPU utilization and turbo-boost
-> > metrics without incurring performance overhead from hypervisor trap-and=
--
-> > emulate loops.
-> >
-> > Signed-off-by: Anderson Nascimento <anderson@allelesecurity.com>
-> > ---
-> > Changes in v2
-> > - Added migration flags
-> > - Link to v1: https://lore.kernel.org/all/20260602022048.752453-1-ander=
-son@allelesecurity.com/
-> >
-> >  target/i386/cpu.c     | 18 +++++++++++++++++-
-> >  target/i386/cpu.h     |  2 ++
-> >  target/i386/kvm/kvm.c |  5 ++++-
-> >  3 files changed, 23 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> > index 8929a75c7c..544738d406 100644
-> > --- a/target/i386/cpu.c
-> > +++ b/target/i386/cpu.c
-> > @@ -1544,6 +1544,22 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS]=
- =3D {
-> >          .cpuid =3D { .eax =3D 6, .reg =3D R_EAX, },
-> >          .tcg_features =3D TCG_6_EAX_FEATURES,
-> >      },
-> > +    [FEAT_6_ECX] =3D {
-> > +        .type =3D CPUID_FEATURE_WORD,
-> > +        .feat_names =3D {
-> > +            "aperfmperf", NULL, NULL, NULL,
-> > +            NULL, NULL, NULL, NULL,
-> > +            NULL, NULL, NULL, NULL,
-> > +            NULL, NULL, NULL, NULL,
-> > +            NULL, NULL, NULL, NULL,
-> > +            NULL, NULL, NULL, NULL,
-> > +            NULL, NULL, NULL, NULL,
-> > +            NULL, NULL, NULL, NULL,
-> > +        },
-> > +        .cpuid =3D { .eax =3D 6, .reg =3D R_ECX, },
-> > +        .tcg_features =3D 0,
-> > +        .unmigratable_flags =3D CPUID_6_ECX_APERFMPERF,
-> > +    },
-> >      [FEAT_XSAVE_XCR0_LO] =3D {
-> >          .type =3D CPUID_FEATURE_WORD,
-> >          .cpuid =3D {
-> > @@ -8770,7 +8786,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t ind=
-ex, uint32_t count,
-> >          /* Thermal and Power Leaf */
-> >          *eax =3D env->features[FEAT_6_EAX];
-> >          *ebx =3D 0;
-> > -        *ecx =3D 0;
-> > +        *ecx =3D env->features[FEAT_6_ECX];
-> >          *edx =3D 0;
-> >          break;
-> >      case 7:
-> > diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> > index 67e2ecf325..87864969c7 100644
-> > --- a/target/i386/cpu.h
-> > +++ b/target/i386/cpu.h
-> > @@ -700,6 +700,7 @@ typedef enum FeatureWord {
-> >      FEAT_SVM,           /* CPUID[8000_000A].EDX */
-> >      FEAT_XSAVE,         /* CPUID[EAX=3D0xd,ECX=3D1].EAX */
-> >      FEAT_6_EAX,         /* CPUID[6].EAX */
-> > +    FEAT_6_ECX,         /* CPUID[6].ECX */
-> >      FEAT_XSAVE_XCR0_LO, /* CPUID[EAX=3D0xd,ECX=3D0].EAX */
-> >      FEAT_XSAVE_XCR0_HI, /* CPUID[EAX=3D0xd,ECX=3D0].EDX */
-> >      FEAT_ARCH_CAPABILITIES,
-> > @@ -1232,6 +1233,7 @@ uint64_t x86_cpu_get_supported_feature_word(X86CP=
-U *cpu, FeatureWord w);
-> >  #define CPUID_XSAVE_XFD        (1U << 4)
-> >
-> >  #define CPUID_6_EAX_ARAT       (1U << 2)
-> > +#define CPUID_6_ECX_APERFMPERF (1U << 0)
-> >
-> >  /* CPUID[0x80000007].EDX flags: */
-> >  #define CPUID_APM_INVTSC       (1U << 8)
-> > diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> > index 9e352882c8..ca722ff9e9 100644
-> > --- a/target/i386/kvm/kvm.c
-> > +++ b/target/i386/kvm/kvm.c
-> > @@ -498,6 +498,8 @@ uint32_t kvm_arch_get_supported_cpuid(KVMState *s, =
-uint32_t function,
-> >          }
-> >      } else if (function =3D=3D 6 && reg =3D=3D R_EAX) {
-> >          ret |=3D CPUID_6_EAX_ARAT; /* safe to allow because of emulate=
-d APIC */
-> > +    } else if (function =3D=3D 6 && reg =3D=3D R_ECX) {
-> > +        ret |=3D CPUID_6_ECX_APERFMPERF;
-> >      } else if (function =3D=3D 7 && index =3D=3D 0 && reg =3D=3D R_EBX=
-) {
-> >          /* Not new instructions, just an optimization.  */
-> >          uint32_t ebx;
-> > @@ -3291,7 +3293,8 @@ static int kvm_vm_enable_disable_exits(KVMState *=
-s)
-> >          disable_exits &=3D (KVM_X86_DISABLE_EXITS_MWAIT |
-> >                            KVM_X86_DISABLE_EXITS_HLT |
-> >                            KVM_X86_DISABLE_EXITS_PAUSE |
-> > -                          KVM_X86_DISABLE_EXITS_CSTATE);
-> > +                          KVM_X86_DISABLE_EXITS_CSTATE |
-> > +                          KVM_X86_DISABLE_EXITS_APERFMPERF);
-> >      }
-> >
-> >      return kvm_vm_enable_cap(s, KVM_CAP_X86_DISABLE_EXITS, 0,
-> > --
-> > 2.54.0
-> >
->
-> ping
->
-> Is there anything I should do to get this patch applied?
->
-> --
-> Anderson Nascimento
-> Allele Security Intelligence
-> https://www.allelesecurity.com
+Right, IIUC all similar single-host migrations like this series or CPR (or
+anything else...) should always need to enable x-ignore-shared in the first
+place.  That's almost always the starting point of optimizing local
+migrations.. no matter how the memory will be shared (by the same pool of
+page cache, or persisted over kexec, etc.).
 
+Thanks,
 
+-- 
+Peter Xu
 
---=20
-Anderson Nascimento
-Allele Security Intelligence
-https://www.allelesecurity.com
 
