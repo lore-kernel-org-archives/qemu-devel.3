@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7978C44508
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 13:45:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D44CC44501
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 13:45:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjzuz-0005W0-Po; Wed, 15 Jul 2026 09:44:57 -0400
+	id 1wjzv9-0005cU-RM; Wed, 15 Jul 2026 09:45:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjzux-0005VF-Vf
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 09:44:56 -0400
-Received: from mx1.catap.net ([162.55.82.72])
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjzv5-0005Zq-Nc
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 09:45:03 -0400
+Received: from mx2.catap.net ([65.21.79.163])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjzuv-0007tj-D7
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 09:44:55 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=oLa3hXp
- VybPaEEG+nSSWTh72dsSJUNMzDnoCcO6qWa/539z2z76xH1kJU5byUXh2bK8MoBI8WoB3E
- 2wJfwMhwaLmnyRwxMspw0c+7XdfwtfARp+QrTuuDXWnc5UNLlG28H1ZuNwsWZC/z2luzBG
- BHH3ZrHgt/omwMXfO4VRcam9FqHZhr5wEqBNU4JnVBTRCTO1K71gjrpNWloDa09WCPxmnb
- IaRyQV0FG8rRMcgsJSGcuBvpc6Cxa/qtcvsT5mE3H30+EiZ2ZZZ64hgJfN+8kc9imo49t7
- d7UMjaNWJshpc45ooaG8Y572bLvMe1wRdWalzrfOPX0pogz921VPOCg==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=E
- MUHPNfas3t/n8i/gxlXqlWs5T+o6W3ezbRVV0wl284=;
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjzv2-0007u1-Ty
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 09:45:03 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=WxGznS+
+ J67HYZYgJZkpkY6RR73hEtk/9i1nBIu/NKT8qAN28WXfHoOmzxkhONonXxHbF6htz9DnDM
+ to2FIvDtlTSw8+cUj+eQQMifa6E2qrTU010IQF6oe1mqz8hQOBouKrWAufa9c7uCW+y32d
+ VnpEbIWqd2d2rjd83Rbh50SEmEMquUziTuIjcnykxcq8LxApt8gGnwZiKAIV2B70HC2G5X
+ /1nXKMYOo74Y0kVNOcpcydUdQD6Ggqibv9oHi3lSy6htT1ExocFNwkK9TDuK6txkM3rNNL
+ RGhJAfgcxPnDj2Pb1e/uVwQLczfjuPVOcxyziigohGcuk4l7rwD+amQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=U
+ geDLBflB5zIOmlcl0N8hG70bCLFVmfl2IDtVqd/6H4=;
  h=references:in-reply-to:
  date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=a0oyOe4q0txVjoOyETyIaFuuV3Y89Qzr2HJ9ScHIu1hHXvP+QIcgRuGyA/vtYI/jxDdO
- /0uK3xhg8cq6O2k4v+VXhQCKEY7xHvi1GPiBo7jnV7WvoAmKcmH6OdXcy+P7g6tEXTx4hw
- h/rfaX3gMGtLgH1kYqqGXI5St1BrNXpg8fosb6DV+N1cpfvzVEG2Q/oBCRMo3qs6/+eVTJ
- KCaJkst6iuVY7ISEBlqzMOvwNDv0dfVUsBptp2owWRlUelcb8KnrpbGW1xug7jj1zGKVbU
- VxIPdValnaYT0sOwxwXMb8CUigI3LbJ1eY1DEAOZoDgUS9kl1aXHO51VFsgsbDhw==
+ b=uIyVmbed/AI0vtZ0EMc1N1NwoYlVB7s+UKewg3/21o9YWnfDwA7HdKK2rDbzoEDo7UYo
+ 7csBRHx6ycSrczT3l0yJd/7D+wRCvT+tBQs1zdUidJGTQnrsj95FtZDvux6hQwP8yYRglH
+ aBTqflSLLbaB9xMAEMnyn88zXpCntaQaGZoYB9TbYCBpZe1jttxJNhHOHHWSyoMXTc+9C6
+ 82OIcOdqOUqrGbMH0m7srTWOSc0e8oZdCBlF4lichjtqCI6XyXPvwWdb2+e5Ki/BmmpCiz
+ Dxi5j9IpYByC32IaokpG/z5FiuFWsJjd0Nr0tY9aiDJI5AC816WlrJBR/w5SjOwQ==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=MaOJc516; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=JvZnIhQ6;
+ header.b=faG8B0fU; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=vLPDtqph;
  arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=EMUHPNfa
- s3t/n8i/gxlXqlWs5T+o6W3ezbRVV0wl284=;
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=UgeDLBfl
+ B5zIOmlcl0N8hG70bCLFVmfl2IDtVqd/6H4=;
  h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=MaOJc516PgEhiWvwv8yRsXhd6PAhir/Yb/C
- srAmkeykb9jz8t8nLdLUMoJgfIOMfgDNp3td3mYzmmdGFrwzcON/LjucJKVeJiTvIrVJ8g
- 0o5J1A+oiEeh9Bj5JlV2AfeViUnaFtid4W6llbUXZ0PHe2LXK4fKI2KYqtllvR1AL6rmTK
- HSFEF1Up+Whac2nKTq3GY524JxBHdt8NfxmY4zJbcdDwdbTpu0kgoV7pNgqYqMkq+uvKT0
- X/a7q9QeE/M6AD+b8hQRO/2t5nh3wfUV/rU6rhrribzZn2gAFDyczKOUc5PkCUqyvhh2Vl
- mbozbKJTVVzji73/46C/cuXhfoA==
+ subject:cc:to:from; d=korins.ky; b=faG8B0fUBd5NAE3URTK72A4N0gg2XBUwfk0
+ IHqs7sGp8NDptrs0jnyq/QXiMXy5wTKHEBCSGRJVCl2DztiohzzueHsYVjc8yoRjSqmIOd
+ XDz47YWTU7d+4gaTrf6QJTMPlNH37G8jULTync7aPVZ6j22VdMfqlOPledkICSBEcs+Ddi
+ T2cIU+9EB2ZiLhnwwXZJG7BOsRTKbnVZk8jvhpQY6vS6QmSNw8zAoU6hkuxn7UmBD6wcaH
+ H2vTrawZmFF+SOAMXHMuOIXAPwm/yyOCrHQjVJwKJaIra/89vPlSmTz1D5XcxnVjJExpdk
+ 5i/a50n78CPdqrkyRUUfwn6aUtw==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=EMUHPNfas3t/n8i/gxlXqlWs5T+o6W3ezbRVV0wl284=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=JvZnIhQ66Tp4H0RBG2
- dee0ZP9oKgwZ5AWIUvwJWLdolE+rZPAQbB2N+WV6eGl0Ch2qJ1Y90mzEqekkSG5ejdDw==
-Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id fcf91f7f
+ bh=UgeDLBflB5zIOmlcl0N8hG70bCLFVmfl2IDtVqd/6H4=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=vLPDtqphzOXfdQNcC6
+ R8bBpyzEPptOVvcWuLTCKiS/3e0j2u8+qt9UnTxMV7HDQdoXJedilz31jWq/TWREuqCw==
+Received: by mx2.catap.net (OpenSMTPD) with ESMTPSA id 571c79af
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Wed, 15 Jul 2026 15:44:50 +0200 (CEST)
+ Wed, 15 Jul 2026 15:44:54 +0200 (CEST)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id f5583df9;
- Wed, 15 Jul 2026 15:44:48 +0200 (CEST)
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id 28bfe959;
+ Wed, 15 Jul 2026 15:44:49 +0200 (CEST)
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 To: qemu-devel@nongnu.org
 Cc: "Kirill A. Korinsky" <kirill@korins.ky>
-Subject: [PATCH v2 01/25] target/mips: make CP0 interrupt state atomic
-Date: Wed, 15 Jul 2026 15:43:47 +0200
-Message-ID: <20260715134447.56007-2-kirill@korins.ky>
+Subject: [PATCH v2 20/25] hw/mips: add Octeon LMC controllers
+Date: Wed, 15 Jul 2026 15:44:06 +0200
+Message-ID: <20260715134447.56007-21-kirill@korins.ky>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260715134447.56007-1-kirill@korins.ky>
 References: <20260715134447.56007-1-kirill@korins.ky>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=162.55.82.72; envelope-from=kirill@korins.ky;
- helo=mx1.catap.net
+Received-SPF: pass client-ip=65.21.79.163; envelope-from=kirill@korins.ky;
+ helo=mx2.catap.net
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -94,399 +94,345 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-MTTCG lets interrupt inputs and timer callbacks update CP0_Cause,
-CP0_Status, and CP0_Count while a vCPU checks interrupt state.
-
-Use qatomic accessors for CP0 fields that participate in interrupt and
-timer decisions, and kick remote CPUs explicitly after raising a hard
-interrupt; MIPS interrupt line updates no longer depend on taking the
-BQL.
+Add four Octeon LMC register banks with the DDR training completion,
+leveling, MPR and clock responses used by firmware. Each LMC owns and
+resets its mutable register state.
 ---
- hw/mips/mips_int.c                      | 17 +++++++------
- target/mips/internal.h                  | 13 ++++++----
- target/mips/system/cp0.c                | 27 +++++++++++++--------
- target/mips/system/cp0_timer.c          | 32 ++++++++++++++-----------
- target/mips/tcg/system/special_helper.c | 17 +++++++------
- target/mips/tcg/system/tlb_helper.c     | 21 +++++++++-------
- 6 files changed, 75 insertions(+), 52 deletions(-)
+ hw/mips/octeon.c          | 184 ++++++++++++++++++++++++++++++++++++++
+ hw/mips/octeon_internal.h |   3 +
+ 2 files changed, 187 insertions(+)
 
-diff --git a/hw/mips/mips_int.c b/hw/mips/mips_int.c
-index 26e7dd6d5f..537394c8fd 100644
---- a/hw/mips/mips_int.c
-+++ b/hw/mips/mips_int.c
-@@ -21,30 +21,33 @@
-  */
+diff --git a/hw/mips/octeon.c b/hw/mips/octeon.c
+index f3f8a74cbe..0553f8ea05 100644
+--- a/hw/mips/octeon.c
++++ b/hw/mips/octeon.c
+@@ -10,6 +10,7 @@
+ #include "qemu/units.h"
+ #include "qemu/datadir.h"
+ #include "qemu/host-utils.h"
++#include "qemu/timer.h"
+ #include "qapi/error.h"
+ #include "hw/char/serial-mm.h"
+ #include "hw/core/clock.h"
+@@ -49,6 +50,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonEmmState, OCTEON_EMM)
+ OBJECT_DECLARE_SIMPLE_TYPE(OcteonRstState, OCTEON_RST)
+ #define TYPE_OCTEON_INTC "octeon-intc"
+ OBJECT_DECLARE_SIMPLE_TYPE(OcteonIntcState, OCTEON_INTC)
++#define TYPE_OCTEON_LMC "octeon-lmc"
++OBJECT_DECLARE_SIMPLE_TYPE(OcteonLmcState, OCTEON_LMC)
+ #define TYPE_OCTEON_CSR_BANK "octeon-csr-bank"
+ OBJECT_DECLARE_SIMPLE_TYPE(OcteonCsrBankState, OCTEON_CSR_BANK)
  
- #include "qemu/osdep.h"
--#include "qemu/main-loop.h"
- #include "hw/core/irq.h"
- #include "target/mips/cpu.h"
-+#include "target/mips/internal.h"
+@@ -243,6 +246,24 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonCsrBankState, OCTEON_CSR_BANK)
+ #define OCTEON_RST_SOFT_RST         0x6001680
+ /* U-Boot uses the reset controller to park and release secondary cores. */
+ #define OCTEON_RST_PP_POWER         0x6001700
++#define OCTEON_LMC_BASE             0x88000000
++#define OCTEON_LMC_SEQ_CTL          0x48
++#define OCTEON_LMC_SEQ_COMPLETE     (1ULL << 5)
++#define OCTEON_LMC_MPR_DATA0        0x70
++#define OCTEON_LMC_MPR_DATA1        0x78
++#define OCTEON_LMC_DCLK_CNT         0x1e0
++#define OCTEON_LMC_PHY_CTL          0x210
++#define OCTEON_LMC_PHY_DSK_COMPLETE (1ULL << 49)
++#define OCTEON_LMC_RLEVEL_RANK      0x280
++#define OCTEON_LMC_RLEVEL_STATUS    (3ULL << 54)
++#define OCTEON_LMC_RLEVEL_DBG       0x2a8
++#define OCTEON_LMC_RLEVEL_MASK      0x3f0
++#define OCTEON_LMC_WLEVEL_RANK      0x2c0
++#define OCTEON_LMC_RANK_COUNT       4
++#define OCTEON_LMC_WLEVEL_STATUS    (3ULL << 45)
++#define OCTEON_LMC_WLEVEL_DBG       0x308
++#define OCTEON_LMC_WLEVEL_MASK      (0x0fULL << 4)
++#define OCTEON_LMC_STRIDE           0x1000000
+ #define OCTEON_RST_BOOT_C_MUL_SHIFT 30
+ #define OCTEON_RST_BOOT_PNR_MUL_SHIFT 24
  
- static void cpu_mips_irq_request(void *opaque, int irq, int level)
+@@ -351,6 +372,11 @@ struct OcteonIntcState {
+     uint8_t ciu3_irq_line[OCTEON_MAX_CPUS][OCTEON_CIU3_CP0_IRQ_COUNT];
+ };
+ 
++struct OcteonLmcState {
++    OcteonPeripheralState parent_obj;
++    GHashTable *regs;
++};
++
+ struct OcteonCsrBankState {
+     OcteonPeripheralState parent_obj;
+     MemoryRegion csr;
+@@ -416,6 +442,13 @@ static uint64_t octeon_atomic_write64(uint64_t *ptr, hwaddr addr,
+     return new;
+ }
+ 
++static uint64_t octeon_clock_count(uint64_t hz)
++{
++    uint64_t now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
++
++    return muldiv64(now, hz, NANOSECONDS_PER_SECOND);
++}
++
+ static void octeon_validate_clocks(OcteonMachineState *oms)
  {
-     MIPSCPU *cpu = opaque;
-     CPUMIPSState *env = &cpu->env;
-     CPUState *cs = CPU(cpu);
-+    int32_t irq_bit;
- 
-     if (irq < 0 || irq > 7) {
-         return;
+     if (!oms->cpu_hz || !oms->ref_hz || !oms->io_hz || !oms->ddr_hz) {
+@@ -884,6 +917,94 @@ static void octeon_mio_emm_write(OcteonState *s, hwaddr reg,
      }
+ }
  
--    BQL_LOCK_GUARD();
--
-+    irq_bit = 1 << (irq + CP0Ca_IP);
-     if (level) {
--        env->CP0_Cause |= 1 << (irq + CP0Ca_IP);
-+        qatomic_or(&env->CP0_Cause, irq_bit);
-     } else {
--        env->CP0_Cause &= ~(1 << (irq + CP0Ca_IP));
-+        qatomic_and(&env->CP0_Cause, ~irq_bit);
-     }
- 
--    if (env->CP0_Cause & CP0Ca_IP_mask) {
--        cpu_interrupt(cs, CPU_INTERRUPT_HARD);
-+    if (qatomic_read(&env->CP0_Cause) & CP0Ca_IP_mask) {
-+        cpu_set_interrupt(cs, CPU_INTERRUPT_HARD);
-+        if (!qemu_cpu_is_self(cs)) {
-+            qemu_cpu_kick(cs);
++static bool octeon_lmc_decode(hwaddr reg, OcteonLmcState **lmc, hwaddr *lreg,
++                              OcteonState *s)
++{
++    hwaddr offset;
++    unsigned int index;
++
++    if (reg < OCTEON_LMC_BASE) {
++        return false;
++    }
++
++    offset = reg - OCTEON_LMC_BASE;
++    index = offset / OCTEON_LMC_STRIDE;
++    if (index >= OCTEON_LMC_COUNT) {
++        return false;
++    }
++
++    *lmc = s->lmc[index];
++    *lreg = offset % OCTEON_LMC_STRIDE;
++    return true;
++}
++
++static uint64_t octeon_lmc_get(OcteonLmcState *lmc, hwaddr reg)
++{
++    uint64_t value;
++
++    if (!octeon_reg_lookup(lmc->regs, reg, &value)) {
++        return 0;
++    }
++    return value;
++}
++
++static bool octeon_lmc_rank_reg(hwaddr reg, hwaddr base)
++{
++    return reg >= base &&
++           reg < base + OCTEON_LMC_RANK_COUNT * 8 &&
++           ((reg - base) & 7) == 0;
++}
++
++static uint64_t octeon_lmc_read(OcteonState *s, OcteonLmcState *lmc,
++                                hwaddr reg, hwaddr addr, unsigned size)
++{
++    uint64_t value;
++
++    switch (reg) {
++    case OCTEON_LMC_SEQ_CTL:
++        value = octeon_lmc_get(lmc, reg) | OCTEON_LMC_SEQ_COMPLETE;
++        break;
++    case OCTEON_LMC_MPR_DATA0:
++        value = ~0ULL;
++        break;
++    case OCTEON_LMC_MPR_DATA1:
++        value = 0xff;
++        break;
++    case OCTEON_LMC_DCLK_CNT:
++        value = octeon_clock_count(s->ddr_hz);
++        break;
++    case OCTEON_LMC_PHY_CTL:
++        value = octeon_lmc_get(lmc, reg) | OCTEON_LMC_PHY_DSK_COMPLETE;
++        break;
++    case OCTEON_LMC_RLEVEL_DBG:
++        value = OCTEON_LMC_RLEVEL_MASK;
++        break;
++    case OCTEON_LMC_WLEVEL_DBG:
++        value = OCTEON_LMC_WLEVEL_MASK;
++        break;
++    default:
++        if (octeon_lmc_rank_reg(reg, OCTEON_LMC_RLEVEL_RANK)) {
++            value = octeon_lmc_get(lmc, reg) | OCTEON_LMC_RLEVEL_STATUS;
++        } else if (octeon_lmc_rank_reg(reg, OCTEON_LMC_WLEVEL_RANK)) {
++            value = octeon_lmc_get(lmc, reg) | OCTEON_LMC_WLEVEL_STATUS;
++        } else {
++            value = octeon_lmc_get(lmc, reg);
 +        }
-     } else {
-         cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
-     }
-diff --git a/target/mips/internal.h b/target/mips/internal.h
-index c5c286872e..cd06d84140 100644
---- a/target/mips/internal.h
-+++ b/target/mips/internal.h
-@@ -8,6 +8,7 @@
- #ifndef MIPS_INTERNAL_H
- #define MIPS_INTERNAL_H
- 
-+#include "qemu/atomic.h"
- #include "exec/memattrs.h"
- #ifdef CONFIG_TCG
- #include "tcg/tcg-internal.h"
-@@ -167,9 +168,11 @@ extern const VMStateDescription vmstate_mips_cpu;
- 
- static inline bool cpu_mips_hw_interrupts_enabled(CPUMIPSState *env)
- {
--    return (env->CP0_Status & (1 << CP0St_IE)) &&
--        !(env->CP0_Status & (1 << CP0St_EXL)) &&
--        !(env->CP0_Status & (1 << CP0St_ERL)) &&
-+    int32_t status = qatomic_read(&env->CP0_Status);
++        break;
++    }
 +
-+    return (status & (1 << CP0St_IE)) &&
-+        !(status & (1 << CP0St_EXL)) &&
-+        !(status & (1 << CP0St_ERL)) &&
-         !(env->hflags & MIPS_HFLAG_DM) &&
-         /*
-          * Note that the TCStatus IXMT field is initialized to zero,
-@@ -186,8 +189,8 @@ static inline bool cpu_mips_hw_interrupts_pending(CPUMIPSState *env)
-     int32_t status;
-     bool r;
- 
--    pending = env->CP0_Cause & CP0Ca_IP_mask;
--    status = env->CP0_Status & CP0Ca_IP_mask;
-+    pending = qatomic_read(&env->CP0_Cause) & CP0Ca_IP_mask;
-+    status = qatomic_read(&env->CP0_Status) & CP0Ca_IP_mask;
- 
-     if (env->CP0_Config3 & (1 << CP0C3_VEIC)) {
-         /*
-diff --git a/target/mips/system/cp0.c b/target/mips/system/cp0.c
-index ff7d3db00c..6f222ad586 100644
---- a/target/mips/system/cp0.c
-+++ b/target/mips/system/cp0.c
-@@ -22,6 +22,7 @@
- #include "cpu.h"
- #include "internal.h"
- #include "exec/cputlb.h"
-+#include "qemu/atomic.h"
- 
- /* Called for updates to CP0_Status.  */
- void sync_c0_status(CPUMIPSState *env, CPUMIPSState *cpu, int tc)
-@@ -61,7 +62,8 @@ void sync_c0_status(CPUMIPSState *env, CPUMIPSState *cpu, int tc)
- void cpu_mips_store_status(CPUMIPSState *env, target_ulong val)
- {
-     uint32_t mask = env->CP0_Status_rw_bitmask;
--    target_ulong old = env->CP0_Status;
-+    target_ulong old;
-+    target_ulong status;
- 
-     if (env->insn_flags & ISA_MIPS_R6) {
-         bool has_supervisor = extract32(mask, CP0St_KSU, 2) == 0x3;
-@@ -77,9 +79,11 @@ void cpu_mips_store_status(CPUMIPSState *env, target_ulong val)
-         mask &= ~(((1 << CP0St_SR) | (1 << CP0St_NMI)) & val);
-     }
- 
--    env->CP0_Status = (old & ~mask) | (val & mask);
-+    old = qatomic_read(&env->CP0_Status);
-+    status = (old & ~mask) | (val & mask);
-+    qatomic_set(&env->CP0_Status, status);
- #if defined(TARGET_MIPS64)
--    if ((env->CP0_Status ^ old) & (old & (7 << CP0St_UX))) {
-+    if ((status ^ old) & (old & (7 << CP0St_UX))) {
-         /* Access to at least one of the 64-bit segments has been disabled */
-         tlb_flush(env_cpu(env));
-     }
-@@ -93,8 +97,9 @@ void cpu_mips_store_status(CPUMIPSState *env, target_ulong val)
- 
- void cpu_mips_store_cause(CPUMIPSState *env, target_ulong val)
- {
--    uint32_t mask = 0x00C00300;
--    uint32_t old = env->CP0_Cause;
-+    int32_t mask = 0x00C00300;
-+    int32_t old;
-+    int32_t cause;
-     int i;
- 
-     if (env->insn_flags & ISA_MIPS_R2) {
-@@ -104,10 +109,12 @@ void cpu_mips_store_cause(CPUMIPSState *env, target_ulong val)
-         mask &= ~((1 << CP0Ca_WP) & val);
-     }
- 
--    env->CP0_Cause = (env->CP0_Cause & ~mask) | (val & mask);
-+    old = qatomic_fetch_and(&env->CP0_Cause, ~mask);
-+    qatomic_or(&env->CP0_Cause, (int32_t)(val & mask));
-+    cause = qatomic_read(&env->CP0_Cause);
- 
--    if ((old ^ env->CP0_Cause) & (1 << CP0Ca_DC)) {
--        if (env->CP0_Cause & (1 << CP0Ca_DC)) {
-+    if ((old ^ cause) & (1 << CP0Ca_DC)) {
-+        if (cause & (1 << CP0Ca_DC)) {
-             cpu_mips_stop_count(env);
-         } else {
-             cpu_mips_start_count(env);
-@@ -116,8 +123,8 @@ void cpu_mips_store_cause(CPUMIPSState *env, target_ulong val)
- 
-     /* Set/reset software interrupts */
-     for (i = 0 ; i < 2 ; i++) {
--        if ((old ^ env->CP0_Cause) & (1 << (CP0Ca_IP + i))) {
--            cpu_mips_soft_irq(env, i, env->CP0_Cause & (1 << (CP0Ca_IP + i)));
-+        if ((old ^ cause) & (1 << (CP0Ca_IP + i))) {
-+            cpu_mips_soft_irq(env, i, cause & (1 << (CP0Ca_IP + i)));
-         }
-     }
- }
-diff --git a/target/mips/system/cp0_timer.c b/target/mips/system/cp0_timer.c
-index 6aed5d3af2..622fee357d 100644
---- a/target/mips/system/cp0_timer.c
-+++ b/target/mips/system/cp0_timer.c
-@@ -23,6 +23,7 @@
- #include "qemu/osdep.h"
- #include "hw/core/irq.h"
- #include "qemu/timer.h"
-+#include "qemu/atomic.h"
- #include "internal.h"
- 
- /* MIPS R4K timer */
-@@ -31,7 +32,7 @@ static uint32_t cpu_mips_get_count_val(CPUMIPSState *env)
-     MIPSCPU *cpu = env_archcpu(env);
-     int64_t now_ns;
-     now_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
--    return env->CP0_Count +
-+    return qatomic_read(&env->CP0_Count) +
-             (uint32_t)clock_ns_to_ticks(cpu->count_clock, now_ns);
- }
- 
-@@ -56,15 +57,15 @@ static void cpu_mips_timer_expire(CPUMIPSState *env)
- {
-     cpu_mips_timer_update(env);
-     if (env->insn_flags & ISA_MIPS_R2) {
--        env->CP0_Cause |= 1 << CP0Ca_TI;
-+        qatomic_or(&env->CP0_Cause, 1 << CP0Ca_TI);
-     }
-     qemu_irq_raise(env->irq[(env->CP0_IntCtl >> CP0IntCtl_IPTI) & 0x7]);
- }
- 
- uint32_t cpu_mips_get_count(CPUMIPSState *env)
- {
--    if (env->CP0_Cause & (1 << CP0Ca_DC)) {
--        return env->CP0_Count;
-+    if (qatomic_read(&env->CP0_Cause) & (1 << CP0Ca_DC)) {
-+        return qatomic_read(&env->CP0_Count);
-     } else {
-         uint64_t now_ns;
- 
-@@ -86,12 +87,13 @@ void cpu_mips_store_count(CPUMIPSState *env, uint32_t count)
-      * So env->timer may be NULL, so treat timer as disabled in that case.
-      */
-     MIPSCPU *cpu = env_archcpu(env);
--    if (env->CP0_Cause & (1 << CP0Ca_DC) || !env->timer) {
--        env->CP0_Count = count;
-+    if ((qatomic_read(&env->CP0_Cause) & (1 << CP0Ca_DC)) || !env->timer) {
-+        qatomic_set(&env->CP0_Count, count);
-     } else {
-         /* Store new count register */
--        env->CP0_Count = count - (uint32_t)clock_ns_to_ticks(cpu->count_clock,
--                        qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
-+        qatomic_set(&env->CP0_Count,
-+                    count - (uint32_t)clock_ns_to_ticks(cpu->count_clock,
-+                            qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL)));
-         /* Update timer timer */
-         cpu_mips_timer_update(env);
-     }
-@@ -100,26 +102,28 @@ void cpu_mips_store_count(CPUMIPSState *env, uint32_t count)
- void cpu_mips_store_compare(CPUMIPSState *env, uint32_t value)
- {
-     env->CP0_Compare = value;
--    if (!(env->CP0_Cause & (1 << CP0Ca_DC))) {
-+    if (!(qatomic_read(&env->CP0_Cause) & (1 << CP0Ca_DC))) {
-         cpu_mips_timer_update(env);
-     }
-     if (env->insn_flags & ISA_MIPS_R2) {
--        env->CP0_Cause &= ~(1 << CP0Ca_TI);
-+        qatomic_and(&env->CP0_Cause, ~(1 << CP0Ca_TI));
-     }
-     qemu_irq_lower(env->irq[(env->CP0_IntCtl >> CP0IntCtl_IPTI) & 0x7]);
- }
- 
- void cpu_mips_start_count(CPUMIPSState *env)
- {
--    cpu_mips_store_count(env, env->CP0_Count);
-+    cpu_mips_store_count(env, qatomic_read(&env->CP0_Count));
- }
- 
- void cpu_mips_stop_count(CPUMIPSState *env)
- {
-     /* Store the current value */
-     MIPSCPU *cpu = env_archcpu(env);
--    env->CP0_Count += (uint32_t)clock_ns_to_ticks(cpu->count_clock,
--                        qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
++    return octeon_read64(value, addr, size);
++}
 +
-+    qatomic_add(&env->CP0_Count,
-+                (uint32_t)clock_ns_to_ticks(cpu->count_clock,
-+                        qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL)));
- }
- 
- static void mips_timer_cb(void *opaque)
-@@ -128,7 +132,7 @@ static void mips_timer_cb(void *opaque)
- 
-     env = opaque;
- 
--    if (env->CP0_Cause & (1 << CP0Ca_DC)) {
-+    if (qatomic_read(&env->CP0_Cause) & (1 << CP0Ca_DC)) {
-         return;
-     }
- 
-diff --git a/target/mips/tcg/system/special_helper.c b/target/mips/tcg/system/special_helper.c
-index b54cbe88a3..04ae0bc6c3 100644
---- a/target/mips/tcg/system/special_helper.c
-+++ b/target/mips/tcg/system/special_helper.c
-@@ -24,21 +24,22 @@
- #include "exec/helper-proto.h"
- #include "exec/translation-block.h"
- #include "internal.h"
-+#include "qemu/atomic.h"
- 
- /* Specials */
- target_ulong helper_di(CPUMIPSState *env)
- {
--    target_ulong t0 = env->CP0_Status;
-+    target_ulong t0 = qatomic_read(&env->CP0_Status);
- 
--    env->CP0_Status = t0 & ~(1 << CP0St_IE);
-+    qatomic_set(&env->CP0_Status, t0 & ~(1 << CP0St_IE));
-     return t0;
- }
- 
- target_ulong helper_ei(CPUMIPSState *env)
- {
--    target_ulong t0 = env->CP0_Status;
-+    target_ulong t0 = qatomic_read(&env->CP0_Status);
- 
--    env->CP0_Status = t0 | (1 << CP0St_IE);
-+    qatomic_set(&env->CP0_Status, t0 | (1 << CP0St_IE));
-     return t0;
- }
- 
-@@ -103,13 +104,15 @@ bool mips_io_recompile_replay_branch(CPUState *cs, const TranslationBlock *tb)
- 
- static inline void exception_return(CPUMIPSState *env)
- {
-+    target_ulong status = qatomic_read(&env->CP0_Status);
++static void octeon_lmc_write(OcteonLmcState *lmc, hwaddr reg,
++                             hwaddr addr, uint64_t value, unsigned size)
++{
++    uint64_t old = octeon_lmc_get(lmc, reg);
 +
-     debug_pre_eret(env);
--    if (env->CP0_Status & (1 << CP0St_ERL)) {
-+    if (status & (1 << CP0St_ERL)) {
-         mips_env_set_pc(env, env->CP0_ErrorEPC);
--        env->CP0_Status &= ~(1 << CP0St_ERL);
-+        qatomic_set(&env->CP0_Status, status & ~(1 << CP0St_ERL));
-     } else {
-         mips_env_set_pc(env, env->CP0_EPC);
--        env->CP0_Status &= ~(1 << CP0St_EXL);
-+        qatomic_set(&env->CP0_Status, status & ~(1 << CP0St_EXL));
-     }
-     compute_hflags(env);
-     debug_post_eret(env);
-diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
-index 4398c6f80b..9772df5d6c 100644
---- a/target/mips/tcg/system/tlb_helper.c
-+++ b/target/mips/tcg/system/tlb_helper.c
-@@ -1106,7 +1106,7 @@ void mips_cpu_do_interrupt(CPUState *cs)
-         env->hflags &= ~(MIPS_HFLAG_KSU);
-         /* EJTAG probe trap enable is not implemented... */
-         if (!(env->CP0_Status & (1 << CP0St_EXL))) {
--            env->CP0_Cause &= ~(1U << CP0Ca_BD);
-+            qatomic_and(&env->CP0_Cause, (int32_t)~(1U << CP0Ca_BD));
-         }
-         env->active_tc.PC = env->exception_base + 0x480;
-         set_hflags_for_handler(env);
-@@ -1134,7 +1134,7 @@ void mips_cpu_do_interrupt(CPUState *cs)
-         env->hflags |= MIPS_HFLAG_CP0;
-         env->hflags &= ~(MIPS_HFLAG_KSU);
-         if (!(env->CP0_Status & (1 << CP0St_EXL))) {
--            env->CP0_Cause &= ~(1U << CP0Ca_BD);
-+            qatomic_and(&env->CP0_Cause, (int32_t)~(1U << CP0Ca_BD));
-         }
-         env->active_tc.PC = env->exception_base;
-         set_hflags_for_handler(env);
-@@ -1148,7 +1148,9 @@ void mips_cpu_do_interrupt(CPUState *cs)
-                 offset = 0x200;
-             } else {
-                 uint32_t vector = 0;
--                uint32_t pending = (env->CP0_Cause & CP0Ca_IP_mask) >> CP0Ca_IP;
-+                uint32_t pending =
-+                    (qatomic_read(&env->CP0_Cause) & CP0Ca_IP_mask) >>
-+                    CP0Ca_IP;
++    value = octeon_write64(old, addr, value, size);
++    octeon_reg_store(lmc->regs, reg, value);
++}
++
+ static bool octeon_ciu3_source_from_intsn(uint32_t intsn,
+                                           unsigned int *source)
+ {
+@@ -1688,7 +1809,9 @@ static const MemoryRegionOps octeon_ciu3_ops = {
+ static uint64_t octeon_csr_read(void *opaque, hwaddr addr, unsigned size)
+ {
+     OcteonState *s = opaque;
++    OcteonLmcState *lmc;
+     hwaddr reg = addr & ~7ULL;
++    hwaddr lreg;
+     hwaddr ereg;
+     uint64_t value;
  
-                 if (env->CP0_Config3 & (1 << CP0C3_VEIC)) {
-                     /*
-@@ -1246,8 +1248,9 @@ void mips_cpu_do_interrupt(CPUState *cs)
-     case EXCP_CpU:
-         cause = 11;
-         update_badinstr = 1;
--        env->CP0_Cause = (env->CP0_Cause & ~(0x3 << CP0Ca_CE)) |
--                         (env->error_code << CP0Ca_CE);
-+        qatomic_and(&env->CP0_Cause, (int32_t)~(0x3U << CP0Ca_CE));
-+        qatomic_or(&env->CP0_Cause,
-+                   (int32_t)(env->error_code << CP0Ca_CE));
-         goto set_EPC;
-     case EXCP_OVERFLOW:
-         cause = 12;
-@@ -1305,9 +1308,9 @@ void mips_cpu_do_interrupt(CPUState *cs)
-                 set_badinstr_registers(env);
-             }
-             if (env->hflags & MIPS_HFLAG_BMASK) {
--                env->CP0_Cause |= (1U << CP0Ca_BD);
-+                qatomic_or(&env->CP0_Cause, (int32_t)(1U << CP0Ca_BD));
-             } else {
--                env->CP0_Cause &= ~(1U << CP0Ca_BD);
-+                qatomic_and(&env->CP0_Cause, (int32_t)~(1U << CP0Ca_BD));
-             }
-             env->CP0_Status |= (1 << CP0St_EXL);
-             if (env->insn_flags & ISA_MIPS3) {
-@@ -1333,8 +1336,8 @@ void mips_cpu_do_interrupt(CPUState *cs)
- 
-         env->active_tc.PC += offset;
-         set_hflags_for_handler(env);
--        env->CP0_Cause = (env->CP0_Cause & ~(0x1f << CP0Ca_EC)) |
--                         (cause << CP0Ca_EC);
-+        qatomic_and(&env->CP0_Cause, (int32_t)~(0x1f << CP0Ca_EC));
-+        qatomic_or(&env->CP0_Cause, cause << CP0Ca_EC);
+@@ -1726,6 +1849,10 @@ static uint64_t octeon_csr_read(void *opaque, hwaddr addr, unsigned size)
          break;
-     default:
-         abort();
+     }
+ 
++    if (octeon_lmc_decode(reg, &lmc, &lreg, s)) {
++        return octeon_lmc_read(s, lmc, lreg, addr, size);
++    }
++
+     if (octeon_mio_emm_decode(reg, &ereg)) {
+         return octeon_mio_emm_read(s, ereg, addr, size);
+     }
+@@ -1740,10 +1867,17 @@ static void octeon_csr_write(void *opaque, hwaddr addr,
+                              uint64_t value, unsigned size)
+ {
+     OcteonState *s = opaque;
++    OcteonLmcState *lmc;
+     hwaddr reg = addr & ~7ULL;
++    hwaddr lreg;
+     hwaddr ereg;
+     uint64_t old;
+ 
++    if (octeon_lmc_decode(reg, &lmc, &lreg, s)) {
++        octeon_lmc_write(lmc, lreg, addr, value, size);
++        return;
++    }
++
+     if (octeon_mio_emm_decode(reg, &ereg)) {
+         octeon_mio_emm_write(s, ereg, addr, value, size);
+         return;
+@@ -2209,6 +2343,18 @@ static void octeon_intc_reset_hold(Object *obj, ResetType type)
+     octeon_intc_update_all_cpus(s);
+ }
+ 
++static void octeon_lmc_reset_hold(Object *obj, ResetType type)
++{
++    OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_GET_CLASS(obj);
++    OcteonLmcState *lmc = OCTEON_LMC(obj);
++
++    if (opc->parent_phases.hold) {
++        opc->parent_phases.hold(obj, type);
++    }
++
++    g_hash_table_remove_all(lmc->regs);
++}
++
+ static void octeon_csr_bank_reset_hold(Object *obj, ResetType type)
+ {
+     OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_GET_CLASS(obj);
+@@ -2256,6 +2402,16 @@ static void octeon_rst_finalize(Object *obj)
+     g_hash_table_destroy(OCTEON_RST(obj)->regs);
+ }
+ 
++static void octeon_lmc_init(Object *obj)
++{
++    OCTEON_LMC(obj)->regs = octeon_reg_table_new();
++}
++
++static void octeon_lmc_finalize(Object *obj)
++{
++    g_hash_table_destroy(OCTEON_LMC(obj)->regs);
++}
++
+ static void octeon_csr_bank_init(Object *obj)
+ {
+     OCTEON_CSR_BANK(obj)->values = octeon_reg_table_new();
+@@ -2302,6 +2458,15 @@ static void octeon_intc_class_init(ObjectClass *klass, const void *data)
+                                        NULL, &opc->parent_phases);
+ }
+ 
++static void octeon_lmc_class_init(ObjectClass *klass, const void *data)
++{
++    OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    resettable_class_set_parent_phases(rc, NULL, octeon_lmc_reset_hold,
++                                       NULL, &opc->parent_phases);
++}
++
+ static void octeon_csr_bank_class_init(ObjectClass *klass, const void *data)
+ {
+     OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_CLASS(klass);
+@@ -2326,10 +2491,16 @@ static OcteonPeripheralState *octeon_new_peripheral(OcteonState *s,
+ 
+ static void octeon_create_peripherals(OcteonState *s)
+ {
++    unsigned int i;
++
+     s->mio = OCTEON_MIO(octeon_new_peripheral(s, TYPE_OCTEON_MIO, 0));
+     s->emm = OCTEON_EMM(octeon_new_peripheral(s, TYPE_OCTEON_EMM, 0));
+     s->rst = OCTEON_RST(octeon_new_peripheral(s, TYPE_OCTEON_RST, 0));
+     s->intc = OCTEON_INTC(octeon_new_peripheral(s, TYPE_OCTEON_INTC, 0));
++    for (i = 0; i < OCTEON_LMC_COUNT; i++) {
++        s->lmc[i] = OCTEON_LMC(octeon_new_peripheral(s, TYPE_OCTEON_LMC,
++                                                      i));
++    }
+     s->csr_bank = OCTEON_CSR_BANK(octeon_new_peripheral(
+                                       s, TYPE_OCTEON_CSR_BANK, 0));
+ }
+@@ -2341,7 +2512,12 @@ static void octeon_realize_peripheral(OcteonPeripheralState *dev)
+ 
+ static void octeon_realize_peripherals(OcteonState *s)
+ {
++    int i;
++
+     octeon_realize_peripheral(&s->csr_bank->parent_obj);
++    for (i = OCTEON_LMC_COUNT - 1; i >= 0; i--) {
++        octeon_realize_peripheral(&s->lmc[i]->parent_obj);
++    }
+     octeon_realize_peripheral(&s->intc->parent_obj);
+     octeon_realize_peripheral(&s->rst->parent_obj);
+     octeon_realize_peripheral(&s->emm->parent_obj);
+@@ -2491,6 +2667,14 @@ static const TypeInfo octeon_machine_types[] = {
+         .instance_size = sizeof(OcteonIntcState),
+         .class_init = octeon_intc_class_init,
+     },
++    {
++        .name = TYPE_OCTEON_LMC,
++        .parent = TYPE_OCTEON_PERIPHERAL,
++        .instance_size = sizeof(OcteonLmcState),
++        .instance_init = octeon_lmc_init,
++        .instance_finalize = octeon_lmc_finalize,
++        .class_init = octeon_lmc_class_init,
++    },
+     {
+         .name = TYPE_OCTEON_CSR_BANK,
+         .parent = TYPE_OCTEON_PERIPHERAL,
+diff --git a/hw/mips/octeon_internal.h b/hw/mips/octeon_internal.h
+index a262107b54..96443a9d64 100644
+--- a/hw/mips/octeon_internal.h
++++ b/hw/mips/octeon_internal.h
+@@ -21,6 +21,7 @@
+ #define OCTEON_MIO_BOOT_REG_CFG_COUNT 8
+ #define OCTEON_MIO_BOOT_LOC_SIZE    0x100
+ #define OCTEON_MIO_EMM_BUF_SIZE     512
++#define OCTEON_LMC_COUNT            4
+ #define OCTEON_TWSI_COUNT           2
+ #define OCTEON_TWSI_STAT_IDLE       0xf8
+ #define OCTEON_SPD_EEPROM_SIZE      139
+@@ -42,6 +43,7 @@ typedef struct OcteonMioState OcteonMioState;
+ typedef struct OcteonEmmState OcteonEmmState;
+ typedef struct OcteonRstState OcteonRstState;
+ typedef struct OcteonIntcState OcteonIntcState;
++typedef struct OcteonLmcState OcteonLmcState;
+ typedef struct OcteonCsrBankState OcteonCsrBankState;
+ 
+ typedef struct OcteonCPUState {
+@@ -73,6 +75,7 @@ struct OcteonState {
+     OcteonEmmState *emm;
+     OcteonRstState *rst;
+     OcteonIntcState *intc;
++    OcteonLmcState *lmc[OCTEON_LMC_COUNT];
+     OcteonCsrBankState *csr_bank;
+     OcteonSpdEepromState *spd[OCTEON_SPD_EEPROM_COUNT];
+     SerialMM *uart;
 -- 
 2.54.0
 
