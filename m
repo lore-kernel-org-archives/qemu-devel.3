@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77F9DC4450B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EBDBC44508
 	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 03:37:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjqNj-0003E5-MP; Tue, 14 Jul 2026 23:33:59 -0400
+	id 1wjqNj-0003EB-R2; Tue, 14 Jul 2026 23:33:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wjqNQ-000382-EA; Tue, 14 Jul 2026 23:33:41 -0400
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ id 1wjqNa-0003BP-M4; Tue, 14 Jul 2026 23:33:51 -0400
+Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wjqNO-0000oW-2K; Tue, 14 Jul 2026 23:33:40 -0400
+ id 1wjqNZ-0000rT-6l; Tue, 14 Jul 2026 23:33:50 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=aOA39q+pxLLRu49e7Twy36OEiYT9VPhllqzl48BshdA/fjTUokgYLzA+Zv0EV6SKtotjmu9ULstYBS4a0XyTz0DSMnTXwQ/CzQX/tFXnZ6p54ncWu6roIMFSAE+bN4obYMPqzPaQ4DUuIaaVCK3+GOpItND/Sm6Q+lfdDj+AM4UNkNGrQWkNxMFjIpjRl4gywFuLXhoQwT9hHRMhZvsIVRfQ8XmHI7qrU19bTrU9vYycrl8S26DETYGs1/onpz+RJMB4zD9fwmvywe7ej76tDHJgfFs4cKxaL0zrHIo0JpCHhByEeG1UL1o33BLXYZA+U5jOsfwzNg/knWwBJdLA4w==
+ b=y1bMXHtXNgQk26GNWXpC8Uw3cCCrRoMIzHvwryA21K3LPVymcpczynJJ0iTAWjAk/NMApWoOIXDDL40C9SvXV27ZI5NveMSIAJ/HvpkwMdNrakgtBZudmGqgCyZj1KOgl1j2ULVWy5mp9iJxYsz1q0p5HvtAFAsszv05AVeJvL6lqcGHwaLoCeR7lTCm3UdN65CgjUerbuc1vy9F9WUzkfySIB/ppkV4xrCRd/dUJF7hjGA35IPVY6EWQW5kLIBmyxxFeJcszdRtHx0vKxsH6eSqYOzugixMUQQm7ZhDKW/p5NXi66Lgp5U/sRmV19GOe+0IGgGJkioS3jyKRiVTGw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lEYwu2gJ/fyU8QsoRe5NSTkyYklVb9LQ9lBHS4RtXw4=;
- b=lklnv2zmKdF448Apvm4jDL8CugqSh+zX3HgR5dzqrtuX6xxL+SY6DCIFIHOGxxyPXv7EY0CUEy9xgOr4z51wzaZ4fESbJUgNRJgFQKPaqp9tZFdnxKX4ECeukRTPbqpZuiuO0o8/5iF+1P0dl+8xaL6a9bopkstrJRQOEiug0Kp8TIaxggVLnaPJFnN8j56GpxxhL19iA0F7GQnSe8kpdv8vaGYAuSjYe+tIj5IKYdFN4CPloM8JuC+CPLVY7EVydv1JGjzUaXOfs90JBng+Wd6znZjuqac+c0B3buzUVP+Oeza/R/wt9+0zStm4lbBPiD1FlyF+9dIhsxt6lRKefw==
+ bh=fo/0X/sP7KOxrB3v8Kz0RC+hKyUFyDa2nND+3OsxO58=;
+ b=x7YAcb7vYaNXYBtSDT/pn3r1sTkWN4oGpgy9pBQX8OBPElbnva9QRcFS/wQt2C1E3H+tK9P5iiXCTXsMzlJkiAtGmiX1+2/4nHQmwNZu1qVTjAV/L7LDgBCjhu2yLfRMf6nZXZzXE1oK3FfkWSeOKWvC4NBQnlLZWJAGefEAAsEwe2wqntZ0kEv+Az4b7NAYIgcMM9dVn5p3mojc/TDEkkBOUqtoJ1lPie6cbsASu3L0KJ8RIJANO1LqpnLNvLQgBYC/M6Qn/TtC/SPa2b2aFjPia+jFRWn5hSI6dBlEG0bxgDXZrFNUo5AT3rH6L9F/njD5CZxEr0ipXuItcNvX0A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lEYwu2gJ/fyU8QsoRe5NSTkyYklVb9LQ9lBHS4RtXw4=;
- b=SXySmVabosDlaQhYMJWazaqvwQzTvdCe3KG8eEbef5ma+g2nGABRskLcYNezWWcGo7xGxCau6deCSZvpvo2Ab2UlK/AnH2dU08djJ1KPny2vl6Tr1gLJdfKQk2HHl30S5l/T/BwVOHS0oEz8ZknegbeZGTEJMr+qSwFKL8pIBbcYM+m369pknpbyQtmR+EnocvN8XyJ9GKbOD5iVIiX3ZcTsNYOSWAsHvfSeZkDWmlBWH15/P/ULZnT7dyQh7+04Npf1COfalFPLAzvj5B48hUbs0OzvJs+l6mzOCXzlAbJZ4u//an7WQgtC95kGqi20NC/s1w5hPoLwmMNQBflb5Q==
+ bh=fo/0X/sP7KOxrB3v8Kz0RC+hKyUFyDa2nND+3OsxO58=;
+ b=cj6GyZ3f4aCCw3PAne0ZHpyImZ7+CNmNrAEgTnKkjNCJbiulNp2cdISeD4FZ+JvrdGZ2HsZb2hgzcPUhfjg3xEXAJrdlxANej91zLeILKFx9HWz3aA9UTvCQGAXg0AHgNM4eA+uwLBJPkW5x6cchlySZHKtK9NPYfPT5kAqMOYs8uat6JTx+VtTy4+J2gbtg0F8X3UXxteuhyccG2SU3oUvvKfI1b1Zt4wgxgSEi+6Hb0eOnU1edzQ6C78RNbGE8y3vgOtN2o/GlqgAky4CnCtoX3HGIM0O9Vjz5RpH4Ta/IIZNXKu0glffy/V3gi1B9MxB56dUqkfREYlZ+xny2JA==
 Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
- by TY0PR06MB5258.apcprd06.prod.outlook.com (2603:1096:400:205::13)
+ by TYNPR06MB8766.apcprd06.prod.outlook.com (2603:1096:405:3cd::19)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.11; Wed, 15 Jul
- 2026 03:33:30 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.19; Wed, 15 Jul
+ 2026 03:33:40 +0000
 Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
  ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
  ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0223.008; Wed, 15 Jul 2026
- 03:33:30 +0000
+ 03:33:40 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: =?iso-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
  =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
@@ -54,11 +54,13 @@ To: =?iso-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
  <pbonzini@redhat.com>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v2 10/17] crypto/cipher-nettle: Implement AES-GCM
-Thread-Topic: [PATCH v2 10/17] crypto/cipher-nettle: Implement AES-GCM
-Thread-Index: AQHdFAq0Ca6722eZ5EKRna+Cx0yEsw==
-Date: Wed, 15 Jul 2026 03:33:29 +0000
-Message-ID: <20260715033311.1648424-11-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 17/17] tests/functional/aarch64/test_aspeed_ast2700: Drop
+ the AST2700 crypto self-test workaround
+Thread-Topic: [PATCH v2 17/17] tests/functional/aarch64/test_aspeed_ast2700:
+ Drop the AST2700 crypto self-test workaround
+Thread-Index: AQHdFAq6wZOaw0LUaUCZCSfN5uAscQ==
+Date: Wed, 15 Jul 2026 03:33:40 +0000
+Message-ID: <20260715033311.1648424-18-jamin_lin@aspeedtech.com>
 References: <20260715033311.1648424-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20260715033311.1648424-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -68,72 +70,72 @@ X-MS-TNEF-Correlator:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|TY0PR06MB5258:EE_
-x-ms-office365-filtering-correlation-id: b59982c7-bee1-4cfa-60e1-08dee221d6d5
+x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|TYNPR06MB8766:EE_
+x-ms-office365-filtering-correlation-id: 4f6e0ee2-a7c2-4fb5-faea-08dee221dd25
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|366016|7416014|376014|23010399003|56012099006|22082099003|18002099003|38070700021|921020;
-x-microsoft-antispam-message-info: EDVq9hukrgtCef/HPa9eYRWnr40KA07yamP6e0RmnA5+xX20X0wSxuiHSjhCUgMt48B9vbKHPJNbg1P0Z7EYyRl8eQk8tZ3CiBmKFGZgcsz5Qded4Rafs1hPx1x4i+z5PnFCKGahqGCnkES5wNuvtpfobHavaTTscPrpne+aCqvI7Je/lkCAf3v/J1QsZr63b+zxRfRbF3IH6LbPl3Vvm4QquR09uNfCTLD99KYGW4VcHNvqRz9QKbB+c/V1qpYXX+o8hv1l94HA8mTDS1Z3akt0hPrkhyvICDDGeix1gQsDsmR+VErftUC8eFnj0wcUho9Qi6em5toqVwbnG79a6SaxjAlX+sjBCu19NJZhoRZBQuynGuT1dnUAjxXLiFVYPqYX/MtoHZLgRFdieW7LBDS+cXcH8cWzzbi4MlZJyLXbCw1kd3uA/JRKXwfIaPVw5if88sAkfA4NfZMdI0OD/lYf3sYmjR2TFXZN+WtIws7LZV7THVitV5y7dPFUg0oIid0LNClo78kRpKArk+O1TS0aoKGEaGuzoTSAvZfGvZ/VGJJJQHVJAlxjIGi7owXzcpoeq5u8gjP6SbTYArymtO4oBnL8HpFnE8t5xbA5Gx8DaApTZ5QEaotOGWq96DLn9D74dDKw4P2VhjvFLvo/EFXHVcGB+xVE/cz1gQPr240i14kiMGZWYeJXblXqPQwTXHVvsoFPbU7zCkQyBzJP10Y2qCiXDSa+k0/1Syn/Quqs4E9FhBsvswk/sx8upf4W
+ ARA:13230040|23010399003|7416014|376014|366016|1800799024|921020|38070700021|56012099006|22082099003|18002099003;
+x-microsoft-antispam-message-info: EBvf/F1HsVwhpI0h3zNnIBiAeQCmz4FIXRPGGoppexXKN6pmKXt6IIRsyISqcEEZRNgAHpxvs6vPP5pZbwWcxnpRQTTf0CLNe6LXqkF+anidB2zQHr8jdeuOkXvmn16uh2Qaj25GCXdFFpooOPis17AwF1I5H6+n6f+V0liyuXcV18vVeqajdbrbPKtQQo1NNr2vd4FbZBr4bAPplhYc0/Kwx8TnM7KfW78KQJllsuDfYKiRThPko4UnJVs44hQ0QEPyXbiXew1GFVL4uTNcccw6E3p7pI3Va6lS8Ms+oHqeBBJDKU8zosK8BgEgtpaaT9HKsPlWwIw7pV6D62pd85GkyBZNTPKUAH51SxyX1ckP9Ol+NZvF8g6y6003kQvTqIV3xL1RnnxGhgHL3IQKvlLPM3klddzK2J7JSwF0vCj80fRl/rgBbXcQYIxg7g2/4C5dKDnIXWP/iCRY21O7CQw+eB9ZX6kcAsD0NtcNB3sDaikm0EMWjqOpDezIjkNHgLIm1zeykgrGIEN4JRDfIJ7htPS7rn+e0+Y4X5RW+P7MZvBeZbjpDOFGRv2+X/WW6hEBxh3zjDtLzLIJ6CqD9qs6ViDfUzAIiDHKthJSl4ehi7Cm9zHA6UeLDe/UUnlx6PEGvrBdPLBkaC9DNg+wRjN76GvR7Aewtitw87mX2Lu9X2/8c+XIPNbf830QZv5Qn/IQrQQvFwlf+/h/FE/oso+RiT8row3RAKAAIjFfG2Whhzezz80ObDkm1WK8HRzs
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(7416014)(376014)(23010399003)(56012099006)(22082099003)(18002099003)(38070700021)(921020);
+ SFS:(13230040)(23010399003)(7416014)(376014)(366016)(1800799024)(921020)(38070700021)(56012099006)(22082099003)(18002099003);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?1ia/7dFCvB5ztSgvEI+fv+kOmowG1+EfMkc5Lw5ZRRcja25Eop9Siqt7bH?=
- =?iso-8859-1?Q?axopelwUZFxZeSmilu3mOuVVlf2tBnTMKgixKRVKXBf0TQdlsbYvfqaF3q?=
- =?iso-8859-1?Q?B4SuEXDs0N/XNut17U34woKVxdBlwUnCK6oLl8r5tXGd/C3VjtZIRu5/lQ?=
- =?iso-8859-1?Q?4aCB6tCEA7rVyIxptkYrUtJbnQQwhyx4xLwYaUkppOiyxuPFv5vd1+sjHM?=
- =?iso-8859-1?Q?Z0IGgsOAEmsaxU6Jc65k7l7bpObqk3eL2RhidL60l6I7YaCvl9hrqt/yrQ?=
- =?iso-8859-1?Q?Oc6SGPhabc9kOfEHniqbxar6xuGNlG8Hrr+r856BBTibggiOYdsjuTYdEC?=
- =?iso-8859-1?Q?kSQfkYBdHAbVLuOgf8zwYFTQUiIMnd3R7FVLCF4sbDQRdJIYgPnPY2ZY/t?=
- =?iso-8859-1?Q?7u0gZ+5G7NsItg6bIQgvqHvoNMleKX+RSnss+l15HFggluM40lFmkQ/fPm?=
- =?iso-8859-1?Q?mVQNLnrN0Syk1tWcZyVNv4gScHw7+kCqeeD53Jg0FJigPuQwl/8bs4l/jN?=
- =?iso-8859-1?Q?I8M5ycCTD0LS1Jx8zvzZYWzIRTlaJZeeaX1XE3/7qLOoERM0ZebT0KC/7p?=
- =?iso-8859-1?Q?dSJak5kxYBRUa35RDGdgKMU3OG149TurVdYLxYc0NjLr2Is2s8PFKG4xRN?=
- =?iso-8859-1?Q?bcIr9/Gs2rL/0F3McwZLO6TMz9/fPYa5NkFbOZMzeor4xZ71/DwcN5eIhU?=
- =?iso-8859-1?Q?9PBiwT3ttaYgZLF6aMivhRqHYAr8Y7Z1aH32A+AQlYWZDxRp/i8fCwrQ13?=
- =?iso-8859-1?Q?4lWUnlm6hG7+FztqHEXGr+Lnxde4i5GE0rnKO7R6YIATLaJKqcWiphfJtW?=
- =?iso-8859-1?Q?DNi0xTxMDSOZlHDAV5FJdURPXaoI0q2dI8NwO8lKBiKatia7lGHfHbTfBf?=
- =?iso-8859-1?Q?bMThF0Al4GwWdQELwSdVIDECtfGovT6MOVQfpZQyrwbnDFFyWhc/NwnDDk?=
- =?iso-8859-1?Q?qNAjfzHunLK0zRo8Dv3+NcXOydbe1ADH5sdresBmxwx9fO6/tIO+70Xd7e?=
- =?iso-8859-1?Q?gg16SBMfTgfrqShZZw9QWm+I9ky3lOtgUmHE2eHAXv671l8FoXjyqa2MUV?=
- =?iso-8859-1?Q?jyjTKxe5AnHss2JtWec/eEucOYKzK8Xg6cE67uNtjJwEFeXHQK6Mo0B0Sz?=
- =?iso-8859-1?Q?RiDFH8kmytucWVElQjOA0hzVaxmpQf34usx/joaiwwIt0d4a5mVKJaSDsg?=
- =?iso-8859-1?Q?FWU+bZOIvioABP7VhJctDX0PPWqyvnapotlTJz1kAo5Xhyh+6EZSMDzGbU?=
- =?iso-8859-1?Q?0Uu4aVw6yV4NmTm3lkUyV9F/B6LWwmg6ag92s8ogYJJUgAb/rhxUMRuMLH?=
- =?iso-8859-1?Q?gyo4oZuaxDWLsoZvP6mtWqhu36XyqlNTvoqbwMptIAcD5AN2dmB2ANyZA+?=
- =?iso-8859-1?Q?HN0VkAJHfaVllDI3yQxxllrOWNPvEzgMlrxP6A4O1Fh4iWeFbEVT0YJJ/p?=
- =?iso-8859-1?Q?szqSY7bxUzN0fk6HlhW7sqMVmTvu+Bi6FxEFg51ibMxveefT+oFbhyhTh5?=
- =?iso-8859-1?Q?8WI6sRSFP13Tbi5GQEWYzddsfIKWgH4w7sH5nqNJime+earXjPF9PLjoqj?=
- =?iso-8859-1?Q?hWApO4bOrzi7QU768uBu4s1mNoz8qKw4+uETILdZiaZDVBPKdTsfQGbQTu?=
- =?iso-8859-1?Q?8Ovxr6S9w0YonP25BSKHx2U6E1GoAJ6uFn4DNeZBPZE/jvxtZZI3m+vtP+?=
- =?iso-8859-1?Q?tFfCwuKzO9rg4UoMIQIfCZq8bmiUaEn8vCcSodpsTejR5dDO7YKdBlFuXh?=
- =?iso-8859-1?Q?zkwEirIw+UwJsVBoZOVdUFltSEzI7OEM3+6BVtUVAZ8CZk/aPCpFjc93fi?=
- =?iso-8859-1?Q?zPkTYP/ARA=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?kt73Za2oWa/Kc0W8/abRl5gEA++rMSSaUt0AnpPBO4yNCCNB2yZuVaHiu1?=
+ =?iso-8859-1?Q?ksecTX5TVP5E3myPPhIcvk8ZPwln8zM4as1TGtgjfUiho6dJ0AXAIBVmsL?=
+ =?iso-8859-1?Q?8uEkZeLiMkBP9PYVxCteq6ohGilI/6F0sTp1URUc9T2aE6l+7kk4OLy+5s?=
+ =?iso-8859-1?Q?//pfTQj6d0b5TvmR0hmWWiw94e4+Hdet8K3ECLtvVoEcWS1Q2ZUdUu/XcF?=
+ =?iso-8859-1?Q?bFlNit//vNG0WZrXBJgH5L4gXkojPrvpU2PVvGwe0I21eVTttX5KQtAHmG?=
+ =?iso-8859-1?Q?2zrs/pf2hm3BpUPjDB1c0FTEI0AXbYuyAoqAVND2RGo5akZzrcwmjUdFw/?=
+ =?iso-8859-1?Q?OQncUE0kG9QzlhnBYiiEqKR5yF4cCtFpSh3IwZ8rWXUj5wjjmMoo0eSk8s?=
+ =?iso-8859-1?Q?ZILTrjzYxBKI8mkfqqBY5nKTcA7SA3vFe89ycHt8ELbP33PMu3oGUO5sJF?=
+ =?iso-8859-1?Q?/6oxy+fAkX6aiENX/SKuF61MH858gnzCa2vOIAtxUllbms+mzwkepsFLML?=
+ =?iso-8859-1?Q?X67bFB8pQH2QncfTtK2Lc98f7qVWJv4oiZhlBflsI6noBXQSjsWkmtSWkd?=
+ =?iso-8859-1?Q?bPeXNKCiomf1ZXd25VhPNp5RF4w547cTSYSXu544z5hXKEP4JzkVyQ3SbJ?=
+ =?iso-8859-1?Q?EE5wg0RkXUHXx6x/Bedq1dOQBAMAguMDvYl09fftaWRNjWF45TvN9e4jnN?=
+ =?iso-8859-1?Q?s0zYt92qYE2aFu2gDRDAkn5D38PViO7i9iG4Y/OadYRI+6CgtGMtYiqnit?=
+ =?iso-8859-1?Q?MNIVQjAKLN8pC0VXMfpIxTs4UCozhO7rViXm9NhNTQze7TYdT4ezCllIR/?=
+ =?iso-8859-1?Q?g5qpBvMuZhzBqW3wBbQiweHgbtzY1O80J68KO7D75KaogfvFi+mrxs4szM?=
+ =?iso-8859-1?Q?2/zhx/+Hwlo5H/50GD/OkFj2yiYMAkwbJjN7xC9USPmxSWCVof4n2WWetr?=
+ =?iso-8859-1?Q?r5VbCehhny5/EX869n0DKS5knCvW97Y+icCC4x0gQ/y8EqcxFXdGKkSzZJ?=
+ =?iso-8859-1?Q?HuBNYIKRyjHOLNfnKWszVbuB/llozTbbO3o24GoiJ8IUuLf59b4zLWi88Y?=
+ =?iso-8859-1?Q?V1Vsu7TSgnH+aWxfV7HlEXEBwbhYK1gS+TlhFo25XiCFHLtE9cSDxA9RH3?=
+ =?iso-8859-1?Q?6nNAFuqx4xz5E9d8F0RZH2NOuxXhOmUgjtMiBeLF6MJtZg3YVdVXBvXwn1?=
+ =?iso-8859-1?Q?suSLrEFT4Q54DrXCuIW9joVCWgnoyIhF9lGOYnOQPf2i1s7VPy9duEwD7z?=
+ =?iso-8859-1?Q?D3oTt7Q5O5j9XUchsJ37HzFN8cc7tAa3v4AS+/P8wrndlPvJvswmeCxFuc?=
+ =?iso-8859-1?Q?kr3L9YwZA5hXquckSte6KO5elCwPv+pPmF75Q4vzZPenu9o4SKZxlr+1np?=
+ =?iso-8859-1?Q?w6g04Zp866yiYeOetkubKshTpapM6s8mu2pPZdPGgNrhmeW0X4lsx1TO+e?=
+ =?iso-8859-1?Q?0z9uz6ZW5soqTyjdZ+ileRHGvzizDI1Mkx36WoRlmGNKTAej2eGFu0lFPu?=
+ =?iso-8859-1?Q?jP+Gol/ncvfYAzlUzMBwbWR2qL+6UYkHzTR4tThpmW6EfSuOzFTwARYP97?=
+ =?iso-8859-1?Q?m1nMO4fO/kOvJk6hA7GRXM/uwMgV1jBARA4gsxXmMEV5vrTQ1a48OHeh1n?=
+ =?iso-8859-1?Q?Wi24WZimy/dDwXyEGJ8habhkNqUUztolfPjAE8HK9CHu10T09WGkIsmQfz?=
+ =?iso-8859-1?Q?4WSA/ZIHc66UOfAIhCeVbdS3cbg668a0/04UQoxDyfYLXrcmMIjdIkYi6s?=
+ =?iso-8859-1?Q?SyFOdesfS47smCRVlLhSRunIGcpFgoQNSC0GBS/RCLy66dM1ymfNSJs/bd?=
+ =?iso-8859-1?Q?xNL0Q9gvow=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: Cop0QyxmU1gab2+xFuCH9L4fy75H3ifSbWgx4GTSNtUxSb+5f3KUXbIJvT6S9pkhmiyZnP4DYJqzlIcIS4eh9bIQteMnGtf0EBZhZcrLIRQAm15aYo7YkpnqaJ8UINUSWl7MbDT2TZKwmq//QUA43bK3aZA6dd2n6ftSgJLXlS1K++0BvIxbPEtDzQ+W+7xDUFairEk0opO6RvOTXCdk3V+L8QJWLJFB34WB0Nm/3GyLn+asD38O2wd0La5Fqb7/AWQ80/flsxFXFVDWtlfgjAltlk1Sspl7D43ly28+ZNV6Ic9bBsokQ2v6dnCHIVSQqRe8WPRGQCSeVAiKIZ/IYA==
+X-Exchange-RoutingPolicyChecked: IeZs3+AtBPdf63yccNhNLIw8x2WnSfYUuWuGbxlnDxF4ZZR+FONeeMRY93mcYbjDyhGfR5lSBaV97qzFByuwUALaoEbJE1NP/zOyT88F8OZdd752bvydcYatGj3Xm/ATYQlQKBHtE9f3X6KfEcBG9pUJ8/3PTKyZQGF+WVerI26L66rmEHqNrvCbyJJUaHv8/Wl1CwECUR+CB5iFmLmy65Gf2zRqryCWv5blvILjdIXmpvYG2tX/K0/kkYPoqzmfWqupz1Gzw42P7UOdYcHVnQHRPKG7xmfgN/JSpLXH1hmQ8X7TkbpVnLpdqgJa3/VC5hOXCtiGuDoumiTdc4pMFQ==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b59982c7-bee1-4cfa-60e1-08dee221d6d5
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Jul 2026 03:33:29.8009 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4f6e0ee2-a7c2-4fb5-faea-08dee221dd25
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Jul 2026 03:33:40.4196 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: jgiV6LbLOM6QaVBxSZhVf8uDXEUjxB0gzm2vB5rX4bhI4EXA5H/u/Cze1JZ5rqQlSa0WJdzdrwJwsJ4KxWir6Z9hvz8dsRxMNQ+450OmUjA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY0PR06MB5258
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+X-MS-Exchange-CrossTenant-userprincipalname: bNGfSmBf/sjsHUndvxpYToQz5C4pwOMFDIBdfmqnGURJWBGAZyvWiwv7bvFi+/9zCHcKnx9VeulUg6U79+7K+U1F2pHBpNutW6G4Tb5El3I=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYNPR06MB8766
+Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=jamin_lin@aspeedtech.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
+ helo=TYDPR03CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -150,197 +152,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the AES-GCM AEAD mode to the nettle backend so it is available when=0A=
-QEMU is built with nettle instead of gcrypt. GCM is driven through=0A=
-nettle's generic gcm_* interface, using the AES encrypt function for both=
+The AST2700 boot tests appended 'cryptomgr.notests=3D1' to the kernel=0A=
+command line to skip the Linux crypto manager self-tests.=0A=
 =0A=
-directions: gcm_set_iv() sets the (typically 96-bit) nonce, gcm_update()=0A=
-feeds the associated data, gcm_encrypt()/gcm_decrypt() need not be block=0A=
-aligned, and gcm_digest() produces the authentication tag.=0A=
+Now that the HACE crypto engine emulates the crypto command, the=0A=
+self-tests pass, so drop the workaround and let them run. This also=0A=
+exercises the HACE crypto emulation during the functional boot tests.=0A=
 =0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 ---=0A=
- crypto/cipher-nettle.c.inc | 128 +++++++++++++++++++++++++++++++++++++=0A=
- 1 file changed, 128 insertions(+)=0A=
+ tests/functional/aarch64/test_aspeed_ast2700a1.py | 5 -----=0A=
+ tests/functional/aarch64/test_aspeed_ast2700a2.py | 5 -----=0A=
+ tests/functional/aarch64/test_aspeed_ast2700fc.py | 5 -----=0A=
+ 3 files changed, 15 deletions(-)=0A=
 =0A=
-diff --git a/crypto/cipher-nettle.c.inc b/crypto/cipher-nettle.c.inc=0A=
-index 1afdc391b4..d4847f0efe 100644=0A=
---- a/crypto/cipher-nettle.c.inc=0A=
-+++ b/crypto/cipher-nettle.c.inc=0A=
-@@ -27,6 +27,7 @@=0A=
- #include <nettle/twofish.h>=0A=
- #include <nettle/ctr.h>=0A=
- #include <nettle/xts.h>=0A=
-+#include <nettle/gcm.h>=0A=
- #ifdef CONFIG_CRYPTO_SM4=0A=
- #include <nettle/sm4.h>=0A=
- #endif=0A=
-@@ -410,6 +411,125 @@ DEFINE_ECB(qcrypto_nettle_sm4,=0A=
-            sm4_encrypt_native, sm4_decrypt_native)=0A=
- #endif=0A=
+diff --git a/tests/functional/aarch64/test_aspeed_ast2700a1.py b/tests/func=
+tional/aarch64/test_aspeed_ast2700a1.py=0A=
+index b0c08854da..bc535449b5 100755=0A=
+--- a/tests/functional/aarch64/test_aspeed_ast2700a1.py=0A=
++++ b/tests/functional/aarch64/test_aspeed_ast2700a1.py=0A=
+@@ -51,10 +51,6 @@ def verify_vbootrom_firmware_flow(self):=0A=
+         wait_for_console_pattern(self, 'pass')=0A=
+         wait_for_console_pattern(self, 'Jumping to BL31 (Trusted Firmware-=
+A)')=0A=
  =0A=
-+/*=0A=
-+ * GCM is an AEAD mode built on AES (128-bit block only). Drive it through=
- the=0A=
-+ * generic gcm_* interface, using the block cipher's encrypt function for =
-both=0A=
-+ * directions; associated data is fed with gcm_update() and the authentica=
-tion=0A=
-+ * tag is produced by gcm_digest().=0A=
-+ */=0A=
-+typedef struct QCryptoNettleAESGCM {=0A=
-+    QCryptoCipher base;=0A=
-+    struct gcm_key gcm_key;=0A=
-+    struct gcm_ctx gcm_ctx;=0A=
-+    union {=0A=
-+        struct aes128_ctx aes128;=0A=
-+        struct aes192_ctx aes192;=0A=
-+        struct aes256_ctx aes256;=0A=
-+    } cipher;=0A=
-+    nettle_cipher_func *encrypt;=0A=
-+} QCryptoNettleAESGCM;=0A=
-+=0A=
-+static int qcrypto_nettle_aes_gcm_setiv(QCryptoCipher *cipher,=0A=
-+                                        const uint8_t *iv, size_t niv,=0A=
-+                                        Error **errp)=0A=
-+{=0A=
-+    QCryptoNettleAESGCM *ctx =3D container_of(cipher, QCryptoNettleAESGCM,=
- base);=0A=
-+=0A=
-+    gcm_set_iv(&ctx->gcm_ctx, &ctx->gcm_key, niv, iv);=0A=
-+    return 0;=0A=
-+}=0A=
-+=0A=
-+static int qcrypto_nettle_aes_gcm_setaad(QCryptoCipher *cipher,=0A=
-+                                         const uint8_t *aad, size_t len,=
+-    def disable_kernel_crypto_selftest(self):=0A=
+-         exec_command_and_wait_for_pattern(self,=0A=
+-            'setenv bootargs "${bootargs} cryptomgr.notests=3D1"', '=3D>')=
 =0A=
-+                                         Error **errp)=0A=
-+{=0A=
-+    QCryptoNettleAESGCM *ctx =3D container_of(cipher, QCryptoNettleAESGCM,=
- base);=0A=
-+=0A=
-+    gcm_update(&ctx->gcm_ctx, &ctx->gcm_key, len, aad);=0A=
-+    return 0;=0A=
-+}=0A=
-+=0A=
-+static int qcrypto_nettle_aes_gcm_encrypt(QCryptoCipher *cipher,=0A=
-+                                          const void *in, void *out,=0A=
-+                                          size_t len, Error **errp)=0A=
-+{=0A=
-+    QCryptoNettleAESGCM *ctx =3D container_of(cipher, QCryptoNettleAESGCM,=
- base);=0A=
-+=0A=
-+    gcm_encrypt(&ctx->gcm_ctx, &ctx->gcm_key, &ctx->cipher, ctx->encrypt,=
+-=0A=
+     def enable_ast2700_pcie2(self):=0A=
+         exec_command_and_wait_for_pattern(self,=0A=
+             'cp 100420000 403000000 900000', '=3D>')=0A=
+@@ -71,7 +67,6 @@ def verify_openbmc_boot_start(self, enable_pcie=3DTrue):=
 =0A=
-+                len, out, in);=0A=
-+    return 0;=0A=
-+}=0A=
-+=0A=
-+static int qcrypto_nettle_aes_gcm_decrypt(QCryptoCipher *cipher,=0A=
-+                                          const void *in, void *out,=0A=
-+                                          size_t len, Error **errp)=0A=
-+{=0A=
-+    QCryptoNettleAESGCM *ctx =3D container_of(cipher, QCryptoNettleAESGCM,=
- base);=0A=
-+=0A=
-+    gcm_decrypt(&ctx->gcm_ctx, &ctx->gcm_key, &ctx->cipher, ctx->encrypt,=
+         wait_for_console_pattern(self, 'U-Boot 2023.10')=0A=
+         wait_for_console_pattern(self, 'Hit any key to stop autoboot')=0A=
+         exec_command_and_wait_for_pattern(self, '\012', '=3D>')=0A=
+-        self.disable_kernel_crypto_selftest()=0A=
+         if enable_pcie:=0A=
+             self.enable_ast2700_pcie2()=0A=
+         else:=0A=
+diff --git a/tests/functional/aarch64/test_aspeed_ast2700a2.py b/tests/func=
+tional/aarch64/test_aspeed_ast2700a2.py=0A=
+index ed414999f4..5aea0a9dd0 100755=0A=
+--- a/tests/functional/aarch64/test_aspeed_ast2700a2.py=0A=
++++ b/tests/functional/aarch64/test_aspeed_ast2700a2.py=0A=
+@@ -51,10 +51,6 @@ def verify_vbootrom_firmware_flow(self):=0A=
+         wait_for_console_pattern(self, 'pass')=0A=
+         wait_for_console_pattern(self, 'Jumping to BL31 (Trusted Firmware-=
+A)')=0A=
+ =0A=
+-    def disable_kernel_crypto_selftest(self):=0A=
+-         exec_command_and_wait_for_pattern(self,=0A=
+-            'setenv bootargs "${bootargs} cryptomgr.notests=3D1"', '=3D>')=
 =0A=
-+                len, out, in);=0A=
-+    return 0;=0A=
-+}=0A=
-+=0A=
-+static int qcrypto_nettle_aes_gcm_gettag(QCryptoCipher *cipher,=0A=
-+                                         uint8_t *tag, size_t len,=0A=
-+                                         Error **errp)=0A=
-+{=0A=
-+    QCryptoNettleAESGCM *ctx =3D container_of(cipher, QCryptoNettleAESGCM,=
- base);=0A=
-+=0A=
-+    gcm_digest(&ctx->gcm_ctx, &ctx->gcm_key, &ctx->cipher, ctx->encrypt,=
+-=0A=
+     def enable_ast2700_pcie2(self):=0A=
+         exec_command_and_wait_for_pattern(self,=0A=
+             'cp 100420000 403000000 900000', '=3D>')=0A=
+@@ -71,7 +67,6 @@ def verify_openbmc_boot_start(self, enable_pcie=3DTrue):=
 =0A=
-+               len, tag);=0A=
-+    return 0;=0A=
-+}=0A=
-+=0A=
-+static const struct QCryptoCipherDriver qcrypto_nettle_aes_gcm_driver =3D =
-{=0A=
-+    .cipher_encrypt =3D qcrypto_nettle_aes_gcm_encrypt,=0A=
-+    .cipher_decrypt =3D qcrypto_nettle_aes_gcm_decrypt,=0A=
-+    .cipher_setiv =3D qcrypto_nettle_aes_gcm_setiv,=0A=
-+    .cipher_setaad =3D qcrypto_nettle_aes_gcm_setaad,=0A=
-+    .cipher_gettag =3D qcrypto_nettle_aes_gcm_gettag,=0A=
-+    .cipher_free =3D qcrypto_cipher_ctx_free,=0A=
-+};=0A=
-+=0A=
-+static QCryptoCipher *qcrypto_nettle_aes_gcm_ctx_new(QCryptoCipherAlgo alg=
-,=0A=
-+                                                     const uint8_t *key,=
+         wait_for_console_pattern(self, 'U-Boot 2023.10')=0A=
+         wait_for_console_pattern(self, 'Hit any key to stop autoboot')=0A=
+         exec_command_and_wait_for_pattern(self, '\012', '=3D>')=0A=
+-        self.disable_kernel_crypto_selftest()=0A=
+         if enable_pcie:=0A=
+             self.enable_ast2700_pcie2()=0A=
+         else:=0A=
+diff --git a/tests/functional/aarch64/test_aspeed_ast2700fc.py b/tests/func=
+tional/aarch64/test_aspeed_ast2700fc.py=0A=
+index df889134ed..1648fa9dba 100755=0A=
+--- a/tests/functional/aarch64/test_aspeed_ast2700fc.py=0A=
++++ b/tests/functional/aarch64/test_aspeed_ast2700fc.py=0A=
+@@ -27,10 +27,6 @@ def do_test_aarch64_aspeed_sdk_start(self, image):=0A=
+ =0A=
+         self.vm.launch()=0A=
+ =0A=
+-    def disable_kernel_crypto_selftest(self):=0A=
+-         exec_command_and_wait_for_pattern(self,=0A=
+-            'setenv bootargs "${bootargs} cryptomgr.notests=3D1"', '=3D>')=
 =0A=
-+                                                     size_t nkey,=0A=
-+                                                     Error **errp)=0A=
-+{=0A=
-+    QCryptoNettleAESGCM *ctx;=0A=
-+=0A=
-+    if (!qcrypto_cipher_validate_key_length(alg, QCRYPTO_CIPHER_MODE_GCM,=
-=0A=
-+                                            nkey, errp)) {=0A=
-+        return NULL;=0A=
-+    }=0A=
-+=0A=
-+    ctx =3D g_new0(QCryptoNettleAESGCM, 1);=0A=
-+    ctx->base.driver =3D &qcrypto_nettle_aes_gcm_driver;=0A=
-+=0A=
-+    switch (alg) {=0A=
-+    case QCRYPTO_CIPHER_ALGO_AES_128:=0A=
-+        aes128_set_encrypt_key(&ctx->cipher.aes128, key);=0A=
-+        ctx->encrypt =3D aes128_encrypt_native;=0A=
-+        break;=0A=
-+    case QCRYPTO_CIPHER_ALGO_AES_192:=0A=
-+        aes192_set_encrypt_key(&ctx->cipher.aes192, key);=0A=
-+        ctx->encrypt =3D aes192_encrypt_native;=0A=
-+        break;=0A=
-+    case QCRYPTO_CIPHER_ALGO_AES_256:=0A=
-+        aes256_set_encrypt_key(&ctx->cipher.aes256, key);=0A=
-+        ctx->encrypt =3D aes256_encrypt_native;=0A=
-+        break;=0A=
-+    default:=0A=
-+        error_setg(errp, "Unsupported cipher algorithm %s with GCM mode",=
-=0A=
-+                   QCryptoCipherAlgo_str(alg));=0A=
-+        g_free(ctx);=0A=
-+        return NULL;=0A=
-+    }=0A=
-+=0A=
-+    gcm_set_key(&ctx->gcm_key, &ctx->cipher, ctx->encrypt);=0A=
-+    return &ctx->base;=0A=
-+}=0A=
-+=0A=
- bool qcrypto_cipher_supports(QCryptoCipherAlgo alg,=0A=
-                              QCryptoCipherMode mode)=0A=
- {=0A=
-@@ -440,6 +560,10 @@ bool qcrypto_cipher_supports(QCryptoCipherAlgo alg,=0A=
-     case QCRYPTO_CIPHER_MODE_XTS:=0A=
-     case QCRYPTO_CIPHER_MODE_CTR:=0A=
-         return true;=0A=
-+    case QCRYPTO_CIPHER_MODE_GCM:=0A=
-+        return alg =3D=3D QCRYPTO_CIPHER_ALGO_AES_128 ||=0A=
-+               alg =3D=3D QCRYPTO_CIPHER_ALGO_AES_192 ||=0A=
-+               alg =3D=3D QCRYPTO_CIPHER_ALGO_AES_256;=0A=
-     default:=0A=
-         return false;=0A=
-     }=0A=
-@@ -451,6 +575,10 @@ static QCryptoCipher *qcrypto_cipher_ctx_new(QCryptoCi=
-pherAlgo alg,=0A=
-                                              size_t nkey,=0A=
-                                              Error **errp)=0A=
- {=0A=
-+    if (mode =3D=3D QCRYPTO_CIPHER_MODE_GCM) {=0A=
-+        return qcrypto_nettle_aes_gcm_ctx_new(alg, key, nkey, errp);=0A=
-+    }=0A=
-+=0A=
-     switch (mode) {=0A=
-     case QCRYPTO_CIPHER_MODE_ECB:=0A=
-     case QCRYPTO_CIPHER_MODE_CBC:=0A=
+-=0A=
+     def enable_ast2700_pcie2(self):=0A=
+         exec_command_and_wait_for_pattern(self,=0A=
+             'cp 100420000 403000000 900000', '=3D>')=0A=
+@@ -47,7 +43,6 @@ def verify_openbmc_boot_and_login(self, name):=0A=
+         wait_for_console_pattern(self, 'U-Boot 2023.10')=0A=
+         wait_for_console_pattern(self, 'Hit any key to stop autoboot')=0A=
+         exec_command_and_wait_for_pattern(self, '\012', '=3D>')=0A=
+-        self.disable_kernel_crypto_selftest()=0A=
+         self.enable_ast2700_pcie2()=0A=
+         wait_for_console_pattern(self, 'Starting kernel ...')=0A=
+ =0A=
 -- =0A=
 2.43.0=0A=
 
