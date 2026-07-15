@@ -4,99 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16552C44508
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 15:02:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB1CCC44508
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 15:31:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wk17N-0003p7-IW; Wed, 15 Jul 2026 11:01:49 -0400
+	id 1wk1Z8-0000nN-Am; Wed, 15 Jul 2026 11:30:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wk17L-0003ow-4x
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 11:01:47 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wk1Z2-0000mw-Po
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 11:30:29 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wk17H-0005u4-TR
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 11:01:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784127697; bh=bojtHTHZNxj4wX8L3eOns08h2V6aWLfjD/cYyRvWpyk=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=Mw2/8AQ2Pusigh5rZHaA8ldrZuC7kTsOr96QJBPM9TSxG85+2gDTfIFwEbVO0KLGU
- 17skGFgUa+5xMuUbwJIA5aQKfzWwCCif72GndauzK1+UH4hzkrzSDGahXhxmAgMwSW
- WIETrN1ysvKl3MmDJwVzBWt2gSYw4rdjmCgvyxTAZ2BDM0MB6nGwGAP/pWqHacbUnQ
- ttI9Ot0YfDshpfegpsXhY+hltUd1krUj7N13W+fK/14gamknavgPjY7HojCxHGV2ym
- Wwr1ylsEacGymSHzkDOF5tOvkzZslMu6A4r8eRFxcqw0BLPosIar+6q9e1FprVhmoV
- /BmE44BxniYaQ==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 459F11C1E9A;
- Wed, 15 Jul 2026 18:01:37 +0300 (MSK)
-Message-ID: <fa53bef0-4fbd-445a-9395-379bbfcb3773@tls.msk.ru>
-Date: Wed, 15 Jul 2026 18:01:39 +0300
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wk1Z0-0001zX-B0
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 11:30:24 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66FE4Th84025767
+ for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 15:30:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 5xJg4LXlBSIiAxL5knxJDRRvUc7MWPyaYrTcMLIM7bY=; b=Wcssuzo2DDh/S1EY
+ YncFp6JrUyYFT2bJ+TkvKievDPFvSKULbjKHMQGO26rTqj/cJqnJomKLDBDhvG9D
+ 4JIdWuylHCpScQbCTnGmrCcDelZOpCv5JvUmEyNAdKVEVXzfCGNVFxEiW+0c3DkV
+ 6HXl9bAggcPw0C23iOJLpifZ/8QXKhMLMSeBn9mYxwyJoGo/BOe43MsJ6spYCJvU
+ +o6P/UOYWgbF7ms+EPON8oJewMBiXNfezwEu0I3btXaSIeiAOHoYIbUKF2TcGtfC
+ NGpN0VsfAdZBsfYsGFS878NjySTSJ4WZ74Uty5Ls2MhI3wyILMnTbvdMtZvNCP7S
+ sm5hBQ==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fe03vk2b6-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 15:30:17 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-2cc7e86e7c5so104357055ad.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 08:30:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1784129417; x=1784734217; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=5xJg4LXlBSIiAxL5knxJDRRvUc7MWPyaYrTcMLIM7bY=;
+ b=KZgSwbpGq1OKdWHYi/ELX/0htbGBzfvFdAHTDo3Stacp8+O1nhQTb9K0u1B3hvL8E7
+ DUdIZmW07kagcNPPvV1LPowp0xagL7nOYHBn9L+6FAf+AVK41tQdniVXMP/sMcj2AAZz
+ ty5jGF9VpBo5b3bERMLAxDQM54BiG71eYjy/xGG5HVu+c3KdoiLKqoK9VaMmSqYoXc2v
+ G4l7fSw3EBK/QQmPpOiClb/07PBTXXEptwjddi9MUm5bFZWpob85RhL7i/kyTuQTkY/u
+ Q3m271SthLr1OVb/t0A9FrdoeM8UO4nMpqf7ktZEQthOsx8OIPgVs7Go2Rs31abgz/QI
+ nUIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784129417; x=1784734217;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=5xJg4LXlBSIiAxL5knxJDRRvUc7MWPyaYrTcMLIM7bY=;
+ b=pcBTb8OPR0GyEsfmAam/c9cips+mvLJtyeAGKv3v23+nHbpxQ7egmG8Is/1Y7uyJSR
+ IHwHgISiuKeFOW0OsdpR8Mz3Yn5Bunu2mc44GYuJzrbkShGYriD5J1xygFxcuAO5aZEi
+ o11X9BtsLhDJClfwX5+NW0yd2cSJi+6INzgQ6hWPfg+F8FcYPdWqjGmqWBtize+6OXd+
+ d305lTiklFpNjdMgIVSHpYqYDGI2XqATfM/b+8cfGSMx8dPBAMeJSsnZENW/roDuRAVi
+ tshNDwMmkpDxgznVVSsuj66jEowRC1poSxRhnQxxlnHogxqq87BXzDSe4SA6Bm8q74L2
+ loAQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoYnB7bcKEFCBEifb006f+B/ouX58KcqC88prnMbmXaWUpsC8VEKTQmPPfSWojZIYaoR1Mak2ASpUiv@nongnu.org
+X-Gm-Message-State: AOJu0YzhK97wSsyDpmZzclnW7Jd6FOB9v5Y2WLKRQSb5UextgI9Bj9UP
+ //PkRKywJ62pjsWKoVo3L3YzYfatF6nolfMe6DXVUFh8sVjwMutSXmuVdAVhSWCFs8L1HmHtt/c
+ auVdRwheFv5/T9oCdDST06vIiZ1Bk21yc2a6/l7jVK6Us59MzQP81kYvQxg==
+X-Gm-Gg: AfdE7cnoXDje6TSt87SrsAh1X2sPPMDqjJGNZ7qVjOCriTU1Q3fhXugSryXiXUMQSLA
+ 6sty9pdTGIhXHhMezNdiZinsqbjvdxuwZbOX/a+ALdWmJwirqnISj6XZSQrELUVZhGs3mhnMvcG
+ KRZt2CgizX194v1n29R/489/Mq4KuNcztQsps1FP0R9DO/0pIGc2vYe1SbwlfTHqkagYaN7vsaU
+ S0pkWULuKC+4EqeT9TryxGJSeisGAt3v8G/OcQouTq9HTFEebvr70pseynK2sojfe6uOg3JwGXA
+ JCVCBF4fPUDwPipCtFM4O6omf14kHGKtuGQn1kno6Ib7JQP0UndlxCCYuuvuYbkMZelv2dvnR0T
+ SS/FQdYZmK8oiTw0qrUHB8Oz9+SOmrwHb0eteGC4hM+sb0Sxtw/8maKn3h2PvksGmNg==
+X-Received: by 2002:a17:903:3886:b0:2ce:e75f:b713 with SMTP id
+ d9443c01a7336-2cf03cef5a9mr29858865ad.23.1784129416727; 
+ Wed, 15 Jul 2026 08:30:16 -0700 (PDT)
+X-Received: by 2002:a17:903:3886:b0:2ce:e75f:b713 with SMTP id
+ d9443c01a7336-2cf03cef5a9mr29858385ad.23.1784129416264; 
+ Wed, 15 Jul 2026 08:30:16 -0700 (PDT)
+Received: from [192.168.1.169] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2cf105b244asm4243315ad.61.2026.07.15.08.30.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 15 Jul 2026 08:30:15 -0700 (PDT)
+Message-ID: <100b70e6-9b5a-4dc7-967c-924a80c09cef@oss.qualcomm.com>
+Date: Wed, 15 Jul 2026 08:30:15 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v19 00/15] virtio-net: live-TAP local migration
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- jasowang@redhat.com, mst@redhat.com
-Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
- raphael.s.norwitz@gmail.com, bchaney@akamai.com, qemu-devel@nongnu.org,
- berrange@redhat.com, pbonzini@redhat.com, yc-core@yandex-team.ru,
- mark.caveayland@nutanix.com
-References: <20260714154246.1242856-1-vsementsov@yandex-team.ru>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260714154246.1242856-1-vsementsov@yandex-team.ru>
+Subject: Re: [PATCH 3/7] bitops.h: Add find_first_bit32()
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org,
+ ltaylorsimpson@gmail.com, Laurent Vivier <lvivier@redhat.com>,
+ Thomas Huth <th.huth+qemu@posteo.eu>, Paolo Bonzini <pbonzini@redhat.com>,
+ matheus.bernardino@oss.qualcomm.com, Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ philmd@oss.qualcomm.com, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>
+References: <20260714155126.3509544-1-brian.cain@oss.qualcomm.com>
+ <20260714155126.3509544-4-brian.cain@oss.qualcomm.com>
+ <32acc813-37ae-4708-a842-7d7958b7d388@oss.qualcomm.com>
+ <CAFEAcA9Smft=r25PJEDiSg6sF-006xLvq56iFWKW+WHWwATUSg@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA9Smft=r25PJEDiSg6sF-006xLvq56iFWKW+WHWwATUSg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+X-Authority-Analysis: v=2.4 cv=Ife3n2qa c=1 sm=1 tr=0 ts=6a57a789 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=m4EvXZsGAIpaEwscJbEA:9 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-ORIG-GUID: Gvk1jwndjPdykDq3GI11kUW9RJ9lrmWj
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE1MDE1NCBTYWx0ZWRfX7bDeVzzteN3q
+ B+chZnCIYTqPEPuRxc1tbif4vXMoTplvV6Nh//sAyJ4PjIJlsRTCPt5f6iFprntY6kSm1ET36mG
+ Vy1++vuvXip785ox5/2kZVXU4/RfJ3WM9Io4wy1d/uDSXPuBh12POOSHwYoSEWJtWY49IA8DJST
+ pS3lWvzSqkrrtyjofPbde0LeDAiWSTteyXVsZUZ3JGs7vGpXGpnkS4eWS2nSgMc+nZ/sS9IpRR1
+ nKwKnSQL5LeSSVlo4cqS3NxiSJPbIhrDgVTuE08yuZt8k5yGlHIV1KlMVMnVJkt5MJsPJtzhBBx
+ pI1aGZRTgrnUYAxoFHr3KHSjnybWoM5AdzNLf8ms/qekZ3JNvtEmtkpoqczW2GH7kYOkhwA+4j1
+ elQo4eHfl32Q0o9HDmj94tyBI2TH+f+IMX19rmeL6f/YCheJ3tEvGKq+4FeHvRmjki2D6WT7pBW
+ JZuLCe6tUgqOpaV7z8A==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE1MDE1NCBTYWx0ZWRfXw+SQ+uJcAytb
+ etZm14rITBh7aBtpBZPsVEHgGR6IU6Fq29EEUMEc2yIeQJIaXM81ACreAPELfwi0G2NSgQhOB4y
+ KghQZX9p0tEdO4iTCDtDpjgEB4hD8NE=
+X-Proofpoint-GUID: Gvk1jwndjPdykDq3GI11kUW9RJ9lrmWj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-15_03,2026-07-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 suspectscore=0 bulkscore=0 clxscore=1015 adultscore=0
+ impostorscore=0 malwarescore=0 priorityscore=1501 phishscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607150154
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,31 +164,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14.07.2026 18:42, Vladimir Sementsov-Ogievskiy wrote:
-> Hi all!
+On 7/15/26 3:01 AM, Peter Maydell wrote:
+> On Wed, 15 Jul 2026 at 02:18, Pierrick Bouvier
+> <pierrick.bouvier@oss.qualcomm.com> wrote:
+>>
+>> On 7/14/2026 8:51 AM, Brian Cain wrote:
+>>> set_bit32()/test_bit32()/etc already let devices operate on
+>>> guest-visible uint32_t register arrays without depending on the
+>>> host's 'unsigned long' size. find_first_bit() has no such
+>>> equivalent, which pushes callers towards casting a uint32_t array
+>>> to 'unsigned long *'.
+>>>
+>>> Add find_first_bit32(), implemented the same way as find_first_bit().
+>>>
+>>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > 
-> Here is a migration for TAP net backend, including its properties and
-> open fds.
+>>> +/**
+>>> + * find_first_bit32 - find the first set bit in a memory region
+>>> + * @addr: The address to start the search at
+>>> + * @size: The maximum size to search
+>>> + *
+>>> + * Returns the bit number of the first set bit,
+>>> + * or @size if there is no set bit in the bitmap.
+>>> + */
+>>> +static inline uint32_t find_first_bit32(const uint32_t *addr, uint32_t size)
+>>> +{
+>>> +    uint32_t result;
+>>> +
+>>> +    for (result = 0; result < size; result += 32) {
+>>> +        uint32_t tmp = *addr++;
+>>> +        if (tmp) {
+>>> +            result += ctz32(tmp);
+>>> +            return result < size ? result : size;
+>>> +        }
+>>> +    }
+>>> +    /* Not found */
+>>> +    return size;
+>>> +}
+>>
+>> Either we should express size in terms of number of elements, or add an
+>> explicit check if size is not a multiple of 32.
 > 
-> With this new feature, management software doesn't need to initialize
-> new TAP and do a switch to it. Nothing should be done around
-> virtio-net in local migration: it just migrates and continues to use
-> same TAP device. So we avoid extra logic in management software, extra
-> allocations in kernel (for new TAP), and corresponding extra delay in
-> migration downtime.
+> I think we should follow the API of the existing find_first_bit()
+> function here, which defines the size in terms of number of bits.
+> 
+> Sizes not a multiple of 32 should work fine -- the representation
+> is "bit 0 in LSB of first 32 bit word, working upwards". So e.g.
+> an bitmap of 16 bits has the representation "a single 32 bit word,
+> and the bits are in bits 0..15". The code correctly handles this
+> with the "return result < size ? result : size" logic: even if
+> bit 17 is set, we will return 16 to indicate "no set bit in bitmap".
+> (This also follows the existing find_first_bit() handling.)
+>
 
-This is quite a big patch set, - is this really worth the effort to do
-all this just for *local* migration?  What's the possible use case for
-this in real, - am I right this is just about upgrading the host qemu?
-And with that in mind, isn't it sufficient to use what we already have
-(namely, create new tap, start new qemu instance, and migrate the usual
-way), and tolerate some very minor downtime while the networking code
-learns the new network topology (isn't it happening almost instantly
-anyway, and if not, the management can help by sending gratitious ARP)?
+What I had in mind with 'add an explicit check', was to make sure we 
+don't read the last entry if size is not a multiple of 32.
+In case addr is a buffer, we might read past its last entry.
+But maybe it's not a concern.
 
-I wonder what's the use for this at yandex?
+> thanks
+> -- PMM
 
-Thanks,
-
-/mjt
+Regards,
+Pierrick
 
