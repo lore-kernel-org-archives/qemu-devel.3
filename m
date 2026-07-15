@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70CE6C44501
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 10:35:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48279C44501
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 10:35:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjwxF-00041W-LD; Wed, 15 Jul 2026 06:35:05 -0400
+	id 1wjwxF-00040l-6F; Wed, 15 Jul 2026 06:35:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wjwxA-0003zZ-5Z
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 06:35:00 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wjwx8-0000vE-F0
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wjwx9-0003yU-0b
  for qemu-devel@nongnu.org; Wed, 15 Jul 2026 06:34:59 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-490cf322ed0so37729835e9.1
- for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 03:34:58 -0700 (PDT)
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wjwx7-0000uk-Bk
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 06:34:58 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-4728c12ba97so2426993f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 03:34:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1784111697; x=1784716497; darn=nongnu.org;
+ d=openvz.org; s=google; t=1784111696; x=1784716496; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=PqCHlCT/qklGcub9P4p3p6WygT/7lJQfYfoI/OJ3UEo=;
- b=atl/JfPVOC7JI3pa8txHj00KWQVKxZ4ZdNF8kmQVxbSRK05IhG6clkMMwaa1+8cLXw
- YgUUWvbDxwAjgn54RSvP0gjMmIu7atsz2SPTrJbFK1Ntz1/jKue+qmvcvpdIWD2TEfbJ
- XhjBXztLYVb5saQHBJ5Dzvxlthi7jkmD5y/U7W5p5QNQcjvBdrs0PBVl6us9xXqOFKQM
- 2XbrAhMlULOR8hFN3G/UCdcrXxvZEkI/3mdaFgs+sAdSYgBKEUg89wRVtrXQ2Rt8imF4
- qnxANEyQjygX5Yne+MuKcBLxx/FyStGKBFaR3Z9tZPDSnFjVqhR1fBC/XmE4aNkgVu0N
- zXjw==
+ bh=s4zeJDdtxVbftajOrHOMfQ8V+NcJ7E3IkRzNWHPvZJQ=;
+ b=ETTOMH0MdaHZJo1uFL0k5ddICSmb/BdrfdUYuCJtnTgD+K/o87TWXO9/EJo+3RmVFa
+ 2LgtvhG8GLN7ouNP8td6B6vGCX0v2v9d8hPnr4WS8IhRL/Xkwnd0DA+YbQbLYinH12oZ
+ h74mkYJ1dqJeauG+Kd9+CYW6r7uvqeL33m1K1C+BvHG5aGylS5NhOiR1zXfnyzf/rlB6
+ 4s6g7legJzseb7cZPqaVJWaQN2eQ8xNZbBZyk4620Nt1nFrZtf9Jjqb9ctd8IEJvde6n
+ d1QMsohCz+LOZOJ3crubNVJBj7d52KRicNFKHoDi9YJCk3+kdfhSV/EAVRr9gCxNkrW6
+ bMlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784111697; x=1784716497;
+ d=1e100.net; s=20251104; t=1784111696; x=1784716496;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=PqCHlCT/qklGcub9P4p3p6WygT/7lJQfYfoI/OJ3UEo=;
- b=Tr7QvKxCPhUC6dErnGUonz1QOf10sfdT7dPAkx2yV1aUkfAZcvbjdjVFAqmwD35oZM
- D0mdUWYuaJbRMWpcH1uMKIpxeM1XZsDz97Sr2kbx0c+tIgjGYe2gntyG/3pw02XNSeB1
- Vk7O1QDy4GYuyvrhTYA6cVyR7zTJzTmoCBaHRFqQLjBGFnqLLrLo7xW73YLUP/tXf1wC
- wuQ6vc28ujbbJNbNSemOUSxHk5Wxbnag4f/yANo/fa3EbsyO4nbOg/0nZA8y/Unx3WDu
- sZY3qnELc/YRxyKboLdUBay8XQ+j9g5w/QADKcUgU8E57DmVA3pnBEJR295F1rFeiuvc
- 5UBQ==
+ bh=s4zeJDdtxVbftajOrHOMfQ8V+NcJ7E3IkRzNWHPvZJQ=;
+ b=bJ1yPFYJh7AUC+fxDUx1p+LPV+8Ps8pR8g+mvW88ZlXWIkO2aBrYOMIUb87E/b1Xpy
+ BezNhg67xGnSJzQupyd8QKKcGJW2Mlu7EHS53+PgAXD5TUI4mMIam20lEy3lyVGYCn++
+ cHkAWUFONR3eNHFr4oCkMjwf+VcQsEopDBhRyEo//ZU9bcHjn+92S2kbc/Mu/L9BgXdU
+ GuZoxKDMyC7Jv7o52C+RY3TPHFzAUna200rDtLvJL0xByE7NzwIeBw8N9LEOlFbfAeMd
+ qnHyyoiYEMKdDeAjLl8YBMlIKJFDilBHjGjKgXCrjXpML/Q7N7BI1KIlL6DHZzJkURMU
+ fR/A==
 X-Forwarded-Encrypted: i=1;
- AHgh+RrI4ruP3MOK8R8NQAPEoUyIbIKlQJNoatlq3C5ItRFe7QoI2TK58fenQPUnf8mIbMM310jpL1spObod@nongnu.org
-X-Gm-Message-State: AOJu0YxR2CtAeTFZdDWlnMA45A29Yc1iIiu0xnBCpQMTJJh9gEhfCDoo
- DtEcBiUuDVPV58C8TxQi1DLu+rDw3sNjxpuZRb6yM1F1ekXHRbG5CnlqV4P3uTEd8UzTcYe2aT+
- AtAgjdrI=
-X-Gm-Gg: AfdE7clW8QuDrmcGakDjgzadCMTssNBkOX5wVagPhu9FEuW1bQWCha9p4OzRkLoloXZ
- N4recOlCTMNEeBqsdmcGbCryBxSvuhlq4Zd/oH+5GqQ1vhDC+R7GKPa3EWdmBc3YOKXjw+/ciAu
- NIxwXvHhMGoWxAdQPpXpPRJERlGK5PhBaltjZmI2Rdbga/bw3sRYEqG5K2gpM1a4fU89hzKREb1
- ZhBDIpFhd8YC9p5QtLIyP/75xrl58Bui3+69DRPRlwy/NXb+1LT+qn6Qx710EX28zd7O2xKe+RL
- CWyABDm24eywL3wp266aY0wZiw2lpH5B3sC9kqrsS8CiEEmnVVguklFFqe45aGiY1vEwy9+EANf
- OEIHDYwcLRe++JFWgKPtdrq3I3HIO+givysyx7ruj8698TvH2kegjK6KWKu/HxdqHBwvSfUvSzT
- F0mQ==
-X-Received: by 2002:a05:600c:8285:b0:493:e46e:157d with SMTP id
- 5b1f17b1804b1-4953c273dd1mr26121025e9.19.1784111696955; 
- Wed, 15 Jul 2026 03:34:56 -0700 (PDT)
+ AHgh+Rqtg1kEKrxioASB9n5KdAhJCK7LL4dvldxDm5+sJGbd2TC2cTgbpYX0sqcimgaOFcCGGIYtIdqOsxFp@nongnu.org
+X-Gm-Message-State: AOJu0YzswAMq6L/lfp73OpzTMr/O39iqaaIrBPZv3Q7XmsgJ7dKWRQqI
+ NLgcA1Dfp0NWKUyDihyaoEk6y3w9Vr5sXD+hB5ym6QcW15QWXNR5hFf/VsmjhlFL24A=
+X-Gm-Gg: AfdE7ckgeYF+MqxDT/OGl7Wg3HPD0ksRdwvEq3dlc7Ow8v3/s+J1jopJqyk8igFCKb9
+ P8JQnJT0PCdjFsBz9qK0mbgWDiVeCdLd8xjqyG5i6cmtf2ZrLVC6h3xyfenqLXm30+Gk0IjmVXF
+ uES0OvEW7NCIH5ESmZFWx4jl42P22ZK0EKhhgH8TeQ9vWt8uhZB4ay0zi77yXk3KQyA1t5NkZvH
+ rPL6vEuQRhgbfPfCYPzWOLnnN95RC1gQ7Zp5ZLKio03Xs6dRl2dMmlPI3k5lnIBF+Lqm1ix4iru
+ MSJEiGrL1Oc3Pqfh7EJxALgdYiM3Rcy8BZtWF2ZtpoCXOhr28HdIA5aODCPEvoz4TLnpV4aQlvS
+ ZhtTp6UlQIzjWkiXeFkk61HP5y5JbWpK+feEdu/CxvjYV7+66IFHJuL4xfYk1RPrh+NMd6W4nOt
+ s9FA==
+X-Received: by 2002:a05:6000:178e:b0:47d:ee23:f15e with SMTP id
+ ffacd0b85a97d-47f4fc99a5amr2650290f8f.5.1784111695800; 
+ Wed, 15 Jul 2026 03:34:55 -0700 (PDT)
 Received: from athena ([2a06:5b06:b600:300:c44f:405f:37a5:5992])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f464a974csm17292644f8f.18.2026.07.15.03.34.55
+ ffacd0b85a97d-47f464a974csm17292644f8f.18.2026.07.15.03.34.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jul 2026 03:34:56 -0700 (PDT)
+ Wed, 15 Jul 2026 03:34:55 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-block@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: den@openvz.org, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH v2 3/3] iotests/migrate-bitmaps-postcopy-test: replace the
- timing assertion with a content check
-Date: Wed, 15 Jul 2026 12:34:51 +0200
-Message-ID: <20260715103451.1930909-4-den@openvz.org>
+ Hanna Reitz <hreitz@redhat.com>
+Subject: [PATCH v2 2/3] iotests: skip FUSE tests when FUSE is not usable
+Date: Wed, 15 Jul 2026 12:34:50 +0200
+Message-ID: <20260715103451.1930909-3-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260715103451.1930909-1-den@openvz.org>
 References: <20260715103451.1930909-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=den@openvz.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=den@openvz.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,63 +101,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-`downtime * 10 < postcopy_time` was an unnormalized wall-clock
-heuristic (commit e80a4150a5) that fails on fast hosts, where the
-bitmap payload now transfers in under a second.
+file-io-error, fuse-allow-other and fuse-mmap-shared skip only when
+FUSE is not compiled in. When FUSE is built in but unusable at run
+time (no /dev/fuse access, fusermount lacking permissions), the
+export fails to mount with "Failed to mount FUSE session to export"
+and the tests report a spurious failure instead of skipping, like
+NBD tests already do for missing NBD support.
 
-Check the actual invariant instead: right after RESUME, bitmap0's
-content hash on the destination must not yet match the fully
-migrated value. Throttle max-bandwidth first, since all-zero chunks
-skip the payload write and would otherwise let a fast host finish
-the transfer before the check runs.
+Add _notrun_on_fuse_error() to common.rc and use it in the shell
+tests. fuse-mmap-shared is Python, so it gets an equivalent inline
+check.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 CC: Kevin Wolf <kwolf@redhat.com>
 CC: Hanna Reitz <hreitz@redhat.com>
-CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- .../tests/migrate-bitmaps-postcopy-test           | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ tests/qemu-iotests/common.rc              | 14 ++++++++++++++
+ tests/qemu-iotests/tests/file-io-error    |  4 +---
+ tests/qemu-iotests/tests/fuse-allow-other |  2 ++
+ tests/qemu-iotests/tests/fuse-mmap-shared |  9 ++++++---
+ 4 files changed, 23 insertions(+), 6 deletions(-)
 
-diff --git a/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test b/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test
-index c519e6db8c..33ff2b861f 100755
---- a/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test
-+++ b/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test
-@@ -160,12 +160,26 @@ class TestDirtyBitmapPostcopyMigration(iotests.QMPTestCase):
+diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
+index 298bc483e0..bcb1ec50a9 100644
+--- a/tests/qemu-iotests/common.rc
++++ b/tests/qemu-iotests/common.rc
+@@ -981,6 +981,20 @@ _require_drivers()
+     done
+ }
  
-         self.vm_b.cmd('migrate-set-capabilities', capabilities=caps)
- 
-+        # Throttle so the chunks covering our discards (the only ones
-+        # not skipped by the all-zero fast path) can't outrun the check
-+        # below.
-+        self.vm_a.cmd('migrate-set-parameters', max_bandwidth=16536)
++# Skip if FUSE is unusable: not compiled in, or the export failed to
++# mount. $1 is the failing 'block-export-add' reply.
++_notrun_on_fuse_error()
++{
++    case "$1" in
++        *"Parameter 'type' does not accept value 'fuse'"*)
++            _notrun "No FUSE support"
++            ;;
++        *"Failed to mount FUSE session"*)
++            _notrun "FUSE not usable in this environment"
++            ;;
++    esac
++}
 +
-         self.vm_a.cmd('migrate', uri='exec:cat>' + fifo)
+ # Check that we have a file system that allows huge (but very sparse) files
+ #
+ _require_large_file()
+diff --git a/tests/qemu-iotests/tests/file-io-error b/tests/qemu-iotests/tests/file-io-error
+index fb8db73b31..0d970c102f 100755
+--- a/tests/qemu-iotests/tests/file-io-error
++++ b/tests/qemu-iotests/tests/file-io-error
+@@ -89,9 +89,7 @@ output=$(_send_qemu_cmd $QEMU_HANDLE \
+     'return' \
+     | grep -v 'option allow_other only allowed if')
  
-         self.vm_a.cmd('migrate-start-postcopy')
+-if echo "$output" | grep -q "Parameter 'type' does not accept value 'fuse'"; then
+-    _notrun 'No FUSE support'
+-fi
++_notrun_on_fuse_error "$output"
+ echo "$output"
  
-         event_resume = self.vm_b.event_wait('RESUME')
-         self.vm_b_events.append(event_resume)
+ echo
+diff --git a/tests/qemu-iotests/tests/fuse-allow-other b/tests/qemu-iotests/tests/fuse-allow-other
+index eaa39f8f23..50a36601d7 100755
+--- a/tests/qemu-iotests/tests/fuse-allow-other
++++ b/tests/qemu-iotests/tests/fuse-allow-other
+@@ -77,6 +77,8 @@ fuse_export_add()
+         _notrun "allow_other not supported"
+     fi
+ 
++    _notrun_on_fuse_error "$output"
 +
-+        # bitmap0 can't already have its final content: that requires
-+        # the bit data to have actually arrived.
-+        result = self.vm_b.qmp('x-debug-block-dirty-bitmap-sha256',
-+                               node='drive0', name='bitmap0')
-+        assert result['return']['sha256'] != all_discards_sha256
-+
-+        self.vm_a.cmd('migrate-set-parameters', max_bandwidth=0)
-+
-         return (event_resume, discards1_sha256, all_discards_sha256)
+     echo "$output"
+ }
  
-     def test_postcopy_success(self):
-@@ -186,7 +200,6 @@ class TestDirtyBitmapPostcopyMigration(iotests.QMPTestCase):
-         downtime = event_dist(event_stop, event_resume)
-         postcopy_time = event_dist(event_resume, event_complete)
+diff --git a/tests/qemu-iotests/tests/fuse-mmap-shared b/tests/qemu-iotests/tests/fuse-mmap-shared
+index 52941a3bb6..b190105894 100755
+--- a/tests/qemu-iotests/tests/fuse-mmap-shared
++++ b/tests/qemu-iotests/tests/fuse-mmap-shared
+@@ -28,9 +28,12 @@ def test_fuse_support(mount_point):
+     })
+     test_qsd.stop()
+     if 'error' in res:
+-        assert (res['error']['desc'] ==
+-                "Parameter 'type' does not accept value 'fuse'")
+-        iotests.notrun('No FUSE support')
++        desc = res['error']['desc']
++        if desc == "Parameter 'type' does not accept value 'fuse'":
++            iotests.notrun('No FUSE support')
++        if 'Failed to mount FUSE session' in desc:
++            iotests.notrun('FUSE not usable in this environment')
++        assert False, desc
  
--        assert downtime * 10 < postcopy_time
-         if debug:
-             print('downtime:', downtime)
-             print('postcopy_time:', postcopy_time)
+ # Shared mmap when using direct IO is only supported for Linux kernels >= 6.6
+ # with commit e78662e818f94 ("fuse: add a new fuse init flag to relax
 -- 
 2.53.0
 
