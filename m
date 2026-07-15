@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F335C44508
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 02:17:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 479FBC4450A
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 03:17:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjpAY-0007WI-CG; Tue, 14 Jul 2026 22:16:18 -0400
+	id 1wjq75-0001t1-JF; Tue, 14 Jul 2026 23:16:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhaoguohan@kylinos.cn>)
- id 1wjpAV-0007W4-OR
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 22:16:15 -0400
-Received: from mailgw.kylinos.cn ([124.126.103.232])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhaoguohan@kylinos.cn>)
- id 1wjpAQ-0008Hj-AF
- for qemu-devel@nongnu.org; Tue, 14 Jul 2026 22:16:15 -0400
-X-UUID: 1c2c7cb67ff311f1aa26b74ffac11d73-20260715
-X-CID-O-RULE: Release_Ham
-X-CID-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12, REQID:0a9bbb37-b5fb-4ee0-972a-f36e765bff0f, IP:15,
- URL:0,TC:0,Content:13,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
- N:release,TS:28
-X-CID-INFO: VERSION:1.3.12, REQID:0a9bbb37-b5fb-4ee0-972a-f36e765bff0f, IP:15,
- UR
- L:0,TC:0,Content:13,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
- release,TS:28
-X-CID-META: VersionHash:e7bac3a, CLOUDID:bc57027b2ba322fdccb3087f29bc343c,
- BulkI
- D:260715101555WMWO7YUR,BulkQuantity:0,Recheck:0,SF:10|64|66|78|80|81|82|83
- |102|123|127|841|865|898,TC:nil,Content:3|15|50,EDM:-3,IP:-2,URL:0,File:ni
- l,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0
- ,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 1c2c7cb67ff311f1aa26b74ffac11d73-20260715
-X-User: zhaoguohan@kylinos.cn
-Received: from zgh-vmware-virtual-platform.localdomain [(116.128.244.171)] by
- mailgw.kylinos.cn (envelope-from <zhaoguohan@kylinos.cn>)
- (Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
- with ESMTP id 1223959138; Wed, 15 Jul 2026 10:15:55 +0800
-From: zhaoguohan@kylinos.cn
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org,
-	Stefano Garzarella <sgarzare@redhat.com>
-Subject: Re: Re: [PATCH] hw/virtio/vdpa-dev: pass set_config buffer to vhost
- backend
-Date: Wed, 15 Jul 2026 10:15:31 +0800
-Message-ID: <20260715021531.276347-1-zhaoguohan@kylinos.cn>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260709033448-mutt-send-email-mst@kernel.org>
-References: <20260709073225.2341642-1-zhaoguohan@kylinos.cn>
- <20260709033448-mutt-send-email-mst@kernel.org>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1wjq70-0001si-TO
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 23:16:42 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1wjq6w-0007ZV-BD
+ for qemu-devel@nongnu.org; Tue, 14 Jul 2026 23:16:42 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8BxmuuC+1ZqsaUDAA--.14615S3;
+ Wed, 15 Jul 2026 11:16:18 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJAxTOV++1ZqJ4cNAA--.1102S2;
+ Wed, 15 Jul 2026 11:16:16 +0800 (CST)
+Subject: Re: [PATCH] target/loongarch: fix data race in CSR_ESTAT
+To: shankerwangmiao@gmail.com, qemu-devel@nongnu.org
+Cc: Song Gao <17746591750@163.com>, Xianglai Li <lixianglai@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Xi Ruoyao <xry111@xry111.site>,
+ b4-sent@kernel.org
+References: <20260714-loong-race-v1-1-54111549c95e@gmail.com>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <fc1b3da5-2433-7f23-03c4-c1d0a0b5a6f4@loongson.cn>
+Date: Wed, 15 Jul 2026 11:16:06 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <20260714-loong-race-v1-1-54111549c95e@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=124.126.103.232;
- envelope-from=zhaoguohan@kylinos.cn; helo=mailgw.kylinos.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowJAxTOV++1ZqJ4cNAA--.1102S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj9fXoW3KF47Xw1kCw1rZw47Gr18CrX_yoW8Jr1DWo
+ WfAa1aqa1kJr4fCFnruwnIqw12qFy8CrsrCa4v9wn8Zan3ZrWjkry8Kwn0y3y7tFs8WFW8
+ GFy2ga45Ka97Ar9rl-sFpf9Il3svdjkaLaAFLSUrUUUUbb8apTn2vfkv8UJUUUU8wcxFpf
+ 9Il3svdxBIdaVrn0xqx4xG64xvF2IEw4CE5I8CrVC2j2Jv73VFW2AGmfu7bjvjm3AaLaJ3
+ UjIYCTnIWjp_UUUY27kC6x804xWl14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI
+ 8IcIk0rVWrJVCq3wAFIxvE14AKwVWUXVWUAwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xG
+ Y2AK021l84ACjcxK6xIIjxv20xvE14v26r1I6r4UM28EF7xvwVC0I7IYx2IY6xkF7I0E14
+ v26r1j6r4UM28EF7xvwVC2z280aVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4j6r4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAF
+ wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
+ CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+ 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
+ IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+ 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
+ W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j1WlkU
+ UUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.494,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,69 +82,294 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: GuoHan Zhao <zhaoguohan@kylinos.cn>
 
-On Thu, Jul 09, 2026 at 03:35:16AM -0400, Michael S. Tsirkin wrote:
-> On Thu, Jul 09, 2026 at 03:32:25PM +0800, zhaoguohan@kylinos.cn wrote:
->> From: GuoHan Zhao <zhaoguohan@kylinos.cn>
->> 
->> vhost_vdpa_device_set_config() receives the updated config buffer, but
->> forwards s->config to the vhost backend. Since s->config is refreshed by
->> get_config(), it may contain stale backend state.
->>
+
+On 2026/7/14 下午11:40, Miao Wang via B4 Relay wrote:
+> From: Miao Wang <shankerwangmiao@gmail.com>
 > 
-> could you be a bit more specific pls? a real scenario where you
-> see an issue? thanks!
->  
->> Pass the supplied config buffer to vhost_dev_set_config() instead.
->> 
->> Fixes: b430a2bd2303 ("vdpa: add vdpa-dev support")
->> Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
->> ---
->>  hw/virtio/vdpa-dev.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->> 
->> diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
->> index 089a77f4d0b9..6dc684ab096a 100644
->> --- a/hw/virtio/vdpa-dev.c
->> +++ b/hw/virtio/vdpa-dev.c
->> @@ -212,7 +212,7 @@ vhost_vdpa_device_set_config(VirtIODevice *vdev, const uint8_t *config)
->>      VhostVdpaDevice *s = VHOST_VDPA_DEVICE(vdev);
->>      int ret;
->>  
->> -    ret = vhost_dev_set_config(&s->dev, s->config, 0, s->config_size,
->> +    ret = vhost_dev_set_config(&s->dev, config, 0, s->config_size,
->>                                 VHOST_SET_CONFIG_TYPE_FRONTEND);
->>      if (ret) {
->>          error_report("set device config space failed");
->> -- 
->> 2.43.0
+> The CSR_ESTAT register of a CPU can be read and written by both the
+> CPU thread and other threads (e.g., the interrupt controller thread).
+> Currently the possible readers and writers of CSR_ESTAT are:
+> 
+> - Readers
+>    - tcg generated by trans_csrrd(, CSR_ESTAT)
+>    - loongarch_cpu_has_work()
+> 
+> - Writers
+>    - tcg generated by trans_csrxchg(, CSR_ESTAT)
+>    - helper_csrwr_estat()
+>    - helper_csrrd_msgir()
+>    - loongarch_cpu_set_irq()
+>    - loongarch_cpu_do_interrupt()
+>    - loongarch_cpu_exec_interrupt()
 
-Sure. I hit this with a generic vhost-vdpa virtio-blk device when
-changing the write cache mode.
+yes, there is contention problem when injecting interrupt to vCPU in TCG 
+mode, only that it is a little strange to use atomic method on CSR estat 
+register.
 
-For virtio-blk, the guest updates virtio_blk_config.wce when switching
-between write through and write back. Without this patch, QEMU still
-passes the old s->config buffer to VHOST_VDPA_SET_CONFIG, so the backend
-does not see the new wce value.
+ From another side, only loongarch_cpu_set_irq() is called from other 
+threads, the other APIs are called from vCPU thread itself.
 
-I reproduced it with vdpa_sim_blk. After writing wce=1 and then wce=0,
-the byte corresponding to virtio_blk_config.wce in the buffer passed to
-VHOST_VDPA_SET_CONFIG remained unchanged without this patch:
+How about using method like KVM, adding software state 
+irq_pending/irq_clear in structure CPULoongArchState and using atomic 
+method, add cpu_sync_interrupt() and it is called function
+cpu_loongarch_hw_interrupts_pending(). When vCPU thread is kicked with 
+new interrupt and executes cpu_loongarch_hw_interrupts_pending(), it 
+synchronize software intterupt irq_pending/irq_clear  to CS ESTAT register.
 
-guest writes wce=1:
-0x0020: 00 00 01 00 ...
-guest writes wce=0:
-0x0020: 00 00 01 00 ...
+Regards
+Bibo Mao
+> 
+> The access from the CPU thread is not synchronized with the access from
+> other threads, which may lead to data races. To fix this, use atomic
+> operations to read and write CSR_ESTAT.
+> 
+> The data race has been identified while running the test cases from
+> dracut, which is using QEMU to boot a LoongArch guest. By running the
+> tests repeatedly (about 30 times) in the following conditions, the
+> guest will hang in the middle of booting:
+> 
+> - Host architecture: LoongArch64 or Aarch64
+> - Guest kernel: 7.1.3+deb14-loong64
+> - Number of vCPUs: 1 or 2
+> - CPU Features: max, la464,msgint=off,ptw=off, or la464,msgint=off,ptw=on
+> - Accelerator: tcg
+> 
+> When the guest hangs, the guest kernel log shows various errors related
+> to RCU stalls or other Soft Lockup or Hard Lockup issues. When running
+> with 1 vCPU and the guest hangs, the guest kernel directly hangs without
+> any messages and stucks at idle_exit.
+> 
+> With this patch, the guest can boot successfully without any hangs
+> during repeated runs of the test cases.
+> 
+> Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
+> ---
+>   target/loongarch/cpu.c                             |  8 +++----
+>   target/loongarch/internals.h                       | 27 +++++++++++++++++++++
+>   target/loongarch/tcg/csr_helper.c                  | 28 +++++++++++++++++-----
+>   target/loongarch/tcg/helper.h                      |  2 ++
+>   .../tcg/insn_trans/trans_privileged.c.inc          | 13 ++++++++--
+>   target/loongarch/tcg/tcg_cpu.c                     | 12 ++++------
+>   6 files changed, 71 insertions(+), 19 deletions(-)
+> 
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index fb03424ffa8cd5e5d250531cc2a36fa789fc25a9..be53307997d60ceaa404a6187eedf96dc51d82ff 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -71,8 +71,8 @@ void loongarch_cpu_set_irq(void *opaque, int irq, int level)
+>       if (kvm_enabled()) {
+>           kvm_loongarch_set_interrupt(cpu, irq, level);
+>       } else if (tcg_enabled()) {
+> -        sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, irq, 1, level != 0);
+> -        if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
+> +        cpu_csr_estat_deposit64(sys, irq, 1, level != 0);
+> +        if (FIELD_EX64(cpu_csr_estat_get(sys), CSR_ESTAT, IS)) {
+>               cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+>           } else {
+>               cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+> @@ -87,7 +87,7 @@ bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env)
+>       uint32_t status;
+>       CPUSysState *sys = env_sys(env);
+>   
+> -    pending = FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS);
+> +    pending = FIELD_EX64(cpu_csr_estat_get(sys), CSR_ESTAT, IS);
+>       status  = FIELD_EX64(sys->CSR_ECFG, CSR_ECFG, LIE);
+>   
+>       return (pending & status) != 0;
+> @@ -641,7 +641,7 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+>       sys->CSR_ECFG = FIELD_DP64(sys->CSR_ECFG, CSR_ECFG, VS, 0);
+>       sys->CSR_ECFG = FIELD_DP64(sys->CSR_ECFG, CSR_ECFG, LIE, 0);
+>   
+> -    sys->CSR_ESTAT = sys->CSR_ESTAT & (~MAKE_64BIT_MASK(0, 2));
+> +    qatomic_and(&sys->CSR_ESTAT, ~MAKE_64BIT_MASK(0, 2));
+>       sys->CSR_RVACFG = FIELD_DP64(sys->CSR_RVACFG, CSR_RVACFG, RBITS, 0);
+>       sys->CSR_CPUID = cs->cpu_index;
+>       sys->CSR_TCFG = FIELD_DP64(sys->CSR_TCFG, CSR_TCFG, EN, 0);
+> diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+> index e01dbed40f6c7d02d2180d9dd5e17dacdd31755a..b94d229b2e0a4d48a5b712ad5ee364fb4a402055 100644
+> --- a/target/loongarch/internals.h
+> +++ b/target/loongarch/internals.h
+> @@ -28,6 +28,33 @@ int ieee_ex_to_loongarch(int xcpt);
+>   void restore_fp_status(CPULoongArchState *env);
+>   #endif
+>   
+> +static inline uint64_t cpu_csr_estat_get(CPUSysState *sys)
+> +{
+> +    return qatomic_read(&sys->CSR_ESTAT);
+> +}
+> +
+> +#define cpu_csr_estat_set(sys, field, val) \
+> +    do { \
+> +        uint64_t _estat = cpu_csr_estat_get(sys); \
+> +        uint64_t _new = FIELD_DP64(_estat, CSR_ESTAT, field, (val)); \
+> +        if (qatomic_cmpxchg(&(sys)->CSR_ESTAT, _estat, _new) == _estat) { \
+> +            break; \
+> +        } \
+> +    } while (1)
+> +
+> +static inline uint64_t cpu_csr_estat_deposit64(CPUSysState *sys, int start,
+> +                                               int len, uint64_t val)
+> +{
+> +    do {
+> +        uint64_t _estat = cpu_csr_estat_get(sys);
+> +        uint64_t _new = deposit64(_estat, start, len, val);
+> +        if (qatomic_cmpxchg(&(sys)->CSR_ESTAT, _estat, _new) == _estat) {
+> +            return _estat;
+> +        }
+> +    } while (1);
+> +}
+> +
+> +
+>   #ifndef CONFIG_USER_ONLY
+>   extern const VMStateDescription vmstate_loongarch_cpu;
+>   
+> diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+> index 7dc33bc1802e5d4efc72648174bbf5e9baeaea54..023a6b1dc44f0df38c8c2f46b0b07eda88ddb3de 100644
+> --- a/target/loongarch/tcg/csr_helper.c
+> +++ b/target/loongarch/tcg/csr_helper.c
+> @@ -90,7 +90,7 @@ target_ulong helper_csrrd_msgir(CPULoongArchState *env)
+>               return irq;
+>           }
+>   
+> -        sys->CSR_ESTAT = FIELD_DP64(sys->CSR_ESTAT, CSR_ESTAT, MSGINT, 0);
+> +        cpu_csr_estat_set(sys, MSGINT, 0);
+>       } else {
+>           /* bit 31 set 1 for no invalid irq */
+>           irq = BIT(31);
+> @@ -99,15 +99,31 @@ target_ulong helper_csrrd_msgir(CPULoongArchState *env)
+>       return irq;
+>   }
+>   
+> -target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
+> +target_ulong helper_csrrd_estat(CPULoongArchState *env)
+>   {
+>       CPUSysState *sys = env_sys(env);
+> -    int64_t old_v = sys->CSR_ESTAT;
+> +    return cpu_csr_estat_get(sys);
+> +}
+>   
+> -    /* Only IS[1:0] can be written */
+> -    sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, 0, 2, val);
+> +target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
+> +{
+> +    CPUSysState *sys = env_sys(env);
+> +    return cpu_csr_estat_deposit64(sys, 0, 2, val);
+> +}
+>   
+> -    return old_v;
+> +target_ulong helper_csrxhg_estat(CPULoongArchState *env, target_ulong val,
+> +                                 target_ulong mask)
+> +{
+> +    CPUSysState *sys = env_sys(env);
+> +    mask &= MAKE_64BIT_MASK(0, 2);
+> +    val &= mask;
+> +    do {
+> +        uint64_t _estat = cpu_csr_estat_get(sys);
+> +        uint64_t _new = (_estat & ~mask) | val;
+> +        if (qatomic_cmpxchg(&(sys)->CSR_ESTAT, _estat, _new) == _estat) {
+> +            return _estat;
+> +        }
+> +    } while (1);
+>   }
+>   
+>   target_ulong helper_csrwr_asid(CPULoongArchState *env, target_ulong val)
+> diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
+> index 8a6c62f11618d7125122831f4a9fe0d0fab73364..58089e84c60fa49524b4705981d0f677cfb439d2 100644
+> --- a/target/loongarch/tcg/helper.h
+> +++ b/target/loongarch/tcg/helper.h
+> @@ -101,8 +101,10 @@ DEF_HELPER_1(csrrd_pgd, i64, env)
+>   DEF_HELPER_1(csrrd_cpuid, i64, env)
+>   DEF_HELPER_1(csrrd_tval, i64, env)
+>   DEF_HELPER_1(csrrd_msgir, i64, env)
+> +DEF_HELPER_1(csrrd_estat, i64, env)
+>   DEF_HELPER_2(csrwr_stlbps, i64, env, tl)
+>   DEF_HELPER_2(csrwr_estat, i64, env, tl)
+> +DEF_HELPER_3(csrxhg_estat, i64, env, tl, tl)
+>   DEF_HELPER_2(csrwr_asid, i64, env, tl)
+>   DEF_HELPER_2(csrwr_tcfg, i64, env, tl)
+>   DEF_HELPER_2(csrwr_ticlr, i64, env, tl)
+> diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> index 6728ce5ec9387d1f66d68cf36abbe6e0997c639a..e6e9072518767479f66bae1cf1c72844df4343d4 100644
+> --- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> +++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+> @@ -75,7 +75,7 @@ static bool set_csr_trans_func(unsigned int csr_num, GenCSRRead readfn,
+>   void loongarch_csr_translate_init(void)
+>   {
+>       SET_CSR_FUNC(STLBPS, NULL, gen_helper_csrwr_stlbps);
+> -    SET_CSR_FUNC(ESTAT, NULL, gen_helper_csrwr_estat);
+> +    SET_CSR_FUNC(ESTAT, gen_helper_csrrd_estat, gen_helper_csrwr_estat);
+>       SET_CSR_FUNC(ASID,  NULL, gen_helper_csrwr_asid);
+>       SET_CSR_FUNC(PGD,   gen_helper_csrrd_pgd, NULL);
+>       SET_CSR_FUNC(PWCL,  NULL, gen_helper_csrwr_pwcl);
+> @@ -187,7 +187,16 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
+>           return false;
+>       }
+>   
+> -    /* So far only readonly csrs have readfn. */
+> +    if (a->csr == LOONGARCH_CSR_ESTAT) {
+> +        src1 = gpr_src(ctx, a->rd, EXT_NONE);
+> +        mask = gpr_src(ctx, a->rj, EXT_NONE);
+> +        oldv = tcg_temp_new();
+> +        gen_helper_csrxhg_estat(oldv, tcg_env, src1, mask);
+> +        gen_set_gpr(a->rd, oldv, EXT_NONE);
+> +        return true;
+> +    }
+> +
+> +    /* So far only readonly csrs have readfn, except ESTAT. */
+>       assert(csr->readfn == NULL);
+>   
+>       src1 = gpr_src(ctx, a->rd, EXT_NONE);
+> diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
+> index 4b1d44a16445841de8b9a7d69d8f389c357e6abf..64a28c7dcbbce2f2ce47640471602485344ca8e3 100644
+> --- a/target/loongarch/tcg/tcg_cpu.c
+> +++ b/target/loongarch/tcg/tcg_cpu.c
+> @@ -160,10 +160,8 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+>           sys->CSR_TLBRERA = FIELD_DP64(sys->CSR_TLBRERA, CSR_TLBRERA,
+>                                         PC, (env->pc >> 2));
+>       } else {
+> -        sys->CSR_ESTAT = FIELD_DP64(sys->CSR_ESTAT, CSR_ESTAT, ECODE,
+> -                                    EXCODE_MCODE(cause));
+> -        sys->CSR_ESTAT = FIELD_DP64(sys->CSR_ESTAT, CSR_ESTAT, ESUBCODE,
+> -                                    EXCODE_SUBCODE(cause));
+> +        cpu_csr_estat_set(sys, ECODE, EXCODE_MCODE(cause));
+> +        cpu_csr_estat_set(sys, ESUBCODE, EXCODE_SUBCODE(cause));
+>           sys->CSR_PRMD = FIELD_DP64(sys->CSR_PRMD, CSR_PRMD, PPLV,
+>                                      FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, PLV));
+>           sys->CSR_PRMD = FIELD_DP64(sys->CSR_PRMD, CSR_PRMD, PIE,
+> @@ -181,7 +179,7 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+>       if  (cs->exception_index == EXCCODE_INT) {
+>           /* Interrupt */
+>           uint32_t vector = 0;
+> -        uint32_t pending = FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS);
+> +        uint32_t pending = FIELD_EX64(cpu_csr_estat_get(sys), CSR_ESTAT, IS);
+>           pending &= FIELD_EX64(sys->CSR_ECFG, CSR_ECFG, LIE);
+>   
+>           /* Find the highest-priority interrupt. */
+> @@ -195,7 +193,7 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+>                         TARGET_FMT_lx "\n",
+>                         __func__, env->pc, sys->CSR_ERA,
+>                         cause, sys->CSR_BADV, sys->CSR_DERA, vector,
+> -                      sys->CSR_ECFG, sys->CSR_ESTAT);
+> +                      sys->CSR_ECFG, cpu_csr_estat_get(sys));
+>           qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
+>       } else {
+>           if (tlbfill) {
+> @@ -210,7 +208,7 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+>                         "BADI " TARGET_FMT_lx " SYS_NUM " TARGET_FMT_lu
+>                         " cpu %d asid " TARGET_FMT_lx "\n", __func__, env->pc,
+>                         tlbfill ? sys->CSR_TLBRERA : sys->CSR_ERA,
+> -                      cause, tlbfill ? "(refill)" : "", sys->CSR_ESTAT,
+> +                      cause, tlbfill ? "(refill)" : "", cpu_csr_estat_get(sys),
+>                         sys->CSR_ECFG,
+>                         tlbfill ? sys->CSR_TLBRBADV : sys->CSR_BADV,
+>                         sys->CSR_BADI, env->gpr[11], cs->cpu_index,
+> 
+> ---
+> base-commit: 499039798cdad7d86b787fec0eaf1da4151c0f05
+> change-id: 20260707-loong-race-63639e8f5afb
+> 
+> Best regards,
+> 
 
-With this patch, the same writes are passed down correctly:
-
-guest writes wce=1:
-0x0020: 01 00 00 00 ...
-guest writes wce=0:
-0x0020: 00 00 00 00 ...
-
-So from the guest's perspective the write cache mode change appears to
-succeed, but the updated value never reaches the vDPA backend because
-VHOST_VDPA_SET_CONFIG receives stale configuration data.
 
