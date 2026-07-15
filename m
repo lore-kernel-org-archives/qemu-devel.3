@@ -4,102 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2567C44501
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 16:24:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C258C44501
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 16:32:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wk2PC-0003zl-E0; Wed, 15 Jul 2026 12:24:18 -0400
+	id 1wk2WZ-0005Lc-30; Wed, 15 Jul 2026 12:31:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wk2P7-0003zE-NT
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 12:24:13 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wk2P6-0001Ul-1w
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 12:24:13 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-47defd0c1c5so1825247f8f.3
- for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 09:24:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784132650; x=1784737450; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=rXcFovKhBZkGu5sLV06dZIsy6dWh7Ruxk3bF6oViZms=;
- b=rFYO4cWbVbk2WjJa9g2vaBNNOuyuYWhrziw0ja2hcbI/Y9KsSG7zOpUeVaz5s8NzO1
- t3sZ1YFYmKjlC/UNQz/URQw2YuIEb+aGGcd/9P75OBdSLy1xqXaCHeMCYZKw0HW9SIp3
- OiAj4FcZSBPvq9pjaRxJL5c84G0rvq8VUdK+8WQAn3Pu7eJswoyTwJfgnB9Oi231vaJD
- vLmxYrpUKVR5s+WrlMJYX+HH5FC3omYqGu4/3eRvRiFRiJRxtW+FS8PC1nSFm+JAxs2E
- lCFbb7WL6GpAmKPoEbsr3Idoy2o9/Li0891AbCwsvZdVS95+ipgGKPJ+S93yzbrK4nQ3
- HIOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784132650; x=1784737450;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=rXcFovKhBZkGu5sLV06dZIsy6dWh7Ruxk3bF6oViZms=;
- b=n+TdN7TnrsLBsIaJy2HTjrKxdEfEhBPsmOtIW+cs1yj7FTbGHTfoDG1Vb/wUU88TIm
- VkhjO8K9+fjnE7sl10YL9AsRVxtkIXP1lbLog86f4lVIhKdrMlJtyTJPqQcGG9lqjUTA
- 3pQeZ7Fast+uaDh7YKLiXpclVeZxHrwBk1yy0+n1QAx6xhbvQsPjoJN422Cp5wFkpAmf
- KxOah/26ZLCvaLzxFuIKvJz476204eQSaoh5s8jwjfAek6rHJmvcVJ4Gk64qZvR7imNl
- WNaW3tJ2e2nnwbNxrydEuLi3e0d/fi8/yS48fUJoVVCmXAexjVpNyQ20VaV6rNX+VA25
- /G7g==
-X-Gm-Message-State: AOJu0YyeFGKE0CuYgr2N+JT3I5csKbQRwyy1tJ9ej08SiTqe5MFt8ai5
- 6vnscGMiVqI75JTjNGAM3cvITDCe6UJdHx6rQKyD+X0wNBZBlubo+ud//RnE4Ac3Xac=
-X-Gm-Gg: AfdE7ck3xsdw30Jt+nDBdQMLL0acQ/GtzOvab2MIduLghZD3O2JzXiOSeoSFtsJB4Uq
- xMJKtZ+tcZubJCGwbhGDLZiPkZPBfyKyFDIwG+suTd9LCsRaNio0r7roRHsXuIK8i9HfWqmB5cc
- 7oR/mjBGXTr680b3gcbh90t6jAcTQxZQIIpT5SOH3UFv1jdCW9Zse+71iv3xRasVUCfYLz6eOvG
- EjBfHh5QDrh93woxSC5xpTIIZYtJji1Ar7IAMo9+ukPtwc+NqPt2X+WTUQOceoDABT3LNf0f77T
- nyzG1IF+ljX4IE+/yy/5Z8uULRxwIkNg/eRoVtagSfo2CkaZtJL0W+pzLO/aEd3P+Rpr7NA/IKo
- rPS+Frp2PrIOoMC0yCWc685qN/ZBQAD2aCBSA1r86lmkz7cLYxvfwrv5s9qZtf24XdyoS9uI8DX
- 6OoYsiteUwcC+OL1sf73/8hGk=
-X-Received: by 2002:a05:600c:1d16:b0:493:f318:3bc6 with SMTP id
- 5b1f17b1804b1-493f87e72b3mr187027205e9.13.1784132650227; 
- Wed, 15 Jul 2026 09:24:10 -0700 (PDT)
-Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4953c59b810sm72037615e9.0.2026.07.15.09.24.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jul 2026 09:24:09 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7CF325F892;
- Wed, 15 Jul 2026 17:24:08 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wk2WN-0005KY-PQ
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 12:31:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wk2WK-0002Ya-9I
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 12:31:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784133098;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Xzboo1t0EtY5mWSUTY7yTT3ay9vq3MKvw241jQkZX+k=;
+ b=QsRH9a9VyHIAz1VrE2VtISOUDKO3s0QOZELJBzBXCeIuuqUhXzYlf63vU7axSDb6jhJdUW
+ HJQ40r7sIhkg0fdTh6PwVKRF9+0uJeukGeKAY205JQ1ILs4dWrqWRwDbuZGxYNTUJS7wZD
+ m/1jr3ejC5d3lKZS7xsPWJ3Rl2rz8kc=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-609-cqltEZisP7Wr1v09u1Prsg-1; Wed,
+ 15 Jul 2026 12:31:33 -0400
+X-MC-Unique: cqltEZisP7Wr1v09u1Prsg-1
+X-Mimecast-MFC-AGG-ID: cqltEZisP7Wr1v09u1Prsg_1784133092
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 504F31800616; Wed, 15 Jul 2026 16:31:32 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.34.221])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9C73A1954107; Wed, 15 Jul 2026 16:31:30 +0000 (UTC)
+Date: Wed, 15 Jul 2026 17:31:27 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,  Brian Cain <brian.cain@oss.qualcomm.com>,  Peter
- Maydell <peter.maydell@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?=
- <philmd@oss.qualcomm.com>,  Daniel =?utf-8?Q?P=2EBerrang=C3=A9?=
- <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,  Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>,  Laurent Vivier <laurent@vivier.eu>,
- Paolo Bonzini <pbonzini@redhat.com>,  Gustavo Romero
- <gustavo.romero@linaro.org>,  Helge Deller <deller@gmx.de>
-Subject: Re: [PATCH v5 00/98] tests/tcg: run tests with meson
-In-Reply-To: <8cf29764-387d-4465-b630-db1742a58eda@oss.qualcomm.com> (Pierrick
- Bouvier's message of "Tue, 14 Jul 2026 08:53:27 -0700")
-References: <20260710214343.2065491-1-pierrick.bouvier@oss.qualcomm.com>
- <87cxwpj3rj.fsf@draig.linaro.org>
- <8cf29764-387d-4465-b630-db1742a58eda@oss.qualcomm.com>
-User-Agent: mu4e 1.14.3-pre1; emacs 30.1
-Date: Wed, 15 Jul 2026 17:24:08 +0100
-Message-ID: <87v7aggr13.fsf@draig.linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH v2] tests/docker: ensure container command is probed at
+ most once
+Message-ID: <ale137WxCZrnk7US@redhat.com>
+References: <20260715104218.1110301-1-berrange@redhat.com>
+ <e3932087-16c8-4e34-98cf-c20cf7db9531@oss.qualcomm.com>
+ <aleyWsC-JqqnIV8k@redhat.com>
+ <2bd87f8d-c5f2-44c1-9a3b-994e7607cd72@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <2bd87f8d-c5f2-44c1-9a3b-994e7607cd72@oss.qualcomm.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: permerror client-ip=170.10.129.124;
+ envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,91 +88,128 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+On Wed, Jul 15, 2026 at 09:22:05AM -0700, Pierrick Bouvier wrote:
+> On 7/15/2026 9:16 AM, Daniel P. Berrangé wrote:
+> > On Wed, Jul 15, 2026 at 09:07:18AM -0700, Pierrick Bouvier wrote:
+> >> On 7/15/2026 3:42 AM, Daniel P. Berrangé wrote:
+> >>> The '--engine' arg accepts either 'podman' or 'docker', which is
+> >>> not sufficiently granular to map directly to a command. This
+> >>> means that  docker.py still has to then probe the exact command
+> >>> to use.
+> >>>
+> >>> Meanwhile the 'probe' command prints out the full command to use
+> >>> but this cannot be passed back to docker.py to avoid probing
+> >>> again, so the caching is only useful in the few case where we
+> >>> run a container directly bypassing docker.py.
+> >>>
+> >>> Address this by replacing --engine with --command for docker.py.
+> >>>
+> >>> This in turn requires the --container-engine configure arg to be
+> >>> replaced with --container-command.
+> >>>
+> >>> With these changes the container command is probed at most once
+> >>> during configure and never again, while running in an unconfigured
+> >>> tree will still probe on demand.
+> >>>
+> >>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> >>> ---
+> >>>
+> >>> In v2:
+> >>>
+> >>>  * Don't set container_command to "no" if 'probe' finds
+> >>>    not viable binaries.
+> >>>
+> >>>  configure                     | 25 +++++++------
+> >>>  tests/docker/Makefile.include | 13 ++++---
+> >>>  tests/docker/docker.py        | 67 ++++++++++++-----------------------
+> >>>  3 files changed, 40 insertions(+), 65 deletions(-)
+> > 
+> > 
+> >>
+> >> I still observe the same error when running make-tcg without
+> >> podman/docker installed.
+> >> bash: line 1: no: command not found
+> >>
+> >> And I will suggest again to include in your series:
+> >> https://lore.kernel.org/qemu-devel/20260710214343.2065491-27-pierrick.bouvier@oss.qualcomm.com/
+> >> and detect if probe command worked or failed, and adapt behavior based
+> >> on it. Existing behavior to compare to a string "no" is a very
+> >> unfamiliar pattern for any command. `which` does not return no for instance.
+> > 
+> > That didn't do anything for me when I tested it, and this current
+> > patch did fix the problem. Are you testing on top of a vanilla
+> > git master, or did you have other patches that aren't merged
+> > upstream.
+> >
+> 
+> Originally caught on GitHub.
+> If you can survive to have to log on this evil platform:
+> https://github.com/p-b-o/qemu-ci/actions/runs/29410261308/job/87335442476
+> 
+> Which I reproduced on my machine locally using the command I posted at
+> the end of my email.
+> Top of master + this patch, without any other patch.
+> 
+> > When /usr/bin/podman was absent
+> > 
+> >  $ ./configure --target-list=s390x-linux-user
+> >  ...
+> >  $ grep CONTAINER build/config-host.mak 
+> >  <no match>
+> >  
+> >  $ make run-tcg-tests-s390x-linux-user
+> >   changing dir to build for make "run-tcg-tests-s390x-linux-user"...
+> >   make[1]: Entering directory '/home/berrange/src/virt/qemu/build'
+> >   ninja: no work to do.
+> >   /home/berrange/src/virt/qemu/build/pyvenv/bin/meson introspect --targets --tests --benchmarks | /home/berrange/src/virt/qemu/build/pyvenv/bin/python3 -B scripts/mtest2make.py > Makefile.mtest
+> >   make[1]: *** No rule to make target 'run-tcg-tests-s390x-linux-user'.  Stop.
+> > 
+> > configure has correctly skipped setup of the tcg cross
+> > compiler targets.
+> > 
+> > When /usr/bin/podman was re-instaled it once again
+> > worked
+> > 
+> > 
+> >   $ ./configure --target-list=s390x-linux-user
+> >   ...
+> >   $ grep CONTAINER build/config-host.mak 
+> >   CONTAINER_COMMAND=podman
+> > 
+> >   $ make run-tcg-tests-s390x-linux-user
+> >   changing dir to build for make "run-tcg-tests-s390x-linux-user"...
+> >   make[1]: Entering directory '/home/berrange/src/virt/qemu/build'
+> >   ninja: no work to do.
+> >   /home/berrange/src/virt/qemu/build/pyvenv/bin/meson introspect --targets --tests --benchmarks | /home/berrange/src/virt/qemu/build/pyvenv/bin/python3 -B scripts/mtest2make.py > Makefile.mtest
+> >     BUILD   debian-s390x-cross
+> >     BUILD   s390x-linux-user guest-tests
+> >   tests/tcg/s390x-linux-user: -march=z14 detected
+> >   tests/tcg/s390x-linux-user: -march=z15 detected
+> >   ...tests running...
+> > 
+> >> You can test next patch using podman (which it seems you have):
+> >> ```
+> >> podman build \
+> >> -f tests/docker/dockerfiles/debian-all-test-cross.docker -t all
+> >> podman run -it --rm all -w $(pwd) -v $(pwd):$(pwd) all \
+> >> bash -c "./configure && cd build && make all -j32 &&make check-tcg -j32"
+> >> ```
+> >
+> 
+> Try to run the exact command above, and we'll see if you can reproduce
+> or not.
 
-> On 7/14/2026 2:53 AM, Alex Benn=C3=A9e wrote:
->> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
->>=20
->>> This series replaces TCG tests makefiles with meson, with the
->>> goal of having something more readable and maintainable in the long ter=
-m.
->>> Also it closes the gap that tcg tests had with the rest of tests, by in=
-tegrating
->>> them with meson directly.
->>>
->>> It covers all existing tests for all architectures, including
->>> user/system/multiarch-user/multiarch-system. It implements all requirem=
-ents
->>> listed on original thread [1].
->>>
->>> [1] https://lore.kernel.org/qemu-devel/87wlwfsay4.fsf@draig.linaro.org/
->>>
->>> We also have for free:
->>> - correct and complete dependencies for any test, including:
->>>   scripts, c.inc, headers, reference files and binaries/plugins.
->>> - catch test declaration issues at configure time vs test time.
->>> - proper data types for variables instead of string expansion with make.
->>>
->>> Series first introduce the meson machinery needed in tests/tcg/meson.bu=
-ild, step
->>> by step. Then it adds support for all existing archs. Finally, we remove
->>> Makefiles and configure bits, and add documentation.
->>>
->>> Usage:
->>>
->>> ```
->>> make check-tcg
->>> make check-tcg-aarch64-linux-user
->>> make check-tcg-aarch64-softmmu
->>> make tcg-tests
->>>
->>> ninja tcg-tests
->>=20
->> This does work but I couldn't see tcg-tests (or individual tests) when
->> running:
->>=20
->>   ninja -C . -t query all
->>=20
->> (which is what my Emacs's helper uses to query potential targets from
->> ninja).
->>=20
->> The plugins, unit and qtest tests all appear in the list.
->>
->
-> This is because tcg tests are not built by default (so not included in
-> all), but they are under target tcg-tests.
-> Good news is that updating emacs config won't be too hard:
-> ninja -C build/ . -t query all tcg-tests
+Oh it is the bash-ism  test "==" vs "="
 
-Thanks.
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
-The helper is intending to be a generic introspection helper for
-multiple projects. Do you know if its possible to query for the list of
-groups(?) with ninja?
-
-I guess something like:
-
-  ninja -t targets | grep phony
-
-would work but I wonder if there is a better way?
-
->
-> I enabled default build in v2, but removed it in v3 since it was really
-> weird to build half of the tests (with native cc available), and leave
-> the rest (based on containers) out of it. Now seeing your emacs
-> configuration, I'm even more convinced it would be very confusing to
-> only show part of them by default.
->
-> There is no way to make all tcg-tests appear in all target, since it
-> would imply we trigger container builds by default, which is a very
-> counterintuitive default IMHO.
-> Regards,
-> Pierrick
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
