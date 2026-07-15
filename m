@@ -4,62 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AFE8C44501
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 16:09:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42E3FC44508
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 16:13:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wk29n-0006Kp-30; Wed, 15 Jul 2026 12:08:23 -0400
+	id 1wk2Dy-0008Sf-1i; Wed, 15 Jul 2026 12:12:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
- id 1wk29K-00067c-9i; Wed, 15 Jul 2026 12:07:58 -0400
-Received: from m16.mail.163.com ([220.197.31.5])
+ (Exim 4.90_1)
+ (envelope-from <89facabd1490ce088a1b2d41f7712e12d7b1e3ee@kylie.crudebyte.com>)
+ id 1wk2Dw-0008S1-0b; Wed, 15 Jul 2026 12:12:40 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
- id 1wk29E-0007aj-Hh; Wed, 15 Jul 2026 12:07:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=EP
- pRpWJacoradDoI1k9i6DndKoskRNO1q+bFBmIbvaA=; b=Tc7x084N9OibpgslVr
- v1ocwDOsZMgwqmYjMNpwB9YRO1NlBUVhuJUjtMme+S3JQ3ZK2z4Aq1T8aU5IASyJ
- uJch2v/eVSsczyrZoZjHV5Iesy3QVYAO60UzzVrUzKTwT8Luk8svwbFUsvjIznAk
- 5z6p7X24ZGEiR2thDtd0zlPu8=
-Received: from dt-VM.localdomain (unknown [])
- by gzga-smtp-mtada-g0-3 (Coremail) with SMTP id
- _____wDnAiBEsFdqSE_mJg--.44286S3; 
- Thu, 16 Jul 2026 00:07:33 +0800 (CST)
-From: Tao Ding <dingtao0430@163.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Tao Ding <dingtao0430@163.com>
-Subject: [PATCH v7 1/2] hw/sd: sdhci: Fix SDMA boundary bug
-Date: Thu, 16 Jul 2026 00:07:29 +0800
-Message-ID: <20260715160731.29969-2-dingtao0430@163.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260715160731.29969-1-dingtao0430@163.com>
-References: <20260715160731.29969-1-dingtao0430@163.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wDnAiBEsFdqSE_mJg--.44286S3
-X-Coremail-Antispam: 1Uf129KBjvJXoWxtr13Ar4DZrWrZry7Aw1DKFg_yoWxKFWrpF
- Zakr4rKrs7tr1fuF4fJ3W3CF4F9r4xuasrKr43GwnakFZxKFyFvwsFka42gr1xtr1xWr12
- vrWUJr909a4UA3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0piOBMtUUUUU=
-X-Originating-IP: [119.4.20.225]
-X-CM-SenderInfo: pglqw3tdrqkjqq6rljoofrz/xtbC4gWt62pXsEVV9AAA3I
-Received-SPF: pass client-ip=220.197.31.5; envelope-from=dingtao0430@163.com;
- helo=m16.mail.163.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1)
+ (envelope-from <89facabd1490ce088a1b2d41f7712e12d7b1e3ee@kylie.crudebyte.com>)
+ id 1wk2Du-0008Ge-I6; Wed, 15 Jul 2026 12:12:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Message-Id:Cc:To:Subject:Date:From:Content-Type:
+ Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Content-ID:
+ Content-Description; bh=hWOvMZMHAYS9htQ08PE3lQy3Polwd6k3l93OnLkja9M=; b=f4pPD
+ cBE+Z+OjYwOAhn8hh7Qwv1UdW344eAwsWezIF3NdxTbSbOzKvjVVJ92bzLqMEDmutvXz6E8rhxqSf
+ UGxYIzskNsG41wHyHr7fAJbW3tltCa9o9Dclx7EZAPD6wi38gPl2GLSuwlBA4e2+4q0Vu27Jfze+n
+ 4wJ/sbUH680TAGrgXXhc6aIoOG2mMR7DRVn5+Mp1a0w8++tbmN9d2fAJ8dhyb4Affz4Z8fJ5L8sCz
+ ZHx/x1TBban6EF/dTR6Y5oQs7lU4VjAQTQl15o2fOkWTgoEMfDRk3RjdWzoWwzy2RAVInG7Yqsqdd
+ k/XiJOJrSLwTzET9CGSQLKD9FICdR3z4EvAIZcvVjj7oGUfAOsFUR/X5agyjdB69luWslIEbEsb/q
+ SO7y8jw7LOepbpUKX+pEBIVw5SqpoYQu1mEu6TsNT5rQXj1Xi3pK1GzEY1Z1riSoFCJy0s6uihHmS
+ mksBmlG4p42T7Cuzk+a4HArbDbLAgYfMBI9Dtt36YmI8Nb1l139L3uKVREJzOK9+8iKlcTz5jUsxJ
+ qJF5ExJTlIkVirudq1Xi9QL+n/zOXRTZtStqE0gl9kAo8wIma+KkumhvRVDDTrKz5T3hatwvKJsfA
+ GtFArF6bF3olFJI931cICLL6Nsqku8B5aMiNKAaKlP1UiRLn6Gfh9SqfJ83mGw=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Date: Wed, 15 Jul 2026 18:10:00 +0200
+Subject: [PATCH] hw/9pfs: fix O_TRUNC bypass on read-only export
+To: qemu-devel@nongnu.org,
+    qemu-stable@nongnu.org
+Cc: Greg Kurz <groug@kaod.org>
+Message-Id: <E1wk2Dq-0019kY-JK@kylie.crudebyte.com>
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=89facabd1490ce088a1b2d41f7712e12d7b1e3ee@kylie.crudebyte.com;
+ helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,213 +64,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-During SDMA transfers, the controller raises an interrupt at buffer boundaries
-to request a system address update. The host driver will rewrite the SDHC_SYSAD register. 
-(according to PartA2_SD_Host_Controller_Simplified_Specification_Ver2.00.pdf section 2.2.1)
-However, the current code will ignore write operations to SDHC_SYSAD. 
+Guest 9p client opening a file with O_TRUNC on a read-only 9p file
+system using 9p2000.u protocol version, allowed to bypass 9p
+server's read-only check, eventually causing file(s) being
+truncated to empty file(s) on host's read-only export.
 
-To fix this bug, when SDMA encounters a boundary, a state is set to record it. 
-In this state, SDHC_SYSAD can be written. In other cases, it is still protected by TRANSFERRING_DATA.
+Root cause is that 9p server's read-only check is using Linux open
+flags like O_WRONLY, O_RDWR, O_TRUNC, but checking them against
+the 9p Topen request's "mode" parameter, which has a different
+encoding (Otrunc = 0x10 vs. O_TRUNC = 0x200).
 
-Meanwhile, a subsection has been added for migration.
+Fix this by checking against the "flags" variable instead of the
+protocol's "mode" option. Because the "flags" variable is already
+converted to Linux encoding by omode_to_uflags() for 9p2000.u and
+by get_dotl_openflags() for 9p2000.L protocol version.
 
-Suggested-by: Bin Meng <bmeng.cn@gmail.com>
-Signed-off-by: Tao Ding <dingtao0430@163.com>
+Only 9p2000.u was affected by this bypass, 9p2000.L uses the Linux
+format on protocol level already.
+
+Fixes: 2c74c2cb4b ("hw/9pfs: Read-only support for 9p export")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4000
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
-This bug may be encountered when using uboot with SDMA functionality, and can be reproduced by following the steps below.
-Uboot test:
-    1. Prepare zImage, uboot and rootfs.cpio.gz, make sure uboot config (MMC_SDHCI_SDMA=y).
-        for more detail, can obtained 
-        "https://lore.kernel.org/qemu-devel/20260617155857.7451-1-dingtao0430@163.com/T/#mcdf231e6bd762903f8393bf93253cbcb12ececcf"
-    2. ./qemu-system-aarch64 -M xilinx-zynq-a9 -machine boot-mode=sd -m 1024 -display none -serial null -serial stdio -monitor none \
-        -device loader,file=u-boot-dtb.bin,addr=0x04000000,cpu-num=0  \
-        -drive file=zynq-sd.img,format=raw,if=sd -D qemu.log
+ hw/9pfs/9p.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-
-After applying the fix, success load sd card:
-  
-U-Boot 2026.07-rc4-g1e80ee41441c (Jun 15 2026 - 19:05:05 +0800)
-
-Model: Xilinx ZC702 board
-DRAM:  ECC disabled 1 GiB
-Core:  33 devices, 21 uclasses, devicetree: board
-Flash: 0 Bytes
-NAND:  0 MiB
-MMC:   mmc@e0100000: 0
-Loading Environment from FAT... *** Error - No Valid Environment Area found
-*** Warning - bad env area, using default environment
-
-In:    serial@e0001000
-Out:   serial@e0001000
-Err:   serial@e0001000
-Net:   
-ZYNQ GEM: e000b000, mdio bus e000b000, phyaddr 7, interface rgmii-id
-
-Warning: ethernet@e000b000 (eth0) using random MAC address - 4a:63:5a:a4:d3:6b
-eth0: ethernet@e000b000
-Hit any key to stop autoboot: 0
-Zynq> fatload mmc 0 ${kernel_addr_r} zImage
-10838528 bytes read in 4316 ms (2.4 MiB/s)
-Zynq> fatload mmc 0 ${ramdisk_addr_r} rootfs-arm32.cpio.gz
-406531 bytes read in 199 ms (1.9 MiB/s)
-Zynq> setenv ramdisk_size ${filesize}
-Zynq> fatload mmc 0 ${fdt_addr_r} zynq-zc702.dtb
-15754 bytes read in 21 ms (732.4 KiB/s)
-Zynq> setenv bootargs console=ttyPS0,115200 earlycon ignore_loglevel rdinit=/init
-Zynq> bootz ${kernel_addr_r} ${ramdisk_addr_r}:${ramdisk_size} ${fdt_addr_r}
-Kernel image @ 0x2000000 [ 0x000000 - 0xa56200 ]
-## Flattened Device Tree blob at 01f00000
-   Booting using the fdt blob at 0x1f00000
-Working FDT set to 1f00000
-   Loading Ramdisk to 2ff9c000, end 2ffff403 ... OK
-   Loading Device Tree to 2ff95000, end 2ff9bd89 ... OK
-Working FDT set to 2ff95000
-
-Starting kernel ...
-
- hw/sd/sdhci.c         | 54 ++++++++++++++++++++++++++++++++++++++++++-
- include/hw/sd/sdhci.h |  2 ++
- 2 files changed, 55 insertions(+), 1 deletion(-)
-
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index c86dfa281f..55a4abdd72 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -307,6 +307,7 @@ static void sdhci_reset(SDHCIState *s)
-     s->data_count = 0;
-     s->stopped_state = sdhc_not_stopped;
-     s->pending_insert_state = false;
-+    s->sdma_boundary_paused = false;
-     if (object_dynamic_cast(OBJECT(s), TYPE_FSL_ESDHC_BE) ||
-             object_dynamic_cast(OBJECT(s), TYPE_FSL_ESDHC_LE)) {
-         s->norintstsen = 0x013f;
-@@ -414,6 +415,7 @@ static void sdhci_end_transfer(SDHCIState *s)
-         s->norintsts |= SDHC_NIS_TRSCMP;
-     }
- 
-+    s->sdma_boundary_paused = false;
-     sdhci_update_irq(s);
- }
- 
-@@ -681,6 +683,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
-     if (s->blkcnt == 0) {
-         sdhci_end_transfer(s);
-     } else {
-+        s->sdma_boundary_paused = true;
-         sdhci_update_irq(s);
-     }
- }
-@@ -717,6 +720,15 @@ static void sdhci_sdma_transfer(SDHCIState *s)
-     }
- }
- 
-+static bool sdhci_sdma_transfer_active(SDHCIState *s)
-+{
-+    return TRANSFERRING_DATA(s->prnsts) &&
-+            (s->trnmod & SDHC_TRNS_DMA) &&
-+            s->blkcnt &&
-+            (s->blksize & BLOCK_SIZE_MASK) &&
-+            SDHC_DMA_TYPE(s->hostctl1) == SDHC_CTRL_SDMA;
-+}
-+
- typedef struct ADMADescr {
-     hwaddr addr;
-     uint16_t length;
-@@ -1164,6 +1176,7 @@ static inline void sdhci_reset_write(SDHCIState *s, uint8_t value)
-                 SDHC_DATA_INHIBIT | SDHC_DAT_LINE_ACTIVE);
-         s->blkgap &= ~(SDHC_STOP_AT_GAP_REQ | SDHC_CONTINUE_REQ);
-         s->stopped_state = sdhc_not_stopped;
-+        s->sdma_boundary_paused = false;
-         s->norintsts &= ~(SDHC_NIS_WBUFRDY | SDHC_NIS_RBUFRDY |
-                 SDHC_NIS_DMA | SDHC_NIS_TRSCMP | SDHC_NIS_BLKGAP);
-         break;
-@@ -1185,7 +1198,7 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
- 
-     switch (offset & ~0x3) {
-     case SDHC_SYSAD:
--        if (!TRANSFERRING_DATA(s->prnsts)) {
-+        if (!TRANSFERRING_DATA(s->prnsts) || s->sdma_boundary_paused) {
-             s->sdmasysad = (s->sdmasysad & mask) | value;
-             MASKED_WRITE(s->sdmasysad, mask, value);
-             /* Writing to last byte of sdmasysad might trigger transfer */
-@@ -1464,6 +1477,31 @@ static bool sdhci_pending_insert_vmstate_needed(void *opaque)
-     return s->pending_insert_state;
- }
- 
-+static bool sdhci_sdma_boundary_paused_vmstate_needed(void *opaque)
-+{
-+    SDHCIState *s = opaque;
-+
-+    return s->sdma_boundary_paused;
-+}
-+
-+static int sdhci_pre_load(void *opaque)
-+{
-+    SDHCIState *s = opaque;
-+
-+    s->sdma_boundary_paused = false;
-+    return 0;
-+}
-+
-+static int sdhci_post_load(void *opaque, int version_id)
-+{
-+    SDHCIState *s = opaque;
-+
-+    if (!s->sdma_boundary_paused) {
-+        s->sdma_boundary_paused = sdhci_sdma_transfer_active(s);
-+    }
-+    return 0;
-+}
-+
- static const VMStateDescription sdhci_pending_insert_vmstate = {
-     .name = "sdhci/pending-insert",
-     .version_id = 1,
-@@ -1475,10 +1513,23 @@ static const VMStateDescription sdhci_pending_insert_vmstate = {
-     },
- };
- 
-+static const VMStateDescription sdhci_sdma_boundary_paused_vmstate = {
-+    .name = "sdhci/sdma_boundary_paused",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = sdhci_sdma_boundary_paused_vmstate_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_BOOL(sdma_boundary_paused, SDHCIState),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
- const VMStateDescription sdhci_vmstate = {
-     .name = "sdhci",
-     .version_id = 1,
-     .minimum_version_id = 1,
-+    .pre_load = sdhci_pre_load,
-+    .post_load = sdhci_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32(sdmasysad, SDHCIState),
-         VMSTATE_UINT16(blksize, SDHCIState),
-@@ -1512,6 +1563,7 @@ const VMStateDescription sdhci_vmstate = {
-     },
-     .subsections = (const VMStateDescription * const []) {
-         &sdhci_pending_insert_vmstate,
-+        &sdhci_sdma_boundary_paused_vmstate,
-         NULL
-     },
- };
-diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
-index a9da6203fc..c485277744 100644
---- a/include/hw/sd/sdhci.h
-+++ b/include/hw/sd/sdhci.h
-@@ -103,6 +103,8 @@ struct SDHCIState {
-      * to be protected. Set wp_inverted to invert the signal.
-      */
-     bool wp_inverted;
-+    /* Indicate that SDMA transfer is paused due to hitting the boundary */
-+    bool sdma_boundary_paused;
- };
- typedef struct SDHCIState SDHCIState;
- 
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index 3119f01117..474ac6cc40 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -2181,8 +2181,8 @@ static void coroutine_fn v9fs_open(void *opaque)
+             flags = omode_to_uflags(mode);
+         }
+         if (is_ro_export(&s->ctx)) {
+-            if (mode & O_WRONLY || mode & O_RDWR ||
+-                mode & O_APPEND || mode & O_TRUNC) {
++            if (flags & O_WRONLY || flags & O_RDWR ||
++                flags & O_APPEND || flags & O_TRUNC) {
+                 err = -EROFS;
+                 goto out;
+             }
 -- 
-2.43.0
+2.47.3
 
 
