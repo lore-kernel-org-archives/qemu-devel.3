@@ -4,57 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3DB9C4450F
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 14:57:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16580C4450E
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 14:58:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wk124-0006gk-Vr; Wed, 15 Jul 2026 10:56:21 -0400
+	id 1wk129-0006lk-Gl; Wed, 15 Jul 2026 10:56:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1wk11u-0006dn-Ia; Wed, 15 Jul 2026 10:56:11 -0400
-Received: from [115.124.30.111] (helo=out30-111.freemail.mail.aliyun.com)
+ id 1wk11z-0006g7-Ff; Wed, 15 Jul 2026 10:56:17 -0400
+Received: from [115.124.30.99] (helo=out30-99.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1wk11l-00053O-V4; Wed, 15 Jul 2026 10:56:10 -0400
+ id 1wk11u-00052w-HO; Wed, 15 Jul 2026 10:56:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1784127350; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=pomSbsIBm7Ld2juxiwMbs/ZHZibXTFp0xC2piTF12G4=;
- b=v8+eMdUX1wbnVNDmSmD3RJaj8sJmTN55G5AChBuTV/Sd9S8ag6RqvQY+pihiGtyi27XLlRtTYP/lxURvuCpxpV3zPOqEFabLqSi1bi3iDNq8JNJzJUgAlrZBgZBhe+Djve4rNch2DReDsoHv4CKzs3v8imLrxlKsOBdkOnNI9s0=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R121e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045098064;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=8; SR=0;
- TI=SMTPD_---0X79XjPT_1784127035; 
+ t=1784127347; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=EZeokRcPmyS1pMC+5nbXh8BHk/bNmq2BQUbViTV7gfk=;
+ b=MrrRwFhuu96EYlO3RMyHWxJHTaGE8PeQ49v5wEuH8Ya1YCrnk0hSjCk8C9D7TSGS0XuxMIzNLu4Z5plTQlLfH4Nc7ralymm6EcBRakTJ40EQr2ra9kWG1w+/i+UMLOKCd9Q2ikOyGh/a84Osydb05Ip43rDJc4OtwJmxs1u0IF8=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R771e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045133197;
+ MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=10; SR=0;
+ TI=SMTPD_---0X79XjOD_1784127031; 
 Received: from localhost.localdomain(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0X79XjPT_1784127035 cluster:ay36) by smtp.aliyun-inc.com;
- Wed, 15 Jul 2026 22:50:35 +0800
+ fp:SMTPD_---0X79XjOD_1784127031 cluster:ay36) by smtp.aliyun-inc.com;
+ Wed, 15 Jul 2026 22:50:31 +0800
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: palmer@dabbelt.com, alistair.francis@wdc.com,
  daniel.barboza@oss.qualcomm.com, chao.liu.zevorn@gmail.com,
  liwei1518@gmail.com, qemu-riscv@nongnu.org,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: [PATCH v7 09/11] target/riscv: Add system test for SMMPT extension
-Date: Wed, 15 Jul 2026 22:50:14 +0800
-Message-Id: <20260715145016.17369-10-zhiwei_liu@linux.alibaba.com>
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Huang Tao <eric.huang@linux.alibaba.com>,
+ TANG Tiancheng <lyndra@linux.alibaba.com>
+Subject: [PATCH v7 03/11] target/riscv: Implement core SMMPT lookup logic
+Date: Wed, 15 Jul 2026 22:50:08 +0800
+Message-Id: <20260715145016.17369-4-zhiwei_liu@linux.alibaba.com>
 X-Mailer: git-send-email 2.39.3 (Apple Git-146)
 In-Reply-To: <20260715145016.17369-1-zhiwei_liu@linux.alibaba.com>
 References: <20260715145016.17369-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.111 (deferred)
-Received-SPF: pass client-ip=115.124.30.111;
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.99 (deferred)
+Received-SPF: pass client-ip=115.124.30.99;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-111.freemail.mail.aliyun.com
+ helo=out30-99.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
 X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
  USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,403 +73,444 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a bare-metal M-mode assembly test (test-smmpt.S) that validates the
-Smmpt43 MPT lookup and permission enforcement against SMMTT v0.4.9.
+This patch introduces the core implementation for the Memory Protection Table
+(MPT) walk, which is the central mechanism of the SMMPT extension.
 
-The test builds a 3-level Smmpt43 MPT in RAM and uses the MPRV trick
-(mstatus.MPRV=1, MPP=S, satp=Bare) so that data accesses are subject to
-MPT checks while instruction fetches remain in M-mode (which bypasses
-the MPT). PMP is configured to grant all permissions so that only the
-MPT gates the accesses.
+A new file, `riscv_smmpt.c`, is added to encapsulate the MPT logic. It
+implements the `smmpt_lookup()` function, which performs a multi-level
+page table-like walk starting from the physical address specified in the
+`mptppn` CSR field. This walk determines the access permissions (read,
+write, execute) for a given physical address.
 
-Coverage: mfence.pa in M-mode; every XWR encoding (RW, no-access,
-R-only, R+X, RWX, the reserved 010/110 encodings and X-only) checked for
-both load and store, verifying the correct exception cause (load access
-fault = 5, store/AMO access fault = 7); an invalid (V=0) leaf; a leaf
-with a reserved bit set; and NAPOT leaves with a valid and a reserved G
-field.
+The implementation supports various SMMPT modes (SMMPT34, SMMPT43, etc.)
+and correctly handles leaf and non-leaf entries, including reserved bit
+checks. Both non-NAPOT leaf entries (per-page XWR tuples) and NAPOT leaf
+entries (a single XWR tuple with a G granularity field) are supported, as
+defined by the v0.4.9 MPTE format. Helper functions for parsing MPT
+entries and converting access permissions are included in the new
+`riscv_smmpt.h` header.
 
-The mode-independent harness (MPRV helpers, per-access check/verify
-subroutines, the M-mode trap handler and the semihosting exit) lives in
-a shared smmpt-common.S so the Smmpt52/Smmpt64/Smmpt34 tests can reuse
-it.
-
+Co-authored-by: Huang Tao <eric.huang@linux.alibaba.com>
+Co-authored-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 ---
- tests/tcg/riscv64/Makefile.softmmu-target |   4 +
- tests/tcg/riscv64/smmpt-common.S          | 256 ++++++++++++++++++++++
- tests/tcg/riscv64/test-smmpt.S            |  85 +++++++
- 3 files changed, 345 insertions(+)
- create mode 100644 tests/tcg/riscv64/smmpt-common.S
- create mode 100644 tests/tcg/riscv64/test-smmpt.S
+ target/riscv/meson.build      |   1 +
+ target/riscv/riscv_smmpt.c    | 339 ++++++++++++++++++++++++++++++++++
+ target/riscv/riscv_smmpt.h    |   5 +
+ target/riscv/tcg/cpu_helper.c |   6 +-
+ target/riscv/tcg/pmp.h        |   3 +
+ 5 files changed, 351 insertions(+), 3 deletions(-)
+ create mode 100644 target/riscv/riscv_smmpt.c
 
-diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
-index 82be8a2c91..18da9c6299 100644
---- a/tests/tcg/riscv64/Makefile.softmmu-target
-+++ b/tests/tcg/riscv64/Makefile.softmmu-target
-@@ -41,5 +41,9 @@ comma:= ,
- run-test-crc32: test-crc32
- 	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)xlrbr=true $(QEMU_OPTS)$<)
+diff --git a/target/riscv/meson.build b/target/riscv/meson.build
+index 42d0f6d538..51257a8f3a 100644
+--- a/target/riscv/meson.build
++++ b/target/riscv/meson.build
+@@ -22,6 +22,7 @@ riscv_ss.add(files(
+ riscv_system_ss = ss.source_set()
+ riscv_system_ss.add(files(
+   'arch_dump.c',
++  'riscv_smmpt.c',
+   'monitor.c',
+   'machine.c',
+   'time_helper.c',
+diff --git a/target/riscv/riscv_smmpt.c b/target/riscv/riscv_smmpt.c
+new file mode 100644
+index 0000000000..5bdc474dbb
+--- /dev/null
++++ b/target/riscv/riscv_smmpt.c
+@@ -0,0 +1,339 @@
++/*
++ * QEMU RISC-V Smmpt (Memory Protection Table)
++ *
++ * Copyright (c) 2024 Alibaba Group. All rights reserved.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * Implements the MPT lookup algorithm per SMMTT specification v0.4.9.
++ *
++ * MPTE format (v0.4.9):
++ *
++ * 32-bit non-leaf:  V[0], L=0[1], Reserved[9:2], PPN[31:10]
++ * 32-bit non-NAPOT leaf: V[0], L=1[1], N=0[2], Reserved[7:3], XWR[31:8]
++ * 32-bit NAPOT leaf: V[0], L=1[1], N=1[2], Reserved[7:3], XWR[10:8], 0[11],
++ *                    G[15:12], Reserved[31:16]
++ *
++ * 64-bit non-leaf:  V[0], L=0[1], Reserved[9:2], PPN[53:10], Reserved[63:54]
++ * 64-bit non-NAPOT leaf: V[0], L=1[1], N=0[2], Reserved[7:3], XWR[55:8],
++ *                         Reserved[63:56]
++ * 64-bit NAPOT leaf: V[0], L=1[1], N=1[2], Reserved[7:3], XWR[10:8], 0[11],
++ *                    G[15:12], Reserved[63:16]
++ */
++
++#include "qemu/osdep.h"
++#include "riscv_smmpt.h"
++#include "tcg/pmp.h"
++#include "exec/page-protection.h"
++#include "system/memory.h"
++
++typedef uint64_t load_entry_fn(AddressSpace *, hwaddr,
++                               MemTxAttrs, MemTxResult *);
++
++static uint64_t load_entry_32(AddressSpace *as, hwaddr addr,
++                              MemTxAttrs attrs, MemTxResult *result)
++{
++    return address_space_ldl_le(as, addr, attrs, result);
++}
++
++static uint64_t load_entry_64(AddressSpace *as, hwaddr addr,
++                              MemTxAttrs attrs, MemTxResult *result)
++{
++    return address_space_ldq_le(as, addr, attrs, result);
++}
++
++static inline bool mpte_is_valid(uint64_t mpte)
++{
++    return mpte & 0x1;
++}
++
++static inline bool mpte_is_leaf(uint64_t mpte)
++{
++    return mpte & 0x2;
++}
++
++static inline bool mpte_get_n(uint64_t mpte)
++{
++    return (mpte >> 2) & 0x1;
++}
++
++/*
++ * Get reserved bits from MPTE. Returns non-zero if any reserved bit is set.
++ */
++static uint64_t mpte_get_rsv(CPURISCVState *env, uint64_t mpte)
++{
++    RISCVMXL mxl = riscv_cpu_mxl(env);
++    bool leaf = mpte_is_leaf(mpte);
++    bool napot = mpte_get_n(mpte);
++
++    if (mxl == MXL_RV32) {
++        if (!leaf) {
++            /* non-leaf32: Reserved = bits[9:2] */
++            return extract32(mpte, 2, 8);
++        }
++        if (!napot) {
++            /* non-NAPOT leaf32: Reserved = bits[7:3] (XWR fills [31:8]) */
++            return extract32(mpte, 3, 5);
++        }
++        /* NAPOT leaf32: Reserved = bits[7:3] | bit[11] (mbz) | bits[31:16] */
++        return extract32(mpte, 3, 5) | extract32(mpte, 11, 1) |
++               extract32(mpte, 16, 16);
++    }
++
++    /* RV64 */
++    if (!leaf) {
++        /* non-leaf64: Reserved = bits[9:2] | bits[63:54] */
++        return extract64(mpte, 2, 8) | extract64(mpte, 54, 10);
++    }
++    if (!napot) {
++        /* non-NAPOT leaf64: Reserved = bits[7:3] | bits[63:56] */
++        return extract64(mpte, 3, 5) | extract64(mpte, 56, 8);
++    }
++    /* NAPOT leaf64: Reserved = bits[7:3] | bit[11] (mbz) | bits[63:16] */
++    return extract64(mpte, 3, 5) | extract64(mpte, 11, 1) |
++           extract64(mpte, 16, 48);
++}
++
++/*
++ * Get PPN from a non-leaf MPTE.
++ * RV32 non-leaf: PPN = bits[31:10] (22 bits)
++ * RV64 non-leaf: PPN = bits[53:10] (44 bits)
++ */
++static uint64_t mpte_get_ppn(CPURISCVState *env, uint64_t mpte)
++{
++    RISCVMXL mxl = riscv_cpu_mxl(env);
++
++    if (mxl == MXL_RV32) {
++        return extract32(mpte, 10, 22);
++    }
++    return extract64(mpte, 10, 44);
++}
++
++/*
++ * Get XWR permission for a specific page index from a non-NAPOT leaf.
++ * The XWR base bit is 8 for both RV32 and RV64; only the number of
++ * entries differs (pi in 0..7 for RV32, 0..15 for RV64).
++ */
++static uint32_t mpte_get_xwr(CPURISCVState *env, uint64_t mpte, int pi)
++{
++    return extract64(mpte, 8 + pi * 3, 3);
++}
++
++/*
++ * Get single XWR from a NAPOT leaf.
++ * The NAPOT XWR base bit is 8 for both RV32 and RV64 (bits[10:8]).
++ */
++static uint32_t mpte_get_napot_xwr(CPURISCVState *env, uint64_t mpte)
++{
++    return extract64(mpte, 8, 3);
++}
++
++/*
++ * Get G field from a NAPOT leaf.
++ * The G base bit is 12 for both RV32 and RV64 (bits[15:12]).
++ */
++static uint32_t mpte_get_g(CPURISCVState *env, uint64_t mpte)
++{
++    return extract64(mpte, 12, 4);
++}
++
++/*
++ * Validate the G encoding for the given MPT mode.
++ * Smmpt34: only G=6 is valid
++ * Smmpt43/52/64: only G=4 is valid
++ */
++static bool mpte_validate_g(uint32_t g, mpt_mode_t mode)
++{
++    switch (mode) {
++    case SMMPT34:
++        return g == 6;
++    case SMMPT43:
++    case SMMPT52:
++    case SMMPT64:
++        return g == 4;
++    default:
++        return false;
++    }
++}
++
++/*
++ * Get page number index pn[i] from the supervisor physical address.
++ *
++ * Smmpt34 (34-bit SPA):
++ *   SPA layout: range_offset[14:0], pn[0][24:15] (10 bits),
++ *   pn[1][33:25] (9 bits)
++ *
++ * Smmpt43/52/64 (RV64 MPT):
++ *   SPA layout: range_offset[15:0], pn[0][24:16] (9 bits), ...
++ *   For Smmpt64, pn[4] (top level) is 12 bits.
++ */
++static int mpt_get_pn(hwaddr addr, int i, mpt_mode_t mode)
++{
++    if (mode == SMMPT34) {
++        return i == 0
++            ? extract64(addr, 15, 10)
++            : extract64(addr, 25, 9);
++    } else {
++        int offset = 16 + i * 9;
++        if ((mode == SMMPT64) && (i == 4)) {
++            return extract64(addr, offset, 12);
++        } else {
++            return extract64(addr, offset, 9);
++        }
++    }
++}
++
++/*
++ * Get the page index within a leaf MPTE.
++ *
++ * Smmpt34: pi = SPA[14:12] (3 bits) for level 0, SPA[24:22] for level 1
++ * Smmpt43/52/64: pi = SPA[offset-4 +: 4] (4 bits)
++ */
++static int mpt_get_pi(hwaddr addr, int i, mpt_mode_t mode)
++{
++    if (mode == SMMPT34) {
++        return i == 0
++            ? extract64(addr, 12, 3)
++            : extract64(addr, 22, 3);
++    } else {
++        int offset = 16 + i * 9;
++        return extract64(addr, offset - 4, 4);
++    }
++}
++
++/*
++ * Check XWR permission bits against the access type.
++ * Returns true if access is allowed.
++ *
++ * The 3-bit XWR field uses the same bit order as RISC-V PTE permissions
++ * (bit0 = R, bit1 = W, bit2 = X), matching QEMU's PAGE_READ / PAGE_WRITE /
++ * PAGE_EXEC. As with PTEs, writable-but-not-readable encodings are reserved.
++ *
++ * XWR encoding (bit2=X, bit1=W, bit0=R):
++ *   000 = No access
++ *   001 = Read only
++ *   010 = Reserved (fault)
++ *   011 = Read + Write
++ *   100 = Execute only
++ *   101 = Read + Execute
++ *   110 = Reserved (fault)
++ *   111 = Read + Write + Execute
++ */
++static bool mpt_check_xwr(uint32_t xwr, int *prot, MMUAccessType access_type)
++{
++    switch (xwr) {
++    case 0: /* No access */
++        return false;
++    case PAGE_EXEC: /* 100: Execute only */
++        *prot = PAGE_EXEC;
++        return access_type == MMU_INST_FETCH;
++    case PAGE_READ | PAGE_EXEC: /* 101: Read + Execute */
++        *prot = PAGE_READ | PAGE_EXEC;
++        return (access_type == MMU_DATA_LOAD ||
++                access_type == MMU_INST_FETCH);
++    case PAGE_READ: /* 001: Read only */
++        *prot = PAGE_READ;
++        return access_type == MMU_DATA_LOAD;
++    case PAGE_READ | PAGE_WRITE: /* 011: Read + Write */
++        *prot = PAGE_READ | PAGE_WRITE;
++        return (access_type == MMU_DATA_LOAD ||
++                access_type == MMU_DATA_STORE);
++    case PAGE_READ | PAGE_WRITE | PAGE_EXEC: /* 111: R+W+X */
++        *prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
++        return true;
++    default: /* 010, 110: Reserved - fault */
++        return false;
++    }
++}
++
++static bool smmpt_lookup(CPURISCVState *env, hwaddr addr, mpt_mode_t mode,
++                         int *prot, MMUAccessType access_type)
++{
++    MemTxResult res;
++    MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
++    CPUState *cs = env_cpu(env);
++    hwaddr mpte_addr, base = (hwaddr)env->mptppn << PGSHIFT;
++    load_entry_fn *load_entry;
++    uint32_t mptesize, levels, xwr, g;
++    int pn, pi, pmp_prot, pmp_ret;
++    uint64_t mpte;
++
++    switch (mode) {
++    case SMMPT34:
++        load_entry = &load_entry_32; levels = 2; mptesize = 4; break;
++    case SMMPT43:
++        load_entry = &load_entry_64; levels = 3; mptesize = 8; break;
++    case SMMPT52:
++        load_entry = &load_entry_64; levels = 4; mptesize = 8; break;
++    case SMMPT64:
++        load_entry = &load_entry_64; levels = 5; mptesize = 8; break;
++    case SMMPTBARE:
++        *prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
++        return true;
++    default:
++        g_assert_not_reached();
++        break;
++    }
++
++    for (int i = levels - 1; i >= 0; i--) {
++        /* Step 1: Get pn[i] as the MPT index */
++        pn = mpt_get_pn(addr, i, mode);
++
++        /* Step 2: Load MPTE from memory */
++        mpte_addr = base + pn * mptesize;
++        pmp_ret = get_physical_address_pmp(env, &pmp_prot, mpte_addr,
++                                           mptesize, MMU_DATA_LOAD, PRV_M);
++        if (pmp_ret != TRANSLATE_SUCCESS) {
++            return false;
++        }
++        mpte = load_entry(cs->as, mpte_addr, attrs, &res);
++        if (res != MEMTX_OK) {
++            return false;
++        }
++
++        /* Step 3: Check valid bit and reserved bits */
++        if (!mpte_is_valid(mpte) || mpte_get_rsv(env, mpte)) {
++            return false;
++        }
++
++        /* Step 3 (cont): non-leaf with N=1 is a fault */
++        if (!mpte_is_leaf(mpte) && mpte_get_n(mpte)) {
++            return false;
++        }
++
++        /* Step 4: Process non-leaf node */
++        if (!mpte_is_leaf(mpte)) {
++            if (i == 0) {
++                return false;
++            }
++            base = mpte_get_ppn(env, mpte) << PGSHIFT;
++            continue;
++        }
++
++        /* Step 5 & 6: Process leaf node */
++        if (!mpte_get_n(mpte)) {
++            /* Step 5: Non-NAPOT leaf - get XWR[pi] */
++            pi = mpt_get_pi(addr, i, mode);
++            xwr = mpte_get_xwr(env, mpte, pi);
++        } else {
++            /* Step 6: NAPOT leaf - validate G, get single XWR */
++            g = mpte_get_g(env, mpte);
++            if (!mpte_validate_g(g, mode)) {
++                return false;
++            }
++            xwr = mpte_get_napot_xwr(env, mpte);
++        }
++
++        /* Step 7: Check permission */
++        return mpt_check_xwr(xwr, prot, access_type);
++    }
++    return false;
++}
++
++bool smmpt_check_access(CPURISCVState *env, hwaddr addr,
++                        int *prot, MMUAccessType access_type)
++{
++    mpt_mode_t mode = env->mptmode;
++
++    return smmpt_lookup(env, addr, mode, prot, access_type);
++}
+diff --git a/target/riscv/riscv_smmpt.h b/target/riscv/riscv_smmpt.h
+index 74dcccf4be..c15637036e 100644
+--- a/target/riscv/riscv_smmpt.h
++++ b/target/riscv/riscv_smmpt.h
+@@ -9,6 +9,9 @@
+ #ifndef RISCV_SMMPT_H
+ #define RISCV_SMMPT_H
  
-+EXTRA_RUNS += run-test-smmpt
-+run-test-smmpt: test-smmpt
-+	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)x-smmpt=true $(QEMU_OPTS)$<)
++#include "cpu.h"
++#include "exec/mmu-access-type.h"
 +
- # We don't currently support the multiarch system tests
- undefine MULTIARCH_TESTS
-diff --git a/tests/tcg/riscv64/smmpt-common.S b/tests/tcg/riscv64/smmpt-common.S
-new file mode 100644
-index 0000000000..020a9de764
---- /dev/null
-+++ b/tests/tcg/riscv64/smmpt-common.S
-@@ -0,0 +1,256 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * Shared harness for the Smmpt (Supervisor Memory Protection Table) system
-+ * tests, per SMMTT specification v0.4.9.
-+ *
-+ * This header is meant to be #included by the per-mode Smmpt test programs
-+ * (Smmpt34 on RV32, Smmpt43/52/64 on RV64).  All the mode-independent logic
-+ * lives here so each test only has to build its mode-specific MPT and invoke
-+ * RUN_LEAF_CHECKS.
-+ *
-+ * The tests run in M-mode and use the MPRV trick (mstatus.MPRV=1,
-+ * mstatus.MPP=S, satp=Bare so PA==VA) to subject explicit data accesses to
-+ * MPT checks while the instruction stream keeps running in M-mode (M-mode
-+ * fetches bypass the MPT).  The data-access width is irrelevant to the MPT
-+ * check, so the harness uses lw/sw and works unmodified on RV32 and RV64.
-+ *
-+ * The MPT XWR field uses the standard bit order R=bit0, W=bit1, X=bit2
-+ * (matching QEMU PAGE_READ/PAGE_WRITE/PAGE_EXEC), so Read+Write is 0b011=3.
-+ * Per the spec the exception is reported for the original access type: a load
-+ * violation raises "load access fault" (cause 5) and a store violation raises
-+ * "store/AMO access fault" (cause 7).
-+ *
-+ * Execute permission is not exercised: the MPRV trick only redirects data
-+ * accesses, while instruction fetch stays in M-mode and bypasses the MPT.
-+ * X-bearing encodings are therefore checked only for their load/store
-+ * behaviour (e.g. X-only denies loads, R+X denies stores).
-+ *
-+ * The tests expect an MPT laid out so that these supervisor physical
-+ * addresses resolve as follows (identical across all modes):
-+ *
-+ *   0x8050_0000..0x8050_7000  non-NAPOT leaf, XWR[pi] tuples (LEAF_ALL_XWR):
-+ *                               pi0 011 (RW)   pi1 000 (no access)
-+ *                               pi2 001 (R)    pi3 101 (R+X)
-+ *                               pi4 111 (RWX)  pi5 010 (reserved)
-+ *                               pi6 110 (rsvd) pi7 100 (X only)
-+ *   0x8051_0000               invalid leaf (V=0)
-+ *   0x8052_0000               leaf with a reserved bit set
-+ *   0x8060_0000               NAPOT leaf with a valid G
-+ *   0x8080_0000               NAPOT leaf with a reserved G
-+ *
-+ * On any mismatch the test exits (via semihosting) with a non-zero code that
-+ * identifies the failing check; a successful run exits with 0.
-+ */
-+
-+	/* mstatus bits (same positions on RV32 and RV64) */
-+	.equ	MSTATUS_MPP_S,	(1 << 11)	/* MPP = 01 (Supervisor) */
-+	.equ	MSTATUS_MPP_M,	(3 << 11)	/* MPP mask */
-+	.equ	MSTATUS_MPRV,	(1 << 17)
-+
-+	/* Expected fault causes */
-+	.equ	CAUSE_LOAD_ACCESS_FAULT,	5
-+	.equ	CAUSE_STORE_ACCESS_FAULT,	7
-+
-+	.equ	EXPECT_OK,	0
-+	.equ	EXPECT_FAULT,	1
-+
-+	/*
-+	 * Non-NAPOT leaf value carrying all eight XWR encodings in pi0..pi7:
-+	 *   V|L | pi0=011 pi1=000 pi2=001 pi3=101 pi4=111 pi5=010 pi6=110 pi7=100
-+	 * The XWR tuples occupy bits [31:8], valid for both the 4-byte (RV32)
-+	 * and 8-byte (RV64) leaf formats.
-+	 */
-+	.equ	LEAF_ALL_XWR,	0x997A4303
-+
-+	/*
-+	 * Switch the effective privilege of data accesses to S-mode so that
-+	 * they are subject to MPT checks (MPP=S, MPRV=1).  Uses t0 only.
-+	 */
-+	.macro	ENTER_MPRV
-+	li	t0, MSTATUS_MPP_M
-+	csrc	mstatus, t0		/* clear MPP */
-+	li	t0, MSTATUS_MPP_S
-+	csrs	mstatus, t0		/* MPP = S */
-+	li	t0, MSTATUS_MPRV
-+	csrs	mstatus, t0		/* enable MPRV */
-+	.endm
-+
-+	.macro	EXIT_MPRV
-+	li	t0, MSTATUS_MPRV
-+	csrc	mstatus, t0		/* disable MPRV */
-+	.endm
-+
-+	/*
-+	 * Perform an MPT-checked load/store from \addr and verify the outcome.
-+	 *   \eflt   : EXPECT_OK or EXPECT_FAULT
-+	 *   \ecause : expected mcause when a fault is expected
-+	 *   \code   : exit code reported if the check fails
-+	 */
-+	.macro	TEST_LOAD addr, eflt, ecause, code
-+	li	a3, \addr
-+	jal	do_load
-+	li	a4, \eflt
-+	li	a5, \ecause
-+	li	a6, \code
-+	jal	check
-+	.endm
-+
-+	.macro	TEST_STORE addr, eflt, ecause, code
-+	li	a3, \addr
-+	li	t3, 0x1234
-+	jal	do_store
-+	li	a4, \eflt
-+	li	a5, \ecause
-+	li	a6, \code
-+	jal	check
-+	.endm
-+
-+	/*
-+	 * MFENCE.PA (funct7=0b1000011) must not fault in M-mode.  Reuses the
-+	 * generic check subroutine (expects no fault).
-+	 */
-+	.macro	TEST_MFENCE_PA code
-+	li	s0, 0
-+	.insn	r 0x73, 0, 0x43, x0, x0, x0
-+	li	a4, EXPECT_OK
-+	li	a6, \code
-+	jal	check
-+	.endm
-+
-+	/*
-+	 * Run the full set of MPT permission and structural checks against the
-+	 * shared address layout described above.
-+	 */
-+	.macro	RUN_LEAF_CHECKS
-+	/* pi0 RW: load and store both allowed */
-+	TEST_LOAD  0x80500000, EXPECT_OK,    0,                        2
-+	TEST_STORE 0x80500000, EXPECT_OK,    0,                        3
-+	/* pi1 no-access: load faults (cause 5), store faults (cause 7) */
-+	TEST_LOAD  0x80501000, EXPECT_FAULT, CAUSE_LOAD_ACCESS_FAULT,  4
-+	TEST_STORE 0x80501000, EXPECT_FAULT, CAUSE_STORE_ACCESS_FAULT, 5
-+	/* pi2 R-only: load allowed, store faults */
-+	TEST_LOAD  0x80502000, EXPECT_OK,    0,                        6
-+	TEST_STORE 0x80502000, EXPECT_FAULT, CAUSE_STORE_ACCESS_FAULT, 7
-+	/* pi3 R+X: load allowed, store faults */
-+	TEST_LOAD  0x80503000, EXPECT_OK,    0,                        8
-+	TEST_STORE 0x80503000, EXPECT_FAULT, CAUSE_STORE_ACCESS_FAULT, 9
-+	/* pi4 RWX: load and store both allowed */
-+	TEST_LOAD  0x80504000, EXPECT_OK,    0,                        10
-+	TEST_STORE 0x80504000, EXPECT_OK,    0,                        11
-+	/* pi5/pi6 reserved encodings (010/110): load faults (cause 5) */
-+	TEST_LOAD  0x80505000, EXPECT_FAULT, CAUSE_LOAD_ACCESS_FAULT,  12
-+	TEST_LOAD  0x80506000, EXPECT_FAULT, CAUSE_LOAD_ACCESS_FAULT,  13
-+	/* pi7 X-only: load faults (cause 5) */
-+	TEST_LOAD  0x80507000, EXPECT_FAULT, CAUSE_LOAD_ACCESS_FAULT,  14
-+	/* invalid leaf (V=0): load faults (cause 5) */
-+	TEST_LOAD  0x80510000, EXPECT_FAULT, CAUSE_LOAD_ACCESS_FAULT,  15
-+	/* leaf with a reserved bit set: load faults (cause 5) */
-+	TEST_LOAD  0x80520000, EXPECT_FAULT, CAUSE_LOAD_ACCESS_FAULT,  16
-+	/* NAPOT leaf, valid G, RW: load and store both allowed */
-+	TEST_LOAD  0x80600000, EXPECT_OK,    0,                        17
-+	TEST_STORE 0x80600000, EXPECT_OK,    0,                        18
-+	/* NAPOT leaf with a reserved G: load faults (cause 5) */
-+	TEST_LOAD  0x80800000, EXPECT_FAULT, CAUSE_LOAD_ACCESS_FAULT,  19
-+	.endm
-+
-+	/*
-+	 * Emit the shared subroutines, trap handler, semihosting exit and data.
-+	 * Invoke once, after the test's _start code.
-+	 */
-+	.macro	SMMPT_HARNESS
-+	/*
-+	 * do_load / do_store: perform one MPT-checked access from a3.
-+	 * On return, s0 = 1 if the access faulted (else 0) and s1 = mcause.
-+	 * do_store uses the value in t3.  lw/sw keep these width-agnostic.
-+	 */
-+	.balign	4
-+do_load:
-+	li	s0, 0
-+	li	s1, 0
-+	ENTER_MPRV
-+	lw	t4, 0(a3)		/* MPT-checked load */
-+	EXIT_MPRV
-+	ret
-+
-+do_store:
-+	li	s0, 0
-+	li	s1, 0
-+	ENTER_MPRV
-+	sw	t3, 0(a3)		/* MPT-checked store */
-+	EXIT_MPRV
-+	ret
-+
-+	/*
-+	 * check: verify the outcome of the last access.
-+	 *   a4 = expected fault (0/1), a5 = expected cause, a6 = fail code.
-+	 * Returns on success; exits with a6 on mismatch.
-+	 */
-+	.balign	4
-+check:
-+	beqz	a4, 1f
-+	beqz	s0, 2f			/* expected a fault but none occurred */
-+	bne	s1, a5, 2f		/* faulted with the wrong cause */
-+	ret
-+1:
-+	bnez	s0, 2f			/* unexpected fault */
-+	ret
-+2:
-+	mv	a0, a6
-+	j	_exit
-+
-+	/*
-+	 * M-mode trap handler.  Records that a fault occurred (s0=1) and the
-+	 * mcause (s1), skips the faulting 4-byte instruction, disables MPRV
-+	 * and returns.  Only clobbers t5/t6 besides s0/s1.
-+	 */
-+	.balign	4
-+mtrap:
-+	csrr	t5, mcause
-+	li	s0, 1
-+	mv	s1, t5
-+	csrr	t6, mepc
-+	addi	t6, t6, 4		/* skip the faulting instruction */
-+	csrw	mepc, t6
-+	li	t5, MSTATUS_MPRV
-+	csrc	mstatus, t5		/* ensure MPRV is off on return */
-+	mret
-+
-+	/* Exit via semihosting (ADP_Stopped_ApplicationExit) */
-+_exit:
-+#if __riscv_xlen == 32
-+	/*
-+	 * On RV32 the SYS_EXIT_EXTENDED parameter block cannot be used: when
-+	 * this test runs on qemu-system-riscv64 with a 32-bit CPU the block
-+	 * pointer is sign-extended (0xffffffff_8xxx_xxxx) and the semihosting
-+	 * argument read faults.  Use the plain SYS_EXIT, which takes the exit
-+	 * reason directly in a1: a successful run (a0==0) reports
-+	 * ADP_Stopped_ApplicationExit and any failure reports a non-zero
-+	 * reason (reported by QEMU as exit status 1).
-+	 */
-+	li	a1, 0x20026		/* ADP_Stopped_ApplicationExit */
-+	beqz	a0, 1f
-+	mv	a1, a0			/* non-zero reason -> exit status 1 */
-+1:
-+	li	a0, 0x18		/* TARGET_SYS_EXIT */
-+#else
-+	lla	a1, semiargs
-+	li	t0, 0x20026
-+	sd	t0, 0(a1)
-+	sd	a0, 8(a1)
-+	li	a0, 0x20		/* TARGET_SYS_EXIT_EXTENDED */
-+#endif
-+
-+	.balign	16
-+	slli	zero, zero, 0x1f
-+	ebreak
-+	srai	zero, zero, 0x7
-+	j	.
-+
-+#if __riscv_xlen != 32
-+	.data
-+	.balign	8
-+semiargs:
-+	.space	16
-+#endif
-+	.endm
-diff --git a/tests/tcg/riscv64/test-smmpt.S b/tests/tcg/riscv64/test-smmpt.S
-new file mode 100644
-index 0000000000..64d0d97756
---- /dev/null
-+++ b/tests/tcg/riscv64/test-smmpt.S
-@@ -0,0 +1,85 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * Test for the Smmpt43 (Supervisor Memory Protection Table) extension,
-+ * per SMMTT specification v0.4.9.
-+ *
-+ * The test runs in M-mode and builds a 3-level Smmpt43 MPT, then drives the
-+ * mode-independent checks in smmpt-common.S.  See that harness for the MPRV
-+ * trick, the shared address layout and the exit-code convention.
-+ *
-+ * MPT layout (Smmpt43, 3 levels, 8-byte entries, 16 pages per leaf,
-+ * pi = SPA[15:12], pn[i] 9 bits at SPA[16 + i*9 +: 9]):
-+ *
-+ *   L2 (root) @ 0x8040_0000 : entry[0]  -> non-leaf, PPN(L1)=0x80410
-+ *   L1        @ 0x8041_0000 : entry[64] -> non-leaf, PPN(L0)=0x80420
-+ *   L0        @ 0x8042_0000 :
-+ *     entry[80]  -> non-NAPOT leaf (LEAF_ALL_XWR)  covering 0x8050_0000+
-+ *     entry[81]  -> V=0 (invalid)                  covering 0x8051_0000
-+ *     entry[82]  -> leaf with a reserved bit set    covering 0x8052_0000
-+ *     entry[96]  -> NAPOT leaf, G=4, XWR=RW         covering 0x8060_0000
-+ *     entry[128] -> NAPOT leaf, reserved G=5        covering 0x8080_0000
-+ *
-+ *   mmpt = MODE(1=Smmpt43)<<60 | PPN(0x80400)
-+ */
-+
-+#include "smmpt-common.S"
-+
-+	.option	norvc
-+
-+	.text
-+	.global	_start
-+_start:
-+	/* Install the M-mode trap handler */
-+	lla	t0, mtrap
-+	csrw	mtvec, t0
-+	csrw	medeleg, zero
-+
-+	/* PMP entry 0: NAPOT covering the whole space, RWX, so S-mode
-+	 * accesses pass PMP and the MPT is the only gate. */
-+	li	t0, -1
-+	csrw	pmpaddr0, t0
-+	li	t0, 0x1f		/* A=NAPOT(0x18) | R | W | X */
-+	csrw	pmpcfg0, t0
-+
-+	/* Build the MPT tables (M-mode stores bypass the MPT). */
-+	/* L2[0] = non-leaf -> L1 (PPN 0x80410): (0x80410 << 10) | V */
-+	li	t0, 0x80400000
-+	li	t1, 0x20104001
-+	sd	t1, 0(t0)
-+	/* L1[64] = non-leaf -> L0 (PPN 0x80420): (0x80420 << 10) | V */
-+	li	t0, 0x80410000
-+	li	t1, 0x20108001
-+	sd	t1, 0x200(t0)		/* 64 * 8 = 0x200 */
-+
-+	li	t0, 0x80420000
-+	/* L0[80] = non-NAPOT leaf carrying all XWR encodings (pi0..pi7) */
-+	li	t1, LEAF_ALL_XWR
-+	sd	t1, 0x280(t0)		/* 80 * 8 = 0x280 */
-+	/* L0[81] = 0: invalid entry (V=0) */
-+	sd	x0, 0x288(t0)		/* 81 * 8 = 0x288 */
-+	/* L0[82] = leaf with reserved bit 3 set (V|L|rsv|XWR[pi0]=RW) */
-+	li	t1, 0x30B
-+	sd	t1, 0x290(t0)		/* 82 * 8 = 0x290 */
-+	/* L0[96] = NAPOT leaf: V|L|N | XWR=RW(0x300) | G=4(0x4000) */
-+	li	t1, 0x4307
-+	sd	t1, 0x300(t0)		/* 96 * 8 = 0x300 */
-+	/* L0[128] = NAPOT leaf with reserved G=5: V|L|N | XWR=RW | G=5(0x5000) */
-+	li	t1, 0x5307
-+	sd	t1, 0x400(t0)		/* 128 * 8 = 0x400 */
-+
-+	/* Program mmpt: MODE=1 (Smmpt43), PPN = 0x80400 */
-+	li	t0, 0x1000000000080400
-+	csrw	0x382, t0		/* CSR_MMPT */
-+
-+	/* mfence.pa must not fault in M-mode */
-+	TEST_MFENCE_PA 1
-+
-+	/* Run the shared permission and structural checks */
-+	RUN_LEAF_CHECKS
-+
-+	/* All tests passed */
-+	li	a0, 0
-+	j	_exit
-+
-+	SMMPT_HARNESS
+ typedef enum {
+     SMMPTBARE = 0,
+     SMMPT34   = 1,
+@@ -18,4 +21,6 @@ typedef enum {
+     SMMPTMAX
+ } mpt_mode_t;
+ 
++bool smmpt_check_access(CPURISCVState *env, hwaddr addr,
++                        int *prot, MMUAccessType access_type);
+ #endif
+diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
+index 07d9222652..354506c565 100644
+--- a/target/riscv/tcg/cpu_helper.c
++++ b/target/riscv/tcg/cpu_helper.c
+@@ -903,9 +903,9 @@ void riscv_cpu_set_mode(CPURISCVState *env, privilege_mode_t newpriv,
+  * @access_type: The type of MMU access
+  * @mode: Indicates current privilege level.
+  */
+-static int get_physical_address_pmp(CPURISCVState *env, int *prot, hwaddr addr,
+-                                    int size, MMUAccessType access_type,
+-                                    privilege_mode_t mode)
++int get_physical_address_pmp(CPURISCVState *env, int *prot, hwaddr addr,
++                             int size, MMUAccessType access_type,
++                             privilege_mode_t mode)
+ {
+     pmp_priv_t pmp_priv;
+     bool pmp_has_privs;
+diff --git a/target/riscv/tcg/pmp.h b/target/riscv/tcg/pmp.h
+index 4c95c2767a..16c0db93c6 100644
+--- a/target/riscv/tcg/pmp.h
++++ b/target/riscv/tcg/pmp.h
+@@ -80,6 +80,9 @@ void pmp_update_rule_nums(CPURISCVState *env);
+ uint32_t pmp_get_num_rules(CPURISCVState *env);
+ int pmp_priv_to_page_prot(pmp_priv_t pmp_priv);
+ void pmp_unlock_entries(CPURISCVState *env);
++int get_physical_address_pmp(CPURISCVState *env, int *prot, hwaddr addr,
++                             int size, MMUAccessType access_type,
++                             privilege_mode_t mode);
+ 
+ #define MSECCFG_MML_ISSET(env) get_field(env->mseccfg, MSECCFG_MML)
+ #define MSECCFG_MMWP_ISSET(env) get_field(env->mseccfg, MSECCFG_MMWP)
 -- 
 2.43.0
 
