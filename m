@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 844F3C4450E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96964C44501
 	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 13:46:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjzvE-0005kr-SV; Wed, 15 Jul 2026 09:45:12 -0400
+	id 1wjzvB-0005fN-AL; Wed, 15 Jul 2026 09:45:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjzv6-0005aX-U2
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 09:45:04 -0400
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjzv9-0005cT-Mk
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 09:45:07 -0400
 Received: from mx1.catap.net ([2a01:4f8:271:125e::2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjzv3-0007uq-Qk
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 09:45:04 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=qBysbkb
- 6KbdbnMg2RHIYN2AXBceoQGCmiJlbGjbash6MN93DrG495DcJXnypq4eJlqQAtl25B7b4c
- BIkMLPhSlGAHtod9SNoHqTC0fmQMxsQj+o9A1MNLhP9rb7pJPSO6DSh+cnLgC531NXTytL
- 5qKOQ6zWbnKDh70N0WJwn4rvTFictm2myQwPSNmcN1/hqo8lCn4gHiH2ecSRzG26Q2UcnO
- F1nW6zW+PfAQKBMkKnAd1gaVhms8h0AJt1F2wris/aglJ60ra/ttmPhENYAiAG8Aj2THLy
- xOQrgIF0Ixb6XxhcsGDsX8yVsRFqpbb8/iw+hWY5tjR2ZZoMkBsE7iw==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=c
- 8FXoUIvEWfGh5UlrrmZX/RCD5/r1RQd+Ff4HqRqQSM=;
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjzv7-0007uq-Al
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 09:45:07 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=hfRmq9G
+ u6/ptu0qU4beWYEPJZwpPMLFMyuXDC3LY5q82YXCrwogKw4heW7LrnpI4E/RlDT4u1bW85
+ KSgeEktZ4YxX2ry0MF6lgwxl0MzVZfArj8i2uNCom6CdXvflIbReguyXIix6nZLtfFLYf1
+ bWzf3Xxgoif1FDRdfNbKNdPl7ArNoB+G5WJqhqLRVVyz4GdFXLgX1zlD2PCflSM210SQMu
+ SLTkbQSeLjcHuQKsbkBkJosAwHyt5btkOOt80e2Sut4xqGmEuLFVvnrWUIm1yBOZ2PuJZv
+ rDQD+HTq8ivCOrn6VFKW6Ch4ejIEkdzjSgHSteI5jCOirzFZSdFJtMg==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=u
+ IbKli1QgdyezVxeAX0vcwMYcv2NNPb0R3DxNFoBUhM=;
  h=references:in-reply-to:
  date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=XB/xo4kVEGUwx/QT4FvRAYDdr5EKqZcrNtgAw5IhBZ47fD+ReM431NVyVYnzYaz1JnTb
- OcndCieMYC9gTajDRLVR2SFIY4sY0SQvWzLcZGOqyV9qY/kmnbNSyOeqNbHAjxFz1RhfLF
- JY+jCS9MWkqltYcy3iyWiSdvD6GC7WPt5BI8tQzf7r7UWKMNwp2x7WwxTEQD/6R0oMS+G4
- iajwhdwCFN1V1yAnlgWTGtvKoKOF9YRIpsdDZpiyUDJeFiNEW5hoOzHqZNZP0vzzbsc0Bz
- waWkkNGl3V46TldOd2rOGrn7XI9bhy+eBf3iA/wiYoKdv7ibCRieK8xooAGjGkPA==
+ b=Y9d+QdLPkF076QOBSQwngM2jJVNvJ/wj0J+hLReeA1a9IEhYPHWt9Vb6uSTDpVruZI6I
+ OR7JB8jWtQCg8qauiBte8fcMxy6C1sc7/c+LNrOBw8ElxPffjzVjeF+xyemuYubt5nulVT
+ hnq+3CZuyiVAQuDx3gMaVOHKSCnQhdQE+rFBxppuVQ3vvYVPn9s0qRoRVjkCxWKyqG4h1L
+ vUeIp0YwQaFjr8ebJyhVXbOOAUIZRuNBV/xuu/bCVhIC9fHa1po5uZ/I4xYbUjEKBz30j5
+ ST+LzsUQWgtRdLu3mcljg2sjWa+/5LVQgwPkNTkO+WE4vsqQmRXhkC9PZGuQO8ww==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=kbUcdUC9; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=k4UkbLsC;
+ header.b=TDB1Rx9t; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=pGakznMY;
  arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=c8FXoUIv
- EWfGh5UlrrmZX/RCD5/r1RQd+Ff4HqRqQSM=;
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=uIbKli1Q
+ gdyezVxeAX0vcwMYcv2NNPb0R3DxNFoBUhM=;
  h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=kbUcdUC9tptVhccYbo8q5QtBq/6KiyvcOPC
- gsJJ0k/HD2xXm7bs4H3nYITFWFjMZ2VFfBqtddSrOmxLOiSmYU5mcgjusA/hxCeMCldatn
- wvdjxz7wcWP6GHZobD1eRwJ49GhfMzOpHHW6t8qJOe5fRAAgApXzI0XKJFJMPlfLEc5il3
- ibpQc5L+VBMOUAhfPI23zaOd63abc3jewfz8Bd2SgSDH+pxQm8gbKzQ12ueNTDwbYaid0N
- 7XQELgi3MRNgNSCdmYAM7fun1AMdoawMSwA1XKyDOSTA2pkaKWlBdqPXjMAO07qB+DBUz8
- ezBb/V3JLMfh4bPNQnOcDQeJlgQ==
+ subject:cc:to:from; d=korins.ky; b=TDB1Rx9tMd3EVxnMiqaGV4sXFBHbnbSNyDd
+ kQ7HoSJS3S+m9orNNTGE2QnY80CkO/OWAfI9O7WXDQN+PE7krdjT3H7HnMu4QTTwJEUHjE
+ DNHUNIvHI39zILeLy83irWZaaJjAYIJEve/kwel+ieV4T6lOmXdU5T0FSB/1QEz3ob4Z5z
+ CDkZuN+4uui184s/dmi68PAu2ysSSt60VpqPL6zhhDeQ9/XWdMaRV92uo6jLQwQHaIISo2
+ SK+13NuAjcdt4dCFOI5zXnKwP9YRzR+MpQJ+cxw2B8jmulZudGRoN8fmy5nCZbM23ze9Hg
+ uZaACrXIYhmDJ+iUr6X9DZ7K9aA==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=c8FXoUIvEWfGh5UlrrmZX/RCD5/r1RQd+Ff4HqRqQSM=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=k4UkbLsCfpts2OaOCN
- e+yyHAPdqCDv+XxksZdV1gN4Klf8lGVIBz4Dk3JJmOZfLK3EuIKzuSL0qMs0ijgZL6AQ==
-Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id 110431e6
+ bh=uIbKli1QgdyezVxeAX0vcwMYcv2NNPb0R3DxNFoBUhM=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=pGakznMYFJlIASbLln
+ VUneuqT0EVpzuArHAHpTgqgA7mhlvwZbqMvwWSihpHe5jblyXdBhQ6SQzlTuJJmg29CA==
+Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id 32aa2197
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Wed, 15 Jul 2026 15:44:52 +0200 (CEST)
+ Wed, 15 Jul 2026 15:44:53 +0200 (CEST)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id f52a85c7;
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id a91425ee;
  Wed, 15 Jul 2026 15:44:49 +0200 (CEST)
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 To: qemu-devel@nongnu.org
 Cc: "Kirill A. Korinsky" <kirill@korins.ky>
-Subject: [PATCH v2 10/25] hw/mips: add Octeon reset controller
-Date: Wed, 15 Jul 2026 15:43:56 +0200
-Message-ID: <20260715134447.56007-11-kirill@korins.ky>
+Subject: [PATCH v2 17/25] hw/mips: wire the Octeon UART
+Date: Wed, 15 Jul 2026 15:44:03 +0200
+Message-ID: <20260715134447.56007-18-kirill@korins.ky>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260715134447.56007-1-kirill@korins.ky>
 References: <20260715134447.56007-1-kirill@korins.ky>
@@ -94,193 +94,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the common resettable peripheral base and model the Octeon RST
-state used to hold secondary cores in reset. Create and realize the
-controller as part of the machine without exposing its CSR interface
-yet.
+Wire the Octeon UART and its alias to the existing serial-mm device.
+Provide the special transmit register window and connect the UART
+interrupt to CIU and CIU3.
 ---
- hw/mips/octeon.c          | 105 ++++++++++++++++++++++++++++++++++++++
- hw/mips/octeon_internal.h |   2 +
- 2 files changed, 107 insertions(+)
+ hw/mips/Kconfig           |  1 +
+ hw/mips/octeon.c          | 69 +++++++++++++++++++++++++++++++++++++++
+ hw/mips/octeon_internal.h |  5 +++
+ 3 files changed, 75 insertions(+)
 
+diff --git a/hw/mips/Kconfig b/hw/mips/Kconfig
+index cb6057fe38..5fe5f885e3 100644
+--- a/hw/mips/Kconfig
++++ b/hw/mips/Kconfig
+@@ -72,6 +72,7 @@ config MIPS_OCTEON
+     default y
+     depends on MIPS64 && TARGET_BIG_ENDIAN
+     select PFLASH_CFI02
++    select SERIAL_MM
+ 
+ config MIPS_CPS
+     bool
 diff --git a/hw/mips/octeon.c b/hw/mips/octeon.c
-index 0e02d3693d..4fc5a71a90 100644
+index 59754cb741..133b3636a0 100644
 --- a/hw/mips/octeon.c
 +++ b/hw/mips/octeon.c
-@@ -29,6 +29,13 @@
- #define TYPE_OCTEON_MACHINE MACHINE_TYPE_NAME("octeon3")
- OBJECT_DECLARE_SIMPLE_TYPE(OcteonMachineState, OCTEON_MACHINE)
+@@ -10,6 +10,7 @@
+ #include "qemu/units.h"
+ #include "qemu/datadir.h"
+ #include "qapi/error.h"
++#include "hw/char/serial-mm.h"
+ #include "hw/core/clock.h"
+ #include "hw/core/irq.h"
+ #include "hw/core/boards.h"
+@@ -48,7 +49,9 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonIntcState, OCTEON_INTC)
+ #define TYPE_OCTEON_CSR_BANK "octeon-csr-bank"
+ OBJECT_DECLARE_SIMPLE_TYPE(OcteonCsrBankState, OCTEON_CSR_BANK)
  
-+#define TYPE_OCTEON_PERIPHERAL "octeon-peripheral"
-+OBJECT_DECLARE_TYPE(OcteonPeripheralState, OcteonPeripheralClass,
-+                    OCTEON_PERIPHERAL)
-+
-+#define TYPE_OCTEON_RST "octeon-rst"
-+OBJECT_DECLARE_SIMPLE_TYPE(OcteonRstState, OCTEON_RST)
-+
++#define OCTEON_CSR_32BIT_SIZE       4
+ #define OCTEON_CSR_64BIT_SIZE       8
++#define OCTEON_CSR_HI32_OFFSET      0
+ 
  /*
   * Clock defaults follow a Ubiquiti E1000 EBB7304 U-Boot banner.
-  * DDR follows the upstream EBB7304 U-Boot board default.
-@@ -85,6 +92,22 @@ struct OcteonMachineState {
-     uint64_t ddr_hz;
- };
+@@ -155,6 +158,12 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonCsrBankState, OCTEON_CSR_BANK)
+ #define OCTEON_RST_BOOT_C_MUL_SHIFT 30
+ #define OCTEON_RST_BOOT_PNR_MUL_SHIFT 24
  
-+struct OcteonPeripheralState {
-+    SysBusDevice parent_obj;
-+    OcteonState *board;
-+    unsigned int index;
-+};
++#define OCTEON_UART0_BASE           0x1180000000800ULL
++#define OCTEON_UART0_ALIAS_BASE     0x1180000000c00ULL
++#define OCTEON_UART_TX_REG          0x40
++#define OCTEON_UART_TX_HI32_OFFSET  OCTEON_CSR_HI32_OFFSET
++#define OCTEON_UART_TX_SIZE         OCTEON_CSR_64BIT_SIZE
 +
-+struct OcteonPeripheralClass {
-+    SysBusDeviceClass parent_class;
-+    ResettablePhases parent_phases;
-+};
-+
-+struct OcteonRstState {
-+    OcteonPeripheralState parent_obj;
-+    uint64_t rst_pp_power;
-+};
-+
- static void octeon_validate_clocks(OcteonMachineState *oms)
- {
-     if (!oms->cpu_hz || !oms->ref_hz || !oms->io_hz || !oms->ddr_hz) {
-@@ -99,6 +122,16 @@ static void octeon_validate_clocks(OcteonMachineState *oms)
-     }
+ /*
+  * QEMU-only backing for per-core CVMSEG. Keep it outside guest DRAM;
+  * the guest sees the virtual CVMSEG window, not this physical address.
+@@ -1613,6 +1622,65 @@ static void octeon_init_mio_boot_loc(OcteonState *s)
  }
  
-+static uint64_t octeon_present_cpu_mask(OcteonState *s)
-+{
-+    return (1ULL << s->cpu_count) - 1;
-+}
-+
-+static uint64_t octeon_secondary_cpu_mask(OcteonState *s)
-+{
-+    return octeon_present_cpu_mask(s) & ~1ULL;
-+}
-+
- static void octeon_cpu_after_reset(OcteonCPUState *cs)
- {
-     CPUMIPSState *env = &cs->cpu->env;
-@@ -303,6 +336,62 @@ static void octeon_init_flash(OcteonState *s)
-                                 &s->boot_flash_alias);
- }
  
-+static void octeon_rst_reset_hold(Object *obj, ResetType type)
++static uint64_t octeon_uart_tx_read(void *opaque, hwaddr addr, unsigned size)
 +{
-+    OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_GET_CLASS(obj);
-+    OcteonRstState *rst = OCTEON_RST(obj);
++    return 0;
++}
 +
-+    if (opc->parent_phases.hold) {
-+        opc->parent_phases.hold(obj, type);
++static void octeon_uart_tx_write(void *opaque, hwaddr addr,
++                                 uint64_t value, unsigned size)
++{
++    OcteonState *s = opaque;
++
++    if (size == OCTEON_CSR_32BIT_SIZE &&
++        addr == OCTEON_UART_TX_HI32_OFFSET) {
++        return;
 +    }
 +
-+    rst->rst_pp_power = octeon_secondary_cpu_mask(rst->parent_obj.board);
++    serial_io_ops.write(&s->uart->serial, 0, value & 0xff, 1);
 +}
 +
-+static void octeon_peripheral_class_init(ObjectClass *klass,
-+                                          const void *data)
++static const MemoryRegionOps octeon_uart_tx_ops = {
++    .read = octeon_uart_tx_read,
++    .write = octeon_uart_tx_write,
++    .endianness = DEVICE_BIG_ENDIAN,
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 8,
++    },
++};
++
++static void octeon_init_uart(OcteonState *s)
 +{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
++    SerialMM *uart;
++    qemu_irq uart_irq;
++    MemoryRegion *uart_mmio;
++    int baudbase = s->io_hz / 16;
 +
-+    dc->user_creatable = false;
++    uart_irq = qemu_allocate_irq(octeon_irq_set, s, OCTEON_IRQ_UART);
++    uart = serial_mm_init(get_system_memory(), OCTEON_UART0_BASE, 3, uart_irq,
++                          baudbase, serial_hd(0), DEVICE_BIG_ENDIAN);
++    s->uart = uart;
++
++    uart_mmio = sysbus_mmio_get_region(SYS_BUS_DEVICE(uart), 0);
++    memory_region_init_alias(&s->uart_alias, NULL, "octeon.uart0-alias",
++                             uart_mmio, 0, memory_region_size(uart_mmio));
++    memory_region_add_subregion(get_system_memory(), OCTEON_UART0_ALIAS_BASE,
++                                &s->uart_alias);
++
++    memory_region_init_io(&s->uart_tx, NULL, &octeon_uart_tx_ops, s,
++                          "octeon.uart0-tx", OCTEON_UART_TX_SIZE);
++    memory_region_add_subregion(get_system_memory(),
++                                OCTEON_UART0_BASE + OCTEON_UART_TX_REG,
++                                &s->uart_tx);
++    memory_region_init_io(&s->uart_alias_tx, NULL, &octeon_uart_tx_ops, s,
++                          "octeon.uart0-alias-tx", OCTEON_UART_TX_SIZE);
++    memory_region_add_subregion(get_system_memory(),
++                                OCTEON_UART0_ALIAS_BASE + OCTEON_UART_TX_REG,
++                                &s->uart_alias_tx);
 +}
 +
-+static void octeon_rst_class_init(ObjectClass *klass, const void *data)
-+{
-+    OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
 +
-+    resettable_class_set_parent_phases(rc, NULL, octeon_rst_reset_hold,
-+                                       NULL, &opc->parent_phases);
-+}
-+
-+static OcteonPeripheralState *octeon_new_peripheral(OcteonState *s,
-+                                                     const char *type,
-+                                                     unsigned int index)
-+{
-+    DeviceState *qdev = qdev_new(type);
-+    OcteonPeripheralState *dev = OCTEON_PERIPHERAL(qdev);
-+
-+    dev->board = s;
-+    dev->index = index;
-+    return dev;
-+}
-+
-+static void octeon_create_peripherals(OcteonState *s)
-+{
-+    s->rst = OCTEON_RST(octeon_new_peripheral(s, TYPE_OCTEON_RST, 0));
-+}
-+
-+static void octeon_realize_peripheral(OcteonPeripheralState *dev)
-+{
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+}
-+
-+static void octeon_realize_peripherals(OcteonState *s)
-+{
-+    octeon_realize_peripheral(&s->rst->parent_obj);
-+}
-+
- static void mips_octeon_init(MachineState *machine)
+ static void octeon_mio_reset_hold(Object *obj, ResetType type)
  {
-     OcteonMachineState *oms = OCTEON_MACHINE(machine);
-@@ -316,6 +405,7 @@ static void mips_octeon_init(MachineState *machine)
-     s->ref_hz = oms->ref_hz;
-     s->io_hz = oms->io_hz;
-     s->ddr_hz = oms->ddr_hz;
-+    octeon_create_peripherals(s);
+     OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_GET_CLASS(obj);
+@@ -1833,6 +1901,7 @@ static void mips_octeon_init(MachineState *machine)
+     memory_region_add_subregion(get_system_memory(), OCTEON_CIU3_BASE,
+                                 &s->intc->ciu3);
  
-     if (machine->kernel_filename) {
-         error_report("-kernel is not implemented for octeon3; "
-@@ -328,6 +418,7 @@ static void mips_octeon_init(MachineState *machine)
-     octeon_load_firmware(s);
-     octeon_create_cpus(s);
- 
-+    octeon_realize_peripherals(s);
- }
- 
- static void octeon_machine_reset(MachineState *machine, ResetType type)
-@@ -385,6 +476,20 @@ static void octeon_machine_class_init(ObjectClass *oc, const void *data)
- }
- 
- static const TypeInfo octeon_machine_types[] = {
-+    {
-+        .name = TYPE_OCTEON_PERIPHERAL,
-+        .parent = TYPE_SYS_BUS_DEVICE,
-+        .instance_size = sizeof(OcteonPeripheralState),
-+        .class_size = sizeof(OcteonPeripheralClass),
-+        .class_init = octeon_peripheral_class_init,
-+        .abstract = true,
-+    },
-+    {
-+        .name = TYPE_OCTEON_RST,
-+        .parent = TYPE_OCTEON_PERIPHERAL,
-+        .instance_size = sizeof(OcteonRstState),
-+        .class_init = octeon_rst_class_init,
-+    },
-     {
-         .name = TYPE_OCTEON_MACHINE,
-         .parent = TYPE_MACHINE,
++    octeon_init_uart(s);
+     memory_region_init_io(&s->csr_bank->csr, OBJECT(s->csr_bank),
+                           &octeon_csr_ops, s,
+                           "octeon.csr", OCTEON_CSR_SIZE);
 diff --git a/hw/mips/octeon_internal.h b/hw/mips/octeon_internal.h
-index 2e568c29ea..9c1baee292 100644
+index 7b45daba10..fbe4875d66 100644
 --- a/hw/mips/octeon_internal.h
 +++ b/hw/mips/octeon_internal.h
-@@ -15,6 +15,7 @@
+@@ -10,6 +10,7 @@
+ #define HW_MIPS_OCTEON_INTERNAL_H
  
- #define OCTEON_MAX_CPUS             16
- typedef struct OcteonState OcteonState;
-+typedef struct OcteonRstState OcteonRstState;
+ #include "qemu/typedefs.h"
++#include "hw/char/serial-mm.h"
+ #include "system/memory.h"
+ #include "target/mips/cpu.h"
  
- typedef struct OcteonCPUState {
-     OcteonState *board;
-@@ -39,6 +40,7 @@ struct OcteonState {
-     MemoryRegion boot_flash;
-     MemoryRegion boot_flash_alias;
-     MemoryRegion cvmseg;
-+    OcteonRstState *rst;
+@@ -64,6 +65,10 @@ struct OcteonState {
+     OcteonRstState *rst;
+     OcteonIntcState *intc;
+     OcteonCsrBankState *csr_bank;
++    SerialMM *uart;
++    MemoryRegion uart_alias;
++    MemoryRegion uart_tx;
++    MemoryRegion uart_alias_tx;
  };
  
- #endif
+ guint octeon_uint64_hash(gconstpointer v);
 -- 
 2.54.0
 
