@@ -4,64 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D7DAC44501
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 11:40:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44B0FC44507
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 11:51:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjxy8-0006uL-Eb; Wed, 15 Jul 2026 07:40:04 -0400
+	id 1wjy8c-0000Np-L1; Wed, 15 Jul 2026 07:50:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <listy@localities.work>)
- id 1wjxy7-0006tv-22
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 07:40:03 -0400
-Received: from 089231102037.vcmts-wawpereca-2.vectranet.pl ([89.231.102.37]
- helo=mail.localities.work)
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1wjy8a-0000NJ-SS
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 07:50:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <listy@localities.work>)
- id 1wjxy5-0004k6-Az
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 07:40:02 -0400
-Received: from localhost (localhost [127.0.0.1])
- by dzien.mine.priv (Postfix) with ESMTP id 6ED47809DC92
- for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 13:32:23 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=localities.work;
- h=content-transfer-encoding:content-type:content-type:subject
- :subject:from:from:content-language:user-agent:mime-version:date
- :date:message-id:received:received; s=dkim20251117; t=
- 1784115143; x=1784979144; bh=bvcUtmpFFEs0TZtTgZSVJmENRVmib5kgpbt
- rtFJYGtE=; b=noNZi+bfmEAJYPCQArktdYmwnY7bk38JLAHSPlfOgbXZfFx6bB4
- 5whSkoF2k+mw11hHlxYnFFOByz+vaI2MTKRHSJ8KiuN2PgzuUzYZ9st/0VfYR0Pr
- viQuMvHn0TcVC+Til+5/K/gqlaUjnhlNt9lJk0+bGKsMtPqYOdq4RiAg=
-X-Virus-Scanned: amavis at mine.priv
-Received: from dzien.mine.priv ([127.0.0.1])
- by localhost (dzien.mine.priv [127.0.0.1]) (amavis, port 10022) with LMTP
- id ozrAw0-p0ZoX for <qemu-devel@nongnu.org>;
- Wed, 15 Jul 2026 13:32:23 +0200 (CEST)
-Received: from [10.3.0.10] (unknown [10.3.0.10])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1wjy8Y-0006IH-TZ
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 07:50:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784116250;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=iBkS4SONdzYHjteBaBsxoOo8C76vZJfa+IvjxQCZ5j4=;
+ b=bWQq7S8T6KQzSfSNirTv/J6OHbvCWQ6zmWwxeNqWGV8HOAxfTVW+LV0Z6QYCTrtBIBZ7l9
+ uO7nKkMnlMDMIc+Mn6FVBMPxeJkdQF18Mb+JJxTIt4o26mtqnyHhCW8LUkbiYa21++EqUs
+ ski7Xys+i1sTFgoR+Q6HHwsGnFSRnu0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-344-mKQd3PWuNka5h6HJBh8dTA-1; Wed,
+ 15 Jul 2026 07:50:45 -0400
+X-MC-Unique: mKQd3PWuNka5h6HJBh8dTA-1
+X-Mimecast-MFC-AGG-ID: mKQd3PWuNka5h6HJBh8dTA_1784116244
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by dzien.mine.priv (Postfix) with ESMTPSA id 0B20C809DC90
- for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 13:32:23 +0200 (CEST)
-Message-ID: <ff0999dc-df05-4bb0-ac4f-95e481ac6422@localities.work>
-Date: Wed, 15 Jul 2026 13:32:22 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-MW, pl, pl-PL
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E754C1956061; Wed, 15 Jul 2026 11:50:43 +0000 (UTC)
+Received: from lenovo-t14s.redhat.corp
+ (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 30A32180036E; Wed, 15 Jul 2026 11:50:41 +0000 (UTC)
+From: Laurent Vivier <lvivier@redhat.com>
 To: qemu-devel@nongnu.org
-From: listy <listy@localities.work>
-Subject: Could not initialize refcount handling:
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=89.231.102.37; envelope-from=listy@localities.work;
- helo=mail.localities.work
-X-Spam_score_int: 24
-X-Spam_score: 2.4
-X-Spam_bar: ++
-X-Spam_report: (2.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FROM_SUSPICIOUS_NTLD=0.5,
- FROM_SUSPICIOUS_NTLD_FP=1.999, PDS_OTHER_BAD_TLD=2, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ jasowangio@gmail.com, qemu-stable@nongnu.org
+Subject: [PATCH] hw/virtio: reject zero-length packed indirect descriptor table
+Date: Wed, 15 Jul 2026 13:50:40 +0200
+Message-ID: <20260715115040.2186274-1-lvivier@redhat.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: permerror client-ip=170.10.133.124;
+ envelope-from=lvivier@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,59 +82,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi guys.
+The split-ring path already rejects a zero-length indirect descriptor
+table since commit 7423192912af ("virtio: add checks for the size of
+the indirect table"). The packed-ring path is missing the same check,
+allowing a guest to trigger an assertion in address_space_cache_init()
+with a packed indirect descriptor that has len=0.
 
-Perhaps not the first place this mailing list might be, 
-however _users_ one seems pretty quiet, thus I'm trying here.
+Add the same !desc.len check to the packed-ring indirect validation
+in both virtqueue_packed_get_avail_bytes() and virtqueue_packed_pop().
 
-My qemu cannot start a domain:
+Fixes: 86044b24e865 ("virtio: basic packed virtqueue support")
+Cc: jasowangio@gmail.com
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3984
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+---
+ hw/virtio/virtio.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
--> $ virsh create /etc/libvirt/qemu/pacemaker.d/ubusrv2.xml
-error: Failed to create domain from 
-/etc/libvirt/qemu/pacemaker.d/ubusrv2.xml
-error: internal error: QEMU unexpectedly closed the monitor 
-(vm='ubusrv2'): 2026-07-15T11:25:13.789834Z qemu-kvm: 
--blockdev 
-{"node-name":"libvirt-2-format","read-only":false,"discard":"unmap","cache":{"direct":true,"no-flush":false},"driver":"qcow2","encrypt":{"format":"luks","key-secret":"libvirt-2-format-encryption-secret0"},"file":"libvirt-2-storage","backing":null}: 
-Could not initialize refcount handling: Input/output error
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index f4d86a365530..1b86c7f41fa8 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -1475,7 +1475,7 @@ static void virtqueue_packed_get_avail_bytes(VirtQueue *vq,
+         }
+ 
+         if (desc.flags & VRING_DESC_F_INDIRECT) {
+-            if (desc.len % sizeof(VRingPackedDesc)) {
++            if (!desc.len || (desc.len % sizeof(VRingPackedDesc))) {
+                 virtio_error(vdev, "Invalid size for indirect buffer table");
+                 goto err;
+             }
+@@ -1927,7 +1927,7 @@ static void *virtqueue_packed_pop(VirtQueue *vq, size_t sz)
+     vring_packed_desc_read(vdev, &desc, desc_cache, i, true);
+     id = desc.id;
+     if (desc.flags & VRING_DESC_F_INDIRECT) {
+-        if (desc.len % sizeof(VRingPackedDesc)) {
++        if (!desc.len || (desc.len % sizeof(VRingPackedDesc))) {
+             virtio_error(vdev, "Invalid size for indirect buffer table");
+             goto done;
+         }
+-- 
+2.54.0
 
-I qemu check the image:
-...
-No errors were found on the image.
-584043/901120 = 64.81% allocated, 20.63% fragmented, 0.00% 
-compressed clusters
-Image end offset: 38286524416
-
--> $ __myQcowInfo --info /X0-STORAGEs/0/X-VMs-BKPs/ubusrv2.qcow2
-image: json:{"encrypt.key-secret": "my-sec0", "driver": 
-"qcow2", "file": {"driver": "file", "filename": 
-"/X0-STORAGEs/0/X-VMs-BKPs/ubusrv2.qcow2"}}
-file format: qcow2
-virtual size: 55 GiB (59055800320 bytes)
-disk size: 35.7 GiB
-encrypted: yes
-cluster_size: 65536
-Format specific information:
-     compat: 1.1
-     compression type: zlib
-     lazy refcounts: false
-     refcount bits: 16
-     encrypt:
-         ivgen alg: plain64
-         detached header: false
-         hash alg: sha256
-         cipher alg: aes-256
-         uuid: 1809fc93-5ae7-4f9e-bf2c-2c3d25364859
-         format: luks
-         cipher mode: xts
-         slots:
-
-I think this might have happened after:
-$ -> virsh backup-begin ...
-but I'm not 100% sure.
-
-qemu-img version 10.1.0 (qemu-kvm-10.1.0-24.el10)
-
-Any thoughts on how to solve/fix this I'll appreciate a lot.
-many thanks, L.
 
