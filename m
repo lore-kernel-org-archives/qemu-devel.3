@@ -4,69 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44B0FC44507
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 11:51:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52637C44507
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 11:56:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjy8c-0000Np-L1; Wed, 15 Jul 2026 07:50:54 -0400
+	id 1wjyDy-0001pN-Or; Wed, 15 Jul 2026 07:56:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1wjy8a-0000NJ-SS
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 07:50:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1wjy8Y-0006IH-TZ
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 07:50:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784116250;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=iBkS4SONdzYHjteBaBsxoOo8C76vZJfa+IvjxQCZ5j4=;
- b=bWQq7S8T6KQzSfSNirTv/J6OHbvCWQ6zmWwxeNqWGV8HOAxfTVW+LV0Z6QYCTrtBIBZ7l9
- uO7nKkMnlMDMIc+Mn6FVBMPxeJkdQF18Mb+JJxTIt4o26mtqnyHhCW8LUkbiYa21++EqUs
- ski7Xys+i1sTFgoR+Q6HHwsGnFSRnu0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-344-mKQd3PWuNka5h6HJBh8dTA-1; Wed,
- 15 Jul 2026 07:50:45 -0400
-X-MC-Unique: mKQd3PWuNka5h6HJBh8dTA-1
-X-Mimecast-MFC-AGG-ID: mKQd3PWuNka5h6HJBh8dTA_1784116244
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E754C1956061; Wed, 15 Jul 2026 11:50:43 +0000 (UTC)
-Received: from lenovo-t14s.redhat.corp
- (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 30A32180036E; Wed, 15 Jul 2026 11:50:41 +0000 (UTC)
-From: Laurent Vivier <lvivier@redhat.com>
+ (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
+ id 1wjyDw-0001ol-8C
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 07:56:24 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
+ id 1wjyDu-0007aM-KJ
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 07:56:24 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2cea3004256so56460025ad.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 04:56:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1784116581; x=1784721381; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:content-type:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=BfvSbRRqaZG2jTmiyYHm9QGHvFmytONzwXXR0lKzL00=;
+ b=ol8+YF6ixYUTgZWZJoMm9juc6b86O7zNNLs3/thaaGH8QbGWfJLN1x/k1FVch+5h5n
+ rVk+X2z/qAelbZ06eR5zFDUZKgXUUGl8clzJR+RMXlG7GQ6OsmPA8P7peI5yohDzs4yn
+ oxFC3dfcpKCI7pWnV6YN4l6lLZYMFkMHWahRliFotdU0xauFvFCaYXc9Wu6Cyfs5lnF8
+ MxwBK6PWELVrC12GId55lX7vRSjtSvcpqQYQStmj5XHo4tAuSM5Z1BW/0NgG/KVAmK9j
+ T/5CadQwXDGyvYiRair4raXqYLiLuOcGfxeOPli3Jak9qL+z1mtsjbVBZNWqHCBthvQx
+ 3ALg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784116581; x=1784721381;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:content-type:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=BfvSbRRqaZG2jTmiyYHm9QGHvFmytONzwXXR0lKzL00=;
+ b=JdPfAnVHbyT5K1R3ga2QDbUCRUo8F/qu3pOBZ21NBx+bq2kvVXtzaJnGdjJjTTQfKE
+ /WZa8z/lGq5LADfz/Pzk5JJGIN6gpoL08ZO5DhLzwpLjHoGYRa05WgASwWjkaSIzfBPX
+ bgA43qd03lNe+d+ItGkhooGpgOuGBvqf1DAIEQj6FuZn2xdNLzPqgXLz+LGikIXUZyj3
+ /z8fAMpPQKxbKxhOqrXErv8vJmOLdU953qDM7yXRveLsu54TR0GIzY40N1rTqEHUGdqk
+ a/swE2TDVS6pn6hZnS89NtVyOG1/2+14xCP2aWdkAPeYZB6DyQ8WQRBomfHVa83r8mYY
+ 5PYg==
+X-Gm-Message-State: AOJu0Yz0OUcwk7+qQMWFXBCGQGhD2QO1Fb00/TyaPnJmL55Cclx4HpQp
+ H1L+oxngyFWrjt/ND/myPkO1FqE0XPF87JMOGngldsZGtH74zN91WSUt+lqomnPo
+X-Gm-Gg: AfdE7cmPzl7SVr5XZ+dFs6+mfgtcqn1IISiobx0/C9NKXF7WCa4YSLrtvVtbZFvxHmv
+ bo/30mYjhAOtnYZnZzac1x6ip/0ari4erBO9eT55CP1k0MbP3B2wyLZpztjzmy9e9TMg2muB8hP
+ hWU6+Y936KIaMOHWuDMMozlO2zRRtVvcGn2WzPbaHHBEJ7XZkCb4wBBK1UMfQIuUssmbhqpWc8v
+ jJKHeNxiFhLDdUy5WjGo3n+YlR7BbymjsiEhYsefzgw2y4/nPLhjfY7rIItb/kD0Ez/lwnkz9xQ
+ +Pg0gQXMKXtaZ9T36JybslGjxFa54SCUqLpOGlbSm66/FDQfTs8LiZqxuFW8qtyElKVSvnUFqSW
+ DAOz+BXWgQouF3hMnci5nVxoGNgU/bYccnNXdD2JM/2+E04GkEAkLjkcxgO/eCo6I3PR+RpI8Wh
+ 90oqId3LmMRIl4XFfwBg==
+X-Received: by 2002:a17:902:d552:b0:2c9:9a2e:dab0 with SMTP id
+ d9443c01a7336-2cef12e8eb7mr66198755ad.3.1784116580587; 
+ Wed, 15 Jul 2026 04:56:20 -0700 (PDT)
+Received: from smtpclient.apple ([82.40.42.115])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2cf10120441sm1295865ad.20.2026.07.15.04.56.16
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 15 Jul 2026 04:56:20 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
+Subject: Re: [RFC PATCH 0/2] *** Add k230 reset management unit support ***
+From: Jack wang <163wangjack@gmail.com>
+In-Reply-To: <20260709031237.21284-1-163wangjack@gmail.com>
+Date: Wed, 15 Jul 2026 19:56:03 +0800
+Cc: chao.liu.zevorn@gmail.com, pierrick.bouvier@oss.qualcomm.com,
+ pbonzini@redhat.com, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, farosas@suse.de, lvivier@redhat.com,
+ qemu-riscv@nongnu.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <60AE661F-44A2-41A4-9E59-6F5F8DB99769@gmail.com>
+References: <20260709031237.21284-1-163wangjack@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- jasowangio@gmail.com, qemu-stable@nongnu.org
-Subject: [PATCH] hw/virtio: reject zero-length packed indirect descriptor table
-Date: Wed, 15 Jul 2026 13:50:40 +0200
-Message-ID: <20260715115040.2186274-1-lvivier@redhat.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: permerror client-ip=170.10.133.124;
- envelope-from=lvivier@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+X-Mailer: Apple Mail (2.3864.600.51.1.1)
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=163wangjack@gmail.com; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FROM_STARTS_WITH_NUMS=0.738, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,47 +106,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The split-ring path already rejects a zero-length indirect descriptor
-table since commit 7423192912af ("virtio: add checks for the size of
-the indirect table"). The packed-ring path is missing the same check,
-allowing a guest to trigger an assertion in address_space_cache_init()
-with a packed indirect descriptor that has len=0.
+Hi all,
 
-Add the same !desc.len check to the packed-ring indirect validation
-in both virtqueue_packed_get_avail_bytes() and virtqueue_packed_pop().
+A polite ping for this RFC series.=20
+Could anyone please take a look when you have a moment? Any feedback or =
+guidance would be greatly appreciated.
 
-Fixes: 86044b24e865 ("virtio: basic packed virtqueue support")
-Cc: jasowangio@gmail.com
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3984
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
----
- hw/virtio/virtio.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Thanks,
+Jack Wang
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index f4d86a365530..1b86c7f41fa8 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -1475,7 +1475,7 @@ static void virtqueue_packed_get_avail_bytes(VirtQueue *vq,
-         }
- 
-         if (desc.flags & VRING_DESC_F_INDIRECT) {
--            if (desc.len % sizeof(VRingPackedDesc)) {
-+            if (!desc.len || (desc.len % sizeof(VRingPackedDesc))) {
-                 virtio_error(vdev, "Invalid size for indirect buffer table");
-                 goto err;
-             }
-@@ -1927,7 +1927,7 @@ static void *virtqueue_packed_pop(VirtQueue *vq, size_t sz)
-     vring_packed_desc_read(vdev, &desc, desc_cache, i, true);
-     id = desc.id;
-     if (desc.flags & VRING_DESC_F_INDIRECT) {
--        if (desc.len % sizeof(VRingPackedDesc)) {
-+        if (!desc.len || (desc.len % sizeof(VRingPackedDesc))) {
-             virtio_error(vdev, "Invalid size for indirect buffer table");
-             goto done;
-         }
--- 
-2.54.0
+> 2026=E5=B9=B47=E6=9C=889=E6=97=A5 11:12=EF=BC=8Cjack wang =
+<163wangjack@gmail.com> =E5=86=99=E9=81=93=EF=BC=9A
+>=20
+> From: Jack Wang <163wangjack@gmail.com>
+>=20
+> This series adds support for reset management unit found on k230 soc =
+and=20
+> successfully  wires it up to k230 machine;
+>=20
+> The register design are implemented based on k230 trm and linux reset =
+driver
+> (drivers/reset/reset-k230.c)
+>=20
+> detailed implementations:
+> 1. write-enable mask for control registers(strobe in the upper 16 =
+bits)
+> 2. hardware auto-clearing for reset and flush request bits
+> 3. latching of Done bits and w1c logic
+> 4. qtest coverage for register read/write behaviors and hardware state =
+modelin
+>=20
+> There are some checkpatch style warnings (line length, comment
+> formatting) that will be addressed in v2 based on reviewer feedback.
+>=20
+> this is my first time for hardware-unit modeling so apologies for =
+possible mistake.
+> I am apprecitated for any feedback
+>=20
+> Jack Wang (2):
+>  hw/misc/k230_rmu: add Kendryte K230 Reset Management Unit model
+>  hw/riscv/k230: wire up the RMU device
+>=20
+> docs/system/riscv/k230.rst  |   1 +
+> hw/misc/Kconfig             |   3 +
+> hw/misc/k230_rmu.c          | 280 ++++++++++++++++++++++++++++++++++++
+> hw/misc/meson.build         |   1 +
+> hw/misc/trace-events        |   6 +
+> hw/riscv/Kconfig            |   1 +
+> hw/riscv/k230.c             |  10 +-
+> include/hw/misc/k230_rmu.h  |  76 ++++++++++
+> include/hw/riscv/k230.h     |   2 +
+> tests/qtest/k230-rmu-test.c | 125 ++++++++++++++++
+> tests/qtest/meson.build     |   3 +-
+> 11 files changed, 504 insertions(+), 4 deletions(-)
+> create mode 100644 hw/misc/k230_rmu.c
+> create mode 100644 include/hw/misc/k230_rmu.h
+> create mode 100644 tests/qtest/k230-rmu-test.c
+>=20
+> --=20
+> 2.53.0
+>=20
 
 
