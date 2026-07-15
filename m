@@ -4,86 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F868C44508
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 14:20:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48019C44508
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 14:40:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wk0St-0004OZ-Ce; Wed, 15 Jul 2026 10:19:59 -0400
+	id 1wk0mQ-0002Ph-Og; Wed, 15 Jul 2026 10:40:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wk0Ss-0004OH-3b
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 10:19:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vaibhav@linux.ibm.com>)
+ id 1wk0mP-0002LM-64; Wed, 15 Jul 2026 10:40:09 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wk0Sq-0005LQ-6v
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 10:19:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784125194;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JB941LrGN/iBFnBCrtCyVDOY1ao0FdU1/fMLI0NBSIM=;
- b=XLg7XT7PXudDibE4LAzR3Xr0TuSxSGEBa4h6hFvVwD48EBpft9vovsMfdH15UUGrwsJ0MD
- mFOqorVleHgEGRdGwGVaAVTa9h961UvlrYClUwgvoGeUUEvG18Boo7Li9OGmJXPt+pDAsl
- u1Un81K3xgMICISyoEGBo6+LmL+G7+Y=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-527-y0Q63fhOMgWFXq8tYz7a2Q-1; Wed,
- 15 Jul 2026 10:19:53 -0400
-X-MC-Unique: y0Q63fhOMgWFXq8tYz7a2Q-1
-X-Mimecast-MFC-AGG-ID: y0Q63fhOMgWFXq8tYz7a2Q_1784125191
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1C9B81955F73; Wed, 15 Jul 2026 14:19:51 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DCF0A30001B9; Wed, 15 Jul 2026 14:19:49 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4830B21E6920; Wed, 15 Jul 2026 16:19:47 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Richard Henderson
- <richard.henderson@linaro.org>,  linux-edac@vger.kernel.org,  Mauro
- Carvalho Chehab <mchehab+huawei@kernel.org>,  Alex Williamson
- <alex@shazbot.org>,  Paolo Bonzini <pbonzini@redhat.com>,  zhenwei pi
- <zhenwei.pi@linux.dev>,  "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>,  Eric Blake <eblake@redhat.com>,  =?utf-8?Q?C=C3=A9dr?=
- =?utf-8?Q?ic?= Le Goater
- <clg@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Zhao Liu
- <zhao1.liu@intel.com>,  Lukas Straub <lukasstraub2@web.de>,  Stefan
- Hajnoczi <stefanha@redhat.com>
-Subject: Re: [PATCH 00/14] qapi: convert to explicit intro section syntax
-In-Reply-To: <CAFn=p-Yu9OV0LJN8rGrc6GTkJZ38XAvP296tfwBxU6CnhLYR7A@mail.gmail.com>
- (John Snow's message of "Mon, 13 Jul 2026 16:34:07 -0400")
-References: <20260629213624.936258-1-jsnow@redhat.com>
- <87ech7gi45.fsf@pond.sub.org>
- <CAFn=p-Yu9OV0LJN8rGrc6GTkJZ38XAvP296tfwBxU6CnhLYR7A@mail.gmail.com>
-Date: Wed, 15 Jul 2026 16:19:47 +0200
-Message-ID: <87ik6ggwsc.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <vaibhav@linux.ibm.com>)
+ id 1wk0mN-0002oA-GM; Wed, 15 Jul 2026 10:40:08 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66FECHKq381748; Wed, 15 Jul 2026 14:40:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=8pKZSYoQWLp5jKesDynnk/GPiaLf7C
+ hiol+yTFEJNyE=; b=RFSRpp49bTf49l7Qa9AFwvJG6w0eVBVN+OuUJzVea5ZLmB
+ AS+anFhbMRo15IbM5bw7UZzFlfPF8ZHAQQ0m8QB9XbaZcXevg0bxBhlRsXhHLZn8
+ y6aW37TlOwa5SgW21NMpFwh4Q/XnngNvG3cby8hae/IBKEcWGvGpnFeTLYCA6r1U
+ kZHnrx1ufOqGTpxgn+AqbHWS3S7GrE4u2rFsiKM6Gi8uHIpbPx29T2KSYpRXiqSJ
+ hVBhvQiYEoAzUD0DZevocTLvzjuCW+3rsNrnxqpLwO6DWLaCP5bH9emNbLAj3XbD
+ VmQECX0IPemiKgI2VGMLsBmt+GDT6kIwqzVVJLZQ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbegbug8y-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 15 Jul 2026 14:40:03 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66FEYfLP022110;
+ Wed, 15 Jul 2026 14:40:02 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc15k0fa7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 15 Jul 2026 14:40:02 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66FEe1Od27853174
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 15 Jul 2026 14:40:01 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 66E0658058;
+ Wed, 15 Jul 2026 14:40:01 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CFD9A58059;
+ Wed, 15 Jul 2026 14:39:56 +0000 (GMT)
+Received: from vaibhav?linux.ibm.com (unknown [9.43.68.28])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with SMTP;
+ Wed, 15 Jul 2026 14:39:56 +0000 (GMT)
+Received: by vaibhav@linux.ibm.com (sSMTP sendmail emulation);
+ Wed, 15 Jul 2026 20:09:54 +0530
+From: Vaibhav Jain <vaibhav@linux.ibm.com>
+To: Shivang Upadhyay <shivangu@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: hbathini@linux.ibm.com, sourabhjain@linux.ibm.com, adityag@linux.ibm.com, 
+ harshpb@linux.ibm.com, rathc@linux.ibm.com, npiggin@gmail.com,
+ mahesh@linux.ibm.com, Shivang Upadhyay <shivangu@linux.ibm.com>
+Subject: Re: [PATCH 0/3] hw/ppc: reorg PowerPC RAS code for better
+ maintainability
+In-Reply-To: <20260714164745.573141-1-shivangu@linux.ibm.com>
+References: <20260714164745.573141-1-shivangu@linux.ibm.com>
+Date: Wed, 15 Jul 2026 20:09:54 +0530
+Message-ID: <87pl0ob9l1.fsf@vajain21.in.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: permerror client-ip=170.10.129.124;
- envelope-from=armbru@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=fOcJG5ae c=1 sm=1 tr=0 ts=6a579bc3 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=4Z04ArDzD7oIC62fKxoA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE1MDE0MSBTYWx0ZWRfX3ls6ShRpI/u5
+ WyaQlWAtPfBMO+yMMkiqi1d0p/fDbVowdiJr/cj6jNO+xkexY27vFPqfX8HBPZZ3TnyEjPK9awu
+ t+N+u/ZLvHW/CGS+GfQpwe7Hh//t02GjLskEkxLp8qdlTtTaNa5bH9voDppp0kiwayh+dPCbs+N
+ XS73rgjlY4J0KR//+HhVgvrJtl/jncNEB6AN3272bV79RS8Gvatehf+MgBCCiK7JHouEyvtHCd0
+ 28sOj+OOY1YpoS/dcr2hhqWuUJGbhMVd4VjZKDGZHFsRBuDHXupCG5dWmCOlyQD31omEDcsOOFO
+ 7RzVoUoGxok2Xpeml9Vij0AkBd+6v1BBe/JryZxxowwLseCRy+hmMDGRdwuWRrkP6j4x4uS++bc
+ fIMz8runKvsEDxfxljsI1mmF0BUzqQlXKLkyi9f47UyS9tdg85c4tnnrg1sfhMVzTE1ow6usgt5
+ qU+tSaUegdbfN1PzQNg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE1MDE0MSBTYWx0ZWRfX5pGVQBKjAivt
+ b+5n50nb1J6mSt2QG9nWerPYgb3N7PWotsE+YaTbQFD+jh+PpcNFM6+bnc5TfjW8dyxijAITSYm
+ RXpzOZVgSQX7w85wB9eenIVzfFyuSvg=
+X-Proofpoint-GUID: 7MrAjf9Vp0c8a2DhXMjUg0jikoGQvTZQ
+X-Proofpoint-ORIG-GUID: aN5PNFqGAU8oB3sy3aqQ_OlL5uVkl5rk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-15_03,2026-07-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 impostorscore=0 suspectscore=0 adultscore=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 phishscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607150141
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=vaibhav@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,119 +125,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+Hi Shivang,
 
-> On Mon, Jul 13, 2026 at 9:00=E2=80=AFAM Markus Armbruster <armbru@redhat.=
-com> wrote:
->>
->> John Snow <jsnow@redhat.com> writes:
->>
->> > GitLab CI: https://gitlab.com/jsnow/qemu/-/pipelines/2638342206
->> >
->> > Hi, this patchset converts some of the most trivial modules to use the
->> > new explicit intro syntax. This particular patchset does not
->> > differentiate between "trivial" conversions and those that take
->> > slightly more liberty in refactoring, but there are (debatably?) no
->> > such cases in this patchset.
->>
->> Looks entirely mechanical to me.  Am I missing anything?
+Thanks for the patches. My review comments below:
+
+Shivang Upadhyay <shivangu@linux.ibm.com> writes:
+
+> Extracting RAS related code from spapr_rtas.c, to a newly created spapr_rtas_ras.c
+> and carving out a MAINTAINERS entry dedicated to PowerPC RAS. This will cover RAS
+> related functionalities for PowerPC platforms.
+For a refactor-only change, this patch is adding 44 new lines to the
+codebase which feels a bit heavy.
+
+Just moving code from one file to a new file will reset the git blame
+history of the code making future reviews difficult.
+
+Such movement also makes code optimization difficult for compiler.
+
+IMHO such code movement should only be done when:
+
+* Its accompanied with patches for adding or fixing a functionality.
+Or
+* It clearly improves performance
+Or
+* Results in significant reduction in LOC
+
+Since these patches doesnt seem to fit to any of the above criteria I
+suggest you to reconsider these patches. 
+
 >
-> Honest answer: I am not sure; I have edited so many QAPI files that I
-> cannot remember what is and what is not mechanical anymore. If there
-> are instances of "non-mechanical" changes, it would be for cases where
-> I decide to indent some paragraphs, but not others, effectively
-> introducing a new split as to what appears before and what appears
-> after the tabular data.
+> Also adding myself as a reviewer, to help share the review workload.
 >
-> I genuinely do not recall if there are any such cases in this mini-series.
+Thanks for volunteering as a reviwer for this code. Having more help
+with reviews is always good :-)
 
-It's only mostly mechanical.
+> Shivang Upadhyay (3):
+>   hw/ppc: move RAS-specific RTAS handlers to spapr_rtas_ras.c
+>   MAINTAINERS: add dedicated PowerPC RAS section
+>   MAINTAINERS: add self as reviewer for PowerPC RAS
+>
+>  MAINTAINERS             |  33 +++---
+>  hw/ppc/meson.build      |   1 +
+>  hw/ppc/spapr_rtas.c     | 189 --------------------------------
+>  hw/ppc/spapr_rtas_ras.c | 232 ++++++++++++++++++++++++++++++++++++++++
+>  4 files changed, 249 insertions(+), 206 deletions(-)
+>  create mode 100644 hw/ppc/spapr_rtas_ras.c
+>
+> -- 
+> 2.54.0
+>
+>
 
-Almost always, the patches change
-
-  ##
-  # @name:
-  #
-  # Single plain paragraph: Lorem ipsum dolor sit amet ut enim ad minim
-  # veniam duis aute irure dolor.
-  #
-  # Something other than a plain paragraph
-
-to
-
-  ##
-  # @name:
-  #     Single plain paragraph: Lorem ipsum dolor sit amet ut enim ad
-  #     minim veniam duis aute irure dolor.
-  #
-  # Something other than a plain paragraph
-
-No decisions, thus mechanical.
-
-I found two exceptions:
-
-1. In qapi/compat.json
-
-    @@ -39,8 +37,7 @@
-
-     ##
-     # @CompatPolicy:
-    -#
-    -# Policy for handling deprecated management interfaces.
-    +#     Policy for handling deprecated management interfaces.
-     #
-     # This is intended for testing users of the management interfaces.
-     #
-     # Limitation: covers only syntactic aspects of QMP, i.e. stuff tagged
-     # with feature 'deprecated' or 'unstable'.  We may want to extend it
-     # to cover semantic aspects and CLI.
-     #
-     # Limitation: deprecated-output policy @hide is not implemented for
-     # enumeration values.  They behave the same as with policy @accept.
-     #
-     # @deprecated-input: how to handle deprecated input (default 'accept')
-     #
-     # @deprecated-output: how to handle deprecated output (default
-     #     'accept')
-     #
-     # @unstable-input: how to handle unstable input (default 'accept')
-     #     (since 6.2)
-     #
-     # @unstable-output: how to handle unstable output (default 'accept')
-     #     (since 6.2)
-     #
-     # Since: 6.0
-     ##
-
-   Here, we have multiple paragraphs, and only the first one becomes
-   "intro".
-
-2. In qapi/misc-arm.json
-
-    @@ -29,9 +28,8 @@
-
-     ##
-     # @query-gic-capabilities:
-    -#
-    -# It will return a list of `GICCapability` objects that describe its
-    -# capability bits.
-    +#     It will return a list of `GICCapability` objects that describe
-    +#     its capability bits.
-     #
-     # On non-ARM targets this command will report an error as the GIC
-     # technology is not applicable.
-     #
-     # Since: 2.6
-     #
-     # .. qmp-example::
-     #
-     #     -> { "execute": "query-gic-capabilities" }
-     #     <- { "return": [{ "version": 2, "emulated": true, "kernel": fals=
-e },
-     #                     { "version": 3, "emulated": false, "kernel": tru=
-e } ] }
-     ##
-
-   Here, we have two paragraphs, and both become "intro".
-
+-- 
+Cheers
+~ Vaibhav
 
