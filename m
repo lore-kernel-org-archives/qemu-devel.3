@@ -4,74 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67514C44508
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 13:45:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20AEEC44501
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 13:46:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjzv4-0005Ym-Ec; Wed, 15 Jul 2026 09:45:02 -0400
+	id 1wjzuw-0005Ul-Dv; Wed, 15 Jul 2026 09:44:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjzv2-0005XN-IB
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 09:45:00 -0400
-Received: from mx2.catap.net ([65.21.79.163])
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjzuv-0005UT-1S
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 09:44:53 -0400
+Received: from mx1.catap.net ([162.55.82.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjzv0-0007u1-9C
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 09:45:00 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=IWnNruG
- 7b18Sc/fI0yfVWBcXhnw9xZ3bmnU2PdxFCdVz9McEZt6isKwchP/e20xhW2hPnFpXQjdbO
- Dxf/JnPaGY7gu6Sq1BSGHmo+/JL1xhJ2zbFfoQq/2zAnCl0pqJHgOUOEJcN3YzQtnxBpKa
- NwLi4JY40Oq2l7JY94cZcBnHFmNvBkJh2V+o30o76NAz6rRc1+jPkrpiYQC8vJ4kHgsxUD
- 3H0Agn8f8mjTB21ZAct7fORzLPSXsn0A4cNFhV1ybFjktNuqzCqEzfGxmupfs6Ue1tt39N
- dvl25z/Hj+lGpk34OJhh8p54TOluNr8yyZvBkWqjy5mbEycee1jj90g==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=o
- vBHesXI0MiKFPQdP7nUTsJW4n+0iEF97sGoPyPeFZo=;
- h=references:in-reply-to:
- date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=ri7AfcxUPV4yfUR84R07aNNumff9m2zPPj0u+mrLmLvsBcEGpZTmZphEqKXkkeOHtnoS
- m4NCYAkdNAyI6t0RO970qmkmAlLtq+QIOlV6pl69XNkm1e7PF8TBW9QnHSEe7otmF5oLxi
- Dy+LSxGXdimfy1XhtHXkfGoUq5LgG9VW8tiEQwxRWhRi1H0mZUjA/293ZfXihx/9adrQ3T
- P4qQbkiUZ/8B1xs4W3x2to0Lbjyor/qmWdUXsMp/AjSOLGVXZEdxKAHI8X4UDWnHo3L4HZ
- wHon9zeF0q2Nfp3s+O+QnLSTG7eI+YgA13+VKevK6XeURlkXDl2TKsOR2GGQ9Vcg==
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjzut-0007tj-61
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 09:44:52 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=f/tKmNq
+ Yw9ifin+kxAD4UGYiy5F0sWBajza7lptTvp8HNvA8ZgA4MpGkt67wxlbm1x94bjdmAFKRc
+ 0V8BLTQwaX2EPYdoesAvbNnpdrwhJo5VJuRdH1Fkv84PZnaseskUsOjQWTe2wUQLD7WNTQ
+ RQ6e9FwbfhLb/rb8S4pOioYIKaDHDS+g3TgR5jlfGmLo4MkxabhE6oYVI4+v8H2glDTKkY
+ YN7/pj9AGXWhSr6+26Fn3kcxRC87N8ebdgsQwOVCPPBYjiZwbqaXZ6XcCWRw2Jenlrz35v
+ 2VSqEiLXBr7t53uNU1EnaUJRQgJhWpp8APRNnd9ZFmi9wP8q3yXvDow==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=v
+ 3uJ4BZPYeIevZtx80MiBaxWtdN2Y/Z60dmHLDjhSh4=;
+ h=date:subject:to:from:
+ dkim-signature:dkim-signature; d=mx.catap.net; b=qAzj49DZTcrCoyyJU/i9a
+ YfiN7w/Y2vAgeCLa52M8qBYYHXVoqOt60CcO5+NVLkTzQQDWVcsmBmBVlnXJIlrWsCF+Yf
+ 4nneNmoF2XNRBEJebJSybTO2vUFXWn55UAMRQjFzyAsP+HQPd1RxEK8m5/Ri7raBoVamP4
+ 5uJy/cDbJWrwA+6Iu5ZwJVhCnolokq+5zK9MsHxNtz+2S2LccKGfOe/w+FwBxnxdNPfaqa
+ 3rPRrSCRS/Q9kXpnjUWVrfVb2OPXAqMX5rbY9hdvTbJibwLC8mbnVvY0DvtlUtw8ZGpkG6
+ t8c7p/9MWfhCaOc9TAJH8kHGCuQjWl7HUrV1LGb2g==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=lwlGSnYN; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=sAiFX7Hc;
+ header.b=zcIgyx9k; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=PGGcGkRb;
  arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=ovBHesXI
- 0MiKFPQdP7nUTsJW4n+0iEF97sGoPyPeFZo=;
- h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=lwlGSnYNrnX/QNQKklYO3vcK7l9WyjVn1t6
- hSpn2mdB3wJ3TFc9+RKQAou6uma5rRtpT8ofCuVD5mr3kxap33ham81ARN2kiD7VsdELib
- n86Y3y7sKY4PzB6irzEjG/RLWgd8zqKvX/CnaFqxuMdw0QeEtJM//3YQeaMBffQ3M07jCA
- YDeCP9J/W9R4ozLqbevJz2BDe5HNTvEtXM/RgEOox6XAl/awLKaysDOxh6XhYR70EjCYhn
- puba8phqhJ4M87NXSxIfDnvJOhByDQs+wLuM+pYcpPGsGBhqLa0exZfzOOQlzIQgfwa65H
- +LgOmSiWAfwu4b45dph9Wsvu0Uw==
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=v3uJ4BZP
+ YeIevZtx80MiBaxWtdN2Y/Z60dmHLDjhSh4=; h=date:subject:to:from; 
+ d=korins.ky;
+ b=zcIgyx9ksDJ9R9br2QXK4s9hhgRNGKkvcnILIFCiNkHDOIqDHkyGsES
+ ETksybj6bsXkVr5hOb3UDwIbqRoXW1DjBpkxVOmyBSU4izSb3IjMwHT+pTtw2F3EEaG8R6
+ ywNJKHjkS558ZYWtCsCvWroTRjaA5GHVO4L68fjtBV1fk2+uv2LQuFopH5QxV5EnarwMlc
+ HtNVAyt2cgL9IPtQYiN1Rogg3IUXQ8EdYDRxuu2wP6fgMWsNbnmmcTpLPoQwkBIu1CaWQZ
+ BqJS6Xur2pl9rXQtEAoZE/px+NQ5y/DVF4/r520PCKK2zXHw9nKTjlzbG2bB5+L7REsT31
+ MxLnoBw==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=ovBHesXI0MiKFPQdP7nUTsJW4n+0iEF97sGoPyPeFZo=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=sAiFX7HcIV1sYpu6K7
- I8c0vdpcPD+bE8ZPI3YXl+A5A1aCgsWtG7BVriyuCB18q/zvBhfUZZosQGan++oxd2CA==
-Received: by mx2.catap.net (OpenSMTPD) with ESMTPSA id 1ad36fbc
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Wed, 15 Jul 2026 15:44:53 +0200 (CEST)
-Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id 0eef788f;
+ bh=v3uJ4BZPYeIevZtx80MiBaxWtdN2Y/Z60dmHLDjhSh4=; h=date:subject:to:
+ from; d=korins.ky; b=PGGcGkRb4MY8maXuQmQUfZNVnVdsbJdddg7sTyVAhmff1EBnI
+ Ifuwe0gc1LBIk53QwFq6GypWYGGXaAKNvCmCw==
+Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id 8378af0e
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO) for <qemu-devel@nongnu.org>;
  Wed, 15 Jul 2026 15:44:49 +0200 (CEST)
+Received: from localhost (matebook.home.arpa [local])
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id e4b7dcba
+ for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 15:44:48 +0200 (CEST)
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 To: qemu-devel@nongnu.org
-Cc: "Kirill A. Korinsky" <kirill@korins.ky>
-Subject: [PATCH v2 15/25] hw/mips: expose Octeon reset CSRs
-Date: Wed, 15 Jul 2026 15:44:01 +0200
-Message-ID: <20260715134447.56007-16-kirill@korins.ky>
+Subject: [PATCH v2 0/25] hw/mips: add Octeon III EBB7304 support
+Date: Wed, 15 Jul 2026 15:43:46 +0200
+Message-ID: <20260715134447.56007-1-kirill@korins.ky>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260715134447.56007-1-kirill@korins.ky>
-References: <20260715134447.56007-1-kirill@korins.ky>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=65.21.79.163; envelope-from=kirill@korins.ky;
- helo=mx2.catap.net
+Received-SPF: pass client-ip=162.55.82.72; envelope-from=kirill@korins.ky;
+ helo=mx1.catap.net
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -94,172 +92,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Expose reset clock, soft reset and processor power registers through the
-shared CSR window. Keep mutable register state and reset handling in the
-reset controller.
----
- hw/mips/octeon.c | 79 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 79 insertions(+)
+This series adds enough Cavium Octeon III CN73xx and EBB7304 board
+support for upstream U-Boot 2026.04 to boot OpenBSD/octeon from USB
+storage or through PCI e1000 and TFTP; the same machine also reaches
+the prompt of the vendor U-Boot 2013.07 image from the Ubiquiti
+EdgeRouter Infinity ER-8-XG recovery set. The model intentionally
+covers the hardware exercised by these firmware and operating system
+paths.
 
-diff --git a/hw/mips/octeon.c b/hw/mips/octeon.c
-index 0caf088adf..007fc4b537 100644
---- a/hw/mips/octeon.c
-+++ b/hw/mips/octeon.c
-@@ -24,6 +24,8 @@
- #include "system/cpus.h"
- #include "system/memory.h"
- #include "system/reset.h"
-+#include "system/runstate.h"
-+#include "system/system.h"
- #include "exec/cpu-interrupt.h"
- #include "qemu/error-report.h"
- #include "qemu/atomic.h"
-@@ -124,6 +126,12 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonCsrBankState, OCTEON_CSR_BANK)
- #define OCTEON_CIU3_UART0_INTSN     0x8000
- #define OCTEON_CSR_BASE             0x1180000000000ULL
- #define OCTEON_CSR_SIZE             0x100000000ULL
-+#define OCTEON_RST_BOOT             0x6001600
-+#define OCTEON_RST_SOFT_RST         0x6001680
-+/* U-Boot uses the reset controller to park and release secondary cores. */
-+#define OCTEON_RST_PP_POWER         0x6001700
-+#define OCTEON_RST_BOOT_C_MUL_SHIFT 30
-+#define OCTEON_RST_BOOT_PNR_MUL_SHIFT 24
- /*
-  * QEMU-only backing for per-core CVMSEG. Keep it outside guest DRAM;
-  * the guest sees the virtual CVMSEG window, not this physical address.
-@@ -168,6 +176,7 @@ struct OcteonPeripheralClass {
- 
- struct OcteonRstState {
-     OcteonPeripheralState parent_obj;
-+    GHashTable *regs;
-     uint64_t rst_pp_power;
- };
- 
-@@ -294,11 +303,18 @@ void octeon_reg_store(GHashTable *regs, uint64_t reg, uint64_t value)
- 
- bool octeon_csr_lookup(OcteonState *s, uint64_t reg, uint64_t *value)
- {
-+    if (reg == OCTEON_RST_SOFT_RST) {
-+        return octeon_reg_lookup(s->rst->regs, reg, value);
-+    }
-     return octeon_reg_lookup(s->csr_bank->values, reg, value);
- }
- 
- static void octeon_csr_store(OcteonState *s, uint64_t reg, uint64_t value)
- {
-+    if (reg == OCTEON_RST_SOFT_RST) {
-+        octeon_reg_store(s->rst->regs, reg, value);
-+        return;
-+    }
-     octeon_reg_store(s->csr_bank->values, reg, value);
- }
- 
-@@ -869,6 +885,33 @@ static void octeon_ciu3_nmi(OcteonState *s, uint64_t mask)
-     }
- }
- 
-+static void octeon_rst_pp_power_write(OcteonState *s, hwaddr addr,
-+                                      uint64_t value, unsigned size)
-+{
-+    uint64_t old = s->rst->rst_pp_power;
-+    uint64_t changed;
-+    unsigned int cpu;
-+
-+    value = octeon_write64(old, addr, value, size) &
-+            octeon_present_cpu_mask(s);
-+    s->rst->rst_pp_power = value;
-+    changed = old ^ value;
-+
-+    for (cpu = 1; cpu < s->cpu_count; cpu++) {
-+        uint64_t mask = 1ULL << cpu;
-+
-+        if (!(changed & mask)) {
-+            continue;
-+        }
-+        if (value & mask) {
-+            async_run_on_cpu(CPU(s->cpu[cpu].cpu), octeon_cpu_park_work,
-+                             RUN_ON_CPU_NULL);
-+        } else {
-+            octeon_start_cpu(s, cpu);
-+        }
-+    }
-+}
-+
- static const MemoryRegionOps octeon_ciu_ops = {
-     .read = octeon_ciu_read,
-     .write = octeon_ciu_write,
-@@ -1082,6 +1125,19 @@ static uint64_t octeon_csr_read(void *opaque, hwaddr addr, unsigned size)
-     hwaddr reg = addr & ~7ULL;
-     uint64_t value;
- 
-+    switch (reg) {
-+    case OCTEON_RST_BOOT:
-+        value = ((uint64_t)(s->cpu_hz / s->ref_hz) <<
-+                 OCTEON_RST_BOOT_C_MUL_SHIFT) |
-+                ((uint64_t)(s->io_hz / s->ref_hz) <<
-+                 OCTEON_RST_BOOT_PNR_MUL_SHIFT);
-+        return octeon_read64(value, addr, size);
-+    case OCTEON_RST_PP_POWER:
-+        return octeon_read64(s->rst->rst_pp_power, addr, size);
-+    default:
-+        break;
-+    }
-+
-     if (!octeon_csr_lookup(s, reg, &value)) {
-         value = 0;
-     }
-@@ -1095,6 +1151,16 @@ static void octeon_csr_write(void *opaque, hwaddr addr,
-     hwaddr reg = addr & ~7ULL;
-     uint64_t old;
- 
-+    if (reg == OCTEON_RST_SOFT_RST && value) {
-+        qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
-+        return;
-+    }
-+
-+    if (reg == OCTEON_RST_PP_POWER) {
-+        octeon_rst_pp_power_write(s, addr, value, size);
-+        return;
-+    }
-+
-     if (!octeon_csr_lookup(s, reg, &old)) {
-         old = 0;
-     }
-@@ -1354,6 +1420,7 @@ static void octeon_rst_reset_hold(Object *obj, ResetType type)
-         opc->parent_phases.hold(obj, type);
-     }
- 
-+    g_hash_table_remove_all(rst->regs);
-     rst->rst_pp_power = octeon_secondary_cpu_mask(rst->parent_obj.board);
- }
- 
-@@ -1411,6 +1478,16 @@ static GHashTable *octeon_reg_table_new(void)
-                                  g_free, g_free);
- }
- 
-+static void octeon_rst_init(Object *obj)
-+{
-+    OCTEON_RST(obj)->regs = octeon_reg_table_new();
-+}
-+
-+static void octeon_rst_finalize(Object *obj)
-+{
-+    g_hash_table_destroy(OCTEON_RST(obj)->regs);
-+}
-+
- static void octeon_csr_bank_init(Object *obj)
- {
-     OCTEON_CSR_BANK(obj)->values = octeon_reg_table_new();
-@@ -1594,6 +1671,8 @@ static const TypeInfo octeon_machine_types[] = {
-         .name = TYPE_OCTEON_RST,
-         .parent = TYPE_OCTEON_PERIPHERAL,
-         .instance_size = sizeof(OcteonRstState),
-+        .instance_init = octeon_rst_init,
-+        .instance_finalize = octeon_rst_finalize,
-         .class_init = octeon_rst_class_init,
-     },
-     {
--- 
-2.54.0
+The vendor recovery image is U-Boot 2013.07, UBNT build
+e1000_002_ef3a9; it reaches:
+
+    Octeon ubnt_e1000(Failsafe)#
+
+This is the expected command prompt of the recovery U-Boot environment;
+"Failsafe" describes the recovery image and does not indicate an
+emulation or boot failure.
+
+Early Octeon investigation used Amir Mehmood's original Octeon
+host.patch as a behavioral reference; the basic machine approach and
+several hardware model ideas come from that work. No code from that
+patch remains in this implementation.
+
+The series starts with three generic MIPS correctness fixes for MTTCG
+interrupt state, MIPS64 segment checks, and architectural tlbwr
+replacement semantics. It then adds Octeon CP0 state, the CN73xx CPU
+model, PageMask handling, and unaligned accesses before introducing an
+empty EBB7304 machine. The remaining patches add the machine state and
+peripherals incrementally, followed by the functional test.
+
+The machine currently models:
+
+* the EBB7304 RAM layout, boot flash aliases, and boot-local RAM;
+* CN73xx CPUs, Octeon CP0 state, CVMSEG, and configurable clocks;
+* reset control, legacy CIU and CIU3 interrupt routing, mailboxes, and
+  secondary CPU release;
+* UART, two TWSI controllers, synthesized DDR4 SPD, four LMC register
+  banks, fuses, RNG, POW, and the firmware probes used during platform
+  initialization;
+* the EMM registers needed for firmware MMC initialization;
+* two UCTL-wrapped DWC3 controllers, sufficient for U-Boot USB storage;
+* a minimal PCIe host bridge, sufficient for a PCI e1000 device.
+
+The functional test starts upstream U-Boot with four CPUs, enumerates
+PCI, obtains a DHCP lease, downloads bsd.rd through user mode TFTP, and
+boots the OpenBSD/octeon 7.9 installer.
+
+The OpenBSD boot and USB stress testing used Philippe Mathieu-Daudé's
+suggested xHCI change which clears ERDP_EHB after a successful interrupt
+callback: https://marc.info/?l=qemu-devel&m=178402329968274&w=2
+
+That one-line change is kept in the development branch and is not part
+of this series. With it applied, a full cvs -Q checkout of the OpenBSD
+ports tree to USB storage completed without a stall.
+
+Each submitted commit was built in sequence and given the meaningful
+smoke test available at that point. The final tree was tested with:
+
+    ninja -C build qemu-system-mips64
+    gmake -C build check-qtest-mips64
+    gmake -C build check-functional-mips64
+
+The qtest suite reported 14 passes, 2 empty suite skips, and no
+failures. The functional suite reported 7 passes, 2 expected skips,
+and no failures; its Octeon case reached the OpenBSD installer prompt.
+
+Before the final rebase, the machine also completed a GCC build inside
+OpenBSD/octeon using:
+
+    -m 16G -smp 4 -accel tcg,thread=multi
+
+That workload ran for several days.
+
+Known limitations are:
+
+* native Octeon Ethernet is not modelled; the OpenBSD test uses PCI
+  e1000;
+* EMM implements the firmware initialization path, not a complete MMC
+  data path;
+* direct kernel boot through -kernel is not implemented;
+* the newly modelled board and peripheral state lacks VMState
+  descriptions; migration and savevm are not expected to preserve the
+  complete machine state.
+
+Changes since v1:
+
+* split the single machine patch into the empty machine, CPU and memory,
+  controller, peripheral, wiring, and test changes;
+* moved the TWSI, USB, and PCI host models to hw/i2c, hw/usb, and
+  hw/pci-bridge respectively;
+* replaced DEVICE_NATIVE_ENDIAN with explicit MMIO endianness;
+* moved mutable peripheral state into its owning device and converted
+  reset handling to the Resettable interface;
+* dropped the xHCI interrupt reassertion patch from the submitted
+  series.
+
+Patches 1 through 3 are generic MIPS correctness fixes. Patches 4
+through 7 add Octeon target support. Patch 8 adds the empty machine;
+patches 9 through 24 add CPUs, memory, controllers, and peripherals.
+Patch 25 adds the functional test.
+
+The series is based on
+499039798cdad7d86b787fec0eaf1da4151c0f05, which already contains the
+Octeon COP2 implementation.
+
+Patch layout:
+
+  1. target/mips: make CP0 interrupt state atomic
+  2. target/mips: fix MIPS64 segment access checks
+  3. target/mips: drop hidden TLB shadowing for tlbwr
+  4. target/mips: add Octeon CP0 register state
+  5. target/mips: add Octeon CN73xx CPU model
+  6. target/mips: accept Octeon PageMask encodings
+  7. target/mips: allow Octeon unaligned accesses
+  8. hw/mips: add empty Octeon III machine
+  9. hw/mips: add Octeon CPUs and boot memory
+ 10. hw/mips: add Octeon reset controller
+ 11. hw/mips: add Octeon CIU3 CPU control
+ 12. hw/mips: add Octeon CIU3 interrupt routing
+ 13. hw/mips: add Octeon legacy CIU
+ 14. hw/mips: add Octeon CSR window
+ 15. hw/mips: expose Octeon reset CSRs
+ 16. hw/mips: add Octeon MIO boot support
+ 17. hw/mips: wire the Octeon UART
+ 18. hw/i2c: add Octeon TWSI controller
+ 19. hw/mips: add Octeon EMM controller
+ 20. hw/mips: add Octeon LMC controllers
+ 21. hw/mips: add Octeon boot support registers
+ 22. hw/usb: add Octeon USB controller
+ 23. hw/pci-bridge: add Octeon PCI host bridge
+ 24. hw/pci-bridge: add Octeon PCI memory window
+ 25. tests/functional: test Octeon III boot
+
 
 
