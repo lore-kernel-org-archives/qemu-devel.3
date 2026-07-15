@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6043C44507
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 19:08:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE559C44501
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 19:09:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wk4xn-0003zH-3z; Wed, 15 Jul 2026 15:08:11 -0400
+	id 1wk4xm-0003ol-Jw; Wed, 15 Jul 2026 15:08:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
- id 1wk4xW-0003iv-6n; Wed, 15 Jul 2026 15:07:55 -0400
+ id 1wk4xW-0003j7-P2; Wed, 15 Jul 2026 15:07:55 -0400
 Received: from zm-mta-out-3.u-ga.fr ([152.77.200.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
- id 1wk4xS-0001nw-7V; Wed, 15 Jul 2026 15:07:53 -0400
+ id 1wk4xT-0001ny-Vu; Wed, 15 Jul 2026 15:07:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=univ-grenoble-alpes.fr; s=2020; t=1784142461;
- bh=kDq4h/6EOPW7FyQ5cFgBeyyIzyzvkpfCV+CV6p1+2ms=;
- h=From:To:Cc:Subject:Date:From;
- b=p1gSAe4p4KGIEotEpNP4d/X6eJ0/uYgxZhCDZh1l+O23lCUiUbU+QdDuEnHkIeHy0
- 3SkJ6P0zEydffd7V0AiltNBnjy+HpE0PDGz/lNdGX50kh/eugXb0eNZv3nE8q0OMHj
- rDShsAerYtFurAjQQXqeDfC6FhXJKBLrxn7ezOBktzVFA+ix0yBNyUSbUq0eK3LF1l
- rpyvSAGmzTLgJRd+XbtwpK64iI/6zCxANTVdSYcUQ66x2Tq5ALTOYxqKcgKd2RVjxK
- VwKo8jKIItjLPd/MRg6ZeyNK3talJIcOFtsDRA4MEw/jB/85tyFJzxjGscVBHSUGNy
- d4jLeZ8ZhKPGA==
-Received: from mailhub-2.u-ga.fr (mailhub-2.u-ga.fr [129.88.178.102])
- by zm-mta-out-3.u-ga.fr (Postfix) with ESMTP id F0AC140215;
- Wed, 15 Jul 2026 21:07:41 +0200 (CEST)
+ d=univ-grenoble-alpes.fr; s=2020; t=1784142462;
+ bh=+vKy8MiHmYIZI5UzqtedK/LGUsUPhC813vzPB9twwY0=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=0la+hFKxBff9to33f0ej8Bj3iXKw6cBrg32EVeVEUW4NHq4QsZz8leO2zakzBQurv
+ M3dai0K1wywmtkPPTok6qutPJ1Ug4hJpTI159MhLlQTiGhHBqFGxfD3iBUPuXHniEC
+ fYG8UZ2L0d5kWWpGo2Nfd66xE57AhOcuN/f/9i8YMD133Spv721SpvedbvZxUlXyYX
+ 3b62u6hfmVWcW+RbRib2tBPyfyQAja4nqhdAlWOSQ/t3XXI0fZM64gmUHTxdsz3BVR
+ vP4Km/0cCSKoEjDQzw4uR6udZWzU3eLfqUKRyHdi1yeqx1rVG2DDKc/3bSh5bcnxPu
+ v5XdPqJdXWGnQ==
+Received: from mailhub-1.u-ga.fr (mailhub-1.u-ga.fr [129.88.178.98])
+ by zm-mta-out-3.u-ga.fr (Postfix) with ESMTP id CA8D64023B;
+ Wed, 15 Jul 2026 21:07:42 +0200 (CEST)
 Received: from smtps.univ-grenoble-alpes.fr (smtps3.u-ga.fr [195.83.24.62])
- by mailhub-2.u-ga.fr (Postfix) with ESMTP id EC2E4FF85F;
- Wed, 15 Jul 2026 21:07:41 +0200 (CEST)
+ by mailhub-1.u-ga.fr (Postfix) with ESMTP id C6A74FF861;
+ Wed, 15 Jul 2026 21:07:42 +0200 (CEST)
 Received: from naga.. (unknown [78.243.103.16])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  (Authenticated sender: petrotf@univ-grenoble-alpes.fr)
- by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id BB795400E7;
- Wed, 15 Jul 2026 21:07:40 +0200 (CEST)
+ by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id 0A766400E7;
+ Wed, 15 Jul 2026 21:07:41 +0200 (CEST)
 From: frederic.petrot@univ-grenoble-alpes.fr
 To: palmer@dabbelt.com, alistair.francis@wdc.com,
  daniel.barboza@oss.qualcomm.com, liwei1518@gmail.com,
@@ -51,10 +51,12 @@ To: palmer@dabbelt.com, alistair.francis@wdc.com,
 Cc: julien.thillard@univ-grenoble-alpes.fr,
  =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20P=C3=A9trot?=
  <frederic.petrot@univ-grenoble-alpes.fr>
-Subject: [PATCH 0/3] Correct cbo and lq disassembly
-Date: Wed, 15 Jul 2026 21:07:34 +0200
-Message-ID: <20260715190737.1381701-1-frederic.petrot@univ-grenoble-alpes.fr>
+Subject: [PATCH 1/3] disas/riscv.c: Correct wrong shifts for cbo
+Date: Wed, 15 Jul 2026 21:07:35 +0200
+Message-ID: <20260715190737.1381701-2-frederic.petrot@univ-grenoble-alpes.fr>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260715190737.1381701-1-frederic.petrot@univ-grenoble-alpes.fr>
+References: <20260715190737.1381701-1-frederic.petrot@univ-grenoble-alpes.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -87,25 +89,39 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
 
-The CBO instructions were, AFAIU, disassembled erroneously.
-In addition, lq (load-quad, a RV128 instruction) shares the same
-opcode space as the CBOs, which also led to incorrect dasm for that
-instruction (understandable since RV128 is an experimental feature).
-To avoid overlaps, we now require that lq is decoded only if
-rd is not 0, as CBO requires the field corresponding to rd to be zero,
-both in dasm and decodetree.
-The last patch corrects the original indentation that was making
-checkpatch unhappy.
+The cache block operations are specified on bits 31:20, but for
+some reason a shift of 17 and a 5 bit masking were performed.
+Make this a raw shift of 20 prior to test for the cbo operation.
 
-Frédéric Pétrot (3):
-  disas/riscv.c: Correct wrong shifts for cbo
-  disas/riscv.c: Correct disasm of lq
-  disas/riscv.c: Correct indent for checkpatch
+Reported-by: Julien Thillard <julien.thillard@univ-grenoble-alpes.fr>
+Signed-off-by: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
+---
+ disas/riscv.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
- disas/riscv.c              | 38 +++++++++++++++++++-------------------
- target/riscv/insn32.decode |  2 ++
- 2 files changed, 21 insertions(+), 19 deletions(-)
-
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 7f1b262773..490bda8e56 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -2889,8 +2889,7 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
+             case 2:
+                /*
+                 * 'lq' shares the "(...) 010 ..... 0001111" opcode space
+-                * with 'cbo' insns.  Check the next 5 bits to select
+-                * what we want:
++                * with 'cbo' insns.
+                 *
+                 * cbo_inval  0000000 00000 ..... 010 00000 0001111
+                 * cbo_clean  0000000 00001 ..... 010 00000 0001111
+@@ -2899,7 +2898,7 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
+                 *
+                 * Anything that doesn't match these will default to 'lq'.
+                 */
+-               switch ((inst >> 17) & 0b11111) {
++               switch (inst >> 20) {
+                case 0: op = rv_op_cbo_inval; break;
+                case 1: op = rv_op_cbo_clean; break;
+                case 2: op = rv_op_cbo_flush; break;
 -- 
 2.43.0
 
