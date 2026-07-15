@@ -4,69 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4830C44507
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 23:28:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C56FC44507
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 23:42:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wk90e-0004x6-NU; Wed, 15 Jul 2026 19:27:24 -0400
+	id 1wk9Eb-0006NG-5s; Wed, 15 Jul 2026 19:41:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wk90c-0004wx-0e
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 19:27:22 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1wk9Ea-0006N8-CI
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 19:41:48 -0400
+Received: from mail-eastusazon11012035.outbound.protection.outlook.com
+ ([52.101.53.35] helo=BL0PR03CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wk90X-0000XK-Pc
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 19:27:20 -0400
-Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 1593C80765;
- Thu, 16 Jul 2026 02:27:12 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:d6a::1:11] (unknown
- [2a02:6bf:8080:d6a::1:11])
- by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id BRa0ms0a70U0-DBeJKViH; Thu, 16 Jul 2026 02:27:11 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1784158031;
- bh=PVR60qt5tlLl1X/m5hHW2lekuH7zGKOPcq5gkERxWCY=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=0EmJZwqdhahvLAt/gk8iyymBfComjditw7PMwOFSkEvyDGDm6Qfa50hpjbkAED1CJ
- UBnhqs/XJ2xeB5ExzauXTF3u3VVOCHfvU9z9Y92jidks5K4BFW1RhHOnnyjb9IVTUZ
- Xw1REQjco1HD204XRg69kmCIejcaL+hegNjaDRIA=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <89ef906d-56d3-40cd-bce4-5636dd963eee@yandex-team.ru>
-Date: Thu, 16 Jul 2026 02:27:10 +0300
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1wk9EY-0002Se-5f
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 19:41:48 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=f6iCFU9U06cbSHexpvd2nbcqPCOo9y/lFoZpsm+qH6UU7k7M2zi5p/zKGMalhhCuS0rNW47sh7Sq6vkE6Qq+hTPsMZlopEIRIGGGK8taV2PmMcpWQr+v52+h3sBDXl9549CFmtst7SbKcqLPbTV9q6enXiJqWJwZm/U0xy2iB1q4lLiw1KmFgSKOtq2dgbXxlX6UTUOHtoaLa4Ae9VkP8Bce18d5Ttex7RN9OiMldVfVzL/N++1FI3CA1T/QxsgbVSIF0WbdgaP6I3wXdqPYPjWPHNnAsdtIric3Z1tXMZt7FkVpIrNM44HjYXV/KoyGGLdbQySPKzYToTWvILFa5g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=v0vZKfBD6bkPdEYT3pjA13E7f2qcIHGIhpY64eFO4C0=;
+ b=fJckCmYqhpn9wGxUHwnIMrX0vF9s1yaxsuNEgp2IMY2x3oFRrdXkXp+Dcq4kobnk6MBH49ewxXCG8MCyTimfKzaxt7QdmTht3QBJieSz0mGPmzbh38Hk2bv0NXfsxT50x3u5E1oQZ+W9lhGjWvV/WKKQ1vdGo11lvnZsQ7oW5Zz5sSo+Cg79U0c4lfqCJaX+3ZoXEVXLI7yY95rysA1+QJaI6A4Wh0jd7iT9yYL4jkSnvSLpA6Oqe4Cu86TV5FDEa91sao5A7r83AHY5I+NZom8sGvXuueMwtWnS206rCw2MNteL37nSC3716WS/BWRwnPmJzun4Hdgta7WNx9hsTg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=v0vZKfBD6bkPdEYT3pjA13E7f2qcIHGIhpY64eFO4C0=;
+ b=ZHRHI6FOlzhebcm2WZCAXW3K0V34eQeZlcusznjCikYXDyw70h0WRVieEcXK0bUeeZqmT9UPmpJ0A+R3S6LO7yZeczNprM2pNgBSphXSALoBKR/T8PX7fwY/R4cmI9oJta2GXTf1N10pR5vSufEZrM0dDTFhtSpPXUcR7WCrAnw=
+Received: from BL1PR13CA0026.namprd13.prod.outlook.com (2603:10b6:208:256::31)
+ by DM4PR12MB5771.namprd12.prod.outlook.com (2603:10b6:8:62::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.12; Wed, 15 Jul
+ 2026 23:36:40 +0000
+Received: from BL02EPF0001A0F9.namprd03.prod.outlook.com
+ (2603:10b6:208:256:cafe::49) by BL1PR13CA0026.outlook.office365.com
+ (2603:10b6:208:256::31) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.245.4 via Frontend Transport; Wed, 15
+ Jul 2026 23:36:40 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BL02EPF0001A0F9.mail.protection.outlook.com (10.167.242.100) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.223.9 via Frontend Transport; Wed, 15 Jul 2026 23:36:40 +0000
+Received: from localhost (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Wed, 15 Jul
+ 2026 18:36:39 -0500
+Date: Wed, 15 Jul 2026 18:36:16 -0500
+From: Michael Roth <michael.roth@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: <stefanha@redhat.com>
+Subject: [ANNOUNCE] QEMU 11.1.0-rc0 is now available
+Message-ID: <vp7afccmso3bcf6bgrlfz34cqek324fmx7lq5664vsabwy7ucg@evu527w6zhoi>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 00/22] vhost refactoring and fixes
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
- yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
-References: <20260527061625.11167-1-vsementsov@yandex-team.ru>
- <20260715184145-mutt-send-email-mst@kernel.org>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20260715184145-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL02EPF0001A0F9:EE_|DM4PR12MB5771:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4cb9b65c-52fd-42fa-36d8-08dee2c9eb8c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|36860700016|82310400026|376014|23010399003|11063799006|56012099006|18002099003|10067099003|13003099007;
+X-Microsoft-Antispam-Message-Info: TJsKjvgssBC34WkMTh8p2UvAVuW/uMtqGzVsW7CXCSie9aaTEnkQhIrZyxYOu6CHHgyxnMJuDACc26SkaKu6mtgKdzvegQyX2b5CQf2TmPc9SaRMlqR/jZj4tKiFc8wozPMi/cDwMGwztPSUcG6K+ZUS84f/yLdJdIiPOW8L6o1LovSO/4AOzYqkcDQ66qSXlvUiTq5ulthsXIul2hdNV7GIoGy7iD8F64LaqhecN2ZQNvKvwgcNLao78rejmpBMJWn8zS2Qai1ZUf7KM4yLVhfCbmybN7wa5umjvzVydaCCrG2+HafDKCw3Jawi/dPzGa2OxS9DezmUJ3FslleUZZYlGkUdEq5s/h1+qlDrxwN89cPpA/QoHNJQdINdF1pBS0wj9aybB4rEV8YSUKeu4GPWS1LpCjhiGdY29zTixzoOx7brHW7KomZRX/75847Tck3ry37e9MCBnHga7pzXlAz1voNI686M4g9GgJJIsuZowqbTG9HKSim3IrA7CS4Q0+r6jDBcJwshcRzecIEqOenIgTjoHS0fZrGRUbW4aPfbdmx73aukFxVR/6cMoDC+Xcgpr72PzC6piAVVcMrCEBWMLIefNSe7S/d4bJeWqPcwOFJLpDp29dg0x4jNby7rYKo/CRf4cHPabmyV+h+eeg==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(36860700016)(82310400026)(376014)(23010399003)(11063799006)(56012099006)(18002099003)(10067099003)(13003099007);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: mBnYWNet3gf9c232hZ/MAfq4/pJZQ5p42W26mfBPIuzYJM06d/6FpCdbs4ddoa/ADYiqUyTCOcSOYshE7rb2/wFtrgW+oODEDXI9o7+2arT6w2r167VLbe9+akavTOx5rSy59PnGeylO7uGxN4BadnyyzWYoTLNy1Q+uq9Fhrt+2H+YVrZ2rb44ST+Cwo3QfiOlFPFGEuOhl3BxM84bmk02pLWcS6OenNxhLorkD0m8dF82RqwuJ2o+dFqUKL1MPM3mQ8hEYXACOp7VQ3SwbVK9QZ85/g0RzLr6blMS4kLxUt9DFw/ZSmEgmpDBsSgQMv6w9EK7uffxVKo99K0s3YJpDG+duV8ITKBAwRYhwVDWjJslhceEAFPXGsMakcCv2QhKMWC2bCLXahq/liQdYgLSVGKJkeuIMSJSEowT66rtbNht5pI1bwI99FvKRI7Yn
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Jul 2026 23:36:40.0890 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4cb9b65c-52fd-42fa-36d8-08dee2c9eb8c
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0001A0F9.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB5771
+Received-SPF: permerror client-ip=52.101.53.35;
+ envelope-from=Michael.Roth@amd.com;
+ helo=BL0PR03CU003.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -78,80 +122,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16.07.26 01:41, Michael S. Tsirkin wrote:
-> On Wed, May 27, 2026 at 09:16:01AM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> Hi all. That's a preparation for vhost-user-blk backend-transfer
->> feature.
->>
->> 07: rebase on master,
->> 04: drop extra occurence of system_virtio_ss.add(files('vhost-user-stub.c'))
-> 
-> so patch 10 is the fix?
+Hello,
 
-Probably it's too late :/ I don't understand, what do you mean). Patch 10 is a
-fix yes. But seems it has no relation to vhost-user-stub.c ?
+On behalf of the QEMU Team, I'd like to announce the availability of the
+first release candidate for the QEMU 11.1 release. This release is meant
+for testing purposes and should not be used in a production environment.
 
-> 
->> Vladimir Sementsov-Ogievskiy (22):
->>    vhost-user: rework enabling vrings
->>    vhost: drop backend_features field
->>    vhost-user: introduce vhost_user_has_protocol_feature() helper
->>    vhost: move protocol_features to vhost_user
->>    vhost-user-gpu: drop code duplication
->>    vhost: make vhost_dev.features private
->>    virtio: move common part of _set_guest_notifier to generic code
->>    virtio: drop *_set_guest_notifier_fd_handler() helpers
->>    vhost-user: keep QIOChannelSocket for backend channel
->>    vhost: vhost_virtqueue_start(): fix failure path
->>    vhost: make vhost_memory_unmap() null-safe
->>    vhost: simplify calls to vhost_memory_unmap()
->>    vhost: move vrings mapping to the top of vhost_virtqueue_start()
->>    vhost: vhost_virtqueue_start(): drop extra local variables
->>    vhost: final refactoring of vhost vrings map/unmap
->>    vhost: simplify vhost_dev_init() error-path
->>    vhost: move busyloop timeout initialization to vhost_virtqueue_init()
->>    vhost: vhost_dev_init(): simplify features initialization
->>    hw/virtio/virtio-bus: refactor virtio_bus_set_host_notifier()
->>    vhost-user: make trace events more readable
->>    vhost-user-blk: add some useful trace-points
->>    vhost: add some useful trace-points
->>
->>   backends/cryptodev-vhost.c     |   9 +-
->>   hw/block/trace-events          |  10 ++
->>   hw/block/vhost-user-blk.c      |  26 +++-
->>   hw/display/vhost-user-gpu.c    |  11 +-
->>   hw/net/vhost_net.c             |  35 ++---
->>   hw/s390x/virtio-ccw.c          |  35 +++--
->>   hw/scsi/vhost-scsi.c           |   1 -
->>   hw/scsi/vhost-user-scsi.c      |   1 -
->>   hw/virtio/meson.build          |   1 +
->>   hw/virtio/trace-events         |  16 +-
->>   hw/virtio/vdpa-dev.c           |   3 +-
->>   hw/virtio/vhost-user-base.c    |   8 +-
->>   hw/virtio/vhost-user-stub.c    |   6 +
->>   hw/virtio/vhost-user.c         | 260 ++++++++++++++++++++++-----------
->>   hw/virtio/vhost.c              | 243 +++++++++++++++---------------
->>   hw/virtio/virtio-bus.c         |  18 +--
->>   hw/virtio/virtio-hmp-cmds.c    |   2 -
->>   hw/virtio/virtio-mmio.c        |  41 +-----
->>   hw/virtio/virtio-pci.c         |  34 +----
->>   hw/virtio/virtio-qmp.c         |  12 +-
->>   hw/virtio/virtio.c             |  48 +++---
->>   include/hw/virtio/vhost-user.h |   4 +
->>   include/hw/virtio/vhost.h      |  63 +++++---
->>   include/hw/virtio/virtio-pci.h |   3 -
->>   include/hw/virtio/virtio.h     |  15 +-
->>   net/vhost-vdpa.c               |   7 +-
->>   qapi/virtio.json               |   3 -
->>   27 files changed, 500 insertions(+), 415 deletions(-)
->>   create mode 100644 hw/virtio/vhost-user-stub.c
->>
->> -- 
->> 2.52.0
-> 
+  http://download.qemu.org/qemu-11.1.0-rc0.tar.xz
+  http://download.qemu.org/qemu-11.1.0-rc0.tar.xz.sig
 
+You can help improve the quality of the QEMU 11.1 release by testing this
+release and reporting bugs using our GitLab issue tracker:
 
--- 
-Best regards,
-Vladimir
+  https://gitlab.com/qemu-project/qemu/-/milestones/19
+
+The release plan, as well a documented known issues for release
+candidates, are available at:
+
+  http://wiki.qemu.org/Planning/11.1
+
+Please add entries to the ChangeLog for the 11.1 release below:
+
+  http://wiki.qemu.org/ChangeLog/11.1
+
+Thank you to everyone involved!
+
 
