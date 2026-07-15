@@ -4,119 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0206C44501
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 18:44:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E0DFC44507
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 18:54:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wk4aQ-0005gn-Q1; Wed, 15 Jul 2026 14:44:02 -0400
+	id 1wk4jx-0000ks-UN; Wed, 15 Jul 2026 14:53:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wk4aP-0005gf-HR
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 14:44:01 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wk4aN-0004EF-Nz
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 14:44:01 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id E1F2F3DF5;
- Wed, 15 Jul 2026 18:43:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1784141036; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dcA3iDQLuiosrfmFcsIs8+m8zsuf5bNbAgyqnhdCkKA=;
- b=kGs/Kcq890kvrQhpq2scw/HmEfuMSUrvcO/oOCV8W9M3P+o7isS6/T7iapNeCYC2pRbyf7
- eKZE9I8PDJQ/0B02dK62429rrxbxsGcxZWpcZ7kc2hXMoGsyJZV54pyiu1XDD/7oL+s+yk
- Mx4+MpNe6QYXOSdGdi3eIKKRHwgGNrA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1784141036;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dcA3iDQLuiosrfmFcsIs8+m8zsuf5bNbAgyqnhdCkKA=;
- b=H1iQLuL7qihnbhc/4+tDYdxdZXqz4tssS0IEuxT+/6tEUIo0OewbPRcPA96PUOmbs7iLcI
- kDkWcq4NAno1eaCw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=alZVwDA7;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=x7hch3sz
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1784141035; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dcA3iDQLuiosrfmFcsIs8+m8zsuf5bNbAgyqnhdCkKA=;
- b=alZVwDA7KHXjFWyUlggrGrz0UWoPezPW48KnoahPd22Hhzt12ARJfilG1okZurgkiOF/vR
- vpAiTzpEbQtZkjrW2ZZOgDi9Imf6uzYjXSz353nKxfQ5hqe5IplvgdHlfkKZjaYgfVwRiy
- KNE+vD3YHfRGzp5SRlLYAFOHMy33u1Y=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1784141035;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dcA3iDQLuiosrfmFcsIs8+m8zsuf5bNbAgyqnhdCkKA=;
- b=x7hch3szH52+v9wieHPxsu2SehgIkKyj3MEqz1VXAcCQLBmPDoTP3210RrquOaavNOGnNG
- lLa7zaTx9dbIoOAg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7ED5F779AD;
- Wed, 15 Jul 2026 18:43:55 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id LWZQFOvUV2rqSQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 15 Jul 2026 18:43:55 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-Subject: Re: [PATCH v3 2/2] get_maintainer: add ability to report Git Lab
- handle
-In-Reply-To: <20260715154029.1216464-3-berrange@redhat.com>
-References: <20260715154029.1216464-1-berrange@redhat.com>
- <20260715154029.1216464-3-berrange@redhat.com>
-Date: Wed, 15 Jul 2026 15:43:53 -0300
-Message-ID: <87pl0o3xg6.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1wk4jr-0000kH-7W; Wed, 15 Jul 2026 14:53:47 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1wk4jp-0005Pd-PM; Wed, 15 Jul 2026 14:53:47 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66FHCrIp779242; Wed, 15 Jul 2026 18:53:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=rvQ3C0
+ /IN0BfdPykbOi836XJXD4mAh6xqm1hS8V8p64=; b=IQcv26G/KtXPHPhAlI0aDm
+ +Ioc9i2w65u/8WuAR9V0pyhGJHep4CZH1AlWGhKFRV81kydvUVIO7vrCAanccM7m
+ 9CJtnGTYv4vjXhw/cWdVeXDwA4L6o5GwkSH+Ps9xTVf3D6NjKYXsBgCSpgvzopyp
+ cogga08l6gEpVwt0IS9gtjirLOXAH5ApwPO8Ly8UPf1jYtUlWjOKRePSN/Q0MevQ
+ N5JHJsyoFkwRWW1fjnH9eJd3wZD/ItFdheObOAsZ0sGtIz9jimdfUgx64K4vQpb0
+ ejyAAwzFbJx5/CypiDbLeDEkSBJ2MkEwqSmziuT5GtLl0JSEkYcG2EJWR5wYLnPw
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbegbvk5t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 15 Jul 2026 18:53:40 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66FInaoF032033;
+ Wed, 15 Jul 2026 18:53:39 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc1nhhdne-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 15 Jul 2026 18:53:39 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66FIrcq928181058
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 15 Jul 2026 18:53:38 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 529C35805C;
+ Wed, 15 Jul 2026 18:53:38 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A8E165805D;
+ Wed, 15 Jul 2026 18:53:36 +0000 (GMT)
+Received: from [9.12.68.85] (unknown [9.12.68.85])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Wed, 15 Jul 2026 18:53:36 +0000 (GMT)
+Message-ID: <4ad2f92a-d3b1-44b4-ba8f-fa993695bf59@linux.ibm.com>
+Date: Wed, 15 Jul 2026 14:53:35 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MISSING_XM_UA(0.00)[];
- ARC_NA(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- DBL_BLOCKED_OPENRESOLVER(0.00)[get_manitainer.pl:url,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,nongnu.org:email,euphon.net:email,suse.de:email,suse.de:dkim,suse.de:mid];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: E1F2F3DF5
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v16 09/33] s390x/diag: Implement DIAG 320 subcode 2
+To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
+ richard.henderson@linaro.org, david@kernel.org, jjherne@linux.ibm.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
+References: <20260707231132.2492104-1-zycai@linux.ibm.com>
+ <20260707231132.2492104-10-zycai@linux.ibm.com>
+Content-Language: en-US
+From: Collin Walling <walling@linux.ibm.com>
+In-Reply-To: <20260707231132.2492104-10-zycai@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=fOcJG5ae c=1 sm=1 tr=0 ts=6a57d734 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=IrZvC-waEUVJwRxjAe8A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE1MDE4NiBTYWx0ZWRfX2a7NFsqzLRUG
+ TgyLAsMF5i+ZLsyYLNASOWFo0OBGJ8AdrL1fp9IdKO9IHBLkRVzbI6UHIT1e7AM/MYcSgBloCr+
+ wjSVVjDClPUWYE5x3P4zfGi3fLfZDrhHoibC4diqpd5aRkxOCQ0gQebLRQsdX5ECfqst1BNLWmI
+ LpoD6MsQ1d56uO8z5j7oubSuCJMjWvpkc1wc0kfGnha5N/tFqTv7qy65r+pm6zbt9n+6mRVyCQI
+ FKs5GPJJ659jpKYFQS02NkNrqRwhuEAC1aB6RfRD5MCrnOhrxSiMSkpnqdt2e65JjTjzhq05mcy
+ 1YyrBq6+nTrYYdgnIIiBC0XJfk1wXtPijtzm5UVd6jNo/fGSp0wJ+6sq/VS5nVZKedtliRlKegc
+ mpUr54y5fiH/xyZqSUw1gXPSljixHidtkoR24kPmQ2htsYI5Zf3qbkrtQ9te5lGdHe+KOkb97ni
+ ekvDOxdZE6kxih9aE4w==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE1MDE4NiBTYWx0ZWRfXwDMrZfymPM9R
+ A1glH1XHlVVe5iV0o2DIyGQG89wIVHom0rHjBmu6BWy8/PbEa/F1Bv4i/U9HH/n2ztVpQ6tHhwl
+ NBtH1XtCIdL4SpDEJzTukgmyNi4igzk=
+X-Proofpoint-GUID: nR71vYj85LO1cLTL1gDvoC2idLSZXtA8
+X-Proofpoint-ORIG-GUID: nR71vYj85LO1cLTL1gDvoC2idLSZXtA8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-15_04,2026-07-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 impostorscore=0 suspectscore=0 adultscore=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 phishscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607150186
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=walling@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -133,114 +130,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> With the GitLab mapping files from the previous commit, the
-> get_manitainer.pl script is now able to report the gitlab
-> handle for each maintainer/reviewer when displaying output.
->
-> For example:
->
->   $ ./scripts/get_maintainer.pl -f hw/scsi/lsi53c895a.c
->   Paolo Bonzini <pbonzini@redhat.com> (supporter:SCSI, gitlab:@bonzini)
->   Fam Zheng <fam@euphon.net> (reviewer:SCSI, gitlab:@famzheng)
->   qemu-devel@nongnu.org (open list:All patches CC here)
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> ---
->  scripts/get_maintainer.pl | 51 ++++++++++++++++++++++++++++++++++++---
->  1 file changed, 47 insertions(+), 4 deletions(-)
->
-> diff --git a/scripts/get_maintainer.pl b/scripts/get_maintainer.pl
-> index 76be402e11..9679f27413 100755
-> --- a/scripts/get_maintainer.pl
-> +++ b/scripts/get_maintainer.pl
-> @@ -365,6 +365,31 @@ sub read_mailmap {
->      close($mailmap_file);
->  }
->=20=20
-> +my %gitlabmap;
-> +
-> +read_gitlabmap(".gitlab-map-auto");
-> +read_gitlabmap(".gitlab-map-manual");
-> +
-> +sub read_gitlabmap {
-> +    my $mapfile =3D shift;
-> +    open MAP, "<$mapfile"
-> +	or die "cannot open $mapfile: $!";
-> +
-> +    while (<MAP>) {
-> +	next if /^#/;
-> +	next if /^\s*$/;
-> +
-> +	if (/^(\S+)\t(.*)$/) {
-> +	    my $handle =3D $1;
-> +	    my $realname =3D $2;
-> +
-> +	    $gitlabmap{$realname} =3D $handle;
-> +	}
-> +    }
-> +
-> +    close MAP;
-> +}
-> +
->  ## use the filenames on the command line or find the filenames in the pa=
-tchfiles
->=20=20
->  my @files =3D ();
-> @@ -1068,6 +1093,18 @@ sub email_inuse {
->      return 0;
->  }
->=20=20
-> +sub gitlab_handle {
-> +    my $name =3D shift;
-> +
-> +    $name =3D~ s/"//g;
-> +
-> +    my $gitlab_handle;
-> +    if (exists $gitlabmap{$name}) {
-> +	return $gitlabmap{$name};
-> +    }
-> +    return undef;
-> +}
-> +
->  sub push_email_address {
->      my ($line, $role) =3D @_;
->=20=20
-> @@ -1077,10 +1114,12 @@ sub push_email_address {
->  	return 0;
->      }
->=20=20
-> +    my $gitlab_handle =3D gitlab_handle($name);
-> +
->      if (!$email_remove_duplicates) {
-> -	push(@email_to, [format_email($name, $address, $email_usename), $role]);
-> +	push(@email_to, [format_email($name, $address, $email_usename), $role, =
-$gitlab_handle]);
->      } elsif (!email_inuse($name, $address)) {
-> -	push(@email_to, [format_email($name, $address, $email_usename), $role]);
-> +	push(@email_to, [format_email($name, $address, $email_usename), $role, =
-$gitlab_handle]);
->  	$email_hash_name{lc($name)}++ if ($name ne "");
->  	$email_hash_address{lc($address)}++;
->      }
-> @@ -2026,10 +2065,14 @@ sub merge_email {
->      my %saw;
->=20=20
->      for (@_) {
-> -	my ($address, $role) =3D @$_;
-> +	my ($address, $role, $gitlab_handle) =3D @$_;
->  	if (!$saw{$address}) {
->  	    if ($output_roles) {
-> -		push(@lines, "$address ($role)");
-> +		if (defined $gitlab_handle) {
-> +		    push(@lines, "$address ($role, gitlab:\@$gitlab_handle)");
-> +		} else {
-> +		    push(@lines, "$address ($role)");
-> +		}
->  	    } else {
->  		push(@lines, $address);
->  	    }
+Reviewed-by: Collin Walling <walling@linux.ibm.com>
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+-- 
+Regards,
+  Collin
 
