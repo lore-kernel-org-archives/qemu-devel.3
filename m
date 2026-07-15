@@ -4,112 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64B52C44501
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 16:06:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B90AC44508
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 16:07:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wk27d-0005UV-Fb; Wed, 15 Jul 2026 12:06:09 -0400
+	id 1wk291-0005zp-Tr; Wed, 15 Jul 2026 12:07:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wk27a-0005TV-95
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 12:06:07 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wk27Y-0007A6-MX
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 12:06:05 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-81e69a2db34so99198217b3.0
- for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 09:06:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784131563; cv=none;
- d=google.com; s=arc-20260327;
- b=L55y1BEw2Rs6ly7rcxYnfwjyTTWDbvh/NluqIWOTr3EjLWmU2MpeFlkqARSUpWnv6f
- HmXUyfR0JS6QB2P/4I4EaAYMLg8oUc9lnWdOYBmGoIXf1SJWPw0qw39aRxOh97fbApcH
- wI5zm7ndlfnCuvySkRfeGp2foH+/3R2Zqh9U3ty94s3QntlaZwOap9W2r20YuoRCXtgi
- siQDxkShN3uA4/hDsN2TqT5gQ/D6iKSrqxLv/DUhlqqGmrQElsECVbk9i6xiQez2Wjvr
- UeYYisPAFn40NxLM+Lb5+tqATqw3yYQ10pA+tzOKAcHiBZ56PlPH3FXgdgR1ZqmMPIy6
- u4KQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=nkPp9ijnzlD4t2O5YSt12zAqO2Ov7v9x04GiYityM4s=;
- fh=Km0gBqDosFtAChIZQuE8/t4hQeiDe8l9e9R6S9Q/us0=;
- b=I5pTaBoxKryg9H3De0vi1dy58Ayb+fIdyx+D8YDaMK8the1qQBo4K8J+oXK6Gidg5u
- 1hUxdOSfj80yloCEOf8nOw+WU4MJuRWfJns/BntsYD+vgilV9z5Rigf4hygYdOL+ghE9
- j9H8ZZWeNcfGV+lrFxDWiuXU7sBq+7LxvQ5YooXdhROomMkyTC2NYj9nZ9/011Xm7RF3
- mZYelgGfFrMmjh2AziIYCKN6tBuiYLy6LHaOAZhNdbZpJCJeBmWoGcgJPQ1YDMqZlsOV
- 7g8PlAB5oqLM8dKGICmSUGwOYPd32cpr2pBwdW2VyCslpHUO4hnNNEZ8qXIRKPaTs3BM
- YloA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wk28t-0005z7-S1
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 12:07:28 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wk28q-0007Jm-H3
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 12:07:27 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66FE3SdP4006795
+ for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 16:07:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 5qotmgPsfkgCHuU+j1M/FHJPkSu+N8BIl1jhMQMztoo=; b=LMViIxWgb7+IQj5L
+ DVBUq+lVYeLTRlHi2rOsI/Qpz0sGbTq3LAmkmNBJtSU8cXcVzb7MH7c1mS+Hof3I
+ 6bLWRGA6imnmpGQegOb30i210aw7lrDpd/E4faht3HyzNST90fbLiWlu2wVAdfH9
+ WFlOmKqVi38MTq5zGreN2JgnxjMVrOCl7VdJ3ykWPi6t+/08AxVxvibiOAQWob18
+ 3BLSF6HBbNCC0+fiBy8aKkcwCyYg21M6uvnqaPRXS11g/7Cc46X6WFyVFWks0KFx
+ DtN5FsALjcf8lZRn1jH4oPWJ5WyPM5r1ctWxSgfmAw3l9DROqJx0ALop8AHsdhfz
+ XO30HA==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fe652a3cm-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 16:07:21 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-c85798977dcso5573293a12.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 09:07:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784131563; x=1784736363; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=nkPp9ijnzlD4t2O5YSt12zAqO2Ov7v9x04GiYityM4s=;
- b=GeAacn8o0RS4UVNwulKnAhY7iRxHPbH3dDoNPEI9sJmH3nj11KkWHbbLvGWApL2rho
- viII7QzT2bPH+F89uAlu0/uqsiaM8M9I4baV2KjjnxYeKLimpCSbmeScU3PtqRz9vUR7
- Xc+uMyFXNSSYQpipF5NQTgI4Biev+8rx2zHpSEAtzODSGhmJ0JrleelDjaQtNp0bp9Z3
- v7gMRevOLV0DTjzBJsDjlJBgYbJuAIZ1NxILU51wKd+CM/o1pcNsZyztaeDqWlhWnUbX
- AcK3EIEmwbxUc/BfuEBsxVyozZ6IeWbCtCgSNlDJ9nLtYpq+xijS2pAPtptwLaUPtuiT
- toJQ==
+ d=oss.qualcomm.com; s=google; t=1784131641; x=1784736441; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=5qotmgPsfkgCHuU+j1M/FHJPkSu+N8BIl1jhMQMztoo=;
+ b=TL1bzzTDIDuAeBoUNtMDuGPOJA9+ewOaR3TVU9JV3LTubhwk8Fez8ZW8g+qV/d0szF
+ lCb/aFT0vhPxXBYqPkXpypmsqtSHCQr2GZ+5KuHptGkNWtYYolkBOG6ynGimq62Rpe18
+ mGa3p8sEMKEW8LPLp8sK6iJS9ERdkc5A5lw3BJ61/hArmA2rKQ+8eZND7Bv1M1mK8a35
+ 9/XR3AAxRw87GwQcsiP3l5HltMCjyFwk+oJxvDqjll+Tm4HsIJ2IgxvN0ftG9DDmG+a1
+ J8zKsI2WeVXsHLZNf06warHp7aYS3lGKt/mX8AUl2b372oUXCCbnFoxhpXKSnagzsubr
+ SLDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784131563; x=1784736363;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=nkPp9ijnzlD4t2O5YSt12zAqO2Ov7v9x04GiYityM4s=;
- b=aP6fnJRzs/RCr3H2Uu3H7o+Ssd2ZDGsEbQeyZaIstgfG0w+fHyIQdG/HPeS4T0JEGU
- rIpaAft2F7T46FNZ9iMhFR/qQ/yvxvJsoUJFun8feQEUI9LRQFOCbNxTF0OdvxSQ9utM
- uCN3hMr2AuMp2Hgsuns6x1TTqq6iFm1bl/Fiwg+FdYOEvMpefwTyfu5ULT/OL/pb/urR
- tJMgXTM1UhfC4R7zAJ2epTgsbrom6NgwqdaVnC/oG0AIZTrzMw/Osis1t9WZPzGTz+mw
- B1E3hmCy6HAbA4ORFvfLMsrV8K9px47NLdvH4p1cd2H38hivUudpngwMFw7BreIsMasJ
- BCpA==
+ d=1e100.net; s=20251104; t=1784131641; x=1784736441;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=5qotmgPsfkgCHuU+j1M/FHJPkSu+N8BIl1jhMQMztoo=;
+ b=ODnBXOndXrf+AOF4Xw24vPEXEYcfa8e5VKQlHvQwXHK2tgx82P4Q54bg5C7Wie+bvK
+ 40GAZS6vf4peWfK9UmThKLlD1UyIvCStcQGjsaEv6JUPxSLxiG3jENNpTYnNwo4TytLU
+ UoLakycbLXlulXeq8a+T/80fpbgwpH0ZTL9UEi6gBjxMt3uOxY/Rum+wW4bitUCnUyAa
+ 32M0ok3YQ3Zdxjxy6AFLFxnnSF0yzVTFz5YJIvsOvwsrfsFKnb8pWpD/6bqnGW8XGXAW
+ QSaUWcFTL3OallWIdzj/ZJZUKBZhPc/RfqPKW201DKBljLlytA4LR757ZRokhKLEZpJh
+ F4+w==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rr5/SbGhl5h3NzUIk70yIfZjYJSnelrCWpX7z+iQRkw7Och68mkPZrDZh/jzGnuphHyTEOXbXRWCSy/@nongnu.org
-X-Gm-Message-State: AOJu0YzySRfVZYBp42Cp2Vs6LcDdmf9EcEnlwb1L65HDfBYViIUg8pts
- Rhf+YlNfmrWKsuJc/UE6ZdSmFr/0NRWOg7n9oWcIp4lccM5hcWoI6r6/5tMy5cHnpzLNaulybW/
- 1OvKQTW30kUI3TJ2M5NrfMJHrSUXH2cJnqZhlZA45Fg==
-X-Gm-Gg: AfdE7ckdARElHUehwFjTpDvsJrQOOCYtj5ETCdwkwczMPr9Qs5KiQlUXzvLSTV/vQoe
- XVtc95SVCyWbh/vt4uvCHgu+9nZam2lDhsdZRP6G/Y+pWyHFKYLZmHCUjLEEm+ZZO4FM2fNtsht
- AX65mA+T8Ib/KVWynAITht/nIAuiazlTjPLX4aNwOToNB3U4BpjKlqPNgI79ela67SXVUgE4ENX
- MZ6ek+K0IYKO3w6B6FjnHWztNB7OSbJ95oURV0n+Oq0stUiu8/R+neNAAlxyST3K0oHKAI5/Ib/
- 1qpulfFGDXk0EA3basrARUBq8fOfowQJx5VRbPyTq0XKPXGVD8AMCxgFV64mh7SVVjiKyVuL5yq
- 4Wg==
-X-Received: by 2002:a05:690c:a98:b0:80c:8624:8a68 with SMTP id
- 00721157ae682-81ecfa136f1mr27480587b3.45.1784131562568; Wed, 15 Jul 2026
- 09:06:02 -0700 (PDT)
+ AHgh+Rphi+CL1SntfnGievGIpe9rtyM499OydgzsCP+OkSIH6Xg57bHzIxRykzmq4W4qZWHm7JyK2OtJrwZi@nongnu.org
+X-Gm-Message-State: AOJu0YxIvZTVZTp2+J1bP7Iz/tUyH5TzsroF9ziT2NLRSYL4xXmfTubw
+ iWtJkPowYdTnAQuRfHVnSWJg7yA1uCrp1/kqfpHASM40ZtO84ayNWu080YXPX8i4JS4lTcsBaOO
+ gL1ravcbvqodMzd/B+nB1B6psglsb78lTDTOcxrXSX8ZENonUcYYGfsR7Fw==
+X-Gm-Gg: AfdE7cmcsYfBWBkW0XMWKNoxef9p8MYXNvOl2Q8G3mKaeHERoa13oOfjddmjAfVJKMP
+ 8Hb40hgQ04qxEyWDgDlyvT5+1psl4UN1MO5BBQsTePObrxaT/UZAItU5uzjeOOxeeyZiMymHHhB
+ AMvuSyFvC1FcJHjXc1mCLKnZl0yG6hCiSsVGEOVapPPeiqKY+rkttGSnepVgPyVwJAnMJRjHu7E
+ 3SOUGr79SF7Z0FuezdKQNAPhCB4VvVL2udm3bRA5CvW9b0KCCGUtKAcZA/mPuuo/Fpcw1Le+pTe
+ BLhICUm1aXSjDLiOb4C2g+w9f1aPRLoRWxqu0wq5m9IP1aEc2lct+Gof6Lxo5+S8AN4obJzcQCu
+ j0HJesgcJo1CogdsGayx4P/vaGfhSJvrQdYq9pQUZZVFFH9ZkaRztehf1wLRxzvvZgglS3a98E6
+ AMZNo=
+X-Received: by 2002:a05:6a21:7706:b0:3b3:23a2:edff with SMTP id
+ adf61e73a8af0-3c36c1d4124mr3408677637.28.1784131640715; 
+ Wed, 15 Jul 2026 09:07:20 -0700 (PDT)
+X-Received: by 2002:a05:6a21:7706:b0:3b3:23a2:edff with SMTP id
+ adf61e73a8af0-3c36c1d4124mr3408636637.28.1784131640139; 
+ Wed, 15 Jul 2026 09:07:20 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-13cd403a7f7sm2612774c88.0.2026.07.15.09.07.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 15 Jul 2026 09:07:19 -0700 (PDT)
+Message-ID: <e3932087-16c8-4e34-98cf-c20cf7db9531@oss.qualcomm.com>
+Date: Wed, 15 Jul 2026 09:07:18 -0700
 MIME-Version: 1.0
-References: <20260714155126.3509544-1-brian.cain@oss.qualcomm.com>
- <20260714155126.3509544-4-brian.cain@oss.qualcomm.com>
- <32acc813-37ae-4708-a842-7d7958b7d388@oss.qualcomm.com>
- <CAFEAcA9Smft=r25PJEDiSg6sF-006xLvq56iFWKW+WHWwATUSg@mail.gmail.com>
- <100b70e6-9b5a-4dc7-967c-924a80c09cef@oss.qualcomm.com>
-In-Reply-To: <100b70e6-9b5a-4dc7-967c-924a80c09cef@oss.qualcomm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 15 Jul 2026 17:05:49 +0100
-X-Gm-Features: AUfX_mzROh0A4UbQXBCszBMQJnhGTcbyFVfcv6WHp0nDgHg6_Paeq_8w3ZeFdUo
-Message-ID: <CAFEAcA_zBP+Y-ocE39NYYtKBVTsRB_CL7OGC1OELQhcp1FRzwg@mail.gmail.com>
-Subject: Re: [PATCH 3/7] bitops.h: Add find_first_bit32()
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org, 
- ltaylorsimpson@gmail.com, Laurent Vivier <lvivier@redhat.com>, 
- Thomas Huth <th.huth+qemu@posteo.eu>, Paolo Bonzini <pbonzini@redhat.com>, 
- matheus.bernardino@oss.qualcomm.com, Fabiano Rosas <farosas@suse.de>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- philmd@oss.qualcomm.com,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] tests/docker: ensure container command is probed at
+ most once
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+References: <20260715104218.1110301-1-berrange@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260715104218.1110301-1-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE1MDE2MCBTYWx0ZWRfXw/64v8TyI3fV
+ 5a1Mz3uDj3wXUjnHE9DrM/ufz0o2iLMVoX5tcae2/MeOY05CsLi2gk8RK+Rg7fUIOtXhaHI+qsu
+ oXq89UlUGwxM+3OiSKRt6Z9yCDyYfaLW3NuplDhhNYuZ9hTbZ54yrOje0UmQjbeSBjR3Q9Kelk5
+ LRdaCynR51Q1uhCqtnaJQf0Z2b89y8qOT+y/YmduYzsX4wwuua6TQNsmXjzZHCarIsVFn4ukY3u
+ LFSzwqORwEzTIirreDDMy+kqXIymPluxnEisqzGMQNKXXs7sIfH3XOfVwslrifnD+BTZ3/HlADS
+ fXiQXQf59iLLgo4zPk2a7duQE0Ok6Np+ovNsi2NevwD4L91H6gJLWCUeB4zk0bXs3XMiPXi+bUm
+ 8rtkWM+2ptLI/Ry5MzGGdhInA7jDA5X4ffNx+NQTw7VoJf/XfaLqIgSrZK6iRKtPTOO/jpD20J/
+ TlDb84U1DQ3hwOjw/bg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE1MDE2MCBTYWx0ZWRfX4WfwRkoMQEYw
+ PZWdXzjjMVBgisBwR4AN/m2ySKD8cxCFtOgcx/7+HCKctBj/IdQxwkdIJUyC8rm1Bjhg54bu4xl
+ W7dhX25gGK8+O/4G4osm4uZOV73IAvM=
+X-Authority-Analysis: v=2.4 cv=bKcm5v+Z c=1 sm=1 tr=0 ts=6a57b039 cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=p0WdMEafAAAA:8
+ a=eOTV7RKpXi4agr-MV6cA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=3WC7DwWrALyhR5TkjVHa:22
+X-Proofpoint-ORIG-GUID: F5cuAEjctH_WJ3C7IXJdsYi9Ox3ttR4I
+X-Proofpoint-GUID: F5cuAEjctH_WJ3C7IXJdsYi9Ox3ttR4I
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-15_03,2026-07-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 spamscore=0 bulkscore=0 clxscore=1015 adultscore=0
+ malwarescore=0 impostorscore=0 suspectscore=0 priorityscore=1501 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607150160
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,72 +159,337 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 15 Jul 2026 at 16:30, Pierrick Bouvier
-<pierrick.bouvier@oss.qualcomm.com> wrote:
->
-> On 7/15/26 3:01 AM, Peter Maydell wrote:
-> > On Wed, 15 Jul 2026 at 02:18, Pierrick Bouvier
-> > <pierrick.bouvier@oss.qualcomm.com> wrote:
-> >>
-> >> On 7/14/2026 8:51 AM, Brian Cain wrote:
-> >>> set_bit32()/test_bit32()/etc already let devices operate on
-> >>> guest-visible uint32_t register arrays without depending on the
-> >>> host's 'unsigned long' size. find_first_bit() has no such
-> >>> equivalent, which pushes callers towards casting a uint32_t array
-> >>> to 'unsigned long *'.
-> >>>
-> >>> Add find_first_bit32(), implemented the same way as find_first_bit().
-> >>>
-> >>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> >
-> >>> +/**
-> >>> + * find_first_bit32 - find the first set bit in a memory region
-> >>> + * @addr: The address to start the search at
-> >>> + * @size: The maximum size to search
-> >>> + *
-> >>> + * Returns the bit number of the first set bit,
-> >>> + * or @size if there is no set bit in the bitmap.
-> >>> + */
-> >>> +static inline uint32_t find_first_bit32(const uint32_t *addr, uint32_t size)
-> >>> +{
-> >>> +    uint32_t result;
-> >>> +
-> >>> +    for (result = 0; result < size; result += 32) {
-> >>> +        uint32_t tmp = *addr++;
-> >>> +        if (tmp) {
-> >>> +            result += ctz32(tmp);
-> >>> +            return result < size ? result : size;
-> >>> +        }
-> >>> +    }
-> >>> +    /* Not found */
-> >>> +    return size;
-> >>> +}
-> >>
-> >> Either we should express size in terms of number of elements, or add an
-> >> explicit check if size is not a multiple of 32.
-> >
-> > I think we should follow the API of the existing find_first_bit()
-> > function here, which defines the size in terms of number of bits.
-> >
-> > Sizes not a multiple of 32 should work fine -- the representation
-> > is "bit 0 in LSB of first 32 bit word, working upwards". So e.g.
-> > an bitmap of 16 bits has the representation "a single 32 bit word,
-> > and the bits are in bits 0..15". The code correctly handles this
-> > with the "return result < size ? result : size" logic: even if
-> > bit 17 is set, we will return 16 to indicate "no set bit in bitmap".
-> > (This also follows the existing find_first_bit() handling.)
-> >
->
-> What I had in mind with 'add an explicit check', was to make sure we
-> don't read the last entry if size is not a multiple of 32.
-> In case addr is a buffer, we might read past its last entry.
-> But maybe it's not a concern.
+On 7/15/2026 3:42 AM, Daniel P. Berrangé wrote:
+> The '--engine' arg accepts either 'podman' or 'docker', which is
+> not sufficiently granular to map directly to a command. This
+> means that  docker.py still has to then probe the exact command
+> to use.
+> 
+> Meanwhile the 'probe' command prints out the full command to use
+> but this cannot be passed back to docker.py to avoid probing
+> again, so the caching is only useful in the few case where we
+> run a container directly bypassing docker.py.
+> 
+> Address this by replacing --engine with --command for docker.py.
+> 
+> This in turn requires the --container-engine configure arg to be
+> replaced with --container-command.
+> 
+> With these changes the container command is probed at most once
+> during configure and never again, while running in an unconfigured
+> tree will still probe on demand.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+> 
+> In v2:
+> 
+>  * Don't set container_command to "no" if 'probe' finds
+>    not viable binaries.
+> 
+>  configure                     | 25 +++++++------
+>  tests/docker/Makefile.include | 13 ++++---
+>  tests/docker/docker.py        | 67 ++++++++++++-----------------------
+>  3 files changed, 40 insertions(+), 65 deletions(-)
+> 
+> diff --git a/configure b/configure
+> index d8bc10060e..5a8e2fd278 100755
+> --- a/configure
+> +++ b/configure
+> @@ -172,7 +172,7 @@ fi
+>  # some defaults, based on the host environment
+>  
+>  # default parameters
+> -container_engine="auto"
+> +container_command=""
+>  cpu=""
+>  cross_compile="no"
+>  cross_prefix=""
+> @@ -734,7 +734,7 @@ for opt do
+>    ;;
+>    --disable-containers) use_containers="no"
+>    ;;
+> -  --container-engine=*) container_engine="$optarg"
+> +  --container-command=*) container_command="$optarg"
+>    ;;
+>    --rust-target-triple=*) rust_target_triple="$optarg"
+>    ;;
+> @@ -869,7 +869,7 @@ Advanced options (experts only):
+>    --enable-debug           enable common debug build options
+>    --cpu=CPU                Build for host CPU [$cpu]
+>    --disable-containers     don't use containers for cross-building
+> -  --container-engine=TYPE  which container engine to use [$container_engine]
+> +  --container-command=CMD  which container command to use [autodetect]
+>    --gdb=GDB-path           gdb to use for gdbstub tests [$gdb_bin]
+>    --wasm64-32bit-address-limit Restrict wasm64 address space to 32-bit (default
+>                                 is to use the whole 64-bit range).
+> @@ -1291,12 +1291,12 @@ fi
+>  ##########################################
+>  # functions to probe cross compilers
+>  
+> -runc="no"
+> -if test $use_containers = "yes" && (has "docker" || has "podman"); then
+> -    runc=$($python "$source_path"/tests/docker/docker.py --engine "$container_engine" probe)
+> -    if test "$runc" != "no"; then
+> -        docker_py="$python $source_path/tests/docker/docker.py --engine $container_engine"
+> -    fi
+> +if test "$container_command" = ""; then
+> +    container_command=$($python "$source_path"/tests/docker/docker.py probe)
+> +    test "$container_command" == "no" && container_command=""
+> +fi
+> +if test $use_containers = "yes" && test "$container_command" != ""; then
+> +    docker_py="$python $source_path/tests/docker/docker.py --command $container_command"
+>  fi
+>  
+>  # cross compilers defaults, can be overridden with --cross-cc-ARCH
+> @@ -1415,7 +1415,7 @@ probe_target_compiler() {
+>    esac
+>  
+>    for host in $container_hosts; do
+> -    test "$runc" != no || continue
+> +    test "$container_command" != "" || continue
+>      test "$host" = "$cpu" || continue
+>      case $target_arch in
+>        # debian-all-test-cross architectures
+> @@ -1736,9 +1736,8 @@ echo all: >> $config_host_mak
+>  echo "SRC_PATH=$source_path" >> $config_host_mak
+>  echo "TARGET_DIRS=$target_list" >> $config_host_mak
+>  echo "GDB=$gdb_bin" >> $config_host_mak
+> -if test "$runc" != no; then
+> -    echo "RUNC=$runc" >> $config_host_mak
+> -    echo "CONTAINER_ENGINE=$container_engine" >> $config_host_mak
+> +if test "$container_command" != ""; then
+> +    echo "CONTAINER_COMMAND=$container_command" >> $config_host_mak
+>  fi
+>  echo "SUBDIRS=$subdirs" >> $config_host_mak
+>  if test "$rust" != disabled; then
+> diff --git a/tests/docker/Makefile.include b/tests/docker/Makefile.include
+> index 4725c39807..0adddb6a5c 100644
+> --- a/tests/docker/Makefile.include
+> +++ b/tests/docker/Makefile.include
+> @@ -16,9 +16,8 @@ DOCKER_DEFAULT_REGISTRY := registry.gitlab.com/qemu-project/qemu
+>  endif
+>  DOCKER_REGISTRY := $(if $(REGISTRY),$(REGISTRY),$(DOCKER_DEFAULT_REGISTRY))
+>  
+> -CONTAINER_ENGINE = auto
+> -DOCKER_SCRIPT=$(SRC_PATH)/tests/docker/docker.py --engine $(CONTAINER_ENGINE)
+> -RUNC ?= $(shell $(DOCKER_SCRIPT) probe)
+> +CONTAINER_COMMAND ?= $(shell $(SRC_PATH)/tests/docker/docker.py probe)
+> +DOCKER_SCRIPT=$(SRC_PATH)/tests/docker/docker.py --command "$(CONTAINER_COMMAND)"
+>  
+>  CUR_TIME := $(shell date +%Y-%m-%d-%H.%M.%S.$$$$)
+>  DOCKER_SRC_COPY := $(BUILD_DIR)/docker-src.$(CUR_TIME)
+> @@ -41,7 +40,7 @@ docker-qemu-src: $(DOCKER_SRC_COPY)
+>  # General rule for building docker images.
+>  docker-image-%: $(DOCKER_FILES_DIR)/%.docker
+>  	  $(call quiet-command,			\
+> -		DOCKER_BUILDKIT=1 $(RUNC) build		\
+> +		DOCKER_BUILDKIT=1 $(CONTAINER_COMMAND) build \
+>  		$(if $(DOCKER_V),,--quiet)		\
+>  		$(if $(NOCACHE),--no-cache,		\
+>  			$(if $(DOCKER_REGISTRY),--cache-from $(DOCKER_REGISTRY)/qemu/$*)) \
+> @@ -152,7 +151,7 @@ $(foreach i,$(filter-out $(DOCKER_PARTIAL_IMAGES),$(DOCKER_IMAGES)), \
+>  )
+>  
+>  docker:
+> -	@echo 'Build QEMU and run tests inside $(RUNC) containers'
+> +	@echo 'Build QEMU and run tests inside $(CONTAINER_COMMAND) containers'
+>  	@echo
+>  	@echo 'Available targets:'
+>  	@echo
+> @@ -219,10 +218,10 @@ docker-run: docker-qemu-src
+>  			$(IMAGE) --executable $(EXECUTABLE),		\
+>  			"  COPYING $(EXECUTABLE) to $(IMAGE)"))
+>  	$(call quiet-command,						\
+> -		$(RUNC) run 						\
+> +		$(CONTAINER_COMMAND) run 				\
+>  			--rm						\
+>  			$(if $(NOUSER),,				\
+> -				$(if $(filter docker,$(RUNC)),		\
+> +				$(if $(filter docker,$(CONTAINER_COMMAND)), \
+>  					-u $(UID),			\
+>  					--userns keep-id		\
+>  				)					\
+> diff --git a/tests/docker/docker.py b/tests/docker/docker.py
+> index 9e18b984f4..d2f39b5645 100755
+> --- a/tests/docker/docker.py
+> +++ b/tests/docker/docker.py
+> @@ -35,27 +35,6 @@
+>  
+>  DEVNULL = open(os.devnull, 'wb')
+>  
+> -class EngineEnum(enum.IntEnum):
+> -    AUTO = 1
+> -    DOCKER = 2
+> -    PODMAN = 3
+> -
+> -    def __str__(self):
+> -        return self.name.lower()
+> -
+> -    def __repr__(self):
+> -        return str(self)
+> -
+> -    @staticmethod
+> -    def argparse(s):
+> -        try:
+> -            return EngineEnum[s.upper()]
+> -        except KeyError:
+> -            return s
+> -
+> -
+> -USE_ENGINE = EngineEnum.AUTO
+> -
+>  def _bytes_checksum(bytes):
+>      """Calculate a digest string unique to the text content"""
+>      return hashlib.sha1(bytes).hexdigest()
+> @@ -73,12 +52,11 @@ def _file_checksum(filename):
+>  
+>  def _guess_engine_command():
+>      """ Guess a working engine command or raise exception if not found"""
+> -    commands = []
+> -
+> -    if USE_ENGINE in [EngineEnum.AUTO, EngineEnum.PODMAN]:
+> -        commands += [["podman"], ["podman-remote"], ["podman", "--remote"]]
+> -    if USE_ENGINE in [EngineEnum.AUTO, EngineEnum.DOCKER]:
+> -        commands += [["docker"], ["sudo", "-n", "docker"]]
+> +    commands = [["podman"],
+> +                ["podman-remote"],
+> +                ["podman", "--remote"],
+> +                ["docker"],
+> +                ["sudo", "-n", "docker"]]
+>      for cmd in commands:
+>          try:
+>              # 'version' is not sufficient to prove a working binary
+> @@ -222,8 +200,11 @@ def _dockerfile_verify_flat(df):
+>  
+>  class Docker(object):
+>      """ Running Docker commands """
+> -    def __init__(self):
+> -        self._command = _guess_engine_command()
+> +    def __init__(self, commandstr=None):
+> +        if commandstr is None:
+> +            self._command = _guess_engine_command()
+> +        else:
+> +            self._command = commandstr.split(" ")
+>  
+>          if ("docker" in self._command and
+>              "TRAVIS" not in os.environ and
+> @@ -411,8 +392,8 @@ def args(self, parser):
+>                              help="Run container using the current user's uid")
+>  
+>      def run(self, args, argv):
+> -        return Docker().run(argv, args.keep, quiet=args.quiet,
+> -                            as_user=args.run_as_current_user)
+> +        return Docker(args.command).run(argv, args.keep, quiet=args.quiet,
+> +                                        as_user=args.run_as_current_user)
+>  
+>  
+>  class BuildCommand(SubCommand):
+> @@ -445,7 +426,7 @@ def run(self, args, argv):
+>          dockerfile = _read_dockerfile(args.dockerfile)
+>          tag = args.tag
+>  
+> -        dkr = Docker()
+> +        dkr = Docker(args.command)
+>          if "--no-cache" not in argv and \
+>             dkr.image_matches_dockerfile(tag, dockerfile):
+>              if not args.quiet:
+> @@ -512,7 +493,7 @@ def args(self, parser):
+>                              help="Docker registry")
+>  
+>      def run(self, args, argv):
+> -        dkr = Docker()
+> +        dkr = Docker(args.command)
+>          dkr.command(cmd="pull", quiet=args.quiet,
+>                      argv=["%s/%s" % (args.registry, args.tag)])
+>          dkr.command(cmd="tag", quiet=args.quiet,
+> @@ -590,7 +571,7 @@ def run(self, args, argv):
+>          tmp.seek(0)
+>  
+>          # Run the build with our tarball context
+> -        dkr = Docker()
+> +        dkr = Docker(args.command)
+>          dkr.update_image(args.tag, tmp, quiet=args.quiet)
+>  
+>          return 0
+> @@ -601,7 +582,7 @@ class CleanCommand(SubCommand):
+>      name = "clean"
+>  
+>      def run(self, args, argv):
+> -        Docker().clean()
+> +        Docker(args.command).clean()
+>          return 0
+>  
+>  
+> @@ -610,7 +591,7 @@ class ImagesCommand(SubCommand):
+>      name = "images"
+>  
+>      def run(self, args, argv):
+> -        return Docker().command("images", argv, args.quiet)
+> +        return Docker(args.command).command("images", argv, args.quiet)
+>  
+>  
+>  class ProbeCommand(SubCommand):
+> @@ -619,7 +600,7 @@ class ProbeCommand(SubCommand):
+>  
+>      def run(self, args, argv):
+>          try:
+> -            docker = Docker()
+> +            docker = Docker(args.command)
+>              print(" ".join(docker._command))
+>          except Exception:
+>              print("no")
+> @@ -651,18 +632,16 @@ def run(self, args, argv):
+>                  cmd += ["-v", "%s:%s:ro,z" % (p, p)]
+>          cmd += [args.image, args.cc]
+>          cmd += argv
+> -        return Docker().run(cmd, False, quiet=args.quiet,
+> -                            as_user=True)
+> +        return Docker(args.command).run(cmd, False, quiet=args.quiet,
+> +                                        as_user=True)
+>  
+>  
+>  def main():
+> -    global USE_ENGINE
+> -
+>      parser = argparse.ArgumentParser(description="A Docker helper",
+>                                       usage="%s <subcommand> ..." %
+>                                       os.path.basename(sys.argv[0]))
+> -    parser.add_argument("--engine", type=EngineEnum.argparse, choices=list(EngineEnum),
+> -                        help="specify which container engine to use")
+> +    parser.add_argument("--command",
+> +                        help="specify which container engine command to use")
+>      subparsers = parser.add_subparsers(title="subcommands", help=None)
+>      for cls in SubCommand.__subclasses__():
+>          cmd = cls()
+> @@ -671,8 +650,6 @@ def main():
+>          cmd.args(subp)
+>          subp.set_defaults(cmdobj=cmd)
+>      args, argv = parser.parse_known_args()
+> -    if args.engine:
+> -        USE_ENGINE = args.engine
+>      return args.cmdobj.run(args, argv)
+>  
+>  
 
-I think if we didn't need to check it for the existing find_first_bit()
-we aren't likely to need to check it here. If the caller has taken
-something that's not actually an array of uint32_t and passed it
-to this function then the code at the callsite probably looks suspicious
-enough to be caught in code review.
+I still observe the same error when running make-tcg without
+podman/docker installed.
+bash: line 1: no: command not found
 
--- PMM
+And I will suggest again to include in your series:
+https://lore.kernel.org/qemu-devel/20260710214343.2065491-27-pierrick.bouvier@oss.qualcomm.com/
+and detect if probe command worked or failed, and adapt behavior based
+on it. Existing behavior to compare to a string "no" is a very
+unfamiliar pattern for any command. `which` does not return no for instance.
+
+You can test next patch using podman (which it seems you have):
+```
+podman build \
+-f tests/docker/dockerfiles/debian-all-test-cross.docker -t all
+podman run -it --rm all -w $(pwd) -v $(pwd):$(pwd) all \
+bash -c "./configure && cd build && make all -j32 &&make check-tcg -j32"
+```
+
+Regards,
+Pierrick
 
