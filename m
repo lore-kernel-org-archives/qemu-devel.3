@@ -4,144 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01D90C44508
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 17:43:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 962EDC44508
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 18:39:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wk3dH-0005qZ-AS; Wed, 15 Jul 2026 13:42:56 -0400
+	id 1wk4VI-00042m-Hv; Wed, 15 Jul 2026 14:38:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wk3dF-0005qQ-H7
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 13:42:53 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wk4VG-00042Z-NW
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 14:38:42 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wk3dD-0003xX-EN
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 13:42:53 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ id 1wk4VE-0003F2-KN
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 14:38:42 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66FHBKNs170265
- for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 17:42:49 GMT
+ 66FHBACc342945
+ for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 18:38:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- DOIwRVIAKhJgEEFMEfWI4etGN/cxtCYNLrSlp/+gV7E=; b=Q8Yjnkoiz9+Ak8TM
- rV83BPQbybSRYugRSUF6jndWXAro4996QsAx6xh/10m9+IWouMHkN+avL4i6qjfE
- lNW8GQON3S1HQSQqUTIT2bwOpDcGMLB1Oz9RU2/oJFMzWHyAwdNiC4i3FDLvB3dp
- B1kqheEk2L+B/jYea97j0ggY1Qi/LU7/8rFp8HBqca/fCWEZ+Lh49SpZJWsRBcQa
- kqdF5OdgvgDNk4AW6NPgnIQZzJp69obsF1D7XI/m+PTnC50e3lJkKAg/aThmDXwf
- Qh85CbOoQFRHwXEmWLKY6UbP9JnzXnrMrpOD3rLvGLhLwXNcTOeZP1dUzE5RVUhp
- FdG4Jw==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fe7q621k4-1
+ 1oihpgowunOkzF3r9cocDxIy3BKc6smI40Uco8zUa6U=; b=Ad/HzUtOEChR+vhR
+ ZFNDHREQWmgpBb8PhecXOmJ7FlnTFwg6PX7fQkLPy2jaujMEAq0qicRVoyXwgfm0
+ sQW/vaewgeOUho0v8819cYldjPJr/tgpgFOQGWt1ZTAQIIR63nz89/qVNLWyoluV
+ XzpdG57RP3W4SQCIBqDJw3GDv3gx9+Oco78dgm+xK6L3WL2SRDWzyHOW5d0U2UmK
+ 23F0BJIDJC0pLBtky7Bg+wfagrsHgIhSpvQ5S3LLUhO3ZgyJHePeE0C3qMQeNeRN
+ U3PVzFl3cb5sL1dZK/tKcyVE3Bk4IZESCrun7lGN6aiXiNPCO2jUEW4hYx/WkZbc
+ N0qVVQ==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fe855a8un-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 17:42:49 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-38e04a53a7aso3572008a91.2
- for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 10:42:48 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 18:38:37 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2cce14a21faso45262475ad.0
+ for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 11:38:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784137368; x=1784742168; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1784140717; x=1784745517; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=DOIwRVIAKhJgEEFMEfWI4etGN/cxtCYNLrSlp/+gV7E=;
- b=K4Y9Nir2PpM0DMo6qJhi7u2G6se1VN62LHLpysevErQ3TqL0LKN9TTf+NNSEtF8+8y
- 52D+5ETXC/8qZy86nxYnoF56yWOBySoXH9NcPyAAooLYGxeSMoqIQ1KDLOM/nE8DKudm
- rbk4zcwAfONKT2PpgRNMscI5CLuZx2wpHiWk85cpqHxaHgr6xw2Alwv2lASmwoBT5Qme
- bRN02xk/nGssEyX72uvtt2iG8fWzUpibY9FOdrDqvvBsDW32cOLNmiMilKwuSHtE1Dto
- tmuz8ceYGw7HojiFtg/0tRR7QR1YdI0ovJ5CEKeleINDEPaAkIUZmVz2Rq1GyrS70MVA
- zQPg==
+ bh=1oihpgowunOkzF3r9cocDxIy3BKc6smI40Uco8zUa6U=;
+ b=Q1pLY46E3+wrszZf++d3v47FqNvc5qj4/BVVVfhV8r4fy5v6ytswQXV/MEU0r/ZNeZ
+ t6wxcYcscngKViEOaFk+6Jl6QnDofbP/khOj/ZJzpk0DEF3kX92bhNJMk1Z8zBFOCsQB
+ 4YkBmXu8se+K7zPQpvdZOOIHbCo5lkzxuKaeA4N3abnGAELPb9Gvu66I8g0U/111TvjO
+ vc+KPyWjVYUPm3XanhdFR5mh4rtZzkUiKIe+sHRmDEvWNjpGuMbMnF435gVJqBUribbL
+ 1WetmB4VpuLJ0b1f+100bOGkpQ59sxk/xE62PWo+G1ckMdcVq2kRiAn01gnTYTFNJT8d
+ kLKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784137368; x=1784742168;
+ d=1e100.net; s=20251104; t=1784140717; x=1784745517;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=DOIwRVIAKhJgEEFMEfWI4etGN/cxtCYNLrSlp/+gV7E=;
- b=eMqUxaSB1JlFHIgE6auY700Bl1Q0H/SPON33/HWRoi6lc0bZ8Fr12o+ggeFuWi21sE
- 4a3yTemNiNW9yXlX+PBMg9tWbHSARNQktAEEI3DJr2M3bifN1YLf9dcCJoNhP13vdhhb
- Jg9T08DlXJe7UVCEm/2umhReEpnZ+bQhrEzArwLOI9VSiq1FNMFcY7C8UsuPS+ExGm65
- xPqI5a6RGrXwL/YcpcyKlvI18fR9ZHjq4nQFF4X0U5pX6bw1D1le4zF0wiRnjgf1/6CO
- 5un167PajKDYYPUPDlLDf1eFdE5XvqHscY4Rqme5v3yTn8YRykU9sOzFbChmgpK2JnGz
- WzHA==
-X-Gm-Message-State: AOJu0YyQom5WS4WuJC8XP+TdN4yWxAtb+72d1C6W0AWaUxZj5ChQpqUu
- zjAUqw9CSuMWkK1mKckIx1izedgRhkA9gkBUhYyN96tvush8LchMizU21RF+ajMRe6BsMsCCUXG
- qVnjeU+O47K2QqqaB4Ga9Z7lydTjjYlBhB/mWqOd5suqktlhd2ULeLqWuBg==
-X-Gm-Gg: AfdE7ckeqHG4X3hxYZJWHeolrkjgZYgedJren+PjCYRUuCmXnJQ15wd8ZUIr9iCrH/y
- WpCnFcWbU5lxL9A6RQMxyapwX3YRT9tRSJB1+QE87A3YQ1mt2VAN+Dq5M+VwWghiCAohDESv/cD
- mvs32qKfjvoh2sPtlMl6CM6AqkHmuFNnA1aUPo2pWfd3CqpkNnSU5ramL2W3yKm2GaMX+BQncW9
- o+sS9jObq7aCf6PFUlnpPjfnYySHoHjIgABY+hP0TW6Vx6vJuszI9psNL6RugEjyfs5T5yDt09H
- go9un5xOyXb9Tie2bHVHn9kJuU86lNl4LIWznQSsybUzsWKJUe8lu+cWLKm92zYmckVN1hc4p4T
- dCF1RzQEhjVBdXyEvPqsw3/1UO6Br+Trgkhp2IrUB3oATSyHnvJDdT26jvPSu+ZpZY0jEX45XRE
- fhWuE=
-X-Received: by 2002:a17:90b:134f:b0:380:540:d499 with SMTP id
- 98e67ed59e1d1-38e29ff93d5mr3290673a91.6.1784137368064; 
- Wed, 15 Jul 2026 10:42:48 -0700 (PDT)
-X-Received: by 2002:a17:90b:134f:b0:380:540:d499 with SMTP id
- 98e67ed59e1d1-38e29ff93d5mr3290651a91.6.1784137367479; 
- Wed, 15 Jul 2026 10:42:47 -0700 (PDT)
+ bh=1oihpgowunOkzF3r9cocDxIy3BKc6smI40Uco8zUa6U=;
+ b=l5f6VPmTsu/etpJTVPyNdb8Xt/u+Hgisc5WkuLCnMVDZuMH8qsuA5U+H8g7JdyJVDn
+ 1WQFeNN1+YDpLrqAQ3oetwUIeP5AIWwSjaTMoohc5paBK/DsQlA9HBqBDMGlc91LY3ET
+ tzvan/8AqzBHL0zlC9Yn0CXpA34VAr0xCarVC5RyER8sRp9eWKd0VKkScUh3OV1XvzBB
+ RDrSH0ksl0fgkwdoiJcmLweDpEq/C2fVLXl7ZUODBiQj1SQHvsOy13Gv6nPchfBQkued
+ OJ2v+K8XEnSEvymIRVQWBi3ncxrAdsvYg37zYY9z9MHqagOvYrBotJfIfeWvGNLj3Epu
+ jenA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rp1Ghmhy03i0/jnTZDXDvIIpDCnAz2upC5UdSNitABk9e7VWuKAf8h90vmaCa9znyVXx+dgQkMRmuy8@nongnu.org
+X-Gm-Message-State: AOJu0YxSo0ZRvSmEg5Wt3wk9UksV2pogg6oPCxsnxHHXV78TOZeeUaoD
+ 8sqkcp7TMsW1XemzEwSa5L8Bs2WhnxGA8+p4Ukt7fVCCoKJHpTv3RiQqulLuuXtpXA8pr4qsuDN
+ DI+6z0myFzT5Tbqc0jvVPJSXEwyUS5qj5tnvnkJR8DFwwE/A3aMV1qyKhPw==
+X-Gm-Gg: AfdE7clBe8IgzZFq+g3HuWFyoRiE61VFd6hJXEIGya3PswZR4IuuZU8WiImBY5oMx+Q
+ RpPPmscdeOE/c2HVsXl9kJzV1nall0gjbtGFYSRYT6HWyitJXAO7FIb6pB1O1ANQcP7t0IMSdtt
+ GdGvP173vP5iZ1x9MVWpY9Amdozc3Uwlq5LB4RX6e6YZHW9mIHrj1f4ZlYjKP4VYzyNTR6l3ivT
+ g+4xxzOYdyTKeLpggQ2O2eTR/0nh12262rPAwuQdmZS+ByXKoN1VZXMgLORNNAumcyCZGh2osFZ
+ fzAjAD31QFfs7ifEUDICno28FtC9tfKmhzP+KSpjDQEDiWNfTh4Ubyva8o1igX4R0IVaBCb9Wto
+ AQUFP1Y/CLvZMmyUvj0gEEDFRhrbm5vngIu80+q6feyH81zemO13SIwVTc4Afu3x4waYWMflxCr
+ VnbIE=
+X-Received: by 2002:a17:902:da8e:b0:2cc:db7a:251 with SMTP id
+ d9443c01a7336-2cf177c78dfmr5610105ad.2.1784140716781; 
+ Wed, 15 Jul 2026 11:38:36 -0700 (PDT)
+X-Received: by 2002:a17:902:da8e:b0:2cc:db7a:251 with SMTP id
+ d9443c01a7336-2cf177c78dfmr5609715ad.2.1784140716173; 
+ Wed, 15 Jul 2026 11:38:36 -0700 (PDT)
 Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3140e3a0d69sm3452528eec.0.2026.07.15.10.42.46
+ a92af1059eb24-13cd4284a92sm2710384c88.4.2026.07.15.11.38.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Jul 2026 10:42:47 -0700 (PDT)
-Message-ID: <a7b40c16-fd9b-4d81-b767-19fd3523c533@oss.qualcomm.com>
-Date: Wed, 15 Jul 2026 10:42:45 -0700
+ Wed, 15 Jul 2026 11:38:35 -0700 (PDT)
+Message-ID: <943b7ca7-dcd3-4702-b6e3-5ddcb04000e8@oss.qualcomm.com>
+Date: Wed, 15 Jul 2026 11:38:34 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 95/98] tests: remove tcg tests machinery
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Brian Cain <brian.cain@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- =?UTF-8?Q?Daniel_P=2EBerrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
- Gustavo Romero <gustavo.romero@linaro.org>, Helge Deller <deller@gmx.de>
-References: <20260710214343.2065491-1-pierrick.bouvier@oss.qualcomm.com>
- <20260710214343.2065491-96-pierrick.bouvier@oss.qualcomm.com>
- <87pl0ognos.fsf@draig.linaro.org>
+Subject: Re: [PATCH 2/2] plugins/execlog: fix execlog vcpu_exit execution
+ print loss
+To: Harry van Haaren <harry.vanhaaren@openchip.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "alex.bennee@linaro.org" <alex.bennee@linaro.org>,
+ "erdnaxe@crans.org" <erdnaxe@crans.org>
+References: <20260616161242.267315-1-harry.vanhaaren@openchip.com>
+ <20260616161242.267315-2-harry.vanhaaren@openchip.com>
+ <e7edbf3f-55e1-42a4-8101-0a1c273c7587@oss.qualcomm.com>
+ <GV2P192MB3464B1F78D8F38D1574A8D9185F82@GV2P192MB3464.EURP192.PROD.OUTLOOK.COM>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <87pl0ognos.fsf@draig.linaro.org>
+In-Reply-To: <GV2P192MB3464B1F78D8F38D1574A8D9185F82@GV2P192MB3464.EURP192.PROD.OUTLOOK.COM>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE1MDE3NiBTYWx0ZWRfX360HzpUCQSM1
- GhvqL2/nOtc1CizcWFCnbTjrCFhtVi74nuWck8Ll9V7SO/TySoosfJfEbj1rJRbiP6Wtaew6Ih2
- J5/mVoD+bYGnGBK+gO/z1AVT5RFRt94=
-X-Proofpoint-ORIG-GUID: KVqNGGtxWVyrN53vVXyRFqnqVDaDI2cl
-X-Proofpoint-GUID: KVqNGGtxWVyrN53vVXyRFqnqVDaDI2cl
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE1MDE3NiBTYWx0ZWRfX9QSLyV1wkLnT
- qtFnxf50ZvR5YyWbhYRE2bn7kJNvTnhDwNuBtZPxnty0E2hoGegoczBDvLhK8VEFMN271KN56tE
- /YC6O3we3Fx1JoZ6VGfOgI92InG1nM3mxm+I04uUi8jVropOhGyYzC+oIBrvdP5uMi3QGwUz+sX
- p+WjkeflPtK8Lk6uulgT26dYVwyyQEsxwcU7/1B90LP5x+sDMNb46DdZIC2xNdCtSBzEkDwBMu4
- 7eK52V0RM/6KgQfMh3H3HE8tBEUsHNJOMcBZgDJJ2+zcrfDpnzoRKOmBDOQBh/xCnJwUvAG2G7L
- o/5iri97FqCkwCYdsSl5O0Ge8A3JTuPZdTfV3ucHmWgIBeeAhKgiMtIlU5q+jBhSPxa6yl4wXEx
- pDC9+ziJKOo0gsCaAxS4K6Rw0M3/6+09WlaJj2zLtU9k4pGPfctrevlidiamsRYQxjHScJlUUk2
- S1i9pcgd5Mb4tUPZ+Jg==
-X-Authority-Analysis: v=2.4 cv=BajoFLt2 c=1 sm=1 tr=0 ts=6a57c699 cx=c_pps
- a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-GUID: OGkhRlcKwfpSf6EE2zrf9YdvPPIqVGp-
+X-Authority-Analysis: v=2.4 cv=KOlqylFo c=1 sm=1 tr=0 ts=6a57d3ad cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=r1IlNvYoa7QnD5ULU6UA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=uKXjsCUrEbL0IQVhDsJ9:22 a=cvBusfyB2V15izCimMoJ:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=EUspDBNiAAAA:8 a=OZcmDFxvAAAA:8 a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8
+ a=dGsWvjqBAAAA:8 a=J1OKBGARc6P9ThM_kiQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=1OuFwYUASf3TG4hYMiVC:22 a=liPxxeoTYnb3ClP5OJlV:22 a=Fg1AiH1G6rFz08G2ETeA:22
+ a=cvBusfyB2V15izCimMoJ:22 a=EwAE0RQWx3bH85eTCWcH:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE1MDE4NSBTYWx0ZWRfX2xvjeBVmMqaV
+ UiX4FDvNrolhscgr4IVpSY5/l0GdIRDgawMcaRQPa11zNf0cj/jRm5lJaFcmbuDmQt7T3kMr/Xj
+ 4ahEmu9n6XBP5KC9+dBJToVSfNkIkrfBPfwu7165wqQmwLD++j0IPZ/F9X9EzYXECKUfMh1TSx1
+ K854WiG03CiB28lrYG/HYCmenfs907sosg4Hp4wBtqIrWkP+n/T77GyYalf1vpOfFcrqdNR5siI
+ UGRKbO3EZ8PDSHvWDCASF4e/dkvjxmV1FbiptUEespdRZnVtYuK4ImdTso4ErHBYqmw0g3xyM8Z
+ Dq7RgGpS03STV7KKyKRSmqlcSa7E+/r2MBNd6rlmXLV1M/5XFTUg9II8IOltIerBUkyqHuKoDaU
+ k++DGomYJkaqymMNbWZEjIE3sK8EmM0jpXwkOHRp1+EMWH3sIbDLzQ98g+iGzCnZH7rNg6jelH3
+ 2eg6O68dV1gYNSJOduA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE1MDE4NSBTYWx0ZWRfX9iHzSmCZwV7n
+ 480e7mSDVTfCfVwSIqE8+S7iqZ/PHxqABWVqM+XXkiWLWwW7BC356ayre4VHvZIq0zc2l4n+CX5
+ hAYKew6qwu1ll7fuqXCq1qYrcRRweqM=
+X-Proofpoint-ORIG-GUID: OGkhRlcKwfpSf6EE2zrf9YdvPPIqVGp-
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-15_04,2026-07-15_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 malwarescore=0 clxscore=1015 bulkscore=0
- impostorscore=0 adultscore=0 spamscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ phishscore=0 bulkscore=0 impostorscore=0 malwarescore=0 spamscore=0
+ clxscore=1015 priorityscore=1501 adultscore=0 lowpriorityscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607150176
-Received-SPF: pass client-ip=205.220.180.131;
+ definitions=main-2607150185
+Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -164,128 +164,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/15/2026 10:36 AM, Alex Bennée wrote:
-> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+On 7/15/2026 10:05 AM, Harry van Haaren wrote:
+>> From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>> Sent: Tuesday 16 June 2026 7:40 pm
+>> To: Harry van Haaren | OPENCHIP <harry.vanhaaren@openchip.com>; qemu-devel@nongnu.org <qemu-devel@nongnu.org>
+>> Cc: alex.bennee@linaro.org <alex.bennee@linaro.org>; erdnaxe@crans.org <erdnaxe@crans.org>
+>> Subject: Re: [PATCH 2/2] plugins/execlog: fix execlog vcpu_exit execution print loss
+>>  
+>> On 6/16/2026 9:13 AM, Harry van Haaren | OPENCHIP wrote:
+>>> From: Harry van Haaren <harry.vanhaaren@openchip.com>
+>>>
+>>> Executed instructions are cached in string format inside the
+>>> execlog plugin. These strings are flushed on exit of a TB, improving
+>>> performance. This causes executed instructions to be lost when an
+>>> 'ecall' (riscv system call) occurs that causes the thread to terminate.
+>>>
+>>> The fix in this patch registers an 'on_exit()' callback, and flushes
+>>> any content in the c->last_exec buffer, to ensure all instructions are
+>>> present in the final instruction log.
+>>>
+>>> A mutex lock/unlock is added around the plugin exit, to ensure the
+>>> lines are not corrupted.
+>>>
+>>> Signed-off-by: Harry van Haaren <harry.vanhaaren@openchip.com>
 > 
->> It's now built-in meson, which offers targets check-tcg and check-tcg-*.
->>
->> Tested-by: Alex Bennée <alex.bennee@linaro.org>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->> ---
->>  tests/Makefile.include | 68 ++----------------------------------------
->>  1 file changed, 2 insertions(+), 66 deletions(-)
->>
->> diff --git a/tests/Makefile.include b/tests/Makefile.include
->> index 494d0109f26..9f82552ab54 100644
->> --- a/tests/Makefile.include
->> +++ b/tests/Makefile.include
->> @@ -19,9 +19,7 @@ check-help:
->>  ifneq ($(filter $(all-check-targets), check-softfloat),)
->>  	@echo " $(MAKE) check-softfloat               Run FPU emulation tests"
->>  	@echo " $(MAKE) check-tcg                     Run TCG tests"
->> -	@echo " $(MAKE) run-tcg-tests-TARGET          Run TCG tests for a given target"
->> -	@echo
->> -	@echo "The variable TCG_TEST_FILTER will select the subset of matching tests."
->> +	@echo " $(MAKE) check-tcg-TARGET              Run TCG tests for a given target"
->>  endif
->>  	@echo
->>  	@echo " $(MAKE) check-report.junit.xml        Generates an aggregated XML test report"
->> @@ -40,67 +38,6 @@ export SRC_PATH
->>  
->>  SPEED = quick
->>  
->> -
->> -# TCG_TESTS_WITH_COMPILERS represents the test targets we have cross compiler
->> -# support for, CONFIGURED_TCG_TARGETS it what meson has finally
->> -# configured having rejected stuff we can't build.
->> -CONFIGURED_TCG_TARGETS=$(patsubst %-config-target.h, %, $(wildcard *-config-target.h))
->> -
->> -# This is the intersection of what tests we can build and is configured
->> -TCG_TESTS_TARGETS=$(filter $(CONFIGURED_TCG_TARGETS), $(TCG_TESTS_WITH_COMPILERS))
->> -
->> -# Per guest TCG tests
->> -BUILD_TCG_TARGET_RULES=$(patsubst %,build-tcg-tests-%, $(TCG_TESTS_TARGETS))
->> -CLEAN_TCG_TARGET_RULES=$(patsubst %,clean-tcg-tests-%, $(TCG_TESTS_TARGETS))
->> -DISTCLEAN_TCG_TARGET_RULES=$(patsubst %,distclean-tcg-tests-%, $(TCG_TESTS_TARGETS))
->> -RUN_TCG_TARGET_RULES=$(patsubst %,run-tcg-tests-%, $(TCG_TESTS_TARGETS))
->> -
->> -$(foreach TARGET,$(TCG_TESTS_TARGETS), \
->> -        $(eval $(BUILD_DIR)/tests/tcg/config-$(TARGET).mak: config-host.mak))
->> -
->> -# $1 = the stem (e.g., arm-softmmu or x86_64-linux-user)
->> -get-qemu-bin = $(if $(findstring softmmu,$1),qemu-system-$(subst -softmmu,,$1),qemu-$(subst -linux-user,,$1))
->> -
->> -$(foreach TARGET,$(TCG_TESTS_TARGETS), \
->> -        $(eval .ninja-goals.run-tcg-tests-$(TARGET) += $(call get-qemu-bin,$(TARGET))))
->> -
->> -.PHONY: $(TCG_TESTS_TARGETS:%=build-tcg-tests-%)
->> -$(TCG_TESTS_TARGETS:%=build-tcg-tests-%): build-tcg-tests-%: $(BUILD_DIR)/tests/tcg/config-%.mak
->> -	$(call quiet-command, \
->> -            $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS), \
->> -        "BUILD","$* guest-tests")
->> -
->> -.PHONY: $(TCG_TESTS_TARGETS:%=run-tcg-tests-%)
->> -$(TCG_TESTS_TARGETS:%=run-tcg-tests-%): run-tcg-tests-%: build-tcg-tests-%
->> -	$(call quiet-command, \
->> -           $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS) SPEED=$(SPEED) TCG_TEST_FILTER=$(TCG_TEST_FILTER) run, \
->> -        "RUN", "$* guest-tests")
->> -
->> -.PHONY: $(TCG_TESTS_TARGETS:%=clean-tcg-tests-%)
->> -$(TCG_TESTS_TARGETS:%=clean-tcg-tests-%): clean-tcg-tests-%:
->> -	$(call quiet-command, \
->> -           $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS) clean, \
->> -        "CLEAN", "$* guest-tests")
->> -
->> -.PHONY: $(TCG_TESTS_TARGETS:%=distclean-tcg-tests-%)
->> -$(TCG_TESTS_TARGETS:%=distclean-tcg-tests-%): distclean-tcg-tests-%:
->> -	$(call quiet-command, \
->> -           $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS) distclean, \
->> -        "CLEAN", "$* guest-tests")
->> -
->> -.PHONY: build-tcg
->> -build-tcg: $(BUILD_TCG_TARGET_RULES)
->> -
->> -.PHONY: check-tcg
->> -.ninja-goals.check-tcg = all test-plugins
->> -check-tcg: $(RUN_TCG_TARGET_RULES)
->> -
->> -.PHONY: clean-tcg
->> -clean-tcg: $(CLEAN_TCG_TARGET_RULES)
+> <snip>
 > 
-> We still need a clean-tcg or similar rule to force a rebuild of the
-> tests without killing the whole build dir.
+>>> +/**
+>>> + * On plugin exit, flush any remaining cached instructions and free state.
+>>>    */
+>>>   static void plugin_exit(qemu_plugin_id_t id, void *p)
+>>>   {
+>>> @@ -396,8 +417,10 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
+>>>       for (int i = 0; i < n; i++) {
+>>>           CPU *c = qemu_plugin_scoreboard_find(cpus, i);
+>>>           if (c->last_exec && c->last_exec->len) {
+>>> +            g_mutex_lock(&execlog_output_mutex);
+>>>               qemu_plugin_outs(c->last_exec->str);
+>>>               qemu_plugin_outs("\n");
+>>> +            g_mutex_unlock(&execlog_output_mutex);
+>>>           }
+>>>       }
+>>>       qemu_plugin_scoreboard_free(cpus);
+>>> @@ -467,6 +490,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>>>
+>>>       /* Register init, translation block and exit callbacks */
+>>>       qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
+>>> +    qemu_plugin_register_vcpu_exit_cb(id, vcpu_exit);
+>>>       qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>>>       qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+>>>
+>>
+>> Why not simply make this flush in atexit callback?
+> 
+> I think on guest-thread join, the pthread stops, and qemu calls vcpu exit callback.
+> At that point in time, its nice to flush the "ecall" (to printf or disk or whatever the output is) so the user sees it immidiately.
+> 
+> The risk of not flushing here, is we wait until:
+> A) the plugin (not thread) exits, which could cause other threads to interleave/finish first (confusing, interleaved and delayed output)
+
+Taking a look here, I can see that we have two different mechanic for
+atexit: one for system (relies on libc atexit), and one for user, which
+indeed can race between threads.
+
+It should be refactored, I'll take a look to remove the need to use any
+lock in atexit handlers for plugins.
+
+> or
+> B) a new thread is spawned by the guest, and the vcpu is re-used. This will correctly flush the previous-thread final instruction, but after an application-dependent delay.
 >
 
-It was needed before, since we only had partial dependencies.
-But now considering that all dependencies are correctly tracked, what's
-the use case?
-- If a test is mtime modified, it rebuilds the test.
-- If a dockerfile is mtime modified, associated tests are rebuilt.
-- If docker.py is modified, it will rebuild tests transitively.
-- If cflags are modified, test will be rebuilt also.
-- All input of a test (.h, .c, ...) are all tracked.
-- If user installs a cross compiler or remove podman/docker, next meson
-configuration will identify this and rebuild all associated tests.
+That's a good concern, and fixing it with vcpu_exit seems like a good
+idea given this argument.
 
-In case you find a missing dep, we just need to add it in meson. clean
-is not needed anymore.
-
->> -
->> -.PHONY: distclean-tcg
->> -distclean-tcg: $(DISTCLEAN_TCG_TARGET_RULES)
->> -
->>  # Build up our target list from the filtered list of ninja targets
->>  TARGETS=$(patsubst libqemu-%.a, %, $(filter libqemu-%.a, $(ninja-targets)))
->>  
->> @@ -128,7 +65,6 @@ check-build: run-ninja
->>  check-clean:
->>  	rm -rf $(BUILD_DIR)/tests/functional
->>  
->> -clean: check-clean clean-tcg
->> -distclean: distclean-tcg
->> +clean: check-clean
->>  
->>  endif
+> Given that thread-exit is already heavy-weight and rare, I think the best for the user that the final instruction flushes immediately when a thread is finished.
+> Unless I get strong feedback for a different approach, I'll respin the patchset and send (with git-publish, with footer removed, and "| Openchip" fixed... hopefully!)
 > 
+> Regards, -Harry
 
+Yes, you can keep the current approach.
+
+Thanks,
+Pierrick
 
