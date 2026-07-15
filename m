@@ -4,74 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5928CC44508
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C54AC4450F
 	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 20:22:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wk66o-00066v-BU; Wed, 15 Jul 2026 16:21:34 -0400
+	id 1wk66v-000684-05; Wed, 15 Jul 2026 16:21:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wk66m-00066i-Cf
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 16:21:32 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wk66j-0002RQ-Nl
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 16:21:32 -0400
-Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 41CB58087F;
- Wed, 15 Jul 2026 23:21:25 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:d6a::1:11] (unknown
- [2a02:6bf:8080:d6a::1:11])
- by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id NLXXEq0a9eA0-zYta51z1; Wed, 15 Jul 2026 23:21:24 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1784146884;
- bh=jbwA8VUJFzH/lmZsNRpsV5ympZkzgkLkNCb0igDgsAA=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=tY0OXNrMnSf2li/4YGCMKcyBtUe2rxLBCwrXSZU0CwhkKHPiwZDkklyqs5158HPjw
- ijrmoJK3Pnln+pNPTrwVz4IcLG8pTh/ifePZvCBK9mc1hzrVsYIPAkO13xi7O1iGOL
- eAO25H7waa8JhRUgIUb5moq8tga1U+l+o1fL6vDc=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <142f9286-bbc7-4aed-8822-5d560a09daf9@yandex-team.ru>
-Date: Wed, 15 Jul 2026 23:21:23 +0300
+ (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
+ id 1wk66t-00067Y-0w
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 16:21:39 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
+ id 1wk66r-0002WK-BS
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 16:21:38 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-383b4a3755fso2429187a91.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 13:21:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1784146895; x=1784751695; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=fBNMuYev9SK9XP/q4UAGz8mTO3r2lm4owsLqkSYGd/A=;
+ b=BWOeShxokWOc5zOiD0n2rHHi3jsEFtDNfjCpUq4tE1z3wGwXG56xEHqU5muBg6WQuB
+ SiUKf7jwX5HbvAHYNgrb3hL72HrE1EbSQNLL8fuPO087Xo7irEb4BMLe7T4m7DMgPQ7e
+ Gj+cFwGK4I0IpQl4xWxp6OI8GuS2qxB18glm2k3MhVuQMsEyQqRjKVwADYttkGTzxHDx
+ y69E7I3KNL89QqqnBJ33U7yNLanQe58N8JOTXy4gwKdue3ZcUHiNVapd+ui7mDXBbz9x
+ fBoxyenUNq2avqPC3wD1BnlIjITPO6tFW9AlIPF7Th4Qg4cg66/WxrDoPtjus20xuf0p
+ lPhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784146895; x=1784751695;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=fBNMuYev9SK9XP/q4UAGz8mTO3r2lm4owsLqkSYGd/A=;
+ b=eOPp+dFZXXx/g9r2eNFzWQTVD/OAe1RLdJLqLEC3QjyrcHdDfOWgPzxBSbwKqg8UEH
+ r17tW+yG1jMA0n5aDFWe+1ngXX/irOEnfD5Qwgn2qs1WCpiejQEuHye77b9NNVCb0EUH
+ OPH1elEa+9fvO03hBvDUu5+cGZMNHPrr4Wwm/Ly3u92DTVASmesDByZqyTYBAinkN6k1
+ fcTXQultcdXaBs2egb4dnQmbLxzLY3wTiCq36diDVjeWk142a2ok4G/x+7lbEX/klLji
+ fVxJHDqp8CrmUgECULuTpgLouQiqYqFOy5rCe+k5SuqA5z+x9KQZ4dupL2Srm36IMYRf
+ VgrQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqWU9JeZMHyA8sS2KAMhm6u4MLLKHrQ3KU6XL3jXk8EE+ESIt0XaMkIQVknuHMOv3OBeYkTYYGHteV4@nongnu.org
+X-Gm-Message-State: AOJu0YxTHGqfgE+B8VL5JgSwoErJCjJOmW00Djn0wtDSRryEcmqi7ZWa
+ gzfo7LLoVCQJgozR+yUwHYnoxK9jGEnE41+Lyd3LnrbtcbLJrzLcn2nYf01eirTu+Ss=
+X-Gm-Gg: AfdE7ckJK5Z5qetMnTHrwQpu/Rrv31cQuzZ9xCZCENy5TASQteaiw+9gV23F/LzeGIp
+ dAsShrVnbTr2Lxf1rlhmTrUJAwFCNT2tjqTKaMC9YNZkzXHwi5hxCykLScD50YHsb5swR55jCdS
+ WSDvGbWeSjhxHZ6moi8VYz0jchxxaQd8bGRO3ojogXe5CapQZ9wZWQQUy5upsBAF6lZHq4RVxCU
+ l8pALATnrOnTJ27EoKB+iaSQUaa7133zu4boKFNDQaXQw0iSXs+j2yYHmG3K1x5HMFXfg9yUmK+
+ sOhbqKnZbrvJpVgCmZGrk7jPsosUZrZH9Cl57gUWKU2PCbqBxK2Sc7DTkgpny9sduvH73vb1x5A
+ /GmpFOKseEH2Pl66yszmGCMifCVlPUZB0WJa6IUYPasauW9lPEbJ8nd3bBbIi5ZRCKgeqWhcvsJ
+ RUA/FHeNWBWUCuxblQ
+X-Received: by 2002:a17:90b:38c8:b0:38d:dbc7:5178 with SMTP id
+ 98e67ed59e1d1-38ddbc75254mr15794311a91.22.1784146895116; 
+ Wed, 15 Jul 2026 13:21:35 -0700 (PDT)
+Received: from p14s ([2604:3d09:148c:c800:4f38:9a5e:fd18:7a9b])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-38e39e74279sm134375a91.17.2026.07.15.13.21.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 15 Jul 2026 13:21:34 -0700 (PDT)
+Date: Wed, 15 Jul 2026 14:21:31 -0600
+From: Mathieu Poirier <mathieu.poirier@linaro.org>
+To: Gavin Shan <gshan@redhat.com>
+Cc: berrange@redhat.com, kchamart@redhat.com,
+ pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
+ mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
+ eblake@redhat.com, armbru@redhat.com, jpb@kernel.org,
+ lorenzo.pieralisi@linaro.org, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvm@vger.kernel.org
+Subject: Re: [RFC v1 04/25] target/arm/kvm-rme: Add mechanic to initialize
+ realms
+Message-ID: <alfry2MJwRFz2hPS@p14s>
+References: <20260707224306.1202330-1-mathieu.poirier@linaro.org>
+ <20260707224306.1202330-5-mathieu.poirier@linaro.org>
+ <4ffc3787-a53e-4889-b245-458de4463cb9@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v19 00/15] virtio-net: live-TAP local migration
-To: Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>,
- jasowang@redhat.com, armbru@redhat.com, farosas@suse.de,
- raphael.s.norwitz@gmail.com, bchaney@akamai.com, qemu-devel@nongnu.org,
- pbonzini@redhat.com, yc-core@yandex-team.ru, mark.caveayland@nutanix.com
-References: <20260714154246.1242856-1-vsementsov@yandex-team.ru>
- <fa53bef0-4fbd-445a-9395-379bbfcb3773@tls.msk.ru>
- <20260715114802-mutt-send-email-mst@kernel.org> <ales0BaHaS0ZgA2d@redhat.com>
- <aleut_YyeS_YeYus@x1.local>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <aleut_YyeS_YeYus@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4ffc3787-a53e-4889-b245-458de4463cb9@redhat.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=mathieu.poirier@linaro.org; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -83,60 +110,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15.07.26 19:00, Peter Xu wrote:
-> On Wed, Jul 15, 2026 at 04:52:48PM +0100, Daniel P. Berrangé wrote:
->> On Wed, Jul 15, 2026 at 11:48:40AM -0400, Michael S. Tsirkin wrote:
->>> On Wed, Jul 15, 2026 at 06:01:39PM +0300, Michael Tokarev wrote:
->>>> On 14.07.2026 18:42, Vladimir Sementsov-Ogievskiy wrote:
->>>>> Hi all!
->>>>>
->>>>> Here is a migration for TAP net backend, including its properties and
->>>>> open fds.
->>>>>
->>>>> With this new feature, management software doesn't need to initialize
->>>>> new TAP and do a switch to it. Nothing should be done around
->>>>> virtio-net in local migration: it just migrates and continues to use
->>>>> same TAP device. So we avoid extra logic in management software, extra
->>>>> allocations in kernel (for new TAP), and corresponding extra delay in
->>>>> migration downtime.
->>>>
->>>> This is quite a big patch set, - is this really worth the effort to do
->>>> all this just for *local* migration?  What's the possible use case for
->>>> this in real, - am I right this is just about upgrading the host qemu?
->>>> And with that in mind, isn't it sufficient to use what we already have
->>>> (namely, create new tap, start new qemu instance, and migrate the usual
->>>> way), and tolerate some very minor downtime while the networking code
->>>> learns the new network topology (isn't it happening almost instantly
->>>> anyway, and if not, the management can help by sending gratitious ARP)?
->>>>
->>>> I wonder what's the use for this at yandex?
->>>>
->>>> Thanks,
->>>>
->>>> /mjt
->>>
->>> Well just theoretically, imagine a big VM, reserving twice the amount
->>> of memory just to migrate is not nice at all.
->>
->> Don't we already have the ability to skip memory transfer by setting
->> the "x-ignore-shared" capability, assuming the VM RAM has a shared
->> memory backing.
+On Mon, Jul 13, 2026 at 03:34:20PM +1000, Gavin Shan wrote:
+> On 7/8/26 8:42 AM, Mathieu Poirier wrote:
+> > From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> > 
+> > Initialise an @rme_guest object and install a handler to get notified
+> > when the Realm is ready to start.  That way we can finish reading the
+> > Realm once we know everything is in place.
+> > 
+> > Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> > Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+> > ---
+> >   target/arm/kvm-rme.c  | 50 +++++++++++++++++++++++++++++++++++++++++++
+> >   target/arm/kvm-stub.c |  5 +++++
+> >   target/arm/kvm.c      |  7 +++++-
+> >   target/arm/kvm_arm.h  |  9 ++++++++
+> >   4 files changed, 70 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
+> > index 42e1d1e7b859..b86b9d6a25cb 100644
+> > --- a/target/arm/kvm-rme.c
+> > +++ b/target/arm/kvm-rme.c
+> > @@ -13,6 +13,7 @@
+> >   #include "kvm_arm.h"
+> >   #include "migration/blocker.h"
+> >   #include "qapi/error.h"
+> > +#include "qemu/error-report.h"
+> >   #include "qom/object_interfaces.h"
+> >   #include "system/confidential-guest-support.h"
+> >   #include "system/kvm.h"
+> > @@ -29,14 +30,63 @@ OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RmeGuest, rme_guest, RME_GUEST,
+> >                                             CONFIDENTIAL_GUEST_SUPPORT,
+> >                                             { TYPE_USER_CREATABLE }, { })
+> > +static RmeGuest *rme_guest;
+> > +
+> > +static void rme_vm_state_change(void *opaque, bool running, RunState state)
+> > +{
+> > +    if (!running) {
+> > +        return;
+> > +    }
+> > +
+> > +    kvm_mark_guest_state_protected();
 > 
-> Right, IIUC all similar single-host migrations like this series or CPR (or
-> anything else...) should always need to enable x-ignore-shared in the first
-> place.  That's almost always the starting point of optimizing local
-> migrations.. no matter how the memory will be shared (by the same pool of
-> page cache, or persisted over kexec, etc.).
+> This would be called in kvm_arm_rme_init(), why we can't call this to mark the
+> KVM state as protected in kvm_arm_rme_init() ?
+>
+
+One of the very last things happening in qemu_init() is a call to
+qmp_x_exit_preconfig(), which ultimately ends up calling qemu_system_reset().
+If we mark the guest state as protected before qemu_system_reset() is called, as
+it would be the case if we move kvm_mark_guest_state_protected() to
+kvm_arm_rme_init(), general purposes and the program counter registers don't get
+pushed down to KVM, resulting in a failure to start the Realm.
+ 
+> > +}
+> > +
+> >   static void rme_guest_class_init(ObjectClass *oc, const void *data)
+> >   {
+> >   }
+> >   static void rme_guest_init(Object *obj)
+> >   {
+> > +    if (rme_guest) {
+> > +        error_report("a single instance of RmeGuest is supported");
+> > +        exit(1);
+> > +    }
+> > +    rme_guest = RME_GUEST(obj);
+> >   }
+> >   static void rme_guest_finalize(Object *obj)
+> >   {
+> >   }
+> > +
+> > +int kvm_arm_rme_init(MachineState *ms, KVMState *s)
+> > +{
+> > +    static Error *rme_mig_blocker;
+> > +    ConfidentialGuestSupport *cgs = ms->cgs;
+> > +
+> > +    if (!rme_guest) {
+> > +        return 0;
+> > +    }
+> > +
+> > +    if (!cgs) {
+> > +        error_report("missing -machine confidential-guest-support parameter");
+> > +        return -EINVAL;
+> > +    }
+> > +
+> > +    if (!kvm_vm_check_extension(s, KVM_CAP_ARM_RMI)) {
+> > +        error_report("KVM doesn't support Realms");
+> > +        return -ENODEV;
+> > +    }
+> > +
+> > +    error_setg(&rme_mig_blocker, "RME: migration is not implemented");
+> > +    migrate_add_blocker(&rme_mig_blocker, &error_fatal);
+> > +
+> > +    /*
+> > +     * The realm activation is done last, when the VM starts, after all images
+> > +     * have been loaded and all vcpus finalized.
+> > +     */
+> > +    qemu_add_vm_change_state_handler(rme_vm_state_change, NULL);
+> > +
+> > +    cgs->require_guest_memfd = true;
+> > +    cgs->ready = true;
+> > +    return 0;
+> > +}
+> > diff --git a/target/arm/kvm-stub.c b/target/arm/kvm-stub.c
+> > index 88cbe8d85c41..eec1ca3dd2e5 100644
+> > --- a/target/arm/kvm-stub.c
+> > +++ b/target/arm/kvm-stub.c
+> > @@ -119,3 +119,8 @@ char *kvm_print_register_name(uint64_t regidx)
+> >   {
+> >       g_assert_not_reached();
+> >   }
+> > +
+> > +int kvm_arm_rme_init(MachineState *ms, KVMState *s)
+> > +{
+> > +    g_assert_not_reached();
+> > +}
+> > diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> > index ed99be7fd80c..28d5643d6779 100644
+> > --- a/target/arm/kvm.c
+> > +++ b/target/arm/kvm.c
+> > @@ -660,7 +660,12 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+> >       hw_breakpoints = g_array_sized_new(true, true,
+> >                                          sizeof(HWBreakpoint), max_hw_bps);
+> > -    return 0;
+> > +    ret = kvm_arm_rme_init(ms, s);
+> > +    if (ret) {
+> > +        error_report("Failed to enable RME: %s", strerror(-ret));
+> > +    }
+> > +
+> > +    return ret;
+> >   }
+> >   unsigned long kvm_arch_vcpu_id(CPUState *cpu)
+> > diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+> > index e7c40fb003e4..6d058b0e08a2 100644
+> > --- a/target/arm/kvm_arm.h
+> > +++ b/target/arm/kvm_arm.h
+> > @@ -240,4 +240,13 @@ void arm_gic_cap_kvm_probe(GICCapability *v2, GICCapability *v3);
+> >    */
+> >   char *kvm_print_register_name(uint64_t regidx);
+> > +/**
+> > + * kvm_arm_rme_init
+> > + * @ms: the machine state
+> > + * @s: State of KVM
+> > + *
+> > + * Prepare the machine to be a Realm, if the user enabled it.
+> > + */
+> > +int kvm_arm_rme_init(MachineState *ms, KVMState *s);
+> > +
+> >   #endif
 > 
-
-Yes, sharing RAM between source and target + enabling x-ignore-shared is a first thing to do.
-
-This series optimizes TAP recreating. Not only skip recreating but also allow to
-exclude cloud-networking component form live-update entirely, making the process
-simpler (less components involved), and as I already said, reducing corresponding
-downtime.
-
--- 
-Best regards,
-Vladimir
+> Thanks,
+> Gavin
+> 
 
