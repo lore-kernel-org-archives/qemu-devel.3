@@ -4,71 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A842FC44501
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 10:42:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18F76C44501
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 10:48:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjx4R-00077r-II; Wed, 15 Jul 2026 06:42:31 -0400
+	id 1wjxA0-0007ra-H4; Wed, 15 Jul 2026 06:48:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wjx4Q-00077h-Pe
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 06:42:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wjx9x-0007r9-Ri
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 06:48:13 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wjx4N-0002ij-Gr
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 06:42:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784112145;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=35bH9050OOq18+jrob98HeXkfN/KnWCh1wzOiXHChf0=;
- b=drws02y/Mka2lpbru+gdWxi8smqYonXq81N6QjOQTMw9WRYzGRqAmsqPY41mbVNaZhrFnb
- n6sBR4OIGB6zyyDlfVOhszIWpSFovI2JJwkL4YRjvB7aWCnGBRAlLnzo/lH6eLn6jVru3f
- ll6mwm3DA6vh8VGTAkVFRJLZQnmEG20=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-661-5uG9sZqrN2mCvJZJWdQXWg-1; Wed,
- 15 Jul 2026 06:42:23 -0400
-X-MC-Unique: 5uG9sZqrN2mCvJZJWdQXWg-1
-X-Mimecast-MFC-AGG-ID: 5uG9sZqrN2mCvJZJWdQXWg_1784112142
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AA895180044F; Wed, 15 Jul 2026 10:42:22 +0000 (UTC)
-Received: from berrange.com (unknown [10.44.33.163])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D507C195419A; Wed, 15 Jul 2026 10:42:20 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2] tests/docker: ensure container command is probed at most
- once
-Date: Wed, 15 Jul 2026 11:42:18 +0100
-Message-ID: <20260715104218.1110301-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wjx9v-0003iE-3K
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 06:48:13 -0400
+Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
+ by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 7949D8082C;
+ Wed, 15 Jul 2026 13:48:06 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:c75::1:c] (unknown [2a02:6bf:8080:c75::1:c])
+ by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id 5mNadh0a3Os0-i2c35wBA; Wed, 15 Jul 2026 13:48:06 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1784112486;
+ bh=diMEYeAFp+5QntB96QBW/FrgFsXrewECtymFuRSQDu0=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=TUNrANGLSm65Wrq4cpM2+9vJ3e2/A0UDu16+xx1MbWrK8+b751PbbjiaTm6QrHt0p
+ 1OnXpDutj6In7pXVZE+G+eaeHIXXG7O1WsBeXgQhoV9eLUkbORpVcxuEEr+XdvOVNe
+ wjN9gXE+Dl/j6dB5XvzFcW2y1+bwEOPTZWk/+AwQ=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <db23c15d-cfb2-49a8-b748-5195a36a50d9@yandex-team.ru>
+Date: Wed, 15 Jul 2026 13:48:05 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: permerror client-ip=170.10.129.124;
- envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/7] migration/cpr: support vhost-vsock devices
+To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, qemu-devel@nongnu.org
+Cc: mst@redhat.com, sgarzare@redhat.com, farosas@suse.de, peterx@redhat.com,
+ dongli.zhang@oracle.com, maciej.szmigiero@oracle.com, bchaney@akamai.com,
+ mark.kanda@oracle.com, den@openvz.org
+References: <20260626164643.2526-1-andrey.drobyshev@virtuozzo.com>
+ <e8cb2e45-b58b-41f8-a69c-4f3e0f3cdd8d@yandex-team.ru>
+ <d22dfbcc-b2ea-43cc-a612-589d5764423b@virtuozzo.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <d22dfbcc-b2ea-43cc-a612-589d5764423b@virtuozzo.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,318 +79,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The '--engine' arg accepts either 'podman' or 'docker', which is
-not sufficiently granular to map directly to a command. This
-means that  docker.py still has to then probe the exact command
-to use.
+On 15.07.26 13:25, Andrey Drobyshev wrote:
+> On 7/14/26 6:03 PM, Vladimir Sementsov-Ogievskiy wrote:
+>> On 26.06.26 19:46, Andrey Drobyshev wrote:
+>>> v2 -> v3:
+>>>
+>>> Re-design device ownership hand-off (suggested by Dongli).  Do not rely
+>>> on SETUP migration notifiers, as this approach forces us to reorder
+>>> generic migration code (see v2 discussion).  Instead:
+>>>
+>>>     * .pre_save() releases ownership on the source (RESET_OWNER) once VM
+>>>       is stopped;
+>>>     * .realize() is adjusted to defer device ownership acquisition for an
+>>>       incoming CPR;
+>>>     * .post_load() actually claims the device (VHOST_SET_OWNER);
+>>>     * FAILED migration event callback re-aquires the ownership on the
+>>>       source after re_save released it.
+>>>
+>>> v2:https://lore.kernel.org/qemu-devel/57c9c9b3-d758-489b-95b8-d16c258b9b0c@virtuozzo.com
+>>
+>> Hi!
+>>
+> 
+> Hello Vladimir!
+> 
+>> Two notes:
+>>
+>> 1. Did you consider migrating needed FDs through main migration channel, without
+>> use of CPR, like I do in (not yet landed) "[PATCH v19 00/15] virtio-net: live-TAP local migration" [1]
+>>
+> 
+> AFAIU you're doing local same-host migration as a way to update QEMU
+> binary.  With this approach transferring FDs through the main channel is
+> indeed cleaner.  However in our own downstream we use enhanced in-place
+> memory preservation which is based entirely on cpr-exec migration mode.
+> 
+> So, to answer your question: yes, we considered it, and it might work
+> for cpr-transfer where we're also doing same-host migration.  But in
+> cpr-exec case there's only one QEMU process involved => we can't use
+> UNIX socket for migration transport => no SCM_RIGHTS FDs passing => FDs
+> should be passed via additional transport, no way around it.
 
-Meanwhile the 'probe' command prints out the full command to use
-but this cannot be passed back to docker.py to avoid probing
-again, so the caching is only useful in the few case where we
-run a container directly bypassing docker.py.
 
-Address this by replacing --engine with --command for docker.py.
+Hmm. Looking at code for fd-passing through migration channel:
 
-This in turn requires the --container-engine configure arg to be
-replaced with --container-command.
+static bool load_fd(QEMUFile *f, void *pv, size_t size,
+                     const VMStateField *field, Error **errp)
+{
+     int32_t *v = pv;
 
-With these changes the container command is probed at most once
-during configure and never again, while running in an unconfigured
-tree will still probe on demand.
+     if (migrate_mode() == MIG_MODE_CPR_EXEC) {
+         qemu_get_sbe32s(f, v);
+         return true;
+     }
+...
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
 
-In v2:
+Seems like passing FDs through main channel (like in my TAP-series) would
+work both for local migration (with two processes and UNIX socket) and for
+CPR_EXEC mode. So the FD is passed as simple number in case of cpr-exec.
 
- * Don't set container_command to "no" if 'probe' finds
-   not viable binaries.
+So, if simply pass FDs through migration state, it should work both for
+CPR_EXEC and local migration.
 
- configure                     | 25 +++++++------
- tests/docker/Makefile.include | 13 ++++---
- tests/docker/docker.py        | 67 ++++++++++++-----------------------
- 3 files changed, 40 insertions(+), 65 deletions(-)
+(hmm, still, keeping in mind that TAP-series API still not negotiated,
+it's simpler to start from pure CPR approach, and add local-migration
+support in future)
 
-diff --git a/configure b/configure
-index d8bc10060e..5a8e2fd278 100755
---- a/configure
-+++ b/configure
-@@ -172,7 +172,7 @@ fi
- # some defaults, based on the host environment
- 
- # default parameters
--container_engine="auto"
-+container_command=""
- cpu=""
- cross_compile="no"
- cross_prefix=""
-@@ -734,7 +734,7 @@ for opt do
-   ;;
-   --disable-containers) use_containers="no"
-   ;;
--  --container-engine=*) container_engine="$optarg"
-+  --container-command=*) container_command="$optarg"
-   ;;
-   --rust-target-triple=*) rust_target_triple="$optarg"
-   ;;
-@@ -869,7 +869,7 @@ Advanced options (experts only):
-   --enable-debug           enable common debug build options
-   --cpu=CPU                Build for host CPU [$cpu]
-   --disable-containers     don't use containers for cross-building
--  --container-engine=TYPE  which container engine to use [$container_engine]
-+  --container-command=CMD  which container command to use [autodetect]
-   --gdb=GDB-path           gdb to use for gdbstub tests [$gdb_bin]
-   --wasm64-32bit-address-limit Restrict wasm64 address space to 32-bit (default
-                                is to use the whole 64-bit range).
-@@ -1291,12 +1291,12 @@ fi
- ##########################################
- # functions to probe cross compilers
- 
--runc="no"
--if test $use_containers = "yes" && (has "docker" || has "podman"); then
--    runc=$($python "$source_path"/tests/docker/docker.py --engine "$container_engine" probe)
--    if test "$runc" != "no"; then
--        docker_py="$python $source_path/tests/docker/docker.py --engine $container_engine"
--    fi
-+if test "$container_command" = ""; then
-+    container_command=$($python "$source_path"/tests/docker/docker.py probe)
-+    test "$container_command" == "no" && container_command=""
-+fi
-+if test $use_containers = "yes" && test "$container_command" != ""; then
-+    docker_py="$python $source_path/tests/docker/docker.py --command $container_command"
- fi
- 
- # cross compilers defaults, can be overridden with --cross-cc-ARCH
-@@ -1415,7 +1415,7 @@ probe_target_compiler() {
-   esac
- 
-   for host in $container_hosts; do
--    test "$runc" != no || continue
-+    test "$container_command" != "" || continue
-     test "$host" = "$cpu" || continue
-     case $target_arch in
-       # debian-all-test-cross architectures
-@@ -1736,9 +1736,8 @@ echo all: >> $config_host_mak
- echo "SRC_PATH=$source_path" >> $config_host_mak
- echo "TARGET_DIRS=$target_list" >> $config_host_mak
- echo "GDB=$gdb_bin" >> $config_host_mak
--if test "$runc" != no; then
--    echo "RUNC=$runc" >> $config_host_mak
--    echo "CONTAINER_ENGINE=$container_engine" >> $config_host_mak
-+if test "$container_command" != ""; then
-+    echo "CONTAINER_COMMAND=$container_command" >> $config_host_mak
- fi
- echo "SUBDIRS=$subdirs" >> $config_host_mak
- if test "$rust" != disabled; then
-diff --git a/tests/docker/Makefile.include b/tests/docker/Makefile.include
-index 4725c39807..0adddb6a5c 100644
---- a/tests/docker/Makefile.include
-+++ b/tests/docker/Makefile.include
-@@ -16,9 +16,8 @@ DOCKER_DEFAULT_REGISTRY := registry.gitlab.com/qemu-project/qemu
- endif
- DOCKER_REGISTRY := $(if $(REGISTRY),$(REGISTRY),$(DOCKER_DEFAULT_REGISTRY))
- 
--CONTAINER_ENGINE = auto
--DOCKER_SCRIPT=$(SRC_PATH)/tests/docker/docker.py --engine $(CONTAINER_ENGINE)
--RUNC ?= $(shell $(DOCKER_SCRIPT) probe)
-+CONTAINER_COMMAND ?= $(shell $(SRC_PATH)/tests/docker/docker.py probe)
-+DOCKER_SCRIPT=$(SRC_PATH)/tests/docker/docker.py --command "$(CONTAINER_COMMAND)"
- 
- CUR_TIME := $(shell date +%Y-%m-%d-%H.%M.%S.$$$$)
- DOCKER_SRC_COPY := $(BUILD_DIR)/docker-src.$(CUR_TIME)
-@@ -41,7 +40,7 @@ docker-qemu-src: $(DOCKER_SRC_COPY)
- # General rule for building docker images.
- docker-image-%: $(DOCKER_FILES_DIR)/%.docker
- 	  $(call quiet-command,			\
--		DOCKER_BUILDKIT=1 $(RUNC) build		\
-+		DOCKER_BUILDKIT=1 $(CONTAINER_COMMAND) build \
- 		$(if $(DOCKER_V),,--quiet)		\
- 		$(if $(NOCACHE),--no-cache,		\
- 			$(if $(DOCKER_REGISTRY),--cache-from $(DOCKER_REGISTRY)/qemu/$*)) \
-@@ -152,7 +151,7 @@ $(foreach i,$(filter-out $(DOCKER_PARTIAL_IMAGES),$(DOCKER_IMAGES)), \
- )
- 
- docker:
--	@echo 'Build QEMU and run tests inside $(RUNC) containers'
-+	@echo 'Build QEMU and run tests inside $(CONTAINER_COMMAND) containers'
- 	@echo
- 	@echo 'Available targets:'
- 	@echo
-@@ -219,10 +218,10 @@ docker-run: docker-qemu-src
- 			$(IMAGE) --executable $(EXECUTABLE),		\
- 			"  COPYING $(EXECUTABLE) to $(IMAGE)"))
- 	$(call quiet-command,						\
--		$(RUNC) run 						\
-+		$(CONTAINER_COMMAND) run 				\
- 			--rm						\
- 			$(if $(NOUSER),,				\
--				$(if $(filter docker,$(RUNC)),		\
-+				$(if $(filter docker,$(CONTAINER_COMMAND)), \
- 					-u $(UID),			\
- 					--userns keep-id		\
- 				)					\
-diff --git a/tests/docker/docker.py b/tests/docker/docker.py
-index 9e18b984f4..d2f39b5645 100755
---- a/tests/docker/docker.py
-+++ b/tests/docker/docker.py
-@@ -35,27 +35,6 @@
- 
- DEVNULL = open(os.devnull, 'wb')
- 
--class EngineEnum(enum.IntEnum):
--    AUTO = 1
--    DOCKER = 2
--    PODMAN = 3
--
--    def __str__(self):
--        return self.name.lower()
--
--    def __repr__(self):
--        return str(self)
--
--    @staticmethod
--    def argparse(s):
--        try:
--            return EngineEnum[s.upper()]
--        except KeyError:
--            return s
--
--
--USE_ENGINE = EngineEnum.AUTO
--
- def _bytes_checksum(bytes):
-     """Calculate a digest string unique to the text content"""
-     return hashlib.sha1(bytes).hexdigest()
-@@ -73,12 +52,11 @@ def _file_checksum(filename):
- 
- def _guess_engine_command():
-     """ Guess a working engine command or raise exception if not found"""
--    commands = []
--
--    if USE_ENGINE in [EngineEnum.AUTO, EngineEnum.PODMAN]:
--        commands += [["podman"], ["podman-remote"], ["podman", "--remote"]]
--    if USE_ENGINE in [EngineEnum.AUTO, EngineEnum.DOCKER]:
--        commands += [["docker"], ["sudo", "-n", "docker"]]
-+    commands = [["podman"],
-+                ["podman-remote"],
-+                ["podman", "--remote"],
-+                ["docker"],
-+                ["sudo", "-n", "docker"]]
-     for cmd in commands:
-         try:
-             # 'version' is not sufficient to prove a working binary
-@@ -222,8 +200,11 @@ def _dockerfile_verify_flat(df):
- 
- class Docker(object):
-     """ Running Docker commands """
--    def __init__(self):
--        self._command = _guess_engine_command()
-+    def __init__(self, commandstr=None):
-+        if commandstr is None:
-+            self._command = _guess_engine_command()
-+        else:
-+            self._command = commandstr.split(" ")
- 
-         if ("docker" in self._command and
-             "TRAVIS" not in os.environ and
-@@ -411,8 +392,8 @@ def args(self, parser):
-                             help="Run container using the current user's uid")
- 
-     def run(self, args, argv):
--        return Docker().run(argv, args.keep, quiet=args.quiet,
--                            as_user=args.run_as_current_user)
-+        return Docker(args.command).run(argv, args.keep, quiet=args.quiet,
-+                                        as_user=args.run_as_current_user)
- 
- 
- class BuildCommand(SubCommand):
-@@ -445,7 +426,7 @@ def run(self, args, argv):
-         dockerfile = _read_dockerfile(args.dockerfile)
-         tag = args.tag
- 
--        dkr = Docker()
-+        dkr = Docker(args.command)
-         if "--no-cache" not in argv and \
-            dkr.image_matches_dockerfile(tag, dockerfile):
-             if not args.quiet:
-@@ -512,7 +493,7 @@ def args(self, parser):
-                             help="Docker registry")
- 
-     def run(self, args, argv):
--        dkr = Docker()
-+        dkr = Docker(args.command)
-         dkr.command(cmd="pull", quiet=args.quiet,
-                     argv=["%s/%s" % (args.registry, args.tag)])
-         dkr.command(cmd="tag", quiet=args.quiet,
-@@ -590,7 +571,7 @@ def run(self, args, argv):
-         tmp.seek(0)
- 
-         # Run the build with our tarball context
--        dkr = Docker()
-+        dkr = Docker(args.command)
-         dkr.update_image(args.tag, tmp, quiet=args.quiet)
- 
-         return 0
-@@ -601,7 +582,7 @@ class CleanCommand(SubCommand):
-     name = "clean"
- 
-     def run(self, args, argv):
--        Docker().clean()
-+        Docker(args.command).clean()
-         return 0
- 
- 
-@@ -610,7 +591,7 @@ class ImagesCommand(SubCommand):
-     name = "images"
- 
-     def run(self, args, argv):
--        return Docker().command("images", argv, args.quiet)
-+        return Docker(args.command).command("images", argv, args.quiet)
- 
- 
- class ProbeCommand(SubCommand):
-@@ -619,7 +600,7 @@ class ProbeCommand(SubCommand):
- 
-     def run(self, args, argv):
-         try:
--            docker = Docker()
-+            docker = Docker(args.command)
-             print(" ".join(docker._command))
-         except Exception:
-             print("no")
-@@ -651,18 +632,16 @@ def run(self, args, argv):
-                 cmd += ["-v", "%s:%s:ro,z" % (p, p)]
-         cmd += [args.image, args.cc]
-         cmd += argv
--        return Docker().run(cmd, False, quiet=args.quiet,
--                            as_user=True)
-+        return Docker(args.command).run(cmd, False, quiet=args.quiet,
-+                                        as_user=True)
- 
- 
- def main():
--    global USE_ENGINE
--
-     parser = argparse.ArgumentParser(description="A Docker helper",
-                                      usage="%s <subcommand> ..." %
-                                      os.path.basename(sys.argv[0]))
--    parser.add_argument("--engine", type=EngineEnum.argparse, choices=list(EngineEnum),
--                        help="specify which container engine to use")
-+    parser.add_argument("--command",
-+                        help="specify which container engine command to use")
-     subparsers = parser.add_subparsers(title="subcommands", help=None)
-     for cls in SubCommand.__subclasses__():
-         cmd = cls()
-@@ -671,8 +650,6 @@ def main():
-         cmd.args(subp)
-         subp.set_defaults(cmdobj=cmd)
-     args, argv = parser.parse_known_args()
--    if args.engine:
--        USE_ENGINE = args.engine
-     return args.cmdobj.run(args, argv)
- 
- 
+> 
+> 
+>> 2. I don't know how much vhost-vsock differs from vhost-net, but for vhost-net I remember
+>> that RESET_OWNER + SET_OWNER is effectively equal to simply recreating vhost device on target,
+>> because in kernel vhost device is hardly bound to the process itself, and can't be passed to
+>> another process. So, we can pass only "empty" FD, not the initialized vhost device.
+>> That's why in [1] I only pass tap-fds (and some additional state), but vhost fds are simply
+>> reopened on target (or passed by mgmt app).
+>> Does vhost-vsock work in a different way? Is there real sense in passing vhost fds here?
+>>
+>>
+>> [1] https://lore.kernel.org/qemu-devel/20260714154246.1242856-1-vsementsov@yandex-team.ru/
+>>
+> 
+> I'm also not extremely keen on vhost-net internals, but as I understand
+> with vhost-net we have 2 FDs: TAP FD for the network endpoint and vhost
+> FD for the memory tables, vring addresses etc.  The TAP FD is
+> process-independent state - and we pass it via migration channel.  The
+> vhost FD is entirely per owning process - and we're able to close it on
+> source, reopen on target and bind to the passed TAP FD.
+
+Yes, my understanding matches.
+
+> 
+> However with vhost-vsock there's only one FD.  It's used both for
+> plumbing and the endpoint.  At the very least, vhost device state holds
+> guest CID registration in the global vhost_vsock_hash.  If we go the
+> "recreate/reopen the device" path - CID is removed from the hash in
+> vhost_vsock_dev_release(), and then we're gonna get ECONNRESET for any
+> incoming packets => connections are dead.  We can't afford that.
+> 
+
+OK, thanks for explanation!
+
+
 -- 
-2.55.0
-
+Best regards,
+Vladimir
 
