@@ -4,62 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B8BDC44508
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 08:09:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D2F7C44501
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 08:10:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjugS-00023D-JV; Wed, 15 Jul 2026 04:09:36 -0400
+	id 1wjuhR-0004Nr-8f; Wed, 15 Jul 2026 04:10:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wjugQ-00022f-0t
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 04:09:34 -0400
+ id 1wjuhQ-0004LQ-9X
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 04:10:36 -0400
 Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wjugM-0005sC-JM
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 04:09:33 -0400
+ id 1wjuhO-00069x-AJ
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 04:10:35 -0400
 Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
- by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 7C77180765;
- Wed, 15 Jul 2026 11:09:25 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 09C748082C;
+ Wed, 15 Jul 2026 11:10:33 +0300 (MSK)
 Received: from [IPV6:2a02:6bf:8080:c75::1:c] (unknown [2a02:6bf:8080:c75::1:c])
  by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id N9L7NY0XCuQ0-YulWPiqE; Wed, 15 Jul 2026 11:09:25 +0300
+ id WALpNY0X4Gk0-4KxoMm6l; Wed, 15 Jul 2026 11:10:32 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1784102965;
- bh=0gd95t6mUkoxrA2HdGtuYCN+DG0Bcq5ohi2ouZLn828=;
+ s=default; t=1784103032;
+ bh=3T8pkd7GijVKgduP/ehtxpp0qXt7S42C5sp6D51R1HY=;
  h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=OVPWRm4IXFlX8Duzw3xWfxN7p0HSjQLF131SvCBMjhLZmbcyxeGfRLkKmDYRPaeWO
- beZDniM/Tr3yphRJ1G8svGQbtbTN3VS1xSKxBoH1XuO4Wz2UVixkf58nTqXQtSIs8p
- a6fX6d6Yvh35V794I/Q7QblP6+2LL+X89np3ez5Q=
+ b=Rk9QahDiLMbQl9SqVZMm+fVz7SU3l7DERjH4xMkq3ghp1VghaBKUiTJ4PR3K/abMu
+ 8JW5KSweKi3YJTykBX8tqTFdvZxPnrnUCK5eQLyF9q1N6d8cryU+aYBNp+6/IyYpCk
+ 1ftFguFIUl2enF4fwx3Dy1QnElOyQ/HGBIwqNUmA=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-Message-ID: <ac98aabf-4b4e-43b2-b689-0291becede5c@yandex-team.ru>
-Date: Wed, 15 Jul 2026 11:09:23 +0300
+Message-ID: <d8da49c7-1d7a-44ee-88ea-0937d1a899cb@yandex-team.ru>
+Date: Wed, 15 Jul 2026 11:10:32 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v18 12/14] net/tap: support local migration with virtio-net
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: jasowang@redhat.com, armbru@redhat.com, peterx@redhat.com,
- farosas@suse.de, raphael.s.norwitz@gmail.com, bchaney@akamai.com,
- qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
- yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Zhao Liu <zhao1.liu@intel.com>, Jason Wang <jasowangio@gmail.com>,
+Subject: Re: [PATCH v19 13/15] net/tap: support local migration with virtio-net
+To: jasowang@redhat.com, mst@redhat.com
+Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
+ raphael.s.norwitz@gmail.com, bchaney@akamai.com, qemu-devel@nongnu.org,
+ berrange@redhat.com, pbonzini@redhat.com, yc-core@yandex-team.ru,
+ mark.caveayland@nutanix.com, Jason Wang <jasowangio@gmail.com>,
  Eric Blake <eblake@redhat.com>
-References: <20260710191809.721154-1-vsementsov@yandex-team.ru>
- <20260710191809.721154-13-vsementsov@yandex-team.ru>
- <20260713153340-mutt-send-email-mst@kernel.org>
- <449911ff-33cb-4fef-8dd2-33d8f3dc9620@yandex-team.ru>
- <20260714035132-mutt-send-email-mst@kernel.org>
+References: <20260714154246.1242856-1-vsementsov@yandex-team.ru>
+ <20260714154246.1242856-14-vsementsov@yandex-team.ru>
 Content-Language: en-US
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20260714035132-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20260714154246.1242856-14-vsementsov@yandex-team.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=178.154.239.200;
@@ -84,103 +79,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14.07.26 22:24, Michael S. Tsirkin wrote:
-> On Tue, Jul 14, 2026 at 09:43:52AM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> On 13.07.26 22:36, Michael S. Tsirkin wrote:
->>> On Fri, Jul 10, 2026 at 10:18:01PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->>>> Support transferring of TAP state (including open fd).
->>>>
->>>> Add new property "local-migration-supported", which defines
->>>> whether local-migration is actually supported for this TAP device.
->>>> Starting from 11.2 QEMU Machine Types it's enabled by default.
->>>>
->>>> Note, that local-migration (including migrating opened FDs
->>>> through migration channel, which must be UNIX socket), is
->>>> enabled by global "local" migration parameters. But individual
->>>> devices may have additional options to enable/disable it
->>>> per device.
->>>>
->>>> The tricky thing, is that we need to know, should we do
->>>> call open/connect in TAP initialization code. That means,
->>>> that on incoming migration we want to know status of
->>>> "local" migration parameter at time of creating TAP device.
->>>> So, currently, for incoming local migration only TAP device
->>>> created through QMP is supported, as you need to set migration
->>>> parameter first (through QMP as well).
->>>>
->>>> So the full picture is:
->>>>
->>>> On source, to start outgoing "local" migration you need:
->>>>
->>>>    - migration parameter "local" set to true
->>>>    - "local-migration-supported" TAP option set to true (the
->>>>      default, starting from 11.2 QEMU Machine Types)
->>>>
->>>> If at least one of these options is not set, TAP backend
->>>> doesn't participate in migration.
->>>>
->>>> On target, things are more difficult:
->>>>
->>>> Same, you need both "local" and "local-migration-supported"
->>>> be set. And same, if one of them is not set, TAP backend
->>>> is initialized as usual, and doesn't accept any incoming
->>>> state.
->>>>
->>>> Additionally, if you are going to set "local", it must be
->>>> set before creating the TAP device. If TAP device created
->>>> with "local" unset, it initializes as usual. If you enable
->>>> "local" after it and start incoming migration, it will fail
->>>> in .pre_load handler of TAP backend.
->>>>
->>>> Moreover, there are interface restrictions: if you create TAP
->>>> device when QEMU is in INCOMING state, and both "local"
->>>> and "local-migration-supported" set, most of TAP options are
->>>> not allowed, and script/downscript are required to be explicitly
->>>> unset (set to "" or "no").
->>>>
->>>> Signed-off-by: Vladimir Sementsov-Ogievskiy<vsementsov@yandex-team.ru>
->>>
->>> I am still confused why is this per device. I just do not
->>> see where is it useful to set it for some devices
->>> but not others. So it looks like a machine property
->>> "incoming local migration" to me?
->>>
->>> Sorry if I am being dense.
->>
->> 1. We need at least "per device class": when local-migration-support is
->> implemented for some new device, we still need to migrate from/to older
->> version without this support.
->>
->> Assume we have "local" migration parameter and support for TAP in 11.2.
->> Then, in 12.0 support for vhost-user-blk is implemented. If we have only
->> global "local" parameter, the migration will be broken between 11.2 and
->> 12.0,
->> with local=true, as in 11.2 it means only TAP local migration, but
->> in 12.0 it means both TAP and vhost-user-blk local migration.
->>
->> Of course, now it's a bit redundant, as we have only TAP, and may define,
->> that TAP is always supported (as support is introduced together with
->> "local"). But there are another considerations:
+On 14.07.26 18:42, Vladimir Sementsov-Ogievskiy wrote:
+> Support transferring of TAP state (including open fd).
 > 
-> If this is your way to version the behaviour, that is fine, but it should
-> be an internal property without ABI guarantees, starting with "x-".
+> Add new property "local-migration-supported", which defines
+> whether local-migration is actually supported for this TAP device.
+> Starting from 11.2 QEMU Machine Types it's enabled by default.
 > 
->>
->> 2. Symmetry: if have a possiblity to disable feature only for vhost-user-blk,
->> seems good to have same possibility for TAP.
->>
->> 3. Disabling fd-migration per device may be useful to switch this specific
->> device to another backend.
+> Note that local-migration (including migrating opened FDs
+> through migration channel, which must be UNIX socket) is
+> enabled by global "local" migration parameters. But individual
+> devices may have additional options to enable/disable it
+> per device.
 > 
-> Unclear what good is it, and the drawback is that it blows up the size
-> of our testing/support matrix.
+> The tricky thing is that we need to know whether to call open/connect in
+> TAP initialization code, i.e. we need to know the value of migration
+> parameter "local" when creating the TAP device.  For incoming migration,
+> we can know only for TAP devices created with QMP after setting the
+> migration parameter with QMP.
 > 
+> So the full picture is:
+> 
+> On source, to start outgoing "local" migration you need:
+> 
+>   - migration parameter "local" set to true
+>   - "local-migration-supported" TAP option set to true (the
+>     default, starting from 11.2 QEMU Machine Types)
+> 
+> If at least one of these options is not set, TAP backend
+> doesn't participate in migration.
+> 
+> On target, things are more difficult:
+> 
+> Same, you need both "local" and "local-migration-supported"
+> be set. And same, if one of them is not set, TAP backend
+> is initialized as usual, and doesn't accept any incoming
+> state.
+> 
+> Additionally, if you are going to set "local", it must be
+> set before creating the TAP device. If TAP device created
+> with "local" unset, it initializes as usual. If you enable
+> "local" after it and start incoming migration, it will fail
+> in .pre_load handler of TAP backend.
+> 
+> Moreover, there are interface restrictions: if you create TAP
+> device when QEMU is in INCOMING state, and both "local"
+> and "local-migration-supported" set, most of TAP options are
+> not allowed, and script/downscript are required to be explicitly
+> unset (set to "" or "no").
+> 
+> Signed-off-by: Vladimir Sementsov-Ogievskiy<vsementsov@yandex-team.ru>
+> ---
+>   net/tap.c     | 165 ++++++++++++++++++++++++++++++++++++++++++++++++--
+>   qapi/net.json |  22 ++++++-
+>   2 files changed, 180 insertions(+), 7 deletions(-)
 
-OK. If you are ok with unstable property x-local-migration-supported, I'm
-happy with it as well. I'll post a squash-in for already sent v19 [13/15] patch.
 
-(To be honest, I'm OK with _any_ API, and this whole (almost a year!) story
-is trying to satisfy all the maintainers at the same time o_O)
+squash in, to mark it unstable:
+
+diff --git a/net/tap.c b/net/tap.c
+index 4162820bcee..250ae15acb7 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -558,7 +558,7 @@ static void tap_class_init(ObjectClass *klass, const void *data)
+  
+      vc->get_id = tap_vmstate_if_get_id;
+  
+-    object_class_property_add_bool(klass, "local-migration-supported",
++    object_class_property_add_bool(klass, "x-local-migration-supported",
+                                     tap_get_local_migration_supported_prop,
+                                     tap_set_local_migration_supported_prop);
+  }
+@@ -958,8 +958,8 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+  {
+      TAPState *s = net_tap_fd_init(peer, tap->helper ? "bridge" : "tap",
+                                    name, fd, vnet_hdr, queue_index,
+-                                  tap->has_local_migration_supported,
+-                                  tap->local_migration_supported);
++                                  tap->has_x_local_migration_supported,
++                                  tap->x_local_migration_supported);
+      bool sndbuf_required = tap->has_sndbuf;
+      int sndbuf =
+          (tap->has_sndbuf && tap->sndbuf) ? MIN(tap->sndbuf, INT_MAX) : INT_MAX;
+@@ -1130,7 +1130,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
+          return -1;
+      }
+  
+-    incoming_fds = tap->local_migration_supported && migrate_local() &&
++    incoming_fds = tap->x_local_migration_supported && migrate_local() &&
+                     runstate_check(RUN_STATE_INMIGRATE);
+  
+      if (incoming_fds &&
+@@ -1140,7 +1140,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
+           !tap_is_explicit_no_script("downscript", tap->downscript))) {
+          error_setg(errp, "Local incoming migration of TAP device (-incoming, "
+                     "migration parameter @local is set, "
+-                   "TAP parameter @local-migration-supported is set) "
++                   "TAP parameter @x-local-migration-supported is set) "
+                     "is incompatible with "
+                     "fd=, fds=, helper=, br=, ifname=, sndbuf= and vnet_hdr=, "
+                     "and requires explicit empty script= and downscript=");
+@@ -1168,8 +1168,8 @@ int net_init_tap(const Netdev *netdev, const char *name,
+      if (incoming_fds) {
+          for (i = 0; i < queues; i++) {
+              TAPState *s = new_tap(peer, "tap", name, i,
+-                                  tap->has_local_migration_supported,
+-                                  tap->local_migration_supported);
++                                  tap->has_x_local_migration_supported,
++                                  tap->x_local_migration_supported);
+              qemu_set_info_str(&s->nc, "incoming");
+  
+              s->fd = -1;
+diff --git a/qapi/net.json b/qapi/net.json
+index d0d6e303b0d..e244cc62658 100644
+--- a/qapi/net.json
++++ b/qapi/net.json
+@@ -435,7 +435,7 @@
+  # @poll-us: maximum number of microseconds that could be spent on busy
+  #     polling for tap (since 2.7)
+  #
+-# @local-migration-supported: enable local migration for this TAP
++# @x-local-migration-supported: enable local migration for this TAP
+  #     backend.  When set, local migration is enabled/disabled by
+  #     migration parameter @local for this TAP backend.  When unset,
+  #     migration parameter @local is ignored for this TAP backend.
+@@ -447,13 +447,17 @@
+  #     after creating TAP backend with @local-migration-supporeted
+  #     parameter set) will simply fail.
+  #     Moreover, when QEMU is in incoming migration state, migration
+-#     parameter @local is set and @local-migration-supported is set,
++#     parameter @local is set and @x-local-migration-supported is set,
+  #     the following options are not supported and must not be set:
+  #     @fd, @fds, @helper, @br, @ifname, @sndbuf, @vnet_hdr.
+  #     Additionally in this case @script and @downscipt must be
+  #     explicitly disabled (empty strings or "no").
+  #     (Since 11.2)
+  #
++# Features:
++#
++# @unstable: Member @x-local-migration-supported is experimental.
++#
+  # Since: 1.2
+  ##
+  { 'struct': 'NetdevTapOptions',
+@@ -473,7 +477,8 @@
+      '*vhostforce': 'bool',
+      '*queues':     'uint32',
+      '*poll-us':    'uint32',
+-    '*local-migration-supported': 'bool' } }
++    '*x-local-migration-supported': {
++      'type': 'bool', 'features' : [ 'unstable'] } } }
+  
+  ##
+  # @NetdevSocketOptions:
+diff --git a/tests/functional/x86_64/test_tap_migration.py b/tests/functional/x86_64/test_tap_migration.py
+index bcc0a60dfe9..5edf3f0fee2 100755
+--- a/tests/functional/x86_64/test_tap_migration.py
++++ b/tests/functional/x86_64/test_tap_migration.py
+@@ -329,7 +329,7 @@ def add_virtio_net(
+              "queues": 4,
+              "script": "no",
+              "downscript": "no",
+-            "local-migration-supported": local,
++            "x-local-migration-supported": local,
+          }
+  
+          if not (local and incoming):
+
+
 
 -- 
 Best regards,
