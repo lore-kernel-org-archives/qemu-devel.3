@@ -4,92 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3DC1C44501
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 08:30:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD728C44501
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 08:38:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjv01-0007Up-8J; Wed, 15 Jul 2026 04:29:49 -0400
+	id 1wjv7W-0000Bk-N8; Wed, 15 Jul 2026 04:37:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shankerwangmiao@gmail.com>)
- id 1wjuzu-0007UX-1h
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 04:29:42 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shankerwangmiao@gmail.com>)
- id 1wjuzr-0000fF-51
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 04:29:40 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-3860f32307bso823196a91.0
- for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 01:29:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wjv7S-0000BR-S0
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 04:37:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wjv7P-0001oc-S5
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 04:37:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784104646;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=Cnmza3A9aHkENaH2pj33Y8y5nLYrZtcmeLmRPH8+2VnD8aCGVyTSazmiLmzjn23gyQONuE
+ kD4XiwK7NfKuG8j1TPbSphirR03n8VDNKjLEx/Dmnsuw2oM3dJtKZ/B1D2ZLlOVD8vqduI
+ vQZgTnUxk1vKluNcp0zc0Sc1C5rqcyE=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-139-KiHbmqNPONqDvme9idAgTw-1; Wed, 15 Jul 2026 04:37:24 -0400
+X-MC-Unique: KiHbmqNPONqDvme9idAgTw-1
+X-Mimecast-MFC-AGG-ID: KiHbmqNPONqDvme9idAgTw_1784104643
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-493bb6a4336so46432505e9.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 01:37:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784104177; x=1784708977; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:content-type:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=BeGqMOgTlDCagNu/bWSBNjr6Oi8r2xL+ExkajpaSico=;
- b=BqD18WOcph+DlAXDca/zTScz9aWUf61T+90WTXTnwcDJXQHewkVDsy6SGY9//1FW2z
- rgJwL0XgbVn20KsRCgkv6yQMqdYSPtd+BdhkL3mfQFZXbQG1NpekVh/DxtFP7Zpaw/Nm
- jo7RYzyYna2Xo2DTIa2gLue6NjfeKyhAkoMxS9hrbJZD+1A2WU97yBQekTYgYAb6Q608
- LImtEL4v9UUSffVl3oBzzrdfaZHTIoxfFYFU2wawyiMxl5uPGoSfvquryiiIM2na4n9G
- gvNFSqkZiVC6hj1OGGiF5VXI5/BSYwNmyMDTQyQOugeqYXdX40vquXdy/F99G3GD2r1t
- wg8Q==
+ d=redhat.com; s=google; t=1784104643; x=1784709443; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=Z6f53wNZSg4lgztIjKevVFPn/Q63kU9VFLc4CLrGEo0V0zdxO5N+o3GNlj0JZADAV1
+ KIetjsm/4GqvmOUmwEVl8QKeJRzkBFLMTGQSU8YU2FQfcMmTVDMlmRQvT9EEYV18Mu3s
+ VMPxGW3ELM1XMzbseqbx0eHtrJWh4JGDMKsHlh6JjNtf0RelN7lIoDvhZHFmW+9TCUpv
+ 4IJy/2RNAN09tmn2oEBDdMCGERZUs0UjtlrxAEke2hOh3v+RNKhVymU/+ft3C2xag7/U
+ +9hcZoBxjnst2mk5umfscIrzArhi6eZzP7oQRNyJcpKxm+DwFFDPXXIDQWfoCTJn1rBB
+ YzFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784104177; x=1784708977;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:content-type:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=BeGqMOgTlDCagNu/bWSBNjr6Oi8r2xL+ExkajpaSico=;
- b=hwSYjPpgTd9u55prtMHWM9E056VKn5noU/G0bBa0HxG87o1BA1eQm8RTmwch4yASpD
- jAycBaYsBfQkFSKV7vygCaocZfYgkqvNm+WBta/RuzzUkPx6p0hzxQ1MvUWnrAhK2GG5
- hOAZTNa+Od5AfgVPGLZ2RDfLUPj1kIscQE/EgHfJ3xkCPFkInxsXbUUqDWW0m512N6To
- 8ndZEldoS/xfAUmJQz9fheMJvDgfMQDRb1566M4jIGoAVWosuk8tujUFUH6uxq9Lfyew
- +98Vy25/IDQD79zwFwZ7REFZqPY3Z/K+BrH/A1olSWWBzTWzExiKFY7ABEp+uGF/6kZM
- NRDQ==
-X-Gm-Message-State: AOJu0YygFW/uhWcqlaJ56z/Lvm+OS18JAwBUuC4+KiHhHCZktDoqaO2T
- TeUERb0z1r2uhGXPY4hz0A0tjztxgxKr8NKHCs1Rofp/T7GetBKZSJKZ
-X-Gm-Gg: AfdE7cnJMqY9zAlIAXq/RD3eUqyzuEhHOjRMGL/ek6SvasUPi6RjaVyz+D2aofaEzkt
- uZtbdzC5uhpkRdCfp8RTfG/vJ1wDVYzgFWE2EODo21cWFYfTnJm+WlZXH9SQJPppPRE3UFUFl6g
- ZXU1zp+S4htOQEqsioRgwojQRgIJo1wyjoASTJOlWwmf/XqDgMYuIovNqnxiSPaPTaPBmCRQorO
- mzFKfF41xNEGywYBgq4DxDT7/Dn+cg9KldNZ3qeJmwOUYWjsUfz57zRlmXDvUnl6G6DWoMtYY/0
- 46D2wXqGslOgicLQtT+TmQ043Mr88EPUEQfLElbuWMLqrmpT8J1sBtiYiZLoHBUFnFbWaG/vmXA
- OQhzO39IlBEotK7hH4S2Wk+fcbFepHiKa2VofVDyBrsmgMK/1vC5kHfjLkpcN/8Hb/48D6aXxdj
- LEg67mpV/SyTiMuXdxOixAWo5N7u3NrSGvvreY
-X-Received: by 2002:a17:90b:4f81:b0:381:77cd:38ca with SMTP id
- 98e67ed59e1d1-38dc7bd893cmr10424114a91.4.1784104177254; 
- Wed, 15 Jul 2026 01:29:37 -0700 (PDT)
-Received: from smtpclient.apple ([23.247.139.92])
+ d=1e100.net; s=20251104; t=1784104643; x=1784709443;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=MqyB78jJkyhpCxcBzHLwf3ZzMoAvTDN/c9VKAa/f9dep7n2Zl+QLUvwF7UssAQ/ASN
+ ZaSJzPrSWAVh+W2Is1AhaaQhOrH0OvJLtfrt9E9RDtzqqvto68LPAR2L5m+yszi0BcGs
+ gJo+THUkacsLNprtZ9gJ4xBE5MUdXv95m9zDklUhOs2LYMMa4EHJQlcVEYz9XGjhBEth
+ 6+n5lBdd/Yov6MDAS0xcjwMi30e1pW/6zAapTEJe0abZqd/2LWZHRMtj9mnflDj+CpXs
+ Y+RVoLvD0WBDLLtanKozriNFleANPlNeWM4iIwVsAJbkA2oEK76XelCt76EEVXBhrvpN
+ mtMA==
+X-Gm-Message-State: AOJu0YzZ1lCX2Nd7tCuxGEieJa4hKYspwRqJWVPhQtgvno8n8gpPQa+r
+ zpuxxkn7fniIc7gjTi6IT/Dq1dBuxY4cdHKZU52oLVh7iV/gIoC/RT72pV+mLZGr6u7pHg+qsgI
+ UhWSGvgCFFB3IwZmq3lbcFqCsGNVprE67iikgRmx7JLDE+X69qb44Q9zr
+X-Gm-Gg: AfdE7ckCtaqoryFeKoLVkkRvRlM1QTwORYW/c2thjrzSGTasjGKwFwZ6IMJ9OrrVG7d
+ BzdGVD6ZxrR82xNkvmyVfkttqHHf25wb5mXEsTNgJe7buMGIn5MhJuag2lTVnBulibOE3LjvLK/
+ QWCltufD1nRbCCeVnrNTRG4ypKou9eMdSvH/hyCud2IEjGmXQjxuaNNOi8c9jx+v6JIj4oqD8gJ
+ GhJ2UGqfXYshmTrO10MLMNBlvR4RxsRboGBt3y9sUXzipK3BYVaBDmQJH2rV7z5VZu9x20DGVGu
+ pHRZdjQ1PzrlCVOyM3WON4YU8a6pmcxfRW27zWYEwWcMmBBcN0wT4L7J2cyz94EfowHma5rY5/w
+ NswAe3aicDlN3CTYyy2iEiRi9Osvnnx/L+H4IiCLmGpo44AIAsIgcC0qvTWflimI/bVl8FvYuOs
+ euRnn5nfy9NSQmJA==
+X-Received: by 2002:a05:600c:5306:b0:495:3e2f:5105 with SMTP id
+ 5b1f17b1804b1-4953e2f5176mr9622665e9.12.1784104643134; 
+ Wed, 15 Jul 2026 01:37:23 -0700 (PDT)
+X-Received: by 2002:a05:600c:5306:b0:495:3e2f:5105 with SMTP id
+ 5b1f17b1804b1-4953e2f5176mr9622245e9.12.1784104642695; 
+ Wed, 15 Jul 2026 01:37:22 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.47.37])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38e172e46basm2785524a91.9.2026.07.15.01.29.34
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 15 Jul 2026 01:29:36 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.8\))
-Subject: Re: [PATCH] target/loongarch: fix data race in CSR_ESTAT
-From: Miao Wang <shankerwangmiao@gmail.com>
-In-Reply-To: <fc1b3da5-2433-7f23-03c4-c1d0a0b5a6f4@loongson.cn>
-Date: Wed, 15 Jul 2026 16:29:22 +0800
-Cc: qemu-devel@nongnu.org, Song Gao <17746591750@163.com>,
- Xianglai Li <lixianglai@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Xi Ruoyao <xry111@xry111.site>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <7FF8CCC1-5065-45E0-8EB8-B414F5C87056@gmail.com>
-References: <20260714-loong-race-v1-1-54111549c95e@gmail.com>
- <fc1b3da5-2433-7f23-03c4-c1d0a0b5a6f4@loongson.cn>
-To: Bibo Mao <maobibo@loongson.cn>
-X-Mailer: Apple Mail (2.3826.700.81.1.8)
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=shankerwangmiao@gmail.com; helo=mail-pj1-x1034.google.com
+ 5b1f17b1804b1-495086ca93esm136314045e9.0.2026.07.15.01.37.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 15 Jul 2026 01:37:21 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: Andrey Polivoda <apolivodaa433@gmail.com>
+Cc: qemu-devel@nongnu.org,
+	Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v2] target/i386: helper_sysret(): Check that RCX contains
+ a canonical address when emulating an Intel CPU
+Date: Wed, 15 Jul 2026 10:37:20 +0200
+Message-ID: <20260715083720.208804-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260608091815.31303-1-apolivodaa433@gmail.com>
+References: 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: permerror client-ip=170.10.129.124;
+ envelope-from=pbonzini@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,62 +121,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Queued, thanks.
 
-> 2026=E5=B9=B47=E6=9C=8815=E6=97=A5 11:16=EF=BC=8CBibo Mao =
-<maobibo@loongson.cn> =E5=86=99=E9=81=93=EF=BC=9A
->=20
->=20
->=20
-> On 2026/7/14 =E4=B8=8B=E5=8D=8811:40, Miao Wang via B4 Relay wrote:
->> From: Miao Wang <shankerwangmiao@gmail.com>
->> The CSR_ESTAT register of a CPU can be read and written by both the
->> CPU thread and other threads (e.g., the interrupt controller thread).
->> Currently the possible readers and writers of CSR_ESTAT are:
->> - Readers
->>   - tcg generated by trans_csrrd(, CSR_ESTAT)
->>   - loongarch_cpu_has_work()
->> - Writers
->>   - tcg generated by trans_csrxchg(, CSR_ESTAT)
->>   - helper_csrwr_estat()
->>   - helper_csrrd_msgir()
->>   - loongarch_cpu_set_irq()
->>   - loongarch_cpu_do_interrupt()
->>   - loongarch_cpu_exec_interrupt()
->=20
-> yes, there is contention problem when injecting interrupt to vCPU in =
-TCG mode, only that it is a little strange to use atomic method on CSR =
-estat register.
->=20
-> =46rom another side, only loongarch_cpu_set_irq() is called from other =
-threads, the other APIs are called from vCPU thread itself.
->=20
-> How about using method like KVM, adding software state =
-irq_pending/irq_clear in structure CPULoongArchState and using atomic =
-method, add cpu_sync_interrupt() and it is called function
-> cpu_loongarch_hw_interrupts_pending(). When vCPU thread is kicked with =
-new interrupt and executes cpu_loongarch_hw_interrupts_pending(), it =
-synchronize software intterupt irq_pending/irq_clear  to CS ESTAT =
-register.
->=20
-
-I understand that adding an additional field which is protected by =
-atomic
-operations to store the pending changes to ESTAT in =
-loongarch_cpu_set_irq()
-and merging it into ESTAT afterwards in =
-cpu_loongarch_hw_interrupts_pending()
-is simpler and cleaner.
-
-However, there might be a problem here. In loongarch_cpu_set_irq(), =
-without
-reading ESTAT, it cannot decide whether to call cpu_interrupt() or
-cpu_reset_interrupt(). If ESTAT should be read in =
-loongarch_cpu_set_irq(), then
-ESTAT should still be protected by atomic operations.
-
-Cheers,
-
-Miao Wang
+Paolo
 
 
