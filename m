@@ -4,71 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCBC0C4450F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9975C44508
 	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 20:11:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wk5wH-0004jF-T7; Wed, 15 Jul 2026 16:10:41 -0400
+	id 1wk5wq-0004l4-6d; Wed, 15 Jul 2026 16:11:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wk5wF-0004j0-Mx
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 16:10:40 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wk5wn-0004kq-Uz
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 16:11:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wk5wC-0001QX-CI
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 16:10:39 -0400
-Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 3BBA9807A6;
- Wed, 15 Jul 2026 23:10:29 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:d6a::1:11] (unknown
- [2a02:6bf:8080:d6a::1:11])
- by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id SAXc5q0a60U0-5m1rhZYB; Wed, 15 Jul 2026 23:10:28 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1784146228;
- bh=RtBGY3N1SUk9qmXX2vpzXEuQwCq/ebJv8+Tg/2nyssM=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=E6xXGjmCNg65cFTaJZR0gbO61bEYlTahvzhRwjcVYGB5xtQfw/+xJ8ZirYGK2/r+6
- bRNyf/c+Zq5G4jyGY6WgPiIbp2edGIkxw6vGSHjIi/tv3LGij0dBDBBiAxoXda7PR3
- W8n5OrTFX+7F4cHM8Wzs0D1jbhZQrCM4qnjzy5Gk=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <7453c24d-7daf-4dfb-9e16-0d6f4e1f6d76@yandex-team.ru>
-Date: Wed, 15 Jul 2026 23:10:28 +0300
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wk5wk-0001SC-PC
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 16:11:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784146269;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=i+cHWBRvYFhS88xmE+KZmL6FFeGIXV1+hGUoRFL3jaw=;
+ b=Kn7BdW+ppfrs6MTV2UVRY7QJL3/CL7I2+CVTJd67qQjYslqSWm+/L0kTe00nFkBjWZ+OYi
+ GIh/qrGLDPCp5dphl1EkSnuRQ/M1qgTwTeDPcI0mNDpQ3KrRZ+kbOTPCcxP/ejBRD0eXCS
+ TK9QYikIedATKAaQOXjG7wsjoFtos9c=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-617-LRNfwqusPhON7Iywjw9OSg-1; Wed,
+ 15 Jul 2026 16:11:05 -0400
+X-MC-Unique: LRNfwqusPhON7Iywjw9OSg-1
+X-Mimecast-MFC-AGG-ID: LRNfwqusPhON7Iywjw9OSg_1784146264
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 57AC01955F7F; Wed, 15 Jul 2026 20:11:03 +0000 (UTC)
+Received: from localhost (unknown [10.44.24.9])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DD4E11956089; Wed, 15 Jul 2026 20:11:01 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH] hw/display/virtio-gpu: validate stride against width on
+ scanout
+Date: Thu, 16 Jul 2026 00:10:55 +0400
+Message-ID: <20260715201055.2465320-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v19 00/15] virtio-net: live-TAP local migration
-To: Michael Tokarev <mjt@tls.msk.ru>, jasowang@redhat.com, mst@redhat.com
-Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
- raphael.s.norwitz@gmail.com, bchaney@akamai.com, qemu-devel@nongnu.org,
- berrange@redhat.com, pbonzini@redhat.com, yc-core@yandex-team.ru,
- mark.caveayland@nutanix.com
-References: <20260714154246.1242856-1-vsementsov@yandex-team.ru>
- <fa53bef0-4fbd-445a-9395-379bbfcb3773@tls.msk.ru>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <fa53bef0-4fbd-445a-9395-379bbfcb3773@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: permerror client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -80,51 +86,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15.07.26 18:01, Michael Tokarev wrote:
-> On 14.07.2026 18:42, Vladimir Sementsov-Ogievskiy wrote:
->> Hi all!
->>
->> Here is a migration for TAP net backend, including its properties and
->> open fds.
->>
->> With this new feature, management software doesn't need to initialize
->> new TAP and do a switch to it. Nothing should be done around
->> virtio-net in local migration: it just migrates and continues to use
->> same TAP device. So we avoid extra logic in management software, extra
->> allocations in kernel (for new TAP), and corresponding extra delay in
->> migration downtime.
-> 
-> This is quite a big patch set,
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-You probably haven't been following Steve's work (about 5 years) on
-CPR Live Update :) My patch set is small.
+Validate that the framebuffer stride is at least width * bytes_per_pixel
+in both virtio_gpu_scanout_blob_to_fb() and virtio_gpu_do_set_scanout().
 
-> - is this really worth the effort to do
-> all this just for *local* migration?  What's the possible use case for
-> this in real, - am I right this is just about upgrading the host qemu?
+A guest can set a very small stride while using a large width. The total
+size check (offset + stride * height <= blob_size) passes because
+stride * height is small, but pixman reads width * bytes_per_pixel per
+row, causing heap OOB reads. The leaked data is rendered to the host
+display.
 
-Exactly. You say "just for", but actually local migration is a lot more
-"massive" operation for us. Remote migrations are done mostly to release the
-physical server for service/redeploy (you should first migrate all the
-vms to other servers).  That's a relatively seldom operation.
+The check is added in virtio_gpu_do_set_scanout() to cover all paths:
+blob scanout, non-blob scanout and migration post_load. The additional
+early check in virtio_gpu_scanout_blob_to_fb() rejects invalid blob
+configurations early.
 
-On the contrary, when updating to new QEMU version, you migrate _all_
-vms on _all_ servers.  These (minimal) downtimes affects all the
-customers, some are sensitive to freezes.
+Fixes: CVE-2026-63109
+Fixes: 144bd171c837 ("virtio-gpu: Support blob scanout using dmabuf fd")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3989
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ hw/display/virtio-gpu.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-> And with that in mind, isn't it sufficient to use what we already have
-> (namely, create new tap, start new qemu instance, and migrate the usual
-> way), and tolerate some very minor downtime while the networking code
-> learns the new network topology (isn't it happening almost instantly
-> anyway, and if not, the management can help by sending gratitious ARP)?
-> 
-> I wonder what's the use for this at yandex?
-> 
-
-This series together with similar about vhost-user-blk local migration
-gives several times win in freeze-time. It's significant for us.
-
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 89a73793a42..1d4b8ee4192 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -647,6 +647,14 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
+         return false;
+     }
+ 
++    if (fb->stride < (uint64_t)fb->width * fb->bytes_pp) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: stride %u too small for width %u at %u bpp\n",
++                      __func__, fb->stride, fb->width, fb->bytes_pp);
++        *error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++        return false;
++    }
++
+     g->parent_obj.enable = 1;
+ 
+     if (res->blob) {
+@@ -754,6 +762,14 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
+     fb->width = ss->width;
+     fb->height = ss->height;
+     fb->stride = ss->strides[0];
++
++    if (fb->stride < (uint64_t)fb->width * fb->bytes_pp) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: stride %u too small for width %u at %u bpp\n",
++                      __func__, fb->stride, fb->width, fb->bytes_pp);
++        return false;
++    }
++
+     fb->offset = ss->offsets[0] + ss->r.x * fb->bytes_pp + ss->r.y * fb->stride;
+ 
+     fbend = fb->offset;
 -- 
-Best regards,
-Vladimir
+2.55.0
+
 
