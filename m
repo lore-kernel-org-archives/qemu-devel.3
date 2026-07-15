@@ -4,107 +4,215 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2618C44508
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 14:53:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA983C44508
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 14:55:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wk0yQ-0005gs-Ny; Wed, 15 Jul 2026 10:52:34 -0400
+	id 1wk10x-00068t-2g; Wed, 15 Jul 2026 10:55:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harsh.prateek.bora@gmail.com>)
- id 1wk0yP-0005gD-8U
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 10:52:33 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <harsh.prateek.bora@gmail.com>)
- id 1wk0yN-0004gk-D4
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 10:52:33 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-c15ea93028dso607107566b.3
- for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 07:52:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784127149; cv=none;
- d=google.com; s=arc-20260327;
- b=I4iyHlLCzld6mz5LAgLlXnp3w9dFTUp4CzVAEWTVm7/SInHddZq7ll5TnbsNU8mHNo
- 8mOi1rlnUE16koDKki0zyISyRc13pI3wbYAazSL4Ec0NAOIgR1AWs/aOn/+BRc+qYDiP
- JlczZipYyzQfWtoEzbcmcMAZ+d4KoFTnGFgamT2rf4vEU4Iw3kkRoKc6AJHxuxCiQ9LV
- o8RHJT/nnt3pcweZ4kfHUha4Iidx5t97avVHZLTn8Ms1nNsrTtAYBw64ggY8ZCetELjI
- T+ZNH2y9ILOSykoE5F1EvQlOXEEyH9oB8J2RCEj/vshwO5IviaEM+USou0eRxM9ul1un
- bw+g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=R+2YQ++tCGhGAsEB28VxBQ9eWCVQpQmGwfss64TAYYU=;
- fh=sCIo24Djn1JEp790PlTnHhwIS7zUfZNgDfxLqebqbxA=;
- b=H7khOFI06uBzer5xYcPrFRBSmT585sVcLjbQAoVyGAuZbaemc5WtGl1HOUqultBPSO
- tR8f1z9/i1gygWKuqWVgMeB3qKmIaJ1wuvdTz4MXXJ4SsubtRXQCV5ErXRDK7xB/RBp8
- gMbB1lpotD5be3itwATwT39O+G4zECbvIDghChgY+0h/vSv62Gg8d2IfTTQpd00s1otT
- asMTT+xYHLkatyPkhobsKQsEwxbGM/RUbfPNb84T1BHMuynMCkmGpopA1yQ480OcIb+u
- XBRrtgkIEXJnnBsOUAiktRAp41kaSwWPl1RKbSIfwa6mvk2woYJMG9BUJxG6PKSYzYSG
- mOUA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784127149; x=1784731949; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=R+2YQ++tCGhGAsEB28VxBQ9eWCVQpQmGwfss64TAYYU=;
- b=hmO4s707BU49p8sQXqAsNpktz+eELSkPpw3avbyYCuZLMk9BBNz2xfKXkhhRpsH5WL
- bJwYwsW7b5GPjv3ujaGycGufyZJPTb79oJGwcRwd+Q/tlFOXOzP/VEZsi6GalVFacdPh
- cqnrvdmmXtWm3lbylVnZp04c654r1Xf9AFOJu0JrgCbaZEEM806hjli5fpBnvfJ4rmqG
- +03RglQIS44BSIg5n4eP4yB+OFb53xnSK5u1tThkm/cl9/DCwAoCftJ9IOsitR74v7NS
- tu70ksTYaH7kY8SDiQ7vfW7d5aXfiE/Jg9+j2szmP6Fnw8BM27amQF3QlZA6+3Qxu6zD
- R4sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784127149; x=1784731949;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=R+2YQ++tCGhGAsEB28VxBQ9eWCVQpQmGwfss64TAYYU=;
- b=RHWiNWQNCFRTftnQ1HJZSkoVVvXJEHJ/FPA6bGIBo2h8qQbD7hV2uch7mgjql4DqR1
- I8YnVyUf1RaNnYOlTgruHWaM4h9Jo041rAg0pX9Itk8HlEj0lLgkx3K0gfKmjtSrSm+q
- pukEYNwZ/5MLUMjBy+CoVcJu8O+fyiwZDMJ2RU5brong54z6BchGQHIlUOuSExVojS6f
- iYvm1KpttknmAw5oKXjboDw2zYy+UNnkgkcMvW43UwJWWSrN4NcafM0nwsgXhhCs4OZe
- fy2kpd0YOPcIQwCqbdOQDoEUUm3APvffFluO4LAIr60qljzeLm/ytKc85fN0dLVDSjbZ
- tQEg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RopvBaBy9ukMve22h6vAfl68jq83TQix2Xw3r5KHMTIveSFouOCdLf9DW/MMhMR5gQTvaN+uALwnmu3@nongnu.org
-X-Gm-Message-State: AOJu0YwCzZwNdSqGRh4QxqCf6eNo9GiaFDhPNGxW6Dg7RIlEXJH2+mr8
- pUXs3ORXk/CN/zh35UZjceffZy+2+JvVZM2mQEHI9UbKxOAJZV1foSmwB3KIXshWlvr0s6jLo/Z
- M9MSvtt8nIfKPPXGAFACWMcztiAu8T/Q=
-X-Gm-Gg: AfdE7cmaAAWjRz97eawZ2VEpBXnYSKVdAm47Ya/g2fUiixadpVVSQqwrLMMEaZ6PzZC
- T6l2St/9GqWBdJzax/mLDdB9eP+CSUaBtbvoF5S7GBEfaaRu52Kyaa3Gj1bzgdXtEbuo83HynaM
- 9x5hrcGoSHpXYc4/E7Syisapt7OPZRlOQHBOvexRC1hRqJyjrJZc719lFjtp8a2WWlf+kYACRbP
- 7y4JpA+EMlzds3QhqfF3m8raIxnsP1k+552g5ZZvRYGK+5YcN3wTuehwBxiuiUWNuwdPKCdUWTf
- +EVbUZo=
-X-Received: by 2002:a17:907:7292:b0:c16:29eb:e84a with SMTP id
- a640c23a62f3a-c1667b8bfdemr456014366b.53.1784127148911; Wed, 15 Jul 2026
- 07:52:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <bchaney@akamai.com>)
+ id 1wk10s-00068a-NW
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 10:55:06 -0400
+Received: from mx0b-00190b01.pphosted.com ([2620:100:9005:57f::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <bchaney@akamai.com>)
+ id 1wk10q-0004oQ-03
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 10:55:05 -0400
+Received: from pps.filterd (m0050102.ppops.net [127.0.0.1])
+ by m0050102.ppops.net-00190b01. (8.18.1.11/8.18.1.11) with ESMTP id
+ 66FE34a01340333; Wed, 15 Jul 2026 15:54:59 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=cc
+ :content-id:content-transfer-encoding:content-type:date:from
+ :in-reply-to:message-id:mime-version:references:subject:to; s=
+ apr2026.eng; bh=8UVzoiQanrKw4wlsSkWdDO1tgMMjC445ynggmkPtaCI=; b=
+ jzaM2aSmE4COSMq9b00S8rbzOXcUp7/ahChr75GnOyZzp7P+aS0lpove8Vw/6fu6
+ 9M0fE9OIhU+A2CA8CUIwVu3+kgeMLJIB0uHaTK54XKJoxCgjgkxsR87t1ZEIAltb
+ GRA8JYhN33WdnIR8b3TAzYfaTabzhkmOq1Z/WhErIwrzOLnwuKHsdoScuZZKxrpP
+ q90/TvHOAVL1K/XmT26uLTxBEjr3Xu44mXHTjursJOszSaIwEV4n/ep6bEyQ2QLp
+ w/+drb66X5IlDE3ZHTxV0omWGkaJGNIpuY899BWUf7eoa8yuE19H8EH7C0H5Z9bX
+ 8ZhribBwhaKho6L5cBoo4A==
+Received: from prod-mail-ppoint8
+ (a72-247-45-34.deploy.static.akamaitechnologies.com [72.247.45.34] (may be
+ forged))
+ by m0050102.ppops.net-00190b01. (PPS) with ESMTPS id 4fbegj4hgj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 15 Jul 2026 15:54:59 +0100 (BST)
+Received: from pps.filterd (prod-mail-ppoint8.akamai.com [127.0.0.1])
+ by prod-mail-ppoint8.akamai.com (8.18.1.7/8.18.1.7) with ESMTP id
+ 66FEg1Of004385; Wed, 15 Jul 2026 10:54:58 -0400
+Received: from email.msg.corp.akamai.com ([172.27.50.220])
+ by prod-mail-ppoint8.akamai.com (PPS) with ESMTPS id 4fbh5v1x56-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 15 Jul 2026 10:54:58 -0400 (EDT)
+Received: from ustx2ex-exedge4.msg.corp.akamai.com (172.27.50.215) by
+ ustx2ex-dag5mb3.msg.corp.akamai.com (172.27.50.220) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.43; Wed, 15 Jul 2026 07:54:58 -0700
+Received: from BYAPR08CU003.outbound.protection.outlook.com (72.247.45.132) by
+ ustx2ex-exedge4.msg.corp.akamai.com (172.27.50.215) with Microsoft
+ SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37 via Frontend Transport; Wed, 15 Jul 2026 07:54:58 -0700
+Received: from SA0PR17MB4299.namprd17.prod.outlook.com (2603:10b6:806:e2::12)
+ by CY5PR17MB6120.namprd17.prod.outlook.com (2603:10b6:930:33::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.20; Wed, 15 Jul
+ 2026 14:54:53 +0000
+Received: from SA0PR17MB4299.namprd17.prod.outlook.com
+ ([fe80::9e2e:cabd:1b09:bab]) by SA0PR17MB4299.namprd17.prod.outlook.com
+ ([fe80::9e2e:cabd:1b09:bab%6]) with mapi id 15.21.0223.011; Wed, 15 Jul 2026
+ 14:54:53 +0000
+From: "Chaney, Ben" <bchaney@akamai.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ "jasowang@redhat.com" <jasowang@redhat.com>, "mst@redhat.com"
+ <mst@redhat.com>
+CC: "armbru@redhat.com" <armbru@redhat.com>, "peterx@redhat.com"
+ <peterx@redhat.com>, "farosas@suse.de" <farosas@suse.de>,
+ "raphael.s.norwitz@gmail.com" <raphael.s.norwitz@gmail.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "berrange@redhat.com"
+ <berrange@redhat.com>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
+ "mark.caveayland@nutanix.com" <mark.caveayland@nutanix.com>, Jason Wang
+ <jasowangio@gmail.com>, Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH v19 13/15] net/tap: support local migration with virtio-net
+Thread-Topic: [PATCH v19 13/15] net/tap: support local migration with
+ virtio-net
+Thread-Index: AQHdE6ew16dw8DCyHUKMaGG+2gFAGLZuaWuA
+Date: Wed, 15 Jul 2026 14:54:53 +0000
+Message-ID: <C3749950-EF67-430C-B894-A740C97124B6@akamai.com>
+References: <20260714154246.1242856-1-vsementsov@yandex-team.ru>
+ <20260714154246.1242856-14-vsementsov@yandex-team.ru>
+In-Reply-To: <20260714154246.1242856-14-vsementsov@yandex-team.ru>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Microsoft-MacOutlook/16.110.26062818
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SA0PR17MB4299:EE_|CY5PR17MB6120:EE_
+x-ms-office365-filtering-correlation-id: bc3ea717-37f1-4de7-db34-08dee2810771
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|23010399003|1800799024|376014|7416014|10070799003|366016|10067099003|56012099006|4143699003|18002099003|22082099003|38070700021;
+x-microsoft-antispam-message-info: kbd+7PW90jwp2EUYrLlc1nU9bwMN6HYnUiHqOgG0y1iSfaLMReQlhZVNdHLQPiqTW4Jkrf3MGoCgK0fau+b3lQnSWNyoV/JCY2tSTs1iNZQg1NLgvOwSoJQxWtFgn+QT/LZKwI+cU0BUEc6wfyNxQqw1Wt9zvvslgerHtYriyj8PN/ibMJrQlZyU0NotR4F1aFZkGgmQTlgHVhBQpB1DRmSFoWy2U6gRA3Ob0PwDe0WJmxZ3irML3xHmp4xllcsCGFgAbfXfso3t5UtKdFJp5XcxPiqwLqJqwp0HoTi38epaERscdxscelWSJ2pax02ybTnww6j2X4pzjHQ70lnbkZv1+LChW/rKU10uerpOruGL5d+1QGGqFXuXpmYS+1ZU2bQpWFq5o1q/jUmDzygZSWa96PbZtkb4juxdwIXGn+0gouPV9zYjkb/c+DWQt4M0J5S0hG6DqYh0qqMWyZFR5WcEQm7y/zS4huC4DcFUwHdGUEz92kSsGCuHlGbuxq1NNf2a6xbexS2zYx8qf5erg/vkJ7GCAAevt6kugwc4AfcmtJzphyKaYLmtDn3fz9ma4MocDt7zDFuKZaLWczMw/+gLwRqxMCw1eg+ChwejMxQQzf+a0fZumumxC6lpBju+I/1yik37QCYnKwmBnxa3Mwv+20yDH7yWUmtJHM01S1YMn0Ma30hTbyd1ZNAcJWB0d1UfidkAJZJEJ0xhlAAXKgV9xQISTc25fRb2bVdwlbo=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SA0PR17MB4299.namprd17.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(1800799024)(376014)(7416014)(10070799003)(366016)(10067099003)(56012099006)(4143699003)(18002099003)(22082099003)(38070700021);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 2
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?c1BHQ2k2TmlzdEFuT1AzK3JWT2hybU5OTkhmVldMR1dBSUFWbzgzMStIaExm?=
+ =?utf-8?B?YUdnT3JGTlBScllPSWxqSm5vVEpIY1dYTXlUa0VDYUVBWTFIMitrd1IvTU14?=
+ =?utf-8?B?TCtOWDVrWXVzQWtiS0xrNDJhZjhjdnI2WjRGc0JnNC9VQysvMTFkbS9JcTZZ?=
+ =?utf-8?B?VVlOc1cxSzhWOVYrVTVtalkzODF0MWZtTVAvbHJvUkpPY3gwc2lSOTd0bmZC?=
+ =?utf-8?B?ZzVIRStnVzZ6NFNFUjhzOTVDVXRabENqZ01hRlhWNUcyUWZ4ZHc3MEFjSEJr?=
+ =?utf-8?B?Ry9MS3pvL2JBSU9hZWZhSnQvZG1ueStYYlV0c0NzRDJEaXVrczE1dlljR2dS?=
+ =?utf-8?B?Tk90Skt1TjdBTTM5OFhiU1daZmhyTWZIZHg4YnVLUE5iTkkzV2hYU3FSSXdD?=
+ =?utf-8?B?cXZLd1A0cHVlclVVWXJ1SXlkLzV0Y015UTdUSCtUeWJEcDd3UXZraXN0R1Fp?=
+ =?utf-8?B?VzI5K3NoR0lCQWpHQVVXOG1tQnM3dzZxZUdQZDBURk5mTG1ER1dTVWxNVDM4?=
+ =?utf-8?B?Ym54SEp3YXVUMDA4WCtjckJ6L2pOSnJFc05pU3ZwZitMWnV1dC94ZHF2QTFq?=
+ =?utf-8?B?bDJ5RS9YbElFK1J2d2hpdkV6cnphdFZEV2t2UFNHYTE2eVpWWjF2TXFHUDdp?=
+ =?utf-8?B?NFZxRDAwSzBIbDZGV29Vem9WTmpTbFFtcVhyZHVxRGc3bjVjS1ZlUHhoTFpZ?=
+ =?utf-8?B?QncrZDlmL1IvREo0N01UQ2NxK1pqL0lBYzN1RGxWdmsxZ1RHYVBMbUFFVjMz?=
+ =?utf-8?B?bzBMRDcwWU85eHRJa1BhM3haamRQWEU2TjI5VXMzdEk4QlNtV0lmOWtmK2Y4?=
+ =?utf-8?B?dU1xTERqK0FkMENOdzNNQUhPbVFLZzRNRmdWNGZCckRYU2RnVXE2OTduUzlY?=
+ =?utf-8?B?Q29qRWhyVWltK2crU0ZxY01SekpxckZrYnlvR2RyRDFhbXU5SjhoN3A4b1dR?=
+ =?utf-8?B?Yk45OUVnMkQ0UlBoeC8raTBSN0tWdTlRejZOZkhKa3lWbEJPODg2c0hvWkZy?=
+ =?utf-8?B?QUNKdVNPQVowb2FCbThmdTNpaVN4Zm9WN2hwVWc1V1BBQWhOVHNpOWR0My91?=
+ =?utf-8?B?ajRiT010a3Z3dGtSalExV3AxNyt5V1BaUHpjaUQzZzREZ2RDNXpvL2NzcjBn?=
+ =?utf-8?B?aUIzWWk5Z3lqUVJnU1hFQWF2NE9oTFBpeE5xTklwNGVxbmxYM0tMUnZ2ang1?=
+ =?utf-8?B?YTdOMlRHYVA3T2ZNbndnQzE0VjM5ZmlTV3RNdGRZRVBaTTdiQi9BMElzdDM2?=
+ =?utf-8?B?QU5WNFZPYzhRdTRFLzJ3SlZvb0JhVlhDMnNGZHpabGxESFVISS9VL04wdXRJ?=
+ =?utf-8?B?c2ZUQ2NTVlN6QjdxaHBLVnZabXNtTnpMUlhGc0lyWTRBMWNCbTNqZlBrbGVG?=
+ =?utf-8?B?cGE1ejIvQ0hiQXBuVFcxYkZoQ21YRE1MNXNqRHJZWSsrazlVYlp5MVBVMmZw?=
+ =?utf-8?B?bXRSRmE4OVpXMWJtcGxLVXNUcVhWelhUaCtxWWlnR1hmL09FZnlCOGxNSDhx?=
+ =?utf-8?B?a3ZwRjBpaUtnRVZ5OUZIVlJ4MG9LbjkrUVMvdHZqbG1pbnUvTEpoSmRjeFJH?=
+ =?utf-8?B?eW5XdGVzUHAxNnhhUVdaazZ1dWRCT3lMNXBTT0pseVEyL3g1N2FvMWprc2xK?=
+ =?utf-8?B?OVlKcDZDTE5JRnhUdzRuazMzdDlrYmFnOE1SNzIzWjZFSXVMcS81SlMvUTRD?=
+ =?utf-8?B?UWYyMnduZzgrUXJPVDJSd0ZieFVRSGdpenFzT3I0bzB5SC9FMi9BTEJwcktS?=
+ =?utf-8?B?MFl3bmEzN2IxUXlnbTRKL0Rqc3JPc0tsdUlvTXRYNm1DcEFkQXlwd3QxODM5?=
+ =?utf-8?B?M3JQY25IZVhuV3pLMUZ6b0FBRWxGUGlLbVRzbmlzYUlLVnJoQjRKbk1JVDR1?=
+ =?utf-8?B?MEp5ZUZDWDY4a0xTOVpyYXRsQkxyaXZFa05hMFlyV0FnK1BMTHVoRGtabUY1?=
+ =?utf-8?B?SzB3bVhxY2lCTnlUQStML3FmTElHa2pLcHVua0R5YzhQbEdUS0RHNk9ZQVZr?=
+ =?utf-8?B?MkhtTmxlZW1IYXUrVVVQcUQ2RkhDNGZncVZ1N2Q0RzJHbnU5S01LeHlqUkV6?=
+ =?utf-8?B?alRqaTJsYlFZUUE0YmNhMXlRNjRGYURGY2dLODZvOEZVQkZZTG1mNVUxcXUx?=
+ =?utf-8?B?T0hFVTExcHB3Z1VXU3k5R29EWFNrZDV0T3lhSnpVMkZWdVl4U2ZScVJmYkgz?=
+ =?utf-8?B?RTcxWEVoN091cGZNcWNzL1R5N3plMFk5MEcvY2VGOVpyVFFWbTdjQjFhTXFX?=
+ =?utf-8?B?bTZWQVFORG1BS0VlaU4zWkw2S3pUQW5oSDlxL1VvQ1h3NllHWlVpcEo0ODVJ?=
+ =?utf-8?B?UVhmNFpYWEllUXJMK2FPMFpoZ1hKUjhUYmJOTkJkMUhXUmlrNG9UbytwdVhn?=
+ =?utf-8?Q?ZN20b+Oe+CMkd5jA+JET0ggs7p5VR/LkSRUr3eAib2oCs?=
+x-ms-exchange-antispam-messagedata-1: W2Iv2QRlXl24VQ==
+arc-seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=qqP1zSChFLRF7UFpUFJxUerESAb/2ZwkcIXw7rCF7M2BP0TOQtZ4NhIf42ejSmnGeQ5RA8XrVNYGTeopRwXmtHIjXGd7s3icOLZkm9wnhR+QRYq8KnL1T77p4WGTQZ1qY0EoNT1ydzXgepQKgjN6T1gQBDRL3x2kR+O7xmGI54D5AjFZEgFqG04b5ucMJHRN1gPBLZn3AQGxKKnXck6Gzs4hAQiJ/fOAq//uh5f4kU1rma0o36yxsszOUEEEIYSDB+moNrj4J3+bbJMks0K1AJqUKOB2M07X9pd6D8mB/hyI7jBavzzj8z1powNawXtMaJeM3UcpZJHyifVliw4Alw==
+arc-message-signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ytG9U+txABFUKb8oLsff5dR3vCjulKjTX5PhF0+hb98=;
+ b=aTh0C+nowZSQNXy+cPK99SyTsM6VdGmFNKjfqnJ51r4QnHnG5/tQSye8APVaPw0i4Gez7YHHc9YMEhJmIUSrpQGSxu4LFCA8r4C7IqA+z7foML318fhCUS1l6Z6QLpI9LOuJ9vAmgSTf0WtYYBZZ6aSViERNQaICU90rd68KokDp31/NZEj30kRHCauRGcWrShztlQVVz5541z1mIcD8Tp5O0fqTSBz+RYzsciszTrForWmJ8nXWPx1T4WOaFZ3F0seSwYdF/QhNlxDhJV4/E3H4z/tmZBuRPzk11NxJjEzT2J6TyOk8Ri0djcC8JRumwXSNS8AEhOp4W+RfYk4hYQ==
+arc-authentication-results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=akamai.com; dmarc=pass action=none header.from=akamai.com;
+ dkim=pass header.d=akamai.com; arc=none
+x-exchange-routingpolicychecked: Iy0GOESA0XFdVDbpJ9xxOpB/K+uF9rI8TazYsjiYP8KndvCCrSBRgyqebn5sgQzux6myVdLomk4QoTdiY2yaQ3Q96GpwZduj+1H2dTxeho8eF7SbZLrA1OhfATNPjc4g6iM6+r/WsCgpi/dLT7umh66OcVUvPieSP1glEG/JtdN9+NruDRcKGdj03lwztNU657Oc/64+tbStQbWSgXQbjQjfgYK5Rwq8zVQO9MjtTsARrduZYW0ScZJnJgnVvfdFPVe7JYIyTu30Lt56xDWJw03/d9uDayX/SqFcs7RtyeP3heh5Cahho0CmOI8gi0L1llbXJzv3hVke98bI4O4bQg==
+x-ms-exchange-crosstenant-authas: Internal
+x-ms-exchange-crosstenant-authsource: SA0PR17MB4299.namprd17.prod.outlook.com
+x-ms-exchange-crosstenant-network-message-id: bc3ea717-37f1-4de7-db34-08dee2810771
+x-ms-exchange-crosstenant-originalarrivaltime: 15 Jul 2026 14:54:53.6288 (UTC)
+x-ms-exchange-crosstenant-fromentityheader: Hosted
+x-ms-exchange-crosstenant-id: 514876bd-5965-4b40-b0c8-e336cf72c743
+x-ms-exchange-crosstenant-mailboxtype: HOSTED
+x-ms-exchange-crosstenant-userprincipalname: emEZnrpZvrOzPtdAV63b2sPnmxh9y1ZvQEP2JqKJFVZtnkqX5KUl5rOJOO3QDMn4Q0VgNL6Ii0vT4lft64cSMw==
+x-ms-exchange-transport-crosstenantheadersstamped: CY5PR17MB6120
+x-originatororg: akamai.com
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <71492DE9A2AEAF44B577AAC1A3CC5E71@namprd17.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20260714164745.573141-1-shivangu@linux.ibm.com>
- <87pl0ob9l1.fsf@vajain21.in.ibm.com>
-In-Reply-To: <87pl0ob9l1.fsf@vajain21.in.ibm.com>
-From: Harsh Prateek Bora <harsh.prateek.bora@gmail.com>
-Date: Wed, 15 Jul 2026 20:22:15 +0530
-X-Gm-Features: AUfX_mzCV-wvqmZvRelqULvxj7v5cBZKEeqHb2LRPgPz1obtzt0nwA1A-rtBKfg
-Message-ID: <CAEuJdmrKCJs_acaeJUu=WNif_hHnq1N5yikgiu7GoBcWjnxLTA@mail.gmail.com>
-Subject: Re: [PATCH 0/3] hw/ppc: reorg PowerPC RAS code for better
- maintainability
-To: Vaibhav Jain <vaibhav@linux.ibm.com>
-Cc: Shivang Upadhyay <shivangu@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, hbathini@linux.ibm.com, sourabhjain@linux.ibm.com, 
- Aditya Gupta <adityag@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, rathc@linux.ibm.com, 
- Nicholas Piggin <npiggin@gmail.com>, mahesh@linux.ibm.com
-Content-Type: multipart/alternative; boundary="000000000000f1f07e0656a778d0"
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=harsh.prateek.bora@gmail.com; helo=mail-ej1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-15_03,2026-07-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ spamscore=0 malwarescore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2606160000
+ definitions=main-2607150146
+X-Proofpoint-GUID: 1XzJxpWEBsr-Oo8y6IDqebaMriQWVxwr
+X-Proofpoint-ORIG-GUID: 1XzJxpWEBsr-Oo8y6IDqebaMriQWVxwr
+X-Authority-Analysis: v=2.4 cv=XJkAjwhE c=1 sm=1 tr=0 ts=6a579f43 cx=c_pps
+ a=YfDTZII5gR69fLX6qI1EXA==:117 a=YfDTZII5gR69fLX6qI1EXA==:17
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=Ifg-1AOnLHOf1gn6spyb:22
+ a=Pq72nHwyFlvh3xMh7ENp:22 a=6R7veym_AAAA:8 a=27Bv8fk0uu5NPRc7wWsA:9
+ a=lqcHg5cX4UMA:10 a=QEXdDO2ut3YA:10 a=ILCOIF4F_8SzUMnO7jNM:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE1MDE0OCBTYWx0ZWRfX3fQg9p7BWXmv
+ o3OrHePFrDODXm5V5lMdsk7yjzf57PN9n0QEQ/4bIl82bZFm3Exo7TuZlSPGW9pDM2m7/YhnZ1m
+ It2XdrXsf/SqkiTZ01NNBmVWb/gm4Co=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE1MDE0OCBTYWx0ZWRfXxtYhusJyMDca
+ C13AzIkIrDy14pxGNQ2DcIIZ2iQkY3IowBPPcY+xtvJcqDVLNnncqiZZD0QiOPp7ig4PuGtKqnt
+ UMCxtgrWgaQ1ecUZZTANn46nOi8JwjyJg4zFioOdZjsPO3DOZPXMGBSEeZYiTjWfqz+WFLaUHQ/
+ YdiaNJm0KPwh1MxH9MEvDow4zyf2bpXiYBHEBAduYdY8Wn3GjmHZu24omISodbiOUNiBQTV2XnY
+ KMep3XMtgFeaBqJry9q4VSNjlt3+lcqhol7/9R43aRyfX/3Gj/pKjvSX+JBQrU+QpKawu7dpb7k
+ gyFLwsWSvBfHCzRr2Q0ns/unsmzt/kDBAhM5JNLidemQQDPhXR4qYbQw99nPYxV8/va005NBzH+
+ fhNo/XG9zk+8qZ3E5T8i6sqgZrNPjCNQtMyplYERguQ6fzJMaENw+0UwZ8kedJbUfv7S10L73Bz
+ nfQGmyRwcLDqhKUBTag==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-15_03,2026-07-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 spamscore=0
+ clxscore=1011 suspectscore=0 phishscore=0 adultscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606160001 definitions=main-2607150148
+Received-SPF: pass client-ip=2620:100:9005:57f::1;
+ envelope-from=bchaney@akamai.com; helo=mx0b-00190b01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,165 +229,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f1f07e0656a778d0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, 15 Jul, 2026, 8:10=E2=80=AFpm Vaibhav Jain, <vaibhav@linux.ibm.com>=
- wrote:
-
-> Hi Shivang,
->
-> Thanks for the patches. My review comments below:
->
-> Shivang Upadhyay <shivangu@linux.ibm.com> writes:
->
-> > Extracting RAS related code from spapr_rtas.c, to a newly created
-> spapr_rtas_ras.c
-> > and carving out a MAINTAINERS entry dedicated to PowerPC RAS. This will
-> cover RAS
-> > related functionalities for PowerPC platforms.
-> For a refactor-only change, this patch is adding 44 new lines to the
-> codebase which feels a bit heavy.
->
-> Just moving code from one file to a new file will reset the git blame
-> history of the code making future reviews difficult.
->
-> Such movement also makes code optimization difficult for compiler.
->
-> IMHO such code movement should only be done when:
->
-> * Its accompanied with patches for adding or fixing a functionality.
-> Or
-> * It clearly improves performance
-> Or
-> * Results in significant reduction in LOC
->
-> Since these patches doesnt seem to fit to any of the above criteria I
-> suggest you to reconsider these patches.
-
-
-I think the goal here is to ensure right people get notified to review RAS
-related code changes. Other option would be to keep entire spapr_rtas.c
-file listed under RAS and let it have non RAS related code also and do the
-split later when it's bloated enough to be considered for split. Open to
-suggestions.
-
-Aditya, Sourabh, thoughts?
-
-
->
-> >
-> > Also adding myself as a reviewer, to help share the review workload.
-> >
-> Thanks for volunteering as a reviwer for this code. Having more help
-> with reviews is always good :-)
->
-> > Shivang Upadhyay (3):
-> >   hw/ppc: move RAS-specific RTAS handlers to spapr_rtas_ras.c
-> >   MAINTAINERS: add dedicated PowerPC RAS section
-> >   MAINTAINERS: add self as reviewer for PowerPC RAS
-> >
-> >  MAINTAINERS             |  33 +++---
-> >  hw/ppc/meson.build      |   1 +
-> >  hw/ppc/spapr_rtas.c     | 189 --------------------------------
-> >  hw/ppc/spapr_rtas_ras.c | 232 ++++++++++++++++++++++++++++++++++++++++
-> >  4 files changed, 249 insertions(+), 206 deletions(-)
-> >  create mode 100644 hw/ppc/spapr_rtas_ras.c
-> >
-> > --
-> > 2.54.0
-> >
-> >
->
-> --
-> Cheers
-> ~ Vaibhav
->
->
-
---000000000000f1f07e0656a778d0
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, 15 Jul, 2026, 8:10=E2=80=
-=AFpm Vaibhav Jain, &lt;<a href=3D"mailto:vaibhav@linux.ibm.com">vaibhav@li=
-nux.ibm.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">Hi Shiva=
-ng,<br>
-<br>
-Thanks for the patches. My review comments below:<br>
-<br>
-Shivang Upadhyay &lt;<a href=3D"mailto:shivangu@linux.ibm.com" target=3D"_b=
-lank" rel=3D"noreferrer">shivangu@linux.ibm.com</a>&gt; writes:<br>
-<br>
-&gt; Extracting RAS related code from spapr_rtas.c, to a newly created spap=
-r_rtas_ras.c<br>
-&gt; and carving out a MAINTAINERS entry dedicated to PowerPC RAS. This wil=
-l cover RAS<br>
-&gt; related functionalities for PowerPC platforms.<br>
-For a refactor-only change, this patch is adding 44 new lines to the<br>
-codebase which feels a bit heavy.<br>
-<br>
-Just moving code from one file to a new file will reset the git blame<br>
-history of the code making future reviews difficult.<br>
-<br>
-Such movement also makes code optimization difficult for compiler.<br>
-<br>
-IMHO such code movement should only be done when:<br>
-<br>
-* Its accompanied with patches for adding or fixing a functionality.<br>
-Or<br>
-* It clearly improves performance<br>
-Or<br>
-* Results in significant reduction in LOC<br>
-<br>
-Since these patches doesnt seem to fit to any of the above criteria I<br>
-suggest you to reconsider these patches.</blockquote></div></div><div dir=
-=3D"auto"><br></div><div dir=3D"auto">I think the goal here is to ensure ri=
-ght people get notified to review RAS related code changes. Other option wo=
-uld be to keep entire spapr_rtas.c file listed under RAS and let it have no=
-n RAS related code also and do the split later when it&#39;s bloated enough=
- to be considered for split. Open to suggestions.</div><div dir=3D"auto"><b=
-r></div><div dir=3D"auto">Aditya, Sourabh, thoughts?</div><div dir=3D"auto"=
-><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_containe=
-r"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left=
-:1px #ccc solid;padding-left:1ex"> <br>
-<br>
-&gt;<br>
-&gt; Also adding myself as a reviewer, to help share the review workload.<b=
-r>
-&gt;<br>
-Thanks for volunteering as a reviwer for this code. Having more help<br>
-with reviews is always good :-)<br>
-<br>
-&gt; Shivang Upadhyay (3):<br>
-&gt;=C2=A0 =C2=A0hw/ppc: move RAS-specific RTAS handlers to spapr_rtas_ras.=
-c<br>
-&gt;=C2=A0 =C2=A0MAINTAINERS: add dedicated PowerPC RAS section<br>
-&gt;=C2=A0 =C2=A0MAINTAINERS: add self as reviewer for PowerPC RAS<br>
-&gt;<br>
-&gt;=C2=A0 MAINTAINERS=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=
-=A0 33 +++---<br>
-&gt;=C2=A0 hw/ppc/meson.build=C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A01 +<br>
-&gt;=C2=A0 hw/ppc/spapr_rtas.c=C2=A0 =C2=A0 =C2=A0| 189 -------------------=
--------------<br>
-&gt;=C2=A0 hw/ppc/spapr_rtas_ras.c | 232 ++++++++++++++++++++++++++++++++++=
-++++++<br>
-&gt;=C2=A0 4 files changed, 249 insertions(+), 206 deletions(-)<br>
-&gt;=C2=A0 create mode 100644 hw/ppc/spapr_rtas_ras.c<br>
-&gt;<br>
-&gt; -- <br>
-&gt; 2.54.0<br>
-&gt;<br>
-&gt;<br>
-<br>
--- <br>
-Cheers<br>
-~ Vaibhav<br>
-<br>
-</blockquote></div></div></div>
-
---000000000000f1f07e0656a778d0--
+DQrvu79PbiA3LzE0LzI2LCAxMTo0NCBBTSwgIlZsYWRpbWlyIFNlbWVudHNvdi1PZ2lldnNraXki
+IDx2c2VtZW50c292QHlhbmRleC10ZWFtLnJ1IDxtYWlsdG86dnNlbWVudHNvdkB5YW5kZXgtdGVh
+bS5ydT4+IHdyb3RlOg0KDQoNCj4gKyBpZiAoaGFzX2xvY2FsX21pZ3JhdGlvbl9zdXBwb3J0ZWQp
+IHsNCj4gKyBzLT5sb2NhbF9taWdyYXRpb25fc3VwcG9ydGVkID0gbG9jYWxfbWlncmF0aW9uX3N1
+cHBvcnRlZDsNCj4gKyB9DQo+ICsNCj4gKyB2bXN0YXRlX3JlZ2lzdGVyKFZNU1RBVEVfSUYocyks
+IFZNU1RBVEVfSU5TVEFOQ0VfSURfQU5ZLCAmdm1zdGF0ZV90YXAsIHMpOw0KPiArDQo+IHJldHVy
+biBzOw0KPiB9DQoNCkEgY29tbWVudCBvbiB2bXN0YXRlX3JlZ2lzdGVyIHNheXM6DQoNCj4gKiBO
+ZXcgY29kZSBzaG91bGRuJ3QgYmUgdXNpbmcgdGhpcyBmdW5jdGlvbiBhcyBRT00taWZpZWQgZGV2
+aWNlcyBoYXZlDQo+ICogZGMtPnZtc2QgdG8gc3RvcmUgdGhlIHNlcmlhbGlzYXRpb24gZGVzY3Jp
+cHRpb24uDQoNCklzIGl0IHBvc3NpYmxlIHRvIHVzZSB0aGF0IGludGVyZmFjZSBoZXJlPw0KDQoN
+Cg==
 
