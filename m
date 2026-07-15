@@ -4,113 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A5F4C44501
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 09:58:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B211EC44507
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 10:01:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjwMm-0005xC-FB; Wed, 15 Jul 2026 05:57:24 -0400
+	id 1wjwQr-0006dx-Bi; Wed, 15 Jul 2026 06:01:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjwMl-0005wr-91
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 05:57:23 -0400
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+ id 1wjwQk-0006dc-Dp
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 06:01:31 -0400
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wjwMj-0004Nd-Hu
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 05:57:22 -0400
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-81e851aebeeso59270057b3.0
- for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 02:57:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784109439; cv=none;
+ id 1wjwQi-0004uD-T6
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 06:01:30 -0400
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-81ecf499af9so8665047b3.1
+ for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 03:01:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784109687; cv=none;
  d=google.com; s=arc-20260327;
- b=eI94KVOm9evvDBkoFht+U8kNAYod7BQN1gV7MXmTA/h3ySBlaFlZO2qlvPFFCOK/o4
- ts8VwofGoqtI1ItNlUBsuHKk1anPv1H1hHiTQy5DlhDSA518zFk0D+90x9/Ph4exU4m7
- fU1NJ2Z8fOVo8isyaj9vAP7IvampdVAMxsPb04EDxz6u1e93DutEOZIXQAfFKoS+AYan
- /ojnk6zNI5316ZGcK3DX2/ugWqaEA65XK0PHhaehmFiDidfpe2VmHjav9s64UuM+LS7L
- 56dAYdrmHiQaxqAgpv54vp5gqFHCJCpgmVsG3NCKb9UHcpz8SPcCHbspBxrfam/I7o3m
- fEpA==
+ b=G/Fg48HjjZ8RM+4R1xbBNlamn1uKBxOO9PuWG6b5k38xCO6azcDH0wJF6hFIqEnW8t
+ oRrnCDwhewiucTB17bAKu9oIhcwKpvu4+Hh13qlL59XdeoHKF63GtQr/lRQh6ZBw6Qg5
+ UJD4auHxFVZxXa4uV8bFBnXt3aQNPoMQYYfV7Rc5hOKsfo2stk4tqWCKBX18MHp2h8Hp
+ ZRXf4PnpZIBPpj86Zz+Max5otv3l/FZjwsVfNVINz25vAhlUcxtyOa3L7Mhi6m8XXwXJ
+ 0TaseLSvpjTJYfBq/3Xb898FNWV0LvbjYT0sP+MbC9cmxBqfBd8qk2jc4GXHSTBbahcy
+ 1rCA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=hiF7Qk1974V1FoIyO6I2xCnds7WThIWYuWNz/CVlnl8=;
- fh=ErwHpewffKkl2/ooxaQgYf0kK60byVFM8jvL4khuOuU=;
- b=pG/vGZJrG91MWUKm6rmhvSXtsB3IG6Q11id5WZUC/cTP//52G9PZin1HKvPHFjAJMp
- OqqL0N8cagLz/v7uOD9s5iyJ4j1fiWK/hosFcQXB5dpdSm/D3H47IswYWaLS63EgaYoK
- 3PXGyiVqqMdf9k1RdNFWkyy4FcLL6RKZ66INdqrCswzEs7/5sI0UvrNAtnBQHKv0tQp3
- AJzHjCNkkruIlw3Ao/dnqNvNIwP9g8uMZ5FRMhgsHHlalqkx5Uy5U6PdvYYVbbjkVXg+
- xmpUz0fxenKvDWpofy0HxaC7sgZUUHjUcXZvmGsWNWhBHx9DKu2d+XYUZu08G0ilg2v8
- u//A==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=f0bGynfKw827dVUyNapCWNiAsW15+3NsHomT7UqeaH8=;
+ fh=2CuaD9y8XJmA5tMV9AjWWMYHrnMSsUtSULxZHRCmiUs=;
+ b=jYYaZnyHxvWX8TPC+i6DxeSyhY/p2hVzUcROIGFesEFqsjh32mM0Hoo19GE9GgLzt1
+ AI0whWKtMDFs1x0eNgsPmAZFftQmYU8Fq6L14Dq20BQksDHV5u1j8q0ezyYw8dctQSC4
+ AgZUztu5sdtWsTAed/Ue3OWo+IETyEW2/UoBcjPESgV2pWmTmh5I2P4p0dpIlg4Roo8L
+ QdxTNBW/SvI+eY7SC2uSUXuXP6YcwShKDHfAyjtK8pQePGWHmKnn9JQ7Tf9QsZx+uApn
+ NWzyumqgqElHK2sy24SqvagtEQBcFYhTSdCo5IrCKUW1dzPc5HXLZRYadueHwtNnuxob
+ tKlg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784109439; x=1784714239; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=hiF7Qk1974V1FoIyO6I2xCnds7WThIWYuWNz/CVlnl8=;
- b=qbfA3612UVf9HTAh7VRr2aXTYcUkWYM4kwWJlKitDyWcTDKekVGtpro/+kfJMfjVow
- HreTde5iTHQcgfX+jV223tq9iBqOIee+uZdlQazGPOYpHKu5U9JP96xkkJ8ejJeumfS5
- NmP5mLtTVkMvDztf2lhtSUoPQdMBwVwWGqFjW57SX9ZbrAAvAlKYCnC+N2wjL63YnRgj
- SgU9tKWkEwREj0UVb+1lQv8F4WisUhamzIraB+JML7FaDr3g9NVdFwCdO63ctoYv6xuK
- PeKot7pZVBqa81nS/FR7at4XPVxZ3DqOiHN0X+JlxdfzJT8f6SAlzSSdpU7nC4V/8pkV
- PgQA==
+ d=linaro.org; s=google; t=1784109687; x=1784714487; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=f0bGynfKw827dVUyNapCWNiAsW15+3NsHomT7UqeaH8=;
+ b=ZnrvjoKNdnr2KT7m0XMaByaTVXpUBxKNqw6KPHxZt+2EZtCijayjhgtqKCAzaPoLR5
+ 9eSV0n02XWrAKnO+2K8PfVbBRV7/IDfgQutc1WLAO66KPwB6RIrGOw6g7gWJtZvj40K2
+ zpIYVWgrHLC8E4jyS9uM31LeMHqyGiZa5sLbZpMq5OtsS1ZCrcz2VB72QhtICQvQlCFU
+ Ftv6LJfMRiE1/qTIWJQpUhZ/FHSoLEQbFGK8RmPcFNwWaPcplCFcNzmra+h1w4m7zUIV
+ /t3FW2UBKBuWMnbz7f2kmHXsy73X6F51LaFMNw2U+CMtw2Kdw7ZQQXbwdfSbRbyOShwa
+ REwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784109439; x=1784714239;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=hiF7Qk1974V1FoIyO6I2xCnds7WThIWYuWNz/CVlnl8=;
- b=HmT0kSiSuxAj89tP4IEmF83HzanC22RedvF+qRzciFUPE92bdu7AxZJl16YyMY5T4N
- pBvWZKz5YfkLqyjJ+R4MWP3PhjwGupDB87ZQ5JCcdJ8KRs5VMq6ndvM4W7uy6BuTzTUp
- lylSwVroN0/X0Pu3Rq7AdMFfmA9KBrKSyEMK1sJdpp9mHfz0K/ida5BDg0mcgfRPS45P
- YiDHBw9PE5f4uZr6Ru4X3VvWNiX5fi0SgsSCNrQd+hIvZmTgleajhaNpLywIItRt8T1W
- 3hLaJaoVunX5VVEeMSu2NPDum4b2YHLBSxDnhiGMFsD3gsvdnX1sQxCQ8BbL7f0acvjZ
- XDNA==
+ d=1e100.net; s=20251104; t=1784109687; x=1784714487;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=f0bGynfKw827dVUyNapCWNiAsW15+3NsHomT7UqeaH8=;
+ b=RELYmoY7mMiZEPYXWHHBomQ2novm3WlT+RFYBvp9xSEcohkqz+1l4pLOcR565Guraq
+ knPFvpSAO9ZKnmodr3rvt2kYUcoEKNSMTu3l9q+OP6720jCqlh0l2g42tFiSe83pY5r2
+ FekusIRiYsak3dvT2vr4fZXUmp68lqjTTolYUMXEE+dh9pIJC5X7eNkibpvcYTElsgzb
+ f4Bv29mt422sFQNZiivEShXAlcm85XfKydqYZe8qfryAt4wJmMokYJV9qUX2JEiEsPIL
+ tixiDP5OitdqMADnjT/y2/lsonZ2IP0uuCNnW6gNLzZ7b+hWIbZfrnATUrhGJmtmeK3O
+ cUYw==
 X-Forwarded-Encrypted: i=1;
- AHgh+RoAoEPNnbk7PN/JcyEkQ8JUNpy2E+OQC6bBiGtNdjJU2fqHLsBPk9O3XiJ3vrfx+KZe7fHM86raudA4@nongnu.org
-X-Gm-Message-State: AOJu0YyDuNCeZ2c3Lf1pXHePyrDsy4ttEo9tEM/HAHXCSmtHQloWQDuB
- OuLtJkgkS68YFTwVkoj58ihw2uvRGL6xH5LKYHXjilog5CqkJ4mcgEjd8eToWiGIkDRsvQ7KkOq
- O73Q2DNpr4x6QkmxPQkUXHxIyMIOpHppR07TNkZtUAA==
-X-Gm-Gg: AfdE7cniqtAVhTl7d4nZFxPD9R7bwTOaI4K9h0E+k/WZb8+a8EOyrILKowdf6iCUUaz
- LlxPIHIaJnnGr8k7rpvZ8LNi7r0M+q8/VrRz93EppSSgtvdVpWpUPwh4dGgisd1ARCO4o3te7VL
- L0S+lCuv92o3XeXQKFWhHR3xEr5phvEfJ6mZqyprnO2HD9QNE5AjiJ1oLPm1Akdx+nZr3B7evGx
- 9kMHytoMsaUiaOGfqgf8Tdq37JE19s/6k7QOBUQMUeR7Fr2vsa9e8WWyq4qdjGUgecEEMZq8nEU
- GQmAQu6t2dn7XVdXkuu5JBCfsH3UAyRJ0m7XCyZdMMs/Bdv2GopABGI8
-X-Received: by 2002:a05:690c:c86:b0:7f5:87d3:c38c with SMTP id
- 00721157ae682-81ebb136b12mr54155427b3.21.1784109439340; Wed, 15 Jul 2026
- 02:57:19 -0700 (PDT)
+ AHgh+Rpvb9ffMtVLJYZU9MbP+Mw8cEI3ppTJpOpq2zLp1OmAYaq63tIcGQZkPELu23AqgOvDZxQl48+pN9Fd@nongnu.org
+X-Gm-Message-State: AOJu0Yxamqe6+SZocKDBoZv8oDtODBhp4qWetEwsDxgbjt3uKYGK9War
+ nNv0gzDgFcwt2TnWqAljuexLSSiVGLKxlj6K4Tk7X3vBvkhVPRr5D0NcqbqeLeNUBi8vYwpBaOl
+ I80ccO/emioFbT8ZSug7a5T5iJPS61Z4eDYKL0+Zhug==
+X-Gm-Gg: AfdE7cn4vyCXHZ55ORZr47u+Y2A87XRJqBj4jfWfe9ljA7LEcxfLJjQ+EfjLmmzuwVO
+ xvlmtAn9/EQvI/cghCn52F5WCgF3CIK5f6f4vj9Q5EMxGQeRyKjzfIxmVmeFCrjqXr5sXnlnyyo
+ gdOzXWD8L9b9P24SbkzKw16x+pE/QWiRalx3Iioi4OUbm3yoE6b3d40UIMCdKclu2H2KOriWcOu
+ e8RmsZW8SC7KjlsVZ/gjN6nEeeoa9190MXrFBYyLl0impeSFCqOEajQEktK0Rj66lDjv7O8IR37
+ wSVthxyveaI+gkXY4Odet6GEV7MCl9l1OIFdBNcar1m8+HYxkERidVNA+GZjrhOHWZE=
+X-Received: by 2002:a05:690c:886:b0:81e:7d90:5673 with SMTP id
+ 00721157ae682-81ecf876688mr15761177b3.26.1784109687361; Wed, 15 Jul 2026
+ 03:01:27 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260209115846.2276651-1-jim.shu@sifive.com>
- <7be3b4f7-7516-40ab-8a95-b3b4a2aea095@linaro.org>
- <CALw707rbMvg1mf1S_3qiqDWbZ0qjzgx4UJ9pUGmQODKWttKFyQ@mail.gmail.com>
- <08c5f243-5aaa-4fe2-bc71-6a3fd9a1914e@linaro.org>
- <CALw707pP_5a_EeUQLRw51nLCoFo4vKkKPGaVtJJdWEqR8K-u-A@mail.gmail.com>
-In-Reply-To: <CALw707pP_5a_EeUQLRw51nLCoFo4vKkKPGaVtJJdWEqR8K-u-A@mail.gmail.com>
+References: <20260714155126.3509544-1-brian.cain@oss.qualcomm.com>
+ <20260714155126.3509544-4-brian.cain@oss.qualcomm.com>
+ <32acc813-37ae-4708-a842-7d7958b7d388@oss.qualcomm.com>
+In-Reply-To: <32acc813-37ae-4708-a842-7d7958b7d388@oss.qualcomm.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 15 Jul 2026 10:57:07 +0100
-X-Gm-Features: AUfX_mzIKVQUyrpPX_4yE0Wb-7cgazNPw-15_Pz0keTDjMDSG7WgKfJ0VvUCGW4
-Message-ID: <CAFEAcA8V-eNMTF6dmR2AHwSjWj_MWaijgG_inepf62BRLYo8DQ@mail.gmail.com>
-Subject: Re: [PATCH] exec: Add RISC-V WorldGuard WID field to MemTxAttrs
-To: Jim Shu <jim.shu@sifive.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, 
- "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@kernel.org>, 
- =?UTF-8?Q?Cl=C3=A9ment_Mathieu=2D=2DDrif?= <clement.mathieu--drif@eviden.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Zhao Liu <zhao1.liu@intel.com>, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>, 
- Frederic Konrad <konrad.frederic@yahoo.fr>
+Date: Wed, 15 Jul 2026 11:01:15 +0100
+X-Gm-Features: AUfX_mwQ4o8X_MMmo9AzZE0wqshODpWjwyJbimbJzekfQaxRHJgu5HV599wqwTE
+Message-ID: <CAFEAcA9Smft=r25PJEDiSg6sF-006xLvq56iFWKW+WHWwATUSg@mail.gmail.com>
+Subject: Re: [PATCH 3/7] bitops.h: Add find_first_bit32()
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org, 
+ ltaylorsimpson@gmail.com, Laurent Vivier <lvivier@redhat.com>, 
+ Thomas Huth <th.huth+qemu@posteo.eu>, Paolo Bonzini <pbonzini@redhat.com>, 
+ matheus.bernardino@oss.qualcomm.com, Fabiano Rosas <farosas@suse.de>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ philmd@oss.qualcomm.com,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -133,81 +123,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 15 Jul 2026 at 07:52, Jim Shu <jim.shu@sifive.com> wrote:
+On Wed, 15 Jul 2026 at 02:18, Pierrick Bouvier
+<pierrick.bouvier@oss.qualcomm.com> wrote:
 >
-> Hi all,
->
-> I'd like to discuss this issue again.
->
-> On Wed, Mar 18, 2026 at 2:42=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <phil=
-md@linaro.org> wrote:
->>
->> On 18/3/26 05:40, Jim Shu wrote:
->> > On Tue, Feb 10, 2026 at 8:25=E2=80=AFAM Richard Henderson
->> > <richard.henderson@linaro.org> wrote:
->> > ...
->> >> Hmm.  This really overlaps the secure and space fields from arm, and =
-possibly some of the
->> >> others as well (e.g. user, requester_id, pid).
->> >>
->> >> I don't really have a good suggestion for that right now, but it woul=
-d be nice to not keep
->> >> expanding the count of these sorts of fields that somehow specify the=
- originator, but
->> >> clearly cannot overlap.
->> >>
->> >> I'm reasonably sure we've had this discussion before, but nothing has=
- come of it.
->> >>
->> >> Time to paint the bikeshed again?
->>
->> Last discussion IIRC:
->> https://lore.kernel.org/qemu-devel/CAFEAcA8vKNkfKgp_Yymo9NA1=3DE2XJYXAMT=
-gO3z6q6DHgqkAwRw@mail.gmail.com/
->
->
-> Follow the idea in the above thread. I'd plan to add the 'src_cpu_id' fie=
-ld to 'MemTxAttr', so we can get the CPUState from MemTxAttr. Thus, we can =
-retrieve the RISC-V world_id from CPU and we don't need to add world_id to =
-'MemTxAttr'. If other security attributes are stored in CPU states, they ca=
-n also reuse this w/o adding more data to 'MemTxAttr'.
+> On 7/14/2026 8:51 AM, Brian Cain wrote:
+> > set_bit32()/test_bit32()/etc already let devices operate on
+> > guest-visible uint32_t register arrays without depending on the
+> > host's 'unsigned long' size. find_first_bit() has no such
+> > equivalent, which pushes callers towards casting a uint32_t array
+> > to 'unsigned long *'.
+> >
+> > Add find_first_bit32(), implemented the same way as find_first_bit().
+> >
+> > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 
-We already have a requester_id field, which is basically
-"what is the thing that is sending this request?". We
-shouldn't have memory transactions that happen to be
-from CPUs indicate the source in a totally different way.
-
-> The whole plan is to add the following 2 fields
-> ::
->     unsigned int src_is_cpu:1;
->     uint16_t src_cpu_id;
+> > +/**
+> > + * find_first_bit32 - find the first set bit in a memory region
+> > + * @addr: The address to start the search at
+> > + * @size: The maximum size to search
+> > + *
+> > + * Returns the bit number of the first set bit,
+> > + * or @size if there is no set bit in the bitmap.
+> > + */
+> > +static inline uint32_t find_first_bit32(const uint32_t *addr, uint32_t size)
+> > +{
+> > +    uint32_t result;
+> > +
+> > +    for (result = 0; result < size; result += 32) {
+> > +        uint32_t tmp = *addr++;
+> > +        if (tmp) {
+> > +            result += ctz32(tmp);
+> > +            return result < size ? result : size;
+> > +        }
+> > +    }
+> > +    /* Not found */
+> > +    return size;
+> > +}
 >
-> src_cpu_id is the CPU ID from 'CPUState->cpu_index'. src_is_cpu is a bool=
-ean flag to check if the transaction is from CPU.
->
-> Moreover, I think this idea is extensible. DMA device transactions can al=
-so have security attributes like world_id. We can also add src_device field=
- to 'MemTxAttr' to store the 'DeviceState *', so we can get the DeviceState=
- from MemTxAttr to get security attributes. If 'DeviceState *' is too large=
- to add to 'MemTxAttr', re-use requester_id as DMA device ID is another pos=
-sible method to support this.
+> Either we should express size in terms of number of elements, or add an
+> explicit check if size is not a multiple of 32.
 
-I don't think that having the thing that receives the memory
-transaction get or get hold of a pointer to the source of the
-transaction that it then uses to get the world ID is a good idea.
-(Especially not putting a DeviceState* into MemTxAttrs: the
-size of the type needs to be kept small so we can conveniently
-pass it around by value: we currently assert that it is 8 bytes.)
+I think we should follow the API of the existing find_first_bit()
+function here, which defines the size in terms of number of bits.
 
-I think we would do better to follow the way the hardware does
-this to the extent that that's reasonable. On hardware the
-bus/fabric is going to provide the world ID as a signal along
-with the memory transaction, and we should accordingly put
-it into the MemTxAttrs. The question for QEMU is then how
-we organize our MemTxAttrs fields so that we can share between
-different architectures the fields that are basically doing a
-similar job, just with different terminology or semantics,
-so that we keep the overall size of the type small.
+Sizes not a multiple of 32 should work fine -- the representation
+is "bit 0 in LSB of first 32 bit word, working upwards". So e.g.
+an bitmap of 16 bits has the representation "a single 32 bit word,
+and the bits are in bits 0..15". The code correctly handles this
+with the "return result < size ? result : size" logic: even if
+bit 17 is set, we will return 16 to indicate "no set bit in bitmap".
+(This also follows the existing find_first_bit() handling.)
 
 thanks
 -- PMM
