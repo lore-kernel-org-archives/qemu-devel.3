@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 203DEC4450A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24E89C4450E
 	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 13:47:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjzv4-0005YN-1S; Wed, 15 Jul 2026 09:45:02 -0400
+	id 1wjzvD-0005ji-Ma; Wed, 15 Jul 2026 09:45:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjzv1-0005We-Dm
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 09:44:59 -0400
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjzvC-0005gb-13
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 09:45:10 -0400
 Received: from mx1.catap.net ([2a01:4f8:271:125e::2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjzuy-0007u3-Rp
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 09:44:58 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=Hi1eRls
- rq5IF20+n++CRehrROOA1/74g4q4GLsA73qaBHwz5c5ElWbyAPYbHoKua1roXKRvM+8IFG
- HhPt0bSJudUaZwSPPZSME+O8ILHgv0xMgEj9pil3wOvVVrTmtMzEfvHdX7Ioh7q8UxjyuV
- g+3/z30+haPw3HiFaEsbM78p+7LAA9UlcfpYHDMQGhh2GwvRKGS7wWZ8Y4bSy+mpg/WvyX
- bHPZfPHS2wicy9x8ddzgFYDYVOUW5gdEhgbF6LMNWJxX1/3jId2ZY9pSVthAef3o2d0J/h
- /Se7WQTTdnM5NG0CAG5x1bNQ1nqhmD9Z3ISPB3L6tqhMPFXS0PshSmA==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=6
- mS6E9/j2Z3UyVv8/YQsOxEUThpdW2ccwS2/LnYdZag=;
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjzvA-0007uq-1k
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 09:45:09 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=WvHWwAN
+ 09+1Q+5CYFe7MaVuqOxEm/Mv9YjQdnc5l3Tn8tpUaFhDgT8mqzpAaBJHpLGW00P/xW7T58
+ ffmdLBWLTvQRIDftdV/JSRvfpJ7fV2c/E1KjoruRbWzT6Ja6eOFqVNt0sF8PmnDwLjssrf
+ VwX1VrZ7rjoRWGuyiLRru6q5IYLqmwwc5WeFHy1pK6YnlRfAxLV3rUEZfQNQsApAjAXMdl
+ cj3N6VwE/kVdnbDXo8Y/2Fr57X9ruKCV66zLZLSQONin1NrfOZXG9BjWwll3hykm2Z0ZGm
+ +7Kvx1u5Ka9MuWFKYoi2Kki1roEbKv6/8EZckBEopPWhwUwsuEECyIg==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=T
+ GGxxsklXjx+ZJoAtFmAIFNHc6Ki8pOSEDu4M+u9ZV8=;
  h=references:in-reply-to:
  date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=KDDzjVmnncssdIYLCWV0Eez63FyqSWwblNb3GGDgZqqk9XgUacxBTGqLndd2bKYgIhkc
- rl9k/zD9iKIdNMPUjjT4FSTEKQOQU1MQ1TlchoJTa1yJU8gmEaTY3dvMw+sh3D3L+s98kq
- Y0MHSKIcnybKnUX0x9aeK5tZwpmhbhBlM8o8M0qy28alionMVZ9Hm4XeetdaKoESvndFZe
- mNHtyDfQLzYVxmzF4W81VDzSJnsqy3HpavvH9rO85O5L7iXAbW6gwmAbG/Kh0SR28Xwn55
- cYjm2UMe8glOiiwKOxQkn5TaJDg7jQs4bk8rHUvHvLh+gxSUZHqMIfP8Zd5Tg7cA==
+ b=L25K0X8aH7E/tzbnxR3Z+mNgEcGz+a+ucfE/8AMHbZLztnzrNZSTfR/H/BG45GRe2TSl
+ WHTbCCQfJmUQf7czIJvN1AbIG1pgb0FBKhmj3WDYCOGhIWbkcut0HlfcvWU0EZFW6O6zQi
+ yT7hvtabZAJ/uLr+yIcWHuLxz3vyxQq5FcvjkdXsUQkoEEbiH2KcWFgTz731RBWl9U/pbY
+ 0D4nXroxSUN8IgC9EnRobt4M8aD/g0m/afhACremFSNEnwRlNubDU6a749iJS5m6LHzDXG
+ jWob9TeBcZTCNUOwyHBZytBXqV4M/LEL+w/wjXTYMlMo6+XnAa6+hkGG9ul6nJWQ==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=Ue22u+iB; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=0WzbjoKy;
+ header.b=fqsKpJbu; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=gCdQWRpD;
  arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=6mS6E9/j
- 2Z3UyVv8/YQsOxEUThpdW2ccwS2/LnYdZag=;
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=TGGxxskl
+ Xjx+ZJoAtFmAIFNHc6Ki8pOSEDu4M+u9ZV8=;
  h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=Ue22u+iBhM/1dtrEml1t3nWp9zFPl7Ga3TQ
- Z8TXP9u6KGn+jyy4IPeoLEFUwU7QkBGmm2/26HbSnQkb2DFqw7ZitPxNZclsftEwBC2Zdq
- 0bTRhVBOiukSezub+pu0+a3S2V7FydUUX4s+2WD71JpBUjWI/8TtZ9J3CUxuEu7Wdgg6a6
- jTH3gMZudCsBM3tZFOdFl294c052KmhimUYbzoGj5bVXny4SYjRZx6SCmVL03uqGGu5fNZ
- H5d13mt7wx7vxR7Q5JQyhPJmmsH+4CjVXsEgpb3u3jf+6hYqcjV34kF6sVEnuZeMr//yEB
- 5m529Bd7ES4LUuSnPzVp+kRNQAg==
+ subject:cc:to:from; d=korins.ky; b=fqsKpJbuEUXHfyz2XjuHGiX9sJFzIfH7h89
+ NrCkHDWsUzZq6mHHtadLJo51s5zoRpkTMkFIv0jvOashrRCNkn8hORXPOlpWYpM3yLo9M2
+ awT2tMFCEhpMS2nlAYx+Re3GFoououY8gJkc18R2D8LeaZE2hPTQFOfSVqCJRPOIP/iVCl
+ a6vbcEuDWPszR/3ESk3GFu0BP5dHoU9jrfL9HueU/WmLolhQb5CRyPbY665Rx4DdjZo1Mh
+ 9E4s9GcAe5CoW08mtu20q1aI0QMxjcq9r08NEmPeMTyu6nnERwpxZjoZBP+/Idqucvvy8i
+ eykIyg4GOMPPYM9AmCTuOhz1oXQ==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=6mS6E9/j2Z3UyVv8/YQsOxEUThpdW2ccwS2/LnYdZag=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=0WzbjoKysEz25EL+Mc
- P1z9lU6HMPSe8ZQIvxQL0j2JaTxlPfnDG3TUVAUPYGcZRLe9ByRCq5M+kb6Q2kDMgWBA==
-Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id 5f4afba7
+ bh=TGGxxsklXjx+ZJoAtFmAIFNHc6Ki8pOSEDu4M+u9ZV8=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=gCdQWRpDE4trh+E3pc
+ v+v0Iz9ytXkk3THazUNCqn7BLBxByn9NrVjD019TeKvg2zt1mSVJH8EFV9fIVB127lCg==
+Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id 468d5614
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Wed, 15 Jul 2026 15:44:50 +0200 (CEST)
+ Wed, 15 Jul 2026 15:44:54 +0200 (CEST)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id 60a4bac6;
- Wed, 15 Jul 2026 15:44:48 +0200 (CEST)
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id 1ab98d2d;
+ Wed, 15 Jul 2026 15:44:49 +0200 (CEST)
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 To: qemu-devel@nongnu.org
 Cc: "Kirill A. Korinsky" <kirill@korins.ky>
-Subject: [PATCH v2 03/25] target/mips: drop hidden TLB shadowing for tlbwr
-Date: Wed, 15 Jul 2026 15:43:49 +0200
-Message-ID: <20260715134447.56007-4-kirill@korins.ky>
+Subject: [PATCH v2 25/25] tests/functional: test Octeon III boot
+Date: Wed, 15 Jul 2026 15:44:11 +0200
+Message-ID: <20260715134447.56007-26-kirill@korins.ky>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260715134447.56007-1-kirill@korins.ky>
 References: <20260715134447.56007-1-kirill@korins.ky>
@@ -94,34 +94,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-tlbwr replaces a random architectural TLB entry. Once that happens, the
-evicted entry must stop translating guest virtual addresses.
-
-The current helper keeps the evicted entry in QEMU-only extra TLB state.
-That makes the old mapping survive until some later operation discards
-the extra entries. A guest can observe this directly by writing through
-a TLB mapping, replacing that entry with tlbwr, and writing through the
-old virtual address again.
-
-Invalidate the replaced entry instead of shadowing it. This keeps the
-translated TLB state aligned with the architectural TLB contents.
+Boot the OpenBSD/octeon ramdisk through U-Boot using an e1000 device
+and QEMU user mode TFTP. Verify PCI enumeration, DHCP, image transfer
+and entry into the OpenBSD installer.
 ---
- target/mips/tcg/system/tlb_helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/functional/mips64/meson.build     |  2 +
+ tests/functional/mips64/test_octeon3.py | 54 +++++++++++++++++++++++++
+ 2 files changed, 56 insertions(+)
+ create mode 100644 tests/functional/mips64/test_octeon3.py
 
-diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
-index 9772df5d6c..4c0a25e622 100644
---- a/target/mips/tcg/system/tlb_helper.c
-+++ b/target/mips/tcg/system/tlb_helper.c
-@@ -165,7 +165,7 @@ static void r4k_helper_tlbwr(CPUMIPSState *env)
- {
-     int r = cpu_mips_get_random(env);
+diff --git a/tests/functional/mips64/meson.build b/tests/functional/mips64/meson.build
+index 3ff2118987..98b7c491a1 100644
+--- a/tests/functional/mips64/meson.build
++++ b/tests/functional/mips64/meson.build
+@@ -2,9 +2,11 @@
  
--    r4k_invalidate_tlb(env, r, 1);
-+    r4k_invalidate_tlb(env, r, 0);
-     r4k_fill_tlb(env, r);
+ test_mips64_timeouts = {
+   'malta' : 240,
++  'octeon3' : 300,
  }
  
+ tests_mips64_system_thorough = [
+   'malta',
++  'octeon3',
+   'tuxrun',
+ ]
+diff --git a/tests/functional/mips64/test_octeon3.py b/tests/functional/mips64/test_octeon3.py
+new file mode 100644
+index 0000000000..9c2bc67ac4
+--- /dev/null
++++ b/tests/functional/mips64/test_octeon3.py
+@@ -0,0 +1,54 @@
++#!/usr/bin/env python3
++#
++# Functional test for the Cavium Octeon III / EBB7304 machine.
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++import os
++import shutil
++
++from qemu_test import QemuSystemTest, Asset
++from qemu_test import wait_for_console_pattern
++from qemu_test import exec_command_and_wait_for_pattern as ec_and_wait
++
++
++class Octeon3Machine(QemuSystemTest):
++
++    ASSET_UBOOT = Asset(
++        'https://kirill.korins.ky/pub/qemu-mips64-openbsd/u-boot.bin',
++        '7e519b2e52ba44b27bfafd16738c8f485e9eda5438b4899cf6a70520a6d34396')
++
++    ASSET_BSD_RD = Asset(
++        'https://kirill.korins.ky/pub/qemu-mips64-openbsd/bsd.rd',
++        '907f26f0ff67390dd21dc85e2c854fc0e65db295b15d47ae92e1927f98ac5872')
++
++    def test_openbsd_ramdisk_tftp(self):
++        self.require_netdev('user')
++        self.require_device('e1000')
++        self.set_machine('octeon3')
++
++        tftp_dir = self.scratch_file('tftp')
++        os.mkdir(tftp_dir)
++        shutil.copy(self.ASSET_BSD_RD.fetch(),
++                    os.path.join(tftp_dir, 'bsd.rd'))
++
++        self.vm.set_console()
++        self.vm.add_args('-bios', self.ASSET_UBOOT.fetch(),
++                         '-m', '1G',
++                         '-smp', '4',
++                         '-no-reboot',
++                         '-netdev',
++                         f'user,id=net0,tftp={tftp_dir},bootfile=bsd.rd',
++                         '-device', 'e1000,netdev=net0')
++        self.vm.launch()
++
++        wait_for_console_pattern(self, '=> ')
++        ec_and_wait(self, 'pci enum', '=> ')
++        ec_and_wait(self, 'dhcp', 'Bytes transferred')
++        wait_for_console_pattern(self, '=> ')
++        ec_and_wait(self, 'bootoctlinux ${loadaddr} numcores=4',
++                    'Welcome to the OpenBSD/octeon 7.9 installation program.')
++
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
 -- 
 2.54.0
 
