@@ -4,88 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48279C44501
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 10:35:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A842FC44501
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 10:42:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjwxF-00040l-6F; Wed, 15 Jul 2026 06:35:05 -0400
+	id 1wjx4R-00077r-II; Wed, 15 Jul 2026 06:42:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wjwx9-0003yU-0b
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 06:34:59 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wjwx7-0000uk-Bk
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 06:34:58 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-4728c12ba97so2426993f8f.0
- for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 03:34:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1784111696; x=1784716496; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=s4zeJDdtxVbftajOrHOMfQ8V+NcJ7E3IkRzNWHPvZJQ=;
- b=ETTOMH0MdaHZJo1uFL0k5ddICSmb/BdrfdUYuCJtnTgD+K/o87TWXO9/EJo+3RmVFa
- 2LgtvhG8GLN7ouNP8td6B6vGCX0v2v9d8hPnr4WS8IhRL/Xkwnd0DA+YbQbLYinH12oZ
- h74mkYJ1dqJeauG+Kd9+CYW6r7uvqeL33m1K1C+BvHG5aGylS5NhOiR1zXfnyzf/rlB6
- 4s6g7legJzseb7cZPqaVJWaQN2eQ8xNZbBZyk4620Nt1nFrZtf9Jjqb9ctd8IEJvde6n
- d1QMsohCz+LOZOJ3crubNVJBj7d52KRicNFKHoDi9YJCk3+kdfhSV/EAVRr9gCxNkrW6
- bMlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784111696; x=1784716496;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=s4zeJDdtxVbftajOrHOMfQ8V+NcJ7E3IkRzNWHPvZJQ=;
- b=bJ1yPFYJh7AUC+fxDUx1p+LPV+8Ps8pR8g+mvW88ZlXWIkO2aBrYOMIUb87E/b1Xpy
- BezNhg67xGnSJzQupyd8QKKcGJW2Mlu7EHS53+PgAXD5TUI4mMIam20lEy3lyVGYCn++
- cHkAWUFONR3eNHFr4oCkMjwf+VcQsEopDBhRyEo//ZU9bcHjn+92S2kbc/Mu/L9BgXdU
- GuZoxKDMyC7Jv7o52C+RY3TPHFzAUna200rDtLvJL0xByE7NzwIeBw8N9LEOlFbfAeMd
- qnHyyoiYEMKdDeAjLl8YBMlIKJFDilBHjGjKgXCrjXpML/Q7N7BI1KIlL6DHZzJkURMU
- fR/A==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rqtg1kEKrxioASB9n5KdAhJCK7LL4dvldxDm5+sJGbd2TC2cTgbpYX0sqcimgaOFcCGGIYtIdqOsxFp@nongnu.org
-X-Gm-Message-State: AOJu0YzswAMq6L/lfp73OpzTMr/O39iqaaIrBPZv3Q7XmsgJ7dKWRQqI
- NLgcA1Dfp0NWKUyDihyaoEk6y3w9Vr5sXD+hB5ym6QcW15QWXNR5hFf/VsmjhlFL24A=
-X-Gm-Gg: AfdE7ckgeYF+MqxDT/OGl7Wg3HPD0ksRdwvEq3dlc7Ow8v3/s+J1jopJqyk8igFCKb9
- P8JQnJT0PCdjFsBz9qK0mbgWDiVeCdLd8xjqyG5i6cmtf2ZrLVC6h3xyfenqLXm30+Gk0IjmVXF
- uES0OvEW7NCIH5ESmZFWx4jl42P22ZK0EKhhgH8TeQ9vWt8uhZB4ay0zi77yXk3KQyA1t5NkZvH
- rPL6vEuQRhgbfPfCYPzWOLnnN95RC1gQ7Zp5ZLKio03Xs6dRl2dMmlPI3k5lnIBF+Lqm1ix4iru
- MSJEiGrL1Oc3Pqfh7EJxALgdYiM3Rcy8BZtWF2ZtpoCXOhr28HdIA5aODCPEvoz4TLnpV4aQlvS
- ZhtTp6UlQIzjWkiXeFkk61HP5y5JbWpK+feEdu/CxvjYV7+66IFHJuL4xfYk1RPrh+NMd6W4nOt
- s9FA==
-X-Received: by 2002:a05:6000:178e:b0:47d:ee23:f15e with SMTP id
- ffacd0b85a97d-47f4fc99a5amr2650290f8f.5.1784111695800; 
- Wed, 15 Jul 2026 03:34:55 -0700 (PDT)
-Received: from athena ([2a06:5b06:b600:300:c44f:405f:37a5:5992])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f464a974csm17292644f8f.18.2026.07.15.03.34.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jul 2026 03:34:55 -0700 (PDT)
-From: "Denis V. Lunev" <den@openvz.org>
-To: qemu-block@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: den@openvz.org, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH v2 2/3] iotests: skip FUSE tests when FUSE is not usable
-Date: Wed, 15 Jul 2026 12:34:50 +0200
-Message-ID: <20260715103451.1930909-3-den@openvz.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260715103451.1930909-1-den@openvz.org>
-References: <20260715103451.1930909-1-den@openvz.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wjx4Q-00077h-Pe
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 06:42:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wjx4N-0002ij-Gr
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 06:42:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784112145;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=35bH9050OOq18+jrob98HeXkfN/KnWCh1wzOiXHChf0=;
+ b=drws02y/Mka2lpbru+gdWxi8smqYonXq81N6QjOQTMw9WRYzGRqAmsqPY41mbVNaZhrFnb
+ n6sBR4OIGB6zyyDlfVOhszIWpSFovI2JJwkL4YRjvB7aWCnGBRAlLnzo/lH6eLn6jVru3f
+ ll6mwm3DA6vh8VGTAkVFRJLZQnmEG20=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-661-5uG9sZqrN2mCvJZJWdQXWg-1; Wed,
+ 15 Jul 2026 06:42:23 -0400
+X-MC-Unique: 5uG9sZqrN2mCvJZJWdQXWg-1
+X-Mimecast-MFC-AGG-ID: 5uG9sZqrN2mCvJZJWdQXWg_1784112142
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AA895180044F; Wed, 15 Jul 2026 10:42:22 +0000 (UTC)
+Received: from berrange.com (unknown [10.44.33.163])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D507C195419A; Wed, 15 Jul 2026 10:42:20 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v2] tests/docker: ensure container command is probed at most
+ once
+Date: Wed, 15 Jul 2026 11:42:18 +0100
+Message-ID: <20260715104218.1110301-1-berrange@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=den@openvz.org; helo=mail-wr1-x42f.google.com
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: permerror client-ip=170.10.129.124;
+ envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,101 +84,318 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-file-io-error, fuse-allow-other and fuse-mmap-shared skip only when
-FUSE is not compiled in. When FUSE is built in but unusable at run
-time (no /dev/fuse access, fusermount lacking permissions), the
-export fails to mount with "Failed to mount FUSE session to export"
-and the tests report a spurious failure instead of skipping, like
-NBD tests already do for missing NBD support.
+The '--engine' arg accepts either 'podman' or 'docker', which is
+not sufficiently granular to map directly to a command. This
+means that  docker.py still has to then probe the exact command
+to use.
 
-Add _notrun_on_fuse_error() to common.rc and use it in the shell
-tests. fuse-mmap-shared is Python, so it gets an equivalent inline
-check.
+Meanwhile the 'probe' command prints out the full command to use
+but this cannot be passed back to docker.py to avoid probing
+again, so the caching is only useful in the few case where we
+run a container directly bypassing docker.py.
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-CC: Kevin Wolf <kwolf@redhat.com>
-CC: Hanna Reitz <hreitz@redhat.com>
+Address this by replacing --engine with --command for docker.py.
+
+This in turn requires the --container-engine configure arg to be
+replaced with --container-command.
+
+With these changes the container command is probed at most once
+during configure and never again, while running in an unconfigured
+tree will still probe on demand.
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/qemu-iotests/common.rc              | 14 ++++++++++++++
- tests/qemu-iotests/tests/file-io-error    |  4 +---
- tests/qemu-iotests/tests/fuse-allow-other |  2 ++
- tests/qemu-iotests/tests/fuse-mmap-shared |  9 ++++++---
- 4 files changed, 23 insertions(+), 6 deletions(-)
 
-diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
-index 298bc483e0..bcb1ec50a9 100644
---- a/tests/qemu-iotests/common.rc
-+++ b/tests/qemu-iotests/common.rc
-@@ -981,6 +981,20 @@ _require_drivers()
-     done
- }
+In v2:
+
+ * Don't set container_command to "no" if 'probe' finds
+   not viable binaries.
+
+ configure                     | 25 +++++++------
+ tests/docker/Makefile.include | 13 ++++---
+ tests/docker/docker.py        | 67 ++++++++++++-----------------------
+ 3 files changed, 40 insertions(+), 65 deletions(-)
+
+diff --git a/configure b/configure
+index d8bc10060e..5a8e2fd278 100755
+--- a/configure
++++ b/configure
+@@ -172,7 +172,7 @@ fi
+ # some defaults, based on the host environment
  
-+# Skip if FUSE is unusable: not compiled in, or the export failed to
-+# mount. $1 is the failing 'block-export-add' reply.
-+_notrun_on_fuse_error()
-+{
-+    case "$1" in
-+        *"Parameter 'type' does not accept value 'fuse'"*)
-+            _notrun "No FUSE support"
-+            ;;
-+        *"Failed to mount FUSE session"*)
-+            _notrun "FUSE not usable in this environment"
-+            ;;
-+    esac
-+}
-+
- # Check that we have a file system that allows huge (but very sparse) files
- #
- _require_large_file()
-diff --git a/tests/qemu-iotests/tests/file-io-error b/tests/qemu-iotests/tests/file-io-error
-index fb8db73b31..0d970c102f 100755
---- a/tests/qemu-iotests/tests/file-io-error
-+++ b/tests/qemu-iotests/tests/file-io-error
-@@ -89,9 +89,7 @@ output=$(_send_qemu_cmd $QEMU_HANDLE \
-     'return' \
-     | grep -v 'option allow_other only allowed if')
+ # default parameters
+-container_engine="auto"
++container_command=""
+ cpu=""
+ cross_compile="no"
+ cross_prefix=""
+@@ -734,7 +734,7 @@ for opt do
+   ;;
+   --disable-containers) use_containers="no"
+   ;;
+-  --container-engine=*) container_engine="$optarg"
++  --container-command=*) container_command="$optarg"
+   ;;
+   --rust-target-triple=*) rust_target_triple="$optarg"
+   ;;
+@@ -869,7 +869,7 @@ Advanced options (experts only):
+   --enable-debug           enable common debug build options
+   --cpu=CPU                Build for host CPU [$cpu]
+   --disable-containers     don't use containers for cross-building
+-  --container-engine=TYPE  which container engine to use [$container_engine]
++  --container-command=CMD  which container command to use [autodetect]
+   --gdb=GDB-path           gdb to use for gdbstub tests [$gdb_bin]
+   --wasm64-32bit-address-limit Restrict wasm64 address space to 32-bit (default
+                                is to use the whole 64-bit range).
+@@ -1291,12 +1291,12 @@ fi
+ ##########################################
+ # functions to probe cross compilers
  
--if echo "$output" | grep -q "Parameter 'type' does not accept value 'fuse'"; then
--    _notrun 'No FUSE support'
--fi
-+_notrun_on_fuse_error "$output"
- echo "$output"
+-runc="no"
+-if test $use_containers = "yes" && (has "docker" || has "podman"); then
+-    runc=$($python "$source_path"/tests/docker/docker.py --engine "$container_engine" probe)
+-    if test "$runc" != "no"; then
+-        docker_py="$python $source_path/tests/docker/docker.py --engine $container_engine"
+-    fi
++if test "$container_command" = ""; then
++    container_command=$($python "$source_path"/tests/docker/docker.py probe)
++    test "$container_command" == "no" && container_command=""
++fi
++if test $use_containers = "yes" && test "$container_command" != ""; then
++    docker_py="$python $source_path/tests/docker/docker.py --command $container_command"
+ fi
  
- echo
-diff --git a/tests/qemu-iotests/tests/fuse-allow-other b/tests/qemu-iotests/tests/fuse-allow-other
-index eaa39f8f23..50a36601d7 100755
---- a/tests/qemu-iotests/tests/fuse-allow-other
-+++ b/tests/qemu-iotests/tests/fuse-allow-other
-@@ -77,6 +77,8 @@ fuse_export_add()
-         _notrun "allow_other not supported"
-     fi
+ # cross compilers defaults, can be overridden with --cross-cc-ARCH
+@@ -1415,7 +1415,7 @@ probe_target_compiler() {
+   esac
  
-+    _notrun_on_fuse_error "$output"
-+
-     echo "$output"
- }
+   for host in $container_hosts; do
+-    test "$runc" != no || continue
++    test "$container_command" != "" || continue
+     test "$host" = "$cpu" || continue
+     case $target_arch in
+       # debian-all-test-cross architectures
+@@ -1736,9 +1736,8 @@ echo all: >> $config_host_mak
+ echo "SRC_PATH=$source_path" >> $config_host_mak
+ echo "TARGET_DIRS=$target_list" >> $config_host_mak
+ echo "GDB=$gdb_bin" >> $config_host_mak
+-if test "$runc" != no; then
+-    echo "RUNC=$runc" >> $config_host_mak
+-    echo "CONTAINER_ENGINE=$container_engine" >> $config_host_mak
++if test "$container_command" != ""; then
++    echo "CONTAINER_COMMAND=$container_command" >> $config_host_mak
+ fi
+ echo "SUBDIRS=$subdirs" >> $config_host_mak
+ if test "$rust" != disabled; then
+diff --git a/tests/docker/Makefile.include b/tests/docker/Makefile.include
+index 4725c39807..0adddb6a5c 100644
+--- a/tests/docker/Makefile.include
++++ b/tests/docker/Makefile.include
+@@ -16,9 +16,8 @@ DOCKER_DEFAULT_REGISTRY := registry.gitlab.com/qemu-project/qemu
+ endif
+ DOCKER_REGISTRY := $(if $(REGISTRY),$(REGISTRY),$(DOCKER_DEFAULT_REGISTRY))
  
-diff --git a/tests/qemu-iotests/tests/fuse-mmap-shared b/tests/qemu-iotests/tests/fuse-mmap-shared
-index 52941a3bb6..b190105894 100755
---- a/tests/qemu-iotests/tests/fuse-mmap-shared
-+++ b/tests/qemu-iotests/tests/fuse-mmap-shared
-@@ -28,9 +28,12 @@ def test_fuse_support(mount_point):
-     })
-     test_qsd.stop()
-     if 'error' in res:
--        assert (res['error']['desc'] ==
--                "Parameter 'type' does not accept value 'fuse'")
--        iotests.notrun('No FUSE support')
-+        desc = res['error']['desc']
-+        if desc == "Parameter 'type' does not accept value 'fuse'":
-+            iotests.notrun('No FUSE support')
-+        if 'Failed to mount FUSE session' in desc:
-+            iotests.notrun('FUSE not usable in this environment')
-+        assert False, desc
+-CONTAINER_ENGINE = auto
+-DOCKER_SCRIPT=$(SRC_PATH)/tests/docker/docker.py --engine $(CONTAINER_ENGINE)
+-RUNC ?= $(shell $(DOCKER_SCRIPT) probe)
++CONTAINER_COMMAND ?= $(shell $(SRC_PATH)/tests/docker/docker.py probe)
++DOCKER_SCRIPT=$(SRC_PATH)/tests/docker/docker.py --command "$(CONTAINER_COMMAND)"
  
- # Shared mmap when using direct IO is only supported for Linux kernels >= 6.6
- # with commit e78662e818f94 ("fuse: add a new fuse init flag to relax
+ CUR_TIME := $(shell date +%Y-%m-%d-%H.%M.%S.$$$$)
+ DOCKER_SRC_COPY := $(BUILD_DIR)/docker-src.$(CUR_TIME)
+@@ -41,7 +40,7 @@ docker-qemu-src: $(DOCKER_SRC_COPY)
+ # General rule for building docker images.
+ docker-image-%: $(DOCKER_FILES_DIR)/%.docker
+ 	  $(call quiet-command,			\
+-		DOCKER_BUILDKIT=1 $(RUNC) build		\
++		DOCKER_BUILDKIT=1 $(CONTAINER_COMMAND) build \
+ 		$(if $(DOCKER_V),,--quiet)		\
+ 		$(if $(NOCACHE),--no-cache,		\
+ 			$(if $(DOCKER_REGISTRY),--cache-from $(DOCKER_REGISTRY)/qemu/$*)) \
+@@ -152,7 +151,7 @@ $(foreach i,$(filter-out $(DOCKER_PARTIAL_IMAGES),$(DOCKER_IMAGES)), \
+ )
+ 
+ docker:
+-	@echo 'Build QEMU and run tests inside $(RUNC) containers'
++	@echo 'Build QEMU and run tests inside $(CONTAINER_COMMAND) containers'
+ 	@echo
+ 	@echo 'Available targets:'
+ 	@echo
+@@ -219,10 +218,10 @@ docker-run: docker-qemu-src
+ 			$(IMAGE) --executable $(EXECUTABLE),		\
+ 			"  COPYING $(EXECUTABLE) to $(IMAGE)"))
+ 	$(call quiet-command,						\
+-		$(RUNC) run 						\
++		$(CONTAINER_COMMAND) run 				\
+ 			--rm						\
+ 			$(if $(NOUSER),,				\
+-				$(if $(filter docker,$(RUNC)),		\
++				$(if $(filter docker,$(CONTAINER_COMMAND)), \
+ 					-u $(UID),			\
+ 					--userns keep-id		\
+ 				)					\
+diff --git a/tests/docker/docker.py b/tests/docker/docker.py
+index 9e18b984f4..d2f39b5645 100755
+--- a/tests/docker/docker.py
++++ b/tests/docker/docker.py
+@@ -35,27 +35,6 @@
+ 
+ DEVNULL = open(os.devnull, 'wb')
+ 
+-class EngineEnum(enum.IntEnum):
+-    AUTO = 1
+-    DOCKER = 2
+-    PODMAN = 3
+-
+-    def __str__(self):
+-        return self.name.lower()
+-
+-    def __repr__(self):
+-        return str(self)
+-
+-    @staticmethod
+-    def argparse(s):
+-        try:
+-            return EngineEnum[s.upper()]
+-        except KeyError:
+-            return s
+-
+-
+-USE_ENGINE = EngineEnum.AUTO
+-
+ def _bytes_checksum(bytes):
+     """Calculate a digest string unique to the text content"""
+     return hashlib.sha1(bytes).hexdigest()
+@@ -73,12 +52,11 @@ def _file_checksum(filename):
+ 
+ def _guess_engine_command():
+     """ Guess a working engine command or raise exception if not found"""
+-    commands = []
+-
+-    if USE_ENGINE in [EngineEnum.AUTO, EngineEnum.PODMAN]:
+-        commands += [["podman"], ["podman-remote"], ["podman", "--remote"]]
+-    if USE_ENGINE in [EngineEnum.AUTO, EngineEnum.DOCKER]:
+-        commands += [["docker"], ["sudo", "-n", "docker"]]
++    commands = [["podman"],
++                ["podman-remote"],
++                ["podman", "--remote"],
++                ["docker"],
++                ["sudo", "-n", "docker"]]
+     for cmd in commands:
+         try:
+             # 'version' is not sufficient to prove a working binary
+@@ -222,8 +200,11 @@ def _dockerfile_verify_flat(df):
+ 
+ class Docker(object):
+     """ Running Docker commands """
+-    def __init__(self):
+-        self._command = _guess_engine_command()
++    def __init__(self, commandstr=None):
++        if commandstr is None:
++            self._command = _guess_engine_command()
++        else:
++            self._command = commandstr.split(" ")
+ 
+         if ("docker" in self._command and
+             "TRAVIS" not in os.environ and
+@@ -411,8 +392,8 @@ def args(self, parser):
+                             help="Run container using the current user's uid")
+ 
+     def run(self, args, argv):
+-        return Docker().run(argv, args.keep, quiet=args.quiet,
+-                            as_user=args.run_as_current_user)
++        return Docker(args.command).run(argv, args.keep, quiet=args.quiet,
++                                        as_user=args.run_as_current_user)
+ 
+ 
+ class BuildCommand(SubCommand):
+@@ -445,7 +426,7 @@ def run(self, args, argv):
+         dockerfile = _read_dockerfile(args.dockerfile)
+         tag = args.tag
+ 
+-        dkr = Docker()
++        dkr = Docker(args.command)
+         if "--no-cache" not in argv and \
+            dkr.image_matches_dockerfile(tag, dockerfile):
+             if not args.quiet:
+@@ -512,7 +493,7 @@ def args(self, parser):
+                             help="Docker registry")
+ 
+     def run(self, args, argv):
+-        dkr = Docker()
++        dkr = Docker(args.command)
+         dkr.command(cmd="pull", quiet=args.quiet,
+                     argv=["%s/%s" % (args.registry, args.tag)])
+         dkr.command(cmd="tag", quiet=args.quiet,
+@@ -590,7 +571,7 @@ def run(self, args, argv):
+         tmp.seek(0)
+ 
+         # Run the build with our tarball context
+-        dkr = Docker()
++        dkr = Docker(args.command)
+         dkr.update_image(args.tag, tmp, quiet=args.quiet)
+ 
+         return 0
+@@ -601,7 +582,7 @@ class CleanCommand(SubCommand):
+     name = "clean"
+ 
+     def run(self, args, argv):
+-        Docker().clean()
++        Docker(args.command).clean()
+         return 0
+ 
+ 
+@@ -610,7 +591,7 @@ class ImagesCommand(SubCommand):
+     name = "images"
+ 
+     def run(self, args, argv):
+-        return Docker().command("images", argv, args.quiet)
++        return Docker(args.command).command("images", argv, args.quiet)
+ 
+ 
+ class ProbeCommand(SubCommand):
+@@ -619,7 +600,7 @@ class ProbeCommand(SubCommand):
+ 
+     def run(self, args, argv):
+         try:
+-            docker = Docker()
++            docker = Docker(args.command)
+             print(" ".join(docker._command))
+         except Exception:
+             print("no")
+@@ -651,18 +632,16 @@ def run(self, args, argv):
+                 cmd += ["-v", "%s:%s:ro,z" % (p, p)]
+         cmd += [args.image, args.cc]
+         cmd += argv
+-        return Docker().run(cmd, False, quiet=args.quiet,
+-                            as_user=True)
++        return Docker(args.command).run(cmd, False, quiet=args.quiet,
++                                        as_user=True)
+ 
+ 
+ def main():
+-    global USE_ENGINE
+-
+     parser = argparse.ArgumentParser(description="A Docker helper",
+                                      usage="%s <subcommand> ..." %
+                                      os.path.basename(sys.argv[0]))
+-    parser.add_argument("--engine", type=EngineEnum.argparse, choices=list(EngineEnum),
+-                        help="specify which container engine to use")
++    parser.add_argument("--command",
++                        help="specify which container engine command to use")
+     subparsers = parser.add_subparsers(title="subcommands", help=None)
+     for cls in SubCommand.__subclasses__():
+         cmd = cls()
+@@ -671,8 +650,6 @@ def main():
+         cmd.args(subp)
+         subp.set_defaults(cmdobj=cmd)
+     args, argv = parser.parse_known_args()
+-    if args.engine:
+-        USE_ENGINE = args.engine
+     return args.cmdobj.run(args, argv)
+ 
+ 
 -- 
-2.53.0
+2.55.0
 
 
