@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17EEDC44501
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 11:21:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 807CFC44501
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 11:23:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjxf2-0007WP-6u; Wed, 15 Jul 2026 07:20:20 -0400
+	id 1wjxhr-00087U-6X; Wed, 15 Jul 2026 07:23:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wjxf0-0007WB-2J; Wed, 15 Jul 2026 07:20:18 -0400
+ id 1wjxhp-00086m-GX; Wed, 15 Jul 2026 07:23:13 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wjxew-0000uT-DL; Wed, 15 Jul 2026 07:20:17 -0400
+ id 1wjxhn-0001VH-OX; Wed, 15 Jul 2026 07:23:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784114392; bh=CkT4bJbwyMRx4pBtmw+8uKuYm01KqZ1lc9q0lSaydqM=;
+ t=1784114585; bh=3kEzduFxq/PJrkIRkAk9TAyeU3hwMdleUHwcrGqiVdw=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=gofcfqhmosmsUZyjjBZFUkbqyNC8z7Zt4s/y8tZ/qvxZPbQRd8yegRER5xKXvuOo1
- s1fX0tLVJ+kPd0ywFi54QQ4ENhvVL/yTJMctbLT9pfwVRS1yUBFe8YN5rIhlvD05z2
- xUxYRwOFwwYQEL5sLzFbdR1qIo8DDucSf+YOPSAw6esL5fKDMeIen0jX5drdW4tBit
- zTEYPp6ksV/bUUlP4hbQHDEKMgZyh+LFPf7z/fQdJgp/jDU/+xO9HdgiOjbK++FItc
- 8GARdoSurKmAr5jwRw/XM3NN5LJC4nugCrWk9kElLIim3Sq73q1jXPT9Rg2vzs9eZa
- C/IBhOh/i9BAA==
+ b=I2ItU9ti00NqsLS2VQakgZ3ENhXHnbIUl7VgKzX8yxU0YfAhMFuV8WvxQiEcBDkpo
+ 7b42CcOYKIxRMYRzNoxBhPOccNAnXfGj50LnqKodJ76rkieC1bXhPLT8O1n/W+VDMP
+ AB0osZUKMzV3Id7WKIBO5Z6o4NgacrgX7SV7iTkXunToj9QucUZHqPgjQW0KMOw7UI
+ 4Nm7cG+VWJWCepa521frFm055YYZXLI/r2xc8Gu/OKc5mJIgXatkw8lGJtvATLIBjq
+ 4TUk2B+aSTXhnVjdYK/rV0m6zRyJlvh++SC9zX/Ren5vaZGnHAZKKTKc2Wrwe7Kf44
+ QZTI/4fus/05w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AB7131C1D5B;
- Wed, 15 Jul 2026 14:19:52 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CDBED1C1D5F;
+ Wed, 15 Jul 2026 14:23:05 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0249B3EF2C0;
- Wed, 15 Jul 2026 14:19:55 +0300 (MSK)
-Message-ID: <bd5e479f-8ed7-405f-b38f-bd73f4990321@tls.msk.ru>
-Date: Wed, 15 Jul 2026 14:19:50 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 28BD33EF2C5;
+ Wed, 15 Jul 2026 14:23:09 +0300 (MSK)
+Message-ID: <9e63ffe6-fa13-4b85-8f9d-5c6d78e793b2@tls.msk.ru>
+Date: Wed, 15 Jul 2026 14:23:03 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user/alpha: add coredump support
+Subject: Re: [PATCH] linux-user/alpha: populate AT_HWCAP from env->amask
 To: Matt Turner <mattst88@gmail.com>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
  qemu-stable <qemu-stable@nongnu.org>
-References: <20260525215308.44096-1-mattst88@gmail.com>
+References: <20260713013610.2691128-1-mattst88@gmail.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -89,9 +89,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260525215308.44096-1-mattst88@gmail.com>
+In-Reply-To: <20260713013610.2691128-1-mattst88@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -19
@@ -115,95 +115,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/26/26 00:53, Matt Turner wrote:
-> Define HAVE_ELF_CORE_DUMP and target_elf_gregset_t in target_elf.h,
-> mirroring the kernel's elf_gregset_t (ELF_NGREG = 66): r0-r31
-> [0..31], f0-f31 [32..63], pc [64], ps [65].  Implement
-> elf_core_copy_regs() in elfload.c to populate the gregset from
-> CPUAlphaState.
+On 7/13/26 04:36, Matt Turner wrote:
+> Alpha has never set AT_HWCAP in linux-user emulation, so getauxval(AT_HWCAP)
+> always returned 0 regardless of the emulated CPU model.
 > 
-> Without this, bprm->core_dump is NULL for Alpha targets.  When a
-> guest signal goes unhandled, dump_core_and_abort() skips the core
-> write and falls through to die_with_signal(), which re-raises the
-> signal to the host.  The host kernel then writes an x86-64 core file
-> for the qemu-alpha process instead of an Alpha guest core.
+> The Linux kernel computes ELF_HWCAP as ~amask(-1), i.e. the set of ISA
+> extension bits that the amask instruction reports as supported (cleared in
+> its output).  env->amask stores exactly those bits with the same layout
+> (BWX=0x1, FIX=0x2, CIX=0x4, MVI=0x100, TRAP=0x200, PREFETCH=0x1000), so
+> returning it directly from get_elf_hwcap matches the kernel convention.
+> 
+> Add HAVE_ELF_HWCAP to target_elf.h and implement get_elf_hwcap() in
+> elfload.c to expose the emulated CPU's capability mask to user-space
+> programs via the auxiliary vector.
+> 
+> Without this fix, programs using getauxval(AT_HWCAP) to detect BWX/FIX/CIX
+> (such as glibc's memcpy or JIT compilers targeting Alpha) incorrectly
+> concluded that no extensions were available even when emulating ev56+.
 
-I'm picking this change up for currently active qemu stable series
-(10.0.x and 11.0.x).  While it is not a bugfix per se, but a lack
-of feature which can be very useful for debugging.
+In stable 10.0.x qemu series, things are different from what we have
+now, - there, everything is in single linux-user/elfload.c and the
+context is a bit different too.
 
-For 11.0.x, picking up this patch makes subsequent patches in this area
-to apply cleanly (e.g. 7a2e863f9dd "populate AT_HWCAP from env->amask").
+Here's my backport of this change to 10.0.x:
+https://gitlab.com/mjt0k/qemu/-/commit/e4c1bf9b1fe030ef1d0d4c74086cccb62c6b0442
 
-For 10.0.x, where things are quite a bit different, both mentioned
-changes require manual apply, since in there, things are in different
-place (in linux-user/elfload.c) and organized a bit differently
-(HAVE_ELF_CORE_DUMP vs USE_ELF_CORE_DUMP).  But since I picked this
-one for 11.0.x, and since 10.0.x is an LTS series, I'm picking it for
-10.0.x anyway.
-
-The result can be seen here:
-  https://gitlab.com/mjt0k/qemu/-/commit/bb9f5a3bbc2f06fba918432b40b56e5aeb2b3c76
-
-Hopefully I did the back-port correctly.  It would be nice to have
-another view on the result.
+I appreciate a quick look at the result, whenever it looks good for
+10.0.x or not.
 
 Thanks,
 
 /mjt
 
-> Signed-off-by: Matt Turner <mattst88@gmail.com>
-> ---
->   linux-user/alpha/elfload.c    | 12 ++++++++++++
->   linux-user/alpha/target_elf.h | 13 +++++++++++++
->   2 files changed, 25 insertions(+)
+>   linux-user/alpha/elfload.c    | 11 +++++++++++
+>   linux-user/alpha/target_elf.h |  1 +
+>   2 files changed, 12 insertions(+)
 > 
 > diff --git ./linux-user/alpha/elfload.c ./linux-user/alpha/elfload.c
-> index 1e44475c47..c86f9cf2bb 100644
+> index 1969f620a5..7be9e466b6 100644
 > --- ./linux-user/alpha/elfload.c
 > +++ ./linux-user/alpha/elfload.c
-> @@ -3,8 +3,20 @@
->   #include "qemu/osdep.h"
->   #include "qemu.h"
->   #include "loader.h"
-> +#include "target_elf.h"
+> @@ -6,6 +6,17 @@
+>   #include "target_elf.h"
 >   
 >   
-> +void elf_core_copy_regs(target_elf_gregset_t *r, const CPUAlphaState *env)
+> +abi_ulong get_elf_hwcap(CPUState *cs)
 > +{
-> +    int i;
-> +
-> +    for (i = 0; i < 31; i++) {
-> +        r->regs[i] = tswap64(env->ir[i]);
-> +    }
-> +    r->pc = tswap64(env->pc);
-> +    r->ps = 0;
+> +    /*
+> +     * The Linux kernel computes ELF_HWCAP as ~amask(-1), which clears a bit
+> +     * for each supported ISA extension.  env->amask stores exactly those bits
+> +     * set for the extensions supported by the emulated CPU model, matching
+> +     * the kernel's convention: bit set in AT_HWCAP ↔ extension present.
+> +     */
+> +    return cpu_env(cs)->amask;
 > +}
 > +
->   const char *get_elf_cpu_model(uint32_t eflags)
+>   void elf_core_copy_regs(target_elf_gregset_t *r, const CPUAlphaState *env)
 >   {
->       return "ev67";
+>       int i;
 > diff --git ./linux-user/alpha/target_elf.h ./linux-user/alpha/target_elf.h
-> index 864dc6e2e6..bf3bd21b09 100644
+> index 4987ae3944..dd90c6f783 100644
 > --- ./linux-user/alpha/target_elf.h
 > +++ ./linux-user/alpha/target_elf.h
-> @@ -11,4 +11,17 @@
->   #define ELF_CLASS               ELFCLASS64
+> @@ -12,6 +12,7 @@
 >   #define ELF_MACHINE             EM_ALPHA
 >   
-> +#define HAVE_ELF_CORE_DUMP      1
-> +
-> +/*
-> + * Matches the kernel's elf_gregset_t (ELF_NGREG = 33):
-> + *   r0-r30 at indices 0-30, pc at 31, ps at 32.
-> + * r31 (hardwired zero) is not stored; pc occupies index 31.
-> + */
-> +typedef struct target_elf_gregset_t {
-> +    abi_ulong regs[31];  /* integer registers r0-r30  [0..30] */
-> +    abi_ulong pc;        /* program counter           [31]    */
-> +    abi_ulong ps;        /* processor status          [32]    */
-> +} target_elf_gregset_t;
-> +
->   #endif
+>   #define HAVE_ELF_CORE_DUMP      1
+> +#define HAVE_ELF_HWCAP          1
+>   
+>   /*
+>    * Matches the kernel's elf_gregset_t (ELF_NGREG = 33):
 
 
