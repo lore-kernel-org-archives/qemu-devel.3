@@ -4,184 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49175C44508
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 17:10:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 754F9C44501
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 17:11:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wk36x-0001a3-8Q; Wed, 15 Jul 2026 13:09:31 -0400
+	id 1wk38V-00027Z-ES; Wed, 15 Jul 2026 13:11:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <calebs@us.ibm.com>)
- id 1wk36v-0001Zl-JB; Wed, 15 Jul 2026 13:09:29 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <harry.vanhaaren@openchip.com>)
+ id 1wk38R-000277-Vk
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 13:11:04 -0400
+Received: from mail-francecentralazon11023117.outbound.protection.outlook.com
+ ([40.107.162.117] helo=PA4PR04CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <calebs@us.ibm.com>)
- id 1wk36r-0007VM-N9; Wed, 15 Jul 2026 13:09:29 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66FEBhqo403756; Wed, 15 Jul 2026 17:09:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=kYH50EfK63aestzeW/JfcdNkKk5JzB
- ZGR22CeO7hRNs=; b=NWGIgQ23FaKINcCcH6IHwODUw8jSQhnNGu5Fxg3MXdQDvW
- XZTGZzh6UgXXaxhJWTMjEnlo8smwT1ZIExJv/MI4KWinHAMNe0qI/ezBAAE0mdhw
- eFnKGFdTXU6TQ+LPSnr44fMK2fUUXhZ/7pBpdXQxRB0udl+iYpgVs3y8PC/o8q77
- NFc+uf1KzGhiZTKb+GD/yFGi+p+zYgiyOhOwUl/+/R5I1a1agSR5AB53ElkFdkK2
- bz3UZNNVU7kVJ45RSX35nGRa79qImSkFV3tEck6JWjwnHsfYCiU5c2r/YNCv6ooh
- MWb31r+Pcy3YkwAqqVX2jQkOb1oyA6TQQWunqEyg==
-Received: from sn4pr2101cu001.outbound.protection.outlook.com
- (mail-southcentralusazon11012030.outbound.protection.outlook.com
- [40.93.195.30])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbegtcsha-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 15 Jul 2026 17:09:03 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <harry.vanhaaren@openchip.com>)
+ id 1wk38Q-0007ny-8M
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 13:11:03 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gYzOxaI9MkQSu3UTjlBeiVodd0OyYBE/HSkbR5v14jNbO5ZlX73AgsM9Pt35gzr4+ugLZCyFX+JPEd0TRHZlHCrPkGBAAx/IWYq/7I+Lt54IKIv0RXv/wn+eXAPAm00LXiV9j6XCY9GG74lcu2DLlYKCgptwu6SLy6ha+gOlsMqOxkC82wBl11C4t6sXvseDXYEkmNWyrdsarfG7zF9Uyv0c2VQX63yoDLbacNaMuAx0B9qWt4sF425p95HkKzu836Maa3B5T+wYKqBpxbFwQ7drsAVq+PwRiP/MKXrmIHdVZGaJ4ouLD8ySQENJOPSnFzkMRIOrabmxy5ytJCYs7Q==
+ b=hG/yatcgEBzpsmOow1HOfUuD6h3RFXSdhy5aw16BgbFvLGts8UU80VCbHt4MCLW0vw5S7YlwsL0AF8d9vPKVCzWwcyb0WqEUQiWnfy/Ud32yE2oP8K1Cz1Gop+EscVg5oX5Jbj3Q2iuQOSkjmvbN6PtXDUG6sYNNqmHGLHEeTTqBAIg4dgH4OOABET4mkEoGuK2Bifr9M5f9IZt+5IyewYFGxSwKU08i8B/yvPiD/JXZob8zpKAovy15yBsaSxnrXMzXjc+FxWjsBwJOt8cD1vsKW5xM6xPBz/hQi+kT+AMT6CUIz8g+V0VWMbcICAvnJYiZ527L4D73shYAGnDcgg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=kYH50EfK63aestzeW/JfcdNkKk5JzBZGR22CeO7hRNs=;
- b=DGQ6hXJU6iPh8ImjXITqw4S8WAj8VeeEHM61OpZMnKzdirbJhR5fnnyEPtkkTWs3fwWY1GIZx+NR9bxuw18373Wwdrf3D60gj7Wt7HE3yJh89StI5T+mT2UjOdiDMp8ddP3uFuMqZ/5+H1d1eV5N+UVaqLfLZ6g2IITOxzhKbNxTRN1BrP+HpH6LGNhyeGL4VACB8Da+TN3g5EiXxgMM1iJs5hWQRNvv7i+5j/5QwabBzmLubX/nRrN90XSqzQMWwazBQOnuIZvup1KGMASJbRIZtyIzKFRMwQwy6FD9OBzYBykIsG/n6IgIbXWrNb1MMwwBVCOHI4NvW8u/oQB7kw==
+ bh=IyIQ+Yn15uvHlCyDmDhFJv4V86CZxl4m+hcaxBP8YDQ=;
+ b=JRkexy4M+9TamF3QiXO/rU5qSJJ3QKUZvS62I4LTnRcoAllgr9YC6wTudTopjv8qNL0QhBqxZ2Q0bbAD8SW+4x3+TzCtzeTwBdPwqMm+/s0XDgnZNgU7JQRSXO1X9Hf1BL20/8+XUlbfJC3rvnFI+BZgayTaTA2GdH5QYg8+v18qAAIX6kM5o4CRsPkCIRqpUq3NqOZ92offNZvy9vCtnJ04IlwJzave1k9hDQmj9yGZL+YAq9JLGra43Sf8jdoCwSIGXtTFClFU1b30jhwSiRbj7O1+cSZZATD2mdMxvZJ4Gfs5dXgjdbyXQ8roKXnvr2dBBCfIDzGIUUCsISkG6g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=us.ibm.com; dmarc=pass action=none header.from=us.ibm.com;
- dkim=pass header.d=us.ibm.com; arc=none
-Received: from DM4PR15MB5380.namprd15.prod.outlook.com (2603:10b6:8:63::9) by
- SA1PR15MB5258.namprd15.prod.outlook.com (2603:10b6:806:22a::12) with
+ smtp.mailfrom=openchip.com; dmarc=pass action=none header.from=openchip.com;
+ dkim=pass header.d=openchip.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openchip.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=IyIQ+Yn15uvHlCyDmDhFJv4V86CZxl4m+hcaxBP8YDQ=;
+ b=Ta9kMXQ0q1JhizvuLldPNTX4q+PfZEbOge6pwiyDVwEIk9rxUoJqp7kXDBR8t3U6Hf1nuzX3ZI9vBH63cu1d8wgIVFHUoAlA9f1bnNWkZR5zqfNWoFJTHJL3vARwT3Pcvzn1uvrar5S4p80X0/BKhNTtVH05GO/B7F+GOHWuSPMvQT3YTRZVognYSbsF0nZM7s6VC6w2BCSJ2xCn3shXlVotK+11RrMqkV8Cmaxh0T8D9tEG1s8VhjrVoCtjNxtsDF+Kx4IF0IyLhJDFCC28KC0qAW2kF5tkZqY1rXud7K//ONySMQTpuCcP1n5r59M/rE3H59nlYUWxOUVuZH33rg==
+Received: from GV2P192MB3464.EURP192.PROD.OUTLOOK.COM (2603:10a6:150:328::6)
+ by GVXP192MB2404.EURP192.PROD.OUTLOOK.COM (2603:10a6:150:1f9::5) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.19; Wed, 15 Jul
- 2026 17:08:57 +0000
-Received: from DM4PR15MB5380.namprd15.prod.outlook.com
- ([fe80::a904:6080:c639:7d67]) by DM4PR15MB5380.namprd15.prod.outlook.com
- ([fe80::a904:6080:c639:7d67%5]) with mapi id 15.21.0223.008; Wed, 15 Jul 2026
- 17:08:57 +0000
-From: CALEB SCHLOSSIN <calebs@us.ibm.com>
-To: Glenn Miles <milesg@ibm.com>, Mikail Sadic <Mikail.Sadic@ibm.com>,
- "clg@kaod.org" <clg@kaod.org>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>
-CC: Paolo Bonzini <pbonzini@redhat.com>, "ninad@linux.ibm.com"
- <ninad@linux.ibm.com>, "titusr@google.com" <titusr@google.com>,
- "jeuk20.kim@samsung.com" <jeuk20.kim@samsung.com>, "philmd@mailo.com"
- <philmd@mailo.com>,
- "steven_lee@aspeedtech.com" <steven_lee@aspeedtech.com>,
- "leetroy@gmail.com" <leetroy@gmail.com>, "jamin_lin@aspeedtech.com"
- <jamin_lin@aspeedtech.com>, "kane_chen@aspeedtech.com"
- <kane_chen@aspeedtech.com>, "andrew@codeconstruct.com.au"
- <andrew@codeconstruct.com.au>, "joel@jms.id.au" <joel@jms.id.au>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v1 0/5] Add IBM Huygens BMC machine for AST2700
-Thread-Topic: [PATCH v1 0/5] Add IBM Huygens BMC machine for AST2700
-Thread-Index: AQHdFHGzqC6AyfQSgk2XQ4/ix1e4DrZuvY2AgAASpqI=
-Date: Wed, 15 Jul 2026 17:08:57 +0000
-Message-ID: <DM4PR15MB5380653523EF2D5C11DE2254E1F82@DM4PR15MB5380.namprd15.prod.outlook.com>
-References: <20260715155037.2237011-1-mikail.sadic@ibm.com>
- <PH7PR15MB515180D1B6F069668AD594DFCAF82@PH7PR15MB5151.namprd15.prod.outlook.com>
-In-Reply-To: <PH7PR15MB515180D1B6F069668AD594DFCAF82@PH7PR15MB5151.namprd15.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.11; Wed, 15 Jul
+ 2026 17:05:54 +0000
+Received: from GV2P192MB3464.EURP192.PROD.OUTLOOK.COM
+ ([fe80::7ed0:3600:9df4:af64]) by GV2P192MB3464.EURP192.PROD.OUTLOOK.COM
+ ([fe80::7ed0:3600:9df4:af64%6]) with mapi id 15.21.0202.018; Wed, 15 Jul 2026
+ 17:05:53 +0000
+From: Harry van Haaren <harry.vanhaaren@openchip.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "alex.bennee@linaro.org" <alex.bennee@linaro.org>, "erdnaxe@crans.org"
+ <erdnaxe@crans.org>
+Subject: Re: [PATCH 2/2] plugins/execlog: fix execlog vcpu_exit execution
+ print loss
+Thread-Topic: [PATCH 2/2] plugins/execlog: fix execlog vcpu_exit execution
+ print loss
+Thread-Index: AQHc/asBdz5UenWH/EGtxKxaHNookbZBg+iAgC10NVI=
+Date: Wed, 15 Jul 2026 17:05:52 +0000
+Message-ID: <GV2P192MB3464B1F78D8F38D1574A8D9185F82@GV2P192MB3464.EURP192.PROD.OUTLOOK.COM>
+References: <20260616161242.267315-1-harry.vanhaaren@openchip.com>
+ <20260616161242.267315-2-harry.vanhaaren@openchip.com>
+ <e7edbf3f-55e1-42a4-8101-0a1c273c7587@oss.qualcomm.com>
+In-Reply-To: <e7edbf3f-55e1-42a4-8101-0a1c273c7587@oss.qualcomm.com>
+Accept-Language: en-IE, en-US
+Content-Language: en-IE
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
 msip_labels: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=openchip.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DM4PR15MB5380:EE_|SA1PR15MB5258:EE_
-x-ms-office365-filtering-correlation-id: 4b04a506-6265-492e-33a2-08dee293c1cf
-x-ld-processed: fcf67057-50c9-4ad4-98f3-ffca64add9e9,ExtAddr
+x-ms-traffictypediagnostic: GV2P192MB3464:EE_|GVXP192MB2404:EE_
+x-ms-office365-filtering-correlation-id: 0e7ab0b6-3a4f-41ea-9ebb-08dee29353e4
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|1800799024|7416014|376014|23010399003|10067099003|38070700021|22082099003|18002099003|4143699003|8096899003|11063799006|56012099006;
-x-microsoft-antispam-message-info: DNHW3TOqoN9EnSvJH4BfSp/AEc7hlV/KySZ5Fwt9wo+3Y4nCPti/2sYG1QuGrxulK2hRtPfqGhRcOqmTn4C5VU5wZUsbHWKW+IDlvPt5kLQFYZY2QLJlaudelb26LS7B5pJ7torOsuTmIJigi4n2KgFsDehSgn37Y55QXxGApzSR9QtHG9hf2bYkRkLb06WevF/BUqnsrKrBFQn0nfAsf9Z3f2F2Q3eeGiV7xi4XbwCNcjKdEFVGnB/0NZgoFWLRuIBECW6vFQyeY78PV7JXK2PLhw94uqqK9TruHO7+0mxEaRcf+hZRJsY11WKhm5CxDHfCdqOC6fFRk9UsXMm6CEdSUKbOQAE9zqQIF5l9/RGoQLA+9SklA7Q5dYZl2qpgb/nLtiqVbcSmVXbcSLkrtyzwsabdTO8Ua5z83g7nV6k1FaLGEKarZ/z/u78vs8pJj3s31BOqrOc/kvwiiGEs8a9b/Sek4MwEvt5jqbv3pmxfBCLD/j8w8fo3K6S87FCL2AohKcmNNFEZ5ZQtocpcG3jPok8U9nHd3qZLkmjbKQc+EbVa8+E8/e4HEAbEiSu0NSaMoB+qndLt205I1SY0CDeEMD5HbDtktxGviDI4IxhmTDAirDKS6DLtRESHPY9w2QhxoZimno4XRIMhh2urgA9U3a3DdM+uu4eGiyLqhbrZjMREjYO7mgsRO2m2+SoAIrZWlDRS/sJvOsRXUAnfb2oEjnkaOpu2kEdu3SD74k0=
+ ARA:13230040|23010399003|376014|1800799024|366016|10067099003|38070700021|4143699003|3023799007|6133799003|56012099006|11063799006|22082099003|18002099003;
+x-microsoft-antispam-message-info: gLeZ7k0DV5R4HGtTqG+BPZ61Yat974xnYA/y+Vo2ZVYhrfxIcBKQC9sKQv+L8EazDtCS+f2dXdcfVJy460gBw2TByqUWVoQXvK6hoAYWgMONXk5+2bSDNg1/RNhVb8ItclqFC0CitlRCLXqgp76fgiFWN4jJ8ACQoEwjceFtzwypVZ9gx918rpodp7xLwlK127gnnXorVOroDFx/mvPp6FIJVn7LmR11gp+k0Khf1IkQL09T1fBg4V1YxMy1SBBqoBUG19h9kOngHXIJiAGnLVQcbQ6j6GtwrOO6Wj2ccY9O9emFXp5G7aUHyw239Jp1W/3sE91VFLSlwBgbOp52VKhvuo5f09QE6DpgfD+Tu8CfiFPuveptN4E59+XImkZldgYv56h9O5Db2qSrEpUQLcUCnxB5WGzI8jegSTvUFGaIgnlOTAD2zF/M7vs4RquTuLzKUxUarfAG8QogO0W+qQtBZ+HMI4DLPHFF6bO1vaL/w46nlzcNTmENj/bkxJuiz8YnKhcG/GWuISfAJDIGx0BHCUCECN3s6Zb2oipuefWBDEc3tlahkFy6OPqcb4F9zhje4hN1WYCCQc/UHFcze0yH0BqXl4g7wpGkAQgUb3Zsaeg6cO3AQFHkjmikXTXLg1KCIGMxrXEqKL9+9jwDDQUpJ2pRCSjMOuaFjnMYXq1+9nSWF6hRJqAuasZFpI+7b/qyWOvumOawbJ0YU6OGR0ZmXKRqaxWVWVNiJ/6Kj1E=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM4PR15MB5380.namprd15.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(7416014)(376014)(23010399003)(10067099003)(38070700021)(22082099003)(18002099003)(4143699003)(8096899003)(11063799006)(56012099006);
- DIR:OUT; SFP:1101; 
+ IPV:NLI; SFV:NSPM; H:GV2P192MB3464.EURP192.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(10067099003)(38070700021)(4143699003)(3023799007)(6133799003)(56012099006)(11063799006)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?HgfHeaLBU3DTYE3JLDsz3Z3EdCUjkJS8+TvVfqkalFAz664+Pnq/Rb+vO8EL?=
- =?us-ascii?Q?/v6WNK/lh5epLNaVZaAJxAQGO6aeJVgHSFBw6OdyW4gd36g4MFWVqpOd/bk0?=
- =?us-ascii?Q?HKjrtj/iAQb4jga9NEBL7qyuKZpQ2c3VLKbinDMtcYutKqC0F+QzPM2o/W/j?=
- =?us-ascii?Q?Xz4OqW2hJNeb42UJJeAJBg3Ap1s/xDhBXw1U9Cp7iweuwKbVd+uYWsRonT8d?=
- =?us-ascii?Q?C2uERUnCBBgs39NN7evfO4IpQBhnmQocmFc/CGoDzMrx2YvgbdhTQQvlk8YV?=
- =?us-ascii?Q?lmn8AwbfdLS5vm7zrjXQ9kmbOx9ING3/mLYGIEzb+Z16w3gAPpXhlGCayK0l?=
- =?us-ascii?Q?WJbSleSzCH/az3CyIQSwSJg9GmuaNBTHYUjPR53KGcvfOvUNpXEllGsgp4TX?=
- =?us-ascii?Q?BNT4c3qTwNdY4CvPj+1K6+V5enHReRpuINpaP/yZifSifnJyxfT0mQnUmrMS?=
- =?us-ascii?Q?dgXhba/CDu2pFuUfImUN7VYk31O4u5N4GUpIwe5Y/ymmEUUdlbEqMDrgUQF1?=
- =?us-ascii?Q?dVe8n+59R3RiFozDPQVNDyw4+aX8eWXG1fKCXzkH5pEjRWY041DJaeVwX4wz?=
- =?us-ascii?Q?ypzkBf/2NDTnGkx6cXqTI0ILMYLM9UG7oX6UVUjd4hgwkRYmdPwatKrvWKyD?=
- =?us-ascii?Q?6B920LmeMnV59sFQkdJR4ksOLx9Reo0FmSYIUXjL9Ae/mB6ZlEIJWs7o7L3z?=
- =?us-ascii?Q?okxpIqLCF3vJPwdeEpZ9AkSyRdbrkmoW3G64eGRAlVzGYv6V+M5dWRIUsHf/?=
- =?us-ascii?Q?SCgeCvpQt1cJaUDoNq1cx2OuTljNI8b1A1N6qMxATA13lGa+cRk2MuASEkqo?=
- =?us-ascii?Q?hDDrTJ9jdYOvWbPV/MtEjgSsoYNR6KjJlnrnDevlxmB+Cuk48NzHBIyjieUM?=
- =?us-ascii?Q?81paM0k9NhybCW+kplY9wXYO/Dpjh5isAVJzi0LREVmAwqLhk1mkyW4hCkeq?=
- =?us-ascii?Q?zBo0gi8jIccdtvjtgvXyjQt9FsRsFyTXc1imbUFj8OihevVCk6wJXAFxddzC?=
- =?us-ascii?Q?DQxMJaYFgTASNg4X3VwwCyLj5zTY9kmYjsrLmnhhmSHWyF6BHoYDM8DijcIp?=
- =?us-ascii?Q?hXs5Kycxe9KCIRKUwyvFlxwwvFLl7+hZcG49u6x6Spue7SkkXy+rmhaaAIoI?=
- =?us-ascii?Q?xBeWCRMZkp80i/dcW934oTelGY0dGvxZ6vpeRlDWgd6SwN1jZ70oYBywJstu?=
- =?us-ascii?Q?ZTK59xqt54QSdHEtS4KdxJuBmlm5q8OCLKuC+aYfkVUKFkt8nYYXZC13WlWO?=
- =?us-ascii?Q?1z1eXNk3Vz0OKvLEcSElnKps4J8HhekqmSTCqlxd0ql7/rrI0k0xdVQQTi04?=
- =?us-ascii?Q?+d4UqNFAhZaR8A8oDboN1YOsm3wq9daKR4kM6Sb17cpgnGsTbkTfq8GWmj3U?=
- =?us-ascii?Q?EZGOh99yGiQJ+nYC8mZw4e+/pkg0iMGBjp5mB4bYEH25b81da1s9jjwbhE1o?=
- =?us-ascii?Q?JDTq4VxRWe2EUwNLt86ZKPxw+6+53eRCbtbj3rmVwmEW/6cmzqKdjj/a04FT?=
- =?us-ascii?Q?duTYHyb3VlNAMb0mGeCzQv5jNf8318HUy/a1UOwnJdFKfGPB5iC22mcr40nn?=
- =?us-ascii?Q?6TjzuhNr9AdfBT1Pk3uNy5gXOYHvFP5OVuSXdPADBmTuFA7NDqM5F7BauFKj?=
- =?us-ascii?Q?OBrwNw4T2HfgzuTjugAwxGIhsZ8udYyQyCzEurmbe4u9D1rVp7WlMM1FPPqX?=
- =?us-ascii?Q?RtVlE8Nqk6ttD/Ktdwc/KfbNcSVjzTnhleiA0gPs1baWBgBG?=
-Content-Type: multipart/alternative;
- boundary="_000_DM4PR15MB5380653523EF2D5C11DE2254E1F82DM4PR15MB5380namp_"
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?1gKdpMOrgCrItJzx4dWsEwxw7yC1EP3FTpa2zpR+C7M+76HQYnhO4nWD2e?=
+ =?iso-8859-1?Q?msY2qYfbjhWJq5FWGLRUsbXsjvlzHRG+y4Ry8pUqGKAyL2X/b+MeQGewBJ?=
+ =?iso-8859-1?Q?MUMELMLm9PdV9eyYvUQFpezc2g6g8UDxR9XqyI5CpOCfpM0D+7He7l1tkj?=
+ =?iso-8859-1?Q?CwPYFzQRPEviIPT7EbzCKjBrmyycrXusul3C55IESkSuwzxK0oV4iIMsmk?=
+ =?iso-8859-1?Q?drAi9LaBSZ12CYFPOYki4nFo36PyAWV/ow2R+aTr8PUlV+OUxj3P96hQcQ?=
+ =?iso-8859-1?Q?a+2AzmeA0NfXnvvxGZOd3/vw1m8PcuRrZ5ByMlwYUwTdOBstxDxBv45Fqb?=
+ =?iso-8859-1?Q?yzzJma6ULYj2Y2D6+icrLsg7AI+vmNdN2IqjVaUnBCb13o2U3FBFSgbK8j?=
+ =?iso-8859-1?Q?qZ8l49wqeGp0p1P8ZUs4Z0cRxVN9vLWNduvAkDf8EeaNwGl8UYYnUDG2yd?=
+ =?iso-8859-1?Q?tumHIlFdBr2ftNo2Ve9EjY/1oXStT9fBB2+qJzpzgPDTOvaW6UfaJX80GD?=
+ =?iso-8859-1?Q?SDlrBQ7NuR5H0UmZwg3sfVXVWxJDPiGv37d632rl3JBpDoLaF18d0GZOQm?=
+ =?iso-8859-1?Q?567wODrmITunxsRrV2wU4z0rie16Fef75ucs1Aexi1V8aWVIohWJ+oeNqG?=
+ =?iso-8859-1?Q?xd9+I1NVSzd7LhtnPhqyTeFxMjf0SG5yEoyQYQHmAFhyjUe14rohzb5slT?=
+ =?iso-8859-1?Q?wAee5aAdKF3s7pvCS/rqMYb+fF4ZMalLz3vGXddtYGOiI8C9eFiaV7TGoP?=
+ =?iso-8859-1?Q?SqZc+gcX3gAKYkrvOTlSVaztrqeViHfBIRdYF0ukbQKb0H020gsxPdU9EZ?=
+ =?iso-8859-1?Q?/q4YpsOH2Koug6K1c01nCG/I4cj3YKHm48sU6dvZabGIMaoEGQwD6YwuW+?=
+ =?iso-8859-1?Q?N6lVUuyuNiXmpjn4iq4aZ4eRCrlQYBvDrU3Fs+6OSQwLwiGFj/zz2jpeIt?=
+ =?iso-8859-1?Q?XFzssGwt65rqbIFuJ+pjGVS7trfS9oSP1P3ZxldaXkoo1RCdlHJReJzABl?=
+ =?iso-8859-1?Q?J1cmpzJUukKwhxPwnNxjB+3TpSWgTTUmYHWOPh3jbXLurVNWgmHtQDKhef?=
+ =?iso-8859-1?Q?b9Lbpm1T5NB+4v1DVOtt36hI9NtFI5Y+eklzRT3gGnmz7Qk85E7Pedghou?=
+ =?iso-8859-1?Q?nC96e4DaOyUaSyL5bQCosrRPv3KmdvfGE81THcfxTOoSfTa3fwlyzWal6N?=
+ =?iso-8859-1?Q?ZmypH+eVuvyCQhQvBc9o8JloH0lCHxXLMsMligcdTPuG4Xzi8CgAQ6dy6M?=
+ =?iso-8859-1?Q?dwplyWEFqd2O/oGigViKUVMZn3YG+v27s4efWomu/Tj+O4ApAOCGNFFXzd?=
+ =?iso-8859-1?Q?XtsJ5EOgBmNirpxm1ft4PjHbVsT7jfkIF0pqUkeNeT8k/6Zu9Xxgb+IWJZ?=
+ =?iso-8859-1?Q?4m1WCXTTvBeDo0vYPEFJK1CjWA5OlVD0yG4DJdIA8Ar4fiKlYGN6Fsgjss?=
+ =?iso-8859-1?Q?hA7KabFGrlXnRJubM6k1z4EEY8lP2jPCTIs2CCD2Og12/T4+AjXklMUHCr?=
+ =?iso-8859-1?Q?f+vz8lG0Du7AyYx7dNHHw4F2O1fUvGU3wymQN8snXG+0TIycn9j3qNlVpP?=
+ =?iso-8859-1?Q?hl3LifXgxsrzX3YwtcPZ7NfVT4TipLj7m3HQbRc+sWhkh2XuoZJLxfNLBC?=
+ =?iso-8859-1?Q?0AnNW+j/uq/8O7ORrdTFPSkAGZQXchtgZGQGhJRhDNkDApejm0L1teuI86?=
+ =?iso-8859-1?Q?aA+dyTDMW8i4xzR8kzY+GJ+0azCxU1PY2nMdQ+3Uj2XxqfTYUQ5xSsLswc?=
+ =?iso-8859-1?Q?41ntv39Dk2tdD8hg+PcMLl2I1hGHIg4Qr4Ys8YK9dPukjUfEK7Soq3tdOV?=
+ =?iso-8859-1?Q?LrZPoPYMkQ=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: cq4LoKeWwYZaCcKoVbOYLnfLVtLtjbSibzHdrFKedal00clIcHfz9OcdEj95B7SHlPpAvcRipQoUM93DVVn2t9XU3BJd6MILt61fEyd2NMlh4TZLILD+RpkNkXN/YKAqx35xgc8gue8USh2Kz+5dL/CYDt4CearVUX54A09/oHKUer1B8CrSe9VWDwcmfeOhh8H9svOllOJIR2B44aQvKB9mDzEII+NjyhEnSOJTp1FW4yaH0MrhYnyYZXMoKhSv7jKf/45bRMeMew28jCyrRl7S0tTSn5ncmbc41u7Bhn5JFk/EK0tdh1glwWoZYzBcIY8IjnK6mBcQz9hpkX7kZg==
-X-OriginatorOrg: us.ibm.com
+X-OriginatorOrg: openchip.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR15MB5380.namprd15.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4b04a506-6265-492e-33a2-08dee293c1cf
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Jul 2026 17:08:57.2266 (UTC)
+X-MS-Exchange-CrossTenant-AuthSource: GV2P192MB3464.EURP192.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0e7ab0b6-3a4f-41ea-9ebb-08dee29353e4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Jul 2026 17:05:52.8528 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: fcf67057-50c9-4ad4-98f3-ffca64add9e9
+X-MS-Exchange-CrossTenant-id: dfdd4aff-e2c9-4e1a-8642-7f6cc6bbbe6d
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: nF65D56aQfYSwSWAvvu9fBdx6S+ntPP7RJ0MsEN8TXq4c4RD0MtqnI5QYhFWw3KMisVvs3fZG5gvlosZ30LfPg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR15MB5258
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: P4CEqEgPt8hFM4bbLpY78D4J4oSFGsc7
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE1MDE2NiBTYWx0ZWRfXxWqhstgyYzXg
- I5uVgziSFgo0HG04q4bZxGKA0YCt0nHElchxPoZoCu4S7RMhKIgPmWktT6xHxVZhsizYuKBy5u/
- YuOqmSymhA4OpUDR3zI1+mf0IQxwciM=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE1MDE2NiBTYWx0ZWRfX9wFmlWBrJF3V
- K7OrKxItdCOpw/o+Xe0WoaQPRQH64Bu4RYQBbcnKKghUKCap4hFTDR09F+7dUBMNuh+hYRrkeBp
- FZFSMmoQ2m7DfyB8jmdkpONQ+riIwU/YJQAKwTiHxiTcxNGKd8cNoYDsAIYJZ68euRbpTb9/hEV
- MB/QJKJ7RrSx3EI7eNsC1W3qbUpCaGT1UOf4zG5mJzofEvcBv+5qzcPuqjQYpsQ+OJhlg0LgoS5
- +FBuEawbUucpN+IFG+gQncEBX4dxtAE/P687SngXhsvG8OWA8hyqTTb17FYa3SsibJLedE+tbMZ
- O9KoO4qcGzn9m65Ws68u1c4pHpScGLWEBc6hthsmzmjvwi6nLiTcKX/y47z9AHXxdVkHiJvjExV
- xJ0SmVbqy2KpZF5WOprdUT2Uv7tuLZbLSOhrkOEEvPT6irI94cm69wcc6NuXgpcm6mpGOGsbyBY
- 1VAt0mKFdPiwz4xG+dw==
-X-Authority-Analysis: v=2.4 cv=IqMutr/g c=1 sm=1 tr=0 ts=6a57beb0 cx=c_pps
- a=3pdFJ6cSxbCDruMc3dgxYA==:117 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=RAioF0-LDSMA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22
- a=VnNF1IyMAAAA:8 a=aow-egSQAAAA:8 a=KKAkSRfTAAAA:8 a=20KFwNOVAAAA:8
- a=1XWaLZrsAAAA:8 a=hD80L64hAAAA:8 a=S56xvJB5AAAA:8 a=V2NxCb60AAAA:8
- a=pGLkceISAAAA:8 a=7KBfExy5AAAA:8 a=69wJf7TsAAAA:8 a=ZyqM74AI27vIaqdW3IgA:9
- a=CjuIK1q_8ugA:10 a=XV2iG6GQJs05N3O_JE0A:9 a=WwSFPsUCu2GDwqp3:21
- a=frz4AuCg-hUA:10 a=_W_S_7VecoQA:10 a=gFNbaldVC-z-bsjSTzMo:22
- a=cvBusfyB2V15izCimMoJ:22 a=MH9Ivq0PDQRhlrFuIVvX:22 a=3L6qF29SlnrayQqPM2jZ:22
- a=eL7OMsOqQ-6kYQPn45L1:22 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-GUID: cZ3p8OZjPS3Rur1P-ceShjJiTS-mEM7n
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-15_03,2026-07-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1011 impostorscore=0 malwarescore=0 adultscore=0
- phishscore=0 suspectscore=0 priorityscore=1501 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607150166
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=calebs@us.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-MS-Exchange-CrossTenant-userprincipalname: aPVSkwp6m7vd76A5Ls7LWSjaihz5XOlWcBKyYLKqLGSDoBJaiTAejsIJHA+hKyIVGdUQ0Cr+sqvEbGcuz5htiMdpMG0rcLh4OAtdmq3zl30=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVXP192MB2404
+Received-SPF: pass client-ip=40.107.162.117;
+ envelope-from=harry.vanhaaren@openchip.com;
+ helo=PA4PR04CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -197,406 +150,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---_000_DM4PR15MB5380653523EF2D5C11DE2254E1F82DM4PR15MB5380namp_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-Mikail,
-
-Same for me, please use calebs@linux.ibm.com.
-
-Thanks,
-Caleb Schlossin
-----------------------------------------
-Power Simulation Architect
-IBM Rochester, MN
-----------------------------------------
-________________________________
-From: Glenn Miles <milesg@ibm.com>
-Sent: Wednesday, July 15, 2026 11:01 AM
-To: Mikail Sadic <Mikail.Sadic@ibm.com>; clg@kaod.org <clg@kaod.org>; peter=
-.maydell@linaro.org <peter.maydell@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>; ninad@linux.ibm.com <ninad@linux.i=
-bm.com>; titusr@google.com <titusr@google.com>; jeuk20.kim@samsung.com <jeu=
-k20.kim@samsung.com>; philmd@mailo.com <philmd@mailo.com>; steven_lee@aspee=
-dtech.com <steven_lee@aspeedtech.com>; leetroy@gmail.com <leetroy@gmail.com=
->; jamin_lin@aspeedtech.com <jamin_lin@aspeedtech.com>; kane_chen@aspeedtec=
-h.com <kane_chen@aspeedtech.com>; andrew@codeconstruct.com.au <andrew@codec=
-onstruct.com.au>; joel@jms.id.au <joel@jms.id.au>; CALEB SCHLOSSIN <calebs@=
-us.ibm.com>; qemu-arm@nongnu.org <qemu-arm@nongnu.org>; qemu-devel@nongnu.o=
-rg <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v1 0/5] Add IBM Huygens BMC machine for AST2700
-
-Hi Mikail,
-
-Could you use my milesg@linux.ibm.com email address for patches please?
-
-Thanks,
-
-Glenn
-________________________________
-From: Mikail Sadic <mikail.sadic@ibm.com>
-Sent: Wednesday, July 15, 2026 10:50 AM
-To: clg@kaod.org <clg@kaod.org>; peter.maydell@linaro.org <peter.maydell@li=
-naro.org>
-Cc: Mikail Sadic <Mikail.Sadic@ibm.com>; Paolo Bonzini <pbonzini@redhat.com=
->; ninad@linux.ibm.com <ninad@linux.ibm.com>; titusr@google.com <titusr@goo=
-gle.com>; jeuk20.kim@samsung.com <jeuk20.kim@samsung.com>; philmd@mailo.com=
- <philmd@mailo.com>; steven_lee@aspeedtech.com <steven_lee@aspeedtech.com>;=
- leetroy@gmail.com <leetroy@gmail.com>; jamin_lin@aspeedtech.com <jamin_lin=
-@aspeedtech.com>; kane_chen@aspeedtech.com <kane_chen@aspeedtech.com>; andr=
-ew@codeconstruct.com.au <andrew@codeconstruct.com.au>; joel@jms.id.au <joel=
-@jms.id.au>; CALEB SCHLOSSIN <calebs@us.ibm.com>; Glenn Miles <milesg@ibm.c=
-om>; qemu-arm@nongnu.org <qemu-arm@nongnu.org>; qemu-devel@nongnu.org <qemu=
--devel@nongnu.org>
-Subject: [PATCH v1 0/5] Add IBM Huygens BMC machine for AST2700
-
-This series adds initial support for the IBM Huygens BMC platform based
-on the ASPEED AST2700 A2 SoC.
-
-The series introduces a new Huygens machine model, adds a dedicated
-CFAM-S implementation for the AST2700 FSI responder framework, provides
-a PMBus model for the TI UCD90320 power sequencer, and implements the
-AST2700 UFS host controller required for booting from UFS storage.
-It also includes an initial functional test covering the Huygens boot
-flow.
-
-Patch summary:
-
-1. Add the AST2700 Huygens machine.
-2. Add the CFAM-S model for AST2700.
-3. Add the TI UCD90320 PMBus device model.
-4. Add the AST2700 UFS host controller.
-5. Add an initial Huygens functional boot test.
-
-Testing done:
-
-* Booted OpenBMC using UFS storage.
-* Verified OpenBMC reaches the login prompt & Active/Ready state.
-* Verified `make check` test cases all pass.
-
-Note: checkpatch has some warns about MAINTAINERS for patches 1, 2,
-and 5, but the new files should already be covered by existing
-wildcard entries in the ASPEED BMCs and FSI sections.
-
-Mikail Sadic (5):
-  arm/aspeed: Add AST2700 Huygens machine
-  fsi/cfam: Add CFAM-S model for AST2700
-  hw/sensor: Add UCD90320 model
-  ufs/aspeed: Add AST2700 UFS host controller
-  tests/functional: Add Huygens BMC boot test
-
- MAINTAINERS                                   |    2 +
- docs/specs/aspeed-ufs.rst                     |   69 ++
- docs/specs/fsi.rst                            |   58 +
- docs/specs/index.rst                          |    2 +
- docs/specs/ucd90320.rst                       |   36 +
- docs/system/arm/aspeed.rst                    |   41 +-
- include/hw/arm/aspeed_soc.h                   |    3 +
- include/hw/fsi/cfam-s.h                       |   26 +
- include/hw/fsi/fsi-master.h                   |    2 +
- include/hw/ufs/aspeed_ufs.h                   |   66 +
- hw/arm/aspeed.c                               |   12 +
- hw/arm/aspeed_ast27x0.c                       |   31 +
- hw/arm/aspeed_ast27x0_huygens.c               |  242 ++++
- hw/fsi/cfam-s.c                               |  145 +++
- hw/fsi/fsi-master.c                           |   10 +-
- hw/i2c/aspeed_i2c.c                           |    7 +
- hw/sensor/ucd90320.c                          |  144 +++
- hw/ufs/aspeed_ufs.c                           | 1095 +++++++++++++++++
- hw/arm/Kconfig                                |    1 +
- hw/arm/meson.build                            |    1 +
- hw/fsi/meson.build                            |    2 +-
- hw/sensor/Kconfig                             |    4 +
- hw/sensor/meson.build                         |    1 +
- hw/ufs/meson.build                            |    1 +
- tests/functional/aarch64/meson.build          |    2 +
- .../functional/aarch64/test_aspeed_huygens.py |   49 +
- 26 files changed, 2047 insertions(+), 5 deletions(-)
- create mode 100644 docs/specs/aspeed-ufs.rst
- create mode 100644 docs/specs/ucd90320.rst
- create mode 100644 include/hw/fsi/cfam-s.h
- create mode 100644 include/hw/ufs/aspeed_ufs.h
- create mode 100644 hw/arm/aspeed_ast27x0_huygens.c
- create mode 100644 hw/fsi/cfam-s.c
- create mode 100644 hw/sensor/ucd90320.c
- create mode 100644 hw/ufs/aspeed_ufs.c
- create mode 100755 tests/functional/aarch64/test_aspeed_huygens.py
-
---
-2.53.0
-
-
---_000_DM4PR15MB5380653523EF2D5C11DE2254E1F82DM4PR15MB5380namp_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html>
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
->
-<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
-ttom:0;} </style>
-</head>
-<body dir=3D"ltr">
-<div class=3D"elementToProof" style=3D"font-family: Arial, Helvetica, sans-=
-serif; font-size: 10pt; color: rgb(0, 0, 0);">
-Mikail,</div>
-<div class=3D"elementToProof" style=3D"font-family: Arial, Helvetica, sans-=
-serif; font-size: 10pt; color: rgb(0, 0, 0);">
-<br>
-</div>
-<div class=3D"elementToProof" style=3D"font-family: Arial, Helvetica, sans-=
-serif; font-size: 10pt; color: rgb(0, 0, 0);">
-Same for me, please use calebs@linux.ibm.com.</div>
-<div id=3D"Signature" class=3D"elementToProof">
-<div class=3D"elementToProof" style=3D"font-family: Arial, Helvetica, sans-=
-serif; font-size: 10pt; color: rgb(0, 0, 0);">
-<br>
-</div>
-<div class=3D"elementToProof" style=3D"font-family: Arial, Helvetica, sans-=
-serif; font-size: 10pt; color: rgb(0, 0, 0);">
-Thanks,</div>
-<div class=3D"elementToProof" style=3D"font-family: Arial, Helvetica, sans-=
-serif; font-size: 10pt; color: rgb(0, 0, 0);">
-Caleb Schlossin</div>
-<div class=3D"elementToProof" style=3D"font-family: Arial, Helvetica, sans-=
-serif; font-size: 10pt; color: rgb(0, 0, 0);">
-----------------------------------------</div>
-<div class=3D"elementToProof" style=3D"font-family: Arial, Helvetica, sans-=
-serif; font-size: 10pt; color: rgb(0, 0, 0);">
-Power Simulation Architect</div>
-<div class=3D"elementToProof" style=3D"font-family: Arial, Helvetica, sans-=
-serif; font-size: 10pt; color: rgb(0, 0, 0);">
-IBM Rochester, MN</div>
-<div class=3D"elementToProof" style=3D"font-family: Arial, Helvetica, sans-=
-serif; font-size: 10pt; color: rgb(0, 0, 0);">
-<span style=3D"background-color: rgb(255, 255, 255);">---------------------=
--------------------</span></div>
-</div>
-<div id=3D"appendonsend"></div>
-<hr style=3D"display:inline-block;width:98%" tabindex=3D"-1">
-<div id=3D"divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" st=
-yle=3D"font-size:11pt" color=3D"#000000"><b>From:</b> Glenn Miles &lt;miles=
-g@ibm.com&gt;<br>
-<b>Sent:</b> Wednesday, July 15, 2026 11:01 AM<br>
-<b>To:</b> Mikail Sadic &lt;Mikail.Sadic@ibm.com&gt;; clg@kaod.org &lt;clg@=
-kaod.org&gt;; peter.maydell@linaro.org &lt;peter.maydell@linaro.org&gt;<br>
-<b>Cc:</b> Paolo Bonzini &lt;pbonzini@redhat.com&gt;; ninad@linux.ibm.com &=
-lt;ninad@linux.ibm.com&gt;; titusr@google.com &lt;titusr@google.com&gt;; je=
-uk20.kim@samsung.com &lt;jeuk20.kim@samsung.com&gt;; philmd@mailo.com &lt;p=
-hilmd@mailo.com&gt;; steven_lee@aspeedtech.com &lt;steven_lee@aspeedtech.co=
-m&gt;;
- leetroy@gmail.com &lt;leetroy@gmail.com&gt;; jamin_lin@aspeedtech.com &lt;=
-jamin_lin@aspeedtech.com&gt;; kane_chen@aspeedtech.com &lt;kane_chen@aspeed=
-tech.com&gt;; andrew@codeconstruct.com.au &lt;andrew@codeconstruct.com.au&g=
-t;; joel@jms.id.au &lt;joel@jms.id.au&gt;; CALEB SCHLOSSIN &lt;calebs@us.ib=
-m.com&gt;;
- qemu-arm@nongnu.org &lt;qemu-arm@nongnu.org&gt;; qemu-devel@nongnu.org &lt=
-;qemu-devel@nongnu.org&gt;<br>
-<b>Subject:</b> Re: [PATCH v1 0/5] Add IBM Huygens BMC machine for AST2700<=
-/font>
-<div>&nbsp;</div>
-</div>
-<style type=3D"text/css" style=3D"display:none">
-<!--
-p
-	{margin-top:0;
-	margin-bottom:0}
--->
-</style>
-<div dir=3D"ltr">
-<div class=3D"x_elementToProof" style=3D"font-family:Aptos,Aptos_EmbeddedFo=
-nt,Aptos_MSFontService,Calibri,Helvetica,sans-serif; font-size:11pt; color:=
-rgb(0,0,0)">
-Hi Mikail,</div>
-<div class=3D"x_elementToProof" style=3D"font-family:Aptos,Aptos_EmbeddedFo=
-nt,Aptos_MSFontService,Calibri,Helvetica,sans-serif; font-size:11pt; color:=
-rgb(0,0,0)">
-<br>
-</div>
-<div class=3D"x_elementToProof" style=3D"font-family:Aptos,Aptos_EmbeddedFo=
-nt,Aptos_MSFontService,Calibri,Helvetica,sans-serif; font-size:11pt; color:=
-rgb(0,0,0)">
-Could you use my milesg@linux.ibm.com email address for patches please?</di=
-v>
-<div class=3D"x_elementToProof" style=3D"font-family:Aptos,Aptos_EmbeddedFo=
-nt,Aptos_MSFontService,Calibri,Helvetica,sans-serif; font-size:11pt; color:=
-rgb(0,0,0)">
-<br>
-</div>
-<div class=3D"x_elementToProof" style=3D"font-family:Aptos,Aptos_EmbeddedFo=
-nt,Aptos_MSFontService,Calibri,Helvetica,sans-serif; font-size:11pt; color:=
-rgb(0,0,0)">
-Thanks,</div>
-<div class=3D"x_elementToProof" style=3D"font-family:Aptos,Aptos_EmbeddedFo=
-nt,Aptos_MSFontService,Calibri,Helvetica,sans-serif; font-size:11pt; color:=
-rgb(0,0,0)">
-<br>
-</div>
-<div class=3D"x_elementToProof" style=3D"font-family:Aptos,Aptos_EmbeddedFo=
-nt,Aptos_MSFontService,Calibri,Helvetica,sans-serif; font-size:11pt; color:=
-rgb(0,0,0)">
-Glenn</div>
-<div id=3D"x_appendonsend"></div>
-<hr tabindex=3D"-1" style=3D"display:inline-block; width:98%">
-<div id=3D"x_divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" =
-color=3D"#000000" style=3D"font-size:11pt"><b>From:</b> Mikail Sadic &lt;mi=
-kail.sadic@ibm.com&gt;<br>
-<b>Sent:</b> Wednesday, July 15, 2026 10:50 AM<br>
-<b>To:</b> clg@kaod.org &lt;clg@kaod.org&gt;; peter.maydell@linaro.org &lt;=
-peter.maydell@linaro.org&gt;<br>
-<b>Cc:</b> Mikail Sadic &lt;Mikail.Sadic@ibm.com&gt;; Paolo Bonzini &lt;pbo=
-nzini@redhat.com&gt;; ninad@linux.ibm.com &lt;ninad@linux.ibm.com&gt;; titu=
-sr@google.com &lt;titusr@google.com&gt;; jeuk20.kim@samsung.com &lt;jeuk20.=
-kim@samsung.com&gt;; philmd@mailo.com &lt;philmd@mailo.com&gt;; steven_lee@=
-aspeedtech.com
- &lt;steven_lee@aspeedtech.com&gt;; leetroy@gmail.com &lt;leetroy@gmail.com=
-&gt;; jamin_lin@aspeedtech.com &lt;jamin_lin@aspeedtech.com&gt;; kane_chen@=
-aspeedtech.com &lt;kane_chen@aspeedtech.com&gt;; andrew@codeconstruct.com.a=
-u &lt;andrew@codeconstruct.com.au&gt;; joel@jms.id.au &lt;joel@jms.id.au&gt=
-;;
- CALEB SCHLOSSIN &lt;calebs@us.ibm.com&gt;; Glenn Miles &lt;milesg@ibm.com&=
-gt;; qemu-arm@nongnu.org &lt;qemu-arm@nongnu.org&gt;; qemu-devel@nongnu.org=
- &lt;qemu-devel@nongnu.org&gt;<br>
-<b>Subject:</b> [PATCH v1 0/5] Add IBM Huygens BMC machine for AST2700</fon=
-t>
-<div>&nbsp;</div>
-</div>
-<div class=3D"x_BodyFragment"><font size=3D"2"><span style=3D"font-size:11p=
-t">
-<div class=3D"x_PlainText">This series adds initial support for the IBM Huy=
-gens BMC platform based<br>
-on the ASPEED AST2700 A2 SoC.<br>
-<br>
-The series introduces a new Huygens machine model, adds a dedicated<br>
-CFAM-S implementation for the AST2700 FSI responder framework, provides<br>
-a PMBus model for the TI UCD90320 power sequencer, and implements the<br>
-AST2700 UFS host controller required for booting from UFS storage.<br>
-It also includes an initial functional test covering the Huygens boot <br>
-flow.<br>
-<br>
-Patch summary:<br>
-<br>
-1. Add the AST2700 Huygens machine.<br>
-2. Add the CFAM-S model for AST2700.<br>
-3. Add the TI UCD90320 PMBus device model.<br>
-4. Add the AST2700 UFS host controller.<br>
-5. Add an initial Huygens functional boot test.<br>
-<br>
-Testing done:<br>
-<br>
-* Booted OpenBMC using UFS storage.<br>
-* Verified OpenBMC reaches the login prompt &amp; Active/Ready state.<br>
-* Verified `make check` test cases all pass.<br>
-<br>
-Note: checkpatch has some warns about MAINTAINERS for patches 1, 2, <br>
-and 5, but the new files should already be covered by existing <br>
-wildcard entries in the ASPEED BMCs and FSI sections.<br>
-<br>
-Mikail Sadic (5):<br>
-&nbsp; arm/aspeed: Add AST2700 Huygens machine<br>
-&nbsp; fsi/cfam: Add CFAM-S model for AST2700<br>
-&nbsp; hw/sensor: Add UCD90320 model<br>
-&nbsp; ufs/aspeed: Add AST2700 UFS host controller<br>
-&nbsp; tests/functional: Add Huygens BMC boot test<br>
-<br>
-&nbsp;MAINTAINERS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&n=
-bsp;&nbsp;&nbsp; 2 +<br>
-&nbsp;docs/specs/aspeed-ufs.rst&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
-; |&nbsp;&nbsp; 69 ++<br>
-&nbsp;docs/specs/fsi.rst&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
-sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp; 58 +<br>
-&nbsp;docs/specs/index.rst&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; 2 +<br>
-&nbsp;docs/specs/ucd90320.rst&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp; |&nbsp;&nbsp; 36 +<br>
-&nbsp;docs/system/arm/aspeed.rst&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&n=
-bsp;&nbsp; 41 +-<br>
-&nbsp;include/hw/arm/aspeed_soc.h&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&=
-nbsp;&nbsp; 3 +<br>
-&nbsp;include/hw/fsi/cfam-s.h&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp; |&nbsp;&nbsp; 26 +<br>
-&nbsp;include/hw/fsi/fsi-master.h&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&=
-nbsp;&nbsp; 2 +<br>
-&nbsp;include/hw/ufs/aspeed_ufs.h&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&=
-nbsp; 66 +<br>
-&nbsp;hw/arm/aspeed.c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
-sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp; 12 +<br>
-&nbsp;hw/arm/aspeed_ast27x0.c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp; |&nbsp;&nbsp; 31 +<br>
-&nbsp;hw/arm/aspeed_ast27x0_huygens.c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 242 ++++<br>
-&nbsp;hw/fsi/cfam-s.c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
-sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 145 +++<br>
-&nbsp;hw/fsi/fsi-master.c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
-;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp; 10 +-<br>
-&nbsp;hw/i2c/aspeed_i2c.c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
-;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; 7 +<br>
-&nbsp;hw/sensor/ucd90320.c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 144 +++<br>
-&nbsp;hw/ufs/aspeed_ufs.c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
-;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 1095 +++++++++++++++++<br>
-&nbsp;hw/arm/Kconfig&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp=
-; 1 +<br>
-&nbsp;hw/arm/meson.build&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
-sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; 1 +<br>
-&nbsp;hw/fsi/meson.build&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
-sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; 2 +-<br>
-&nbsp;hw/sensor/Kconfig&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; 4 +<br>
-&nbsp;hw/sensor/meson.build&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
-sp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; 1 +<br>
-&nbsp;hw/ufs/meson.build&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
-sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; 1 +<br>
-&nbsp;tests/functional/aarch64/meson.build&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
-sp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; 2 +<br>
-&nbsp;.../functional/aarch64/test_aspeed_huygens.py |&nbsp;&nbsp; 49 +<br>
-&nbsp;26 files changed, 2047 insertions(+), 5 deletions(-)<br>
-&nbsp;create mode 100644 docs/specs/aspeed-ufs.rst<br>
-&nbsp;create mode 100644 docs/specs/ucd90320.rst<br>
-&nbsp;create mode 100644 include/hw/fsi/cfam-s.h<br>
-&nbsp;create mode 100644 include/hw/ufs/aspeed_ufs.h<br>
-&nbsp;create mode 100644 hw/arm/aspeed_ast27x0_huygens.c<br>
-&nbsp;create mode 100644 hw/fsi/cfam-s.c<br>
-&nbsp;create mode 100644 hw/sensor/ucd90320.c<br>
-&nbsp;create mode 100644 hw/ufs/aspeed_ufs.c<br>
-&nbsp;create mode 100755 tests/functional/aarch64/test_aspeed_huygens.py<br=
->
-<br>
--- <br>
-2.53.0<br>
-<br>
-</div>
-</span></font></div>
-</div>
-</body>
-</html>
-
---_000_DM4PR15MB5380653523EF2D5C11DE2254E1F82DM4PR15MB5380namp_--
+>From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>=0A=
+>Sent: Tuesday 16 June 2026 7:40 pm=0A=
+>To: Harry van Haaren | OPENCHIP <harry.vanhaaren@openchip.com>; qemu-devel=
+@nongnu.org <qemu-devel@nongnu.org>=0A=
+>Cc: alex.bennee@linaro.org <alex.bennee@linaro.org>; erdnaxe@crans.org <er=
+dnaxe@crans.org>=0A=
+>Subject: Re: [PATCH 2/2] plugins/execlog: fix execlog vcpu_exit execution =
+print loss=0A=
+>=A0=0A=
+>On 6/16/2026 9:13 AM, Harry van Haaren | OPENCHIP wrote:=0A=
+>> From: Harry van Haaren <harry.vanhaaren@openchip.com>=0A=
+>>=0A=
+>> Executed instructions are cached in string format inside the=0A=
+>> execlog plugin. These strings are flushed on exit of a TB, improving=0A=
+>> performance. This causes executed instructions to be lost when an=0A=
+>> 'ecall' (riscv system call) occurs that causes the thread to terminate.=
+=0A=
+>>=0A=
+>> The fix in this patch registers an 'on_exit()' callback, and flushes=0A=
+>> any content in the c->last_exec buffer, to ensure all instructions are=
+=0A=
+>> present in the final instruction log.=0A=
+>>=0A=
+>> A mutex lock/unlock is added around the plugin exit, to ensure the=0A=
+>> lines are not corrupted.=0A=
+>>=0A=
+>> Signed-off-by: Harry van Haaren <harry.vanhaaren@openchip.com>=0A=
+=0A=
+<snip>=0A=
+=0A=
+>> +/**=0A=
+>> + * On plugin exit, flush any remaining cached instructions and free sta=
+te.=0A=
+>>=A0=A0 */=0A=
+>>=A0 static void plugin_exit(qemu_plugin_id_t id, void *p)=0A=
+>>=A0 {=0A=
+>> @@ -396,8 +417,10 @@ static void plugin_exit(qemu_plugin_id_t id, void *=
+p)=0A=
+>>=A0=A0=A0=A0=A0 for (int i =3D 0; i < n; i++) {=0A=
+>>=A0=A0=A0=A0=A0=A0=A0=A0=A0 CPU *c =3D qemu_plugin_scoreboard_find(cpus, =
+i);=0A=
+>>=A0=A0=A0=A0=A0=A0=A0=A0=A0 if (c->last_exec && c->last_exec->len) {=0A=
+>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 g_mutex_lock(&execlog_output_mutex);=
+=0A=
+>>=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 qemu_plugin_outs(c->last_exec->st=
+r);=0A=
+>>=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 qemu_plugin_outs("\n");=0A=
+>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 g_mutex_unlock(&execlog_output_mutex)=
+;=0A=
+>>=A0=A0=A0=A0=A0=A0=A0=A0=A0 }=0A=
+>>=A0=A0=A0=A0=A0 }=0A=
+>>=A0=A0=A0=A0=A0 qemu_plugin_scoreboard_free(cpus);=0A=
+>> @@ -467,6 +490,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plug=
+in_id_t id,=0A=
+>>=0A=
+>>=A0=A0=A0=A0=A0 /* Register init, translation block and exit callbacks */=
+=0A=
+>>=A0=A0=A0=A0=A0 qemu_plugin_register_vcpu_init_cb(id, vcpu_init);=0A=
+>> +=A0=A0=A0 qemu_plugin_register_vcpu_exit_cb(id, vcpu_exit);=0A=
+>>=A0=A0=A0=A0=A0 qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);=
+=0A=
+>>=A0=A0=A0=A0=A0 qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);=0A=
+>>=0A=
+>=0A=
+>Why not simply make this flush in atexit callback?=0A=
+=0A=
+I think on guest-thread join, the pthread stops, and qemu calls vcpu exit c=
+allback.=0A=
+At that point in time, its nice to flush the "ecall" (to printf or disk or =
+whatever the output is) so the user sees it immidiately.=0A=
+=0A=
+The risk of not flushing here, is we wait until:=0A=
+A) the plugin (not thread) exits, which could cause other threads to interl=
+eave/finish first (confusing, interleaved and delayed output)=0A=
+or=0A=
+B) a new thread is spawned by the guest, and the vcpu is re-used. This will=
+ correctly flush the previous-thread final instruction, but after an applic=
+ation-dependent delay.=0A=
+=0A=
+Given that thread-exit is already heavy-weight and rare, I think the best f=
+or the user that the final instruction flushes immediately when a thread is=
+ finished.=0A=
+Unless I get strong feedback for a different approach, I'll respin the patc=
+hset and send (with git-publish, with footer removed, and "| Openchip" fixe=
+d... hopefully!)=0A=
+=0A=
+Regards, -Harry=
 
