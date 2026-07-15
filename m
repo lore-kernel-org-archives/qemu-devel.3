@@ -4,150 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 962EDC44508
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 18:39:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11D2DC44508
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 18:39:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wk4VI-00042m-Hv; Wed, 15 Jul 2026 14:38:44 -0400
+	id 1wk4Vf-00044C-CB; Wed, 15 Jul 2026 14:39:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wk4VG-00042Z-NW
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 14:38:42 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wk4VE-0003F2-KN
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 14:38:42 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66FHBACc342945
- for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 18:38:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 1oihpgowunOkzF3r9cocDxIy3BKc6smI40Uco8zUa6U=; b=Ad/HzUtOEChR+vhR
- ZFNDHREQWmgpBb8PhecXOmJ7FlnTFwg6PX7fQkLPy2jaujMEAq0qicRVoyXwgfm0
- sQW/vaewgeOUho0v8819cYldjPJr/tgpgFOQGWt1ZTAQIIR63nz89/qVNLWyoluV
- XzpdG57RP3W4SQCIBqDJw3GDv3gx9+Oco78dgm+xK6L3WL2SRDWzyHOW5d0U2UmK
- 23F0BJIDJC0pLBtky7Bg+wfagrsHgIhSpvQ5S3LLUhO3ZgyJHePeE0C3qMQeNeRN
- U3PVzFl3cb5sL1dZK/tKcyVE3Bk4IZESCrun7lGN6aiXiNPCO2jUEW4hYx/WkZbc
- N0qVVQ==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fe855a8un-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 18:38:37 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2cce14a21faso45262475ad.0
- for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 11:38:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784140717; x=1784745517; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=1oihpgowunOkzF3r9cocDxIy3BKc6smI40Uco8zUa6U=;
- b=Q1pLY46E3+wrszZf++d3v47FqNvc5qj4/BVVVfhV8r4fy5v6ytswQXV/MEU0r/ZNeZ
- t6wxcYcscngKViEOaFk+6Jl6QnDofbP/khOj/ZJzpk0DEF3kX92bhNJMk1Z8zBFOCsQB
- 4YkBmXu8se+K7zPQpvdZOOIHbCo5lkzxuKaeA4N3abnGAELPb9Gvu66I8g0U/111TvjO
- vc+KPyWjVYUPm3XanhdFR5mh4rtZzkUiKIe+sHRmDEvWNjpGuMbMnF435gVJqBUribbL
- 1WetmB4VpuLJ0b1f+100bOGkpQ59sxk/xE62PWo+G1ckMdcVq2kRiAn01gnTYTFNJT8d
- kLKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784140717; x=1784745517;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=1oihpgowunOkzF3r9cocDxIy3BKc6smI40Uco8zUa6U=;
- b=l5f6VPmTsu/etpJTVPyNdb8Xt/u+Hgisc5WkuLCnMVDZuMH8qsuA5U+H8g7JdyJVDn
- 1WQFeNN1+YDpLrqAQ3oetwUIeP5AIWwSjaTMoohc5paBK/DsQlA9HBqBDMGlc91LY3ET
- tzvan/8AqzBHL0zlC9Yn0CXpA34VAr0xCarVC5RyER8sRp9eWKd0VKkScUh3OV1XvzBB
- RDrSH0ksl0fgkwdoiJcmLweDpEq/C2fVLXl7ZUODBiQj1SQHvsOy13Gv6nPchfBQkued
- OJ2v+K8XEnSEvymIRVQWBi3ncxrAdsvYg37zYY9z9MHqagOvYrBotJfIfeWvGNLj3Epu
- jenA==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rp1Ghmhy03i0/jnTZDXDvIIpDCnAz2upC5UdSNitABk9e7VWuKAf8h90vmaCa9znyVXx+dgQkMRmuy8@nongnu.org
-X-Gm-Message-State: AOJu0YxSo0ZRvSmEg5Wt3wk9UksV2pogg6oPCxsnxHHXV78TOZeeUaoD
- 8sqkcp7TMsW1XemzEwSa5L8Bs2WhnxGA8+p4Ukt7fVCCoKJHpTv3RiQqulLuuXtpXA8pr4qsuDN
- DI+6z0myFzT5Tbqc0jvVPJSXEwyUS5qj5tnvnkJR8DFwwE/A3aMV1qyKhPw==
-X-Gm-Gg: AfdE7clBe8IgzZFq+g3HuWFyoRiE61VFd6hJXEIGya3PswZR4IuuZU8WiImBY5oMx+Q
- RpPPmscdeOE/c2HVsXl9kJzV1nall0gjbtGFYSRYT6HWyitJXAO7FIb6pB1O1ANQcP7t0IMSdtt
- GdGvP173vP5iZ1x9MVWpY9Amdozc3Uwlq5LB4RX6e6YZHW9mIHrj1f4ZlYjKP4VYzyNTR6l3ivT
- g+4xxzOYdyTKeLpggQ2O2eTR/0nh12262rPAwuQdmZS+ByXKoN1VZXMgLORNNAumcyCZGh2osFZ
- fzAjAD31QFfs7ifEUDICno28FtC9tfKmhzP+KSpjDQEDiWNfTh4Ubyva8o1igX4R0IVaBCb9Wto
- AQUFP1Y/CLvZMmyUvj0gEEDFRhrbm5vngIu80+q6feyH81zemO13SIwVTc4Afu3x4waYWMflxCr
- VnbIE=
-X-Received: by 2002:a17:902:da8e:b0:2cc:db7a:251 with SMTP id
- d9443c01a7336-2cf177c78dfmr5610105ad.2.1784140716781; 
- Wed, 15 Jul 2026 11:38:36 -0700 (PDT)
-X-Received: by 2002:a17:902:da8e:b0:2cc:db7a:251 with SMTP id
- d9443c01a7336-2cf177c78dfmr5609715ad.2.1784140716173; 
- Wed, 15 Jul 2026 11:38:36 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13cd4284a92sm2710384c88.4.2026.07.15.11.38.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Jul 2026 11:38:35 -0700 (PDT)
-Message-ID: <943b7ca7-dcd3-4702-b6e3-5ddcb04000e8@oss.qualcomm.com>
-Date: Wed, 15 Jul 2026 11:38:34 -0700
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wk4Vc-00043p-PC
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 14:39:04 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wk4Va-0003GR-Gv
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 14:39:04 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id A5A743DF5;
+ Wed, 15 Jul 2026 18:38:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1784140739; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MZU7tLS84VBYPqySl+QbeMgffwV1DzMtdcea1YDCfdE=;
+ b=Vim3JpaL39aQrceIrDyGxsZncxVoj9EVbhxCyWP+KCV95g/cXd+KBV4Qb6r2cedA+x8PKe
+ L3UbcDd0UM1do9WDvwyPbeaqoZENXGr+NR1lTXFK/VicexhGj3S3I+Pj2NtM4/R6kfcWol
+ NjvA8Zk5w1j0GPqaSvUYqZfbojFKBio=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1784140739;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MZU7tLS84VBYPqySl+QbeMgffwV1DzMtdcea1YDCfdE=;
+ b=8XIx/y2CqYMiqs5EEE66XPofLcPtTaPe65bniZZ+A9DIZdLEc6GEBvj4XxprZTQdGLJqLW
+ RgD5xM63kBX/KyDw==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=KsEg88+i;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=u2jsfJbh
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1784140738; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MZU7tLS84VBYPqySl+QbeMgffwV1DzMtdcea1YDCfdE=;
+ b=KsEg88+iDVkvlqhmxor2tf54pplMy+g9xeUtn+QyLNNfgx0vxGrGu+vmacpnOb5N+tdG6b
+ lzzoIIPFLPErL4rIyx4soV7ecIGYd9PPBeAs3GZ7u5kwGoVJgYUUYkr+l7P1Std8PXTJzt
+ RoO3nChCrw4J95SF6gqlTlDnHjhSTW8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1784140738;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MZU7tLS84VBYPqySl+QbeMgffwV1DzMtdcea1YDCfdE=;
+ b=u2jsfJbhXPU031VJSk4JSQ3B+bvj9f0pUO2OdID07tHv+lLlfROdhGnZGYMrF/kCdcLbT5
+ 5ufUsLtS3ThrAiCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 46A57779AD;
+ Wed, 15 Jul 2026 18:38:58 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id PqKSBsLTV2omRQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 15 Jul 2026 18:38:58 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@oss.qualcomm.com>, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+Subject: Re: [PATCH v3 1/2] gitlab: introduce files mapping GitLab accounts
+ to real names
+In-Reply-To: <20260715154029.1216464-2-berrange@redhat.com>
+References: <20260715154029.1216464-1-berrange@redhat.com>
+ <20260715154029.1216464-2-berrange@redhat.com>
+Date: Wed, 15 Jul 2026 15:38:47 -0300
+Message-ID: <87se5k3xoo.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] plugins/execlog: fix execlog vcpu_exit execution
- print loss
-To: Harry van Haaren <harry.vanhaaren@openchip.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "alex.bennee@linaro.org" <alex.bennee@linaro.org>,
- "erdnaxe@crans.org" <erdnaxe@crans.org>
-References: <20260616161242.267315-1-harry.vanhaaren@openchip.com>
- <20260616161242.267315-2-harry.vanhaaren@openchip.com>
- <e7edbf3f-55e1-42a4-8101-0a1c273c7587@oss.qualcomm.com>
- <GV2P192MB3464B1F78D8F38D1574A8D9185F82@GV2P192MB3464.EURP192.PROD.OUTLOOK.COM>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <GV2P192MB3464B1F78D8F38D1574A8D9185F82@GV2P192MB3464.EURP192.PROD.OUTLOOK.COM>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: OGkhRlcKwfpSf6EE2zrf9YdvPPIqVGp-
-X-Authority-Analysis: v=2.4 cv=KOlqylFo c=1 sm=1 tr=0 ts=6a57d3ad cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=EUspDBNiAAAA:8 a=OZcmDFxvAAAA:8 a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8
- a=dGsWvjqBAAAA:8 a=J1OKBGARc6P9ThM_kiQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=1OuFwYUASf3TG4hYMiVC:22 a=liPxxeoTYnb3ClP5OJlV:22 a=Fg1AiH1G6rFz08G2ETeA:22
- a=cvBusfyB2V15izCimMoJ:22 a=EwAE0RQWx3bH85eTCWcH:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE1MDE4NSBTYWx0ZWRfX2xvjeBVmMqaV
- UiX4FDvNrolhscgr4IVpSY5/l0GdIRDgawMcaRQPa11zNf0cj/jRm5lJaFcmbuDmQt7T3kMr/Xj
- 4ahEmu9n6XBP5KC9+dBJToVSfNkIkrfBPfwu7165wqQmwLD++j0IPZ/F9X9EzYXECKUfMh1TSx1
- K854WiG03CiB28lrYG/HYCmenfs907sosg4Hp4wBtqIrWkP+n/T77GyYalf1vpOfFcrqdNR5siI
- UGRKbO3EZ8PDSHvWDCASF4e/dkvjxmV1FbiptUEespdRZnVtYuK4ImdTso4ErHBYqmw0g3xyM8Z
- Dq7RgGpS03STV7KKyKRSmqlcSa7E+/r2MBNd6rlmXLV1M/5XFTUg9II8IOltIerBUkyqHuKoDaU
- k++DGomYJkaqymMNbWZEjIE3sK8EmM0jpXwkOHRp1+EMWH3sIbDLzQ98g+iGzCnZH7rNg6jelH3
- 2eg6O68dV1gYNSJOduA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE1MDE4NSBTYWx0ZWRfX9iHzSmCZwV7n
- 480e7mSDVTfCfVwSIqE8+S7iqZ/PHxqABWVqM+XXkiWLWwW7BC356ayre4VHvZIq0zc2l4n+CX5
- hAYKew6qwu1ll7fuqXCq1qYrcRRweqM=
-X-Proofpoint-ORIG-GUID: OGkhRlcKwfpSf6EE2zrf9YdvPPIqVGp-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-15_04,2026-07-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 impostorscore=0 malwarescore=0 spamscore=0
- clxscore=1015 priorityscore=1501 adultscore=0 lowpriorityscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607150185
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: A5A743DF5
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:dkim];
+ FROM_HAS_DN(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MISSING_XM_UA(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,
+ imap1.dmz-prg2.suse.org:helo, suse.de:mid, suse.de:dkim]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -164,86 +138,291 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/15/2026 10:05 AM, Harry van Haaren wrote:
->> From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->> Sent: Tuesday 16 June 2026 7:40 pm
->> To: Harry van Haaren | OPENCHIP <harry.vanhaaren@openchip.com>; qemu-devel@nongnu.org <qemu-devel@nongnu.org>
->> Cc: alex.bennee@linaro.org <alex.bennee@linaro.org>; erdnaxe@crans.org <erdnaxe@crans.org>
->> Subject: Re: [PATCH 2/2] plugins/execlog: fix execlog vcpu_exit execution print loss
->>  
->> On 6/16/2026 9:13 AM, Harry van Haaren | OPENCHIP wrote:
->>> From: Harry van Haaren <harry.vanhaaren@openchip.com>
->>>
->>> Executed instructions are cached in string format inside the
->>> execlog plugin. These strings are flushed on exit of a TB, improving
->>> performance. This causes executed instructions to be lost when an
->>> 'ecall' (riscv system call) occurs that causes the thread to terminate.
->>>
->>> The fix in this patch registers an 'on_exit()' callback, and flushes
->>> any content in the c->last_exec buffer, to ensure all instructions are
->>> present in the final instruction log.
->>>
->>> A mutex lock/unlock is added around the plugin exit, to ensure the
->>> lines are not corrupted.
->>>
->>> Signed-off-by: Harry van Haaren <harry.vanhaaren@openchip.com>
-> 
-> <snip>
-> 
->>> +/**
->>> + * On plugin exit, flush any remaining cached instructions and free state.
->>>    */
->>>   static void plugin_exit(qemu_plugin_id_t id, void *p)
->>>   {
->>> @@ -396,8 +417,10 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
->>>       for (int i = 0; i < n; i++) {
->>>           CPU *c = qemu_plugin_scoreboard_find(cpus, i);
->>>           if (c->last_exec && c->last_exec->len) {
->>> +            g_mutex_lock(&execlog_output_mutex);
->>>               qemu_plugin_outs(c->last_exec->str);
->>>               qemu_plugin_outs("\n");
->>> +            g_mutex_unlock(&execlog_output_mutex);
->>>           }
->>>       }
->>>       qemu_plugin_scoreboard_free(cpus);
->>> @@ -467,6 +490,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
->>>
->>>       /* Register init, translation block and exit callbacks */
->>>       qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
->>> +    qemu_plugin_register_vcpu_exit_cb(id, vcpu_exit);
->>>       qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
->>>       qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
->>>
->>
->> Why not simply make this flush in atexit callback?
-> 
-> I think on guest-thread join, the pthread stops, and qemu calls vcpu exit callback.
-> At that point in time, its nice to flush the "ecall" (to printf or disk or whatever the output is) so the user sees it immidiately.
-> 
-> The risk of not flushing here, is we wait until:
-> A) the plugin (not thread) exits, which could cause other threads to interleave/finish first (confusing, interleaved and delayed output)
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Taking a look here, I can see that we have two different mechanic for
-atexit: one for system (relies on libc atexit), and one for user, which
-indeed can race between threads.
-
-It should be refactored, I'll take a look to remove the need to use any
-lock in atexit handlers for plugins.
-
-> or
-> B) a new thread is spawned by the guest, and the vcpu is re-used. This will correctly flush the previous-thread final instruction, but after an application-dependent delay.
+> It is desirable to be able to discover the GitLab account handle
+> assocaited with a real name in the MAINTAINERS file.
 >
+> Rather that duplicating the same account handle multiple times,
+> inline with the MAINTAINERS file entries, this introduces mapping
+> files:
+>
+>   * .gitlab-map-auto - data automatically queried from GitLab
+>     using the 'glab' tool and REST API
+>   * .gitlab-map-manual - manual overrides/augmentation for
+>     cases where the MAINTAINERS real name does not match the
+>     GitLab account real name
+>
+> The former would need refreshing when we add new MAINTAINERS
+> entries, if the person had to be added as a GitLab account
+> member. For this purpose scripts/gitlab-map-update can be
+> used, assuming the user has the 'glab' client tool present
+> and configured with an access token.
+>
+> To audit how many maintainers have GitLab handles present/missing
+> scripts/gitlab-map-check can run a report.
+>
+>   $ ./scripts/gitlab-map-check
+>   Missing GitLab handle for maintainer 'Akihiko Odaki'
+>   Missing GitLab handle for maintainer 'Albert Esteve'
+>   ....
+>   Missing GitLab handle for maintainer 'Zhenzhong Duan'
+>   Missing GitLab handle for maintainer 'Zhuoying Cai'
+>   GitLab handles missing: 158 / present: 68
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> ---
+>  .gitlab-map-auto          | 93 +++++++++++++++++++++++++++++++++++++++
+>  .gitlab-map-manual        | 18 ++++++++
+>  scripts/gitlab-map-check  | 51 +++++++++++++++++++++
+>  scripts/gitlab-map-update | 45 +++++++++++++++++++
+>  4 files changed, 207 insertions(+)
+>  create mode 100644 .gitlab-map-auto
+>  create mode 100644 .gitlab-map-manual
+>  create mode 100755 scripts/gitlab-map-check
+>  create mode 100755 scripts/gitlab-map-update
+>
+> diff --git a/.gitlab-map-auto b/.gitlab-map-auto
+> new file mode 100644
+> index 0000000000..c15c301435
+> --- /dev/null
+> +++ b/.gitlab-map-auto
+> @@ -0,0 +1,93 @@
+> +# This file is auto-generated by scripts/autolab-map-update
 
-That's a good concern, and fixing it with vcpu_exit seems like a good
-idea given this argument.
+gitlab
 
-> Given that thread-exit is already heavy-weight and rare, I think the best for the user that the final instruction flushes immediately when a thread is finished.
-> Unless I get strong feedback for a different approach, I'll respin the patchset and send (with git-publish, with footer removed, and "| Openchip" fixed... hopefully!)
-> 
-> Regards, -Harry
+> +#
+> +# This GitLab map associates GitLab account handles
+> +# with real names, in order to allow mapping from
+> +# MAINTAINERS entries. The format of entries is
+> +#
+> +#    {gitlab-handle}<tab>{real name}
+> +#
+> +# Manual overrides must be placed in .gitlab-map-manual
+> +TaoTang	Tao Tang
+> +a1xndr	Alexander Bulekov
+> +adi-g15-ibm	Aditya Gupta
+> +agraf	Alexander Graf
+> +alex.williamson	Alex Williamson
+> +aliang1	Aihua Liang
+> +alistair23	Alistair Francis
+> +anisinha	Ani Sinha
+> +anthony-linaro	Anthony Roberts
+> +anthonyper	Anthony PERARD
+> +berrange	Daniel P. Berrang=C3=A9
+> +birkelund	Klaus Jensen
+> +bonzini	Paolo Bonzini
+> +brian-cain	Brian Cain
+> +bsdimp	Warner Losh
+> +cborntra	Christian Borntraeger
+> +chao23.liu	Chao Liu (Zevorn)
+> +cleber.gnu	Cleber Rosa
+> +clegoate	C=C3=A9dric Le Goater
+> +cohuck	Cornelia Huck
+> +cota_	Emilio Cota
+> +dagrh	Dr. David Alan Gilbert
+> +danielhb	Daniel Henrique Barboza
+> +davidhildenbrand	David Hildenbrand
+> +dgibson	dgibson
+> +dwmw2	David Woodhouse
+> +eauger1	Eric Auger
+> +ebblake	Eric Blake
+> +edgar.iglesias	Edgar E. Iglesias
+> +ehabkost	Eduardo Habkost
+> +eldondev	Eldon
+> +epilys	Manos Pitsidianakis
+> +famzheng	Fam Zheng
+> +farosas	Fabiano Rosas
+> +gautammenghani	Gautam Menghani
+> +gkurz	Greg Kurz
+> +gusbromero	Gustavo Romero
+> +harshpb	Harsh Prateek Bora
+> +hdeller	Helge Deller
+> +hreitz	Hanna Czenczek
+> +imammedo	Igor Mammedov
+> +jasowang	Jason Wang
+> +jmacarthur	Jim MacArthur
+> +jsnow	John Snow
+> +juan.quintela	Juan Quintela
+> +kbastian-qemu	Bastian Koppelmann
+> +kmwolf	Kevin Wolf
+> +kostyanf14	Kostiantyn Kostiuk
+> +kraxel	Gerd Hoffmann
+> +lbmeng	Bin Meng
+> +legoater	C=C3=A9dric Le Goater
+> +lvivier	Laurent Vivier
+> +lygstate	Yonggang Luo
+> +maciejsszmigiero	Maciej S. Szmigiero
+> +marcandre.lureau	Marc-Andr=C3=A9 Lureau
+> +marcandre.lureau-rh	Marc-Andr=C3=A9 Lureau
+> +mauromatteo.cascella	Mauro Matteo Cascella
+> +mcayland	Mark Cave-Ayland
+> +mdroth	Michael Roth
+> +mediouni-m	M. Mediouni
+> +mjt0k	Michael Tokarev
+> +mstredhat	MST
+> +npiggin	npiggin
+> +p-b-o	Pierrick Bouvier
+> +pauldzim	Paul Zimmerman
+> +peterx	Peter Xu
+> +philmd	Philippe Mathieu-Daud=C3=A9
+> +pierrick.bouvier	Pierrick Bouvier
+> +pipo.sk	Peter Krempa
+> +pkrempa	Peter Krempa (work)
+> +pm215	Peter Maydell
+> +qemu-janitor	Qemu Janitor
+> +rathc	Chinmay Rath
+> +rth7680	Richard Henderson
+> +schoenebeck	Christian Schoenebeck
+> +sgarzarella	Stefano Garzarella
+> +sstabellini	Stefano Stabellini
+> +stefanberger	Stefan Berger
+> +stefanha	Stefan Hajnoczi
+> +stsquad	Alex Benn=C3=A9e
+> +stweil	Stefan Weil
+> +thuth	Thomas Huth
+> +vsementsov	Vladimir Sementsov-Ogievskiy
+> +xcancerberox	Joaquin de Andres
+> diff --git a/.gitlab-map-manual b/.gitlab-map-manual
+> new file mode 100644
+> index 0000000000..1551e2f55d
+> --- /dev/null
+> +++ b/.gitlab-map-manual
+> @@ -0,0 +1,18 @@
+> +# This GitLab map associates GitLab account handles
+> +# with real names, in order to allow mapping from
+> +# MAINTAINERS entries. The format of entries is
+> +#
+> +#    {gitlab-handle}<tab>{real name}
+> +#
+> +# This file is manually written, to augment the
+> +# auto-generated data in .gitlab-map-auto. This
 
-Yes, you can keep the current approach.
+This is
 
-Thanks,
-Pierrick
+> +# needed where a GitLab account real name does
+> +# not exactly match the MAINTAINERS file real
+> +# name.
+> +#
+> +berrange	Daniel P. Berrange
+> +dgibson	David Gibson
+> +hreitz	Hanna Reitz
+> +mstredhat	Michael S. Tsirkin
+> +npiggin	Nicholas Piggin
+> +mediouni-m	Mohamed Mediouni
+> diff --git a/scripts/gitlab-map-check b/scripts/gitlab-map-check
+> new file mode 100755
+> index 0000000000..ff12e36593
+> --- /dev/null
+> +++ b/scripts/gitlab-map-check
+> @@ -0,0 +1,51 @@
+> +#!/bin/sh
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +missing=3D0
+> +present=3D0
+> +
+> +grep -E '^(R|M):' MAINTAINERS | \
+> +sed -E -e 's/^(M|R): //' -e 's/ <.*//' | \
+> +sort | uniq > names.txt
+> +while IFS=3D read -r NAME
+> +do
+> +  grep "$NAME" .gitlab-map-{auto,manual} > /dev/null
+> +  if test $? !=3D 0
+> +  then
+> +    echo "Missing GitLab handle for maintainer '$NAME'"
+> +    missing=3D$(($missing + 1))
+> +  else
+> +    present=3D$(($present + 1))
+> +  fi
+> +done < names.txt
+> +rm -f names.txt
+> +
+> +echo "GitLab handles missing: $missing / present: $present"
+> +
+> +# .gitlab-map-manual is to provide alternate real names
+> +# for cases where name in MANITAINERS does not match
+
+MAINTAINERS
+
+> +# the GitLab account real name. As such...
+> +
+> +# ...all gitlab handles in .gitlab-map-manual must also exist
+> +# in .gitlab-map-auto and ....
+> +for HANDLE in $(grep -v '^#' .gitlab-map-manual | awk '{print $1}')
+> +do
+> +    grep -E "^$HANDLE\s" .gitlab-map-auto >/dev/null
+> +    if test $? !=3D 0
+> +    then
+> +	echo "Unexpected GitLab handle '$HANDLE' is not a member"
+> +    fi
+> +done
+> +
+> +# ...and all realnames in .gitlab-map-manual must also
+> +# exist in MAINTAINERS
+> +grep -v '^#' .gitlab-map-manual | \
+> +awk '{ saved =3D $1; $1 =3D ""; print substr($0, 2) }' | \
+
+Is 'saved' doing anything here?
+
+> +while IFS=3D read -r NAME
+> +do
+> +    grep -E "\s$NAME\s" MAINTAINERS >/dev/null
+> +    if test $? !=3D 0
+> +    then
+> +	echo "Unexpected real name '$NAME' is not a maintainer"
+> +    fi
+> +done
+> diff --git a/scripts/gitlab-map-update b/scripts/gitlab-map-update
+> new file mode 100755
+> index 0000000000..c134c226aa
+> --- /dev/null
+> +++ b/scripts/gitlab-map-update
+> @@ -0,0 +1,45 @@
+> +#!/bin/sh
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +echo "Checking authentication token status"
+> +glab auth status
+> +
+> +if test $? !=3D 0
+> +then
+> +  echo "ERROR: not authenticated with gitlab.com"
+> +  exit 1
+> +fi
+> +
+> +if ! test -f .gitlab-map-auto
+> +then
+> +  echo "ERROR: cannot find existing '.gitlab-map-auto file'"
+> +  echo "ERROR: this must be executed from the root of the"
+> +  echo "ERROR: git repository checkout"
+> +  exit 1
+> +fi
+> +
+> +fail=3D0
+> +echo "Updating member list from qemu-project"
+> +glab api --paginate /groups/qemu-project/members | \
+> +    jq -r -c '.[] | [.username, .name] | @tsv' | \
+> +    grep -v '^group_3038080_bot' > \
+> +    .gitlab-map-auto.tmp
+> +test $? !=3D 0 && fail=3D1
+> +
+> +echo "Updating member list from qemu-project/qemu"
+> +glab api --paginate /projects/qemu-project%2fqemu/members | \
+> +    jq -r -c '.[] | [.username, .name] | @tsv' | \
+> +    grep -v 'Duo Developer' >> \
+> +    .gitlab-map-auto.tmp
+> +test $? !=3D 0 && fail=3D1
+> +
+> +if test $fail =3D=3D 0
+> +then
+> +  grep '^#' .gitlab-map-auto > .gitlab-map-auto.new
+> +  LC_ALL=3DC sort .gitlab-map-auto.tmp | uniq >> .gitlab-map-auto.new
+> +  mv .gitlab-map-auto.new .gitlab-map-auto
+> +  echo "OK: GitLab member list updated"
+> +else
+> +  echo "ERROR: Updating member list failed"
+> +fi
+> +rm -f .gitlab-map-auto.tmp
 
