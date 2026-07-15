@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF902C44508
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 13:46:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BE74C44508
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 13:46:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjzv9-0005cI-7f; Wed, 15 Jul 2026 09:45:07 -0400
+	id 1wjzv6-0005a6-9c; Wed, 15 Jul 2026 09:45:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjzv3-0005Xu-DJ
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 09:45:01 -0400
-Received: from mx1.catap.net ([2a01:4f8:271:125e::2])
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjzv2-0005XM-Gh
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 09:45:00 -0400
+Received: from mx1.catap.net ([162.55.82.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjzv1-0007uq-Ew
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 09:45:01 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=WPGSZzh
- UIP5yf8j+lp9rVikzwrpbBBx9p+9GPdRnCf7VRaDeVnfD6fo13wMidy12Sqw9u2maU7FBE
- aSNbo5nIPdvnICcZjv0QT2PPK+iTqzAA3XtKDnjn0xG7Al/srv32CvgnlpbqjulXa+aAs3
- I38ZRd71YHmzYVBYFmQsXB9pI3MxT0EeAeCgdnji02EwYkyRqAp5Tg5VYr9L1lQJ3Q68YY
- Hs/mzQzPjFtJ4j/g6SBXCXXynYsRjXODIE142Qzul8V0vJGkgHFgR+f1ZMLBSCo8D/IyS2
- COAPv8hwtngoI6Q7QVJ2NhC6GESVt1VgdR6VlBwm8iPq4ASXqMAvGTA==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=P
- Oyhf9Iunjp2h42Ks9RVFy2rrI6RIYh+DpHMxI4OICM=;
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wjzv0-0007tj-CC
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 09:45:00 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=l7DDRAg
+ VAgLl7fMyxNP68NFRW45Vg/87JXuhs43rF+M6YrXv34Q7k19PNGdIsliIFN1yARsIMTXWO
+ REOM0gYsa6DvbbjEOHfe4jUZu7v2Br4u+8kylUe+SgiTRnM2h+GcjayJlh8fQGj5s7JN7z
+ 2bTXMAqTXW8cD+2gyMY7/3/TI6ym0Sd6Ng0d1dyiz0CoQ+Uu4qM1V1Rm2oI9I9OnwLNG86
+ waLha8n4K41WMNnqHO8WU7iYq32u4VBpRTT1D8bQcVoP9mIvA0RYhju7ouzy5D33l+H8J5
+ atcuxE3ll9XJnTchN9gNQei6iNzkL98IBnkF7n7U6JV1KgVjK+72HMg==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=5
+ unVjui2VqYQAOoR8Cz3h7Wz8eYsYZYctNPB/KH5TKQ=;
  h=references:in-reply-to:
  date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=zhTXOglavO82RdyUSUrxaHBmq48hv+v69RVfpyMGOVjd8rJdi2sYK/hZIHsx8YXIR84B
- aNxH8pT8OBpMcForwZGclZdyh42URy2xQS/cIYG8zfreVSS7rrLBbkDzhMctyX4H6Ytjn6
- QdISuce6R65jkuaNbOAcHuV21bOSlUgB7688ZoKbR4xCQuJw39OdcymKlpWt76HPK/kPj4
- g0rw801WX0jBQwyEFfcYu0vEA98f8rMFdCbkyKpEX0PTE1kyqy76tJLzaYfa4DfRB3KLRC
- 3xn6b0LaD2OWqHxKbe1aLeZ/IctdwPdDuX1eJcbFMMuynBqvUNSMlOdtI0hs9c7A==
+ b=v7UbFguvfz6y8cBVVj1neOEYYcKt7eExNAHiALyWfFK1XurOfmbSh50doHnumzK+Zks/
+ 2yLVaomPjU0zyX77XfTXYn8mQ5K/z02XeVQI6xTn4u4Y3kpcSj9REmXnGCs++Di4TMNy62
+ 69h9POqs+W0JgzpTgaKMKzrb3AuXrI3nfDnBu45L3sfN8+HcRzui6VX8Ns4+7B3/aFBWXR
+ B39DNiQ/v8licnUH2D/BfpUqTNzvGICT5kYF60NiJYEbn9g4tfvdsQ5SD3uruOiH5w2jY/
+ miHQgCERuRChWqARSluzVC8soFbzuyoKU5zSpg3lqmgL5uSf+eHMbDrY+uJ+ugDA==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=DxcymHrR; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=dX2I6ata;
+ header.b=zkJ5SZo1; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=3vR+7kuv;
  arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=POyhf9Iu
- njp2h42Ks9RVFy2rrI6RIYh+DpHMxI4OICM=;
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=5unVjui2
+ VqYQAOoR8Cz3h7Wz8eYsYZYctNPB/KH5TKQ=;
  h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=DxcymHrRyn04We/RBykTsKoJ7qtKljAs+9n
- Qv7/ejSkJmNwjoWU4inQaCETrAyia2ZuM35Oe6GaYjE+ZhG6LqYbjoEw9KgRLrLRmlFyp0
- ZXsoCSa87Uz2zOHafuFcug1LTmrMP8z9ruAXZo8Rz3EEw86dct7Qt1KBQ3U+2lIzEnYWh1
- RxOJMRm9aFMdYIvZN+sSUy+sEkjJ34dtWJLOumC/9HkzhFoU8O3KHEejGAVJs8mmJDTUC0
- sxN2meSMrbub2ZtmU5PcVwtJA8Kbiw2bPaSCkttggiEjJ4xc6/jH7Higt3vyWUehc8fe4G
- tSsF8ro41sdLOke3GiyNoQjAg/w==
+ subject:cc:to:from; d=korins.ky; b=zkJ5SZo1l7pSrJx8BcQZocfcSkh2cV8Izz5
+ v8nN86AJbzKtVeb3UnCg0AdkT6LKZUtL95EFPzV+UmIgmU/UzSffJABRrV+3R/CKQZ64AK
+ a15maoe1ZdCQXaN1IUNkL3cy16V2BHvBJ1mzdSY7BpqC/nHhjPGL3Qn3KY+iIndm5omo9z
+ EJbu/XyIiBod4d4ql07WF8grVl5tCE61xe4zY19c6ZEXT0PnrKX7vtzZbkUlvapqE9WV36
+ svoUtgikbUXC30mltuQsveV7psUSDbZWxgJJpFnqYkXC5fGrR4Mt0HmSevfSwBW151KGkj
+ ZQYcRyOY790s+wUb4uk+3sNRDaA==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=POyhf9Iunjp2h42Ks9RVFy2rrI6RIYh+DpHMxI4OICM=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=dX2I6atazOFqDucYUO
- jGhbr2PuhJT0FXmDGEY3PptVUakdMn5zmpcvMINWZJamSfwCDSIto6SPMcGJf4BNW/CQ==
-Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id b64b0226
+ bh=5unVjui2VqYQAOoR8Cz3h7Wz8eYsYZYctNPB/KH5TKQ=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=3vR+7kuvgCDwM3Fv9m
+ DkQYBX+d7W600GqhwRzK7KKPUUHs5dHH8EIs1SOib+eHOUKBO3pnIMmcmSyUwpvUB0Cg==
+Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id fe0d8c33
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
  Wed, 15 Jul 2026 15:44:51 +0200 (CEST)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id b42f9560;
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id 694c9095;
  Wed, 15 Jul 2026 15:44:49 +0200 (CEST)
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 To: qemu-devel@nongnu.org
 Cc: "Kirill A. Korinsky" <kirill@korins.ky>
-Subject: [PATCH v2 06/25] target/mips: accept Octeon PageMask encodings
-Date: Wed, 15 Jul 2026 15:43:52 +0200
-Message-ID: <20260715134447.56007-7-kirill@korins.ky>
+Subject: [PATCH v2 05/25] target/mips: add Octeon CN73xx CPU model
+Date: Wed, 15 Jul 2026 15:43:51 +0200
+Message-ID: <20260715134447.56007-6-kirill@korins.ky>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260715134447.56007-1-kirill@korins.ky>
 References: <20260715134447.56007-1-kirill@korins.ky>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a01:4f8:271:125e::2;
- envelope-from=kirill@korins.ky; helo=mx1.catap.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=162.55.82.72; envelope-from=kirill@korins.ky;
+ helo=mx1.catap.net
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,80 +94,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Octeon firmware programs contiguous PageMask values that do not follow
-the generic R4K even maskbits rule.
-
-Keep the generic validation rule for other MIPS CPUs, while allowing
-Octeon CPUs to use the contiguous masks accepted by hardware.
+Add a CN73xx CPU definition for the Octeon III machine. The PRId, FPU
+FIR, and L2 cache geometry come from EdgeRouter Infinity ER-8-XG data;
+the remaining CP0 fields come from a Juniper SRX300 CN70xx/CN71xx dump.
 ---
- target/mips/tcg/system/cp0_helper.c | 15 ++++++++++-----
- target/mips/tcg/system/tlb_helper.c |  2 +-
- target/mips/tcg/tcg-internal.h      |  2 +-
- 3 files changed, 12 insertions(+), 7 deletions(-)
+ target/mips/cpu-defs.c.inc | 42 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
 
-diff --git a/target/mips/tcg/system/cp0_helper.c b/target/mips/tcg/system/cp0_helper.c
-index 1c23d2a525..40a41805fa 100644
---- a/target/mips/tcg/system/cp0_helper.c
-+++ b/target/mips/tcg/system/cp0_helper.c
-@@ -882,14 +882,19 @@ void helper_mtc0_memorymapid(CPUMIPSState *env, target_ulong arg1)
-     }
- }
+diff --git a/target/mips/cpu-defs.c.inc b/target/mips/cpu-defs.c.inc
+index cc1916232f..ee638568db 100644
+--- a/target/mips/cpu-defs.c.inc
++++ b/target/mips/cpu-defs.c.inc
+@@ -1023,6 +1023,48 @@ const mips_def_t mips_defs[] =
+         .insn_flags = CPU_MIPS64R2 | INSN_OCTEON,
+         .mmu_type = MMU_TYPE_R4000,
+     },
++    {
++        /*
++         * Minimal Octeon CN73xx model for EBB7304 firmware. PRId, FPU FIR,
++         * and L2 cache geometry match a Ubiquiti EdgeRouter Infinity
++         * ER-8-XG; the remaining CP0 values are a placeholder Octeon III
++         * model derived from a Juniper SRX300 CN70xx/CN71xx dump.
++         */
++        .name = "OcteonCN73XX",
++        .CP0_PRid = 0x000D9702,
++        .CP0_Config0 = MIPS_CONFIG0 | (0x1 << CP0C0_AR) | (0x2 << CP0C0_AT) |
++                       (MMU_TYPE_R4000 << CP0C0_MT) | (1 << CP0C0_VI),
++        .CP0_Config1 = MIPS_CONFIG1 | (1 << CP0C1_FP) |
++                       (0x3F << CP0C1_MMU) |
++                       (0 << CP0C1_IS) | (6 << CP0C1_IL) | (7 << CP0C1_IA) |
++                       (0 << CP0C1_DS) | (0 << CP0C1_DL) | (7 << CP0C1_DA) |
++                       (1 << CP0C1_C2) | (1 << CP0C1_PC) |
++                       (1 << CP0C1_WR) | (1 << CP0C1_EP),
++        .CP0_Config2 = MIPS_CONFIG2 | (5 << CP0C2_SS) | (6 << CP0C2_SL) |
++                       (15 << CP0C2_SA),
++        .CP0_Config3 = MIPS_CONFIG3 | (1U << CP0C3_M) |
++                       (1 << CP0C3_BP) | (1 << CP0C3_BI) |
++                       (1 << CP0C3_VZ) | (1 << CP0C3_ULRI) |
++                       (1 << CP0C3_RXI) | (1 << CP0C3_LPA),
++        .CP0_Config4 = MIPS_CONFIG4 | (1U << CP0C4_M) |
++                       (0x3c << CP0C4_KScrExist),
++        .CP0_Config7 = 1 << CP0C7_WII,
++        .CP0_LLAddr_rw_bitmask = 0,
++        .CP0_LLAddr_shift = 4,
++        .CP0_PageGrain = (1 << CP0PG_ELPA),
++        .SYNCI_Step = 32,
++        .CCRes = 1,
++        .CP0_Status_rw_bitmask = 0x36F8FFFF,
++        .CP1_fcr0 = (1 << FCR0_F64) | (1 << FCR0_L) | (1 << FCR0_W) |
++                    (1 << FCR0_D) | (1 << FCR0_S) |
++                    (0x97 << FCR0_PRID) | (0x0 << FCR0_REV),
++        .CP1_fcr31 = 0,
++        .CP1_fcr31_rw_bitmask = 0xFF83FFFF,
++        .SEGBITS = 42,
++        .PABITS = 49,
++        .insn_flags = CPU_MIPS64R2 | INSN_OCTEON,
++        .mmu_type = MMU_TYPE_R4000,
++    },
  
--uint32_t compute_pagemask(uint32_t val)
-+uint32_t compute_pagemask(CPUMIPSState *env, uint32_t val)
- {
-     /* Don't care MASKX as we don't support 1KB page */
--    uint32_t mask = extract32(val, CP0PM_MASK, 16);
-+    uint32_t mask = val >> CP0PM_MASK;
-     int maskbits = cto32(mask);
- 
--    /* Ensure no more set bit after first zero, and maskbits even. */
--    if ((mask >> maskbits) == 0 && maskbits % 2 == 0) {
-+    /*
-+     * Generic R4K PageMask values use two mask bits per size step.
-+     * Octeon accepts contiguous byte masks such as 0x003fffff for
-+     * two 2 MiB pages.
-+     */
-+    if ((mask & (mask + 1)) == 0 &&
-+        ((env->insn_flags & INSN_OCTEON) || maskbits % 2 == 0)) {
-         return mask << CP0PM_MASK;
-     } else {
-         /* When invalid, set to default target page size. */
-@@ -899,7 +904,7 @@ uint32_t compute_pagemask(uint32_t val)
- 
- void helper_mtc0_pagemask(CPUMIPSState *env, target_ulong arg1)
- {
--    env->CP0_PageMask = compute_pagemask(arg1);
-+    env->CP0_PageMask = compute_pagemask(env, arg1);
- }
- 
- void helper_mtc0_pagegrain(CPUMIPSState *env, target_ulong arg1)
-diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
-index 4c0a25e622..ae805bff28 100644
---- a/target/mips/tcg/system/tlb_helper.c
-+++ b/target/mips/tcg/system/tlb_helper.c
-@@ -877,7 +877,7 @@ refill:
-         }
-     }
-     pw_pagemask = m >> TARGET_PAGE_BITS;
--    pw_pagemask = compute_pagemask(pw_pagemask << CP0PM_MASK);
-+    pw_pagemask = compute_pagemask(env, pw_pagemask << CP0PM_MASK);
-     pw_entryhi = (address & ~0x1fff) | (env->CP0_EntryHi & 0xFF);
-     {
-         target_ulong tmp_entryhi = env->CP0_EntryHi;
-diff --git a/target/mips/tcg/tcg-internal.h b/target/mips/tcg/tcg-internal.h
-index 950e6afc3f..66ae39551e 100644
---- a/target/mips/tcg/tcg-internal.h
-+++ b/target/mips/tcg/tcg-internal.h
-@@ -47,7 +47,7 @@ bool mips_cpu_exec_interrupt(CPUState *cpu, int int_req);
- 
- void mmu_init(CPUMIPSState *env, const mips_def_t *def);
- 
--uint32_t compute_pagemask(uint32_t val);
-+uint32_t compute_pagemask(CPUMIPSState *env, uint32_t val);
- 
- void r4k_invalidate_tlb(CPUMIPSState *env, int idx, int use_extra);
- uint32_t cpu_mips_get_random(CPUMIPSState *env);
+ #endif
+ };
 -- 
 2.54.0
 
