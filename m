@@ -4,68 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1057C44508
-	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 07:07:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A76DC44508
+	for <qemu-devel@archiver.kernel.org>; Wed, 15 Jul 2026 07:14:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wjthY-0007S0-JC; Wed, 15 Jul 2026 03:06:40 -0400
+	id 1wjtoM-0005Ga-Qi; Wed, 15 Jul 2026 03:13:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wjthU-0007RU-M2
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 03:06:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wjtoJ-0005GL-LC
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 03:13:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wjthS-0005kY-Gv
- for qemu-devel@nongnu.org; Wed, 15 Jul 2026 03:06:36 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wjtoH-0006nH-Tl
+ for qemu-devel@nongnu.org; Wed, 15 Jul 2026 03:13:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784099192;
+ s=mimecast20190719; t=1784099615;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=m0/Q/YYevEPHvKzDPJRAOvl85iWJCAk5Q7iHC3eSAQk=;
- b=KhOAhwEdBReGmhj+sM4OuHu5MeE4objjEeX3StdYsQKrUNtTffFzTmwtTJRSFEiK7h1EdQ
- Q0tv5P31GUDdNLTcuZAvj1S9nc2flnf/4aNWAbm6QnK4/2T/pwwmQKDeQBdFDL39Qf4Jv0
- NsQEUC5/EYo3J82qOJ7ymp3zWKl47FI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-244-mECovYS_OwizZe0su7UWJA-1; Wed,
- 15 Jul 2026 03:06:28 -0400
-X-MC-Unique: mECovYS_OwizZe0su7UWJA-1
-X-Mimecast-MFC-AGG-ID: mECovYS_OwizZe0su7UWJA_1784099187
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D94F4195608E; Wed, 15 Jul 2026 07:06:26 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.44.48.79])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 36F47195419A; Wed, 15 Jul 2026 07:06:24 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex@shazbot.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Nicolin Chen <nicolinc@nvidia.com>
-Subject: [PATCH] vfio/region: Clarify dma-buf failure messages
-Date: Wed, 15 Jul 2026 09:06:22 +0200
-Message-ID: <20260715070622.198400-1-clg@redhat.com>
+ in-reply-to:in-reply-to:references:references;
+ bh=Wdg99n/spo3tfC4hGCRxi4oh0gDICk5j/Dcb2LUW0ao=;
+ b=QhAb8xLnYmvgnd16hZOM7K/YUxDdj47uAbfvOSeLF6buJvefasUEz6Zn0oQohGZDeHYbew
+ pt5TtTI/sKmiLJ8y9FUtZqfGt5O08UH9iswAQWZfAPyegm+jmVDEeZ5xagN0Q6XFievZGg
+ GG70M/ECvmsHOi5eHx+uxyNjqj/+Jas=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-619-dhrb5csgPoyiESJcxBewOw-1; Wed, 15 Jul 2026 03:13:33 -0400
+X-MC-Unique: dhrb5csgPoyiESJcxBewOw-1
+X-Mimecast-MFC-AGG-ID: dhrb5csgPoyiESJcxBewOw_1784099612
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-493c526df6bso15808025e9.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 00:13:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1784099612; x=1784704412; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=Wdg99n/spo3tfC4hGCRxi4oh0gDICk5j/Dcb2LUW0ao=;
+ b=Vx5LnIgbIsfLOnSa6uAE9anGjzv4LZhQdYagI37dTCXlGTfAD/+TfCfaZzWaDGjCWZ
+ lCa7tpvATgMGhJarTu27ph3rVE1NaDnaGDeizmHk1+5g3J4HYOAQUfQ3HbHnH/2Rz4Uf
+ QLUOP+TSirLEqDjQW741Snlbc0Wrkc7dliWk4pUiM5krpQVto1VBSODb5mJnjNjS9g2g
+ XCOGMXguCz3C7hJPXGOUa37QMlap3FkutguZmvyBdyv/8zqJya6kaoULFLnVI+kAEy8a
+ 1ngl9yR5EbtL173E4ToYIiZ5I/34RauSjpZzOBxCSCnWbYMJC8VXJYrZqAaLYhmuMYyx
+ wb0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784099612; x=1784704412;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Wdg99n/spo3tfC4hGCRxi4oh0gDICk5j/Dcb2LUW0ao=;
+ b=iS3YUFTrLe7c99vtdVstTf27bgsDfswlJ2x2zkQj19OH+QfmfpQC9671U8I/HzX74C
+ gF+MG/ddebGNx7WBj/Z2exzsXHg0xfM6Jz/sHvgWFmYzFzOTEEZiGnAizjdHX0U2L8WN
+ OZ6ma87F01D4Ot5z+J19wmglrlbpPI/vGXEfOWzxdE0XRcmZcenwpcujzkgFQmTtnnBt
+ xJS49y+0W0WtBBJGvzBQMoJQQeCxnvyj2GMpVorrsU4mTNjSF7f93YpfTUrGXu86l5cS
+ 8vuatb6R7nqcDe2/HuJxQJ/p5kA+t/0cl2hvv8BCcigy7W0FU4cwIisYvddI6zWGP0Sc
+ K8og==
+X-Gm-Message-State: AOJu0YzzQ022Gw7ttZfoQCn+0jkfXWZwQDTybdnmJbUs1xftcunzKYLd
+ hqQ9icsEYzPNYIAbyd2QHd34xOiafiWqaglsGSABk5WxayK4odE+TmNl1hAxrxaLY2Y8WemS5/4
+ Xvk3HCIbQAn5hnH0qrxkpsiFM0LG1OXCSBYcBQuQC4g/RVaCBziLro87E
+X-Gm-Gg: AfdE7cnbJk2Av7bOOwzBsDFGhdpdbiwzVEEcFE3W/AapKYRDwp7S4yYxVBEUDixs0ok
+ ZV4QTJTss0JlL2zc+3nt07nmgx/XlIKcaH5GT3DItbve2U4FWlPbRhI/QAezA8Q+gTrraLwwC0c
+ 2qm/HehMMeD2Ahg9qIRTrBVkV1KvZoLcc1fKwWnjpDEFn28oYrdhIfjY/zdHGBEFANqGNb4e8Hf
+ J95SHGisQg4tJU0uXNzQTI+YVcKjCL4yOJyHc+uGsHaOJ3Nm+Y8dR8S3/Q3eHhNil3ED/jtvLRz
+ qV229yOBLjme2HR+ZzDsgbCZkeyS/FzMDTzLmVazrV8Q3aWVq6NOoMccgeFC4YtY8NmGB1GGkjX
+ 5VqbrCIyJB4IuIWtIkAmR2lnr5QaXt5KkCkE=
+X-Received: by 2002:a05:600c:3f06:b0:495:3c8c:c16a with SMTP id
+ 5b1f17b1804b1-4953c8cc25bmr14926635e9.0.1784099611708; 
+ Wed, 15 Jul 2026 00:13:31 -0700 (PDT)
+X-Received: by 2002:a05:600c:3f06:b0:495:3c8c:c16a with SMTP id
+ 5b1f17b1804b1-4953c8cc25bmr14926145e9.0.1784099611182; 
+ Wed, 15 Jul 2026 00:13:31 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-24-117.inter.net.il. [80.230.24.117])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f4634e5c3sm13484225f8f.1.2026.07.15.00.13.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 15 Jul 2026 00:13:30 -0700 (PDT)
+Date: Wed, 15 Jul 2026 03:13:27 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: shenjiatong <yshxxsjt715@163.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com
+Subject: Re: [PATCH] rtc/mc146818rtc: fix QEMU crash when time runs backwards
+Message-ID: <20260715031232-mutt-send-email-mst@kernel.org>
+References: <20251113030211.6283-1-yshxxsjt715@163.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: permerror client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251113030211.6283-1-yshxxsjt715@163.com>
+Received-SPF: permerror client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,54 +116,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The dma-buf failure messages in vfio_region_create_dma_buf() say "PCI
-BAR IOMMU mappings may fail", which suggests the BAR is broken. In
-practice, only P2P DMA is affected -- normal passthrough uses the mmap
-fallback.
+On Thu, Nov 13, 2025 at 11:02:11AM +0800, shenjiatong wrote:
+> Loosen restriction on computed lost_tick. When QEMU's rtc_clock is set
+> to host, the walltime is used for mc146818rtc which requires computed
+> lost_tick to be strictly non-negative. But host walltime could possibly
+> run backwards, for example, configured by NTP service. Under such
+> circumstances QEMU process could crash unexpectly. This situation is
+> easy to reproduce for Windows 2012/2016 guests.
 
-Reword both messages to mention P2P DMA explicitly and clarify that
-the mmap fallback is in use. Use warn_report_err_once() at the call
-site so per-BAR repetition on mdev devices is suppressed.
+Looks like this feel through the cracks.
+The patch lacks your Signed off by certifying the DCO.
+Could you pls confirm that?
 
-Fixes: dcf1b77e834d ("hw/vfio/region: Create dmabuf for PCI BAR per region")
-Cc: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- hw/vfio/region.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
-
-diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-index dbde3391802691888ca31d5e329aba5ba680feb4..54ad11a6c8ed8e04fa365262ccb8bd694bdb45f7 100644
---- a/hw/vfio/region.c
-+++ b/hw/vfio/region.c
-@@ -321,13 +321,12 @@ static bool vfio_region_create_dma_buf(VFIORegion *region, Error **errp)
-     ret = vfio_device_get_feature(vbasedev, feature);
-     if (ret < 0) {
-         if (ret == -ENOTTY) {
--            warn_report_once("VFIO dma-buf not supported in kernel: "
--                             "PCI BAR IOMMU mappings may fail");
-+            warn_report_once("VFIO dma-buf not supported in kernel, "
-+                             "using mmap fallback, P2P DMA will not work");
-             return true;
-         }
--        /* P2P DMA or exposing device memory use cases are not supported. */
--        error_setg_errno(errp, -ret, "%s: failed to create dma-buf: "
--                         "PCI BAR IOMMU mappings may fail",
-+        error_setg_errno(errp, -ret, "%s: dma-buf unavailable, "
-+                         "using mmap fallback, P2P DMA will not work",
-                          memory_region_name(region->mem));
-         return false;
-     }
-@@ -448,7 +447,7 @@ int vfio_region_mmap(VFIORegion *region)
-     }
- 
-     if (!vfio_region_create_dma_buf(region, &local_err)) {
--        error_report_err(local_err);
-+        warn_report_err_once(local_err);
-     }
- 
-     return 0;
--- 
-2.55.0
+> ---
+>  hw/rtc/mc146818rtc.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
+> index 8631386b9f..04185eb6e9 100644
+> --- a/hw/rtc/mc146818rtc.c
+> +++ b/hw/rtc/mc146818rtc.c
+> @@ -173,8 +173,7 @@ static void periodic_timer_update(MC146818RtcState *s, int64_t current_time,
+>          next_periodic_clock = muldiv64(s->next_periodic_time,
+>                                  RTC_CLOCK_RATE, NANOSECONDS_PER_SECOND);
+>          last_periodic_clock = next_periodic_clock - old_period;
+> -        lost_clock = cur_clock - last_periodic_clock;
+> -        assert(lost_clock >= 0);
+> +        lost_clock = MAX(cur_clock - last_periodic_clock, 0);
+>      }
+>  
+>      /*
+> -- 
+> 2.34.1
+> 
+> 
+> 
 
 
