@@ -4,145 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A29EBC44511
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 16:09:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0F79C44516
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 16:11:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkOe4-00076k-Kj; Thu, 16 Jul 2026 12:09:08 -0400
+	id 1wkOgL-0007jQ-Dm; Thu, 16 Jul 2026 12:11:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wkOe0-00076K-W4
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 12:09:06 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1wkOgI-0007iG-W8; Thu, 16 Jul 2026 12:11:27 -0400
+Received: from smtpout1.mo528.mail-out.ovh.net ([46.105.34.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wkOdz-00066b-44
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 12:09:04 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66GDJd8b3988086
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 16:09:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- k0bzd/cCqwKLMA4Jx2RmPmTw97YrIVEQ5MtnssVIH8Q=; b=H5evZHxGW3/jzji/
- bdWBIDtm0I5y6EaKL9IPVk1ugYmBVK0yNWBigK6B/paRuQai1KOfXiqMvX5Xlvbq
- /BboKEoZl0H3+vQGN1OWST6kQGSmbGQao40irmghRc3mLClmMNeaHIC3boXhiZlr
- aDZuXvheUw4uCY28dF08P4F4boNggCgt7yHwoMfUTX+Lm8q52DZLlgn30BAOcb/x
- Fd1pirDH7Lf6rXG9bP1Qt7s3b9MNZ8UInTHNAj21d7fd4hcAMlm/LVQPJmfSpiGd
- Z6hqWwTofe3yCIu1WHYpD+XShb4xmuT0w4wGrnNCnemaF0q2O/7J3DnRTLBLUqxu
- zaXQjQ==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4feq3pk5qe-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 16:09:00 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-38e095fd889so6902782a91.2
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 09:09:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784218140; x=1784822940; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=k0bzd/cCqwKLMA4Jx2RmPmTw97YrIVEQ5MtnssVIH8Q=;
- b=fLWeHEcmoMHnTR7nCLLjffsHe99hfHEloN3RiVUbaLI6mnOnjyrYkRa+02a0RAfEog
- jY1vAxmVuCwwB8KnlqBmYkSppWG9sat3y0PqJRScLS6asz9ohf224Iy6MB2TI5yzgCjB
- x8qKkJHsonlhgTv/SyWP00Ym8Uo4oLhR5jig+X7fnllgKatRU9Mbpt71ZLwGG2aSJkjd
- V/qIYn/CdWq5yEgY/8kSPhOV9fCfK/dntdZn9bKxs/6kqyWaMJ+z8p3lv7nItCGPPYmH
- +1TG7ceHoSgJUR4tsCHF92ZSI32N2aNYWPcJCxVN3XVswzGx0SMC5BW1IHK7s62Gs1fb
- LTsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784218140; x=1784822940;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=k0bzd/cCqwKLMA4Jx2RmPmTw97YrIVEQ5MtnssVIH8Q=;
- b=OzMNeHgpixMJEIxEKQfJ3uCiGPFdZ36LQZOuQ2Wq3jRspSqnTWjRD8LvX5lFMOSDPv
- eQCf/XwcOx3XOW+Xy5ro4HEoVpQuaNybxJZBNRmpenhoSHdv4CheG6WAu+cPwUpnEEWO
- PobUVKEGIE3ex7ZS7cpBV9o6V3jKrVrOHV8XBQa3y/rRWR35Uj4d00wDhJ5I15ru3DPP
- 9+zLyeuhU2zWnsDz60UBBfm5KX0wJmPxV3rFdYQQu1/cqEXkXebWh7UlUSeS6NFHBF7E
- Bz3ptfi5ASYF4W3/PcVow1cMS5KXNOHDzphb87kUK5Ck2wBCWhOUBsWTZlm9kb7/+5Z/
- kRcw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RobFlEroZpOtfUOyooiWlJpNBpt3mp5xkh/SLiY/NR6VlaUf4haMvjm1yc0I9DS5BtolW3nqkrvigaK@nongnu.org
-X-Gm-Message-State: AOJu0YzdbQ0C0mX3F6mvtJ1lIqpkwtzyMfCyx+qYWq7LmmkdYmNsDh24
- JaLQ7aGWlAofMvSZbnWawPk5K528A/A3rSjpDgSDbvvk7NA9iBadIhvbMyMNCXkuxNjQqfzydZ7
- jiZ43K74TReBONgh+m3KfK6+DR21XKv+sM2Cot95YfhHsg65w8sFcoBn3dQ==
-X-Gm-Gg: AfdE7cneJ4Ma2V81YqG2AJ9anLsOy2WDCZ6DhYn+b5+EjVrQ87mZOgyXcfGlOYC2mRE
- RbttPOqGMfFa7+NHRLreacVtpjvEEHVSkeMKvYZxQJ8pIB1a5MMiZaHd9FE1BTvQdO8Y2aTC0Z3
- 5Skr4mJAXHIuTzBXT/Xty71bA80ai+bBXwGUhM1MQBs6YX5y3FitkN3icBv9g+tHgagZAOUofFE
- PVqINgSxHxUcWFsPLkzVwq6LIwN3nGkeWNulf6cFxANQbHUis6rJ+Oh8zPB6dj6nK5nGcInfcAU
- mcVScfjhWa4JHYxIhgnVqWTKLgSpQ5ysWl92dqaEHLXtEQ8xOQ9lU3AB4S2j2x9CEuN71CKPb9d
- PUIO74i7oCEWFX7ldBv/qJyZ14+qUG87ehm9Rs/vNYrEcMU4RYXIy8nY1Kp5dt0556udh
-X-Received: by 2002:a17:90b:17c3:b0:384:5b5b:3465 with SMTP id
- 98e67ed59e1d1-38e467a97edmr163280a91.29.1784218140197; 
- Thu, 16 Jul 2026 09:09:00 -0700 (PDT)
-X-Received: by 2002:a17:90b:17c3:b0:384:5b5b:3465 with SMTP id
- 98e67ed59e1d1-38e467a97edmr163242a91.29.1784218139728; 
- Thu, 16 Jul 2026 09:08:59 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38e2a23eb4dsm1491850a91.2.2026.07.16.09.08.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jul 2026 09:08:59 -0700 (PDT)
-Message-ID: <d559136c-8c93-450d-9880-cc4bac9aa841@oss.qualcomm.com>
-Date: Thu, 16 Jul 2026 09:08:58 -0700
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1wkOgF-0006go-Jb; Thu, 16 Jul 2026 12:11:26 -0400
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net [51.210.158.128])
+ by mo528.mail-out.ovh.net (Postfix) with ESMTPS id 4h1J1x6pRxz66Gn;
+ Thu, 16 Jul 2026 16:11:17 +0000 (UTC)
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net. [127.0.0.1])
+ by director1.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Thu, 16 Jul 2026 16:11:17 +0000 (UTC)
+Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.43.33])
+ by director1.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4h1J1x43Qjz60Mk;
+ Thu, 16 Jul 2026 16:11:17 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.7])
+ (Authenticated sender: clg@kaod.org)
+ by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 42FDE203DD4; 
+ Thu, 16 Jul 2026 16:11:15 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-97G0028a6db53a-cbd8-4993-a7b1-67a65e9b6e05,
+ 816DE1EE18DD2826DFD8B9EE289546F56902E1FE) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <bbdacd53-4928-4c9a-b85b-e6c0c04a1597@kaod.org>
+Date: Thu, 16 Jul 2026 18:11:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] plugins/execlog: fix segfault and flush output on
- vcpu exit
-To: Harry van Haaren <harry.vanhaaren@openchip.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, Alexandre Iooss <erdnaxe@crans.org>, 
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20260616161242.267315-1-harry.vanhaaren@openchip.com>
- <20260716094126.787556-1-harry.vanhaaren@openchip.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260716094126.787556-1-harry.vanhaaren@openchip.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: wwqOc1xo_z9-IHGArwzPxwgN_twD8D7c
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDE2NSBTYWx0ZWRfXwjlWDM5x81Zv
- Wh/6f2lF8WHRMxKCwLiQfZkUoDtMMQQt1jo4d+IpPTXht67kokOoFtUs1Pm2PIwttYyQ6a3k9As
- Tz9zOQQpCH0OChVzsupy32JUGv4tPRY=
-X-Proofpoint-GUID: wwqOc1xo_z9-IHGArwzPxwgN_twD8D7c
-X-Authority-Analysis: v=2.4 cv=PN8/P/qC c=1 sm=1 tr=0 ts=6a59021d cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=VwQbUJbxAAAA:8 a=OZcmDFxvAAAA:8 a=MI6s7Ohd7u6-WKzijUcA:9 a=QEXdDO2ut3YA:10
- a=mQ_c8vxmzFEMiUWkPHU9:22 a=liPxxeoTYnb3ClP5OJlV:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDE2NSBTYWx0ZWRfX9rZ7rhxWXMYf
- 0yv2EN5u7M1whBRsNxsuRGqMznLVJwhPb456lm6qFzhz7ZKbL04Onz8QrOHkw5TILsZJD0OH4BR
- UwekGRQ73vlW8JfcHv9sN6Z909GwFudG23538x6FQ6V/fTgcM47wv/aQ5rs8L5EdxAvFim8hmGy
- hiNaJrkMvFhMfb8XIGnW9KMYCQE9I/pdJjUcLo86CDvWUdeg4Jk+4hvVbc/TlAX+cgSPhnKm68T
- qL21JGLfgWRlP658Vw68PBs03N1cxBPAEbMc7riXciOdp6RGNmvWNfYpg+mhwH7aS8kYFwGTuyh
- 0vOINdZoO8hUnY2Wpwc6VwwfFk2/lv2pfX+KHLkddvxhCiJjpkxC4lgxzdVLTpltQKwYFwZv987
- z0FOpfr7yBsposjZPN+gQbHF5dqJ24L1DNILMJOvjiCMhV7Uh70WqKdBWpT63Ije/yOBvBFeiIm
- ROr8Ffm29xXQwKhgWYw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-16_05,2026-07-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 malwarescore=0 lowpriorityscore=0 phishscore=0 adultscore=0
- priorityscore=1501 impostorscore=0 clxscore=1015 suspectscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607160165
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Subject: Re: [PATCH 28/29] hw/arm: catalina: drive pca9554 io expander input
+ pins externally
+To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
+Cc: Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org,
+ qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Corey Minyard <cminyard@mvista.com>
+References: <20260709-catalina-upgrade-v1-0-82a63fead90c@free.fr>
+ <20260709-catalina-upgrade-v1-28-82a63fead90c@free.fr>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260709-catalina-upgrade-v1-28-82a63fead90c@free.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+x-ovh-tracer-id: 190558563190549549
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTGUKepQxFPaYNzHZJkkQWNaGVTI09Pu1UFPGKsticIZtBSSBsXidvEa0uzu0gfPYAt0TKu8D5Oeo9Qosaaq6uLzQLuAZNZ3RmOAN3UhMEXZC606rjOH/NhB/iJWMoui5a/SRplfkpec6Qd3WeC2JCcQ6rLsoLT5M318ZB2hYT6M4t3Jc31dy4KtxdT6FvwYx9uFUIxnK9008guKgXO8MQBxwweZ/lBCOwA5PPft4vTDntQulX2BIa7J3NkptDqnfarnxvzQzv7t+lz7y+8G0T2sHvocgXQSTrrSc76poNcIH15elI9BNXXrAup1WOS5YY0BOWUN/TI7CtbQ5BTu4vLvD78fQiII92TezDApZmiCiZM+ZMptWcZ33FX7umRTw4vSIu7YDTeE9Jebm6Jsnjgj2Juz+LayEo6qbxtQiffhUvx8Zlh6Q1EtCHGjoxrUN4xV3xqJ7NPEQ/UJdPX9HQni/cT3PYahtkCioEd0844xVIP7npXKKKVfS4gy6Y7uRtHXBwTYT565uNGEtS1cUC38vJGpvjtsZ7RvkS8Zb6ouC75jJHSUg9tbdBDKx2/e9yNoXjqtbgBuJnPO8UKqBPiBdlVyGFUULz5Nf678TfaMOMWRM4k4OfvA09TLLY3dkPHQIZQVpgy5z+fBOu+F1AYKTpxCE2K6Gz24PMxWdRCuBg
+DKIM-Signature: a=rsa-sha256; bh=H6Upms3s80xgYu1N8JfTDqmtccX/l3K2xuKSb/KBhAc=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1784218279; v=1;
+ b=G8m3Lt5fHb154B+RJpVp1aQzQjA81SgO2aF7JPuK0KG5arh+LmYjYeh3BSuMH+aJzhCtR0pb
+ U61zRIA1p+9kMT6BROb1NzsofMmxAU9Yxk4i2dtvkZSLNCdwDWJ9SH1zFaJb1TO4GUn6kD3unHo
+ M7KQM94zEtT/v2ndi4bwT6ONeAxsE+/fI2Q1gZjONXLSqN5nRBeUun+6djPrfjIGpr2EFh0VCEq
+ 9mLEa7B7zw52PLi/4tTO8PPQ8EgcnzoG9b/x3UDcY/FS0bIrlfeVII2iiu446jbPqzIHxlyOgG8
+ VXF7srsxJYF166Y4HPAfhNmOTxH6rjpijWfQN+MdnxpRQ==
+Received-SPF: pass client-ip=46.105.34.251; envelope-from=clg@kaod.org;
+ helo=smtpout1.mo528.mail-out.ovh.net
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,50 +137,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Harry,
-
-On 7/16/2026 2:41 AM, Harry van Haaren wrote:
-> From: Harry van Haaren <harry.vanhaaren@openchip.com>
+On 7/9/26 17:23, Emmanuel Blot wrote:
+> Create io_expander5 (pca9554@27) with hw-dir=true so its pin%d QOM
+> properties drive the external input level of each pin, matching the
+> pca9555 expanders, instead of the legacy behaviour that forces the pin
+> to an output. This lets external agents, including tests, stimulate the
+> input pins and have the guest read them back.
 > 
-> Hi Qemu-Dev & CCs,
+> Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
+> ---
+>   hw/arm/aspeed_ast2600_catalina.c | 13 ++++++++++---
+>   1 file changed, 10 insertions(+), 3 deletions(-)
 > 
-> This is my first contribution to QEMU itself, but I have worked on
-> DPDK, OVS, and QEMU-RS a bit in the past. I have experience with
-> mailing lists for patches and some QEMU internals.
-> 
-> This is a "git publish" reply to the original patches that weren't in a patchset:
-
-When sending new version, you should not reply to v1 series, but send a
-proper new thread. Not sure if you added some extra parameters to
-git-publish, but it should not be needed.
-
-No need to resend that now, but just an information for your future
-series :).
-
-> https://patchwork.kernel.org/project/qemu-devel/patch/20260616161242.267315-1-harry.vanhaaren@openchip.com/
-> https://patchwork.kernel.org/project/qemu-devel/patch/20260616161242.267315-2-harry.vanhaaren@openchip.com/
-> 
-> Thanks for reviews and input, the v2 reworks as follows:
-> - I expect email to no longer have "| OPENCHIP" in my name, and the email footer removed
-> - git publish used to send, with "--number 2" to hopefully get a v2 patchset out
-> - rebased to latest branch, atexit() function signatures changed
-> - avoid adding mutex for output, rely on QEMUs logging mutex (thanks Pierrick)
-> --- use single call to log to avoid line-breaks corrupting output
-> 
-> Please note that LLMs were used to investigate and fix this bug,
-> but all code in this patch has been reviewed by me, and I believe
-> it to be a good solution.
-> 
-> Regards, -Harry
-> 
-> Harry van Haaren (2):
->   plugins/execlog: fix segfault/race-cond on per-vCPU structures
->   plugins/execlog: fix execlog vcpu_exit execution print loss
-> 
->  contrib/plugins/execlog.c | 88 +++++++++++++++++++--------------------
->  1 file changed, 43 insertions(+), 45 deletions(-)
+> diff --git a/hw/arm/aspeed_ast2600_catalina.c b/hw/arm/aspeed_ast2600_catalina.c
+> index f714c9d1b3..67b821ccb9 100644
+> --- a/hw/arm/aspeed_ast2600_catalina.c
+> +++ b/hw/arm/aspeed_ast2600_catalina.c
+> @@ -546,9 +546,16 @@ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
+>       i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 5), TYPE_TMP75, 0x4f);
+>   
+>       /* i2c1mux0ch6 */
+> -    /* io_expander5 - pca9554@27 */
+> -    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 6),
+> -                            TYPE_PCA9554, 0x27);
+> +    /* io_expander5 - pca9554@27 (external agents drive its input pins) */
+> +    {
+> +        I2CBus *bus = pca954x_i2c_get_bus(i2c_mux, 6);
+> +        I2CSlave *ioexp = i2c_slave_new(TYPE_PCA9554, 0x27);
+> +
+> +        object_property_add_child(OBJECT(bus), "0x27", OBJECT(ioexp));
+> +        object_property_set_bool(OBJECT(ioexp), "hw-dir", true,
+> +                                 &error_abort);
+> +        i2c_slave_realize_and_unref(ioexp, bus, &error_abort);
+> +    }
+>       /* io_expander6 - pca9555@25 */
+>       i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 6),
+>                               TYPE_PCA9555, 0x25);
 > 
 
-Regards,
-Pierrick
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
 
