@@ -4,109 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17DB4C4450A
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 12:49:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAE0FC44501
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 12:50:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkLWj-0003VC-4i; Thu, 16 Jul 2026 08:49:21 -0400
+	id 1wkLXi-0004JY-13; Thu, 16 Jul 2026 08:50:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wkLWh-0003Ub-5x
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 08:49:19 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wkLWe-0000QS-Tv
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 08:49:18 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id EC4AE3E3B;
- Thu, 16 Jul 2026 12:49:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1784206155; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=aic3BVYwXbgM8+WJhSoU8B7l0zawbgUTyTlq2yoyXKY=;
- b=edKwoPedzepvTi7KHqAsSm5C9uDFJW+mWq5DpmDIl1BG4BKk23H/kg5uJe1M/7RUhFUpVB
- tvJpykVAWg4hJqehxjeqirf7rmQcSvX+oSH/v28cGjHTUQPzQbDj21WIGU6Q+QAtsKcCsu
- YmaQ48RjRas5oRFT5WrYCkLPiWPU2yk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1784206155;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=aic3BVYwXbgM8+WJhSoU8B7l0zawbgUTyTlq2yoyXKY=;
- b=/jh0gXdQzHjZizHlcpazz95O8wtjbpYbXKb1ildFyP+sum+nm4/5/fGAnbHu3NV/3xklfd
- 9gHvCCVoXdHTuqAg==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1784206153; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=aic3BVYwXbgM8+WJhSoU8B7l0zawbgUTyTlq2yoyXKY=;
- b=uTbgIqnBdEQxs+sg9X7pyq3scINtx6dlw9oJHwL2RUL1YTYhYDgcl4t/8jbo6gduCL+F91
- wT55KGgVOwAvYxoGCeRkERxRQeYHjn3gica70zVCv70hrZMnE67wR4SqvjLz3Yla7guZj9
- H7whhWo+qz/uiXjRoWj/kg3RbA/fPNc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1784206153;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=aic3BVYwXbgM8+WJhSoU8B7l0zawbgUTyTlq2yoyXKY=;
- b=ZZUJf/ieA1wL1dkbbQNu9qXPrsNwWnmAxvuxr6kE65GKvhqwyZAC5XJlzf9Cyw0dVdjMJ8
- /rD8gjJqlXxZ91Bw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 87503779AD;
- Thu, 16 Jul 2026 12:49:13 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id fmERFknTWGp0XwAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 16 Jul 2026 12:49:13 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-Subject: Re: [PATCH v4 1/2] gitlab: introduce files mapping GitLab accounts
- to real names
-In-Reply-To: <20260716101305.1484991-2-berrange@redhat.com>
-References: <20260716101305.1484991-1-berrange@redhat.com>
- <20260716101305.1484991-2-berrange@redhat.com>
-Date: Thu, 16 Jul 2026 09:49:11 -0300
-Message-ID: <87mrvr3xrs.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wkLXf-0004J8-JF; Thu, 16 Jul 2026 08:50:20 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wkLXd-0000Vu-MJ; Thu, 16 Jul 2026 08:50:19 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66GABxfB1019788; Thu, 16 Jul 2026 12:50:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=aQV+dCmb58H0g3jBNRqCAQZmjRC2QB
+ 5S9eH7CLsvLcs=; b=a+1L2rNiZPksQ5q5ao/Np/Z86g4gX37yR5cybOmUd2IiD+
+ 7J764WCzqwNz/liqgWFV153OQ5GQuxEiGhhvSjmyJw6z6GBZi1zsQjQya0Faf8fs
+ UtVQEKAwSnlyNc7N0Cxmq2TPLCDDPdhmRNMq2LHAn0kvol1WkavjvhRlM6qR/6B9
+ Lx2rM7ZT5Mks1urBiooWupCwE4ZF+jwtCUBetZ/H0Q3H20W+HXXbwEi65N4AIaSR
+ q2EeCmWb5ZI1A9A6HLOgvvw3B+nwMO6Ag+LkkrW/egK/GcHFQjPlMGcDeDJj5gGY
+ KOAcvhuByNrfiCfHwU9dEkVCExuxiR+zGaiPC8WQ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fcv33hd3k-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Jul 2026 12:50:07 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66GCna4f017944;
+ Thu, 16 Jul 2026 12:50:06 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc0hwd4wj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Jul 2026 12:50:06 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66GCo2Vs31851256
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 16 Jul 2026 12:50:02 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3E5132004B;
+ Thu, 16 Jul 2026 12:50:02 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3737D20040;
+ Thu, 16 Jul 2026 12:49:54 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.39.17.30]) by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Thu, 16 Jul 2026 12:49:53 +0000 (GMT)
+Date: Thu, 16 Jul 2026 18:19:50 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Saif Abrar <saif.abrar@linux.ibm.com>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, harshpb@linux.ibm.com,
+ clg@kaod.org, npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
+ thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
+ kowal@linux.ibm.com, chalapathi.v@linux.ibm.com, calebs@linux.ibm.com,
+ milesg@linux.ibm.com, jishnuvw@linux.ibm.com, amachhiw@linux.ibm.com
+Subject: Re: [PATCH v5 5/9] pnv/phb5: Implement write-clear and return 1's on
+ unimplemented reg read
+Message-ID: <aljQz3yux9eLr68H@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+References: <20260617095058.652789-1-saif.abrar@linux.ibm.com>
+ <20260617095058.652789-6-saif.abrar@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- TO_DN_SOME(0.00)[]; FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MISSING_XM_UA(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:email,
- suse.de:mid]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260617095058.652789-6-saif.abrar@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDEzMSBTYWx0ZWRfX76t0MoU7E7TW
+ Vr+dmaImf885+hbAAeJEmzFxVQtrOyCSoS9YtzKXWhtW+6k5ekkgQnPPXi9eJCpbSV+i+iUmfza
+ lgTED00+nL02d3WmK3/dIItd6WieDYE=
+X-Authority-Analysis: v=2.4 cv=Mp1iLWae c=1 sm=1 tr=0 ts=6a58d380 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=kj9zAlcOel0A:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=6WmQozfOMwaGxlpHVjIA:9
+ a=CjuIK1q_8ugA:10
+X-Proofpoint-GUID: qgsKXDbxDcL_LzQQogmRdH6Gt2By5PRy
+X-Proofpoint-ORIG-GUID: pVuVSZF8xlIK-xxT99typUVbkM1b6Hst
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDEzMSBTYWx0ZWRfX4N2AynyVC1jR
+ Vel16CBfCc+QbrLOs1dPDEXN7nh0+blxhZ+dyNWVxCbVRgcd13sSj0gmzAts/dVxL5i7LPQl3lp
+ 5x9T+HIMlk896wjC6tABL7CudpBcdETrYMBv4LfpXl98249kXFFe78K79QGWcc8YWHfV13LU61v
+ PmVLVHhjnG+HKuHRmD1NRL0d5egOXaBO2/fb5pk7si5aRQHy82JwCvGFD/y9JrmYC0R8n/dCiWB
+ mAdNII/wcQ8Clu8VhsDg34WzBUMn/NRYYJNOX9efwEMKGIsdpLs0NfFe2LRZZY88gBrRziVAKl4
+ KifB/7T+rFb+zgNt2AKkgTJYJxYe3+WbBgs+derUduMYsYhBVq9tr0WCFG76gUBzu9yEsKBMj8E
+ NnNx0Q6KZv7Ah/eEDmdm7Qsm0fu7CE2Sv1v2xBwLfbyTVWnv4Ch9akkCZD+eY+gF+yd5wEwDYsN
+ ETfR+Ql5jhfCyNzBXhw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-16_04,2026-07-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 bulkscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
+ impostorscore=0 priorityscore=1501 suspectscore=0 clxscore=1015 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607160131
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,281 +127,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On 26/06/17 04:50AM, Saif Abrar wrote:
+> <...snip...>
+>
+> @@ -724,6 +762,7 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+>              pnv_phb4_update_all_msi_regions(phb);
+>          }
+>          break;
+> +
+>      case PHB_M32_START_ADDR:
+>      case PHB_M64_UPPER_BITS:
+>          if (changed) {
+> @@ -771,27 +810,63 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+>          break;
+>  
+>      /* Silent simple writes */
+> -    case PHB_ASN_CMPM:
+> -    case PHB_CONFIG_ADDRESS:
+> -    case PHB_IODA_ADDR:
+> -    case PHB_TCE_KILL:
+> -    case PHB_TCE_SPEC_CTL:
+> -    case PHB_PEST_BAR:
+> -    case PHB_PELTV_BAR:
 
-> It is desirable to be able to discover the GitLab account handle
-> assocaited with a real name in the MAINTAINERS file.
->
-> Rather that duplicating the same account handle multiple times,
-> inline with the MAINTAINERS file entries, this introduces mapping
-> files:
->
->   * .gitlab-map-auto - data automatically queried from GitLab
->     using the 'glab' tool and REST API
->   * .gitlab-map-manual - manual overrides/augmentation for
->     cases where the MAINTAINERS real name does not match the
->     GitLab account real name
->
-> The former would need refreshing when we add new MAINTAINERS
-> entries, if the person had to be added as a GitLab account
-> member. For this purpose scripts/gitlab-map-update can be
-> used, assuming the user has the 'glab' client tool present
-> and configured with an access token.
->
-> To audit how many maintainers have GitLab handles present/missing
-> scripts/gitlab-map-check can run a report.
->
->   $ ./scripts/gitlab-map-check
->   Missing GitLab handle for maintainer 'Akihiko Odaki'
->   Missing GitLab handle for maintainer 'Albert Esteve'
->   ....
->   Missing GitLab handle for maintainer 'Zhenzhong Duan'
->   Missing GitLab handle for maintainer 'Zhuoying Cai'
->   GitLab handles missing: 158 / present: 68
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> ---
->  .gitlab-map-auto          | 93 +++++++++++++++++++++++++++++++++++++++
->  .gitlab-map-manual        | 18 ++++++++
->  scripts/gitlab-map-check  | 51 +++++++++++++++++++++
->  scripts/gitlab-map-update | 45 +++++++++++++++++++
->  4 files changed, 207 insertions(+)
->  create mode 100644 .gitlab-map-auto
->  create mode 100644 .gitlab-map-manual
->  create mode 100755 scripts/gitlab-map-check
->  create mode 100755 scripts/gitlab-map-update
->
-> diff --git a/.gitlab-map-auto b/.gitlab-map-auto
-> new file mode 100644
-> index 0000000000..28ce448f1b
-> --- /dev/null
-> +++ b/.gitlab-map-auto
-> @@ -0,0 +1,93 @@
-> +# This file is auto-generated by scripts/gitlab-map-update
-> +#
-> +# This GitLab map associates GitLab account handles
-> +# with real names, in order to allow mapping from
-> +# MAINTAINERS entries. The format of entries is
-> +#
-> +#    {gitlab-handle}<tab>{real name}
-> +#
-> +# Manual overrides must be placed in .gitlab-map-manual
-> +TaoTang	Tao Tang
-> +a1xndr	Alexander Bulekov
-> +adi-g15-ibm	Aditya Gupta
-> +agraf	Alexander Graf
-> +alex.williamson	Alex Williamson
-> +aliang1	Aihua Liang
-> +alistair23	Alistair Francis
-> +anisinha	Ani Sinha
-> +anthony-linaro	Anthony Roberts
-> +anthonyper	Anthony PERARD
-> +berrange	Daniel P. Berrang=C3=A9
-> +birkelund	Klaus Jensen
-> +bonzini	Paolo Bonzini
-> +brian-cain	Brian Cain
-> +bsdimp	Warner Losh
-> +cborntra	Christian Borntraeger
-> +chao23.liu	Chao Liu (Zevorn)
-> +cleber.gnu	Cleber Rosa
-> +clegoate	C=C3=A9dric Le Goater
-> +cohuck	Cornelia Huck
-> +cota_	Emilio Cota
-> +dagrh	Dr. David Alan Gilbert
-> +danielhb	Daniel Henrique Barboza
-> +davidhildenbrand	David Hildenbrand
-> +dgibson	dgibson
-> +dwmw2	David Woodhouse
-> +eauger1	Eric Auger
-> +ebblake	Eric Blake
-> +edgar.iglesias	Edgar E. Iglesias
-> +ehabkost	Eduardo Habkost
-> +eldondev	Eldon
-> +epilys	Manos Pitsidianakis
-> +famzheng	Fam Zheng
-> +farosas	Fabiano Rosas
-> +gautammenghani	Gautam Menghani
-> +gkurz	Greg Kurz
-> +gusbromero	Gustavo Romero
-> +harshpb	Harsh Prateek Bora
-> +hdeller	Helge Deller
-> +hreitz	Hanna Czenczek
-> +imammedo	Igor Mammedov
-> +jasowang	Jason Wang
-> +jmacarthur	Jim MacArthur
-> +jsnow	John Snow
-> +juan.quintela	Juan Quintela
-> +kbastian-qemu	Bastian Koppelmann
-> +kmwolf	Kevin Wolf
-> +kostyanf14	Kostiantyn Kostiuk
-> +kraxel	Gerd Hoffmann
-> +lbmeng	Bin Meng
-> +legoater	C=C3=A9dric Le Goater
-> +lvivier	Laurent Vivier
-> +lygstate	Yonggang Luo
-> +maciejsszmigiero	Maciej S. Szmigiero
-> +marcandre.lureau	Marc-Andr=C3=A9 Lureau
-> +marcandre.lureau-rh	Marc-Andr=C3=A9 Lureau
-> +mauromatteo.cascella	Mauro Matteo Cascella
-> +mcayland	Mark Cave-Ayland
-> +mdroth	Michael Roth
-> +mediouni-m	M. Mediouni
-> +mjt0k	Michael Tokarev
-> +mstredhat	MST
-> +npiggin	npiggin
-> +p-b-o	Pierrick Bouvier
-> +pauldzim	Paul Zimmerman
-> +peterx	Peter Xu
-> +philmd	Philippe Mathieu-Daud=C3=A9
-> +pierrick.bouvier	Pierrick Bouvier
-> +pipo.sk	Peter Krempa
-> +pkrempa	Peter Krempa (work)
-> +pm215	Peter Maydell
-> +qemu-janitor	Qemu Janitor
-> +rathc	Chinmay Rath
-> +rth7680	Richard Henderson
-> +schoenebeck	Christian Schoenebeck
-> +sgarzarella	Stefano Garzarella
-> +sstabellini	Stefano Stabellini
-> +stefanberger	Stefan Berger
-> +stefanha	Stefan Hajnoczi
-> +stsquad	Alex Benn=C3=A9e
-> +stweil	Stefan Weil
-> +thuth	Thomas Huth
-> +vsementsov	Vladimir Sementsov-Ogievskiy
-> +xcancerberox	Joaquin de Andres
-> diff --git a/.gitlab-map-manual b/.gitlab-map-manual
-> new file mode 100644
-> index 0000000000..f605a540e9
-> --- /dev/null
-> +++ b/.gitlab-map-manual
-> @@ -0,0 +1,18 @@
-> +# This GitLab map associates GitLab account handles
-> +# with real names, in order to allow mapping from
-> +# MAINTAINERS entries. The format of entries is
-> +#
-> +#    {gitlab-handle}<tab>{real name}
-> +#
-> +# This file is manually written, to augment the
-> +# auto-generated data in .gitlab-map-auto. This
-> +# is needed where a GitLab account real name does
-> +# not exactly match the MAINTAINERS file real
-> +# name.
-> +#
-> +berrange	Daniel P. Berrange
-> +dgibson	David Gibson
-> +hreitz	Hanna Reitz
-> +mstredhat	Michael S. Tsirkin
-> +npiggin	Nicholas Piggin
-> +mediouni-m	Mohamed Mediouni
-> diff --git a/scripts/gitlab-map-check b/scripts/gitlab-map-check
-> new file mode 100755
-> index 0000000000..f72a06756d
-> --- /dev/null
-> +++ b/scripts/gitlab-map-check
-> @@ -0,0 +1,51 @@
-> +#!/bin/sh
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +missing=3D0
-> +present=3D0
-> +
-> +grep -E '^(R|M):' MAINTAINERS | \
-> +sed -E -e 's/^(M|R): //' -e 's/ <.*//' | \
-> +sort | uniq > names.txt
-> +while IFS=3D read -r NAME
-> +do
-> +  grep "$NAME" .gitlab-map-{auto,manual} > /dev/null
-> +  if test $? !=3D 0
-> +  then
-> +    echo "Missing GitLab handle for maintainer '$NAME'"
-> +    missing=3D$(($missing + 1))
-> +  else
-> +    present=3D$(($present + 1))
-> +  fi
-> +done < names.txt
-> +rm -f names.txt
-> +
-> +echo "GitLab handles missing: $missing / present: $present"
-> +
-> +# .gitlab-map-manual is to provide alternate real names
-> +# for cases where name in MAINTAINERS does not match
-> +# the GitLab account real name. As such...
-> +
-> +# ...all gitlab handles in .gitlab-map-manual must also exist
-> +# in .gitlab-map-auto and ....
-> +for HANDLE in $(grep -v '^#' .gitlab-map-manual | awk '{print $1}')
-> +do
-> +    grep -E "^$HANDLE\s" .gitlab-map-auto >/dev/null
-> +    if test $? !=3D 0
-> +    then
-> +	echo "Unexpected GitLab handle '$HANDLE' is not a member"
-> +    fi
-> +done
-> +
-> +# ...and all realnames in .gitlab-map-manual must also
-> +# exist in MAINTAINERS
-> +grep -v '^#' .gitlab-map-manual | \
-> +awk '{ $1 =3D ""; print substr($0, 2) }' | \
-> +while IFS=3D read -r NAME
-> +do
-> +    grep -E "\s$NAME\s" MAINTAINERS >/dev/null
-> +    if test $? !=3D 0
-> +    then
-> +	echo "Unexpected real name '$NAME' is not a maintainer"
-> +    fi
-> +done
-> diff --git a/scripts/gitlab-map-update b/scripts/gitlab-map-update
-> new file mode 100755
-> index 0000000000..c134c226aa
-> --- /dev/null
-> +++ b/scripts/gitlab-map-update
-> @@ -0,0 +1,45 @@
-> +#!/bin/sh
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +echo "Checking authentication token status"
-> +glab auth status
-> +
-> +if test $? !=3D 0
-> +then
-> +  echo "ERROR: not authenticated with gitlab.com"
-> +  exit 1
-> +fi
-> +
-> +if ! test -f .gitlab-map-auto
-> +then
-> +  echo "ERROR: cannot find existing '.gitlab-map-auto file'"
-> +  echo "ERROR: this must be executed from the root of the"
-> +  echo "ERROR: git repository checkout"
-> +  exit 1
-> +fi
-> +
-> +fail=3D0
-> +echo "Updating member list from qemu-project"
-> +glab api --paginate /groups/qemu-project/members | \
-> +    jq -r -c '.[] | [.username, .name] | @tsv' | \
-> +    grep -v '^group_3038080_bot' > \
-> +    .gitlab-map-auto.tmp
-> +test $? !=3D 0 && fail=3D1
-> +
-> +echo "Updating member list from qemu-project/qemu"
-> +glab api --paginate /projects/qemu-project%2fqemu/members | \
-> +    jq -r -c '.[] | [.username, .name] | @tsv' | \
-> +    grep -v 'Duo Developer' >> \
-> +    .gitlab-map-auto.tmp
-> +test $? !=3D 0 && fail=3D1
-> +
-> +if test $fail =3D=3D 0
-> +then
-> +  grep '^#' .gitlab-map-auto > .gitlab-map-auto.new
-> +  LC_ALL=3DC sort .gitlab-map-auto.tmp | uniq >> .gitlab-map-auto.new
-> +  mv .gitlab-map-auto.new .gitlab-map-auto
-> +  echo "OK: GitLab member list updated"
-> +else
-> +  echo "ERROR: Updating member list failed"
-> +fi
-> +rm -f .gitlab-map-auto.tmp
+Few of these are not handled in new code, like ASN_CMPM.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+As you said in v4 that these are removed in PHB5 spec. The ASN_CMPM in
+particular was anyways a silent skip, and now it will turn up as
+unimplemented.
+
+With separation of phb5, i will let you remove them or keep them as
+silent skip for phb4.
+
+Can you also check if there are any other such regs which may have been
+skipped ?
+
+> --- a/tests/qtest/pnv-phb-test.c
+> +++ b/tests/qtest/pnv-phb-test.c
+> @@ -88,11 +88,10 @@ static void phb5_sticky_rst_test(QTestState *qts)
+>      g_assert_cmpuint(val, ==, (PPC_BITMASK(24, 27) | PPC_BITMASK(36, 37) |
+>                       PPC_BITMASK(39, 45) | PPC_BITMASK(47, 48) |
+>                       PPC_BITMASK(52, 54)));
+> -
+>  }
+>  
+>  /* Check that write-only bits/regs return 0 when read */
+> -static void phb4_writeonly_read_test(QTestState *qts)
+> +static void phb5_writeonly_read_test(QTestState *qts)
+>  {
+>      uint64_t val;
+>  
+> @@ -143,6 +142,12 @@ static void phb4_writeonly_read_test(QTestState *qts)
+>      g_assert_cmpuint(val, ==, 0x0);
+>  }
+>  
+> +/* Check that reading an unimplemented address 0x0 returns -1 */
+> +static void phb5_unimplemented_read_test(QTestState *qts)
+> +{
+> +    g_assert_cmpint(PHB5_XSCOM_READ(0x0), ==, -1);
+> +}
+> +
+>  static void phb5_tests(void)
+>  {
+>      QTestState *qts = NULL;
+> @@ -156,7 +161,10 @@ static void phb5_tests(void)
+>      phb5_sticky_rst_test(qts);
+>  
+>      /* Check write-only logic */
+> -    phb4_writeonly_read_test(qts);
+> +    phb5_writeonly_read_test(qts);
+
+With PHB5 separated out from PHB4, let's keep phb4_writeonly_read_test
+also.
+
+Thanks,
+- Aditya G
+
 
