@@ -4,121 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2182DC44512
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 20:18:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86A55C44512
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 20:48:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkSWG-0004z9-67; Thu, 16 Jul 2026 16:17:20 -0400
+	id 1wkSzy-0001oi-AE; Thu, 16 Jul 2026 16:48:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1wkSVg-0004ui-Pl; Thu, 16 Jul 2026 16:16:48 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wkSzw-0001oL-FO
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 16:48:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1wkSVd-0003gS-Sh; Thu, 16 Jul 2026 16:16:43 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66GKBpid021744; Thu, 16 Jul 2026 20:16:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=phvh1e
- r0LibAnWbpDiN/82scQNhDpi63i/Q6JAfsSdQ=; b=CJFOddUNI8+WyIHoTC3MnM
- 2q5C5MjqNu2+56fyUSIdhqRrHam+amBpEzfSLmokndJNHqUu33kDs1yTzwWaB0t6
- rIpKmefbWnKrx1UkBsBS6CxA3m7Jn41NT1EWYV2vh8q6d/qoAwb7q0smxntlCdF1
- H0Ldq0b5ahIjMHSyvmyBA+rPpI5Flkt0/EgHA2hmpN9KMZULZtJHwjVwhjjsiDxd
- fwteWY0tagc30TwCJHg0x3Sz+S+UCUHu1OmHmADS/WrJXMEJB4J+SQINdFSbeHMf
- xRHqz/WnJJSmG6o9d3j7JYY9SizIs1zdNAWp8k1cuo3qjHCbmQ2MYGIJOEfn8HiQ
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbegtjy66-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jul 2026 20:16:16 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66GK4jnb001226;
- Thu, 16 Jul 2026 20:16:15 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc0hwetd4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jul 2026 20:16:15 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66GKGEEG21561860
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 16 Jul 2026 20:16:14 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F259F58062;
- Thu, 16 Jul 2026 20:16:13 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C47945805E;
- Thu, 16 Jul 2026 20:16:12 +0000 (GMT)
-Received: from [9.67.41.202] (unknown [9.67.41.202])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Thu, 16 Jul 2026 20:16:12 +0000 (GMT)
-Message-ID: <9b4e79c8-6b57-46e1-94ab-919a16798b13@linux.ibm.com>
-Date: Thu, 16 Jul 2026 16:16:12 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wkSzu-00086H-5K
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 16:48:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784234875;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SLscvMbultGeCFBMoqoVyL5g6Spu1s3eX/09KNeOWGQ=;
+ b=YAk4yvu+5KXJbGZU1ivUHxfoTq+aEJdbSl4Urxd+gsn5xWjp9VPRd0/Hl5BwC2ISoke7qH
+ FbplTnsqVmj5ywxK2Hklp82unaehLU+PyfTXmWCIkU2kJa6kq6YxyTgQ7LZ6L7OhurtMvS
+ kJFN8f78fqkncp8TPEi4m53oT7opnWM=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-591-uOJMrgAtOEGYtvMrPGC42g-1; Thu, 16 Jul 2026 16:47:54 -0400
+X-MC-Unique: uOJMrgAtOEGYtvMrPGC42g-1
+X-Mimecast-MFC-AGG-ID: uOJMrgAtOEGYtvMrPGC42g_1784234873
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-49544a639e9so4573285e9.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 13:47:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1784234873; x=1784839673; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=SLscvMbultGeCFBMoqoVyL5g6Spu1s3eX/09KNeOWGQ=;
+ b=ULnk3zcc9W+upwruj71grwLPzfUs7YeLGGyXhoT7AU2Y1uW1Lb4IkKcO6AAEAYUca6
+ V21aZsWYb/ZKVlw+VW+FZxcHNNxEm9LKFWUrdIblvtxjMZ3Ag35lb5+Scf0ZDjoiI6Jl
+ fu4LJmHVed+nbReiIyUiQKUR9lNznE2oes+y7Cyx9ZitjKG7HoJktp8sBE/fiGYHIJwo
+ Mt7HkRxSfUacQInkUdv2a6sxo/ak0JPfmIdgKau+fA2p3LZs3NlyCnqIyXCJYb7dsoiF
+ ORsUIwSIAS/C//V7K6dy9ds9MSHHga8ftE+oj2ecLkLvmnqetOqnxToe8pUDU7qZTZvH
+ G+Iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784234873; x=1784839673;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=SLscvMbultGeCFBMoqoVyL5g6Spu1s3eX/09KNeOWGQ=;
+ b=HdDz4aqFWX01heCktyuE/W3JKSP/09sr6r+0h5STvcVxpSnDaMxgc31IDrUmUjWhdY
+ qJEiEimH0B2Egp5mPHswRStu+lhzA6xRrigggaNiyp7v8jQcyUnPGoPeNtvzcIIETTy9
+ SHv/6X0n98OPRFkW3QLql1VdT1NCq9gu+Bhdh5N+WOiwE4/tHL//daHFBjPcsswV8p/A
+ 4RihCbPc+4ZKxzxGFOn6VQuhYaA0xUb9dIs4fyvazX4jUuHYd4ZsIOnoXG68Hr/VjFhW
+ RSfEZcpERTljNN/kjg27bSMgYj9AjH/qTihBpo15zCxrnodoATNsQ8DT4i5o69i97Dn6
+ uTGQ==
+X-Gm-Message-State: AOJu0Yw0moH1nWbrWDtisD2MftOIWUVQJm369KVxLfTURx5hRJ7AnoMs
+ HPvpTRORZmXM604eXcW27lv/nXP/UAlV4uQXzXvqoEBf9f78Yu36Y2NatU9qHatldL92RwoukJT
+ owVUM8twpFg/MR3ziVxmfPTMyM8ZhmQuCGDpuqO2ZotsTX0ZpZI8Vgqcf
+X-Gm-Gg: AfdE7cmOHaD0g0ewes2tbAkQ7JNHdM0VIpfXzKIYy0RY90UmZH+1F0iFYdL9ZRD2V4y
+ 5UxfRMkXHk8A50D70CHyF289GV6q0TJGWngV+Up4lugG4ZPqm6LLPBe2oCCXiq9d4di7n5z6FGA
+ DGzsfvsjG4buyT/oP8Oa/blz3uwFi8Rq27ryFyXoqsTw3DxAJ3d+GsGmeNPS9QCmq4wiv7ftAsO
+ dI7DmiCJ4Pc7OalY0FhXDIWRA1ECNYq7SqxCCTRriOOz34XgRJ6SxglSTgVAbHigZcRMNB0uG35
+ tFqterAFBN58hJpMBLoapWzsSfeMnanGKxcp1yEmst+wLPvVLKwfwuMps0Yyo03HSn+wqp4g0gt
+ TK/TI/++SD4CYJJv+e9v8QFQO
+X-Received: by 2002:a05:600c:1f94:b0:493:e52f:6ee1 with SMTP id
+ 5b1f17b1804b1-4953bfffbc8mr99282955e9.0.1784234872850; 
+ Thu, 16 Jul 2026 13:47:52 -0700 (PDT)
+X-Received: by 2002:a05:600c:1f94:b0:493:e52f:6ee1 with SMTP id
+ 5b1f17b1804b1-4953bfffbc8mr99282825e9.0.1784234872366; 
+ Thu, 16 Jul 2026 13:47:52 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-24-117.inter.net.il. [80.230.24.117])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f4635ac2esm26656602f8f.13.2026.07.16.13.47.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 16 Jul 2026 13:47:51 -0700 (PDT)
+Date: Thu, 16 Jul 2026 16:47:48 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Mauro Matteo Cascella <mcascell@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH] docs: outline some guidelines for security classification
+Message-ID: <20260716164043-mutt-send-email-mst@kernel.org>
+References: <20260707105927.2776822-1-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 23/33] pc-bios/s390-ccw: Add signature verification
- for secure IPL in audit mode
-To: Zhuoying Cai <zycai@linux.ibm.com>, Jared Rossi <jrossi@linux.ibm.com>,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: cohuck@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
- david@kernel.org, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
- pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-References: <20260707231132.2492104-1-zycai@linux.ibm.com>
- <20260707234047.2499921-1-zycai@linux.ibm.com>
- <20260707234047.2499921-4-zycai@linux.ibm.com>
- <17778d69-9860-4713-9321-a1293064fc06@linux.ibm.com>
- <89882b65-07c4-4b26-85ad-7c1638a829cf@linux.ibm.com>
- <a869dade-8b64-4d70-8fe5-fd1347c84559@linux.ibm.com>
-Content-Language: en-US
-From: Collin Walling <walling@linux.ibm.com>
-In-Reply-To: <a869dade-8b64-4d70-8fe5-fd1347c84559@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: Brsf-ErUKp7XhTBl6vk37bWXhVQe4GIH
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDIwNiBTYWx0ZWRfX5TMBh4sjrtRp
- n7DC00M3F2MvKHH33eNbaSSZPHlJPo6KFDt9m9d0XyB9DGi1tLLTfk7vK3NrhfwufUPT9CRGPAj
- RbkRIvcNEdoUdiQWY9xqLsE8UNdtiq8=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDIwNiBTYWx0ZWRfX2DkcFtDT4TUM
- SPmLICAlTquP+JmDnv6S+H6qHK+XhTeGlg6qrwftuLI01SaG1xsM+OYqBHhxgh727W6vwU7cBZM
- QgZdtyMdkjH/kJNrxSk4S9ynZOeE8I9W3eogpyy0iAw/AyytJRkjDv3vZqjKUsh14KzE/bNkXF4
- YU/nwtjpqZmgRKFRqsPv12h0Ukje9L6mvuClnEGBbM2KclsFrdlhIMiAQPHQDLvbleKKgSIQ735
- cXv1b3orJQCFFpp2QjzemrFwCT+IMlBuei+ewJziWgWNPleaLq6rKwupePgumGUHWDRq591LAre
- FMA8LdOe8eihge40U/DbZqlDES+sIvjxFWsfiDK1NXbOaYxtTqR0/OgtrEkj1kawIBkziljx7hG
- r5z1N/YRyVuBSqtJJVKB3PS8eiD5pDLPZxxKctY+Gm3QP4B5GqxARojssOFTymMLBmPk6T1Gu+M
- eeN+w5OHBwzhavgUxqQ==
-X-Authority-Analysis: v=2.4 cv=IqMutr/g c=1 sm=1 tr=0 ts=6a593c10 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=tdMvfBfS8nACWcF_XGIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: Brsf-ErUKp7XhTBl6vk37bWXhVQe4GIH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-16_07,2026-07-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 impostorscore=0 malwarescore=0 adultscore=0
- phishscore=0 suspectscore=0 priorityscore=1501 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607160206
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=walling@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+In-Reply-To: <20260707105927.2776822-1-berrange@redhat.com>
+Received-SPF: permerror client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,99 +125,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/16/26 12:36, Zhuoying Cai wrote:
-> On 7/16/26 10:05 AM, Jared Rossi wrote:
->>
->>
->> On 7/15/26 4:37 PM, Collin Walling wrote:
->>> On 7/7/26 19:40, Zhuoying Cai wrote:
->>>>       /* should not return */
->>>>       write_reset_psw(entry->compdat.load_psw);
->>>> +
->>>> +    if (boot_mode == ZIPL_BOOT_MODE_SECURE_AUDIT) {
->>>> +        update_cert_list(&cert_list);
->>>> +        update_iirb(&comp_list, &cert_list);
->>>> +        free(tmp_cert_buf);
->>>> +    }
->>>> +
->>> Sorry if I missed this from the previous rounds of review, but why was
->>> this moved outside of `zipl_run_secure()`?  It seems out of place here.
->>>
->>> If there is justification for it, I'd suggest at least moving this chunk
->>> a few lines up to before the `write_reset_psw` call to keep the "IPL
->>> jump" code together.  The comment above is meant for the following chunk:
->>>
->>> ```
->>>      /* should not return */
->>>      write_reset_psw(entry->compdat.load_psw);
->>>      jump_to_IPL_code(0);
->>>      return -1;
->>> ```
->>>
->>> Otherwise the comment is a bit misleading.  I suppose one could argue
->>> the comment should actually be placed abouve `jump_to_IPL_code`, but
->>> let's not bother with that change.
->>>
->>
->> This was something I had asked for, but I don't recall if it was in a 
->> review comment or internal discussion, but a brief summary for the sake 
->> of posterity...
->>
->> Moving the call to update_iirb() was necessitated by a different change, 
->> which was to use a specific memory address range for storing the cert 
->> list.  The fundamental issue is that we wanted to store the cert list at 
->> a calculated address to ensure it is not clobbered before the kernel 
->> reads it.  My idea was to reclaim the space previously used for chained 
->> IPLBs.  The chained IPLBs and the cert list are never needed at the same 
->> time, so that isn't an issue; however, the impact of reclaiming the 
->> space is that we destroy our IPLB chain, meaning, once we write the cert 
->> list, if the IPL subsequently fails, we no longer have the fallback IPLB 
->> to try the next device in boot order.  To deal with this we delayed 
->> updating the cert list and IIRB until we are committed to boot from the 
->> selected device, that is to say, once we have progressed through the IPL 
->> far enough that there is no longer any possibility of falling back to a 
->> different device.  As such, we wait until we are ready to actually hand 
->> over control to the kernel before overwriting any of the IPL data.
->>
->> There is some flexibility with exactly where the calls can be placed, 
->> but the idea is that there should not be any paths that return for retry 
->> on error after we update the cert list.  By placing the update calls 
->> directly before the jump we know the only two outcomes remaining are to 
->> either successfully hand over control and never return, or for the jump 
->> itself to fail, which would be a catastrophic error and necessitate that 
->> the IPL is aborted entirely anyway.  There is no condition such that we 
->> may update the cert list or IIRB and then realize we actually should try 
->> booting from a different device instead.
->>
->> Regards,
->> Jared Rossi
-> 
-> Thanks for the clarification, Jared.
-> 
-> I think moving the update_iirb chunk before write_rest_psw() should
-> work, as long as it is invoked after committing to the current IPLB and
-> does not return for a retry afterward.
-> 
-> 
+On Tue, Jul 07, 2026 at 11:59:27AM +0100, Daniel P. Berrang� wrote:
+> +* **memory allocation bounds**. There are many ways in which a QEMU
+> +  process can legitimately consume an amount of memory that is
+> +  significantly larger than the assigned guest RAM. QEMU's worst
+> +  case memory usage should be considered effectively unbounded.
 
-Gotcha, I see the "retry" loop now, and why with the changes to reusing
-the qipl.ipl_data necessitates moving this code out of run secure.  Had
-to look at the greater scope to understand.  Thanks.
+This really is a bug we need to fix at some point.
 
-How about just move the /* should not return */ to the same line as the
-`return -1` line so its placement is more accurate.  Either in this
-patch or in patch 20, where zipl_run is refactored (latter is more
-preferable).
+> As
+> +  such the QEMU deployment on the host should account for the
+> +  possibility of large memory peaks and apply countermeasures to
+> +  provide continuity of host operations.
 
-With that change as well as an update to the comment in
-update_cert_list, I'd feel comfortable with:
 
-Reviewed-by: Collin Walling <walling@linux.ibm.com>
+Well it does not look like existing management stacks do much of this,
+perhaps because when we say qemu memory is unbounded
+the result is you can't limit memory using cgroups without risk of
+qemu dying on oom.
 
-No need to change where you placed the chunk of code above. The rest of
-my comments are nits.
 
--- 
-Regards,
-  Collin
+> It is typical for the Linux
+> +  OOM killer to reap the process triggering host memory overcommit
+> +  in the case of exccessive usage, offering a degree of protection.
+
+Yes but what degree?
+At least on my box, it seems to kill firefox at about 50% of time (
+
+> +  As such, bugs which can lead to excessive/unbounded memory allocations
+> +  will usually not be classified as security flaws, but should be
+> +  fixed as hardening bugs.
+>
+
+should we classify guest driven memory leaks and guest driven
+memory spikes differently?
+
+
+> +* **degraded guest behaviour**. There are a set of bugs which can
+> +  lead guest hardware devices to misbehave. For example, a flawed
+> +  virtual IOMMU operation may not offer the guest device isolation
+> +  that would otherwise be expected. If a guest triggered exploit
+> +  requires kernel privileges (or root account access), and leads
+> +  to sub-optimal behaviour of the virtual device this is considered
+> +  a self inflicted service degradation. These will **not** be
+> +  treated as security flaws, at most hardening bugs. If triggernig
+> +  the code path can be done by an unprivileged guest OS account,
+> +  this may justify handling as a security bug.
+> +
+> +* **nested virtualization**. The scope for nested virtualization
+> +  is to prevent a level 2 guest from breaking out into a level
+> +  1 guest. As noted above, a number of scenarios exclude security
+> +  handling for flaws only exploitable by the guest kernel / root
+> +  account with affect the guest's own service/availability. In the
+> +  context of nested virtualization with PCI device assignment, it
+> +  may may be possible for a level 2 guest kernel to trigger flaws
+> +  that affect the level 0 QEMU process. While these bugs should be
+> +  fixed, they will not be triaged as security flaws at this time.
+> +
+> +* **low severity impact**. As a catch all rule, issues which
+> +  are judged to have a "low" severity impact on the system will
+> +  usually not justify handling as security bugs, nor assignment
+> +  of CVEs. They will be fixed as routine bugs when time allows.
+> +
+>  Architecture
+>  ------------
+>  
+> -- 
+> 2.55.0
+
 
