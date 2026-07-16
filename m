@@ -4,45 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFD88C4450A
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 08:06:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83B0AC44501
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 08:06:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkH6h-0003OC-CN; Thu, 16 Jul 2026 04:06:12 -0400
+	id 1wkH78-0003Sz-Si; Thu, 16 Jul 2026 04:06:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wkH6f-0003O3-EL
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 04:06:09 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wkH77-0003Sm-EW; Thu, 16 Jul 2026 04:06:37 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wkH6c-0004ui-Qi
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 04:06:09 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wkH76-0004wU-07; Thu, 16 Jul 2026 04:06:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784189157; bh=xg46MEDtuIUu6GlNoJKCKgRhn3sFSoY/GuzwEWdbBII=;
+ t=1784189189; bh=typBFO3KQzOQZWsjp9C2POdB/tvWbc96WPpi4cdqiWE=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=NPxFhLNl2hj2kPu2X5gYQP0AWL/1H+5gILZ7CU3pSscbWQiKK0GKwrE+GwE3CVEiN
- nZ5DLcjGxuuwmCz0M3iD4+c/AODUBYZg0LZZmjwRCKlqMUGNloPNCq9rAxb+8EWdm6
- PfHaEbo266z4uV/aW1qdxw7nFVE1tIPrVBfhVADZLujHnIENZ3TXJ4IZI6uxKc8oH/
- 88laykUKIvIGsfBW27OGzZvpqVROjt7r7nNWMLJU/RVgzH+5kvLQEuBq4H4cBxJ5nn
- lsXnjKI4ZbzVKMcvh9L961NNNKJcMFGknowFo/5WdfR2jaF9hBXOQZ4DONaQYaetIc
- UTKtEi1VzxS8Q==
+ b=I4eQoFhdjybAFNQdtHVBrskqZt83k6XAHaKKp97/DR/8nk6VIMjoAVTOv2O/NAyMN
+ +i+ExRGKhp8/HUHcTAgcYhy9dj432z2UHO8zeZPkDuP1nkTfCyXrriKVPNmQALx2qm
+ XyuBX0FHUFqLhzkyj4QIkJNOWPWzbeUSQIv/G6t+CYEwBltZEVHOqzy5s7VXOYHkz6
+ 3m6hGAHCPkAxR1ZQCdzJ0RQrJHhP5fh2fV9Nw1aHANX2/lYRB6J572R+rr7VYzUig8
+ bhwieqZrROex8wa6rYj2/O6Mf9VnZNWdd6CEnKlA4B2VPWQL084N7WesE2xniLalAd
+ gcSp3nta/XK3g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8918D1C221F;
- Thu, 16 Jul 2026 11:05:57 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3FD8B1C2221;
+ Thu, 16 Jul 2026 11:06:29 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 909AB3EFDB2;
- Thu, 16 Jul 2026 11:06:02 +0300 (MSK)
-Message-ID: <28be5573-2b49-41c9-9d0e-d5077c2ed37d@tls.msk.ru>
-Date: Thu, 16 Jul 2026 11:05:57 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4E74B3EFDB3;
+ Thu, 16 Jul 2026 11:06:34 +0300 (MSK)
+Message-ID: <78e31bf1-328d-46ba-89db-1e069f21c7db@tls.msk.ru>
+Date: Thu, 16 Jul 2026 11:06:29 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user/sh4: add VDSO support for sh4 and sh4eb
-To: Matt Turner <mattst88@gmail.com>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20260523114128.2468754-1-mattst88@gmail.com>
+Subject: Re: [PATCH trivial] spelling: happend
+To: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Alistair Francis <alistair.francis@wdc.com>
+References: <20260716063457.532035-1-mjt@tls.msk.ru>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -88,7 +86,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260523114128.2468754-1-mattst88@gmail.com>
+In-Reply-To: <20260716063457.532035-1-mjt@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -114,71 +112,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/23/26 14:41, Matt Turner wrote:
-> Provides replacement VDSO with sigreturn trampolines
-> (__kernel_sigreturn, __kernel_rt_sigreturn) and syscall stubs
-> (clock_gettime, clock_gettime64, clock_getres, gettimeofday).
-> 
-> Both LE and BE blobs are committed and selected at compile time via
-> TARGET_BIG_ENDIAN. The BE variant requires an sh4eb-unknown-linux-gnu
-> toolchain; sh4-unknown-linux-gnu does not support -mb.
-> 
-> CFI register numbers follow GCC's SH_DEBUGGER_REGNO:
-> PR=17, GBR=18, MACH=20, MACL=21, FPUL=23, FPSCR=24, FR0-15=25-40.
-> ---
->   linux-user/sh4/Makefile.vdso    |  18 ++++
->   linux-user/sh4/elfload.c        |  14 ++++
->   linux-user/sh4/meson.build      |  12 +++
->   linux-user/sh4/target_elf.h     |   1 +
->   linux-user/sh4/vdso-asmoffset.h |  45 ++++++++++
->   linux-user/sh4/vdso-be.so       | Bin 0 -> 2704 bytes
->   linux-user/sh4/vdso-le.so       | Bin 0 -> 2704 bytes
->   linux-user/sh4/vdso.S           | 142 ++++++++++++++++++++++++++++++++
->   linux-user/sh4/vdso.ld          |  67 +++++++++++++++
->   9 files changed, 299 insertions(+)
->   create mode 100644 linux-user/sh4/Makefile.vdso
->   create mode 100644 linux-user/sh4/vdso-asmoffset.h
->   create mode 100755 linux-user/sh4/vdso-be.so
->   create mode 100755 linux-user/sh4/vdso-le.so
->   create mode 100644 linux-user/sh4/vdso.S
->   create mode 100644 linux-user/sh4/vdso.ld
-> 
-> diff --git ./linux-user/sh4/Makefile.vdso ./linux-user/sh4/Makefile.vdso
-> new file mode 100644
-> index 0000000000..272c5d262d
-> --- /dev/null
-> +++ ./linux-user/sh4/Makefile.vdso
-> @@ -0,0 +1,18 @@
-> +include $(BUILD_DIR)/tests/tcg/sh4-linux-user/config-target.mak
-> +
-> +SUBDIR = $(SRC_PATH)/linux-user/sh4
-> +VPATH += $(SUBDIR)
-> +
-> +all: $(SUBDIR)/vdso-le.so $(SUBDIR)/vdso-be.so
-> +
-> +LDFLAGS = -nostdlib -shared -Wl,-h,linux-gate.so.1 \
-> +	  -Wl,--build-id=sha1 -Wl,--hash-style=both \
-> +	  -Wl,-T,$(SUBDIR)/vdso.ld
-> +
-> +$(SUBDIR)/vdso-le.so: vdso.S vdso.ld vdso-asmoffset.h
-> +	$(CC) -o $@ $(LDFLAGS) -ml $<
-> +
-> +CC_BE = sh4eb-unknown-linux-gnu-gcc
-> +
-> +$(SUBDIR)/vdso-be.so: vdso.S vdso.ld vdso-asmoffset.h
-> +	$(CC_BE) -o $@ $(LDFLAGS) $<
+On 7/16/26 09:34, Michael Tokarev wrote:
 
-Where this sh4eb-unknown-linux-gnu-gcc comes from?  For one,
-we don't have it in debian.  Can the same be produced with
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index 66bd900465a..802474750b5 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -270,7 +270,7 @@
+>   #     (Since 10.1)
+>   #
+>   # @postcopy-non-vcpu-latency: average remote page fault latency for
+> -#     all faults happend in non-vCPU threads (in ns).  It has the same
+> +#     all faults happened in non-vCPU threads (in ns).  It has the same
+>   #     definition of @postcopy-latency but this only provides
 
-  sh4-linux-gnu-gcc -Wl,-EB -Wa,--big
+This doesn't work, - it fails to build due to too long line, so
+line re-wrapping is also needed.  The correct(ed) version is:
 
-instead?  (Or -gcc -mb, which does not work on debian currenly).
-I can pass this on command like as CC_BE="..".
-
-But I know nothing about sh4, so dunno if this is the right
-thing to do.  It builds, but I don't have any sh4eb binary
-to test against.
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -270,8 +270,8 @@
+  #     (Since 10.1)
+  #
+  # @postcopy-non-vcpu-latency: average remote page fault latency for
+-#     all faults happend in non-vCPU threads (in ns).  It has the same
+-#     definition of @postcopy-latency but this only provides
++#     all faults happened in non-vCPU threads (in ns).  It has the
++#     same definition of @postcopy-latency but this only provides
+  #     statistics to non-vCPU faults.  This is only present when the
+  #     postcopy-blocktime migration capability is enabled.
+  #     (Since 10.1)
 
 Thanks,
 
