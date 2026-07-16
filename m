@@ -4,108 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04A62C44512
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 15:44:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 727C4C44515
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 15:47:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkOFg-0003KA-Dt; Thu, 16 Jul 2026 11:43:56 -0400
+	id 1wkOJ1-0004FF-11; Thu, 16 Jul 2026 11:47:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wkOFe-0003Jr-J9
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 11:43:54 -0400
-Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wkOFW-0001lM-Rw
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 11:43:49 -0400
-Received: by mail-lj1-x22c.google.com with SMTP id
- 38308e7fff4ca-39b3931e259so62170521fa.2
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 08:43:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784216621; cv=none;
- d=google.com; s=arc-20260327;
- b=G/9mKPrCyrJh5fHCLIWw8T4ND6WFVANTjix1Zh6CZ3Cr8dZVaPiwaU5ec3uNy9bWsq
- T5FRhDBcGJKj5Au5c66xtWifiLijGKYtYnxraCEceorgBQt6CiaPP7gckdz4Uf+afQBP
- yEWuRLIbDMFPvu4Z+m7jcORwTEEsHyArofFSA0PG7ZcVXewLpDNCfV2+1gYgppgwb7pO
- mfzCxokxN8zyCFew5B79Tf8lN/1zWNtGjNJenGZYyMD7eP+XP3f9QjgqPibPE7Gc0sI0
- +riArcySXMKpeo8JuQIVzT/2ezsSswkgpYNOMWzMnsxY3DC2NORJyXCQkI38BFqzaMCx
- M/4A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=t2R5ffQoZ2FgXGVQvC9DVFqR7MMPZTq3/qNNCDmHGiU=;
- fh=ch309eY2Or78ift7qkjQt59r4AD7D2IMT9oBqo17Vxs=;
- b=jDzwmJIuk8Rj0EbjMgTntr7kF6pXiMGG5smOe+Cs/kYXC6c0DIP91kUD9Bne9t39pn
- GAV/+sOL4hqOi+KTko0FjGjlKvUGnuV94g8KH21BMPYnEMkpM/RSuW0qC9SUDnnqPUf9
- BWB5lW0mZGSi7jxmH6XwaMr1cYzgyOjSyj2Pjg47T99Xmk98fC9RAvncDiBm3HVuLJvw
- 51nVWyU87SPX/LluYWUh1e6eu4LhlcnOv/cWy2jiwDVNfVGk/nS7P+YU0LPAYHRK5m5F
- H7sgkpMCLGSv5c6xrkw220umb98JC8lbfTHrKSsSyn7nIY6QqUJiNmdlT6hov8se20od
- Hc8A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784216621; x=1784821421; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=t2R5ffQoZ2FgXGVQvC9DVFqR7MMPZTq3/qNNCDmHGiU=;
- b=YPR4gy2wg0NtcENth7dWMBkEJs1taT0RmWWS4D1luKJrNzn5u/N7G2Aus39I63GaLD
- IvFEenAXRcR4qxXdn4N/Cz6Z3HzV/tV5arGvYEphK9kH9DF4Wuh6bP60+Yk1o3+MnJdJ
- dzfSAt9XxiKE6PLCigcztt0L4J7IXac5JgXViHwOYPM0vLW4WUUENUM0RA0hM67hHClz
- 6eetUX7OvP2BmbkvIFRguxinD+bli5VGlHDhx/zneDzlilJGlzphxQRLqBXsn/ns9dM9
- oapfzpGAzUJEpRNqUYaUXimBXncVpRb0s3gM4ccpqTHdC1taAOIVqe/zqeGunLS7V32K
- eQKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784216621; x=1784821421;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=t2R5ffQoZ2FgXGVQvC9DVFqR7MMPZTq3/qNNCDmHGiU=;
- b=gITlu/OgrzhWnJaS3XsjaBc5CiOZ710xH/5gx8gPRERSVANLRlKPe8oAG1AZ5oSo3O
- RAMF3cM4iCh/KQ8agqVJq0lv6gONjI9ah1DmE0OL7glWf0kTFDYLran0rGdDaeSERw9D
- VjasK8IMbAfpG7v+KDx3aeKqNnA+XUpcR8f09AYLx4lcfTbtmwMfik3jwntWNTUu1BRw
- TvwEnd1UiEwNJZfHfjDLkiNtq/mDDtPzRvio4T8JTj76OTbCTUkncSTWcKw7eI1GzbER
- YH3nzDfoTN5MlzJKY0h9oFqtKthFQHKlx8xVpjK18TNVP8uhpC1/0ABF+98IgxD9yP4J
- v0FA==
-X-Gm-Message-State: AOJu0YzPOW5qGV6lFfzDvzcMP3Ql6hreajM2xIapD5520+reJY6r4gAt
- zH4Wt/YhburTZednXIajm28FDgkb460mXObEooR+wetuS35s5MrhsE/mSSXYcVXie8XNbO/OZqK
- mcb2XiPBQ5Mmabeg1/TeVJIAyswIBxZE=
-X-Gm-Gg: AfdE7ckm8dq2qTiOK5huGxhBsSAwxHQ9aLEAsYQSyCMC4hhSSiJpC0YPTUWuLoEyFk4
- v76o/5aASBB69PSd57MenrT1+YBhHuo1vBN3xxwDt96Es8U3r/yftadd95HUgMOZUKYmOJk+oJK
- J5qRpvUDde/Qg9Ug8Wkdpphaa2KMC8K19hBgQox0Co1+o+inzGetKKTECI40HgnbErkjfdzO4On
- 4W+FnFMPjYjKxaXbBx5zsE8qDOhOZkKKvCBzUKO2YjT5QPpoSQ877RpDVs1fQeOhUEjf/NiGILU
- s5KqNUD/ciE5tpeq0v9c
-X-Received: by 2002:a2e:bcc7:0:b0:39a:cfe9:247f with SMTP id
- 38308e7fff4ca-39db6d68aa5mr17965981fa.31.1784216621388; Thu, 16 Jul 2026
- 08:43:41 -0700 (PDT)
+ (Exim 4.90_1)
+ (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
+ id 1wkOIT-00048c-Ri; Thu, 16 Jul 2026 11:47:07 -0400
+Received: from zm-mta-out-3.u-ga.fr ([152.77.200.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
+ id 1wkOIK-0002MH-6M; Thu, 16 Jul 2026 11:46:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=univ-grenoble-alpes.fr; s=2020; t=1784216797;
+ bh=jSuRj9IRW0QigeZa4bLZgDPiu+5R/Vid2SH/Mkyex04=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=QBbb6R7rj4pRAe9pMvBbtat+nTXaVfL9ezqVDFpUYWv25a5vlJNpo/yjvZqifV3TT
+ l+4Wk31HTNkJuHUr+9FNOhIdz7PCzwrCYGhU39kGSacT5in8DvAaakua63bfqQ9Bmd
+ QhdZUs0nB0fJ4gNZoN/XIHwxwUGxfSElMT5ZzsCvg6wkx3Z/I3r97EySoALalxJVWE
+ dnuJvG5oho0Nk9ucezm5S8ZCeWInsLm05eGn5oCgVFlJU9NV8PNM684TW5utfQezhD
+ W4f6WrMd51pKaEf3vFbXf5TBVX9IOGo9k8zWhF1sSQlHzbce4381eRk2UKp3f9kZbN
+ BmCY+k+SkwA+g==
+Received: from mailhub-1.u-ga.fr (mailhub-1.u-ga.fr [129.88.178.98])
+ by zm-mta-out-3.u-ga.fr (Postfix) with ESMTP id CC3104028E;
+ Thu, 16 Jul 2026 17:46:37 +0200 (CEST)
+Received: from smtps.univ-grenoble-alpes.fr (smtps3.u-ga.fr [195.83.24.62])
+ by mailhub-1.u-ga.fr (Postfix) with ESMTP id C7C78FF85D;
+ Thu, 16 Jul 2026 17:46:37 +0200 (CEST)
+Received: from naga.tima.u-ga.fr (naga.tima.u-ga.fr [147.171.132.150])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: petrotf@univ-grenoble-alpes.fr)
+ by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id 9CCBC400E7;
+ Thu, 16 Jul 2026 17:46:37 +0200 (CEST)
+From: frederic.petrot@univ-grenoble-alpes.fr
+To: daniel.barboza@oss.qualcomm.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Cc: julien.thillard@univ-grenoble-alpes.fr,
+ =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20P=C3=A9trot?=
+ <frederic.petrot@univ-grenoble-alpes.fr>
+Subject: [PATCH v2 1/3] disas/riscv.c: Correct indent for checkpatch
+Date: Thu, 16 Jul 2026 17:46:13 +0200
+Message-ID: <20260716154615.1545145-2-frederic.petrot@univ-grenoble-alpes.fr>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260716154615.1545145-1-frederic.petrot@univ-grenoble-alpes.fr>
+References: <20260716154615.1545145-1-frederic.petrot@univ-grenoble-alpes.fr>
 MIME-Version: 1.0
-References: <20260713013610.2691128-1-mattst88@gmail.com>
- <9e63ffe6-fa13-4b85-8f9d-5c6d78e793b2@tls.msk.ru>
-In-Reply-To: <9e63ffe6-fa13-4b85-8f9d-5c6d78e793b2@tls.msk.ru>
-From: Matt Turner <mattst88@gmail.com>
-Date: Thu, 16 Jul 2026 11:43:28 -0400
-X-Gm-Features: AUfX_mzWlihxLj9rs883pkpLvqJdtKeTlqGscMJnCMW0vZLsGbynqpuXPbbhqmQ
-Message-ID: <CAEdQ38FwC-ZVSP95BOjXncT-Csue1un3ihqYOogNDGdAd8-3qw@mail.gmail.com>
-Subject: Re: [PATCH] linux-user/alpha: populate AT_HWCAP from env->amask
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-stable <qemu-stable@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
- envelope-from=mattst88@gmail.com; helo=mail-lj1-x22c.google.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Greylist: Whitelist-UGA SMTP Authentifie (petrotf@univ-grenoble-alpes.fr)
+ via submission-587 ACL (41)
+Received-SPF: pass client-ip=152.77.200.56;
+ envelope-from=frederic.petrot@univ-grenoble-alpes.fr;
+ helo=zm-mta-out-3.u-ga.fr
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,41 +87,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 15, 2026 at 7:23=E2=80=AFAM Michael Tokarev <mjt@tls.msk.ru> wr=
-ote:
->
-> On 7/13/26 04:36, Matt Turner wrote:
-> > Alpha has never set AT_HWCAP in linux-user emulation, so getauxval(AT_H=
-WCAP)
-> > always returned 0 regardless of the emulated CPU model.
-> >
-> > The Linux kernel computes ELF_HWCAP as ~amask(-1), i.e. the set of ISA
-> > extension bits that the amask instruction reports as supported (cleared=
- in
-> > its output).  env->amask stores exactly those bits with the same layout
-> > (BWX=3D0x1, FIX=3D0x2, CIX=3D0x4, MVI=3D0x100, TRAP=3D0x200, PREFETCH=
-=3D0x1000), so
-> > returning it directly from get_elf_hwcap matches the kernel convention.
-> >
-> > Add HAVE_ELF_HWCAP to target_elf.h and implement get_elf_hwcap() in
-> > elfload.c to expose the emulated CPU's capability mask to user-space
-> > programs via the auxiliary vector.
-> >
-> > Without this fix, programs using getauxval(AT_HWCAP) to detect BWX/FIX/=
-CIX
-> > (such as glibc's memcpy or JIT compilers targeting Alpha) incorrectly
-> > concluded that no extensions were available even when emulating ev56+.
->
-> In stable 10.0.x qemu series, things are different from what we have
-> now, - there, everything is in single linux-user/elfload.c and the
-> context is a bit different too.
->
-> Here's my backport of this change to 10.0.x:
-> https://gitlab.com/mjt0k/qemu/-/commit/e4c1bf9b1fe030ef1d0d4c74086cccb62c=
-6b0442
->
-> I appreciate a quick look at the result, whenever it looks good for
-> 10.0.x or not.
+From: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
 
-Looks good to me. Thank you!
+Trival indentation patch on the cbo/lq relevant code, in preparation
+for modifications in that part.
+
+Signed-off-by: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
+---
+ disas/riscv.c | 38 +++++++++++++++++++-------------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
+
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 7f1b262773..689502f083 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -2887,25 +2887,25 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
+             case 0: op = rv_op_fence; break;
+             case 1: op = rv_op_fence_i; break;
+             case 2:
+-               /*
+-                * 'lq' shares the "(...) 010 ..... 0001111" opcode space
+-                * with 'cbo' insns.  Check the next 5 bits to select
+-                * what we want:
+-                *
+-                * cbo_inval  0000000 00000 ..... 010 00000 0001111
+-                * cbo_clean  0000000 00001 ..... 010 00000 0001111
+-                * cbo_flush  0000000 00010 ..... 010 00000 0001111
+-                * cbo_zero   0000000 00100 ..... 010 00000 0001111
+-                *
+-                * Anything that doesn't match these will default to 'lq'.
+-                */
+-               switch ((inst >> 17) & 0b11111) {
+-               case 0: op = rv_op_cbo_inval; break;
+-               case 1: op = rv_op_cbo_clean; break;
+-               case 2: op = rv_op_cbo_flush; break;
+-               case 4: op = rv_op_cbo_zero; break;
+-               default: op = rv_op_lq; break;
+-               }
++                /*
++                 * 'lq' shares the "(...) 010 ..... 0001111" opcode space
++                 * with 'cbo' insns.  Check the next 5 bits to select
++                 * what we want:
++                 *
++                 * cbo_inval  0000000 00000 ..... 010 00000 0001111
++                 * cbo_clean  0000000 00001 ..... 010 00000 0001111
++                 * cbo_flush  0000000 00010 ..... 010 00000 0001111
++                 * cbo_zero   0000000 00100 ..... 010 00000 0001111
++                 *
++                 * Anything that doesn't match these will default to 'lq'.
++                 */
++                switch ((inst >> 17) & 0b11111) {
++                case 0: op = rv_op_cbo_inval; break;
++                case 1: op = rv_op_cbo_clean; break;
++                case 2: op = rv_op_cbo_flush; break;
++                case 4: op = rv_op_cbo_zero; break;
++                default: op = rv_op_lq; break;
++                }
+             }
+             break;
+         case 4:
+-- 
+2.43.0
+
 
