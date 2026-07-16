@@ -4,138 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 422DFC44512
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 19:59:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2182DC44512
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 20:18:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkSEv-0001y7-7p; Thu, 16 Jul 2026 15:59:25 -0400
+	id 1wkSWG-0004z9-67; Thu, 16 Jul 2026 16:17:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wkSEn-0001to-E5
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 15:59:18 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1wkSVg-0004ui-Pl; Thu, 16 Jul 2026 16:16:48 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wkSEl-0000Mk-Sh
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 15:59:17 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66GJorW33864127
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 19:59:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- EMhgrooHmwxlXg9yeZyIbycPQqjfvCOLGyLjbks4A4o=; b=mZpISV3N5XTMvcm5
- 4Rif6bccdctCP8o1thS5tvUck5zK0vdhwj2NRNCFFgGqiodhmUq4M0QBbR5Da+0B
- Xtph5tvAKK6q5xJGM4CLOWRy1UOSm3tAgFpZWtHNIjCM77MoME8r12PzNDrqR1s/
- dVmblm7rzAXievfMjXxsBoKzYZCsSV3xSWxMYV7TrGFkYbIeMYTdDwZgz1CNHPWv
- p402h8ZurrRhet66me5z7D1kxxEZSEPP2l7ik7Q9O44f7cMvknBLVHH4ir5f6G/T
- PD8iYK5Cbb7Yktv/gBaKgURW/Vf9O0opD5Xy16r/u3dWkFuKTTBgdVwnYLUMVdaM
- gEO78Q==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4feu10b6sv-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 19:59:14 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-38e25e4b41cso2790282a91.0
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 12:59:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784231954; x=1784836754; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=EMhgrooHmwxlXg9yeZyIbycPQqjfvCOLGyLjbks4A4o=;
- b=SnhWAMDFUBaYKhUD7qndsJhdIJ6weeEWenPF8diX+mtOGD9zQWYTiuhF5+M4sabbCe
- R3N4yC2CavciymMfbiw48wqNBy0xkZm5EcU9wV6cTeTF3rYwVMG/PA8XJRO1PYIn8RqN
- M75jhT9g3D9SxU6BHoRwK0aEsIVbcveRGY06lEQl0gRpIWi/zLketOAc9xU7Zwus5iHj
- /aAp7J80/hU0PlXuWanEkABnEcBN/zaXmk4EwRWgnXnI0VBiavkyU1Y4F8aDMEEHz5Iw
- A3ay6OzSXQekwWRtxkcmdWMRN28+R6hjUjmdsLADiuwap6DcjbgjEGjDIUGy96ieN6aH
- TOSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784231954; x=1784836754;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=EMhgrooHmwxlXg9yeZyIbycPQqjfvCOLGyLjbks4A4o=;
- b=J0LzLlKubwZ4mZezFIxop3SDBCkGnqucVakJGxx2UQyH3BJ2GyFROc3Dsdec7SsRHE
- tzFQogBcqYAl3tm9Enpb2HmzXzqwOP8hvzLZbx6QgYgh4pod8I/lXTiBT6s00TuTVZ7o
- EykJKkUcfPK0Ci82NoQPKAW+eKZDJo4ATjisKq+4M33cXKgJIqeqUTSRcc+HdK94EWZ0
- o8x5l9MHMPKeTaWbGiaFpZo+BZ27iCpff3Wv2Tk4/MqlVOMRzzRuwCHqkHS+zj5j/NQG
- DWVWKt+prs8tcgcmRZsZW+ySmcR7PC5Qs8vZCWw4PvxdcbhYevUvsvZOIMQVmngkDYic
- 2tYA==
-X-Gm-Message-State: AOJu0YymN6YHvJGkdA+avRfwjIUguB4pStdhncMvbTpUKiWS20XmXdNW
- V4ic75nHEM1ncn1DXLPcoVDuFCHFIldiQzjv7asdrG/27NVTfKob3BgrkuqC5QXpgItLnuCVZRj
- SXUpMum1Zcf0Ez9dbjB6TIsrLMMz5tiMhT3+rpfhKuk0B/klOE8JkpucGfIXTFZMAzw==
-X-Gm-Gg: AfdE7ckrXjb5SA25PKEDvKhb8XqPpWEB81jIzI5lhGNhjoIvp9NIYMwFSUoVR6hbD4n
- vLCA+NJi0L7p2YKbvFpfaOjSBe75jYAvm/xmvjB3zPEwjYreeo7sUw7NsG+WVwCNYvParrhUkE3
- jzUUE33NNHPsSrGQRG4UJIm9f1J9tCwP0z6IRMEaIm4dZHp7/ZEBPqnR9T3pOubQW+NwDZjiYbx
- hWl9Fr4xn1yMIvvwqXn3HwaWsHB5A9yD2DLsC+3FVCiM826oyZR4SRDy2V/Sa4bZ0j8E6SUQ6Aa
- Ml6Ht+oBDY7HbdzQtnjBsR9QX5ul5gGslf5ddPodkWW+Vbng3lL6GrrARZ5EJgp/MEfTHkTx2DM
- NZnUkadC+7xsQDUQonAa511mx+t9wxxXIxpzqzSBo2NaPl5VGK3gRQJvINQo7QuEL5OCT
-X-Received: by 2002:a17:90b:57e5:b0:38d:e7b7:5125 with SMTP id
- 98e67ed59e1d1-38e2a030175mr7445870a91.17.1784231953604; 
- Thu, 16 Jul 2026 12:59:13 -0700 (PDT)
-X-Received: by 2002:a17:90b:57e5:b0:38d:e7b7:5125 with SMTP id
- 98e67ed59e1d1-38e2a030175mr7445843a91.17.1784231953144; 
- Thu, 16 Jul 2026 12:59:13 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3140e4fcd31sm15543656eec.4.2026.07.16.12.59.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jul 2026 12:59:12 -0700 (PDT)
-Message-ID: <11960014-7021-49f5-b5ba-26a8107717ac@oss.qualcomm.com>
-Date: Thu, 16 Jul 2026 12:59:11 -0700
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1wkSVd-0003gS-Sh; Thu, 16 Jul 2026 16:16:43 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66GKBpid021744; Thu, 16 Jul 2026 20:16:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=phvh1e
+ r0LibAnWbpDiN/82scQNhDpi63i/Q6JAfsSdQ=; b=CJFOddUNI8+WyIHoTC3MnM
+ 2q5C5MjqNu2+56fyUSIdhqRrHam+amBpEzfSLmokndJNHqUu33kDs1yTzwWaB0t6
+ rIpKmefbWnKrx1UkBsBS6CxA3m7Jn41NT1EWYV2vh8q6d/qoAwb7q0smxntlCdF1
+ H0Ldq0b5ahIjMHSyvmyBA+rPpI5Flkt0/EgHA2hmpN9KMZULZtJHwjVwhjjsiDxd
+ fwteWY0tagc30TwCJHg0x3Sz+S+UCUHu1OmHmADS/WrJXMEJB4J+SQINdFSbeHMf
+ xRHqz/WnJJSmG6o9d3j7JYY9SizIs1zdNAWp8k1cuo3qjHCbmQ2MYGIJOEfn8HiQ
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbegtjy66-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Jul 2026 20:16:16 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66GK4jnb001226;
+ Thu, 16 Jul 2026 20:16:15 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc0hwetd4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Jul 2026 20:16:15 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66GKGEEG21561860
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 16 Jul 2026 20:16:14 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F259F58062;
+ Thu, 16 Jul 2026 20:16:13 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C47945805E;
+ Thu, 16 Jul 2026 20:16:12 +0000 (GMT)
+Received: from [9.67.41.202] (unknown [9.67.41.202])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Thu, 16 Jul 2026 20:16:12 +0000 (GMT)
+Message-ID: <9b4e79c8-6b57-46e1-94ab-919a16798b13@linux.ibm.com>
+Date: Thu, 16 Jul 2026 16:16:12 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/1] Docker fixes for 2026-07-16
-To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
-References: <20260716195807.3219466-1-pierrick.bouvier@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH v16 23/33] pc-bios/s390-ccw: Add signature verification
+ for secure IPL in audit mode
+To: Zhuoying Cai <zycai@linux.ibm.com>, Jared Rossi <jrossi@linux.ibm.com>,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: cohuck@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
+ david@kernel.org, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
+References: <20260707231132.2492104-1-zycai@linux.ibm.com>
+ <20260707234047.2499921-1-zycai@linux.ibm.com>
+ <20260707234047.2499921-4-zycai@linux.ibm.com>
+ <17778d69-9860-4713-9321-a1293064fc06@linux.ibm.com>
+ <89882b65-07c4-4b26-85ad-7c1638a829cf@linux.ibm.com>
+ <a869dade-8b64-4d70-8fe5-fd1347c84559@linux.ibm.com>
 Content-Language: en-US
-In-Reply-To: <20260716195807.3219466-1-pierrick.bouvier@oss.qualcomm.com>
+From: Collin Walling <walling@linux.ibm.com>
+In-Reply-To: <a869dade-8b64-4d70-8fe5-fd1347c84559@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 3QbCXRtvd1LC0LF_tFmjg_bisccQE2w-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDIwNCBTYWx0ZWRfX4hDgblDbc9EY
- q4+N9U/NmZySrJcWhBD12M08F7lniRcWTWiHYZGxBPrA3fBtE9jAv+5xne0CM/lP8efn+UpkQZ/
- MKAFU+dAF4qp4E6OzuhJCcuN+BAzLxWIWhxaGqf07sMeA+lVDcYV4WiCxU7FYOUDxbRsAT5bTeM
- YMr8N+Db9S62sLc8jVCOZ6GISKA9eGTr0+ba3Eh5T0NSXsET/bqaSI27+BLpEOY2s3jLHvMlJcG
- jSv3E6D7GSjpCkBFp0shME+ebtckrRedgq+y0ESc0RHWmchIoX5XBrkrv4N5UZPFRlfDVVi05Ge
- 38iyxYqOwbliGVzfPD6rhdyho5E/VIRI29mSOcli3A9W55ZJdxxRETiyJnB7T8EVYu1gPe2B1Ej
- JbS695FrGuAkpc5X8f+HuzQtkamAlAE+OYVtmndL1n9XB/QKCcOT2Gfp7k/awvyg+0z45bmgA+K
- J+kIrFgQHPKriAoaouw==
-X-Proofpoint-GUID: 3QbCXRtvd1LC0LF_tFmjg_bisccQE2w-
-X-Authority-Analysis: v=2.4 cv=BPODalQG c=1 sm=1 tr=0 ts=6a593812 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=p0WdMEafAAAA:8 a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=__0t8_hIU7gXlkaPYQ0A:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDIwNCBTYWx0ZWRfXwmOnMkgkoO49
- qn2r4QPwwhFeklGalfG7VFcAXGe5gWfuJbV81UUhb3qvI8+Oeb8HGZtJnsum4vDpUBPKZ12asOo
- lWk42DMe5XucpWIG6n1dQxwbPHhbo5Q=
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: Brsf-ErUKp7XhTBl6vk37bWXhVQe4GIH
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDIwNiBTYWx0ZWRfX5TMBh4sjrtRp
+ n7DC00M3F2MvKHH33eNbaSSZPHlJPo6KFDt9m9d0XyB9DGi1tLLTfk7vK3NrhfwufUPT9CRGPAj
+ RbkRIvcNEdoUdiQWY9xqLsE8UNdtiq8=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDIwNiBTYWx0ZWRfX2DkcFtDT4TUM
+ SPmLICAlTquP+JmDnv6S+H6qHK+XhTeGlg6qrwftuLI01SaG1xsM+OYqBHhxgh727W6vwU7cBZM
+ QgZdtyMdkjH/kJNrxSk4S9ynZOeE8I9W3eogpyy0iAw/AyytJRkjDv3vZqjKUsh14KzE/bNkXF4
+ YU/nwtjpqZmgRKFRqsPv12h0Ukje9L6mvuClnEGBbM2KclsFrdlhIMiAQPHQDLvbleKKgSIQ735
+ cXv1b3orJQCFFpp2QjzemrFwCT+IMlBuei+ewJziWgWNPleaLq6rKwupePgumGUHWDRq591LAre
+ FMA8LdOe8eihge40U/DbZqlDES+sIvjxFWsfiDK1NXbOaYxtTqR0/OgtrEkj1kawIBkziljx7hG
+ r5z1N/YRyVuBSqtJJVKB3PS8eiD5pDLPZxxKctY+Gm3QP4B5GqxARojssOFTymMLBmPk6T1Gu+M
+ eeN+w5OHBwzhavgUxqQ==
+X-Authority-Analysis: v=2.4 cv=IqMutr/g c=1 sm=1 tr=0 ts=6a593c10 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=tdMvfBfS8nACWcF_XGIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: Brsf-ErUKp7XhTBl6vk37bWXhVQe4GIH
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-16_07,2026-07-15_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 lowpriorityscore=0 adultscore=0 malwarescore=0
- priorityscore=1501 phishscore=0 bulkscore=0 spamscore=0 impostorscore=0
+ spamscore=0 clxscore=1015 impostorscore=0 malwarescore=0 adultscore=0
+ phishscore=0 suspectscore=0 priorityscore=1501 bulkscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607160204
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607160206
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=walling@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -152,37 +134,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/16/2026 12:58 PM, Pierrick Bouvier wrote:
-> The following changes since commit eca2c16212ef9dcb0871de39bb9d1c2efebe76be:
+On 7/16/26 12:36, Zhuoying Cai wrote:
+> On 7/16/26 10:05 AM, Jared Rossi wrote:
+>>
+>>
+>> On 7/15/26 4:37 PM, Collin Walling wrote:
+>>> On 7/7/26 19:40, Zhuoying Cai wrote:
+>>>>       /* should not return */
+>>>>       write_reset_psw(entry->compdat.load_psw);
+>>>> +
+>>>> +    if (boot_mode == ZIPL_BOOT_MODE_SECURE_AUDIT) {
+>>>> +        update_cert_list(&cert_list);
+>>>> +        update_iirb(&comp_list, &cert_list);
+>>>> +        free(tmp_cert_buf);
+>>>> +    }
+>>>> +
+>>> Sorry if I missed this from the previous rounds of review, but why was
+>>> this moved outside of `zipl_run_secure()`?  It seems out of place here.
+>>>
+>>> If there is justification for it, I'd suggest at least moving this chunk
+>>> a few lines up to before the `write_reset_psw` call to keep the "IPL
+>>> jump" code together.  The comment above is meant for the following chunk:
+>>>
+>>> ```
+>>>      /* should not return */
+>>>      write_reset_psw(entry->compdat.load_psw);
+>>>      jump_to_IPL_code(0);
+>>>      return -1;
+>>> ```
+>>>
+>>> Otherwise the comment is a bit misleading.  I suppose one could argue
+>>> the comment should actually be placed abouve `jump_to_IPL_code`, but
+>>> let's not bother with that change.
+>>>
+>>
+>> This was something I had asked for, but I don't recall if it was in a 
+>> review comment or internal discussion, but a brief summary for the sake 
+>> of posterity...
+>>
+>> Moving the call to update_iirb() was necessitated by a different change, 
+>> which was to use a specific memory address range for storing the cert 
+>> list.  The fundamental issue is that we wanted to store the cert list at 
+>> a calculated address to ensure it is not clobbered before the kernel 
+>> reads it.  My idea was to reclaim the space previously used for chained 
+>> IPLBs.  The chained IPLBs and the cert list are never needed at the same 
+>> time, so that isn't an issue; however, the impact of reclaiming the 
+>> space is that we destroy our IPLB chain, meaning, once we write the cert 
+>> list, if the IPL subsequently fails, we no longer have the fallback IPLB 
+>> to try the next device in boot order.  To deal with this we delayed 
+>> updating the cert list and IIRB until we are committed to boot from the 
+>> selected device, that is to say, once we have progressed through the IPL 
+>> far enough that there is no longer any possibility of falling back to a 
+>> different device.  As such, we wait until we are ready to actually hand 
+>> over control to the kernel before overwriting any of the IPL data.
+>>
+>> There is some flexibility with exactly where the calls can be placed, 
+>> but the idea is that there should not be any paths that return for retry 
+>> on error after we update the cert list.  By placing the update calls 
+>> directly before the jump we know the only two outcomes remaining are to 
+>> either successfully hand over control and never return, or for the jump 
+>> itself to fail, which would be a catastrophic error and necessitate that 
+>> the IPL is aborted entirely anyway.  There is no condition such that we 
+>> may update the cert list or IIRB and then realize we actually should try 
+>> booting from a different device instead.
+>>
+>> Regards,
+>> Jared Rossi
 > 
->   Update version for v11.1.0-rc0 release (2026-07-14 20:36:23 +0100)
+> Thanks for the clarification, Jared.
 > 
-> are available in the Git repository at:
+> I think moving the update_iirb chunk before write_rest_psw() should
+> work, as long as it is invoked after committing to the current IPLB and
+> does not return for a retry afterward.
 > 
->   https://gitlab.com/p-b-o/qemu tags/pbouvier/pr/docker-20260716
 > 
-> for you to fetch changes up to c4ce04cfb7460d46c0262d437a7f35bb5c5fc449:
-> 
->   tests/docker: ensure container command is probed at most once (2026-07-16 10:49:11 -0700)
-> 
-> ----------------------------------------------------------------
-> Changes:
-> - [PATCH v3] tests/docker: ensure container command is probed at most (=?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>)
->   Link: https://lore.kernel.org/qemu-devel/20260716102515.1503404-1-berrange@redhat.com
-> 
-> ----------------------------------------------------------------
-> Daniel P. Berrangé (1):
->       tests/docker: ensure container command is probed at most once
-> 
->  configure                     | 25 ++++++++--------
->  tests/docker/Makefile.include | 13 ++++-----
->  tests/docker/docker.py        | 67 ++++++++++++++-----------------------------
->  3 files changed, 40 insertions(+), 65 deletions(-)
 
-This is a fix PR (so eligible for current release), since it solves slow
-tcg-tests compilation time regression introduced by:
-https://gitlab.com/qemu-project/qemu/-/commit/c5ecd377a016997f093801685a73303980be3ec4
+Gotcha, I see the "retry" loop now, and why with the changes to reusing
+the qipl.ipl_data necessitates moving this code out of run secure.  Had
+to look at the greater scope to understand.  Thanks.
 
+How about just move the /* should not return */ to the same line as the
+`return -1` line so its placement is more accurate.  Either in this
+patch or in patch 20, where zipl_run is refactored (latter is more
+preferable).
+
+With that change as well as an update to the comment in
+update_cert_list, I'd feel comfortable with:
+
+Reviewed-by: Collin Walling <walling@linux.ibm.com>
+
+No need to change where you placed the chunk of code above. The rest of
+my comments are nits.
+
+-- 
 Regards,
-Pierrick
+  Collin
 
