@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0012C44511
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 15:48:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C166C44512
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 15:49:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkOJz-0005fi-Hx; Thu, 16 Jul 2026 11:48:23 -0400
+	id 1wkOKv-0007Af-Jt; Thu, 16 Jul 2026 11:49:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wkOJw-0005cB-VV; Thu, 16 Jul 2026 11:48:22 -0400
+ id 1wkOKu-0007AP-H6; Thu, 16 Jul 2026 11:49:20 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wkOJv-0002VQ-IS; Thu, 16 Jul 2026 11:48:20 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1wkOKp-0002aJ-L4; Thu, 16 Jul 2026 11:49:20 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66GDgKCg3349087; Thu, 16 Jul 2026 15:47:56 GMT
+ 66GDg0sH3285294; Thu, 16 Jul 2026 15:48:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=mhVd0jzuyRZiiePdzIr/rja6e5pVRznTnY5Fu8iNP7U=; b=P9ZeupYKKCsf
- 7d2KF4H2lWtD1O12BR3y/Iaxj4Tp5dFXnve9DWcfeyq5ppJQWJXkTJvhZIMzZNYT
- 74Cviqt6OqCsE/h95STkzhsGs47g3Kpg9Nbzfr7OW86F2DFgUO0Pwbs7JY7SpzQm
- Q9ttpF8zy1CkVpGdf1HT0GgSO1pyNEx92alUx3Gzyfhd/v5qNgbLykjP/vthqg4B
- oiGxm3FbUZr/v9MvLZHKP3KGF95LVhhMYz1HV58iiVT5+1iFNXbrJ+iJQ8FhxPae
- tHNfu5STqp6gZAAQZl5swRFEkxDrQ11IFIPB9SzToKNJupww5sociZAfZcF/w29Y
- UdJDfZbY9A==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbegc0yuj-1
+ bh=MBaogVelM5qmxX74UeR0bYxeAWlAnV9Z+sA/oReMod4=; b=nWu/iNvAjVgx
+ bsolHOksb2kjoobUvumAyljZtrnugjxfsmkT/4mrl8P8yeH6MZ6Uo6G0DDzS9xFZ
+ inMY02Sl+Cwnpg4pHsEi9dbORCL92/vvXRZGx4OPPBG0vSG+AEBRFc2RnNX9PdgA
+ XwP9BdYSGCCCHuUHw8AB+qG8Wyo/BfNJP/YXqCLGvYRXOBcWJSN7Tgsg/eEGjJFA
+ qomgFhbtvmEjzAMwiehvGqaJfADskDhsooNznCOx4QE47LvtVATuZn7er9eqN6ak
+ TjkyQkcScySVb+lmTaONsjb+giPPcQTYU6PH2R94PCOTdUDDAgFJqlZYhkgBN0za
+ nD0S03C2ug==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbf2agymp-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jul 2026 15:47:55 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66GFYak5003141;
- Thu, 16 Jul 2026 15:47:55 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc1nhnm41-1
+ Thu, 16 Jul 2026 15:48:50 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66GFYcMM032679;
+ Thu, 16 Jul 2026 15:48:50 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc0hwdtmj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jul 2026 15:47:55 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66GFlsNj37094138
+ Thu, 16 Jul 2026 15:48:50 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66GFmntM30474968
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 16 Jul 2026 15:47:54 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5088058068;
- Thu, 16 Jul 2026 15:47:54 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 891305805A;
- Thu, 16 Jul 2026 15:47:53 +0000 (GMT)
+ Thu, 16 Jul 2026 15:48:49 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 63A3D58056;
+ Thu, 16 Jul 2026 15:48:49 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A18E958052;
+ Thu, 16 Jul 2026 15:48:48 +0000 (GMT)
 Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 16 Jul 2026 15:47:53 +0000 (GMT)
-Message-ID: <e60839240e04c1243c2ba3e5449ae241c48f8733.camel@linux.ibm.com>
-Subject: Re: [PATCH 18/29] hw/gpio: pca9554: expose pin%d as a string property
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 16 Jul 2026 15:48:48 +0000 (GMT)
+Message-ID: <abe01b7fae240135243eec01401ce9bdbb229775.camel@linux.ibm.com>
+Subject: Re: [PATCH 19/29] tests/qtest: add PCA9554 register access tests
 From: Miles Glenn <milesg@linux.ibm.com>
 To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>,
@@ -70,10 +70,10 @@ Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew
  Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, Corey
  Minyard <cminyard@mvista.com>
-Date: Thu, 16 Jul 2026 10:47:53 -0500
-In-Reply-To: <20260709-catalina-upgrade-v1-18-82a63fead90c@free.fr>
+Date: Thu, 16 Jul 2026 10:48:48 -0500
+In-Reply-To: <20260709-catalina-upgrade-v1-19-82a63fead90c@free.fr>
 References: <20260709-catalina-upgrade-v1-0-82a63fead90c@free.fr>
- <20260709-catalina-upgrade-v1-18-82a63fead90c@free.fr>
+ <20260709-catalina-upgrade-v1-19-82a63fead90c@free.fr>
 Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
@@ -81,33 +81,33 @@ Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=fOcJG5ae c=1 sm=1 tr=0 ts=6a58fd2c cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDE2MSBTYWx0ZWRfX3le4S8mGuzRx
+ HW4XyH/dXXN5KRBFdytbYH9RTCSaxtzhIFzu2KZBeYJ137FjUXnppNALd1jgS84zoRRUgwAZn3M
+ FY5UK3TGnbQvGL+eQlq2GQKxcqePmt8=
+X-Proofpoint-GUID: RrHkgZUlT8p5DcfOMx99QgV9e3ty1HFk
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDE2MSBTYWx0ZWRfX+Mh/PZqqq5S/
+ +mEn+OM6+1YRONbLRovkBbJqlH+mYmPja7atPZ3aOm61YyBPS5EZlEENem9/selcaO4gXmJ2o8H
+ UVSLmmwWAIsfZrTaUNY51aOGFUAzNjMxZoXV9PzACUcaThI9opP0HH4VaeTlY7lVDxwLdBuy4aH
+ 0THXRK+lqcuveP4a1adTPUseRZyozT3q0uhIY61EbZDEqBHASa+jaHUlpkS5wLEEq3MUz+McntO
+ cxmz6xYfDeW+yi/hf7jhmq4r1dDlOriRot/+C1xgVUGgCAXB64/k5F3lukrd54wycQgn4uSQLDi
+ 3q7jvPvA2wpqgDPuCrPTnxFbxOXJVz9KIXLNLobnX+Kx+SjkWMPlsGDfrSUD0QXVgOGzjXcflvN
+ kD44klKM5O8sKb0bwvlTvxXwBJlsvxAFoZKcJZuJh+ZU4j+6bplcaHha+bPuyqTP+tXQlQ6+K+0
+ jhaBKTfkrwV6IaJgo3w==
+X-Proofpoint-ORIG-GUID: -TkTlCRQxIUxmyUXKgseH7_drVq5Zl10
+X-Authority-Analysis: v=2.4 cv=PvajqQM3 c=1 sm=1 tr=0 ts=6a58fd63 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=N7nTd0MHQuZND135gA8A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDE2MSBTYWx0ZWRfX/Y30k3jvs3op
- ysPO426z750dVchOPqGghSQDx6iM1mP/PLRpHn+DtaFZErDROM2BZzWtXsGqSetAwALe0ohf3pG
- B9r6F+gHK3VBhAwRa77ZgkhJr+TOoCvho7UgBMiMLR+uJhVODRIyP4SW0qOprt1EB6GiHspxaeA
- PAJWAtWLZs2KLxgqlzF2gMjNOtcIWlTQiw+7uQIzIEUBdWABDu9deWZypR7GeruGrXuD05eki0V
- BCqzdbSC9WmRSmDIOY9bfxq8eGtUVtiiuU8jV+c9jpgU78zzyXnwfEPsrnZndG9nn+EVMse+Yrs
- WcjCqJkzQ+B+xF8gZiIW3Ilzt5WAdMD++hLPRQd/4RhVBO6AlBW8kTZq+nIgC8miS8jS6yimkh1
- 4Qwov1n/rORgDCQtxHpLjGfBW7o2tYutd4UICRZ2Wa8gpJkXSFKElPThGSQP8iDM8022Emuo10h
- B+EYPWGuJwiIkWaT8rQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDE2MSBTYWx0ZWRfX2IwZ1lNfqLtk
- FidBF2NEKNJOwGh/l1FhdtPKWbBkQ2HNUxsKXmhlHVKgqLIR0OXe+kRZeF23EtIieXp2iQM6dqw
- gyATsE1fp5hfndW5dNyiAmZMQPqLfYc=
-X-Proofpoint-GUID: 1h-a-cfN6gysNa_BkYc5WcUEzRNHNDBk
-X-Proofpoint-ORIG-GUID: aAnHQia2S0THevIvBscI60TCHYhiADY0
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VabnemYjAAAA:8
+ a=VnNF1IyMAAAA:8 a=s28BrN_b0GBEnfV0YMcA:9 a=QEXdDO2ut3YA:10
+ a=gKebqoRLp9LExxC7YDUY:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-16_05,2026-07-15_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 impostorscore=0 suspectscore=0 adultscore=0
- priorityscore=1501 malwarescore=0 clxscore=1015 phishscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607160161
+ priorityscore=1501 malwarescore=0 bulkscore=0 impostorscore=0 adultscore=0
+ clxscore=1015 lowpriorityscore=0 spamscore=0 suspectscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607160161
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -140,30 +140,75 @@ Thanks,
 Glenn
 
 On Thu, 2026-07-09 at 17:23 +0200, Emmanuel Blot wrote:
-> The pinN properties are accessed with visit_type_str() (values "low" and
-> "high"), but were registered as type "bool", so introspection advertised
-> a boolean while the accessors require a string. Register them as "str",
-> matching the PCA9555 GPIO variant.
+> Add a qtest for the PCA9554 8-bit I/O port expander exercising the basic
+> register access: power-on reset defaults and read/write of the OUTPUT,
+> CONFIG and POLARITY registers.
 > 
-> Fixes: de0c7d543bca ("misc: Add a pca9554 GPIO device model")
 > Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 > ---
->  hw/gpio/pca9554.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  tests/qtest/meson.build    |  1 +
+>  tests/qtest/pca9554-test.c | 41 +++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 42 insertions(+)
 > 
-> diff --git a/hw/gpio/pca9554.c b/hw/gpio/pca9554.c
-> index d4746719f9..904698cdce 100644
-> --- a/hw/gpio/pca9554.c
-> +++ b/hw/gpio/pca9554.c
-> @@ -280,7 +280,7 @@ static void pca9554_initfn(Object *obj)
->          char *name;
->  
->          name = g_strdup_printf("pin%d", pin);
-> -        object_property_add(obj, name, "bool", pca9554_get_pin, pca9554_set_pin,
-> +        object_property_add(obj, name, "str", pca9554_get_pin, pca9554_set_pin,
->                              NULL, NULL);
->          g_free(name);
->      }
+> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+> index 2c283708a5..2f35bde630 100644
+> --- a/tests/qtest/meson.build
+> +++ b/tests/qtest/meson.build
+> @@ -318,6 +318,7 @@ qos_test_ss.add(
+>    'tulip-test.c',
+>    'nvme-test.c',
+>    'pca9552-test.c',
+> +  'pca9554-test.c',
+>    'pca9555-test.c',
+>    'pci-test.c',
+>    'pcnet-test.c',
+> diff --git a/tests/qtest/pca9554-test.c b/tests/qtest/pca9554-test.c
+> new file mode 100644
+> index 0000000000..a5f213a59c
+> --- /dev/null
+> +++ b/tests/qtest/pca9554-test.c
+> @@ -0,0 +1,41 @@
+> +/*
+> + * QTest testcase for the PCA9554/PCA9536 I/O port expanders
+> + *
+> + * Copyright (c) Meta Platforms, Inc. and affiliates. (http://www.meta.com)
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "hw/gpio/pca9554_regs.h"
+> +#include "libqos/i2c.h"
+> +#include "libqos/qgraph.h"
+> +
+> +#define PCA9554_TEST_ADDR 0x20
+> +
+> +/* Verify power-on reset defaults match the PCA9554 datasheet. */
+> +static void test_reset_defaults(void *obj, void *data, QGuestAllocator *alloc)
+> +{
+> +    QI2CDevice *dev = (QI2CDevice *)obj;
+> +
+> +    /* All pins are inputs, pulled high, with no polarity inversion. */
+> +    g_assert_cmphex(i2c_get8(dev, PCA9554_INPUT), ==, 0xFF);
+> +    g_assert_cmphex(i2c_get8(dev, PCA9554_OUTPUT), ==, 0xFF);
+> +    g_assert_cmphex(i2c_get8(dev, PCA9554_POLARITY), ==, 0x00);
+> +    g_assert_cmphex(i2c_get8(dev, PCA9554_CONFIG), ==, 0xFF);
+> +}
+> +
+> +static void pca9554_register_nodes(void)
+> +{
+> +    QOSGraphEdgeOptions opts = {
+> +        .extra_device_opts = "address=0x20"
+> +    };
+> +    add_qi2c_address(&opts, &(QI2CAddress) { PCA9554_TEST_ADDR });
+> +
+> +    qos_node_create_driver("pca9554", i2c_device_create);
+> +    qos_node_consumes("pca9554", "i2c-bus", &opts);
+> +
+> +    qos_add_test("reset-defaults", "pca9554", test_reset_defaults, NULL);
+> +}
+> +
+> +libqos_init(pca9554_register_nodes);
 > 
 
 
