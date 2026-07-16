@@ -4,115 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19083C4450A
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 13:30:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A635DC4450A
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 13:35:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkMAM-0007lM-O5; Thu, 16 Jul 2026 09:30:18 -0400
+	id 1wkMF2-0000A6-M6; Thu, 16 Jul 2026 09:35:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wkMAL-0007jz-GI
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 09:30:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1wkMF0-00008X-Nz; Thu, 16 Jul 2026 09:35:06 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wkMAJ-0005Ye-1e
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 09:30:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784208613;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Mx+c5m/N8NFdRTUudQi0Kcf3Bv0CqHFJMH5XXZ7eH+E=;
- b=DvBJkr1dmbz5bqYIupQ3n75Z1c4AtWhZGyugFWsFQkueqm4feoB9JRLAe24b+lQbibbzbl
- OIsDTdhJ+/ir4+3OqsOEbqMScl3iLC3w9ZPT6IrVYqc6ydxdyAlaZw9xgISDrowzgUqe6n
- VPXxIENxzCbP2YI8pUwJ3RFLEb855So=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-317-s9jj3jQFOhWMmcq0CGOiJg-1; Thu, 16 Jul 2026 09:30:11 -0400
-X-MC-Unique: s9jj3jQFOhWMmcq0CGOiJg-1
-X-Mimecast-MFC-AGG-ID: s9jj3jQFOhWMmcq0CGOiJg_1784208611
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-51c1d7886cdso136321441cf.1
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 06:30:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784208611; x=1784813411; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=Mx+c5m/N8NFdRTUudQi0Kcf3Bv0CqHFJMH5XXZ7eH+E=;
- b=r6zVQgCbmsl0fmg5xX35+xZ2NZbe334+JNfjC2a4Z2sM1RwLjkbcr4yGu6+TtwMUMS
- v7cVwZ3zuTtjQN0qxbml23hjJjGnULjV1ZPIQH3oXgf+7SYdVKJHstS3onavPKLyXBtc
- YUKabENuUbW9lBvfR3qo17BUWal6HeKI2q0Lcv/1/yHwhvrKWWd+tmziIrFsfDKWTjF7
- vUTe6xZ+O2TYdidoFBdceshQTyP9DeAhHcMfr9hiHv1FVLB6/qA0VJecuIp37zcftGzi
- v428omIpydk4n/rqQzRfM2cUQ6id74p5cVAIonVm2dWG8y/J9ZgjLZdJEuy5c9eEIen6
- ulsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784208611; x=1784813411;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Mx+c5m/N8NFdRTUudQi0Kcf3Bv0CqHFJMH5XXZ7eH+E=;
- b=pKRabxuUP/yfLxr0Dt19srwWV8PKfc16RbSn2Ve/pQG/zsLYwjJ5h8RRV9vrLPxtSw
- GXv6RaHZbLXhMPoXC1lnduVfsAZecgyDxxG0VrJPI82qD72FV1ZHr/tqrtwQWoKaXYft
- 8DNgu5NBvYs+MgB8tUDZKPl1xmHRF2pFQxxag2LMbxeVgzTOADd3gtg7pS67ZxOyj4LO
- fCQBI1uCY/s9MRVp50XTKucWqOmRGqqEhs72cXdC5u8t5iOTmC9ofD66vVHCzegEGlcB
- q9gxvN2Hu/NsvRytZPSXL6Hm44j6L78ZwpPoW10xo0OR7AWfiJlbCxmRTe3WnBB+5zwE
- q6MQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqH8EKMGWUK4q99zJku/CF7VCECTCP+JcL1bORKCzyDDw1k6D5U+bW/llU6GadCnL/PeUmm3lH6zNNV@nongnu.org
-X-Gm-Message-State: AOJu0Yy/gO0i594pGqCRyxuFth74Y/lftMKGaCflG6yL2F4W1fjAI4Df
- uN388oCIaf0KNX8NOeaKQI/Vr+kq2de8Dy1IODBKH+0Mt0b2RmCcYm0fgtSSegTwjWGo0MsD1Ck
- iYMhIeEnjk0Zgh3onVr/PIj5N0Arbl4IHoeV3YUt7je3IEDtRU+YIxXSW
-X-Gm-Gg: AfdE7ckG6+cbQG8wxLcgt4m+Vp4byPZEjmf59R1iYwylKwCa+yET1lSbSdJivjrns/T
- Wt9Cx2rU4Xaaxb6uZFpisRHKk8wHhefDAfgxMxnb5iZiO3U9UQqcvBR5XG4GNZKyhfjIfi/Ot3O
- wk8Q06bA2fvXfyN+jIcYJTGfJ+4N1wqpBT60ZImDc8mUVoj+gn1Jjnd5Jauau1P2MkQIDiOmEHF
- dUxmkCglQhS+UiSnxEduDHdLaXMNpTMCul5pLl1B4glSjJDmPT/p5UJ8pqzDx4VhSwFOU49Cxb8
- vI9l2qlMBBi0Qq0RltS11VlhJQX1xknCAhbzK3g9VVZKx2qHcXpw0NomyQjAZvd9HhgX
-X-Received: by 2002:ac8:5a8f:0:b0:51c:7b12:5fda with SMTP id
- d75a77b69052e-51e4f12cda6mr75238621cf.86.1784208609906; 
- Thu, 16 Jul 2026 06:30:09 -0700 (PDT)
-X-Received: by 2002:ac8:5a8f:0:b0:51c:7b12:5fda with SMTP id
- d75a77b69052e-51e4f12cda6mr75236451cf.86.1784208608076; 
- Thu, 16 Jul 2026 06:30:08 -0700 (PDT)
-Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-51caacdacf7sm160021361cf.11.2026.07.16.06.30.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Jul 2026 06:30:07 -0700 (PDT)
-Date: Thu, 16 Jul 2026 09:30:03 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Fabiano Rosas <farosas@suse.de>, Alex Williamson <alex@shazbot.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/2] vfio/migration: Parallelize device state transitions
-Message-ID: <aljc2-4XfpSkX_ay@x1.local>
-References: <ac677bf9-1372-4905-a0b8-874a74be07be@maciej.szmigiero.name>
- <ah86Z0r5sMnxwgo-@x1.local>
- <c739f4fe-1f43-45c4-b98f-109366526405@maciej.szmigiero.name>
- <e79a3746-9c7e-46a5-ad81-537b9d3affdb@maciej.szmigiero.name>
- <akvWlciUvxjDbBBZ@x1.local>
- <e602d0cd-dfc2-441d-a017-067e55418dad@maciej.szmigiero.name>
- <alZssI9OmGJyD-rc@x1.local>
- <19b76c19-4c7b-4a48-8c77-7db8746ff570@maciej.szmigiero.name>
- <alenmdWqD-x3bYll@x1.local>
- <5513c20b-0f5c-4bf2-93fc-d1619e3319c1@maciej.szmigiero.name>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <5513c20b-0f5c-4bf2-93fc-d1619e3319c1@maciej.szmigiero.name>
-Received-SPF: permerror client-ip=170.10.129.124;
- envelope-from=peterx@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1wkMEz-0006Ls-3f; Thu, 16 Jul 2026 09:35:06 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66GACETw2899651; Thu, 16 Jul 2026 13:34:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=PWhn8kjzB6tgkFhA+CaZlszuNPUfISD3CsgkMvC2iOU=; b=mHy3I25U5ep8
+ sttL6D6t18CrXEjZlrMwXsMVl2ijkXGBdYiES0BiRvxIIcrBxFtO9KJsU7BrtWqG
+ 7CcFfFyFpyheqv6FzaMi+d1vjfa92RtG6LP4VWm7DGhNzkjp0mrSDaC77uMfYsAM
+ gJO/myJidVSSygpHCC5DjumCUUx4JwgQzuTD70WZ2NW7i8kIp8dTF5xU0+eXj5Ma
+ J9PhR6Oa1ofkdgYC0Om1XH2KvmTLa3lGZ3supfV+hkySlX4OYNACCtoFSqpkUjKW
+ EGABTe3IfYPnSxyhprN0tXiMUqvnjj5VRznss2WShffJLGVRL4VbInC1ePoUo9C/
+ LBf1cqO9SA==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbegc0c7q-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Jul 2026 13:34:46 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66GDYghu017683;
+ Thu, 16 Jul 2026 13:34:45 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fc05qddbe-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Jul 2026 13:34:45 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66GDYjAe23724660
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 16 Jul 2026 13:34:45 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F034D58052;
+ Thu, 16 Jul 2026 13:34:44 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B271D58062;
+ Thu, 16 Jul 2026 13:34:43 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 16 Jul 2026 13:34:43 +0000 (GMT)
+Message-ID: <f7c436451ade74baed3087c9c6dd4bee554d1ed2.camel@linux.ibm.com>
+Subject: Re: [PATCH 06/29] hw/gpio: pca9552: use the Resettable interface
+ instead of legacy reset
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Steven Lee
+ <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Jamin Lin
+ <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew
+ Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, Corey
+ Minyard <cminyard@mvista.com>
+Date: Thu, 16 Jul 2026 08:34:43 -0500
+In-Reply-To: <20260709-catalina-upgrade-v1-6-814575bc076b@free.fr>
+References: <20260709-catalina-upgrade-v1-0-814575bc076b@free.fr>
+ <20260709-catalina-upgrade-v1-6-814575bc076b@free.fr>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=fOcJG5ae c=1 sm=1 tr=0 ts=6a58ddf7 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=ayuSXJ0DrvFcvoGZ-b4A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDEzNiBTYWx0ZWRfX6CH33atjACOE
+ HuOFoEes/mqS4xumow2muTS1oTq+nbXrIuazqDKzxKFAJzC3Tk/NUfcO+hbXNdCts+5UZ1y8tzM
+ RBJWuQaXGCEBRxijJztZ5baGltC9gW/mER9GquT8BDwf73wY8YGama0mVWMj19MVYQsQqDZA8q8
+ /VlCrYzf7uNjJwFL4wufQxmb397SlFrkWWjLtpufBWLjrMbZhfHsxj7ZRpyeUxg8zaLF+gMravG
+ JoFdP39xk0DmWRm0UcqngsLewZRKV+/QWzfxFMuqPaE1NMOt8KSXhrm94YcGQ8RkOV7p/IujyMg
+ IXYcCUOY5QcZSOFkDkhGUmpmG43D4eJUfYDYMTV+nfhQArDSdVjTdFCVt/6DvN84s82chBFgs0K
+ LyB3e34+ApnMNWGaY67HlI2JqTlLviXDVrZ2grUjtOmaIsNNPdnDCj3Yf2hluBbKhVkU4WLHP52
+ Be8dCvM3mkri9gx6A+Q==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDEzNiBTYWx0ZWRfX0O+qR8OZjrxz
+ 2ExfeVGLqcXGvrQxZhOnepS6urCp4h4d+q5GVu4Mt650YXQnYgjS2MZqwQ4B37rmd/b3JAn8qgh
+ g0bHbfN6iLDCuigOkziYZw7i3bWY3zY=
+X-Proofpoint-GUID: CwP99NTpaWgqnEUOR43pCJ5Nos7VYalF
+X-Proofpoint-ORIG-GUID: EP2twkZXyQdvM6SuE4EfN1TlJXiwlkGK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-16_04,2026-07-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 impostorscore=0 suspectscore=0 adultscore=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 phishscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607160136
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,154 +130,81 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 16, 2026 at 02:18:34PM +0200, Maciej S. Szmigiero wrote:
-> On 15.07.2026 17:30, Peter Xu wrote:
-> > On Tue, Jul 14, 2026 at 10:23:05PM +0200, Maciej S. Szmigiero wrote:
-> > > The VFIO devices in {PRE_COPY,RUNNING}_P2P states can {still,already} accept
-> > > DMA so in the master branch by the time prepare_cb() handlers exit and
-> > > cb() ones start running the VFIO devices are {still,already} capable of
-> > > accepting incoming DMA.
-> > > 
-> > > On the other hand, if you meant the state transition into STOP_COPY on the
-> > > migration source currently initiated from cb() handler then there can be an
-> > > ordering issue in principle.
-> > > 
-> > > It looks like the current master branch mostly avoids this by registering
-> > > vhost-net vm_state_change handler from VirtIODevice and not from its parent
-> > > PCI device, so with the usual PCI topology vhost-net cb() handler will run
-> > > before the VFIO PCI device one (and so still hit DMA-capable VFIO device)
-> > > due to the vhost-net VirtIODevice being one level deeper in the qdev tree.
-> > > It could theoretically be problem with more complex PCI topology though.
-> > 
-> > That's an interesting observation, but neither do I think it's intentional,
-> > nor do I think it guarantees the depth ordering. Consider when a VFIO
-> > device is put under a few layers of PCIe switches, or PCI bridges.  In that
-> > case the VFIO device notifier can have larger depth value v.s. the virtio
-> > device when the virtio device is attached to the root complex.
-> 
-> Yeah, that's why I wrote that it could be a problem with "more complex PCI topology".
-
-Ah yes.
-
-> 
-> Nevertheless, that's probably uncommon enough setup to not generate visible
-> complaints about things being broken.
-> 
-> > 
-> > > 
-> > > > It is also an issue then even before P2P_DMA state introduced, because
-> > > > before that all cb()s can be run at random orders.
-> > > 
-> > > Technically, the order is based on the device qdev tree depth and within
-> > > the same qdev tree depth level it looks like the handler calling order will
-> > > be dependent on the order the registering devices were instantiated.
-> > > 
-> > > This means that even before these P2P states were introduced
-> > > VM configurations that instantiated VFIO/virtio devices in the certain
-> > > "right" order or topology weren't affected.
-> > > 
-> > > So maybe adding these P2P states mostly fixed this issue too?
-> > 
-> > I still think they're two different issues, and I still think with/without
-> > P2P the issue is the same, now I tend to agree this issue exists,
-> > especially if virtio-blk have similar behavior like virtio-net.
-> > 
-> > For one example of virtio-blk DMA to VFIO MMIO regions:
-> > 
-> > https://lore.kernel.org/r/20260616052552.389021-1-gshan@redhat.com
-> > 
-> > Said that, I don't know it's 100% triggerable in this case with notifiers,
-> > but sounds relevant.
-> 
-> It does look like it could trigger this issue indeed since it's DMA done
-> to VFIO device MMIO BAR.
-> However, how easy would be to reproduce this is another question.
-> 
-> > For virtio-net and others, I have less idea.
-> > 
-> > In all cases, I still think there are two issues to fix, and I think we
-> > don't need to fix this problem in one shot. I still don't think they're
-> > directly relevant, at least on the goals.
-> 
-> Sure, let's just not make the possible race situation worse.
-> 
-> > So with what I suggested previously relying on prepare_cb() I believe we
-> > can still do the concurrency issue you're looking for, making sure when
-> > reaching VFIO's cb() it's still at least accepting DMAs (P2P is fine).
-> 
-> But that's more or less the design of this (original) patch set -
-> make the state change to RUNNING_P2P on the target finish already in the
-> prepare_cb() time, make the state change to STOP_COPY on the source begin
-> only in the cb() time?
-
-I am not against the idea in general. I'm against patch 1 where it hijacks
-"depth" into something even more complicated.
-
-The "depth" itself makes sense to be recorded as a value, but I think it's
-already a bit confusing to call it "priority" in VMChangeStateEntry,
-because it isn't: when something has higher "priority", it should always be
-executed before lower priority items.  Here, the current code invert the
-order for !RUN case, so it's in reality "depth", not "priority".
-
-Now patch 1 added yet another extra "adj" concept on top of qdev hierachy's
-"depth", which in fact the caller needs "priority" and callers need to
-explicitly handle that by checking RUNNING and invert things.
-
-That's the part I'm definitely against.  Such code is IMHO not maintainable.
-
-So my point is if we can implement your idea with existing prepare_cb() we
-should just use it.  Even if we want to enhance the priority support for
-cb()s, we shouldn't use patch 1.  I never thought further on that because I
-still assumed relying on prepare_cb() works.
-
-> 
-> > For the other issue you reported, even if existed, I am not yet sure VFIO
-> > is the only special case that got affected.  I think it's possible some
-> > other emulated devices suffer the same even if it has no direct hardware
-> > attached.  Say, there can be device backends got stopped in cb() when VM
-> > stopped, further DMA to it may cause assertions, then it's the same issue
-> > that needs solving, where essentially we may require all such devices to
-> > provide similar P2P states like VFIO to make sure they initiate DMAs and
-> > flush them in a prepare_cb(), then if all devices' prepare_cb() will make
-> > sure no DMA to be initiated anymore, cb()s will have no ordering constraint
-> > on DMAs.
-> 
-> Although the description above is about the migration source the situation
-> on the migration target is essentially a mirror image of it so I will refer
-> to both cases below.
-> 
-> Specifically:
-> * on the source no device should reach non DMA accepting state (like STOP_COPY
-> for VFIO) before all devices reach non DMA generating state (PRE_COPY_P2P-equivalent).
-> 
-> * on the target no device should reach DMA generating state (RUNNING-equivalent)
-> before all devices reach DMA accepting state (RUNNING_P2P-like).
-> 
-> That's why even in the case where non-VFIO devices introduce the equivalent of
-> VFIO P2P states and implement a prepare_cb() callback we still need a (VM-wide)
-> sync point between these callbacks for the benefit of async state changes/threads
-> since no cb()-like async state change should start until all prepare_cb()-like
-> changes finish (including these for other devices).
-
-IIUC, prepare_cb() + cb() is already that "sync point".  After all
-prepare_cb() done, the VM should achieve "DMA quiesced" across the system?
-
-What's missing is we should move all problematic device cb()s "let's flush
-pending DMAs" logic into a prepare_cb(), leaving the real stop logic in
-cb()s.  That's the 2nd problem which I think we can skip until a reproducer
-pops up at least.
-
-VFIO is only special here when it wants to concurrent process of state
-changes.  If you create threads in prepare_cb(), then in cb() you have
-chance to synchronize everything correctly satisfying the "sync point".
-That's not a requirement for most of the rest devices.
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 
 Thanks,
 
--- 
-Peter Xu
+Glenn
+
+On Thu, 2026-07-09 at 17:23 +0200, Emmanuel Blot wrote:
+> Convert the PCA9552 and PCA9535/PCA9555 reset handlers from the legacy
+> device reset hook to the Resettable interface: move each reset body into
+> a ResettableHoldPhase handler and register it through the class's
+> ResettableClass::phases.hold instead of device_class_set_legacy_reset().
+> 
+> No functional change.
+> 
+> Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
+> ---
+>  hw/gpio/pca9552.c | 14 ++++++++------
+>  1 file changed, 8 insertions(+), 6 deletions(-)
+> 
+> diff --git a/hw/gpio/pca9552.c b/hw/gpio/pca9552.c
+> index 3b9b63eb17..66f699bf6a 100644
+> --- a/hw/gpio/pca9552.c
+> +++ b/hw/gpio/pca9552.c
+> @@ -406,9 +406,9 @@ static const VMStateDescription pca9552_vmstate = {
+>      }
+>  };
+>  
+> -static void pca9552_reset(DeviceState *dev)
+> +static void pca9552_reset_hold(Object *obj, ResetType type)
+>  {
+> -    PCA955xState *s = PCA955X(dev);
+> +    PCA955xState *s = PCA955X(obj);
+>  
+>      s->regs[PCA9552_PSC0] = 0xFF;
+>      s->regs[PCA9552_PWM0] = 0x80;
+> @@ -426,9 +426,9 @@ static void pca9552_reset(DeviceState *dev)
+>      s->len = 0;
+>  }
+>  
+> -static void pca9535_reset(DeviceState *dev)
+> +static void pca9535_reset_hold(Object *obj, ResetType type)
+>  {
+> -    PCA955xState *s = PCA955X(dev);
+> +    PCA955xState *s = PCA955X(obj);
+>  
+>      s->regs[PCA9535_INPUT0] = 0xFF;   /* All inputs high (pull-ups) */
+>      s->regs[PCA9535_INPUT1] = 0xFF;   /* All inputs high (pull-ups) */
+> @@ -514,9 +514,10 @@ static void pca955x_class_init(ObjectClass *klass, const void *data)
+>  static void pca9552_class_init(ObjectClass *oc, const void *data)
+>  {
+>      DeviceClass *dc = DEVICE_CLASS(oc);
+> +    ResettableClass *rc = RESETTABLE_CLASS(oc);
+>      PCA955xClass *pc = PCA955X_CLASS(oc);
+>  
+> -    device_class_set_legacy_reset(dc, pca9552_reset);
+> +    rc->phases.hold = pca9552_reset_hold;
+>      dc->vmsd = &pca9552_vmstate;
+>      pc->max_reg = PCA9552_LS3;
+>      pc->pin_count = 16;
+> @@ -526,9 +527,10 @@ static void pca9552_class_init(ObjectClass *oc, const void *data)
+>  static void pca95x5_class_init(ObjectClass *oc, const void *data)
+>  {
+>      DeviceClass *dc = DEVICE_CLASS(oc);
+> +    ResettableClass *rc = RESETTABLE_CLASS(oc);
+>      PCA955xClass *pc = PCA955X_CLASS(oc);
+>  
+> -    device_class_set_legacy_reset(dc, pca9535_reset);
+> +    rc->phases.hold = pca9535_reset_hold;
+>      dc->vmsd = &pca9552_vmstate;
+>      pc->max_reg = PCA9535_CONFIG1;
+>      pc->pin_count = 16;
+> 
 
 
