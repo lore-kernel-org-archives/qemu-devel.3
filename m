@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 015A7C44512
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 14:01:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79042C44512
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 14:04:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkMea-0000l3-0r; Thu, 16 Jul 2026 10:01:32 -0400
+	id 1wkMhQ-00023y-PR; Thu, 16 Jul 2026 10:04:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wkMeX-0000kb-EI; Thu, 16 Jul 2026 10:01:29 -0400
-Received: from smtpout1.mo528.mail-out.ovh.net ([46.105.34.251])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wkMhM-00023X-MD
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 10:04:24 -0400
+Received: from smtpout8.mo536.mail-out.ovh.net ([51.210.91.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wkMeU-0001LY-F9; Thu, 16 Jul 2026 10:01:29 -0400
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net [57.128.106.70])
- by mo528.mail-out.ovh.net (Postfix) with ESMTPS id 4h1F813mvlz62SM;
- Thu, 16 Jul 2026 14:01:21 +0000 (UTC)
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net. [127.0.0.1])
- by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Thu, 16 Jul 2026 14:01:21 +0000 (UTC)
-Received: from mta11.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.249.154])
- by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4h1F806fybz7tBf;
- Thu, 16 Jul 2026 14:01:20 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.7])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wkMhK-0001XU-5j
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 10:04:24 -0400
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net [79.137.60.37])
+ by mo536.mail-out.ovh.net (Postfix) with ESMTPS id 4h1FCP4d39z87y9;
+ Thu, 16 Jul 2026 14:04:17 +0000 (UTC)
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net. [127.0.0.1])
+ by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Thu, 16 Jul 2026 14:04:17 +0000 (UTC)
+Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.188.192])
+ by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4h1FCP3Wm4z1y44; Thu, 16 Jul 2026 14:04:17 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.4])
  (Authenticated sender: clg@kaod.org)
- by mta11.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- C1BCF2403DD2; Thu, 16 Jul 2026 14:01:18 +0000 (UTC)
+ by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id AA1691B43C7B;
+ Thu, 16 Jul 2026 14:04:14 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-104R00558d3656e-3da2-4bb8-83e0-b8cece9cd647,
+ (GARM-113S007e8815a55-d7be-40af-82a7-a9d10b32c296,
  816DE1EE18DD2826DFD8B9EE289546F56902E1FE) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <e709723d-71fd-497a-83a8-e462254eac8c@kaod.org>
-Date: Thu, 16 Jul 2026 16:01:18 +0200
+Message-ID: <94ffa2a9-d534-4f65-8f77-2bbf8a745e99@kaod.org>
+Date: Thu, 16 Jul 2026 16:04:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/5] fsi/cfam: Add CFAM-S model for AST2700
+Subject: Re: [PATCH v1 3/5] hw/sensor: Add UCD90320 model
 To: Mikail Sadic <mikail.sadic@ibm.com>, peter.maydell@linaro.org
 Cc: pbonzini@redhat.com, ninad@linux.ibm.com, titusr@google.com,
  jeuk20.kim@samsung.com, philmd@mailo.com, steven_lee@aspeedtech.com,
@@ -49,7 +49,7 @@ Cc: pbonzini@redhat.com, ninad@linux.ibm.com, titusr@google.com,
  andrew@codeconstruct.com.au, joel@jms.id.au, calebs@us.ibm.com,
  milesg@ibm.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
 References: <20260715155037.2237011-1-mikail.sadic@ibm.com>
- <20260715155037.2237011-3-mikail.sadic@ibm.com>
+ <20260715155037.2237011-4-mikail.sadic@ibm.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -94,30 +94,29 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260715155037.2237011-3-mikail.sadic@ibm.com>
+In-Reply-To: <20260715155037.2237011-4-mikail.sadic@ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 16442923717610155173
+x-ovh-tracer-id: 16492463312808160421
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFUGZPB2GsUNXaVEmgH3FsWmmtHd1YN4Ye896ShwJe5fL8M02SNshlce2dWm39okPF7r5NsqH/xMSHjfLHpRQ0Y3We34xDu+Ct+BSaT0UrB9paC7l7lOtoLbg8PhON8si/1VIcYaxwc5MnZWo6/c9Gk+Zcf0q0REQmscCK2CTGBzjM4WCfuiayLQjqHXPgSDOLN+Vv3tWLMCv7XWo4SnHhdqwKapY2Z4ghAE4y5QMhxnrdggHvJbwjILAVQBU+GnGQkcj1xGu6s/RMkB7Q2oWwqR/G4y2ulrpCOi+8/o1fkTdR3fE4Xzug0NF8Hwla0iPsdir2qQFhSmIFBWnMCpXygGD8l6JGrmWI6sjM0BcwSTDdAgr7wzybbqmR+2EEi3ocrGNWBOgO0BH1T4R+tEpkEpCPfaUpgV2ZXQtHe/438vb+QCXPVOaBS8LOq98f1cMn6e51yHxDVjV3uw9ztCnLyuCIOOvYcQpFgqsZxhoi4npsVgqnY2N+ZtmtFE4cnIOUO9F3G57FofQ9nsZlCGPdeFLeCbuoI2Njndjf0CHb3rcRbUjnwviLiQ7PdDYCYzN90omk7RFozVvEvRYEI7IKdl3C6x3/LS5SC9tAtiFY0ELwcN+E25dCqWRBvMcNpxoN/ux3b/CFCTPjcQD81h9SwTZEmsSe3YiE9TqPWugvMzw
-DKIM-Signature: a=rsa-sha256; bh=HpotnQKvMhIGtDidyHt0ESReYRvTrdhjXvGZr0y5tQM=; 
+X-VR-SPAMCAUSE: dmFkZTFYu6RYzP0DpaOmksmukHbgT54jNuALVIu+GXs+psQ0E9dqEPGz6K+BD1P06cjkuSHa9lnSuVIiHgyfhznBXrT1tc5Fdmbeh6sDHwOxN34+81BkDOpNEdXP/OpUUEJuJXOaKzNxY5JqduiQrEuc8kHqDh1CtoWR9mIGk5/e5IEPmFpo/eN8C+BhIhJaltGqT3Ppg4+HCVfQitgKikZK0KCKElVjrIgVCa1NSjya/MNvDkOPkuDFtmejALNhtO/+4uidfwSmBPH6V52NJQGOUgql8wMglYc91g4uWF6AWFEqrUEcAai71cDCkLeHE7HHJrPbajZ1s0xn/U7VAER7bvAPEvsaMj5XORmgynh8pMV7nDYLsDdCUMkc8Mm5yjR4F3pmKR2DQy/UXtjGzXjUMsn/aRqqp4CRb0bb2TcoNFuh9wogK3YmZi6xX823gYq3Xy+fJM7pZwGMxJP6UV7OwOnxUU8WfJoBd7qMsx10YBY5WCgzJjUX4r6avrS0+6HlN+W2P3QN5/ib4rff0Y4v53nfPlOdcg1mkrsfYOqVwoYfTN4COT32hRV+cHMu/vfbfXfuiEwjry3l3m8ZT63I/+qAjWGiYCBgP/cOqq4cYn/nxK7MaqUMcoPZJ8SU85DAv/2A8czXgOLhTRhajwN9OI9B13dxjoR8yHFQlo2uE3eEdQ
+DKIM-Signature: a=rsa-sha256; bh=RTRJ6unAapuQN1XfdoXsa+5k5dHZA9kpMYBWWBlFlDE=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1784210483; v=1;
- b=graHLifqVjS6sD3e8k/1c99Z5sLVkoANzUdS/5LJkkhbAtUVqs7UhGTfWA9tFCFPBFNyCzrq
- y09xEG4F5UNGAMos6Vj9pm7A+FFrK+vsVfHNOyPBDaaPBwS8/5L3lYkdYw/dJ25vzihXhCevP0T
- Fx1VDzp3pG8kHgvNUM42uHFd/IhS4GaKMxUP6vLzTbkrucfirFB7aK0UUVeXR/zEMSQa6nBQbAR
- bObUKJPCoW4n1fZ5mSMxSLsvoORYe106gNSlSjqmUrjNpT8GELg87EzC2WgXmwcdaq5XKvqCflC
- Y1JNTY1fsrnNfxAoWUu0BLzf+48M+5eSTMZFjDUQCD91w==
-Received-SPF: pass client-ip=46.105.34.251; envelope-from=clg@kaod.org;
- helo=smtpout1.mo528.mail-out.ovh.net
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ t=1784210659; v=1;
+ b=v5VhDm825rlU5HVC7Zj+5ipQPkCqmk2gNhmRU4xR4yR0C2EO8VmyGEFLJ8ArJMqU4Sxqt9ia
+ QL+um66s89o8G02CgsLlx8u/gs3OJMJq1NEA89GidPEtk8F4LsW0JOVzp+IGEmXpvHHkLgXVSFL
+ rg8ACTeE62ncYQythYvjz7petiOMvy0B67V6gRTWJkFIUzWHCL1f3KmGKOzYgf/LdKBONdI7nZ/
+ e4xrbae9BSqKXgGmGBvLr8MDuNJbaNpRNc78YRJWh/UvC6kkApWnew58o+OzzuqZLVtnEK0lsWM
+ UAAdQGYp0rzdAq+Wp5EFBlyB4Js1IilrxtjGEUUHcZUNA==
+Received-SPF: pass client-ip=51.210.91.17; envelope-from=clg@kaod.org;
+ helo=smtpout8.mo536.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,413 +132,314 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ninad,
-
-Since you are the FSI maintainer, Could you please provide feedback ?
-
-Thanks,
-
-C.
-
-
 On 7/15/26 17:50, Mikail Sadic wrote:
-> Introduce TYPE_FSI_CFAM_S as a dedicated QOM type that presents the
-> config table and mailbox scratch registers expected by the new Linux
-> FSI responder framework. FSIMasterState gains a cfam_s field.
-> fsi_master_realize() instantiates both cfam (at offset 0) and cfam-s
-> (at offset 2 MiB) into the OPB-to-FSI aperture. aspeed_ast27x0.c wires
-> up both fsi[0] and fsi[1] APB-to-OPB bridges for the AST2700 SoC.
+> Add a PMBus device model for the TI-UCD90320 24-rail power
+> sequencer. Configures 24 pages with linear vout mode and responds to
+> the vendor-specific UCD9000_DEVICE_ID, NUM_PAGES, MONITOR_CONFIG, and
+> MFR_STATUS commands, allowing the Linux ucd9000 driver to bind and
+> create hwmon sysfs entries.
 > 
 > Signed-off-by: Mikail Sadic <mikail.sadic@ibm.com>
 > ---
->   docs/specs/fsi.rst          |  58 +++++++++++++++
->   include/hw/fsi/cfam-s.h     |  26 +++++++
->   include/hw/fsi/fsi-master.h |   2 +
->   hw/arm/aspeed_ast27x0.c     |  18 +++++
->   hw/fsi/cfam-s.c             | 145 ++++++++++++++++++++++++++++++++++++
->   hw/fsi/fsi-master.c         |  10 ++-
->   hw/fsi/meson.build          |   2 +-
->   7 files changed, 258 insertions(+), 3 deletions(-)
->   create mode 100644 include/hw/fsi/cfam-s.h
->   create mode 100644 hw/fsi/cfam-s.c
+>   MAINTAINERS             |   1 +
+>   docs/specs/index.rst    |   1 +
+>   docs/specs/ucd90320.rst |  36 ++++++++++
+>   hw/i2c/aspeed_i2c.c     |   7 ++
+>   hw/sensor/ucd90320.c    | 144 ++++++++++++++++++++++++++++++++++++++++
+>   hw/arm/Kconfig          |   1 +
+>   hw/sensor/Kconfig       |   4 ++
+>   hw/sensor/meson.build   |   1 +
+>   8 files changed, 195 insertions(+)
+>   create mode 100644 docs/specs/ucd90320.rst
+>   create mode 100644 hw/sensor/ucd90320.c
 > 
-> diff --git a/docs/specs/fsi.rst b/docs/specs/fsi.rst
-> index f7d86d3e37..a8896b67ef 100644
-> --- a/docs/specs/fsi.rst
-> +++ b/docs/specs/fsi.rst
-> @@ -120,3 +120,61 @@ from the BMC. (see the `pdbg source repository`_ for more details)
->   
->   .. _pdbg source repository:
->      https://github.com/open-power/pdbg
-> +
-> +CFAM-S model (AST2700)
-> +----------------------
-> +
-> +The AST2700 uses a CFAM variant known as the CFAM-S, required by the new
-> +Linux FSI responder framework. A dedicated QOM type, ``TYPE_FSI_CFAM_S``
-> +(``"cfam-s"``), implements this alongside the existing ``TYPE_FSI_CFAM``
-> +(``"cfam"``) used by the AST2600 machines.
-> +
-> +``FSIMasterState`` realizes both ``cfam`` and ``cfam-s``. The regular
-> +``cfam`` is mapped at offset 0 into the OPB-to-FSI aperture; ``cfam-s`` is
-> +mapped at offset 2 MiB. The DTS overrides ``fsim0`` with
-> +``compatible = "aspeed,ast2600-fsi-master"`` and ``reg = <0x21800000>``,
-> +pointing the kernel FSI driver at the QEMU APB-to-OPB bridge, which routes
-> +through the FSI master's OPB-to-FSI window to reach the CFAM-S.
-> +
-> +The CFAM-S model presents an 8 MiB region and folds the SID bits ``[22:21]``
-> +so both the SID_BREAK enumeration view (``0x600000``) and the runtime view
-> +(``0x000000``) address the same register space. The config table at folded
-> +offset ``0x000`` contains three CRC4-valid words: a chip_id word with
-> +``MAJOR=9`` (selecting the ``cfam_s`` kernel driver), a responder engine
-> +entry (``TYPE=0x3``), and a mailbox v1 engine entry (``TYPE=0x14``) at
-> +engine address ``0x800``.
-> +
-> +The responder registers at folded offset ``0x400`` implement ``SMODE``,
-> +``SSTAT``, ``SRES``, ``SSISM``, and ``SLBUS`` with store-on-write semantics.
-> +The mailbox scratch registers at folded offset ``0x8e0`` are five stateful
-> +32-bit registers served to the ``ibm,mbox-cfam-s`` kernel driver, which
-> +creates ``/dev/fsi/mbox0``.
-> +
-> +The following commands start the ``huygens-bmc`` machine with the built-in
-> +CFAM-S model. There are no model specific arguments. Please check this
-> +document to learn more about Aspeed ``huygens-bmc`` machine:
-> +(:doc:`../../system/arm/aspeed`)
-> +
-> +.. code-block:: console
-> +
-> +  qemu-system-aarch64 -M huygens-bmc \
-> +    -drive file=image-bmc,if=mtd,format=raw \
-> +    -drive file=ufs.img,if=none,format=raw \
-> +    -nographic
-> +
-> +The CFAM-S appears as follows in the QEMU device tree:
-> +
-> +.. code-block:: console
-> +
-> +  (qemu) info qtree
-> +  bus: main-system-bus
-> +    type System
-> +    ...
-> +    dev: aspeed.apb2opb, id ""
-> +      mmio 0000000021800000/0000000000001000
-> +      bus: opb.0
-> +        type opb
-> +        dev: fsi.master, id ""
-> +          bus: fsi.bus.0
-> +            type fsi.bus
-> +            dev: cfam-s, id ""
-> diff --git a/include/hw/fsi/cfam-s.h b/include/hw/fsi/cfam-s.h
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index ecb8cfdc41..b2861dfc79 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -4059,6 +4059,7 @@ F: hw/i2c/pmbus_device.c
+>   F: hw/sensor/adm1272.c
+>   F: hw/sensor/isl_pmbus_vr.c
+>   F: hw/sensor/max34451.c
+> +F: hw/sensor/ucd90320.c
+>   F: include/hw/i2c/pmbus_device.h
+>   F: include/hw/sensor/isl_pmbus_vr.h
+>   F: tests/qtest/adm1272-test.c
+> diff --git a/docs/specs/index.rst b/docs/specs/index.rst
+> index b7909a108a..4de65e2fdf 100644
+> --- a/docs/specs/index.rst
+> +++ b/docs/specs/index.rst
+> @@ -39,4 +39,5 @@ guest hardware that is specific to QEMU.
+>      riscv-iommu
+>      riscv-aia
+>      aspeed-intc
+> +   ucd90320
+>      iommu-testdev
+> diff --git a/docs/specs/ucd90320.rst b/docs/specs/ucd90320.rst
 > new file mode 100644
-> index 0000000000..3793b01471
+> index 0000000000..fdc0878c75
 > --- /dev/null
-> +++ b/include/hw/fsi/cfam-s.h
-> @@ -0,0 +1,26 @@
-> +/*
-> + * IBM Common FRU Access Macro - S variant (CFAM-S)
-> + *
-> + * Copyright (C) 2026 IBM Corp.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +#ifndef FSI_CFAM_S_H
-> +#define FSI_CFAM_S_H
+> +++ b/docs/specs/ucd90320.rst
+> @@ -0,0 +1,36 @@
+> +Texas Instruments UCD90320 Power Sequencer
+> +==========================================
 > +
-> +#include "system/memory.h"
-> +#include "hw/fsi/fsi.h"
+> +The UCD90320 is a 24-rail PMBus power sequencer. QEMU models it as a PMBus
+> +device (``"ucd90320"``) so the Linux ``ucd9000`` driver can bind and create
+> +``hwmon`` sysfs entries.
 > +
-> +#define TYPE_FSI_CFAM_S "cfam-s"
-> +#define FSI_CFAM_S(obj) OBJECT_CHECK(FSICFAMSState, (obj), TYPE_FSI_CFAM_S)
+> +The model configures 24 PMBus pages (one per rail) with ``VOUT_MODE = 0x00``
+> +(linear, exponent 0). ``READ_VOUT`` and ``MFR_STATUS`` return zero on all
+> +pages.
 > +
-> +#define CFAM_S_MBOX_SCRATCH_NUM 5
+> +Vendor-specific commands handled:
 > +
-> +typedef struct FSICFAMSState {
-> +    FSISlaveState parent;
+> ++------+---------------------------+--------------------------------------------+
+> +| Code | Name                      | Response                                   |
+> ++======+===========================+============================================+
+> +| 0xD5 | ``UCD9000_MONITOR_CONFIG``| Block: one byte ``0x00``                   |
+> ++------+---------------------------+--------------------------------------------+
+> +| 0xD6 | ``UCD9000_NUM_PAGES``     | Byte: ``24``                               |
+> ++------+---------------------------+--------------------------------------------+
+> +| 0xF3 | ``UCD9000_MFR_STATUS``    | Block: four bytes ``0x00 0x00 0x00 0x00``  |
+> ++------+---------------------------+--------------------------------------------+
+> +| 0xFD | ``UCD9000_DEVICE_ID``     | Block: ASCII string ``"UCD90320"``         |
+> ++------+---------------------------+--------------------------------------------+
 > +
-> +    MemoryRegion mr;
-> +    uint32_t mbox_scratch[CFAM_S_MBOX_SCRATCH_NUM];
-> +} FSICFAMSState;
+> +``DEVICE_ID`` uses the vendor-specific code ``0xFD`` rather than the standard
+> +``PMBUS_IC_DEVICE_ID`` (``0xAD``), matching the Linux ``ucd9000`` probe
+> +sequence.
 > +
-> +#endif /* FSI_CFAM_S_H */
-> diff --git a/include/hw/fsi/fsi-master.h b/include/hw/fsi/fsi-master.h
-> index 60ddaa994f..6a2782fdf2 100644
-> --- a/include/hw/fsi/fsi-master.h
-> +++ b/include/hw/fsi/fsi-master.h
-> @@ -11,6 +11,7 @@
->   #include "hw/core/qdev.h"
->   #include "hw/fsi/fsi.h"
->   #include "hw/fsi/cfam.h"
-> +#include "hw/fsi/cfam-s.h"
+> +The UCD90320 is instantiated automatically in the ``huygens-bmc`` machine on
+> +I2C bus 5 at address ``0x11``. To instantiate on a different Aspeed machine:
+> +
+> +.. code-block:: c
+> +
+> +  i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5),
+> +                          "ucd90320", 0x11);
+> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
+> index 27afcaecee..facb54d27e 100644
+> --- a/hw/i2c/aspeed_i2c.c
+> +++ b/hw/i2c/aspeed_i2c.c
+> @@ -365,6 +365,7 @@ static void aspeed_i2c_bus_recv(AspeedI2CBus *bus)
+>       uint32_t reg_pool_ctrl = aspeed_i2c_bus_pool_ctrl_offset(bus);
+>       uint32_t reg_byte_buf = aspeed_i2c_bus_byte_buf_offset(bus);
+>       uint32_t reg_dma_len = aspeed_i2c_bus_dma_len_offset(bus);
+> +    bool first_dma_byte;
+>       int pool_rx_count = SHARED_ARRAY_FIELD_EX32(bus->regs, reg_pool_ctrl,
+>                                                   RX_SIZE) + 1;
 >   
->   #define TYPE_FSI_MASTER "fsi.master"
->   OBJECT_DECLARE_SIMPLE_TYPE(FSIMasterState, FSI_MASTER)
-> @@ -26,6 +27,7 @@ typedef struct FSIMasterState {
->   
->       uint32_t regs[FSI_MASTER_NR_REGS];
->       FSICFAMState cfam;
-> +    FSICFAMSState cfam_s;
->   } FSIMasterState;
->   
->   
-> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-> index dddd7d2106..b908d7d4ff 100644
-> --- a/hw/arm/aspeed_ast27x0.c
-> +++ b/hw/arm/aspeed_ast27x0.c
-> @@ -17,6 +17,7 @@
->   #include "qemu/module.h"
->   #include "qemu/error-report.h"
->   #include "hw/i2c/aspeed_i2c.h"
-> +#include "hw/fsi/aspeed_apb2opb.h"
->   #include "net/net.h"
->   #include "system/qtest.h"
->   #include "system/system.h"
-> @@ -98,6 +99,8 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
->       [ASPEED_DEV_PCIE_MMIO0] = 0x60000000,
->       [ASPEED_DEV_PCIE_MMIO1] = 0x80000000,
->       [ASPEED_DEV_PCIE_MMIO2] = 0xA0000000,
-> +    [ASPEED_DEV_FSI1]      =  0x21800000,
-> +    [ASPEED_DEV_FSI2]      =  0x23800000,
->       [ASPEED_DEV_SPI_BOOT]  =  0x100000000,
->       [ASPEED_DEV_SDRAM]     =  0x400000000,
->   };
-> @@ -559,6 +562,11 @@ static void aspeed_soc_ast2700_init(Object *obj)
->                                sc->silicon_rev);
->       }
->   
-> +    for (i = 0; i < ARRAY_SIZE(s->fsi); i++) {
-> +        object_initialize_child(obj, "fsi[*]", &s->fsi[i],
-> +                                TYPE_ASPEED_APB2OPB);
-> +    }
-> +
->       object_initialize_child(obj, "dpmcu", &s->dpmcu,
->                               TYPE_UNIMPLEMENTED_DEVICE);
->       object_initialize_child(obj, "iomem", &s->iomem,
-> @@ -1132,6 +1140,16 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+> @@ -391,6 +392,7 @@ static void aspeed_i2c_bus_recv(AspeedI2CBus *bus)
 >           }
->       }
 >   
-> +    /* FSI / OPB */
-> +    for (i = 0; i < ARRAY_SIZE(s->fsi); i++) {
-> +        if (!sysbus_realize(SYS_BUS_DEVICE(&s->fsi[i]), errp)) {
-> +            return;
-> +        }
-> +        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->fsi[i]), 0,
-> +                        sc->memmap[ASPEED_DEV_FSI1 + i]);
-> +    }
-> +
-> +
->       aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->dpmcu),
->                                     "aspeed.dpmcu",
->                                     sc->memmap[ASPEED_DEV_DPMCU],
-> diff --git a/hw/fsi/cfam-s.c b/hw/fsi/cfam-s.c
+>           aspeed_i2c_set_rx_dma_dram_offset(bus);
+> +        first_dma_byte = true;
+>           while (bus->regs[reg_dma_len]) {
+>               MemTxResult result;
+>   
+> @@ -407,6 +409,11 @@ static void aspeed_i2c_bus_recv(AspeedI2CBus *bus)
+>                   return;
+>               }
+>   
+> +            /* Mirror first byte to reg_byte_buf for I2C_M_RECV_LEN. */
+> +            if (first_dma_byte) {
+> +                SHARED_ARRAY_FIELD_DP32(bus->regs, reg_byte_buf, RX_BUF, data);
+> +                first_dma_byte = false;
+> +            }
+>               bus->dma_dram_offset++;
+>               bus->regs[reg_dma_len]--;
+>               /* In new mode, keep track of how many bytes we RXed */
+
+
+The I2C part belongs to another patch.
+
+
+> diff --git a/hw/sensor/ucd90320.c b/hw/sensor/ucd90320.c
 > new file mode 100644
-> index 0000000000..bf000d1879
+> index 0000000000..f3b2a5d777
 > --- /dev/null
-> +++ b/hw/fsi/cfam-s.c
-> @@ -0,0 +1,145 @@
+> +++ b/hw/sensor/ucd90320.c
+> @@ -0,0 +1,144 @@
 > +/*
-> + * IBM Common FRU Access Macro - S variant (CFAM-S)
+> + * Texas Instruments UCD90320 24-Rail PMBus Power Sequencer
 > + *
-> + * Copyright (C) 2026 IBM Corp.
+> + * Copyright 2026 IBM Corp.
 > + *
 > + * SPDX-License-Identifier: GPL-2.0-or-later
 > + */
 > +
 > +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "trace.h"
-> +#include "hw/fsi/cfam-s.h"
-> +#include "hw/fsi/fsi.h"
+> +#include "hw/i2c/pmbus_device.h"
+> +#include "qemu/log.h"
+> +#include "qemu/module.h"
 > +
-> +/* bits [22:21] are the slave ID, low 21 bits address registers within it */
-> +#define CFAM_SID_MASK       0x1fffff
-> +#define CFAM_WINDOW_SIZE    0x800000 /* 8 MiB per slave, covers SID 0..3 */
+> +#define TYPE_UCD90320 "ucd90320"
 > +
-> +#define CFAM_RESPONDER_BASE 0x400 /* == FSI_RESPONDER_PAGE_SIZE */
+> +/* UCD90320 has 24 sequenced power-rail pages */
+> +#define UCD90320_NUM_PAGES 24
 > +
-> +/* Config-table word fields (see Linux fsi-master.h) */
-> +#define CFAM_CONF_NEXT          (1u << 31)
-> +#define CFAM_CONF_SLOTS(n)      (((n) & 0xff) << 16)
-> +#define CFAM_CONF_VERSION(v)    (((v) & 0xf) << 12)
-> +#define CFAM_CONF_TYPE(t)       (((t) & 0xff) << 4)
-> +#define CFAM_CHIP_ID_MAJOR(m)   (((m) & 0xf) << 8)
+> +/* Vendor-specific command codes (not in the standard PMBus register table) */
+> +#define UCD9000_MONITOR_CONFIG  0xd5
+> +#define UCD9000_NUM_PAGES       0xd6
+> +#define UCD9000_MFR_STATUS      0xf3
+> +#define UCD9000_DEVICE_ID       0xfd
 > +
-> +/* Engine IDs (include/linux/fsi.h) */
-> +#define FSI_ENGINE_ID_RESPONDER     0x3
-> +#define FSI_ENGINE_ID_MBOXV1        0x14
-> +#define FSI_CHIP_ID_MAJOR_CFAM_S    0x9 /* major == 9 -> CFAM-S */
+> +typedef struct UCD90320State {
+> +    PMBusDevice parent;
+> +} UCD90320State;
 > +
-> +/* Engine layout: 0x000 config table, 0x400 responder, 0x800 mbox */
-> +#define CFAM_MBOX_BASE          0x800
-> +#define CFAM_MBOX_SCRATCH_OFF   0xe0
-> +#define CFAM_MBOX_SCRATCH_BASE  (CFAM_MBOX_BASE + CFAM_MBOX_SCRATCH_OFF)
-> +
-> +static uint8_t cfam_s_crc4(uint8_t c, uint64_t x, int bits)
+> +static void ucd90320_send_block(PMBusDevice *pmdev,
+> +                                const uint8_t *data, uint8_t len)
 > +{
-> +    static const uint8_t tab[16] = {
-> +        0x0, 0x7, 0xe, 0x9, 0xb, 0xc, 0x5, 0x2,
-> +        0x1, 0x6, 0xf, 0x8, 0xa, 0xd, 0x4, 0x3,
-> +    };
 > +    int i;
 > +
-> +    x &= (1ull << bits) - 1;
-> +    bits = (bits + 3) & ~0x3;
-> +    for (i = bits - 4; i >= 0; i -= 4) {
-> +        c = tab[c ^ ((x >> i) & 0xf)];
+> +    pmdev->out_buf[len + pmdev->out_buf_len] = len;
+> +    for (i = len - 1; i >= 0; i--) {
+> +        pmdev->out_buf[i + pmdev->out_buf_len] = data[len - 1 - i];
 > +    }
-> +    return c;
+> +    pmdev->out_buf_len += len + 1;
 > +}
 > +
-> +static uint32_t cfam_s_cfg_word(uint32_t fields)
+> +static uint8_t ucd90320_read_byte(PMBusDevice *pmdev)
 > +{
-> +    return fields | cfam_s_crc4(0, fields >> 4, 28);
-> +}
-> +
-> +static uint64_t fsi_cfam_s_read(void *opaque, hwaddr addr, unsigned size)
-> +{
-> +    FSICFAMSState *cfam = FSI_CFAM_S(opaque);
-> +    uint32_t off = (uint32_t)addr & CFAM_SID_MASK;
-> +    uint32_t val = 0;
-> +
-> +    if (off < CFAM_RESPONDER_BASE) {
-> +        switch (off) {
-> +        case 0x00:
-> +            /* chip-id: NEXT set, MAJOR=9 (CFAM-S) */
-> +            val = cfam_s_cfg_word(CFAM_CONF_NEXT |
-> +                                  CFAM_CHIP_ID_MAJOR(FSI_CHIP_ID_MAJOR_CFAM_S));
-> +            break;
-> +        case 0x04:
-> +            /* responder engine entry */
-> +            val = cfam_s_cfg_word(CFAM_CONF_NEXT | CFAM_CONF_SLOTS(1) |
-> +                                  CFAM_CONF_VERSION(1) |
-> +                                  CFAM_CONF_TYPE(FSI_ENGINE_ID_RESPONDER));
-> +            break;
-> +        case 0x08:
-> +            /* mailbox engine entry, last (NEXT clear) */
-> +            val = cfam_s_cfg_word(CFAM_CONF_SLOTS(1) | CFAM_CONF_VERSION(1) |
-> +                                  CFAM_CONF_TYPE(FSI_ENGINE_ID_MBOXV1));
-> +            break;
-> +        default:
-> +            break;
-> +        }
-> +    } else if (off >= CFAM_MBOX_SCRATCH_BASE &&
-> +               off < CFAM_MBOX_SCRATCH_BASE + CFAM_S_MBOX_SCRATCH_NUM * 4) {
-> +        val = cfam->mbox_scratch[(off - CFAM_MBOX_SCRATCH_BASE) / 4];
-> +    }
-> +
-> +    trace_fsi_cfam_config_read(addr, size);
-> +    return val;
-> +}
-> +
-> +static void fsi_cfam_s_write(void *opaque, hwaddr addr, uint64_t data,
-> +                             unsigned size)
-> +{
-> +    FSICFAMSState *cfam = FSI_CFAM_S(opaque);
-> +    uint32_t off = (uint32_t)addr & CFAM_SID_MASK;
-> +
-> +    if (off >= CFAM_MBOX_SCRATCH_BASE &&
-> +        off < CFAM_MBOX_SCRATCH_BASE + CFAM_S_MBOX_SCRATCH_NUM * 4) {
-> +        cfam->mbox_scratch[(off - CFAM_MBOX_SCRATCH_BASE) / 4] = (uint32_t)data;
-> +    }
-> +    trace_fsi_cfam_config_write(addr, size, data);
-> +}
-> +
-> +static const MemoryRegionOps cfam_s_ops = {
-> +    .read = fsi_cfam_s_read,
-> +    .write = fsi_cfam_s_write,
-> +    .endianness = DEVICE_BIG_ENDIAN,
-> +    .valid.min_access_size = 1,
-> +    .valid.max_access_size = 4,
-> +    .impl.min_access_size = 1,
-> +    .impl.max_access_size = 4,
-> +};
-> +
-> +static void fsi_cfam_s_realize(DeviceState *dev, Error **errp)
-> +{
-> +    FSICFAMSState *cfam = FSI_CFAM_S(dev);
-> +
-> +    memory_region_init_io(&cfam->mr, OBJECT(cfam), &cfam_s_ops, cfam,
-> +                          TYPE_FSI_CFAM_S, CFAM_WINDOW_SIZE);
+> +    switch (pmdev->code) {
+> +    case UCD9000_DEVICE_ID: {
+> +        static const uint8_t id[] = "UCD90320";
 
-This could be in a instance_init() handler.
+this is hacky. use device constant reset values or class fields.
+Same below.
 
+> +        ucd90320_send_block(pmdev, id, sizeof(id) - 1);
+> +        pmbus_idle(pmdev);
+> +        return 0;
+> +    }
+> +    case UCD9000_NUM_PAGES:
+> +        pmbus_send8(pmdev, UCD90320_NUM_PAGES);
+> +        pmbus_idle(pmdev);
+> +        return 0;
+> +
+> +    case UCD9000_MONITOR_CONFIG: {
+> +        static const uint8_t cfg[] = { 0x00 };
+> +        ucd90320_send_block(pmdev, cfg, sizeof(cfg));
+> +        pmbus_idle(pmdev);
+> +        return 0;
+> +    }
+> +    case UCD9000_MFR_STATUS: {
+> +        static const uint8_t status[] = { 0x00, 0x00, 0x00, 0x00 };
+> +        ucd90320_send_block(pmdev, status, sizeof(status));
+> +        pmbus_idle(pmdev);
+> +        return 0;
+> +    }
+> +    default:
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: reading from unsupported register: 0x%02x\n",
+> +                      __func__, pmdev->code);
+> +        break;
+> +    }
+> +    return 0xFF;
 > +}
 > +
-> +static void fsi_cfam_s_class_init(ObjectClass *klass, const void *data)
+> +static int ucd90320_write_data(PMBusDevice *pmdev, const uint8_t *buf,
+> +                               uint8_t len)
 > +{
+> +    if (len == 0) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: writing empty data\n", __func__);
+> +        return -1;
+> +    }
+> +
+> +    pmdev->code = buf[0];
+> +
+> +    if (len == 1) {
+> +        return 0;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +static void ucd90320_exit_reset(Object *obj, ResetType type)
+> +{
+> +    PMBusDevice *pmdev = PMBUS_DEVICE(obj);
+> +
+> +    pmdev->capability = 0x20; /* PEC supported */
+> +
+> +    for (int i = 0; i < UCD90320_NUM_PAGES; i++) {
+> +        pmdev->pages[i].operation     = 0x80; /* on */
+> +        pmdev->pages[i].on_off_config = 0x1a;
+> +        pmdev->pages[i].vout_mode     = 0x00; /* linear mode, exponent=0 */
+> +        pmdev->pages[i].read_vout     = 0;    /* rails off, pgood=0 */
+> +    }
+> +}
+> +
+> +static void ucd90320_init(Object *obj)
+> +{
+> +    PMBusDevice *pmdev = PMBUS_DEVICE(obj);
+> +    uint64_t flags = PB_HAS_VOUT | PB_HAS_VOUT_MODE |
+> +                     PB_HAS_STATUS_MFR_SPECIFIC;
+> +
+> +    for (int i = 0; i < UCD90320_NUM_PAGES; i++) {
+> +        pmbus_page_config(pmdev, i, flags);
+> +    }
+> +}
+> +
+> +static void ucd90320_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    ResettableClass *rc = RESETTABLE_CLASS(klass);
 > +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    dc->bus_type = TYPE_FSI_BUS;
-> +    dc->realize = fsi_cfam_s_realize;
+> +    PMBusDeviceClass *k = PMBUS_DEVICE_CLASS(klass);
+> +
+> +    dc->desc = "Texas Instruments UCD90320 24-Rail Power Sequencer";
+> +    k->write_data = ucd90320_write_data;
+> +    k->receive_byte = ucd90320_read_byte;
+> +    k->device_num_pages = UCD90320_NUM_PAGES;
+> +    rc->phases.exit = ucd90320_exit_reset;
 > +}
 > +
-> +static const TypeInfo fsi_cfam_s_info = {
-> +    .name = TYPE_FSI_CFAM_S,
-> +    .parent = TYPE_FSI_SLAVE,
-> +    .instance_size = sizeof(FSICFAMSState),
-> +    .class_init = fsi_cfam_s_class_init,
+> +static const TypeInfo ucd90320_info = {
+> +    .name          = TYPE_UCD90320,
+> +    .parent        = TYPE_PMBUS_DEVICE,
+> +    .instance_size = sizeof(UCD90320State),
+> +    .instance_init = ucd90320_init,
+> +    .class_init    = ucd90320_class_init,
 > +};
 > +
-> +static void fsi_cfam_s_register_types(void)
+> +static void ucd90320_register_types(void)
 > +{
-> +    type_register_static(&fsi_cfam_s_info);
+> +    type_register_static(&ucd90320_info);
 > +}
 > +
-> +type_init(fsi_cfam_s_register_types);
-> diff --git a/hw/fsi/fsi-master.c b/hw/fsi/fsi-master.c
-> index 083a5507ab..f7c19e24b0 100644
-> --- a/hw/fsi/fsi-master.c
-> +++ b/hw/fsi/fsi-master.c
-> @@ -8,6 +8,7 @@
->   #include "qemu/osdep.h"
->   #include "qapi/error.h"
->   #include "qemu/log.h"
-> +#include "qemu/units.h"
->   #include "trace.h"
->   
->   #include "hw/fsi/fsi-master.h"
-> @@ -112,8 +113,6 @@ static void fsi_master_init(Object *o)
->   {
->       FSIMasterState *s = FSI_MASTER(o);
->   
-> -    object_initialize_child(o, "cfam", &s->cfam, TYPE_FSI_CFAM);
-> -
-
-euh. Don't to that. Why ?
-
->       qbus_init(&s->bus, sizeof(s->bus), TYPE_FSI_BUS, DEVICE(s), NULL);
->   
->       memory_region_init_io(&s->iomem, OBJECT(s), &fsi_master_ops, s,
-> @@ -125,12 +124,19 @@ static void fsi_master_realize(DeviceState *dev, Error **errp)
->   {
->       FSIMasterState *s = FSI_MASTER(dev);
->   
-> +    object_initialize_child(OBJECT(dev), "cfam", &s->cfam, TYPE_FSI_CFAM);
-
-no again.>       if (!qdev_realize(DEVICE(&s->cfam), BUS(&s->bus), errp)) {
->           return;
->       }
->   
->       /* address ? */
->       memory_region_add_subregion(&s->opb2fsi, 0, &s->cfam.mr);
+> +type_init(ucd90320_register_types)
+> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+> index 82e0bc2e70..ac44740547 100644
+> --- a/hw/arm/Kconfig
+> +++ b/hw/arm/Kconfig
+> @@ -555,6 +555,7 @@ config ASPEED_SOC
+>       select LED
+>       select PMBUS
+>       select MAX31785
+> +    select UCD90320
+>       select FSI_APB2OPB_ASPEED
+>       select AT24C
+>       select PCI_EXPRESS
+> diff --git a/hw/sensor/Kconfig b/hw/sensor/Kconfig
+> index bc6331b4ab..135ffa7d5d 100644
+> --- a/hw/sensor/Kconfig
+> +++ b/hw/sensor/Kconfig
+> @@ -43,3 +43,7 @@ config ISL_PMBUS_VR
+>   config MAX31785
+>       bool
+>       depends on PMBUS
 > +
-> +    object_initialize_child(OBJECT(dev), "cfam-s", &s->cfam_s, TYPE_FSI_CFAM_S);
-
-no again.
-
-> +    if (!qdev_realize(DEVICE(&s->cfam_s), BUS(&s->bus), errp)) {
-> +        return;
-> +    }
-> +    memory_region_add_subregion(&s->opb2fsi, 2 * MiB, &s->cfam_s.mr);
->   }
->   
->   static void fsi_master_reset(DeviceState *dev)
-> diff --git a/hw/fsi/meson.build b/hw/fsi/meson.build
-> index a18a076552..585d549405 100644
-> --- a/hw/fsi/meson.build
-> +++ b/hw/fsi/meson.build
-> @@ -1,2 +1,2 @@
-> -system_ss.add(when: 'CONFIG_FSI', if_true: files('lbus.c','fsi.c','cfam.c','fsi-master.c'))
-> +system_ss.add(when: 'CONFIG_FSI', if_true: files('lbus.c','fsi.c','cfam.c','cfam-s.c','fsi-master.c'))
->   system_ss.add(when: 'CONFIG_FSI_APB2OPB_ASPEED', if_true: files('aspeed_apb2opb.c'))
+> +config UCD90320
+> +    bool
+> +    depends on PMBUS
+> diff --git a/hw/sensor/meson.build b/hw/sensor/meson.build
+> index 420fdc3359..c0583161d3 100644
+> --- a/hw/sensor/meson.build
+> +++ b/hw/sensor/meson.build
+> @@ -8,3 +8,4 @@ system_ss.add(when: 'CONFIG_MAX34451', if_true: files('max34451.c'))
+>   system_ss.add(when: 'CONFIG_LSM303DLHC_MAG', if_true: files('lsm303dlhc_mag.c'))
+>   system_ss.add(when: 'CONFIG_ISL_PMBUS_VR', if_true: files('isl_pmbus_vr.c'))
+>   system_ss.add(when: 'CONFIG_MAX31785', if_true: files('max31785.c'))
+> +system_ss.add(when: 'CONFIG_UCD90320', if_true: files('ucd90320.c'))
 
 
