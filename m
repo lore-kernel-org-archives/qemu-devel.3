@@ -4,33 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF118C44512
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 17:10:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D3D6C44512
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 17:10:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkPav-0007I3-QH; Thu, 16 Jul 2026 13:09:57 -0400
+	id 1wkPau-0007Hn-EY; Thu, 16 Jul 2026 13:09:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kariyam@oss.nttdata.com>)
- id 1wkPaq-0007Dh-HX
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 13:09:53 -0400
+ id 1wkPar-0007ER-MI; Thu, 16 Jul 2026 13:09:53 -0400
 Received: from oss.nttdata.com ([49.212.34.109])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <kariyam@oss.nttdata.com>)
- id 1wkPao-0007Rk-Dq
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 13:09:52 -0400
+ id 1wkPao-0007Rg-NS; Thu, 16 Jul 2026 13:09:53 -0400
 Received: by oss.nttdata.com (Postfix, from userid 1024)
- id 72F982020243; Fri, 17 Jul 2026 02:09:24 +0900 (JST)
+ id 5766E2020242; Fri, 17 Jul 2026 02:09:24 +0900 (JST)
 From: Mitsuru Kariya <Mitsuru.Kariya@oss.nttdata.com>
 To: qemu-devel@nongnu.org
 Cc: Mitsuru Kariya <Mitsuru.Kariya@oss.nttdata.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 4/4] tests/qtest: drive_del: Add regression test for empty
- CD-ROM BlockBackend leak
-Date: Fri, 17 Jul 2026 02:09:23 +0900
-Message-ID: <20260716170923.2125858-5-Mitsuru.Kariya@oss.nttdata.com>
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ xen-devel@lists.xenproject.org (open list:X86 Xen CPUs),
+ qemu-block@nongnu.org (open list:Block layer core)
+Subject: [PATCH 3/4] xen-block: Fix BlockBackend leak on unplug of empty CD-ROM
+Date: Fri, 17 Jul 2026 02:09:22 +0900
+Message-ID: <20260716170923.2125858-4-Mitsuru.Kariya@oss.nttdata.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260716170923.2125858-1-Mitsuru.Kariya@oss.nttdata.com>
 References: <20260716170923.2125858-1-Mitsuru.Kariya@oss.nttdata.com>
@@ -60,93 +61,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a regression test for the BlockBackend reference leak in
-scsi_cd_realize(): create an empty scsi-cd (which gets an anonymous
-BlockBackend), insert a medium, unplug the device, and check that the
-medium's blockdev node can then be deleted.  Before the fix the leaked
-BlockBackend keeps the node in use and blockdev-del fails.
+When a Xen CD-ROM is created without a backing drive (an empty CD-ROM),
+xen_cdrom_realize() allocates an anonymous BlockBackend for the empty
+drive with blk_new() and attaches it to the device using
+blk_attach_dev().
+
+blk_new() returns the backend with refcnt == 1 (the creation reference
+owned by the caller) and blk_attach_dev() takes an additional reference
+for the device.  The creation reference was never released, so on
+unplug blk_detach_dev() only drops the device's reference and the
+BlockBackend is leaked.
+
+Release the creation reference with blk_unref() right after
+blk_attach_dev(), matching the idiom already used in set_drive_helper()
+in hw/core/qdev-properties-system.c ("If we need to keep a reference,
+blk_attach_dev() took it").
 
 Signed-off-by: Mitsuru Kariya <Mitsuru.Kariya@oss.nttdata.com>
 ---
- tests/qtest/drive_del-test.c | 58 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
+ hw/block/xen-block.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tests/qtest/drive_del-test.c b/tests/qtest/drive_del-test.c
-index 30d9451ddd..24793da852 100644
---- a/tests/qtest/drive_del-test.c
-+++ b/tests/qtest/drive_del-test.c
-@@ -320,6 +320,62 @@ static void test_empty_device_del(void)
-     qtest_quit(qts);
- }
+diff --git a/hw/block/xen-block.c b/hw/block/xen-block.c
+index abf9df2eee..e5e14e47ee 100644
+--- a/hw/block/xen-block.c
++++ b/hw/block/xen-block.c
+@@ -763,6 +763,7 @@ static void xen_cdrom_realize(XenBlockDevice *blockdev, Error **errp)
  
-+static void test_insert_medium_and_device_del(void)
-+{
-+    QTestState *qts;
-+    QDict *response;
-+
-+    if (!has_device_builtin("virtio-scsi")) {
-+        g_test_skip("Device virtio-scsi is not available");
-+        return;
-+    }
-+
-+    /* An empty scsi-cd creates an anonymous BlockBackend at realize. */
-+    qts = qtest_initf("-device virtio-scsi-%s -device scsi-cd,id=dev0",
-+                      qvirtio_get_dev_type());
-+
-+    /* Create the blockdev node to be inserted as a medium. */
-+    blockdev_add_with_media(qts);
-+
-+    /* Open tray. */
-+    response = qtest_qmp(qts, "{'execute': 'blockdev-open-tray',"
-+                              " 'arguments': {'id': 'dev0'}}");
-+    g_assert(response);
-+    g_assert(qdict_haskey(response, "return"));
-+    qobject_unref(response);
-+
-+    /*
-+     * Insert a medium into the empty drive.  This adds a reference from
-+     * the anonymous BlockBackend to the blockdev node.
-+     */
-+    response = qtest_qmp(qts, "{'execute': 'blockdev-insert-medium',"
-+                              " 'arguments': {'id': 'dev0',"
-+                              "               'node-name': 'drive0'}}");
-+    g_assert(response);
-+    g_assert(qdict_haskey(response, "return"));
-+    qobject_unref(response);
-+
-+    /*
-+     * Unplug the device.  This drops the last reference to the anonymous
-+     * BlockBackend, so it is deleted and releases its reference to the
-+     * blockdev node.
-+     */
-+    device_del(qts, false);
-+
-+    /*
-+     * If the BlockBackend leaked, drive0 is still in use here and
-+     * blockdev-del fails.
-+     */
-+    response = qtest_qmp(qts, "{'execute': 'blockdev-del',"
-+                              " 'arguments': {'node-name': 'drive0'}}");
-+    g_assert(response);
-+    g_assert(qdict_haskey(response, "return"));
-+    qobject_unref(response);
-+    g_assert(!has_blockdev(qts));
-+
-+    qtest_quit(qts);
-+}
-+
- static void test_device_add_and_del(void)
- {
-     QTestState *qts;
-@@ -516,6 +572,8 @@ int main(int argc, char **argv)
-                        test_drive_add_device_add_and_del);
-         qtest_add_func("/device_del/empty",
-                        test_empty_device_del);
-+        qtest_add_func("/device_del/insert_medium",
-+                       test_insert_medium_and_device_del);
-         qtest_add_func("/device_del/blockdev",
-                        test_blockdev_add_device_add_and_del);
+         rc = blk_attach_dev(conf->blk, DEVICE(blockdev));
+         assert(rc == 0);
++        blk_unref(conf->blk);
+     }
  
+     blockdev->info = VDISK_READONLY | VDISK_CDROM;
 -- 
 2.43.0
 
