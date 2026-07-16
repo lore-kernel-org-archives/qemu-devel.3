@@ -4,92 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8774C44501
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 13:27:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19083C4450A
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 13:30:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkM76-0006ix-Lz; Thu, 16 Jul 2026 09:26:56 -0400
+	id 1wkMAM-0007lM-O5; Thu, 16 Jul 2026 09:30:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <caojunze424@gmail.com>)
- id 1wkM74-0006iI-Ld
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 09:26:54 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <caojunze424@gmail.com>)
- id 1wkM72-0005Hi-Er
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 09:26:54 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2cad85b7b5aso8962275ad.1
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 06:26:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wkMAL-0007jz-GI
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 09:30:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wkMAJ-0005Ye-1e
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 09:30:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784208613;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Mx+c5m/N8NFdRTUudQi0Kcf3Bv0CqHFJMH5XXZ7eH+E=;
+ b=DvBJkr1dmbz5bqYIupQ3n75Z1c4AtWhZGyugFWsFQkueqm4feoB9JRLAe24b+lQbibbzbl
+ OIsDTdhJ+/ir4+3OqsOEbqMScl3iLC3w9ZPT6IrVYqc6ydxdyAlaZw9xgISDrowzgUqe6n
+ VPXxIENxzCbP2YI8pUwJ3RFLEb855So=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-317-s9jj3jQFOhWMmcq0CGOiJg-1; Thu, 16 Jul 2026 09:30:11 -0400
+X-MC-Unique: s9jj3jQFOhWMmcq0CGOiJg-1
+X-Mimecast-MFC-AGG-ID: s9jj3jQFOhWMmcq0CGOiJg_1784208611
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-51c1d7886cdso136321441cf.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 06:30:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784208411; x=1784813211; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=CvShPGpwKNFXEzFauLDR7uPosp0H+g1u6SP4L/tTglA=;
- b=fifAUhFruBZcCqNwHdrklBkoQpdtuNOMhXtMYQ/TdgSIepMVi4nW60bcf8xL9QTveT
- sYHdELcYWNBXm4XYmgNtcXOdiQY2VeYAYjrFR7Qx6SXNQu94eZ2uqUDEY2/Semp4fHHV
- VjXseOePUSBdhTETxdW0VpzuFFnrZIMAF1oNfWQvEsHPD3R9NaEMgCT3poVLRvBt6/bQ
- bw/hFycnMwDXQ0q40KaWfJGZB6+8KpiLjQJnEq340TNC47XWn1dHdJx8pvx+4HA3+jer
- T6dr4YV3XfaJOrH688lXpGeJ8qwcaf2rUfxd7qrEDqvCK447YC9Y1pb2RQWztVcVTgZU
- 4nYQ==
+ d=redhat.com; s=google; t=1784208611; x=1784813411; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=Mx+c5m/N8NFdRTUudQi0Kcf3Bv0CqHFJMH5XXZ7eH+E=;
+ b=r6zVQgCbmsl0fmg5xX35+xZ2NZbe334+JNfjC2a4Z2sM1RwLjkbcr4yGu6+TtwMUMS
+ v7cVwZ3zuTtjQN0qxbml23hjJjGnULjV1ZPIQH3oXgf+7SYdVKJHstS3onavPKLyXBtc
+ YUKabENuUbW9lBvfR3qo17BUWal6HeKI2q0Lcv/1/yHwhvrKWWd+tmziIrFsfDKWTjF7
+ vUTe6xZ+O2TYdidoFBdceshQTyP9DeAhHcMfr9hiHv1FVLB6/qA0VJecuIp37zcftGzi
+ v428omIpydk4n/rqQzRfM2cUQ6id74p5cVAIonVm2dWG8y/J9ZgjLZdJEuy5c9eEIen6
+ ulsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784208411; x=1784813211;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=CvShPGpwKNFXEzFauLDR7uPosp0H+g1u6SP4L/tTglA=;
- b=Xl744nkGlQWlQu6ERFiiprwi+WSPLy+fG9GjNHHrCSN6p6HjEnU6US/O0OHPnXZiQF
- i2jD6lUQqFH7ny9Yc166awyHvtFv8blVma0zYxbDsLX3jajaFCk5kWQpr3w+QpdaHcFE
- BzwCsG4GWMXaBUpjzsvFWMr8fvbrriqcMkYRrAZvetsOn72wC1kSJyk3GbeS+HHGBLLV
- mRNOhmgY9nC4IFuNeQG90qqOF0UxBWIwPy873x6OVU55MZJbiK/JUUU5ybEictWdGLBC
- ESWiwI4gFUBUxDpz6/HBbLTCxDWEn9oYiEUUKTblUiKMMa53dCMgZ/rXFvFYOt1DZhJH
- OALw==
-X-Gm-Message-State: AOJu0YyccpgJFCByavvaCZf3hoMJ/JR2+L1JIqLwrKE+EhHFRfIgkDHE
- EYJj8qJtHVzPc7ZjTDUFLAouxa4nBKMkKCCclxateF1724qCR1yuauGsjw7lT9rz7RF4UA==
-X-Gm-Gg: AfdE7cnUjTK/TCRbcP9oiCcGw1vEWqh6d1PDyL+5cLCMD586GGofLK/NtMcXci0sIJu
- kCifGyX26BedSCjEMQte3AlKO9qUG+5tDJa1GFi3QBBggGCvY6EAqcNaILQoOg06I2FMYXeXBfS
- U8ckE43rI7yetlBgsD/HDnIxM7QnsOxluYSVSiAqqY+sn7WUuEAnNAsvqOoGUrvvnKrr4Tv7Zgp
- +snNILNKQGNJ8YVaWbx9uFXIRqXi9aXlWrs0/7Njfi+A36WVzhiEy4vwlCpsxfNGJtREQrTchTD
- nZ49uQCvnZKyOysZE5nlV1RyE3cBPmdZyZ5+jNjDJAqYvtxGMMXLm9YzSVLliWHBvXuDC8qrXDT
- n32kZoYM0Zo5Ivd2HBkJ9bgJkm4cRBrKMXJwKtovTSYBOhiyvC1ksewPMLxNwkTNQLxabHrLcb6
- hHidgFPOM3n+MSxTTv/eOgMzpnCA5/
-X-Received: by 2002:a17:903:2b0e:b0:2cc:e3b6:f305 with SMTP id
- d9443c01a7336-2ce9f038e25mr170767415ad.4.1784208410993; 
- Thu, 16 Jul 2026 06:26:50 -0700 (PDT)
-Received: from DESKTOP-JUS09M1.tail12b54b.ts.net ([38.34.7.236])
- by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13cd4344b8bsm11336706c88.13.2026.07.16.06.26.47
+ d=1e100.net; s=20251104; t=1784208611; x=1784813411;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Mx+c5m/N8NFdRTUudQi0Kcf3Bv0CqHFJMH5XXZ7eH+E=;
+ b=pKRabxuUP/yfLxr0Dt19srwWV8PKfc16RbSn2Ve/pQG/zsLYwjJ5h8RRV9vrLPxtSw
+ GXv6RaHZbLXhMPoXC1lnduVfsAZecgyDxxG0VrJPI82qD72FV1ZHr/tqrtwQWoKaXYft
+ 8DNgu5NBvYs+MgB8tUDZKPl1xmHRF2pFQxxag2LMbxeVgzTOADd3gtg7pS67ZxOyj4LO
+ fCQBI1uCY/s9MRVp50XTKucWqOmRGqqEhs72cXdC5u8t5iOTmC9ofD66vVHCzegEGlcB
+ q9gxvN2Hu/NsvRytZPSXL6Hm44j6L78ZwpPoW10xo0OR7AWfiJlbCxmRTe3WnBB+5zwE
+ q6MQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqH8EKMGWUK4q99zJku/CF7VCECTCP+JcL1bORKCzyDDw1k6D5U+bW/llU6GadCnL/PeUmm3lH6zNNV@nongnu.org
+X-Gm-Message-State: AOJu0Yy/gO0i594pGqCRyxuFth74Y/lftMKGaCflG6yL2F4W1fjAI4Df
+ uN388oCIaf0KNX8NOeaKQI/Vr+kq2de8Dy1IODBKH+0Mt0b2RmCcYm0fgtSSegTwjWGo0MsD1Ck
+ iYMhIeEnjk0Zgh3onVr/PIj5N0Arbl4IHoeV3YUt7je3IEDtRU+YIxXSW
+X-Gm-Gg: AfdE7ckG6+cbQG8wxLcgt4m+Vp4byPZEjmf59R1iYwylKwCa+yET1lSbSdJivjrns/T
+ Wt9Cx2rU4Xaaxb6uZFpisRHKk8wHhefDAfgxMxnb5iZiO3U9UQqcvBR5XG4GNZKyhfjIfi/Ot3O
+ wk8Q06bA2fvXfyN+jIcYJTGfJ+4N1wqpBT60ZImDc8mUVoj+gn1Jjnd5Jauau1P2MkQIDiOmEHF
+ dUxmkCglQhS+UiSnxEduDHdLaXMNpTMCul5pLl1B4glSjJDmPT/p5UJ8pqzDx4VhSwFOU49Cxb8
+ vI9l2qlMBBi0Qq0RltS11VlhJQX1xknCAhbzK3g9VVZKx2qHcXpw0NomyQjAZvd9HhgX
+X-Received: by 2002:ac8:5a8f:0:b0:51c:7b12:5fda with SMTP id
+ d75a77b69052e-51e4f12cda6mr75238621cf.86.1784208609906; 
+ Thu, 16 Jul 2026 06:30:09 -0700 (PDT)
+X-Received: by 2002:ac8:5a8f:0:b0:51c:7b12:5fda with SMTP id
+ d75a77b69052e-51e4f12cda6mr75236451cf.86.1784208608076; 
+ Thu, 16 Jul 2026 06:30:08 -0700 (PDT)
+Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-51caacdacf7sm160021361cf.11.2026.07.16.06.30.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Jul 2026 06:26:50 -0700 (PDT)
-From: Junze Cao <caojunze424@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, chao.liu@processmission.com,
- pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, liwei1518@gmail.com,
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
- farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com,
- Junze Cao <caojunze424@gmail.com>
-Subject: [PATCH 3/3] tests/qtest: Add K230 DDR controller tests
-Date: Thu, 16 Jul 2026 21:24:23 +0800
-Message-ID: <20260716132423.931427-4-caojunze424@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260716132423.931427-1-caojunze424@gmail.com>
-References: <20260716132423.931427-1-caojunze424@gmail.com>
+ Thu, 16 Jul 2026 06:30:07 -0700 (PDT)
+Date: Thu, 16 Jul 2026 09:30:03 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Fabiano Rosas <farosas@suse.de>, Alex Williamson <alex@shazbot.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 2/2] vfio/migration: Parallelize device state transitions
+Message-ID: <aljc2-4XfpSkX_ay@x1.local>
+References: <ac677bf9-1372-4905-a0b8-874a74be07be@maciej.szmigiero.name>
+ <ah86Z0r5sMnxwgo-@x1.local>
+ <c739f4fe-1f43-45c4-b98f-109366526405@maciej.szmigiero.name>
+ <e79a3746-9c7e-46a5-ad81-537b9d3affdb@maciej.szmigiero.name>
+ <akvWlciUvxjDbBBZ@x1.local>
+ <e602d0cd-dfc2-441d-a017-067e55418dad@maciej.szmigiero.name>
+ <alZssI9OmGJyD-rc@x1.local>
+ <19b76c19-4c7b-4a48-8c77-7db8746ff570@maciej.szmigiero.name>
+ <alenmdWqD-x3bYll@x1.local>
+ <5513c20b-0f5c-4bf2-93fc-d1619e3319c1@maciej.szmigiero.name>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=caojunze424@gmail.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <5513c20b-0f5c-4bf2-93fc-d1619e3319c1@maciej.szmigiero.name>
+Received-SPF: permerror client-ip=170.10.129.124;
+ envelope-from=peterx@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,281 +128,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add qtests for DDRC and PHY reset values, register access policy, the
-software-update handshake, and PHY register ownership.
+On Thu, Jul 16, 2026 at 02:18:34PM +0200, Maciej S. Szmigiero wrote:
+> On 15.07.2026 17:30, Peter Xu wrote:
+> > On Tue, Jul 14, 2026 at 10:23:05PM +0200, Maciej S. Szmigiero wrote:
+> > > The VFIO devices in {PRE_COPY,RUNNING}_P2P states can {still,already} accept
+> > > DMA so in the master branch by the time prepare_cb() handlers exit and
+> > > cb() ones start running the VFIO devices are {still,already} capable of
+> > > accepting incoming DMA.
+> > > 
+> > > On the other hand, if you meant the state transition into STOP_COPY on the
+> > > migration source currently initiated from cb() handler then there can be an
+> > > ordering issue in principle.
+> > > 
+> > > It looks like the current master branch mostly avoids this by registering
+> > > vhost-net vm_state_change handler from VirtIODevice and not from its parent
+> > > PCI device, so with the usual PCI topology vhost-net cb() handler will run
+> > > before the VFIO PCI device one (and so still hit DMA-capable VFIO device)
+> > > due to the vhost-net VirtIODevice being one level deeper in the qdev tree.
+> > > It could theoretically be problem with more complex PCI topology though.
+> > 
+> > That's an interesting observation, but neither do I think it's intentional,
+> > nor do I think it guarantees the depth ordering. Consider when a VFIO
+> > device is put under a few layers of PCIe switches, or PCI bridges.  In that
+> > case the VFIO device notifier can have larger depth value v.s. the virtio
+> > device when the virtio device is attached to the root complex.
+> 
+> Yeah, that's why I wrote that it could be a problem with "more complex PCI topology".
 
-Exercise PHY training and mailbox acknowledgement through the DFI
-initialization sequence. Include negative coverage to ensure DFI cannot
-complete before PHY training or enter Normal mode before completion is
-enabled.
+Ah yes.
 
-Signed-off-by: Junze Cao <caojunze424@gmail.com>
----
- MAINTAINERS                 |   1 +
- tests/qtest/k230-ddr-test.c | 226 ++++++++++++++++++++++++++++++++++++
- tests/qtest/meson.build     |   3 +-
- 3 files changed, 229 insertions(+), 1 deletion(-)
- create mode 100644 tests/qtest/k230-ddr-test.c
+> 
+> Nevertheless, that's probably uncommon enough setup to not generate visible
+> complaints about things being broken.
+> 
+> > 
+> > > 
+> > > > It is also an issue then even before P2P_DMA state introduced, because
+> > > > before that all cb()s can be run at random orders.
+> > > 
+> > > Technically, the order is based on the device qdev tree depth and within
+> > > the same qdev tree depth level it looks like the handler calling order will
+> > > be dependent on the order the registering devices were instantiated.
+> > > 
+> > > This means that even before these P2P states were introduced
+> > > VM configurations that instantiated VFIO/virtio devices in the certain
+> > > "right" order or topology weren't affected.
+> > > 
+> > > So maybe adding these P2P states mostly fixed this issue too?
+> > 
+> > I still think they're two different issues, and I still think with/without
+> > P2P the issue is the same, now I tend to agree this issue exists,
+> > especially if virtio-blk have similar behavior like virtio-net.
+> > 
+> > For one example of virtio-blk DMA to VFIO MMIO regions:
+> > 
+> > https://lore.kernel.org/r/20260616052552.389021-1-gshan@redhat.com
+> > 
+> > Said that, I don't know it's 100% triggerable in this case with notifiers,
+> > but sounds relevant.
+> 
+> It does look like it could trigger this issue indeed since it's DMA done
+> to VFIO device MMIO BAR.
+> However, how easy would be to reproduce this is another question.
+> 
+> > For virtio-net and others, I have less idea.
+> > 
+> > In all cases, I still think there are two issues to fix, and I think we
+> > don't need to fix this problem in one shot. I still don't think they're
+> > directly relevant, at least on the goals.
+> 
+> Sure, let's just not make the possible race situation worse.
+> 
+> > So with what I suggested previously relying on prepare_cb() I believe we
+> > can still do the concurrency issue you're looking for, making sure when
+> > reaching VFIO's cb() it's still at least accepting DMAs (P2P is fine).
+> 
+> But that's more or less the design of this (original) patch set -
+> make the state change to RUNNING_P2P on the target finish already in the
+> prepare_cb() time, make the state change to STOP_COPY on the source begin
+> only in the cb() time?
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 1cb3ef6c02..ace7def55e 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1833,6 +1833,7 @@ F: include/hw/misc/k230_ddr.h
- F: include/hw/riscv/k230.h
- F: include/hw/watchdog/k230_wdt.h
- F: tests/functional/riscv64/test_k230.py
-+F: tests/qtest/k230-ddr-test.c
- F: tests/qtest/k230-wdt-test.c
- 
- RX Machines
-diff --git a/tests/qtest/k230-ddr-test.c b/tests/qtest/k230-ddr-test.c
-new file mode 100644
-index 0000000000..72362929bc
---- /dev/null
-+++ b/tests/qtest/k230-ddr-test.c
-@@ -0,0 +1,226 @@
-+/*
-+ * QTest testcase for the K230 DDR controller and PHY
-+ *
-+ * Exercises register access, reset, PHY ownership, training mailbox, and DFI
-+ * initialization.
-+ *
-+ * Copyright (c) 2026 Junze Cao <caojunze424@gmail.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+
-+#define K230_DDRC_BASE    UINT64_C(0x98000000)
-+#define K230_DDR_PHY_BASE UINT64_C(0x9a000000)
-+
-+#define K230_DDRC_MSTR    0x000
-+#define K230_DDRC_STAT    0x004
-+#define K230_DDRC_DRAMTMG4 0x110
-+#define K230_DDRC_DFIMISC 0x1b0
-+#define K230_DDRC_DFISTAT 0x1bc
-+#define K230_DDRC_SWCTL   0x320
-+#define K230_DDRC_SWSTAT  0x324
-+
-+#define K230_DDRC_STAT_OPERATING_MODE_MASK          0x7
-+#define K230_DDRC_DFISTAT_DFI_INIT_COMPLETE_MASK    0x1
-+
-+#define K230_DDR_PHY_CSR(index) \
-+    (K230_DDR_PHY_BASE + (uint64_t)(index) * sizeof(uint32_t))
-+
-+#define K230_DDR_PHY_ATX_IMPEDANCE      0x00043
-+#define K230_DDR_PHY_TX_IMPEDANCE_CTRL1 0x10049
-+#define K230_DDR_PHY_VREF_IN_GLOBAL     0x200b2
-+#define K230_DDR_PHY_MICRO_CONT_MUX_SEL 0xd0000
-+#define K230_DDR_PHY_TRAINING_STATUS    0xd0004
-+#define K230_DDR_PHY_TRAINING_ACK       0xd0031
-+#define K230_DDR_PHY_TRAINING_MESSAGE   0xd0032
-+#define K230_DDR_PHY_TRAINING_TRIGGER   0xd0099
-+
-+static void complete_phy_training(QTestState *qts)
-+{
-+    qtest_writel(qts,
-+                 K230_DDR_PHY_CSR(K230_DDR_PHY_MICRO_CONT_MUX_SEL), 1);
-+    qtest_writel(qts, K230_DDR_PHY_CSR(K230_DDR_PHY_TRAINING_TRIGGER), 9);
-+    qtest_writel(qts, K230_DDR_PHY_CSR(K230_DDR_PHY_TRAINING_TRIGGER), 1);
-+    qtest_writel(qts, K230_DDR_PHY_CSR(K230_DDR_PHY_TRAINING_TRIGGER), 0);
-+}
-+
-+static void test_reset_and_register_access(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_MSTR),
-+                    ==, 0x01040000);
-+    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_STAT),
-+                    ==, 0x00000000);
-+    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_DRAMTMG4),
-+                    ==, 0x05040405);
-+    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_DFIMISC),
-+                    ==, 0x00000001);
-+    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_SWCTL),
-+                    ==, 0x00000001);
-+    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_SWSTAT),
-+                    ==, 0x00000001);
-+
-+    g_assert_cmphex(qtest_readl(qts,
-+                    K230_DDR_PHY_CSR(K230_DDR_PHY_ATX_IMPEDANCE)),
-+                    ==, 0x03ff);
-+    g_assert_cmphex(qtest_readl(qts,
-+                    K230_DDR_PHY_CSR(K230_DDR_PHY_TX_IMPEDANCE_CTRL1)),
-+                    ==, 0x0fff);
-+    g_assert_cmphex(qtest_readl(qts,
-+                    K230_DDR_PHY_CSR(K230_DDR_PHY_VREF_IN_GLOBAL)),
-+                    ==, 0x0200);
-+
-+    qtest_writel(qts, K230_DDRC_BASE + K230_DDRC_MSTR, 0x01040008);
-+    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_MSTR),
-+                    ==, 0x01040008);
-+
-+    qtest_writel(qts, K230_DDRC_BASE + K230_DDRC_STAT, 0xffffffff);
-+    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_STAT),
-+                    ==, 0x00000000);
-+
-+    qtest_writel(qts, K230_DDR_PHY_CSR(K230_DDR_PHY_VREF_IN_GLOBAL),
-+                 0xffffffff);
-+    g_assert_cmphex(qtest_readl(qts,
-+                    K230_DDR_PHY_CSR(K230_DDR_PHY_VREF_IN_GLOBAL)),
-+                    ==, 0x7fff);
-+
-+    qtest_writel(qts, K230_DDRC_BASE + K230_DDRC_DRAMTMG4, 0);
-+
-+    qtest_system_reset(qts);
-+    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_MSTR),
-+                    ==, 0x01040000);
-+    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_DRAMTMG4),
-+                    ==, 0x05040405);
-+    g_assert_cmphex(qtest_readl(qts,
-+                    K230_DDR_PHY_CSR(K230_DDR_PHY_VREF_IN_GLOBAL)),
-+                    ==, 0x0200);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_software_update_handshake(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    qtest_writel(qts, K230_DDRC_BASE + K230_DDRC_SWCTL, 0);
-+    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_SWSTAT),
-+                    ==, 0);
-+
-+    qtest_writel(qts, K230_DDRC_BASE + K230_DDRC_SWCTL, 1);
-+    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_SWSTAT),
-+                    ==, 1);
-+
-+    qtest_writel(qts, K230_DDRC_BASE + K230_DDRC_SWSTAT, 0);
-+    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_SWSTAT),
-+                    ==, 1);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_phy_ownership(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+    uint64_t atx = K230_DDR_PHY_CSR(K230_DDR_PHY_ATX_IMPEDANCE);
-+    uint64_t mux = K230_DDR_PHY_CSR(K230_DDR_PHY_MICRO_CONT_MUX_SEL);
-+
-+    qtest_writel(qts, atx, 0x155);
-+    g_assert_cmphex(qtest_readl(qts, atx), ==, 0x155);
-+
-+    qtest_writel(qts, mux, 1);
-+    qtest_writel(qts, atx, 0x2aa);
-+    g_assert_cmphex(qtest_readl(qts, atx), ==, 0x155);
-+
-+    qtest_writel(qts, mux, 0);
-+    qtest_writel(qts, atx, 0x2aa);
-+    g_assert_cmphex(qtest_readl(qts, atx), ==, 0x2aa);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_dfi_prerequisites(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    qtest_writel(qts, K230_DDRC_BASE + K230_DDRC_DFIMISC, 0x20);
-+
-+    g_assert_cmphex(qtest_readl(qts,
-+                    K230_DDRC_BASE + K230_DDRC_DFISTAT) &
-+                    K230_DDRC_DFISTAT_DFI_INIT_COMPLETE_MASK,
-+                    ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_STAT) &
-+                    K230_DDRC_STAT_OPERATING_MODE_MASK,
-+                    ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_dfi_complete_enable(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    complete_phy_training(qts);
-+    qtest_writel(qts, K230_DDRC_BASE + K230_DDRC_DFIMISC, 0x20);
-+
-+    g_assert_cmphex(qtest_readl(qts,
-+                    K230_DDRC_BASE + K230_DDRC_DFISTAT) &
-+                    K230_DDRC_DFISTAT_DFI_INIT_COMPLETE_MASK,
-+                    ==, 1);
-+    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_STAT) &
-+                    K230_DDRC_STAT_OPERATING_MODE_MASK,
-+                    ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_training_and_dfi_handshake(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    complete_phy_training(qts);
-+
-+    g_assert_cmphex(qtest_readl(qts,
-+                    K230_DDR_PHY_CSR(K230_DDR_PHY_TRAINING_STATUS)),
-+                    ==, 0);
-+    g_assert_cmphex(qtest_readl(qts,
-+                    K230_DDR_PHY_CSR(K230_DDR_PHY_TRAINING_MESSAGE)),
-+                    ==, 0x07);
-+
-+    qtest_writel(qts, K230_DDR_PHY_CSR(K230_DDR_PHY_TRAINING_ACK), 0);
-+    g_assert_cmphex(qtest_readl(qts,
-+                    K230_DDR_PHY_CSR(K230_DDR_PHY_TRAINING_STATUS)),
-+                    ==, 1);
-+    qtest_writel(qts, K230_DDR_PHY_CSR(K230_DDR_PHY_TRAINING_ACK), 1);
-+
-+    qtest_writel(qts, K230_DDRC_BASE + K230_DDRC_DFIMISC, 0x20);
-+    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_DFISTAT),
-+                    ==, 1);
-+
-+    qtest_writel(qts, K230_DDRC_BASE + K230_DDRC_DFIMISC, 0);
-+    qtest_writel(qts, K230_DDRC_BASE + K230_DDRC_DFIMISC, 1);
-+    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_STAT) & 0x7,
-+                    ==, 1);
-+
-+    qtest_quit(qts);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    qtest_add_func("/k230-ddr/reset-and-register-access",
-+                   test_reset_and_register_access);
-+    qtest_add_func("/k230-ddr/software-update-handshake",
-+                   test_software_update_handshake);
-+    qtest_add_func("/k230-ddr/phy-ownership", test_phy_ownership);
-+    qtest_add_func("/k230-ddr/dfi-prerequisites", test_dfi_prerequisites);
-+    qtest_add_func("/k230-ddr/dfi-complete-enable",
-+                   test_dfi_complete_enable);
-+    qtest_add_func("/k230-ddr/training-and-dfi-handshake",
-+                   test_training_and_dfi_handshake);
-+
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 56ff860e21..dc110f72c8 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -297,7 +297,8 @@ qtests_riscv64 = ['riscv-csr-test'] + \
-   (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
-    config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
-    ['iommu-riscv-test'] : []) + \
--  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test'] : [])
-+  (config_all_devices.has_key('CONFIG_K230') ?
-+   ['k230-ddr-test', 'k230-wdt-test'] : [])
- 
- qtests_hexagon = ['boot-serial-test']
- 
+I am not against the idea in general. I'm against patch 1 where it hijacks
+"depth" into something even more complicated.
+
+The "depth" itself makes sense to be recorded as a value, but I think it's
+already a bit confusing to call it "priority" in VMChangeStateEntry,
+because it isn't: when something has higher "priority", it should always be
+executed before lower priority items.  Here, the current code invert the
+order for !RUN case, so it's in reality "depth", not "priority".
+
+Now patch 1 added yet another extra "adj" concept on top of qdev hierachy's
+"depth", which in fact the caller needs "priority" and callers need to
+explicitly handle that by checking RUNNING and invert things.
+
+That's the part I'm definitely against.  Such code is IMHO not maintainable.
+
+So my point is if we can implement your idea with existing prepare_cb() we
+should just use it.  Even if we want to enhance the priority support for
+cb()s, we shouldn't use patch 1.  I never thought further on that because I
+still assumed relying on prepare_cb() works.
+
+> 
+> > For the other issue you reported, even if existed, I am not yet sure VFIO
+> > is the only special case that got affected.  I think it's possible some
+> > other emulated devices suffer the same even if it has no direct hardware
+> > attached.  Say, there can be device backends got stopped in cb() when VM
+> > stopped, further DMA to it may cause assertions, then it's the same issue
+> > that needs solving, where essentially we may require all such devices to
+> > provide similar P2P states like VFIO to make sure they initiate DMAs and
+> > flush them in a prepare_cb(), then if all devices' prepare_cb() will make
+> > sure no DMA to be initiated anymore, cb()s will have no ordering constraint
+> > on DMAs.
+> 
+> Although the description above is about the migration source the situation
+> on the migration target is essentially a mirror image of it so I will refer
+> to both cases below.
+> 
+> Specifically:
+> * on the source no device should reach non DMA accepting state (like STOP_COPY
+> for VFIO) before all devices reach non DMA generating state (PRE_COPY_P2P-equivalent).
+> 
+> * on the target no device should reach DMA generating state (RUNNING-equivalent)
+> before all devices reach DMA accepting state (RUNNING_P2P-like).
+> 
+> That's why even in the case where non-VFIO devices introduce the equivalent of
+> VFIO P2P states and implement a prepare_cb() callback we still need a (VM-wide)
+> sync point between these callbacks for the benefit of async state changes/threads
+> since no cb()-like async state change should start until all prepare_cb()-like
+> changes finish (including these for other devices).
+
+IIUC, prepare_cb() + cb() is already that "sync point".  After all
+prepare_cb() done, the VM should achieve "DMA quiesced" across the system?
+
+What's missing is we should move all problematic device cb()s "let's flush
+pending DMAs" logic into a prepare_cb(), leaving the real stop logic in
+cb()s.  That's the 2nd problem which I think we can skip until a reproducer
+pops up at least.
+
+VFIO is only special here when it wants to concurrent process of state
+changes.  If you create threads in prepare_cb(), then in cb() you have
+chance to synchronize everything correctly satisfying the "sync point".
+That's not a requirement for most of the rest devices.
+
+Thanks,
+
 -- 
-2.53.0
+Peter Xu
 
 
