@@ -4,113 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2E76C4450A
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 12:01:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC400C4450E
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 12:02:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkKlt-0000zv-AU; Thu, 16 Jul 2026 08:00:57 -0400
+	id 1wkKnU-0001g7-Q2; Thu, 16 Jul 2026 08:02:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wkKlr-0000z7-2S; Thu, 16 Jul 2026 08:00:55 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wkKlp-0001RQ-FT; Thu, 16 Jul 2026 08:00:54 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66GABtc22826184; Thu, 16 Jul 2026 12:00:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=hpG/iErSR7VD6lG11/wsZgh8a2tAKQ
- E+OyTLikaZW3E=; b=E6HfoNweaHPGle7tnwZQl6gM4FcpwGY99PfWPXn9WJnNOo
- C0dQmi1XiIRz/iVYWtVrHI6qyBgl9oeJShM+2xgCBmQudeaJNp8MNa221xXhjsyy
- tMpRK/O8v39rWlM7pQV6NbwBPlJnwQ2T3uFS5dYHhIUnXHx+OZlxK63ZRcf47bJK
- Oxuld2oJEEnzweoro7YJMvMJg7Su6oiBm4iFJrWn6NsK+piO/fO2kHPxLINOwSXR
- j2yTfw5/0tH0zDFUhVgT1IV6v4O9bsxnosIK7DNOalbX80uX2txgAIiCSFohpMSl
- 8M+2WwZb5rycL+vG6aw2YKqIeYVMgnYxLveqX8aA==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbexwyv82-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jul 2026 12:00:43 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66GBni0H003265;
- Thu, 16 Jul 2026 12:00:42 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fc05qd244-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jul 2026 12:00:42 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66GC0c8s47776136
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 16 Jul 2026 12:00:38 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 92A2A2004F;
- Thu, 16 Jul 2026 12:00:38 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 292EE2004D;
- Thu, 16 Jul 2026 12:00:31 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.39.17.30]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Thu, 16 Jul 2026 12:00:30 +0000 (GMT)
-Date: Thu, 16 Jul 2026 17:30:27 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Saif Abrar <saif.abrar@linux.ibm.com>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, harshpb@linux.ibm.com,
- clg@kaod.org, npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
- marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
- thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
- kowal@linux.ibm.com, chalapathi.v@linux.ibm.com, calebs@linux.ibm.com,
- milesg@linux.ibm.com, jishnuvw@linux.ibm.com, amachhiw@linux.ibm.com
-Subject: Re: [PATCH v5 4/9] pnv/phb5: Implement read-only and write-only bits
- of registers
-Message-ID: <aljG2hajR3dLXHkB@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20260617095058.652789-1-saif.abrar@linux.ibm.com>
- <20260617095058.652789-5-saif.abrar@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
+ id 1wkKmR-0001FI-5l
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 08:01:31 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wkKmO-0001Wz-Ol
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 08:01:30 -0400
+Received: from linux.microsoft.com (unknown [167.220.197.183])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 4231820B7167;
+ Thu, 16 Jul 2026 05:01:15 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 4231820B7167
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1784203277;
+ bh=t5zP8bAJk32JcowzMhZUrtiIZUJKDg0XefZPWTtYfQw=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=QvmSDX70B9AQas0ULFpW7gdz/Hup5hCtVjvuy49FKCBrd17uXU5I8yPfBZzwnL1V1
+ BJYwWzf5swTIl+jACLc/8dro97stuh5fJiEk0sW4yB0N3Lqp+wg7ZwgjKrT6azrCK+
+ 91jAF41dH+x14Ck0vmKmsPagGEx1kLS7Z1+KKyLo=
+Date: Thu, 16 Jul 2026 15:01:21 +0300
+From: Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Magnus Kulke <magnuskulke@microsoft.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Wei Liu <wei.liu@kernel.org>,
+ Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <doru.blanzeanu@microsoft.com>,
+ Wei Liu <liuwe@microsoft.com>
+Subject: Re: [PATCH 03/12] hw/i386/mshv: migrate REFERENCE_TIME
+Message-ID: <aljIEVon0_qwyuB4@linux.microsoft.com>
+References: <20260710101534.664604-1-magnuskulke@linux.microsoft.com>
+ <20260710101534.664604-4-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20260617095058.652789-5-saif.abrar@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: qsHLIKL63rgzufoPUEnMgwWRvXrNLLrb
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDEyMSBTYWx0ZWRfX1wPUV8ewuZmH
- G6daG+ufD0guME7C799o/uJBs1zFoN4J6uEgJ7L4NSQ9LqGf5xCTtw2Pwx6i00VzYmkbCahyrem
- O3Ar8YfV4qkk1pD5ivlRkpREu7ttH1RM+Vfb4ylgooqW2u8H9ygmNBz7jPX6K+hs+S5UHRapdSd
- pnw9nAAlFV230vSka0QQLPdmSB4lakjDO+JM5YuoiCj5e/4FuFrm8CYGcDeL9BZOIEIXhcBLJ/t
- xfbI99MW65t//wZU1d8bscMZB4RZdTJv8DLSsg2EdtC5ICA6VzmI/fXbRzm1+6bjl0N2n7AI7uf
- v49D83Nk7FrKUzHeE5dzynSxOAlkhUNXC85l/9+iUcfmPwAlNVtoDlP47q7hSNliVpqD8z9wvP8
- Nnle/WF7ZbeWXOYWhQs5HSOl40K/yHDbw5dgaj4Wo75cXhmK9zVgzmG+INxG+0VoE2WFq6kvk6z
- PGvZ4GTgsCRjKkQx/fw==
-X-Authority-Analysis: v=2.4 cv=XJoAjwhE c=1 sm=1 tr=0 ts=6a58c7eb cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=kj9zAlcOel0A:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=WcL14SwBzZWWs5KTvBEA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-ORIG-GUID: lu5mMUpuvgb2N6I0zwzlDeTWG7rrUXRQ
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDEyMSBTYWx0ZWRfXyPti4SR/FxSh
- Lchp2nWHNpzbK3S3ims7sL+OMdHHFwHophHkhgCm1qnsLuqrEqUdTSsppbn1wNoHHT1fX8+Fnq3
- 8jAoXYnmQKdyF0Xw39XmfW2Rrz87/YA=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-16_04,2026-07-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0
- priorityscore=1501 impostorscore=0 clxscore=1015 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607160121
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260710101534.664604-4-magnuskulke@linux.microsoft.com>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=dblanzeanu@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,34 +72,393 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/06/17 04:50AM, Saif Abrar wrote:
-> <...snip...>
->
-> diff --git a/include/hw/pci-host/pnv_phb4_regs.h b/include/hw/pci-host/pnv_phb4_regs.h
-> index df5e86d29a..dfd0e01d1e 100644
-> --- a/include/hw/pci-host/pnv_phb4_regs.h
-> +++ b/include/hw/pci-host/pnv_phb4_regs.h
-> @@ -180,9 +180,11 @@
->  #define PHB_M64_AOMASK                  0x1d0
->  #define PHB_M64_UPPER_BITS              0x1f0
->  #define PHB_NXLATE_PREFIX               0x1f8
-> -#define PHB_DMARD_SYNC                  0x200
-> -#define   PHB_DMARD_SYNC_START          PPC_BIT(0)
-> -#define   PHB_DMARD_SYNC_COMPLETE       PPC_BIT(1)
-> +#define PHB_DMA_SYNC                    0x200
-> +#define   PHB_DMA_SYNC_RD_START         PPC_BIT(0)
-> +#define   PHB_DMA_SYNC_RD_COMPLETE      PPC_BIT(1)
-> +#define   PHB_DMA_SYNC_WR_START         PPC_BIT(2)
-> +#define   PHB_DMA_SYNC_WR_COMPLETE      PPC_BIT(3)
+On Fri, Jul 10, 2026 at 12:15:25PM +0200, Magnus Kulke wrote:
+> This is a partition-wide state for which we use a dedicated hw clock
+> facility, similar to KVM. We have to freeze the time for a partition
+> before we are allowed to set it. We register a state change handler for
+> the clock device and a post-load handler for migration state. In the
+> post-load handler we toggle a flag that will set the reference time
+> state on next state to "running" on the partition.
+> 
+> We can move the time freeze and reference-time ioctls/hvcalls to the
+> clock module.
+> 
+> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+> ---
+>  MAINTAINERS              |   1 +
+>  accel/mshv/mshv-all.c    |  67 ++------------
+>  accel/mshv/trace-events  |   1 +
+>  hw/i386/meson.build      |   1 +
+>  hw/i386/mshv/clock.c     | 189 +++++++++++++++++++++++++++++++++++++++
+>  hw/i386/mshv/meson.build |   4 +
+>  include/system/mshv.h    |   3 +
+>  7 files changed, 208 insertions(+), 58 deletions(-)
+>  create mode 100644 hw/i386/mshv/clock.c
+>  create mode 100644 hw/i386/mshv/meson.build
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 6171cc7494..269876db3e 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -613,6 +613,7 @@ R: Wei Liu <wei.liu@kernel.org>
+>  R: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+>  S: Supported
+>  F: target/i386/mshv/
+> +F: hw/i386/mshv/
+>  
+>  X86 Instruction Emulator
+>  M: Roman Bolshakov <rbolshakov@ddn.com>
+> diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+> index b34fb34d05..7b3c13cf1e 100644
+> --- a/accel/mshv/mshv-all.c
+> +++ b/accel/mshv/mshv-all.c
+> @@ -60,54 +60,6 @@ static int init_mshv(int *mshv_fd)
+>      return 0;
+>  }
+>  
+> -/* freeze 1 to pause, 0 to resume */
+> -static int set_time_freeze(int vm_fd, int freeze)
+> -{
+> -    int ret;
+> -    struct hv_input_set_partition_property in = {0};
+> -    in.property_code = HV_PARTITION_PROPERTY_TIME_FREEZE;
+> -    in.property_value = freeze;
+> -
+> -    struct mshv_root_hvcall args = {0};
+> -    args.code = HVCALL_SET_PARTITION_PROPERTY;
+> -    args.in_sz = sizeof(in);
+> -    args.in_ptr = (uint64_t)&in;
+> -
+> -    ret = mshv_hvcall(vm_fd, &args);
+> -    if (ret < 0) {
+> -        error_report("Failed to set time freeze");
+> -        return -1;
+> -    }
+> -
+> -    return 0;
+> -}
+> -
+> -static int pause_vm(int vm_fd)
+> -{
+> -    int ret;
+> -
+> -    ret = set_time_freeze(vm_fd, 1);
+> -    if (ret < 0) {
+> -        error_report("Failed to pause partition: %s", strerror(errno));
+> -        return -1;
+> -    }
+> -
+> -    return 0;
+> -}
+> -
+> -static int resume_vm(int vm_fd)
+> -{
+> -    int ret;
+> -
+> -    ret = set_time_freeze(vm_fd, 0);
+> -    if (ret < 0) {
+> -        error_report("Failed to resume partition: %s", strerror(errno));
+> -        return -1;
+> -    }
+> -
+> -    return 0;
+> -}
+> -
+>  static int get_host_partition_property(int mshv_fd, uint32_t property_code,
+>                                         uint64_t *value)
+>  {
+> @@ -330,9 +282,6 @@ static int create_vm(int mshv_fd, int *vm_fd)
+>          return -1;
+>      }
+>  
+> -    /* Always create a frozen partition */
+> -    pause_vm(*vm_fd);
+> -
+>      return 0;
+>  }
+>  
+> @@ -578,13 +527,6 @@ static int mshv_init(AccelState *as, MachineState *ms)
+>          return -1;
+>      }
+>  
+> -    ret = resume_vm(vm_fd);
+> -    if (ret < 0) {
+> -        close(mshv_fd);
+> -        close(vm_fd);
+> -        return -1;
+> -    }
+> -
+>      s->vm = vm_fd;
+>      s->fd = mshv_fd;
+>  
+> @@ -606,6 +548,8 @@ static int mshv_init(AccelState *as, MachineState *ms)
+>  
+>      register_savevm_live("mshv", 0, 1, &savevm_mshv, s);
+>  
+> +    mshv_clock_init();
+> +
+>      return 0;
+>  }
+>  
+> @@ -643,6 +587,13 @@ static int mshv_cpu_exec(CPUState *cpu)
+>              cpu->vcpu_dirty = false;
+>          }
+>  
+> +        /* Corresponding store-release is in cpu_exit. */
+> +        if (qatomic_load_acquire(&cpu->exit_request)) {
+> +            trace_mshv_interrupt_exit_request(cpu->cpu_index);
+> +            ret = EXCP_INTERRUPT;
+> +            break;
+> +        }
+> +
+>          ret = mshv_run_vcpu(mshv_state->vm, cpu, &mshv_msg, &exit_reason);
+>          if (ret < 0) {
+>              error_report("Failed to run on vcpu %d", cpu->cpu_index);
+> diff --git a/accel/mshv/trace-events b/accel/mshv/trace-events
+> index a4dffeb24a..859e8bfb0f 100644
+> --- a/accel/mshv/trace-events
+> +++ b/accel/mshv/trace-events
+> @@ -4,6 +4,7 @@
+>  # SPDX-License-Identifier: GPL-2.0-or-later
+>  
+>  mshv_start_vcpu_thread(const char* thread, uint32_t cpu) "thread=%s cpu_index=%d"
+> +mshv_interrupt_exit_request(uint32_t cpu) "cpu_index=%d"
+>  
+>  mshv_set_memory(bool add, uint64_t gpa, uint64_t size, uint64_t user_addr, bool readonly, int ret) "add=%d gpa=0x%" PRIx64 " size=0x%" PRIx64 " user=0x%" PRIx64 " readonly=%d result=%d"
+>  mshv_mem_ioeventfd_add(uint64_t addr, uint32_t size, uint32_t data) "addr=0x%" PRIx64 " size=%d data=0x%x"
+> diff --git a/hw/i386/meson.build b/hw/i386/meson.build
+> index b611fbb5a7..f4d3122863 100644
+> --- a/hw/i386/meson.build
+> +++ b/hw/i386/meson.build
+> @@ -39,6 +39,7 @@ i386_ss.add(when: 'CONFIG_TDX', if_true: files('tdvf.c', 'tdvf-hob.c'))
+>  
+>  subdir('kvm')
+>  subdir('xen')
+> +subdir('mshv')
+>  
+>  i386_ss.add_all(xenpv_ss)
+>  
+> diff --git a/hw/i386/mshv/clock.c b/hw/i386/mshv/clock.c
+> new file mode 100644
+> index 0000000000..02c586503a
+> --- /dev/null
+> +++ b/hw/i386/mshv/clock.c
+> @@ -0,0 +1,189 @@
+> +/*
+> + * MSHV partition reference clock
+> + *
+> + * Copyright Microsoft, Corp. 2026
+> + *
+> + * Authors: Magnus Kulke <magnuskulke@microsoft.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/error-report.h"
+> +#include "migration/vmstate.h"
+> +#include "system/runstate.h"
+> +#include "hw/hyperv/hvhdk.h"
+> +#include "hw/hyperv/hvhdk_mini.h"
+> +#include "hw/hyperv/hvgdk.h"
+> +#include "hw/hyperv/hvgdk_mini.h"
+> +#include "linux/mshv.h"
+> +#include "system/mshv.h"
+> +#include "system/mshv_int.h"
+> +
+> +/*
+> + * Partition reference clock (HV_PARTITION_PROPERTY_REFERENCE_TIME), captured
+> + * when the VM is stopped and re-applied when it resumes.
+> + *
+> + * Mirrors hw/i386/kvm/clock.c.
+> + */
+> +typedef struct MshvClockState {
+> +    uint64_t ref_time;
+> +    bool ref_time_pending;
+> +} MshvClockState;
+> +
+> +static MshvClockState mshv_clock;
+> +
+> +static int mshv_get_reference_time(int vm_fd, uint64_t *ref_time)
+> +{
+> +    struct hv_input_get_partition_property in = { 0 };
+> +    struct hv_output_get_partition_property out = { 0 };
+> +    struct mshv_root_hvcall args = { 0 };
+> +    int ret;
+> +
+> +    in.property_code = HV_PARTITION_PROPERTY_REFERENCE_TIME;
+> +
+> +    args.code        = HVCALL_GET_PARTITION_PROPERTY;
+> +    args.in_sz       = sizeof(in);
+> +    args.in_ptr      = (uint64_t)&in;
+> +    args.out_sz      = sizeof(out);
+> +    args.out_ptr     = (uint64_t)&out;
+> +
+> +    ret = mshv_hvcall(vm_fd, &args);
+> +    if (ret < 0) {
+> +        error_report("Failed to get reference time");
+> +        return -1;
+> +    }
+> +
+> +    *ref_time = out.property_value;
+> +    return 0;
+> +}
+> +
+> +static int mshv_set_reference_time(int vm_fd, uint64_t ref_time)
+> +{
+> +    struct hv_input_set_partition_property in = { 0 };
+> +    struct mshv_root_hvcall args = { 0 };
+> +    int ret;
+> +
+> +    in.property_code  = HV_PARTITION_PROPERTY_REFERENCE_TIME;
+> +    in.property_value = ref_time;
+> +
+> +    args.code         = HVCALL_SET_PARTITION_PROPERTY;
+> +    args.in_sz        = sizeof(in);
+> +    args.in_ptr       = (uint64_t)&in;
+> +
+> +    ret = mshv_hvcall(vm_fd, &args);
+> +    if (ret < 0) {
+> +        error_report("Failed to set reference time");
+> +        return -1;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +/*
+> + * Freeze (freeze=1) or unfreeze (freeze=0) time for a partition. This will not
+> + * pause/eject vCPU execution. It is assumed that the caller already has stopped
+> + * the partition's vCPUs.
+> + *
+> + * NB: a partition's reference clock can only be written while the time is
+> + * frozen.
+> + */
+> +static int mshv_set_time_freeze(int vm_fd, int freeze)
+> +{
+> +    struct hv_input_set_partition_property in = { 0 };
+> +    struct mshv_root_hvcall args = { 0 };
+> +    int ret;
+> +
+> +    in.property_code  = HV_PARTITION_PROPERTY_TIME_FREEZE;
+> +    in.property_value = freeze;
+> +
+> +    args.code         = HVCALL_SET_PARTITION_PROPERTY;
+> +    args.in_sz        = sizeof(in);
+> +    args.in_ptr       = (uint64_t)&in;
+> +
+> +    ret = mshv_hvcall(vm_fd, &args);
+> +    if (ret < 0) {
+> +        error_report("Failed to set time freeze");
+> +        return -1;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +static void mshv_clock_vm_state_change(void *opaque, bool running,
+> +                                       RunState state)
+> +{
+> +    MshvClockState *s = opaque;
+> +    int vm_fd = mshv_state->vm;
+> +    int ret;
+> +
+> +    if (running) {
+> +        /* Skip if we have nothing to restore, e.g. on initial boot. */
+> +        if (!s->ref_time_pending) {
+> +            return;
+> +        }
+> +
+> +        ret = mshv_set_time_freeze(vm_fd, 1);
+> +        if (ret < 0) {
+> +            error_report("Failed to freeze partition time on resume");
+> +            abort();
+> +        }
+> +
+> +        /* INVARIANT: reference time can only be written if time is frozen. */
+> +        ret = mshv_set_reference_time(vm_fd, s->ref_time);
+> +        if (ret < 0) {
+> +            error_report("Failed to restore reference time on resume");
+> +            abort();
+> +        }
+> +
+> +        if (mshv_set_time_freeze(vm_fd, 0) < 0) {
+> +            error_report("Failed to unfreeze partition time on resume");
+> +            abort();
+> +        }
+> +
+> +        s->ref_time_pending = false;
+> +    } else {
+> +        /* Skip if we already have a to-be-set ref time */
+> +        if (s->ref_time_pending) {
+> +            return;
+> +        }
+> +
+> +        ret = mshv_get_reference_time(vm_fd, &s->ref_time);
+> +        if (ret < 0) {
+> +            error_report("Failed to capture reference time on stop");
+> +            abort();
+> +        }
+> +
+> +        s->ref_time_pending = true;
+> +    }
+> +}
+> +
+> +/*
+> + * The incoming reference time should be applied on the next resume before
+> + * vCPUs start executing.
+> + */
+> +static int mshv_clock_post_load(void *opaque, int version_id)
+> +{
+> +    MshvClockState *s = opaque;
+> +
+> +    s->ref_time_pending = true;
+> +
+> +    return 0;
+> +}
+> +
+> +static const VMStateDescription vmstate_mshv_clock = {
+> +    .name = "mshv-clock",
+> +    .version_id = 1,
+> +    .minimum_version_id = 1,
+> +    .post_load = mshv_clock_post_load,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_UINT64(ref_time, MshvClockState),
+> +        VMSTATE_END_OF_LIST()
+> +    },
+> +};
+> +
+> +void mshv_clock_init(void)
+> +{
+> +    vmstate_register(NULL, 0, &vmstate_mshv_clock, &mshv_clock);
+> +    qemu_add_vm_change_state_handler(mshv_clock_vm_state_change, &mshv_clock);
+> +}
+> diff --git a/hw/i386/mshv/meson.build b/hw/i386/mshv/meson.build
+> new file mode 100644
+> index 0000000000..0e556851b6
+> --- /dev/null
+> +++ b/hw/i386/mshv/meson.build
+> @@ -0,0 +1,4 @@
+> +i386_mshv_ss = ss.source_set()
+> +i386_mshv_ss.add(files('clock.c'))
+> +
+> +i386_ss.add_all(when: 'CONFIG_MSHV', if_true: i386_mshv_ss)
+> diff --git a/include/system/mshv.h b/include/system/mshv.h
+> index 46fe3fcebc..a6f815b822 100644
+> --- a/include/system/mshv.h
+> +++ b/include/system/mshv.h
+> @@ -55,6 +55,9 @@ DECLARE_INSTANCE_CHECKER(MshvState, MSHV_STATE,
+>  
+>  extern MshvState *mshv_state;
+>  
+> +/* clock (partition reference time) */
+> +void mshv_clock_init(void);
+> +
+>  /* interrupt */
+>  int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint32_t vector,
+>                             uint32_t vp_index, bool logical_destination_mode,
+> -- 
+> 2.34.1
 
-nit: This affects the behaviour in PHB4, where DMARD had bit 2 & 3 as
-reserved
-
-but i don't see it as a concern.
-
-Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
-
-Thanks,
-- Aditya G
-
+Reviewed-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
 
