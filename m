@@ -4,149 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DBA0C44515
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 18:46:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 219F1C44515
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 18:52:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkR5w-0003n3-Ux; Thu, 16 Jul 2026 14:46:05 -0400
+	id 1wkRBT-0004fe-J4; Thu, 16 Jul 2026 14:51:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wkR5p-0003mW-5u
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 14:45:57 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wkR5n-00082p-7v
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 14:45:56 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66GGSm9V3395807
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 18:45:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- mmZxylGgR4VBT+W0L9gDebXQzAn7Oer8v5uC/gz439I=; b=gJETXO3KAR+5eHap
- uaeHeDmkR/oPVyOqmVHke/8d6w+DOaQ3BXMW3HHookYHPHWu2/ppMcF4A522dlNi
- s9WyLtO6OFRxeT8k0PCW71pL88GHkgPhhtITmvqyyi9+QHAtkOGKDfuzd86mmPxn
- 2jmDSCRZPAfFT0Po0cc3rG76X5MuRamYzI14pSbMy4qB80HzgY6QV+uxv4Avrffq
- tWuDAxtDKqKIxZkYNldLJY9GOo3wP3HytlOMMl3fPPa0rDIjNAVYZygDDRMFeSeU
- nyKWSsMT53daf7nAHAbEwjRB5jOrEz7HE9f2BgVSbkM4dkl16USD+12ICu5C7JlQ
- T+TQSw==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4feym19m21-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 18:45:53 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8e934385db1so132746986d6.0
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 11:45:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784227553; x=1784832353; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=mmZxylGgR4VBT+W0L9gDebXQzAn7Oer8v5uC/gz439I=;
- b=Rm2nXJIvBANSXJZaSyZxIOnBF5kslKfLZix6N3ZQmUg3qNi91SLXTvlEDUva6dNkxf
- vWIkvMvQzuWeoNhWoCVwlxsNeYWh+GXfLUGuceROq45VixVFxu2PRdFdhdUjftctzpb1
- wCwy3PS1R5rntNIed3pxEm3ljnoh8MJXCksxAMiU9EmnICrh3KfZNlnz/g1mPvRcRD5d
- FghEZTSjGpdnRAgziEZG2EXYPhpDLytIGc9bNBPWTTSPuPAU5UZmXyZwEhyA+A/17VWM
- ZDmkC7V9w9CAEZG48/toCAxoYPqULtzvzYIgd7y4Pev9mgfUOkB7O7bJxff34whXcBTH
- LK7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784227553; x=1784832353;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=mmZxylGgR4VBT+W0L9gDebXQzAn7Oer8v5uC/gz439I=;
- b=QBlr+AHwA4Aii73dHXVERf5tzeBSF7WypENiKj4tYa1mZl40BZWeDXdJiGBqLIMjVD
- L4hOZiTW6Xqfr+f2AahqFhP8TUonMaKI3Tz023HdkCCViomqlAuhqjsHywQTjflcyjRc
- lb2ll7esMixbUEp6zHC4IQO4PYapcRsBgg/6rZDlx3dVSoHuk+7ro6QQT/XPy8kaWFmE
- VPCKv1EYH9DhgtItLDY0mK9z8QesvWHouEM9DFZKl1eayiMKcS5HkFbnwIb6w0h5VNX4
- 3U9NuFqTUjAF89uaOoM/5bMQqvyDJdfO7+YJI9ukUIbQEx83ZroJQolA47u89QT/9d5J
- mY5A==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rp4Yp/gPZ53l4oMH5oXJINPVFCXGlT3k6Vu618SVU4xTq1URy7a9Vb5pDeP8b+9I1VRWxwVBlX952oS@nongnu.org
-X-Gm-Message-State: AOJu0YxcYFdhiVQeo2oBTsZx2clhrCRJm54U9bn9Gct7KDJAq4rx9akp
- QGB7gWdNE0t2piBoyfpifw+75sY80dZSASrDBdfE/r3iM1FNoislQ2R2kFBh+Tn9XbqRMC/rZqJ
- CavEp2LADz/oh3jhjHWJR3r6BbPDmfvQYfjDrDYGisoEpuTYG/ddkbY5Wwg==
-X-Gm-Gg: AfdE7cktkRYYtSlf9yON6ft76NfMQilOdo/8p9FP2v9N0loYgUxtlBUr78WpzzuKRbc
- Dl5nqeWfSUo8Xq1nPBBpoFRRuScyUORTmi/inW0mBhhCXMar96Ck/xaks+0SFTXoZL4sNPjGrTK
- BaKUBNBVKPhZAxGftiISn2KoemjXrU20y4LsoW1O2Qkw9fKq20jXlVRLWKyEt7qhf+zrpGWS/lh
- fZ641uAPerI007UKmDd7P4X0TCjrSQUHb5gU3TvuTD1NgRMvgRUdpbUixrhyS/ME0ERjEWA7+DU
- VQZZzgizgTww/qadxe/zqQUC5pDzBrdTfO2avtM3bH0CbiB5lMeXQCa3k76hnVuJZqrqMkybFmm
- 1LjCwzdjh9+9wpD7obxxq6mXCmPzIRg7My4oiSQ==
-X-Received: by 2002:a05:6214:4292:b0:8f4:8950:37ce with SMTP id
- 6a1803df08f44-90747b5f834mr156227976d6.0.1784227552649; 
- Thu, 16 Jul 2026 11:45:52 -0700 (PDT)
-X-Received: by 2002:a05:6214:4292:b0:8f4:8950:37ce with SMTP id
- 6a1803df08f44-90747b5f834mr156227616d6.0.1784227552216; 
- Thu, 16 Jul 2026 11:45:52 -0700 (PDT)
-Received: from [192.168.68.105] ([152.234.123.183])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8ffd50e081dsm225174586d6.9.2026.07.16.11.45.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jul 2026 11:45:51 -0700 (PDT)
-Message-ID: <3b172ec2-1506-406f-96ad-763380023788@oss.qualcomm.com>
-Date: Thu, 16 Jul 2026 15:45:48 -0300
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wkRBQ-0004fT-9T
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 14:51:44 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wkRBN-0000FM-Nc
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 14:51:43 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 3529678A93;
+ Thu, 16 Jul 2026 18:51:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1784227898; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4n1gq6WRjMYQD0c6Xl6idUJVdHufi/HZr1+XluLt8jI=;
+ b=ArPpL1vAMpZMcy5kZh7LcYeeGjaiJx+Z8jzqjtMhdCu4vj7SL2XXyolIR+3bDdeXbGYZCt
+ 3/HykGgUVIT8u9xcHBLTQYCXn/4kiMc9fY38/kkMVJd0FSFw4s2ysOh77KkICBxmApQnm0
+ kn/Rzqwv9Gr7C0bI3fptyQlpYr8EBX0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1784227898;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4n1gq6WRjMYQD0c6Xl6idUJVdHufi/HZr1+XluLt8jI=;
+ b=Ja0rU4/VpvELsqtm3kFhdkIbRTrgJFINSWQcFfg5EH26OlUTWS9O91CC8M6KMrwW5V3hrM
+ Vo/IMHpSccB/IuAA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ArPpL1vA;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="Ja0rU4/V"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1784227898; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4n1gq6WRjMYQD0c6Xl6idUJVdHufi/HZr1+XluLt8jI=;
+ b=ArPpL1vAMpZMcy5kZh7LcYeeGjaiJx+Z8jzqjtMhdCu4vj7SL2XXyolIR+3bDdeXbGYZCt
+ 3/HykGgUVIT8u9xcHBLTQYCXn/4kiMc9fY38/kkMVJd0FSFw4s2ysOh77KkICBxmApQnm0
+ kn/Rzqwv9Gr7C0bI3fptyQlpYr8EBX0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1784227898;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4n1gq6WRjMYQD0c6Xl6idUJVdHufi/HZr1+XluLt8jI=;
+ b=Ja0rU4/VpvELsqtm3kFhdkIbRTrgJFINSWQcFfg5EH26OlUTWS9O91CC8M6KMrwW5V3hrM
+ Vo/IMHpSccB/IuAA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C1773779AD;
+ Thu, 16 Jul 2026 18:51:37 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id SlZzJDkoWWrmQgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 16 Jul 2026 18:51:37 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>, qemu-devel@nongnu.org, Thomas Huth
+ <thuth@redhat.com>, Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, Mauro Matteo
+ Cascella <mcascell@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Pierrick
+ Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH] docs: outline some guidelines for security classification
+In-Reply-To: <alj7gF_ayHO7Dvb7@x1.local>
+References: <20260707105927.2776822-1-berrange@redhat.com>
+ <CAMxuvazpNiy8iqu76wJwiF3aKEizjgZaQFgF3gtHDXqiGh9Fsw@mail.gmail.com>
+ <ak0q0vOeFVJsDBcL@redhat.com> <87jyqv3u32.fsf@suse.de>
+ <alj7gF_ayHO7Dvb7@x1.local>
+Date: Thu, 16 Jul 2026 15:51:31 -0300
+Message-ID: <87cxwm4vkc.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 0/6] target/riscv: Support the true Zicclsm extension
-To: Alistair Francis <Alistair.Francis@wdc.com>,
- "frank.chang@sifive.com" <frank.chang@sifive.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "palmer@dabbelt.com" <palmer@dabbelt.com>,
- "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "chao.liu@processmission.com" <chao.liu@processmission.com>,
- "liwei1518@gmail.com" <liwei1518@gmail.com>,
- "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>
-References: <20260713035135.3996990-1-frank.chang@sifive.com>
- <6c50f31be3a11f34f9cf9f507cb7a7d1fdea1532.camel@wdc.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <6c50f31be3a11f34f9cf9f507cb7a7d1fdea1532.camel@wdc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=KPRqylFo c=1 sm=1 tr=0 ts=6a5926e1 cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=szoPuAicwqWYzOEwwuIrwA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=ID6ng7r3AAAA:8 a=xvfqbYfxAAAA:20 a=pFyQfRViAAAA:8 a=2OcK-xkllQftIlSRpdIA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=O8hF6Hzn-FEA:10
- a=pJ04lnu7RYOZP9TFuWaZ:22 a=AkheI1RvQwOzcTXhi5f4:22 a=oJz5jJLG1JtSoe7EL652:22
- a=bA3UWDv6hWIuX7UZL3qL:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDE5MiBTYWx0ZWRfX3xBl4U3hoVEo
- edb4LvEdmI7YDtBCG7kO0A5J1lLNXQqdOGKlYYWxfVzzry1DvKDV8CDO4/+Kf5EhE6YQU+++kZw
- tuAEMV4J/Op66DVo3HLVJ0RVjlkyo5JwLLewDqkvyVQsA221jxjpqJiSAfrBPV8cmRKGglxMCEg
- brZt5MxvHYZx0yRwLTtj1XtROGDHjmkkPWqHQA3jDZ2lLkYZD+4m5Y6vcKI8Ap1GXNlyGCjgeFM
- b9qO0kA3nbWP8uKslT2aSVDv0fAyk3W2VHHbf05bbE3a1RHSIJ1vRHsyCLRbSmcDPf9XY3pL3WI
- /0PThLfirrumVDwWhLR/34BwGCUAwUSp90TVCXL2qkXUz3R4WtPNgoZURZ1fIIAWMVtSVfHfvzP
- VUI/EsrIZ7LA1tS/xm4xRYlLdPpvxQ14bEaq3a1B0s5/xc5de9s7zhNRvS15OmRZCHwjCzwsydS
- WQeZ8t9oeOH80G+kt9g==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDE5MiBTYWx0ZWRfX9q3gEZS1ArMI
- SnGmzvjnu/QJJP4DVVo0/XXtikJs2IwH57nS7EyPVQzsnQIjawWlFPqxqc86fivxlkLXwON8O/d
- G5U6Kqrb9PyNMi37jAU3Hu3t5tO9yac=
-X-Proofpoint-GUID: WJrglAV7nO-cwioojBBzKgcfxk4krRTs
-X-Proofpoint-ORIG-GUID: WJrglAV7nO-cwioojBBzKgcfxk4krRTs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-16_06,2026-07-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 adultscore=0 impostorscore=0
- clxscore=1015 malwarescore=0 bulkscore=0 spamscore=0 phishscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607160192
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
+ RCPT_COUNT_TWELVE(0.00)[12]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MID_RHS_MATCH_FROM(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,qemu.org:url,suse.de:mid,suse.de:dkim];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 3529678A93
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -163,106 +138,245 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Peter Xu <peterx@redhat.com> writes:
 
+> On Thu, Jul 16, 2026 at 11:08:49AM -0300, Fabiano Rosas wrote:
+>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>>=20
+>> > On Tue, Jul 07, 2026 at 04:43:43PM +0400, Marc-Andr=C3=A9 Lureau wrote:
+>> >> Hi
+>> >>=20
+>> >> On Tue, Jul 7, 2026 at 2:59=E2=80=AFPM Daniel P. Berrang=C3=A9 <berra=
+nge@redhat.com> wrote:
+>> >> >
+>> >> > Beyond the overall virt/non-virt use case classification, there are
+>> >> > a number of scenarios which we have decided will not be treated as
+>> >> > security issues. Start to document some of these to give consistency
+>> >> > in our treatemnt of incoming disclosures.
+>> >> >
+>> >> > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>> >> > ---
+>> >> >
+>> >> > Mauro / Michael: please suggest any other rules which we have appli=
+ed
+>> >> > historically on qemu-security disclosures that we should capture he=
+re.
+>> >> >
+>> >> > The vfio-user/vhost-user addition is a new one based on discussions
+>> >> > in some GitLab issues today/yesterday
+>> >> >
+>> >> >  docs/system/security.rst | 63 ++++++++++++++++++++++++++++++++++++=
+++++
+>> >> >  1 file changed, 63 insertions(+)
+>> >> >
+>> >> > diff --git a/docs/system/security.rst b/docs/system/security.rst
+>> >> > index 53992048e6..fbbca50f95 100644
+>> >> > --- a/docs/system/security.rst
+>> >> > +++ b/docs/system/security.rst
+>> >> > @@ -75,6 +75,69 @@ Bugs affecting the non-virtualization use case a=
+re not considered security
+>> >> >  bugs at this time.  Users with non-virtualization use cases must n=
+ot rely on
+>> >> >  QEMU to provide guest isolation or any security guarantees.
+>> >> >
+>> >> > +Security boundary scope
+>> >> > +'''''''''''''''''''''''
+>> >> > +
+>> >> > +Even where a flaw affects the virtualization use case described ab=
+ove,
+>> >> > +not all scenarios will be considered in scope. The following guide=
+lines
+>> >> > +are used to evaluate whether to apply the full security process, o=
+r treat
+>> >> > +an issue as a normal bug.
+>> >> > +
+>> >> > +* **assert** / **abort**. If triggering the code path requires ker=
+nel
+>> >> > +  privileges (or root account access) in the guest, asserts/aborts=
+ in
+>> >> > +  QEMU are a self inflicted denial of service. These will **not** =
+be
+>> >> > +  treated as security flaws, at most hardening bugs. If triggering=
+ the
+>> >> > +  code path can be done by an unprivileged guest OS account, this
+>> >> > +  **may** justify handling as a security bug.
+>> >> > +
+>> >> > +* **vhost-user/vfio-user backends**. The backend processes have
+>> >> > +  shared memory regions co-mapped with the QEMU process. The intent
+>> >> > +  of the process separation is operational resilience & flexibility
+>> >> > +  and allowing for independent software suppliers. There is not
+>> >> > +  considered to be security boundary between QEMU and the vhost-us=
+er
+>> >> > +  & vfio-user backends. Thus flaws in the backends which can cause
+>> >> > +  crashes / undesirable behaviour in QEMU will **not** be treated =
+as
+>> >> > +  security flaws, but should be fixed as hardening bugs.
+>> >> > +
+>> >> > +* **memory allocation bounds**. There are many ways in which a QEMU
+>> >> > +  process can legitimately consume an amount of memory that is
+>> >> > +  significantly larger than the assigned guest RAM. QEMU's worst
+>> >> > +  case memory usage should be considered effectively unbounded. As
+>> >> > +  such the QEMU deployment on the host should account for the
+>> >> > +  possibility of large memory peaks and apply countermeasures to
+>> >> > +  provide continuity of host operations. It is typical for the Lin=
+ux
+>> >> > +  OOM killer to reap the process triggering host memory overcommit
+>> >> > +  in the case of exccessive usage, offering a degree of protection.
+>> >> > +  As such, bugs which can lead to excessive/unbounded memory alloc=
+ations
+>> >> > +  will usually not be classified as security flaws, but should be
+>> >> > +  fixed as hardening bugs.
+>> >> > +
+>> >> > +* **degraded guest behaviour**. There are a set of bugs which can
+>> >> > +  lead guest hardware devices to misbehave. For example, a flawed
+>> >> > +  virtual IOMMU operation may not offer the guest device isolation
+>> >> > +  that would otherwise be expected. If a guest triggered exploit
+>> >> > +  requires kernel privileges (or root account access), and leads
+>> >> > +  to sub-optimal behaviour of the virtual device this is considered
+>> >> > +  a self inflicted service degradation. These will **not** be
+>> >> > +  treated as security flaws, at most hardening bugs. If triggernig
+>> >> > +  the code path can be done by an unprivileged guest OS account,
+>> >> > +  this may justify handling as a security bug.
+>> >> > +
+>> >> > +* **nested virtualization**. The scope for nested virtualization
+>> >> > +  is to prevent a level 2 guest from breaking out into a level
+>> >> > +  1 guest. As noted above, a number of scenarios exclude security
+>> >> > +  handling for flaws only exploitable by the guest kernel / root
+>> >> > +  account with affect the guest's own service/availability. In the
+>> >> > +  context of nested virtualization with PCI device assignment, it
+>> >> > +  may may be possible for a level 2 guest kernel to trigger flaws
+>> >> > +  that affect the level 0 QEMU process. While these bugs should be
+>> >> > +  fixed, they will not be triaged as security flaws at this time.
+>> >> > +
+>> >> > +* **low severity impact**. As a catch all rule, issues which
+>> >> > +  are judged to have a "low" severity impact on the system will
+>> >> > +  usually not justify handling as security bugs, nor assignment
+>> >> > +  of CVEs. They will be fixed as routine bugs when time allows.
+>> >>=20
+>> >> Should we have a section about management-plane protocols? (migration,
+>> >> QMP, monitor), since they already require trusted network access?
+>> >
+>> > There is a section later about QMP/monitor
+>> >
+>> >   https://www.qemu.org/docs/master/system/security.html#sensitive-conf=
+igurations
+>> >
+>> > For migration we do need to think of something to explain our approach
+>> > more clearly, and indeed document our expectations for configuration
+>> > for migration (trusted LAN vs TLS + certs).
+>> >
+>>=20
+>> +CC peterx
+>>=20
+>> Hi, I put together a draft so we can discuss, let me know what you
+>> think.
+>
+> Below looks good in general, some trivial comments inline.
+>
+>>=20
+>> Assumptions:
+>>=20
+>> A) The migration stream is assumed to be secured by TLS on a per-host
+>> basis.
+>>=20
+>> B) For migration streams stored to file, including snapshots, it is
+>> assumed that the storage file is authentic, i.e. the files are owned by
+>> the party performing the live migration and have not been tampered with.
+>>=20
+>> C) The network ports used for migration are expected to be available
+>> only during migration. No long-standing listening destination QEMU
+>> process.
+>>=20
+>> D) The network used for migration is expected to be adequately isolated.
+>>=20
+>> E) The migration source QEMU process is assumed to be secure. Compromise
+>> of the source QEMU process is nonetheless possible but exploiting the
+>> migration process is expected to grant no further privileges.
+>
+> Yes, having this whole section should help clarify things a lot.
+>
+>>=20
+>> For security consideration, the following are considered:
+>>=20
+>> OUT OF SCOPE:
+>>=20
+>> 1) Abort of destination QEMU process while migration is still in course.
+>> Rationale: the source virtual machine is not affected.
+>>=20
+>> 2) Migration failure.
+>> Rationale: eventual failed migrations are part of normal operation.
+>>=20
+>> 3) Memory over-allocation issues in the destination QEMU process.
+>> Rationale: the destination host's operating system is expected to
+>> constrain resource usage. Process termination due to OOM falls under
+>> point 1 above.
+>
+> This whole section is good too.
+>
+> Though for 3), I'd not say the dest host is expected to constrain resouce
+> usage.  For example, if there is way to cause over-allocate in a daemon it
+> should still be treated a real host mem DoS, and we may or may not always
+> assume the guest processes are protected by memcg or something alike.
+>
+> However, I still agree with the conclusion: it's out of scope of migration
+> not because #1, but because dest QEMU process is in the "secure zone" and
+> it's not a generic daemon, hence ASSUMPTION A)+C)+D).  If the attacker can
+> reach it and talk to it, something has already been breached.
+>
 
-On 7/13/2026 1:01 AM, Alistair Francis wrote:
-> On Mon, 2026-07-13 at 11:51 +0800, frank.chang@sifive.com wrote:
->> From: Frank Chang <frank.chang@sifive.com>
->>
->> Support the true Zicclsm extension so that we can trap misaligned
->> accesses
->> when Zicclsm is disabled.
->>
->> To enable/disable Zicclsm, simply set zicclsm=[true|false], e.g.:
->>    -cpu rv64,zicclsm=[true|false]
->>
->> QEMU will raise a misaligned load/store exception when executing
->> misaligned
->> load/store instructions if Zicclsm is disabled.
->>
->> Changelog:
->>    v6:
->>      * Reorder and squash Zicclsm CPU property and RVA22U64 profile
->> patches to
->>        make every single commit to pass `make check`.
->>    v5:
->>      * Add Zicclsm to RVA22U64 profile explicitly.
->>      * Rebase to the latest riscv-to-apply.next.
->>    v4:
->>      * Align ROM reset vector data at 8-byte aligned offsets.
->>    v3:
->>      * Enable Zicclsm for the compatible CPUs.
->>      * Rebase to the latest riscv-to-apply.next.
->>    v2:
->>      * Use (size_memop(size) | mo_endian_env(env)) to calculate MemOp.
->>      * Use (log2_esz << MO_ASHIFT) to calculate aligment MemOp for
->>        vector load/store whole register instructions.
->>
->> Frank Chang (6):
->>    target/riscv: Add Zicclsm CPU option
->>    target/riscv: Enable Zicclsm for the compatible CPUs
->>    hw/riscv: sifive_u: Align ROM reset vector data
->>    target/riscv: Support raising misaligned exceptions for scalar
->>      loads/stores
->>    target/riscv: Support raising misaligned exceptions for vector
->>      loads/stores
->>    target/riscv: Expose Zicclsm as a CPU property and update RVA22U64
->>      profile
-> 
-> This has missed the 11.1 release window [1]. So it will now need to
-> include unit tests and a user of the extension (submitted toolchain
-> support patches) according to [2].
-> 
-> 1: https://wiki.qemu.org/Planning/11.1
-> 2:
-> https://wiki.qemu.org/Documentation/Platforms/RISCV#RISC-V_Foundation_Extensions
+Ok, let's try to tweak this part.
 
-zicclsm is supported by GCC since
+>>=20
+>> IN SCOPE:
+>
+> It's harder to follow for what are described as IN SCOPE below.. except..
+>
+>>=20
+>> 1) Privilege escalation from the guest operating system into the
+>> destination QEMU process or host.
+>>=20
+>> 2) Tampering or exfiltration of migration stream data by a third party
+>> at a lower privilege level than either QEMU processes involved in the
+>> migration.
+>>=20
+>> 3) Termination of the source QEMU process by source virtual machine
+>> guest userspace, including by forcing host OS resource constraints to
+>> be reached.
+>>=20
+>> 4) Other tampering or exfiltration of data from the source QEMU process
+>> if reached from migration code or migration stream manipulation.
+>>=20
+>> 5) Causing source QEMU process to enter a state from which migration is
+>> not possible permanently.
+>>=20
+>> The overall effect of this policy is that only legitimately produced
+>> migration data is considered for security implications, whether that
+>> data is malicious or buggy.
+>
+> .. I kind of get what you wanted to say. The only legit way to interact
+> with migration module that I can think of, is either from guest access
+> (manipulation of guest device registers etc. iow, malicious drivers),
+> causing migration misbehave / disfunction, or via host side interfacing
+> like QMP/HMP causing source host / guest damage, this time memory DoS
+> could be a bigger problem for sure comparing to a dest QEMU DoS, but this
+> then also depends on how we want to define the scope for monitors in
+> general.
+>
+> I wonder if we can simply above 5 points into something simpler, or skip
+> for now?  To me, what is out of scope is more valuable to be put into doc,
+> because I bet 99% if not all of existing "security issues" on migration in
+> past few months fall into it.. so it saves huge time already for triaging.
 
------------
-commit 5c18df44fd1387653595869c9145c63fffb8cfac
-Author: Monk Chiang <monk.chiang@sifive.com>
-Date:   Thu Feb 1 17:14:18 2024 +0800
+I want to reduce the guesswork both when reporting issues and when
+triaging. People tend to sit around and imagine infinite scenarios, it's
+not productive.
 
-     RISC-V: Add minimal support for 7 new unprivileged extensions
+This section is so we can point at it and ask for some indication of any
+of the points above. Otherwise we'll get the random bug report saying
+that weird behavior was achieved, therefore CVE. These are the
+situations I could think of that would obviously be worthy of further
+consideration.
 
-     The RISC-V Profiles specification here:
-     https://github.com/riscv/riscv-profiles/blob/main/profiles.adoc#7-new-isa-extensions
-
-     These extensions don't add any new features but
-     describe existing features. So this patch only adds parsing.
-
-     Za64rs: Reservation set size of 64 bytes
-     Za128rs: Reservation set size of 128 bytes
-     Ziccif: Main memory supports instruction fetch with atomicity requirement
-     Ziccrse: Main memory supports forward progress on LR/SC sequences
-     Ziccamoa: Main memory supports all atomics in A
-     Zicclsm: Main memory supports misaligned loads/stores
-     Zic64b: Cache block size isf 64 bytes
------------
-
-
-I think we're good w.r.t a user/use for it.  Thanks,
-
-Daniel
-
-
-
-> 
-> Alistair
-> 
->>
->>   hw/riscv/sifive_u.c                         | 11 ++--
->>   target/riscv/cpu.c                          | 10 +++-
->>   target/riscv/cpu_cfg_fields.h.inc           |  2 +
->>   target/riscv/tcg/insn_trans/trans_rvi.c.inc |  6 ++
->>   target/riscv/tcg/insn_trans/trans_rvv.c.inc | 18 +++++-
->>   target/riscv/tcg/vector_helper.c            | 65 ++++++++++++++++---
->> --
->>   6 files changed, 88 insertions(+), 24 deletions(-)
->>
->> --
->> 2.43.0
->>
-
+Could you expand on why you think this is not worth having? I don't
+think I understand it.
 
