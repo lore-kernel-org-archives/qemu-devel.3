@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCEEDC4450A
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 12:59:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9710C44501
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 13:00:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkLgG-0000By-EG; Thu, 16 Jul 2026 08:59:12 -0400
+	id 1wkLhY-0000su-GW; Thu, 16 Jul 2026 09:00:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wkLgC-0000B3-5i; Thu, 16 Jul 2026 08:59:08 -0400
+ id 1wkLhJ-0000qs-OU; Thu, 16 Jul 2026 09:00:17 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wkLgA-0001mj-Lg; Thu, 16 Jul 2026 08:59:07 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ id 1wkLhI-0001t3-4m; Thu, 16 Jul 2026 09:00:17 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66GABoEX1019574; Thu, 16 Jul 2026 12:58:42 GMT
+ 66GACRLu2911452; Thu, 16 Jul 2026 12:59:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=gt0rcvZr39bcuHIMabiqMvA2qbPdwSaKT2SUKVhHcJk=; b=HmPe1emHyal7
- 4RIBOjRRkhG2wxXAqL6g+S57pRzloY8zPNi0LMe0ubQ/Aq7qinhsLbfTdAFdAekr
- +xGzkV80bEWoXEegJTefRNEMQs64W1pjHi7kGfucOK701VAhwctzJRXxc0AZUAKv
- fm0zKQJve2jZBcXZSt2iIjyjn+1bdJDmggvVCozN/fmblHRDcsYyN0ue+ss0fkia
- ETHOFq1IhDLe0QKznvaS1uMh5D5C/SBZrRz1FALwGY/d1+OQC0S3TQF8KYhoQQYe
- 9d2T2TTg5BbBtfCS+2xkwHXLL/Eu2IJ2VINOvKat3cMBVIIkfMG6Pxo9Ju8VFvgJ
- wAGKx98S/w==
+ bh=JJaqmbvIAvY71cjE5wRnG6cnXupQuw/Ilcdqh5GO/gE=; b=kDCVdGj5V4oJ
+ tJuS8PsdKSpgp/T5mpO9Txd2kCvUiSsbhlzXIOSx5NtihBIDcA3rbwFdx2oXX3WU
+ 0qZUK/5FGJcXf9U5JqXQbH+QRC6yZxgBGy0j80KbHcRKRX62Q9+cQquZHxi4PPcO
+ s7xt34WogYBk7pQh3HnCd9IDEa77d3Mynmwj095nN1Ieh9fhdpkt+tV+aPONYH6n
+ Eq/YmgBS5GLbaZfy9+FWcTagI5O4rPiEGiPcL/ja4XVEe8ZIaynFe+WM9m5z9SGx
+ mnvaNO+MTx1wWB1qGrY9zpNELRLHFNqH/6Boa313pRJl6C62yFnZ55+pOpciw5LC
+ X3Hvry1GzA==
 Received: from ppma13.dal12v.mail.ibm.com
  (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fcv33he54-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbepxrw8x-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jul 2026 12:58:41 +0000 (GMT)
+ Thu, 16 Jul 2026 12:59:57 +0000 (GMT)
 Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66GCnag6022918;
- Thu, 16 Jul 2026 12:58:40 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fc2cgmu9e-1
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66GCnfIM022956;
+ Thu, 16 Jul 2026 12:59:56 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fc2cgmucj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jul 2026 12:58:40 +0000 (GMT)
+ Thu, 16 Jul 2026 12:59:56 +0000 (GMT)
 Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
  [10.241.53.101])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66GCwdso64880926
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66GCxuF927591230
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 16 Jul 2026 12:58:40 GMT
+ Thu, 16 Jul 2026 12:59:56 GMT
 Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AC05B5805C;
- Thu, 16 Jul 2026 12:58:39 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 5B4D45805A;
+ Thu, 16 Jul 2026 12:59:56 +0000 (GMT)
 Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E9F2D5805A;
- Thu, 16 Jul 2026 12:58:38 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id A148E58051;
+ Thu, 16 Jul 2026 12:59:55 +0000 (GMT)
 Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
  by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 16 Jul 2026 12:58:38 +0000 (GMT)
-Message-ID: <09b0278c2ad58545ba90b086ead579ecd7ef96ba.camel@linux.ibm.com>
-Subject: Re: [PATCH 03/29] hw/gpio: pca9552: rename I2CSlave member to
- parent_obj
+ Thu, 16 Jul 2026 12:59:55 +0000 (GMT)
+Message-ID: <7330879b3b90bb70363520190de2445ba2426f16.camel@linux.ibm.com>
+Subject: Re: [PATCH 04/29] hw/gpio: pca9552: default description to the
+ instantiated type name
 From: Miles Glenn <milesg@linux.ibm.com>
 To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>,
@@ -71,10 +71,10 @@ Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew
  Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, Corey
  Minyard <cminyard@mvista.com>
-Date: Thu, 16 Jul 2026 07:58:38 -0500
-In-Reply-To: <20260709-catalina-upgrade-v1-3-814575bc076b@free.fr>
+Date: Thu, 16 Jul 2026 07:59:55 -0500
+In-Reply-To: <20260709-catalina-upgrade-v1-4-814575bc076b@free.fr>
 References: <20260709-catalina-upgrade-v1-0-814575bc076b@free.fr>
- <20260709-catalina-upgrade-v1-3-814575bc076b@free.fr>
+ <20260709-catalina-upgrade-v1-4-814575bc076b@free.fr>
 Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
@@ -82,30 +82,30 @@ Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDEzMSBTYWx0ZWRfX2bUd/1vEcNRT
- uzWRgEG5HSwUYBmLqMI3uk+QE2UVS61Ciq40Rg9ZSaDOMKoAIujRd9tTe2Vvw4fUyywK27A8bUS
- HPUezbrZ76acyAZN4Xq+o0eo6/cfGdk=
-X-Authority-Analysis: v=2.4 cv=Mp1iLWae c=1 sm=1 tr=0 ts=6a58d582 cx=c_pps
+X-Proofpoint-GUID: jltnoybh4oQ3mVfgdNzIQGSMn3pOhtcr
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDEzMSBTYWx0ZWRfX5oIuf4iw8Pjy
+ RkYT/GCQ7RSiR+RAdO5YxGJNO4hGiDSgsyi2omX1XsC50bKGXKfcV5al6t4pNUNFgJ8xNy0mLFv
+ gPrZrGNFuC4PSCW3eLZXZAhnaoXZ9kk=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDEzMSBTYWx0ZWRfXztGSc+FkroBv
+ /DgWo3J5i+QvAlzylNTxdcvs05pgiwyBHdzI2kdwa/iA3WCY/qv6QM+9UtPV+baeYb3zADQsMeF
+ jaU3KMOYzFU0/uALaawuDRWSNGdXlcpEM/i9vfQZOOku0YOimZl0V/eIPc3ALPlplKdjJptlp3w
+ rFIwNhipBTVCyYBoSclzRafjqli0gR2vfEro1Xm+VXU+jTcBcNzteyAUnytnwpPSFYsSypdNozp
+ PqxCD8ZTKiUJhx6BosgAOcqdfHFmCAQr3zIHaR4FgzVppXsDvVOFADDODU617XfJKgJVHm7v3nQ
+ NHsiEeF8i7zB4CV2a3XG8aOP1rfn70+mmuoERYV88LNFcCQ+JqCcuJINMCWqic8sIk/elsds8wx
+ wNvoIgfi44/hp+kdfZunk+Ynh1pTVAafA//T1q6wOxKXPHh+Cw3H1O0ra0PJhLpuqcu0OSSBaJZ
+ Dg2uJzZGhAx76Cp+Ung==
+X-Authority-Analysis: v=2.4 cv=XbS5Co55 c=1 sm=1 tr=0 ts=6a58d5ce cx=c_pps
  a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=BjX4JLUsjlLduDaIeOIA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: qHNNLTvKH2V5xjLf5Nu1hVaREqcICgae
-X-Proofpoint-ORIG-GUID: UWt-2pCZOj1AYkK0DC7I-qOrrqA3TWuH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDEzMSBTYWx0ZWRfX6geMPl2/drC9
- zgfHiRM2YuHFYmXzJC588c4d+25hY2My9LBJRBlsZmWxU8BGN8O+fnZQkZc3LIqSVU9ch30x65B
- GCrop7NNDrGYJjCw1de+zkbEHSILZ/8tv0KmzrnuZO/hZ7jEy3Wsq9xUWB1cQCs7VdGq4AIyWJ0
- deISMjxwGiif08YfSWNnMPVjdFanOKBQlStTcaJV2YuOe37IaWLR74X91F8xFE+EAA4d8Rac+6Z
- 7pNw18cfLL+534BFWBns39yV7H0KyFElPWNSpGBQ8nfdJAYRN3LdwKdiGmBXZ9UuI0U0UIl4VjM
- u/Z2GQTQa4VsG06MUdch5wApA1FWuwc/NOMUhHcVODzjmOWb02+7noxF84OAjp7Oy55Db38TmOo
- m+36twQ40KqwmpSCIKIe2Eb97kT4HbMIDqwuFkWEhG9Qek+HuZhrXsQin6GdSoQ/kSEVJ7JaBMe
- UznIO79PvhiUE08EXGQ==
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=Rbrhkx265bOAGaGp-ooA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: uLoZdhjolpR6v771Dc9_5gdndpqSy2AX
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-16_04,2026-07-15_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 bulkscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
- impostorscore=0 priorityscore=1501 suspectscore=0 clxscore=1015 phishscore=0
+ clxscore=1015 suspectscore=0 spamscore=0 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 adultscore=0 malwarescore=0 impostorscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607160131
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
@@ -133,42 +133,36 @@ Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 
 Thanks,
 
 Glenn
 
 On Thu, 2026-07-09 at 17:23 +0200, Emmanuel Blot wrote:
-> Use the conventional parent_obj name for the embedded I2CSlave instance.
+> When no description is supplied, fall back to the actual QOM type name
+> (pca9552 / pca9535 / pca9555) via object_get_typename() instead of the
+> opaque "pca-unspecified" placeholder, matching the PCA9554 model and
+> giving meaningful device labels in traces.
 > 
 > Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 > ---
->  hw/gpio/pca9552.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  hw/gpio/pca9552.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/hw/gpio/pca9552.c b/hw/gpio/pca9552.c
-> index 36bc4f86ed..da21e56aab 100644
+> index da21e56aab..ffeb438d2a 100644
 > --- a/hw/gpio/pca9552.c
 > +++ b/hw/gpio/pca9552.c
-> @@ -34,7 +34,7 @@ OBJECT_DECLARE_TYPE(PCA955xState, PCA955xClass, PCA955X)
+> @@ -488,7 +488,7 @@ static void pca955x_realize(DeviceState *dev, Error **errp)
+>      PCA955xState *s = PCA955X(dev);
 >  
->  struct PCA955xState {
->      /*< private >*/
-> -    I2CSlave i2c;
-> +    I2CSlave parent_obj;
->      /*< public >*/
->  
->      uint8_t len;
-> @@ -401,7 +401,7 @@ static const VMStateDescription pca9552_vmstate = {
->          VMSTATE_UINT8(pointer, PCA955xState),
->          VMSTATE_UINT8_ARRAY(regs, PCA955xState, PCA955X_NR_REGS),
->          VMSTATE_UINT8_ARRAY(ext_state, PCA955xState, PCA955X_PIN_COUNT_MAX),
-> -        VMSTATE_I2C_SLAVE(i2c, PCA955xState),
-> +        VMSTATE_I2C_SLAVE(parent_obj, PCA955xState),
->          VMSTATE_END_OF_LIST()
+>      if (!s->description) {
+> -        s->description = g_strdup("pca-unspecified");
+> +        s->description = g_strdup(object_get_typename(OBJECT(dev)));
 >      }
->  };
+>  
+>      qdev_init_gpio_out(dev, s->gpio_out, k->pin_count);
 > 
 
 
