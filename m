@@ -4,115 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BB95C44514
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 19:57:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20F1BC44512
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 19:57:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkSC0-0007lr-Bz; Thu, 16 Jul 2026 15:56:24 -0400
+	id 1wkSD8-0008IR-ES; Thu, 16 Jul 2026 15:57:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wkSBy-0007lR-QP
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 15:56:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wkSD3-0008I6-RF
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 15:57:29 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wkSBw-0008UQ-Jz
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 15:56:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784231778;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=U228GzrKyORQv9ntqC4dIPAxuGww2BOhCo9jSL7tH2w=;
- b=UR44E2xaKQGciHgG+xdurFi4m8donW7oPqjLkan0xdx+tIQ73DEY0ksALye4yt4G7qqI1G
- ju7QdjJAMj4MjHG/npLln7A+BRpIOqEu7kYYO1TpjUIaqIXWwaiwlKfzRxdwCRaL+TSn+U
- eSFqtxX+sG1g8FSNaDjvEYSvcrXPWpk=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-73-qTwIQS-GOtKqRPkYXgNcBg-1; Thu, 16 Jul 2026 15:56:17 -0400
-X-MC-Unique: qTwIQS-GOtKqRPkYXgNcBg-1
-X-Mimecast-MFC-AGG-ID: qTwIQS-GOtKqRPkYXgNcBg_1784231777
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-92ea24a2db9so1168354085a.0
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 12:56:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wkSD1-0000Ha-Q6
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 15:57:29 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66GJodGL3933387
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 19:57:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=qcppdkim1; bh=UX9vURJ/4MF9kraWJfk9UFMgu5vtG9iNOzO
+ hDB5dkoo=; b=PbAwETKgGruRxa4mBuCeDH9nrmEvx0EDws4OLQe87JcSRHvZzzY
+ 2uEP8N7sv9Ql2OcsNsRwnmsvOrS7Ir5fsQpHDMOtQuQh1usFMh0uZekIj0nOB6tB
+ 7fKQkCvWnb2rJIiboCKaTj9mh9Gg4UmqethNoCiNcafDa0dOMY90+LM5U3BMGCF9
+ b9rPK42E0/co4VM/YsftZ2LNdD/kfqoAUgITCOB+usG2UB0obtI98/OHn6bKsUEN
+ nxSW5qFxUfkhVpUDr8PJTeVDwVfe2VCQaG7tcNHr2VW1ZzkYs5lgvbNRj9MyBsX5
+ CuLGI+Qj6aDzdGglXfnX5CvAPar87xUZLjg==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fetcf38ue-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 19:57:25 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-38de0739ab6so4942543a91.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 12:57:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784231777; x=1784836577; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=U228GzrKyORQv9ntqC4dIPAxuGww2BOhCo9jSL7tH2w=;
- b=HUH+hvj8o9ltk2WT6bl+WqydG//Rhpout1ANni0mJT5Rr0ic7zAeDutjVYTctftV4E
- FwbVFEw/9XkaxPoWwh0nk+10a5MNJ21EOA/oI9u7mCdLqcCMPNMYC+KxpjSls0cgMTWX
- kL27zMCyWxQKn+Jl2bZDvasX36kDXn7//O6aHi/MgtJzAq4kxgng6JLBDDV0EzejcBrR
- 4MsNDvNv3VCnU9n1BnYgdq/fJbcDDKfQB2YF8OCMIAheFjJ671Ew8gzzyA/hHkRq3DK+
- HUg2NieDNYV0emt4rjeIQYcurRKi0rif66EQEd3tP/oT4O/tscJqnMwV8F6CY0gtqBLD
- oWvw==
+ d=oss.qualcomm.com; s=google; t=1784231844; x=1784836644; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=UX9vURJ/4MF9kraWJfk9UFMgu5vtG9iNOzOhDB5dkoo=;
+ b=Etvgbs/Ryl7RanZwXDr6CBy2NWhYF0jw7ye5FYLJOKs3GNyxA2g8QWR3ygs5Rf8K2H
+ niD+CIlO6KodyYgzshR9nphunei7yYsGqB2nVgNL9lRRTy/CBxPfG7BvshP+MtWOvn+H
+ rFgFO+cCpGEM+xljMGNbp0C2YelkLGcFpsge1WbUBBi9CJvkmVeaCGEI8oxv4ZFAw4XJ
+ K9vZ/t250ggAPLKDAEmBI+B0ugDSe1aksRzjS3kgBkIxBH1nf3xUvRy4v8HzD791l3GY
+ 7a/elcoYYqjnXwFWqa1+edHPEWwu1RsZSIbGOuLSbHkU+bpKgQ/Io0+Ebj/OXGvz6wef
+ 3GXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784231777; x=1784836577;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=U228GzrKyORQv9ntqC4dIPAxuGww2BOhCo9jSL7tH2w=;
- b=e4M+clByxpB/KLnfcZwwJpATFYbHj50JP6qwCquHLoReBuMEkNn0B9TUwtJgbrrXXU
- olY1xsA2QitqEao8kEv3sVWX00BaN+qeNV8MaEePf+ZW7aGwCqL3QGvM9cUNCJbrgMnP
- giQ9mnM2tJcxKyhQa5Nbk/yDDrZBodfftIQRGdGfrEURXwzWdf04SzAkV/9yMmpG+YEZ
- pmW+/SRU51Ckpwxa6INV/0mN1vpGWVEkEyDEk2bPZ9Ybri0sFK0WMw8p25oFwIKPXvi9
- Tvt52u2/KIANRDkLywIeGCrBl79AXtZJUtT7nJdSlzhk4tCwcAZAINCjFgjC7/qzUMK5
- R7Eg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqTtOh8p4xWbvTcPfGc0sgv1dIN59pmCP+UDpqunBktI2N7n58xDtwdC6XtFcYtoeHdzZjDuA0kM00D@nongnu.org
-X-Gm-Message-State: AOJu0YzGz5QK4NHuJlE48brlf2KTzdSKTOvkICwP95RD7vcRtX4fDFFj
- lAlavWdzjq6DeGSH9KEcWPjaFI6RkbQA5wWMoaHFT9emAEFuFklQBIF2FqZ+M2pL21uPQBasc5e
- R64q2riXV4dInp3ih+h/KIjNw5nH0tLEhK+z4fmQcPpuPpl4zibKfy6ZD
-X-Gm-Gg: AfdE7cmM9gC4jToaxi4K1eUX11YCwzdWrwW6/COHQ85wVn6jkE4Xfv3e+Z1wk2VmOfZ
- nOWJxVC6zr3raOevr20lBWtccRgM3r+RZwjNJmAUYFJBO7mWD4HxjkPnjOPOKxvD/IjFt9N83AN
- 9uAJGsANoABmWJVSqBqHHaNECRAKOPfIxQCRpQqHp+yV+eM66zL+DbaFDwLPCPaJoAfJHV+OwOe
- ctj+/fZAltL9FPIvuYku8BGTFukNuh5P2SRHiKjJX1lctkfdVQUCjZYqd1AQlJ+q0qJoprGx4gu
- acF92VHGcTKJ0PACoC213j5TuGyVZ8CQ/JeJ0xq1p+z6U/b82t9UoWgUxZOsjnnDFzU4
-X-Received: by 2002:a05:620a:4455:b0:92e:4dd2:bb24 with SMTP id
- af79cd13be357-93086a867e5mr1292016685a.39.1784231776453; 
- Thu, 16 Jul 2026 12:56:16 -0700 (PDT)
-X-Received: by 2002:a05:620a:4455:b0:92e:4dd2:bb24 with SMTP id
- af79cd13be357-93086a867e5mr1292011785a.39.1784231775730; 
- Thu, 16 Jul 2026 12:56:15 -0700 (PDT)
-Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-92ee5b8ea22sm2013726185a.15.2026.07.16.12.56.14
+ d=1e100.net; s=20251104; t=1784231844; x=1784836644;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=UX9vURJ/4MF9kraWJfk9UFMgu5vtG9iNOzOhDB5dkoo=;
+ b=KJgQJxe0uuI0MYau08oVrvfwYsFC8ku+g8YxhcvqL6OwgrpiduMNufc6+oBnvdrYAP
+ yr3wFVxGMngoO8wfnFi2vurgE3cDTNqEHb1MUvlM+wxF6sSXPTiUUT2ocu0A2v5XplDv
+ yqzTZlzQHqt9ufg3TFa9ErdF10wMS5qnub0Ji6VUV4FPpjoVjFhaWGcL1j8FrRmD3EPd
+ e98uMGBzMPnrTfcqL+x49FRA4MqvFZQsscCRjjetpIxqljmJtxH6BDYLTCzxK4p7tLaK
+ sq+OePHkgO1K9ZescgdDrukXTWbKfLUcUAp+4Shy89ZjVuhGpIEA0cEeGCWd2g2Gw5ip
+ H8kw==
+X-Gm-Message-State: AOJu0YyzcfjB9PIRwlakXYxHDGGTeNwGycdPCNHIHUOdLr18FXXPCfNq
+ n2CSuCV0KblVFCCDN67P6/NDpwCfL7OjD9Pee4mdamXi8cuRGpVL6mAbOga62Vq4dukHEnF2cce
+ 9bdb9Nb8IWnW+0UBCIQhdCCMOHzRNhMrIcVzNvjxyG54nSxdNUn7klR+3hPtNS+vBjw==
+X-Gm-Gg: AfdE7cnSgSB4NKOlLOe0FgW1KgUdJZwfuKvKV3wZnLn7T9Uki9htcMMoifrmpT84e58
+ OuSuye8AT9yoIP5MODZUQ+cglM56Od6Z2L4ANtueB3HtVAyG7hij31Mx4bANJUgIXo8IchEPVaB
+ ovelbXX1vTSELT5BnyJtqawwOW1tN3AatmnjmbwdIUaIs+jNJH/SrfSWqamUBhRrS/y74+cCHYH
+ hi5OAvoWmNLNqp+mXEGwbwFYjNZlAJacP9cLHPz5DYrIvnd84wRX5tjR6EIt+md2BnmYLl72Uax
+ djg1fYQomeI24pjcu9Vi32xf7mrlTOFrcmsI5VgVsnoFh+muLtTHTDIY2i9BSpcIEFDr94IWd/C
+ GkglnmP7kGlGpjBAjXuYi2NDqA4lrnsylwvVlKc0OYloPqpWNsD8TPtRc4VcFSC/1RllECsk=
+X-Received: by 2002:a17:90b:5906:b0:381:26f:8f05 with SMTP id
+ 98e67ed59e1d1-38e29ff97bdmr8865197a91.3.1784231844583; 
+ Thu, 16 Jul 2026 12:57:24 -0700 (PDT)
+X-Received: by 2002:a17:90b:5906:b0:381:26f:8f05 with SMTP id
+ 98e67ed59e1d1-38e29ff97bdmr8865171a91.3.1784231844034; 
+ Thu, 16 Jul 2026 12:57:24 -0700 (PDT)
+Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3140e6a5174sm14494672eec.15.2026.07.16.12.57.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Jul 2026 12:56:15 -0700 (PDT)
-Date: Thu, 16 Jul 2026 15:56:03 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Mauro Matteo Cascella <mcascell@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: Re: [PATCH] docs: outline some guidelines for security classification
-Message-ID: <alk3U6P_W0z-XNF1@x1.local>
-References: <20260707105927.2776822-1-berrange@redhat.com>
- <CAMxuvazpNiy8iqu76wJwiF3aKEizjgZaQFgF3gtHDXqiGh9Fsw@mail.gmail.com>
- <ak0q0vOeFVJsDBcL@redhat.com> <87jyqv3u32.fsf@suse.de>
- <alj7gF_ayHO7Dvb7@x1.local> <87cxwm4vkc.fsf@suse.de>
+ Thu, 16 Jul 2026 12:57:23 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
+Cc: pierrick.bouvier@oss.qualcomm.com
+Subject: [PULL 0/2] Plugins fixes for 2026-07-16
+Date: Thu, 16 Jul 2026 12:57:13 -0700
+Message-ID: <20260716195715.3218862-1-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87cxwm4vkc.fsf@suse.de>
-Received-SPF: permerror client-ip=170.10.129.124;
- envelope-from=peterx@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: KQ72wpBw0ZZX9oigvGUvPDMeFjo_wvPL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDIwMiBTYWx0ZWRfXzm2G0tlKQjWX
+ 70079IIGiFQ8nIn/IRTm588BIfdUhHrnDCHPg18inPmZrsooqC0K2O8m843za2IwePU12+Cs8UO
+ XvHEvw64oisAV4tnBFC2f4LxUHb+xaXWuozcDSBzC72QlKVbL3dR2JONYJhxZyeBdmJQU+uI2Yg
+ X9r5vkNT0zsK65X6ZX0xq0BxWXAMQFfGNoTVtre1eDlpDn9UPd6rCvlNuDrnC0OSC1EuMsu+lm9
+ xmRpaVS82zbp4h2BUJ8qxmwIv6zEZlXcfcnfEqQ4GtbvU8FMqEqhV++CCJ7MOxLbtT+M838dCU8
+ PBiv2p8lB3HVOPCpllyyNicMssBEraBfwejJ8zmxh+dBt+NdTxWQ8ygrK+sSKipsRAGED+abL5/
+ ENKLA/KKyG6QRw3MAe8TByXo1q0wQ5yfOjyOyMwe4VuVmOqAyJq+SuzhZ1MU1cYyoai5yqGgPFP
+ G29IOD0eRn8vw3y8zFA==
+X-Authority-Analysis: v=2.4 cv=f8R4wuyM c=1 sm=1 tr=0 ts=6a5937a5 cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=p0WdMEafAAAA:8
+ a=VwQbUJbxAAAA:8 a=OZcmDFxvAAAA:8 a=MAKquEBSEbejAvWtep8A:9
+ a=iS9zxrgQBfv6-_F4QbHw:22 a=liPxxeoTYnb3ClP5OJlV:22
+X-Proofpoint-GUID: KQ72wpBw0ZZX9oigvGUvPDMeFjo_wvPL
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDIwMiBTYWx0ZWRfX3tQpgHy/5+nV
+ qASbpPP5qhnOCrWjCR4a2BnQrM+rNK2Cs7vXczV8FHPaVVXBz845rWW5E+SUBvqnHhrA+ymnaDE
+ miE59Qcc5JuqM3WhoNjJ9AD5+gHSNGE=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-16_07,2026-07-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015 impostorscore=0 priorityscore=1501 bulkscore=0
+ phishscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607160202
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,102 +146,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 16, 2026 at 03:51:31PM -0300, Fabiano Rosas wrote:
-> > I wonder if we can simply above 5 points into something simpler, or skip
-> > for now?  To me, what is out of scope is more valuable to be put into doc,
-> > because I bet 99% if not all of existing "security issues" on migration in
-> > past few months fall into it.. so it saves huge time already for triaging.
-> 
-> I want to reduce the guesswork both when reporting issues and when
-> triaging. People tend to sit around and imagine infinite scenarios, it's
-> not productive.
-> 
-> This section is so we can point at it and ask for some indication of any
-> of the points above. Otherwise we'll get the random bug report saying
-> that weird behavior was achieved, therefore CVE. These are the
-> situations I could think of that would obviously be worthy of further
-> consideration.
-> 
-> Could you expand on why you think this is not worth having? I don't
-> think I understand it.
+The following changes since commit eca2c16212ef9dcb0871de39bb9d1c2efebe76be:
 
-I didn't expect to point to a bug report into "IN SCOPE" category.  IMHO,
-the major use case for the doc is to point a bug report into "OUT OF SCOPE"
-category.. then we can easily justify an issue to be not a CVE candidate.
+  Update version for v11.1.0-rc0 release (2026-07-14 20:36:23 +0100)
 
-When it is a real security issue, we likely need to evaluate it case by
-case, but first it needs to not directly fall int OUT OF SCOPE first.
+are available in the Git repository at:
 
-I think it could be that I hardly have any real experience with a legit
-security report versus migration yet, but we have richer experience on
-"what we don't think is a security issue, but only a bug" thanks to AI.. so
-NOT IN SCOPE is easier to list to me than IN SCOPE ones.
+  https://gitlab.com/p-b-o/qemu tags/pbouvier/pr/plugins-20260716
 
-Neither do I have very clear idea after reading the five examples given.
+for you to fetch changes up to fdff1c864aaab3c2458c2d6802a5cfe9dfcbdff4:
 
-To make it clearer on what I meant, I can start by asking some questions on
-the five examples listed IN SCOPE.  You don't need to answer all, or
-maybe.. no need to answer any of them, just to show my confusions on
-reading the examples (hence the request of simplifications, or removal, at
-first version).
+  plugins/execlog: fix execlog vcpu_exit execution print loss (2026-07-16 10:33:59 -0700)
 
-> 1) Privilege escalation from the guest operating system into the
-> destination QEMU process or host.
+----------------------------------------------------------------
+Changes:
+- [PATCH v2 0/2] plugins/execlog: fix segfault and flush output on vcpu (Harry van Haaren <harry.vanhaaren@openchip.com>)
+  Link: https://lore.kernel.org/qemu-devel/20260716094126.787556-1-harry.vanhaaren@openchip.com
 
-Do you mean any form of guest operation to cause privilege escalation?
-Obviously, it must be about during a live migration happening, otherwise I
-don't see how it is relevant to migration, but then is this only talking
-about a postcopy use case (where dest QEMU has vCPU running)?  After all,
-precopy migration guest operations all done on source, so if there's any
-privilege escalation, it needs to happen on source host first.
+----------------------------------------------------------------
+Harry van Haaren (2):
+      plugins/execlog: fix segfault/race-cond on per-vCPU structures
+      plugins/execlog: fix execlog vcpu_exit execution print loss
 
-Also, I am a bit lost on why this is special for migration.  Such issue can
-happen on any host without migration.  It's a bit unclear to me.
-
-> 
-> 2) Tampering or exfiltration of migration stream data by a third party
-> at a lower privilege level than either QEMU processes involved in the
-> migration.
-
-If we have the ASSUMPTION describing migration stream is secure, why do we
-worry about third party hijacking migration stream?  Someone already
-breached?
-
-> 
-> 3) Termination of the source QEMU process by source virtual machine
-> guest userspace, including by forcing host OS resource constraints to
-> be reached.
-
-This is also not clear on how it correlates to migration, because IIUC this
-can also happen without migration.  Maybe it's trying to catch the cases
-where it only can be attacked during migration?
-
-What is "guest userspace"?  Is that the userspace of the guest OS?
-
-> 
-> 4) Other tampering or exfiltration of data from the source QEMU process
-> if reached from migration code or migration stream manipulation.
-
-This is a very generic statement to me, even though I think it's correct..
-Say, how stream can be manipulated with TLS encryption?  If it's
-manipulated from the guest, is the guest data being tampered on its own or
-some other data?
-
-> 
-> 5) Causing source QEMU process to enter a state from which migration is
-> not possible permanently.
-
-This is a very valid one and clear to understand.  However I don't know if
-any of such would really happen, though.  It's easier to happen to me when
-e.g. we leaked memory in QMP handlers which may cause DoS rather than
-"cannot migrate anymore"..
-
-Also, if it's only the VM itself got affected (say, attacker from guest
-within causing its VM not migratable), then the damage it can cause is very
-limited too.  I'm not 100% sure I know how severe is such, and whether it's
-CVE.
-
--- 
-Peter Xu
-
+ contrib/plugins/execlog.c | 88 +++++++++++++++++++++++------------------------
+ 1 file changed, 43 insertions(+), 45 deletions(-)
 
