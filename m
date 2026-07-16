@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DE3DC4450A
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 11:23:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1134AC4450E
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 11:23:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkKB2-0002RV-R2; Thu, 16 Jul 2026 07:22:52 -0400
+	id 1wkKB3-0002Rb-Co; Thu, 16 Jul 2026 07:22:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wkKB0-0002Ko-FQ
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wkKB0-0002Lh-MV
  for qemu-devel@nongnu.org; Thu, 16 Jul 2026 07:22:50 -0400
 Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wkKAy-0005E6-0E
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wkKAy-0005EE-P7
  for qemu-devel@nongnu.org; Thu, 16 Jul 2026 07:22:50 -0400
 Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-493d92b7db3so24108725e9.2
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 04:22:47 -0700 (PDT)
+ 5b1f17b1804b1-495437bb891so2606515e9.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 04:22:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1784200966; x=1784805766; darn=nongnu.org;
+ d=openvz.org; s=google; t=1784200967; x=1784805767; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=jUbV7alaeVOad4qQ8VoPOBfCbDLvwGK/15GYJMqehXk=;
- b=tzv2cKgNYralEw6f8GJDT5UipxQ0u9xxXkkTwDKr4wSg5Z6liuRky1VSYBIfb+Ug0m
- 8PGItIHaGWeF8ECL45sf3xvyOyFjJIJpOi5tGJsr1L16nGal9JdgB9+F9uygvHZCEpDQ
- +2DwMVGpBjUMaekobHu2AznLh2eiJ0Tdzf8lK/wkGQTfKMMh7gGzXdeum6Kv+n1rMlJm
- 1e4K3G3T2r5B6tKX2HeEXxtAMSxXzraSViv63lKlebyfDzoj8i1PhyZtNpa5vCeqBAvg
- 1ke0k0uUJ/bRq1cBnYlKbx/MyM5my/8OKTMXk4N3WmDSS3QHYDdUX1dxewzXjii+Z+md
- H6Xw==
+ bh=R1x24EIH9Zws+U6zhZ4YK6KCdLCmyavM2XPJ+59zwwk=;
+ b=ZJtq0Ub+9v021oWQQBI7hJDc9AzQlZ3Af6Q8eEQ5BCbS9DA0zCSIannX54ZzrPF/2X
+ lzy+hp1u2JZWgPe1k5koz4HegzAWuW/G7hRzvvi5CkM1Wvd//eiW12C4NpiEyuH+wXkB
+ pSg96pGahqx7V+G9XOBmd+3h8vmsz1eJc99aSx1+f28sArPcQtyq1aok1YSneiQwF0+l
+ PmnGKNhw0vDB27QrEC97KjWuxSUBprAt3vbpbM123U6D8fzIYwn2EXO3dh6vAdgX1N/O
+ 6Zh9oMAeZdv6RYO1N1Uy5IVCeuzbyHcGZ9d0YR//9RBAqZNUlML4SKNafnhMFEbsMeiY
+ WuLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784200966; x=1784805766;
+ d=1e100.net; s=20251104; t=1784200967; x=1784805767;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=jUbV7alaeVOad4qQ8VoPOBfCbDLvwGK/15GYJMqehXk=;
- b=nsE0TynWHoTkX96aKaNuYRCN+kkQiWxyBqvjxJbsv3nXI95kU1/h01Fq3i/lPSvkXm
- i46okbeqphiF5G0g5jBfjjBZM/QYftm0zrFs+4whuFYLaJiLd9+bc+ix8AdxmKuNUx9Z
- aPUf2h1d95XnIYPIfphMZ1276fa8YsdT53Cn1me30GRBbq2l9PdnieYq/firqto9CfwW
- YqJD5AFZoAd+A0zrJn/kabX6wFV2VgC3HgA/Hc9vk1pBi6GCNDbOKXKG1cy2qUAMvihz
- eW4Sl1BINXWa6kUJbfRei8eUIhirTXiUt8OiJcxzouiIIxukBGeoF99ewldFj99ft2JG
- gCng==
+ bh=R1x24EIH9Zws+U6zhZ4YK6KCdLCmyavM2XPJ+59zwwk=;
+ b=Bgt54JpJ8W1gu92dnV6z2Qqt0j2FvcG685FL5KXu5Irlm08/RYvB0DPWUEo1c6DVqE
+ +bjhrqdgjn+5LURPbPe/SHni+tcYfnxtZTg3lr0G3eijrG0iRhGjqfsOBlt8vRMEfYOf
+ up8iu/tDXmk5msMEfi6lYh/8epJaWixCIQxHJboR3ZM+OPy8AgqlCoTcPg6ZEXewnpFS
+ 5yEg+o9WkCPplLfYM0dSqlUixE60MgkBbWFUHncVGT/rUCF+x79GRctUMsB7S5hs+87S
+ /WgNZ31nZBKIiXZe6GcI3ZG3Upp/DGE7rQu9ZkiZihCshfTI/nIfqqebO7PV7SwbpE0e
+ O3Cg==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rq4ffi1rfV4LpWN1T4TRINUTf8PzkBmrSAZObk8TkC5OsKnqCB/QfgGHH2Sg5wCMN1LA/3h70tBRgAL@nongnu.org
-X-Gm-Message-State: AOJu0YxXPwoQSy9QI5+1jQR2Ji2xWn85JcGleGQzQJs+kscETDNiy3Sm
- LZ2ZTX56A2/Nc2rw3BVyIbILcFyd3OQwzHHv9ggl7YJWZ7lIG0e0NfZW2z79Nq1Qc74=
-X-Gm-Gg: AfdE7cmiEqplZnCG7+rDL98UKiZzcuB4HADUPuHf7GNQzZyat88I/D675LhqXru041X
- 9PvGed2Tm0h3TlilU0bg8mDs0zZdgJ4sz+T4+8OstGXKESvetnZjJcbUAUypvO7AbxOjEGEmwkt
- 1WTkg9FsRHPfACTY+yqN7Yhl7wM6nxHX3yEL7f86XmAS1nmpMxMwo4alxZhuVYeU5btKURntzMT
- x67rvS1JlwmCeRUunQnNvGChc20VL9HhNU68JWjYFZs0tfcQ/x4yanvAjuQhRfXTWAmnEe0Vw5K
- lmfe1U7gpZqZXh7HYhWWfttUGlXaOXgz0PJm5GpbFKuCIJJ7gjtLDYivpJuG1NSLnI4AqMkwi/B
- uNh6II2zHnC+D7PrRBe1pcu0kWXnAEIp4N40a1BqjJB7O1eDNMjVj8pZru8vzh37WVpP+4Z5qj5
- I=
-X-Received: by 2002:a05:600c:4fc3:b0:495:4598:6e13 with SMTP id
- 5b1f17b1804b1-49545986eaemr6603995e9.17.1784200966198; 
- Thu, 16 Jul 2026 04:22:46 -0700 (PDT)
+ AHgh+RqAitWvdvxlf9vaV8foWZaBqF3631AdsvPR6vhOZEBV3ZIkbjIczYu1Z0yK2Je7pw387Sc4/b99STIq@nongnu.org
+X-Gm-Message-State: AOJu0Yzb443QtGTRo9IzGXkRodXAvms1/UfZq85UV61U2J2D0MHBjLFl
+ TnBsLfggXaJ1WgkkRdstIKCU1/E3cFnGo4d2eRsy5WV7vPJ2UVFCwtru/gh/dOgDqao=
+X-Gm-Gg: AfdE7cmwR3B9XMsFTFTGsY1kg2ri8dvBRGBoGzn802toxD3PNCaM0HOhzmPBQadVDdZ
+ pZSwnSboLwjzcR/7BKVoTeuBHvohBqChdu8xIw+uxA3TBu6Aos1tXH1qYCe7vy6Cr2Q2eyllb1C
+ 2nPZbMqLwUEMJIt/itLWrd4avSIh4qYx2ZOkpson0MwQO/s7o9MNSAtILFH0Lrn59FCgg/pPvDK
+ Ef1GCWX5s4eYieSGXKTvEHUwv/RjHI9e5NLuJyEd2TEQzax62f1otwKTDnJqjPTtL5vETQnygwd
+ CepoBKwX1eOqHshQRhVJMJSLtnXmDwMqC0V+Hk8+fIO0df6xk97aiQnVSyrZzCAFAoLLPwZkso5
+ XlTjR2qbQKoERKlCVG9amvV1M+XyCx+iqhZph67O4pamW9iouc2SCV1w70BUDYcmOU+DeNoQU0O
+ U=
+X-Received: by 2002:a05:600c:3552:b0:494:1f7:8057 with SMTP id
+ 5b1f17b1804b1-4954286a3b4mr22010785e9.1.1784200967328; 
+ Thu, 16 Jul 2026 04:22:47 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:4ca9:146f:3485:e2c5])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f464a96fdsm24019672f8f.24.2026.07.16.04.22.45
+ ffacd0b85a97d-47f464a96fdsm24019672f8f.24.2026.07.16.04.22.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Jul 2026 04:22:45 -0700 (PDT)
+ Thu, 16 Jul 2026 04:22:46 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-block@nongnu.org,
 	qemu-devel@nongnu.org
@@ -71,10 +71,10 @@ Cc: den@openvz.org, Eric Blake <eblake@redhat.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  John Snow <jsnow@redhat.com>,
  Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Subject: [PATCH v2 1/3] block/monitor: reject persistent bitmap add on a
- read-only node
-Date: Thu, 16 Jul 2026 13:22:40 +0200
-Message-ID: <20260716112242.3000035-2-den@openvz.org>
+Subject: [PATCH v2 2/3] migration/block-dirty-bitmap: reject bitmap load onto
+ ro node
+Date: Thu, 16 Jul 2026 13:22:41 +0200
+Message-ID: <20260716112242.3000035-3-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260716112242.3000035-1-den@openvz.org>
 References: <20260716112242.3000035-1-den@openvz.org>
@@ -88,7 +88,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,23 +104,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qmp_block_dirty_bitmap_add() marks a new bitmap persistent without
-checking write access to its node. bdrv_create_dirty_bitmap() always
-creates bitmaps writable, so a persistent bitmap added to an
-already read-only node stays writable in memory on a node that can
-never store it, and the next global inactivation fails:
+dirty_bitmap_load_start() creates an incoming migrated bitmap with
+bdrv_create_dirty_bitmap() and, if the source marked it persistent,
+calls bdrv_dirty_bitmap_set_persistence() without checking whether
+the destination node can be written to. Same gap as
+qmp_block_dirty_bitmap_add(), reached via incoming migration: a
+persistent bitmap for a read-only destination (e.g. a migrated
+CD-ROM-class attachment with dirty-bitmaps migration enabled) ends
+up writable in memory on a node that can never store it.
 
-  Lost persistent bitmaps during inactivation of node '<node>': No write access
-  migration_block_inactivate: bdrv_inactivate_all() failed: -22
-
-Forcing it read-only instead does not help: it was never stored,
-so it stays unpromotable on the next reopen to read-write and can
-trip bdrv_set_dirty()'s readonly assert on the first write. Reject
-the add instead, for both read-only and inactive nodes -- an
-already-inactive node skips qcow2_inactivate() on close, so a
-bitmap added during that window would never get stored either.
-Wrapped in a transaction, this denies the whole transaction, since
-qmp_transaction() is already all-or-none.
+Reject it the same way, with one difference from the QMP path:
+every destination node is BDRV_O_INACTIVE until migration completes,
+so bdrv_is_writable() would reject every incoming persistent
+bitmap, not just read-only ones. Check bdrv_is_read_only() alone.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 CC: Eric Blake <eblake@redhat.com>
@@ -128,128 +124,107 @@ CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 CC: John Snow <jsnow@redhat.com>
 CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- block/monitor/bitmap-qmp-cmds.c               | 15 +++++++---
- qapi/block-core.json                          |  4 ++-
- .../tests/remove-bitmap-from-backing          | 29 ++++++++++++++++++-
- .../tests/remove-bitmap-from-backing.out      | 20 +++++++++++++
- 4 files changed, 62 insertions(+), 6 deletions(-)
+ migration/block-dirty-bitmap.c                | 22 +++++++++----
+ tests/qemu-iotests/tests/migrate-bitmaps-test | 33 +++++++++++++++++++
+ .../tests/migrate-bitmaps-test.out            |  4 +--
+ 3 files changed, 50 insertions(+), 9 deletions(-)
 
-diff --git a/block/monitor/bitmap-qmp-cmds.c b/block/monitor/bitmap-qmp-cmds.c
-index a738e7bbf7..d87ca982aa 100644
---- a/block/monitor/bitmap-qmp-cmds.c
-+++ b/block/monitor/bitmap-qmp-cmds.c
-@@ -125,10 +125,17 @@ void qmp_block_dirty_bitmap_add(const char *node, const char *name,
-         disabled = false;
+diff --git a/migration/block-dirty-bitmap.c b/migration/block-dirty-bitmap.c
+index cba54e25cd..1b8f39c12b 100644
+--- a/migration/block-dirty-bitmap.c
++++ b/migration/block-dirty-bitmap.c
+@@ -812,13 +812,6 @@ static int dirty_bitmap_load_start(QEMUFile *f, DBMLoadState *s)
+         error_report("Bitmap with the same name ('%s') already exists on "
+                      "destination", bdrv_dirty_bitmap_name(s->bitmap));
+         return -EINVAL;
+-    } else {
+-        s->bitmap = bdrv_create_dirty_bitmap(s->bs, granularity,
+-                                             s->bitmap_name, &local_err);
+-        if (!s->bitmap) {
+-            error_report_err(local_err);
+-            return -EINVAL;
+-        }
      }
  
--    if (persistent &&
--        !bdrv_can_store_new_dirty_bitmap(bs, name, granularity, errp))
--    {
--        return;
-+    if (persistent) {
-+        if (!bdrv_is_writable(bs)) {
-+            error_setg(errp, "Cannot add a persistent bitmap to "
-+                       "read-only or inactive node '%s'",
-+                       bdrv_get_node_name(bs));
-+            return;
-+        }
-+
-+        if (!bdrv_can_store_new_dirty_bitmap(bs, name, granularity, errp)) {
-+            return;
-+        }
+     if (flags & DIRTY_BITMAP_MIG_START_FLAG_RESERVED_MASK) {
+@@ -835,6 +828,21 @@ static int dirty_bitmap_load_start(QEMUFile *f, DBMLoadState *s)
+         persistent = flags & DIRTY_BITMAP_MIG_START_FLAG_PERSISTENT;
      }
  
-     bitmap = bdrv_create_dirty_bitmap(bs, granularity, name, errp);
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 1f87b07850..199efc1e00 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -2353,7 +2353,9 @@
- # @persistent: the bitmap is persistent, i.e. it will be saved to the
- #     corresponding block device image file on its close.  For now
- #     only Qcow2 disks support persistent bitmaps.  Default is false
--#     for `block-dirty-bitmap-add`.  (Since: 2.10)
-+#     for `block-dirty-bitmap-add`.  This fails if the node is
-+#     read-only or inactive, since such a bitmap could never be
-+#     stored.  (Since: 2.10)
- #
- # @disabled: the bitmap is created in the disabled state, which means
- #     that it will not track drive changes.  The bitmap may be enabled
-diff --git a/tests/qemu-iotests/tests/remove-bitmap-from-backing b/tests/qemu-iotests/tests/remove-bitmap-from-backing
-index 15be32dcb9..a54984fa58 100755
---- a/tests/qemu-iotests/tests/remove-bitmap-from-backing
-+++ b/tests/qemu-iotests/tests/remove-bitmap-from-backing
-@@ -35,7 +35,7 @@ qemu_img('bitmap', '--add', base, 'bitmap0')
- # Just assert that our method of checking bitmaps in the image works.
- assert 'bitmaps' in qemu_img_info(base)['format-specific']['data']
++    /* Not bdrv_is_writable(): nodes stay inactive until migration ends. */
++    if (persistent && bdrv_is_read_only(s->bs)) {
++        error_report("Cannot make migrated bitmap '%s' persistent "
++                     "on read-only node '%s'", s->bitmap_name,
++                     bdrv_get_node_name(s->bs));
++        return -EINVAL;
++    }
++
++    s->bitmap = bdrv_create_dirty_bitmap(s->bs, granularity,
++                                         s->bitmap_name, &local_err);
++    if (!s->bitmap) {
++        error_report_err(local_err);
++        return -EINVAL;
++    }
++
+     if (persistent) {
+         bdrv_dirty_bitmap_set_persistence(s->bitmap, true);
+     }
+diff --git a/tests/qemu-iotests/tests/migrate-bitmaps-test b/tests/qemu-iotests/tests/migrate-bitmaps-test
+index 8fb4099201..cb9154ca8d 100755
+--- a/tests/qemu-iotests/tests/migrate-bitmaps-test
++++ b/tests/qemu-iotests/tests/migrate-bitmaps-test
+@@ -206,6 +206,39 @@ class TestDirtyBitmapMigration(iotests.QMPTestCase):
+             self.vm_b.launch()
+             self.check_bitmap(self.vm_b, sha256 if persistent else False)
  
--vm = iotests.VM().add_drive(top, 'backing.node-name=base')
-+vm = iotests.VM().add_drive(top, 'node-name=top,backing.node-name=base')
- vm.launch()
++    def test_migration_to_readonly_destination(self):
++        granularity = 512
++        mig_caps = [{'capability': 'events', 'state': True},
++                   {'capability': 'dirty-bitmaps', 'state': True}]
++
++        self.vm_b.add_incoming("defer")
++        self.vm_b.add_drive(disk_b, 'read-only=on')
++
++        self.add_bitmap(self.vm_a, granularity, True)
++        self.vm_a.hmp_qemu_io('drive0', 'write 0 4096')
++
++        self.vm_a.cmd('migrate-set-capabilities', capabilities=mig_caps)
++        self.vm_a.cmd('migrate', uri=mig_cmd)
++        while True:
++            event = self.vm_a.event_wait('MIGRATION')
++            if event['data']['status'] == 'completed':
++                break
++        self.vm_a.shutdown()
++
++        self.vm_b.launch()
++        self.vm_b.cmd('migrate-set-capabilities', capabilities=mig_caps)
++        self.vm_b.cmd('migrate-incoming', uri=incoming_cmd)
++        while True:
++            event = self.vm_b.event_wait('MIGRATION')
++            if event['data']['status'] in ('completed', 'failed'):
++                break
++
++        self.assert_qmp(event, 'data/status', 'failed')
++
++        # A failed incoming load makes the destination process exit on
++        # its own; reap it so tearDown()'s shutdown() is a clean no-op.
++        self.vm_b.wait()
++
  
- log('Trying to remove persistent bitmap from r-o base node, should fail:')
-@@ -66,6 +66,33 @@ result = vm.qmp('blockdev-reopen', **new_base_opts)
- if result != {'return': {}}:
-     log('Failed to reopen: ' + str(result))
+ def inject_test_case(klass, suffix, method, *args, **kwargs):
+     mc = operator.methodcaller(method, *args, **kwargs)
+diff --git a/tests/qemu-iotests/tests/migrate-bitmaps-test.out b/tests/qemu-iotests/tests/migrate-bitmaps-test.out
+index cafb8161f7..73e375a9d7 100644
+--- a/tests/qemu-iotests/tests/migrate-bitmaps-test.out
++++ b/tests/qemu-iotests/tests/migrate-bitmaps-test.out
+@@ -1,5 +1,5 @@
+-.....................................
++......................................
+ ----------------------------------------------------------------------
+-Ran 37 tests
++Ran 38 tests
  
-+log('Adding a persistent bitmap to the r-o base node, should fail:')
-+vm.qmp_log('block-dirty-bitmap-add', node='base', name='bitmap1',
-+          persistent=True)
-+
-+log('Same add inside a transaction, preceded by an otherwise valid')
-+log('action: the whole transaction must fail and roll back the')
-+log('already-succeeded first action too:')
-+vm.qmp_log('transaction', actions=[
-+    {'type': 'block-dirty-bitmap-add',
-+     'data': {'node': 'top', 'name': 'bitmap2', 'persistent': True}},
-+    {'type': 'block-dirty-bitmap-add',
-+     'data': {'node': 'base', 'name': 'bitmap1', 'persistent': True}},
-+])
-+
-+log('bitmap2 on the rw top node must not have survived the rollback:')
-+vm.qmp_log('block-dirty-bitmap-remove', node='top', name='bitmap2')
-+
-+log('Marking the rw top node inactive:')
-+vm.qmp_log('blockdev-set-active', **{'node-name': 'top', 'active': False})
-+
-+log('Adding a persistent bitmap to a rw but inactive node, should fail:')
-+vm.qmp_log('block-dirty-bitmap-add', node='top', name='bitmap3',
-+          persistent=True)
-+
-+log('Reactivating the top node:')
-+vm.qmp_log('blockdev-set-active', **{'node-name': 'top', 'active': True})
-+
- vm.shutdown()
- 
- if 'bitmaps' in qemu_img_info(base)['format-specific']['data']:
-diff --git a/tests/qemu-iotests/tests/remove-bitmap-from-backing.out b/tests/qemu-iotests/tests/remove-bitmap-from-backing.out
-index c28af82c75..fe105fe0a3 100644
---- a/tests/qemu-iotests/tests/remove-bitmap-from-backing.out
-+++ b/tests/qemu-iotests/tests/remove-bitmap-from-backing.out
-@@ -4,3 +4,23 @@ Trying to remove persistent bitmap from r-o base node, should fail:
- Remove persistent bitmap from base node reopened to RW:
- {"execute": "block-dirty-bitmap-remove", "arguments": {"name": "bitmap0", "node": "base"}}
- {"return": {}}
-+Adding a persistent bitmap to the r-o base node, should fail:
-+{"execute": "block-dirty-bitmap-add", "arguments": {"name": "bitmap1", "node": "base", "persistent": true}}
-+{"error": {"class": "GenericError", "desc": "Cannot add a persistent bitmap to read-only or inactive node 'base'"}}
-+Same add inside a transaction, preceded by an otherwise valid
-+action: the whole transaction must fail and roll back the
-+already-succeeded first action too:
-+{"execute": "transaction", "arguments": {"actions": [{"data": {"name": "bitmap2", "node": "top", "persistent": true}, "type": "block-dirty-bitmap-add"}, {"data": {"name": "bitmap1", "node": "base", "persistent": true}, "type": "block-dirty-bitmap-add"}]}}
-+{"error": {"class": "GenericError", "desc": "Cannot add a persistent bitmap to read-only or inactive node 'base'"}}
-+bitmap2 on the rw top node must not have survived the rollback:
-+{"execute": "block-dirty-bitmap-remove", "arguments": {"name": "bitmap2", "node": "top"}}
-+{"error": {"class": "GenericError", "desc": "Dirty bitmap 'bitmap2' not found"}}
-+Marking the rw top node inactive:
-+{"execute": "blockdev-set-active", "arguments": {"active": false, "node-name": "top"}}
-+{"return": {}}
-+Adding a persistent bitmap to a rw but inactive node, should fail:
-+{"execute": "block-dirty-bitmap-add", "arguments": {"name": "bitmap3", "node": "top", "persistent": true}}
-+{"error": {"class": "GenericError", "desc": "Cannot add a persistent bitmap to read-only or inactive node 'top'"}}
-+Reactivating the top node:
-+{"execute": "blockdev-set-active", "arguments": {"active": true, "node-name": "top"}}
-+{"return": {}}
+ OK
 -- 
 2.53.0
 
