@@ -4,58 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 286D4C44501
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 10:21:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F229C44501
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 10:23:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkJCS-00041V-87; Thu, 16 Jul 2026 06:20:16 -0400
+	id 1wkJFZ-0005la-DD; Thu, 16 Jul 2026 06:23:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wkJCP-00040R-TN
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 06:20:13 -0400
-Received: from [115.124.30.131] (helo=out30-131.freemail.mail.aliyun.com)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wkJFX-0005lL-9P
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 06:23:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wkJCJ-00054q-VQ
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 06:20:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1784197198; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=ANb5OyyCZT/FApULtSqZ9QNYrtKLeWbtrDaSoNGlUyI=;
- b=JGJD9RWRDDn7UvQRhmHfNJQV6qyADZBrY5k7hemQjZiTCix99DcqbHzs+qm8/bh0ybsF5KF2t20R5+GBw8K6RH37FVyktnSz2OZeE4EUO8CX9eKJsKXtodmMwzaY22eGOD3EIs2NcZvRNEDaV+kCaOO5NwWafpvF8++e2sbAYqA=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R901e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam011083073210;
- MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=3; SR=0;
- TI=SMTPD_---0X7E6RmL_1784197194; 
-Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0X7E6RmL_1784197194 cluster:ay36) by smtp.aliyun-inc.com;
- Thu, 16 Jul 2026 18:19:55 +0800
-From: Bin Guo <guobin@linux.alibaba.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com,
-	farosas@suse.de
-Subject: [PATCH 2/3] migration: fix const mismatch in format_time_str()
-Date: Thu, 16 Jul 2026 18:19:51 +0800
-Message-ID: <20260716101952.65329-3-guobin@linux.alibaba.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260716101952.65329-1-guobin@linux.alibaba.com>
-References: <20260716101952.65329-1-guobin@linux.alibaba.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wkJFU-0005Tr-Kd
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 06:23:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784197403;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3J1NaS7N9zVLcKKqIEUKbc5VBeYqHHcFLLDDeWJOnOE=;
+ b=cuWpFR9v8vFlSj2inlODhpWtF2Gm2iAQqmyaHO1NtIFG/MR/3qbcHu7PBGkqOjSDV/jsN6
+ HKlvrNzE3WJaGeyQxIodVcNiJsuUocIwdhSawYaM3KT+RiC7CwX9s4MureFqZDclf+Tk7b
+ g4kfXd8xM/X3Qv8fb9y/HEuKQh6yi5A=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-PMNKTYWoPK6QlttTty3Gug-1; Thu,
+ 16 Jul 2026 06:23:19 -0400
+X-MC-Unique: PMNKTYWoPK6QlttTty3Gug-1
+X-Mimecast-MFC-AGG-ID: PMNKTYWoPK6QlttTty3Gug_1784197398
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 153EA1800667; Thu, 16 Jul 2026 10:23:18 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.34.221])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 161981956042; Thu, 16 Jul 2026 10:23:14 +0000 (UTC)
+Date: Thu, 16 Jul 2026 11:23:11 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Luc Michel <luc.michel@amd.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Frederic Konrad <frederic.konrad@amd.com>
+Subject: Re: [PATCH v2] meson.build: re-add explicit gcrypt/nettle request
+ check
+Message-ID: <alixDyX9bC3Ju161@redhat.com>
+References: <20260710132531.97844-1-luc.michel@amd.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.131 (deferred)
-Received-SPF: pass client-ip=115.124.30.131;
- envelope-from=guobin@linux.alibaba.com;
- helo=out30-131.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+In-Reply-To: <20260710132531.97844-1-luc.michel@amd.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: permerror client-ip=170.10.129.124;
+ envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,43 +89,38 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-format_time_str() returns a newly allocated string from
-g_strdup_printf(), so the caller owns it.  Return gchar * rather
-than const gchar * to match the g_autofree callers.
+On Fri, Jul 10, 2026 at 03:25:30PM +0200, Luc Michel wrote:
+> c4b3d0074 removed the check that nettle or gcrypt were explicitly
+> requested as the crypto library to use, breaking the --enable-nettle and
+> --enable-gcrypt options. Re-add the logic to force usage of nettle or
+> gcrypt for crypto operations, while still keeping gnutls for TLS.
+> 
+> Fixes: c4b3d0074 (crypto: bump min gnutls to 3.7.5)
+> Signed-off-by: Luc Michel <luc.michel@amd.com>
+> ---
+> v2:
+>    - Revert more of c4b3d0074 to restore the gnutls_crypto logic to
+>      disable gnutls only for crypto ops but keep it for TLS [Daniel]
+> ---
+>  meson.build                    | 11 ++++++++++-
+>  crypto/cipher.c                |  2 +-
+>  tests/unit/test-crypto-block.c |  3 ++-
+>  crypto/meson.build             |  2 +-
+>  4 files changed, 14 insertions(+), 4 deletions(-)
 
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
----
- migration/migration-hmp-cmds.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-index 502ca704da..6bedf786df 100644
---- a/migration/migration-hmp-cmds.c
-+++ b/migration/migration-hmp-cmds.c
-@@ -54,7 +54,7 @@ static void migration_global_dump(Monitor *mon)
-                    ms->clear_bitmap_shift);
- }
- 
--static const gchar *format_time_str(uint64_t us)
-+static gchar *format_time_str(uint64_t us)
- {
-     const char *units[] = {"us", "ms", "sec"};
-     int index = 0;
-@@ -123,8 +123,8 @@ static void migration_dump_blocktime(Monitor *mon, MigrationInfo *info)
-         monitor_printf(mon, "Postcopy Latency Distribution:\n");
- 
-         while (item) {
--            g_autofree const gchar *from = format_time_str(1UL << count);
--            g_autofree const gchar *to = format_time_str(1UL << (count + 1));
-+            g_autofree gchar *from = format_time_str(1UL << count);
-+            g_autofree gchar *to = format_time_str(1UL << (count + 1));
- 
-             monitor_printf(mon, "  [ %8s - %8s ]: %10"PRIu64"\n",
-                            from, to, item->value);
+and queued.
+
+With regards,
+Daniel
 -- 
-2.50.1 (Apple Git-155)
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
