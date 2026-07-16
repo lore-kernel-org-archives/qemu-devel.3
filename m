@@ -4,118 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71139C44511
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 15:58:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6528C44511
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 16:05:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkOTO-0002uB-NG; Thu, 16 Jul 2026 11:58:06 -0400
+	id 1wkOZd-0005px-HE; Thu, 16 Jul 2026 12:04:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wkOTM-0002tU-SV; Thu, 16 Jul 2026 11:58:04 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wkOZa-0005pb-Qo
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 12:04:30 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wkOTK-0004Jd-Gx; Thu, 16 Jul 2026 11:58:03 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66GDg7nC3348875; Thu, 16 Jul 2026 15:57:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=HfpPWW/HCyd+V+dZZxuM58AnRvAtg50LGLNGQASB3xE=; b=tRtTOy3+WKDJ
- 0oodzDs6+mQyp5mQNFf8NEbra7oqd8igwQ70OhadExqLBeqtCQs3Ng9QpavKkuXm
- rpi4BAX5QXXatXkXfONbINEFaY5jpR8ZDgHGMBtfqv7MhFtQMsrv2f4+IYJ35qWz
- wDqccdymCjAuDb8XI0L3iFky8JGdH3SWSB6gYPAqHVN2fwTBb2kpvuBJA+z//H2V
- ljI0i/+ASlY8CjUx+r9ydf+awTA3cs3H/W3AnFLuJ9L86BEuNAd/mQ5cNJGywZmS
- YsO4GXHt4oLhrXNqLruTVKpIHLv89yFkDkmqa926IEfv1u0FXKXz//l0sH33ptCF
- kxAfSKMyRA==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbegc1106-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jul 2026 15:57:38 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66GFnblf016697;
- Thu, 16 Jul 2026 15:57:38 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc0hwdue5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jul 2026 15:57:38 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66GFvbKJ37093968
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 16 Jul 2026 15:57:38 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CAB3D5804B;
- Thu, 16 Jul 2026 15:57:37 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 89A2258055;
- Thu, 16 Jul 2026 15:57:36 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 16 Jul 2026 15:57:36 +0000 (GMT)
-Message-ID: <db71a6365211a840caef08548eaa95e6fa49cceb.camel@linux.ibm.com>
-Subject: Re: [PATCH 23/29] tests/qtest: pca9554: test the PCA9536 4-bit variant
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>, Steven Lee
- <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Jamin Lin
- <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew
- Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, Corey
- Minyard <cminyard@mvista.com>
-Date: Thu, 16 Jul 2026 10:57:36 -0500
-In-Reply-To: <20260709-catalina-upgrade-v1-23-82a63fead90c@free.fr>
-References: <20260709-catalina-upgrade-v1-0-82a63fead90c@free.fr>
- <20260709-catalina-upgrade-v1-23-82a63fead90c@free.fr>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=fOcJG5ae c=1 sm=1 tr=0 ts=6a58ff73 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=chtLON8zQLDBo5PjSsAA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDE2MSBTYWx0ZWRfX5AFie3iCAeZh
- b88ZG+JcT/FiCniGTtRzP6n0co1hpNB6LF/GXf1aoR9KZuBaE4MGG3XDvEHfJcVsdKVrjpgNeDq
- 7tlhwXL+cA1GmZf8nuS4o7GfqSGVUdlpscu7cgTCb0/XUQmYL4UK+HT4eWaj6ZRzTNN9OyplD1v
- Q1E1S00Q1j8IyEIfyfwTKrfXQTlVpJoZCwEQR0s/tVqfcxERrsHOXAcQjbpqS/TsByfR6vB7QLW
- TKGxe40eKtBIlpdth5jpqmv1l9/zU86xUuSN1HuHiOCLH2XAg27LhNc/X9xbjQhLEqujeN+SBvD
- qXufWvbIwXewBuGAbx4JVEViz04xp8MmioVILXzRNlud+c8ZV01FbTvSiJM5W2DZQsESGMJOrq2
- IPz0zx+vjLFar7bfp2D9EVWlbl0+sIlou/CfAIyG9YrbFnO2j4rvhK5Folm3gpCcuKTY20u6dCW
- +bSptGjFNDzdmqfXI2A==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDE2MSBTYWx0ZWRfX7bFEEymLoZTX
- ly2HuChUjgzLHJFV5sbn/oJ9G2IBF2zDlVhXL5V7ljDDcL5mdQKWM4RFQIt/afoxWvrd/FVoEFj
- TSnQ+2fguvTglUdPNnX8wZB3gUImVUU=
-X-Proofpoint-GUID: AfaQcU8oqXeq8aMBzKPyxoMdWbEcw4EI
-X-Proofpoint-ORIG-GUID: xmA2eImDozOVADK1geiBKAqS-Y6fcmVf
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wkOZY-0005D3-Gj
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 12:04:30 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66GDKM892857818
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 16:04:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ fYDVrbRB+LlR9DZ24ptHcBy6whX3UJ6tb5JuMlHfHzw=; b=fi4QMGNMaPNJKrVC
+ RSnzlsJuSL/GhCL/gWAqUAN3Jgtb9TLKsTDsFkXRuOlqAUHcaD++a8GbX3ifBL9E
+ lYN7HtXeluz5CyuUICA9RJTbYk/nXXZo0kG9I4IIxmaZgj4ckDs4POxdpxDumfYR
+ 2FA+5M2tiMMTTB7GtaQZFU56wccn3/nFkrKEyUX7Jgw+tCtiwj7mwCnohlBMIqJM
+ 8LKV2MT37SPiXOCqqrdDersD2tpfx6axQbvYGLOU0WYRnI9HW9gnpygP0vS521BI
+ JmAg4S/pVE3EKJakguZSDu8T/X2uNf9+QB68Z8qitBS/jpYQSfnnxhcMQy528sBF
+ m7o2yw==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4feuex23n9-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 16:04:25 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2cc8bde6318so122993785ad.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 09:04:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1784217865; x=1784822665; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=fYDVrbRB+LlR9DZ24ptHcBy6whX3UJ6tb5JuMlHfHzw=;
+ b=RqwyK6jvBqreQmuSIuRp8PZMFHzyw8saVoSQgtQnMj85NPE2GlUlhmW9EiKwIwlgr2
+ IpzhhHCns3Jjs70rFD/5IrWzsLZjpIT5iJ3/B/R4A/3pZd/R6h32/Q8Ksg+mqN2ZiZqx
+ bxjDdS4Dopr5CbrNbYOdLqJN9u3mpapIaVT9UCMRClU1JNHUiSd9cczwoA5ksjCOZkkJ
+ x2teZDUjjKDK6xohfqbBHDd4VR8pOkeDwcfLCSAk4vriyLV9KBWrvdbnN41YY4QuS7D8
+ 7zsPfiBzXDsUp+JeW9o0Ohrw1ziZ1P+/gOpJxwxKS6c5ScisaoU/aRXKGRQVXtC3gfiQ
+ 6I8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784217865; x=1784822665;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=fYDVrbRB+LlR9DZ24ptHcBy6whX3UJ6tb5JuMlHfHzw=;
+ b=MOd6f8sly2K64b8uZT4RVhxEf24P7DBddtL2lzAKDVDZmj9ZEHqvZP67g80iNX8CAB
+ MhO5E7vXsDMEy4HpbnfoLwbbwZhAsKsFTrn2eUmIaL1rNtOWzDER+kWnsYDalKfg79+w
+ fqdr8BXJdOB1iR4wS9Ach+fmw/DfrSvXSG+jotmtQuqUV46HIZfa7aIxLGGT2j4XT050
+ D3stNXtiCobHS3fPWFf5Wq2YtOWeSnzfLKQ1zwauF2weRNqwGHI+OlPFgE4sBsmi4qVx
+ eq1yktprNZogNn5DOqKlM58eVCWFJxd5o9JwRGgIJ0mPSRx/I1dixUmdWagp+I0hKb52
+ 9OTA==
+X-Gm-Message-State: AOJu0YyiXvPxT28zbYqiLvnGCqQHiZic8nJa4iv5E7QVPr0tZqI0fqFj
+ VysS4Ian8lC7KLtOLPkmK1cXfBGjhZgxfNISiSEpP52nW6LQK/oqDQA47U94j7SfeXcfzHI6Fro
+ BkUWgwZVuYtcVb/9iANlu57fL5XVP1UdEQc15BArZ/MaUU+vA5jkJVaL6zw==
+X-Gm-Gg: AfdE7cnwA6wL+Vw5TNS/L46Bx08qJGzLerMwJG6ezBo5jwYm+5VQRnOx/RDhIToJhVv
+ qHPQg2Okcw9rzmBw5CS8bDPJoRacKBKqMfdhrDaR4FekDwnY7Yw4b/nXhIdZwjo81uRo2q7ETH7
+ ZjN5wYTEK0uZOyCFYPboqrktnB9iw4QwWzNw3TqMIE2h/ozr+npmcosMkPHEa9RSudiPvlxc9FC
+ MkQm438FL4a4pxwyFUwFlVUFONDkP2n7QOWsXhY6ikmjdlkUzOcQx0znOJw2YuPKRi9jPZSM9B2
+ 1JlKIkQvx21mahFhZzm7S2JTCvwW2XfETesSC6W/QAQXF9SmQED3p90WdIzm7DKoOsx4KVguhIE
+ SXWymBx52GPsTAED265JEu7sqW++QryDTyHGyiNTshgJIrr4rDAPtHccz7vg4q68U6Qod
+X-Received: by 2002:a17:902:eccb:b0:2c9:bf82:dd11 with SMTP id
+ d9443c01a7336-2cef1194387mr112042955ad.7.1784217864849; 
+ Thu, 16 Jul 2026 09:04:24 -0700 (PDT)
+X-Received: by 2002:a17:902:eccb:b0:2c9:bf82:dd11 with SMTP id
+ d9443c01a7336-2cef1194387mr112042415ad.7.1784217864329; 
+ Thu, 16 Jul 2026 09:04:24 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2cf100e3915sm22904875ad.3.2026.07.16.09.04.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 16 Jul 2026 09:04:23 -0700 (PDT)
+Message-ID: <a88ec0dd-2daf-4bce-b08f-bc0e472c1932@oss.qualcomm.com>
+Date: Thu, 16 Jul 2026 09:04:22 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 95/98] tests: remove tcg tests machinery
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Brian Cain <brian.cain@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?Q?Daniel_P=2EBerrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>, Helge Deller <deller@gmx.de>
+References: <20260710214343.2065491-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260710214343.2065491-96-pierrick.bouvier@oss.qualcomm.com>
+ <87pl0ognos.fsf@draig.linaro.org>
+ <a7b40c16-fd9b-4d81-b767-19fd3523c533@oss.qualcomm.com>
+ <87jyqvgu05.fsf@draig.linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <87jyqvgu05.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=JeeMa0KV c=1 sm=1 tr=0 ts=6a590109 cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=x2NpYwA8f-TEMJUGOvwA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: MNaNXztnZkISiYc1V_5AVv8V1_Ox7jOE
+X-Proofpoint-GUID: MNaNXztnZkISiYc1V_5AVv8V1_Ox7jOE
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDE2NSBTYWx0ZWRfX/7oPB6KFIHcd
+ fa6EGueCIypWGDErnIx3T4Mg4fPkm3vRHGuG+k8y4NgIXbIBb9vXbHA9ISC8vMaTBfGxKxaZpr/
+ 4+lJwb9Kt8RodICTvD3FhYE+y4VXAUA=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDE2NSBTYWx0ZWRfXynk35BoDWwSC
+ aQzUBQkU0heePNEE8WxkvMNlOAtz4+/PAih0MB6gmgkddCa2onWeH/l0JXA+vQfxgDG0aV0qVY+
+ of0oG3Uh5vHGkKUJlSgoWQlAhakX8AJ07UisbKw2A/rGiKHhLLOgBCFqufr3EKSQHt17aFRdg0f
+ exCQDQvfekC2ebd3ChsBXSu6mZPyVfQVxUptUhSRty3TNS1rJaw/Zv9YMtj4j858og6VvzsVu7a
+ gCP/JCwGjQb9EFNLea6MzaGc/G/ScEZ6X4UXaqPbDGkAKUFvXJOlSdHIUHqKPyYtsuK2bznynWL
+ Ttf9aMxLOenvjP+gZT/nasHZNgnw6LbM9Fe/30QjN+qeBSvhqO2xCUaHOG9+0o4feunZCemOzfp
+ JT2YQAHHVx7BHL2+U4R09RAdkprnhj6W9Fb3H9pevZELCFpNulT8IYlz6EytUjlLUAUz4YwAbrR
+ oXRZDqQTc4rQbNUrHVA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-16_05,2026-07-15_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 impostorscore=0 suspectscore=0 adultscore=0
- priorityscore=1501 malwarescore=0 clxscore=1015 phishscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607160161
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ spamscore=0 adultscore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0
+ priorityscore=1501 impostorscore=0 phishscore=0 malwarescore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607160165
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,114 +161,182 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-
-Thanks,
-
-Glenn
-
-On Thu, 2026-07-09 at 17:23 +0200, Emmanuel Blot wrote:
-> The PCA9536 shares the PCA9554 register map and code path but exposes
-> only four pins. Add a pca9536 node and check its reset defaults and
-> output-to-input reflection are masked to the low nibble.
+On 7/16/2026 2:32 AM, Alex Bennée wrote:
+> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 > 
-> Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
-> ---
->  tests/qtest/pca9554-test.c | 70 ++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 70 insertions(+)
+>> On 7/15/2026 10:36 AM, Alex Bennée wrote:
+>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>>
+>>>> It's now built-in meson, which offers targets check-tcg and check-tcg-*.
+>>>>
+>>>> Tested-by: Alex Bennée <alex.bennee@linaro.org>
+>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>>> ---
+>>>>  tests/Makefile.include | 68 ++----------------------------------------
+>>>>  1 file changed, 2 insertions(+), 66 deletions(-)
+>>>>
+>>>> diff --git a/tests/Makefile.include b/tests/Makefile.include
+>>>> index 494d0109f26..9f82552ab54 100644
+>>>> --- a/tests/Makefile.include
+>>>> +++ b/tests/Makefile.include
+>>>> @@ -19,9 +19,7 @@ check-help:
+>>>>  ifneq ($(filter $(all-check-targets), check-softfloat),)
+>>>>  	@echo " $(MAKE) check-softfloat               Run FPU emulation tests"
+>>>>  	@echo " $(MAKE) check-tcg                     Run TCG tests"
+>>>> -	@echo " $(MAKE) run-tcg-tests-TARGET          Run TCG tests for a given target"
+>>>> -	@echo
+>>>> -	@echo "The variable TCG_TEST_FILTER will select the subset of matching tests."
+>>>> +	@echo " $(MAKE) check-tcg-TARGET              Run TCG tests for a given target"
+>>>>  endif
+>>>>  	@echo
+>>>>  	@echo " $(MAKE) check-report.junit.xml        Generates an aggregated XML test report"
+>>>> @@ -40,67 +38,6 @@ export SRC_PATH
+>>>>  
+>>>>  SPEED = quick
+>>>>  
+>>>> -
+>>>> -# TCG_TESTS_WITH_COMPILERS represents the test targets we have cross compiler
+>>>> -# support for, CONFIGURED_TCG_TARGETS it what meson has finally
+>>>> -# configured having rejected stuff we can't build.
+>>>> -CONFIGURED_TCG_TARGETS=$(patsubst %-config-target.h, %, $(wildcard *-config-target.h))
+>>>> -
+>>>> -# This is the intersection of what tests we can build and is configured
+>>>> -TCG_TESTS_TARGETS=$(filter $(CONFIGURED_TCG_TARGETS), $(TCG_TESTS_WITH_COMPILERS))
+>>>> -
+>>>> -# Per guest TCG tests
+>>>> -BUILD_TCG_TARGET_RULES=$(patsubst %,build-tcg-tests-%, $(TCG_TESTS_TARGETS))
+>>>> -CLEAN_TCG_TARGET_RULES=$(patsubst %,clean-tcg-tests-%, $(TCG_TESTS_TARGETS))
+>>>> -DISTCLEAN_TCG_TARGET_RULES=$(patsubst %,distclean-tcg-tests-%, $(TCG_TESTS_TARGETS))
+>>>> -RUN_TCG_TARGET_RULES=$(patsubst %,run-tcg-tests-%, $(TCG_TESTS_TARGETS))
+>>>> -
+>>>> -$(foreach TARGET,$(TCG_TESTS_TARGETS), \
+>>>> -        $(eval $(BUILD_DIR)/tests/tcg/config-$(TARGET).mak: config-host.mak))
+>>>> -
+>>>> -# $1 = the stem (e.g., arm-softmmu or x86_64-linux-user)
+>>>> -get-qemu-bin = $(if $(findstring softmmu,$1),qemu-system-$(subst -softmmu,,$1),qemu-$(subst -linux-user,,$1))
+>>>> -
+>>>> -$(foreach TARGET,$(TCG_TESTS_TARGETS), \
+>>>> -        $(eval .ninja-goals.run-tcg-tests-$(TARGET) += $(call get-qemu-bin,$(TARGET))))
+>>>> -
+>>>> -.PHONY: $(TCG_TESTS_TARGETS:%=build-tcg-tests-%)
+>>>> -$(TCG_TESTS_TARGETS:%=build-tcg-tests-%): build-tcg-tests-%: $(BUILD_DIR)/tests/tcg/config-%.mak
+>>>> -	$(call quiet-command, \
+>>>> -            $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS), \
+>>>> -        "BUILD","$* guest-tests")
+>>>> -
+>>>> -.PHONY: $(TCG_TESTS_TARGETS:%=run-tcg-tests-%)
+>>>> -$(TCG_TESTS_TARGETS:%=run-tcg-tests-%): run-tcg-tests-%: build-tcg-tests-%
+>>>> -	$(call quiet-command, \
+>>>> -           $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS) SPEED=$(SPEED) TCG_TEST_FILTER=$(TCG_TEST_FILTER) run, \
+>>>> -        "RUN", "$* guest-tests")
+>>>> -
+>>>> -.PHONY: $(TCG_TESTS_TARGETS:%=clean-tcg-tests-%)
+>>>> -$(TCG_TESTS_TARGETS:%=clean-tcg-tests-%): clean-tcg-tests-%:
+>>>> -	$(call quiet-command, \
+>>>> -           $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS) clean, \
+>>>> -        "CLEAN", "$* guest-tests")
+>>>> -
+>>>> -.PHONY: $(TCG_TESTS_TARGETS:%=distclean-tcg-tests-%)
+>>>> -$(TCG_TESTS_TARGETS:%=distclean-tcg-tests-%): distclean-tcg-tests-%:
+>>>> -	$(call quiet-command, \
+>>>> -           $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS) distclean, \
+>>>> -        "CLEAN", "$* guest-tests")
+>>>> -
+>>>> -.PHONY: build-tcg
+>>>> -build-tcg: $(BUILD_TCG_TARGET_RULES)
+>>>> -
+>>>> -.PHONY: check-tcg
+>>>> -.ninja-goals.check-tcg = all test-plugins
+>>>> -check-tcg: $(RUN_TCG_TARGET_RULES)
+>>>> -
+>>>> -.PHONY: clean-tcg
+>>>> -clean-tcg: $(CLEAN_TCG_TARGET_RULES)
+>>>
+>>> We still need a clean-tcg or similar rule to force a rebuild of the
+>>> tests without killing the whole build dir.
+>>>
+>>
+>> It was needed before, since we only had partial dependencies.
+>> But now considering that all dependencies are correctly tracked, what's
+>> the use case?
+>> - If a test is mtime modified, it rebuilds the test.
+>> - If a dockerfile is mtime modified, associated tests are rebuilt.
+>> - If docker.py is modified, it will rebuild tests transitively.
+>> - If cflags are modified, test will be rebuilt also.
+>> - All input of a test (.h, .c, ...) are all tracked.
+>> - If user installs a cross compiler or remove podman/docker, next meson
+>> configuration will identify this and rebuild all associated tests.
+>>
+>> In case you find a missing dep, we just need to add it in meson. clean
+>> is not needed anymore.
 > 
-> diff --git a/tests/qtest/pca9554-test.c b/tests/qtest/pca9554-test.c
-> index 0da1f3304b..5366e71984 100644
-> --- a/tests/qtest/pca9554-test.c
-> +++ b/tests/qtest/pca9554-test.c
-> @@ -129,6 +129,66 @@ static void test_no_autoincrement(void *obj, void *data,
->      g_assert_cmphex(i2c_get8(dev, PCA9554_POLARITY), ==, 0x33);
->  }
->  
-> +/*
-> + * The PCA9536 shares the PCA9554 register map but only has four pins, so its
-> + * reset defaults and pin logic are masked to the low nibble.
-> + */
-> +static void test_pca9536_reset_defaults(void *obj, void *data,
-> +                                        QGuestAllocator *alloc)
-> +{
-> +    QI2CDevice *dev = (QI2CDevice *)obj;
-> +
-> +    g_assert_cmphex(i2c_get8(dev, PCA9554_INPUT), ==, 0x0F);
-> +    g_assert_cmphex(i2c_get8(dev, PCA9554_OUTPUT), ==, 0x0F);
-> +    g_assert_cmphex(i2c_get8(dev, PCA9554_POLARITY), ==, 0x00);
-> +    g_assert_cmphex(i2c_get8(dev, PCA9554_CONFIG), ==, 0x0F);
-> +}
-> +
-> +/* Only the four low pins are driven; the upper nibble stays low. */
-> +static void test_pca9536_output_drives_input(void *obj, void *data,
-> +                                             QGuestAllocator *alloc)
-> +{
-> +    QI2CDevice *dev = (QI2CDevice *)obj;
-> +
-> +    i2c_set8(dev, PCA9554_CONFIG, 0x00);
-> +
-> +    i2c_set8(dev, PCA9554_OUTPUT, 0x0A);
-> +    g_assert_cmphex(i2c_get8(dev, PCA9554_INPUT), ==, 0x0A);
-> +
-> +    i2c_set8(dev, PCA9554_OUTPUT, 0x00);
-> +    g_assert_cmphex(i2c_get8(dev, PCA9554_INPUT), ==, 0x00);
-> +}
-> +
-> +/*
-> + * The four upper bits address pins that do not exist on the PCA9536, so writes
-> + * to the register map discard them: the writable registers read back with bits
-> + * [7:4] cleared, and driving them onto the pins never surfaces in INPUT.
-> + */
-> +static void test_pca9536_ignores_upper_bits(void *obj, void *data,
-> +                                            QGuestAllocator *alloc)
-> +{
-> +    QI2CDevice *dev = (QI2CDevice *)obj;
-> +
-> +    /* Bits [7:4] are dropped on write; bits [3:0] survive. */
-> +    i2c_set8(dev, PCA9554_OUTPUT, 0xFA);
-> +    g_assert_cmphex(i2c_get8(dev, PCA9554_OUTPUT), ==, 0x0A);
-> +
-> +    i2c_set8(dev, PCA9554_POLARITY, 0xF5);
-> +    g_assert_cmphex(i2c_get8(dev, PCA9554_POLARITY), ==, 0x05);
-> +
-> +    i2c_set8(dev, PCA9554_CONFIG, 0xF3);
-> +    g_assert_cmphex(i2c_get8(dev, PCA9554_CONFIG), ==, 0x03);
-> +
-> +    /*
-> +     * With all four pins as outputs, driving 0xFF only affects the low
-> +     * nibble.
-> +     */
-> +    i2c_set8(dev, PCA9554_POLARITY, 0x00);
-> +    i2c_set8(dev, PCA9554_CONFIG, 0x00);
-> +    i2c_set8(dev, PCA9554_OUTPUT, 0xFF);
-> +    g_assert_cmphex(i2c_get8(dev, PCA9554_INPUT), ==, 0x0F);
-> +}
-> +
->  static void pca9554_register_nodes(void)
->  {
->      QOSGraphEdgeOptions opts = {
-> @@ -148,6 +208,16 @@ static void pca9554_register_nodes(void)
->      qos_add_test("polarity-with-output", "pca9554", test_polarity_with_output,
->                   NULL);
->      qos_add_test("no-autoincrement", "pca9554", test_no_autoincrement, NULL);
-> +
-> +    qos_node_create_driver("pca9536", i2c_device_create);
-> +    qos_node_consumes("pca9536", "i2c-bus", &opts);
-> +
-> +    qos_add_test("reset-defaults", "pca9536", test_pca9536_reset_defaults,
-> +                 NULL);
-> +    qos_add_test("output-drives-input", "pca9536",
-> +                 test_pca9536_output_drives_input, NULL);
-> +    qos_add_test("ignores-upper-bits", "pca9536",
-> +                 test_pca9536_ignores_upper_bits, NULL);
->  }
->  
->  libqos_init(pca9554_register_nodes);
+> OK I was testing the changing of the cross compiler and I noticed its
+> not reported in the config summary if we have the fallback to
+> podman/docker.
+> 
+> I suspect the logic here:
+> 
+>   # snarf the cross-compilation information for tests
+>   summary_info = {}
+>   have_cross = false
+>   foreach target: target_dirs
+>     tcg_mak = meson.current_build_dir() / 'tests/tcg' / target / 'config-target.mak'
+>     if fs.exists(tcg_mak)
+>       config_cross_tcg = keyval.load(tcg_mak)
+>       if 'CC' in config_cross_tcg
+>         summary_info += {config_cross_tcg['TARGET_NAME']: config_cross_tcg['CC']}
+>         have_cross = true
+>       endif
+>     endif
+>   endforeach
+>   if have_cross
+>     summary(summary_info, bool_yn: true, section: 'Cross compilers')
+>   endif
+> 
+> needs to be cleaned up.
+>
+
+Thanks for reporting it, I didn't even notice this part of the code
+existed to be honest. Indeed, it needs to be updated, and it should be
+easy to present the same information from what we did during the test
+configuration.
+
+I'll add it in next version.
+
+>>
+>>>> -
+>>>> -.PHONY: distclean-tcg
+>>>> -distclean-tcg: $(DISTCLEAN_TCG_TARGET_RULES)
+>>>> -
+>>>>  # Build up our target list from the filtered list of ninja targets
+>>>>  TARGETS=$(patsubst libqemu-%.a, %, $(filter libqemu-%.a, $(ninja-targets)))
+>>>>  
+>>>> @@ -128,7 +65,6 @@ check-build: run-ninja
+>>>>  check-clean:
+>>>>  	rm -rf $(BUILD_DIR)/tests/functional
+>>>>  
+>>>> -clean: check-clean clean-tcg
+>>>> -distclean: distclean-tcg
+>>>> +clean: check-clean
+> 
+> I wonder if check-clean is redundant as well now if the functional test
+> dependencies are properly encoded.
+>
+
+It's not really used for dependencies issues (tests/functional has no
+meson built binaries), but just to clean tests/functional folder, which
+may contain logs, scratch files, and other things leftover from those tests.
+
+I would keep it for now as it doesn't hurt.
+
+>>>>  
+>>>>  endif
+>>>
 > 
 
+Regards,
+Pierrick
 
