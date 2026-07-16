@@ -4,79 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F229C44501
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 10:23:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B547C44501
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 10:26:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkJFZ-0005la-DD; Thu, 16 Jul 2026 06:23:29 -0400
+	id 1wkJHd-0006P5-1Y; Thu, 16 Jul 2026 06:25:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wkJFX-0005lL-9P
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 06:23:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wkJHY-0006OM-5r
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 06:25:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wkJFU-0005Tr-Kd
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 06:23:27 -0400
+ id 1wkJHU-0005u1-5h
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 06:25:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784197403;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3J1NaS7N9zVLcKKqIEUKbc5VBeYqHHcFLLDDeWJOnOE=;
- b=cuWpFR9v8vFlSj2inlODhpWtF2Gm2iAQqmyaHO1NtIFG/MR/3qbcHu7PBGkqOjSDV/jsN6
- HKlvrNzE3WJaGeyQxIodVcNiJsuUocIwdhSawYaM3KT+RiC7CwX9s4MureFqZDclf+Tk7b
- g4kfXd8xM/X3Qv8fb9y/HEuKQh6yi5A=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ s=mimecast20190719; t=1784197525;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=zMadrffyHPto0rUIdW/xxD0skGqij8qb5Ota3D+XKxk=;
+ b=EEk+pcTZGZ2UIxf3TlpDt1DvY8vmr/i/oSJgLXtxogQ7w0wJl6Kji7fy2GKovNtNylcllN
+ NvyS+TmtXxwhKvIAsTMwiZKrTrVypAWdzLx1l7FGHSOj7dUhFBSpwBw9X2/NF95j0h3EG+
+ fG6qBmR0BssINgMt3lA4S1cmKbU6f+g=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-PMNKTYWoPK6QlttTty3Gug-1; Thu,
- 16 Jul 2026 06:23:19 -0400
-X-MC-Unique: PMNKTYWoPK6QlttTty3Gug-1
-X-Mimecast-MFC-AGG-ID: PMNKTYWoPK6QlttTty3Gug_1784197398
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-150-qRm4FQ-jMMKg_SuWCXRgCg-1; Thu,
+ 16 Jul 2026 06:25:20 -0400
+X-MC-Unique: qRm4FQ-jMMKg_SuWCXRgCg-1
+X-Mimecast-MFC-AGG-ID: qRm4FQ-jMMKg_SuWCXRgCg_1784197519
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 153EA1800667; Thu, 16 Jul 2026 10:23:18 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.34.221])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 161981956042; Thu, 16 Jul 2026 10:23:14 +0000 (UTC)
-Date: Thu, 16 Jul 2026 11:23:11 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Luc Michel <luc.michel@amd.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Francisco Iglesias <francisco.iglesias@amd.com>,
- Frederic Konrad <frederic.konrad@amd.com>
-Subject: Re: [PATCH v2] meson.build: re-add explicit gcrypt/nettle request
- check
-Message-ID: <alixDyX9bC3Ju161@redhat.com>
-References: <20260710132531.97844-1-luc.michel@amd.com>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1239D195604D; Thu, 16 Jul 2026 10:25:19 +0000 (UTC)
+Received: from berrange.com (unknown [10.44.34.221])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2FE0C1955F78; Thu, 16 Jul 2026 10:25:16 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v3] tests/docker: ensure container command is probed at most
+ once
+Date: Thu, 16 Jul 2026 11:25:15 +0100
+Message-ID: <20260716102515.1503404-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260710132531.97844-1-luc.michel@amd.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: permerror client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: permerror client-ip=170.10.133.124;
  envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,38 +82,320 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 10, 2026 at 03:25:30PM +0200, Luc Michel wrote:
-> c4b3d0074 removed the check that nettle or gcrypt were explicitly
-> requested as the crypto library to use, breaking the --enable-nettle and
-> --enable-gcrypt options. Re-add the logic to force usage of nettle or
-> gcrypt for crypto operations, while still keeping gnutls for TLS.
-> 
-> Fixes: c4b3d0074 (crypto: bump min gnutls to 3.7.5)
-> Signed-off-by: Luc Michel <luc.michel@amd.com>
-> ---
-> v2:
->    - Revert more of c4b3d0074 to restore the gnutls_crypto logic to
->      disable gnutls only for crypto ops but keep it for TLS [Daniel]
-> ---
->  meson.build                    | 11 ++++++++++-
->  crypto/cipher.c                |  2 +-
->  tests/unit/test-crypto-block.c |  3 ++-
->  crypto/meson.build             |  2 +-
->  4 files changed, 14 insertions(+), 4 deletions(-)
+The '--engine' arg accepts either 'podman' or 'docker', which is
+not sufficiently granular to map directly to a command. This
+means that  docker.py still has to then probe the exact command
+to use.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Meanwhile the 'probe' command prints out the full command to use
+but this cannot be passed back to docker.py to avoid probing
+again, so the caching is only useful in the few case where we
+run a container directly bypassing docker.py.
 
-and queued.
+Address this by replacing --engine with --command for docker.py.
 
-With regards,
-Daniel
+This in turn requires the --container-engine configure arg to be
+replaced with --container-command.
+
+With these changes the container command is probed at most once
+during configure and never again, while running in an unconfigured
+tree will still probe on demand.
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+
+In v3:
+
+ - Avoid bashism when testing probe result
+
+ configure                     | 25 +++++++------
+ tests/docker/Makefile.include | 13 ++++---
+ tests/docker/docker.py        | 67 ++++++++++++-----------------------
+ 3 files changed, 40 insertions(+), 65 deletions(-)
+
+diff --git a/configure b/configure
+index d8bc10060e..6ddfe4b534 100755
+--- a/configure
++++ b/configure
+@@ -172,7 +172,7 @@ fi
+ # some defaults, based on the host environment
+ 
+ # default parameters
+-container_engine="auto"
++container_command=""
+ cpu=""
+ cross_compile="no"
+ cross_prefix=""
+@@ -734,7 +734,7 @@ for opt do
+   ;;
+   --disable-containers) use_containers="no"
+   ;;
+-  --container-engine=*) container_engine="$optarg"
++  --container-command=*) container_command="$optarg"
+   ;;
+   --rust-target-triple=*) rust_target_triple="$optarg"
+   ;;
+@@ -869,7 +869,7 @@ Advanced options (experts only):
+   --enable-debug           enable common debug build options
+   --cpu=CPU                Build for host CPU [$cpu]
+   --disable-containers     don't use containers for cross-building
+-  --container-engine=TYPE  which container engine to use [$container_engine]
++  --container-command=CMD  which container command to use [autodetect]
+   --gdb=GDB-path           gdb to use for gdbstub tests [$gdb_bin]
+   --wasm64-32bit-address-limit Restrict wasm64 address space to 32-bit (default
+                                is to use the whole 64-bit range).
+@@ -1291,12 +1291,12 @@ fi
+ ##########################################
+ # functions to probe cross compilers
+ 
+-runc="no"
+-if test $use_containers = "yes" && (has "docker" || has "podman"); then
+-    runc=$($python "$source_path"/tests/docker/docker.py --engine "$container_engine" probe)
+-    if test "$runc" != "no"; then
+-        docker_py="$python $source_path/tests/docker/docker.py --engine $container_engine"
+-    fi
++if test "$container_command" = ""; then
++    container_command=$($python "$source_path"/tests/docker/docker.py probe)
++    test "$container_command" = "no" && container_command=""
++fi
++if test $use_containers = "yes" && test "$container_command" != ""; then
++    docker_py="$python $source_path/tests/docker/docker.py --command $container_command"
+ fi
+ 
+ # cross compilers defaults, can be overridden with --cross-cc-ARCH
+@@ -1415,7 +1415,7 @@ probe_target_compiler() {
+   esac
+ 
+   for host in $container_hosts; do
+-    test "$runc" != no || continue
++    test "$container_command" != "" || continue
+     test "$host" = "$cpu" || continue
+     case $target_arch in
+       # debian-all-test-cross architectures
+@@ -1736,9 +1736,8 @@ echo all: >> $config_host_mak
+ echo "SRC_PATH=$source_path" >> $config_host_mak
+ echo "TARGET_DIRS=$target_list" >> $config_host_mak
+ echo "GDB=$gdb_bin" >> $config_host_mak
+-if test "$runc" != no; then
+-    echo "RUNC=$runc" >> $config_host_mak
+-    echo "CONTAINER_ENGINE=$container_engine" >> $config_host_mak
++if test "$container_command" != ""; then
++    echo "CONTAINER_COMMAND=$container_command" >> $config_host_mak
+ fi
+ echo "SUBDIRS=$subdirs" >> $config_host_mak
+ if test "$rust" != disabled; then
+diff --git a/tests/docker/Makefile.include b/tests/docker/Makefile.include
+index 4725c39807..0adddb6a5c 100644
+--- a/tests/docker/Makefile.include
++++ b/tests/docker/Makefile.include
+@@ -16,9 +16,8 @@ DOCKER_DEFAULT_REGISTRY := registry.gitlab.com/qemu-project/qemu
+ endif
+ DOCKER_REGISTRY := $(if $(REGISTRY),$(REGISTRY),$(DOCKER_DEFAULT_REGISTRY))
+ 
+-CONTAINER_ENGINE = auto
+-DOCKER_SCRIPT=$(SRC_PATH)/tests/docker/docker.py --engine $(CONTAINER_ENGINE)
+-RUNC ?= $(shell $(DOCKER_SCRIPT) probe)
++CONTAINER_COMMAND ?= $(shell $(SRC_PATH)/tests/docker/docker.py probe)
++DOCKER_SCRIPT=$(SRC_PATH)/tests/docker/docker.py --command "$(CONTAINER_COMMAND)"
+ 
+ CUR_TIME := $(shell date +%Y-%m-%d-%H.%M.%S.$$$$)
+ DOCKER_SRC_COPY := $(BUILD_DIR)/docker-src.$(CUR_TIME)
+@@ -41,7 +40,7 @@ docker-qemu-src: $(DOCKER_SRC_COPY)
+ # General rule for building docker images.
+ docker-image-%: $(DOCKER_FILES_DIR)/%.docker
+ 	  $(call quiet-command,			\
+-		DOCKER_BUILDKIT=1 $(RUNC) build		\
++		DOCKER_BUILDKIT=1 $(CONTAINER_COMMAND) build \
+ 		$(if $(DOCKER_V),,--quiet)		\
+ 		$(if $(NOCACHE),--no-cache,		\
+ 			$(if $(DOCKER_REGISTRY),--cache-from $(DOCKER_REGISTRY)/qemu/$*)) \
+@@ -152,7 +151,7 @@ $(foreach i,$(filter-out $(DOCKER_PARTIAL_IMAGES),$(DOCKER_IMAGES)), \
+ )
+ 
+ docker:
+-	@echo 'Build QEMU and run tests inside $(RUNC) containers'
++	@echo 'Build QEMU and run tests inside $(CONTAINER_COMMAND) containers'
+ 	@echo
+ 	@echo 'Available targets:'
+ 	@echo
+@@ -219,10 +218,10 @@ docker-run: docker-qemu-src
+ 			$(IMAGE) --executable $(EXECUTABLE),		\
+ 			"  COPYING $(EXECUTABLE) to $(IMAGE)"))
+ 	$(call quiet-command,						\
+-		$(RUNC) run 						\
++		$(CONTAINER_COMMAND) run 				\
+ 			--rm						\
+ 			$(if $(NOUSER),,				\
+-				$(if $(filter docker,$(RUNC)),		\
++				$(if $(filter docker,$(CONTAINER_COMMAND)), \
+ 					-u $(UID),			\
+ 					--userns keep-id		\
+ 				)					\
+diff --git a/tests/docker/docker.py b/tests/docker/docker.py
+index 9e18b984f4..d2f39b5645 100755
+--- a/tests/docker/docker.py
++++ b/tests/docker/docker.py
+@@ -35,27 +35,6 @@
+ 
+ DEVNULL = open(os.devnull, 'wb')
+ 
+-class EngineEnum(enum.IntEnum):
+-    AUTO = 1
+-    DOCKER = 2
+-    PODMAN = 3
+-
+-    def __str__(self):
+-        return self.name.lower()
+-
+-    def __repr__(self):
+-        return str(self)
+-
+-    @staticmethod
+-    def argparse(s):
+-        try:
+-            return EngineEnum[s.upper()]
+-        except KeyError:
+-            return s
+-
+-
+-USE_ENGINE = EngineEnum.AUTO
+-
+ def _bytes_checksum(bytes):
+     """Calculate a digest string unique to the text content"""
+     return hashlib.sha1(bytes).hexdigest()
+@@ -73,12 +52,11 @@ def _file_checksum(filename):
+ 
+ def _guess_engine_command():
+     """ Guess a working engine command or raise exception if not found"""
+-    commands = []
+-
+-    if USE_ENGINE in [EngineEnum.AUTO, EngineEnum.PODMAN]:
+-        commands += [["podman"], ["podman-remote"], ["podman", "--remote"]]
+-    if USE_ENGINE in [EngineEnum.AUTO, EngineEnum.DOCKER]:
+-        commands += [["docker"], ["sudo", "-n", "docker"]]
++    commands = [["podman"],
++                ["podman-remote"],
++                ["podman", "--remote"],
++                ["docker"],
++                ["sudo", "-n", "docker"]]
+     for cmd in commands:
+         try:
+             # 'version' is not sufficient to prove a working binary
+@@ -222,8 +200,11 @@ def _dockerfile_verify_flat(df):
+ 
+ class Docker(object):
+     """ Running Docker commands """
+-    def __init__(self):
+-        self._command = _guess_engine_command()
++    def __init__(self, commandstr=None):
++        if commandstr is None:
++            self._command = _guess_engine_command()
++        else:
++            self._command = commandstr.split(" ")
+ 
+         if ("docker" in self._command and
+             "TRAVIS" not in os.environ and
+@@ -411,8 +392,8 @@ def args(self, parser):
+                             help="Run container using the current user's uid")
+ 
+     def run(self, args, argv):
+-        return Docker().run(argv, args.keep, quiet=args.quiet,
+-                            as_user=args.run_as_current_user)
++        return Docker(args.command).run(argv, args.keep, quiet=args.quiet,
++                                        as_user=args.run_as_current_user)
+ 
+ 
+ class BuildCommand(SubCommand):
+@@ -445,7 +426,7 @@ def run(self, args, argv):
+         dockerfile = _read_dockerfile(args.dockerfile)
+         tag = args.tag
+ 
+-        dkr = Docker()
++        dkr = Docker(args.command)
+         if "--no-cache" not in argv and \
+            dkr.image_matches_dockerfile(tag, dockerfile):
+             if not args.quiet:
+@@ -512,7 +493,7 @@ def args(self, parser):
+                             help="Docker registry")
+ 
+     def run(self, args, argv):
+-        dkr = Docker()
++        dkr = Docker(args.command)
+         dkr.command(cmd="pull", quiet=args.quiet,
+                     argv=["%s/%s" % (args.registry, args.tag)])
+         dkr.command(cmd="tag", quiet=args.quiet,
+@@ -590,7 +571,7 @@ def run(self, args, argv):
+         tmp.seek(0)
+ 
+         # Run the build with our tarball context
+-        dkr = Docker()
++        dkr = Docker(args.command)
+         dkr.update_image(args.tag, tmp, quiet=args.quiet)
+ 
+         return 0
+@@ -601,7 +582,7 @@ class CleanCommand(SubCommand):
+     name = "clean"
+ 
+     def run(self, args, argv):
+-        Docker().clean()
++        Docker(args.command).clean()
+         return 0
+ 
+ 
+@@ -610,7 +591,7 @@ class ImagesCommand(SubCommand):
+     name = "images"
+ 
+     def run(self, args, argv):
+-        return Docker().command("images", argv, args.quiet)
++        return Docker(args.command).command("images", argv, args.quiet)
+ 
+ 
+ class ProbeCommand(SubCommand):
+@@ -619,7 +600,7 @@ class ProbeCommand(SubCommand):
+ 
+     def run(self, args, argv):
+         try:
+-            docker = Docker()
++            docker = Docker(args.command)
+             print(" ".join(docker._command))
+         except Exception:
+             print("no")
+@@ -651,18 +632,16 @@ def run(self, args, argv):
+                 cmd += ["-v", "%s:%s:ro,z" % (p, p)]
+         cmd += [args.image, args.cc]
+         cmd += argv
+-        return Docker().run(cmd, False, quiet=args.quiet,
+-                            as_user=True)
++        return Docker(args.command).run(cmd, False, quiet=args.quiet,
++                                        as_user=True)
+ 
+ 
+ def main():
+-    global USE_ENGINE
+-
+     parser = argparse.ArgumentParser(description="A Docker helper",
+                                      usage="%s <subcommand> ..." %
+                                      os.path.basename(sys.argv[0]))
+-    parser.add_argument("--engine", type=EngineEnum.argparse, choices=list(EngineEnum),
+-                        help="specify which container engine to use")
++    parser.add_argument("--command",
++                        help="specify which container engine command to use")
+     subparsers = parser.add_subparsers(title="subcommands", help=None)
+     for cls in SubCommand.__subclasses__():
+         cmd = cls()
+@@ -671,8 +650,6 @@ def main():
+         cmd.args(subp)
+         subp.set_defaults(cmdobj=cmd)
+     args, argv = parser.parse_known_args()
+-    if args.engine:
+-        USE_ENGINE = args.engine
+     return args.cmdobj.run(args, argv)
+ 
+ 
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.55.0
 
 
