@@ -4,69 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FA32C44511
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 17:09:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B658C44511
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 17:10:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkPZa-0006IY-Nn; Thu, 16 Jul 2026 13:08:34 -0400
+	id 1wkPat-0007HN-TE; Thu, 16 Jul 2026 13:09:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1wkPZY-0006Hz-Nd; Thu, 16 Jul 2026 13:08:32 -0400
-Received: from smtp2-g21.free.fr ([212.27.42.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuel.blot@free.fr>)
- id 1wkPZW-0007Lh-A6; Thu, 16 Jul 2026 13:08:32 -0400
-Received: from [192.168.75.54] (unknown [89.92.102.124])
- (Authenticated sender: emmanuel.blot@free.fr)
- by smtp2-g21.free.fr (Postfix) with ESMTPSA id F201F2003F3;
- Thu, 16 Jul 2026 19:08:07 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
- s=smtp-20201208; t=1784221707;
- bh=v1TOwzHVscYDnAB5cWc4UY32DTpJ2EEd66DlKvgJj7w=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=owfmr+3xHxtSj0HiAsV/3LIRml3s8AlBQLtZVG+shN0imqgnzAFHKnHR5D8O986Mx
- HDz2pPbfstjky4Tq1oDvvMy7qdLuF+PdZxhk1gEO7qeLwwX9Ipd4JBUPhBTgo8xqht
- +qaSKBnWUVT16fk/igKypG3tQbafo86PVzv47fmqgPAmsMJiQodcTk3s9417PKnh/+
- Tcwca6aREMJKzbm1GYOwYVzrq97L2pCG44+lH/MJK/PYhwwdO0SAdPu4v06ahZRjlq
- ztMwwVCdlK3+t0GLPj9xUP5FEmZaptLnoKI3R5582Xlk/X8RZs3kSogiD81xoB8qIV
- UFFyJGKrUvZfw==
-From: Emmanuel Blot <emmanuel.blot@free.fr>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Alexander Hansen <alexander.hansen@9elements.com>,
- William de Abreu Pinho <williampinho@meta.com>,
- Emmanuel Blot <eblot@meta.com>, qemu-arm@nongnu.org,
- Corey Minyard <cminyard@mvista.com>
-Subject: Re: [PATCH v5 6/8] hw/i2c: parent slaves created with
- i2c_slave_create_simple
-Date: Thu, 16 Jul 2026 19:08:04 +0200
-X-Mailer: MailMate (3.0r7020)
-Message-ID: <D5F0871C-4AC1-43D6-9BCD-C59A07236A1F@free.fr>
-In-Reply-To: <CAFEAcA8mygA035i3VSEGzQWppCDaUz0HM5mNU9DvTsOjei1F8Q@mail.gmail.com>
-References: <20260701-i2c-adc128d818-anacapa-v5-0-fe8292d86b38@free.fr>
- <20260701-i2c-adc128d818-anacapa-v5-6-fe8292d86b38@free.fr>
- <CAFEAcA8mygA035i3VSEGzQWppCDaUz0HM5mNU9DvTsOjei1F8Q@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <kariyam@oss.nttdata.com>)
+ id 1wkPar-0007E8-Jt
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 13:09:53 -0400
+Received: from oss.nttdata.com ([49.212.34.109])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <kariyam@oss.nttdata.com>)
+ id 1wkPao-0007Rh-Q4
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 13:09:53 -0400
+Received: by oss.nttdata.com (Postfix, from userid 1024)
+ id 1FA8A202031E; Fri, 17 Jul 2026 02:09:24 +0900 (JST)
+From: Mitsuru Kariya <Mitsuru.Kariya@oss.nttdata.com>
+To: qemu-devel@nongnu.org
+Cc: Mitsuru Kariya <Mitsuru.Kariya@oss.nttdata.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>
+Subject: [PATCH 1/4] scsi-disk: Fix BlockBackend leak on unplug of empty CD-ROM
+Date: Fri, 17 Jul 2026 02:09:20 +0900
+Message-ID: <20260716170923.2125858-2-Mitsuru.Kariya@oss.nttdata.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260716170923.2125858-1-Mitsuru.Kariya@oss.nttdata.com>
+References: <20260716170923.2125858-1-Mitsuru.Kariya@oss.nttdata.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"; markup=markdown
-Content-Transfer-Encoding: quoted-printable
-X-MS-Reactions: disallow
-Received-SPF: pass client-ip=212.27.42.2; envelope-from=emmanuel.blot@free.fr;
- helo=smtp2-g21.free.fr
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: clamav-milter 1.4.3 at oss.nttdata.com
+X-Virus-Status: Clean
+Received-SPF: pass client-ip=49.212.34.109;
+ envelope-from=kariyam@oss.nttdata.com; helo=oss.nttdata.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,55 +58,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+When a scsi-cd is created without a backing drive (an empty CD-ROM),
+scsi_cd_realize() allocates an anonymous BlockBackend for the empty
+drive with blk_new() and attaches it to the device using
+blk_attach_dev().
 
+blk_new() returns the backend with refcnt == 1 (the creation reference
+owned by the caller) and blk_attach_dev() takes an additional reference
+for the device.  The creation reference was never released, so on
+unplug blk_detach_dev() only drops the device's reference and the
+BlockBackend is leaked.
 
-On 10 Jul 2026, at 18:05, Peter Maydell wrote:
+Release the creation reference with blk_unref() right after
+blk_attach_dev(), matching the idiom already used in set_drive_helper()
+in hw/core/qdev-properties-system.c ("If we need to keep a reference,
+blk_attach_dev() took it").
 
-> On Wed, 1 Jul 2026 at 18:31, Emmanuel Blot <emmanuel.blot@free.fr> wrot=
-e:
->>
->> Slaves created with i2c_slave_create_simple() were left unparented and=
+Signed-off-by: Mitsuru Kariya <Mitsuru.Kariya@oss.nttdata.com>
+---
+ hw/scsi/scsi-disk.c | 1 +
+ 1 file changed, 1 insertion(+)
 
->> showed up under /machine/unattached with no stable QOM path. Add each
->> slave as a QOM child of its bus, named after its I2C address, so it ha=
-s
->> a deterministic and addressable QOM path.
->
-> Should devices on a bus be QOM children of the bus, though?
-> I would expect that they ought to be QOM children of e.g.
-> the SoC or machine that created them.
->
-> Do we do this for other bus types, e.g. PCI ?
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index 5ba5b46c4f..d70af0d9b4 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -2627,6 +2627,7 @@ static void scsi_cd_realize(SCSIDevice *dev, Error **errp)
+         dev->conf.blk = blk_new(qemu_get_aio_context(), 0, BLK_PERM_ALL);
+         ret = blk_attach_dev(dev->conf.blk, &dev->qdev);
+         assert(ret == 0);
++        blk_unref(dev->conf.blk);
+     }
+ 
+     if (dev->conf.physical_block_size != 0) {
+-- 
+2.43.0
 
-If we do not want a I2C device to be a child of its bus, an alternative p=
-arent could be the master/controller of the bus. However as a controller =
-may manage several buses, we need to add bus differentiator in the child =
-name, such as bus_num:address.
-
-I do not think it makes more sense to have the I2C device to be a child o=
-f the SoC rather than its dedicated controller.
-
-On machines that are statically defined rather than composed from the com=
-mand line (BMCs, complex SoC-based machines, =E2=80=A6), all the I2C devi=
-ces would appear as a =E2=80=9Cflat=E2=80=9D list of devices, with someti=
-mes many instances of the same I2C device type belonging to very differen=
-t sub-domains of the machine they instrument and/or drive.
-
-I tend to think that using a flat schema would likely make use of QOM pat=
-hs more difficult to observe and reach a device at run time: one would ha=
-ve to iterate the device and bus hierarchy rather than to use QOM path to=
- access a device, or special care would be required for naming device ins=
-tances. I was viewing the role of the QOM paths as a way to expose the ma=
-chine device hierarchy as a comprehensive and non-ambiguous representatio=
-n.
-
-What are the cons for using the device/bus hierarchy for simple buses suc=
-h as SPI & I2C?
-Is there any drawback to use the device & bus hierarchy to assign a defau=
-lt/fallback QOM path to a device?
-
-Maybe it=E2=80=99s a matter of ownership? Neither the I2C. bus nor the I2=
-C controller owns the device for sure.
-
-Emmanuel.
 
