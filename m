@@ -4,75 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15559C4450A
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 10:15:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB297C44501
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 10:20:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkJ7r-0002yp-1c; Thu, 16 Jul 2026 06:15:31 -0400
+	id 1wkJCU-00041o-Oc; Thu, 16 Jul 2026 06:20:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wkJ7p-0002wo-MU
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 06:15:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1wkJCT-00041e-Ks
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 06:20:17 -0400
+Received: from [115.124.30.111] (helo=out30-111.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wkJ7n-0004RZ-0C
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 06:15:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784196926;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=127lHvq6qlz1+4z4X14WRABFSX0rEPsR0bZodUSsga4=;
- b=fxttmxQZJppjOAysxO7wo+lT1glNNOLmGFB+6C5OJ5BcNHA41hD6/8YHoTfnvWpxo5Hahv
- /9e8Tcrz+lfse9/RPnvwxv29Wmn8fPYDsl7ZBD0SL3t73jNH5oH0OFuQFGbQgkFpfxRvVQ
- 2NyXJYFndzWFFXl59Ncu80BX+6X2/f4=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-354-nEHOqfV9MAC2Q9yP-_VHrA-1; Thu,
- 16 Jul 2026 06:15:22 -0400
-X-MC-Unique: nEHOqfV9MAC2Q9yP-_VHrA-1
-X-Mimecast-MFC-AGG-ID: nEHOqfV9MAC2Q9yP-_VHrA_1784196922
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E49AE1955F23; Thu, 16 Jul 2026 10:15:21 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.34.221])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 260D51956044; Thu, 16 Jul 2026 10:15:19 +0000 (UTC)
-Date: Thu, 16 Jul 2026 11:15:16 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1wkJCJ-00054e-11
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 06:20:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1784197194; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=BDQd/iBlbpofFm5nuJcZqJvHB5cXG0H9Mabhl90UX2w=;
+ b=DGGRDA+dns4C6UivWi+QSKF7JbNPcuvLAOM+BDbv9dtlCLsgRIk6BmpHPvRqEw+bs4y0Uxx8DzTyOjq6nnMbfvy94ET81ZeoBt1y/9Boki+MlDya9RHMdrJW2Qj6WPsmFi1pxVagu1u6GW7odDyOGYLNIFduQZyFB3GRY6PAevA=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R631e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032089153;
+ MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=3; SR=0;
+ TI=SMTPD_---0X7E4g4o_1784197193; 
+Received: from localhost(mailfrom:guobin@linux.alibaba.com
+ fp:SMTPD_---0X7E4g4o_1784197193 cluster:ay36) by smtp.aliyun-inc.com;
+ Thu, 16 Jul 2026 18:19:53 +0800
+From: Bin Guo <guobin@linux.alibaba.com>
 To: qemu-devel@nongnu.org
-Cc: Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org
-Subject: Re: [PATCH] iotests: increase timeouts for tests to 5 minutes
-Message-ID: <alivNA7E1p8XJR-7@redhat.com>
-References: <20260623160326.2346255-1-berrange@redhat.com>
+Cc: peterx@redhat.com,
+	farosas@suse.de
+Subject: [PATCH 0/3] migration: postcopy blocktime cleanups and assert fix
+Date: Thu, 16 Jul 2026 18:19:49 +0800
+Message-ID: <20260716101952.65329-1-guobin@linux.alibaba.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260623160326.2346255-1-berrange@redhat.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: permerror client-ip=170.10.133.124;
- envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.111 (deferred)
+Received-SPF: pass client-ip=115.124.30.111;
+ envelope-from=guobin@linux.alibaba.com;
+ helo=out30-111.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,79 +66,27 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping: any reviewers for this simple robustness fix.
+This series fixes a couple of issues in the postcopy blocktime
+fine-grained tracking feature:
 
-On Tue, Jun 23, 2026 at 05:03:26PM +0100, Daniel P. Berrangé wrote:
-> Currently we have tests timeout set to 3 minutes, on the basis
-> that they're generally done in less than a minute. I've hit a
-> couple of random failures suggesting that's not sufficiently
-> pessimistic. Increase the timeout to 5 minutes to have a greater
-> safety net in high load scenarios.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->  tests/qemu-iotests/meson.build | 15 +++++++--------
->  1 file changed, 7 insertions(+), 8 deletions(-)
-> 
-> diff --git a/tests/qemu-iotests/meson.build b/tests/qemu-iotests/meson.build
-> index bc6132a0f7..8857f25f29 100644
-> --- a/tests/qemu-iotests/meson.build
-> +++ b/tests/qemu-iotests/meson.build
-> @@ -52,16 +52,17 @@ foreach driver, speed: qemu_iotests_drivers
->                '-tap', '-' + driver, item,
->                '--source-dir', meson.current_source_dir(),
->                '--build-dir', meson.current_build_dir()]
-> -      # Some individual tests take as long as 45 seconds
-> -      # Bump the timeout to 3 minutes for some headroom
-> -      # on slow machines to minimize spurious failures
-> +      # Some individual tests take as long as 3 minutes
-> +      # in high load scenarios. Bump the timeout to 5
-> +      # minutes for some headroom on slow / loaded
-> +      # machines to minimize spurious failures
->        test('io-' + driver + '-' + item,
->             python,
->             args: args,
->             depends: qemu_iotests_binaries,
->             env: qemu_iotests_env,
->             protocol: 'tap',
-> -           timeout: 180,
-> +           timeout: 300,
->             suite: suites)
->      endforeach
->    endif
-> @@ -94,16 +95,14 @@ foreach driver, speed: qemu_iotests_drivers
->                '-tap', '-' + driver, item,
->                '--source-dir', meson.current_source_dir(),
->                '--build-dir', meson.current_build_dir()]
-> -      # Some individual tests take as long as 45 seconds
-> -      # Bump the timeout to 3 minutes for some headroom
-> -      # on slow machines to minimize spurious failures
-> +      # See earlier note about timeouts
->        test('io-' + driver + '-' + item,
->             python,
->             args: args,
->             depends: qemu_iotests_binaries,
->             env: qemu_iotests_env,
->             protocol: 'tap',
-> -           timeout: 180,
-> +           timeout: 300,
->             suite: suites)
->    endforeach
->  endforeach
-> -- 
-> 2.54.0
-> 
-> 
+  - Patch 1 fixes an ineffective overflow assert in vcpu_faults_current[].
+  - Patch 2 fixes the const/gchar mismatch in format_time_str().
+  - Patch 3 collects minor cleanups: remove a redundant memset() and
+    fix the HMP label for non-vCPU latency.
 
-With regards,
-Daniel
+Bin Guo (3):
+  migration: fix ineffective overflow assert in postcopy blocktime
+  migration: fix const mismatch in format_time_str()
+  migration: clean up postcopy blocktime presentation
+
+ migration/migration-hmp-cmds.c |  8 ++++----
+ migration/postcopy-ram.c       | 10 ++++------
+ 2 files changed, 8 insertions(+), 10 deletions(-)
+
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.50.1 (Apple Git-155)
 
 
