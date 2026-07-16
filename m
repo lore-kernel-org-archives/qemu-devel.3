@@ -4,108 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D446AC44511
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 15:37:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1DD8C44512
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 15:41:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkO9g-0001Sf-Il; Thu, 16 Jul 2026 11:37:44 -0400
+	id 1wkOCs-0002M4-9S; Thu, 16 Jul 2026 11:41:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wkO9e-0001Ra-Ji
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 11:37:42 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wkO9b-0000fk-SO
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 11:37:42 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-5b018fe8318so2986701e87.3
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 08:37:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784216257; cv=none;
- d=google.com; s=arc-20260327;
- b=r/SolIkHMPkbPUBOx0UNK4urWvU+cub7Apm66/6nphICFYkL2vA6iFlnAPAeBCJ7eE
- Ybk7qxM7+8AMUV27r3H3fjepOuhMcRmRO5KM+NM7jerVzzYpoug7cbgn/F/bUIKI3kkG
- u1nJ8g5YN9a3BNSBA/4sJhWxW0ppLy/Y4R8CtfI4RtpU078TcciaX3bOIjVNNk7C/281
- K7zHAJZ+Bz4sTU6zr4HtcXPgESYBHiLxSawVp0mz3gUqVFu0s3o0msWhB7Irm2O3NZg8
- GufWsgXLSb3wAlHTV2QQwiPAn+XAt60oKla19dj0cc3q4GOlpVWbqMeC8tmUOS0iVOkw
- Ue9A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=/OndQUDEFJBv6AGocQBsEBszmbMlldXolWnfGCtTlL0=;
- fh=aJcWuLTZckZ7gxoEuHF1/9IwFjMrLidnlAV2i0OG1HE=;
- b=iH1KCmhyrS1QfLKI76FV5sMiNIm3no0tl8MB1JOvjPir3wN7HUZdzg3pgkZ/W+wnDb
- KXsmFKOE6E3axKSMEu1u+NhvgwjwMfl1S1Ay16Z0QQIdobLN42QOQhl0dbQQZAjhFWw5
- lPvSFAQLtsN+FZQhaMZc4RG5f8f25JZ6VbbUxSYSSC57asiIlw8pWxY0RztDvTsCWNl9
- h/D4vBogH27UY1Yd/44nNBToc+2cb8BiErxo9HI2Kv1FE7WIHXGquv02r9+c2tCAZ4ku
- L5++BDdLZBdikt4DQnToSfgc04iinhZBkHlENJ/f5vdUlvw4g2hl93ss8ZzIyJf0y89g
- hueA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wkOCq-0002Lq-Q2
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 11:41:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wkOCm-0001LJ-Dx
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 11:41:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784216455;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=B0HwOx7t7LtBBp2NDZL0d7YMNK7hXUEhn5q8DJR3X+I=;
+ b=dT7n4vQO2+etCafP525phG925HL83G7JDFxSYs4rntd7ha6UwkLqhACs+1zASqMMI79Wj3
+ heHokVkVKtkGCZ53SLl/Sr0tktVPebDR79gWzhC1OlVTpFo0WF+JknrDBC4KOGjyGwLaok
+ SEKFcKXzF4Iu4lVPtMXnn6YTUNte4MQ=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-296-4XU_0PAQNS6Of2WQeMUHXw-1; Thu, 16 Jul 2026 11:40:54 -0400
+X-MC-Unique: 4XU_0PAQNS6Of2WQeMUHXw-1
+X-Mimecast-MFC-AGG-ID: 4XU_0PAQNS6Of2WQeMUHXw_1784216453
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-51c1e6f602cso64242081cf.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 08:40:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784216257; x=1784821057; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=/OndQUDEFJBv6AGocQBsEBszmbMlldXolWnfGCtTlL0=;
- b=KZiBXKzpNFoMXplkMjWfPY5e2Days3916bkO5+sYjhHDCz/eUkolA7/xBVzvAbkAEn
- 0E6dO9DVLvvvZNlyuHKVzohuwrWKWLBTjchZeNizrfNQAPK7PnGQ2gPYKfnk5ACExzhF
- gQRGdL1gd0ORfE+3cqeNnCz400wtMpjOO81W0qgwXvq9YTg2yI3jPG+P4eLla4QGam/j
- v84lk4i/rkdU924heFxJ+CnqBnBiVb/K7JDaqla0W0sG1bLkQPrQYgu7dbH6ljQEtxud
- UWO+lV2/5g6WxsjtRd75Xf+8ZYQcK3arun/Ps8Z6CitlEJZEJjxm4gVir5QiNQcRcIaT
- ge2Q==
+ d=redhat.com; s=google; t=1784216453; x=1784821253; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=B0HwOx7t7LtBBp2NDZL0d7YMNK7hXUEhn5q8DJR3X+I=;
+ b=Y8cwLQixbpMnboCZPM/gjkAn2JGEnd5aE/DISulIEjdxkHE1R0TZMhDoWCjL8rk5JF
+ qx910io2mT5mvMM/ZosUJCfbV/Wn0Y/4JB8nT1I4NqkonLbCl45MBC3799GBrFhkeACb
+ Q85IN2iSFPqmq9ZkfBrzM+/Csu+Q7l4D5stXbD0ecoX1LAbXfyej24X9FhGKkXJCTqU+
+ kQdpFNidWeWyvd9Lv6EHKtMoXv4CjJcUvgzauj0uJ5+0cdyU7deh13XM+ygfn1ZJwtZL
+ PXA/qP8FUjeTobN2tZd7ioFOofYQpqV69FRPzx8QrkT7xi5rBj7ZbS3jsr40M/8bvWbh
+ 3yZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784216257; x=1784821057;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=/OndQUDEFJBv6AGocQBsEBszmbMlldXolWnfGCtTlL0=;
- b=nP2iuzLPs0kbir+iI7ul38rte6T96vK3Pnb14VHzsGCURSiXlwFiVdzLgdPTyxCfrz
- TVz3TF5iXo+u5IFWkUOwWa+Fa5R+iHPYUAJybT/WqBOiXXO1Jkye94syiWFI+Q3QeLoz
- Jdi4UfzlLY5Nz3Lt0M+JaGdIXj8Sc6MYtp0rh05Yp5+BS9ck2biAggFTZ+8QFEbxfKBj
- DXrLVuDUZXlz9S/5becShDhe9uLu5hgWVGZdQqg9VrQgiuG0gqkBr8C4LkpwWBE56LwF
- 0BFQTUVmefg3sP+uoPoKhJDlTMpH7hadOf9aRgDUn3CBerIKECtnCP+7DxMetZ7mE7BS
- gIkQ==
-X-Gm-Message-State: AOJu0YwzaUeM4MOo8P39HgS3lBgUPgvLJ6jQ7TPOsUyGF9BBuln2Zx0k
- M+/0O4J12S0iEP4erRhUQJIo/sXlNg/rpemnRydXG90KKAVBXPiXuAU4dfZkJK0guTJ0oOtN8Ld
- Gp6esKDm3xlcYJDXzzK0FyIZTaqpiYFQ=
-X-Gm-Gg: AfdE7ck5M2aBWr0HygwpttDzES8BqkKwUApTJWGmdI0ZsTOoFeuFZZ7xYZtbPH7P+2A
- jQav2L6CLi5OxmQ1BPqvqWaIjXR0BqTraNtsx4hnxlQM59cNCJXgUT8lfiodmZ0pOpxmBYMKcWi
- eCLuimYs3dmjnchFSz4cs27Gvgm7fQbV7i6yNmKE5NnXEU6bELJIf+SBA13LZ4RoOsi9yRpIqZO
- BFe+MkUyPnEh/EGMAn+cd15zuA27EeiOh0vkbE3UharS2lvNZAnB0+yM/9Ubq9cOZIb1tgrQVpl
- JKlqRXH29tjQaC8W9zm7
-X-Received: by 2002:a05:6512:1443:20b0:5b0:129c:ed85 with SMTP id
- 2adb3069b0e04-5b023563c99mr3688294e87.1.1784216257280; Thu, 16 Jul 2026
- 08:37:37 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1784216453; x=1784821253;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=B0HwOx7t7LtBBp2NDZL0d7YMNK7hXUEhn5q8DJR3X+I=;
+ b=hW9CM/2morn5RIUZi5A14dM5TE10PnAX3KNgaKZa0jvZA7gYae+MN7lFXk5Sr17Zkk
+ 4PokpPBW97fB2oNHxaUqR5u1Y3o5Gd/E3fuhjDUNHaDxWhcxTnd8WmKgbo1nxqEE9oPO
+ Y7Uj/rkznmI1RNcvx5h3f7WdWQ4zLc7xaRlzR1WsyeMa5RG6sFtpeJFhQKiSHXB5wEQ9
+ nBUoYlMKlXHNA4htCVDoj++y2LY+uWKVjor0WM4Ja39WnL7WLtwmtTWUzxyFrSy4gKPM
+ 8B6q+MSRuhS086vsdHIipHjIJHp/UeXXw3N84u0nl+/8oGNTtNJjuxqPsavcdNusBIKL
+ zy6Q==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rp/bLhePgGmtlC8ai8oe31FbQ0Rep8DlNVXmWNxKt2MsqP0f4pdYeX2cogY3Y6GzgZR3+XKsxBLidsE@nongnu.org
+X-Gm-Message-State: AOJu0YytxN7zz4pGl2skwAyG2kNum2iXHubjiGO02iMjmCwIZ/hpq3sI
+ NrMsYzPtU70PWRZHckN8e6juCeBr6yUEtVrR/fHxmuI9X9JnTxdVGTJFAGbsCrrDpACi10QQkNG
+ Lm5pwlCguDwC3mHwNmueqrYGtYmGdI7z3AMAPKq7QAd234XyhdmhVpeEL
+X-Gm-Gg: AfdE7cnn/55lEgEjDyGYdrVcToay+lcPED/retLKsfso++U4rKoIHfCq+VJ9i7igIB5
+ 3ms+KCid4aMCHJu17qUW0b116DlGr7enoXODvQbvyk8ai4xR6tFfU4BaTOfPVEiQSKNpVcKyvv/
+ Zm/ZCgG0/dB/NEyUhIjtsJjS2bRMKYdC8PaYUpIQ9GZdjG3YlTlW/tmnPtb47QhhpzFyAQrBqz5
+ aAKJY8gZuw+PUGhpr24eJ9XxnX8lKMxQ5rvfmioLVfYTUwJ0SvY3IisqLGQ9Orvi2kwGtVXFWI/
+ NWslAx2jukkfk5qevSlN7Msft9f+zfB832iyXHTEtzX+YrWjnbsQEkFbJiBQErhyvEsq
+X-Received: by 2002:ac8:7e8d:0:b0:51b:feee:b08b with SMTP id
+ d75a77b69052e-520be690507mr702471cf.45.1784216453319; 
+ Thu, 16 Jul 2026 08:40:53 -0700 (PDT)
+X-Received: by 2002:ac8:7e8d:0:b0:51b:feee:b08b with SMTP id
+ d75a77b69052e-520be690507mr701851cf.45.1784216452577; 
+ Thu, 16 Jul 2026 08:40:52 -0700 (PDT)
+Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8ffd81f43e6sm222378556d6.39.2026.07.16.08.40.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 16 Jul 2026 08:40:52 -0700 (PDT)
+Date: Thu, 16 Jul 2026 11:40:48 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Mauro Matteo Cascella <mcascell@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH] docs: outline some guidelines for security classification
+Message-ID: <alj7gF_ayHO7Dvb7@x1.local>
+References: <20260707105927.2776822-1-berrange@redhat.com>
+ <CAMxuvazpNiy8iqu76wJwiF3aKEizjgZaQFgF3gtHDXqiGh9Fsw@mail.gmail.com>
+ <ak0q0vOeFVJsDBcL@redhat.com> <87jyqv3u32.fsf@suse.de>
 MIME-Version: 1.0
-References: <20260523114128.2468754-1-mattst88@gmail.com>
- <28be5573-2b49-41c9-9d0e-d5077c2ed37d@tls.msk.ru>
-In-Reply-To: <28be5573-2b49-41c9-9d0e-d5077c2ed37d@tls.msk.ru>
-From: Matt Turner <mattst88@gmail.com>
-Date: Thu, 16 Jul 2026 11:37:25 -0400
-X-Gm-Features: AUfX_mzruxOrQ1thNwTEsczoLOpU-Il7kO6TtQns4uCCRyMKvfcKQ5MXhvGr2Rg
-Message-ID: <CAEdQ38FHh3Vi8BKR_rSJ1SkBcA1ML+=g3m0ircZAU4mYeeYH+g@mail.gmail.com>
-Subject: Re: [PATCH] linux-user/sh4: add VDSO support for sh4 and sh4eb
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
- Helge Deller <deller@gmx.de>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=mattst88@gmail.com; helo=mail-lf1-x133.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87jyqv3u32.fsf@suse.de>
+Received-SPF: permerror client-ip=170.10.133.124;
+ envelope-from=peterx@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,86 +129,213 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 16, 2026 at 4:06=E2=80=AFAM Michael Tokarev <mjt@tls.msk.ru> wr=
-ote:
->
-> On 5/23/26 14:41, Matt Turner wrote:
-> > Provides replacement VDSO with sigreturn trampolines
-> > (__kernel_sigreturn, __kernel_rt_sigreturn) and syscall stubs
-> > (clock_gettime, clock_gettime64, clock_getres, gettimeofday).
+On Thu, Jul 16, 2026 at 11:08:49AM -0300, Fabiano Rosas wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
+> 
+> > On Tue, Jul 07, 2026 at 04:43:43PM +0400, Marc-André Lureau wrote:
+> >> Hi
+> >> 
+> >> On Tue, Jul 7, 2026 at 2:59 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
+> >> >
+> >> > Beyond the overall virt/non-virt use case classification, there are
+> >> > a number of scenarios which we have decided will not be treated as
+> >> > security issues. Start to document some of these to give consistency
+> >> > in our treatemnt of incoming disclosures.
+> >> >
+> >> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> >> > ---
+> >> >
+> >> > Mauro / Michael: please suggest any other rules which we have applied
+> >> > historically on qemu-security disclosures that we should capture here.
+> >> >
+> >> > The vfio-user/vhost-user addition is a new one based on discussions
+> >> > in some GitLab issues today/yesterday
+> >> >
+> >> >  docs/system/security.rst | 63 ++++++++++++++++++++++++++++++++++++++++
+> >> >  1 file changed, 63 insertions(+)
+> >> >
+> >> > diff --git a/docs/system/security.rst b/docs/system/security.rst
+> >> > index 53992048e6..fbbca50f95 100644
+> >> > --- a/docs/system/security.rst
+> >> > +++ b/docs/system/security.rst
+> >> > @@ -75,6 +75,69 @@ Bugs affecting the non-virtualization use case are not considered security
+> >> >  bugs at this time.  Users with non-virtualization use cases must not rely on
+> >> >  QEMU to provide guest isolation or any security guarantees.
+> >> >
+> >> > +Security boundary scope
+> >> > +'''''''''''''''''''''''
+> >> > +
+> >> > +Even where a flaw affects the virtualization use case described above,
+> >> > +not all scenarios will be considered in scope. The following guidelines
+> >> > +are used to evaluate whether to apply the full security process, or treat
+> >> > +an issue as a normal bug.
+> >> > +
+> >> > +* **assert** / **abort**. If triggering the code path requires kernel
+> >> > +  privileges (or root account access) in the guest, asserts/aborts in
+> >> > +  QEMU are a self inflicted denial of service. These will **not** be
+> >> > +  treated as security flaws, at most hardening bugs. If triggering the
+> >> > +  code path can be done by an unprivileged guest OS account, this
+> >> > +  **may** justify handling as a security bug.
+> >> > +
+> >> > +* **vhost-user/vfio-user backends**. The backend processes have
+> >> > +  shared memory regions co-mapped with the QEMU process. The intent
+> >> > +  of the process separation is operational resilience & flexibility
+> >> > +  and allowing for independent software suppliers. There is not
+> >> > +  considered to be security boundary between QEMU and the vhost-user
+> >> > +  & vfio-user backends. Thus flaws in the backends which can cause
+> >> > +  crashes / undesirable behaviour in QEMU will **not** be treated as
+> >> > +  security flaws, but should be fixed as hardening bugs.
+> >> > +
+> >> > +* **memory allocation bounds**. There are many ways in which a QEMU
+> >> > +  process can legitimately consume an amount of memory that is
+> >> > +  significantly larger than the assigned guest RAM. QEMU's worst
+> >> > +  case memory usage should be considered effectively unbounded. As
+> >> > +  such the QEMU deployment on the host should account for the
+> >> > +  possibility of large memory peaks and apply countermeasures to
+> >> > +  provide continuity of host operations. It is typical for the Linux
+> >> > +  OOM killer to reap the process triggering host memory overcommit
+> >> > +  in the case of exccessive usage, offering a degree of protection.
+> >> > +  As such, bugs which can lead to excessive/unbounded memory allocations
+> >> > +  will usually not be classified as security flaws, but should be
+> >> > +  fixed as hardening bugs.
+> >> > +
+> >> > +* **degraded guest behaviour**. There are a set of bugs which can
+> >> > +  lead guest hardware devices to misbehave. For example, a flawed
+> >> > +  virtual IOMMU operation may not offer the guest device isolation
+> >> > +  that would otherwise be expected. If a guest triggered exploit
+> >> > +  requires kernel privileges (or root account access), and leads
+> >> > +  to sub-optimal behaviour of the virtual device this is considered
+> >> > +  a self inflicted service degradation. These will **not** be
+> >> > +  treated as security flaws, at most hardening bugs. If triggernig
+> >> > +  the code path can be done by an unprivileged guest OS account,
+> >> > +  this may justify handling as a security bug.
+> >> > +
+> >> > +* **nested virtualization**. The scope for nested virtualization
+> >> > +  is to prevent a level 2 guest from breaking out into a level
+> >> > +  1 guest. As noted above, a number of scenarios exclude security
+> >> > +  handling for flaws only exploitable by the guest kernel / root
+> >> > +  account with affect the guest's own service/availability. In the
+> >> > +  context of nested virtualization with PCI device assignment, it
+> >> > +  may may be possible for a level 2 guest kernel to trigger flaws
+> >> > +  that affect the level 0 QEMU process. While these bugs should be
+> >> > +  fixed, they will not be triaged as security flaws at this time.
+> >> > +
+> >> > +* **low severity impact**. As a catch all rule, issues which
+> >> > +  are judged to have a "low" severity impact on the system will
+> >> > +  usually not justify handling as security bugs, nor assignment
+> >> > +  of CVEs. They will be fixed as routine bugs when time allows.
+> >> 
+> >> Should we have a section about management-plane protocols? (migration,
+> >> QMP, monitor), since they already require trusted network access?
 > >
-> > Both LE and BE blobs are committed and selected at compile time via
-> > TARGET_BIG_ENDIAN. The BE variant requires an sh4eb-unknown-linux-gnu
-> > toolchain; sh4-unknown-linux-gnu does not support -mb.
+> > There is a section later about QMP/monitor
 > >
-> > CFI register numbers follow GCC's SH_DEBUGGER_REGNO:
-> > PR=3D17, GBR=3D18, MACH=3D20, MACL=3D21, FPUL=3D23, FPSCR=3D24, FR0-15=
-=3D25-40.
-> > ---
-> >   linux-user/sh4/Makefile.vdso    |  18 ++++
-> >   linux-user/sh4/elfload.c        |  14 ++++
-> >   linux-user/sh4/meson.build      |  12 +++
-> >   linux-user/sh4/target_elf.h     |   1 +
-> >   linux-user/sh4/vdso-asmoffset.h |  45 ++++++++++
-> >   linux-user/sh4/vdso-be.so       | Bin 0 -> 2704 bytes
-> >   linux-user/sh4/vdso-le.so       | Bin 0 -> 2704 bytes
-> >   linux-user/sh4/vdso.S           | 142 +++++++++++++++++++++++++++++++=
-+
-> >   linux-user/sh4/vdso.ld          |  67 +++++++++++++++
-> >   9 files changed, 299 insertions(+)
-> >   create mode 100644 linux-user/sh4/Makefile.vdso
-> >   create mode 100644 linux-user/sh4/vdso-asmoffset.h
-> >   create mode 100755 linux-user/sh4/vdso-be.so
-> >   create mode 100755 linux-user/sh4/vdso-le.so
-> >   create mode 100644 linux-user/sh4/vdso.S
-> >   create mode 100644 linux-user/sh4/vdso.ld
+> >   https://www.qemu.org/docs/master/system/security.html#sensitive-configurations
 > >
-> > diff --git ./linux-user/sh4/Makefile.vdso ./linux-user/sh4/Makefile.vds=
-o
-> > new file mode 100644
-> > index 0000000000..272c5d262d
-> > --- /dev/null
-> > +++ ./linux-user/sh4/Makefile.vdso
-> > @@ -0,0 +1,18 @@
-> > +include $(BUILD_DIR)/tests/tcg/sh4-linux-user/config-target.mak
-> > +
-> > +SUBDIR =3D $(SRC_PATH)/linux-user/sh4
-> > +VPATH +=3D $(SUBDIR)
-> > +
-> > +all: $(SUBDIR)/vdso-le.so $(SUBDIR)/vdso-be.so
-> > +
-> > +LDFLAGS =3D -nostdlib -shared -Wl,-h,linux-gate.so.1 \
-> > +       -Wl,--build-id=3Dsha1 -Wl,--hash-style=3Dboth \
-> > +       -Wl,-T,$(SUBDIR)/vdso.ld
-> > +
-> > +$(SUBDIR)/vdso-le.so: vdso.S vdso.ld vdso-asmoffset.h
-> > +     $(CC) -o $@ $(LDFLAGS) -ml $<
-> > +
-> > +CC_BE =3D sh4eb-unknown-linux-gnu-gcc
-> > +
-> > +$(SUBDIR)/vdso-be.so: vdso.S vdso.ld vdso-asmoffset.h
-> > +     $(CC_BE) -o $@ $(LDFLAGS) $<
->
-> Where this sh4eb-unknown-linux-gnu-gcc comes from?  For one,
-> we don't have it in debian.  Can the same be produced with
+> > For migration we do need to think of something to explain our approach
+> > more clearly, and indeed document our expectations for configuration
+> > for migration (trusted LAN vs TLS + certs).
+> >
+> 
+> +CC peterx
+> 
+> Hi, I put together a draft so we can discuss, let me know what you
+> think.
 
-I built it locally with Gentoo's crossdev tool.
+Below looks good in general, some trivial comments inline.
 
->   sh4-linux-gnu-gcc -Wl,-EB -Wa,--big
->
-> instead?  (Or -gcc -mb, which does not work on debian currenly).
+> 
+> Assumptions:
+> 
+> A) The migration stream is assumed to be secured by TLS on a per-host
+> basis.
+> 
+> B) For migration streams stored to file, including snapshots, it is
+> assumed that the storage file is authentic, i.e. the files are owned by
+> the party performing the live migration and have not been tampered with.
+> 
+> C) The network ports used for migration are expected to be available
+> only during migration. No long-standing listening destination QEMU
+> process.
+> 
+> D) The network used for migration is expected to be adequately isolated.
+> 
+> E) The migration source QEMU process is assumed to be secure. Compromise
+> of the source QEMU process is nonetheless possible but exploiting the
+> migration process is expected to grant no further privileges.
 
-I believe I ran into this as well, which led me to build a cross
-toolchain myself. I didn't think to try `-Wl,-EB -Wa,--big`, but if
-that works then it could have saved me some time :)
+Yes, having this whole section should help clarify things a lot.
 
-> I can pass this on command like as CC_BE=3D"..".
->
-> But I know nothing about sh4, so dunno if this is the right
-> thing to do.  It builds, but I don't have any sh4eb binary
-> to test against.
+> 
+> For security consideration, the following are considered:
+> 
+> OUT OF SCOPE:
+> 
+> 1) Abort of destination QEMU process while migration is still in course.
+> Rationale: the source virtual machine is not affected.
+> 
+> 2) Migration failure.
+> Rationale: eventual failed migrations are part of normal operation.
+> 
+> 3) Memory over-allocation issues in the destination QEMU process.
+> Rationale: the destination host's operating system is expected to
+> constrain resource usage. Process termination due to OOM falls under
+> point 1 above.
 
-I'm not anywhere near an expert in sh4, but it seems that big-endian
-sh4 is super niche and uncommon. I wasn't even sure whether I should
-bother implementing big-endian support here.
+This whole section is good too.
+
+Though for 3), I'd not say the dest host is expected to constrain resouce
+usage.  For example, if there is way to cause over-allocate in a daemon it
+should still be treated a real host mem DoS, and we may or may not always
+assume the guest processes are protected by memcg or something alike.
+
+However, I still agree with the conclusion: it's out of scope of migration
+not because #1, but because dest QEMU process is in the "secure zone" and
+it's not a generic daemon, hence ASSUMPTION A)+C)+D).  If the attacker can
+reach it and talk to it, something has already been breached.
+
+> 
+> IN SCOPE:
+
+It's harder to follow for what are described as IN SCOPE below.. except..
+
+> 
+> 1) Privilege escalation from the guest operating system into the
+> destination QEMU process or host.
+> 
+> 2) Tampering or exfiltration of migration stream data by a third party
+> at a lower privilege level than either QEMU processes involved in the
+> migration.
+> 
+> 3) Termination of the source QEMU process by source virtual machine
+> guest userspace, including by forcing host OS resource constraints to
+> be reached.
+> 
+> 4) Other tampering or exfiltration of data from the source QEMU process
+> if reached from migration code or migration stream manipulation.
+> 
+> 5) Causing source QEMU process to enter a state from which migration is
+> not possible permanently.
+> 
+> The overall effect of this policy is that only legitimately produced
+> migration data is considered for security implications, whether that
+> data is malicious or buggy.
+
+.. I kind of get what you wanted to say. The only legit way to interact
+with migration module that I can think of, is either from guest access
+(manipulation of guest device registers etc. iow, malicious drivers),
+causing migration misbehave / disfunction, or via host side interfacing
+like QMP/HMP causing source host / guest damage, this time memory DoS
+could be a bigger problem for sure comparing to a dest QEMU DoS, but this
+then also depends on how we want to define the scope for monitors in
+general.
+
+I wonder if we can simply above 5 points into something simpler, or skip
+for now?  To me, what is out of scope is more valuable to be put into doc,
+because I bet 99% if not all of existing "security issues" on migration in
+past few months fall into it.. so it saves huge time already for triaging.
+
+-- 
+Peter Xu
+
 
