@@ -4,137 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EFEEC4450A
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 13:20:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63898C44501
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 13:21:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkM0e-0003Ru-6T; Thu, 16 Jul 2026 09:20:16 -0400
+	id 1wkM1j-00041Q-KT; Thu, 16 Jul 2026 09:21:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wkM0c-0003Ra-Vb
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 09:20:15 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wkM1h-000414-UY
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 09:21:21 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wkM0b-0004VA-53
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 09:20:14 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ id 1wkM1f-0004jX-Vi
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 09:21:21 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66GDJdeu2946548
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 13:20:09 GMT
+ 66GDJsk92734773
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 13:21:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- quGU/oli+WnqTpslmTOghalXx6uOih3oPXOtRW1dWb8=; b=MR5X1W/aIshj6DhZ
- cmnF14dR0Iw0RdKEvA9exT1TQACE2t8L6odJLS88rEuMzFckCaHrHsFdO/YdHHQm
- tLYXzGrKW+stBjFCcrlo+Za8AaYGHVYLiuSn8vogxU2Uq7di3+5O1NvmU4TOEW0x
- nbiivPz5sk3MJYd7LZMUkr3KkdV95olk8fS5g5qLTX3v6QrYXdeNw2jMJ0AcpsjE
- 9nFtdNsSDkJFZ3OsLPr+BadWBjCxu5N3m9vaF/MdwBZhHU8bPfFcztC1Ogd+UER5
- G/i5qX6Rvnt14rFVmbT3DlPq+xMsdjaYAuumr12XTsyVkP/vTJIduCagGpw+cUim
- GQFFMg==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fen4wak6f-1
+ Y0MCf5pW4xNNdIkgT1T1KQEaBjldhwFlgVHv9j2llvE=; b=phTpw5g3+KdocmP9
+ dpkAKYIR8A2KlMx2adDlmMM3um+ZbuNLxlekKmFiA8MvKYgFAz9FA7tyQyQ8fY3m
+ pNBIGJVkbT4Btga1aPkIBMToy+CE0XDX+uiXUDugv+MBBLkSnPEvlbNaBYTwjf0L
+ gjgvOBqdfDmK8h7eZCnKY7+ua/wSyidww7Coj120M/awrjctm9QIvOO0PknQ0NI5
+ oTTF226Y7sdYgCMC7n3hUhaQLynsiUK71SuvMtDo5HFsSwjnq4v2PhToniuOVMgd
+ FkFOl6N+ERft5ViAeROt7GPNk4PpNpLoETzT5rfErfGeaOX6Akiz8SwX+3k4sxpe
+ apvxYg==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fevkv0y6w-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 13:20:09 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-92e4f946461so1115547085a.2
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 06:20:08 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 13:21:18 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-51bfe3fa93bso129771011cf.2
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 06:21:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784208008; x=1784812808; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1784208078; x=1784812878; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=quGU/oli+WnqTpslmTOghalXx6uOih3oPXOtRW1dWb8=;
- b=RRyKAnlPQEiemfGkDTxV4aLqYuMUahdEJKaKwehqPrDrFqa2qd31QdT9rqGTMw/W04
- WknmDsf1Ik98jCiCJzUjQFDbCxNICDEGHtTryTh24WfXBaDD1/Dj+3IOy4omVcqDyGo0
- sY5+MgLyPHBGJMyo+F7SJp9rWMyl0E4+Od1410XwOBU5zm7kxv+YRecEUqIrRA1G9RO1
- q9fXY0d6ZpoqsirRjTlI9y/w9DJdGHiXSBkzKeow5cxo3hMCj1ObePhkIxzaVo/4wHoH
- LnxePPqiv8V8h/W3N8fBEbl2huAMmBPR/Akps5u/uYKkYAy1zac8m7Dc9Q/DswtEDqgJ
- 8nng==
+ bh=Y0MCf5pW4xNNdIkgT1T1KQEaBjldhwFlgVHv9j2llvE=;
+ b=XjqOFRwlKPNuytCeE57GYFkqr+NpGFA4YaRGOpgTFEIgzuYpwqabfA5EA8jeVDvP+m
+ VtSaDdCkyHs7lZvqZNp8KaIomy9A5Cbz38X04U8b+J8WPRR8Ros3h8OEj1ti5YcfmjRx
+ 7LAJAj56avTooJkbbMS4kHCDdE1sE09tcu91Hogu8rJ94p5+mmtzfzjNjJdNtvq1r5Jw
+ r/dLEB16TbMYdtqTCvt+DnIio78fyr8IVw3XOkzO/392IMsyB3Bdsn6M1LI09K4pReAK
+ KktTfP0uL37r7BZ0VzFvn0oZZ5VZP7MUcP66czYpMthoAgBu7yUSTBJ+GGHGGLlxBUAl
+ 374w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784208008; x=1784812808;
+ d=1e100.net; s=20251104; t=1784208078; x=1784812878;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=quGU/oli+WnqTpslmTOghalXx6uOih3oPXOtRW1dWb8=;
- b=rOuT5IWfLPN74RvKv3D3si82uBvGo0hTMRkRkqUhc315uwk1e0WtZi0TURSGtNzicx
- FCETide3wI+0GCrVDmYF1DYBAZu51jZM36nqn0cNVrihqIc2S1DVOl8CwpIl1C+klX2f
- K2EgZH6lDc3R9jS9HeLXoynGUtkZXR8rVzY0gzDIQjo5d1N2XIAJL0MdbqePlOs9MKI8
- ljnJ29LR800AdoOlmRqJ5ZQHJXNlFuMKtsqlGXDAraFRpXCYeLHOmwznCOCZbiDtD52J
- VbSnM7lDz6rw1/oZYxLOT89UF0cPQ2GyQeuw0YMOxLTyJGMThQz8KbStn1L2H0rR9Gj5
- dH8g==
+ bh=Y0MCf5pW4xNNdIkgT1T1KQEaBjldhwFlgVHv9j2llvE=;
+ b=k9PCxyffpGyOINAXZpgX4k6ip96w/6aOsnJFWEaa4HKXyOIMnxSbg6asWGv08LLVsw
+ ylgAjs6mNLsmwuFCYXnMwv8+/7Eeph176mtemfmLYSf5RvjaE9CGjVWwASu27NbRqkcD
+ h5hFPSKkv/GLe4BtCQhybY239ng+DP6c8g6XsUzu/piEQmNuBqpV6GDP7AX82e4JnURI
+ pPGyrtZwm4PwCVEHi8PWwMyeNuHJid6pBizh2wNjNNqc+z0lEnbycab09dUhq3pYdHEt
+ ZUu4qTt/Wx59/NEdA+5r50h7LfzRjf+yerDwbPt+FehelOYkQGN4VwXs7u8xw3iZG1NC
+ qpzA==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rom1CEz7KtGWK9c3nR0NsT0GQjK31dggUh10pcgOV+nVpDKcPnBQwpVQEcigxig8PKIw1Ygp7zbK3yd@nongnu.org
-X-Gm-Message-State: AOJu0Yzc+PF6mUONLZVLL5Yja07Y0AMjDsSlNLdZ8HQYLmYmuVuhVN0d
- PWmrNIOiGD8ugOxymq2kdVxINi6B3u9b4O3+JRXTVuO0JY6VZ8eWqLBrnoO/J6GUAyizyuByqfk
- jKYzaCuNqj2JjwhsooXrTmL7Bp55z7fhFK0clF3cBz9cMibWlDFkebcl1TQ==
-X-Gm-Gg: AfdE7cmSQnI+Uv4kWzT0Da7fEn1YZ4Qj8ld15uwiw30yhcwJ6WM8RdYnjyT2EsxpEkx
- 6cUtPA9DkJqJ4we7lEqP8m73SP9GTL0USf4X681bciil2vsLc59Q9umXwx03B+97V7qFSx2V0kz
- yMcdCVS5BAEMKp0utHNolLnRUXBFVEndjMhIzNn9UGXESNrSw5q2y3sPwT2PcGxNhnd3MU8TpMK
- iuph/mo8P+Olz59AoVx1fLNMvNtdpDhlP9StuCyqbcno4vbD0k/8TcDqwtTeVfpzjnhlhgjDQPP
- OhA3hUyLWdS2M4oLm7/kHedgf+smFKxAjX1axbAl0uCt/WPy1OvwT1DHbuCTfFBtGcQMX6ydkiJ
- nuCb3dBpOfNTJfvWWRViuBfKvvAgQUnRGAA==
-X-Received: by 2002:a05:620a:81d:b0:92e:ee51:e9cf with SMTP id
- af79cd13be357-93083d41dbbmr1014073985a.61.1784208007889; 
- Thu, 16 Jul 2026 06:20:07 -0700 (PDT)
-X-Received: by 2002:a05:620a:81d:b0:92e:ee51:e9cf with SMTP id
- af79cd13be357-93083d41dbbmr1014069685a.61.1784208007259; 
- Thu, 16 Jul 2026 06:20:07 -0700 (PDT)
+ AHgh+Rr92jxWndnlgpb9EnnVU0v6q0siZbNDz1liEPii0lTezsi3asJvvG5fjtdWziQOGSvqSbs5seLku00+@nongnu.org
+X-Gm-Message-State: AOJu0YwBWtguxakhbyXgxpDbWR/QQmB3yxcuyb9CmI/IAo0aX2G75v70
+ f9JPEb7dmYvi/pqR3KZoTMCWv+f92Vu5wAOsMHDF3eIxuMPN3qa1mJGYS9TwObBTgGCGUdYBH59
+ F7pfQ/1UZNGdGKYSbMGyShtgwy3/HCK+M2bydse7IMHxjkzS+EaClfi65Ng==
+X-Gm-Gg: AfdE7cmBwu4Xo8+niqELdSFp7cLUQOM24c7nSFCkQtXS1H/71x7u1zrMs7C4BIOtgPm
+ RQZlKAaBJVm615yxf0t9jcdqyljTbclNjMOZCXMXzhFcN/mxC4xkzdTtS5nJPASqcbV0gGPTwVe
+ yne2Xmk7amdyRRfa0sx+YTGkcWPYT1JFbCtlIsBm17UAt+jRzdtF4VkIDAAsDmKRLgpChLQxlFy
+ qRjCcXbr920fX/nZqZKK/TUCfTkXKv/BcCVCuFmdRTgpUZIblFVBJk4oMBUGkGazTC2N4mEsmkW
+ RSO9sjIK1NzWZmLQ93bVpXp0oajA4SyDtVtKFtAs5S2p4rLW6xMG8ipA9nTOTObvv7Ee2qIWwkZ
+ lezKZkTqPZuCPCUEi70SVp9bkPlEUhmeVCw==
+X-Received: by 2002:ac8:5805:0:b0:51c:12bf:d4a3 with SMTP id
+ d75a77b69052e-51e3c2cc193mr125319051cf.52.1784208078238; 
+ Thu, 16 Jul 2026 06:21:18 -0700 (PDT)
+X-Received: by 2002:ac8:5805:0:b0:51c:12bf:d4a3 with SMTP id
+ d75a77b69052e-51e3c2cc193mr125318501cf.52.1784208077597; 
+ Thu, 16 Jul 2026 06:21:17 -0700 (PDT)
 Received: from [192.168.68.105] ([189.79.21.40])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-92ee5d61fb9sm1911037285a.41.2026.07.16.06.20.05
+ d75a77b69052e-51caab6e9f4sm158122921cf.2.2026.07.16.06.21.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jul 2026 06:20:06 -0700 (PDT)
-Message-ID: <2090a46a-7936-470a-9624-06d873c4a9ff@oss.qualcomm.com>
-Date: Thu, 16 Jul 2026 10:20:03 -0300
+ Thu, 16 Jul 2026 06:21:17 -0700 (PDT)
+Message-ID: <c06253bf-6e56-4ef8-9fd0-43d8a062190e@oss.qualcomm.com>
+Date: Thu, 16 Jul 2026 10:21:14 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] disas/riscv.c: Correct disasm of lq
+Subject: Re: [PATCH 3/3] disas/riscv.c: Correct indent for checkpatch
 To: frederic.petrot@univ-grenoble-alpes.fr, palmer@dabbelt.com,
  alistair.francis@wdc.com, liwei1518@gmail.com,
  zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
  qemu-riscv@nongnu.org, qemu-devel@nongnu.org
 Cc: julien.thillard@univ-grenoble-alpes.fr
 References: <20260715190737.1381701-1-frederic.petrot@univ-grenoble-alpes.fr>
- <20260715190737.1381701-3-frederic.petrot@univ-grenoble-alpes.fr>
+ <20260715190737.1381701-4-frederic.petrot@univ-grenoble-alpes.fr>
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20260715190737.1381701-3-frederic.petrot@univ-grenoble-alpes.fr>
+In-Reply-To: <20260715190737.1381701-4-frederic.petrot@univ-grenoble-alpes.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=PsejqQM3 c=1 sm=1 tr=0 ts=6a58da89 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDEzNyBTYWx0ZWRfXwZZTeuL5Q9HU
+ 4StKf7R01hGzDnlV3LY/hTE1pLytg0W4YtLZfnva1GkbQmk2SH51n47HRyoXLIbfd/A8gOYlHto
+ ZiUiacmaDHyXZYXWoCMgSArvePKKoHGa/y5QZHgmQU3ZHia1B89hveMZHdcyC+FC0/DRil44UNc
+ Mc88jnM33/Aiv8usq9wtfG5rWEzyHGaaMwCAKTJPsIBHtVzu+hnFJJC3EV8aNoEVYxjKmmrZea8
+ zzj1ITT/mPRQlmNQmx9ivH5Ao4ulpEr7NxJWmtW8UsLRQGC6bzzUUQ+QkG1wPwQk3B7aFjsXmRc
+ zNaGtMK8sox6RQC1KibqV3GMjxhDu0KN8qwvkpdXUn5NIQjpfC7+pTXDhCrIrtfcWxJW2zF1vnZ
+ XhjV/HLwVJIHb+3oRALO6A/mKwV766ICxnWcjwB6A0doN66D8iRf+9l6R8tcherON+GbGZZGV/A
+ p8bCfUWYEPZ0uAPeLxg==
+X-Authority-Analysis: v=2.4 cv=WrEb99fv c=1 sm=1 tr=0 ts=6a58dace cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=xgo6v3CxWvHGKzMUA_0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-GUID: qnM8b0yxOdMMJDxVZpX7yIoUd1WGG_mS
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDEzNyBTYWx0ZWRfX/FSM8cnBYJsg
- p7l3+mc39FJ/HrqQgT9IslLSirZSZXXxAmnCxmy8w0Gm/+hc20ibJDm425/FKdjzJUmVrllKXGO
- A7V3PaA0IbcCKxNppOerunandGhCyec=
-X-Proofpoint-ORIG-GUID: qnM8b0yxOdMMJDxVZpX7yIoUd1WGG_mS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDEzNyBTYWx0ZWRfX/nN9sclChOcy
- lv32ZrS8ydzQ6HRQ73JdFCak84N2WIewBkAbGQG78IpnOlePcyd78XeSUp8ma/Ji8WCiABi9jPQ
- LyL4iZfYNMoSdY8eUru7CugYJiVX0gKNDsp25HFduv8aaEHvYgqxKOKvUxnt6Gka5MsZ+QZLnAA
- KRtXJ5Nj6lQiqTNOKjjrzMK1ag4GG0ofJGsCu7n0bDYAola9nzD052svinDqRpqZ6aHGMUcEzuR
- LAiSj1rWu0bAOGHTLnNXr5A6EeBr2uSsNq1ODB1LYZ5npKNuQbZXkyLCdrNxmiph6sjDK6vayWU
- 2BGKRaNgdzixiOrT344hQ3ora2lKMf8v+PAkI8momqNnl0HpwwJSMYC9MsJhqKsLeNTLsoQ7CeA
- hzAK0o85Io5nBzU7yYS5D5C3uWAVCSeeuj1k4x6mqTO+tsexRPjiB3useyJsBR/SdoLD/QJ1DFl
- iFf9jsXXf2IDGYWIqQw==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=a4YAP2N2y8i5vXA3XgsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-GUID: 7njbdAU5fl5G3GWQgC_zuyyg2cFPH6S2
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDEzNyBTYWx0ZWRfXzGjpGFQxeN42
+ AnqIu5uHZ25SAIAVxJMXmOgdbyfUym1mkkdf7f7PaUqwj1kXhKEHP+lFOSk+bDT0u8dDH7972Zc
+ t4A5HSHz87mXgwnyF0uLPVRlmkZqZx0=
+X-Proofpoint-ORIG-GUID: 7njbdAU5fl5G3GWQgC_zuyyg2cFPH6S2
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-16_05,2026-07-15_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 malwarescore=0 clxscore=1015 bulkscore=0 priorityscore=1501
- lowpriorityscore=0 adultscore=0 suspectscore=0 spamscore=0 phishscore=0
+ suspectscore=0 phishscore=0 clxscore=1015 spamscore=0 priorityscore=1501
+ adultscore=0 malwarescore=0 bulkscore=0 lowpriorityscore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607160137
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -162,108 +162,69 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 7/15/2026 4:07 PM, frederic.petrot@univ-grenoble-alpes.fr wrote:
 > From: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
 > 
-> Lq shares the cmo opcode space, but the cbos must have rd = 0.
-> Now ensure that they are matched only in that case.
-> This implies that lq can be recognized as such only when rd != 0.
-> Update the decoder file accordingly.
+> Trival indentation patch on the cbo/lq relevant code.
 > 
-
-Fixes: 9273cda722 ("disas/riscv.c: add 'cbo' insns to disassembler")
-
-> Reported-by: Julien Thillard <julien.thillard@univ-grenoble-alpes.fr>
 > Signed-off-by: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
 > ---
 
-This patch adds style issues that you're fixing with patch 3:
-
-$ ./scripts/checkpatch.pl 0002-disas-riscv.c-Correct-disasm-of-lq.patch
-ERROR: suspect code indent for conditional statements (15, 18)
-#46: FILE: disas/riscv.c:2899:
-+               if ((inst >> 7) & 0b11111) {
-+                  op = rv_op_lq;
-
-ERROR: trailing statements should be on next line
-#50: FILE: disas/riscv.c:2903:
-+                  case 0: op = rv_op_cbo_inval; break;
-
-ERROR: trailing statements should be on next line
-#51: FILE: disas/riscv.c:2904:
-+                  case 1: op = rv_op_cbo_clean; break;
-
-ERROR: trailing statements should be on next line
-#52: FILE: disas/riscv.c:2905:
-+                  case 2: op = rv_op_cbo_flush; break;
-
-ERROR: trailing statements should be on next line
-#53: FILE: disas/riscv.c:2906:
-+                  case 4: op = rv_op_cbo_zero; break;
-
-total: 5 errors, 0 warnings, 39 lines checked
+As I said in patch 2 this patch is fixing style issues that patch 2 itself
+is introducing.  We want this patch squashed into patch 2.
 
 
-What we want to do is to squash patch 3 into this patch to not have the style
-issues being added in the first place.
+Thanks,
+Daniel
 
-
-Assuming patch 3 is squashed into this one:
-
-
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-
-
-
->   disas/riscv.c              | 19 ++++++++++---------
->   target/riscv/insn32.decode |  2 ++
->   2 files changed, 12 insertions(+), 9 deletions(-)
+>   disas/riscv.c | 38 +++++++++++++++++++-------------------
+>   1 file changed, 19 insertions(+), 19 deletions(-)
 > 
 > diff --git a/disas/riscv.c b/disas/riscv.c
-> index 490bda8e56..831ff526ad 100644
+> index 831ff526ad..27bf4d9954 100644
 > --- a/disas/riscv.c
 > +++ b/disas/riscv.c
-> @@ -2889,21 +2889,22 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
+> @@ -2887,25 +2887,25 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
+>               case 0: op = rv_op_fence; break;
+>               case 1: op = rv_op_fence_i; break;
 >               case 2:
->                  /*
->                   * 'lq' shares the "(...) 010 ..... 0001111" opcode space
-> -                * with 'cbo' insns.
-> +                * with 'cbo' insns, but assumes rd != 0.
->                   *
->                   * cbo_inval  0000000 00000 ..... 010 00000 0001111
->                   * cbo_clean  0000000 00001 ..... 010 00000 0001111
->                   * cbo_flush  0000000 00010 ..... 010 00000 0001111
->                   * cbo_zero   0000000 00100 ..... 010 00000 0001111
+> -               /*
+> -                * 'lq' shares the "(...) 010 ..... 0001111" opcode space
+> -                * with 'cbo' insns, but assumes rd != 0.
 > -                *
-> -                * Anything that doesn't match these will default to 'lq'.
->                   */
-> -               switch (inst >> 20) {
-> -               case 0: op = rv_op_cbo_inval; break;
-> -               case 1: op = rv_op_cbo_clean; break;
-> -               case 2: op = rv_op_cbo_flush; break;
-> -               case 4: op = rv_op_cbo_zero; break;
-> -               default: op = rv_op_lq; break;
-> +               if ((inst >> 7) & 0b11111) {
-> +                  op = rv_op_lq;
-> +               } else {
-> +                  switch (inst >> 20) {
-> +                  case 0: op = rv_op_cbo_inval; break;
-> +                  case 1: op = rv_op_cbo_clean; break;
-> +                  case 2: op = rv_op_cbo_flush; break;
-> +                  case 4: op = rv_op_cbo_zero; break;
-> +                  }
->                  }
+> -                * cbo_inval  0000000 00000 ..... 010 00000 0001111
+> -                * cbo_clean  0000000 00001 ..... 010 00000 0001111
+> -                * cbo_flush  0000000 00010 ..... 010 00000 0001111
+> -                * cbo_zero   0000000 00100 ..... 010 00000 0001111
+> -                */
+> -               if ((inst >> 7) & 0b11111) {
+> -                  op = rv_op_lq;
+> -               } else {
+> -                  switch (inst >> 20) {
+> -                  case 0: op = rv_op_cbo_inval; break;
+> -                  case 1: op = rv_op_cbo_clean; break;
+> -                  case 2: op = rv_op_cbo_flush; break;
+> -                  case 4: op = rv_op_cbo_zero; break;
+> -                  }
+> -               }
+> +                /*
+> +                 * 'lq' shares the "(...) 010 ..... 0001111" opcode space
+> +                 * with 'cbo' insns, but assumes rd != 0.
+> +                 *
+> +                 * cbo_inval  0000000 00000 ..... 010 00000 0001111
+> +                 * cbo_clean  0000000 00001 ..... 010 00000 0001111
+> +                 * cbo_flush  0000000 00010 ..... 010 00000 0001111
+> +                 * cbo_zero   0000000 00100 ..... 010 00000 0001111
+> +                 */
+> +                if ((inst >> 7) & 0b11111) {
+> +                    op = rv_op_lq;
+> +                } else {
+> +                    switch (inst >> 20) {
+> +                    case 0: op = rv_op_cbo_inval; break;
+> +                    case 1: op = rv_op_cbo_clean; break;
+> +                    case 2: op = rv_op_cbo_flush; break;
+> +                    case 4: op = rv_op_cbo_zero; break;
+> +                    }
+> +                }
 >               }
 >               break;
-> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-> index 21272fdb50..aa02dae3c9 100644
-> --- a/target/riscv/insn32.decode
-> +++ b/target/riscv/insn32.decode
-> @@ -216,6 +216,8 @@ ldu      ............   ..... 111 ..... 0000011 @i
->     ]
->   
->     # *** RVI128 lq ***
-> +  # *** Catches an lq with rd = 0, which we disallow
-> +  illegal  ------------   ----- 010 00000 0001111
->     lq       ............   ..... 010 ..... 0001111 @i
->   }
->   sq       ............   ..... 100 ..... 0100011 @s
+>           case 4:
 
 
