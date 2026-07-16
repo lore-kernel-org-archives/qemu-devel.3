@@ -4,63 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0939AC4450E
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 11:12:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74243C4450A
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 11:23:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkK0j-00084W-A1; Thu, 16 Jul 2026 07:12:13 -0400
+	id 1wkKB1-0002NU-5H; Thu, 16 Jul 2026 07:22:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wkK0h-00084O-Dj
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 07:12:11 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wkK0e-000412-2y
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 07:12:11 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66GBBvcX073240
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 16 Jul 2026 20:11:57 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=v8tUllsCjpTdyYoZVXSFWp6pannV0DyqHwMztstJW8c=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1784200317; v=1;
- b=o9rQab1APQq4fanhasSHwLxyo+ONwuR9KSEL+wCeWADn+gzsqySPVV4zLLvGbwT7
- /MuNg3OoDRoSxatKNHOmDv0kHVSYW+Jual8Va9NAvFsWy8wh5RkgY/uZHjXpxMu+
- sKPunqY0Uca+zqCvcFRn3E99v+ytZKdL9YY/m4+599tdva5ipwf0PzmWbK58Cpq1
- RCSq6NjHEUk3Y3nukoLWefnjzYYYjLAhGiXZenCPlvmlegHGr5AOkbKS/fH3Yes0
- sxucWWD8UHZGprTXPIz12saWJ8jjIRBwjBRbFbtPxE6y+DTIZZdha532EY+5mchu
- 3Fs7GujpOdmSIhQOtPIDVg==
-Message-ID: <f0ea299a-0030-400f-85a6-b4fb3e36b21b@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 16 Jul 2026 20:11:57 +0900
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wkKAz-0002IM-C8
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 07:22:49 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wkKAx-0005Dt-Ju
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 07:22:49 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-47defd0c1c5so2448799f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 04:22:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=openvz.org; s=google; t=1784200965; x=1784805765; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Ywb9wMcCqQGY5fA7ISlUJpyxSz9uBohQJAm1rN2/7VI=;
+ b=X2aTWC5FU2D25RpQcqb1yVu9y/GAdHsMtksVXv42Mui/dcxQa8C5iHkhPsUsCQAqUf
+ wZSsXjg1h2C34vguPfvRXeKaKO0YAG9QpZRkNRS5xlzTh2BCjv+QlqX/Xn+I7I83LPiI
+ T/qdHuZkLhddGGHEvZolkLjlQLqix6a36oT2WPgXR2bix3W9VxqRNTNHYePTAZoYT2ED
+ zoHu1kNTfswYj2cSOBdeHM/Fs1K4hkvC0awQXUbsORnX2uSCY/qG1kXG7HhiCC6OIgaA
+ /1TOZKLU8pkThQH/NzI6zb7k6ri6+SKxsoyGht2oKGmDbwloogoC3QIPHDKiXadlCkiw
+ bshg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784200965; x=1784805765;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Ywb9wMcCqQGY5fA7ISlUJpyxSz9uBohQJAm1rN2/7VI=;
+ b=mgqs046zmfAfQOnziF/LwtGLLLM7Ca9Bk+HN5Hd+zHdl+26NBoYA1+RTBC1X9YiyFH
+ 3Lx5wyewzCEzbpALBcuXBYSDGrhr4nhmbQdjlpVUEhJB0NBTySsZYUr4phb4brw0C8os
+ 3KHZtUndiHhjlow3XDGoSrDjvdtAZRX/g/SCvLzvilC4K9mBchkvecCW20KpFdRsWZBL
+ CIo+aik+9TqdnFUeexJ6AF+0JFM9DuzFuUfgYImAx4IlGxk75U4mEUVU16cXh2tOOtsD
+ Ms+UbUQ2oFgiEDpyVhDOoolDBSc+sIMZzdHzYxwIKHN0Jc7DSZ6B6/ZM4SfQ+fFYvlma
+ BFRw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rq8vivMdx8ys4b60ln3fgvjCFjEzQZrEY7mYs5keTYewEHEfd3bkFltlXR3WTFMlZAt/xPRChLihUoc@nongnu.org
+X-Gm-Message-State: AOJu0Yy/7Lf0iSKsCFSMXgUy59KEUOmpvBoDVgOp79CNBMgu13B0ialh
+ Ei6CqAN0gbHfwutCqZOHTDuNVe8uRaERxKtwP3MBUu37yG53oNwlzfuWPo4iN57pEmE=
+X-Gm-Gg: AfdE7ckUjVGVYauEQEQOY+SyZJfCMx5ZzOQW4lvzMXYemi4LfBYUDnDb6fvdOezRcPW
+ OKrTl/iwvy3Gk1ojWFI03+793R29/AHzsPiqTdx/Cnmv59aEFEIwOopWF1pETGIHC6VIjq2RebZ
+ TV72dAizcyNIj7b8sdiocfFSXdpFwliTBTvNbaDuD0kmoqnP4s2SMHCZzbgF+TJ6rTeIrObtxSG
+ txWS9h1GXSTlakYaBtWowYtc4r5mPEltNBPrVXWsBbXhDkKKbeZwTMrufHxNF7tnKcdN2nuTzAD
+ WY+VG3R5hjoYYsosRUnttiXxj1A2KDyBtzqVFB59Cgv9QgoIMjBMIKQvx9PCTyAIvhWW1ZRzvji
+ 81QY7p2MEkScRJ8KwwgP/IVMGPSiccCl1yOHF3clPmNAFPEEnXdVTrRs2KKxZAoBykq4ssSZqJl
+ A=
+X-Received: by 2002:a05:6000:29c2:b0:47f:4fc4:1db9 with SMTP id
+ ffacd0b85a97d-47f4fc41f12mr5376972f8f.34.1784200965201; 
+ Thu, 16 Jul 2026 04:22:45 -0700 (PDT)
+Received: from athena.sw.ru ([2a06:5b06:b600:300:4ca9:146f:3485:e2c5])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f464a96fdsm24019672f8f.24.2026.07.16.04.22.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 16 Jul 2026 04:22:44 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
+To: qemu-block@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: den@openvz.org, Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ John Snow <jsnow@redhat.com>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Subject: [PATCH v2 0/3] block: reject persistent bitmaps a node can never store
+Date: Thu, 16 Jul 2026 13:22:39 +0200
+Message-ID: <20260716112242.3000035-1-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/display/virtio-gpu: cap submit_3d command buffer
- allocation
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-References: <20260716105023.3246364-1-marcandre.lureau@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260716105023.3246364-1-marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=den@openvz.org; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,140 +100,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/07/16 19:50, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> Both virgl_cmd_submit_3d() and rutabaga_cmd_submit_3d() pass the
-> guest-controlled cs.size directly to malloc() without bounds checking. A
-> malicious guest can set cs.size to an arbitrarily large value, causing
-> an OOM abort that crashes the QEMU process.
-> 
-> Checking cs.size against the descriptor payload length (iov_size) is not
-> sufficient: indirect descriptor tables can repeat entries aliasing the
-> same guest-physical range, inflating iov_size() to nearly 4 GiB while
-> referring to only a small amount of unique memory.
-> 
-> Instead, cap cs.size at 4 MiB. With 4 KiB pages and QEMU's
-> VIRTQUEUE_MAX_SIZE (1024) mapped-iov limit, the Linux virtio driver
-> cannot carry more than ~4 MiB of inline command data, so legitimate
-> submissions are unaffected.
-> 
-> Fixes: 9d9e152136bd ("virtio-gpu: add 3d mode and virgl rendering support.")
-> Fixes: 1dcc6adbc168 ("gfxstream + rutabaga: add initial support for gfxstream")
-> Fixes: d52c454aadc ("contrib: add vhost-user-gpu")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3776
-> Reported-by: admin@fluentlogic.org
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   contrib/vhost-user-gpu/vugpu.h   | 8 ++++++++
->   include/hw/virtio/virtio-gpu.h   | 8 ++++++++
->   contrib/vhost-user-gpu/virgl.c   | 7 +++++++
->   hw/display/virtio-gpu-rutabaga.c | 8 ++++++++
->   hw/display/virtio-gpu-virgl.c    | 8 ++++++++
->   5 files changed, 39 insertions(+)
-> 
-> diff --git a/contrib/vhost-user-gpu/vugpu.h b/contrib/vhost-user-gpu/vugpu.h
-> index 654c392fbbf..0421c536403 100644
-> --- a/contrib/vhost-user-gpu/vugpu.h
-> +++ b/contrib/vhost-user-gpu/vugpu.h
-> @@ -163,6 +163,14 @@ struct virtio_gpu_ctrl_command {
->       QTAILQ_ENTRY(virtio_gpu_ctrl_command) next;
->   };
->   
-> +/*
-> + * With 4 KiB pages and QEMU's VIRTQUEUE_MAX_SIZE (1024) mapped-iov
-> + * limit, the largest inline command is ~4 MiB.  Cap submit_3d
-> + * allocations to this value to prevent a malicious guest from
-> + * triggering an OOM abort via an inflated cs.size field.
-> + */
-> +#define VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE (4 * 1024 * 1024)
+qmp_block_dirty_bitmap_add() and the incoming-migration bitmap loader
+both create a persistent bitmap with bdrv_create_dirty_bitmap(), which
+always creates it writable, without checking whether the node can
+actually be written to. A persistent bitmap added to an already
+read-only or inactive node stays writable in memory on a node that
+can never store it, and the next global inactivation (migration
+completion, save, or any other bdrv_inactivate_all() caller) fails
+trying to flush it back:
 
-One nit I failed to point out earlier: please use the "MiB" macro.
-With that addressed:
+  Lost persistent bitmaps during inactivation of node '<node>': No write access
+  migration_block_inactivate: bdrv_inactivate_all() failed: -22
 
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Patch 1 rejects this at block-dirty-bitmap-add (and, wrapped in a
+transaction, denies the whole transaction). Patch 2 closes the same
+hole on the incoming-migration path. Patch 3 fixes a knock-on
+regression from patch 1's approach: a bitmap that was rejected from
+ever being written can still exist in memory read-only and must
+remain removable without requiring write access.
 
-Regards,
-Akihiko Odaki
+v1 -> v2
+* approach changed to deny rather than adopt (Vladimir)
+* added patch to add permission check on migration path
+* added patch to change permissions check on bitmap drop to more natural
 
-> +
->   #define VUGPU_FILL_CMD(out) do {                                \
->           size_t vugpufillcmd_s_ =                                \
->               iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num, 0,  \
-> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-> index f69fc194627..c10bfbd596f 100644
-> --- a/include/hw/virtio/virtio-gpu.h
-> +++ b/include/hw/virtio/virtio-gpu.h
-> @@ -299,6 +299,14 @@ struct VirtIOGPURutabaga {
->       struct rutabaga *rutabaga;
->   };
->   
-> +/*
-> + * With 4 KiB pages and QEMU's VIRTQUEUE_MAX_SIZE (1024) mapped-iov
-> + * limit, the largest inline command is ~4 MiB.  Cap submit_3d
-> + * allocations to this value to prevent a malicious guest from
-> + * triggering an OOM abort via an inflated cs.size field.
-> + */
-> +#define VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE (4 * 1024 * 1024)
-> +
->   #define VIRTIO_GPU_FILL_CMD(out) do {                                   \
->           size_t virtiogpufillcmd_s_ =                                    \
->               iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num, 0,          \
-> diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
-> index 51da0e3667f..550fd03bf5c 100644
-> --- a/contrib/vhost-user-gpu/virgl.c
-> +++ b/contrib/vhost-user-gpu/virgl.c
-> @@ -202,6 +202,13 @@ virgl_cmd_submit_3d(VuGpu *g,
->   
->       VUGPU_FILL_CMD(cs);
->   
-> +    if (cs.size > VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE) {
-> +        g_critical("%s: command buffer too large (%u)",
-> +                   __func__, cs.size);
-> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-> +        return;
-> +    }
-> +
->       buf = g_malloc(cs.size);
->       s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
->                      sizeof(cs), buf, cs.size);
-> diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
-> index 6ff12639012..4d7d7b24592 100644
-> --- a/hw/display/virtio-gpu-rutabaga.c
-> +++ b/hw/display/virtio-gpu-rutabaga.c
-> @@ -351,6 +351,14 @@ rutabaga_cmd_submit_3d(VirtIOGPU *g,
->       VIRTIO_GPU_FILL_CMD(cs);
->       trace_virtio_gpu_cmd_ctx_submit(cs.hdr.ctx_id, cs.size);
->   
-> +    if (cs.size > VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: command buffer too large (%u)\n",
-> +                      __func__, cs.size);
-> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-> +        return;
-> +    }
-> +
->       buf = g_new0(uint8_t, cs.size);
->       s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
->                      sizeof(cs), buf, cs.size);
-> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-> index 60c78af06a4..d9e5b011049 100644
-> --- a/hw/display/virtio-gpu-virgl.c
-> +++ b/hw/display/virtio-gpu-virgl.c
-> @@ -607,6 +607,14 @@ static void virgl_cmd_submit_3d(VirtIOGPU *g,
->       VIRTIO_GPU_FILL_CMD(cs);
->       trace_virtio_gpu_cmd_ctx_submit(cs.hdr.ctx_id, cs.size);
->   
-> +    if (cs.size > VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: command buffer too large (%u)\n",
-> +                      __func__, cs.size);
-> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-> +        return;
-> +    }
-> +
->       buf = g_malloc(cs.size);
->       s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
->                      sizeof(cs), buf, cs.size);
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Eric Blake <eblake@redhat.com>
+CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+CC: John Snow <jsnow@redhat.com>
+CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+
+Denis V. Lunev (3):
+  block/monitor: reject persistent bitmap add on a read-only node
+  migration/block-dirty-bitmap: reject bitmap load onto ro node
+  block/monitor: allow dropping a bitmap never stored on disk
+
+ block/monitor/bitmap-qmp-cmds.c               | 19 +++++++----
+ block/qcow2-bitmap.c                          |  9 +++++
+ migration/block-dirty-bitmap.c                | 22 +++++++++----
+ qapi/block-core.json                          |  4 ++-
+ tests/qemu-iotests/tests/migrate-bitmaps-test | 33 +++++++++++++++++++
+ .../tests/migrate-bitmaps-test.out            |  4 +--
+ .../tests/remove-bitmap-from-backing          | 29 +++++++++++++++-
+ .../tests/remove-bitmap-from-backing.out      | 22 ++++++++++++-
+ 8 files changed, 124 insertions(+), 18 deletions(-)
+
+-- 
+2.53.0
 
 
