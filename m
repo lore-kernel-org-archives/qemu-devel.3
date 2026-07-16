@@ -4,118 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA1CDC44512
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 14:05:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55698C44512
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 14:06:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkMiL-0002rp-HB; Thu, 16 Jul 2026 10:05:25 -0400
+	id 1wkMiL-0002ro-H8; Thu, 16 Jul 2026 10:05:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1wkMiF-0002pK-Mu; Thu, 16 Jul 2026 10:05:20 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wkMiF-0002pF-5K
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 10:05:20 -0400
+Received: from smtpout4.mo540.mail-out.ovh.net ([51.210.91.53])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1wkMiD-00023p-LR; Thu, 16 Jul 2026 10:05:19 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66GDfcYv3370643; Thu, 16 Jul 2026 14:05:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=wKLM3w
- z92p6ieGOcdTPRX8mcH/Ki4GZpSO/ONIHczsg=; b=COd1nHVjQKd0QgsVrqJTY5
- 7Y1Uy0z6emdqAm66bJPdxg1ppwD50zD/4OS+uWK4XySLABD4CDkDm17G6Fa5WTA/
- B74z7Va/Y+wxuW2Y7fqIerC74R50BlciB95TAs4ZgN0xOxWdS6MZt+0MtgTex9iG
- cAp2xIJYAq+ltEEXz8BD32zKkvqZMxabnJrJnmiky6yo0tUstGFEa8U5cVRjmpgx
- K3kB1OGBW0Ha7fTCdJyS+d82GoqJVsJ8zLNfso4AXtFhj6E4QkGvFKZJPCsUGWuU
- MFm0/Bba3xufN4lsxHAeOlaDEIfgzM/FlQRkL7m4yuTGjoK1SIYxIGye3N27UgWg
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbegth906-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jul 2026 14:05:12 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66GE4dq1005219;
- Thu, 16 Jul 2026 14:05:10 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc1nhn7mj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jul 2026 14:05:10 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66GE59CV25952772
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 16 Jul 2026 14:05:09 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5BBAF5805E;
- Thu, 16 Jul 2026 14:05:09 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0D7C458043;
- Thu, 16 Jul 2026 14:05:08 +0000 (GMT)
-Received: from [9.61.117.162] (unknown [9.61.117.162])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Thu, 16 Jul 2026 14:05:07 +0000 (GMT)
-Message-ID: <89882b65-07c4-4b26-85ad-7c1638a829cf@linux.ibm.com>
-Date: Thu, 16 Jul 2026 10:05:07 -0400
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wkMiC-00023n-Cn
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 10:05:18 -0400
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net [57.128.106.70])
+ by mo540.mail-out.ovh.net (Postfix) with ESMTPS id 4h1FDS6sspz42vC;
+ Thu, 16 Jul 2026 14:05:12 +0000 (UTC)
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net. [127.0.0.1])
+ by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Thu, 16 Jul 2026 14:05:12 +0000 (UTC)
+Received: from mta10.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.164.55])
+ by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4h1FDS48s2z7tDT; Thu, 16 Jul 2026 14:05:12 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.7])
+ (Authenticated sender: clg@kaod.org)
+ by mta10.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
+ 8407A1923D9A; Thu, 16 Jul 2026 14:05:10 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-105G006e85e0780-d4f9-4cbf-ac95-81c8d703b403,
+ 816DE1EE18DD2826DFD8B9EE289546F56902E1FE) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <56685a9a-495c-464b-8878-6d33001c81b0@kaod.org>
+Date: Thu, 16 Jul 2026 16:05:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 23/33] pc-bios/s390-ccw: Add signature verification
- for secure IPL in audit mode
-To: Collin Walling <walling@linux.ibm.com>, Zhuoying Cai
- <zycai@linux.ibm.com>, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: cohuck@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
- david@kernel.org, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
- pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-References: <20260707231132.2492104-1-zycai@linux.ibm.com>
- <20260707234047.2499921-1-zycai@linux.ibm.com>
- <20260707234047.2499921-4-zycai@linux.ibm.com>
- <17778d69-9860-4713-9321-a1293064fc06@linux.ibm.com>
-Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <17778d69-9860-4713-9321-a1293064fc06@linux.ibm.com>
+Subject: Re: [PATCH v1 5/5] tests/functional: Add Huygens BMC boot test
+To: Mikail Sadic <mikail.sadic@ibm.com>, peter.maydell@linaro.org
+Cc: pbonzini@redhat.com, ninad@linux.ibm.com, titusr@google.com,
+ jeuk20.kim@samsung.com, philmd@mailo.com, steven_lee@aspeedtech.com,
+ leetroy@gmail.com, jamin_lin@aspeedtech.com, kane_chen@aspeedtech.com,
+ andrew@codeconstruct.com.au, joel@jms.id.au, calebs@us.ibm.com,
+ milesg@ibm.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+References: <20260715155037.2237011-1-mikail.sadic@ibm.com>
+ <20260715155037.2237011-6-mikail.sadic@ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260715155037.2237011-6-mikail.sadic@ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: cK2laUBeaDQ0eD0f6yYO7RohN72L-0CU
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDE0MSBTYWx0ZWRfX3Zm+vE0COH5J
- cQb0AYt1XyN28fT6OyyaNhE4UVu5/zxCQ2DfayX7w0w7LHf8JAdENen3CcJizJVcicMoCWHNMnR
- ZW1ftvo0xydLeixF5vB+BYHDb3htmFo=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDE0MSBTYWx0ZWRfX/TK8PqgY6gsR
- hmjiR905+QYR2CmIJeRDSP1wrDyd5JNZUFu3aUVkHHCpnUTOuuLDsgySGfktqhqYPwjDqcwXsis
- gh7IK1lQ/LKuZ5brU2TEoKb8QNXVSw0qWVY8yOEITy9WRWFOK0LV7MFRoKixCFlHXJelf+tOfZo
- 9j4VZaNj33/5fbg2yy/JU1S/HZZrOj9eOjVePG13wRXKrXcbNryq+vY1w2riCA3xMLFkzeHOfhv
- wXqc53gyx37TpO4byNOJFOdWfyOUEdkz+LzWWWo51rnhhmVWjP6rlz+CqJoTiOYPoJ+r7XSeJcj
- nPQStKxjXDBeI74sX9gwl8QiVk/qLatpJ/aSfB9DxLBRmbTNyY6IpeAvMbtkdOy7uTXiUtv3yc3
- Rntxml8dY6gRp+qaK17o3MGzsEyxknPy0fUVt9vvKLdQscznQY8JviE8aZlMIlZBC6y/Ya2Gl+U
- Vm20PSqqdjZP3MMXOjQ==
-X-Authority-Analysis: v=2.4 cv=IqMutr/g c=1 sm=1 tr=0 ts=6a58e518 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=bYFsD0xH97nPGZzuJnsA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: cK2laUBeaDQ0eD0f6yYO7RohN72L-0CU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-16_05,2026-07-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 impostorscore=0 malwarescore=0 adultscore=0
- phishscore=0 suspectscore=0 priorityscore=1501 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607160141
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 7bit
+x-ovh-tracer-id: 16507944434548583589
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTFYu6RYzP0DpaOmksmukHbgT54jNuALVIu+GXs+psQ0E9dqEPGz6K+BD1P06cjkuSHa9lnSuVIiHgyfhznBXrT1tc5Fdmbeh6sDHwOxN34+81BkDOpNEdXP/OpUUEJuJXOaKzNxY5JqduiQrEuc8kHqDh1CtoWR9mIGk5/e5IEPmFpo/eN8C+BhIhJaltGqT3Ppg4+HCVfQitgKikZK0KCKElVjrIgVCa1NSjya/MNvDkOPkuDFtmejALNhtO/+4uidfwSmBPH6V52NJQGOUgql8wMglYc91g4uWF6AWFEqrUEcAai71cDCkLeHE7HHJrPbajZ1s0xn/U7VAER7bvAPN/XFCkHriNy+MY8FLMWfRMoZjnwnKwddg1SgmNzW9Kle7evtIItxnZSADip/mE5/9sCfc9DyDILonb+N8o3ZKcXHVDKZMjnzi3cq+3MOrNnfog0clTKHKUDh2zLFNGCvEnKOCLYyWuGUgZSqfWCMKRIBuBurcJWN3uJ08ejhTa1JrQjt9meToR9VSNMk15FKu0yIl1r9ckD+zs7jhb/tuy2axNlha2Xylg5d2ae7jY0JLubOShV2zb1LmiM3j45bWJdget3yqAUFwtiIzJU1vrqS7FBRcLeWq+hSxWEOLRmnA+eRDeQKR5qFcOTb0dfLC5o0GcTmUQ1GK4djB2T7FA
+DKIM-Signature: a=rsa-sha256; bh=OOFoFBq+byc2eHk/ZmV8KD8KyWCD3KPwXiYmJgU0eNQ=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1784210714; v=1;
+ b=h1p+Ano0jeHuIVsg8xiOd1Wio6Vupk+1J2IWQ87WXymJmYWnE33eKhNF7mJze4rMzu5agIxP
+ BrKaYx0rHedU4sZL5+4v5DhE4uta/7ccJqIwXk0UmxLKlb6a5FlMetot+EfNB9ACG4IKobS63Pf
+ Ev3JyOCfGXOS2x1LHhOAM7e90Bcpthid+0gFBythnmOJiGhTAoODD7VrGzGS4olJus79KtzR/Sn
+ H8e67vbpVwVGA2zkmEwMkF9fBV7sdSb52ALg/EyADGDPYcKjWdSIhHuiSWx+rpES9BQ085WyLvC
+ 7wV1/R1KUBFACFEwrAYAs6Ofd7QGcLtKqHJNXAcBOlypg==
+Received-SPF: pass client-ip=51.210.91.53; envelope-from=clg@kaod.org;
+ helo=smtpout4.mo540.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -132,68 +133,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 7/15/26 17:50, Mikail Sadic wrote:
+> Add a functional test for the huygens-bmc machine that boots from FMC
+> flash and a UFS storage image, verifying the full boot sequence from
+> U-Boot through OpenBMC login and multi-user target.
+> Note: The Huygens img is not yet public, so this test is for future/internal
+> use. It has been tested/verified with the correct image, and will gracefully
+> exit if image is not found.
+> 
+> Signed-off-by: Mikail Sadic <mikail.sadic@ibm.com>
+> ---
+>   tests/functional/aarch64/meson.build          |  2 +
+>   .../functional/aarch64/test_aspeed_huygens.py | 49 +++++++++++++++++++
+>   2 files changed, 51 insertions(+)
+>   create mode 100755 tests/functional/aarch64/test_aspeed_huygens.py
+> 
+> diff --git a/tests/functional/aarch64/meson.build b/tests/functional/aarch64/meson.build
+> index e81afd6c39..d81c0d6761 100644
+> --- a/tests/functional/aarch64/meson.build
+> +++ b/tests/functional/aarch64/meson.build
+> @@ -4,6 +4,7 @@ test_aarch64_timeouts = {
+>     'aspeed_ast2700a1' : 600,
+>     'aspeed_ast2700a2' : 600,
+>     'aspeed_ast2700fc' : 600,
+> +  'aspeed_huygens' : 600,
+>     'device_passthrough' : 720,
+>     'imx8mm_evk' : 240,
+>     'imx8mp_evk' : 240,
+> @@ -29,6 +30,7 @@ tests_aarch64_system_thorough = [
+>     'aspeed_ast2700a1',
+>     'aspeed_ast2700a2',
+>     'aspeed_ast2700fc',
+> +  'aspeed_huygens',
+>     'device_passthrough',
+>     'hotplug_pci',
+>     'imx8mm_evk',
+> diff --git a/tests/functional/aarch64/test_aspeed_huygens.py b/tests/functional/aarch64/test_aspeed_huygens.py
+> new file mode 100755
+> index 0000000000..750d6e0d7f
+> --- /dev/null
+> +++ b/tests/functional/aarch64/test_aspeed_huygens.py
+> @@ -0,0 +1,49 @@
+> +#!/usr/bin/env python3
+> +#
+> +# Functional test that boots the ASPEED Huygens machine with UFS storage
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +import os
+> +
+> +from aspeed import AspeedTest
+> +
+> +class HuygensMachine(AspeedTest):
+> +
+> +    def test_arm_aspeed_ufs_boot(self):
+> +        self.set_machine('huygens-bmc')
+> +        self.require_netdev('user')
+> +
+> +        # Huygens image is not public yet, skip if missing
+> +        fmc_path = '/tmp/fmc-huygens.img'
+> +        ufs_path = '/tmp/ufs-huygens.img'
 
 
-On 7/15/26 4:37 PM, Collin Walling wrote:
-> On 7/7/26 19:40, Zhuoying Cai wrote:
->>       /* should not return */
->>       write_reset_psw(entry->compdat.load_psw);
->> +
->> +    if (boot_mode == ZIPL_BOOT_MODE_SECURE_AUDIT) {
->> +        update_cert_list(&cert_list);
->> +        update_iirb(&comp_list, &cert_list);
->> +        free(tmp_cert_buf);
->> +    }
->> +
-> Sorry if I missed this from the previous rounds of review, but why was
-> this moved outside of `zipl_run_secure()`?  It seems out of place here.
->
-> If there is justification for it, I'd suggest at least moving this chunk
-> a few lines up to before the `write_reset_psw` call to keep the "IPL
-> jump" code together.  The comment above is meant for the following chunk:
->
-> ```
->      /* should not return */
->      write_reset_psw(entry->compdat.load_psw);
->      jump_to_IPL_code(0);
->      return -1;
-> ```
->
-> Otherwise the comment is a bit misleading.  I suppose one could argue
-> the comment should actually be placed abouve `jump_to_IPL_code`, but
-> let's not bother with that change.
->
+This is dead code. resend when they are then.
 
-This was something I had asked for, but I don't recall if it was in a 
-review comment or internal discussion, but a brief summary for the sake 
-of posterity...
+Thanks,
 
-Moving the call to update_iirb() was necessitated by a different change, 
-which was to use a specific memory address range for storing the cert 
-list.  The fundamental issue is that we wanted to store the cert list at 
-a calculated address to ensure it is not clobbered before the kernel 
-reads it.  My idea was to reclaim the space previously used for chained 
-IPLBs.  The chained IPLBs and the cert list are never needed at the same 
-time, so that isn't an issue; however, the impact of reclaiming the 
-space is that we destroy our IPLB chain, meaning, once we write the cert 
-list, if the IPL subsequently fails, we no longer have the fallback IPLB 
-to try the next device in boot order.  To deal with this we delayed 
-updating the cert list and IIRB until we are committed to boot from the 
-selected device, that is to say, once we have progressed through the IPL 
-far enough that there is no longer any possibility of falling back to a 
-different device.  As such, we wait until we are ready to actually hand 
-over control to the kernel before overwriting any of the IPL data.
+C.
 
-There is some flexibility with exactly where the calls can be placed, 
-but the idea is that there should not be any paths that return for retry 
-on error after we update the cert list.  By placing the update calls 
-directly before the jump we know the only two outcomes remaining are to 
-either successfully hand over control and never return, or for the jump 
-itself to fail, which would be a catastrophic error and necessitate that 
-the IPL is aborted entirely anyway.  There is no condition such that we 
-may update the cert list or IIRB and then realize we actually should try 
-booting from a different device instead.
 
-Regards,
-Jared Rossi
+> +        if not os.path.exists(fmc_path) or not os.path.exists(ufs_path):
+> +            self.skipTest(f'Missing required images: {fmc_path}, {ufs_path}')
+> +
+> +        self.vm.set_console()
+> +        self.vm.add_args('-drive',
+> +                         'file=' + fmc_path + ',if=mtd,format=raw',
+> +                         '-drive',
+> +                         'file=' + ufs_path +
+> +                         ',if=none,format=raw,readonly=off',
+> +                         '-nic', 'user,model=ftgmac100,net=10.0.2.0/24',
+> +                         '-nic', 'user,model=ftgmac100,net=10.0.3.0/24',
+> +                         '-nic', 'user,model=ftgmac100,net=10.0.4.0/24')
+> +        self.vm.launch()
+> +
+> +        self.wait_for_console_pattern('U-Boot 2023.10')
+> +        self.wait_for_console_pattern(
+> +            'Vendor: ASPEED Prod.: UFS QEMU Rev: 1.00')
+> +        self.wait_for_console_pattern('Starting kernel ...')
+> +        self.wait_for_console_pattern('Machine model: Huygens')
+> +        self.wait_for_console_pattern('Starting systemd-udevd version 257.1')
+> +        self.wait_for_console_pattern('Phosphor OpenBMC')
+> +        self.wait_for_console_pattern('huygens login:')
+> +        self.wait_for_console_pattern('Active BMC Target')
+> +        self.wait_for_console_pattern('Multi-User System')
+> +        self.vm.shutdown()
+> +
+> +
+> +if __name__ == '__main__':
+> +    AspeedTest.main()
+
 
