@@ -4,114 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E22FDC43458
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 05:25:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04834C43458
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 05:26:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkEao-0007VS-NO; Thu, 16 Jul 2026 01:25:06 -0400
+	id 1wkEbB-0007ha-Io; Thu, 16 Jul 2026 01:25:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wkEan-0007V0-65; Thu, 16 Jul 2026 01:25:05 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wkEbA-0007hE-42
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 01:25:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wkEal-0003Hw-6c; Thu, 16 Jul 2026 01:25:04 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66G4Be9r2152176; Thu, 16 Jul 2026 05:24:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=lzKDkgOzXYdPjjjXlBLYwnpyfI/G0v
- Jz3NyOF8hiWIw=; b=KFEctGxPR8SdULaJsn+WZu70EwueBRj150XZnX0pP46nYw
- Nk6JrrIkYnQsrf+8TfPhoB0Q2ik3JYDCm64V4qmrmmsoUH4ATzY6ogoI3Fthf9Zd
- twpjKNWVyqUnOnHne5C6uMnWlTxi9Jt7t0YPYqwd9blZZKLEtvfKelAmT2dugtET
- 0uk2AXi6Y5ZO7gOfjOg+oWsVKUu5jrA2OPjEB55SLhZeVYDAtdsz83MJNcFNFS/n
- VO0OnTqNO6Z5rVshLlH7wh8XMKyM5HJ6lrVf3F3ZcvJm3xRTUqtO7ZpY+O+tqmu8
- obh6QritlLXaqZra6E59tmq2w4uF0PFFQLdYZlCg==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbepxq3sp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jul 2026 05:24:50 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66G5JZUo008069;
- Thu, 16 Jul 2026 05:24:49 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fc2cgkaak-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jul 2026 05:24:49 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66G5Oj9n25559480
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 16 Jul 2026 05:24:45 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A98D520049;
- Thu, 16 Jul 2026 05:24:45 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B60C220040;
- Thu, 16 Jul 2026 05:24:39 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.123.10.203])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Thu, 16 Jul 2026 05:24:39 +0000 (GMT)
-Date: Thu, 16 Jul 2026 10:54:37 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Saif Abrar <saif.abrar@linux.ibm.com>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, harshpb@linux.ibm.com,
- clg@kaod.org, npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
- marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
- thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
- kowal@linux.ibm.com, chalapathi.v@linux.ibm.com, calebs@linux.ibm.com,
- milesg@linux.ibm.com, jishnuvw@linux.ibm.com, amachhiw@linux.ibm.com
-Subject: Re: [PATCH v5 2/9] pnv/phb5: Add reset logic to PHB5
-Message-ID: <alfDsZl-d1o75KR2@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20260617095058.652789-1-saif.abrar@linux.ibm.com>
- <20260617095058.652789-3-saif.abrar@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wkEb5-0003U1-UE
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 01:25:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784179519;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=fp4jZFS509qTnQegXqa8viOpEWkTEOB4RzKTfCUybWQ=;
+ b=J1dodZQaXA9csOe63lCMwgqzsQ3VRVfgAXw+8Rv+O2Ce7bTerHRDQdc81ljk/za6d0sNIe
+ Yb5wuNQWH8EfKZDBk5RD1nNNEYCbK22PPrO8giPrw0q1DIfZ+Tb2KYfcu78hZzprMjScgq
+ me+IyXRS/I589m2lSeuG4+wxiUfoB2E=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-290-jidVvaV5NAyhTIpbtv93Wg-1; Thu, 16 Jul 2026 01:25:17 -0400
+X-MC-Unique: jidVvaV5NAyhTIpbtv93Wg-1
+X-Mimecast-MFC-AGG-ID: jidVvaV5NAyhTIpbtv93Wg_1784179516
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-4767036f8faso3848305f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 22:25:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1784179516; x=1784784316; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=fp4jZFS509qTnQegXqa8viOpEWkTEOB4RzKTfCUybWQ=;
+ b=lmoDz+W+kh3K8VdKlZZSGHM+WhFpCTrN3OCwMj9UB8pwbjMET9CT5ANMQ3fTgMXhN2
+ HEUBBb9gC+RlnJaj4CCpjL6nS6sUljI4X+tXF4nkND4nDwBp1wAVHZyRrXVki1sniAQ9
+ EAG23butiIsE5To7rMFxwfypTiQrqpgtf+AQzw4jhOproRQvi/S3nJa22ylGqyupqmdh
+ XDDt6uPiQQ+JawY17/AWkGWvXSYDFDdnZJ0cYuRJ4sL2v8cIF42EFrRfFnGsNisiOMBc
+ kb1l3Za9BZ2TL7DNMoq1KOTiBDXk3aqN+PoDxYf252V3r9TAoWARUk8A+KPRKrzjfQAz
+ fV3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784179516; x=1784784316;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=fp4jZFS509qTnQegXqa8viOpEWkTEOB4RzKTfCUybWQ=;
+ b=s0ENKKoUnC0rdIrpetQHsym3BvynwaIwvR3CYyqqRa+wPevk7rPGVm9Y3akOoXYBzm
+ WhNcXsSzufafT+asxDtn8pIfg5ZtPtZxZ0sGMTjUlO5WpWMlfz0P4MNPDoPz4WwLxBsH
+ JRbAx/mnzsBr2+/J6ym2DQSCZiCrTDeCGG4B6RZ5YmHoW/IvdflaZvOBcNmOWjuamNyk
+ eE7BkblRMi0Q24QRgg+4Vi41yYtxszQsO2iiIMg2eDrgrEOntzlCLg6a9ENpB4cYL92f
+ ht0B32n8oHUJ4ry8CLO6D/kqNAGpwSM3qAc4t7eKsxHNzgJCbHupSKvWZwPFXpLhCe04
+ X7jQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RobjZnGPopG+Ym0WxxlxBEd0jG2SmLMWsL09tgnrFwDBQ0udRftGgB1fX5SxhSGQf2V0xpPbqa1Mo+4@nongnu.org
+X-Gm-Message-State: AOJu0Yy9HYtDVZLnrs/zXcFHqe3PeDpctxGNF0yVnTOICsltVWNArE1O
+ ogO04KyFWiIVmG1tDc9r2PhPhRc0m4sOxFf5W5OCE/QKUEIzfWXUKLfHqbOi9/SHRD1OS2Pf9Yi
+ Aqx5PfmSGQP+jESz/X682kt5+qMCp33bG7G25wJ+H6NDhgstObBqcQNng
+X-Gm-Gg: AfdE7clZfKcG736GWH8UDphaur5y54KQf0fflK603gRarJmQV8wPN5rI47Dv0gHIo6K
+ KurF9RSbsua2OmWTcNwL+YkT9sZVk8nOq/Zmul7KrjkVNB1/Zdf9g+XSobbqHTGhTQvy2v80PJh
+ tuu0foj/tBzxHQ924u6dInXLz7j+nHzOalIF0hUWCz8tzul9T+CIMI3OWRc+mYSdhTq5B4g1IGk
+ kU+AfSxNsC/XF8nfk7Tabntg3DhkfyJlrY4visJNOkrRCU/1H99MVZnyGAQFkeEBM3dJb8BzrFB
+ 0KaOCfv512QzhmcsDYBH7i7vi4rPGR8sJUw3bhc5+eRYm84dtri8H8A9JY9sBVEoaN+0VporxyT
+ GuiwCSgyvYT7G0Xnncb2KIIkX
+X-Received: by 2002:a05:6000:4201:b0:47f:2bc3:8cf3 with SMTP id
+ ffacd0b85a97d-47f4fcb5e95mr6009439f8f.18.1784179516001; 
+ Wed, 15 Jul 2026 22:25:16 -0700 (PDT)
+X-Received: by 2002:a05:6000:4201:b0:47f:2bc3:8cf3 with SMTP id
+ ffacd0b85a97d-47f4fcb5e95mr6009407f8f.18.1784179515470; 
+ Wed, 15 Jul 2026 22:25:15 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-24-117.inter.net.il. [80.230.24.117])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f4634debesm21840845f8f.8.2026.07.15.22.25.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 15 Jul 2026 22:25:14 -0700 (PDT)
+Date: Thu, 16 Jul 2026 01:25:12 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
+ yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
+Subject: Re: [PATCH v7 00/22] vhost refactoring and fixes
+Message-ID: <20260716012417-mutt-send-email-mst@kernel.org>
+References: <20260527061625.11167-1-vsementsov@yandex-team.ru>
+ <20260715184145-mutt-send-email-mst@kernel.org>
+ <89ef906d-56d3-40cd-bce4-5636dd963eee@yandex-team.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260617095058.652789-3-saif.abrar@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: f_Ualj4YP5cLG4bZRnkc92n6XTkABSKc
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDA1MCBTYWx0ZWRfX9tzkWpg3XLbN
- ZJhc1D/tFCfMRS/wCWfXn0cnpNU83JB+TO+tftfgzv4RtKcPQNfLR/hLdmyRXO63XcnAgGD0M57
- fXeZZxRTSD4jAha1/RodjcvxR1sm3GU=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDA1MCBTYWx0ZWRfXzzdG8S6JnJwA
- Svx10wjpe1NyOigonKP0K9ZGPk1gBLU1AiAy/fVe176XcFs7EUtHxN/ktm7id2hY1aBWlxzGaMs
- t1HOoKs0NtSlV5PvJjeU5+KkuqYFGIHM3hQ0DjcXuqU1ZCsR4hgYU7KT30fXJe37MvRRJvBZquL
- NQE2FHiFV90XOeZDjfpV9nP4mVzqEYNS/WNc9RcMkt0Bh86LTSX187CjYvMEGZFe9SySLX65wYL
- bJ3ckcqD+AC4yJ0roNoKmkOCdpAYnV2i1GIDSCOi0tcWphdJL1dnBvaCUy4SKdaCAtBe/dZAnXR
- Fr3+ArO+EjNaCMfzzk3NLtQEv7gNCHvGUW2YJ2b2uoxU+pSS1JQOp8Bj3xO0YbnA5Kt6qwewJG1
- lrepXcUOI9ukMQKsmDee+RWY2B9Q4htY+Dw8ozlG2wBxixQmPrLSidHHoJoxCUmBukFKtZBwcqz
- H2DjE5p1DmUfEsEwppQ==
-X-Authority-Analysis: v=2.4 cv=XbS5Co55 c=1 sm=1 tr=0 ts=6a586b22 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=kj9zAlcOel0A:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=5fUirfjHXe-NdIqDpewA:9
- a=CjuIK1q_8ugA:10
-X-Proofpoint-ORIG-GUID: 0sPJkewydW_qirbL3SOdBwCBZmf6BFE6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-16_02,2026-07-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 spamscore=0 phishscore=0 lowpriorityscore=0
- priorityscore=1501 adultscore=0 malwarescore=0 impostorscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607160050
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+In-Reply-To: <89ef906d-56d3-40cd-bce4-5636dd963eee@yandex-team.ru>
+Received-SPF: permerror client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,137 +121,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks for the patches !
+On Thu, Jul 16, 2026 at 02:27:10AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> On 16.07.26 01:41, Michael S. Tsirkin wrote:
+> > On Wed, May 27, 2026 at 09:16:01AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> > > Hi all. That's a preparation for vhost-user-blk backend-transfer
+> > > feature.
+> > > 
+> > > 07: rebase on master,
+> > > 04: drop extra occurence of system_virtio_ss.add(files('vhost-user-stub.c'))
+> > 
+> > so patch 10 is the fix?
+> 
+> Probably it's too late :/ I don't understand, what do you mean). Patch 10 is a
+> fix yes. But seems it has no relation to vhost-user-stub.c ?
 
-On 26/06/17 04:50AM, Saif Abrar wrote:
-> diff --git a/hw/pci-host/pnv_phb.c b/hw/pci-host/pnv_phb.c
-> index 0b556d1bf5..d4f452d7b2 100644
-> --- a/hw/pci-host/pnv_phb.c
-> +++ b/hw/pci-host/pnv_phb.c
-> @@ -232,6 +232,7 @@ static void pnv_phb_root_port_reset_hold(Object *obj, ResetType type)
->      pci_set_long(conf + PCI_PREF_BASE_UPPER32, 0x1); /* Hack */
->      pci_set_long(conf + PCI_PREF_LIMIT_UPPER32, 0xffffffff);
->      pci_config_set_interrupt_pin(conf, 0);
-> +    pnv_phb4_cfg_core_reset(d);
+the patchset is big. I am debating with myself when to merge it.
+Is it possible to just apply fixes an cleanups later?
 
-nit: phb4 reset in common phb path ? will it affect phb3 too ?
-
->  }
->  
-> <...snip...>
-> +void pnv_phb4_cfg_core_reset(PCIDevice *d)
-> +{
-> +    uint8_t *conf = d->config;
-> +    uint32_t exp_offset = get_exp_offset(d);
-> +
-> +    pci_set_word(conf + PCI_COMMAND, PCI_COMMAND_SERR);
-> +    pci_set_word(conf + PCI_STATUS, PCI_STATUS_CAP_LIST);
-> +    pci_set_long(conf + PCI_CLASS_REVISION, 0x06040000);
-> +    pci_set_long(conf + PCI_CACHE_LINE_SIZE, BIT(16));
-> +    pci_set_word(conf + PCI_MEMORY_BASE, BIT(4));
-> +    pci_set_word(conf + PCI_PREF_MEMORY_BASE, BIT(0) | BIT(4));
-> +    pci_set_word(conf + PCI_PREF_MEMORY_LIMIT, PCI_PREF_RANGE_TYPE_64);
-> +    pci_set_long(conf + PCI_CAPABILITY_LIST, BIT(6));
-> +    pci_set_word(conf + PCI_BRIDGE_CONTROL, PCI_BRIDGE_CTL_SERR);
-> +    pci_set_long(conf + PCI_BRIDGE_CONTROL + PCI_PM_PMC, 0xC8034801);
-> +
-> +    pci_set_long(conf + exp_offset, 0x420010);
-> +    pci_set_long(conf + exp_offset + PCI_EXP_DEVCAP,  0x8022);
-> +    pci_set_long(conf + exp_offset + PCI_EXP_DEVCTL, PCI_EXP_DEVCTL_EXT_TAG
-> +                                              | PCI_EXP_DEVCTL_PAYLOAD_512B);
-> +    pci_set_long(conf + exp_offset + PCI_EXP_LNKCAP, PCI_EXP_LNKCAP_LBNC
-> +                 | PCI_EXP_LNKCAP_DLLLARC | BIT(8) | PCI_EXP_LNKCAP_SLS_32_0GB);
-> +    pci_set_word(conf + exp_offset + PCI_EXP_LNKCTL, PCI_EXP_LNKCTL_RCB);
-> +    pci_set_long(conf + exp_offset + PCI_EXP_SLTCTL,
-> +                                                   PCI_EXP_SLTCTL_ASPL_DISABLE);
-> +    pci_set_long(conf + exp_offset + PCI_EXP_DEVCAP2, BIT(16)
-> +                  | PCI_EXP_DEVCAP2_ARI | PCI_EXP_DEVCAP2_COMP_TMOUT_DIS | 0xF);
-> +    pci_set_long(conf + exp_offset + PCI_EXP_DEVCTL2, PCI_EXP_DEVCTL2_ARI);
-> +    pci_set_long(conf + exp_offset + PCI_EXP_LNKCAP2, BIT(23)
-> +                       | PCI_EXP_LNKCAP2_SLS_32_0GB
-> +                       | PCI_EXP_LNKCAP2_SLS_16_0GB | PCI_EXP_LNKCAP2_SLS_8_0GB
-> +                       | PCI_EXP_LNKCAP2_SLS_5_0GB | PCI_EXP_LNKCAP2_SLS_2_5GB);
-> +    pci_set_long(conf + PHB_AER_ECAP, PCI_EXT_CAP(0x1, 0x1, 0x148));
-> +    pci_set_long(conf + PHB_SEC_ECAP, (0x1A0 << 20) | BIT(16)
-> +                                                       | PCI_EXT_CAP_ID_SECPCI);
-> +    pci_set_long(conf + PHB_LMR_ECAP, 0x1E810027);
-> +    /* LMR - Margining Lane Control / Status Register # 2 to 16 */
-> +    for (int i = PHB_LMR_CTLSTA_2 ; i <= PHB_LMR_CTLSTA_16 ; i += 4) {
-> +        pci_set_long(conf + i, 0x9C38);
-> +    }
-> +
-> +    pci_set_long(conf + PHB_DLF_ECAP, 0x1F410025);
-> +    pci_set_long(conf + PHB_DLF_CAP,  0x80000001);
-> +    pci_set_long(conf + P16_ECAP, 0x22410026);
-> +    pci_set_long(conf + P32_ECAP, 0x1002A);
-> +    pci_set_long(conf + P32_CAP,  0x103);
-> +}
-> +
-> +static void pnv_phb4_pbl_core_reset(PnvPHB4 *phb)
-> +{
-> +    /* Zero all registers initially */
-> +    for (int i = PHB_PBL_CONTROL ; i <= PHB_PBL_ERR1_STATUS_MASK ; i += 8) {
-
-nit: should we use PNV_PHB4_NUM_REGS here, since we want to set all
-phb->regs to 0 here ?
-
-#define PNV_PHB4_NUM_REGS          (0x3000 >> 3)
-
-> +        phb->regs[i >> 3] = 0x0;
-> +    }
-> +
-> +    /* Set specific register values */
-> +    phb->regs[PHB_PBL_CONTROL       >> 3] = 0xC009000000000000;
-
-This reset value is different for PHB4 and PHB5.
-
-The PHB4 spec that i am referring to marks the bits 8:15 as reserved,
-and unimplemented. While PHB5 suggests the reset value of 0x9.
-
-I am okay with considering those bits as implementation defined and let
-qemu set those bits, but maybe it's better to separate it out in
-pnv_phb5.c ?
-
-> +    phb->regs[PHB_PBL_TIMEOUT_CTRL  >> 3] = 0x2020000000000000;
-> +    phb->regs[PHB_PBL_NPTAG_ENABLE  >> 3] = 0xFFFFFFFF00000000;
-
-Same 8:31 are reserved bits in PHB4, while not in PHB5.
-
-Maybe separating out PHB5 from PHB4 helps in such cases.
-
-> +    phb->regs[PHB_PBL_SYS_LINK_INIT >> 3] = 0x80088B4642473000;
-> +}
-> +
-
-> <...snip...>
-
-> +static void phb5_tests(void)
-> +{
-> +    QTestState *qts = NULL;
-> +
-> +    qts = qtest_initf("-machine powernv10 -accel tcg");
-> +
-> +    /* Check reset value of a register */
-> +    phb5_reset_test(qts);
-> +
-> +    qtest_quit(qts);
-> +}
-> +
->  /* Assert that 'PHB - Version Register' bits[24:31] are as expected */
->  static void phb_version_test(const void *data)
->  {
-> @@ -59,7 +83,7 @@ static void phb_version_test(const void *data)
->          expected_ver = 0xA4;
->      } else if (chip->chip_type == PNV_CHIP_POWER10) {
->          machine = "powernv10";
-
-This patch is giving an error on compilation now in upstream, due to
-introduction of 'pnv_get_machine_type'. We can use
-'pnv_get_machine_type' here in the start in place of machine = "powernv8".
-What do you say ?
-
-Thanks,
-- Aditya G
-
+> > 
+> > > Vladimir Sementsov-Ogievskiy (22):
+> > >    vhost-user: rework enabling vrings
+> > >    vhost: drop backend_features field
+> > >    vhost-user: introduce vhost_user_has_protocol_feature() helper
+> > >    vhost: move protocol_features to vhost_user
+> > >    vhost-user-gpu: drop code duplication
+> > >    vhost: make vhost_dev.features private
+> > >    virtio: move common part of _set_guest_notifier to generic code
+> > >    virtio: drop *_set_guest_notifier_fd_handler() helpers
+> > >    vhost-user: keep QIOChannelSocket for backend channel
+> > >    vhost: vhost_virtqueue_start(): fix failure path
+> > >    vhost: make vhost_memory_unmap() null-safe
+> > >    vhost: simplify calls to vhost_memory_unmap()
+> > >    vhost: move vrings mapping to the top of vhost_virtqueue_start()
+> > >    vhost: vhost_virtqueue_start(): drop extra local variables
+> > >    vhost: final refactoring of vhost vrings map/unmap
+> > >    vhost: simplify vhost_dev_init() error-path
+> > >    vhost: move busyloop timeout initialization to vhost_virtqueue_init()
+> > >    vhost: vhost_dev_init(): simplify features initialization
+> > >    hw/virtio/virtio-bus: refactor virtio_bus_set_host_notifier()
+> > >    vhost-user: make trace events more readable
+> > >    vhost-user-blk: add some useful trace-points
+> > >    vhost: add some useful trace-points
+> > > 
+> > >   backends/cryptodev-vhost.c     |   9 +-
+> > >   hw/block/trace-events          |  10 ++
+> > >   hw/block/vhost-user-blk.c      |  26 +++-
+> > >   hw/display/vhost-user-gpu.c    |  11 +-
+> > >   hw/net/vhost_net.c             |  35 ++---
+> > >   hw/s390x/virtio-ccw.c          |  35 +++--
+> > >   hw/scsi/vhost-scsi.c           |   1 -
+> > >   hw/scsi/vhost-user-scsi.c      |   1 -
+> > >   hw/virtio/meson.build          |   1 +
+> > >   hw/virtio/trace-events         |  16 +-
+> > >   hw/virtio/vdpa-dev.c           |   3 +-
+> > >   hw/virtio/vhost-user-base.c    |   8 +-
+> > >   hw/virtio/vhost-user-stub.c    |   6 +
+> > >   hw/virtio/vhost-user.c         | 260 ++++++++++++++++++++++-----------
+> > >   hw/virtio/vhost.c              | 243 +++++++++++++++---------------
+> > >   hw/virtio/virtio-bus.c         |  18 +--
+> > >   hw/virtio/virtio-hmp-cmds.c    |   2 -
+> > >   hw/virtio/virtio-mmio.c        |  41 +-----
+> > >   hw/virtio/virtio-pci.c         |  34 +----
+> > >   hw/virtio/virtio-qmp.c         |  12 +-
+> > >   hw/virtio/virtio.c             |  48 +++---
+> > >   include/hw/virtio/vhost-user.h |   4 +
+> > >   include/hw/virtio/vhost.h      |  63 +++++---
+> > >   include/hw/virtio/virtio-pci.h |   3 -
+> > >   include/hw/virtio/virtio.h     |  15 +-
+> > >   net/vhost-vdpa.c               |   7 +-
+> > >   qapi/virtio.json               |   3 -
+> > >   27 files changed, 500 insertions(+), 415 deletions(-)
+> > >   create mode 100644 hw/virtio/vhost-user-stub.c
+> > > 
+> > > -- 
+> > > 2.52.0
+> > 
+> 
+> 
+> -- 
+> Best regards,
+> Vladimir
 
 
