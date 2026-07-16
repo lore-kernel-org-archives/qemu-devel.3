@@ -4,96 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABEF1C4450A
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 09:33:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D587C4450E
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 09:42:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkIS2-0007un-Gk; Thu, 16 Jul 2026 05:32:18 -0400
+	id 1wkIbB-0001fR-0h; Thu, 16 Jul 2026 05:41:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wkIS1-0007uZ-4r
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 05:32:17 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wkIRz-0007ih-33
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 05:32:16 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-476a130c138so2975458f8f.0
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 02:32:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784194332; x=1784799132; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=sC430UQSLXNDCblP7YEOFz54D93brO7i9OUVdoX0+bo=;
- b=Aq0rJCCeCo4BvUk6l0FNvamCTZQyTrOl8FOD+J7EpGFouQelnvmwhEiYw0DqwGkuq5
- bELjDSLESRTZ2jXSRFbXFQKlVm7+/ww+Hvurvls2BCR3NQjZ8C32qOBfLbLh4+9fPXt3
- qaOaiVcKtfy39UQqtlyb7VjVbPOi2TftmmsV2HaFWrOmNXCdXrmAjh9jtRl0zYVDHC5p
- no6cLBT6WXyxgDYK8DB+3UBEgBr2mT5ceCZ8+9eJbm3fRPRZNURas8sW+W+OCT3drP9B
- tsNlcrAAegHPo+VPGvlPp8zYtJ72gRjHYmouKGMmHtaXkSCRDRQY3t83Xm5WVXBwKje/
- imWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784194332; x=1784799132;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=sC430UQSLXNDCblP7YEOFz54D93brO7i9OUVdoX0+bo=;
- b=Ad3scjVgkt9Yo4QZ9QvY6SVZ59BkYUjnwaJ9QgpWNfhZo7CazGXj+SvArkMT4y6pxY
- yOgs9Ajumf+Wcl+EfbsJeV12WGans6aspvHXxLADyOg90LhHm/oz59dmm16PejEbu6K9
- 9DqK7mBaIMvnnve23cF4dWiDuY723X2PPvciz7xtdDQgfE0d1SVok87PWdSwEas10ykT
- 5bQpjDQ2auztIYKStFW0JRFZni8KBhxSl7DM3cbtD0IQyFggV+WSh0dhqHvGq58yAnEB
- hBGkzgOKY+120vvVy1/guhP/sZWCJllqEjkSIFtqw00DC0o9sNnW3DFvqWWPNw1eLNy7
- hfkA==
-X-Gm-Message-State: AOJu0YyxXVOmR2iuXQ4SLFQWKgSN+7sv7he2E19eFvzQky+E25ogE7XC
- gsPxNcQNGoQfClrroKzSNlOUzulNyxAGrCX7j/W11Z6dgYWzQNsHLBT4FLSXW72gA6o=
-X-Gm-Gg: AfdE7cnYmb9Yd2STs/BS/Pj33PS3Mugydvxf0y6DNoQ9bJhrWk/eM82WLBTk1eeuwWM
- Q3scoNGGTZVrDjpi1SOFwIE3tiOM5xPTjMueikRJmx3S8tZfBcKyecL0Q63++tV33AaaZyKXPar
- dhncRy1z7Tigm7jYctlMOah5upeggTVpXspeagFpy2Y6OMlutyKc3i67d8+PX0T1s584t6hb8NP
- wDVLi+M1ILxSuF9xRKcZBrr5uqeyueXonjvU9Ujdf5Jh5IKJORe/bObSMnN8d5pHjq2MHKDEjz3
- wwvF9RpExrLHZmYsS3VaLo2sYuKbZmYO54YezaxKdMZ99BG22pnaoKBI7pPE/d878K2vLrKDEx9
- NxgwBiKWNu3OOBbxGV6ZO/sHRcswDXPciuXRldMAR32Vdc+KYz60yZPgFxLY8mIMFPprFOyaNbx
- qmLQ==
-X-Received: by 2002:a5d:5f02:0:b0:47d:fc20:f6f9 with SMTP id
- ffacd0b85a97d-47f2dd2f413mr23221431f8f.45.1784194332368; 
- Thu, 16 Jul 2026 02:32:12 -0700 (PDT)
-Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f464d6fa7sm23532637f8f.37.2026.07.16.02.32.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Jul 2026 02:32:11 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8D8F85F8E7;
- Thu, 16 Jul 2026 10:32:10 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,  Brian Cain <brian.cain@oss.qualcomm.com>,  Peter
- Maydell <peter.maydell@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?=
- <philmd@oss.qualcomm.com>,  Daniel =?utf-8?Q?P=2EBerrang=C3=A9?=
- <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,  Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>,  Laurent Vivier <laurent@vivier.eu>,
- Paolo Bonzini <pbonzini@redhat.com>,  Gustavo Romero
- <gustavo.romero@linaro.org>,  Helge Deller <deller@gmx.de>
-Subject: Re: [PATCH v5 95/98] tests: remove tcg tests machinery
-In-Reply-To: <a7b40c16-fd9b-4d81-b767-19fd3523c533@oss.qualcomm.com> (Pierrick
- Bouvier's message of "Wed, 15 Jul 2026 10:42:45 -0700")
-References: <20260710214343.2065491-1-pierrick.bouvier@oss.qualcomm.com>
- <20260710214343.2065491-96-pierrick.bouvier@oss.qualcomm.com>
- <87pl0ognos.fsf@draig.linaro.org>
- <a7b40c16-fd9b-4d81-b767-19fd3523c533@oss.qualcomm.com>
-User-Agent: mu4e 1.14.3-pre1; emacs 30.1
-Date: Thu, 16 Jul 2026 10:32:10 +0100
-Message-ID: <87jyqvgu05.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <harry.vanhaaren@openchip.com>)
+ id 1wkIb8-0001et-Ki
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 05:41:42 -0400
+Received: from mail-swedencentralazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c202::7] helo=GVXPR05CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harry.vanhaaren@openchip.com>)
+ id 1wkIb5-0000NU-TC
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 05:41:42 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=OGa2xkCOlz0KKMKosWmoSl9Z2ap37LQD5xnPxWfbWA8Wz6ifgqjRgHSHD9ilhbx5JV/6IcHuxv2FdcTPC1c9rm9Kfp5ktIJD4tVfsg4uQsaMYmHGGDMh5qoJD/x/18uTMw0J0z2u4DYz50kn47RjAhjAqgPGK+rnO1ocfXvDURcN7Bs+AYFGM+N1izUMRihxrj3KCuUbT3rObxUaNB3ersidj5zZVs1PeIAScR0mJJq+4aflQXn+3aXpfvmQfM+8tXTuTUkuNynAlhSLDkFJYPmeiL4GRlEORCJ3VZqp+glVFgKZjqeqnwM+O+X8E5Z4CPe0fTMs5tMHUNtQuDEsmQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=4kz49DH0+pUAcGRSIZFS81xzlesqoFiXQQaGyfqRnIQ=;
+ b=oecnrTDmhxRGggRKao4h2kVq2P+NgD5XcGSm9/zlaJrmU6q8A43XDQieME6RzfHkfaXldxnuyxUsPONgQBZ2pSybDh6teH3YmWQrW8izRZ5IqZc4Nl6nhCmGrOyNS8UUwMO9SN27taDRnGJ7Zbxrpfw3AKEn/G6n5I5enuUESzsYAF4bHnME0XA4mh6gKs5bLg1b9IwcjIzNSih64kxzHYLdoa3OjPejaDDZWNWdFk5vdG4S4THVrN5Yrjkfch2JkRuKibh7yJxZvGc8N+BehxrQ6PMEyINC6z2dD5xpPUyuqmLWULJyrCIbxXzzFrM03/Mj2++eKCaRcyfrGQpXMA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=openchip.com; dmarc=pass action=none header.from=openchip.com;
+ dkim=pass header.d=openchip.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openchip.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=4kz49DH0+pUAcGRSIZFS81xzlesqoFiXQQaGyfqRnIQ=;
+ b=KKE/tMFGHF7YJbg5FUcfYEL0D2BHCWbBGbH1+Q3uvG1Af9ZCCcaV8++Wp00Hjb7jqMYY6qLV0eahz57U8wAIUtaBXtyZT3OdTSUPmbEXtE6jndRjXLdN/zdR10V5V9fp6u2iTXOrSZ/GpPKs+Kv+d8EECqjrRBmnt5qaNl7TzcUOgOIAIPBqL052JrJhSZ/cX250iBlKpIfo+dBE9HmATiDNyu1BL4VVq2MSNHiBJDZMRFw7AOxITz1v6NsdLG0Phd4GVsEC6naOLP2rUfiw/5dqpDMcUJ9iaZMp3wp5lW1eyzXnFetj1oPDDBwf+hza4P4m3yLw7uw3BoUAsie+Ug==
+Received: from GV2P192MB3464.EURP192.PROD.OUTLOOK.COM (2603:10a6:150:328::6)
+ by VI1P192MB2186.EURP192.PROD.OUTLOOK.COM (2603:10a6:800:1c9::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.18; Thu, 16 Jul
+ 2026 09:41:32 +0000
+Received: from GV2P192MB3464.EURP192.PROD.OUTLOOK.COM
+ ([fe80::7ed0:3600:9df4:af64]) by GV2P192MB3464.EURP192.PROD.OUTLOOK.COM
+ ([fe80::7ed0:3600:9df4:af64%6]) with mapi id 15.21.0223.008; Thu, 16 Jul 2026
+ 09:41:32 +0000
+From: Harry van Haaren <harry.vanhaaren@openchip.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: BALATON Zoltan <balaton@eik.bme.hu>, Alexandre Iooss <erdnaxe@crans.org>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?utf-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, Harry van Haaren
+ <harry.vanhaaren@openchip.com>
+Subject: [PATCH v2 0/2] plugins/execlog: fix segfault and flush output on vcpu
+ exit
+Thread-Topic: [PATCH v2 0/2] plugins/execlog: fix segfault and flush output on
+ vcpu exit
+Thread-Index: AQHdFQdJu/FiksvJv0eX2zuIpJXEzw==
+Date: Thu, 16 Jul 2026 09:41:32 +0000
+Message-ID: <20260716094126.787556-1-harry.vanhaaren@openchip.com>
+References: <20260616161242.267315-1-harry.vanhaaren@openchip.com>
+In-Reply-To: <20260616161242.267315-1-harry.vanhaaren@openchip.com>
+Accept-Language: en-IE, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=openchip.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: GV2P192MB3464:EE_|VI1P192MB2186:EE_
+x-ms-office365-filtering-correlation-id: 356b123b-3d72-4b6c-a0ab-08dee31e6b82
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|23010399003|1800799024|366016|376014|3023799007|6133799003|11063799006|56012099006|10067099003|22082099003|38070700021|18002099003;
+x-microsoft-antispam-message-info: HpRlVZi3d+GGf058GulkzfQgdUalOOlPenAg5qX/EMLsEXjeHx/QPvLfDkSNQsB4xKhK9JZUsRQ9LLdCY3AbIYMbUhdoEr0+UC9Nmfi7n+VNEzq5c92qcep50UFzCMdhvB37hk7lEp7tSsZ8gzfUk7SIp1Vv1ZXnDKIKg4ewPgABI1R1WZmRdLFm2k4iASFwQmWKdDI4Ox5J+dan/lKAyYskhnzlBs92QFFpGrbzWaWb5Wul6uj8/mkHzyfat3otdZ9q3xgviXjngorLWmZQ0QygLzcBtFwjZYXeY/tfmsR+4e6AO1aSClYfSrrWInTFJeA+Pnt2iQc8bOueSkqsvqMrbU+uUoVyGklB/fJV0Y8B7LbMdknwizA4W/oxMq0LEo5xrDa4yXYowoDgD1HzHX9n6d1UBIU6gnwz8Z4UqxWRyiXPaN6c3TvIT8wrFW6uTMb/TibEFnSKjCooJ71bG84ttlwb0vhpG0uw9sm/aYSz9+HYZIB6ttuNjHUgqklrSftV8ZUpRmp4YmDFCDgmwXQLu5NHagROYoKoqltsKusj3kfx34otyD+ZDOJSh5S6KP4xKr4G52nRlxVs4Z/QP33LK5E2nGxJDO/heg7dX81gpkT75QI+jPm2Ff69qt3HdIqDkqGhAbqx1rAi2uVEYOtlJTOAAjYPo2YGL77dUYIzptYmWhVfYSrmYTHdRHSZqBApNxo3WsmSuR2UcEet11rzMOurSvlsJaZZYIQOMj4=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:GV2P192MB3464.EURP192.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(3023799007)(6133799003)(11063799006)(56012099006)(10067099003)(22082099003)(38070700021)(18002099003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?ekx1NzcyNUtOc2xmUW1rUDRYamdLbGRTYlBwcTRRSXpaSFBIRUtmNUhYTjVW?=
+ =?utf-8?B?aHJiTlF2R0o5bjduUUwwN2Fuak8wcmd0OGl0N3J5QkFIbXJCVGVWVDNsVC8w?=
+ =?utf-8?B?MHZsQmtrUUozUHhnc3lkRmkyQ1JmcUExSW41cGdaUTY5d2tzR2hVczhtcUh4?=
+ =?utf-8?B?WXR2ZTRueWdHdkxSejE2Mk56ajhPVGJqRDdkeGdUSmljYnhKYzNOdERmdHhy?=
+ =?utf-8?B?Vkt2ek1jMXRoRzQwWmUyQ0krSDNGZjBZbXM4NEh6Yy9oSGVjMWpnS21IdnBk?=
+ =?utf-8?B?K0tDRzZDeURlc0craXJuYS9SeFJWa0NtR3JKbWJMM0sxMHY4N0RSMWxRV3hp?=
+ =?utf-8?B?Y2tNY01RZ2UrZXRqMFNiU095RS9SZW15a3J4ZWY3U0Y5SFFYYTNHRS9Qa0JH?=
+ =?utf-8?B?NEczdjlyZHl4WmZWWnQyRjdxaFRnbENTU2ZHVWVDdTE5enkrL0pkSWM2NmxX?=
+ =?utf-8?B?UndEUk9vMHVRUU5Ua1B0Z2NDRWVEMGVzZEhydkVZempMK0UrQTN0ME1RcEVE?=
+ =?utf-8?B?VGh6RmdtaXFpdzhSOUUzcmE3UjFVWVlQQytFekRsQ0ZMMG1ySXpaNURha1o3?=
+ =?utf-8?B?WXJGOWlTYkx3QU1PUFE1ai85YVBqTkZnZGpXS2h1VUhnTWRQbGI0Nk5Rb0x1?=
+ =?utf-8?B?ZUtta1A1T291SVk5RFNyNGU3UFhScTNTY04xR1FOMndXMDdOY3JFK2UvQkdC?=
+ =?utf-8?B?cldqSm1NbVBNV3hzd3ZJdlNtczZkYWVLa2ZQdVM1YUNFQno3YWNCQTgrTTdP?=
+ =?utf-8?B?aDg4WU53MzR2TzZCWXlXY1BpbEFzMW1aSVNGSDliem9WLzNxL1VBZjJ0eUVT?=
+ =?utf-8?B?SGU1WkJlVkdLbXJWTXhaM25aSzFhL1FNdlFvMXV6VUJueDJ0REV6dkxWSGQw?=
+ =?utf-8?B?SThWS0I5WDlPUHpaNms1cGI2RHN0ekJwT2x0c0kvNU85V2oyaTh5Vmk1dnB1?=
+ =?utf-8?B?Y1FtejRvOWlTYk92UnhhMEVLazZWWTh4ZVI2dTAvMWRGZEwvMDR1MGxObE5t?=
+ =?utf-8?B?L3YvRWxtWmZPd1FCalhoeGU1VlJGSlVUZGlLVzJOVnhXR21NclpjeVc2cGFR?=
+ =?utf-8?B?cmVUam1jYnVlZ25TSnliTE52ZHk3TFJyTkZ3MFNlYk04NVdmNU1PSnQzY2Zw?=
+ =?utf-8?B?MStjckZiaG00TzFjVGlJN043MjBSZnBDS0lwQXJFcWVmUDFwNm5nU1oyWHRo?=
+ =?utf-8?B?SXkvRWlaa1ZoSjI1TE1PQjZ2Yk9iZ2hIV0I3bUgwSSt6VDY4azM5YXozNTBu?=
+ =?utf-8?B?SlV3dnFDMk8zMzVsSFZkQlpxSmFrSnJnS3hKY3U2VFlIK1lpUkJqRytNWndm?=
+ =?utf-8?B?cXlzSklQbGgybkJGSDR2WUhYNm5CMkVUQUhMbjZGWUNSMmpESS9oei9VQk1M?=
+ =?utf-8?B?MmhwbUVOVTdSOFlQRms5dVRKVjF5dWIvcnZPYkpCMVVIeHhSREIvMSsrMUEw?=
+ =?utf-8?B?cTJZZXZwZ0U4aXBNeG5MdlpuemZEdGhMRHVjVjM0NUVPZWF2RnZSTWY4ODZy?=
+ =?utf-8?B?UTdHM3RjaXhlcGpDUGdCSWVxRjYzQkVFYjNuWVZhK1lFc2NhSlRFbmJyVlRk?=
+ =?utf-8?B?eWloQ3A4SkFGUGhuRzRXb1hBN3pSdExlajNKTUh1QitYZS9OVm5ZK1ZwNW5q?=
+ =?utf-8?B?M0lydFl3QzI0SnVERkxkSE5XZ1Bkek1TS2s1U0d2VjRwUzI2cTF0TXZhUlJP?=
+ =?utf-8?B?VlVaU1lydU44ZC94Vytid1ZjNzh4bmJEZFU2S1M4QmovOUgxOVA0ZXJTbGRm?=
+ =?utf-8?B?VnBPY1kwNWFUQzhocHZtYnEveEpSQjhEajFsOTNDMEhMQlBrSVdoazhIcW5F?=
+ =?utf-8?B?YWtXby9vN2MzNG8rdmx3VUx2aHZwdmdoYU80YkpzRVdGb1NkQ3Zsb1BWZXBY?=
+ =?utf-8?B?RFJBeGYzZEdiTmF2Y2hmQjYzb2kwbm1vQmFwUHM1b0NGaXNwcmlqWS83Zzdj?=
+ =?utf-8?B?K1BwOW01dVkvQzArcmU5M3BKa0JWaTRKcHAxeDFPaWliTng2Q0FXZWxkdk1l?=
+ =?utf-8?B?UzFUNGRBWUFTeUd0M1lKdlJTYk01VStoUTFUd2ppb0RheEZ0aHkrYjFObHlW?=
+ =?utf-8?B?SjByYjNWS3JRVm5QbjNEMVBwdm9iWEZSL3dqdWZZMVBlZzJweGZnb0R3Y0dw?=
+ =?utf-8?B?WG93cWpRcU9OeXhFNFJoUXlrc0kzejJmcFR1K0pRclFjSWhab1FxeisvZVRM?=
+ =?utf-8?B?S3dtazZFei9JU0EwQkN5NjVwaVh2bk1qNEl5WXRxMzVuWXc0bXZCb25xWUxk?=
+ =?utf-8?B?MWMzZ013aUlHUDhTMTlBTDIwQjhOQUpYQWc5NEsrUFM3cTNRQ3JEYlN0TGZu?=
+ =?utf-8?B?TWs4M05tTFZVdkNkYVhqVUVsc0VsREErVFUrMVdwQUdLUzkvSHBIZz09?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <D72677E21C02A04FA4A27A1D0EF16C75@EURP192.PROD.OUTLOOK.COM>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42a.google.com
+X-OriginatorOrg: openchip.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: GV2P192MB3464.EURP192.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: 356b123b-3d72-4b6c-a0ab-08dee31e6b82
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Jul 2026 09:41:32.4811 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: dfdd4aff-e2c9-4e1a-8642-7f6cc6bbbe6d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: oarxJ3tNlz9NjVrPRQyrz6x0G/nEZQMYM2LU9nXzbZzagIXXrBBHnZSZAAfnrvtRkxK7tAZDHrPwJmqdWMtMFgm6Cj/0IL1H5GuXsPLFsKY=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1P192MB2186
+Received-SPF: pass client-ip=2a01:111:f403:c202::7;
+ envelope-from=harry.vanhaaren@openchip.com;
+ helo=GVXPR05CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,183 +157,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
-
-> On 7/15/2026 10:36 AM, Alex Benn=C3=A9e wrote:
->> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
->>=20
->>> It's now built-in meson, which offers targets check-tcg and check-tcg-*.
->>>
->>> Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->>> ---
->>>  tests/Makefile.include | 68 ++----------------------------------------
->>>  1 file changed, 2 insertions(+), 66 deletions(-)
->>>
->>> diff --git a/tests/Makefile.include b/tests/Makefile.include
->>> index 494d0109f26..9f82552ab54 100644
->>> --- a/tests/Makefile.include
->>> +++ b/tests/Makefile.include
->>> @@ -19,9 +19,7 @@ check-help:
->>>  ifneq ($(filter $(all-check-targets), check-softfloat),)
->>>  	@echo " $(MAKE) check-softfloat               Run FPU emulation tests"
->>>  	@echo " $(MAKE) check-tcg                     Run TCG tests"
->>> -	@echo " $(MAKE) run-tcg-tests-TARGET          Run TCG tests for a giv=
-en target"
->>> -	@echo
->>> -	@echo "The variable TCG_TEST_FILTER will select the subset of matchin=
-g tests."
->>> +	@echo " $(MAKE) check-tcg-TARGET              Run TCG tests for a giv=
-en target"
->>>  endif
->>>  	@echo
->>>  	@echo " $(MAKE) check-report.junit.xml        Generates an aggregated=
- XML test report"
->>> @@ -40,67 +38,6 @@ export SRC_PATH
->>>=20=20
->>>  SPEED =3D quick
->>>=20=20
->>> -
->>> -# TCG_TESTS_WITH_COMPILERS represents the test targets we have cross c=
-ompiler
->>> -# support for, CONFIGURED_TCG_TARGETS it what meson has finally
->>> -# configured having rejected stuff we can't build.
->>> -CONFIGURED_TCG_TARGETS=3D$(patsubst %-config-target.h, %, $(wildcard *=
--config-target.h))
->>> -
->>> -# This is the intersection of what tests we can build and is configured
->>> -TCG_TESTS_TARGETS=3D$(filter $(CONFIGURED_TCG_TARGETS), $(TCG_TESTS_WI=
-TH_COMPILERS))
->>> -
->>> -# Per guest TCG tests
->>> -BUILD_TCG_TARGET_RULES=3D$(patsubst %,build-tcg-tests-%, $(TCG_TESTS_T=
-ARGETS))
->>> -CLEAN_TCG_TARGET_RULES=3D$(patsubst %,clean-tcg-tests-%, $(TCG_TESTS_T=
-ARGETS))
->>> -DISTCLEAN_TCG_TARGET_RULES=3D$(patsubst %,distclean-tcg-tests-%, $(TCG=
-_TESTS_TARGETS))
->>> -RUN_TCG_TARGET_RULES=3D$(patsubst %,run-tcg-tests-%, $(TCG_TESTS_TARGE=
-TS))
->>> -
->>> -$(foreach TARGET,$(TCG_TESTS_TARGETS), \
->>> -        $(eval $(BUILD_DIR)/tests/tcg/config-$(TARGET).mak: config-hos=
-t.mak))
->>> -
->>> -# $1 =3D the stem (e.g., arm-softmmu or x86_64-linux-user)
->>> -get-qemu-bin =3D $(if $(findstring softmmu,$1),qemu-system-$(subst -so=
-ftmmu,,$1),qemu-$(subst -linux-user,,$1))
->>> -
->>> -$(foreach TARGET,$(TCG_TESTS_TARGETS), \
->>> -        $(eval .ninja-goals.run-tcg-tests-$(TARGET) +=3D $(call get-qe=
-mu-bin,$(TARGET))))
->>> -
->>> -.PHONY: $(TCG_TESTS_TARGETS:%=3Dbuild-tcg-tests-%)
->>> -$(TCG_TESTS_TARGETS:%=3Dbuild-tcg-tests-%): build-tcg-tests-%: $(BUILD=
-_DIR)/tests/tcg/config-%.mak
->>> -	$(call quiet-command, \
->>> -            $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS), \
->>> -        "BUILD","$* guest-tests")
->>> -
->>> -.PHONY: $(TCG_TESTS_TARGETS:%=3Drun-tcg-tests-%)
->>> -$(TCG_TESTS_TARGETS:%=3Drun-tcg-tests-%): run-tcg-tests-%: build-tcg-t=
-ests-%
->>> -	$(call quiet-command, \
->>> -           $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS) SPEED=3D$(SPEED=
-) TCG_TEST_FILTER=3D$(TCG_TEST_FILTER) run, \
->>> -        "RUN", "$* guest-tests")
->>> -
->>> -.PHONY: $(TCG_TESTS_TARGETS:%=3Dclean-tcg-tests-%)
->>> -$(TCG_TESTS_TARGETS:%=3Dclean-tcg-tests-%): clean-tcg-tests-%:
->>> -	$(call quiet-command, \
->>> -           $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS) clean, \
->>> -        "CLEAN", "$* guest-tests")
->>> -
->>> -.PHONY: $(TCG_TESTS_TARGETS:%=3Ddistclean-tcg-tests-%)
->>> -$(TCG_TESTS_TARGETS:%=3Ddistclean-tcg-tests-%): distclean-tcg-tests-%:
->>> -	$(call quiet-command, \
->>> -           $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS) distclean, \
->>> -        "CLEAN", "$* guest-tests")
->>> -
->>> -.PHONY: build-tcg
->>> -build-tcg: $(BUILD_TCG_TARGET_RULES)
->>> -
->>> -.PHONY: check-tcg
->>> -.ninja-goals.check-tcg =3D all test-plugins
->>> -check-tcg: $(RUN_TCG_TARGET_RULES)
->>> -
->>> -.PHONY: clean-tcg
->>> -clean-tcg: $(CLEAN_TCG_TARGET_RULES)
->>=20
->> We still need a clean-tcg or similar rule to force a rebuild of the
->> tests without killing the whole build dir.
->>
->
-> It was needed before, since we only had partial dependencies.
-> But now considering that all dependencies are correctly tracked, what's
-> the use case?
-> - If a test is mtime modified, it rebuilds the test.
-> - If a dockerfile is mtime modified, associated tests are rebuilt.
-> - If docker.py is modified, it will rebuild tests transitively.
-> - If cflags are modified, test will be rebuilt also.
-> - All input of a test (.h, .c, ...) are all tracked.
-> - If user installs a cross compiler or remove podman/docker, next meson
-> configuration will identify this and rebuild all associated tests.
->
-> In case you find a missing dep, we just need to add it in meson. clean
-> is not needed anymore.
-
-OK I was testing the changing of the cross compiler and I noticed its
-not reported in the config summary if we have the fallback to
-podman/docker.
-
-I suspect the logic here:
-
-  # snarf the cross-compilation information for tests
-  summary_info =3D {}
-  have_cross =3D false
-  foreach target: target_dirs
-    tcg_mak =3D meson.current_build_dir() / 'tests/tcg' / target / 'config-=
-target.mak'
-    if fs.exists(tcg_mak)
-      config_cross_tcg =3D keyval.load(tcg_mak)
-      if 'CC' in config_cross_tcg
-        summary_info +=3D {config_cross_tcg['TARGET_NAME']: config_cross_tc=
-g['CC']}
-        have_cross =3D true
-      endif
-    endif
-  endforeach
-  if have_cross
-    summary(summary_info, bool_yn: true, section: 'Cross compilers')
-  endif
-
-needs to be cleaned up.
-
->
->>> -
->>> -.PHONY: distclean-tcg
->>> -distclean-tcg: $(DISTCLEAN_TCG_TARGET_RULES)
->>> -
->>>  # Build up our target list from the filtered list of ninja targets
->>>  TARGETS=3D$(patsubst libqemu-%.a, %, $(filter libqemu-%.a, $(ninja-tar=
-gets)))
->>>=20=20
->>> @@ -128,7 +65,6 @@ check-build: run-ninja
->>>  check-clean:
->>>  	rm -rf $(BUILD_DIR)/tests/functional
->>>=20=20
->>> -clean: check-clean clean-tcg
->>> -distclean: distclean-tcg
->>> +clean: check-clean
-
-I wonder if check-clean is redundant as well now if the functional test
-dependencies are properly encoded.
-
->>>=20=20
->>>  endif
->>=20
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+RnJvbTogSGFycnkgdmFuIEhhYXJlbiA8aGFycnkudmFuaGFhcmVuQG9wZW5jaGlwLmNvbT4KCkhp
+IFFlbXUtRGV2ICYgQ0NzLAoKVGhpcyBpcyBteSBmaXJzdCBjb250cmlidXRpb24gdG8gUUVNVSBp
+dHNlbGYsIGJ1dCBJIGhhdmUgd29ya2VkIG9uCkRQREssIE9WUywgYW5kIFFFTVUtUlMgYSBiaXQg
+aW4gdGhlIHBhc3QuIEkgaGF2ZSBleHBlcmllbmNlIHdpdGgKbWFpbGluZyBsaXN0cyBmb3IgcGF0
+Y2hlcyBhbmQgc29tZSBRRU1VIGludGVybmFscy4KClRoaXMgaXMgYSAiZ2l0IHB1Ymxpc2giIHJl
+cGx5IHRvIHRoZSBvcmlnaW5hbCBwYXRjaGVzIHRoYXQgd2VyZW4ndCBpbiBhIHBhdGNoc2V0Ogpo
+dHRwczovL3BhdGNod29yay5rZXJuZWwub3JnL3Byb2plY3QvcWVtdS1kZXZlbC9wYXRjaC8yMDI2
+MDYxNjE2MTI0Mi4yNjczMTUtMS1oYXJyeS52YW5oYWFyZW5Ab3BlbmNoaXAuY29tLwpodHRwczov
+L3BhdGNod29yay5rZXJuZWwub3JnL3Byb2plY3QvcWVtdS1kZXZlbC9wYXRjaC8yMDI2MDYxNjE2
+MTI0Mi4yNjczMTUtMi1oYXJyeS52YW5oYWFyZW5Ab3BlbmNoaXAuY29tLwoKVGhhbmtzIGZvciBy
+ZXZpZXdzIGFuZCBpbnB1dCwgdGhlIHYyIHJld29ya3MgYXMgZm9sbG93czoKLSBJIGV4cGVjdCBl
+bWFpbCB0byBubyBsb25nZXIgaGF2ZSAifCBPUEVOQ0hJUCIgaW4gbXkgbmFtZSwgYW5kIHRoZSBl
+bWFpbCBmb290ZXIgcmVtb3ZlZAotIGdpdCBwdWJsaXNoIHVzZWQgdG8gc2VuZCwgd2l0aCAiLS1u
+dW1iZXIgMiIgdG8gaG9wZWZ1bGx5IGdldCBhIHYyIHBhdGNoc2V0IG91dAotIHJlYmFzZWQgdG8g
+bGF0ZXN0IGJyYW5jaCwgYXRleGl0KCkgZnVuY3Rpb24gc2lnbmF0dXJlcyBjaGFuZ2VkCi0gYXZv
+aWQgYWRkaW5nIG11dGV4IGZvciBvdXRwdXQsIHJlbHkgb24gUUVNVXMgbG9nZ2luZyBtdXRleCAo
+dGhhbmtzIFBpZXJyaWNrKQotLS0gdXNlIHNpbmdsZSBjYWxsIHRvIGxvZyB0byBhdm9pZCBsaW5l
+LWJyZWFrcyBjb3JydXB0aW5nIG91dHB1dAoKUGxlYXNlIG5vdGUgdGhhdCBMTE1zIHdlcmUgdXNl
+ZCB0byBpbnZlc3RpZ2F0ZSBhbmQgZml4IHRoaXMgYnVnLApidXQgYWxsIGNvZGUgaW4gdGhpcyBw
+YXRjaCBoYXMgYmVlbiByZXZpZXdlZCBieSBtZSwgYW5kIEkgYmVsaWV2ZQppdCB0byBiZSBhIGdv
+b2Qgc29sdXRpb24uCgpSZWdhcmRzLCAtSGFycnkKCkhhcnJ5IHZhbiBIYWFyZW4gKDIpOgogIHBs
+dWdpbnMvZXhlY2xvZzogZml4IHNlZ2ZhdWx0L3JhY2UtY29uZCBvbiBwZXItdkNQVSBzdHJ1Y3R1
+cmVzCiAgcGx1Z2lucy9leGVjbG9nOiBmaXggZXhlY2xvZyB2Y3B1X2V4aXQgZXhlY3V0aW9uIHBy
+aW50IGxvc3MKCiBjb250cmliL3BsdWdpbnMvZXhlY2xvZy5jIHwgODggKysrKysrKysrKysrKysr
+KysrKy0tLS0tLS0tLS0tLS0tLS0tLS0tCiAxIGZpbGUgY2hhbmdlZCwgNDMgaW5zZXJ0aW9ucygr
+KSwgNDUgZGVsZXRpb25zKC0pCgotLSAKMi41NC4wCgo=
 
