@@ -4,115 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8C7BC44501
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 08:32:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6EE3C4450A
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 08:58:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkHVh-00005r-VE; Thu, 16 Jul 2026 04:32:01 -0400
+	id 1wkHvC-0002iz-0s; Thu, 16 Jul 2026 04:58:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wkHVd-00005b-3a
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 04:31:58 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wkHVb-0000Kb-Lz
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 04:31:56 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-c96b08cdd1cso4316675a12.0
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 01:31:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784190714; cv=none;
- d=google.com; s=arc-20260327;
- b=ZFM+MvX/z63q8Y4SwI3fVD4Fga/ILH1ozU7goTV9HtBdAK7tjVULQL6VncWJgskL2B
- MxDnkoyY7S74PNl8GEI6A2F09jH1InPkvWiO/vpYqnZdlAe/u411Xq3Ts4ud7OK/4mWM
- fWhauHNHfPJNZLDDUSFoGydpifxUxlYJnX38RxJBZMKFq+FgRuBwJ54obVHe5PLxW+cV
- l+lzn3OiDfsCACRDN0H1BOva/Qyg80WWHlEp98c9vOr5Jxp1VYCXzJEzopsPar95vvbB
- vXEgr/iqy8SDI6lKtCeSqp0xwxkcxgYaYLe7Dp0TC0xASvXFdJohyCTZRg0Md+ci3DHi
- P/kQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=yROQRcmsDh+lQyyYwu/CwkohZirvBeHYMVBnxhiac1w=;
- fh=KnxVq+/dNMGR5XtbHr3cm7WMCtMcRbEU6z8PkW8LG2I=;
- b=RhS76/7Apl+5Rw5n4Ds3gjE4gZem82FkQ7k9MWqG/1FkdZJ4NGaB7UWXiWXMddtjtl
- RfgNiVcYryECy4d9tzptVL31gwQJ2zpX9aUooYzGPgpXrv7D44ZgeabhvV9GWCmE+KEA
- ssa5OVBMXXA8oGTvT0K/tONnA8PF9upU72UqR9R4m/dXoEUAtPGZOciE051u+BJ8oA/3
- RQktGZ1lHZZPCEoueGKN8FB+AYpHATCcCPNYdHNu6MKFXoxZ0Z9qteNHqdZ7yw0WpS4+
- h7PM5B3vZwmH3v+LKHrtQ+0kAlZEN5b9k19FBEVKkY/A6md+SF63Aw/la/tQ2ABleIiP
- pIcQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784190714; x=1784795514; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=yROQRcmsDh+lQyyYwu/CwkohZirvBeHYMVBnxhiac1w=;
- b=k32wc+Ha55G86dIncvxDwYo8z+bUdsCUwMFKTSkB52mgmPKK0yD2achfhyFD8WJxCc
- RFA7MCAdvBNuOMn+rCXmms0/pkRZyVqdFu06ChqpYPl4A+sOOi3uJICqumkESat4Bpwy
- 1gkKSLIbkbav8t5urndCwqmotenfxkm0Dvqrjd/ot+4MheRLEA2KGoTm62twm7NoOy/s
- t2pt3sBCn51GApHMlaX9QHeZN8IaMWGbRwfgZqClPUHPAjCHH56EGA9Q3qLkKcO4su4H
- 2i90gNuyqVFfG9rBJ6BuYfnOql+iGk3Z2fCwUYHbga6d8NC4ptL/0O6ZuPdFtNPmrIXY
- 4i0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784190714; x=1784795514;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=yROQRcmsDh+lQyyYwu/CwkohZirvBeHYMVBnxhiac1w=;
- b=bBMERcAIDvVxdmzCjWJXIJh3MoUVddc3Fia2ZxAco2lRD0eOi0Qavg9IER9d+YSOAb
- pZ1dOyD57J4nG39JjCgQ5hOYutqqaUkPMWK8JLrjuLDEw72WyExfFYlkbx12bEDmaRcS
- g4cAbo4po3oA1G9gzHyWVBPXSm8x6eINqH5bWqcuNabT1Qh8mB0dPF70i1Y2umPyj6HP
- qMea1VblxitqQIsfr3l3mHprzJpG6Zjhp69tR1vXdIFvANtRsMqKXqn0PIsrKNaHtKdC
- gKPXA83T9dTYGYLiTQ5TGqBw6sU9DOC+8PlF0KLCYuecrXhmkoXRnGI5pGLVbZ+sdwqg
- ag/g==
-X-Gm-Message-State: AOJu0YwKarwRGIVhrccz5zhVzwsG/Z3b8shE3QajK92ExBoMGpibxiEY
- T0y9xIsxTE/FweqJM4Cpy2u3kdKuKwb1pRVaUU8J3RZ+0kuxc58U74MfRQnJDVB9qDh0xrlnThK
- hgvC6FS0Yle9M5XqxxVJ3+QFnyveCL9I=
-X-Gm-Gg: AfdE7ckPNoDrv8pBTdIOfAlG1gfJCNS1l+g19MM9yAdi7L+mdiurLCgBv29YGBl5VAz
- ecpjpG/Q4227F+wddXOB0HVabDqqMZROhH+iYje37M9zOYueYTot/4IrERKI3TxDAvsJa3hugSA
- ggO/nIqtQKoJIPe1CYkbyd1PrdkJNElQyDLZGnSJT+T7elHA+NY+ntifdZv2i8RJy4eMJyyWc2V
- UAouVpYokuhlkuVZiv8DhikNahfBhEAIXm2WatV69nxhwijzk/MdQxkGJreLG5XqDULtfdnY2yf
- JnCm1Nfm5UW+IVoV0w==
-X-Received: by 2002:a05:6a21:6d9b:b0:3b4:71a9:cd8f with SMTP id
- adf61e73a8af0-3c36c365548mr7182581637.41.1784190714185; Thu, 16 Jul 2026
- 01:31:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wkHvA-0002ii-58
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 04:58:20 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wkHv4-0003Fx-Ks
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 04:58:19 -0400
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
+ by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id D0365C0254;
+ Thu, 16 Jul 2026 11:58:09 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:d6a::1:11] (unknown
+ [2a02:6bf:8080:d6a::1:11])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id 8wM2sT4XFa60-egtSLQpy; Thu, 16 Jul 2026 11:58:09 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1784192289;
+ bh=iI55AQMk2jU89B71M2xeM5aJqfaJVXxUFjPYu2/cPGI=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=q0ubMeZpb8HzQLmaG+WOWgSlRG1tx1dH3SYFoD/lDJURHC0WPSGuVWRmkmYyomE2y
+ yJuospNIyTn2U3zbcjuT2fh2E7OMWqXBuNYiYc26X7rB3COPiuYg7GL39S7wyzAeIp
+ rckf1QyOKFATACveefKyoI5mgEx8MI7SAYmihmLg=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <27da92c7-1669-4a68-81b9-2001e0e89edb@yandex-team.ru>
+Date: Thu, 16 Jul 2026 11:58:08 +0300
 MIME-Version: 1.0
-References: <20260715201055.2465320-1-marcandre.lureau@redhat.com>
- <25541fac-4e55-477c-8599-7e503bff31c6@rsg.ci.i.u-tokyo.ac.jp>
- <c625e54a-b7f5-41d8-8f2c-93bd31f662e4@rsg.ci.i.u-tokyo.ac.jp>
- <CAJ+F1CKxAiu4+ckfmtN0OGRuX58MFoERDiMVJiRx+_WGG-WraQ@mail.gmail.com>
-In-Reply-To: <CAJ+F1CKxAiu4+ckfmtN0OGRuX58MFoERDiMVJiRx+_WGG-WraQ@mail.gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Thu, 16 Jul 2026 12:31:40 +0400
-X-Gm-Features: AUfX_mxpJcq_P0lPEo3tzUHkqIWmsCwZYoqPr_XidgYGCw4RbuEBDwKtvSTcko8
-Message-ID: <CAJ+F1CJWnBcvGHYGPNRzCfKssHrxcKN2h30bhTVP=1gubMUy_w@mail.gmail.com>
-Subject: Re: [PATCH] hw/display/virtio-gpu: validate stride against width on
- scanout
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pg1-x52d.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v19 00/15] virtio-net: live-TAP local migration
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>,
+ jasowang@redhat.com, armbru@redhat.com, farosas@suse.de,
+ raphael.s.norwitz@gmail.com, bchaney@akamai.com, qemu-devel@nongnu.org,
+ pbonzini@redhat.com, yc-core@yandex-team.ru, mark.caveayland@nutanix.com
+References: <20260714154246.1242856-1-vsementsov@yandex-team.ru>
+ <fa53bef0-4fbd-445a-9395-379bbfcb3773@tls.msk.ru>
+ <20260715114802-mutt-send-email-mst@kernel.org> <ales0BaHaS0ZgA2d@redhat.com>
+ <aleut_YyeS_YeYus@x1.local>
+ <142f9286-bbc7-4aed-8822-5d560a09daf9@yandex-team.ru>
+ <20260715163116-mutt-send-email-mst@kernel.org>
+ <d62fa0f5-4339-49e1-aeef-85196561a94e@yandex-team.ru>
+ <20260715181555-mutt-send-email-mst@kernel.org>
+ <7c939f46-482d-4324-8e9f-065e5bb43c33@yandex-team.ru>
+ <20260716011544-mutt-send-email-mst@kernel.org>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20260716011544-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -124,51 +88,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On 16.07.26 08:18, Michael S. Tsirkin wrote:
+> On Thu, Jul 16, 2026 at 03:30:26AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>> On 16.07.26 01:45, Michael S. Tsirkin wrote:
+>>> On Thu, Jul 16, 2026 at 01:11:05AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>>>> On 15.07.26 23:32, Michael S. Tsirkin wrote:
+>>>>> On Wed, Jul 15, 2026 at 11:21:23PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>>>>>> On 15.07.26 19:00, Peter Xu wrote:
+>>>>>>> On Wed, Jul 15, 2026 at 04:52:48PM +0100, Daniel P. Berrangé wrote:
+>>>>>>>> On Wed, Jul 15, 2026 at 11:48:40AM -0400, Michael S. Tsirkin wrote:
+>>>>>>>>> On Wed, Jul 15, 2026 at 06:01:39PM +0300, Michael Tokarev wrote:
+>>>>>>>>>> On 14.07.2026 18:42, Vladimir Sementsov-Ogievskiy wrote:
+>>>>>>>>>>> Hi all!
+>>>>>>>>>>>
+>>>>>>>>>>> Here is a migration for TAP net backend, including its properties and
+>>>>>>>>>>> open fds.
+>>>>>>>>>>>
+>>>>>>>>>>> With this new feature, management software doesn't need to initialize
+>>>>>>>>>>> new TAP and do a switch to it. Nothing should be done around
+>>>>>>>>>>> virtio-net in local migration: it just migrates and continues to use
+>>>>>>>>>>> same TAP device. So we avoid extra logic in management software, extra
+>>>>>>>>>>> allocations in kernel (for new TAP), and corresponding extra delay in
+>>>>>>>>>>> migration downtime.
+>>>>>>>>>>
+>>>>>>>>>> This is quite a big patch set, - is this really worth the effort to do
+>>>>>>>>>> all this just for *local* migration?  What's the possible use case for
+>>>>>>>>>> this in real, - am I right this is just about upgrading the host qemu?
+>>>>>>>>>> And with that in mind, isn't it sufficient to use what we already have
+>>>>>>>>>> (namely, create new tap, start new qemu instance, and migrate the usual
+>>>>>>>>>> way), and tolerate some very minor downtime while the networking code
+>>>>>>>>>> learns the new network topology (isn't it happening almost instantly
+>>>>>>>>>> anyway, and if not, the management can help by sending gratitious ARP)?
+>>>>>>>>>>
+>>>>>>>>>> I wonder what's the use for this at yandex?
+>>>>>>>>>>
+>>>>>>>>>> Thanks,
+>>>>>>>>>>
+>>>>>>>>>> /mjt
+>>>>>>>>>
+>>>>>>>>> Well just theoretically, imagine a big VM, reserving twice the amount
+>>>>>>>>> of memory just to migrate is not nice at all.
+>>>>>>>>
+>>>>>>>> Don't we already have the ability to skip memory transfer by setting
+>>>>>>>> the "x-ignore-shared" capability, assuming the VM RAM has a shared
+>>>>>>>> memory backing.
+>>>>>>>
+>>>>>>> Right, IIUC all similar single-host migrations like this series or CPR (or
+>>>>>>> anything else...) should always need to enable x-ignore-shared in the first
+>>>>>>> place.  That's almost always the starting point of optimizing local
+>>>>>>> migrations.. no matter how the memory will be shared (by the same pool of
+>>>>>>> page cache, or persisted over kexec, etc.).
+>>>>>>>
+>>>>>>
+>>>>>> Yes, sharing RAM between source and target + enabling x-ignore-shared is a first thing to do.
+>>>>>>
+>>>>>> This series optimizes TAP recreating. Not only skip recreating but also allow to
+>>>>>> exclude cloud-networking component form live-update entirely, making the process
+>>>>>> simpler (less components involved), and as I already said, reducing corresponding
+>>>>>> downtime.
+>>>>>>
+>>>>>> -- 
+>>>>>> Best regards,
+>>>>>> Vladimir
+>>>>>
+>>>>> So can you explain, how is this better than
+>>>>> 1. a persistent tap
+>>>>
+>>>> You mean open same tap device both on source and target?
+>>>>
+>>>> This will require some additional steps anyway, to avoid packet loss,
+>>>> like keeping queues disabled on target until post_load.
+>>>>
+>>>> Another thing is MAX_TAP_QUEUES=256 in kernel: this is a problem, if you have more
+>>>> than 128 queues already opened on source. Seems cleaner just pass already opened
+>>>> queues to the target.
+>>>>
+>>>> And finally, on hosts with many CPUs, TAP queue allocate noticeable amount
+>>>> of RAM, so having x2 queues during migration would be an overhead.
+>>>
+>>> ah I forgot. yes queues do get
+>>>
+>>>>> 2. a non persistent tap that some server gets a hold of
+>>>>
+>>>> You mean, just pass FDs externally, instead of using QEMUs migration stream?
+>>>> That's possible. But requires mgmt tool to store (or get from source) and pass
+>>>> these FDs. Requires mgmt to even know about these FDs.
+>>>
+>>> e.g. libvirt already does, right? it creates them?
+>>
+>> Not sure. But even if it creates and passes them to QEMU. Does it store them?
+>> Libvirt may restart, and it shouldn't break further migration.
+>>
+>> So, we'll need also an API to get FDs from QEMU. To get FDs from QEMU just
+>> to pass them to target QEMU - I don't think it's more clear solution.
+>>
+>>>
+>>>> But why? QEMU already
+>>>> can pass FDs through migration for vfio devices (CPR), why is TAP worse?
+>>>
+>>> it's not that it's worse. it's that we are growing bespoke mechanisms so far.
+>>> so if qemu gets tap fd on command line then what? how does that
+>>> interact?
+>>
+>> Do you mean how this series handles that case? No problem: given on source from command line
+>> FDs will migrate to the target the same way. Or I don't understand the question.
+> 
+> But right now target gives its own FDs.
 
-On Thu, Jul 16, 2026 at 12:20=E2=80=AFPM Marc-Andr=C3=A9 Lureau
-<marcandre.lureau@redhat.com> wrote:
->
-> Hi
->
-> On Thu, Jul 16, 2026 at 12:04=E2=80=AFPM Akihiko Odaki
-> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
-> >
-> > On 2026/07/16 16:37, Akihiko Odaki wrote:
-> > > On 2026/07/16 5:10, marcandre.lureau@redhat.com wrote:
-> > >> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > >>
-> > >> Validate that the framebuffer stride is at least width * bytes_per_p=
-ixel
-> > >> in both virtio_gpu_scanout_blob_to_fb() and virtio_gpu_do_set_scanou=
-t().
-> > >>
-> > >> A guest can set a very small stride while using a large width. The t=
-otal
-> > >> size check (offset + stride * height <=3D blob_size) passes because
-> > >> stride * height is small, but pixman reads width * bytes_per_pixel p=
-er
-> > >> row, causing heap OOB reads. The leaked data is rendered to the host
-> > >> display.
-> > >>
-> > >> The check is added in virtio_gpu_do_set_scanout() to cover all paths=
-:
-> > >> blob scanout, non-blob scanout and migration post_load. The addition=
-al
-> > >> early check in virtio_gpu_scanout_blob_to_fb() rejects invalid blob
-> > >> configurations early.
-> > >>
-> > >> Fixes: CVE-2026-63109
-> > >> Fixes: 144bd171c837 ("virtio-gpu: Support blob scanout using dmabuf =
-fd")
-> >
-> > I cannot resolve commit 144bd171c837. Apparently the bug was introduced
-> > by commit 7b5574225429 ("hw/display: check frame buffer can hold blob")=
-.
-> >
->
-> oh yes, that was an earlier version from a development branch, thanks..
+You can't start local incoming migration of TAP and also pass FDs (by fd= or fds=),
+that's checked in 13/15.
 
-I'd rather reference 32db3c63ae11 ("virtio-gpu: Add
-virtio_gpu_set_scanout_blob") that introduced the issue
+> 
+>>>
+>>>> Like with persistent tap, it will require some changes in Qemu anyway, to avoid packet loss
+>>>> (like patch 12/15 here).
+>>>
+>>> that one is more like a bugfix.
+>>>
+>>>>>
+>>>>> IOW why does qemu need to bother.
+>>>>
+>>>> QEMU owns the TAP fd and has full knowledge of its state. Pushing this responsibility
+>>>> to an external tool means the tool needs to understand QEMU internals just to pass
+>>>> an fd that QEMU already has. I think, that's a worse separation of concerns.
+>>>>
+>>>> Of course, there are other ways to do TAP local migration. But looking at wider
+>>>> picture, where we want to migrate not only TAP, but also vfio devices (already
+>>>> implemented as CPR migration, but may be updated to use similar approach as in
+>>>> this series, to use one migration channel), vhost-user-blk (my another series
+>>>> in flight) and vhost-user-fs (not yet published), vhost-vsock migration
+>>>> ("[PATCH v3 0/7] migration/cpr: support vhost-vsock devices" in flight series),
+>>>> it seems a good generic approach: simply pass backends (including open FDs) to
+>>>> the target, not involving mgmt. Qemu has full knowledge about these FDs and
+>>>> owns the whole state. Migrating them in QEMU looks correct for me.
+>>>
+>>> if you find a way to generalize things and reuse them for your
+>>> purposes without intrusive changes all over qemu, fine.
+>>
+>> That's not only my purposes (i.e., as I understand, not only Yandex use case).
+>> Originally the work was started by Oracle (CPR), and I see interest from other
+>> companies too.
+>>
+>>>
+>>> But this one is poking as far as frontend code even.
+>>>
+>>
+>> You mean "[PATCH v19 11/15] virtio-net: support local migration of backend" ?
+>>
+>> CPR-approach avoids it, because FDs are passed _before_ any devices created
+>> on target. Is that better? In this way I don't really like the fact that we
+>> start to use (call some ioctls) in target QEMU the FDs, which are still
+>> actively used in running source QEMU . I don't like it, but that works,
+>> and I started working on live-migration on TAP from CPR tap series by
+>> Steve. Still, such approach doesn't work with vhost-user-blk, as trying
+>> to share (even for initialization) the fd between source and running
+>> target may just break things. So I decided to move to similar approach for both
+>> net and storage. Do you think it's better to return to CPR-approach for TAP
+>> (accepting that it won't generalize to vhost-user) like in
+>> "[PATCH v4 0/8] Live update: tap and vhost" -
+>> https://lore.kernel.org/qemu-devel/20260128-cpr-tap-v4-0-48e334d4216b@akamai.com/ -
+>> where both approaches were compared and mine was preferred?
+> 
+> Hmm. Can CPR use yours?
+> 
+
+Yes. For cpr-transfer, TAP will just migrate through main migration channel, like
+other (non-CPR) devices. For cpr-exec, Peter noted [1] that cpr-exec removes
+FD_CLOEXEC for passed fds. But for TAP FDs we don't set this flag, so it should
+work as is. And this series uses the same core mechanism to pass FDs as CPR (see
+load_fd() / save_fd() in migration/vmstate-types.c), which in the case of CPR_EXEC
+passes FDs simply as integers.
+
+[1] https://lore.kernel.org/qemu-devel/aYN1I0WMl6vqaZx4@x1.local/
+
+-- 
+Best regards,
+Vladimir
 
