@@ -4,91 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6885BC4450A
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 14:15:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E32C1C44512
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 14:22:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkMsC-0006ts-Jm; Thu, 16 Jul 2026 10:15:36 -0400
+	id 1wkMy9-0008Aj-Ks; Thu, 16 Jul 2026 10:21:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mike.malyshev@gmail.com>)
- id 1wkLzD-0003Nh-J8
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 09:18:48 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mike.malyshev@gmail.com>)
- id 1wkLzB-0004Ow-1S
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 09:18:47 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-49545ba3d4eso1161685e9.3
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 06:18:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1wkMy8-0008AM-8V
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 10:21:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1wkMy5-00045x-5s
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 10:21:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784211699;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rhZA5YDu7b/kYNoLcHQk8vnfTW5pXOBr0mgRR0qJzVU=;
+ b=YCmCFu+3DsLcSvUBUUtIdd1X9Z7KPVXIpsOaUAQ3M5LdCt+osElM8wTmEpu1TLPbBRffAO
+ 9qiAURCAqw1zVfpMNMGe0x6UMfMzPUn+7KrIlQaZyMytFffvJMXE1w/qas5hWBS8erccbE
+ l3adktHjhIOZRc10xqxK3amRoKx0BF0=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-557-uYpuZTNBP5GYnKmlzHno9Q-1; Thu, 16 Jul 2026 10:21:38 -0400
+X-MC-Unique: uYpuZTNBP5GYnKmlzHno9Q-1
+X-Mimecast-MFC-AGG-ID: uYpuZTNBP5GYnKmlzHno9Q_1784211697
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-81e735bcceaso66780197b3.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 07:21:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784211697; cv=none;
+ d=google.com; s=arc-20260327;
+ b=NPV8hkWnp2vFh4HqeHUnfJWpn10jI+4BzuGDrDAOxnIczz469IjIKIwrrzb+uW5iCe
+ PSyIVdr/WYHHUh04manF9wgdwipm+RMjIY9eK3/CzhkrAweVuj08N4q0bRIX3bHtun/P
+ 5Y7FtwIAx92cu/LUSUAheSNxGeTX9XcmIPu2hE7j71kLHMuUM1tozCq80kOIAMlNGu9K
+ wmzpXsHa0mRdiDPjFag8zf2rGI2QJv4RsX1QQeNGsrKF0uOCWmpkw/MFITPZXChZaRDL
+ SjkLisAziQWiAhXLP7r9ShLZFE+q/CXoYus7B8E6Fus87GYGwRiqaQs9KoAQNiM4+pxS
+ Ydaw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=rhZA5YDu7b/kYNoLcHQk8vnfTW5pXOBr0mgRR0qJzVU=;
+ fh=Y+qgqljnCD+vn9maPv5/L5D+nWzFUyAWPfDNwkTz0Pw=;
+ b=hm453JUPUNQsFBJOnr5cFkYgQRQARAmWrJzdgtgLCp0B3CZr2FQ8JSrzdidckB0OJZ
+ OVXDe52UCDkvqHrDqKKvJonI6wV00UcUQj+1cV2e9/e8kfUkKV2xBaJoPTQ4sBCsZF/V
+ maJu0DUKcA0jmIiNNveL++qRnNCmp+LWXOS1x87sFb6+90NbwgnhY1GhCDwYOy4TW4vw
+ Ts6fPpWi08zv133s87kLqrcNrv3EqXMWekkzJz+9sE0nScCCWtI4B+GyOMr9+ZZ/D3JT
+ 59uNUM/bfI0ZCZhsWvM53NUtLoCH7pMgC4ISqPOqDqqPPMTvwZqnxu6esw6TzsXMq9T8
+ xyzw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784207922; x=1784812722; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=AYiOSLZ05BXXFHEk68Bw7Gj8xG73Q2VclyfmnlPY5aw=;
- b=jhA4CK5mooS57UzWx3imv+Ip5wJP031DVdIvws0u7TdRP+Rnzp3OA+6EyJCbcpcV8B
- BE4kvIt1wRcpHOXWZDLybgZhtI03AilCCobuTBYBpHXNJvboNcISEzzgeJLC/dGUvvct
- LZTMpv57J2kjAm2qQBjwTQUTw4MRecn1wgeLHTLW0pO9kSEx+m8WlVOoi66ok/ZY1Ujy
- qxhNKeY20nC5WRfqHgipezuzVvYaB3H+ShPT+ur51zOUDewzSu/oL3db5jFWz39QtTX+
- 1fTUZmX4uxHNK4WqVZyAxruO83I0FjaryupyMkvaBPWFfNsAx27wpI3NgdVcOIDFM8H3
- 5evw==
+ d=redhat.com; s=google; t=1784211697; x=1784816497; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=rhZA5YDu7b/kYNoLcHQk8vnfTW5pXOBr0mgRR0qJzVU=;
+ b=Bh9YMisowvoWqJrOyA8RCfeOh7FmPfPkNtf9CfgSRgf9uqnyPNpGAQdDMncuaBcTtc
+ 3+P9vkYLscaTQgLV8nCXc+kkqnXcydWXA+d0OLnx2AT4BoZmaMynuF8yYSTd9RbO2o1c
+ MibO5MLfxZlX5QqKU9fz67AKKPcHXTGmpTiiygvxJHtW9L7ScichrME3xzFqthKjjX88
+ OgK60HZAd+vAX39W/oqCGCXjYMYY8JJKqz++XOwcOXeMRZYSKK3kxnXmbdpJzg3bh3PY
+ LQbAdyNQJvcq7mx+cjtwswJMI83KraKxG/3ySEPhyEEWFjTEKvL+YD8RW2duYhEx3NdZ
+ kVhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784207922; x=1784812722;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=AYiOSLZ05BXXFHEk68Bw7Gj8xG73Q2VclyfmnlPY5aw=;
- b=VSyh4d0djkNsGGbaiVe7H/4walygJmcyBTyGCbVoN3PlEQ5LBqFrGOEVC+sFDscbOW
- ZQWYcCQ4gfYiedapUW1A87h+jud2E0JMUphgLpFT6FsowGDf1bTXuasBgK9lFROl8k/M
- Tf/w+8vxo9J4UIYcPrtxYRNVLamNI4K0Nhurc+2N8PuHyKtja44kazdwCANz2zjgpUeg
- r3qewcUSDYdh2N0z67T4qyWWQ9xzoifeqH9h2qm1IO3gNK5WCl1aPRxrt9CM28ztOP+G
- D+fkslGaS6T85qSE3It8Hn+4JNw8VdKe//c9zLdWxwgY/bS9YtRBriySsOz8eCu/Cug0
- mcTQ==
-X-Gm-Message-State: AOJu0Yyc/5P7FUNZz8EVXu+qx1ywg29jGg4iY8+I4AW9MvszIp63l4vV
- NRjCpJuocBzKdxX+F1N4LCEs72yc8oGg7DBsfsIC4OMV/FFx/Z6QSIoUxvCe2NWbwGE=
-X-Gm-Gg: AfdE7ckusskD5urht6ct5b2K8eqJFXjZFhMWIZYUCe/5jlB4G0cb6NPKXY7Y0E52GPQ
- O5ZIceRJIm/wyEUZtj3HMB/Wvea/lGA8lh8PJJNxgE6Gtzn2BU46riUDAIYph8jIj1feqhpTxhF
- SmA1qXethTseWkxtrzQ6ZnDm+pVx20bgeY2kv5UtD4kOrQP7FTXs/6MRaa3/BSMuLyeBTAD8zbA
- rCVw4BmFZjfE+YGFwrgitT+8icDvLDkli8WiqedLdCfExoCLlJgcNTJ/py7tzuxn7ito6+CJjb+
- 7POyUkju8Fp/wVcP+aV2UkQ5pW/VEH5+3DXKWL4EUIHlMDEidJOizkV+Tgsqeuf+93wzOlcgdBy
- YJmbLXZxJjtOY6rcbpCWKi9N+RlnGe+i+kBhJNcX7cn+3SZA+1hhbTt1lct4gT1/j9hRYnTuKec
- waz6T+uxg=
-X-Received: by 2002:a05:600c:34c9:b0:492:3e44:214b with SMTP id
- 5b1f17b1804b1-4953905c59emr121581365e9.13.1784207921418; 
- Thu, 16 Jul 2026 06:18:41 -0700 (PDT)
-Received: from build-server.. ([62.96.37.222])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49541e7f8aesm64769805e9.1.2026.07.16.06.18.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Jul 2026 06:18:40 -0700 (PDT)
-From: mike.malyshev@gmail.com
-To: qemu-devel@nongnu.org
-Cc: Mikhail Malyshev <mike.malyshev@gmail.com>,
- Alex Williamson <alex@shazbot.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [RFC PATCH] hw/vfio: recover from disabled-BAR mmap SIGBUS as
- Unsupported Request
-Date: Thu, 16 Jul 2026 13:18:39 +0000
-Message-ID: <20260716131839.1522870-1-mike.malyshev@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20251104; t=1784211697; x=1784816497;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=rhZA5YDu7b/kYNoLcHQk8vnfTW5pXOBr0mgRR0qJzVU=;
+ b=gwZUVxvLUve0mtkN6XIiQ1pD7bYOeHKMOgQPMt+8DtToUxU1E8jnbm/no4pJCE2nc8
+ PeTMEIU7oGGlkOkD4KD3n+LX8sSYnD2tVfwr5zTuWqItAIrBdf9dHzFmpSDGRXws2OUp
+ sAfPB88mdBJbR0uw+kRCr1S7pvRw2WoGL9wfn/0brNzpMIIMNt9U/bsOnd/49a/xLt2y
+ z2NqZANDA5jH+zpKWFFJ56VPsmk4cZYBKO5JTMsfn2g78QiSLjY5WDKmhbXGPPfsw/GE
+ NnNVJLj6x9p03iRCvSs4/J5nGV09iN1FJC6vRvKkzvSZNUwLvEY39A4lkJHTW0YbQSmX
+ SaXg==
+X-Gm-Message-State: AOJu0Yw1zVEjIT7/PuwWwK/mNHqENipNJFE811wXmeTpE4ZC3bwa8mMp
+ mQgTiUubt2bE9EBQRMIGCj9a9W/UlYCUkUXyBrQFJjHah5o+Bo4gJnl5JO4FNIVZc/TwQvz6DQS
+ 75hdlv5dS74otMIMaK13Zz0yJHQuBMR5gX12hTcGj0MpefofVbcFaMciWAp3UnOc5pvkullyhOh
+ Hh9dWHukB2I5LvBAKRx4Wq7v7lV8GJYcuvQ6+Lne8IEqWT
+X-Gm-Gg: AfdE7cnt0C59/sN+sQ8W5twMC3oFnyCqCPBptk14k/qgzdgGY0FBmZvPKAMwkMqwkHC
+ mezzDYxnBS4QNJFA9pyhOXwLsFwfmLGdTaMnThqpejmzsYpqJQ3HuZPfptcFMg/qQaSnHinZa8h
+ 59OcPb5in6CJ28I/XmmYcF3qZmruDlXz/UaAe3Ye37kVG8/LdhbSOUpcwr
+X-Received: by 2002:a05:690c:338b:b0:7fd:e030:2407 with SMTP id
+ 00721157ae682-81e90091580mr158916947b3.29.1784211697279; 
+ Thu, 16 Jul 2026 07:21:37 -0700 (PDT)
+X-Received: by 2002:a05:690c:338b:b0:7fd:e030:2407 with SMTP id
+ 00721157ae682-81e90091580mr158916537b3.29.1784211695990; Thu, 16 Jul 2026
+ 07:21:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=mike.malyshev@gmail.com; helo=mail-wm1-x32a.google.com
+References: <20260707112149.2867886-1-aesteve@redhat.com>
+ <20260707112149.2867886-3-aesteve@redhat.com>
+In-Reply-To: <20260707112149.2867886-3-aesteve@redhat.com>
+From: Albert Esteve <aesteve@redhat.com>
+Date: Thu, 16 Jul 2026 16:21:24 +0200
+X-Gm-Features: AUfX_mykbzkTkdZuEqHkEtFhrK2TjSN42DeSTy1birjy4A2F2rk3yRTBi1CjtUs
+Message-ID: <CADSE00+abo=8ny1L=u=b-bOj53DaAqwrDQzNCky7Fhh2QHSQPg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] virtio: use g_autoptr guard for shmem map transaction
+To: qemu-devel@nongnu.org, Dorinda Bassey <dbassey@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: permerror client-ip=170.10.129.124;
+ envelope-from=aesteve@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 16 Jul 2026 10:15:34 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,324 +136,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mikhail Malyshev <mike.malyshev@gmail.com>
+On Tue, Jul 7, 2026 at 1:22=E2=80=AFPM Albert Esteve <aesteve@redhat.com> w=
+rote:
+>
+> Use g_autoptr(VirtioShmemGuard) to automatically commit the memory
+> region transaction opened by virtio_add_shmem_map_start(), removing
+> explicit virtio_add_shmem_map_end() calls on each exit path of
+> vhost_user_backend_handle_shmem_map(). This also allows the
+> send_reply_commit label to be folded into send_reply since the two
+> blocks are now identical.
+>
+> VirtioShmemGuard is a sentinel type whose non-NULL value triggers
+> the cleanup function on scope exit via GLib's g_autoptr infrastructure,
+> similar to those used in main-loop.h and rcu.h.
 
-A guest that clears PCI_COMMAND.MEM on a passed-through device makes
-vfio-pci invalidate the device's BAR mmaps in the kernel: any access
-to them then faults with BUS_ADRERR. A vCPU MMIO access that races
-the resulting BAR teardown can reach
-memory_region_ram_device_{read,write}() against a mmap the kernel has
-already invalidated and take SIGBUS, which qemu turns into a fatal
-abort of the whole VM.
+This patch is now superseded by
+https://lore.kernel.org/all/20260716132359.96785-4-dbassey@redhat.com/
 
-This is not a contrived race: real multi-vCPU guest drivers clear a
-device's PCI_COMMAND.MEM (memory decode) on one vCPU while other
-vCPUs are still issuing MMIO to that device's BAR, and this has been
-observed with Intel integrated-GPU drivers in a Windows guest under
-vfio passthrough, so the racing MMIO during teardown is ordinary
-guest behavior.
+I will drop this patch from the series and send the single remaining
+patch in v2.
 
-On real hardware an access to a BAR whose memory decode is disabled
-is answered by the PCIe layer with an Unsupported Request: reads
-return all-ones, writes are dropped, and the instruction completes.
-Emulate that instead of aborting.
-
-Record each ram_device mmap host range as it is (un)mapped, arm a
-per-thread sigsetjmp checkpoint around the raw load/store in the
-ram_device ops, and have the SIGBUS handler longjmp back to it when a
-non-MCE fault address falls in one of those ranges. Mirrors the
-SIGBUS-recovery idiom already used by qemu_prealloc_mem(). MCE and
-non-vfio SIGBUS are unaffected.
-
-Notes:
-- A compiler barrier() brackets the guarded load/store so the
-  ram_device_active guard is ordered around the faulting access
-  rather than depending on codegen.
-- Overflowing the mmap range table warns rather than silently leaving
-  a range untracked (which would reintroduce the abort).
-- sigsetjmp saves the signal mask (an rt_sigprocmask per trapped
-  access); it cannot be dropped without leaving SIGBUS blocked after
-  siglongjmp, so it is a deliberate cost on the trapped-MMIO slow path
-  only, never the EPT fast path.
-
-Link: https://lore.kernel.org/all/20260621133708.3454718-1-mike.malyshev@gmail.com/
-Signed-off-by: Mikhail Malyshev <mike.malyshev@gmail.com>
----
-
-Sent as RFC because:
-
-(a) This is the VMM/SIGBUS half of a two-part PCI_COMMAND.MEM
-    teardown-edge race. The KVM -EFAULT half (the kernel-side arrival
-    of the same race) is handled separately via KVM_EXIT_MEMORY_FAULT
-    and discussed at the Link above; a coordinated qemu memory-fault
-    handler for that half will follow.
-
-(b) The mmap range table currently lives in the generic
-    system/memory.c ram_device path. It could instead be relocated
-    into vfio, since vfio is presently the only user of ram_device
-    regions that hits this race in practice.
-
-(c) The per-access sigsetjmp on the trapped-MMIO slow path, and the
-    alternative of keeping the ram_device MemoryRegion's enabled state
-    synced with PCI_COMMAND.MEM (so the race window is closed instead
-    of recovered from), are both open to maintainer direction.
-
-(d) There is no clean single qemu commit that introduced this fault
-    (it is the kernel vfio-pci mmap invalidation on PCI_COMMAND.MEM
-    clear that makes the mapping fault); commit 4a2e242bbb30
-    ("memory: Don't use memcpy for ram_device regions") is only where
-    the now-recoverable ram_device dereference lives, so no Fixes:
-    tag is asserted.
-
- hw/vfio/region.c        |   5 ++
- include/system/memory.h |  13 ++++
- system/cpus.c           |   9 +++
- system/memory.c         | 131 +++++++++++++++++++++++++++++++++++++++-
- 4 files changed, 157 insertions(+), 1 deletion(-)
-
-diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-index dbde339180..30f10e5857 100644
---- a/hw/vfio/region.c
-+++ b/hw/vfio/region.c
-@@ -280,6 +280,7 @@ static void vfio_subregion_unmap(VFIORegion *region, int index)
-                             region->mmaps[index].offset +
-                             region->mmaps[index].size - 1);
-     memory_region_del_subregion(region->mem, &region->mmaps[index].mem);
-+    memory_region_ram_device_del_range(region->mmaps[index].mmap);
-     munmap(region->mmaps[index].mmap, region->mmaps[index].size);
-     object_unparent(OBJECT(&region->mmaps[index].mem));
-     region->mmaps[index].mmap = NULL;
-@@ -428,6 +429,9 @@ int vfio_region_mmap(VFIORegion *region)
-                                           memory_region_owner(region->mem),
-                                           name, region->mmaps[i].size,
-                                           region->mmaps[i].mmap);
-+        /* track the mmap host range for disabled-BAR SIGBUS -> UR recovery */
-+        memory_region_ram_device_add_range(region->mmaps[i].mmap,
-+                                           region->mmaps[i].size);
-         g_free(name);
-         memory_region_add_subregion(region->mem, region->mmaps[i].offset,
-                                     &region->mmaps[i].mem);
-@@ -495,6 +499,7 @@ void vfio_region_finalize(VFIORegion *region)
- 
-     for (i = 0; i < region->nr_mmaps; i++) {
-         if (region->mmaps[i].mmap) {
-+            memory_region_ram_device_del_range(region->mmaps[i].mmap);
-             munmap(region->mmaps[i].mmap, region->mmaps[i].size);
-         }
-     }
-diff --git a/include/system/memory.h b/include/system/memory.h
-index 47a0e06fbf..bcf1b4e735 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -1278,6 +1278,19 @@ void memory_region_init_ram_device_ptr(MemoryRegion *mr,
-                                        uint64_t size,
-                                        void *ptr);
- 
-+/*
-+ * vfio disabled-BAR SIGBUS recovery (see system/memory.c). vfio registers each
-+ * BAR mmap host range so a racing MMIO into a just-invalidated mmap can be
-+ * completed as an Unsupported Request instead of aborting qemu.
-+ */
-+void memory_region_ram_device_add_range(void *host, size_t size);
-+void memory_region_ram_device_del_range(void *host);
-+/*
-+ * called from the SIGBUS handler; longjmps (no return) when it recovers.
-+ * Recovers only for a BUS_ADRERR fault address in a tracked range.
-+ */
-+bool memory_region_ram_device_on_sigbus(void *addr, int si_code);
-+
- /**
-  * memory_region_init_alias: Initialize a memory region that aliases all or a
-  *                           part of another memory region.
-diff --git a/system/cpus.c b/system/cpus.c
-index 97e5a5edee..22f77321b1 100644
---- a/system/cpus.c
-+++ b/system/cpus.c
-@@ -33,6 +33,7 @@
- #include "exec/gdbstub.h"
- #include "accel/accel-cpu-ops.h"
- #include "system/hw_accel.h"
-+#include "system/memory.h"
- #include "exec/cpu-common.h"
- #include "qemu/thread.h"
- #include "qemu/main-loop.h"
-@@ -382,6 +383,14 @@ static void sigbus_reraise(void)
- static void sigbus_handler(int n, siginfo_t *siginfo, void *ctx)
- {
-     if (siginfo->si_code != BUS_MCEERR_AO && siginfo->si_code != BUS_MCEERR_AR) {
-+        /*
-+         * Not an MCE. If this is a racing MMIO into a passed-through vfio BAR
-+         * whose PCI_COMMAND.MEM was just cleared (mmap invalidated by the
-+         * kernel), complete it as an Unsupported Request instead of aborting.
-+         * memory_region_ram_device_on_sigbus() longjmps back into the
-+         * ram_device access and does not return when it recovers.
-+         */
-+        memory_region_ram_device_on_sigbus(siginfo->si_addr, siginfo->si_code);
-         sigbus_reraise();
-     }
- 
-diff --git a/system/memory.c b/system/memory.c
-index 5fc36708ec..db74606d45 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -14,6 +14,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/atomic.h"
- #include "qemu/log.h"
- #include "qapi/error.h"
- #include "system/memory.h"
-@@ -1364,11 +1365,129 @@ const MemoryRegionOps unassigned_mem_ops = {
-     .endianness = DEVICE_NATIVE_ENDIAN,
- };
- 
-+/*
-+ * vfio passthrough disabled-BAR SIGBUS recovery.
-+ *
-+ * When a guest clears PCI_COMMAND.MEM on a passed-through device, vfio-pci in
-+ * the kernel invalidates the BAR's mmap: any access faults with BUS_ADRERR. A
-+ * vCPU MMIO access that races the teardown reaches the ram_device ops below
-+ * against the just-invalidated mmap and takes SIGBUS, which qemu would turn
-+ * into an abort. On real hardware an access to a MEM=0 BAR is answered with an
-+ * Unsupported Request (reads return all-ones, writes are dropped).
-+ *
-+ * Recover to those semantics: record each ram_device mmap host range, arm a
-+ * sigsetjmp checkpoint around the raw load/store, and let the SIGBUS handler
-+ * (system/cpus.c) longjmp back here when the fault address is one of our
-+ * ranges. Same idiom as qemu_prealloc_mem() in util/oslib-posix.c.
-+ */
-+typedef struct RamDeviceRange {
-+    uintptr_t start;
-+    uintptr_t end;
-+} RamDeviceRange;
-+#define RAM_DEVICE_MAX_RANGES 64
-+static RamDeviceRange ram_device_ranges[RAM_DEVICE_MAX_RANGES];
-+/*
-+ * Mutated only from the vfio mmap/munmap paths (device (un)realize), which run
-+ * under the BQL; read locklessly from the SIGBUS handler on the faulting vCPU
-+ * thread. The range set is tied to the device mmap lifecycle, not to the
-+ * MEM-toggle path that triggers the fault, so a fault never races an add/del
-+ * of its own range. (If a non-BQL ram_device dispatch or vfio unmap path were
-+ * ever added, this swap-remove would need to become atomic.)
-+ */
-+static int ram_device_nranges;
-+
-+void memory_region_ram_device_add_range(void *host, size_t size)
-+{
-+    if (!host) {
-+        return;
-+    }
-+    if (ram_device_nranges >= RAM_DEVICE_MAX_RANGES) {
-+        /*
-+         * Don't drop it silently: an untracked mmap reintroduces the fatal
-+         * abort this recovery prevents, so make the failure mode observable.
-+         */
-+        warn_report("ram_device SIGBUS recovery: range table full (%d); "
-+                    "host %p (0x%zx) left untracked, a racing MMIO to it "
-+                    "while its BAR is disabled would abort qemu",
-+                    RAM_DEVICE_MAX_RANGES, host, size);
-+        return;
-+    }
-+    ram_device_ranges[ram_device_nranges].start = (uintptr_t)host;
-+    ram_device_ranges[ram_device_nranges].end = (uintptr_t)host + size;
-+    ram_device_nranges++;
-+}
-+
-+void memory_region_ram_device_del_range(void *host)
-+{
-+    int i;
-+    for (i = 0; i < ram_device_nranges; i++) {
-+        if (ram_device_ranges[i].start == (uintptr_t)host) {
-+            ram_device_ranges[i] = ram_device_ranges[--ram_device_nranges];
-+            return;
-+        }
-+    }
-+}
-+
-+static bool ram_device_addr_known(uintptr_t addr)
-+{
-+    /* snapshot for the lockless signal-context read */
-+    int i, n = ram_device_nranges;
-+
-+    for (i = 0; i < n; i++) {
-+        if (addr >= ram_device_ranges[i].start &&
-+            addr < ram_device_ranges[i].end) {
-+            return true;
-+        }
-+    }
-+    return false;
-+}
-+
-+/* per-thread checkpoint, armed around the raw mmap access below */
-+static __thread sigjmp_buf ram_device_env;
-+static __thread volatile sig_atomic_t ram_device_active;
-+
-+/*
-+ * Called from the SIGBUS handler on the faulting thread. If a ram_device
-+ * access is in flight on this thread and the fault hit one of our mmap ranges,
-+ * jump back to the checkpoint (does not return); otherwise return false.
-+ */
-+bool memory_region_ram_device_on_sigbus(void *addr, int si_code)
-+{
-+    if (si_code == BUS_ADRERR && ram_device_active &&
-+        ram_device_addr_known((uintptr_t)addr)) {
-+        siglongjmp(ram_device_env, 1);
-+    }
-+    return false;
-+}
-+
- static uint64_t memory_region_ram_device_read(void *opaque,
-                                               hwaddr addr, unsigned size)
- {
-     MemoryRegion *mr = opaque;
--    uint64_t data = ldn_he_p(mr->ram_block->host + addr, size);
-+    uint64_t data;
-+
-+    /*
-+     * sigsetjmp(env, 1) saves the signal mask (an rt_sigprocmask on glibc) on
-+     * every trapped ram_device access. It can't be dropped: siglongjmp out of
-+     * the SIGBUS handler must restore the mask or SIGBUS stays blocked on the
-+     * thread. This is a deliberate per-access cost, incurred only on the
-+     * trapped-MMIO slow path (quirked/sub-page BARs, teardown), never on the
-+     * EPT fast path.
-+     */
-+    if (sigsetjmp(ram_device_env, 1)) {
-+        /* mmap faulted (BUS_ADRERR): BAR MEM disabled -> Unsupported Request */
-+        ram_device_active = 0;
-+        data = (size >= 8) ? ~(uint64_t)0 : (((uint64_t)1 << (size * 8)) - 1);
-+        trace_memory_region_ram_device_read(get_cpu_index(), mr, addr, data,
-+                                            size);
-+        return data;
-+    }
-+    ram_device_active = 1;
-+    /* the guard must be set before the faulting load, reset after */
-+    barrier();
-+    data = ldn_he_p(mr->ram_block->host + addr, size);
-+    barrier();
-+    ram_device_active = 0;
- 
-     trace_memory_region_ram_device_read(get_cpu_index(), mr, addr, data, size);
- 
-@@ -1382,7 +1501,17 @@ static void memory_region_ram_device_write(void *opaque, hwaddr addr,
- 
-     trace_memory_region_ram_device_write(get_cpu_index(), mr, addr, data, size);
- 
-+    if (sigsetjmp(ram_device_env, 1)) {
-+        /* mmap faulted (BUS_ADRERR): BAR MEM disabled -> drop write (UR) */
-+        ram_device_active = 0;
-+        return;
-+    }
-+    ram_device_active = 1;
-+    /* the guard must be set before the faulting store, reset after */
-+    barrier();
-     stn_he_p(mr->ram_block->host + addr, size, data);
-+    barrier();
-+    ram_device_active = 0;
- }
- 
- static const MemoryRegionOps ram_device_mem_ops = {
--- 
-2.43.0
+>
+> Signed-off-by: Albert Esteve <aesteve@redhat.com>
+> ---
+>  hw/virtio/vhost-user.c     | 21 ++++-----------------
+>  hw/virtio/virtio.c         |  4 +++-
+>  include/hw/virtio/virtio.h | 16 ++++++++++++++--
+>  3 files changed, 21 insertions(+), 20 deletions(-)
+>
+> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> index f6bf9e0ba4..0306b06b48 100644
+> --- a/hw/virtio/vhost-user.c
+> +++ b/hw/virtio/vhost-user.c
+> @@ -1933,6 +1933,7 @@ vhost_user_backend_handle_shmem_map(struct vhost_de=
+v *dev,
+>                                      VhostUserPayload *payload,
+>                                      int fd)
+>  {
+> +    g_autoptr(VirtioShmemGuard) shmem_guard =3D NULL;
+>      VirtioSharedMemory *shmem;
+>      VhostUserMMap *vu_mmap =3D &payload->mmap;
+>      VirtioSharedMemoryMapping *existing;
+> @@ -1977,7 +1978,7 @@ vhost_user_backend_handle_shmem_map(struct vhost_de=
+v *dev,
+>          }
+>      }
+>
+> -    virtio_add_shmem_map_start();
+> +    shmem_guard =3D virtio_add_shmem_map_start();
+>
+>      /* Create VirtioSharedMemoryMapping object */
+>      VirtioSharedMemoryMapping *mapping =3D virtio_shared_memory_mapping_=
+new(
+> @@ -1986,7 +1987,7 @@ vhost_user_backend_handle_shmem_map(struct vhost_de=
+v *dev,
+>
+>      if (!mapping) {
+>          ret =3D -EFAULT;
+> -        goto send_reply_commit;
+> +        goto send_reply;
+>      }
+>
+>      /* Add the mapping to the shared memory region */
+> @@ -1994,22 +1995,8 @@ vhost_user_backend_handle_shmem_map(struct vhost_d=
+ev *dev,
+>          error_report("Failed to add shared memory mapping");
+>          object_unref(OBJECT(mapping));
+>          ret =3D -EFAULT;
+> -        goto send_reply_commit;
+> -    }
+> -
+> -send_reply_commit:
+> -    /* Send reply and commit after transaction started */
+> -    if (hdr->flags & VHOST_USER_NEED_REPLY_MASK) {
+> -        payload->u64 =3D !!ret;
+> -        hdr->size =3D sizeof(payload->u64);
+> -        if (!vhost_user_send_resp(ioc, hdr, payload, &local_err)) {
+> -            error_report_err(local_err);
+> -            virtio_add_shmem_map_end();
+> -            return -EFAULT;
+> -        }
+> +        goto send_reply;
+>      }
+> -    virtio_add_shmem_map_end();
+> -    return 0;
+>
+>  send_reply:
+>      if (hdr->flags & VHOST_USER_NEED_REPLY_MASK) {
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index e604781ffe..1db800fcd7 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -3226,9 +3226,11 @@ VirtioSharedMemoryMapping *virtio_shared_memory_ma=
+pping_new(uint8_t shmid,
+>      return mapping;
+>  }
+>
+> -void virtio_add_shmem_map_start(void)
+> +VirtioShmemGuard *virtio_add_shmem_map_start(void)
+>  {
+>      memory_region_transaction_begin();
+> +    /* Anything non-NULL causes the cleanup function to be called */
+> +    return (VirtioShmemGuard *)(uintptr_t)1;
+>  }
+>
+>  void virtio_add_shmem_map_end(void)
+> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+> index 9935452486..b9e67f789c 100644
+> --- a/include/hw/virtio/virtio.h
+> +++ b/include/hw/virtio/virtio.h
+> @@ -104,6 +104,8 @@ enum virtio_device_endian {
+>  #define TYPE_VIRTIO_SHARED_MEMORY_MAPPING "virtio-shared-memory-mapping"
+>  OBJECT_DECLARE_SIMPLE_TYPE(VirtioSharedMemoryMapping, VIRTIO_SHARED_MEMO=
+RY_MAPPING)
+>
+> +typedef void VirtioShmemGuard;
+> +
+>  /**
+>   * VirtioSharedMemoryMapping:
+>   * @parent: Parent QOM object
+> @@ -396,17 +398,27 @@ VirtioSharedMemoryMapping *virtio_shared_memory_map=
+ping_new(uint8_t shmid,
+>   * Begins a transaction to add a shared memory mapping. Call this before=
+ adding
+>   * a shared memory mapping when the commit must be delayed until after a=
+ reply
+>   * is sent to a vhost-user backend.
+> + *
+> + * Returns: Non-NULL guard that triggers cleanup on scope exit.
+>   */
+> -void virtio_add_shmem_map_start(void);
+> +VirtioShmemGuard *virtio_add_shmem_map_start(void);
+>
+>  /**
+>   * virtio_add_shmem_map_end() - End a shmem map transaction
+>   *
+>   * Completes the transaction started by virtio_add_shmem_map_start() and=
+ makes
+> - * the mapping visible to the guest.
+> + * the mapping visible to the guest. Prefer using g_autoptr(VirtioShmemG=
+uard)
+> + * over calling this directly.
+>   */
+>  void virtio_add_shmem_map_end(void);
+>
+> +static inline void virtio_shmem_guard_cleanup(VirtioShmemGuard *guard)
+> +{
+> +    virtio_add_shmem_map_end();
+> +}
+> +
+> +G_DEFINE_AUTOPTR_CLEANUP_FUNC(VirtioShmemGuard, virtio_shmem_guard_clean=
+up)
+> +
+>  /**
+>   * virtio_add_shmem_map() - Add a memory mapping to a shared region
+>   * @shmem: VirtioSharedMemory region
+> --
+> 2.54.0
+>
 
 
