@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8089C44501
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 10:14:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15559C4450A
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 10:15:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkJ62-0001mL-Hl; Thu, 16 Jul 2026 06:13:38 -0400
+	id 1wkJ7r-0002yp-1c; Thu, 16 Jul 2026 06:15:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wkJ5j-0001kj-QT
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 06:13:20 -0400
+ id 1wkJ7p-0002wo-MU
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 06:15:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wkJ5h-00047s-OS
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 06:13:19 -0400
+ id 1wkJ7n-0004RZ-0C
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 06:15:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784196797;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1784196926;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+i7ARB+22SmXZKrtg7FwgVHGWJOiIykqj+z7je/BW0o=;
- b=GM46NnHFJZWo3qS4SHEz9i97h6FrTwOX/hVFu6ejfmAN2x4LR5W+s0+aIShe21QU/ZAQfm
- J3334fpeCMHIY8d8gPWOVNx44O1P7GfdhiEM/5t/DjJKVVFWSg+OOmnLSvIfV7WtGUEQh/
- jCDz91kcVlDvp24++xvmsALJsHY8lnU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=127lHvq6qlz1+4z4X14WRABFSX0rEPsR0bZodUSsga4=;
+ b=fxttmxQZJppjOAysxO7wo+lT1glNNOLmGFB+6C5OJ5BcNHA41hD6/8YHoTfnvWpxo5Hahv
+ /9e8Tcrz+lfse9/RPnvwxv29Wmn8fPYDsl7ZBD0SL3t73jNH5oH0OFuQFGbQgkFpfxRvVQ
+ 2NyXJYFndzWFFXl59Ncu80BX+6X2/f4=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-620-WjlTvYtaNf6BXYmqtBHHnw-1; Thu,
- 16 Jul 2026 06:13:15 -0400
-X-MC-Unique: WjlTvYtaNf6BXYmqtBHHnw-1
-X-Mimecast-MFC-AGG-ID: WjlTvYtaNf6BXYmqtBHHnw_1784196794
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-354-nEHOqfV9MAC2Q9yP-_VHrA-1; Thu,
+ 16 Jul 2026 06:15:22 -0400
+X-MC-Unique: nEHOqfV9MAC2Q9yP-_VHrA-1
+X-Mimecast-MFC-AGG-ID: nEHOqfV9MAC2Q9yP-_VHrA_1784196922
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B31DA1956067; Thu, 16 Jul 2026 10:13:14 +0000 (UTC)
-Received: from berrange.com (unknown [10.44.34.221])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 88ABC1955F78; Thu, 16 Jul 2026 10:13:12 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E49AE1955F23; Thu, 16 Jul 2026 10:15:21 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.34.221])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 260D51956044; Thu, 16 Jul 2026 10:15:19 +0000 (UTC)
+Date: Thu, 16 Jul 2026 11:15:16 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v4 2/2] get_maintainer: add ability to report Git Lab handle
-Date: Thu, 16 Jul 2026 11:13:05 +0100
-Message-ID: <20260716101305.1484991-3-berrange@redhat.com>
-In-Reply-To: <20260716101305.1484991-1-berrange@redhat.com>
-References: <20260716101305.1484991-1-berrange@redhat.com>
+Cc: Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH] iotests: increase timeouts for tests to 5 minutes
+Message-ID: <alivNA7E1p8XJR-7@redhat.com>
+References: <20260623160326.2346255-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+In-Reply-To: <20260623160326.2346255-1-berrange@redhat.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: permerror client-ip=170.10.133.124;
  envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
@@ -84,114 +85,79 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With the GitLab mapping files from the previous commit, the
-get_manitainer.pl script is now able to report the gitlab
-handle for each maintainer/reviewer when displaying output.
+Ping: any reviewers for this simple robustness fix.
 
-For example:
+On Tue, Jun 23, 2026 at 05:03:26PM +0100, Daniel P. Berrangé wrote:
+> Currently we have tests timeout set to 3 minutes, on the basis
+> that they're generally done in less than a minute. I've hit a
+> couple of random failures suggesting that's not sufficiently
+> pessimistic. Increase the timeout to 5 minutes to have a greater
+> safety net in high load scenarios.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>  tests/qemu-iotests/meson.build | 15 +++++++--------
+>  1 file changed, 7 insertions(+), 8 deletions(-)
+> 
+> diff --git a/tests/qemu-iotests/meson.build b/tests/qemu-iotests/meson.build
+> index bc6132a0f7..8857f25f29 100644
+> --- a/tests/qemu-iotests/meson.build
+> +++ b/tests/qemu-iotests/meson.build
+> @@ -52,16 +52,17 @@ foreach driver, speed: qemu_iotests_drivers
+>                '-tap', '-' + driver, item,
+>                '--source-dir', meson.current_source_dir(),
+>                '--build-dir', meson.current_build_dir()]
+> -      # Some individual tests take as long as 45 seconds
+> -      # Bump the timeout to 3 minutes for some headroom
+> -      # on slow machines to minimize spurious failures
+> +      # Some individual tests take as long as 3 minutes
+> +      # in high load scenarios. Bump the timeout to 5
+> +      # minutes for some headroom on slow / loaded
+> +      # machines to minimize spurious failures
+>        test('io-' + driver + '-' + item,
+>             python,
+>             args: args,
+>             depends: qemu_iotests_binaries,
+>             env: qemu_iotests_env,
+>             protocol: 'tap',
+> -           timeout: 180,
+> +           timeout: 300,
+>             suite: suites)
+>      endforeach
+>    endif
+> @@ -94,16 +95,14 @@ foreach driver, speed: qemu_iotests_drivers
+>                '-tap', '-' + driver, item,
+>                '--source-dir', meson.current_source_dir(),
+>                '--build-dir', meson.current_build_dir()]
+> -      # Some individual tests take as long as 45 seconds
+> -      # Bump the timeout to 3 minutes for some headroom
+> -      # on slow machines to minimize spurious failures
+> +      # See earlier note about timeouts
+>        test('io-' + driver + '-' + item,
+>             python,
+>             args: args,
+>             depends: qemu_iotests_binaries,
+>             env: qemu_iotests_env,
+>             protocol: 'tap',
+> -           timeout: 180,
+> +           timeout: 300,
+>             suite: suites)
+>    endforeach
+>  endforeach
+> -- 
+> 2.54.0
+> 
+> 
 
-  $ ./scripts/get_maintainer.pl -f hw/scsi/lsi53c895a.c
-  Paolo Bonzini <pbonzini@redhat.com> (supporter:SCSI, gitlab:@bonzini)
-  Fam Zheng <fam@euphon.net> (reviewer:SCSI, gitlab:@famzheng)
-  qemu-devel@nongnu.org (open list:All patches CC here)
-
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- scripts/get_maintainer.pl | 51 ++++++++++++++++++++++++++++++++++++---
- 1 file changed, 47 insertions(+), 4 deletions(-)
-
-diff --git a/scripts/get_maintainer.pl b/scripts/get_maintainer.pl
-index 76be402e11..9679f27413 100755
---- a/scripts/get_maintainer.pl
-+++ b/scripts/get_maintainer.pl
-@@ -365,6 +365,31 @@ sub read_mailmap {
-     close($mailmap_file);
- }
- 
-+my %gitlabmap;
-+
-+read_gitlabmap(".gitlab-map-auto");
-+read_gitlabmap(".gitlab-map-manual");
-+
-+sub read_gitlabmap {
-+    my $mapfile = shift;
-+    open MAP, "<$mapfile"
-+	or die "cannot open $mapfile: $!";
-+
-+    while (<MAP>) {
-+	next if /^#/;
-+	next if /^\s*$/;
-+
-+	if (/^(\S+)\t(.*)$/) {
-+	    my $handle = $1;
-+	    my $realname = $2;
-+
-+	    $gitlabmap{$realname} = $handle;
-+	}
-+    }
-+
-+    close MAP;
-+}
-+
- ## use the filenames on the command line or find the filenames in the patchfiles
- 
- my @files = ();
-@@ -1068,6 +1093,18 @@ sub email_inuse {
-     return 0;
- }
- 
-+sub gitlab_handle {
-+    my $name = shift;
-+
-+    $name =~ s/"//g;
-+
-+    my $gitlab_handle;
-+    if (exists $gitlabmap{$name}) {
-+	return $gitlabmap{$name};
-+    }
-+    return undef;
-+}
-+
- sub push_email_address {
-     my ($line, $role) = @_;
- 
-@@ -1077,10 +1114,12 @@ sub push_email_address {
- 	return 0;
-     }
- 
-+    my $gitlab_handle = gitlab_handle($name);
-+
-     if (!$email_remove_duplicates) {
--	push(@email_to, [format_email($name, $address, $email_usename), $role]);
-+	push(@email_to, [format_email($name, $address, $email_usename), $role, $gitlab_handle]);
-     } elsif (!email_inuse($name, $address)) {
--	push(@email_to, [format_email($name, $address, $email_usename), $role]);
-+	push(@email_to, [format_email($name, $address, $email_usename), $role, $gitlab_handle]);
- 	$email_hash_name{lc($name)}++ if ($name ne "");
- 	$email_hash_address{lc($address)}++;
-     }
-@@ -2026,10 +2065,14 @@ sub merge_email {
-     my %saw;
- 
-     for (@_) {
--	my ($address, $role) = @$_;
-+	my ($address, $role, $gitlab_handle) = @$_;
- 	if (!$saw{$address}) {
- 	    if ($output_roles) {
--		push(@lines, "$address ($role)");
-+		if (defined $gitlab_handle) {
-+		    push(@lines, "$address ($role, gitlab:\@$gitlab_handle)");
-+		} else {
-+		    push(@lines, "$address ($role)");
-+		}
- 	    } else {
- 		push(@lines, $address);
- 	    }
+With regards,
+Daniel
 -- 
-2.55.0
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
