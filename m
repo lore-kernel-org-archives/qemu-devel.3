@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3629C4450A
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 14:31:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E14EC44512
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 14:31:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkN6U-00019w-Q0; Thu, 16 Jul 2026 10:30:22 -0400
+	id 1wkN7g-0001ZD-QP; Thu, 16 Jul 2026 10:31:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wkN6G-00010Y-KH; Thu, 16 Jul 2026 10:30:08 -0400
+ id 1wkN7d-0001XP-L7; Thu, 16 Jul 2026 10:31:35 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wkN6C-0004ok-2a; Thu, 16 Jul 2026 10:30:06 -0400
+ id 1wkN7a-0005EP-LR; Thu, 16 Jul 2026 10:31:33 -0400
 Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66GDgMU73361652; Thu, 16 Jul 2026 14:29:39 GMT
+ 66GDfdlM3359884; Thu, 16 Jul 2026 14:31:08 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=i3N99XXUhzZ/JoqtxrSdRe/ZdGxWQ2zDc+hU/+q92aE=; b=NFzHcrXjffTP
- t+5PcW43UUJjWTXFph3MV2e2uEdPu5iOQt+se7cNYqGuZ+8rdpGadl55VZxmAVSZ
- kJ082GqB4OrnUGzCL2KGl+hoE/+Iq1feZtn1B0cRK1S/GfYNW/OL/QTqqQvASn1C
- ETmWN6lrdtHQGgYuejC8TpAbvRsfPW5jXWAi27m8ZXh/+h9nciQlH0p1ad+aniuI
- 0eW49jrXZg66G0bDlWE6kgelsDNrWk27rgfQFBt4373sYF56zofRkS6LJ6OE5b9Z
- Ngnc00xhSkV/OPdfSKAosAKSXnPH7IGWkSnrZDDsXZbNUZf1yFwrayG86hvqNapE
- 05jemz++OQ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbepxsb9k-1
+ bh=wPFPkHnrMKAtZ5WU9SXmfL8BWWH/cTkjh2iQ+MzUJPA=; b=lkGUomHyVWkg
+ VteOPlqlHn6aRY7Jbu06aJ1pQ27nJx87q8bRaseG4tCYSMHwlZWcalA7j2UrzoIQ
+ iv7etf8malQAbsYqHgrDiIpsDYAbN3fpUJaQ8AvYRjvEbs/ikvv90hy0wc0ysIzs
+ 2arZx2Oh9WHbrYfMoRdTHk8T+yW5uiOfCnYhpsddZEXarb3h0wb/Kv+ugH5tpwA3
+ gHgv+ch6tI33t5a6C0V9gM1Xww53tgFF9/Zjsi+OnrlSf2bhxiBjurOio+iFk9Ye
+ 7sAsTSasE5DRTqI1m6hzt7S9QxBgM/Y+pCt4awVw9/5kQ9n7xkvPYxPdxCGYNvhC
+ uNOQIUY3yw==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbepxsbs7-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jul 2026 14:29:39 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66GEJnIL023176;
- Thu, 16 Jul 2026 14:29:38 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fc2cgn6j9-1
+ Thu, 16 Jul 2026 14:31:07 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66GEJjMr018236;
+ Thu, 16 Jul 2026 14:31:06 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc0hwdgyx-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jul 2026 14:29:38 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66GETbHu31457926
+ Thu, 16 Jul 2026 14:31:06 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66GEV5Ar25166350
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 16 Jul 2026 14:29:37 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AE10958052;
- Thu, 16 Jul 2026 14:29:37 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E86D458065;
- Thu, 16 Jul 2026 14:29:36 +0000 (GMT)
+ Thu, 16 Jul 2026 14:31:05 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 31DE458054;
+ Thu, 16 Jul 2026 14:31:05 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E06CB5803F;
+ Thu, 16 Jul 2026 14:31:03 +0000 (GMT)
 Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 16 Jul 2026 14:29:36 +0000 (GMT)
-Message-ID: <e32a3161806c1fd056cf86fe674a0fbde21c8b00.camel@linux.ibm.com>
-Subject: Re: [PATCH 12/29] tests/qtest: pca9555: test polarity inversion
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 16 Jul 2026 14:31:03 +0000 (GMT)
+Message-ID: <ab22bba9872d1ee5f9da5b06042046e735aad339.camel@linux.ibm.com>
+Subject: Re: [PATCH 14/29] tests/qtest: pca9552: test behaviour specific to
+ the LED variant
 From: Miles Glenn <milesg@linux.ibm.com>
 To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>,
@@ -70,10 +71,10 @@ Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew
  Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, Corey
  Minyard <cminyard@mvista.com>
-Date: Thu, 16 Jul 2026 09:29:36 -0500
-In-Reply-To: <20260709-catalina-upgrade-v1-12-82a63fead90c@free.fr>
+Date: Thu, 16 Jul 2026 09:31:03 -0500
+In-Reply-To: <20260709-catalina-upgrade-v1-14-82a63fead90c@free.fr>
 References: <20260709-catalina-upgrade-v1-0-82a63fead90c@free.fr>
- <20260709-catalina-upgrade-v1-12-82a63fead90c@free.fr>
+ <20260709-catalina-upgrade-v1-14-82a63fead90c@free.fr>
 Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
@@ -81,24 +82,24 @@ Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: 9ZbT8F4IZ4U8LWjLvh8uBF66-mtJUXA3
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDE0NiBTYWx0ZWRfX+R3PO9mFu4nB
- igl6xsuEH8qB/JCQKs1ZurVMGpdT4xpCXnUmw5949e+y5gjISyZEsbbZu3plEdWY64M/MQA2q8G
- aqsK1h1ggsscCA6w+VVZj1MIlyXx4SQ=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDE0NiBTYWx0ZWRfX+SbiryyNufEE
- MELVEe4RFIJlHdEjzAKI4X/f9NCgqbge3lENf6ZEXSDBWi/sytipZRiVvWHv6+V1ZWhOkz+TplC
- InE2TaN7kXlFgshR3vBasd/2k7tPgryQ5yUknYHi1uTwiii4q5k9SA35fCW+BUZs9nWvCbb2nxO
- eBbI6VYeNbHyugz8BnAdRnZyp74NASN8V4v/qi9rSOYxb466oJHKww4TBE45k4ClSS8xOMBZQpf
- nwHcEukoc1AERixoLtOLY7E7UCE3I71BN5WnsaYrbXu93QzO9foXl7dz9kIJyu81S3jXg97luu0
- o2qRImDj79rKGukxu3QC2OmTS9eDNQjYQH/tNb5xCcRDyTYZcAzphRmNy8BE6mnSzYwQ21lL8sQ
- uR201ntssd8KJ/5b3P/Qep1r35E98jM9LLYRGJzyHwX9eV6+afdrUoEzfYzoRfRweT+1veUWXqp
- JaxaD5Ji/w8hWqp7rhA==
-X-Authority-Analysis: v=2.4 cv=XbS5Co55 c=1 sm=1 tr=0 ts=6a58ead3 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Proofpoint-GUID: 9Hk5U0-zbqC77sxqTnu9viaRJ1VooXuw
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDE0NiBTYWx0ZWRfX+qI076p2/bN2
+ wAPlibxYhRFMNfGIC+FAUcwV7oIyv634aIH5LrO3jrmsDBhoeHiBfcP+DLyODN16+X5OnmWmqLU
+ bBqRZ44Ns5B3AfqN/NOY9vHR/b0/hFA=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDE0NiBTYWx0ZWRfX5KVjbfxcM9/z
+ mIRQbzHleLJBj8YiRa2ZVXB3nL3/Wbduk0f7+OICvXq3Rps0YgNkYuT+Pr9rL15qjn8HbRy6l3D
+ YuJ/6hTNyS2oYNF8bD8cmfV2JnkDkd+/k1aoBbFC+OV8r+GYbTZDT1TJ/OlppAWSi3tcZ35Bzwq
+ Yo7jeprjad5NHR0OSTiW6cOUppLbcnXvFKL3rR3Oi7ffn+19sobWsMPgMusroQ6VykWNSrUuX6q
+ EIbmv/WMdT2lLYTJuV6l+bydb0oY8NTCk5qNS8pi7YeNiKUWDpj4Sjf0um5s6U4gj2NaiwQWRxi
+ bOHIHzftstLQApMv3hxgDddR2R++2AuFPpAW1oxtL4FlR/vcRT30LeBBqxZ+BJqDAqvLEYg1pve
+ qdhSgpA2H/UJATUP8wnwPecLEgdooarFnBEb8NsT6FGgfwMJadazqNbxcmv1/iPllXJQ4seoUkU
+ wogmZRSqP+cYqYtYWpg==
+X-Authority-Analysis: v=2.4 cv=XbS5Co55 c=1 sm=1 tr=0 ts=6a58eb2b cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
  a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=yaGZh0SbKlrZijkgEIsA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: 9H1RJs6DbarfMTKLxj1MbxLc-zu9gIaS
+ a=bBjh46LIgEFOdmwQBDIA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: GTbVTvB6p-cOMs0mK4FMowGWTtTzVRQU
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-16_05,2026-07-15_02,2025-10-01_01
@@ -139,77 +140,118 @@ Thanks,
 Glenn
 
 On Thu, 2026-07-09 at 17:23 +0200, Emmanuel Blot wrote:
-> Add tests for the polarity inversion register: the inversion is applied
-> when reading the INPUT register, both for input pins (pull-up) and for
-> output-driven pins, and it does not affect the OUTPUT register readback.
+> The PCA9552 shares its device model with the PCA9535/PCA9555 GPIO
+> expanders but decodes registers differently. Add tests for the behaviour
+> that is specific to the LED variant and diverges from the PCA9555:
+> 
+>   - the power-on reset defaults of the prescaler, PWM and LED-selector
+>     registers;
+>   - the prescaler/PWM registers (2-5), which are OUTPUT/POLARITY on the
+>     PCA9555, as plain read/write storage;
+>   - the auto-increment, which only advances when the AI command bit is set
+>     and wraps modulo the full 10-register map (rather than toggling bit 0
+>     within a register pair);
+>   - the 4-bit command decode, where an out-of-range register reads back
+>     0xFF instead of aliasing into the register window.
 > 
 > Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 > ---
->  tests/qtest/pca9555-test.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 44 insertions(+)
+>  tests/qtest/pca9552-test.c | 76 ++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 76 insertions(+)
 > 
-> diff --git a/tests/qtest/pca9555-test.c b/tests/qtest/pca9555-test.c
-> index 6b085702c3..2afa061bd2 100644
-> --- a/tests/qtest/pca9555-test.c
-> +++ b/tests/qtest/pca9555-test.c
-> @@ -99,6 +99,46 @@ static void test_port_independence(void *obj, void *data,
->      g_assert_cmphex(i2c_get8(dev, PCA9535_OUTPUT1), ==, 0xAA);
+> diff --git a/tests/qtest/pca9552-test.c b/tests/qtest/pca9552-test.c
+> index 74749576923..3718dfbd227 100644
+> --- a/tests/qtest/pca9552-test.c
+> +++ b/tests/qtest/pca9552-test.c
+> @@ -77,6 +77,76 @@ static void send_and_receive(void *obj, void *data, QGuestAllocator *alloc)
+>      g_assert_cmphex(value, ==, 0xEF);
 >  }
 >  
-> +/*
-> + * Polarity inversion: reading INPUT with polarity bits set should
-> + * return the XOR of the actual input state and the polarity register.
-> + */
-> +static void test_polarity_inversion(void *obj, void *data,
-> +                                    QGuestAllocator *alloc)
+> +/* Verify the power-on reset defaults. */
+> +static void test_reset_defaults(void *obj, void *data, QGuestAllocator *alloc)
 > +{
-> +    QI2CDevice *dev = (QI2CDevice *)obj;
+> +    QI2CDevice *i2cdev = (QI2CDevice *)obj;
 > +
-> +    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT0), ==, 0xFF);
+> +    /* Prescalers, PWM duty cycles and LED selectors (all LEDs off) */
+> +    g_assert_cmphex(i2c_get8(i2cdev, PCA9552_PSC0), ==, 0xFF);
+> +    g_assert_cmphex(i2c_get8(i2cdev, PCA9552_PWM0), ==, 0x80);
+> +    g_assert_cmphex(i2c_get8(i2cdev, PCA9552_PSC1), ==, 0xFF);
+> +    g_assert_cmphex(i2c_get8(i2cdev, PCA9552_PWM1), ==, 0x80);
+> +    g_assert_cmphex(i2c_get8(i2cdev, PCA9552_LS0), ==, 0x55);
+> +    g_assert_cmphex(i2c_get8(i2cdev, PCA9552_LS1), ==, 0x55);
+> +    g_assert_cmphex(i2c_get8(i2cdev, PCA9552_LS2), ==, 0x55);
+> +    g_assert_cmphex(i2c_get8(i2cdev, PCA9552_LS3), ==, 0x55);
 > +
-> +    i2c_set8(dev, PCA9535_POLARITY0, 0xFF);
-> +    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT0), ==, 0x00);
-> +
-> +    i2c_set8(dev, PCA9535_POLARITY0, 0x0F);
-> +    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT0), ==, 0xF0);
-> +
-> +    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT1), ==, 0xFF);
-> +
-> +    i2c_set8(dev, PCA9535_POLARITY1, 0xAA);
-> +    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT1), ==, 0x55);
+> +    /* All LEDs off, so every pin floats high through its pull-up */
+> +    g_assert_cmphex(i2c_get8(i2cdev, PCA9552_INPUT0), ==, 0xFF);
+> +    g_assert_cmphex(i2c_get8(i2cdev, PCA9552_INPUT1), ==, 0xFF);
 > +}
 > +
-> +/* Polarity inversion combined with output-driven pins. */
-> +static void test_polarity_with_output(void *obj, void *data,
+> +/*
+> + * The PCA9552 only advances the command pointer when the AI bit is set, and
+> + * it wraps modulo the full 10-register map.
+> + */
+> +static void test_autoinc_requires_ai_bit(void *obj, void *data,
+> +                                         QGuestAllocator *alloc)
+> +{
+> +    QI2CDevice *i2cdev = (QI2CDevice *)obj;
+> +    uint8_t reg;
+> +    uint8_t resp;
+> +
+> +    /*
+> +     * With the AI bit, reading from LS3 (register 9) rolls over to INPUT0
+> +     * (register 0), not to a sibling in a register pair. All LEDs are off
+> +     * after reset so the input ports read 0xFF.
+> +     */
+> +    reg = PCA9552_LS3 | PCA9552_AUTOINC;
+> +    qi2c_send(i2cdev, &reg, 1);
+> +    qi2c_recv(i2cdev, &resp, 1); /* LS3 */
+> +    g_assert_cmphex(resp, ==, 0x55);
+> +    qi2c_recv(i2cdev, &resp, 1); /* wraps to INPUT0 */
+> +    g_assert_cmphex(resp, ==, 0xFF);
+> +    qi2c_recv(i2cdev, &resp, 1); /* INPUT1 */
+> +    g_assert_cmphex(resp, ==, 0xFF);
+> +
+> +    /*
+> +     * Without the AI bit the pointer must not advance: repeated reads keep
+> +     * returning the same register.
+> +     */
+> +    i2c_set8(i2cdev, PCA9552_LS0, 0x54);
+> +    reg = PCA9552_LS0;
+> +    qi2c_send(i2cdev, &reg, 1);
+> +    qi2c_recv(i2cdev, &resp, 1);
+> +    g_assert_cmphex(resp, ==, 0x54);
+> +    qi2c_recv(i2cdev, &resp, 1);
+> +    g_assert_cmphex(resp, ==, 0x54);
+> +}
+> +
+> +/*
+> + * The PCA9552 decodes a 4-bit command and has no register past LS3 (9), so
+> + * addressing register 0x0A reads back 0xFF.
+> + */
+> +static void test_command_out_of_range(void *obj, void *data,
 > +                                      QGuestAllocator *alloc)
 > +{
-> +    QI2CDevice *dev = (QI2CDevice *)obj;
+> +    QI2CDevice *i2cdev = (QI2CDevice *)obj;
 > +
-> +    i2c_set8(dev, PCA9535_CONFIG0, 0x00);
-> +    i2c_set8(dev, PCA9535_OUTPUT0, 0xA5);
-> +
-> +    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT0), ==, 0xA5);
-> +
-> +    i2c_set8(dev, PCA9535_POLARITY0, 0xFF);
-> +    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT0), ==, 0x5A);
-> +
-> +    g_assert_cmphex(i2c_get8(dev, PCA9535_OUTPUT0), ==, 0xA5);
+> +    g_assert_cmphex(i2c_get8(i2cdev, 0x0A), ==, 0xFF);
 > +}
 > +
->  static void pca9555_register_nodes(void)
+>  static void pca9552_register_nodes(void)
 >  {
 >      QOSGraphEdgeOptions opts = {
-> @@ -114,6 +154,10 @@ static void pca9555_register_nodes(void)
->                   NULL);
->      qos_add_test("input-pullup", "pca9555", test_input_pullup, NULL);
->      qos_add_test("port-independence", "pca9555", test_port_independence, NULL);
-> +    qos_add_test("polarity-inversion", "pca9555", test_polarity_inversion,
-> +                 NULL);
-> +    qos_add_test("polarity-with-output", "pca9555", test_polarity_with_output,
+> @@ -89,5 +159,11 @@ static void pca9552_register_nodes(void)
+>  
+>      qos_add_test("tx-rx", "pca9552", send_and_receive, NULL);
+>      qos_add_test("rx-autoinc", "pca9552", receive_autoinc, NULL);
+> +    qos_add_test("reset-defaults", "pca9552", test_reset_defaults, NULL);
+> +    qos_add_test("autoinc-requires-ai-bit", "pca9552",
+> +                 test_autoinc_requires_ai_bit, NULL);
+> +    qos_add_test("command-out-of-range", "pca9552", test_command_out_of_range,
 > +                 NULL);
 >  }
->  
->  libqos_init(pca9555_register_nodes);
+> +
+>  libqos_init(pca9552_register_nodes);
 > 
 
 
