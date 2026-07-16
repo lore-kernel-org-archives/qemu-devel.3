@@ -4,142 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5BC4C44515
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 17:49:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34759C44515
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 17:55:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkQCg-0005ZK-0e; Thu, 16 Jul 2026 13:48:58 -0400
+	id 1wkQHp-0006t7-AQ; Thu, 16 Jul 2026 13:54:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wkQCc-0005Z2-9U
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 13:48:54 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1wkQHn-0006sa-Ni; Thu, 16 Jul 2026 13:54:15 -0400
+Received: from mail-westeuropeazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::6] helo=AM0PR02CU008.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wkQCZ-0005g8-47
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 13:48:54 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66GGSqhu3301975
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 17:48:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- so15kSDDfM2d4TOWZC/pkg95UAujATPQLEeimXx42SQ=; b=pk9iBUPOyEM5e05+
- Mw+UaPT3s4dbVJ5ge1srv843+a3d3gAuThtaiYQ/1Tnlb+RJuOTK0kZf+j73Atom
- dSAKa8xGGZciYGmSkYBgQXzVBz49r/pO7I45o+Y9hdHVENNhgDE775ncDzNo/43w
- gp0u7eZ9bdL0Kr4DsECHPaHUeXOjWh2pBwuw1Lo0yRqT9MetzvNaJMMKXmI1b7Yp
- qw+fPIn+tijR88ksXmkU5DrU/Zp/lq6LlzYtfmO/8T1K0MMUZjjN7CmxeqmZE87H
- gp9D2NdPN98awZm2sAqQcuQkIx97m37eSUSkigEICyrB1jvMp+Iv6iNCSkULn2/s
- XmiV6A==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4feuex2k7u-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 17:48:49 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-38c7e26ecabso3516301a91.1
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 10:48:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784224129; x=1784828929; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=so15kSDDfM2d4TOWZC/pkg95UAujATPQLEeimXx42SQ=;
- b=BiWCvZAStfliEKkr4dNjdr7LIE0indPl4uLAbV4aqtGFcTPD9YFV84v0A1qk7HQ2s2
- h3l+0f/77avBdSoCZKxSoL2zGVc9ekhTkJE0g2srPmK/x80rueqyYGKEMiNrYoa1vL6o
- XTOIchCObSJi7YDJQVpjWi0zi1sbrNwvidVxJFT/w+uvc+joeoe19v9AsBAsaxOwIyRy
- l5qfYV/wXV0B+wsr1nff3O06Onh5/2k43ayqUWkEqloiEPwHa9M8G/wN3bEWZIOxgMF7
- jLppwFGw2MgNCJuof9Zn1yk1P3tVYu1I+sfi3gl0qhUiSQjuliMh0xONFMkomSo4j75W
- 3SZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784224129; x=1784828929;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=so15kSDDfM2d4TOWZC/pkg95UAujATPQLEeimXx42SQ=;
- b=LkU63jMYWOUG2AKWOaw8Hzr63hvSJPrNEv47qkMmmaa629HBJ+WhFBUKSMsnQhLz2B
- e3++WczgJUR68WRinJ4xgTM4Y4nvGXKbtHD1uN+pVN5ovHqeEKr5thJRoiUYNyjWQL3D
- ZvJe6Wnbe1QC1UO1skykXmXklBbDqvXaQx8kdA+cnrTcYGsr2zQcTHhby49bGkg9fkTS
- XrYmdQpsu75Icmnf3Lm2yxwAD044u/4mDUaxbmbKrfAG22aVSeHhxEuR1V6hAxzx2pAm
- //WrReyc1idcd0wRdVF/l60rEVXOcDTRrxhkhOcsy1GLahfQpO/jSuDrt0PSQln3I29O
- jp0w==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rrt2/N7h1bVI3lgWpvUaVa2vnQi//D3r8TuUAI/noMu7lZOqWxT5+blos2xuwY7Z+W9borK0LyZOTIp@nongnu.org
-X-Gm-Message-State: AOJu0YwmGHgfI8pFPKIjSf+Nsj6AnctdVkWBWzJ1Mwk2v4gH+DkTGR2Z
- IF7rBRCKR45NCRQug6BbMAS3iJLQ1EB5ry/MRP0hhlvxuDVgDBR7DR5skklPf4nIAQ+nR5SfFDr
- T1Gt+pcw2Gv/5Ayvb7VX/kH1xhHC3Inf6Zj9oxY9wOD6GMPBzdsuVZtbK2g==
-X-Gm-Gg: AfdE7cm9RaJxCrBNru/MYx/yuESoMzqcNwD+OnybC6kmJFxr5StYe4jEotJb5OM6kI7
- xJipI54x/QBhDbAME5ntPND+coMh76VjRErzpvnXmnags4fFoaaH65QVMxM9kg6vdIr1lv5Z8xr
- gGhwAUUlrmUccLJpA7kKlOofB5b/73lGXm/QtXULKHS4mSQ6JSYZZYdOHRUREr+wpDNCRZG8t3Z
- 631gnvGUYkt5ZxXYAcrR5Kr+C70YpLopNPhFQjxRcP97Z0IFVHlI9NHh7P/BsBmvpC1GVWtFFNk
- 5KrqzTNpKzwCHoCG8CN9FLukLRVKvjjPciloEkQFa5IJJc4rPlXSovPI58+j1o4wJ+oP+6GCVf1
- sXFUMzupVnIyJIiU1NjMrpBvZIpUO1ThtybNlfA==
-X-Received: by 2002:a17:90a:da8d:b0:38d:c834:2106 with SMTP id
- 98e67ed59e1d1-38e4676ed6emr508022a91.28.1784224128421; 
- Thu, 16 Jul 2026 10:48:48 -0700 (PDT)
-X-Received: by 2002:a17:90a:da8d:b0:38d:c834:2106 with SMTP id
- 98e67ed59e1d1-38e4676ed6emr507989a91.28.1784224127785; 
- Thu, 16 Jul 2026 10:48:47 -0700 (PDT)
-Received: from [192.168.68.105] ([152.234.123.183])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3140e6c09adsm14560803eec.20.2026.07.16.10.48.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jul 2026 10:48:47 -0700 (PDT)
-Message-ID: <8b4f4583-63b0-4d0f-b349-a0177ff19318@oss.qualcomm.com>
-Date: Thu, 16 Jul 2026 14:48:43 -0300
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1wkQHl-0006oe-H3; Thu, 16 Jul 2026 13:54:15 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Yd8r60BGOYH3xtzn75nKt2MRmF1gfR/6kF855UHqfmiAoO7Vc0G/cExeJAyIZOc3o+UMDM5xZwM+8FLgWgUozv/ffFY0YBBx29TY36BGiK+i78GmmEedtckrIYQKFYyMiVY8ZFq/OPHpYPOKwIBrEIAbrDluSHjvSN1ckgYZlTz9UkJcRCmlyGvt4pKPlayKOyUuYKReaeECRfYJhQECdcky4LmNsbRncBFuwJz7w2coOQN5quuoPuTwy5DFHhNlLG2FtjyhadnJDiYvGwY4mWUtWk7DAUUNQN/YBBkmAYl9AnAuGAhVQq6Xuq9N3tm3cXc0nY/sQ7OUuMKhiw8Rag==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1qr958OhV8GdJ9AfQ/IHhyhD65X6thQylRASLS9heM0=;
+ b=IGIRvPhdBrh3R9MaMpO4KqC1f8XUt5brM+0sQ2dBRmKCGTOidEyE2zluIiZeN0UFdxhpwEzwkDaaIxccrXpP1p4Ygr3tFiYp7+jfANjMq4bcNVHZ8kA9sbGYjl7kGUe82+8ByrLiFjEI2l747CATFBMXG1UXZ/G46FR2PyNzE1yZ7SOfDl5S4r3iEyBcTqwDlh3Wxjz94GbLdjPA9lJWZ2iwrdo6uOk7BoosjZnYby0W09MeJDlGGfiHRTOb+WFkl99WrbNXEtCCVVATMoyaTYxbhiYKb5Kjhlm2uAsBNowMU92s9537CJ/f5c23fLCJCtepJ4jz1ZejBgN6pt6BPg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1qr958OhV8GdJ9AfQ/IHhyhD65X6thQylRASLS9heM0=;
+ b=utRjZ5W/U/0HrMb21TVP06+mV/7Zfav3w3VDTPxM+rbb1B3r2wkXMw2Se9FmcQNC933YtP1gah8i3/Xq/UxoY13uTY+52YBsNuQRyq5IdWDjpr9xntqSv7KIEqz8OsSItgAjr9l6jev5yZvmOI6xccMttro/asNShzhROwNmuv+1XB/Ywk98QsAQ0HS3S3Yk//EAaclMbKXxfHHEDezKVAG1xSDNafGqw7JUkbmOIxOXehkthKxUa495fqyHx7HCIot5Q+Rij+RY/jxKdRg6dB5yIYfU0Wz4Y0N0CI5qVT6FrMSv5MNdi4+qgKh4LutYTryOP5a2fITKMdoU1EzDrw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
+ by DB9PR08MB6505.eurprd08.prod.outlook.com (2603:10a6:10:23e::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.9; Thu, 16 Jul
+ 2026 17:54:09 +0000
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0223.011; Thu, 16 Jul 2026
+ 17:54:09 +0000
+Message-ID: <e586cdd4-f9c6-4889-894c-7fc71ca15286@virtuozzo.com>
+Date: Thu, 16 Jul 2026 19:54:07 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/2] hw/misc/k230_rmu: add Kendryte K230 Reset
- Management Unit model
-To: jack wang <163wangjack@gmail.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>
-References: <20260709031237.21284-1-163wangjack@gmail.com>
- <20260709031237.21284-2-163wangjack@gmail.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: Re: [PATCH 1/1] qcow2: do not try to clear the dirty bit on a
+ read-only node
+To: "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+References: <20260716153552.3376009-1-den@openvz.org>
 Content-Language: en-US
-In-Reply-To: <20260709031237.21284-2-163wangjack@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=JeeMa0KV c=1 sm=1 tr=0 ts=6a591981 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=szoPuAicwqWYzOEwwuIrwA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=e57ZSKXAAAAA:20 a=pGLkceISAAAA:8 a=aVSNYSbkTACvUHdZQmAA:9 a=QEXdDO2ut3YA:10
- a=mQ_c8vxmzFEMiUWkPHU9:22 a=bA3UWDv6hWIuX7UZL3qL:22
-X-Proofpoint-ORIG-GUID: gvsYJongJOknPtwWSgnzC1cDsPUQhDbw
-X-Proofpoint-GUID: gvsYJongJOknPtwWSgnzC1cDsPUQhDbw
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDE4MiBTYWx0ZWRfXzQ6B97ED6Tvk
- rxaaTadlsFRdfb77yXs5amHMLvE6Dzlx+e2aWCHq+y8YXMAslhNALm4RCkrlDXryoklfooATZzy
- LY21lpbRZXKG2NEaoUvMyohiuK9Qal4=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDE4MiBTYWx0ZWRfX5iBdHCGXj4bH
- KvbhhL7hy8Rb2602nNNZKriCJxDQzUynHP+sgfnTPhjBXvBqEzBOYLo777tGr8J+t94w4RT7duV
- n/IrN8mlrgHlUeRS+Svk/OS6c1zmTUXm9/XX7eKTCA8aOUo8MOJ7rKVSH6JyA5Mp0GW5/eT8MFe
- YNqNYNZjmml3/6fGlC2kBjJNF1yZ6+UL9k/D3AVtiwpN+fE4CDRiWnRswmocdfHJKgrYVDviLKO
- hJwlnYlDo8GhH19oW4czchSA7uYOim/eWTQcit/pYQuzqWOzPV5soi/tsCiXYcaOeU3q2PGIMRu
- 2sWWSAVFaEs7pVI9233jgTKu+a8PCRrDFDfonWkZkIYqaM/wvxof6uOmz7NIh00945rk7Ldoo93
- nKGyOaXm4cRmmGu8gwAOyWak2DaNg01pUa5OHBwLMBnC2SrTgdHoDxDYf4JQJwtgSIzIwiepcMO
- wYkzw0+DP/n2sK/P+uQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-16_06,2026-07-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0
- priorityscore=1501 impostorscore=0 phishscore=0 malwarescore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607160182
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <20260716153552.3376009-1-den@openvz.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: VIVP296CA0053.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:800:353::13) To AM9PR08MB5892.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2dd::16)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|DB9PR08MB6505:EE_
+X-MS-Office365-Filtering-Correlation-Id: e631c53e-962a-477a-c668-08dee3633c7a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|10070799003|23010399003|1800799024|366016|376014|56012099006|5023799004|18002099003|22082099003|6133799003|10067099003;
+X-Microsoft-Antispam-Message-Info: Kxgmf2mtpCPMuM0xNKVA3oX4Ggv5zNG0QwjHXRe71WyAmgM0OU5pRJfP762or7oRPc8//O/+Qf9ouJvQur7rv9+XmmIzxY463YelB4j9qlOrCjAY+7zkzB/0+QacAg+UnooXSxE9AixxW3v5UmnPP+U1fIrSjolR7ejxbc2FBY5ue6LXvRsB1FZxBAM/5JgsaGP135hcvD2cuqrCW+7VCdvIJQrKTQ8pyMxc4xaO7CBcziStNPYtBmPVdv1H+MDgRLWhpxgQaj6lkEvbJzfewGyr7Y4Dqh9u3/GLhb2YMHr2esAfxX+lJ025VepCiPTLNexAFSB9PT7Fi216C73rKgqyQiqZzHHT58AiSUlk9QLE8R9SqcR0aLwL9XQ4hrmXWyhumA7TR3W5cT5/ELRdzXd5IMdMLrjx3I2sIjuzNQidJJJm6JPfg7VXo4Rqf+S9JaDiurAW7xOmHzCFyDTndDZ4HyEZSIdkEMOJSiQW9kEMIHkXjTVOuQbvAfFZ3nqcAN1ECtW4tUEA5cJ+uVlQpvSGwcm6Nao/0x7xGo4SOlOHOn5jWngXwh0IHj3tt4bBilBhtBuQ3k52aYzGL8aqP2wJ3T2rHs9yCu9sQr0Ir+62udRemorKHysFhqkoacsJEy8kFTjmwE4TomvQ5J6OtxyK2FrAZsRUaIg0mMeEuqU=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(10070799003)(23010399003)(1800799024)(366016)(376014)(56012099006)(5023799004)(18002099003)(22082099003)(6133799003)(10067099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?OExnUVFLR1NRWFh2WnZ2eUJPckFPN2ZrMmRqc0U4MzFyVVNjYXhqWXU4RUls?=
+ =?utf-8?B?V25YY05XL0VvUFZBUnVleGU2REhTN2ZoSkRadU5LSDhGZzZGcm5PRm42RDhk?=
+ =?utf-8?B?aTIxdkRRTnd2WVh2RXBZY0F3K3QzaEVxSmwvTkdTMTZTbm10enhGT2F0Y1BO?=
+ =?utf-8?B?SlRjaFM5aTN1ZGc5eDhlaW95WWpBdEJWYmtPQ0kvU0JRYzR0Q25PNXVWeWtC?=
+ =?utf-8?B?MkM2VWRINzI2VU45Q1hrTVc4am5PZ05BR3YyWjlrQUxtWlp0RHpIcTh1QXNk?=
+ =?utf-8?B?SU1tR2NPcGs3MzdpSG1pVStDQ3VjNGl3V1I3Nk01bzBRNUIrWnoybHlnUzFN?=
+ =?utf-8?B?b2prOXdMYXk4ZWdXcVU0V2ZMTzdxSjFlelVDdThNUUp3d3hBbWpZZE5FSWpE?=
+ =?utf-8?B?bmJPYWxuQUZpV3FJTXluQ1AzN0djcnRyNSt1U3oyVWpHcTdJQm4zd1RuWWMy?=
+ =?utf-8?B?SjJucFNFaVRsTUtScG5ZTFN4MXVTUm1lM3g1TTl3bFg2eHRJa3JVRU5LQU1W?=
+ =?utf-8?B?Q0VwVXlnbXBUeThsTEpZRTJtb1J1YmFQRENJeTVNeXRoYzhIM2Z2eUR6QTZL?=
+ =?utf-8?B?SmpMM1VUOG1mV2QvZlQzZ3ZnbEVzQjhpeTdTczZVd1VaMkRpbW15bG5EZWxh?=
+ =?utf-8?B?elNTN1VPM0hBa0t3YjdhaEpMVklWeDBIcmhWc2p1RGdYRjlScFJaT2V0TDk2?=
+ =?utf-8?B?cjhvdWNyL1JsaEtKMUp6YXo3aVNXcnJlQ1ppR2ZLcUhRdkxDY2lMKzBwYnMr?=
+ =?utf-8?B?NG9VVEVlcE1UV0Y5Z21obFM2WDQyanBXNys3UXRLOHBTQUYvaTBHclB6NGRu?=
+ =?utf-8?B?QTVSanNyNU9KdHVZYVdKbmduRUpCOHBTdFdoc0VmbmZpSTYzUENsWnNMYm5C?=
+ =?utf-8?B?dlJNb0JuYUhqR01nTC90Y0VxVVdXeVk1bm9ESzZBRy9ENEpmaWdQYzZ6SW9p?=
+ =?utf-8?B?UUVZMzQ2M3JQaCtRYmtKdmxuZkpjS2E1dWJkY0kzeVFwYm02WG51SzRJdjFM?=
+ =?utf-8?B?RHlaclp3aTBwYjIvMjFVN3g1bHM2bldOUlh3M3JjTWVYalJJYmkrRlI4RFFy?=
+ =?utf-8?B?SEdndUhjZVp6blFVRTFHNzBSSVE2NDlHd3ZrZFhsaEtWRDVuOVdKV05jZXY0?=
+ =?utf-8?B?Ri94WDUrN29RR1dGbjZUR0pXd0JVRDZLYjh4UDhMMzhzTUF0NlpuRTd0V1NP?=
+ =?utf-8?B?WjBaWmorWVdJNklRRHFkbjArSENudlZDVVFIbnpNWDJtbmcrYklaR2I0c1I4?=
+ =?utf-8?B?NVMveWpQKzBLSGFTTWFmY2ZHTEd2MktyQmF2emdEV3lYTlRKWEY0dHV5Z3ZJ?=
+ =?utf-8?B?ZjZSSmFWakVoUXVpTkZzcGQvZzg0K2dmcnVmNWRLMUJ4dmhhbzQyVzB5dXpT?=
+ =?utf-8?B?MDl3OXV4WC83Q1p0STY0NkhhaDk3MmNFNmtSUDBzTDg5dUdVUVRaamJXN1Nr?=
+ =?utf-8?B?d25qR2k5S3phMisyV2thQi9xazAyTk9sZnNTZkhMVkl3RDd0bUJnQ1d3MEEv?=
+ =?utf-8?B?a3I1alZ5K2IrVWVwWktzTGRwZldwVzJtK1pYNXhINTFtalNKTnAyNVN2b202?=
+ =?utf-8?B?ZE90azIzYWN5aWVrRDVVelFjYkpiTjRNQXB4bUlyUktvRVlpdEpQK2RlekVG?=
+ =?utf-8?B?UkFpY1R6Mkd3eFRXT0Jpc0Y1SDVSa0JnTU5mMXo4bk9ISk9rOGMyakFtZFNR?=
+ =?utf-8?B?YnpCV2RVZkFiNndvZlQ3RHY1ZzBRNzh5eS90dSt4cFZyUjFEVVdpbEtlYWMr?=
+ =?utf-8?B?SUo3OVVyUlo3N3VFQ1pENkIzdkJVbDMwaVAxcUZZWDJjbXlvWEY2Rm5rV0Q5?=
+ =?utf-8?B?MllOV2lUa2JSZkxPZVY1RFd2dEtnY1hxNUtHL25xYVBPRGh3NWFMZ0xOS1F0?=
+ =?utf-8?B?QnRwRHA5T3FPZmtiQnJEZWlPYmo5Z25UZEZMWlVaZENWS0hXUVppRE9BSHp3?=
+ =?utf-8?B?Qk05ZTdXbE04VXFNdTdzOVl0ckhqMHBObjZac2tOTDJMU0Z5QXAzYmVuNWVV?=
+ =?utf-8?B?SktZYUpTWTNweWlrWWtjNlVpQ2lxY0J3ajdERUJ6QzVKRzY2SFhxK1l1amNK?=
+ =?utf-8?B?THByeEtaNVNCdlBBR0xIeWlEUFNQQVNDMFJVRW9KWnRvbGREbEtZN1diOEZv?=
+ =?utf-8?B?NzRWYTVTTk1qTHlUOSszamNnZlBBNmMvVW1lMGFvdlhwckwzaEl1NFl2cnlY?=
+ =?utf-8?B?aWNoS3pWdGREeDMvaG5IVDkzOTFvS3VKYkxSaDBUWnoyTmE1WXpIRW1HdElv?=
+ =?utf-8?B?QXJhMTFaWkltMk8xUDExbUVKSEVNWXUvVi8wWjJvUk9ENzFlUW1nblBBTTl0?=
+ =?utf-8?B?U09BQkNxaG1QdzllK3VRK0d4YjQyRVNqeWVYM2tzTDE1ZEx0WUdSZWtzSnls?=
+ =?utf-8?Q?ftMOcMUCjIqNGCStoulwRDRAte22outCImCZ8X0+KE6DD?=
+X-MS-Exchange-AntiSpam-MessageData-1: Y2HpKAWDn8OwrQ==
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e631c53e-962a-477a-c668-08dee3633c7a
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jul 2026 17:54:09.0554 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: dCwAQ/CjJoIQUm1Apu5hLr59wtsKpGoTnSd+11fjUHRIeSWbVQJjqsjuBe6plLmQsl8bWrMnpBRCK/0cildq0w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR08MB6505
+Received-SPF: pass client-ip=2a01:111:f403:c201::6;
+ envelope-from=den@virtuozzo.com;
+ helo=AM0PR02CU008.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,376 +152,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-On 7/9/2026 12:12 AM, jack wang wrote:
-> From: Jack Wang <163wangjack@gmail.com>
-> 
-> Model the K230 Reset Management Unit (RMU / SYSCTL_RST) at 0x91101000.
-> Its control registers gather the software-controllable reset lines of the
-> SoC peripherals. The register semantics are modelled after the five reset
-> types described by the Linux mainline driver drivers/reset/reset-k230.c:
-> 
->    - CPU0/CPU1: high-half per-bit write-enable strobe plus a done bit (bit12)
->    - FLUSH:     the CPU register bit4, auto-cleared by hardware, no done bit
->    - HW_DONE:   no write-enable; a done bit is latched when the reset fires
->                 and acknowledged by software with write-1-to-clear
->    - SW_DONE:   plain read/write storage, no write-enable and no done bit
-> 
-> QEMU does not reset the target peripherals, so the model collapses the
-> hardware reset latency to zero: writing a reset request bit latches the
-> paired done bit and auto-clears the request bit in the same access, which
-> lets the kernel's readl_poll_timeout() loops succeed on the first read.
-> 
-> A qtest exercises the reset defaults, write-enable gating, HW_DONE latch
-> and write-1-to-clear, repeated resets, flush auto-clear and SW_DONE
-> storage behaviour.
-
-
-The qtest fails with this patch:
-
-  29/352 qtest+qtest-riscv64 - qemu:qtest-riscv64/k230-rmu-test               ERROR            0.33s   killed by signal 6 SIGABRT
-
-
-Error being thrown:
-
-# starting QEMU: exec ./qemu-system-riscv64 -qtest unix:/tmp/qtest-3816689.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-3816689.qmp,id=char0 -object monitor-qmp,id=qmp0,chardev=char0 -display none -audio none -run-with exit-with-parent=on -machine k230  -accel qtest
-ok 1 /riscv64/k230/rmu/reset_values
-# starting QEMU: exec ./qemu-system-riscv64 -qtest unix:/tmp/qtest-3816689.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-3816689.qmp,id=char0 -object monitor-qmp,id=qmp0,chardev=char0 -display none -audio none -run-with exit-with-parent=on -machine k230  -accel qtest
-**
-ERROR:../tests/qtest/k230-rmu-test.c:50:test_cpu_write_enable: assertion failed (rd(qts, K230_RMU_CPU0_CTRL) == K230_RMU_CPU_DONE): (0x00000000 == 0x00001000)
-not ok /riscv64/k230/rmu/cpu_we - ERROR:../tests/qtest/k230-rmu-test.c:50:test_cpu_write_enable: assertion failed (rd(qts, K230_RMU_CPU0_CTRL) == K230_RMU_CPU_DONE): (0x00000000 == 0x00001000)
-Bail out!
-
-
-If we apply patch 2/2 the qtest succeeds.  Which is good, but we aim for all
-tests being green for all individual patches to ease our lives when bisecting
-code.
-
-You can either squash patch 2/2 into this one or move the new qtest to patch 2/2
-where it'll pass.
-
-
-The code LGTM aside from this bit:
-
-> 
-> Signed-off-by: Jack Wang <163wangjack@gmail.com>
+On 7/16/26 17:35, Denis V. Lunev wrote:
+> This email originated from an IP that might not be authorized by the domain it was sent from.
+> Do not click links or open attachments unless it is an email you expected to receive.
+> qcow2_do_close() -> qcow2_inactivate() clears the dirty bit with a
+> plain write to bs->file, unconditionally. A read-only node can still
+> be dirty, inherited from an earlier writable session, and that write
+> then hits a missing BLK_PERM_WRITE and asserts in
+> bdrv_co_write_req_prepare() (block/io.c) on an entirely ordinary
+> close -- closing is expected, the dirty bit on a read-only node
+> is not.
+>
+> Skip the clear for read-only nodes, same as read access already does.
+> Any other still-dirty node keeps the unguarded write: it is expected
+> to hold write permission, and a missing one there is a bug worth
+> seeing.
+>
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> CC: Kevin Wolf <kwolf@redhat.com>
+> CC: Hanna Reitz <hreitz@redhat.com>
 > ---
->   hw/misc/Kconfig             |   3 +
->   hw/misc/k230_rmu.c          | 280 ++++++++++++++++++++++++++++++++++++
->   hw/misc/meson.build         |   1 +
->   hw/misc/trace-events        |   6 +
->   include/hw/misc/k230_rmu.h  |  76 ++++++++++
->   tests/qtest/k230-rmu-test.c | 125 ++++++++++++++++
->   tests/qtest/meson.build     |   3 +-
->   7 files changed, 493 insertions(+), 1 deletion(-)
->   create mode 100644 hw/misc/k230_rmu.c
->   create mode 100644 include/hw/misc/k230_rmu.h
->   create mode 100644 tests/qtest/k230-rmu-test.c
-> 
-
-[...]
-
-> +static void k230_rmu_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +
-> +    dc->realize = k230_rmu_realize;
-> +    device_class_set_legacy_reset(dc, k230_rmu_reset);
-
-
-This is a deprecated API.  If you look at include/hw/core/qdev.h:
-
-
----
-* device_class_set_legacy_reset(): set the DeviceClass::reset method
-  * @dc: The device class
-  * @dev_reset: the reset function
-  *
-  * This function sets the DeviceClass::reset method. This is widely
-  * used in existing code, but new code should prefer to use the
-  * Resettable API as documented in docs/devel/reset.rst.
----
-
-I suggest reading docs/devel/reset.rst to understand which reset phases might
-be applicable to this device.  Some devices implement just the phases.hold cb,
-others implement enter and/or exit.  Seeing k230_rmu_reset() I think you can
-get away with implementing it with just phases.hold but don't just take my word
-for it.  Check out the docs and see what makes sense for this RMU.
-
-
-Thanks,
-Daniel
-
-
-> +    dc->vmsd = &vmstate_k230_rmu;
-> +    dc->desc = "K230 Reset Management Unit";
-> +}
-> +
-> +static const TypeInfo k230_rmu_info = {
-> +    .name          = TYPE_K230_RMU,
-> +    .parent        = TYPE_SYS_BUS_DEVICE,
-> +    .instance_size = sizeof(K230RmuState),
-> +    .class_init    = k230_rmu_class_init,
-> +};
-> +
-> +static void k230_rmu_register_type(void)
-> +{
-> +    type_register_static(&k230_rmu_info);
-> +}
-> +type_init(k230_rmu_register_type)
-> diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-> index 23265f6035..5e1155723f 100644
-> --- a/hw/misc/meson.build
-> +++ b/hw/misc/meson.build
-> @@ -111,6 +111,7 @@ system_ss.add(when: 'CONFIG_XLNX_VERSAL', if_true: files(
->   system_ss.add(when: 'CONFIG_XLNX_VERSAL_TRNG', if_true: files(
->     'xlnx-versal-trng.c',
->   ))
-> +system_ss.add(when: 'CONFIG_K230_RMU', if_true: files('k230_rmu.c'))
->   system_ss.add(when: 'CONFIG_STM32_RCC', if_true: files('stm32_rcc.c'))
->   system_ss.add(when: 'CONFIG_STM32F2XX_SYSCFG', if_true: files('stm32f2xx_syscfg.c'))
->   system_ss.add(when: 'CONFIG_STM32F4XX_SYSCFG', if_true: files('stm32f4xx_syscfg.c'))
-> diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-> index b88accc437..da0e32582e 100644
-> --- a/hw/misc/trace-events
-> +++ b/hw/misc/trace-events
-> @@ -417,3 +417,9 @@ iommu_testdev_dma_read(uint64_t gva, uint32_t len) "gva=0x%" PRIx64 " len=%u"
->   iommu_testdev_dma_verify(uint32_t expected, uint32_t actual) "expected=0x%x actual=0x%x"
->   iommu_testdev_dma_result(uint32_t result) "DMA completed result=0x%x"
->   iommu_testdev_dma_armed(bool armed) "armed=%d"
-> +
-> +# k230_rmu.c
-> +k230_rmu_read(uint64_t offset, uint32_t value) "K230 RMU read:  [0x%" PRIx64 "] -> 0x%08" PRIx32
-> +k230_rmu_write(uint64_t offset, uint32_t value) "K230 RMU write: [0x%" PRIx64 "] <- 0x%08" PRIx32
-> +k230_rmu_flush(uint64_t offset) "K230 RMU flush auto-clear at offset 0x%" PRIx64
-> +k230_rmu_reset_device(void) "K230 RMU device reset"
-> diff --git a/include/hw/misc/k230_rmu.h b/include/hw/misc/k230_rmu.h
-> new file mode 100644
-> index 0000000000..e6f5073c1e
-> --- /dev/null
-> +++ b/include/hw/misc/k230_rmu.h
-> @@ -0,0 +1,76 @@
-> +/*
-> + * K230 Reset Management Unit (RMU / SYSCTL_RST)
-> + *
-> + * K230 Technical Reference Manual V0.3.1 (2024-11-18):
-> + * https://github.com/revyos/external-docs/blob/master/K230/en-us/K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
-> + *
-> + * Register semantics cross-checked against the Linux mainline driver
-> + * drivers/reset/reset-k230.c (compatible "canaan,k230-rst").
-> + *
-> + * Copyright (c) 2026 Jack Wang <163wangjack@gmail.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef HW_MISC_K230_RMU_H
-> +#define HW_MISC_K230_RMU_H
-> +
-> +#include "qemu/bitops.h"
-> +#include "hw/core/sysbus.h"
-> +#include "qom/object.h"
-> +
-> +#define TYPE_K230_RMU "riscv.k230.rmu"
-> +OBJECT_DECLARE_SIMPLE_TYPE(K230RmuState, K230_RMU)
-> +
-> +/* 1 KiB MMIO window, see K230_DEV_RMU in hw/riscv/k230.c. */
-> +#define K230_RMU_MMIO_SIZE   0x1000
-> +#define K230_RMU_NUM_REGS    (K230_RMU_MMIO_SIZE / 4)
-> +
-> +/* Control register offsets used by drivers/reset/reset-k230.c. */
-> +#define K230_RMU_CPU0_CTRL     0x04
-> +#define K230_RMU_CPU1_CTRL     0x0C
-> +#define K230_RMU_AI_CTRL       0x14
-> +#define K230_RMU_VPU_CTRL      0x1C
-> +#define K230_RMU_PERI0_CTRL    0x20   /* SW_DONE bank: TIMERx, WDTx, MAILBOX   */
-> +#define K230_RMU_PERI1_CTRL    0x24   /* SW_DONE bank: UARTx, I2Cx, GPIO       */
-> +#define K230_RMU_HISYS_CTRL    0x2C
-> +#define K230_RMU_SDIO_CTRL     0x34
-> +#define K230_RMU_USB_CTRL      0x3C
-> +#define K230_RMU_SPI_CTRL      0x44
-> +#define K230_RMU_SEC_CTRL      0x4C
-> +#define K230_RMU_DMA_CTRL      0x54
-> +#define K230_RMU_DECOMP_CTRL   0x5C
-> +#define K230_RMU_SRAM_CTRL     0x64   /* mixed: HW_DONE bits + SW_DONE bit1     */
-> +#define K230_RMU_NONAI2D_CTRL  0x6C
-> +#define K230_RMU_MCTL_CTRL     0x74
-> +#define K230_RMU_ISP_CTRL      0x80   /* mixed: HW_DONE bits + SW_DONE bits     */
-> +#define K230_RMU_DPU_CTRL      0x88
-> +#define K230_RMU_DISP_CTRL     0x90
-> +#define K230_RMU_GPU_CTRL      0x98
-> +#define K230_RMU_AUDIO_CTRL    0xA4
-> +#define K230_RMU_SPI2AXI_CTRL  0xA8   /* SW_DONE (active high)                  */
-> +
-> +/* Bit layout shared by the CPU0/CPU1 control registers. */
-> +#define K230_RMU_CPU_RESET     BIT(0)    /* reset request, auto/soft cleared    */
-> +#define K230_RMU_CPU_FLUSH     BIT(4)    /* L2 flush request, hw auto-clears     */
-> +#define K230_RMU_CPU_DONE      BIT(12)   /* done bit, write-1-to-clear           */
-> +
-> +/* The high 16 bits are per-bit write-enable strobes (CPU0/CPU1 registers). */
-> +#define K230_RMU_WE_SHIFT      16
-> +
-> +struct K230RmuState {
-> +    /*< private >*/
-> +    SysBusDevice parent_obj;
-> +
-> +    /*< public >*/
-> +    MemoryRegion mmio;
-> +
+>  block/qcow2.c              |  6 +++++-
+>  tests/qemu-iotests/039     | 11 +++++++++++
+>  tests/qemu-iotests/039.out |  3 +++
+>  3 files changed, 19 insertions(+), 1 deletion(-)
+>
+> diff --git a/block/qcow2.c b/block/qcow2.c
+> index 2ab6ddd7b0..adb177e6b6 100644
+> --- a/block/qcow2.c
+> +++ b/block/qcow2.c
+> @@ -2870,7 +2870,11 @@ static int GRAPH_RDLOCK qcow2_inactivate(BlockDriverState *bs)
+>                       strerror(-ret));
+>      }
+>  
+> -    if (result == 0) {
 > +    /*
-> +     * One 32-bit word per MMIO offset. Indexing by word offset keeps the
-> +     * VMState description trivial. Reset requests auto-clear, so what
-> +     * actually persists here is done bits and SW_DONE storage bits.
+> +     * A read-only node cannot resolve an inherited dirty bit here;
+> +     * leave it dirty, same as plain read access already does.
 > +     */
-> +    uint32_t regs[K230_RMU_NUM_REGS];
-> +};
+> +    if (result == 0 && !bdrv_is_read_only(bs)) {
+>          qcow2_mark_clean(bs);
+>      }
+>  
+> diff --git a/tests/qemu-iotests/039 b/tests/qemu-iotests/039
+> index e43e7026ce..94a8bfe754 100755
+> --- a/tests/qemu-iotests/039
+> +++ b/tests/qemu-iotests/039
+> @@ -84,6 +84,17 @@ $QEMU_IO -r -c "read -P 0x5a 0 512" "$TEST_IMG" | _filter_qemu_io
+>  # The dirty bit must be set
+>  _qcow2_dump_header | grep incompatible_features
+>  
+> +echo
+> +echo "== Read-only open must not crash on close =="
 > +
-> +#endif /* HW_MISC_K230_RMU_H */
-> diff --git a/tests/qtest/k230-rmu-test.c b/tests/qtest/k230-rmu-test.c
-> new file mode 100644
-> index 0000000000..c2c862cd1d
-> --- /dev/null
-> +++ b/tests/qtest/k230-rmu-test.c
-> @@ -0,0 +1,125 @@
-> +/*
-> + * QTest for the K230 Reset Management Unit.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +#include "qemu/osdep.h"
-> +#include "qemu/bitops.h"
-> +#include "libqtest.h"
-> +#include "hw/misc/k230_rmu.h"
+> +# We must not try to write the QCOW2 header to a read-only image.
+> +$QEMU_IMG info --image-opts \
+> +    "driver=$IMGFMT,read-only=on,file.driver=file,file.filename=$TEST_IMG,file.read-only=off" \
+> +    > /dev/null
 > +
-> +#define K230_RMU_BASE 0x91101000ULL
+> +# The dirty bit must still be set: this open never wrote any guest data
+> +_qcow2_dump_header | grep incompatible_features
 > +
-> +static inline uint32_t rd(QTestState *qts, uint64_t off)
-> +{
-> +    return qtest_readl(qts, K230_RMU_BASE + off);
-> +}
-> +static inline void wr(QTestState *qts, uint64_t off, uint32_t val)
-> +{
-> +    qtest_writel(qts, K230_RMU_BASE + off, val);
-> +}
+>  echo
+>  echo "== Repairing the image file must succeed =="
+>  
+> diff --git a/tests/qemu-iotests/039.out b/tests/qemu-iotests/039.out
+> index 8fdbcc528a..c66361128f 100644
+> --- a/tests/qemu-iotests/039.out
+> +++ b/tests/qemu-iotests/039.out
+> @@ -24,6 +24,9 @@ read 512/512 bytes at offset 0
+>  512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+>  incompatible_features     [0]
+>  
+> +== Read-only open must not crash on close ==
+> +incompatible_features     [0]
 > +
-> +/* Every known register reads back as 0 after reset. */
-> +static void test_reset_values(void)
-> +{
-> +    QTestState *qts = qtest_init("-machine k230");
-> +
-> +    g_assert_cmphex(rd(qts, K230_RMU_CPU0_CTRL),  ==, 0);
-> +    g_assert_cmphex(rd(qts, K230_RMU_AI_CTRL),    ==, 0);
-> +    g_assert_cmphex(rd(qts, K230_RMU_HISYS_CTRL), ==, 0);
-> +    g_assert_cmphex(rd(qts, K230_RMU_PERI0_CTRL), ==, 0);
-> +
-> +    qtest_quit(qts);
-> +}
-> +
-> +/*
-> + * CPU0: a low-half write without its strobe is ignored; with the strobe the
-> + * reset request fires, latches done (bit12), and the request bit auto-clears.
-> + */
-> +static void test_cpu_write_enable(void)
-> +{
-> +    QTestState *qts = qtest_init("-machine k230");
-> +
-> +    /* No strobe: the low-half write is dropped, reads back as 0. */
-> +    wr(qts, K230_RMU_CPU0_CTRL, K230_RMU_CPU_RESET);
-> +    g_assert_cmphex(rd(qts, K230_RMU_CPU0_CTRL), ==, 0);
-> +
-> +    /* With strobe (bit16): request bit0 takes effect, done (bit12) latches. */
-> +    wr(qts, K230_RMU_CPU0_CTRL,
-> +       K230_RMU_CPU_RESET | (K230_RMU_CPU_RESET << K230_RMU_WE_SHIFT));
-> +    g_assert_cmphex(rd(qts, K230_RMU_CPU0_CTRL), ==, K230_RMU_CPU_DONE);
-> +
-> +    qtest_quit(qts);
-> +}
-> +
-> +/*
-> + * HW_DONE: no write-enable needed. Writing HISYS request bit0 latches its
-> + * done bit (bit4); writing 1 to the done bit clears it.
-> + */
-> +static void test_hw_done_and_w1c(void)
-> +{
-> +    QTestState *qts = qtest_init("-machine k230");
-> +    uint32_t v;
-> +
-> +    wr(qts, K230_RMU_HISYS_CTRL, BIT(0));      /* no strobe */
-> +    v = rd(qts, K230_RMU_HISYS_CTRL);
-> +    g_assert_cmphex(v & BIT(4), ==, BIT(4));   /* done latched */
-> +    g_assert_cmphex(v & BIT(0), ==, 0);        /* request bit auto-cleared */
-> +
-> +    wr(qts, K230_RMU_HISYS_CTRL, BIT(4));      /* write-1-to-clear */
-> +    g_assert_cmphex(rd(qts, K230_RMU_HISYS_CTRL) & BIT(4), ==, 0);
-> +
-> +    qtest_quit(qts);
-> +}
-> +
-> +/* Repeated resets: one HW_DONE line can be triggered again and again. */
-> +static void test_repeat_reset(void)
-> +{
-> +    QTestState *qts = qtest_init("-machine k230");
-> +
-> +    for (int i = 0; i < 3; i++) {
-> +        wr(qts, K230_RMU_AI_CTRL, BIT(0));                 /* request */
-> +        g_assert_cmphex(rd(qts, K230_RMU_AI_CTRL) & BIT(31), ==, BIT(31));
-> +        wr(qts, K230_RMU_AI_CTRL, BIT(31));                /* W1C done */
-> +        g_assert_cmphex(rd(qts, K230_RMU_AI_CTRL) & BIT(31), ==, 0);
-> +    }
-> +
-> +    qtest_quit(qts);
-> +}
-> +
-> +/* FLUSH: the CPU0 bit4 flush request is auto-cleared, reads back as 0. */
-> +static void test_flush_auto_clear(void)
-> +{
-> +    QTestState *qts = qtest_init("-machine k230");
-> +
-> +    wr(qts, K230_RMU_CPU0_CTRL,
-> +       K230_RMU_CPU_FLUSH | (K230_RMU_CPU_FLUSH << K230_RMU_WE_SHIFT));
-> +    g_assert_cmphex(rd(qts, K230_RMU_CPU0_CTRL) & K230_RMU_CPU_FLUSH, ==, 0);
-> +
-> +    qtest_quit(qts);
-> +}
-> +
-> +/* SW_DONE: the PERI0 low half is plain storage, no strobe and no done bit. */
-> +static void test_sw_done_storage(void)
-> +{
-> +    QTestState *qts = qtest_init("-machine k230");
-> +
-> +    wr(qts, K230_RMU_PERI0_CTRL, BIT(12) | BIT(13));   /* WDT0 / WDT1 reset bits */
-> +    g_assert_cmphex(rd(qts, K230_RMU_PERI0_CTRL), ==, (BIT(12) | BIT(13)));
-> +
-> +    qtest_quit(qts);
-> +}
-> +
-> +int main(int argc, char **argv)
-> +{
-> +    g_test_init(&argc, &argv, NULL);
-> +
-> +    qtest_add_func("/k230/rmu/reset_values",   test_reset_values);
-> +    qtest_add_func("/k230/rmu/cpu_we",         test_cpu_write_enable);
-> +    qtest_add_func("/k230/rmu/hw_done_w1c",    test_hw_done_and_w1c);
-> +    qtest_add_func("/k230/rmu/repeat_reset",   test_repeat_reset);
-> +    qtest_add_func("/k230/rmu/flush",          test_flush_auto_clear);
-> +    qtest_add_func("/k230/rmu/sw_done",        test_sw_done_storage);
-> +
-> +    return g_test_run();
-> +}
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index 822e0bd286..70c9a53454 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -294,7 +294,8 @@ qtests_riscv64 = ['riscv-csr-test'] + \
->     (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
->      config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
->      ['iommu-riscv-test'] : []) + \
-> -  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test'] : [])
-> +  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test',
-> +                                                'k230-rmu-test'] : [])
->   
->   qtests_hexagon = ['boot-serial-test']
->   
+>  == Repairing the image file must succeed ==
+>  ERROR cluster 5 refcount=0 reference=1
+>  Rebuilding refcount structure
+Actually the problem is more subtle. The following command line results in
 
+qemu-storage-daemon \                                                   
+                                                                       
+                                                    
+  --blockdev
+'{"driver":"file","filename":"dirty.qcow2","aio":"threads","node-name":"file0","cache":{"direct":false,"no-flush":false},"auto-read-only":true,"discard":"unmap"}'
+\                    
+  --blockdev
+'{"node-name":"fmt0","read-only":true,"discard":"unmap","cache":{"direct":false,"no-flush":false},"driver":"qcow2","file":"file0"}'
+\                                                   
+  --chardev socket,id=qmp,path=master.sock,server=on,wait=off \         
+                                                                       
+                                                    
+  --monitor chardev=qmp                                                 
+                                                                       
+                                                    
+                                                                       
+                                                                       
+                                                         
+via query-named-block-nodes:
+
+  node-name=fmt0     drv=qcow2  ro=True
+  node-name=file0    drv=file   ro=False
+
+which would come to exactly configuration being asserted in the test
+and this setup is pretty legal at my opinion. In production we have
+had something lengthier with more snapshots.
+
+File descriptor in turn is opened in a correct way - with O_RDONLY
+that is why the problem was hidden for a lot of time.
+
+Would it be more reasonable to disallow to set dirty rather than
+to ignore is open question to me. Playing with permissions and
+changing bdrv_is_read_only() seems more dangerous.
+
+Also worth to note that bdrv_co_write_req_prepare() has wrong check.
+It should check file descriptor rather than administrative permission.
+
+This looks toooooooooo complex to me :(
+
+Den
 
