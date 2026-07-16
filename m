@@ -4,97 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6E5AC44512
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 20:55:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79EABC44512
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 21:06:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkT6D-0002nG-LF; Thu, 16 Jul 2026 16:54:29 -0400
+	id 1wkTGY-00030v-2w; Thu, 16 Jul 2026 17:05:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1wkT6B-0002mf-Ap
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 16:54:27 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1wkT69-0000M4-II
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 16:54:27 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-84a4d8fd6ecso3969504b3a.1
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 13:54:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784235263; x=1784840063; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=BJzIIFDdDzqLtCWmyUzRxr6o/+lBrb/0M6xgQK1DoGI=;
- b=bPDPIAmR9rEJlPKpOYkxTaAVklorxwjEONIU1WO3hlUY8M3CrYkNO/FS9qi9SW3YW4
- dIC+NHisosWU+h/raqTD+n+GIi6E8PFWyOw4AwkePZWD769d9K3imDhRaQRc+9rF8gQu
- x/MUaULe9XfPk8jRU/is7ePFSlxfFvn7k82oXPhipQxIki5s+IgkbuhB9cRI17+YhEN6
- IqMF0jCzJvLm3daLkrDQqEo5oZcwb/NeWKog3DjtqHU4k1zSbQervpxIzjpkjCykYqZp
- nWk+hlJGZwqM5ectyLMpJLafAnSzNRjezcFl/e3Mb2CmgVLkqSPziPh9x7F6ANp52bLi
- /TUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784235263; x=1784840063;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=BJzIIFDdDzqLtCWmyUzRxr6o/+lBrb/0M6xgQK1DoGI=;
- b=n3ax9bCO1XMd0nBzyb+99fZ/oQbhR8CrZxX26TkXGAXhPpDhqAaOXw7lnrTUxTLMiU
- J8vjO2lWQ/9iBt2jK8Fy06lRYfTUN43fFeFzP1weiUc+BuncF2lDgt277/C38dSRnR2F
- GsKmIUBdgRHkYUdZEuPmVKcGfaYd+dIRiX79iKcluM0MHjBIy7HGnn36jdKQvSsUrqfQ
- LGmJiUcRZwWXLaTvCyQglr8lRhuNr5ObTVKUXQuE1yZNyztSzIi+55Y9nKJ+v/cEpWWB
- NpDcGeaZFWpVjoW67CUIIElY6CDTtkgTt8EN7EgGXEuHQxCxZFev4V3yQgkWxpWegm3u
- dGcA==
-X-Forwarded-Encrypted: i=1;
- AHgh+RotqnzKAKO2BFh5PbbfpzIp1yl7dDe5+CVziLCtPuz6x3DA5EpKUYdWDG191XHsuTpKrJDNqgLjekLB@nongnu.org
-X-Gm-Message-State: AOJu0Ywt99nUKP+db3SI14pMb5NgRI30AXtPaIvKrGtS4XBHljXgGa8d
- ZkwNbUD5NxxneQmxmOM7HPWH2Mugcz3diyRPsO61PUgWUwdqcgjD/rU5qKKLe1O+GjE=
-X-Gm-Gg: AfdE7cmWlxT+Ej2xcnBr3ts7Qo9cp+s1qkVs6x1JgAG5kjHL/ip+clUdK0/HViECXwZ
- zVNmB5IcVFrDiOJl3Z3HY0N4fH0Rrbvuz5fMv4nXbMMwkablmYYH1WQBG3cxYmeadWbDL76J+Yg
- NM/CoF82OXVYaErf8LcmGb/I/i0POeRY0Rj4lcUAb4/oUwtlQh3dLFZH9TbFMczTjAxnbk3taYz
- 0nFpF97wWME11tD0Z+YX44dIjv+DsBs6FfdCJ+8Wdx4a2vhjRrOIUAVsX2ISbzD0K8K1GzGvPVk
- oco0TwsSdIN37qvEPwaKA6w+DkrBfLppjUE6b16D2xqguV5tl9lFFTSoUG1PPA8/GyAlZFpX69u
- 93i5wE0gUQBSZGbYVXfT3lBUvzkGx8i1rmsBVxj3sM2x+W8Y51D2EOPhCzlEY8b7ZDWhkMN2wW0
- DU3n5g1g==
-X-Received: by 2002:a05:6a00:1808:b0:848:6698:2d5a with SMTP id
- d2e1a72fcca58-84a6726c042mr7950638b3a.20.1784235263350; 
- Thu, 16 Jul 2026 13:54:23 -0700 (PDT)
-Received: from p14s ([2604:3d09:148c:c800:bc13:5578:20b0:9bee])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cb258eb856dsm2492407a12.6.2026.07.16.13.54.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Jul 2026 13:54:22 -0700 (PDT)
-Date: Thu, 16 Jul 2026 14:54:20 -0600
-From: Mathieu Poirier <mathieu.poirier@linaro.org>
-To: Gavin Shan <gshan@redhat.com>
-Cc: berrange@redhat.com, kchamart@redhat.com,
- pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
- mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
- eblake@redhat.com, armbru@redhat.com, jpb@kernel.org,
- lorenzo.pieralisi@linaro.org, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvm@vger.kernel.org
-Subject: Re: [RFC v1 08/25] target/arm/kvm: Use kvm_vm_check_extension()
- where necessary
-Message-ID: <allE_PUn5T4FRTXr@p14s>
-References: <20260707224306.1202330-1-mathieu.poirier@linaro.org>
- <20260707224306.1202330-9-mathieu.poirier@linaro.org>
- <3ac5a5b7-e41d-499e-a4d2-e9a5a78f8c0c@redhat.com>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1wkTGV-0002yy-VC; Thu, 16 Jul 2026 17:05:07 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1wkTGU-0001gq-23; Thu, 16 Jul 2026 17:05:07 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66GKC4lR022486; Thu, 16 Jul 2026 21:05:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=j+dxHd
+ mh17O1Qqj4dMTQmXu564QX27WWYAAdeC5Hu28=; b=Spg0VveP5kgZ75/saaNOo+
+ EZtCB3A5RGAuyolxnr0tEl0o0RhS6iu+0R0+VGPtIsyE5xFFg/Q7bWOOAKahVbPp
+ vQNcFEIgaMat7ZaVHzVxPffBLPKTYMlA/HvQNt0lDwXpLeAgXmn1GHr9/Ar4N+/4
+ UXwF4lACOCTiwbn3G9+UQMzLu6unWSESw1RiF51qgRaW9rp6axwIXo2iaRrv76i8
+ mfkifSSvEfgh9mfZI9ktDtUKPPlaHUmvr8mYs5M6/a43l2FrQ1hItwMDXo5a68JJ
+ NcAcftMkaEJPG12AyihI/0oTFneE2f9B0a2NipmlMj7UcMfP6v7nhXRLdwdzf61A
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbegtk544-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Jul 2026 21:05:01 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66GL4drU004439;
+ Thu, 16 Jul 2026 21:05:00 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc1nhps06-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Jul 2026 21:05:00 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66GL4wLI24117638
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 16 Jul 2026 21:04:58 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 423A120040;
+ Thu, 16 Jul 2026 21:04:58 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E426D2004B;
+ Thu, 16 Jul 2026 21:04:57 +0000 (GMT)
+Received: from [0.0.0.0] (unknown [9.111.65.221])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 16 Jul 2026 21:04:57 +0000 (GMT)
+Message-ID: <a3687796-086f-40b6-b8fd-86279859bc3c@linux.ibm.com>
+Date: Thu, 16 Jul 2026 23:04:57 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3ac5a5b7-e41d-499e-a4d2-e9a5a78f8c0c@redhat.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=mathieu.poirier@linaro.org; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 20/51] system: Remove cpu_watchpoint_insert error
+ return path
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
+ qemu-s390x@nongnu.org, jcmvbkbc@gmail.com
+References: <20260710205401.836304-1-richard.henderson@linaro.org>
+ <20260710205401.836304-21-richard.henderson@linaro.org>
+Content-Language: en-US
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+In-Reply-To: <20260710205401.836304-21-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: pIa7psXy1-n2Tyql_Lg0UF5-RMzUv6Q9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDIxMSBTYWx0ZWRfXwvArROH8yMlf
+ NUTIRa2HwnLt3i9HEHK1yrfQVOGlmL9fXAWTVNF3fQftnjri4076hQ+fRH+PK93h1R8ZX2wihHX
+ mTbltn7ZsyuGOUpH68o27SaIeLrY1+8=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDIxMSBTYWx0ZWRfX9GF2dHHPEPNI
+ UaApb9GYJSXCLqkCkY9VziflNlj0dKIecgwurC5n4UZjWknqEL9W5y4oeIm8mFPPVOlxLAa3m6w
+ kxS4LJRFSeV5pJ6apN5BiD0asHWyirvvyimPax+jdMaDAqOIZwLHaduL1MOrAUn4NT00XdVB53c
+ zU6brKk/3CJbIfp3Z5+uJ1BHBhw1S/cMf6mFQSe2LSyPQ17pey9H0yUvxnHVCPYHZMTwunzQ34j
+ Ve5NViUGjC1/7akFIqIPvzKNNlMc21cM3P4RtpQ/0N5lxyzb4/xqTHQ70AgC6N7gQ4OX2mLXk5K
+ Jj23X1WEchRDzGaNWVSt1Uh9mXfmicaCLe1NDsf3NLUt9m6hT19IoeFBgSwmfp2vKwdMmc7Rx10
+ sFp2PodhAWrg/efd8SzheOaNSbJqlrWYkbFhLTnfDAgeTTTcDyLCdn2nJhTJDCcRWzwXsFadB2v
+ mL1ME6E+m3T7VQd2lpQ==
+X-Authority-Analysis: v=2.4 cv=IqMutr/g c=1 sm=1 tr=0 ts=6a59477e cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=KKAkSRfTAAAA:8
+ a=VnNF1IyMAAAA:8 a=pZVW5Mm1fYg_kLs75vEA:9 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: -cfISRRSMAWEKVwLYyNZtiB85uNh7DQ5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-16_07,2026-07-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015 impostorscore=0 malwarescore=0 adultscore=0
+ phishscore=0 suspectscore=0 priorityscore=1501 bulkscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607160211
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,70 +127,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 13, 2026 at 10:43:37AM +1000, Gavin Shan wrote:
-> On 7/8/26 8:42 AM, Mathieu Poirier wrote:
-> > From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> > 
-> > The Arm KVM code can return different values from KVM_CHECK_EXTENSION
-> > depending on the VM type. Use kvm_vm_check_extension() where necessary
-> > to ensure we get the right response from KVM.
-> > 
-> > Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> > Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-> > ---
-> >   target/arm/kvm.c | 8 ++++----
-> >   1 file changed, 4 insertions(+), 4 deletions(-)
-> > 
-> 
-> I'm putting a note here so that we won't forget. The following changes are needed
-> so that capability KVM_CAP_ARM_NISV_TO_USER won't be enabled for realm guest since
-> it has been hidden from the realm guest in (v14) host series.
-> 
-> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index 3d5e16a21c..4c52ee7e1b 100644
-> --- a/target/arm/kvm.c
-> +++ b/target/arm/kvm.c
-> @@ -623,7 +623,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
->          return -EINVAL;
->      }
-> -    if (kvm_check_extension(s, KVM_CAP_ARM_NISV_TO_USER)) {
-> +    if (kvm_vm_check_extension(s, KVM_CAP_ARM_NISV_TO_USER)) {
 
-Addressed.
 
->          if (kvm_vm_enable_cap(s, KVM_CAP_ARM_NISV_TO_USER, 0)) {
->              error_report("Failed to enable KVM_CAP_ARM_NISV_TO_USER cap");
->          } else {
+On 7/10/26 22:53, Richard Henderson wrote:
+> Move the validation of the address range to tcg_insert_breakpoint,
+> which has to deal with gdbstub inputs.  Leave assertions behind
+> in cpu_watchpoint_insert, but no error return path.
 > 
-> > diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> > index 6aa1cd04e484..c69b5310c184 100644
-> > --- a/target/arm/kvm.c
-> > +++ b/target/arm/kvm.c
-> > @@ -328,7 +328,7 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-> >                                1 << KVM_ARM_VCPU_PTRAUTH_GENERIC);
-> >       }
-> > -    if (kvm_check_extension(kvm_state, KVM_CAP_ARM_PMU_V3)) {
-> > +    if (kvm_vm_check_extension(kvm_state, KVM_CAP_ARM_PMU_V3)) {
-> >           init.features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
-> >           pmu_supported = true;
-> >           features |= 1ULL << ARM_FEATURE_PMU;
-> > @@ -654,11 +654,11 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-> >           }
-> >       }
-> > -    max_hw_wps = kvm_check_extension(s, KVM_CAP_GUEST_DEBUG_HW_WPS);
-> > +    max_hw_wps = kvm_vm_check_extension(s, KVM_CAP_GUEST_DEBUG_HW_WPS);
-> >       hw_watchpoints = g_array_sized_new(true, true,
-> >                                          sizeof(HWWatchpoint), max_hw_wps);
-> > -    max_hw_bps = kvm_check_extension(s, KVM_CAP_GUEST_DEBUG_HW_BPS);
-> > +    max_hw_bps = kvm_vm_check_extension(s, KVM_CAP_GUEST_DEBUG_HW_BPS);
-> >       hw_breakpoints = g_array_sized_new(true, true,
-> >                                          sizeof(HWBreakpoint), max_hw_bps);
-> > @@ -1905,7 +1905,7 @@ void kvm_arm_pvtime_init(ARMCPU *cpu, uint64_t ipa)
-> >   void kvm_arm_steal_time_finalize(ARMCPU *cpu, Error **errp)
-> >   {
-> > -    bool has_steal_time = kvm_check_extension(kvm_state, KVM_CAP_STEAL_TIME);
-> > +    bool has_steal_time = kvm_vm_check_extension(kvm_state, KVM_CAP_STEAL_TIME);
-> >       if (cpu->kvm_steal_time == ON_OFF_AUTO_AUTO) {
-> >           if (!has_steal_time || !arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
-> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   accel/tcg/tcg-accel-ops.c | 3 +++
+>   system/watchpoint.c       | 9 ++-------
+>   2 files changed, 5 insertions(+), 7 deletions(-)
+
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+
 
