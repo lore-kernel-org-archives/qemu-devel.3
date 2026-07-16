@@ -4,141 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6682C4450A
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 09:16:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABEF1C4450A
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 09:33:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkIC2-0005XW-W8; Thu, 16 Jul 2026 05:15:47 -0400
+	id 1wkIS2-0007un-Gk; Thu, 16 Jul 2026 05:32:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wkIC1-0005W3-F4
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 05:15:45 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wkIBz-0005P2-Oi
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 05:15:45 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66G7DU4n1994824
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 09:15:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- +PgtuMJ651yFnS8milX9w/QPFeXR8tdPgpwmRBqUQKg=; b=KLvoksG338cZDcw8
- hsIUsvPG/4Yd0K0VK+FZBMO3sl06+HXfYqIDpp8H3OLhDpcFhvpVeCJ73RIh73lx
- Sb/3FNvrd5KGMz0179ljHmpyIxM4a8AscI8QgUGW0aZD7GAD2cH8Ufxbnf/qhesl
- K641llXfSvIrk0teDmZB775Y5MfAXdeoI79L5LZzDEik/D8J54i/yJKiFhltlyJ0
- dIffMcoc2lfnJw14vCbmAU2MzeYsVWYL/5+oZM3SoSsStfqvTe9epaRBgJ7XvjxT
- YyTIv6L4b4ftffgYhhmZCK3LJinR4ogmMwYamLyk0kvkLuvAA5aKxBIdhvYCtxl+
- MxCE0w==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4feefqjya1-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 09:15:40 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-517e054fe07so133626661cf.1
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 02:15:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wkIS1-0007uZ-4r
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 05:32:17 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wkIRz-0007ih-33
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 05:32:16 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-476a130c138so2975458f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 02:32:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784193340; x=1784798140; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=+PgtuMJ651yFnS8milX9w/QPFeXR8tdPgpwmRBqUQKg=;
- b=G02Pw+J++IiwveBnt0KR1xoPxLplTTxSRznKaV76IeNcsMH3zrmxReBt9BmnCLP1fV
- 6sEYb26J23VQokIVyqN9sqim91bVEr8AcA5YloTcoyMF9/eO2HOhFYKHsMgoEQKNxsJk
- cjwa+/okhE/r/Ucwt4XBa/WgnQBGIXViFMr02/6yW0CwCTDYHeTFF+rQWCQX1QgPGkwN
- KxfB6IQoHghEDwn8/jC/J59Pw1Xprh3VC7QfWQau9jwEGxlioQ/b06aNSFn3ByQx+Hrt
- kqL0iQApY5exvV/IsXvwrjskfMPWIVR5FfwyMUjjRHrbE77NCXnrH+ni8g+Ex0Y5cpxf
- n/RQ==
+ d=linaro.org; s=google; t=1784194332; x=1784799132; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=sC430UQSLXNDCblP7YEOFz54D93brO7i9OUVdoX0+bo=;
+ b=Aq0rJCCeCo4BvUk6l0FNvamCTZQyTrOl8FOD+J7EpGFouQelnvmwhEiYw0DqwGkuq5
+ bELjDSLESRTZ2jXSRFbXFQKlVm7+/ww+Hvurvls2BCR3NQjZ8C32qOBfLbLh4+9fPXt3
+ qaOaiVcKtfy39UQqtlyb7VjVbPOi2TftmmsV2HaFWrOmNXCdXrmAjh9jtRl0zYVDHC5p
+ no6cLBT6WXyxgDYK8DB+3UBEgBr2mT5ceCZ8+9eJbm3fRPRZNURas8sW+W+OCT3drP9B
+ tsNlcrAAegHPo+VPGvlPp8zYtJ72gRjHYmouKGMmHtaXkSCRDRQY3t83Xm5WVXBwKje/
+ imWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784193340; x=1784798140;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=+PgtuMJ651yFnS8milX9w/QPFeXR8tdPgpwmRBqUQKg=;
- b=RnhsQRutmJaYKRC7ZYS2bbZxFmzH2NKaMpdK4DUKodsokc+M6QUSRvemZX0+5IqjTO
- A85Vc3g3JFQAEhTC5qGN4dOSAuTRlrPnBHu6H12WSBpTUnhJPjkRGd0cw4pJKdsixIBV
- jYwyVK8Z4TyDbQjHBj7dTpqBCrOJfAfUUj7cakOf73cOZ6+ATVP0qAxygng3yDGtvCsL
- Q98llvDL6nw0U42LFTzT8mAvqX+at1t44bfpAl0P3a8br6Ke2C9Aun07JBTUiRBJymD0
- IGR1xw3jh4pib327eUMHxGgyUSQCRJUCP29JJi9cbzMKL0BGiI+YsbWOPzPh+bDTIVOu
- 079g==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrvRH6Uv4BFF1rpJ8/CAP+LwrHkEOJlXeKYlhHcFBWP2HNsBQYFWmuV+vDpO1rWmxGmVeqz4bOM0Nl4@nongnu.org
-X-Gm-Message-State: AOJu0Yy71ehYMXQKMk9fi5uUAC5EVbrVbLdeQwQVEWdbZa/3Cek60R4y
- IKGwJGEQNVcncmsFs4rb7dXZY42+2TKcdHrNh+ofXAX1jPLlgg6+JMfU4anbl+zDuu4cX4HCoyC
- AH1IHs20rAbePG/BE4o8ERchQUp0fJmja/L7ocJc8yhWQALxUNosJvsCTrWLW6Pwvjg==
-X-Gm-Gg: AfdE7cn1S7O5Ixt3inoFWNlm5iYAYvkKFjP0gpb85Kllc4mr6RAzbGx1UTzdBHF8COv
- iiYsSWqodYMNwBilAynRUwpwuMEQbAXEfkZtY2WdHegGHThk6aW7CxHz1KBlT2dcfKysX0vB9t8
- tiA94LvKGJioX8pk8a1mIIl13m4eoWa7nCTdOaNE2Y8UC68IguVuxNF7OrzOceg8Cgvn3GnMG6+
- 8WhX0J0PWzbzvVGj9AECfpZdRK6xq3D2wipYVrQUAynVUsrFKjbqxt+up3pNIF1bxQS5qAwwnwF
- PwJELl/9dYMy3qSmLX6LqoGDeJm3yk28WK0vtYboogTzOSp6MDq8TXd7PPogABgdg17KM6LalWw
- +dDy01vGrT286pLhOrbMFcN52hccSX/y3jJDNxXxEC6ytb+pr0B0=
-X-Received: by 2002:a05:622a:17c4:b0:51c:511:c5 with SMTP id
- d75a77b69052e-51e4ede12d1mr69734691cf.16.1784193339917; 
- Thu, 16 Jul 2026 02:15:39 -0700 (PDT)
-X-Received: by 2002:a05:622a:17c4:b0:51c:511:c5 with SMTP id
- d75a77b69052e-51e4ede12d1mr69734431cf.16.1784193339327; 
- Thu, 16 Jul 2026 02:15:39 -0700 (PDT)
-Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c1687171464sm172581066b.19.2026.07.16.02.15.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jul 2026 02:15:38 -0700 (PDT)
-Message-ID: <59818965-dfdc-4856-bfa1-cdc197793994@oss.qualcomm.com>
-Date: Thu, 16 Jul 2026 11:15:37 +0200
+ d=1e100.net; s=20251104; t=1784194332; x=1784799132;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=sC430UQSLXNDCblP7YEOFz54D93brO7i9OUVdoX0+bo=;
+ b=Ad3scjVgkt9Yo4QZ9QvY6SVZ59BkYUjnwaJ9QgpWNfhZo7CazGXj+SvArkMT4y6pxY
+ yOgs9Ajumf+Wcl+EfbsJeV12WGans6aspvHXxLADyOg90LhHm/oz59dmm16PejEbu6K9
+ 9DqK7mBaIMvnnve23cF4dWiDuY723X2PPvciz7xtdDQgfE0d1SVok87PWdSwEas10ykT
+ 5bQpjDQ2auztIYKStFW0JRFZni8KBhxSl7DM3cbtD0IQyFggV+WSh0dhqHvGq58yAnEB
+ hBGkzgOKY+120vvVy1/guhP/sZWCJllqEjkSIFtqw00DC0o9sNnW3DFvqWWPNw1eLNy7
+ hfkA==
+X-Gm-Message-State: AOJu0YyxXVOmR2iuXQ4SLFQWKgSN+7sv7he2E19eFvzQky+E25ogE7XC
+ gsPxNcQNGoQfClrroKzSNlOUzulNyxAGrCX7j/W11Z6dgYWzQNsHLBT4FLSXW72gA6o=
+X-Gm-Gg: AfdE7cnYmb9Yd2STs/BS/Pj33PS3Mugydvxf0y6DNoQ9bJhrWk/eM82WLBTk1eeuwWM
+ Q3scoNGGTZVrDjpi1SOFwIE3tiOM5xPTjMueikRJmx3S8tZfBcKyecL0Q63++tV33AaaZyKXPar
+ dhncRy1z7Tigm7jYctlMOah5upeggTVpXspeagFpy2Y6OMlutyKc3i67d8+PX0T1s584t6hb8NP
+ wDVLi+M1ILxSuF9xRKcZBrr5uqeyueXonjvU9Ujdf5Jh5IKJORe/bObSMnN8d5pHjq2MHKDEjz3
+ wwvF9RpExrLHZmYsS3VaLo2sYuKbZmYO54YezaxKdMZ99BG22pnaoKBI7pPE/d878K2vLrKDEx9
+ NxgwBiKWNu3OOBbxGV6ZO/sHRcswDXPciuXRldMAR32Vdc+KYz60yZPgFxLY8mIMFPprFOyaNbx
+ qmLQ==
+X-Received: by 2002:a5d:5f02:0:b0:47d:fc20:f6f9 with SMTP id
+ ffacd0b85a97d-47f2dd2f413mr23221431f8f.45.1784194332368; 
+ Thu, 16 Jul 2026 02:32:12 -0700 (PDT)
+Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f464d6fa7sm23532637f8f.37.2026.07.16.02.32.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 16 Jul 2026 02:32:11 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 8D8F85F8E7;
+ Thu, 16 Jul 2026 10:32:10 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,  Brian Cain <brian.cain@oss.qualcomm.com>,  Peter
+ Maydell <peter.maydell@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?=
+ <philmd@oss.qualcomm.com>,  Daniel =?utf-8?Q?P=2EBerrang=C3=A9?=
+ <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,  Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,  Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>,  Laurent Vivier <laurent@vivier.eu>,
+ Paolo Bonzini <pbonzini@redhat.com>,  Gustavo Romero
+ <gustavo.romero@linaro.org>,  Helge Deller <deller@gmx.de>
+Subject: Re: [PATCH v5 95/98] tests: remove tcg tests machinery
+In-Reply-To: <a7b40c16-fd9b-4d81-b767-19fd3523c533@oss.qualcomm.com> (Pierrick
+ Bouvier's message of "Wed, 15 Jul 2026 10:42:45 -0700")
+References: <20260710214343.2065491-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260710214343.2065491-96-pierrick.bouvier@oss.qualcomm.com>
+ <87pl0ognos.fsf@draig.linaro.org>
+ <a7b40c16-fd9b-4d81-b767-19fd3523c533@oss.qualcomm.com>
+User-Agent: mu4e 1.14.3-pre1; emacs 30.1
+Date: Thu, 16 Jul 2026 10:32:10 +0100
+Message-ID: <87jyqvgu05.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH trivial] spelling: happend
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Alistair Francis <alistair.francis@wdc.com>
-References: <20260716063457.532035-1-mjt@tls.msk.ru>
- <78e31bf1-328d-46ba-89db-1e069f21c7db@tls.msk.ru>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <78e31bf1-328d-46ba-89db-1e069f21c7db@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=APNfGQ4N c=1 sm=1 tr=0 ts=6a58a13c cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=EUspDBNiAAAA:8 a=zeRjNQde2fG1WwSHE68A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDA5NCBTYWx0ZWRfX/nEfB01/16IB
- hiU5FyusAMTC9nLNlPCVm4GNlAvNOdWw7kx8sOgkidBk2Rvul0bEjHreLi6NpCwj9Ol+t6TgWqI
- P2txb23ST3on/PEIBG022BZzko6rkA4=
-X-Proofpoint-ORIG-GUID: JfD5ln5f69O4R7m7empg52FZzAiLoV0p
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDA5NCBTYWx0ZWRfXwtmsEKlxQMpJ
- kX/R4IAMKmLNNY6vWHLHIfc9PkS7aR8nJKXw3zUgPATGt6mdeZz1PpCcZMwZ7IItrmGrzssIJ8r
- fYqQfZXPpoz+c5EFKxl2+zZPuyDDBEy4GxKqG2MxQ+W/s/MUDq/3P9YQhjXPh0as3fv7yv6l9AB
- W8l73vkdrdGzf3zPbOStf4lehgRxR1TMsJtIcXRq1v6TB/f42L9++Z74Um/53HKl0iR3PQc1wTg
- 9PiQYBMqEdatGb16frqj6R1CGMQMi00dByasIMhFjNdoTxuX/5wQd8vnyo8vFwzb/iYWLhPrVpR
- YrzXsmBOjH49urQU6Z/7PGYPgYEohUAG9oDuUZMxBziyekd+tju3gzlg+CcESfK4OQlF0SNrpSn
- 8RhOT1b4girGrfJZ7zZe3u+0aAqIwXmyKAO6ShphRdn4e+Xf+f5uU0zKpUalAUGcDdnwpsx/wzJ
- 6TwI6ItzqDWSbKAqQnw==
-X-Proofpoint-GUID: JfD5ln5f69O4R7m7empg52FZzAiLoV0p
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-16_03,2026-07-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0
- malwarescore=0 bulkscore=0 spamscore=0 clxscore=1015 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607160094
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,37 +116,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/7/26 10:06, Michael Tokarev wrote:
-> On 7/16/26 09:34, Michael Tokarev wrote:
-> 
->> diff --git a/qapi/migration.json b/qapi/migration.json
->> index 66bd900465a..802474750b5 100644
->> --- a/qapi/migration.json
->> +++ b/qapi/migration.json
->> @@ -270,7 +270,7 @@
->>   #     (Since 10.1)
->>   #
->>   # @postcopy-non-vcpu-latency: average remote page fault latency for
->> -#     all faults happend in non-vCPU threads (in ns).  It has the same
->> +#     all faults happened in non-vCPU threads (in ns).  It has the same
->>   #     definition of @postcopy-latency but this only provides
-> 
-> This doesn't work, - it fails to build due to too long line, so
-> line re-wrapping is also needed.  The correct(ed) version is:
-> 
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -270,8 +270,8 @@
->   #     (Since 10.1)
->   #
->   # @postcopy-non-vcpu-latency: average remote page fault latency for
-> -#     all faults happend in non-vCPU threads (in ns).  It has the same
-> -#     definition of @postcopy-latency but this only provides
-> +#     all faults happened in non-vCPU threads (in ns).  It has the
-> +#     same definition of @postcopy-latency but this only provides
->   #     statistics to non-vCPU faults.  This is only present when the
->   #     postcopy-blocktime migration capability is enabled.
->   #     (Since 10.1)
+Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> On 7/15/2026 10:36 AM, Alex Benn=C3=A9e wrote:
+>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>=20
+>>> It's now built-in meson, which offers targets check-tcg and check-tcg-*.
+>>>
+>>> Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>> ---
+>>>  tests/Makefile.include | 68 ++----------------------------------------
+>>>  1 file changed, 2 insertions(+), 66 deletions(-)
+>>>
+>>> diff --git a/tests/Makefile.include b/tests/Makefile.include
+>>> index 494d0109f26..9f82552ab54 100644
+>>> --- a/tests/Makefile.include
+>>> +++ b/tests/Makefile.include
+>>> @@ -19,9 +19,7 @@ check-help:
+>>>  ifneq ($(filter $(all-check-targets), check-softfloat),)
+>>>  	@echo " $(MAKE) check-softfloat               Run FPU emulation tests"
+>>>  	@echo " $(MAKE) check-tcg                     Run TCG tests"
+>>> -	@echo " $(MAKE) run-tcg-tests-TARGET          Run TCG tests for a giv=
+en target"
+>>> -	@echo
+>>> -	@echo "The variable TCG_TEST_FILTER will select the subset of matchin=
+g tests."
+>>> +	@echo " $(MAKE) check-tcg-TARGET              Run TCG tests for a giv=
+en target"
+>>>  endif
+>>>  	@echo
+>>>  	@echo " $(MAKE) check-report.junit.xml        Generates an aggregated=
+ XML test report"
+>>> @@ -40,67 +38,6 @@ export SRC_PATH
+>>>=20=20
+>>>  SPEED =3D quick
+>>>=20=20
+>>> -
+>>> -# TCG_TESTS_WITH_COMPILERS represents the test targets we have cross c=
+ompiler
+>>> -# support for, CONFIGURED_TCG_TARGETS it what meson has finally
+>>> -# configured having rejected stuff we can't build.
+>>> -CONFIGURED_TCG_TARGETS=3D$(patsubst %-config-target.h, %, $(wildcard *=
+-config-target.h))
+>>> -
+>>> -# This is the intersection of what tests we can build and is configured
+>>> -TCG_TESTS_TARGETS=3D$(filter $(CONFIGURED_TCG_TARGETS), $(TCG_TESTS_WI=
+TH_COMPILERS))
+>>> -
+>>> -# Per guest TCG tests
+>>> -BUILD_TCG_TARGET_RULES=3D$(patsubst %,build-tcg-tests-%, $(TCG_TESTS_T=
+ARGETS))
+>>> -CLEAN_TCG_TARGET_RULES=3D$(patsubst %,clean-tcg-tests-%, $(TCG_TESTS_T=
+ARGETS))
+>>> -DISTCLEAN_TCG_TARGET_RULES=3D$(patsubst %,distclean-tcg-tests-%, $(TCG=
+_TESTS_TARGETS))
+>>> -RUN_TCG_TARGET_RULES=3D$(patsubst %,run-tcg-tests-%, $(TCG_TESTS_TARGE=
+TS))
+>>> -
+>>> -$(foreach TARGET,$(TCG_TESTS_TARGETS), \
+>>> -        $(eval $(BUILD_DIR)/tests/tcg/config-$(TARGET).mak: config-hos=
+t.mak))
+>>> -
+>>> -# $1 =3D the stem (e.g., arm-softmmu or x86_64-linux-user)
+>>> -get-qemu-bin =3D $(if $(findstring softmmu,$1),qemu-system-$(subst -so=
+ftmmu,,$1),qemu-$(subst -linux-user,,$1))
+>>> -
+>>> -$(foreach TARGET,$(TCG_TESTS_TARGETS), \
+>>> -        $(eval .ninja-goals.run-tcg-tests-$(TARGET) +=3D $(call get-qe=
+mu-bin,$(TARGET))))
+>>> -
+>>> -.PHONY: $(TCG_TESTS_TARGETS:%=3Dbuild-tcg-tests-%)
+>>> -$(TCG_TESTS_TARGETS:%=3Dbuild-tcg-tests-%): build-tcg-tests-%: $(BUILD=
+_DIR)/tests/tcg/config-%.mak
+>>> -	$(call quiet-command, \
+>>> -            $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS), \
+>>> -        "BUILD","$* guest-tests")
+>>> -
+>>> -.PHONY: $(TCG_TESTS_TARGETS:%=3Drun-tcg-tests-%)
+>>> -$(TCG_TESTS_TARGETS:%=3Drun-tcg-tests-%): run-tcg-tests-%: build-tcg-t=
+ests-%
+>>> -	$(call quiet-command, \
+>>> -           $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS) SPEED=3D$(SPEED=
+) TCG_TEST_FILTER=3D$(TCG_TEST_FILTER) run, \
+>>> -        "RUN", "$* guest-tests")
+>>> -
+>>> -.PHONY: $(TCG_TESTS_TARGETS:%=3Dclean-tcg-tests-%)
+>>> -$(TCG_TESTS_TARGETS:%=3Dclean-tcg-tests-%): clean-tcg-tests-%:
+>>> -	$(call quiet-command, \
+>>> -           $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS) clean, \
+>>> -        "CLEAN", "$* guest-tests")
+>>> -
+>>> -.PHONY: $(TCG_TESTS_TARGETS:%=3Ddistclean-tcg-tests-%)
+>>> -$(TCG_TESTS_TARGETS:%=3Ddistclean-tcg-tests-%): distclean-tcg-tests-%:
+>>> -	$(call quiet-command, \
+>>> -           $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS) distclean, \
+>>> -        "CLEAN", "$* guest-tests")
+>>> -
+>>> -.PHONY: build-tcg
+>>> -build-tcg: $(BUILD_TCG_TARGET_RULES)
+>>> -
+>>> -.PHONY: check-tcg
+>>> -.ninja-goals.check-tcg =3D all test-plugins
+>>> -check-tcg: $(RUN_TCG_TARGET_RULES)
+>>> -
+>>> -.PHONY: clean-tcg
+>>> -clean-tcg: $(CLEAN_TCG_TARGET_RULES)
+>>=20
+>> We still need a clean-tcg or similar rule to force a rebuild of the
+>> tests without killing the whole build dir.
+>>
+>
+> It was needed before, since we only had partial dependencies.
+> But now considering that all dependencies are correctly tracked, what's
+> the use case?
+> - If a test is mtime modified, it rebuilds the test.
+> - If a dockerfile is mtime modified, associated tests are rebuilt.
+> - If docker.py is modified, it will rebuild tests transitively.
+> - If cflags are modified, test will be rebuilt also.
+> - All input of a test (.h, .c, ...) are all tracked.
+> - If user installs a cross compiler or remove podman/docker, next meson
+> configuration will identify this and rebuild all associated tests.
+>
+> In case you find a missing dep, we just need to add it in meson. clean
+> is not needed anymore.
+
+OK I was testing the changing of the cross compiler and I noticed its
+not reported in the config summary if we have the fallback to
+podman/docker.
+
+I suspect the logic here:
+
+  # snarf the cross-compilation information for tests
+  summary_info =3D {}
+  have_cross =3D false
+  foreach target: target_dirs
+    tcg_mak =3D meson.current_build_dir() / 'tests/tcg' / target / 'config-=
+target.mak'
+    if fs.exists(tcg_mak)
+      config_cross_tcg =3D keyval.load(tcg_mak)
+      if 'CC' in config_cross_tcg
+        summary_info +=3D {config_cross_tcg['TARGET_NAME']: config_cross_tc=
+g['CC']}
+        have_cross =3D true
+      endif
+    endif
+  endforeach
+  if have_cross
+    summary(summary_info, bool_yn: true, section: 'Cross compilers')
+  endif
+
+needs to be cleaned up.
+
+>
+>>> -
+>>> -.PHONY: distclean-tcg
+>>> -distclean-tcg: $(DISTCLEAN_TCG_TARGET_RULES)
+>>> -
+>>>  # Build up our target list from the filtered list of ninja targets
+>>>  TARGETS=3D$(patsubst libqemu-%.a, %, $(filter libqemu-%.a, $(ninja-tar=
+gets)))
+>>>=20=20
+>>> @@ -128,7 +65,6 @@ check-build: run-ninja
+>>>  check-clean:
+>>>  	rm -rf $(BUILD_DIR)/tests/functional
+>>>=20=20
+>>> -clean: check-clean clean-tcg
+>>> -distclean: distclean-tcg
+>>> +clean: check-clean
+
+I wonder if check-clean is redundant as well now if the functional test
+dependencies are properly encoded.
+
+>>>=20=20
+>>>  endif
+>>=20
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
