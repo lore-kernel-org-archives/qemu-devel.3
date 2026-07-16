@@ -4,144 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63898C44501
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 13:21:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0757C44501
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 13:24:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkM1j-00041Q-KT; Thu, 16 Jul 2026 09:21:23 -0400
+	id 1wkM4s-0004Wq-1W; Thu, 16 Jul 2026 09:24:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wkM1h-000414-UY
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 09:21:21 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wkM1f-0004jX-Vi
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 09:21:21 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66GDJsk92734773
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 13:21:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Y0MCf5pW4xNNdIkgT1T1KQEaBjldhwFlgVHv9j2llvE=; b=phTpw5g3+KdocmP9
- dpkAKYIR8A2KlMx2adDlmMM3um+ZbuNLxlekKmFiA8MvKYgFAz9FA7tyQyQ8fY3m
- pNBIGJVkbT4Btga1aPkIBMToy+CE0XDX+uiXUDugv+MBBLkSnPEvlbNaBYTwjf0L
- gjgvOBqdfDmK8h7eZCnKY7+ua/wSyidww7Coj120M/awrjctm9QIvOO0PknQ0NI5
- oTTF226Y7sdYgCMC7n3hUhaQLynsiUK71SuvMtDo5HFsSwjnq4v2PhToniuOVMgd
- FkFOl6N+ERft5ViAeROt7GPNk4PpNpLoETzT5rfErfGeaOX6Akiz8SwX+3k4sxpe
- apvxYg==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fevkv0y6w-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 13:21:18 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-51bfe3fa93bso129771011cf.2
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 06:21:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <caojunze424@gmail.com>)
+ id 1wkM4q-0004Wg-OS
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 09:24:36 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <caojunze424@gmail.com>)
+ id 1wkM4o-0004wg-Sl
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 09:24:36 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-37f9e2642deso637408a91.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 06:24:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784208078; x=1784812878; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Y0MCf5pW4xNNdIkgT1T1KQEaBjldhwFlgVHv9j2llvE=;
- b=XjqOFRwlKPNuytCeE57GYFkqr+NpGFA4YaRGOpgTFEIgzuYpwqabfA5EA8jeVDvP+m
- VtSaDdCkyHs7lZvqZNp8KaIomy9A5Cbz38X04U8b+J8WPRR8Ros3h8OEj1ti5YcfmjRx
- 7LAJAj56avTooJkbbMS4kHCDdE1sE09tcu91Hogu8rJ94p5+mmtzfzjNjJdNtvq1r5Jw
- r/dLEB16TbMYdtqTCvt+DnIio78fyr8IVw3XOkzO/392IMsyB3Bdsn6M1LI09K4pReAK
- KktTfP0uL37r7BZ0VzFvn0oZZ5VZP7MUcP66czYpMthoAgBu7yUSTBJ+GGHGGLlxBUAl
- 374w==
+ d=gmail.com; s=20251104; t=1784208273; x=1784813073; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=4RZU0JMLqDYjhf52UqXGRbMX/EBibWo0iByrh3E9K9I=;
+ b=Q74VEdDXHr9uXt2MIMRWEED9vRAZ2Vv5A+wprbfPcPz8C2zCiGYePUjrnnT2a6BlOu
+ oRC+BIFkgA4MHgh0twrf+OmYuizg75jWh8Od5IhD0Ekda9w3eJP4OSGdGNhQipjB00vH
+ 1BiALFJ0MMBdgn4HjqPC8RdAL88xQWRzijJh49ux74fb7gfpgUhleRAMt57KVZL0YsVd
+ pSu3kH1QQy83ivrzmE5m2bDVVyr1GHZWzomIM5RcWv3jHmn6niMRLJJwSLpEbaNaZnSV
+ jk3bD4dO9SxEXdE4GwLe7BjV/YVFIAK+p8eDTd7QAQFl7P6UawlAwvBKVABbL6/S7rEf
+ 7VoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784208078; x=1784812878;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1784208273; x=1784813073;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Y0MCf5pW4xNNdIkgT1T1KQEaBjldhwFlgVHv9j2llvE=;
- b=k9PCxyffpGyOINAXZpgX4k6ip96w/6aOsnJFWEaa4HKXyOIMnxSbg6asWGv08LLVsw
- ylgAjs6mNLsmwuFCYXnMwv8+/7Eeph176mtemfmLYSf5RvjaE9CGjVWwASu27NbRqkcD
- h5hFPSKkv/GLe4BtCQhybY239ng+DP6c8g6XsUzu/piEQmNuBqpV6GDP7AX82e4JnURI
- pPGyrtZwm4PwCVEHi8PWwMyeNuHJid6pBizh2wNjNNqc+z0lEnbycab09dUhq3pYdHEt
- ZUu4qTt/Wx59/NEdA+5r50h7LfzRjf+yerDwbPt+FehelOYkQGN4VwXs7u8xw3iZG1NC
- qpzA==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rr92jxWndnlgpb9EnnVU0v6q0siZbNDz1liEPii0lTezsi3asJvvG5fjtdWziQOGSvqSbs5seLku00+@nongnu.org
-X-Gm-Message-State: AOJu0YwBWtguxakhbyXgxpDbWR/QQmB3yxcuyb9CmI/IAo0aX2G75v70
- f9JPEb7dmYvi/pqR3KZoTMCWv+f92Vu5wAOsMHDF3eIxuMPN3qa1mJGYS9TwObBTgGCGUdYBH59
- F7pfQ/1UZNGdGKYSbMGyShtgwy3/HCK+M2bydse7IMHxjkzS+EaClfi65Ng==
-X-Gm-Gg: AfdE7cmBwu4Xo8+niqELdSFp7cLUQOM24c7nSFCkQtXS1H/71x7u1zrMs7C4BIOtgPm
- RQZlKAaBJVm615yxf0t9jcdqyljTbclNjMOZCXMXzhFcN/mxC4xkzdTtS5nJPASqcbV0gGPTwVe
- yne2Xmk7amdyRRfa0sx+YTGkcWPYT1JFbCtlIsBm17UAt+jRzdtF4VkIDAAsDmKRLgpChLQxlFy
- qRjCcXbr920fX/nZqZKK/TUCfTkXKv/BcCVCuFmdRTgpUZIblFVBJk4oMBUGkGazTC2N4mEsmkW
- RSO9sjIK1NzWZmLQ93bVpXp0oajA4SyDtVtKFtAs5S2p4rLW6xMG8ipA9nTOTObvv7Ee2qIWwkZ
- lezKZkTqPZuCPCUEi70SVp9bkPlEUhmeVCw==
-X-Received: by 2002:ac8:5805:0:b0:51c:12bf:d4a3 with SMTP id
- d75a77b69052e-51e3c2cc193mr125319051cf.52.1784208078238; 
- Thu, 16 Jul 2026 06:21:18 -0700 (PDT)
-X-Received: by 2002:ac8:5805:0:b0:51c:12bf:d4a3 with SMTP id
- d75a77b69052e-51e3c2cc193mr125318501cf.52.1784208077597; 
- Thu, 16 Jul 2026 06:21:17 -0700 (PDT)
-Received: from [192.168.68.105] ([189.79.21.40])
+ bh=4RZU0JMLqDYjhf52UqXGRbMX/EBibWo0iByrh3E9K9I=;
+ b=QuXRGGhgNiYm1jS6qRFpk0ZaIYedaIAtUUQK7Njs+rTR+JzCboYJ15EqljNcasZCiF
+ AjP3aN9iLfLGfa3LschuvDmigTQOKeAeh4AadJt8aeX1jFi+yAY0X3AFpaJCCeeWzfO0
+ QJfrzqRlyT/mniMkpGg+DvZxEm+zuzRG22k0F2coFTgH+xYPj5cgoCMp5E+sFkMHPvgQ
+ 38PCaES6zoIRnG4VxGMphsMswaVoRICOKlNv5hYYloxjLjGI0Sd5umAyO0P1gSMWLC7s
+ PQAH8uhj+zsStSNY0K3W2H5EEWRzq74IEJaRwf+DovNEFzpZs6kD2jCuV3WDQdcAbhuD
+ OMRw==
+X-Gm-Message-State: AOJu0YwhRJlcptocpet2UqLCmN6gjac0D07AbLZAW6sBcmtDcBGx0Nn0
+ qNZCkP9E956c+EQXf7vxoNF81FFDx96heXfL05hp9RvOyyaMisNjf8mclksP2HWDARj3ZA==
+X-Gm-Gg: AfdE7ckmj5E57j1oL/J6JYZXQsVJODAMT4porC2N7VmN08/N0AtWzoMCjuBqzP6UiXl
+ yK/uHnJZC7UD8qTY8c805kwBsmygcRYrntVjvJMaqIZSgOm7XhDuXzzRc4U4wMqDYsIum07R2uc
+ GwAGzOWiKc8gaV0LEikx/KdosulTn05V65HWqZiEFE4f0dnpeJob5hi18d+xdYY2dwdEl38xtYC
+ soASnXfGh8qyNLnWVK0zOcpDgeFbRQlD5wvDEz7lgctnGKfCFlkTc1LaxfT/5cCFeAxjw4coAnY
+ YFJX9Jv5HhxCiiiFti2i1KSaah8r/7bkwFrQVtlLkHhvb3uVPtEj/WTJQUsaDkr+BvBmxuwz3I5
+ iTEOCcNHeWUh6Yg9sCML+gLoIQFoEgB9DD9oiTKp97aaX2SLtXoJEx/ntQsWPpPrfZKhWUIuu+7
+ 7e9mpw4qWB3RDSLhiwlv1rwjDd/Q5P
+X-Received: by 2002:a17:90b:3b8d:b0:381:bcfb:e710 with SMTP id
+ 98e67ed59e1d1-38dc7b2d49emr17119568a91.3.1784208272742; 
+ Thu, 16 Jul 2026 06:24:32 -0700 (PDT)
+Received: from DESKTOP-JUS09M1.tail12b54b.ts.net ([38.34.7.236])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-51caab6e9f4sm158122921cf.2.2026.07.16.06.21.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jul 2026 06:21:17 -0700 (PDT)
-Message-ID: <c06253bf-6e56-4ef8-9fd0-43d8a062190e@oss.qualcomm.com>
-Date: Thu, 16 Jul 2026 10:21:14 -0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] disas/riscv.c: Correct indent for checkpatch
-To: frederic.petrot@univ-grenoble-alpes.fr, palmer@dabbelt.com,
+ a92af1059eb24-13cd4344b8bsm11336706c88.13.2026.07.16.06.24.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 16 Jul 2026 06:24:32 -0700 (PDT)
+From: Junze Cao <caojunze424@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, chao.liu@processmission.com,
+ pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com,
  alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Cc: julien.thillard@univ-grenoble-alpes.fr
-References: <20260715190737.1381701-1-frederic.petrot@univ-grenoble-alpes.fr>
- <20260715190737.1381701-4-frederic.petrot@univ-grenoble-alpes.fr>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260715190737.1381701-4-frederic.petrot@univ-grenoble-alpes.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com,
+ Junze Cao <caojunze424@gmail.com>
+Subject: [PATCH 0/3] riscv: Add K230 DDR controller and PHY models
+Date: Thu, 16 Jul 2026 21:24:20 +0800
+Message-ID: <20260716132423.931427-1-caojunze424@gmail.com>
+X-Mailer: git-send-email 2.53.0
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDEzNyBTYWx0ZWRfXwZZTeuL5Q9HU
- 4StKf7R01hGzDnlV3LY/hTE1pLytg0W4YtLZfnva1GkbQmk2SH51n47HRyoXLIbfd/A8gOYlHto
- ZiUiacmaDHyXZYXWoCMgSArvePKKoHGa/y5QZHgmQU3ZHia1B89hveMZHdcyC+FC0/DRil44UNc
- Mc88jnM33/Aiv8usq9wtfG5rWEzyHGaaMwCAKTJPsIBHtVzu+hnFJJC3EV8aNoEVYxjKmmrZea8
- zzj1ITT/mPRQlmNQmx9ivH5Ao4ulpEr7NxJWmtW8UsLRQGC6bzzUUQ+QkG1wPwQk3B7aFjsXmRc
- zNaGtMK8sox6RQC1KibqV3GMjxhDu0KN8qwvkpdXUn5NIQjpfC7+pTXDhCrIrtfcWxJW2zF1vnZ
- XhjV/HLwVJIHb+3oRALO6A/mKwV766ICxnWcjwB6A0doN66D8iRf+9l6R8tcherON+GbGZZGV/A
- p8bCfUWYEPZ0uAPeLxg==
-X-Authority-Analysis: v=2.4 cv=WrEb99fv c=1 sm=1 tr=0 ts=6a58dace cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=a4YAP2N2y8i5vXA3XgsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-GUID: 7njbdAU5fl5G3GWQgC_zuyyg2cFPH6S2
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDEzNyBTYWx0ZWRfXzGjpGFQxeN42
- AnqIu5uHZ25SAIAVxJMXmOgdbyfUym1mkkdf7f7PaUqwj1kXhKEHP+lFOSk+bDT0u8dDH7972Zc
- t4A5HSHz87mXgwnyF0uLPVRlmkZqZx0=
-X-Proofpoint-ORIG-GUID: 7njbdAU5fl5G3GWQgC_zuyyg2cFPH6S2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-16_05,2026-07-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 clxscore=1015 spamscore=0 priorityscore=1501
- adultscore=0 malwarescore=0 bulkscore=0 lowpriorityscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607160137
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=caojunze424@gmail.com; helo=mail-pj1-x1034.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,74 +102,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The K230 SDK U-Boot SPL initializes DRAM by programming the DDRC CFG
+and DDR PHY MMIO regions. The k230 machine currently exposes the DDR
+configuration region as unimplemented and does not provide the PHY, so
+the SPL cannot complete the training and DFI handshakes.
+
+Add minimal models for the register behavior exercised by the SDK SPL.
+The controller model provides reset values, register access policy, DFI
+and software-update handshakes, and the Init-to-Normal transition. The
+PHY model provides CSR ownership, the training mailbox, and DFI
+completion. Wire both devices into the k230 machine and document the
+resulting SPL support.
+
+These device models allow firmware to complete the DDR initialization
+sequence.
+
+Testing performed:
+
+* scripts/checkpatch.pl --branch upstream/master..HEAD
+* meson test -C build --print-errorlogs
+  qemu:qtest-riscv64/k230-ddr-test (6 subtests passed)
+* Booted the K230 SDK U-Boot SPL through DDR initialization to its SPI
+  boot path
+
+Junze Cao (3):
+  hw/misc: Add K230 DDR controller and PHY models
+  hw/riscv: Connect K230 DDR controller and PHY models
+  tests/qtest: Add K230 DDR controller tests
+
+ MAINTAINERS                 |   3 +
+ docs/system/riscv/k230.rst  |   4 +
+ hw/misc/k230_ddr.c          | 544 ++++++++++++++++++++++++++++++++++++
+ hw/misc/meson.build         |   1 +
+ hw/riscv/k230.c             |  19 +-
+ include/hw/misc/k230_ddr.h  |  59 ++++
+ include/hw/riscv/k230.h     |   4 +
+ tests/qtest/k230-ddr-test.c | 226 +++++++++++++++
+ tests/qtest/meson.build     |   3 +-
+ 9 files changed, 859 insertions(+), 4 deletions(-)
+ create mode 100644 hw/misc/k230_ddr.c
+ create mode 100644 include/hw/misc/k230_ddr.h
+ create mode 100644 tests/qtest/k230-ddr-test.c
 
 
-On 7/15/2026 4:07 PM, frederic.petrot@univ-grenoble-alpes.fr wrote:
-> From: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
-> 
-> Trival indentation patch on the cbo/lq relevant code.
-> 
-> Signed-off-by: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
-> ---
-
-As I said in patch 2 this patch is fixing style issues that patch 2 itself
-is introducing.  We want this patch squashed into patch 2.
-
-
-Thanks,
-Daniel
-
->   disas/riscv.c | 38 +++++++++++++++++++-------------------
->   1 file changed, 19 insertions(+), 19 deletions(-)
-> 
-> diff --git a/disas/riscv.c b/disas/riscv.c
-> index 831ff526ad..27bf4d9954 100644
-> --- a/disas/riscv.c
-> +++ b/disas/riscv.c
-> @@ -2887,25 +2887,25 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
->               case 0: op = rv_op_fence; break;
->               case 1: op = rv_op_fence_i; break;
->               case 2:
-> -               /*
-> -                * 'lq' shares the "(...) 010 ..... 0001111" opcode space
-> -                * with 'cbo' insns, but assumes rd != 0.
-> -                *
-> -                * cbo_inval  0000000 00000 ..... 010 00000 0001111
-> -                * cbo_clean  0000000 00001 ..... 010 00000 0001111
-> -                * cbo_flush  0000000 00010 ..... 010 00000 0001111
-> -                * cbo_zero   0000000 00100 ..... 010 00000 0001111
-> -                */
-> -               if ((inst >> 7) & 0b11111) {
-> -                  op = rv_op_lq;
-> -               } else {
-> -                  switch (inst >> 20) {
-> -                  case 0: op = rv_op_cbo_inval; break;
-> -                  case 1: op = rv_op_cbo_clean; break;
-> -                  case 2: op = rv_op_cbo_flush; break;
-> -                  case 4: op = rv_op_cbo_zero; break;
-> -                  }
-> -               }
-> +                /*
-> +                 * 'lq' shares the "(...) 010 ..... 0001111" opcode space
-> +                 * with 'cbo' insns, but assumes rd != 0.
-> +                 *
-> +                 * cbo_inval  0000000 00000 ..... 010 00000 0001111
-> +                 * cbo_clean  0000000 00001 ..... 010 00000 0001111
-> +                 * cbo_flush  0000000 00010 ..... 010 00000 0001111
-> +                 * cbo_zero   0000000 00100 ..... 010 00000 0001111
-> +                 */
-> +                if ((inst >> 7) & 0b11111) {
-> +                    op = rv_op_lq;
-> +                } else {
-> +                    switch (inst >> 20) {
-> +                    case 0: op = rv_op_cbo_inval; break;
-> +                    case 1: op = rv_op_cbo_clean; break;
-> +                    case 2: op = rv_op_cbo_flush; break;
-> +                    case 4: op = rv_op_cbo_zero; break;
-> +                    }
-> +                }
->               }
->               break;
->           case 4:
-
+base-commit: eca2c16212ef9dcb0871de39bb9d1c2efebe76be
+-- 
+2.53.0
 
