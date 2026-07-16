@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68B95C44501
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 13:44:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A25CC44501
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 13:45:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkMOG-0002UU-QX; Thu, 16 Jul 2026 09:44:40 -0400
+	id 1wkMOO-0002V6-Ez; Thu, 16 Jul 2026 09:44:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kdutta@redhat.com>) id 1wkMOE-0002U3-Uc
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 09:44:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kdutta@redhat.com>) id 1wkMOM-0002Ur-NO
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 09:44:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kdutta@redhat.com>) id 1wkMOC-0007N0-Us
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 09:44:38 -0400
+ (Exim 4.90_1) (envelope-from <kdutta@redhat.com>) id 1wkMOJ-0007NV-HE
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 09:44:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784209476;
+ s=mimecast20190719; t=1784209482;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Qd3TNrOnqY8L2J6lvZ814YmXt5L8tWJW+CCI1BK2UIw=;
- b=KsfFLyKgXg2Az6BtA40Rq6HVq4AG9jyCfDvAhUjC4mQQa7WN06TX5151dF7hkjePcSTXMC
- FW0JHvmWjEolZNKR5J0NNn3rOOvz74GYEE9ZildwrznbMkslnBIiUNPNDTEFQ1IpykSz1j
- 7iJPuTUuXd9ciDJ70nHBqKDaUlb3EIQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=bGprAAMhsBLm/djvyAE64mSKdfRYnPPY8PLAUIwi0ck=;
+ b=UNG9ck820cIWZSkDsMwqSp+m/OwcImtMzZ8Xv+DoGyTSWh+nNJnBWUBYH4BgCixJ4l8mCt
+ HeZEbipTyzqSmP0hsqaQ43dHAiCqEt+LPt9bvDMQMzk9by/S2YYYUZDt31P9rHIzw9EcuI
+ gvL/C/2pAroN/ATz7mBFgn3SZ7ql32M=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-530-QmfjZb8YORyZyHSQetUFog-1; Thu,
- 16 Jul 2026 09:44:32 -0400
-X-MC-Unique: QmfjZb8YORyZyHSQetUFog-1
-X-Mimecast-MFC-AGG-ID: QmfjZb8YORyZyHSQetUFog_1784209472
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-297--WmaCfzSOZu347vAmeEKFw-1; Thu,
+ 16 Jul 2026 09:44:36 -0400
+X-MC-Unique: -WmaCfzSOZu347vAmeEKFw-1
+X-Mimecast-MFC-AGG-ID: -WmaCfzSOZu347vAmeEKFw_1784209475
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C16C41955F31; Thu, 16 Jul 2026 13:44:31 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8697C18002F2; Thu, 16 Jul 2026 13:44:35 +0000 (UTC)
 Received: from kdutta-thinkpadp1gen7.bengluru.csb (unknown [10.74.80.216])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D34EA42E; Thu, 16 Jul 2026 13:44:28 +0000 (UTC)
+ id 6EB0A42E; Thu, 16 Jul 2026 13:44:32 +0000 (UTC)
 From: Koushik Dutta <kdutta@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
@@ -52,26 +52,27 @@ Cc: =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
  Stefano Garzarella <sgarzare@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Zhao Liu <zhao1.liu@intel.com>, Jason Wang <jasowang@redhat.com>
-Subject: [PATCH v10 1/2] [PATCH 1/2] Introduce virtio_net_handle_tx_dispatch()
- to unify TX path handling. This dispatcher dynamically selects between
- timer-based and BH-based TX processing based on configuration.
-Date: Thu, 16 Jul 2026 19:14:20 +0530
-Message-ID: <20260716134421.3765533-2-kdutta@redhat.com>
+Subject: [PATCH v10 2/2] [PATCH 2/2] Implement VirtIO Network Notification
+ Coalescing (VIRTIO_NET_F_NOTF_COAL). This allows guests to reduce interrupt
+ overhead by configuring coalescing parameters via ethtool -C for both RX and
+ TX paths.
+Date: Thu, 16 Jul 2026 19:14:21 +0530
+Message-ID: <20260716134421.3765533-3-kdutta@redhat.com>
 In-Reply-To: <20260716134421.3765533-1-kdutta@redhat.com>
 References: <20260716134421.3765533-1-kdutta@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: permerror client-ip=170.10.133.124;
+Received-SPF: permerror client-ip=170.10.129.124;
  envelope-from=kdutta@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,97 +88,426 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Previously, the tx=timer selected between two completely separate
-code paths at queue creation time. This refactoring introduces a
-runtime dispatch mechanism while maintaining identical behavior.
+The feature supports two coalescing modes:
+- Time-based: delay notifications up to N microseconds
+- Count-based: delay until N packets are processed
 
-This is a preparatory patch with no functional changes, making it
-easier to add dynamic TX notification coalescing in a subsequent patch.
+Implementation details:
+- Added VIRTIO_NET_CTRL_NOTF_COAL class handling in control virtqueue
+- RX path: batches notifications based on packet count or timeout
+- TX path: leverages the unified dispatcher to dynamically enable
+  timer-based coalescing when guest configures it via ethtool
+- Coalescing parameters persist across live migration
+
+Note: When tx=timer is configured at VM launch, the coalescing feature
+is automatically disabled because tx=timer already introduces a fixed
+150µs delay for packet batching, making notification coalescing redundant.
+
+Adds the `x-vq_notf_coal=on` device parameter to dynamically enable
+virtqueue notification coalescing at VM startup.
+
+Performance metrics (Moderate Coalescing vs Without Coalescing):
+- RX parameters: 1000µs, 10 frames
+- TX parameters: 2000µs, 20 frames
+- Results: 20% drop in CPU overhead and a 30% reduction in interrupts.
 
 Signed-off-by: Koushik Dutta <kdutta@redhat.com>
 ---
- hw/net/virtio-net.c            | 41 ++++++++++++++++++++++------------
- include/hw/virtio/virtio-net.h |  1 +
- 2 files changed, 28 insertions(+), 14 deletions(-)
+ hw/net/virtio-net.c            | 203 ++++++++++++++++++++++++++++++++-
+ include/hw/virtio/virtio-net.h |  10 ++
+ net/passt.c                    |   1 +
+ net/tap.c                      |   1 +
+ net/vhost-user.c               |   1 +
+ net/vhost-vdpa.c               |   1 +
+ 6 files changed, 213 insertions(+), 4 deletions(-)
 
 diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 2a5d642a64..e7f05956a5 100644
+index e7f05956a5..fac1013d47 100644
 --- a/hw/net/virtio-net.c
 +++ b/hw/net/virtio-net.c
-@@ -2973,6 +2973,22 @@ static void virtio_net_tx_bh(void *opaque)
+@@ -157,6 +157,16 @@ static void flush_or_purge_queued_packets(NetClientState *nc)
+  * - we could suppress RX interrupt if we were so inclined.
+  */
+ 
++static void virtio_net_rx_notify(void *opaque)
++{
++    VirtIONetQueue *q = opaque;
++    VirtIONet *n = q->n;
++    VirtIODevice *vdev = VIRTIO_DEVICE(n);
++
++    q->rx_coal.pkt_cnt = 0;
++    virtio_notify(vdev, q->rx_vq);
++}
++
+ static void virtio_net_get_config(VirtIODevice *vdev, uint8_t *config)
+ {
+     VirtIONet *n = VIRTIO_NET(vdev);
+@@ -1002,6 +1012,87 @@ static void virtio_net_set_features(VirtIODevice *vdev,
      }
  }
  
-+static void virtio_net_handle_tx_dispatch(VirtIODevice *vdev, VirtQueue *vq)
++static void virtio_net_tx_notification_timer(void *opaque)
 +{
-+    VirtIONet *n = VIRTIO_NET(vdev);
-+    VirtIONetQueue *q = &n->vqs[vq2q(virtio_get_queue_index(vq))];
++    VirtIONetQueue *q = opaque;
++    VirtIONet *n = q->n;
++    VirtIODevice *vdev = VIRTIO_DEVICE(n);
 +
-+    if (n->tx_timer_activate) {
-+        if (q->tx_timer == NULL) {
-+            q->tx_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-+                                       virtio_net_tx_timer, q);
-+        }
-+        virtio_net_handle_tx_timer(vdev, vq);
-+    } else {
-+        virtio_net_handle_tx_bh(vdev, vq);
-+    }
++    q->tx_coal.pkt_cnt = 0;
++    virtio_notify(vdev, q->tx_vq);
 +}
 +
- static void virtio_net_add_queue(VirtIONet *n, int index)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(n);
-@@ -2980,20 +2996,13 @@ static void virtio_net_add_queue(VirtIONet *n, int index)
-     n->vqs[index].rx_vq = virtio_add_queue(vdev, n->net_conf.rx_queue_size,
-                                            virtio_net_handle_rx);
- 
--    if (n->net_conf.tx && !strcmp(n->net_conf.tx, "timer")) {
--        n->vqs[index].tx_vq =
--            virtio_add_queue(vdev, n->net_conf.tx_queue_size,
--                             virtio_net_handle_tx_timer);
--        n->vqs[index].tx_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
--                                              virtio_net_tx_timer,
--                                              &n->vqs[index]);
--    } else {
--        n->vqs[index].tx_vq =
--            virtio_add_queue(vdev, n->net_conf.tx_queue_size,
--                             virtio_net_handle_tx_bh);
--        n->vqs[index].tx_bh = qemu_bh_new_guarded(virtio_net_tx_bh, &n->vqs[index],
--                                                  &DEVICE(vdev)->mem_reentrancy_guard);
--    }
-+    n->vqs[index].tx_vq =
-+        virtio_add_queue(vdev, n->net_conf.tx_queue_size,
-+                         virtio_net_handle_tx_dispatch);
-+
-+    n->vqs[index].tx_bh =
-+        qemu_bh_new_guarded(virtio_net_tx_bh, &n->vqs[index],
-+                            &DEVICE(vdev)->mem_reentrancy_guard);
- 
-     n->vqs[index].tx_waiting = 0;
-     n->vqs[index].n = n;
-@@ -3970,6 +3979,10 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
-         error_printf("Defaulting to \"bh\"");
-     }
- 
-+    if (n->net_conf.tx && strcmp(n->net_conf.tx, "timer") == 0) {
-+        n->tx_timer_activate = true;
++static bool virtio_net_tx_should_notify(VirtIONetQueue *q)
++{
++    if (q->tx_coal.usecs == 0 || !q->tx_coal.timer) {
++        return true;
 +    }
 +
-     n->net_conf.tx_queue_size = MIN(virtio_net_max_tx_queue_size(n),
-                                     n->net_conf.tx_queue_size);
++    q->tx_coal.pkt_cnt++;
++
++    if (q->tx_coal.packets > 0 && q->tx_coal.pkt_cnt >= q->tx_coal.packets) {
++        q->tx_coal.pkt_cnt = 0;
++        timer_del(q->tx_coal.timer);
++        return true;
++    }
++
++    if (!timer_pending(q->tx_coal.timer)) {
++        timer_mod(q->tx_coal.timer,
++                  qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
++                  q->tx_coal.usecs * 1000); /* Converted to ns */
++    }
++
++    return false;
++}
++
++static int virtio_net_handle_coal(VirtIONet *n, uint8_t cmd,
++                                  struct iovec *iov, unsigned int iov_cnt)
++{
++    struct virtio_net_ctrl_coal coal;
++    VirtIONetQueue *q;
++    size_t s;
++    int i;
++
++    s = iov_to_buf(iov, iov_cnt, 0, &coal, sizeof(coal));
++    if (s != sizeof(coal)) {
++        return VIRTIO_NET_ERR;
++    }
++
++    if (cmd == VIRTIO_NET_CTRL_NOTF_COAL_RX_SET) {
++        for (i = 0; i < n->max_queue_pairs; i++) {
++            q = &n->vqs[i];
++            q->rx_coal.usecs = le32_to_cpu(coal.max_usecs);
++            q->rx_coal.packets = le32_to_cpu(coal.max_packets);
++            q->rx_coal.pkt_cnt = 0;
++            if (q->rx_coal.usecs > 0) {
++                /* Delete old timer if exists, then create new one */
++                g_clear_pointer(&q->rx_coal.timer, timer_free);
++                q->rx_coal.timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
++                                                virtio_net_rx_notify,
++                                                q);
++            } else {
++                g_clear_pointer(&q->rx_coal.timer, timer_free);
++            }
++        }
++    } else if (cmd == VIRTIO_NET_CTRL_NOTF_COAL_TX_SET) {
++        for (i = 0; i < n->max_queue_pairs; i++) {
++            q = &n->vqs[i];
++            q->tx_coal.usecs = le32_to_cpu(coal.max_usecs);
++            q->tx_coal.packets = le32_to_cpu(coal.max_packets);
++            q->tx_coal.pkt_cnt = 0;
++            if (q->tx_coal.usecs > 0) {
++                g_clear_pointer(&q->tx_coal.timer, timer_free);
++                q->tx_coal.timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
++                                                virtio_net_tx_notification_timer,
++                                                q);
++            } else {
++                g_clear_pointer(&q->tx_coal.timer, timer_free);
++            }
++        }
++    }
++    return VIRTIO_NET_OK;
++}
++
+ static int virtio_net_handle_rx_mode(VirtIONet *n, uint8_t cmd,
+                                      struct iovec *iov, unsigned int iov_cnt)
+ {
+@@ -1581,6 +1672,8 @@ size_t virtio_net_handle_ctrl_iov(VirtIODevice *vdev,
+         status = virtio_net_handle_mq(n, ctrl.cmd, iov, out_num);
+     } else if (ctrl.class == VIRTIO_NET_CTRL_GUEST_OFFLOADS) {
+         status = virtio_net_handle_offloads(n, ctrl.cmd, iov, out_num);
++    } else if (ctrl.class == VIRTIO_NET_CTRL_NOTF_COAL) {
++        status = virtio_net_handle_coal(n, ctrl.cmd, iov, out_num);
+     }
  
-diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
-index 371e376428..a4eb3f407e 100644
---- a/include/hw/virtio/virtio-net.h
-+++ b/include/hw/virtio/virtio-net.h
-@@ -230,6 +230,7 @@ struct VirtIONet {
-     struct EBPFRSSContext ebpf_rss;
-     uint32_t nr_ebpf_rss_fds;
-     char **ebpf_rss_fds;
-+    bool tx_timer_activate;
+     s = iov_from_buf(in_sg, in_num, 0, &status, sizeof(status));
+@@ -2040,7 +2133,23 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
+     }
+ 
+     virtqueue_flush(q->rx_vq, i);
+-    virtio_notify(vdev, q->rx_vq);
++
++    /* rx coalescing */
++    q->rx_coal.pkt_cnt += i;
++    if (q->rx_coal.usecs == 0 || q->rx_coal.pkt_cnt >= q->rx_coal.packets) {
++        if (q->rx_coal.timer) {
++            timer_del(q->rx_coal.timer);
++        }
++        virtio_net_rx_notify(q);
++    } else {
++        if (q->rx_coal.timer) {
++            if (!timer_pending(q->rx_coal.timer)) {
++                timer_mod(q->rx_coal.timer,
++                          qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
++                          q->rx_coal.usecs * 1000); /* Converted to ns */
++            }
++        }
++    }
+ 
+     return size;
+ 
+@@ -2690,7 +2799,9 @@ static void virtio_net_tx_complete(NetClientState *nc, ssize_t len)
+     int ret;
+ 
+     virtqueue_push(q->tx_vq, q->async_tx.elem, 0);
+-    virtio_notify(vdev, q->tx_vq);
++    if (virtio_net_tx_should_notify(q)) {
++        virtio_notify(vdev, q->tx_vq);
++    }
+ 
+     g_free(q->async_tx.elem);
+     q->async_tx.elem = NULL;
+@@ -2802,7 +2913,10 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
+ 
+ drop:
+         virtqueue_push(q->tx_vq, elem, 0);
+-        virtio_notify(vdev, q->tx_vq);
++        if (virtio_net_tx_should_notify(q)) {
++            virtio_notify(vdev, q->tx_vq);
++        }
++
+         g_free(elem);
+ 
+         if (++num_packets >= n->tx_burst) {
+@@ -2899,6 +3013,7 @@ static void virtio_net_tx_timer(void *opaque)
+     if (ret == -EBUSY || ret == -EINVAL) {
+         return;
+     }
++
+     /*
+      * If we flush a full burst of packets, assume there are
+      * more coming and immediately rearm
+@@ -3005,6 +3120,12 @@ static void virtio_net_add_queue(VirtIONet *n, int index)
+                             &DEVICE(vdev)->mem_reentrancy_guard);
+ 
+     n->vqs[index].tx_waiting = 0;
++    n->vqs[index].rx_coal.pkt_cnt = 0;
++    n->vqs[index].tx_coal.pkt_cnt = 0;
++    n->vqs[index].rx_coal.usecs = 0;
++    n->vqs[index].tx_coal.usecs = 0;
++    n->vqs[index].rx_coal.packets = 0;
++    n->vqs[index].tx_coal.packets = 0;
+     n->vqs[index].n = n;
+ }
+ 
+@@ -3017,6 +3138,11 @@ static void virtio_net_del_queue(VirtIONet *n, int index)
+     qemu_purge_queued_packets(nc);
+ 
+     virtio_del_queue(vdev, index * 2);
++
++    /* Cleanup coalescing timers */
++    g_clear_pointer(&q->rx_coal.timer, timer_free);
++    g_clear_pointer(&q->tx_coal.timer, timer_free);
++
+     if (q->tx_timer) {
+         timer_free(q->tx_timer);
+         q->tx_timer = NULL;
+@@ -3097,6 +3223,13 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
+     virtio_features_or(features, features, n->host_features_ex);
+ 
+     virtio_add_feature_ex(features, VIRTIO_NET_F_MAC);
++    if (n->tx_timer_activate) {
++        virtio_clear_feature_ex(features, VIRTIO_NET_F_NOTF_COAL);
++    } else {
++        if (!virtio_has_feature(*features, VIRTIO_NET_F_NOTF_COAL)) {
++            *features &= ~(1ULL << VIRTIO_NET_F_NOTF_COAL);
++        }
++    }
+ 
+     if (!peer_has_vnet_hdr(n)) {
+         virtio_clear_feature_ex(features, VIRTIO_NET_F_CSUM);
+@@ -3251,6 +3384,26 @@ static int virtio_net_post_load_device(void *opaque, int version_id)
+     }
+ 
+     virtio_net_commit_rss_config(n);
++
++    for (i = 0; i < n->max_queue_pairs; i++) {
++        VirtIONetQueue *q = &n->vqs[i];
++        if (q->rx_coal.usecs > 0) {
++            if (!q->rx_coal.timer) {
++                q->rx_coal.timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
++                                                virtio_net_rx_notify,
++                                                q);
++            }
++        }
++
++        if (q->tx_coal.usecs > 0) {
++            if (!q->tx_coal.timer) {
++                q->tx_coal.timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
++                                                virtio_net_tx_notification_timer,
++                                                q);
++            }
++        }
++    }
++
+     return 0;
+ }
+ 
+@@ -3270,13 +3423,49 @@ static int virtio_net_post_load_virtio(VirtIODevice *vdev)
+     return 0;
+ }
+ 
++static const VMStateDescription vmstate_virtio_net_coal = {
++    .name = "virtio-net-coal",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(usecs, VirtIONetCoal),
++        VMSTATE_UINT32(packets, VirtIONetCoal),
++        VMSTATE_UINT32(pkt_cnt, VirtIONetCoal),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
++static bool virtio_net_queue_notf_coal_needed(void *opaque)
++{
++    VirtIONetQueue *q = opaque;
++    return q->rx_coal.usecs > 0 || q->tx_coal.usecs > 0;
++}
++
++static const VMStateDescription vmstate_virtio_net_queue_notf_coal = {
++    .name = "virtio-net-queue-tx_waiting/notf-coal",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = virtio_net_queue_notf_coal_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_STRUCT(rx_coal, VirtIONetQueue, 0,
++                       vmstate_virtio_net_coal, VirtIONetCoal),
++        VMSTATE_STRUCT(tx_coal, VirtIONetQueue, 0,
++                       vmstate_virtio_net_coal, VirtIONetCoal),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
+ /* tx_waiting field of a VirtIONetQueue */
+ static const VMStateDescription vmstate_virtio_net_queue_tx_waiting = {
+     .name = "virtio-net-queue-tx_waiting",
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT32(tx_waiting, VirtIONetQueue),
+         VMSTATE_END_OF_LIST()
+-   },
++    },
++    .subsections = (const VMStateDescription * const []) {
++        &vmstate_virtio_net_queue_notf_coal,
++        NULL
++    }
  };
  
- size_t virtio_net_handle_ctrl_iov(VirtIODevice *vdev,
+ static bool max_queue_pairs_gt_1(void *opaque, int version_id)
+@@ -3981,6 +4170,10 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+ 
+     if (n->net_conf.tx && strcmp(n->net_conf.tx, "timer") == 0) {
+         n->tx_timer_activate = true;
++        if (n->host_features & (1ULL << VIRTIO_NET_F_NOTF_COAL)) {
++            warn_report("virtio-net: 'vq_notf_coal' is incompatible with 'tx=timer',"
++                        "disabling notification coalescing");
++        }
+     }
+ 
+     n->net_conf.tx_queue_size = MIN(virtio_net_max_tx_queue_size(n),
+@@ -4271,6 +4464,8 @@ static const Property virtio_net_properties[] = {
+                       VIRTIO_NET_F_GUEST_USO6, true),
+     DEFINE_PROP_BIT64("host_uso", VirtIONet, host_features,
+                       VIRTIO_NET_F_HOST_USO, true),
++    DEFINE_PROP_BIT64("x-vq_notf_coal", VirtIONet, host_features,
++                      VIRTIO_NET_F_NOTF_COAL, false),
+     DEFINE_PROP_ON_OFF_AUTO_BIT64("hash-ipv4", VirtIONet,
+                                   rss_data.specified_hash_types,
+                                   VIRTIO_NET_HASH_REPORT_IPv4 - 1,
+diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
+index a4eb3f407e..244c8a0224 100644
+--- a/include/hw/virtio/virtio-net.h
++++ b/include/hw/virtio/virtio-net.h
+@@ -155,6 +155,14 @@ typedef struct VirtioNetRssData {
+     uint16_t default_queue;
+ } VirtioNetRssData;
+ 
++/* Interrupt notification coalescing parameters */
++typedef struct VirtIONetCoal {
++    uint32_t usecs;    /* Timeout in microseconds */
++    uint32_t packets;  /* Packet count threshold */
++    uint32_t pkt_cnt;  /* Current packet count since last notification */
++    QEMUTimer *timer;  /* Coalescing timer */
++} VirtIONetCoal;
++
+ typedef struct VirtIONetQueue {
+     VirtQueue *rx_vq;
+     VirtQueue *tx_vq;
+@@ -165,6 +173,8 @@ typedef struct VirtIONetQueue {
+         VirtQueueElement *elem;
+     } async_tx;
+     struct VirtIONet *n;
++    VirtIONetCoal rx_coal;
++    VirtIONetCoal tx_coal;
+ } VirtIONetQueue;
+ 
+ struct VirtIONet {
+diff --git a/net/passt.c b/net/passt.c
+index 45440c399b..43b36ed8c5 100644
+--- a/net/passt.c
++++ b/net/passt.c
+@@ -52,6 +52,7 @@ static const int user_feature_bits[] = {
+     VIRTIO_NET_F_GUEST_USO4,
+     VIRTIO_NET_F_GUEST_USO6,
+     VIRTIO_NET_F_HOST_USO,
++    VIRTIO_NET_F_NOTF_COAL,
+ 
+     /* This bit implies RARP isn't sent by QEMU out of band */
+     VIRTIO_NET_F_GUEST_ANNOUNCE,
+diff --git a/net/tap.c b/net/tap.c
+index 57ffb09885..e6ddbc1eb1 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -63,6 +63,7 @@ static const int kernel_feature_bits[] = {
+     VIRTIO_F_NOTIFICATION_DATA,
+     VIRTIO_NET_F_RSC_EXT,
+     VIRTIO_NET_F_HASH_REPORT,
++    VIRTIO_NET_F_NOTF_COAL,
+     VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO,
+     VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO,
+     VHOST_INVALID_FEATURE_BIT
+diff --git a/net/vhost-user.c b/net/vhost-user.c
+index 2d0fc49b4d..f1e9b7a038 100644
+--- a/net/vhost-user.c
++++ b/net/vhost-user.c
+@@ -54,6 +54,7 @@ static const int user_feature_bits[] = {
+     VIRTIO_NET_F_GUEST_USO4,
+     VIRTIO_NET_F_GUEST_USO6,
+     VIRTIO_NET_F_HOST_USO,
++    VIRTIO_NET_F_NOTF_COAL,
+ 
+     /* This bit implies RARP isn't sent by QEMU out of band */
+     VIRTIO_NET_F_GUEST_ANNOUNCE,
+diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+index f1523697e2..0dcd6fb9f1 100644
+--- a/net/vhost-vdpa.c
++++ b/net/vhost-vdpa.c
+@@ -70,6 +70,7 @@ static const int vdpa_feature_bits[] = {
+     VIRTIO_NET_F_CTRL_RX,
+     VIRTIO_NET_F_CTRL_RX_EXTRA,
+     VIRTIO_NET_F_CTRL_VLAN,
++    VIRTIO_NET_F_NOTF_COAL,
+     VIRTIO_NET_F_CTRL_VQ,
+     VIRTIO_NET_F_GSO,
+     VIRTIO_NET_F_GUEST_CSUM,
 -- 
 2.53.0
 
