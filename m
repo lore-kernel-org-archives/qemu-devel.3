@@ -4,112 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86A55C44512
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 20:48:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3991C44514
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 20:55:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkSzy-0001oi-AE; Thu, 16 Jul 2026 16:48:02 -0400
+	id 1wkT6W-0002rw-IQ; Thu, 16 Jul 2026 16:54:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wkSzw-0001oL-FO
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 16:48:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wkSzu-00086H-5K
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 16:48:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784234875;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SLscvMbultGeCFBMoqoVyL5g6Spu1s3eX/09KNeOWGQ=;
- b=YAk4yvu+5KXJbGZU1ivUHxfoTq+aEJdbSl4Urxd+gsn5xWjp9VPRd0/Hl5BwC2ISoke7qH
- FbplTnsqVmj5ywxK2Hklp82unaehLU+PyfTXmWCIkU2kJa6kq6YxyTgQ7LZ6L7OhurtMvS
- kJFN8f78fqkncp8TPEi4m53oT7opnWM=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-591-uOJMrgAtOEGYtvMrPGC42g-1; Thu, 16 Jul 2026 16:47:54 -0400
-X-MC-Unique: uOJMrgAtOEGYtvMrPGC42g-1
-X-Mimecast-MFC-AGG-ID: uOJMrgAtOEGYtvMrPGC42g_1784234873
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-49544a639e9so4573285e9.1
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 13:47:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
+ id 1wkT6T-0002qY-H6
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 16:54:45 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
+ id 1wkT6R-0000Mb-US
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 16:54:45 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-84a4d8fd6ecso3969719b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 13:54:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784234873; x=1784839673; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=SLscvMbultGeCFBMoqoVyL5g6Spu1s3eX/09KNeOWGQ=;
- b=ULnk3zcc9W+upwruj71grwLPzfUs7YeLGGyXhoT7AU2Y1uW1Lb4IkKcO6AAEAYUca6
- V21aZsWYb/ZKVlw+VW+FZxcHNNxEm9LKFWUrdIblvtxjMZ3Ag35lb5+Scf0ZDjoiI6Jl
- fu4LJmHVed+nbReiIyUiQKUR9lNznE2oes+y7Cyx9ZitjKG7HoJktp8sBE/fiGYHIJwo
- Mt7HkRxSfUacQInkUdv2a6sxo/ak0JPfmIdgKau+fA2p3LZs3NlyCnqIyXCJYb7dsoiF
- ORsUIwSIAS/C//V7K6dy9ds9MSHHga8ftE+oj2ecLkLvmnqetOqnxToe8pUDU7qZTZvH
- G+Iw==
+ d=linaro.org; s=google; t=1784235282; x=1784840082; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=HhLYnr/qR2b4y0zZ+sDHUxX9VDtn3ie68FSiMVa5FBY=;
+ b=h/Vd7Vdu6m7B/C3FnzmX1sDbHAPaBJZi+03GXPvPX+gLwCYhbxigmNDSO+7NB+dGio
+ qVoTcuQERb15WPdzbXUn4Mg24If3lWVhfyfTfaiHGhWKY2eCAVwPbi+BdqIX643/8kD/
+ HaGMEZL21hUtDrLlIrE5YciSCwp+Y7g87F+K8nTe+suUA6GBU6O1SUUlwU7oO7ThIbS3
+ IeidHPZiMTMEcbsjaCftYLqRmRvnd6VuEuHsICdZr60i8ySYZhNsOUke6YpC9rLw09rg
+ YbtLcTM+7MddhPa8prsdTaWqBZjY1528bgfZpl8FpZxsFDsA3I14PquuI122wBLXSFrj
+ 8dzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784234873; x=1784839673;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=SLscvMbultGeCFBMoqoVyL5g6Spu1s3eX/09KNeOWGQ=;
- b=HdDz4aqFWX01heCktyuE/W3JKSP/09sr6r+0h5STvcVxpSnDaMxgc31IDrUmUjWhdY
- qJEiEimH0B2Egp5mPHswRStu+lhzA6xRrigggaNiyp7v8jQcyUnPGoPeNtvzcIIETTy9
- SHv/6X0n98OPRFkW3QLql1VdT1NCq9gu+Bhdh5N+WOiwE4/tHL//daHFBjPcsswV8p/A
- 4RihCbPc+4ZKxzxGFOn6VQuhYaA0xUb9dIs4fyvazX4jUuHYd4ZsIOnoXG68Hr/VjFhW
- RSfEZcpERTljNN/kjg27bSMgYj9AjH/qTihBpo15zCxrnodoATNsQ8DT4i5o69i97Dn6
- uTGQ==
-X-Gm-Message-State: AOJu0Yw0moH1nWbrWDtisD2MftOIWUVQJm369KVxLfTURx5hRJ7AnoMs
- HPvpTRORZmXM604eXcW27lv/nXP/UAlV4uQXzXvqoEBf9f78Yu36Y2NatU9qHatldL92RwoukJT
- owVUM8twpFg/MR3ziVxmfPTMyM8ZhmQuCGDpuqO2ZotsTX0ZpZI8Vgqcf
-X-Gm-Gg: AfdE7cmOHaD0g0ewes2tbAkQ7JNHdM0VIpfXzKIYy0RY90UmZH+1F0iFYdL9ZRD2V4y
- 5UxfRMkXHk8A50D70CHyF289GV6q0TJGWngV+Up4lugG4ZPqm6LLPBe2oCCXiq9d4di7n5z6FGA
- DGzsfvsjG4buyT/oP8Oa/blz3uwFi8Rq27ryFyXoqsTw3DxAJ3d+GsGmeNPS9QCmq4wiv7ftAsO
- dI7DmiCJ4Pc7OalY0FhXDIWRA1ECNYq7SqxCCTRriOOz34XgRJ6SxglSTgVAbHigZcRMNB0uG35
- tFqterAFBN58hJpMBLoapWzsSfeMnanGKxcp1yEmst+wLPvVLKwfwuMps0Yyo03HSn+wqp4g0gt
- TK/TI/++SD4CYJJv+e9v8QFQO
-X-Received: by 2002:a05:600c:1f94:b0:493:e52f:6ee1 with SMTP id
- 5b1f17b1804b1-4953bfffbc8mr99282955e9.0.1784234872850; 
- Thu, 16 Jul 2026 13:47:52 -0700 (PDT)
-X-Received: by 2002:a05:600c:1f94:b0:493:e52f:6ee1 with SMTP id
- 5b1f17b1804b1-4953bfffbc8mr99282825e9.0.1784234872366; 
- Thu, 16 Jul 2026 13:47:52 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-24-117.inter.net.il. [80.230.24.117])
+ d=1e100.net; s=20251104; t=1784235282; x=1784840082;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=HhLYnr/qR2b4y0zZ+sDHUxX9VDtn3ie68FSiMVa5FBY=;
+ b=PYCfGWrc3Ilbj3nI88bCa9DwzNOFT9ojyaOplAZ0AYCwBSnZLrBtiBnQPCSclObQeJ
+ wga2pBhVnnPbL7vBwlEj5jQX3Qyjka24asu4bY2kn6u3KsXepPU215fnTINU+7bBwloh
+ R9iSsVwZnGZHfJ1WQ0Z4rSOBOuzkRUWtHE8ZmsMzZEMAb/f2kL27qooMR6VgmIznBZYh
+ eCuzM2tQ4EDD8YNeKV7Z6QQidFa+sMriPZRgpamfC8eroxdHa+Th7GFjlhh503EGeg2h
+ pvszwDnGp+D+7JSZwXGWfWOaKrRWmjvFBYGqOupLlowzKjOqLVNndOUhfxQ/DrqkyVgN
+ Vg1A==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpMuPWhF96tSoNw/yg5irepbcLG+rlnyp7+HWcXEGbsqv09GOwf5lU6WSjTjp/qTUuhC+Dy1oUxa/hH@nongnu.org
+X-Gm-Message-State: AOJu0Ywx/wyMCFAdwr2lD6RDfxUVp8hCIHUD0pf+HTqz/71XLIayKwxn
+ lYONYI1kHdSbf3D4RVuiVHlGzYFt6X3RoKYszBYlERo8P7VY8np6NWM8ITP9Ci72BAQ=
+X-Gm-Gg: AfdE7cl4JeNFh00i8QMitSTh8SiKdZ1FUWo4855Rqs98rzL+4WZ3FRLpRLNkdQBxHkK
+ kxeeBgjs70Y3GZRerAnZpP/NYzMpMGGhDD5+TlhCHR5RxXBOjRRlqT0byzK/OIwPVhyfBUK2Ni7
+ wJ47XBjdfCaI0TP6NY0uwa4o+OrrH/a9x5xC0nhblUjZOo2k4Ms08fnLGXBrpJRgpBkPFG4ogsR
+ Hs6QN7eZyjQfuQwUSX7w6iavwpBWRYxbuq5n4TAs0hlVSlPkCNj2JdkZ2LEszYC5xalH7rYCdJi
+ mReiVtFZAXnQcqkq70KOVbY/Kq6rDIwvvTuMN49vYySp+nLpnGUxdZvfVsZXYgdIW5n4fQlmbz2
+ nGxFk0qVITCWssxa4jjDK6sMBNfAzazKvnA5ukwbZRPObAm2Eb+0GyqVDETd7UW2KVOqahfGAlM
+ mwilbvhg==
+X-Received: by 2002:a05:6a00:3a01:b0:848:75a1:a0fa with SMTP id
+ d2e1a72fcca58-84a6738bde1mr8608393b3a.67.1784235282318; 
+ Thu, 16 Jul 2026 13:54:42 -0700 (PDT)
+Received: from p14s ([2604:3d09:148c:c800:bc13:5578:20b0:9bee])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f4635ac2esm26656602f8f.13.2026.07.16.13.47.50
+ d2e1a72fcca58-84a4f7dc8e7sm5302307b3a.47.2026.07.16.13.54.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Jul 2026 13:47:51 -0700 (PDT)
-Date: Thu, 16 Jul 2026 16:47:48 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Mauro Matteo Cascella <mcascell@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: Re: [PATCH] docs: outline some guidelines for security classification
-Message-ID: <20260716164043-mutt-send-email-mst@kernel.org>
-References: <20260707105927.2776822-1-berrange@redhat.com>
+ Thu, 16 Jul 2026 13:54:41 -0700 (PDT)
+Date: Thu, 16 Jul 2026 14:54:39 -0600
+From: Mathieu Poirier <mathieu.poirier@linaro.org>
+To: Gavin Shan <gshan@redhat.com>
+Cc: berrange@redhat.com, kchamart@redhat.com,
+ pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
+ mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
+ eblake@redhat.com, armbru@redhat.com, jpb@kernel.org,
+ lorenzo.pieralisi@linaro.org, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvm@vger.kernel.org
+Subject: Re: [RFC v1 07/25] target/arm/kvm: Create scratch Realm VM when
+ requested
+Message-ID: <allFD6P0162v4Dcp@p14s>
+References: <20260707224306.1202330-1-mathieu.poirier@linaro.org>
+ <20260707224306.1202330-8-mathieu.poirier@linaro.org>
+ <ac26ac91-6809-4429-9750-e7d671e952bc@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260707105927.2776822-1-berrange@redhat.com>
-Received-SPF: permerror client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+In-Reply-To: <ac26ac91-6809-4429-9750-e7d671e952bc@redhat.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=mathieu.poirier@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,72 +110,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 07, 2026 at 11:59:27AM +0100, Daniel P. Berrangé wrote:
-> +* **memory allocation bounds**. There are many ways in which a QEMU
-> +  process can legitimately consume an amount of memory that is
-> +  significantly larger than the assigned guest RAM. QEMU's worst
-> +  case memory usage should be considered effectively unbounded.
-
-This really is a bug we need to fix at some point.
-
-> As
-> +  such the QEMU deployment on the host should account for the
-> +  possibility of large memory peaks and apply countermeasures to
-> +  provide continuity of host operations.
-
-
-Well it does not look like existing management stacks do much of this,
-perhaps because when we say qemu memory is unbounded
-the result is you can't limit memory using cgroups without risk of
-qemu dying on oom.
-
-
-> It is typical for the Linux
-> +  OOM killer to reap the process triggering host memory overcommit
-> +  in the case of exccessive usage, offering a degree of protection.
-
-Yes but what degree?
-At least on my box, it seems to kill firefox at about 50% of time (
-
-> +  As such, bugs which can lead to excessive/unbounded memory allocations
-> +  will usually not be classified as security flaws, but should be
-> +  fixed as hardening bugs.
+On Mon, Jul 13, 2026 at 03:30:31PM +1000, Gavin Shan wrote:
+> On 7/8/26 8:42 AM, Mathieu Poirier wrote:
+> > From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> > 
+> > When a Realm is requested, create a scratch Realm VM by setting bit 8
+> > of the argument given to the KVM_CREATE_VM ioctl().  Bit 7-0 are reserved
+> > for the guest PA size.
+> > 
+> > Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> > Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+> > ---
+> >   target/arm/kvm-rme.c  | 8 ++++++++
+> >   target/arm/kvm-stub.c | 5 +++++
+> >   target/arm/kvm.c      | 4 +++-
+> >   target/arm/kvm_arm.h  | 8 ++++++++
+> >   4 files changed, 24 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
+> > index 90c1d30ba24c..f763d5ed6199 100644
+> > --- a/target/arm/kvm-rme.c
+> > +++ b/target/arm/kvm-rme.c
+> > @@ -99,3 +99,11 @@ void kvm_arm_rme_vcpu_init(ARMCPU *cpu)
+> >       cpu->kvm_rme = true;
+> >   }
+> > +
+> > +int kvm_arm_rme_vm_type(void)
+> > +{
+> > +    if (rme_guest) {
+> > +        return KVM_VM_TYPE_ARM_REALM;
+> > +    }
+> > +    return 0;
+> > +}
+> 
+> We had official name for 0, which is KVM_VM_TYPE_ARM_NORMAL. Another question if
+> it's worthwhile to have this helper since it's equivalent to something as below,
+> which can be directly applied to the caller.
+> 
+> 
+>     int vm_type = (current_machine && current_machine->cgs) ? KVM_VM_TYPE_ARM_REALM :
+>                                                               KVM_VM_TYPE_ARM_NORMAL;
 >
 
-should we classify guest driven memory leaks and guest driven
-memory spikes differently?
-
-
-> +* **degraded guest behaviour**. There are a set of bugs which can
-> +  lead guest hardware devices to misbehave. For example, a flawed
-> +  virtual IOMMU operation may not offer the guest device isolation
-> +  that would otherwise be expected. If a guest triggered exploit
-> +  requires kernel privileges (or root account access), and leads
-> +  to sub-optimal behaviour of the virtual device this is considered
-> +  a self inflicted service degradation. These will **not** be
-> +  treated as security flaws, at most hardening bugs. If triggernig
-> +  the code path can be done by an unprivileged guest OS account,
-> +  this may justify handling as a security bug.
-> +
-> +* **nested virtualization**. The scope for nested virtualization
-> +  is to prevent a level 2 guest from breaking out into a level
-> +  1 guest. As noted above, a number of scenarios exclude security
-> +  handling for flaws only exploitable by the guest kernel / root
-> +  account with affect the guest's own service/availability. In the
-> +  context of nested virtualization with PCI device assignment, it
-> +  may may be possible for a level 2 guest kernel to trigger flaws
-> +  that affect the level 0 QEMU process. While these bugs should be
-> +  fixed, they will not be triaged as security flaws at this time.
-> +
-> +* **low severity impact**. As a catch all rule, issues which
-> +  are judged to have a "low" severity impact on the system will
-> +  usually not justify handling as security bugs, nor assignment
-> +  of CVEs. They will be fixed as routine bugs when time allows.
-> +
->  Architecture
->  ------------
->  
-> -- 
-> 2.55.0
-
+Addressed.
+ 
+> 
+> > diff --git a/target/arm/kvm-stub.c b/target/arm/kvm-stub.c
+> > index 4ab6f08637d1..6d52f172c5df 100644
+> > --- a/target/arm/kvm-stub.c
+> > +++ b/target/arm/kvm-stub.c
+> > @@ -129,3 +129,8 @@ void kvm_arm_rme_vcpu_init(ARMCPU *cpu)
+> >   {
+> >       g_assert_not_reached();
+> >   }
+> > +
+> > +int kvm_arm_rme_vm_type(void)
+> > +{
+> > +    g_assert_not_reached();
+> > +}
+> > diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> > index 4c212ed0c337..6aa1cd04e484 100644
+> > --- a/target/arm/kvm.c
+> > +++ b/target/arm/kvm.c
+> > @@ -108,6 +108,7 @@ bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
+> >   {
+> >       int ret = 0, kvmfd = -1, vmfd = -1, cpufd = -1;
+> >       int max_vm_pa_size;
+> > +    int vm_type;
+> >       kvmfd = qemu_open_old("/dev/kvm", O_RDWR);
+> >       if (kvmfd < 0) {
+> > @@ -117,8 +118,9 @@ bool kvm_arm_create_scratch_host_vcpu(int *fdarray,
+> >       if (max_vm_pa_size < 0) {
+> >           max_vm_pa_size = 0;
+> >       }
+> > +    vm_type = kvm_arm_rme_vm_type();
+> >       do {
+> > -        vmfd = ioctl(kvmfd, KVM_CREATE_VM, max_vm_pa_size);
+> > +        vmfd = ioctl(kvmfd, KVM_CREATE_VM, max_vm_pa_size | vm_type);
+> >       } while (vmfd == -1 && errno == EINTR);
+> >       if (vmfd < 0) {
+> >           goto err;
+> > diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+> > index 12ed1eee18b4..65ec1b970606 100644
+> > --- a/target/arm/kvm_arm.h
+> > +++ b/target/arm/kvm_arm.h
+> > @@ -259,4 +259,12 @@ int kvm_arm_rme_init(MachineState *ms, KVMState *s);
+> >    */
+> >   void kvm_arm_rme_vcpu_init(ARMCPU *cpu);
+> > +/**
+> > + * kvm_arm_rme_vm_type
+> > + * @ms: the machine state
+> > + *
+> > + * Returns the Realm KVM VM type if the user requested a Realm, 0 otherwise.
+> > + */
+> > +int kvm_arm_rme_vm_type(void);
+> > +
+> >   #endif
+> 
+> Thanks,
+> Gavin
+> 
 
