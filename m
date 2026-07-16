@@ -4,127 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F1AEC44514
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 19:57:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32DCBC44514
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 19:58:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkSDJ-0008MY-3x; Thu, 16 Jul 2026 15:57:45 -0400
+	id 1wkSDw-0000rd-7J; Thu, 16 Jul 2026 15:58:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wkSD5-0008Ia-A1
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 15:57:32 -0400
+ id 1wkSDq-0000ph-VB
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 15:58:20 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wkSD3-0000Hm-8s
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 15:57:31 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ id 1wkSDp-0000K4-2J
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 15:58:18 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66GJqLMx3853414
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 19:57:27 GMT
+ 66GJp7le3792736
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 19:58:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=tQsoVK9o6Jn
- TY63k0CBWn27eVPOf4mepjUp5pH7gZzc=; b=ooDgUEK7xaEQgJxPdGeyL2IlIr9
- okJqPQjuyV71vtydAPiYwgiGkeCJM/PAEM2EjwMcL+YkYW8eMCN17HOwtB56LZ/H
- RTsNDSHqANvbDJC2E8kgycRgBwGaMhO/8xc0NOGdRH4AtgwpfCS7I8SB2zMFMDZY
- 2qr2hDPtIcZYD4/OxWI8N4uoOeG+QIGGReVrUlkIV7iP/Gh4emLIm0D5QgXyWfVN
- nlMdrvVMGcQ0tHfTcbw+iNlaU93czvH2+yT29Nbf6gYLSt+uHGWkjlQC81rvozBB
- P1ddI9uqa/2XOIU+NAFRDBeg2vPxCNhljukOQCAcSXGhi1Y42ZqARiHAElw==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4feym19vhh-1
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=3kNU5qvo10iMoS3oJMk2DX
+ /BgTlnwND31hrGgfsuG7Y=; b=Bw/nP5d8oiyxAtDjQJnp66QtCxE4YT8NIBcXux
+ ZM4CETMnseuqS1EQycaTR6Mn/c9sLP83sctSc5pskQUsPsxno27jHcaQ4Epls1JK
+ gV4O32WUgd3UaQYPsH3r0SCAG9seqY++xLkz/x7fWheh57/n8YgMcb+3bCZjfsre
+ i9NE722WF7pIJmC/SVxsamXlY7R+Hn+IEXwRLUfchc+jDi0EqnniSIxF+ENK3pA+
+ qgIuUYxYyB839uDXWIUbI0cqYPoFjpnTTJ2v6mSy+/EU9kOFysQyz3hOzvWoIQ3T
+ bxX5/kwXbbO2kMjuiZpD0c0n3vtJQ4xaPEuJpbyJkcwHv6eg==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4feve1twb4-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 19:57:27 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-2cf1c86963bso5483185ad.0
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 12:57:27 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 19:58:16 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2cd01a14e81so102849485ad.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 12:58:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784231847; x=1784836647; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=tQsoVK9o6JnTY63k0CBWn27eVPOf4mepjUp5pH7gZzc=;
- b=kX0auGpoukV57Y4Ek8f/byEAElymTAtLaw2WEfm+tTE+s9QbBbSBRE+jdVopAUcObA
- vkLWa9Zks6JPM52heOzl8/agxFt5h1yK2p4OnIoOV/887IQbl8a5GjeT4CzTphcjhJSN
- eQUZjfgQ9aao4QiuyLu0WlbL0IUTT5iNMEgVtyzTjstgt8VRCxziYONg48SoOSQAPpb5
- DTEt0ciVqlopLSRGiKPp+VBvDdxBYvIp2kuZiJqq03BCyKX1ScAgBrBGPYWLDDbs/JXS
- sn71gkC1TNNJInAWLgW2yrijpBeu+6p/r1yOvpjAghePiozCWarOPucVHS8ZVyBq+DTB
- ehJw==
+ d=oss.qualcomm.com; s=google; t=1784231895; x=1784836695; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=3kNU5qvo10iMoS3oJMk2DX/BgTlnwND31hrGgfsuG7Y=;
+ b=E5DYyJm4G7vHLK9G2yf38oNrjdN4G2SJ8eO3NSfyPkaIZROwx2GzAX6lKuxPyzGpFk
+ 0zGJ0WFSe9p2KsQXfibFmOwTs8kfNmafl1KuB8cxXY/oHZMasa97QxZniLgin1gpnEZ6
+ 7toMJ84meTFt4n03PJcKExAwR+t+7R+jF3k33R+QaUkNN/hS3gWY2U+siXVU+P+i1wD/
+ Qo55KUCEfO08MAuC2aLJp0qH+wtJxjZk4kBCUuK5iPGsrX4rwnW2hPU2m9Yi2y20HlUf
+ zu0300op2prFdY/gl34rbgrgIXUhcfNFKh/z0waKLhtvKh44xh3dnsSYk6VHPKx4ROXb
+ PLfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784231847; x=1784836647;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=tQsoVK9o6JnTY63k0CBWn27eVPOf4mepjUp5pH7gZzc=;
- b=Pd7QyYMVV0Ibiz+X0bywnC1HEeJWwcVPcr5ZbfA1LGI41ap69BpxpOIMV4uR6THBem
- eG6MWaMQjIPqNZlwKpx5/Te3WJY4U2juWehKHMH0sDFmMpN9ZfQHMZ8G/O2QKfg1LCbf
- a+XuteSA7+U4U1D4NILQazRcapK0GfMxTHAy2FgaChUKtJPGoZ5WuEqWg2Nt8lecWN96
- OtjwXedatH6Qhx9dk9QIl9I9pwsW5GMaudzjXqZcxMrilt8D1lYnzcnbKmk2yz5CV5mE
- peRBzAQVNv2mAv3HgZ8ic5m8vHV2rZMitwrZk95g9E8LukUFgnlMs1NVd1/6BbCB9rb0
- g3aQ==
-X-Gm-Message-State: AOJu0YxWz5GVOg9Kca9G0BNv7bSJFkwdg8zC5ZA0UAWIVYOQFFI/9oIk
- RaeNDCgRxcsCWDElyARw4rVKqHTFhk8GkncBV3CCOFtL07e9K8po8OiD7TqPaUJ+hDcij4P8ED9
- C97Zo99ODN92TH0xKOmXSkfiI0JWU3Fl7gg1dNGNjwwPaYt44H1WJhrxi15SBI309aQ==
-X-Gm-Gg: AfdE7ckCLT6Lzrl6rmwjLb6DxVJsZZm0B/R6dBMOHeC3FcruGduCd1+Fe0FKfHnAsqb
- XAkEt2GKWwxlopjFcTWs4nY/arCLFEJVxAEXxQNAgXz4nryTNW7qlckTp8w9bJUJA+crWpqOvtu
- yjFx3eSTBmZ/BmwFbLM+GC/SzQjwdkoNzAAyx0rDS5UxRkeVM5mfk6SYb+1g6YDfguSwVNA07j3
- 8t6vwp+bOC+q7I8L5BpiEo8eW72i4e8UG6lXU6KtxPQoqU/FQmn3INpoff81B1qN+SOR/MJiR5m
- qojralWSdwiM6dxjNp43G1qykX1tMOEBAmb9VQd7STsD9nDsn0Tpzv4yJCSd+2P6Ty3XI0pEmWp
- KY+Jig/Iy8Ja73uJekKCUQAbF7MTCy1Z+h3urL28LzWY2fkBwONTz4t5Jrgu9yiL2mlLL71k=
-X-Received: by 2002:a17:90a:da86:b0:36b:4d63:4a93 with SMTP id
- 98e67ed59e1d1-38e3d21fc15mr3649106a91.13.1784231846635; 
- Thu, 16 Jul 2026 12:57:26 -0700 (PDT)
-X-Received: by 2002:a17:90a:da86:b0:36b:4d63:4a93 with SMTP id
- 98e67ed59e1d1-38e3d21fc15mr3649073a91.13.1784231846189; 
- Thu, 16 Jul 2026 12:57:26 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1784231895; x=1784836695;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=3kNU5qvo10iMoS3oJMk2DX/BgTlnwND31hrGgfsuG7Y=;
+ b=PRlRFj/eIfDHBwCeudkX7Tn7uD3SX5A3z7L5NZkR1vTUbgEFSSKR4pA4bIh/0+C740
+ /BXXx06DUMT3dRxXPLBFNrZ+axzZOEGqnbkyv6wKAjM3aIl6wfzBLUal0Rs1rjIgZd6Z
+ 0oj1RGLDecJhfSmDi16WF9LPlCRkWSDnK9fGJ8EY1ohJRPpof6MU2im4mPghlSXN/AN0
+ NHKEwpkQ9o4/4fmSiW+h32j/X7AKx6LTa/iS3p2cTMKH3NCVAVclBQb3qALFerJG/lhm
+ tnvzK3U50ePj5lbtxZVqltD0o6ti10GhENCLHhknUN1WGMmPlrsvKiKmTBlXjs95GBSJ
+ 3YPw==
+X-Gm-Message-State: AOJu0YxPoG2by/zRn55QZ9JAevL8rphheMFBmK5SUHL22xhwsfK4h4Eg
+ u+UTCB71wCH0SC8OH+uDj8aEEBhHhUXV7Sna/6yx4tudhJPSEf8vUYR7LvKU5Q5n9Jugwrrv47i
+ zkXXtZBnGWcCAvcS35Fi1etjXp5D3+JC49R9Bunci/Z7w5eurQ21EBp7F2YSlzuk0FQ==
+X-Gm-Gg: AfdE7ckvhan/A6AFPZI3KSgXwR7Hbl9Ldcsw8oHmhaBQwJE/1HZOCqEz+yCPCnBJl6s
+ Bjq/J2UG16QmV07gg1pH6lG8iEup9F5dlIUrjwohUxZu0i3II6K9jybMuf6PrMAudFSEKXP9Obe
+ Mwc4KigeTAsUruDOouA+AYxwmGCk8gjmjoYLZXLoP1A922++4WhGqEgfoJ8k3g3hoEob9fPAJGy
+ qXP+GRB2Dx1Rpz/KQ2AOZWp1n+gMRDx6PGOWTAB8sMsDSVm1V/HRhlKvngeh9jndcjvkykyRZhu
+ CCdetzGsnAipj3nZ1KYIAygIxccZ0+NF9A3KKR7AJAe6P87nE2AOMANd2x/uk0akWG37P0eyD4q
+ ckh7/LaMYGVJhSECTMxnBBjqfNQyw0hU35UNRttd1itK/LASN4hjbR+28j/rZAgnWMiLKLdo=
+X-Received: by 2002:a17:90b:588d:b0:37f:d9dc:557 with SMTP id
+ 98e67ed59e1d1-38e2a0300a8mr8294989a91.16.1784231894898; 
+ Thu, 16 Jul 2026 12:58:14 -0700 (PDT)
+X-Received: by 2002:a17:90b:588d:b0:37f:d9dc:557 with SMTP id
+ 98e67ed59e1d1-38e2a0300a8mr8294957a91.16.1784231894340; 
+ Thu, 16 Jul 2026 12:58:14 -0700 (PDT)
 Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3140e6a5174sm14494672eec.15.2026.07.16.12.57.25
+ 5a478bee46e88-3140e6c23c0sm14140471eec.24.2026.07.16.12.58.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Jul 2026 12:57:25 -0700 (PDT)
+ Thu, 16 Jul 2026 12:58:13 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@oss.qualcomm.com
-Subject: [PULL 2/2] plugins/execlog: fix execlog vcpu_exit execution print loss
-Date: Thu, 16 Jul 2026 12:57:15 -0700
-Message-ID: <20260716195715.3218862-3-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL 0/1] Docker fixes for 2026-07-16
+Date: Thu, 16 Jul 2026 12:58:06 -0700
+Message-ID: <20260716195807.3219466-1-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260716195715.3218862-1-pierrick.bouvier@oss.qualcomm.com>
-References: <20260716195715.3218862-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=KPRqylFo c=1 sm=1 tr=0 ts=6a5937a7 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=VwQbUJbxAAAA:8
- a=OZcmDFxvAAAA:8 a=EUspDBNiAAAA:8 a=a92uN-qT0L5WIk0CFmQA:9
- a=GvdueXVYPmCkWapjIL-Q:22 a=liPxxeoTYnb3ClP5OJlV:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDIwMiBTYWx0ZWRfX1hSu0trfrgkQ
- O5xvIj3FJ5aANwz5O9Kzck1qfvSvRlwdkLuFxvsJFoYES+R3KRdf9AaO9fO8NchW6nYDex5IbOZ
- wxgyC8bsj29DXNWs+Lu5rWf5jeZCedtYwZ2nd9sw629yjWKuAd9rCF9xUqt0o2erYTglh+OU4GJ
- Yjte5c9XSstLEDh85FobjfR2DrnXR8e3ta+WAD5+q23s9kpBmEwCu0dyD9o1Sx15RRDfOogMZhu
- Z+Qv/3lde11JqeO3Q8n3+3cSThVPUvPvr/cIIS8x8cMOenFlxdoweX4tuzsnhJBiuOJ9w5pl249
- meMVG19fXnH3Qr5J0ltSAFW782JlS+edWJUv54igb4pb/k8moQ5DhRAt/b15jdmrmS4ILYlh4An
- B44MzLp+8RNWay4IW8a0PE7JKAjfAJh3YBOddOtW+gSvLKVSKKw6GyKps/FjfNYI0DSKgvmULMD
- Eoy+JnW+6zYQGKYAblw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDIwMiBTYWx0ZWRfX48+UHzfCGdvy
- +2XaeR3bArbBa6G/nVWMEgbgSaWxZO9YSC1PdrfFz26KAopaUJ3QKJkhcORqN88Ijk7n4BfYTdD
- vf4L7TaVwDM790InrJtqkt8Bfq0G+xg=
-X-Proofpoint-GUID: E488pUq4xJ-S1OnzsEv8IDDlc5zgSIPk
-X-Proofpoint-ORIG-GUID: E488pUq4xJ-S1OnzsEv8IDDlc5zgSIPk
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDIwNCBTYWx0ZWRfX5GAB6mURVnXi
+ iw2WcBtrrCWGlrYV3DlNi90xXMHExPktvLM5xBaj0h/yIucqerAOH0mukA4jGNiouEN+O4ZS75h
+ /QWM2oYT6rzKJDzQamcpBmxLmJki1H//s8OxiqQ5+VjUzkCY9Cz25lnig80Wxui4A91O4bmtK4H
+ /3X9i2QUjC1LcmqHePQFy1QmRObfYRQKbmucyRfPaUKWT6kzRVHF83D8g6rqUsKvRlmf6cOueWk
+ SXIUp4E6Y0b8F9ctaCZ4CY+6U+z98xcCPo2JwodD3uat//oFwoTokR8bxSwH8laDTg8VrSwa1cq
+ wkz9Ush3pnCduaVOAuNzyXjEX7kPI0bjXTvRaNJakFVtv+dvoQ6hXIqiHD7q9V5ERz4xcKSL8zP
+ QKDwZLWeC/oTLFe2lm0GbR0QvKd6ATimBjmzMliRjMSeBYoSuumOgz0CAStt+3maMDnEOTV5HyE
+ XjHNX44ZKcu6te7YyAg==
+X-Authority-Analysis: v=2.4 cv=DvpmPm/+ c=1 sm=1 tr=0 ts=6a5937d8 cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=p0WdMEafAAAA:8 a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=m98AXBtd1jWFNP0ztuMA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-GUID: pvWx0oaGt4zGWTHhw-ihryfmfXg8EYMx
+X-Proofpoint-ORIG-GUID: pvWx0oaGt4zGWTHhw-ihryfmfXg8EYMx
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDIwNCBTYWx0ZWRfX+v2W7FewaZR6
+ zdDPzgeoee8oM7qq5EDIGQxNHp/qwn2nJ+NkI2ukqPXlk55nCAWy1hPxHUxZ/MhKSZgP+kE1an3
+ 4JYa0Ak41V1Cq0ZCyDDqnYZrhT5Mwgw=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-16_07,2026-07-15_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 adultscore=0 impostorscore=0
- clxscore=1015 malwarescore=0 bulkscore=0 spamscore=0 phishscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ clxscore=1015 suspectscore=0 priorityscore=1501 phishscore=0
+ lowpriorityscore=0 bulkscore=0 spamscore=0 malwarescore=0 impostorscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607160202
+ definitions=main-2607160204
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0b-0031df01.pphosted.com
@@ -150,65 +148,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Harry van Haaren <harry.vanhaaren@openchip.com>
+The following changes since commit eca2c16212ef9dcb0871de39bb9d1c2efebe76be:
 
-Executed instructions are cached in string format inside the
-execlog plugin. These strings are flushed on exit of a TB, improving
-performance. This causes executed instructions to be lost when an
-'ecall' (riscv system call) occurs that causes the thread to terminate.
+  Update version for v11.1.0-rc0 release (2026-07-14 20:36:23 +0100)
 
-The fix in this patch registers a 'vcpu_exit' callback, and flushes
-any content in the c->last_exec buffer, to ensure all instructions are
-present in the final instruction log.
+are available in the Git repository at:
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Tested-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Signed-off-by: Harry van Haaren <harry.vanhaaren@openchip.com>
-Link: https://lore.kernel.org/qemu-devel/20260716094126.787556-3-harry.vanhaaren@openchip.com
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
----
- contrib/plugins/execlog.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+  https://gitlab.com/p-b-o/qemu tags/pbouvier/pr/docker-20260716
 
-diff --git a/contrib/plugins/execlog.c b/contrib/plugins/execlog.c
-index dfe00bf836c..cb0bd399d88 100644
---- a/contrib/plugins/execlog.c
-+++ b/contrib/plugins/execlog.c
-@@ -380,6 +380,25 @@ static void vcpu_init(unsigned int vcpu_index, void *userdata)
-     c->registers = registers_init(vcpu_index);
- }
- 
-+/**
-+ * On vCPU exit, flush the last cached instruction for this vCPU.
-+ *
-+ * The one-instruction-delay pattern stores each instruction in last_exec and
-+ * only prints it when the *next* callback fires. When a thread exits via
-+ * syscall (e.g. ecall/exit), no subsequent callback fires for that vCPU and
-+ * the final instruction is silently dropped. Flushing here guarantees it is
-+ * written before the vCPU is torn down.
-+ */
-+static void vcpu_exit(unsigned int vcpu_index, void *udata)
-+{
-+    CPU *c = qemu_plugin_scoreboard_find(cpus, vcpu_index);
-+    if (c->last_exec && c->last_exec->len) {
-+        g_string_append_c(c->last_exec, '\n');
-+        qemu_plugin_outs(c->last_exec->str);
-+        g_string_truncate(c->last_exec, 0);
-+    }
-+}
-+
- /**
-  * On plugin exit, flush any remaining cached instructions and free state.
-  */
-@@ -461,6 +480,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-     /* Register init, translation block and exit callbacks */
-     qemu_plugin_register_vcpu_init_cb(id, vcpu_init, NULL);
-     qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
-+    qemu_plugin_register_vcpu_exit_cb(id, vcpu_exit, NULL);
-     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
- 
-     return 0;
--- 
-2.47.3
+for you to fetch changes up to c4ce04cfb7460d46c0262d437a7f35bb5c5fc449:
 
+  tests/docker: ensure container command is probed at most once (2026-07-16 10:49:11 -0700)
+
+----------------------------------------------------------------
+Changes:
+- [PATCH v3] tests/docker: ensure container command is probed at most (=?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>)
+  Link: https://lore.kernel.org/qemu-devel/20260716102515.1503404-1-berrange@redhat.com
+
+----------------------------------------------------------------
+Daniel P. Berrangé (1):
+      tests/docker: ensure container command is probed at most once
+
+ configure                     | 25 ++++++++--------
+ tests/docker/Makefile.include | 13 ++++-----
+ tests/docker/docker.py        | 67 ++++++++++++++-----------------------------
+ 3 files changed, 40 insertions(+), 65 deletions(-)
 
