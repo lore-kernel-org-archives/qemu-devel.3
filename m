@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0495C4450A
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 10:20:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 286D4C44501
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 10:21:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkJCS-00040y-GU; Thu, 16 Jul 2026 06:20:16 -0400
+	id 1wkJCS-00041V-87; Thu, 16 Jul 2026 06:20:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wkJCP-00040B-6k
+ id 1wkJCP-00040R-TN
  for qemu-devel@nongnu.org; Thu, 16 Jul 2026 06:20:13 -0400
-Received: from [115.124.30.110] (helo=out30-110.freemail.mail.aliyun.com)
+Received: from [115.124.30.131] (helo=out30-131.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wkJCI-00054p-Tt
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 06:20:12 -0400
+ id 1wkJCJ-00054q-VQ
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 06:20:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1784197197; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=tZtJ9o1OGLraNBGTQRGuVYRTBcoj0U7p+LKhOmdV6NA=;
- b=coKg8z8Oes1houwTPr1LY3kJpATYt07V7J26VyN300TXHe0LGmNMf61rmDHPZb+i0apyeaS/M9QTc3Mtu0n2te1VFODacbtCBqG/lZn0gzmkFIbjeBzVb1KZT8Csg5BD9HvXsC28QnUqqDwZMeIo+yHpOyZ7CWII3DkrgbAMybw=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R151e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037009110;
+ t=1784197198; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=ANb5OyyCZT/FApULtSqZ9QNYrtKLeWbtrDaSoNGlUyI=;
+ b=JGJD9RWRDDn7UvQRhmHfNJQV6qyADZBrY5k7hemQjZiTCix99DcqbHzs+qm8/bh0ybsF5KF2t20R5+GBw8K6RH37FVyktnSz2OZeE4EUO8CX9eKJsKXtodmMwzaY22eGOD3EIs2NcZvRNEDaV+kCaOO5NwWafpvF8++e2sbAYqA=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R901e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam011083073210;
  MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=3; SR=0;
- TI=SMTPD_---0X7E4g61_1784197195; 
+ TI=SMTPD_---0X7E6RmL_1784197194; 
 Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0X7E4g61_1784197195 cluster:ay36) by smtp.aliyun-inc.com;
+ fp:SMTPD_---0X7E6RmL_1784197194 cluster:ay36) by smtp.aliyun-inc.com;
  Thu, 16 Jul 2026 18:19:55 +0800
 From: Bin Guo <guobin@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com,
 	farosas@suse.de
-Subject: [PATCH 3/3] migration: clean up postcopy blocktime presentation
-Date: Thu, 16 Jul 2026 18:19:52 +0800
-Message-ID: <20260716101952.65329-4-guobin@linux.alibaba.com>
+Subject: [PATCH 2/3] migration: fix const mismatch in format_time_str()
+Date: Thu, 16 Jul 2026 18:19:51 +0800
+Message-ID: <20260716101952.65329-3-guobin@linux.alibaba.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260716101952.65329-1-guobin@linux.alibaba.com>
 References: <20260716101952.65329-1-guobin@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.110 (deferred)
-Received-SPF: pass client-ip=115.124.30.110;
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.131 (deferred)
+Received-SPF: pass client-ip=115.124.30.131;
  envelope-from=guobin@linux.alibaba.com;
- helo=out30-110.freemail.mail.aliyun.com
+ helo=out30-131.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -71,46 +71,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Small cleanups for the postcopy blocktime fine-grained tracking
-feature:
-
-* Remove a redundant memset() on latency_buckets after g_new0().
-* Use singular "Latency" in the HMP label for postcopy non-vCPU
-  latency, consistent with other single-value labels.
+format_time_str() returns a newly allocated string from
+g_strdup_printf(), so the caller owns it.  Return gchar * rather
+than const gchar * to match the g_autofree callers.
 
 Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 ---
- migration/migration-hmp-cmds.c | 2 +-
- migration/postcopy-ram.c       | 3 ---
- 2 files changed, 1 insertion(+), 4 deletions(-)
+ migration/migration-hmp-cmds.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-index 6bedf786df..4a18ca8bba 100644
+index 502ca704da..6bedf786df 100644
 --- a/migration/migration-hmp-cmds.c
 +++ b/migration/migration-hmp-cmds.c
-@@ -96,7 +96,7 @@ static void migration_dump_blocktime(Monitor *mon, MigrationInfo *info)
-     }
+@@ -54,7 +54,7 @@ static void migration_global_dump(Monitor *mon)
+                    ms->clear_bitmap_shift);
+ }
  
-     if (info->has_postcopy_non_vcpu_latency) {
--        monitor_printf(mon, "Postcopy non-vCPU Latencies (ns): %" PRIu64 "\n",
-+        monitor_printf(mon, "Postcopy non-vCPU Latency (ns): %" PRIu64 "\n",
-                        info->postcopy_non_vcpu_latency);
-     }
+-static const gchar *format_time_str(uint64_t us)
++static gchar *format_time_str(uint64_t us)
+ {
+     const char *units[] = {"us", "ms", "sec"};
+     int index = 0;
+@@ -123,8 +123,8 @@ static void migration_dump_blocktime(Monitor *mon, MigrationInfo *info)
+         monitor_printf(mon, "Postcopy Latency Distribution:\n");
  
-diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-index 341cad264a..28d698260e 100644
---- a/migration/postcopy-ram.c
-+++ b/migration/postcopy-ram.c
-@@ -297,9 +297,6 @@ static struct PostcopyBlocktimeContext *blocktime_context_new(void)
-     unsigned int smp_cpus = ms->smp.cpus;
-     PostcopyBlocktimeContext *ctx = g_new0(PostcopyBlocktimeContext, 1);
+         while (item) {
+-            g_autofree const gchar *from = format_time_str(1UL << count);
+-            g_autofree const gchar *to = format_time_str(1UL << (count + 1));
++            g_autofree gchar *from = format_time_str(1UL << count);
++            g_autofree gchar *to = format_time_str(1UL << (count + 1));
  
--    /* Initialize all counters to be zeros */
--    memset(ctx->latency_buckets, 0, sizeof(ctx->latency_buckets));
--
-     ctx->vcpu_blocktime_total = g_new0(uint64_t, smp_cpus);
-     ctx->vcpu_faults_count = g_new0(uint64_t, smp_cpus);
-     ctx->vcpu_faults_current = g_new0(uint8_t, smp_cpus);
+             monitor_printf(mon, "  [ %8s - %8s ]: %10"PRIu64"\n",
+                            from, to, item->value);
 -- 
 2.50.1 (Apple Git-155)
 
