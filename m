@@ -4,99 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83B0AC44501
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 08:06:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25691C44515
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 08:21:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkH78-0003Sz-Si; Thu, 16 Jul 2026 04:06:39 -0400
+	id 1wkHKc-0006H4-2j; Thu, 16 Jul 2026 04:20:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wkH77-0003Sm-EW; Thu, 16 Jul 2026 04:06:37 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wkH76-0004wU-07; Thu, 16 Jul 2026 04:06:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784189189; bh=typBFO3KQzOQZWsjp9C2POdB/tvWbc96WPpi4cdqiWE=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=I4eQoFhdjybAFNQdtHVBrskqZt83k6XAHaKKp97/DR/8nk6VIMjoAVTOv2O/NAyMN
- +i+ExRGKhp8/HUHcTAgcYhy9dj432z2UHO8zeZPkDuP1nkTfCyXrriKVPNmQALx2qm
- XyuBX0FHUFqLhzkyj4QIkJNOWPWzbeUSQIv/G6t+CYEwBltZEVHOqzy5s7VXOYHkz6
- 3m6hGAHCPkAxR1ZQCdzJ0RQrJHhP5fh2fV9Nw1aHANX2/lYRB6J572R+rr7VYzUig8
- bhwieqZrROex8wa6rYj2/O6Mf9VnZNWdd6CEnKlA4B2VPWQL084N7WesE2xniLalAd
- gcSp3nta/XK3g==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3FD8B1C2221;
- Thu, 16 Jul 2026 11:06:29 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4E74B3EFDB3;
- Thu, 16 Jul 2026 11:06:34 +0300 (MSK)
-Message-ID: <78e31bf1-328d-46ba-89db-1e069f21c7db@tls.msk.ru>
-Date: Thu, 16 Jul 2026 11:06:29 +0300
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wkHKW-0006GD-6E
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 04:20:28 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wkHKU-0007IR-Nn
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 04:20:27 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-38e07ebd263so2264298a91.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 01:20:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784190025; cv=none;
+ d=google.com; s=arc-20260327;
+ b=EBYWAexfGYsjW5SkBUZXKYENw7/1NVGAb2y7qT5qGkGAUgwoF04X0s7h254ovxLCfw
+ +ockxY42Kht8WX4UdzHI9conhAbfN+UznTVbPk/5MVmYYPP/Wkgann9z2yPUS7hz59N+
+ fe+eeUVkGhm9bl1prk8bD6NFTGW96FoG7o4VNQzdAIpEwziyYol/J/anRhcKrUYXTkZ7
+ lKvglhU9BLcoFa7KAY7i9JYNhNDkaz/aBbdqbmaQI8GgF5tE1oNL9a+0dqwzJh5JK/TA
+ tMp9QmZ5etNdeWjHBuPfQVY2o018dh6s+4j0l+hHUCyAHbUwmVaDO/2vhF86aXX6wvTe
+ cPPA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=QabQvq/l16JIP1F6Te1Ej1KxSZdpT4dBYEjWumWNQ4M=;
+ fh=KnxVq+/dNMGR5XtbHr3cm7WMCtMcRbEU6z8PkW8LG2I=;
+ b=WdbFaEgAM8PlF0rSngJgIm7DLDZ3cjNif4M9FE+ZGt+D4bM3qJ0UBLCsnJ3kEbUnct
+ rEIAypF0bLQqS9Cg1PzfEwd8Fw7gKipTFYMSDeWuX1kaUjdvjyO7Ur7rRfTGJ2pCIAJL
+ bCsVQsDtUarJoBWvJFwoMNDgU2CGUtG/b7D5Qv7GpDE1jWkmrspxswkpaL22g/GFzxLe
+ ZdFSBjTIBlrRSX8nLHCRdAOFjf1DsvhFnTIfd2LTed6cwHcqxi6S6RVVxJ36UZ5AsHJ8
+ g5Xsr5KRIiTcMbjf7CJAGXXPHqwknCIrMqeRa1YLpno9hVC8Vy3/T1jR0lk9y/CJk5ww
+ POFQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1784190025; x=1784794825; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=QabQvq/l16JIP1F6Te1Ej1KxSZdpT4dBYEjWumWNQ4M=;
+ b=sah5DGZrAaDjV6dQuBj39v4CGOwjm6+4GWrCv88Rtan/AyU4idVjda3ISF5YuRfGd6
+ uWIl5jeGSteCz3/bTb3Kq9D6JnkYrgD8ecjKvuRD0mflB3GOtIuP/BxYL/uV/yaWRnse
+ mCsKsHaHm8aodbj/mU8sKQfnZq+ZcSdvgRDn4PiwrlH8Me8890Zyw8XrdtkwIgaCjuc0
+ 8hjsutslucprH9eBZ9IoaaOE0MC50NS5efziNOGkpNuWhrmKFtNjb/mXcYbF9KTrHOYH
+ doe3xPRkgy3CQI0PZ2B+jrAJUA/KJjuvgKptKMIXM6RguKBrXGtFN9QvfWFmfPfGtd8P
+ c63A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784190025; x=1784794825;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=QabQvq/l16JIP1F6Te1Ej1KxSZdpT4dBYEjWumWNQ4M=;
+ b=ipCDZO+E78ZZo3p9G9MoAU6IaaP6IJUJvWCqVDVddM5PnKClB30ZUTbCdlg8kFqBLL
+ WyjTBtF7hgJR1/UeZJcrD4CCRP9HQ5deKn0hRh9zEjcpDYe9f3+IQ91rgIC5d4vgd8HQ
+ v98kBt40qf8Goa8yB6oTpuXWSIT22b8HZSoCi5RftnS/yD4WvHZRHjfQhqCbtYb69Tun
+ I/UlmrDI9GkQlJZPO+Glpps0CLYuJ3r4exWtfKLEjP0jwou5IYacIfQbnW6lKfOx+Xqt
+ qBOf7+OY8gX3eOX7bgLLXUo0ZoeLn30Ad6LkAtTpNKbrmdb78Ag5GQspGnUfv81+tvtX
+ +v+A==
+X-Gm-Message-State: AOJu0YwVGizMemBPdBMSk3ledKXWfaiOn/0vHQU4nwyEzyeZiDP1CoLo
+ 5rl3LmRy+Ydhxh8yWDgMheRnBbGa1osRbQ2csrPmr+/U0HbRTJXnWYBkHAv8bQFNVPaJTxTDGiL
+ xLyTxhbIlacoVBHOWVdPUD161PUpxTxc=
+X-Gm-Gg: AfdE7ckTllUN5ghA7nlrv9+vT7h6KZHaYkqxCMeNzrusCHUmGvSH02XHCyjaHJVMR+1
+ +YgfBzbP2QrXkZK4tX0xMgDkhIF7yIz5bAQI582j7Unxc8kzV0lskmoW8+YTnH+nvtHF3mZz0mb
+ yBco7JWEzNJmlGAblpycH1RQr9mgHAdvTEMgAKkupfZ3Pjek7VIunhlLk1ymKOqBkrsli04mXrf
+ 0g20xGV0ssSTtZrchxkiiAIKDWalffZVXQrbwM4A9bfQ4KWeUqFznI/1ljqe2Cu7+1YlUmvJ4Vp
+ 4OBDxlc6JYRDibbRJIz1G8sPAVQr
+X-Received: by 2002:a17:90b:4f42:b0:37f:c28a:de61 with SMTP id
+ 98e67ed59e1d1-38dc75fa2d0mr21404997a91.17.1784190024723; Thu, 16 Jul 2026
+ 01:20:24 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH trivial] spelling: happend
-To: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Alistair Francis <alistair.francis@wdc.com>
-References: <20260716063457.532035-1-mjt@tls.msk.ru>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260716063457.532035-1-mjt@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260715201055.2465320-1-marcandre.lureau@redhat.com>
+ <25541fac-4e55-477c-8599-7e503bff31c6@rsg.ci.i.u-tokyo.ac.jp>
+ <c625e54a-b7f5-41d8-8f2c-93bd31f662e4@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <c625e54a-b7f5-41d8-8f2c-93bd31f662e4@rsg.ci.i.u-tokyo.ac.jp>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Thu, 16 Jul 2026 12:20:11 +0400
+X-Gm-Features: AUfX_myB8scKhGWEScU_z6GXkimOK5acn8YRtL8ae7Aq1D2n7O3JfaJB1nyNoYk
+Message-ID: <CAJ+F1CKxAiu4+ckfmtN0OGRuX58MFoERDiMVJiRx+_WGG-WraQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/display/virtio-gpu: validate stride against width on
+ scanout
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-pj1-x1033.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,38 +123,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/16/26 09:34, Michael Tokarev wrote:
+Hi
 
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index 66bd900465a..802474750b5 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -270,7 +270,7 @@
->   #     (Since 10.1)
->   #
->   # @postcopy-non-vcpu-latency: average remote page fault latency for
-> -#     all faults happend in non-vCPU threads (in ns).  It has the same
-> +#     all faults happened in non-vCPU threads (in ns).  It has the same
->   #     definition of @postcopy-latency but this only provides
+On Thu, Jul 16, 2026 at 12:04=E2=80=AFPM Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>
+> On 2026/07/16 16:37, Akihiko Odaki wrote:
+> > On 2026/07/16 5:10, marcandre.lureau@redhat.com wrote:
+> >> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> >>
+> >> Validate that the framebuffer stride is at least width * bytes_per_pix=
+el
+> >> in both virtio_gpu_scanout_blob_to_fb() and virtio_gpu_do_set_scanout(=
+).
+> >>
+> >> A guest can set a very small stride while using a large width. The tot=
+al
+> >> size check (offset + stride * height <=3D blob_size) passes because
+> >> stride * height is small, but pixman reads width * bytes_per_pixel per
+> >> row, causing heap OOB reads. The leaked data is rendered to the host
+> >> display.
+> >>
+> >> The check is added in virtio_gpu_do_set_scanout() to cover all paths:
+> >> blob scanout, non-blob scanout and migration post_load. The additional
+> >> early check in virtio_gpu_scanout_blob_to_fb() rejects invalid blob
+> >> configurations early.
+> >>
+> >> Fixes: CVE-2026-63109
+> >> Fixes: 144bd171c837 ("virtio-gpu: Support blob scanout using dmabuf fd=
+")
+>
+> I cannot resolve commit 144bd171c837. Apparently the bug was introduced
+> by commit 7b5574225429 ("hw/display: check frame buffer can hold blob").
+>
 
-This doesn't work, - it fails to build due to too long line, so
-line re-wrapping is also needed.  The correct(ed) version is:
-
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -270,8 +270,8 @@
-  #     (Since 10.1)
-  #
-  # @postcopy-non-vcpu-latency: average remote page fault latency for
--#     all faults happend in non-vCPU threads (in ns).  It has the same
--#     definition of @postcopy-latency but this only provides
-+#     all faults happened in non-vCPU threads (in ns).  It has the
-+#     same definition of @postcopy-latency but this only provides
-  #     statistics to non-vCPU faults.  This is only present when the
-  #     postcopy-blocktime migration capability is enabled.
-  #     (Since 10.1)
-
-Thanks,
-
-/mjt
+oh yes, that was an earlier version from a development branch, thanks..
 
