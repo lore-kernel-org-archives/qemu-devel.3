@@ -4,90 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1134AC4450E
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 11:23:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC52FC4450A
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 11:52:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkKB3-0002Rb-Co; Thu, 16 Jul 2026 07:22:53 -0400
+	id 1wkKdQ-0007ZM-Sz; Thu, 16 Jul 2026 07:52:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wkKB0-0002Lh-MV
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 07:22:50 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wkKAy-0005EE-P7
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 07:22:50 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-495437bb891so2606515e9.1
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 04:22:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1784200967; x=1784805767; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=R1x24EIH9Zws+U6zhZ4YK6KCdLCmyavM2XPJ+59zwwk=;
- b=ZJtq0Ub+9v021oWQQBI7hJDc9AzQlZ3Af6Q8eEQ5BCbS9DA0zCSIannX54ZzrPF/2X
- lzy+hp1u2JZWgPe1k5koz4HegzAWuW/G7hRzvvi5CkM1Wvd//eiW12C4NpiEyuH+wXkB
- pSg96pGahqx7V+G9XOBmd+3h8vmsz1eJc99aSx1+f28sArPcQtyq1aok1YSneiQwF0+l
- PmnGKNhw0vDB27QrEC97KjWuxSUBprAt3vbpbM123U6D8fzIYwn2EXO3dh6vAdgX1N/O
- 6Zh9oMAeZdv6RYO1N1Uy5IVCeuzbyHcGZ9d0YR//9RBAqZNUlML4SKNafnhMFEbsMeiY
- WuLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784200967; x=1784805767;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=R1x24EIH9Zws+U6zhZ4YK6KCdLCmyavM2XPJ+59zwwk=;
- b=Bgt54JpJ8W1gu92dnV6z2Qqt0j2FvcG685FL5KXu5Irlm08/RYvB0DPWUEo1c6DVqE
- +bjhrqdgjn+5LURPbPe/SHni+tcYfnxtZTg3lr0G3eijrG0iRhGjqfsOBlt8vRMEfYOf
- up8iu/tDXmk5msMEfi6lYh/8epJaWixCIQxHJboR3ZM+OPy8AgqlCoTcPg6ZEXewnpFS
- 5yEg+o9WkCPplLfYM0dSqlUixE60MgkBbWFUHncVGT/rUCF+x79GRctUMsB7S5hs+87S
- /WgNZ31nZBKIiXZe6GcI3ZG3Upp/DGE7rQu9ZkiZihCshfTI/nIfqqebO7PV7SwbpE0e
- O3Cg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqAitWvdvxlf9vaV8foWZaBqF3631AdsvPR6vhOZEBV3ZIkbjIczYu1Z0yK2Je7pw387Sc4/b99STIq@nongnu.org
-X-Gm-Message-State: AOJu0Yzb443QtGTRo9IzGXkRodXAvms1/UfZq85UV61U2J2D0MHBjLFl
- TnBsLfggXaJ1WgkkRdstIKCU1/E3cFnGo4d2eRsy5WV7vPJ2UVFCwtru/gh/dOgDqao=
-X-Gm-Gg: AfdE7cmwR3B9XMsFTFTGsY1kg2ri8dvBRGBoGzn802toxD3PNCaM0HOhzmPBQadVDdZ
- pZSwnSboLwjzcR/7BKVoTeuBHvohBqChdu8xIw+uxA3TBu6Aos1tXH1qYCe7vy6Cr2Q2eyllb1C
- 2nPZbMqLwUEMJIt/itLWrd4avSIh4qYx2ZOkpson0MwQO/s7o9MNSAtILFH0Lrn59FCgg/pPvDK
- Ef1GCWX5s4eYieSGXKTvEHUwv/RjHI9e5NLuJyEd2TEQzax62f1otwKTDnJqjPTtL5vETQnygwd
- CepoBKwX1eOqHshQRhVJMJSLtnXmDwMqC0V+Hk8+fIO0df6xk97aiQnVSyrZzCAFAoLLPwZkso5
- XlTjR2qbQKoERKlCVG9amvV1M+XyCx+iqhZph67O4pamW9iouc2SCV1w70BUDYcmOU+DeNoQU0O
- U=
-X-Received: by 2002:a05:600c:3552:b0:494:1f7:8057 with SMTP id
- 5b1f17b1804b1-4954286a3b4mr22010785e9.1.1784200967328; 
- Thu, 16 Jul 2026 04:22:47 -0700 (PDT)
-Received: from athena.sw.ru ([2a06:5b06:b600:300:4ca9:146f:3485:e2c5])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f464a96fdsm24019672f8f.24.2026.07.16.04.22.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Jul 2026 04:22:46 -0700 (PDT)
-From: "Denis V. Lunev" <den@openvz.org>
-To: qemu-block@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: den@openvz.org, Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Subject: [PATCH v2 2/3] migration/block-dirty-bitmap: reject bitmap load onto
- ro node
-Date: Thu, 16 Jul 2026 13:22:41 +0200
-Message-ID: <20260716112242.3000035-3-den@openvz.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260716112242.3000035-1-den@openvz.org>
-References: <20260716112242.3000035-1-den@openvz.org>
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wkKdP-0007Z6-6S; Thu, 16 Jul 2026 07:52:11 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wkKdN-00009r-O3; Thu, 16 Jul 2026 07:52:10 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66GABvdr2899272; Thu, 16 Jul 2026 11:52:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=nqtInuljqCRBXQjymMG38k5wjV1cRR
+ GCdeDznB7lg5o=; b=Fr2IMcV+N8hfsac5IbWLwuqoxH7N8dnuxxcytP5aLNY0/t
+ GZu87uNSGd+HU7Sn9Kuhv4stRuVIf7DufNh6h390l7PaGDleBbtRrnm89z2jPrbM
+ 7diBxWLqxWLDI6aCQF3Mp8k7Zq+SbpQFqak54R50GFtKx9LDrg9nGucRznDGNT7R
+ cONsxRgh4CJXDDTpGbHq1Ee3BVKVnHEgfnDVstpiOXZ5CzQIuIQ371icfZ3AkxCs
+ G4drzdT9RUoS2KFhydUsCgB7Po0CoJneJcWqxQ9CBuRDpEk7vTl8/MpZepmiye6N
+ 6PKDl673tTU2KTO3P2rC+9MyRFxVlln/2jnmPYSQ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbegbywhq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Jul 2026 11:52:00 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66GBndjP005300;
+ Thu, 16 Jul 2026 11:51:59 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc15k4sja-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 16 Jul 2026 11:51:59 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66GBptba47776114
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 16 Jul 2026 11:51:55 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 817B720040;
+ Thu, 16 Jul 2026 11:51:55 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 705352004B;
+ Thu, 16 Jul 2026 11:51:48 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.39.17.30]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Thu, 16 Jul 2026 11:51:48 +0000 (GMT)
+Date: Thu, 16 Jul 2026 17:21:44 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Saif Abrar <saif.abrar@linux.ibm.com>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, harshpb@linux.ibm.com,
+ clg@kaod.org, npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
+ thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
+ kowal@linux.ibm.com, chalapathi.v@linux.ibm.com, calebs@linux.ibm.com,
+ milesg@linux.ibm.com, jishnuvw@linux.ibm.com, amachhiw@linux.ibm.com
+Subject: Re: [PATCH v5 3/9] pnv/phb5: Implement sticky reset logic in PHB5
+Message-ID: <aljDwbMnI_w8R1Nu@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+References: <20260617095058.652789-1-saif.abrar@linux.ibm.com>
+ <20260617095058.652789-4-saif.abrar@linux.ibm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=den@openvz.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260617095058.652789-4-saif.abrar@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=fOcJG5ae c=1 sm=1 tr=0 ts=6a58c5e0 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=kj9zAlcOel0A:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=Io184aDfKauzPn52k4QA:9
+ a=CjuIK1q_8ugA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDEyMSBTYWx0ZWRfXxcdNIndDaBdT
+ p2h08Tt6leXc7n0dcpU7PbwBCtUl66StrwS8yqOHcYImJ0CeuQ1wE3dYRMQZQ+dk42Xq7aQ8fWe
+ pT8EADyyKf6ilXSdBWxGPbaADgSylx1wyLmmBr+zmd03xWLBNRCmls/Wp7kO2vvV9a1iOF8VwaZ
+ JPBaKwz/QcHDP06jYv2VDP0D4qdkvQZiKMPOJjwowduZ8EMI1j37Zilg6rID76ekoeRe7O1vYIf
+ MAs5/unZR1i7l6guOzFAD8XE69HScshdLhiczsahPLEbcT18Q4upRQzLMdwOwwKkMu54SAEYzip
+ xXHA+awEyNAa5zFvEcryc535eX1w4+DWfPrPkVhOInyB1N9JwLtQ818iLeyiC01+ohEavZOYeH+
+ ql+7TXsUQ7PuJeaOm8ReITopqruRfvYMeej/SKNBlLIu4Qjv6+H8xWKR+7IrTg3H3OdpXAJ4bZV
+ WEVOfV9tC9HcKUW9W6g==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDEyMSBTYWx0ZWRfXw/UR5mDEncsr
+ Yx2ITdKO3gcyT+rMuBFT4KJI6mnlqzrBcei7dCH8nxjr/kIsGV7lrIIOgwBNeOaVCL0pGOWgsmG
+ Fh5oGjM8hneC6XMZ5NCsyteDSFYksCY=
+X-Proofpoint-GUID: ZMiRvBoOZXpH4nMIsNxA4o9mCbBUN7oL
+X-Proofpoint-ORIG-GUID: zBtPFy3VMsYr4n3iURW9CPaGJ-13PhNq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-16_04,2026-07-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 impostorscore=0 suspectscore=0 adultscore=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 phishscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607160121
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,128 +127,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-dirty_bitmap_load_start() creates an incoming migrated bitmap with
-bdrv_create_dirty_bitmap() and, if the source marked it persistent,
-calls bdrv_dirty_bitmap_set_persistence() without checking whether
-the destination node can be written to. Same gap as
-qmp_block_dirty_bitmap_add(), reached via incoming migration: a
-persistent bitmap for a read-only destination (e.g. a migrated
-CD-ROM-class attachment with dirty-bitmaps migration enabled) ends
-up writable in memory on a node that can never store it.
+On 26/06/17 04:50AM, Saif Abrar wrote:
+> <...snip...>
+>
+>  void pnv_phb4_cfg_core_reset(PCIDevice *d)
+>  {
+>      uint8_t *conf = d->config;
+> @@ -557,14 +570,56 @@ void pnv_phb4_cfg_core_reset(PCIDevice *d)
+>      pci_set_long(conf + P16_ECAP, 0x22410026);
+>      pci_set_long(conf + P32_ECAP, 0x1002A);
+>      pci_set_long(conf + P32_CAP,  0x103);
+> +
+> +    /* Sticky reset */
+> +    RC_CONFIG_STICKY_RESET(exp_offset + PCI_EXP_LNKCTL2,
+> +                                          PCI_EXP_LNKCTL2_TLS_32_0GT, 0xFEFFBF);
 
-Reject it the same way, with one difference from the QMP path:
-every destination node is BDRV_O_INACTIVE until migration completes,
-so bdrv_is_writable() would reject every incoming persistent
-bitmap, not just read-only ones. Check bdrv_is_read_only() alone.
+This is different for PHB4, which is PCI_EXP_LNKCTL2_TLS_16_0GT (0x4)
+and for PHB5, spec says PCI_EXP_LNKCTL2_TLS_32_0GT (0x5)
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-CC: Eric Blake <eblake@redhat.com>
-CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-CC: John Snow <jsnow@redhat.com>
-CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
----
- migration/block-dirty-bitmap.c                | 22 +++++++++----
- tests/qemu-iotests/tests/migrate-bitmaps-test | 33 +++++++++++++++++++
- .../tests/migrate-bitmaps-test.out            |  4 +--
- 3 files changed, 50 insertions(+), 9 deletions(-)
+This doesn't affect skiboot anyways, but good to be correct now.
+Rebasing/separating phb5 should fix such nits, let's discuss on it.
 
-diff --git a/migration/block-dirty-bitmap.c b/migration/block-dirty-bitmap.c
-index cba54e25cd..1b8f39c12b 100644
---- a/migration/block-dirty-bitmap.c
-+++ b/migration/block-dirty-bitmap.c
-@@ -812,13 +812,6 @@ static int dirty_bitmap_load_start(QEMUFile *f, DBMLoadState *s)
-         error_report("Bitmap with the same name ('%s') already exists on "
-                      "destination", bdrv_dirty_bitmap_name(s->bitmap));
-         return -EINVAL;
--    } else {
--        s->bitmap = bdrv_create_dirty_bitmap(s->bs, granularity,
--                                             s->bitmap_name, &local_err);
--        if (!s->bitmap) {
--            error_report_err(local_err);
--            return -EINVAL;
--        }
-     }
- 
-     if (flags & DIRTY_BITMAP_MIG_START_FLAG_RESERVED_MASK) {
-@@ -835,6 +828,21 @@ static int dirty_bitmap_load_start(QEMUFile *f, DBMLoadState *s)
-         persistent = flags & DIRTY_BITMAP_MIG_START_FLAG_PERSISTENT;
-     }
- 
-+    /* Not bdrv_is_writable(): nodes stay inactive until migration ends. */
-+    if (persistent && bdrv_is_read_only(s->bs)) {
-+        error_report("Cannot make migrated bitmap '%s' persistent "
-+                     "on read-only node '%s'", s->bitmap_name,
-+                     bdrv_get_node_name(s->bs));
-+        return -EINVAL;
-+    }
-+
-+    s->bitmap = bdrv_create_dirty_bitmap(s->bs, granularity,
-+                                         s->bitmap_name, &local_err);
-+    if (!s->bitmap) {
-+        error_report_err(local_err);
-+        return -EINVAL;
-+    }
-+
-     if (persistent) {
-         bdrv_dirty_bitmap_set_persistence(s->bitmap, true);
-     }
-diff --git a/tests/qemu-iotests/tests/migrate-bitmaps-test b/tests/qemu-iotests/tests/migrate-bitmaps-test
-index 8fb4099201..cb9154ca8d 100755
---- a/tests/qemu-iotests/tests/migrate-bitmaps-test
-+++ b/tests/qemu-iotests/tests/migrate-bitmaps-test
-@@ -206,6 +206,39 @@ class TestDirtyBitmapMigration(iotests.QMPTestCase):
-             self.vm_b.launch()
-             self.check_bitmap(self.vm_b, sha256 if persistent else False)
- 
-+    def test_migration_to_readonly_destination(self):
-+        granularity = 512
-+        mig_caps = [{'capability': 'events', 'state': True},
-+                   {'capability': 'dirty-bitmaps', 'state': True}]
-+
-+        self.vm_b.add_incoming("defer")
-+        self.vm_b.add_drive(disk_b, 'read-only=on')
-+
-+        self.add_bitmap(self.vm_a, granularity, True)
-+        self.vm_a.hmp_qemu_io('drive0', 'write 0 4096')
-+
-+        self.vm_a.cmd('migrate-set-capabilities', capabilities=mig_caps)
-+        self.vm_a.cmd('migrate', uri=mig_cmd)
-+        while True:
-+            event = self.vm_a.event_wait('MIGRATION')
-+            if event['data']['status'] == 'completed':
-+                break
-+        self.vm_a.shutdown()
-+
-+        self.vm_b.launch()
-+        self.vm_b.cmd('migrate-set-capabilities', capabilities=mig_caps)
-+        self.vm_b.cmd('migrate-incoming', uri=incoming_cmd)
-+        while True:
-+            event = self.vm_b.event_wait('MIGRATION')
-+            if event['data']['status'] in ('completed', 'failed'):
-+                break
-+
-+        self.assert_qmp(event, 'data/status', 'failed')
-+
-+        # A failed incoming load makes the destination process exit on
-+        # its own; reap it so tearDown()'s shutdown() is a clean no-op.
-+        self.vm_b.wait()
-+
- 
- def inject_test_case(klass, suffix, method, *args, **kwargs):
-     mc = operator.methodcaller(method, *args, **kwargs)
-diff --git a/tests/qemu-iotests/tests/migrate-bitmaps-test.out b/tests/qemu-iotests/tests/migrate-bitmaps-test.out
-index cafb8161f7..73e375a9d7 100644
---- a/tests/qemu-iotests/tests/migrate-bitmaps-test.out
-+++ b/tests/qemu-iotests/tests/migrate-bitmaps-test.out
-@@ -1,5 +1,5 @@
--.....................................
-+......................................
- ----------------------------------------------------------------------
--Ran 37 tests
-+Ran 38 tests
- 
- OK
--- 
-2.53.0
+Rest looks good to me.
+
+Thanks,
+- Aditya G
 
 
