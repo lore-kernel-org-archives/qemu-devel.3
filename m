@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9BC3C44514
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 06:40:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F283C44512
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 06:42:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkFlZ-0000PX-BE; Thu, 16 Jul 2026 02:40:17 -0400
+	id 1wkFnf-0001Ug-4o; Thu, 16 Jul 2026 02:42:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wkFlX-0000Ov-TC
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 02:40:15 -0400
-Received: from smtpout2.mo540.mail-out.ovh.net ([51.210.91.51])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wkFnc-0001UG-H5
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 02:42:24 -0400
+Received: from smtpout5.mo538.mail-out.ovh.net ([51.210.91.34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wkFlV-0003F8-Tw
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 02:40:15 -0400
-Received: from director3.derp.mail-out.ovh.net
- (director3.derp.mail-out.ovh.net [152.228.215.222])
- by mo540.mail-out.ovh.net (Postfix) with ESMTPS id 4h13M00KyDz44n8;
- Thu, 16 Jul 2026 06:40:12 +0000 (UTC)
-Received: from director3.derp.mail-out.ovh.net
- (director3.derp.mail-out.ovh.net. [127.0.0.1])
- by director3.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <alistair@alistair23.me>; Thu, 16 Jul 2026 06:40:11 +0000 (UTC)
-Received: from mta11.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.37.2])
- by director3.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4h13Lz6HvDz5vLc;
- Thu, 16 Jul 2026 06:40:11 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.7])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wkFna-0003kA-E8
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 02:42:24 -0400
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net [79.137.60.36])
+ by mo538.mail-out.ovh.net (Postfix) with ESMTPS id 4h13PQ2C1Bz6Dd7;
+ Thu, 16 Jul 2026 06:42:18 +0000 (UTC)
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net. [127.0.0.1])
+ by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <alistair@alistair23.me>; Thu, 16 Jul 2026 06:42:18 +0000 (UTC)
+Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.96.215])
+ by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4h13PQ12Wyz1xpN; Thu, 16 Jul 2026 06:42:18 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.5])
  (Authenticated sender: clg@kaod.org)
- by mta11.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- C424D2403DCF; Thu, 16 Jul 2026 06:40:10 +0000 (UTC)
+ by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 8819C1B43D69;
+ Thu, 16 Jul 2026 06:42:16 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-95G001d71f8fb6-917f-476e-ada2-aca0e972a101,
+ (GARM-102R004c46c3df8-20e6-4374-a383-705a17be844e,
  816DE1EE18DD2826DFD8B9EE289546F56902E1FE) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <2b5db5b7-bb14-4a47-805b-5dfb2918b755@kaod.org>
-Date: Thu, 16 Jul 2026 08:40:10 +0200
+Message-ID: <4c37151a-edbe-4b1b-a379-c6f50c4e230c@kaod.org>
+Date: Thu, 16 Jul 2026 08:42:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 0/8] Refactor AST2700 SCU preparation for coprocessors
@@ -98,27 +98,26 @@ Autocrypt: addr=clg@kaod.org; keydata=
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
 In-Reply-To: <20260707060919.350637-1-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 8992281081508113419
+Content-Transfer-Encoding: 7bit
+x-ovh-tracer-id: 9028028403839446027
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFs3D7kvhCtBEj1rPrXv6nNWG0W+DKcQD3O/2wrLsnSplWXDkdg2eFitWTAl0/ZaJiNMQWhYwIpRa4r78oT2FjxCCzp8sd80D1xqwbtai5iEBzw5vPNX+3GXSvY3RYHMcJHrmnb9t3iRgM9bUw+CIRCbmQzpbR3weMkHlYBlKjmPqJ/gAulQcBLIgAqFYvx5H61ZGK9f4zGXgH4T63C2H9VQjqXFZjyRA3vCsmnhwLHdIfi4/pcIMnPcUrTDC/c4Y8o2xwmas8hz1M4x7aHrS1P7v/rdRasX1nWaZYHzyLKqNeG4lf431OXFLTmTYvUp2M7Xc+eonF0dOK1jpgCK2pud7GYoThtDInQxtyCFYl/uxZ2PU3DNiZ3hhzs9pM0D4XI3K5iOcAr3jyulUOz2BK9L2Vpnf0sHVL4W6+6eyYaLfQr4j5mkRyC87yqLL5b2W1//67m0N2vVxpAdzyKV4ibLyJolPN9c03DHwYcQSVUEdQa9aF0423K5/BTESDmzKVbsV9/27sfNs0hd/blGJxgPUCkw9hjxK1v2l+JQzvuJHluqULlKcUb8SUmxOT7ucTUD2M75Zo58FjqSI2JiHT2Apgftz9rfAU0knLaGhkEB5MslxVdQbMim1Um9xAkvvyJGnEvH+B+nQp7t02o5AL+xmg4W6+cIN5aBn5/EpM+pQ
-DKIM-Signature: a=rsa-sha256; bh=b50yXKLK3tJ+R66vB5m80B1996wkuJlerqWnOk88J2g=; 
+X-VR-SPAMCAUSE: dmFkZTF2pbXOsTvMAmHuVnyBkmRUp4KEGunXxctK16wCHYRdS57kRO49V+OP799SfXGK8myC1lMIQ8xPZeu4rRBJi2F8mHA+m7tZtoCnmFxbktuPXttK0CpqNqgEQU1PaJbsCo6rNnVRcdVZCDdKWtJfavg8anDFHXlaMyMQnuIPqg+5q5kbNajIAkb5TSKA4dEO27nDlDHgnGMK208LTVqSVgHKJ3BgBKqHGARLvOtUGZlWPKOsPMjl7VKuFRwISFDqO6wHhJcSoKWOlxoJNuQXr9gVuLK+3tZeJ7Uthdg2b/B3mNfxB7g1joxOAkJ3xt6bmYvvEtu+8GuF/PlTd99ey8RQjhKtqbyC1YaRcBGecvO15sXL5D5fFD3WmWCBHnfuTuCMnBgynd2UbbirTxg25gXgzv2N1Dr8Jw2kZJ5qvPPRvUAyRp2J2AUyQ/vDHwukQj0t7b7JXJw1GM2NpQb2Rody9pP0p6mh8ZKmZMYaTq/igweICZgC+iyuM7/vu7kw/qrdk6ZEQGVWF1BhaJpR4vh4iM7adCgjK5D55iMu0AZC2k0o/KpK24COucEEy+f5XRL3c5Kiz3k612buenvBIblUIz9fjMKc/fxv71L7w/T/v83zNEh9m2zgU7jM5bRlvvuNHETrcYftuVWqGxjRBkLKTIAIsKnkOiuFVB4XLCthHg
+DKIM-Signature: a=rsa-sha256; bh=c/PVQffIpacdkdSA6wulG7/8iEtiJCjxPI5hblIXmEA=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1784184012; v=1;
- b=ZBETt0UY6YBudxnbLmyQZm3Pgo8ZRTsWj4Ozk35vP7GAz9288tjv9Ce52n2BXv9Bagzz+gl8
- 6FpGDhi3xLavO+sBheEv2z/43DyU8xpGHF4/dkmIJ8MFVeBH99WwC/PS9P20yGAKWd9/RSyun5q
- 0hFwzujO5FBLneJF4h80ZXdWoMlXAvMwgyYiFFMXTEGnRND3P35aahc2Falc24xI1C4pUKvJt3+
- zXUqR//4msJuzdmw/Yz2TRuCTwzHNLpIVBNlTJQR4IBmF6bpi+GEWh2v53reL91C8ce5zRGtrxl
- +fuExlA9Zhji2ehQybrzgkLVZ+zerzt6A/6+t5GTAIOkQ==
-Received-SPF: pass client-ip=51.210.91.51; envelope-from=clg@kaod.org;
- helo=smtpout2.mo540.mail-out.ovh.net
+ t=1784184139; v=1;
+ b=ckUwUeLrBeHIS7gh29Bt19dN2JTSh/hKuyxSSdmdDEjapAOwJUrivNHuUhGgNQ71UImGRpWI
+ Q3fDUeVyewsjnE773+WlVuSsG20O1R9Dq1fRLABu5Fv2cq70Z/wvdvDvdP8FYrAyXk7k47B2W0n
+ am3plR4+kqYpkmyTbPARjlZ3eUT/+r0aATJeE3fvBi4P8VCSx0p6FCOmQ8NNi3+/5aXEwzWpPL+
+ 6cQW/JpqNu69RP9cq0wlcGOBreSBv82pstTrWhYXFpA+yQ5Y2wPA3DSRFGFk0GGc13KFyHZ4xFY
+ N/DLH2zaDtlzuE2aDxRb1bwPnWg4wx3ZRIEgWaty3r4fw==
+Received-SPF: pass client-ip=51.210.91.34; envelope-from=clg@kaod.org;
+ helo=smtpout5.mo538.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -215,7 +214,9 @@ On 7/7/26 08:09, Jamin Lin wrote:
 >   12 files changed, 267 insertions(+), 56 deletions(-)
 > 
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Applied to
+
+     https://github.com/legoater/qemu aspeed-next
 
 Thanks,
 
