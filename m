@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5964EC4450A
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 13:50:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DDEAC4450A
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 13:54:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkMTi-0005Fd-V2; Thu, 16 Jul 2026 09:50:18 -0400
+	id 1wkMXJ-0005t1-3C; Thu, 16 Jul 2026 09:54:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wkMTh-0005FB-47; Thu, 16 Jul 2026 09:50:17 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1wkMXD-0005sN-0x; Thu, 16 Jul 2026 09:53:55 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wkMTf-00083S-DM; Thu, 16 Jul 2026 09:50:16 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1wkMXA-00005Z-G5; Thu, 16 Jul 2026 09:53:54 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66GDfidG3284432; Thu, 16 Jul 2026 13:49:58 GMT
+ 66GDfshg3361030; Thu, 16 Jul 2026 13:53:35 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=OjZ/DlJiMjCCxcUxxmy0oGHjNj4kiQ78E1W+8f8sj8s=; b=XRVrUQKKaZ2J
- Q+5lWLP2bg+4CUiwSvgAzdLg8cyB9VhicrTP7HrgYklsPfyIX6OGyz/OSjYyRb9t
- uKA+Jiy9eOFlsqTgatM86maEldZsqXrqRtQ54k/MOWdGpqpytgV5Ywsp9yb3/I6j
- m/DUBRmFv81mStm5sytstaSogKkVzlSU5cFWBl7hwneqUeraSeSqcIR8l+Lg8WZy
- 1+xpHS1+Q7P4MOy6RRYtw6ZKd85c2ZSYQlKtLKDfcOOYGYduz3J+2CgXN9GlFaFO
- NKxpOq40TcnicvcOOj8DgIh4tHtYXRaGmkKMcGLy5o9bitHPgDgr/MOGqL+fDzEV
- Jo5DjwxXCA==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbf2agdge-1
+ bh=5W58qFRB7VEArcD6p6H5aiP/zVGPWyIGPUXAXm0jqpw=; b=hVhz+CP/ixAs
+ qb773/4UUoQf5GqTDhVRHgkO9ZMEXAGE5N1Tw/MDlcIkHLtjOmbs3anTybdPWpAe
+ 0QNyGpBUI5lTJprmJDs4pvoowgxxYJnlX+rFGt4T8cqBQ6VRWbqlThaeyGoBss9W
+ n19TqPUHGy8tA+mKIDVyjyiOTUc0LZne0LAFGeCyGkhBStSSfdXN5MvVZW9v23b9
+ D+0cqORRrBLLWvr2yQRdnHvYdvqLKqxqgdymigVZuGNoC96CC4LAZgGLLqr9U9xT
+ HIhaExq1D23YwSp11OrMJVie+zWTK/D8lpjn9W617Fg/seaA613Jx4bOjfqJ9IRe
+ LXt4y9xehw==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbepxs57h-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jul 2026 13:49:57 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66GDnrEf021402;
- Thu, 16 Jul 2026 13:49:57 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc1nhn5pf-1
+ Thu, 16 Jul 2026 13:53:34 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66GDncKY003301;
+ Thu, 16 Jul 2026 13:53:33 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc15k57kq-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jul 2026 13:49:57 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66GDnMau27591228
+ Thu, 16 Jul 2026 13:53:33 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66GDrWr122872592
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 16 Jul 2026 13:49:22 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F243A5805B;
- Thu, 16 Jul 2026 13:49:56 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A13F55805E;
- Thu, 16 Jul 2026 13:49:55 +0000 (GMT)
+ Thu, 16 Jul 2026 13:53:32 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3C6B358052;
+ Thu, 16 Jul 2026 13:53:32 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7650758056;
+ Thu, 16 Jul 2026 13:53:31 +0000 (GMT)
 Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 16 Jul 2026 13:49:55 +0000 (GMT)
-Message-ID: <cf6167754880e48fe8e034f0885a243355695211.camel@linux.ibm.com>
-Subject: Re: [PATCH 09/29] hw/gpio: pca9552: expose GPIO pins as pin%d QOM
- properties
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 16 Jul 2026 13:53:31 +0000 (GMT)
+Message-ID: <aa6d9c079173083fbfe745d3d8116950292fe35d.camel@linux.ibm.com>
+Subject: Re: [PATCH 10/29] tests/qtest: add PCA9555 register access tests
 From: Miles Glenn <milesg@linux.ibm.com>
 To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>,
@@ -71,10 +70,10 @@ Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew
  Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, Corey
  Minyard <cminyard@mvista.com>
-Date: Thu, 16 Jul 2026 08:49:55 -0500
-In-Reply-To: <20260709-catalina-upgrade-v1-9-814575bc076b@free.fr>
+Date: Thu, 16 Jul 2026 08:53:31 -0500
+In-Reply-To: <20260709-catalina-upgrade-v1-10-814575bc076b@free.fr>
 References: <20260709-catalina-upgrade-v1-0-814575bc076b@free.fr>
- <20260709-catalina-upgrade-v1-9-814575bc076b@free.fr>
+ <20260709-catalina-upgrade-v1-10-814575bc076b@free.fr>
 Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
@@ -82,40 +81,40 @@ Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDE0MSBTYWx0ZWRfX6lU67jUU9Qrm
- pmwa+d3kJSiztXNoGiKRXtlFnxYgJxEGzWwdT84Hd/XgRX2/7NZAZRWnfxLBb0X26P48KkvZZEx
- 3vUWjB/TWBly2+fDcHLDsEpwsqpD1K4=
-X-Proofpoint-GUID: sEjAgBnlFcTk_4AfuEXK0AQJlHVkUXOA
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDE0MSBTYWx0ZWRfX2LM/LdxuWlww
- S7vZQmXF0pxqUyeZ7B4veC2Zz/IIILf74Eqt0XDJFTkMwxn2IzecucOxSy0X/z4FqQ+Wy+ZcK7q
- /q2Yo3AF6DXGf/u+b57UGRJX/BL2xzZUbirsv/qLCHiXs7nQDCczztrL7JNMDgxUTTBowbCioz5
- c1cziBKrBzE5RMWjPB1XchlJJbduLvETgIDNWvh3R8dydooJjjI/thDrSvIrDkywmZhl21K1OnB
- g2ZZuJLlBMhPc2EL05HCpcikGZbWc5wEGfKq+Y8nzAVEQDJ/cofEsJZiOIm0mRz11oRoO7OhyTv
- Kqwe/4xtZVHnAhpuNtshmb75/8RbZF6ioKnDTw7FTXv/huExX+KKBDGeDoqQCQlSZA9tGgWDX+P
- /jKHyakgePAYsQaBOqzC9EwD1btGNHHrMuMAFbaLNtlOoa3MsY+hf3QKP+BMBHcAHxfKGCcpXH/
- TXg3Xym3ZyzRO7G/22Q==
-X-Proofpoint-ORIG-GUID: kvQfBgWuX6C-p1jem8sF8ZSi4xQA4ucc
-X-Authority-Analysis: v=2.4 cv=PvajqQM3 c=1 sm=1 tr=0 ts=6a58e186 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-GUID: 6ROMvE7CWnHx1mRcOk8WMnBamNmlcNYk
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDE0MSBTYWx0ZWRfXzqCjP2IWzRsi
+ NA/4/xwUlxQLR3c0UvsAwVLEdNSPU57ju1HsSI9+ZLDnilQ3bAToljvPub29r5YDC0bjjQG3pYW
+ QV2lTbA02PRjQ4hI4I7rcHJ48rJN+IQ=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDE0MSBTYWx0ZWRfX9FF6Yq4oOkvQ
+ tojO4VhXddrkUCMOHI6F9AnpOJRspsYNB89RSTsePXgqvQlW2GgTrOSZsQVFmS4BamuLYCj+JXN
+ sMhE2FKRhXW1chj0/nqtuLl21m/ickBjs+TWmXnWawHbwaSWNqn0B6Iqinz/QnaJPCR8cMfnVTk
+ Bxah6WbX8UJ+9lFmnQvL43CaaRRhSHN7ZplsPVtwrDEqw3LJyKpwyzRThFoZIuF5iYY3W07CpOe
+ UHtdKcvQ0iCJufnf8e92EFlpJyXgtZSI3VTy7X5sPks52NCjEX46i0bla3dgHvx1D+NVJje0eFe
+ 6NzUB20quQ+jwnvOx5Gc8hBbVdhgMgrqiAyLkuozvS83oOjbqgjTtL/e/lnowbVHN4M995XBQJm
+ m/P+EwKaxJ6SJk8xanCdd6dz55R1v03SYj7FLgSXKpTDB/8OtBZE2g2Oz3nFHSX8Swb0XzYxNNG
+ XU+3t2xxmmsZ2PAZsKQ==
+X-Authority-Analysis: v=2.4 cv=XbS5Co55 c=1 sm=1 tr=0 ts=6a58e25e cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=-OEWlCpV48v73FPsAqAA:9 a=QEXdDO2ut3YA:10
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=P69FplKQNIv0u7DI7F0A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: wSpkQhWtwwOSLNkQVzO_Iv_sr3UrPofO
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-16_05,2026-07-15_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 bulkscore=0 impostorscore=0 adultscore=0
- clxscore=1015 lowpriorityscore=0 spamscore=0 suspectscore=0 phishscore=0
+ clxscore=1015 suspectscore=0 spamscore=0 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 adultscore=0 malwarescore=0 impostorscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607160141
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -140,146 +139,79 @@ Thanks,
 Glenn
 
 On Thu, 2026-07-09 at 17:23 +0200, Emmanuel Blot wrote:
-> The PCA9552 exposes its LED channels as led%d QOM string properties, but
-> the GPIO variants (PCA9535/PCA9555) inherited the same led%d interface,
-> which drives the LED selector registers and is meaningless for a plain
-> I/O expander.
+> Introduce a qtest for the PCA9555 16-bit I/O port expander.
 > 
-> Add pin%d string properties ("low"/"high") for the GPIO variants,
-> mirroring the standalone pca9555 model:
-> 
->   - reading returns the raw pin logic level from the INPUT register;
->   - writing drives the external input level, but only for pins the guest
->     has configured as inputs (writes to output pins are ignored with a
->     LOG_UNIMP message).
-> 
-> The LED variant keeps its led%d properties.
+> This first set covers the power-on reset defaults and the read/write
+> behaviour of the OUTPUT, CONFIG and POLARITY register pairs.
 > 
 > Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
 > ---
->  hw/gpio/pca9552.c | 91 ++++++++++++++++++++++++++++++++++++++++++++++++++++---
->  1 file changed, 86 insertions(+), 5 deletions(-)
+>  tests/qtest/meson.build    |  1 +
+>  tests/qtest/pca9555-test.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 45 insertions(+)
 > 
-> diff --git a/hw/gpio/pca9552.c b/hw/gpio/pca9552.c
-> index 54a5945d92..719149b717 100644
-> --- a/hw/gpio/pca9552.c
-> +++ b/hw/gpio/pca9552.c
-> @@ -68,6 +68,7 @@ struct PCA955xClass {
->  #define PCA9552_PIN_HIZ  0x1
->  
->  static const char *led_state[] = {"on", "off", "pwm0", "pwm1"};
-> +static const char *pin_state[] = {"low", "high"};
->  
->  static uint8_t pca955x_pin_get_config(PCA955xState *s, int pin)
->  {
-> @@ -428,6 +429,79 @@ static void pca955x_set_led(Object *obj, Visitor *v, const char *name,
->      pca955x_write(s, reg, val);
->  }
->  
-> +static void pca955x_set_ext_state(PCA955xState *s, int pin, int level);
+> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+> index 56ff860e21..2c283708a5 100644
+> --- a/tests/qtest/meson.build
+> +++ b/tests/qtest/meson.build
+> @@ -318,6 +318,7 @@ qos_test_ss.add(
+>    'tulip-test.c',
+>    'nvme-test.c',
+>    'pca9552-test.c',
+> +  'pca9555-test.c',
+>    'pci-test.c',
+>    'pcnet-test.c',
+>    'rs5c372-test.c',
+> diff --git a/tests/qtest/pca9555-test.c b/tests/qtest/pca9555-test.c
+> new file mode 100644
+> index 0000000000..5945c3441e
+> --- /dev/null
+> +++ b/tests/qtest/pca9555-test.c
+> @@ -0,0 +1,44 @@
+> +/*
+> + * QTest testcase for the PCA9555 16-bit I/O port expander
+> + *
+> + * Copyright (c) Meta Platforms, Inc. and affiliates.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
 > +
-> +static void pca955x_get_pin(Object *obj, Visitor *v, const char *name,
-> +                            void *opaque, Error **errp)
+> +#include "qemu/osdep.h"
+> +#include "hw/gpio/pca9552_regs.h"
+> +#include "libqos/i2c.h"
+> +#include "libqos/qgraph.h"
+> +
+> +#define PCA9555_TEST_ADDR 0x20
+> +
+> +/* Verify power-on reset defaults match the PCA9555 datasheet. */
+> +static void test_reset_defaults(void *obj, void *data, QGuestAllocator *alloc)
 > +{
-> +    PCA955xClass *k = PCA955X_GET_CLASS(obj);
-> +    PCA955xState *s = PCA955X(obj);
-> +    int pin, rc;
-> +    uint8_t input_reg, state;
+> +    QI2CDevice *dev = (QI2CDevice *)obj;
 > +
-> +    rc = sscanf(name, "pin%2d", &pin);
-> +    if (rc != 1) {
-> +        error_setg(errp, "%s: error reading %s", __func__, name);
-> +        return;
-> +    }
-> +    if (pin < 0 || pin >= k->pin_count) {
-> +        error_setg(errp, "%s invalid pin %s", __func__, name);
-> +        return;
-> +    }
-> +
-> +    /*
-> +     * Report the raw pin logic level; polarity inversion is a read-time
-> +     * transform applied to the INPUT register, not to the pin state itself.
-> +     */
-> +    input_reg = PCA9535_INPUT0 + (pin / 8);
-> +    state = (s->regs[input_reg] >> (pin % 8)) & 0x1;
-> +    visit_type_str(v, name, (char **)&pin_state[state], errp);
+> +    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT0), ==, 0xFF);
+> +    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT1), ==, 0xFF);
+> +    g_assert_cmphex(i2c_get8(dev, PCA9535_OUTPUT0), ==, 0xFF);
+> +    g_assert_cmphex(i2c_get8(dev, PCA9535_OUTPUT1), ==, 0xFF);
+> +    g_assert_cmphex(i2c_get8(dev, PCA9535_POLARITY0), ==, 0x00);
+> +    g_assert_cmphex(i2c_get8(dev, PCA9535_POLARITY1), ==, 0x00);
+> +    g_assert_cmphex(i2c_get8(dev, PCA9535_CONFIG0), ==, 0xFF);
+> +    g_assert_cmphex(i2c_get8(dev, PCA9535_CONFIG1), ==, 0xFF);
 > +}
 > +
-> +static void pca955x_set_pin(Object *obj, Visitor *v, const char *name,
-> +                            void *opaque, Error **errp)
+> +static void pca9555_register_nodes(void)
 > +{
-> +    PCA955xClass *k = PCA955X_GET_CLASS(obj);
-> +    PCA955xState *s = PCA955X(obj);
-> +    int pin, rc;
-> +    uint8_t state, config_reg;
-> +    g_autofree char *state_str = NULL;
+> +    QOSGraphEdgeOptions opts = {
+> +        .extra_device_opts = "address=0x20"
+> +    };
+> +    add_qi2c_address(&opts, &(QI2CAddress) { PCA9555_TEST_ADDR });
 > +
-> +    if (!visit_type_str(v, name, &state_str, errp)) {
-> +        return;
-> +    }
-> +    rc = sscanf(name, "pin%2d", &pin);
-> +    if (rc != 1) {
-> +        error_setg(errp, "%s: error reading %s", __func__, name);
-> +        return;
-> +    }
-> +    if (pin < 0 || pin >= k->pin_count) {
-> +        error_setg(errp, "%s invalid pin %s", __func__, name);
-> +        return;
-> +    }
+> +    qos_node_create_driver("pca9555", i2c_device_create);
+> +    qos_node_consumes("pca9555", "i2c-bus", &opts);
 > +
-> +    for (state = 0; state < ARRAY_SIZE(pin_state); state++) {
-> +        if (!strcmp(state_str, pin_state[state])) {
-> +            break;
-> +        }
-> +    }
-> +    if (state >= ARRAY_SIZE(pin_state)) {
-> +        error_setg(errp, "%s invalid pin state %s", __func__, state_str);
-> +        return;
-> +    }
-> +
-> +    /* Only input-configured pins can be driven by an external device. */
-> +    config_reg = PCA9535_CONFIG0 + (pin / 8);
-> +    if (!((s->regs[config_reg] >> (pin % 8)) & 0x1)) {
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "%s: pin %d is configured as output, ignoring set\n",
-> +                      s->description, pin);
-> +        return;
-> +    }
-> +
-> +    pca955x_set_ext_state(s, pin, state != PCA9552_PIN_LOW);
+> +    qos_add_test("reset-defaults", "pca9555", test_reset_defaults, NULL);
 > +}
 > +
->  static const VMStateDescription pca9552_vmstate = {
->      .name = "PCA9552",
->      .version_id = 0,
-> @@ -485,15 +559,22 @@ static void pca9535_reset_hold(Object *obj, ResetType type)
->  static void pca955x_initfn(Object *obj)
->  {
->      PCA955xClass *k = PCA955X_GET_CLASS(obj);
-> -    int led;
->  
->      assert(k->pin_count <= PCA955X_PIN_COUNT_MAX);
-> -    for (led = 0; led < k->pin_count; led++) {
-> +    for (int ix = 0; ix < k->pin_count; ix++) {
->          char *name;
->  
-> -        name = g_strdup_printf("led%d", led);
-> -        object_property_add(obj, name, "bool", pca955x_get_led, pca955x_set_led,
-> -                            NULL, NULL);
-> +        if (k->has_led_support) {
-> +            /* LED variant: expose the LED selector state as led%d. */
-> +            name = g_strdup_printf("led%d", ix);
-> +            object_property_add(obj, name, "bool",
-> +                                pca955x_get_led, pca955x_set_led, NULL, NULL);
-> +        } else {
-> +            /* GPIO variant: expose the pin logic level as pin%d. */
-> +            name = g_strdup_printf("pin%d", ix);
-> +            object_property_add(obj, name, "str",
-> +                                pca955x_get_pin, pca955x_set_pin, NULL, NULL);
-> +        }
->          g_free(name);
->      }
->  }
+> +libqos_init(pca9555_register_nodes);
 > 
 
 
