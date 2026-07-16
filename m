@@ -4,144 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6528C44511
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 16:05:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A29EBC44511
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 16:09:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkOZd-0005px-HE; Thu, 16 Jul 2026 12:04:33 -0400
+	id 1wkOe4-00076k-Kj; Thu, 16 Jul 2026 12:09:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wkOZa-0005pb-Qo
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 12:04:30 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wkOe0-00076K-W4
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 12:09:06 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wkOZY-0005D3-Gj
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 12:04:30 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ id 1wkOdz-00066b-44
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 12:09:04 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66GDKM892857818
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 16:04:26 GMT
+ 66GDJd8b3988086
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 16:09:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- fYDVrbRB+LlR9DZ24ptHcBy6whX3UJ6tb5JuMlHfHzw=; b=fi4QMGNMaPNJKrVC
- RSnzlsJuSL/GhCL/gWAqUAN3Jgtb9TLKsTDsFkXRuOlqAUHcaD++a8GbX3ifBL9E
- lYN7HtXeluz5CyuUICA9RJTbYk/nXXZo0kG9I4IIxmaZgj4ckDs4POxdpxDumfYR
- 2FA+5M2tiMMTTB7GtaQZFU56wccn3/nFkrKEyUX7Jgw+tCtiwj7mwCnohlBMIqJM
- 8LKV2MT37SPiXOCqqrdDersD2tpfx6axQbvYGLOU0WYRnI9HW9gnpygP0vS521BI
- JmAg4S/pVE3EKJakguZSDu8T/X2uNf9+QB68Z8qitBS/jpYQSfnnxhcMQy528sBF
- m7o2yw==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4feuex23n9-1
+ k0bzd/cCqwKLMA4Jx2RmPmTw97YrIVEQ5MtnssVIH8Q=; b=H5evZHxGW3/jzji/
+ bdWBIDtm0I5y6EaKL9IPVk1ugYmBVK0yNWBigK6B/paRuQai1KOfXiqMvX5Xlvbq
+ /BboKEoZl0H3+vQGN1OWST6kQGSmbGQao40irmghRc3mLClmMNeaHIC3boXhiZlr
+ aDZuXvheUw4uCY28dF08P4F4boNggCgt7yHwoMfUTX+Lm8q52DZLlgn30BAOcb/x
+ Fd1pirDH7Lf6rXG9bP1Qt7s3b9MNZ8UInTHNAj21d7fd4hcAMlm/LVQPJmfSpiGd
+ Z6hqWwTofe3yCIu1WHYpD+XShb4xmuT0w4wGrnNCnemaF0q2O/7J3DnRTLBLUqxu
+ zaXQjQ==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4feq3pk5qe-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 16:04:25 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2cc8bde6318so122993785ad.3
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 09:04:25 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 16:09:00 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-38e095fd889so6902782a91.2
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 09:09:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784217865; x=1784822665; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1784218140; x=1784822940; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=fYDVrbRB+LlR9DZ24ptHcBy6whX3UJ6tb5JuMlHfHzw=;
- b=RqwyK6jvBqreQmuSIuRp8PZMFHzyw8saVoSQgtQnMj85NPE2GlUlhmW9EiKwIwlgr2
- IpzhhHCns3Jjs70rFD/5IrWzsLZjpIT5iJ3/B/R4A/3pZd/R6h32/Q8Ksg+mqN2ZiZqx
- bxjDdS4Dopr5CbrNbYOdLqJN9u3mpapIaVT9UCMRClU1JNHUiSd9cczwoA5ksjCOZkkJ
- x2teZDUjjKDK6xohfqbBHDd4VR8pOkeDwcfLCSAk4vriyLV9KBWrvdbnN41YY4QuS7D8
- 7zsPfiBzXDsUp+JeW9o0Ohrw1ziZ1P+/gOpJxwxKS6c5ScisaoU/aRXKGRQVXtC3gfiQ
- 6I8g==
+ bh=k0bzd/cCqwKLMA4Jx2RmPmTw97YrIVEQ5MtnssVIH8Q=;
+ b=fLWeHEcmoMHnTR7nCLLjffsHe99hfHEloN3RiVUbaLI6mnOnjyrYkRa+02a0RAfEog
+ jY1vAxmVuCwwB8KnlqBmYkSppWG9sat3y0PqJRScLS6asz9ohf224Iy6MB2TI5yzgCjB
+ x8qKkJHsonlhgTv/SyWP00Ym8Uo4oLhR5jig+X7fnllgKatRU9Mbpt71ZLwGG2aSJkjd
+ V/qIYn/CdWq5yEgY/8kSPhOV9fCfK/dntdZn9bKxs/6kqyWaMJ+z8p3lv7nItCGPPYmH
+ +1TG7ceHoSgJUR4tsCHF92ZSI32N2aNYWPcJCxVN3XVswzGx0SMC5BW1IHK7s62Gs1fb
+ LTsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784217865; x=1784822665;
+ d=1e100.net; s=20251104; t=1784218140; x=1784822940;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=fYDVrbRB+LlR9DZ24ptHcBy6whX3UJ6tb5JuMlHfHzw=;
- b=MOd6f8sly2K64b8uZT4RVhxEf24P7DBddtL2lzAKDVDZmj9ZEHqvZP67g80iNX8CAB
- MhO5E7vXsDMEy4HpbnfoLwbbwZhAsKsFTrn2eUmIaL1rNtOWzDER+kWnsYDalKfg79+w
- fqdr8BXJdOB1iR4wS9Ach+fmw/DfrSvXSG+jotmtQuqUV46HIZfa7aIxLGGT2j4XT050
- D3stNXtiCobHS3fPWFf5Wq2YtOWeSnzfLKQ1zwauF2weRNqwGHI+OlPFgE4sBsmi4qVx
- eq1yktprNZogNn5DOqKlM58eVCWFJxd5o9JwRGgIJ0mPSRx/I1dixUmdWagp+I0hKb52
- 9OTA==
-X-Gm-Message-State: AOJu0YyiXvPxT28zbYqiLvnGCqQHiZic8nJa4iv5E7QVPr0tZqI0fqFj
- VysS4Ian8lC7KLtOLPkmK1cXfBGjhZgxfNISiSEpP52nW6LQK/oqDQA47U94j7SfeXcfzHI6Fro
- BkUWgwZVuYtcVb/9iANlu57fL5XVP1UdEQc15BArZ/MaUU+vA5jkJVaL6zw==
-X-Gm-Gg: AfdE7cnwA6wL+Vw5TNS/L46Bx08qJGzLerMwJG6ezBo5jwYm+5VQRnOx/RDhIToJhVv
- qHPQg2Okcw9rzmBw5CS8bDPJoRacKBKqMfdhrDaR4FekDwnY7Yw4b/nXhIdZwjo81uRo2q7ETH7
- ZjN5wYTEK0uZOyCFYPboqrktnB9iw4QwWzNw3TqMIE2h/ozr+npmcosMkPHEa9RSudiPvlxc9FC
- MkQm438FL4a4pxwyFUwFlVUFONDkP2n7QOWsXhY6ikmjdlkUzOcQx0znOJw2YuPKRi9jPZSM9B2
- 1JlKIkQvx21mahFhZzm7S2JTCvwW2XfETesSC6W/QAQXF9SmQED3p90WdIzm7DKoOsx4KVguhIE
- SXWymBx52GPsTAED265JEu7sqW++QryDTyHGyiNTshgJIrr4rDAPtHccz7vg4q68U6Qod
-X-Received: by 2002:a17:902:eccb:b0:2c9:bf82:dd11 with SMTP id
- d9443c01a7336-2cef1194387mr112042955ad.7.1784217864849; 
- Thu, 16 Jul 2026 09:04:24 -0700 (PDT)
-X-Received: by 2002:a17:902:eccb:b0:2c9:bf82:dd11 with SMTP id
- d9443c01a7336-2cef1194387mr112042415ad.7.1784217864329; 
- Thu, 16 Jul 2026 09:04:24 -0700 (PDT)
+ bh=k0bzd/cCqwKLMA4Jx2RmPmTw97YrIVEQ5MtnssVIH8Q=;
+ b=OzMNeHgpixMJEIxEKQfJ3uCiGPFdZ36LQZOuQ2Wq3jRspSqnTWjRD8LvX5lFMOSDPv
+ eQCf/XwcOx3XOW+Xy5ro4HEoVpQuaNybxJZBNRmpenhoSHdv4CheG6WAu+cPwUpnEEWO
+ PobUVKEGIE3ex7ZS7cpBV9o6V3jKrVrOHV8XBQa3y/rRWR35Uj4d00wDhJ5I15ru3DPP
+ 9+zLyeuhU2zWnsDz60UBBfm5KX0wJmPxV3rFdYQQu1/cqEXkXebWh7UlUSeS6NFHBF7E
+ Bz3ptfi5ASYF4W3/PcVow1cMS5KXNOHDzphb87kUK5Ck2wBCWhOUBsWTZlm9kb7/+5Z/
+ kRcw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RobFlEroZpOtfUOyooiWlJpNBpt3mp5xkh/SLiY/NR6VlaUf4haMvjm1yc0I9DS5BtolW3nqkrvigaK@nongnu.org
+X-Gm-Message-State: AOJu0YzdbQ0C0mX3F6mvtJ1lIqpkwtzyMfCyx+qYWq7LmmkdYmNsDh24
+ JaLQ7aGWlAofMvSZbnWawPk5K528A/A3rSjpDgSDbvvk7NA9iBadIhvbMyMNCXkuxNjQqfzydZ7
+ jiZ43K74TReBONgh+m3KfK6+DR21XKv+sM2Cot95YfhHsg65w8sFcoBn3dQ==
+X-Gm-Gg: AfdE7cneJ4Ma2V81YqG2AJ9anLsOy2WDCZ6DhYn+b5+EjVrQ87mZOgyXcfGlOYC2mRE
+ RbttPOqGMfFa7+NHRLreacVtpjvEEHVSkeMKvYZxQJ8pIB1a5MMiZaHd9FE1BTvQdO8Y2aTC0Z3
+ 5Skr4mJAXHIuTzBXT/Xty71bA80ai+bBXwGUhM1MQBs6YX5y3FitkN3icBv9g+tHgagZAOUofFE
+ PVqINgSxHxUcWFsPLkzVwq6LIwN3nGkeWNulf6cFxANQbHUis6rJ+Oh8zPB6dj6nK5nGcInfcAU
+ mcVScfjhWa4JHYxIhgnVqWTKLgSpQ5ysWl92dqaEHLXtEQ8xOQ9lU3AB4S2j2x9CEuN71CKPb9d
+ PUIO74i7oCEWFX7ldBv/qJyZ14+qUG87ehm9Rs/vNYrEcMU4RYXIy8nY1Kp5dt0556udh
+X-Received: by 2002:a17:90b:17c3:b0:384:5b5b:3465 with SMTP id
+ 98e67ed59e1d1-38e467a97edmr163280a91.29.1784218140197; 
+ Thu, 16 Jul 2026 09:09:00 -0700 (PDT)
+X-Received: by 2002:a17:90b:17c3:b0:384:5b5b:3465 with SMTP id
+ 98e67ed59e1d1-38e467a97edmr163242a91.29.1784218139728; 
+ Thu, 16 Jul 2026 09:08:59 -0700 (PDT)
 Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2cf100e3915sm22904875ad.3.2026.07.16.09.04.23
+ 98e67ed59e1d1-38e2a23eb4dsm1491850a91.2.2026.07.16.09.08.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jul 2026 09:04:23 -0700 (PDT)
-Message-ID: <a88ec0dd-2daf-4bce-b08f-bc0e472c1932@oss.qualcomm.com>
-Date: Thu, 16 Jul 2026 09:04:22 -0700
+ Thu, 16 Jul 2026 09:08:59 -0700 (PDT)
+Message-ID: <d559136c-8c93-450d-9880-cc4bac9aa841@oss.qualcomm.com>
+Date: Thu, 16 Jul 2026 09:08:58 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 95/98] tests: remove tcg tests machinery
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Brian Cain <brian.cain@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- =?UTF-8?Q?Daniel_P=2EBerrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
- Gustavo Romero <gustavo.romero@linaro.org>, Helge Deller <deller@gmx.de>
-References: <20260710214343.2065491-1-pierrick.bouvier@oss.qualcomm.com>
- <20260710214343.2065491-96-pierrick.bouvier@oss.qualcomm.com>
- <87pl0ognos.fsf@draig.linaro.org>
- <a7b40c16-fd9b-4d81-b767-19fd3523c533@oss.qualcomm.com>
- <87jyqvgu05.fsf@draig.linaro.org>
+Subject: Re: [PATCH v2 0/2] plugins/execlog: fix segfault and flush output on
+ vcpu exit
+To: Harry van Haaren <harry.vanhaaren@openchip.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: BALATON Zoltan <balaton@eik.bme.hu>, Alexandre Iooss <erdnaxe@crans.org>, 
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20260616161242.267315-1-harry.vanhaaren@openchip.com>
+ <20260716094126.787556-1-harry.vanhaaren@openchip.com>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <87jyqvgu05.fsf@draig.linaro.org>
+In-Reply-To: <20260716094126.787556-1-harry.vanhaaren@openchip.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=JeeMa0KV c=1 sm=1 tr=0 ts=6a590109 cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: wwqOc1xo_z9-IHGArwzPxwgN_twD8D7c
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDE2NSBTYWx0ZWRfXwjlWDM5x81Zv
+ Wh/6f2lF8WHRMxKCwLiQfZkUoDtMMQQt1jo4d+IpPTXht67kokOoFtUs1Pm2PIwttYyQ6a3k9As
+ Tz9zOQQpCH0OChVzsupy32JUGv4tPRY=
+X-Proofpoint-GUID: wwqOc1xo_z9-IHGArwzPxwgN_twD8D7c
+X-Authority-Analysis: v=2.4 cv=PN8/P/qC c=1 sm=1 tr=0 ts=6a59021d cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=x2NpYwA8f-TEMJUGOvwA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: MNaNXztnZkISiYc1V_5AVv8V1_Ox7jOE
-X-Proofpoint-GUID: MNaNXztnZkISiYc1V_5AVv8V1_Ox7jOE
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDE2NSBTYWx0ZWRfX/7oPB6KFIHcd
- fa6EGueCIypWGDErnIx3T4Mg4fPkm3vRHGuG+k8y4NgIXbIBb9vXbHA9ISC8vMaTBfGxKxaZpr/
- 4+lJwb9Kt8RodICTvD3FhYE+y4VXAUA=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDE2NSBTYWx0ZWRfXynk35BoDWwSC
- aQzUBQkU0heePNEE8WxkvMNlOAtz4+/PAih0MB6gmgkddCa2onWeH/l0JXA+vQfxgDG0aV0qVY+
- of0oG3Uh5vHGkKUJlSgoWQlAhakX8AJ07UisbKw2A/rGiKHhLLOgBCFqufr3EKSQHt17aFRdg0f
- exCQDQvfekC2ebd3ChsBXSu6mZPyVfQVxUptUhSRty3TNS1rJaw/Zv9YMtj4j858og6VvzsVu7a
- gCP/JCwGjQb9EFNLea6MzaGc/G/ScEZ6X4UXaqPbDGkAKUFvXJOlSdHIUHqKPyYtsuK2bznynWL
- Ttf9aMxLOenvjP+gZT/nasHZNgnw6LbM9Fe/30QjN+qeBSvhqO2xCUaHOG9+0o4feunZCemOzfp
- JT2YQAHHVx7BHL2+U4R09RAdkprnhj6W9Fb3H9pevZELCFpNulT8IYlz6EytUjlLUAUz4YwAbrR
- oXRZDqQTc4rQbNUrHVA==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=VwQbUJbxAAAA:8 a=OZcmDFxvAAAA:8 a=MI6s7Ohd7u6-WKzijUcA:9 a=QEXdDO2ut3YA:10
+ a=mQ_c8vxmzFEMiUWkPHU9:22 a=liPxxeoTYnb3ClP5OJlV:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDE2NSBTYWx0ZWRfX9rZ7rhxWXMYf
+ 0yv2EN5u7M1whBRsNxsuRGqMznLVJwhPb456lm6qFzhz7ZKbL04Onz8QrOHkw5TILsZJD0OH4BR
+ UwekGRQ73vlW8JfcHv9sN6Z909GwFudG23538x6FQ6V/fTgcM47wv/aQ5rs8L5EdxAvFim8hmGy
+ hiNaJrkMvFhMfb8XIGnW9KMYCQE9I/pdJjUcLo86CDvWUdeg4Jk+4hvVbc/TlAX+cgSPhnKm68T
+ qL21JGLfgWRlP658Vw68PBs03N1cxBPAEbMc7riXciOdp6RGNmvWNfYpg+mhwH7aS8kYFwGTuyh
+ 0vOINdZoO8hUnY2Wpwc6VwwfFk2/lv2pfX+KHLkddvxhCiJjpkxC4lgxzdVLTpltQKwYFwZv987
+ z0FOpfr7yBsposjZPN+gQbHF5dqJ24L1DNILMJOvjiCMhV7Uh70WqKdBWpT63Ije/yOBvBFeiIm
+ ROr8Ffm29xXQwKhgWYw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-16_05,2026-07-15_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0
- priorityscore=1501 impostorscore=0 phishscore=0 malwarescore=0 bulkscore=0
+ bulkscore=0 malwarescore=0 lowpriorityscore=0 phishscore=0 adultscore=0
+ priorityscore=1501 impostorscore=0 clxscore=1015 suspectscore=0 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607160165
-Received-SPF: pass client-ip=205.220.180.131;
+Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -164,177 +158,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/16/2026 2:32 AM, Alex Bennée wrote:
-> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
-> 
->> On 7/15/2026 10:36 AM, Alex Bennée wrote:
->>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
->>>
->>>> It's now built-in meson, which offers targets check-tcg and check-tcg-*.
->>>>
->>>> Tested-by: Alex Bennée <alex.bennee@linaro.org>
->>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->>>> ---
->>>>  tests/Makefile.include | 68 ++----------------------------------------
->>>>  1 file changed, 2 insertions(+), 66 deletions(-)
->>>>
->>>> diff --git a/tests/Makefile.include b/tests/Makefile.include
->>>> index 494d0109f26..9f82552ab54 100644
->>>> --- a/tests/Makefile.include
->>>> +++ b/tests/Makefile.include
->>>> @@ -19,9 +19,7 @@ check-help:
->>>>  ifneq ($(filter $(all-check-targets), check-softfloat),)
->>>>  	@echo " $(MAKE) check-softfloat               Run FPU emulation tests"
->>>>  	@echo " $(MAKE) check-tcg                     Run TCG tests"
->>>> -	@echo " $(MAKE) run-tcg-tests-TARGET          Run TCG tests for a given target"
->>>> -	@echo
->>>> -	@echo "The variable TCG_TEST_FILTER will select the subset of matching tests."
->>>> +	@echo " $(MAKE) check-tcg-TARGET              Run TCG tests for a given target"
->>>>  endif
->>>>  	@echo
->>>>  	@echo " $(MAKE) check-report.junit.xml        Generates an aggregated XML test report"
->>>> @@ -40,67 +38,6 @@ export SRC_PATH
->>>>  
->>>>  SPEED = quick
->>>>  
->>>> -
->>>> -# TCG_TESTS_WITH_COMPILERS represents the test targets we have cross compiler
->>>> -# support for, CONFIGURED_TCG_TARGETS it what meson has finally
->>>> -# configured having rejected stuff we can't build.
->>>> -CONFIGURED_TCG_TARGETS=$(patsubst %-config-target.h, %, $(wildcard *-config-target.h))
->>>> -
->>>> -# This is the intersection of what tests we can build and is configured
->>>> -TCG_TESTS_TARGETS=$(filter $(CONFIGURED_TCG_TARGETS), $(TCG_TESTS_WITH_COMPILERS))
->>>> -
->>>> -# Per guest TCG tests
->>>> -BUILD_TCG_TARGET_RULES=$(patsubst %,build-tcg-tests-%, $(TCG_TESTS_TARGETS))
->>>> -CLEAN_TCG_TARGET_RULES=$(patsubst %,clean-tcg-tests-%, $(TCG_TESTS_TARGETS))
->>>> -DISTCLEAN_TCG_TARGET_RULES=$(patsubst %,distclean-tcg-tests-%, $(TCG_TESTS_TARGETS))
->>>> -RUN_TCG_TARGET_RULES=$(patsubst %,run-tcg-tests-%, $(TCG_TESTS_TARGETS))
->>>> -
->>>> -$(foreach TARGET,$(TCG_TESTS_TARGETS), \
->>>> -        $(eval $(BUILD_DIR)/tests/tcg/config-$(TARGET).mak: config-host.mak))
->>>> -
->>>> -# $1 = the stem (e.g., arm-softmmu or x86_64-linux-user)
->>>> -get-qemu-bin = $(if $(findstring softmmu,$1),qemu-system-$(subst -softmmu,,$1),qemu-$(subst -linux-user,,$1))
->>>> -
->>>> -$(foreach TARGET,$(TCG_TESTS_TARGETS), \
->>>> -        $(eval .ninja-goals.run-tcg-tests-$(TARGET) += $(call get-qemu-bin,$(TARGET))))
->>>> -
->>>> -.PHONY: $(TCG_TESTS_TARGETS:%=build-tcg-tests-%)
->>>> -$(TCG_TESTS_TARGETS:%=build-tcg-tests-%): build-tcg-tests-%: $(BUILD_DIR)/tests/tcg/config-%.mak
->>>> -	$(call quiet-command, \
->>>> -            $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS), \
->>>> -        "BUILD","$* guest-tests")
->>>> -
->>>> -.PHONY: $(TCG_TESTS_TARGETS:%=run-tcg-tests-%)
->>>> -$(TCG_TESTS_TARGETS:%=run-tcg-tests-%): run-tcg-tests-%: build-tcg-tests-%
->>>> -	$(call quiet-command, \
->>>> -           $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS) SPEED=$(SPEED) TCG_TEST_FILTER=$(TCG_TEST_FILTER) run, \
->>>> -        "RUN", "$* guest-tests")
->>>> -
->>>> -.PHONY: $(TCG_TESTS_TARGETS:%=clean-tcg-tests-%)
->>>> -$(TCG_TESTS_TARGETS:%=clean-tcg-tests-%): clean-tcg-tests-%:
->>>> -	$(call quiet-command, \
->>>> -           $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS) clean, \
->>>> -        "CLEAN", "$* guest-tests")
->>>> -
->>>> -.PHONY: $(TCG_TESTS_TARGETS:%=distclean-tcg-tests-%)
->>>> -$(TCG_TESTS_TARGETS:%=distclean-tcg-tests-%): distclean-tcg-tests-%:
->>>> -	$(call quiet-command, \
->>>> -           $(MAKE) -C tests/tcg/$* $(SUBDIR_MAKEFLAGS) distclean, \
->>>> -        "CLEAN", "$* guest-tests")
->>>> -
->>>> -.PHONY: build-tcg
->>>> -build-tcg: $(BUILD_TCG_TARGET_RULES)
->>>> -
->>>> -.PHONY: check-tcg
->>>> -.ninja-goals.check-tcg = all test-plugins
->>>> -check-tcg: $(RUN_TCG_TARGET_RULES)
->>>> -
->>>> -.PHONY: clean-tcg
->>>> -clean-tcg: $(CLEAN_TCG_TARGET_RULES)
->>>
->>> We still need a clean-tcg or similar rule to force a rebuild of the
->>> tests without killing the whole build dir.
->>>
->>
->> It was needed before, since we only had partial dependencies.
->> But now considering that all dependencies are correctly tracked, what's
->> the use case?
->> - If a test is mtime modified, it rebuilds the test.
->> - If a dockerfile is mtime modified, associated tests are rebuilt.
->> - If docker.py is modified, it will rebuild tests transitively.
->> - If cflags are modified, test will be rebuilt also.
->> - All input of a test (.h, .c, ...) are all tracked.
->> - If user installs a cross compiler or remove podman/docker, next meson
->> configuration will identify this and rebuild all associated tests.
->>
->> In case you find a missing dep, we just need to add it in meson. clean
->> is not needed anymore.
-> 
-> OK I was testing the changing of the cross compiler and I noticed its
-> not reported in the config summary if we have the fallback to
-> podman/docker.
-> 
-> I suspect the logic here:
-> 
->   # snarf the cross-compilation information for tests
->   summary_info = {}
->   have_cross = false
->   foreach target: target_dirs
->     tcg_mak = meson.current_build_dir() / 'tests/tcg' / target / 'config-target.mak'
->     if fs.exists(tcg_mak)
->       config_cross_tcg = keyval.load(tcg_mak)
->       if 'CC' in config_cross_tcg
->         summary_info += {config_cross_tcg['TARGET_NAME']: config_cross_tcg['CC']}
->         have_cross = true
->       endif
->     endif
->   endforeach
->   if have_cross
->     summary(summary_info, bool_yn: true, section: 'Cross compilers')
->   endif
-> 
-> needs to be cleaned up.
->
+Hi Harry,
 
-Thanks for reporting it, I didn't even notice this part of the code
-existed to be honest. Indeed, it needs to be updated, and it should be
-easy to present the same information from what we did during the test
-configuration.
-
-I'll add it in next version.
-
->>
->>>> -
->>>> -.PHONY: distclean-tcg
->>>> -distclean-tcg: $(DISTCLEAN_TCG_TARGET_RULES)
->>>> -
->>>>  # Build up our target list from the filtered list of ninja targets
->>>>  TARGETS=$(patsubst libqemu-%.a, %, $(filter libqemu-%.a, $(ninja-targets)))
->>>>  
->>>> @@ -128,7 +65,6 @@ check-build: run-ninja
->>>>  check-clean:
->>>>  	rm -rf $(BUILD_DIR)/tests/functional
->>>>  
->>>> -clean: check-clean clean-tcg
->>>> -distclean: distclean-tcg
->>>> +clean: check-clean
+On 7/16/2026 2:41 AM, Harry van Haaren wrote:
+> From: Harry van Haaren <harry.vanhaaren@openchip.com>
 > 
-> I wonder if check-clean is redundant as well now if the functional test
-> dependencies are properly encoded.
->
+> Hi Qemu-Dev & CCs,
+> 
+> This is my first contribution to QEMU itself, but I have worked on
+> DPDK, OVS, and QEMU-RS a bit in the past. I have experience with
+> mailing lists for patches and some QEMU internals.
+> 
+> This is a "git publish" reply to the original patches that weren't in a patchset:
 
-It's not really used for dependencies issues (tests/functional has no
-meson built binaries), but just to clean tests/functional folder, which
-may contain logs, scratch files, and other things leftover from those tests.
+When sending new version, you should not reply to v1 series, but send a
+proper new thread. Not sure if you added some extra parameters to
+git-publish, but it should not be needed.
 
-I would keep it for now as it doesn't hurt.
+No need to resend that now, but just an information for your future
+series :).
 
->>>>  
->>>>  endif
->>>
+> https://patchwork.kernel.org/project/qemu-devel/patch/20260616161242.267315-1-harry.vanhaaren@openchip.com/
+> https://patchwork.kernel.org/project/qemu-devel/patch/20260616161242.267315-2-harry.vanhaaren@openchip.com/
+> 
+> Thanks for reviews and input, the v2 reworks as follows:
+> - I expect email to no longer have "| OPENCHIP" in my name, and the email footer removed
+> - git publish used to send, with "--number 2" to hopefully get a v2 patchset out
+> - rebased to latest branch, atexit() function signatures changed
+> - avoid adding mutex for output, rely on QEMUs logging mutex (thanks Pierrick)
+> --- use single call to log to avoid line-breaks corrupting output
+> 
+> Please note that LLMs were used to investigate and fix this bug,
+> but all code in this patch has been reviewed by me, and I believe
+> it to be a good solution.
+> 
+> Regards, -Harry
+> 
+> Harry van Haaren (2):
+>   plugins/execlog: fix segfault/race-cond on per-vCPU structures
+>   plugins/execlog: fix execlog vcpu_exit execution print loss
+> 
+>  contrib/plugins/execlog.c | 88 +++++++++++++++++++--------------------
+>  1 file changed, 43 insertions(+), 45 deletions(-)
 > 
 
 Regards,
