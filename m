@@ -4,108 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04834C43458
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 05:26:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 005FFC43458
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 05:48:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkEbB-0007ha-Io; Thu, 16 Jul 2026 01:25:29 -0400
+	id 1wkEx1-00034b-Pw; Thu, 16 Jul 2026 01:48:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wkEbA-0007hE-42
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 01:25:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
+ id 1wkEws-00033m-Ux; Thu, 16 Jul 2026 01:47:54 -0400
+Received: from [115.124.30.100] (helo=out30-100.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wkEb5-0003U1-UE
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 01:25:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784179519;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=fp4jZFS509qTnQegXqa8viOpEWkTEOB4RzKTfCUybWQ=;
- b=J1dodZQaXA9csOe63lCMwgqzsQ3VRVfgAXw+8Rv+O2Ce7bTerHRDQdc81ljk/za6d0sNIe
- Yb5wuNQWH8EfKZDBk5RD1nNNEYCbK22PPrO8giPrw0q1DIfZ+Tb2KYfcu78hZzprMjScgq
- me+IyXRS/I589m2lSeuG4+wxiUfoB2E=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-290-jidVvaV5NAyhTIpbtv93Wg-1; Thu, 16 Jul 2026 01:25:17 -0400
-X-MC-Unique: jidVvaV5NAyhTIpbtv93Wg-1
-X-Mimecast-MFC-AGG-ID: jidVvaV5NAyhTIpbtv93Wg_1784179516
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-4767036f8faso3848305f8f.3
- for <qemu-devel@nongnu.org>; Wed, 15 Jul 2026 22:25:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
+ id 1wkEwf-0005sn-JU; Thu, 16 Jul 2026 01:47:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784179516; x=1784784316; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=fp4jZFS509qTnQegXqa8viOpEWkTEOB4RzKTfCUybWQ=;
- b=lmoDz+W+kh3K8VdKlZZSGHM+WhFpCTrN3OCwMj9UB8pwbjMET9CT5ANMQ3fTgMXhN2
- HEUBBb9gC+RlnJaj4CCpjL6nS6sUljI4X+tXF4nkND4nDwBp1wAVHZyRrXVki1sniAQ9
- EAG23butiIsE5To7rMFxwfypTiQrqpgtf+AQzw4jhOproRQvi/S3nJa22ylGqyupqmdh
- XDDt6uPiQQ+JawY17/AWkGWvXSYDFDdnZJ0cYuRJ4sL2v8cIF42EFrRfFnGsNisiOMBc
- kb1l3Za9BZ2TL7DNMoq1KOTiBDXk3aqN+PoDxYf252V3r9TAoWARUk8A+KPRKrzjfQAz
- fV3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784179516; x=1784784316;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=fp4jZFS509qTnQegXqa8viOpEWkTEOB4RzKTfCUybWQ=;
- b=s0ENKKoUnC0rdIrpetQHsym3BvynwaIwvR3CYyqqRa+wPevk7rPGVm9Y3akOoXYBzm
- WhNcXsSzufafT+asxDtn8pIfg5ZtPtZxZ0sGMTjUlO5WpWMlfz0P4MNPDoPz4WwLxBsH
- JRbAx/mnzsBr2+/J6ym2DQSCZiCrTDeCGG4B6RZ5YmHoW/IvdflaZvOBcNmOWjuamNyk
- eE7BkblRMi0Q24QRgg+4Vi41yYtxszQsO2iiIMg2eDrgrEOntzlCLg6a9ENpB4cYL92f
- ht0B32n8oHUJ4ry8CLO6D/kqNAGpwSM3qAc4t7eKsxHNzgJCbHupSKvWZwPFXpLhCe04
- X7jQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RobjZnGPopG+Ym0WxxlxBEd0jG2SmLMWsL09tgnrFwDBQ0udRftGgB1fX5SxhSGQf2V0xpPbqa1Mo+4@nongnu.org
-X-Gm-Message-State: AOJu0Yy9HYtDVZLnrs/zXcFHqe3PeDpctxGNF0yVnTOICsltVWNArE1O
- ogO04KyFWiIVmG1tDc9r2PhPhRc0m4sOxFf5W5OCE/QKUEIzfWXUKLfHqbOi9/SHRD1OS2Pf9Yi
- Aqx5PfmSGQP+jESz/X682kt5+qMCp33bG7G25wJ+H6NDhgstObBqcQNng
-X-Gm-Gg: AfdE7clZfKcG736GWH8UDphaur5y54KQf0fflK603gRarJmQV8wPN5rI47Dv0gHIo6K
- KurF9RSbsua2OmWTcNwL+YkT9sZVk8nOq/Zmul7KrjkVNB1/Zdf9g+XSobbqHTGhTQvy2v80PJh
- tuu0foj/tBzxHQ924u6dInXLz7j+nHzOalIF0hUWCz8tzul9T+CIMI3OWRc+mYSdhTq5B4g1IGk
- kU+AfSxNsC/XF8nfk7Tabntg3DhkfyJlrY4visJNOkrRCU/1H99MVZnyGAQFkeEBM3dJb8BzrFB
- 0KaOCfv512QzhmcsDYBH7i7vi4rPGR8sJUw3bhc5+eRYm84dtri8H8A9JY9sBVEoaN+0VporxyT
- GuiwCSgyvYT7G0Xnncb2KIIkX
-X-Received: by 2002:a05:6000:4201:b0:47f:2bc3:8cf3 with SMTP id
- ffacd0b85a97d-47f4fcb5e95mr6009439f8f.18.1784179516001; 
- Wed, 15 Jul 2026 22:25:16 -0700 (PDT)
-X-Received: by 2002:a05:6000:4201:b0:47f:2bc3:8cf3 with SMTP id
- ffacd0b85a97d-47f4fcb5e95mr6009407f8f.18.1784179515470; 
- Wed, 15 Jul 2026 22:25:15 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-24-117.inter.net.il. [80.230.24.117])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f4634debesm21840845f8f.8.2026.07.15.22.25.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 15 Jul 2026 22:25:14 -0700 (PDT)
-Date: Thu, 16 Jul 2026 01:25:12 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
- yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
-Subject: Re: [PATCH v7 00/22] vhost refactoring and fixes
-Message-ID: <20260716012417-mutt-send-email-mst@kernel.org>
-References: <20260527061625.11167-1-vsementsov@yandex-team.ru>
- <20260715184145-mutt-send-email-mst@kernel.org>
- <89ef906d-56d3-40cd-bce4-5636dd963eee@yandex-team.ru>
+ d=linux.alibaba.com; s=default;
+ t=1784180834; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=uDX7x13DA6IZpGu69TxU6W58VJFYBz17Hd+QDSaOHKM=;
+ b=eFj8Wk34HRoqBKqK0+kdxiX38Pe6fjdmOpRNplj/uqN3f/mSwbugVkQPdG+T8TSmdVt9lOzz2uf4759x6ls1l0qdodLdack+HZ2op+rrgdFSY+mthN68Jy32auWr+O2HeLrIUccQ51ZuKZO5jJyA9r+LmRzvKeLG04ZU5JXLNFE=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R621e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037009110;
+ MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
+ TI=SMTPD_---0X7CFkfQ_1784180830; 
+Received: from 30.166.64.228(mailfrom:lyndra@linux.alibaba.com
+ fp:SMTPD_---0X7CFkfQ_1784180830 cluster:ay36) by smtp.aliyun-inc.com;
+ Thu, 16 Jul 2026 13:47:11 +0800
+Message-ID: <fc6cb1dc-e531-4073-93aa-7a42ab864c50@linux.alibaba.com>
+Date: Thu, 16 Jul 2026 13:47:08 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <89ef906d-56d3-40cd-bce4-5636dd963eee@yandex-team.ru>
-Received-SPF: permerror client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/5] disas/riscv: Fix immediate decoding and extraction
+To: qemu-devel@nongnu.org
+Cc: Christoph Muellner <christoph.muellner@vrull.eu>,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-riscv@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20260703-b4-disas-xthead-fix-riscv-next-v4-0-84c566330bc7@linux.alibaba.com>
+From: TianCheng TANG <lyndra@linux.alibaba.com>
+In-Reply-To: <20260703-b4-disas-xthead-fix-riscv-next-v4-0-84c566330bc7@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.100 (deferred)
+Received-SPF: pass client-ip=115.124.30.100;
+ envelope-from=lyndra@linux.alibaba.com;
+ helo=out30-100.freemail.mail.aliyun.com
+X-Spam_score_int: -88
+X-Spam_score: -8.9
+X-Spam_bar: --------
+X-Spam_report: (-8.9 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001,
+ RDNS_NONE=0.793, SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01,
+ UNPARSEABLE_RELAY=0.001,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,85 +75,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 16, 2026 at 02:27:10AM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> On 16.07.26 01:41, Michael S. Tsirkin wrote:
-> > On Wed, May 27, 2026 at 09:16:01AM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> > > Hi all. That's a preparation for vhost-user-blk backend-transfer
-> > > feature.
-> > > 
-> > > 07: rebase on master,
-> > > 04: drop extra occurence of system_virtio_ss.add(files('vhost-user-stub.c'))
-> > 
-> > so patch 10 is the fix?
-> 
-> Probably it's too late :/ I don't understand, what do you mean). Patch 10 is a
-> fix yes. But seems it has no relation to vhost-user-stub.c ?
+Hi,
 
-the patchset is big. I am debating with myself when to merge it.
-Is it possible to just apply fixes an cleanups later?
+Gentle ping for this series.
 
-> > 
-> > > Vladimir Sementsov-Ogievskiy (22):
-> > >    vhost-user: rework enabling vrings
-> > >    vhost: drop backend_features field
-> > >    vhost-user: introduce vhost_user_has_protocol_feature() helper
-> > >    vhost: move protocol_features to vhost_user
-> > >    vhost-user-gpu: drop code duplication
-> > >    vhost: make vhost_dev.features private
-> > >    virtio: move common part of _set_guest_notifier to generic code
-> > >    virtio: drop *_set_guest_notifier_fd_handler() helpers
-> > >    vhost-user: keep QIOChannelSocket for backend channel
-> > >    vhost: vhost_virtqueue_start(): fix failure path
-> > >    vhost: make vhost_memory_unmap() null-safe
-> > >    vhost: simplify calls to vhost_memory_unmap()
-> > >    vhost: move vrings mapping to the top of vhost_virtqueue_start()
-> > >    vhost: vhost_virtqueue_start(): drop extra local variables
-> > >    vhost: final refactoring of vhost vrings map/unmap
-> > >    vhost: simplify vhost_dev_init() error-path
-> > >    vhost: move busyloop timeout initialization to vhost_virtqueue_init()
-> > >    vhost: vhost_dev_init(): simplify features initialization
-> > >    hw/virtio/virtio-bus: refactor virtio_bus_set_host_notifier()
-> > >    vhost-user: make trace events more readable
-> > >    vhost-user-blk: add some useful trace-points
-> > >    vhost: add some useful trace-points
-> > > 
-> > >   backends/cryptodev-vhost.c     |   9 +-
-> > >   hw/block/trace-events          |  10 ++
-> > >   hw/block/vhost-user-blk.c      |  26 +++-
-> > >   hw/display/vhost-user-gpu.c    |  11 +-
-> > >   hw/net/vhost_net.c             |  35 ++---
-> > >   hw/s390x/virtio-ccw.c          |  35 +++--
-> > >   hw/scsi/vhost-scsi.c           |   1 -
-> > >   hw/scsi/vhost-user-scsi.c      |   1 -
-> > >   hw/virtio/meson.build          |   1 +
-> > >   hw/virtio/trace-events         |  16 +-
-> > >   hw/virtio/vdpa-dev.c           |   3 +-
-> > >   hw/virtio/vhost-user-base.c    |   8 +-
-> > >   hw/virtio/vhost-user-stub.c    |   6 +
-> > >   hw/virtio/vhost-user.c         | 260 ++++++++++++++++++++++-----------
-> > >   hw/virtio/vhost.c              | 243 +++++++++++++++---------------
-> > >   hw/virtio/virtio-bus.c         |  18 +--
-> > >   hw/virtio/virtio-hmp-cmds.c    |   2 -
-> > >   hw/virtio/virtio-mmio.c        |  41 +-----
-> > >   hw/virtio/virtio-pci.c         |  34 +----
-> > >   hw/virtio/virtio-qmp.c         |  12 +-
-> > >   hw/virtio/virtio.c             |  48 +++---
-> > >   include/hw/virtio/vhost-user.h |   4 +
-> > >   include/hw/virtio/vhost.h      |  63 +++++---
-> > >   include/hw/virtio/virtio-pci.h |   3 -
-> > >   include/hw/virtio/virtio.h     |  15 +-
-> > >   net/vhost-vdpa.c               |   7 +-
-> > >   qapi/virtio.json               |   3 -
-> > >   27 files changed, 500 insertions(+), 415 deletions(-)
-> > >   create mode 100644 hw/virtio/vhost-user-stub.c
-> > > 
-> > > -- 
-> > > 2.52.0
-> > 
-> 
-> 
-> -- 
+v4 still applies cleanly on current Alistair's riscv-to-apply.next
+(8fb3075916), and test-riscv-disas still passes with the external unit
+test coverage:
+https://patchew.org/QEMU/20260703-b4-disas-xthead-fix-riscv-next-v4-0-84c566330bc7%40linux.alibaba.com/
+
+Thanks,
+TianCheng
+
+在 2026/7/3 13:03, TANG Tiancheng 写道:
+> Fix two XThead immediate decoding issues in the RISC-V disassembler, fix
+> vector immediate signedness handling, and make operand extraction more
+> explicit.
+>
+> The first patch aligns th.srri decoding with target/riscv/xthead.decode:
+> th_srri uses bits 31:26 as 000100 and bit 25 as shamt[5], while the
+> disassembler switches on bits 31:25.
+>
+> The second patch extracts the full 6-bit immediate field for
+> rv_codec_r2_imm6, which fixes the immediate printed for th.srri and
+> th.tst.
+>
+> The third patch makes operand_vimm() return int32_t, matching the signed
+> 5-bit vector immediate value it extracts.
+>
+> The fourth patch decodes unsigned 5-bit vector immediates with a separate
+> codec, matching the target translator paths that zero-extend or truncate
+> those fields.
+>
+> The fifth patch follows Richard's review suggestion by converting operand
+> helper bit extraction to extract32() or sextract32(). Signed immediates use
+> sextract32() on the sign-bearing field and combine it with the remaining
+> extract32() fields.
+>
+> This series is based on Alistair's riscv-to-apply.next branch:
+> 64ce9ac18757 ("hw/riscv/riscv-iommu.c: always fault with SADE=0 and A=0")
+>
+> Testing:
+> - Applied and tested on top of Alistair's riscv-to-apply.next branch.
+> - Verified with an external test branch that adds unit coverage:
+>    https://github.com/LLyndra/qemu.git b4-disas-riscv-v2-tests
+>
+>    The added tests cover XThead th.srri/th.tst immediate decoding,
+>    signed vector immediates, unsigned vector immediate operands, and
+>    signed base ISA I-immediate extraction.
+> - Commands run:
+>      ./configure --target-list=riscv64-softmmu --disable-docs \
+>          --prefix=/tmp/qemu-riscv-disas-test --cross-prefix=
+>      ninja -C build tests/unit/test-riscv-disas
+>      build/tests/unit/test-riscv-disas --tap -k
+> - Result:
+>      test-riscv-disas passed: 37/37 TAP tests ok.
+>
+> ---
+> Changes in v4:
+> - Rebased on current Alistair's riscv-to-apply.next branch.
+> - Folded Alex's extract32() suggestion into the 6-bit immediate
+>    fix patch, so it directly uses extract32(inst, 20, 6).
+> - Link to v3: https://lore.kernel.org/qemu-devel/20260701-b4-disas-xthead-fix-riscv-next-v3-0-fc4f5f1b6c15@linux.alibaba.com
+>
+> Changes in v3:
+> - Updated the extract-helper cleanup patch to use sextract32() on the
+>    sign-bearing field directly, as suggested by Richard.
+> - Link to v2: https://lore.kernel.org/qemu-devel/20260701-b4-disas-xthead-fix-riscv-next-v2-0-e6e4ff5a7847@linux.alibaba.com
+>
+> Changes in v2:
+> - Collected Reviewed-by tags from Daniel.
+> - Kept the 6-bit immediate fix as a minimal correctness change.
+> - Added a patch making the signed vector immediate helper return a signed
+>    type.
+> - Added a patch decoding unsigned vector immediates separately from signed
+>    vector immediates.
+> - Added a cleanup patch using extract32()/sextract32() for replaceable
+>    operand helper field extraction, including split immediates, as
+>    suggested by Richard.
+> - Link to v1: https://lore.kernel.org/qemu-devel/20260626-b4-disas-xthead-fix-riscv-next-v1-0-74228a3c1b21@linux.alibaba.com
+>
+> ---
+> TANG Tiancheng (5):
+>        disas/riscv: Fix th.srri decoding
+>        disas/riscv: Fix 6-bit immediate extraction
+>        disas/riscv: Use signed type for vector immediates
+>        disas/riscv: Decode unsigned vector immediates as unsigned
+>        disas/riscv: Use extract helpers for operand fields
+>
+>   disas/riscv-xthead.c |   6 +-
+>   disas/riscv.c        | 263 +++++++++++++++++++++++++++------------------------
+>   disas/riscv.h        |   1 +
+>   3 files changed, 142 insertions(+), 128 deletions(-)
+> ---
+> base-commit: 64ce9ac18757d79f3b5b337f7bcbdd0dabef3ce1
+> change-id: 20260623-b4-disas-xthead-fix-riscv-next-c6af6a09d2dc
+>
 > Best regards,
-> Vladimir
-
 
