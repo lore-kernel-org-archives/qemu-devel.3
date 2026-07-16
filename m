@@ -4,120 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16EA6C44512
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 14:12:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1FB7C4450A
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 14:13:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkMp3-0005cF-Ul; Thu, 16 Jul 2026 10:12:21 -0400
+	id 1wkMqS-00068F-Gz; Thu, 16 Jul 2026 10:13:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wkMp2-0005by-4T; Thu, 16 Jul 2026 10:12:20 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1wkMqQ-000675-E9; Thu, 16 Jul 2026 10:13:46 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wkMoz-0002jR-Lf; Thu, 16 Jul 2026 10:12:19 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1wkMqO-0002oT-QJ; Thu, 16 Jul 2026 10:13:46 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66GDfhOk3360139; Thu, 16 Jul 2026 14:11:53 GMT
+ 66GDfnBk3273886; Thu, 16 Jul 2026 14:13:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=a7pRjTSYF1Ya4y/kE6jwbxZrx2zKaYXiWJL/xkFle7E=; b=BDMWvkAmaybs
- qK8jzNwdUsxUbdm04PbL5kRHbjThLXDGRG0XJTvwZwNKq+XN0XvkRpCWfq+/ci3e
- PYZQB6r+zdV2uzErL2w6zIuLyaaDL5LKyBiSeulivmFjXfiIP6Ae25kAS+RW9kED
- 3MKzNiY3vsjnRLzYaQAcTMzR4s1HyJiEbFakmIJxp3a2F9Az7QQVKYHd0LGc50Vw
- fkvF/ju9UtYI95DnlVN2ejouFQFwlPgv1QTN3cLopH7itAsk4axIwjA+82Z5ok29
- RppSv21Q1df0t6pvDJtj2Kw4dnd1C15G+A6ptnfwqm/MKCJdEPKahnoZVuSm/Iz+
- DsBqudoTHw==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbepxs878-1
+ bh=DkRj4IQjAAWkvQEAAUfC42BwQbmAUOw464DnzLMT8mk=; b=iP8LWQ7fqLbN
+ DifwfJx7xaByqrrxHpRIU2kS1ZeGPFjUYwlDrFUWDCQ9FYnHjzPfpmr5rIXOTgOE
+ he7+bVOjTkQODirggIGkobIhKnaPNQlOMgsmDzeTQt5nrAV0UTE1aAaqjOWL3+Ex
+ 6OXLguv7nc3VdkJRSq/qA1sUEp/SuzyX0YXInRd3pqs4qanCaKbJ8et69fof183V
+ qiR6MJXbhhsJyVfkOfNSLaGyFzpYnMwW43BCCaWAx0fL3aygTho8kvipwaO3x3HD
+ bziSd8/lg+/cVs1lhsclU7yhYey9vBjVYjY8OgQ04CLBU9FktG5UXD9bE7b6bzJx
+ ZDk5xQfIag==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fbexx0f2p-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jul 2026 14:11:52 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66GE4b9H002414;
- Thu, 16 Jul 2026 14:11:51 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc0hwdev8-1
+ Thu, 16 Jul 2026 14:13:27 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66GE4drr005219;
+ Thu, 16 Jul 2026 14:13:26 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fc1nhn8hf-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 16 Jul 2026 14:11:51 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 66GEBGK625625152
+ Thu, 16 Jul 2026 14:13:26 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66GEDQ7K30474942
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 16 Jul 2026 14:11:16 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4DE1A58062;
- Thu, 16 Jul 2026 14:11:51 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1EB035805F;
- Thu, 16 Jul 2026 14:11:50 +0000 (GMT)
+ Thu, 16 Jul 2026 14:13:26 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1B2795805E;
+ Thu, 16 Jul 2026 14:13:26 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6105E58056;
+ Thu, 16 Jul 2026 14:13:25 +0000 (GMT)
 Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 16 Jul 2026 14:11:50 +0000 (GMT)
-Message-ID: <a60d05bf4a345dc2f5cdd503b0371d11117bc2d3.camel@linux.ibm.com>
-Subject: Re: [PATCH 11/29] tests/qtest: pca9555: test output-to-input
- reflection and pull-ups
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 16 Jul 2026 14:13:25 +0000 (GMT)
+Message-ID: <df4d9cf39e0d09dbd0184a38f55531bef3555b14.camel@linux.ibm.com>
+Subject: Re: [PATCH 13/29] tests/qtest: pca9555: test auto-increment and
+ command wrapping
 From: Miles Glenn <milesg@linux.ibm.com>
-To: emmanuel.blot@free.fr
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-arm@nongnu.org, Fabiano
- Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>,
+To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>,
  Peter Maydell <peter.maydell@linaro.org>, Steven Lee
  <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Jamin Lin
  <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew
  Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, Corey
  Minyard <cminyard@mvista.com>
-Date: Thu, 16 Jul 2026 09:11:49 -0500
-In-Reply-To: <37343465-DA0D-4D3B-96AF-2FF2BEEDA1C5@free.fr>
+Date: Thu, 16 Jul 2026 09:13:25 -0500
+In-Reply-To: <20260709-catalina-upgrade-v1-13-82a63fead90c@free.fr>
 References: <20260709-catalina-upgrade-v1-0-82a63fead90c@free.fr>
- <20260709-catalina-upgrade-v1-11-82a63fead90c@free.fr>
- <5da27eef8c07b6d742d46dca19035e221cac402a.camel@linux.ibm.com>
- <37343465-DA0D-4D3B-96AF-2FF2BEEDA1C5@free.fr>
+ <20260709-catalina-upgrade-v1-13-82a63fead90c@free.fr>
 Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: EKgkb4f2HOh6Kf-_pYneNjIHnurNvT61
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDE0NiBTYWx0ZWRfXybd9zJyOLnqV
- o71Mu+sq0uwCSQVgFfIAHnx1hKXIgTAoOSc37JR0eyuvbiOU81dX0+i2/MrvNSG56J/eZwKCTCd
- nj75wXMYPcHJghQHCYeJDhoUm6cpNQs=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDE0NiBTYWx0ZWRfX5Y7pwx1e+s8P
- iz1ytUKfk3Ye4tJWtTTsxZnI9ocEwp9RQ9UP1fX5cgBlgxFreziRnjrFg0eg2sHiQaI1YW7O75y
- V0HiCrzsx+QphmKqRB7NideXocTI72RYXOOdglEZKIoz6kX/6xVnDq6FCZYmaBlGL850E77qtMq
- aQpQ3D+a7uY75lSE3QqgaQXCvAR59FsbopALQ8larroaDjQ5W4+3h7YVUysR2+aU5iHp86G5b3L
- CtzdGCkW23PZG6MYhbU4iznAZcxSJ4WkPNn/MBd7KvKEfOaAYVl2jQri177E4VuMftu+Za5rZsX
- p2+2f1hNT8zbAi2Iu9lNRbUXY+fLh20xmyzPM3Ay26AemPGH34h62hks+HEGw3gbGTjsuvoED7H
- 6oQPTMPRUypXaFEqx4IqTSe8PmK2qPzQk6oRa+eubH2Jq08mdWaXcd7xrvysfkuzID0reh1Rk0V
- HMYeItdabNU6jXpX/pg==
-X-Authority-Analysis: v=2.4 cv=XbS5Co55 c=1 sm=1 tr=0 ts=6a58e6a9 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+X-Proofpoint-GUID: cJ7M7uWIWwBB7BO5TCySf7Wp2nmrgq03
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDE0NiBTYWx0ZWRfX/VHHB6vjBLMq
+ s4rkla3uJIcVop0jGQgBc4s1f6rTVHub7jjIitiCiFZEkX43N7LDinFi7hcaz01ptLFtLrxLrQd
+ yELJNqMGD/gOhF6CTyPzaY0ORob0W/PQiOuNnoUr6jV/drs4i9kX9Uikd8Opb5R4u6LnCuCtj8P
+ 8XnYzfGVoSoJv+wB0LN5WGk7vIg9XNVwbjIwuC6mRrB2+cePlW94o+MJ/HtYPd9E9XPlqief+lF
+ bhK66RuD+m6Nd7Benp7ZjnyQbbqYcYDVVh2kzcXy6dca98IIQ9mwBmseaujSC43pwkPkfvam4lc
+ s3HtiYgQW8OVdTtMH7x3F0cQ6XbhWvRcgKhLx0W8G1dci+FxHqOb4OCPycReAlNMPfKrS7JuvSp
+ MJt4iy32P0noP//AWDWBWdfOO9gmqZB+B+YKmlS8P6QNoEkZH1Hs6WDJyLdJZj1BIMtQXNjIU4V
+ 8UX2gefn+AvGK5qKtgQ==
+X-Authority-Analysis: v=2.4 cv=XJoAjwhE c=1 sm=1 tr=0 ts=6a58e708 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=3x-COLowADpmA6-WuyUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: 0mnnaOD6-GSn--ay3OMpYEgJhf31u8Wv
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=2m9YVKBKTLHlkAwVmdwA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: SWPOI-s0HdNhfgqen460QXkPBiAgt650
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDE0NiBTYWx0ZWRfX2LWz2h7nknx6
+ SLEKSwoKRZWF09TB8HTITi1kjagGLqEpjv4SMe3E9yJkEv1aQIyU1PmdMZxLBzPefc3RzW+LsRu
+ I4pBCV3Tx+LMn5kcX6+clzncnu7Gs9o=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-16_05,2026-07-15_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 spamscore=0 phishscore=0 lowpriorityscore=0
- priorityscore=1501 adultscore=0 malwarescore=0 impostorscore=0 bulkscore=0
+ suspectscore=0 adultscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 impostorscore=0 clxscore=1015 spamscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607160146
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -135,134 +133,129 @@ Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ah, no worries!  Also, it seems that I never recieved patch 12 of 29. 
-Can you resend it to me or maybe someone else can review that one?
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 
 Thanks,
 
 Glenn
 
-On Thu, 2026-07-16 at 16:05 +0200, emmanuel.blot@free.fr wrote:
-> Hey Glenn,
+On Thu, 2026-07-09 at 17:23 +0200, Emmanuel Blot wrote:
+> Add tests for the I2C command protocol of the GPIO variant: the
+> auto-increment that toggles bit 0 within a register pair on reads and
+> writes, and the 3-bit command wrapping that aliases out-of-range register
+> addresses back into the register window.
 > 
-> Yes sorry, I’ve been fighting my ISP SMTP server that considers that sending more than a couple of patches to 10 different addresses is some kind of SPAM, and I ended up pushing twice the same email…
+> Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
+> ---
+>  tests/qtest/pca9555-test.c | 88 ++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 88 insertions(+)
 > 
-> Emmanuel.
+> diff --git a/tests/qtest/pca9555-test.c b/tests/qtest/pca9555-test.c
+> index 2afa061bd2..84d771bcbb 100644
+> --- a/tests/qtest/pca9555-test.c
+> +++ b/tests/qtest/pca9555-test.c
+> @@ -139,6 +139,87 @@ static void test_polarity_with_output(void *obj, void *data,
+>      g_assert_cmphex(i2c_get8(dev, PCA9535_OUTPUT0), ==, 0xA5);
+>  }
+>  
+> +/*
+> + * The PCA9555 auto-increments by toggling bit 0 of the command pointer
+> + * within a register pair. Reading two bytes from INPUT0 should yield
+> + * INPUT0 then INPUT1.
+> + */
+> +static void test_auto_increment_read(void *obj, void *data,
+> +                                     QGuestAllocator *alloc)
+> +{
+> +    QI2CDevice *dev = (QI2CDevice *)obj;
+> +    uint8_t buf[2];
+> +
+> +    i2c_set8(dev, PCA9535_CONFIG0, 0x00);
+> +    i2c_set8(dev, PCA9535_CONFIG1, 0x00);
+> +    i2c_set8(dev, PCA9535_OUTPUT0, 0xAA);
+> +    i2c_set8(dev, PCA9535_OUTPUT1, 0x55);
+> +
+> +    i2c_read_block(dev, PCA9535_INPUT0, buf, 2);
+> +    g_assert_cmphex(buf[0], ==, 0xAA);
+> +    g_assert_cmphex(buf[1], ==, 0x55);
+> +
+> +    i2c_read_block(dev, PCA9535_OUTPUT0, buf, 2);
+> +    g_assert_cmphex(buf[0], ==, 0xAA);
+> +    g_assert_cmphex(buf[1], ==, 0x55);
+> +}
+> +
+> +/*
+> + * Auto-increment write: writing two data bytes after a command byte
+> + * should write to port 0 then port 1 of the addressed register pair.
+> + */
+> +static void test_auto_increment_write(void *obj, void *data,
+> +                                      QGuestAllocator *alloc)
+> +{
+> +    QI2CDevice *dev = (QI2CDevice *)obj;
+> +    uint8_t buf[2];
+> +
+> +    buf[0] = 0x12;
+> +    buf[1] = 0x34;
+> +    i2c_write_block(dev, PCA9535_OUTPUT0, buf, 2);
+> +
+> +    g_assert_cmphex(i2c_get8(dev, PCA9535_OUTPUT0), ==, 0x12);
+> +    g_assert_cmphex(i2c_get8(dev, PCA9535_OUTPUT1), ==, 0x34);
+> +
+> +    buf[0] = 0x0F;
+> +    buf[1] = 0xF0;
+> +    i2c_write_block(dev, PCA9535_CONFIG0, buf, 2);
+> +
+> +    g_assert_cmphex(i2c_get8(dev, PCA9535_CONFIG0), ==, 0x0F);
+> +    g_assert_cmphex(i2c_get8(dev, PCA9535_CONFIG1), ==, 0xF0);
+> +}
+> +
+> +/*
+> + * Auto-increment toggles within the pair: starting from port 1 should
+> + * wrap back to port 0 (toggle bit 0).
+> + */
+> +static void test_auto_increment_toggle(void *obj, void *data,
+> +                                       QGuestAllocator *alloc)
+> +{
+> +    QI2CDevice *dev = (QI2CDevice *)obj;
+> +    uint8_t buf[2];
+> +
+> +    i2c_set8(dev, PCA9535_OUTPUT0, 0xAA);
+> +    i2c_set8(dev, PCA9535_OUTPUT1, 0x55);
+> +
+> +    i2c_read_block(dev, PCA9535_OUTPUT1, buf, 2);
+> +    g_assert_cmphex(buf[0], ==, 0x55);
+> +    g_assert_cmphex(buf[1], ==, 0xAA);
+> +}
+> +
+> +/*
+> + * Verify the command byte wraps at 3 bits: register addresses
+> + * beyond 7 should alias to the same register (bits [2:0] only).
+> + */
+> +static void test_command_wrapping(void *obj, void *data, QGuestAllocator *alloc)
+> +{
+> +    QI2CDevice *dev = (QI2CDevice *)obj;
+> +
+> +    i2c_set8(dev, PCA9535_OUTPUT0, 0x42);
+> +
+> +    g_assert_cmphex(i2c_get8(dev, 0x0A), ==, 0x42);
+> +}
+> +
+>  static void pca9555_register_nodes(void)
+>  {
+>      QOSGraphEdgeOptions opts = {
+> @@ -158,6 +239,13 @@ static void pca9555_register_nodes(void)
+>                   NULL);
+>      qos_add_test("polarity-with-output", "pca9555", test_polarity_with_output,
+>                   NULL);
+> +    qos_add_test("auto-increment-read", "pca9555", test_auto_increment_read,
+> +                 NULL);
+> +    qos_add_test("auto-increment-write", "pca9555", test_auto_increment_write,
+> +                 NULL);
+> +    qos_add_test("auto-increment-toggle", "pca9555", test_auto_increment_toggle,
+> +                 NULL);
+> +    qos_add_test("command-wrapping", "pca9555", test_command_wrapping, NULL);
+>  }
+>  
+>  libqos_init(pca9555_register_nodes);
 > 
-> On 16 Jul 2026, at 15:58, Miles Glenn wrote:
-> 
-> > Not sure why patch 11 was sent twice (once from two different emails),
-> > but...
-> > 
-> > Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-> > 
-> > Thanks,
-> > 
-> > Glenn
-> > 
-> > On Thu, 2026-07-09 at 17:23 +0200, Emmanuel Blot wrote:
-> > > Add tests covering the pin I/O semantics of the expander: output-driven
-> > > pins reflected in the input register, the pull-up seen on input-configured
-> > > pins, and the independence of the two 8-bit ports.
-> > > 
-> > > Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
-> > > ---
-> > >  tests/qtest/pca9555-test.c | 75 ++++++++++++++++++++++++++++++++++++++++++++++
-> > >  1 file changed, 75 insertions(+)
-> > > 
-> > > diff --git a/tests/qtest/pca9555-test.c b/tests/qtest/pca9555-test.c
-> > > index 5945c3441e..6b085702c3 100644
-> > > --- a/tests/qtest/pca9555-test.c
-> > > +++ b/tests/qtest/pca9555-test.c
-> > > @@ -28,6 +28,77 @@ static void test_reset_defaults(void *obj, void *data, QGuestAllocator *alloc)
-> > >      g_assert_cmphex(i2c_get8(dev, PCA9535_CONFIG1), ==, 0xFF);
-> > >  }
-> > > 
-> > > +/*
-> > > + * When a pin is configured as output and driven low (output=0, config=0),
-> > > + * the input register should reflect 0 for that pin.
-> > > + * When driven high (output=1, config=0), input should reflect 1.
-> > > + * When configured as input (config=1), PCA5555 pull-up makes it read 1.
-> > > + */
-> > > +static void test_output_drives_input(void *obj, void *data,
-> > > +                                     QGuestAllocator *alloc)
-> > > +{
-> > > +    QI2CDevice *dev = (QI2CDevice *)obj;
-> > > +
-> > > +    i2c_set8(dev, PCA9535_CONFIG0, 0xF0);
-> > > +    i2c_set8(dev, PCA9535_OUTPUT0, 0xFA);
-> > > +
-> > > +    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT0), ==, 0xFA);
-> > > +
-> > > +    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT1), ==, 0xFF);
-> > > +
-> > > +    i2c_set8(dev, PCA9535_CONFIG0, 0x00);
-> > > +    i2c_set8(dev, PCA9535_OUTPUT0, 0x00);
-> > > +    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT0), ==, 0x00);
-> > > +
-> > > +    i2c_set8(dev, PCA9535_OUTPUT0, 0xFF);
-> > > +    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT0), ==, 0xFF);
-> > > +}
-> > > +
-> > > +/*
-> > > + * When all pins are inputs (config=0xFF) and no external driver,
-> > > + * PCA9555 pull-ups should make the input register read all ones.
-> > > + * Switching a pin to output mode with output=0 should drive it low.
-> > > + */
-> > > +static void test_input_pullup(void *obj, void *data, QGuestAllocator *alloc)
-> > > +{
-> > > +    QI2CDevice *dev = (QI2CDevice *)obj;
-> > > +
-> > > +    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT0), ==, 0xFF);
-> > > +    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT1), ==, 0xFF);
-> > > +
-> > > +    i2c_set8(dev, PCA9535_OUTPUT0, 0x00);
-> > > +    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT0), ==, 0xFF);
-> > > +
-> > > +    i2c_set8(dev, PCA9535_CONFIG0, 0x00);
-> > > +    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT0), ==, 0x00);
-> > > +}
-> > > +
-> > > +/*
-> > > + * Test that both ports are independent: changing port 0 registers
-> > > + * should not affect port 1 and vice versa.
-> > > + */
-> > > +static void test_port_independence(void *obj, void *data,
-> > > +                                   QGuestAllocator *alloc)
-> > > +{
-> > > +    QI2CDevice *dev = (QI2CDevice *)obj;
-> > > +
-> > > +    i2c_set8(dev, PCA9535_CONFIG0, 0x00);
-> > > +    i2c_set8(dev, PCA9535_OUTPUT0, 0x00);
-> > > +
-> > > +    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT0), ==, 0x00);
-> > > +    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT1), ==, 0xFF);
-> > > +    g_assert_cmphex(i2c_get8(dev, PCA9535_CONFIG1), ==, 0xFF);
-> > > +    g_assert_cmphex(i2c_get8(dev, PCA9535_OUTPUT1), ==, 0xFF);
-> > > +
-> > > +    i2c_set8(dev, PCA9535_CONFIG1, 0x00);
-> > > +    i2c_set8(dev, PCA9535_OUTPUT1, 0xAA);
-> > > +
-> > > +    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT0), ==, 0x00);
-> > > +    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT1), ==, 0xAA);
-> > > +    g_assert_cmphex(i2c_get8(dev, PCA9535_OUTPUT0), ==, 0x00);
-> > > +    g_assert_cmphex(i2c_get8(dev, PCA9535_OUTPUT1), ==, 0xAA);
-> > > +}
-> > > +
-> > >  static void pca9555_register_nodes(void)
-> > >  {
-> > >      QOSGraphEdgeOptions opts = {
-> > > @@ -39,6 +110,10 @@ static void pca9555_register_nodes(void)
-> > >      qos_node_consumes("pca9555", "i2c-bus", &opts);
-> > > 
-> > >      qos_add_test("reset-defaults", "pca9555", test_reset_defaults, NULL);
-> > > +    qos_add_test("output-drives-input", "pca9555", test_output_drives_input,
-> > > +                 NULL);
-> > > +    qos_add_test("input-pullup", "pca9555", test_input_pullup, NULL);
-> > > +    qos_add_test("port-independence", "pca9555", test_port_independence, NULL);
-> > >  }
-> > > 
-> > >  libqos_init(pca9555_register_nodes);
-> > > 
 
 
