@@ -4,108 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26AA6C4450A
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 10:38:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72CA6C4450A
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 10:39:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkJU6-0000N1-MJ; Thu, 16 Jul 2026 06:38:31 -0400
+	id 1wkJUL-0000OR-Tx; Thu, 16 Jul 2026 06:38:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wkJTi-0000M7-E8
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 06:38:09 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wkJTg-0007PQ-Gz
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 06:38:06 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-c85b73ffb52so3736788a12.3
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 03:38:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784198283; cv=none;
- d=google.com; s=arc-20260327;
- b=LsajsSI5kLpDWx3I7wjeVRCLJwAfnwZWBFFI9G8Ie7CasJudX2UdORN8CBRubF64br
- APONmhGTeBCcXCCzfw9Mxyh1nJYYxEj80vPhI9kh6YW//A6xz/Bsvx5p26hNhfCkKDzh
- Am40dEHnk1CwWhKMeYCN6oeqlWa4YEY9s/W9V6Cij+zHBpSPfzjgjXhaqgFD1lb4Dwd/
- 5cDzx4/srpjvNctQeipqCeGWPmjAEScYAVn5sJ5qox7cT/KS12brNwA66A9dKm0PTAZm
- hRCjR84NdS73wYfzA/Dl49aeo1OyyFo10RQgMnpBwwqfiYQvmFnzF+QQkcOVO/FR9pu+
- cbZg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=32p2C0PQBVyemZZBfbN/HYFe6jtNxagRr9uqRGk2H8o=;
- fh=fWOTDz5YDRO8gq4Ddplx48s4Kmwze/7hZKKkVfzrGlw=;
- b=PqbJAtiNeWlbJICDSlSVM+Xzsvztt54YeyhkBZyR1VFGOblp1e+wO3vxUvBFtQ992Q
- 4KmB49o9kvkgq54FeSU2qugGA3r2AT/L4pSzzQUnz5B8RMNORJw6VD/eEqF0bRaPOJhA
- /AmOS2KiJqQ4l3DyhsigQIOrAz+MNCxANi0BPNpglF/kobLz6iLlTP6A2okbMRS5lgjr
- K8wSyB6P5Uqn/lYCqevFCrh4Ne8D32n98qftQgc8Qs+HzF7w0ofL2YruSdAsmzEO/+va
- /Ky+oQP/GpvMowop+OTkpcuO+/qMKIq7TJAHx9ifTNyNignwjAhICj2r1Bb8uDaTXG7w
- qogg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784198283; x=1784803083; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=32p2C0PQBVyemZZBfbN/HYFe6jtNxagRr9uqRGk2H8o=;
- b=Sawyi7/rv15/ViLKqW19dQWE/LH+aV0XaNnPW4bey2z+VVPviQ240FdUPSrhAwJY+e
- 2ATpMMUL5IO4ZbVgufemM57/WuMiNLPP6jYYBvv0mIJoxUDdl906LDfCdX0noPm0Hd8p
- ++o8INLdY02PwcGrRM5aYEc4zKEmnVjW2sX8YYMuKxn+wEA4WQT+7ayqlnO7mKLvRvV0
- CeatYp+eb2csUJQtP9D9GT20RTy6+6p7syBTWExATqms+nqzBdZemXcLVJGhpyp1IgMH
- q08q12kYm+QL5YEEMnaFOl+yeZEnRMmpj0E6DrvnWAz9svLUEvHV8Yv70hQA9ssTuhpK
- DLdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784198283; x=1784803083;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=32p2C0PQBVyemZZBfbN/HYFe6jtNxagRr9uqRGk2H8o=;
- b=oTnR+HSay2NiSZrsPU4Pq1MnBZnNqjN3dRD51nmmCH6BGJpHP2zIlfjMwZL9dCO10q
- bpweLs1YEpJyhdqHdzfYagEktMETmRGtlAtjXWghM8R2Z4Jv0LHontMZe+atx/e0hWSJ
- BS55/BCWOB5+eQ7fELmZCuwK3qSYDH/ASeYidfkYoo/ZjFioVpBxNqmxyazgkQSPKk27
- VW9INVgoVclYxcKfbqcfhU4PPM4AZsPpIvt3FK5ykiDkGZ7Tg/Hnn8vQo1lmcG+52VMZ
- 3WlBDU+oa2SkKOJ7siVgF8RsAMTfq1wnJUSjQ47OEJSWaqT6i0AHAGNfD3TJ6RDkfx/I
- 0Ixg==
-X-Gm-Message-State: AOJu0YyJibAgyR1stC6kXMO5z0GBY/xMvNx83X20mq5HKKHBDKS8Vt6k
- iB/RHRZ1aB3Uu7KSbtIIsis7mkRz/exVEoq5wMYQ2Lv6zf9oUBb9TXEl/Qtq1XONZicyMj7und4
- e1uD8lksspaU+jq+V0AF298j6IE+3vpo=
-X-Gm-Gg: AfdE7ckmvdcmHI/QUbtYVhfnhKR5QEQqDj9VHPkk085epA2P/pXrku+a+5SLupOj37/
- DBSR/352VoKZZ3Sloy/96kTtv7xQJaOX9yBxlmDQxdZ055kHFskAKErXBOsscSoumjMXPFqRTx3
- 0yPY0U20yHHr+Q+DGPPZ4BOHW08sFBS9IanFZq/BDbfUiQEaElbyep4qL5DuHTZraRpGhUiYe9M
- esnEV5Jvmp0fl9RbwKwGOM1pPO5UwXSWAV5XhJu/NGDskpeT2E5yHxHtZSU5kdEnQ9hwu4gQeHb
- HcytsEtj87e890HEHw==
-X-Received: by 2002:a05:6a21:9210:b0:3b3:1c7b:ff7 with SMTP id
- adf61e73a8af0-3c36c2ece25mr7725654637.46.1784198282760; Thu, 16 Jul 2026
- 03:38:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1wkJU9-0000NZ-KB
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 06:38:35 -0400
+Received: from mail-northeuropeazon11021107.outbound.protection.outlook.com
+ ([52.101.65.107] helo=DU2PR03CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1wkJU7-0007QE-KI
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 06:38:33 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=P5/My7JMFOxHsit32gUV09O5QU4ol4tWtK1HogZ28o8IzqlRPQ5bSf2lhpkw3h/9/TJDenwetBbxKwQb7P4G0+pq7NH+3HIs61qkoJ7Uy18uQJMOUhjdLDRbQlIT7gPsJmuxgfXMoiy+kKi5V5LGaie5jwqppOTnNaGP6TJJmfqDEHEo9JuZ8NzwjXlNT+7WXWFPlHl7GTXcdO6Yy2r0VimaQ5itk4JaIrWuUfyBXg4WYTJEqwDHMgb5vXN9Xrjb/zL0Fb9p0B1xYeys189wF9VFsarmPndB29W3UbWCWG5JOzUQteo3MT8Voo+TgOWjrBOb+wDEAZ1kTPh9uy2jcw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=vh9I8XqBjvxk3aDxn4jta+HDJiPzKW7bR/jNN2st2Nk=;
+ b=wH2Du8XCaswudz2GDVNPH0a2TG/MDn/DZkEtdVghVpQtEIhBJWQCcP+bmXbj1Bqsh2ewppdB/mXepZdrPWd9Pp4GT8VfMf8h0DKZJX3UMlRNfGP1Tib/+2CDHgo85scLJl/ywfaPSmvvhGjXbk8JsH2Us9ZxdJ+Lk/f86Z9/zPZS8X3woBkPHkWqtkcYOZ9jxKTQvh/UUl4qPeFCVyI3bgtd0rTrm585prWdNdQGNbxhiaQQ/6R4gVgnwH1FmZCKfXQGGDaHo1DHU67BhX96oa9zdVVswqWSq3C1NbgfCIsz20q39nJdlWwB/IIn/q3ldlZyNi5qB/RJXfnE8ojXzA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=vh9I8XqBjvxk3aDxn4jta+HDJiPzKW7bR/jNN2st2Nk=;
+ b=KKw4lMMGZNgFp7w0H2XM1EyaLFbybE83YuUTaJavv4JQzlHGhzfdHrTwUssSSrG+ZHsW8+NJaLaNUl9kE7yFAF9xzyQdzfuOvL6dSVx6rt/DBqyQHDIhvrHQ3W9bFIhafxsBE6oGnbKXXebeBV7T9Gmz6/UHQs6fXE9v2kjTWMHZ8QtDIf03llQl86c3CSfB5eYrgILsPwzIio9//zA2sYuB5tqK1iMhhPWRvGJV3JOlxqcA+VJS+VUkf3dhRrAOpba9FBBVoMUK1s3gQzdIZoKOWOng2Is2EWD1aaxvkUKck5Qp2N5MOjWR6fiHHq4P0/YlS8ZV/pd3q9AcgLg+FA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
+ by PA6PR08MB10766.eurprd08.prod.outlook.com (2603:10a6:102:3cd::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.11; Thu, 16 Jul
+ 2026 10:33:24 +0000
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0223.011; Thu, 16 Jul 2026
+ 10:33:24 +0000
+Message-ID: <f00b67c8-b871-4064-bea4-5d49c66a83d9@virtuozzo.com>
+Date: Thu, 16 Jul 2026 12:33:21 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] vfio/pci: Reject invalid PCI interrupt pin values
+To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex@shazbot.org>, Cedric Le Goater <clg@redhat.com>
+References: <20260715191735.2454719-1-den@openvz.org>
+Content-Language: en-US
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <20260715191735.2454719-1-den@openvz.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: VI1PR09CA0170.eurprd09.prod.outlook.com
+ (2603:10a6:800:120::24) To AM9PR08MB5892.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2dd::16)
 MIME-Version: 1.0
-References: <20260716075529.3009491-1-marcandre.lureau@redhat.com>
- <809cedaa-0704-4ff9-954a-8e6e5724494d@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <809cedaa-0704-4ff9-954a-8e6e5724494d@rsg.ci.i.u-tokyo.ac.jp>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Thu, 16 Jul 2026 14:37:51 +0400
-X-Gm-Features: AUfX_mxmTEcLG5lDM3ODOxJEi1TlQBby6Xo34pBkzi8IH4XbelqII8WPJQLH_U8
-Message-ID: <CAJ+F1C+pkjmfPb-KoGB=RxL8HpcqSWVQx6ceGYXxvkuKmqfquQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/display/virtio-gpu: cap submit_3d command buffer
- allocation
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pg1-x530.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|PA6PR08MB10766:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7b498c71-0eaf-4a11-4ced-08dee325aa31
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|10070799003|376014|366016|23010399003|1800799024|10067099003|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: pdqF0D2Qsjarm2SmoCPJlGREa3vjw+2m3P0r7Dlx5QxRJhYNjrVnEruNL6qI32ZCUZxzn6g6bxwxLCXZHysNEq2qOSeh92yC5IrK8yfj2CZKl3GvAPCk44LHOD91l52OpHGyRf30/CrMZDpwvMh8GLHb4MZS/xBtddJJ3sN+j+0JR39lMKLsxNHkIQ4fu5NujGYJ0doGCwUeRzbA7arxSmNiz2LEE8PJuq0S5q1kvh8hMr/OMmKOg6bCYuU3J6dJtia1acLOt4zN6W9InLg7tiAY3+wFBDYT5bgRiiOyiq3QPC8vwlrG8cWJ4QCN09QLd5dxifpKqj6V+WmuXteEJQ+qa0p0RjK63G+7i8VQDTdI7mo+5whzQPpild0F6e/mEQSPd/PNWS0Bb+4m9lTJio/b/BGew9S+Tudbm14qUYIqBCHlE2eZLAwtQ6EWBmbEu3YQjatwAmDR5Pq7Jld5N7NeR9Xg1fhsJfj67EVu0puXeW9vIwgGEgB9RPCFEJJ64ImF1J/V7Y13MF3hY76m1RDVos/m/TGIBNurIOwXtyrbEcReRqZOopxFS3cQYaWlMxSusMsvqHnaPZ0LWoRN5yQNSrsTvA9X//ye8Us+ZrEFQpHNor88vp+ZqZRhAob+b7i4rO0dYHrXWxbPNQV14RzOZgDKgxyDO/pFx6B1B5Y=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(10070799003)(376014)(366016)(23010399003)(1800799024)(10067099003)(56012099006)(18002099003)(22082099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WGdST2RGNmluUEdaZDJvMEI3dlMwUHFwWlZyZEtLeDYxWTdLWE5HOTZ4T05G?=
+ =?utf-8?B?T2FlNGd0TE5YQzNtcDdUZHNRNEsrejNNTUJtTHBNK3MvOVdTc3lOaHFDZks5?=
+ =?utf-8?B?UW43V2JYNlIzWWVReGVuVlhsY2txOGl2dDlGdVZTbTdFUTErTXpnaTI3T0tk?=
+ =?utf-8?B?WkdPQzZTQmhVOVJBdXVESGZWNytMSlVQK05XdUk0RURlaXRQUlE1UGNUb2hZ?=
+ =?utf-8?B?dEg4NW5vSERsQVNRdDd0R1ZYQ1dlQ3NROHNqQ3pNSDVnQmtPQmtNT1RnbWRQ?=
+ =?utf-8?B?eitYRG82SWw2emx0TTVKUFE5UmkvS1JmTGM0WmJ3eW11RWp0MUtNY0JvOUFr?=
+ =?utf-8?B?L0J6SDdNbUhKSkljN24wczFUUDdRcytOdzlranViNGROQWZ5UisyL2tZL2pq?=
+ =?utf-8?B?L0JHRGZVOTE3dG94bW9PNXZDT0VoUnlCNktlS28wc0JlV0tIQktpRCtyTURG?=
+ =?utf-8?B?TExIRUFienU2RkRoRVZTcGE2MEVkMUF4WTh4OXFONldvcVlvT2lOTlVwVjhm?=
+ =?utf-8?B?emFQenJKcFNFekcyREk4TU15WWpJenNZRWxrNUd2NkN2S1VwQjg4cTZ0dm56?=
+ =?utf-8?B?RW5BTjVoanlraFFxR0Vrbk5lSnUwcWR2emtHd3RRdUFjNHM5T1pBbHdvaEs4?=
+ =?utf-8?B?VC9tcDVodlhuekFiWjVYSCttekZUS1R4bzJlS0hSYkpjelZBQ1NoN1ZpSEdz?=
+ =?utf-8?B?N3R2REw3WlJiNGxHWnprM1NuVHUxSUVHdVZvOW92Ni9yUWdSakZ5U25lODNY?=
+ =?utf-8?B?ZUYwbm5lTUYxM0czdkpZZVB4S3ZZdXFJOUhEVHVnaUlLeFNKUzlmRDZQb0JF?=
+ =?utf-8?B?ZmZDckNDRmE1ZHdWVmQ5L2R2RkZLTUlFMytLb200T0tpMitVcHl5L3l0ZVkw?=
+ =?utf-8?B?NVdTTG9XUW5ZME80RlVOQWYzM1VVWTE4THVKL2tlWS8yZXVLS0E5TkdJSU5E?=
+ =?utf-8?B?Ti8wQ0J1YjE0a2RxVDVkdkVkMHR5WHdONWUycGdRMm16ajJWamxhcHdzTTUv?=
+ =?utf-8?B?N0hJeHlEcjIrbEp1Yk5aRE9GL1ZnYmJUMjVSbW44NnRaY3YxdXVWU0JTaVNh?=
+ =?utf-8?B?RXlFQlA5RWhDb0JyTDFKekRJL3J6aGFBRkx1UjZ1Q08yTTd6NFhubkVVeWx1?=
+ =?utf-8?B?OTgrNzgxZmJKSTJWUFJPZy9mU2lyOXBMM1BONGxwM1R4QjREaW0xaFh6SHZM?=
+ =?utf-8?B?L3FYLzl3UVdWemVNWGJGT3hrN05LSXFaUTVRRlk3VlZMaWFSL2JHZVd3UGxY?=
+ =?utf-8?B?WHJBU0M1SzhraUNIdnV2RU5OYlRaN0t4Y0IxbDhJb0lTdG9sM2RQZ3ZBbmNM?=
+ =?utf-8?B?Uk9EYVZ3S3Y5RjNmbmcrZ2l1d2E2emhrVkgzd0pJTmRjMUdJai9ncXA3cWQv?=
+ =?utf-8?B?aGhEMXdNT1RCeE9ZV0IwUVRnQ2h0bEhrVUYyNjRHV0tpd3dMdXBwOHZqMjhY?=
+ =?utf-8?B?Um9tNEt0UW01c0JBdGxHcGhEdURDYVA2cG5wYTl0Y0RTNEt0V0FNbFJPNzF2?=
+ =?utf-8?B?TU5jTk1QNGZGb2dJMWJGQTlqVjlFdnlUK0tCdUJNYmxPdHdWQzY2czN0Vlp6?=
+ =?utf-8?B?bHVpMG4weXJRWmZ0WjRlN3BaWVRPSWdpY0xCNHZkSExoRnhzWkQxNUtsVHpT?=
+ =?utf-8?B?ZEZyNmRGYzNUZTRLbUtBbDhSYWFIR3EvbSsvSGtJZDIycnhFYi83dFVrQjA5?=
+ =?utf-8?B?Vkx2WGI5NXVTeHlQeGJDeWc1UXBILzgzWlpiTUx0QTFTN2JIbllqazJtRnps?=
+ =?utf-8?B?RU5WNnJZR1pHK3lScXV2RnJXTGdHcnFPeG9IeU5CeVN4Mm9SUTJWdjJlUzlJ?=
+ =?utf-8?B?Tk5sZmJ5emF6NDhQdWhEVEtqRWk4YWxPQXZFZjRSeDE0bDdtWGtoeTRHRk1R?=
+ =?utf-8?B?YmVURDZkaDlKZGdjbmpPTGtLMHVoV3NUZW85Q2UxbDJYdDhYeDBNWHNRUktn?=
+ =?utf-8?B?dlZzM0tPR3l5VDdsUldlOHM1azQyTjBDeklRWUd5UVIrYm4yclZXeUpRMm1z?=
+ =?utf-8?B?NmZ2Q1RENW1IUWRtUnJJbFhRS1htR1IwUkZaRmR3Y1BpMEpDUFRLV3Z6OFhF?=
+ =?utf-8?B?NDdoUVFoN0hsTlYrZnJ4cU45RDVxcU9QanBad3doU1lkdk9uV0dDSDQ0VnRR?=
+ =?utf-8?B?blh6dkZaUUw0bm5RUXBHNDZrcnVZNXlqOG9KOGJodFQvYU4zSFdpQVF2WUFR?=
+ =?utf-8?B?UVVOWHZjZzEzZ05NN3ZCVlhPN2kwOU9aWXhCV3I5dDI2citsNXg2RmlUdnVn?=
+ =?utf-8?B?QVVhU09JZ3BOdm9pZEk0VitPeWlNNUUvTzV3R0lRSldoN3A5RW80VDlRSnEz?=
+ =?utf-8?B?S1lCMmtRTGI5eFZxVHRQVlVRMWIyOEh3WkwrUlkyK0J2dytrbENqM25SaWk2?=
+ =?utf-8?Q?MjOt1mOWUYONRuddB28bZN7todkpGbnqLlu/7DlEafMTY?=
+X-MS-Exchange-AntiSpam-MessageData-1: jM/Jtzzn8Emexw==
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7b498c71-0eaf-4a11-4ced-08dee325aa31
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jul 2026 10:33:24.4026 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: G3VqVOnSKdxS5OxYbbBZoLur75EIhRIb42w2XUYTcDKbpFdk4igVckEy0XUzBsvcym1/o+A7gpKUNaMiTVJ1tA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA6PR08MB10766
+Received-SPF: pass client-ip=52.101.65.107; envelope-from=den@virtuozzo.com;
+ helo=DU2PR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,121 +149,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On 7/15/26 21:17, Denis V. Lunev wrote:
+> This email originated from an IP that might not be authorized by the domain it was sent from.
+> Do not click links or open attachments unless it is an email you expected to receive.
+> If a passthrough device's config space is unreadable at realize
+> time (wedged link, surprise removal, powered-off GPU, etc.), the
+> read of PCI_INTERRUPT_PIN comes back as 0xff. That value is
+> non-zero, so it passes the "!pin" early-return check, and
+> vfio_intx_enable() turns it into an out-of-range intx.pin (254).
+> That value survives into pci_irq_deassert() -> pci_set_irq() ->
+> pci_irq_handler(), which asserts 0 <= irq_num < PCI_NUM_PINS and
+> aborts, killing the whole qemu-kvm process with SIGABRT instead
+> of just failing the device.
+>
+> Reject pin values outside the legal PCI_INTERRUPT_PIN range so
+> this now surfaces as an ordinary device realize failure.
+>
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> CC: Alex Williamson <alex@shazbot.org>
+> CC: "Cedric Le Goater" <clg@redhat.com>
+> ---
+>  hw/vfio/pci.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+>
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index c204706e63..612ee4a0db 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -812,6 +812,12 @@ static void vfio_msix_enable(VFIOPCIDevice *vdev)
+>      PCIDevice *pdev = PCI_DEVICE(vdev);
+>      int ret;
+>  
+> +    /* pin reads back as 0xff if the device is unresponsive */
+> +    if (pin > PCI_NUM_PINS) {
+> +        error_setg(errp, "Invalid PCI interrupt pin %d", pin);
+> +        return -EINVAL;
+> +    }
+> +
+>      vfio_disable_interrupts(vdev);
+>  
+>      vdev->msi_vectors = g_new0(VFIOMSIVector, vdev->msix->entries);
+pls disregard. Completely wrong port from downstream.
 
-On Thu, Jul 16, 2026 at 2:35=E2=80=AFPM Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->
-> On 2026/07/16 16:55, marcandre.lureau@redhat.com wrote:
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >
-> > Both virgl_cmd_submit_3d() and rutabaga_cmd_submit_3d() pass the
-> > guest-controlled cs.size directly to malloc() without bounds checking. =
-A
-> > malicious guest can set cs.size to an arbitrarily large value, causing
-> > an OOM abort that crashes the QEMU process.
->
-> I rechecked and found vhost-user-gpu is also affected. The changes of
-> virgl and rutabaga look good to me.
-
-Yes, I did it for vhost-user-gpu too (now outdated):
-https://patchew.org/QEMU/20260713125431.107278-1-marcandre.lureau@redhat.co=
-m/
-
-I should probably merge them together and resend then.
-
->
-> Regards,
-> Akihiko Odaki
->
-> >
-> > Checking cs.size against the descriptor payload length (iov_size) is no=
-t
-> > sufficient: indirect descriptor tables can repeat entries aliasing the
-> > same guest-physical range, inflating iov_size() to nearly 4 GiB while
-> > referring to only a small amount of unique memory.
-> >
-> > Instead, cap cs.size at 4 MiB. With 4 KiB pages and QEMU's
-> > VIRTQUEUE_MAX_SIZE (1024) mapped-iov limit, the Linux virtio driver
-> > cannot carry more than ~4 MiB of inline command data, so legitimate
-> > submissions are unaffected.
-> >
-> > Fixes: 9d9e152136bd ("virtio-gpu: add 3d mode and virgl rendering suppo=
-rt.")
-> > Fixes: 1dcc6adbc168 ("gfxstream + rutabaga: add initial support for gfx=
-stream")
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3776
-> > Reported-by: admin@fluentlogic.org
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >   include/hw/virtio/virtio-gpu.h   | 8 ++++++++
-> >   hw/display/virtio-gpu-rutabaga.c | 8 ++++++++
-> >   hw/display/virtio-gpu-virgl.c    | 8 ++++++++
-> >   3 files changed, 24 insertions(+)
-> >
-> > diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-=
-gpu.h
-> > index f69fc194627..c10bfbd596f 100644
-> > --- a/include/hw/virtio/virtio-gpu.h
-> > +++ b/include/hw/virtio/virtio-gpu.h
-> > @@ -299,6 +299,14 @@ struct VirtIOGPURutabaga {
-> >       struct rutabaga *rutabaga;
-> >   };
-> >
-> > +/*
-> > + * With 4 KiB pages and QEMU's VIRTQUEUE_MAX_SIZE (1024) mapped-iov
-> > + * limit, the largest inline command is ~4 MiB.  Cap submit_3d
-> > + * allocations to this value to prevent a malicious guest from
-> > + * triggering an OOM abort via an inflated cs.size field.
-> > + */
-> > +#define VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE (4 * 1024 * 1024)
-> > +
-> >   #define VIRTIO_GPU_FILL_CMD(out) do {                                =
-   \
-> >           size_t virtiogpufillcmd_s_ =3D                               =
-     \
-> >               iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num, 0,       =
-   \
-> > diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-r=
-utabaga.c
-> > index 6ff12639012..4d7d7b24592 100644
-> > --- a/hw/display/virtio-gpu-rutabaga.c
-> > +++ b/hw/display/virtio-gpu-rutabaga.c
-> > @@ -351,6 +351,14 @@ rutabaga_cmd_submit_3d(VirtIOGPU *g,
-> >       VIRTIO_GPU_FILL_CMD(cs);
-> >       trace_virtio_gpu_cmd_ctx_submit(cs.hdr.ctx_id, cs.size);
-> >
-> > +    if (cs.size > VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE) {
-> > +        qemu_log_mask(LOG_GUEST_ERROR,
-> > +                      "%s: command buffer too large (%u)\n",
-> > +                      __func__, cs.size);
-> > +        cmd->error =3D VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-> > +        return;
-> > +    }
-> > +
-> >       buf =3D g_new0(uint8_t, cs.size);
-> >       s =3D iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
-> >                      sizeof(cs), buf, cs.size);
-> > diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virg=
-l.c
-> > index 60c78af06a4..d9e5b011049 100644
-> > --- a/hw/display/virtio-gpu-virgl.c
-> > +++ b/hw/display/virtio-gpu-virgl.c
-> > @@ -607,6 +607,14 @@ static void virgl_cmd_submit_3d(VirtIOGPU *g,
-> >       VIRTIO_GPU_FILL_CMD(cs);
-> >       trace_virtio_gpu_cmd_ctx_submit(cs.hdr.ctx_id, cs.size);
-> >
-> > +    if (cs.size > VIRTIO_GPU_MAX_CMD_SUBMIT_SIZE) {
-> > +        qemu_log_mask(LOG_GUEST_ERROR,
-> > +                      "%s: command buffer too large (%u)\n",
-> > +                      __func__, cs.size);
-> > +        cmd->error =3D VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-> > +        return;
-> > +    }
-> > +
-> >       buf =3D g_malloc(cs.size);
-> >       s =3D iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
-> >                      sizeof(cs), buf, cs.size);
->
->
+Sorry,
+    Den
 
