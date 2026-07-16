@@ -4,130 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C018C44515
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 18:08:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 463D3C44512
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 18:08:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkQUf-0000tr-So; Thu, 16 Jul 2026 14:07:33 -0400
+	id 1wkQUg-0000uI-Ga; Thu, 16 Jul 2026 14:07:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1wkQUe-0000t4-5s
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 14:07:32 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wkQUe-0000tS-Vt
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 14:07:33 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1wkQUc-0001UM-7B
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 14:07:31 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ id 1wkQUd-0001V1-AF
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 14:07:32 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66GHZQhl385147
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 18:07:29 GMT
+ 66GGSaJm3274373
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 18:07:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=r1f4hb6Kd8h
- BTIEo4PyGmASCC8aKN4PC9ZUadxyxhNE=; b=VimfATsVXyEiFnSvJFoskdDAHiE
- 6r3+Yb3zrm0B4A3ZI1dnUjQKVW0BLM+A6MS8lUoSS0lCkz26HwTe5PlQbKMlcKB7
- ZzL9Gk5ho++wqcG7oQIsKmFxND2nYQSkrlf4/Z5mBKOhS0LrErMbBvhKKOlM1QNb
- ZJQuFaVnNg9tLPdMhy3fI7Hx4k96jzr69nvQE5XM9WpAFC9uIjKi1ZhFeiZPWF8U
- 0xWURv/7mfNlNn1sblK55Yom8FrQjbU7zo7flRZyz1RRjcZhviXAmqFuZXEw7wlh
- 2HW606ky2JqJsRvYIvL3FPADHaPUKgfWypfym4RbWufGyaDK8yyjZzN0yXw==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ff3u6g3v6-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=9UrV+RpzLm4
+ SQFf/YCtA70LWv9dPQi1KI6bnkivTxIE=; b=Lrhf7tZsLwEt7s3kRCGDPJRSo3/
+ r/R4uMrTdGx4QGCO4O3zczcLvxaVzJw++YFRcEWVZW8nFCIWTyEdwDkh+2jVhjOi
+ vAXFu9lylPBI/JM6NnPKUd4wmywMpkQTqE3UDyT6qssij9boZnRPKKuXrBfR+oIa
+ agntDqNOvd4iUfFvKkm3K5+lpSGgTlD5QA0oEcLrKBE8/Kc7oPqpZy2WaHMNx7bo
+ XI8rQOY4eL4QxZ1Ttdf+ZtLSOqdQCavaD3Q4glqBxtqMVYdQ4QDkp+k8QqaGIdob
+ C4pAZmq2ls/L2PLzX6TGwW4kgWP8iQZyyq5wJObRAqoq5dmybXoiY/F1x3g==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ff2f2rjhw-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 18:07:28 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-380b630c505so8457267a91.1
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 11:07:28 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 18:07:30 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-c96b4f58ddcso3554842a12.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 11:07:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784225248; x=1784830048; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1784225249; x=1784830049; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=r1f4hb6Kd8hBTIEo4PyGmASCC8aKN4PC9ZUadxyxhNE=;
- b=PhqjB+1Ja6QfokDDCA0/x7oMRYtI/w9oCD/Wc6PGJc9l8QjxvToQS0HFBbwd944oQd
- vb17YUzvPwwALxm4934VGpCKu/jijPzpGau8zwJEe34gMCrneSs9Mx3cpivP4Gjv0WSr
- PKg8bNSISRWHLlZqziN134vvA2Y3MXwM8jKwxyHY7Ke7SLKvkDFQUP1WorQplIfzdsPH
- 6iLgPdb15zO3nLhpVjUu+NTp3ASnNkoNLm4FEa5zmVhQJ53c9ipHpzDlZ95ooE7GTubG
- Nzg42WsuKV9PEhxWT6FwDPX6vO+fNzP1KweKAguNVEB4pFjR5Hxa9q3OYhzFRuNVFfy+
- Cw5A==
+ bh=9UrV+RpzLm4SQFf/YCtA70LWv9dPQi1KI6bnkivTxIE=;
+ b=YpJzvGhm+aYzOonkuqsRj5VTK0oUcnOVEBAn1tPEbVRaRJVCJIY2MoPS0Oi1Yrwdbn
+ jjYSpb10gD7zCXG/S5ko5jR9TbLwDb6MLbozHfyhHemQx/EuCSDTVhZTZeT+em0BcmoB
+ 4VgxfhKseJxzvy+bz8+Uwrazh95D9kiDGzU3vAe4A15E6C3bsbw3RT3MKqrlgai6kbw9
+ zAUYQlL5EUglKqDLkGusEzqowaRUI1JqSz9R6lBJ/hMIE94XFYDOwdPVKBF8oK7svBhz
+ dIPPRJoJyvhj5uTaW4YJmHn8+uFfTh6M3je+FOveqKnWVXqMEAcL6yoYLtSkmxD6kBtk
+ 7ciw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784225248; x=1784830048;
+ d=1e100.net; s=20251104; t=1784225249; x=1784830049;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=r1f4hb6Kd8hBTIEo4PyGmASCC8aKN4PC9ZUadxyxhNE=;
- b=kOPiFImDvllcrLtutFEGk/stzLabtsX++njXZ9j4/tdxFSjWu+rvFZ1Vbiml+MJ0Bt
- ZSfNTzZe9uq58a+VdGk2V8E7qC6eN/ovProRO6WLOuwg9mrvMOLjsqIGkiqLtaC9JI67
- HwFgTZBUP5gi04RVlf904jDGQs6xOSLlEG48ULpJmWw0QCI+pC2XCl3/RdYHJQE9TMxD
- ppHXSzEgx1BgRUKPiNfEbFDabunU8aydhw5tudkuwEEVuSOVeEeOEssBxedUR5OjV4lh
- 3wLxl8PAKnXDH0M3fkS10ziyQW4fRqK+JlQe9CSgDtMA6R9wjuHATdw62q1rwIuV9i6x
- RKoQ==
-X-Gm-Message-State: AOJu0YwOdDudHQSJGUqyTy482tFKOBxUpP3IZFXU4qbMSo9AF3i2bSNK
- WZHbZVnqI7DYs01XwsB2Z4w7dzl63gRL2dSQKLFBPr8fRGZR8SKx4LRbwaF/4EgqzUNqIzoOJ4f
- P5A02Eg7QUBHd52b9W5oRA0Iuuj5fM5nffMaRQ3fym8ozUsEZ7mz5UUHOp5aa+zfRHw==
-X-Gm-Gg: AfdE7cmg6vUi7JedxwFU2ylH83tlBWrquMdk9JZgXkv3Y9UvegEbqK1NIXXzfKyguqq
- UiY+tpjTbdyj+SXPOCgVBKcA6nGb6RpvM32N52iFWY6QsP310APLRTYSkleBoD1gwwPx0CoGCYa
- l7n6JCfEnN2OipUGm6hAJcFcUjA78s+inW7I+vYc1kwFkQ1aW5MESx5SwmmOCVnjn0+y9XSr8VZ
- F6Jm8ZO45dALv2txeBrflfDgOlf4cmrmA1d/k3xpVkNb/l05DBAI6fwXCBNeylsoRsyPnI8yf9L
- bhvyigqMrJ8Tpf/UROygL0pmDPU+xQMPaMl0fdcGwVKyZJN734HyJMHT1fnfR3tMyJiNB5YpPim
- Uvkr6c7feZZGLPKIeW6QIxjaKBruJ1/D1BO2Lx/76HY+NcJhQWUAxasytoB8ZZzg=
-X-Received: by 2002:a17:90b:180d:b0:37f:9ce1:736a with SMTP id
- 98e67ed59e1d1-38e1af3481amr11870369a91.32.1784225248096; 
+ bh=9UrV+RpzLm4SQFf/YCtA70LWv9dPQi1KI6bnkivTxIE=;
+ b=kW3OTUTaXDO+epUJfEvEMcKm8CdvLVE4d+dlFLXNyTcybuFkwLvX5yixl+gW5+W4wv
+ KLmJ3/25wnUgctuYleMijjuqtbl8STPrjyINgwjqgFQUr1ofpk7JdIzub/2guDRX7E9c
+ 1S4q7X+YcX2KOJWMpMKO3Bl8dkHKt2HvLbx4GGMwfbb+Z0H3jHTzFtUDNKWgGuLvn8Ml
+ hEpGfN8SXHTIkbMKIPVXB9rFu/Sz067X/GZdpd4SQGJG/tWE6IRMiljvhSVigdCD/e9Z
+ nHhqBggkk8aAFOScSeBWdeobNgVZSdNXzYF3yYdnuozk6+YQ799iOemDcwfCMXqFcprZ
+ QS3A==
+X-Gm-Message-State: AOJu0Ywj4Fri/VovtyJJnH0A+Jco2qcgq5pz0VX2MYJsTHs67O5uAcFY
+ K4rUGNbYTSadJNWD+IuTbm/a+99q5ncfxsBzP1B4GoxEvKQRpWRhBOqAD/zlk1ZXK28u5Bkl6tT
+ qDqRmJHLleS+maruDDiNaXjLbEFuZxQA3O0UrrTv6+Jw4sCXXbZzkK26jEvLcgiiI6g==
+X-Gm-Gg: AfdE7ckmxotweauTv7Y5F9yuxs3a8JJQkF9WtlMDghh6bBKEBwIrh6WQxpYVbpHv2mj
+ ybH+93MtLvFdxuOoiVHH0fRI1va3E/MUeMxwq7NUnAQQN8wAG7zr6Pa/+2dSCMecn9GdJ1V99Rv
+ G1Bzwkjxyd83EV/ZJp13vi7AQ1KxNfoWfFyFnRmSLxP0B1Hvicje7ShQSBkuquu5dWOP9jwPPQY
+ lScSsMdE1l+HHwx0JIYelOSA5Z119FOQtYWOVUTMtZwR+wP4hOZCD7nb9OZvGYdt1e+y6YJdJnV
+ fHm+hGcwURsUeZOHuFhSQ2qR7IeKqK4I+Wy/3FsSbSgzmMqvi8l0GGO4H1cqsiKMrvWlBy1c8AG
+ QYaKzI8LNYDRKc/dsSMBxB649Kvkd7ViQ5Q6tu5vRAjT+eZnk05u2n1wy/aE58l4=
+X-Received: by 2002:a17:90b:52d0:b0:387:e0db:bc30 with SMTP id
+ 98e67ed59e1d1-38e467be1damr563568a91.38.1784225248992; 
  Thu, 16 Jul 2026 11:07:28 -0700 (PDT)
-X-Received: by 2002:a17:90b:180d:b0:37f:9ce1:736a with SMTP id
- 98e67ed59e1d1-38e1af3481amr11870315a91.32.1784225247394; 
- Thu, 16 Jul 2026 11:07:27 -0700 (PDT)
+X-Received: by 2002:a17:90b:52d0:b0:387:e0db:bc30 with SMTP id
+ 98e67ed59e1d1-38e467be1damr563534a91.38.1784225248528; 
+ Thu, 16 Jul 2026 11:07:28 -0700 (PDT)
 Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3140e5326c0sm17131184eec.11.2026.07.16.11.07.26
+ 5a478bee46e88-3140e5326c0sm17131184eec.11.2026.07.16.11.07.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Jul 2026 11:07:26 -0700 (PDT)
+ Thu, 16 Jul 2026 11:07:27 -0700 (PDT)
 From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: brian.cain@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
  marco.liebel@oss.qualcomm.com, philmd@oss.qualcomm.com, ale@rev.ng,
  anjo@rev.ng
-Subject: [PATCH v2 04/14] target/hexagon: add aux functions for guest mem
- load/store
-Date: Thu, 16 Jul 2026 11:06:48 -0700
-Message-Id: <b0f794c467ad70581d91ef441c6d64a99735d086.1784225209.git.matheus.bernardino@oss.qualcomm.com>
+Subject: [PATCH v2 05/14] hexagon: cpu_helper: add reg reading/writing helpers
+Date: Thu, 16 Jul 2026 11:06:49 -0700
+Message-Id: <5b16ff40a6e22b05af8caf12299cbf0726ccb336.1784225209.git.matheus.bernardino@oss.qualcomm.com>
 X-Mailer: git-send-email 2.37.2
 In-Reply-To: <cover.1784225209.git.matheus.bernardino@oss.qualcomm.com>
 References: <cover.1784225209.git.matheus.bernardino@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDE4NSBTYWx0ZWRfX0lI71N4x3mXu
- 1ypPTRRURFl4i8aucnKtjp1Fqddyee81lU047dH1ucqFG9ir0kAD/Jk6KOLjHP+rXrvYKOlOHFO
- i3gDSzkaykECKHrz9MNLOrMxrkxJlL1bw0tZgtimfbmw4nZSneCVvv/Hz2/Pev9oiS85jr5sGGu
- cf7rEp9NjWB1mAgvURQSiGE8wyZH+81GpKxMV0MCTRWu7KZqNnDF1OZ+5ETZTCRlXiJD6lHhTRg
- DoftwEb4PP2v6qc68yn5xSPM11qSns1plZ9UdPzA+rf43pKcZdgNITLbMag+aCloKksRgA/zorG
- DBWPQRcWivn/SVnGhcplBAN5Au7mqc0Lqj/utmPUUWId/LCn0pvxXw349UoKKhFFY1CPn/GlKyT
- FxCkhCeH1sv7ozNOIwLHvgJ/1pCFEomvoji+5M6VgIFewItIS3zShp6nPFgpjRfzsHbANPnhHU+
- DCkAuxCda2939153b8A==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDE4NSBTYWx0ZWRfX1fhLbgCKmE1H
- J7gTGSD4JcGgQlsEgpP7CpJCJiww8x5eKwDOLic/FWKsb8RDNjnTAZMLEGmcUcRxeRNbhN0x/tp
- 43IQcM/vATRLKK4To6BcKdZIhJVLrtY=
-X-Authority-Analysis: v=2.4 cv=DYMnbPtW c=1 sm=1 tr=0 ts=6a591de0 cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-ORIG-GUID: kyWBCeAQfuid-Aj9lpqGZAm27j_4n_FS
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDE4NSBTYWx0ZWRfX6FyNVjLW9gE5
+ wqORw/Gk7PC20PQi2izJIZEtlir4YSsz4+PNIkrAJA0TZD96NTey4vj2oFaDoy061ZC0+tL2Bb4
+ Peqg9EI0R2FKmz1yLF5ea6suDFIpI3g=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDE4NSBTYWx0ZWRfX/nxVpAiKir2s
+ fJMlqgiNF+eaYl8XqQrAMUeT7An6MY/WQIDjH41eLUzeUhqqhbhckdeSTEXbt6Krdkf7rjTLMF9
+ AsCWCLnOQmAJ3SWi0GTK6vNXHISBomC6gCKrqpIah6XETKp8PE00jZTDrP2RmlCtnU2XQwGb7Jy
+ OBXS2zDVr5WD1d+6Y8DDuUIoAUEPtn/KZD5Hc3mBxrNYaYPCrzNJVB/gsFHB6A9E5ZBB3YMaD96
+ yPdFi+JTuCWJINLYUWnKoO8eQDr0+uwsYlbyTv5YHyAitvMMCRHgYg8G10jeEKwOXCvnzieYDl4
+ idoknZnJhW/Fb48ky/DeuxDov7sQkrYFa/AGa7u2GqUR5gv/Y/Gp6sCNNrrQDzPY7lA/un83R2q
+ YJlTeX9u/KTup4rEZTkXEzPKWYgbxC7TZHBr2fMDvYRi3lC8BkiFozZdPSTM2AFrCWH7Vmj3xWB
+ WqYFWFDFEV0DE0TOCJg==
+X-Authority-Analysis: v=2.4 cv=NcTWEWD4 c=1 sm=1 tr=0 ts=6a591de2 cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=EUspDBNiAAAA:8
- a=f3xLiZNeclign1bWSxgA:9 a=iS9zxrgQBfv6-_F4QbHw:22
-X-Proofpoint-GUID: gV4_cBvqWZ8Bgtx9LPNox-8E10yw12jz
-X-Proofpoint-ORIG-GUID: gV4_cBvqWZ8Bgtx9LPNox-8E10yw12jz
+ a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=EUspDBNiAAAA:8
+ a=nXchshz6agspm-bXmVMA:9 a=x9snwWr2DeNwDh03kgHS:22
+X-Proofpoint-GUID: kyWBCeAQfuid-Aj9lpqGZAm27j_4n_FS
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-16_06,2026-07-15_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0
- adultscore=0 priorityscore=1501 spamscore=0 malwarescore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607160185
-Received-SPF: pass client-ip=205.220.168.131;
+ suspectscore=0 malwarescore=0 priorityscore=1501 lowpriorityscore=0
+ clxscore=1015 phishscore=0 bulkscore=0 spamscore=0 adultscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607160185
+Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=matheus.bernardino@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -150,177 +150,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Will be used for semihosting.
+And adjust op_helper to use those. They will also be used on upcoming
+semihosting commits.
 
-Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 ---
- target/hexagon/cpu_helper.h |   6 ++
- target/hexagon/cpu_helper.c | 133 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 139 insertions(+)
+ target/hexagon/cpu_helper.h | 18 +++++++++++++++++
+ target/hexagon/cpu_helper.c | 40 +++++++++++++++++++++++++++++++++++++
+ target/hexagon/op_helper.c  | 18 ++---------------
+ 3 files changed, 60 insertions(+), 16 deletions(-)
 
 diff --git a/target/hexagon/cpu_helper.h b/target/hexagon/cpu_helper.h
-index d1767503156..ca2e13ab1d1 100644
+index ca2e13ab1d1..757a49fc4d4 100644
 --- a/target/hexagon/cpu_helper.h
 +++ b/target/hexagon/cpu_helper.h
-@@ -7,6 +7,12 @@
+@@ -7,6 +7,24 @@
  #ifndef HEXAGON_CPU_HELPER_H
  #define HEXAGON_CPU_HELPER_H
  
-+void hexagon_read_memory(CPUHexagonState *env, target_ulong vaddr, int size,
-+                         void *retptr, uintptr_t retaddr);
-+void hexagon_write_memory(CPUHexagonState *env, target_ulong vaddr,
-+                          int size, uint64_t data, uintptr_t retaddr);
-+void hexagon_peek_memory_range(CPUHexagonState *env, uint32_t start_addr,
-+                               uint32_t length, uintptr_t retaddr);
- uint32_t hexagon_get_pmu_counter(CPUHexagonState *cur_env, int index);
- void hexagon_modify_ssr(CPUHexagonState *env, uint32_t new, uint32_t old);
- int get_cpu_mode(CPUHexagonState *env);
++static inline void arch_set_thread_reg(CPUHexagonState *env, uint32_t reg,
++                                       uint32_t val)
++{
++    g_assert(reg < TOTAL_PER_THREAD_REGS);
++    env->gpr[reg] = val;
++}
++
++static inline uint32_t arch_get_thread_reg(CPUHexagonState *env, uint32_t reg)
++{
++    g_assert(reg < TOTAL_PER_THREAD_REGS);
++    return env->gpr[reg];
++}
++
++void arch_set_system_reg(CPUHexagonState *env, uint32_t reg, uint32_t val);
++void arch_set_system_reg_masked(CPUHexagonState *env, uint32_t reg,
++                                uint32_t val);
++uint32_t arch_get_system_reg(CPUHexagonState *env, uint32_t reg);
++
+ void hexagon_read_memory(CPUHexagonState *env, target_ulong vaddr, int size,
+                          void *retptr, uintptr_t retaddr);
+ void hexagon_write_memory(CPUHexagonState *env, target_ulong vaddr,
 diff --git a/target/hexagon/cpu_helper.c b/target/hexagon/cpu_helper.c
-index 64c5746c6d9..e981e11a35d 100644
+index e981e11a35d..98ce599571e 100644
 --- a/target/hexagon/cpu_helper.c
 +++ b/target/hexagon/cpu_helper.c
-@@ -25,6 +25,139 @@
- #include "sys_macros.h"
- #include "arch.h"
+@@ -27,6 +27,46 @@
  
-+#ifndef CONFIG_USER_ONLY
-+
-+static bool hexagon_read_memory_small(CPUHexagonState *env, target_ulong addr,
-+                                      int byte_count, unsigned char *dstbuf,
-+                                      int mmu_idx, uintptr_t retaddr)
-+ {
-+    /* handle small sizes */
-+    switch (byte_count) {
-+    case 1:
-+        *dstbuf = cpu_ldub_mmuidx_ra(env, addr, mmu_idx, retaddr);
-+        return true;
-+
-+    case 2:
-+        if (QEMU_IS_ALIGNED(addr, 2)) {
-+            *(unsigned short *)dstbuf =
-+                cpu_lduw_le_mmuidx_ra(env, addr, mmu_idx, retaddr);
-+            return true;
-+        }
-+        break;
-+
-+    case 4:
-+        if (QEMU_IS_ALIGNED(addr, 4)) {
-+            *(uint32_t *)dstbuf =
-+                cpu_ldl_le_mmuidx_ra(env, addr, mmu_idx, retaddr);
-+            return true;
-+        }
-+        break;
-+
-+    case 8:
-+        if (QEMU_IS_ALIGNED(addr, 8)) {
-+            *(uint64_t *)dstbuf =
-+                cpu_ldq_le_mmuidx_ra(env, addr, mmu_idx, retaddr);
-+            return true;
-+        }
-+        break;
-+
-+    default:
-+        /* larger request, handle elsewhere */
-+        return false;
-+    }
-+
-+    /* not aligned, copy bytes */
-+    for (int i = 0; i < byte_count; ++i) {
-+        *dstbuf++ = cpu_ldub_mmuidx_ra(env, addr++, mmu_idx, retaddr);
-+    }
-+    return true;
-+}
-+
-+void hexagon_read_memory(CPUHexagonState *env, target_ulong vaddr, int size,
-+                         void *retptr, uintptr_t retaddr)
-+{
-+    BQL_LOCK_GUARD();
-+    CPUState *cs = env_cpu(env);
-+    unsigned mmu_idx = cpu_mmu_index(cs, false);
-+    if (!hexagon_read_memory_small(env, vaddr, size, retptr, mmu_idx,
-+                                   retaddr)) {
-+        cpu_abort(cs, "%s: ERROR: bad size = %d!\n", __func__, size);
-+    }
-+}
-+
-+static bool hexagon_write_memory_small(CPUHexagonState *env, target_ulong addr,
-+                                       int byte_count, unsigned char *srcbuf,
-+                                       int mmu_idx, uintptr_t retaddr)
-+{
-+    /* handle small sizes */
-+    switch (byte_count) {
-+    case 1:
-+        cpu_stb_mmuidx_ra(env, addr, *srcbuf, mmu_idx, retaddr);
-+        return true;
-+
-+    case 2:
-+        if (QEMU_IS_ALIGNED(addr, 2)) {
-+            cpu_stw_le_mmuidx_ra(env, addr, *(uint16_t *)srcbuf, mmu_idx, retaddr);
-+            return true;
-+        }
-+        break;
-+
-+    case 4:
-+        if (QEMU_IS_ALIGNED(addr, 4)) {
-+            cpu_stl_le_mmuidx_ra(env, addr, *(uint32_t *)srcbuf, mmu_idx, retaddr);
-+            return true;
-+        }
-+        break;
-+
-+    case 8:
-+        if (QEMU_IS_ALIGNED(addr, 8)) {
-+            cpu_stq_le_mmuidx_ra(env, addr, *(uint64_t *)srcbuf, mmu_idx, retaddr);
-+            return true;
-+        }
-+        break;
-+
-+    default:
-+        /* larger request, handle elsewhere */
-+        return false;
-+    }
-+
-+    /* not aligned, copy bytes */
-+    for (int i = 0; i < byte_count; ++i) {
-+        cpu_stb_mmuidx_ra(env, addr++, *srcbuf++, mmu_idx, retaddr);
-+    }
-+
-+    return true;
-+}
-+
-+void hexagon_write_memory(CPUHexagonState *env, target_ulong vaddr,
-+                          int size, uint64_t data, uintptr_t retaddr)
-+{
-+    CPUState *cs = env_cpu(env);
-+    unsigned mmu_idx = cpu_mmu_index(cs, false);
-+    if (!hexagon_write_memory_small(env, vaddr, size, (unsigned char *)&data,
-+                                   mmu_idx, retaddr)) {
-+        cpu_abort(cs, "%s: ERROR: bad size = %d!\n", __func__, size);
-+    }
-+}
-+
-+static inline uint32_t page_start(uint32_t addr)
-+{
-+    uint32_t page_align = ~(TARGET_PAGE_SIZE - 1);
-+    return addr & page_align;
-+}
-+
-+void hexagon_peek_memory_range(CPUHexagonState *env, uint32_t start_addr,
-+                               uint32_t length, uintptr_t retaddr)
-+{
-+    unsigned int warm;
-+    uint32_t first = page_start(start_addr);
-+    uint32_t last = page_start(start_addr + length - 1);
-+    for (uint32_t page = first; page <= last; page += TARGET_PAGE_SIZE) {
-+        hexagon_read_memory(env, page, 1, &warm, retaddr);
-+    }
-+}
-+
-+#endif
+ #ifndef CONFIG_USER_ONLY
  
- uint32_t hexagon_get_pmu_counter(CPUHexagonState *cur_env, int index)
++uint32_t arch_get_system_reg(CPUHexagonState *env, uint32_t reg)
++{
++    if (reg == HEX_SREG_PCYCLELO) {
++        return hexagon_get_sys_pcycle_count_low(env);
++    } else if (reg == HEX_SREG_PCYCLEHI) {
++        return hexagon_get_sys_pcycle_count_high(env);
++    }
++
++    g_assert(reg < NUM_SREGS);
++    if (reg < HEX_SREG_GLB_START) {
++        return env->t_sreg[reg];
++    } else {
++        HexagonCPU *cpu = env_archcpu(env);
++        return hexagon_globalreg_read(cpu->globalregs, reg, env->threadId);
++    }
++}
++
++void arch_set_system_reg(CPUHexagonState *env, uint32_t reg, uint32_t val)
++{
++    g_assert(reg < NUM_SREGS);
++    if (reg < HEX_SREG_GLB_START) {
++        env->t_sreg[reg] = val;
++    } else {
++        HexagonCPU *cpu = env_archcpu(env);
++        hexagon_globalreg_write(cpu->globalregs, reg, val, env->threadId);
++    }
++}
++
++void arch_set_system_reg_masked(CPUHexagonState *env, uint32_t reg,
++                                uint32_t val)
++{
++    g_assert(reg < NUM_SREGS);
++    if (reg < HEX_SREG_GLB_START) {
++        env->t_sreg[reg] = val;
++    } else {
++        HexagonCPU *cpu = env_archcpu(env);
++        hexagon_globalreg_write_masked(cpu->globalregs, reg, val);
++    }
++}
++
+ static bool hexagon_read_memory_small(CPUHexagonState *env, target_ulong addr,
+                                       int byte_count, unsigned char *dstbuf,
+                                       int mmu_idx, uintptr_t retaddr)
+diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
+index 125952aee59..4859d8a484e 100644
+--- a/target/hexagon/op_helper.c
++++ b/target/hexagon/op_helper.c
+@@ -1839,28 +1839,14 @@ void HELPER(setimask)(CPUHexagonState *env, uint32_t tid, uint32_t imask)
+ void HELPER(sreg_write_masked)(CPUHexagonState *env, uint32_t reg, uint32_t val)
  {
+     BQL_LOCK_GUARD();
+-    if (reg < HEX_SREG_GLB_START) {
+-        env->t_sreg[reg] = val;
+-    } else {
+-        HexagonCPU *cpu = env_archcpu(env);
+-        if (cpu->globalregs) {
+-            hexagon_globalreg_write_masked(cpu->globalregs, reg, val);
+-        }
+-    }
++    arch_set_system_reg_masked(env, reg, val);
+ }
+ 
+ static inline QEMU_ALWAYS_INLINE uint32_t sreg_read(CPUHexagonState *env,
+                                                     uint32_t reg)
+ {
+-    HexagonCPU *cpu;
+-
+     g_assert(bql_locked());
+-    if (reg < HEX_SREG_GLB_START) {
+-        return env->t_sreg[reg];
+-    }
+-    cpu = env_archcpu(env);
+-    return cpu->globalregs ?
+-        hexagon_globalreg_read(cpu->globalregs, reg, env->threadId) : 0;
++    return arch_get_system_reg(env, reg);
+ }
+ 
+ uint32_t HELPER(sreg_read)(CPUHexagonState *env, uint32_t reg)
 -- 
 2.37.2
 
