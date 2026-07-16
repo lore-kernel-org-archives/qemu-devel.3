@@ -4,56 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40F1DC44512
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 17:05:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D7C2C44512
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 17:06:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkPWO-0004fX-VA; Thu, 16 Jul 2026 13:05:16 -0400
+	id 1wkPWI-0004YI-16; Thu, 16 Jul 2026 13:05:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wkPWM-0004e1-Rg; Thu, 16 Jul 2026 13:05:14 -0400
-Received: from smtpout7.mo537.mail-out.ovh.net ([51.210.91.26])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wkPWG-0004SM-FE
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 13:05:08 -0400
+Received: from smtpout1.mo540.mail-out.ovh.net ([51.210.91.50])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wkPWK-0006zu-Ra; Thu, 16 Jul 2026 13:05:14 -0400
-Received: from director6.derp.mail-out.ovh.net
- (director6.derp.mail-out.ovh.net [51.255.22.22])
- by mo537.mail-out.ovh.net (Postfix) with ESMTPS id 4h1KD43d6bz3xZn;
- Thu, 16 Jul 2026 17:05:08 +0000 (UTC)
-Received: from director6.derp.mail-out.ovh.net
- (director6.derp.mail-out.ovh.net. [127.0.0.1])
- by director6.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Thu, 16 Jul 2026 17:05:08 +0000 (UTC)
-Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.164.71])
- by director6.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4h1KD42mPnz7tKv; Thu, 16 Jul 2026 17:05:08 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.4])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wkPWD-0006k8-QW
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 13:05:08 -0400
+Received: from director3.derp.mail-out.ovh.net
+ (director3.derp.mail-out.ovh.net [152.228.215.222])
+ by mo540.mail-out.ovh.net (Postfix) with ESMTPS id 4h1KCw6VMdz41sD;
+ Thu, 16 Jul 2026 17:05:00 +0000 (UTC)
+Received: from director3.derp.mail-out.ovh.net
+ (director3.derp.mail-out.ovh.net. [127.0.0.1])
+ by director3.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <alexander.hansen@9elements.com>; Thu, 16 Jul 2026 17:05:00 +0000 (UTC)
+Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.58.137])
+ by director3.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4h1KCw4rrDz5vMM; Thu, 16 Jul 2026 17:05:00 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.5])
  (Authenticated sender: clg@kaod.org)
- by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id F2F771B43D69;
- Thu, 16 Jul 2026 17:05:05 +0000 (UTC)
+ by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 468D620349F; 
+ Thu, 16 Jul 2026 17:04:58 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-101G00488fe6421-30a6-41fc-a6b5-881c07aaded4,
+ (GARM-107S001c1b61445-ea3f-4dd5-bcb4-95ee901f6b87,
  816DE1EE18DD2826DFD8B9EE289546F56902E1FE) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <8f99f8de-6932-4220-b907-870e589ce4a5@kaod.org>
-Date: Thu, 16 Jul 2026 19:05:05 +0200
+Message-ID: <43f31b46-f240-41f5-8625-cf0a838bea29@kaod.org>
+Date: Thu, 16 Jul 2026 19:04:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 26/29] hw/i2c: parent slaves created with
+Subject: Re: [PATCH v5 6/8] hw/i2c: parent slaves created with
  i2c_slave_create_simple
-To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
-Cc: Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org,
- qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+To: emmanuel.blot@free.fr, Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
  Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
  Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Alexander Hansen <alexander.hansen@9elements.com>,
+ William de Abreu Pinho <williampinho@meta.com>,
+ Emmanuel Blot <eblot@meta.com>, qemu-arm@nongnu.org,
  Corey Minyard <cminyard@mvista.com>
-References: <20260709-catalina-upgrade-v1-0-82a63fead90c@free.fr>
- <20260709-catalina-upgrade-v1-26-82a63fead90c@free.fr>
+References: <20260701-i2c-adc128d818-anacapa-v5-0-fe8292d86b38@free.fr>
+ <20260701-i2c-adc128d818-anacapa-v5-6-fe8292d86b38@free.fr>
+ <87pl0uyihl.fsf@pond.sub.org> <F7E73975-A2A2-4A5A-BBCA-40C2229FFF18@free.fr>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -98,23 +102,23 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260709-catalina-upgrade-v1-26-82a63fead90c@free.fr>
+In-Reply-To: <F7E73975-A2A2-4A5A-BBCA-40C2229FFF18@free.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 1100004213061430317
+x-ovh-tracer-id: 1097752411443997741
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTE8SopXwkcKKUM3SWchme2ME3l73XRsEAaAcQvCXOVfbWC3DKbP4fctCqH08CKQpLSBc1Wa707j54AQlTl/9q/WVQjRnmcCcJuuWtB/aaGQ2hpFflAfr7jdWI4wn1p38hLUMVXl25LPSTMzd1lYPvMM6WF09CTFjuLNsaxTRSsPMfLXlZ9hnUCVYYYdY9C3jaWTbKbu/jmVzmp1C7P3GZMoINfAyFGuvChjlbQpXOmq9CYj2hsRbppvixzt9lD/f+h+fcRlmKeaewHKOPg9fZNXYJeEYkZaBG2O3ezh0PgHi3M0bGPBfiqkvA6YB4JZ0hjBoheC05o5+VndW0SGcEe2YGgP+zoteDIIHrX7mBhW4BxlRogf2CNMbCkDWmUQVZhj9A8dIChQDHa9kKSgKxGx1WgBeONv6nlGsNCn+hrR+6Dfsqjs+U2XElv9h9Wo9XV2GTMhVvx4slF6r8I8icuiNAaNQw+n/rnggIT0+FznA/6H09KnoJfA8R0cmIoVeHtIFx28QvtrHpyy5iprHgiGIJu0diaxbD8URmjyj6psfaksZW9dzY5e8XP0UwpI5y0scK46BOa/42tcKDAdmHcdOFfBqexG4ik2nsGLZTFl6TpWaFxWfDO3Q6K8WB0W8WiL3mOdm22Gsmzm0VSGtm3/cL7vg7jTFTF4FLNzs1pdkw
-DKIM-Signature: a=rsa-sha256; bh=3IJRu8aXpbOVxXRv0PNPiDmg7DQxjZJHNvAQHKAfLG8=; 
+X-VR-SPAMCAUSE: dmFkZTFUyQ8qo+X/8pcEUFXrZvbPK7XpWztIIWEG1pc/2q5TLnHcMcdcNCyzz5G8if0Fame94LWFzgXTLYqHMTEOTh4NNlPbPPw94pObZp9i753/NuuymM3PDGUYNYqxrlThr0imlUFcVmfIyDrhUOO0xCg1pZRXpouM/NsCopTK5d4pXw/2Iwv2+pMGcE90Bzv/j87WyIDKFe68xICEeHvJFIWVJ17R9DuX5ccPt3wYjw5RmM8LOg5d7p/NGfPJX4fwHLDyo54rrF26q6nQOZmUt0NDpzk7D+rQCmYJ0yHk5RjT/ksLxkcq/A2gJq5DER97WMfN+ZJhmFdNMmNtmU++YOgnGkk+p7Ja9crMYmIvB4ztHg+fM/P5Y2hgwP1sMn5Pz/5qeG4L3i+G+MpEJgIoNGNgdOyg3J4NTf1mf2i8jNHY0P/xPGhDed4VhigcCDimR9l1ahlVLUplgLnDzdrQa4gYU6BTltyRLC/YW6nSP7mWF8H9YgoL0CtBEawjf69MBi78HTmwxAsLNSFvo5ycHJdUxbLzWUXTOHPXG7xWkxOIaUVHkUsHvMNom3O/8vDg/G5N4Kzph2zdpltKQmynTjkz3NKDdW4kL/CX+YM8eslEC82+JIYREHkEZYl464ucCE0Tv8mBAS2T9GvgLUeJP6NztHUtvuoQgW6mpiurP1vcfQ
+DKIM-Signature: a=rsa-sha256; bh=85hi8p4hjolP/Iv9Ji3QVi+aESiIuvCDqnfClFrYALs=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1784221510; v=1;
- b=dqfkSWKBxh1LfmJninI9usCsjbNYT3g6a+W/1sPmPZr57du84Zw4gYbELOLelqs7U2mdtfLI
- Jh2gqf6kKKwCrdRZ5I17JFkX7D8Z7E0qhOoa2fr2PpY6rmxf2o2nz39/cg75/dhylT0dGl/ZbRc
- 3A0AV2ZsLNfGczqTkyI6au7YlnOkIKi4yDZrACT+H2jYNtAXFH72EnHwwfXRNP3Bu5CpIW0/1KE
- aEe0F2Ms1KDE9IfwFaM6zp78oHVULCCQUCjaHADcHq/Nc9UHPuMse6fbPq672oX4/wTeFTEP+x2
- yH5/i31KzNgxWmkxjzLqXfzi2rkaq4tCw0gmTD7XGHx6Q==
-Received-SPF: pass client-ip=51.210.91.26; envelope-from=clg@kaod.org;
- helo=smtpout7.mo537.mail-out.ovh.net
+ t=1784221502; v=1;
+ b=PpaENgCDeCXE9zxyrQ1WV5Wc128x0Pwnj9m+cRUj0QOk2bwFKeHvMy0iIhbpaymfVKFi6Hiz
+ ctYGm+YiIyyAzlt+8w3ZnYVNqutlyRQg1gtkOYFOfI6AvBFg+Gt6/8GOffsHfWLtW56tXPMFYUq
+ BwevBxZ0y7IBgErh0w8kI816PAMvJEIVM6ISWzpPbNhUX1bsgsnuHyetofo38+JCxN8wdSpEFiw
+ Z6UtpEhOnKZs+rXADMIcXAKQJha+PMO0pWEE6c4Fq0ruFPSWMFdI/jBsr2t5g20+rB/JPYzPt1r
+ MGcHIVKbL9GPGvdjm5Cesf2m9p8MgCqVDLb/v30PXpD+g==
+Received-SPF: pass client-ip=51.210.91.50; envelope-from=clg@kaod.org;
+ helo=smtpout1.mo540.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -137,40 +141,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/9/26 17:23, Emmanuel Blot wrote:
-> THIS PATCH IS ALREADY PART OF THE ADC128D818 SERIES
-> WILL BE REMOVED BEFORE FINAL REVIEW
+On 7/16/26 18:56, emmanuel.blot@free.fr wrote:
 > 
-> Slaves created with i2c_slave_create_simple() were left unparented and
-> showed up under /machine/unattached with no stable QOM path. Add each
-> slave as a QOM child of its bus, named after its I2C address, so it has
-> a deterministic and addressable QOM path.
 > 
-> Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
-> (cherry picked from commit f55644fa78777e52fd90efaa59dd89b4ff0a7020)
-
-you can drop these
-
-> Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
-> ---
->   hw/i2c/core.c        | 3 +++
->   include/hw/i2c/i2c.h | 7 +++++--
->   2 files changed, 8 insertions(+), 2 deletions(-)
+> On 10 Jul 2026, at 17:25, Markus Armbruster wrote:
 > 
-> diff --git a/hw/i2c/core.c b/hw/i2c/core.c
-> index 54f6bdca882..0bbce45d48d 100644
-> --- a/hw/i2c/core.c
-> +++ b/hw/i2c/core.c
-> @@ -382,6 +382,9 @@ I2CSlave *i2c_slave_create_simple(I2CBus *bus, const char *name, uint8_t addr)
->   {
->       I2CSlave *dev = i2c_slave_new(name, addr);
->   
-> +    g_autofree char *childname = g_strdup_printf("0x%02x", addr);
-> +    object_property_add_child(OBJECT(bus), childname, OBJECT(dev));
-> +
+>> Emmanuel Blot <emmanuel.blot@free.fr> writes:
+>>
+>>> Slaves created with i2c_slave_create_simple() were left unparented and
+>>> showed up under /machine/unattached with no stable QOM path. Add each
+>>> slave as a QOM child of its bus, named after its I2C address, so it has
+>>> a deterministic and addressable QOM path.
+>>
+>>> index 54f6bdca88..0bbce45d48 100644
+>>> --- a/hw/i2c/core.c
+>>> +++ b/hw/i2c/core.c
+>>> @@ -382,6 +382,9 @@ I2CSlave *i2c_slave_create_simple(I2CBus *bus, const char *name, uint8_t addr)
+>>>   {
+>>>       I2CSlave *dev = i2c_slave_new(name, addr);
+>>>
+>>> +    g_autofree char *childname = g_strdup_printf("0x%02x", addr);
+>>
+>> Is the hex address a satisfactory child name?
+>>
+> 
+> Addresses are unique on a I2C bus. They are identified on the bus with their unique address, which is usually expressed as an hex integer in the datasheets. It makes the QOM path easy to interpret and use to access an I2C device, but I do not have a strong opinion on how to name them.
 
-This can not be merged yet. Discussions are in progress.
-
+I tend to agree. Oarenting the device to the board seems to be
+a preferred solution : 
 See :
 
    Call to clean up QOM onboard devices lacking a parent
@@ -181,40 +179,7 @@ and
    [RFC PATCH 000/134] qom: Make composition-tree parenting mandatory
    https://lore.kernel.org/qemu-devel/20260711223707.42139-1-graf@amazon.com/
 
-It isn't as precise  as a QOM path :
-
-     IOEXP0_QOM = "/machine/soc/i2c/bus[2]/aspeed.i2c.bus.2/0x20"
-
-but it simplifies the device lookups.
+Thanks,
 
 C.
-
->       i2c_slave_realize_and_unref(dev, bus, &error_abort);
->   
->       return dev;
-> diff --git a/include/hw/i2c/i2c.h b/include/hw/i2c/i2c.h
-> index dd5930f4b5e..dc557bbf3f2 100644
-> --- a/include/hw/i2c/i2c.h
-> +++ b/include/hw/i2c/i2c.h
-> @@ -166,13 +166,16 @@ bool i2c_scan_bus(I2CBus *bus, uint8_t address, bool broadcast,
->   I2CSlave *i2c_slave_new(const char *name, uint8_t addr);
->   
->   /**
-> - * Create and realize an I2C slave device on the heap.
-> + * Create and realize an I2C slave device on the heap, add the device as a
-> + * child of its parent bus.
-> + *
->    * @bus: I2C bus to put it on
->    * @name: I2C slave device type name
->    * @addr: I2C address of the slave when put on a bus
->    *
->    * Create the device state structure, initialize it, put it on the
-> - * specified @bus, and drop the reference to it (the device is realized).
-> + * specified @bus, parent it, and drop the reference to it (the device is
-> + * realized).
->    */
->   I2CSlave *i2c_slave_create_simple(I2CBus *bus, const char *name, uint8_t addr);
->   
-> 
-
 
