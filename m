@@ -4,100 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 561FDC44516
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 12:19:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98256C4450A
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 12:32:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkL3L-00068F-2T; Thu, 16 Jul 2026 08:18:59 -0400
+	id 1wkLGA-00021P-EC; Thu, 16 Jul 2026 08:32:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wkL3H-000685-QB
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 08:18:55 -0400
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wkLG9-000219-MK; Thu, 16 Jul 2026 08:32:13 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wkL3F-000591-JL
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 08:18:55 -0400
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wkL31-00000000asD-1phs; Thu, 16 Jul 2026 14:18:39 +0200
-Message-ID: <5513c20b-0f5c-4bf2-93fc-d1619e3319c1@maciej.szmigiero.name>
-Date: Thu, 16 Jul 2026 14:18:34 +0200
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wkLG7-0006f6-UH; Thu, 16 Jul 2026 08:32:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=6foyLyGEqbjbk5SZkNGEBLcK0puNEBhjbXvm2dc8pLA=; b=Ful+kZufAJoFyTxMkkqYt2q81W
+ ECcc1gKdO4OG/X622o3MpO3d1gP4VCPvbgLUuMN/B1dx6QKLH4MCsQWJNNC6DsTZxHSKz1CdYqhNQ
+ Wpuf3VAMnmlbqiKH/lalvBLAAwBXmRfkBa2zkvKSDOaE1lGDkdQiUvDxzXhOFPwV3mGVoAls3biFD
+ DH6eJbZySmzDJYG3TTKxYs1L+6sTWEv6zzMvt7ZP0Wou40ux7kd798pya67Y0ZpuVmAfqxQ58UFRr
+ LOo1b+FekonIhh3PeKM3fGrYPV4WITNwBWmE2D7c4nwreUDIkr8QeMbCmvFUyTCXWRk720zINd6mZ
+ pGliqOYgA6vob/IiCX6Oj2rhNed/MAZHNJPjsy6bWwjJKlXlvIrw7scgM9W/WNzGubVzfS6OQ2jGP
+ GsHP+yfFuALGpb8RId8xPqBbzEwjMvW7zwBhWbTQ/cMIDOaxNeUccpO7l+dkIJrm77N8v95DFp7Jk
+ Z0AU7QY5BuGBhN4Ug8ZujoR7tiDZ0GUl1kZhXjBuSkWEWUUaWQDJEaV/3f/EBG8omMLLDrfQ2YUIZ
+ WgnMiS49ZT9FIEVdcUIGtnZhcTWgzy1si/qahCSO7MNvggrynjtQUh6huTHaoO3fhk41OEyGrWu4b
+ PD2EdwHerdWp4XlczY59mi0TFTTUa0C0UAGIy5Q10=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: Stefano Stabellini <sstabellini@kernel.org>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>, 
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: Re: [PATCH 3/3] hw/9pfs/xen: drain in-flight PDUs before xen-9p
+ disconnect
+Date: Thu, 16 Jul 2026 14:32:06 +0200
+Message-ID: <12932229.O9o76ZdvQC@weasel>
+In-Reply-To: <6811fc561b7d20610e5f39234d08542cc1f31fd7.1783604079.git.qemu_oss@crudebyte.com>
+References: <cover.1783604079.git.qemu_oss@crudebyte.com>
+ <6811fc561b7d20610e5f39234d08542cc1f31fd7.1783604079.git.qemu_oss@crudebyte.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] vfio/migration: Parallelize device state transitions
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, Alex Williamson <alex@shazbot.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
- qemu-devel@nongnu.org
-References: <871peqtm5t.fsf@suse.de> <ah3eheRXN1QJAGj_@x1.local>
- <ac677bf9-1372-4905-a0b8-874a74be07be@maciej.szmigiero.name>
- <ah86Z0r5sMnxwgo-@x1.local>
- <c739f4fe-1f43-45c4-b98f-109366526405@maciej.szmigiero.name>
- <e79a3746-9c7e-46a5-ad81-537b9d3affdb@maciej.szmigiero.name>
- <akvWlciUvxjDbBBZ@x1.local>
- <e602d0cd-dfc2-441d-a017-067e55418dad@maciej.szmigiero.name>
- <alZssI9OmGJyD-rc@x1.local>
- <19b76c19-4c7b-4a48-8c77-7db8746ff570@maciej.szmigiero.name>
- <alenmdWqD-x3bYll@x1.local>
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Content-Language: en-US, pl-PL
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <alenmdWqD-x3bYll@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,113 +70,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15.07.2026 17:30, Peter Xu wrote:
-> On Tue, Jul 14, 2026 at 10:23:05PM +0200, Maciej S. Szmigiero wrote:
->> The VFIO devices in {PRE_COPY,RUNNING}_P2P states can {still,already} accept
->> DMA so in the master branch by the time prepare_cb() handlers exit and
->> cb() ones start running the VFIO devices are {still,already} capable of
->> accepting incoming DMA.
->>
->> On the other hand, if you meant the state transition into STOP_COPY on the
->> migration source currently initiated from cb() handler then there can be an
->> ordering issue in principle.
->>
->> It looks like the current master branch mostly avoids this by registering
->> vhost-net vm_state_change handler from VirtIODevice and not from its parent
->> PCI device, so with the usual PCI topology vhost-net cb() handler will run
->> before the VFIO PCI device one (and so still hit DMA-capable VFIO device)
->> due to the vhost-net VirtIODevice being one level deeper in the qdev tree.
->> It could theoretically be problem with more complex PCI topology though.
+Hi Stefano,
+
+do you might have a chance to look at this Xen patch?
+
+/Christian
+
+On Thursday, 9 July 2026 15:50:36 CEST Christian Schoenebeck wrote:
+> The xen-9p disconnect path has two issues:
 > 
-> That's an interesting observation, but neither do I think it's intentional,
-> nor do I think it guarantees the depth ordering. Consider when a VFIO
-> device is put under a few layers of PCIe switches, or PCI bridges.  In that
-> case the VFIO device notifier can have larger depth value v.s. the virtio
-> device when the virtio device is attached to the root complex.
-
-Yeah, that's why I wrote that it could be a problem with "more complex PCI topology".
-
-Nevertheless, that's probably uncommon enough setup to not generate visible
-complaints about things being broken.
-
+> 1. It frees the Xen9pfsRing structures while in-flight PDUs may still
+>    reference them via pdu->tag to index rings[]. This causes a UAF
+>    in xen_9pfs_push_and_notify() when worker threads resume after
+>    completing filesystem operations.
 > 
->>
->>> It is also an issue then even before P2P_DMA state introduced, because
->>> before that all cb()s can be run at random orders.
->>
->> Technically, the order is based on the device qdev tree depth and within
->> the same qdev tree depth level it looks like the handler calling order will
->> be dependent on the order the registering devices were instantiated.
->>
->> This means that even before these P2P states were introduced
->> VM configurations that instantiated VFIO/virtio devices in the certain
->> "right" order or topology weren't affected.
->>
->> So maybe adding these P2P states mostly fixed this issue too?
+> 2. It never calls v9fs_device_unrealize_common(), which means server
+>    state (struct LocalData, mountfd, FIDs) is never cleaned up on
+>    disconnect, causing a resource leak on every guest-initiated
+>    disconnect.
 > 
-> I still think they're two different issues, and I still think with/without
-> P2P the issue is the same, now I tend to agree this issue exists,
-> especially if virtio-blk have similar behavior like virtio-net.
+> Fix both by draining in-flight PDUs via v9fs_reset() before tearing
+> down rings, and calling v9fs_device_unrealize_common() to clean up
+> server state.
 > 
-> For one example of virtio-blk DMA to VFIO MMIO regions:
+> Fixes: b37eeb0201 ("xen/9pfs: introduce Xen 9pfs backend")
+> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> ---
+>  hw/9pfs/xen-9p-backend.c | 4 ++++
+>  1 file changed, 4 insertions(+)
 > 
-> https://lore.kernel.org/r/20260616052552.389021-1-gshan@redhat.com
+> diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
+> index 24c90d97ec..3b7a68779a 100644
+> --- a/hw/9pfs/xen-9p-backend.c
+> +++ b/hw/9pfs/xen-9p-backend.c
+> @@ -368,10 +368,14 @@ static void xen_9pfs_evtchn_event(void *opaque)
+>  static void xen_9pfs_disconnect(struct XenLegacyDevice *xendev)
+>  {
+>      Xen9pfsDev *xen_9pdev = container_of(xendev, Xen9pfsDev, xendev);
+> +    V9fsState *s = &xen_9pdev->state;
+>      int i;
 > 
-> Said that, I don't know it's 100% triggerable in this case with notifiers,
-> but sounds relevant. 
-
-It does look like it could trigger this issue indeed since it's DMA done
-to VFIO device MMIO BAR.
-However, how easy would be to reproduce this is another question.
-
-> For virtio-net and others, I have less idea.
+>      trace_xen_9pfs_disconnect(xendev->name);
 > 
-> In all cases, I still think there are two issues to fix, and I think we
-> don't need to fix this problem in one shot. I still don't think they're
-> directly relevant, at least on the goals.
+> +    v9fs_reset(s);
+> +    v9fs_device_unrealize_common(s);
+> +
+>      for (i = 0; i < xen_9pdev->num_rings; i++) {
+>          if (xen_9pdev->rings[i].evtchndev != NULL) {
+>             
+> qemu_set_fd_handler(qemu_xen_evtchn_fd(xen_9pdev->rings[i].evtchndev),
 
-Sure, let's just not make the possible race situation worse.
 
-> So with what I suggested previously relying on prepare_cb() I believe we
-> can still do the concurrency issue you're looking for, making sure when
-> reaching VFIO's cb() it's still at least accepting DMAs (P2P is fine).
 
-But that's more or less the design of this (original) patch set -
-make the state change to RUNNING_P2P on the target finish already in the
-prepare_cb() time, make the state change to STOP_COPY on the source begin
-only in the cb() time?
-
-> For the other issue you reported, even if existed, I am not yet sure VFIO
-> is the only special case that got affected.  I think it's possible some
-> other emulated devices suffer the same even if it has no direct hardware
-> attached.  Say, there can be device backends got stopped in cb() when VM
-> stopped, further DMA to it may cause assertions, then it's the same issue
-> that needs solving, where essentially we may require all such devices to
-> provide similar P2P states like VFIO to make sure they initiate DMAs and
-> flush them in a prepare_cb(), then if all devices' prepare_cb() will make
-> sure no DMA to be initiated anymore, cb()s will have no ordering constraint
-> on DMAs.
-
-Although the description above is about the migration source the situation
-on the migration target is essentially a mirror image of it so I will refer
-to both cases below.
-
-Specifically:
-* on the source no device should reach non DMA accepting state (like STOP_COPY
-for VFIO) before all devices reach non DMA generating state (PRE_COPY_P2P-equivalent).
-
-* on the target no device should reach DMA generating state (RUNNING-equivalent)
-before all devices reach DMA accepting state (RUNNING_P2P-like).
-
-That's why even in the case where non-VFIO devices introduce the equivalent of
-VFIO P2P states and implement a prepare_cb() callback we still need a (VM-wide)
-sync point between these callbacks for the benefit of async state changes/threads
-since no cb()-like async state change should start until all prepare_cb()-like
-changes finish (including these for other devices).
-> Thanks,
-> 
-
-Thanks,
-Maciej
 
 
