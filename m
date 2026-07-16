@@ -4,106 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88500C4450A
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 14:45:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57919C44515
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 14:45:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkNJX-0007K0-8l; Thu, 16 Jul 2026 10:43:51 -0400
+	id 1wkNJb-0007QE-Jt; Thu, 16 Jul 2026 10:43:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wkNIj-0006c0-CD
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 10:43:08 -0400
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1wkNI9-0006Tl-Ak
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 10:42:32 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wkNIb-0007hO-KH
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 10:42:58 -0400
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-8114a4542b2so7209977b3.1
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 07:42:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784212970; cv=none;
- d=google.com; s=arc-20260327;
- b=lm53CKH7k8vtmSsGN8afvR0upHFOwSCWCqalOFSXkoNVVlDGKKgRpYvbhmQumTFNND
- NDnTKEnOqS+aGmLxL92DpuImQuxiC7QpB4xNjC+lJzNGgB+d2o0qYEIx4f8jnX0P3k/W
- 87iw02yzpKeAo+p6QyITTannLw2kpmlTDefx3R0dJ62h/DpN/5HITiGagfjNH82maMMk
- H1eidqSft5vp8+rBMOPrgeumjLfBVToQz0s+rbAj9EKfVOc2nM5iqcZr364TJ4gLbwZW
- fVqXh53AJeo/1wF8rhYO+LOgF6c0jsy16VGHsMHG2iQNDBkTPzKqK0wuOc6ZfkzTE4Jv
- uv1w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=0OXNv10CN64tbF4/e8/7EUE/YNaxUQhCo5JttJ30MMI=;
- fh=iDp5i+ro4oOWeHQdE5F92zc2sb8szbNgm/kYGOQWLcY=;
- b=dUHPNoGNju2+z0Fte9IKmwj8QoxqsDVcMffd3GBDl+Xzrzrl++XwbnqkdQRePtTKCu
- 8mkzV+xqk2y7sXSYbzrev95IAJQbqiakZqAo3O2CTGzTJMFhNW+fiqJzUijG39rvHQT2
- cc3VNwcYUVriP6cUL78OIBfOrtUj0ijVX5lLa4rRniTj2cwUhpcXxzHDnpK7Mx6THbjj
- BPgaQLv61fJMhEBhRH13F9cTpGS1yTB0y+Utp8RFJgtNaTWH34FM8UXyuy3u89tYsVmn
- 3CzqJbJKXMMcjNTgMqDiJ/J1rtW/g4j7wBmFdw89wawZNCS+kJpgnyPCK61zMCStIfyv
- vXjg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1wkNI2-0007Rk-JG
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 10:42:21 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2cc73e322dbso81959015ad.1
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 07:42:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784212970; x=1784817770; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=0OXNv10CN64tbF4/e8/7EUE/YNaxUQhCo5JttJ30MMI=;
- b=SB6BbtO3rBtnkF3DMQQSshN6uJQLEeP4/O/+B9ov93m4DNpl/sx5n3vxxRycnPfViy
- wT0MmaxEeOefcB29DgOiBagv6IA0OXv9IlMEp+VIsuJ/Xngwcib3NadtGp2Q08rbrHrE
- 7+EtP/pupMrn+2NniWE+zlWm9IY0fNuU6SKDPrxZVUgtm5kTBPNQEJkjq1nyk2vo827z
- l9ixuXAL3Y8N9Pt3MNcjUeO/mdl2QxDgERbjUyYghOYrEBdgqlXyfuHzQNEOgc2ojhAg
- NFDVpTn1HvFqVOSCuoodSvg7PdJ6kyg90aofppuPSoNPQn8MQw+REU1U8adf8njnNESy
- jALw==
+ d=gmail.com; s=20251104; t=1784212934; x=1784817734; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=TMWKjSKfCkLdRLDphuftQNsCyWQFXmHbwlzRM8NRv8w=;
+ b=VrGh4TzBH0Mshr3pzCQY6ZbQbELVkmD/dmyk4VZGjT6IACs/o84exCu7p5tbWk/dFN
+ /cUFwG6lDqhSjBnifTDqnKpoO41ChFY4LHHSjjYr1eYl5vqCUffFRuMnp9f1F0pRqDJh
+ rSE8vELdwmkdKHbgoG4qSMXuEdLdG4We+rlmtp/6T0rbr2cVL+RhgcgMsDwYfq3JpyL5
+ oxHLRhFtzuJtA8dtb2Y77vi3SvIp1sxKIULXTl7UL1Tt16RyTyQ5rSVmVEyoEVbAUGRv
+ 0+CveGR5aPPtVSutABF7nhwLnVkgZuN/poa+MyetjMkmlhbydPN5Zow5UZ0WRZJ4BRj+
+ dhog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784212970; x=1784817770;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=0OXNv10CN64tbF4/e8/7EUE/YNaxUQhCo5JttJ30MMI=;
- b=HwnLVEDPV/b2hhnKv1i0aUf5rgCbjfTqMwM9F3PCUWerWWmQnEL/tFg8qJGVXXoxcz
- xeeHoxQIrKD0AXyTkwTZyIETHaHzBTUS5Fd2XNPDH6El/ZRHr9FGziKBjh0HasMn2PVs
- zGsYiIxbHQHnrOCGkXktk7yGfcN5GzuzyaDvBRJhUrrItr0voxpuJbxbnVijxlQBTQi6
- g3GyDOpE5mVcJ+ac74Pp0SSdXQNQ5c+XId/VP9e2qYCvkxV2b0FWej07BhxaIP+0fihy
- cWEheKR3HoBDoYnaNBBhFF2bg0fEoJo27hPKrx8U++gk3mQcwkbwDDF/Qntmcnhv71u9
- 9DeQ==
-X-Gm-Message-State: AOJu0YyyWUt28rH8N+nS893VFn8tdoALfoopBlFxM98TBmrwt5c8/KAj
- 38G1QRDXei/ELw+SSsCI27+B/RIOvaIWYaXgs4x4Ltzyb4w4OezHOXvX/5vdRd8im7z05Aq22d3
- wYk0LGp0XzdpFIDZZft9d9vE/uBYY2UY=
-X-Gm-Gg: AfdE7clZmTwuHpsupkCxlSCyRFtiabj402m3YQmlPvU7LHA0SeS6cx22Q8oLicIjHJC
- Hs/96kn0np36RQk2gfOiQ9Npv0NOULwh0xGGVXNr8J9y0pvSCXH9HyuOCKyd9AQj7WDsOqNdqS1
- fRQRxCPa5GaI9dEg27IjPB24fNCzSRIkOWE5VBdeQmN3q+xZVaIbp6Y6dbDvXZOv5NnOuaX3mTb
- XwMKHzHMlDDZ160hBjOxSec6l1pp4lL3StQNZzP4DtGPT+8bDWRdQVCzJ89
-X-Received: by 2002:a05:690c:6e82:b0:81e:a3a0:701b with SMTP id
- 00721157ae682-81ecf78127dmr55073787b3.9.1784212970579; Thu, 16 Jul 2026
- 07:42:50 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1784212934; x=1784817734;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=TMWKjSKfCkLdRLDphuftQNsCyWQFXmHbwlzRM8NRv8w=;
+ b=oOdVSD8k1FiAZT/M3URDrALL5GFSfrh0RKM0Ne/8ANVMUrZEKxN073oc+536I2ARd1
+ fSyjvykyeYC2xvPiWybeZvk2Gf3liVDhJdrHRfYqfHajIUrbbJabgjpU+KCLFtZswhK1
+ jC/bajnF3bTUkgNvKzi0R6BuwrVCFzQOh51a5ug+T+5KBsLaCfXoowQGN5vm4SY3nQ5z
+ EsoS9z4+3m1NCkeSEhjay5dRjRbrIXQ7+KawLFSCvjC48CVhzaoYqoi89xtLZf+8+BV3
+ UMTA0oZdILbOXYR5200DNzelUIuKrItczRglo70upPeZ5Ws5MCFRx4frc84KeBlRfbxn
+ vZ7Q==
+X-Gm-Message-State: AOJu0Yw/+Q2uHy0BE3rOHjx/x+Htdcc+EVz7Wp60iltkPPw6SZbnkdO4
+ jMxFwiBDEyZGIEtu3mqs3sroyDCySO5XAUGNyjGk8k+E3Ye00ZdJpQOjSCU1G42jqFI=
+X-Gm-Gg: AfdE7clLzmflxwTWUaufCLC2cSkuSSgWegOrpv55w24Zzptu2w2HoRxbJkC4vhrQGmD
+ Ve6HFhxsuwpXodFpLWyIYLswhZYzCyjKNge60Zfeo8TeYZih9YbF8/PoAkurCID9x4BjyEIBtQX
+ vbdJtRaxd/UMT5lKlUgf8zoY6w7Omolxqx2a8iWUuqH0apYzq4xEpicMywsxNtQFiCuSCVcZtyK
+ 69GDONh51Dr1ZG66tZERIJQRIYM7DbDrL5fmOCVd+aqXYT14FfDhPahQD3CrmsXRo8/aVTKBZsU
+ AroqNXQr2oaFN5uIaKQlq9yCmV87xso/WzlqOMoKPiUI+uDoFhnb+T8PBEFCKGGyb7hIefOYPV5
+ oPVmZG5v/cTnfRHfIt++oiEyWFZbb2h5YBNVn97MOOMq7dimW21CdihkOBrkYEBmGxIH3vadByM
+ 5qZtRO6GQkd7MQ1YQH85JR+sHxeov6aRVqCncfGeTl
+X-Received: by 2002:a17:903:8c7:b0:2c8:1f56:9fc5 with SMTP id
+ d9443c01a7336-2cf03d93757mr71087935ad.35.1784212934450; 
+ Thu, 16 Jul 2026 07:42:14 -0700 (PDT)
+Received: from ZBMac-LWN10QXKQ0.taila0cd24.ts.net
+ ([2408:80e0:41fc:0:fe49::677]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2cf100e42a1sm20991165ad.15.2026.07.16.07.42.09
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 16 Jul 2026 07:42:14 -0700 (PDT)
+From: Zhang Chen <zhangckid@gmail.com>
+To: qemu-devel <qemu-devel@nongnu.org>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Fam Zheng <fam@euphon.net>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Zhang Chen <zhangckid@gmail.com>
+Subject: [PATCH V10 10/15] virtio-balloon: Update tracking iothread users with
+ holder
+Date: Thu, 16 Jul 2026 22:40:35 +0800
+Message-ID: <20260716144043.76414-11-zhangckid@gmail.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20260716144043.76414-1-zhangckid@gmail.com>
+References: <20260716144043.76414-1-zhangckid@gmail.com>
 MIME-Version: 1.0
-References: <20260715160731.29969-1-dingtao0430@163.com>
- <20260715160731.29969-2-dingtao0430@163.com>
-In-Reply-To: <20260715160731.29969-2-dingtao0430@163.com>
-From: Bin Meng <bmeng.cn@gmail.com>
-Date: Thu, 16 Jul 2026 22:42:39 +0800
-X-Gm-Features: AUfX_mwOEXLYyD2aMwMcDLa2F66caNhKvZMbng2BK39OrS0dbSWad0e-FbDTo40
-Message-ID: <CAEUhbmX65ObC0Q+0xz_CZRntn8A0nyR_AhgJJhi6tqB+Q3d5nA@mail.gmail.com>
-Subject: Re: [PATCH v7 1/2] hw/sd: sdhci: Fix SDMA boundary bug
-To: Tao Ding <dingtao0430@163.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- qemu-block@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yw1-x112c.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=zhangckid@gmail.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,91 +107,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 16, 2026 at 12:08=E2=80=AFAM Tao Ding <dingtao0430@163.com> wro=
-te:
->
-> During SDMA transfers, the controller raises an interrupt at buffer bound=
-aries
-> to request a system address update. The host driver will rewrite the SDHC=
-_SYSAD register.
-> (according to PartA2_SD_Host_Controller_Simplified_Specification_Ver2.00.=
-pdf section 2.2.1)
-> However, the current code will ignore write operations to SDHC_SYSAD.
->
-> To fix this bug, when SDMA encounters a boundary, a state is set to recor=
-d it.
-> In this state, SDHC_SYSAD can be written. In other cases, it is still pro=
-tected by TRANSFERRING_DATA.
->
-> Meanwhile, a subsection has been added for migration.
->
-> Suggested-by: Bin Meng <bmeng.cn@gmail.com>
-> Signed-off-by: Tao Ding <dingtao0430@163.com>
-> ---
-> This bug may be encountered when using uboot with SDMA functionality, and=
- can be reproduced by following the steps below.
-> Uboot test:
->     1. Prepare zImage, uboot and rootfs.cpio.gz, make sure uboot config (=
-MMC_SDHCI_SDMA=3Dy).
->         for more detail, can obtained
->         "https://lore.kernel.org/qemu-devel/20260617155857.7451-1-dingtao=
-0430@163.com/T/#mcdf231e6bd762903f8393bf93253cbcb12ececcf"
->     2. ./qemu-system-aarch64 -M xilinx-zynq-a9 -machine boot-mode=3Dsd -m=
- 1024 -display none -serial null -serial stdio -monitor none \
->         -device loader,file=3Du-boot-dtb.bin,addr=3D0x04000000,cpu-num=3D=
-0  \
->         -drive file=3Dzynq-sd.img,format=3Draw,if=3Dsd -D qemu.log
->
->
-> After applying the fix, success load sd card:
->
-> U-Boot 2026.07-rc4-g1e80ee41441c (Jun 15 2026 - 19:05:05 +0800)
->
-> Model: Xilinx ZC702 board
-> DRAM:  ECC disabled 1 GiB
-> Core:  33 devices, 21 uclasses, devicetree: board
-> Flash: 0 Bytes
-> NAND:  0 MiB
-> MMC:   mmc@e0100000: 0
-> Loading Environment from FAT... *** Error - No Valid Environment Area fou=
-nd
-> *** Warning - bad env area, using default environment
->
-> In:    serial@e0001000
-> Out:   serial@e0001000
-> Err:   serial@e0001000
-> Net:
-> ZYNQ GEM: e000b000, mdio bus e000b000, phyaddr 7, interface rgmii-id
->
-> Warning: ethernet@e000b000 (eth0) using random MAC address - 4a:63:5a:a4:=
-d3:6b
-> eth0: ethernet@e000b000
-> Hit any key to stop autoboot: 0
-> Zynq> fatload mmc 0 ${kernel_addr_r} zImage
-> 10838528 bytes read in 4316 ms (2.4 MiB/s)
-> Zynq> fatload mmc 0 ${ramdisk_addr_r} rootfs-arm32.cpio.gz
-> 406531 bytes read in 199 ms (1.9 MiB/s)
-> Zynq> setenv ramdisk_size ${filesize}
-> Zynq> fatload mmc 0 ${fdt_addr_r} zynq-zc702.dtb
-> 15754 bytes read in 21 ms (732.4 KiB/s)
-> Zynq> setenv bootargs console=3DttyPS0,115200 earlycon ignore_loglevel rd=
-init=3D/init
-> Zynq> bootz ${kernel_addr_r} ${ramdisk_addr_r}:${ramdisk_size} ${fdt_addr=
-_r}
-> Kernel image @ 0x2000000 [ 0x000000 - 0xa56200 ]
-> ## Flattened Device Tree blob at 01f00000
->    Booting using the fdt blob at 0x1f00000
-> Working FDT set to 1f00000
->    Loading Ramdisk to 2ff9c000, end 2ffff403 ... OK
->    Loading Device Tree to 2ff95000, end 2ff9bd89 ... OK
-> Working FDT set to 2ff95000
->
-> Starting kernel ...
->
->  hw/sd/sdhci.c         | 54 ++++++++++++++++++++++++++++++++++++++++++-
->  include/hw/sd/sdhci.h |  2 ++
->  2 files changed, 55 insertions(+), 1 deletion(-)
->
+Replace raw object_ref/unref calls with iothread_get/put_aio_context.
 
-Reviewed-by: Bin Meng <bmeng.cn@gmail.com>
+Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+---
+ hw/virtio/virtio-balloon.c | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
+
+diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
+index 4c5f486ba2..e9d023b4ec 100644
+--- a/hw/virtio/virtio-balloon.c
++++ b/hw/virtio/virtio-balloon.c
+@@ -892,14 +892,20 @@ static void virtio_balloon_device_realize(DeviceState *dev, Error **errp)
+     s->svq = virtio_add_queue(vdev, 128, virtio_balloon_receive_stats);
+ 
+     if (virtio_has_feature(s->host_features, VIRTIO_BALLOON_F_FREE_PAGE_HINT)) {
++        g_autofree char *path = object_get_canonical_path(OBJECT(s));
++        IOThreadHolder io_holder = {
++            .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
++            .u.qom_object.qom_path = (char *)path,
++        };
++
+         s->free_page_vq = virtio_add_queue(vdev, VIRTQUEUE_MAX_SIZE,
+                                            virtio_balloon_handle_free_page_vq);
+         precopy_add_notifier(&s->free_page_hint_notify);
+ 
+-        object_ref(OBJECT(s->iothread));
+-        s->free_page_bh = aio_bh_new_guarded(iothread_get_aio_context(s->iothread),
+-                                             virtio_ballloon_get_free_page_hints, s,
+-                                             &dev->mem_reentrancy_guard);
++        s->free_page_bh = aio_bh_new_guarded(
++                      iothread_ref_and_get_aio_context(s->iothread, &io_holder),
++                      virtio_ballloon_get_free_page_hints, s,
++                      &dev->mem_reentrancy_guard);
+     }
+ 
+     if (virtio_has_feature(s->host_features, VIRTIO_BALLOON_F_REPORTING)) {
+@@ -919,9 +925,15 @@ static void virtio_balloon_device_unrealize(DeviceState *dev)
+ 
+     qemu_unregister_resettable(OBJECT(dev));
+     if (s->free_page_bh) {
++        g_autofree char *path = object_get_canonical_path(OBJECT(s));
++        IOThreadHolder io_holder = {
++            .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
++            .u.qom_object.qom_path = (char *)path,
++        };
++
+         qemu_bh_delete(s->free_page_bh);
+-        object_unref(OBJECT(s->iothread));
+         virtio_balloon_free_page_stop(s);
++        iothread_put_aio_context(s->iothread, &io_holder);
+         precopy_remove_notifier(&s->free_page_hint_notify);
+     }
+     balloon_stats_destroy_timer(s);
+-- 
+2.49.0
+
 
