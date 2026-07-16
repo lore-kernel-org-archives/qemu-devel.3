@@ -4,96 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F8EBC44512
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 17:28:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 201B3C44512
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 17:48:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkPsS-0003js-K7; Thu, 16 Jul 2026 13:28:05 -0400
+	id 1wkQC6-0005Y0-Qm; Thu, 16 Jul 2026 13:48:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yisooan.dev@gmail.com>)
- id 1wkPsN-0003jU-Hb
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 13:27:59 -0400
-Received: from mail-oa1-f41.google.com ([209.85.160.41])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yisooan.dev@gmail.com>)
- id 1wkPsL-00016e-60
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 13:27:58 -0400
-Received: by mail-oa1-f41.google.com with SMTP id
- 586e51a60fabf-456395f4e7bso979547fac.0
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 10:27:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wkQC5-0005Xb-8v
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 13:48:21 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wkQBw-0005b7-Sh
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 13:48:21 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66GGSkkD3395516
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 17:48:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 6Z2VZqfIHb19VZ/Cq0V83D/zeqEgjSsVM7xES1oGVo4=; b=Sw2oW5tGURqHU5eb
+ zuJYY4BDRzhED2xW4RIRGVLB21LReRD/m9ZQNmnkNBehX9PnYACjholTYWDrLNww
+ fWdrBIXAlpKrjOd2EtbYDFESsJbN6937XE3z+GS2BmKbL4HvW18D17yUlhbA2fSb
+ oXmvDyFhO2NVMX+nBSeVDyQMq/2VunNyASyMYWl9JiMN3NTqZ2OKP3sqPWo0EKyn
+ okHEZrWZ6l36xHrtP7Sizmoc/FNHn8+36nUxSuDCExyUh08CC5IFdSe7T9ezUiw9
+ AjRO/77P8NBGA7weg4MUnZprqf6qruK7Q7fbBfgcDcS7PdrTbukaiXm5xevXChPA
+ Qt7t7A==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4feym19cfy-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 17:48:10 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-c8952346bb9so5928304a12.2
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 10:48:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1784224089; x=1784828889; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=6Z2VZqfIHb19VZ/Cq0V83D/zeqEgjSsVM7xES1oGVo4=;
+ b=E1XAOpQHhSZV9Crb98Ka6SAg5I2AZ3Fqq/vzYhzVaQG6ip+biBkeo6+7326/HpdZtA
+ JLq/v5g0/dRxsqiPEsKkDyeHXpGP/b6SDTlv0ovHsXAjB0962p+fWC+8lzsVnPwUnK+6
+ ATTjwVm+S03brft+eqKTL4ZkH9xidxm9M3GUaAzbpl0JX/qh/cYbiApmYF0f7b3VHCmB
+ 2CebKo4iFFsOFsIAyFkTevWI0ir0Xjh1Q4JhpQc1jONyzP1MSSvqFqIjK2vDjHpg4PQM
+ U7KvbAZnxVzPJ4O99s9mg/sLrdmlOCZgNdyAdh+k9RLSRfq30bPqy195lfQCehMRPYfM
+ 5vwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784222875; x=1784827675;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=df4xxXKfud+vHTeMMkueAvHLfaVdA07+CRchcpoXFaA=;
- b=BIRip9A8cWoKostY/0nvg56E/Tkm1Z4kjk1sIEQps9vaFaFOOSuhc5OiYFradPhKmW
- CZp/iG2Lw1rq1kdUiqnr7CT/cMkY3NsgCjv5Apaw0kvPlzb3tkgHOVYBLmoZZJ5sZ7cE
- xUdPN4zSLEcZoNYuZebV6GXFf5pi5yYaVbplPeMTowX8PX6PFEAdBtAKqgaGeHrCyhrA
- OLjgrfERa1lHXO7lUjLz3oyrzutjWsPyQx27o1uJyib27b+SPGrgPbU2rUvhi/snD5wX
- LFt2BmlAUeb7Tx9C68B58kPa7xm2CyuTKdHsLnmWLE7l0HYOdW0GJ95Jdsagyovabhxj
- GhWw==
+ d=1e100.net; s=20251104; t=1784224089; x=1784828889;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=6Z2VZqfIHb19VZ/Cq0V83D/zeqEgjSsVM7xES1oGVo4=;
+ b=ZTvTQAQ1VpA8zpe8Xx26ssaFNJUM1R7HY7mZMCB3+o7fP6LJDwxjj/PphD5PfEu5lk
+ Hp+EJV8uQGQ2OYnv7F5KcJ8cq8vEh8oYnO3jm8nrVj95ITRGogOoPsQoF59JzORfZnQt
+ 3DNZR0MXLkzoQ0mIjNrK0wvPqPasoJhb2ufKT3PFu18y3bgQYnJ81F/e04glnhMcNb9X
+ BKXEJuKq/ZK+fBe6Ehe5YHYcZNqXG1W4DvI4hgSsr5w3yGm6DhElTviELbceQFZCql4Q
+ eJz9D2zPpr1QVOWzBCuIT3v2QGZQAxyxY92Q3LDCzrkMhfmLUCZMc3ktDiXykV2ASmwq
+ uQxw==
 X-Forwarded-Encrypted: i=1;
- AHgh+RrMDbImF8GnLpCHZJRrMQnoss7xamcokDZ8X/zBNxTERvNLrFctWIpEUskRE15j5JNScM2JIfLifbmV@nongnu.org
-X-Gm-Message-State: AOJu0Yw5CH+n0GWxZDvJv79gIP0v4zfO3KBRj+iKhy9Vj5lyssiusvHs
- PNNPHT4iFegE5ohZ64TrnnTWya+yR0nH1ePPj3YSLSfGbqKhbJaVS7WVOqjV6OI8
-X-Gm-Gg: AfdE7ckyMp3MC2B1eJJ8wLbUzQunYekcu+hUFrWknh4wlNRid83nn9ZfPyMSJRkEi2Q
- SPWfevqlWnH6uW41H7eaJi64n99dX83OchUwfm6i0jvXIxamaFazztEektzA5d4zeBdePr0wIwB
- Axjs6uiAoI2soBbYOvMpVvqYTTcicAiBa+8BsgLORyZdvzhF0uBZNOr/jknQ2+50XjYMt3+1IJU
- +dBIFvtJJs7Aceo2vsMjFIp0hmQjWvcK34lZnec18N5Ti3kg8Qtie3yD88GGMDgDilCKnWfMWbI
- JgfTB0VK9Itr9H7jZ3QqKDbA6JNG5qQBz1ftT6s0jOnYwy2lb6MYdHnEAn3luBQTfhEUsCj7rKS
- 4KprOIkGHNSbfcBCbbfmfXD01hb6WO1QqMtNShrMZn5rfsJQTLzO0Sgc1eTaXPA1ASHAQXCFfFo
- dN7mWfUQ1JkETfckGS2WlvJSA2myYls4a+EIIurQ==
-X-Received: by 2002:a05:687c:218:b0:456:5d8b:5681 with SMTP id
- 586e51a60fabf-4565d8b6a2bmr2056784fac.1.1784222875336; 
- Thu, 16 Jul 2026 10:27:55 -0700 (PDT)
-Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com.
- [209.85.167.170]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-451a0ceccf1sm21794074fac.6.2026.07.16.10.27.54
- for <qemu-devel@nongnu.org>
+ AHgh+RrJf0BQhG9gAr+ThlPw/JfaUTbL7/OrT9K6w0bEI7jjYvHa0NPo1Y3IaJnbVbosZ55R3WTWM8GY3iq3@nongnu.org
+X-Gm-Message-State: AOJu0YyfnFK/oJADejUXS7PGqbLGpjZNihMaxvki2imu/x+yWTZ7Qwd3
+ AEiDQfBbHTHMVJuO2eGsuoqJGV20WfaJTU4lwDTdKBEkB01G2X3KkVmeEcVNrMdWk2UKQSl37pk
+ qZmgd6j9SliJ62obJpm5BfbvlQsLV1dF6WTSj68TKNnZ81NvR4Ku+myVbTA==
+X-Gm-Gg: AfdE7cmWU1fjSiishRG+ke3rhh/2dSif2nvvSt6siE60WDn060PJIPo/7gRuzfY9hEf
+ WrJpVzwSu4RVlKtmZ5iClBzoCpWQd0MAzzbqPy3ULrmK3cCJdzwokRnt2LewXpBI2beefLHhUiE
+ YXTXyTcbzjyN2OZA8dUEpfQe3Q5SK7EVXT8LF8xpv7ACuJdt33ZoWhtnD0GHP8XH7WyDmFlCrX5
+ AhLEVrE/s9JagAdejp7+5WLCfjeB5tMolfKSEYq+RvoBgfM4SlZzz86+bdcvD2Bu40xik81bLUz
+ 4C6quqhmLM184AaqCp7+OvcODOvpQgiMaL38IKTF04wLkQpmvopqSuqv2JsVuGxJrWNQAbix8FW
+ Kjnh6cwiIUHUof0FJ6I37ZTPqtMbddEdYpKjtZiXiOtHjWRXtl4yeGsJwNluUjhdFCOUN
+X-Received: by 2002:a05:6a20:4308:b0:3c3:67e9:660d with SMTP id
+ adf61e73a8af0-3c36c3b67bdmr8887145637.60.1784224089469; 
+ Thu, 16 Jul 2026 10:48:09 -0700 (PDT)
+X-Received: by 2002:a05:6a20:4308:b0:3c3:67e9:660d with SMTP id
+ adf61e73a8af0-3c36c3b67bdmr8887108637.60.1784224088815; 
+ Thu, 16 Jul 2026 10:48:08 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3140e6e9edfsm13713796eec.28.2026.07.16.10.48.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jul 2026 10:27:54 -0700 (PDT)
-Received: by mail-oi1-f170.google.com with SMTP id
- 5614622812f47-489f3611e0cso4621278b6e.1
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 10:27:54 -0700 (PDT)
-X-Forwarded-Encrypted: i=1;
- AHgh+Rrmxfj+R7OPl0t4RfrQG9z4OEZkLt8Is7SDudB/4do0V+yxmJyJE52XPcGoL7yGI1WUFbVV56Bx3ZGQ@nongnu.org
-X-Received: by 2002:a05:6808:5393:b0:485:48da:133d with SMTP id
- 5614622812f47-4a495e65f8dmr5457005b6e.10.1784222874593; Thu, 16 Jul 2026
- 10:27:54 -0700 (PDT)
+ Thu, 16 Jul 2026 10:48:08 -0700 (PDT)
+Message-ID: <19f82cfa-c7c3-46ef-95d3-c8c26f0dacb6@oss.qualcomm.com>
+Date: Thu, 16 Jul 2026 10:48:07 -0700
 MIME-Version: 1.0
-References: <20260623-guest-panic-unhandle-v1-1-6adfb6d4221e@ooseel.net>
- <CAFEAcA9LCRKmU+r77zGp+4Rgd-uaZLPnoPPQDSfG8X5eeiynJA@mail.gmail.com>
- <91ad4c80-adc6-4f37-8346-20230638e5f0@oss.qualcomm.com>
- <CAFEAcA-hnm17d4PR0wmaKwQmM-K50nHeRYv0a-pCk3J1qUbPsg@mail.gmail.com>
-In-Reply-To: <CAFEAcA-hnm17d4PR0wmaKwQmM-K50nHeRYv0a-pCk3J1qUbPsg@mail.gmail.com>
-From: Leesoo Ahn <lsahn@ooseel.net>
-Date: Fri, 17 Jul 2026 02:27:42 +0900
-X-Gmail-Original-Message-ID: <CANTT7qh6X7ESRwgfM5PRkfCx9BSVUXHy8GL+n8SmX3LtusWiGw@mail.gmail.com>
-X-Gm-Features: AUfX_mwX-oH7xTIBahJbzBsn_H3IPboItZP6cQIpBWcV3Pl7WpvRiXf5alPdeZo
-Message-ID: <CANTT7qh6X7ESRwgfM5PRkfCx9BSVUXHy8GL+n8SmX3LtusWiGw@mail.gmail.com>
-Subject: Re: [PATCH] target/arm/hvf: panic the guest if an unhandled exception
- occurs
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- qemu-devel@nongnu.org, Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org, 
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Markus Armbruster <armbru@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=209.85.160.41; envelope-from=yisooan.dev@gmail.com;
- helo=mail-oa1-f41.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] tests/docker: ensure container command is probed at
+ most once
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+References: <20260716102515.1503404-1-berrange@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260716102515.1503404-1-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=KPRqylFo c=1 sm=1 tr=0 ts=6a59195a cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=VMQfhjUgHwDC8tgg_nwA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=3WC7DwWrALyhR5TkjVHa:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDE4MiBTYWx0ZWRfX4h2NBu/38UjM
+ D+sEVLs82XmJXqURqyAdl4FC6SosL1KUpK4/XF+fh8gv2H4AIs1mm6ORUeG1rl2OHNqD3tKN83R
+ 67xET02suH32yFUvYqZ7vnqhEchPCVKUCPao/lhoD3+sJV0965HE+02vwyxdbqFRkzepKkV/ljP
+ 14BGjDHIFm2Ffz8MnKCkD6DLdMsOmFxLKh9R98c51AWPziH2NZSOGtCtRY7ycsOvmgKIE+H3sGd
+ Zp6eVKqpBdIsyMNgSyYWxoDKcwSlQjotpjATYqhVMbjLTALDfqb4sB/kxJyxSiPJfMDLsm1NEDT
+ EEfNl0hgqWKdw5kNW5ninGYFpattDnJckLCIiPyZsL8YIND6BKHLrwPelMH0J0dYsP83j6GTV57
+ IPX/bNHWLJhCexkmQU6fC2tCYRo7Rg2CJhRtKAV2pt4XDQmg6o0nGus1h6nKKe44CTxS9Kd4FHe
+ Rfv9LnPBaCQHEi4NsCg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDE4MiBTYWx0ZWRfXyOOH0oCHhv1D
+ 825FTVWWU74N3ndXAPSqQRoh8vcHm7NuMhDXrzWNknSsxXS+Pnmfi6C2WMDQPMjvQ9CQvNNkAgZ
+ hWtVt8FZMWDm3V58YZcP+6DwyOd70/o=
+X-Proofpoint-GUID: l7ykp6a6ZpjvinyrSs1pXMT9vsOe8kCO
+X-Proofpoint-ORIG-GUID: l7ykp6a6ZpjvinyrSs1pXMT9vsOe8kCO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-16_06,2026-07-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 lowpriorityscore=0 adultscore=0 impostorscore=0
+ clxscore=1015 malwarescore=0 bulkscore=0 spamscore=0 phishscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607160182
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,81 +158,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-2026=EB=85=84 7=EC=9B=94 13=EC=9D=BC (=EC=9B=94) =EC=98=A4=ED=9B=84 6:34, P=
-eter Maydell <peter.maydell@linaro.org>=EB=8B=98=EC=9D=B4 =EC=9E=91=EC=84=
-=B1:
->
-> On Fri, 10 Jul 2026 at 23:56, Philippe Mathieu-Daud=C3=A9
-> <philmd@oss.qualcomm.com> wrote:
-> >
-> > On 10/7/26 17:37, Peter Maydell wrote:
-> > > On Tue, 23 Jun 2026 at 13:56, Leesoo Ahn <lsahn@ooseel.net> wrote:
-> > >>
-> > >> It's worth cleaning up all resources that the guest taking and to qu=
-it
-> > >> if an exception in el1 could not be resolved.
-> > >>
-> > >> Otherwise, the guest will get in the infinite black-hole by
-> > >> unmodified pc.
-> > >>
-> > >> Signed-off-by: Leesoo Ahn <lsahn@ooseel.net>
-> > >> ---
-> > >>   target/arm/hvf/hvf.c | 1 +
-> > >>   1 file changed, 1 insertion(+)
-> > >>
-> > >> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-> > >> index 8b902c6882..4358cf90e8 100644
-> > >> --- a/target/arm/hvf/hvf.c
-> > >> +++ b/target/arm/hvf/hvf.c
-> > >> @@ -2533,6 +2533,7 @@ static int hvf_handle_exception(CPUState *cpu,=
- hv_vcpu_exit_exception_t *excp)
-> > >>           cpu_synchronize_state(cpu);
-> > >>           trace_hvf_exit(syndrome, ec, env->pc);
-> > >>           error_report("0x%llx: unhandled exception ec=3D0x%x", env-=
->pc, ec);
-> > >> +        qemu_system_guest_panicked(cpu_get_crash_info(cpu));
-> > >>       }
-> > >
-> > > We should do something here, but my question is whether
-> > > qemu_system_guest_panicked() is the right thing. We mostly
-> > > use that for "the guest OS wants to tell QEMU that it has
-> > > panicked, so QEMU can reflect that to the user and perhaps
-> > > reboot or exit", though we do in a few places use it for
-> > > things that are more like "we don't handle this case". I'm
-> > > not sure exactly what the right thing to do here is, though.
-> >
-> > We usually abort() for programming errors (here unimplemented
-> > case) and don't let the guest mis-behave.
->
-> We've definitely used that strategy in the past (either directly,
-> or indirectly via hw_abort() or cpu_abort()), but I think these
-> days we'd prefer not to let the guest trigger QEMU to abort().
-> Some of those cases we've been able to convert to LOG_GUEST_ERROR
-> and continue in some manner, but some cases are just not
-> continuable from.
->
-> I think we could probably use a better mechanism for "something
-> went badly wrong and we can't continue executing the guest", where
-> e.g. we can suspend the VM and let the operator look at its state:
->  https://lore.kernel.org/qemu-devel/alSqlDRT9L8OqAso@redhat.com/T/#m9ab2f=
-4a819e33cd5ac0f6d22ab30f98a0d599866
+On 7/16/2026 3:25 AM, Daniel P. Berrangé wrote:
+> The '--engine' arg accepts either 'podman' or 'docker', which is
+> not sufficiently granular to map directly to a command. This
+> means that  docker.py still has to then probe the exact command
+> to use.
+> 
+> Meanwhile the 'probe' command prints out the full command to use
+> but this cannot be passed back to docker.py to avoid probing
+> again, so the caching is only useful in the few case where we
+> run a container directly bypassing docker.py.
+> 
+> Address this by replacing --engine with --command for docker.py.
+> 
+> This in turn requires the --container-engine configure arg to be
+> replaced with --container-command.
+> 
+> With these changes the container command is probed at most once
+> during configure and never again, while running in an unconfigured
+> tree will still probe on demand.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+> 
+> In v3:
+> 
+>  - Avoid bashism when testing probe result
+> 
+>  configure                     | 25 +++++++------
+>  tests/docker/Makefile.include | 13 ++++---
+>  tests/docker/docker.py        | 67 ++++++++++++-----------------------
+>  3 files changed, 40 insertions(+), 65 deletions(-)
+> 
 
-I keep my eyes on the thread and agree with your idea.
+Thanks for the update, it's working fine now.
+Also, docker.py run command is now fast again when given --command argument.
 
->
-> For this specific patch: what is the case where we get into this
-> codepath (and in particular what is the EC_FOO exception subtype)?
-> Maybe the fix is to handle that case. Compare an earlier thread:
-> https://lore.kernel.org/qemu-devel/8D0BCB24-BB1B-40EF-A361-0F79D65600AE@u=
-npredictable.fr/
->
-> If we're getting here by falling through from EC_INSNABORT,
-> I think that can happen if the guest tries to execute from
-> an MMIO region.
+Tested-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-EC_DATABORT already deals with traps by accessing MMIO regions.
-Yet I have no idea what kind of instruction abort could be raised in MMIO.
+I'll pull this today.
 
-BR,
-Leesoo
+Regards,
+Pierrick
 
