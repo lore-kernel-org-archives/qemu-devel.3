@@ -4,112 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6966BC44515
-	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 14:54:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AC72C44512
+	for <qemu-devel@archiver.kernel.org>; Thu, 16 Jul 2026 15:12:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkNTw-00020H-SD; Thu, 16 Jul 2026 10:54:36 -0400
+	id 1wkNkF-0005Dx-5q; Thu, 16 Jul 2026 11:11:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wkNTu-0001o2-Po
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 10:54:34 -0400
-Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wkNTt-0001rX-6L
- for qemu-devel@nongnu.org; Thu, 16 Jul 2026 10:54:34 -0400
-Received: by mail-yw1-x112a.google.com with SMTP id
- 00721157ae682-80e24970f1dso27245497b3.0
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 07:54:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784213672; cv=none;
- d=google.com; s=arc-20260327;
- b=fnJjhUY1jbWoopgbft1S82YJSmltNwBv2ZjLoaPFlElN3InmZ4rjrCpKcQMwh3vi4O
- L83rMUxFpjDG1CdUa94vuOpe1TqdnzxLg8VBdDk3uONPGbl/3Ys+GmwSpEgTy+2J4V5C
- BwSOr0QPf2Clx3r0pK7mLG9ybP/saCfK78e7+RggEuUpgBB0IvpVcSbcAKagnFG4S+MI
- spMfCk1H4LI7oLFggzaMZ539AmC2BdK3dXWfAZzFqXh2LWCy1sgYAOiM6UVqPfVLP5ua
- XR8xiWje+bW9PxbHma4U5JyOMrjTPsZMZktG1yG1gnUNMPuBQLnXWPqGx/UdKHocsFXa
- 44Sg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=JToxajq5ZH1vSLCWTN9NJBxR/6nVWGhA53YwXQOTcu8=;
- fh=dEcCJoizW0PIXIsgsrNAtfPedPj0hmKZvH/dXrAI1HE=;
- b=MUNZ41TmNBQKGB9onx2ksvsBL06LdmSv9rzpz6X45Bj2ZBFE5oYmq2hRITvzAvr6KF
- 6Xr2uioAU/yUSNaDfs61/W8b4CMkwfvi7iYC2M3qyXEzy3hTIHg0mqEv59VMeDhwpSNj
- DMD/EmNovDq1vl9fs6btq0nLOyLgDOwArcWMB36ihc4QH3qOqqrJkAqqpuU6U3OiqQZ4
- +vk5t30QCYC71kiiLfP8knOBXXW5Eqdm1otBC0wrSuvULq9Cnbsxgvqx3H4/QX/SipxJ
- OLBhdl2hMk0bl2N40YgqpT1uIc9zdgoCJY6fW4/n5f2Z+Rbwv2orqrSKBVELG4lJCkJY
- HQVg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784213672; x=1784818472; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=JToxajq5ZH1vSLCWTN9NJBxR/6nVWGhA53YwXQOTcu8=;
- b=tLJxIlQwoH8E4UpGQNgn8NKGmiboigWcfH7y8ESq86IiyJM8wIwlBqJtE7vC5fsmB0
- 9CR/Guv4+A4DUaa1ncK7ZcOD4T89sfLA5QI0LNq0qCv8gDq8fKG3G8GLZ5YxBor6mwI/
- 7H0L6ELxtdqmxIo/yFSx6Xu3gkVnvJ2fB6802acVQUPslWYwRCmIjVlEGeZaBcn16i3c
- Be+fUMCXuBGGFM7+Pz1isoxj0Tq5J8fTlr4ikuHLooAdd7MBQCa68dNr6WH7ZGZSOvDG
- Rv/pKXvUeVvn5QvB6RmBuTyNg5sw1cTWtIU8nCaGF9+Jts1fXO22u6aZr4SeEcCWAVs2
- GHAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784213672; x=1784818472;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=JToxajq5ZH1vSLCWTN9NJBxR/6nVWGhA53YwXQOTcu8=;
- b=Rr9hl1yTVcEx50sZd9DBhGm2l32TUxZXsfUuM1UOq7D2ZyRKCh/aVf4r+g7ocPy0eo
- PBjCNnGNXT7iklMLYGZ2SL51dL7scyHwfJQTHcIxBlljG2TvJ74c1fVOvBRNKW76pSuY
- tEXNlWABf6FRwgyWBnyXugJJ1/eU83msG4lgamElVBAN8zd4GJmpGhgKMNXGy/aAPHgf
- kHcwbeqUoG9k1MM/TAO8iwoLCPMWGRR0YXGIV6skRYtu1B3DZ3/rwW9pqdQt8mtS0eOH
- 772U9xO/PoMbJQSHydI/qz9xDPxY/qLm2zn3FD5Ze9vXYvS9pqk1f+eX0dgstOusL+SE
- SstQ==
-X-Gm-Message-State: AOJu0YwSUHV9t2dNiBmDw2OgNe/aE5g0iwHAJy4bohdefEj+47dKx+GO
- wBLr6Pvb11oJr2NKyI+wB5YZ4LWICvtb613ZoTBGBxqdNICfnf1I+msZs/+C4NA6tBFMzBuzV30
- 424r1x4m6ne/FLyV3oYlH8f4oWnL5qgY=
-X-Gm-Gg: AfdE7ckVGo0dojH/7U/hMk/o6iQp2xZTqsV/zUGNPv8dPxh535FsaBqb2dZ+620ISkX
- 2cf0w9qABy+1ht02gKCC66//u9MjzfrlMpNLIk7uh4Cs3p+pGU3bcFs90Yac6gGSMLh07IXsfb7
- wTWbufRQ4V2elokBv9q4t/EJsGiN5S4srcxKQaQRPMUWnJw8J54lIhgRBw1E4ayjqWSAFHvTYZx
- SU2mCV5GmIGU5fMuhyE+Q+sX1fS1Czt66qS/gFy+I8wVPjbordNG/bak9srLOgT0TjAnw0m
-X-Received: by 2002:a05:690c:2605:b0:81c:fc30:a35c with SMTP id
- 00721157ae682-81e901104ecmr177259927b3.42.1784213671794; Thu, 16 Jul 2026
- 07:54:31 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260624070851.13342-1-zhangckid@gmail.com>
- <20260624070851.13342-9-zhangckid@gmail.com>
- <20260701161642.GB413397@fedora>
- <CAK3tnv+qwj9=rgg3-pF-GYDQm9LbxCOrcr9EkO1dNtk0kBw8oA@mail.gmail.com>
- <20260716092207.GA741667@fedora>
-In-Reply-To: <20260716092207.GA741667@fedora>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Thu, 16 Jul 2026 22:53:53 +0800
-X-Gm-Features: AUfX_mxuYoIkOO9LixMuJlQzW0YLyB1gA82JbJCCH00ChM4otVn1j-q_Bxg_qyc
-Message-ID: <CAK3tnvLFOwgdevMRk8wzO5wBFD30gzgb4W3SXJivy+4TPe0HpQ@mail.gmail.com>
-Subject: Re: [PATCH V9 08/17] monitor: switch to
- iothread_unsafe_get_aio_context()
-To: Stefan Hajnoczi <stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wkNkD-0005DW-Sg
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 11:11:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wkNkA-0004xv-LT
+ for qemu-devel@nongnu.org; Thu, 16 Jul 2026 11:11:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784214680;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=YFsxFnklmO+X5ASco9yOrMosB76tHtUzWdpaJDXp+Ng=;
+ b=RNaoDdgvFU01O2BLow1eZdQh3P4yE0/hJ3pPmuvy+KziY349kf6L9xzPARwa0iD12Ich9L
+ jPCUTfW+ga1KvAEgflJanbQhDOxk9SWXR5cZtzIsKR1Cfseg5UnVIuhVGstNtYq/u8T4cn
+ tPhNPbahqbMg0jZl+OySg6nYp9ocmIA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-63-DaFYEHUSPdGxIXK9m4JXfg-1; Thu,
+ 16 Jul 2026 11:11:19 -0400
+X-MC-Unique: DaFYEHUSPdGxIXK9m4JXfg-1
+X-Mimecast-MFC-AGG-ID: DaFYEHUSPdGxIXK9m4JXfg_1784214677
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5C29D1955DC7; Thu, 16 Jul 2026 15:11:17 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.34.221])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8B85242E; Thu, 16 Jul 2026 15:11:12 +0000 (UTC)
+Date: Thu, 16 Jul 2026 16:11:09 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>
 Cc: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, 
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Jason Wang <jasowang@redhat.com>, Fam Zheng <fam@euphon.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
- envelope-from=zhangckid@gmail.com; helo=mail-yw1-x112a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Subject: Re: [PATCH V10 06/15] monitor: Update tracking iothread users with
+ holder
+Message-ID: <alj0jQ_Is4VA_J2A@redhat.com>
+References: <20260716144043.76414-1-zhangckid@gmail.com>
+ <20260716144043.76414-7-zhangckid@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260716144043.76414-7-zhangckid@gmail.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: permerror client-ip=170.10.129.124;
+ envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,80 +88,126 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 16, 2026 at 8:46=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.co=
-m> wrote:
->
-> On Mon, Jul 06, 2026 at 04:59:30PM +0800, Zhang Chen wrote:
-> > On Thu, Jul 2, 2026 at 2:39=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat=
-.com> wrote:
-> > >
-> > > On Wed, Jun 24, 2026 at 03:08:42PM +0800, Zhang Chen wrote:
-> > > > Since previous patches introduced explicit monitor tracking and ref=
-erence
-> > > > counting via IOThreadHolder during initialization, standard global =
-calls
-> > > > to iothread_get_aio_context() are no longer appropriate for raw con=
-text
-> > > > fetches.
-> > > >
-> > > > Switch the remaining fallback sites in monitor_suspend(), monitor_r=
-esume(),
-> > > > and monitor_init_qmp() to use iothread_unsafe_get_aio_context(). Th=
-is aligns
-> > > > with the new safe ref/unref lifecycles introduced for monitor track=
-ing.
-> > >
-> > > Why is the unsafe API used here? monitor_data_init() now takes a
-> > > reference and gets the AioContext. Can you use that AioContext here
-> > > instead of fetching it with iothread_unsafe_get_aio_context()?
-> >
-> > Because we have some comments from this series V8 patches:
-> > https://lists.gnu.org/archive/html/qemu-devel/2026-06/msg00375.html
-> >
-> > If OK, I will back to the V8 code and follow the [PATCH V9 06/17] comme=
-nts,
-> > https://lists.gnu.org/archive/html/qemu-devel/2026-06/msg07323.html
-> > based on Daniel's series for monitor parts in V10.
->
-> Markus had no objection to using safe ref/unref APIs. I think he didn't
-> like the additional AioContext pointer that the caller needed to manage.
->
-> Using the safe APIs is important because the risk of bugs is high with
-> an unsafe API. If the new safe API is too inconvenient to use, then
-> let's find a different API design.
->
-> Here is a variation of the API that requires the caller to hold just 1
-> thing - the ref:
->
-> IOThreadRef *iothread_ref_get(IOThread *iothread, const IOThreadHolder *h=
-older);
-> void iothread_ref_put(IOThreadRef *ref);
-> AioContext *iothread_ref_get_aio_context(IOThreadRef *ref);
->
-> The caller can call iothread_ref_get_aio_aio_context() multiple times,
-> so they no longer need to store the AioContext pointer.
->
-> Since iothread_ref_put() takes IOThreadRef, the caller doesn't need to
-> build a new IOThreadHolder when releasing the reference.
->
-> What do you think?
->
+On Thu, Jul 16, 2026 at 10:40:31PM +0800, Zhang Chen wrote:
+> Based on monitor QOM path tracking iothread users with holder.
+> Introduce the AioContext in the Monitor struct to avoid repeated calls to
+> iothread_get_aio_context() and ensure symmetrical ref/unref during
+> monitor lifecycle.
+> 
+> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> ---
+>  monitor/monitor-internal.h |  3 +++
+>  monitor/monitor.c          | 22 ++++++++++++++++++++--
+>  monitor/qmp.c              |  5 +++--
+>  3 files changed, 26 insertions(+), 4 deletions(-)
+> 
+> diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+> index 23829f32f9..caecceec93 100644
+> --- a/monitor/monitor-internal.h
+> +++ b/monitor/monitor-internal.h
+> @@ -153,6 +153,9 @@ struct Monitor {
+>      guint out_watch;
+>      int mux_out;
+>      int reset_seen;
+> +
+> +    /* iothread context */
+> +    AioContext *ctx;
+>  };
+>  
+>  struct MonitorHMPClass {
+> diff --git a/monitor/monitor.c b/monitor/monitor.c
+> index ed195fd97b..688bb85c81 100644
+> --- a/monitor/monitor.c
+> +++ b/monitor/monitor.c
+> @@ -573,7 +573,7 @@ void monitor_suspend(Monitor *mon)
+>           * Kick I/O thread to make sure this takes effect.  It'll be
+>           * evaluated again in prepare() of the watch object.
+>           */
+> -        aio_notify(iothread_get_aio_context(mon_iothread));
+> +        aio_notify(mon->ctx);
+>      }
+>  
+>      trace_monitor_suspend(mon, 1);
+> @@ -668,6 +668,17 @@ void monitor_cleanup(void)
+>          qemu_mutex_unlock(&monitor_lock);
+>          monitor_flush(mon);
+>          qemu_mutex_lock(&monitor_lock);
+> +
+> +        if (mon_iothread) {
+> +            g_autofree char *path = object_get_canonical_path(OBJECT(mon));
+> +            const IOThreadHolder io_holder = {
+> +                .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
+> +                .u.qom_object.qom_path = path,
+> +            };
+> +
+> +            iothread_put_aio_context(mon_iothread, &io_holder);
+> +            mon->ctx = NULL;
+> +        }
+>          object_unparent(OBJECT(mon));
+>      }
+>      qemu_mutex_unlock(&monitor_lock);
+> @@ -732,7 +743,14 @@ static void monitor_complete(UserCreatable *uc, Error **errp)
+>              mon_iothread = iothread_create("mon_iothread", &error_abort);
+>          }
+>  
+> -        ctx = iothread_get_aio_context(mon_iothread);
+> +        g_autofree char *path = object_get_canonical_path(OBJECT(mon));
+> +        const IOThreadHolder io_holder = {
+> +            .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
+> +            .u.qom_object.qom_path = path,
+> +        };
+> +
+> +        mon->ctx = iothread_ref_and_get_aio_context(mon_iothread, &io_holder);
+> +        ctx = mon->ctx;
+>      } else {
+>          ctx = qemu_get_aio_context();
+>      }
 
-The monitor parts based on Daniel P. Berrang=C3=A9's series:
-    [PATCH v7 00/35] monitor: turn QMP and HMP into QOM objects
-    https://lore.kernel.org/qemu-devel/20260706135824.2623960-1-berrange@re=
-dhat.com/
+Even though QMP only takes the first branch, I'd be more
+comfortable if we set mon->ctx in both branches of this
+condition, so we can always assume that mon->ctx is
+non-NULL.
 
-This part has undergone significant changes; please refer to V10 for
-the latest implementation.
-https://lists.gnu.org/archive/html/qemu-devel/2026-07/msg04823.html
+> diff --git a/monitor/qmp.c b/monitor/qmp.c
+> index 223e0643c2..b16bd77688 100644
+> --- a/monitor/qmp.c
+> +++ b/monitor/qmp.c
+> @@ -732,7 +732,8 @@ static void monitor_qmp_complete(UserCreatable *uc, Error **errp)
+>           * thread.  Schedule a bottom half.
+>           */
+>          mon->setup_pending = true;
+> -        aio_bh_schedule_oneshot(iothread_get_aio_context(mon_iothread),
+> +
+> +        aio_bh_schedule_oneshot(MONITOR(mon)->ctx,
+>                                  monitor_qmp_setup_handlers_bh, mon);
+>          /* The bottom half will add @mon to @mon_list */
+>      } else {
+> @@ -787,7 +788,7 @@ static bool monitor_qmp_prepare_delete(UserCreatable *uc, Error **errp)
+>  
+>      /* Synchronize with in-flight iothread callbacks. */
+>      if (monitor_requires_iothread(mon)) {
+> -        aio_wait_bh_oneshot(iothread_get_aio_context(mon_iothread),
+> +        aio_wait_bh_oneshot(MONITOR(mon)->ctx,
+>                              monitor_qmp_iothread_quiesce, NULL);
+>      }
 
-Thanks
-Chen
+...this unconditionally accesses mon->ctx, and so will surely hit
+a NULL
 
+>  
+> -- 
+> 2.49.0
+> 
 
-> Stefan
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
