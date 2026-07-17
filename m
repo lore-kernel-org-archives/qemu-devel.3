@@ -4,121 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B15BC44520
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 11:51:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DDFBC44520
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 11:53:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkh5f-00031o-Rs; Fri, 17 Jul 2026 07:50:51 -0400
+	id 1wkh7u-0003eD-0W; Fri, 17 Jul 2026 07:53:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1wkh5e-00031g-UH
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 07:50:50 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wkh7s-0003e5-NG
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 07:53:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1wkh5c-00039p-B1
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 07:50:50 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wkh7r-0003Nu-1b
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 07:53:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784289045;
+ s=mimecast20190719; t=1784289185;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PL+JIVUfP2T88Lb85E2opQpl4gleVZjIFm720qYcIaI=;
- b=KiQcGHXdrNtShqQqp7tFhuJvILrR8YzxN7ND1b4p4YM6SOAhn8yebOVzRUEq13Ou8A10nT
- qwd+4VAN4gslJnH9XrDTWs2XAmSoziBeo9eFvfg8qIleV/xlWJxiNSIR+tPLKUN8K2u6Dc
- jeiAMnfnTGfQY0nnGRiOaalBj3cX5ck=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-154-onITQDqcMfOKlXFIYt5dTg-1; Fri, 17 Jul 2026 07:50:44 -0400
-X-MC-Unique: onITQDqcMfOKlXFIYt5dTg-1
-X-Mimecast-MFC-AGG-ID: onITQDqcMfOKlXFIYt5dTg_1784289044
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-81e85096e65so13326907b3.2
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 04:50:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784289043; cv=none;
- d=google.com; s=arc-20260327;
- b=ByB6sbiodNVFnwtuIi8sfdsngWIPtS7lQi9o1Rj4OCqsPuqtxquiqtnWrdTbvbE97V
- PU+vg0FUzP5SIakfBMe3e3gjkVzbRiTGD7cwCvtGu5TIis0tkeyqfEJCgBxfkX2uwxO0
- SOk0Z+Ru1iBmdcQE0iWYCo55VoPtC0LJyd/EIopbrMCrJI0yLH3gk8+OiqC2nBGaVORi
- IplhHT/HxfBbTr+5MtsQkOBq6Qk1proXuMKGZoHa0pL5+pNil+EnXZ3lVFmXyFyuiNxa
- VFgr6lMSUe5/3tXBWo43H63FlB62L5hmUhCPPTa7f41V+irCaWpQv3jPuTt7YjfycPGK
- cr0w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=PL+JIVUfP2T88Lb85E2opQpl4gleVZjIFm720qYcIaI=;
- fh=RWtWNYEOH40uILQhtQ4eYdsUqQAdhLJVdLNvEoqRoyk=;
- b=Z6GjMS1RBzYe8g5D8HiB7k4Aah+Zgi3/OUryHTo40Vx00Q/yttgm9POzRCpB4mmDob
- wM0yiHCfnJC+/E1OfGHs9EYvgImgtHEPtVWxyexDQUMFI/fXgjx/0MCwiHYdvzWxvlqM
- 82xks+ZSitdnmx1MATvB/Qr+6w+ZUV/w0FpGIxIv1ekNPH8Vl3sWIu3m3pcxbIyq/M7b
- rc5ThwxL5z6jq7XRGEKX8wHbcA2lTXgXtNWUpjHqrLhkF5ankA61NAPMlsS0ylDwtQ0a
- cwjwoJHm18HZ04vDmNZYhDwB5G76ksA+uNiaFCj47Z72borbBBedDSMFL/YbPN+DkfoK
- 9eGw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784289043; x=1784893843; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=PL+JIVUfP2T88Lb85E2opQpl4gleVZjIFm720qYcIaI=;
- b=YeRxfLp2Ld4citjWHy1tLxSC0/slrTUmIGnmq82ri79Ht+iwncueBqLDqs1p6c+lSI
- ovrVnZq42L6bTQQmZw+uc468mqdCQA07dkfvndrBX0eqt7UuAWNrO6DVoEySqLRdEf1h
- MtGNnWtCW6AA4kaeVE9jnSMKtd6bvyVeUM/tY4mF4VjzX+HD+PNycoYQM0137Z/PBwDm
- SN1X/KYMLA2f4ZmslfCE+zvPYMahvgknzlfC0wQiKM1AL1NxWwG7C2cM/H6EPMFFnlCp
- wGgRRagZdqKWvpOIPvXM2oNBcD7NsErOsa4mpFGx+1GzyXq26QAGNjKJHFPuLEqz12kj
- rAmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784289043; x=1784893843;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=PL+JIVUfP2T88Lb85E2opQpl4gleVZjIFm720qYcIaI=;
- b=duxZi5ocmCEeA4cCb4M/sQ7r665Zvbmn3uIbJITs95owK7fV1mvzBaj7iaL/PA4UOq
- R6uf7BnSeg+uuyxJ4rH1j2vglwIzW4ZHxsubvqC9cXOL1jXPN4KpNjEsxXTgLx3xWoE7
- LuHXgUSOGubnjN8FvejD7Lpb0gtII9oBekUAfo0aNy2cE9gMYkLYcMLyLlr7DDggHvic
- fuIYD8IFK5OqVR46GxqBYNAxqq5JGQoMUYbQGfzlk24NB+yvq1aG3S5ufW2WFLZHtFP6
- Q22uqxhoqGUwwZCyJ8GywaG7sTwyzYoyllbvcWd+dmjCyzUAYFeBtrHnUfm0Q1S3U0se
- z4lQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoHYe22tfrOXbAweNDChvLVwCLuigN60HwIUV3JSzFWI2dsvE9LWng+JDPIIU+iiPuCt2BXjKPM8X1w@nongnu.org
-X-Gm-Message-State: AOJu0Ywle5DeQN08NJ78houcY2EjkLDSfbcooRcb7nVfbk/sUijceW9H
- n4gSL2GbSOE+BvQFX16ILCuEF05N6B9roOLlYbfXhou51pxdpHCZawjfIy6KtjvZFDDOk/tVJaq
- 7MK7itqCgWhXlbeSoNovdqy6LGmGK+hAQ4/ltaDITaQ5+bOC9Nqd0g2I9tjy91WwTzBfAKAtxQ3
- 9IncZgxMIHP5em0kHOm2xQNPk8tdg5ZcQ=
-X-Gm-Gg: AfdE7cln3OWPSlt8Zc39WffV/U1mVVHJeTIoNSONi9PIt2STc4sU/fKSoj1pbtyfyzZ
- GEFU7ZI1W8eO1Le/PfTikCTywj5WRRH/nDe84QQEQRmrMRAGH9v6UV6Qvnn5pfEiMGSlPhePdnD
- XhveEMk/SRjimo8g/iObBv36eJPLztJgVl6efgBJCtrk+Is8hLxjWRZ4MR
-X-Received: by 2002:a05:690e:43d0:b0:667:b898:4d84 with SMTP id
- 956f58d0204a3-6683bba43efmr384012d50.28.1784289043597; 
- Fri, 17 Jul 2026 04:50:43 -0700 (PDT)
-X-Received: by 2002:a05:690e:43d0:b0:667:b898:4d84 with SMTP id
- 956f58d0204a3-6683bba43efmr384002d50.28.1784289043080; Fri, 17 Jul 2026
- 04:50:43 -0700 (PDT)
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=WkXipREj4zZ7uhBy3rcmEX1BB6UtKYN1cjy9qXkGKxQ=;
+ b=YtwooIt+qIT0fe8KBC4492uymf85UmCMvlmh8SH6EzfC8PJLeto2BxrrQQM7Q8PQx5GbqS
+ P7xO8+rTVeTAtur51Jc7DM0fFsgEK9XpYgdw/zq9GOeFwI5NQZGcWv/CStcTaqYDVZ7oSX
+ Crn+CgrKMXYdusAUGagwwWha/2ZM4C4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-388-x8T35_5xNhOffOODs1pkJg-1; Fri,
+ 17 Jul 2026 07:53:04 -0400
+X-MC-Unique: x8T35_5xNhOffOODs1pkJg-1
+X-Mimecast-MFC-AGG-ID: x8T35_5xNhOffOODs1pkJg_1784289183
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7B9A518007FE
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 11:53:03 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.17])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3C4C7195604D
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 11:53:01 +0000 (UTC)
 MIME-Version: 1.0
-References: <20260717103301.228974-1-dbassey@redhat.com>
- <20260717103301.228974-2-dbassey@redhat.com>
- <20260717063641-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20260717063641-mutt-send-email-mst@kernel.org>
-From: Albert Esteve <aesteve@redhat.com>
-Date: Fri, 17 Jul 2026 13:50:31 +0200
-X-Gm-Features: AUfX_my8qhEbGhpQPS3kwZAKCd8NTL5b0CvrBhddLfpLZzfjrL5xR8r7X2JvceQ
-Message-ID: <CADSE00+Uoy=fu3OnvMCr0Cn=tHSj27LkD9y7_CPqT32oSaDFow@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] vhost: Fix SHMEM_MAP transaction ordering and
- resulting deadlock
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Dorinda Bassey <dbassey@redhat.com>, qemu-devel@nongnu.org,
- mhrica@redhat.com, sgarzare@redhat.com, manos.pitsidianakis@linaro.org, 
- marcandre.lureau@redhat.com, stefanha@redhat.com, pbonzini@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Subject: [GIT PULL 00/15] Various UI/security-related fixes for 11.1
+Message-Id: <20260717-fix-v1-0-cb9f7d49dc52@redhat.com>
+Date: Fri, 17 Jul 2026 15:52:39 +0400
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+To: qemu-devel@nongnu.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2444;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=JN3R1axexD51YS+9J8rXL5ULt7vSfr3pFr5dbXRJlDQ=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqWheZXZlCAmsk+BZori3o5wlgatgi6iMpOp8Ds
+ cQNHD0paruJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaloXmQAKCRDa6OEJdZac
+ 5fW3D/9SNpmNSaT1VkZVPqp+APHPP01zjdRZk2eH9NnEbGI9bnT9tMpS05OJCW0hvesq/Z9IYIG
+ Ar0mw1VqU1mh0U+wcKk44K3SytLrVBoYRo81yxdrtXcTqnNFSMQXG01Me3XSx8euO2vPp5CKpEb
+ 1lVz4G+6KGHBT8HnAApvImiEIlDhYWlP4deVNi2JdMIG5wRLHkYZNpXJNIrEmnRLwNWkisbA5ff
+ 2jn40SWeTCFsH32sk+zEKusHUAPDZN4n2LifWavRzUsysj5NaQ6pRET0S42ysTKnIsQO43C/xgc
+ HrKBJl46MkNupVGTLTQlyjmLbWqvz7YIay9o5VpZldg8TeZKB5sBfozW30hCovwUbBUP6c3I0dT
+ 7Ipy5FQNgJJX1UWS5INisc5GHcz0xr2C1q2PiO8sVF8d3F9xrtCbb2hTo1ctvAwJ0LYMzCRaMIz
+ iLJNxtLmrtK+/BdqO0TD+bfevPrba0EzxS5KRywFyey3cYO7PICT9HnYTrNFDuOSieaVcnC+DYs
+ PG/mLwq1HtOklrG7i3V/OgNSGI8xPFq5NB0VNVqM4mlPg9qt5/0sSd8HZY5ZiDaEdchw8Upo5Tl
+ +hG8aO9HyX7gI0ePndARWwh2PV6BJOrC+zv0RVA4FUF/0dnjQaSff+zmSykgULzwVQGfLqzhBIc
+ ZG2gbYuTeekEWjQ==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: permerror client-ip=170.10.133.124;
- envelope-from=aesteve@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -141,120 +99,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 17, 2026 at 12:37=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com=
-> wrote:
->
-> On Fri, Jul 17, 2026 at 12:32:59PM +0200, Dorinda Bassey wrote:
-> > Commit the memory region transaction before sending the SHMEM_MAP reply
-> > so the KVM memory slot exists before the guest can access the mapped
-> > region.
-> >
-> > This moves the commit to while the backend is still blocked waiting for
-> > the reply, which can trigger ADD_MEM_REG back to the backend and
-> > deadlock. Filter shmem mapping regions out of vhost_section() by
-> > checking the MR owner type to prevent this.
-> >
-> > The explicit transaction begin/commit wrapping is dropped since
-> > virtio_add_shmem_map() already commits via memory_region_add_subregion(=
-).
-> >
-> > Fixes: b52e1896e764 ("vhost-user: Add VirtIO Shared Memory map request"=
-)
-> > Suggested-by: Albert Esteve <aesteve@redhat.com>
-> > Signed-off-by: Dorinda Bassey <dbassey@redhat.com>
-> > ---
-> >  hw/virtio/vhost-user.c | 20 ++------------------
-> >  hw/virtio/vhost.c      | 10 ++++++++++
-> >  2 files changed, 12 insertions(+), 18 deletions(-)
-> >
-> > diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> > index 517cc4ca716..01468f7441a 100644
-> > --- a/hw/virtio/vhost-user.c
-> > +++ b/hw/virtio/vhost-user.c
-> > @@ -1977,8 +1977,6 @@ vhost_user_backend_handle_shmem_map(struct vhost_=
-dev *dev,
-> >          }
-> >      }
-> >
-> > -    memory_region_transaction_begin();
-> > -
-> >      /* Create VirtioSharedMemoryMapping object */
-> >      VirtioSharedMemoryMapping *mapping =3D virtio_shared_memory_mappin=
-g_new(
-> >          vu_mmap->shmid, fd, vu_mmap->fd_offset, vu_mmap->shm_offset,
-> > @@ -1986,7 +1984,7 @@ vhost_user_backend_handle_shmem_map(struct vhost_=
-dev *dev,
-> >
-> >      if (!mapping) {
-> >          ret =3D -EFAULT;
-> > -        goto send_reply_commit;
-> > +        goto send_reply;
-> >      }
-> >
-> >      /* Add the mapping to the shared memory region */
-> > @@ -1994,22 +1992,8 @@ vhost_user_backend_handle_shmem_map(struct vhost=
-_dev *dev,
-> >          error_report("Failed to add shared memory mapping");
-> >          object_unref(OBJECT(mapping));
-> >          ret =3D -EFAULT;
-> > -        goto send_reply_commit;
-> > -    }
-> > -
-> > -send_reply_commit:
-> > -    /* Send reply and commit after transaction started */
-> > -    if (hdr->flags & VHOST_USER_NEED_REPLY_MASK) {
-> > -        payload->u64 =3D !!ret;
-> > -        hdr->size =3D sizeof(payload->u64);
-> > -        if (!vhost_user_send_resp(ioc, hdr, payload, &local_err)) {
-> > -            error_report_err(local_err);
-> > -            memory_region_transaction_commit();
-> > -            return -EFAULT;
-> > -        }
-> > +        goto send_reply;
-> >      }
-> > -    memory_region_transaction_commit();
-> > -    return 0;
-> >
-> >  send_reply:
-> >      if (hdr->flags & VHOST_USER_NEED_REPLY_MASK) {
-> > diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> > index af41841b529..e5c219be095 100644
-> > --- a/hw/virtio/vhost.c
-> > +++ b/hw/virtio/vhost.c
-> > @@ -636,6 +636,16 @@ static bool vhost_section(struct vhost_dev *dev, M=
-emoryRegionSection *section)
-> >  {
-> >      MemoryRegion *mr =3D section->mr;
-> >
-> > +    /*
-> > +     * Skip shmem mapping regions, they are managed via SHMEM_MAP/UNMA=
-P.
-> > +     * Including them triggers ADD_MEM_REG during the SHMEM_MAP transa=
-ction
-> > +     * commit, deadlocking the backend.
-> > +     */
-> > +    if (object_dynamic_cast(memory_region_owner(mr),
-> > +                            TYPE_VIRTIO_SHARED_MEMORY_MAPPING)) {
-> > +        return false;
-> > +    }
-> > +
-> >      if (memory_region_is_ram(mr) && !memory_region_is_rom(mr)) {
-> >          uint8_t dirty_mask =3D memory_region_get_dirty_log_mask(mr);
-> >          uint8_t handled_dirty;
->
->
-> This all seems risky i have to say.  Is this always map never unmap?
+The following changes since commit eca2c16212ef9dcb0871de39bb9d1c2efebe76be:
 
-The filter covers both, and this is a good point. For symmetry the
-handle_shmem_unmap() should call virtio_del_shmem_map() before
-replying.
+  Update version for v11.1.0-rc0 release (2026-07-14 20:36:23 +0100)
 
-BR,
-Albert.
+are available in the Git repository at:
 
->
-> > --
-> > 2.52.0
->
+  https://gitlab.com/marcandre.lureau/qemu.git tags/fix-pr-v1
+
+for you to fetch changes up to f1af81ba2aeec7b5a5ee8529ef55275865aea0c0:
+
+  hw/display/virtio-gpu: Check pixman_image_create_bits() results (2026-07-17 15:52:31 +0400)
+
+----------------------------------------------------------------
+Various UI/security-related fixes for 11.1
+
+To: qemu-devel@nongnu.org
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+
+----------------------------------------------------------------
+Akihiko Odaki (3):
+      ui/gtk: Narrow DMA-BUF critical section
+      hw/display/virtio-gpu: reject strides exceeding INT_MAX
+      hw/display/virtio-gpu: Check pixman_image_create_bits() results
+
+Marc-André Lureau (12):
+      i386/tdx: fix uninitialized variable warning in tdx_check_features
+      ui/vnc: fix OOB write in vnc_refresh_lossy_rect
+      ui/vnc: validate color shifts in SetPixelFormat
+      ui/vnc: use RFB wire types for client message handlers
+      ui/input-barrier: fix off-by-one in keycode bounds check
+      ui/vnc: fix out-of-bounds write in lossy refresh dirty marking
+      ui/vnc: validate SetPixelFormat field ranges
+      hw/display/virtio-gpu: fix dmabuf_fd leak on remap failure
+      hw/display/qxl: fix TOCTOU in cursor chunk data_size handling
+      hw/display/virtio-gpu: validate stride against width on scanout
+      hw/display/virtio-gpu: cap submit_3d command buffer allocation
+      hw/display/virtio-gpu: handle migration iov allocation failure
+
+ contrib/vhost-user-gpu/vugpu.h   |  9 ++++++
+ include/hw/virtio/virtio-gpu.h   |  9 ++++++
+ contrib/vhost-user-gpu/virgl.c   |  7 +++++
+ hw/display/qxl-render.c          | 28 ++++++++++-------
+ hw/display/virtio-gpu-rutabaga.c |  8 +++++
+ hw/display/virtio-gpu-udmabuf.c  |  1 +
+ hw/display/virtio-gpu-virgl.c    |  8 +++++
+ hw/display/virtio-gpu.c          | 57 ++++++++++++++++++++++++++++++++---
+ target/i386/kvm/tdx.c            |  2 +-
+ ui/gtk-egl.c                     |  6 ++--
+ ui/gtk-gl-area.c                 | 23 +-------------
+ ui/input-barrier.c               |  2 +-
+ ui/vnc.c                         | 65 ++++++++++++++++++++++++----------------
+ 13 files changed, 157 insertions(+), 68 deletions(-)
 
 
