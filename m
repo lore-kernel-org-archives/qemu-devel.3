@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3C0DC44520
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 11:54:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4F1FC4451C
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 11:54:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkh8o-0004qD-Ba; Fri, 17 Jul 2026 07:54:06 -0400
+	id 1wkh8s-00053C-48; Fri, 17 Jul 2026 07:54:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wkh8j-0004oy-2t
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 07:54:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wkh8q-00050y-Cx
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 07:54:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wkh8h-0003SU-E1
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 07:54:00 -0400
+ id 1wkh8o-0003Sg-O8
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 07:54:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784289238;
+ s=mimecast20190719; t=1784289244;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=u/JocELUzciLrI2R+2g24aN1QWMe8pYZXVY3rWZQaXc=;
- b=cQhAuqKsr5JBPEYBasqk9Vz7xaArFpaJgmQjBm8cE5FLXJ4jOZ6+lrVxa6LKJAyDiZ8uSi
- z399/Ccs1hXcyjBAmkBCoezEIHVDyhAMs0X/le4r5tyBYP/rMDXMfCJaBfm4hDo6mRUyYV
- NN7aCoEnYKGmuUwyOD3KZrKM3b1Ss6U=
+ bh=36RJqVPwaBMvjLN3VZbKH8Wswuy8bro5HEmKr61RjUo=;
+ b=AdO2bgy7C6ktbOLfX5n0S6++l6/OueReqX79DK+DtK9cIkRidlYGg1tGRXXC+ZFuw4kHMD
+ mTqfMdGbVp1ZjcCywDoztyjBAdOMbua93Kr/2sTXZatHgt15uCcBE59MMbX3XV8egzLn8w
+ s+30E3G5rZM48dt5MjIozXG7mDiyBjI=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-62-pJVjfXucOOeYH-kWZGdU7Q-1; Fri,
- 17 Jul 2026 07:53:57 -0400
-X-MC-Unique: pJVjfXucOOeYH-kWZGdU7Q-1
-X-Mimecast-MFC-AGG-ID: pJVjfXucOOeYH-kWZGdU7Q_1784289236
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-121-cLTfsJ3fOKyVdgwaNlhdDA-1; Fri,
+ 17 Jul 2026 07:54:03 -0400
+X-MC-Unique: cLTfsJ3fOKyVdgwaNlhdDA-1
+X-Mimecast-MFC-AGG-ID: cLTfsJ3fOKyVdgwaNlhdDA_1784289242
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B297C180075F
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 11:53:56 +0000 (UTC)
+ id 484ED1800750
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 11:54:02 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.17])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A7CB51955D86
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 11:53:55 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0C28B30040BF
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 11:54:00 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 17 Jul 2026 15:52:49 +0400
-Subject: [GIT PULL 10/15] hw/display/qxl: fix TOCTOU in cursor chunk
- data_size handling
+Date: Fri, 17 Jul 2026 15:52:50 +0400
+Subject: [GIT PULL 11/15] hw/display/virtio-gpu: validate stride against
+ width on scanout
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260717-fix-v1-10-cb9f7d49dc52@redhat.com>
+Message-Id: <20260717-fix-v1-11-cb9f7d49dc52@redhat.com>
 References: <20260717-fix-v1-0-cb9f7d49dc52@redhat.com>
 In-Reply-To: <20260717-fix-v1-0-cb9f7d49dc52@redhat.com>
 To: qemu-devel@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5603;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2368;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=GpIUqifl/gyolM0MgyVL0mom4t/4c7mPXqLdbQ0eOAs=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqWheayjWEFXZK9oBDZ+zk+DJ1F8tKetKCULl5o
- SG77hA4w1qJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaloXmgAKCRDa6OEJdZac
- 5VTeEACByQei7qBPYuTnmmBuTNGOyrIrhE7B2TaC9NtmgjxCBv5MqRzjMenwnv/z5712gfKW9Q7
- NQhEPae+zZJWezDMYEaKhKqiDI/VbeB47M21xkFaCS8OUR0jV9vqcJ5Zs5rz6KfJRihQhrxXbuI
- Cv5VGobNLRQMY659NFZIbGVeMtPUZwHY0quc0HhgvkIBHJq+qDVF6S3ENrnJsPZYpWDRO/gZS33
- PSknwlVpO/k7xWw1svibOnJDr/ocfY8FKx6Zw1+RDVg0jKu5eX0yUGeHWUDD/VvkMlMqso5FlN1
- Y3IjDXvo49OBNuEFrrhvhnkS1ZNqu9rboG9oDcCjp7KCJlZ13KEELSN52jZi20C4YRU0A4R6AIa
- hmhVeWCluhhbh8JHvzFYOO3pCgtMvbkqkHViYxSGBKtuO7T4RZFqRM5iM6T/igAfKqeGyK0m63b
- 6Gp9PrLxmFv4Ph0LuAoCiO5Hvyt5R5hCUcr7lvk7yKkD+2+7bWjnH0s3TWkJR0Q69zBeGh93Cql
- l2IYz70P0oZM/+nQTHYbE84j5L//7/j2cZYNIWsokxA63ftI/PwY0bxWIRzlL7x/N6OARigaxzY
- uYDiWH41tpzONVbG/wrZ4aFCCykQrQcYh8+8WryXdoqurYdYVm9PgedacuT1410u+gkfeiPfyBv
- 7FMZdns1o5aEQqQ==
+ bh=/2k1yLXrr0iajI/tlLhcu7f0CvyuxjSOgEJVPdgkS2Y=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqWhea7rqZfR4+V/5+jozm1ihzOwvOot3mciRki
+ dxJYpRbnoeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaloXmgAKCRDa6OEJdZac
+ 5QgoD/97Hx/fysWjY8YhuRos+bE57XsR9yQvhgy6YjG6exiuFENj4A1iDvZLb+3vvghIxhVxQ+J
+ yL5lpHYpltfK1+J/XGqIiKPF8bHvivkmYpm9dzFyHJ5GHj/qRcDngj31gjA7IVc+hPiI7/4s7Xk
+ U/aJVpPs2ljjxLXLoVI2dK0aitfApDTKrtTPhziRuY7UEhuh+9KxTtjBiBSlUl+1/ADvalyCajC
+ x6OfSvh1UJYl2OmZRj3aaAooMAQGxjFwMqPa0TjjXkUAxpQXcLLb6bX43J6o6N/f6eShBtQHFOD
+ 0GET53bpqfh9vch3+Uyqo7kTu2r2IdYbqRaYO0qzjfKYL5NIGRgMhNdl38lOqMgfxJ0PPS+DQnn
+ GJmiY4zGisEQCT2fzzH38/81ffe6aHObBfbFyE8wU3311tMblsIdM8Pwa4dW4y/QlUQ+WTn9vJS
+ +tpcaEYQp9aSI0FOEH6pL1Uq66O7a8GXCvowluo7byyZA2CLLRI0sVPgfBDJ8rq5SQv8EmM7kvh
+ FDYp2If286r8NcsvNXEKScChXLNo0DhafvlaU2dW3kqAvDV7OMxuxKT2vfXaqq08pCeadStwJi9
+ e5WhGEjJDE72f7Ho/tKrS80cfs9L1HppCwOAwT0YrDuqNlH7e7/n9sTXA3NxS1gHALrfatHC6Bb
+ gJVIaHk1ChZpdsA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: permerror client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: permerror client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -86,8 +86,8 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,130 +103,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Snapshot chunk.data_size into a host-local variable before passing it to
-qxl_phys2virt() for validation, and pass it through qxl_cursor() and
-qxl_unpack_chunks() so that no subsequent code re-reads the field.
+Validate that the framebuffer stride is at least width * bytes_per_pixel
+in both virtio_gpu_scanout_blob_to_fb() and virtio_gpu_do_set_scanout().
 
-Without this, a racing vCPU can inflate data_size between the
-qxl_phys2virt() validation and the memcpy in qxl_unpack_chunks(),
-causing a source read past the validated region. In practice the read
-stays within the guest's own VRAM mmap, so the impact is limited.
+A guest can set a very small stride while using a large width. The total
+size check (offset + stride * height <= blob_size) passes because
+stride * height is small, but pixman reads width * bytes_per_pixel per
+row, causing heap OOB reads. The leaked data is rendered to the host
+display.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3757
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reported-by: Feifan Qian <bea1e@proton.me>
-Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+The check is added in virtio_gpu_do_set_scanout() to cover all paths:
+blob scanout, non-blob scanout and migration post_load. The additional
+early check in virtio_gpu_scanout_blob_to_fb() rejects invalid blob
+configurations early.
+
+Fixes: CVE-2026-63109
+Fixes: 7b5574225429 ("hw/display: check frame buffer can hold blob")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3989
+Reported-by: Tristan @TristanInSec
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/display/qxl-render.c | 28 +++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+ hw/display/virtio-gpu.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/hw/display/qxl-render.c b/hw/display/qxl-render.c
-index 3bf634ee059..4799c9e8bef 100644
---- a/hw/display/qxl-render.c
-+++ b/hw/display/qxl-render.c
-@@ -217,7 +217,8 @@ void qxl_render_update_area_done(PCIQXLDevice *qxl, QXLCookie *cookie)
- }
- 
- static void qxl_unpack_chunks(void *dest, size_t size, PCIQXLDevice *qxl,
--                              QXLDataChunk *chunk, uint32_t group_id)
-+                              QXLDataChunk *chunk, uint32_t group_id,
-+                              uint32_t chunk_data_size)
- {
-     uint32_t max_chunks = 32;
-     size_t offset = 0;
-@@ -225,22 +226,21 @@ static void qxl_unpack_chunks(void *dest, size_t size, PCIQXLDevice *qxl,
-     QXLPHYSICAL next_chunk_phys = 0;
- 
-     for (;;) {
--        bytes = MIN(size - offset, chunk->data_size);
-+        bytes = MIN(size - offset, chunk_data_size);
-         memcpy(dest + offset, chunk->data, bytes);
-         offset += bytes;
-         if (offset == size) {
-             return;
-         }
-         next_chunk_phys = chunk->next_chunk;
--        /* fist time, only get the next chunk's data size */
-         chunk = qxl_phys2virt(qxl, next_chunk_phys, group_id,
-                               sizeof(QXLDataChunk));
-         if (!chunk) {
-             return;
-         }
--        /* second time, check data size and get data */
-+        chunk_data_size = chunk->data_size;
-         chunk = qxl_phys2virt(qxl, next_chunk_phys, group_id,
--                              sizeof(QXLDataChunk) + chunk->data_size);
-+                              sizeof(QXLDataChunk) + chunk_data_size);
-         if (!chunk) {
-             return;
-         }
-@@ -252,7 +252,7 @@ static void qxl_unpack_chunks(void *dest, size_t size, PCIQXLDevice *qxl,
- }
- 
- static QEMUCursor *qxl_cursor(PCIQXLDevice *qxl, QXLCursor *cursor,
--                              uint32_t group_id)
-+                              uint32_t group_id, uint32_t chunk_data_size)
- {
-     QEMUCursor *c;
-     uint8_t *and_mask, *xor_mask;
-@@ -272,11 +272,11 @@ static QEMUCursor *qxl_cursor(PCIQXLDevice *qxl, QXLCursor *cursor,
-     case SPICE_CURSOR_TYPE_MONO:
-         /* Assume that the full cursor is available in a single chunk. */
-         size = 2 * cursor_get_mono_bpl(c) * c->height;
--        if (size != cursor->data_size || cursor->chunk.data_size < size) {
-+        if (size != cursor->data_size || chunk_data_size < size) {
-             qxl_set_guest_bug(qxl, "%s: bad monochrome cursor %ux%u"
-                               " data_size %u chunk_size %u",
-                               __func__, c->width, c->height,
--                              cursor->data_size, cursor->chunk.data_size);
-+                              cursor->data_size, chunk_data_size);
-             goto fail;
-         }
-         and_mask = cursor->chunk.data;
-@@ -288,7 +288,8 @@ static QEMUCursor *qxl_cursor(PCIQXLDevice *qxl, QXLCursor *cursor,
-         break;
-     case SPICE_CURSOR_TYPE_ALPHA:
-         size = sizeof(uint32_t) * c->width * c->height;
--        qxl_unpack_chunks(c->data, size, qxl, &cursor->chunk, group_id);
-+        qxl_unpack_chunks(c->data, size, qxl, &cursor->chunk, group_id,
-+                          chunk_data_size);
-         if (qxl->debug > 2) {
-             cursor_print_ascii_art(c, "qxl/alpha");
-         }
-@@ -325,19 +326,23 @@ int qxl_render_cursor(PCIQXLDevice *qxl, QXLCommandExt *ext)
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 88526051a99..e00fb6effa5 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -646,6 +646,14 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
+         return false;
      }
-     switch (cmd->type) {
-     case QXL_CURSOR_SET:
-+    {
-+        uint32_t chunk_data_size;
-+
-         /* First read the QXLCursor to get QXLDataChunk::data_size ... */
-         cursor = qxl_phys2virt(qxl, cmd->u.set.shape, ext->group_id,
-                                sizeof(QXLCursor));
-         if (!cursor) {
-             return 1;
-         }
-+        chunk_data_size = cursor->chunk.data_size;
-         /* Then read including the chunked data following QXLCursor. */
-         cursor = qxl_phys2virt(qxl, cmd->u.set.shape, ext->group_id,
--                               sizeof(QXLCursor) + cursor->chunk.data_size);
-+                               sizeof(QXLCursor) + chunk_data_size);
-         if (!cursor) {
-             return 1;
-         }
--        c = qxl_cursor(qxl, cursor, ext->group_id);
-+        c = qxl_cursor(qxl, cursor, ext->group_id, chunk_data_size);
-         if (c == NULL) {
-             c = cursor_builtin_left_ptr();
-         }
-@@ -351,6 +356,7 @@ int qxl_render_cursor(PCIQXLDevice *qxl, QXLCommandExt *ext)
-         qemu_mutex_unlock(&qxl->ssd.lock);
-         qemu_bh_schedule(qxl->ssd.cursor_bh);
-         break;
+ 
++    if (fb->stride < (uint64_t)fb->width * fb->bytes_pp) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: stride %u too small for width %u at %u bpp\n",
++                      __func__, fb->stride, fb->width, fb->bytes_pp);
++        *error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++        return false;
 +    }
-     case QXL_CURSOR_MOVE:
-         qemu_mutex_lock(&qxl->ssd.lock);
-         qxl->ssd.mouse_x = cmd->u.position.x;
++
+     g->parent_obj.enable = 1;
+ 
+     if (res->blob) {
+@@ -753,6 +761,14 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
+     fb->width = ss->width;
+     fb->height = ss->height;
+     fb->stride = ss->strides[0];
++
++    if (fb->stride < (uint64_t)fb->width * fb->bytes_pp) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: stride %u too small for width %u at %u bpp\n",
++                      __func__, fb->stride, fb->width, fb->bytes_pp);
++        return false;
++    }
++
+     fb->offset = ss->offsets[0] + ss->r.x * fb->bytes_pp + ss->r.y * fb->stride;
+ 
+     fbend = fb->offset;
 
 -- 
 2.55.0
