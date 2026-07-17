@@ -4,99 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AB0EC4451B
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 18:16:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD3EFC44523
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 18:52:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkn6N-000615-Gu; Fri, 17 Jul 2026 14:16:01 -0400
+	id 1wknfA-0004OJ-UP; Fri, 17 Jul 2026 14:51:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wkn67-000609-Mo
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 14:15:45 -0400
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wkn65-0007Mf-NX
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 14:15:43 -0400
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-81062fdeaf5so19446657b3.0
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 11:15:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784312140; cv=none;
- d=google.com; s=arc-20260327;
- b=lw5li3aCYZao46QLiIwhL2vhrDtANjxTgLjCARErbyAKWI4ThxtJcLXi8kKNXxh0Sr
- f+QbbijS3mxyQrtFiofZUYkyvIChEOa9I6NQxlgUvTVEkzy3CSeMGlqNiCAxb8y0uhKy
- srIyt7bLlu3hR6mxymw887BYOP+vVRHBpwqt4VWxHEO79RSVFpeM3eSFTFJccLwdnCbq
- NVKm8pD2VyyVysVmAHhtwz1DtGmeVA4/o9WTV6kclJ40R/g1uCtlWEhQO8R6QmWnVZIc
- FF191Jrg/Ba9joqL3tFkP9YT1R7alGnxGUpJJEcv/j3oExkovA1T+SHRZKaJtL4AMIqf
- InKQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=u5/REWPssNQzJgBC/rzOpgJs6qngnLwQxtd688bC4/Q=;
- fh=gS8oh9EHdcTDcglskGyIv3/M5LtfI+jKdwGYJC227W4=;
- b=KsglEQqvia/MypXsEAHdLXsj4MapZUYVV++/MWwarz4ublaIRub2ClI6LMBX28xLJB
- EziWNWm3uswu4SA/4yZGsnHShUXAGNaMprTsQ/L4unctyNCrKoo1/W5v4GuVHtSvX1WC
- +cfsqg6KsOKqk3lAftxx0+jwLkOWbVCkSMAvHqf0Ycq0JhDL9qxnoTN4bCkiyG0U+j4I
- 5YB6LJIFcks6Y7n6/RLpCYxT7wiSKADbCpE7qoyVt+3HcDiRMf9gRP5dsBD83qjj7Xv0
- E35Xbbs2dAcaT4284V2ClJvLcnlvk5g+nv9pesc7YO/6SSisa6qI1VPPtQsOQXr0ibWJ
- yoxw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784312140; x=1784916940; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=u5/REWPssNQzJgBC/rzOpgJs6qngnLwQxtd688bC4/Q=;
- b=goAS5oilKCaVhbYcoExHaWaARJKr1IW8oWzcjqX4l4fq8N5+VFTKSIGGagzKZXNhEQ
- JdDIjflMzv9xPbp2NatAsuy/7yzV+gBgwRkXhajjcRUb0AUbEixHpxOqNDyNL9kaM+ga
- G8kdlgOEozWynV4JMdi3giCCZJBoy48T+TcE9ciSPBFo9Dh4XmPMgBBqyXe4ihSLGEsW
- fH6oQrz6ZjxzgXPCxXJJcQ/+sffF6tRtsia2axANQNMuciRR3AZNF14rHLjeCA9Gfl9m
- peuiekWncvoGbEYwUHSYe+VmjwV6gdrgK1RcSHC/2M2hoFrQk9vEIqjVIvDFWuwiV5mK
- UUMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784312140; x=1784916940;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=u5/REWPssNQzJgBC/rzOpgJs6qngnLwQxtd688bC4/Q=;
- b=gJVCfyWfimIuy/bKDrn24fwWZgOKdLa5xvUWSzSMidLgWdGiREyIOrlIMjvJttpflN
- +cwRzZ+2HZ0R2OYKohgNcr0ZGD3ZsG2VlNTBikcdPg5SQdKokF4fN2IlfAdjKITVkma9
- PXhClrjKpBTT5JK4M88NbL6Vxo13ThDfDX6RUUoiy1hmCgEGYfqhpHTchgPCL2PcEEta
- UgOZh+m/Wu/jSJvvu460oP8DUHFdFvjo3eP0Vbw0lCIoXShG1Q3vM/J8di3zLiBK4vAV
- OZHDmDhrh4Vt0cylI4CdqscskfpthV7t1cigiXQa7vgySToP4KNXq2a2BjshGXj587ZP
- n+eg==
-X-Gm-Message-State: AOJu0YyuZWC9Tf9mIgViQx7bLDpsJBpH2pPgmaFMWK0WpwTkx2zyvsMn
- +9vhgM29GMM57gUTB0vGOD+6oqQTlDvCBcjh+wcHfP4uZDndjnfLR9kEfvnfbOgyMHZBFjZ57F0
- MMVoWlehjGXOhgQ4sjkkegM87NUNOEnN/zuNSiTaHVA==
-X-Gm-Gg: AfdE7cmLR2ezeVsOoOpzG4ZgWTjKIUabt6OXvwf4T+Lmi0enLn7Qp7eDLcFGCKOLRpi
- MmpBAtZRUYaaxJp1V2su1YYTmboawev0pZDWzDmIdOcUqNGNrjpyL02C+Qnx9UQU+REJmf23zMC
- RsTcjyf1O2cSdhe8tR605PU4kJi5ZVuwOUyLaSrNRX4ROYF7DYM9zvkfxid8+bKyu4n1aEmm3kv
- RAzrUqQsLZ9zRjQm1cmrWSl1A/M7xEbUC66d42JEoCDlUJFCz3ElFDUk/cOC57L0pN6vgWuOnXi
- AW2AJwwBKyFaJK41hTRHpPsPTVb51JB1Dcf43D9PYv7IKg==
-X-Received: by 2002:a05:690c:298:b0:81e:fdf7:bfbd with SMTP id
- 00721157ae682-81efdf7c075mr2136617b3.15.1784312140192; Fri, 17 Jul 2026
- 11:15:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wknf8-0004O2-NC; Fri, 17 Jul 2026 14:51:54 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wknf3-0004he-0j; Fri, 17 Jul 2026 14:51:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1784314287; bh=+b6HtWmt9dJ/9wOhmw7VM4hHc4+6Tzlnkt2kpwwMSIA=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=gSdj8JBWjH5nhsFoDxv9O7KYZbkoZ/+wuzdM6kePziMyDH6wOl+YMSDLF7fsNqLuC
+ MRKDJc7FlU/f9odvXOMIR6Bs6XcwPrmlSXXW8PlT34wDN6Mka68I/Aa+HBh0e736aT
+ /wJgUoT6lKGhvs8/JSM3xCT1v1vWV/kbBcYmE8SnbVDp9tNRKB86/g/XNNFvCZji/l
+ vIzgOhZE3DjUzCUwpp1wNA9X9yCzF5VTYooT4gxssS1o6Zs5MKau0SZbwuyLu+YMr5
+ Xx/SvsdhzRcP92qrb/wL4ywSZZ7lB4dK0BffLMUA0ttyAwMAN5dEHlWSnta5O+lEKI
+ aEmuMTHCW1Xxg==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 62D791C2937;
+ Fri, 17 Jul 2026 21:51:27 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0DC393F0744;
+ Fri, 17 Jul 2026 21:51:34 +0300 (MSK)
+Message-ID: <c3a7cd83-7666-40c5-9baa-ebe64edacab6@tls.msk.ru>
+Date: Fri, 17 Jul 2026 21:51:26 +0300
 MIME-Version: 1.0
-References: <20260717174412.88258-1-dingtao0430@163.com>
-In-Reply-To: <20260717174412.88258-1-dingtao0430@163.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 17 Jul 2026 19:15:28 +0100
-X-Gm-Features: AUfX_mwvy6Bm57SptJAU93Z67tGAtKynfjEmcQN_hV5dGGac_QI_yKzkZwfBGVk
-Message-ID: <CAFEAcA-ZLB8+N_ud+6V=DkDrOvPznc75eoGHwQhMhYk7Cgf8MA@mail.gmail.com>
-Subject: Re: [PATCH 0/1] Aarch32 TCG CPU: secure register migration
-To: Tao Ding <dingtao0430@163.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/8] hw/vfio/listener.c: remove CONFIG_KVM
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: philmd@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-ppc@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, eric.auger@redhat.com
+References: <20260312224449.1605071-1-pierrick.bouvier@linaro.org>
+ <20260312224449.1605071-2-pierrick.bouvier@linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
+ HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
+ 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
+ /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
+ DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
+ /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
+ 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
+ a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
+ z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
+ y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
+ a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
+ BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
+ /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
+ cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
+ G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
+ b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
+ LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
+ JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
+ 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
+ 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
+ CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
+ k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
+ OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
+ XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
+ tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
+ zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
+ jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
+ xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
+ K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
+ t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
+ +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
+ eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
+ GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
+ Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
+ RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
+ S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
+ wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
+ VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
+ FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
+ YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
+ ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
+ 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
+In-Reply-To: <20260312224449.1605071-2-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,19 +115,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 17 Jul 2026 at 18:44, Tao Ding <dingtao0430@163.com> wrote:
->
-> Hi, all
->
-> In TCG mode, the xilinx-zynq-a9 board cannot recover normally
-> after migration during the uboot phase. Some secure registers
-> did not recover their correct values after migration, causing
-> the CPU to enter an abnormal state.
+On 3/13/26 01:44, Pierrick Bouvier wrote:
+> Code concerned is under a kvm_enabled() guard.
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   hw/vfio/listener.c | 4 ----
+>   1 file changed, 4 deletions(-)
+> 
+> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+> index 960da9e0a93..31c3113f8fb 100644
+> --- a/hw/vfio/listener.c
+> +++ b/hw/vfio/listener.c
+> @@ -20,9 +20,7 @@
+>   
+>   #include "qemu/osdep.h"
+>   #include <sys/ioctl.h>
+> -#ifdef CONFIG_KVM
+>   #include <linux/kvm.h>
+> -#endif
+>   #include <linux/vfio.h>
 
-Yes, this is a very long standing issue:
-https://gitlab.com/qemu-project/qemu/-/work_items/467
+This now fails to build on sparc64:
 
-Thanks for submitting this patch -- I'll have a look at it later.
+In file included from ../../hw/vfio/listener.c:23:
+/build/reproducible-path/qemu-11.1.0~rc0+ds/linux-headers/linux/kvm.h:16:10: fatal error: asm/kvm.h: No such file or directory
+    16 | #include <asm/kvm.h>
+       |          ^~~~~~~~~~~
 
--- PMM
+I wonder if this is a sparc problem or qemu problem.
+
+I don't think kvm has been enabled on sparc, ever.
+
+Thanks,
+
+/mjt
 
