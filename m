@@ -4,124 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1358C4451C
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 13:26:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65575C44520
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 13:27:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkiaA-0008Pq-5a; Fri, 17 Jul 2026 09:26:26 -0400
+	id 1wkian-00010w-Lt; Fri, 17 Jul 2026 09:27:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wkia4-0008K7-6e
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 09:26:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wkiah-0000wF-TL
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 09:26:59 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wkia2-0007BE-7d
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 09:26:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784294776;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JJTzZ9L8kSicvXaFZ8mg16rfoYFo6CObEkP17tu/daE=;
- b=iyUnGs0kIFWYS+9CdoZWS1+zOpwYPOvvhsDtwyJwtrtm/PDP8fzyG+S+7tikLBqmAT2dCR
- Ampmitl+7wp4/zcdc5ISfZZUEaIu/gY/NRYAG6WHmn5ogRSiYhZAqiLv/Ij5cthdKXZfYW
- WLitq/Rfw5etwa3aGChv30RcpPSV5+4=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-346-YBTBPaKmMSWMKYdZKEAv0g-1; Fri, 17 Jul 2026 09:26:14 -0400
-X-MC-Unique: YBTBPaKmMSWMKYdZKEAv0g-1
-X-Mimecast-MFC-AGG-ID: YBTBPaKmMSWMKYdZKEAv0g_1784294773
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-47485fde05aso4660783f8f.0
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 06:26:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wkiaf-0007Dw-0n
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 09:26:59 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66HCTKj01755170
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 13:26:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ +0YU1T0vWzgT8jlDIM8QTFYOwuPUiM0KOIQe0NdqIQU=; b=XWS/GdFXewkWeWcn
+ phT8t+EfRidhNbseOorg56BtiHYD/w38xyQkGR24wKV7amdc2QrOneo9kZ79gKB/
+ oOQJbCv3jK36pzHF/+32yX1pJEEv6uWxPiTAf/MaPpACGF24SO4H+I7wgOFFOkUR
+ fZgOnH7lr7gvAE5u6KQxOyBek/j9RH3Y6daAMt/5k2W6J+LevU6xBp8NqO70ordz
+ PsFTELOIhiOOTq36KqBs1S4LP/bNWaVJlsLP3WUFoe5AN2npz3wGi2pCFXs6feO9
+ 3WTAV0tXZsyD0SbqNhzKb3j06YVHJlwP/EOnS207AeNWbwMRvXNjItOU4kD6Id/5
+ AKgJcQ==
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ff2f2vd2b-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 13:26:55 +0000 (GMT)
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-7f5b54da461so82088397b3.3
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 06:26:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784294773; x=1784899573; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=JJTzZ9L8kSicvXaFZ8mg16rfoYFo6CObEkP17tu/daE=;
- b=tOwclAyJOE6+gudQ3eB0clxJhCpk3o1k/KHaZbGCWOM8NUffsXP/qc8kDLF9P7LokZ
- ExG8cQLHv2Aiimheb4HJrRzZv8S0Ak5DatsCQSxO+IhuXQpAR30xasdnq8ufj6inHsPq
- P+lB7BDmg2Xtv/hFd6wCzKi8mfSfdzUM1xytvwZuMYsPljBkFoSW6X7XN1iN1qdMeaBn
- JTqfw61PbMjWTq6YdFHXOIjavOi+KPJ4/F80zhymC0yTBhpMdtP5FeLckPMqbjz93p3B
- S34ovf5FM1mHukAGyk31sg0qJe9+reInGmzpSJbLyp9tLeTHOxh2vK7RnzW6iZh1Y3Q/
- n/sw==
+ d=oss.qualcomm.com; s=google; t=1784294815; x=1784899615; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=+0YU1T0vWzgT8jlDIM8QTFYOwuPUiM0KOIQe0NdqIQU=;
+ b=Zi2fWshzucRGvmV9HtAonCF5bIzbXzDs6XXqFpr7TbhnMFbFSwRo5kRykRS5ijCj91
+ dZnmZ+CRJd/dFSoF8+1GeYKFslIf+MB4HvicyF1kncJi+EvRYE8GD6s+8Ud56bI+H5+B
+ yRDvKjFiMJN4gpx0jOhJjdUN2MyGG/1GfgiP4kOhfXgeRLwyNWrwa8mjaJ1+SQz4qfHD
+ /x9ILavUAiHN3oxw9QI75H3Tm3V4hnJ+SdT/qo+hzEukGXmFqLwbe8UKOo6E3m82+8ZX
+ JYYsgUdUW3eVBcP9B0jmhG29kI2fQiZkCtDc6iQm6Nz2iGZ7tOXuVFO8G1tzlU1H2/ke
+ WLtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784294773; x=1784899573;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=JJTzZ9L8kSicvXaFZ8mg16rfoYFo6CObEkP17tu/daE=;
- b=Y1KEJpDPxZrBT1HvTJ295pCZzAGtBAnWObiy4gev0YhZU6w+9Q0yZTV2eM54zkpXl2
- kJ0WBruVY0YU8tLF9vDJca23tE5nYtvLMXCE9iuDT+f3yA0Q0S7QwkACVrMk4mdqLGwS
- l/bWYq4rtSYQxgnrx/rP+8+kpCa99uBFpJerXOp6vWfg1qOdiSWM1X8i7h+L+DkzRC/T
- Wkz2XkmMtddfzeLSU4aeYuMv7e72uuMbq/sT6DNK05CNVP7KMjdrBcqVk1gkzvd6kx2Z
- b9KimaP7DUz7vYo0C8lkuonMVEf85/6CGVntvtVfr0KByfIqtZY2zl5vodclmykWT2tD
- LPlw==
+ d=1e100.net; s=20251104; t=1784294815; x=1784899615;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=+0YU1T0vWzgT8jlDIM8QTFYOwuPUiM0KOIQe0NdqIQU=;
+ b=DV85vjCPl4HsQ0eymK4Ld5pFHIiOj3deTMSx8ojr2v66x3iDHcny1tuSPIIw9SKXg9
+ rjv3UYJAC+Rl1OaLWER/EUUA+fgdP+IsWSBG17plx6hQsU9l3s7stEM5B3H1POfgrJL8
+ KR6n00ENweAy5ROmtpkzBGNVFgOdwX6P06b5yX/7bOxbcWlZTsuvnTryCoVVCXNVdzBW
+ 5KkwvsZzGnN5nYmTSchHAmeqKbnuQ8nrIFVwpFCxGzElR2wjKVx3Xts0OcefnXcRVUv3
+ qCiLHNDTBrrC9CzOEmZHlcrBzRaCpvQ5rATEy5hvXmKuivs4Ws8IqrenejRI41PcajEu
+ QcAg==
 X-Forwarded-Encrypted: i=1;
- AHgh+RrcrskqywQ+3cGWdl6bs9/9XGpf3AJDVejKdye+EGYtpGeZ/MaGDaUzXX1jteYH54Vu2sGm6NZwZapx@nongnu.org
-X-Gm-Message-State: AOJu0Yx3ZtsR2Hv/sBrmgVQOE9f9CRhTSoFgr2kmXRTjESufLM9QQAYt
- Q/cDUImaJoGvALdXK3wp4LXJiXP0ece48w7KdYm83LmasATf9hdqsX594e0TKhoxLnKG1+JJ/pV
- EI139Nv4LgwFtuEUxfAEZpUcW3O1QoHdv/wvHHP+7iWi2QnETwC+xy8TE
-X-Gm-Gg: AfdE7ckp06TEvPhUqiWXVgwJuMmBGPyR9zZqiAZqwZ4bPeqpfbY3tEfd31IGiG9ZrrR
- HgJzbR+YMDiRswBFFI70FxzYdx428OUwiW4A/4EJRY9s+K2JIAM+MiZQuyglHJzHTDbLweHIz2N
- 1OxhXMPCkmooeQRTNlUBMV44j5sdEy6TsjOegAlmxNOp9/Ggxr5zGbVlO6MtX1G/McxSZtFfd9b
- E9OSbG9ulbpEDNcAAEPecEtCuHFVxqPP274mHXUC5QCT+Yzz05RTTH1Tv2Sgs6iaHZrP/cR7m7J
- 6GlTKt7Hvf/wHmNHPld1plAnxJtmCJ4241DjmZ3iKPlI+HVscToyMM8vuzhBxJtTER8oLqqvM6W
- ePEgfyC1onmOP8PyarSrWsKbx
-X-Received: by 2002:a05:6000:1788:b0:470:80f7:9ef with SMTP id
- ffacd0b85a97d-47f62310e75mr3540503f8f.19.1784294772708; 
- Fri, 17 Jul 2026 06:26:12 -0700 (PDT)
-X-Received: by 2002:a05:6000:1788:b0:470:80f7:9ef with SMTP id
- ffacd0b85a97d-47f62310e75mr3540425f8f.19.1784294772037; 
- Fri, 17 Jul 2026 06:26:12 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-24-117.inter.net.il. [80.230.24.117])
+ AHgh+Rr/aAuRyL/CH9ByG49l2S+/vQzwxLYnT/N/xDm1muXNqunzyaSYYDnRX+G/7ezI9NDKA82I9HLrG63q@nongnu.org
+X-Gm-Message-State: AOJu0YyOh+/NRwMXtajmMDNorGWyL1qDzE8nJ+EfXd1CHRvJ1xJGfIjm
+ TfzHq9isnVt656XZO1++j3CfzoBvU44dTJOwSNcgtsKkm/Wwo8DeTGZtebhutDrEsOy4mhMpNGE
+ oV+592qIeFDNtEOrvmrj5kGZZrM2B44XC2zzETsBzcpBO+vhAJFAH0pY3Eg==
+X-Gm-Gg: AfdE7ckxnXomAVvQcrfL/CK8/cuyADZaVFNqLgKz4GYad37ZAMwKjjBXW6l+0jdW+zV
+ 6CKNbUMsCCfVbbUdmBqngTUWvIv0OQypXpEtfRIHaaNK9Nf4pcQsZW0i3ZlSnC9DpTZ2G04g7hL
+ ttqCWYblkyCeshlz+yJU98b5Ip+xl2XfgxL671bBbFonOK/RvVRvhLDJLWwjHpEUg6SCMrkwn3v
+ /PNRCjkoeKbuFHgD1FrWUq7eVPifw/OuQtiyOT6EAx6ccy/zBX/3TLv5BphMcq1PA+oEFxyxNi0
+ ETQ9R032IG3WbLDHpv76VmpV+7ym1wo6T8gY88y9IGcXODfAC0Ra3veB6ZkHIbKypZHCTDAuYs0
+ bADlGvw8lKM/xocczA34qbBwJsKgNgiUKA/azqQ==
+X-Received: by 2002:a05:690e:4399:b0:667:a683:9990 with SMTP id
+ 956f58d0204a3-6683bd4eb7emr524360d50.78.1784294815369; 
+ Fri, 17 Jul 2026 06:26:55 -0700 (PDT)
+X-Received: by 2002:a05:690e:4399:b0:667:a683:9990 with SMTP id
+ 956f58d0204a3-6683bd4eb7emr524348d50.78.1784294814763; 
+ Fri, 17 Jul 2026 06:26:54 -0700 (PDT)
+Received: from [192.168.68.105] ([152.234.122.204])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f63e51b7asm4150458f8f.13.2026.07.17.06.26.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jul 2026 06:26:11 -0700 (PDT)
-Date: Fri, 17 Jul 2026 09:26:08 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Gavin Shan <gshan@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, peterx@redhat.com, alex@shazbot.org,
- richard.henderson@linaro.org, berrange@redhat.com,
- philmd@oss.qualcomm.com, philmd@mailo.com, david@kernel.org,
- clg@redhat.com, pbonzini@redhat.com, phrdina@redhat.com,
- jugraham@redhat.com, liugang24219@sangfor.com.cn,
- dinghui@sangfor.com.cn, shan.gavin@gmail.com
-Subject: Re: [PATCH v3 1/2] system/memory: Use qemu_ram_{copy, move}() in ram
- device region accessors
-Message-ID: <20260717092420-mutt-send-email-mst@kernel.org>
-References: <CAFEAcA8YJZq9TqrUd0zTnewAdVDm5y6UV7BJQZ0C60TZ=RT98Q@mail.gmail.com>
- <20260625091334-mutt-send-email-mst@kernel.org>
- <CAFEAcA8xK+t3-prEphtkq-o9UY2mgS6cowhs880GOaxL9dKSGw@mail.gmail.com>
- <20260625101817-mutt-send-email-mst@kernel.org>
- <CAFEAcA8-Un+Q1yBDqLWCLPRwtgTA_VhJqGobgZChrFhAeVfG8A@mail.gmail.com>
- <20260625123119-mutt-send-email-mst@kernel.org>
- <CAFEAcA8UjtXgmPC27fOKMwbaWs2piwGYudtwCNWQHuu3E_7A-A@mail.gmail.com>
- <5faf04b9-d596-4a1d-9fe3-5e9ad5f0a99a@redhat.com>
- <73f79841-8cc7-4ca6-8f6b-fb97b53a6fe8@redhat.com>
- <20260717091756-mutt-send-email-mst@kernel.org>
+ 956f58d0204a3-6683b80eb54sm1333142d50.13.2026.07.17.06.26.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 17 Jul 2026 06:26:54 -0700 (PDT)
+Message-ID: <8e5b44e3-9054-4e81-ab76-89d853221299@oss.qualcomm.com>
+Date: Fri, 17 Jul 2026 10:26:50 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260717091756-mutt-send-email-mst@kernel.org>
-Received-SPF: permerror client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 08/10] docs/system/riscv: document initial virt RPMI
+ support
+To: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>,
+ qemu-riscv@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+References: <20260714075659.2258023-1-subrahmanya.lingappa@oss.qualcomm.com>
+ <20260714075659.2258023-9-subrahmanya.lingappa@oss.qualcomm.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260714075659.2258023-9-subrahmanya.lingappa@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: nupsd8Mj_uwM4wbp1hhGJvre_0qzz_EE
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE3MDEzNiBTYWx0ZWRfX6KgOHIwjqb4u
+ fWOyCswOhQ4IJ//4u6sQnls6L3ryvFodIkJmRpzZ+/64ra5dt2xuvlN2FOMIHCb1o63O85EJbXO
+ b21nn4xDWSJbpUSbyy4dUuF3tSiuif0=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE3MDEzNiBTYWx0ZWRfXzrgVQRR4szcI
+ Vb50xyXZozeFGqsfJKClou0smNY90XC1LStiIa/RcQi8m9cW5E/0WWsuX2rqkOpjjpK2gXdOgzl
+ b/eKRlYzbZFnobk/3UrbyufVB+LsixAZZDtuvIhOAgljYvhvt0IxWHhuPHJjPi9+mMJT/1OlYm5
+ iy/oA6Milcxu+yBei/6CfQt5wEjtLiNx9fKEVTGtTals0FuPbfXnwiVQOkx7HBVDtO01TtUQCK+
+ oqPfImQe/yLHtMOPxlAHC87r6k6wUuan0I+wZ8nZoc906bjvacspc9Sd6jg5mvjj027fxlB6Ydz
+ dUFqFiuFZM7K+A1X+RO4YpVcvTOOrDvZwMx+xOX2ZjvlByargO3HSJi/WsyFeL3NN33ANyD6eo8
+ 1cbgPDrDhwohjI7SV+FrzYGWIGTWq4cyIz69thGJXjz2Lb9e5/xGom0mkqHej7Pna2v7FFQAHhl
+ ctwzTsBH8LzZC+Z441w==
+X-Authority-Analysis: v=2.4 cv=NcTWEWD4 c=1 sm=1 tr=0 ts=6a5a2d9f cx=c_pps
+ a=NMvoxGxYzVyQPkMeJjVPKg==:117 a=J0RmenBMOwS19r/fhzI3tQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=NEAV23lmAAAA:8 a=V1jnuoLLAAAA:20 a=EUspDBNiAAAA:8 a=xqlBBKlOt2JiA3_xaBgA:9
+ a=QEXdDO2ut3YA:10 a=kLokIza1BN8a-hAJ3hfR:22 a=bA3UWDv6hWIuX7UZL3qL:22
+X-Proofpoint-GUID: nupsd8Mj_uwM4wbp1hhGJvre_0qzz_EE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-17_03,2026-07-17_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 malwarescore=0 priorityscore=1501 lowpriorityscore=0
+ clxscore=1015 phishscore=0 bulkscore=0 spamscore=0 adultscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607170136
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,243 +158,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 17, 2026 at 09:24:03AM -0400, Michael S. Tsirkin wrote:
-> On Thu, Jul 09, 2026 at 07:52:12PM +1000, Gavin Shan wrote:
-> > Hi Michael and Peter,
-> > 
-> > On 6/26/26 10:07 AM, Gavin Shan wrote:
-> > > On 6/26/26 4:40 AM, Peter Maydell wrote:
-> > > > On Thu, 25 Jun 2026 at 17:47, Michael S. Tsirkin <mst@redhat.com> wrote:
-> > > > > 
-> > > > > On Thu, Jun 25, 2026 at 04:23:47PM +0100, Peter Maydell wrote:
-> > > > > > On Thu, 25 Jun 2026 at 15:52, Michael S. Tsirkin <mst@redhat.com> wrote:
-> > > > > > > I think there is exactly 1 kinda reasonable case. A 2 byte read/write at
-> > > > > > > offset 0x1 within a dword. This maps nicely to even classical PCI byte
-> > > > > > > enable mechanism and so yes it works if your CPU can initiate these
-> > > > > > > things, and it's atomic.
-> > > > > > > 
-> > > > > > > I tried reading LEDCTL on e1000e:
-> > > > > > > 
-> > > > > > >         byte  @ 0xe00: 0x64
-> > > > > > >         byte  @ 0xe01: 0x2a
-> > > > > > >         byte  @ 0xe02: 0x00
-> > > > > > >         byte  @ 0xe03: 0x00
-> > > > > > >         word  @ 0xe00: 0x2a64
-> > > > > > >         word  @ 0xe01: 0x002a
-> > > > > > > 
-> > > > > > > Works fine.
-> > > > > > 
-> > > > > > The e1000e datasheet actually documents what it does in this
-> > > > > > case (slightly surprising, since hardware engineers love to
-> > > > > > leave this kind of corner case undocumented):
-> > > > > > 
-> > > > > > # For registers that should be accessed as 32-bit double words,
-> > > > > > # partial writes (less than a 32-bit double word) does not take
-> > > > > > # effect (such as, the write is ignored).
-> > > > > > # Partial reads
-> > > > > > # return all 32 bits of data regardless of the byte enables.
-> > > > > > #
-> > > > > > # Note: Partial reads to clear-by-read registers (such as, ICR)
-> > > > > > # can have unexpected results since all 32 bits are actually read
-> > > > > > # regardless of the byte enables. Partial reads should not be done.
-> > > > > > 
-> > > > > > So for this specific device that access is out-of-spec.
-> > > > > 
-> > > > > You mean that access to clear by read should not be done, right?
-> > > > 
-> > > > The datasheet is ambiguous about whether "Partial reads should
-> > > > not be done" is meant to apply generally or only to clear-by-read
-> > > > registers.
-> > > > 
-> > > 
-> > > I think the document intends to say: the partial reads shouldn't be issued to
-> > > the clear-by-read registers. Those partial reads on no-read-side-affect registers
-> > > would be fine.
-> > > 
-> > > > > > I guess what I'm wondering is: can we just have code
-> > > > > > that does an aligned exact-width access in the 1/2/4/8
-> > > > > > byte aligned case, and the host's best approximation to
-> > > > > > an unaligned exact-width access for the 2/4/8 byte
-> > > > > > unaligned case?
-> > > > > 
-> > > > > That's my idea, too.
-> > > > > 
-> > > 
-> > > I assume this the conclusion of our discussions? If so, we just need to have
-> > > unified function where __builtin_{memcpy, memmove}() are used for 1/2/4/8 bytes
-> > > access no matter if the address is aligned, and fall back to {memcpy, memmove}()
-> > > for other cases?
-> > > 
-> > 
-> > Could you help to confirm if the conclusion is to have unified qemu_ram_{copy, move}()
-> > for all architectures? In qemu_ram_{copy, move}(), the fixed sized accesses like
-> > 1/2/4/8 bytes are handled by __builtin_{memcpy, memmove}() and fall back to
-> > memcpy/memmove() for other sized accesses. It's basically what was proposed by
-> > Michael :-)
-> 
-> No. __builtin_ and  memcpy/memmove are same on modern linuxes.
-> 
-> I'd say as a 1st step, on x86 hosts we can do a fixed size
-> memmove for 1/2/4/8, on other hosts 
-> *aligned* 1/2/4/8 bytes can do
->  __atomic_store ... __ATOMIC_RELAXED
-> and the rest can hobble along on memmove
-> and hope for the best.
-> 
-> And memcpy is likely not the right thing, ever.
-
-Or maybe better hobble along on a loop over __atomic_store.
-Safer.
-
-And as a 2nd step, extend vfio to tell us how is the
-device mapped, and then we can maybe fallback to a loop
-when we know it is not safe to access with memcpy.
 
 
+On 7/14/2026 4:56 AM, Subrahmanya Lingappa wrote:
+> Document the opt-in virt RPMI transport and the initial HSM, system
+> reset, and system suspend service groups.
 > 
-> > Something like below.
-> > 
-> > -----> include/system/memory.h
-> > 
-> > +/**
-> > + * qemu_ram_copy: copy data to ramblock
-> > + *
-> > + * @dst: destination where the data is copied to
-> > + * @src: source where the data is copied from
-> > + * @n: length of data to be copied
-> > + *
-> > + *
-> > + * Copy @n bytes from @src to @dst with the assumption that @src and @dst
-> > + * do not overlap. The fixed sized accesses like 1/2/4/8 bytes are handled
-> > + * by __builtin_memcpy() to avoid the optimizations applied to memcpy(),
-> > + * which can be unsafe to DMA/VCPU IO. Fall back to memcpy() for other
-> > + * sized accesses and the safety is ensured by users.
-> > + */
-> > +void qemu_ram_copy(void *dest, const void *src, size_t n);
-> > +
-> > +/**
-> > + * qemu_ram_move: move data to ramblock
-> > + *
-> > + * @dst: destination where the data is moved to
-> > + * @src: source where the data is moved from
-> > + * @n: length of data to be moved
-> > + *
-> > + * Move @n bytes from @src to @dst with the assumption that @src and @dst
-> > + * can overlap. The fixed sized accesses like 1/2/4/8 bytes are handled
-> > + * by __builtin_memmove() to avoid the optimizations applied to memmove(),
-> > + * which can be unsafe to DMA/VCPU IO. Fall back to memmove() for other
-> > + * sized accesses and the safety is ensured by users.
-> > + */
-> > +void qemu_ram_move(void *dest, const void *src, size_t n);
-> > +
-> > 
-> > -----> system/physmem.c
-> > 
-> > +void qemu_ram_copy(void *dst, const void *src, size_t n)
-> > +{
-> > +    switch (n) {
-> > +    case 1:
-> > +        __builtin_memcpy(dst, src, 1);
-> > +        break;
-> > +    case 2:
-> > +        __builtin_memcpy(dst, src, 2);
-> > +        break;
-> > +    case 4:
-> > +        __builtin_memcpy(dst, src, 4);
-> > +        break;
-> > +    case 8:
-> > +        __builtin_memcpy(dst, src, 8);
-> > +        break;
-> > +    default:
-> > +        memcpy(dst, src, n);
-> > +    }
-> > +}
-> > +
-> > +void qemu_ram_move(void *dst, const void *src, size_t n)
-> > +{
-> > +    switch (n) {
-> > +    case 1:
-> > +        __builtin_memmove(dst, src, 1);
-> > +        break;
-> > +    case 2:
-> > +        __builtin_memmove(dst, src, 2);
-> > +        break;
-> > +    case 4:
-> > +        __builtin_memmove(dst, src, 4);
-> > +        break;
-> > +    case 8:
-> > +        __builtin_memmove(dst, src, 8);
-> > +        break;
-> > +    default:
-> > +        memmove(dst, src, n);
-> > +    }
-> > +}
-> > +
-> > 
-> > 
-> > > > > > (so on sparc you get multiple smaller
-> > > > > > accesses, and on most archs including x86 and arm you
-> > > > > > get an unaligned load).
-> > > > > 
-> > > > > I thought unaligned load from uncacheable on arm is
-> > > > > also a fault?
-> > > > 
-> > > > For Arm the distinction is not cacheable/uncacheable
-> > > > but Normal vs Device. (Device is essentially for things
-> > > > which are not RAM; Normal is for RAM and RAM-like things,
-> > > > and includes all of Normal Non-cacheable, Normal WT-Cacheable
-> > > > and Normal WB-Cacheable.) Things mapped as Normal memory
-> > > > don't generate unaligned faults (unless the guest turned them
-> > > > on deliberately). For Device memory, it is IMPLEMENTATION
-> > > > DEFINED whether you get an alignment fault or not if you
-> > > > map something as Device that could have handled unaligned
-> > > > accesses if you had mapped it as Normal.
-> > > > 
-> > > > > > That would mean the guest could
-> > > > > > potentially provoke a fault on the load/store on an
-> > > > > > access to a passthrough device, but if you give the
-> > > > > > guest passthrough access it can very likely provoke
-> > > > > > a fault anyway, depending on exactly what the device is.
-> > > > > > 
-> > > > > > I think the most likely reason for an unaligned access
-> > > > > > in this codepath is "it's actually RAM, either really
-> > > > > > host RAM or else something memory-like in a BAR", and
-> > > > > > either way if the guest does a 4-byte unaligned access
-> > > > > > then doing a 4-byte unaligned access seems better than
-> > > > > > second-guessing it, even on non-x86.
-> > > > 
-> > > > > Right though remember: whether it's RAM doesn't matter. What matters is
-> > > > > how we map it.  qemu might fault because it maps NC but guest maps
-> > > > > cacheable and it's ok.
-> > > > 
-> > > > If QEMU and the guest disagree about the memory attributes
-> > > > on Arm then we have already lost, because the architecture
-> > > > says that memory attribute mismatches result in a variety of
-> > > > undesirable effects including things like loss of cache coherency
-> > > > (i.e. read and writes via QEMU's NC mapping disagree with ones
-> > > > via the guest's cacheable mapping because the latter are hitting
-> > > > in the cache and the former are bypassing it).
-> > > > 
-> > > > > But, all this in theory. At a high level, I personally think going with
-> > > > > what you propose as a 1st approximation is entirely reasonable, except
-> > > > > for one thing: we really should not crash qemu, since access can be from
-> > > > > guest userspace.
-> > > > 
-> > > > You can't prevent faults entirely, though -- if the device
-> > > > being mapped has e.g. behaviour that says "unaligned accesses
-> > > > will fault" and then the x86 guest does an unaligned access,
-> > > > then the device will trigger a fault, and the fault is what
-> > > > you want because it's what the guest would see on real h/w.
-> > > > Unfortunately we don't have a convenient way to feed the
-> > > > fault back to the guest. At some level if you pass through
-> > > > host hardware you're relying on the guest to not do totally
-> > > > stupid things.
-> > > > 
-> > > > thanks
-> > > > -- PMM
-> > > > 
-> > 
-> > Thanks,
-> > Gavin
+> Signed-off-by: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
+> ---
+
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+
+>   docs/system/riscv/virt.rst | 65 ++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 65 insertions(+)
+> 
+> diff --git a/docs/system/riscv/virt.rst b/docs/system/riscv/virt.rst
+> index 60850970ce..31cd945a3b 100644
+> --- a/docs/system/riscv/virt.rst
+> +++ b/docs/system/riscv/virt.rst
+> @@ -146,6 +146,71 @@ The following machine-specific options are supported:
+>   
+>     Enables the riscv-iommu-sys platform device. Defaults to 'off'.
+>   
+> +- rpmi=[on|off]
+> +
+> +  Enables the RISC-V RPMI shared-memory transport. This option defaults to
+> +  "off", is TCG-only, and is available only when QEMU is built with librpmi
+> +  support. This support targets the RISC-V Platform Management Interface
+> +  (RPMI) Specification v1.0 Ratified (`RPMI v1.0 specification`_). The initial
+> +  ``virt`` implementation exposes RPMI system reset, system suspend, and HSM
+> +  service groups. System reset can request shutdown or cold reboot through
+> +  RPMI. HSM uses the ``virt`` hart IDs and supports hart discovery, status,
+> +  start, stop, and suspend commands. System suspend uses QEMU's suspend and
+> +  wakeup path. Migration is currently blocked while RPMI transport and service
+> +  VMState support is being designed.
+> +
+> +  The build dependency is provided by `librpmi`_. QEMU requires librpmi 1.0.0
+> +  or newer. If the host distribution does not provide a librpmi development
+> +  package, build and install it from the upstream source tree so that
+> +  ``pkg-config`` can find ``librpmi.pc``:
+> +
+> +  .. code-block:: bash
+> +
+> +    $ git clone https://github.com/riscv-software-src/librpmi.git
+> +    $ cd librpmi
+> +    $ make
+> +    $ make install I=/usr/local
+> +    $ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+> +    $ pkg-config --modversion librpmi
+> +
+> +  The librpmi repository can also generate installable ``librpmi-dev`` Debian
+> +  packages with ``make deb-pkg`` and ``librpmi-devel`` RPM packages with
+> +  ``make rpm-pkg``. After installing librpmi, configure QEMU with
+> +  ``--enable-librpmi`` or ``-Dlibrpmi=enabled``.
+> +
+> +.. _RPMI v1.0 specification: https://github.com/riscv-non-isa/riscv-rpmi/releases/download/v1.0/riscv-rpmi.pdf
+> +.. _librpmi: https://github.com/riscv-software-src/librpmi
+> +
+> +RPMI firmware and guest smoke
+> +-----------------------------
+> +
+> +A firmware-level RPMI smoke test can be run with OpenSBI, a Linux kernel, and a
+> +RISC-V disk image:
+> +
+> +.. code-block:: bash
+> +
+> +  $ qemu-system-riscv64 \
+> +      -machine virt,rpmi=on \
+> +      -cpu rv64 -smp 4 -m 4G -nographic \
+> +      -bios /path/to/fw_jump.bin \
+> +      -kernel /path/to/Image \
+> +      -append "root=/dev/vda rw console=ttyS0 earlycon=sbi" \
+> +      -drive file=/path/to/rootfs.img,format=raw,if=virtio,snapshot=on
+> +
+> +The OpenSBI banner should report RPMI-backed HSM and system suspend support.
+> +After the guest reaches a shell, normal guest reboot/poweroff commands exercise
+> +the RPMI system reset path.
+> +
+> +RPMI device tree policy
+> +-----------------------
+> +
+> +RPMI is currently described through FDT only; no ACPI representation is emitted
+> +for the RPMI transport or service groups. The ``virt`` machine uses the
+> +``riscv,rpmi-shmem-mbox`` shared-memory mailbox node plus child service nodes
+> +with ``riscv,rpmi-*`` compatible strings. These binding names are part of the
+> +RPMI RFC surface and may be revised if the RISC-V RPMI bindings change during
+> +review.
+> +
+>   Running Linux kernel
+>   --------------------
+>   
 
 
