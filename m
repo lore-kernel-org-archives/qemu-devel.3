@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7AE4C44514
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 10:29:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F47FC44507
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 10:29:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkfnB-0005rU-M1; Fri, 17 Jul 2026 06:27:41 -0400
+	id 1wkfnB-0005qu-4d; Fri, 17 Jul 2026 06:27:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1wkfn9-0005ok-CK; Fri, 17 Jul 2026 06:27:39 -0400
+ id 1wkfn9-0005oY-3E; Fri, 17 Jul 2026 06:27:39 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <aastharawat@linux.microsoft.com>)
- id 1wkfn6-0000P5-Oc; Fri, 17 Jul 2026 06:27:39 -0400
+ id 1wkfn7-0000PE-67; Fri, 17 Jul 2026 06:27:38 -0400
 Received: from localhost (unknown [131.107.159.8])
- by linux.microsoft.com (Postfix) with ESMTPSA id 332E720B7171;
- Fri, 17 Jul 2026 03:27:25 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 332E720B7171
+ by linux.microsoft.com (Postfix) with ESMTPSA id 2312520B7170;
+ Fri, 17 Jul 2026 03:27:26 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 2312520B7170
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1784284045;
- bh=V8OzHC5oy918yB/21XHFyqNdjwQiewwEcgmUSw0zINY=;
+ s=default; t=1784284046;
+ bh=1W+ro0UCqHdRyuUzYJclJi4PAuQ6lSvcECtz7ysd7aM=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=kPDZmTCv+Mp6Isll245Q8EBrqsybPu+pD237gQWvSC1E+VcoJVTuyNv89OM/pblao
- zmSFOr8y5UR/JJpN345Bnk9xd/tXVUKRfWyXc47UaVpcxLV85uBNz3yJOppuQSRcwv
- 5F1jSAUiOepxigfCLW8WG8w04uNLCyJOiPeEFGYs=
+ b=Bh8h0Hb/zQLmyYkj/Igb17pISVuNmzoC2XUuc97Y7s1IIpefVC0ZV4scoVBQ9dMAm
+ H1PnuLgQLsm+OkxTPym2gHrbt4w4MMVUjkgmlvLCSyXE6eMUHRScx6VTAT2hVG1IzG
+ 7io+eYq5Wj1fDyOwmh6+2RmEW+KEQa4UzwSdoTRg=
 From: Aastha Rawat <aastharawat@linux.microsoft.com>
-Date: Fri, 17 Jul 2026 10:27:21 +0000
-Subject: [PATCH v5 06/13] target/arm/mshv: implement -cpu host for MSHV
+Date: Fri, 17 Jul 2026 10:27:22 +0000
+Subject: [PATCH v5 07/13] accel/mshv: Add access_vp_regs synthetic proc
+ features
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260717-mshv_accel_arm64_supp-v5-6-ef07d4c6b337@linux.microsoft.com>
+Message-Id: <20260717-mshv_accel_arm64_supp-v5-7-ef07d4c6b337@linux.microsoft.com>
 References: <20260717-mshv_accel_arm64_supp-v5-0-ef07d4c6b337@linux.microsoft.com>
 In-Reply-To: <20260717-mshv_accel_arm64_supp-v5-0-ef07d4c6b337@linux.microsoft.com>
 To: qemu-devel@nongnu.org
@@ -76,404 +77,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit enables support for the `-cpu host` option with MSHV
-accelerator on ARM64. The implementation queries the partition's CPU's
-ID registers and features via hypervisor interface, allowing to pass all
-CPU capabilities for the host CPU to the guest.
+Enable access_vp_regs feature for regs. In arm64, this feature bit
+allows the guest to set VP registers using hypercall. This wasn't
+required for x86 because such registers are set using wrmsr instead of
+hypercall.
 
 Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
 ---
- hw/arm/virt.c                  |   3 +-
- include/hw/hyperv/hvgdk_mini.h |  17 ++++
- include/system/hw_accel.h      |   3 +-
- target/arm/cpu.c               |   6 +-
- target/arm/cpu64.c             |   2 +
- target/arm/mshv/mshv-all.c     | 217 +++++++++++++++++++++++++++++++++++++++++
- target/arm/mshv_arm.h          |  18 ++++
- 7 files changed, 262 insertions(+), 4 deletions(-)
+ accel/mshv/mshv-all.c     |  1 +
+ include/hw/hyperv/hvhdk.h | 91 ++++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 91 insertions(+), 1 deletion(-)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 219597cabd..438bd408ba 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -49,6 +49,7 @@
- #include "system/kvm.h"
- #include "system/hvf.h"
- #include "system/whpx.h"
-+#include "system/mshv.h"
- #include "system/qtest.h"
- #include "system/system.h"
- #include "hw/core/loader.h"
-@@ -4147,7 +4148,7 @@ static GPtrArray *virt_get_valid_cpu_types(const MachineState *ms)
-     if (target_aarch64()) {
-         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a53")));
-         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a57")));
--        if (kvm_enabled() || hvf_enabled() || whpx_enabled()) {
-+        if (kvm_enabled() || hvf_enabled() || whpx_enabled() || mshv_enabled()) {
-             g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("host")));
-         }
-     }
-diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
-index 740a73c85a..fc014aa5d7 100644
---- a/include/hw/hyperv/hvgdk_mini.h
-+++ b/include/hw/hyperv/hvgdk_mini.h
-@@ -64,6 +64,20 @@ typedef enum hv_register_name {
-     HV_ARM64_REGISTER_LR    = 0x0002001E,
-     HV_ARM64_REGISTER_PC    = 0x00020022,
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index 199b957a97..d11813c3fd 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -273,6 +273,7 @@ static int set_synthetic_proc_features(int vm_fd)
+     features.tb_flush_hypercalls = 1;
+     features.synthetic_cluster_ipi = 1;
+     features.direct_synthetic_timers = 1;
++    features.access_vp_regs = 1;
  
-+    /* AArch64 System Register Descriptions: ID Registers */
-+    HV_ARM64_REGISTER_ID_MIDR_EL1         = 0x00022000,
-+    HV_ARM64_REGISTER_ID_MPIDR_EL1        = 0x00022005,
-+    HV_ARM64_REGISTER_ID_AA64_PFR0_EL1    = 0x00022020,
-+    HV_ARM64_REGISTER_ID_AA64_PFR1_EL1    = 0x00022021,
-+    HV_ARM64_REGISTER_ID_AA64_ISAR0_EL1   = 0x00022030,
-+    HV_ARM64_REGISTER_ID_AA64_ISAR1_EL1   = 0x00022031,
-+    HV_ARM64_REGISTER_ID_AA64_ISAR2_EL1   = 0x00022032,
-+    HV_ARM64_REGISTER_ID_AA64_MMFR0_EL1   = 0x00022038,
-+    HV_ARM64_REGISTER_ID_AA64_MMFR1_EL1   = 0x00022039,
-+    HV_ARM64_REGISTER_ID_AA64_MMFR2_EL1   = 0x0002203a,
-+    HV_ARM64_REGISTER_ID_AA64_DFR0_EL1    = 0x00022028,
-+    HV_ARM64_REGISTER_ID_AA64_DFR1_EL1    = 0x00022029,
-+
-     /* AArch64 System Register Descriptions: General system control registers */
-     HV_ARM64_REGISTER_MIDR_EL1   = 0x00040051,
-     HV_ARM64_REGISTER_MPIDR_EL1  = 0x00040001,
-@@ -983,6 +997,9 @@ struct hv_cpuid {
- #define HV_HYP_PAGE_SIZE        BIT(HV_HYP_PAGE_SHIFT)
- #define HV_HYP_PAGE_MASK        (~(HV_HYP_PAGE_SIZE - 1))
+     mshv_arch_amend_proc_features(&features);
  
-+#define HV_ANY_VP               ((uint32_t)-1)
-+#define HV_VTL_ALL              0xF
-+
- #define HVCALL_GET_PARTITION_PROPERTY    0x0044
- #define HVCALL_SET_PARTITION_PROPERTY    0x0045
- #define HVCALL_GET_VP_REGISTERS          0x0050
-diff --git a/include/system/hw_accel.h b/include/system/hw_accel.h
-index f0c10b6d80..614ea60be3 100644
---- a/include/system/hw_accel.h
-+++ b/include/system/hw_accel.h
-@@ -51,7 +51,8 @@ static inline bool hwaccel_enabled(void)
-     return hvf_enabled()
-         || kvm_enabled()
-         || nvmm_enabled()
--        || whpx_enabled();
-+        || whpx_enabled()
-+        || mshv_enabled();
- }
+diff --git a/include/hw/hyperv/hvhdk.h b/include/hw/hyperv/hvhdk.h
+index 9e6dcb22f6..d0adbea0c7 100644
+--- a/include/hw/hyperv/hvhdk.h
++++ b/include/hw/hyperv/hvhdk.h
+@@ -94,11 +94,16 @@ union hv_partition_synthetic_processor_features {
+          */
+         uint64_t access_partition_reference_tsc:1;
  
- #endif /* QEMU_HW_ACCEL_H */
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 787e4dc7ab..c5037a145a 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -47,6 +47,7 @@
- #include "system/tcg.h"
- #include "system/qtest.h"
- #include "system/hw_accel.h"
-+#include "system/mshv.h"
- #include "kvm_arm.h"
- #include "disas/capstone.h"
- #include "fpu/softfloat.h"
-@@ -1829,8 +1830,9 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-      * this is the first point where we can report it.
-      */
-     if (cpu->host_cpu_probe_failed) {
--        if (!kvm_enabled() && !hvf_enabled() && !whpx_enabled()) {
--            error_setg(errp, "The 'host' CPU type can only be used with KVM, HVF or WHPX");
-+        if (!kvm_enabled() && !hvf_enabled() && !whpx_enabled() && !mshv_enabled()) {
-+            error_setg(errp,
-+                       "The 'host' CPU type can only be used with KVM, HVF, WHPX, or MSHV");
-         } else {
-             error_setg(errp, "Failed to retrieve host CPU features");
-         }
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 9724c9475d..dc8239efc6 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -26,12 +26,14 @@
- #include "qemu/units.h"
- #include "system/kvm.h"
- #include "system/hvf.h"
-+#include "system/mshv.h"
- #include "system/whpx.h"
- #include "system/hw_accel.h"
- #include "system/qtest.h"
- #include "system/tcg.h"
- #include "kvm_arm.h"
- #include "hvf_arm.h"
-+#include "mshv_arm.h"
- #include "whpx_arm.h"
- #include "qapi/visitor.h"
- #include "hw/core/qdev-properties.h"
-diff --git a/target/arm/mshv/mshv-all.c b/target/arm/mshv/mshv-all.c
-index a3ca60a4d5..da43333aa6 100644
---- a/target/arm/mshv/mshv-all.c
-+++ b/target/arm/mshv/mshv-all.c
-@@ -18,10 +18,23 @@
- 
- #include "system/cpus.h"
- #include "target/arm/cpu.h"
-+#include "target/arm/internals.h"
-+#include "target/arm/mshv_arm.h"
- 
- #include "system/mshv.h"
- #include "system/mshv_int.h"
- #include "hw/hyperv/hvgdk_mini.h"
-+#include "hw/hyperv/hvhdk_mini.h"
++#if defined(__x86_64__)
 +
-+typedef struct ARMHostCPUFeatures {
-+    ARMISARegisters isar;
-+    uint64_t features;
-+    uint64_t midr;
-+    uint32_t reset_sctlr;
-+    const char *dtb_compatible;
-+} ARMHostCPUFeatures;
-+
-+static ARMHostCPUFeatures arm_host_cpu_features;
- 
- static const enum hv_register_name STANDARD_REGISTER_NAMES[32] = {
-     HV_ARM64_REGISTER_X0,
-@@ -168,8 +181,46 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
-     state->hvcall_args = (MshvHvCallArgs){0};
- }
- 
-+
-+static uint32_t mshv_arm_get_ipa_bit_size(int mshv_fd)
-+{
-+    int ret;
-+    struct hv_input_get_partition_property in = {0};
-+    struct hv_output_get_partition_property out = {0};
-+    struct mshv_root_hvcall args = {0};
-+
-+    in.property_code = HV_PARTITION_PROPERTY_PHYSICAL_ADDRESS_WIDTH;
-+
-+    args.code = HVCALL_GET_PARTITION_PROPERTY;
-+    args.in_sz = sizeof(in);
-+    args.in_ptr = (uint64_t)&in;
-+    args.out_sz = sizeof(out);
-+    args.out_ptr = (uint64_t)&out;
-+
-+    ret = mshv_hvcall(mshv_fd, &args);
-+
-+    if (ret < 0) {
-+        error_report("Failed to get IPA size");
-+        exit(1);
-+    }
-+
-+    return out.property_value;
-+}
-+
- int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd)
- {
-+    MachineClass *mc = MACHINE_GET_CLASS(ms);
-+    int pa_range;
-+    uint32_t ipa_size;
-+
-+    if (mc->get_physical_address_range) {
-+        ipa_size = mshv_arm_get_ipa_bit_size(mshv_fd);
-+        pa_range = mc->get_physical_address_range(ms, ipa_size, ipa_size);
-+        if (pa_range < 0) {
-+            return -EINVAL;
-+        }
-+    }
-+
-     return 0;
- }
- 
-@@ -189,3 +240,169 @@ int mshv_arch_post_init_vm(int vm_fd)
- {
-     return 0;
- }
-+
-+static void clamp_id_aa64mmfr0_parange_to_ipa_size(int mshv_fd,
-+                                                   ARMISARegisters *isar)
-+{
-+    uint32_t ipa_size = mshv_arm_get_ipa_bit_size(mshv_fd);
-+    uint64_t id_aa64mmfr0;
-+
-+    /* Clamp down the PARange to the IPA size the kernel supports. */
-+    uint8_t index = round_down_to_parange_index(ipa_size);
-+    id_aa64mmfr0 = GET_IDREG(isar, ID_AA64MMFR0);
-+    id_aa64mmfr0 = FIELD_DP64(id_aa64mmfr0, ID_AA64MMFR0, PARANGE, index);
-+    SET_IDREG(isar, ID_AA64MMFR0, id_aa64mmfr0);
-+}
-+
-+static int mshv_get_partition_regs(int vm_fd, hv_register_name *names,
-+                             hv_register_value *values, size_t n_regs)
-+{
-+    int ret = 0;
-+    size_t in_sz, names_sz, values_sz;
-+    void *in_buffer = qemu_memalign(HV_HYP_PAGE_SIZE, HV_HYP_PAGE_SIZE);
-+    void *out_buffer = qemu_memalign(HV_HYP_PAGE_SIZE, HV_HYP_PAGE_SIZE);
-+    hv_input_get_vp_registers *in = in_buffer;
-+
-+    struct mshv_root_hvcall args = {0};
-+
-+    names_sz = n_regs * sizeof(hv_register_name);
-+    in_sz = sizeof(hv_input_get_vp_registers) + names_sz;
-+
-+    memset(in, 0, HV_HYP_PAGE_SIZE);
-+
-+    in->vp_index = HV_ANY_VP;
-+    in->input_vtl.target_vtl = HV_VTL_ALL;
-+    in->input_vtl.use_target_vtl = 1;
-+
-+    for (int i = 0; i < n_regs; i++) {
-+        in->names[i] = names[i];
-+    }
-+
-+    values_sz = n_regs * sizeof(hv_register_value);
-+
-+    args.code = HVCALL_GET_VP_REGISTERS;
-+    args.in_sz = in_sz;
-+    args.in_ptr = (uintptr_t)in_buffer;
-+    args.out_sz = values_sz;
-+    args.out_ptr = (uintptr_t)out_buffer;
-+    args.reps = n_regs;
-+
-+    ret = mshv_hvcall(vm_fd, &args);
-+
-+    if (ret == 0) {
-+        memcpy(values, out_buffer, values_sz);
-+    }
-+
-+    qemu_vfree(in_buffer);
-+    qemu_vfree(out_buffer);
-+
-+    return ret;
-+}
-+
-+static bool mshv_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-+{
-+    int mshv_fd = mshv_state->fd;
-+    int vm_fd = mshv_state->vm;
-+    int i, ret;
-+    bool success = true;
-+    uint64_t pfr0, pfr1;
-+    gchar *contents = NULL;
-+
-+    static const struct {
-+        hv_register_name name;
-+        int isar_idx;
-+    } regs[] = {
-+        { HV_ARM64_REGISTER_ID_AA64_PFR0_EL1,  ID_AA64PFR0_EL1_IDX },
-+        { HV_ARM64_REGISTER_ID_AA64_PFR1_EL1,  ID_AA64PFR1_EL1_IDX },
-+        { HV_ARM64_REGISTER_ID_AA64_ISAR0_EL1, ID_AA64ISAR0_EL1_IDX },
-+        { HV_ARM64_REGISTER_ID_AA64_ISAR1_EL1, ID_AA64ISAR1_EL1_IDX },
-+        { HV_ARM64_REGISTER_ID_AA64_ISAR2_EL1, ID_AA64ISAR2_EL1_IDX },
-+        { HV_ARM64_REGISTER_ID_AA64_MMFR0_EL1, ID_AA64MMFR0_EL1_IDX },
-+        { HV_ARM64_REGISTER_ID_AA64_MMFR1_EL1, ID_AA64MMFR1_EL1_IDX },
-+        { HV_ARM64_REGISTER_ID_AA64_MMFR2_EL1, ID_AA64MMFR2_EL1_IDX },
-+        { HV_ARM64_REGISTER_ID_AA64_DFR0_EL1,  ID_AA64DFR0_EL1_IDX },
-+        { HV_ARM64_REGISTER_ID_AA64_DFR1_EL1,  ID_AA64DFR1_EL1_IDX },
-+    };
-+
-+    size_t n_regs = ARRAY_SIZE(regs);
-+    hv_register_name *reg_names = g_new(hv_register_name, n_regs);
-+    hv_register_value *reg_values = g_new(hv_register_value, n_regs);
-+
-+    for (i = 0; i < n_regs; i++) {
-+        reg_names[i] = regs[i].name;
-+    }
-+
-+    ret = mshv_get_partition_regs(vm_fd, reg_names, reg_values, n_regs);
-+
-+    if (ret < 0) {
-+        error_report("Failed to get host ID registers");
-+        success = false;
-+        goto out;
-+    }
-+
-+    for (i = 0; i < n_regs; i++) {
-+        ahcf->isar.idregs[regs[i].isar_idx] = reg_values[i].reg64;
-+    }
-+
-+    /* Read MIDR_EL1 from sysfs */
-+    if (g_file_get_contents(
-+            "/sys/devices/system/cpu/cpu0/regs/identification/midr_el1",
-+            &contents, NULL, NULL)) {
-+        ahcf->midr = g_ascii_strtoull(contents, NULL, 0);
-+    } else {
-+        error_report("Failed to read MIDR_EL1 from sysfs");
-+        success = false;
-+        goto out;
-+    }
-+
-+    ahcf->dtb_compatible = "arm,armv8";
-+    ahcf->features = (1ULL << ARM_FEATURE_V8) |
-+                     (1ULL << ARM_FEATURE_AARCH64) |
-+                     (1ULL << ARM_FEATURE_PMU) |
-+                     (1ULL << ARM_FEATURE_GENERIC_TIMER) |
-+                     (1ULL << ARM_FEATURE_NEON);
-+
-+    clamp_id_aa64mmfr0_parange_to_ipa_size(mshv_fd, &ahcf->isar);
-+
-+    /*
-+     * SVE (Scalable Vector Extension) and SME (Scalable Matrix Extension)
-+     * require specific context switch logic in the accelerator.
-+     * Mask them out for now to ensure stability.
-+     */
-+    /* Mask SVE in PFR0 */
-+    pfr0 = GET_IDREG(&ahcf->isar, ID_AA64PFR0);
-+    pfr0 &= ~R_ID_AA64PFR0_SVE_MASK;
-+    SET_IDREG(&ahcf->isar, ID_AA64PFR0, pfr0);
-+
-+    /* Mask SME in PFR1 */
-+    pfr1 = GET_IDREG(&ahcf->isar, ID_AA64PFR1);
-+    pfr1 &= ~R_ID_AA64PFR1_SME_MASK;
-+    SET_IDREG(&ahcf->isar, ID_AA64PFR1, pfr1);
-+
-+out:
-+    g_free(contents);
-+    g_free(reg_names);
-+    g_free(reg_values);
-+    return success;
-+}
-+
-+void mshv_arm_set_cpu_features_from_host(ARMCPU *cpu)
-+{
-+    if (!arm_host_cpu_features.dtb_compatible) {
-+        if (!mshv_enabled() ||
-+            !mshv_arm_get_host_cpu_features(&arm_host_cpu_features)) {
-+            /*
-+             * We can't report this error yet, so flag that we need to
-+             * in arm_cpu_realizefn().
-+             */
-+            cpu->host_cpu_probe_failed = true;
-+            return;
-+        }
-+    }
-+
-+    cpu->dtb_compatible = arm_host_cpu_features.dtb_compatible;
-+    cpu->isar = arm_host_cpu_features.isar;
-+    cpu->env.features = arm_host_cpu_features.features;
-+    cpu->midr = arm_host_cpu_features.midr;
-+    cpu->reset_sctlr = arm_host_cpu_features.reset_sctlr;
-+}
-diff --git a/target/arm/mshv_arm.h b/target/arm/mshv_arm.h
-new file mode 100644
-index 0000000000..a03f9a4405
---- /dev/null
-+++ b/target/arm/mshv_arm.h
-@@ -0,0 +1,18 @@
-+/*
-+ * QEMU MSHV support
-+ *
-+ * Copyright Microsoft, Corp. 2026
-+ *
-+ * Authors: Aastha Rawat   <aastharawat@linux.microsoft.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef QEMU_MSHV_ARM_H
-+#define QEMU_MSHV_ARM_H
-+
-+#include "target/arm/cpu.h"
-+
-+void mshv_arm_set_cpu_features_from_host(ARMCPU *cpu);
-+
+         /*
+          * Partition has access to the guest idle reg. Corresponds to
+          * access_guest_idle_reg privilege.
+          */
+         uint64_t access_guest_idle_reg:1;
++#else
++        uint64_t reserved_z10:1;
 +#endif
+ 
+         /*
+          * Partition has access to frequency regs. corresponds to
+@@ -110,11 +115,16 @@ union hv_partition_synthetic_processor_features {
+         uint64_t reserved_z13:1; /* Reserved for access_root_scheduler_reg */
+         uint64_t reserved_z14:1; /* Reserved for access_tsc_invariant_controls */
+ 
++#if defined(__x86_64__)
++
+         /*
+          * Extended GVA ranges for HvCallFlushVirtualAddressList hypercall.
+          * Corresponds to privilege.
+          */
+         uint64_t enable_extended_gva_ranges_for_flush_virtual_address_list:1;
++#else
++        uint64_t reserved_z15:1;
++#endif
+ 
+         uint64_t reserved_z16:1; /* Reserved for access_vsm. */
+         uint64_t reserved_z17:1; /* Reserved for access_vp_registers. */
+@@ -161,13 +171,92 @@ union hv_partition_synthetic_processor_features {
+         /* HvCallRetargetDeviceInterrupt is supported. */
+         uint64_t retarget_device_interrupt:1;
+ 
++#if defined(__x86_64__)
+         /* HvCallRestorePartitionTime is supported. */
+         uint64_t restore_time:1;
+ 
+         /* EnlightenedVmcs nested enlightenment is supported. */
+         uint64_t enlightened_vmcs:1;
+ 
+-        uint64_t reserved:30;
++        uint64_t nested_debug_ctl:1;
++        uint64_t synthetic_time_unhalted_timer:1;
++        uint64_t idle_spec_ctrl:1;
++
++#else
++        uint64_t reserved_z31:1;
++        uint64_t reserved_z32:1;
++        uint64_t reserved_z33:1;
++        uint64_t reserved_z34:1;
++        uint64_t reserved_z35:1;
++#endif
++
++#if defined(__aarch64__)
++        /*
++         * Register intercepts supported in V1. As more registers are supported
++         * in future releases, new bits will be added here to prevent migration
++         * between incompatible hosts.
++         *
++         * List of registers supported in V1:
++         * 1. TPIDRRO_EL0
++         * 2. TPIDR_EL1
++         * 3. SCTLR_EL1 - Supports write intercept mask.
++         * 4. VBAR_EL1
++         * 5. TCR_EL1 - Supports write intercept mask.
++         * 6. MAIR_EL1 - Supports write intercept mask.
++         * 7. CPACR_EL1 - Supports write intercept mask.
++         * 8. CONTEXTIDR_EL1
++         * 9. PAuth keys (total 10 registers)
++         * 10. HvArm64RegisterSyntheticException
++         */
++        uint64_t register_intercepts_v1:1;
++#else
++        uint64_t reserved_z36:1;
++#endif
++
++        /* HvCallWakeVps is supported */
++        uint64_t wake_vps:1;
++
++        /*
++         * HvCallGet/SetVpRegisters is supported.
++         * Corresponds to AccessVpRegisters privilege.
++         * This feature only affects exo partitions.
++         */
++        uint64_t access_vp_regs:1;
++
++#if defined(__aarch64__)
++        /* HvCallSyncContext/Ex is supported. */
++        uint64_t sync_context:1;
++#else
++        uint64_t reserved_z39:1;
++#endif /* __aarch64__ */
++
++        /*
++         * Management VTL synic support is allowed.
++         * Corresponds to the ManagementVtlSynicSupport privilege.
++         */
++        uint64_t management_vtl_synic_support:1;
++
++#if defined(__x86_64__)
++        /*
++         * Hypervisor supports guest mechanism to signal pending interrupts to
++         * paravisor.
++         */
++        uint64_t proxy_interrupt_doorbell_support:1;
++#else
++        uint64_t reserved_z41:1;
++#endif
++
++#if defined(__aarch64__)
++        /* InterceptSystemResetAvailable is exposed. */
++        uint64_t intercept_system_reset:1;
++#else
++        uint64_t reserved_z42:1;
++#endif
++
++        /* Hypercalls for host MMIO operations are available. */
++        uint64_t mmio_hypercalls:1;
++
++        uint64_t reserved:20;
+     };
+ };
+ 
 
 -- 
 2.45.4
