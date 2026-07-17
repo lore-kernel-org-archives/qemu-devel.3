@@ -4,96 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16165C4451C
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 13:50:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28353C4451B
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 13:50:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkix4-0004GU-Mc; Fri, 17 Jul 2026 09:50:12 -0400
+	id 1wkixP-0004RC-QO; Fri, 17 Jul 2026 09:50:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbassey@redhat.com>)
- id 1wkiwn-0004FE-96
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 09:49:50 -0400
+ id 1wkiws-0004Fy-87
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 09:49:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbassey@redhat.com>)
- id 1wkiwk-0001XO-SQ
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 09:49:49 -0400
+ id 1wkiwp-0001YM-BY
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 09:49:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784296185;
+ s=mimecast20190719; t=1784296190;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=lZBZPNLhjCDSLe+l9dGorEQW0aTecu4Xl6LsTO76fCw=;
- b=dGGCqPWnNbWKiMp93WNd7P4yrsd8s0jm+V5LaciVV+yGQBiFE2jBgE0zTfcmZSuxAn5zHC
- +QEUEXSRdkpFxpz6y8+M24BufVZ9w6LgTKqvuxn8uzql9GxAsBooDr/MTv2QCpp7uy4fq0
- HKHuizSLm8Y4OAotowp4OwDkJCBDMCQ=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=PPiM/aoeSCDxMW8QTDsfI2a1F6P28NxKwnIXOOJ69Is=;
+ b=P/SmubCn0XzEmRG4VnEgVTO+wdjjK+wljKZ+neghDTa97JRSkbdMPG0lvUG/Q7iMWfQ///
+ 0b8fUSKxz8T2P7BUtckBdek2iGBDQiyez+M6fMTY1/+ZDJHPRbdj9dp6GmBWJbfgQ1XAqz
+ 6dg+x7spE+Wrb4cO8ELko7nd2IR+Oe8=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-272-lOBqcOfvOFWFwrijvF29Qg-1; Fri, 17 Jul 2026 09:49:43 -0400
-X-MC-Unique: lOBqcOfvOFWFwrijvF29Qg-1
-X-Mimecast-MFC-AGG-ID: lOBqcOfvOFWFwrijvF29Qg_1784296182
+ us-mta-294-mQPgLhGxN_e9BvQZmKrGkQ-1; Fri, 17 Jul 2026 09:49:49 -0400
+X-MC-Unique: mQPgLhGxN_e9BvQZmKrGkQ-1
+X-Mimecast-MFC-AGG-ID: mQPgLhGxN_e9BvQZmKrGkQ_1784296188
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-493b0a5e636so71777305e9.3
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 06:49:43 -0700 (PDT)
+ 5b1f17b1804b1-493c47a09b5so42836875e9.2
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 06:49:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784296182; x=1784900982; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=lZBZPNLhjCDSLe+l9dGorEQW0aTecu4Xl6LsTO76fCw=;
- b=iURqURCpkWHQYppJ7Ae8SzFnwHYOoo5btuRTNB9Yxml9tGHh0w82f/eIT1TSVLY21M
- gTK8SNO8D46mgnOmWAx42OZk/Qfc+pPaEetW7JqNM7dmC3HQnfom9p15qN5lelcEQ+ZT
- hHEUOd5x6axqu+KThxfl4mkGbBe5xA7f/4hwn5qOJEZ1ufLdbnkSJf3Ubkp8TGTpCK+3
- 7z+rYippbRWlKKuqgGIhxi9PzdqBaUiiJngpujF+SYRbXDkYVp249LoD2raIzcwHGChn
- vj5xDfTpakaeeeLYe2n6sdGV6mXIR/mET1qeUyGz58HafP1+v2c9O+LORadvw5XLR2MG
- GLeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784296182; x=1784900982;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1784296188; x=1784900988; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=lZBZPNLhjCDSLe+l9dGorEQW0aTecu4Xl6LsTO76fCw=;
- b=HCDPSfbpUYI50Artg27GZg176MjkWfoaIymY0bVYOg23mMYe1Y+C/I0sruEM7IJssu
- +yD0KIshO0Oc/zF9QpbMLkosPlKPHIVv5KiaFxU8YJKN2rBhEqze7FO586dUtKpySEvZ
- kk5DoNwYvTqFzGHz4Ts39yCCHNBXV18sH0gr4dcI+2rEJ+XB8kRerU3HLn2Jh5pwljVM
- qc9gYFbzpn12Hfq0ormbDObyM+zeUIsEiTWgdFuZwwmeGoNsgfYdZHk+d/RlKVqtmcSz
- BpcfWHtzOIVmYC9IGUsNEjIqYCETe9SVkJc1Cd8lImo9t344tr8/G2Xs6kohUJ+VzNIZ
- FMeQ==
-X-Gm-Message-State: AOJu0Ywu27b/VKe68csSH3oAsaM2+ee5V2MDXJRuM2wEskmHAE6ub90L
- Sqyr/ewSjKRdmQvL1qoHx3xsJxXoOxOX4JoUOV2RYY12rmzD/9rLzy/2aYmXZ1z0nlZWHtjjIB4
- 1Y47cRku1igOaZPmrwqME5izTGo1t8KZGX25gB1McR5LOcpONFHsO7Qa2WyeTpsUJRqajV9STGE
- Ojn9d8OLkU4/4EMl7rZ+H2oatcN1COzTY2dgj4tyk/Wvad
-X-Gm-Gg: AfdE7cn5sTCjfdI5FqQlbktYE9iD7+YYshPSHQ7RyJ1OG8vMI79yDq99jcFqv8ZVNr6
- 8o7nQmA0jRkSHqEkwo9DG95f0Lt/viAPT+cYp3LF3MUi8U/rO+yM8+2uhX0M3U/5LTco5szTCrn
- 5uii2V1r7QXteFlTSqHjLnl/9LC0c8mvBfUnorFGnSbI6O9HMFkJE9m8ec8luLGxMsFQ6bu+ylj
- OAq6vfwZghOYrc8mTabfwT4OQ32Pvgor9FsL2tfKTiVzxwDhyW4V+K+GqhCBBsCsWotpmhR7mqd
- tjGWQhUbcmVdmog8pLh8hA7NTcRNZXio31gd3bRvyNzrBIdAUs965Hg4iWv6JJFsLB0AJvBr3aV
- 4VSbxsBm113h/XUyT9QngwBuTmrBFMSFSjcwuFmL6EkIeg1fA74ZpdFDAsyVttZydud0ZlESX7Y
- BQjfl5lFE1rw==
-X-Received: by 2002:a05:600c:3586:b0:493:e504:cbef with SMTP id
- 5b1f17b1804b1-4954a38def9mr35829845e9.0.1784296182181; 
- Fri, 17 Jul 2026 06:49:42 -0700 (PDT)
-X-Received: by 2002:a05:600c:3586:b0:493:e504:cbef with SMTP id
- 5b1f17b1804b1-4954a38def9mr35829405e9.0.1784296181675; 
- Fri, 17 Jul 2026 06:49:41 -0700 (PDT)
+ bh=PPiM/aoeSCDxMW8QTDsfI2a1F6P28NxKwnIXOOJ69Is=;
+ b=c3I3wV85a93LlL7JndB0jx8ORjCDvHC9IEqvYgDilJcYoWOqMYo5CiknY/OI6QEfq5
+ mIM0M0kfnVrrE9sv9zF1gphlWi2I5I1uqE2uKQf9gcETiDPyJagMNzc2d3PgFhVkZ4eQ
+ z4ZYOCGla0HIMFs3haGu+B27FnXFIsOa5M90M2M2Npc3eoJcFxueBY0QH7lSbCls6S7l
+ 7y8fObVTykHQtsHD5vbJca/eJakk/T3tBKmiBYPRfEpvBTcNbTml6W257rYhSZ7al1Iq
+ pgfI/y2lEgveSW67oVpaxMPVZqoofBfkQ94YUygNy1gvDn94RudYYK5mCkpchLL5wQKO
+ bn9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784296188; x=1784900988;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=PPiM/aoeSCDxMW8QTDsfI2a1F6P28NxKwnIXOOJ69Is=;
+ b=CWEHKUkaDkpEjIeQQ74ErZFeqTjdNM8SUaoLIFaIg2XU40r6nLxZ5XgtY3Hd607H4C
+ Nwq6FduasFkMt4gcSQ+vatrV+eoxe5fLBCBA04I0Z0nG/s6ZT3FR08ZVXIxZbvVv0WYD
+ REVQZxgQNTatWDIbg2ir0O1ZjVshx8dj2agN72jX+pME/2bYjotVz5BPnpTcB2CvVQIQ
+ xS0hYki7uhzQKvM6e5X7ePOZOHqzIe8tl2PKJCLwThOqx0JiPiS2Q0G/unWGsOhQFalf
+ 5CCPtUnWohbC7C931JWUFg8+Nf3nYXOCuQFTFFjio78vk5t4Y8kHHR23wyO37eiDEsEL
+ ZW5g==
+X-Gm-Message-State: AOJu0YxFVAmpq2PwUOtb0Xo7sYu6KJne5GSAt0dhV+c3yGWm03lvxBKn
+ z4L931tjwfhXVJpvMUSF4yLpIZoS9748geyp1rTm67fQfEbQTyB6sC5GJhJuDeU/f1KK5ny7bLH
+ XBtuserNUFsAZM9QOH9c+uOOKvBonsHYe2J3v7InXDJQkA2EpPw8JH/0IzA9nZEMImwxSDPdirb
+ Kxwtd6xLUZ7bJZTYX3DAVMwkycuzgmh4vfVdnqi7Ls72JN
+X-Gm-Gg: AfdE7ck9Pr17Yxcpc9LX9caNcfn1cTIsh0rxf0YGfZhJuQCovw3yS6unoH+ABlUqHnt
+ sfTmRpWiS94viAt+heMwSlFHseq87DLzfzLWtZana+AZbFkB+y103dQBRnAR4WrqYRdspFcMXoy
+ RjvZZWJhiTWi0Nw5Ay49DqrgNdsE9lr3VYzTA8PNZvXU+6ONgZXH1SLFwM1ZPIhfzBMzk8Pd13N
+ eNGSB3oQpfMcL3k/DO6LoyINPnKypvsSqxBISPZ0Z6x5X545y0wsQi3EGhrmyTpipQjC9WhlBTY
+ gGoVdIedGosXJabj3tTQgLyUu7Q5SUnmEt3lZqrYKyF5/gGiL2pojHOdof0DvriRIYsnG6VsMwl
+ ZeAL7SsVh1iicOFHbgyMaxYc1R9rN1WwBIBTyifeYTyZRxDAzVmtEiyxS42WQJQyzSAzE8gXnhR
+ vlPxaRtNbHfw==
+X-Received: by 2002:a05:600c:4ed0:b0:493:c634:952 with SMTP id
+ 5b1f17b1804b1-4954a3d0872mr31772365e9.7.1784296187916; 
+ Fri, 17 Jul 2026 06:49:47 -0700 (PDT)
+X-Received: by 2002:a05:600c:4ed0:b0:493:c634:952 with SMTP id
+ 5b1f17b1804b1-4954a3d0872mr31771465e9.7.1784296187075; 
+ Fri, 17 Jul 2026 06:49:47 -0700 (PDT)
 Received: from fedora (cst-prg-27-253.cust.vodafone.cz. [46.135.27.253])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4954ba2abd0sm30049525e9.15.2026.07.17.06.49.39
+ 5b1f17b1804b1-4954ba2abd0sm30049525e9.15.2026.07.17.06.49.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jul 2026 06:49:40 -0700 (PDT)
+ Fri, 17 Jul 2026 06:49:46 -0700 (PDT)
 From: Dorinda Bassey <dbassey@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: mhrica@redhat.com, mst@redhat.com, sgarzare@redhat.com,
  manos.pitsidianakis@linaro.org, marcandre.lureau@redhat.com,
  stefanha@redhat.com, pbonzini@redhat.com, aesteve@redhat.com,
  Dorinda Bassey <dbassey@redhat.com>
-Subject: [PATCH v4 0/3] vhost-user-gpu: Add blob resource and shared memory
- support
-Date: Fri, 17 Jul 2026 15:49:17 +0200
-Message-ID: <20260717134920.265128-1-dbassey@redhat.com>
+Subject: [PATCH v4 2/3] vhost-user-gpu: Add shared memory region support
+Date: Fri, 17 Jul 2026 15:49:19 +0200
+Message-ID: <20260717134920.265128-3-dbassey@redhat.com>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260717134920.265128-1-dbassey@redhat.com>
+References: <20260717134920.265128-1-dbassey@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: permerror client-ip=170.10.133.124;
@@ -120,43 +123,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add blob resource support to the vhost-user-gpu device, enabling
-Vulkan pass-through via Venus with a vhost-user backend such as
-vhost-device-gpu.
+From: Matej Hrica <mhrica@redhat.com>
 
-Patch 1 fixes a deadlock that occurs when the memory region
-transaction commit triggers ADD_MEM_REG back to the backend while
-it is still blocked waiting for the SHMEM_MAP reply.
+Add a 'hostmem' property to the vhost-user-gpu which enables the shared
+memory in the parent object.
 
-Patches 2-3 register a shared memory region for SHMEM_MAP/UNMAP
-operations and forward the RESOURCE_BLOB and CONTEXT_INIT feature
-flags from the backend to the guest.
+Register a container MR in the shmem_list for SHMEM_MAP/UNMAP
+operations. A container MR is used so that SHMEM_MAP FD-backed
+subregions each get their own KVM memory slot with the correct
+backing fd.
 
-Dorinda Bassey (1):
-  vhost: Fix SHMEM_MAP transaction ordering and resulting deadlock
+Suggested-by: Albert Esteve <aesteve@redhat.com>
+Reviewed-by: Albert Esteve <aesteve@redhat.com>
+Signed-off-by: Matej Hrica <mhrica@redhat.com>
+Signed-off-by: Dorinda Bassey <dbassey@redhat.com>
+---
+ hw/display/vhost-user-gpu.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-Matej Hrica (2):
-  vhost-user-gpu: Add shared memory region support
-  vhost-user-gpu: Forward RESOURCE_BLOB and CONTEXT_INIT flags
-
- hw/display/vhost-user-gpu.c | 17 +++++++++++++++++
- hw/virtio/vhost-user.c      | 20 ++------------------
- hw/virtio/vhost.c           | 10 ++++++++++
- 3 files changed, 29 insertions(+), 18 deletions(-)
-
-Changes in v4:
-- Document map/unmap ordering in commit message
-
-Changes in v3:
-- Reordered patches: bugfix first, then features
-- Added Fixes tag
-
-Changes in v2:
-- Reordered patches: shmem support before feature flags
-- Use virtio_new_shmem_region() helper
-- Drop explicit transaction begin/commit wrapping
-
---
+diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
+index 57360898ca0..dbba80c7783 100644
+--- a/hw/display/vhost-user-gpu.c
++++ b/hw/display/vhost-user-gpu.c
+@@ -649,6 +649,16 @@ vhost_user_gpu_device_realize(DeviceState *qdev, Error **errp)
+     }
+ 
+     g->vhost_gpu_fd = -1;
++
++    /*
++     * If shared memory is enabled, register the hostmem region for
++     * SHMEM_MAP/UNMAP operations.
++     */
++    if (virtio_gpu_hostmem_enabled(g->parent_obj.conf)) {
++        VirtioSharedMemory *shmem = virtio_new_shmem_region(
++            vdev, VIRTIO_GPU_SHM_ID_HOST_VISIBLE, g->parent_obj.conf.hostmem);
++        memory_region_add_subregion(&g->parent_obj.hostmem, 0, &shmem->mr);
++    }
+ }
+ 
+ static struct vhost_dev *vhost_user_gpu_get_vhost(VirtIODevice *vdev)
+@@ -659,6 +669,7 @@ static struct vhost_dev *vhost_user_gpu_get_vhost(VirtIODevice *vdev)
+ 
+ static const Property vhost_user_gpu_properties[] = {
+     VIRTIO_GPU_BASE_PROPERTIES(VhostUserGPU, parent_obj.conf),
++    DEFINE_PROP_SIZE("hostmem", VhostUserGPU, parent_obj.conf.hostmem, 0),
+ };
+ 
+ static void
+-- 
 2.52.0
 
 
