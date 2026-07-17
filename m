@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87C4AC44516
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 23:26:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D24ADC44515
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 23:26:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkru0-0001br-KT; Fri, 17 Jul 2026 19:23:32 -0400
+	id 1wkrtu-0001YO-Dk; Fri, 17 Jul 2026 19:23:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wkrty-0001au-Ah
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 19:23:30 -0400
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ id 1wkrts-0001X9-Oc
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 19:23:24 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wkrtw-00071q-9n
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 19:23:29 -0400
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-c9c26a5fb98so1527499a12.0
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 16:23:27 -0700 (PDT)
+ id 1wkrtp-0006zX-KF
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 19:23:24 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-38e07ebd263so3453858a91.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 16:23:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784330607; x=1784935407; darn=nongnu.org;
+ d=linaro.org; s=google; t=1784330600; x=1784935400; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=hoKL+T5ZAMVBhG4qjN+wRa38usEFNIxUeO3xCWyHIIM=;
- b=m3IRTIyUUrImJNcPSCcQ8eGPJpHyemnqZ9yDLIrsUyiGFLhLoTVZstCoC8Ox6hQKzi
- ogXtQ5LSYKPsg1d3mGKOUJsBSpu1ys6QwwChau7YdHlVI0ES3IFy9g9gfBRQrQp7QIqh
- b2T9ar5zMiWOS874HvZu9KDvfAytDXuBqgdtFtFWWV64Lap4cO9JR3NJ/UYhRjcdr7S9
- Ci/9n+G3fO/j8D4ImlJJV0pyjErDjBqmXYqSU/fLIWZBw6SCwjoNgcnm0IDtdG/mGAc/
- UnZsqTRcHINVYI1e433V5gWtqShZ59BhZWFsqIp74KpvQV7pBiK3hAQ+sxGuh3db7u/C
- I52g==
+ bh=mZTwqniLxRl1m+Mbcq6QdOuxrIA10SI062fGGhdr3eE=;
+ b=C4lIwUMCm+LHM7FJ9yZAFzuPJIlIm781TOP0bDaz+GTi12KLeTc1TGjGpVSpdq5ve5
+ BChw47oM5wzuhxvcFjhCPlprYzbPddOtTxGIokZocor8Q7HrKJmZ2KluOqBNnOBP0wHV
+ 2Moapuku5mnQYZFeiLJLg6sEEE/N/mEnmxZNSUop12Cnk5yB+hFXLS60uPltTsaEVN0p
+ /YT8Kd/OgqeSV9D+DZNN+pATzltlvKhqVHU13l0IyTphDqDT0HA003MUNtPTQBVGu5Dn
+ +nlG2z+n/KDoNmM35zo3PEqABqR6ueu5Pkhp27WeLPhne7BT/jwaoGOWB5D2bki8KDo0
+ aNEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784330607; x=1784935407;
+ d=1e100.net; s=20251104; t=1784330600; x=1784935400;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=hoKL+T5ZAMVBhG4qjN+wRa38usEFNIxUeO3xCWyHIIM=;
- b=I1X7jT+ZLtRwd6pOErTRpcnvulYXOzUELeM98YvOY5OW8nuP79ZPIMAcQhyXXkWwY6
- AfEUKJzvzoLilszHbWKcbGbjEch2VAA2iUE7kvxBjOK/NduYXoNkMcbeN15rLbqUpw6Z
- dL3avCK2/ijJpag8gCKUt6o4tJEpU8VSHOPIwm3Vtu8z19SMXuLXmUvEqy+K7AnFYR5C
- 1dOEpd0zEGDYoGw8Cd1Ygf4FKzOC+UkSHMf2PcEIbV5r8I96K6yssytUxBw1/cH27WW8
- vdFtSMqPYvNBFoG8Jo0dDXx0/0G5FqkP0gU/YCtmH2KSrx4QsuUG/S3VyqHksKWQPwZK
- V8SQ==
-X-Gm-Message-State: AOJu0YzLDCaF0YnW+6znRiT4rb1d3uwYYdreoV7I+lgb/7SkuCfBoumE
- V7d/jU5viH0vgBRJBsmM9ott30aiRZpg6Xi3JeVu32Zsl+UtMGz5jnH7hzpw0VAWgONb3BoWSkb
- qZKoH
-X-Gm-Gg: AfdE7ck7fyqSxz2GY6snx3Wrp42qC57WoZClYCmNaMm8h7bD4x0eMueGkWsPEJR/ZqL
- 9u04YKp0N1dOnapTYSu+tbWp9QT6StyZ2+hFA479sP7ejICncKprOXgXEZhAzzj9PuhPkzW6Hzd
- xVW0c64j+nqGOBjNCmsIqnbys0ekMgf70xe7wlz8wvJ+mePWbOzvqXudibBambSj/vUStrFP9sK
- Lo/OC8T6LDxn7skvj8ZvWrNh3zwy3QQXYXz2ezfFAR9yJ8OC3BbEasUJBRUC1KoCy1YmLBM3ShU
- LRk/BXWnCN1KXjlcI7zANV0Tr1iVDWMHwIR+rfSNFe1uIgI+tgo7maAisxGF0N1207eFCT0FN3N
- qpoH3NG3vQ3SgFq/oByzKkuQWNRJvLVfXMm27JsHSG+BkEa9Co2AY9Jyf1/DEFlmV4nGN0KfwWP
- /46HVmgtA=
-X-Received: by 2002:a17:90b:1345:b0:37e:1620:dabc with SMTP id
- 98e67ed59e1d1-38e3cfd30a6mr9211116a91.0.1784330606704; 
- Fri, 17 Jul 2026 16:23:26 -0700 (PDT)
+ bh=mZTwqniLxRl1m+Mbcq6QdOuxrIA10SI062fGGhdr3eE=;
+ b=msTgRZX57uEZ4mwXKGOtN4JG2KzqsGmbnaT+ZUUnqFA0CNnk2IPjeirbP1eAEd9wOP
+ phAcXa3f2ieV+0q7i52N9Arwv7yk5lkMWH/wKQlr+Z0k6ffR4TGtRvJQ5S1hPRNA2spR
+ LI4EVWw7zfM9s655v3H5f8eCGO9PqZOFbu53xjLiYth+10HuCq8lNfq17UtdW1HJlT25
+ QQ3fpGT1NEwP9Jzpd1w4oqAZkO0Vt3C8bl/o8AIeeR6B5BEn+EhUzcyEpdJdVKlTpbS3
+ h01ny083HFT1Q9ait1UzN07bjh1PmgWxNSMBBbv1+t6833tN8FIOk73n93SUqsiqnkp9
+ sn4w==
+X-Gm-Message-State: AOJu0YyXpBF6DkJFs0eUj2jk7Z5BrTjOCIecNXpXY1PLrH94/t3fccLA
+ aq5SL6roR4AlsdCfa+IGej07zsW2AbISqbfr11nUYI/uAYU8aaP+iVgL7lscazgppUBWC51tQH+
+ 465v9
+X-Gm-Gg: AfdE7clYh9gZSAA7xo1zohDCaBLj0DgT73OdQPBIR3GSPLFnAWlt3z6tv+lybieBDFq
+ 9NglnoZrH8/v885Jv8XVoDiVwb2o3NuQXH36cWySlEqHpYPRfxoHO0JOnUKbkpKZtAR3CxlNCSu
+ y6biijj1OnYplocWgpNiWY8D1aUJIU0iE8knbhduYZtX2PG3YV6OY/OBSKKHoD6BYzZGESQFWvm
+ ujWbAe88ZFIJNhymVtsKNq8Zm9O8XfWh347Ah6mGK6AdvDtGT+iLZseekXiIWw+EFHmPi9TiCm1
+ U/W6Ay+Ru7leS0rXKG5yf3eUScNOysxtQTib+4ZAO+BE3cyry23EeB/IjFc0UEPG1a6M6q6a1fI
+ Alck41kkDeKWI0wTLvfUQk+DUltBavHVzZmj+Rd5Sa6S0L2xcp7q6RY9xmUa/U6MlAT9S3RLHGs
+ J9V8rnNfs=
+X-Received: by 2002:a17:90b:3ec7:b0:38e:cb1:8ec9 with SMTP id
+ 98e67ed59e1d1-38e4b585bfcmr4868782a91.42.1784330600120; 
+ Fri, 17 Jul 2026 16:23:20 -0700 (PDT)
 Received: from stoup.. ([32.140.233.50]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13ce2a18a47sm8186261c88.8.2026.07.17.16.23.25
+ a92af1059eb24-13ce2a18a47sm8186261c88.8.2026.07.17.16.23.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jul 2026 16:23:26 -0700 (PDT)
+ Fri, 17 Jul 2026 16:23:19 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 14/17] target/arm: Drop clean_addr_tbi before helper_dc_zva
-Date: Fri, 17 Jul 2026 16:23:02 -0700
-Message-ID: <20260717232306.378988-16-richard.henderson@linaro.org>
+Subject: [PATCH 09/17] target/arm: Drop TLB_MMIO check in
+ allocation_tag_mem_internal
+Date: Fri, 17 Jul 2026 16:22:57 -0700
+Message-ID: <20260717232306.378988-11-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260717232306.378988-1-richard.henderson@linaro.org>
 References: <20260717232306.378988-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,48 +100,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that probe_write always handles tagged pointers, we
-don't need to handle this during translation.
+There is a memory_region_is_ram check later that
+actually does that this was trying to do.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/translate-a64.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ target/arm/tcg/mte_helper.c | 11 -----------
+ 1 file changed, 11 deletions(-)
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 590c7d8064..24a0cd8345 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -3142,7 +3142,7 @@ static void handle_sys(DisasContext *s, bool isread,
-             gen_helper_mte_check_zva(tcg_rt, tcg_env, gen_mtedesc_zva(s),
-                                      cpu_reg(s, rt));
-         } else {
--            tcg_rt = clean_data_tbi(s, cpu_reg(s, rt));
-+            tcg_rt = cpu_reg(s, rt);
-         }
-         gen_helper_dc_zva(tcg_env, tcg_rt);
-         return;
-@@ -4763,7 +4763,7 @@ static bool trans_LD_single_repl(DisasContext *s, arg_LD_single_repl *a)
+diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
+index 997248bd57..6177dea842 100644
+--- a/target/arm/tcg/mte_helper.c
++++ b/target/arm/tcg/mte_helper.c
+@@ -181,17 +181,6 @@ allocation_tag_mem_internal(CPUARMState *env, int ptr_mmu_idx,
+         goto fini;
+     }
  
- static bool trans_STZGM(DisasContext *s, arg_ldst_tag *a)
- {
--    TCGv_i64 addr, clean_addr, tcg_rt;
-+    TCGv_i64 addr, tcg_rt;
- 
-     if (!dc_isar_feature(aa64_mte, s)) {
-         return false;
-@@ -4787,9 +4787,8 @@ static bool trans_STZGM(DisasContext *s, arg_ldst_tag *a)
-      * The non-tags portion of STZGM is mostly like DC_ZVA,
-      * except the alignment happens before the access.
-      */
--    clean_addr = clean_data_tbi(s, addr);
--    tcg_gen_andi_i64(clean_addr, clean_addr, -s->dcz_blocksize);
--    gen_helper_dc_zva(tcg_env, clean_addr);
-+    tcg_gen_andi_i64(addr, addr, -s->dcz_blocksize);
-+    gen_helper_dc_zva(tcg_env, addr);
-     return true;
- }
- 
+-    /*
+-     * If not backed by host ram, there is no tag storage: access unchecked.
+-     * This is probably a guest os bug though, so log it.
+-     */
+-    if (unlikely(ret.flags & TLB_MMIO)) {
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "Page @ 0x%" PRIx64 " indicates Tagged Normal memory "
+-                      "but is not backed by host ram\n", ptr);
+-        goto fini;
+-    }
+-
+     /*
+      * Remember this across the second lookup below,
+      * which may invalidate this pointer via tlb resize.
 -- 
 2.43.0
 
