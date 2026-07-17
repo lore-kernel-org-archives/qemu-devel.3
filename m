@@ -4,23 +4,23 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82C68C44516
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 10:16:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 206C6C44517
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 10:16:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkfb8-0002oo-2z; Fri, 17 Jul 2026 06:15:14 -0400
+	id 1wkfb8-0002pq-NH; Fri, 17 Jul 2026 06:15:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
- id 1wkfb6-0002ni-NL; Fri, 17 Jul 2026 06:15:12 -0400
+ id 1wkfb6-0002nk-Ow; Fri, 17 Jul 2026 06:15:12 -0400
 Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
  by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
  (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
- id 1wkfb4-0007Zt-4D; Fri, 17 Jul 2026 06:15:12 -0400
+ id 1wkfb4-0007Zv-5M; Fri, 17 Jul 2026 06:15:12 -0400
 Received: from xiaoou-ubuntu-02.home.arpa (unknown [36.110.52.2])
- by APP-01 (Coremail) with SMTP id qwCowAB3T_Pa_llqSAw4AA--.34459S20;
- Fri, 17 Jul 2026 18:07:28 +0800 (CST)
+ by APP-01 (Coremail) with SMTP id qwCowAB3T_Pa_llqSAw4AA--.34459S18;
+ Fri, 17 Jul 2026 18:07:27 +0800 (CST)
 From: Molly Chen <xiaoou@iscas.ac.cn>
 To: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
  daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
@@ -28,19 +28,19 @@ To: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
 Cc: xiaoou@iscas.ac.cn,
 	qemu-riscv@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH v2 18/18] target/riscv: Remove Zbkb dependency from P
- extension to align with the spec
-Date: Fri, 17 Jul 2026 10:07:11 +0000
-Message-Id: <c2c9fd17d043449e94d6a63206696d50e1f4a257.1784280142.git.xiaoou@iscas.ac.cn>
+Subject: [PATCH v2 16/18] target/riscv: Add packed SIMD load-replicate
+ instructions
+Date: Fri, 17 Jul 2026 10:07:09 +0000
+Message-Id: <246659451a5aac58f61f92751baac9bf57e4ba54.1784280142.git.xiaoou@iscas.ac.cn>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <cover.1784280142.git.xiaoou@iscas.ac.cn>
 References: <cover.1784280142.git.xiaoou@iscas.ac.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qwCowAB3T_Pa_llqSAw4AA--.34459S20
-X-Coremail-Antispam: 1UD129KBjvJXoWxJrW5JF4rJr43Cw1xWFW7urg_yoW8uFW5pr
- 40k3yjkrZ8tryrA3yftF4UJF1UWa1S9a1Iqan2vwn8uF45JrW3Xw4q9w4agF1UJF1kWa12
- kF1vvwn0vrW8Xa7anT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+X-CM-TRANSID: qwCowAB3T_Pa_llqSAw4AA--.34459S18
+X-Coremail-Antispam: 1UD129KBjvJXoWxurWUKFWrGFW8JFyDWr1rWFg_yoW5Kr1xpF
+ 18Gr17KrW8JrW7AFyfKr45Jr13JrsxG3yUGrnxX3Z3Za15JFWrA34UK3y7GrWYqFyDWFWU
+ WF1qyryUWa95JwUanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
  9KBjDU0xBIdaVrnRJUUUmm14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
  rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JF0E3s1l82xGYI
  kIc2x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2
@@ -82,53 +82,102 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Molly Chen <xiaoou@iscas.ac.cn>
 ---
- target/riscv/tcg/insn_trans/trans_rvb.c.inc | 4 +++-
- target/riscv/tcg/insn_trans/trans_rvp.c.inc | 2 +-
- target/riscv/tcg/tcg-cpu.c                  | 6 ++----
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ target/riscv/insn32.decode                  | 16 ++++++++++++++
+ target/riscv/tcg/insn_trans/trans_rvp.c.inc | 24 +++++++++++++++++++++
+ target/riscv/tcg/translate.c                |  2 ++
+ 3 files changed, 42 insertions(+)
 
-diff --git a/target/riscv/tcg/insn_trans/trans_rvb.c.inc b/target/riscv/tcg/insn_trans/trans_rvb.c.inc
-index e4dcc7c9913..af53eb4fe4b 100644
---- a/target/riscv/tcg/insn_trans/trans_rvb.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_rvb.c.inc
-@@ -527,7 +527,9 @@ static bool trans_brev8(DisasContext *ctx, arg_brev8 *a)
+diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+index 8720fedb592..403e17e439d 100644
+--- a/target/riscv/insn32.decode
++++ b/target/riscv/insn32.decode
+@@ -44,6 +44,10 @@
+ %imm_p_ui16 20:4
+ %imm_p_ui32 20:5
+ %imm_p_ui64 20:6
++%imm_p_l1  16:8
++%imm_p_l2  15:s1 16:9
++%imm_p_l3  15:s9 24:1              !function=ex_shift_6
++%imm_p_l4  15:s9 24:1              !function=ex_shift_22
  
- static bool trans_pack(DisasContext *ctx, arg_pack *a)
- {
--    REQUIRE_ZBKB(ctx);
-+    if (!has_ext(ctx, RVP) && !ctx->cfg_ptr->ext_zbkb) {
-+        return false;
-+    }
-     return gen_arith(ctx, a, EXT_NONE, gen_pack, NULL);
- }
+ # Argument sets:
+ &empty
+@@ -53,6 +57,7 @@
+ &r    rd rs1 rs2
+ &r2   rd rs1
+ &r2_s rs1 rs2
++&p_l  imm rd
+ &s    imm rs1 rs2
+ &u    imm rd
+ &shift     shamt rs1 rd
+@@ -114,6 +119,10 @@
+ @p_ui16 ..... .... ... ..... ... ..... ....... &i imm=%imm_p_ui16 %rs1 %rd
+ @p_ui32 ..... .... ... ..... ... ..... ....... &i imm=%imm_p_ui32 %rs1 %rd
+ @p_ui64 ..... .... ... ..... ... ..... ....... &i imm=%imm_p_ui64 %rs1 %rd
++@p_l1  ........ ........ .... ..... ....... &p_l      imm=%imm_p_l1         %rd
++@p_l2  ....... .......... ... ..... ....... &p_l      imm=%imm_p_l2         %rd
++@p_l3  ....... .......... ... ..... ....... &p_l      imm=%imm_p_l3         %rd
++@p_l4  ....... .......... ... ..... ....... &p_l      imm=%imm_p_l4         %rd
  
+ # Formats 64:
+ @sh5     .......  ..... .....  ... ..... ....... &shift  shamt=%sh5      %rs1 %rd
+@@ -1614,3 +1623,10 @@ pm4addu_h       10100 11 ..... ..... 101 ..... 0111011 @r
+ pm4adda_h       10001 11 ..... ..... 101 ..... 0111011 @r
+ pm4addasu_h     11101 11 ..... ..... 101 ..... 0111011 @r
+ pm4addau_h      10101 11 ..... ..... 101 ..... 0111011 @r
++
++# Packed SIMD - Load and Replicate instructions
++pli_b    10110100 ........ 0010 ..... 0011011 @p_l1
++pli_h    1011000 .......... 010 ..... 0011011 @p_l2
++plui_h   1111000 .......... 010 ..... 0011011 @p_l3
++pli_w    1011001 ..... ..... 010 ..... 0011011 @p_l2
++plui_w   1111001 ..... ..... 010 ..... 0011011 @p_l4
 diff --git a/target/riscv/tcg/insn_trans/trans_rvp.c.inc b/target/riscv/tcg/insn_trans/trans_rvp.c.inc
-index e33e0ec110a..8c5b52ca970 100644
+index 6c344a66dc8..4d5fc230d2e 100644
 --- a/target/riscv/tcg/insn_trans/trans_rvp.c.inc
 +++ b/target/riscv/tcg/insn_trans/trans_rvp.c.inc
-@@ -1386,4 +1386,4 @@ GEN_DWS_REG_OP(psll_dws, gen_shift, EXT_NONE, tcg_gen_shl_tl)
- GEN_DWS_REG_OP(psrl_dws, gen_shift, EXT_ZERO, tcg_gen_shr_tl)
- GEN_DWS_REG_OP(psra_dws, gen_shift, EXT_SIGN, tcg_gen_sar_tl)
+@@ -902,3 +902,27 @@ GEN_SIMD_TRANS_ACC_64(pm4adda_h)
+ GEN_SIMD_TRANS_ACC_64(pm4addasu_h)
+ GEN_SIMD_TRANS_ACC_64(pm4addau_h)
  
--GEN_DW_PAIR_ARITH(ppaire_dh, REQUIRE_ZBKB(ctx); , EXT_NONE, gen_pack)
-+GEN_DW_PAIR_ARITH(ppaire_dh, , EXT_NONE, gen_pack)
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 1665583accf..36b0196a626 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -563,10 +563,8 @@ static void riscv_cpu_validate_p(RISCVCPU *cpu, Error **errp)
-         return;
-     }
++#define GEN_PLI(NAME, PRE_REQ, IMM_TYPE, LIMIT, SHIFT, ADDEND) \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a)    \
++{                                                              \
++    PRE_REQ                                                    \
++    REQUIRE_RVP(ctx);                                          \
++    int i = 1;                                                 \
++    IMM_TYPE imm = a->imm;                                     \
++    while (i < (LIMIT)) {                                      \
++        imm = (imm << (SHIFT)) + (ADDEND);                     \
++        i++;                                                   \
++    }                                                          \
++    gen_set_gpri(ctx, a->rd, imm);                             \
++    return true;                                               \
++}
++
++GEN_PLI(pli_b, , target_long, TARGET_LONG_SIZE, 8, a->imm)
++GEN_PLI(pli_h, , target_long, TARGET_LONG_SIZE / 2, 16,
++        a->imm & 0xFFFF)
++GEN_PLI(plui_h, , target_long, TARGET_LONG_SIZE / 2, 16,
++        a->imm & 0xFFFF)
++GEN_PLI(pli_w, REQUIRE_64BIT(ctx); , int64_t, TARGET_LONG_SIZE / 4, 32,
++        a->imm & 0xFFFFFFFF)
++GEN_PLI(plui_w, REQUIRE_64BIT(ctx); , int64_t, TARGET_LONG_SIZE / 4, 32,
++        a->imm & 0xFFFFFFFF)
+diff --git a/target/riscv/tcg/translate.c b/target/riscv/tcg/translate.c
+index 0df9d4190f1..668ec3120af 100644
+--- a/target/riscv/tcg/translate.c
++++ b/target/riscv/tcg/translate.c
+@@ -790,7 +790,9 @@ EX_SH(1)
+ EX_SH(2)
+ EX_SH(3)
+ EX_SH(4)
++EX_SH(6)
+ EX_SH(12)
++EX_SH(22)
  
--    if (!(cpu->cfg.ext_zmmul && cpu->cfg.ext_zba && cpu->cfg.ext_zbb &&
--          cpu->cfg.ext_zbkb)) {
--        error_setg(errp, "P extension requires zmmul, zba, zbb and zbkb "
--                         "extensions");
-+    if (!(cpu->cfg.ext_zmmul && cpu->cfg.ext_zba && cpu->cfg.ext_zbb)) {
-+        error_setg(errp, "P extension requires zmmul, zba and zbb extensions");
-         return;
-     }
- }
+ #define REQUIRE_EXT(ctx, ext) do { \
+     if (!has_ext(ctx, ext)) {      \
 -- 
 2.34.1
 
