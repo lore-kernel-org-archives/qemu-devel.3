@@ -4,110 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA85DC44507
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 10:33:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4CF9C44507
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 10:34:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkft0-0003Ke-JL; Fri, 17 Jul 2026 06:33:42 -0400
+	id 1wkfsz-0003KU-Jt; Fri, 17 Jul 2026 06:33:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbassey@redhat.com>)
- id 1wkfsv-0003Jf-Ol
+ id 1wkfsv-0003Je-OW
  for qemu-devel@nongnu.org; Fri, 17 Jul 2026 06:33:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbassey@redhat.com>)
- id 1wkfst-0001Ql-Li
+ id 1wkfsr-0001QZ-J7
  for qemu-devel@nongnu.org; Fri, 17 Jul 2026 06:33:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784284412;
+ s=mimecast20190719; t=1784284407;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AYSfFq9oXIBf3ZUfwtzjbA8CNeqsnosYDVtMJ70W6gE=;
- b=fxP0nSptRENhFZfulRhG7uMCLmfBLREdcIB9TEmpmWicYN5Lx7HEj3hyRzcCJI0wW2fwZE
- PLwBv5C/DvdN9m0AmHIwfCjmo7IdGpO0ilVvkrlRi1/xwiU8iuWzaCu0/NYhCpGVFwi+vU
- +IOyqOF0733NTnyVGmr9GKv/XlNQjzU=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Jf30dL8Lh4Vek0qz4aE62PpGyRERpDruf5mfOsXxdLI=;
+ b=JDf3fgQRLPJ0I+0TlUztxQBlsdcZSulX3HnwPeb89NdtAMSNtncZ8Jb4vJvylz/KrN+ZEM
+ aopl7W6sSx1pnDTwB6jp8Mr1Ao7Drx0zFjNkLlPyHaJCSUrEy7ykmMb3ea7JqYXTqLN6L+
+ WZkJpvXLpSWUJ3MukoBwNo3yO7ZsLBQ=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-175-T9jMUWbKMZeygPEwpx2TFw-1; Fri, 17 Jul 2026 06:33:31 -0400
-X-MC-Unique: T9jMUWbKMZeygPEwpx2TFw-1
-X-Mimecast-MFC-AGG-ID: T9jMUWbKMZeygPEwpx2TFw_1784284410
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-47f24a50f0cso6684991f8f.3
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 03:33:31 -0700 (PDT)
+ us-mta-346-ZEHkV15jOZuz-pkywX5wEg-1; Fri, 17 Jul 2026 06:33:25 -0400
+X-MC-Unique: ZEHkV15jOZuz-pkywX5wEg-1
+X-Mimecast-MFC-AGG-ID: ZEHkV15jOZuz-pkywX5wEg_1784284404
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-47f2ed7cc45so5104744f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 03:33:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784284410; x=1784889210; darn=nongnu.org;
+ d=redhat.com; s=google; t=1784284404; x=1784889204; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=AYSfFq9oXIBf3ZUfwtzjbA8CNeqsnosYDVtMJ70W6gE=;
- b=BmtEuIHMTMrrgec/p2uAyXeDkfe3ZcCjXyVTDp5xiXgRU5oeeY/eHNMEhm/6venJke
- OAsYygkE4W+W4hjXzZAqqO3UvXnv1wXKBOacYph6Ah8qPv47C3LoyrxD9YeyaNad0PsA
- 8G2v9bQ1ZHzXygKwVh1HVkqdgpq2NETgtUDgD5u7YE+4ZOeYsrr0UViPT3olbGAKhW5E
- s+funcffVR6WTYY/TwLp6cix4n+TGmg0MZd0q60ELj1XKfTqYwcSb3/BD8onhMj2zgVJ
- XIYzSNSaXoWlKzqNgR7oxrSUpsHbqKbhD04IJfCKT2zargh6VUnppN+AhikYfSEcy0NN
- TBqg==
+ bh=Jf30dL8Lh4Vek0qz4aE62PpGyRERpDruf5mfOsXxdLI=;
+ b=ZL3by/EZTU+FRnfKJ80YOWjrS5zGnVeWi7Vmws9m4DXlMnIK0fjbA7piq63owhGoyZ
+ 4RgI+wlNIwYmdGhgi7P/MsAs+w2gZvvHrqoQE8N/0OdwObHgyUh8yMxoD43xlKBDWh4o
+ kdu4IuufUTPGopY4p+fGgRHey2/6LNRU2NJKflhPEQUkVM+7NwQkpepgjRz3jI/uED2O
+ 0Bz68sY7gLU7einAgMicMqiPRsqrTNxt6FdAIQQyC6FkrKdoq1zv+TV0C7q6sPDtH8PF
+ HSS2DtanKPmO09LDGTJLNuhRR5VgLQJolW1DGT0pldq8EYRyRDdZfKahKDSeGvDzj25P
+ F9nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784284410; x=1784889210;
+ d=1e100.net; s=20251104; t=1784284404; x=1784889204;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=AYSfFq9oXIBf3ZUfwtzjbA8CNeqsnosYDVtMJ70W6gE=;
- b=g0dolh2A7sCWv5303OwG9IzhOwtKEovrcNP+uYNSI4qvhHEpMn7iBTSTVSAr3avQQv
- hN/SGBRWwIgQSbQLYKkJrJiadJm8C/R/bkMYA65cwjD5iS7WrVolsOtQEIi0+zNLV0BJ
- /z5aAx5a6cwSl3f/b10vQdVse1+qbsWMj61f+9PBELeixaLqAGOI7kTM+UNleH6lrU+q
- pVbP406Mm1mO5zD2peZnlqDm+bAvm2RXB/DVS0wjfwtb/6r710Eip5PuZkHfgXN8b9KZ
- ton2Yq01Pbb9Fs5ozJLuP5ZqQqwwOVWaMO7tZuQJci2DoSPnFZ+CskwQHqHYi4nkPs/n
- QU6Q==
-X-Gm-Message-State: AOJu0YxXOC1eR8eylv1Su5VJUL6KR+PXI/hQeSoQRVqJANBT3zsOO7no
- A6CUqPZlsP/5oVIQgmuD/F9z+FiWLHbZaPPVZTLJAZmhpe168MEV0SEqhElBbCbq/Kc+ikLSszM
- KpRRE52muJ26/TMfdGPeRI6vtqO9OLlb09Cuq+25cqvGaNIDumuA+1OOhCLOEidrTkgtYj9o0C3
- j82fK26m8SISVoaHihVzrYnbJ9cFP28I+IPVzOnauD4tWd
-X-Gm-Gg: AfdE7cka2JHrZSM+mvnpn4vdWULJbAh2g5z6UUdLaj/h0ja3W5oxcTAA4E7DwIxkkvA
- KmzmxYtqhKUVVkHcaq20InAFjwyjaxNvYJSCeDmACw7zRT9tvisnM7wCN9En+Uue4Fr0XtR2pUY
- Y7JrsCrM5thQyU0agr4iLsYDc4HFJjScfa6wDd7b83IHCpFUuTGB2/Rt8MFiubUw7Z+0/+Ba8GJ
- SXvrVJedJqkTZ3Uy9mhx44FQ/lTGkgN/Aw+s3sl5AbZ0J7uT8WcEcGOs6j4YE9lPSNYmtFNLLow
- zIlCYUtYdmnD9Us+zudYspFmnLWsYyC5fnoAVNtDHjrmO43wdeOZslP8s1Tt7uwXTeuQmTioCZD
- XgldsbPfVXupIWn0f1Bdzcw9TOjGIZTGZpgjDO6udM/BCnk4HkAn1AFCvv7NyfX9f6nIKznhIFJ
- EiYN4OzmY=
-X-Received: by 2002:adf:e19b:0:b0:46d:d90b:bbe4 with SMTP id
- ffacd0b85a97d-47f6232c546mr2474855f8f.40.1784284410102; 
- Fri, 17 Jul 2026 03:33:30 -0700 (PDT)
-X-Received: by 2002:adf:e19b:0:b0:46d:d90b:bbe4 with SMTP id
- ffacd0b85a97d-47f6232c546mr2474801f8f.40.1784284409517; 
- Fri, 17 Jul 2026 03:33:29 -0700 (PDT)
+ bh=Jf30dL8Lh4Vek0qz4aE62PpGyRERpDruf5mfOsXxdLI=;
+ b=nSfuxxWkKIljZ9eH/AH8ZdcZR0LXnJmnrGORYNE1PXSva1o3xEZk/dQDHFxBWUf/tW
+ NbEuho8bDFziL+Fnpn97DQcm6O0SKoAAZ2cmz5f6kmERcx8nCnBKW61NjVXa1ocq8HkP
+ 2TFaNCFb2z0XwAEQkmYRPFY1a9s8fHRyzBasRPO9HM25vRuZD/YvRqT80Uu3LhCK3nS/
+ heRtS7uQr9ZRYOoDF8gd3FBy9KaUlhj2VN54HU5jEMWHdMXwRxvVwk2tFVOdWBLg8AZ6
+ BNuvoJgLi+BXKRFwbT0y6Hq5vFp2SPmA1dGQ5DWV9nWRymD8v3Dssf3VYaIAAD10W/Y0
+ jh1A==
+X-Gm-Message-State: AOJu0Yw+wwia7eUofEDCO3eF/5AY8pUOwxxYGM1Tg3agMN6ybZt7EhQG
+ DPzT6mWFZqtzwq6Nfpe6qKgeNQO3tirExp2xYCRFOuZCe7Xm6/NNtfQWz95fDCidVWuc9iRXfeX
+ cwFDLXTNp1A+t7iLOBSSIa9wv0pZdHlnyNpicn1Yz7XCY0IfzCp8/Pn1GmN6P/reZSrZw6cjd/f
+ fkzwwu725XXAm+AEOPSS+sESEE/xjrXQ/L4io95ZtxlAGS
+X-Gm-Gg: AfdE7clqvdxa7ZCAm1ljDTWQzywwqHWLwzIjrEU45MwqNG+iWN21Cob3oCcGr66FzAx
+ T0r/iDYCjDjw8NwghaMjLQQsBBguGvMAptKM+7gOuJPYou5rrbr5XCPKyolNhNTyKXlBVywLPCJ
+ cD69iDDM+BEMg0ePS28w9mdOF0epTKCzMk57ObFNlqxYzh8cPxgsal7WgbxHQwqnMC90f7PsQa4
+ ga6Qt1S5FgNzN0xKg2XRU1wxreGMu52eRr2t9674bGQvW8lRhNI5q7AAKaB4k5X+KLk9e0mBB0i
+ dZOk2BP3zhrjzOVumxujSzKyvObvPxQuA69gLQO8H3gXzBxFlFxjJrL0VfBF9+Xha/Poua+1WuS
+ y+0C/YxaBUPUVdwHOIk9tibNfB4C2qZGHAHa3mqEzciQ7UnHl58Kx34wkEd0GcMsuwLgrx2/Rhx
+ sHYWPsEi0=
+X-Received: by 2002:a05:6000:2f83:b0:476:504f:7a8 with SMTP id
+ ffacd0b85a97d-47f6233ee55mr2759533f8f.55.1784284404440; 
+ Fri, 17 Jul 2026 03:33:24 -0700 (PDT)
+X-Received: by 2002:a05:6000:2f83:b0:476:504f:7a8 with SMTP id
+ ffacd0b85a97d-47f6233ee55mr2759483f8f.55.1784284403923; 
+ Fri, 17 Jul 2026 03:33:23 -0700 (PDT)
 Received: from fedora (cst-prg-95-48.cust.vodafone.cz. [46.135.95.48])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f63ed2313sm2523298f8f.23.2026.07.17.03.33.27
+ ffacd0b85a97d-47f63ed2313sm2523298f8f.23.2026.07.17.03.33.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jul 2026 03:33:28 -0700 (PDT)
+ Fri, 17 Jul 2026 03:33:23 -0700 (PDT)
 From: Dorinda Bassey <dbassey@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: mhrica@redhat.com, mst@redhat.com, sgarzare@redhat.com,
  manos.pitsidianakis@linaro.org, marcandre.lureau@redhat.com,
  stefanha@redhat.com, pbonzini@redhat.com, aesteve@redhat.com,
  Dorinda Bassey <dbassey@redhat.com>
-Subject: [PATCH v3 2/3] vhost-user-gpu: Add shared memory region support
-Date: Fri, 17 Jul 2026 12:33:00 +0200
-Message-ID: <20260717103301.228974-3-dbassey@redhat.com>
+Subject: [PATCH v3 1/3] vhost: Fix SHMEM_MAP transaction ordering and
+ resulting deadlock
+Date: Fri, 17 Jul 2026 12:32:59 +0200
+Message-ID: <20260717103301.228974-2-dbassey@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260717103301.228974-1-dbassey@redhat.com>
 References: <20260717103301.228974-1-dbassey@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: permerror client-ip=170.10.129.124;
+Received-SPF: permerror client-ip=170.10.133.124;
  envelope-from=dbassey@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,52 +124,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matej Hrica <mhrica@redhat.com>
+Commit the memory region transaction before sending the SHMEM_MAP reply
+so the KVM memory slot exists before the guest can access the mapped
+region.
 
-Add a 'hostmem' property to the vhost-user-gpu which enables the shared
-memory in the parent object.
+This moves the commit to while the backend is still blocked waiting for
+the reply, which can trigger ADD_MEM_REG back to the backend and
+deadlock. Filter shmem mapping regions out of vhost_section() by
+checking the MR owner type to prevent this.
 
-Register a container MR in the shmem_list for SHMEM_MAP/UNMAP
-operations. A container MR is used so that SHMEM_MAP FD-backed
-subregions each get their own KVM memory slot with the correct
-backing fd.
+The explicit transaction begin/commit wrapping is dropped since
+virtio_add_shmem_map() already commits via memory_region_add_subregion().
 
+Fixes: b52e1896e764 ("vhost-user: Add VirtIO Shared Memory map request")
 Suggested-by: Albert Esteve <aesteve@redhat.com>
-Signed-off-by: Matej Hrica <mhrica@redhat.com>
 Signed-off-by: Dorinda Bassey <dbassey@redhat.com>
 ---
- hw/display/vhost-user-gpu.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ hw/virtio/vhost-user.c | 20 ++------------------
+ hw/virtio/vhost.c      | 10 ++++++++++
+ 2 files changed, 12 insertions(+), 18 deletions(-)
 
-diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
-index 57360898ca0..dbba80c7783 100644
---- a/hw/display/vhost-user-gpu.c
-+++ b/hw/display/vhost-user-gpu.c
-@@ -649,6 +649,16 @@ vhost_user_gpu_device_realize(DeviceState *qdev, Error **errp)
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index 517cc4ca716..01468f7441a 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -1977,8 +1977,6 @@ vhost_user_backend_handle_shmem_map(struct vhost_dev *dev,
+         }
      }
  
-     g->vhost_gpu_fd = -1;
-+
+-    memory_region_transaction_begin();
+-
+     /* Create VirtioSharedMemoryMapping object */
+     VirtioSharedMemoryMapping *mapping = virtio_shared_memory_mapping_new(
+         vu_mmap->shmid, fd, vu_mmap->fd_offset, vu_mmap->shm_offset,
+@@ -1986,7 +1984,7 @@ vhost_user_backend_handle_shmem_map(struct vhost_dev *dev,
+ 
+     if (!mapping) {
+         ret = -EFAULT;
+-        goto send_reply_commit;
++        goto send_reply;
+     }
+ 
+     /* Add the mapping to the shared memory region */
+@@ -1994,22 +1992,8 @@ vhost_user_backend_handle_shmem_map(struct vhost_dev *dev,
+         error_report("Failed to add shared memory mapping");
+         object_unref(OBJECT(mapping));
+         ret = -EFAULT;
+-        goto send_reply_commit;
+-    }
+-
+-send_reply_commit:
+-    /* Send reply and commit after transaction started */
+-    if (hdr->flags & VHOST_USER_NEED_REPLY_MASK) {
+-        payload->u64 = !!ret;
+-        hdr->size = sizeof(payload->u64);
+-        if (!vhost_user_send_resp(ioc, hdr, payload, &local_err)) {
+-            error_report_err(local_err);
+-            memory_region_transaction_commit();
+-            return -EFAULT;
+-        }
++        goto send_reply;
+     }
+-    memory_region_transaction_commit();
+-    return 0;
+ 
+ send_reply:
+     if (hdr->flags & VHOST_USER_NEED_REPLY_MASK) {
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index af41841b529..e5c219be095 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -636,6 +636,16 @@ static bool vhost_section(struct vhost_dev *dev, MemoryRegionSection *section)
+ {
+     MemoryRegion *mr = section->mr;
+ 
 +    /*
-+     * If shared memory is enabled, register the hostmem region for
-+     * SHMEM_MAP/UNMAP operations.
++     * Skip shmem mapping regions, they are managed via SHMEM_MAP/UNMAP.
++     * Including them triggers ADD_MEM_REG during the SHMEM_MAP transaction
++     * commit, deadlocking the backend.
 +     */
-+    if (virtio_gpu_hostmem_enabled(g->parent_obj.conf)) {
-+        VirtioSharedMemory *shmem = virtio_new_shmem_region(
-+            vdev, VIRTIO_GPU_SHM_ID_HOST_VISIBLE, g->parent_obj.conf.hostmem);
-+        memory_region_add_subregion(&g->parent_obj.hostmem, 0, &shmem->mr);
++    if (object_dynamic_cast(memory_region_owner(mr),
++                            TYPE_VIRTIO_SHARED_MEMORY_MAPPING)) {
++        return false;
 +    }
- }
- 
- static struct vhost_dev *vhost_user_gpu_get_vhost(VirtIODevice *vdev)
-@@ -659,6 +669,7 @@ static struct vhost_dev *vhost_user_gpu_get_vhost(VirtIODevice *vdev)
- 
- static const Property vhost_user_gpu_properties[] = {
-     VIRTIO_GPU_BASE_PROPERTIES(VhostUserGPU, parent_obj.conf),
-+    DEFINE_PROP_SIZE("hostmem", VhostUserGPU, parent_obj.conf.hostmem, 0),
- };
- 
- static void
++
+     if (memory_region_is_ram(mr) && !memory_region_is_rom(mr)) {
+         uint8_t dirty_mask = memory_region_get_dirty_log_mask(mr);
+         uint8_t handled_dirty;
 -- 
 2.52.0
 
