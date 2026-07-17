@@ -4,23 +4,23 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58291C44507
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 10:09:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB373C44507
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 10:09:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkfU3-0003nF-T4; Fri, 17 Jul 2026 06:07:55 -0400
+	id 1wkfTq-0003cS-1O; Fri, 17 Jul 2026 06:07:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
- id 1wkfU2-0003kR-1P; Fri, 17 Jul 2026 06:07:54 -0400
+ id 1wkfTl-0003YH-4z; Fri, 17 Jul 2026 06:07:37 -0400
 Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
  by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
  (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
- id 1wkfTy-0006av-IN; Fri, 17 Jul 2026 06:07:53 -0400
+ id 1wkfTg-0006aZ-9y; Fri, 17 Jul 2026 06:07:36 -0400
 Received: from xiaoou-ubuntu-02.home.arpa (unknown [36.110.52.2])
- by APP-01 (Coremail) with SMTP id qwCowAB3T_Pa_llqSAw4AA--.34459S15;
- Fri, 17 Jul 2026 18:07:26 +0800 (CST)
+ by APP-01 (Coremail) with SMTP id qwCowAB3T_Pa_llqSAw4AA--.34459S7;
+ Fri, 17 Jul 2026 18:07:24 +0800 (CST)
 From: Molly Chen <xiaoou@iscas.ac.cn>
 To: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
  daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
@@ -28,33 +28,33 @@ To: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
 Cc: xiaoou@iscas.ac.cn,
 	qemu-riscv@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH v2 13/18] target/riscv: Add packed SIMD Q-format MAC
- instructions
-Date: Fri, 17 Jul 2026 10:07:06 +0000
-Message-Id: <1630945f33187a0b92bf356350fd676d72f6eb64.1784280142.git.xiaoou@iscas.ac.cn>
+Subject: [PATCH v2 05/18] target/riscv: Add packed SIMD absolute, difference,
+ compare and mask instructions
+Date: Fri, 17 Jul 2026 10:06:58 +0000
+Message-Id: <c2240ccc07df39d7cf7034ba99aec089ede81a93.1784280142.git.xiaoou@iscas.ac.cn>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <cover.1784280142.git.xiaoou@iscas.ac.cn>
 References: <cover.1784280142.git.xiaoou@iscas.ac.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qwCowAB3T_Pa_llqSAw4AA--.34459S15
-X-Coremail-Antispam: 1UD129KBjvJXoWxtFW5KryxAr17tw15XFyxZrb_yoWfJF17pa
- 97GrW7WrWIgr13tFyvgr45Cw4DWr4akw1DCr13JF15AFZ5XFn8Gryjqw17uanrWFZrXF1Y
- 9ayIyrWq9ayIqwUanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUmm14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+X-CM-TRANSID: qwCowAB3T_Pa_llqSAw4AA--.34459S7
+X-Coremail-Antispam: 1UD129KBjvJXoW3CF18Jr18urWkGFykGw45KFg_yoWDtF4kpa
+ 97Gry3WrW0qrWFq34xKr15J3ZxWFsIk3y8ur43KF4fZay5JFZ5Xr1Utr4ayF4UXr9rWFWj
+ gay8A3s8Aay0q3JanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUUmS14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
  rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_JF0E3s1l82xGYI
  kIc2x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2
- z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F
- 4UJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_GcCE
- 3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2I
- x0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE14v26r4UJVWxJr1lOx8S6xCaFVCjc4AY6r1j
- 6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x0262
- 8vn2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE
- 7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
- 8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVW8JVW5
- JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F4UJwCI42IY6xAIw20EY4v20xvaj40_Jr
- 0_JF4lIxAIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8Jr0_Cr1U
- YxBIdaVFxhVjvjDU0xZFpf9x0JULvtZUUUUU=
+ z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Cr0_Gr
+ 1UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x0267AKxVW0oVCq
+ 3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7
+ IYx2IY67AKxVWUAVWUtwAv7VC2z280aVAFwI0_Gr1j6F4UJwAm72CE4IkC6x0Yz7v_Jr0_
+ Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8c
+ xan2IY04v7MxkF7I0En4kS14v26r1q6r43MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCj
+ c4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4
+ CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1I6r4U
+ MIIF0xvE2Ix0cI8IcVCY1x0267AKxVWxJVW8Jr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
+ 1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBI
+ daVFxhVjvjDU0xZFpf9x0JULvtZUUUUU=
 X-Originating-IP: [36.110.52.2]
 X-CM-SenderInfo: 50ld003x6l2u1dvotugofq/
 Received-SPF: pass client-ip=159.226.251.21; envelope-from=xiaoou@iscas.ac.cn;
@@ -82,194 +82,259 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Molly Chen <xiaoou@iscas.ac.cn>
 ---
- target/riscv/helper.h                       | 20 ++++++
- target/riscv/insn32.decode                  | 32 +++++++++
- target/riscv/tcg/insn_trans/trans_rvp.c.inc | 20 ++++++
- target/riscv/tcg/psimd_helper.c             | 78 +++++++++++++++++++++
- 4 files changed, 150 insertions(+)
+ target/riscv/helper.h                       | 38 +++++++++
+ target/riscv/insn32.decode                  | 44 ++++++++++
+ target/riscv/tcg/insn_trans/trans_rvp.c.inc | 38 +++++++++
+ target/riscv/tcg/psimd_helper.c             | 95 +++++++++++++++++++++
+ 4 files changed, 215 insertions(+)
 
 diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index 638c7b0629d..9568a7f91c4 100644
+index 7256f776ae6..1628ca119ac 100644
 --- a/target/riscv/helper.h
 +++ b/target/riscv/helper.h
-@@ -1688,3 +1688,23 @@ DEF_HELPER_3(pmulq_w, i64, env, i64, i64)
- DEF_HELPER_3(pmulqr_w, i64, env, i64, i64)
- DEF_HELPER_3(mulq, i32, env, i32, i32)
- DEF_HELPER_3(mulqr, i32, env, i32, i32)
+@@ -1417,3 +1417,41 @@ DEF_HELPER_3(pasubu_h, tl, env, tl, tl)
+ DEF_HELPER_3(pasubu_w, i64, env, i64, i64)
+ DEF_HELPER_3(asub, i32, env, i32, i32)
+ DEF_HELPER_3(asubu, i32, env, i32, i32)
 +
-+/* Packed SIMD - Q-Format Multiply-Accumulate Operations */
-+DEF_HELPER_4(mqacc_h00, i32, env, i32, i32, i32)
-+DEF_HELPER_4(mqacc_h01, i32, env, i32, i32, i32)
-+DEF_HELPER_4(mqacc_h11, i32, env, i32, i32, i32)
-+DEF_HELPER_4(mqracc_h00, i32, env, i32, i32, i32)
-+DEF_HELPER_4(mqracc_h01, i32, env, i32, i32, i32)
-+DEF_HELPER_4(mqracc_h11, i32, env, i32, i32, i32)
-+DEF_HELPER_4(mqacc_w00, i64, env, i64, i64, i64)
-+DEF_HELPER_4(mqacc_w01, i64, env, i64, i64, i64)
-+DEF_HELPER_4(mqacc_w11, i64, env, i64, i64, i64)
-+DEF_HELPER_4(mqracc_w00, i64, env, i64, i64, i64)
-+DEF_HELPER_4(mqracc_w01, i64, env, i64, i64, i64)
-+DEF_HELPER_4(mqracc_w11, i64, env, i64, i64, i64)
-+DEF_HELPER_4(pmqacc_w_h00, i64, env, i64, i64, i64)
-+DEF_HELPER_4(pmqacc_w_h01, i64, env, i64, i64, i64)
-+DEF_HELPER_4(pmqacc_w_h11, i64, env, i64, i64, i64)
-+DEF_HELPER_4(pmqracc_w_h00, i64, env, i64, i64, i64)
-+DEF_HELPER_4(pmqracc_w_h01, i64, env, i64, i64, i64)
-+DEF_HELPER_4(pmqracc_w_h11, i64, env, i64, i64, i64)
++/* Packed SIMD - Absolute Value and Difference Operations */
++DEF_HELPER_2(psabs_b, tl, env, tl)
++DEF_HELPER_2(psabs_h, tl, env, tl)
++DEF_HELPER_2(abs, tl, env, tl)
++DEF_HELPER_2(absw, i64, env, i64)
++DEF_HELPER_3(pabd_b, tl, env, tl, tl)
++DEF_HELPER_3(pabdu_b, tl, env, tl, tl)
++DEF_HELPER_3(pabd_h, tl, env, tl, tl)
++DEF_HELPER_3(pabdu_h, tl, env, tl, tl)
++DEF_HELPER_3(pabdsumu_b, tl, env, tl, tl)
++DEF_HELPER_4(pabdsumau_b, tl, env, tl, tl, tl)
++
++/* Packed SIMD - Comparison and Mask Generation Operations */
++DEF_HELPER_3(pmseq_b, tl, env, tl, tl)
++DEF_HELPER_3(pmslt_b, tl, env, tl, tl)
++DEF_HELPER_3(pmsltu_b, tl, env, tl, tl)
++DEF_HELPER_3(pmin_b, tl, env, tl, tl)
++DEF_HELPER_3(pminu_b, tl, env, tl, tl)
++DEF_HELPER_3(pmax_b, tl, env, tl, tl)
++DEF_HELPER_3(pmaxu_b, tl, env, tl, tl)
++DEF_HELPER_3(pmseq_h, tl, env, tl, tl)
++DEF_HELPER_3(pmslt_h, tl, env, tl, tl)
++DEF_HELPER_3(pmsltu_h, tl, env, tl, tl)
++DEF_HELPER_3(pmin_h, tl, env, tl, tl)
++DEF_HELPER_3(pminu_h, tl, env, tl, tl)
++DEF_HELPER_3(pmax_h, tl, env, tl, tl)
++DEF_HELPER_3(pmaxu_h, tl, env, tl, tl)
++DEF_HELPER_3(pmseq_w, i64, env, i64, i64)
++DEF_HELPER_3(pmslt_w, i64, env, i64, i64)
++DEF_HELPER_3(pmsltu_w, i64, env, i64, i64)
++DEF_HELPER_3(pmin_w, i64, env, i64, i64)
++DEF_HELPER_3(pminu_w, i64, env, i64, i64)
++DEF_HELPER_3(pmax_w, i64, env, i64, i64)
++DEF_HELPER_3(pmaxu_w, i64, env, i64, i64)
++DEF_HELPER_3(mseq, i32, env, i32, i32)
++DEF_HELPER_3(mslt, i32, env, i32, i32)
++DEF_HELPER_3(msltu, i32, env, i32, i32)
 diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-index 9c50a4dbf52..e2af5f83965 100644
+index 005cc055b8a..0c60f2eac7a 100644
 --- a/target/riscv/insn32.decode
 +++ b/target/riscv/insn32.decode
-@@ -1534,3 +1534,35 @@ pmulqr_h    11010 10 ..... ..... 111 ..... 0111011 @r
-   mulqr     11010 11 ..... ..... 111 ..... 0111011 @r
-   pmulqr_w  11010 11 ..... ..... 111 ..... 0111011 @r
+@@ -1173,3 +1173,47 @@ pasubu_h   1111100 ..... ..... 000 ..... 0111011 @r
+   asubu    1111101 ..... ..... 000 ..... 0111011 @r
+   pasubu_w 1111101 ..... ..... 000 ..... 0111011 @r
  }
 +
-+# Packed SIMD - Q-Format Multiply-Accumulate Operations
++# Packed SIMD - Absolute Value and Difference Operations
++psabs_b    1110010 00111 ..... 010 ..... 0011011 @r2
++psabs_h    1110000 00111 ..... 010 ..... 0011011 @r2
++abs        01100 0000111 ..... 001 ..... 0010011 @r2
++absw       01100 0000111 ..... 001 ..... 0011011 @r2
++pabd_b     1100110 ..... ..... 000 ..... 0111011 @r
++pabdu_b    1110110 ..... ..... 000 ..... 0111011 @r
++pabd_h     1100100 ..... ..... 000 ..... 0111011 @r
++pabdu_h    1110100 ..... ..... 000 ..... 0111011 @r
++pabdsumu_b 1011010 ..... ..... 001 ..... 0111011 @r
++pabdsumau_b 1011110 ..... ..... 001 ..... 0111011 @r
++
++# Packed SIMD - Comparison and Mask Generation Operations
++pmseq_b    1100010 ..... ..... 110 ..... 0111011 @r
++pmslt_b    1101010 ..... ..... 110 ..... 0111011 @r
++pmsltu_b   1101110 ..... ..... 110 ..... 0111011 @r
++pmin_b     1110010 ..... ..... 110 ..... 0111011 @r
++pminu_b    1110110 ..... ..... 110 ..... 0111011 @r
++pmax_b     1111010 ..... ..... 110 ..... 0111011 @r
++pmaxu_b    1111110 ..... ..... 110 ..... 0111011 @r
++pmseq_h    1100000 ..... ..... 110 ..... 0111011 @r
++pmslt_h    1101000 ..... ..... 110 ..... 0111011 @r
++pmsltu_h   1101100 ..... ..... 110 ..... 0111011 @r
++pmin_h     1110000 ..... ..... 110 ..... 0111011 @r
++pminu_h    1110100 ..... ..... 110 ..... 0111011 @r
++pmax_h     1111000 ..... ..... 110 ..... 0111011 @r
++pmaxu_h    1111100 ..... ..... 110 ..... 0111011 @r
 +{
-+  mqacc_h00 11101 00 ..... ..... 111 ..... 0111011 @r
-+  pmqacc_w_h00  11101 00 ..... ..... 111 ..... 0111011 @r
++  mseq     1100001 ..... ..... 110 ..... 0111011 @r
++  pmseq_w  1100001 ..... ..... 110 ..... 0111011 @r
 +}
 +{
-+  mqacc_h01 11111 00 ..... ..... 101 ..... 0111011 @r
-+  pmqacc_w_h01 11111 00 ..... ..... 101 ..... 0111011 @r
++  mslt     1101001 ..... ..... 110 ..... 0111011 @r
++  pmslt_w  1101001 ..... ..... 110 ..... 0111011 @r
 +}
 +{
-+  mqacc_h11 11111 00 ..... ..... 111 ..... 0111011 @r
-+  pmqacc_w_h11 11111 00 ..... ..... 111 ..... 0111011 @r
++  msltu    1101101 ..... ..... 110 ..... 0111011 @r
++  pmsltu_w 1101101 ..... ..... 110 ..... 0111011 @r
 +}
-+{
-+  mqracc_h00 11101 10 ..... ..... 111 ..... 0111011 @r
-+  pmqracc_w_h00 11101 10 ..... ..... 111 ..... 0111011 @r
-+}
-+{
-+  mqracc_h01 11111 10 ..... ..... 101 ..... 0111011 @r
-+  pmqracc_w_h01 11111 10 ..... ..... 101 ..... 0111011 @r
-+}
-+{
-+  mqracc_h11 11111 10 ..... ..... 111 ..... 0111011 @r
-+  pmqracc_w_h11 11111 10 ..... ..... 111 ..... 0111011 @r
-+}
-+mqacc_w00       11101 01 ..... ..... 111 ..... 0111011 @r
-+mqacc_w01       11111 01 ..... ..... 101 ..... 0111011 @r
-+mqacc_w11       11111 01 ..... ..... 111 ..... 0111011 @r
-+mqracc_w00      11101 11 ..... ..... 111 ..... 0111011 @r
-+mqracc_w01      11111 11 ..... ..... 101 ..... 0111011 @r
-+mqracc_w11      11111 11 ..... ..... 111 ..... 0111011 @r
++pmin_w     1110001 ..... ..... 110 ..... 0111011 @r
++pminu_w    1110101 ..... ..... 110 ..... 0111011 @r
++pmax_w     1111001 ..... ..... 110 ..... 0111011 @r
++pmaxu_w    1111101 ..... ..... 110 ..... 0111011 @r
 diff --git a/target/riscv/tcg/insn_trans/trans_rvp.c.inc b/target/riscv/tcg/insn_trans/trans_rvp.c.inc
-index 3535f71de88..cec18255a1e 100644
+index 43c59aef182..2ad8e818ba5 100644
 --- a/target/riscv/tcg/insn_trans/trans_rvp.c.inc
 +++ b/target/riscv/tcg/insn_trans/trans_rvp.c.inc
-@@ -834,3 +834,23 @@ GEN_SIMD_TRANS_64_VXSAT(pmulqr_w)
- GEN_SIMD_TRANS_32_VXSAT(mulq)
- GEN_SIMD_TRANS_32_VXSAT(mulqr)
+@@ -563,3 +563,41 @@ GEN_SIMD_TRANS_64(pasubu_w)
+ GEN_SIMD_TRANS_32(asub)
+ GEN_SIMD_TRANS_32(asubu)
  
-+/* Packed SIMD - Q-Format Multiply-Accumulate Operations */
-+GEN_SIMD_TRANS_ACC_32(mqacc_h00)
-+GEN_SIMD_TRANS_ACC_32(mqacc_h01)
-+GEN_SIMD_TRANS_ACC_32(mqacc_h11)
-+GEN_SIMD_TRANS_ACC_32(mqracc_h00)
-+GEN_SIMD_TRANS_ACC_32(mqracc_h01)
-+GEN_SIMD_TRANS_ACC_32(mqracc_h11)
-+GEN_SIMD_TRANS_ACC_64(mqacc_w00)
-+GEN_SIMD_TRANS_ACC_64(mqacc_w01)
-+GEN_SIMD_TRANS_ACC_64(mqacc_w11)
-+GEN_SIMD_TRANS_ACC_64(mqracc_w00)
-+GEN_SIMD_TRANS_ACC_64(mqracc_w01)
-+GEN_SIMD_TRANS_ACC_64(mqracc_w11)
-+GEN_SIMD_TRANS_ACC_64(pmqacc_w_h00)
-+GEN_SIMD_TRANS_ACC_64(pmqacc_w_h01)
-+GEN_SIMD_TRANS_ACC_64(pmqacc_w_h11)
-+GEN_SIMD_TRANS_ACC_64(pmqracc_w_h00)
-+GEN_SIMD_TRANS_ACC_64(pmqracc_w_h01)
-+GEN_SIMD_TRANS_ACC_64(pmqracc_w_h11)
++/* Packed SIMD - Absolute Value and Difference Operations */
++GEN_SIMD_TRANS_R1_VXSAT(psabs_b)
++GEN_SIMD_TRANS_R1_VXSAT(psabs_h)
++GEN_SIMD_TRANS_R1(abs)
++GEN_SIMD_TRANS_R1_64(absw)
++GEN_SIMD_TRANS(pabd_b)
++GEN_SIMD_TRANS(pabdu_b)
++GEN_SIMD_TRANS(pabd_h)
++GEN_SIMD_TRANS(pabdu_h)
++GEN_SIMD_TRANS(pabdsumu_b)
++GEN_SIMD_TRANS_ACC(pabdsumau_b)
++
++/* Packed SIMD - Comparison and Mask Generation Operations */
++GEN_SIMD_TRANS(pmseq_b)
++GEN_SIMD_TRANS(pmslt_b)
++GEN_SIMD_TRANS(pmsltu_b)
++GEN_SIMD_TRANS(pmin_b)
++GEN_SIMD_TRANS(pminu_b)
++GEN_SIMD_TRANS(pmax_b)
++GEN_SIMD_TRANS(pmaxu_b)
++GEN_SIMD_TRANS(pmseq_h)
++GEN_SIMD_TRANS(pmslt_h)
++GEN_SIMD_TRANS(pmsltu_h)
++GEN_SIMD_TRANS(pmin_h)
++GEN_SIMD_TRANS(pminu_h)
++GEN_SIMD_TRANS(pmax_h)
++GEN_SIMD_TRANS(pmaxu_h)
++GEN_SIMD_TRANS_64(pmseq_w)
++GEN_SIMD_TRANS_64(pmslt_w)
++GEN_SIMD_TRANS_64(pmsltu_w)
++GEN_SIMD_TRANS_64(pmin_w)
++GEN_SIMD_TRANS_64(pminu_w)
++GEN_SIMD_TRANS_64(pmax_w)
++GEN_SIMD_TRANS_64(pmaxu_w)
++GEN_SIMD_TRANS_32(mseq)
++GEN_SIMD_TRANS_32(mslt)
++GEN_SIMD_TRANS_32(msltu)
 +
 diff --git a/target/riscv/tcg/psimd_helper.c b/target/riscv/tcg/psimd_helper.c
-index 11ca17576be..ecdb20bbb58 100644
+index 162041a8f18..034afe5a054 100644
 --- a/target/riscv/tcg/psimd_helper.c
 +++ b/target/riscv/tcg/psimd_helper.c
-@@ -2655,3 +2655,81 @@ GEN_PSIMD_QMUL(mulq, uint32_t, int32_t, int64_t, uint32_t,
- GEN_PSIMD_QMUL(mulqr, uint32_t, int32_t, int64_t, uint32_t,
-                EXTRACT32, INSERT32, ELEMS_W, 31, 1LL << 30, INT32_MIN,
-                INT32_MAX)
+@@ -1808,3 +1808,98 @@ GEN_PSIMD_AVG_BINOP(asub, uint32_t, int32_t, int64_t,
+ GEN_PSIMD_AVG_BINOP(asubu, uint32_t, uint32_t, uint64_t,
+                     EXTRACT32, INSERT32, ELEMS_W, PSIMD_DO_SUB)
+ 
++/* Absolute value operations */
 +
++GEN_PSIMD_ABS(psabs_b, target_ulong, int8_t,
++              EXTRACT8, INSERT8, ELEMS_B, INT8_MIN, INT8_MAX)
++GEN_PSIMD_ABS(psabs_h, target_ulong, int16_t,
++              EXTRACT16, INSERT16, ELEMS_H, INT16_MIN, INT16_MAX)
 +
-+/* Q-Format Multiply-Accumulate Operations */
++GEN_PSIMD_SCALAR_ABS(abs, target_ulong, target_long, target_ulong)
++GEN_PSIMD_SCALAR_ABS(absw, uint64_t, int32_t, uint32_t)
 +
-+GEN_PSIMD_QMUL_ACC_INDEXED(mqacc_h00, uint32_t, int16_t, int16_t,
-+                           int32_t, int64_t, int32_t, uint32_t, EXTRACT16,
-+                           EXTRACT32, INSERT32, ELEMS_W, 0, 0, 0, 15, 0,
-+                           PSIMD_MUL_S64)
-+GEN_PSIMD_QMUL_ACC_INDEXED(mqacc_h01, uint32_t, int16_t, int16_t,
-+                           int32_t, int64_t, int32_t, uint32_t, EXTRACT16,
-+                           EXTRACT32, INSERT32, ELEMS_W, 0, 0, 1, 15, 0,
-+                           PSIMD_MUL_S64)
-+GEN_PSIMD_QMUL_ACC_INDEXED(mqacc_h11, uint32_t, int16_t, int16_t,
-+                           int32_t, int64_t, int32_t, uint32_t, EXTRACT16,
-+                           EXTRACT32, INSERT32, ELEMS_W, 0, 1, 1, 15, 0,
-+                           PSIMD_MUL_S64)
-+GEN_PSIMD_QMUL_ACC_INDEXED(mqracc_h00, uint32_t, int16_t, int16_t,
-+                           int32_t, int64_t, int32_t, uint32_t, EXTRACT16,
-+                           EXTRACT32, INSERT32, ELEMS_W, 0, 0, 0, 15,
-+                           1LL << 14, PSIMD_MUL_S64)
-+GEN_PSIMD_QMUL_ACC_INDEXED(mqracc_h01, uint32_t, int16_t, int16_t,
-+                           int32_t, int64_t, int32_t, uint32_t, EXTRACT16,
-+                           EXTRACT32, INSERT32, ELEMS_W, 0, 0, 1, 15,
-+                           1LL << 14, PSIMD_MUL_S64)
-+GEN_PSIMD_QMUL_ACC_INDEXED(mqracc_h11, uint32_t, int16_t, int16_t,
-+                           int32_t, int64_t, int32_t, uint32_t, EXTRACT16,
-+                           EXTRACT32, INSERT32, ELEMS_W, 0, 1, 1, 15,
-+                           1LL << 14, PSIMD_MUL_S64)
++/* Absolute difference operations */
 +
-+GEN_PSIMD_QMUL_ACC_INDEXED(mqacc_w00, uint64_t, int32_t, int32_t,
-+                           int64_t, int64_t, int64_t, uint64_t, EXTRACT32,
-+                           EXTRACT64, INSERT64, ELEMS_D, 0, 0, 0, 31, 0,
-+                           PSIMD_MUL_S64)
-+GEN_PSIMD_QMUL_ACC_INDEXED(mqacc_w01, uint64_t, int32_t, int32_t,
-+                           int64_t, int64_t, int64_t, uint64_t, EXTRACT32,
-+                           EXTRACT64, INSERT64, ELEMS_D, 0, 0, 1, 31, 0,
-+                           PSIMD_MUL_S64)
-+GEN_PSIMD_QMUL_ACC_INDEXED(mqacc_w11, uint64_t, int32_t, int32_t,
-+                           int64_t, int64_t, int64_t, uint64_t, EXTRACT32,
-+                           EXTRACT64, INSERT64, ELEMS_D, 0, 1, 1, 31, 0,
-+                           PSIMD_MUL_S64)
-+GEN_PSIMD_QMUL_ACC_INDEXED(mqracc_w00, uint64_t, int32_t, int32_t,
-+                           int64_t, int64_t, int64_t, uint64_t, EXTRACT32,
-+                           EXTRACT64, INSERT64, ELEMS_D, 0, 0, 0, 31,
-+                           1LL << 30, PSIMD_MUL_S64)
-+GEN_PSIMD_QMUL_ACC_INDEXED(mqracc_w01, uint64_t, int32_t, int32_t,
-+                           int64_t, int64_t, int64_t, uint64_t, EXTRACT32,
-+                           EXTRACT64, INSERT64, ELEMS_D, 0, 0, 1, 31,
-+                           1LL << 30, PSIMD_MUL_S64)
-+GEN_PSIMD_QMUL_ACC_INDEXED(mqracc_w11, uint64_t, int32_t, int32_t,
-+                           int64_t, int64_t, int64_t, uint64_t, EXTRACT32,
-+                           EXTRACT64, INSERT64, ELEMS_D, 0, 1, 1, 31,
-+                           1LL << 30, PSIMD_MUL_S64)
++GEN_PSIMD_BINOP(pabd_b, target_ulong, int8_t, uint8_t,
++                EXTRACT8, INSERT8, ELEMS_B, PSIMD_DO_ABD)
++GEN_PSIMD_BINOP(pabdu_b, target_ulong, uint8_t, uint8_t,
++                EXTRACT8, INSERT8, ELEMS_B, PSIMD_DO_ABD)
++GEN_PSIMD_BINOP(pabd_h, target_ulong, int16_t, uint16_t,
++                EXTRACT16, INSERT16, ELEMS_H, PSIMD_DO_ABD)
++GEN_PSIMD_BINOP(pabdu_h, target_ulong, uint16_t, uint16_t,
++                EXTRACT16, INSERT16, ELEMS_H, PSIMD_DO_ABD)
 +
-+GEN_PSIMD_QMUL_ACC_INDEXED(pmqacc_w_h00, uint64_t, int16_t, int16_t,
-+                           int32_t, int64_t, int32_t, uint32_t, EXTRACT16,
-+                           EXTRACT32, INSERT32, ELEMS_W, 2, 0, 0, 15, 0,
-+                           PSIMD_MUL_S64)
-+GEN_PSIMD_QMUL_ACC_INDEXED(pmqacc_w_h01, uint64_t, int16_t, int16_t,
-+                           int32_t, int64_t, int32_t, uint32_t, EXTRACT16,
-+                           EXTRACT32, INSERT32, ELEMS_W, 2, 0, 1, 15, 0,
-+                           PSIMD_MUL_S64)
-+GEN_PSIMD_QMUL_ACC_INDEXED(pmqacc_w_h11, uint64_t, int16_t, int16_t,
-+                           int32_t, int64_t, int32_t, uint32_t, EXTRACT16,
-+                           EXTRACT32, INSERT32, ELEMS_W, 2, 1, 1, 15, 0,
-+                           PSIMD_MUL_S64)
-+GEN_PSIMD_QMUL_ACC_INDEXED(pmqracc_w_h00, uint64_t, int16_t, int16_t,
-+                           int32_t, int64_t, int32_t, uint32_t, EXTRACT16,
-+                           EXTRACT32, INSERT32, ELEMS_W, 2, 0, 0, 15,
-+                           1LL << 14, PSIMD_MUL_S64)
-+GEN_PSIMD_QMUL_ACC_INDEXED(pmqracc_w_h01, uint64_t, int16_t, int16_t,
-+                           int32_t, int64_t, int32_t, uint32_t, EXTRACT16,
-+                           EXTRACT32, INSERT32, ELEMS_W, 2, 0, 1, 15,
-+                           1LL << 14, PSIMD_MUL_S64)
-+GEN_PSIMD_QMUL_ACC_INDEXED(pmqracc_w_h11, uint64_t, int16_t, int16_t,
-+                           int32_t, int64_t, int32_t, uint32_t, EXTRACT16,
-+                           EXTRACT32, INSERT32, ELEMS_W, 2, 1, 1, 15,
-+                           1LL << 14, PSIMD_MUL_S64)
++/**
++ * PABDSUMU.B - Sum of unsigned absolute differences
++ * Returns sum(|rs1[i] - rs2[i]|) for all bytes
++ */
++target_ulong HELPER(pabdsumu_b)(CPURISCVState *env,
++                                target_ulong rs1, target_ulong rs2)
++{
++    return psimd_abdsumu_b(rs1, rs2, 0);
++}
++
++/**
++ * PABDSUMAU.B - Accumulated sum of unsigned absolute differences
++ * rd = rd + sum(|rs1[i] - rs2[i]|)
++ */
++target_ulong HELPER(pabdsumau_b)(CPURISCVState *env, target_ulong rs1,
++                                 target_ulong rs2, target_ulong rd)
++{
++    return psimd_abdsumu_b(rs1, rs2, rd);
++}
++
++/* Comparison operations (producing masks) */
++
++GEN_PSIMD_BINOP(pmseq_b, target_ulong, uint8_t, uint8_t,
++                EXTRACT8, INSERT8, ELEMS_B, PSIMD_DO_EQ_MASK)
++GEN_PSIMD_BINOP(pmslt_b, target_ulong, int8_t, uint8_t,
++                EXTRACT8, INSERT8, ELEMS_B, PSIMD_DO_LT_MASK)
++GEN_PSIMD_BINOP(pmsltu_b, target_ulong, uint8_t, uint8_t,
++                EXTRACT8, INSERT8, ELEMS_B, PSIMD_DO_LT_MASK)
++GEN_PSIMD_BINOP(pmin_b, target_ulong, int8_t, int8_t,
++                EXTRACT8, INSERT8, ELEMS_B, PSIMD_DO_MIN)
++GEN_PSIMD_BINOP(pminu_b, target_ulong, uint8_t, uint8_t,
++                EXTRACT8, INSERT8, ELEMS_B, PSIMD_DO_MIN)
++GEN_PSIMD_BINOP(pmax_b, target_ulong, int8_t, int8_t,
++                EXTRACT8, INSERT8, ELEMS_B, PSIMD_DO_MAX)
++GEN_PSIMD_BINOP(pmaxu_b, target_ulong, uint8_t, uint8_t,
++                EXTRACT8, INSERT8, ELEMS_B, PSIMD_DO_MAX)
++
++GEN_PSIMD_BINOP(pmseq_h, target_ulong, uint16_t, uint16_t,
++                EXTRACT16, INSERT16, ELEMS_H, PSIMD_DO_EQ_MASK)
++GEN_PSIMD_BINOP(pmslt_h, target_ulong, int16_t, uint16_t,
++                EXTRACT16, INSERT16, ELEMS_H, PSIMD_DO_LT_MASK)
++GEN_PSIMD_BINOP(pmsltu_h, target_ulong, uint16_t, uint16_t,
++                EXTRACT16, INSERT16, ELEMS_H, PSIMD_DO_LT_MASK)
++GEN_PSIMD_BINOP(pmin_h, target_ulong, int16_t, int16_t,
++                EXTRACT16, INSERT16, ELEMS_H, PSIMD_DO_MIN)
++GEN_PSIMD_BINOP(pminu_h, target_ulong, uint16_t, uint16_t,
++                EXTRACT16, INSERT16, ELEMS_H, PSIMD_DO_MIN)
++GEN_PSIMD_BINOP(pmax_h, target_ulong, int16_t, int16_t,
++                EXTRACT16, INSERT16, ELEMS_H, PSIMD_DO_MAX)
++GEN_PSIMD_BINOP(pmaxu_h, target_ulong, uint16_t, uint16_t,
++                EXTRACT16, INSERT16, ELEMS_H, PSIMD_DO_MAX)
++
++GEN_PSIMD_BINOP(pmseq_w, uint64_t, uint32_t, uint32_t,
++                EXTRACT32, INSERT32, ELEMS_W, PSIMD_DO_EQ_MASK)
++GEN_PSIMD_BINOP(pmslt_w, uint64_t, int32_t, uint32_t,
++                EXTRACT32, INSERT32, ELEMS_W, PSIMD_DO_LT_MASK)
++GEN_PSIMD_BINOP(pmsltu_w, uint64_t, uint32_t, uint32_t,
++                EXTRACT32, INSERT32, ELEMS_W, PSIMD_DO_LT_MASK)
++GEN_PSIMD_BINOP(pmin_w, uint64_t, int32_t, int32_t,
++                EXTRACT32, INSERT32, ELEMS_W, PSIMD_DO_MIN)
++GEN_PSIMD_BINOP(pminu_w, uint64_t, uint32_t, uint32_t,
++                EXTRACT32, INSERT32, ELEMS_W, PSIMD_DO_MIN)
++GEN_PSIMD_BINOP(pmax_w, uint64_t, int32_t, int32_t,
++                EXTRACT32, INSERT32, ELEMS_W, PSIMD_DO_MAX)
++GEN_PSIMD_BINOP(pmaxu_w, uint64_t, uint32_t, uint32_t,
++                EXTRACT32, INSERT32, ELEMS_W, PSIMD_DO_MAX)
++
++GEN_PSIMD_BINOP(mseq, uint32_t, uint32_t, uint32_t,
++                EXTRACT32, INSERT32, ELEMS_W, PSIMD_DO_EQ_MASK)
++GEN_PSIMD_BINOP(mslt, uint32_t, int32_t, uint32_t,
++                EXTRACT32, INSERT32, ELEMS_W, PSIMD_DO_LT_MASK)
++GEN_PSIMD_BINOP(msltu, uint32_t, uint32_t, uint32_t,
++                EXTRACT32, INSERT32, ELEMS_W, PSIMD_DO_LT_MASK)
++
 -- 
 2.34.1
 
