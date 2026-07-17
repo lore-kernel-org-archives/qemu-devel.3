@@ -4,122 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5780DC44514
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 11:05:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AFC5C44514
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 11:06:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkgNS-0007vN-2m; Fri, 17 Jul 2026 07:05:10 -0400
+	id 1wkgO2-0008C2-Ry; Fri, 17 Jul 2026 07:05:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wkgNL-0007uV-J5
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 07:05:04 -0400
-Received: from smtpout1.mo537.mail-out.ovh.net ([51.210.91.20])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wkgNI-0005Nz-Cc
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 07:05:03 -0400
-Received: from director1.derp.mail-out.ovh.net
- (director1.derp.mail-out.ovh.net [51.210.158.128])
- by mo537.mail-out.ovh.net (Postfix) with ESMTPS id 4h1nB02JGmz48kl;
- Fri, 17 Jul 2026 11:04:56 +0000 (UTC)
-Received: from director1.derp.mail-out.ovh.net
- (director1.derp.mail-out.ovh.net. [127.0.0.1])
- by director1.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Fri, 17 Jul 2026 11:04:56 +0000 (UTC)
-Received: from mta10.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.96.26])
- by director1.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4h1n9z6fGSz60Mk; Fri, 17 Jul 2026 11:04:55 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.1])
- (Authenticated sender: clg@kaod.org)
- by mta10.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- AF5321923D96; Fri, 17 Jul 2026 11:04:53 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-110S004c42c96b2-2faf-48df-8b46-a216b9023b7f,
- D28FE153D5A3AE5C5EC95691E5B856C14C2CAAE9) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <4887e0f1-9ba3-4faf-9cc8-8382b0135e13@kaod.org>
-Date: Fri, 17 Jul 2026 13:04:53 +0200
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wkgO1-0008BK-9P
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 07:05:45 -0400
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wkgNz-0005cz-H9
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 07:05:45 -0400
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-81ef11a0972so5446727b3.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 04:05:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784286342; cv=none;
+ d=google.com; s=arc-20260327;
+ b=IgZ9K+8MA6LfEAXwgkvlmj56KLLtsj+7OKbw5Pac1XvAqVz0L3YrkDQeWSj8JF7awm
+ FLHRDrP7sA8AHUWRPQtUmvF76dxE0x3KSUB4xxg2z1PHo4WLr8cOMMzlWvp5B9Ic1QSQ
+ adma6/gQEx2hf2z/NMDpy4YwIse2yJyU/wQToEOuCSg3OJyx+DOW2P8nCHWxgPZ84t+7
+ 1sdBVa6F83dIIxUyLsZXnXUInzhRadbAlehmbJTAhNmEiDbmTM96gYV4L789QrJVwQRf
+ YQlxg1BOgRAbibGApYZZF2PNyD12fVGcdrJ5tFLR+I4xXTKDIL83huDablsE0KrRepdF
+ JK6g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=ekVtR/loJxDrA3aerqu3GtkExdV3IdtPovuInh/R/9s=;
+ fh=akbhKwgRgOSUCG1JBVCqiMpsRQ3OL8Xvqe1Ei6bUgDs=;
+ b=UQek5zSpcgS7UYsaY3BIPrkD07tfNDwzzQcag++3kwf0Y5B780KXG7qrrQB8VDZ75f
+ yfFkJTvdFmyf+EoFgp09BQ0Bh4Xj9oBMuhxrQRGEs1JXSY1UrS8RedLqweraa1PNfAYR
+ JnG8ibq1jwiMIOFcDXxpKTAaM8pLhLzU2N9lA6/fOnL2XsI7i/fqxu+iQUE6CoNpiFjY
+ wYuYWRI7OBs6oqswMBZBJe1ff7fjBcFqpcUXI7vEOBPPhb2HQOFgBkrdlMAip1LAiXDa
+ 0VH51nPf70LSJ0nCImvHAP9tnB0gnqLPgSKXUwf5DGavxrqC7Ne5Q5s6HvKjzZXq6l3d
+ z8bA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1784286342; x=1784891142; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=ekVtR/loJxDrA3aerqu3GtkExdV3IdtPovuInh/R/9s=;
+ b=DtgS5lYZz9ps1kprAaDVG2mqrLGLxLY0zW+LD97zEzobIoeOo8VYYbvXUBoDfaW4+Z
+ Tl2NJdZskKYkEEw1a5C1QDT8D3nQRckKtNH+D9P1gWSpgzekdue7+k9/7IPhQUXQLTXV
+ C9rGkW2iRCmBlf86EpbRcSL7qiSKYYrWHR8uOW47sJiMDAyNZ02T/y7ds/ksKWgcBbx3
+ OHyGq/iJs+x7MrA8BzHoQnu6AO8yQWLR1slnMKavxLAqTBru9ln1LxU6CIGH1glWulP4
+ 5TqQoXSSpT8Oe3IJ5X8iVsGB/Q4w9bY3R8U8zg5x4ihPFEdpfQy+L+0YzG58BpDyRRRz
+ Mqbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784286342; x=1784891142;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=ekVtR/loJxDrA3aerqu3GtkExdV3IdtPovuInh/R/9s=;
+ b=AZ3WWoNyBKqTinYgXhzMGhtOjaFpMNDyvhJPvNWE90P7V6j1IiP4yv3q3JQpp3r5by
+ rUauNATXPqiZCxSvSnDWu8vSaw9oGSVAhsIwknUW7Nrda6QOtGGo0uEOVCCWE44CkyOI
+ n4VBesr6dbuyyRjDdzJ+ytEnwNZ0s8wgZy714/mIy8n3KlECxNH6kwEDtzx+ppL2ADkY
+ 5zgnW82boDkalkA9sYsJkMH+QMKBey+dw14Fadn7+hS64+0+YgwOgnkdUWyW4UdpXWcE
+ n6x3fHj4isOBaXaye5SQHyMze4yenZ8L2XcKidpbLL0HceDgMDE3D/qCj5o+jyGjepOq
+ boKA==
+X-Gm-Message-State: AOJu0YwMtjlO111IPeteYG8sty6H0ZJ/+lfF1/n1NNHfN2cw9YWJU5mW
+ z9CUDuboA4eiM+vdWR09gkR0ahreLDoh4Co/iAJAGX+wj749G7tipSKnSZJyEtmHbV3RGYRUig6
+ /JMhcymW3KKBAK+KyZ6vaI7KRsdSYmtSDAtdphb4k0g==
+X-Gm-Gg: AfdE7ckty4AEfJZDWI12hIROFcqwz5a3/s3BGpZRh9O8nyceDDfD8FfKsi1iJNnIrU0
+ 5zm9BrEoxq/PgcL+TkJnD3LJr5ULWY7JE+AfYzTk+L1DyUsP4Y4pM/LoCVNTlagQ+o+OujbLWoi
+ 2f8uD9ot8YFmHpqcNSPJuHCSkYKYl2b5ImlVJOekaZelYlHqU/iQFt6aWmEW+wb8bI6d7EOqKy+
+ LU2vwJeR3/y5Me5uGBL7cGRTVnBT3HIHWS356lCNiFK203THrgWFRXz8Sbor5jE0XTZB9B0vu/x
+ 9MfKfZMRdvNe4EJHmXpZPX1HGfJ55saCKrUcqkvNZRH24MFk5K3NR7xZ
+X-Received: by 2002:a05:690c:e3ec:b0:81e:c972:e8c3 with SMTP id
+ 00721157ae682-81ef252281bmr5824547b3.29.1784286341730; Fri, 17 Jul 2026
+ 04:05:41 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/29] hw/arm: improve Aspeed Catalina BMC emulation
-To: Emmanuel Blot <emmanuel.blot@free.fr>, qemu-devel@nongnu.org
-Cc: Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org,
- qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Corey Minyard <cminyard@mvista.com>
-References: <20260709-catalina-upgrade-v1-0-814575bc076b@free.fr>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20260709-catalina-upgrade-v1-0-814575bc076b@free.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 889460927874640941
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGgYna5WdbgGWuRZ4Dwcim+Lv78fsMhw6/F2YLhR4wxSqxaZxcs6x4+We6Cunm89jxkyJebuHQ2oWK9oyssbKYZ7q1kLClDvvLebSdbjwk/APc+TqEhVrbYVXHJQWyr65aCiT9eK02WBneAoIFQ6z40wb6jikSAw6Sg9vnd/LVGFdZRRInD7rPCiYODiGNuQCH64EZwZ2eGxMpkAiwo2vGydzwR+nfbwtg0J62PXXFgoIdl8GLwMdTW7S6ZipRiIW3+CVn6wp41j60l/mbGZG9aBep1tR58y3AX6hQx3RiymJW6/OzY9W5SJZurbUsSnjPHtD132W9QE2GLHd2uIDskTTXKZpBnFZ825Slz6Fn2m4LJxUzvbEWTCa6wAUzqucR+y/dqfdUVlIsWovpXLjO68mKpZFpEsL36RTFwUOPT3YCqprw4upEOc9aEgGnnqP2e95vAm4p7mzEmA628YbcrBf2TTlgLhv9qjPtptnatq7GxC4iMZzHRSufWhUPMPelml1laVdAqffjyCkVYUch11+zY1o67+BdSXrBkNAJDmPUAyubIBaAkSEc/c7/VRYvw1qYPosWs1xkukC0IHh1OQ97hc9brTk7ij103asiNEjrvKqt5tailvGsuXY/nVPS3UBT6QPZUSK5Vw9kpKjKY34OCKSR7wvMfOgUQ+MjTgA
-DKIM-Signature: a=rsa-sha256; bh=UuRHVzxTNKs+TYbA83XvO5rin/y6tS9cRwbfBGfUsb4=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1784286296; v=1;
- b=JdVKSfYNqNIcX4PnA7l6AqAEJDqOOxYRIV5XNe0GzrYfSCW7Eyrzqk4EyJisVs8VhBClIU8F
- Bs843BffrFrtFJ7sR8k40akWrxA876w4o5aeISaEtOocTK2z5gF2SappUeqymBQ1KQyqlQUhPi8
- 3FC5yBpqCCvRPBDYX9zj2hLMTBW3RzWpEPuo216JRCYtXzrzM8m7IXyEVu8IeqoeDrt2AJHxzNs
- +3kBZaUUgvDEE7UPrqXGL2rMeBD/IANDl3Vzzum53a/gZTKig6R4DgzMwvO3dj8zjTanUXBM3I+
- UlhsmOCzC9KR/84zBU3hAagVodCmzzrNuFovkH231EUXA==
-Received-SPF: pass client-ip=51.210.91.20; envelope-from=clg@kaod.org;
- helo=smtpout1.mo537.mail-out.ovh.net
+References: <20260716193321.256391-1-thuth@redhat.com>
+In-Reply-To: <20260716193321.256391-1-thuth@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 17 Jul 2026 12:05:29 +0100
+X-Gm-Features: AUfX_mzVAvkMgtpzTvt3oL5b8INESf04TJZp_VHQrGdBZF8IGE9zE_US5SFKiEA
+Message-ID: <CAFEAcA_s8pZmJu9GW5Kqkg=7UZjKcMOGCrQNz=n_z8vY45doaA@mail.gmail.com>
+Subject: Re: [PATCH] hw/usb/dev-uas: Fix guest-triggerable heap OOB access
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, kraxel@redhat.com, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ qemu-trivial@nongnu.org, qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,113 +115,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/9/26 17:23, Emmanuel Blot wrote:
-> This series improves emulation of the Aspeed-based Catalina BMC machine,
-> mostly around its I2C buses: the GPIO expanders the board relies on and
-> the temperature sensors sitting next to them.
-> 
-> The bulk of the work is on the PCA95xx I/O expander models. The existing
-> PCA9552 and PCA9554 drivers only really covered the exact parts a couple
-> of boards happened to use, and some of their register and pin behaviour
-> did not match the datasheets. Catalina needs a few more variants and
-> expects them to act like the real chips, so:
-> 
->   - the PCA9552 driver now provides proper PCA9555/PCA9535 types, applies
->     input polarity inversion on reads, and handles the command register
->     as the datasheet describes (auto-increment and wrapping);
-> 
->   - the PCA9554 driver gains the 4-bit PCA9536 variant, reflects
-> push-pull
->     outputs back into the input register, and grows an opt-in mode that
->     honours the configured pin direction instead of forcing pins to
->     outputs;
-> 
->   - both drivers expose each line as a "pinN" QOM property, which lets an
->     external actor drive an input pin. The property also allows reading
->     the value driven onto an output-configured pin, which is the more
->     useful capability, but nothing exercises it yet.
-> 
-> Along the way both models get a fair bit of cleanup (DEFINE_TYPES, the
-> Resettable interface, state moved out of the headers, default
-> descriptions derived from the instantiated type).
-> 
-> On the machine itself, Catalina now instantiates its PCA9555 expanders
-> as their own type, gains the NIC and FIO temperature sensors present on
-> real hardware, and drives the pca9554 expander input pins from outside
-> the guest.
-> 
-> Finally, the register-level behaviour of both expanders is covered by
-> new qtests, and the functional test that boots the OpenBMC image now
-> exercises the expanders end to end, both through QOM and through the
-> guest's gpio tooling.
-> 
-> Note that the "hw/i2c: parent slaves created with
-> i2c_slave_create_simple"
-> patch is only a temporary dependency here: it already belongs to the
-> separate ADC128D818 series currently under review, and will be dropped
-> from this series before it is submitted for final review.
-> 
-> Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
+On Thu, 16 Jul 2026 at 20:33, Thomas Huth <thuth@redhat.com> wrote:
+>
+> From: Thomas Huth <thuth@redhat.com>
+>
+> The stream ID is under control of the guest, so we must not use
+> it for indexing into the status3[] array without checking it for
+> being in range.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3612
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3986
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
-> Emmanuel Blot (29):
->        hw/gpio: pca9552: register types with DEFINE_TYPES()
->        hw/gpio: pca9552: move PCA955xState definition out of the header
->        hw/gpio: pca9552: rename I2CSlave member to parent_obj
->        hw/gpio: pca9552: default description to the instantiated type name
->        hw/gpio: pca9552: declare pca9555 device as an alias of pca9535 device
->        hw/gpio: pca9552: use the Resettable interface instead of legacy reset
->        hw/gpio: pca9552: apply input polarity inversion on read
->        hw/gpio: pca9552: conform GPIO command handling to the datasheet
->        hw/gpio: pca9552: expose GPIO pins as pin%d QOM properties
->        tests/qtest: add PCA9555 register access tests
->        tests/qtest: pca9555: test output-to-input reflection and pull-ups
->        tests/qtest: pca9555: test polarity inversion
->        tests/qtest: pca9555: test auto-increment and command wrapping
->        tests/qtest: pca9552: test behaviour specific to the LED variant
->        hw/gpio: pca9554: add PCA9536 support
->        hw/gpio: pca9554: add hw-dir property honoring the configured pin direction
->        hw/gpio: pca9554: reflect push-pull outputs in the input register
->        hw/gpio: pca9554: expose pin%d as a string property
->        tests/qtest: add PCA9554 register access tests
->        tests/qtest: pca9554: test output-to-input reflection and pull-ups
->        tests/qtest: pca9554: test polarity inversion
->        tests/qtest: pca9554: test absence of command auto-increment
->        tests/qtest: pca9554: test the PCA9536 4-bit variant
->        hw/arm: catalina: model PCA9555 IO expanders with their own type
->        hw/arm: catalina: add NIC and FIO temperature sensors
->        hw/i2c: parent slaves created with i2c_slave_create_simple
->        test/functional: catalina: test PCA9555 IO expander via QOM
->        hw/arm: catalina: drive pca9554 io expander input pins externally
->        test/functional: catalina: test PCA9554 IO expander via QOM
-> 
->   hw/arm/aspeed_ast2600_catalina.c             |  67 ++++---
->   hw/gpio/pca9552.c                            | 256 ++++++++++++++++++++-------
->   hw/gpio/pca9554.c                            | 175 ++++++++++--------
->   hw/i2c/core.c                                |   3 +
->   include/hw/gpio/pca9552.h                    |  31 +---
->   include/hw/gpio/pca9554.h                    |   3 +
->   include/hw/i2c/i2c.h                         |   7 +-
->   tests/functional/arm/test_aspeed_catalina.py |  81 +++++++++
->   tests/qtest/meson.build                      |   2 +
->   tests/qtest/pca9552-test.c                   |  76 ++++++++
->   tests/qtest/pca9554-test.c                   | 223 +++++++++++++++++++++++
->   tests/qtest/pca9555-test.c                   | 251 ++++++++++++++++++++++++++
->   12 files changed, 994 insertions(+), 181 deletions(-)
-> ---
-> base-commit: f893c46c3931b3684d235d221bf8b7844ddbf1d7
-> change-id: 20260703-catalina-upgrade-3eae7d9d7289
-> 
-> Best regards,
-> --
-> Emmanuel Blot <emmanuel.blot@free.fr>
-> 
+>  hw/usb/dev-uas.c | 11 +++++++++--
+>  1 file changed, 9 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/usb/dev-uas.c b/hw/usb/dev-uas.c
+> index 8576dfec96f..7df58cdeee7 100644
+> --- a/hw/usb/dev-uas.c
+> +++ b/hw/usb/dev-uas.c
+> @@ -383,8 +383,15 @@ static void usb_uas_send_status_bh(void *opaque)
+>
+>  static void usb_uas_queue_status(UASDevice *uas, UASStatus *st, int length)
+>  {
+> -    USBPacket *p = uas_using_streams(uas) ?
+> -        uas->status3[st->stream] : uas->status2;
+> +    USBPacket *p = NULL;
+> +
+> +    if (!uas_using_streams(uas)) {
+> +        p = uas->status2;
+> +    } else if (st->stream <= UAS_MAX_STREAMS) {
+> +        p = uas->status3[st->stream];
+> +    } else {
+> +        warn_report_once(TYPE_USB_UAS ": bad stream ID 0x%x", st->stream);
+> +    }
+>
+>      st->length += length;
+>      QTAILQ_INSERT_TAIL(&uas->results, st, next);
 
-Applied 1-25 to
+Doesn't this just postpone the problem? This function puts the
+UASStatus struct (with the out-of-range stream value) oto the
+uas->results queue. Later on we will end up in the
+usb_uas_send_status_bh function, which picks USBStatus structs
+off the queue and uses the same "assume st->stream is in bounds"
+logic for finding a USBPacket for them.
 
-     https://github.com/legoater/qemu aspeed-next
+Also, once we put this UASStatus into the results queue we
+will never take it off again -- the code for handling reads
+on the status pipe will only remove and process UASStatus
+entries where st->stream matches the stream ID used for
+the read on the status pipe (which must be in-bounds, we
+check that).
 
-Thanks,
+The copy of the USB attached storage spec I found is not very
+clear about error handling. But I think there is no way for us
+to report back the "invalid stream ID" case. So I think:
 
-C.
+(1) in usb_uas_command() we should check the tag for being
+in bounds first, before any other error check; if it is not
+then LOG_GUEST_ERROR and return (do not call
+usb_uas_queue_fake_sense(); have comment about why not)
 
+(2) is usb_uas_queue_status() and usb_uas_send_status_bh(),
+assert() that st->stream is in bounds before using it
+
+thanks
+-- PMM
 
