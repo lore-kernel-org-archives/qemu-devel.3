@@ -4,64 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FFD9C44514
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 10:29:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA85DC44507
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 10:33:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkfnA-0005qC-Gd; Fri, 17 Jul 2026 06:27:40 -0400
+	id 1wkft0-0003Ke-JL; Fri, 17 Jul 2026 06:33:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1wkfn8-0005oL-Es; Fri, 17 Jul 2026 06:27:38 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <aastharawat@linux.microsoft.com>)
- id 1wkfn6-0000P7-R8; Fri, 17 Jul 2026 06:27:38 -0400
-Received: from localhost (unknown [131.107.159.8])
- by linux.microsoft.com (Postfix) with ESMTPSA id 9EB6220B716F;
- Fri, 17 Jul 2026 03:27:24 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 9EB6220B716F
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1784284044;
- bh=W5oTxHBqK2JiDAiHbkwJlqTOiYpl5s4zdpxfycSZFpU=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=PEYbGo/XFiwcT18RD0+IuwjC7JwznKIEfRLgprSMLlbr6sHVVtTY0lcWcuzoz05wQ
- 8/AlDMhDx5ylN2IEDt/aUDHfZvX/hJaVgPHhY2gK12Fh9yiN7GAS7FLDwKxHxbygMK
- 4Wdb71oPcad2Mw23sJfuJhDQHa9zJfLBc6z0f7Mo=
-From: Aastha Rawat <aastharawat@linux.microsoft.com>
-Date: Fri, 17 Jul 2026 10:27:20 +0000
-Subject: [PATCH v5 05/13] target/arm: convert host CPU feature ifdef ladder
- to runtime checks
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260717-mshv_accel_arm64_supp-v5-5-ef07d4c6b337@linux.microsoft.com>
-References: <20260717-mshv_accel_arm64_supp-v5-0-ef07d4c6b337@linux.microsoft.com>
-In-Reply-To: <20260717-mshv_accel_arm64_supp-v5-0-ef07d4c6b337@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <dbassey@redhat.com>)
+ id 1wkfsv-0003Jf-Ol
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 06:33:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dbassey@redhat.com>)
+ id 1wkfst-0001Ql-Li
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 06:33:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784284412;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AYSfFq9oXIBf3ZUfwtzjbA8CNeqsnosYDVtMJ70W6gE=;
+ b=fxP0nSptRENhFZfulRhG7uMCLmfBLREdcIB9TEmpmWicYN5Lx7HEj3hyRzcCJI0wW2fwZE
+ PLwBv5C/DvdN9m0AmHIwfCjmo7IdGpO0ilVvkrlRi1/xwiU8iuWzaCu0/NYhCpGVFwi+vU
+ +IOyqOF0733NTnyVGmr9GKv/XlNQjzU=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-175-T9jMUWbKMZeygPEwpx2TFw-1; Fri, 17 Jul 2026 06:33:31 -0400
+X-MC-Unique: T9jMUWbKMZeygPEwpx2TFw-1
+X-Mimecast-MFC-AGG-ID: T9jMUWbKMZeygPEwpx2TFw_1784284410
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-47f24a50f0cso6684991f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 03:33:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1784284410; x=1784889210; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=AYSfFq9oXIBf3ZUfwtzjbA8CNeqsnosYDVtMJ70W6gE=;
+ b=BmtEuIHMTMrrgec/p2uAyXeDkfe3ZcCjXyVTDp5xiXgRU5oeeY/eHNMEhm/6venJke
+ OAsYygkE4W+W4hjXzZAqqO3UvXnv1wXKBOacYph6Ah8qPv47C3LoyrxD9YeyaNad0PsA
+ 8G2v9bQ1ZHzXygKwVh1HVkqdgpq2NETgtUDgD5u7YE+4ZOeYsrr0UViPT3olbGAKhW5E
+ s+funcffVR6WTYY/TwLp6cix4n+TGmg0MZd0q60ELj1XKfTqYwcSb3/BD8onhMj2zgVJ
+ XIYzSNSaXoWlKzqNgR7oxrSUpsHbqKbhD04IJfCKT2zargh6VUnppN+AhikYfSEcy0NN
+ TBqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784284410; x=1784889210;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=AYSfFq9oXIBf3ZUfwtzjbA8CNeqsnosYDVtMJ70W6gE=;
+ b=g0dolh2A7sCWv5303OwG9IzhOwtKEovrcNP+uYNSI4qvhHEpMn7iBTSTVSAr3avQQv
+ hN/SGBRWwIgQSbQLYKkJrJiadJm8C/R/bkMYA65cwjD5iS7WrVolsOtQEIi0+zNLV0BJ
+ /z5aAx5a6cwSl3f/b10vQdVse1+qbsWMj61f+9PBELeixaLqAGOI7kTM+UNleH6lrU+q
+ pVbP406Mm1mO5zD2peZnlqDm+bAvm2RXB/DVS0wjfwtb/6r710Eip5PuZkHfgXN8b9KZ
+ ton2Yq01Pbb9Fs5ozJLuP5ZqQqwwOVWaMO7tZuQJci2DoSPnFZ+CskwQHqHYi4nkPs/n
+ QU6Q==
+X-Gm-Message-State: AOJu0YxXOC1eR8eylv1Su5VJUL6KR+PXI/hQeSoQRVqJANBT3zsOO7no
+ A6CUqPZlsP/5oVIQgmuD/F9z+FiWLHbZaPPVZTLJAZmhpe168MEV0SEqhElBbCbq/Kc+ikLSszM
+ KpRRE52muJ26/TMfdGPeRI6vtqO9OLlb09Cuq+25cqvGaNIDumuA+1OOhCLOEidrTkgtYj9o0C3
+ j82fK26m8SISVoaHihVzrYnbJ9cFP28I+IPVzOnauD4tWd
+X-Gm-Gg: AfdE7cka2JHrZSM+mvnpn4vdWULJbAh2g5z6UUdLaj/h0ja3W5oxcTAA4E7DwIxkkvA
+ KmzmxYtqhKUVVkHcaq20InAFjwyjaxNvYJSCeDmACw7zRT9tvisnM7wCN9En+Uue4Fr0XtR2pUY
+ Y7JrsCrM5thQyU0agr4iLsYDc4HFJjScfa6wDd7b83IHCpFUuTGB2/Rt8MFiubUw7Z+0/+Ba8GJ
+ SXvrVJedJqkTZ3Uy9mhx44FQ/lTGkgN/Aw+s3sl5AbZ0J7uT8WcEcGOs6j4YE9lPSNYmtFNLLow
+ zIlCYUtYdmnD9Us+zudYspFmnLWsYyC5fnoAVNtDHjrmO43wdeOZslP8s1Tt7uwXTeuQmTioCZD
+ XgldsbPfVXupIWn0f1Bdzcw9TOjGIZTGZpgjDO6udM/BCnk4HkAn1AFCvv7NyfX9f6nIKznhIFJ
+ EiYN4OzmY=
+X-Received: by 2002:adf:e19b:0:b0:46d:d90b:bbe4 with SMTP id
+ ffacd0b85a97d-47f6232c546mr2474855f8f.40.1784284410102; 
+ Fri, 17 Jul 2026 03:33:30 -0700 (PDT)
+X-Received: by 2002:adf:e19b:0:b0:46d:d90b:bbe4 with SMTP id
+ ffacd0b85a97d-47f6232c546mr2474801f8f.40.1784284409517; 
+ Fri, 17 Jul 2026 03:33:29 -0700 (PDT)
+Received: from fedora (cst-prg-95-48.cust.vodafone.cz. [46.135.95.48])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f63ed2313sm2523298f8f.23.2026.07.17.03.33.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 17 Jul 2026 03:33:28 -0700 (PDT)
+From: Dorinda Bassey <dbassey@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>, 
- Wei Liu <wei.liu@kernel.org>, 
- =?utf-8?q?Doru_Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Anirudh Rayabharam <anirudh@anirudhrb.com>, 
- Aastha Rawat <aastharawat@linux.microsoft.com>, qemu-arm@nongnu.org, 
- Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>, 
- Mohamed Mediouni <mohamed@unpredictable.fr>
-X-Mailer: b4 0.15.1
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=aastharawat@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Cc: mhrica@redhat.com, mst@redhat.com, sgarzare@redhat.com,
+ manos.pitsidianakis@linaro.org, marcandre.lureau@redhat.com,
+ stefanha@redhat.com, pbonzini@redhat.com, aesteve@redhat.com,
+ Dorinda Bassey <dbassey@redhat.com>
+Subject: [PATCH v3 2/3] vhost-user-gpu: Add shared memory region support
+Date: Fri, 17 Jul 2026 12:33:00 +0200
+Message-ID: <20260717103301.228974-3-dbassey@redhat.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260717103301.228974-1-dbassey@redhat.com>
+References: <20260717103301.228974-1-dbassey@redhat.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: permerror client-ip=170.10.129.124;
+ envelope-from=dbassey@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,66 +123,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the compile-time #if/#elif preprocessor ladder in
-aarch64_host_initfn() with runtime calls and add mshv_enabled() to it.
-This ensures the correct accelerator is selected at runtime when
-multiple accelerators are compiled in.
+From: Matej Hrica <mhrica@redhat.com>
 
-Add CONFIG_MSHV to the aarch64_cpus[] guard so that mshv accelerator can
-register the "host" CPU type.
+Add a 'hostmem' property to the vhost-user-gpu which enables the shared
+memory in the parent object.
 
-Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
+Register a container MR in the shmem_list for SHMEM_MAP/UNMAP
+operations. A container MR is used so that SHMEM_MAP FD-backed
+subregions each get their own KVM memory slot with the correct
+backing fd.
+
+Suggested-by: Albert Esteve <aesteve@redhat.com>
+Signed-off-by: Matej Hrica <mhrica@redhat.com>
+Signed-off-by: Dorinda Bassey <dbassey@redhat.com>
 ---
- target/arm/cpu64.c | 25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ hw/display/vhost-user-gpu.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 2816735577..9724c9475d 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -802,17 +802,21 @@ void aarch64_host_initfn(Object *obj)
+diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
+index 57360898ca0..dbba80c7783 100644
+--- a/hw/display/vhost-user-gpu.c
++++ b/hw/display/vhost-user-gpu.c
+@@ -649,6 +649,16 @@ vhost_user_gpu_device_realize(DeviceState *qdev, Error **errp)
      }
- #endif
  
-+    if (mshv_enabled()) {
-+        mshv_arm_set_cpu_features_from_host(cpu);
-+    } else if (kvm_enabled()) {
- #if defined(CONFIG_KVM)
--    kvm_arm_set_cpreg_mig_tolerances(cpu);
--    kvm_arm_set_cpu_features_from_host(cpu);
--    aarch64_add_sve_properties(obj);
--#elif defined(CONFIG_HVF)
--    hvf_arm_set_cpu_features_from_host(cpu);
--#elif defined(CONFIG_WHPX)
--    whpx_arm_set_cpu_features_from_host(cpu);
--#else
--    g_assert_not_reached();
-+        kvm_arm_set_cpreg_mig_tolerances(cpu);
- #endif
-+        kvm_arm_set_cpu_features_from_host(cpu);
-+        aarch64_add_sve_properties(obj);
-+    } else if (hvf_enabled()) {
-+        hvf_arm_set_cpu_features_from_host(cpu);
-+    } else if (whpx_enabled()) {
-+        whpx_arm_set_cpu_features_from_host(cpu);
-+    } else {
-+        g_assert_not_reached();
+     g->vhost_gpu_fd = -1;
++
++    /*
++     * If shared memory is enabled, register the hostmem region for
++     * SHMEM_MAP/UNMAP operations.
++     */
++    if (virtio_gpu_hostmem_enabled(g->parent_obj.conf)) {
++        VirtioSharedMemory *shmem = virtio_new_shmem_region(
++            vdev, VIRTIO_GPU_SHM_ID_HOST_VISIBLE, g->parent_obj.conf.hostmem);
++        memory_region_add_subregion(&g->parent_obj.hostmem, 0, &shmem->mr);
 +    }
-     if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
-         aarch64_add_pauth_properties(obj);
-     }
-@@ -821,7 +825,8 @@ void aarch64_host_initfn(Object *obj)
- static const ARMCPUInfo aarch64_cpus[] = {
-     { .name = "cortex-a57",         .initfn = aarch64_a57_initfn },
-     { .name = "cortex-a53",         .initfn = aarch64_a53_initfn },
--#if defined(CONFIG_KVM) || defined(CONFIG_HVF) || defined(CONFIG_WHPX)
-+#if defined(CONFIG_KVM) || defined(CONFIG_HVF) || \
-+    defined(CONFIG_WHPX) || defined(CONFIG_MSHV)
-     { .name = "host",               .initfn = aarch64_host_initfn },
- #endif
+ }
+ 
+ static struct vhost_dev *vhost_user_gpu_get_vhost(VirtIODevice *vdev)
+@@ -659,6 +669,7 @@ static struct vhost_dev *vhost_user_gpu_get_vhost(VirtIODevice *vdev)
+ 
+ static const Property vhost_user_gpu_properties[] = {
+     VIRTIO_GPU_BASE_PROPERTIES(VhostUserGPU, parent_obj.conf),
++    DEFINE_PROP_SIZE("hostmem", VhostUserGPU, parent_obj.conf.hostmem, 0),
  };
-
+ 
+ static void
 -- 
-2.45.4
+2.52.0
 
 
