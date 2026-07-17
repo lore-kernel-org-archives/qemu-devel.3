@@ -4,83 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D4D7C44514
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 08:49:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7C40C44514
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 08:55:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkeGV-0005zI-Cb; Fri, 17 Jul 2026 04:49:51 -0400
+	id 1wkeLy-00082C-Q4; Fri, 17 Jul 2026 04:55:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mike.malyshev@gmail.com>)
- id 1wkeGS-0005yP-TI
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 04:49:48 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wkeLx-00081w-1y
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 04:55:29 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mike.malyshev@gmail.com>)
- id 1wkeGQ-00046c-TM
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 04:49:48 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4954a32cf1eso1387815e9.3
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 01:49:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wkeLv-0005Lk-Co
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 04:55:28 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-81ed073fed0so43359097b3.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 01:55:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784278526; cv=none;
+ d=google.com; s=arc-20260327;
+ b=BhCJ5KOp5w8MN/WoMO3OnoRVQ5Ys+V6uzZ5d1jRDO2qw4Je5wjO/vbMJsZj2KPWyH9
+ Cd9f8W9Bva4Qlfvz5joHv+MjOxJuQpAvPIOOhv5ozP7B9wcJ03uBXvN/MEBG0UprW3Bf
+ pzmRRnGk1AVgdvJWVFJ/CxqemNZYfZGeaKwzXTBANyRxaXyTb+La90TtkjZcgcuHBCpS
+ NtaH9OcmbykoLeFfoC1gZ6AjQ/fp3K6xPLugiuRy9mUnUrUMHC19rlyv5Ca0x4bbZtd1
+ YOEdiyToQIyNnbo5BzaWlT31Scwlckm8uxeJK8Hp+tSvMVL6CsNum8t+NbVF8pmEPRar
+ Vwdw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=qfDpFj5sI7c1lMBs2+vjZfAUb2p+bBhzlM8dFQ160u8=;
+ fh=ViYreDVnUBDMZOrvRzzwMHgxbyDdY05QoGLSYCNlAHw=;
+ b=HQDqXzV3F6rnGEa8LJ2avMHixkIJCcSyrXGm+GsYTQCpVQk+XRPv1QlJcsjbZLVIYB
+ L8XW0Ss+rKXiSqjvdydtu5EBwmaXEF1RSawzKr33IadDwHwFMLxdYdiZylPuYjHP4p6k
+ s7pof3ebNr2L83TPPIjSDl7Y1ti859RLjkzCAZqIliVt1aqCzikNq8HcLRRHncTUVIDD
+ LMmSc17l/1KplC1SKAdAm9LYmlDyWvt1/PHFaj+CwG7WEA0F75HgKUpIGowQrWbBDxU2
+ VNo7apVbBjUspZFIwaDwdKJBXo1UUTiaZDPVAlKZ5fdnBK/JJ+t74/81h080V3HcRt7M
+ jpKA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784278185; x=1784882985; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=kmiBcKAqv2OGhp0GULp7p7IUjutVY/OZQ5oX+wnj/3Q=;
- b=CEpqVB29UpxgTeo87fcma2DPRop7aMCHXh0JZGKqxGEBpjwO9YS2E1kRlL1HlA9G9n
- UPCYoESiEy7mdJBI/qJw/iosPhA7msu/Mct6C9B4iDym0+RjhIC4ji9gZaLZtFmvO3hU
- 39Q3SKsSoI7q7LVBkMUFXiCnEL+RIjPa/7BjyyOoDAkpP7dpOPj63JOseK7pKNWffK/c
- I2+NZBXBcKWl8Ak/zM+RO0NafTmgE1mv1GiL6KCmCza0fXTjX1Ax5ilq8p/htn40wTEy
- EZejErKK3PYP0GZVJcnZvteKFtusPN7wPFRFV1biMd/inJTO5YXQMRS+JA6qmrPHVg51
- qAIw==
+ d=linaro.org; s=google; t=1784278526; x=1784883326; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=qfDpFj5sI7c1lMBs2+vjZfAUb2p+bBhzlM8dFQ160u8=;
+ b=KoF3yKPQSFaDe/Kt9avpmfj9d79tX7MyBbJlpIIdS4xdGSj9ixIhkOcqJdFMIFMmck
+ Qb3kXoUMAWE7D7Do6biMTkNE0d+iNkIneYch2kWbxM3V9CfVa8XlkM3Mv2Wld5/MAdGw
+ dwOfK9PfdRVECKody5pbhUlhZ1RecDsBKHaS1eSV65y2nIvQhGTdkeZsYRNgteVfE23W
+ pKwsvHwUZuUb29RU108TExmbpOf1g+ABFArL5zwUYCW9W2rfyg2PsZnG3O+COX/zYLd4
+ 8bHtjMbH1va2YeESeNsz3fr9/Kfafh4NeBiQS/HRJseCUHaJqdcpt5oPM8x301r8bRMQ
+ 6Vxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784278185; x=1784882985;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=kmiBcKAqv2OGhp0GULp7p7IUjutVY/OZQ5oX+wnj/3Q=;
- b=LElFcbPzEwBNO6gTjJxe0MXkHYV4acsAwmiH08RJZIfa9UmgmzLziNJIuj3pBl2W86
- 6HheQqg6d/l+f10AqGD84hsFt2Qw14JTVgMleyXa15jOW0mE8oQrsiLf2vktUHg/y5GQ
- CvUHhhAN6xR87EpcBFhvu/ZlCCuCwUntIQl/zNwyk/71BK8G3VHeMGuv2mPRm8wJ1ZsB
- M0X9chSN2s0aMcbxvZiwzQajXFjTs0IrOLumwIdArP4rAPJCX7Qhi6/gWLipSIlAw4uq
- f4Q3vHrmuv5/UtRFvBrROPupBjXmHwBPketI2z3gp9+6jOpJX5w/YVusXZ6QYumA4Jp1
- Duig==
-X-Gm-Message-State: AOJu0YwVSmFvOPvsIWUurnkSI18jwTXfHDDD3Mhp+CEvhfK6vux9UVfy
- fW+iukHxUUwpUWtE3G7eVcGEBS2VRaRXCHj/Y5LNCrQrFRfJeSNxWDkatQLsfAz0a0w=
-X-Gm-Gg: AfdE7clb6fn2RnM8+HoikSuqJJWh2+NIm3l8LEgY+MyEpteQcV+CLdgoeugnaSbLv13
- kULcThcCKbzlhZOa+shmN+5AZ3wx9lytM7erB5dxZ14Ttp0Ah0TSzpna9T+PyGOw7Z4a8vRBOFh
- SfOvlTCjuk6mG2/ywtzDF68RxPuq1eZs/a7ltjyfNqE0UKZ0LkwgNKRiJsbMkGXzU756DFhiEPd
- mopjdELpAaiTd6IgBcAutEz0r56Ns4eK0XmOE7yfwqRbIerhcimlXKrl9zFxE7zmN/SZQL4A7Nl
- E+h38oV5Gf7uCDdnk7XgXh9okRTiVTi4DfB8igGtQ3xdV2YDIUuNIQewTy7xCrm5EPXf0qMqgFc
- mHk5BybEHK2RROZRT+7B5pHemHnAqgkb/kjKNsKoXgTptyKinUXhTR/QKrtnkvozcA4ce1gos+g
- sYTjxtoK8=
-X-Received: by 2002:a05:600c:4512:b0:493:bc4a:fb56 with SMTP id
- 5b1f17b1804b1-4954a50e92bmr17546615e9.39.1784278184730; 
- Fri, 17 Jul 2026 01:49:44 -0700 (PDT)
-Received: from build-server.. ([62.96.37.222])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4954a2aa698sm28753815e9.4.2026.07.17.01.49.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jul 2026 01:49:43 -0700 (PDT)
-From: mike.malyshev@gmail.com
-To: qemu-devel@nongnu.org,
-	alex@shazbot.org
-Cc: clg@redhat.com, tomitamoeko@gmail.com, corvin.koehne@gmail.com,
- Mikhail Malyshev <mike.malyshev@gmail.com>
-Subject: [PATCH] vfio/igd: sanitize DBUF_CTL POWER_STATE for iGPU passthrough
-Date: Fri, 17 Jul 2026 08:49:42 +0000
-Message-ID: <20260717084942.1555442-1-mike.malyshev@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20251104; t=1784278526; x=1784883326;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=qfDpFj5sI7c1lMBs2+vjZfAUb2p+bBhzlM8dFQ160u8=;
+ b=fcPfsvoDpAxrDxFobcBMqeFcSa2X0t1dbapnr+qI6qe8d1Poc3rHsHKlkj9OCtIz6s
+ EfDbSpK6HZlz8VyEgSo1dnCTcyjauQLNPkiZPB8XUzIziSai+ZYEB4FdO1dE2luL+mjd
+ awExSF2JjbWKsnM2S2TYFk8LLhC1EIoEU5AYH4SURWa9P/Dk4qi4EA5qfV9JCQv7/kyY
+ HFUxKPtajyUA63/gJtaLdAupaJKg9tqScM742JyNdR1FYftlqGhcEHzbILA/FTrVi8Oo
+ CpcRYYwczKv/sOpKzVkaooYfumd54dPUObHXIK4yGWCaX7QAyWcgZVyJOgvu3ssQVv2Y
+ A4nw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpFinQlks3AeH94ZtN7LAGxmgWugIfDeNtjKjqeRBMzHMCaLWDMxPXo9epW+frxBjdUu6CCDwYADBKV@nongnu.org
+X-Gm-Message-State: AOJu0Yzu6sm9kTubqyxfF6qMvyOlu21qXI4IcuJcTBW6Xs3zsXY01tPZ
+ ZHkbUp8+CUZzRuZupspmxhcZ9D8J9TMo0YxQJTIQS8Vl9fb/RHax5yhX1KWgrzdJ23KtOqM99kp
+ II2s+sUUfXe33+qtupM8c/8c48YgDAAuLv5lXv8yV3g==
+X-Gm-Gg: AfdE7cnR617qNxeJ6WTUpundb77Gpr67Ik7Y3UjQW9c0vZdDR72lf7QJ15W/Z18M81q
+ nPH2Dvx1Fm/0DxsflHO8yfXV5Yvx6k+cqpesGYr3lqD3mSFG8q05MNSmRpGrrYhkcOQ0z66MH27
+ BG0hRPcLcfnoSj1oqQggR9ycGhMTpINVsTC25Xt9RpJZGOEeYlEz7q0rNKqrql4UHBJyW/6H8zX
+ NQ996OT8b/vbIsuBkd3ragt2WRPrUsIXemepJlPVvasC3mbkBpEJUQSeYAQ9bHvmPr6Yg1Uq+sJ
+ uC8H+DTz8Kn9TNZ72xbIuMNXRKskYC1SLrJRtH+K3tWMWjGRwoUarU3b
+X-Received: by 2002:a05:690c:3a0:b0:81e:b981:3eb5 with SMTP id
+ 00721157ae682-81ef25ae906mr4941747b3.23.1784278525669; Fri, 17 Jul 2026
+ 01:55:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=mike.malyshev@gmail.com; helo=mail-wm1-x32b.google.com
+References: <20260715190737.1381701-1-frederic.petrot@univ-grenoble-alpes.fr>
+In-Reply-To: <20260715190737.1381701-1-frederic.petrot@univ-grenoble-alpes.fr>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 17 Jul 2026 09:55:14 +0100
+X-Gm-Features: AUfX_mzIBdcuIA0_XiDSTG-R6hxX7SXzzbEIjX6Yf0tDT0ixLrWe6e-nujP8a_0
+Message-ID: <CAFEAcA9FoE33wE9HqcsmP8Xe=g6-JYCGgGyw8YnaEJs8Z5Kbbw@mail.gmail.com>
+Subject: Re: [PATCH 0/3] Correct cbo and lq disassembly
+To: frederic.petrot@univ-grenoble-alpes.fr
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, 
+ daniel.barboza@oss.qualcomm.com, liwei1518@gmail.com, 
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com, 
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
+ julien.thillard@univ-grenoble-alpes.fr
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -98,165 +122,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mikhail Malyshev <mike.malyshev@gmail.com>
+On Wed, 15 Jul 2026 at 20:08, <frederic.petrot@univ-grenoble-alpes.fr> wrot=
+e:
+>
+> From: Fr=C3=A9d=C3=A9ric P=C3=A9trot <frederic.petrot@univ-grenoble-alpes=
+.fr>
+>
+> The CBO instructions were, AFAIU, disassembled erroneously.
+> In addition, lq (load-quad, a RV128 instruction) shares the same
+> opcode space as the CBOs, which also led to incorrect dasm for that
+> instruction (understandable since RV128 is an experimental feature).
+> To avoid overlaps, we now require that lq is decoded only if
+> rd is not 0, as CBO requires the field corresponding to rd to be zero,
+> both in dasm and decodetree.
+> The last patch corrects the original indentation that was making
+> checkpatch unhappy.
 
-On some hosts the firmware POST modeset leaves the display data buffer
-(DBUF) powered, so the passed-through iGPU's DBUF_CTL registers read
-back POWER_STATE=1 while POWER_REQUEST=0 -- an inconsistent leftover that
-never occurs under GVT, which emulates the register so POWER_STATE
-follows POWER_REQUEST.
+Reminder: please put some disambiguator in the subject lines
+of cover letter emails. "Correct cbo and lq disassembly" doesn't
+say it's riscv related so you can't tell without looking into
+the email body. Doing this assists people in easily scanning
+through the list to find or skip over topics.
 
-A guest display driver samples POWER_STATE to determine which DBUF
-slices are already enabled; seeing the stale "powered" bit it never
-issues POWER_REQUEST, so DBUF actually powers down, the plane FIFO
-underruns, and scanout is corrupted (vertical stripes) until a full
-modeset (e.g. a display sleep/wake) re-requests power.
-
-Present a consistent view like GVT: trap the DBUF_CTL slice registers
-(S1..S4, only as many as the generation exposes) in BAR0 and clear
-POWER_STATE on read whenever POWER_REQUEST is not set.  Writes pass
-straight through to the device.
-
-Signed-off-by: Mikhail Malyshev <mike.malyshev@gmail.com>
----
- hw/vfio/igd.c | 116 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 116 insertions(+)
-
-diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index e091f21b6a..ebe957f69d 100644
---- a/hw/vfio/igd.c
-+++ b/hw/vfio/igd.c
-@@ -455,6 +455,96 @@ static bool vfio_pci_igd_override_gms(int gen, uint32_t gms, uint32_t *gmch)
- #define IGD_GGC_MMIO_OFFSET     0x108040
- #define IGD_BDSM_MMIO_OFFSET    0x1080C0
- 
-+/*
-+ * IGD BAR0 DBUF_CTL sanitize quirk.
-+ *
-+ * On hosts where the firmware POST modeset left the display engine powered,
-+ * DBUF_CTL reads back POWER_STATE=1 while POWER_REQUEST=0 -- an inconsistent
-+ * leftover that never occurs under GVT (which emulates the register so STATE
-+ * follows REQUEST).  A passed-through guest driver samples POWER_STATE to
-+ * decide which DBUF slices are already enabled, sees this stale "powered"
-+ * bit, and therefore never issues POWER_REQUEST.  DBUF then powers down, the
-+ * plane FIFO underruns, and scanout is corrupted until a full modeset (e.g.
-+ * a display sleep/wake) re-requests power.
-+ *
-+ * Present a consistent view like GVT: intercept DBUF_CTL reads and clear
-+ * POWER_STATE whenever POWER_REQUEST is not set.  Writes pass straight
-+ * through to the device.
-+ */
-+#define IGD_DBUF_POWER_REQUEST  (1u << 31)
-+#define IGD_DBUF_POWER_STATE    (1u << 30)
-+
-+/*
-+ * DBUF_CTL slice registers within BAR0, in slice order (i915 numbers these
-+ * S1..S4).  How many slices exist is generation-dependent, so only the first
-+ * igd_dbuf_ctl_nslices(gen) entries are real DBUF_CTL registers on a given
-+ * part; the rest are unrelated registers and must not be trapped.
-+ */
-+static const uint32_t igd_dbuf_ctl_offsets[] = {
-+    0x45008, /* S1 */ 0x44FE8, /* S2 */ 0x44300, /* S3 */ 0x44304, /* S4 */
-+};
-+
-+/*
-+ * DBUF slice count by generation, matching i915 dbuf.slice_mask:
-+ * gen9/10 = 1 (S1), gen11 = 2 (S1-S2), gen12+ = 4 (S1-S4).
-+ *
-+ * Within gen12 the slice count is actually per-platform, not per-gen: ADL-P /
-+ * RPL-P / DG2 expose 4 slices, but TGL / RKL / ADL-S have only 2.  We return 4
-+ * for all gen12+ (igd_gen() can't distinguish them), so on a <4-slice gen12
-+ * part S3/S4 (0x44300/0x44304) are over-trapped.  This is harmless in practice:
-+ * the read handler only mutates a value when POWER_REQUEST=0 && POWER_STATE=1,
-+ * which whatever register lives at those offsets is very unlikely to present.
-+ * A fully-correct count would have to key off the PCI device ID.
-+ */
-+static int igd_dbuf_ctl_nslices(int gen)
-+{
-+    if (gen <= 10) {
-+        return 1;
-+    }
-+    if (gen == 11) {
-+        return 2;
-+    }
-+    return 4;
-+}
-+
-+typedef struct IGDDbufCtlQuirk {
-+    VFIOPCIDevice *vdev;
-+    uint32_t bar_offset;    /* offset within BAR0 MMIO */
-+    uint8_t bar;
-+} IGDDbufCtlQuirk;
-+
-+static uint64_t igd_dbuf_ctl_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    IGDDbufCtlQuirk *q = opaque;
-+    VFIOPCIDevice *vdev = q->vdev;
-+    uint64_t val = vfio_region_read(&vdev->bars[q->bar].region,
-+                                    addr + q->bar_offset, size);
-+
-+    if (size == 4 && !(val & IGD_DBUF_POWER_REQUEST) &&
-+        (val & IGD_DBUF_POWER_STATE)) {
-+        val &= ~(uint64_t)IGD_DBUF_POWER_STATE;
-+        error_report_once("IGD quirk: DBUF_CTL@0x%x cleared stale "
-+                          "POWER_STATE (POWER_REQUEST=0)", q->bar_offset);
-+    }
-+    return val;
-+}
-+
-+static void igd_dbuf_ctl_write(void *opaque, hwaddr addr,
-+                               uint64_t data, unsigned size)
-+{
-+    IGDDbufCtlQuirk *q = opaque;
-+    VFIOPCIDevice *vdev = q->vdev;
-+
-+    vfio_region_write(&vdev->bars[q->bar].region,
-+                      addr + q->bar_offset, data, size);
-+}
-+
-+static const MemoryRegionOps igd_dbuf_ctl_ops = {
-+    .read = igd_dbuf_ctl_read,
-+    .write = igd_dbuf_ctl_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+};
-+
- void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
- {
-     VFIOQuirk *ggc_quirk, *bdsm_quirk;
-@@ -507,6 +597,32 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
-                                         1);
- 
-     QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, bdsm_quirk, next);
-+
-+    /*
-+     * DBUF_CTL sanitize quirk (gen9+): trap the DBUF_CTL slice registers so
-+     * POWER_STATE is reported consistently with POWER_REQUEST (see
-+     * igd_dbuf_ctl_read()).  Only trap slices that actually exist on this
-+     * generation -- the remaining offsets are unrelated registers.
-+     */
-+    if (gen >= 9) {
-+        int i, nslices = igd_dbuf_ctl_nslices(gen);
-+
-+        for (i = 0; i < nslices; i++) {
-+            VFIOQuirk *dquirk = vfio_quirk_alloc(1);
-+            IGDDbufCtlQuirk *dq = dquirk->data = g_malloc0(sizeof(*dq));
-+
-+            dq->vdev = vdev;
-+            dq->bar = nr;
-+            dq->bar_offset = igd_dbuf_ctl_offsets[i];
-+            memory_region_init_io(&dquirk->mem[0], OBJECT(vdev),
-+                                  &igd_dbuf_ctl_ops, dq,
-+                                  "vfio-igd-dbuf-ctl-quirk", 4);
-+            memory_region_add_subregion_overlap(vdev->bars[nr].region.mem,
-+                                                igd_dbuf_ctl_offsets[i],
-+                                                &dquirk->mem[0], 1);
-+            QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, dquirk, next);
-+        }
-+    }
- }
- 
- static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
--- 
-2.43.0
-
+thanks
+-- PMM
 
