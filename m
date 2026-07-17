@@ -4,143 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91306C44520
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 12:34:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C56FC4451C
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 12:34:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkhlW-00010q-A7; Fri, 17 Jul 2026 08:34:06 -0400
+	id 1wkhlg-00015r-RF; Fri, 17 Jul 2026 08:34:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wkhlU-00010V-Gl
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 08:34:04 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <dbassey@redhat.com>)
+ id 1wkhlf-00015T-1a
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 08:34:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wkhlS-0000Vc-K8
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 08:34:04 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66HCTuwt1756227
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 12:34:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- irwPvkl8b0yZTQ+eDfTrHiU1/R5uLZoCSXHK9QNgr9I=; b=Bb15rEODqP9tQz8W
- LaZAz5T+7BcllnbldfQbsJhtXoD/CYYg5Z7OFyuYsHFxC9lIX00AU4O2GDf/pbPK
- 0npr7lNI5XGB4WB2lQPORDU+r6I/vYTcuLYDGf5HX1F4cxozQj9gAdziEVVQd+F6
- bjRpbkDZCPOg0HFXSZq8WVfV+IZ8R/riod0peemy4r7yZNleXM9iayqAiqu6chYY
- UnCr8/2WLvqQhA7p79/OFC2eaP0Apg9CozhFmFwLYTkGno89dm8D430l6PyyeyQP
- 0j8v9LYR66p0hvG+yEPjQsdMnX8Fm9cDvAyWfanBJdyZYIet/GRM1bwKv58zjU6+
- Be22JQ==
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ff2f2v6gy-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 12:34:00 +0000 (GMT)
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-81e68b02459so200852557b3.2
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 05:34:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbassey@redhat.com>)
+ id 1wkhlc-0000XI-Tc
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 08:34:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784291652;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=2qUN9KCPNvPeb/q+dpEjEzbh002POb/NdOo381n94iE=;
+ b=PxE2hU7qlqVfM4IaSRKorMOkTwU7ZGgGx7tv8T0dpF9O94yc4/wQSHjqejSKY6OslAd6Vv
+ XfnkEHDGqi1jKsIc4scbFJpYoFY7xKvP478lXZrZWWrt7cKIVMZIS/d3mRnlV3CpUOw3We
+ W7W6xIdXe//+ERVvoLSktdRxsMC2IYI=
+Received: from mail-oi1-f198.google.com (mail-oi1-f198.google.com
+ [209.85.167.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-358-goSA5mIIOwiln9l3tfbadw-1; Fri, 17 Jul 2026 08:34:09 -0400
+X-MC-Unique: goSA5mIIOwiln9l3tfbadw-1
+X-Mimecast-MFC-AGG-ID: goSA5mIIOwiln9l3tfbadw_1784291649
+Received: by mail-oi1-f198.google.com with SMTP id
+ 5614622812f47-486055c1c6fso4590667b6e.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 05:34:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784291649; cv=none;
+ d=google.com; s=arc-20260327;
+ b=YSNvBFd0XWVodaqGzkIGeUOf58rp3rDMxCbNRlV/iFlvUp1xjtZqmTnvF04IESmVZl
+ 8jpXrrvPYE4QtRsPn0qoKC6aLSeyPeK57LOdsv7pNA5CnZePUO7oQUqHONPb1TbPQbLD
+ ixUjksGMtOm/8fW1LNjZmDmSCE4qm9iP3U5PiTGQW5E1MIdbvco6k7yiHIPAJgIzNHcV
+ i9karoeE3K+jdKToupfltSBzKJQfiaMWwihu27rQK3T4iqLCoAazmJ2UoW9w8enkuA8A
+ ol42gBomM/YCVPGHArOEL8qzQGH0sxSltZ35M6R7YeFB8AR+Iy+GOiLaR2xCej0wxY+o
+ J11w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=2qUN9KCPNvPeb/q+dpEjEzbh002POb/NdOo381n94iE=;
+ fh=yMT8b8T8ht6iWX7piMkmNLNvzSymuJt3sDznvSbJHMQ=;
+ b=VEYkEshs5WYLcJfnMZuQfYaueRFml3nrM1lCB/3XUBGFpieTGUgHhcvZpTwIvnnLfr
+ IrzUSfoZfG5qTPhUtz4HVA699DC3GK2genFpzBthn5vJ5AihoxzTBveukI9d4WU6z2k5
+ RGe9Y/bLrhr835r5HLFJqnAMu8iAZUk5Fth2WooJQQ1JpUSkX9OrUstHE9Tj9k/qej4S
+ FgjffcyueIjqqAVaJXIpcZjirsIquNeQTzRgTg13wfW5uwH0QxmBcefn84TK+RfHxUMh
+ 6UdwRWWtKUrSBGENhbKzr3HFI15OM72gWrGWcbt8QgAnVMn6GYzXAnE0+cTDylfkLQ+c
+ IO7w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784291640; x=1784896440; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=irwPvkl8b0yZTQ+eDfTrHiU1/R5uLZoCSXHK9QNgr9I=;
- b=QI+o7koB312SLd/wZDLtHcOMQmwBWSIgWJB++t7Qr3MELMS54T23KIp02EXAkQnOaR
- IC4okUyhY0E1sChvv/ppMS7ompP8SC7tsC9SflgjSY5+Jcso5R6mivWa5QXy1qYwuawv
- 4dTWWs6k+sHMM+zZDJpLlaRbFr5eJ2z6nZPYlwE3sBRD4TPf5VE25EpqOFpq4OSbOizQ
- cavkafPETbDpKc9gyX3eV7q2GcWN0KLfGDB4hJ6hDsXHssf4QZ47EQn/jNPe6Uw5hhqM
- RSnslIuyRY6oCBSyN9+orT/Ud6I1Jmf0xCygb5sNf9LL/7glMF3aa9UHOx5mw3kJrQch
- YRqQ==
+ d=redhat.com; s=google; t=1784291649; x=1784896449; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=2qUN9KCPNvPeb/q+dpEjEzbh002POb/NdOo381n94iE=;
+ b=fT7fmiHJkg88zZWtKHqIaiKeTV6zqYuNlYHLJOJYxIueCqaSinz9tajsYf5HnOKwCA
+ R1F/NqxP5GwXBEJBDsRCfVEoNKkeFvtBduciwLnrOwTSDqY/B1s1xkQ+CxjIPD91oqSZ
+ fFxq8ZpceOKrNdiWf9l7kdN6IxCwZ59urOUkkVoDv7DxgDFOW6MoB2FLWLLQnUTSHvC4
+ 0GR3MANvA1s8QmfXPSmUjw7ERCoj9F3TEFnlITB1+CwClqCNp2BJwVc9/A4utBiaZXtB
+ T9nvH+kHPV97NEtXn3c9l5S+bYySshZFqRcQqKbA7FM9Ma8VXxPBN6Alts6WWoKKPWSY
+ ZwhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784291640; x=1784896440;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=irwPvkl8b0yZTQ+eDfTrHiU1/R5uLZoCSXHK9QNgr9I=;
- b=KI6NEOkMXCAmUJ1vdJcSRKvqfOetijcAmsDUvdiaG+1HuMqOXvkkdm3FjtaqCvGilK
- LboH0bBdlp12n9BCLw5EQcLL6d63TcC0YCrjEkrhzyQV72t/9/yQN8StrA5+KjZYh5ul
- 12d0Jq2BtjHbdkJgdWRe6DOZo0b/Hi/+xo6khYYl50VdHwbt2ixmQNrhAgoa92Z+9eQm
- zbSlZJsx/H+A4+i9rtw8pbWahwXXCDIaewJLW+6YnDvij6R8VU5LFaW3be9z18UTD3Av
- lhNc9UvNEp2urf9gG1PxblSAeBjUr+BrSLLLc9gCKmKPR1C64W9G/3ElNLwH6ykEE3XW
- 0YvQ==
+ d=1e100.net; s=20251104; t=1784291649; x=1784896449;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=2qUN9KCPNvPeb/q+dpEjEzbh002POb/NdOo381n94iE=;
+ b=jS0jTx1Z6v30l5CVhzuBe6HqPnK+7GuYi3ljW1iV+MYUmUxXiyftbPZx0Wa0vL/xwL
+ 0qIaDQL34GTNFsmmuz0wUtaozNsd3c9ve8n3LwG6okH98WHMxRltFTVE091PL28wAzmu
+ Njv5JJKLPn9+QnH94xlM+CVLl/Ek8JCbVs2Zw37vxiNGWkgchbGG5ZX6wyUjQj54X0IA
+ GVjQCf9B11dm0008Q+SL3UdDrlRzkusr2U2bcl/cBw7upjlwQ+F3SIJXRuEA2/tVffbe
+ 9cYiLU/vIwl8/0L5Hi4F/Hf2w95eBe+1UszU6Lk9qezsXkNnSgyVCABP1nXdjK6pULM1
+ oCaQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RpnFw/adurU3POuebOa+J+7tanrWuTx1GR8IJKzZRx7IIJ/auZrfTpyiV/W7/F3b6mkBTbxqyLN8Vfi@nongnu.org
-X-Gm-Message-State: AOJu0YzfL9DBWiF/VtNPXpNDvrAV799g2ir7s0DyzNwaNOvjVY/Z0MQf
- lgNy+RwarHP4EYY4Tt/D0e99mBdcSBTbW/wd+qkdDiCQ4zpzx846HkUD0ykztqIwK4rb+jvzf5H
- oqj9uVLZ8oDMKQBMwfxQV3t0Y7A3kFmmOnxQXD79y6gHmkdYfl2OCu4rk8Q==
-X-Gm-Gg: AfdE7cmVfqrN7a3gBaBL5jpx4nJkGQ+9hQRdIxFpaxVCTdHTOwORhQG047w4z0nO7AU
- QX7ftQLFkrR7E+zzFm8hWjL/zOQh/pJXdjVTbktUS80Hr4zKr1GVtIuMLZHID7N4260ZnXPt8Oc
- 3/Ch9+e21u2UmCvLr/vlXWVOMSJgOScY3tzFJwGmc0JTFSQCqpdAJLA65NDzy1VvXkyjVIOYrNU
- RdXe6dqtrotGAMftvzhRhqlf1zaQRT07kmX9A1a73hF826h2dvwoXf7DY/4xhB9/7dd2P+R0Wvr
- Yqbnuxtp5fpi9C/4ZzcOvqctE6Zar4MijwUTFOIQoZPJzjVInLXI75ykc0jc7CxhIfqrXrlM1Dh
- dxX3DGdwVyIxeTwtrtxrlM4TudMcCm9Km3L2Kww==
-X-Received: by 2002:a05:690c:6b06:b0:816:b469:ccec with SMTP id
- 00721157ae682-81ef25a187dmr7368497b3.15.1784291640507; 
- Fri, 17 Jul 2026 05:34:00 -0700 (PDT)
-X-Received: by 2002:a05:690c:6b06:b0:816:b469:ccec with SMTP id
- 00721157ae682-81ef25a187dmr7368387b3.15.1784291640096; 
- Fri, 17 Jul 2026 05:34:00 -0700 (PDT)
-Received: from [192.168.68.105] ([152.234.122.204])
- by smtp.gmail.com with ESMTPSA id
- 00721157ae682-81ef42e85f5sm7833937b3.45.2026.07.17.05.33.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Jul 2026 05:33:59 -0700 (PDT)
-Message-ID: <1f0df921-7575-49fc-805f-e18de5edfbb8@oss.qualcomm.com>
-Date: Fri, 17 Jul 2026 09:33:55 -0300
+ AHgh+RoUNnQ2JLJZ8zaIvPXsPJbqbG7YOxOc81UAT6CX+NSQRHf2DoSiz/DbsAnz0YtHah+zZd1T9qzODces@nongnu.org
+X-Gm-Message-State: AOJu0YwEnBIIHMk0+Gyi0yrsXFiNwYuAWfrnOXoLP7cjieSIDSeHbD4y
+ AT6Bb9sv5TqCBnYvNGzgzFsN36fjdBpow9oyMNT+vMl+EHHY/ZzGnvOo2Qy8Pnbt8mMMcgztrKa
+ 9po2IDPo/4L5KfeAkp4UlYt9QswJQyLsY1nrlcwwh3gvilKZRo4nXgxrfmPEZtV64QXTiYDo6hn
+ q5EhMJp/LdtgD8VgNOoLjCvKKSW0203ls=
+X-Gm-Gg: AfdE7ckw9FlKiwApAXC6GJ5myjkMeEK9JP71K9Mm//qQXIk45CTLwSHAfT108guiJ/t
+ vaEyCk8XvssAegVSMr3QNAkQ0H1BAGwid0kjt9hvitj9EWYukjgwJp9o4diEeQ6/vUEO9edoofR
+ kyychzhjfvqYJvJABdloimL3Kf7ap+PGzX+4atxlVqclQpLmlFXtc1rwuymDM2Yq/04MJSCcpIE
+ 4rXmxi57VugazVRe9GUszvimBEcuFqQibl6kB79GYqWXw==
+X-Received: by 2002:a05:6808:13ca:b0:497:e0bc:afe2 with SMTP id
+ 5614622812f47-4a4d03063f2mr966520b6e.4.1784291649035; 
+ Fri, 17 Jul 2026 05:34:09 -0700 (PDT)
+X-Received: by 2002:a05:6808:13ca:b0:497:e0bc:afe2 with SMTP id
+ 5614622812f47-4a4d03063f2mr966501b6e.4.1784291648536; Fri, 17 Jul 2026
+ 05:34:08 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/riscv/riscv-iommu: fix U-bit check to apply only to
- leaf S/VS-stage PTEs
-To: Andrew Jones <andrew.jones@oss.qualcomm.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Cc: alistair.francis@wdc.com, palmer@dabbelt.com
-References: <20260717112340.1071148-1-andrew.jones@oss.qualcomm.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260717112340.1071148-1-andrew.jones@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: GXjTFuieXcraeK7vsvcyBWerlRCbFfAR
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE3MDEyOCBTYWx0ZWRfXxk05IF+H120k
- kb3n4gl7ARvU3ou4Jn/v3+fNMjWpzzyALRzrBQM+KCCijY65iaxzXuOKoimFn/k5K3FZpQA822n
- nosZcwo4c44P4o3eOuKMAQnXtHUgQKI=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE3MDEyOCBTYWx0ZWRfX3c1JvdjFKTat
- iLrHt0QUz7/fzXIcIF68fbWstQNDQriyZayZJFS5ese5RwZDeKFTcphhna/7rwyWzXtQW6qTWO3
- LxLYnOzO+ur6qH9dn+HgJIZyZ56CkxAOhV7mhRb2+2gh8OvJO+YYNabLySV+WjfIGAHJsN7CHzn
- vNUAnASDB5XuQkCi9XEytBAeYi7NweA5Bc+rR25ybIyQNlurCR5mgiyKb1M/6bmsueEIzpe2Daa
- hR9XwDpDAOVhfPHTJB7YaTJCRyvJAMYVI3tS1+Olx+JOhF32Jups0+0n3TzFZcHoVdMQXj3xEOt
- 0fMSrrxCsdKjXhb+qQoQfL5W1lK44QWRoML26U1TZcJfO4x1JNt4t2S04zrgSVoXpO933/HwCIS
- zhngGmd958skqcxEopFQ76ShikLgR7iqzpKjmTSBzDuazFtqOP0dNG6iMymCi/HbQFqpYqex3na
- UVCuuunJc1ahEpXqWgQ==
-X-Authority-Analysis: v=2.4 cv=NcTWEWD4 c=1 sm=1 tr=0 ts=6a5a2139 cx=c_pps
- a=0mLRTIufkjop4KoA/9S1MA==:117 a=J0RmenBMOwS19r/fhzI3tQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=EUspDBNiAAAA:8 a=reDuT1hDkj-Uxv0C5A8A:9 a=QEXdDO2ut3YA:10
- a=WgItmB6HBUc_1uVUp3mg:22
-X-Proofpoint-GUID: GXjTFuieXcraeK7vsvcyBWerlRCbFfAR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-17_03,2026-07-17_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 priorityscore=1501 lowpriorityscore=0
- clxscore=1015 phishscore=0 bulkscore=0 spamscore=0 adultscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607170128
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260717103301.228974-1-dbassey@redhat.com>
+ <20260717103301.228974-2-dbassey@redhat.com>
+ <20260717063641-mutt-send-email-mst@kernel.org>
+ <CADSE00+Uoy=fu3OnvMCr0Cn=tHSj27LkD9y7_CPqT32oSaDFow@mail.gmail.com>
+In-Reply-To: <CADSE00+Uoy=fu3OnvMCr0Cn=tHSj27LkD9y7_CPqT32oSaDFow@mail.gmail.com>
+From: Dorinda Bassey <dbassey@redhat.com>
+Date: Fri, 17 Jul 2026 14:33:56 +0200
+X-Gm-Features: AUfX_mztrW3g0GrNg_P1X1ZjfLgnm1MtnIHlB-0Hcgs4I9Ik9e1op4jgx_LAWZs
+Message-ID: <CACzuRyzBab+XdnQVkv1CSLx_36huJn+_u=pyp1POpgYm-KgFUQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] vhost: Fix SHMEM_MAP transaction ordering and
+ resulting deadlock
+To: Albert Esteve <aesteve@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
+ mhrica@redhat.com, sgarzare@redhat.com, manos.pitsidianakis@linaro.org, 
+ marcandre.lureau@redhat.com, stefanha@redhat.com, pbonzini@redhat.com
+Content-Type: multipart/alternative; boundary="000000000000e32a2a0656cdc5bd"
+Received-SPF: permerror client-ip=170.10.133.124;
+ envelope-from=dbassey@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,63 +140,292 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--000000000000e32a2a0656cdc5bd
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Good point, will move virtio_del_shmem_map() before the reply in the next
+version.
 
-On 7/17/2026 8:23 AM, Andrew Jones wrote:
-> Commit b795ea0ba471 ("hw/riscv/riscv-iommu.c: fault when !PTE_U and
-> no priv access") placed its check ahead of the leaf-vs-non-leaf
-> branch in riscv_iommu_spa_fetch(), so it fires on every PTE walked,
-> including non-leaf/table entries. Per the RISC-V privileged spec's
-> address translation algorithm (Sv39/Sv48/etc., the "leaf PTE has
-> been reached" step, followed separately by the U-bit permission
-> check), the U bit is only defined and checked for the leaf PTE
-> reached at the end of the walk -- non-leaf PTEs don't carry a
-> meaningful U bit at all.
-> 
-> Move the check after the leaf/non-leaf branch, alongside the other
-> leaf-only checks, mirroring how the G_STAGE U-bit check (added in
-> 9158c900ab30) is already correctly placed.
-> 
-> Fixes: b795ea0ba471 ("hw/riscv/riscv-iommu.c: fault when !PTE_U and no priv access")
-> Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
-> ---
+On Fri, Jul 17, 2026 at 1:50=E2=80=AFPM Albert Esteve <aesteve@redhat.com> =
+wrote:
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> On Fri, Jul 17, 2026 at 12:37=E2=80=AFPM Michael S. Tsirkin <mst@redhat.c=
+om>
+> wrote:
+> >
+> > On Fri, Jul 17, 2026 at 12:32:59PM +0200, Dorinda Bassey wrote:
+> > > Commit the memory region transaction before sending the SHMEM_MAP rep=
+ly
+> > > so the KVM memory slot exists before the guest can access the mapped
+> > > region.
+> > >
+> > > This moves the commit to while the backend is still blocked waiting f=
+or
+> > > the reply, which can trigger ADD_MEM_REG back to the backend and
+> > > deadlock. Filter shmem mapping regions out of vhost_section() by
+> > > checking the MR owner type to prevent this.
+> > >
+> > > The explicit transaction begin/commit wrapping is dropped since
+> > > virtio_add_shmem_map() already commits via
+> memory_region_add_subregion().
+> > >
+> > > Fixes: b52e1896e764 ("vhost-user: Add VirtIO Shared Memory map
+> request")
+> > > Suggested-by: Albert Esteve <aesteve@redhat.com>
+> > > Signed-off-by: Dorinda Bassey <dbassey@redhat.com>
+> > > ---
+> > >  hw/virtio/vhost-user.c | 20 ++------------------
+> > >  hw/virtio/vhost.c      | 10 ++++++++++
+> > >  2 files changed, 12 insertions(+), 18 deletions(-)
+> > >
+> > > diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> > > index 517cc4ca716..01468f7441a 100644
+> > > --- a/hw/virtio/vhost-user.c
+> > > +++ b/hw/virtio/vhost-user.c
+> > > @@ -1977,8 +1977,6 @@ vhost_user_backend_handle_shmem_map(struct
+> vhost_dev *dev,
+> > >          }
+> > >      }
+> > >
+> > > -    memory_region_transaction_begin();
+> > > -
+> > >      /* Create VirtioSharedMemoryMapping object */
+> > >      VirtioSharedMemoryMapping *mapping =3D
+> virtio_shared_memory_mapping_new(
+> > >          vu_mmap->shmid, fd, vu_mmap->fd_offset, vu_mmap->shm_offset,
+> > > @@ -1986,7 +1984,7 @@ vhost_user_backend_handle_shmem_map(struct
+> vhost_dev *dev,
+> > >
+> > >      if (!mapping) {
+> > >          ret =3D -EFAULT;
+> > > -        goto send_reply_commit;
+> > > +        goto send_reply;
+> > >      }
+> > >
+> > >      /* Add the mapping to the shared memory region */
+> > > @@ -1994,22 +1992,8 @@ vhost_user_backend_handle_shmem_map(struct
+> vhost_dev *dev,
+> > >          error_report("Failed to add shared memory mapping");
+> > >          object_unref(OBJECT(mapping));
+> > >          ret =3D -EFAULT;
+> > > -        goto send_reply_commit;
+> > > -    }
+> > > -
+> > > -send_reply_commit:
+> > > -    /* Send reply and commit after transaction started */
+> > > -    if (hdr->flags & VHOST_USER_NEED_REPLY_MASK) {
+> > > -        payload->u64 =3D !!ret;
+> > > -        hdr->size =3D sizeof(payload->u64);
+> > > -        if (!vhost_user_send_resp(ioc, hdr, payload, &local_err)) {
+> > > -            error_report_err(local_err);
+> > > -            memory_region_transaction_commit();
+> > > -            return -EFAULT;
+> > > -        }
+> > > +        goto send_reply;
+> > >      }
+> > > -    memory_region_transaction_commit();
+> > > -    return 0;
+> > >
+> > >  send_reply:
+> > >      if (hdr->flags & VHOST_USER_NEED_REPLY_MASK) {
+> > > diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> > > index af41841b529..e5c219be095 100644
+> > > --- a/hw/virtio/vhost.c
+> > > +++ b/hw/virtio/vhost.c
+> > > @@ -636,6 +636,16 @@ static bool vhost_section(struct vhost_dev *dev,
+> MemoryRegionSection *section)
+> > >  {
+> > >      MemoryRegion *mr =3D section->mr;
+> > >
+> > > +    /*
+> > > +     * Skip shmem mapping regions, they are managed via
+> SHMEM_MAP/UNMAP.
+> > > +     * Including them triggers ADD_MEM_REG during the SHMEM_MAP
+> transaction
+> > > +     * commit, deadlocking the backend.
+> > > +     */
+> > > +    if (object_dynamic_cast(memory_region_owner(mr),
+> > > +                            TYPE_VIRTIO_SHARED_MEMORY_MAPPING)) {
+> > > +        return false;
+> > > +    }
+> > > +
+> > >      if (memory_region_is_ram(mr) && !memory_region_is_rom(mr)) {
+> > >          uint8_t dirty_mask =3D memory_region_get_dirty_log_mask(mr);
+> > >          uint8_t handled_dirty;
+> >
+> >
+> > This all seems risky i have to say.  Is this always map never unmap?
+>
+> The filter covers both, and this is a good point. For symmetry the
+> handle_shmem_unmap() should call virtio_del_shmem_map() before
+> replying.
+>
+> BR,
+> Albert.
+>
+> >
+> > > --
+> > > 2.52.0
+> >
+>
+>
 
->   hw/riscv/riscv-iommu.c | 14 +++++++-------
->   1 file changed, 7 insertions(+), 7 deletions(-)
-> 
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index f6865d1e164e..ed9fb09f8bc7 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -476,13 +476,6 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
->               break;                /* Invalid PTE */
->           } else if (pte & PTE_RESERVED(false)) {
->               break;                /* Reserved PTE bits set */
-> -        } else if (!(pte & PTE_U) && !pv) {
-> -            /*
-> -             * All accesses are assumed to be User mode unless
-> -             * process_id is valid (pv).  In case we have a
-> -             * non-user mode PTE and !pv we need to fault.
-> -             */
-> -            break;
->           } else if (!(pte & (PTE_R | PTE_W | PTE_X))) {
->               base = PPN_PHYS(ppn); /* Inner PTE, continue walking */
->           } else if ((pte & (PTE_R | PTE_W | PTE_X)) == PTE_W) {
-> @@ -491,6 +484,13 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
->               break;                /* Reserved leaf PTE flags: PTE_W + PTE_X */
->           } else if (ppn & ((1ULL << (va_skip - TARGET_PAGE_BITS)) - 1)) {
->               break;                /* Misaligned PPN */
-> +        } else if (!(pte & PTE_U) && !pv) {
-> +            /*
-> +             * All accesses are assumed to be User mode unless
-> +             * process_id is valid (pv).  In case we have a
-> +             * non-user mode leaf PTE and !pv we need to fault.
-> +             */
-> +            break;
->           } else if ((iotlb->perm & IOMMU_RO) && !(pte & PTE_R)) {
->               break;                /* Read access check failed */
->           } else if ((iotlb->perm & IOMMU_WO) && !(pte & PTE_W)) {
+--000000000000e32a2a0656cdc5bd
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Good point, will move virtio_del_shmem_map() before t=
+he reply in the next version.</div></div><br><div class=3D"gmail_quote gmai=
+l_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Jul 17, 20=
+26 at 1:50=E2=80=AFPM Albert Esteve &lt;<a href=3D"mailto:aesteve@redhat.co=
+m">aesteve@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_qu=
+ote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,20=
+4);padding-left:1ex">On Fri, Jul 17, 2026 at 12:37=E2=80=AFPM Michael S. Ts=
+irkin &lt;<a href=3D"mailto:mst@redhat.com" target=3D"_blank">mst@redhat.co=
+m</a>&gt; wrote:<br>
+&gt;<br>
+&gt; On Fri, Jul 17, 2026 at 12:32:59PM +0200, Dorinda Bassey wrote:<br>
+&gt; &gt; Commit the memory region transaction before sending the SHMEM_MAP=
+ reply<br>
+&gt; &gt; so the KVM memory slot exists before the guest can access the map=
+ped<br>
+&gt; &gt; region.<br>
+&gt; &gt;<br>
+&gt; &gt; This moves the commit to while the backend is still blocked waiti=
+ng for<br>
+&gt; &gt; the reply, which can trigger ADD_MEM_REG back to the backend and<=
+br>
+&gt; &gt; deadlock. Filter shmem mapping regions out of vhost_section() by<=
+br>
+&gt; &gt; checking the MR owner type to prevent this.<br>
+&gt; &gt;<br>
+&gt; &gt; The explicit transaction begin/commit wrapping is dropped since<b=
+r>
+&gt; &gt; virtio_add_shmem_map() already commits via memory_region_add_subr=
+egion().<br>
+&gt; &gt;<br>
+&gt; &gt; Fixes: b52e1896e764 (&quot;vhost-user: Add VirtIO Shared Memory m=
+ap request&quot;)<br>
+&gt; &gt; Suggested-by: Albert Esteve &lt;<a href=3D"mailto:aesteve@redhat.=
+com" target=3D"_blank">aesteve@redhat.com</a>&gt;<br>
+&gt; &gt; Signed-off-by: Dorinda Bassey &lt;<a href=3D"mailto:dbassey@redha=
+t.com" target=3D"_blank">dbassey@redhat.com</a>&gt;<br>
+&gt; &gt; ---<br>
+&gt; &gt;=C2=A0 hw/virtio/vhost-user.c | 20 ++------------------<br>
+&gt; &gt;=C2=A0 hw/virtio/vhost.c=C2=A0 =C2=A0 =C2=A0 | 10 ++++++++++<br>
+&gt; &gt;=C2=A0 2 files changed, 12 insertions(+), 18 deletions(-)<br>
+&gt; &gt;<br>
+&gt; &gt; diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c<br>
+&gt; &gt; index 517cc4ca716..01468f7441a 100644<br>
+&gt; &gt; --- a/hw/virtio/vhost-user.c<br>
+&gt; &gt; +++ b/hw/virtio/vhost-user.c<br>
+&gt; &gt; @@ -1977,8 +1977,6 @@ vhost_user_backend_handle_shmem_map(struct =
+vhost_dev *dev,<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; &gt;<br>
+&gt; &gt; -=C2=A0 =C2=A0 memory_region_transaction_begin();<br>
+&gt; &gt; -<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 /* Create VirtioSharedMemoryMapping object */=
+<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 VirtioSharedMemoryMapping *mapping =3D virtio=
+_shared_memory_mapping_new(<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 vu_mmap-&gt;shmid, fd, vu_mmap-=
+&gt;fd_offset, vu_mmap-&gt;shm_offset,<br>
+&gt; &gt; @@ -1986,7 +1984,7 @@ vhost_user_backend_handle_shmem_map(struct =
+vhost_dev *dev,<br>
+&gt; &gt;<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 if (!mapping) {<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D -EFAULT;<br>
+&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto send_reply_commit;<br>
+&gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto send_reply;<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; &gt;<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 /* Add the mapping to the shared memory regio=
+n */<br>
+&gt; &gt; @@ -1994,22 +1992,8 @@ vhost_user_backend_handle_shmem_map(struct=
+ vhost_dev *dev,<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_report(&quot;Failed to ad=
+d shared memory mapping&quot;);<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 object_unref(OBJECT(mapping));<=
+br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D -EFAULT;<br>
+&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto send_reply_commit;<br>
+&gt; &gt; -=C2=A0 =C2=A0 }<br>
+&gt; &gt; -<br>
+&gt; &gt; -send_reply_commit:<br>
+&gt; &gt; -=C2=A0 =C2=A0 /* Send reply and commit after transaction started=
+ */<br>
+&gt; &gt; -=C2=A0 =C2=A0 if (hdr-&gt;flags &amp; VHOST_USER_NEED_REPLY_MASK=
+) {<br>
+&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 payload-&gt;u64 =3D !!ret;<br>
+&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 hdr-&gt;size =3D sizeof(payload-&gt;=
+u64);<br>
+&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!vhost_user_send_resp(ioc, hdr, =
+payload, &amp;local_err)) {<br>
+&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_report_err(local=
+_err);<br>
+&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 memory_region_transact=
+ion_commit();<br>
+&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -EFAULT;<br>
+&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto send_reply;<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; &gt; -=C2=A0 =C2=A0 memory_region_transaction_commit();<br>
+&gt; &gt; -=C2=A0 =C2=A0 return 0;<br>
+&gt; &gt;<br>
+&gt; &gt;=C2=A0 send_reply:<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 if (hdr-&gt;flags &amp; VHOST_USER_NEED_REPLY=
+_MASK) {<br>
+&gt; &gt; diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c<br>
+&gt; &gt; index af41841b529..e5c219be095 100644<br>
+&gt; &gt; --- a/hw/virtio/vhost.c<br>
+&gt; &gt; +++ b/hw/virtio/vhost.c<br>
+&gt; &gt; @@ -636,6 +636,16 @@ static bool vhost_section(struct vhost_dev *=
+dev, MemoryRegionSection *section)<br>
+&gt; &gt;=C2=A0 {<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 MemoryRegion *mr =3D section-&gt;mr;<br>
+&gt; &gt;<br>
+&gt; &gt; +=C2=A0 =C2=A0 /*<br>
+&gt; &gt; +=C2=A0 =C2=A0 =C2=A0* Skip shmem mapping regions, they are manag=
+ed via SHMEM_MAP/UNMAP.<br>
+&gt; &gt; +=C2=A0 =C2=A0 =C2=A0* Including them triggers ADD_MEM_REG during=
+ the SHMEM_MAP transaction<br>
+&gt; &gt; +=C2=A0 =C2=A0 =C2=A0* commit, deadlocking the backend.<br>
+&gt; &gt; +=C2=A0 =C2=A0 =C2=A0*/<br>
+&gt; &gt; +=C2=A0 =C2=A0 if (object_dynamic_cast(memory_region_owner(mr),<b=
+r>
+&gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 TYPE_VIRTIO_SHARED_MEMORY_MAPPING)) {<br=
+>
+&gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return false;<br>
+&gt; &gt; +=C2=A0 =C2=A0 }<br>
+&gt; &gt; +<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 if (memory_region_is_ram(mr) &amp;&amp; !memo=
+ry_region_is_rom(mr)) {<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint8_t dirty_mask =3D memory_r=
+egion_get_dirty_log_mask(mr);<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint8_t handled_dirty;<br>
+&gt;<br>
+&gt;<br>
+&gt; This all seems risky i have to say.=C2=A0 Is this always map never unm=
+ap?<br>
+<br>
+The filter covers both, and this is a good point. For symmetry the<br>
+handle_shmem_unmap() should call virtio_del_shmem_map() before<br>
+replying.<br>
+<br>
+BR,<br>
+Albert.<br>
+<br>
+&gt;<br>
+&gt; &gt; --<br>
+&gt; &gt; 2.52.0<br>
+&gt;<br>
+<br>
+</blockquote></div>
+
+--000000000000e32a2a0656cdc5bd--
 
 
