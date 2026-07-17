@@ -4,142 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE531C44520
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 11:46:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B15BC44520
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 11:51:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkh1U-00027C-D7; Fri, 17 Jul 2026 07:46:32 -0400
+	id 1wkh5f-00031o-Rs; Fri, 17 Jul 2026 07:50:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1wkh1P-00026i-T7
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 07:46:28 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1wkh5e-00031g-UH
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 07:50:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1wkh1N-0002jR-Sl
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 07:46:27 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66HASor81695396
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 11:46:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- DOPyOCMsDTdWy5j5dgvAXyMoQtHfzbrtqunbqORHEUA=; b=Nr+kvNfg0HylCffD
- dnMjl9MwHDi4DhxDxfb7iZgfd4oNLjH3MomZXl979KfrcoV8VPFFbEkBm6lE5mFc
- 5b4az2p9phiyoQlJR+ZxSGo8Ab455PWlMlMF6F3DHfrYhEoSFZxUKiSrHxHaj/qr
- cLFK6H7ivFqq5vLlJ2+Pei+NW7VqFFRp9RS4sZnKgqnlzEW/fVJM532c3z6EfeIo
- g/nfK9O9QdMlC7Cz8K9PvpfrFqNNqD4dvD4UOGt8d/qeCN8nRmybwRilRB+vCGIY
- fUkwSufhUkvrjSoNTMl1ytDxUUABSCkq8TzAUdnsrxSBLNzWHdQBQJx7z4TJl0WK
- 6ScF7w==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ffd3asm15-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 11:46:21 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-2ccbb61893fso165797655ad.0
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 04:46:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1wkh5c-00039p-B1
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 07:50:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784289045;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=PL+JIVUfP2T88Lb85E2opQpl4gleVZjIFm720qYcIaI=;
+ b=KiQcGHXdrNtShqQqp7tFhuJvILrR8YzxN7ND1b4p4YM6SOAhn8yebOVzRUEq13Ou8A10nT
+ qwd+4VAN4gslJnH9XrDTWs2XAmSoziBeo9eFvfg8qIleV/xlWJxiNSIR+tPLKUN8K2u6Dc
+ jeiAMnfnTGfQY0nnGRiOaalBj3cX5ck=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-154-onITQDqcMfOKlXFIYt5dTg-1; Fri, 17 Jul 2026 07:50:44 -0400
+X-MC-Unique: onITQDqcMfOKlXFIYt5dTg-1
+X-Mimecast-MFC-AGG-ID: onITQDqcMfOKlXFIYt5dTg_1784289044
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-81e85096e65so13326907b3.2
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 04:50:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784289043; cv=none;
+ d=google.com; s=arc-20260327;
+ b=ByB6sbiodNVFnwtuIi8sfdsngWIPtS7lQi9o1Rj4OCqsPuqtxquiqtnWrdTbvbE97V
+ PU+vg0FUzP5SIakfBMe3e3gjkVzbRiTGD7cwCvtGu5TIis0tkeyqfEJCgBxfkX2uwxO0
+ SOk0Z+Ru1iBmdcQE0iWYCo55VoPtC0LJyd/EIopbrMCrJI0yLH3gk8+OiqC2nBGaVORi
+ IplhHT/HxfBbTr+5MtsQkOBq6Qk1proXuMKGZoHa0pL5+pNil+EnXZ3lVFmXyFyuiNxa
+ VFgr6lMSUe5/3tXBWo43H63FlB62L5hmUhCPPTa7f41V+irCaWpQv3jPuTt7YjfycPGK
+ cr0w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=PL+JIVUfP2T88Lb85E2opQpl4gleVZjIFm720qYcIaI=;
+ fh=RWtWNYEOH40uILQhtQ4eYdsUqQAdhLJVdLNvEoqRoyk=;
+ b=Z6GjMS1RBzYe8g5D8HiB7k4Aah+Zgi3/OUryHTo40Vx00Q/yttgm9POzRCpB4mmDob
+ wM0yiHCfnJC+/E1OfGHs9EYvgImgtHEPtVWxyexDQUMFI/fXgjx/0MCwiHYdvzWxvlqM
+ 82xks+ZSitdnmx1MATvB/Qr+6w+ZUV/w0FpGIxIv1ekNPH8Vl3sWIu3m3pcxbIyq/M7b
+ rc5ThwxL5z6jq7XRGEKX8wHbcA2lTXgXtNWUpjHqrLhkF5ankA61NAPMlsS0ylDwtQ0a
+ cwjwoJHm18HZ04vDmNZYhDwB5G76ksA+uNiaFCj47Z72borbBBedDSMFL/YbPN+DkfoK
+ 9eGw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784288781; x=1784893581; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ d=redhat.com; s=google; t=1784289043; x=1784893843; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=DOPyOCMsDTdWy5j5dgvAXyMoQtHfzbrtqunbqORHEUA=;
- b=kicXU9+15DkXurVW61phroA5unKRMSti7TiRebWmC9bbpExBeKv0lNOWWf+qfscV1Y
- wJuqt1wOdT4M7ROqs/XSkaRqVSiBMnYbnxhRqU7ztFcaW3MiYyFfIH5uAMSfQu9kGsbQ
- itJA7lhucpqTPlij417C+PCoztbA5/UcC2sCxrVB/E/ODQFKFDvoDejSrK7VqgnCT/AC
- SrWJnhvKowXEp62fSl42PlQE8KK99E8s3VbdNyHDMOGGNzyuOCgQluNjl/BEYj2SPV0B
- 0d4r4YuqSqrBcZ9rDD1ASqR9z9MsVrkrXQ8EiiNpjLgqpP9HRJldGUCSnmWhNlC+YytQ
- nKKg==
+ bh=PL+JIVUfP2T88Lb85E2opQpl4gleVZjIFm720qYcIaI=;
+ b=YeRxfLp2Ld4citjWHy1tLxSC0/slrTUmIGnmq82ri79Ht+iwncueBqLDqs1p6c+lSI
+ ovrVnZq42L6bTQQmZw+uc468mqdCQA07dkfvndrBX0eqt7UuAWNrO6DVoEySqLRdEf1h
+ MtGNnWtCW6AA4kaeVE9jnSMKtd6bvyVeUM/tY4mF4VjzX+HD+PNycoYQM0137Z/PBwDm
+ SN1X/KYMLA2f4ZmslfCE+zvPYMahvgknzlfC0wQiKM1AL1NxWwG7C2cM/H6EPMFFnlCp
+ wGgRRagZdqKWvpOIPvXM2oNBcD7NsErOsa4mpFGx+1GzyXq26QAGNjKJHFPuLEqz12kj
+ rAmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784288781; x=1784893581;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ d=1e100.net; s=20251104; t=1784289043; x=1784893843;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=DOPyOCMsDTdWy5j5dgvAXyMoQtHfzbrtqunbqORHEUA=;
- b=DnowJn8oU/aztPCS+iIKZNbcOrx+2ZOllEULEJtFLv2eGtPE3p9nf1wWjeR9Tk/CGp
- Foa5IBVyd+h/pR9jtqevrMimySwfvxXRzuJ5sT0vsdk2tYn6rfOIJwL2M/DtqsnAXBEM
- vqHU8m9HNEKwrBvqmmH3OXApMOyXFdcngaaNDdBlGiNXMGBMhRv0VPiKGobmiX+0Dx+a
- SzVMCdw6Cxn6oJvgoGd2CmqnizavtTX2tz1VVCXP/QLO2YK8N2cBt3RVZGh8/4UZhXey
- LZUJK2h7KwZpbForuK07GUTGYjYcTR5+LSU81Mepm3arZiL5Es+BRyUzX+eNTOmodNxw
- 5rKQ==
+ bh=PL+JIVUfP2T88Lb85E2opQpl4gleVZjIFm720qYcIaI=;
+ b=duxZi5ocmCEeA4cCb4M/sQ7r665Zvbmn3uIbJITs95owK7fV1mvzBaj7iaL/PA4UOq
+ R6uf7BnSeg+uuyxJ4rH1j2vglwIzW4ZHxsubvqC9cXOL1jXPN4KpNjEsxXTgLx3xWoE7
+ LuHXgUSOGubnjN8FvejD7Lpb0gtII9oBekUAfo0aNy2cE9gMYkLYcMLyLlr7DDggHvic
+ fuIYD8IFK5OqVR46GxqBYNAxqq5JGQoMUYbQGfzlk24NB+yvq1aG3S5ufW2WFLZHtFP6
+ Q22uqxhoqGUwwZCyJ8GywaG7sTwyzYoyllbvcWd+dmjCyzUAYFeBtrHnUfm0Q1S3U0se
+ z4lQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rq1an3tEBvud9PPR0VEPq/INo7TgV+YwkRNFUm3NT198tQAgpeyfZ0+uTd608NMtc85dpSad/KlbVSn@nongnu.org
-X-Gm-Message-State: AOJu0YzwMqExnEu88LQZktgp1mylkQWXYN5HYMehcfxZep9/PmrbrKor
- xT9ycPbz8977CNoPU1Uenza3Zq/zyaboG8/XDqlfgOuXEpBeXWk3kWIorjc24er/yE6ytqr8gzO
- Eyb4BTzKnrME7+/lhsf+/VhRzllBHXR5uxjal21CLzzbx3lY3w0OBKjr5fw==
-X-Gm-Gg: AfdE7cmNdaZy1rvciXjUMwy0Zeynv3ARHkR3u4dKpcioB4DMDDPQoMFxIz2uVWgyRMv
- ds69dh+Byx0qcCbtub0LrafYGkwqfheENj8hG9XoxpfN+2Lpl1TY6RI2IoZ70uiGZFbRIIudNKb
- obS7H06rrLfC8x3su1hK8NrcPAA/KnniXIKgRDixOtbgipKoPxHtEzIFNdNJ+LXEDPXqFL3K4vp
- MkPfvo36OyZOrzf3yeRdx72KyYC22iaaKmth0IB2iLyqO7JuCUC22tTk8Ef4N/DV8BahQbEg+kA
- ACNalNyYxUFODxC+EyBRInmiV9GjvXZtex0ZadfYgNf9GWoY5C7iCfcGuUmWHDfHcKS4hhy3DcU
- 6KMe+858g7NeTnRtkuZwC1iqHYGgUERBA439mzcGr6/sosJoOodAYDR3bzsqGNaI=
-X-Received: by 2002:a17:90b:2dc1:b0:37f:fdc8:71b4 with SMTP id
- 98e67ed59e1d1-38e4b3e1424mr2189791a91.2.1784288781189; 
- Fri, 17 Jul 2026 04:46:21 -0700 (PDT)
-X-Received: by 2002:a17:90b:2dc1:b0:37f:fdc8:71b4 with SMTP id
- 98e67ed59e1d1-38e4b3e1424mr2189755a91.2.1784288780690; 
- Fri, 17 Jul 2026 04:46:20 -0700 (PDT)
-Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13ce29e340esm4862255c88.5.2026.07.17.04.46.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jul 2026 04:46:20 -0700 (PDT)
-From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-To: brian.cain@oss.qualcomm.com
-Cc: matheus.bernardino@oss.qualcomm.com, qemu-devel@nongnu.org,
- pierrick.bouvier@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
- philmd@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng, pbonzini@redhat.com
-Subject: Re: [PATCH v2 08/14] target/hexagon: add semihosting support
-Date: Fri, 17 Jul 2026 04:46:18 -0700
-Message-Id: <20260717114618.140638-1-matheus.bernardino@oss.qualcomm.com>
-X-Mailer: git-send-email 2.37.2
-In-Reply-To: <3cd3a419-ee2c-4d7a-9396-60eab8d26908@oss.qualcomm.com>
-References: <3cd3a419-ee2c-4d7a-9396-60eab8d26908@oss.qualcomm.com>
+ AHgh+RoHYe22tfrOXbAweNDChvLVwCLuigN60HwIUV3JSzFWI2dsvE9LWng+JDPIIU+iiPuCt2BXjKPM8X1w@nongnu.org
+X-Gm-Message-State: AOJu0Ywle5DeQN08NJ78houcY2EjkLDSfbcooRcb7nVfbk/sUijceW9H
+ n4gSL2GbSOE+BvQFX16ILCuEF05N6B9roOLlYbfXhou51pxdpHCZawjfIy6KtjvZFDDOk/tVJaq
+ 7MK7itqCgWhXlbeSoNovdqy6LGmGK+hAQ4/ltaDITaQ5+bOC9Nqd0g2I9tjy91WwTzBfAKAtxQ3
+ 9IncZgxMIHP5em0kHOm2xQNPk8tdg5ZcQ=
+X-Gm-Gg: AfdE7cln3OWPSlt8Zc39WffV/U1mVVHJeTIoNSONi9PIt2STc4sU/fKSoj1pbtyfyzZ
+ GEFU7ZI1W8eO1Le/PfTikCTywj5WRRH/nDe84QQEQRmrMRAGH9v6UV6Qvnn5pfEiMGSlPhePdnD
+ XhveEMk/SRjimo8g/iObBv36eJPLztJgVl6efgBJCtrk+Is8hLxjWRZ4MR
+X-Received: by 2002:a05:690e:43d0:b0:667:b898:4d84 with SMTP id
+ 956f58d0204a3-6683bba43efmr384012d50.28.1784289043597; 
+ Fri, 17 Jul 2026 04:50:43 -0700 (PDT)
+X-Received: by 2002:a05:690e:43d0:b0:667:b898:4d84 with SMTP id
+ 956f58d0204a3-6683bba43efmr384002d50.28.1784289043080; Fri, 17 Jul 2026
+ 04:50:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE3MDExOCBTYWx0ZWRfX8FhIBU7F/B9H
- ttIi06+2aPWrV1q4QAMZ9SlJjUg/zkMu+7+9mJUQBrykZXCgAyHv0quZ5QijvRWfZGimuqfIRG6
- tyIkvDwJIHoaJo94bLaWklUQk2v6mLQ=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE3MDExOCBTYWx0ZWRfX92JaZyBKjmrG
- R39BezjvaUq15/xwZVVZrArBsjdmsbG/tsEHXmFz+pQVsB4Of/MulKzXb36d2xlBOQ2yLSG2UBp
- 6kLT2JV/mma4I2qLjHFEhUIuJ3eAPTZrXJT+C93B9mv/yFrQ0oWh1NrFsSv5hOWuOZjVICUsIST
- 8jX5tLsLS55ML14JPCJCRQi+JMVmX55HW0mzJlYs39/T1Ec1dLHO168CODK/mJAUapK61zIkHCI
- aS1DSJCW2OblaqpyIh+6en6Jnxl8mf/cGyKejCj0naaPfofrwHaD/XYX3uJmzwixHEmrgMBI9N/
- wpS4RrEffzljo0nkDRqv0YYihOeOgKqgDqe3/YV9150sno7x73LaesWj+s7UkGO+QbJ6Zr5UgqN
- vTWNOV6di3ANNffxxmKfLhZO3lESji+yvwP/VNAykyYsMu8nLwlwIMK50VsWhyA1DQGd4ocXriB
- 3Tc5dFch7JDbqo9bAvw==
-X-Proofpoint-GUID: EzMZ09DOuBiSu0Q36xyj9xej3gubY_ly
-X-Proofpoint-ORIG-GUID: EzMZ09DOuBiSu0Q36xyj9xej3gubY_ly
-X-Authority-Analysis: v=2.4 cv=e/M2j6p/ c=1 sm=1 tr=0 ts=6a5a160d cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=EUspDBNiAAAA:8 a=86x5i4uHXf9FeOCPnK4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-17_03,2026-07-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 suspectscore=0 phishscore=0 priorityscore=1501
- spamscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607170118
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=matheus.bernardino@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260717103301.228974-1-dbassey@redhat.com>
+ <20260717103301.228974-2-dbassey@redhat.com>
+ <20260717063641-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20260717063641-mutt-send-email-mst@kernel.org>
+From: Albert Esteve <aesteve@redhat.com>
+Date: Fri, 17 Jul 2026 13:50:31 +0200
+X-Gm-Features: AUfX_my8qhEbGhpQPS3kwZAKCd8NTL5b0CvrBhddLfpLZzfjrL5xR8r7X2JvceQ
+Message-ID: <CADSE00+Uoy=fu3OnvMCr0Cn=tHSj27LkD9y7_CPqT32oSaDFow@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] vhost: Fix SHMEM_MAP transaction ordering and
+ resulting deadlock
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Dorinda Bassey <dbassey@redhat.com>, qemu-devel@nongnu.org,
+ mhrica@redhat.com, sgarzare@redhat.com, manos.pitsidianakis@linaro.org, 
+ marcandre.lureau@redhat.com, stefanha@redhat.com, pbonzini@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: permerror client-ip=170.10.133.124;
+ envelope-from=aesteve@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,29 +141,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 16 Jul 2026 16:08:42 -0500 Brian Cain <brian.cain@oss.qualcomm.com> wrote:
+On Fri, Jul 17, 2026 at 12:37=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com=
+> wrote:
 >
-> On 7/16/2026 1:06 PM, Matheus Tavares Bernardino wrote:
-> > [...]
-> > diff --git a/docs/system/target-hexagon.rst b/docs/system/target-hexagon.rst
-> > index 416b8f7be76..36115137626 100644
-> > --- a/docs/system/target-hexagon.rst
-> > +++ b/docs/system/target-hexagon.rst
-> > @@ -91,9 +91,11 @@ Semihosting
-> >   -----------
-> >   Hexagon supports a semihosting interface similar to other architectures'.
-> >   The ``trap0`` instruction can activate these semihosting calls so that the
-> > -guest software can access the host console and filesystem.  Semihosting
-> > -is not yet implemented in QEMU hexagon.
+> On Fri, Jul 17, 2026 at 12:32:59PM +0200, Dorinda Bassey wrote:
+> > Commit the memory region transaction before sending the SHMEM_MAP reply
+> > so the KVM memory slot exists before the guest can access the mapped
+> > region.
+> >
+> > This moves the commit to while the backend is still blocked waiting for
+> > the reply, which can trigger ADD_MEM_REG back to the backend and
+> > deadlock. Filter shmem mapping regions out of vhost_section() by
+> > checking the MR owner type to prevent this.
+> >
+> > The explicit transaction begin/commit wrapping is dropped since
+> > virtio_add_shmem_map() already commits via memory_region_add_subregion(=
+).
+> >
+> > Fixes: b52e1896e764 ("vhost-user: Add VirtIO Shared Memory map request"=
+)
+> > Suggested-by: Albert Esteve <aesteve@redhat.com>
+> > Signed-off-by: Dorinda Bassey <dbassey@redhat.com>
+> > ---
+> >  hw/virtio/vhost-user.c | 20 ++------------------
+> >  hw/virtio/vhost.c      | 10 ++++++++++
+> >  2 files changed, 12 insertions(+), 18 deletions(-)
+> >
+> > diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> > index 517cc4ca716..01468f7441a 100644
+> > --- a/hw/virtio/vhost-user.c
+> > +++ b/hw/virtio/vhost-user.c
+> > @@ -1977,8 +1977,6 @@ vhost_user_backend_handle_shmem_map(struct vhost_=
+dev *dev,
+> >          }
+> >      }
+> >
+> > -    memory_region_transaction_begin();
 > > -
-> > +guest software can access the host console and filesystem. Read the
-> > +`Hexagon Semihosting Specification
-> > +<https://docs.qualcomm.com/doc/80-N2040-101_102648/topic/semihosting-specification.html>`__
-> > +for details. Semihosting is enabled on qemu-system-hexagon machines by default,
-> 
-> It's enabled on most of them, but not `virt`.  So probably mention that 
-> exception or just describe it as being enabled on the "hexagon-sim-style 
-> machines"?
+> >      /* Create VirtioSharedMemoryMapping object */
+> >      VirtioSharedMemoryMapping *mapping =3D virtio_shared_memory_mappin=
+g_new(
+> >          vu_mmap->shmid, fd, vu_mmap->fd_offset, vu_mmap->shm_offset,
+> > @@ -1986,7 +1984,7 @@ vhost_user_backend_handle_shmem_map(struct vhost_=
+dev *dev,
+> >
+> >      if (!mapping) {
+> >          ret =3D -EFAULT;
+> > -        goto send_reply_commit;
+> > +        goto send_reply;
+> >      }
+> >
+> >      /* Add the mapping to the shared memory region */
+> > @@ -1994,22 +1992,8 @@ vhost_user_backend_handle_shmem_map(struct vhost=
+_dev *dev,
+> >          error_report("Failed to add shared memory mapping");
+> >          object_unref(OBJECT(mapping));
+> >          ret =3D -EFAULT;
+> > -        goto send_reply_commit;
+> > -    }
+> > -
+> > -send_reply_commit:
+> > -    /* Send reply and commit after transaction started */
+> > -    if (hdr->flags & VHOST_USER_NEED_REPLY_MASK) {
+> > -        payload->u64 =3D !!ret;
+> > -        hdr->size =3D sizeof(payload->u64);
+> > -        if (!vhost_user_send_resp(ioc, hdr, payload, &local_err)) {
+> > -            error_report_err(local_err);
+> > -            memory_region_transaction_commit();
+> > -            return -EFAULT;
+> > -        }
+> > +        goto send_reply;
+> >      }
+> > -    memory_region_transaction_commit();
+> > -    return 0;
+> >
+> >  send_reply:
+> >      if (hdr->flags & VHOST_USER_NEED_REPLY_MASK) {
+> > diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> > index af41841b529..e5c219be095 100644
+> > --- a/hw/virtio/vhost.c
+> > +++ b/hw/virtio/vhost.c
+> > @@ -636,6 +636,16 @@ static bool vhost_section(struct vhost_dev *dev, M=
+emoryRegionSection *section)
+> >  {
+> >      MemoryRegion *mr =3D section->mr;
+> >
+> > +    /*
+> > +     * Skip shmem mapping regions, they are managed via SHMEM_MAP/UNMA=
+P.
+> > +     * Including them triggers ADD_MEM_REG during the SHMEM_MAP transa=
+ction
+> > +     * commit, deadlocking the backend.
+> > +     */
+> > +    if (object_dynamic_cast(memory_region_owner(mr),
+> > +                            TYPE_VIRTIO_SHARED_MEMORY_MAPPING)) {
+> > +        return false;
+> > +    }
+> > +
+> >      if (memory_region_is_ram(mr) && !memory_region_is_rom(mr)) {
+> >          uint8_t dirty_mask =3D memory_region_get_dirty_log_mask(mr);
+> >          uint8_t handled_dirty;
+>
+>
+> This all seems risky i have to say.  Is this always map never unmap?
 
-Ah, right. I'll change that.
+The filter covers both, and this is a good point. For symmetry the
+handle_shmem_unmap() should call virtio_del_shmem_map() before
+replying.
+
+BR,
+Albert.
+
+>
+> > --
+> > 2.52.0
+>
+
 
