@@ -4,101 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68BFBC44515
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 16:34:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84910C44515
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 17:01:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wklVK-0005uH-9h; Fri, 17 Jul 2026 12:33:38 -0400
+	id 1wklvb-00019i-DG; Fri, 17 Jul 2026 13:00:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wklVI-0005tr-4y
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 12:33:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1wklvU-00014F-W3; Fri, 17 Jul 2026 13:00:41 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wklVG-00089A-3W
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 12:33:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784306012;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=BHPFparUF819IwONJkaBg2U52ByZ8ExvsDB8nlNNvc4=;
- b=IcsivAbDrYNlshky7wzHs3pnR7UL66zYijA1RXDzV+wi2RSdGAYvwV5ucIbwXfkObCPXIb
- M30y9rg+nPgFqdG9YkMdIkk+zu7lrX5+7JB38NoURl8egDRZHBHAaizr5ExrY/gZLrBmeg
- 2yV+hdaZn7KBR4PnLcRzb39yDKzIzI0=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-489-sAP93aMVMe6mkMXDmVzDQw-1; Fri, 17 Jul 2026 12:33:31 -0400
-X-MC-Unique: sAP93aMVMe6mkMXDmVzDQw-1
-X-Mimecast-MFC-AGG-ID: sAP93aMVMe6mkMXDmVzDQw_1784306010
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-51c2af04aeeso50777761cf.0
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 09:33:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784306010; x=1784910810; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=BHPFparUF819IwONJkaBg2U52ByZ8ExvsDB8nlNNvc4=;
- b=Y7OhYlqob7o1/E2kTvF8xAbdXwKMNivBI3RQNN1E7C4Jw0CjPPP0qOQzMEC+GwCIJi
- sBBg+wJdMkQuESHyhaDU3w2aJghq0BN22pQV1AC/OSlw+3m8SyfypcvQgIOF2mvhAJxZ
- uWrQ9qjGMNEtjaUyD1m4Bvs720t85o78JPXQ5LxaVsKDGevfs4OBpuWFUMecho8Wj77N
- UF2xYMM5IP3zo11mARVfK+NgJtu74creeRwfzo02UOonr1XTszYiy9//gwbJGduq2kOU
- 9UfHWAiUeAI6agsZMkF5WzAL/LVUqGT2YnanOGPpIiRnF4xA5U11VGc35Lu78pz+nC2x
- TNaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784306010; x=1784910810;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=BHPFparUF819IwONJkaBg2U52ByZ8ExvsDB8nlNNvc4=;
- b=nvtg8nb0KumM+F3WEA1a/tYTUJ8anQmXf4KZLRGH45Ndf1qg0U9rcbD4kX0gzslVwB
- MqmkPbN8ei2/wPhDaAdf1ZYB0M7MoU86z5kxXRbVOOdlT27QBmQMZfA/DjXDvfLVlenZ
- tJFHPurlHpQsHGizTMYjPQtTYnTx/qKEEBdLpkDeV8Q5I/jIbirg2Z+0ZI9dHybYgoME
- rXMr4r+fbM27/TbNLX2c7MvdOZC94azm844vrDVUQ79Y+acp15dn6kPW1jETbiQt2HbG
- sYq5NYwp39FOZwvmJy+RhQFV+ybNseSiyNc4ilfAvHD9Rwq0/vHF3uNLLB2iABp398qO
- WZ2Q==
-X-Gm-Message-State: AOJu0YxZz+QzT3GZAhpj14N7gsABAk+MSI1+Snd3ErfSuLz6PnxLaLRR
- nxSN43rjUmmiHSP9mrBdCvSNrLnNcRC3x2XroVHO31J2+OaE7EVc5IoNVDy0cLGyj0ghEvIGnbH
- +mc9cUwNtA/neN5NC7ZOX1OaZj+ipPhbdZcLrZ4Jfm6QRdNCtlQVljerv
-X-Gm-Gg: AfdE7cl6LVTRWf2hUBm77BW75oZSN8Go32SBEPtVZP6lGgy27AgpuxclgcWM4A+dMpJ
- k9EHCQKekuiGmu08s5Dkp9cXEbXQgEEkVh7dR6+Trr4OuzQfC6bLYcAQZUq2GWuKG1GRUFWRgmV
- SwMziOhBImbl0OFdBdb4AeydshusunXBU6rAXzL60qwuPB/kcN6a3qyKWbTmMjCFmU497//PUyZ
- cIBOT+YbcsQfpoFeD23OXisX97+y6x6a7kOPu5yc28fbGDHtQSVQwg68iYd4e0ei4FuG5JtyhvI
- jg2cxABeWq8gngAK0uOOhfHM/1wivp/wekbjiXOr0qRSBOcSUMXwJ2tiFOhw2xqnPxR8
-X-Received: by 2002:a05:622a:307:b0:51c:7aa7:e0ef with SMTP id
- d75a77b69052e-5212c9eb5b3mr34670931cf.44.1784306010255; 
- Fri, 17 Jul 2026 09:33:30 -0700 (PDT)
-X-Received: by 2002:a05:622a:307:b0:51c:7aa7:e0ef with SMTP id
- d75a77b69052e-5212c9eb5b3mr34670231cf.44.1784306009352; 
- Fri, 17 Jul 2026 09:33:29 -0700 (PDT)
-Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-5214c5cc8d5sm16008371cf.6.2026.07.17.09.33.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jul 2026 09:33:28 -0700 (PDT)
-Date: Fri, 17 Jul 2026 12:33:17 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Bin Guo <guobin@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de
-Subject: Re: [PATCH 0/3] migration: postcopy blocktime cleanups and assert fix
-Message-ID: <alpZTRIw8IB6Hv8O@x1.local>
-References: <20260716101952.65329-1-guobin@linux.alibaba.com>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1wklvS-0004Iu-JA; Fri, 17 Jul 2026 13:00:40 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66HEBrgh360443; Fri, 17 Jul 2026 17:00:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Slfq83
+ 9Nzrww98FCFFubwt3Bxogsbz1jAN6acQigG0w=; b=lCc0xezX1+eDU3F6N8Xwm7
+ XwWjAK7DqsuIYDqz8mHu2sWGkRpQA1E0Y1v2a9gbHZFdfquMPsiED67Hbqt60csX
+ LKqeDhZpxXR7RLhmqmcxEAAkrlkoRwqCGKLYsRVopBDChEom78Ig5dFwXtpsRAYr
+ FpBSAIU38AMbEAOOnv7VK409oFwgfg9/29CUAH8lUTa7ccw/KZV3CG6Xexu/y6E+
+ KZbRhfVbYqyK2z9mz7vTReJbJKM9QWnUBHZ7wTU3qorpBh9FJe9Nj1Pr/DFcNi0u
+ dJeI6aD/Iw1lXYtR90Dw0SGhZJc/YYa5hxZMJWxYSEz2OEQMi/+q0FdsZPPt0jNg
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fcv33r2st-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 17 Jul 2026 17:00:33 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66HGo3Tr009383;
+ Fri, 17 Jul 2026 17:00:32 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fc05qjqw6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 17 Jul 2026 17:00:32 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66HH0UPg45809972
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 17 Jul 2026 17:00:30 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C03472004D;
+ Fri, 17 Jul 2026 17:00:30 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6CADB20040;
+ Fri, 17 Jul 2026 17:00:30 +0000 (GMT)
+Received: from [0.0.0.0] (unknown [9.87.138.123])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 17 Jul 2026 17:00:30 +0000 (GMT)
+Message-ID: <d47df378-d920-443e-8f5b-10373d63a3ab@linux.ibm.com>
+Date: Fri, 17 Jul 2026 19:00:30 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260716101952.65329-1-guobin@linux.alibaba.com>
-Received-SPF: permerror client-ip=170.10.129.124;
- envelope-from=peterx@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 26/51] accel/tcg: Pass watchpoint hit to
+ debug_excp_handler
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
+ qemu-s390x@nongnu.org, jcmvbkbc@gmail.com
+References: <20260710205401.836304-1-richard.henderson@linaro.org>
+ <20260710205401.836304-27-richard.henderson@linaro.org>
+Content-Language: en-US
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+In-Reply-To: <20260710205401.836304-27-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE3MDE3MCBTYWx0ZWRfXxFzf6J5S5vZP
+ X4NspMJi3W4ZTO/lkFPt0GW6XSLLK+6lF6SzD6rrvbLIRyn0GkWbB2JS23lrvmGMtWdlGlPuUQT
+ yKexEqSg+szAVVrY4tSAIwEU3ukfIkM=
+X-Authority-Analysis: v=2.4 cv=Mp1iLWae c=1 sm=1 tr=0 ts=6a5a5fb1 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=KKAkSRfTAAAA:8
+ a=VnNF1IyMAAAA:8 a=cI_4PblpzWkclxkKpuAA:9 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: BYD7u2F6qi_G8lrxLahAO8Y7GSnzLYQ6
+X-Proofpoint-ORIG-GUID: XVto-0vhxi-M4o1VRfFwvgnTqzIozN_g
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE3MDE3MCBTYWx0ZWRfX5/deiisFAgks
+ y1ePaANntl9Ol8oP4UjpSFXqG29sqjcjK4wGMEVgHVJOlijr1aHfHBaTBDkDILUXypXt7tcmUGU
+ Ohk+TbHMCVamknvk0XeJLEM/vbKVQjScyGLg4A2zXKB2hP/CsU2rx/Bm4FyKa5zo3AceoTyaAvq
+ Z+/r6Es8F10p3v4gSgk4vkCwlLhcH1XhzINOB9sUF/PXFiiNfpet0fdgN/oOx2mlPzvVUjsuGeV
+ OSzvAEeA7OEbqkLjzoPgjhNeSt7loFfRUgR+1TyWH4Q1gg+VvYDmQ0LXU2NLlQtmJrowMowrNa3
+ 3vR4nDcsuAQDVy4DTtaEqPWzFac9wNQTLbia3ByXDM+ADH0jVljlM4ASjdlfQcBkW9cn27BOZCj
+ YznFkavMiYL4U2OxepVMfnkr/az37SJ0WfNncYmj0yIU6ds8441X8W7PMAHyUpej8NsH3zwloIb
+ CdWq2o0h95v/KMBJKrg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-17_04,2026-07-17_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 bulkscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
+ impostorscore=0 priorityscore=1501 suspectscore=0 clxscore=1015 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607170170
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,22 +127,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 16, 2026 at 06:19:49PM +0800, Bin Guo wrote:
-> This series fixes a couple of issues in the postcopy blocktime
-> fine-grained tracking feature:
+
+
+On 7/10/26 22:53, Richard Henderson wrote:
+> Allow the breakpoint/watchpoint causing the exception
+> to be passed to the target hook.  Unused so far.
 > 
->   - Patch 1 fixes an ineffective overflow assert in vcpu_faults_current[].
->   - Patch 2 fixes the const/gchar mismatch in format_time_str().
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   include/accel/tcg/cpu-ops.h         | 2 +-
+>   target/arm/internals.h              | 2 +-
+>   target/i386/tcg/helper-tcg.h        | 2 +-
+>   target/ppc/internal.h               | 2 +-
+>   target/riscv/debug.h                | 2 +-
+>   target/s390x/tcg/tcg_s390x.h        | 2 +-
+>   target/xtensa/cpu.h                 | 2 +-
+>   accel/tcg/cpu-exec.c                | 2 +-
+>   target/arm/tcg/debug.c              | 2 +-
+>   target/i386/tcg/system/bpt_helper.c | 2 +-
+>   target/ppc/tcg-excp_helper.c        | 2 +-
+>   target/riscv/debug.c                | 2 +-
+>   target/s390x/tcg/debug.c            | 2 +-
+>   target/xtensa/helper.c              | 2 +-
+>   14 files changed, 14 insertions(+), 14 deletions(-)
 
-This one was intentional to add some protection on the char string, it's
-common way to use, try grep "g_autofree const char" in the tree.
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
->   - Patch 3 collects minor cleanups: remove a redundant memset() and
->     fix the HMP label for non-vCPU latency.
-
-I queued patch 1+3, thanks!
-
--- 
-Peter Xu
 
 
