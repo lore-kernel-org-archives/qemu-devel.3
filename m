@@ -4,105 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CC20C44514
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 08:39:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EA29C44507
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 08:39:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wke5n-0007F4-HM; Fri, 17 Jul 2026 04:38:47 -0400
+	id 1wke6T-0007OL-6d; Fri, 17 Jul 2026 04:39:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wke5m-0007Ev-5a
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 04:38:46 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wke5k-0002qr-Ko
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 04:38:45 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-381b831d535so4801079a91.0
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 01:38:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784277523; cv=none;
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1wke6R-0007O9-87
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 04:39:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1wke6O-0002tB-TD
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 04:39:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784277558;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+J8ouTUOutmqXF+mKLUSaJg8UqrVHLs91VXo4vxdPwU=;
+ b=dd1CQfO3mnkMA4rUIyVdikw4cBGtpI9D91bD9upgWwcRwXL/ylmKu6vu3wG9mce8nFC3RE
+ 5M8SIQb6JTceJQUJinovYI0erZI9S47taIEW5I9LNVkbXd9kybs+RSfbPZiSz4R3Gse4AG
+ 18IiTy2GfFzRLrj/8j7oUx3CAmvnKoQ=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-444-oDPSwp0wNaCwckRFzm64Pg-1; Fri, 17 Jul 2026 04:39:16 -0400
+X-MC-Unique: oDPSwp0wNaCwckRFzm64Pg-1
+X-Mimecast-MFC-AGG-ID: oDPSwp0wNaCwckRFzm64Pg_1784277556
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-81e6fce9ed7so134016187b3.3
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 01:39:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784277556; cv=none;
  d=google.com; s=arc-20260327;
- b=PPMpH4zjscdIUlo1f+36Q8dVWFaPmxnSFzlMdphI7CL2E1qr72K7B2ak+ZkIvKvMub
- 7OwlmMprC/sPnL95KxSkWe0s2PSMKYJYJHfc+9sbzXB9TW8hs+3nCCzVLE1NnVdb+Hry
- Kuxh7DoEE99uxrD0iz6V459cjZpgROf9k9LrCMR4ptMaRlmoquvvIe95qPCCRXjIsM52
- iHmis/9ky0xflGl65rusZvP8Ed6ASGmKKJOOQRkHkpdEwHFBfzvPHbIGnA+i4BS+bwxr
- EkskgVobmnuIRRAtLDLzJqziBiuRi8zSK7RZDcHbRA+mx+F1YPZIaLqjLJn8BV7S1Xip
- 6pWQ==
+ b=FXg11xpdY1hdnsDow3zexXHYc6TAV+c8NtnpkHFJX5taxlwvINrk665mA0u1YypEd+
+ R7d/5CVaJtoFd4fEi2eBbDXrlgrI2XlGc6CoGEXGaIPBI0Mw+jfkhRX1ml40cVb6ZTZc
+ Fb+v0P9Vv86knaitlKOujVzYLxMAkVAm/HT2ayq/X49FG/8mL4sfAHsrL2+F++ZBUDC8
+ 8ZxKXL+GnucLCApuLjswR68W/IdQ/tOA+MrXo4bMJlVnA0WdpuwvES0khFmf2zD6B1hd
+ xZhQcDtu1/nCvz+NwPijsneJAUYH94IAzAy7lnDqhs2+8rJX4aB3G+HJdW7b4q+F0hEO
+ Ip5A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=gOTyrjMrNS07ducISMeb2JsCvm/i4WxJAwHBeZxv1BE=;
- fh=fWOTDz5YDRO8gq4Ddplx48s4Kmwze/7hZKKkVfzrGlw=;
- b=VN0IUCgxivxGwxBgvcwwOWt0QSH6ovEFHWBWg4TO2njyo4dooueMAcYGD/fzSSH1wB
- uYtGdrV1pOUDvX06s/++dZaCK2uW0Ezhzn+Ga9qYYYvS3y9Lq7OHtPb1esspXzGccNpw
- rVtD81gCWy1W91afDqdeQTMt7VGkWmSTN2iZTBwKbI2ew6XZMH23fCcq4YkB+TzyhjyI
- 0o1fbqtZZ0bTfgvpxBjyQJnA7FpN1xA1KADoV9XHCxdtureT1QpmPHmmF9qYoUksq2bq
- b3cNyZOjNWTOwK5sIFhKD8vu4TkpLD36lNcMjDltIjw0T/OcDQ8INiKMDZc9N2J+YxfU
- 0oWA==; darn=nongnu.org
+ bh=+J8ouTUOutmqXF+mKLUSaJg8UqrVHLs91VXo4vxdPwU=;
+ fh=scobbx4Z3/DtfOtk4QFSadtpeR2080Ksudnd1sTI/uM=;
+ b=QVsCc/r075FMcOzsZTyNBM1ocXjZlj4I+4QmA3rR3tWTBNyoy64xUwZQG6z/BB79Lq
+ Mq79Sls9QtMP5Uh0NbC4XXc/ZcxB/gq1V9eILoqKzVd8iuPIms61F040UsVV8slZxsxs
+ VybOpDNxe1qNT0vDOBjXm0Lngxh5o1nfYqQMX8YeVIGMOZY82MSadA9nnCsh1Au8pwdl
+ B9YV1/mlEZ2PAMluqGTR9W6df++6XHySqWeQ5xhvuT08w3D1OspB8myViWhH4amwPlNC
+ cHsPOVc+ZIGVnSsjpIRoEtJ3oCH14dfRAzChXxClp3IK7ofSyyv2J/+2Dmqqs6XPJt5p
+ rmNg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784277523; x=1784882323; darn=nongnu.org;
+ d=redhat.com; s=google; t=1784277556; x=1784882356; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=gOTyrjMrNS07ducISMeb2JsCvm/i4WxJAwHBeZxv1BE=;
- b=cW6ZMtR0V0v+jKPxXsgZR6qt57YcHoU9jW5mDJ8UtwoN1DqTFwShB6DllLAZRTKFZr
- ORPalQlnKVg+6ONW49w4XOQmkGpN/QoBS7Rrwl5dp7kd6u6K/3dR8mHGWILNoa+7QnDw
- pNeLqZZDgWWl1lwP9mAXZez6kP4h0UZXrSnwU6oZZFHvgjn5CzF406NOIocOamdc76ZB
- KsrLjWalaAqkYoBKD6Rl/b5AJLMjj20OFdCt+auoCuKjEVJFbZiITtY0z2VeI/nSTGZ1
- txp0fXBaeviv2SK0/Ej3c8oXkKGTH1+hCIVXtVuysRjEsHAOYgpXHRn2aKuzm4UXHemA
- KsKQ==
+ bh=+J8ouTUOutmqXF+mKLUSaJg8UqrVHLs91VXo4vxdPwU=;
+ b=BQnYYv7rZ3wJWUbCbuvglpusvPOiO0AdRLAFCAS2RTgWYhyioSWP7bUuLfjBpxUbov
+ a49FIVsZcO1zl5QjDOJaEEunbtqG2cHYXK2Cgb+OT5oF97AYgh7DktgLKcfqaRmqhpOu
+ gaGsR6mWjeLgQXOrkmOv7qnQdbGK469paCDWJQC/XwSI7DiWWrqaE9+jqqV8AOLvVam2
+ cZeT1mCZdFK+LJyZGYbaiKzuUT78XOG2sY4mivrxo/LH98PVefTD+HwqVG2XOiqxlpWE
+ BljJiKsAUlIaXXU9fTJ3t/QsQXnziUpQ51N6aG/ur6aVe4EHQzPH29dpVdtKuRSoZ2Sx
+ OCTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784277523; x=1784882323;
+ d=1e100.net; s=20251104; t=1784277556; x=1784882356;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=gOTyrjMrNS07ducISMeb2JsCvm/i4WxJAwHBeZxv1BE=;
- b=sDG4rvApQiRsNTer/yQT8ry6b/ZbA0fTv4z1jZxzVkyEBHs4pPmQolNxMYbwoQeBmo
- T2U0+624tod/tE8DEeFI4Wl1zn3EywRP5VYx/RxG5wfBED3p9bPP/otBdMq1GN1lBrl8
- C4Lm19XyAYArdgp2AA8Y7zyDUPU4VksSigEk9WVm4zaaueyTv0oeYnks9gjCAJrx3hcY
- hrSrqdBiDnOh+gKTe59KvyAu6CIYjoegE/65HdUbXhGzYzRBwVDI85rxsIHt0r6wWCgM
- tVR+ib55OjZoy5xMcma1YexlEQyxHPNtHuU48+av/TgTTSzG6F19MohiVedfY1DgPVvm
- xWpw==
-X-Gm-Message-State: AOJu0YyD2uAAYIy3UAVjfldFrQh4NJWMvYyiwB05OWygaPHLjHliuqgV
- oZA2G9HSRf7MdYry0ffysM2qBvn2QI37EmQXKq45WDi/NCy5IrUcb+ZLOc/emkX7V5TnPN7go8g
- Ja50PXfSzmXCIg/gf2zpMxP6k2/buI4k=
-X-Gm-Gg: AfdE7cnAa1CefqBrLfgOGRgcXQ1yUvoqs6LLT76MyKU7y1X/MhCW/7yoGpBTN5T2GjO
- GhOKzYzCafY4qdaZs4d3LrLp9O/BwabF4QpM+X4PNtrIl1iRZ8AV8B7ZOnZQZ/etzXIwSiimF0e
- GYW5AKbtEWJcsC/WUpcYVuz0JY3e98CCpoBBbkBW1mvWGg0I0I/uu77gS6r+0tglfm8NOHbxOv0
- nqHp5n2F5glR0Qr2b+b4lrjRszJfxpbX/kYfeL+hKsz90a9sdpfLhEnb2dyFnZ6OWE5vXd681Gl
- DZTspUYwDoa9PJ70Lg==
-X-Received: by 2002:a17:90b:278e:b0:38a:c3f:3b87 with SMTP id
- 98e67ed59e1d1-38e4b454f0bmr1617200a91.12.1784277522585; Fri, 17 Jul 2026
- 01:38:42 -0700 (PDT)
+ bh=+J8ouTUOutmqXF+mKLUSaJg8UqrVHLs91VXo4vxdPwU=;
+ b=EhTDZeASAisVgxFFxznTNaYN4yj58VOn9soS5fK9Rt7X+Ti/JnqDNpD6xCMZlhL+tc
+ gkv5l2w0Tuc6ZCE8hbTQxR+RYOod2marzkEiPfs2eCLedpP+GLc6PQJ8T4Q1O7CYzZzy
+ u9/jDqUun4+6k1LPQ/w3/8bEio8wEmwYz0cvtYIOTG5cRcOeWFZYkev46W59HJfXS7M/
+ Lu8Mw6nbbkvPVc8w08RYMRZynEEoe6lhh5gKSv7Iriqs4n+5YAGDtJ5PK6sOeAM3KtLz
+ 7Lub7QkA2gBrn7CFu3qQNFHcluXSu55JBWtjFMqZ/a1K8oVGMctJYj4fjgvwmSvIii+l
+ POBw==
+X-Gm-Message-State: AOJu0Yx+hFmhxihGNc5kxlxRaXLaDlIAjPniRspF1nYo/bgEVadNm+QV
+ 84NWHJCh/+1upVm1fdbly1AuYLFG344SnU3r1u2xcNqY8WWJzhraiCUYBwcGDEboxGarurH2euP
+ BD5Rzof/U/4KRDVfCuMzln/KLzwPOVzsfUjTo/0KpB1WxyCXNkNVeOifkVp6LVG7xRQdo1/yy9g
+ oTA5q4rqv0nHjsLvuqAnLK7zDuoTv9CnU=
+X-Gm-Gg: AfdE7cmNqCdr9CB1rK8NgNbMml6T1EQU5UvjdQVrv4b3aJ6Rr21fHjRY6t8WoG5R0g9
+ u3f27R4q3fMhB10OcZvBxIRsiXMDgl94MlUggjWGvnvohEkCXN7eF+M3ixEjJrKz9pvtzARqNMC
+ 6Av/CjkTaQdNd1o7DQduNkhPlclOUDXkr9qBoP8ajGkpCrmonIiSxPvbA/
+X-Received: by 2002:a53:e03c:0:b0:662:b4ae:f38b with SMTP id
+ 956f58d0204a3-6683bb7ee2bmr370139d50.40.1784277555841; 
+ Fri, 17 Jul 2026 01:39:15 -0700 (PDT)
+X-Received: by 2002:a53:e03c:0:b0:662:b4ae:f38b with SMTP id
+ 956f58d0204a3-6683bb7ee2bmr370126d50.40.1784277555337; Fri, 17 Jul 2026
+ 01:39:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260717-int-v1-1-8aa05e1791a0@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260717-int-v1-1-8aa05e1791a0@rsg.ci.i.u-tokyo.ac.jp>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Fri, 17 Jul 2026 12:38:29 +0400
-X-Gm-Features: AUfX_mxIaPcSyTlwpuE2dqe-_EnTMLg4xrRP0I8ig7p2UEpZUYIiLTAzS8_9wVs
-Message-ID: <CAJ+F1CJuXiop8j5-XO4HM=B3-jLU2QSAZYz5ERo8QO=ByhF5ig@mail.gmail.com>
-Subject: Re: [PATCH] hw/display/virtio-gpu: reject strides exceeding INT_MAX
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
+References: <20260716132359.96785-1-dbassey@redhat.com>
+ <20260716132359.96785-3-dbassey@redhat.com>
+In-Reply-To: <20260716132359.96785-3-dbassey@redhat.com>
+From: Albert Esteve <aesteve@redhat.com>
+Date: Fri, 17 Jul 2026 10:39:04 +0200
+X-Gm-Features: AUfX_mzYcYMq2oz2aVtklBXrGE2vNeJSHgaDkj7vIHd93GLr--Ifor8TI_XL6no
+Message-ID: <CADSE00+o6Ut78pTUUBFRXtnF5+UEtj0Ckm20KSszCLTGuRZMyg@mail.gmail.com>
+Subject: Re: [PATCH 2/3] vhost-user-gpu: Add shared memory region support
+To: Dorinda Bassey <dbassey@redhat.com>
+Cc: qemu-devel@nongnu.org, mhrica@redhat.com, mst@redhat.com, 
+ sgarzare@redhat.com, manos.pitsidianakis@linaro.org, 
+ marcandre.lureau@redhat.com, stefanha@redhat.com, pbonzini@redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pj1-x1030.google.com
+Received-SPF: permerror client-ip=170.10.133.124;
+ envelope-from=aesteve@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,85 +137,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 17, 2026 at 11:43=E2=80=AFAM Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+On Thu, Jul 16, 2026 at 3:25=E2=80=AFPM Dorinda Bassey <dbassey@redhat.com>=
+ wrote:
 >
-> VIRTIO_GPU_CMD_SET_SCANOUT_BLOB supplies a guest-controlled uint32_t
-> stride, but some downstream consumers take it as int. They may interpret
-> a value greater than INT_MAX as negative and cause issues:
+> From: Matej Hrica <mhrica@redhat.com>
 >
-> - pixman_image_create_bits() takes the stride as int, and Pixman may
->   later access memory before the blob buffer.
+> Add a 'hostmem' property to the vhost-user-gpu which enables the shared
+> memory in the parent object.
 >
-> - eglCreateImageKHR() also takes the stride as EGLint when importing the
->   DMA-BUF, and Mesa rejects it.
+> Register a container MR in the shmem_list for SHMEM_MAP/UNMAP
+> operations. A container MR is used so that SHMEM_MAP FD-backed
+> subregions each get their own KVM memory slot with the correct
+> backing fd.
 >
-> Reject such strides before scanout.
->
-> The check in virtio_gpu_scanout_blob_to_fb() rejects unsupported blob
-> configurations early. The check added in virtio_gpu_do_set_scanout()
-> covers migration post_load.
->
-> Fixes: 32db3c63ae11 ("virtio-gpu: Add virtio_gpu_set_scanout_blob")
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
+> Signed-off-by: Matej Hrica <mhrica@redhat.com>
+> Signed-off-by: Dorinda Bassey <dbassey@redhat.com>
 > ---
-> Based-on: <20260715201055.2465320-1-marcandre.lureau@redhat.com>
-> ("[PATCH] hw/display/virtio-gpu: validate stride against width on scanout=
-")
-> ---
->  hw/display/virtio-gpu.c | 15 +++++++++++++++
->  1 file changed, 15 insertions(+)
+>  hw/display/vhost-user-gpu.c | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
 >
-> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> index e00fb6effa50..9b54207feb37 100644
-> --- a/hw/display/virtio-gpu.c
-> +++ b/hw/display/virtio-gpu.c
-> @@ -654,6 +654,14 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
->          return false;
+> diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
+> index 06549c98e07..7e4580aa895 100644
+> --- a/hw/display/vhost-user-gpu.c
+> +++ b/hw/display/vhost-user-gpu.c
+> @@ -655,6 +655,21 @@ vhost_user_gpu_device_realize(DeviceState *qdev, Err=
+or **errp)
 >      }
 >
-> +    if (fb->stride > INT_MAX) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: stride is %" PRIu32
-> +                      ", larger than the supported maximum (%d)\n",
-> +                      __func__, fb->stride, INT_MAX);
-> +        *error =3D VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-> +        return false;
-> +    }
+>      g->vhost_gpu_fd =3D -1;
 > +
->      g->parent_obj.enable =3D 1;
->
->      if (res->blob) {
-> @@ -769,6 +777,13 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu=
-_framebuffer *fb,
->          return false;
->      }
->
-> +    if (fb->stride > INT_MAX) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: stride is %" PRIu32
-> +                      ", larger than the supported maximum (%d)\n",
-> +                      __func__, fb->stride, INT_MAX);
-> +        return false;
+> +    /*
+> +     * If shared memory is enabled, register the hostmem region for
+> +     * SHMEM_MAP/UNMAP operations.
+> +     */
+> +    if (virtio_gpu_hostmem_enabled(g->parent_obj.conf)) {
+> +        VirtioSharedMemory *shmem =3D g_new0(VirtioSharedMemory, 1);
+> +        shmem->shmid =3D VIRTIO_GPU_SHM_ID_HOST_VISIBLE;
+> +        memory_region_init(&shmem->mr, OBJECT(vdev),
+> +                           "vhost-user-gpu-shmem",
+> +                           g->parent_obj.conf.hostmem);
+> +        memory_region_add_subregion(&g->parent_obj.hostmem, 0, &shmem->m=
+r);
+> +        QTAILQ_INIT(&shmem->mmaps);
+> +        QSIMPLEQ_INSERT_TAIL(&vdev->shmem_list, shmem, entry);
 > +    }
-> +
->      fb->offset =3D ss->offsets[0] + ss->r.x * fb->bytes_pp + ss->r.y * f=
-b->stride;
+
+Why not just use virtio_new_shmem_region()?
+
+>  }
 >
->      fbend =3D fb->offset;
+>  static struct vhost_dev *vhost_user_gpu_get_vhost(VirtIODevice *vdev)
+> @@ -665,6 +680,7 @@ static struct vhost_dev *vhost_user_gpu_get_vhost(Vir=
+tIODevice *vdev)
 >
-> ---
-> base-commit: d25b8018680d762145d55ceed4fa7a3a47ac646e
-> change-id: 20260716-int-6c94d32875b1
+>  static const Property vhost_user_gpu_properties[] =3D {
+>      VIRTIO_GPU_BASE_PROPERTIES(VhostUserGPU, parent_obj.conf),
+> +    DEFINE_PROP_SIZE("hostmem", VhostUserGPU, parent_obj.conf.hostmem, 0=
+),
+>  };
 >
-> Best regards,
+>  static void
 > --
-> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->
+> 2.52.0
 >
 
-
---=20
-Marc-Andr=C3=A9 Lureau
 
