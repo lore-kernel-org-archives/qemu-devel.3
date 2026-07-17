@@ -4,106 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA287C4451C
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 13:49:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16165C4451C
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 13:50:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkiw6-0003oY-HN; Fri, 17 Jul 2026 09:49:06 -0400
+	id 1wkix4-0004GU-Mc; Fri, 17 Jul 2026 09:50:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wkiw3-0003ix-IA
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 09:49:04 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wkiw1-0001RW-Ta
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 09:49:03 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-81e8fa1b8d6so73725507b3.1
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 06:49:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784296141; cv=none;
- d=google.com; s=arc-20260327;
- b=mYtaOJ593j49DI+WSehQhf25dlppL1m4Qe1kTaIOx8CjxcngWOYTxkDvLvCPPGqTim
- Av8smAyFKqXxnhEHHP5SQA5RABKH+oow1vwW1+rt+09RaaSbvq9tWnQD5zP8ALwxl6Le
- WpjW7dFzYXEUk04AkTMMrz3GXpWUc9R16t/A73CtPjOUjTeZG9MpyuRHJHyK4TSdPZJ6
- QvWBtXS0Qq2NUqn17mb+lc8DY7vdi7aD7P2XJgkeTt7MykrJlwKpIvrnBWZAYycG3VHE
- CaenivQ+epq7jEl0DtBvWmxzFD3njZIFNVJm+Fzb55+MK9AbNQXRyyGLgF5GRt8pEFPe
- rPSQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Pau/hqnjfNhTDxxEOa+7xlzUJvLSNPTqET0lqCQpKHo=;
- fh=b73Juu8FZ0PLXL6YfPDAQXwDYgIVUN202sDzjg/x4UA=;
- b=HVojL18m9tn8OI4/dFaCINXlI92lc/aIN1Dqyc5PjU1c9CDukvBWqgc1NkICU59bXx
- ykC8pMS/TnmoK3lBnu/M42JfpwjS3s4LfcSRLv9G8itTzS+/BP5Wwat63QiGmXuOEbXS
- Gfm2cmYAQVz3quBq50zxSuQ+16XhL9ZGFVqYTyZwcuPVn0KdR2e9+Q+G4digPjLv80yy
- yX6eSpqYotCmon36E5IWwj2tov8zOMq2cAX8EM5lc4rz5gAG0y4uO3aTyKO6u5TDz/z6
- c710gjD0ioHVo0rbeddYspgBb+qhteHKz80PUEsGsm8E8OVsHAdNtfB+ZAZqvIqtcdQX
- bZ7A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <dbassey@redhat.com>)
+ id 1wkiwn-0004FE-96
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 09:49:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dbassey@redhat.com>)
+ id 1wkiwk-0001XO-SQ
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 09:49:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784296185;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=lZBZPNLhjCDSLe+l9dGorEQW0aTecu4Xl6LsTO76fCw=;
+ b=dGGCqPWnNbWKiMp93WNd7P4yrsd8s0jm+V5LaciVV+yGQBiFE2jBgE0zTfcmZSuxAn5zHC
+ +QEUEXSRdkpFxpz6y8+M24BufVZ9w6LgTKqvuxn8uzql9GxAsBooDr/MTv2QCpp7uy4fq0
+ HKHuizSLm8Y4OAotowp4OwDkJCBDMCQ=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-272-lOBqcOfvOFWFwrijvF29Qg-1; Fri, 17 Jul 2026 09:49:43 -0400
+X-MC-Unique: lOBqcOfvOFWFwrijvF29Qg-1
+X-Mimecast-MFC-AGG-ID: lOBqcOfvOFWFwrijvF29Qg_1784296182
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-493b0a5e636so71777305e9.3
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 06:49:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784296141; x=1784900941; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=Pau/hqnjfNhTDxxEOa+7xlzUJvLSNPTqET0lqCQpKHo=;
- b=h/gLhW2pH9tDBd7DQerlz+x5fK9/ld2n9Vgl4bkyaj6yqiQTaZ6D4K3x6+tPFPgxnd
- Q747KvHytsrmi3bF6qnYOBW0Dfc8VmCBIJ32jY8TW/iIsy3yBM2H1dbbPU6jI0uQCNNa
- YdlHehI5D6TnLvahTn+lWbxaVDTueN4MDNXh3d0Kng7Tc+oqXl/WgfQhGIJXI5La/YNk
- D1VDHQO6jmxeWihzk8V8PZu5HRiNH4bNzOmYndbYS3OJItQ9TmvG4RYupmG8phGNvRMl
- 1CM6ZROGgZJi34OXf5MRx9lvEJDKZnI99TE5KuoY8q1tfoOG35jrD9KmZ5VSmGHB23KM
- fg8g==
+ d=redhat.com; s=google; t=1784296182; x=1784900982; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=lZBZPNLhjCDSLe+l9dGorEQW0aTecu4Xl6LsTO76fCw=;
+ b=iURqURCpkWHQYppJ7Ae8SzFnwHYOoo5btuRTNB9Yxml9tGHh0w82f/eIT1TSVLY21M
+ gTK8SNO8D46mgnOmWAx42OZk/Qfc+pPaEetW7JqNM7dmC3HQnfom9p15qN5lelcEQ+ZT
+ hHEUOd5x6axqu+KThxfl4mkGbBe5xA7f/4hwn5qOJEZ1ufLdbnkSJf3Ubkp8TGTpCK+3
+ 7z+rYippbRWlKKuqgGIhxi9PzdqBaUiiJngpujF+SYRbXDkYVp249LoD2raIzcwHGChn
+ vj5xDfTpakaeeeLYe2n6sdGV6mXIR/mET1qeUyGz58HafP1+v2c9O+LORadvw5XLR2MG
+ GLeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784296141; x=1784900941;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=Pau/hqnjfNhTDxxEOa+7xlzUJvLSNPTqET0lqCQpKHo=;
- b=Gpa3YBeCdVjsE1tdP1ZalXxv2AkApynQ0eFYFRXWbR1d7HVCA9RvdX/9PHdZ9YDkeV
- MHhFDZBCJXSzYfEuGzdcfOtbX/d3p6jXmH1mYcrqEqxJUvSxPtgdkuq5dwecKvl3j0WS
- 0AIkPuGxsk4LV3J5JoHYItXUnhv4q+gnL/ywFIjF+t6bSAC51FXYxTuX/DS82W4GiofX
- BFeJDneUkwaKjfKmVh9YwOfxeRuNkgQme9hnm10mRbjA35h0qDobexwKyCol8yJ9KFdP
- vLSZ0ogJnOZk4PSAGcyD2/j3ykgpNSB4CTsdjVFWXkIE3duUcn7s+t2u1HDyZD3/jPkK
- O5ZA==
-X-Gm-Message-State: AOJu0YwJyfBn95CJMd7Qon6NsiVC2U4PN3rZldpTKrfMQu1qfIBseaWx
- ND5Sv5Id/BrQ0wdjto7jqDgGtX+TBYBNtKQzre7bGxzPLm9MEiuPQEl1/Kl9b4f0lW2x9FRuvi1
- siUhYyFAVNnzfRuWxwHtHuDfXpAyNnwsc4+5fLS3LTw==
-X-Gm-Gg: AfdE7ckJ3ilu4uWSY5RdMt6WBbumE1j1ZypFq4uRd/d/G6ilNROig3saNqAi7yUrN4q
- 5LHDIRQQkVF8fJmah1JsC3B3gKqhN7BfcpJWfCpoo5Ccmlba75FBS9e+0eyxGql0LGaOSkZ/U/f
- TOcvXplJABc5z32ekRfD8eQGMw4s/1VNJYiiADslM1YxIJDJSbCdJBBpN+d1RWA9ceErbNVhnpS
- tpkRzLGYNOUegDuXp0uDmUxvZMT2cHCeRtIKuK6IL/qjyYbCOsuBQOkcXG+W3LjYRW44jX8EmiB
- h9kx7Za33wRtl4mHM73PYbEFnec9SodhXs46b5dDw+6cpLHoiRVQaIac
-X-Received: by 2002:a05:690c:6c8d:b0:81e:c016:5b48 with SMTP id
- 00721157ae682-81ef28620a0mr8190717b3.64.1784296140520; Fri, 17 Jul 2026
- 06:49:00 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1784296182; x=1784900982;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=lZBZPNLhjCDSLe+l9dGorEQW0aTecu4Xl6LsTO76fCw=;
+ b=HCDPSfbpUYI50Artg27GZg176MjkWfoaIymY0bVYOg23mMYe1Y+C/I0sruEM7IJssu
+ +yD0KIshO0Oc/zF9QpbMLkosPlKPHIVv5KiaFxU8YJKN2rBhEqze7FO586dUtKpySEvZ
+ kk5DoNwYvTqFzGHz4Ts39yCCHNBXV18sH0gr4dcI+2rEJ+XB8kRerU3HLn2Jh5pwljVM
+ qc9gYFbzpn12Hfq0ormbDObyM+zeUIsEiTWgdFuZwwmeGoNsgfYdZHk+d/RlKVqtmcSz
+ BpcfWHtzOIVmYC9IGUsNEjIqYCETe9SVkJc1Cd8lImo9t344tr8/G2Xs6kohUJ+VzNIZ
+ FMeQ==
+X-Gm-Message-State: AOJu0Ywu27b/VKe68csSH3oAsaM2+ee5V2MDXJRuM2wEskmHAE6ub90L
+ Sqyr/ewSjKRdmQvL1qoHx3xsJxXoOxOX4JoUOV2RYY12rmzD/9rLzy/2aYmXZ1z0nlZWHtjjIB4
+ 1Y47cRku1igOaZPmrwqME5izTGo1t8KZGX25gB1McR5LOcpONFHsO7Qa2WyeTpsUJRqajV9STGE
+ Ojn9d8OLkU4/4EMl7rZ+H2oatcN1COzTY2dgj4tyk/Wvad
+X-Gm-Gg: AfdE7cn5sTCjfdI5FqQlbktYE9iD7+YYshPSHQ7RyJ1OG8vMI79yDq99jcFqv8ZVNr6
+ 8o7nQmA0jRkSHqEkwo9DG95f0Lt/viAPT+cYp3LF3MUi8U/rO+yM8+2uhX0M3U/5LTco5szTCrn
+ 5uii2V1r7QXteFlTSqHjLnl/9LC0c8mvBfUnorFGnSbI6O9HMFkJE9m8ec8luLGxMsFQ6bu+ylj
+ OAq6vfwZghOYrc8mTabfwT4OQ32Pvgor9FsL2tfKTiVzxwDhyW4V+K+GqhCBBsCsWotpmhR7mqd
+ tjGWQhUbcmVdmog8pLh8hA7NTcRNZXio31gd3bRvyNzrBIdAUs965Hg4iWv6JJFsLB0AJvBr3aV
+ 4VSbxsBm113h/XUyT9QngwBuTmrBFMSFSjcwuFmL6EkIeg1fA74ZpdFDAsyVttZydud0ZlESX7Y
+ BQjfl5lFE1rw==
+X-Received: by 2002:a05:600c:3586:b0:493:e504:cbef with SMTP id
+ 5b1f17b1804b1-4954a38def9mr35829845e9.0.1784296182181; 
+ Fri, 17 Jul 2026 06:49:42 -0700 (PDT)
+X-Received: by 2002:a05:600c:3586:b0:493:e504:cbef with SMTP id
+ 5b1f17b1804b1-4954a38def9mr35829405e9.0.1784296181675; 
+ Fri, 17 Jul 2026 06:49:41 -0700 (PDT)
+Received: from fedora (cst-prg-27-253.cust.vodafone.cz. [46.135.27.253])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4954ba2abd0sm30049525e9.15.2026.07.17.06.49.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 17 Jul 2026 06:49:40 -0700 (PDT)
+From: Dorinda Bassey <dbassey@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: mhrica@redhat.com, mst@redhat.com, sgarzare@redhat.com,
+ manos.pitsidianakis@linaro.org, marcandre.lureau@redhat.com,
+ stefanha@redhat.com, pbonzini@redhat.com, aesteve@redhat.com,
+ Dorinda Bassey <dbassey@redhat.com>
+Subject: [PATCH v4 0/3] vhost-user-gpu: Add blob resource and shared memory
+ support
+Date: Fri, 17 Jul 2026 15:49:17 +0200
+Message-ID: <20260717134920.265128-1-dbassey@redhat.com>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-References: <20260717113006.172612-1-thuth@redhat.com>
- <CAFEAcA_0q+3fi406hhVaj-W6e+XgkAU0jACVQvAS5FnSUnq+fA@mail.gmail.com>
- <7cd279e6-f79b-40e5-94a2-610a60d57fdc@redhat.com>
-In-Reply-To: <7cd279e6-f79b-40e5-94a2-610a60d57fdc@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 17 Jul 2026 14:48:48 +0100
-X-Gm-Features: AUfX_mxjyHd3ozq-HUy8XHvEbzGU8gjfuMJOzCJjeYcY5S69XNyzYlpBkydppfo
-Message-ID: <CAFEAcA_9Ps1xWqnDan17D5uzxFKQ9g=r2pGRPjmHtubEbF4TCQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/usb/hcd-xhci-sysbus: Fix OOB heap access in
- xhci_sysbus_intr_raise()
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, kraxel@redhat.com, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- qemu-stable@nongnu.org, "Daniel P . Berrange" <berrange@redhat.com>, 
- Mauro Matteo Cascella <mcascell@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: permerror client-ip=170.10.133.124;
+ envelope-from=dbassey@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,41 +120,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 17 Jul 2026 at 14:13, Thomas Huth <thuth@redhat.com> wrote:
->
-> On 17/07/2026 15.02, Peter Maydell wrote:
-> >
-> > This doesn't seem right. If we've told the core XHCI code that
-> > we only have one interrupt line, then it should not be calling
-> > this function for a nonexistent interrupt line.
-> >
-> > In xhci_event() we have code that (a) has a special case
-> > for numintrs == 1 that means all events go to interrupt 0,
-> > and (b) have a bounds check for an out of range interrupt number.
-> >
-> > It looks like the call path via the ERDP register write
-> > is missing an equivalent check.
-> Yes, the ERDP write is the critical code path. I can move the check to that
-> part of the code, fine for me! I'll send a v2...
+Add blob resource support to the vhost-user-gpu device, enabling
+Vulkan pass-through via Venus with a vhost-user backend such as
+vhost-device-gpu.
 
-In particular, looking at the xhci spec, the registers
-involved here are a set of registers for each interrupter,
-and the spec says that it's up to the implementation how
-many interrupters it has.
+Patch 1 fixes a deadlock that occurs when the memory region
+transaction commit triggers ADD_MEM_REG back to the backend while
+it is still blocked waiting for the SHMEM_MAP reply.
 
-So I think that in xhci_runtime_read() and xhci_runtime_write()
-where we do:
-        int v = (reg - 0x20) / 0x20;
-        XHCIInterrupter *intr = &xhci->intr[v];
+Patches 2-3 register a shared memory region for SHMEM_MAP/UNMAP
+operations and forward the RESOURCE_BLOB and CONTEXT_INIT feature
+flags from the backend to the guest.
 
-we should be checking v against xhci->numintrs, and make
-the access RAZ/WI if it's out of bounds. Compare
+Dorinda Bassey (1):
+  vhost: Fix SHMEM_MAP transaction ordering and resulting deadlock
 
-https://docs.amd.com/r/en-US/am011-versal-acap-trm/Port-Status-Control-Host-Interrupter-Event-Ring-and-Doorbell-Registers
+Matej Hrica (2):
+  vhost-user-gpu: Add shared memory region support
+  vhost-user-gpu: Forward RESOURCE_BLOB and CONTEXT_INIT flags
 
-which is an implementation of xhci with 4 interrupters: there are
-4 registers of each type, not 16 (XHCI_MAXINTRS).
+ hw/display/vhost-user-gpu.c | 17 +++++++++++++++++
+ hw/virtio/vhost-user.c      | 20 ++------------------
+ hw/virtio/vhost.c           | 10 ++++++++++
+ 3 files changed, 29 insertions(+), 18 deletions(-)
 
-thanks
--- PMM
+Changes in v4:
+- Document map/unmap ordering in commit message
+
+Changes in v3:
+- Reordered patches: bugfix first, then features
+- Added Fixes tag
+
+Changes in v2:
+- Reordered patches: shmem support before feature flags
+- Use virtio_new_shmem_region() helper
+- Drop explicit transaction begin/commit wrapping
+
+--
+2.52.0
+
 
