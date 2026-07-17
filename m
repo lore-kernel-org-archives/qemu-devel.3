@@ -4,106 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DA2EC44514
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 08:48:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A230C44507
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 08:48:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkeEL-0002wY-Iz; Fri, 17 Jul 2026 04:47:37 -0400
+	id 1wkeDG-0000Z0-CZ; Fri, 17 Jul 2026 04:46:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wkeEJ-0002vr-Oc
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 04:47:35 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wkeEH-00040E-OZ
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 04:47:35 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-c99eaa1f020so4122048a12.2
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 01:47:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784278052; cv=none;
- d=google.com; s=arc-20260327;
- b=fbK2kgbtoaMfOuOS9qpxoxMqDicw3hGJ2ucupM6ltyed2ZaTFXX1MEBd9AEHRkRR/A
- tFAayOjjcw8XKCnVxSuQFMf+XJY4qpy1rCLpoB4H7gFA3l3odm1V7KgkBX51vleGBcAp
- /QPi8XTJgcJSlDWBnfhZg5So/ZaqHoTU/Wma9IPfG3xJbgkSt8IOWsGN49NTAX9+oR6P
- 4BEdN7xwCTPD5jQWnZyLe7gbcizmEx1xDeS3E2if3r21n0/BkPB8myq+U8X0B8/EOIel
- f1IEGeVi/5qmQ7HqjJfi5YmjEwpOtCJExXprunkahSaWnTegI4Ln15a62SjhGzvpa1rj
- gHqA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=VBVQdNb+mUOrlkcSdaPvF8dAh8794ap8PN6AZJQyEaU=;
- fh=xBmFfvi1CIxcv4xit7QIpsd2+YAL5haLXAfECwFCXKw=;
- b=Q1GNDcAZ07NUAF3dy25ZU1bWbeh9/ReQJy7xMYOBO09P+diIhTp//tn2af0lfHfb8M
- LUnQ1DS3URqcdkUISM+T9AWlneAbYdsxIk4dNyTuZnW8Q82pS2V71s0gPpDgI9ajiSz3
- +Dnm7A593QNEvEhb7Zfe+/KLgwrIpzy1EBpIexC1/2d9WQuzT4rQJp4rptuQ03RZ8zSB
- OyYufJ1zvaKanueISdF5XloO6zdVg6fu9PQrNvoTC9M6yXQ7ytJy3lHHTeqBtBgBTJWM
- NfdLp5YXLQN3aayYMdN8gyGVsMPmA1kW+oP2l4Lityz+//5ibcEpJutOvVkCIUuwHh/a
- Aqpg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784278052; x=1784882852; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=VBVQdNb+mUOrlkcSdaPvF8dAh8794ap8PN6AZJQyEaU=;
- b=DAYHgW7erqBVMBUWmGfa6+gokE/h7fQqwtGdzXzp19gnyMuA7ExbsZB6cpgtIzepxW
- ReYTMaxUgIrwTR0bzaaomT6K8YnPnkH57WzyzEBqt/NeZJ/oHAz0vEQ1uQAHuKCNx11l
- ZziTyu3+dFK6JyAqIyva/AwZKpkjHHcVmHqIwUoLXrUSiz3Yf9hR85EpLr5yMPBA7jGv
- Oy0T8QkMp77sBsDc/8KImxRpw0uBCytjxquXYdOXDzqA2rwzB7oHpCx+T8KVbXCuNpog
- j3Z/m3VSUFPf1VXkSKZVyI3k68YbyDYDR4m1pmebSbWGA6k/mIAbiiprJWQaZWDP0Eio
- xuvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784278052; x=1784882852;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=VBVQdNb+mUOrlkcSdaPvF8dAh8794ap8PN6AZJQyEaU=;
- b=ffTqCB2KJf/A55TiYtsGrXLTrR+zs9mB0QSZXg/1prx7GT8MpUrrBlLbunhTMdIqAo
- nORNZ4SKY83FhcqKjDHrJ+S85a1iVPK2OGGhCHDg05PSen+dWp60SYdlhv+Z96IYXx+T
- mgQ+EFjpsCwthIQA8YKWwPgcQ91MOMXSDs8w8e9mARjneBf8g+qjuC/2zR3+qlf8DLoU
- zsdFY+k/pM+il409WohPWUEpXU3HO9icA2t1lLJSz6WNIX0j5dy6FsUtoHw+zro2u34O
- mlKyqkKyD1Sq/DhcyFLZC9Kmw6RJt9TYfiCWI0pdpF6gdWQefdTPRjJzQMAodz4mn8hV
- IDLg==
-X-Gm-Message-State: AOJu0YyoFYJCPxAHE1Qd1JiY1fdMTdGSdC4L90+CGRBZzz94RgFOlsog
- qbpdrVkfRoR/aOCvy/BKOLFeV5ReZEIyOhkCSmYZdLcWSjWWYGSGZ9wPQakhwnngI1+ubWM/Mc3
- asPut+86bzYXSjaKa4Cij/kF+jXDfyyo=
-X-Gm-Gg: AfdE7cmzx+wvF9nf3LLglq+K6cAlDU+OAf5H5VGJG6HI3eR5H3Gu2Md90PiZjZbzfu1
- JBDB1B0XT/ohDx3e3IDG0OawNBwkydDbaFbd+i97jtugNH88d8YY8HSU4c6KUv+a+UCuXtcb6Ly
- Q0m19tkG9cMGiMROqawxFjvuG65EmNIddZbCest2+ijMcyX9mncE9DxwLcIzJMwYfMtW0nT0SuP
- +xQ0eGvi70NH3hysPnqg3+8+GWs61NKFr0WHIKhmC86v7SUlE8O2T9ZoBSCfDG1T+ltY9YYWz/2
- CDAY+VJeqFpUqO8Vgg==
-X-Received: by 2002:a05:6a20:e282:b0:3c3:91f5:82ba with SMTP id
- adf61e73a8af0-3c3ad975d54mr1919804637.57.1784278052089; Fri, 17 Jul 2026
- 01:47:32 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260717045253.4004241-1-jianghaotian.sunday@gmail.com>
-In-Reply-To: <20260717045253.4004241-1-jianghaotian.sunday@gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Fri, 17 Jul 2026 12:47:19 +0400
-X-Gm-Features: AUfX_mxkkoB9Aq_YlLYEH12WK1XVdMqBY1O89k82YbqJqJT-DYKZvKD2-8suaJk
-Message-ID: <CAJ+F1CLUcxOzbFo5Pf_jNuxcdvjoczMpoFyzjYRG9=S=F-JGfQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/display/qxl: unregister vm_change_state handler and
- BHs on device exit (CVE-2026-63322)
-To: jianghaotian.sunday@gmail.com
-Cc: qemu-devel@nongnu.org, philmd@mailo.com, vsementsov@yandex-team.ru, 
- thuth@redhat.com, farosas@suse.de, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1wkeDB-0000XM-V9; Fri, 17 Jul 2026 04:46:27 -0400
+Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1wkeDA-0003vC-02; Fri, 17 Jul 2026 04:46:25 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=p7jdp9URkRRWGvMkob534SI/vigN99vdIhhpSNxPK1Feq7e+5StkECYRLD40cMlMVsEsGxy0SO0uveJSCKgwsXZJ01/VShjGEn9bAHz/WPyvywHyTWJRYLntmpGmYqPvtFkTnm2Bp8EcCr3J/a3ObBmqrmqMoOxEJtSdeuz/iLibHTJ2y0udOHGXCbP/N3xmSBYDugGvf1PngZgzahYpQD+ujg8v9yaJbIgQeZLqNUrWBU/UPyk8cD+m17r1C0rKjB/cw67ohzAluJ2KOs7v3HHeGHpCVJK2IqZm7vP9pNli4OViO6YIDmNQIejNBKMeDSjv/ljy4jqt27+ebIbnlg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+NsZPU0vp5g+L+ZwYkgzN0/vSqDgJxWBI/lwu9OovNo=;
+ b=YfcWUqNiejdlUF2Q8Pd9Q+FsU/+vUByVkROO9wFPi1OwlRzqHgIIvfh4vQXV8eKVHkIuW0HvubHPbhULaQvq97YG9a4hWNEHnaEBKssMx/HUCy5x8uh6Yz2BZpe51krOpc713pw0p2PAUteyK1CpA2cTqoIejuZwHtGab5qV8/XpEkY43wOCsxFRpKOVChnuXB8spUVxa2yuKz9fglNqoz2rFz7F4cNsB2R1Rcv3qTCc8sLddlWPsX1IXGnrpJXVsypB7393QaAsIbPDZI8Gleki+h0XZVwGQozcOZtwfR0cQy2YBzs9OYsbIEuIo+kbSzjrWoWPP63jfuXRxyX+Cg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+NsZPU0vp5g+L+ZwYkgzN0/vSqDgJxWBI/lwu9OovNo=;
+ b=SXA9tOngXvi0xyqDNdr8lCciUGNcWAj+Gx3GBgAgb/aYch8GP7IfhkqGPaohTJ8GYf2deOeB/IqGzI2kWlugTmcC92W2DwINLdmhCyPOcKRlFLQOMQ9UR+qmP1EFeIsGH5Y/59MAzvG6MPWCf6Upf/t/BXuXpCLtkLrXB2PoYNA07LkCAP63u9zx4aKVaTfPGPhYdccInkk3rRbR2fwFAy3iUPOTlqLUuTphQziau17sX4/VmVM1t0+DQhP46xk0ukkD6NvooiHBRF59DG3O5bMJocKztBi/LLboaYo6+gaefimhrK8F5cQVjz8gax/5T1ZpaAOjLP4h2fjmhTktjg==
+Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
+ by KUZPR06MB8267.apcprd06.prod.outlook.com (2603:1096:d10:63::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.12; Fri, 17 Jul
+ 2026 08:46:08 +0000
+Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
+ ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
+ ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0223.011; Fri, 17 Jul 2026
+ 08:46:08 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: =?Windows-1252?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, Alistair
+ Francis <alistair@alistair23.me>, Fabiano Rosas <farosas@suse.de>, Laurent
+ Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, "open
+ list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>, 
+ =?Windows-1252?Q?Philippe_Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
+ =?Windows-1252?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
+Subject: [PATCH v4 6/9] hw/arm/ast27x0: Share single SCUIO instance across
+ PSP, SSP, and TSP
+Thread-Topic: [PATCH v4 6/9] hw/arm/ast27x0: Share single SCUIO instance
+ across PSP, SSP, and TSP
+Thread-Index: AQHdFci29aPijPy6VkuwdqCu9zor6g==
+Date: Fri, 17 Jul 2026 08:46:08 +0000
+Message-ID: <20260717084559.3477061-7-jamin_lin@aspeedtech.com>
+References: <20260717084559.3477061-1-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260717084559.3477061-1-jamin_lin@aspeedtech.com>
+Accept-Language: zh-TW, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|KUZPR06MB8267:EE_
+x-ms-office365-filtering-correlation-id: 0fdb5285-55b7-4ad9-af7a-08dee3dfd894
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|23010399003|1800799024|7416014|376014|921020|22082099003|18002099003|38070700021|56012099006|10067099003;
+x-microsoft-antispam-message-info: 87ZKDfGE22aUD+I+NVGJyvZLunRf+uRgPuHsydsRMJlFsC+k2BztZAmtKB6ebRGK7XMoMxcVbj7ThF/PRrtHdQSdw8VQZKqTaWB2qi/Lq02AZ+ipVKcsIBha2pe8jD/RkJ69CKJ0l4UewKA1M6bIwbhRPaE5h1qO8cH8OZ7iutxygkDYdekcy1qk7mwI0S5NwFi6j2Bqe4yM0Ejirw6JIJg9gr3etkqfyVhN0rx1n8XmgNrnV5T6jmdEolMshw0MqWmrZpqhs9XPCUtlZUrKqB27MVe8Uzapo8WkCw2LXvAhlAWF1PeVmTC5/EQgHOkLMYihX0kYN8ewNm/njy47DlLIeobBld66/HvH+v46cZCahTS+i55xbWVSQ0rKWZWGSEZoFCj4B6g/+EfiYNZM6yf7o4vn033cPgg0fP7yIzn77+wOiV3JeJaP7wreFfFPp+r0sHeNdOLSEwCLVnw3nJ+xD6k4i+eILqTZXjTvI73h3jOAbpuo6V1Kssq2bJP7b5QbTbr+hYq+yCaW6QPSQoEqr0VH/Rw/tIVOEBTuOjkNcin2dFp3l1JrOBbDeAjz9VZqIFXEBKKJV9pr4pl2/RZgLCV09Te6ETlB7I77wc0ymAOC4+1JxWvucsnj6AIk7ODoSsfatpG1Lg+umb6oOL+XqncMG/dITHK9myvLx5Bj6U9dRjVeHobupBiOkTPJaAr7huNZOdhl+pdDHE371m24yhGjaEOVu18BVxrwNjjX0yE3fOYY4vWFSn5MnwYH
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(23010399003)(1800799024)(7416014)(376014)(921020)(22082099003)(18002099003)(38070700021)(56012099006)(10067099003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?Windows-1252?Q?ZLMpOj0QY7faEVRZoGGE3gksUvqsCnOZZM8ci0d6feSntx4ubVMJmkBg?=
+ =?Windows-1252?Q?H7StqWRlIds72PNJrNO8wXbDyXxOCObKkDfeC1D/cRoHajZzAwltRXf9?=
+ =?Windows-1252?Q?9MQ6d34cue/5KbGSoJGXAXiYeWhwY8pVkiqIGTWxKDas503FPZUfn/1+?=
+ =?Windows-1252?Q?XUb+WFwsfrqhsoUwiRfccUu5lFTsqQ7iPLxXHgAVntWtP7mB5bWtqNTH?=
+ =?Windows-1252?Q?yu0Zs1E4F6VFZkPmpjX0guqO+I/tArUKhK642t14XJm6APZsCOlwrEod?=
+ =?Windows-1252?Q?ORP4JLVEKDn1V2mnIkweZQL5NIUDPqpEsIeKTEzxQJYO+efaph8DYJG5?=
+ =?Windows-1252?Q?g4fY93WgMd9FWuWCB13X7/k4LrjMJqaakwjy1pAYPLavR700ffQxdsdw?=
+ =?Windows-1252?Q?xiJUXg+0RKInANjSgwKMJjtGiQ3UyR260YPT7Gy+hcDGI1WkFzsUdNPI?=
+ =?Windows-1252?Q?MX7s1qGIG8aZJlpLP4ROeF9V3ZkT6UmOV8cpTYwX7rJlFYCz4WmNB/nN?=
+ =?Windows-1252?Q?oFelmPI+gHIZRrf7Zsco9N8pp0e36VhVnIMqoZ0jcBkSeRHxX0GTbo5W?=
+ =?Windows-1252?Q?brQCVcqc+rs/ftRHSvi1tU0NKrAnVfiaVCqlp5mrQgYLyd/u/FRmISTf?=
+ =?Windows-1252?Q?dIbp7EpRh+nezeBOGDXM+r7ml++3ItnTiA++DY5N9feZiIB4BXhZwtlL?=
+ =?Windows-1252?Q?qzH8mRKYAWst4Y5pWk2AcRQb7Y+++MgfP6WA8rEzCYDTub4Y92qen0ZH?=
+ =?Windows-1252?Q?pBu+wAciAtu8pOOneC47gR373ZfaXjd0VDr7ZXj1H+KcOIo5MYKSDBmr?=
+ =?Windows-1252?Q?Hli6g9YpvFTYE63jA9wQ4ArGx3Z+jHRddrqGmBMTCETb1nSxPNqu+rBt?=
+ =?Windows-1252?Q?sBQAgOcO7UfSsOxKTDupdEPd483IZDvSQl9mpDWAGhfeTWHPuUjBq+o4?=
+ =?Windows-1252?Q?9/4r0vDs+zzYvYcuLuvpXP3SbruiGSM4IBUIkxt8yxqpqWevGenFnzkp?=
+ =?Windows-1252?Q?O9toLCDNdE0sRiFRBNgbfxElO2mHG88mxHWkGbipUqETRh7gCSD34jms?=
+ =?Windows-1252?Q?q8Qf4B59/UXupU5QMO8MUtuYW8M/Zr9Q7bsAq8UpHKR/8GLKmKWxcRuF?=
+ =?Windows-1252?Q?01mlIGAiMJqQYwBgBviCq1ESosbFWWPgdzMJ3QmTXDjRxu+g8PLhYka+?=
+ =?Windows-1252?Q?a1LFHra5YJQ6ksVp5KCU130vRlgcx67gNu7vQCMdqjqp4DwDNSyQENIg?=
+ =?Windows-1252?Q?ad+N+rtzGwNGlgCU4sZ0deATz5EXbv8ugPElFyqnomrBJ7hQV5umYeBy?=
+ =?Windows-1252?Q?LrzyGDYXTVsJF0KShcJQKA+qkXVbDqiaixh2wJ/PJ6vMXiIvbN4iBLYi?=
+ =?Windows-1252?Q?6l+Kq41KD3T8CBfEppzYAJV2RADF79WA1TTuFJFdpLLK360+Td/D8+UF?=
+ =?Windows-1252?Q?YCKo8Yulkeu2Qiade9BiRFJ++syPtYxpE+K1LmN7EcLQH6BhaN8AIJdn?=
+ =?Windows-1252?Q?yULQ08mk00DDg7eMbJlentUGvi6jDhCzp+dtxyt3W42cNYVeUFqaHroV?=
+ =?Windows-1252?Q?TUm+SzG9KKes6mAk7z7s7tSiugx7+w1EH3MfR1LqcTWJdsjYNn1JoIQu?=
+ =?Windows-1252?Q?f+mWnhLyS6fMiBRl9Sn6psNzskNgLLDUqwlMwcWkpoKKIOkUg7ZxJUXo?=
+ =?Windows-1252?Q?wEhy7aO1xcXlEfgW7XFd8QuF4AICmuiBW4ykAKRQqWARcZ+PnAQovCX/?=
+ =?Windows-1252?Q?/8/nJpQE3w2cTbQcLPh/FjmSmiNMdQWWzeO2avCYCk6Z+TjSFMRd62uG?=
+ =?Windows-1252?Q?PUF+q0OTqAG/mTkBcJk26S0QSelv1y2Iq3sLpDbRzoCkN++nVZcmSaK9?=
+ =?Windows-1252?Q?ER8dunyZ/3tqZw=3D=3D?=
+Content-Type: text/plain; charset="Windows-1252"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pg1-x530.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+MIME-Version: 1.0
+X-Exchange-RoutingPolicyChecked: lz1enrtsnuhSgsL11GVxf4ORnsjsyrkgQ5dP2MB3LN2s0k/MUy/4FJR3q8JjPcBYkJuT7lm3jD678Cr40BXYGahSqs6zUSfLCyLad89rAhRhGL/3VFez+J3wTicyK8o+MthpG4+HYeNWd4Ljpk9w7v1P0smgELojZ52QOJq2m04c/XOLjDOsVJOxf3qssnkw54WzxEi2gYo1KrxLo8cF/dM0B6MyX1hllIYx/evAzyAsButD6eS491dO0RqiC8kJyRoS2+MoaNwhx/yWwmMIEM6PL6wa5ynj5PeYWfCpWVMmcCGj3ux8GnRtS3u4vr9h4UhhV9LFlAf2V8yYeF4muQ==
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0fdb5285-55b7-4ad9-af7a-08dee3dfd894
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Jul 2026 08:46:08.3622 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: BNOptCJGuxF6kXYay5MPs13uJZKa+p85j4+g0qA037QXRZlt9LpwnIz+ZkrZSwm9LvMIU/OQOSD42kCr5wVdm5Zqf6erYcFQPNGyeRtY+aI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUZPR06MB8267
+Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=TYPPR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,125 +154,238 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-On Fri, Jul 17, 2026 at 8:54=E2=80=AFAM <jianghaotian.sunday@gmail.com> wro=
-te:
->
-> From: Haotian Jiang <jianghaotian.sunday@gmail.com>
->
-> qxl_realize_common() registers a vm_change_state handler via
-> qemu_add_vm_change_state_handler() and creates three bottom halves
-> (update_irq, update_area_bh, cursor_bh), but none are ever cleaned up.
-> The return value of qemu_add_vm_change_state_handler() is discarded, so
-> the handler is never removed from the global list, and there is no
-> PCIDeviceClass.exit callback to delete the BHs.
->
-> When a secondary QXL device (hotpluggable by default) is hot-unplugged
-> via device_del, the PCIQXLDevice memory is freed but the vm_state
-> handler and BH entries remain with dangling opaque pointers. On the
-> next VM state change (stop/cont/migrate) or BH dispatch, the callback
-> dereferences freed memory, causing a use-after-free.
->
-> Fix this by storing the VMChangeStateEntry returned by
-> qemu_add_vm_change_state_handler() and adding a qxl_exit() callback
-> that deletes the vm_state handler, all three BHs, and the
-> guest_surfaces.cmds allocation before the device memory is freed.
->
-> Fixes: a19cbfb34642 ("spice: add qxl device")
-> Fixes: CVE-2026-63322
-> Reported-by: Haotian Jiang of Tencent Security (Yunding Lab) <jianghaotia=
-n.sunday@gmail.com>
-> Signed-off-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
-> Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3607
-> ---
->  hw/display/qxl.c | 29 ++++++++++++++++++++++++++++-
->  hw/display/qxl.h |  1 +
->  2 files changed, 29 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/display/qxl.c b/hw/display/qxl.c
-> index 74258afa58..23608f988a 100644
-> --- a/hw/display/qxl.c
-> +++ b/hw/display/qxl.c
-> @@ -2203,7 +2203,8 @@ static void qxl_realize_common(PCIQXLDevice *qxl, E=
-rror **errp)
->          error_report_err(err);
->      }
->
-> -    qemu_add_vm_change_state_handler(qxl_vm_change_state_handler, qxl);
-> +    qxl->vmstate_handler =3D
-> +        qemu_add_vm_change_state_handler(qxl_vm_change_state_handler, qx=
-l);
->
->      qxl->update_irq =3D qemu_bh_new_guarded(qxl_update_irq_bh, qxl,
->                                            &DEVICE(qxl)->mem_reentrancy_g=
-uard);
-> @@ -2475,6 +2476,31 @@ static const Property qxl_properties[] =3D {
->          DEFINE_PROP_UINT32("yres", PCIQXLDevice, yres, 0),
->  };
->
-> +static void qxl_exit(PCIDevice *dev)
-> +{
-> +    PCIQXLDevice *qxl =3D PCI_QXL(dev);
-> +
-> +    if (qxl->vmstate_handler) {
-> +        qemu_del_vm_change_state_handler(qxl->vmstate_handler);
-> +        qxl->vmstate_handler =3D NULL;
-> +    }
-> +    if (qxl->update_irq) {
-> +        qemu_bh_delete(qxl->update_irq);
-> +        qxl->update_irq =3D NULL;
-> +    }
-> +    if (qxl->update_area_bh) {
-> +        qemu_bh_delete(qxl->update_area_bh);
-> +        qxl->update_area_bh =3D NULL;
-> +    }
-> +    if (qxl->ssd.cursor_bh) {
-> +        qemu_bh_delete(qxl->ssd.cursor_bh);
-> +        qxl->ssd.cursor_bh =3D NULL;
-> +    }
-
-
-Please use g_clear_pointer(&bh, qemu_bh_delete).
-
-> +
-> +    g_free(qxl->guest_surfaces.cmds);
-> +    qxl->guest_surfaces.cmds =3D NULL;
-
-And g_clear_pointer(&..cmds, g_free)
-
-Hard to say without careful examination if other fields should be
-unref/free here...
-
-> +}
-> +
->  static void qxl_pci_class_init(ObjectClass *klass, const void *data)
->  {
->      DeviceClass *dc =3D DEVICE_CLASS(klass);
-> @@ -2482,6 +2508,7 @@ static void qxl_pci_class_init(ObjectClass *klass, =
-const void *data)
->
->      k->vendor_id =3D REDHAT_PCI_VENDOR_ID;
->      k->device_id =3D QXL_DEVICE_ID_STABLE;
-> +    k->exit =3D qxl_exit;
->      set_bit(DEVICE_CATEGORY_DISPLAY, dc->categories);
->      device_class_set_legacy_reset(dc, qxl_reset_handler);
->      dc->vmsd =3D &qxl_vmstate;
-> diff --git a/hw/display/qxl.h b/hw/display/qxl.h
-> index ad8a912878..48d664f777 100644
-> --- a/hw/display/qxl.h
-> +++ b/hw/display/qxl.h
-> @@ -83,6 +83,7 @@ struct PCIQXLDevice {
->
->      /* thread signaling */
->      QEMUBH             *update_irq;
-> +    VMChangeStateEntry *vmstate_handler;
->
->      /* ram pci bar */
->      QXLRam             *ram;
-> --
-> 2.34.1
->
->
+AST2700 has a single SCUIO hardware block, memory-mapped at=0A=
+0x14C02000=960x14C03FFF from the perspective of the main CA35 processor (PS=
+P).=0A=
+The SSP and TSP coprocessors access this same SCUIO block at different=0A=
+addresses: 0x74C02000=960x74C03FFF.=0A=
+=0A=
+Previously, each subsystem (PSP, SSP, and TSP) instantiated its own SCUIO=
+=0A=
+device, resulting in three independent SCUIO instances in the QEMU model.=
+=0A=
+In real hardware, however, only a single SCUIO exists and is shared among=
+=0A=
+all processors.=0A=
+=0A=
+This commit reworks the SCUIO model to correctly reflect the hardware=0A=
+behavior by allowing SSP and TSP to reference the PSP=92s SCUIO instance.=
+=0A=
+The following changes are introduced:=0A=
+=0A=
+- Add a scuio property to Aspeed27x0CoprocessorState for linking the=0A=
+  coprocessor to the PSP=92s SCUIO instance.=0A=
+- Replace per-coprocessor SCUIO instantiation with a shared SCUIO link.=0A=
+- Add "MemoryRegion scuio_alias" to model address remapping for SSP and TSP=
+.=0A=
+- Create SCUIO alias regions in both SSP and TSP coprocessors and map=0A=
+  them at 0x74C02000 to mirror the PSP=92s SCUIO registers.=0A=
+- Ensure the SCUIO device in PSP is realized before SSP/TSP alias setup.=0A=
+=0A=
+With this change, PSP, SSP, and TSP now share a consistent SCUIO state,=0A=
+matching the single-SCUIO hardware design of AST2700.=0A=
+=0A=
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
+Reviewed-by: Philippe Mathieu-Daud=E9 <philmd@oss.qualcomm.com>=0A=
+Reviewed-by: C=E9dric Le Goater <clg@redhat.com>=0A=
+Tested-by: Philippe Mathieu-Daud=E9 <philmd@oss.qualcomm.com>=0A=
+---=0A=
+ include/hw/arm/aspeed_coprocessor.h |  4 ++--=0A=
+ hw/arm/aspeed_ast27x0-fc.c          |  4 ++++=0A=
+ hw/arm/aspeed_ast27x0-ssp.c         | 20 +++++++++++++++-----=0A=
+ hw/arm/aspeed_ast27x0-tsp.c         | 20 +++++++++++++++-----=0A=
+ 4 files changed, 36 insertions(+), 12 deletions(-)=0A=
+=0A=
+diff --git a/include/hw/arm/aspeed_coprocessor.h b/include/hw/arm/aspeed_co=
+processor.h=0A=
+index adfc3c4512..b77ea06e7f 100644=0A=
+--- a/include/hw/arm/aspeed_coprocessor.h=0A=
++++ b/include/hw/arm/aspeed_coprocessor.h=0A=
+@@ -22,7 +22,6 @@ struct AspeedCoprocessorState {=0A=
+     MemoryRegion uart_alias;=0A=
+     Clock *sysclk;=0A=
+ =0A=
+-    AspeedSCUState scuio;=0A=
+     AspeedTimerCtrlState timerctrl;=0A=
+     SerialMM *uart;=0A=
+     int uart_dev;=0A=
+@@ -45,14 +44,15 @@ struct Aspeed27x0CoprocessorState {=0A=
+     AspeedCoprocessorState parent;=0A=
+     AspeedINTCState intc[2];=0A=
+     UnimplementedDeviceState ipc[2];=0A=
+-    UnimplementedDeviceState scuio;=0A=
+     UnimplementedDeviceState pric[2];=0A=
+     UnimplementedDeviceState otp;=0A=
+ =0A=
+     ARMv7MState armv7m;=0A=
+ =0A=
+     MemoryRegion scu_alias;=0A=
++    MemoryRegion scuio_alias;=0A=
+     Aspeed2700SCUState *scu;=0A=
++    AspeedSCUState *scuio;=0A=
+ };=0A=
+ =0A=
+ #define TYPE_ASPEED27X0SSP_COPROCESSOR "aspeed27x0ssp-coprocessor"=0A=
+diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c=0A=
+index 58d0b4d7cd..d14a42ebca 100644=0A=
+--- a/hw/arm/aspeed_ast27x0-fc.c=0A=
++++ b/hw/arm/aspeed_ast27x0-fc.c=0A=
+@@ -157,6 +157,8 @@ static bool ast2700fc_ssp_init(Ast2700FCState *s, Aspee=
+dSoCState *psp,=0A=
+                              OBJECT(&psp->sram), &error_abort);=0A=
+     object_property_set_link(OBJECT(&s->ssp), "scu",=0A=
+                              OBJECT(&s->ca35.scu), &error_abort);=0A=
++    object_property_set_link(OBJECT(&s->ssp), "scuio",=0A=
++                             OBJECT(&psp->scuio), &error_abort);=0A=
+     if (!qdev_realize(DEVICE(&s->ssp), NULL, errp)) {=0A=
+         return false;=0A=
+     }=0A=
+@@ -187,6 +189,8 @@ static bool ast2700fc_tsp_init(Ast2700FCState *s, Aspee=
+dSoCState *psp,=0A=
+                              OBJECT(&psp->sram), &error_abort);=0A=
+     object_property_set_link(OBJECT(&s->tsp), "scu",=0A=
+                              OBJECT(&s->ca35.scu), &error_abort);=0A=
++    object_property_set_link(OBJECT(&s->tsp), "scuio",=0A=
++                             OBJECT(&psp->scuio), &error_abort);=0A=
+     if (!qdev_realize(DEVICE(&s->tsp), NULL, errp)) {=0A=
+         return false;=0A=
+     }=0A=
+diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c=0A=
+index 28bb59c8c5..fa492f1797 100644=0A=
+--- a/hw/arm/aspeed_ast27x0-ssp.c=0A=
++++ b/hw/arm/aspeed_ast27x0-ssp.c=0A=
+@@ -142,8 +142,6 @@ static void aspeed_soc_ast27x0ssp_init(Object *obj)=0A=
+                             TYPE_UNIMPLEMENTED_DEVICE);=0A=
+     object_initialize_child(obj, "ipc1", &a->ipc[1],=0A=
+                             TYPE_UNIMPLEMENTED_DEVICE);=0A=
+-    object_initialize_child(obj, "scuio", &a->scuio,=0A=
+-                            TYPE_UNIMPLEMENTED_DEVICE);=0A=
+     object_initialize_child(obj, "pric0", &a->pric[0],=0A=
+                             TYPE_UNIMPLEMENTED_DEVICE);=0A=
+     object_initialize_child(obj, "pric1", &a->pric[1],=0A=
+@@ -173,6 +171,12 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState =
+*dev_soc, Error **errp)=0A=
+         return;=0A=
+     }=0A=
+ =0A=
++    if (!a->scuio) {=0A=
++        error_setg(errp, TYPE_ASPEED27X0SSP_COPROCESSOR=0A=
++                   ": 'scuio' link is not set");=0A=
++        return;=0A=
++    }=0A=
++=0A=
+     /* AST27X0 SSP Core */=0A=
+     armv7m =3D DEVICE(&a->armv7m);=0A=
+     qdev_prop_set_uint32(armv7m, "num-irq", 256);=0A=
+@@ -207,6 +211,13 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState =
+*dev_soc, Error **errp)=0A=
+     memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SCU],=0A=
+                                 &a->scu_alias);=0A=
+ =0A=
++    /* SCUIO */=0A=
++    memory_region_init_alias(&a->scuio_alias, OBJECT(a), "scuio.alias",=0A=
++                             &a->scuio->iomem, 0,=0A=
++                             memory_region_size(&a->scuio->iomem));=0A=
++    memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SCUIO],=
+=0A=
++                                &a->scuio_alias);=0A=
++=0A=
+     /* INTC */=0A=
+     if (!sysbus_realize(SYS_BUS_DEVICE(&a->intc[0]), errp)) {=0A=
+         return;=0A=
+@@ -267,9 +278,6 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *=
+dev_soc, Error **errp)=0A=
+     aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->ipc[1]),=
+=0A=
+                                   "aspeed.ipc1",=0A=
+                                   sc->memmap[ASPEED_DEV_IPC1], 0x1000);=0A=
+-    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->scuio),=0A=
+-                                  "aspeed.scuio",=0A=
+-                                  sc->memmap[ASPEED_DEV_SCUIO], 0x1000);=
+=0A=
+     aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->pric[0]),=
+=0A=
+                                   "aspeed.pric0",=0A=
+                                   sc->memmap[ASPEED_DEV_PRIC0], 0x1000);=
+=0A=
+@@ -284,6 +292,8 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *=
+dev_soc, Error **errp)=0A=
+ static const Property aspeed_27x0_coprocessor_properties[] =3D {=0A=
+     DEFINE_PROP_LINK("scu", Aspeed27x0CoprocessorState, scu,=0A=
+                      TYPE_ASPEED_2700_SCU, Aspeed2700SCUState *),=0A=
++    DEFINE_PROP_LINK("scuio", Aspeed27x0CoprocessorState, scuio,=0A=
++                     TYPE_ASPEED_SCU, AspeedSCUState *),=0A=
+ };=0A=
+ =0A=
+ static void aspeed_soc_ast27x0ssp_class_init(ObjectClass *klass,=0A=
+diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c=0A=
+index f5c4a02161..3a98bd232c 100644=0A=
+--- a/hw/arm/aspeed_ast27x0-tsp.c=0A=
++++ b/hw/arm/aspeed_ast27x0-tsp.c=0A=
+@@ -142,8 +142,6 @@ static void aspeed_soc_ast27x0tsp_init(Object *obj)=0A=
+                             TYPE_UNIMPLEMENTED_DEVICE);=0A=
+     object_initialize_child(obj, "ipc1", &a->ipc[1],=0A=
+                             TYPE_UNIMPLEMENTED_DEVICE);=0A=
+-    object_initialize_child(obj, "scuio", &a->scuio,=0A=
+-                            TYPE_UNIMPLEMENTED_DEVICE);=0A=
+     object_initialize_child(obj, "pric0", &a->pric[0],=0A=
+                             TYPE_UNIMPLEMENTED_DEVICE);=0A=
+     object_initialize_child(obj, "pric1", &a->pric[1],=0A=
+@@ -173,6 +171,12 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState =
+*dev_soc, Error **errp)=0A=
+         return;=0A=
+     }=0A=
+ =0A=
++    if (!a->scuio) {=0A=
++        error_setg(errp, TYPE_ASPEED27X0TSP_COPROCESSOR=0A=
++                   ": 'scuio' link is not set");=0A=
++        return;=0A=
++    }=0A=
++=0A=
+     /* AST27X0 TSP Core */=0A=
+     armv7m =3D DEVICE(&a->armv7m);=0A=
+     qdev_prop_set_uint32(armv7m, "num-irq", 256);=0A=
+@@ -207,6 +211,13 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState =
+*dev_soc, Error **errp)=0A=
+     memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SCU],=0A=
+                                 &a->scu_alias);=0A=
+ =0A=
++    /* SCUIO */=0A=
++    memory_region_init_alias(&a->scuio_alias, OBJECT(a), "scuio.alias",=0A=
++                             &a->scuio->iomem, 0,=0A=
++                             memory_region_size(&a->scuio->iomem));=0A=
++    memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SCUIO],=
+=0A=
++                                &a->scuio_alias);=0A=
++=0A=
+     /* INTC */=0A=
+     if (!sysbus_realize(SYS_BUS_DEVICE(&a->intc[0]), errp)) {=0A=
+         return;=0A=
+@@ -267,9 +278,6 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *=
+dev_soc, Error **errp)=0A=
+     aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->ipc[1]),=
+=0A=
+                                   "aspeed.ipc1",=0A=
+                                   sc->memmap[ASPEED_DEV_IPC1], 0x1000);=0A=
+-    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->scuio),=0A=
+-                                  "aspeed.scuio",=0A=
+-                                  sc->memmap[ASPEED_DEV_SCUIO], 0x1000);=
+=0A=
+     aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->pric[0]),=
+=0A=
+                                   "aspeed.pric0",=0A=
+                                   sc->memmap[ASPEED_DEV_PRIC0], 0x1000);=
+=0A=
+@@ -284,6 +292,8 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *=
+dev_soc, Error **errp)=0A=
+ static const Property aspeed_27x0_coprocessor_properties[] =3D {=0A=
+     DEFINE_PROP_LINK("scu", Aspeed27x0CoprocessorState, scu,=0A=
+                      TYPE_ASPEED_2700_SCU, Aspeed2700SCUState *),=0A=
++    DEFINE_PROP_LINK("scuio", Aspeed27x0CoprocessorState, scuio,=0A=
++                     TYPE_ASPEED_SCU, AspeedSCUState *),=0A=
+ };=0A=
+ =0A=
+ static void aspeed_soc_ast27x0tsp_class_init(ObjectClass *klass,=0A=
+-- =0A=
+2.43.0=0A=
 
