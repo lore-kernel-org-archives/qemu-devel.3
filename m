@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BE68C4451C
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 14:16:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F3ABC44520
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 14:17:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkjMa-0007jG-L3; Fri, 17 Jul 2026 10:16:28 -0400
+	id 1wkjN8-000816-7d; Fri, 17 Jul 2026 10:17:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wkjMZ-0007ih-87
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 10:16:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wkjN6-0007y6-NJ
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 10:17:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wkjMX-00061o-6d
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 10:16:27 -0400
+ id 1wkjN5-000678-33
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 10:17:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784297783;
+ s=mimecast20190719; t=1784297817;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pEqI7u2d1vz+ptZrxtjRcEXO53QauCJBCGPuLkeYV74=;
- b=RMyJsHj8vwFSquxEwPo32l49oiQ/geaEIFgbsR0B6bn+Z0LP5gTMs+il7KctsETAtQdD8l
- PCSR45L7dAtoRYHwZwFFGFje7jDAYhSVglgjLeQgkTqbvfx6PNrG4tnKpio+My/U66T5SI
- 5vKrfxrM1MSBjTdXOOIomiJOr2T4xbw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=K8RwmA1elj5CN9Hey07Cbu3GOWBcuyV2M217cRLO85Q=;
+ b=F6A/za9y5mtP2rOK3ISImLHS1vXUW1CYDMnzeny4MpA6rZXDbn0I2Eg6OmNWgGFciiKNrL
+ 7tCmovPlnn6KD2O3mIAdLi9FI+fidILrq//8L2kAFV5kghSOsr9Uuszby82qCRTvSrO6Dw
+ 40XQ55DJa98/tTBe697Ao/+LKEoEPL8=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-381-t4tgfv2zPU2m2iLdSKj4kg-1; Fri,
- 17 Jul 2026 10:16:22 -0400
-X-MC-Unique: t4tgfv2zPU2m2iLdSKj4kg-1
-X-Mimecast-MFC-AGG-ID: t4tgfv2zPU2m2iLdSKj4kg_1784297781
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-380-BEobqyF2M-SyfMnyEBMehA-1; Fri,
+ 17 Jul 2026 10:16:54 -0400
+X-MC-Unique: BEobqyF2M-SyfMnyEBMehA-1
+X-Mimecast-MFC-AGG-ID: BEobqyF2M-SyfMnyEBMehA_1784297813
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8A692195D008; Fri, 17 Jul 2026 14:16:20 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5E66319540D3; Fri, 17 Jul 2026 14:16:52 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.34.221])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7446C1955D89; Fri, 17 Jul 2026 14:16:18 +0000 (UTC)
-Date: Fri, 17 Jul 2026 15:16:14 +0100
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 59FD418005B3; Fri, 17 Jul 2026 14:16:49 +0000 (UTC)
+Date: Fri, 17 Jul 2026 15:16:45 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Cc: qemu-devel@nongnu.org, Greg Kurz <groug@kaod.org>,
- Jia Jia <physicalmtea@gmail.com>, Igor Mammedov <imammedo@redhat.com>
-Subject: Re: [PATCH 2/3] hw/9pfs/virtio: disable hotpluggable property of
- virtio-9p device
-Message-ID: <alo5LiqOfOVx0Yxu@redhat.com>
-References: <cover.1783604079.git.qemu_oss@crudebyte.com>
- <alEEROvr0gbuWCB2@redhat.com> <20260713094935.5eda77f9@imammedo>
- <3767624.R56niFO833@weasel>
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ pbonzini@redhat.com, qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 4/6] qom/object.h: rename @child to @targetp in
+ object_property_add_link() documentation
+Message-ID: <alo5TQ-SmJvIXs5M@redhat.com>
+References: <20260717135254.508701-1-mark.caveayland@nutanix.com>
+ <20260717135254.508701-5-mark.caveayland@nutanix.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <3767624.R56niFO833@weasel>
+In-Reply-To: <20260717135254.508701-5-mark.caveayland@nutanix.com>
 User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: permerror client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: permerror client-ip=170.10.133.124;
  envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,70 +92,18 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 17, 2026 at 04:05:42PM +0200, Christian Schoenebeck wrote:
-> On Monday, 13 July 2026 09:49:35 CEST Igor Mammedov wrote:
-> > On Fri, 10 Jul 2026 15:40:04 +0100
-> > 
-> > Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > > On Fri, Jul 10, 2026 at 04:31:51PM +0200, Christian Schoenebeck wrote:
-> > > > On Friday, 10 July 2026 14:51:49 CEST Igor Mammedov wrote:
-> > > > > On Fri, 10 Jul 2026 12:49:06 +0200
-> > > > > 
-> > > > > Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
-> > > > > > On Friday, 10 July 2026 12:23:45 CEST Igor Mammedov wrote:
-> > > > [...]
-> > > > 
-> > > > > note: I'm looking from pov of hotpluggable PCI device and generic
-> > > > > hotplug
-> > > > > infra, only.
-> > > > 
-> > > > That's okay, but so far I don't see the relevance for this particular 9p
-> > > > device.
-> > > > 
-> > > > > it's not guest users directly, it's how hotplug flow works for various
-> > > > > guest OSes:
-> > > > > 
-> > > > > 1. host plugs device in (-device or device_add)
-> > > > > 2. guest OS get's notified one way or another and does what ever guest
-> > > > > side
-> > > > > 
-> > > > >    init needed (incl. mounting share in 9pfs case)
-> > > > 
-> > > > That's not affected by this patch, right?
-> > > > 
-> > > > > opposite flow:
-> > > > > 1. host does device_del (basically notify guest to remove device)
-> > > > > 2. guest OS frees resources and tells qemu to delete device
-> > > > > 3. qemu process remove event (which incl. unrealize as part of
-> > > > > destroying
-> > > > > device)
-> > > > 
-> > > > And that's not affected by this patch either, right?
-> > 
-> > the patch would break unplug flow by effectively removing 'eject' knob
-> > from guest side, which is part of unplug flow.
+On Fri, Jul 17, 2026 at 02:51:44PM +0100, Mark Cave-Ayland wrote:
+> This was missed when updating the parameter name in commit 36854207f0 ("object:
+> rename link "child" to "target"").
 > 
-> These are two different things: device_del would not be affected by this. 
-> 
-> 1. Ejecting the device from host side e.g. via QMP would still work.
-> 
-> vs.
-> 
-> 2. Ejecting from guest side OTOH would be disabled.
-> 
-> It is also different from regular block devices where you have convenient ways
-> to eject a block device on guest OSes. For a virtio-9p device it is not that
-> easy.
+> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> Fixes: 36854207f0 ("object: rename link "child" to "target"")
+> ---
+>  include/qom/object.h | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 
-Igor can correct me if I'm wrong, but IIUC there's no distinction
-to those 2 scenarios from the guest POV.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-A "device_del" in QMP does not actually delete a device from the
-QEMU POV.  Rather it triggers an ACPI notification to the geust
-OS, that the operator wants to unplug the device.  The guest OS
-then honours (or not) that by initiating a guest side "eject".
-IOW disabling guest initiated eject would break device_del too
-AFAIK.
 
 With regards,
 Daniel
