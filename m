@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAB01C4451C
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 10:29:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FFD9C44514
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 10:29:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkfnZ-0005zD-MI; Fri, 17 Jul 2026 06:28:05 -0400
+	id 1wkfnA-0005qC-Gd; Fri, 17 Jul 2026 06:27:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1wkfnW-0005w7-52; Fri, 17 Jul 2026 06:28:02 -0400
+ id 1wkfn8-0005oL-Es; Fri, 17 Jul 2026 06:27:38 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <aastharawat@linux.microsoft.com>)
- id 1wkfnU-0000PE-0m; Fri, 17 Jul 2026 06:28:01 -0400
+ id 1wkfn6-0000P7-R8; Fri, 17 Jul 2026 06:27:38 -0400
 Received: from localhost (unknown [131.107.159.8])
- by linux.microsoft.com (Postfix) with ESMTPSA id DD6B920B7179;
- Fri, 17 Jul 2026 03:27:28 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com DD6B920B7179
+ by linux.microsoft.com (Postfix) with ESMTPSA id 9EB6220B716F;
+ Fri, 17 Jul 2026 03:27:24 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 9EB6220B716F
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1784284048;
- bh=1QK2Ff6clHlkv6KcKYafk1otzjUG6SIl3BFetAKCNvY=;
+ s=default; t=1784284044;
+ bh=W5oTxHBqK2JiDAiHbkwJlqTOiYpl5s4zdpxfycSZFpU=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=IIwFdt50j6yqR9dkvRL0n+3xPhMP7UG5NfHDsPj1itqnK56GJvtd5gTUF/nRet+iz
- wA7FAV2D2EwiKxJMMP4gwYSIVxmmOPHOnlK2Sbt3ItyGsvSTRaHx7yI9SMfEbzIt7R
- qdkss4YEeNGmOprXNYweSSF4vXt5ewgVshB9TzFc=
+ b=PEYbGo/XFiwcT18RD0+IuwjC7JwznKIEfRLgprSMLlbr6sHVVtTY0lcWcuzoz05wQ
+ 8/AlDMhDx5ylN2IEDt/aUDHfZvX/hJaVgPHhY2gK12Fh9yiN7GAS7FLDwKxHxbygMK
+ 4Wdb71oPcad2Mw23sJfuJhDQHa9zJfLBc6z0f7Mo=
 From: Aastha Rawat <aastharawat@linux.microsoft.com>
-Date: Fri, 17 Jul 2026 10:27:26 +0000
-Subject: [PATCH v5 11/13] include/hw/hyperv: adjust hv_interrupt_control
- structure for arm64
+Date: Fri, 17 Jul 2026 10:27:20 +0000
+Subject: [PATCH v5 05/13] target/arm: convert host CPU feature ifdef ladder
+ to runtime checks
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260717-mshv_accel_arm64_supp-v5-11-ef07d4c6b337@linux.microsoft.com>
+Message-Id: <20260717-mshv_accel_arm64_supp-v5-5-ef07d4c6b337@linux.microsoft.com>
 References: <20260717-mshv_accel_arm64_supp-v5-0-ef07d4c6b337@linux.microsoft.com>
 In-Reply-To: <20260717-mshv_accel_arm64_supp-v5-0-ef07d4c6b337@linux.microsoft.com>
 To: qemu-devel@nongnu.org
@@ -77,99 +77,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>
+Replace the compile-time #if/#elif preprocessor ladder in
+aarch64_host_initfn() with runtime calls and add mshv_enabled() to it.
+This ensures the correct accelerator is selected at runtime when
+multiple accelerators are compiled in.
 
-Add the arm64 specific fields to the hv_interrupt_control struct and
-adjust the existing usage accordingly. mshv_request_interrupt is only
-needed only for x86 so compile it out entirely for arm64.
+Add CONFIG_MSHV to the aarch64_cpus[] guard so that mshv accelerator can
+register the "host" CPU type.
 
-Signed-off-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
+Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
 ---
- accel/mshv/irq.c               |  2 ++
- include/hw/hyperv/hvgdk_mini.h | 24 ++++++++++++++++++++++++
- include/system/mshv.h          |  2 ++
- 3 files changed, 28 insertions(+)
+ target/arm/cpu64.c | 25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
-index 4828ac51ac..f18e6a0f66 100644
---- a/accel/mshv/irq.c
-+++ b/accel/mshv/irq.c
-@@ -259,6 +259,7 @@ int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev)
-     return 0;
- }
- 
-+#if defined(__x86_64__)
- int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint32_t vector,
-                            uint32_t vp_index, bool logical_dest_mode,
-                            bool level_triggered)
-@@ -295,6 +296,7 @@ int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint3
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index 2816735577..9724c9475d 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -802,17 +802,21 @@ void aarch64_host_initfn(Object *obj)
      }
-     return 0;
- }
-+#endif
+ #endif
  
- void mshv_irqchip_commit_routes(MshvState *s)
- {
-diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
-index 63f05b01a6..477898d919 100644
---- a/include/hw/hyperv/hvgdk_mini.h
-+++ b/include/hw/hyperv/hvgdk_mini.h
-@@ -539,14 +539,38 @@ typedef struct hv_input_set_vp_registers {
- } QEMU_PACKED hv_input_set_vp_registers;
- 
- #define MSHV_VP_MAX_REGISTERS   128
-+enum hv_interrupt_type {
-+#if defined(__x86_64__)
-+    HV_X64_INTERRUPT_TYPE_FIXED             = 0x0000,
-+    HV_X64_INTERRUPT_TYPE_LOWESTPRIORITY    = 0x0001,
-+    HV_X64_INTERRUPT_TYPE_SMI               = 0x0002,
-+    HV_X64_INTERRUPT_TYPE_REMOTEREAD        = 0x0003,
-+    HV_X64_INTERRUPT_TYPE_NMI               = 0x0004,
-+    HV_X64_INTERRUPT_TYPE_INIT              = 0x0005,
-+    HV_X64_INTERRUPT_TYPE_SIPI              = 0x0006,
-+    HV_X64_INTERRUPT_TYPE_EXTINT            = 0x0007,
-+    HV_X64_INTERRUPT_TYPE_LOCALINT0         = 0x0008,
-+    HV_X64_INTERRUPT_TYPE_LOCALINT1         = 0x0009,
-+    HV_X64_INTERRUPT_TYPE_MAXIMUM           = 0x000A,
-+#elif defined(__aarch64__)
-+    HV_ARM64_INTERRUPT_TYPE_FIXED           = 0x0000,
-+    HV_ARM64_INTERRUPT_TYPE_MAXIMUM         = 0x0008,
-+#endif
-+};
- 
- union hv_interrupt_control {
-     uint64_t as_uint64;
-     struct {
-         uint32_t interrupt_type; /* enum hv_interrupt type */
-+#if defined(__x86_64__)
-         uint32_t level_triggered:1;
-         uint32_t logical_dest_mode:1;
-         uint32_t rsvd:30;
-+#elif defined(__aarch64__)
-+        uint32_t rsvd1:2;
-+        uint32_t asserted:1;
-+        uint32_t rsvd2:29;
-+#endif
-     };
++    if (mshv_enabled()) {
++        mshv_arm_set_cpu_features_from_host(cpu);
++    } else if (kvm_enabled()) {
+ #if defined(CONFIG_KVM)
+-    kvm_arm_set_cpreg_mig_tolerances(cpu);
+-    kvm_arm_set_cpu_features_from_host(cpu);
+-    aarch64_add_sve_properties(obj);
+-#elif defined(CONFIG_HVF)
+-    hvf_arm_set_cpu_features_from_host(cpu);
+-#elif defined(CONFIG_WHPX)
+-    whpx_arm_set_cpu_features_from_host(cpu);
+-#else
+-    g_assert_not_reached();
++        kvm_arm_set_cpreg_mig_tolerances(cpu);
+ #endif
++        kvm_arm_set_cpu_features_from_host(cpu);
++        aarch64_add_sve_properties(obj);
++    } else if (hvf_enabled()) {
++        hvf_arm_set_cpu_features_from_host(cpu);
++    } else if (whpx_enabled()) {
++        whpx_arm_set_cpu_features_from_host(cpu);
++    } else {
++        g_assert_not_reached();
++    }
+     if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
+         aarch64_add_pauth_properties(obj);
+     }
+@@ -821,7 +825,8 @@ void aarch64_host_initfn(Object *obj)
+ static const ARMCPUInfo aarch64_cpus[] = {
+     { .name = "cortex-a57",         .initfn = aarch64_a57_initfn },
+     { .name = "cortex-a53",         .initfn = aarch64_a53_initfn },
+-#if defined(CONFIG_KVM) || defined(CONFIG_HVF) || defined(CONFIG_WHPX)
++#if defined(CONFIG_KVM) || defined(CONFIG_HVF) || \
++    defined(CONFIG_WHPX) || defined(CONFIG_MSHV)
+     { .name = "host",               .initfn = aarch64_host_initfn },
+ #endif
  };
- 
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-index 46fe3fcebc..6e20b32247 100644
---- a/include/system/mshv.h
-+++ b/include/system/mshv.h
-@@ -55,10 +55,12 @@ DECLARE_INSTANCE_CHECKER(MshvState, MSHV_STATE,
- 
- extern MshvState *mshv_state;
- 
-+#if defined(__x86_64__)
- /* interrupt */
- int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint32_t vector,
-                            uint32_t vp_index, bool logical_destination_mode,
-                            bool level_triggered);
-+#endif
- 
- int mshv_irqchip_add_msi_route(AccelRouteChange *c, int vector, PCIDevice *dev);
- int mshv_irqchip_update_msi_route(int virq, MSIMessage msg, PCIDevice *dev);
 
 -- 
 2.45.4
