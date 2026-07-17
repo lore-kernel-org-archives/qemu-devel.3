@@ -4,124 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB2FFC44516
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 11:39:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE531C44520
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 11:46:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkgu7-00005T-II; Fri, 17 Jul 2026 07:38:56 -0400
+	id 1wkh1U-00027C-D7; Fri, 17 Jul 2026 07:46:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1wkgtz-0008Vp-Ea
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 07:38:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1wkh1P-00026i-T7
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 07:46:28 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1wkgtx-0001Jb-V8
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 07:38:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784288325;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cHiY3e3S8za5oFuIwlEmTeSJBMcUXpN1gGwI4E9RFt8=;
- b=MoXh2/2nmWFsdOVZRkcVvst72SXPdiB7H2g3AIifa3DfAqHSYKm1iitBSou0BwIpjQKlTw
- kSeHmTzgK55cTgtRm7GIheHh5kwjisUUrvQvxD6UBNdNNVPO/uM+e+QNcTODEATKOfJRmG
- 1DJBee0udWiM48DHZ5k5DToCPvpGjwo=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-204-3yEyAFA1NMKy3kTgMhjy8A-1; Fri, 17 Jul 2026 07:38:41 -0400
-X-MC-Unique: 3yEyAFA1NMKy3kTgMhjy8A-1
-X-Mimecast-MFC-AGG-ID: 3yEyAFA1NMKy3kTgMhjy8A_1784288321
-Received: by mail-yw1-f199.google.com with SMTP id
- 00721157ae682-80ee3cb097eso222219797b3.1
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 04:38:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784288321; cv=none;
- d=google.com; s=arc-20260327;
- b=gP+tXPXKLJPGXkhWXC4ukY5+4YlSxjGSd6HtsgcT7RfNx1EpW5nHltfJ74C25WqJ22
- M5k9GMG4xzFE0lcLCPc7C4d+AXqxGm5JRKQns5r/NEC3B+lKJHld6eFBLFQP0O5h+RS1
- PREXrEOStU7GQpMy46JQHrV6BvMPgSwutHtStXeDZbbUaLR+j8vSLRSabyVAaUyJvD57
- +Lc6XJm7EaiVF+b+KJBIHmdHV2ky5k2heHbpG6EBcx2InOuC9xzZHTcIsW4VE+FMeYJX
- EeyYssIT8djsYOYb9JqpqCYSo2foSpzd0jmMSb9nCFWXkNGln5FDlWtrjebel7+0Qu7u
- Pbkw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=cHiY3e3S8za5oFuIwlEmTeSJBMcUXpN1gGwI4E9RFt8=;
- fh=scobbx4Z3/DtfOtk4QFSadtpeR2080Ksudnd1sTI/uM=;
- b=EjoZm56ya+B/qpv52kBJeXIAchrcDopCHscLcQ6N7jqRhBbQf33Z3Cbe6S5BuEs2+e
- TwtbHoy27kWaw1qAeKyW0qTxdF8r60xH2CRBPksp9qkSv2bZc3jTu9yDL771wYjzhA9U
- f63uKJMkxkIvB//zhMpagDuPC6Xpa2ItZ5BGWUK7ELSj6dYKDUglfsLiE3XSCfPNHUTA
- u/dNcGbBGgifjaftnVNzEo2fjF47ahTaLG8zv9sYt+1XNj0CGuhCdjs0E3HSEKNYGfPG
- Yq6CQy0oWpX2tvA7ERm8ryrvANxsbWH6z5CbhpI7obYyGgnh3jrvwnUqtsr0KnEnwTex
- XZXg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1wkh1N-0002jR-Sl
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 07:46:27 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66HASor81695396
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 11:46:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ DOPyOCMsDTdWy5j5dgvAXyMoQtHfzbrtqunbqORHEUA=; b=Nr+kvNfg0HylCffD
+ dnMjl9MwHDi4DhxDxfb7iZgfd4oNLjH3MomZXl979KfrcoV8VPFFbEkBm6lE5mFc
+ 5b4az2p9phiyoQlJR+ZxSGo8Ab455PWlMlMF6F3DHfrYhEoSFZxUKiSrHxHaj/qr
+ cLFK6H7ivFqq5vLlJ2+Pei+NW7VqFFRp9RS4sZnKgqnlzEW/fVJM532c3z6EfeIo
+ g/nfK9O9QdMlC7Cz8K9PvpfrFqNNqD4dvD4UOGt8d/qeCN8nRmybwRilRB+vCGIY
+ fUkwSufhUkvrjSoNTMl1ytDxUUABSCkq8TzAUdnsrxSBLNzWHdQBQJx7z4TJl0WK
+ 6ScF7w==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ffd3asm15-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 11:46:21 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-2ccbb61893fso165797655ad.0
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 04:46:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784288321; x=1784893121; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ d=oss.qualcomm.com; s=google; t=1784288781; x=1784893581; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=cHiY3e3S8za5oFuIwlEmTeSJBMcUXpN1gGwI4E9RFt8=;
- b=mkAHFzfj86D7EFYsyphYOwkyp2rgd70HG0Wfc7pxQihJNhfUClBdC3lnvQFsWIGkFn
- yVIaTHnxR7bsC2KlOr9rZ1dsekLHBSxnWveoSYaqmHVB20LTx2lYwVat4aC6O2LzYmdt
- X8pW1QKQCHnAMEGsSC2yU3LVxM8MUo8Pv8etQ2igGsmmUYtrl3BHCBfc0/VuyZXl5yRI
- 7jWFD37nb2jEOB0DloMPkDXPTUAA5zNjL/X/9dJaWNnfO9aaXVq7mhLvO/pCkYayo70r
- coHddLpdB5uvV7/138Hh/ckzHJL8Demux8e8ZyMbnboitOJqobM3WgupOcJjWkDN8peM
- D8Kg==
+ bh=DOPyOCMsDTdWy5j5dgvAXyMoQtHfzbrtqunbqORHEUA=;
+ b=kicXU9+15DkXurVW61phroA5unKRMSti7TiRebWmC9bbpExBeKv0lNOWWf+qfscV1Y
+ wJuqt1wOdT4M7ROqs/XSkaRqVSiBMnYbnxhRqU7ztFcaW3MiYyFfIH5uAMSfQu9kGsbQ
+ itJA7lhucpqTPlij417C+PCoztbA5/UcC2sCxrVB/E/ODQFKFDvoDejSrK7VqgnCT/AC
+ SrWJnhvKowXEp62fSl42PlQE8KK99E8s3VbdNyHDMOGGNzyuOCgQluNjl/BEYj2SPV0B
+ 0d4r4YuqSqrBcZ9rDD1ASqR9z9MsVrkrXQ8EiiNpjLgqpP9HRJldGUCSnmWhNlC+YytQ
+ nKKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784288321; x=1784893121;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
+ d=1e100.net; s=20251104; t=1784288781; x=1784893581;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=cHiY3e3S8za5oFuIwlEmTeSJBMcUXpN1gGwI4E9RFt8=;
- b=tR4w6/EH+tM3sWvAjc7Iqi8Iuy5233IyeyY6v2+dXLXn8sYLdlvR0YKcyXktKohon2
- YXuDiQrias4HtGKb+4BhBxNLyYVVtAB73wWzHucEoG5kWzQZerEEcPxS40+d/1JwyqH3
- LGoE3AS8UO0gHUdoc+HKDw00fbEFLV7ac/zPHi/ct9QIyaH6dcFQTY7Gf5kHyosqinxU
- 0aRtFtJLmbvOjUauxif9BZoUw39te3y3mla7s7JIsZ27mkUSLGSTJGpl9jt/u0eCyA7M
- iGCUxELA2bseCdXfv8og4+sXETnJ2c7l9EhnzFhJC+Liw76pSneVhLx/ZzWU/g84XL0L
- r23A==
-X-Gm-Message-State: AOJu0YxEuScfQDYaVZE9hb8192apvvnjmOo2ohsmYb/RjPqCIAEQ3gvG
- rfRhBwNiR0qJXdVsP/AuGegvAzzV01KJqO7KKflCCl7WcE0tDSIxZ1fkfgRrRuwOVc9WdGRQCfG
- oKisgG/sV7bvrRVLxd5XvCt/V0COuNlO4l/2s8z2BEb2LDFiFo6Pnx+bMaWt3PmZg4bB5PWDiVM
- /T4vPjwnTEXNwuTYhDbbwC+gnuzDjzRkc=
-X-Gm-Gg: AfdE7cmfStkS7dkgdWThz41A1DaU5OB/UuNR98UhKhmD58PL04pMvElgXG+G3hBBZ68
- 27m7yssU/b/BGie28v+e1HNSCaTVjBUwtLVDkSRiQ6EZSUeaQCsYhTy/FIF6kACyr3HjYYEIwgh
- jp5r4sqIbvmbO8Ri65A6nDET/IWIVI9KY+TzPYb+czaa6N3z/sG3KQxlUY
-X-Received: by 2002:a05:690c:d95:b0:81c:ef47:2dd0 with SMTP id
- 00721157ae682-81ef283fce3mr6260417b3.49.1784288321075; 
- Fri, 17 Jul 2026 04:38:41 -0700 (PDT)
-X-Received: by 2002:a05:690c:d95:b0:81c:ef47:2dd0 with SMTP id
- 00721157ae682-81ef283fce3mr6260297b3.49.1784288320680; Fri, 17 Jul 2026
- 04:38:40 -0700 (PDT)
+ bh=DOPyOCMsDTdWy5j5dgvAXyMoQtHfzbrtqunbqORHEUA=;
+ b=DnowJn8oU/aztPCS+iIKZNbcOrx+2ZOllEULEJtFLv2eGtPE3p9nf1wWjeR9Tk/CGp
+ Foa5IBVyd+h/pR9jtqevrMimySwfvxXRzuJ5sT0vsdk2tYn6rfOIJwL2M/DtqsnAXBEM
+ vqHU8m9HNEKwrBvqmmH3OXApMOyXFdcngaaNDdBlGiNXMGBMhRv0VPiKGobmiX+0Dx+a
+ SzVMCdw6Cxn6oJvgoGd2CmqnizavtTX2tz1VVCXP/QLO2YK8N2cBt3RVZGh8/4UZhXey
+ LZUJK2h7KwZpbForuK07GUTGYjYcTR5+LSU81Mepm3arZiL5Es+BRyUzX+eNTOmodNxw
+ 5rKQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rq1an3tEBvud9PPR0VEPq/INo7TgV+YwkRNFUm3NT198tQAgpeyfZ0+uTd608NMtc85dpSad/KlbVSn@nongnu.org
+X-Gm-Message-State: AOJu0YzwMqExnEu88LQZktgp1mylkQWXYN5HYMehcfxZep9/PmrbrKor
+ xT9ycPbz8977CNoPU1Uenza3Zq/zyaboG8/XDqlfgOuXEpBeXWk3kWIorjc24er/yE6ytqr8gzO
+ Eyb4BTzKnrME7+/lhsf+/VhRzllBHXR5uxjal21CLzzbx3lY3w0OBKjr5fw==
+X-Gm-Gg: AfdE7cmNdaZy1rvciXjUMwy0Zeynv3ARHkR3u4dKpcioB4DMDDPQoMFxIz2uVWgyRMv
+ ds69dh+Byx0qcCbtub0LrafYGkwqfheENj8hG9XoxpfN+2Lpl1TY6RI2IoZ70uiGZFbRIIudNKb
+ obS7H06rrLfC8x3su1hK8NrcPAA/KnniXIKgRDixOtbgipKoPxHtEzIFNdNJ+LXEDPXqFL3K4vp
+ MkPfvo36OyZOrzf3yeRdx72KyYC22iaaKmth0IB2iLyqO7JuCUC22tTk8Ef4N/DV8BahQbEg+kA
+ ACNalNyYxUFODxC+EyBRInmiV9GjvXZtex0ZadfYgNf9GWoY5C7iCfcGuUmWHDfHcKS4hhy3DcU
+ 6KMe+858g7NeTnRtkuZwC1iqHYGgUERBA439mzcGr6/sosJoOodAYDR3bzsqGNaI=
+X-Received: by 2002:a17:90b:2dc1:b0:37f:fdc8:71b4 with SMTP id
+ 98e67ed59e1d1-38e4b3e1424mr2189791a91.2.1784288781189; 
+ Fri, 17 Jul 2026 04:46:21 -0700 (PDT)
+X-Received: by 2002:a17:90b:2dc1:b0:37f:fdc8:71b4 with SMTP id
+ 98e67ed59e1d1-38e4b3e1424mr2189755a91.2.1784288780690; 
+ Fri, 17 Jul 2026 04:46:20 -0700 (PDT)
+Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-13ce29e340esm4862255c88.5.2026.07.17.04.46.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 17 Jul 2026 04:46:20 -0700 (PDT)
+From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+To: brian.cain@oss.qualcomm.com
+Cc: matheus.bernardino@oss.qualcomm.com, qemu-devel@nongnu.org,
+ pierrick.bouvier@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
+ philmd@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng, pbonzini@redhat.com
+Subject: Re: [PATCH v2 08/14] target/hexagon: add semihosting support
+Date: Fri, 17 Jul 2026 04:46:18 -0700
+Message-Id: <20260717114618.140638-1-matheus.bernardino@oss.qualcomm.com>
+X-Mailer: git-send-email 2.37.2
+In-Reply-To: <3cd3a419-ee2c-4d7a-9396-60eab8d26908@oss.qualcomm.com>
+References: <3cd3a419-ee2c-4d7a-9396-60eab8d26908@oss.qualcomm.com>
 MIME-Version: 1.0
-References: <20260717103301.228974-1-dbassey@redhat.com>
- <20260717103301.228974-3-dbassey@redhat.com>
-In-Reply-To: <20260717103301.228974-3-dbassey@redhat.com>
-From: Albert Esteve <aesteve@redhat.com>
-Date: Fri, 17 Jul 2026 13:38:29 +0200
-X-Gm-Features: AUfX_mw9EKEzkNZ6sGGmAGbBaVDjC8iMvjiGHuolMmgMESfqYHQxzhuCZ5lrDQo
-Message-ID: <CADSE00KihJqK1kvKiLe1EEDszbrV44yiQ-WMnkykhfnOsYGkXg@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] vhost-user-gpu: Add shared memory region support
-To: Dorinda Bassey <dbassey@redhat.com>
-Cc: qemu-devel@nongnu.org, mhrica@redhat.com, mst@redhat.com, 
- sgarzare@redhat.com, manos.pitsidianakis@linaro.org, 
- marcandre.lureau@redhat.com, stefanha@redhat.com, pbonzini@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: permerror client-ip=170.10.133.124;
- envelope-from=aesteve@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE3MDExOCBTYWx0ZWRfX8FhIBU7F/B9H
+ ttIi06+2aPWrV1q4QAMZ9SlJjUg/zkMu+7+9mJUQBrykZXCgAyHv0quZ5QijvRWfZGimuqfIRG6
+ tyIkvDwJIHoaJo94bLaWklUQk2v6mLQ=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE3MDExOCBTYWx0ZWRfX92JaZyBKjmrG
+ R39BezjvaUq15/xwZVVZrArBsjdmsbG/tsEHXmFz+pQVsB4Of/MulKzXb36d2xlBOQ2yLSG2UBp
+ 6kLT2JV/mma4I2qLjHFEhUIuJ3eAPTZrXJT+C93B9mv/yFrQ0oWh1NrFsSv5hOWuOZjVICUsIST
+ 8jX5tLsLS55ML14JPCJCRQi+JMVmX55HW0mzJlYs39/T1Ec1dLHO168CODK/mJAUapK61zIkHCI
+ aS1DSJCW2OblaqpyIh+6en6Jnxl8mf/cGyKejCj0naaPfofrwHaD/XYX3uJmzwixHEmrgMBI9N/
+ wpS4RrEffzljo0nkDRqv0YYihOeOgKqgDqe3/YV9150sno7x73LaesWj+s7UkGO+QbJ6Zr5UgqN
+ vTWNOV6di3ANNffxxmKfLhZO3lESji+yvwP/VNAykyYsMu8nLwlwIMK50VsWhyA1DQGd4ocXriB
+ 3Tc5dFch7JDbqo9bAvw==
+X-Proofpoint-GUID: EzMZ09DOuBiSu0Q36xyj9xej3gubY_ly
+X-Proofpoint-ORIG-GUID: EzMZ09DOuBiSu0Q36xyj9xej3gubY_ly
+X-Authority-Analysis: v=2.4 cv=e/M2j6p/ c=1 sm=1 tr=0 ts=6a5a160d cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=EUspDBNiAAAA:8 a=86x5i4uHXf9FeOCPnK4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-17_03,2026-07-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 suspectscore=0 phishscore=0 priorityscore=1501
+ spamscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607170118
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=matheus.bernardino@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,67 +155,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 17, 2026 at 12:33=E2=80=AFPM Dorinda Bassey <dbassey@redhat.com=
-> wrote:
+On Thu, 16 Jul 2026 16:08:42 -0500 Brian Cain <brian.cain@oss.qualcomm.com> wrote:
 >
-> From: Matej Hrica <mhrica@redhat.com>
->
-> Add a 'hostmem' property to the vhost-user-gpu which enables the shared
-> memory in the parent object.
->
-> Register a container MR in the shmem_list for SHMEM_MAP/UNMAP
-> operations. A container MR is used so that SHMEM_MAP FD-backed
-> subregions each get their own KVM memory slot with the correct
-> backing fd.
->
-> Suggested-by: Albert Esteve <aesteve@redhat.com>
-> Signed-off-by: Matej Hrica <mhrica@redhat.com>
-> Signed-off-by: Dorinda Bassey <dbassey@redhat.com>
+> On 7/16/2026 1:06 PM, Matheus Tavares Bernardino wrote:
+> > [...]
+> > diff --git a/docs/system/target-hexagon.rst b/docs/system/target-hexagon.rst
+> > index 416b8f7be76..36115137626 100644
+> > --- a/docs/system/target-hexagon.rst
+> > +++ b/docs/system/target-hexagon.rst
+> > @@ -91,9 +91,11 @@ Semihosting
+> >   -----------
+> >   Hexagon supports a semihosting interface similar to other architectures'.
+> >   The ``trap0`` instruction can activate these semihosting calls so that the
+> > -guest software can access the host console and filesystem.  Semihosting
+> > -is not yet implemented in QEMU hexagon.
+> > -
+> > +guest software can access the host console and filesystem. Read the
+> > +`Hexagon Semihosting Specification
+> > +<https://docs.qualcomm.com/doc/80-N2040-101_102648/topic/semihosting-specification.html>`__
+> > +for details. Semihosting is enabled on qemu-system-hexagon machines by default,
+> 
+> It's enabled on most of them, but not `virt`.  So probably mention that 
+> exception or just describe it as being enabled on the "hexagon-sim-style 
+> machines"?
 
-Reviewed-by: Albert Esteve <aesteve@redhat.com>
-
-Thanks!
-
-> ---
->  hw/display/vhost-user-gpu.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
->
-> diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
-> index 57360898ca0..dbba80c7783 100644
-> --- a/hw/display/vhost-user-gpu.c
-> +++ b/hw/display/vhost-user-gpu.c
-> @@ -649,6 +649,16 @@ vhost_user_gpu_device_realize(DeviceState *qdev, Err=
-or **errp)
->      }
->
->      g->vhost_gpu_fd =3D -1;
-> +
-> +    /*
-> +     * If shared memory is enabled, register the hostmem region for
-> +     * SHMEM_MAP/UNMAP operations.
-> +     */
-> +    if (virtio_gpu_hostmem_enabled(g->parent_obj.conf)) {
-> +        VirtioSharedMemory *shmem =3D virtio_new_shmem_region(
-> +            vdev, VIRTIO_GPU_SHM_ID_HOST_VISIBLE, g->parent_obj.conf.hos=
-tmem);
-> +        memory_region_add_subregion(&g->parent_obj.hostmem, 0, &shmem->m=
-r);
-> +    }
->  }
->
->  static struct vhost_dev *vhost_user_gpu_get_vhost(VirtIODevice *vdev)
-> @@ -659,6 +669,7 @@ static struct vhost_dev *vhost_user_gpu_get_vhost(Vir=
-tIODevice *vdev)
->
->  static const Property vhost_user_gpu_properties[] =3D {
->      VIRTIO_GPU_BASE_PROPERTIES(VhostUserGPU, parent_obj.conf),
-> +    DEFINE_PROP_SIZE("hostmem", VhostUserGPU, parent_obj.conf.hostmem, 0=
-),
->  };
->
->  static void
-> --
-> 2.52.0
->
-
+Ah, right. I'll change that.
 
