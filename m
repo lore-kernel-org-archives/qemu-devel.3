@@ -4,141 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE53AC44507
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 04:34:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B32FC44507
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 04:54:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkaGo-00005N-94; Fri, 17 Jul 2026 00:33:54 -0400
+	id 1wkaZb-0001dE-7l; Fri, 17 Jul 2026 00:53:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wkaGn-0008Vy-Cc
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 00:33:53 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wkaGl-0007sg-QQ
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 00:33:53 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66H33jMT580787
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 04:33:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- cf54BHhatHN5oOwzffckGbaTYD/xeDqzRErSotN+VrA=; b=f/KlZeds0S0MUr1Z
- 9AcVhV1u6kRMT2GFNDfZUpTBFTqXKJgRwhd3NGXEwwKNlC+daoTCMb2m3dAAcU7k
- eEYxuY2QvB/xYuKfz4qhC60jhdDKJbA6uVEUnfwf2j4oWc7lmDU3U7N609wWmRAg
- VL6lMa/xjwBLzLIbe/xCK+7t+4r1lWducgirxtGF1eFPki6i3tUtPmnzFRlDl+FV
- JpRXjE7AxzzfYn06uhpSBKVV6vj0EoLmjNw6MUy2nBXVaW2viSE8mzCyW06GPqlT
- g9evytN4B/PaVhOoBzvdANBtl60RsMjxPnrUq5n2pJdwSsIY1Px50+XGfwVP7G5F
- /8b4Pg==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ffbqugb0q-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 04:33:49 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-2cce02cb769so52147715ad.1
- for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 21:33:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jianghaotian.sunday@gmail.com>)
+ id 1wkaZZ-0001cz-PK
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 00:53:17 -0400
+Received: from mail-pj2-x01.google.com ([2607:f8b0:4864:39::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jianghaotian.sunday@gmail.com>)
+ id 1wkaZX-0002il-UM
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 00:53:17 -0400
+Received: by mail-pj2-x01.google.com with SMTP id
+ 98e67ed59e1d1-37fb1883fbfso1578515a91.0
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 21:53:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784262829; x=1784867629; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=cf54BHhatHN5oOwzffckGbaTYD/xeDqzRErSotN+VrA=;
- b=kVbqJ3enUEFQa43bf9iTyTrwj6aaeNhG2u/wKb4m3PK7VsCJ/LyhoVkHWKqSO/1au4
- pm8WzHsWyiJbzdUUGxlXrOlX+3DqRJA1ioYVYWVQvmQV+yunwes8+DfLYZqa0wQ9WOg7
- BJTn1iab23KYONcjo/F47wS73XS4XrnWgJUGCHiA7wMzrIyr89Li8vX5DOC7SpFOkmbO
- AwaLltysk67cAc0S+KAERVAF/gcyvZ+IrrBFLEhUmRLfIlI+v2xx5k4jtNNFxmScxjwk
- aecGlkZ6cPqFjbDf/QhjsIwKM+/p1rkTqVVit3VTOV4GeVNDIwpJUC6Grl+AJOGdIIPV
- bvgA==
+ d=gmail.com; s=20251104; t=1784263994; x=1784868794; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=A2FJkZW2/6/XvxRekeDsl5ImVnfRSwjbV/A7iBIingk=;
+ b=qLy/fw7Mx+LW6k6UN+WVxccJgrO/ktF24XzO20PAlXMaXpV7inZNYRift1mM7zcoop
+ Q2VyBR7KAhwKok3nHzsnuR711BfHsfThItfwL7cKS/U+y6Q9hYp8nQI1qXv1NaUz8JcB
+ KyNcVBjUeXqbg20+Z/JKAVdFzKWojN7z08ftEqlnzc8zFmQ30DJVCxTPUG4okqq15tkC
+ 0jQwR7uyzv4KzlfiZgI3iQ3mQYqTA4TLio9JKdTm6fDHrQBjOFiPuYFeOglT9jPv5OzM
+ 6x72WQ3zvxD4L1g1aNCA9CKkVxJguWQu7wVqWFHY4nYGM/7t9Jyf/6c9oVNNuYPBqvd9
+ JSkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784262829; x=1784867629;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1784263994; x=1784868794;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=cf54BHhatHN5oOwzffckGbaTYD/xeDqzRErSotN+VrA=;
- b=lqOJu3gjU2joc3nmlrS7uv5hiWJBuMo9hIQTLzf1O4iM1dSNNeqte5uEHkKQaKJjmS
- JlM/M3c2ONuGW7DDph5R+Icuu4Ai2ZrYVUyPbQz/+4jsBCIVmCS9lX9Sza0Kl8cEm9gO
- 5q9y86qT8tcvPXlzhcmUH1lEgM851Fb9R6L3fgM551qgkj13D9Uvy1m8ur8oIauQ51/D
- QYeG/9n/ADcGuPLwN5ogAJ2NwH63VzK2pNzg37L3OSxZDAcGq+yguNcnF96UWMRtFOez
- 0Hc2aHBy5ak3SNzeOt9wyWyBSlU+OvS4g5z0EWc+jkBxNrK5vAu9ebNW80TM/Y8Jl1Ts
- 5V7w==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rp+xU4j0d1V5yuar8gQMYb3lEKjKTCrz+zL/ehTLqfRvUSwP9F1lm1Z8tCkAvqo1pSn9HzTPrYbtcMc@nongnu.org
-X-Gm-Message-State: AOJu0Yw5KZaJHPQGIGZYwYZbI16ctx2SsmdDJfSkWyvHXdlDzf7M7fF7
- VMc5vEWsVqgmNAIePaH6AxDjutuZQyB5ly81HuIy2uLHTwSyT3qtcPF/UUyIMplVRlFed3BE/Yk
- l69ceI7TI3+trOhPEbN21S3pJ0SkqlcuAmEPJ+h1MntJqKREhnrRnRrZdZg==
-X-Gm-Gg: AfdE7clbMV4H30gkkbKX2BR3YWqWdTTqJtJiZL9UhfdF88J6Y35/cP+kqEIso9gMIma
- gp6OmQX2gmFFMxohMd1aYl/DcskJYiDTaNUoOfqWBuILgLCkx1KyLw3q538+CvxpDJgzFCI0TEA
- mxr/Q0v/cL7Qrbd/khE/zy0eiYHQYv3ymztTYcg8GUlNfd2I5Zw2dCUB/Ntgk64RgFpNse5wwhq
- as+uTe9WevUva1dUKqtUBJ076ot+H0fFm6/cH7QAC91HMxm3kMJeVC/QCJpbO91UxVyzmY+mW8Y
- VH7HHHGg6MwI3y6eVs5UcE8ZFZZplG06DcQPiIVoEraL3U9QOPqppPkljBbkRQt59o0Qz/ChfI+
- cpU0DTf8zA8xKd5qsKRgaXWV/TzB6KO+G4b0Ta/PGauUQRE0Cgz8EM18=
-X-Received: by 2002:a17:903:2383:b0:2c9:97a7:f544 with SMTP id
- d9443c01a7336-2cf34a18cefmr10876105ad.42.1784262829133; 
- Thu, 16 Jul 2026 21:33:49 -0700 (PDT)
-X-Received: by 2002:a17:903:2383:b0:2c9:97a7:f544 with SMTP id
- d9443c01a7336-2cf34a18cefmr10875935ad.42.1784262828678; 
- Thu, 16 Jul 2026 21:33:48 -0700 (PDT)
-Received: from [192.168.1.169] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2cf344f8c27sm3456785ad.34.2026.07.16.21.33.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 16 Jul 2026 21:33:48 -0700 (PDT)
-Message-ID: <79189100-debf-4799-8e4b-d7a00ddc0ecb@oss.qualcomm.com>
-Date: Thu, 16 Jul 2026 21:33:48 -0700
+ bh=A2FJkZW2/6/XvxRekeDsl5ImVnfRSwjbV/A7iBIingk=;
+ b=dpSeV5bO5YKBq4zBqXs4vR2qmN83AxDyawusxIqyRg5RlGRsE+JvzcezvfxUkJCoAG
+ qiOwu1b71XCVkVLxjbbvwH4lSDoLfvr2UGFQYToPCskTFsmW1/RJGiMt24IPzzsgfvOj
+ yQfHhSHwKb4Y4Zo+kZF7RtfGfV4EsG3pGUfNUkfQ3hrg2IcCRPjkwi+W5Cobk9unTYMG
+ 4e5JQv2d1OQtrGYn2u8GVoQosaXGwGe8AtXepqE5qnJKa2g2/j6Okg5gKiIrYIntSXrH
+ 7Oo6O0HWYCKyRMEjp5ygvuHVQXI1pYqITtXfObArTiLG+NxyqT5czTWj71BUJt232ut6
+ RxOg==
+X-Gm-Message-State: AOJu0Yzhrlz75KDTv/rRkh+PvpCKVPsqVyDhvij9N+YS6WAsayvqtjNR
+ LjJjHsVdrdAfjCYGpXQbYVE3Pbc8SppD8lLCkoxsdHIN35hagFt//1M+zV6MSZLD6R0=
+X-Gm-Gg: AfdE7ckw7DH/zFpdcq51E8kABcFp8KHdorp3XuxCxQRgI9G/MXef+tIJ1PMYXMLL02E
+ CikflC2t++sx59+Bhjrt9KeB2ETut6/p2bW+U6+1GrXRMNz2k2aj6ANnAXH38XGRG4QeL6QALut
+ c3j839qkSZLqZNUv9gvXIaNwKOk41cF7x+zwBnHtf7VNzo4uUq7owc6Q6gQbFWzvanj4rHhW9UD
+ gIpxuhnOicCQPb+xenOThcw0CuTQU58Ffgv1G53aL6cXkvyWBxwtGm/FZwXlqkdY5Dt1gDCnlqW
+ +gmuDlYZpSn0XqvfK67TV/Och+2jNvPcx3I2+c82pXlF/RteKu/W92MQ+Dx2y2bx8pRpkE7L99r
+ EWmjqjhNvMwHTPFfpIcKtB+wwR/KrrEEEtnQxTOrSGWRy9HLou0a5GM7WuZSR/AUKa81WAwxvKF
+ wEPA5gbCyK3UkaR7O8Jwps7qGuVn4AW8djU8uNPXu/CS4/s6u5R1QCo9qBAMRHSWb+WAjH6m1Sl
+ TRJ+Zu6cXka3+qEsRSt+bYhp8d/
+X-Received: by 2002:a17:90a:d44e:b0:38d:ddc2:7ccb with SMTP id
+ 98e67ed59e1d1-38e4b3d0fdamr911730a91.1.1784263993749; 
+ Thu, 16 Jul 2026 21:53:13 -0700 (PDT)
+Received: from VM-210-252-ubuntu.. ([14.22.11.166])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-38e4b22a0c7sm353628a91.14.2026.07.16.21.53.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 16 Jul 2026 21:53:13 -0700 (PDT)
+From: jianghaotian.sunday@gmail.com
+To: qemu-devel@nongnu.org
+Cc: marcandre.lureau@redhat.com, philmd@mailo.com, vsementsov@yandex-team.ru,
+ thuth@redhat.com, farosas@suse.de, qemu-stable@nongnu.org,
+ Haotian Jiang <jianghaotian.sunday@gmail.com>
+Subject: [PATCH] hw/display/qxl: unregister vm_change_state handler and BHs on
+ device exit (CVE-2026-63322)
+Date: Fri, 17 Jul 2026 12:52:53 +0800
+Message-Id: <20260717045253.4004241-1-jianghaotian.sunday@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] gitlab-ci: build hexagon-softmmu to enable functional test
-Content-Language: en-US
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: matheus.bernardino@oss.qualcomm.com, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-References: <20260717041916.3949105-1-brian.cain@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-In-Reply-To: <20260717041916.3949105-1-brian.cain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: u_3IdBE6vbZdfNC1wU_z3-W5UVwcJntW
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE3MDA0MSBTYWx0ZWRfX8ZIR1anJOQQg
- p80qt86NCr9AokKhTuT93NTiqW06qVJAsKCIu04Wk1Xba03XZHmfjdS67q71bZWYmu8w0qRdMUu
- DrUMKm49Vo/6jfqzWVmuXArvU1WqQaf4x6HHT4MR6P+fpZGnK/6GDjpadK5tKgmL8SLPfBIfYk5
- qSJL3h3C4BCsAPGziQApCakcxar4IX0kH807wIMzCZDshgty8U6PxPA+EIxUAS39BQJaynAm297
- dH2asjSo0JeGSDrOlT9jvyVJ3ejyZ44sRjZwoEsu9zvL7kgqHe81y+72InphfF+RhpeFJ3GEOqA
- azSzZVlJoR5ryuWGHnZLaRHi1wKVhzHkzUS4heAPZylNXTmpaI1HFk2hnHJcQ4fXiT8IRVYAxqk
- QK8uPlFfEe8uIy3Jx9eYM/aDb3Vzvpntdl87uSVHj0A3/a/Ayq5GmfW/yTxEuzeogQaER/menbr
- cZnmDbuWqkA6jXfDsSw==
-X-Authority-Analysis: v=2.4 cv=NZ3WEWD4 c=1 sm=1 tr=0 ts=6a59b0ad cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=qbVTx35NfVmC8YQ4Tz8A:9 a=QEXdDO2ut3YA:10
- a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-ORIG-GUID: u_3IdBE6vbZdfNC1wU_z3-W5UVwcJntW
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE3MDA0MSBTYWx0ZWRfX+71N7bMV7gSg
- hQ5WTUf11xlwEj/ZCp0t7x+rFMb06P0I+3QyFhKAaNWbcjXWWdravkJRrUmvaO9+NNBOgDT0zrK
- d5H05sifVN9deZZAWmmlTkgxjhkaQO4=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-17_01,2026-07-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015 adultscore=0
- bulkscore=0 phishscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607170041
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:39::1;
+ envelope-from=jianghaotian.sunday@gmail.com; helo=mail-pj2-x01.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,17 +100,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/16/26 9:19 PM, Brian Cain wrote:
-> Add hexagon-softmmu to build-system-debian's target list so that the
-> existing functional-system-debian job picks up hexagon functional
-> test.
-> 
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->   .gitlab-ci.d/buildtest.yml | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
+From: Haotian Jiang <jianghaotian.sunday@gmail.com>
 
-Fixed my reviewed-by tag.
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+qxl_realize_common() registers a vm_change_state handler via
+qemu_add_vm_change_state_handler() and creates three bottom halves
+(update_irq, update_area_bh, cursor_bh), but none are ever cleaned up.
+The return value of qemu_add_vm_change_state_handler() is discarded, so
+the handler is never removed from the global list, and there is no
+PCIDeviceClass.exit callback to delete the BHs.
+
+When a secondary QXL device (hotpluggable by default) is hot-unplugged
+via device_del, the PCIQXLDevice memory is freed but the vm_state
+handler and BH entries remain with dangling opaque pointers. On the
+next VM state change (stop/cont/migrate) or BH dispatch, the callback
+dereferences freed memory, causing a use-after-free.
+
+Fix this by storing the VMChangeStateEntry returned by
+qemu_add_vm_change_state_handler() and adding a qxl_exit() callback
+that deletes the vm_state handler, all three BHs, and the
+guest_surfaces.cmds allocation before the device memory is freed.
+
+Fixes: a19cbfb34642 ("spice: add qxl device")
+Fixes: CVE-2026-63322
+Reported-by: Haotian Jiang of Tencent Security (Yunding Lab) <jianghaotian.sunday@gmail.com>
+Signed-off-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3607
+---
+ hw/display/qxl.c | 29 ++++++++++++++++++++++++++++-
+ hw/display/qxl.h |  1 +
+ 2 files changed, 29 insertions(+), 1 deletion(-)
+
+diff --git a/hw/display/qxl.c b/hw/display/qxl.c
+index 74258afa58..23608f988a 100644
+--- a/hw/display/qxl.c
++++ b/hw/display/qxl.c
+@@ -2203,7 +2203,8 @@ static void qxl_realize_common(PCIQXLDevice *qxl, Error **errp)
+         error_report_err(err);
+     }
+ 
+-    qemu_add_vm_change_state_handler(qxl_vm_change_state_handler, qxl);
++    qxl->vmstate_handler =
++        qemu_add_vm_change_state_handler(qxl_vm_change_state_handler, qxl);
+ 
+     qxl->update_irq = qemu_bh_new_guarded(qxl_update_irq_bh, qxl,
+                                           &DEVICE(qxl)->mem_reentrancy_guard);
+@@ -2475,6 +2476,31 @@ static const Property qxl_properties[] = {
+         DEFINE_PROP_UINT32("yres", PCIQXLDevice, yres, 0),
+ };
+ 
++static void qxl_exit(PCIDevice *dev)
++{
++    PCIQXLDevice *qxl = PCI_QXL(dev);
++
++    if (qxl->vmstate_handler) {
++        qemu_del_vm_change_state_handler(qxl->vmstate_handler);
++        qxl->vmstate_handler = NULL;
++    }
++    if (qxl->update_irq) {
++        qemu_bh_delete(qxl->update_irq);
++        qxl->update_irq = NULL;
++    }
++    if (qxl->update_area_bh) {
++        qemu_bh_delete(qxl->update_area_bh);
++        qxl->update_area_bh = NULL;
++    }
++    if (qxl->ssd.cursor_bh) {
++        qemu_bh_delete(qxl->ssd.cursor_bh);
++        qxl->ssd.cursor_bh = NULL;
++    }
++
++    g_free(qxl->guest_surfaces.cmds);
++    qxl->guest_surfaces.cmds = NULL;
++}
++
+ static void qxl_pci_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+@@ -2482,6 +2508,7 @@ static void qxl_pci_class_init(ObjectClass *klass, const void *data)
+ 
+     k->vendor_id = REDHAT_PCI_VENDOR_ID;
+     k->device_id = QXL_DEVICE_ID_STABLE;
++    k->exit = qxl_exit;
+     set_bit(DEVICE_CATEGORY_DISPLAY, dc->categories);
+     device_class_set_legacy_reset(dc, qxl_reset_handler);
+     dc->vmsd = &qxl_vmstate;
+diff --git a/hw/display/qxl.h b/hw/display/qxl.h
+index ad8a912878..48d664f777 100644
+--- a/hw/display/qxl.h
++++ b/hw/display/qxl.h
+@@ -83,6 +83,7 @@ struct PCIQXLDevice {
+ 
+     /* thread signaling */
+     QEMUBH             *update_irq;
++    VMChangeStateEntry *vmstate_handler;
+ 
+     /* ram pci bar */
+     QXLRam             *ram;
+-- 
+2.34.1
+
 
