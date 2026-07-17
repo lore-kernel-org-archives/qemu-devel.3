@@ -4,124 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BB04C44514
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 08:23:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C37EDC44507
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 08:33:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkdr0-00057G-1t; Fri, 17 Jul 2026 04:23:30 -0400
+	id 1wkdzo-0006WW-V8; Fri, 17 Jul 2026 04:32:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wkdqz-00056d-3T
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 04:23:29 -0400
-Received: from smtpout5.mo540.mail-out.ovh.net ([51.210.91.54])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wkdqw-00010r-K4
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 04:23:28 -0400
-Received: from director6.derp.mail-out.ovh.net
- (director6.derp.mail-out.ovh.net [51.255.22.22])
- by mo540.mail-out.ovh.net (Postfix) with ESMTPS id 4h1jbZ5spDz454s;
- Fri, 17 Jul 2026 08:23:22 +0000 (UTC)
-Received: from director6.derp.mail-out.ovh.net
- (director6.derp.mail-out.ovh.net. [127.0.0.1])
- by director6.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <alistair@alistair23.me>; Fri, 17 Jul 2026 08:23:22 +0000 (UTC)
-Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.118.140])
- by director6.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4h1jbZ4SnZz7tLD; Fri, 17 Jul 2026 08:23:22 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.0])
- (Authenticated sender: clg@kaod.org)
- by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id CEF071B43DCC;
- Fri, 17 Jul 2026 08:23:20 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-106R006241575d4-9901-406a-96b7-d0cba3a40554,
- D28FE153D5A3AE5C5EC95691E5B856C14C2CAAE9) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <f27e8e99-ae68-4047-9cc0-d1c2eaefae04@kaod.org>
-Date: Fri, 17 Jul 2026 10:23:20 +0200
+ (Exim 4.90_1) (envelope-from <jianghaotian.sunday@gmail.com>)
+ id 1wkdzk-0006W6-CI
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 04:32:33 -0400
+Received: from mail-pj2-x04.google.com ([2607:f8b0:4864:39::4])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jianghaotian.sunday@gmail.com>)
+ id 1wkdzi-000277-7M
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 04:32:32 -0400
+Received: by mail-pj2-x04.google.com with SMTP id
+ d9443c01a7336-2cabfb70501so24553885ad.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 01:32:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1784277148; x=1784881948; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=PLxR5/zdjkUO27N60gXOi9bDuitb3Ij55GO3qVURNp8=;
+ b=B3GZoBiMQYcd5RbsKzf+NCSN+So5qCkoDNLFcwyM4sFwRD6YgTZlWlv+OUk3IGL9T3
+ Wmm7cI+f6nVlF04JL7N97/X895JHCp8vq7d3SQWkGRfpYL1ZSsy7CeL63WmTr5iQODKm
+ hNAWATHkebnr35mQM7npCYsc7QHwqm4gpz3FXSIJnlVfUY+qJwsHUr3NIXjlKtJxZOIP
+ r4CM59zYwWF935kisBRlai0mTjfmpjl0U0ZsQq0pC0cwvdnhcS/4ZPgO9qT0Xcw3IOKL
+ wTzvAnSGX09btHF4gY1asefqMy/z0o2f1KjUHFpnal6P5D8pXFCaJZeJSVpUWHmiQVhZ
+ 4igg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784277148; x=1784881948;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=PLxR5/zdjkUO27N60gXOi9bDuitb3Ij55GO3qVURNp8=;
+ b=s683Je6wZMJDlmndilLxWVEUHjfPwzOfLhQVK1C9tlNy+HOpfHMTJKSQmMLgVocIlt
+ KWanty3tsEYxYDWRkL8ainQma6tUhV7T9mrLXwejb45lu6csvO4rkIJN+ShPmwcGxXs9
+ CI8AhCQWRrtM31jKDt2Rgv3CzayOnC1z/vkw8tyYpo5wT8wEuB2V0sr3rgrtKOAKnLSc
+ pdW4jKDGQz1ipdwURKJRRnPIgv7HVgaGYxk+DTomQiQEQN1shoxzAzyHbdd6oSg60tIA
+ bg1t/TjuoT1pm9/xH2Omeu2HGDDtoPJXs9BOPOAgVAwQw4AAmhOnKhPPCctE8lnkTWIV
+ PFLg==
+X-Gm-Message-State: AOJu0YyTyiWgA3QQPddO2OdGm6btudu6OQnuIyXnIIRLSjpSACV0yFdz
+ 4OONawkEewe6FUiI6993UdNRv8T8n3+sDi0YCoLKX4N8OYgPByqxUrKjOmi+gHFjIQQolDtf
+X-Gm-Gg: AfdE7cmi8sHKK5UCllVrMqsisx+DLlgYUy/GrS7Q0+JsvUBeYKrhRcimfwTGtjwEs54
+ CrqolpfqehEMbq3yPrSctA1FD7J1Q7wtdzaPHBxa6ADeoGH6MvwpgG4R80IepWa1ww7Nfyc+bwU
+ jFAUD+5eL62hgqpfaSl1jOjHUjZ/t7z9+Cu7RQ0nvtTy6LgANvw9Bt82UrnzZvNYjrZg0wqsiWO
+ lIeilWyG4TdZauk6oKoNKGmONQXEPXwNb3q1EonnreFqqkXcJq8PsTrJPJz0Czqwc4KFe5HbqST
+ NErUqh03B26BYpcu/BJMjOfu3qUzLDr6/oHbVDEaAHbMs6JEE+ojtsmXngjY94WiGMdwijHMiVO
+ A5easHgtVS8W0bWPr2C56KiUg196uKNXhhc0ykaIzVA8vol+Rl3xVo6+5f54AaN9qhwUM0mhp/S
+ MKBKmpnb9yJ6Gw71T4+msat8+UCp244cckfRlOQPnHHW3CvdqhIp4dYX/k1qIH/hckMudMvk/qh
+ sqzlI59CYKuZ/Upj1qEDIvSgYnT
+X-Received: by 2002:a05:6a00:190e:b0:82f:2b0:2809 with SMTP id
+ d2e1a72fcca58-84c29305388mr1703593b3a.1.1784277148483; 
+ Fri, 17 Jul 2026 01:32:28 -0700 (PDT)
+Received: from VM-210-252-ubuntu.. ([14.22.11.167])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-84c2af9e922sm584026b3a.54.2026.07.17.01.32.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 17 Jul 2026 01:32:27 -0700 (PDT)
+From: jianghaotian.sunday@gmail.com
+To: qemu-devel@nongnu.org
+Cc: mst@redhat.com, alex.bennee@linaro.org, odaki@rsg.ci.i.u-tokyo.ac.jp,
+ dmitry.osipenko@collabora.com, qemu-stable@nongnu.org,
+ Haotian Jiang <jianghaotian.sunday@gmail.com>
+Subject: [PATCH] virtio-gpu: fix NULL deref in rutabaga set_scanout
+Date: Fri, 17 Jul 2026 16:32:08 +0800
+Message-Id: <20260717083208.291036-1-jianghaotian.sunday@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 9/9] tests/qtest/ast2700-smc-test: Add Data FIFO mode
- test
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Alistair Francis <alistair@alistair23.me>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20260717081813.3407862-1-jamin_lin@aspeedtech.com>
- <20260717081813.3407862-10-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSBDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQGthb2Qub3JnPsLBeAQTAQIAIgUCW7yjdQIbAwYLCQgHAwIGFQgCCQoL
- BBYCAwECHgECF4AACgkQUaNDx8/77KGRSxAAuMJJMhJdj7acTcFtwof7CDSfoVX0owE2FJdd
- M43hNeTwPWlV5oLCj1BOQo0MVilIpSd9Qu5wqRD8KnN2Bv/rllKPqK2+i8CXymi9hsuzF56m
- 76wiPwbsX54jhv/VYY9Al7NBknh6iLYJiC/pgacRCHtSj/wofemSCM48s61s1OleSPSSvJE/
- jYRa0jMXP98N5IEn8rEbkPua/yrm9ynHqi4dKEBCq/F7WDQ+FfUaFQb4ey47A/aSHstzpgsl
- TSDTJDD+Ms8y9x2X5EPKXnI3GRLaCKXVNNtrvbUd9LsKymK3WSbADaX7i0gvMFq7j51P/8yj
- neaUSKSkktHauJAtBNXHMghWm/xJXIVAW8xX5aEiSK7DNp5AM478rDXn9NZFUdLTAScVf7LZ
- VzMFKR0jAVG786b/O5vbxklsww+YXJGvCUvHuysEsz5EEzThTJ6AC5JM2iBn9/63PKiS3ptJ
- QAqzasT6KkZ9fKLdK3qtc6yPaSm22C5ROM3GS+yLy6iWBkJ/nEYh/L/du+TLw7YNbKejBr/J
- ml+V3qZLfuhDjW0GbeJVPzsENuxiNiBbyzlSnAvKlzda/sBDvxmvWhC+nMRQCf47mFr8Xx3w
- WtDSQavnz3zTa0XuEucpwfBuVdk4RlPzNPri6p2KTBhPEvRBdC9wNOdRBtsP9rAPjd52d73O
- wU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhWpOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNL
- SoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZKXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVU
- cP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwpbV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+
- S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc
- 9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFUCSLB2AE4wXQkJbApye48qnZ09zc929df5gU6
- hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iSYBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616d
- tb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6gLxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/
- t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1c
- OY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0SdujWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475
- KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/JxIqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8
- o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoX
- ywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjKyKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0
- IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9jhQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Ta
- d2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yops302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it
- +OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/pLHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1n
- HzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBUwYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVIS
- l73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lUXOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY
- 3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
- ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
- KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260717081813.3407862-10-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 16607586578621574189
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTE6MTS7Deftow7gmfc9HgYModzP/gQiKt42TjVzRgDXJ9q+E5X/OrYwl2G46ZORRpTaEbhcesENH/sOImgmtDRUc88aAQKFvOGapv1gLupGxuvDv1jMZE4CUGVkE1saLIILyDuA+DnLOgSf37Y74n0Kz2YXkUSQHO0M5c9bTUnaSH+Si2lycRkMBZ5zs1eFWiWP59MwxEZAj/HepNJs7Mvdnz0r1S0gG/fI/jklsTLKzgvely39I2AXGzEKehfbwXMk8XvJufHiVY1MErNiHMnXkf4S7KA7OVsg6wYuCWNks+sf/RZNJx41e+bz3/Uey2xqyo7rKhF531bkCMxWwAfCXXReA1uXiF6//KuMBdlRgv40JgOjBUgT5zXtzWbxYzPAAb9QYHqfo3Zs4o1zVS2K+4LTpzl2Up8FcFyYPpEcpbHju2YoeOgOdGCthmU7HF6nGy4Ww19KLyNbGaCnslbplcfv/w9Oxv5rndnZRnrGpqO03PbjQImYbtxog6ExM3mtp8HOgmbk9qpWzbmEa2K+dX6v/h/3gar0a48xgNNvCIhsP5v1C2Rm3K1LlG7RsS7Pf5BZIA9mb7+RdMJxx5NooJCbw0nCOL2OSNpx3wyAPOJUxNsFiLL1Hx1lxXo1dA+Jmi5be1Xhct4SpPvJDs+2X3ONYa9Vo8EcuM/DwXFT3g
-DKIM-Signature: a=rsa-sha256; bh=J9rudMrXZyn4EtE5pu+q1mwuK+Qgn+LNus0RqMRBLgs=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1784276604; v=1;
- b=WjRdG2mBpuv3dXJkl+wSBnWhAtgdTUf8ofiEWVFhy5AiCMERTZxw4XgSh7I8yKDrorDKIT1p
- R9pKVGd4/9LeqGn2SHf8rvdFTmbNb/GkJEUdovGnOcBkKUK3b9AEs8wyLs9m1M/bj9diAOimlk8
- 93P1c3f74YFymiXz1vQsn0oInpoqTG70EPvXKrLFmsakGufXxGgTwATw/KRmpgx3tu5JKybejl2
- cCitwGnR2A5PoO647ot6gzkWcfKe47SK6T2lxVhyrRPtBMcC4l7OaFvstFWmP4/qkeczNGYx3jd
- Or4MZsTyfXZO/TqUkmTGRYPzlhOpMfEGE24rhRkisltGw==
-Received-SPF: pass client-ip=51.210.91.54; envelope-from=clg@kaod.org;
- helo=smtpout5.mo540.mail-out.ovh.net
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:39::4;
+ envelope-from=jianghaotian.sunday@gmail.com; helo=mail-pj2-x04.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,25 +99,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/17/26 10:18, Jamin Lin wrote:
-> Add two qtest cases exercising the new AST2700 Data FIFO-based flash
-> access path (R_DATA_FIFO at spi_base + 0x200).
-> 
-> Write_page_datafifo sends the page-program command and data through
-> the FIFO port, then verifies the result via the regular read path.
-> Read_page_datafifo writes a page the regular way, then reads it back
-> through the FIFO port, so both directions are checked independently.
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   tests/qtest/aspeed-smc-utils.h |   4 ++
->   tests/qtest/aspeed-smc-utils.c | 103 +++++++++++++++++++++++++++++++++
->   tests/qtest/ast2700-smc-test.c |   4 ++
->   3 files changed, 111 insertions(+)
-> 
-This patch doesn't apply on aspeed-next.
+From: Haotian Jiang <jianghaotian.sunday@gmail.com>
 
-Thanks,
+rutabaga_cmd_set_scanout() checks scanout_id < VIRTIO_GPU_MAX_SCANOUTS
+(16), but does not check scanout_id < conf.max_outputs like the base
+class (virtio-gpu.c) and virgl backend (virtio-gpu-virgl.c) do.
 
-C.
+With the default max_outputs=1, virtio_gpu_base_device_realize only
+initializes scanout[0].con. A guest submitting SET_SCANOUT with
+scanout_id >= 1 takes the con=NULL path, and
+qemu_console_set_surface(NULL, NULL) dereferences con->ds, crashing
+QEMU.
+
+Add the same max_outputs check used by the base class and virgl backend.
+
+Fixes: 1dcc6adbc1 ("gfxstream + rutabaga: add initial support for gfxstream")
+Reported-by: Haotian Jiang of Tencent Security (Yunding Lab) <jianghaotian.sunday@gmail.com>
+Signed-off-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
+Cc: qemu-stable@nongnu.org
+---
+ hw/display/virtio-gpu-rutabaga.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
+index 6ff1263901..24386487ba 100644
+--- a/hw/display/virtio-gpu-rutabaga.c
++++ b/hw/display/virtio-gpu-rutabaga.c
+@@ -303,6 +303,14 @@ rutabaga_cmd_set_scanout(VirtIOGPU *g, struct virtio_gpu_ctrl_command *cmd)
+                                      ss.r.width, ss.r.height, ss.r.x, ss.r.y);
+ 
+     CHECK(ss.scanout_id < VIRTIO_GPU_MAX_SCANOUTS, cmd);
++
++    if (ss.scanout_id >= vb->conf.max_outputs) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: illegal scanout id specified %d",
++                      __func__, ss.scanout_id);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_SCANOUT_ID;
++        return;
++    }
++
+     scanout = &vb->scanout[ss.scanout_id];
+ 
+     if (ss.resource_id == 0) {
+-- 
+2.34.1
+
 
