@@ -4,129 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90654C4451C
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 13:26:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA1E2C44516
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 13:26:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkiZq-0008IB-1n; Fri, 17 Jul 2026 09:26:09 -0400
+	id 1wkiZz-0008JM-TL; Fri, 17 Jul 2026 09:26:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbassey@redhat.com>)
- id 1wkiZk-0008Hl-3f
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 09:26:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wkiZp-0008ID-EA
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 09:26:05 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbassey@redhat.com>)
- id 1wkiZh-0007AP-9Y
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 09:25:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784294756;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=9sNdq2VoJJQRAirfz5fenf9IpCGK3zYMDGoZDbNdoeI=;
- b=JnbihFfHBxg13YBPTaiaYxQXRJtGMsIAYw7NFCjpH/c4e8CgQHffZKRqHhwvsHUj6H9w+w
- yG5ZG21P86NGcMVKqSk+70ww6q+8zyPo9a+atK6gO9k5WGWiwXdFV6RJxRb9m1uj5R002P
- q7MAGC8t781A1tvxrlV3s7W/07ali/8=
-Received: from mail-oi1-f198.google.com (mail-oi1-f198.google.com
- [209.85.167.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-650-B-wjKNgZM--EMLM7xVnjtA-1; Fri, 17 Jul 2026 09:25:55 -0400
-X-MC-Unique: B-wjKNgZM--EMLM7xVnjtA-1
-X-Mimecast-MFC-AGG-ID: B-wjKNgZM--EMLM7xVnjtA_1784294754
-Received: by mail-oi1-f198.google.com with SMTP id
- 5614622812f47-48f0c5d20c6so6478681b6e.2
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 06:25:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784294754; cv=none;
- d=google.com; s=arc-20260327;
- b=r+F+J/TQXNVYETll9crvRjvF8dOHfa+KtuTgCwZWmt462wXhVAEcp322pMOIx3qHlO
- oOfBKN2J6Kz/KUsyUE8sLHMZQUpMlYa2L6GZCM8QB5u/bRAiLIJSf5RAtp0paaofazm5
- AqpL/rVNdPzoLkTdkxcCWfzbusfFew/xApoqD+sQuv6NcCzYkdepIBkeWvMqcTHb1kxG
- LGLntN+FUkSMBygtexo/UcP9UwH8NWr2SiTSJV6d2gffneeMxXTk/o8NE/supbBxS7/7
- Wc/fQQA8KvEc5gnJSpCDpZaIPblI58cWmLCAzUeNPcyXl+kuc+pnm0DY49v//UkQYSOW
- RdVA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=9sNdq2VoJJQRAirfz5fenf9IpCGK3zYMDGoZDbNdoeI=;
- fh=U9TUit7J9qCkxCjcC9c8Uz7Xap3+9ZNV1UQG0kyLV6Y=;
- b=hFoxpt9y+WPs/tD+RYPmnn5KnZHAsg3JSS8ayxDMDzmZBZBJOOK4aBD6JzZxuyPoI+
- h3ClDcRPcbHkFMWx7FG3BegYNdsTnkXVuYyfArzSs0GWklhZ34vXguikjNn0cb/WvnT8
- xpzbWyC1sJSsEO8EyuH4hdtjKud4+fvvTgmd9vqB5Stc7fzpWqhK4LKPXRHi0nc2+DED
- IggpC4TbnX8my3Ju9DZmyghaUTWWXJ/LfLhrf52lFSBBsG00u5k1MSTU9V0rAP9Lzi/l
- BCcsxdOeyO8B3v23mjYUvdHynEY1vqI5QTxM7T8YHYwmEFQsWEC/84ZsvqbF4vwyWpE6
- iVjw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wkiZn-0007Ac-G2
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 09:26:05 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66HCT1tP1884520
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 13:26:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ dEZXfGKPhpN/GbNaJUJdMJOu6x/OSxFKQsc7D4qJtXM=; b=fZsfsBgTwUCgwtH5
+ wFdPT17coma4QvMofyPZrydgZxpTKf3sg55IQMco10vUBf+BM9bTYMbTa4fgTJ7B
+ xeYCbt8ZtQ1iFox4S4pMRH6zO3Hy9zfaO2vStVhlpiFXHTWmuzrhCg81GuhhiKtr
+ IdAiKebSaVHl0Jk5QJU6YL9QsYLm7h+F6IJxiprxYLA7tbMM3lEUWqmp71NOtAb2
+ n0gIEMXn6Q/97St60x0406Qv6PRvFZi4UDdJEAr5eyG2aVWZCCveHri94o65kd5S
+ GHSglJCKBqPjt1BpcKX/vIqra10YPk7FOpcTdT+UxxoFJF2KuDYih9zb9S6NtlRw
+ TyXL8A==
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ffhpfgvbs-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 13:26:01 +0000 (GMT)
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-81eddfe28b4so64288227b3.3
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 06:26:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784294754; x=1784899554; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=9sNdq2VoJJQRAirfz5fenf9IpCGK3zYMDGoZDbNdoeI=;
- b=StJTWKdvGWOM5VffQOnpNCQ6UHF2hSOjsaZ+gsyBKxgmu5JM8tEFlQk+R61pLXUycQ
- LeiXIzelLF/LCKrmfhbEoEPzlBeEMYTJSQ4boCv6rco50AQeK4nZq+8xngEJUmsJrVya
- xzESiJ8+qjvcxPzfYD6745vVtYzBbZSwPuMTQoxWIH3IX5j1ut5Tabfabr+ZrTNcsEko
- 7PlX8UKrPEb9RK6sBPuX6f14VcOasKQ4xW+2A4Ke8PhSb6v0vduRdrpZ0NfFmtpDZZK7
- dQdyeJ7F4e4Nsf60CdcYXsjcGuBySBOXOzztTneI/MW0djLuxxtBr8jhOJIbODbcOz+T
- y3Hg==
+ d=oss.qualcomm.com; s=google; t=1784294761; x=1784899561; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=dEZXfGKPhpN/GbNaJUJdMJOu6x/OSxFKQsc7D4qJtXM=;
+ b=R3YhrdIJft+vQHhwgJtSzde1kynGdkMHEK9hSK2PZaMbzhU2uS9a5qWGZx8cSQqx03
+ +JVmieOdfn4PTe9PgqxkJuO/yfcY1VJ2ob68BLi4/Ubt+IVxjnOAObjzJyH/Qq/JVzPL
+ vljC+jAv79eaMUqq9YPvPLArUrq57jqN+kL/doMzqE0JDMb4G+xMfQK2KE4uyMs9EXna
+ e03QFW0MY8YCusSBlFmTZVPnklF+lJkiUe7vcRy6dmdzvCxQux61BZgjqGnAq5y10XOI
+ qZjFmfMRr6BcIRgI3YAMl0tIckb+fX2odKzQ5SsX4r7xtOQNtV8XkAGcG1ijff484va+
+ uwWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784294754; x=1784899554;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=9sNdq2VoJJQRAirfz5fenf9IpCGK3zYMDGoZDbNdoeI=;
- b=fX+LxxRCOr80hHwqj1gcjLpLpo8eppXUcYtm3Nww5Pnv+fpNYtnuKcknkXhMjkEZ/G
- DCrjNYZx3vEyBMpfxzWNAxxxpC0gE672y+VOnHpdsk43QNlYovIXLWDPqTHwyQH3xdw3
- ur774OddWZlnnCVleYNToYyIYGyr++q7PNT+GMACMV+ycDFTSDuzeVb7SNYiJ4QVVM0f
- KWRl8mHt2M5Sfpg7orSi8JCI7u6SkuKiRAXHVctpZRNxMO2pE60im4ODfhtDCmqmjTk6
- ihS2LwZIiP8G0dm90WA15Q/sFgMIgDiQ/cckdpflVLAfKsZiqLB2nebgqx9qqPOaWXLt
- Mgyg==
+ d=1e100.net; s=20251104; t=1784294761; x=1784899561;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=dEZXfGKPhpN/GbNaJUJdMJOu6x/OSxFKQsc7D4qJtXM=;
+ b=c83RfTFYuzEKBVu+3FTtC8pfmckGIwnG0Vrrt1eC3LhS3kUbLgJ1iZvsIYKe7uIKLQ
+ 8XE0tIfAmEGH+pz7VFsKv5rm8IpRwofrulx+aAX5mWLt9LY4+6jevSngNAShRvFjy/xj
+ W4sTq7QyK/APoOIoGHaEY2BM6gCdmyrNi4vh7IYhILtR14Asd44+P3pjtiDQ6am8KpFA
+ mIymWmy6hES2kCDVH2g1qbZfb/pVykCNssty43XIg6i89v+4PgOWHE3/HapQGpLEpePz
+ pW2e5h/IXfTMGA+geZ044jvrz4fOqX+hb57QpZH90ZigeumuYfhhEfE4LTxwIP0uxdtQ
+ AOtQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RrSssI2nKvzhOQTYNRnPEAbIC2xJ+vrwjrVVo3W4sKTHHgPI0l5zM9lNC74rnZ5jAuzFyEtlBStzCNt@nongnu.org
-X-Gm-Message-State: AOJu0Yx/aqF7n/IXXBi4pExyrvB2A4zAGMooWVXMxADrPunffsaJtDEb
- KnKV7IRiYGg0IOWjx6KRuIdvCORt7+qNe4cAvP8wBV5sR0e5OaKp7Tt+ETphkynkVGIAB8+PYQJ
- mZdSr+jCT815qI9J3Iqr9CUYzTxQrDnbKcqKXuqdqdk6oJO0J5m0fgvV5Kh2zDitHy4KxFj+lNt
- j8luxN6pNJiDxi+gMGW/k6412Smq62K7M=
-X-Gm-Gg: AfdE7cm7qTMOzmwAbQ9TSf2B3WYUd6o1pCC41o+PvzCoHrnfL95mXXeeNcecWaJnfsL
- rB0zWcFp6azl6zzx9/UoptMj7ekOdvwBaSr1e1apbclxB+HMzjBS1nojW1ckeDm6sSTBCzrz7Ec
- gPiUbNbIRom0lGvvg3a56cI7g0nYMFLtnb5/KxejoNoa3EMx+cqug9XL/mnX5BtCG6PlgFUo5ct
- ib0XcT2Wm6cghCE5ZSg7Ez2R5f47vS+Zm/qNmLqRHE9Pw==
-X-Received: by 2002:a05:6808:1904:b0:495:ecd3:ba29 with SMTP id
- 5614622812f47-4a4d03a96b0mr1161821b6e.35.1784294754082; 
- Fri, 17 Jul 2026 06:25:54 -0700 (PDT)
-X-Received: by 2002:a05:6808:1904:b0:495:ecd3:ba29 with SMTP id
- 5614622812f47-4a4d03a96b0mr1161803b6e.35.1784294753612; Fri, 17 Jul 2026
- 06:25:53 -0700 (PDT)
+ AHgh+Ro/64Puy4ueJgHlD0KnFVObVC1Oq9Czmr8Ve0msHCBJrwj7cgaXSQJXOe/SjaByJn1+NUYkOSFvxkhi@nongnu.org
+X-Gm-Message-State: AOJu0YwpBPOxmxg46bDjD5wiS2/ukibqSKJEmUXDBQN9kBCXiEcOoYKb
+ 5m2mYy63sjDqeHPHlBtZ9nWgm95KZgTAhdJ8dbIHq8IoywCKQ+drAUYFEha1/7LfKPAsqf01I8G
+ ZU+q8cZc8gubnjEzGHIH4tPPB3y/EVjRjGoC7h2nK9AYPo5fadTP2Vi2AIA==
+X-Gm-Gg: AfdE7ckzFmpx2LFiqF5RMNy+vo6FbghmSfiv+xe2y1phKifKsPW5jdcQMS/oU8hcfa7
+ v34IvvGwyjhStJeuZly6bEY9fcP18OQENF7wWNUxtXKW+/h1JX5Sgw8rdv3CeDQPQMxG15AAUb2
+ H0AlQbQegfZfNs1RboLwJJhIl9LiDRltqG7s74k9/JBdVsqht7zWVB64+c6H+L84SgcC7JWwCIO
+ Ili7xh5fdnNhng9f+O8cb1/bmqf+1/hfssqTtr+D1gwAIhY17ZrPa/5Ig0A0Xx5yMAAw45+NKNv
+ kP/mLM4l7/uiq94smN9PpQRBHrdmhapC34VUVlzUpmpp+JCT4nT1qkgo0i89nccqQlenB4iJvi8
+ uvJY6bkYSvPCtYgnQMN7wfu0B9VM/L6uznK78Og==
+X-Received: by 2002:a05:690c:6:b0:80c:85e5:8732 with SMTP id
+ 00721157ae682-81ef26c1340mr7064477b3.64.1784294761415; 
+ Fri, 17 Jul 2026 06:26:01 -0700 (PDT)
+X-Received: by 2002:a05:690c:6:b0:80c:85e5:8732 with SMTP id
+ 00721157ae682-81ef26c1340mr7064227b3.64.1784294760764; 
+ Fri, 17 Jul 2026 06:26:00 -0700 (PDT)
+Received: from [192.168.68.105] ([152.234.122.204])
+ by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-81ef42ae43esm9010967b3.34.2026.07.17.06.25.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 17 Jul 2026 06:26:00 -0700 (PDT)
+Message-ID: <e4c52a4d-9464-4a8b-92ea-7ab1197e9bea@oss.qualcomm.com>
+Date: Fri, 17 Jul 2026 10:25:56 -0300
 MIME-Version: 1.0
-References: <20260717103301.228974-1-dbassey@redhat.com>
- <20260717103301.228974-2-dbassey@redhat.com>
- <20260717063641-mutt-send-email-mst@kernel.org>
- <CADSE00+Uoy=fu3OnvMCr0Cn=tHSj27LkD9y7_CPqT32oSaDFow@mail.gmail.com>
- <20260717085600-mutt-send-email-mst@kernel.org>
- <CADSE00K8xv0WOZQjL95SuZTEMadKc+HyMTffFkJ0EG27f3bHOQ@mail.gmail.com>
-In-Reply-To: <CADSE00K8xv0WOZQjL95SuZTEMadKc+HyMTffFkJ0EG27f3bHOQ@mail.gmail.com>
-From: Dorinda Bassey <dbassey@redhat.com>
-Date: Fri, 17 Jul 2026 15:25:42 +0200
-X-Gm-Features: AUfX_mzA9nO7GTnRQfwimGnKAAPDHGitdfb7KRIOzpljG3VICjToED7L4SsbmYg
-Message-ID: <CACzuRyzbemx+jLTRzXxEhxKwuM6Prq5KHzxfNvf=MHUBBToQxA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] vhost: Fix SHMEM_MAP transaction ordering and
- resulting deadlock
-To: Albert Esteve <aesteve@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
- mhrica@redhat.com, sgarzare@redhat.com, manos.pitsidianakis@linaro.org, 
- marcandre.lureau@redhat.com, stefanha@redhat.com, pbonzini@redhat.com
-Content-Type: multipart/alternative; boundary="000000000000f71ed00656ce7e30"
-Received-SPF: permerror client-ip=170.10.133.124;
- envelope-from=dbassey@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 10/10] tests/functional: add initial RPMI virt guest
+ smoke
+To: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>,
+ qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+References: <20260714075659.2258023-1-subrahmanya.lingappa@oss.qualcomm.com>
+ <20260714075659.2258023-11-subrahmanya.lingappa@oss.qualcomm.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260714075659.2258023-11-subrahmanya.lingappa@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE3MDEzNiBTYWx0ZWRfX3qClSHL0YSX7
+ 0WW/UgflAoiacCpFPU5B09LmNQlGnjSiltFSco3a6cjP6OlPbomhMYJX41nUvecsLa73dB3vqqq
+ h3EX9DwRYIHPqJ0PpzvaLQj8GVLesxvtU/Hv5r4bVQAe9uraw5zaHVkWclgd4MC5lzEvrBu4Vn8
+ 4ppDZN1RUIdKvu5ej+qNNdpVD70WjR0g6s1TVyJAFLsG2O9h8i3PYsN1CP9gK9vx/iNsLYyrQWe
+ MCfzlhcqXzgdJXs1CIJm3PFp+BgVezuOg1GOVdhOE4zJXr8qgFqb9+i5/LTK/dNETeyqOAyNRoO
+ ZrenMujKQ+9FoypgtDFG5b/M7bRhkbHEBDuzA3EVyuEbYBw73Hswq8AIpxgZ5G4oo0AxcCjw88y
+ atYPUh23Lz+o7GJQ0c+1ZZHF3s13zBB19sovGW/3H3cR0rEoEDvcJ0hgeUbMvScOZMBqRsLEdb0
+ fKRTjZaxfcW+51JncHw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE3MDEzNiBTYWx0ZWRfXyzYHq7qohDO7
+ 7kpjVkKwz9iz+gf0mP4dYb8KEEfnjMN2pBevg0U6Dlukrics/eUUlP2ZhT6tDRjO+jYelashz36
+ ff2SllkTybxBL1XhbDGSUx6/J7OCU2Q=
+X-Authority-Analysis: v=2.4 cv=YeWNIQRf c=1 sm=1 tr=0 ts=6a5a2d69 cx=c_pps
+ a=NMvoxGxYzVyQPkMeJjVPKg==:117 a=J0RmenBMOwS19r/fhzI3tQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=id1fG4O3IpAWAUPRaTwA:9 a=QEXdDO2ut3YA:10
+ a=kLokIza1BN8a-hAJ3hfR:22
+X-Proofpoint-GUID: SiUn4Tg2FIft38FCL70Ga85uidGdWn8v
+X-Proofpoint-ORIG-GUID: SiUn4Tg2FIft38FCL70Ga85uidGdWn8v
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-17_03,2026-07-17_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 bulkscore=0 suspectscore=0 priorityscore=1501 clxscore=1015
+ spamscore=0 lowpriorityscore=0 adultscore=0 phishscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607170136
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01,
- RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,369 +160,223 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f71ed00656ce7e30
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-So I will keep the current mainline ordering for unmap (reply before
-delete) as Michael suggested.
 
-On Fri, Jul 17, 2026 at 3:11=E2=80=AFPM Albert Esteve <aesteve@redhat.com> =
-wrote:
+On 7/14/2026 4:56 AM, Subrahmanya Lingappa wrote:
+> Boot an RPMI-enabled RISC-V virt guest and exercise the initial HSM,
+> system suspend, and system reset paths.
+> 
+> Signed-off-by: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
+> ---
+>   tests/functional/riscv64/meson.build       |   2 +
+>   tests/functional/riscv64/test_rpmi_virt.py | 172 +++++++++++++++++++++
+>   2 files changed, 174 insertions(+)
+>   create mode 100644 tests/functional/riscv64/test_rpmi_virt.py
+> 
+> diff --git a/tests/functional/riscv64/meson.build b/tests/functional/riscv64/meson.build
+> index 5871211e89..619a0735fa 100644
+> --- a/tests/functional/riscv64/meson.build
+> +++ b/tests/functional/riscv64/meson.build
+> @@ -3,6 +3,7 @@
+>   test_riscv64_timeouts = {
+>     'boston' : 120,
+>     'tuxrun' : 120,
+> +  'rpmi_virt' : 300,
+>   }
+>   
+>   tests_riscv64_system_quick = [
+> @@ -15,4 +16,5 @@ tests_riscv64_system_thorough = [
+>     'boston',
+>     'sifive_u',
+>     'tuxrun',
+> +  'rpmi_virt',
+>   ]
+> diff --git a/tests/functional/riscv64/test_rpmi_virt.py b/tests/functional/riscv64/test_rpmi_virt.py
+> new file mode 100644
+> index 0000000000..c0f96f7d8d
+> --- /dev/null
+> +++ b/tests/functional/riscv64/test_rpmi_virt.py
+> @@ -0,0 +1,172 @@
+> +#!/usr/bin/env python3
+> +#
+> +# RISC-V virt RPMI Linux guest integration tests
+> +#
+> +# Copyright (c) 2026 Ventana Micro Systems Inc.
 
-> On Fri, Jul 17, 2026 at 2:58=E2=80=AFPM Michael S. Tsirkin <mst@redhat.co=
-m> wrote:
-> >
-> > On Fri, Jul 17, 2026 at 01:50:31PM +0200, Albert Esteve wrote:
-> > > On Fri, Jul 17, 2026 at 12:37=E2=80=AFPM Michael S. Tsirkin <mst@redh=
-at.com>
-> wrote:
-> > > >
-> > > > On Fri, Jul 17, 2026 at 12:32:59PM +0200, Dorinda Bassey wrote:
-> > > > > Commit the memory region transaction before sending the SHMEM_MAP
-> reply
-> > > > > so the KVM memory slot exists before the guest can access the
-> mapped
-> > > > > region.
-> > > > >
-> > > > > This moves the commit to while the backend is still blocked
-> waiting for
-> > > > > the reply, which can trigger ADD_MEM_REG back to the backend and
-> > > > > deadlock. Filter shmem mapping regions out of vhost_section() by
-> > > > > checking the MR owner type to prevent this.
-> > > > >
-> > > > > The explicit transaction begin/commit wrapping is dropped since
-> > > > > virtio_add_shmem_map() already commits via
-> memory_region_add_subregion().
-> > > > >
-> > > > > Fixes: b52e1896e764 ("vhost-user: Add VirtIO Shared Memory map
-> request")
-> > > > > Suggested-by: Albert Esteve <aesteve@redhat.com>
-> > > > > Signed-off-by: Dorinda Bassey <dbassey@redhat.com>
-> > > > > ---
-> > > > >  hw/virtio/vhost-user.c | 20 ++------------------
-> > > > >  hw/virtio/vhost.c      | 10 ++++++++++
-> > > > >  2 files changed, 12 insertions(+), 18 deletions(-)
-> > > > >
-> > > > > diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> > > > > index 517cc4ca716..01468f7441a 100644
-> > > > > --- a/hw/virtio/vhost-user.c
-> > > > > +++ b/hw/virtio/vhost-user.c
-> > > > > @@ -1977,8 +1977,6 @@ vhost_user_backend_handle_shmem_map(struct
-> vhost_dev *dev,
-> > > > >          }
-> > > > >      }
-> > > > >
-> > > > > -    memory_region_transaction_begin();
-> > > > > -
-> > > > >      /* Create VirtioSharedMemoryMapping object */
-> > > > >      VirtioSharedMemoryMapping *mapping =3D
-> virtio_shared_memory_mapping_new(
-> > > > >          vu_mmap->shmid, fd, vu_mmap->fd_offset,
-> vu_mmap->shm_offset,
-> > > > > @@ -1986,7 +1984,7 @@ vhost_user_backend_handle_shmem_map(struct
-> vhost_dev *dev,
-> > > > >
-> > > > >      if (!mapping) {
-> > > > >          ret =3D -EFAULT;
-> > > > > -        goto send_reply_commit;
-> > > > > +        goto send_reply;
-> > > > >      }
-> > > > >
-> > > > >      /* Add the mapping to the shared memory region */
-> > > > > @@ -1994,22 +1992,8 @@ vhost_user_backend_handle_shmem_map(struct
-> vhost_dev *dev,
-> > > > >          error_report("Failed to add shared memory mapping");
-> > > > >          object_unref(OBJECT(mapping));
-> > > > >          ret =3D -EFAULT;
-> > > > > -        goto send_reply_commit;
-> > > > > -    }
-> > > > > -
-> > > > > -send_reply_commit:
-> > > > > -    /* Send reply and commit after transaction started */
-> > > > > -    if (hdr->flags & VHOST_USER_NEED_REPLY_MASK) {
-> > > > > -        payload->u64 =3D !!ret;
-> > > > > -        hdr->size =3D sizeof(payload->u64);
-> > > > > -        if (!vhost_user_send_resp(ioc, hdr, payload, &local_err)=
-)
-> {
-> > > > > -            error_report_err(local_err);
-> > > > > -            memory_region_transaction_commit();
-> > > > > -            return -EFAULT;
-> > > > > -        }
-> > > > > +        goto send_reply;
-> > > > >      }
-> > > > > -    memory_region_transaction_commit();
-> > > > > -    return 0;
-> > > > >
-> > > > >  send_reply:
-> > > > >      if (hdr->flags & VHOST_USER_NEED_REPLY_MASK) {
-> > > > > diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> > > > > index af41841b529..e5c219be095 100644
-> > > > > --- a/hw/virtio/vhost.c
-> > > > > +++ b/hw/virtio/vhost.c
-> > > > > @@ -636,6 +636,16 @@ static bool vhost_section(struct vhost_dev
-> *dev, MemoryRegionSection *section)
-> > > > >  {
-> > > > >      MemoryRegion *mr =3D section->mr;
-> > > > >
-> > > > > +    /*
-> > > > > +     * Skip shmem mapping regions, they are managed via
-> SHMEM_MAP/UNMAP.
-> > > > > +     * Including them triggers ADD_MEM_REG during the SHMEM_MAP
-> transaction
-> > > > > +     * commit, deadlocking the backend.
-> > > > > +     */
-> > > > > +    if (object_dynamic_cast(memory_region_owner(mr),
-> > > > > +                            TYPE_VIRTIO_SHARED_MEMORY_MAPPING)) =
-{
-> > > > > +        return false;
-> > > > > +    }
-> > > > > +
-> > > > >      if (memory_region_is_ram(mr) && !memory_region_is_rom(mr)) {
-> > > > >          uint8_t dirty_mask =3D memory_region_get_dirty_log_mask(=
-mr);
-> > > > >          uint8_t handled_dirty;
-> > > >
-> > > >
-> > > > This all seems risky i have to say.  Is this always map never unmap=
-?
-> > >
-> > > The filter covers both, and this is a good point. For symmetry the
-> > > handle_shmem_unmap() should call virtio_del_shmem_map() before
-> > > replying.
-> > >
-> > > BR,
-> > > Albert.
-> >
-> > the reverse order I would say?
-> >
-> > if we add, first we commit then update the backend
-> >
-> > if we delete first update the backend then commit?
->
-> I think it could be argued both ways, so I'd be ok with what you
-> described (which is what's done in current mainline for the unmap
-> side).
->
-> The reason the commit (the whole del_shmem_map() op) was delayed
-> before on unmap was to avoid the deadlock (the same as for map).
->
-> With the filter, that is no longer a problem. So I would say that if
-> the backend sends a SHMEM_UNMAP request, by the time it receives the
-> reply the unmap operation is already commited. It's more symmetrical:
-> the frontend only replies when the requested memory operation (map or
-> unmap) is finished and committed.
->
-> >
-> >
-> >
-> > > >
-> > > > > --
-> > > > > 2.52.0
-> > > >
-> >
->
->
+We can't add a Ventana copyright dated 2026.  Ventana as an entity ceased to
+exist December 2025.
 
---000000000000f71ed00656ce7e30
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">So I will keep the current mainline ordering for unmap (re=
-ply before delete) as Michael suggested.</div><br><div class=3D"gmail_quote=
- gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Jul 1=
-7, 2026 at 3:11=E2=80=AFPM Albert Esteve &lt;<a href=3D"mailto:aesteve@redh=
-at.com">aesteve@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
-04,204);padding-left:1ex">On Fri, Jul 17, 2026 at 2:58=E2=80=AFPM Michael S=
-. Tsirkin &lt;<a href=3D"mailto:mst@redhat.com" target=3D"_blank">mst@redha=
-t.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; On Fri, Jul 17, 2026 at 01:50:31PM +0200, Albert Esteve wrote:<br>
-&gt; &gt; On Fri, Jul 17, 2026 at 12:37=E2=80=AFPM Michael S. Tsirkin &lt;<=
-a href=3D"mailto:mst@redhat.com" target=3D"_blank">mst@redhat.com</a>&gt; w=
-rote:<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; On Fri, Jul 17, 2026 at 12:32:59PM +0200, Dorinda Bassey wro=
-te:<br>
-&gt; &gt; &gt; &gt; Commit the memory region transaction before sending the=
- SHMEM_MAP reply<br>
-&gt; &gt; &gt; &gt; so the KVM memory slot exists before the guest can acce=
-ss the mapped<br>
-&gt; &gt; &gt; &gt; region.<br>
-&gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; This moves the commit to while the backend is still blo=
-cked waiting for<br>
-&gt; &gt; &gt; &gt; the reply, which can trigger ADD_MEM_REG back to the ba=
-ckend and<br>
-&gt; &gt; &gt; &gt; deadlock. Filter shmem mapping regions out of vhost_sec=
-tion() by<br>
-&gt; &gt; &gt; &gt; checking the MR owner type to prevent this.<br>
-&gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; The explicit transaction begin/commit wrapping is dropp=
-ed since<br>
-&gt; &gt; &gt; &gt; virtio_add_shmem_map() already commits via memory_regio=
-n_add_subregion().<br>
-&gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; Fixes: b52e1896e764 (&quot;vhost-user: Add VirtIO Share=
-d Memory map request&quot;)<br>
-&gt; &gt; &gt; &gt; Suggested-by: Albert Esteve &lt;<a href=3D"mailto:aeste=
-ve@redhat.com" target=3D"_blank">aesteve@redhat.com</a>&gt;<br>
-&gt; &gt; &gt; &gt; Signed-off-by: Dorinda Bassey &lt;<a href=3D"mailto:dba=
-ssey@redhat.com" target=3D"_blank">dbassey@redhat.com</a>&gt;<br>
-&gt; &gt; &gt; &gt; ---<br>
-&gt; &gt; &gt; &gt;=C2=A0 hw/virtio/vhost-user.c | 20 ++------------------<=
-br>
-&gt; &gt; &gt; &gt;=C2=A0 hw/virtio/vhost.c=C2=A0 =C2=A0 =C2=A0 | 10 ++++++=
-++++<br>
-&gt; &gt; &gt; &gt;=C2=A0 2 files changed, 12 insertions(+), 18 deletions(-=
-)<br>
-&gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-u=
-ser.c<br>
-&gt; &gt; &gt; &gt; index 517cc4ca716..01468f7441a 100644<br>
-&gt; &gt; &gt; &gt; --- a/hw/virtio/vhost-user.c<br>
-&gt; &gt; &gt; &gt; +++ b/hw/virtio/vhost-user.c<br>
-&gt; &gt; &gt; &gt; @@ -1977,8 +1977,6 @@ vhost_user_backend_handle_shmem_m=
-ap(struct vhost_dev *dev,<br>
-&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; -=C2=A0 =C2=A0 memory_region_transaction_begin();<br>
-&gt; &gt; &gt; &gt; -<br>
-&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 /* Create VirtioSharedMemoryMapping=
- object */<br>
-&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 VirtioSharedMemoryMapping *mapping =
-=3D virtio_shared_memory_mapping_new(<br>
-&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 vu_mmap-&gt;shmid, fd=
-, vu_mmap-&gt;fd_offset, vu_mmap-&gt;shm_offset,<br>
-&gt; &gt; &gt; &gt; @@ -1986,7 +1984,7 @@ vhost_user_backend_handle_shmem_m=
-ap(struct vhost_dev *dev,<br>
-&gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 if (!mapping) {<br>
-&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D -EFAULT;<br>
-&gt; &gt; &gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto send_reply_commit;<br=
->
-&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto send_reply;<br>
-&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 /* Add the mapping to the shared me=
-mory region */<br>
-&gt; &gt; &gt; &gt; @@ -1994,22 +1992,8 @@ vhost_user_backend_handle_shmem_=
-map(struct vhost_dev *dev,<br>
-&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_report(&quot;Fa=
-iled to add shared memory mapping&quot;);<br>
-&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 object_unref(OBJECT(m=
-apping));<br>
-&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D -EFAULT;<br>
-&gt; &gt; &gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto send_reply_commit;<br=
->
-&gt; &gt; &gt; &gt; -=C2=A0 =C2=A0 }<br>
-&gt; &gt; &gt; &gt; -<br>
-&gt; &gt; &gt; &gt; -send_reply_commit:<br>
-&gt; &gt; &gt; &gt; -=C2=A0 =C2=A0 /* Send reply and commit after transacti=
-on started */<br>
-&gt; &gt; &gt; &gt; -=C2=A0 =C2=A0 if (hdr-&gt;flags &amp; VHOST_USER_NEED_=
-REPLY_MASK) {<br>
-&gt; &gt; &gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 payload-&gt;u64 =3D !!ret;=
-<br>
-&gt; &gt; &gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 hdr-&gt;size =3D sizeof(pa=
-yload-&gt;u64);<br>
-&gt; &gt; &gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!vhost_user_send_resp(=
-ioc, hdr, payload, &amp;local_err)) {<br>
-&gt; &gt; &gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_report=
-_err(local_err);<br>
-&gt; &gt; &gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 memory_regio=
-n_transaction_commit();<br>
-&gt; &gt; &gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -EFAU=
-LT;<br>
-&gt; &gt; &gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto send_reply;<br>
-&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; &gt; &gt; &gt; -=C2=A0 =C2=A0 memory_region_transaction_commit();<br>
-&gt; &gt; &gt; &gt; -=C2=A0 =C2=A0 return 0;<br>
-&gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt;=C2=A0 send_reply:<br>
-&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 if (hdr-&gt;flags &amp; VHOST_USER_=
-NEED_REPLY_MASK) {<br>
-&gt; &gt; &gt; &gt; diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c<br>
-&gt; &gt; &gt; &gt; index af41841b529..e5c219be095 100644<br>
-&gt; &gt; &gt; &gt; --- a/hw/virtio/vhost.c<br>
-&gt; &gt; &gt; &gt; +++ b/hw/virtio/vhost.c<br>
-&gt; &gt; &gt; &gt; @@ -636,6 +636,16 @@ static bool vhost_section(struct v=
-host_dev *dev, MemoryRegionSection *section)<br>
-&gt; &gt; &gt; &gt;=C2=A0 {<br>
-&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 MemoryRegion *mr =3D section-&gt;mr=
-;<br>
-&gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 /*<br>
-&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0* Skip shmem mapping regions, they=
- are managed via SHMEM_MAP/UNMAP.<br>
-&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0* Including them triggers ADD_MEM_=
-REG during the SHMEM_MAP transaction<br>
-&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0* commit, deadlocking the backend.=
-<br>
-&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0*/<br>
-&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 if (object_dynamic_cast(memory_region_ow=
-ner(mr),<br>
-&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 TYPE_VIRTIO_SHARED_MEMORY_MAP=
-PING)) {<br>
-&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return false;<br>
-&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 }<br>
-&gt; &gt; &gt; &gt; +<br>
-&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 if (memory_region_is_ram(mr) &amp;&=
-amp; !memory_region_is_rom(mr)) {<br>
-&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint8_t dirty_mask =
-=3D memory_region_get_dirty_log_mask(mr);<br>
-&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint8_t handled_dirty=
-;<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; This all seems risky i have to say.=C2=A0 Is this always map=
- never unmap?<br>
-&gt; &gt;<br>
-&gt; &gt; The filter covers both, and this is a good point. For symmetry th=
-e<br>
-&gt; &gt; handle_shmem_unmap() should call virtio_del_shmem_map() before<br=
->
-&gt; &gt; replying.<br>
-&gt; &gt;<br>
-&gt; &gt; BR,<br>
-&gt; &gt; Albert.<br>
-&gt;<br>
-&gt; the reverse order I would say?<br>
-&gt;<br>
-&gt; if we add, first we commit then update the backend<br>
-&gt;<br>
-&gt; if we delete first update the backend then commit?<br>
-<br>
-I think it could be argued both ways, so I&#39;d be ok with what you<br>
-described (which is what&#39;s done in current mainline for the unmap<br>
-side).<br>
-<br>
-The reason the commit (the whole del_shmem_map() op) was delayed<br>
-before on unmap was to avoid the deadlock (the same as for map).<br>
-<br>
-With the filter, that is no longer a problem. So I would say that if<br>
-the backend sends a SHMEM_UNMAP request, by the time it receives the<br>
-reply the unmap operation is already commited. It&#39;s more symmetrical:<b=
-r>
-the frontend only replies when the requested memory operation (map or<br>
-unmap) is finished and committed.<br>
-<br>
-&gt;<br>
-&gt;<br>
-&gt;<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; --<br>
-&gt; &gt; &gt; &gt; 2.52.0<br>
-&gt; &gt; &gt;<br>
-&gt;<br>
-<br>
-</blockquote></div>
+Everything else LGTM.  Thanks,
+Daniel
 
---000000000000f71ed00656ce7e30--
+
+> +# Copyright (c) 2026 Qualcomm Technologies, Inc.
+> +#
+> +# Author:
+> +#  Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +import os
+> +from pathlib import Path
+> +import subprocess
+> +import time
+> +
+> +from qemu_test import QemuSystemTest
+> +from qemu_test import exec_command
+> +from qemu_test import exec_command_and_wait_for_pattern
+> +from qemu_test import get_qemu_img
+> +from qemu_test import wait_for_console_pattern
+> +
+> +
+> +class RiscvVirtRpmiGuestTest(QemuSystemTest):
+> +    """Boot Linux and exercise RPMI-backed services through guest APIs.
+> +
+> +    This test intentionally keeps guest artifacts external. Set:
+> +
+> +      QEMU_TEST_RPMI_OPENSBI=/path/to/fw_jump.bin
+> +      QEMU_TEST_RPMI_KERNEL=/path/to/Image
+> +      QEMU_TEST_RPMI_ROOTFS=/path/to/rootfs.ext4
+> +
+> +    Exact RPMI packet command-ID coverage remains in riscv-rpmi qtests. This
+> +    functional test verifies Linux/OpenSBI integration paths visible from a
+> +    real guest without adding probe hooks to production RPMI sources.
+> +    """
+> +
+> +    timeout = 360
+> +    PROMPT = 'root@tuxtest:~#'
+> +
+> +    def _require_path(self, env_name):
+> +        value = os.getenv(env_name)
+> +        if not value:
+> +            self.skipTest(f'{env_name} is required')
+> +        path = Path(value)
+> +        if not path.exists():
+> +            self.skipTest(f'{env_name} does not exist: {path}')
+> +        return path
+> +
+> +    def setUp(self):
+> +        super().setUp()
+> +        self.opensbi = self._require_path('QEMU_TEST_RPMI_OPENSBI')
+> +        self.kernel = self._require_path('QEMU_TEST_RPMI_KERNEL')
+> +        self.rootfs = self._require_path('QEMU_TEST_RPMI_ROOTFS')
+> +        self.qemu_img = get_qemu_img(self)
+> +
+> +    def _create_rootfs_overlay(self):
+> +        overlay = Path(self.scratch_file('rootfs.qcow2'))
+> +        subprocess.run([
+> +            self.qemu_img, 'create', '-q', '-f', 'qcow2', '-F', 'raw',
+> +            '-b', str(self.rootfs), str(overlay),
+> +        ], check=True)
+> +        return overlay
+> +
+> +    def _boot_guest(self, smp=4):
+> +        self.set_machine('virt')
+> +        self.machine = 'virt,rpmi=on,aia=aplic-imsic'
+> +        rootfs_overlay = self._create_rootfs_overlay()
+> +
+> +        self.vm.set_console()
+> +        self.vm.add_args(
+> +            '-cpu', 'rv64',
+> +            '-smp', str(smp),
+> +            '-m', '1G',
+> +            '-bios', str(self.opensbi),
+> +            '-kernel', str(self.kernel),
+> +            '-append', 'printk.time=0 root=/dev/vda rw console=ttyS0 '
+> +                       'earlycon=sbi loglevel=8 no_console_suspend',
+> +            '-blockdev', 'driver=qcow2,file.driver=file,'
+> +                         f'file.filename={rootfs_overlay},node-name=hd0',
+> +            '-device', 'virtio-blk-device,drive=hd0',
+> +        )
+> +        self.vm.launch()
+> +
+> +    def _expect_rpmi_firmware_and_linux(self):
+> +        patterns = [
+> +            'Platform HSM Device         : rpmi-hsm',
+> +            'Platform Suspend Device     : rpmi-system-suspend',
+> +            'Standard SBI Extensions',
+> +            'susp',
+> +            'tuxtest login:',
+> +        ]
+> +        for pattern in patterns:
+> +            wait_for_console_pattern(self, pattern)
+> +        exec_command_and_wait_for_pattern(self, 'root', self.PROMPT)
+> +
+> +    def _run_marker_command(self, command, marker, failure_marker=None):
+> +        out = exec_command_and_wait_for_pattern(self, command, marker,
+> +                                                failure_message=failure_marker)
+> +        self.assertIn(marker.encode(), out)
+> +        return out
+> +
+> +    def _validate_hsm_boot_start(self, online_cpus):
+> +        self._run_marker_command(
+> +            'echo RPMI_LINUX_HSM_START_BEGIN; '
+> +            'cat /sys/devices/system/cpu/present; '
+> +            'online=$(cat /sys/devices/system/cpu/online); '
+> +            'echo "$online"; '
+> +            f'if [ "$online" = "{online_cpus}" ]; '
+> +            'then echo RPMI_LINUX_HSM_START_PASS; '
+> +            'else echo RPMI_LINUX_HSM_START_FAIL; fi',
+> +            'RPMI_LINUX_HSM_START_PASS', 'RPMI_LINUX_HSM_START_FAIL')
+> +
+> +    def _validate_hsm_stop(self):
+> +        self._run_marker_command(
+> +            'echo RPMI_LINUX_HSM_STOP_BEGIN; '
+> +            'if [ -w /sys/devices/system/cpu/cpu1/online ]; then '
+> +            'echo 0 > /sys/devices/system/cpu/cpu1/online && '
+> +            '[ "$(cat /sys/devices/system/cpu/online)" = 0 ] && '
+> +            'echo RPMI_LINUX_HSM_STOP_PASS || echo RPMI_LINUX_HSM_STOP_FAIL; '
+> +            'else echo RPMI_LINUX_HSM_STOP_FAIL; fi',
+> +            'RPMI_LINUX_HSM_STOP_PASS', 'RPMI_LINUX_HSM_STOP_FAIL')
+> +
+> +    def _validate_system_suspend(self):
+> +        exec_command(
+> +            self,
+> +            'echo RPMI_LINUX_SUSPEND_BEGIN; '
+> +            'if grep -qw mem /sys/power/state; then '
+> +            'echo mem > /sys/power/state; '
+> +            'else echo RPMI_LINUX_SUSPEND_FAIL; fi')
+> +        wait_for_console_pattern(self, 'RPMI_LINUX_SUSPEND_BEGIN')
+> +        wait_for_console_pattern(self, 'PM: suspend entry')
+> +        self.vm.event_wait('SUSPEND', 10)
+> +        self.vm.qmp('system_wakeup')
+> +        self.vm.event_wait('WAKEUP', 10)
+> +        wait_for_console_pattern(self, 'PM: suspend exit')
+> +        wait_for_console_pattern(self, self.PROMPT)
+> +        self._run_marker_command(
+> +            'marker=RPMI_LINUX_WAKEUP; echo ${marker}_PASS',
+> +            'RPMI_LINUX_WAKEUP_PASS')
+> +
+> +    def _validate_reset_poweroff(self):
+> +        exec_command(self, 'echo RPMI_LINUX_RESET_POWEROFF_BEGIN; poweroff -f')
+> +        wait_for_console_pattern(self, 'RPMI_LINUX_RESET_POWEROFF_BEGIN')
+> +        wait_for_console_pattern(self, 'reboot: Power down')
+> +        self.vm.wait()
+> +
+> +    def test_linux_guest_service_enumeration(self):
+> +        self._boot_guest(smp=4)
+> +        self._expect_rpmi_firmware_and_linux()
+> +        self._validate_hsm_boot_start('0-3')
+> +
+> +    def test_linux_guest_hsm_stop(self):
+> +        self._boot_guest(smp=2)
+> +        self._expect_rpmi_firmware_and_linux()
+> +        self._validate_hsm_boot_start('0-1')
+> +        self._validate_hsm_stop()
+> +
+> +    def test_linux_guest_suspend(self):
+> +        self._boot_guest(smp=1)
+> +        self._expect_rpmi_firmware_and_linux()
+> +        self._validate_system_suspend()
+> +
+> +    def test_linux_guest_reset_poweroff(self):
+> +        self._boot_guest(smp=1)
+> +        self._expect_rpmi_firmware_and_linux()
+> +        self._validate_reset_poweroff()
+> +
+> +
+> +if __name__ == '__main__':
+> +    QemuSystemTest.main()
 
 
