@@ -4,67 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 030B4C44516
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 10:11:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE2AEC44516
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 10:12:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkfTp-0003c3-17; Fri, 17 Jul 2026 06:07:41 -0400
+	id 1wkfXf-0000f1-03; Fri, 17 Jul 2026 06:11:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
- id 1wkfTl-0003ZW-RE; Fri, 17 Jul 2026 06:07:37 -0400
-Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
- id 1wkfTg-0006ar-8F; Fri, 17 Jul 2026 06:07:37 -0400
-Received: from xiaoou-ubuntu-02.home.arpa (unknown [36.110.52.2])
- by APP-01 (Coremail) with SMTP id qwCowAB3T_Pa_llqSAw4AA--.34459S13;
- Fri, 17 Jul 2026 18:07:26 +0800 (CST)
-From: Molly Chen <xiaoou@iscas.ac.cn>
-To: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
- chao.liu.zevorn@gmail.com, Chao Liu <chao.liu@processmission.com>
-Cc: xiaoou@iscas.ac.cn,
-	qemu-riscv@nongnu.org,
-	qemu-devel@nongnu.org
-Subject: [PATCH v2 11/18] target/riscv: Add packed SIMD multiply-accumulate
- instructions
-Date: Fri, 17 Jul 2026 10:07:04 +0000
-Message-Id: <80620d66e75a6c4c58d001fa7ce82ea4415b1b03.1784280142.git.xiaoou@iscas.ac.cn>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <cover.1784280142.git.xiaoou@iscas.ac.cn>
-References: <cover.1784280142.git.xiaoou@iscas.ac.cn>
+ (Exim 4.90_1) (envelope-from <caojunze424@gmail.com>)
+ id 1wkfXT-0000Yo-M5
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 06:11:28 -0400
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <caojunze424@gmail.com>)
+ id 1wkfXE-0007Dp-W2
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 06:11:14 -0400
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-38115bbb83dso600557a91.3
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 03:11:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1784283071; x=1784887871; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=3D4LB4UMCIVeq5/1+G8tKmsQHEW4amZ6BXQzFNtTap4=;
+ b=pF6RLUuHtUHVYnoe69ExCM7y2oKlXddcMt41/6zeflEvJWljGMz9Gp9eXiyr2tPxkD
+ +awueafu7TmRISUsWlsvlfMXhJcLkGaZZMQ7rsmkEqN7K/nG0RV31Hc2jLJeF+prEVHd
+ pHUw5XCKvEtnnh2QWHZW4FE5LhUWbGx6AtCBMx2WpYIx9v2JsuU1w+PSo1iP6bV8gQod
+ dk3fn8tL8sa0KUOXPePy+1HA9ZQJLd/JXsraGeJash6/cpjUy1RCY1BSYYVlxd+oa9Zb
+ H3oS+owmOtyEGmNucLWs0sivnddeY5p0+VU+2dCTAaf/+/DE/N8pcrx+Qg4Hz0pyoI8+
+ U+1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784283071; x=1784887871;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=3D4LB4UMCIVeq5/1+G8tKmsQHEW4amZ6BXQzFNtTap4=;
+ b=YLAzLJpAXLBQdeGsT+0gqcztfMKUrnWnl3DjS0PWaCbaey/9/FS731W+cUrSD61bCb
+ lwqo54hGfgbbDOBLiytoU4E94p0nIggs9f+zCgjtg9QTX1kstfqRTXskAVSEIhMN96Z1
+ SAkb2P7yHojlciQGDpd84VxfdMadPxN23uUzPzJvEpMlDWcHTSvGR7TS1C13RxjmnOas
+ p9AoIgCp9T1m8rhhBxYbaQqcruPMpsZtJZKbjsiB9LBfJPvzS5uYUcYWZOQxRjCwpXGo
+ TIDrBqbP4yqCdI8ngbWg0fDuVlzwddXNvJ8y27bOjyFH5PFbubWeDWUns34BG/WqRCGR
+ w5ug==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpQId1GrqFj7QWDmNjpr01Dp0Sg6Ihlojegzt7zK75jUIuqxDf+jnDVDk1NbpqT+GMzLdh0EhFAvvvs@nongnu.org
+X-Gm-Message-State: AOJu0YxuwBsEt6V058HVLW720mrbwb/xQWyAdi3eMct2f1r7rc78LNzy
+ Uuh9zV3OQsbiY+zzpH4GaFpP6vRyEwpPZg3DcmXSW3BQ6pltE6uINatt
+X-Gm-Gg: AfdE7cloucom2vBc5KhjPCeiNNih0/CsL+LnE40+mt1AJp3+kPiKNxAgwwVdLE77+Da
+ 81QX/BTep3CJgV3MwafYh8trerrf4Y5JVZ/8WJOEz+CFeZY9n26jnPKSOa73LVDpDyKOfXaFocI
+ j42jYnWGKbDDkION9AASzQEtiuAe41qs8o2wFCeseQK/z+H9apaVtuyU0I5R/ngFbP1XeI8XBqA
+ OEhZ2JSjotWPEPJpsSo0cMQSrNfq7hQIt7hSjkCTavFCtpfoOUsUjWWnSGYDaS7uy1EUqdVO/rQ
+ vQoAbb53ewyloKRZoE53C6A2842QNpYTlJySRM5EY4ZkNTBT4PSmJRJ7dx21Ozj+ODNfOgbVhL9
+ 8l5B6f6WYm2WU1C5I/odzw0F4T4C/526SR6vebvkjFyZTA53sPfO3XRhEUDdMzaxjG1X4RiZJkg
+ SE3PHfOW5Z0wHUXumJP7L13QwBPaaY
+X-Received: by 2002:a17:90b:5547:b0:38e:549:9e04 with SMTP id
+ 98e67ed59e1d1-38e4b441371mr1396585a91.1.1784283071381; 
+ Fri, 17 Jul 2026 03:11:11 -0700 (PDT)
+Received: from DESKTOP-JUS09M1.tail12b54b.ts.net ([38.34.7.236])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3142a20b037sm5885396eec.27.2026.07.17.03.11.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 17 Jul 2026 03:11:10 -0700 (PDT)
+From: Junze Cao <caojunze424@gmail.com>
+To: Jack Wang <163wangjack@gmail.com>
+Cc: Junze Cao <caojunze424@gmail.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, Chao Liu <chao.liu@processmission.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>
+Subject: Re: [RFC PATCH 1/2] hw/misc/k230_rmu: add Kendryte K230 Reset
+ Management Unit model
+Date: Fri, 17 Jul 2026 18:11:00 +0800
+Message-ID: <20260717101101.1288002-1-caojunze424@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260709031237.21284-2-163wangjack@gmail.com>
+References: <20260709031237.21284-1-163wangjack@gmail.com>
+ <20260709031237.21284-2-163wangjack@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qwCowAB3T_Pa_llqSAw4AA--.34459S13
-X-Coremail-Antispam: 1UD129KBjvAXoWfZFW8Xw45Cr1ruw4DWw15Jwb_yoW8ZF43Ko
- Z7Cr1rArW8C3y8urya9w1UXrs2qFW09a1DJay5Zr47XF93Wry2qrW5J348A3Z7CrWSyry3
- XrZ3C34rtF9ak34Dn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7v73VFW2AGmfu7bjvjm3
- AaLaJ3UjIYCTnIWjp_UUUO-7AC8VAFwI0_Wr0E3s1l1xkIjI8I6I8E6xAIw20EY4v20xva
- j40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l82xGYIkIc2x26280x7IE14v26r126s0DM28Irc
- Ia0xkI8VCY1x0267AKxVW5JVCq3wA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK021l
- 84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4UJV
- WxJr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v26rxl
- 6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6x
- IIjxv20xvE14v26r126r1DMcIj6I8E87Iv67AKxVW8Jr0_Cr1UMcvjeVCFs4IE7xkEbVWU
- JVW8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxGxcIEc7CjxV
- A2Y2ka0xkIwI1lc7CjxVAaw2AFwI0_Jw0_GFyl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC
- 6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWw
- C2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Gr0_
- Xr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4UJVWxJr1lIxAIcVCF04k26cxKx2IYs7xG6r
- 1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr1j6F4U
- JbIYCTnIWIevJa73UjIFyTuYvjfUomhFDUUUU
-X-Originating-IP: [36.110.52.2]
-X-CM-SenderInfo: 50ld003x6l2u1dvotugofq/
-Received-SPF: pass client-ip=159.226.251.21; envelope-from=xiaoou@iscas.ac.cn;
- helo=cstnet.cn
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, HK_RANDOM_ENVFROM=0.001,
- HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=caojunze424@gmail.com; helo=mail-pj1-x102c.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,446 +109,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Molly Chen <xiaoou@iscas.ac.cn>
----
- target/riscv/helper.h                       |  56 ++++++
- target/riscv/insn32.decode                  |  92 +++++++++
- target/riscv/tcg/insn_trans/trans_rvp.c.inc |  56 ++++++
- target/riscv/tcg/psimd_helper.c             | 195 ++++++++++++++++++++
- 4 files changed, 399 insertions(+)
+Hi Wang,
 
-diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index f06f40b1284..48604d91a79 100644
---- a/target/riscv/helper.h
-+++ b/target/riscv/helper.h
-@@ -1624,3 +1624,59 @@ DEF_HELPER_3(mulsu_w11, i64, env, i64, i64)
- DEF_HELPER_3(mulu_w00, i64, env, i64, i64)
- DEF_HELPER_3(mulu_w01, i64, env, i64, i64)
- DEF_HELPER_3(mulu_w11, i64, env, i64, i64)
-+
-+/* Packed SIMD - Multiply-Accumulate Operations */
-+DEF_HELPER_4(pmhacc_h, tl, env, tl, tl, tl)
-+DEF_HELPER_4(pmhaccsu_h, tl, env, tl, tl, tl)
-+DEF_HELPER_4(pmhaccu_h, tl, env, tl, tl, tl)
-+DEF_HELPER_4(pmhracc_h, tl, env, tl, tl, tl)
-+DEF_HELPER_4(pmhraccsu_h, tl, env, tl, tl, tl)
-+DEF_HELPER_4(pmhraccu_h, tl, env, tl, tl, tl)
-+DEF_HELPER_4(pmhacc_w, i64, env, i64, i64, i64)
-+DEF_HELPER_4(pmhracc_w, i64, env, i64, i64, i64)
-+DEF_HELPER_4(pmhaccsu_w, i64, env, i64, i64, i64)
-+DEF_HELPER_4(pmhraccsu_w, i64, env, i64, i64, i64)
-+DEF_HELPER_4(pmhaccu_w, i64, env, i64, i64, i64)
-+DEF_HELPER_4(pmhraccu_w, i64, env, i64, i64, i64)
-+DEF_HELPER_4(mhacc, i32, env, i32, i32, i32)
-+DEF_HELPER_4(mhracc, i32, env, i32, i32, i32)
-+DEF_HELPER_4(mhaccsu, i32, env, i32, i32, i32)
-+DEF_HELPER_4(mhraccsu, i32, env, i32, i32, i32)
-+DEF_HELPER_4(mhaccu, i32, env, i32, i32, i32)
-+DEF_HELPER_4(mhraccu, i32, env, i32, i32, i32)
-+DEF_HELPER_4(pmhacc_h_b0, tl, env, tl, tl, tl)
-+DEF_HELPER_4(pmhacc_h_b1, tl, env, tl, tl, tl)
-+DEF_HELPER_4(pmhaccsu_h_b0, tl, env, tl, tl, tl)
-+DEF_HELPER_4(pmhaccsu_h_b1, tl, env, tl, tl, tl)
-+DEF_HELPER_4(mhacc_h0, i32, env, i32, i32, i32)
-+DEF_HELPER_4(mhacc_h1, i32, env, i32, i32, i32)
-+DEF_HELPER_4(mhaccsu_h0, i32, env, i32, i32, i32)
-+DEF_HELPER_4(mhaccsu_h1, i32, env, i32, i32, i32)
-+DEF_HELPER_4(pmhacc_w_h0, i64, env, i64, i64, i64)
-+DEF_HELPER_4(pmhacc_w_h1, i64, env, i64, i64, i64)
-+DEF_HELPER_4(pmhaccsu_w_h0, i64, env, i64, i64, i64)
-+DEF_HELPER_4(pmhaccsu_w_h1, i64, env, i64, i64, i64)
-+DEF_HELPER_4(pmacc_w_h00, i64, env, i64, i64, i64)
-+DEF_HELPER_4(pmacc_w_h01, i64, env, i64, i64, i64)
-+DEF_HELPER_4(pmacc_w_h11, i64, env, i64, i64, i64)
-+DEF_HELPER_4(pmaccsu_w_h00, i64, env, i64, i64, i64)
-+DEF_HELPER_4(pmaccsu_w_h11, i64, env, i64, i64, i64)
-+DEF_HELPER_4(pmaccu_w_h00, i64, env, i64, i64, i64)
-+DEF_HELPER_4(pmaccu_w_h01, i64, env, i64, i64, i64)
-+DEF_HELPER_4(pmaccu_w_h11, i64, env, i64, i64, i64)
-+DEF_HELPER_4(macc_h00, i32, env, i32, i32, i32)
-+DEF_HELPER_4(macc_h01, i32, env, i32, i32, i32)
-+DEF_HELPER_4(macc_h11, i32, env, i32, i32, i32)
-+DEF_HELPER_4(maccsu_h00, i32, env, i32, i32, i32)
-+DEF_HELPER_4(maccsu_h11, i32, env, i32, i32, i32)
-+DEF_HELPER_4(maccu_h00, i32, env, i32, i32, i32)
-+DEF_HELPER_4(maccu_h01, i32, env, i32, i32, i32)
-+DEF_HELPER_4(maccu_h11, i32, env, i32, i32, i32)
-+DEF_HELPER_4(macc_w00, i64, env, i64, i64, i64)
-+DEF_HELPER_4(macc_w01, i64, env, i64, i64, i64)
-+DEF_HELPER_4(macc_w11, i64, env, i64, i64, i64)
-+DEF_HELPER_4(maccsu_w00, i64, env, i64, i64, i64)
-+DEF_HELPER_4(maccsu_w11, i64, env, i64, i64, i64)
-+DEF_HELPER_4(maccu_w00, i64, env, i64, i64, i64)
-+DEF_HELPER_4(maccu_w01, i64, env, i64, i64, i64)
-+DEF_HELPER_4(maccu_w11, i64, env, i64, i64, i64)
-diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-index cc0cc35fe24..a9b407e43e2 100644
---- a/target/riscv/insn32.decode
-+++ b/target/riscv/insn32.decode
-@@ -1430,3 +1430,95 @@ mulsu_w11       11110 11 ..... ..... 011 ..... 0111011 @r
- mulu_w00        10100 11 ..... ..... 011 ..... 0111011 @r
- mulu_w01        10110 11 ..... ..... 001 ..... 0111011 @r
- mulu_w11        10110 11 ..... ..... 011 ..... 0111011 @r
-+
-+# Packed SIMD - Multiply-Accumulate Operations
-+pmhacc_h    10001 00 ..... ..... 111 ..... 0111011 @r
-+pmhaccsu_h  11001 00 ..... ..... 111 ..... 0111011 @r
-+pmhaccu_h   10011 00 ..... ..... 111 ..... 0111011 @r
-+pmhracc_h   10001 10 ..... ..... 111 ..... 0111011 @r
-+pmhraccsu_h 11001 10 ..... ..... 111 ..... 0111011 @r
-+pmhraccu_h  10011 10 ..... ..... 111 ..... 0111011 @r
-+{
-+  mhacc     10001 01 ..... ..... 111 ..... 0111011 @r
-+  pmhacc_w  10001 01 ..... ..... 111 ..... 0111011 @r
-+}
-+{
-+  mhracc    10001 11 ..... ..... 111 ..... 0111011 @r
-+  pmhracc_w 10001 11 ..... ..... 111 ..... 0111011 @r
-+}
-+{
-+  mhaccsu   11001 01 ..... ..... 111 ..... 0111011 @r
-+  pmhaccsu_w    11001 01 ..... ..... 111 ..... 0111011 @r
-+}
-+{
-+  mhraccsu  11001 11 ..... ..... 111 ..... 0111011 @r
-+  pmhraccsu_w   11001 11 ..... ..... 111 ..... 0111011 @r
-+}
-+{
-+  mhaccu    10011 01 ..... ..... 111 ..... 0111011 @r
-+  pmhaccu_w 10011 01 ..... ..... 111 ..... 0111011 @r
-+}
-+{
-+  mhraccu   10011 11 ..... ..... 111 ..... 0111011 @r
-+  pmhraccu_w    10011 11 ..... ..... 111 ..... 0111011 @r
-+}
-+pmhacc_h_b0     10101 00 ..... ..... 111 ..... 0111011 @r
-+pmhacc_h_b1     10111 00 ..... ..... 111 ..... 0111011 @r
-+pmhaccsu_h_b0   10101 10 ..... ..... 111 ..... 0111011 @r
-+pmhaccsu_h_b1   10111 10 ..... ..... 111 ..... 0111011 @r
-+{
-+  mhacc_h0      10101 01 ..... ..... 111 ..... 0111011 @r
-+  pmhacc_w_h0   10101 01 ..... ..... 111 ..... 0111011 @r
-+}
-+{
-+  mhacc_h1      10111 01 ..... ..... 111 ..... 0111011 @r
-+  pmhacc_w_h1   10111 01 ..... ..... 111 ..... 0111011 @r
-+}
-+{
-+  mhaccsu_h0    10101 11 ..... ..... 111 ..... 0111011 @r
-+  pmhaccsu_w_h0 10101 11 ..... ..... 111 ..... 0111011 @r
-+}
-+{
-+  mhaccsu_h1    10111 11 ..... ..... 111 ..... 0111011 @r
-+  pmhaccsu_w_h1 10111 11 ..... ..... 111 ..... 0111011 @r
-+}
-+{
-+  macc_h00      10001 01 ..... ..... 011 ..... 0111011 @r
-+  pmacc_w_h00   10001 01 ..... ..... 011 ..... 0111011 @r
-+}
-+{
-+  macc_h01      10011 01 ..... ..... 001 ..... 0111011 @r
-+  pmacc_w_h01   10011 01 ..... ..... 001 ..... 0111011 @r
-+}
-+{
-+  macc_h11      10011 01 ..... ..... 011 ..... 0111011 @r
-+  pmacc_w_h11   10011 01 ..... ..... 011 ..... 0111011 @r
-+}
-+{
-+  maccsu_h00    11101 01 ..... ..... 011 ..... 0111011 @r
-+  pmaccsu_w_h00 11101 01 ..... ..... 011 ..... 0111011 @r
-+}
-+{
-+  maccsu_h11    11111 01 ..... ..... 011 ..... 0111011 @r
-+  pmaccsu_w_h11 11111 01 ..... ..... 011 ..... 0111011 @r
-+}
-+{
-+  maccu_h00     10101 01 ..... ..... 011 ..... 0111011 @r
-+  pmaccu_w_h00  10101 01 ..... ..... 011 ..... 0111011 @r
-+}
-+{
-+  maccu_h01     10111 01 ..... ..... 001 ..... 0111011 @r
-+  pmaccu_w_h01  10111 01 ..... ..... 001 ..... 0111011 @r
-+}
-+{
-+  maccu_h11     10111 01 ..... ..... 011 ..... 0111011 @r
-+  pmaccu_w_h11  10111 01 ..... ..... 011 ..... 0111011 @r
-+}
-+macc_w00        10001 11 ..... ..... 011 ..... 0111011 @r
-+macc_w01        10011 11 ..... ..... 001 ..... 0111011 @r
-+macc_w11        10011 11 ..... ..... 011 ..... 0111011 @r
-+maccsu_w00      11101 11 ..... ..... 011 ..... 0111011 @r
-+maccsu_w11      11111 11 ..... ..... 011 ..... 0111011 @r
-+maccu_w00       10101 11 ..... ..... 011 ..... 0111011 @r
-+maccu_w01       10111 11 ..... ..... 001 ..... 0111011 @r
-+maccu_w11       10111 11 ..... ..... 011 ..... 0111011 @r
-diff --git a/target/riscv/tcg/insn_trans/trans_rvp.c.inc b/target/riscv/tcg/insn_trans/trans_rvp.c.inc
-index 7edea099d01..5a30c49016f 100644
---- a/target/riscv/tcg/insn_trans/trans_rvp.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_rvp.c.inc
-@@ -770,3 +770,59 @@ GEN_SIMD_TRANS_64(mulu_w00)
- GEN_SIMD_TRANS_64(mulu_w01)
- GEN_SIMD_TRANS_64(mulu_w11)
- 
-+/* Packed SIMD - Multiply-Accumulate Operations */
-+GEN_SIMD_TRANS_ACC(pmhacc_h)
-+GEN_SIMD_TRANS_ACC(pmhaccsu_h)
-+GEN_SIMD_TRANS_ACC(pmhaccu_h)
-+GEN_SIMD_TRANS_ACC(pmhracc_h)
-+GEN_SIMD_TRANS_ACC(pmhraccsu_h)
-+GEN_SIMD_TRANS_ACC(pmhraccu_h)
-+GEN_SIMD_TRANS_ACC_64(pmhacc_w)
-+GEN_SIMD_TRANS_ACC_64(pmhracc_w)
-+GEN_SIMD_TRANS_ACC_64(pmhaccsu_w)
-+GEN_SIMD_TRANS_ACC_64(pmhraccsu_w)
-+GEN_SIMD_TRANS_ACC_64(pmhaccu_w)
-+GEN_SIMD_TRANS_ACC_64(pmhraccu_w)
-+GEN_SIMD_TRANS_ACC_32(mhacc)
-+GEN_SIMD_TRANS_ACC_32(mhracc)
-+GEN_SIMD_TRANS_ACC_32(mhaccsu)
-+GEN_SIMD_TRANS_ACC_32(mhraccsu)
-+GEN_SIMD_TRANS_ACC_32(mhaccu)
-+GEN_SIMD_TRANS_ACC_32(mhraccu)
-+GEN_SIMD_TRANS_ACC(pmhacc_h_b0)
-+GEN_SIMD_TRANS_ACC(pmhacc_h_b1)
-+GEN_SIMD_TRANS_ACC(pmhaccsu_h_b0)
-+GEN_SIMD_TRANS_ACC(pmhaccsu_h_b1)
-+GEN_SIMD_TRANS_ACC_32(mhacc_h0)
-+GEN_SIMD_TRANS_ACC_32(mhacc_h1)
-+GEN_SIMD_TRANS_ACC_32(mhaccsu_h0)
-+GEN_SIMD_TRANS_ACC_32(mhaccsu_h1)
-+GEN_SIMD_TRANS_ACC_64(pmhacc_w_h0)
-+GEN_SIMD_TRANS_ACC_64(pmhacc_w_h1)
-+GEN_SIMD_TRANS_ACC_64(pmhaccsu_w_h0)
-+GEN_SIMD_TRANS_ACC_64(pmhaccsu_w_h1)
-+GEN_SIMD_TRANS_ACC_64(pmacc_w_h00)
-+GEN_SIMD_TRANS_ACC_64(pmacc_w_h01)
-+GEN_SIMD_TRANS_ACC_64(pmacc_w_h11)
-+GEN_SIMD_TRANS_ACC_64(pmaccsu_w_h00)
-+GEN_SIMD_TRANS_ACC_64(pmaccsu_w_h11)
-+GEN_SIMD_TRANS_ACC_64(pmaccu_w_h00)
-+GEN_SIMD_TRANS_ACC_64(pmaccu_w_h01)
-+GEN_SIMD_TRANS_ACC_64(pmaccu_w_h11)
-+GEN_SIMD_TRANS_ACC_32(macc_h00)
-+GEN_SIMD_TRANS_ACC_32(macc_h01)
-+GEN_SIMD_TRANS_ACC_32(macc_h11)
-+GEN_SIMD_TRANS_ACC_32(maccsu_h00)
-+GEN_SIMD_TRANS_ACC_32(maccsu_h11)
-+GEN_SIMD_TRANS_ACC_32(maccu_h00)
-+GEN_SIMD_TRANS_ACC_32(maccu_h01)
-+GEN_SIMD_TRANS_ACC_32(maccu_h11)
-+GEN_SIMD_TRANS_ACC_64(macc_w00)
-+GEN_SIMD_TRANS_ACC_64(macc_w01)
-+GEN_SIMD_TRANS_ACC_64(macc_w11)
-+GEN_SIMD_TRANS_ACC_64(maccsu_w00)
-+GEN_SIMD_TRANS_ACC_64(maccsu_w11)
-+GEN_SIMD_TRANS_ACC_64(maccu_w00)
-+GEN_SIMD_TRANS_ACC_64(maccu_w01)
-+GEN_SIMD_TRANS_ACC_64(maccu_w11)
-+
-diff --git a/target/riscv/tcg/psimd_helper.c b/target/riscv/tcg/psimd_helper.c
-index 5be8fe257f8..91a3aac3ebb 100644
---- a/target/riscv/tcg/psimd_helper.c
-+++ b/target/riscv/tcg/psimd_helper.c
-@@ -2443,3 +2443,198 @@ GEN_PSIMD_MUL_ELEM_SCALAR(mulu_w01, uint64_t, uint32_t, uint32_t,
- GEN_PSIMD_MUL_ELEM_SCALAR(mulu_w11, uint64_t, uint32_t, uint32_t,
-                           uint64_t, EXTRACT32, 1, 1, PSIMD_MUL_U64)
- 
-+/* Multiply-Accumulate Operations */
-+
-+GEN_PSIMD_MUL_HIGH_ACC(pmhacc_h, target_ulong, int16_t, int16_t, int16_t,
-+                       int32_t, int16_t, uint16_t, EXTRACT16, INSERT16,
-+                       ELEMS_H, 16, 0, PSIMD_MUL_S32)
-+GEN_PSIMD_MUL_HIGH_ACC(pmhaccsu_h, target_ulong, int16_t, uint16_t, int16_t,
-+                       int32_t, int16_t, uint16_t, EXTRACT16, INSERT16,
-+                       ELEMS_H, 16, 0, PSIMD_MUL_SU32)
-+GEN_PSIMD_MUL_HIGH_ACC(pmhaccu_h, target_ulong, uint16_t, uint16_t, uint16_t,
-+                       uint32_t, uint16_t, uint16_t, EXTRACT16, INSERT16,
-+                       ELEMS_H, 16, 0, PSIMD_MUL_U32)
-+GEN_PSIMD_MUL_HIGH_ACC(pmhracc_h, target_ulong, int16_t, int16_t, int16_t,
-+                       int32_t, int16_t, uint16_t, EXTRACT16, INSERT16,
-+                       ELEMS_H, 16, 1 << 15, PSIMD_MUL_S32)
-+GEN_PSIMD_MUL_HIGH_ACC(pmhraccsu_h, target_ulong, int16_t, uint16_t, int16_t,
-+                       int32_t, int16_t, uint16_t, EXTRACT16, INSERT16,
-+                       ELEMS_H, 16, 1 << 15, PSIMD_MUL_SU32)
-+GEN_PSIMD_MUL_HIGH_ACC(pmhraccu_h, target_ulong, uint16_t, uint16_t,
-+                       uint16_t, uint32_t, uint16_t, uint16_t,
-+                       EXTRACT16, INSERT16, ELEMS_H, 16, 1 << 15,
-+                       PSIMD_MUL_U32)
-+
-+GEN_PSIMD_MUL_HIGH_ACC(pmhacc_w, uint64_t, int32_t, int32_t, int32_t,
-+                       int64_t, int32_t, uint32_t, EXTRACT32, INSERT32,
-+                       ELEMS_W, 32, 0, PSIMD_MUL_S64)
-+GEN_PSIMD_MUL_HIGH_ACC(pmhracc_w, uint64_t, int32_t, int32_t, int32_t,
-+                       int64_t, int32_t, uint32_t, EXTRACT32, INSERT32,
-+                       ELEMS_W, 32, 1LL << 31, PSIMD_MUL_S64)
-+GEN_PSIMD_MUL_HIGH_ACC(pmhaccsu_w, uint64_t, int32_t, uint32_t, int32_t,
-+                       int64_t, int32_t, uint32_t, EXTRACT32, INSERT32,
-+                       ELEMS_W, 32, 0, PSIMD_MUL_SU64)
-+GEN_PSIMD_MUL_HIGH_ACC(pmhraccsu_w, uint64_t, int32_t, uint32_t, int32_t,
-+                       int64_t, int32_t, uint32_t, EXTRACT32, INSERT32,
-+                       ELEMS_W, 32, 1LL << 31, PSIMD_MUL_SU64)
-+GEN_PSIMD_MUL_HIGH_ACC(pmhaccu_w, uint64_t, uint32_t, uint32_t, uint32_t,
-+                       uint64_t, uint32_t, uint32_t, EXTRACT32, INSERT32,
-+                       ELEMS_W, 32, 0, PSIMD_MUL_U64)
-+GEN_PSIMD_MUL_HIGH_ACC(pmhraccu_w, uint64_t, uint32_t, uint32_t, uint32_t,
-+                       uint64_t, uint32_t, uint32_t, EXTRACT32, INSERT32,
-+                       ELEMS_W, 32, 1LL << 31, PSIMD_MUL_U64)
-+
-+GEN_PSIMD_MUL_HIGH_ACC(mhacc, uint32_t, int32_t, int32_t, int32_t,
-+                       int64_t, int32_t, uint32_t, EXTRACT32, INSERT32,
-+                       ELEMS_W, 32, 0, PSIMD_MUL_S64)
-+GEN_PSIMD_MUL_HIGH_ACC(mhracc, uint32_t, int32_t, int32_t, int32_t,
-+                       int64_t, int32_t, uint32_t, EXTRACT32, INSERT32,
-+                       ELEMS_W, 32, 1LL << 31, PSIMD_MUL_S64)
-+GEN_PSIMD_MUL_HIGH_ACC(mhaccsu, uint32_t, int32_t, uint32_t, int32_t,
-+                       int64_t, int32_t, uint32_t, EXTRACT32, INSERT32,
-+                       ELEMS_W, 32, 0, PSIMD_MUL_SU64)
-+GEN_PSIMD_MUL_HIGH_ACC(mhraccsu, uint32_t, int32_t, uint32_t, int32_t,
-+                       int64_t, int32_t, uint32_t, EXTRACT32, INSERT32,
-+                       ELEMS_W, 32, 1LL << 31, PSIMD_MUL_SU64)
-+GEN_PSIMD_MUL_HIGH_ACC(mhaccu, uint32_t, uint32_t, uint32_t, uint32_t,
-+                       uint64_t, uint32_t, uint32_t, EXTRACT32, INSERT32,
-+                       ELEMS_W, 32, 0, PSIMD_MUL_U64)
-+GEN_PSIMD_MUL_HIGH_ACC(mhraccu, uint32_t, uint32_t, uint32_t, uint32_t,
-+                       uint64_t, uint32_t, uint32_t, EXTRACT32, INSERT32,
-+                       ELEMS_W, 32, 1LL << 31, PSIMD_MUL_U64)
-+
-+GEN_PSIMD_MUL_HIGH_ACC_SEL(pmhacc_h_b0, target_ulong, int16_t, int8_t,
-+                           int16_t, int32_t, int16_t, uint16_t, EXTRACT16,
-+                           EXTRACT8, INSERT16, ELEMS_H, 2, 0, 8,
-+                           PSIMD_MUL_S32)
-+GEN_PSIMD_MUL_HIGH_ACC_SEL(pmhacc_h_b1, target_ulong, int16_t, int8_t,
-+                           int16_t, int32_t, int16_t, uint16_t, EXTRACT16,
-+                           EXTRACT8, INSERT16, ELEMS_H, 2, 1, 8,
-+                           PSIMD_MUL_S32)
-+GEN_PSIMD_MUL_HIGH_ACC_SEL(pmhaccsu_h_b0, target_ulong, int16_t, uint8_t,
-+                           int16_t, int32_t, int16_t, uint16_t, EXTRACT16,
-+                           EXTRACT8, INSERT16, ELEMS_H, 2, 0, 8,
-+                           PSIMD_MUL_SU32)
-+GEN_PSIMD_MUL_HIGH_ACC_SEL(pmhaccsu_h_b1, target_ulong, int16_t, uint8_t,
-+                           int16_t, int32_t, int16_t, uint16_t, EXTRACT16,
-+                           EXTRACT8, INSERT16, ELEMS_H, 2, 1, 8,
-+                           PSIMD_MUL_SU32)
-+
-+GEN_PSIMD_MUL_HIGH_ACC_SEL(mhacc_h0, uint32_t, int32_t, int16_t, int32_t,
-+                           int64_t, int32_t, uint32_t, EXTRACT32,
-+                           EXTRACT16, INSERT32, ELEMS_W, 0, 0, 16,
-+                           PSIMD_MUL_S64)
-+GEN_PSIMD_MUL_HIGH_ACC_SEL(mhacc_h1, uint32_t, int32_t, int16_t, int32_t,
-+                           int64_t, int32_t, uint32_t, EXTRACT32,
-+                           EXTRACT16, INSERT32, ELEMS_W, 0, 1, 16,
-+                           PSIMD_MUL_S64)
-+GEN_PSIMD_MUL_HIGH_ACC_SEL(mhaccsu_h0, uint32_t, int32_t, uint16_t, int32_t,
-+                           int64_t, int32_t, uint32_t, EXTRACT32,
-+                           EXTRACT16, INSERT32, ELEMS_W, 0, 0, 16,
-+                           PSIMD_MUL_SU64)
-+GEN_PSIMD_MUL_HIGH_ACC_SEL(mhaccsu_h1, uint32_t, int32_t, uint16_t, int32_t,
-+                           int64_t, int32_t, uint32_t, EXTRACT32,
-+                           EXTRACT16, INSERT32, ELEMS_W, 0, 1, 16,
-+                           PSIMD_MUL_SU64)
-+
-+GEN_PSIMD_MUL_HIGH_ACC_SEL(pmhacc_w_h0, uint64_t, int32_t, int16_t,
-+                           int32_t, int64_t, int32_t, uint32_t, EXTRACT32,
-+                           EXTRACT16, INSERT32, ELEMS_W, 2, 0, 16,
-+                           PSIMD_MUL_S64)
-+GEN_PSIMD_MUL_HIGH_ACC_SEL(pmhacc_w_h1, uint64_t, int32_t, int16_t,
-+                           int32_t, int64_t, int32_t, uint32_t, EXTRACT32,
-+                           EXTRACT16, INSERT32, ELEMS_W, 2, 1, 16,
-+                           PSIMD_MUL_S64)
-+GEN_PSIMD_MUL_HIGH_ACC_SEL(pmhaccsu_w_h0, uint64_t, int32_t, uint16_t,
-+                           int32_t, int64_t, int32_t, uint32_t, EXTRACT32,
-+                           EXTRACT16, INSERT32, ELEMS_W, 2, 0, 16,
-+                           PSIMD_MUL_SU64)
-+GEN_PSIMD_MUL_HIGH_ACC_SEL(pmhaccsu_w_h1, uint64_t, int32_t, uint16_t,
-+                           int32_t, int64_t, int32_t, uint32_t, EXTRACT32,
-+                           EXTRACT16, INSERT32, ELEMS_W, 2, 1, 16,
-+                           PSIMD_MUL_SU64)
-+
-+GEN_PSIMD_MUL_ACC_INDEXED(pmacc_w_h00, uint64_t, int16_t, int16_t,
-+                          int32_t, int32_t, uint32_t, EXTRACT16, EXTRACT32,
-+                          INSERT32, ELEMS_W, 2, 0, 0, PSIMD_MUL_S32)
-+GEN_PSIMD_MUL_ACC_INDEXED(pmacc_w_h01, uint64_t, int16_t, int16_t,
-+                          int32_t, int32_t, uint32_t, EXTRACT16, EXTRACT32,
-+                          INSERT32, ELEMS_W, 2, 0, 1, PSIMD_MUL_S32)
-+GEN_PSIMD_MUL_ACC_INDEXED(pmacc_w_h11, uint64_t, int16_t, int16_t,
-+                          int32_t, int32_t, uint32_t, EXTRACT16, EXTRACT32,
-+                          INSERT32, ELEMS_W, 2, 1, 1, PSIMD_MUL_S32)
-+GEN_PSIMD_MUL_ACC_INDEXED(pmaccsu_w_h00, uint64_t, int16_t, uint16_t,
-+                          int32_t, int32_t, uint32_t, EXTRACT16, EXTRACT32,
-+                          INSERT32, ELEMS_W, 2, 0, 0, PSIMD_MUL_SU32)
-+GEN_PSIMD_MUL_ACC_INDEXED(pmaccsu_w_h11, uint64_t, int16_t, uint16_t,
-+                          int32_t, int32_t, uint32_t, EXTRACT16, EXTRACT32,
-+                          INSERT32, ELEMS_W, 2, 1, 1, PSIMD_MUL_SU32)
-+GEN_PSIMD_MUL_ACC_INDEXED(pmaccu_w_h00, uint64_t, uint16_t, uint16_t,
-+                          uint32_t, uint32_t, uint32_t, EXTRACT16,
-+                          EXTRACT32, INSERT32, ELEMS_W, 2, 0, 0,
-+                          PSIMD_MUL_U32)
-+GEN_PSIMD_MUL_ACC_INDEXED(pmaccu_w_h01, uint64_t, uint16_t, uint16_t,
-+                          uint32_t, uint32_t, uint32_t, EXTRACT16,
-+                          EXTRACT32, INSERT32, ELEMS_W, 2, 0, 1,
-+                          PSIMD_MUL_U32)
-+GEN_PSIMD_MUL_ACC_INDEXED(pmaccu_w_h11, uint64_t, uint16_t, uint16_t,
-+                          uint32_t, uint32_t, uint32_t, EXTRACT16,
-+                          EXTRACT32, INSERT32, ELEMS_W, 2, 1, 1,
-+                          PSIMD_MUL_U32)
-+
-+GEN_PSIMD_MUL_ACC_INDEXED(macc_h00, uint32_t, int16_t, int16_t,
-+                          int32_t, int32_t, uint32_t, EXTRACT16, EXTRACT32,
-+                          INSERT32, ELEMS_W, 0, 0, 0, PSIMD_MUL_S32)
-+GEN_PSIMD_MUL_ACC_INDEXED(macc_h01, uint32_t, int16_t, int16_t,
-+                          int32_t, int32_t, uint32_t, EXTRACT16, EXTRACT32,
-+                          INSERT32, ELEMS_W, 0, 0, 1, PSIMD_MUL_S32)
-+GEN_PSIMD_MUL_ACC_INDEXED(macc_h11, uint32_t, int16_t, int16_t,
-+                          int32_t, int32_t, uint32_t, EXTRACT16, EXTRACT32,
-+                          INSERT32, ELEMS_W, 0, 1, 1, PSIMD_MUL_S32)
-+GEN_PSIMD_MUL_ACC_INDEXED(maccsu_h00, uint32_t, int16_t, uint16_t,
-+                          int32_t, int32_t, uint32_t, EXTRACT16, EXTRACT32,
-+                          INSERT32, ELEMS_W, 0, 0, 0, PSIMD_MUL_SU32)
-+GEN_PSIMD_MUL_ACC_INDEXED(maccsu_h11, uint32_t, int16_t, uint16_t,
-+                          int32_t, int32_t, uint32_t, EXTRACT16, EXTRACT32,
-+                          INSERT32, ELEMS_W, 0, 1, 1, PSIMD_MUL_SU32)
-+GEN_PSIMD_MUL_ACC_INDEXED(maccu_h00, uint32_t, uint16_t, uint16_t,
-+                          uint32_t, uint32_t, uint32_t, EXTRACT16,
-+                          EXTRACT32, INSERT32, ELEMS_W, 0, 0, 0,
-+                          PSIMD_MUL_U32)
-+GEN_PSIMD_MUL_ACC_INDEXED(maccu_h01, uint32_t, uint16_t, uint16_t,
-+                          uint32_t, uint32_t, uint32_t, EXTRACT16,
-+                          EXTRACT32, INSERT32, ELEMS_W, 0, 0, 1,
-+                          PSIMD_MUL_U32)
-+GEN_PSIMD_MUL_ACC_INDEXED(maccu_h11, uint32_t, uint16_t, uint16_t,
-+                          uint32_t, uint32_t, uint32_t, EXTRACT16,
-+                          EXTRACT32, INSERT32, ELEMS_W, 0, 1, 1,
-+                          PSIMD_MUL_U32)
-+
-+GEN_PSIMD_MUL_ACC_INDEXED(macc_w00, uint64_t, int32_t, int32_t,
-+                          int64_t, int64_t, uint64_t, EXTRACT32, EXTRACT64,
-+                          INSERT64, ELEMS_D, 0, 0, 0, PSIMD_MUL_S64)
-+GEN_PSIMD_MUL_ACC_INDEXED(macc_w01, uint64_t, int32_t, int32_t,
-+                          int64_t, int64_t, uint64_t, EXTRACT32, EXTRACT64,
-+                          INSERT64, ELEMS_D, 0, 0, 1, PSIMD_MUL_S64)
-+GEN_PSIMD_MUL_ACC_INDEXED(macc_w11, uint64_t, int32_t, int32_t,
-+                          int64_t, int64_t, uint64_t, EXTRACT32, EXTRACT64,
-+                          INSERT64, ELEMS_D, 0, 1, 1, PSIMD_MUL_S64)
-+GEN_PSIMD_MUL_ACC_INDEXED(maccsu_w00, uint64_t, int32_t, uint32_t,
-+                          int64_t, int64_t, uint64_t, EXTRACT32, EXTRACT64,
-+                          INSERT64, ELEMS_D, 0, 0, 0, PSIMD_MUL_SU64)
-+GEN_PSIMD_MUL_ACC_INDEXED(maccsu_w11, uint64_t, int32_t, uint32_t,
-+                          int64_t, int64_t, uint64_t, EXTRACT32, EXTRACT64,
-+                          INSERT64, ELEMS_D, 0, 1, 1, PSIMD_MUL_SU64)
-+GEN_PSIMD_MUL_ACC_INDEXED(maccu_w00, uint64_t, uint32_t, uint32_t,
-+                          uint64_t, uint64_t, uint64_t, EXTRACT32,
-+                          EXTRACT64, INSERT64, ELEMS_D, 0, 0, 0,
-+                          PSIMD_MUL_U64)
-+GEN_PSIMD_MUL_ACC_INDEXED(maccu_w01, uint64_t, uint32_t, uint32_t,
-+                          uint64_t, uint64_t, uint64_t, EXTRACT32,
-+                          EXTRACT64, INSERT64, ELEMS_D, 0, 0, 1,
-+                          PSIMD_MUL_U64)
-+GEN_PSIMD_MUL_ACC_INDEXED(maccu_w11, uint64_t, uint32_t, uint32_t,
-+                          uint64_t, uint64_t, uint64_t, EXTRACT32,
-+                          EXTRACT64, INSERT64, ELEMS_D, 0, 1, 1,
-+                          PSIMD_MUL_U64)
-+
--- 
-2.34.1
+Thanks for working on the K230 RMU model.
 
+I reviewed this series against the K230 TRM and the upstream Linux
+reset-k230 driver. The series builds and the supplied qtest passes, but
+I found several issues that should be addressed in v2.
+
+1. The RMU currently acknowledges reset requests without actually
+resetting the target devices. Please connect at least the existing K230
+watchdog devices and add a qtest which verifies that their state is
+reset through the RMU.
+
+2. The register reset state does not match the TRM. Please initialize
+each modelled register with its documented reset value and update the
+reset-value test accordingly.
+
+3. Some register access permissions and reset types are incorrect. In
+particular, some upper SW_DONE reset lines cannot be changed, reserved
+bits are writable, and CPU1 is treated as self-clearing even though it
+requires separate assert and deassert operations.
+
+4. Patch 1 adds k230-rmu-test while the K230 machine still uses the
+unimplemented RMU stub. K230_RMU is enabled and wired only by patch 2,
+so patch 1 cannot pass its own test when checked out independently.
+Please reorder the changes, move the test to patch 2, or squash the two
+patches.
+
+5. The new source, header and qtest files should be added to the K230
+section in MAINTAINERS. Please address the checkpatch errors and
+warnings before sending v2 as well.
+
+6. Please consider modelling the reset timing registers. At minimum,
+their reset values and writable fields should be represented. Real-time
+delays may remain simplified if the zero-latency behavior is documented
+and preserves guest-visible ordering.
+
+7. Please add coverage for the corrected reset values, CPU1
+transitions, upper SW_DONE fields, reserved bits, and reset propagation
+to the watchdogs.
+
+Regards,
+Junze Cao
 
