@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDE9AC44507
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 08:20:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65B8BC44514
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 08:20:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkdnW-0000NX-Ta; Fri, 17 Jul 2026 04:19:54 -0400
+	id 1wkdmk-0007JV-7r; Fri, 17 Jul 2026 04:19:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rohit.kuma1313@gmail.com>)
- id 1wkdnU-0000A0-VI
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 04:19:52 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1wkdmi-0007IN-6C
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 04:19:04 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <rohit.kuma1313@gmail.com>)
- id 1wkdnT-0000Pm-DC
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 04:19:52 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-493d92b7db3so31595085e9.2
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 01:19:51 -0700 (PDT)
+ id 1wkdmf-0000H4-MB
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 04:19:03 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4954a2e73a9so2119385e9.3
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 01:19:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784276390; x=1784881190; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=nLGpY643O2jZqKfla4Bau/QPP9FMH2aQ3gASY/wfNjE=;
- b=rYMhiDZIiO8qs1tNV5gibG+2bqWZGBwSzVlgkYQUy8YiNPAIRX4U7GQi8PCJd7/JWQ
- Vl94WNeOrTII5TT350ZvR/nBjeVA4A6szxL/Ht8+vCeMAV7Rhww0zTBYIDN3Dl+7k0qA
- 5lbrRFD/FRu9JauIkLgYG8h88Q8CrVD2S9Mg1ORw24V9El0Vdmjby96gdpYdqk+XwFAE
- kmhcHvMFs0xDSPE9AERY5jELtSlQ9LJ5ejJaZsTTNUV8o2sSk7KDH52C0HAPKsky6rvY
- KHQzcKUaMw0JU3H5gK5gn1kYDhIVxye9vWUcV0RVhUQYHBDpp7zQfFiXKxqCAYV4CopU
- OU5A==
+ d=gmail.com; s=20251104; t=1784276340; x=1784881140; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=7tS5r3/DAfACBegouwizOa65kFVV2Vd21tyezne+TO0=;
+ b=r7WmeK54L384yZH7MW0Vwb4RQVutKoEoMa1VrAtCbCb3pN9bt2MU/3ENtzhoki4Wkv
+ NwzrIoPAU6skfPl2mLOfb6sMP2u+4NLG5WPqoaX8XbJI7cHZc5UfBoLOXJmLTIzcfaqj
+ zyhY1s99lpQtjEnjTFnE/jWEGvyA/RW2IMOyQAhLmtM/53TR2WcQ+UEm58PtfekOiMEV
+ JQWb9+T6qduJIDwbz90cPjkdjs/Cq+ilH87fp686vHNJnTWIV0696NRHKUqmze7RvMuG
+ 0fxBYhoE9In3z00OEqA8hcNXffW5L+wl1ulF2btThrAT0T4nWY3H4q6fiFdHHBtpKq+G
+ AgWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784276390; x=1784881190;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=nLGpY643O2jZqKfla4Bau/QPP9FMH2aQ3gASY/wfNjE=;
- b=BYMfoALS0caQfS8I8EIJgnXcxDcdeXJKN2k0CzjCkWsH+eGbVDRTbUN65DaPpFxwen
- JtkDsg8DE+yKwGdebXXjXxXQYrnYftCXWdiVkvGf5ebrwE6w4LfPP1xtJnDdAi1PuNvZ
- 63h7ZLpEQ9hxI+vEPd27pfx4Bl4IYF7BGjSLK5ERs3AY1qPFyWRDJMhjQexjRTOKot1O
- CYqr96iSTBZXafQEmhXDQSYp0NArQ7vqQhCkgdBQrK0rCoETUb1uwncF2s3/tiG27IAH
- TrnPJCrTFuCVLfHJoA06tJ7iKx9YMsRQHjmrDjQ8Oo7pcfB4Xf+4HPSCxpmt5c77kORa
- ML+A==
-X-Gm-Message-State: AOJu0YwoHDf4sfQqGmumU3R2yq/wj1jZSFFDYA+VnQxWnGpO/90We04x
- cq22PhS9wI+4KS2/AwqckhtnK9ZQBnWSbeUF5LEOnjrc3Jv7hhD0/tKgOPsfGvVbZlk=
-X-Gm-Gg: AfdE7cni73ikJ+Vp4o+ojGdU5iBGmTbR0JNT1paXbtUwFZm22kngmBsUaa+gwMNmmt0
- NTwOfAsD9fg6lMYVfSvtGVhI6QxktO1H+bMuiYvpFuyfm+45L7o7M0eBbcu35iJP9HOa6NTZ8/q
- bjTt2L/WrYOTSIG8B2jVxhqybjI+nK8sLvtxQceGEWp8Kvw4efH6+ZNwsFqbecpPpUBYJXRYz1v
- I1L8T4zet0lSeWFVhiegesYcxhYF4llxe6+fLvON9vpuCqq92LWSgEyXMmPRZEaqe4vdapda5z2
- IilM/jTQ7BWuWjclejdYMGg00tdAQbWxLc4Yoz4ZJ3bYfdZmKy+vKB5hOy+zh/74+f3LnRiUZWt
- 4TtcJLx24rLiAJApAXrf5D3LOMOHlh1TzZbn6URTGJ9UQPEIfiZQglF7ZfAGFexGCfZDtUWVKK3
- EBvN9EBleUPXVMIp4X0toX/3hrNhjMkFTsPcC8PZHPhLQCaW3Df0af6Rj7+LtKKdW1784xDz4zY
- RiSa3O1XjtJBNWjESWE5nYu/dq1GVdTMh+5pcL/cTEf1y3UrM0=
-X-Received: by 2002:a05:600c:4692:b0:493:bcef:565c with SMTP id
- 5b1f17b1804b1-4954a3e6dd1mr16862565e9.1.1784276389415; 
- Fri, 17 Jul 2026 01:19:49 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1784276340; x=1784881140;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=7tS5r3/DAfACBegouwizOa65kFVV2Vd21tyezne+TO0=;
+ b=abC1ClNHv/M70T87P9b2DxcsCM/6jnge7oZrbiRPGYaBgHdcW5blmIanoVSnJx4bb/
+ znzODMwy3UvE5PwNkyEu1NXu88rk4xFViMsKUnI2/U6jCa8RQzSinJoSIEYuUOLUT8aJ
+ 9kp8ec+p8kDkWZb3gmj5b+462yTSBWIvFrAauPBTMqnzl8rGW3FuX7d7Sdd72oz4yFn3
+ EQeiR4h6kES0lZ+9Di1jPwDL040OUI3uC7lQ10bQIMp/Z/jLZbNG4W73aIQfBwLJ1fiF
+ XUIc3Dlvmid0Da22cJqKAy2jKk1CR+wbh8pqcXYdmmwo/hlQHGH2ypAdDHhomrCpAb5w
+ nGTA==
+X-Gm-Message-State: AOJu0Yxln4eR9zRTTJbbssitCnswgZRQdYkGvgz/vmZqzM/tbvIglVsh
+ +s8QoPiUb+NJQuMs4w9MziywnoxUAeaunV7fuZWdQalIV0T5fjPM5H91i99GhDco/58=
+X-Gm-Gg: AfdE7cllz8M9Ke3nbLOGpt3d4ETiKfR7xbUG1d3jg9uMez3+LkKDRTWJbTMiUcDAoRn
+ rxTLG8Uy6b6euMoowxsiH75ccN0TmH3NnAF5UP30Nd9opFZZ8mGxX3N3YVwaqb8kumG0us9dUdU
+ pDhdmpksrtpWNEg6HJsUInLUqmUfAXuLtABD2G6QukSR+AzBT33lgmxkteQD0hgcaXzfpS38wON
+ zAySXDLQHe9e3bo2FnIWfTJGdwsgxJvXRLxTDsXSNSEnTCfXhxSKUR+Zqc9NkKSnkLACe+5kd5x
+ z1jTmB8J8vC+oMeKWx8/AtBPGrc7luIrRnF43gm3xMILqtAwQApt6hzlSvYaXTGnDCPWhRKt6AU
+ TMkIeKt317LwySojto4Ol+MnA9s2VsSupBDkphQtSgvNblH/Yxf0I9jxCwDziAXkkZicWABK6bu
+ vgZouAlGp1Wzh+6Tvuu6saBUTThFiTwhjE/gmijvFDJqihYj/P1pFuzuV7jkpquS1QboqLln972
+ setkmPUdVOikAlXjVssHKf5bnFsmc/FMvf1aAJnf5jOByjoFJE=
+X-Received: by 2002:a05:600c:304a:b0:493:af56:8e64 with SMTP id
+ 5b1f17b1804b1-4954a40ff61mr12696445e9.32.1784276339272; 
+ Fri, 17 Jul 2026 01:18:59 -0700 (PDT)
 Received: from ip-172-31-13-20.eu-central-1.compute.internal
  (ec2-18-198-207-175.eu-central-1.compute.amazonaws.com. [18.198.207.175])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49549c96fecsm36504285e9.11.2026.07.17.01.19.48
+ 5b1f17b1804b1-49549c96fecsm36504285e9.11.2026.07.17.01.18.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jul 2026 01:19:48 -0700 (PDT)
+ Fri, 17 Jul 2026 01:18:58 -0700 (PDT)
 From: Rohitashv Kumar <rohit.kuma1313@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Rohitashv Kumar <roohiit@amazon.de>
-Subject: [PATCH 2/3] tests/qtest/drive_del-test: skip pc tests when 'pc'
- machine is unavailable
-Date: Fri, 17 Jul 2026 08:18:35 +0000
-Message-ID: <20260717081845.2439849-3-rohit.kuma1313@gmail.com>
+Subject: [PATCH 0/3] tests/qtest: make PCI tests resilient to a compiled-out
+ i440fx/pc machine
+Date: Fri, 17 Jul 2026 08:18:33 +0000
+Message-ID: <20260717081845.2439849-1-rohit.kuma1313@gmail.com>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260717081845.2439849-1-rohit.kuma1313@gmail.com>
-References: <20260717081845.2439849-1-rohit.kuma1313@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=rohit.kuma1313@gmail.com; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=rohit.kuma1313@gmail.com; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -106,69 +103,41 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Rohitashv Kumar <roohiit@amazon.de>
 
-test_cli_device_del(), test_device_add_and_del(),
-test_drive_add_device_add_and_del() and
-test_blockdev_add_device_add_and_del() use "-machine pc" on i386/x86_64.
-When QEMU is built without the i440fx/pc machine, these fail with
-"unsupported machine type 'pc'".
+QEMU can be built with the i440fx/pc machine type compiled out (for
+example via a custom --with-devices-<arch> configuration that only keeps
+the q35 machine). In that configuration a few qtests fail because they
+hard-code "-machine pc" instead of checking whether the machine is
+available.
 
-Skip the x86 case when 'pc' is not available. Non-x86 architectures use
-the default machine and are unaffected, and the corresponding _q35
-variants already cover x86 under qtest_has_machine("q35").
+This series makes the affected tests skip the pc-specific paths when the
+"pc" machine is not compiled in, using the existing qtest_has_machine()
+helper. There is intentionally NO behaviour change for a normal build
+that includes i440fx/pc: the guards only take effect when "pc" is absent,
+so existing CI coverage is unchanged.
 
-Signed-off-by: Rohitashv Kumar <roohiit@amazon.de>
----
- tests/qtest/drive_del-test.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+For device-plug-test and drive_del-test the guard is placed inside the
+x86-only branch that adds "-machine pc", so coverage on other
+architectures (which use the default machine) is preserved, and x86
+coverage is still provided by the existing q35 variants. For pxe-test the
+per-row check mirrors the existing per-row qtest_has_device() guard, so
+q35 rows keep running when pc is gone.
 
-diff --git a/tests/qtest/drive_del-test.c b/tests/qtest/drive_del-test.c
-index 30d9451d..4c32da59 100644
---- a/tests/qtest/drive_del-test.c
-+++ b/tests/qtest/drive_del-test.c
-@@ -258,6 +258,10 @@ static void test_cli_device_del(void)
-     }
- 
-     if (strcmp(arch, "i386") == 0 || strcmp(arch, "x86_64") == 0) {
-+        if (!qtest_has_machine("pc")) {
-+            g_test_skip("Machine 'pc' is not available");
-+            return;
-+        }
-         machine_addition = "-machine pc";
-     }
- 
-@@ -332,6 +336,10 @@ static void test_device_add_and_del(void)
-     }
- 
-     if (strcmp(arch, "i386") == 0 || strcmp(arch, "x86_64") == 0) {
-+        if (!qtest_has_machine("pc")) {
-+            g_test_skip("Machine 'pc' is not available");
-+            return;
-+        }
-         machine_addition = "-machine pc";
-     }
- 
-@@ -403,6 +411,10 @@ static void test_drive_add_device_add_and_del(void)
-     }
- 
-     if (strcmp(arch, "i386") == 0 || strcmp(arch, "x86_64") == 0) {
-+        if (!qtest_has_machine("pc")) {
-+            g_test_skip("Machine 'pc' is not available");
-+            return;
-+        }
-         machine_addition = "-machine pc";
-     }
- 
-@@ -456,6 +468,10 @@ static void test_blockdev_add_device_add_and_del(void)
-     }
- 
-     if (strcmp(arch, "i386") == 0 || strcmp(arch, "x86_64") == 0) {
-+        if (!qtest_has_machine("pc")) {
-+            g_test_skip("Machine 'pc' is not available");
-+            return;
-+        }
-         machine_addition = "-machine pc";
-     }
- 
+Tested by building QEMU with and without the i440fx/pc machine: with it
+present all affected tests run as before; with CONFIG_I440FX=n the pc
+cases skip instead of failing.
+
+Rohitashv Kumar (3):
+  tests/qtest/device-plug-test: skip pc tests when 'pc' machine is
+    unavailable
+  tests/qtest/drive_del-test: skip pc tests when 'pc' machine is
+    unavailable
+  tests/qtest/pxe-test: skip per-row cases whose machine is unavailable
+
+ tests/qtest/device-plug-test.c |  8 ++++++++
+ tests/qtest/drive_del-test.c   | 16 ++++++++++++++++
+ tests/qtest/pxe-test.c         |  4 ++++
+ 3 files changed, 28 insertions(+)
+
 -- 
 2.47.3
 
