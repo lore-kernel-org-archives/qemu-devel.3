@@ -4,97 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F29F0C44521
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 12:36:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0A44C4451C
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 12:36:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkhne-00026V-B0; Fri, 17 Jul 2026 08:36:18 -0400
+	id 1wkhnf-000280-Gs; Fri, 17 Jul 2026 08:36:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wkhnb-00025R-IN
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 08:36:15 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wkhnb-00025Y-V7
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 08:36:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wkhnX-0000oD-39
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wkhnZ-0000ob-1j
  for qemu-devel@nongnu.org; Fri, 17 Jul 2026 08:36:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784291759;
+ s=mimecast20190719; t=1784291772;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=w2TscbExM8upt0nkDV7Tlhm3bpmyGiE4kvcDTJFXh3g=;
- b=NpMquBeCVd+lEto0IC9TIzKlzvECsUeUJDyp0R3AcflE+A3ZnXxJgn7wRpK6v7OBHL6MkG
- bdf3LYxzx2rEaEBv+4hw1T7UMXr2oJP/3Yf/1IK5O3uEQAAniafAZmJljizNu6hWjflDLW
- X6MyyWQ3saQYHmgTV8MpoPILn2Oemfc=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Y6NuUY2yoajIq6Jem7NgNyXTkJYgCTjXPYkiC5jy2dg=;
+ b=Z9oIY2MpiL53Ms/RU/GuLRgCT+2fKFRANPEf2PWl9sRNumXWQK6ACqR3ZdlgW17HfesQMR
+ x/673e00IMe+e0lp7n+1oTfYIxerZr3Lx/yTCHxBsxMyCAFlPbIU3toFjTnTUBFRzM4GeB
+ k11mVp0TCOHjKbfa80nEz/tjx8uqs+c=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-271-uuKhIA1WO1Kh0NkZv1RWow-1; Fri, 17 Jul 2026 08:35:57 -0400
-X-MC-Unique: uuKhIA1WO1Kh0NkZv1RWow-1
-X-Mimecast-MFC-AGG-ID: uuKhIA1WO1Kh0NkZv1RWow_1784291757
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-47f24a50f0cso6800864f8f.3
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 05:35:57 -0700 (PDT)
+ us-mta-371-bT2fJiQgPYawUf7wcG2OSg-1; Fri, 17 Jul 2026 08:36:10 -0400
+X-MC-Unique: bT2fJiQgPYawUf7wcG2OSg-1
+X-Mimecast-MFC-AGG-ID: bT2fJiQgPYawUf7wcG2OSg_1784291769
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-47345535410so7613725f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 05:36:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784291756; x=1784896556; darn=nongnu.org;
+ d=redhat.com; s=google; t=1784291769; x=1784896569; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=w2TscbExM8upt0nkDV7Tlhm3bpmyGiE4kvcDTJFXh3g=;
- b=bQ/Vs08441CarUWAhmj3vZsESSuUyBNKdR4waPk0IdRovSj0vKcLMfyc0X3wYpzS1M
- b1W1puU1hqs5B8dJIp0tpMglpqJBCaKy3kH8j0GycSeNkkDBRdZDOurX0v2U6VkLnbQS
- m08unq1L01nRghwXmHjJQh4lDqUO1O3lf+eVVquEm2jGiqGdfaeFb/B+joJTzKVPC7pT
- NRsBBz36w+JTRDyLd3PDTeRRcl820Do09gJ30Re8IFBycdTLGyCbxUCwg8gkrru6WbUS
- azsg6YQiB5niGjvF8jRk2BZcDl831p+yyXTZl43S9J4InmgR42lCcXw+aC4wj2ioAmvP
- P/tQ==
+ :content-type; bh=Y6NuUY2yoajIq6Jem7NgNyXTkJYgCTjXPYkiC5jy2dg=;
+ b=aNacLr8MIRQsjbPaZApyG3a0ka4EoHiX9J5p/XXVriyLazAm9Uzq6wR61d23XGINcB
+ bZWUtAciZFgqAnnBB4An1m928ZXOdrMaQsL+P18JHY7VZRrv1nCcr/pMEl//ub5Ls/7+
+ eYROJSD6wlYdB6Jxd4eIsf7IA8sBWcWT0AtzeZ7+xAInz4SuxK6+KKx3anefYjPGYSeT
+ M1TbVfi3tpSXEgsvtHcLnS7XwRgvok0JFCr73r55tghWxr7kdRPh08eMrdU9qab2rUEb
+ 4o73ArIczfFJZh8W1BRV3n/qXGaddLsjP+jd+nojm9wvRWeMgFGY/jic6n2+ekQnslET
+ prUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784291756; x=1784896556;
+ d=1e100.net; s=20251104; t=1784291769; x=1784896569;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=w2TscbExM8upt0nkDV7Tlhm3bpmyGiE4kvcDTJFXh3g=;
- b=gHk7pu0Ol+yS4bx4HlLUG5ukz9PfpdmTOSGFw7DP9+3CNHa6tAB/2A61I0M++/U9PD
- PUd94SaQg58o7KF3PVWoufW7sZ8gFJnFV4KM3PKHX+RAHRXHXEPwJUOTn3KZWNQAe2OJ
- wO05NQzvd5fij8qpdrI5qo/+4vgJROvaxM+W8MVDZ+tyPm5nKROwTjjUcOdO0oms/tlX
- /mZgQmaumT7umOeTMqiwnsE5V6D2l02Pp1lvWAqDZYFe8H7RTr6UN5a8TTOaj2yUEZg0
- I5+0HyZVqhJc6uocWS8z23g5a+NTsKGndgtRPnj3784mo3amoBaJdB10OLiyx6v4d2E6
- IlIg==
-X-Forwarded-Encrypted: i=1;
- AHgh+Ro7RAvVboVrxu9TOvuk5PDxLbFcoam5/OPAF5kEQJ+B24ggy2ngFuEOhsOMtWz+vwGIGsp+hKE1VzFL@nongnu.org
-X-Gm-Message-State: AOJu0YxKaPnFT8GQmqbb/fC7PV0iqJt/fcPBPXVCniYZZS/lRx9q4Nte
- J4idFwhDBQ62DbJvHQx8ezKVR1U1OwVLF9ItZ5fcoksecfalki6ona55k8qXQ6Ws9eY8UFq23It
- KjJ4FJOUQZ+ifgb4ggn0nBtQUA8Eo73xdXuhL4CO/KLrZ92XLA8WoZxDe
-X-Gm-Gg: AfdE7cnWJXrDLVbKx6JRYseSh+4TKN6dQygX8Qreu0zc8RtqZ7IudXoWhiufdK2p7uU
- dyNe7th3htfnBEhU1O668qf37p9t/r/ZxPbHARO3BEFuP8QLOM8qYZnj6gxtqcmCotSzjsS0Ow8
- if9dIuWdhc7UTHR7aW1MEv1qVf/A75Zon7X2Mc8292YpKUKXdLqSUomh9VViH74P9rysw3lbJHQ
- 0xm536XKPrP0OltdRrs2xeGQL56gfnd9lOMyHMGAqmpoeaAmb5bMrtLI3NE+uwxIWthbrzk5PXK
- rSjwfsM51mniqZepIxgAtWb97zexjSo3iSOMwvFMI0dnGpvEUsor3QpwtzOp2GNONoh5+cQIKdJ
- BZmOXZPdC3wgymnscuRXAJyk2xyvTcE30PW6W3sw=
-X-Received: by 2002:a05:6000:2606:b0:475:f0c2:75a6 with SMTP id
- ffacd0b85a97d-47f623440f1mr3176492f8f.55.1784291756345; 
- Fri, 17 Jul 2026 05:35:56 -0700 (PDT)
-X-Received: by 2002:a05:6000:2606:b0:475:f0c2:75a6 with SMTP id
- ffacd0b85a97d-47f623440f1mr3176431f8f.55.1784291755640; 
- Fri, 17 Jul 2026 05:35:55 -0700 (PDT)
+ bh=Y6NuUY2yoajIq6Jem7NgNyXTkJYgCTjXPYkiC5jy2dg=;
+ b=PbJ5DEXTnAwVDWCNz6m7cBj7D17u+lyVsipHDCVUC19v+CopwRIzjQkPAxXxmY8iv9
+ rkiwt4PC8Zq7B9Bed6uacWQK0+H6BuSUhwDrsy3DL6Fo3oNDmOcjVwgud0ptVXGZar2Z
+ wYY4bn5XyzxwlLGKDeMdMy53SgvAFXFD+Osn7SnxZa0in7sekKhIlTPvXbcqdDEnoBIO
+ l465vNWxR4CwMNBi68DgF0do9cbkdeoOAe7t6hZHsXTa68D9URTldnC9OVTWvXDJJ7bD
+ D3IkkNH3gZ4t6rhlyJaSQoBA7jYq3NWwZPFki7u8juDZ/G2cAaqVgBa6Mgw2B/84C6H8
+ 0/YQ==
+X-Gm-Message-State: AOJu0YxoircUIIuhKEZU5BD1pk3qcZUqN0fIzukfjvuSZD5txww52mT7
+ tkWwN84eDMxIf2/hWRdYlwv/3walRkl5Ar4+k/nlWllEWXBLQBiNmmxihgK1myPFw1cKxKvBJiJ
+ TWNuGPKTpj8tVts3fk0Nmw2WAxzrRbRWUimt+LsNYgvr9mZSUiXHSrDydbHavtY18a4BxruXWNn
+ lUpGgIY9vkk48vqiwBWDbBGw2/PKvT1Nn2Ag==
+X-Gm-Gg: AfdE7cl0plTEgWy8p6ZdBv5a8fOg4/Y3PtwXdPDhkzWEQtIeWvl0W6JFkCFbx18hZpc
+ 4+B5hTYp1KqTVdes0shxmUNRCHo2fH8+IubST0LEorLLPwCdO1PVu2AcaQH3j/QN4iQYs7H5nsV
+ pBftt5cSpVz4fbBAyGo7XQml1VJ/tP4ovElNwgUIjOS68MXNucvZ6ULYkBQwvfEK9O3wfWv2ltL
+ A6qg8Vpoxz+b8REVRUNF+YQZanEHW+upmQH7wFBKqK3naubjMKfms5lIpJn2hqMOYqecjE2EaoJ
+ P7l9Pn3+zaIe9SftWkI60wtbOQAeHyl3A1ZipajdAqJwUAxFtK1vPe25CXq6SU+nOyG7B/KyBp3
+ ptoji4znXU3kib15RL2JtoSSFBseFh7iEzJ1Z33M=
+X-Received: by 2002:a05:6000:18a3:b0:47d:f02a:99c8 with SMTP id
+ ffacd0b85a97d-47f62316577mr3616426f8f.23.1784291769202; 
+ Fri, 17 Jul 2026 05:36:09 -0700 (PDT)
+X-Received: by 2002:a05:6000:18a3:b0:47d:f02a:99c8 with SMTP id
+ ffacd0b85a97d-47f62316577mr3616369f8f.23.1784291768552; 
+ Fri, 17 Jul 2026 05:36:08 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
  ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f63ed2313sm3252480f8f.23.2026.07.17.05.35.54
+ ffacd0b85a97d-47f63eea8afsm3744472f8f.33.2026.07.17.05.36.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 17 Jul 2026 05:35:55 -0700 (PDT)
-Message-ID: <ad7dda44-f81a-47b3-81ce-521c96156eb4@redhat.com>
-Date: Fri, 17 Jul 2026 14:35:54 +0200
+ Fri, 17 Jul 2026 05:36:08 -0700 (PDT)
+Message-ID: <6689baff-331a-47ef-abc5-de0be217b812@redhat.com>
+Date: Fri, 17 Jul 2026 14:36:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6] vfio/igd: Clear saved BDSM in legacy VBIOS ROM at load
- time
-To: Tomita Moeko <tomitamoeko@gmail.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex@shazbot.org>, K S Maan <kirandeepmaan45@gmail.com>, 
- qemu-stable@nongnu.org
-References: <20260708103100.23127-1-tomitamoeko@gmail.com>
+Subject: Re: [PATCH] vfio/region: Clarify dma-buf failure messages
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex@shazbot.org>, Nicolin Chen <nicolinc@nvidia.com>
+References: <20260715070622.198400-1-clg@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -140,9 +137,9 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260708103100.23127-1-tomitamoeko@gmail.com>
+In-Reply-To: <20260715070622.198400-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: permerror client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -151,7 +148,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=unavailable autolearn_force=no
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,284 +164,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/8/26 12:31, Tomita Moeko wrote:
-> IGD does not come with a ROM BAR [1], the ROM BAR read by default from
-> kernel is actually the host VBIOS shadow RAM region that contains host
-> modifications on boot. With AI-assisted reverse engineering on VBIOS
-> binaries, it is observed that VBIOS saves BDSM register value on first
-> access and uses saved value if present.
+On 7/15/26 09:06, Cédric Le Goater wrote:
+> The dma-buf failure messages in vfio_region_create_dma_buf() say "PCI
+> BAR IOMMU mappings may fail", which suggests the BAR is broken. In
+> practice, only P2P DMA is affected -- normal passthrough uses the mmap
+> fallback.
 > 
-> When the image is executed in guest, since there is already a saved HPA
-> in VBIOS, it keeps using that value instead of the GPA programmed by
-> SeaBIOS in BDSM register in PCI config space, causing VBIOS to program
-> GTT entries with wrong address, resulting in garbled output in BIOS
-> POST and the error below detected by i915 driver.
+> Reword both messages to mention P2P DMA explicitly and clarify that
+> the mmap fallback is in use. Use warn_report_err_once() at the call
+> site so per-BAR repetition on mdev devices is suppressed.
 > 
-> i915 0000:00:02.0: [drm] *ERROR* Initial plane programming using invalid range, dma_addr=0x00000000db200000 ((null) [0x00000000baf00000-0x00000000beefffff])
-> 
-> The previous solution, c4c45e943e51 ("vfio/pci: Intel graphics legacy
-> mode assignment"), adjusts GTT entry addresses to (addr - host BDSM +
-> guest BDSM) to workaround that. But it is removed in 5aed8b0f0be2
-> ("vfio/igd: Remove GTT write quirk in IO BAR 4") due to inconsistent
-> values in MMIO BAR0 and IO BAR4.
-> 
-> Since it was a value latched into the VBIOS that breaks virtualization
-> (QEMU does not map the GTT at the same address in the VM), a ROM quirk
-> clearing the saved value in VBIOS image is introduced. It searches the
-> BDSM accessor routine by matching a 19-byte signature anchored on the
-> unique `mov $0x105e,%ax` instruction, then locates the offset of saved
-> BDSM and clears it. This makes the routine fall through to the PCI
-> config read on the first call inside the guest.
-> 
-> [1] 3.5.15, 4th Generation Intel Core Processor Family Datasheet Vol. 2
->      https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/4th-gen-core-family-desktop-vol-2-datasheet.pdf
-> 
-> Fixes: 5aed8b0f0be2 ("vfio/igd: Remove GTT write quirk in IO BAR 4")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3093
-> Reported-by: K S Maan <kirandeepmaan45@gmail.com>
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+> Fixes: dcf1b77e834d ("hw/vfio/region: Create dmabuf for PCI BAR per region")
+> Cc: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
-> Changelog:
-> v6:
-> * Make it a self-contained regression fix for the ROM read through vfio
->    path only reported in the gitlab issue, per v5 comment from Alex.
-> * Reword the commit message.
-> * Cc stable as this is now a regression fix for QEMU 10.0+.
-> Link: https://lore.kernel.org/all/20260707083550.25765-1-tomitamoeko@gmail.com/t
+>   hw/vfio/region.c | 11 +++++------
+>   1 file changed, 5 insertions(+), 6 deletions(-)
 > 
-> v5:
-> * Keep the current ID and checksum patching logic in vfio_pci_load_rom()
->    since it is not IGD-specific, as pointed out by Alex. The IGD-specific
->    quirk is now invoked after the generic patching. The ID and checksum
->    patching is duplicated in vfio_igd_legacy_rom_quirk() to handle the
->    romfile path, since the generic patching is not invoked on romfile.
-> * Picked up the Michael's Acked-by on patch 1.
-> * Reduced from 4 to 3 patches.
-> Link: https://lore.kernel.org/all/20260701182035.96010-1-tomitamoeko@gmail.com/t
-> 
-> v4:
-> * Reworked per review feedback to keep IGD-specific workarounds out of
->    the generic PCI code. Instead of recalculating the checksum in
->    hw/pci/pci.c, a single generic romfile_fixup hook is added for device-
->    specific ROM patching. Now both kernel ROM BAR and romfile paths share
->    the same quirk, so the saved BDSM in user-provided romfile will also
->    get cleared.
-> * Reduced from 7 to 4 patches.
-> Link: https://lore.kernel.org/all/20260617100646.28326-1-tomitamoeko@gmail.com/t
-> 
-> v3:
-> * Refactor ROM checksum calculation and patching logic as Alex's comment
-> * Fix boundary checks as comments in v2.
-> Link: https://lore.kernel.org/all/20260608134559.23971-1-tomitamoeko@gmail.com/t
-> 
-> v2:
-> * New patch 2/7 to fix regression with EFI option ROMs
-> * Refine logic in ROM ID and checksum patching
-> * Reorder patch 4 and 5 for cleaner bisection
-> * Address comments from v1
-> Link: https://lore.kernel.org/all/20260603173355.36121-1-tomitamoeko@gmail.com/t
-> 
->   hw/vfio/igd-stubs.c  |   5 ++
->   hw/vfio/igd.c        | 115 +++++++++++++++++++++++++++++++++++++++++++
->   hw/vfio/pci-quirks.c |   5 ++
->   hw/vfio/pci.c        |   2 +
->   hw/vfio/pci.h        |   3 ++
->   hw/vfio/trace-events |   1 +
->   6 files changed, 131 insertions(+)
-> 
-> diff --git a/hw/vfio/igd-stubs.c b/hw/vfio/igd-stubs.c
-> index f7687d9091..5f60b24c8b 100644
-> --- a/hw/vfio/igd-stubs.c
-> +++ b/hw/vfio/igd-stubs.c
-> @@ -18,3 +18,8 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
->   {
->       return true;
->   }
-> +
-> +void vfio_igd_legacy_rom_quirk(VFIOPCIDevice *vdev)
-> +{
-> +    return;
-> +}
-> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-> index e091f21b6a..413a49aae9 100644
-> --- a/hw/vfio/igd.c
-> +++ b/hw/vfio/igd.c
-> @@ -724,3 +724,118 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
->   
->       return vfio_pci_igd_config_quirk(vdev, errp);
->   }
-> +
-> +/*
-> + * IGD ROM BAR read from kernel is actually the host VBIOS shadow RAM region,
-> + * which contains host modifications. In Gen 6-9 VBIOS, the routine below is
-> + * used to get BDSM value when programming the initial GTT.
-> + *   xx xx xx xx           v: .long ?                  # saved value
-> + *   66 53                    push  %ebx
-> + *   66 2e 83 3e xx xx 00     cmpl  $0x0,%cs:v         # is saved value empty?
-> + *   74 07                    je    1f                 # if zero, go compute
-> + *   66 2e a1 xx xx           mov   %cs:v,%eax         # else return saved value
-> + *   eb 0f                    jmp   2f
-> + *   b8 5e 10              1: mov   $0x105e,%ax        # dev 00:02.0, offset 5E
-> + *   e8 xx xx                 call  pci_read_cfg_word
-> + *   66 c1 e0 10              shl   $0x10,%eax         # left shift 16 bits
-> + *   66 2e a3 xx xx           mov   %eax,%cs:v         # save the result
-> + *   66 5b                 2: pop   %ebx
-> + *   c3                       ret
-> + * When running the VBIOS in guest, saved value still reflects the host stolen
-> + * memory base address, which is not correct in guest. So we need to patch the
-> + * VBIOS to clear the saved value.
-> + *
-> + * The unique 19-byte starts at `cmpl $0,%cs:v` and ends at `mov $0x105e,%ax`
-> + * anchors the match to the routine. Both `cs:` displacements must reference
-> + * the same offset.
-> + */
-> +static int igd_vbios_find_saved_bdsm(const uint8_t *rom, size_t rom_size,
-> +                                     uint16_t *bdsm_offset)
-> +{
-> +    static const uint8_t start[] = { 0x66, 0x2e, 0x83, 0x3e };
-> +    static const uint8_t middle[] = { 0x00, 0x74, 0x07, 0x66, 0x2e, 0xa1 };
-> +    static const uint8_t end[] = { 0xeb, 0x0f, 0xb8, 0x5e, 0x10 };
-> +    uint16_t val;
-> +    size_t i;
-> +    bool found = false;
-> +
-> +    if (rom_size < 19) {
-> +        return -ENOENT;
-> +    }
-> +
-> +    for (i = 0; i + 19 <= rom_size; i++) {
-> +        if (memcmp(rom + i, start, sizeof(start)) != 0 ||
-> +            memcmp(rom + i + 6, middle, sizeof(middle)) != 0 ||
-> +            memcmp(rom + i + 14, end, sizeof(end)) != 0) {
-> +            continue;
-> +        }
-> +
-> +        /* same saved value address? */
-> +        if (rom[i + 4] != rom[i + 12] || rom[i + 5] != rom[i + 13]) {
-> +            continue;
-> +        }
-> +
-> +        if (found) {
-> +            return -EEXIST;
-> +        }
-> +
-> +        val = rom[i + 4] | ((uint16_t)rom[i + 5] << 8);
-> +        if (val + sizeof(uint32_t) <= rom_size) {
-> +            *bdsm_offset = val;
-> +            found = true;
-> +        }
-> +    }
-> +
-> +    if (!found) {
-> +        return -ENOENT;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +void vfio_igd_legacy_rom_quirk(VFIOPCIDevice *vdev)
-> +{
-> +    uint8_t *rom = vdev->rom;
-> +    int gen;
-> +    uint16_t pcir_offset;
-> +    uint16_t bdsm_offset = 0;
-> +    uint8_t checksum = 0;
-> +    uint32_t i;
-> +
-> +    if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
-> +        !vfio_is_vga(vdev) || !vdev->vga) {
-> +        return;
-> +    }
-> +
-> +    /* Only Gen 6~9 devices have legacy VBIOS as Option ROM */
-> +    gen = igd_gen(vdev);
-> +    if (gen < 6 || gen > 9) {
-> +        return;
-> +    }
-> +
-> +    if (pci_get_word(rom) != 0xaa55) {
-> +        return;
-> +    }
-> +
-> +    /* Must be a legacy ROM */
-> +    pcir_offset = pci_get_word(rom + 0x18);
-> +    if (pcir_offset + 0x14 >= vdev->rom_size ||
-> +        memcmp(rom + pcir_offset, "PCIR", 4) ||
-> +        pci_get_byte(rom + pcir_offset + 0x14) != 0x00) {
-> +        return;
-> +    }
-> +
-> +    /* Search and clear the saved BDSM value */
-> +    if (igd_vbios_find_saved_bdsm(rom, vdev->rom_size, &bdsm_offset)) {
-> +        return;
-> +    }
-> +    memset(rom + bdsm_offset, 0, sizeof(uint32_t));
-> +
-> +    /* Recalculate checksum and patch it. */
-> +    for (i = 0; i < vdev->rom_size; i++) {
-> +        checksum += rom[i];
-> +    }
-> +    rom[6] -= checksum;
-> +
-> +    trace_vfio_pci_igd_vbios_patched(vdev->vbasedev.name);
-> +}
-> diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
-> index bccf31751f..c5b4f9091d 100644
-> --- a/hw/vfio/pci-quirks.c
-> +++ b/hw/vfio/pci-quirks.c
-> @@ -1592,3 +1592,8 @@ bool vfio_add_virt_caps(VFIOPCIDevice *vdev, Error **errp)
->   
->       return true;
->   }
-> +
-> +void vfio_rom_quirk_setup(VFIOPCIDevice *vdev)
-> +{
-> +    vfio_igd_legacy_rom_quirk(vdev);
-> +}
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index c204706e63..dcfc92aae1 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -1119,6 +1119,8 @@ static bool vfio_pci_load_rom(VFIOPCIDevice *vdev, Error **errp)
+> diff --git a/hw/vfio/region.c b/hw/vfio/region.c
+> index dbde3391802691888ca31d5e329aba5ba680feb4..54ad11a6c8ed8e04fa365262ccb8bd694bdb45f7 100644
+> --- a/hw/vfio/region.c
+> +++ b/hw/vfio/region.c
+> @@ -321,13 +321,12 @@ static bool vfio_region_create_dma_buf(VFIORegion *region, Error **errp)
+>       ret = vfio_device_get_feature(vbasedev, feature);
+>       if (ret < 0) {
+>           if (ret == -ENOTTY) {
+> -            warn_report_once("VFIO dma-buf not supported in kernel: "
+> -                             "PCI BAR IOMMU mappings may fail");
+> +            warn_report_once("VFIO dma-buf not supported in kernel, "
+> +                             "using mmap fallback, P2P DMA will not work");
+>               return true;
 >           }
+> -        /* P2P DMA or exposing device memory use cases are not supported. */
+> -        error_setg_errno(errp, -ret, "%s: failed to create dma-buf: "
+> -                         "PCI BAR IOMMU mappings may fail",
+> +        error_setg_errno(errp, -ret, "%s: dma-buf unavailable, "
+> +                         "using mmap fallback, P2P DMA will not work",
+>                            memory_region_name(region->mem));
+>           return false;
+>       }
+> @@ -448,7 +447,7 @@ int vfio_region_mmap(VFIORegion *region)
 >       }
 >   
-> +    vfio_rom_quirk_setup(vdev);
-> +
->       return true;
->   }
+>       if (!vfio_region_create_dma_buf(region, &local_err)) {
+> -        error_report_err(local_err);
+> +        warn_report_err_once(local_err);
+>       }
 >   
-> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-> index fe52e9df6e..c9ab949870 100644
-> --- a/hw/vfio/pci.h
-> +++ b/hw/vfio/pci.h
-> @@ -252,10 +252,13 @@ void vfio_bar_quirk_exit(VFIOPCIDevice *vdev, int nr);
->   void vfio_bar_quirk_finalize(VFIOPCIDevice *vdev, int nr);
->   void vfio_setup_resetfn_quirk(VFIOPCIDevice *vdev);
->   bool vfio_add_virt_caps(VFIOPCIDevice *vdev, Error **errp);
-> +void vfio_rom_quirk_setup(VFIOPCIDevice *vdev);
->   void vfio_quirk_reset(VFIOPCIDevice *vdev);
->   VFIOQuirk *vfio_quirk_alloc(int nr_mem);
-> +
->   void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr);
->   bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp);
-> +void vfio_igd_legacy_rom_quirk(VFIOPCIDevice *vdev);
->   
->   extern const PropertyInfo qdev_prop_nv_gpudirect_clique;
->   
-> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-> index f71d0bbc0a..bfdaf229e4 100644
-> --- a/hw/vfio/trace-events
-> +++ b/hw/vfio/trace-events
-> @@ -90,6 +90,7 @@ vfio_pci_igd_bar4_write(const char *name, uint32_t index, uint32_t data, uint32_
->   vfio_pci_igd_bdsm_enabled(const char *name, int size) "%s %dMB"
->   vfio_pci_igd_host_bridge_enabled(const char *name) "%s"
->   vfio_pci_igd_lpc_bridge_enabled(const char *name) "%s"
-> +vfio_pci_igd_vbios_patched(const char *name) "%s"
->   
->   # listener.c
->   vfio_iommu_map_notify(const char *op, uint64_t iova_start, uint64_t iova_end) "iommu %s @ 0x%"PRIx64" - 0x%"PRIx64
+>       return 0;
 
 Applied to
 
