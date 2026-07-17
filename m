@@ -4,114 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C2C7C44515
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 09:05:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4845DC44507
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 09:10:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkeUs-0001Gt-F5; Fri, 17 Jul 2026 05:04:42 -0400
+	id 1wkeaY-000301-Ob; Fri, 17 Jul 2026 05:10:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wkeUr-0001GR-LK
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 05:04:41 -0400
-Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
+ (Exim 4.90_1) (envelope-from <lufia@lufia.org>) id 1wkcIU-0004RV-3Q
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 02:43:46 -0400
+Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wkeUo-0006Cn-Vk
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 05:04:41 -0400
-Received: by mail-yw1-x112a.google.com with SMTP id
- 00721157ae682-81ecf499af9so43847607b3.1
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 02:04:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784279077; cv=none;
+ (Exim 4.90_1) (envelope-from <lufia@lufia.org>) id 1wkcIS-00053O-2R
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 02:43:45 -0400
+Received: by mail-lf1-x12b.google.com with SMTP id
+ 2adb3069b0e04-5aeae771c49so8610984e87.3
+ for <qemu-devel@nongnu.org>; Thu, 16 Jul 2026 23:43:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784270620; cv=none;
  d=google.com; s=arc-20260327;
- b=GeYbSIXsQUWJBSPGb7jU0u+qpjk/fpqhsWcpH6CMcnTXcvhUvEykD5YuJFm3I/dmHI
- cZoNnB9yRShKLg08aBBtzL/u8T00lVF0C/E9wScSHEQ0i77BWoUhIK3dn6qIzZcxtjY7
- IXAFLY//MCRtUaOem/NQkOspZTBkQFGHxON4baa9DB+HpHluS7xJb0ByeWRiRb4vu1dI
- q3shzyaL/ljqAdgsv8sNAMk2o+SOvLf8baEDP+SxFfuWDHLg8P9H+tLq/50lkm3TWdD1
- AIFfRJuuuCISLsjiZSjohWwC1TC6b3iSPz8kDTwC+u5D2/ATJAJ6ZAKGU5l/Zbg2r1qX
- cznw==
+ b=BTlEWrdoccCGpznI2P4CBDE/jDyuzWmFR6D9vzhZx2sirZR+TihqNcJ4BKaEr83824
+ N6ycydjOGzsspx0ULVypXaHWy+Mq7UiKE/jz43X4fDF+Ag/qnuovZ/+N2x7IiTexjPqS
+ 4Hw3tuVFX3a2ydF6KL9rg2948E/Z318emajyoPVd+icmRlcN8oPf+lIYdO/2VReDlAQ8
+ ArwUf/hWmOuHUqn6jgQI0kRakmTx7VVU8qRzkYN/xiytPpnW7OK+LzFGK0qDnWyXfN9T
+ y8jM1U8pWcT4A2c/91OFXZbU4r4FiG4fTommYtP5dTBVN+SDbi1HTrtlHxwhkpmSEr3e
+ yvvw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=P8nJbFTwijDQXHnHUxqAc5yYHgnENsgRFp7K23oSfL4=;
- fh=JZRbMaK6XI/G3VFS9BOCv5MpQN+HOAIaxbGDlg5Rjkw=;
- b=lrNv+tQ2dl6rmPZWAq+tCLS+Hw8xmCcIcDkLBbvCbfXz9TyVJvO+zyOGqP5d6KOD7Y
- trllOuxOnhj2poEh4JiYf5SmGV2LmpqM9JfH+Zs9Zh0oN6YTA8C4cG7f7ZyVbC56BpOb
- /zMjDHuHJ0UUm0B1dQ5Q8QTSZLpeSuSAWUGLMNpBjl2qGbT9o+BAEket/xh/hTaIE1ph
- UPLRLZdoNPCneGvQR36ImIPKX9SdmcNDCS691reNieJKi296zAqd/iGQwnNVVPTKvePn
- cYTFSG5XCMsWH1VYjLTGq1yjQrk8lClQLGFI3MyebJ5NtNzOBN27VoDNG3JJBkPSZ7rC
- zppg==; darn=nongnu.org
+ h=to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=EKbyG3+SiwTROHcMwe8+lh1F+tMXCsXm64BeyFHW07A=;
+ fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
+ b=DX9t/045JsYRUqSTZyNjxziyDXnCFtisOhaFSS07SmpRk5c+h6S3ZFqOHu+JY5G11d
+ GIT+exs+ajaYD6eNTUIGInM4UnEW5pOAYzXmwTE7HkRiEsmXx5nsMXPIpIWyfKE81+Zh
+ qouNvUixzMks5DyypZhcFqHPdTGyQriKCXRVabuWiIW4FgiJR4kPFTZXjPznSB0nK3Gg
+ s+BYqOyykjOejFJA/fR5LI6KrMpT6iofiX8WKFMFB84yxfV4VJhmUUfoNrDsJFvWexlH
+ ilTVhSTrdKK1YDcfzvuwqBYzkZgSkn049IiChkrIWg7fBv6RjrgXo0Ndv/ODcHea45Hm
+ CJJg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784279077; x=1784883877; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=P8nJbFTwijDQXHnHUxqAc5yYHgnENsgRFp7K23oSfL4=;
- b=VbBBsW6wesagi8OIjUqulDorC1zV8hm63883uDObCtAWvJLt9pYZoWxkVNiQZi3jDp
- zFJK+H+aJHFT4+Ap+yDKkn741SFqv+PPDdkLnfupHQtmI9Vszx7AV93NtBPFN4G443uH
- iLwuB/7xat/M+WVBpaY35g5eXouY4cl9jhpoziUWCrFZYs2KboAWsRGEXZZmquCHd0pe
- EvA5SSJ8HqTuI+WlZbhIJ5GOMuybJryJ+XkDaz7V1LFT+uIqCF0/bOXBctYJWpiCo37/
- XwI7zFcOyiseKU/eIfGjH19oKo7uo9bGMEQVUgZSZ5kP08puBDmVnYrJvJntt5Xt7V5J
- +fvg==
+ d=lufia-org.20251104.gappssmtp.com; s=20251104; t=1784270620; x=1784875420;
+ darn=nongnu.org; 
+ h=content-type:to:subject:message-id:date:from:mime-version:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=EKbyG3+SiwTROHcMwe8+lh1F+tMXCsXm64BeyFHW07A=;
+ b=B9BlLfvwLpA1cr5FS9xo5FoZnOI0rMRZZzmpsR2wR2gzX8WvGEcgzgZAGjm8wQ8QpN
+ CocY21BLWnYBBORohnS3QzEU9J+aB+YyBVcn9Ax3noWLMloep+mZHLo1BgqZRqRhtf+A
+ UPMX1UZCiJEGHwHNoWj+kK+SdZIMP1tolt1iNMsn7RVfRVOT9iOQWeqNjZOXuHfLFgHr
+ WQ0YWfc0nrnkWlYynOkd5EkcP9ALhUQcvuDMRt5A5H50WRdwL4Szo0tRs4Q6c4ejsbIy
+ j+oOEKpdoSDylIWXlTNmxEKTwWiARBIn5Dm8wZ6//KCL98efZMZ3aBOB2+IFDfvhgXkd
+ Jeuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784279077; x=1784883877;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
+ d=1e100.net; s=20251104; t=1784270620; x=1784875420;
+ h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=P8nJbFTwijDQXHnHUxqAc5yYHgnENsgRFp7K23oSfL4=;
- b=ectspmLGAB49A+5OZuLnJdWrtLold7gl9YHWlCYIfpOmrKt89MIzjuAsnyYp5mvWgx
- JquzC52Ed+3yeXTRkYfeAUs3p5iuMi2HM6Hcvd5WxFkuY/xd01B4rBo0iCaVQ5aaeTI1
- LyVB/VZYLjGraFoQ02mk0l70lI6p8ASgXpZK3sS+nBcnQ5M6VRqkEwlT99PfF/9CZMv9
- X62ox0NWTDTYnZr2LpJt4z8SwpMqFDvCr0LM9QXopkrJJ2RNpHM/lVEZjDrP/u+vCr4y
- zJovBZeZbjlU303GA9i4u6GhIJbyuzBnOzWNpB2xxZeGWNe5yTjbKmtz2ppedVrNkMAo
- AgvQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrsM5XfM6sPV2wtuPKyf/RyoW5084ii2tsGkm1DdVVrX/55mvjmHkrWNYKfTnLKYziwFCSFGynq3ezb@nongnu.org
-X-Gm-Message-State: AOJu0YxQvRvG77AwZ9PVkBRLtGdVSj7iVYFjUsIkQDN61Xsn175y7S3V
- Kpc4mGSA0OZ0T/NZNES90I/KAMk5x3MgBXxZGD/X4LQvsnPhZgs0uj0c0Qdedocb961GLHK5d5B
- qN9V52KC9zPbwfUd5DYsb8Fp5tQAQ51GBh6fCTW/z9g==
-X-Gm-Gg: AfdE7cnd3BNz+d1hQZCgYvIVqNZJy3xyDiPnl2KxLFAbFl61MxtGWJT00WONQwmy5Ve
- EW45Iw5L9gykkPoz9w74LC0+uLrVy3kNkCNIENjnR4nHKZko7faVoJNM7GyBdABOcT5nnyNHnEL
- 8XTo+XHZ8vSLZtpfp8DuMZszT37niL5WR7PAWptvSe9NOTxhXA8IQV4A9sCDDzNRvoYA7i3XK2/
- PaSh7S+NaS/ty/8X7+x3myGmXV1IK4Eo6Pxd+R7fZZcT9D0iJq8YVC88BIE9aqqqEe7mp0eo6ng
- QsplQlPVwNqMkbw4707h/agVdpHRUBNVWFcwJjcygJDIzQ==
-X-Received: by 2002:a05:690c:e3c6:b0:80c:85e5:872d with SMTP id
- 00721157ae682-81ef26b97bcmr4629817b3.59.1784279077354; Fri, 17 Jul 2026
- 02:04:37 -0700 (PDT)
+ bh=EKbyG3+SiwTROHcMwe8+lh1F+tMXCsXm64BeyFHW07A=;
+ b=VkZTX7fed0A/bvmgw0nxMZHcMx7oRFpDwlC5U4W15ovYu5WfOdH4XIEDSULg+1goyP
+ gOTMr9qSxsx2Sg5QA7tOX22RFts+x1KPXy4bQK/hGBGXmmUxNSd0XhwPUUVQpRrR1Qza
+ 7Z1ILyfisjNuzGRPfxvabKOqCgwHBhZHdvlfvpicHG75H4akIiMFdUQs35Vi4K8A4w7O
+ 3pQHWn9wrhtu4uuLbEkSCTWosJqaIiDDJVWC/xXtW1I10wli32dxZdp81l1hSLjBudNh
+ 4MHlDVNoBP3Ob+zPQvaaEeGxXcppcMiMSQyOGcoCBxyIHDi077WY1EsD4hvcCrrmU8wd
+ osxw==
+X-Gm-Message-State: AOJu0Yxnio3+iXNqv8q8SS3wG67hgfMz3M1vecDueQxDRGAc7vnxFoPX
+ diYvonnhG1EE0hmLaHn+mEWGNUVAjNugyUVpIdMNG5daR4XHvQdONNMrDheVen6QrTOvpDEf4+c
+ QwOgbE/MCgJJ9bW13MimZgp4IDZNktAvxdcA4F69bu9y8/aR1d9zSVYKFNA==
+X-Gm-Gg: AfdE7ck16OzfPZsh5YQhXj5xgHka3+UCbrubFozCqmncWD2s1dVjPw4tL8teVpz3+8A
+ c6IPGbPT3S49RnKpp4D3HBdMeW355Kc31LwiN/zkOlmJScgiX+cEskM7WfojfiI2t2uuVtamHOQ
+ aajAP5FpW4ErYPuKK35tFmw4myhpPWDHl/10qtv8zf0Ez2SKYKH17VYY+hmBB9vRb5MSFlBjfe3
+ 5M8viR1xruqb4oZzyKKDV263pRGhtGW7VoTD3e3SNdc9Ho/8aQUqWlSyQdQ
+X-Received: by 2002:a05:6512:8354:b0:5ae:b7bc:27a6 with SMTP id
+ 2adb3069b0e04-5b28f859360mr185760e87.2.1784270620171; Thu, 16 Jul 2026
+ 23:43:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260623-guest-panic-unhandle-v1-1-6adfb6d4221e@ooseel.net>
- <CAFEAcA9LCRKmU+r77zGp+4Rgd-uaZLPnoPPQDSfG8X5eeiynJA@mail.gmail.com>
- <91ad4c80-adc6-4f37-8346-20230638e5f0@oss.qualcomm.com>
- <CAFEAcA-hnm17d4PR0wmaKwQmM-K50nHeRYv0a-pCk3J1qUbPsg@mail.gmail.com>
- <CANTT7qh6X7ESRwgfM5PRkfCx9BSVUXHy8GL+n8SmX3LtusWiGw@mail.gmail.com>
-In-Reply-To: <CANTT7qh6X7ESRwgfM5PRkfCx9BSVUXHy8GL+n8SmX3LtusWiGw@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 17 Jul 2026 10:04:24 +0100
-X-Gm-Features: AUfX_myAcVGgxGl7E5kSTzl0FlyaoeC_z5epinFqPxAeHx2PntIyQ7ihGC8s3Dc
-Message-ID: <CAFEAcA_Q1O16RUkLk+LvMjyi7L8O2txFrUkbna911QBQjAQLFA@mail.gmail.com>
-Subject: Re: [PATCH] target/arm/hvf: panic the guest if an unhandled exception
- occurs
-To: Leesoo Ahn <lsahn@ooseel.net>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- qemu-devel@nongnu.org, Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org, 
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Markus Armbruster <armbru@redhat.com>
+Date: Fri, 17 Jul 2026 15:43:26 +0900
+X-Gm-Features: AUfX_mytOJj9EI1hl-xqswg-1jqIjlhz2m0pqX14t6RonVPuoZHe3k3p9xZuET4
+Message-ID: <CAFMepcnmdskwDZ6dN2wEEK=ve5B8hzghfrbUcGkQxCHGCDXVVA@mail.gmail.com>
+Subject: [PATCH] hw/9pfs: add support ORCLOSE flag to create and open request
+To: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
+ envelope-from=lufia@lufia.org; helo=mail-lf1-x12b.google.com
+X-Spam_score_int: 1
+X-Spam_score: 0.1
+X-Spam_bar: /
+X-Spam_report: (0.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ PDS_OTHER_BAD_TLD=2, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 17 Jul 2026 05:10:33 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -123,67 +103,96 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Kyohei Kadota <lufia@lufia.org>
+From:  Kyohei Kadota via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 16 Jul 2026 at 18:27, Leesoo Ahn <lsahn@ooseel.net> wrote:
->
-> 2026=EB=85=84 7=EC=9B=94 13=EC=9D=BC (=EC=9B=94) =EC=98=A4=ED=9B=84 6:34,=
- Peter Maydell <peter.maydell@linaro.org>=EB=8B=98=EC=9D=B4 =EC=9E=91=EC=84=
-=B1:
-> >
-> > On Fri, 10 Jul 2026 at 23:56, Philippe Mathieu-Daud=C3=A9
-> > <philmd@oss.qualcomm.com> wrote:
-> > >
-> > > On 10/7/26 17:37, Peter Maydell wrote:
-> > > > On Tue, 23 Jun 2026 at 13:56, Leesoo Ahn <lsahn@ooseel.net> wrote:
-> > > >>
-> > > >> It's worth cleaning up all resources that the guest taking and to =
-quit
-> > > >> if an exception in el1 could not be resolved.
-> > > >>
-> > > >> Otherwise, the guest will get in the infinite black-hole by
-> > > >> unmodified pc.
-> > > >>
-> > > >> Signed-off-by: Leesoo Ahn <lsahn@ooseel.net>
-> > > >> ---
-> > > >>   target/arm/hvf/hvf.c | 1 +
-> > > >>   1 file changed, 1 insertion(+)
-> > > >>
-> > > >> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-> > > >> index 8b902c6882..4358cf90e8 100644
-> > > >> --- a/target/arm/hvf/hvf.c
-> > > >> +++ b/target/arm/hvf/hvf.c
-> > > >> @@ -2533,6 +2533,7 @@ static int hvf_handle_exception(CPUState *cp=
-u, hv_vcpu_exit_exception_t *excp)
-> > > >>           cpu_synchronize_state(cpu);
-> > > >>           trace_hvf_exit(syndrome, ec, env->pc);
-> > > >>           error_report("0x%llx: unhandled exception ec=3D0x%x", en=
-v->pc, ec);
-> > > >> +        qemu_system_guest_panicked(cpu_get_crash_info(cpu));
-> > > >>       }
+9P, and its successor 9P2000, allows ORCLOSE flag to both open- and
+create-request.
+When 9pclient requests close(fid) operation to the 9pserver, and if
+the fid has ORCLOSE flag,
+9pserver deletes the file, which is pointed of the fid, from
+9pserver's filesystem.
 
-> > For this specific patch: what is the case where we get into this
-> > codepath (and in particular what is the EC_FOO exception subtype)?
-> > Maybe the fix is to handle that case. Compare an earlier thread:
-> > https://lore.kernel.org/qemu-devel/8D0BCB24-BB1B-40EF-A361-0F79D65600AE=
-@unpredictable.fr/
-> >
-> > If we're getting here by falling through from EC_INSNABORT,
-> > I think that can happen if the guest tries to execute from
-> > an MMIO region.
->
-> EC_DATABORT already deals with traps by accessing MMIO regions.
-> Yet I have no idea what kind of instruction abort could be raised in MMIO=
-.
+However, the 9P specification does not allow any directories to be
+specified ORCLOSE flag.
 
-Yeah, we can't support emulating of execution from an MMIO region
-with hvf. I think it will only really happen if the guest has
-a bug and jumps to a bad address that happens to have a device.
+Signed-off-by: KADOTA, Kyohei <lufia@lufia.org>
+---
+ hw/9pfs/9p.c | 17 +++++++++++++++++
+ hw/9pfs/9p.h |  1 +
+ 2 files changed, 18 insertions(+)
 
-Did you submit this patch because you saw a VM get into this
-state? What did the guest do to cause it?
-
-thanks
--- PMM
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index 3119f01117..6fff57cc47 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -416,6 +416,9 @@ static int coroutine_fn free_fid(V9fsPDU *pdu,
+V9fsFidState *fidp)
+         if (fidp->fs.fd != -1) {
+             retval = v9fs_co_close(pdu, &fidp->fs);
+         }
++        if (retval >= 0 && fidp->orclose) {
++            retval = v9fs_co_remove(pdu, &fidp->path);
++        }
+     } else if (fidp->fid_type == P9_FID_DIR) {
+         if (fidp->fs.dir.stream != NULL) {
+             retval = v9fs_co_closedir(pdu, &fidp->fs);
+@@ -2164,6 +2167,10 @@ static void coroutine_fn v9fs_open(void *opaque)
+         goto out;
+     }
+     if (S_ISDIR(stbuf.st_mode)) {
++        if (mode & Orclose) {
++            err = -EINVAL;
++            goto out;
++        }
+         err = v9fs_co_opendir(pdu, fidp);
+         if (err < 0) {
+             goto out;
+@@ -2193,6 +2200,9 @@ static void coroutine_fn v9fs_open(void *opaque)
+         }
+         fidp->fid_type = P9_FID_FILE;
+         fidp->open_flags = flags;
++        if (mode & Orclose) {
++            fidp->orclose = true;
++        }
+         if (flags & O_EXCL) {
+             /*
+              * We let the host file system do O_EXCL check
+@@ -2959,6 +2969,10 @@ static void coroutine_fn v9fs_create(void *opaque)
+         goto out;
+     }
+     if (perm & P9_STAT_MODE_DIR) {
++        if (mode & Orclose) {
++            err = -EINVAL;
++            goto out;
++        }
+         err = v9fs_co_mkdir(pdu, fidp, &name, perm & 0777,
+                             fidp->uid, -1, &stbuf);
+         if (err < 0) {
+@@ -3083,6 +3097,9 @@ static void coroutine_fn v9fs_create(void *opaque)
+         }
+         fidp->fid_type = P9_FID_FILE;
+         fidp->open_flags = omode_to_uflags(mode);
++        if (mode & Orclose) {
++            fidp->orclose = true;
++        }
+         if (fidp->open_flags & O_EXCL) {
+             /*
+              * We let the host file system do O_EXCL check
+diff --git a/hw/9pfs/9p.h b/hw/9pfs/9p.h
+index 1a309664f6..16730cbd93 100644
+--- a/hw/9pfs/9p.h
++++ b/hw/9pfs/9p.h
+@@ -276,6 +276,7 @@ struct V9fsFidState {
+     V9fsFidOpenState fs;
+     V9fsFidOpenState fs_reclaim;
+     int flags;
++    bool orclose;
+     int open_flags;
+     uid_t uid;
+     int ref;
+-- 
+2.55.0
 
