@@ -4,134 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01116C44514
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 11:24:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38587C44516
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 11:29:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkgfX-0005ex-55; Fri, 17 Jul 2026 07:23:51 -0400
+	id 1wkgkH-0006Vb-9m; Fri, 17 Jul 2026 07:28:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
- id 1wkgfU-0005dz-PS
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 07:23:48 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
- id 1wkgfS-0008Jk-S9
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 07:23:48 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66HATONo1388536
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 11:23:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=qcppdkim1; bh=czT540BGHprotdvyBya4XBVf8GAhAsGl4mo
- u0i7NKxs=; b=JMu2hivdWtZ2MkpgGots7lmuWSZPKmf0eptjpSJFS27ShNZYO/5
- pINV9bDEZwN63QXVDjDt9u+YkLJW6dqfolK1hRgYNGL5UYg3cEsr673NYzTGO2HZ
- Oy6k8+O+vS3zUu3gZAeKBaQHE9CY4mhlWxF8uftwR+f0UO5F1XgxAhMcEJT9YaUg
- EgrnbN9j/99hgMWL9fUgaaajX2D8M7ROS+AEh+PooCPazhLnnlfdFd1vo6hZiWIE
- 6fF2dxGekTtmuUEP4zZxR7fhx6kmiUi4SMawMzO1MRm78lTi5k8WfRJju1fdBZrk
- J7nj/U241Pv7KUEXnsEH8Vpn7uoYhUUvJMQ==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fff9p91x7-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 11:23:44 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8fdace20927so54307686d6.2
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 04:23:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wkgkF-0006Ux-LZ
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 07:28:43 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wkgkD-0000CC-Fh
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 07:28:43 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-81ee41aaec1so20952517b3.3
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 04:28:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784287719; cv=none;
+ d=google.com; s=arc-20260327;
+ b=gKokvbojzAirgd7A9zfIA9AQYltT8BwyNigtCG9RDzN2yg0kUmQRSFxC8JQ9lgSkds
+ qE0j7uZHD1dmytYiuU1E0nmYcJhR5p5Zr8Ihlzdchl5Gic6c1J/ReJ7CXV9SYzlJWpek
+ VowXoLCtjCvzCQfISZvCVdap4k96+43YDrNT5ruirLLOHk/8wAiYhJAGJwRXWNIOCLSi
+ kZxI35isvAysfF6BTt19OjmsedZ0OMXi1FSWPxV5z35NlAFT78pRIhlANkRbcgSkwpFw
+ JXX8a4PsSleEGmZmfK46oRy0Yd6sMcy7ts+3J7uSKymvJfVzLogDVPctv9ITYfd38xRr
+ NrCg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=8csP0/y1o4tNevTIFivehVlkNlmNFE5TfYnkt9pwNXE=;
+ fh=OM3BSxedQk5F2YNEo6zs1zCTkf0tpzWc+pm1SrDXw1s=;
+ b=MWOssTNcGHIGyQB88WQ46CTNYhs0cRFeDJ139TQK+RNh6+iRCAVvx2s8hZd867Kct1
+ MfBh120gQcVZu/eQgHyf5xKyjkchKCEK7XctUmYUY/TAS+vpYfyFSi+Tj5jmJuH6HqP5
+ drIPU/rcgUlD/uqt2Zw/KSprJbwHMbEoFtgMWEScBO9xClkLx+RHODe4yyY6tVF0aXFS
+ 4/AkV8zUqYNY1ltUYGbb4NfhYGXH4eX4A7Y2h9GRiK4562jfLuvrwL3MdR2CwgsNpcWP
+ cAuhlk/SbdWrIWEU010XB7AyYsiUWsxTDYmPtY7FdTM0PGDXvKYRruorMj8Guiml4ivG
+ hKyg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784287423; x=1784892223; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=czT540BGHprotdvyBya4XBVf8GAhAsGl4mou0i7NKxs=;
- b=KuNbhJrluNlrO1mesJ/Yr62ZgihRYfqm4xYRZL0Eap0o4nfrUeS1fgT2QAsz6j7qTg
- XW8JZJYrBoGlX/No2YOS0YDq/rICJTmfIAFS0sm55QnZhvfrt2FSymxKeBvxWfVVdmEi
- dj6t3UojuB3XdLIk/fUguUb8fhIdPptgBMQhtS3PqDmbHZalmLaedgu3hGU50tVwhx2H
- tNUPfArWEyO4999gVLXqfksUgETqrLIhHpPt88JksnE3vFFXOJ+JlQvFB6/ZG303tXfU
- tpuZJK8kKAY3bpCafTqi88674TI/ULLwGJzyBfxfRqOgk4CCiWKNffsnugvdDiiidRh6
- iZFQ==
+ d=linaro.org; s=google; t=1784287719; x=1784892519; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=8csP0/y1o4tNevTIFivehVlkNlmNFE5TfYnkt9pwNXE=;
+ b=MeaoY7KU8CUMk1ymwI4JGKMIEfa29McB0T8+p4pQHv2M1ebsSxdgZ4tXZ7Z9yzCsZz
+ JvovlMuXscMn3SoVFv4aurXerpycxtx3XccQzgHNU89KPTFOE4eA64x6r50HBESAveQB
+ UYoHmaqkkAD2BY22e3CS7nndjNgJSOy0saXfEZSNfZGYSb4NazLh+ouc8P/hS2+QZ4KD
+ 6bFe4qDCwhrTXeAeswI8VsdVenhoo/ptvJJDcPbn9d9HsaRExH5B8wFY3pRib37f/vEa
+ EcTPy0YGwcsAHpGQAF8dAjJcDxxHVs18rWDMugZoO0viXP7ImI+sKCKbYgnJkfeB8Un9
+ Vv8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784287423; x=1784892223;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=czT540BGHprotdvyBya4XBVf8GAhAsGl4mou0i7NKxs=;
- b=fyhuXP7n+TZHXUUJebBX0BHxyMdJHntBLPuB0P7FHGSF/fjOB1B9n6GVxJ6cKgd9bd
- ePwqfqwkwp4Tg+66c9cZmq805UwzcOVXqZFU5mkwfOWRe+7prG4pM975kzz30zAyLybM
- /HcMFibXrgC2o/i5Fo3zCVpjT/fyA30YVf+mFKNhsvVxXv+94xhdTfdClFJ12TbOOsXx
- /Mpo876u1zzsPF0UrwVyOGcycyHgqzSmwjxlvRbojG8LkX4sPo1fctBSk5OEjuXYGIk/
- mxhUyEbjzDzb2wc67g5VivF8sNJvUmwN/fkpPZ09iWhvCwza6fhSNF/rUWMDFpVWysLx
- RzmQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrTm4PR/84Lu+d4mxaT49o8zy2suvi6ubp9Hf5jrJlt07iC2ToaRqjfCBGdb9nyIjogxxfqo4baWab5@nongnu.org
-X-Gm-Message-State: AOJu0Yxd+8Qn3OkE7c2Q0JXhasilRJQzQS/he1TnCK/hOwEUnTZzcU6Q
- BBUsHQv9qQGTGO62bM8RzJSb/CpyVAyeh4J5RQsUPVIDQllZeezP7CDLDeOv+tHaoAZ2UWE7BZ8
- kG553HC08/FgaNrrfqZrQpQQJPUNVnF6dMlTqOkot1SX8wytORl1wNB5uCw==
-X-Gm-Gg: AfdE7cmwJ2gc8f6Q+762FCwSVAvQX4djgLBE5drtP3atsuD8snIPvkNcHu+j90jhpDt
- Lkh0tu81ANXJ5//tSXQzn3ij/Vqy3mJ+OzN97G2dIQujzvILP7LpCx07ZMHs3LY0kBbn2lbY948
- YJbiowmAjrg3h2j1moyPDKO6gLLyfeTGSq3DPkkavH2k/G3VQqE+QL1h0WVjUqxFwAsEvqmeAMK
- 5wyp5iXpw2NE37mOzu1ey+9K1zdTuvu8CVJJGQqn9cqltVin33NxAKzdqEHdDYMlrxftnDX5a2+
- qexwKCAApWSrBFu009yZP8LLmLxBQEA5aupX+EQulgBv78jzIXRKQPQE2Tl+ZBDiNcePcwa6YjY
- 8Gs1L+UziANL3PNcMJzeBxUulHQwybIC9o25f87XJ
-X-Received: by 2002:a05:622a:3ce:b0:51b:fdd4:a1d6 with SMTP id
- d75a77b69052e-5213cbd581bmr17073551cf.31.1784287423513; 
- Fri, 17 Jul 2026 04:23:43 -0700 (PDT)
-X-Received: by 2002:a05:622a:3ce:b0:51b:fdd4:a1d6 with SMTP id
- d75a77b69052e-5213cbd581bmr17073271cf.31.1784287423058; 
- Fri, 17 Jul 2026 04:23:43 -0700 (PDT)
-Received: from localhost (85-207-54-79.static.bluetone.cz. [85.207.54.79])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-69e6fee330fsm530949a12.3.2026.07.17.04.23.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jul 2026 04:23:42 -0700 (PDT)
-From: Andrew Jones <andrew.jones@oss.qualcomm.com>
-To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Cc: alistair.francis@wdc.com, palmer@dabbelt.com,
- daniel.barboza@oss.qualcomm.com
-Subject: [PATCH] hw/riscv/riscv-iommu: fix U-bit check to apply only to leaf
- S/VS-stage PTEs
-Date: Fri, 17 Jul 2026 13:23:40 +0200
-Message-ID: <20260717112340.1071148-1-andrew.jones@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20251104; t=1784287719; x=1784892519;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=8csP0/y1o4tNevTIFivehVlkNlmNFE5TfYnkt9pwNXE=;
+ b=DBxaqgIO1nVRUew7y/zQ2/bGxo/n03X9KiQZIrC/FqCGC230nvRx32o+IHGeTJ84lT
+ nz8R/vQEwey6xraZB1Ud97IJSQPaLIjAZNQy11FuHJcwQ9l8HkKq0tKiOf+N3grhNNol
+ Sr7wWO2B8Zi4pXD8bhxdzgzOeWIIgUXLW8acSHcgpzgWKWmwxMtfKBf7IFq16YOU3k4n
+ jPbSlRHzfEN/+hqct2KpitfiT8J14vVlFQvx+49SUoMS2M780hs9wMF8Zyhw/V59+Kef
+ 2aVkkhtKoiaGfMuVJDkM4dDMT9wrfwdP2h6xukf0S69qFAbgtmJyM71IhXMQxHSs3kh5
+ xdQQ==
+X-Gm-Message-State: AOJu0YyEDKEHaa8/YYyzOpoRN/qcK4OfH0IeboMWq2U2jEQdsyKhyxSK
+ 1w9JqcZMWFD2c97dxyGdX+FwNgtdGZOv4XdqcRexdiKBsZIibq8ubRywLWAyxoZ9MxooL82Oz7B
+ acyfzKVFsMyPDAnSyKGgM6nPBeGefqbE+SKYg0shMuA==
+X-Gm-Gg: AfdE7ckjCwuq/g85rCHL6677Hn7njfKedJzv3EhgmHdj7MdneMQFiGJwgYk01wyYUS2
+ XPfYM9lmSjiaxOBjlPQmyXSA/hnsv9OTtNsRTMjUvLKD6UsQ2g8QxnI4Ne/jarTDKxfzA8kU6hc
+ tBdRRmr6KD/2CkGFPCxMWtmTTYgc1ip6wugUEgpEF/zGE0rSmzMKvOx5jK2NnWuQXu8bO2HBGfW
+ z3qFZDaCpFKxPBR4benis12RCOaXXpF5s9DeijmdOj9qEOXK+0b6kfeVLZ3c6hKs71faDdgl+VT
+ TLkxWqnpcmZYiZfhjQTyWwZQQVLPmt2jmFz6M/fdks+UQrecETaAvYzb
+X-Received: by 2002:a05:690c:dd2:b0:81d:6af3:b9b8 with SMTP id
+ 00721157ae682-81ef26b7ed1mr5205977b3.60.1784287718737; Fri, 17 Jul 2026
+ 04:28:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: G1vZr2SmoD29MtS2IQsP5HjfUyM5xAON
-X-Proofpoint-ORIG-GUID: G1vZr2SmoD29MtS2IQsP5HjfUyM5xAON
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE3MDExNSBTYWx0ZWRfXx3ecIJw+aSiJ
- PiZldvIhff+QK01kHrRXzoCDbzsiedHWrK3FoEvPv5oDHmydcN2fXdEjsEfOt3kp0Rh0VFO9/MO
- nE+EtdZri1tb5xTxnQqF+e8GWrdBD8/a3FuQr0BgsOK0mT1g9P8J7E9iyX9HkmnTKUNUzD8yFYd
- bjtQxl2FqL5+SY4k508/YRUmwaxS/LexTBCrxHLF5777Bp3uUlmRWjVEDY1iC+XtcKSlxHC4fb5
- BUT1hRME2a3V0Ckhx6pcC9yXisGCslEyvSs9+E8ecAKnTj1qDAQCCLp/L/QhXwUYjuOYY1lTTun
- HGxlwLrLbVee54NNb8u+whse7TBaxOr4XoRPcNMrggguXlOBC9IfuxA9FBZT/eg6Uidw6bfncAJ
- KET9OzZd1SiA2aZTftp1Fevk6dkkgCqk02wD0/U4gwINKbrL4DZZhfsAi+Mq6enUsemPuv7ObD2
- vjwecCaLM7T+YiD540A==
-X-Authority-Analysis: v=2.4 cv=TaqmcxQh c=1 sm=1 tr=0 ts=6a5a10c0 cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=sMQditckXvAul1hrnTxjdA==:17
- a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=EUspDBNiAAAA:8
- a=67zmbIgRDZDG84ANJA8A:9 a=pJ04lnu7RYOZP9TFuWaZ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE3MDExNSBTYWx0ZWRfX25ciRQPYHyKZ
- bxY03fNAxUH33U2JCqMDjvqRs0mz6rhznqxiORTlU95UiySry73WL4yKXmBwSiiWFp+WOvsXrD/
- 97yVujB57L70oZm8MJ/AeZq0soLkuos=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-17_03,2026-07-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 suspectscore=0 lowpriorityscore=0 phishscore=0
- adultscore=0 spamscore=0 bulkscore=0 priorityscore=1501 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607170115
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=andrew.jones@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260715131819.14827-1-dingtao0430@163.com>
+In-Reply-To: <20260715131819.14827-1-dingtao0430@163.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 17 Jul 2026 12:28:27 +0100
+X-Gm-Features: AUfX_mytekb_1XJdQ79DW4roY87bbelE0vkQUmnZwMfIafaiVPXObc6z0M7LXHY
+Message-ID: <CAFEAcA8AHg2Sov8rEsU1jNFYUgmBaVV7eBz0YtzExwHTLYvdEw@mail.gmail.com>
+Subject: Re: [PATCH 0/1] imx_serial: add missing migration state
+To: Tao Ding <dingtao0430@163.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, marcandre.lureau@redhat.com, 
+ pbonzini@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,59 +114,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit b795ea0ba471 ("hw/riscv/riscv-iommu.c: fault when !PTE_U and
-no priv access") placed its check ahead of the leaf-vs-non-leaf
-branch in riscv_iommu_spa_fetch(), so it fires on every PTE walked,
-including non-leaf/table entries. Per the RISC-V privileged spec's
-address translation algorithm (Sv39/Sv48/etc., the "leaf PTE has
-been reached" step, followed separately by the U-bit permission
-check), the U bit is only defined and checked for the leaf PTE
-reached at the end of the walk -- non-leaf PTEs don't carry a
-meaningful U bit at all.
+On Wed, 15 Jul 2026 at 14:18, Tao Ding <dingtao0430@163.com> wrote:
+>
+> Hi all.
+> The imx_serial is missing a migration status,
+> resulting in no display on the terminal after migration.
+> This patch fixes this issue.
 
-Move the check after the leaf/non-leaf branch, alongside the other
-leaf-only checks, mirroring how the G_STAGE U-bit check (added in
-9158c900ab30) is already correctly placed.
+Whoops. Yes, ucr2 has the rx enable and tx enable bits,
+so not migrating it will leave the UART in a completely
+broken state.
 
-Fixes: b795ea0ba471 ("hw/riscv/riscv-iommu.c: fault when !PTE_U and no priv access")
-Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
----
- hw/riscv/riscv-iommu.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+I've applied this patch to target-arm.next for 11.1. I
+tweaked the commit message a bit to lead off with a clearer
+description of the problem and to note that it's a migration
+compat break:
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index f6865d1e164e..ed9fb09f8bc7 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -476,13 +476,6 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-             break;                /* Invalid PTE */
-         } else if (pte & PTE_RESERVED(false)) {
-             break;                /* Reserved PTE bits set */
--        } else if (!(pte & PTE_U) && !pv) {
--            /*
--             * All accesses are assumed to be User mode unless
--             * process_id is valid (pv).  In case we have a
--             * non-user mode PTE and !pv we need to fault.
--             */
--            break;
-         } else if (!(pte & (PTE_R | PTE_W | PTE_X))) {
-             base = PPN_PHYS(ppn); /* Inner PTE, continue walking */
-         } else if ((pte & (PTE_R | PTE_W | PTE_X)) == PTE_W) {
-@@ -491,6 +484,13 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-             break;                /* Reserved leaf PTE flags: PTE_W + PTE_X */
-         } else if (ppn & ((1ULL << (va_skip - TARGET_PAGE_BITS)) - 1)) {
-             break;                /* Misaligned PPN */
-+        } else if (!(pte & PTE_U) && !pv) {
-+            /*
-+             * All accesses are assumed to be User mode unless
-+             * process_id is valid (pv).  In case we have a
-+             * non-user mode leaf PTE and !pv we need to fault.
-+             */
-+            break;
-         } else if ((iotlb->perm & IOMMU_RO) && !(pte & PTE_R)) {
-             break;                /* Read access check failed */
-         } else if ((iotlb->perm & IOMMU_WO) && !(pte & PTE_W)) {
--- 
-2.43.0
+    The imx_serial vmstate is missing the ucr2 field.  This register
+    includes important state like the transmit enable and receive enable
+    bits, so it's likely that after a migration the UART will be in a
+    completely broken state. This bug has been present ever since
+    the UART code was first added to QEMU.
 
+    Add ucr2 from imx_serial to vmstate, and increment the version_id.
+    This is a migration compatibility break, but this UART is only used
+    in the various imx-based boards, where we are OK with compat breaks.
+
+    [etc]
+
+thanks
+-- PMM
 
