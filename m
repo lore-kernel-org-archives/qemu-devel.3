@@ -4,107 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6A8EC44507
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 10:08:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E23DBC44516
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 10:09:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkfUi-0004h9-PR; Fri, 17 Jul 2026 06:08:36 -0400
+	id 1wkfTr-0003e4-6M; Fri, 17 Jul 2026 06:07:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wkfUg-0004f1-W7
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 06:08:35 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wkfUf-0006gk-As
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 06:08:34 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-493b27c7451so9513735e9.0
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 03:08:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784282911; x=1784887711; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=WPYcDT7NBX3WsaIillj0axYKcvwlC8AzLwkYpRUGU4c=;
- b=r99uOmT7R/cUmQw8XcmDCSB5Zvh6ffqBM92k1tWwjdcG1vDmEqm+dB+TZxJ1akiN+h
- 8QP2g2IExm06yWDhp/DbsVhf0t12F8aZsqkSc0JJ/e75VGS3m0JPfLDX9axyixQPHGqo
- 5+7P6nc5lBw5u78ieqKhn4ZfI/9xtcCUFgZ3s+1Fn9pRnlHTKFMx9reqjM4CsgTxA23I
- J3WJGfGtrB+vV1obXDWZm6hPsoQ+eByXJNaHX/GuoTxSOLDRz8d5KEY+30T2EIiDXZAN
- 5mouwlIAiEMq4g5EPegh2xgcMPhlEJFz1xbwgCE3BjUIh1sqL62fsMNNFW43VDwEAB1h
- l6uQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784282911; x=1784887711;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=WPYcDT7NBX3WsaIillj0axYKcvwlC8AzLwkYpRUGU4c=;
- b=opLi2CmCiYrcBkJRhxPSVj2fohXPxVjicRbnPr4LwIOlbvtVA4gbXVL7yyp6CRt1dJ
- dAlvArSYd2K1U3Wd0JPc4UbKc+T5ZyPcxaYgezxglMNLCVWtIgGx8y9ZE/WtVzdKC7An
- qVPw2r4hoH/RR5a1mw2HP1EkyECq1cPO4uo9MQSleh3HGBI9J5LiSi4y2ctV8b50Ckbq
- 6wi4ndsq9QduZKzdeDWl3edR+bzvNB8sHPasl+OVvRCtcp2X06LpCxCJQYPlIP9ZctMs
- P15PVGDcm+qrqWw9Yw/UJLondkW7idhz0+3FO3vDmgeb3yPEHYpbsQaj0hiUxYfQQ1Pe
- ivSw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoRuRLjCskKLs3LKQTD+gMxYpz6Z7Mw3fEKMZ/pmxtwHlYqFe+VqgU84/EbDFDN1xbr4gEGMJAW1u/g@nongnu.org
-X-Gm-Message-State: AOJu0Yz2RMyZcAKtqUryeMOtKxMQDFWttPGmtp1H7uD6JC8xh7JFOlEu
- ofX/7dKEIZwdNcUWE766E8p+uJPb89vbmmux01Pft0NOKby/vydXOa+aZihGXPcYdO8=
-X-Gm-Gg: AfdE7cllzGjdG7NwfL7XHeFk8d++5xWcgd41abtDWrip+gYV/CoemOM4CCXjgAD5CZF
- ylSMQO4oVQ8GWsBOFAviNr/ZCYZjLX4Ow44k5ZGZRzkZM+zlB6zw1LtNiQUQEF/DzhwDWS9IUeG
- If4Rp5kgdEANDMZbeS7puomIw8c427kPhlvGMYJWeWuAB9U45EAfMnaaKYAPoedGxU/06Dl/rEh
- zG73ugjIj0EvgFXW6Uo73F4hq1rSS50q55ClfWfNMTvRNzquzTKSakvTy+Icjw03XIEu98ib1YE
- WOpqSAs1lRJ/rxtZ8nA4A4kkdPqvcIpupj/8dXUEPKQIklIv40v/66Q+xnbf70NMCAm+ihi5ena
- Chpdk7L/WWV29tlN88ZttDX1SHfT9LHP5mp4Q1OPJiu7avbanZBCY5IEjkPodWXirLuiNv800tM
- 5PIg==
-X-Received: by 2002:a05:600c:1d18:b0:495:3c6f:7c18 with SMTP id
- 5b1f17b1804b1-4954a320080mr20552035e9.3.1784282910552; 
- Fri, 17 Jul 2026 03:08:30 -0700 (PDT)
-Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49549a47e64sm46431185e9.8.2026.07.17.03.08.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jul 2026 03:08:29 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A46715F7DB;
- Fri, 17 Jul 2026 11:08:28 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Jim Shu <jim.shu@sifive.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org,  "Michael S. Tsirkin" <mst@redhat.com>,  Peter Xu
- <peterx@redhat.com>,  David Hildenbrand <david@kernel.org>,  =?utf-8?Q?Cl?=
- =?utf-8?Q?=C3=A9ment?=
- Mathieu--Drif <clement.mathieu--drif@eviden.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Daniel Henrique Barboza
- <daniel.barboza@oss.qualcomm.com>,  Peter Maydell
- <peter.maydell@linaro.org>,  Zhao Liu <zhao1.liu@intel.com>,  "Edgar E.
- Iglesias" <edgar.iglesias@gmail.com>,  =?utf-8?Q?Cl=C3=A9ment?= Chigot
- <chigot@adacore.com>,  Frederic Konrad <konrad.frederic@yahoo.fr>
-Subject: Re: [PATCH] exec: Add RISC-V WorldGuard WID field to MemTxAttrs
-In-Reply-To: <08c5f243-5aaa-4fe2-bc71-6a3fd9a1914e@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Wed, 18 Mar 2026 07:42:31
- +0100")
-References: <20260209115846.2276651-1-jim.shu@sifive.com>
- <7be3b4f7-7516-40ab-8a95-b3b4a2aea095@linaro.org>
- <CALw707rbMvg1mf1S_3qiqDWbZ0qjzgx4UJ9pUGmQODKWttKFyQ@mail.gmail.com>
- <08c5f243-5aaa-4fe2-bc71-6a3fd9a1914e@linaro.org>
-User-Agent: mu4e 1.14.3-pre1; emacs 30.1
-Date: Fri, 17 Jul 2026 11:08:28 +0100
-Message-ID: <87ik6e2ajn.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
+ id 1wkfTo-0003bW-4d; Fri, 17 Jul 2026 06:07:40 -0400
+Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
+ id 1wkfTg-0006aX-A1; Fri, 17 Jul 2026 06:07:39 -0400
+Received: from xiaoou-ubuntu-02.home.arpa (unknown [36.110.52.2])
+ by APP-01 (Coremail) with SMTP id qwCowAB3T_Pa_llqSAw4AA--.34459S4;
+ Fri, 17 Jul 2026 18:07:23 +0800 (CST)
+From: Molly Chen <xiaoou@iscas.ac.cn>
+To: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu.zevorn@gmail.com, Chao Liu <chao.liu@processmission.com>
+Cc: xiaoou@iscas.ac.cn,
+	qemu-riscv@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH v2 02/18] target/riscv: Add packed SIMD helper framework
+Date: Fri, 17 Jul 2026 10:06:55 +0000
+Message-Id: <e3775ec9235fa974e9a318edf1836cdaab197e27.1784280142.git.xiaoou@iscas.ac.cn>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <cover.1784280142.git.xiaoou@iscas.ac.cn>
+References: <cover.1784280142.git.xiaoou@iscas.ac.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qwCowAB3T_Pa_llqSAw4AA--.34459S4
+X-Coremail-Antispam: 1UD129KBjvAXoWDWw1kuFy7CFW3Ar43Jr1UJrb_yoWrAF1kGo
+ W7Gw1fX3yxXryxCrW0vr1IqFy7JFy5Zwn8ZrWYvryrA3ZrWa4agr1fJw4kXF10ka13tr47
+ GrZ7Wwn8KasI9r1fn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7v73VFW2AGmfu7bjvjm3
+ AaLaJ3UjIYCTnIWjp_UUUYm7AC8VAFwI0_Wr0E3s1l1xkIjI8I6I8E6xAIw20EY4v20xva
+ j40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l82xGYIkIc2x26280x7IE14v26r15M28IrcIa0x
+ kI8VCY1x0267AKxVW5JVCq3wA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK021l84AC
+ jcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4j6r4UJw
+ A2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_GcCE3s1l
+ e2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI
+ 8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE14v26r4UJVWxJr1lOx8S6xCaFVCjc4AY6r1j6r4U
+ M4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628vn2kIc2xKxwCY1x0262kKe7
+ AKxVWUtVW8ZwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I
+ 3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxAIcVC0I7IYx2IY67
+ AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IY
+ s7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr
+ 0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x0JUpOJ5UUUUU=
+X-Originating-IP: [36.110.52.2]
+X-CM-SenderInfo: 50ld003x6l2u1dvotugofq/
+Received-SPF: pass client-ip=159.226.251.21; envelope-from=xiaoou@iscas.ac.cn;
+ helo=cstnet.cn
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, HK_RANDOM_ENVFROM=0.001,
+ HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,61 +78,1690 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+Signed-off-by: Molly Chen <xiaoou@iscas.ac.cn>
+---
+ target/riscv/tcg/meson.build    |    3 +-
+ target/riscv/tcg/psimd_helper.c | 1656 +++++++++++++++++++++++++++++++
+ 2 files changed, 1658 insertions(+), 1 deletion(-)
+ create mode 100644 target/riscv/tcg/psimd_helper.c
 
-> On 18/3/26 05:40, Jim Shu wrote:
->> On Tue, Feb 10, 2026 at 8:25=E2=80=AFAM Richard Henderson
->> <richard.henderson@linaro.org> wrote:
->> ...
->>> Hmm.  This really overlaps the secure and space fields from arm, and po=
-ssibly some of the
->>> others as well (e.g. user, requester_id, pid).
->>>
->>> I don't really have a good suggestion for that right now, but it would =
-be nice to not keep
->>> expanding the count of these sorts of fields that somehow specify the o=
-riginator, but
->>> clearly cannot overlap.
->>>
->>> I'm reasonably sure we've had this discussion before, but nothing has c=
-ome of it.
->>>
->>> Time to paint the bikeshed again?
->
-> Last discussion IIRC:
-> https://lore.kernel.org/qemu-devel/CAFEAcA8vKNkfKgp_Yymo9NA1=3DE2XJYXAMTg=
-O3z6q6DHgqkAwRw@mail.gmail.com/
->
-> (see also a suggestion in
-> https://lore.kernel.org/qemu-devel/Z4+P3eHXqcU4Dqdx@intel.com/)
+diff --git a/target/riscv/tcg/meson.build b/target/riscv/tcg/meson.build
+index a05ab642f41..cc438d7c0d2 100644
+--- a/target/riscv/tcg/meson.build
++++ b/target/riscv/tcg/meson.build
+@@ -15,7 +15,8 @@ riscv_ss.add(files(
+   'vcrypto_helper.c',
+   'vector_helper.c',
+   'vector_internals.c',
+-  'zce_helper.c'))
++  'zce_helper.c',
++  'psimd_helper.c'))
+ 
+ 
+ riscv_system_ss.add(files(
+diff --git a/target/riscv/tcg/psimd_helper.c b/target/riscv/tcg/psimd_helper.c
+new file mode 100644
+index 00000000000..2948bbb2a86
+--- /dev/null
++++ b/target/riscv/tcg/psimd_helper.c
+@@ -0,0 +1,1656 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* RISC-V Packed SIMD Extension Helpers for QEMU. */
++/* Copyright (C) 2026 ISRC ISCAS. */
++
++#include "qemu/osdep.h"
++#include "cpu.h"
++#include "qemu/host-utils.h"
++#include "exec/helper-proto.h"
++#include "fpu/softfloat.h"
++#include "internals.h"
++
++
++/* Helper macros */
++
++/* Element count calculations */
++#define ELEMS_B(target) (sizeof(target) * 8 / 8)    /* byte elements count */
++#define ELEMS_H(target) (sizeof(target) * 8 / 16)
++#define ELEMS_W(target) (sizeof(target) * 8 / 32)   /* word elements count */
++#define ELEMS_D(target) (sizeof(target) * 8 / 64)
++
++/* Element extraction macros - unsigned to avoid sign extension */
++#define EXTRACT8(val, idx)  (((val) >> ((idx) * 8)) & 0xFF)
++#define EXTRACT16(val, idx) (((val) >> ((idx) * 16)) & 0xFFFF)
++#define EXTRACT32(val, idx) (((val) >> ((idx) * 32)) & 0xFFFFFFFF)
++#define EXTRACT64(val, idx) (((val) >> ((idx) * 64)) & 0xFFFFFFFFFFFFFFFFULL)
++
++/* Element insertion macros */
++#define INSERT8(val, res, idx) \
++    ((val) | ((target_ulong)(uint8_t)(res) << ((idx) * 8)))
++#define INSERT16(val, res, idx) \
++    ((val) | ((target_ulong)(uint16_t)(res) << ((idx) * 16)))
++#define INSERT32(val, res, idx) \
++    ((val) | ((target_ulong)(uint32_t)(res) << ((idx) * 32)))
++#define INSERT32_64(val, res, idx) \
++    ((val) | ((uint64_t)(uint32_t)(res) << ((idx) * 32)))
++#define INSERT64(val, res, idx) \
++    ((val) | ((uint64_t)(res) << ((idx) * 64)))
++
++/* Saturation constants */
++static const int8_t   SAT_MAX_B = 127;
++static const int8_t   SAT_MIN_B = -128;
++static const int16_t  SAT_MAX_H = 32767;
++static const int16_t  SAT_MIN_H = -32768;
++static const int32_t  SAT_MAX_W = 2147483647;
++static const int32_t  SAT_MIN_W = -2147483648LL;
++static const uint8_t  USAT_MAX_B = 255;
++static const uint16_t USAT_MAX_H = 65535;
++static const uint32_t USAT_MAX_W = 4294967295U;
++
++
++/* Saturation helper functions */
++
++/**
++ * Signed saturation for 8-bit elements
++ * Returns saturated value and sets *sat if saturation occurred
++ */
++static inline int8_t signed_saturate_b(int32_t val, int *sat)
++{
++    if (val > SAT_MAX_B) {
++        *sat = 1;
++        return SAT_MAX_B;
++    }
++    if (val < SAT_MIN_B) {
++        *sat = 1;
++        return SAT_MIN_B;
++    }
++    return (int8_t)val;
++}
++
++/**
++ * Signed saturation for 16-bit elements
++ */
++static inline int16_t signed_saturate_h(int32_t val, int *sat)
++{
++    if (val > SAT_MAX_H) {
++        *sat = 1;
++        return SAT_MAX_H;
++    }
++    if (val < SAT_MIN_H) {
++        *sat = 1;
++        return SAT_MIN_H;
++    }
++    return (int16_t)val;
++}
++
++/**
++ * Signed saturation for 32-bit elements
++ */
++static inline int32_t signed_saturate_w(int64_t val, int *sat)
++{
++    if (val > SAT_MAX_W) {
++        *sat = 1;
++        return SAT_MAX_W;
++    }
++    if (val < SAT_MIN_W) {
++        *sat = 1;
++        return SAT_MIN_W;
++    }
++    return (int32_t)val;
++}
++
++/**
++ * Unsigned saturation for 8-bit elements
++ */
++static inline uint8_t unsigned_saturate_b(uint32_t val, int *sat)
++{
++    if (val > USAT_MAX_B) {
++        *sat = 1;
++        return USAT_MAX_B;
++    }
++    return (uint8_t)val;
++}
++
++/**
++ * Unsigned saturation for 16-bit elements
++ */
++static inline uint16_t unsigned_saturate_h(uint32_t val, int *sat)
++{
++    if (val > USAT_MAX_H) {
++        *sat = 1;
++        return USAT_MAX_H;
++    }
++    return (uint16_t)val;
++}
++
++/**
++ * Unsigned saturation for 32-bit elements
++ */
++static inline uint32_t unsigned_saturate_w(uint64_t val, int *sat)
++{
++    if (val > USAT_MAX_W) {
++        *sat = 1;
++        return USAT_MAX_W;
++    }
++    return (uint32_t)val;
++}
++
++static inline target_ulong psimd_abdsumu_b(target_ulong rs1,
++                                           target_ulong rs2,
++                                           target_ulong sum)
++{
++    int elems = ELEMS_B(rs1);
++
++    for (int i = 0; i < elems; i++) {
++        uint8_t e1 = EXTRACT8(rs1, i);
++        uint8_t e2 = EXTRACT8(rs2, i);
++        uint8_t diff = (e1 > e2) ? (e1 - e2) : (e2 - e1);
++        sum += diff;
++    }
++
++    return sum;
++}
++
++#define PSIMD_DO_ADD(N, M) ((N) + (M))
++#define PSIMD_DO_SUB(N, M) ((N) - (M))
++#define PSIMD_DO_ABD(N, M) ((N) >= (M) ? (N) - (M) : (M) - (N))
++#define PSIMD_DO_EQ_MASK(N, M) ((N) == (M) ? -1 : 0)
++#define PSIMD_DO_LT_MASK(N, M) ((N) < (M) ? -1 : 0)
++#define PSIMD_DO_MIN(N, M) ((N) < (M) ? (N) : (M))
++#define PSIMD_DO_MAX(N, M) ((N) > (M) ? (N) : (M))
++#define PSIMD_DO_SLL(N, M) ((N) << (M))
++#define PSIMD_DO_SRL(N, M) ((N) >> (M))
++#define PSIMD_DO_SRA(N, M) ((N) >> (M))
++
++#define GEN_PSIMD_BINOP(NAME, RTYPE, STYPE, DTYPE, EXTRACT, INSERT,       \
++                        ELEMS, OP)                                        \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        STYPE e1 = (STYPE)EXTRACT(rs1, i);                                \
++        STYPE e2 = (STYPE)EXTRACT(rs2, i);                                \
++        DTYPE res = (DTYPE)OP(e1, e2);                                    \
++        rd = INSERT(rd, res, i);                                          \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_BINOP_SCALAR(NAME, RTYPE, ETYPE, EXTRACT, INSERT,       \
++                               ELEMS, OP)                                 \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++    ETYPE e2 = (ETYPE)EXTRACT(rs2, 0);                                    \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        ETYPE e1 = (ETYPE)EXTRACT(rs1, i);                                \
++        ETYPE res = OP(e1, e2);                                           \
++        rd = INSERT(rd, res, i);                                          \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_SHIFTOP(NAME, RTYPE, STYPE, DTYPE, EXTRACT, INSERT,     \
++                          ELEMS, SHMASK, OP)                              \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++    uint8_t shamt = rs2 & (SHMASK);                                       \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        STYPE e1 = (STYPE)EXTRACT(rs1, i);                                \
++        DTYPE res = (DTYPE)OP(e1, shamt);                                 \
++        rd = INSERT(rd, res, i);                                          \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_SAT_SHIFTOP(NAME, RTYPE, ETYPE, WTYPE, EXTRACT, INSERT, \
++                              ELEMS, SHMASK, SAT_FN)                      \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++    int sat = 0;                                                          \
++    uint8_t shamt = rs2 & (SHMASK);                                       \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        ETYPE e1 = (ETYPE)EXTRACT(rs1, i);                                \
++        WTYPE shifted = (WTYPE)e1 << shamt;                               \
++        ETYPE res = SAT_FN(shifted, &sat);                                \
++        rd = INSERT(rd, res, i);                                          \
++    }                                                                     \
++                                                                          \
++    if (sat) {                                                            \
++        env->vxsat = 1;                                                   \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_ROUND_SRAI(NAME, RTYPE, ETYPE, WTYPE, EXTRACT, INSERT,  \
++                             ELEMS, SHMASK)                               \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++    uint8_t shamt = rs2 & (SHMASK);                                       \
++                                                                          \
++    if (shamt == 0) {                                                     \
++        return rs1;                                                       \
++    }                                                                     \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        ETYPE e1 = (ETYPE)EXTRACT(rs1, i);                                \
++        WTYPE rounded = (((WTYPE)e1 >> (shamt - 1)) + 1) >> 1;            \
++        rd = INSERT(rd, (ETYPE)rounded, i);                               \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_SAT_BINOP(NAME, RTYPE, ETYPE, WTYPE, EXTRACT, INSERT,   \
++                            ELEMS, OP, SAT_FN)                            \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++    int sat = 0;                                                          \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        ETYPE e1 = (ETYPE)EXTRACT(rs1, i);                                \
++        ETYPE e2 = (ETYPE)EXTRACT(rs2, i);                                \
++        WTYPE val = OP((WTYPE)e1, (WTYPE)e2);                             \
++        ETYPE res = SAT_FN(val, &sat);                                    \
++        rd = INSERT(rd, res, i);                                          \
++    }                                                                     \
++                                                                          \
++    if (sat) {                                                            \
++        env->vxsat = 1;                                                   \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_USUB_SAT(NAME, RTYPE, ETYPE, EXTRACT, INSERT, ELEMS)    \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++    int sat = 0;                                                          \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        ETYPE e1 = (ETYPE)EXTRACT(rs1, i);                                \
++        ETYPE e2 = (ETYPE)EXTRACT(rs2, i);                                \
++        ETYPE res = (e1 >= e2) ? (e1 - e2) : 0;                           \
++        if (e1 < e2) {                                                    \
++            sat = 1;                                                      \
++        }                                                                 \
++        rd = INSERT(rd, res, i);                                          \
++    }                                                                     \
++                                                                          \
++    if (sat) {                                                            \
++        env->vxsat = 1;                                                   \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_AVG_BINOP(NAME, RTYPE, ETYPE, WTYPE, EXTRACT, INSERT,   \
++                            ELEMS, OP)                                    \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        WTYPE e1 = (WTYPE)(ETYPE)EXTRACT(rs1, i);                         \
++        WTYPE e2 = (WTYPE)(ETYPE)EXTRACT(rs2, i);                         \
++        ETYPE res = (ETYPE)(OP(e1, e2) >> 1);                             \
++        rd = INSERT(rd, res, i);                                          \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_SHADD(NAME, RTYPE, ETYPE, EXTRACT, INSERT, ELEMS,       \
++                        SHAMT)                                            \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        ETYPE e1 = (ETYPE)EXTRACT(rs1, i);                                \
++        ETYPE e2 = (ETYPE)EXTRACT(rs2, i);                                \
++        ETYPE res = (e1 << (SHAMT)) + e2;                                 \
++        rd = INSERT(rd, res, i);                                          \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_SAT_SHADD(NAME, RTYPE, ETYPE, WTYPE, EXTRACT, INSERT,   \
++                            ELEMS, SHAMT, SH_MIN, SH_MAX, SAT_MIN,        \
++                            SAT_MAX, SAT_FN)                              \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++    int sat = 0;                                                          \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        ETYPE e1 = (ETYPE)EXTRACT(rs1, i);                                \
++        ETYPE e2 = (ETYPE)EXTRACT(rs2, i);                                \
++        WTYPE shifted;                                                    \
++                                                                          \
++        if (e1 > (SH_MAX) || e1 < (SH_MIN)) {                             \
++            shifted = (e1 < 0) ? (SAT_MIN) : (SAT_MAX);                   \
++            sat = 1;                                                      \
++        } else {                                                          \
++            shifted = (WTYPE)e1 << (SHAMT);                               \
++        }                                                                 \
++                                                                          \
++        WTYPE sum = shifted + e2;                                         \
++        ETYPE res = SAT_FN(sum, &sat);                                    \
++        rd = INSERT(rd, res, i);                                          \
++    }                                                                     \
++                                                                          \
++    if (sat) {                                                            \
++        env->vxsat = 1;                                                   \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_SATI(NAME, RTYPE, ETYPE, WTYPE, EXTRACT, INSERT,        \
++                       ELEMS, IMMMASK)                                    \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE imm)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++    int range = (imm & (IMMMASK)) + 1;                                    \
++    WTYPE max = ((WTYPE)1 << (range - 1)) - 1;                            \
++    WTYPE min = -((WTYPE)1 << (range - 1));                               \
++    int sat = 0;                                                          \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        ETYPE e1 = (ETYPE)EXTRACT(rs1, i);                                \
++        ETYPE res;                                                        \
++                                                                          \
++        if (e1 > max) {                                                   \
++            res = max;                                                    \
++            sat = 1;                                                      \
++        } else if (e1 < min) {                                            \
++            res = min;                                                    \
++            sat = 1;                                                      \
++        } else {                                                          \
++            res = e1;                                                     \
++        }                                                                 \
++                                                                          \
++        rd = INSERT(rd, res, i);                                          \
++    }                                                                     \
++                                                                          \
++    if (sat) {                                                            \
++        env->vxsat = 1;                                                   \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_USATI(NAME, RTYPE, ETYPE, UTYPE, WTYPE, EXTRACT,        \
++                        INSERT, ELEMS, ONE)                               \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE imm)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++    WTYPE max = ((WTYPE)(ONE) << imm) - 1;                                \
++    int sat = 0;                                                          \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        ETYPE e1 = (ETYPE)EXTRACT(rs1, i);                                \
++        ETYPE res;                                                        \
++                                                                          \
++        if (e1 < 0) {                                                     \
++            res = 0;                                                      \
++            sat = 1;                                                      \
++        } else if ((UTYPE)e1 > max) {                                     \
++            res = max;                                                    \
++            sat = 1;                                                      \
++        } else {                                                          \
++            res = e1;                                                     \
++        }                                                                 \
++                                                                          \
++        rd = INSERT(rd, res, i);                                          \
++    }                                                                     \
++                                                                          \
++    if (sat) {                                                            \
++        env->vxsat = 1;                                                   \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_ABS(NAME, RTYPE, ETYPE, EXTRACT, INSERT, ELEMS,         \
++                      MINVAL, MAXVAL)                                     \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1)                         \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++    int sat = 0;                                                          \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        ETYPE e1 = (ETYPE)EXTRACT(rs1, i);                                \
++        ETYPE res;                                                        \
++                                                                          \
++        if (e1 == (MINVAL)) {                                             \
++            res = (MAXVAL);                                               \
++            sat = 1;                                                      \
++        } else if (e1 < 0) {                                              \
++            res = -e1;                                                    \
++        } else {                                                          \
++            res = e1;                                                     \
++        }                                                                 \
++                                                                          \
++        rd = INSERT(rd, res, i);                                          \
++    }                                                                     \
++                                                                          \
++    if (sat) {                                                            \
++        env->vxsat = 1;                                                   \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_SCALAR_ABS(NAME, RTYPE, STYPE, UTYPE)                   \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1)                         \
++{                                                                         \
++    STYPE value = (STYPE)rs1;                                            \
++    UTYPE result = (UTYPE)value;                                         \
++                                                                          \
++    if (value < 0) {                                                      \
++        result = (UTYPE)0 - result;                                      \
++    }                                                                     \
++    return (RTYPE)(STYPE)result;                                         \
++}
++
++#define GEN_PSIMD_VAR_SSHA(NAME, RTYPE, ETYPE, WTYPE, EXTRACT, INSERT,    \
++                           ELEMS, BITS, SAT_FN)                           \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++    int sat = 0;                                                          \
++    int8_t shamt = (int8_t)(rs2 & 0xff);                                  \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        ETYPE e1 = (ETYPE)EXTRACT(rs1, i);                                \
++        ETYPE res;                                                        \
++                                                                          \
++        if (shamt >= 0) {                                                 \
++            WTYPE shifted = (WTYPE)e1 << shamt;                           \
++            res = SAT_FN(shifted, &sat);                                  \
++        } else {                                                          \
++            int right = -shamt;                                           \
++            if (right >= (BITS)) {                                        \
++                res = (e1 < 0) ? -1 : 0;                                  \
++            } else {                                                      \
++                res = e1 >> right;                                        \
++            }                                                             \
++        }                                                                 \
++                                                                          \
++        rd = INSERT(rd, res, i);                                          \
++    }                                                                     \
++                                                                          \
++    if (sat) {                                                            \
++        env->vxsat = 1;                                                   \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_VAR_SSHAR(NAME, RTYPE, ETYPE, WTYPE, EXTRACT, INSERT,   \
++                            ELEMS, BITS, SAT_MIN, SAT_MAX, SAT_FN)        \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++    int sat = 0;                                                          \
++    int8_t shamt = (int8_t)(rs2 & 0xff);                                  \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        ETYPE e1 = (ETYPE)EXTRACT(rs1, i);                                \
++        ETYPE res;                                                        \
++                                                                          \
++        if (shamt >= 0) {                                                 \
++            if (shamt >= (BITS)) {                                        \
++                if (e1 == 0) {                                            \
++                    res = 0;                                              \
++                } else if (e1 > 0) {                                      \
++                    res = (SAT_MAX);                                      \
++                    sat = 1;                                              \
++                } else {                                                  \
++                    res = (SAT_MIN);                                      \
++                    sat = 1;                                              \
++                }                                                         \
++            } else {                                                      \
++                WTYPE shifted = (WTYPE)e1 * ((WTYPE)1 << shamt);          \
++                res = SAT_FN(shifted, &sat);                              \
++            }                                                             \
++        } else {                                                          \
++            int right = -shamt;                                           \
++            if (right >= (BITS)) {                                        \
++                res = 0;                                                  \
++            } else {                                                      \
++                WTYPE rounded = ((e1 >> (right - 1)) + 1) >> 1;           \
++                res = (ETYPE)rounded;                                     \
++            }                                                             \
++        }                                                                 \
++                                                                          \
++        rd = INSERT(rd, res, i);                                          \
++    }                                                                     \
++                                                                          \
++    if (sat) {                                                            \
++        env->vxsat = 1;                                                   \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_VAR_USHL(NAME, RTYPE, ETYPE, WTYPE, EXTRACT, INSERT,    \
++                           ELEMS, BITS, SAT_FN)                           \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++    int sat = 0;                                                          \
++    int8_t shamt = (int8_t)(rs2 & 0xff);                                  \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        ETYPE e1 = (ETYPE)EXTRACT(rs1, i);                                \
++        ETYPE res;                                                        \
++                                                                          \
++        if (shamt >= 0) {                                                 \
++            WTYPE shifted = (shamt >= (BITS)) ?                           \
++                            ((WTYPE)e1 << (BITS)) :                       \
++                            ((WTYPE)e1 << shamt);                         \
++            res = SAT_FN(shifted, &sat);                                  \
++        } else {                                                          \
++            int right = -shamt;                                           \
++            if (right >= (BITS)) {                                        \
++                res = 0;                                                  \
++            } else {                                                      \
++                res = e1 >> right;                                        \
++            }                                                             \
++        }                                                                 \
++                                                                          \
++        rd = INSERT(rd, res, i);                                          \
++    }                                                                     \
++                                                                          \
++    if (sat) {                                                            \
++        env->vxsat = 1;                                                   \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_VAR_USHLR(NAME, RTYPE, ETYPE, WTYPE, EXTRACT, INSERT,   \
++                            ELEMS, BITS, SAT_FN)                          \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++    int sat = 0;                                                          \
++    int8_t shamt = (int8_t)(rs2 & 0xff);                                  \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        ETYPE e1 = (ETYPE)EXTRACT(rs1, i);                                \
++        ETYPE res;                                                        \
++                                                                          \
++        if (shamt >= 0) {                                                 \
++            WTYPE shifted = (shamt >= (BITS)) ?                           \
++                            ((WTYPE)e1 << (BITS)) :                       \
++                            ((WTYPE)e1 << shamt);                         \
++            res = SAT_FN(shifted, &sat);                                  \
++        } else {                                                          \
++            int right = -shamt;                                           \
++            if (right > (BITS)) {                                         \
++                res = 0;                                                  \
++            } else {                                                      \
++                WTYPE rounded = ((WTYPE)e1 >> (right - 1)) + 1;           \
++                res = (ETYPE)(rounded >> 1);                              \
++            }                                                             \
++        }                                                                 \
++                                                                          \
++        rd = INSERT(rd, res, i);                                          \
++    }                                                                     \
++                                                                          \
++    if (sat) {                                                            \
++        env->vxsat = 1;                                                   \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define PSIMD_DO_SRA64(A, B) ((A) >> (B))
++#define PSIMD_DO_RNDSRA64(A, B)                                          \
++    ((int64_t)((((__int128_t)(A) >> ((B) - 1)) + 1) >> 1))
++
++#define GEN_PSIMD_VAR_SRA64(NAME, RIGHT_OP)                               \
++uint64_t HELPER(NAME)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)     \
++{                                                                         \
++    int64_t a = (int64_t)rs1;                                            \
++    int8_t shamt = (int8_t)(rs2 & 0xff);                                 \
++                                                                          \
++    if (shamt >= 0) {                                                     \
++        return (uint64_t)(a << shamt);                                    \
++    }                                                                     \
++                                                                          \
++    int right = -shamt;                                                   \
++    if (right >= 64) {                                                    \
++        return (a < 0) ? (uint64_t)-1 : 0;                               \
++    }                                                                     \
++    return (uint64_t)RIGHT_OP(a, right);                                  \
++}
++
++#define PSIMD_DO_SRL64(A, B) (((B) >= 64) ? 0 : ((A) >> (B)))
++#define PSIMD_DO_RNDSRL64(A, B)                                          \
++    (((B) > 64) ? 0 : ((((A) >> ((B) - 1)) + 1) >> 1))
++
++#define GEN_PSIMD_VAR_SRL64(NAME, RIGHT_OP)                               \
++uint64_t HELPER(NAME)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)     \
++{                                                                         \
++    int8_t shamt = (int8_t)(rs2 & 0xff);                                 \
++                                                                          \
++    if (shamt < 0) {                                                      \
++        return RIGHT_OP(rs1, -shamt);                                     \
++    }                                                                     \
++    return (shamt >= 64) ? 0 : (rs1 << shamt);                           \
++}
++
++#define GEN_PSIMD_XPAIR_BINOP(NAME, RTYPE, ETYPE, EXTRACT, INSERT,        \
++                              ELEMS, OP_LO, OP_HI)                        \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++                                                                          \
++    for (int i = 0; i < elems; i += 2) {                                  \
++        ETYPE s1_lo = (ETYPE)EXTRACT(rs1, i);                             \
++        ETYPE s1_hi = (ETYPE)EXTRACT(rs1, i + 1);                         \
++        ETYPE s2_lo = (ETYPE)EXTRACT(rs2, i);                             \
++        ETYPE s2_hi = (ETYPE)EXTRACT(rs2, i + 1);                         \
++        ETYPE res_lo = OP_LO(s1_lo, s2_hi);                               \
++        ETYPE res_hi = OP_HI(s1_hi, s2_lo);                               \
++        rd = INSERT(rd, res_lo, i);                                       \
++        rd = INSERT(rd, res_hi, i + 1);                                   \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_XPAIR_SAT_BINOP(NAME, RTYPE, ETYPE, WTYPE, EXTRACT,     \
++                                  INSERT, ELEMS, OP_LO, OP_HI, SAT_FN)    \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++    int sat = 0;                                                          \
++                                                                          \
++    for (int i = 0; i < elems; i += 2) {                                  \
++        ETYPE s1_lo = (ETYPE)EXTRACT(rs1, i);                             \
++        ETYPE s1_hi = (ETYPE)EXTRACT(rs1, i + 1);                         \
++        ETYPE s2_lo = (ETYPE)EXTRACT(rs2, i);                             \
++        ETYPE s2_hi = (ETYPE)EXTRACT(rs2, i + 1);                         \
++        WTYPE val_lo = OP_LO((WTYPE)s1_lo, (WTYPE)s2_hi);                 \
++        WTYPE val_hi = OP_HI((WTYPE)s1_hi, (WTYPE)s2_lo);                 \
++        ETYPE res_lo = SAT_FN(val_lo, &sat);                              \
++        ETYPE res_hi = SAT_FN(val_hi, &sat);                              \
++        rd = INSERT(rd, res_lo, i);                                       \
++        rd = INSERT(rd, res_hi, i + 1);                                   \
++    }                                                                     \
++                                                                          \
++    if (sat) {                                                            \
++        env->vxsat = 1;                                                   \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_XPAIR_AVG_BINOP(NAME, RTYPE, ETYPE, WTYPE, EXTRACT,     \
++                                  INSERT, ELEMS, OP_LO, OP_HI)            \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++                                                                          \
++    for (int i = 0; i < elems; i += 2) {                                  \
++        ETYPE s1_lo = (ETYPE)EXTRACT(rs1, i);                             \
++        ETYPE s1_hi = (ETYPE)EXTRACT(rs1, i + 1);                         \
++        ETYPE s2_lo = (ETYPE)EXTRACT(rs2, i);                             \
++        ETYPE s2_hi = (ETYPE)EXTRACT(rs2, i + 1);                         \
++        ETYPE res_lo = (ETYPE)(OP_LO((WTYPE)s1_lo, (WTYPE)s2_hi) >> 1);   \
++        ETYPE res_hi = (ETYPE)(OP_HI((WTYPE)s1_hi, (WTYPE)s2_lo) >> 1);   \
++        rd = INSERT(rd, res_lo, i);                                       \
++        rd = INSERT(rd, res_hi, i + 1);                                   \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_REDSUM(NAME, RTYPE, SUMTYPE, ETYPE, EXTRACT, ELEMS,     \
++                         INIT)                                            \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    SUMTYPE sum = (INIT);                                                 \
++    int elems = ELEMS(rs1);                                               \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        ETYPE e1 = (ETYPE)EXTRACT(rs1, i);                                \
++        sum += e1;                                                        \
++    }                                                                     \
++                                                                          \
++    return (RTYPE)sum;                                                    \
++}
++
++#define PSIMD_PAIR_LO(V, MASK, SHIFT) ((V) & (MASK))
++#define PSIMD_PAIR_HI(V, MASK, SHIFT) (((V) >> (SHIFT)) & (MASK))
++
++#define GEN_PSIMD_PAIR_PACK(NAME, RTYPE, ETYPE, EXTRACT, INSERT, ELEMS,   \
++                            MASK, SHIFT, HI_SEL, LO_SEL)                 \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        ETYPE e1 = EXTRACT(rs1, i);                                       \
++        ETYPE e2 = EXTRACT(rs2, i);                                       \
++        ETYPE res = (HI_SEL(e2, MASK, SHIFT) << (SHIFT)) |                \
++                    LO_SEL(e1, MASK, SHIFT);                              \
++        rd = INSERT(rd, res, i);                                          \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_PAIR_WORD(NAME, RS1_IDX, RS2_IDX)                       \
++uint64_t HELPER(NAME)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)     \
++{                                                                         \
++    uint32_t e1 = EXTRACT32(rs1, RS1_IDX);                                \
++    uint32_t e2 = EXTRACT32(rs2, RS2_IDX);                                \
++                                                                          \
++    return ((uint64_t)e2 << 32) | e1;                                     \
++}
++
++#define GEN_PSIMD_SIGN_EXTEND(NAME, RTYPE, STYPE, DTYPE, EXTRACT, INSERT, \
++                              ELEMS, SCALE)                               \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1)                         \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        STYPE e1 = (STYPE)EXTRACT(rs1, i * (SCALE));                      \
++        rd = INSERT(rd, (DTYPE)e1, i);                                    \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_ZIP(NAME, ETYPE, EXTRACT, ELEMS, BITS, START)           \
++uint64_t HELPER(NAME)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)     \
++{                                                                         \
++    uint64_t rd = 0;                                                      \
++                                                                          \
++    for (int i = 0; i < (ELEMS); i++) {                                   \
++        ETYPE e1 = EXTRACT(rs1, (START) - i);                             \
++        ETYPE e2 = EXTRACT(rs2, (START) - i);                             \
++        rd = (rd << (2 * (BITS))) | ((uint64_t)e2 << (BITS)) | e1;        \
++    }                                                                     \
++                                                                          \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_UNZIP(NAME, EXTRACT, ELEMS, BITS, OFFSET)               \
++uint64_t HELPER(NAME)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)     \
++{                                                                         \
++    uint64_t rd = 0;                                                      \
++                                                                          \
++    for (int i = 0; i < (ELEMS); i++) {                                   \
++        uint64_t e1 = (uint64_t)EXTRACT(rs1, 2 * i + (OFFSET)) <<         \
++                      ((BITS) * i);                                       \
++        uint64_t e2 = (uint64_t)EXTRACT(rs2, 2 * i + (OFFSET)) <<         \
++                      (32 + (BITS) * i);                                  \
++        rd = rd | e2 | e1;                                                \
++    }                                                                     \
++                                                                          \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_BIT_SELECT(NAME, MASK, TRUE_VAL, FALSE_VAL)             \
++target_ulong HELPER(NAME)(CPURISCVState *env, target_ulong rs1,           \
++                          target_ulong rs2, target_ulong rd)              \
++{                                                                         \
++    return (~(MASK) & (FALSE_VAL)) | ((MASK) & (TRUE_VAL));               \
++}
++
++#define GEN_PSIMD_NCLIP_PACK(NAME, ITYPE, OTYPE, EXTRACT, INSERT, ELEMS,  \
++                             SAT_FN)                                      \
++uint64_t HELPER(NAME)(CPURISCVState *env, uint64_t rs1, uint64_t rs2)     \
++{                                                                         \
++    uint64_t rd = 0;                                                      \
++    int sat = 0;                                                          \
++                                                                          \
++    for (int i = 0; i < (ELEMS); i++) {                                   \
++        ITYPE lo = (ITYPE)EXTRACT(rs1, i);                                \
++        ITYPE hi = (ITYPE)EXTRACT(rs2, i);                                \
++        OTYPE res_lo = SAT_FN(lo, &sat);                                  \
++        OTYPE res_hi = SAT_FN(hi, &sat);                                  \
++                                                                          \
++        rd = (uint64_t)INSERT(rd, res_lo, i);                             \
++        rd = (uint64_t)INSERT(rd, res_hi, i + (ELEMS));                   \
++    }                                                                     \
++                                                                          \
++    if (sat) {                                                            \
++        env->vxsat = 1;                                                   \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_CLS(NAME, RTYPE, UTYPE, CLRSB)                          \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1)                         \
++{                                                                         \
++    return CLRSB((UTYPE)rs1);                                             \
++}
++
++#define PSIMD_MUL_S32(A, B)  ((int32_t)(A) * (int32_t)(B))
++#define PSIMD_MUL_SU16(A, B) ((int16_t)(A) * (uint16_t)(B))
++#define PSIMD_MUL_SU32(A, B) ((int32_t)(A) * (uint32_t)(B))
++#define PSIMD_MUL_U32(A, B)  ((uint32_t)(A) * (uint32_t)(B))
++#define PSIMD_MUL_S64(A, B)  ((int64_t)(A) * (int64_t)(B))
++#define PSIMD_MUL_SU64(A, B) ((int64_t)(A) * (uint64_t)(B))
++#define PSIMD_MUL_U64(A, B)  ((uint64_t)(A) * (uint64_t)(B))
++
++#define GEN_PSIMD_MUL_HIGH(NAME, RTYPE, E1TYPE, E2TYPE, PTYPE, HTYPE,     \
++                           EXTRACT, INSERT, ELEMS, SHIFT, ROUND, OP)     \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        E1TYPE e1 = (E1TYPE)EXTRACT(rs1, i);                              \
++        E2TYPE e2 = (E2TYPE)EXTRACT(rs2, i);                              \
++        PTYPE prod = OP(e1, e2) + (ROUND);                                \
++        HTYPE high = (HTYPE)(prod >> (SHIFT));                            \
++        rd = INSERT(rd, high, i);                                         \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_MUL_HIGH_SEL(NAME, RTYPE, E1TYPE, E2TYPE, PTYPE,        \
++                               HTYPE, EXTRACT1, EXTRACT2, INSERT, ELEMS, \
++                               SCALE, OFFSET, SHIFT, OP)                 \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        E1TYPE e1 = (E1TYPE)EXTRACT1(rs1, i);                             \
++        E2TYPE e2 = (E2TYPE)EXTRACT2(rs2, i * (SCALE) + (OFFSET));        \
++        PTYPE prod = OP(e1, e2);                                          \
++        HTYPE high = (HTYPE)(prod >> (SHIFT));                            \
++        rd = INSERT(rd, high, i);                                         \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_MUL_ELEM_INDEXED(NAME, RTYPE, E1TYPE, E2TYPE, PTYPE,    \
++                                   OTYPE, EXTRACT, INSERT, ELEMS, SCALE, \
++                                   OFFSET1, OFFSET2, OP)                 \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        E1TYPE e1 = (E1TYPE)EXTRACT(rs1, i * (SCALE) + (OFFSET1));        \
++        E2TYPE e2 = (E2TYPE)EXTRACT(rs2, i * (SCALE) + (OFFSET2));        \
++        PTYPE mul = OP(e1, e2);                                           \
++        rd = INSERT(rd, (OTYPE)mul, i);                                   \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_MUL_ELEM_SCALAR(NAME, RTYPE, E1TYPE, E2TYPE, PTYPE,     \
++                                  EXTRACT, OFFSET1, OFFSET2, OP)         \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    E1TYPE e1 = (E1TYPE)EXTRACT(rs1, OFFSET1);                            \
++    E2TYPE e2 = (E2TYPE)EXTRACT(rs2, OFFSET2);                            \
++    PTYPE mul = OP(e1, e2);                                               \
++                                                                          \
++    return (RTYPE)mul;                                                    \
++}
++
++#define GEN_PSIMD_MUL_HIGH_ACC(NAME, RTYPE, E1TYPE, E2TYPE, DTYPE, PTYPE, \
++                               HTYPE, OTYPE, EXTRACT, INSERT, ELEMS,     \
++                               SHIFT, ROUND, OP)                         \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2, RTYPE dest)  \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        E1TYPE e1 = (E1TYPE)EXTRACT(rs1, i);                              \
++        E2TYPE e2 = (E2TYPE)EXTRACT(rs2, i);                              \
++        DTYPE d = (DTYPE)EXTRACT(dest, i);                                \
++        PTYPE prod = OP(e1, e2) + (ROUND);                                \
++        HTYPE high = (HTYPE)(prod >> (SHIFT));                            \
++        OTYPE res = (OTYPE)(high + d);                                    \
++        rd = INSERT(rd, res, i);                                          \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_MUL_HIGH_ACC_SEL(NAME, RTYPE, E1TYPE, E2TYPE, DTYPE,    \
++                                   PTYPE, HTYPE, OTYPE, EXTRACT1,        \
++                                   EXTRACT2, INSERT, ELEMS, SCALE,       \
++                                   OFFSET, SHIFT, OP)                    \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2, RTYPE dest)  \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        E1TYPE e1 = (E1TYPE)EXTRACT1(rs1, i);                             \
++        E2TYPE e2 = (E2TYPE)EXTRACT2(rs2, i * (SCALE) + (OFFSET));        \
++        DTYPE d = (DTYPE)EXTRACT1(dest, i);                               \
++        PTYPE prod = OP(e1, e2);                                          \
++        HTYPE high = (HTYPE)(prod >> (SHIFT));                            \
++        OTYPE res = (OTYPE)(high + d);                                    \
++        rd = INSERT(rd, res, i);                                          \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_MUL_ACC_INDEXED(NAME, RTYPE, E1TYPE, E2TYPE, DTYPE,     \
++                                  PTYPE, OTYPE, EXTRACT, EXTRACTD,       \
++                                  INSERT, ELEMS, SCALE, OFFSET1,         \
++                                  OFFSET2, OP)                           \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2, RTYPE dest)  \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        E1TYPE e1 = (E1TYPE)EXTRACT(rs1, i * (SCALE) + (OFFSET1));        \
++        E2TYPE e2 = (E2TYPE)EXTRACT(rs2, i * (SCALE) + (OFFSET2));        \
++        DTYPE d = (DTYPE)EXTRACTD(dest, i);                               \
++        PTYPE mul = OP(e1, e2);                                           \
++        rd = INSERT(rd, (OTYPE)(d + mul), i);                             \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_QMUL(NAME, RTYPE, ETYPE, PTYPE, OTYPE, EXTRACT, INSERT, \
++                       ELEMS, SHIFT, ROUND, MINVAL, MAXVAL)              \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++    int sat = 0;                                                          \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        ETYPE e1 = (ETYPE)EXTRACT(rs1, i);                                \
++        ETYPE e2 = (ETYPE)EXTRACT(rs2, i);                                \
++        OTYPE result;                                                     \
++                                                                          \
++        if ((e1 == (ETYPE)(MINVAL)) && (e2 == (ETYPE)(MINVAL))) {         \
++            sat = 1;                                                      \
++            result = (OTYPE)(MAXVAL);                                     \
++        } else {                                                          \
++            PTYPE prod = (PTYPE)e1 * (PTYPE)e2 + (ROUND);                 \
++            result = (OTYPE)(prod >> (SHIFT));                            \
++        }                                                                 \
++        rd = INSERT(rd, result, i);                                       \
++    }                                                                     \
++                                                                          \
++    if (sat) {                                                            \
++        env->vxsat = 1;                                                   \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_QMUL_ACC_INDEXED(NAME, RTYPE, E1TYPE, E2TYPE, DTYPE,    \
++                                   PTYPE, STYPE, OTYPE, EXTRACT,         \
++                                   EXTRACTD, INSERT, ELEMS, SCALE,       \
++                                   OFFSET1, OFFSET2, SHIFT, ROUND, OP)   \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2, RTYPE dest)  \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        E1TYPE e1 = (E1TYPE)EXTRACT(rs1, i * (SCALE) + (OFFSET1));        \
++        E2TYPE e2 = (E2TYPE)EXTRACT(rs2, i * (SCALE) + (OFFSET2));        \
++        DTYPE d = (DTYPE)EXTRACTD(dest, i);                               \
++        PTYPE prod = OP(e1, e2) + (ROUND);                                \
++        STYPE scaled = (STYPE)(((__int128_t)prod) >> (SHIFT));            \
++        rd = INSERT(rd, (OTYPE)(d + scaled), i);                          \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_Q2ADD(NAME, RTYPE, ETYPE, PTYPE, STYPE, OTYPE, EXTRACT, \
++                        INSERT, ELEMS, SCALE, SHIFT, ROUND, OP)          \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        ETYPE s1_0 = (ETYPE)EXTRACT(rs1, i * (SCALE));                   \
++        ETYPE s1_1 = (ETYPE)EXTRACT(rs1, i * (SCALE) + 1);               \
++        ETYPE s2_0 = (ETYPE)EXTRACT(rs2, i * (SCALE));                   \
++        ETYPE s2_1 = (ETYPE)EXTRACT(rs2, i * (SCALE) + 1);               \
++        PTYPE prod0 = OP(s1_0, s2_0) + (ROUND);                          \
++        PTYPE prod1 = OP(s1_1, s2_1) + (ROUND);                          \
++        STYPE scaled0 = (STYPE)(((__int128_t)prod0) >> (SHIFT));          \
++        STYPE scaled1 = (STYPE)(((__int128_t)prod1) >> (SHIFT));          \
++        rd = INSERT(rd, (OTYPE)(scaled0 + scaled1), i);                   \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_Q2ADDA(NAME, RTYPE, ETYPE, DTYPE, PTYPE, STYPE, OTYPE,  \
++                         EXTRACT, EXTRACTD, INSERT, ELEMS, SCALE,        \
++                         SHIFT, ROUND, OP)                               \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2, RTYPE dest)  \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        ETYPE s1_0 = (ETYPE)EXTRACT(rs1, i * (SCALE));                   \
++        ETYPE s1_1 = (ETYPE)EXTRACT(rs1, i * (SCALE) + 1);               \
++        ETYPE s2_0 = (ETYPE)EXTRACT(rs2, i * (SCALE));                   \
++        ETYPE s2_1 = (ETYPE)EXTRACT(rs2, i * (SCALE) + 1);               \
++        DTYPE d = (DTYPE)EXTRACTD(dest, i);                               \
++        PTYPE prod0 = OP(s1_0, s2_0) + (ROUND);                          \
++        PTYPE prod1 = OP(s1_1, s2_1) + (ROUND);                          \
++        STYPE scaled0 = (STYPE)(((__int128_t)prod0) >> (SHIFT));          \
++        STYPE scaled1 = (STYPE)(((__int128_t)prod1) >> (SHIFT));          \
++        rd = INSERT(rd, (OTYPE)(d + scaled0 + scaled1), i);               \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define PSIMD_COMB_ADD(D, A, B) ((D) + (A) + (B))
++#define PSIMD_COMB_SUB(D, A, B) ((D) + (A) - (B))
++
++#define GEN_PSIMD_2WAY_MUL(NAME, RTYPE, E1TYPE, E2TYPE, PTYPE, OTYPE,     \
++                           EXTRACT, INSERT, ELEMS, SCALE, OFFSET10,      \
++                           OFFSET11, OFFSET20, OFFSET21, OP, COMBINE)   \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        E1TYPE s1_0 = (E1TYPE)EXTRACT(rs1, i * (SCALE) + (OFFSET10));     \
++        E1TYPE s1_1 = (E1TYPE)EXTRACT(rs1, i * (SCALE) + (OFFSET11));     \
++        E2TYPE s2_0 = (E2TYPE)EXTRACT(rs2, i * (SCALE) + (OFFSET20));     \
++        E2TYPE s2_1 = (E2TYPE)EXTRACT(rs2, i * (SCALE) + (OFFSET21));     \
++        PTYPE prod0 = OP(s1_0, s2_0);                                     \
++        PTYPE prod1 = OP(s1_1, s2_1);                                     \
++        rd = INSERT(rd, (OTYPE)COMBINE(0, prod0, prod1), i);              \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_2WAY_SAT_MUL(NAME, OFFSET10, OFFSET11, OFFSET20,        \
++                               OFFSET21)                                 \
++target_ulong HELPER(NAME)(CPURISCVState *env, target_ulong rs1,           \
++                           target_ulong rs2)                              \
++{                                                                         \
++    target_ulong rd = 0;                                                  \
++    int sat = 0;                                                          \
++                                                                          \
++    for (int i = 0; i < ELEMS_W(rd); i++) {                               \
++        int16_t s1_0 = (int16_t)EXTRACT16(rs1, i * 2 + (OFFSET10));       \
++        int16_t s1_1 = (int16_t)EXTRACT16(rs1, i * 2 + (OFFSET11));       \
++        int16_t s2_0 = (int16_t)EXTRACT16(rs2, i * 2 + (OFFSET20));       \
++        int16_t s2_1 = (int16_t)EXTRACT16(rs2, i * 2 + (OFFSET21));       \
++        uint32_t result;                                                  \
++                                                                          \
++        if (s1_0 == INT16_MIN && s1_1 == INT16_MIN &&                    \
++            s2_0 == INT16_MIN && s2_1 == INT16_MIN) {                    \
++            result = INT32_MAX;                                          \
++            sat = 1;                                                      \
++        } else {                                                          \
++            int32_t prod0 = (int32_t)s1_0 * s2_0;                        \
++            int32_t prod1 = (int32_t)s1_1 * s2_1;                        \
++            result = (uint32_t)(prod0 + prod1);                           \
++        }                                                                 \
++        rd = INSERT32(rd, result, i);                                     \
++    }                                                                     \
++                                                                          \
++    if (sat) {                                                            \
++        env->vxsat = 1;                                                   \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_2WAY_MUL_ACC(NAME, RTYPE, E1TYPE, E2TYPE, DTYPE, PTYPE, \
++                               OTYPE, EXTRACT, EXTRACTD, INSERT, ELEMS,  \
++                               SCALE, OFFSET10, OFFSET11, OFFSET20,      \
++                               OFFSET21, OP, COMBINE)                   \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2, RTYPE dest)  \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        E1TYPE s1_0 = (E1TYPE)EXTRACT(rs1, i * (SCALE) + (OFFSET10));     \
++        E1TYPE s1_1 = (E1TYPE)EXTRACT(rs1, i * (SCALE) + (OFFSET11));     \
++        E2TYPE s2_0 = (E2TYPE)EXTRACT(rs2, i * (SCALE) + (OFFSET20));     \
++        E2TYPE s2_1 = (E2TYPE)EXTRACT(rs2, i * (SCALE) + (OFFSET21));     \
++        DTYPE d = (DTYPE)EXTRACTD(dest, i);                               \
++        PTYPE prod0 = OP(s1_0, s2_0);                                     \
++        PTYPE prod1 = OP(s1_1, s2_1);                                     \
++        rd = INSERT(rd, (OTYPE)COMBINE(d, prod0, prod1), i);              \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_4WAY_MUL(NAME, RTYPE, E1TYPE, E2TYPE, PTYPE, OTYPE,     \
++                           EXTRACT, INSERT, ELEMS, SCALE, OP)            \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2)              \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        PTYPE prod0 = OP((E1TYPE)EXTRACT(rs1, i * (SCALE)),              \
++                         (E2TYPE)EXTRACT(rs2, i * (SCALE)));             \
++        PTYPE prod1 = OP((E1TYPE)EXTRACT(rs1, i * (SCALE) + 1),          \
++                         (E2TYPE)EXTRACT(rs2, i * (SCALE) + 1));         \
++        PTYPE prod2 = OP((E1TYPE)EXTRACT(rs1, i * (SCALE) + 2),          \
++                         (E2TYPE)EXTRACT(rs2, i * (SCALE) + 2));         \
++        PTYPE prod3 = OP((E1TYPE)EXTRACT(rs1, i * (SCALE) + 3),          \
++                         (E2TYPE)EXTRACT(rs2, i * (SCALE) + 3));         \
++        rd = INSERT(rd, (OTYPE)(prod0 + prod1 + prod2 + prod3), i);       \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_4WAY_MUL_ACC(NAME, RTYPE, E1TYPE, E2TYPE, DTYPE, PTYPE, \
++                               OTYPE, EXTRACT, EXTRACTD, INSERT, ELEMS,  \
++                               SCALE, OP)                                \
++RTYPE HELPER(NAME)(CPURISCVState *env, RTYPE rs1, RTYPE rs2, RTYPE dest)  \
++{                                                                         \
++    RTYPE rd = 0;                                                         \
++    int elems = ELEMS(rd);                                                \
++                                                                          \
++    for (int i = 0; i < elems; i++) {                                     \
++        DTYPE d = (DTYPE)EXTRACTD(dest, i);                               \
++        PTYPE prod0 = OP((E1TYPE)EXTRACT(rs1, i * (SCALE)),              \
++                         (E2TYPE)EXTRACT(rs2, i * (SCALE)));             \
++        PTYPE prod1 = OP((E1TYPE)EXTRACT(rs1, i * (SCALE) + 1),          \
++                         (E2TYPE)EXTRACT(rs2, i * (SCALE) + 1));         \
++        PTYPE prod2 = OP((E1TYPE)EXTRACT(rs1, i * (SCALE) + 2),          \
++                         (E2TYPE)EXTRACT(rs2, i * (SCALE) + 2));         \
++        PTYPE prod3 = OP((E1TYPE)EXTRACT(rs1, i * (SCALE) + 3),          \
++                         (E2TYPE)EXTRACT(rs2, i * (SCALE) + 3));         \
++        rd = INSERT(rd, (OTYPE)(d + prod0 + prod1 + prod2 + prod3), i);   \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_WIDEN_BINOP(NAME, ETYPE, WTYPE, OTYPE, ELEMS, IBITS,    \
++                              OBITS, IMASK, OP)                          \
++uint64_t HELPER(NAME)(CPURISCVState *env, uint32_t rs1, uint32_t rs2)     \
++{                                                                         \
++    uint64_t rd = 0;                                                      \
++                                                                          \
++    for (int i = 0; i < (ELEMS); i++) {                                   \
++        ETYPE e1 = (ETYPE)((rs1 >> (i * (IBITS))) & (IMASK));             \
++        ETYPE e2 = (ETYPE)((rs2 >> (i * (IBITS))) & (IMASK));             \
++        WTYPE res = OP((WTYPE)0, (WTYPE)e1, (WTYPE)e2);                   \
++        rd |= ((uint64_t)(OTYPE)res) << (i * (OBITS));                    \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_WIDEN_BINOP_ACC(NAME, ETYPE, WTYPE, OTYPE, ELEMS,       \
++                                  IBITS, OBITS, IMASK, OMASK, OP)        \
++uint64_t HELPER(NAME)(CPURISCVState *env, uint32_t rs1, uint32_t rs2,     \
++                      uint64_t dest)                                      \
++{                                                                         \
++    uint64_t rd = 0;                                                      \
++                                                                          \
++    for (int i = 0; i < (ELEMS); i++) {                                   \
++        ETYPE e1 = (ETYPE)((rs1 >> (i * (IBITS))) & (IMASK));             \
++        ETYPE e2 = (ETYPE)((rs2 >> (i * (IBITS))) & (IMASK));             \
++        WTYPE acc = (WTYPE)((dest >> (i * (OBITS))) & (OMASK));           \
++        WTYPE res = OP(acc, (WTYPE)e1, (WTYPE)e2);                        \
++        rd |= ((uint64_t)(OTYPE)res) << (i * (OBITS));                    \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_WIDEN_MUL(NAME, E1TYPE, E2TYPE, PTYPE, OTYPE, ELEMS,    \
++                            EXTRACT, OBITS, OP)                          \
++uint64_t HELPER(NAME)(CPURISCVState *env, uint32_t rs1, uint32_t rs2)     \
++{                                                                         \
++    uint64_t rd = 0;                                                      \
++                                                                          \
++    for (int i = 0; i < (ELEMS); i++) {                                   \
++        E1TYPE e1 = (E1TYPE)EXTRACT(rs1, i);                              \
++        E2TYPE e2 = (E2TYPE)EXTRACT(rs2, i);                              \
++        PTYPE prod = OP(e1, e2);                                          \
++        rd |= ((uint64_t)(OTYPE)prod) << (i * (OBITS));                   \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_WIDEN_MUL_ACC(NAME, E1TYPE, E2TYPE, DTYPE, PTYPE,       \
++                                OTYPE, ELEMS, EXTRACT, EXTRACTD, OBITS,  \
++                                OP)                                      \
++uint64_t HELPER(NAME)(CPURISCVState *env, uint32_t rs1, uint32_t rs2,     \
++                      uint64_t dest)                                      \
++{                                                                         \
++    uint64_t rd = 0;                                                      \
++                                                                          \
++    for (int i = 0; i < (ELEMS); i++) {                                   \
++        E1TYPE e1 = (E1TYPE)EXTRACT(rs1, i);                              \
++        E2TYPE e2 = (E2TYPE)EXTRACT(rs2, i);                              \
++        DTYPE d = (DTYPE)EXTRACTD(dest, i);                               \
++        PTYPE prod = OP(e1, e2);                                          \
++        rd |= ((uint64_t)(OTYPE)(d + prod)) << (i * (OBITS));             \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_WIDEN_QMUL_ACC(NAME, ETYPE, DTYPE, PTYPE, STYPE,        \
++                                 OTYPE, ELEMS, EXTRACT, EXTRACTD, SCALE, \
++                                 OFFSET, SHIFT, ROUND, OBITS, OP)        \
++uint64_t HELPER(NAME)(CPURISCVState *env, uint32_t rs1, uint32_t rs2,     \
++                      uint64_t dest)                                      \
++{                                                                         \
++    uint64_t rd = 0;                                                      \
++                                                                          \
++    for (int i = 0; i < (ELEMS); i++) {                                   \
++        ETYPE e1 = (ETYPE)EXTRACT(rs1, i * (SCALE) + (OFFSET));           \
++        ETYPE e2 = (ETYPE)EXTRACT(rs2, i * (SCALE) + (OFFSET));           \
++        DTYPE d = (DTYPE)EXTRACTD(dest, i);                               \
++        PTYPE prod = OP(e1, e2) + (ROUND);                                \
++        STYPE scaled = (STYPE)(((__int128_t)prod) >> (SHIFT));            \
++        rd |= ((uint64_t)(OTYPE)(d + scaled)) << (i * (OBITS));           \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_DW_2WAY_MUL(NAME, E1TYPE, E2TYPE, PTYPE, EXTRACT,       \
++                              OFFSET10, OFFSET11, OFFSET20, OFFSET21,    \
++                              OP, COMBINE)                               \
++uint64_t HELPER(NAME)(CPURISCVState *env, uint32_t rs1, uint32_t rs2)     \
++{                                                                         \
++    E1TYPE s1_0 = (E1TYPE)EXTRACT(rs1, OFFSET10);                         \
++    E1TYPE s1_1 = (E1TYPE)EXTRACT(rs1, OFFSET11);                         \
++    E2TYPE s2_0 = (E2TYPE)EXTRACT(rs2, OFFSET20);                         \
++    E2TYPE s2_1 = (E2TYPE)EXTRACT(rs2, OFFSET21);                         \
++    PTYPE prod0 = OP(s1_0, s2_0);                                        \
++    PTYPE prod1 = OP(s1_1, s2_1);                                        \
++                                                                          \
++    return (uint64_t)COMBINE(0, prod0, prod1);                            \
++}
++
++#define GEN_PSIMD_DW_2WAY_MUL_ACC(NAME, E1TYPE, E2TYPE, DTYPE, PTYPE,     \
++                                  EXTRACT, OFFSET10, OFFSET11, OFFSET20, \
++                                  OFFSET21, OP, COMBINE)                \
++uint64_t HELPER(NAME)(CPURISCVState *env, uint32_t rs1, uint32_t rs2,     \
++                      uint64_t dest)                                      \
++{                                                                         \
++    E1TYPE s1_0 = (E1TYPE)EXTRACT(rs1, OFFSET10);                         \
++    E1TYPE s1_1 = (E1TYPE)EXTRACT(rs1, OFFSET11);                         \
++    E2TYPE s2_0 = (E2TYPE)EXTRACT(rs2, OFFSET20);                         \
++    E2TYPE s2_1 = (E2TYPE)EXTRACT(rs2, OFFSET21);                         \
++    DTYPE d = (DTYPE)dest;                                                \
++    PTYPE prod0 = OP(s1_0, s2_0);                                        \
++    PTYPE prod1 = OP(s1_1, s2_1);                                        \
++                                                                          \
++    return (uint64_t)COMBINE(d, prod0, prod1);                            \
++}
++
++#define GEN_PSIMD_WIDEN_SHIFT(NAME, ETYPE, WTYPE, OTYPE, ELEMS, IBITS,    \
++                              OBITS, IMASK, SHMASK)                      \
++uint64_t HELPER(NAME)(CPURISCVState *env, uint32_t rs1, uint32_t rs2)     \
++{                                                                         \
++    uint64_t rd = 0;                                                      \
++    uint8_t shamt = rs2 & (SHMASK);                                       \
++                                                                          \
++    for (int i = 0; i < (ELEMS); i++) {                                   \
++        ETYPE e1 = (ETYPE)((rs1 >> (i * (IBITS))) & (IMASK));             \
++        WTYPE res = (WTYPE)e1 << shamt;                                   \
++        rd |= ((uint64_t)(OTYPE)res) << (i * (OBITS));                    \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_DW_ZIP(NAME, EXTRACT, ELEMS, STRIDE, BITS)              \
++uint64_t HELPER(NAME)(CPURISCVState *env, uint32_t rs1, uint32_t rs2)     \
++{                                                                         \
++    uint64_t rd = 0;                                                      \
++                                                                          \
++    for (int i = 0; i < (ELEMS); i++) {                                   \
++        uint64_t e1 = (uint64_t)EXTRACT(rs1, i) << ((STRIDE) * i);        \
++        uint64_t e2 = (uint64_t)EXTRACT(rs2, i)                           \
++                      << ((STRIDE) * i + (BITS));                         \
++        rd |= e2 | e1;                                                    \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_DW_REDSUM(NAME, SUMTYPE, INITTYPE, ETYPE, EXTRACT,      \
++                            ELEMS)                                        \
++uint32_t HELPER(NAME)(CPURISCVState *env, uint32_t rs1_lo,                \
++                      uint32_t rs1_hi, uint32_t rs2)                      \
++{                                                                         \
++    SUMTYPE sum = (INITTYPE)rs2;                                          \
++    uint64_t s1 = ((uint64_t)rs1_hi << 32) | rs1_lo;                      \
++                                                                          \
++    for (int i = 0; i < (ELEMS); i++) {                                   \
++        sum += (ETYPE)EXTRACT(s1, i);                                     \
++    }                                                                     \
++    return (uint32_t)sum;                                                 \
++}
++
++#define GEN_PSIMD_NARROW_SRL(NAME, ETYPE, OTYPE, ELEMS, IBITS, OBITS,     \
++                             IMASK, SHMASK)                               \
++uint32_t HELPER(NAME)(CPURISCVState *env, uint64_t s1, uint32_t shamt)    \
++{                                                                         \
++    uint32_t rd = 0;                                                      \
++    uint8_t shift = shamt & (SHMASK);                                     \
++                                                                          \
++    for (int i = 0; i < (ELEMS); i++) {                                   \
++        ETYPE e1 = (ETYPE)((s1 >> (i * (IBITS))) & (IMASK));              \
++        OTYPE result = (OTYPE)(e1 >> shift);                              \
++        rd |= ((uint32_t)result) << (i * (OBITS));                        \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_NARROW_SRA_PACK(NAME, ETYPE, STYPE, OTYPE, ELEMS,       \
++                                  IBITS, OBITS, IMASK, SHMASK)            \
++uint32_t HELPER(NAME)(CPURISCVState *env, uint64_t s1, uint32_t shamt)    \
++{                                                                         \
++    uint32_t rd = 0;                                                      \
++    uint8_t shift = shamt & (SHMASK);                                     \
++                                                                          \
++    for (int i = 0; i < (ELEMS); i++) {                                   \
++        ETYPE e1 = (ETYPE)((s1 >> (i * (IBITS))) & (IMASK));              \
++        STYPE shx = (STYPE)e1 >> shift;                                   \
++        OTYPE result = (OTYPE)shx;                                        \
++        rd |= ((uint32_t)result) << (i * (OBITS));                        \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_NARROW_RNDSRA_PACK(NAME, ETYPE, STYPE, OTYPE, ELEMS,    \
++                                     IBITS, OBITS, IMASK, SHMASK, RMASK)  \
++uint32_t HELPER(NAME)(CPURISCVState *env, uint64_t s1, uint32_t shamt)    \
++{                                                                         \
++    uint32_t rd = 0;                                                      \
++    uint8_t shift = shamt & (SHMASK);                                     \
++                                                                          \
++    for (int i = 0; i < (ELEMS); i++) {                                   \
++        ETYPE e1 = (ETYPE)((s1 >> (i * (IBITS))) & (IMASK));              \
++        STYPE e1_s = (STYPE)e1;                                           \
++        uint64_t shx = (((uint64_t)e1_s << 1) >> shift) & (RMASK);        \
++        OTYPE result = (OTYPE)((shx + 1) >> 1);                           \
++        rd |= ((uint32_t)result) << (i * (OBITS));                        \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_NCLIP_SIGNED_PACK(NAME, ETYPE, STYPE, CTYPE, OTYPE,     \
++                                    ELEMS, IBITS, OBITS, IMASK, SHMASK,   \
++                                    MIN, MAX, MIN_RES, MAX_RES)           \
++uint32_t HELPER(NAME)(CPURISCVState *env, uint64_t s1, uint32_t shamt)    \
++{                                                                         \
++    uint32_t rd = 0;                                                      \
++    uint8_t shift = shamt & (SHMASK);                                     \
++    int sat = 0;                                                          \
++                                                                          \
++    for (int i = 0; i < (ELEMS); i++) {                                   \
++        ETYPE e1 = (ETYPE)((s1 >> (i * (IBITS))) & (IMASK));              \
++        CTYPE shx = (CTYPE)((STYPE)e1 >> shift);                          \
++        OTYPE result;                                                     \
++                                                                          \
++        if (shx < (MIN)) {                                                \
++            sat = 1;                                                      \
++            result = (MIN_RES);                                           \
++        } else if (shx > (MAX)) {                                         \
++            sat = 1;                                                      \
++            result = (MAX_RES);                                           \
++        } else {                                                          \
++            result = (OTYPE)shx;                                          \
++        }                                                                 \
++        rd |= ((uint32_t)result) << (i * (OBITS));                        \
++    }                                                                     \
++                                                                          \
++    if (sat) {                                                            \
++        env->vxsat = 1;                                                   \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_NCLIPR_SIGNED_PACK(NAME, ETYPE, STYPE, CTYPE, OTYPE,    \
++                                     ELEMS, IBITS, OBITS, IMASK, SHMASK,  \
++                                     RMASK, MIN, MAX, MIN_RES, MAX_RES)   \
++uint32_t HELPER(NAME)(CPURISCVState *env, uint64_t s1, uint32_t shamt)    \
++{                                                                         \
++    uint32_t rd = 0;                                                      \
++    uint8_t shift = shamt & (SHMASK);                                     \
++    int sat = 0;                                                          \
++                                                                          \
++    for (int i = 0; i < (ELEMS); i++) {                                   \
++        ETYPE e1 = (ETYPE)((s1 >> (i * (IBITS))) & (IMASK));              \
++        STYPE e1_s = (STYPE)e1;                                           \
++        uint64_t shx = (((uint64_t)e1_s << 1) >> shift) & (RMASK);        \
++        CTYPE round_shx = (CTYPE)((shx + 1) >> 1);                        \
++        OTYPE result;                                                     \
++                                                                          \
++        if (round_shx < (MIN)) {                                          \
++            sat = 1;                                                      \
++            result = (MIN_RES);                                           \
++        } else if (round_shx > (MAX)) {                                   \
++            sat = 1;                                                      \
++            result = (MAX_RES);                                           \
++        } else {                                                          \
++            result = (OTYPE)round_shx;                                    \
++        }                                                                 \
++        rd |= ((uint32_t)result) << (i * (OBITS));                        \
++    }                                                                     \
++                                                                          \
++    if (sat) {                                                            \
++        env->vxsat = 1;                                                   \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_NCLIP_UNSIGNED_PACK(NAME, ETYPE, WTYPE, OTYPE, ELEMS,   \
++                                      IBITS, OBITS, IMASK, SHMASK, MAX)   \
++uint32_t HELPER(NAME)(CPURISCVState *env, uint64_t s1, uint32_t shamt)    \
++{                                                                         \
++    uint32_t rd = 0;                                                      \
++    uint8_t shift = shamt & (SHMASK);                                     \
++    int sat = 0;                                                          \
++                                                                          \
++    for (int i = 0; i < (ELEMS); i++) {                                   \
++        ETYPE e1 = (ETYPE)((s1 >> (i * (IBITS))) & (IMASK));              \
++        WTYPE shx = (WTYPE)e1 >> shift;                                   \
++        OTYPE result;                                                     \
++                                                                          \
++        if (shx > (MAX)) {                                                \
++            sat = 1;                                                      \
++            result = (OTYPE)(MAX);                                        \
++        } else {                                                          \
++            result = (OTYPE)shx;                                          \
++        }                                                                 \
++        rd |= ((uint32_t)result) << (i * (OBITS));                        \
++    }                                                                     \
++                                                                          \
++    if (sat) {                                                            \
++        env->vxsat = 1;                                                   \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_NCLIPR_UNSIGNED_PACK(NAME, ETYPE, WTYPE, OTYPE, ELEMS,  \
++                                       IBITS, OBITS, IMASK, SHMASK, MAX)  \
++uint32_t HELPER(NAME)(CPURISCVState *env, uint64_t s1, uint32_t shamt)    \
++{                                                                         \
++    uint32_t rd = 0;                                                      \
++    uint8_t shift = shamt & (SHMASK);                                     \
++    int sat = 0;                                                          \
++                                                                          \
++    for (int i = 0; i < (ELEMS); i++) {                                   \
++        ETYPE e1 = (ETYPE)((s1 >> (i * (IBITS))) & (IMASK));              \
++        WTYPE shx = ((WTYPE)e1 << 1) >> shift;                            \
++        WTYPE round_shx = (shx + 1) >> 1;                                 \
++        OTYPE result;                                                     \
++                                                                          \
++        if (round_shx > (MAX)) {                                          \
++            sat = 1;                                                      \
++            result = (OTYPE)(MAX);                                        \
++        } else {                                                          \
++            result = (OTYPE)round_shx;                                    \
++        }                                                                 \
++        rd |= ((uint32_t)result) << (i * (OBITS));                        \
++    }                                                                     \
++                                                                          \
++    if (sat) {                                                            \
++        env->vxsat = 1;                                                   \
++    }                                                                     \
++    return rd;                                                            \
++}
++
++#define GEN_PSIMD_NARROW_SRA(NAME)                                        \
++uint32_t HELPER(NAME)(CPURISCVState *env, uint64_t s1, uint32_t shamt)    \
++{                                                                         \
++    __int128_t s1_s128 = (__int128_t)((int64_t)s1);                       \
++    __int128_t s1_s96 = (s1_s128 << 32) >> 32;                            \
++                                                                          \
++    return (uint32_t)(s1_s96 >> (shamt & 0x3F)) & 0xFFFFFFFF;             \
++}
++
++#define GEN_PSIMD_NARROW_RNDSRA(NAME)                                     \
++uint32_t HELPER(NAME)(CPURISCVState *env, uint64_t s1, uint32_t shamt)    \
++{                                                                         \
++    __int128_t s1_s128 = (__int128_t)((int64_t)s1);                       \
++    __int128_t s1_s96 = (s1_s128 << 32) >> 32;                            \
++    __uint128_t shx_97bit = ((__uint128_t)s1_s96 << 1);                   \
++    uint64_t shx = (uint64_t)(shx_97bit >> (shamt & 0x3F)) & 0x1FFFFFFFF; \
++                                                                          \
++    return (uint32_t)((shx + 1) >> 1);                                    \
++}
++
++#define GEN_PSIMD_NARROW_ALIAS(NAME, TARGET)                              \
++uint32_t HELPER(NAME)(CPURISCVState *env, uint64_t s1, uint32_t shamt)    \
++{                                                                         \
++    return HELPER(TARGET)(env, s1, shamt);                                \
++}
++
++typedef struct {
++    __uint128_t low;
++    uint8_t high;
++} PsImdUint129;
++
++static inline PsImdUint129 psimd_uint129_lshift1(__int128_t val)
++{
++    PsImdUint129 result;
++    __uint128_t uval = (__uint128_t)val;
++
++    result.low = uval << 1;
++    result.high = (uval >> 127) & 0x1;
++    return result;
++}
++
++static inline PsImdUint129 psimd_uint129_rshift(PsImdUint129 val,
++                                                uint32_t shamt)
++{
++    PsImdUint129 result;
++
++    if (shamt == 0) {
++        return val;
++    } else if (shamt >= 129) {
++        result.low = 0;
++        result.high = 0;
++    } else if (shamt == 128) {
++        result.low = val.high;
++        result.high = 0;
++    } else {
++        result.low = (val.low >> shamt) |
++                     ((__uint128_t)val.high << (128 - shamt));
++        result.high = val.high >> shamt;
++    }
++    return result;
++}
++
++#define GEN_PSIMD_NCLIP(NAME)                                             \
++uint32_t HELPER(NAME)(CPURISCVState *env, uint64_t s1, uint32_t shamt)    \
++{                                                                         \
++    __int128_t s1_s128 = (__int128_t)((int64_t)s1);                       \
++    int64_t shx = (int64_t)(s1_s128 >> (shamt & 0x3F));                  \
++                                                                          \
++    if (shx < -2147483648LL) {                                            \
++        env->vxsat = 1;                                                   \
++        return 0x80000000U;                                               \
++    } else if (shx > 2147483647LL) {                                      \
++        env->vxsat = 1;                                                   \
++        return 0x7FFFFFFFU;                                               \
++    } else {                                                              \
++        return (uint32_t)(shx & 0xFFFFFFFF);                              \
++    }                                                                     \
++}
++
++#define GEN_PSIMD_NCLIPR(NAME)                                            \
++uint32_t HELPER(NAME)(CPURISCVState *env, uint64_t s1, uint32_t shamt)    \
++{                                                                         \
++    __int128_t s1_s128 = (__int128_t)((int64_t)s1);                       \
++    PsImdUint129 shx_129bit = psimd_uint129_lshift1(s1_s128);             \
++    PsImdUint129 shx = psimd_uint129_rshift(shx_129bit, shamt & 0x3F);    \
++    int64_t round_shx = (int64_t)((shx.low + 1) >> 1);                    \
++                                                                          \
++    if (round_shx < -2147483648LL) {                                      \
++        env->vxsat = 1;                                                   \
++        return 0x80000000U;                                               \
++    } else if (round_shx > 2147483647LL) {                                \
++        env->vxsat = 1;                                                   \
++        return 0x7FFFFFFFU;                                               \
++    } else {                                                              \
++        return (uint32_t)round_shx;                                       \
++    }                                                                     \
++}
++
++#define GEN_PSIMD_NCLIPU(NAME)                                            \
++uint32_t HELPER(NAME)(CPURISCVState *env, uint64_t s1, uint32_t shamt)    \
++{                                                                         \
++    uint64_t shx = s1 >> (shamt & 0x3F);                                  \
++                                                                          \
++    if (shx > 4294967295ULL) {                                            \
++        env->vxsat = 1;                                                   \
++        return 0xFFFFFFFFU;                                               \
++    } else {                                                              \
++        return (uint32_t)(shx & 0xFFFFFFFF);                              \
++    }                                                                     \
++}
++
++#define GEN_PSIMD_NCLIPRU(NAME)                                           \
++uint32_t HELPER(NAME)(CPURISCVState *env, uint64_t s1, uint32_t shamt)    \
++{                                                                         \
++    __uint128_t shx_65bit = (__uint128_t)s1 << 1;                         \
++    __uint128_t shx = shx_65bit >> (shamt & 0x3F);                        \
++    uint64_t round_shx = (shx + 1) >> 1;                                  \
++                                                                          \
++    if (round_shx > 4294967295ULL) {                                      \
++        env->vxsat = 1;                                                   \
++        return 0xFFFFFFFFU;                                               \
++    } else {                                                              \
++        return (uint32_t)(round_shx & 0xFFFFFFFF);                        \
++    }                                                                     \
++}
++
++/* Basic addition operations (non-saturating) */
++
+-- 
+2.34.1
 
-Also somewhat related:
-
-  Message-Id: <20221111182535.64844-1-alex.bennee@linaro.org>
-  Date: Fri, 11 Nov 2022 18:25:15 +0000
-  Subject: [PATCH for 8.0 v5 00/20] use MemTxAttrs to avoid current_cpu in =
-hw/
-
-Another case that was mentioned in a Core Collective meeting was
-handling MMIO devices with IOMMUs (currently requester_id is tied to
-PCI). I guess the WorldGuard WID field is a similar thing.
-
->
->>>
->> I can union the 'secure' and 'world_id' fields, as they are not used
->> together.
->> However, I have no idea about the 'space' fields.
->> I have seen CPUTLBEntryFull has the extra union to support
->> ARM-specific members.
->> Another idea is that also adding the extra union to MemTxAttrs to
->> place the RISC-V worid_id.
->> We can use this extra union to as SoC-specific signals in the bus,
->> like AXI AxUSER signal.
->> Do you think it is suitable?
->> Thanks,
->> Jim
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
