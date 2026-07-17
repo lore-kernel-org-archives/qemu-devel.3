@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00ACDC44515
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 23:25:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82CE9C44516
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 23:25:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkrtt-0001Y1-UL; Fri, 17 Jul 2026 19:23:25 -0400
+	id 1wkru7-0001hV-Op; Fri, 17 Jul 2026 19:23:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wkrtp-0001UA-3Z
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 19:23:21 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ id 1wkru4-0001em-1g
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 19:23:36 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wkrtk-0006yY-Mm
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 19:23:18 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-ca965de53baso2809394a12.0
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 16:23:16 -0700 (PDT)
+ id 1wkru0-00073D-3F
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 19:23:35 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-38dfe910e9dso5470718a91.3
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 16:23:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784330595; x=1784935395; darn=nongnu.org;
+ d=linaro.org; s=google; t=1784330610; x=1784935410; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=jexTKBibLdxg3RvO/0OqJ7xCxktdejWuZt8hYEIzmj8=;
- b=hHtKkJsFLGMH2yltT2tKWweY0mybbwvB/b540KmSuoS+Kwll8fZ2ssQGVupjlKbkJO
- IktznEeQ1J/xyXHiIhIUA6ZkXpgL/cmES8Qavfauj4aVKum6TelTScOA488jDAi/eEup
- fKFxWF7psv3gyG5L3cel2RGtuiMwm4+Rgbi+OWGd74o5pb+uk5MxGEAW5jFCzM3kb3Wl
- jRi4cKbhwoezjMire0Sf+/Ok1kazOrDYeX7URBI6dYWL0wzyxVJd0CKvG92n05HTOmpt
- jSowEAjnX4dHNbvOOE4ty3lNRll3irtS4ka1ugUnxS+Wj6Uyh7JDZs/uvO6Iw26JffjU
- BDIg==
+ bh=/+gOtEK+4wt+LDZh97nLyEPdOI5ONUbxlvkS7t1kf94=;
+ b=NqFTXrzEExv8TuUe0xkLtuz2c6HfTwiPqFiS1384eNiNynvJ1FrzdBdNCughp1cLAr
+ U2PQLYOhyYOBb6+ZRHPLKqI6V670iwD5RuuUEHDtiGy70YQVGpCkkvQ4JFpEX1S/M9oT
+ LVc492Ybw6L1WoUSs8TzFKjj21V1Gr03RaZ2Eg1sLmI3RTfKyGrzcbYGPAeyfJZ9kmE6
+ 42g3MiR6qdFRXWeB+WsFeD0bVaDlc+qxmCpi9yqgu12ZiDO23LBqGtMSA10t7t4IsniV
+ gKPkGawq3LZr0DqGFCUKyweMVtOQOo4IkorLfRbcDKvRuzrL6WdI/Tw+dA3L5tAY6w8p
+ Gkcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784330595; x=1784935395;
+ d=1e100.net; s=20251104; t=1784330610; x=1784935410;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=jexTKBibLdxg3RvO/0OqJ7xCxktdejWuZt8hYEIzmj8=;
- b=k6mWR0ASr11HHloRrEEjiIsBzzGRz/Jhootm0hwDxdS8c3cCQErdRwlLqLnfD2mD+W
- /JERCuoS7MF4xmQFObqkGW2WJMd7adbS7sJIz3ImvmSLpTkbwd1nZH3RgyIIGLst7LbE
- EdkZ1rw7/i2sRsp/cr/j3OsKz31AOdxADCrEikMyy6W63JRMwYZLw6n2/1ufJ/37ofmC
- 9yvke1TnrGyIpO7ZjaSvKKB9atMw8oTW54gEzY9Tvh40bS9OPqDBc0xkNBZDYhEcVwhA
- qtjpI7wGwZu9jUj3lCGjxb+1h+1uVsYmPptmmMI8fTz2mvNgCOhNGMw9KWrbxe7xlAot
- RHNA==
-X-Gm-Message-State: AOJu0YwKLJ8sgbeAeRwTVTSLsT7xoK+y2nGAFFDzxCOtYpCnLB3oxiDY
- LWv49iagsvJy/jbw3G8Ma43ZamBRAMB/+6EI7i6qEa+uc+L2u+kxlHHEh0gtko1hNcCfe+ScHB+
- OB3lf
-X-Gm-Gg: AfdE7cmFG6XvXY00AwKTRzqU//kYo+PXaFf3W8Xk6BjsWZ4exrowMm12dSPidtVsnfM
- sSbzwk2Oal1GRkoqmZOBqemWYzv6mKtJNobc16FUU6AcoXEvYCVV0+FW65T944pQ/llFqWXJ1wZ
- Na1e298shbnzYaVkGzefg9LuScCKvCUgcIMu4MlOxMROODmNmEPnnvGvg+OvA4NHXDVqduKysYf
- y5L3KXqeBdpWxxdCJpH1oYTgA+DWOfnkE7d04HuGd61ZCXjKmo0yhZBLZ2mxkcVdxe2PhOm3GE5
- bILhNLVBH01991gqFDvQnM+TkDaP4eDD0CFAR+VOki4EVfh39jzEWZda4rdD2nYDpSqfcUI6Mkj
- EUu9JjJq9d5vBzbv8SRVWvC2QshKlI4hyVzxm6b47rs3DVNTEC/vCMvlLFCEabj5Y5t6cLuobLn
- tSiYy9oFE=
-X-Received: by 2002:a17:90b:2151:b0:38e:59c2:cbc5 with SMTP id
- 98e67ed59e1d1-38e59c2dc76mr1185855a91.18.1784330595170; 
- Fri, 17 Jul 2026 16:23:15 -0700 (PDT)
+ bh=/+gOtEK+4wt+LDZh97nLyEPdOI5ONUbxlvkS7t1kf94=;
+ b=LXjAcquE6NbMR24KKAb9rVsfaTqqCE9TSs8y2Up+NRTQSaQK1JpXJl7PMGjcDrSf8+
+ 2zBDMqnfc/kLwRg7I1P+JfC8DzEUJbeVcs7y8fERFg9vdoFX8rNoCdqSLsl1//30mxVR
+ h83SJzQyzdqiEsbJkn+atLQH4nedQAgOZipP636yOzPhmVHTsYeymHesAxp7qnG1r1LU
+ KbekauLMGcUeYzX6cH0K6OUPJmcDZBGPvNEiorNpJSVtQGtzVHQHm+SG3+CgcexbWlsn
+ noi9bFWVa2xgZZMsciTsoCxaDLdDRlVeUBdYXdnBut+z/G/kzkiPiioyNz6CXBh0mgwx
+ mPKQ==
+X-Gm-Message-State: AOJu0YwkTmxmn3BgKGp7iXFBhLHLFYKa2jWXQZxaaHLW7cd2A9Yt0BT6
+ wvtZBVixeVKcz1iFZ8a5iohmsdfDJ5X2vdFAelbvY1Et7XV4OC8IW6UPvghnCLsl/FX8HrnOqMU
+ cYQiV
+X-Gm-Gg: AfdE7ck1bBvOIfChG/lchbU1K1ik6KwVbMV/N8vIytw8l65V58Ty31LiBz1t1ftzQ/D
+ cRlc5S7bqD3ZFq8w2ocUCGaO9E3LNRg+zyHhGf+QOzm9zr6OHao+qdzbBCWS4EW6d3hS8Fl5f40
+ 4pAAjkmymS8WNsTZwgvZvnXYsqILuSdlVZOmUikjlSDY2BkuvkCmZsKcyAZtHrfWs3RVAdMW8LJ
+ qpDetOC4ywWUoRGs/jfe64sUvb9kfX5vAP6bU1cZQaY3NgXrbH8KteVsnFZstY+sj8jSuT/fkBA
+ lOddI9w3fhMRi9/dg0Mv2gEDqN5mqouUkqNysEoDjKN2ul3B8RGAttkRJqVamptCgdVRsL74MpD
+ nqMGO5Ds+3T2XbyMAexEJ1deITSBysfP9RjPTJYnwN8jCuw2WDejWwXqfmxQtBeVSoRnBwIEr1g
+ cjhwyD5AY=
+X-Received: by 2002:a17:90b:574c:b0:387:e0cb:7ee with SMTP id
+ 98e67ed59e1d1-38e4b585dd2mr4650729a91.34.1784330610477; 
+ Fri, 17 Jul 2026 16:23:30 -0700 (PDT)
 Received: from stoup.. ([32.140.233.50]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13ce2a18a47sm8186261c88.8.2026.07.17.16.23.14
+ a92af1059eb24-13ce2a18a47sm8186261c88.8.2026.07.17.16.23.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jul 2026 16:23:14 -0700 (PDT)
+ Fri, 17 Jul 2026 16:23:30 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 05/17] target/arm: Imply probe from allocation_tag_mem_probe
-Date: Fri, 17 Jul 2026 16:22:53 -0700
-Message-ID: <20260717232306.378988-7-richard.henderson@linaro.org>
+Subject: [PATCH 17/17] target/arm: Rewrite DC_GVA, DC_GZVA, STZGM
+Date: Fri, 17 Jul 2026 16:23:05 -0700
+Message-ID: <20260717232306.378988-19-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260717232306.378988-1-richard.henderson@linaro.org>
 References: <20260717232306.378988-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,167 +99,302 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename current allocation_tag_mem_probe to
-allocation_tag_mem_internal, then create a new
-allocation_tag_mem_probe that lacks probe and ra arguments.
-Force those to true and 0 when passing off to _internal.
+Perform alignment trap on device memory.  Recognize watchpoints.
+Perform both in the correct order wrt MTX faults.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/mte_helper.h | 18 +++---------------
- target/arm/gdbstub64.c      | 10 +++++-----
- target/arm/tcg/mte_helper.c | 29 ++++++++++++++++++-----------
- 3 files changed, 26 insertions(+), 31 deletions(-)
+ target/arm/tcg/helper-a64-defs.h |   5 +-
+ target/arm/tcg/mte_helper.c      | 127 ++++++++++++++++++++++---------
+ target/arm/tcg/translate-a64.c   |  49 +++++-------
+ 3 files changed, 115 insertions(+), 66 deletions(-)
 
-diff --git a/target/arm/tcg/mte_helper.h b/target/arm/tcg/mte_helper.h
-index 1f471fb69b..b23a5de193 100644
---- a/target/arm/tcg/mte_helper.h
-+++ b/target/arm/tcg/mte_helper.h
-@@ -19,8 +19,6 @@
-  * @ptr_access: the access to use for the virtual address
-  * @ptr_size: the number of bytes in the normal memory access
-  * @tag_access: the access to use for the tag memory
-- * @probe: true to merely probe, never taking an exception
-- * @ra: the return address for exception handling
-  *
-  * Our tag memory is formatted as a sequence of little-endian nibbles.
-  * That is, the byte at (addr >> (LOG2_TAG_GRANULE + 1)) contains two
-@@ -31,22 +29,12 @@
-  * a pointer to the corresponding tag byte.
-  *
-  * If there is no tag storage corresponding to @ptr, return NULL.
-- *
-- * If the page is inaccessible for @ptr_access, or has a watchpoint, there are
-- * three options:
-- * (1) probe = true, ra = 0 : pure probe -- we return NULL if the page is not
-- *     accessible, and do not take watchpoint traps. The calling code must
-- *     handle those cases in the right priority compared to MTE traps.
-- * (2) probe = false, ra = 0 : probe, no fault expected -- the caller guarantees
-- *     that the page is going to be accessible. We will take watchpoint traps.
-- * (3) probe = false, ra != 0 : non-probe -- we will take both memory access
-- *     traps and watchpoint traps.
-- * (probe = true, ra != 0 is invalid and will assert.)
-+ * If the page is inaccessible for @ptr_access, return NULL.
-+ * Do not take watcnpoint traps.
-  */
- uint8_t *allocation_tag_mem_probe(CPUARMState *env, int ptr_mmu_idx,
-                                   uint64_t ptr, MMUAccessType ptr_access,
--                                  int ptr_size, MMUAccessType tag_access,
--                                  bool probe, uintptr_t ra);
-+                                  int ptr_size, MMUAccessType tag_access);
+diff --git a/target/arm/tcg/helper-a64-defs.h b/target/arm/tcg/helper-a64-defs.h
+index 518e74c8aa..0d0830c837 100644
+--- a/target/arm/tcg/helper-a64-defs.h
++++ b/target/arm/tcg/helper-a64-defs.h
+@@ -82,6 +82,9 @@ DEF_HELPER_3(vfp_ah_maxd, f64, f64, f64, fpst)
  
- /**
-  * load_tag1 - Load 1 tag (nibble) from byte
-diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
-index 0c3e5b30bd..08900f6843 100644
---- a/target/arm/gdbstub64.c
-+++ b/target/arm/gdbstub64.c
-@@ -725,8 +725,8 @@ static void handle_q_memtag(GArray *params, void *user_ctx)
-     /* Find out the current translation regime for probe. */
-     mmu_index = cpu_mmu_index(env_cpu(env), false);
-     /* Note that tags are packed here (2 tags packed in one byte). */
--    tags = allocation_tag_mem_probe(env, mmu_index, addr, MMU_DATA_LOAD, 1,
--                                    MMU_DATA_LOAD, true, 0);
-+    tags = allocation_tag_mem_probe(env, mmu_index, addr, MMU_DATA_LOAD,
-+                                    1, MMU_DATA_LOAD);
-     if (!tags) {
-         /* Address is not in a tagged region. */
-         gdb_put_packet("E04");
-@@ -753,8 +753,8 @@ static void handle_q_isaddresstagged(GArray *params, void *user_ctx)
+ DEF_HELPER_FLAGS_3(dc_zva, TCG_CALL_NO_WG, void, env, i64, i32)
+ DEF_HELPER_FLAGS_3(dc_zva_mte, TCG_CALL_NO_WG, void, env, i64, i32)
++DEF_HELPER_FLAGS_3(dc_gva, TCG_CALL_NO_WG, void, env, i64, i32)
++DEF_HELPER_FLAGS_3(dc_gva_stub, TCG_CALL_NO_WG, void, env, i64, i32)
++DEF_HELPER_FLAGS_3(dc_gzva, TCG_CALL_NO_WG, void, env, i64, i32)
  
-     /* Find out the current translation regime for probe. */
-     mmu_index = cpu_mmu_index(env_cpu(env), false);
--    tags = allocation_tag_mem_probe(env, mmu_index, addr, MMU_DATA_LOAD, 1,
--                                    MMU_DATA_LOAD, true, 0);
-+    tags = allocation_tag_mem_probe(env, mmu_index, addr, MMU_DATA_LOAD,
-+                                    1, MMU_DATA_LOAD);
-     reply = tags ? "01" : "00";
+ DEF_HELPER_FLAGS_3(pacia, TCG_CALL_NO_WG, i64, env, i64, i64)
+ DEF_HELPER_FLAGS_3(pacib, TCG_CALL_NO_WG, i64, env, i64, i64)
+@@ -111,7 +114,7 @@ DEF_HELPER_FLAGS_4(st2g_parallel, TCG_CALL_NO_WG, void, env, i64, i64, i32)
+ DEF_HELPER_FLAGS_2(st2g_stub, TCG_CALL_NO_WG, void, env, i64)
+ DEF_HELPER_FLAGS_3(ldgm, TCG_CALL_NO_WG, i64, env, i64, i32)
+ DEF_HELPER_FLAGS_4(stgm, TCG_CALL_NO_WG, void, env, i64, i64, i32)
+-DEF_HELPER_FLAGS_4(stzgm_tags, TCG_CALL_NO_WG, void, env, i64, i64, i32)
++DEF_HELPER_FLAGS_4(stzgm, TCG_CALL_NO_WG, void, env, i64, i64, i32)
  
-     gdb_put_packet(reply);
-@@ -800,7 +800,7 @@ static void handle_Q_memtag(GArray *params, void *user_ctx)
-     /* Find out the current translation regime for probe. */
-     mmu_index = cpu_mmu_index(env_cpu(env), false);
-     tags = allocation_tag_mem_probe(env, mmu_index, start_addr, MMU_DATA_STORE,
--                                    1, MMU_DATA_STORE, true, 0);
-+                                    1, MMU_DATA_STORE);
-     if (!tags) {
-         /* Address is not in a tagged region. */
-         gdb_put_packet("E04");
+ DEF_HELPER_FLAGS_4(arm_unaligned_access, TCG_CALL_NO_WG,
+                    noreturn, env, i64, i32, i32)
 diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
-index dc87dc283f..905e9d7eaf 100644
+index 4161f4eb32..25adc8c714 100644
 --- a/target/arm/tcg/mte_helper.c
 +++ b/target/arm/tcg/mte_helper.c
-@@ -80,10 +80,11 @@ static void mte_perm_check_fail(CPUARMState *env, uint64_t dirty_ptr,
+@@ -671,36 +671,6 @@ void HELPER(stgm)(CPUARMState *env, uint64_t ptr, uint64_t val, uint32_t mtx)
+     }
  }
+ 
+-void HELPER(stzgm_tags)(CPUARMState *env, uint64_t ptr, uint64_t val,
+-                        uint32_t mtx)
+-{
+-    uintptr_t ra = GETPC();
+-    int mmu_idx = arm_env_mmu_index(env);
+-    int log2_dcz_bytes, log2_tag_bytes;
+-    intptr_t dcz_bytes, tag_bytes;
+-    uint8_t *mem;
+-
+-    /*
+-     * In arm_cpu_realizefn, we assert that dcz > LOG2_TAG_GRANULE+1,
+-     * i.e. 32 bytes, which is an unreasonably small dcz anyway,
+-     * to make sure that we can access one complete tag byte here.
+-     */
+-    log2_dcz_bytes = get_dczid_bs(env_archcpu(env)) + 2;
+-    log2_tag_bytes = log2_dcz_bytes - (LOG2_TAG_GRANULE + 1);
+-    dcz_bytes = (intptr_t)1 << log2_dcz_bytes;
+-    tag_bytes = (intptr_t)1 << log2_tag_bytes;
+-    ptr &= -dcz_bytes;
+-
+-    mem = allocation_tag_mem(env, mmu_idx, ptr, MMU_DATA_STORE, dcz_bytes,
+-                             MMU_DATA_STORE, ra);
+-    if (mem) {
+-        int tag_pair = (val & 0xf) * 0x11;
+-        memset(mem, tag_pair, tag_bytes);
+-    } else if (raw_mtx_check(mtx, extract64(ptr, 55, 1))) {
+-        canonical_tag_write_fail(env, ptr, ra);
+-    }
+-}
+-
+ static void mte_sync_check_fail(CPUARMState *env, uint32_t desc,
+                                 uint64_t dirty_ptr, uintptr_t ra)
+ {
+@@ -1092,8 +1062,9 @@ bool mte_probe(CPUARMState *env, uint32_t desc, uint64_t ptr)
+ }
+ 
+ /* Traps for DC_ZVA, DC_GVA, and friends, after successful page lookup. */
+-static int do_dcxva_traps(CPUARMState *env, vaddr addr, size_t len, int mmu_idx,
+-                          int flags, MemTxAttrs attrs, uintptr_t ra)
++static int do_dcxva_traps(CPUARMState *env, vaddr addr, size_t len,
++                          int mmu_idx, int flags, MemTxAttrs attrs,
++                          uint32_t mtx_write, uintptr_t ra)
+ {
+ #ifndef CONFIG_USER_ONLY
+     /*
+@@ -1106,7 +1077,17 @@ static int do_dcxva_traps(CPUARMState *env, vaddr addr, size_t len, int mmu_idx,
+         arm_cpu_do_unaligned_access(env_cpu(env), addr, MMU_DATA_STORE,
+                                     mmu_idx, ra);
+     }
++#endif
+ 
++    /*
++     * MTX write fault is via AArch64_S1CheckPermissions, which happens
++     * after AArch64_S1HasAlignmentFaultDueToMemType.
++     */
++    if (mtx_check(mtx_write, extract64(addr, 55, 1))) {
++        canonical_tag_write_fail(env, addr, ra);
++    }
++
++#ifndef CONFIG_USER_ONLY
+     /* Watchpoints have lower priority than alignment faults. */
+     if (unlikely(flags & TLB_WATCHPOINT)) {
+         cpu_check_watchpoint(env_cpu(env), addr & -len, len,
+@@ -1158,7 +1139,7 @@ void HELPER(dc_zva)(CPUARMState *env, uint64_t addr, uint32_t desc)
+     attrs = full->attrs;
  #endif
  
--uint8_t *allocation_tag_mem_probe(CPUARMState *env, int ptr_mmu_idx,
--                                  uint64_t ptr, MMUAccessType ptr_access,
--                                  int ptr_size, MMUAccessType tag_access,
--                                  bool probe, uintptr_t ra)
-+static uint8_t *
-+allocation_tag_mem_internal(CPUARMState *env, int ptr_mmu_idx,
-+                            uint64_t ptr, MMUAccessType ptr_access,
-+                            int ptr_size, MMUAccessType tag_access,
-+                            bool probe, uintptr_t ra)
- {
- #ifdef CONFIG_USER_ONLY
-     const size_t page_data_size = TARGET_PAGE_SIZE >> (LOG2_TAG_GRANULE + 1);
-@@ -92,8 +93,6 @@ uint8_t *allocation_tag_mem_probe(CPUARMState *env, int ptr_mmu_idx,
-     uint8_t *tags;
-     uintptr_t index;
+-    flags = do_dcxva_traps(env, addr, len, mmu_idx, flags, attrs, ra);
++    flags = do_dcxva_traps(env, addr, len, mmu_idx, flags, attrs, 0, ra);
  
--    assert(!(probe && ra));
--
-     if (!(flags & (ptr_access == MMU_DATA_STORE ? PAGE_WRITE_ORG : PAGE_READ))) {
-         if (probe) {
-             return NULL;
-@@ -250,8 +249,16 @@ static uint8_t *allocation_tag_mem(CPUARMState *env, int ptr_mmu_idx,
-                                    int ptr_size, MMUAccessType tag_access,
-                                    uintptr_t ra)
- {
--    return allocation_tag_mem_probe(env, ptr_mmu_idx, ptr, ptr_access,
--                                    ptr_size, tag_access, false, ra);
-+    return allocation_tag_mem_internal(env, ptr_mmu_idx, ptr, ptr_access,
-+                                       ptr_size, tag_access, false, ra);
-+}
-+
-+uint8_t *allocation_tag_mem_probe(CPUARMState *env, int ptr_mmu_idx,
-+                                  uint64_t ptr, MMUAccessType ptr_access,
-+                                  int ptr_size, MMUAccessType tag_access)
-+{
-+    return allocation_tag_mem_internal(env, ptr_mmu_idx, ptr, ptr_access,
-+                                       ptr_size, tag_access, true, 0);
+     /* After traps, treat as aligned blocks. */
+     addr = addr & -len;
+@@ -1180,7 +1161,7 @@ void HELPER(dc_zva_mte)(CPUARMState *env, uintptr_t ptr_orig, uint32_t desc)
+                                     dcz_bytes, MMU_DATA_LOAD, ra, ATM_ZVA);
+ 
+     r.flags = do_dcxva_traps(env, ptr, dcz_bytes, mmu_idx,
+-                             r.flags, r.attrs, ra);
++                             r.flags, r.attrs, 0, ra);
+ 
+     bit55 = extract64(ptr, 55, 1);
+     ptr_tag = allocation_tag_from_addr(ptr);
+@@ -1266,6 +1247,84 @@ void HELPER(dc_zva_mte)(CPUARMState *env, uintptr_t ptr_orig, uint32_t desc)
+     do_dczva_0(env, ptr, dcz_bytes, r.ptr_mem, mmu_idx, r.flags, ra);
  }
  
- uint64_t HELPER(irg)(CPUARMState *env, uint64_t rn, uint64_t rm)
-@@ -1221,7 +1228,7 @@ uint64_t mte_mops_probe(CPUARMState *env, uint64_t ptr, uint64_t size,
-     /* True probe; this will never fault */
-     mem = allocation_tag_mem_probe(env, mmu_idx, ptr,
-                                    w ? MMU_DATA_STORE : MMU_DATA_LOAD,
--                                   size, MMU_DATA_LOAD, true, 0);
-+                                   size, MMU_DATA_LOAD);
-     if (!mem) {
-         return size;
-     }
-@@ -1279,7 +1286,7 @@ uint64_t mte_mops_probe_rev(CPUARMState *env, uint64_t ptr, uint64_t size,
-      */
-     mem = allocation_tag_mem_probe(env, mmu_idx, ptr,
-                                    w ? MMU_DATA_STORE : MMU_DATA_LOAD,
--                                   1, MMU_DATA_LOAD, true, 0);
-+                                   1, MMU_DATA_LOAD);
-     if (!mem) {
-         return size;
-     }
-@@ -1331,7 +1338,7 @@ void mte_mops_set_tags(CPUARMState *env, uint64_t ptr, uint64_t size,
-     mmu_idx = FIELD_EX32(desc, MTEDESC, MIDX);
-     /* True probe: this will never fault */
-     mem = allocation_tag_mem_probe(env, mmu_idx, ptr, MMU_DATA_STORE, size,
--                                   MMU_DATA_STORE, true, 0);
-+                                   MMU_DATA_STORE);
-     if (!mem) {
++static void do_stzgm_tags(void *mem, int dcz_bytes, int tag)
++{
++    /*
++     * In arm_cpu_realizefn, we asserted that dcz > LOG2_TAG_GRANULE+1,
++     * i.e. 32 bytes, which is an unreasonably small dcz anyway, to make
++     * sure that we can access one complete tag byte here.
++     */
++    int tag_bytes = dcz_bytes / (TAG_GRANULE * 2);
++    int tag_pair = (tag & 0xf) * 0x11;
++    memset(mem, tag_pair, tag_bytes);
++}
++
++void HELPER(dc_gva)(CPUARMState *env, uint64_t ptr, uint32_t desc)
++{
++    int dcz_bytes = FIELD_EX32(desc, MTEDESC, SIZEM1) + 1;
++    int mmu_idx = FIELD_EX32(desc, MTEDESC, MIDX);
++    uintptr_t ra = GETPC();
++
++    AllocationTagMem r =
++        allocation_tag_mem_internal(env, mmu_idx, ptr, MMU_DATA_STORE,
++                                    dcz_bytes, MMU_DATA_STORE, ra, ATM_ZVA);
++
++    do_dcxva_traps(env, ptr, dcz_bytes, mmu_idx, r.flags, r.attrs,
++                   r.tag_mem ? 0 : desc, ra);
++
++    if (r.tag_mem) {
++        do_stzgm_tags(r.tag_mem, dcz_bytes, allocation_tag_from_addr(ptr));
++    }
++}
++
++/* DC GVA when tag access is disabled -- we still want all of the traps. */
++void HELPER(dc_gva_stub)(CPUARMState *env, uint64_t ptr, uint32_t desc)
++{
++    uintptr_t ra = GETPC();
++    int mmu_idx = FIELD_EX32(desc, MTEDESC, MIDX);
++
++#ifdef CONFIG_USER_ONLY
++    probe_write(env, ptr, 0, mmu_idx, ra);
++#else
++    int len = FIELD_EX32(desc, MTEDESC, SIZEM1) + 1;
++    void *mem;
++    CPUTLBEntryFull *full;
++    int flags = probe_access_full(env, ptr, 0, MMU_DATA_STORE, mmu_idx,
++                                  false, &mem, &full, ra);
++    do_dcxva_traps(env, ptr, len, mmu_idx, flags, full->attrs, 0, ra);
++#endif
++}
++
++static void do_gzva_stzgm(CPUARMState *env, uint64_t ptr, uint64_t tag,
++                          uint32_t desc, uintptr_t ra)
++{
++    int dcz_bytes = FIELD_EX32(desc, MTEDESC, SIZEM1) + 1;
++    int mmu_idx = FIELD_EX32(desc, MTEDESC, MIDX);
++
++    AllocationTagMem r =
++        allocation_tag_mem_internal(env, mmu_idx, ptr, MMU_DATA_STORE,
++                                    dcz_bytes, MMU_DATA_STORE, ra, ATM_ZVA);
++
++    r.flags = do_dcxva_traps(env, ptr, dcz_bytes, mmu_idx, r.flags, r.attrs,
++                             r.tag_mem ? 0 : desc, ra);
++
++    if (r.tag_mem) {
++        do_stzgm_tags(r.tag_mem, dcz_bytes, tag);
++    }
++    do_dczva_0(env, ptr, dcz_bytes, r.ptr_mem, mmu_idx, r.flags, ra);
++}
++
++void HELPER(dc_gzva)(CPUARMState *env, uint64_t ptr, uint32_t desc)
++{
++    do_gzva_stzgm(env, ptr, allocation_tag_from_addr(ptr), desc, GETPC());
++}
++
++void HELPER(stzgm)(CPUARMState *env, uint64_t ptr, uint64_t tag, uint32_t desc)
++{
++    int dcz_bytes = FIELD_EX32(desc, MTEDESC, SIZEM1) + 1;
++    do_gzva_stzgm(env, ptr & -dcz_bytes, tag, desc, GETPC());
++}
++
+ uint64_t mte_mops_probe(CPUARMState *env, uint64_t ptr, uint64_t size,
+                         uint32_t desc)
+ {
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index cae8d6826f..6ce123eafc 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -3150,41 +3150,25 @@ static void handle_sys(DisasContext *s, bool isread,
          return;
+     case ARM_CP_DC_GVA:
+         {
+-            TCGv_i64 clean_addr, tag;
++            TCGv_i32 desc = gen_mtedesc_zva(s);
+ 
+-            /*
+-             * DC_GVA, like DC_ZVA, requires that we supply the original
+-             * pointer for an invalid page.  Probe that address first.
+-             */
+             tcg_rt = cpu_reg(s, rt);
+-            clean_addr = clean_data_tbi(s, tcg_rt);
+-            gen_probe_access(s, clean_addr, MMU_DATA_STORE, MO_8);
+-
+             if (s->ata[0]) {
+-                /* Extract the tag from the register to match STZGM.  */
+-                tag = tcg_temp_new_i64();
+-                tcg_gen_shri_i64(tag, tcg_rt, 56);
+-                gen_helper_stzgm_tags(tcg_env, clean_addr, tag,
+-                                      tcg_constant_i32(s->mtx));
++                gen_helper_dc_gva(tcg_env, tcg_rt, desc);
++            } else {
++                gen_helper_dc_gva_stub(tcg_env, tcg_rt, desc);
+             }
+         }
+         return;
+     case ARM_CP_DC_GZVA:
+         {
+-            TCGv_i64 clean_addr, tag;
+             TCGv_i32 desc = gen_mtedesc_zva(s);
+ 
+-            /* For DC_GZVA, we can rely on DC_ZVA for the proper fault. */
+             tcg_rt = cpu_reg(s, rt);
+-            clean_addr = clean_data_tbi(s, tcg_rt);
+-            gen_helper_dc_zva(tcg_env, clean_addr, desc);
+-
+             if (s->ata[0]) {
+-                /* Extract the tag from the register to match STZGM.  */
+-                tag = tcg_temp_new_i64();
+-                tcg_gen_shri_i64(tag, tcg_rt, 56);
+-                gen_helper_stzgm_tags(tcg_env, clean_addr, tag,
+-                                      tcg_constant_i32(s->mtx));
++                gen_helper_dc_gzva(tcg_env, tcg_rt, desc);
++            } else {
++                gen_helper_dc_zva(tcg_env, tcg_rt, desc);
+             }
+         }
+         return;
+@@ -4767,6 +4751,7 @@ static bool trans_LD_single_repl(DisasContext *s, arg_LD_single_repl *a)
+ static bool trans_STZGM(DisasContext *s, arg_ldst_tag *a)
+ {
+     TCGv_i64 addr, tcg_rt;
++    TCGv_i32 desc;
+ 
+     if (!dc_isar_feature(aa64_mte, s)) {
+         return false;
+@@ -4781,17 +4766,19 @@ static bool trans_STZGM(DisasContext *s, arg_ldst_tag *a)
+ 
+     addr = read_cpu_reg_sp(s, a->rn, true);
+     tcg_gen_addi_i64(addr, addr, a->imm);
+-    tcg_rt = cpu_reg(s, a->rt);
+ 
++    desc = gen_mtedesc_zva(s);
+     if (s->ata[0]) {
+-        gen_helper_stzgm_tags(tcg_env, addr, tcg_rt, tcg_constant_i32(s->mtx));
++        tcg_rt = cpu_reg(s, a->rt);
++        gen_helper_stzgm(tcg_env, addr, tcg_rt, desc);
++    } else {
++        /*
++         * The non-tags portion of STZGM is mostly like DC_ZVA,
++         * except the alignment happens before the access.
++         */
++        tcg_gen_andi_i64(addr, addr, -s->dcz_blocksize);
++        gen_helper_dc_zva(tcg_env, addr, desc);
      }
+-    /*
+-     * The non-tags portion of STZGM is mostly like DC_ZVA,
+-     * except the alignment happens before the access.
+-     */
+-    tcg_gen_andi_i64(addr, addr, -s->dcz_blocksize);
+-    gen_helper_dc_zva(tcg_env, addr, gen_mtedesc_zva(s));
+     return true;
+ }
+ 
 -- 
 2.43.0
 
