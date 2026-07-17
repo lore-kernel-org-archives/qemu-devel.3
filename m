@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F3ABC44520
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 14:17:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AB81C4451B
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 14:17:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkjN8-000816-7d; Fri, 17 Jul 2026 10:17:02 -0400
+	id 1wkjNq-0008UG-O4; Fri, 17 Jul 2026 10:17:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wkjN6-0007y6-NJ
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 10:17:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wkjNo-0008T0-TB
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 10:17:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wkjN5-000678-33
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 10:17:00 -0400
+ id 1wkjNm-0006FD-JF
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 10:17:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784297817;
+ s=mimecast20190719; t=1784297861;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=K8RwmA1elj5CN9Hey07Cbu3GOWBcuyV2M217cRLO85Q=;
- b=F6A/za9y5mtP2rOK3ISImLHS1vXUW1CYDMnzeny4MpA6rZXDbn0I2Eg6OmNWgGFciiKNrL
- 7tCmovPlnn6KD2O3mIAdLi9FI+fidILrq//8L2kAFV5kghSOsr9Uuszby82qCRTvSrO6Dw
- 40XQ55DJa98/tTBe697Ao/+LKEoEPL8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=qkOKLuTl/EhHto4M16J437NXXyPWeIbQ7V85OuqSUw0=;
+ b=Ma+mHNRyqekSkBSevZADHUn1GhEmtGDWuMWby36x1avjl+qwipomj6v4ydR2VsXLZyG5qB
+ e5CeEsr6+PbUpfwI21GTvWziTz6ttsIiTaUf3cC2uWgsYjYZ0Fa2Dy+XJenEiCgCvOhKGJ
+ l4KN9IRRLU96r+s/e4H8Y98Nm2ERCZc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-380-BEobqyF2M-SyfMnyEBMehA-1; Fri,
- 17 Jul 2026 10:16:54 -0400
-X-MC-Unique: BEobqyF2M-SyfMnyEBMehA-1
-X-Mimecast-MFC-AGG-ID: BEobqyF2M-SyfMnyEBMehA_1784297813
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-nJN1jmp6MZ2739rk7tr9GA-1; Fri,
+ 17 Jul 2026 10:17:38 -0400
+X-MC-Unique: nJN1jmp6MZ2739rk7tr9GA-1
+X-Mimecast-MFC-AGG-ID: nJN1jmp6MZ2739rk7tr9GA_1784297856
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5E66319540D3; Fri, 17 Jul 2026 14:16:52 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 44E711800671; Fri, 17 Jul 2026 14:17:36 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.34.221])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 59FD418005B3; Fri, 17 Jul 2026 14:16:49 +0000 (UTC)
-Date: Fri, 17 Jul 2026 15:16:45 +0100
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 06D9D180036E; Fri, 17 Jul 2026 14:17:32 +0000 (UTC)
+Date: Fri, 17 Jul 2026 15:17:29 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
  daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
  pbonzini@redhat.com, qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 4/6] qom/object.h: rename @child to @targetp in
- object_property_add_link() documentation
-Message-ID: <alo5TQ-SmJvIXs5M@redhat.com>
+Subject: Re: [PATCH v2 5/6] qom/object.h: add missing documentation for
+ object_class_* property functions
+Message-ID: <alo5eWME5mMdfEqz@redhat.com>
 References: <20260717135254.508701-1-mark.caveayland@nutanix.com>
- <20260717135254.508701-5-mark.caveayland@nutanix.com>
+ <20260717135254.508701-6-mark.caveayland@nutanix.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260717135254.508701-5-mark.caveayland@nutanix.com>
+In-Reply-To: <20260717135254.508701-6-mark.caveayland@nutanix.com>
 User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: permerror client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: permerror client-ip=170.10.129.124;
  envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,15 +91,14 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 17, 2026 at 02:51:44PM +0100, Mark Cave-Ayland wrote:
-> This was missed when updating the parameter name in commit 36854207f0 ("object:
-> rename link "child" to "target"").
+On Fri, Jul 17, 2026 at 02:51:45PM +0100, Mark Cave-Ayland wrote:
+> This is so that the object_class_* property functions appear in the generated
+> QOM documentation at devel/qom-api.html.
 > 
 > Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> Fixes: 36854207f0 ("object: rename link "child" to "target"")
 > ---
->  include/qom/object.h | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  include/qom/object.h | 136 +++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 136 insertions(+)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
