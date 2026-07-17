@@ -4,111 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28690C4451B
-	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 13:51:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F2F9C4451C
+	for <qemu-devel@archiver.kernel.org>; Fri, 17 Jul 2026 13:51:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkixW-0004St-W2; Fri, 17 Jul 2026 09:50:38 -0400
+	id 1wkixt-0004fa-Hj; Fri, 17 Jul 2026 09:50:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbassey@redhat.com>)
- id 1wkiwo-0004FH-Ii
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 09:49:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbassey@redhat.com>)
- id 1wkiwm-0001Xt-Uh
- for qemu-devel@nongnu.org; Fri, 17 Jul 2026 09:49:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784296187;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=f7fEN9p3YFcRJxQVbUrtqGwOhTf7ACd7FeDVIrSzydk=;
- b=eJG+B2Cgsjd5821Bgs99yyH734CVHGorJJCOtkkHa227PvF9CcA7FnboLXE96gkCRFo85C
- qgCvl0FqWSyeS+EIGkp2DBaVobCKMrNGrO3+kIgN6ZVjCcoSLqIXydIfe+TtLc9ZHmb+0w
- gHnBT2VHmMs9RC24Op8tDsD1D7WigYE=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-203-__mWVRIUOaqKbISoLkJP-Q-1; Fri, 17 Jul 2026 09:49:46 -0400
-X-MC-Unique: __mWVRIUOaqKbISoLkJP-Q-1
-X-Mimecast-MFC-AGG-ID: __mWVRIUOaqKbISoLkJP-Q_1784296185
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-49547298689so5745895e9.1
- for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 06:49:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wkix9-0004Q0-66
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 09:50:15 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wkix4-0001bd-CI
+ for qemu-devel@nongnu.org; Fri, 17 Jul 2026 09:50:07 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-81ef11a0972so7375427b3.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 06:50:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784296204; cv=none;
+ d=google.com; s=arc-20260327;
+ b=PL7IArOXJsP0guHW3hntwjGImwuYTDLpwzBKgLETZZfdE52gatCS14klbdt1FuJ1I2
+ uW2r1iNvy/aLpAk0c2knf1jv6rpJbVygsQPhQUMni0xfMZwng9+1BHT6JhaRysqZKtwo
+ sbLQohhJBkok3WimJGKQheOkZCEiAwwPxFcsGWDdIlxFj24vQVB6DUR166AyE3LHICz2
+ pNL9GusfylAuGgROB3QBa3VvRKSDEh82O4/9iBPzdwAHjbn7IZsusVA355G0qLij/AqO
+ qYR3J9df4IaXDhF7rBNL65BFoQkwA59A3TllXL4LHIciLzMCXkeseIh4KQvlww9ecMFM
+ kJFA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=fbnd4avmCZuarZm8evJ8GJbSYptpIMj9ydyywnXY8to=;
+ fh=P385SY7ZQgiYT4UoVrmLvbOK18O8gTSYWdpx2fq+5qM=;
+ b=tCNzpDGNpoPv3Aw/tD4I4S76ZlzXtbz9fvoTXxKs/IlaUFjbKGBSSQ9bFD1HKN518S
+ KTNk7n8Wlm/51VhtM1uuhgGkoHyfDoIwRhvgRLwfpxcAlIRWELg3ddi6ATh89Bof46Rq
+ zyGs5a8Vxo6Rdynpo32EtYP5gf4peK30nvCdRUMvqGIfiVVnWZs821x9qgVkK2e2NJzs
+ ycS1pUmm5bFJ7BQAd5HShfsc42Y76rxWJVUegScaEoxWmMTyj2akrhjHIz4/AOabzVfH
+ fS6NX84m2+n1byMyXWleeqxGvqqaDpA1g8891u4xh3/2U6TIqY/kRJ1UxoRkZUTzQ8o2
+ ulMQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784296185; x=1784900985; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=f7fEN9p3YFcRJxQVbUrtqGwOhTf7ACd7FeDVIrSzydk=;
- b=YBsp6Y8tOJ1XqF0Ah9Nk9k4n+G6DnmYC4PslaXzHwfrzqdD6wJ8m3BNaWvfLUqXvPO
- 1VqlgQFcLQ0Lc8shb5AepNJQ67O/ky5cicYaih3629O5iL1+r5rBUT0FBIetXoMs5Eqs
- ufoYjUJZkhM9JPihVrMHNbtAElY9FOmHsiaKny8+HaZ0SULB4ul5vuBzoLb//XPQHJLS
- zJ19pkDYcw1KnkrqBKgrYDNxFCxBD+IWUf0JiahrfhFKjZtT4gTJ7hESywGpd7GXD82I
- RMIDhbJbqgZ7JLf14N+zySzyTpTctWwYaEb1VzIdb4M4yuUNh436vOOdYHFyRzuVyUmD
- haYA==
+ d=linaro.org; s=google; t=1784296204; x=1784901004; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=fbnd4avmCZuarZm8evJ8GJbSYptpIMj9ydyywnXY8to=;
+ b=s1jdsyWFuW8ihwPa7jkEZ7t7kcjiGEE/4L33LrfFA4y7pGPRVIj1Ee/bwqD9w0gYes
+ 4C7+crLt1l9GuRfl2yIOVTEWJOY2V9vlgDXGcU0pD3r5pAY+3nmThhwgWW0MmR1PPe91
+ 4/mQAQv1b/0+7vHiUVCM146lxsRJK8gZ9plBe4ial4/+cI6/8ewpvPfR7KBZcDmlZt0x
+ 2Mfu4YhVwtAARlM8biZOBU5qnqDdfGSIoaAg/5v2vdF1PtnA5ScpDJQKcE5NuBdg94VQ
+ Z5kluJp5K4d1UY8Yqjgxk8vpUc6e+o0WV84jRkZXT3y4bdOXu6QSRR6iVjROOfhbmXUo
+ YCEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784296185; x=1784900985;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=f7fEN9p3YFcRJxQVbUrtqGwOhTf7ACd7FeDVIrSzydk=;
- b=pNSEj2NP1uQPcyqnIfqpwzqzRjDsVIP0wJCTYHEg6tGB4Edt0sgkeyQyAaV7QGurLf
- lcZAO/66b+PzOFgksUWUrCfIl+gPGtAckn0zg1WoppP+Iz8jhPI5j1IFbHJeEBLxLCSb
- 0lLqXnhEPXzKotfK4lK/G7smah4vPAoWqtcKpjynJ1Ev203WWjcAmmEGwW2SpOCGxbkq
- g+jeJplmu1VX9/zuDSaHas1rRq8fe9prMTq1VAhpHj/zQ1Fjws47QhenF6fIcPHqMd9E
- CyX3LFJV0y9x4IUhnjxWiXwh3vm41J0nsGM/6NcYdILAiSaIITjjdmS2SbN6Cifd5EOw
- PZCQ==
-X-Gm-Message-State: AOJu0Yzrn8QWBzZuEbxVMZXn7sTukqO0Cr5VPwZDuGV7jHYnJWiu/BsJ
- 5Pf7wLwzfGFkPmjb7w8XGjGe85AMRK4BHR8cAKGD61iT9rDz2/lzr1o9Cx0yjr+H9Aydojz7GmC
- KyOkfsZmR7MQW6BxwUeYKvNQIabvQgUY2sDGO7V2Mcz7gmGbWcqKuAjp47tPcNHpNbHpoJmsMFW
- /xNwuXEbiI1MsUP7yLZvuIEElqAypVxHkUuss91R1GPZ+x
-X-Gm-Gg: AfdE7cnXFgPJ8fpb9t4s1Em11rirBNyeN33G1sGDGEWhyvlJrA005kXBShYhNriZ2AZ
- 9a+0SZulInsDPbWESWh1+R4p7m3wY1LLOrOBQTdCr03+eSYGyCau3Y7ifAu/83stuiAoma3M7tL
- WMZfmTGbR0KVtcqneloPi2Wxa3MspPvTUnkvSzzTUqwOFB/nVDlPd4T9Ef52Wd8cajCHttGLm13
- XK+8LTOvqX/utb4V5b+6qLbceRyniHzZlWVACvRuz9XZpGly0p+qo+7exkfrC/L4acbJjsq07HT
- 2aGr77dSfIPA6sWhRvgjdZ6YZyB5Q/bIn4ZAxb2SvC+GJtfJFP1BvCcxqTBfphA+lkJZ7OPYWQb
- 1nb4tUCwauDxHwPpSuh6rzihZf+KluEj2n13pJHv9nb6/Wpk08+Vmw4HgIRgJukiucrW+BdJOn9
- WgVYUZKnYSdw==
-X-Received: by 2002:a05:600c:1554:b0:495:3de8:33a6 with SMTP id
- 5b1f17b1804b1-4954a3dc7bcmr33652195e9.16.1784296185021; 
- Fri, 17 Jul 2026 06:49:45 -0700 (PDT)
-X-Received: by 2002:a05:600c:1554:b0:495:3de8:33a6 with SMTP id
- 5b1f17b1804b1-4954a3dc7bcmr33651715e9.16.1784296184487; 
- Fri, 17 Jul 2026 06:49:44 -0700 (PDT)
-Received: from fedora (cst-prg-27-253.cust.vodafone.cz. [46.135.27.253])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4954ba2abd0sm30049525e9.15.2026.07.17.06.49.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 17 Jul 2026 06:49:43 -0700 (PDT)
-From: Dorinda Bassey <dbassey@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: mhrica@redhat.com, mst@redhat.com, sgarzare@redhat.com,
- manos.pitsidianakis@linaro.org, marcandre.lureau@redhat.com,
- stefanha@redhat.com, pbonzini@redhat.com, aesteve@redhat.com,
- Dorinda Bassey <dbassey@redhat.com>
-Subject: [PATCH v4 1/3] vhost: Fix SHMEM_MAP transaction ordering and
- resulting deadlock
-Date: Fri, 17 Jul 2026 15:49:18 +0200
-Message-ID: <20260717134920.265128-2-dbassey@redhat.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260717134920.265128-1-dbassey@redhat.com>
-References: <20260717134920.265128-1-dbassey@redhat.com>
+ d=1e100.net; s=20251104; t=1784296204; x=1784901004;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=fbnd4avmCZuarZm8evJ8GJbSYptpIMj9ydyywnXY8to=;
+ b=BEQ5sZKAmGoVOxGgj5maedR3+NFUgJhM39H/zGFgSqMG0fNQcppoXmnnXJJH+jNOwx
+ Z+01VUhlkEzacSLSpQ80PQVjETCrrwVo/FGLkTA4W6A+vqA0qWLFxHTpSyiuzLnp1jh1
+ ql2z4/PbH1FNquqHnxMIMJYWBKk/7MLCw2gNFAlsQEWACo/vXOfpupKRtfxm06qO6WRl
+ kAJWHjfeFtwOVW0Q3C6UXPDzk7SDT2ED3/0mKr3lRik27qBrWn89qzVFwcPKmJ0DCraA
+ Nt+jesdX7SOd1bPuF83wYZaAg88W5uXF3ECwAcvLnKEIYZlLtTC9x/0IIWhAF6anYoBq
+ 8MFw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpUaBfXNenUvcfKR3X3xH+tJuPKoDyeOR0o37Pz1+HD41GqEZNNsbp8NeBYd663dRRmsdH9PdJhko6J@nongnu.org
+X-Gm-Message-State: AOJu0YxfhWaSXDFGCNiMrM3bBuLlFqkvUwuGe9erSNuPaUOwitBSrTuG
+ Mgdeori0yuj2+T2fdzKa+bNVCT4NXvlRDTiySZhn1M9ULdM5HqpSxXuVnOpbNjghTMN0byaF0Aw
+ tzhnA+3r8kwXpjrY3Be6lsfp2WQOt9l0C0mreiJ6yMg==
+X-Gm-Gg: AfdE7cm9btDlHZCYXj9++H//2TWuO9ffhjEiIh6Yfc/duqKU0HPrjQtm46rgoOI0IqI
+ ENgFHiIoBe+7AkZuBlLnFxfS3+QegdDrEE2PNZ/fp6DQvKF4YUXf5Qm4+8CjPWju61kk7VgMFE+
+ 5wWJeZb8mYnl5hJRm2co8CCj/t6ASyxzi7kuv/bZ3ZIf6SxlS2SjjVqv6RBFFO0xogkEo3kPb05
+ Zkj+VaHJ39g8oXhZPaszHysXNfwkkd9GZzfko6p6Xd89dmY6kXwuVAigKFqieRrQIhTeLK6WBqK
+ rLues+fPJCyW2AGNGfXILRL8yU3e2wJ+Qsu9z/lwh7QcWw==
+X-Received: by 2002:a05:690c:4801:b0:80c:85c6:897f with SMTP id
+ 00721157ae682-81ef263285dmr8165487b3.62.1784296204492; Fri, 17 Jul 2026
+ 06:50:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: permerror client-ip=170.10.129.124;
- envelope-from=dbassey@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+References: <20260625070551-mutt-send-email-mst@kernel.org>
+ <CAFEAcA8YJZq9TqrUd0zTnewAdVDm5y6UV7BJQZ0C60TZ=RT98Q@mail.gmail.com>
+ <20260625091334-mutt-send-email-mst@kernel.org>
+ <CAFEAcA8xK+t3-prEphtkq-o9UY2mgS6cowhs880GOaxL9dKSGw@mail.gmail.com>
+ <20260625101817-mutt-send-email-mst@kernel.org>
+ <CAFEAcA8-Un+Q1yBDqLWCLPRwtgTA_VhJqGobgZChrFhAeVfG8A@mail.gmail.com>
+ <20260625123119-mutt-send-email-mst@kernel.org>
+ <CAFEAcA8UjtXgmPC27fOKMwbaWs2piwGYudtwCNWQHuu3E_7A-A@mail.gmail.com>
+ <5faf04b9-d596-4a1d-9fe3-5e9ad5f0a99a@redhat.com>
+ <73f79841-8cc7-4ca6-8f6b-fb97b53a6fe8@redhat.com>
+ <20260717091756-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20260717091756-mutt-send-email-mst@kernel.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 17 Jul 2026 14:49:53 +0100
+X-Gm-Features: AUfX_mzSQyLYQofBBh-fPCiowP3Wl9A04pifrBGZdwvQ1aWJUo0gu2VipGSTwAQ
+Message-ID: <CAFEAcA-O6Z4JrVV0DL_tta6khRyUta_Zz5mJt6OszaW1mu0o6Q@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] system/memory: Use qemu_ram_{copy, move}() in ram
+ device region accessors
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Gavin Shan <gshan@redhat.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ peterx@redhat.com, alex@shazbot.org, richard.henderson@linaro.org, 
+ berrange@redhat.com, philmd@oss.qualcomm.com, philmd@mailo.com, 
+ david@kernel.org, clg@redhat.com, pbonzini@redhat.com, phrdina@redhat.com, 
+ jugraham@redhat.com, liugang24219@sangfor.com.cn, dinghui@sangfor.com.cn, 
+ shan.gavin@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,98 +131,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit the memory region transaction before sending the SHMEM_MAP reply
-so the KVM memory slot exists before the guest can access the mapped
-region.
+On Fri, 17 Jul 2026 at 14:24, Michael S. Tsirkin <mst@redhat.com> wrote:
+>
+> On Thu, Jul 09, 2026 at 07:52:12PM +1000, Gavin Shan wrote:
+> > Hi Michael and Peter,
 
-This moves the commit to while the backend is still blocked waiting for
-the reply, which can trigger ADD_MEM_REG back to the backend and
-deadlock. Filter shmem mapping regions out of vhost_section() by
-checking the MR owner type to prevent this.
+> >
+> > Could you help to confirm if the conclusion is to have unified qemu_ram_{copy, move}()
+> > for all architectures? In qemu_ram_{copy, move}(), the fixed sized accesses like
+> > 1/2/4/8 bytes are handled by __builtin_{memcpy, memmove}() and fall back to
+> > memcpy/memmove() for other sized accesses. It's basically what was proposed by
+> > Michael :-)
+>
+> No. __builtin_ and  memcpy/memmove are same on modern linuxes.
+>
+> I'd say as a 1st step, on x86 hosts we can do a fixed size
+> memmove for 1/2/4/8, on other hosts
+> *aligned* 1/2/4/8 bytes can do
+>  __atomic_store ... __ATOMIC_RELAXED
+> and the rest can hobble along on memmove
+> and hope for the best.
 
-The explicit transaction begin/commit wrapping is dropped since
-virtio_add_shmem_map() already commits via memory_region_add_subregion().
-The unmap handler keeps the original ordering: reply before delete, so
-the backend is unblocked before the transaction commit.
+I don't think we should be doing something that's x86-host specific,
+as I've mentioned previously.
 
-Fixes: b52e1896e764 ("vhost-user: Add VirtIO Shared Memory map request")
-Suggested-by: Albert Esteve <aesteve@redhat.com>
-Reviewed-by: Albert Esteve <aesteve@redhat.com>
-Tested-by: Albert Esteve <aesteve@redhat.com>
-Signed-off-by: Dorinda Bassey <dbassey@redhat.com>
----
- hw/virtio/vhost-user.c | 20 ++------------------
- hw/virtio/vhost.c      | 10 ++++++++++
- 2 files changed, 12 insertions(+), 18 deletions(-)
-
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 517cc4ca716..01468f7441a 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -1977,8 +1977,6 @@ vhost_user_backend_handle_shmem_map(struct vhost_dev *dev,
-         }
-     }
- 
--    memory_region_transaction_begin();
--
-     /* Create VirtioSharedMemoryMapping object */
-     VirtioSharedMemoryMapping *mapping = virtio_shared_memory_mapping_new(
-         vu_mmap->shmid, fd, vu_mmap->fd_offset, vu_mmap->shm_offset,
-@@ -1986,7 +1984,7 @@ vhost_user_backend_handle_shmem_map(struct vhost_dev *dev,
- 
-     if (!mapping) {
-         ret = -EFAULT;
--        goto send_reply_commit;
-+        goto send_reply;
-     }
- 
-     /* Add the mapping to the shared memory region */
-@@ -1994,22 +1992,8 @@ vhost_user_backend_handle_shmem_map(struct vhost_dev *dev,
-         error_report("Failed to add shared memory mapping");
-         object_unref(OBJECT(mapping));
-         ret = -EFAULT;
--        goto send_reply_commit;
--    }
--
--send_reply_commit:
--    /* Send reply and commit after transaction started */
--    if (hdr->flags & VHOST_USER_NEED_REPLY_MASK) {
--        payload->u64 = !!ret;
--        hdr->size = sizeof(payload->u64);
--        if (!vhost_user_send_resp(ioc, hdr, payload, &local_err)) {
--            error_report_err(local_err);
--            memory_region_transaction_commit();
--            return -EFAULT;
--        }
-+        goto send_reply;
-     }
--    memory_region_transaction_commit();
--    return 0;
- 
- send_reply:
-     if (hdr->flags & VHOST_USER_NEED_REPLY_MASK) {
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index af41841b529..e5c219be095 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -636,6 +636,16 @@ static bool vhost_section(struct vhost_dev *dev, MemoryRegionSection *section)
- {
-     MemoryRegion *mr = section->mr;
- 
-+    /*
-+     * Skip shmem mapping regions, they are managed via SHMEM_MAP/UNMAP.
-+     * Including them triggers ADD_MEM_REG during the SHMEM_MAP transaction
-+     * commit, deadlocking the backend.
-+     */
-+    if (object_dynamic_cast(memory_region_owner(mr),
-+                            TYPE_VIRTIO_SHARED_MEMORY_MAPPING)) {
-+        return false;
-+    }
-+
-     if (memory_region_is_ram(mr) && !memory_region_is_rom(mr)) {
-         uint8_t dirty_mask = memory_region_get_dirty_log_mask(mr);
-         uint8_t handled_dirty;
--- 
-2.52.0
-
+-- PMM
 
