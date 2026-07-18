@@ -4,102 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA7DAC4451C
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 08:41:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B6A4C4451C
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 08:47:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wl0c2-00064G-KP; Sat, 18 Jul 2026 04:41:34 -0400
+	id 1wl0h8-0006uZ-HO; Sat, 18 Jul 2026 04:46:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wl0c1-000640-3V; Sat, 18 Jul 2026 04:41:33 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wl0bz-0000zs-My; Sat, 18 Jul 2026 04:41:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784364080; bh=PNZaLMI/sTUun/UNIFZX3tK6v3U+WDUs4JqpNm3AfhM=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=BD9fhNc2VS9RXVx08vb6ZF/lri3CgG1xoLUlNNENCsRIuxL3EAWyjPgC+DFt2mEHL
- WlcPzGz8SAbfx/n7oMIcmHfGXHccoeiARbmh51TusSzh9jSMae78vgoB55kWyd76Q9
- 5LGDOYZblvTVZkivAi3Zo1QFuA9R1/IZ03G9pg81szGK+SV1GzwzNVuH+YH4s2nvIc
- +UIxIziA3ZSKGdSpSI8CUumzpkchPeJTmqd+Pp8ZSpd1711mVXfnafj2LmsiUMCETX
- CTIohn97qrBVh7sUZm6nUxWlIV13r/aRnFjaDcz/CXTMqLfPoOJJPCYOGRGO/I+XcA
- wBuRrxy9HsqPw==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3B5AB1C2A89;
- Sat, 18 Jul 2026 11:41:20 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 397403F0B9E;
- Sat, 18 Jul 2026 11:41:29 +0300 (MSK)
-Message-ID: <7841a2f8-9b27-4800-9c1e-de2b66f364ea@tls.msk.ru>
-Date: Sat, 18 Jul 2026 11:41:20 +0300
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wl0h7-0006uD-Og
+ for qemu-devel@nongnu.org; Sat, 18 Jul 2026 04:46:49 -0400
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wl0h5-0001T6-N3
+ for qemu-devel@nongnu.org; Sat, 18 Jul 2026 04:46:49 -0400
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-81e9f7491ffso108269367b3.0
+ for <qemu-devel@nongnu.org>; Sat, 18 Jul 2026 01:46:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784364406; cv=none;
+ d=google.com; s=arc-20260327;
+ b=VhrOVgdNjsghe3ddEGRoDByR793dWOCA5jX7e8f/t4GzTTLdxXVIU+OmZ/hdDNbfET
+ GdMCMTY8TlN5gQFyeZ1E3njlFibW5pfpzpTFUioL0pmWSoHDt8OTHMMoy2YK8O25bKVh
+ N8ewRhsGtlk7wz68b4ZbBuIzAHTcx3X0Yj5Y7E5THfszKH7IpO6SkdQtr6HECGDvsQmB
+ UKrcVgxefLYhB9EpyBLikcGS//ism65+m1RnZjEbckyQ+3gzLdALI2VzHblBJe+H+MGg
+ uJ+A5DbnVI0C8G3T5WYbLnXa/N3Z8ZkFpqhn99OkTq88bhBNDUc24vOx0aDi1wB7WivL
+ AtAg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=hQ9wju8zMMYK2IRw5pjD8AVLUQicw+TqfdvxBzIpRj0=;
+ fh=hHQwqgTY7ltwat616CldellfBTSzzr31raK2NubcdK0=;
+ b=aYY0u87vJT0uOctaXQ1GhUXQlNo5vjzMLCC8Go7tZzC1Lf1vdnOlCCCmwV/hTnVwgj
+ 7yDfHu/1gn38ga2b50Fwm3sCRVW1sprO4RpUuY1tKhetE9gTcvbzGhjUSaUo+83OXpRz
+ JLMWHu5nXcc4Ff3jT5ae37UKfn1lwZBXWkuIbyKsCeXTOHKe9h3OwJSDfnJte0+QHb81
+ UK0kH12lGQUgijZ/wfR65JbNuSxXIQnN2q70t/2FUizu36B11J5tTFAPX1T0e6dQZ7G8
+ sUn04mfGKlUfiw5FOi1O8bpCKamYqkwoHoDsekN39W2Os4kJJpt3I+9VBl0HZ9iK4sIn
+ ddaA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1784364406; x=1784969206; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=hQ9wju8zMMYK2IRw5pjD8AVLUQicw+TqfdvxBzIpRj0=;
+ b=uIFgvDbaq17ROS/oTwbYotxfdugZkbuhE0qWTe3oYbYU8qedzRAJ+QOjTZpUfu3OTt
+ daRXxKrUB1ZyASzM4ZOpoK3N9y9PelAcmIeV0xe/Mo8+squPB/Ta2Z8m6Lzv6OXhktuf
+ F9QV/FHFWgpZ2Lgu2oba2IKIeErUTyC1tU3CBm/be0p/a0joMwBXLyo+9n9huCpxk3hY
+ OxYt74lq+otlTnXNIlkMLF39V1w+br6pUv2WpofD1bhH4f41dlqQsjga7+z3CNJgjCA/
+ K+F2c5vhu5PWtpOSEF3JCSgg/ZGWkGjLf/Jk67n39jB3/GxMO45U3gX3KDArzC9B6Jg1
+ Edbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784364406; x=1784969206;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=hQ9wju8zMMYK2IRw5pjD8AVLUQicw+TqfdvxBzIpRj0=;
+ b=qUtcgjuGFiV4SMazdnUYkYDVpGfukVb2+QfKa0nQfv38FfZ9/JragwQbbyPwEcMSgX
+ oHQ9tIE9fI2YlSl8P1hwjGhZ1nsPDw9MvVk1z+HTWv5D0MECqHaP8dQi2cifuB5toAun
+ 2pr/gdik20D+DrOQy2CH+j7PAf+0qsIbu/004F2zsLU6EjiF0IBfSnijJYGwQbljTbMH
+ JtoUNgZryKJyvGWPGVClbiItRbrRXYBtg1rLsAe6zeVymFHUUP9sMHWf/quf6fa3rMoF
+ wkAXkn/IhJYK0J3/293aV4Mr+L6Dv3Kg2nPpt2Xm8calpKkVdeuRjkVVqYvFiUDGRkRJ
+ HYzQ==
+X-Gm-Message-State: AOJu0YxwHeFDNKGpJy1evH2dc/WznORDKRP6zAqnTU0SSlHZ3iVJAFFj
+ AKUhm7E8RDKOcmQ/r5i7Ij080I8AcWnId3EVAR3rIV3xOa2i6nGv7JIn6RpvAYeWDJTtnS0GYlD
+ idhtMVURdh+6ppErn5OF/QSFXvtY/Rg4m14QDbBZRyw==
+X-Gm-Gg: AfdE7cmwZ5726K98EKGDOITY2W5GJEnOwqjPCKdrrc8FN8rj9wOoJF+3UyscZP+BVBT
+ UZJ9k2xqHXKPdBKIbMHLJsSTQ6/RAa/o7K3d1W0E9qilqKcoNfsxqV7HzRry8XKknYc/D0rrWNY
+ 3kts8gDRc1irQmu1JibicCEm2YWna4QaaX25PrJKKtSw/n5lKymS9AZlriguoN65bIkAZ5LfbZi
+ Pf0BS2cSoQ1bjGQwYyFfxwkVIu2D4ZA4KWcGgSU4VPF4tAhOGiw2XNbLhzPzNRBrkGxJxCfExWq
+ MXRYKpgHYjw5DhngWnnAeRZgcUCAWsy+kbCaMEk3qB3UvZ0SZFcJ5mWS
+X-Received: by 2002:a05:690c:4b90:b0:81d:5ee3:aef9 with SMTP id
+ 00721157ae682-81ef26dd7edmr19305917b3.8.1784364405904; Sat, 18 Jul 2026
+ 01:46:45 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/display/virtio-gpu: fix dmabuf_fd leak on remap failure
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
-References: <20260713125622.111513-1-marcandre.lureau@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260713125622.111513-1-marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20260313170938.449538-1-peter.maydell@linaro.org>
+ <48fdece2-5b98-4785-9b47-9eb2528803e2@ilande.co.uk>
+ <CAFEAcA_zf5joZKeiU=c5qP+PzbkrPEVOBZ0nMrOhidiywi_s8w@mail.gmail.com>
+ <CAFEAcA-MQ8tObH=9j-O-bqfGMLc2oTwaM1xEzv__GU2qrncmgw@mail.gmail.com>
+ <CAFEAcA_boBOkNAaUgX=QEQvm3Mgy2ewkSNtx8zR9e=P58aWmmQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA_boBOkNAaUgX=QEQvm3Mgy2ewkSNtx8zR9e=P58aWmmQ@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sat, 18 Jul 2026 09:46:34 +0100
+X-Gm-Features: AUfX_mxnvce9eks6gI06cdKprwmA-k6V6VLSJnNUAqaFgppwtsk5zkxcV_2A4YA
+Message-ID: <CAFEAcA-VF47TGkRQBh_phZVvZ36tN5OJepbb1z=t=O=R3CwZDg@mail.gmail.com>
+Subject: Re: [PATCH] target/sparc: Set reg window data structures currently
+ after vmstate load
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: qemu-devel@nongnu.org, Artyom Tarasenko <atar4qemu@gmail.com>,
+ qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,27 +119,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/13/26 15:56, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> When virtio_gpu_create_udmabuf() succeeds but virtio_gpu_remap_udmabuf()
-> fails (mmap returns MAP_FAILED), virtio_gpu_init_udmabuf() returns early
-> without closing the dmabuf fd. Since res->blob is never set in this
-> path, later cleanup via virtio_gpu_cleanup_mapping() skips
-> virtio_gpu_fini_udmabuf() entirely, leaking the file descriptor.
-> 
-> Call virtio_gpu_destroy_udmabuf() before the early return to close
-> the fd. This function already handles partial state correctly: it
-> skips the munmap when res->remapped is NULL and closes the fd when
-> res->dmabuf_fd >= 0.
-> 
-> Fixes: 9b60cdf98723 ("virtio-gpu: Add udmabuf helpers")
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Ping^3. It would be nice to get this fix into 11.1, since it's
+a bug that trips the address-sanitizer.
 
-This too smells like a qemu-stable material (the issue is minor though).
-I'm picking it up, please let me know if I should not.
+thanks
+-- PMM
 
-Thanks,
-/mjt
-
+On Mon, 11 May 2026 at 15:45, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> Ping^2. I think this is now the only remaining blocker to being
+> able to do a full sanitizer test run. I'm happy to throw it into
+> my target-arm queue if you don't have any other sparc patches you
+> need to send, but I think it would be better if it had a
+> reviewed-by tag first :-)
+>
+> -- PMM
+>
+> On Thu, 30 Apr 2026 at 14:02, Peter Maydell <peter.maydell@linaro.org> wrote:
+> >
+> > Ping ? Now we're in the 11.1 cycle it would be nice to get these
+> > remaining sanitizer errors fixed so we can maybe get a CI job
+> > to test a sanitizer build.
+> >
+> > thanks
+> > -- PMM
+> >
+> > On Fri, 20 Mar 2026 at 11:02, Peter Maydell <peter.maydell@linaro.org> wrote:
+> > >
+> > > On Mon, 16 Mar 2026 at 21:42, Mark Cave-Ayland
+> > > <mark.cave-ayland@ilande.co.uk> wrote:
+> > > >
+> > > > On 13/03/2026 17:09, Peter Maydell wrote:
+> > > >
+> > > > > In the SPARC CPU state, env->regwptr points into the env->regbase
+> > > > > array at wherever the architectural CWP (current window pointer) says
+> > > > > we are in the register windows.  We don't migrate this directly,
+> > > > > since it's a host pointer, so we must ensure it is set up again
+> > > > > after migration load.
+> > > > >
+> > > > > We also have to deal with a special case when CWP is (nwindows - 1).
+> > > > > In this case, while running we keep the "in" register data for this
+> > > > > window in a temporary location at the end of the regbase[] array, so
+> > > > > that generated code doesn't have to special case this "wrap around"
+> > > > > case.  In cpu_pre_save() we call cpu_set_cwp() to force a copy of the
+> > > > > wrapped data from its temporary location into the architectural
+> > > > > location in window 0's "out" registers.  We then migrate only
+> > > > > (nwindows * 16) entries in the regbase[] array.  So on the
+> > > > > destination we need to copy the "in" register data back to its
+> > > > > temporary location again.
+> > > > >
+> > > > > For 32-bit SPARC we get this right, because the CWP is in the PSR.
+> > > > > The get_psr() function does:
+> > > > >      env->cwp = 0;
+> > > > >      cpu_put_psr_raw(env, val);
+> > > > > which causes cpu_put_psr_raw() to call cpu_set_cwp() in a way that
+> > > > > sets up both regwptr and the wrapped-register data.
+> > > > >
+> > > > > However, for 64-bit SPARC the CWP is not in the PSR, and
+> > > > > cpu_put_psr_raw() will not call cpu_set_cwp().  This leaves the guest
+> > > > > register state in a corrupted state, and the guest will likely crash
+> > > > > on the destination if it didn't happen to be executing with CWP == 0.
+> > > > >
+> > > > > Fix this by adding a cpu_post_load hook which does the cpu_set_cwp()
+> > > > > for the 64-bit case, and enough commentary to explain what is going
+> > > > > on.
+> > > > >
+> > > > > Cc: qemu-stable@nongnu.org
+> > > > > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > > > > ---
+> > > > > I ran into this because the "sparc64-migration" functional test seems
+> > > > > to hit this reliably when built with the address sanitizer.  This is
+> > > > > probably a timing thing, because it doesn't trip any ASAN failures,
+> > > > > the guest just crashes on the destination side most of the time
+> > > > > because it returns from a subroutine to a corrupt %o7 return address.
+> > > > >
+> > > > > As far as I can tell this is what the problem is, but I'm a bit
+> > > > > surprised that we have never hit this, given how likely you are to
+> > > > > hit it on a vmsave/vmload or migration.  So am I missing something?
+> > > > > ---
+> > > > >   target/sparc/machine.c | 41 +++++++++++++++++++++++++++++++++++++++--
+> > > > >   1 file changed, 39 insertions(+), 2 deletions(-)
+> > > > >
+> > > > > diff --git a/target/sparc/machine.c b/target/sparc/machine.c
+> > > > > index 4dd75aff74..b935c31630 100644
+> > > > > --- a/target/sparc/machine.c
+> > > > > +++ b/target/sparc/machine.c
+> > > > > @@ -167,14 +167,50 @@ static int cpu_pre_save(void *opaque)
+> > > > >       SPARCCPU *cpu = opaque;
+> > > > >       CPUSPARCState *env = &cpu->env;
+> > > > >
+> > > > > -    /* if env->cwp == env->nwindows - 1, this will set the ins of the last
+> > > > > -     * window as the outs of the first window
+> > > > > +    /*
+> > > > > +     * If env->cwp == env->nwindows - 1, this will set the ins of the last
+> > > > > +     * window as the outs of the first window. We do this because we only
+> > > > > +     * transfer the (nwindows * 16) entries of regbase[] that correspond
+> > > > > +     * to the "proper" locations of the registers; this call has the
+> > > > > +     * effect of copying the wrap register values from their temporary
+> > > > > +     * location down to their proper location ready for migration.
+> > > > >        */
+> > > > >       cpu_set_cwp(env, env->cwp);
+> > > > >
+> > > > >       return 0;
+> > > > >   }
+> > > > >
+> > > > > +static int cpu_post_load(void *opaque, int version_id)
+> > > > > +{
+> > > > > +    /*
+> > > > > +     * For 32-bit SPARC we set the register window data structures
+> > > > > +     * up again correctly when get_psr() called cpu_put_psr_raw(),
+> > > > > +     * which calls cpu_set_cwp(). But for 64-bit SPARC the CWP isn't
+> > > > > +     * part of the PSR, so we need to handle it here.
+> > > > > +     *
+> > > > > +     * There are two things we need to have happen:
+> > > > > +     * 1. regwptr points into regbase[] at the location determined by CWP.
+> > > > > +     * 2. If CWP is (nwindows - 1) then we keep the "in" regs of this window
+> > > > > +     *    in a copy at a temporary location at the end of the regbase[]
+> > > > > +     *    array. For migration we only transferred the (nwindows * 16)
+> > > > > +     *    entries of regbase[] that correspond to the "proper" locations
+> > > > > +     *    of the registers, so now we must copy the wrap registers back to
+> > > > > +     *    their temporary location.
+> > > > > +     *
+> > > > > +     * We achieve both of these by setting env->cwp to 0 and then calling
+> > > > > +     * cpu_set_cwp(). This is the same thing get_psr() does for 32-bit.
+> > > > > +     */
+> > > > > +#if defined(TARGET_SPARC64)
+> > > > > +    SPARCCPU *cpu = opaque;
+> > > > > +    CPUSPARCState *env = &cpu->env;
+> > > > > +    uint32_t cwp = env->cwp;
+> > > > > +
+> > > > > +    env->cwp = 0;
+> > > > > +    cpu_set_cwp(env, cwp);
+> > > > > +#endif
+> > > > > +    return 0;
+> > > > > +}
+> > > > > +
+> > > > >   /* 32-bit SPARC retains migration compatibility with older versions
+> > > > >    * of QEMU; 64-bit SPARC has had a migration break since then, so the
+> > > > >    * versions are different.
+> > > > > @@ -190,6 +226,7 @@ const VMStateDescription vmstate_sparc_cpu = {
+> > > > >       .version_id = SPARC_VMSTATE_VER,
+> > > > >       .minimum_version_id = SPARC_VMSTATE_VER,
+> > > > >       .pre_save = cpu_pre_save,
+> > > > > +    .post_load = cpu_post_load,
+> > > > >       .fields = (const VMStateField[]) {
+> > > > >           VMSTATE_UINTTL_ARRAY(env.gregs, SPARCCPU, 8),
+> > > > >           VMSTATE_UINT32(env.nwindows, SPARCCPU),
+> > > >
+> > > > Nice analysis! I suspect the reason this doesn't always show up is because any
+> > > > context switch (e.g. OpenBIOS, kernel to user, 32-bit to 64-bit etc.) will flush the
+> > > > entire register window set to the stack, and hence reset env->cwp back to 0.
+> > > >
+> > > > It does instinctively feel odd that 32-bit and 64-bit aren't handled in the same way
+> > > > - I wonder if this implicit behaviour on 32-bit somehow needs to be more explicit?
+> > >
+> > > I did wonder about that, but I preferred leaving the 32-bit handling
+> > > the way it is -- trying to unify it with 64-bit would require making
+> > > the get_psr() code path go out of its way to avoid updating the
+> > > reg window data structures, which seems awkward and a bit unnecessary
+> > > given the code does work. So I opted to describe the way the 32-bit
+> > > targets do it in the cpu_post_load() comment, so at least we have
+> > > a record of it.
+> > >
+> > > Are you OK with this patch as it stands, or would you like me to
+> > > change it?
 
