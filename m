@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F1DCC4450A
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:45:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5820DC4451B
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:45:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlCqG-0007FC-FF; Sat, 18 Jul 2026 17:45:04 -0400
+	id 1wlCpz-0006w4-Of; Sat, 18 Jul 2026 17:44:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlCqD-0007BW-AM; Sat, 18 Jul 2026 17:45:01 -0400
-Received: from pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([44.245.243.92])
+ id 1wlCpv-0006uf-Ml; Sat, 18 Jul 2026 17:44:44 -0400
+Received: from pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.34.181.151])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlCqB-0002yF-Db; Sat, 18 Jul 2026 17:45:01 -0400
+ id 1wlCpt-0002xF-SE; Sat, 18 Jul 2026 17:44:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784411099; x=1815947099;
+ t=1784411081; x=1815947081;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=qVCl/LGYfL4UCle58yHXW8mCdP/ph3jgnSmOc1JYYvo=;
- b=ZhkIruUSOh3piSQKjvyBkYCv7yWqrr2JZRCA4RM3InDbNQnWf9i8rp9u
- +p3lVBRAWvgKSWxec4JUYIw3VxztDuIrlSgrhCAOX6mTTayC/zRpP27mJ
- CV/tzv1oh2QOxFSRiaC3T6uYVsCeZpn7TDpp5YkzonDG2sAS7hR2L0orl
- kpSkNjHD8VYSo0GTCkpb8kx6bCwEyUINeYUhuQUQJfyjiTspLvOcjTcYk
- DV7oeBkLWYLqVoy2VIFLAK0IcqwVUVhJqBnB/NLWw0qEEudemqdMSj4Gw
- QWxDMXetYQ2r8necpMc4+0YgOcPYDl8R/cVmMYeQ7ZKQk3gS3m51H9Pvp A==;
-X-CSE-ConnectionGUID: 7j7rb7PISgqsU1wtkjzSIw==
-X-CSE-MsgGUID: rJ+oC4gXQ96g7IvRC437ig==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23422691"
-Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
- by internal-pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:44:55 +0000
-Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.234:3753]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.11.151:2525]
+ bh=CN3v+LJuo2aoGGUCi3MnBfy7w8pCG0HXoOGWYL5yOgE=;
+ b=G4nPM3LCCHuepUMXoS4wVZlKx3KymyFvd+ttBHZXLi1F+do5FI8miulJ
+ dWd/Ch3H/s6qlfd8lAQRt8dnNMig0UEIE22KIAkxXsuIXkNmFzerAiBfj
+ U6VddbafP/CwWe238nlV+GOWIwXpw2h0B3C1bWrINclgZhEDfESYAK6Hw
+ JYTNEBscWm+ZctgNQlfZ452QVvAn3hBRJtIp68i6JnNetWHkQlmek94XW
+ UaQX8w4RoXvuUA0SzF6Ryudbjap0c1O/OidGJzDDY6ZJulfE7Y9fNiZIN
+ Gg/KjSnyyZ/M4W9YshoksI8x9iQ0XPA8OahoJv/kR6qnkm+9UW5K+TKdQ Q==;
+X-CSE-ConnectionGUID: Pz7InH/bQv6O5OnNd8WcKw==
+X-CSE-MsgGUID: bC9JP5V9QEOFsfpqBea3uw==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23910348"
+Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
+ by internal-pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:44:37 +0000
+Received: from EX19MTAUWC001.ant.amazon.com [205.251.233.53:12270]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.19.34:2525]
  with esmtp (Farcaster)
- id 3a5ed661-dd78-4c44-992b-09c3c211baf5; Sat, 18 Jul 2026 21:44:55 +0000 (UTC)
-X-Farcaster-Flow-ID: 3a5ed661-dd78-4c44-992b-09c3c211baf5
+ id 88b5f2b4-5b38-4171-9fb2-2d8f735aa1df; Sat, 18 Jul 2026 21:44:37 +0000 (UTC)
+X-Farcaster-Flow-ID: 88b5f2b4-5b38-4171-9fb2-2d8f735aa1df
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
+ EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:44:55 +0000
+ Sat, 18 Jul 2026 21:44:36 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:44:46 +0000
+ Sat, 18 Jul 2026 21:44:27 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,9 +93,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 029/137] hw/mem: Give onboard devices a QOM parent
-Date: Sat, 18 Jul 2026 21:35:04 +0000
-Message-ID: <20260718213652.37673-30-graf@amazon.com>
+Subject: [RFC PATCH v2 027/137] hw/nvme: Give onboard devices a QOM parent
+Date: Sat, 18 Jul 2026 21:35:02 +0000
+Message-ID: <20260718213652.37673-28-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -106,16 +106,16 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D035UWB002.ant.amazon.com (10.13.138.97) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=44.245.243.92;
+Received-SPF: pass client-ip=52.34.181.151;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
  HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
+ RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
  UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -132,7 +132,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the *_orphan() device-creation calls in hw/mem to the new
+Convert the *_orphan() device-creation calls in hw/nvme to the new
 parented API introduced earlier in this series, so every onboard
 device gets a stable path in the composition tree instead of landing
 in /machine/unattached with an unstable device[N] name.
@@ -143,64 +143,28 @@ composite children.  Names follow existing QOM conventions.
 
 Per-site rationale (reviewers: dispute the modeling here):
 
-hw/mem/sparse-mem.c:111 | qdev_new | parent (new arg) | "sparse-mem" | Public helper; thread Object *parent through. Only caller is generic_fuzz which passes qdev_get_machine()
+hw/nvme/ctrl.c:9559 | qdev_new | OBJECT(n) | "subsys" | Called from nvme controller realize; the auto-created subsystem is owned by the controller that creates it
 
 Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/mem/sparse-mem.c             | 6 +++---
- include/hw/mem/sparse-mem.h     | 2 +-
- tests/qtest/fuzz/generic_fuzz.c | 2 +-
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ hw/nvme/ctrl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/mem/sparse-mem.c b/hw/mem/sparse-mem.c
-index 3310504578..fbf94eb8e7 100644
---- a/hw/mem/sparse-mem.c
-+++ b/hw/mem/sparse-mem.c
-@@ -104,14 +104,14 @@ static const Property sparse_mem_properties[] = {
-     DEFINE_PROP_UINT64("maxsize", SparseMemState, maxsize, 10 * MiB),
- };
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 300a5aa835..f247bbce22 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -9556,7 +9556,7 @@ static int nvme_init_subsys(NvmeCtrl *n, Error **errp)
+     int cntlid;
  
--MemoryRegion *sparse_mem_init(uint64_t addr, uint64_t length)
-+MemoryRegion *sparse_mem_init(Object *parent, uint64_t addr, uint64_t length)
- {
-     DeviceState *dev;
+     if (!n->subsys) {
+-        DeviceState *dev = qdev_new_orphan(TYPE_NVME_SUBSYS);
++        DeviceState *dev = qdev_new(OBJECT(n), "auto-subsys", TYPE_NVME_SUBSYS);
  
--    dev = qdev_new_orphan(TYPE_SPARSE_MEM);
-+    dev = qdev_new(parent, "sparse-mem", TYPE_SPARSE_MEM);
-     qdev_prop_set_uint64(dev, "baseaddr", addr);
-     qdev_prop_set_uint64(dev, "length", length);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
-     sysbus_mmio_map_overlap(SYS_BUS_DEVICE(dev), 0, addr, -10000);
-     return &SPARSE_MEM(dev)->mmio;
- }
-diff --git a/include/hw/mem/sparse-mem.h b/include/hw/mem/sparse-mem.h
-index f9863b154b..79c30cf412 100644
---- a/include/hw/mem/sparse-mem.h
-+++ b/include/hw/mem/sparse-mem.h
-@@ -14,6 +14,6 @@
- #define SPARSE_MEM_H
- #define TYPE_SPARSE_MEM "sparse-mem"
+         qdev_prop_set_string(dev, "nqn", n->params.serial);
  
--MemoryRegion *sparse_mem_init(uint64_t addr, uint64_t length);
-+MemoryRegion *sparse_mem_init(Object *parent, uint64_t addr, uint64_t length);
- 
- #endif
-diff --git a/tests/qtest/fuzz/generic_fuzz.c b/tests/qtest/fuzz/generic_fuzz.c
-index e48f868775..99b38a7fd4 100644
---- a/tests/qtest/fuzz/generic_fuzz.c
-+++ b/tests/qtest/fuzz/generic_fuzz.c
-@@ -788,7 +788,7 @@ static void generic_pre_fuzz(QTestState *s)
-      * Create a special device that we can use to back DMA buffers at very
-      * high memory addresses
-      */
--    sparse_mem_mr = sparse_mem_init(0, UINT64_MAX);
-+    sparse_mem_mr = sparse_mem_init(qdev_get_machine(), 0, UINT64_MAX);
- 
-     dma_regions = g_array_new(false, false, sizeof(address_range));
-     dma_patterns = g_array_new(false, false, sizeof(pattern));
 -- 
 2.47.1
 
