@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AE1FC44521
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:55:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 331BEC4451B
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:55:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlD04-0002jK-RO; Sat, 18 Jul 2026 17:55:12 -0400
+	id 1wlD0e-0003zs-QA; Sat, 18 Jul 2026 17:55:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlD00-0002Sd-Jp; Sat, 18 Jul 2026 17:55:10 -0400
-Received: from pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([44.245.243.92])
+ id 1wlD0W-0003kJ-Id; Sat, 18 Jul 2026 17:55:42 -0400
+Received: from pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([34.218.115.239])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlCzy-0004Bc-0R; Sat, 18 Jul 2026 17:55:08 -0400
+ id 1wlD0U-0004YT-AP; Sat, 18 Jul 2026 17:55:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784411706; x=1815947706;
+ t=1784411738; x=1815947738;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=piG5i0Kw/mZf3qHVMQIIrj0TNSz9zrPVWmSDq4bnoEg=;
- b=bV0EITH1tuojdExmxhvlDTEODB2OcJDX0nYbZpiDPDIeH2MbPDKpr+al
- oaOj1yeTWn0+710qTiiopETjMg1Y9oiXETdVjTgG1rDD4GmKsdbdJrNfp
- 6sDIAqXudATLSu4aps8+8hHUVUW0QocUyz0E5ITJM/SDFdTlg3rwy6qpj
- 3KkUjKvIgIcknE66SKoqN8AfLmLaB/59Nt8dkvLu9EMX8g2S7KH6/Dm1/
- j3HhWRQYR9+esyJA7s/EvgQc4DhDRRWO/tBk4mnkwlCJFdTfTVYG6NRcH
- FqhAGoP8LNWlnq8+E4edf7EqXYiuhzz3CpOhqHvaRjbJjTE8fCrBJnkZp g==;
-X-CSE-ConnectionGUID: v9HHeFCgRM+Sjthrlh2CcQ==
-X-CSE-MsgGUID: cp++HSuCTWOXRWW9vOgL6g==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23423041"
-Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
- by internal-pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:55:02 +0000
-Received: from EX19MTAUWC002.ant.amazon.com [205.251.233.51:9413]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.30.230:2525]
+ bh=cYN1CqVkHnd7rjYF8Nv9TACjJSq4vFWbCxR5bx7AHz8=;
+ b=MjIJeX5cB0kcl49QpY3+6FCA5cleng0voIzYG4ST/IJITCF+pfjoPBLt
+ t1L7fjT0q0h/3+X2sZ0sKna4Fg2e3NPUH9IfwdcGwcVwzf9Q2qqsiSKjl
+ 527PzLbTghFnYRqH1mCUs7+umQJyJw5qJXWmdvmvnITMOjhMgCwuexQGT
+ iwe2BlalaLf3shOMwWpohm9HhKhXcjo/3q2EzlELdtLIw3Lfc/906Tx89
+ DVQf3Efb7NNV607Mm2XtfW2fYJX8YpQOmXVlfFxQfs4OXMDdMT5+WdUN/
+ GFhREXC9Vt+Q1BpDuXmuvEmkAenz1HHhuyYLtcNXmr6I3r/5MmdQG/2bF g==;
+X-CSE-ConnectionGUID: wSmFik+dRvuYFBl5C5xmxw==
+X-CSE-MsgGUID: /rYntoWZR1is3Aw96EFq3Q==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23719204"
+Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
+ by internal-pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:55:33 +0000
+Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.51:13401]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.48.250:2525]
  with esmtp (Farcaster)
- id 0aca974a-d9f7-429c-a693-a2e670e44ff1; Sat, 18 Jul 2026 21:55:02 +0000 (UTC)
-X-Farcaster-Flow-ID: 0aca974a-d9f7-429c-a693-a2e670e44ff1
+ id b7c53ff7-61ec-47f1-9fbc-b6039fd1a2ef; Sat, 18 Jul 2026 21:55:33 +0000 (UTC)
+X-Farcaster-Flow-ID: b7c53ff7-61ec-47f1-9fbc-b6039fd1a2ef
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
+ EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:55:01 +0000
+ Sat, 18 Jul 2026 21:55:33 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:54:52 +0000
+ Sat, 18 Jul 2026 21:55:23 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,10 +93,10 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 065/137] hw/arm/exynos: Give onboard devices a QOM
+Subject: [RFC PATCH v2 066/137] hw/arm/allwinner: Give onboard devices a QOM
  parent
-Date: Sat, 18 Jul 2026 21:35:40 +0000
-Message-ID: <20260718213652.37673-66-graf@amazon.com>
+Date: Sat, 18 Jul 2026 21:35:41 +0000
+Message-ID: <20260718213652.37673-67-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -105,18 +105,18 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D043UWC001.ant.amazon.com (10.13.139.202) To
+X-ClientProxiedBy: EX19D031UWC003.ant.amazon.com (10.13.139.252) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=44.245.243.92;
+Received-SPF: pass client-ip=34.218.115.239;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
  HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
+ RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
  UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -133,7 +133,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the *_orphan() device-creation calls in the hw/arm exynos
+Convert the *_orphan() device-creation calls in the hw/arm allwinner
 board files to the new parented API introduced earlier in this
 series, so every onboard device gets a stable path in the
 composition tree instead of landing in /machine/unattached with an
@@ -145,183 +145,146 @@ composite children.  Names follow existing QOM conventions.
 
 Per-site rationale (reviewers: dispute the modeling here):
 
-hw/arm/exynos4210.c:522 | qdev_new | parent (threaded) | "pl330[*]" | pl330_create() static helper: added Object *parent as first arg, threaded from exynos4210_realize() with OBJECT(s). Paired sysbus_realize_and_unref -> sysbus_realize.
-hw/arm/exynos4210.c:603 | sysbus_create_simple | OBJECT(s) | "l2x0" | SoC realize(); s = Exynos4210State being realized.
-hw/arm/exynos4210.c:670 | sysbus_create_simple | OBJECT(s) | "pmu" | SoC realize(); single instance.
-hw/arm/exynos4210.c:672 | sysbus_create_simple | OBJECT(s) | "clk" | SoC realize(); single instance.
-hw/arm/exynos4210.c:673 | sysbus_create_simple | OBJECT(s) | "rng" | SoC realize(); single instance.
-hw/arm/exynos4210.c:676 | sysbus_create_varargs | OBJECT(s) | "pwm" | SoC realize(); single instance.
-hw/arm/exynos4210.c:684 | sysbus_create_varargs | OBJECT(s) | "rtc" | SoC realize(); single instance.
-hw/arm/exynos4210.c:690 | qdev_new | OBJECT(s) | "mct" | SoC realize(); paired sysbus_realize_and_unref -> sysbus_realize.
-hw/arm/exynos4210.c:716 | qdev_new | OBJECT(s) | "i2c[*]" | SoC realize(); loop over EXYNOS4210_I2C_NUMBER, auto-index. Paired sysbus_realize_and_unref -> sysbus_realize.
-hw/arm/exynos4210.c:760 | qdev_new | OBJECT(s) | "sdhci[*]" | SoC realize(); loop over EXYNOS4210_SDHCI_NUMBER. Paired sysbus_realize_and_unref -> sysbus_realize.
-hw/arm/exynos4210.c:770 | qdev_new | OBJECT(s) | "sd-card[*]" | SoC realize(); SD cards owned by SoC (bus is not parent). Paired qdev_realize_and_unref -> qdev_realize.
-hw/arm/exynos4210.c:777 | qdev_new | OBJECT(s) | "fimd" | SoC realize(); single instance. Paired sysbus_realize_and_unref -> sysbus_realize.
-hw/arm/exynos4210.c:787 | sysbus_create_simple | OBJECT(s) | "ehci" | SoC realize(); single instance.
+hw/arm/allwinner-h3.c:382 | sysbus_create_simple | OBJECT(s) | "ehci[*]" | allwinner_h3_realize() SoC realize; 4 instances, auto-index.
+hw/arm/allwinner-h3.c:385 | sysbus_create_simple | OBJECT(s) | "ehci[*]" | SoC realize; auto-index.
+hw/arm/allwinner-h3.c:388 | sysbus_create_simple | OBJECT(s) | "ehci[*]" | SoC realize; auto-index.
+hw/arm/allwinner-h3.c:391 | sysbus_create_simple | OBJECT(s) | "ehci[*]" | SoC realize; auto-index.
+hw/arm/allwinner-h3.c:395 | sysbus_create_simple | OBJECT(s) | "ohci[*]" | SoC realize; 4 instances, auto-index.
+hw/arm/allwinner-h3.c:398 | sysbus_create_simple | OBJECT(s) | "ohci[*]" | SoC realize; auto-index.
+hw/arm/allwinner-h3.c:401 | sysbus_create_simple | OBJECT(s) | "ohci[*]" | SoC realize; auto-index.
+hw/arm/allwinner-h3.c:404 | sysbus_create_simple | OBJECT(s) | "ohci[*]" | SoC realize; auto-index.
+hw/arm/bananapi_m2u.c:53 | qdev_new | OBJECT(s) | "sd-card[*]" | mmc_attach_drive() helper receives AwR40State *s (SoC, itself child of machine); use it as parent. Multiple units -> auto-index. Paired qdev_realize_and_unref -> qdev_realize.
+hw/arm/bananapi_m2u.c:117 | i2c_slave_create_simple | OBJECT(machine) | "axp221" | Board init(); PMU is board-level peripheral on i2c bus.
+hw/arm/cubieboard.c:84 | i2c_slave_create_simple | OBJECT(machine) | "axp209" | Board init(); PMU is board-level peripheral.
+hw/arm/cubieboard.c:92 | qdev_new | OBJECT(machine) | "sd-card" | Board init(); single SD card. Paired qdev_realize_and_unref -> qdev_realize.
+hw/arm/orangepi.c:88 | qdev_new | OBJECT(machine) | "sd-card" | Board init(); single SD card. Paired qdev_realize_and_unref -> qdev_realize.
 
 Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/arm/exynos4210.c | 60 +++++++++++++++++++++++++--------------------
- 1 file changed, 34 insertions(+), 26 deletions(-)
+ hw/arm/allwinner-h3.c | 24 ++++++++++++++++--------
+ hw/arm/bananapi_m2u.c |  6 +++---
+ hw/arm/cubieboard.c   |  6 +++---
+ hw/arm/orangepi.c     |  4 ++--
+ 4 files changed, 24 insertions(+), 16 deletions(-)
 
-diff --git a/hw/arm/exynos4210.c b/hw/arm/exynos4210.c
-index 7d9d87d7ba..74ce36c1e6 100644
---- a/hw/arm/exynos4210.c
-+++ b/hw/arm/exynos4210.c
-@@ -512,14 +512,15 @@ static uint64_t exynos4210_calc_affinity(int cpu)
-     return (0x9 << ARM_AFF1_SHIFT) | cpu;
- }
+diff --git a/hw/arm/allwinner-h3.c b/hw/arm/allwinner-h3.c
+index ce716d1687..6f9a07610f 100644
+--- a/hw/arm/allwinner-h3.c
++++ b/hw/arm/allwinner-h3.c
+@@ -379,29 +379,37 @@ static void allwinner_h3_realize(DeviceState *dev, Error **errp)
+                        qdev_get_gpio_in(DEVICE(&s->gic), AW_H3_GIC_SPI_EMAC));
  
--static DeviceState *pl330_create(uint32_t base, OrIRQState *orgate,
--                                 qemu_irq irq, int nreq, int nevents, int width)
-+static DeviceState *pl330_create(Object *parent, uint32_t base,
-+                                 OrIRQState *orgate, qemu_irq irq,
-+                                 int nreq, int nevents, int width)
- {
-     SysBusDevice *busdev;
-     DeviceState *dev;
-     int i;
+     /* Universal Serial Bus */
+-    sysbus_create_simple_orphan(TYPE_AW_H3_EHCI, s->memmap[AW_H3_DEV_EHCI0],
++    sysbus_create_simple(OBJECT(s), "ehci[*]", TYPE_AW_H3_EHCI,
++                         s->memmap[AW_H3_DEV_EHCI0],
+                          qdev_get_gpio_in(DEVICE(&s->gic),
+                                           AW_H3_GIC_SPI_EHCI0));
+-    sysbus_create_simple_orphan(TYPE_AW_H3_EHCI, s->memmap[AW_H3_DEV_EHCI1],
++    sysbus_create_simple(OBJECT(s), "ehci[*]", TYPE_AW_H3_EHCI,
++                         s->memmap[AW_H3_DEV_EHCI1],
+                          qdev_get_gpio_in(DEVICE(&s->gic),
+                                           AW_H3_GIC_SPI_EHCI1));
+-    sysbus_create_simple_orphan(TYPE_AW_H3_EHCI, s->memmap[AW_H3_DEV_EHCI2],
++    sysbus_create_simple(OBJECT(s), "ehci[*]", TYPE_AW_H3_EHCI,
++                         s->memmap[AW_H3_DEV_EHCI2],
+                          qdev_get_gpio_in(DEVICE(&s->gic),
+                                           AW_H3_GIC_SPI_EHCI2));
+-    sysbus_create_simple_orphan(TYPE_AW_H3_EHCI, s->memmap[AW_H3_DEV_EHCI3],
++    sysbus_create_simple(OBJECT(s), "ehci[*]", TYPE_AW_H3_EHCI,
++                         s->memmap[AW_H3_DEV_EHCI3],
+                          qdev_get_gpio_in(DEVICE(&s->gic),
+                                           AW_H3_GIC_SPI_EHCI3));
  
--    dev = qdev_new_orphan("pl330");
-+    dev = qdev_new(parent, "pl330[*]", "pl330");
-     object_property_set_link(OBJECT(dev), "memory",
-                              OBJECT(get_system_memory()),
-                              &error_fatal);
-@@ -534,7 +535,7 @@ static DeviceState *pl330_create(uint32_t base, OrIRQState *orgate,
-     qdev_prop_set_uint8(dev, "data_width", width);
-     qdev_prop_set_uint16(dev, "data_buffer_dep", width);
-     busdev = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(busdev, &error_fatal);
-+    sysbus_realize(busdev, &error_fatal);
-     sysbus_mmio_map(busdev, 0, base);
+-    sysbus_create_simple_orphan("sysbus-ohci", s->memmap[AW_H3_DEV_OHCI0],
++    sysbus_create_simple(OBJECT(s), "ohci[*]", "sysbus-ohci",
++                         s->memmap[AW_H3_DEV_OHCI0],
+                          qdev_get_gpio_in(DEVICE(&s->gic),
+                                           AW_H3_GIC_SPI_OHCI0));
+-    sysbus_create_simple_orphan("sysbus-ohci", s->memmap[AW_H3_DEV_OHCI1],
++    sysbus_create_simple(OBJECT(s), "ohci[*]", "sysbus-ohci",
++                         s->memmap[AW_H3_DEV_OHCI1],
+                          qdev_get_gpio_in(DEVICE(&s->gic),
+                                           AW_H3_GIC_SPI_OHCI1));
+-    sysbus_create_simple_orphan("sysbus-ohci", s->memmap[AW_H3_DEV_OHCI2],
++    sysbus_create_simple(OBJECT(s), "ohci[*]", "sysbus-ohci",
++                         s->memmap[AW_H3_DEV_OHCI2],
+                          qdev_get_gpio_in(DEVICE(&s->gic),
+                                           AW_H3_GIC_SPI_OHCI2));
+-    sysbus_create_simple_orphan("sysbus-ohci", s->memmap[AW_H3_DEV_OHCI3],
++    sysbus_create_simple(OBJECT(s), "ohci[*]", "sysbus-ohci",
++                         s->memmap[AW_H3_DEV_OHCI3],
+                          qdev_get_gpio_in(DEVICE(&s->gic),
+                                           AW_H3_GIC_SPI_OHCI3));
  
-     object_property_set_int(OBJECT(orgate), "num-lines", nevents + 1,
-@@ -600,7 +601,8 @@ static void exynos4210_realize(DeviceState *socdev, Error **errp)
+diff --git a/hw/arm/bananapi_m2u.c b/hw/arm/bananapi_m2u.c
+index 809c8bbc43..ae2d8bd2f7 100644
+--- a/hw/arm/bananapi_m2u.c
++++ b/hw/arm/bananapi_m2u.c
+@@ -50,9 +50,9 @@ static void mmc_attach_drive(AwR40State *s, AwSdHostState *mmc, int unit,
+         exit(1);
      }
  
-     /* Cache controller */
--    sysbus_create_simple_orphan("l2x0", EXYNOS4210_L2X0_BASE_ADDR, NULL);
-+    sysbus_create_simple(OBJECT(s), "l2x0", "l2x0",
-+                         EXYNOS4210_L2X0_BASE_ADDR, NULL);
+-    carddev = qdev_new_orphan(TYPE_SD_CARD);
++    carddev = qdev_new(OBJECT(s), "sd-card[*]", TYPE_SD_CARD);
+     qdev_prop_set_drive_err(carddev, "drive", blk, &error_fatal);
+-    qdev_realize_and_unref(carddev, bus, &error_fatal);
++    qdev_realize(carddev, bus, &error_fatal);
  
-     /* External GIC */
-     qdev_prop_set_uint32(DEVICE(&s->ext_gic), "num-cpu", EXYNOS4210_NCPUS);
-@@ -667,13 +669,17 @@ static void exynos4210_realize(DeviceState *socdev, Error **errp)
-     * The only reason of existence at the moment is that secondary CPU boot
-     * loader uses PMU INFORM5 register as a holding pen.
-     */
--    sysbus_create_simple_orphan("exynos4210.pmu", EXYNOS4210_PMU_BASE_ADDR, NULL);
-+    sysbus_create_simple(OBJECT(s), "pmu", "exynos4210.pmu",
-+                         EXYNOS4210_PMU_BASE_ADDR, NULL);
+     if (load_bootroom && blk && blk_is_available(blk)) {
+         /* Use Boot ROM to copy data from SD card to SRAM */
+@@ -114,7 +114,7 @@ static void bpim2u_init(MachineState *machine)
  
--    sysbus_create_simple_orphan("exynos4210.clk", EXYNOS4210_CLK_BASE_ADDR, NULL);
--    sysbus_create_simple_orphan("exynos4210.rng", EXYNOS4210_RNG_BASE_ADDR, NULL);
-+    sysbus_create_simple(OBJECT(s), "clk", "exynos4210.clk",
-+                         EXYNOS4210_CLK_BASE_ADDR, NULL);
-+    sysbus_create_simple(OBJECT(s), "rng", "exynos4210.rng",
-+                         EXYNOS4210_RNG_BASE_ADDR, NULL);
+     /* Connect AXP221 */
+     i2c = I2C_BUS(qdev_get_child_bus(DEVICE(&r40->i2c0), "i2c"));
+-    i2c_slave_create_simple_orphan(i2c, "axp221_pmu", 0x34);
++    i2c_slave_create_simple(OBJECT(machine), "axp221", i2c, "axp221_pmu", 0x34);
  
-     /* PWM */
--    sysbus_create_varargs_orphan("exynos4210.pwm", EXYNOS4210_PWM_BASE_ADDR,
-+    sysbus_create_varargs(OBJECT(s), "pwm", "exynos4210.pwm",
-+                          EXYNOS4210_PWM_BASE_ADDR,
-                           s->irq_table[exynos4210_get_irq(22, 0)],
-                           s->irq_table[exynos4210_get_irq(22, 1)],
-                           s->irq_table[exynos4210_get_irq(22, 2)],
-@@ -681,15 +687,16 @@ static void exynos4210_realize(DeviceState *socdev, Error **errp)
-                           s->irq_table[exynos4210_get_irq(22, 4)],
-                           NULL);
-     /* RTC */
--    sysbus_create_varargs_orphan("exynos4210.rtc", EXYNOS4210_RTC_BASE_ADDR,
-+    sysbus_create_varargs(OBJECT(s), "rtc", "exynos4210.rtc",
-+                          EXYNOS4210_RTC_BASE_ADDR,
-                           s->irq_table[exynos4210_get_irq(23, 0)],
-                           s->irq_table[exynos4210_get_irq(23, 1)],
-                           NULL);
+     /* SDRAM */
+     memory_region_add_subregion(get_system_memory(),
+diff --git a/hw/arm/cubieboard.c b/hw/arm/cubieboard.c
+index 7ce5179345..fa5eaa5378 100644
+--- a/hw/arm/cubieboard.c
++++ b/hw/arm/cubieboard.c
+@@ -81,7 +81,7 @@ static void cubieboard_init(MachineState *machine)
  
-     /* Multi Core Timer */
--    dev = qdev_new_orphan("exynos4210.mct");
-+    dev = qdev_new(OBJECT(s), "mct", "exynos4210.mct");
-     busdev = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(busdev, &error_fatal);
-+    sysbus_realize(busdev, &error_fatal);
-     for (n = 0; n < 4; n++) {
-         /* Connect global timer interrupts to Combiner gpio_in */
-         sysbus_connect_irq(busdev, n,
-@@ -713,9 +720,9 @@ static void exynos4210_realize(DeviceState *socdev, Error **errp)
-             i2c_irq = s->irq_table[exynos4210_get_irq(EXYNOS4210_HDMI_INTG, 1)];
-         }
+     /* Connect AXP 209 */
+     i2c = I2C_BUS(qdev_get_child_bus(DEVICE(&a10->i2c0), "i2c"));
+-    i2c_slave_create_simple_orphan(i2c, "axp209_pmu", 0x34);
++    i2c_slave_create_simple(OBJECT(machine), "axp209", i2c, "axp209_pmu", 0x34);
  
--        dev = qdev_new_orphan("exynos4210.i2c");
-+        dev = qdev_new(OBJECT(s), "i2c[*]", "exynos4210.i2c");
-         busdev = SYS_BUS_DEVICE(dev);
--        sysbus_realize_and_unref(busdev, &error_fatal);
-+        sysbus_realize(busdev, &error_fatal);
-         sysbus_connect_irq(busdev, 0, i2c_irq);
-         sysbus_mmio_map(busdev, 0, addr);
-         s->i2c_if[n] = (I2CBus *)qdev_get_child_bus(dev, "i2c");
-@@ -757,46 +764,47 @@ static void exynos4210_realize(DeviceState *socdev, Error **errp)
-          * public datasheet which is very similar (implementing
-          * MMC Specification Version 4.0 being the only difference noted)
-          */
--        dev = qdev_new_orphan(TYPE_S3C_SDHCI);
-+        dev = qdev_new(OBJECT(s), "sdhci[*]", TYPE_S3C_SDHCI);
-         qdev_prop_set_uint64(dev, "capareg", EXYNOS4210_SDHCI_CAPABILITIES);
+     /* Retrieve SD bus */
+     di = drive_get(IF_SD, 0, 0);
+@@ -89,9 +89,9 @@ static void cubieboard_init(MachineState *machine)
+     bus = qdev_get_child_bus(DEVICE(a10), "sd-bus");
  
-         busdev = SYS_BUS_DEVICE(dev);
--        sysbus_realize_and_unref(busdev, &error_fatal);
-+        sysbus_realize(busdev, &error_fatal);
-         sysbus_mmio_map(busdev, 0, EXYNOS4210_SDHCI_ADDR(n));
-         sysbus_connect_irq(busdev, 0, s->irq_table[exynos4210_get_irq(29, n)]);
+     /* Plug in SD card */
+-    carddev = qdev_new_orphan(TYPE_SD_CARD);
++    carddev = qdev_new(OBJECT(machine), "sd-card", TYPE_SD_CARD);
+     qdev_prop_set_drive_err(carddev, "drive", blk, &error_fatal);
+-    qdev_realize_and_unref(carddev, bus, &error_fatal);
++    qdev_realize(carddev, bus, &error_fatal);
  
-         di = drive_get(IF_SD, 0, n);
-         blk = di ? blk_by_legacy_dinfo(di) : NULL;
--        carddev = qdev_new_orphan(TYPE_SD_CARD);
-+        carddev = qdev_new(OBJECT(s), "sd-card[*]", TYPE_SD_CARD);
-         qdev_prop_set_drive(carddev, "drive", blk);
--        qdev_realize_and_unref(carddev, qdev_get_child_bus(dev, "sd-bus"),
--                               &error_fatal);
-+        qdev_realize(carddev, qdev_get_child_bus(dev, "sd-bus"),
-+                     &error_fatal);
-     }
+     memory_region_add_subregion(get_system_memory(), AW_A10_SDRAM_BASE,
+                                 machine->ram);
+diff --git a/hw/arm/orangepi.c b/hw/arm/orangepi.c
+index d705cc43b4..1a37c97eef 100644
+--- a/hw/arm/orangepi.c
++++ b/hw/arm/orangepi.c
+@@ -85,9 +85,9 @@ static void orangepi_init(MachineState *machine)
+     bus = qdev_get_child_bus(DEVICE(h3), "sd-bus");
  
-     /*** Display controller (FIMD) ***/
--    dev = qdev_new_orphan("exynos4210.fimd");
-+    dev = qdev_new(OBJECT(s), "fimd", "exynos4210.fimd");
-     object_property_set_link(OBJECT(dev), "framebuffer-memory",
-                              OBJECT(system_mem), &error_fatal);
-     busdev = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(busdev, &error_fatal);
-+    sysbus_realize(busdev, &error_fatal);
-     sysbus_mmio_map(busdev, 0, EXYNOS4210_FIMD0_BASE_ADDR);
-     for (n = 0; n < 3; n++) {
-         sysbus_connect_irq(busdev, n, s->irq_table[exynos4210_get_irq(11, n)]);
-     }
+     /* Plug in SD card */
+-    carddev = qdev_new_orphan(TYPE_SD_CARD);
++    carddev = qdev_new(OBJECT(machine), "sd-card", TYPE_SD_CARD);
+     qdev_prop_set_drive_err(carddev, "drive", blk, &error_fatal);
+-    qdev_realize_and_unref(carddev, bus, &error_fatal);
++    qdev_realize(carddev, bus, &error_fatal);
  
--    sysbus_create_simple_orphan(TYPE_EXYNOS4210_EHCI, EXYNOS4210_EHCI_BASE_ADDR,
--            s->irq_table[exynos4210_get_irq(28, 3)]);
-+    sysbus_create_simple(OBJECT(s), "ehci", TYPE_EXYNOS4210_EHCI,
-+                         EXYNOS4210_EHCI_BASE_ADDR,
-+                         s->irq_table[exynos4210_get_irq(28, 3)]);
- 
-     /*** DMA controllers ***/
--    pl330[0] = pl330_create(EXYNOS4210_PL330_BASE0_ADDR,
-+    pl330[0] = pl330_create(OBJECT(s), EXYNOS4210_PL330_BASE0_ADDR,
-                             &s->pl330_irq_orgate[0],
-                             s->irq_table[exynos4210_get_irq(21, 0)],
-                             32, 32, 32);
--    pl330[1] = pl330_create(EXYNOS4210_PL330_BASE1_ADDR,
-+    pl330[1] = pl330_create(OBJECT(s), EXYNOS4210_PL330_BASE1_ADDR,
-                             &s->pl330_irq_orgate[1],
-                             s->irq_table[exynos4210_get_irq(21, 1)],
-                             32, 32, 32);
--    pl330[2] = pl330_create(EXYNOS4210_PL330_BASE2_ADDR,
-+    pl330[2] = pl330_create(OBJECT(s), EXYNOS4210_PL330_BASE2_ADDR,
-                             &s->pl330_irq_orgate[2],
-                             s->irq_table[exynos4210_get_irq(20, 1)],
-                             1, 31, 64);
+     /* SDRAM */
+     memory_region_add_subregion(get_system_memory(), h3->memmap[AW_H3_DEV_SDRAM],
 -- 
 2.47.1
 
