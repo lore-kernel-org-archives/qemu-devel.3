@@ -4,69 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF207C4451C
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 02:17:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12FB6C4450A
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 04:15:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkubs-0005jP-9t; Fri, 17 Jul 2026 22:17:00 -0400
+	id 1wkwRV-00057N-B8; Sat, 18 Jul 2026 00:14:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
- id 1wkubp-0005jA-P7; Fri, 17 Jul 2026 22:16:58 -0400
-Received: from xmbghk7.mail.qq.com ([43.163.128.44])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wkwRS-000571-UO; Sat, 18 Jul 2026 00:14:22 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
- id 1wkubk-000116-5i; Fri, 17 Jul 2026 22:16:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1784340997; bh=PKHcrFmwTmiGY5F71svbtT7BPTkfXZNyYEsftPaA1h4=;
- h=From:To:Cc:Subject:Date;
- b=KlpGdlJP5pDGuOqVuFDXPrg+yZ5ObtLIVm+SER3T3gPt5d3Wd/mR4w4Cawh5bRF6q
- 7C9DmBvNKAqBwliiWPTfbehMFDG9sxxi5WvZo59SYztoaA/TlgBCdEvWla6c/IpwPL
- V/rLJEaB1sv1Gi1cJc5zW5SYjR5+uhWuxnvxToxc=
-Received: from qq.com ([171.216.132.19])
- by newxmesmtplogicsvrszc43-0.qq.com (NewEsmtp) with SMTP
- id 422BFE19; Sat, 18 Jul 2026 10:16:34 +0800
-X-QQ-mid: xmsmtpt1784340994t5mef6viw
-Message-ID: <tencent_4EEBFC805F3E59863BEDC38094EF5A109206@qq.com>
-X-QQ-XMAILINFO: Oc3TLAADIdlpyFEVj+GimWkT8hrf3Vsj1eJtUq0HTeKXSNxHAiP9EVtY+bQU1p
- d9f11sAL44pFcPOhA4ilHWZ9fOSy4cm+N+bt+IJKkrkeWOeOdyE2hql2VJZ0BaSAOHooQ5dA2pEw
- IMO6h6qN16aGA+OMkh4vxDbrndwF/cGedH9zk0auLjj6dEWNtHDXmh20q4kz/EFaSKXCJ80NiIfy
- MjkEm8YQD3UN1L+Xstv+Db5ghTz0iUnVObsprcwitQ5NH8dEzNsZTxHg1iAVKmgjJ+FIwCNNvrrk
- FofZIqHY4fLsf/SoybjNuKixprNNzfCqfL/9pMHkxSR9eWTdgEXaP4mfmH6u72ozQQcA7oW/ei1m
- gGfMR8JwSlbbcCtwZGMZDAWZrGeQtyhDN7gl8d5DQy0ZyvOcwuFj0VcRM3fEXqLzFHQqaIAjo3na
- W5zMfDS8uyQiCY+6j1jz8lgfk9gpw6J3v/XRd6FIGOxE6HVidTDncUXHvRuXw4t+XfnmdxPwtJBI
- VNhPDLS75yJPHXOJRapQrWEDfDTOwAgL/yiasaexAQ8OK+FmShwoi27+9KSEsRML3Hg5qPZxyFmC
- ka0Kfpi217/swviPdH9WEPJ5EXAcixSs3uo44BIj09XMQ9L1OqFgnAOEfn+I9AscA53GFoSDDpY3
- zvFn9Xxj0s8YH4k588gIA+526O5jy/dJ7CS9lhFLZMavfhN/FTs11hZ/M5t4J0nWofKBvXrdQZJa
- KH7tV8cyU+seSapKu4nI8nsas4q2JTFn6rghHkkBiaoYZ5I5W7J0LygVoiEGssfL8bZ2pjKEiz3j
- tFqnkl1TGhjAlmJ0OFZFbn7QypwIHxU8en8uwJ8qaLHIxLyH8X9cnSoQNBhA+2C6bZH6P02VBV71
- j7mOE4ZkrEBKlR8Kvl6/c1wsrZE4TEn3FNoO6Z2QqXs9mOhY4BieIWY5xJ0CSeUtLMfEattgdhgk
- M65fagNgaeHKTr12RNS4mUN6m0ues8aQd4pgN/r+7bjChN1tDSLzHx7sBoXVrEbeVLeUPn9s+ljc
- HBVzQUtjnDeaztH41+eR0QKQcUZE6NNxNFKX4i7v/+8sxhu6pG
-X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
-From: Yanfeng Liu <yfliu2008@qq.com>
-To: qemu-riscv@nongnu.org
-Cc: qemu-devel@nongnu.org, alistair.francis@wdc.com,
- pierrick.bouvier@oss.qualcomm.com, sunilvl@ventanamicro.com,
- palmer@dabbelt.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- Yanfeng Liu <yfliu2008@qq.com>
-Subject: [PATCH v3] riscv/virt: Add optional UART1
-Date: Sat, 18 Jul 2026 10:16:32 +0800
-X-OQ-MSGID: <20260718021632.4728-1-yfliu2008@qq.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wkwRQ-0005k0-Av; Sat, 18 Jul 2026 00:14:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1784348044; bh=gEQNwXVT2ZV0HiKvRiGMWGPjCQl9VcssN80srVeDE7k=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=ZOZ7XYqNmgMi5YKzyL1sK6S4OiXBTMdm6vdNohR/HztIECGJg4mzLxG9UKuHmb5Qd
+ 9QTPZUGl3bputmQIWMC/LTnwyCNW/4Zf3kTqFsXr+xezeOQ3hunDs3K/vY8B+TbT/C
+ Pp6vHO8sNtumm+LnEO/863/qUrDTcpyIPRUBgG1blqmGL53wdQEIjynUzjMJG4IsBZ
+ n1p3z8drrwQeKZocSPqgm8GU1LN/UqAWvkghkSgC8EnK/2UOhTn8pZPZfb4TPA/VZQ
+ rAMLJg88TtEU8vedSeM8iPJg74naZVOfXpzuyRqabh9lRmeovn7W27nTiEHZ55pPoH
+ hCBcf/K0LjnLw==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id E8FAF1C2A68;
+ Sat, 18 Jul 2026 07:14:04 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8694B3F0A67;
+ Sat, 18 Jul 2026 07:14:13 +0300 (MSK)
+Message-ID: <5dc9f2fc-3bd6-4df3-8496-44e6037b51ad@tls.msk.ru>
+Date: Sat, 18 Jul 2026 07:14:05 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=43.163.128.44; envelope-from=yfliu2008@qq.com;
- helo=xmbghk7.mail.qq.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/8] hw/vfio/listener.c: remove CONFIG_KVM
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: philmd@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-ppc@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, eric.auger@redhat.com
+References: <20260312224449.1605071-1-pierrick.bouvier@linaro.org>
+ <20260312224449.1605071-2-pierrick.bouvier@linaro.org>
+ <c3a7cd83-7666-40c5-9baa-ebe64edacab6@tls.msk.ru>
+ <3f98fbb6-16be-4de1-b9ae-6108f8f33b57@oss.qualcomm.com>
+ <d3f85639-e6a4-4917-8300-d48a7852662f@oss.qualcomm.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <d3f85639-e6a4-4917-8300-d48a7852662f@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,204 +119,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This adds optional UART1 to RiscV virt board if required at
-runtime to simplify multicore development.
+On 7/17/26 22:40, Pierrick Bouvier wrote:
 
-Note that UART0 remains default serial_hd(0) and it is:
+> https://gitlab.com/qemu-project/qemu/-/blob/master/hw/vfio/Kconfig?ref_type=heads#L5
+> 
+> ```
+> config VFIO
+>      bool
+>      depends on LINUX
+> ```
+> 
+> Incorrect, and it should exclude Linux hosts not supporting VFIO.
+> At least sparc64 to fix the current issue.
 
-- the lowest address UART
-- first serial in DTB
-- behind /aliases/serial0 in DTB
-- the /chosen/stdout-path in DTB
+Shouldn't there be "depends on LINUX & KVM" ?  At least, this
+way we can do --disable-kvm and it will work.
 
-Note that UART1 is placed at different page from UART0 to
-support page level isolation.
+Is sparc64 the only architecture where kvm is not available?
+Somehow I doubt it's the case.  Yet, on other architectures
+without kvm, the thing builds.
 
-Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
----
- docs/system/riscv/virt.rst |  5 ++++-
- hw/riscv/virt-acpi-build.c | 12 ++++++++----
- hw/riscv/virt.c            | 40 ++++++++++++++++++++++++++++----------
- include/hw/riscv/virt.h    |  3 +++
- 4 files changed, 45 insertions(+), 15 deletions(-)
+To me, this smells like a bug in debian, - missing asm/kvm.h
+include in linux-headers - so that some headers are missing
+while some others are present.  Or a bug in kernel itself, with
+sparc port lagging in this area so that even dummy asm/kvm.h is
+not provided.
 
-diff --git a/docs/system/riscv/virt.rst b/docs/system/riscv/virt.rst
-index 60850970ce..45ac63ac77 100644
---- a/docs/system/riscv/virt.rst
-+++ b/docs/system/riscv/virt.rst
-@@ -16,7 +16,7 @@ The ``virt`` machine supports the following devices:
- * Core Local Interruptor (CLINT)
- * Platform-Level Interrupt Controller (PLIC)
- * CFI parallel NOR flash memory
--* 1 NS16550 compatible UART
-+* Either 1 or 2 NS16550 compatible UARTs
- * 1 Google Goldfish RTC
- * 1 SiFive Test device
- * 8 virtio-mmio transport devices
-@@ -27,6 +27,9 @@ The hypervisor extension has been enabled for the default CPU, so virtual
- machines with hypervisor extension can simply be used without explicitly
- declaring.
- 
-+The second UART only exists if a backend is configured explicitly (e.g.
-+with a second `-serial` command line option).
-+
- Hardware configuration information
- ----------------------------------
- 
-diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-index 413d47d70e..597751c84a 100644
---- a/hw/riscv/virt-acpi-build.c
-+++ b/hw/riscv/virt-acpi-build.c
-@@ -169,11 +169,11 @@ static void acpi_dsdt_add_plic_aplic(Aml *scope, uint8_t socket_count,
- 
- static void
- acpi_dsdt_add_uart(Aml *scope, const MemMapEntry *uart_memmap,
--                    uint32_t uart_irq)
-+                    uint32_t uart_irq, int uartidx)
- {
--    Aml *dev = aml_device("COM0");
-+    Aml *dev = aml_device("COM%d", uartidx);
-     aml_append(dev, aml_name_decl("_HID", aml_string("RSCV0003")));
--    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
-+    aml_append(dev, aml_name_decl("_UID", aml_int(uartidx)));
- 
-     Aml *crs = aml_resource_template();
-     aml_append(crs, aml_memory32_fixed(uart_memmap->base,
-@@ -479,7 +479,11 @@ static void build_dsdt(GArray *table_data,
-                                  memmap[VIRT_APLIC_S].size, "RSCV0002");
-     }
- 
--    acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0], UART0_IRQ);
-+    acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0], UART0_IRQ, 0);
-+    if (s->uart1_present) {
-+        acpi_dsdt_add_uart(scope, &memmap[VIRT_UART1], UART1_IRQ, 1);
-+    }
-+
-     if (virt_is_iommu_sys_enabled(s)) {
-         acpi_dsdt_add_iommu_sys(scope, &memmap[VIRT_IOMMU_SYS], IOMMU_SYS_IRQ);
-     }
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 33775a61fd..4703ac58f8 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -96,6 +96,8 @@ static const MemMapEntry virt_memmap[] = {
-     [VIRT_APLIC_S] =      {  0xd000000, APLIC_SIZE(VIRT_CPUS_MAX) },
-     [VIRT_UART0] =        { 0x10000000,         0x100 },
-     [VIRT_VIRTIO] =       { 0x10001000,        0x1000 },
-+    /* UART1 supports page isolation from UART0 */
-+    [VIRT_UART1] =        { 0x1000a000,         0x100 },
-     [VIRT_FW_CFG] =       { 0x10100000,          0x18 },
-     [VIRT_FLASH] =        { 0x20000000,     0x4000000 },
-     [VIRT_IMSIC_M] =      { 0x24000000, VIRT_IMSIC_MAX_SIZE },
-@@ -186,7 +188,8 @@ static void create_pcie_irq_map(RISCVVirtState *s, void *fdt, char *nodename,
-                           FDT_MAX_INT_MAP_WIDTH] = {};
-     uint32_t *irq_map = full_irq_map;
- 
--    /* This code creates a standard swizzle of interrupts such that
-+    /*
-+     * This code creates a standard swizzle of interrupts such that
-      * each device's first interrupt is based on it's PCI_SLOT number.
-      * (See pci_swizzle_map_irq_fn())
-      *
-@@ -832,28 +835,38 @@ static void create_fdt_reset(RISCVVirtState *s, uint32_t *phandle)
- }
- 
- static void create_fdt_uart(RISCVVirtState *s,
--                            uint32_t irq_mmio_phandle)
-+                            uint32_t irq_mmio_phandle, int memId, int irqNo)
- {
-     g_autofree char *name = NULL;
-     MachineState *ms = MACHINE(s);
- 
-     name = g_strdup_printf("/soc/serial@%"HWADDR_PRIx,
--                           s->memmap[VIRT_UART0].base);
-+                           s->memmap[memId].base);
-     qemu_fdt_add_subnode(ms->fdt, name);
-     qemu_fdt_setprop_string(ms->fdt, name, "compatible", "ns16550a");
-     qemu_fdt_setprop_sized_cells(ms->fdt, name, "reg",
--                                 2, s->memmap[VIRT_UART0].base,
--                                 2, s->memmap[VIRT_UART0].size);
-+                                 2, s->memmap[memId].base,
-+                                 2, s->memmap[memId].size);
-     qemu_fdt_setprop_cell(ms->fdt, name, "clock-frequency", 3686400);
-     qemu_fdt_setprop_cell(ms->fdt, name, "interrupt-parent", irq_mmio_phandle);
-     if (s->aia_type == VIRT_AIA_TYPE_NONE) {
--        qemu_fdt_setprop_cell(ms->fdt, name, "interrupts", UART0_IRQ);
-+        qemu_fdt_setprop_cell(ms->fdt, name, "interrupts", irqNo);
-     } else {
--        qemu_fdt_setprop_cells(ms->fdt, name, "interrupts", UART0_IRQ, 0x4);
-+        qemu_fdt_setprop_cells(ms->fdt, name, "interrupts", irqNo, 0x4);
-+    }
-+
-+    if (VIRT_UART0 == memId) {
-+        qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", name);
-+        qemu_fdt_setprop_string(ms->fdt, "/aliases", "serial0", name);
-     }
-+}
- 
--    qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", name);
--    qemu_fdt_setprop_string(ms->fdt, "/aliases", "serial0", name);
-+static void create_fdt_uarts(RISCVVirtState *s, uint32_t irq_mmio_phandle)
-+{
-+    if (s->uart1_present) {
-+        create_fdt_uart(s, irq_mmio_phandle, VIRT_UART1, UART1_IRQ);
-+    }
-+    create_fdt_uart(s, irq_mmio_phandle, VIRT_UART0, UART0_IRQ);
- }
- 
- static void create_fdt_rtc(RISCVVirtState *s,
-@@ -1023,7 +1036,7 @@ static void finalize_fdt(RISCVVirtState *s)
- 
-     create_fdt_reset(s, &phandle);
- 
--    create_fdt_uart(s, irq_mmio_phandle);
-+    create_fdt_uarts(s, irq_mmio_phandle);
- 
-     create_fdt_rtc(s, irq_mmio_phandle);
- }
-@@ -1567,6 +1580,13 @@ static void virt_machine_init(MachineState *machine)
-         0, qdev_get_gpio_in(mmio_irqchip, UART0_IRQ), 399193,
-         serial_hd(0), DEVICE_LITTLE_ENDIAN);
- 
-+    if (serial_hd(1)) {
-+        serial_mm_init(system_memory, s->memmap[VIRT_UART1].base,
-+            0, qdev_get_gpio_in(mmio_irqchip, UART1_IRQ), 399193,
-+            serial_hd(1), DEVICE_LITTLE_ENDIAN);
-+        s->uart1_present = true;
-+    }
-+
-     sysbus_create_simple("goldfish_rtc", s->memmap[VIRT_RTC].base,
-         qdev_get_gpio_in(mmio_irqchip, RTC_IRQ));
- 
-diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
-index 18a2a323a3..7d57c8292e 100644
---- a/include/hw/riscv/virt.h
-+++ b/include/hw/riscv/virt.h
-@@ -59,6 +59,7 @@ struct RISCVVirtState {
-     int aia_guests;
-     char *oem_id;
-     char *oem_table_id;
-+    bool uart1_present;
-     OnOffAuto acpi;
-     const MemMapEntry *memmap;
-     struct GPEXHost *gpex_host;
-@@ -78,6 +79,7 @@ enum {
-     VIRT_APLIC_S,
-     VIRT_UART0,
-     VIRT_VIRTIO,
-+    VIRT_UART1,
-     VIRT_FW_CFG,
-     VIRT_IMSIC_M,
-     VIRT_IMSIC_S,
-@@ -93,6 +95,7 @@ enum {
- enum {
-     UART0_IRQ = 10,
-     RTC_IRQ = 11,
-+    UART1_IRQ = 12,
-     VIRTIO_IRQ = 1, /* 1 to 8 */
-     VIRTIO_COUNT = 8,
-     PCIE_IRQ = 0x20, /* 32 to 35 */
--- 
-2.34.1
+Thanks,
 
+/mjt
 
