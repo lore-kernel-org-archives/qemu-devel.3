@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FA57C4451B
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:12:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14AFFC4451B
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:12:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlDGI-0006s1-9F; Sat, 18 Jul 2026 18:11:58 -0400
+	id 1wlDH3-0008EA-Ef; Sat, 18 Jul 2026 18:12:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlDGG-0006e7-AU; Sat, 18 Jul 2026 18:11:56 -0400
-Received: from pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.26.1.71])
+ id 1wlDH2-0008Da-MV; Sat, 18 Jul 2026 18:12:44 -0400
+Received: from pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([44.246.1.125])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlDGD-0006tP-6L; Sat, 18 Jul 2026 18:11:55 -0400
+ id 1wlDH1-0006zK-2S; Sat, 18 Jul 2026 18:12:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784412713; x=1815948713;
+ t=1784412763; x=1815948763;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=KueI85jxNEkbbLG6vVMUGWXIOodLg7ml4f6quy6N39c=;
- b=oloNN3dN+j/2yzTGxH5zn93ePCE/ii6lTy6QR5Qvlnz47IMOPx+VKYhW
- TEqCHd3Z9g1Dvrp60WUK9Mb4hmG2OYMlaCGMzFce/r0GfQTiEReXtfs/O
- D6UlZ/+PFSQUnpZKaXm3ugbgoBvUEl4coSTDNRfa/hKmprkOXyx+Hgjrp
- DMzyF0z2/9CMzQK1C5ihGlm0HIdw9EF+BrLDdma0o8i+oL8e1/jZ+9frA
- Gg7kWLxeCLF427Ts3NVK8IYJZBVk//nPgETnht47mAh4i8IDA5pWDQ85N
- aiNAzJ0R50neNPYDCBS5SQl3HEF7MAseVePExwCPeU2c4nKr5QU8jAgmv A==;
-X-CSE-ConnectionGUID: BWY9ITVFT0Wm4GTo7tfUCg==
-X-CSE-MsgGUID: vv75u5GOTSGpbipMjQyEcg==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23945205"
-Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
- by internal-pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:11:49 +0000
-Received: from EX19MTAUWC001.ant.amazon.com [205.251.233.105:9708]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.40.177:2525]
+ bh=OsHkueJbfgT/bnymqWSa3LbLbRvkv1mQV9LDHX2G+q4=;
+ b=AY+dfxIypdlMmELQTCuXeQkNyFOa01qwmUERA8KZLRwth9txCxrUYx7j
+ 0e8mz701AAECipI0Kdi3f6N2ArrCv/eU4z99MkgR0YFU93Ccg4v6/T44E
+ Kixwp3e7MhVetLkQUk50QsJQh6x2BLMWQQ4Nvsbrtp7c/hFfXRdvACvTM
+ xjkc3VAStuHKTU/gBx0msySUSvtq5EsXZY+VpicDD9X+kqP+zpYcitC8x
+ 0gRj9urd9K9gzFl31ldaIQJQbM0ZShgwLhO0yDOm3CykIMtuiaEjWz7vG
+ 43C5mGs4JYT2NgcoU/cnP1v9i70cAJVOMJa34uFdi+2sO9tt/2SeBofvl w==;
+X-CSE-ConnectionGUID: TkkE505hTG2cdEbedzbFiA==
+X-CSE-MsgGUID: x5KvxMnYQDWNBLgL7Fgkig==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23928118"
+Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
+ by internal-pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:12:40 +0000
+Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.51:25084]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.58.199:2525]
  with esmtp (Farcaster)
- id 803ee3f8-dad3-4d29-8cbc-350ef2785825; Sat, 18 Jul 2026 22:11:49 +0000 (UTC)
-X-Farcaster-Flow-ID: 803ee3f8-dad3-4d29-8cbc-350ef2785825
+ id 51c9281e-ef86-4fd4-9699-e90463d7fc94; Sat, 18 Jul 2026 22:12:39 +0000 (UTC)
+X-Farcaster-Flow-ID: 51c9281e-ef86-4fd4-9699-e90463d7fc94
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
+ EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:11:49 +0000
+ Sat, 18 Jul 2026 22:12:39 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:11:39 +0000
+ Sat, 18 Jul 2026 22:12:29 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,10 +93,10 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 125/137] hw/s390x,
- hw/remote: Parent per-devfn IOMMU objects
-Date: Sat, 18 Jul 2026 21:36:40 +0000
-Message-ID: <20260718213652.37673-126-graf@amazon.com>
+Subject: [RFC PATCH v2 128/137] hw/arm/digic: Parent the DIGIC SoC under the
+ machine
+Date: Sat, 18 Jul 2026 21:36:43 +0000
+Message-ID: <20260718213652.37673-129-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -105,11 +105,11 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D044UWB004.ant.amazon.com (10.13.139.134) To
+X-ClientProxiedBy: EX19D033UWC003.ant.amazon.com (10.13.139.217) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=52.26.1.71;
+Received-SPF: pass client-ip=44.246.1.125;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -133,75 +133,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Give the per-devfn S390 PCI IOMMU object a canonical path under the
-S390 PCI host state.  s390_pci_iommu_free() already calls
-object_unparent(), which was previously a no-op; it now performs
-the actual release.
-
-For the multi-process remote IOMMU, replace the raw
-object_new(TYPE_MEMORY_REGION) with a proper memory_region_init()
-under the RemoteIommu object so the MR gets an owner like every
-other MR in the tree.
+Bring digic in line with cubieboard/orangepi/bpim2u/imx6ul/imx7,
+which all parent their SoC as /machine/soc.
 
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/remote/iommu.c       | 7 ++++---
- hw/s390x/s390-pci-bus.c | 9 +++++++--
- 2 files changed, 11 insertions(+), 5 deletions(-)
+ hw/arm/digic_boards.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/remote/iommu.c b/hw/remote/iommu.c
-index 3e0758a21e..52ee9765e6 100644
---- a/hw/remote/iommu.c
-+++ b/hw/remote/iommu.c
-@@ -52,8 +52,9 @@ static AddressSpace *remote_iommu_find_add_as(PCIBus *pci_bus,
-     }
+diff --git a/hw/arm/digic_boards.c b/hw/arm/digic_boards.c
+index 92b66f34f7..bdc5f7324b 100644
+--- a/hw/arm/digic_boards.c
++++ b/hw/arm/digic_boards.c
+@@ -50,7 +50,8 @@ typedef struct DigicBoard {
+ static void digic4_board_init(MachineState *machine, DigicBoard *board)
+ {
+     Error *err = NULL;
+-    DigicState *s = DIGIC(object_new(TYPE_DIGIC));
++    DigicState *s = DIGIC(object_new_child(OBJECT(machine), "soc",
++                                           TYPE_DIGIC));
+     MachineClass *mc = MACHINE_GET_CLASS(machine);
  
-     if (!elem->mr) {
--        elem->mr = MEMORY_REGION(object_new(TYPE_MEMORY_REGION));
--        memory_region_set_size(elem->mr, UINT64_MAX);
-+        g_autofree char *name = g_strdup_printf("mr-devfn-%02x", devfn);
-+        elem->mr = g_new0(MemoryRegion, 1);
-+        memory_region_init(elem->mr, OBJECT(iommu), name, UINT64_MAX);
-         address_space_init(&elem->as, elem->mr, NULL);
-     }
- 
-@@ -75,7 +76,7 @@ void remote_iommu_unplug_dev(PCIDevice *pci_dev)
- 
-     address_space_destroy(&elem->as);
- 
--    object_unref(elem->mr);
-+    object_unparent(OBJECT(elem->mr));
- 
-     elem->mr = NULL;
- }
-diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-index 4f0a8a787b..da8406cc4e 100644
---- a/hw/s390x/s390-pci-bus.c
-+++ b/hw/s390x/s390-pci-bus.c
-@@ -618,7 +618,13 @@ static S390PCIIOMMU *s390_pci_get_iommu(S390pciState *s, PCIBus *bus,
- 
-     iommu = table->iommu[PCI_SLOT(devfn)];
-     if (!iommu) {
--        iommu = S390_PCI_IOMMU(object_new(TYPE_S390_PCI_IOMMU));
-+        char *ch_name = g_strdup_printf("iommu[%02x:%02x.%01x]",
-+                                        pci_bus_num(bus),
-+                                        PCI_SLOT(devfn),
-+                                        PCI_FUNC(devfn));
-+        iommu = S390_PCI_IOMMU(object_new_child(OBJECT(s), ch_name,
-+                                                TYPE_S390_PCI_IOMMU));
-+        g_free(ch_name);
- 
-         char *mr_name = g_strdup_printf("iommu-root-%02x:%02x.%01x",
-                                         pci_bus_num(bus),
-@@ -798,7 +804,6 @@ static void s390_pci_iommu_free(S390pciState *s, PCIBus *bus, int32_t devfn)
-     address_space_destroy(&iommu->as);
-     object_unparent(OBJECT(&iommu->mr));
-     object_unparent(OBJECT(iommu));
--    object_unref(OBJECT(iommu));
- }
- 
- S390PCIGroup *s390_group_create(int id, int host_id)
+     if (machine->ram_size != mc->default_ram_size) {
 -- 
 2.47.1
 
