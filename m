@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F256FC4451B
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:07:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B76E0C44521
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:07:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlDBh-00052x-CZ; Sat, 18 Jul 2026 18:07:13 -0400
+	id 1wlDBv-0005r7-EA; Sat, 18 Jul 2026 18:07:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlDBa-0004y2-Ek; Sat, 18 Jul 2026 18:07:06 -0400
-Received: from pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([50.112.246.219])
+ id 1wlDBu-0005pG-6g; Sat, 18 Jul 2026 18:07:26 -0400
+Received: from pdx-out-003.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([44.246.68.102])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlDBY-0006He-GX; Sat, 18 Jul 2026 18:07:06 -0400
+ id 1wlDBs-0006Jt-Cq; Sat, 18 Jul 2026 18:07:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784412424; x=1815948424;
+ t=1784412444; x=1815948444;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Bf2p0UMpWSGplqSzcxf51p2ckh1yy0+rCZ/xLdiJQho=;
- b=tZTZ+vy66yqZxEkHq5g0DW81Jn2sEKTzcu5ZUIjx1Yn1N1fXntzrJkH3
- DGejF0cd2Y1M5qy/Rwg0gxCiJLK3Iokzy+pDaIEF57YxG2VmPu+3ccX6i
- oN/9nJFmNV8JARoBEbAyIJ4SCEs5jXYaJHN+XSc2mkrzznQLKCxIj2REK
- dBeYtieUY9nnZuiE08zxOuBc6Hfa34X/svsQW04Ir5kF2mALqfq1f3/32
- 5Pe1b+Ct+S5Dmv2AW02tb0NZgFjceCluIxyXYFTBCa/dI3cGCljpHZW0y
- mr1KsDr234sNo0nPW8G7BkVU70tytZ1PsdRGmOt4sPjsIXaNJXCaOJfwe w==;
-X-CSE-ConnectionGUID: 9v2wO3KOQXamLkHy88kWMA==
-X-CSE-MsgGUID: x3d2y7ZISLueLRjDa8hQHg==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23725699"
-Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
- by internal-pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:06:48 +0000
-Received: from EX19MTAUWB002.ant.amazon.com [205.251.233.48:24486]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.48.250:2525]
+ bh=55SFmn7YY6K/MBM3JuF967S/TaYaKf1YhgQPTJk68Tc=;
+ b=NMb+Ij/mNxeX1CVYHwSI1HY2rFpho+V6Z49jBeWQfbX9EhLnGNNdVQXe
+ bseivs4Aj2QwxetHBDXz0HqJhx1O1WGyButNxb95FiIWQgWCsTWuTdQHR
+ LwW5GG1Y4VwU/LmuQXO4hcwbqNws6WPixI4YH0POXiEreS+ybJ/G2zkxP
+ iMCH9xOPwQtndS59Z4fj2DczXqNHn2d6IDoB92yIx1PFXWDaWd1CgqeHF
+ 00lwBFYzTmSaq8IxcLbNTOtmbowPhLgRMbAYhsMJhOHeBOdNec5vGMebM
+ mZnLgaTefB9AFWz9MrQ8vO5U/G+tR28KVWx25qTZHGsAO3m7wYWZNySfd A==;
+X-CSE-ConnectionGUID: UF+PGGPWSSCZaalGleLw1w==
+X-CSE-MsgGUID: nJ7aeXq7RZ2Yt8ALZut9Xw==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23942476"
+Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
+ by internal-pdx-out-003.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:07:19 +0000
+Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.234:27061]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.19.34:2525]
  with esmtp (Farcaster)
- id c9f51611-2e7a-4f79-be1b-3b34475a82d4; Sat, 18 Jul 2026 22:06:48 +0000 (UTC)
-X-Farcaster-Flow-ID: c9f51611-2e7a-4f79-be1b-3b34475a82d4
+ id a20f09b3-eb34-4ef8-b450-f12e054ddefd; Sat, 18 Jul 2026 22:07:19 +0000 (UTC)
+X-Farcaster-Flow-ID: a20f09b3-eb34-4ef8-b450-f12e054ddefd
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
+ EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:06:47 +0000
+ Sat, 18 Jul 2026 22:07:18 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:06:38 +0000
+ Sat, 18 Jul 2026 22:07:09 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,10 +93,10 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 107/137] hw/ide: Let ide_init_ioport() take an explicit
- owner
-Date: Sat, 18 Jul 2026 21:36:22 +0000
-Message-ID: <20260718213652.37673-108-graf@amazon.com>
+Subject: [RFC PATCH v2 108/137] memory: Require an owner for named memory
+ regions
+Date: Sat, 18 Jul 2026 21:36:23 +0000
+Message-ID: <20260718213652.37673-109-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -105,11 +105,11 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D036UWB002.ant.amazon.com (10.13.139.139) To
+X-ClientProxiedBy: EX19D040UWA004.ant.amazon.com (10.13.139.93) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=50.112.246.219;
+Received-SPF: pass client-ip=44.246.68.102;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-003.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -133,122 +133,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-hw/ide/piix.c calls ide_init_ioport() with a NULL ISADevice because
-the PIIX IDE function is a PCI device, not an ISA one.  That NULL
-propagates to isa_register_portio_list() and from there to
-portio_list_init() as owner==NULL, which the following commit turns
-into a hard error.
+Now that every named memory region in the tree passes an explicit
+owner, replace the /machine/unattached fallback in
+memory_region_do_init() and portio_list_add_1() with an assertion.
 
-Change ide_init_ioport() to take an Object *owner directly.  When the
-owner is an ISADevice, keep the existing isa_register_portio_list()
-path so isa_init_ioport() still records the base I/O port for firmware
-paths.  When it is not (the PIIX case), register the port lists with
-the given owner directly.
+Anonymous (name==NULL) regions such as subpages and io_mem_unassigned
+are never QOM-parented and continue to accept a NULL owner.
 
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/ide/ide-internal.h |  2 +-
- hw/ide/ioport.c       | 37 ++++++++++++++++++++++++++-----------
- hw/ide/isa.c          |  2 +-
- hw/ide/piix.c         |  2 +-
- 4 files changed, 29 insertions(+), 14 deletions(-)
+ system/ioport.c | 7 ++-----
+ system/memory.c | 7 +++----
+ 2 files changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/hw/ide/ide-internal.h b/hw/ide/ide-internal.h
-index 281d07c9d5..3f48335cdf 100644
---- a/hw/ide/ide-internal.h
-+++ b/hw/ide/ide-internal.h
-@@ -419,7 +419,7 @@ uint32_t ide_data_readl(void *opaque, uint32_t addr);
- int ide_init_drive(IDEState *s, IDEDevice *dev, IDEDriveKind kind, Error **errp);
- void ide_exit(IDEState *s);
- void ide_bus_init_output_irq(IDEBus *bus, qemu_irq irq_out);
--int ide_init_ioport(IDEBus *bus, ISADevice *isa, int iobase, int iobase2);
-+int ide_init_ioport(IDEBus *bus, Object *owner, int iobase, int iobase2);
- void ide_bus_set_irq(IDEBus *bus);
- void ide_bus_register_restart_cb(IDEBus *bus);
+diff --git a/system/ioport.c b/system/ioport.c
+index 0a1b80f299..0415b3cd60 100644
+--- a/system/ioport.c
++++ b/system/ioport.c
+@@ -248,11 +248,8 @@ static void portio_list_add_1(PortioList *piolist,
+     /* Reparent the MemoryRegion to the piolist owner */
+     object_ref(&mrpio->mr);
+     object_unparent(OBJECT(&mrpio->mr));
+-    if (!piolist->owner) {
+-        owner = machine_get_container("unattached");
+-    } else {
+-        owner = piolist->owner;
+-    }
++    g_assert(piolist->owner);
++    owner = piolist->owner;
+     name = g_strdup_printf("%s[*]", piolist->name);
+     object_property_add_child(owner, name, OBJECT(&mrpio->mr));
+     g_free(name);
+diff --git a/system/memory.c b/system/memory.c
+index 838be57b4d..d1ac7ffa04 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1230,14 +1230,13 @@ static void memory_region_do_init(MemoryRegion *mr,
+     mr->dev = (DeviceState *) object_dynamic_cast(mr->owner, TYPE_DEVICE);
+     mr->ram_block = NULL;
  
-diff --git a/hw/ide/ioport.c b/hw/ide/ioport.c
-index a2f457f0bd..afafe6844c 100644
---- a/hw/ide/ioport.c
-+++ b/hw/ide/ioport.c
-@@ -1,5 +1,5 @@
- /*
-- * QEMU IDE disk and CD/DVD-ROM Emulator
-+ * QEMU IDE Emulation: PIO ioport registration.
-  *
-  * Copyright (c) 2003 Fabrice Bellard
-  * Copyright (c) 2006 Openedhand Ltd.
-@@ -28,19 +28,34 @@
- #include "ide-internal.h"
- #include "trace.h"
++    /* A named MemoryRegion is a QOM child of @owner */
++    g_assert(!name || owner);
++
+     if (name) {
+         char *escaped_name = memory_region_escape_name(name);
+         char *name_array = g_strdup_printf("%s[*]", escaped_name);
  
--int ide_init_ioport(IDEBus *bus, ISADevice *dev, int iobase, int iobase2)
-+int ide_init_ioport(IDEBus *bus, Object *owner, int iobase, int iobase2)
- {
-+    ISADevice *isa = ISA_DEVICE(object_dynamic_cast(owner, TYPE_ISA_DEVICE));
-     int ret;
- 
--    /* ??? Assume only ISA and PCI configurations, and that the PCI-ISA
--       bridge has been setup properly to always register with ISA.  */
--    ret = isa_register_portio_list(dev, &bus->portio_list,
--                                   iobase, ide_portio_list, bus, "ide");
+-        if (!owner) {
+-            owner = machine_get_container("unattached");
+-        }
 -
--    if (ret == 0 && iobase2) {
--        ret = isa_register_portio_list(dev, &bus->portio2_list,
--                                       iobase2, ide_portio2_list, bus, "ide");
-+    if (isa) {
-+        ret = isa_register_portio_list(isa, &bus->portio_list,
-+                                       iobase, ide_portio_list, bus, "ide");
-+        if (ret == 0 && iobase2) {
-+            ret = isa_register_portio_list(isa, &bus->portio2_list,
-+                                           iobase2, ide_portio2_list, bus,
-+                                           "ide");
-+        }
-+        return ret;
-     }
- 
--    return ret;
-+    /* PIIX3/4: no ISADevice, but ISA I/O space is set up by the PCI-ISA */
-+    /* bridge; register the port lists directly with the given owner.   */
-+    if (!isa_address_space_io(NULL)) {
-+        return -ENODEV;
-+    }
-+    portio_list_init(&bus->portio_list, owner, ide_portio_list, bus, "ide");
-+    portio_list_add(&bus->portio_list, isa_address_space_io(NULL), iobase);
-+    if (iobase2) {
-+        portio_list_init(&bus->portio2_list, owner,
-+                         ide_portio2_list, bus, "ide");
-+        portio_list_add(&bus->portio2_list,
-+                        isa_address_space_io(NULL), iobase2);
-+    }
-+    return 0;
- }
-diff --git a/hw/ide/isa.c b/hw/ide/isa.c
-index 37457be035..7949625e00 100644
---- a/hw/ide/isa.c
-+++ b/hw/ide/isa.c
-@@ -71,7 +71,7 @@ static void isa_ide_realizefn(DeviceState *dev, Error **errp)
-     ISAIDEState *s = ISA_IDE(dev);
- 
-     ide_bus_init(&s->bus, sizeof(s->bus), dev, 0, 2);
--    ide_init_ioport(&s->bus, isadev, s->iobase, s->iobase2);
-+    ide_init_ioport(&s->bus, OBJECT(isadev), s->iobase, s->iobase2);
-     ide_bus_init_output_irq(&s->bus, isa_get_irq(isadev, s->irqnum));
-     vmstate_register_any(VMSTATE_IF(dev), &vmstate_ide_isa, s);
-     ide_bus_register_restart_cb(&s->bus);
-diff --git a/hw/ide/piix.c b/hw/ide/piix.c
-index a0f2709c69..5c5b91fa52 100644
---- a/hw/ide/piix.c
-+++ b/hw/ide/piix.c
-@@ -134,7 +134,7 @@ static bool pci_piix_init_bus(PCIIDEState *d, unsigned i, Error **errp)
-     int ret;
- 
-     ide_bus_init(&d->bus[i], sizeof(d->bus[i]), DEVICE(d), i, 2);
--    ret = ide_init_ioport(&d->bus[i], NULL, port_info[i].iobase,
-+    ret = ide_init_ioport(&d->bus[i], OBJECT(d), port_info[i].iobase,
-                           port_info[i].iobase2);
-     if (ret) {
-         error_setg_errno(errp, -ret, "Failed to realize %s port %u",
+         object_property_add_child(owner, name_array, OBJECT(mr));
+         object_unref(OBJECT(mr));
+         g_free(name_array);
 -- 
 2.47.1
 
