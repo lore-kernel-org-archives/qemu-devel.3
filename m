@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED0CBC4450A
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:05:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1B1CC4450A
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:05:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlD9U-00009G-Ew; Sat, 18 Jul 2026 18:04:56 -0400
+	id 1wlD9o-0000nR-QF; Sat, 18 Jul 2026 18:05:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlD9S-0008WU-QM; Sat, 18 Jul 2026 18:04:54 -0400
-Received: from pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([44.246.77.92])
+ id 1wlD9m-0000ir-Jn; Sat, 18 Jul 2026 18:05:14 -0400
+Received: from pdx-out-003.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([44.246.68.102])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlD9Q-0005nM-2P; Sat, 18 Jul 2026 18:04:54 -0400
+ id 1wlD9k-00061C-1C; Sat, 18 Jul 2026 18:05:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784412292; x=1815948292;
+ t=1784412312; x=1815948312;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Hqoa0Zg4cpWSCjfZXN0aqvvhoBuY41v/DVel18QdV0M=;
- b=bq2pNSkh6Cq6okv8oKQUqHbrWNduhrzO27e07WE5YMb1hKcHHDKO9msT
- Ix0JhinmR1RXChjOMeYmCA7lemA0ta5BmfC+VP+t+ArIeyDqlH4Rh2LnH
- QgHR5W6ZpKgzLiWtpIAL725KYbcodiovH3JkmXBQcu1leXaIk0K44EZwv
- dr9tzag22WloyVinTQzrQ6c3VhNSAXGXk+9UXwiemRuvGdrhus90tVeKW
- 2S3wLuPn09rn+0ouYTBoOPGqKcqIuliHS0vcir9MOQQI0f0JDu1/mMpkI
- 2S0gv+r9IX7IZTE6u8bNrokrqq05VA83lMgLFxgUXJ3WVn2YslMGDJ3z0 A==;
-X-CSE-ConnectionGUID: 72IVsrxPRn2BIDbULQJpog==
-X-CSE-MsgGUID: Bzbay9R2TbKf1QqbIe8c9Q==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23917942"
-Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
- by internal-pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:04:48 +0000
-Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.234:12741]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.11.151:2525]
+ bh=42fWECEj/By4pP4aqwhbfUtd2TyT+YqbexkZw1F0AO4=;
+ b=Ze6WXTKftG/U+yqhb7KIWkAGEunupuSX4NdY+a+6/NI0sqIqqGCi1guH
+ sKoUenNjRUuRuVjCKVNTC/J6nOdR8myZEdo1vNO3xlQ24FZ83W42HIb2X
+ 2EYCYmsCykSQGgnB53UBlUSQAPvw308UgrWD4WabKKMO3CVyoZrbmHsaz
+ WAP/Eg9ADwtOaJMalYSXpo6N178eebp6+hkw66kvZ2VmQ6dshAu1D0GG3
+ GuwhxGBTVnkgbI3lw0nlW0KUo5JgNQyMqdN4t7wzjJVUH2icJbBRZYVrg
+ udAGlz7lEa1OOQJyi6DtYjdqKgXZkaXIwv6mcERlFSAHMACf39me5KxhJ w==;
+X-CSE-ConnectionGUID: m/773KBxTMaDCKT0N5HJaA==
+X-CSE-MsgGUID: 5uBm1Q6kSISHTYh56CtHIg==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23942369"
+Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
+ by internal-pdx-out-003.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:05:07 +0000
+Received: from EX19MTAUWC002.ant.amazon.com [205.251.233.51:13962]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.41.246:2525]
  with esmtp (Farcaster)
- id 4fc69d3a-aab8-402c-b335-557de534b143; Sat, 18 Jul 2026 22:04:48 +0000 (UTC)
-X-Farcaster-Flow-ID: 4fc69d3a-aab8-402c-b335-557de534b143
+ id 7a81a946-177b-4b3c-a93f-e0edaad297f6; Sat, 18 Jul 2026 22:05:07 +0000 (UTC)
+X-Farcaster-Flow-ID: 7a81a946-177b-4b3c-a93f-e0edaad297f6
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
+ EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:04:47 +0000
+ Sat, 18 Jul 2026 22:05:07 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:04:38 +0000
+ Sat, 18 Jul 2026 22:04:57 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,9 +93,10 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 099/137] hw/ppc: Give memory regions an explicit owner
-Date: Sat, 18 Jul 2026 21:36:14 +0000
-Message-ID: <20260718213652.37673-100-graf@amazon.com>
+Subject: [RFC PATCH v2 101/137] hw/xtensa: Give memory regions an explicit
+ owner
+Date: Sat, 18 Jul 2026 21:36:16 +0000
+Message-ID: <20260718213652.37673-102-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -106,9 +107,9 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D033UWC003.ant.amazon.com (10.13.139.217) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=44.246.77.92;
+Received-SPF: pass client-ip=44.246.68.102;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-003.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -135,7 +136,7 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Convert memory_region_init*() calls that pass NULL owner to pass
 the enclosing machine or device instead.
 
-Thread Object *owner through ppc4xx_l2sram_init() (called from sam460ex board init) and the static ppc4xx_sdram_banks() / sdram_bank_map() / sdram_bank_set_bcr() helpers (called from ppc4xx-sdram-ddr[2] realize and DCR write callbacks that already carry the device state).
+Thread Object *owner through xtensa_create_memory_regions(), xtensa_mx_pic_register_cpu() and the static xtfpga_fpga_init() helper. All callers are inside board init functions.
 
 No functional change intended.
 
@@ -146,313 +147,228 @@ dev=NULL for qemu_ram_set_idstr().
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/ppc/amigaone.c      |  6 +++---
- hw/ppc/mac_newworld.c  |  2 +-
- hw/ppc/mac_oldworld.c  |  2 +-
- hw/ppc/pegasos.c       |  2 +-
- hw/ppc/ppc440.h        |  2 +-
- hw/ppc/ppc440_bamboo.c |  2 +-
- hw/ppc/ppc440_uc.c     | 10 +++++-----
- hw/ppc/ppc4xx_sdram.c  | 34 +++++++++++++++++-----------------
- hw/ppc/prep.c          |  2 +-
- hw/ppc/sam460ex.c      |  4 ++--
- 10 files changed, 33 insertions(+), 33 deletions(-)
+ hw/xtensa/mx_pic.c         |  4 ++--
+ hw/xtensa/sim.c            | 15 ++++++++-------
+ hw/xtensa/xtensa_memory.c  |  5 +++--
+ hw/xtensa/xtensa_memory.h  |  3 ++-
+ hw/xtensa/xtfpga.c         | 30 ++++++++++++++++--------------
+ include/hw/xtensa/mx_pic.h |  2 +-
+ 6 files changed, 32 insertions(+), 27 deletions(-)
 
-diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
-index 60aed15a6e..4a4e52c1fe 100644
---- a/hw/ppc/amigaone.c
-+++ b/hw/ppc/amigaone.c
-@@ -130,7 +130,7 @@ static void nvram_realize(DeviceState *dev, Error **errp)
-     void *p;
-     uint32_t crc, *c;
+diff --git a/hw/xtensa/mx_pic.c b/hw/xtensa/mx_pic.c
+index 8ded3bc79b..f349fb125c 100644
+--- a/hw/xtensa/mx_pic.c
++++ b/hw/xtensa/mx_pic.c
+@@ -299,7 +299,7 @@ static const MemoryRegionOps xtensa_mx_pic_ops = {
+     },
+ };
  
--    memory_region_init_rom_device(&s->mr, NULL, &nvram_ops, s, "nvram",
-+    memory_region_init_rom_device(&s->mr, OBJECT(dev), &nvram_ops, s, "nvram",
-                                   NVRAM_SIZE, &error_fatal);
-     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr);
-     c = p = memory_region_get_ram_ptr(&s->mr);
-@@ -297,7 +297,7 @@ static void amigaone_init(MachineState *machine)
-     if (machine->ram_size < 1 * GiB + 32 * KiB) {
-         /* Firmware uses this area for startup */
-         mr = g_new(MemoryRegion, 1);
--        memory_region_init_ram(mr, NULL, "init-cache", 32 * KiB, &error_fatal);
-+        memory_region_init_ram(mr, OBJECT(machine), "init-cache", 32 * KiB, &error_fatal);
-         memory_region_add_subregion(get_system_memory(), INIT_RAM_ADDR, mr);
-     }
- 
-@@ -313,7 +313,7 @@ static void amigaone_init(MachineState *machine)
- 
-     /* allocate and load firmware */
-     rom = g_new(MemoryRegion, 1);
--    memory_region_init_rom(rom, NULL, "rom", PROM_SIZE, &error_fatal);
-+    memory_region_init_rom(rom, OBJECT(machine), "rom", PROM_SIZE, &error_fatal);
-     memory_region_add_subregion(get_system_memory(), PROM_ADDR, rom);
-     if (!machine->firmware) {
-         rom_add_blob_fixed("dummy-fw", dummy_fw, sizeof(dummy_fw),
-diff --git a/hw/ppc/mac_newworld.c b/hw/ppc/mac_newworld.c
-index a6af53e21a..392a1fb87d 100644
---- a/hw/ppc/mac_newworld.c
-+++ b/hw/ppc/mac_newworld.c
-@@ -176,7 +176,7 @@ static void ppc_core99_init(MachineState *machine)
-     memory_region_add_subregion(get_system_memory(), 0, machine->ram);
- 
-     /* allocate and load firmware ROM */
--    memory_region_init_rom(bios, NULL, "ppc_core99.bios", PROM_SIZE,
-+    memory_region_init_rom(bios, OBJECT(machine), "ppc_core99.bios", PROM_SIZE,
-                            &error_fatal);
-     memory_region_add_subregion(get_system_memory(), PROM_BASE, bios);
- 
-diff --git a/hw/ppc/mac_oldworld.c b/hw/ppc/mac_oldworld.c
-index f9b62a518a..0fe8dfaf8c 100644
---- a/hw/ppc/mac_oldworld.c
-+++ b/hw/ppc/mac_oldworld.c
-@@ -130,7 +130,7 @@ static void ppc_heathrow_init(MachineState *machine)
-     memory_region_add_subregion(get_system_memory(), 0, machine->ram);
- 
-     /* allocate and load firmware ROM */
--    memory_region_init_rom(bios, NULL, "ppc_heathrow.bios", PROM_SIZE,
-+    memory_region_init_rom(bios, OBJECT(machine), "ppc_heathrow.bios", PROM_SIZE,
-                            &error_fatal);
-     memory_region_add_subregion(get_system_memory(), PROM_BASE, bios);
- 
-diff --git a/hw/ppc/pegasos.c b/hw/ppc/pegasos.c
-index 4917d8137a..426a54d8ee 100644
---- a/hw/ppc/pegasos.c
-+++ b/hw/ppc/pegasos.c
-@@ -194,7 +194,7 @@ static void pegasos_init(MachineState *machine)
-     if (pm->type == PEGASOS1) {
-         prom_addr += PROM_SIZE;
-     }
--    memory_region_init_rom(rom, NULL, "rom", PROM_SIZE, &error_fatal);
-+    memory_region_init_rom(rom, OBJECT(machine), "rom", PROM_SIZE, &error_fatal);
-     memory_region_add_subregion(get_system_memory(), prom_addr, rom);
-     sz = load_elf(filename, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-                   ELFDATA2MSB, PPC_ELF_MACHINE, 0, 0);
-diff --git a/hw/ppc/ppc440.h b/hw/ppc/ppc440.h
-index 909373fb38..192b76adc4 100644
---- a/hw/ppc/ppc440.h
-+++ b/hw/ppc/ppc440.h
-@@ -13,7 +13,7 @@
- 
- #include "hw/ppc/ppc.h"
- 
--void ppc4xx_l2sram_init(CPUPPCState *env);
-+void ppc4xx_l2sram_init(Object *owner, CPUPPCState *env);
- void ppc4xx_cpr_init(CPUPPCState *env);
- void ppc4xx_sdr_init(CPUPPCState *env);
- void ppc4xx_ahb_init(CPUPPCState *env);
-diff --git a/hw/ppc/ppc440_bamboo.c b/hw/ppc/ppc440_bamboo.c
-index 2d9efeba77..5aad2a504b 100644
---- a/hw/ppc/ppc440_bamboo.c
-+++ b/hw/ppc/ppc440_bamboo.c
-@@ -194,7 +194,7 @@ static void bamboo_init(MachineState *machine)
-         exit(1);
-     }
- 
--    memory_region_init_alias(isa, NULL, "isa_mmio",
-+    memory_region_init_alias(isa, OBJECT(machine), "isa_mmio",
-                              get_system_io(), 0, PPC440EP_PCI_IOLEN);
-     memory_region_add_subregion(get_system_memory(), PPC440EP_PCI_IO, isa);
- 
-diff --git a/hw/ppc/ppc440_uc.c b/hw/ppc/ppc440_uc.c
-index 016c756c19..e86519326e 100644
---- a/hw/ppc/ppc440_uc.c
-+++ b/hw/ppc/ppc440_uc.c
-@@ -167,19 +167,19 @@ static void l2sram_reset(void *opaque)
-     memset(l2sram->isram0, 0, sizeof(l2sram->isram0));
- }
- 
--void ppc4xx_l2sram_init(CPUPPCState *env)
-+void ppc4xx_l2sram_init(Object *owner, CPUPPCState *env)
+-MemoryRegion *xtensa_mx_pic_register_cpu(XtensaMxPic *mx,
++MemoryRegion *xtensa_mx_pic_register_cpu(Object *owner, XtensaMxPic *mx,
+                                          qemu_irq *irq,
+                                          qemu_irq runstall)
  {
-     ppc4xx_l2sram_t *l2sram;
+@@ -309,7 +309,7 @@ MemoryRegion *xtensa_mx_pic_register_cpu(XtensaMxPic *mx,
+     mx_cpu->irq = irq;
+     mx_cpu->runstall = runstall;
  
-     l2sram = g_malloc0(sizeof(*l2sram));
-     /* XXX: Size is 4*64kB for 460ex, cf. U-Boot, ppc4xx-isram.h */
--    memory_region_init_ram(&l2sram->bank[0], NULL, "ppc4xx.l2sram_bank0",
-+    memory_region_init_ram(&l2sram->bank[0], owner, "ppc4xx.l2sram_bank0",
-                            64 * KiB, &error_abort);
--    memory_region_init_ram(&l2sram->bank[1], NULL, "ppc4xx.l2sram_bank1",
-+    memory_region_init_ram(&l2sram->bank[1], owner, "ppc4xx.l2sram_bank1",
-                            64 * KiB, &error_abort);
--    memory_region_init_ram(&l2sram->bank[2], NULL, "ppc4xx.l2sram_bank2",
-+    memory_region_init_ram(&l2sram->bank[2], owner, "ppc4xx.l2sram_bank2",
-                            64 * KiB, &error_abort);
--    memory_region_init_ram(&l2sram->bank[3], NULL, "ppc4xx.l2sram_bank3",
-+    memory_region_init_ram(&l2sram->bank[3], owner, "ppc4xx.l2sram_bank3",
-                            64 * KiB, &error_abort);
-     qemu_register_reset(&l2sram_reset, l2sram);
-     ppc_dcr_register(env, DCR_L2CACHE_CFG,
-diff --git a/hw/ppc/ppc4xx_sdram.c b/hw/ppc/ppc4xx_sdram.c
-index b2c8f96d5f..8be3bb3160 100644
---- a/hw/ppc/ppc4xx_sdram.c
-+++ b/hw/ppc/ppc4xx_sdram.c
-@@ -53,7 +53,7 @@
-  * must be one of a small set of sizes. The number of banks and the supported
-  * sizes varies by SoC.
-  */
--static bool ppc4xx_sdram_banks(MemoryRegion *ram, int nr_banks,
-+static bool ppc4xx_sdram_banks(Object *owner, MemoryRegion *ram, int nr_banks,
-                                Ppc4xxSdramBank ram_banks[],
-                                const ram_addr_t sdram_bank_sizes[],
-                                Error **errp)
-@@ -76,7 +76,7 @@ static bool ppc4xx_sdram_banks(MemoryRegion *ram, int nr_banks,
-                 base += bank_size;
-                 size_left -= bank_size;
-                 snprintf(name, sizeof(name), "ppc4xx.sdram%d", i);
--                memory_region_init_alias(&ram_banks[i].ram, NULL, name, ram,
-+                memory_region_init_alias(&ram_banks[i].ram, owner, name, ram,
-                                          ram_banks[i].base, ram_banks[i].size);
-                 break;
+-    memory_region_init_io(&mx_cpu->reg, NULL, &xtensa_mx_pic_ops, mx_cpu,
++    memory_region_init_io(&mx_cpu->reg, owner, &xtensa_mx_pic_ops, mx_cpu,
+                           "mx_pic", 0x280);
+ 
+     ++mx->n_cpu;
+diff --git a/hw/xtensa/sim.c b/hw/xtensa/sim.c
+index ad1439a0b4..e3cd69ceca 100644
+--- a/hw/xtensa/sim.c
++++ b/hw/xtensa/sim.c
+@@ -60,10 +60,11 @@ XtensaCPU *xtensa_sim_common_init(MachineState *machine)
+     XtensaCPU *cpu = NULL;
+     CPUXtensaState *env = NULL;
+     ram_addr_t ram_size = machine->ram_size;
++    Object *mo = OBJECT(machine);
+     int n;
+ 
+     for (n = 0; n < machine->smp.cpus; n++) {
+-        cpu = XTENSA_CPU(cpu_create(OBJECT(machine), "cpu[*]", machine->cpu_type));
++        cpu = XTENSA_CPU(cpu_create(mo, "cpu[*]", machine->cpu_type));
+         env = &cpu->env;
+ 
+         env->sregs[PRID] = n;
+@@ -78,17 +79,17 @@ XtensaCPU *xtensa_sim_common_init(MachineState *machine)
+         XtensaMemory sysram = env->config->sysram;
+ 
+         sysram.location[0].size = ram_size;
+-        xtensa_create_memory_regions(&env->config->instrom, "xtensa.instrom",
++        xtensa_create_memory_regions(mo, &env->config->instrom, "xtensa.instrom",
+                                      get_system_memory());
+-        xtensa_create_memory_regions(&env->config->instram, "xtensa.instram",
++        xtensa_create_memory_regions(mo, &env->config->instram, "xtensa.instram",
+                                      get_system_memory());
+-        xtensa_create_memory_regions(&env->config->datarom, "xtensa.datarom",
++        xtensa_create_memory_regions(mo, &env->config->datarom, "xtensa.datarom",
+                                      get_system_memory());
+-        xtensa_create_memory_regions(&env->config->dataram, "xtensa.dataram",
++        xtensa_create_memory_regions(mo, &env->config->dataram, "xtensa.dataram",
+                                      get_system_memory());
+-        xtensa_create_memory_regions(&env->config->sysrom, "xtensa.sysrom",
++        xtensa_create_memory_regions(mo, &env->config->sysrom, "xtensa.sysrom",
+                                      get_system_memory());
+-        xtensa_create_memory_regions(&sysram, "xtensa.sysram",
++        xtensa_create_memory_regions(mo, &sysram, "xtensa.sysram",
+                                      get_system_memory());
+     }
+     if (serial_hd(0)) {
+diff --git a/hw/xtensa/xtensa_memory.c b/hw/xtensa/xtensa_memory.c
+index 13a6077d86..4477eea0ad 100644
+--- a/hw/xtensa/xtensa_memory.c
++++ b/hw/xtensa/xtensa_memory.c
+@@ -31,7 +31,8 @@
+ #include "qemu/error-report.h"
+ #include "xtensa_memory.h"
+ 
+-void xtensa_create_memory_regions(const XtensaMemory *memory,
++void xtensa_create_memory_regions(Object *owner,
++                                  const XtensaMemory *memory,
+                                   const char *name,
+                                   MemoryRegion *super)
+ {
+@@ -43,7 +44,7 @@ void xtensa_create_memory_regions(const XtensaMemory *memory,
+ 
+         g_string_printf(num_name, "%s%u", name, i);
+         m = g_new(MemoryRegion, 1);
+-        memory_region_init_ram(m, NULL, num_name->str,
++        memory_region_init_ram(m, owner, num_name->str,
+                                memory->location[i].size, &error_fatal);
+         memory_region_add_subregion(super, memory->location[i].addr, m);
+     }
+diff --git a/hw/xtensa/xtensa_memory.h b/hw/xtensa/xtensa_memory.h
+index c86ad06685..b8b2d4b8b4 100644
+--- a/hw/xtensa/xtensa_memory.h
++++ b/hw/xtensa/xtensa_memory.h
+@@ -30,7 +30,8 @@
+ 
+ #include "target/xtensa/cpu.h"
+ 
+-void xtensa_create_memory_regions(const XtensaMemory *memory,
++void xtensa_create_memory_regions(Object *owner,
++                                  const XtensaMemory *memory,
+                                   const char *name,
+                                   MemoryRegion *super);
+ 
+diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
+index 1c48283f5d..f0c21180a2 100644
+--- a/hw/xtensa/xtfpga.c
++++ b/hw/xtensa/xtfpga.c
+@@ -125,12 +125,13 @@ static const MemoryRegionOps xtfpga_fpga_ops = {
+     .endianness = DEVICE_NATIVE_ENDIAN,
+ };
+ 
+-static XtfpgaFpgaState *xtfpga_fpga_init(MemoryRegion *address_space,
++static XtfpgaFpgaState *xtfpga_fpga_init(Object *owner,
++                                         MemoryRegion *address_space,
+                                          hwaddr base, uint32_t freq)
+ {
+     XtfpgaFpgaState *s = g_new(XtfpgaFpgaState, 1);
+ 
+-    memory_region_init_io(&s->iomem, NULL, &xtfpga_fpga_ops, s,
++    memory_region_init_io(&s->iomem, owner, &xtfpga_fpga_ops, s,
+                           "xtfpga.fpga", 0x10000);
+     memory_region_add_subregion(address_space, base, &s->iomem);
+     s->freq = freq;
+@@ -243,6 +244,7 @@ static void xtfpga_init(const XtfpgaBoardDesc *board, MachineState *machine)
+     uint32_t freq = 10000000;
+     int n;
+     unsigned int smp_cpus = machine->smp.cpus;
++    Object *mo = OBJECT(machine);
+ 
+     if (smp_cpus > 1) {
+         mx_pic = xtensa_mx_pic_init(31);
+@@ -262,7 +264,7 @@ static void xtfpga_init(const XtfpgaBoardDesc *board, MachineState *machine)
+         if (mx_pic) {
+             MemoryRegion *mx_eri;
+ 
+-            mx_eri = xtensa_mx_pic_register_cpu(mx_pic,
++            mx_eri = xtensa_mx_pic_register_cpu(OBJECT(machine), mx_pic,
+                                                 xtensa_get_extints(cenv),
+                                                 xtensa_get_runstall(cenv));
+             memory_region_add_subregion(xtensa_get_er_region(cenv),
+@@ -286,30 +288,30 @@ static void xtfpga_init(const XtfpgaBoardDesc *board, MachineState *machine)
+         XtensaMemory sysram = env->config->sysram;
+ 
+         sysram.location[0].size = machine->ram_size;
+-        xtensa_create_memory_regions(&env->config->instrom, "xtensa.instrom",
++        xtensa_create_memory_regions(mo, &env->config->instrom, "xtensa.instrom",
+                                      system_memory);
+-        xtensa_create_memory_regions(&env->config->instram, "xtensa.instram",
++        xtensa_create_memory_regions(mo, &env->config->instram, "xtensa.instram",
+                                      system_memory);
+-        xtensa_create_memory_regions(&env->config->datarom, "xtensa.datarom",
++        xtensa_create_memory_regions(mo, &env->config->datarom, "xtensa.datarom",
+                                      system_memory);
+-        xtensa_create_memory_regions(&env->config->dataram, "xtensa.dataram",
++        xtensa_create_memory_regions(mo, &env->config->dataram, "xtensa.dataram",
+                                      system_memory);
+-        xtensa_create_memory_regions(&sysram, "xtensa.sysram",
++        xtensa_create_memory_regions(mo, &sysram, "xtensa.sysram",
+                                      system_memory);
+     }
+ 
+     system_io = g_malloc(sizeof(*system_io));
+-    memory_region_init_io(system_io, NULL, &xtfpga_io_ops, NULL, "xtfpga.io",
++    memory_region_init_io(system_io, OBJECT(machine), &xtfpga_io_ops, NULL, "xtfpga.io",
+                           system_io_size);
+     memory_region_add_subregion(system_memory, board->io[0], system_io);
+     if (board->io[1]) {
+         MemoryRegion *io = g_malloc(sizeof(*io));
+ 
+-        memory_region_init_alias(io, NULL, "xtfpga.io.cached",
++        memory_region_init_alias(io, OBJECT(machine), "xtfpga.io.cached",
+                                  system_io, 0, system_io_size);
+         memory_region_add_subregion(system_memory, board->io[1], io);
+     }
+-    xtfpga_fpga_init(system_io, 0x0d020000, freq);
++    xtfpga_fpga_init(OBJECT(machine), system_io, 0x0d020000, freq);
+     xtfpga_net_init(system_io, 0x0d030000, 0x0d030400, 0x0d800000, extints[1]);
+ 
+     serial_mm_init(OBJECT(machine), system_io, 0x0d050020, 2, extints[0],
+@@ -341,7 +343,7 @@ static void xtfpga_init(const XtfpgaBoardDesc *board, MachineState *machine)
+         lowmem_end += env->config->sysram.location[0].addr;
+         cur_lowmem += env->config->sysram.location[0].addr;
+ 
+-        xtensa_create_memory_regions(&env->config->sysrom, "xtensa.sysrom",
++        xtensa_create_memory_regions(mo, &env->config->sysrom, "xtensa.sysrom",
+                                      system_memory);
+ 
+         if (kernel_cmdline) {
+@@ -465,13 +467,13 @@ static void xtfpga_init(const XtfpgaBoardDesc *board, MachineState *machine)
+                 size = board->flash->size - board->flash->boot_base;
              }
-@@ -108,10 +108,10 @@ static bool ppc4xx_sdram_banks(MemoryRegion *ram, int nr_banks,
-     return true;
- }
  
--static void sdram_bank_map(Ppc4xxSdramBank *bank)
-+static void sdram_bank_map(Object *owner, Ppc4xxSdramBank *bank)
- {
-     trace_ppc4xx_sdram_map(bank->base, bank->size);
--    memory_region_init(&bank->container, NULL, "sdram-container", bank->size);
-+    memory_region_init(&bank->container, owner, "sdram-container", bank->size);
-     memory_region_add_subregion(&bank->container, 0, &bank->ram);
-     memory_region_add_subregion(get_system_memory(), bank->base,
-                                 &bank->container);
-@@ -125,7 +125,7 @@ static void sdram_bank_unmap(Ppc4xxSdramBank *bank)
-     object_unparent(OBJECT(&bank->container));
- }
- 
--static void sdram_bank_set_bcr(Ppc4xxSdramBank *bank, uint32_t bcr,
-+static void sdram_bank_set_bcr(Object *owner, Ppc4xxSdramBank *bank, uint32_t bcr,
-                                hwaddr base, hwaddr size, int enabled)
- {
-     if (memory_region_is_mapped(&bank->container)) {
-@@ -135,7 +135,7 @@ static void sdram_bank_set_bcr(Ppc4xxSdramBank *bank, uint32_t bcr,
-     bank->base = base;
-     bank->size = size;
-     if (enabled && (bcr & 1)) {
--        sdram_bank_map(bank);
-+        sdram_bank_map(owner, bank);
-     }
- }
- 
-@@ -296,7 +296,7 @@ static void sdram_ddr_dcr_write(void *opaque, int dcrn, uint32_t val)
-                 /* validate all RAM mappings */
-                 for (i = 0; i < s->nbanks; i++) {
-                     if (s->bank[i].size) {
--                        sdram_bank_set_bcr(&s->bank[i], s->bank[i].bcr,
-+                        sdram_bank_set_bcr(OBJECT(s), &s->bank[i], s->bank[i].bcr,
-                                            s->bank[i].base, s->bank[i].size,
-                                            1);
-                     }
-@@ -307,7 +307,7 @@ static void sdram_ddr_dcr_write(void *opaque, int dcrn, uint32_t val)
-                 /* invalidate all RAM mappings */
-                 for (i = 0; i < s->nbanks; i++) {
-                     if (s->bank[i].size) {
--                        sdram_bank_set_bcr(&s->bank[i], s->bank[i].bcr,
-+                        sdram_bank_set_bcr(OBJECT(s), &s->bank[i], s->bank[i].bcr,
-                                            s->bank[i].base, s->bank[i].size,
-                                            0);
-                     }
-@@ -337,7 +337,7 @@ static void sdram_ddr_dcr_write(void *opaque, int dcrn, uint32_t val)
-             i = (s->addr - 0x40) / 4;
-             val &= SDRAM_DDR_BCR_MASK;
-             if (s->bank[i].size) {
--                sdram_bank_set_bcr(&s->bank[i], val,
-+                sdram_bank_set_bcr(OBJECT(s), &s->bank[i], val,
-                                    sdram_ddr_base(val), sdram_ddr_size(val),
-                                    s->cfg & 0x80000000);
-             }
-@@ -400,17 +400,17 @@ static void ppc4xx_sdram_ddr_realize(DeviceState *dev, Error **errp)
-         error_setg(errp, "Missing dram memory region");
-         return;
-     }
--    if (!ppc4xx_sdram_banks(s->dram_mr, s->nbanks, s->bank,
-+    if (!ppc4xx_sdram_banks(OBJECT(s), s->dram_mr, s->nbanks, s->bank,
-                             valid_bank_sizes, errp)) {
-         return;
-     }
-     for (i = 0; i < s->nbanks; i++) {
-         if (s->bank[i].size) {
-             s->bank[i].bcr = sdram_ddr_bcr(s->bank[i].base, s->bank[i].size);
--            sdram_bank_set_bcr(&s->bank[i], s->bank[i].bcr,
-+            sdram_bank_set_bcr(OBJECT(s), &s->bank[i], s->bank[i].bcr,
-                                s->bank[i].base, s->bank[i].size, 0);
+-            memory_region_init_alias(flash_io, NULL, "xtfpga.flash",
++            memory_region_init_alias(flash_io, OBJECT(machine), "xtfpga.flash",
+                                      flash_mr, board->flash->boot_base, size);
+             memory_region_add_subregion(system_memory,
+                                         env->config->sysrom.location[0].addr,
+                                         flash_io);
          } else {
--            sdram_bank_set_bcr(&s->bank[i], 0, 0, 0, 0);
-+            sdram_bank_set_bcr(OBJECT(s), &s->bank[i], 0, 0, 0, 0);
+-            xtensa_create_memory_regions(&env->config->sysrom, "xtensa.sysrom",
++            xtensa_create_memory_regions(mo, &env->config->sysrom, "xtensa.sysrom",
+                                          system_memory);
          }
-         trace_ppc4xx_sdram_init(sdram_ddr_base(s->bank[i].bcr),
-                                 sdram_ddr_size(s->bank[i].bcr),
-@@ -607,7 +607,7 @@ static void sdram_ddr2_dcr_write(void *opaque, int dcrn, uint32_t val)
-                 /* validate all RAM mappings */
-                 for (i = 0; i < s->nbanks; i++) {
-                     if (s->bank[i].size) {
--                        sdram_bank_set_bcr(&s->bank[i], s->bank[i].bcr,
-+                        sdram_bank_set_bcr(OBJECT(s), &s->bank[i], s->bank[i].bcr,
-                                            s->bank[i].base, s->bank[i].size,
-                                            1);
-                     }
-@@ -619,7 +619,7 @@ static void sdram_ddr2_dcr_write(void *opaque, int dcrn, uint32_t val)
-                 /* invalidate all RAM mappings */
-                 for (i = 0; i < s->nbanks; i++) {
-                     if (s->bank[i].size) {
--                        sdram_bank_set_bcr(&s->bank[i], s->bank[i].bcr,
-+                        sdram_bank_set_bcr(OBJECT(s), &s->bank[i], s->bank[i].bcr,
-                                            s->bank[i].base, s->bank[i].size,
-                                            0);
-                     }
-@@ -666,7 +666,7 @@ static void ppc4xx_sdram_ddr2_realize(DeviceState *dev, Error **errp)
-         error_setg(errp, "Missing dram memory region");
-         return;
      }
--    if (!ppc4xx_sdram_banks(s->dram_mr, s->nbanks, s->bank,
-+    if (!ppc4xx_sdram_banks(OBJECT(s), s->dram_mr, s->nbanks, s->bank,
-                             valid_bank_sizes, errp)) {
-         return;
-     }
-@@ -674,10 +674,10 @@ static void ppc4xx_sdram_ddr2_realize(DeviceState *dev, Error **errp)
-         if (s->bank[i].size) {
-             s->bank[i].bcr = sdram_ddr2_bcr(s->bank[i].base, s->bank[i].size);
-             s->bank[i].bcr &= SDRAM_DDR2_BCR_MASK;
--            sdram_bank_set_bcr(&s->bank[i], s->bank[i].bcr,
-+            sdram_bank_set_bcr(OBJECT(s), &s->bank[i], s->bank[i].bcr,
-                                s->bank[i].base, s->bank[i].size, 0);
-         } else {
--            sdram_bank_set_bcr(&s->bank[i], 0, 0, 0, 0);
-+            sdram_bank_set_bcr(OBJECT(s), &s->bank[i], 0, 0, 0, 0);
-         }
-         trace_ppc4xx_sdram_init(sdram_ddr2_base(s->bank[i].bcr),
-                                 sdram_ddr2_size(s->bank[i].bcr),
-diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
-index 52f94b206a..c79736a1f3 100644
---- a/hw/ppc/prep.c
-+++ b/hw/ppc/prep.c
-@@ -274,7 +274,7 @@ static void ibm_40p_init(MachineState *machine)
-         error_report("Could not find bios image '%s'", bios_name);
-         exit(1);
-     }
--    memory_region_init_rom(bios, NULL, "bios", BIOS_SIZE, &error_fatal);
-+    memory_region_init_rom(bios, OBJECT(machine), "bios", BIOS_SIZE, &error_fatal);
-     memory_region_add_subregion(get_system_memory(), BIOS_ADDR, bios);
-     bios_size = load_elf(filename, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-                          ELFDATA2MSB, PPC_ELF_MACHINE, 0, 0);
-diff --git a/hw/ppc/sam460ex.c b/hw/ppc/sam460ex.c
-index 59c217e2b2..20b2acb40b 100644
---- a/hw/ppc/sam460ex.c
-+++ b/hw/ppc/sam460ex.c
-@@ -375,9 +375,9 @@ static void sam460ex_init(MachineState *machine)
-     ppc4xx_dma_init(env, 0x200);
+diff --git a/include/hw/xtensa/mx_pic.h b/include/hw/xtensa/mx_pic.h
+index cd316d86eb..01d5ea884e 100644
+--- a/include/hw/xtensa/mx_pic.h
++++ b/include/hw/xtensa/mx_pic.h
+@@ -35,7 +35,7 @@ typedef struct XtensaMxPic XtensaMxPic;
  
-     /* 256K of L2 cache as memory */
--    ppc4xx_l2sram_init(env);
-+    ppc4xx_l2sram_init(OBJECT(machine), env);
-     /* FIXME: remove this after fixing l2sram mapping in ppc440_uc.c? */
--    memory_region_init_ram(l2cache_ram, NULL, "ppc440.l2cache_ram", 256 * KiB,
-+    memory_region_init_ram(l2cache_ram, OBJECT(machine), "ppc440.l2cache_ram", 256 * KiB,
-                            &error_abort);
-     memory_region_add_subregion(get_system_memory(), 0x400000000LL,
-                                 l2cache_ram);
+ XtensaMxPic *xtensa_mx_pic_init(unsigned n_extint);
+ void xtensa_mx_pic_reset(void *opaque);
+-MemoryRegion *xtensa_mx_pic_register_cpu(XtensaMxPic *mx,
++MemoryRegion *xtensa_mx_pic_register_cpu(Object *owner, XtensaMxPic *mx,
+                                          qemu_irq *irq,
+                                          qemu_irq runstall);
+ qemu_irq *xtensa_mx_pic_get_extints(XtensaMxPic *mx);
 -- 
 2.47.1
 
