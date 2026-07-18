@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8585C44523
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8548C4450A
 	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:53:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlCyG-00087P-QC; Sat, 18 Jul 2026 17:53:20 -0400
+	id 1wlCyP-0000AA-3e; Sat, 18 Jul 2026 17:53:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlCyE-0007x7-Rs; Sat, 18 Jul 2026 17:53:19 -0400
-Received: from pdx-out-014.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([35.83.148.184])
+ id 1wlCyO-00006C-3Z; Sat, 18 Jul 2026 17:53:28 -0400
+Received: from pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.26.1.71])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlCyC-00044j-6n; Sat, 18 Jul 2026 17:53:18 -0400
+ id 1wlCyL-00045o-H4; Sat, 18 Jul 2026 17:53:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784411596; x=1815947596;
+ t=1784411605; x=1815947605;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=YSVHDbm9pGvbCq3x/ZXvqfLKh29t19oRcnpwNquQT6A=;
- b=nXTgfN42HiCYERHHOP5K/zgNinUU8+CWn6nyWdPye24UioLNdDHPmrLV
- kpSCdXo1zFnFPo29UxEohozDtmFwfiIenEZdc39kRd8uv9h0UXBlBNtdU
- XE3xp1aphdLaqQj5UUFetjnq7Bbr1SpAgoH7q38Dz5L3w1bxyQV2kLiSM
- uN506CyAZ6AwN+WSerjbV1qk1z/vuFyMKbpHaistT6MAkl37AvKHjKXZF
- RkSCl+TKfmzV+cGikn4264xbDnk29BvVGw5QmfC5zjBRUwddLqV3Q1bG/
- RrECpT29VsX2smEXjE7gfbKg3ZT++K7zYI/Qsnp9SGyAZwS0se0KUQO19 A==;
-X-CSE-ConnectionGUID: ayOEKACyR3yKaT/udj9Bwg==
-X-CSE-MsgGUID: YUOt02SxRLWi6XuleHhHYg==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23712484"
+ bh=4YQdQnrp7xnjDNq4HBV3zaDNvDKiBrkcsaDcDukGNdU=;
+ b=G5fbgxuQ0nZ9MhIFdPMtxkOCGwHvuqGkd/KXpthIKyBmgilNNfzIUo4I
+ VcX8tJ/RNBkBxY2vQxFt+d6Skb62nLymuZa+eDryDUNSxytbsoE0m7fCM
+ MZ+jvqYGqU5fszFiodLW5eQjKzTPE2fXDSDdw42YB+iF4xKUfV4X522O1
+ I1Pbx5A4/4Kreje4m6KHVB4x/0n9JYFWja/UGUHvoQpWeL02DiQMnaSYN
+ NUK0mt7hwtcQlWh2Xn4LjKXcBED4hWWCHgUHSts9q+bphyAdUI5vDnjfq
+ U9nbCIBLudumb56rq0UGPlDBuJHudRRQOYI/cNsveV5tf3pUTNX8kwyL0 g==;
+X-CSE-ConnectionGUID: p5Jti7seRmi5VXx89N2SZg==
+X-CSE-MsgGUID: /oJwLT1+T4OVc7QUlh9dcw==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23944219"
 Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
  smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
- by internal-pdx-out-014.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:53:12 +0000
-Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.51:3631]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.41.246:2525]
+ by internal-pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:53:21 +0000
+Received: from EX19MTAUWC002.ant.amazon.com [205.251.233.51:29904]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.30.230:2525]
  with esmtp (Farcaster)
- id a5f6152f-118b-4567-b840-9e8dd8250b94; Sat, 18 Jul 2026 21:53:11 +0000 (UTC)
-X-Farcaster-Flow-ID: a5f6152f-118b-4567-b840-9e8dd8250b94
+ id 7b924b66-ad96-4acc-ad9f-01d82394975f; Sat, 18 Jul 2026 21:53:20 +0000 (UTC)
+X-Farcaster-Flow-ID: 7b924b66-ad96-4acc-ad9f-01d82394975f
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
+ EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:53:11 +0000
+ Sat, 18 Jul 2026 21:53:20 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:53:01 +0000
+ Sat, 18 Jul 2026 21:53:11 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,10 +93,10 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 058/137] hw/arm/sbsa-ref: Give onboard devices a QOM
+Subject: [RFC PATCH v2 059/137] hw/arm/xilinx-zynq: Give onboard devices a QOM
  parent
-Date: Sat, 18 Jul 2026 21:35:33 +0000
-Message-ID: <20260718213652.37673-59-graf@amazon.com>
+Date: Sat, 18 Jul 2026 21:35:34 +0000
+Message-ID: <20260718213652.37673-60-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -107,9 +107,9 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D037UWB001.ant.amazon.com (10.13.138.123) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=35.83.148.184;
+Received-SPF: pass client-ip=52.26.1.71;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-014.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -133,7 +133,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the *_orphan() device-creation calls in the hw/arm sbsa-ref
+Convert the *_orphan() device-creation calls in the hw/arm xilinx-zynq
 board files to the new parented API introduced earlier in this
 series, so every onboard device gets a stable path in the
 composition tree instead of landing in /machine/unattached with an
@@ -145,294 +145,258 @@ composite children.  Names follow existing QOM conventions.
 
 Per-site rationale (reviewers: dispute the modeling here):
 
-hw/arm/sbsa-ref.c:299 | qdev_new | OBJECT(sms) | name | collapse existing object_property_add_child(OBJECT(sms), name, ...); keep existing name; sbsa_flash_map1 realize -> sysbus_realize
-hw/arm/sbsa-ref.c:424 | qdev_new | OBJECT(sms) | "its" | helper receives SBSAMachineState* board pointer
-hw/arm/sbsa-ref.c:443 | qdev_new | OBJECT(sms) | "gic" | helper receives SBSAMachineState* board pointer
-hw/arm/sbsa-ref.c:525 | qdev_new | OBJECT(sms) | "uart[*]" | helper called 3x from board init -> auto-index; drop const
-hw/arm/sbsa-ref.c:540 | sysbus_create_simple | OBJECT(sms) | "rtc" | helper receives SBSAMachineState*; drop const
-hw/arm/sbsa-ref.c:547 | qdev_new | OBJECT(sms) | "wdt" | helper receives SBSAMachineState*; drop const
-hw/arm/sbsa-ref.c:575 | sysbus_create_simple | OBJECT(sms) | "gpio" | helper receives SBSAMachineState*; drop const
-hw/arm/sbsa-ref.c:578 | sysbus_create_simple | OBJECT(sms) | "gpio-key" | helper receives SBSAMachineState*
-hw/arm/sbsa-ref.c:593 | qdev_new | OBJECT(sms) | "ahci" | helper receives SBSAMachineState*; drop const
-hw/arm/sbsa-ref.c:608 | qdev_new | OBJECT(sms) | "xhci" | helper receives SBSAMachineState*; drop const
-hw/arm/sbsa-ref.c:625 | qdev_new | OBJECT(sms) | "smmuv3" | helper receives SBSAMachineState*; drop const
-hw/arm/sbsa-ref.c:661 | qdev_new | OBJECT(sms) | "pcie" | helper receives SBSAMachineState*
-hw/arm/sbsa-ref.c:698 | pci_create_simple | OBJECT(sms) | "bochs-display" | board owns lifetime; bus is plug location not parent
-hw/arm/sbsa-ref.c:715 | qdev_new | parent | "sbsa-ec" | helper lacks parent-capable pointer -> thread Object *parent from sbsa_ref_init
+hw/arm/xilinx_zynq.c:113 | qdev_new | parent | "gem[*]" | thread Object *parent into gem_init(); board init callers pass OBJECT(machine); sysbus_realize
+hw/arm/xilinx_zynq.c:134 | qdev_new | parent | is_qspi?"qspi":"spi[*]" | thread Object *parent into zynq_init_spi_flashes(); sysbus_realize
+hw/arm/xilinx_zynq.c:155 | qdev_new | OBJECT(dev) | "flash[*]" | flash owned by SPI controller; qdev_realize
+hw/arm/xilinx_zynq.c:198 | qdev_new | parent | "ddr-ctrl" | thread Object *parent into ddr_ctrl_init(); sysbus_realize
+hw/arm/xilinx_zynq.c:259 | qdev_new | OBJECT(machine) | "slcr" | board init; sysbus_realize
+hw/arm/xilinx_zynq.c:265 | qdev_new | OBJECT(machine) | "a9mpcore" | board init; sysbus_realize
+hw/arm/xilinx_zynq.c:272 | sysbus_create_varargs | OBJECT(machine) | "l2x0" | board init; create_simple realizes internally
+hw/arm/xilinx_zynq.c:290 | sysbus_create_simple | OBJECT(machine) | "usb[*]" | board init; two ChipIdea USB controllers
+hw/arm/xilinx_zynq.c:291 | sysbus_create_simple | OBJECT(machine) | "usb[*]" | board init
+hw/arm/xilinx_zynq.c:293 | qdev_new | OBJECT(machine) | "uart[*]" | board init; sysbus_realize
+hw/arm/xilinx_zynq.c:301 | qdev_new | OBJECT(machine) | "uart[*]" | board init; sysbus_realize
+hw/arm/xilinx_zynq.c:310 | sysbus_create_varargs | OBJECT(machine) | "ttc[*]" | board init; two Cadence TTCs
+hw/arm/xilinx_zynq.c:312 | sysbus_create_varargs | OBJECT(machine) | "ttc[*]" | board init
+hw/arm/xilinx_zynq.c:332 | qdev_new | OBJECT(machine) | "sdhci[*]" | board init loop; sysbus_realize
+hw/arm/xilinx_zynq.c:341 | qdev_new | OBJECT(dev) | "sd-card" | card owned by its SDHCI controller; qdev_realize
+hw/arm/xilinx_zynq.c:347 | qdev_new | OBJECT(machine) | "xadc" | board init; sysbus_realize
+hw/arm/xilinx_zynq.c:352 | qdev_new | OBJECT(machine) | "dma" | board init pl330 DMA; sysbus_realize
+hw/arm/xilinx_zynq.c:375 | qdev_new | OBJECT(machine) | "devcfg" | board init; sysbus_realize
 
 Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/arm/sbsa-ref.c | 82 +++++++++++++++++++++--------------------------
- 1 file changed, 36 insertions(+), 46 deletions(-)
+ hw/arm/xilinx_zynq.c | 92 ++++++++++++++++++++++++--------------------
+ 1 file changed, 50 insertions(+), 42 deletions(-)
 
-diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
-index f9fb681d31..bb35de1616 100644
---- a/hw/arm/sbsa-ref.c
-+++ b/hw/arm/sbsa-ref.c
-@@ -296,7 +296,7 @@ static PFlashCFI01 *sbsa_flash_create1(SBSAMachineState *sms,
-      * Create a single flash device.  We use the same parameters as
-      * the flash devices on the Versatile Express board.
-      */
--    DeviceState *dev = qdev_new_orphan(TYPE_PFLASH_CFI01);
-+    DeviceState *dev = qdev_new(OBJECT(sms), name, TYPE_PFLASH_CFI01);
+diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
+index ba00c5a3aa..378ab532a3 100644
+--- a/hw/arm/xilinx_zynq.c
++++ b/hw/arm/xilinx_zynq.c
+@@ -105,22 +105,23 @@ static void zynq_write_board_setup(ARMCPU *cpu,
  
-     qdev_prop_set_uint64(dev, "sector-length", SBSA_FLASH_SECTOR_SIZE);
-     qdev_prop_set_uint8(dev, "width", 4);
-@@ -307,7 +307,6 @@ static PFlashCFI01 *sbsa_flash_create1(SBSAMachineState *sms,
-     qdev_prop_set_uint16(dev, "id2", 0x00);
-     qdev_prop_set_uint16(dev, "id3", 0x00);
-     qdev_prop_set_string(dev, "name", name);
--    object_property_add_child(OBJECT(sms), name, OBJECT(dev));
-     object_property_add_alias(OBJECT(sms), alias_prop_name,
-                               OBJECT(dev), "drive");
-     return PFLASH_CFI01(dev);
-@@ -328,7 +327,7 @@ static void sbsa_flash_map1(PFlashCFI01 *flash,
-     assert(QEMU_IS_ALIGNED(size, SBSA_FLASH_SECTOR_SIZE));
-     assert(size / SBSA_FLASH_SECTOR_SIZE <= UINT32_MAX);
-     qdev_prop_set_uint32(dev, "num-blocks", size / SBSA_FLASH_SECTOR_SIZE);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+ static struct arm_boot_info zynq_binfo = {};
  
-     memory_region_add_subregion(sysmem, base,
-                                 sysbus_mmio_get_region(SYS_BUS_DEVICE(dev),
-@@ -421,11 +420,11 @@ static void create_its(SBSAMachineState *sms)
-     const char *itsclass = its_class_name();
+-static void gem_init(uint32_t base, qemu_irq irq)
++static void gem_init(Object *parent, uint32_t base, qemu_irq irq)
+ {
      DeviceState *dev;
+     SysBusDevice *s;
  
--    dev = qdev_new_orphan(itsclass);
-+    dev = qdev_new(OBJECT(sms), "its", itsclass);
- 
-     object_property_set_link(OBJECT(dev), "parent-gicv3", OBJECT(sms->gic),
-                              &error_abort);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
-     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, sbsa_ref_memmap[SBSA_GIC_ITS].base);
- }
- 
-@@ -440,7 +439,7 @@ static void create_gic(SBSAMachineState *sms, MemoryRegion *mem)
- 
-     gictype = gicv3_class_name();
- 
--    sms->gic = qdev_new_orphan(gictype);
-+    sms->gic = qdev_new(OBJECT(sms), "gic", gictype);
-     qdev_prop_set_uint32(sms->gic, "revision", 3);
-     qdev_prop_set_uint32(sms->gic, "num-cpu", smp_cpus);
-     /*
-@@ -463,7 +462,7 @@ static void create_gic(SBSAMachineState *sms, MemoryRegion *mem)
-     qdev_prop_set_bit(sms->gic, "has-lpi", true);
- 
-     gicbusdev = SYS_BUS_DEVICE(sms->gic);
--    sysbus_realize_and_unref(gicbusdev, &error_fatal);
-+    sysbus_realize(gicbusdev, &error_fatal);
-     sysbus_mmio_map(gicbusdev, 0, sbsa_ref_memmap[SBSA_GIC_DIST].base);
-     sysbus_mmio_map(gicbusdev, 1, sbsa_ref_memmap[SBSA_GIC_REDIST].base);
- 
-@@ -517,39 +516,40 @@ static void create_gic(SBSAMachineState *sms, MemoryRegion *mem)
-     create_its(sms);
- }
- 
--static void create_uart(const SBSAMachineState *sms, int uart,
-+static void create_uart(SBSAMachineState *sms, int uart,
-                         MemoryRegion *mem, Chardev *chr)
- {
-     hwaddr base = sbsa_ref_memmap[uart].base;
-     int irq = sbsa_ref_irqmap[uart];
--    DeviceState *dev = qdev_new_orphan(TYPE_PL011);
-+    DeviceState *dev = qdev_new(OBJECT(sms), "uart[*]", TYPE_PL011);
-     SysBusDevice *s = SYS_BUS_DEVICE(dev);
- 
-     qdev_prop_set_chr(dev, "chardev", chr);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
-     memory_region_add_subregion(mem, base,
-                                 sysbus_mmio_get_region(s, 0));
-     sysbus_connect_irq(s, 0, qdev_get_gpio_in(sms->gic, irq));
- }
- 
--static void create_rtc(const SBSAMachineState *sms)
-+static void create_rtc(SBSAMachineState *sms)
- {
-     hwaddr base = sbsa_ref_memmap[SBSA_RTC].base;
-     int irq = sbsa_ref_irqmap[SBSA_RTC];
- 
--    sysbus_create_simple_orphan("pl031", base, qdev_get_gpio_in(sms->gic, irq));
-+    sysbus_create_simple(OBJECT(sms), "rtc", "pl031", base,
-+                         qdev_get_gpio_in(sms->gic, irq));
- }
- 
--static void create_wdt(const SBSAMachineState *sms)
-+static void create_wdt(SBSAMachineState *sms)
- {
-     hwaddr rbase = sbsa_ref_memmap[SBSA_GWDT_REFRESH].base;
-     hwaddr cbase = sbsa_ref_memmap[SBSA_GWDT_CONTROL].base;
--    DeviceState *dev = qdev_new_orphan(TYPE_WDT_SBSA);
-+    DeviceState *dev = qdev_new(OBJECT(sms), "wdt", TYPE_WDT_SBSA);
-     SysBusDevice *s = SYS_BUS_DEVICE(dev);
-     int irq = sbsa_ref_irqmap[SBSA_GWDT_WS0];
- 
-     qdev_prop_set_uint64(dev, "clock-frequency", SBSA_GTIMER_HZ);
+-    dev = qdev_new_orphan(TYPE_CADENCE_GEM);
++    dev = qdev_new(parent, "gem[*]", TYPE_CADENCE_GEM);
+     qemu_configure_nic_device(dev, true, NULL);
+     object_property_set_int(OBJECT(dev), "phy-addr", 7, &error_abort);
+     s = SYS_BUS_DEVICE(dev);
 -    sysbus_realize_and_unref(s, &error_fatal);
 +    sysbus_realize(s, &error_fatal);
-     sysbus_mmio_map(s, 0, rbase);
-     sysbus_mmio_map(s, 1, cbase);
-     sysbus_connect_irq(s, 0, qdev_get_gpio_in(sms->gic, irq));
-@@ -566,23 +566,23 @@ static Notifier sbsa_ref_powerdown_notifier = {
-     .notify = sbsa_ref_powerdown_req
- };
- 
--static void create_gpio(const SBSAMachineState *sms)
-+static void create_gpio(SBSAMachineState *sms)
- {
-     DeviceState *pl061_dev;
-     hwaddr base = sbsa_ref_memmap[SBSA_GPIO].base;
-     int irq = sbsa_ref_irqmap[SBSA_GPIO];
- 
--    pl061_dev = sysbus_create_simple_orphan("pl061", base,
-+    pl061_dev = sysbus_create_simple(OBJECT(sms), "gpio", "pl061", base,
-                                      qdev_get_gpio_in(sms->gic, irq));
- 
--    gpio_key_dev = sysbus_create_simple_orphan("gpio-key", -1,
--                                        qdev_get_gpio_in(pl061_dev, 3));
-+    gpio_key_dev = sysbus_create_simple(OBJECT(sms), "gpio-key", "gpio-key",
-+                                        -1, qdev_get_gpio_in(pl061_dev, 3));
- 
-     /* connect powerdown request */
-     qemu_register_powerdown_notifier(&sbsa_ref_powerdown_notifier);
+     sysbus_mmio_map(s, 0, base);
+     sysbus_connect_irq(s, 0, irq);
  }
  
--static void create_ahci(const SBSAMachineState *sms)
-+static void create_ahci(SBSAMachineState *sms)
+-static inline int zynq_init_spi_flashes(uint32_t base_addr, qemu_irq irq,
+-                                        bool is_qspi, int unit0)
++static inline int zynq_init_spi_flashes(Object *parent, uint32_t base_addr,
++                                        qemu_irq irq, bool is_qspi,
++                                        int unit0)
  {
-     hwaddr base = sbsa_ref_memmap[SBSA_AHCI].base;
-     int irq = sbsa_ref_irqmap[SBSA_AHCI];
-@@ -590,9 +590,9 @@ static void create_ahci(const SBSAMachineState *sms)
-     DriveInfo *hd[NUM_SATA_PORTS];
-     SysbusAHCIState *sysahci;
- 
--    dev = qdev_new_orphan("sysbus-ahci");
-+    dev = qdev_new(OBJECT(sms), "ahci", "sysbus-ahci");
-     qdev_prop_set_uint32(dev, "num-ports", NUM_SATA_PORTS);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
-     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
-     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, qdev_get_gpio_in(sms->gic, irq));
- 
-@@ -601,19 +601,19 @@ static void create_ahci(const SBSAMachineState *sms)
-     ahci_ide_create_devs(&sysahci->ahci, hd);
- }
- 
--static void create_xhci(const SBSAMachineState *sms)
-+static void create_xhci(SBSAMachineState *sms)
- {
-     hwaddr base = sbsa_ref_memmap[SBSA_XHCI].base;
-     int irq = sbsa_ref_irqmap[SBSA_XHCI];
--    DeviceState *dev = qdev_new_orphan(TYPE_XHCI_SYSBUS);
-+    DeviceState *dev = qdev_new(OBJECT(sms), "xhci", TYPE_XHCI_SYSBUS);
-     qdev_prop_set_uint32(dev, "slots", XHCI_MAXSLOTS);
- 
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
-     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
-     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, qdev_get_gpio_in(sms->gic, irq));
- }
- 
--static void create_smmu(const SBSAMachineState *sms, PCIBus *bus,
-+static void create_smmu(SBSAMachineState *sms, PCIBus *bus,
-                         MemoryRegion *sysmem,
-                         MemoryRegion *secure_sysmem)
- {
-@@ -622,7 +622,7 @@ static void create_smmu(const SBSAMachineState *sms, PCIBus *bus,
+     int unit = unit0;
      DeviceState *dev;
-     int i;
+@@ -131,12 +132,13 @@ static inline int zynq_init_spi_flashes(uint32_t base_addr, qemu_irq irq,
+     int num_busses =  is_qspi ? NUM_QSPI_BUSSES : 1;
+     int num_ss = is_qspi ? NUM_QSPI_FLASHES : NUM_SPI_FLASHES;
  
--    dev = qdev_new_orphan(TYPE_ARM_SMMUV3);
-+    dev = qdev_new(OBJECT(sms), "smmuv3", TYPE_ARM_SMMUV3);
+-    dev = qdev_new_orphan(is_qspi ? "xlnx.ps7-qspi" : "xlnx.ps7-spi");
++    dev = qdev_new(parent, is_qspi ? "qspi" : "spi[*]",
++                   is_qspi ? "xlnx.ps7-qspi" : "xlnx.ps7-spi");
+     qdev_prop_set_uint8(dev, "num-txrx-bytes", is_qspi ? 4 : 1);
+     qdev_prop_set_uint8(dev, "num-ss-bits", num_ss);
+     qdev_prop_set_uint8(dev, "num-busses", num_busses);
+     busdev = SYS_BUS_DEVICE(dev);
+-    sysbus_realize_and_unref(busdev, &error_fatal);
++    sysbus_realize(busdev, &error_fatal);
+     sysbus_mmio_map(busdev, 0, base_addr);
+     if (is_qspi) {
+         sysbus_mmio_map(busdev, 1, 0xFC000000);
+@@ -152,14 +154,14 @@ static inline int zynq_init_spi_flashes(uint32_t base_addr, qemu_irq irq,
  
-     object_property_set_str(OBJECT(dev), "stage", "nested", &error_abort);
-     object_property_set_link(OBJECT(dev), "primary-bus", OBJECT(bus),
-@@ -631,7 +631,7 @@ static void create_smmu(const SBSAMachineState *sms, PCIBus *bus,
-                              &error_abort);
-     object_property_set_link(OBJECT(dev), "secure-memory", OBJECT(secure_sysmem),
-                              &error_abort);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
-     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
-     for (i = 0; i < NUM_SMMU_IRQS; i++) {
-         sysbus_connect_irq(SYS_BUS_DEVICE(dev), i,
-@@ -658,8 +658,8 @@ static void create_pcie(SBSAMachineState *sms,
-     PCIHostState *pci;
-     int i;
+         for (j = 0; j < num_ss; ++j) {
+             DriveInfo *dinfo = drive_get(IF_MTD, 0, unit++);
+-            flash_dev = qdev_new_orphan("n25q128");
++            flash_dev = qdev_new(OBJECT(dev), "flash[*]", "n25q128");
+             if (dinfo) {
+                 qdev_prop_set_drive_err(flash_dev, "drive",
+                                         blk_by_legacy_dinfo(dinfo),
+                                         &error_fatal);
+             }
+             qdev_prop_set_uint8(flash_dev, "cs", j);
+-            qdev_realize_and_unref(flash_dev, BUS(spi), &error_fatal);
++            qdev_realize(flash_dev, BUS(spi), &error_fatal);
  
--    dev = qdev_new_orphan(TYPE_GPEX_HOST);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    dev = qdev_new(OBJECT(sms), "pcie", TYPE_GPEX_HOST);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
- 
-     /* Map ECAM space */
-     ecam_alias = g_new0(MemoryRegion, 1);
-@@ -695,7 +695,7 @@ static void create_pcie(SBSAMachineState *sms,
- 
-     pci_init_nic_devices(pci->bus, mc->default_nic);
- 
--    pci_create_simple_orphan(pci->bus, -1, "bochs-display");
-+    pci_create_simple(OBJECT(sms), "bochs-display", pci->bus, -1, "bochs-display");
- 
-     create_smmu(sms, pci->bus, sysmem, secure_sysmem);
- }
-@@ -709,12 +709,14 @@ static void *sbsa_ref_dtb(const struct arm_boot_info *binfo, int *fdt_size)
-     return board->fdt;
+             cs_line = qdev_get_gpio_in_named(flash_dev, SSI_GPIO_CS, 0);
+             sysbus_connect_irq(busdev, i * num_ss + j + 1, cs_line);
+@@ -190,14 +192,14 @@ static void zynq_set_boot_mode(Object *obj, const char *str,
+     m->boot_mode = mode;
  }
  
--static void create_secure_ec(MemoryRegion *mem)
-+static void create_secure_ec(Object *parent, MemoryRegion *mem)
+-static void ddr_ctrl_init(uint32_t base)
++static void ddr_ctrl_init(Object *parent, uint32_t base)
  {
-     hwaddr base = sbsa_ref_memmap[SBSA_SECURE_EC].base;
--    DeviceState *dev = qdev_new_orphan("sbsa-ec");
-+    DeviceState *dev = qdev_new(parent, "sbsa-ec", "sbsa-ec");
-     SysBusDevice *s = SYS_BUS_DEVICE(dev);
+     DeviceState *dev;
+     SysBusDevice *busdev;
  
-+    sysbus_realize(s, &error_fatal);
-+
-     memory_region_add_subregion(mem, base,
-                                 sysbus_mmio_get_region(s, 0));
- }
-@@ -835,7 +837,7 @@ static void sbsa_ref_init(MachineState *machine)
- 
-     create_pcie(sms, sysmem, secure_sysmem);
- 
--    create_secure_ec(secure_sysmem);
-+    create_secure_ec(OBJECT(sms), secure_sysmem);
- 
-     sms->bootinfo.ram_size = machine->ram_size;
-     sms->bootinfo.board_id = -1;
-@@ -892,17 +894,6 @@ static void sbsa_ref_instance_init(Object *obj)
-     sbsa_flash_create(sms);
+-    dev = qdev_new_orphan("zynq.ddr-ctlr");
++    dev = qdev_new(parent, "ddr-ctrl", "zynq.ddr-ctlr");
+     busdev = SYS_BUS_DEVICE(dev);
+-    sysbus_realize_and_unref(busdev, &error_fatal);
++    sysbus_realize(busdev, &error_fatal);
+     sysbus_mmio_map(busdev, 0, base);
  }
  
--static void sbsa_ref_instance_finalize(Object *obj)
--{
--    SBSAMachineState *sms = SBSA_MACHINE(obj);
--
--    for (int i = 0; i < ARRAY_SIZE(sms->flash); i++) {
--        if (sms->flash[i] && !qdev_is_realized(DEVICE(sms->flash[i]))) {
--            object_unref(OBJECT(sms->flash[i]));
--        }
--    }
--}
--
- static void sbsa_ref_class_init(ObjectClass *oc, const void *data)
- {
-     MachineClass *mc = MACHINE_CLASS(oc);
-@@ -941,7 +932,6 @@ static const TypeInfo sbsa_ref_info = {
-     .name          = TYPE_SBSA_MACHINE,
-     .parent        = TYPE_MACHINE,
-     .instance_init = sbsa_ref_instance_init,
--    .instance_finalize = sbsa_ref_instance_finalize,
-     .class_init    = sbsa_ref_class_init,
-     .instance_size = sizeof(SBSAMachineState),
-     .interfaces    = aarch64_machine_interfaces,
+@@ -256,20 +258,21 @@ static void zynq_init(MachineState *machine)
+     clock_set_hz(zynq_machine->ps_clk, PS_CLK_FREQUENCY);
+ 
+     /* Create slcr, keep a pointer to connect clocks */
+-    slcr = qdev_new_orphan("xilinx-zynq_slcr");
++    slcr = qdev_new(OBJECT(machine), "slcr", "xilinx-zynq_slcr");
+     qdev_connect_clock_in(slcr, "ps_clk", zynq_machine->ps_clk);
+     qdev_prop_set_uint8(slcr, "boot-mode", zynq_machine->boot_mode);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(slcr), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(slcr), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(slcr), 0, 0xF8000000);
+ 
+-    dev = qdev_new_orphan(TYPE_A9MPCORE_PRIV);
++    dev = qdev_new(OBJECT(machine), "a9mpcore", TYPE_A9MPCORE_PRIV);
+     qdev_prop_set_uint32(dev, "num-cpu", smp_cpus);
+     qdev_prop_set_uint32(dev, "num-irq", GIC_EXT_IRQS + GIC_INTERNAL);
+     busdev = SYS_BUS_DEVICE(dev);
+-    sysbus_realize_and_unref(busdev, &error_fatal);
++    sysbus_realize(busdev, &error_fatal);
+     sysbus_mmio_map(busdev, 0, MPCORE_PERIPHBASE);
+     zynq_binfo.gic_cpu_if_addr = MPCORE_PERIPHBASE + 0x100;
+-    sysbus_create_varargs_orphan("l2x0", MPCORE_PERIPHBASE + 0x2000, NULL);
++    sysbus_create_varargs(OBJECT(machine), "l2x0", "l2x0",
++                          MPCORE_PERIPHBASE + 0x2000, NULL);
+     for (n = 0; n < smp_cpus; n++) {
+         /* See "hw/intc/arm_gic.h" for the IRQ line association */
+         DeviceState *cpudev = DEVICE(zynq_machine->cpu[n]);
+@@ -283,39 +286,44 @@ static void zynq_init(MachineState *machine)
+         pic[n] = qdev_get_gpio_in(dev, n);
+     }
+ 
+-    n = zynq_init_spi_flashes(0xE0006000, pic[58 - GIC_INTERNAL], false, 0);
+-    n = zynq_init_spi_flashes(0xE0007000, pic[81 - GIC_INTERNAL], false, n);
+-    n = zynq_init_spi_flashes(0xE000D000, pic[51 - GIC_INTERNAL], true, n);
++    n = zynq_init_spi_flashes(OBJECT(machine), 0xE0006000,
++                              pic[58 - GIC_INTERNAL], false, 0);
++    n = zynq_init_spi_flashes(OBJECT(machine), 0xE0007000,
++                              pic[81 - GIC_INTERNAL], false, n);
++    n = zynq_init_spi_flashes(OBJECT(machine), 0xE000D000,
++                              pic[51 - GIC_INTERNAL], true, n);
+ 
+-    sysbus_create_simple_orphan(TYPE_CHIPIDEA, 0xE0002000, pic[53 - GIC_INTERNAL]);
+-    sysbus_create_simple_orphan(TYPE_CHIPIDEA, 0xE0003000, pic[76 - GIC_INTERNAL]);
++    sysbus_create_simple(OBJECT(machine), "usb[*]", TYPE_CHIPIDEA,
++                         0xE0002000, pic[53 - GIC_INTERNAL]);
++    sysbus_create_simple(OBJECT(machine), "usb[*]", TYPE_CHIPIDEA,
++                         0xE0003000, pic[76 - GIC_INTERNAL]);
+ 
+-    dev = qdev_new_orphan(TYPE_CADENCE_UART);
++    dev = qdev_new(OBJECT(machine), "uart[*]", TYPE_CADENCE_UART);
+     busdev = SYS_BUS_DEVICE(dev);
+     qdev_prop_set_chr(dev, "chardev", serial_hd(0));
+     qdev_connect_clock_in(dev, "refclk",
+                           qdev_get_clock_out(slcr, "uart0_ref_clk"));
+-    sysbus_realize_and_unref(busdev, &error_fatal);
++    sysbus_realize(busdev, &error_fatal);
+     sysbus_mmio_map(busdev, 0, 0xE0000000);
+     sysbus_connect_irq(busdev, 0, pic[59 - GIC_INTERNAL]);
+-    dev = qdev_new_orphan(TYPE_CADENCE_UART);
++    dev = qdev_new(OBJECT(machine), "uart[*]", TYPE_CADENCE_UART);
+     busdev = SYS_BUS_DEVICE(dev);
+     qdev_prop_set_chr(dev, "chardev", serial_hd(1));
+     qdev_connect_clock_in(dev, "refclk",
+                           qdev_get_clock_out(slcr, "uart1_ref_clk"));
+-    sysbus_realize_and_unref(busdev, &error_fatal);
++    sysbus_realize(busdev, &error_fatal);
+     sysbus_mmio_map(busdev, 0, 0xE0001000);
+     sysbus_connect_irq(busdev, 0, pic[82 - GIC_INTERNAL]);
+ 
+-    sysbus_create_varargs_orphan("cadence_ttc", 0xF8001000,
++    sysbus_create_varargs(OBJECT(machine), "ttc[*]", "cadence_ttc", 0xF8001000,
+             pic[42-GIC_INTERNAL], pic[43-GIC_INTERNAL], pic[44-GIC_INTERNAL], NULL);
+-    sysbus_create_varargs_orphan("cadence_ttc", 0xF8002000,
++    sysbus_create_varargs(OBJECT(machine), "ttc[*]", "cadence_ttc", 0xF8002000,
+             pic[69-GIC_INTERNAL], pic[70-GIC_INTERNAL], pic[71-GIC_INTERNAL], NULL);
+ 
+-    ddr_ctrl_init(0xF8006000);
++    ddr_ctrl_init(OBJECT(machine), 0xF8006000);
+ 
+-    gem_init(0xE000B000, pic[54 - GIC_INTERNAL]);
+-    gem_init(0xE000C000, pic[77 - GIC_INTERNAL]);
++    gem_init(OBJECT(machine), 0xE000B000, pic[54 - GIC_INTERNAL]);
++    gem_init(OBJECT(machine), 0xE000C000, pic[77 - GIC_INTERNAL]);
+ 
+     for (n = 0; n < 2; n++) {
+         int hci_irq = n ? 79 : 56;
+@@ -329,27 +337,27 @@ static void zynq_init(MachineState *machine)
+          * - SDIO Specification Version 2.0
+          * - MMC Specification Version 3.31
+          */
+-        dev = qdev_new_orphan(TYPE_SYSBUS_SDHCI);
++        dev = qdev_new(OBJECT(machine), "sdhci[*]", TYPE_SYSBUS_SDHCI);
+         qdev_prop_set_uint8(dev, "sd-spec-version", 2);
+         qdev_prop_set_uint64(dev, "capareg", ZYNQ_SDHCI_CAPABILITIES);
+-        sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++        sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+         sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, hci_addr);
+         sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, pic[hci_irq - GIC_INTERNAL]);
+ 
+         di = drive_get(IF_SD, 0, n);
+         blk = di ? blk_by_legacy_dinfo(di) : NULL;
+-        carddev = qdev_new_orphan(TYPE_SD_CARD);
++        carddev = qdev_new(OBJECT(dev), "sd-card", TYPE_SD_CARD);
+         qdev_prop_set_drive_err(carddev, "drive", blk, &error_fatal);
+-        qdev_realize_and_unref(carddev, qdev_get_child_bus(dev, "sd-bus"),
+-                               &error_fatal);
++        qdev_realize(carddev, qdev_get_child_bus(dev, "sd-bus"),
++                     &error_fatal);
+     }
+ 
+-    dev = qdev_new_orphan(TYPE_ZYNQ_XADC);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    dev = qdev_new(OBJECT(machine), "xadc", TYPE_ZYNQ_XADC);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0xF8007100);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, pic[39-GIC_INTERNAL]);
+ 
+-    dev = qdev_new_orphan("pl330");
++    dev = qdev_new(OBJECT(machine), "dma", "pl330");
+     object_property_set_link(OBJECT(dev), "memory",
+                              OBJECT(address_space_mem),
+                              &error_fatal);
+@@ -365,16 +373,16 @@ static void zynq_init(MachineState *machine)
+     qdev_prop_set_uint16(dev, "data_buffer_dep",  256);
+ 
+     busdev = SYS_BUS_DEVICE(dev);
+-    sysbus_realize_and_unref(busdev, &error_fatal);
++    sysbus_realize(busdev, &error_fatal);
+     sysbus_mmio_map(busdev, 0, 0xF8003000);
+     sysbus_connect_irq(busdev, 0, pic[45-GIC_INTERNAL]); /* abort irq line */
+     for (n = 0; n < ARRAY_SIZE(dma_irqs); ++n) { /* event irqs */
+         sysbus_connect_irq(busdev, n + 1, pic[dma_irqs[n] - GIC_INTERNAL]);
+     }
+ 
+-    dev = qdev_new_orphan("xlnx.ps7-dev-cfg");
++    dev = qdev_new(OBJECT(machine), "devcfg", "xlnx.ps7-dev-cfg");
+     busdev = SYS_BUS_DEVICE(dev);
+-    sysbus_realize_and_unref(busdev, &error_fatal);
++    sysbus_realize(busdev, &error_fatal);
+     sysbus_connect_irq(busdev, 0, pic[40 - GIC_INTERNAL]);
+     sysbus_mmio_map(busdev, 0, 0xF8007000);
+ 
 -- 
 2.47.1
 
