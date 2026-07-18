@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 550C8C4451B
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:56:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8946BC4450A
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:56:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlD1O-0006lN-3f; Sat, 18 Jul 2026 17:56:34 -0400
+	id 1wlD1Y-0006wE-Jb; Sat, 18 Jul 2026 17:56:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlD1M-0006kx-1I; Sat, 18 Jul 2026 17:56:32 -0400
-Received: from pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([50.112.246.219])
+ id 1wlD1T-0006to-TO; Sat, 18 Jul 2026 17:56:40 -0400
+Received: from pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.42.203.116])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlD1H-0004fX-Q2; Sat, 18 Jul 2026 17:56:31 -0400
+ id 1wlD1R-0004g2-PW; Sat, 18 Jul 2026 17:56:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784411787; x=1815947787;
+ t=1784411797; x=1815947797;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=ryD4CYKSXv6OLvpmUHtpBkHhhYgwrqqNbJwAKFj2HhM=;
- b=GX46IRNYLI7B/b8HU4x1LlaHs5bsRphy0Og4yyzNlAbvhG+xiE7ZgXw0
- 6LapMZx16Yq+wVkhfzxUQSXw5RwNYkjP+8uEBMdqbvVo+mPqAnAfineGO
- 5CzDLwmbB99p8dS158uqNN8StWUUkLSpuCJ/tKtVNXg3Bq9/ULfkHLJaC
- RLcBk5bR08T1TqRa67inildRHo29R/WadfHjaMYdaHrS6Nyd0dl3vdRb+
- 8k6vjAiK7It7CDZWJgILGVTSbukCSqz7eibxSZ5hsNNn1e0r+o9qiFjfn
- MCr5D9wJqvkya48hbIorN79iPtzXcdoVmyLDtbSMps+NbmR6KLZ6umljF g==;
-X-CSE-ConnectionGUID: h/bIFewwTuOr0G2bBUaKXA==
-X-CSE-MsgGUID: Eo++Umx3RJWFCJrSKr2SkA==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23725094"
-Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
- by internal-pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:56:24 +0000
-Received: from EX19MTAUWC001.ant.amazon.com [205.251.233.53:14107]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.41.246:2525]
+ bh=jlOGAdStmn18YNthMQ1V323+hKhmvN2yrpAYrt47LxA=;
+ b=jwvOkRSb3AjmHuCe7cEiPi7cZGdvxtgTNQu08KPcSVxGJ5KgUgHUyKxz
+ 0xx8I2e3H38lq5F26DMvDTxJjbRZND3SyBtXOa+OvDrMlB8KJe0b4R8Gm
+ k6ijEsD/7YDYh6PkJrwzxdCJ642x734r8ytu18NWMEmTOUs2WjS5gMHFn
+ /PguN0Ta+s8kozEA3ss/U8I+3pU8y2wYBhnQaRXd/TZm/UmF5xQlYP6dT
+ yOtQ+Xm8PQZS4RpLYiIj8pARz3XjGeFYi3K+0Ak1FXltAyrKmyg3PVmTN
+ KQ3SmWjVthTCdwxHVcKD0JgkZH3+ffGLrC6wMrtrCmpUe+pkCjGvwDmsq Q==;
+X-CSE-ConnectionGUID: jQWsJQAnRPuGVTTVbu8UBg==
+X-CSE-MsgGUID: TzDmUDRLTP27C+fEll7EAg==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23940038"
+Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
+ by internal-pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:56:33 +0000
+Received: from EX19MTAUWB002.ant.amazon.com [205.251.233.111:4084]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.29.147:2525]
  with esmtp (Farcaster)
- id 0427b51b-9d43-4a6b-a523-ca14d6c5c609; Sat, 18 Jul 2026 21:56:23 +0000 (UTC)
-X-Farcaster-Flow-ID: 0427b51b-9d43-4a6b-a523-ca14d6c5c609
+ id e01b40c2-1667-4667-bad7-6863ee0051f5; Sat, 18 Jul 2026 21:56:32 +0000 (UTC)
+X-Farcaster-Flow-ID: e01b40c2-1667-4667-bad7-6863ee0051f5
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
+ EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:56:23 +0000
+ Sat, 18 Jul 2026 21:56:32 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:56:13 +0000
+ Sat, 18 Jul 2026 21:56:23 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,9 +93,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 069/137] hw/arm/mps2: Give onboard devices a QOM parent
-Date: Sat, 18 Jul 2026 21:35:44 +0000
-Message-ID: <20260718213652.37673-70-graf@amazon.com>
+Subject: [RFC PATCH v2 070/137] hw/arm/imx: Give onboard devices a QOM parent
+Date: Sat, 18 Jul 2026 21:35:45 +0000
+Message-ID: <20260718213652.37673-71-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -106,9 +106,9 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D042UWA001.ant.amazon.com (10.13.139.92) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=50.112.246.219;
+Received-SPF: pass client-ip=52.42.203.116;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -132,7 +132,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the *_orphan() device-creation calls in the hw/arm mps2
+Convert the *_orphan() device-creation calls in the hw/arm imx
 board files to the new parented API introduced earlier in this
 series, so every onboard device gets a stable path in the
 composition tree instead of landing in /machine/unattached with an
@@ -144,117 +144,142 @@ composite children.  Names follow existing QOM conventions.
 
 Per-site rationale (reviewers: dispute the modeling here):
 
-hw/arm/mps2.c:302 | qdev_new_orphan | OBJECT(mms) | "uart[*]" | board init (mps2_common_init), MPS2MachineState *mms is machine; indexed loop; drop _and_unref
-hw/arm/mps2.c:346 | qdev_new_orphan | OBJECT(mms) | "uart[*]" | board init, second FPGA variant loop; auto-index; drop _and_unref
-hw/arm/mps2.c:419 | sysbus_create_simple_orphan | OBJECT(mms) | "spi[*]" | board init; PL022 external ADC; auto-index shared with loop below
-hw/arm/mps2.c:438 | sysbus_create_simple_orphan | OBJECT(mms) | "spi[*]" | board init; PL022 in nested loop; auto-index
-hw/arm/mps2.c:449 | sysbus_create_simple_orphan | OBJECT(mms) | "i2c[*]" | board init; SBCON I2C in loop; auto-index
-hw/arm/mps2-tz.c:511 | qdev_new_orphan | OBJECT(mms) | "lan9118" | make_eth_dev helper receives MPS2TZMachineState *mms (board state); single instance; drop _and_unref
-hw/arm/mps2-tz.c:538 | qdev_new_orphan | OBJECT(mms) | "lan9118" | make_eth_usb helper receives mms; single instance (mutually exclusive with make_eth_dev per board); drop _and_unref
+hw/arm/fsl-imx6.c:171 | sysbus_create_simple_orphan | OBJECT(dev) | "l2x0" | SoC DeviceClass.realize(DeviceState *dev); parent is the SoC device being realized; single instance
+hw/arm/imx25_pdk.c:130 | qdev_new_orphan | OBJECT(machine) | "sd-card[*]" | board init(MachineState *machine); loop over ESDHC slots; auto-index; drop _and_unref
+hw/arm/imx8mm-evk.c:100 | qdev_new_orphan | OBJECT(machine) | "sd-card[*]" | board init; loop over USDHC slots; auto-index; drop _and_unref
+hw/arm/imx8mp-evk.c:113 | qdev_new_orphan | OBJECT(machine) | "sd-card[*]" | board init; loop over USDHC slots; auto-index; drop _and_unref
+hw/arm/mcimx6ul-evk.c:62 | qdev_new_orphan | OBJECT(machine) | "sd-card[*]" | board init; loop over USDHC slots; auto-index; drop _and_unref
+hw/arm/mcimx7d-sabre.c:62 | qdev_new_orphan | OBJECT(machine) | "sd-card[*]" | board init; loop over USDHC slots; auto-index; drop _and_unref
+hw/arm/sabrelite.c:99 | qdev_new_orphan | OBJECT(machine) | "spi-flash" | board init; single NOR flash on SPI bus; drop _and_unref
 
 Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/arm/mps2-tz.c |  8 ++++----
- hw/arm/mps2.c    | 18 ++++++++++--------
- 2 files changed, 14 insertions(+), 12 deletions(-)
+ hw/arm/fsl-imx6.c      | 3 ++-
+ hw/arm/imx25_pdk.c     | 4 ++--
+ hw/arm/imx8mm-evk.c    | 4 ++--
+ hw/arm/imx8mp-evk.c    | 4 ++--
+ hw/arm/mcimx6ul-evk.c  | 4 ++--
+ hw/arm/mcimx7d-sabre.c | 4 ++--
+ hw/arm/sabrelite.c     | 5 +++--
+ 7 files changed, 15 insertions(+), 13 deletions(-)
 
-diff --git a/hw/arm/mps2-tz.c b/hw/arm/mps2-tz.c
-index c0ab898f2e..17945d2b71 100644
---- a/hw/arm/mps2-tz.c
-+++ b/hw/arm/mps2-tz.c
-@@ -508,11 +508,11 @@ static MemoryRegion *make_eth_dev(MPS2TZMachineState *mms, void *opaque,
-     /* In hardware this is a LAN9220; the LAN9118 is software compatible
-      * except that it doesn't support the checksum-offload feature.
-      */
--    mms->lan9118 = qdev_new_orphan(TYPE_LAN9118);
-+    mms->lan9118 = qdev_new(OBJECT(mms), "lan9118", TYPE_LAN9118);
-     qemu_configure_nic_device(mms->lan9118, true, NULL);
- 
-     s = SYS_BUS_DEVICE(mms->lan9118);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
-     sysbus_connect_irq(s, 0, get_sse_irq_in(mms, irqs[0]));
-     return sysbus_mmio_get_region(s, 0);
- }
-@@ -535,11 +535,11 @@ static MemoryRegion *make_eth_usb(MPS2TZMachineState *mms, void *opaque,
-      * In hardware this is a LAN9220; the LAN9118 is software compatible
-      * except that it doesn't support the checksum-offload feature.
-      */
--    mms->lan9118 = qdev_new_orphan(TYPE_LAN9118);
-+    mms->lan9118 = qdev_new(OBJECT(mms), "lan9118", TYPE_LAN9118);
-     qemu_configure_nic_device(mms->lan9118, true, NULL);
- 
-     s = SYS_BUS_DEVICE(mms->lan9118);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
-     sysbus_connect_irq(s, 0, get_sse_irq_in(mms, irqs[0]));
- 
-     memory_region_add_subregion(&mms->eth_usb_container,
-diff --git a/hw/arm/mps2.c b/hw/arm/mps2.c
-index e646c7c71e..2edd222674 100644
---- a/hw/arm/mps2.c
-+++ b/hw/arm/mps2.c
-@@ -299,11 +299,11 @@ static void mps2_common_init(MachineState *machine)
-                 rxovrint = qdev_get_gpio_in(orgate_dev, i * 2 + 1);
-             }
- 
--            dev = qdev_new_orphan(TYPE_CMSDK_APB_UART);
-+            dev = qdev_new(OBJECT(mms), "uart[*]", TYPE_CMSDK_APB_UART);
-             s = SYS_BUS_DEVICE(dev);
-             qdev_prop_set_chr(dev, "chardev", serial_hd(i));
-             qdev_prop_set_uint32(dev, "pclk-frq", SYSCLK_FRQ);
--            sysbus_realize_and_unref(s, &error_fatal);
-+            sysbus_realize(s, &error_fatal);
-             sysbus_mmio_map(s, 0, uartbase[i]);
-             sysbus_connect_irq(s, 0, qdev_get_gpio_in(armv7m, uartirq[i] + 1));
-             sysbus_connect_irq(s, 1, qdev_get_gpio_in(armv7m, uartirq[i]));
-@@ -343,11 +343,11 @@ static void mps2_common_init(MachineState *machine)
-             qdev_connect_gpio_out(txrx_orgate_dev, 0,
-                                   qdev_get_gpio_in(armv7m, uart_txrx_irqno[i]));
- 
--            dev = qdev_new_orphan(TYPE_CMSDK_APB_UART);
-+            dev = qdev_new(OBJECT(mms), "uart[*]", TYPE_CMSDK_APB_UART);
-             s = SYS_BUS_DEVICE(dev);
-             qdev_prop_set_chr(dev, "chardev", serial_hd(i));
-             qdev_prop_set_uint32(dev, "pclk-frq", SYSCLK_FRQ);
--            sysbus_realize_and_unref(s, &error_fatal);
-+            sysbus_realize(s, &error_fatal);
-             sysbus_mmio_map(s, 0, uartbase[i]);
-             sysbus_connect_irq(s, 0, qdev_get_gpio_in(txrx_orgate_dev, 0));
-             sysbus_connect_irq(s, 1, qdev_get_gpio_in(txrx_orgate_dev, 1));
-@@ -416,8 +416,8 @@ static void mps2_common_init(MachineState *machine)
-     qdev_prop_set_uint32(DEVICE(&mms->fpgaio), "prescale-clk", 25000000);
-     sysbus_realize(SYS_BUS_DEVICE(&mms->fpgaio), &error_fatal);
-     sysbus_mmio_map(SYS_BUS_DEVICE(&mms->fpgaio), 0, 0x40028000);
--    sysbus_create_simple_orphan(TYPE_PL022, 0x40025000,        /* External ADC */
--                         qdev_get_gpio_in(armv7m, 22));
-+    sysbus_create_simple(OBJECT(mms), "spi[*]", TYPE_PL022, 0x40025000,
-+                         qdev_get_gpio_in(armv7m, 22)); /* External ADC */
-     for (i = 0; i < 2; i++) {
-         static const int spi_irqno[] = {11, 24};
-         static const hwaddr spibase[] = {0x40020000,    /* APB */
-@@ -435,7 +435,8 @@ static void mps2_common_init(MachineState *machine)
-         qdev_connect_gpio_out(orgate_dev, 0,
-                               qdev_get_gpio_in(armv7m, spi_irqno[i]));
-         for (j = 0; j < 2; j++) {
--            sysbus_create_simple_orphan(TYPE_PL022, spibase[2 * i + j],
-+            sysbus_create_simple(OBJECT(mms), "spi[*]", TYPE_PL022,
-+                                 spibase[2 * i + j],
-                                  qdev_get_gpio_in(orgate_dev, j));
-         }
+diff --git a/hw/arm/fsl-imx6.c b/hw/arm/fsl-imx6.c
+index 103adcc2bd..44046953be 100644
+--- a/hw/arm/fsl-imx6.c
++++ b/hw/arm/fsl-imx6.c
+@@ -168,7 +168,8 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
      }
-@@ -446,7 +447,8 @@ static void mps2_common_init(MachineState *machine)
-                                          0x4002a000};   /* Shield1 */
-         DeviceState *dev;
  
--        dev = sysbus_create_simple_orphan(TYPE_ARM_SBCON_I2C, i2cbase[i], NULL);
-+        dev = sysbus_create_simple(OBJECT(mms), "i2c[*]",
-+                                   TYPE_ARM_SBCON_I2C, i2cbase[i], NULL);
-         if (i < 2) {
-             /*
-              * internal-only bus: mark it full to avoid user-created
+     /* L2 cache controller */
+-    sysbus_create_simple_orphan("l2x0", FSL_IMX6_PL310_ADDR, NULL);
++    sysbus_create_simple(OBJECT(dev), "l2x0", "l2x0", FSL_IMX6_PL310_ADDR,
++                         NULL);
+ 
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->ccm), errp)) {
+         return;
+diff --git a/hw/arm/imx25_pdk.c b/hw/arm/imx25_pdk.c
+index 6976652370..9351d53850 100644
+--- a/hw/arm/imx25_pdk.c
++++ b/hw/arm/imx25_pdk.c
+@@ -127,9 +127,9 @@ static void imx25_pdk_init(MachineState *machine)
+         di = drive_get(IF_SD, 0, i);
+         blk = di ? blk_by_legacy_dinfo(di) : NULL;
+         bus = qdev_get_child_bus(DEVICE(&s->soc.esdhc[i]), "sd-bus");
+-        carddev = qdev_new_orphan(TYPE_SD_CARD);
++        carddev = qdev_new(OBJECT(machine), "sd-card[*]", TYPE_SD_CARD);
+         qdev_prop_set_drive_err(carddev, "drive", blk, &error_fatal);
+-        qdev_realize_and_unref(carddev, bus, &error_fatal);
++        qdev_realize(carddev, bus, &error_fatal);
+     }
+ 
+     /*
+diff --git a/hw/arm/imx8mm-evk.c b/hw/arm/imx8mm-evk.c
+index ce7693ca7a..72fa1930ae 100644
+--- a/hw/arm/imx8mm-evk.c
++++ b/hw/arm/imx8mm-evk.c
+@@ -97,9 +97,9 @@ static void imx8mm_evk_init(MachineState *machine)
+ 
+         blk = blk_by_legacy_dinfo(di);
+         bus = qdev_get_child_bus(DEVICE(&s->usdhc[i]), "sd-bus");
+-        carddev = qdev_new_orphan(TYPE_SD_CARD);
++        carddev = qdev_new(OBJECT(machine), "sd-card[*]", TYPE_SD_CARD);
+         qdev_prop_set_drive_err(carddev, "drive", blk, &error_fatal);
+-        qdev_realize_and_unref(carddev, bus, &error_fatal);
++        qdev_realize(carddev, bus, &error_fatal);
+     }
+ 
+     if (!qtest_enabled()) {
+diff --git a/hw/arm/imx8mp-evk.c b/hw/arm/imx8mp-evk.c
+index 90cda63b49..6116e6e9dc 100644
+--- a/hw/arm/imx8mp-evk.c
++++ b/hw/arm/imx8mp-evk.c
+@@ -110,9 +110,9 @@ static void imx8mp_evk_init(MachineState *machine)
+ 
+         blk = blk_by_legacy_dinfo(di);
+         bus = qdev_get_child_bus(DEVICE(&s->soc.usdhc[i]), "sd-bus");
+-        carddev = qdev_new_orphan(TYPE_SD_CARD);
++        carddev = qdev_new(OBJECT(machine), "sd-card[*]", TYPE_SD_CARD);
+         qdev_prop_set_drive_err(carddev, "drive", blk, &error_fatal);
+-        qdev_realize_and_unref(carddev, bus, &error_fatal);
++        qdev_realize(carddev, bus, &error_fatal);
+     }
+ 
+     if (!qtest_enabled()) {
+diff --git a/hw/arm/mcimx6ul-evk.c b/hw/arm/mcimx6ul-evk.c
+index 96309e1bfc..be4c4ca316 100644
+--- a/hw/arm/mcimx6ul-evk.c
++++ b/hw/arm/mcimx6ul-evk.c
+@@ -59,9 +59,9 @@ static void mcimx6ul_evk_init(MachineState *machine)
+         di = drive_get(IF_SD, 0, i);
+         blk = di ? blk_by_legacy_dinfo(di) : NULL;
+         bus = qdev_get_child_bus(DEVICE(&s->usdhc[i]), "sd-bus");
+-        carddev = qdev_new_orphan(TYPE_SD_CARD);
++        carddev = qdev_new(OBJECT(machine), "sd-card[*]", TYPE_SD_CARD);
+         qdev_prop_set_drive_err(carddev, "drive", blk, &error_fatal);
+-        qdev_realize_and_unref(carddev, bus, &error_fatal);
++        qdev_realize(carddev, bus, &error_fatal);
+     }
+ 
+     if (!qtest_enabled()) {
+diff --git a/hw/arm/mcimx7d-sabre.c b/hw/arm/mcimx7d-sabre.c
+index be9d0d6993..d8b1e7fc7e 100644
+--- a/hw/arm/mcimx7d-sabre.c
++++ b/hw/arm/mcimx7d-sabre.c
+@@ -59,9 +59,9 @@ static void mcimx7d_sabre_init(MachineState *machine)
+         di = drive_get(IF_SD, 0, i);
+         blk = di ? blk_by_legacy_dinfo(di) : NULL;
+         bus = qdev_get_child_bus(DEVICE(&s->usdhc[i]), "sd-bus");
+-        carddev = qdev_new_orphan(TYPE_SD_CARD);
++        carddev = qdev_new(OBJECT(machine), "sd-card[*]", TYPE_SD_CARD);
+         qdev_prop_set_drive_err(carddev, "drive", blk, &error_fatal);
+-        qdev_realize_and_unref(carddev, bus, &error_fatal);
++        qdev_realize(carddev, bus, &error_fatal);
+     }
+ 
+     if (!qtest_enabled()) {
+diff --git a/hw/arm/sabrelite.c b/hw/arm/sabrelite.c
+index af4dfef7f2..04c764f82f 100644
+--- a/hw/arm/sabrelite.c
++++ b/hw/arm/sabrelite.c
+@@ -96,13 +96,14 @@ static void sabrelite_init(MachineState *machine)
+                 qemu_irq cs_line;
+                 DriveInfo *dinfo = drive_get(IF_MTD, 0, 0);
+ 
+-                flash_dev = qdev_new_orphan("sst25vf016b");
++                flash_dev = qdev_new(OBJECT(machine), "spi-flash",
++                                     "sst25vf016b");
+                 if (dinfo) {
+                     qdev_prop_set_drive_err(flash_dev, "drive",
+                                             blk_by_legacy_dinfo(dinfo),
+                                             &error_fatal);
+                 }
+-                qdev_realize_and_unref(flash_dev, BUS(spi_bus), &error_fatal);
++                qdev_realize(flash_dev, BUS(spi_bus), &error_fatal);
+ 
+                 cs_line = qdev_get_gpio_in_named(flash_dev, SSI_GPIO_CS, 0);
+                 qdev_connect_gpio_out(DEVICE(&s->soc.gpio[2]), 19, cs_line);
 -- 
 2.47.1
 
