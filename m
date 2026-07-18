@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88C46C4450A
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:11:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7243C4451B
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:11:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlDEr-0002mT-0X; Sat, 18 Jul 2026 18:10:29 -0400
+	id 1wlDFu-0005Bi-Ks; Sat, 18 Jul 2026 18:11:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlDEd-0002Wx-Fz; Sat, 18 Jul 2026 18:10:16 -0400
-Received: from pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([44.246.77.92])
+ id 1wlDFR-0004dl-Rh; Sat, 18 Jul 2026 18:11:07 -0400
+Received: from pdx-out-012.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([35.162.73.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlDEb-0006ZK-N5; Sat, 18 Jul 2026 18:10:15 -0400
+ id 1wlDFP-0006qH-6M; Sat, 18 Jul 2026 18:11:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784412613; x=1815948613;
+ t=1784412663; x=1815948663;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=9Qn6R6pxE5AvdQsbIZhdL+G28xuxoC+uESHB8pn4JQU=;
- b=ZtPSPaWXmreIPBnYTyLwqO3WbBUrU6w7mUxJq+kU2dr7zxPYD9AeHmb4
- ZYnZ2ax3x5FMV438iDqZBHgO0+IzWOJoWAOoqm2QlphtZOHBjKk6YBPoi
- A2GMxJ7cB7V2OIl0LEfp1Gk11/wS7o3GlhLS+h6BX5/OqMF+6sXXUWq02
- /Qvb0T81YGpG/6K2Y6MubJ4zCC8yG4874z9Ifdd+jX74Qj+xVaT4w2bzl
- 9YOBZ0vt2Zrr6l+Ak52Kh3860DoOXH5nWu4zic/zzfdLNxtYSfQwC6Dyy
- shBG2a6nWAUrR+JXBnaLn/lwU34oJOtd531N7xmixb9lgCEev2QBWa1KO A==;
-X-CSE-ConnectionGUID: 0Vx/TroqSRiAP/Thw0Aq+A==
-X-CSE-MsgGUID: 8+BGN2RJTuGWy5lPVNy4vQ==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23918132"
+ bh=xbtCk5DYK+hnP7Mgo7vvnzsMAqL3XvNk17QcEg+K//w=;
+ b=INXFXSJOYRBv78FnBWYoNn+pZRI0gl7nYPYIiaKuggXbRBAM4F5lkAK9
+ kl7aJO4Kx1GhMdRchHKvGSsI17s8qdmmsl9IPbhGeUE6qoGAbbqy/oVTO
+ luvwva0y4Q6o1PL+PWVP38m7+16oCTR057720GiKYEsGqpA9iOuRD8IPS
+ LaBW/QbwQQlg4PBFRKqcCIYQkDRYMyehPGnBpEF5DLmr9Z27prSDIgbOl
+ jqfLX4x/WOEctNhAr0LgBlxxaXj9D2238H6FDzJEvSvTlXjnYnoqOWol2
+ I8JeULdb9RxMh1jRZKhO5gcay0QKoeXoG0FgzntZl/Q63tOVHTHBq+Lvw Q==;
+X-CSE-ConnectionGUID: FJXk4PqKSGGyrhvgJNS/iQ==
+X-CSE-MsgGUID: alDvnnZGTO2EoxExU2nkDQ==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23716772"
 Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
  smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
- by internal-pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:10:09 +0000
-Received: from EX19MTAUWB002.ant.amazon.com [205.251.233.111:15151]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.30.230:2525]
+ by internal-pdx-out-012.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:10:59 +0000
+Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.104:9398]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.48.250:2525]
  with esmtp (Farcaster)
- id 84d3792a-25d4-4505-ae8c-01ddd0eac50e; Sat, 18 Jul 2026 22:10:09 +0000 (UTC)
-X-Farcaster-Flow-ID: 84d3792a-25d4-4505-ae8c-01ddd0eac50e
+ id ad2e6022-b2c2-4d0b-a61c-9bde01cbc76d; Sat, 18 Jul 2026 22:10:59 +0000 (UTC)
+X-Farcaster-Flow-ID: ad2e6022-b2c2-4d0b-a61c-9bde01cbc76d
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
+ EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:10:09 +0000
+ Sat, 18 Jul 2026 22:10:59 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:09:59 +0000
+ Sat, 18 Jul 2026 22:10:49 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,10 +93,10 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 119/137] accel: Parent the accelerator singleton under
- /machine
-Date: Sat, 18 Jul 2026 21:36:34 +0000
-Message-ID: <20260718213652.37673-120-graf@amazon.com>
+Subject: [RFC PATCH v2 122/137] system: Parent per-MR helper objects under
+ their owner
+Date: Sat, 18 Jul 2026 21:36:37 +0000
+Message-ID: <20260718213652.37673-123-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -105,11 +105,11 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D036UWC003.ant.amazon.com (10.13.139.214) To
+X-ClientProxiedBy: EX19D039UWB002.ant.amazon.com (10.13.138.79) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=44.246.77.92;
+Received-SPF: pass client-ip=35.162.73.231;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-012.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -133,37 +133,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-do_configure_accelerator() runs after qemu_create_machine(), so
-current_machine is available.  Give the AccelState singleton a
-canonical path at /machine/accel and drop the floating caller
-reference; on init failure, unparent instead of unref.
+RamBlockAttributes and MemoryRegionPortioList objects are long-lived
+helpers whose lifetime is already tied to a MemoryRegion or its owner.
+Give each a canonical path under that owner instead of leaving them
+as floating refcounted objects:
+
+  <mr-path>/attributes           (RamBlockAttributes)
+  <owner-path>/portio-list[N]    (MemoryRegionPortioList)
+
+The destroy paths switch from object_unref() to object_unparent()
+now that the parent holds the reference.
+
+RamDiscardManager is deliberately left as-is: it is unref'd from
+memory_region_finalize() itself, so making it a child<> of the MR
+would introduce a use-after-free during MR teardown.  It can move
+under a different owner in a follow-up once the RDM lifecycle is
+untangled from MR finalize.
 
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- accel/accel-system.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ system/ioport.c               | 5 +++--
+ system/ram-block-attributes.c | 7 ++++---
+ 2 files changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/accel/accel-system.c b/accel/accel-system.c
-index 9176665202..987c982c16 100644
---- a/accel/accel-system.c
-+++ b/accel/accel-system.c
-@@ -41,12 +41,14 @@ int accel_init_machine(AccelState *accel, MachineState *ms)
-     AccelClass *acc = ACCEL_GET_CLASS(accel);
-     int ret;
-     ms->accelerator = accel;
-+    object_property_add_child(OBJECT(ms), "accel", OBJECT(accel));
-+    object_unref(OBJECT(accel));
-     *(acc->allowed) = true;
-     ret = acc->init_machine(accel, ms);
-     if (ret < 0) {
-         ms->accelerator = NULL;
-         *(acc->allowed) = false;
--        object_unref(OBJECT(accel));
-+        object_unparent(OBJECT(accel));
-     } else {
-         object_set_accelerator_compat_props(acc->compat_props);
+diff --git a/system/ioport.c b/system/ioport.c
+index 0415b3cd60..77ab77d7be 100644
+--- a/system/ioport.c
++++ b/system/ioport.c
+@@ -145,7 +145,7 @@ void portio_list_destroy(PortioList *piolist)
+     for (i = 0; i < piolist->nr; ++i) {
+         mrpio = container_of(piolist->regions[i], MemoryRegionPortioList, mr);
+         object_unparent(OBJECT(&mrpio->mr));
+-        object_unref(mrpio);
++        object_unparent(OBJECT(mrpio));
      }
+     g_free(piolist->regions);
+ }
+@@ -228,7 +228,8 @@ static void portio_list_add_1(PortioList *piolist,
+ 
+     /* Copy the sub-list and null-terminate it.  */
+     mrpio = MEMORY_REGION_PORTIO_LIST(
+-                object_new(TYPE_MEMORY_REGION_PORTIO_LIST));
++                object_new_child(piolist->owner, "portio-list[*]",
++                                 TYPE_MEMORY_REGION_PORTIO_LIST));
+     mrpio->portio_opaque = piolist->opaque;
+     mrpio->ports = g_new0(MemoryRegionPortio, count + 1);
+     memcpy(mrpio->ports, pio_init, sizeof(MemoryRegionPortio) * count);
+diff --git a/system/ram-block-attributes.c b/system/ram-block-attributes.c
+index 59ec7a28eb..0967bed6d3 100644
+--- a/system/ram-block-attributes.c
++++ b/system/ram-block-attributes.c
+@@ -182,12 +182,13 @@ RamBlockAttributes *ram_block_attributes_create(RAMBlock *ram_block)
+     RamBlockAttributes *attr;
+     MemoryRegion *mr = ram_block->mr;
+ 
+-    attr = RAM_BLOCK_ATTRIBUTES(object_new(TYPE_RAM_BLOCK_ATTRIBUTES));
++    attr = RAM_BLOCK_ATTRIBUTES(object_new_child(OBJECT(mr), "attributes",
++                                                 TYPE_RAM_BLOCK_ATTRIBUTES));
+ 
+     attr->ram_block = ram_block;
+ 
+     if (memory_region_add_ram_discard_source(mr, RAM_DISCARD_SOURCE(attr))) {
+-        object_unref(OBJECT(attr));
++        object_unparent(OBJECT(attr));
+         return NULL;
+     }
+     attr->bitmap_size = DIV_ROUND_UP(int128_get64(mr->size), block_size);
+@@ -202,7 +203,7 @@ void ram_block_attributes_destroy(RamBlockAttributes *attr)
+ 
+     g_free(attr->bitmap);
+     memory_region_del_ram_discard_source(attr->ram_block->mr, RAM_DISCARD_SOURCE(attr));
+-    object_unref(OBJECT(attr));
++    object_unparent(OBJECT(attr));
+ }
+ 
+ static void ram_block_attributes_init(Object *obj)
 -- 
 2.47.1
 
