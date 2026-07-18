@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA1EEC44520
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:43:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C094EC4450A
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:43:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlCoL-0001Hd-P1; Sat, 18 Jul 2026 17:43:05 -0400
+	id 1wlCn1-0007Qp-Du; Sat, 18 Jul 2026 17:41:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlCoK-0001B5-7i; Sat, 18 Jul 2026 17:43:04 -0400
-Received: from pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.35.192.45])
+ id 1wlCmz-0007Ll-Fr; Sat, 18 Jul 2026 17:41:41 -0400
+Received: from pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.42.203.116])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlCoH-0002gH-NY; Sat, 18 Jul 2026 17:43:03 -0400
+ id 1wlCmw-0002cl-Uy; Sat, 18 Jul 2026 17:41:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784410981; x=1815946981;
+ t=1784410898; x=1815946898;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=I5FWnzvUpueVbZs3g/mAe7MQaCCSMX+O6arKRJA8z10=;
- b=Ul8bqaVhXZ4XyBRWHz59e/WUjRRRoJvAv7rXS0wtiH+iwMP0h+kIIQWE
- BcyvKcbbYGxX9GzWkUjxNrTjg1/xM1h9Ero0cENBnf+cW2Bx9pTPHtqew
- JTEaLlM8FZBvdgQQQ9lclO8hfm1wm/3UHOZVPQj960/4Y5AbmlrMWiDz/
- TIGDSgtQ6kD55fZrmVIpeifEOZi+AkQ+bHSkVqfMCyNeF5KKxBNgm3swL
- 20DqnHgV4UE6ggPfqkwV36JaFsyZMOJ4ZbxpQVYSbfMZnm9srDWqesbE8
- D6RC+BdB5qxaklhVNOTb3QHeS2pn8yRuOdBXD7e7D2EwGtgC0n/3ogO1h Q==;
-X-CSE-ConnectionGUID: ruNifr1oSKO6GRacmtekCA==
-X-CSE-MsgGUID: a66UDxMhR/S9DGb7leyh0w==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23694135"
+ bh=aC76E76BUMCHktjAAmYwiTASIngvq0xbC9gJYETSLVY=;
+ b=BRasMp0cWPkEoLbw9edpWGUHbk1NpEDAYZfzDv40/5+Rj1GrvOwOXxL6
+ aM1ZXpAefShpNBWwlgm5kLOif0fWRsj0Ro6lgJWaKQZ2oucvZcGvQambg
+ bU8oCOwORYTGmQlGFo7sZotGFT4pXbr3imcBG3FN2ecmkeObHf3voHw9X
+ pPjj/iJGY9iUYkn4CwX7JuIyOXjjIgPxJYP3MI4B2c6Fh73dntUMTp4g5
+ 0yXtltsd5skm+hXZkiOw3CtfdculfbZCSRfijhF2oUy3vjhJH65MjQGMK
+ drbZ7PE0DGGpp06w3ydYa3KvNNavIDznuL0FDdcVlw7dWk8fJQSSUQ+AF w==;
+X-CSE-ConnectionGUID: B46q3CUBRfWmO7SVnZq9xQ==
+X-CSE-MsgGUID: GuEFUcqsQo+Vg47Z3H9CjA==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23939545"
 Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
  smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
- by internal-pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:42:57 +0000
-Received: from EX19MTAUWC001.ant.amazon.com [205.251.233.53:30501]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.0.115:2525]
+ by internal-pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:41:35 +0000
+Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.234:10530]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.48.250:2525]
  with esmtp (Farcaster)
- id bd2d5380-70cf-44e6-b88e-316755de809e; Sat, 18 Jul 2026 21:42:57 +0000 (UTC)
-X-Farcaster-Flow-ID: bd2d5380-70cf-44e6-b88e-316755de809e
+ id 45655989-78d4-452c-ba66-fdcc5d0266da; Sat, 18 Jul 2026 21:41:35 +0000 (UTC)
+X-Farcaster-Flow-ID: 45655989-78d4-452c-ba66-fdcc5d0266da
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
+ EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:42:56 +0000
+ Sat, 18 Jul 2026 21:41:34 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:42:47 +0000
+ Sat, 18 Jul 2026 21:41:25 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,9 +93,10 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 021/137] hw/loongarch: Give onboard devices a QOM parent
-Date: Sat, 18 Jul 2026 21:34:56 +0000
-Message-ID: <20260718213652.37673-22-graf@amazon.com>
+Subject: [RFC PATCH v2 017/137] hw/microblaze: Give onboard devices a QOM
+ parent
+Date: Sat, 18 Jul 2026 21:34:52 +0000
+Message-ID: <20260718213652.37673-18-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -104,11 +105,11 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D037UWC002.ant.amazon.com (10.13.139.250) To
+X-ClientProxiedBy: EX19D046UWB002.ant.amazon.com (10.13.139.181) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=52.35.192.45;
+Received-SPF: pass client-ip=52.42.203.116;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -132,7 +133,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the *_orphan() device-creation calls in hw/loongarch to the new
+Convert the *_orphan() device-creation calls in hw/microblaze to the new
 parented API introduced earlier in this series, so every onboard
 device gets a stable path in the composition tree instead of landing
 in /machine/unattached with an unstable device[N] name.
@@ -143,181 +144,170 @@ composite children.  Names follow existing QOM conventions.
 
 Per-site rationale (reviewers: dispute the modeling here):
 
-file:line | creator | parent | name | rationale
-hw/loongarch/virt.c:153 | qdev_new | OBJECT(lvms) | name | board-init helper already receives lvms + child name; drop redundant object_property_add_child()
-hw/loongarch/virt.c:298 | qdev_new | OBJECT(lvms) | "acpi-ged" | board-init helper receives LoongArchVirtMachineState *lvms
-hw/loongarch/virt.c:325 | qdev_new | parent | "platform-bus" | static helper w/o parent ptr; add Object *parent first arg, thread OBJECT(lvms) from caller
-hw/loongarch/virt.c:403 | qdev_new | OBJECT(lvms) | "pci-host" | board-init helper receives lvms
-hw/loongarch/virt.c:488 | sysbus_create_simple | OBJECT(lvms) | "rtc" | board-init helper receives lvms
-hw/loongarch/virt.c:604 | qdev_new | OBJECT(lvms) | "ipi" | virt_irq_init() receives lvms
-hw/loongarch/virt.c:610 | qdev_new | OBJECT(lvms) | "dintc" | virt_irq_init() receives lvms
-hw/loongarch/virt.c:617 | qdev_new | OBJECT(lvms) | "extioi" | virt_irq_init() receives lvms
-hw/loongarch/virt.c:625 | qdev_new | OBJECT(lvms) | "pch-pic" | virt_irq_init() receives lvms
-hw/loongarch/virt.c:631 | qdev_new | OBJECT(lvms) | "pch-msi" | virt_irq_init() receives lvms
+  hw/microblaze/petalogix_ml605_mmu.c:113 | OBJECT(machine) | "intc" | board init(); single XPS interrupt controller owned by machine
+  hw/microblaze/petalogix_ml605_mmu.c:129 | OBJECT(machine) | "timer" | board init(); single XPS timer block owned by machine
+  hw/microblaze/petalogix_ml605_mmu.c:138 | OBJECT(machine) | "xilinx-eth" | board init(); keep existing child name; drop now-redundant object_property_add_child()
+  hw/microblaze/petalogix_ml605_mmu.c:139 | OBJECT(machine) | "xilinx-dma" | board init(); keep existing child name; drop now-redundant object_property_add_child()
+  hw/microblaze/petalogix_ml605_mmu.c:177 | OBJECT(machine) | "spi" | board init(); single XPS SPI controller owned by machine
+  hw/microblaze/petalogix_ml605_mmu.c:191 | OBJECT(machine) | "spi-flash[*]" | board init(); NUM_SPI_FLASHES instances in loop, auto-index; plugged onto SPI bus but lifetime-owned by machine
+  hw/microblaze/petalogix_s3adsp1800_mmu.c:110 | OBJECT(machine) | "intc" | board init(); single XPS interrupt controller owned by machine
+  hw/microblaze/petalogix_s3adsp1800_mmu.c:122 | OBJECT(machine) | "uart" | board init(); single Xilinx uartlite owned by machine
+  hw/microblaze/petalogix_s3adsp1800_mmu.c:130 | OBJECT(machine) | "timer" | board init(); single XPS timer block owned by machine
+  hw/microblaze/petalogix_s3adsp1800_mmu.c:138 | OBJECT(machine) | "eth" | board init(); single XPS ethernetlite owned by machine
 
 Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/loongarch/virt.c | 48 ++++++++++++++++++++-------------------------
- 1 file changed, 21 insertions(+), 27 deletions(-)
+ hw/microblaze/petalogix_ml605_mmu.c      | 28 ++++++++++--------------
+ hw/microblaze/petalogix_s3adsp1800_mmu.c | 16 +++++++-------
+ 2 files changed, 20 insertions(+), 24 deletions(-)
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 45acdc3ec1..e0129b2f33 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -150,7 +150,7 @@ static PFlashCFI01 *virt_flash_create1(LoongArchVirtMachineState *lvms,
-                                        const char *name,
-                                        const char *alias_prop_name)
- {
--    DeviceState *dev = qdev_new_orphan(TYPE_PFLASH_CFI01);
-+    DeviceState *dev = qdev_new(OBJECT(lvms), name, TYPE_PFLASH_CFI01);
+diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/petalogix_ml605_mmu.c
+index 178cfd4a5e..031de37cec 100644
+--- a/hw/microblaze/petalogix_ml605_mmu.c
++++ b/hw/microblaze/petalogix_ml605_mmu.c
+@@ -110,10 +110,10 @@ petalogix_ml605_init(MachineState *machine)
+                           64 * KiB, 2, 0x89, 0x18, 0x0000, 0x0, 0);
  
-     qdev_prop_set_uint64(dev, "sector-length", VIRT_FLASH_SECTOR_SIZE);
-     qdev_prop_set_uint8(dev, "width", 4);
-@@ -161,7 +161,6 @@ static PFlashCFI01 *virt_flash_create1(LoongArchVirtMachineState *lvms,
-     qdev_prop_set_uint16(dev, "id2", 0x00);
-     qdev_prop_set_uint16(dev, "id3", 0x00);
-     qdev_prop_set_string(dev, "name", name);
--    object_property_add_child(OBJECT(lvms), name, OBJECT(dev));
-     object_property_add_alias(OBJECT(lvms), alias_prop_name,
-                               OBJECT(dev), "drive");
-     return PFLASH_CFI01(dev);
-@@ -191,7 +190,7 @@ static void virt_flash_map1(PFlashCFI01 *flash,
-     assert(real_size / VIRT_FLASH_SECTOR_SIZE <= UINT32_MAX);
  
-     qdev_prop_set_uint32(dev, "num-blocks", real_size / VIRT_FLASH_SECTOR_SIZE);
+-    dev = qdev_new_orphan("xlnx.xps-intc");
++    dev = qdev_new(OBJECT(machine), "intc", "xlnx.xps-intc");
+     qdev_prop_set_enum(dev, "endianness", ENDIAN_MODE_LITTLE);
+     qdev_prop_set_uint32(dev, "kind-of-intr", 1 << TIMER_IRQ);
 -    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
 +    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
-     memory_region_add_subregion(sysmem, base,
-                                 sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0));
- }
-@@ -295,9 +294,9 @@ static DeviceState *create_acpi_ged(DeviceState *pch_pic,
-         event |= ACPI_GED_CPU_HOTPLUG_EVT;
-     }
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, INTC_BASEADDR);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
+                        qdev_get_gpio_in(DEVICE(cpu), MB_CPU_IRQ));
+@@ -126,21 +126,17 @@ petalogix_ml605_init(MachineState *machine)
+                    DEVICE_LITTLE_ENDIAN);
  
--    dev = qdev_new_orphan(TYPE_ACPI_GED);
-+    dev = qdev_new(OBJECT(lvms), "acpi-ged", TYPE_ACPI_GED);
-     qdev_prop_set_uint32(dev, "ged-event", event);
+     /* 2 timers at irq 2 @ 100 Mhz.  */
+-    dev = qdev_new_orphan("xlnx.xps-timer");
++    dev = qdev_new(OBJECT(machine), "timer", "xlnx.xps-timer");
+     qdev_prop_set_enum(dev, "endianness", ENDIAN_MODE_LITTLE);
+     qdev_prop_set_uint32(dev, "one-timer-only", 0);
+     qdev_prop_set_uint32(dev, "clock-frequency", 100 * 1000000);
 -    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
 +    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, TIMER_BASEADDR);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq[TIMER_IRQ]);
  
-     /* ged event */
-     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, VIRT_GED_EVT_ADDR);
-@@ -315,18 +314,18 @@ static DeviceState *create_acpi_ged(DeviceState *pch_pic,
-     return dev;
- }
+     /* axi ethernet and dma initialization. */
+-    eth0 = qdev_new_orphan("xlnx.axi-ethernet");
+-    dma = qdev_new_orphan("xlnx.axi-dma");
+-
+-    /* FIXME: attach to the sysbus instead */
+-    object_property_add_child(qdev_get_machine(), "xilinx-eth", OBJECT(eth0));
+-    object_property_add_child(qdev_get_machine(), "xilinx-dma", OBJECT(dma));
++    eth0 = qdev_new(OBJECT(machine), "xilinx-eth", "xlnx.axi-ethernet");
++    dma = qdev_new(OBJECT(machine), "xilinx-dma", "xlnx.axi-dma");
  
--static DeviceState *create_platform_bus(DeviceState *pch_pic)
-+static DeviceState *create_platform_bus(Object *parent, DeviceState *pch_pic)
- {
-     DeviceState *dev;
-     SysBusDevice *sysbus;
-     int i, irq;
-     MemoryRegion *sysmem = get_system_memory();
+     ds = object_property_get_link(OBJECT(dma),
+                                   "axistream-connected-target", NULL);
+@@ -153,7 +149,7 @@ petalogix_ml605_init(MachineState *machine)
+                              &error_abort);
+     object_property_set_link(OBJECT(eth0), "axistream-control-connected", cs,
+                              &error_abort);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(eth0), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(eth0), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(eth0), 0, AXIENET_BASEADDR);
+     sysbus_connect_irq(SYS_BUS_DEVICE(eth0), 0, irq[AXIENET_IRQ]);
  
--    dev = qdev_new_orphan(TYPE_PLATFORM_BUS_DEVICE);
-+    dev = qdev_new(parent, "platform-bus", TYPE_PLATFORM_BUS_DEVICE);
-     dev->id = g_strdup(TYPE_PLATFORM_BUS_DEVICE);
-     qdev_prop_set_uint32(dev, "num_irqs", VIRT_PLATFORM_BUS_NUM_IRQS);
-     qdev_prop_set_uint32(dev, "mmio_size", VIRT_PLATFORM_BUS_SIZE);
+@@ -166,7 +162,7 @@ petalogix_ml605_init(MachineState *machine)
+                              &error_abort);
+     object_property_set_link(OBJECT(dma), "axistream-control-connected", cs,
+                              &error_abort);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dma), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(dma), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dma), 0, AXIDMA_BASEADDR);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dma), 0, irq[AXIDMA_IRQ0]);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dma), 1, irq[AXIDMA_IRQ1]);
+@@ -174,11 +170,11 @@ petalogix_ml605_init(MachineState *machine)
+     {
+         SSIBus *spi;
+ 
+-        dev = qdev_new_orphan("xlnx.xps-spi");
++        dev = qdev_new(OBJECT(machine), "spi", "xlnx.xps-spi");
+         qdev_prop_set_enum(dev, "endianness", ENDIAN_MODE_LITTLE);
+         qdev_prop_set_uint8(dev, "num-ss-bits", NUM_SPI_FLASHES);
+         busdev = SYS_BUS_DEVICE(dev);
+-        sysbus_realize_and_unref(busdev, &error_fatal);
++        sysbus_realize(busdev, &error_fatal);
+         sysbus_mmio_map(busdev, 0, SPI_BASEADDR);
+         sysbus_connect_irq(busdev, 0, irq[SPI_IRQ]);
+ 
+@@ -188,14 +184,14 @@ petalogix_ml605_init(MachineState *machine)
+             dinfo = drive_get(IF_MTD, 0, i);
+             qemu_irq cs_line;
+ 
+-            dev = qdev_new_orphan("n25q128");
++            dev = qdev_new(OBJECT(machine), "spi-flash[*]", "n25q128");
+             if (dinfo) {
+                 qdev_prop_set_drive_err(dev, "drive",
+                                         blk_by_legacy_dinfo(dinfo),
+                                         &error_fatal);
+             }
+             qdev_prop_set_uint8(dev, "cs", i);
+-            qdev_realize_and_unref(dev, BUS(spi), &error_fatal);
++            qdev_realize(dev, BUS(spi), &error_fatal);
+ 
+             cs_line = qdev_get_gpio_in_named(dev, SSI_GPIO_CS, 0);
+             sysbus_connect_irq(busdev, i+1, cs_line);
+diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+index 91c1d64451..b4327ad493 100644
+--- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
++++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
+@@ -107,11 +107,11 @@ petalogix_s3adsp1800_init(MachineState *machine)
+                           dinfo ? blk_by_legacy_dinfo(dinfo) : NULL,
+                           64 * KiB, 1, 0x89, 0x18, 0x0000, 0x0, 1);
+ 
+-    dev = qdev_new_orphan("xlnx.xps-intc");
++    dev = qdev_new(OBJECT(machine), "intc", "xlnx.xps-intc");
+     qdev_prop_set_enum(dev, "endianness", endianness);
+     qdev_prop_set_uint32(dev, "kind-of-intr",
+                          1 << ETHLITE_IRQ | 1 << UARTLITE_IRQ);
 -    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
 +    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
- 
-     sysbus = SYS_BUS_DEVICE(dev);
-     for (i = 0; i < VIRT_PLATFORM_BUS_NUM_IRQS; i++) {
-@@ -400,9 +399,9 @@ static void virt_devices_init(DeviceState *pch_pic,
-     hwaddr mmio_base, mmio_size;
-     int i, irq;
- 
--    gpex_dev = qdev_new_orphan(TYPE_GPEX_HOST);
-+    gpex_dev = qdev_new(OBJECT(lvms), "pci-host", TYPE_GPEX_HOST);
-     d = SYS_BUS_DEVICE(gpex_dev);
--    sysbus_realize_and_unref(d, &error_fatal);
-+    sysbus_realize(d, &error_fatal);
-     pci_bus = PCI_HOST_BRIDGE(gpex_dev)->bus;
-     lvms->gpex.pio.base = VIRT_PCI_IO_BASE;
-     lvms->gpex.pio.size = VIRT_PCI_IO_SIZE;
-@@ -485,14 +484,14 @@ static void virt_devices_init(DeviceState *pch_pic,
-      * Create some unimplemented devices to emulate this.
-      */
-     create_unimplemented_device("pci-dma-cfg", 0x1001041c, 0x4);
--    sysbus_create_simple_orphan("ls7a_rtc", VIRT_RTC_REG_BASE,
-+    sysbus_create_simple(OBJECT(lvms), "rtc", "ls7a_rtc", VIRT_RTC_REG_BASE,
-                          qdev_get_gpio_in(pch_pic,
-                          VIRT_RTC_IRQ - VIRT_GSI_BASE));
- 
-     /* acpi ged */
-     lvms->acpi_ged = create_acpi_ged(pch_pic, lvms);
-     /* platform bus */
--    lvms->platform_bus_dev = create_platform_bus(pch_pic);
-+    lvms->platform_bus_dev = create_platform_bus(OBJECT(lvms), pch_pic);
- }
- 
- static void virt_cpu_irq_init(LoongArchVirtMachineState *lvms)
-@@ -601,40 +600,40 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
-      */
- 
-     /* Create IPI device */
--    ipi = qdev_new_orphan(TYPE_LOONGARCH_IPI);
-+    ipi = qdev_new(OBJECT(lvms), "ipi", TYPE_LOONGARCH_IPI);
-     lvms->ipi = ipi;
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(ipi), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(ipi), &error_fatal);
- 
-     /* Create DINTC device*/
-     if (virt_has_dmsi(lvms)) {
--        dintc = qdev_new_orphan(TYPE_LOONGARCH_DINTC);
-+        dintc = qdev_new(OBJECT(lvms), "dintc", TYPE_LOONGARCH_DINTC);
-         lvms->dintc = dintc;
--        sysbus_realize_and_unref(SYS_BUS_DEVICE(dintc), &error_fatal);
-+        sysbus_realize(SYS_BUS_DEVICE(dintc), &error_fatal);
-         sysbus_mmio_map(SYS_BUS_DEVICE(dintc), 0, VIRT_DINTC_BASE);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, INTC_BASEADDR);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
+                        qdev_get_gpio_in(DEVICE(cpu), MB_CPU_IRQ));
+@@ -119,28 +119,28 @@ petalogix_s3adsp1800_init(MachineState *machine)
+         irq[i] = qdev_get_gpio_in(dev, i);
      }
  
-     /* Create EXTIOI device */
--    extioi = qdev_new_orphan(TYPE_LOONGARCH_EXTIOI);
-+    extioi = qdev_new(OBJECT(lvms), "extioi", TYPE_LOONGARCH_EXTIOI);
-     lvms->extioi = extioi;
-     if (virt_is_veiointc_enabled(lvms)) {
-         qdev_prop_set_bit(extioi, "has-virtualization-extension", true);
-     }
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(extioi), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(extioi), &error_fatal);
+-    dev = qdev_new_orphan(TYPE_XILINX_UARTLITE);
++    dev = qdev_new(OBJECT(machine), "uart", TYPE_XILINX_UARTLITE);
+     qdev_prop_set_enum(dev, "endianness", endianness);
+     qdev_prop_set_chr(dev, "chardev", serial_hd(0));
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, UARTLITE_BASEADDR);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq[UARTLITE_IRQ]);
  
-     virt_cpu_irq_init(lvms);
--    pch_pic = qdev_new_orphan(TYPE_LOONGARCH_PIC);
-+    pch_pic = qdev_new(OBJECT(lvms), "pch-pic", TYPE_LOONGARCH_PIC);
-     num = VIRT_PCH_PIC_IRQ_NUM;
-     qdev_prop_set_uint32(pch_pic, "pch_pic_irq_num", num);
-     d = SYS_BUS_DEVICE(pch_pic);
--    sysbus_realize_and_unref(d, &error_fatal);
-+    sysbus_realize(d, &error_fatal);
+     /* 2 timers at irq 2 @ 62 Mhz.  */
+-    dev = qdev_new_orphan("xlnx.xps-timer");
++    dev = qdev_new(OBJECT(machine), "timer", "xlnx.xps-timer");
+     qdev_prop_set_enum(dev, "endianness", endianness);
+     qdev_prop_set_uint32(dev, "one-timer-only", 0);
+     qdev_prop_set_uint32(dev, "clock-frequency", 62 * 1000000);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, TIMER_BASEADDR);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq[TIMER_IRQ]);
  
--    pch_msi = qdev_new_orphan(TYPE_LOONGARCH_PCH_MSI);
-+    pch_msi = qdev_new(OBJECT(lvms), "pch-msi", TYPE_LOONGARCH_PCH_MSI);
-     start   =  num;
-     num = EXTIOI_IRQS - start;
-     qdev_prop_set_uint32(pch_msi, "msi_irq_base", start);
-     qdev_prop_set_uint32(pch_msi, "msi_irq_num", num);
-     d = SYS_BUS_DEVICE(pch_msi);
--    sysbus_realize_and_unref(d, &error_fatal);
-+    sysbus_realize(d, &error_fatal);
-     sysbus_mmio_map(d, 0, VIRT_PCH_MSI_ADDR_LOW);
+-    dev = qdev_new_orphan("xlnx.xps-ethernetlite");
++    dev = qdev_new(OBJECT(machine), "eth", "xlnx.xps-ethernetlite");
+     qdev_prop_set_enum(dev, "endianness", endianness);
+     qemu_configure_nic_device(dev, true, NULL);
+     qdev_prop_set_uint32(dev, "tx-ping-pong", 0);
+     qdev_prop_set_uint32(dev, "rx-ping-pong", 0);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, ETHLITE_BASEADDR);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq[ETHLITE_IRQ]);
  
-     if (kvm_irqchip_in_kernel()) {
-@@ -1570,11 +1569,6 @@ static void virt_instance_finalize(Object *obj)
- {
-     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
- 
--    for (int i = 0; i < ARRAY_SIZE(lvms->flash); i++) {
--        if (lvms->flash[i] && !qdev_is_realized(DEVICE(lvms->flash[i]))) {
--            object_unref(OBJECT(lvms->flash[i]));
--        }
--    }
-     g_free(lvms->oem_id);
-     g_free(lvms->oem_table_id);
- }
 -- 
 2.47.1
 
