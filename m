@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2BDBC4451B
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:51:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96CBCC4450A
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:52:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlCwc-0002Sv-4j; Sat, 18 Jul 2026 17:51:38 -0400
+	id 1wlCwh-0002vG-Ka; Sat, 18 Jul 2026 17:51:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlCwR-0002IM-1H; Sat, 18 Jul 2026 17:51:29 -0400
-Received: from pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.42.203.116])
+ id 1wlCwe-0002bM-08; Sat, 18 Jul 2026 17:51:40 -0400
+Received: from pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([35.155.198.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlCwO-0003uy-5d; Sat, 18 Jul 2026 17:51:25 -0400
+ id 1wlCwY-0003vT-Kj; Sat, 18 Jul 2026 17:51:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784411484; x=1815947484;
+ t=1784411494; x=1815947494;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=kusAj88vV1sqo722Q/UnBwTqKM3LagzQTOwpOxPSAM0=;
- b=o0k7zXB2qMivK2YdDoxl+B6HrqCdlXCI6oGbfD0/PdVw1s4lRhNgetSt
- Ts2IITIsr4OH2EzwqJ14CfqRYiX7aQxpM3wrfjkG08GmxYgB0hQ2yoZQM
- ULO5198Bd968kRRfYN6TdnCfCZDZo33vzGdUia9Nqpolpx07yv6l4Urn4
- zgwVZVGgthQSJk9/NziGsP2YgM+dEe/5uMPLA0Ss99CtxC2CFivkQfQj0
- 4ac1vwgRDgxuEaS8PqngK+Y2SrVaoXdSJGFKXNCPH1EigOswSxqtN8n70
- evNDLHbV5vbrW674D8Ah4N+67AFrPu5VM9gYo++a1vooI0tCGvwLNfNf0 A==;
-X-CSE-ConnectionGUID: dWKSyx9ESouI/M8fUGMl8Q==
-X-CSE-MsgGUID: QDvZBdERS/muaMDvT35Ubw==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23939853"
-Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
- by internal-pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:51:20 +0000
-Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.234:28066]
+ bh=gQXzab3WxKtQdbHEOACFtXwWmwNHyOBMCFK2xrKvKRc=;
+ b=rOwX8u/Trpk7yYL+tUn7FEx4acniikhUvZ2YjkZN99NYN5jLK6wEcHEg
+ 8MkbzEJaKIfjKHhYQotf9htIcdfxFzPG9gfsDXvXaEUJ7JH2PooOrCijC
+ z0pKF0n5OgoF2PDaRtyFlH4acZB76/DOQQsJaiSr9exUIMOHhpFawK3nl
+ 6kb3gYLGA6DIgt1yHIu8MLCJX9gN/EFaaOBRZ5bHzXzVBzkb0YeIgxc2a
+ emYO+80U1a84VqIRNANSX4I9qnYcZOFU+mgMBZeoSUaiu28SDcg9ehaMN
+ kqXx8Ip7A14IZbJqXFNPq86F8I8ugx4PQXQD18QBMxUMyXUPGAgB9+Q4U g==;
+X-CSE-ConnectionGUID: 9laVQ4BmReypGzUL8gVHEw==
+X-CSE-MsgGUID: QWR+6E3WSwWiy/t7IrBHDQ==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23816621"
+Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
+ by internal-pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:51:30 +0000
+Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.51:28085]
  by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.0.115:2525]
  with esmtp (Farcaster)
- id 084f9962-b416-49fa-87fe-1631eb551eaa; Sat, 18 Jul 2026 21:51:20 +0000 (UTC)
-X-Farcaster-Flow-ID: 084f9962-b416-49fa-87fe-1631eb551eaa
+ id 9d786f6a-0d80-44db-b948-2a06f9686ab0; Sat, 18 Jul 2026 21:51:30 +0000 (UTC)
+X-Farcaster-Flow-ID: 9d786f6a-0d80-44db-b948-2a06f9686ab0
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
+ EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:51:20 +0000
+ Sat, 18 Jul 2026 21:51:30 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:51:10 +0000
+ Sat, 18 Jul 2026 21:51:20 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,9 +93,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 051/137] hw/pci: Give onboard devices a QOM parent
-Date: Sat, 18 Jul 2026 21:35:26 +0000
-Message-ID: <20260718213652.37673-52-graf@amazon.com>
+Subject: [RFC PATCH v2 052/137] hw/riscv: Give onboard devices a QOM parent
+Date: Sat, 18 Jul 2026 21:35:27 +0000
+Message-ID: <20260718213652.37673-53-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -106,9 +106,9 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D031UWC002.ant.amazon.com (10.13.139.212) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=52.42.203.116;
+Received-SPF: pass client-ip=35.155.198.111;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -132,56 +132,405 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert pcie_sriov_pf_init() to the parented pci_new() API so each
-VF becomes a child<> of its PF PCIDevice with a stable "vf[N]" name
-in the composition tree instead of landing in /machine/unattached
-with an unstable device[N] name.
+Convert the *_orphan() device-creation calls in hw/riscv to the new
+parented API introduced earlier in this series, so every onboard
+device gets a stable path in the composition tree instead of landing
+in /machine/unattached with an unstable device[N] name.
 
-Since object_property_add_child() now holds the sole reference to
-the VF, drop the extra creator-ref object_unref() on both the
-realize error path and in unparent_vfs(): object_unparent() drops
-the last reference and frees the VF.
+The parent for each device is the object that owns its lifetime: the
+machine for board-created devices, the containing device for
+composite children.  Names follow existing QOM conventions.
 
-The remaining *_orphan() calls in hw/pci/pci.c are the transitional
-API definitions themselves plus the public pci_vga_init() /
-pci_init_nic_in_slot() helpers, which need parent threading through
-their callers and are converted in the per-board patches.
+Per-site rationale (reviewers: dispute the modeling here):
+
+hw/riscv/boston-aia.c:308 | qdev_new | OBJECT(machine) | "pcie" | static helper called from board init; thread Object *parent through
+hw/riscv/boston-aia.c:355 | qdev_new | OBJECT(machine) | "boston" | board MachineClass.init()
+hw/riscv/boston-aia.c:422 | pci_create_simple_multifunction | OBJECT(machine) | "ahci" | board MachineClass.init()
+hw/riscv/microblaze-v-generic.c:82 | qdev_new | OBJECT(machine) | "intc" | board MachineClass.init()
+hw/riscv/microblaze-v-generic.c:95 | qdev_new | OBJECT(machine) | "uartlite" | board MachineClass.init()
+hw/riscv/microblaze-v-generic.c:108 | qdev_new | OBJECT(machine) | "timer[*]" | board MachineClass.init(); two timers
+hw/riscv/microblaze-v-generic.c:117 | qdev_new | OBJECT(machine) | "timer[*]" | board MachineClass.init(); two timers
+hw/riscv/microblaze-v-generic.c:126 | qdev_new | OBJECT(machine) | "ethlite" | board MachineClass.init()
+hw/riscv/microblaze-v-generic.c:136 | qdev_new | OBJECT(machine) | "xilinx-eth" | board init; collapse existing object_property_add_child, keep name
+hw/riscv/microblaze-v-generic.c:137 | qdev_new | OBJECT(machine) | "xilinx-dma" | board init; collapse existing object_property_add_child, keep name
+hw/riscv/microchip_pfsoc.c:584 | qdev_new | OBJECT(machine) | "sd-card" | board MachineClass.init()
+hw/riscv/sifive_u.c:596 | qdev_new | OBJECT(machine) | "flash" | board MachineClass.init()
+hw/riscv/sifive_u.c:609 | ssi_create_peripheral | OBJECT(machine) | "ssi-sd" | board MachineClass.init()
+hw/riscv/sifive_u.c:616 | qdev_new | OBJECT(machine) | "sd-card" | board MachineClass.init()
+hw/riscv/tt_atlantis.c:580 | i2c_slave_create_simple | OBJECT(s) | "rtc" | board init; s is TTAtlantisState (machine)
+hw/riscv/tt_atlantis.c:581 | i2c_slave_create_simple | OBJECT(s) | "tmp105" | board init; s is TTAtlantisState (machine)
+hw/riscv/virt.c:129 | qdev_new | OBJECT(s) | name | helper receives RISCVVirtState *s; collapse existing object_property_add_child, keep name arg
+hw/riscv/virt.c:1054 | qdev_new | OBJECT(s) | "pcie" | helper receives RISCVVirtState *s (machine)
+hw/riscv/virt.c:1147 | qdev_new | OBJECT(s) | "platform-bus" | helper receives RISCVVirtState *s (machine)
+hw/riscv/virt.c:1484 | sysbus_create_simple | OBJECT(machine) | "virtio-mmio[*]" | board MachineClass.init(); loop
+hw/riscv/virt.c:1497 | sysbus_create_simple | OBJECT(machine) | "rtc" | board MachineClass.init()
+hw/riscv/virt.c:1519 | qdev_new | OBJECT(machine) | "iommu" | board MachineClass.init()
 
 Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/pci/pcie_sriov.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ hw/riscv/boston-aia.c           | 17 +++++++++--------
+ hw/riscv/microblaze-v-generic.c | 32 ++++++++++++++------------------
+ hw/riscv/microchip_pfsoc.c      |  5 +++--
+ hw/riscv/sifive_u.c             | 15 ++++++++-------
+ hw/riscv/tt_atlantis.c          |  5 +++--
+ hw/riscv/virt.c                 | 29 ++++++++++++-----------------
+ 6 files changed, 49 insertions(+), 54 deletions(-)
 
-diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-index a69a41cdde..f96b0f45cb 100644
---- a/hw/pci/pcie_sriov.c
-+++ b/hw/pci/pcie_sriov.c
-@@ -26,7 +26,6 @@ static void unparent_vfs(PCIDevice *dev, uint16_t total_vfs)
-     for (uint16_t i = 0; i < total_vfs; i++) {
-         PCIDevice *vf = dev->exp.sriov_pf.vf[i];
-         object_unparent(OBJECT(vf));
--        object_unref(OBJECT(vf));
+diff --git a/hw/riscv/boston-aia.c b/hw/riscv/boston-aia.c
+index 26bacf0e59..3b0eba00a7 100644
+--- a/hw/riscv/boston-aia.c
++++ b/hw/riscv/boston-aia.c
+@@ -297,7 +297,7 @@ static void gen_firmware(uint32_t *p)
+ }
+ 
+ static inline XilinxPCIEHost *
+-xilinx_pcie_init(MemoryRegion *sys_mem, uint32_t bus_nr,
++xilinx_pcie_init(Object *parent, MemoryRegion *sys_mem, uint32_t bus_nr,
+                  hwaddr cfg_base, uint64_t cfg_size,
+                  hwaddr mmio_base, uint64_t mmio_size,
+                  qemu_irq irq)
+@@ -305,7 +305,7 @@ xilinx_pcie_init(MemoryRegion *sys_mem, uint32_t bus_nr,
+     DeviceState *dev;
+     MemoryRegion *cfg, *mmio;
+ 
+-    dev = qdev_new_orphan(TYPE_XILINX_PCIE_HOST);
++    dev = qdev_new(parent, "pcie", TYPE_XILINX_PCIE_HOST);
+ 
+     qdev_prop_set_uint32(dev, "bus_nr", bus_nr);
+     qdev_prop_set_uint64(dev, "cfg_base", cfg_base);
+@@ -313,7 +313,7 @@ xilinx_pcie_init(MemoryRegion *sys_mem, uint32_t bus_nr,
+     qdev_prop_set_uint64(dev, "mmio_base", mmio_base);
+     qdev_prop_set_uint64(dev, "mmio_size", mmio_size);
+ 
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+ 
+     cfg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
+     memory_region_add_subregion_overlap(sys_mem, cfg_base, cfg, 0);
+@@ -352,8 +352,8 @@ static void boston_mach_init(MachineState *machine)
+         exit(1);
      }
-     g_free(dev->exp.sriov_pf.vf);
-     dev->exp.sriov_pf.vf = NULL;
-@@ -171,13 +170,13 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
-     dev->exp.sriov_pf.vf = g_new(PCIDevice *, total_vfs);
  
-     for (uint16_t i = 0; i < total_vfs; i++) {
--        PCIDevice *vf = pci_new_orphan(devfn, vfname);
-+        g_autofree char *vf_id = g_strdup_printf("vf[%u]", i);
-+        PCIDevice *vf = pci_new(OBJECT(dev), vf_id, devfn, vfname);
-         vf->exp.sriov_vf.pf = dev;
-         vf->exp.sriov_vf.vf_number = i;
+-    dev = qdev_new_orphan(TYPE_MIPS_BOSTON_AIA);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    dev = qdev_new(OBJECT(machine), "boston", TYPE_MIPS_BOSTON_AIA);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
  
-         if (!qdev_realize(&vf->qdev, bus, errp)) {
-             object_unparent(OBJECT(vf));
--            object_unref(vf);
-             unparent_vfs(dev, i);
-             return false;
-         }
+     s = BOSTON(dev);
+     s->mach = machine;
+@@ -390,7 +390,7 @@ static void boston_mach_init(MachineState *machine)
+                              MIN(machine->ram_size, (256 * MiB)));
+     memory_region_add_subregion_overlap(sys_mem, 0, ddr_low_alias, 0);
+ 
+-    pcie2 = xilinx_pcie_init(sys_mem, 2,
++    pcie2 = xilinx_pcie_init(OBJECT(machine), sys_mem, 2,
+                              boston_memmap[BOSTON_PCIE2].base,
+                              boston_memmap[BOSTON_PCIE2].size,
+                              boston_memmap[BOSTON_PCIE2_MMIO].base,
+@@ -419,8 +419,9 @@ static void boston_mach_init(MachineState *machine)
+     qemu_chr_fe_set_handlers(&s->lcd_display, NULL, NULL,
+                              boston_lcd_event, NULL, s, NULL, true);
+ 
+-    pdev = pci_create_simple_multifunction_orphan(&PCI_BRIDGE(&pcie2->root)->sec_bus,
+-                                           PCI_DEVFN(0, 0), TYPE_ICH9_AHCI);
++    pdev = pci_create_simple_multifunction(OBJECT(machine), "ahci",
++                                &PCI_BRIDGE(&pcie2->root)->sec_bus,
++                                PCI_DEVFN(0, 0), TYPE_ICH9_AHCI);
+     ich9 = ICH9_AHCI(pdev);
+     g_assert(ARRAY_SIZE(hd) == ich9->ahci.ports);
+     ide_drive_get(hd, ich9->ahci.ports);
+diff --git a/hw/riscv/microblaze-v-generic.c b/hw/riscv/microblaze-v-generic.c
+index 063be14b19..fbfdec7ede 100644
+--- a/hw/riscv/microblaze-v-generic.c
++++ b/hw/riscv/microblaze-v-generic.c
+@@ -79,11 +79,11 @@ static void mb_v_generic_init(MachineState *machine)
+                            ram_size, &error_fatal);
+     memory_region_add_subregion(sysmem, ddr_base, phys_ram);
+ 
+-    dev = qdev_new_orphan("xlnx.xps-intc");
++    dev = qdev_new(OBJECT(machine), "intc", "xlnx.xps-intc");
+     qdev_prop_set_enum(dev, "endianness", ENDIAN_MODE_LITTLE);
+     qdev_prop_set_uint32(dev, "kind-of-intr",
+                          1 << UARTLITE_IRQ);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, INTC_BASEADDR);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
+                        qdev_get_gpio_in(DEVICE(cpu), 11));
+@@ -92,10 +92,10 @@ static void mb_v_generic_init(MachineState *machine)
+     }
+ 
+     /* Uartlite */
+-    dev = qdev_new_orphan(TYPE_XILINX_UARTLITE);
++    dev = qdev_new(OBJECT(machine), "uartlite", TYPE_XILINX_UARTLITE);
+     qdev_prop_set_enum(dev, "endianness", ENDIAN_MODE_LITTLE);
+     qdev_prop_set_chr(dev, "chardev", serial_hd(0));
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, UARTLITE_BASEADDR);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq[UARTLITE_IRQ]);
+ 
+@@ -105,40 +105,36 @@ static void mb_v_generic_init(MachineState *machine)
+                    DEVICE_LITTLE_ENDIAN);
+ 
+     /* 2 timers at irq 0 @ 100 Mhz.  */
+-    dev = qdev_new_orphan("xlnx.xps-timer");
++    dev = qdev_new(OBJECT(machine), "timer[*]", "xlnx.xps-timer");
+     qdev_prop_set_enum(dev, "endianness", ENDIAN_MODE_LITTLE);
+     qdev_prop_set_uint32(dev, "one-timer-only", 0);
+     qdev_prop_set_uint32(dev, "clock-frequency", 100000000);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, TIMER_BASEADDR);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq[TIMER_IRQ]);
+ 
+     /* 2 timers at irq 3 @ 100 Mhz.  */
+-    dev = qdev_new_orphan("xlnx.xps-timer");
++    dev = qdev_new(OBJECT(machine), "timer[*]", "xlnx.xps-timer");
+     qdev_prop_set_enum(dev, "endianness", ENDIAN_MODE_LITTLE);
+     qdev_prop_set_uint32(dev, "one-timer-only", 0);
+     qdev_prop_set_uint32(dev, "clock-frequency", 100000000);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, TIMER_BASEADDR2);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq[TIMER_IRQ2]);
+ 
+     /* Emaclite */
+-    dev = qdev_new_orphan("xlnx.xps-ethernetlite");
++    dev = qdev_new(OBJECT(machine), "ethlite", "xlnx.xps-ethernetlite");
+     qdev_prop_set_enum(dev, "endianness", ENDIAN_MODE_LITTLE);
+     qemu_configure_nic_device(dev, true, NULL);
+     qdev_prop_set_uint32(dev, "tx-ping-pong", 0);
+     qdev_prop_set_uint32(dev, "rx-ping-pong", 0);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, ETHLITE_BASEADDR);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq[ETHLITE_IRQ]);
+ 
+     /* axi ethernet and dma initialization. */
+-    eth0 = qdev_new_orphan("xlnx.axi-ethernet");
+-    dma = qdev_new_orphan("xlnx.axi-dma");
+-
+-    /* FIXME: attach to the sysbus instead */
+-    object_property_add_child(qdev_get_machine(), "xilinx-eth", OBJECT(eth0));
+-    object_property_add_child(qdev_get_machine(), "xilinx-dma", OBJECT(dma));
++    eth0 = qdev_new(OBJECT(machine), "xilinx-eth", "xlnx.axi-ethernet");
++    dma = qdev_new(OBJECT(machine), "xilinx-dma", "xlnx.axi-dma");
+ 
+     ds = object_property_get_link(OBJECT(dma),
+                                   "axistream-connected-target", NULL);
+@@ -151,7 +147,7 @@ static void mb_v_generic_init(MachineState *machine)
+                              &error_abort);
+     object_property_set_link(OBJECT(eth0), "axistream-control-connected", cs,
+                              &error_abort);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(eth0), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(eth0), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(eth0), 0, AXIENET_BASEADDR);
+     sysbus_connect_irq(SYS_BUS_DEVICE(eth0), 0, irq[AXIENET_IRQ]);
+ 
+@@ -164,7 +160,7 @@ static void mb_v_generic_init(MachineState *machine)
+                              &error_abort);
+     object_property_set_link(OBJECT(dma), "axistream-control-connected", cs,
+                              &error_abort);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dma), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(dma), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dma), 0, AXIDMA_BASEADDR);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dma), 0, irq[AXIDMA_IRQ0]);
+     sysbus_connect_irq(SYS_BUS_DEVICE(dma), 1, irq[AXIDMA_IRQ1]);
+diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
+index 52fb5d5970..0d298aa3fc 100644
+--- a/hw/riscv/microchip_pfsoc.c
++++ b/hw/riscv/microchip_pfsoc.c
+@@ -581,11 +581,12 @@ static void microchip_icicle_kit_machine_init(MachineState *machine)
+     /* Attach an SD card */
+     if (dinfo) {
+         CadenceSDHCIState *sdhci = &(s->soc.sdhci);
+-        DeviceState *card = qdev_new_orphan(TYPE_SD_CARD);
++        DeviceState *card = qdev_new(OBJECT(machine), "sd-card",
++                                     TYPE_SD_CARD);
+ 
+         qdev_prop_set_drive_err(card, "drive", blk_by_legacy_dinfo(dinfo),
+                                 &error_fatal);
+-        qdev_realize_and_unref(card, sdhci->bus, &error_fatal);
++        qdev_realize(card, sdhci->bus, &error_fatal);
+     }
+ 
+     /*
+diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
+index 0ef0124140..3d60a501dd 100644
+--- a/hw/riscv/sifive_u.c
++++ b/hw/riscv/sifive_u.c
+@@ -593,31 +593,32 @@ static void sifive_u_machine_init(MachineState *machine)
+                                  sizeof(reset_vec), kernel_entry);
+ 
+     /* Connect an SPI flash to SPI0 */
+-    flash_dev = qdev_new_orphan("is25wp256");
++    flash_dev = qdev_new(OBJECT(machine), "flash", "is25wp256");
+     dinfo = drive_get(IF_MTD, 0, 0);
+     if (dinfo) {
+         qdev_prop_set_drive_err(flash_dev, "drive",
+                                 blk_by_legacy_dinfo(dinfo),
+                                 &error_fatal);
+     }
+-    qdev_realize_and_unref(flash_dev, BUS(s->soc.spi0.spi), &error_fatal);
++    qdev_realize(flash_dev, BUS(s->soc.spi0.spi), &error_fatal);
+ 
+     flash_cs = qdev_get_gpio_in_named(flash_dev, SSI_GPIO_CS, 0);
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->soc.spi0), 1, flash_cs);
+ 
+     /* Connect an SD card to SPI2 */
+-    sd_dev = ssi_create_peripheral_orphan(s->soc.spi2.spi, "ssi-sd");
++    sd_dev = ssi_create_peripheral(OBJECT(machine), "ssi-sd",
++                                   s->soc.spi2.spi, "ssi-sd");
+ 
+     sd_cs = qdev_get_gpio_in_named(sd_dev, SSI_GPIO_CS, 0);
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->soc.spi2), 1, sd_cs);
+ 
+     dinfo = drive_get(IF_SD, 0, 0);
+     blk = dinfo ? blk_by_legacy_dinfo(dinfo) : NULL;
+-    card_dev = qdev_new_orphan(TYPE_SD_CARD_SPI);
++    card_dev = qdev_new(OBJECT(machine), "sd-card", TYPE_SD_CARD_SPI);
+     qdev_prop_set_drive_err(card_dev, "drive", blk, &error_fatal);
+-    qdev_realize_and_unref(card_dev,
+-                           qdev_get_child_bus(sd_dev, "sd-bus"),
+-                           &error_fatal);
++    qdev_realize(card_dev,
++                 qdev_get_child_bus(sd_dev, "sd-bus"),
++                 &error_fatal);
+ }
+ 
+ static bool sifive_u_machine_get_start_in_flash(Object *obj, Error **errp)
+diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
+index 4d2f5fbeda..6e0a54fe3c 100644
+--- a/hw/riscv/tt_atlantis.c
++++ b/hw/riscv/tt_atlantis.c
+@@ -576,8 +576,9 @@ static void tt_atlantis_machine_init(MachineState *machine)
+     }
+ 
+     /* I2C peripherals: qemu specific */
+-    i2c_slave_create_simple_orphan(i2c_get_bus(s, 0), "ds1338", 0x6f);
+-    i2c_slave_create_simple_orphan(i2c_get_bus(s, 4), "tmp105", 0x48);
++    i2c_slave_create_simple(OBJECT(s), "rtc", i2c_get_bus(s, 0), "ds1338", 0x6f);
++    i2c_slave_create_simple(OBJECT(s), "tmp105", i2c_get_bus(s, 4),
++                            "tmp105", 0x48);
+ 
+     /* Load or create device tree */
+     if (machine->dtb) {
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index cecb221bec..718b730a4d 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -125,7 +125,7 @@ static PFlashCFI01 *virt_flash_create1(RISCVVirtState *s,
+      * Create a single flash device.  We use the same parameters as
+      * the flash devices on the ARM virt board.
+      */
+-    DeviceState *dev = qdev_new_orphan(TYPE_PFLASH_CFI01);
++    DeviceState *dev = qdev_new(OBJECT(s), name, TYPE_PFLASH_CFI01);
+ 
+     qdev_prop_set_uint64(dev, "sector-length", VIRT_FLASH_SECTOR_SIZE);
+     qdev_prop_set_uint8(dev, "width", 4);
+@@ -137,7 +137,6 @@ static PFlashCFI01 *virt_flash_create1(RISCVVirtState *s,
+     qdev_prop_set_uint16(dev, "id3", 0x00);
+     qdev_prop_set_string(dev, "name", name);
+ 
+-    object_property_add_child(OBJECT(s), name, OBJECT(dev));
+     object_property_add_alias(OBJECT(s), alias_prop_name,
+                               OBJECT(dev), "drive");
+ 
+@@ -159,7 +158,7 @@ static void virt_flash_map1(PFlashCFI01 *flash,
+     assert(QEMU_IS_ALIGNED(size, VIRT_FLASH_SECTOR_SIZE));
+     assert(size / VIRT_FLASH_SECTOR_SIZE <= UINT32_MAX);
+     qdev_prop_set_uint32(dev, "num-blocks", size / VIRT_FLASH_SECTOR_SIZE);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+ 
+     memory_region_add_subregion(sysmem, base,
+                                 sysbus_mmio_get_region(SYS_BUS_DEVICE(dev),
+@@ -1050,7 +1049,7 @@ static inline DeviceState *gpex_pcie_init(MemoryRegion *sys_mem,
+     qemu_irq irq;
+     int i;
+ 
+-    dev = qdev_new_orphan(TYPE_GPEX_HOST);
++    dev = qdev_new(OBJECT(s), "pcie", TYPE_GPEX_HOST);
+ 
+     /* Set GPEX object properties for the virt machine */
+     object_property_set_uint(OBJECT(dev), PCI_HOST_ECAM_BASE,
+@@ -1070,7 +1069,7 @@ static inline DeviceState *gpex_pcie_init(MemoryRegion *sys_mem,
+     object_property_set_int(OBJECT(dev), PCI_HOST_PIO_SIZE,
+                             pio_size, NULL);
+ 
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+ 
+     ecam_alias = g_new0(MemoryRegion, 1);
+     ecam_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
+@@ -1143,11 +1142,11 @@ static void create_platform_bus(RISCVVirtState *s, DeviceState *irqchip)
+     int i;
+     MemoryRegion *sysmem = get_system_memory();
+ 
+-    dev = qdev_new_orphan(TYPE_PLATFORM_BUS_DEVICE);
++    dev = qdev_new(OBJECT(s), "platform-bus", TYPE_PLATFORM_BUS_DEVICE);
+     dev->id = g_strdup(TYPE_PLATFORM_BUS_DEVICE);
+     qdev_prop_set_uint32(dev, "num_irqs", VIRT_PLATFORM_BUS_NUM_IRQS);
+     qdev_prop_set_uint32(dev, "mmio_size", s->memmap[VIRT_PLATFORM_BUS].size);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     s->platform_bus_dev = dev;
+ 
+     sysbus = SYS_BUS_DEVICE(dev);
+@@ -1480,7 +1479,7 @@ static void virt_machine_init(MachineState *machine)
+ 
+     /* VirtIO MMIO devices */
+     for (i = 0; i < VIRTIO_COUNT; i++) {
+-        sysbus_create_simple_orphan("virtio-mmio",
++        sysbus_create_simple(OBJECT(machine), "virtio-mmio[*]", "virtio-mmio",
+             s->memmap[VIRT_VIRTIO].base + i * s->memmap[VIRT_VIRTIO].size,
+             qdev_get_gpio_in(virtio_irqchip, VIRTIO_IRQ + i));
+     }
+@@ -1493,8 +1492,8 @@ static void virt_machine_init(MachineState *machine)
+         0, qdev_get_gpio_in(mmio_irqchip, UART0_IRQ), 399193,
+         serial_hd(0), DEVICE_LITTLE_ENDIAN);
+ 
+-    sysbus_create_simple_orphan("goldfish_rtc", s->memmap[VIRT_RTC].base,
+-        qdev_get_gpio_in(mmio_irqchip, RTC_IRQ));
++    sysbus_create_simple(OBJECT(machine), "rtc", "goldfish_rtc",
++        s->memmap[VIRT_RTC].base, qdev_get_gpio_in(mmio_irqchip, RTC_IRQ));
+ 
+     for (i = 0; i < ARRAY_SIZE(s->flash); i++) {
+         /* Map legacy -drive if=pflash to machine properties */
+@@ -1515,7 +1514,8 @@ static void virt_machine_init(MachineState *machine)
+     }
+ 
+     if (virt_is_iommu_sys_enabled(s)) {
+-        DeviceState *iommu_sys = qdev_new_orphan(TYPE_RISCV_IOMMU_SYS);
++        DeviceState *iommu_sys = qdev_new(OBJECT(machine), "iommu",
++                                          TYPE_RISCV_IOMMU_SYS);
+ 
+         object_property_set_uint(OBJECT(iommu_sys), "addr",
+                                  s->memmap[VIRT_IOMMU_SYS].base,
+@@ -1534,7 +1534,7 @@ static void virt_machine_init(MachineState *machine)
+                                  riscv_is_32bit(&s->soc[0]) ? 34 : 56,
+                                  &error_fatal);
+ 
+-        sysbus_realize_and_unref(SYS_BUS_DEVICE(iommu_sys), &error_fatal);
++        sysbus_realize(SYS_BUS_DEVICE(iommu_sys), &error_fatal);
+     }
+ 
+     s->machine_done.notify = virt_machine_done;
+@@ -1545,11 +1545,6 @@ static void virt_machine_instance_finalize(Object *obj)
+ {
+     RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
+ 
+-    for (int i = 0; i < ARRAY_SIZE(s->flash); i++) {
+-        if (s->flash[i] && !qdev_is_realized(DEVICE(s->flash[i]))) {
+-            object_unref(OBJECT(s->flash[i]));
+-        }
+-    }
+     g_free(s->oem_id);
+     g_free(s->oem_table_id);
+ }
 -- 
 2.47.1
 
