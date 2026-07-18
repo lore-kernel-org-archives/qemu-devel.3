@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1BBAC4451B
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:43:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA1EEC44520
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:43:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlCoE-0000Xq-9p; Sat, 18 Jul 2026 17:42:58 -0400
+	id 1wlCoL-0001Hd-P1; Sat, 18 Jul 2026 17:43:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlCnn-00007v-W0; Sat, 18 Jul 2026 17:42:36 -0400
-Received: from pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.13.214.179])
+ id 1wlCoK-0001B5-7i; Sat, 18 Jul 2026 17:43:04 -0400
+Received: from pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.35.192.45])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlCnl-0002fP-Bz; Sat, 18 Jul 2026 17:42:31 -0400
+ id 1wlCoH-0002gH-NY; Sat, 18 Jul 2026 17:43:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784410949; x=1815946949;
+ t=1784410981; x=1815946981;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=5f3HzwuXe0MvsCBU0ME0zpexJU3MHLtq9ie+g2sflTM=;
- b=Zypekd1FV+MDzw0VPLQJyXXEUe4pbmyNhtB+ea1A0I/TytAyz2++vBBw
- IjSy9hSoREiaAunF5vx1DntIUtrdRI0gFR3kTABlhCl/o1rkcClL12lRV
- Cc+CbwRd3NZKCj9bgrNww9Cn44NVqLpRk3PzgW6gSxd03FtOh+7SaIuGI
- k9sdZ9gPm1YfiaiVrCy2V5urHKxj2CPqhr+ayr5czNB6adUHtmE2sf6C4
- ShWQHsVT5In4Ms+ePme4RLniSppCh8bGXLdzUD2OPo7fcRXI7A8IRRsfj
- 6ATjyNBqlDn4GhiB4OY5U+KiQ85zMIJ/G9vhfgz1OnT9OW3RxdZ2bKuae Q==;
-X-CSE-ConnectionGUID: K9+R2bHIRgaKIegRivN9sg==
-X-CSE-MsgGUID: ODEi2OHxRbqb0tBCbjOHOg==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23903655"
-Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
- by internal-pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:42:26 +0000
-Received: from EX19MTAUWA001.ant.amazon.com [205.251.233.182:6891]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.58.199:2525]
+ bh=I5FWnzvUpueVbZs3g/mAe7MQaCCSMX+O6arKRJA8z10=;
+ b=Ul8bqaVhXZ4XyBRWHz59e/WUjRRRoJvAv7rXS0wtiH+iwMP0h+kIIQWE
+ BcyvKcbbYGxX9GzWkUjxNrTjg1/xM1h9Ero0cENBnf+cW2Bx9pTPHtqew
+ JTEaLlM8FZBvdgQQQ9lclO8hfm1wm/3UHOZVPQj960/4Y5AbmlrMWiDz/
+ TIGDSgtQ6kD55fZrmVIpeifEOZi+AkQ+bHSkVqfMCyNeF5KKxBNgm3swL
+ 20DqnHgV4UE6ggPfqkwV36JaFsyZMOJ4ZbxpQVYSbfMZnm9srDWqesbE8
+ D6RC+BdB5qxaklhVNOTb3QHeS2pn8yRuOdBXD7e7D2EwGtgC0n/3ogO1h Q==;
+X-CSE-ConnectionGUID: ruNifr1oSKO6GRacmtekCA==
+X-CSE-MsgGUID: a66UDxMhR/S9DGb7leyh0w==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23694135"
+Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
+ by internal-pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:42:57 +0000
+Received: from EX19MTAUWC001.ant.amazon.com [205.251.233.53:30501]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.0.115:2525]
  with esmtp (Farcaster)
- id f206f6b6-4a63-4ecf-9627-73aa492ccfd6; Sat, 18 Jul 2026 21:42:25 +0000 (UTC)
-X-Farcaster-Flow-ID: f206f6b6-4a63-4ecf-9627-73aa492ccfd6
+ id bd2d5380-70cf-44e6-b88e-316755de809e; Sat, 18 Jul 2026 21:42:57 +0000 (UTC)
+X-Farcaster-Flow-ID: bd2d5380-70cf-44e6-b88e-316755de809e
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA001.ant.amazon.com (10.250.64.217) with Microsoft SMTP Server
+ EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:42:25 +0000
+ Sat, 18 Jul 2026 21:42:56 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:42:15 +0000
+ Sat, 18 Jul 2026 21:42:47 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,9 +93,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 020/137] hw/or1k: Give onboard devices a QOM parent
-Date: Sat, 18 Jul 2026 21:34:55 +0000
-Message-ID: <20260718213652.37673-21-graf@amazon.com>
+Subject: [RFC PATCH v2 021/137] hw/loongarch: Give onboard devices a QOM parent
+Date: Sat, 18 Jul 2026 21:34:56 +0000
+Message-ID: <20260718213652.37673-22-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -104,11 +104,11 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D039UWA002.ant.amazon.com (10.13.139.32) To
+X-ClientProxiedBy: EX19D037UWC002.ant.amazon.com (10.13.139.250) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=52.13.214.179;
+Received-SPF: pass client-ip=52.35.192.45;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -132,7 +132,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the *_orphan() device-creation calls in hw/or1k to the new
+Convert the *_orphan() device-creation calls in hw/loongarch to the new
 parented API introduced earlier in this series, so every onboard
 device gets a stable path in the composition tree instead of landing
 in /machine/unattached with an unstable device[N] name.
@@ -143,190 +143,181 @@ composite children.  Names follow existing QOM conventions.
 
 Per-site rationale (reviewers: dispute the modeling here):
 
-  hw/or1k/or1k-sim.c:189 | OBJECT(state) | "irq-splitter[*]" | board-init helper receives Or1ksimState; auto-index (net + serial share the pool)
-  hw/or1k/or1k-sim.c:224 | OBJECT(state) | "ompic" | board-init helper receives Or1ksimState; single OMPIC per machine
-  hw/or1k/or1k-sim.c:257 | OBJECT(state) | "irq-splitter[*]" | board-init helper receives Or1ksimState; auto-index alongside net splitter
-  hw/or1k/or1k-sim.c:302 | OBJECT(machine) | "cpu[*]" | MachineClass.init(); auto-index over smp_cpus
-  hw/or1k/virt.c:113 | parent | "irq-splitter[*]" | static helper had no parent-capable arg; add Object *parent first arg, thread OBJECT(state) from all callers; auto-index (serial+rtc+virtio*N)
-  hw/or1k/virt.c:209 | OBJECT(state) | "ompic" | board-init helper receives OR1KVirtState; single OMPIC
-  hw/or1k/virt.c:303 | OBJECT(state) | "rtc" | board-init helper receives OR1KVirtState; single Goldfish RTC
-  hw/or1k/virt.c:382 | OBJECT(state) | "pcie" | board-init helper receives OR1KVirtState; single GPEX host
-  hw/or1k/virt.c:454 | OBJECT(state) | "virtio-mmio[*]" | board-init helper receives OR1KVirtState; called VIRTIO_COUNT times, auto-index
-  hw/or1k/virt.c:484 | OBJECT(machine) | "cpu[*]" | MachineClass.init(); auto-index over smp_cpus
+file:line | creator | parent | name | rationale
+hw/loongarch/virt.c:153 | qdev_new | OBJECT(lvms) | name | board-init helper already receives lvms + child name; drop redundant object_property_add_child()
+hw/loongarch/virt.c:298 | qdev_new | OBJECT(lvms) | "acpi-ged" | board-init helper receives LoongArchVirtMachineState *lvms
+hw/loongarch/virt.c:325 | qdev_new | parent | "platform-bus" | static helper w/o parent ptr; add Object *parent first arg, thread OBJECT(lvms) from caller
+hw/loongarch/virt.c:403 | qdev_new | OBJECT(lvms) | "pci-host" | board-init helper receives lvms
+hw/loongarch/virt.c:488 | sysbus_create_simple | OBJECT(lvms) | "rtc" | board-init helper receives lvms
+hw/loongarch/virt.c:604 | qdev_new | OBJECT(lvms) | "ipi" | virt_irq_init() receives lvms
+hw/loongarch/virt.c:610 | qdev_new | OBJECT(lvms) | "dintc" | virt_irq_init() receives lvms
+hw/loongarch/virt.c:617 | qdev_new | OBJECT(lvms) | "extioi" | virt_irq_init() receives lvms
+hw/loongarch/virt.c:625 | qdev_new | OBJECT(lvms) | "pch-pic" | virt_irq_init() receives lvms
+hw/loongarch/virt.c:631 | qdev_new | OBJECT(lvms) | "pch-msi" | virt_irq_init() receives lvms
 
 Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/or1k/or1k-sim.c | 17 ++++++++++-------
- hw/or1k/virt.c     | 37 ++++++++++++++++++++++---------------
- 2 files changed, 32 insertions(+), 22 deletions(-)
+ hw/loongarch/virt.c | 48 ++++++++++++++++++++-------------------------
+ 1 file changed, 21 insertions(+), 27 deletions(-)
 
-diff --git a/hw/or1k/or1k-sim.c b/hw/or1k/or1k-sim.c
-index 6962313315..da05d7cbe3 100644
---- a/hw/or1k/or1k-sim.c
-+++ b/hw/or1k/or1k-sim.c
-@@ -186,9 +186,10 @@ static void openrisc_sim_net_init(Or1ksimState *state, hwaddr base, hwaddr size,
-     s = SYS_BUS_DEVICE(dev);
-     sysbus_realize_and_unref(s, &error_fatal);
-     if (num_cpus > 1) {
--        DeviceState *splitter = qdev_new_orphan(TYPE_SPLIT_IRQ);
-+        DeviceState *splitter = qdev_new(OBJECT(state), "irq-splitter[*]",
-+                                         TYPE_SPLIT_IRQ);
-         qdev_prop_set_uint32(splitter, "num-lines", num_cpus);
--        qdev_realize_and_unref(splitter, NULL, &error_fatal);
-+        qdev_realize(splitter, NULL, &error_fatal);
-         for (i = 0; i < num_cpus; i++) {
-             qdev_connect_gpio_out(splitter, i, get_cpu_irq(cpus, i, irq_pin));
-         }
-@@ -221,11 +222,11 @@ static void openrisc_sim_ompic_init(Or1ksimState *state, hwaddr base,
-     char *nodename;
-     int i;
- 
--    dev = qdev_new_orphan("or1k-ompic");
-+    dev = qdev_new(OBJECT(state), "ompic", "or1k-ompic");
-     qdev_prop_set_uint32(dev, "num-cpus", num_cpus);
- 
-     s = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
-     for (i = 0; i < num_cpus; i++) {
-         sysbus_connect_irq(s, i, get_cpu_irq(cpus, i, irq_pin));
-     }
-@@ -254,9 +255,10 @@ static void openrisc_sim_serial_init(Or1ksimState *state, hwaddr base,
-     int i;
- 
-     if (num_cpus > 1) {
--        DeviceState *splitter = qdev_new_orphan(TYPE_SPLIT_IRQ);
-+        DeviceState *splitter = qdev_new(OBJECT(state), "irq-splitter[*]",
-+                                         TYPE_SPLIT_IRQ);
-         qdev_prop_set_uint32(splitter, "num-lines", num_cpus);
--        qdev_realize_and_unref(splitter, NULL, &error_fatal);
-+        qdev_realize(splitter, NULL, &error_fatal);
-         for (i = 0; i < num_cpus; i++) {
-             qdev_connect_gpio_out(splitter, i, get_cpu_irq(cpus, i, irq_pin));
-         }
-@@ -299,7 +301,8 @@ static void openrisc_sim_init(MachineState *machine)
- 
-     assert(smp_cpus >= 1 && smp_cpus <= OR1KSIM_CPUS_MAX);
-     for (n = 0; n < smp_cpus; n++) {
--        cpus[n] = OPENRISC_CPU(cpu_create_orphan(machine->cpu_type));
-+        cpus[n] = OPENRISC_CPU(cpu_create(OBJECT(machine), "cpu[*]",
-+                                          machine->cpu_type));
-         if (cpus[n] == NULL) {
-             fprintf(stderr, "Unable to find CPU definition!\n");
-             exit(1);
-diff --git a/hw/or1k/virt.c b/hw/or1k/virt.c
-index f222efafde..7362433a02 100644
---- a/hw/or1k/virt.c
-+++ b/hw/or1k/virt.c
-@@ -105,14 +105,16 @@ static qemu_irq get_cpu_irq(OpenRISCCPU *cpus[], int cpunum, int irq_pin)
-     return qdev_get_gpio_in_named(DEVICE(cpus[cpunum]), "IRQ", irq_pin);
- }
- 
--static qemu_irq get_per_cpu_irq(OpenRISCCPU *cpus[], int num_cpus, int irq_pin)
-+static qemu_irq get_per_cpu_irq(Object *parent, OpenRISCCPU *cpus[],
-+                                int num_cpus, int irq_pin)
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 45acdc3ec1..e0129b2f33 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -150,7 +150,7 @@ static PFlashCFI01 *virt_flash_create1(LoongArchVirtMachineState *lvms,
+                                        const char *name,
+                                        const char *alias_prop_name)
  {
-     int i;
+-    DeviceState *dev = qdev_new_orphan(TYPE_PFLASH_CFI01);
++    DeviceState *dev = qdev_new(OBJECT(lvms), name, TYPE_PFLASH_CFI01);
  
-     if (num_cpus > 1) {
--        DeviceState *splitter = qdev_new_orphan(TYPE_SPLIT_IRQ);
-+        DeviceState *splitter = qdev_new(parent, "irq-splitter[*]",
-+                                         TYPE_SPLIT_IRQ);
-         qdev_prop_set_uint32(splitter, "num-lines", num_cpus);
--        qdev_realize_and_unref(splitter, NULL, &error_fatal);
-+        qdev_realize(splitter, NULL, &error_fatal);
-         for (i = 0; i < num_cpus; i++) {
-             qdev_connect_gpio_out(splitter, i, get_cpu_irq(cpus, i, irq_pin));
-         }
-@@ -206,11 +208,11 @@ static void openrisc_virt_ompic_init(OR1KVirtState *state, hwaddr base,
-     char *nodename;
-     int i;
+     qdev_prop_set_uint64(dev, "sector-length", VIRT_FLASH_SECTOR_SIZE);
+     qdev_prop_set_uint8(dev, "width", 4);
+@@ -161,7 +161,6 @@ static PFlashCFI01 *virt_flash_create1(LoongArchVirtMachineState *lvms,
+     qdev_prop_set_uint16(dev, "id2", 0x00);
+     qdev_prop_set_uint16(dev, "id3", 0x00);
+     qdev_prop_set_string(dev, "name", name);
+-    object_property_add_child(OBJECT(lvms), name, OBJECT(dev));
+     object_property_add_alias(OBJECT(lvms), alias_prop_name,
+                               OBJECT(dev), "drive");
+     return PFLASH_CFI01(dev);
+@@ -191,7 +190,7 @@ static void virt_flash_map1(PFlashCFI01 *flash,
+     assert(real_size / VIRT_FLASH_SECTOR_SIZE <= UINT32_MAX);
  
--    dev = qdev_new_orphan("or1k-ompic");
-+    dev = qdev_new(OBJECT(state), "ompic", "or1k-ompic");
-     qdev_prop_set_uint32(dev, "num-cpus", num_cpus);
- 
-     s = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
-     for (i = 0; i < num_cpus; i++) {
-         sysbus_connect_irq(s, i, get_cpu_irq(cpus, i, irq_pin));
-     }
-@@ -233,7 +235,8 @@ static void openrisc_virt_serial_init(OR1KVirtState *state, hwaddr base,
- {
-     void *fdt = state->fdt;
-     char *nodename;
--    qemu_irq serial_irq = get_per_cpu_irq(cpus, num_cpus, irq_pin);
-+    qemu_irq serial_irq = get_per_cpu_irq(OBJECT(state), cpus, num_cpus,
-+                                          irq_pin);
- 
-     serial_mm_init(get_system_memory(), base, 0, serial_irq, 115200,
-                    serial_hd(0), DEVICE_BIG_ENDIAN);
-@@ -297,10 +300,12 @@ static void openrisc_virt_rtc_init(OR1KVirtState *state, hwaddr base,
- {
-     void *fdt = state->fdt;
-     char *nodename;
--    qemu_irq rtc_irq = get_per_cpu_irq(cpus, num_cpus, irq_pin);
-+    qemu_irq rtc_irq = get_per_cpu_irq(OBJECT(state), cpus, num_cpus,
-+                                       irq_pin);
- 
-     /* Goldfish RTC */
--    sysbus_create_simple_orphan(TYPE_GOLDFISH_RTC, base, rtc_irq);
-+    sysbus_create_simple(OBJECT(state), "rtc", TYPE_GOLDFISH_RTC, base,
-+                         rtc_irq);
- 
-     /* Goldfish RTC FDT */
-     nodename = g_strdup_printf("/soc/rtc@%" HWADDR_PRIx, base);
-@@ -379,8 +384,8 @@ static void openrisc_virt_pcie_init(OR1KVirtState *state,
-     qemu_irq pcie_irq;
-     int i;
- 
--    dev = qdev_new_orphan(TYPE_GPEX_HOST);
+     qdev_prop_set_uint32(dev, "num-blocks", real_size / VIRT_FLASH_SECTOR_SIZE);
 -    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    dev = qdev_new(OBJECT(state), "pcie", TYPE_GPEX_HOST);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     memory_region_add_subregion(sysmem, base,
+                                 sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0));
+ }
+@@ -295,9 +294,9 @@ static DeviceState *create_acpi_ged(DeviceState *pch_pic,
+         event |= ACPI_GED_CPU_HOTPLUG_EVT;
+     }
+ 
+-    dev = qdev_new_orphan(TYPE_ACPI_GED);
++    dev = qdev_new(OBJECT(lvms), "acpi-ged", TYPE_ACPI_GED);
+     qdev_prop_set_uint32(dev, "ged-event", event);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
 +    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
  
-     /* Map ECAM space. */
-     alias = g_new0(MemoryRegion, 1);
-@@ -410,7 +415,7 @@ static void openrisc_virt_pcie_init(OR1KVirtState *state,
+     /* ged event */
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, VIRT_GED_EVT_ADDR);
+@@ -315,18 +314,18 @@ static DeviceState *create_acpi_ged(DeviceState *pch_pic,
+     return dev;
+ }
  
-     /* Connect IRQ lines. */
-     for (i = 0; i < PCI_NUM_PINS; i++) {
--        pcie_irq = get_per_cpu_irq(cpus, num_cpus, irq_base + i);
-+        pcie_irq = get_per_cpu_irq(OBJECT(state), cpus, num_cpus, irq_base + i);
- 
-         sysbus_connect_irq(SYS_BUS_DEVICE(dev), i, pcie_irq);
-         gpex_set_irq_num(GPEX_HOST(dev), i, irq_base + i);
-@@ -448,13 +453,14 @@ static void openrisc_virt_virtio_init(OR1KVirtState *state, hwaddr base,
-     char *nodename;
+-static DeviceState *create_platform_bus(DeviceState *pch_pic)
++static DeviceState *create_platform_bus(Object *parent, DeviceState *pch_pic)
+ {
      DeviceState *dev;
      SysBusDevice *sysbus;
--    qemu_irq virtio_irq = get_per_cpu_irq(cpus, num_cpus, irq_pin);
-+    qemu_irq virtio_irq = get_per_cpu_irq(OBJECT(state), cpus, num_cpus,
-+                                          irq_pin);
+     int i, irq;
+     MemoryRegion *sysmem = get_system_memory();
  
-     /* VirtIO MMIO devices */
--    dev = qdev_new_orphan(TYPE_VIRTIO_MMIO);
-+    dev = qdev_new(OBJECT(state), "virtio-mmio[*]", TYPE_VIRTIO_MMIO);
-     qdev_prop_set_bit(dev, "force-legacy", false);
+-    dev = qdev_new_orphan(TYPE_PLATFORM_BUS_DEVICE);
++    dev = qdev_new(parent, "platform-bus", TYPE_PLATFORM_BUS_DEVICE);
+     dev->id = g_strdup(TYPE_PLATFORM_BUS_DEVICE);
+     qdev_prop_set_uint32(dev, "num_irqs", VIRT_PLATFORM_BUS_NUM_IRQS);
+     qdev_prop_set_uint32(dev, "mmio_size", VIRT_PLATFORM_BUS_SIZE);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+ 
      sysbus = SYS_BUS_DEVICE(dev);
--    sysbus_realize_and_unref(sysbus, &error_fatal);
-+    sysbus_realize(sysbus, &error_fatal);
-     sysbus_connect_irq(sysbus, 0, virtio_irq);
-     sysbus_mmio_map(sysbus, 0, base);
+     for (i = 0; i < VIRT_PLATFORM_BUS_NUM_IRQS; i++) {
+@@ -400,9 +399,9 @@ static void virt_devices_init(DeviceState *pch_pic,
+     hwaddr mmio_base, mmio_size;
+     int i, irq;
  
-@@ -481,7 +487,8 @@ static void openrisc_virt_init(MachineState *machine)
+-    gpex_dev = qdev_new_orphan(TYPE_GPEX_HOST);
++    gpex_dev = qdev_new(OBJECT(lvms), "pci-host", TYPE_GPEX_HOST);
+     d = SYS_BUS_DEVICE(gpex_dev);
+-    sysbus_realize_and_unref(d, &error_fatal);
++    sysbus_realize(d, &error_fatal);
+     pci_bus = PCI_HOST_BRIDGE(gpex_dev)->bus;
+     lvms->gpex.pio.base = VIRT_PCI_IO_BASE;
+     lvms->gpex.pio.size = VIRT_PCI_IO_SIZE;
+@@ -485,14 +484,14 @@ static void virt_devices_init(DeviceState *pch_pic,
+      * Create some unimplemented devices to emulate this.
+      */
+     create_unimplemented_device("pci-dma-cfg", 0x1001041c, 0x4);
+-    sysbus_create_simple_orphan("ls7a_rtc", VIRT_RTC_REG_BASE,
++    sysbus_create_simple(OBJECT(lvms), "rtc", "ls7a_rtc", VIRT_RTC_REG_BASE,
+                          qdev_get_gpio_in(pch_pic,
+                          VIRT_RTC_IRQ - VIRT_GSI_BASE));
  
-     assert(smp_cpus >= 1 && smp_cpus <= VIRT_CPUS_MAX);
-     for (n = 0; n < smp_cpus; n++) {
--        cpus[n] = OPENRISC_CPU(cpu_create_orphan(machine->cpu_type));
-+        cpus[n] = OPENRISC_CPU(cpu_create(OBJECT(machine), "cpu[*]",
-+                                          machine->cpu_type));
-         if (cpus[n] == NULL) {
-             fprintf(stderr, "Unable to find CPU definition!\n");
-             exit(1);
+     /* acpi ged */
+     lvms->acpi_ged = create_acpi_ged(pch_pic, lvms);
+     /* platform bus */
+-    lvms->platform_bus_dev = create_platform_bus(pch_pic);
++    lvms->platform_bus_dev = create_platform_bus(OBJECT(lvms), pch_pic);
+ }
+ 
+ static void virt_cpu_irq_init(LoongArchVirtMachineState *lvms)
+@@ -601,40 +600,40 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+      */
+ 
+     /* Create IPI device */
+-    ipi = qdev_new_orphan(TYPE_LOONGARCH_IPI);
++    ipi = qdev_new(OBJECT(lvms), "ipi", TYPE_LOONGARCH_IPI);
+     lvms->ipi = ipi;
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(ipi), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(ipi), &error_fatal);
+ 
+     /* Create DINTC device*/
+     if (virt_has_dmsi(lvms)) {
+-        dintc = qdev_new_orphan(TYPE_LOONGARCH_DINTC);
++        dintc = qdev_new(OBJECT(lvms), "dintc", TYPE_LOONGARCH_DINTC);
+         lvms->dintc = dintc;
+-        sysbus_realize_and_unref(SYS_BUS_DEVICE(dintc), &error_fatal);
++        sysbus_realize(SYS_BUS_DEVICE(dintc), &error_fatal);
+         sysbus_mmio_map(SYS_BUS_DEVICE(dintc), 0, VIRT_DINTC_BASE);
+     }
+ 
+     /* Create EXTIOI device */
+-    extioi = qdev_new_orphan(TYPE_LOONGARCH_EXTIOI);
++    extioi = qdev_new(OBJECT(lvms), "extioi", TYPE_LOONGARCH_EXTIOI);
+     lvms->extioi = extioi;
+     if (virt_is_veiointc_enabled(lvms)) {
+         qdev_prop_set_bit(extioi, "has-virtualization-extension", true);
+     }
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(extioi), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(extioi), &error_fatal);
+ 
+     virt_cpu_irq_init(lvms);
+-    pch_pic = qdev_new_orphan(TYPE_LOONGARCH_PIC);
++    pch_pic = qdev_new(OBJECT(lvms), "pch-pic", TYPE_LOONGARCH_PIC);
+     num = VIRT_PCH_PIC_IRQ_NUM;
+     qdev_prop_set_uint32(pch_pic, "pch_pic_irq_num", num);
+     d = SYS_BUS_DEVICE(pch_pic);
+-    sysbus_realize_and_unref(d, &error_fatal);
++    sysbus_realize(d, &error_fatal);
+ 
+-    pch_msi = qdev_new_orphan(TYPE_LOONGARCH_PCH_MSI);
++    pch_msi = qdev_new(OBJECT(lvms), "pch-msi", TYPE_LOONGARCH_PCH_MSI);
+     start   =  num;
+     num = EXTIOI_IRQS - start;
+     qdev_prop_set_uint32(pch_msi, "msi_irq_base", start);
+     qdev_prop_set_uint32(pch_msi, "msi_irq_num", num);
+     d = SYS_BUS_DEVICE(pch_msi);
+-    sysbus_realize_and_unref(d, &error_fatal);
++    sysbus_realize(d, &error_fatal);
+     sysbus_mmio_map(d, 0, VIRT_PCH_MSI_ADDR_LOW);
+ 
+     if (kvm_irqchip_in_kernel()) {
+@@ -1570,11 +1569,6 @@ static void virt_instance_finalize(Object *obj)
+ {
+     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
+ 
+-    for (int i = 0; i < ARRAY_SIZE(lvms->flash); i++) {
+-        if (lvms->flash[i] && !qdev_is_realized(DEVICE(lvms->flash[i]))) {
+-            object_unref(OBJECT(lvms->flash[i]));
+-        }
+-    }
+     g_free(lvms->oem_id);
+     g_free(lvms->oem_table_id);
+ }
 -- 
 2.47.1
 
