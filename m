@@ -4,41 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12FB6C4450A
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 04:15:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11D04C4450A
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 04:53:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkwRV-00057N-B8; Sat, 18 Jul 2026 00:14:25 -0400
+	id 1wkx2K-0003fY-89; Sat, 18 Jul 2026 00:52:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wkwRS-000571-UO; Sat, 18 Jul 2026 00:14:22 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wkx2I-0003fI-LC
+ for qemu-devel@nongnu.org; Sat, 18 Jul 2026 00:52:26 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wkwRQ-0005k0-Av; Sat, 18 Jul 2026 00:14:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784348044; bh=gEQNwXVT2ZV0HiKvRiGMWGPjCQl9VcssN80srVeDE7k=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=ZOZ7XYqNmgMi5YKzyL1sK6S4OiXBTMdm6vdNohR/HztIECGJg4mzLxG9UKuHmb5Qd
- 9QTPZUGl3bputmQIWMC/LTnwyCNW/4Zf3kTqFsXr+xezeOQ3hunDs3K/vY8B+TbT/C
- Pp6vHO8sNtumm+LnEO/863/qUrDTcpyIPRUBgG1blqmGL53wdQEIjynUzjMJG4IsBZ
- n1p3z8drrwQeKZocSPqgm8GU1LN/UqAWvkghkSgC8EnK/2UOhTn8pZPZfb4TPA/VZQ
- rAMLJg88TtEU8vedSeM8iPJg74naZVOfXpzuyRqabh9lRmeovn7W27nTiEHZ55pPoH
- hCBcf/K0LjnLw==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E8FAF1C2A68;
- Sat, 18 Jul 2026 07:14:04 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8694B3F0A67;
- Sat, 18 Jul 2026 07:14:13 +0300 (MSK)
-Message-ID: <5dc9f2fc-3bd6-4df3-8496-44e6037b51ad@tls.msk.ru>
-Date: Sat, 18 Jul 2026 07:14:05 +0300
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wkx2H-0000hr-6M
+ for qemu-devel@nongnu.org; Sat, 18 Jul 2026 00:52:26 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66I4NC8s3891576
+ for <qemu-devel@nongnu.org>; Sat, 18 Jul 2026 04:52:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ z+zOoEvEiF9WudrD0BwBrgA0gcrVtJ2X7XshIAskqOU=; b=fcbUoP3x6hOYKmB3
+ cmSjyGQ8+23HsBIdy58E280xrqvVjpOkx6IXXrAUxeEQiLDvFDkWzhT+4mpQj7b0
+ RhNXoMErXZF0T2tVUClpUugXVm58I1xv64Tbk4l+AUQZln0RI0HhGRY/Fgrg4Izg
+ 5OO9cVj4WUDFPnJBXCC/BaczqiDK/G2+SEEMu7OkF97KkHIK63R6O27QRKIyy+uA
+ f0TLLbLN1hDLSE1JtHQXiY7oPSk3NL6iVR3j6i6R8EFdj9iVOj5MXs/MTMS/qEA0
+ FF0cyOsQeJpXiKogtezKs4Y7/UsJJpMd3kBdOlg/PX8f41TL6ePEa2sQwbTvF6mt
+ jRw7hw==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fg2dc01fg-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Sat, 18 Jul 2026 04:52:22 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-c890bac374eso19729510a12.1
+ for <qemu-devel@nongnu.org>; Fri, 17 Jul 2026 21:52:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1784350342; x=1784955142; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=z+zOoEvEiF9WudrD0BwBrgA0gcrVtJ2X7XshIAskqOU=;
+ b=FZ0o0tx82tFnP6FjZvLgueLwbTYrCGZrWtIrPmJVXyaTbEHx55/QS6E+uu413E7O5P
+ ukGjjLTkl69uthh7m2ELe2my24gtCA+v+0yIPAnrlGJort0cPPJpuCDtMYGj3TJB0eYp
+ EoP/sUlJMUtokSKXhf4Bbk8ysfjxnhoe8YFGeZST5cNedxL+B6jgpkGn37jQt/7NXSP5
+ 4fm/NTUp3lQ3VMsVl2OkLytc87X5AlsAj6fs/34P8c2C5uaQ8fwlXKWAVJlw5jHAhbVO
+ 1qX8K//jUV4WU/MeykaoHtrHBPvE4xFm+/DTFlGfN/MEo9oRTnJZfRm4zrKq2rBFz7Rf
+ rd5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784350342; x=1784955142;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=z+zOoEvEiF9WudrD0BwBrgA0gcrVtJ2X7XshIAskqOU=;
+ b=i4wqTR9w0b8skcIp1dviI0e/HAMxcTdBKhnUp0Iv1RvoSb+W/NbMfnDhHjDYqBnnIy
+ gc5qNFxZSZAYF1Ayphxxai1XCsk+2czDItmHSYhbyCA9AYKt44+hbnt0/hF01/nM9HVE
+ M1TTyfC+VowZKRJjbjIjMqodxOuOUlBggq5/6lWhFc2trQsXaD0BOZ9VBvP926Lp4cfh
+ e4yygzwX3U/hSn3Cg5EhVQ50x5UBWZfsQWJLtLbtpYlMn5geiOBDJvRRSaUWp6UsxOvf
+ ypQrsq5XXpdMi52eleHKd5qUsncQB/Roc0V86vfFzVjDmnWV8Kmrow0GrpL00mmdR9fA
+ Rd/A==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqayMDzGrF05YaC8GPdIaY0HTK3nmMfFlZO+FMSz1CakqUWsRhRQuKeS/T8Z+uF7UAoP5FFue4ug7bF@nongnu.org
+X-Gm-Message-State: AOJu0Yy03MvSo0kT8ESYdmqP3/+x21jzDMuA4Wi9pgowgX7pQ3IqhI/K
+ Eb8zJ/LIrARJ2WTUwZKA53QOGRQ+rApNqkpmzXkbwEK9xCRB08IuKzI8Oje8SwJDDJ6Ah9HnhTY
+ 67PlCo5lQNbRSwDGj4VnBtbRp7He/ia9T0BdJH3AkcfzHdJy9E8LMRSTjaA==
+X-Gm-Gg: AfdE7cn76YmLeAN0O3DjlMQAMo7ltSCxjgRf9ca17x0PrLNipeTH9Lm4+H0aZWRDyow
+ jKngYigESF8bElTbwbNF6QMKDFMPrC2QqqSRIhgMHdPFk4iU3l27wqt7kdzojT3uE3ngKkuoWon
+ Cub+7RBSdcEtMoUu0UX7mli0TXy+62FbA/rNENLVSHsT07Wbtb9mU2DFPMZmvvRdWqsaDUef89I
+ /NuUYLtaIcIvNo62SQTbflowe8KKxQ5pJFlapW4LkWGDd4EoBTyIwHZGLJK+mos00G5i1zTR39d
+ RXuZo+1fMZTa+nHhnyz1oBmDITql+LdS/tk8X5wGSWK8D+WlJYlpYwmjL6Smpca9JwEppRerf8s
+ Odvj86QQR26Wq7vghfHd0XAp5w2DezIrI6JGi/PB+naJkzzqI7QwC5OAHvXMfhfDcUHHz
+X-Received: by 2002:a05:6a21:1506:b0:3c1:c6e:9360 with SMTP id
+ adf61e73a8af0-3c3ad844369mr6126181637.32.1784350341909; 
+ Fri, 17 Jul 2026 21:52:21 -0700 (PDT)
+X-Received: by 2002:a05:6a21:1506:b0:3c1:c6e:9360 with SMTP id
+ adf61e73a8af0-3c3ad844369mr6126150637.32.1784350341421; 
+ Fri, 17 Jul 2026 21:52:21 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-31429fe4677sm11266202eec.11.2026.07.17.21.52.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 17 Jul 2026 21:52:20 -0700 (PDT)
+Message-ID: <73d87f66-6907-4e02-8026-b89c49912aeb@oss.qualcomm.com>
+Date: Fri, 17 Jul 2026 21:52:19 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 1/8] hw/vfio/listener.c: remove CONFIG_KVM
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+To: Michael Tokarev <mjt@tls.msk.ru>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: philmd@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
  qemu-ppc@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
@@ -48,62 +104,50 @@ References: <20260312224449.1605071-1-pierrick.bouvier@linaro.org>
  <c3a7cd83-7666-40c5-9baa-ebe64edacab6@tls.msk.ru>
  <3f98fbb6-16be-4de1-b9ae-6108f8f33b57@oss.qualcomm.com>
  <d3f85639-e6a4-4917-8300-d48a7852662f@oss.qualcomm.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <d3f85639-e6a4-4917-8300-d48a7852662f@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+ <5dc9f2fc-3bd6-4df3-8496-44e6037b51ad@tls.msk.ru>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <5dc9f2fc-3bd6-4df3-8496-44e6037b51ad@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE4MDA0NiBTYWx0ZWRfXwqgfQ1+KzkyA
+ NxwZ5TfdGq/rvhoEF+9S0rqgxu2tQewee87FeVatVJszlxQ6fIPpI/ZvSU1qgzO+r4GEjZOlULT
+ tzWsSsSulo2aSS1EAt7spkO1vUQYVfk=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE4MDA0NiBTYWx0ZWRfXyWQvrFMqZQcU
+ UIo9CT58jfQ3rCxdr9k0jTA/RMxCHXpREnXNsHRFOYOGi9k0Wv4GSZWl2JgRcNEz7JwH3QpEJRG
+ e0QPNDaFia7raXFl4Kns0yB1JfNTYAR4W5j7fsa6vTCLitzVz2tLfqIwSVkmK3qQ1mHPXgjkT/x
+ HPd5v6JgFE35fQw6p5IFGcDsvj0g4M683fk16UqXs4gLQ7AP6cA9vRhLcaZ2T65mpHzfiUEPymG
+ 29S1lwG5RNpFSMXfZvoIF/nK8tnAwlzncO2Bxsu6RghPWPAKMZq0kjtmAfutMjfcejD/0hQ4BM4
+ lAOMcWqAQaQvhvq8rRxyHLiW7zFzGHyNm/MJmgaWvuaBaXaUXuOWmbilx0m9N7u1vQPL00qkIMf
+ sfISYe12icTiN9WyOQR/KnMmU1y7VgLyT3vx2Af03ZgV9Vf9qG6F3aHGzg1qbDcDf4uIuywonYX
+ WbnTDw/NS2OCggNxk7w==
+X-Proofpoint-ORIG-GUID: yv4iwy-RkJBAmzV99uWF4D9nu1Zyk6CW
+X-Proofpoint-GUID: yv4iwy-RkJBAmzV99uWF4D9nu1Zyk6CW
+X-Authority-Analysis: v=2.4 cv=FOQrAeos c=1 sm=1 tr=0 ts=6a5b0686 cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=p0WdMEafAAAA:8 a=pWJUZo6IXamL42iKUEkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=_Vgx9l1VpLgwpw_dHYaR:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-18_01,2026-07-17_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 suspectscore=0 adultscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607180046
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,33 +163,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/17/26 22:40, Pierrick Bouvier wrote:
-
-> https://gitlab.com/qemu-project/qemu/-/blob/master/hw/vfio/Kconfig?ref_type=heads#L5
+On 7/17/2026 9:14 PM, Michael Tokarev wrote:
+> On 7/17/26 22:40, Pierrick Bouvier wrote:
 > 
-> ```
-> config VFIO
->      bool
->      depends on LINUX
-> ```
+>> https://gitlab.com/qemu-project/qemu/-/blob/master/hw/vfio/Kconfig?
+>> ref_type=heads#L5
+>>
+>> ```
+>> config VFIO
+>>      bool
+>>      depends on LINUX
+>> ```
+>>
+>> Incorrect, and it should exclude Linux hosts not supporting VFIO.
+>> At least sparc64 to fix the current issue.
 > 
-> Incorrect, and it should exclude Linux hosts not supporting VFIO.
-> At least sparc64 to fix the current issue.
+> Shouldn't there be "depends on LINUX & KVM" ?  At least, this
+> way we can do --disable-kvm and it will work.
+>
 
-Shouldn't there be "depends on LINUX & KVM" ?  At least, this
-way we can do --disable-kvm and it will work.
+I think it's a safe choice, but not sure if we are supposed to be able
+to use the exotic combination of vfio with tcg also. Maybe it doesn't
+make any sense technically though, I don't know the arcane of vfio.
 
-Is sparc64 the only architecture where kvm is not available?
-Somehow I doubt it's the case.  Yet, on other architectures
-without kvm, the thing builds.
+@Cédric, Any idea of which matrix of host/target is supposed to be
+supported?
 
-To me, this smells like a bug in debian, - missing asm/kvm.h
-include in linux-headers - so that some headers are missing
-while some others are present.  Or a bug in kernel itself, with
-sparc port lagging in this area so that even dummy asm/kvm.h is
-not provided.
+> Is sparc64 the only architecture where kvm is not available?
+> Somehow I doubt it's the case.  Yet, on other architectures
+> without kvm, the thing builds.
+> 
+> To me, this smells like a bug in debian, - missing asm/kvm.h
+> include in linux-headers - so that some headers are missing
+> while some others are present.  Or a bug in kernel itself, with
+> sparc port lagging in this area so that even dummy asm/kvm.h is
+> not provided.
+>
 
-Thanks,
+In upstream kernel, that's the list of architectures providing this:
+./arch/arm64/include/uapi/asm/kvm.h
+./arch/loongarch/include/uapi/asm/kvm.h
+./arch/mips/include/uapi/asm/kvm.h
+./arch/powerpc/include/uapi/asm/kvm.h
+./arch/riscv/include/uapi/asm/kvm.h
+./arch/s390/include/uapi/asm/kvm.h
+./arch/x86/include/uapi/asm/kvm.h
 
-/mjt
+It seems like there is no concept of "asm/kvm.h" stub in the kernel.
+Which seems reasonable considering they have Kconfig for this.
+
+> Thanks,
+> 
+> /mjt
+
+Regards,
+Pierrick
 
