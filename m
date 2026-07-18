@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1202C4451B
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:39:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5642FC44520
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:39:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlCje-0000PT-Fp; Sat, 18 Jul 2026 17:38:14 -0400
+	id 1wlCkc-0002Aj-Lv; Sat, 18 Jul 2026 17:39:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlCjc-0000OK-U4; Sat, 18 Jul 2026 17:38:12 -0400
+ id 1wlCkT-00021q-Qd; Sat, 18 Jul 2026 17:39:07 -0400
 Received: from pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com
  ([44.245.243.92])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlCjY-000201-3K; Sat, 18 Jul 2026 17:38:12 -0400
+ id 1wlCkO-000244-O9; Sat, 18 Jul 2026 17:39:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784410688; x=1815946688;
+ t=1784410740; x=1815946740;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=bxpXC4MITv5hh985dMkHBTgluTdz27C6qpED/8FVkfo=;
- b=ROp170WA6OJv9Lxt8QGpUqiMgGIS5359KepHcd0lUvAPWUT7JrtcIfX6
- f4DG4RuqLUrWy5VTD5fxtDemAIpiqwxy5jIHSC6vcMDS6ypSaJoPRPpHs
- sZoiljlgNJRnzL11puFSZqULEU6fYUkvppYDJBbO0uTroL+q2A9OdsF/p
- Ni020q+KzukaZbGpJ6n8V910fpu1WTt8Qryei2s7wHAQTwXLzhl6/Ux20
- zNx+tQrYTNMKjlG5plj+GA8twvTLdwT3L2X2cFs2aZQruH0H2Uc3fcmL0
- 3r5lg6CZb9GXkKVPvuH+BkSZgkiJBK5eLKluKZuVtdaxCvptDl2dNUW7U g==;
-X-CSE-ConnectionGUID: DntEBtiETLaNCj6EC6nMng==
-X-CSE-MsgGUID: MOr4UklsQfWz2fiAbIrr6Q==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23422475"
-Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
+ bh=+cp5UBuFCU/6+q4YL/3HEtApJtGX3GrviM3GZkm3jxA=;
+ b=npEQZe3Yim+gFyuv4Q27TIcnxpNXY/mIUFrC9fxTZjKpBHhCw7C1D9dH
+ jLEwhwfx1JiToLY6iwfPebTgYfDtM5FcHVMAXA3zBrANXIDsEpo1TRzV6
+ cXxd0Fxunq/Sv0yELUVqgZfbPZwSsq9lNQnp7U0JYVgvc3M5f6EOz7/Id
+ BwxxA23NgvTNk5RILi4SYQDWjzZ/Mcz0nwVWWVIL7MlsPCx0LzwhBYEzd
+ wfKYq4GZC3GeBlSQmoRJ3d6aI6jAtTSaupA+UyAiWMqn8L8nzz1wr/Es9
+ cf7ws0i4PO5aTqDcAkODiL4+kz/XltpuxTM2AuLz6/ptCeh9WM6HnJEre Q==;
+X-CSE-ConnectionGUID: zHxtl/CIRNOnap7lmp1q6g==
+X-CSE-MsgGUID: ka5Xf88PTj+w93cS0XIHrw==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23422500"
+Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
  by internal-pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:38:05 +0000
-Received: from EX19MTAUWC002.ant.amazon.com [205.251.233.51:7377]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.48.250:2525]
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:38:56 +0000
+Received: from EX19MTAUWB002.ant.amazon.com [205.251.233.111:24211]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.11.151:2525]
  with esmtp (Farcaster)
- id dc3916e0-9a56-4512-9bd0-5d49a6de8b32; Sat, 18 Jul 2026 21:38:05 +0000 (UTC)
-X-Farcaster-Flow-ID: dc3916e0-9a56-4512-9bd0-5d49a6de8b32
+ id 9e184146-dcf1-489a-8e53-b67ba13a36b1; Sat, 18 Jul 2026 21:38:56 +0000 (UTC)
+X-Farcaster-Flow-ID: 9e184146-dcf1-489a-8e53-b67ba13a36b1
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
+ EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:38:04 +0000
+ Sat, 18 Jul 2026 21:38:55 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:37:54 +0000
+ Sat, 18 Jul 2026 21:38:45 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,10 +93,10 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 004/137] sysbus: Make sysbus_create_simple()/_varargs()
- take a QOM parent
-Date: Sat, 18 Jul 2026 21:34:39 +0000
-Message-ID: <20260718213652.37673-5-graf@amazon.com>
+Subject: [RFC PATCH v2 007/137] i2c: Make
+ i2c_slave_new()/i2c_slave_create_simple() take a QOM parent
+Date: Sat, 18 Jul 2026 21:34:42 +0000
+Message-ID: <20260718213652.37673-8-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -105,7 +105,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D035UWA004.ant.amazon.com (10.13.139.109) To
+X-ClientProxiedBy: EX19D046UWA001.ant.amazon.com (10.13.139.112) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
 Received-SPF: pass client-ip=44.245.243.92;
  envelope-from=prvs=65292d44c=graf@amazon.de;
@@ -133,22 +133,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sysbus is by far the largest producer of orphaned onboard devices:
-of the ~1180 unparented device creation sites in the tree, well over
-half go through sysbus_create_simple(), sysbus_create_varargs(), or
-qdev_new_orphan()+sysbus_realize_and_unref() open-coded.
+Same rename-and-reintroduce treatment as the qdev, sysbus, PCI and
+ISA layers: mechanically rename the two I2C-slave creation helpers
+to *_orphan() and reintroduce the short names with a leading
+(parent, id, ...) pair.
 
-Apply the same rename-and-reintroduce treatment as qdev_new():
-mechanically rename the existing helpers to *_orphan() and
-reintroduce the short names with a leading (parent, id, ...) pair
-that plumbs down to the new qdev_new().  The parented versions call
-sysbus_realize() (not _and_unref) since the child<> property already
+The parented i2c_slave_create_simple() calls qdev_realize() (not
+i2c_slave_realize_and_unref()) since the child<> property already
 holds the sole reference.
 
 The mechanical rename part is generated by
 
   spatch --sp-file \
-      scripts/coccinelle/qom-parent/sysbus-create-orphan.cocci \
+      scripts/coccinelle/qom-parent/i2c-slave-new-orphan.cocci \
       --in-place --include-headers --dir .
 
 or equivalently
@@ -156,1201 +153,1377 @@ or equivalently
   git ls-files '*.[ch]' '*.[ch].inc' '*.rst' '*.py' | \
       grep -v '^subprojects/' | \
       xargs sed -i \
-          's/\bsysbus_create_simple\b/sysbus_create_simple_orphan/g;
-           s/\bsysbus_create_varargs\b/sysbus_create_varargs_orphan/g'
+          's/\bi2c_slave_create_simple\b/&_orphan/g;
+           s/\bi2c_slave_new\b/&_orphan/g'
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/arm/allwinner-h3.c                         | 16 ++++-----
- hw/arm/collie.c                               |  2 +-
- hw/arm/exynos4210.c                           | 14 ++++----
- hw/arm/fsl-imx6.c                             |  2 +-
- hw/arm/integratorcp.c                         | 18 +++++-----
- hw/arm/mps2.c                                 |  6 ++--
- hw/arm/musicpal.c                             | 18 +++++-----
- hw/arm/npcm7xx.c                              |  2 +-
- hw/arm/realview.c                             | 24 ++++++-------
- hw/arm/sbsa-ref.c                             |  6 ++--
- hw/arm/stellaris.c                            |  8 ++---
- hw/arm/strongarm.c                            | 10 +++---
- hw/arm/versatilepb.c                          | 28 +++++++--------
- hw/arm/vexpress.c                             | 20 +++++------
- hw/arm/virt.c                                 |  8 ++---
- hw/arm/xilinx_zynq.c                          | 10 +++---
- hw/core/sysbus.c                              | 35 +++++++++++++++++-
- hw/i386/kvm/clock.c                           |  2 +-
- hw/i386/kvm/xen_evtchn.c                      |  2 +-
- hw/i386/kvm/xen_gnttab.c                      |  2 +-
- hw/i386/kvm/xen_overlay.c                     |  2 +-
- hw/i386/kvm/xen_primary_console.c             |  2 +-
- hw/i386/kvm/xen_xenstore.c                    |  2 +-
- hw/i386/microvm.c                             |  2 +-
- hw/intc/apic_common.c                         |  2 +-
- hw/loongarch/virt.c                           |  2 +-
- hw/m68k/next-cube.c                           |  4 +--
- hw/m68k/virt.c                                |  2 +-
- hw/mips/jazz.c                                |  2 +-
- hw/mips/loongson3_virt.c                      |  2 +-
- hw/or1k/virt.c                                |  2 +-
- hw/ppc/amigaone.c                             |  2 +-
+ hw/arm/aspeed.c                               |  4 +-
+ hw/arm/aspeed_ast1040_evb.c                   |  2 +-
+ hw/arm/aspeed_ast10x0_evb.c                   |  2 +-
+ hw/arm/aspeed_ast2400_palmetto.c              |  4 +-
+ hw/arm/aspeed_ast2400_quanta-q71l.c           | 12 ++--
+ hw/arm/aspeed_ast2400_supermicrox11.c         |  4 +-
+ hw/arm/aspeed_ast2500_evb.c                   |  2 +-
+ hw/arm/aspeed_ast2500_g220a.c                 |  6 +-
+ hw/arm/aspeed_ast2500_romulus.c               |  2 +-
+ hw/arm/aspeed_ast2500_supermicro-x11spi.c     |  4 +-
+ hw/arm/aspeed_ast2500_tiogapass.c             |  6 +-
+ hw/arm/aspeed_ast2500_witherspoon.c           | 16 ++---
+ hw/arm/aspeed_ast2500_yosemitev2.c            |  6 +-
+ hw/arm/aspeed_ast2600_anacapa.c               | 26 ++++-----
+ hw/arm/aspeed_ast2600_bletchley.c             | 20 +++----
+ hw/arm/aspeed_ast2600_catalina.c              | 58 +++++++++----------
+ hw/arm/aspeed_ast2600_evb.c                   |  2 +-
+ hw/arm/aspeed_ast2600_fby35.c                 | 10 ++--
+ hw/arm/aspeed_ast2600_fuji.c                  | 40 ++++++-------
+ hw/arm/aspeed_ast2600_gb200nvl.c              | 12 ++--
+ hw/arm/aspeed_ast2600_rainier.c               | 46 +++++++--------
+ hw/arm/aspeed_ast27x0-fc.c                    |  2 +-
+ hw/arm/aspeed_ast27x0_evb.c                   |  2 +-
+ hw/arm/bananapi_m2u.c                         |  2 +-
+ hw/arm/cubieboard.c                           |  2 +-
+ hw/arm/musicpal.c                             |  2 +-
+ hw/arm/npcm7xx_boards.c                       | 42 +++++++-------
+ hw/arm/npcm8xx_boards.c                       |  2 +-
+ hw/arm/realview.c                             |  2 +-
+ hw/arm/stellaris.c                            |  2 +-
+ hw/arm/versatilepb.c                          |  2 +-
+ hw/arm/vexpress.c                             |  2 +-
+ hw/display/sii9022.c                          |  2 +-
+ hw/i2c/aspeed_i2c.c                           |  2 +-
+ hw/i2c/core.c                                 | 26 ++++++++-
+ hw/i3c/core.c                                 |  2 +-
+ hw/nvram/eeprom_at24c.c                       |  2 +-
  hw/ppc/e500.c                                 |  2 +-
- hw/ppc/pegasos.c                              |  4 +--
- hw/ppc/ppc440_bamboo.c                        |  2 +-
- hw/ppc/sam460ex.c                             |  8 ++---
- hw/riscv/virt.c                               |  4 +--
- hw/sparc/sun4m.c                              |  2 +-
- hw/vmapple/vmapple.c                          |  4 +--
- hw/xen/xen-pvh-common.c                       |  2 +-
- include/hw/core/sysbus.h                      | 36 ++++++++++++++++---
- .../qom-parent/sysbus-create-orphan.cocci     | 18 ++++++++++
- 42 files changed, 210 insertions(+), 131 deletions(-)
- create mode 100644 scripts/coccinelle/qom-parent/sysbus-create-orphan.cocci
+ hw/ppc/pnv.c                                  |  4 +-
+ hw/ppc/sam460ex.c                             |  2 +-
+ hw/riscv/tt_atlantis.c                        |  4 +-
+ include/hw/arm/aspeed.h                       |  4 +-
+ include/hw/i2c/i2c.h                          | 38 ++++++++++--
+ .../qom-parent/i2c-slave-new-orphan.cocci     | 18 ++++++
+ 44 files changed, 260 insertions(+), 192 deletions(-)
+ create mode 100644 scripts/coccinelle/qom-parent/i2c-slave-new-orphan.cocci
 
-diff --git a/hw/arm/allwinner-h3.c b/hw/arm/allwinner-h3.c
-index 262e99b3f9..427dbad7c3 100644
---- a/hw/arm/allwinner-h3.c
-+++ b/hw/arm/allwinner-h3.c
-@@ -379,29 +379,29 @@ static void allwinner_h3_realize(DeviceState *dev, Error **errp)
-                        qdev_get_gpio_in(DEVICE(&s->gic), AW_H3_GIC_SPI_EMAC));
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index 531e3ce276..4a4c1f1556 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -253,13 +253,13 @@ static void aspeed_machine_init(MachineState *machine)
  
-     /* Universal Serial Bus */
--    sysbus_create_simple(TYPE_AW_H3_EHCI, s->memmap[AW_H3_DEV_EHCI0],
-+    sysbus_create_simple_orphan(TYPE_AW_H3_EHCI, s->memmap[AW_H3_DEV_EHCI0],
-                          qdev_get_gpio_in(DEVICE(&s->gic),
-                                           AW_H3_GIC_SPI_EHCI0));
--    sysbus_create_simple(TYPE_AW_H3_EHCI, s->memmap[AW_H3_DEV_EHCI1],
-+    sysbus_create_simple_orphan(TYPE_AW_H3_EHCI, s->memmap[AW_H3_DEV_EHCI1],
-                          qdev_get_gpio_in(DEVICE(&s->gic),
-                                           AW_H3_GIC_SPI_EHCI1));
--    sysbus_create_simple(TYPE_AW_H3_EHCI, s->memmap[AW_H3_DEV_EHCI2],
-+    sysbus_create_simple_orphan(TYPE_AW_H3_EHCI, s->memmap[AW_H3_DEV_EHCI2],
-                          qdev_get_gpio_in(DEVICE(&s->gic),
-                                           AW_H3_GIC_SPI_EHCI2));
--    sysbus_create_simple(TYPE_AW_H3_EHCI, s->memmap[AW_H3_DEV_EHCI3],
-+    sysbus_create_simple_orphan(TYPE_AW_H3_EHCI, s->memmap[AW_H3_DEV_EHCI3],
-                          qdev_get_gpio_in(DEVICE(&s->gic),
-                                           AW_H3_GIC_SPI_EHCI3));
+ void aspeed_create_pca9552(AspeedSoCState *soc, int bus_id, int addr)
+ {
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, bus_id),
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, bus_id),
+                             TYPE_PCA9552, addr);
+ }
  
--    sysbus_create_simple("sysbus-ohci", s->memmap[AW_H3_DEV_OHCI0],
-+    sysbus_create_simple_orphan("sysbus-ohci", s->memmap[AW_H3_DEV_OHCI0],
-                          qdev_get_gpio_in(DEVICE(&s->gic),
-                                           AW_H3_GIC_SPI_OHCI0));
--    sysbus_create_simple("sysbus-ohci", s->memmap[AW_H3_DEV_OHCI1],
-+    sysbus_create_simple_orphan("sysbus-ohci", s->memmap[AW_H3_DEV_OHCI1],
-                          qdev_get_gpio_in(DEVICE(&s->gic),
-                                           AW_H3_GIC_SPI_OHCI1));
--    sysbus_create_simple("sysbus-ohci", s->memmap[AW_H3_DEV_OHCI2],
-+    sysbus_create_simple_orphan("sysbus-ohci", s->memmap[AW_H3_DEV_OHCI2],
-                          qdev_get_gpio_in(DEVICE(&s->gic),
-                                           AW_H3_GIC_SPI_OHCI2));
--    sysbus_create_simple("sysbus-ohci", s->memmap[AW_H3_DEV_OHCI3],
-+    sysbus_create_simple_orphan("sysbus-ohci", s->memmap[AW_H3_DEV_OHCI3],
-                          qdev_get_gpio_in(DEVICE(&s->gic),
-                                           AW_H3_GIC_SPI_OHCI3));
+ I2CSlave *aspeed_create_pca9554(AspeedSoCState *soc, int bus_id, int addr)
+ {
+-    return i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, bus_id),
++    return i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, bus_id),
+                             TYPE_PCA9554, addr);
+ }
  
-diff --git a/hw/arm/collie.c b/hw/arm/collie.c
-index 91f0a94b6f..81bc019460 100644
---- a/hw/arm/collie.c
-+++ b/hw/arm/collie.c
-@@ -64,7 +64,7 @@ static void collie_init(MachineState *machine)
-                               FLASH_SECTOR_SIZE, 4, 0x00, 0x00, 0x00, 0x00, 0);
+diff --git a/hw/arm/aspeed_ast1040_evb.c b/hw/arm/aspeed_ast1040_evb.c
+index 2b93d4dfbc..d0326d39f9 100644
+--- a/hw/arm/aspeed_ast1040_evb.c
++++ b/hw/arm/aspeed_ast1040_evb.c
+@@ -55,7 +55,7 @@ static void ast1040_evb_i2c_init(AspeedMachineState *bmc)
+     uint8_t *eeprom_buf = g_malloc0(256);
+ 
+     smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50, eeprom_buf);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4d);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4d);
+ }
+ 
+ static void aspeed_machine_ast1040_evb_class_init(ObjectClass *oc,
+diff --git a/hw/arm/aspeed_ast10x0_evb.c b/hw/arm/aspeed_ast10x0_evb.c
+index c19563d1f0..52ead37bc7 100644
+--- a/hw/arm/aspeed_ast10x0_evb.c
++++ b/hw/arm/aspeed_ast10x0_evb.c
+@@ -73,7 +73,7 @@ static void ast1030_evb_i2c_init(AspeedMachineState *bmc)
+     smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50, eeprom_buf);
+ 
+     /* U11 LM75 connects to SDA/SCL Group 2 by default */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4d);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4d);
+ }
+ 
+ static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
+diff --git a/hw/arm/aspeed_ast2400_palmetto.c b/hw/arm/aspeed_ast2400_palmetto.c
+index 776aa43a45..d89d042ce2 100644
+--- a/hw/arm/aspeed_ast2400_palmetto.c
++++ b/hw/arm/aspeed_ast2400_palmetto.c
+@@ -37,13 +37,13 @@ static void palmetto_bmc_i2c_init(AspeedMachineState *bmc)
+      * The palmetto platform expects a ds3231 RTC but a ds1338 is
+      * enough to provide basic RTC features. Alarms will be missing
+      */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0), "ds1338", 0x68);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 0), "ds1338", 0x68);
+ 
+     smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50,
+                           eeprom_buf);
+ 
+     /* add a TMP423 temperature sensor */
+-    dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2),
++    dev = DEVICE(i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 2),
+                                          "tmp423", 0x4c));
+     object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
+     object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
+diff --git a/hw/arm/aspeed_ast2400_quanta-q71l.c b/hw/arm/aspeed_ast2400_quanta-q71l.c
+index 42ad2a2303..802ae49604 100644
+--- a/hw/arm/aspeed_ast2400_quanta-q71l.c
++++ b/hw/arm/aspeed_ast2400_quanta-q71l.c
+@@ -33,21 +33,21 @@ static void quanta_q71l_bmc_i2c_init(AspeedMachineState *bmc)
+      * The quanta-q71l platform expects tmp75s which are compatible with
+      * tmp105s.
+      */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4c);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4e);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4f);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4c);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4e);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4f);
+ 
+     /* TODO: i2c-1: Add baseboard FRU eeprom@54 24c64 */
+     /* TODO: i2c-1: Add Frontpanel FRU eeprom@57 24c64 */
+     /* TODO: Add Memory Riser i2c mux and eeproms. */
+ 
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), "pca9546", 0x74);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), "pca9548", 0x77);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 2), "pca9546", 0x74);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 2), "pca9548", 0x77);
+ 
+     /* TODO: i2c-3: Add BIOS FRU eeprom@56 24c64 */
+ 
+     /* i2c-7 */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7), "pca9546", 0x70);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 7), "pca9546", 0x70);
+     /*        - i2c@0: pmbus@59 */
+     /*        - i2c@1: pmbus@58 */
+     /*        - i2c@2: pmbus@58 */
+diff --git a/hw/arm/aspeed_ast2400_supermicrox11.c b/hw/arm/aspeed_ast2400_supermicrox11.c
+index 88cdb01fc7..9c90998754 100644
+--- a/hw/arm/aspeed_ast2400_supermicrox11.c
++++ b/hw/arm/aspeed_ast2400_supermicrox11.c
+@@ -37,13 +37,13 @@ static void supermicrox11_bmc_i2c_init(AspeedMachineState *bmc)
+      * The palmetto platform expects a ds3231 RTC but a ds1338 is
+      * enough to provide basic RTC features. Alarms will be missing
+      */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0), "ds1338", 0x68);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 0), "ds1338", 0x68);
+ 
+     smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50,
+                           eeprom_buf);
+ 
+     /* add a TMP423 temperature sensor */
+-    dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2),
++    dev = DEVICE(i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 2),
+                                          "tmp423", 0x4c));
+     object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
+     object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
+diff --git a/hw/arm/aspeed_ast2500_evb.c b/hw/arm/aspeed_ast2500_evb.c
+index 8b5cb67be9..e46ce4a5aa 100644
+--- a/hw/arm/aspeed_ast2500_evb.c
++++ b/hw/arm/aspeed_ast2500_evb.c
+@@ -34,7 +34,7 @@ static void ast2500_evb_i2c_init(AspeedMachineState *bmc)
+                           eeprom_buf);
+ 
+     /* The AST2500 EVB expects a LM75 but a TMP105 is compatible */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7),
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 7),
+                      TYPE_TMP105, 0x4d);
+ }
+ 
+diff --git a/hw/arm/aspeed_ast2500_g220a.c b/hw/arm/aspeed_ast2500_g220a.c
+index 3f979a78e5..577ee0aff4 100644
+--- a/hw/arm/aspeed_ast2500_g220a.c
++++ b/hw/arm/aspeed_ast2500_g220a.c
+@@ -32,19 +32,19 @@ static void g220a_bmc_i2c_init(AspeedMachineState *bmc)
+     AspeedSoCState *soc = bmc->soc;
+     DeviceState *dev;
+ 
+-    dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 3),
++    dev = DEVICE(i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 3),
+                                          "emc1413", 0x4c));
+     object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
+     object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
+     object_property_set_int(OBJECT(dev), "temperature2", 20000, &error_abort);
+ 
+-    dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 12),
++    dev = DEVICE(i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 12),
+                                          "emc1413", 0x4c));
+     object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
+     object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
+     object_property_set_int(OBJECT(dev), "temperature2", 20000, &error_abort);
+ 
+-    dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 13),
++    dev = DEVICE(i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 13),
+                                          "emc1413", 0x4c));
+     object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
+     object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
+diff --git a/hw/arm/aspeed_ast2500_romulus.c b/hw/arm/aspeed_ast2500_romulus.c
+index 91b660e74b..1bbd2802f1 100644
+--- a/hw/arm/aspeed_ast2500_romulus.c
++++ b/hw/arm/aspeed_ast2500_romulus.c
+@@ -30,7 +30,7 @@ static void romulus_bmc_i2c_init(AspeedMachineState *bmc)
+      * The romulus board expects Epson RX8900 I2C RTC but a ds1338 is
+      * good enough
+      */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), "ds1338", 0x32);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 11), "ds1338", 0x32);
+ }
+ 
+ static void aspeed_machine_romulus_class_init(ObjectClass *oc,
+diff --git a/hw/arm/aspeed_ast2500_supermicro-x11spi.c b/hw/arm/aspeed_ast2500_supermicro-x11spi.c
+index a2450aa962..9e95d26901 100644
+--- a/hw/arm/aspeed_ast2500_supermicro-x11spi.c
++++ b/hw/arm/aspeed_ast2500_supermicro-x11spi.c
+@@ -33,13 +33,13 @@ static void supermicro_x11spi_bmc_i2c_init(AspeedMachineState *bmc)
+      * The palmetto platform expects a ds3231 RTC but a ds1338 is
+      * enough to provide basic RTC features. Alarms will be missing
+      */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0), "ds1338", 0x68);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 0), "ds1338", 0x68);
+ 
+     smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50,
+                           eeprom_buf);
+ 
+     /* add a TMP423 temperature sensor */
+-    dev = DEVICE(i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2),
++    dev = DEVICE(i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 2),
+                                          "tmp423", 0x4c));
+     object_property_set_int(OBJECT(dev), "temperature0", 31000, &error_abort);
+     object_property_set_int(OBJECT(dev), "temperature1", 28000, &error_abort);
+diff --git a/hw/arm/aspeed_ast2500_tiogapass.c b/hw/arm/aspeed_ast2500_tiogapass.c
+index 186dbc1da3..a6b3c0d051 100644
+--- a/hw/arm/aspeed_ast2500_tiogapass.c
++++ b/hw/arm/aspeed_ast2500_tiogapass.c
+@@ -55,9 +55,9 @@ static void tiogapass_bmc_i2c_init(AspeedMachineState *bmc)
+     at24c_eeprom_init_rom(aspeed_i2c_get_bus(&soc->i2c, 6), 0x54, 128 * KiB,
+                           tiogapass_bmc_fruid, tiogapass_bmc_fruid_len);
+     /* TMP421 */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 8), "tmp421", 0x1f);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), "tmp421", 0x4f);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), "tmp421", 0x4e);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 8), "tmp421", 0x1f);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 6), "tmp421", 0x4f);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 6), "tmp421", 0x4e);
+ }
+ 
+ static void aspeed_machine_tiogapass_class_init(ObjectClass *oc,
+diff --git a/hw/arm/aspeed_ast2500_witherspoon.c b/hw/arm/aspeed_ast2500_witherspoon.c
+index 28d437fec0..cb57cb421a 100644
+--- a/hw/arm/aspeed_ast2500_witherspoon.c
++++ b/hw/arm/aspeed_ast2500_witherspoon.c
+@@ -44,7 +44,7 @@ static void witherspoon_bmc_i2c_init(AspeedMachineState *bmc)
+     LEDState *led;
+ 
+     /* Bus 3: TODO bmp280@77 */
+-    dev = DEVICE(i2c_slave_new(TYPE_PCA9552, 0x60));
++    dev = DEVICE(i2c_slave_new_orphan(TYPE_PCA9552, 0x60));
+     qdev_prop_set_string(dev, "description", "pca1");
+     i2c_slave_realize_and_unref(I2C_SLAVE(dev),
+                                 aspeed_i2c_get_bus(&soc->i2c, 3),
+@@ -58,24 +58,24 @@ static void witherspoon_bmc_i2c_init(AspeedMachineState *bmc)
+         qdev_connect_gpio_out(dev, pca1_leds[i].gpio_id,
+                               qdev_get_gpio_in(DEVICE(led), 0));
+     }
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 3), "dps310", 0x76);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 3), "max31785", 0x52);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4), "tmp423", 0x4c);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5), "tmp423", 0x4c);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 3), "dps310", 0x76);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 3), "max31785", 0x52);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 4), "tmp423", 0x4c);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 5), "tmp423", 0x4c);
+ 
+     /* The Witherspoon expects a TMP275 but a TMP105 is compatible */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), TYPE_TMP105,
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 9), TYPE_TMP105,
+                      0x4a);
+ 
+     /*
+      * The witherspoon board expects Epson RX8900 I2C RTC but a ds1338 is
+      * good enough
+      */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), "ds1338", 0x32);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 11), "ds1338", 0x32);
+ 
+     smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 11), 0x51,
+                           eeprom_buf);
+-    dev = DEVICE(i2c_slave_new(TYPE_PCA9552, 0x60));
++    dev = DEVICE(i2c_slave_new_orphan(TYPE_PCA9552, 0x60));
+     qdev_prop_set_string(dev, "description", "pca0");
+     i2c_slave_realize_and_unref(I2C_SLAVE(dev),
+                                 aspeed_i2c_get_bus(&soc->i2c, 11),
+diff --git a/hw/arm/aspeed_ast2500_yosemitev2.c b/hw/arm/aspeed_ast2500_yosemitev2.c
+index eaa75bcccb..905758c345 100644
+--- a/hw/arm/aspeed_ast2500_yosemitev2.c
++++ b/hw/arm/aspeed_ast2500_yosemitev2.c
+@@ -55,9 +55,9 @@ static void yosemitev2_bmc_i2c_init(AspeedMachineState *bmc)
+     at24c_eeprom_init_rom(aspeed_i2c_get_bus(&soc->i2c, 8), 0x51, 128 * KiB,
+                           yosemitev2_bmc_fruid, yosemitev2_bmc_fruid_len);
+     /* TMP421 */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), "tmp421", 0x1f);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "tmp421", 0x4e);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "tmp421", 0x4f);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 11), "tmp421", 0x1f);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 9), "tmp421", 0x4e);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 9), "tmp421", 0x4f);
+ 
+ }
+ 
+diff --git a/hw/arm/aspeed_ast2600_anacapa.c b/hw/arm/aspeed_ast2600_anacapa.c
+index a1c8111a93..98395f196b 100644
+--- a/hw/arm/aspeed_ast2600_anacapa.c
++++ b/hw/arm/aspeed_ast2600_anacapa.c
+@@ -237,17 +237,17 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
+     /* eeprom@50 */
+     at24c_eeprom_init(i2c[0], 0x50, 256 * KiB);
+     /* i2c-mux@70 */
+-    i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x70);
++    i2c_slave_create_simple_orphan(i2c[0], TYPE_PCA9546, 0x70);
+ 
+     /* &i2c1 */
+     /* eeprom@50 */
+     at24c_eeprom_init(i2c[1], 0x50, 256 * KiB);
+     /* i2c-mux@70 (PCA9546) — 4 channels, empty */
+-    i2c_slave_create_simple(i2c[1], TYPE_PCA9546, 0x70);
++    i2c_slave_create_simple_orphan(i2c[1], TYPE_PCA9546, 0x70);
+ 
+     /* &i2c4 */
+     /* i2c-mux@70 (PCA9548) */
+-    i2c_slave_create_simple(i2c[4], TYPE_PCA9548, 0x70);
++    i2c_slave_create_simple_orphan(i2c[4], TYPE_PCA9548, 0x70);
+ 
+     /* &i2c6 */
+     /* eeprom@50 */
+@@ -256,15 +256,15 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
+ 
+     /* &i2c8 */
+     /* i2c-mux@72 (PCA9546) */
+-    i2c_mux = i2c_slave_create_simple(i2c[8], TYPE_PCA9546, 0x72);
++    i2c_mux = i2c_slave_create_simple_orphan(i2c[8], TYPE_PCA9546, 0x72);
+ 
+     /* i2c8mux ch0 */
+     /* adc128d818@1f — no model */
+     /* pca9555@22 */
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 0),
++    i2c_slave_create_simple_orphan(pca954x_i2c_get_bus(i2c_mux, 0),
+                             TYPE_PCA9552, 0x22);
+     /* pca9555@24 */
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 0),
++    i2c_slave_create_simple_orphan(pca954x_i2c_get_bus(i2c_mux, 0),
+                             TYPE_PCA9552, 0x24);
+     /* eeprom@50 */
+     at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 0), 0x50, 16 * KiB,
+@@ -272,10 +272,10 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
+ 
+     /* i2c8mux ch1 */
+     /* pca9555@22 */
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 1),
++    i2c_slave_create_simple_orphan(pca954x_i2c_get_bus(i2c_mux, 1),
+                             TYPE_PCA9552, 0x22);
+     /* pca9555@24 */
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 1),
++    i2c_slave_create_simple_orphan(pca954x_i2c_get_bus(i2c_mux, 1),
+                             TYPE_PCA9552, 0x24);
+     /* eeprom@50 */
+     at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 1), 0x50, 16 * KiB,
+@@ -291,11 +291,11 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
+ 
+     /* &i2c10 */
+     /* i2c-mux@71 (PCA9548) */
+-    i2c_mux = i2c_slave_create_simple(i2c[10], TYPE_PCA9548, 0x71);
++    i2c_mux = i2c_slave_create_simple_orphan(i2c[10], TYPE_PCA9548, 0x71);
+ 
+     /* i2c10mux ch5 */
+     /* pca9555@22*/
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 5),
++    i2c_slave_create_simple_orphan(pca954x_i2c_get_bus(i2c_mux, 5),
+                             TYPE_PCA9552, 0x22);
+     /* eeprom@52 */
+     at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 5), 0x52, 32 * KiB,
+@@ -303,13 +303,13 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
+ 
+     /* &i2c11 */
+     /* i2c-mux@71 (PCA9548) */
+-    i2c_mux = i2c_slave_create_simple(i2c[11], TYPE_PCA9548, 0x71);
++    i2c_mux = i2c_slave_create_simple_orphan(i2c[11], TYPE_PCA9548, 0x71);
+ 
+     /* i2c11mux ch0-ch4 — empty */
+ 
+     /* i2c11mux ch5 */
+     /* pca9555@22 */
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 5),
++    i2c_slave_create_simple_orphan(pca954x_i2c_get_bus(i2c_mux, 5),
+                             TYPE_PCA9552, 0x22);
+     /* eeprom@52 */
+     at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 5), 0x52, 32 * KiB,
+@@ -317,7 +317,7 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
+ 
+     /* &i2c13 */
+     /* i2c-mux@70 (PCA9548) */
+-    i2c_mux = i2c_slave_create_simple(i2c[13], TYPE_PCA9548, 0x70);
++    i2c_mux = i2c_slave_create_simple_orphan(i2c[13], TYPE_PCA9548, 0x70);
+ 
+     /* i2c13mux ch3 */
+     /* adc128d818@1f - no model */
+diff --git a/hw/arm/aspeed_ast2600_bletchley.c b/hw/arm/aspeed_ast2600_bletchley.c
+index b7e84db143..4930bddb39 100644
+--- a/hw/arm/aspeed_ast2600_bletchley.c
++++ b/hw/arm/aspeed_ast2600_bletchley.c
+@@ -35,35 +35,35 @@ static void bletchley_bmc_i2c_init(AspeedMachineState *bmc)
+     for (int i = 0; i < 6; i++) {
+         /* Missing model: ti,ina230 @ 0x45 */
+         /* Missing model: mps,mp5023 @ 0x40 */
+-        i2c_slave_create_simple(i2c[i], TYPE_TMP421, 0x4f);
++        i2c_slave_create_simple_orphan(i2c[i], TYPE_TMP421, 0x4f);
+         /* Missing model: nxp,pca9539 @ 0x76, but PCA9552 works enough */
+-        i2c_slave_create_simple(i2c[i], TYPE_PCA9552, 0x76);
+-        i2c_slave_create_simple(i2c[i], TYPE_PCA9552, 0x67);
++        i2c_slave_create_simple_orphan(i2c[i], TYPE_PCA9552, 0x76);
++        i2c_slave_create_simple_orphan(i2c[i], TYPE_PCA9552, 0x67);
+         /* Missing model: fsc,fusb302 @ 0x22 */
      }
  
--    sysbus_create_simple("scoop", 0x40800000, NULL);
-+    sysbus_create_simple_orphan("scoop", 0x40800000, NULL);
+     /* Bus 6 */
+     at24c_eeprom_init(i2c[6], 0x56, 65536);
+     /* Missing model: nxp,pcf85263 @ 0x51 , but ds1338 works enough */
+-    i2c_slave_create_simple(i2c[6], "ds1338", 0x51);
++    i2c_slave_create_simple_orphan(i2c[6], "ds1338", 0x51);
  
-     collie_binfo.board_id = 0x208;
-     arm_load_kernel(cms->sa1110->cpu, machine, &collie_binfo);
-diff --git a/hw/arm/exynos4210.c b/hw/arm/exynos4210.c
-index 2b6e61abd0..3199ea9cb7 100644
---- a/hw/arm/exynos4210.c
-+++ b/hw/arm/exynos4210.c
-@@ -600,7 +600,7 @@ static void exynos4210_realize(DeviceState *socdev, Error **errp)
+ 
+     /* Bus 7 */
+     at24c_eeprom_init(i2c[7], 0x54, 65536);
+ 
+     /* Bus 9 */
+-    i2c_slave_create_simple(i2c[9], TYPE_TMP421, 0x4f);
++    i2c_slave_create_simple_orphan(i2c[9], TYPE_TMP421, 0x4f);
+ 
+     /* Bus 10 */
+-    i2c_slave_create_simple(i2c[10], TYPE_TMP421, 0x4f);
++    i2c_slave_create_simple_orphan(i2c[10], TYPE_TMP421, 0x4f);
+     /* Missing model: ti,hdc1080 @ 0x40 */
+-    i2c_slave_create_simple(i2c[10], TYPE_PCA9552, 0x67);
++    i2c_slave_create_simple_orphan(i2c[10], TYPE_PCA9552, 0x67);
+ 
+     /* Bus 12 */
+     /* Missing model: adi,adm1278 @ 0x11 */
+-    i2c_slave_create_simple(i2c[12], TYPE_TMP421, 0x4c);
+-    i2c_slave_create_simple(i2c[12], TYPE_TMP421, 0x4d);
+-    i2c_slave_create_simple(i2c[12], TYPE_PCA9552, 0x67);
++    i2c_slave_create_simple_orphan(i2c[12], TYPE_TMP421, 0x4c);
++    i2c_slave_create_simple_orphan(i2c[12], TYPE_TMP421, 0x4d);
++    i2c_slave_create_simple_orphan(i2c[12], TYPE_PCA9552, 0x67);
+ }
+ 
+ static void aspeed_machine_bletchley_class_init(ObjectClass *oc,
+diff --git a/hw/arm/aspeed_ast2600_catalina.c b/hw/arm/aspeed_ast2600_catalina.c
+index 65495a524e..c2c949ace3 100644
+--- a/hw/arm/aspeed_ast2600_catalina.c
++++ b/hw/arm/aspeed_ast2600_catalina.c
+@@ -472,43 +472,43 @@ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
+ 
+     /* &i2c0 */
+     /* i2c-mux@71 (PCA9546) on i2c0 */
+-    i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x71);
++    i2c_slave_create_simple_orphan(i2c[0], TYPE_PCA9546, 0x71);
+ 
+     /* i2c-mux@72 (PCA9546) on i2c0 */
+-    i2c_mux = i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x72);
++    i2c_mux = i2c_slave_create_simple_orphan(i2c[0], TYPE_PCA9546, 0x72);
+ 
+     /* i2c0mux1ch1 */
+     /* io_expander7 - pca9535@20 */
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 1),
++    i2c_slave_create_simple_orphan(pca954x_i2c_get_bus(i2c_mux, 1),
+                             TYPE_PCA9535, 0x20);
+     /* eeprom@50 */
+     at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 1), 0x50, 8 * KiB,
+                           gb200io_eeprom, gb200io_eeprom_len);
+ 
+     /* i2c-mux@73 (PCA9546) on i2c0 */
+-    i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x73);
++    i2c_slave_create_simple_orphan(i2c[0], TYPE_PCA9546, 0x73);
+ 
+     /* i2c-mux@75 (PCA9546) on i2c0 */
+-    i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x75);
++    i2c_slave_create_simple_orphan(i2c[0], TYPE_PCA9546, 0x75);
+ 
+     /* i2c-mux@76 (PCA9546) on i2c0 */
+-    i2c_mux = i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x76);
++    i2c_mux = i2c_slave_create_simple_orphan(i2c[0], TYPE_PCA9546, 0x76);
+ 
+     /* i2c0mux4ch1 */
+     /* io_expander8 - pca9535@21 */
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 1),
++    i2c_slave_create_simple_orphan(pca954x_i2c_get_bus(i2c_mux, 1),
+                             TYPE_PCA9535, 0x21);
+     /* eeprom@50 */
+     at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 1), 0x50, 8 * KiB,
+                           gb200io_eeprom, gb200io_eeprom_len);
+ 
+     /* i2c-mux@77 (PCA9546) on i2c0 */
+-    i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x77);
++    i2c_slave_create_simple_orphan(i2c[0], TYPE_PCA9546, 0x77);
+ 
+ 
+     /* &i2c1 */
+     /* i2c-mux@70 (PCA9548) on i2c1 */
+-    i2c_mux = i2c_slave_create_simple(i2c[1], TYPE_PCA9548, 0x70);
++    i2c_mux = i2c_slave_create_simple_orphan(i2c[1], TYPE_PCA9548, 0x70);
+     /* i2c1mux0ch0 */
+     /* ina238@41 - no model */
+     /* ina238@42 - no model */
+@@ -525,14 +525,14 @@ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
+     at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 5), 0x54, 8 * KiB,
+                           pdb_eeprom, pdb_eeprom_len);
+     /* tpm75@4f */
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 5), TYPE_TMP75, 0x4f);
++    i2c_slave_create_simple_orphan(pca954x_i2c_get_bus(i2c_mux, 5), TYPE_TMP75, 0x4f);
+ 
+     /* i2c1mux0ch6 */
+     /* io_expander5 - pca9554@27 */
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 6),
++    i2c_slave_create_simple_orphan(pca954x_i2c_get_bus(i2c_mux, 6),
+                             TYPE_PCA9554, 0x27);
+     /* io_expander6 - pca9555@25 */
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 6),
++    i2c_slave_create_simple_orphan(pca954x_i2c_get_bus(i2c_mux, 6),
+                             TYPE_PCA9552, 0x25);
+     /* eeprom@51 */
+     at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 6), 0x51, 8 * KiB,
+@@ -543,15 +543,15 @@ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
+     at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 7), 0x53, 8 * KiB,
+                           fio_eeprom, fio_eeprom_len);
+     /* temperature-sensor@4b - tmp75 */
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 7), TYPE_TMP75, 0x4b);
++    i2c_slave_create_simple_orphan(pca954x_i2c_get_bus(i2c_mux, 7), TYPE_TMP75, 0x4b);
+ 
+     /* &i2c2 */
+     /* io_expander0 - pca9555@20 */
+-    i2c_slave_create_simple(i2c[2], TYPE_PCA9552, 0x20);
++    i2c_slave_create_simple_orphan(i2c[2], TYPE_PCA9552, 0x20);
+     /* io_expander0 - pca9555@21 */
+-    i2c_slave_create_simple(i2c[2], TYPE_PCA9552, 0x21);
++    i2c_slave_create_simple_orphan(i2c[2], TYPE_PCA9552, 0x21);
+     /* io_expander0 - pca9555@27 */
+-    i2c_slave_create_simple(i2c[2], TYPE_PCA9552, 0x27);
++    i2c_slave_create_simple_orphan(i2c[2], TYPE_PCA9552, 0x27);
+     /* eeprom@50 */
+     at24c_eeprom_init(i2c[2], 0x50, 8 * KiB);
+     /* eeprom@51 */
+@@ -559,7 +559,7 @@ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
+ 
+     /* &i2c5 */
+     /* i2c-mux@70 (PCA9548) on i2c5 */
+-    i2c_mux = i2c_slave_create_simple(i2c[5], TYPE_PCA9548, 0x70);
++    i2c_mux = i2c_slave_create_simple_orphan(i2c[5], TYPE_PCA9548, 0x70);
+     /* i2c5mux0ch6 */
+     /* eeprom@52 */
+     at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 6), 0x52, 8 * KiB,
+@@ -572,15 +572,15 @@ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
+ 
+     /* &i2c6 */
+     /* io_expander3 - pca9555@21 */
+-    i2c_slave_create_simple(i2c[6], TYPE_PCA9552, 0x21);
++    i2c_slave_create_simple_orphan(i2c[6], TYPE_PCA9552, 0x21);
+     /* rtc@6f - nct3018y */
+-    i2c_slave_create_simple(i2c[6], TYPE_DS1338, 0x6f);
++    i2c_slave_create_simple_orphan(i2c[6], TYPE_DS1338, 0x6f);
+ 
+     /* &i2c9 */
+     /* io_expander4 - pca9555@4f */
+-    i2c_slave_create_simple(i2c[9], TYPE_PCA9552, 0x4f);
++    i2c_slave_create_simple_orphan(i2c[9], TYPE_PCA9552, 0x4f);
+     /* temperature-sensor@4b - tpm75 */
+-    i2c_slave_create_simple(i2c[9], TYPE_TMP75, 0x4b);
++    i2c_slave_create_simple_orphan(i2c[9], TYPE_TMP75, 0x4b);
+     /* eeprom@50 */
+     at24c_eeprom_init_rom(i2c[9], 0x50, 8 * KiB, scm_eeprom, scm_eeprom_len);
+     /* eeprom@56 */
+@@ -588,7 +588,7 @@ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
+ 
+     /* &i2c10 */
+     /* temperature-sensor@1f - tpm421 */
+-    i2c_slave_create_simple(i2c[10], TYPE_TMP421, 0x1f);
++    i2c_slave_create_simple_orphan(i2c[10], TYPE_TMP421, 0x1f);
+     /* eeprom@50 */
+     at24c_eeprom_init_rom(i2c[10], 0x50, 8 * KiB, nic_eeprom, nic_eeprom_len);
+ 
+@@ -615,21 +615,21 @@ static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
+ 
+     /* &i2c14 */
+     /* io_expander9 - pca9555@10 */
+-    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x10);
++    i2c_slave_create_simple_orphan(i2c[14], TYPE_PCA9552, 0x10);
+     /* io_expander10 - pca9555@11 */
+-    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x11);
++    i2c_slave_create_simple_orphan(i2c[14], TYPE_PCA9552, 0x11);
+     /* io_expander11 - pca9555@12 */
+-    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x12);
++    i2c_slave_create_simple_orphan(i2c[14], TYPE_PCA9552, 0x12);
+     /* io_expander12 - pca9555@13 */
+-    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x13);
++    i2c_slave_create_simple_orphan(i2c[14], TYPE_PCA9552, 0x13);
+     /* io_expander13 - pca9555@14 */
+-    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x14);
++    i2c_slave_create_simple_orphan(i2c[14], TYPE_PCA9552, 0x14);
+     /* io_expander14 - pca9555@15 */
+-    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x15);
++    i2c_slave_create_simple_orphan(i2c[14], TYPE_PCA9552, 0x15);
+ 
+     /* &i2c15 */
+     /* temperature-sensor@1f - tmp421 */
+-    i2c_slave_create_simple(i2c[15], TYPE_TMP421, 0x1f);
++    i2c_slave_create_simple_orphan(i2c[15], TYPE_TMP421, 0x1f);
+     /* eeprom@52 */
+     at24c_eeprom_init_rom(i2c[15], 0x52, 8 * KiB, nic_eeprom, nic_eeprom_len);
+ }
+diff --git a/hw/arm/aspeed_ast2600_evb.c b/hw/arm/aspeed_ast2600_evb.c
+index c43d2687c1..cf1e2b006c 100644
+--- a/hw/arm/aspeed_ast2600_evb.c
++++ b/hw/arm/aspeed_ast2600_evb.c
+@@ -27,7 +27,7 @@ static void ast2600_evb_i2c_init(AspeedMachineState *bmc)
+                           eeprom_buf);
+ 
+     /* LM75 is compatible with TMP105 driver */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 8),
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 8),
+                      TYPE_TMP105, 0x4d);
+ }
+ 
+diff --git a/hw/arm/aspeed_ast2600_fby35.c b/hw/arm/aspeed_ast2600_fby35.c
+index f624427070..fcd1acdc17 100644
+--- a/hw/arm/aspeed_ast2600_fby35.c
++++ b/hw/arm/aspeed_ast2600_fby35.c
+@@ -102,12 +102,12 @@ static void fby35_i2c_init(AspeedMachineState *bmc)
+         i2c[i] = aspeed_i2c_get_bus(&soc->i2c, i);
      }
  
-     /* Cache controller */
--    sysbus_create_simple("l2x0", EXYNOS4210_L2X0_BASE_ADDR, NULL);
-+    sysbus_create_simple_orphan("l2x0", EXYNOS4210_L2X0_BASE_ADDR, NULL);
+-    i2c_slave_create_simple(i2c[2], TYPE_LM75, 0x4f);
+-    i2c_slave_create_simple(i2c[8], TYPE_TMP421, 0x1f);
++    i2c_slave_create_simple_orphan(i2c[2], TYPE_LM75, 0x4f);
++    i2c_slave_create_simple_orphan(i2c[8], TYPE_TMP421, 0x1f);
+     /* Hotswap controller is actually supposed to be mp5920 or ltc4282. */
+-    i2c_slave_create_simple(i2c[11], "adm1272", 0x44);
+-    i2c_slave_create_simple(i2c[12], TYPE_LM75, 0x4e);
+-    i2c_slave_create_simple(i2c[12], TYPE_LM75, 0x4f);
++    i2c_slave_create_simple_orphan(i2c[11], "adm1272", 0x44);
++    i2c_slave_create_simple_orphan(i2c[12], TYPE_LM75, 0x4e);
++    i2c_slave_create_simple_orphan(i2c[12], TYPE_LM75, 0x4f);
  
-     /* External GIC */
-     qdev_prop_set_uint32(DEVICE(&s->ext_gic), "num-cpu", EXYNOS4210_NCPUS);
-@@ -667,13 +667,13 @@ static void exynos4210_realize(DeviceState *socdev, Error **errp)
-     * The only reason of existence at the moment is that secondary CPU boot
-     * loader uses PMU INFORM5 register as a holding pen.
-     */
--    sysbus_create_simple("exynos4210.pmu", EXYNOS4210_PMU_BASE_ADDR, NULL);
-+    sysbus_create_simple_orphan("exynos4210.pmu", EXYNOS4210_PMU_BASE_ADDR, NULL);
- 
--    sysbus_create_simple("exynos4210.clk", EXYNOS4210_CLK_BASE_ADDR, NULL);
--    sysbus_create_simple("exynos4210.rng", EXYNOS4210_RNG_BASE_ADDR, NULL);
-+    sysbus_create_simple_orphan("exynos4210.clk", EXYNOS4210_CLK_BASE_ADDR, NULL);
-+    sysbus_create_simple_orphan("exynos4210.rng", EXYNOS4210_RNG_BASE_ADDR, NULL);
- 
-     /* PWM */
--    sysbus_create_varargs("exynos4210.pwm", EXYNOS4210_PWM_BASE_ADDR,
-+    sysbus_create_varargs_orphan("exynos4210.pwm", EXYNOS4210_PWM_BASE_ADDR,
-                           s->irq_table[exynos4210_get_irq(22, 0)],
-                           s->irq_table[exynos4210_get_irq(22, 1)],
-                           s->irq_table[exynos4210_get_irq(22, 2)],
-@@ -681,7 +681,7 @@ static void exynos4210_realize(DeviceState *socdev, Error **errp)
-                           s->irq_table[exynos4210_get_irq(22, 4)],
-                           NULL);
-     /* RTC */
--    sysbus_create_varargs("exynos4210.rtc", EXYNOS4210_RTC_BASE_ADDR,
-+    sysbus_create_varargs_orphan("exynos4210.rtc", EXYNOS4210_RTC_BASE_ADDR,
-                           s->irq_table[exynos4210_get_irq(23, 0)],
-                           s->irq_table[exynos4210_get_irq(23, 1)],
-                           NULL);
-@@ -784,7 +784,7 @@ static void exynos4210_realize(DeviceState *socdev, Error **errp)
-         sysbus_connect_irq(busdev, n, s->irq_table[exynos4210_get_irq(11, n)]);
+     at24c_eeprom_init(i2c[4], 0x51, 128 * KiB);
+     at24c_eeprom_init(i2c[6], 0x51, 128 * KiB);
+diff --git a/hw/arm/aspeed_ast2600_fuji.c b/hw/arm/aspeed_ast2600_fuji.c
+index 37db252e27..59b2da1ccf 100644
+--- a/hw/arm/aspeed_ast2600_fuji.c
++++ b/hw/arm/aspeed_ast2600_fuji.c
+@@ -27,7 +27,7 @@
+ static void get_pca9548_channels(I2CBus *bus, uint8_t mux_addr,
+                                  I2CBus **channels)
+ {
+-    I2CSlave *mux = i2c_slave_create_simple(bus, "pca9548", mux_addr);
++    I2CSlave *mux = i2c_slave_create_simple_orphan(bus, "pca9548", mux_addr);
+     for (int i = 0; i < 8; i++) {
+         channels[i] = pca954x_i2c_get_bus(mux, i);
+     }
+@@ -57,8 +57,8 @@ static void fuji_bmc_i2c_init(AspeedMachineState *bmc)
+         get_pca9548_channels(i2c[40 + i], 0x76, &i2c[80 + i * 8]);
      }
  
--    sysbus_create_simple(TYPE_EXYNOS4210_EHCI, EXYNOS4210_EHCI_BASE_ADDR,
-+    sysbus_create_simple_orphan(TYPE_EXYNOS4210_EHCI, EXYNOS4210_EHCI_BASE_ADDR,
-             s->irq_table[exynos4210_get_irq(28, 3)]);
+-    i2c_slave_create_simple(i2c[17], TYPE_LM75, 0x4c);
+-    i2c_slave_create_simple(i2c[17], TYPE_LM75, 0x4d);
++    i2c_slave_create_simple_orphan(i2c[17], TYPE_LM75, 0x4c);
++    i2c_slave_create_simple_orphan(i2c[17], TYPE_LM75, 0x4d);
  
-     /*** DMA controllers ***/
-diff --git a/hw/arm/fsl-imx6.c b/hw/arm/fsl-imx6.c
-index eec9673c6f..103adcc2bd 100644
---- a/hw/arm/fsl-imx6.c
-+++ b/hw/arm/fsl-imx6.c
-@@ -168,7 +168,7 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
+     /*
+      * EEPROM 24c64 size is 64Kbits or 8 Kbytes
+@@ -68,33 +68,33 @@ static void fuji_bmc_i2c_init(AspeedMachineState *bmc)
+     at24c_eeprom_init(i2c[20], 0x50, 256);
+     at24c_eeprom_init(i2c[22], 0x52, 256);
+ 
+-    i2c_slave_create_simple(i2c[3], TYPE_LM75, 0x48);
+-    i2c_slave_create_simple(i2c[3], TYPE_LM75, 0x49);
+-    i2c_slave_create_simple(i2c[3], TYPE_LM75, 0x4a);
+-    i2c_slave_create_simple(i2c[3], TYPE_TMP422, 0x4c);
++    i2c_slave_create_simple_orphan(i2c[3], TYPE_LM75, 0x48);
++    i2c_slave_create_simple_orphan(i2c[3], TYPE_LM75, 0x49);
++    i2c_slave_create_simple_orphan(i2c[3], TYPE_LM75, 0x4a);
++    i2c_slave_create_simple_orphan(i2c[3], TYPE_TMP422, 0x4c);
+ 
+     at24c_eeprom_init(i2c[8], 0x51, 8 * KiB);
+-    i2c_slave_create_simple(i2c[8], TYPE_LM75, 0x4a);
++    i2c_slave_create_simple_orphan(i2c[8], TYPE_LM75, 0x4a);
+ 
+-    i2c_slave_create_simple(i2c[50], TYPE_LM75, 0x4c);
++    i2c_slave_create_simple_orphan(i2c[50], TYPE_LM75, 0x4c);
+     at24c_eeprom_init(i2c[50], 0x52, 8 * KiB);
+-    i2c_slave_create_simple(i2c[51], TYPE_TMP75, 0x48);
+-    i2c_slave_create_simple(i2c[52], TYPE_TMP75, 0x49);
++    i2c_slave_create_simple_orphan(i2c[51], TYPE_TMP75, 0x48);
++    i2c_slave_create_simple_orphan(i2c[52], TYPE_TMP75, 0x49);
+ 
+-    i2c_slave_create_simple(i2c[59], TYPE_TMP75, 0x48);
+-    i2c_slave_create_simple(i2c[60], TYPE_TMP75, 0x49);
++    i2c_slave_create_simple_orphan(i2c[59], TYPE_TMP75, 0x48);
++    i2c_slave_create_simple_orphan(i2c[60], TYPE_TMP75, 0x49);
+ 
+     at24c_eeprom_init(i2c[65], 0x53, 8 * KiB);
+-    i2c_slave_create_simple(i2c[66], TYPE_TMP75, 0x49);
+-    i2c_slave_create_simple(i2c[66], TYPE_TMP75, 0x48);
++    i2c_slave_create_simple_orphan(i2c[66], TYPE_TMP75, 0x49);
++    i2c_slave_create_simple_orphan(i2c[66], TYPE_TMP75, 0x48);
+     at24c_eeprom_init(i2c[68], 0x52, 8 * KiB);
+     at24c_eeprom_init(i2c[69], 0x52, 8 * KiB);
+     at24c_eeprom_init(i2c[70], 0x52, 8 * KiB);
+     at24c_eeprom_init(i2c[71], 0x52, 8 * KiB);
+ 
+     at24c_eeprom_init(i2c[73], 0x53, 8 * KiB);
+-    i2c_slave_create_simple(i2c[74], TYPE_TMP75, 0x49);
+-    i2c_slave_create_simple(i2c[74], TYPE_TMP75, 0x48);
++    i2c_slave_create_simple_orphan(i2c[74], TYPE_TMP75, 0x49);
++    i2c_slave_create_simple_orphan(i2c[74], TYPE_TMP75, 0x48);
+     at24c_eeprom_init(i2c[76], 0x52, 8 * KiB);
+     at24c_eeprom_init(i2c[77], 0x52, 8 * KiB);
+     at24c_eeprom_init(i2c[78], 0x52, 8 * KiB);
+@@ -103,9 +103,9 @@ static void fuji_bmc_i2c_init(AspeedMachineState *bmc)
+ 
+     for (int i = 0; i < 8; i++) {
+         at24c_eeprom_init(i2c[81 + i * 8], 0x56, 64 * KiB);
+-        i2c_slave_create_simple(i2c[82 + i * 8], TYPE_TMP75, 0x48);
+-        i2c_slave_create_simple(i2c[83 + i * 8], TYPE_TMP75, 0x4b);
+-        i2c_slave_create_simple(i2c[84 + i * 8], TYPE_TMP75, 0x4a);
++        i2c_slave_create_simple_orphan(i2c[82 + i * 8], TYPE_TMP75, 0x48);
++        i2c_slave_create_simple_orphan(i2c[83 + i * 8], TYPE_TMP75, 0x4b);
++        i2c_slave_create_simple_orphan(i2c[84 + i * 8], TYPE_TMP75, 0x4a);
      }
+ }
  
-     /* L2 cache controller */
--    sysbus_create_simple("l2x0", FSL_IMX6_PL310_ADDR, NULL);
-+    sysbus_create_simple_orphan("l2x0", FSL_IMX6_PL310_ADDR, NULL);
+diff --git a/hw/arm/aspeed_ast2600_gb200nvl.c b/hw/arm/aspeed_ast2600_gb200nvl.c
+index ad9a10110b..2c1c513674 100644
+--- a/hw/arm/aspeed_ast2600_gb200nvl.c
++++ b/hw/arm/aspeed_ast2600_gb200nvl.c
+@@ -54,12 +54,12 @@ static void gb200nvl_bmc_i2c_init(AspeedMachineState *bmc)
+     aspeed_create_pca9554(soc, 4, 0x21);
  
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->ccm), errp)) {
-         return;
-diff --git a/hw/arm/integratorcp.c b/hw/arm/integratorcp.c
-index 8a56165cc2..3df488921a 100644
---- a/hw/arm/integratorcp.c
-+++ b/hw/arm/integratorcp.c
-@@ -626,26 +626,26 @@ static void integratorcp_init(MachineState *machine)
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-     sysbus_mmio_map((SysBusDevice *)dev, 0, 0x10000000);
+     /* Mux I2c Expanders */
+-    i2c_slave_create_simple(i2c[5], "pca9546", 0x71);
+-    i2c_slave_create_simple(i2c[5], "pca9546", 0x72);
+-    i2c_slave_create_simple(i2c[5], "pca9546", 0x73);
+-    i2c_slave_create_simple(i2c[5], "pca9546", 0x75);
+-    i2c_slave_create_simple(i2c[5], "pca9546", 0x76);
+-    i2c_slave_create_simple(i2c[5], "pca9546", 0x77);
++    i2c_slave_create_simple_orphan(i2c[5], "pca9546", 0x71);
++    i2c_slave_create_simple_orphan(i2c[5], "pca9546", 0x72);
++    i2c_slave_create_simple_orphan(i2c[5], "pca9546", 0x73);
++    i2c_slave_create_simple_orphan(i2c[5], "pca9546", 0x75);
++    i2c_slave_create_simple_orphan(i2c[5], "pca9546", 0x76);
++    i2c_slave_create_simple_orphan(i2c[5], "pca9546", 0x77);
  
--    dev = sysbus_create_varargs(TYPE_INTEGRATOR_PIC, 0x14000000,
-+    dev = sysbus_create_varargs_orphan(TYPE_INTEGRATOR_PIC, 0x14000000,
-                                 qdev_get_gpio_in(DEVICE(cpu), ARM_CPU_IRQ),
-                                 qdev_get_gpio_in(DEVICE(cpu), ARM_CPU_FIQ),
-                                 NULL);
-     for (i = 0; i < 32; i++) {
-         pic[i] = qdev_get_gpio_in(dev, i);
-     }
--    sic = sysbus_create_simple(TYPE_INTEGRATOR_PIC, 0xca000000, pic[26]);
--    sysbus_create_varargs("integrator_pit", 0x13000000,
-+    sic = sysbus_create_simple_orphan(TYPE_INTEGRATOR_PIC, 0xca000000, pic[26]);
-+    sysbus_create_varargs_orphan("integrator_pit", 0x13000000,
-                           pic[5], pic[6], pic[7], NULL);
--    sysbus_create_simple("pl031", 0x15000000, pic[8]);
-+    sysbus_create_simple_orphan("pl031", 0x15000000, pic[8]);
-     pl011_create(0x16000000, pic[1], serial_hd(0));
-     pl011_create(0x17000000, pic[2], serial_hd(1));
--    icp = sysbus_create_simple(TYPE_ICP_CONTROL_REGS, 0xcb000000,
-+    icp = sysbus_create_simple_orphan(TYPE_ICP_CONTROL_REGS, 0xcb000000,
-                                qdev_get_gpio_in(sic, 3));
--    sysbus_create_simple("pl050_keyboard", 0x18000000, pic[3]);
--    sysbus_create_simple("pl050_mouse", 0x19000000, pic[4]);
--    sysbus_create_simple(TYPE_INTEGRATOR_DEBUG, 0x1a000000, 0);
-+    sysbus_create_simple_orphan("pl050_keyboard", 0x18000000, pic[3]);
-+    sysbus_create_simple_orphan("pl050_mouse", 0x19000000, pic[4]);
-+    sysbus_create_simple_orphan(TYPE_INTEGRATOR_DEBUG, 0x1a000000, 0);
+     /* Bus 10 */
+     dev = DEVICE(aspeed_create_pca9554(soc, 9, 0x20));
+diff --git a/hw/arm/aspeed_ast2600_rainier.c b/hw/arm/aspeed_ast2600_rainier.c
+index 8f0a412ddc..0495c2880c 100644
+--- a/hw/arm/aspeed_ast2600_rainier.c
++++ b/hw/arm/aspeed_ast2600_rainier.c
+@@ -73,37 +73,37 @@ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
+     aspeed_create_pca9552(soc, 3, 0x61);
  
--    dev = sysbus_create_varargs("pl181", 0x1c000000, pic[23], pic[24], NULL);
-+    dev = sysbus_create_varargs_orphan("pl181", 0x1c000000, pic[23], pic[24], NULL);
-     qdev_connect_gpio_out_named(dev, "card-read-only", 0,
-                           qdev_get_gpio_in_named(icp, ICP_GPIO_MMC_WPROT, 0));
-     qdev_connect_gpio_out_named(dev, "card-inserted", 0,
-diff --git a/hw/arm/mps2.c b/hw/arm/mps2.c
-index 96af49e213..5a0384a412 100644
---- a/hw/arm/mps2.c
-+++ b/hw/arm/mps2.c
-@@ -416,7 +416,7 @@ static void mps2_common_init(MachineState *machine)
-     qdev_prop_set_uint32(DEVICE(&mms->fpgaio), "prescale-clk", 25000000);
-     sysbus_realize(SYS_BUS_DEVICE(&mms->fpgaio), &error_fatal);
-     sysbus_mmio_map(SYS_BUS_DEVICE(&mms->fpgaio), 0, 0x40028000);
--    sysbus_create_simple(TYPE_PL022, 0x40025000,        /* External ADC */
-+    sysbus_create_simple_orphan(TYPE_PL022, 0x40025000,        /* External ADC */
-                          qdev_get_gpio_in(armv7m, 22));
-     for (i = 0; i < 2; i++) {
-         static const int spi_irqno[] = {11, 24};
-@@ -435,7 +435,7 @@ static void mps2_common_init(MachineState *machine)
-         qdev_connect_gpio_out(orgate_dev, 0,
-                               qdev_get_gpio_in(armv7m, spi_irqno[i]));
-         for (j = 0; j < 2; j++) {
--            sysbus_create_simple(TYPE_PL022, spibase[2 * i + j],
-+            sysbus_create_simple_orphan(TYPE_PL022, spibase[2 * i + j],
-                                  qdev_get_gpio_in(orgate_dev, j));
-         }
-     }
-@@ -446,7 +446,7 @@ static void mps2_common_init(MachineState *machine)
-                                          0x4002a000};   /* Shield1 */
-         DeviceState *dev;
+     /* The rainier expects a TMP275 but a TMP105 is compatible */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4), TYPE_TMP105,
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 4), TYPE_TMP105,
+                      0x48);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4), TYPE_TMP105,
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 4), TYPE_TMP105,
+                      0x49);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4), TYPE_TMP105,
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 4), TYPE_TMP105,
+                      0x4a);
+-    i2c_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4),
++    i2c_mux = i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 4),
+                                       "pca9546", 0x70);
+     at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 0), 0x50, 64 * KiB);
+     at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 1), 0x51, 64 * KiB);
+     at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 2), 0x52, 64 * KiB);
+     aspeed_create_pca9552(soc, 4, 0x60);
  
--        dev = sysbus_create_simple(TYPE_ARM_SBCON_I2C, i2cbase[i], NULL);
-+        dev = sysbus_create_simple_orphan(TYPE_ARM_SBCON_I2C, i2cbase[i], NULL);
-         if (i < 2) {
-             /*
-              * internal-only bus: mark it full to avoid user-created
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5), TYPE_TMP105,
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 5), TYPE_TMP105,
+                      0x48);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5), TYPE_TMP105,
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 5), TYPE_TMP105,
+                      0x49);
+     aspeed_create_pca9552(soc, 5, 0x60);
+     aspeed_create_pca9552(soc, 5, 0x61);
+-    i2c_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5),
++    i2c_mux = i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 5),
+                                       "pca9546", 0x70);
+     at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 0), 0x50, 64 * KiB);
+     at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 1), 0x51, 64 * KiB);
+ 
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), TYPE_TMP105,
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 6), TYPE_TMP105,
+                      0x48);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), TYPE_TMP105,
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 6), TYPE_TMP105,
+                      0x4a);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6), TYPE_TMP105,
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 6), TYPE_TMP105,
+                      0x4b);
+-    i2c_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 6),
++    i2c_mux = i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 6),
+                                       "pca9546", 0x70);
+     at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 0), 0x50, 64 * KiB);
+     at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 1), 0x51, 64 * KiB);
+@@ -116,17 +116,17 @@ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
+     aspeed_create_pca9552(soc, 7, 0x33);
+     aspeed_create_pca9552(soc, 7, 0x60);
+     aspeed_create_pca9552(soc, 7, 0x61);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7), "dps310", 0x76);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 7), "dps310", 0x76);
+     /* Bus 7: TODO si7021-a20@20 */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7), TYPE_TMP105,
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 7), TYPE_TMP105,
+                      0x48);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7), "max31785", 0x52);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 7), "max31785", 0x52);
+     at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 7), 0x50, 64 * KiB);
+     at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 7), 0x51, 64 * KiB);
+ 
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 8), TYPE_TMP105,
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 8), TYPE_TMP105,
+                      0x48);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 8), TYPE_TMP105,
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 8), TYPE_TMP105,
+                      0x4a);
+     at24c_eeprom_init_rom(aspeed_i2c_get_bus(&soc->i2c, 8), 0x50,
+                           64 * KiB, rainier_bb_fruid, rainier_bb_fruid_len);
+@@ -138,19 +138,19 @@ static void rainier_bmc_i2c_init(AspeedMachineState *bmc)
+     /* Bus 8: ucd90320@b */
+     /* Bus 8: ucd90320@c */
+ 
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "tmp423", 0x4c);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "tmp423", 0x4d);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 9), "tmp423", 0x4c);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 9), "tmp423", 0x4d);
+     at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 9), 0x50, 128 * KiB);
+ 
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 10), "tmp423", 0x4c);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 10), "tmp423", 0x4d);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 10), "tmp423", 0x4c);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 10), "tmp423", 0x4d);
+     at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 10), 0x50, 128 * KiB);
+ 
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), TYPE_TMP105,
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 11), TYPE_TMP105,
+                      0x48);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11), TYPE_TMP105,
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 11), TYPE_TMP105,
+                      0x49);
+-    i2c_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 11),
++    i2c_mux = i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 11),
+                                       "pca9546", 0x70);
+     at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 0), 0x50, 64 * KiB);
+     at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 1), 0x51, 64 * KiB);
+diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
+index 7d9fade68d..f21c842315 100644
+--- a/hw/arm/aspeed_ast27x0-fc.c
++++ b/hw/arm/aspeed_ast27x0-fc.c
+@@ -109,7 +109,7 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
+     /*
+      * AST2700 EVB has a LM75 temperature sensor on I2C bus 0 at address 0x4d.
+      */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0), "tmp105", 0x4d);
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 0), "tmp105", 0x4d);
+ 
+     aspeed_board_init_flashes(&soc->fmc, AST2700FC_FMC_MODEL, 2, 0);
+     aspeed_board_init_flashes(&soc->spi[0], AST2700FC_SPI_MODEL, 1, 2);
+diff --git a/hw/arm/aspeed_ast27x0_evb.c b/hw/arm/aspeed_ast27x0_evb.c
+index 0ff1bebeb0..a59714372d 100644
+--- a/hw/arm/aspeed_ast27x0_evb.c
++++ b/hw/arm/aspeed_ast27x0_evb.c
+@@ -24,7 +24,7 @@ static void ast2700_evb_i2c_init(AspeedMachineState *bmc)
+     AspeedSoCState *soc = bmc->soc;
+ 
+     /* LM75 is compatible with TMP105 driver */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0),
++    i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 0),
+                             TYPE_TMP105, 0x4d);
+ }
+ 
+diff --git a/hw/arm/bananapi_m2u.c b/hw/arm/bananapi_m2u.c
+index 748db26d41..809c8bbc43 100644
+--- a/hw/arm/bananapi_m2u.c
++++ b/hw/arm/bananapi_m2u.c
+@@ -114,7 +114,7 @@ static void bpim2u_init(MachineState *machine)
+ 
+     /* Connect AXP221 */
+     i2c = I2C_BUS(qdev_get_child_bus(DEVICE(&r40->i2c0), "i2c"));
+-    i2c_slave_create_simple(i2c, "axp221_pmu", 0x34);
++    i2c_slave_create_simple_orphan(i2c, "axp221_pmu", 0x34);
+ 
+     /* SDRAM */
+     memory_region_add_subregion(get_system_memory(),
+diff --git a/hw/arm/cubieboard.c b/hw/arm/cubieboard.c
+index 215741a194..7ce5179345 100644
+--- a/hw/arm/cubieboard.c
++++ b/hw/arm/cubieboard.c
+@@ -81,7 +81,7 @@ static void cubieboard_init(MachineState *machine)
+ 
+     /* Connect AXP 209 */
+     i2c = I2C_BUS(qdev_get_child_bus(DEVICE(&a10->i2c0), "i2c"));
+-    i2c_slave_create_simple(i2c, "axp209_pmu", 0x34);
++    i2c_slave_create_simple_orphan(i2c, "axp209_pmu", 0x34);
+ 
+     /* Retrieve SD bus */
+     di = drive_get(IF_SD, 0, 0);
 diff --git a/hw/arm/musicpal.c b/hw/arm/musicpal.c
-index 6dd18a67b2..3bcdea7db8 100644
+index 3bcdea7db8..baab159bfd 100644
 --- a/hw/arm/musicpal.c
 +++ b/hw/arm/musicpal.c
-@@ -1240,9 +1240,9 @@ static void musicpal_init(MachineState *machine)
-                            &error_fatal);
-     memory_region_add_subregion(address_space_mem, MP_SRAM_BASE, sram);
- 
--    pic = sysbus_create_simple(TYPE_MV88W8618_PIC, MP_PIC_BASE,
-+    pic = sysbus_create_simple_orphan(TYPE_MV88W8618_PIC, MP_PIC_BASE,
-                                qdev_get_gpio_in(DEVICE(cpu), ARM_CPU_IRQ));
--    sysbus_create_varargs(TYPE_MV88W8618_PIT, MP_PIT_BASE,
-+    sysbus_create_varargs_orphan(TYPE_MV88W8618_PIT, MP_PIT_BASE,
-                           qdev_get_gpio_in(pic, MP_TIMER1_IRQ),
-                           qdev_get_gpio_in(pic, MP_TIMER2_IRQ),
-                           qdev_get_gpio_in(pic, MP_TIMER3_IRQ),
-@@ -1286,7 +1286,7 @@ static void musicpal_init(MachineState *machine)
-                               2, 0x00BF, 0x236D, 0x0000, 0x0000,
-                               0x5555, 0x2AAA, 0);
-     }
--    sysbus_create_simple(TYPE_MV88W8618_FLASHCFG, MP_FLASHCFG_BASE, NULL);
-+    sysbus_create_simple_orphan(TYPE_MV88W8618_FLASHCFG, MP_FLASHCFG_BASE, NULL);
- 
-     dev = qdev_new_orphan(TYPE_MV88W8618_ETH);
-     qemu_configure_nic_device(dev, true, "mv88w8618");
-@@ -1297,17 +1297,17 @@ static void musicpal_init(MachineState *machine)
-     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
-                        qdev_get_gpio_in(pic, MP_ETH_IRQ));
- 
--    sysbus_create_simple("mv88w8618_wlan", MP_WLAN_BASE, NULL);
-+    sysbus_create_simple_orphan("mv88w8618_wlan", MP_WLAN_BASE, NULL);
- 
--    sysbus_create_simple(TYPE_MUSICPAL_MISC, MP_MISC_BASE, NULL);
-+    sysbus_create_simple_orphan(TYPE_MUSICPAL_MISC, MP_MISC_BASE, NULL);
- 
--    dev = sysbus_create_simple(TYPE_MUSICPAL_GPIO, MP_GPIO_BASE,
-+    dev = sysbus_create_simple_orphan(TYPE_MUSICPAL_GPIO, MP_GPIO_BASE,
-                                qdev_get_gpio_in(pic, MP_GPIO_IRQ));
--    i2c_dev = sysbus_create_simple(TYPE_GPIO_I2C, -1, NULL);
-+    i2c_dev = sysbus_create_simple_orphan(TYPE_GPIO_I2C, -1, NULL);
-     i2c = (I2CBus *)qdev_get_child_bus(i2c_dev, "i2c");
- 
--    lcd_dev = sysbus_create_simple(TYPE_MUSICPAL_LCD, MP_LCD_BASE, NULL);
--    key_dev = sysbus_create_simple(TYPE_MUSICPAL_KEY, -1, NULL);
-+    lcd_dev = sysbus_create_simple_orphan(TYPE_MUSICPAL_LCD, MP_LCD_BASE, NULL);
-+    key_dev = sysbus_create_simple_orphan(TYPE_MUSICPAL_KEY, -1, NULL);
- 
-     /* I2C read data */
-     qdev_connect_gpio_out(i2c_dev, 0,
-diff --git a/hw/arm/npcm7xx.c b/hw/arm/npcm7xx.c
-index c27f149c04..87734c1cfb 100644
---- a/hw/arm/npcm7xx.c
-+++ b/hw/arm/npcm7xx.c
-@@ -521,7 +521,7 @@ static void npcm7xx_realize(DeviceState *dev, Error **errp)
+@@ -1327,7 +1327,7 @@ static void musicpal_init(MachineState *machine)
+         qdev_connect_gpio_out(key_dev, i, qdev_get_gpio_in(dev, i + 15));
      }
  
-     /* L2 cache controller */
--    sysbus_create_simple("l2x0", NPCM7XX_L2C_BA, NULL);
-+    sysbus_create_simple_orphan("l2x0", NPCM7XX_L2C_BA, NULL);
+-    wm8750_dev = i2c_slave_new(TYPE_WM8750, MP_WM_ADDR);
++    wm8750_dev = i2c_slave_new_orphan(TYPE_WM8750, MP_WM_ADDR);
+     if (machine->audiodev) {
+         qdev_prop_set_string(DEVICE(wm8750_dev), "audiodev", machine->audiodev);
+     }
+diff --git a/hw/arm/npcm7xx_boards.c b/hw/arm/npcm7xx_boards.c
+index 9e5d5f08f9..7b5cdd7191 100644
+--- a/hw/arm/npcm7xx_boards.c
++++ b/hw/arm/npcm7xx_boards.c
+@@ -198,13 +198,13 @@ static void npcm7xx_connect_pwm_fan(NPCM7xxState *soc, SplitIRQ *splitter,
+ static void npcm750_evb_i2c_init(NPCM7xxState *soc)
+ {
+     /* lm75 temperature sensor on SVB, tmp105 is compatible */
+-    i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 0), "tmp105", 0x48);
++    i2c_slave_create_simple_orphan(npcm7xx_i2c_get_bus(soc, 0), "tmp105", 0x48);
+     /* lm75 temperature sensor on EB, tmp105 is compatible */
+-    i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 1), "tmp105", 0x48);
++    i2c_slave_create_simple_orphan(npcm7xx_i2c_get_bus(soc, 1), "tmp105", 0x48);
+     /* tmp100 temperature sensor on EB, tmp105 is compatible */
+-    i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 2), "tmp105", 0x48);
++    i2c_slave_create_simple_orphan(npcm7xx_i2c_get_bus(soc, 2), "tmp105", 0x48);
+     /* tmp100 temperature sensor on SVB, tmp105 is compatible */
+-    i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 6), "tmp105", 0x48);
++    i2c_slave_create_simple_orphan(npcm7xx_i2c_get_bus(soc, 6), "tmp105", 0x48);
+ }
  
-     /* System Global Control Registers (GCR). Can fail due to user input. */
-     object_property_set_int(OBJECT(&s->gcr), "disabled-modules",
+ static void npcm750_evb_fan_init(NPCM7xxMachine *machine, NPCM7xxState *soc)
+@@ -234,10 +234,10 @@ static void npcm750_evb_fan_init(NPCM7xxMachine *machine, NPCM7xxState *soc)
+ static void quanta_gsj_i2c_init(NPCM7xxState *soc)
+ {
+     /* GSJ machine have 4 max31725 temperature sensors, tmp105 is compatible. */
+-    i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 1), "tmp105", 0x5c);
+-    i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 2), "tmp105", 0x5c);
+-    i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 3), "tmp105", 0x5c);
+-    i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 4), "tmp105", 0x5c);
++    i2c_slave_create_simple_orphan(npcm7xx_i2c_get_bus(soc, 1), "tmp105", 0x5c);
++    i2c_slave_create_simple_orphan(npcm7xx_i2c_get_bus(soc, 2), "tmp105", 0x5c);
++    i2c_slave_create_simple_orphan(npcm7xx_i2c_get_bus(soc, 3), "tmp105", 0x5c);
++    i2c_slave_create_simple_orphan(npcm7xx_i2c_get_bus(soc, 4), "tmp105", 0x5c);
+ 
+     at24c_eeprom_init(npcm7xx_i2c_get_bus(soc, 9), 0x55, 8192);
+     at24c_eeprom_init(npcm7xx_i2c_get_bus(soc, 10), 0x55, 8192);
+@@ -253,7 +253,7 @@ static void quanta_gsj_i2c_init(NPCM7xxState *soc)
+      * - ucd90160@6b
+      */
+ 
+-    i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 15), "pca9548", 0x75);
++    i2c_slave_create_simple_orphan(npcm7xx_i2c_get_bus(soc, 15), "pca9548", 0x75);
+ }
+ 
+ static void quanta_gsj_fan_init(NPCM7xxMachine *machine, NPCM7xxState *soc)
+@@ -333,29 +333,29 @@ static void kudo_bmc_i2c_init(NPCM7xxState *soc)
+ {
+     I2CSlave *i2c_mux;
+ 
+-    i2c_mux = i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 1),
++    i2c_mux = i2c_slave_create_simple_orphan(npcm7xx_i2c_get_bus(soc, 1),
+                                       TYPE_PCA9548, 0x75);
+ 
+     /* tmp105 is compatible with the lm75 */
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 4), "tmp105", 0x5c);
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 5), "tmp105", 0x5c);
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 6), "tmp105", 0x5c);
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 7), "tmp105", 0x5c);
++    i2c_slave_create_simple_orphan(pca954x_i2c_get_bus(i2c_mux, 4), "tmp105", 0x5c);
++    i2c_slave_create_simple_orphan(pca954x_i2c_get_bus(i2c_mux, 5), "tmp105", 0x5c);
++    i2c_slave_create_simple_orphan(pca954x_i2c_get_bus(i2c_mux, 6), "tmp105", 0x5c);
++    i2c_slave_create_simple_orphan(pca954x_i2c_get_bus(i2c_mux, 7), "tmp105", 0x5c);
+ 
+-    i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 1), TYPE_PCA9548, 0x77);
++    i2c_slave_create_simple_orphan(npcm7xx_i2c_get_bus(soc, 1), TYPE_PCA9548, 0x77);
+ 
+-    i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 4), TYPE_PCA9548, 0x77);
++    i2c_slave_create_simple_orphan(npcm7xx_i2c_get_bus(soc, 4), TYPE_PCA9548, 0x77);
+ 
+     at24c_eeprom_init(npcm7xx_i2c_get_bus(soc, 4), 0x50, 8192); /* mbfru */
+ 
+-    i2c_mux = i2c_slave_create_simple(npcm7xx_i2c_get_bus(soc, 13),
++    i2c_mux = i2c_slave_create_simple_orphan(npcm7xx_i2c_get_bus(soc, 13),
+                                       TYPE_PCA9548, 0x77);
+ 
+     /* tmp105 is compatible with the lm75 */
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 2), "tmp105", 0x48);
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 3), "tmp105", 0x49);
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 4), "tmp105", 0x48);
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 5), "tmp105", 0x49);
++    i2c_slave_create_simple_orphan(pca954x_i2c_get_bus(i2c_mux, 2), "tmp105", 0x48);
++    i2c_slave_create_simple_orphan(pca954x_i2c_get_bus(i2c_mux, 3), "tmp105", 0x49);
++    i2c_slave_create_simple_orphan(pca954x_i2c_get_bus(i2c_mux, 4), "tmp105", 0x48);
++    i2c_slave_create_simple_orphan(pca954x_i2c_get_bus(i2c_mux, 5), "tmp105", 0x49);
+ 
+     at24c_eeprom_init(npcm7xx_i2c_get_bus(soc, 14), 0x55, 8192); /* bmcfru */
+ 
+diff --git a/hw/arm/npcm8xx_boards.c b/hw/arm/npcm8xx_boards.c
+index 10df2d614c..eb0248552f 100644
+--- a/hw/arm/npcm8xx_boards.c
++++ b/hw/arm/npcm8xx_boards.c
+@@ -159,7 +159,7 @@ static void npcm8xx_connect_pwm_fan(NPCM8xxState *soc, SplitIRQ *splitter,
+ static void npcm845_evb_i2c_init(NPCM8xxState *soc)
+ {
+     /* tmp100 temperature sensor on SVB, tmp105 is compatible */
+-    i2c_slave_create_simple(npcm8xx_i2c_get_bus(soc, 6), "tmp105", 0x48);
++    i2c_slave_create_simple_orphan(npcm8xx_i2c_get_bus(soc, 6), "tmp105", 0x48);
+ }
+ 
+ static void npcm845_evb_fan_init(NPCM8xxMachine *machine, NPCM8xxState *soc)
 diff --git a/hw/arm/realview.c b/hw/arm/realview.c
-index 0fce9b624f..287c092c2d 100644
+index 0642e35dd2..f37ddf8073 100644
 --- a/hw/arm/realview.c
 +++ b/hw/arm/realview.c
-@@ -200,13 +200,13 @@ static void realview_init(MachineState *machine,
-         for (n = 0; n < smp_cpus; n++) {
-             sysbus_connect_irq(busdev, n, cpu_irq[n]);
-         }
--        sysbus_create_varargs("l2x0", periphbase + 0x2000, NULL);
-+        sysbus_create_varargs_orphan("l2x0", periphbase + 0x2000, NULL);
-         /* Both A9 and 11MPCore put the GIC CPU i/f at base + 0x100 */
-         realview_binfo.gic_cpu_if_addr = periphbase + 0x100;
-     } else {
-         uint32_t gic_addr = is_pb ? 0x1e000000 : 0x10040000;
-         /* For now just create the nIRQ GIC, and ignore the others.  */
--        dev = sysbus_create_simple(TYPE_REALVIEW_GIC, gic_addr, cpu_irq[0]);
-+        dev = sysbus_create_simple_orphan(TYPE_REALVIEW_GIC, gic_addr, cpu_irq[0]);
-     }
-     for (n = 0; n < GIC_EXT_IRQS; n++) {
-         pic[n] = qdev_get_gpio_in(dev, n);
-@@ -221,8 +221,8 @@ static void realview_init(MachineState *machine,
-     sysbus_mmio_map(SYS_BUS_DEVICE(pl041), 0, 0x10004000);
-     sysbus_connect_irq(SYS_BUS_DEVICE(pl041), 0, pic[19]);
+@@ -321,7 +321,7 @@ static void realview_init(MachineState *machine,
  
--    sysbus_create_simple("pl050_keyboard", 0x10006000, pic[20]);
--    sysbus_create_simple("pl050_mouse", 0x10007000, pic[21]);
-+    sysbus_create_simple_orphan("pl050_keyboard", 0x10006000, pic[20]);
-+    sysbus_create_simple_orphan("pl050_mouse", 0x10007000, pic[21]);
- 
-     pl011_create(0x10009000, pic[12], serial_hd(0));
-     pl011_create(0x1000a000, pic[13], serial_hd(1));
-@@ -238,12 +238,12 @@ static void realview_init(MachineState *machine,
-     sysbus_mmio_map(busdev, 0, 0x10030000);
-     sysbus_connect_irq(busdev, 0, pic[24]);
- 
--    sysbus_create_simple("sp804", 0x10011000, pic[4]);
--    sysbus_create_simple("sp804", 0x10012000, pic[5]);
-+    sysbus_create_simple_orphan("sp804", 0x10011000, pic[4]);
-+    sysbus_create_simple_orphan("sp804", 0x10012000, pic[5]);
- 
--    sysbus_create_simple("pl061", 0x10013000, pic[6]);
--    sysbus_create_simple("pl061", 0x10014000, pic[7]);
--    gpio2 = sysbus_create_simple("pl061", 0x10015000, pic[8]);
-+    sysbus_create_simple_orphan("pl061", 0x10013000, pic[6]);
-+    sysbus_create_simple_orphan("pl061", 0x10014000, pic[7]);
-+    gpio2 = sysbus_create_simple_orphan("pl061", 0x10015000, pic[8]);
- 
-     dev = qdev_new_orphan("pl111");
-     object_property_set_link(OBJECT(dev), "framebuffer-memory",
-@@ -252,7 +252,7 @@ static void realview_init(MachineState *machine,
-     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0x10020000);
-     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, pic[23]);
- 
--    dev = sysbus_create_varargs("pl181", 0x10005000, pic[17], pic[18], NULL);
-+    dev = sysbus_create_varargs_orphan("pl181", 0x10005000, pic[17], pic[18], NULL);
-     /* Wire up MMC card detect and read-only signals. These have
-      * to go to both the PL061 GPIO and the sysctl register.
-      * Note that the PL181 orders these lines (readonly,inserted)
-@@ -278,7 +278,7 @@ static void realview_init(MachineState *machine,
-                                &error_fatal);
-     }
- 
--    sysbus_create_simple("pl031", 0x10017000, pic[10]);
-+    sysbus_create_simple_orphan("pl031", 0x10017000, pic[10]);
- 
-     if (!is_pb) {
-         dev = qdev_new_orphan("realview_pci");
-@@ -319,7 +319,7 @@ static void realview_init(MachineState *machine,
-         pci_init_nic_devices(pci_bus, "rtl8139");
-     }
- 
--    dev = sysbus_create_simple(TYPE_ARM_SBCON_I2C, 0x10002000, NULL);
-+    dev = sysbus_create_simple_orphan(TYPE_ARM_SBCON_I2C, 0x10002000, NULL);
+     dev = sysbus_create_simple_orphan(TYPE_ARM_SBCON_I2C, 0x10002000, NULL);
      i2c = (I2CBus *)qdev_get_child_bus(dev, "i2c");
-     i2c_slave_create_simple(i2c, "ds1338", 0x68);
+-    i2c_slave_create_simple(i2c, "ds1338", 0x68);
++    i2c_slave_create_simple_orphan(i2c, "ds1338", 0x68);
  
-diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
-index 47a1a82a39..a821833fa7 100644
---- a/hw/arm/sbsa-ref.c
-+++ b/hw/arm/sbsa-ref.c
-@@ -537,7 +537,7 @@ static void create_rtc(const SBSAMachineState *sms)
-     hwaddr base = sbsa_ref_memmap[SBSA_RTC].base;
-     int irq = sbsa_ref_irqmap[SBSA_RTC];
- 
--    sysbus_create_simple("pl031", base, qdev_get_gpio_in(sms->gic, irq));
-+    sysbus_create_simple_orphan("pl031", base, qdev_get_gpio_in(sms->gic, irq));
- }
- 
- static void create_wdt(const SBSAMachineState *sms)
-@@ -572,10 +572,10 @@ static void create_gpio(const SBSAMachineState *sms)
-     hwaddr base = sbsa_ref_memmap[SBSA_GPIO].base;
-     int irq = sbsa_ref_irqmap[SBSA_GPIO];
- 
--    pl061_dev = sysbus_create_simple("pl061", base,
-+    pl061_dev = sysbus_create_simple_orphan("pl061", base,
-                                      qdev_get_gpio_in(sms->gic, irq));
- 
--    gpio_key_dev = sysbus_create_simple("gpio-key", -1,
-+    gpio_key_dev = sysbus_create_simple_orphan("gpio-key", -1,
-                                         qdev_get_gpio_in(pl061_dev, 3));
- 
-     /* connect powerdown request */
+     /* Memory map for RealView Emulation Baseboard:  */
+     /* 0x10000000 System registers.  */
 diff --git a/hw/arm/stellaris.c b/hw/arm/stellaris.c
-index 1f816a3965..3f72cedf2e 100644
+index 3f72cedf2e..f9d2a61f9c 100644
 --- a/hw/arm/stellaris.c
 +++ b/hw/arm/stellaris.c
-@@ -1143,7 +1143,7 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
-     sysbus_connect_irq(SYS_BUS_DEVICE(ssys_dev), 0, qdev_get_gpio_in(nvic, 28));
+@@ -1209,7 +1209,7 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
+     if (board->peripherals & BP_OLED_I2C) {
+         I2CBus *bus = (I2CBus *)qdev_get_child_bus(i2c_dev[0], "i2c");
  
-     if (DEV_CAP(1, ADC)) {
--        dev = sysbus_create_varargs(TYPE_STELLARIS_ADC, 0x40038000,
-+        dev = sysbus_create_varargs_orphan(TYPE_STELLARIS_ADC, 0x40038000,
-                                     qdev_get_gpio_in(nvic, 14),
-                                     qdev_get_gpio_in(nvic, 15),
-                                     qdev_get_gpio_in(nvic, 16),
-@@ -1189,7 +1189,7 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
- 
-     for (i = 0; i < NUM_GPIO; i++) {
-         if (DEV_CAP(4, GPIO(i))) {
--            gpio_dev[i] = sysbus_create_simple("pl061_luminary", gpio_addr[i],
-+            gpio_dev[i] = sysbus_create_simple_orphan("pl061_luminary", gpio_addr[i],
-                                                qdev_get_gpio_in(nvic,
-                                                                 gpio_irq[i]));
-             for (j = 0; j < 8; j++) {
-@@ -1201,7 +1201,7 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
- 
-     for (i = 0; i < NUM_I2C; i++) {
-         if (DEV_CAP(2, I2C(i))) {
--            i2c_dev[i] = sysbus_create_simple(TYPE_STELLARIS_I2C, i2c_addr[i],
-+            i2c_dev[i] = sysbus_create_simple_orphan(TYPE_STELLARIS_I2C, i2c_addr[i],
-                                               qdev_get_gpio_in(nvic,
-                                                                i2c_irq[i]));
-         }
-@@ -1226,7 +1226,7 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
-         }
-     }
-     if (DEV_CAP(2, SSI)) {
--        dev = sysbus_create_simple("pl022", 0x40008000,
-+        dev = sysbus_create_simple_orphan("pl022", 0x40008000,
-                                    qdev_get_gpio_in(nvic, 7));
-         if (board->peripherals & BP_OLED_SSI) {
-             void *bus;
-diff --git a/hw/arm/strongarm.c b/hw/arm/strongarm.c
-index 0c6b04f805..f67aaa23ed 100644
---- a/hw/arm/strongarm.c
-+++ b/hw/arm/strongarm.c
-@@ -1622,24 +1622,24 @@ StrongARMState *sa1110_init(const char *cpu_type)
- 
-     s->cpu = ARM_CPU(cpu_create(cpu_type));
- 
--    s->pic = sysbus_create_varargs("strongarm_pic", 0x90050000,
-+    s->pic = sysbus_create_varargs_orphan("strongarm_pic", 0x90050000,
-                     qdev_get_gpio_in(DEVICE(s->cpu), ARM_CPU_IRQ),
-                     qdev_get_gpio_in(DEVICE(s->cpu), ARM_CPU_FIQ),
-                     NULL);
- 
--    sysbus_create_varargs("pxa25x-timer", 0x90000000,
-+    sysbus_create_varargs_orphan("pxa25x-timer", 0x90000000,
-                     qdev_get_gpio_in(s->pic, SA_PIC_OSTC0),
-                     qdev_get_gpio_in(s->pic, SA_PIC_OSTC1),
-                     qdev_get_gpio_in(s->pic, SA_PIC_OSTC2),
-                     qdev_get_gpio_in(s->pic, SA_PIC_OSTC3),
-                     NULL);
- 
--    sysbus_create_simple(TYPE_STRONGARM_RTC, 0x90010000,
-+    sysbus_create_simple_orphan(TYPE_STRONGARM_RTC, 0x90010000,
-                     qdev_get_gpio_in(s->pic, SA_PIC_RTC_ALARM));
- 
-     s->gpio = strongarm_gpio_init(0x90040000, s->pic);
- 
--    s->ppc = sysbus_create_varargs(TYPE_STRONGARM_PPC, 0x90060000, NULL);
-+    s->ppc = sysbus_create_varargs_orphan(TYPE_STRONGARM_PPC, 0x90060000, NULL);
- 
-     for (i = 0; sa_serial[i].io_base; i++) {
-         DeviceState *dev = qdev_new_orphan(TYPE_STRONGARM_UART);
-@@ -1651,7 +1651,7 @@ StrongARMState *sa1110_init(const char *cpu_type)
-                 qdev_get_gpio_in(s->pic, sa_serial[i].irq));
+-        i2c_slave_create_simple(bus, "ssd0303", 0x3d);
++        i2c_slave_create_simple_orphan(bus, "ssd0303", 0x3d);
      }
  
--    s->ssp = sysbus_create_varargs(TYPE_STRONGARM_SSP, 0x80070000,
-+    s->ssp = sysbus_create_varargs_orphan(TYPE_STRONGARM_SSP, 0x80070000,
-                 qdev_get_gpio_in(s->pic, SA_PIC_SSP), NULL);
-     s->ssp_bus = (SSIBus *)qdev_get_child_bus(s->ssp, "ssi");
- 
+     for (i = 0; i < NUM_UART; i++) {
 diff --git a/hw/arm/versatilepb.c b/hw/arm/versatilepb.c
-index 5e9d76859f..b80410db0d 100644
+index 81bd397b5d..dcc7b7debd 100644
 --- a/hw/arm/versatilepb.c
 +++ b/hw/arm/versatilepb.c
-@@ -232,21 +232,21 @@ static void versatile_init(MachineState *machine, int board_id)
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(sysctl), &error_fatal);
-     sysbus_mmio_map(SYS_BUS_DEVICE(sysctl), 0, 0x10000000);
+@@ -341,7 +341,7 @@ static void versatile_init(MachineState *machine, int board_id)
  
--    dev = sysbus_create_varargs("pl190", 0x10140000,
-+    dev = sysbus_create_varargs_orphan("pl190", 0x10140000,
-                                 qdev_get_gpio_in(DEVICE(cpu), ARM_CPU_IRQ),
-                                 qdev_get_gpio_in(DEVICE(cpu), ARM_CPU_FIQ),
-                                 NULL);
-     for (n = 0; n < 32; n++) {
-         pic[n] = qdev_get_gpio_in(dev, n);
-     }
--    dev = sysbus_create_simple(TYPE_VERSATILE_PB_SIC, 0x10003000, NULL);
-+    dev = sysbus_create_simple_orphan(TYPE_VERSATILE_PB_SIC, 0x10003000, NULL);
-     for (n = 0; n < 32; n++) {
-         sysbus_connect_irq(SYS_BUS_DEVICE(dev), n, pic[n]);
-         sic[n] = qdev_get_gpio_in(dev, n);
-     }
- 
--    sysbus_create_simple("pl050_keyboard", 0x10006000, sic[3]);
--    sysbus_create_simple("pl050_mouse", 0x10007000, sic[4]);
-+    sysbus_create_simple_orphan("pl050_keyboard", 0x10006000, sic[3]);
-+    sysbus_create_simple_orphan("pl050_mouse", 0x10007000, sic[4]);
- 
-     dev = qdev_new_orphan("versatile_pci");
-     busdev = SYS_BUS_DEVICE(dev);
-@@ -292,13 +292,13 @@ static void versatile_init(MachineState *machine, int board_id)
-     sysbus_mmio_map(busdev, 0, 0x10130000);
-     sysbus_connect_irq(busdev, 0, pic[17]);
- 
--    sysbus_create_simple("sp804", 0x101e2000, pic[4]);
--    sysbus_create_simple("sp804", 0x101e3000, pic[5]);
-+    sysbus_create_simple_orphan("sp804", 0x101e2000, pic[4]);
-+    sysbus_create_simple_orphan("sp804", 0x101e3000, pic[5]);
- 
--    sysbus_create_simple("pl061", 0x101e4000, pic[6]);
--    sysbus_create_simple("pl061", 0x101e5000, pic[7]);
--    sysbus_create_simple("pl061", 0x101e6000, pic[8]);
--    sysbus_create_simple("pl061", 0x101e7000, pic[9]);
-+    sysbus_create_simple_orphan("pl061", 0x101e4000, pic[6]);
-+    sysbus_create_simple_orphan("pl061", 0x101e5000, pic[7]);
-+    sysbus_create_simple_orphan("pl061", 0x101e6000, pic[8]);
-+    sysbus_create_simple_orphan("pl061", 0x101e7000, pic[9]);
- 
-     /* The versatile/PB actually has a modified Color LCD controller
-        that includes hardware cursor support from the PL111.  */
-@@ -312,7 +312,7 @@ static void versatile_init(MachineState *machine, int board_id)
-     /* Wire up the mux control signals from the SYS_CLCD register */
-     qdev_connect_gpio_out(sysctl, 0, qdev_get_gpio_in(dev, 0));
- 
--    dev = sysbus_create_varargs("pl181", 0x10005000, sic[22], sic[1], NULL);
-+    dev = sysbus_create_varargs_orphan("pl181", 0x10005000, sic[22], sic[1], NULL);
-     dinfo = drive_get(IF_SD, 0, 0);
-     if (dinfo) {
-         DeviceState *card;
-@@ -324,7 +324,7 @@ static void versatile_init(MachineState *machine, int board_id)
-                                &error_fatal);
-     }
- 
--    dev = sysbus_create_varargs("pl181", 0x1000b000, sic[23], sic[2], NULL);
-+    dev = sysbus_create_varargs_orphan("pl181", 0x1000b000, sic[23], sic[2], NULL);
-     dinfo = drive_get(IF_SD, 0, 1);
-     if (dinfo) {
-         DeviceState *card;
-@@ -337,9 +337,9 @@ static void versatile_init(MachineState *machine, int board_id)
-     }
- 
-     /* Add PL031 Real Time Clock. */
--    sysbus_create_simple("pl031", 0x101e8000, pic[10]);
-+    sysbus_create_simple_orphan("pl031", 0x101e8000, pic[10]);
- 
--    dev = sysbus_create_simple(TYPE_ARM_SBCON_I2C, 0x10002000, NULL);
-+    dev = sysbus_create_simple_orphan(TYPE_ARM_SBCON_I2C, 0x10002000, NULL);
+     dev = sysbus_create_simple_orphan(TYPE_ARM_SBCON_I2C, 0x10002000, NULL);
      i2c = (I2CBus *)qdev_get_child_bus(dev, "i2c");
-     i2c_slave_create_simple(i2c, "ds1338", 0x68);
+-    i2c_slave_create_simple(i2c, "ds1338", 0x68);
++    i2c_slave_create_simple_orphan(i2c, "ds1338", 0x68);
  
+     /* Add PL041 AACI Interface to the LM4549 codec */
+     pl041 = qdev_new_orphan("pl041");
 diff --git a/hw/arm/vexpress.c b/hw/arm/vexpress.c
-index 716f55a086..5a0012cb4f 100644
+index 5a0012cb4f..ffd3c52d4f 100644
 --- a/hw/arm/vexpress.c
 +++ b/hw/arm/vexpress.c
-@@ -313,7 +313,7 @@ static void a9_daughterboard_init(VexpressMachineState *vms,
-     /* 0x100e1000 PL354 Static Memory Controller */
-     /* 0x100e2000 System Configuration Controller */
+@@ -653,7 +653,7 @@ static void vexpress_common_init(MachineState *machine)
  
--    sysbus_create_simple("sp804", 0x100e4000, pic[48]);
-+    sysbus_create_simple_orphan("sp804", 0x100e4000, pic[48]);
-     /* 0x100e5000 SP805 Watchdog module */
-     /* 0x100e6000 BP147 TrustZone Protection Controller */
-     /* 0x100e9000 PL301 'Fast' AXI matrix */
-@@ -321,7 +321,7 @@ static void a9_daughterboard_init(VexpressMachineState *vms,
-     /* 0x100ec000 TrustZone Address Space Controller */
-     /* 0x10200000 CoreSight debug APB */
-     /* 0x1e00a000 PL310 L2 Cache Controller */
--    sysbus_create_varargs("l2x0", 0x1e00a000, NULL);
-+    sysbus_create_varargs_orphan("l2x0", 0x1e00a000, NULL);
- }
- 
- /* Voltage values for SYS_CFG_VOLT daughterboard registers;
-@@ -623,7 +623,7 @@ static void vexpress_common_init(MachineState *machine)
-     sysbus_mmio_map(SYS_BUS_DEVICE(pl041), 0, map[VE_PL041]);
-     sysbus_connect_irq(SYS_BUS_DEVICE(pl041), 0, pic[11]);
- 
--    dev = sysbus_create_varargs("pl181", map[VE_MMCI], pic[9], pic[10], NULL);
-+    dev = sysbus_create_varargs_orphan("pl181", map[VE_MMCI], pic[9], pic[10], NULL);
-     /* Wire up MMC card detect and read-only signals */
-     qdev_connect_gpio_out_named(dev, "card-read-only", 0,
-                           qdev_get_gpio_in(sysctl, ARM_SYSCTL_GPIO_MMC_WPROT));
-@@ -640,22 +640,22 @@ static void vexpress_common_init(MachineState *machine)
-                                &error_fatal);
-     }
- 
--    sysbus_create_simple("pl050_keyboard", map[VE_KMI0], pic[12]);
--    sysbus_create_simple("pl050_mouse", map[VE_KMI1], pic[13]);
-+    sysbus_create_simple_orphan("pl050_keyboard", map[VE_KMI0], pic[12]);
-+    sysbus_create_simple_orphan("pl050_mouse", map[VE_KMI1], pic[13]);
- 
-     pl011_create(map[VE_UART0], pic[5], serial_hd(0));
-     pl011_create(map[VE_UART1], pic[6], serial_hd(1));
-     pl011_create(map[VE_UART2], pic[7], serial_hd(2));
-     pl011_create(map[VE_UART3], pic[8], serial_hd(3));
- 
--    sysbus_create_simple("sp804", map[VE_TIMER01], pic[2]);
--    sysbus_create_simple("sp804", map[VE_TIMER23], pic[3]);
-+    sysbus_create_simple_orphan("sp804", map[VE_TIMER01], pic[2]);
-+    sysbus_create_simple_orphan("sp804", map[VE_TIMER23], pic[3]);
- 
--    dev = sysbus_create_simple(TYPE_ARM_SBCON_I2C, map[VE_SERIALDVI], NULL);
-+    dev = sysbus_create_simple_orphan(TYPE_ARM_SBCON_I2C, map[VE_SERIALDVI], NULL);
+     dev = sysbus_create_simple_orphan(TYPE_ARM_SBCON_I2C, map[VE_SERIALDVI], NULL);
      i2c = (I2CBus *)qdev_get_child_bus(dev, "i2c");
-     i2c_slave_create_simple(i2c, "sii9022", 0x39);
+-    i2c_slave_create_simple(i2c, "sii9022", 0x39);
++    i2c_slave_create_simple_orphan(i2c, "sii9022", 0x39);
  
--    sysbus_create_simple("pl031", map[VE_RTC], pic[4]); /* RTC */
-+    sysbus_create_simple_orphan("pl031", map[VE_RTC], pic[4]); /* RTC */
+     sysbus_create_simple_orphan("pl031", map[VE_RTC], pic[4]); /* RTC */
  
-     /* VE_COMPACTFLASH: not modelled */
+diff --git a/hw/display/sii9022.c b/hw/display/sii9022.c
+index d00d3e9fc5..0bf49195d7 100644
+--- a/hw/display/sii9022.c
++++ b/hw/display/sii9022.c
+@@ -164,7 +164,7 @@ static void sii9022_realize(DeviceState *dev, Error **errp)
+     I2CBus *bus;
  
-@@ -706,7 +706,7 @@ static void vexpress_common_init(MachineState *machine)
-      * no backend is created the transport will just sit harmlessly idle.
-      */
-     for (i = 0; i < NUM_VIRTIO_TRANSPORTS; i++) {
--        sysbus_create_simple("virtio-mmio", map[VE_VIRTIO] + 0x200 * i,
-+        sysbus_create_simple_orphan("virtio-mmio", map[VE_VIRTIO] + 0x200 * i,
-                              pic[40 + i]);
-     }
- 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index f8a1ba68be..1845124dc0 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -1561,7 +1561,7 @@ static void create_rtc(const VirtMachineState *vms)
-     const char compat[] = "arm,pl031\0arm,primecell";
-     MachineState *ms = MACHINE(vms);
- 
--    sysbus_create_simple("pl031", base, qdev_get_gpio_in(vms->gic, irq));
-+    sysbus_create_simple_orphan("pl031", base, qdev_get_gpio_in(vms->gic, irq));
- 
-     nodename = g_strdup_printf("/pl031@%" PRIx64, base);
-     qemu_fdt_add_subnode(ms->fdt, nodename);
-@@ -1606,7 +1606,7 @@ static void virt_generic_error_req(Notifier *n, void *opaque)
- static void create_gpio_keys(char *fdt, DeviceState *pl061_dev,
-                              uint32_t phandle)
- {
--    gpio_key_dev = sysbus_create_simple("gpio-key", -1,
-+    gpio_key_dev = sysbus_create_simple_orphan("gpio-key", -1,
-                                         qdev_get_gpio_in(pl061_dev,
-                                                          GPIO_PIN_POWER_BUTTON));
- 
-@@ -1631,7 +1631,7 @@ static void create_secure_gpio_pwr(char *fdt, DeviceState *pl061_dev,
-     DeviceState *gpio_pwr_dev;
- 
-     /* gpio-pwr */
--    gpio_pwr_dev = sysbus_create_simple("gpio-pwr", -1, NULL);
-+    gpio_pwr_dev = sysbus_create_simple_orphan("gpio-pwr", -1, NULL);
- 
-     /* connect secure pl061 to gpio-pwr */
-     qdev_connect_gpio_out(pl061_dev, SECURE_GPIO_RESET,
-@@ -1746,7 +1746,7 @@ static void create_virtio_devices(const VirtMachineState *vms)
-         int irq = vms->irqmap[VIRT_MMIO] + i;
-         hwaddr base = vms->memmap[VIRT_MMIO].base + i * size;
- 
--        sysbus_create_simple("virtio-mmio", base,
-+        sysbus_create_simple_orphan("virtio-mmio", base,
-                              qdev_get_gpio_in(vms->gic, irq));
-     }
- 
-diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
-index 8c3b47d07a..7f31cd6088 100644
---- a/hw/arm/xilinx_zynq.c
-+++ b/hw/arm/xilinx_zynq.c
-@@ -269,7 +269,7 @@ static void zynq_init(MachineState *machine)
-     sysbus_realize_and_unref(busdev, &error_fatal);
-     sysbus_mmio_map(busdev, 0, MPCORE_PERIPHBASE);
-     zynq_binfo.gic_cpu_if_addr = MPCORE_PERIPHBASE + 0x100;
--    sysbus_create_varargs("l2x0", MPCORE_PERIPHBASE + 0x2000, NULL);
-+    sysbus_create_varargs_orphan("l2x0", MPCORE_PERIPHBASE + 0x2000, NULL);
-     for (n = 0; n < smp_cpus; n++) {
-         /* See "hw/intc/arm_gic.h" for the IRQ line association */
-         DeviceState *cpudev = DEVICE(zynq_machine->cpu[n]);
-@@ -287,8 +287,8 @@ static void zynq_init(MachineState *machine)
-     n = zynq_init_spi_flashes(0xE0007000, pic[81 - GIC_INTERNAL], false, n);
-     n = zynq_init_spi_flashes(0xE000D000, pic[51 - GIC_INTERNAL], true, n);
- 
--    sysbus_create_simple(TYPE_CHIPIDEA, 0xE0002000, pic[53 - GIC_INTERNAL]);
--    sysbus_create_simple(TYPE_CHIPIDEA, 0xE0003000, pic[76 - GIC_INTERNAL]);
-+    sysbus_create_simple_orphan(TYPE_CHIPIDEA, 0xE0002000, pic[53 - GIC_INTERNAL]);
-+    sysbus_create_simple_orphan(TYPE_CHIPIDEA, 0xE0003000, pic[76 - GIC_INTERNAL]);
- 
-     dev = qdev_new_orphan(TYPE_CADENCE_UART);
-     busdev = SYS_BUS_DEVICE(dev);
-@@ -307,9 +307,9 @@ static void zynq_init(MachineState *machine)
-     sysbus_mmio_map(busdev, 0, 0xE0001000);
-     sysbus_connect_irq(busdev, 0, pic[82 - GIC_INTERNAL]);
- 
--    sysbus_create_varargs("cadence_ttc", 0xF8001000,
-+    sysbus_create_varargs_orphan("cadence_ttc", 0xF8001000,
-             pic[42-GIC_INTERNAL], pic[43-GIC_INTERNAL], pic[44-GIC_INTERNAL], NULL);
--    sysbus_create_varargs("cadence_ttc", 0xF8002000,
-+    sysbus_create_varargs_orphan("cadence_ttc", 0xF8002000,
-             pic[69-GIC_INTERNAL], pic[70-GIC_INTERNAL], pic[71-GIC_INTERNAL], NULL);
- 
-     ddr_ctrl_init(0xF8006000);
-diff --git a/hw/core/sysbus.c b/hw/core/sysbus.c
-index fe8baf73b5..bbacb07e1a 100644
---- a/hw/core/sysbus.c
-+++ b/hw/core/sysbus.c
-@@ -209,7 +209,40 @@ static void sysbus_device_realize(DeviceState *dev, Error **errp)
- {
+     bus = I2C_BUS(qdev_get_parent_bus(dev));
+-    i2c_slave_create_simple(bus, TYPE_I2CDDC, 0x50);
++    i2c_slave_create_simple_orphan(bus, TYPE_I2CDDC, 0x50);
  }
  
--DeviceState *sysbus_create_varargs(const char *name,
-+static void sysbus_create_tail(SysBusDevice *s, hwaddr addr, va_list va)
-+{
-+    qemu_irq irq;
-+    int n;
-+
-+    if (addr != (hwaddr)-1) {
-+        sysbus_mmio_map(s, 0, addr);
-+    }
-+    n = 0;
-+    while (1) {
-+        irq = va_arg(va, qemu_irq);
-+        if (!irq) {
-+            break;
-+        }
-+        sysbus_connect_irq(s, n, irq);
-+        n++;
-+    }
-+}
-+
-+DeviceState *sysbus_create_varargs(Object *parent, const char *id,
-+                                    const char *type, hwaddr addr, ...)
+ static void sii9022_class_init(ObjectClass *klass, const void *data)
+diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
+index 27afcaecee..ac09e5f706 100644
+--- a/hw/i2c/aspeed_i2c.c
++++ b/hw/i2c/aspeed_i2c.c
+@@ -1518,7 +1518,7 @@ static void aspeed_i2c_bus_realize(DeviceState *dev, Error **errp)
+     sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq);
+ 
+     s->bus = i2c_init_bus(dev, s->name);
+-    s->slave = i2c_slave_create_simple(s->bus, TYPE_ASPEED_I2C_BUS_SLAVE,
++    s->slave = i2c_slave_create_simple_orphan(s->bus, TYPE_ASPEED_I2C_BUS_SLAVE,
+                                        0xff);
+ 
+     memory_region_init_io(&s->mr, OBJECT(s), &aspeed_i2c_bus_ops,
+diff --git a/hw/i2c/core.c b/hw/i2c/core.c
+index 7803f6113c..fba21fdfad 100644
+--- a/hw/i2c/core.c
++++ b/hw/i2c/core.c
+@@ -364,7 +364,7 @@ const VMStateDescription vmstate_i2c_slave = {
+     }
+ };
+ 
+-I2CSlave *i2c_slave_new(const char *name, uint8_t addr)
++I2CSlave *i2c_slave_new_orphan(const char *name, uint8_t addr)
+ {
+     DeviceState *dev;
+ 
+@@ -373,14 +373,34 @@ I2CSlave *i2c_slave_new(const char *name, uint8_t addr)
+     return I2C_SLAVE(dev);
+ }
+ 
++I2CSlave *i2c_slave_new(Object *parent, const char *id,
++                        const char *type, uint8_t addr)
 +{
 +    DeviceState *dev;
-+    va_list va;
 +
 +    dev = qdev_new(parent, id, type);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
-+    va_start(va, addr);
-+    sysbus_create_tail(SYS_BUS_DEVICE(dev), addr, va);
-+    va_end(va);
++    qdev_prop_set_uint8(dev, "address", addr);
++    return I2C_SLAVE(dev);
++}
++
++I2CSlave *i2c_slave_create_simple(Object *parent, const char *id,
++                                  I2CBus *bus, const char *type,
++                                  uint8_t addr)
++{
++    I2CSlave *dev = i2c_slave_new(parent, id, type, addr);
++
++    qdev_realize(DEVICE(dev), BUS(bus), &error_abort);
 +    return dev;
 +}
 +
-+DeviceState *sysbus_create_varargs_orphan(const char *name,
-                                    hwaddr addr, ...)
+ bool i2c_slave_realize_and_unref(I2CSlave *dev, I2CBus *bus, Error **errp)
  {
-     DeviceState *dev;
-diff --git a/hw/i386/kvm/clock.c b/hw/i386/kvm/clock.c
-index e3dad136d3..de0df2c82a 100644
---- a/hw/i386/kvm/clock.c
-+++ b/hw/i386/kvm/clock.c
-@@ -377,7 +377,7 @@ void kvmclock_create(bool create_always)
-     if (create_always ||
-         cpu->env.features[FEAT_KVM] & (CPUID_KVM_CLOCK |
-                                        CPUID_KVM_CLOCK2)) {
--        sysbus_create_simple(TYPE_KVM_CLOCK, -1, NULL);
-+        sysbus_create_simple_orphan(TYPE_KVM_CLOCK, -1, NULL);
-     }
+     return qdev_realize_and_unref(&dev->qdev, &bus->qbus, errp);
  }
  
-diff --git a/hw/i386/kvm/xen_evtchn.c b/hw/i386/kvm/xen_evtchn.c
-index 8b243984e4..1a406fbc00 100644
---- a/hw/i386/kvm/xen_evtchn.c
-+++ b/hw/i386/kvm/xen_evtchn.c
-@@ -306,7 +306,7 @@ static void gsi_assert_bh(void *opaque)
- 
- void xen_evtchn_create(unsigned int nr_gsis, qemu_irq *system_gsis)
+-I2CSlave *i2c_slave_create_simple(I2CBus *bus, const char *name, uint8_t addr)
++I2CSlave *i2c_slave_create_simple_orphan(I2CBus *bus, const char *name, uint8_t addr)
  {
--    XenEvtchnState *s = XEN_EVTCHN(sysbus_create_simple(TYPE_XEN_EVTCHN,
-+    XenEvtchnState *s = XEN_EVTCHN(sysbus_create_simple_orphan(TYPE_XEN_EVTCHN,
-                                                         -1, NULL));
-     int i;
+-    I2CSlave *dev = i2c_slave_new(name, addr);
++    I2CSlave *dev = i2c_slave_new_orphan(name, addr);
  
-diff --git a/hw/i386/kvm/xen_gnttab.c b/hw/i386/kvm/xen_gnttab.c
-index 85b324e62d..eb43e9f385 100644
---- a/hw/i386/kvm/xen_gnttab.c
-+++ b/hw/i386/kvm/xen_gnttab.c
-@@ -152,7 +152,7 @@ static const TypeInfo xen_gnttab_info = {
+     i2c_slave_realize_and_unref(dev, bus, &error_abort);
  
- void xen_gnttab_create(void)
+diff --git a/hw/i3c/core.c b/hw/i3c/core.c
+index 2fb865490e..469d66f1fb 100644
+--- a/hw/i3c/core.c
++++ b/hw/i3c/core.c
+@@ -623,7 +623,7 @@ void legacy_i2c_end_transfer(I3CBus *bus)
+ I2CSlave *legacy_i2c_device_create_simple(I3CBus *bus, const char *name,
+                                           uint8_t addr)
  {
--    xen_gnttab_singleton = XEN_GNTTAB(sysbus_create_simple(TYPE_XEN_GNTTAB,
-+    xen_gnttab_singleton = XEN_GNTTAB(sysbus_create_simple_orphan(TYPE_XEN_GNTTAB,
-                                                            -1, NULL));
- }
+-    I2CSlave *dev = i2c_slave_new(name, addr);
++    I2CSlave *dev = i2c_slave_new_orphan(name, addr);
  
-diff --git a/hw/i386/kvm/xen_overlay.c b/hw/i386/kvm/xen_overlay.c
-index 74cadffb72..1ef47539e4 100644
---- a/hw/i386/kvm/xen_overlay.c
-+++ b/hw/i386/kvm/xen_overlay.c
-@@ -169,7 +169,7 @@ static const TypeInfo xen_overlay_info = {
- 
- void xen_overlay_create(void)
+     i2c_slave_realize_and_unref(dev, bus->i2c_bus, &error_abort);
+     return dev;
+diff --git a/hw/nvram/eeprom_at24c.c b/hw/nvram/eeprom_at24c.c
+index 8b7f2dc13f..b6d314447c 100644
+--- a/hw/nvram/eeprom_at24c.c
++++ b/hw/nvram/eeprom_at24c.c
+@@ -148,7 +148,7 @@ I2CSlave *at24c_eeprom_init_rom(I2CBus *bus, uint8_t address, uint32_t rom_size,
  {
--    xen_overlay_singleton = XEN_OVERLAY(sysbus_create_simple(TYPE_XEN_OVERLAY,
-+    xen_overlay_singleton = XEN_OVERLAY(sysbus_create_simple_orphan(TYPE_XEN_OVERLAY,
-                                                              -1, NULL));
+     EEPROMState *s;
  
-     /* If xen_domid wasn't explicitly set, at least make sure it isn't zero. */
-diff --git a/hw/i386/kvm/xen_primary_console.c b/hw/i386/kvm/xen_primary_console.c
-index bf61f6235b..f22ce4b14b 100644
---- a/hw/i386/kvm/xen_primary_console.c
-+++ b/hw/i386/kvm/xen_primary_console.c
-@@ -84,7 +84,7 @@ static const TypeInfo xen_primary_console_info = {
+-    s = AT24C_EE(i2c_slave_new(TYPE_AT24C_EE, address));
++    s = AT24C_EE(i2c_slave_new_orphan(TYPE_AT24C_EE, address));
  
- void xen_primary_console_create(void)
- {
--    DeviceState *dev = sysbus_create_simple(TYPE_XEN_PRIMARY_CONSOLE, -1, NULL);
-+    DeviceState *dev = sysbus_create_simple_orphan(TYPE_XEN_PRIMARY_CONSOLE, -1, NULL);
+     qdev_prop_set_uint32(DEVICE(s), "rom-size", rom_size);
  
-     trace_xen_primary_console_create();
- 
-diff --git a/hw/i386/kvm/xen_xenstore.c b/hw/i386/kvm/xen_xenstore.c
-index 0dc0edf3bf..92493bcb6d 100644
---- a/hw/i386/kvm/xen_xenstore.c
-+++ b/hw/i386/kvm/xen_xenstore.c
-@@ -276,7 +276,7 @@ static const TypeInfo xen_xenstore_info = {
- 
- void xen_xenstore_create(void)
- {
--    DeviceState *dev = sysbus_create_simple(TYPE_XEN_XENSTORE, -1, NULL);
-+    DeviceState *dev = sysbus_create_simple_orphan(TYPE_XEN_XENSTORE, -1, NULL);
- 
-     xen_xenstore_singleton = XEN_XENSTORE(dev);
- 
-diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
-index 08d54c277f..22688687c4 100644
---- a/hw/i386/microvm.c
-+++ b/hw/i386/microvm.c
-@@ -197,7 +197,7 @@ static void microvm_devices_init(MicrovmMachineState *mms)
-     }
- 
-     for (i = 0; i < mms->virtio_num_transports; i++) {
--        sysbus_create_simple("virtio-mmio",
-+        sysbus_create_simple_orphan("virtio-mmio",
-                              VIRTIO_MMIO_BASE + i * 512,
-                              x86ms->gsi[mms->virtio_irq_base + i]);
-     }
-diff --git a/hw/intc/apic_common.c b/hw/intc/apic_common.c
-index 49c03a5bce..aaa7dca480 100644
---- a/hw/intc/apic_common.c
-+++ b/hw/intc/apic_common.c
-@@ -282,7 +282,7 @@ static void apic_common_realize(DeviceState *dev, Error **errp)
-     /* Note: We need at least 1M to map the VAPIC option ROM */
-     if (!vapic && s->vapic_control & VAPIC_ENABLE_MASK &&
-             current_machine->ram_size >= 1024 * 1024) {
--        vapic = sysbus_create_simple("kvmvapic", -1, NULL);
-+        vapic = sysbus_create_simple_orphan("kvmvapic", -1, NULL);
-     }
-     s->vapic = vapic;
-     if (apic_report_tpr_access && info->enable_tpr_reporting) {
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 23751c46d7..45acdc3ec1 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -485,7 +485,7 @@ static void virt_devices_init(DeviceState *pch_pic,
-      * Create some unimplemented devices to emulate this.
-      */
-     create_unimplemented_device("pci-dma-cfg", 0x1001041c, 0x4);
--    sysbus_create_simple("ls7a_rtc", VIRT_RTC_REG_BASE,
-+    sysbus_create_simple_orphan("ls7a_rtc", VIRT_RTC_REG_BASE,
-                          qdev_get_gpio_in(pch_pic,
-                          VIRT_RTC_IRQ - VIRT_GSI_BASE));
- 
-diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index 5bb123594d..0c1f5b4481 100644
---- a/hw/m68k/next-cube.c
-+++ b/hw/m68k/next-cube.c
-@@ -1280,7 +1280,7 @@ static void next_cube_init(MachineState *machine)
-     memory_region_add_subregion(sysmem, 0x04000000, machine->ram);
- 
-     /* Framebuffer */
--    sysbus_create_simple(TYPE_NEXTFB, 0x0B000000, NULL);
-+    sysbus_create_simple_orphan(TYPE_NEXTFB, 0x0B000000, NULL);
- 
-     /* MMIO */
-     sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 0, 0x02005000);
-@@ -1319,7 +1319,7 @@ static void next_cube_init(MachineState *machine)
-     memory_region_add_subregion(sysmem, 0x820c0000, &m->bmapm2);
- 
-     /* KBD */
--    sysbus_create_simple(TYPE_NEXTKBD, 0x0200e000, NULL);
-+    sysbus_create_simple_orphan(TYPE_NEXTKBD, 0x0200e000, NULL);
- 
-     /* Load ROM here */
-     memory_region_init_rom(&m->rom, NULL, "next.rom", 0x20000, &error_fatal);
-diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
-index f86d55d96c..e2af0196e8 100644
---- a/hw/m68k/virt.c
-+++ b/hw/m68k/virt.c
-@@ -202,7 +202,7 @@ static void virt_init(MachineState *machine)
-     sysbus_connect_irq(sysbus, 0, PIC_GPIO(VIRT_GF_TTY_IRQ_BASE));
- 
-     /* virt controller */
--    dev = sysbus_create_simple(TYPE_VIRT_CTRL, VIRT_CTRL_MMIO_BASE,
-+    dev = sysbus_create_simple_orphan(TYPE_VIRT_CTRL, VIRT_CTRL_MMIO_BASE,
-                                PIC_GPIO(VIRT_CTRL_IRQ_BASE));
- 
-     /* virtio-mmio */
-diff --git a/hw/mips/jazz.c b/hw/mips/jazz.c
-index f9be67249f..a902e400cf 100644
---- a/hw/mips/jazz.c
-+++ b/hw/mips/jazz.c
-@@ -395,7 +395,7 @@ static void mips_jazz_init(MachineState *machine,
-     sysbus_mmio_map(sysbus, 0, 0x80009000);
- 
-     /* LED indicator */
--    sysbus_create_simple("jazz-led", 0x8000f000, NULL);
-+    sysbus_create_simple_orphan("jazz-led", 0x8000f000, NULL);
- 
-     g_free(dmas);
- }
-diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
-index d3b728339e..854f7f6801 100644
---- a/hw/mips/loongson3_virt.c
-+++ b/hw/mips/loongson3_virt.c
-@@ -536,7 +536,7 @@ static void mips_loongson3_virt_init(MachineState *machine)
-                    qdev_get_gpio_in(liointc, UART_IRQ), 115200, serial_hd(0),
-                    DEVICE_LITTLE_ENDIAN);
- 
--    sysbus_create_simple("goldfish_rtc", virt_memmap[VIRT_RTC].base,
-+    sysbus_create_simple_orphan("goldfish_rtc", virt_memmap[VIRT_RTC].base,
-                          qdev_get_gpio_in(liointc, RTC_IRQ));
- 
-     cpuclk = clock_new(OBJECT(machine), "cpu-refclk");
-diff --git a/hw/or1k/virt.c b/hw/or1k/virt.c
-index 3067a5b2e7..9451a0b7df 100644
---- a/hw/or1k/virt.c
-+++ b/hw/or1k/virt.c
-@@ -300,7 +300,7 @@ static void openrisc_virt_rtc_init(OR1KVirtState *state, hwaddr base,
-     qemu_irq rtc_irq = get_per_cpu_irq(cpus, num_cpus, irq_pin);
- 
-     /* Goldfish RTC */
--    sysbus_create_simple(TYPE_GOLDFISH_RTC, base, rtc_irq);
-+    sysbus_create_simple_orphan(TYPE_GOLDFISH_RTC, base, rtc_irq);
- 
-     /* Goldfish RTC FDT */
-     nodename = g_strdup_printf("/soc/rtc@%" HWADDR_PRIx, base);
-diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
-index bcdf36b344..528c2c656a 100644
---- a/hw/ppc/amigaone.c
-+++ b/hw/ppc/amigaone.c
-@@ -329,7 +329,7 @@ static void amigaone_init(MachineState *machine)
-     }
- 
-     /* Articia S */
--    dev = sysbus_create_simple(TYPE_ARTICIA, ARTICIA_ADDR, NULL);
-+    dev = sysbus_create_simple_orphan(TYPE_ARTICIA, ARTICIA_ADDR, NULL);
- 
-     i2c_bus = I2C_BUS(qdev_get_child_bus(dev, "smbus"));
-     if (machine->ram_size > 512 * MiB) {
 diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
-index 65e71826a4..05c305b72c 100644
+index 05c305b72c..85977c8b69 100644
 --- a/hw/ppc/e500.c
 +++ b/hw/ppc/e500.c
-@@ -1076,7 +1076,7 @@ void ppce500_init(MachineState *machine)
+@@ -1025,7 +1025,7 @@ void ppce500_init(MachineState *machine)
+     memory_region_add_subregion(ccsr_addr_space, MPC8544_I2C_REGS_OFFSET,
+                                 sysbus_mmio_get_region(s, 0));
+     i2c = I2C_BUS(qdev_get_child_bus(dev, "i2c"));
+-    i2c_slave_create_simple(i2c, "ds1338", RTC_REGS_OFFSET);
++    i2c_slave_create_simple_orphan(i2c, "ds1338", RTC_REGS_OFFSET);
+ 
+     /* eSDHC */
+     if (pmc->has_esdhc) {
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 8346613a68..0a22d854d7 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -2825,7 +2825,7 @@ static void pnv_rainier_i2c_init(PnvMachineState *pnv)
+          * Add a PCA9552 I2C device for PCIe hotplug control
+          * to engine 2, bus 1, address 0x63
+          */
+-        I2CSlave *dev = i2c_slave_create_simple(chip10->i2c[2].busses[1],
++        I2CSlave *dev = i2c_slave_create_simple_orphan(chip10->i2c[2].busses[1],
+                                                 "pca9552", 0x63);
+ 
+         /*
+@@ -2843,7 +2843,7 @@ static void pnv_rainier_i2c_init(PnvMachineState *pnv)
+          * Add a PCA9554 I2C device for cable card presence detection
+          * to engine 2, bus 1, address 0x25
+          */
+-        i2c_slave_create_simple(chip10->i2c[2].busses[1], "pca9554", 0x25);
++        i2c_slave_create_simple_orphan(chip10->i2c[2].busses[1], "pca9554", 0x25);
      }
+ }
  
-     /* Register spinning region */
--    sysbus_create_simple("e500-spin", pmc->spin_base, NULL);
-+    sysbus_create_simple_orphan("e500-spin", pmc->spin_base, NULL);
- 
-     if (pmc->has_mpc8xxx_gpio) {
-         qemu_irq poweroff_irq;
-diff --git a/hw/ppc/pegasos.c b/hw/ppc/pegasos.c
-index 9d7e279123..3dc02423ee 100644
---- a/hw/ppc/pegasos.c
-+++ b/hw/ppc/pegasos.c
-@@ -218,7 +218,7 @@ static void pegasos_init(MachineState *machine)
-         MemoryRegion *pci_mem, *mr;
- 
-         /* Articia S */
--        pm->nb = DEVICE(sysbus_create_simple(TYPE_ARTICIA, 0xfe000000, NULL));
-+        pm->nb = DEVICE(sysbus_create_simple_orphan(TYPE_ARTICIA, 0xfe000000, NULL));
-         pci_mem = sysbus_mmio_get_region(SYS_BUS_DEVICE(pm->nb), 1);
-         mr = g_new(MemoryRegion, 1);
-         memory_region_init_alias(mr, OBJECT(pm->nb), "pci-mem-low", pci_mem,
-@@ -233,7 +233,7 @@ static void pegasos_init(MachineState *machine)
-     }
-     case PEGASOS2:
-         /* Marvell Discovery II system controller */
--        pm->nb = DEVICE(sysbus_create_simple(TYPE_MV64361, -1,
-+        pm->nb = DEVICE(sysbus_create_simple_orphan(TYPE_MV64361, -1,
-                         qdev_get_gpio_in(DEVICE(pm->cpu), PPC6xx_INPUT_INT)));
-         pci_bus = mv64361_get_pci_bus(pm->nb, 1);
-         break;
-diff --git a/hw/ppc/ppc440_bamboo.c b/hw/ppc/ppc440_bamboo.c
-index e76d359e43..7a6c3ebec5 100644
---- a/hw/ppc/ppc440_bamboo.c
-+++ b/hw/ppc/ppc440_bamboo.c
-@@ -183,7 +183,7 @@ static void bamboo_init(MachineState *machine)
-     ppc4xx_sdram_ddr_enable(PPC4xx_SDRAM_DDR(dev));
- 
-     /* PCI */
--    dev = sysbus_create_varargs(TYPE_PPC4xx_PCI_HOST, PPC440EP_PCI_CONFIG,
-+    dev = sysbus_create_varargs_orphan(TYPE_PPC4xx_PCI_HOST, PPC440EP_PCI_CONFIG,
-                                 qdev_get_gpio_in(uicdev, pci_irq_nrs[0]),
-                                 qdev_get_gpio_in(uicdev, pci_irq_nrs[1]),
-                                 qdev_get_gpio_in(uicdev, pci_irq_nrs[2]),
 diff --git a/hw/ppc/sam460ex.c b/hw/ppc/sam460ex.c
-index 778b04c532..88c4e66b2d 100644
+index 0c4c6f6256..767a5eb596 100644
 --- a/hw/ppc/sam460ex.c
 +++ b/hw/ppc/sam460ex.c
-@@ -336,7 +336,7 @@ static void sam460ex_init(MachineState *machine)
-     ppc4xx_sdram_ddr2_enable(PPC4xx_SDRAM_DDR2(dev));
- 
-     /* IIC controllers and devices */
--    dev = sysbus_create_simple(TYPE_PPC4xx_I2C, 0x4ef600700,
-+    dev = sysbus_create_simple_orphan(TYPE_PPC4xx_I2C, 0x4ef600700,
-                                qdev_get_gpio_in(uic[0], 2));
-     i2c = PPC4xx_I2C(dev)->bus;
-     /* SPD EEPROM on RAM module */
-@@ -347,7 +347,7 @@ static void sam460ex_init(MachineState *machine)
+@@ -345,7 +345,7 @@ static void sam460ex_init(MachineState *machine)
+     spd_data[20] = 4; /* SO-DIMM module */
+     smbus_eeprom_init_one(i2c, 0x50, spd_data);
      /* RTC */
-     i2c_slave_create_simple(i2c, "m41t80", 0x68);
+-    i2c_slave_create_simple(i2c, "m41t80", 0x68);
++    i2c_slave_create_simple_orphan(i2c, "m41t80", 0x68);
  
--    dev = sysbus_create_simple(TYPE_PPC4xx_I2C, 0x4ef600800,
-+    dev = sysbus_create_simple_orphan(TYPE_PPC4xx_I2C, 0x4ef600800,
+     dev = sysbus_create_simple_orphan(TYPE_PPC4xx_I2C, 0x4ef600800,
                                 qdev_get_gpio_in(uic[0], 3));
- 
-     /* External bus controller */
-@@ -387,7 +387,7 @@ static void sam460ex_init(MachineState *machine)
-                                 l2cache_ram);
- 
-     /* USB */
--    sysbus_create_simple(TYPE_PPC4xx_EHCI, 0x4bffd0400,
-+    sysbus_create_simple_orphan(TYPE_PPC4xx_EHCI, 0x4bffd0400,
-                          qdev_get_gpio_in(uic[2], 29));
-     dev = qdev_new_orphan("sysbus-ohci");
-     qdev_prop_set_string(dev, "masterbus", "usb-bus.0");
-@@ -416,7 +416,7 @@ static void sam460ex_init(MachineState *machine)
- 
-     /* PCI bus */
-     /* All PCI irqs are connected to the same UIC pin (cf. UBoot source) */
--    dev = sysbus_create_simple(TYPE_PPC440_PCIX_HOST, 0xc0ec00000,
-+    dev = sysbus_create_simple_orphan(TYPE_PPC440_PCIX_HOST, 0xc0ec00000,
-                                qdev_get_gpio_in(uic[1], 0));
-     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 1, 0xc08000000);
-     pci_bus = PCI_BUS(qdev_get_child_bus(dev, "pci.0"));
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 81212c81dd..cb1fa3c732 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -1473,7 +1473,7 @@ static void virt_machine_init(MachineState *machine)
- 
-     /* VirtIO MMIO devices */
-     for (i = 0; i < VIRTIO_COUNT; i++) {
--        sysbus_create_simple("virtio-mmio",
-+        sysbus_create_simple_orphan("virtio-mmio",
-             s->memmap[VIRT_VIRTIO].base + i * s->memmap[VIRT_VIRTIO].size,
-             qdev_get_gpio_in(virtio_irqchip, VIRTIO_IRQ + i));
-     }
-@@ -1486,7 +1486,7 @@ static void virt_machine_init(MachineState *machine)
-         0, qdev_get_gpio_in(mmio_irqchip, UART0_IRQ), 399193,
-         serial_hd(0), DEVICE_LITTLE_ENDIAN);
- 
--    sysbus_create_simple("goldfish_rtc", s->memmap[VIRT_RTC].base,
-+    sysbus_create_simple_orphan("goldfish_rtc", s->memmap[VIRT_RTC].base,
-         qdev_get_gpio_in(mmio_irqchip, RTC_IRQ));
- 
-     for (i = 0; i < ARRAY_SIZE(s->flash); i++) {
-diff --git a/hw/sparc/sun4m.c b/hw/sparc/sun4m.c
-index 69a287937e..80e37555b1 100644
---- a/hw/sparc/sun4m.c
-+++ b/hw/sparc/sun4m.c
-@@ -1018,7 +1018,7 @@ static void sun4m_hw_init(MachineState *machine)
-                      slavio_irq[30], fdc_tc);
- 
-     if (hwdef->cs_base) {
--        sysbus_create_simple("sun-CS4231", hwdef->cs_base,
-+        sysbus_create_simple_orphan("sun-CS4231", hwdef->cs_base,
-                              slavio_irq[5]);
+diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
+index d808bcc11c..9c63ec7e29 100644
+--- a/hw/riscv/tt_atlantis.c
++++ b/hw/riscv/tt_atlantis.c
+@@ -574,8 +574,8 @@ static void tt_atlantis_machine_init(MachineState *machine)
      }
  
-diff --git a/hw/vmapple/vmapple.c b/hw/vmapple/vmapple.c
-index 9f69ab2bc7..bf19faa04a 100644
---- a/hw/vmapple/vmapple.c
-+++ b/hw/vmapple/vmapple.c
-@@ -305,7 +305,7 @@ static void create_rtc(const VMAppleMachineState *vms)
-     hwaddr base = vms->memmap[VMAPPLE_RTC].base;
-     int irq = vms->irqmap[VMAPPLE_RTC];
+     /* I2C peripherals: qemu specific */
+-    i2c_slave_create_simple(i2c_get_bus(s, 0), "ds1338", 0x6f);
+-    i2c_slave_create_simple(i2c_get_bus(s, 4), "tmp105", 0x48);
++    i2c_slave_create_simple_orphan(i2c_get_bus(s, 0), "ds1338", 0x6f);
++    i2c_slave_create_simple_orphan(i2c_get_bus(s, 4), "tmp105", 0x48);
  
--    sysbus_create_simple("pl031", base, qdev_get_gpio_in(vms->gic, irq));
-+    sysbus_create_simple_orphan("pl031", base, qdev_get_gpio_in(vms->gic, irq));
- }
+     /* Load or create device tree */
+     if (machine->dtb) {
+diff --git a/include/hw/arm/aspeed.h b/include/hw/arm/aspeed.h
+index a00238ed74..e1c0323cb6 100644
+--- a/include/hw/arm/aspeed.h
++++ b/include/hw/arm/aspeed.h
+@@ -83,7 +83,7 @@ void aspeed_machine_class_init_cpus_defaults(MachineClass *mc);
+  *
+  * Create and attach a PCA9552 LED controller device to the specified I2C bus
+  * of the given Aspeed SoC. The device is instantiated using
+- * i2c_slave_create_simple() with the PCA9552 device type.
++ * i2c_slave_create_simple_orphan() with the PCA9552 device type.
+  */
+ void aspeed_create_pca9552(AspeedSoCState *soc, int bus_id, int addr);
  
- static DeviceState *gpio_key_dev;
-@@ -331,7 +331,7 @@ static void create_gpio_devices(const VMAppleMachineState *vms, int gpio,
-     sysbus_realize_and_unref(s, &error_fatal);
-     memory_region_add_subregion(mem, base, sysbus_mmio_get_region(s, 0));
-     sysbus_connect_irq(s, 0, qdev_get_gpio_in(vms->gic, irq));
--    gpio_key_dev = sysbus_create_simple("gpio-key", -1,
-+    gpio_key_dev = sysbus_create_simple_orphan("gpio-key", -1,
-                                         qdev_get_gpio_in(pl061_dev, 3));
- }
- 
-diff --git a/hw/xen/xen-pvh-common.c b/hw/xen/xen-pvh-common.c
-index 4c9a4fdea8..17f545d07c 100644
---- a/hw/xen/xen-pvh-common.c
-+++ b/hw/xen/xen-pvh-common.c
-@@ -173,7 +173,7 @@ static void xen_create_virtio_mmio_devices(XenPVHMachineState *s)
-         qemu_irq irq = qemu_allocate_irq(xen_set_irq, NULL,
-                                          s->cfg.virtio_mmio_irq_base + i);
- 
--        sysbus_create_simple("virtio-mmio", base, irq);
-+        sysbus_create_simple_orphan("virtio-mmio", base, irq);
- 
-         trace_xen_create_virtio_mmio_devices(i,
-                                              s->cfg.virtio_mmio_irq_base + i,
-diff --git a/include/hw/core/sysbus.h b/include/hw/core/sysbus.h
-index f3c4259d29..1e07b1978d 100644
---- a/include/hw/core/sysbus.h
-+++ b/include/hw/core/sysbus.h
-@@ -91,15 +91,43 @@ bool sysbus_realize_and_unref(SysBusDevice *dev, Error **errp);
- /* Call func for every dynamically created sysbus device in the system */
- void foreach_dynamic_sysbus_device(FindSysbusDeviceFunc *func, void *opaque);
- 
--/* Legacy helper function for creating devices.  */
--DeviceState *sysbus_create_varargs(const char *name,
+@@ -95,7 +95,7 @@ void aspeed_create_pca9552(AspeedSoCState *soc, int bus_id, int addr);
+  *
+  * Create and attach a PCA9554 I/O expander to the specified I2C bus
+  * of the given Aspeed SoC. The device is created via
+- * i2c_slave_create_simple() and returned as an #I2CSlave pointer.
++ * i2c_slave_create_simple_orphan() and returned as an #I2CSlave pointer.
+  *
+  * Returns: a pointer to the newly created #I2CSlave instance.
+  */
+diff --git a/include/hw/i2c/i2c.h b/include/hw/i2c/i2c.h
+index bcdc4f21a9..0bba1a7c20 100644
+--- a/include/hw/i2c/i2c.h
++++ b/include/hw/i2c/i2c.h
+@@ -163,7 +163,20 @@ bool i2c_scan_bus(I2CBus *bus, uint8_t address, bool broadcast,
+  * properties to be set. Type @name must exist. The device still
+  * needs to be realized. See qdev-core.h.
+  */
+-I2CSlave *i2c_slave_new(const char *name, uint8_t addr);
++I2CSlave *i2c_slave_new_orphan(const char *name, uint8_t addr);
++
 +/**
-+ * sysbus_create_varargs: Create, parent and realize a sysbus device
-+ * @parent: the QOM parent (usually the machine or containing device)
++ * Create a parented I2C slave device on the heap.
++ * @parent: the QOM parent
 + * @id: child<> property name
-+ * @type: sysbus device type to create
-+ * @addr: MMIO region 0 address, or -1 for none
-+ * @...: NULL-terminated list of qemu_irq to connect
++ * @type: I2C slave device type name
++ * @addr: I2C address of the slave when put on a bus
 + *
-+ * Create a sysbus device via qdev_new(@parent, @id, @type), realize
-+ * it, optionally map MMIO region 0 at @addr, and connect the given
-+ * IRQs.  The returned device is owned by @parent.
-+ *
-+ * This is a convenience helper for simple sysbus devices; new code
-+ * should generally prefer qdev_new() + sysbus_realize() and set
-+ * properties explicitly before realize.
++ * Like i2c_slave_new_orphan(), but the returned device is owned by
++ * @parent's child<> property.  Pair with qdev_realize().
 + */
-+DeviceState *sysbus_create_varargs(Object *parent, const char *id,
-+                                   const char *type, hwaddr addr, ...);
-+
-+static inline DeviceState *sysbus_create_simple(Object *parent,
-+                                                 const char *id,
-+                                                 const char *type,
-+                                                 hwaddr addr,
-+                                                 qemu_irq irq)
-+{
-+    return sysbus_create_varargs(parent, id, type, addr, irq, NULL);
-+}
-+
-+/* Legacy helper function for creating unparented devices.  */
-+DeviceState *sysbus_create_varargs_orphan(const char *name,
-                                  hwaddr addr, ...);
++I2CSlave *i2c_slave_new(Object *parent, const char *id,
++                        const char *type, uint8_t addr);
  
--static inline DeviceState *sysbus_create_simple(const char *name,
-+static inline DeviceState *sysbus_create_simple_orphan(const char *name,
-                                               hwaddr addr,
-                                               qemu_irq irq)
- {
--    return sysbus_create_varargs(name, addr, irq, NULL);
-+    return sysbus_create_varargs_orphan(name, addr, irq, NULL);
- }
+ /**
+  * Create and realize an I2C slave device on the heap.
+@@ -174,7 +187,24 @@ I2CSlave *i2c_slave_new(const char *name, uint8_t addr);
+  * Create the device state structure, initialize it, put it on the
+  * specified @bus, and drop the reference to it (the device is realized).
+  */
+-I2CSlave *i2c_slave_create_simple(I2CBus *bus, const char *name, uint8_t addr);
++I2CSlave *i2c_slave_create_simple_orphan(I2CBus *bus, const char *name,
++                                         uint8_t addr);
++
++/**
++ * Create, parent and realize an I2C slave device on the heap.
++ * @parent: the QOM parent
++ * @id: child<> property name
++ * @bus: I2C bus to put it on
++ * @type: I2C slave device type name
++ * @addr: I2C address of the slave when put on a bus
++ *
++ * Create the device state structure, add it as a child of @parent,
++ * put it on the specified @bus and realize it.  The returned device
++ * is owned by @parent.
++ */
++I2CSlave *i2c_slave_create_simple(Object *parent, const char *id,
++                                  I2CBus *bus, const char *type,
++                                  uint8_t addr);
  
- #endif /* HW_SYSBUS_H */
-diff --git a/scripts/coccinelle/qom-parent/sysbus-create-orphan.cocci b/scripts/coccinelle/qom-parent/sysbus-create-orphan.cocci
+ /**
+  * Realize and drop a reference an I2C slave device
+@@ -189,10 +219,10 @@ I2CSlave *i2c_slave_create_simple(I2CBus *bus, const char *name, uint8_t addr);
+  * reference to it.
+  *
+  * This function is useful if you have created @dev via qdev_new_orphan(),
+- * i2c_slave_new() or i2c_slave_try_new() (which take a reference to
++ * i2c_slave_new_orphan() or i2c_slave_try_new() (which take a reference to
+  * the device it returns to you), so that you can set properties on it
+  * before realizing it. If you don't need to set properties then
+- * i2c_slave_create_simple() is probably better (as it does the create,
++ * i2c_slave_create_simple_orphan() is probably better (as it does the create,
+  * init and realize in one step).
+  *
+  * If you are embedding the I2C slave into another QOM device and
+diff --git a/scripts/coccinelle/qom-parent/i2c-slave-new-orphan.cocci b/scripts/coccinelle/qom-parent/i2c-slave-new-orphan.cocci
 new file mode 100644
-index 0000000000..b925d9396f
+index 0000000000..fdfb6a84c8
 --- /dev/null
-+++ b/scripts/coccinelle/qom-parent/sysbus-create-orphan.cocci
++++ b/scripts/coccinelle/qom-parent/i2c-slave-new-orphan.cocci
 @@ -0,0 +1,18 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later
 +//
-+// Rename sysbus_create_simple()/sysbus_create_varargs() to *_orphan()
++// Rename i2c_slave_new()/i2c_slave_create_simple() to *_orphan()
 +// so that the short names can be reintroduced with a mandatory
 +// (parent, id, ...) signature.
 +//
-+// spatch --sp-file scripts/coccinelle/qom-parent/sysbus-create-orphan.cocci \
++// spatch --sp-file scripts/coccinelle/qom-parent/i2c-slave-new-orphan.cocci \
 +//        --in-place --include-headers --dir .
 +
 +@@
 +@@
-+- sysbus_create_simple
-++ sysbus_create_simple_orphan
++- i2c_slave_new
+++ i2c_slave_new_orphan
 +
 +@@
 +@@
-+- sysbus_create_varargs
-++ sysbus_create_varargs_orphan
++- i2c_slave_create_simple
+++ i2c_slave_create_simple_orphan
 -- 
 2.47.1
 
