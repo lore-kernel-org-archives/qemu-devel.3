@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B9E4C4451B
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:39:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01CD1C44520
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:40:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlCkp-0002HQ-CT; Sat, 18 Jul 2026 17:39:27 -0400
+	id 1wlCld-0003uZ-Hk; Sat, 18 Jul 2026 17:40:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlCkb-0002Am-4t; Sat, 18 Jul 2026 17:39:14 -0400
-Received: from pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.13.214.179])
+ id 1wlClL-0003HB-MG; Sat, 18 Jul 2026 17:40:07 -0400
+Received: from pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([50.112.246.219])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlCkX-00024w-10; Sat, 18 Jul 2026 17:39:12 -0400
+ id 1wlClJ-00026U-N6; Sat, 18 Jul 2026 17:39:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784410749; x=1815946749;
+ t=1784410797; x=1815946797;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=3pAl7q7X7Mi85bRK3UReERNe4o7slUjmgc/yKmJpq6k=;
- b=KAyGJRKA4OUSuPnDBnAMuEWR4pZ3RA1Dj5qr4MR2ghuV7pOsEjM3dlo3
- 3S7BePtEwf2Pmcq3fpgkn6KMSPAbdbxkqp/myqftahnP6i8OLnk8tCH7x
- wjj6aEhoienMZWnRv85FzK2B8IOxUaZE5xHsiQTSI0m7AboSBEgwYRKHf
- A6FBjxaM3d8iluWLztM20A2Ia0mcdthmX8MQwelhUe+uur74l9/L0Vusj
- O4fY+UqdMO9baOgTpNXD6WCBwh3mrGCR0Kphj2YR+Uh3FiSLj06Gr7LJ5
- LUXkHi7lYOSeKZMI6nmdO0xpJQF2V9ODvSuN1s/y/4fF8Iv0KfoM0kufT A==;
-X-CSE-ConnectionGUID: KKY+EocVTDSmZpCxwejytQ==
-X-CSE-MsgGUID: hbQR2xwMR0imEddNT73CdA==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23903572"
+ bh=AzsMyr+OSlMjtWcFAfEACFfgIyx83zWcWDq+hX8zj9I=;
+ b=pOjAW+xHwTM/b8jzKo+YTWImjuXKsyyZkNZSxyvbEGz9GVVGmlL7YCUc
+ /WNBQfWXVRsD0w+cX5iEuyrcE4R0IyNZAHbprvHwslS9KZ0uQWwD0RB3v
+ RXoNBIk4lulX38uUg/LxZpU8qANcvXoW/fTOaPoYHgQWW6M8x7kdt3dY4
+ dwM/qiF9/n56T616hEURbbFEzWyYtfPJNwsgPiCPLFXQYmXMNCV3XsFQ5
+ s+GtjVFwsTKM4SfEDi8Cq1UkVoTVBPEP8pM+aeFav3QPjBPmIhfKU157n
+ +F4JWGY3jYRe3xMfiPlozpzN2BUJj0LzWzMEO3LFyxLVxZbhiRrb1ZBdx g==;
+X-CSE-ConnectionGUID: tNtDRSmvQlKbuNr/LvVBBA==
+X-CSE-MsgGUID: 9Opdsza5SrOFCOMEhoTSPg==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23724691"
 Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
  smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
- by internal-pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:39:05 +0000
-Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.234:11725]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.35.17:2525]
+ by internal-pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:39:55 +0000
+Received: from EX19MTAUWA001.ant.amazon.com [205.251.233.182:20511]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.48.250:2525]
  with esmtp (Farcaster)
- id b5984954-f75a-4ac8-bb7f-a2aa60ec4ba1; Sat, 18 Jul 2026 21:39:04 +0000 (UTC)
-X-Farcaster-Flow-ID: b5984954-f75a-4ac8-bb7f-a2aa60ec4ba1
+ id 434683dd-be8b-420a-aad4-ead22363d4ea; Sat, 18 Jul 2026 21:39:54 +0000 (UTC)
+X-Farcaster-Flow-ID: 434683dd-be8b-420a-aad4-ead22363d4ea
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
+ EX19MTAUWA001.ant.amazon.com (10.250.64.217) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:39:04 +0000
+ Sat, 18 Jul 2026 21:39:54 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:38:55 +0000
+ Sat, 18 Jul 2026 21:39:45 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,10 +93,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 008/137] ssi,
- usb: Make bus-layer creators take a QOM parent
-Date: Sat, 18 Jul 2026 21:34:43 +0000
-Message-ID: <20260718213652.37673-9-graf@amazon.com>
+Subject: [RFC PATCH v2 011/137] hw/tricore: Give onboard devices a QOM parent
+Date: Sat, 18 Jul 2026 21:34:46 +0000
+Message-ID: <20260718213652.37673-12-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -105,11 +104,11 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D046UWA001.ant.amazon.com (10.13.139.112) To
+X-ClientProxiedBy: EX19D046UWB003.ant.amazon.com (10.13.139.174) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=52.13.214.179;
+Received-SPF: pass client-ip=50.112.246.219;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -133,282 +132,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Apply the rename-and-reintroduce treatment to the remaining
-bus-layer helpers that wrap qdev_new_orphan():
+Convert the *_orphan() device-creation calls in hw/tricore to the new
+parented API introduced earlier in this series, so every onboard
+device gets a stable path in the composition tree instead of landing
+in /machine/unattached with an unstable device[N] name.
 
-  ssi_create_peripheral()  -> ssi_create_peripheral_orphan()
-  usb_create_simple()      -> usb_create_simple_orphan()
+The parent for each device is the object that owns its lifetime: the
+machine for board-created devices, the containing device for
+composite children.  Names follow existing QOM conventions.
 
-and reintroduce the short names with a leading (parent, id, ...)
-pair.  Also add a usb_new(parent, id, type) helper for callers that
-need to set properties before realize.
+Per-site rationale (reviewers: dispute the modeling here):
 
-sd-bus, apple-desktop-bus, HDA, aux-bus and spapr-vio have no bus-
-layer creation wrapper: their onboard devices are open-coded via
-qdev_new_orphan() at each call site and will be converted directly
-to qdev_new(parent, id, type) in the per-subdirectory conversion
-patches.
+  file:line                | parent           | name         | rationale
+  tricore_testboard.c:70   | OBJECT(machine)  | "cpu"        | single CPU created by board init(); machine owns it
+  tricore_testboard.c:92   | OBJECT(machine)  | "testdevice" | onboard test device created by board init()
 
-The mechanical rename part is generated by
-
-  spatch --sp-file scripts/coccinelle/qom-parent/ssi-usb-orphan.cocci \
-         --in-place --include-headers --dir .
-
-or equivalently
-
-  git ls-files '*.[ch]' '*.[ch].inc' '*.rst' '*.py' | \
-      grep -v '^subprojects/' | \
-      xargs sed -i \
-          's/\bssi_create_peripheral\b/&_orphan/g;
-           s/\busb_create_simple\b/&_orphan/g'
-
+Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/arm/stellaris.c                             |  2 +-
- hw/hppa/machine.c                              |  4 ++--
- hw/mips/loongson3_virt.c                       |  4 ++--
- hw/ppc/mac_newworld.c                          |  4 ++--
- hw/ppc/sam460ex.c                              |  4 ++--
- hw/ppc/spapr.c                                 |  4 ++--
- hw/riscv/sifive_u.c                            |  2 +-
- hw/sh4/r2d.c                                   |  2 +-
- hw/ssi/ssi.c                                   | 11 ++++++++++-
- hw/vmapple/vmapple.c                           |  4 ++--
- include/hw/ssi/ssi.h                           |  6 ++++--
- include/hw/usb/usb.h                           | 18 +++++++++++++++++-
- .../coccinelle/qom-parent/ssi-usb-orphan.cocci | 18 ++++++++++++++++++
- 13 files changed, 64 insertions(+), 19 deletions(-)
- create mode 100644 scripts/coccinelle/qom-parent/ssi-usb-orphan.cocci
+ hw/tricore/tricore_testboard.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/stellaris.c b/hw/arm/stellaris.c
-index f9d2a61f9c..7a18d98477 100644
---- a/hw/arm/stellaris.c
-+++ b/hw/arm/stellaris.c
-@@ -1300,7 +1300,7 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
-              *  - Make the ssd0323 OLED controller chipselect active-low
-              */
-             bus = qdev_get_child_bus(dev, "ssi");
--            sddev = ssi_create_peripheral(bus, "ssi-sd");
-+            sddev = ssi_create_peripheral_orphan(bus, "ssi-sd");
+diff --git a/hw/tricore/tricore_testboard.c b/hw/tricore/tricore_testboard.c
+index 69794d3445..9e8cccbd59 100644
+--- a/hw/tricore/tricore_testboard.c
++++ b/hw/tricore/tricore_testboard.c
+@@ -55,6 +55,7 @@ static void tricore_load_kernel(CPUTriCoreState *env)
  
-             dinfo = drive_get(IF_SD, 0, 0);
-             blk = dinfo ? blk_by_legacy_dinfo(dinfo) : NULL;
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index 91fe4845c4..44dab9225a 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -446,8 +446,8 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
-         pci_create_simple_orphan(pci_bus, -1, "pci-ohci");
-         usb_bus = USB_BUS(object_resolve_type_unambiguous(TYPE_USB_BUS,
-                                                           &error_abort));
--        usb_create_simple(usb_bus, "usb-kbd");
--        usb_create_simple(usb_bus, "usb-mouse");
-+        usb_create_simple_orphan(usb_bus, "usb-kbd");
-+        usb_create_simple_orphan(usb_bus, "usb-mouse");
-     }
- 
-     /* register power switch emulation */
-diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
-index 1729eb1c0b..f43c231004 100644
---- a/hw/mips/loongson3_virt.c
-+++ b/hw/mips/loongson3_virt.c
-@@ -468,8 +468,8 @@ static inline void loongson3_virt_devices_init(MachineState *machine,
-         pci_create_simple_orphan(pci_bus, -1, "pci-ohci");
-         usb_bus = USB_BUS(object_resolve_type_unambiguous(TYPE_USB_BUS,
-                                                           &error_abort));
--        usb_create_simple(usb_bus, "usb-kbd");
--        usb_create_simple(usb_bus, "usb-tablet");
-+        usb_create_simple_orphan(usb_bus, "usb-kbd");
-+        usb_create_simple_orphan(usb_bus, "usb-tablet");
-     }
- 
-     pci_init_nic_devices(pci_bus, mc->default_nic);
-diff --git a/hw/ppc/mac_newworld.c b/hw/ppc/mac_newworld.c
-index 0df953b9e1..72baeef60a 100644
---- a/hw/ppc/mac_newworld.c
-+++ b/hw/ppc/mac_newworld.c
-@@ -425,8 +425,8 @@ static void ppc_core99_init(MachineState *machine)
- 
-             usb_bus = USB_BUS(object_resolve_type_unambiguous(TYPE_USB_BUS,
-                                                               &error_abort));
--            usb_create_simple(usb_bus, "usb-kbd");
--            usb_create_simple(usb_bus, "usb-mouse");
-+            usb_create_simple_orphan(usb_bus, "usb-kbd");
-+            usb_create_simple_orphan(usb_bus, "usb-mouse");
-         }
-     }
- 
-diff --git a/hw/ppc/sam460ex.c b/hw/ppc/sam460ex.c
-index 767a5eb596..39e704dfaa 100644
---- a/hw/ppc/sam460ex.c
-+++ b/hw/ppc/sam460ex.c
-@@ -398,8 +398,8 @@ static void sam460ex_init(MachineState *machine)
-     sysbus_connect_irq(sbdev, 0, qdev_get_gpio_in(uic[2], 30));
-     usb_bus = USB_BUS(object_resolve_type_unambiguous(TYPE_USB_BUS,
-                                                       &error_abort));
--    usb_create_simple(usb_bus, "usb-kbd");
--    usb_create_simple(usb_bus, "usb-mouse");
-+    usb_create_simple_orphan(usb_bus, "usb-kbd");
-+    usb_create_simple_orphan(usb_bus, "usb-mouse");
- 
-     /* PCIe buses */
-     dev = qdev_new_orphan(TYPE_PPC460EX_PCIE_HOST);
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 4ead6ba664..e09b529ebc 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -3082,8 +3082,8 @@ static void spapr_machine_init(MachineState *machine)
- 
-             usb_bus = USB_BUS(object_resolve_type_unambiguous(TYPE_USB_BUS,
-                                                               &error_abort));
--            usb_create_simple(usb_bus, "usb-kbd");
--            usb_create_simple(usb_bus, "usb-mouse");
-+            usb_create_simple_orphan(usb_bus, "usb-kbd");
-+            usb_create_simple_orphan(usb_bus, "usb-mouse");
-         }
-     }
- 
-diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-index db6d984f94..47ce75ef11 100644
---- a/hw/riscv/sifive_u.c
-+++ b/hw/riscv/sifive_u.c
-@@ -606,7 +606,7 @@ static void sifive_u_machine_init(MachineState *machine)
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->soc.spi0), 1, flash_cs);
- 
-     /* Connect an SD card to SPI2 */
--    sd_dev = ssi_create_peripheral(s->soc.spi2.spi, "ssi-sd");
-+    sd_dev = ssi_create_peripheral_orphan(s->soc.spi2.spi, "ssi-sd");
- 
-     sd_cs = qdev_get_gpio_in_named(sd_dev, SSI_GPIO_CS, 0);
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->soc.spi2), 1, sd_cs);
-diff --git a/hw/sh4/r2d.c b/hw/sh4/r2d.c
-index 0b502ca392..6f8d270fae 100644
---- a/hw/sh4/r2d.c
-+++ b/hw/sh4/r2d.c
-@@ -320,7 +320,7 @@ static void r2d_init(MachineState *machine)
-     /* USB keyboard */
-     usb_bus = USB_BUS(object_resolve_type_unambiguous(TYPE_USB_BUS,
-                                                       &error_abort));
--    usb_create_simple(usb_bus, "usb-kbd");
-+    usb_create_simple_orphan(usb_bus, "usb-kbd");
- 
-     /* Todo: register on board registers */
-     memset(&boot_params, 0, sizeof(boot_params));
-diff --git a/hw/ssi/ssi.c b/hw/ssi/ssi.c
-index b1935271f0..6031cde7b0 100644
---- a/hw/ssi/ssi.c
-+++ b/hw/ssi/ssi.c
-@@ -138,7 +138,16 @@ bool ssi_realize_and_unref(DeviceState *dev, SSIBus *bus, Error **errp)
-     return qdev_realize_and_unref(dev, &bus->parent_obj, errp);
- }
- 
--DeviceState *ssi_create_peripheral(SSIBus *bus, const char *name)
-+DeviceState *ssi_create_peripheral(Object *parent, const char *id,
-+                                    SSIBus *bus, const char *type)
-+{
-+    DeviceState *dev = qdev_new(parent, id, type);
-+
-+    qdev_realize(dev, BUS(bus), &error_fatal);
-+    return dev;
-+}
-+
-+DeviceState *ssi_create_peripheral_orphan(SSIBus *bus, const char *name)
+ static void tricore_testboard_init(MachineState *machine, int board_id)
  {
-     DeviceState *dev = qdev_new_orphan(name);
++    Object *mo = OBJECT(machine);
+     TriCoreCPU *cpu;
+     CPUTriCoreState *env;
+     TriCoreTestDeviceState *test_dev;
+@@ -67,7 +68,7 @@ static void tricore_testboard_init(MachineState *machine, int board_id)
+     MemoryRegion *pcp_data = g_new(MemoryRegion, 1);
+     MemoryRegion *pcp_text = g_new(MemoryRegion, 1);
  
-diff --git a/hw/vmapple/vmapple.c b/hw/vmapple/vmapple.c
-index bf19faa04a..4d218748c2 100644
---- a/hw/vmapple/vmapple.c
-+++ b/hw/vmapple/vmapple.c
-@@ -425,8 +425,8 @@ static void create_pcie(VMAppleMachineState *vms)
+-    cpu = TRICORE_CPU(cpu_create_orphan(machine->cpu_type));
++    cpu = TRICORE_CPU(cpu_create(mo, "cpu", machine->cpu_type));
+     env = &cpu->env;
+     memory_region_init_ram(ext_cram, NULL, "powerlink_ext_c.ram",
+                            2 * MiB, &error_fatal);
+@@ -89,7 +90,9 @@ static void tricore_testboard_init(MachineState *machine, int board_id)
+     memory_region_add_subregion(sysmem, 0xf0050000, pcp_data);
+     memory_region_add_subregion(sysmem, 0xf0060000, pcp_text);
  
-         usb_bus = USB_BUS(object_resolve_type_unambiguous(TYPE_USB_BUS,
-                                                           &error_fatal));
--        usb_create_simple(usb_bus, "usb-kbd");
--        usb_create_simple(usb_bus, "usb-tablet");
-+        usb_create_simple_orphan(usb_bus, "usb-kbd");
-+        usb_create_simple_orphan(usb_bus, "usb-tablet");
-     }
- }
+-    test_dev = TRICORE_TESTDEVICE(qdev_new_orphan(TYPE_TRICORE_TESTDEVICE));
++    test_dev = TRICORE_TESTDEVICE(qdev_new(mo, "testdevice",
++                                           TYPE_TRICORE_TESTDEVICE));
++    sysbus_realize(SYS_BUS_DEVICE(test_dev), &error_fatal);
+     memory_region_add_subregion(sysmem, 0xf0000000, &test_dev->iomem);
  
-diff --git a/include/hw/ssi/ssi.h b/include/hw/ssi/ssi.h
-index 153bf0cb9c..36ed002281 100644
---- a/include/hw/ssi/ssi.h
-+++ b/include/hw/ssi/ssi.h
-@@ -81,7 +81,9 @@ extern const VMStateDescription vmstate_ssi_peripheral;
-     .offset     = vmstate_offset_value(_state, _field, SSIPeripheral), \
- }
  
--DeviceState *ssi_create_peripheral(SSIBus *bus, const char *name);
-+DeviceState *ssi_create_peripheral(Object *parent, const char *id,
-+                                    SSIBus *bus, const char *type);
-+DeviceState *ssi_create_peripheral_orphan(SSIBus *bus, const char *name);
- /**
-  * ssi_realize_and_unref: realize and unref an SSI peripheral
-  * @dev: SSI peripheral to realize
-@@ -95,7 +97,7 @@ DeviceState *ssi_create_peripheral(SSIBus *bus, const char *name);
-  * This function is useful if you have created @dev via qdev_new_orphan()
-  * (which takes a reference to the device it returns to you), so that
-  * you can set properties on it before realizing it. If you don't need
-- * to set properties then ssi_create_peripheral() is probably better (as it
-+ * to set properties then ssi_create_peripheral_orphan() is probably better (as it
-  * does the create, init and realize in one step).
-  *
-  * If you are embedding the SSI peripheral into another QOM device and
-diff --git a/include/hw/usb/usb.h b/include/hw/usb/usb.h
-index 6ef190523f..1ae1f40aa9 100644
---- a/include/hw/usb/usb.h
-+++ b/include/hw/usb/usb.h
-@@ -584,7 +584,23 @@ static inline bool usb_realize_and_unref(USBDevice *dev, USBBus *bus, Error **er
-     return qdev_realize_and_unref(&dev->qdev, &bus->qbus, errp);
- }
- 
--static inline USBDevice *usb_create_simple(USBBus *bus, const char *name)
-+static inline USBDevice *usb_new(Object *parent, const char *id,
-+                                  const char *type)
-+{
-+    return USB_DEVICE(qdev_new(parent, id, type));
-+}
-+
-+static inline USBDevice *usb_create_simple(Object *parent, const char *id,
-+                                            USBBus *bus, const char *type)
-+{
-+    USBDevice *dev = usb_new(parent, id, type);
-+
-+    qdev_realize(DEVICE(dev), BUS(bus), &error_abort);
-+    return dev;
-+}
-+
-+static inline USBDevice *usb_create_simple_orphan(USBBus *bus,
-+                                                    const char *name)
- {
-     USBDevice *dev = USB_DEVICE(qdev_new_orphan(name));
- 
-diff --git a/scripts/coccinelle/qom-parent/ssi-usb-orphan.cocci b/scripts/coccinelle/qom-parent/ssi-usb-orphan.cocci
-new file mode 100644
-index 0000000000..7d201536d8
---- /dev/null
-+++ b/scripts/coccinelle/qom-parent/ssi-usb-orphan.cocci
-@@ -0,0 +1,18 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+//
-+// Rename ssi_create_peripheral()/usb_create_simple() to *_orphan()
-+// so that the short names can be reintroduced with a mandatory
-+// (parent, id, ...) signature.
-+//
-+// spatch --sp-file scripts/coccinelle/qom-parent/ssi-usb-orphan.cocci \
-+//        --in-place --include-headers --dir .
-+
-+@@
-+@@
-+- ssi_create_peripheral
-++ ssi_create_peripheral_orphan
-+
-+@@
-+@@
-+- usb_create_simple
-++ usb_create_simple_orphan
 -- 
 2.47.1
 
