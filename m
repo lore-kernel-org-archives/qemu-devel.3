@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E012C4451B
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:14:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09360C4450A
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:14:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlDIQ-0003CV-4I; Sat, 18 Jul 2026 18:14:10 -0400
+	id 1wlDIj-0003aT-9w; Sat, 18 Jul 2026 18:14:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlDIO-0003BZ-1r; Sat, 18 Jul 2026 18:14:08 -0400
-Received: from pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([34.218.115.239])
+ id 1wlDIh-0003UE-Sz; Sat, 18 Jul 2026 18:14:27 -0400
+Received: from pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.35.192.45])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlDIM-00074X-Go; Sat, 18 Jul 2026 18:14:07 -0400
+ id 1wlDIf-00075F-Ki; Sat, 18 Jul 2026 18:14:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784412846; x=1815948846;
+ t=1784412865; x=1815948865;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=NJpP0eMUz9RgKfKN7c0j9nZ3nsAHgWe24CG5g2vFMKk=;
- b=CXNhJBIV/Sc8fIBgx2Wjo72ZWB71G3dmxiSwK8tk3DMW1LZYBSo38JWo
- cQ2xs6mAMpr0bPdt/6lUTPN8bQDAu0NoJapCg9VBYnIaBcnnRrBHe/KTL
- BtP0cN/QkIGxG+vfkQ1BaH2RrwwlADspm7yyoayn7f7AFGUydicX3OeKa
- kARLTH2HQwE6ITql0eCX3ouLr47Q+V0AtM1lflCun4sS0sOw7GHxRTJs2
- pQny9JB1o0o9+RTVx1WoyMp0HaipyPsV5vXQVb87hfJYuFxkkDOVeHqO5
- AYpyb67EQjdw9Zj2lXQRL/OnRyc8WyXfO82XxcmBduE56jPtb7MLf32l4 A==;
-X-CSE-ConnectionGUID: V9yQYF7WSJKAPPAArtZF5Q==
-X-CSE-MsgGUID: 0LMPs3GDR1Ga/0V3+VmZBA==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23720093"
-Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
- by internal-pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:14:02 +0000
-Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.234:14799]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.30.230:2525]
+ bh=xsBoXh4tBaSrJVy9bgHYnnrFGltFojExcdq4Y6GWQHM=;
+ b=Jwida82D2V4QE7eWGhtL0O1XztcPSM9ryXMPZen3WCw9mMOUYasaxcSn
+ OpMFs8ASKYJupmqTJPfVfXRpuIyDlLYgTBBsx9RsewPmz/wKL2h9PHlf4
+ KRAI5QuRViH8NXUffI1TX0qZNtxIbfdrnUKEpxjJUUIgZSE2K5pZ0WCEf
+ 2VcZFCZyoUXSd/VbKFxM0Cr+wa3nhCAy/e/cHbTKdBMlNPOI/4bF9DN86
+ 931Bgaw05jiByEQbrwUos4zFDZxzkBeKMhcoCuBT9nVJ9kO6SD8GS8roi
+ Wswq7Mbg7bQeeKEFgOq7EaTTc2Fc/B/KBO1riXhBHfbwCmUh1r3RN+aLE Q==;
+X-CSE-ConnectionGUID: F1QrvP7TTlal1fYrS5G8pw==
+X-CSE-MsgGUID: M3Ih5GZOQE6QK07BrJXL5A==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23695361"
+Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
+ by internal-pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:14:21 +0000
+Received: from EX19MTAUWC002.ant.amazon.com [205.251.233.51:30382]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.29.147:2525]
  with esmtp (Farcaster)
- id 6ca61aea-c4a5-4912-87e6-5a5d4881c791; Sat, 18 Jul 2026 22:14:01 +0000 (UTC)
-X-Farcaster-Flow-ID: 6ca61aea-c4a5-4912-87e6-5a5d4881c791
+ id cc76cffe-21e4-4157-ba11-66333fc2a8a1; Sat, 18 Jul 2026 22:14:21 +0000 (UTC)
+X-Farcaster-Flow-ID: cc76cffe-21e4-4157-ba11-66333fc2a8a1
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
+ EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:14:01 +0000
+ Sat, 18 Jul 2026 22:14:20 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:13:52 +0000
+ Sat, 18 Jul 2026 22:14:11 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,10 +93,10 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 132/137] hw/pci-host/versatile: Use
- object_initialize_child() for pci_dev
-Date: Sat, 18 Jul 2026 21:36:47 +0000
-Message-ID: <20260718213652.37673-133-graf@amazon.com>
+Subject: [RFC PATCH v2 134/137] qom: Delete /machine/unattached and error on
+ unparented realize
+Date: Sat, 18 Jul 2026 21:36:49 +0000
+Message-ID: <20260718213652.37673-135-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -107,16 +107,16 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D044UWA001.ant.amazon.com (10.13.139.100) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=34.218.115.239;
+Received-SPF: pass client-ip=52.35.192.45;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-011.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
  HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
+ SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
  UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -133,32 +133,254 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The embedded versatile_pci_host device was initialized via
-object_initialize() without ever being parented, so it landed in
-/machine/unattached at realize time.  Switch to
-object_initialize_child() so it becomes a proper child<> of the
-host bridge.
+With every board-created device, memory region, IRQ, and singleton
+now given an explicit QOM parent, the /machine/unattached container
+serves no legitimate purpose.  Remove it and turn the
+device_set_realized() fallback into a hard error, so that any
+future orphan is caught at realize time rather than silently
+adopted into an anonymous bucket.
+
+  hw/core/qdev.c   error out on !obj->parent instead of adopting
+  hw/core/qdev-user.c   drop the fake unattached container
+  system/vl.c      drop "unattached" from machine container list
+  hw/i386/pc.c     search /machine recursively for the FDC instead
+                   of the (unattached, peripheral, peripheral-anon)
+                   container triple
+  tests/unit/      parent test devices explicitly under /machine
+
+After this commit, `info qom-tree` no longer shows
+/machine/unattached on any target/machine combination, and
+`git grep '"unattached"'` returns zero hits.
 
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/pci-host/versatile.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/core/qdev-user.c                 |  6 +-----
+ hw/core/qdev.c                      | 20 ++++----------------
+ hw/i386/pc.c                        | 11 +----------
+ include/hw/core/qdev.h              |  2 +-
+ system/vl.c                         |  1 -
+ tests/unit/test-qdev-global-props.c | 17 +++++++----------
+ tests/unit/test-qdev.c              | 12 ++++--------
+ 7 files changed, 18 insertions(+), 51 deletions(-)
 
-diff --git a/hw/pci-host/versatile.c b/hw/pci-host/versatile.c
-index b27531f7fb..b749bcf1a1 100644
---- a/hw/pci-host/versatile.c
-+++ b/hw/pci-host/versatile.c
-@@ -410,7 +410,8 @@ static void pci_vpb_realize(DeviceState *dev, Error **errp)
-                       PCI_DEVFN(11, 0), TYPE_PCI_BUS);
-     h->bus = &s->pci_bus;
+diff --git a/hw/core/qdev-user.c b/hw/core/qdev-user.c
+index 051f8fbd02..592a8369a3 100644
+--- a/hw/core/qdev-user.c
++++ b/hw/core/qdev-user.c
+@@ -11,9 +11,5 @@
  
--    object_initialize(&s->pci_dev, sizeof(s->pci_dev), TYPE_VERSATILE_PCI_HOST);
-+    object_initialize_child(OBJECT(s), "pci-host", &s->pci_dev,
-+                            TYPE_VERSATILE_PCI_HOST);
+ void qdev_create_fake_machine(void)
+ {
+-    Object *fake_machine_obj;
+-
+-    fake_machine_obj = object_property_add_new_container(object_get_root(),
+-                                                         "machine");
+-    object_property_add_new_container(fake_machine_obj, "unattached");
++    object_property_add_new_container(object_get_root(), "machine");
+ }
+diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+index 9a68fb426e..df3ba02839 100644
+--- a/hw/core/qdev.c
++++ b/hw/core/qdev.c
+@@ -486,8 +486,6 @@ static void device_set_realized(Object *obj, bool value, Error **errp)
+     BusState *bus;
+     NamedClockList *ncl;
+     Error *local_err = NULL;
+-    bool unattached_parent = false;
+-    static int unattached_count;
  
-     for (i = 0; i < 4; i++) {
-         sysbus_init_irq(sbd, &s->irq[i]);
+     if (dev->hotplugged && !dc->hotpluggable) {
+         error_setg(errp, "Device '%s' does not support hotplugging",
+@@ -501,12 +499,10 @@ static void device_set_realized(Object *obj, bool value, Error **errp)
+         }
+ 
+         if (!obj->parent) {
+-            gchar *name = g_strdup_printf("device[%d]", unattached_count++);
+-
+-            object_property_add_child(machine_get_container("unattached"),
+-                                      name, obj);
+-            unattached_parent = true;
+-            g_free(name);
++            error_setg(errp, "device type '%s' has no QOM parent; "
++                       "use qdev_new() with a parent",
++                       object_get_typename(obj));
++            return;
+         }
+ 
+         hotplug_ctrl = qdev_get_hotplug_handler(dev);
+@@ -634,14 +630,6 @@ post_realize_fail:
+ 
+ fail:
+     error_propagate(errp, local_err);
+-    if (unattached_parent) {
+-        /*
+-         * Beware, this doesn't just revert
+-         * object_property_add_child(), it also runs bus_remove()!
+-         */
+-        object_unparent(OBJECT(dev));
+-        unattached_count--;
+-    }
+ }
+ 
+ static bool device_get_hotpluggable(Object *obj, Error **errp)
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 398371ff6f..bab8ee453f 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -368,24 +368,15 @@ static int check_fdc(Object *obj, void *opaque)
+     return 0;
+ }
+ 
+-static const char * const fdc_container_path[] = {
+-    "unattached", "peripheral", "peripheral-anon"
+-};
+-
+ /*
+  * Locate the FDC at IO address 0x3f0, in order to configure the CMOS registers
+  * and ACPI objects.
+  */
+ static ISADevice *pc_find_fdc0(void)
+ {
+-    int i;
+-    Object *container;
+     CheckFdcState state = { 0 };
+ 
+-    for (i = 0; i < ARRAY_SIZE(fdc_container_path); i++) {
+-        container = machine_get_container(fdc_container_path[i]);
+-        object_child_foreach(container, check_fdc, &state);
+-    }
++    object_child_foreach_recursive(qdev_get_machine(), check_fdc, &state);
+ 
+     if (state.multiple) {
+         warn_report("multiple floppy disk controllers with "
+diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
+index 9220e9e3b1..eded1b715d 100644
+--- a/include/hw/core/qdev.h
++++ b/include/hw/core/qdev.h
+@@ -462,7 +462,7 @@ static inline bool qdev_is_realized(DeviceState *dev)
+  * initialization.
+  * @dev must not be plugged into a bus already.
+  * If @bus, plug @dev into @bus.  This takes a reference to @dev.
+- * If @dev has no QOM parent, make one up, taking another reference.
++ * @dev must already have a QOM parent (see qdev_new()).
+  *
+  * If you created @dev via object_new() directly (holding a floating
+  * reference), you probably want to use qdev_realize_and_unref() instead.
+diff --git a/system/vl.c b/system/vl.c
+index b4434839df..e51399d389 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -2192,7 +2192,6 @@ static void parse_memory_options(void)
+ static void qemu_create_machine_containers(Object *machine)
+ {
+     static const char *const containers[] = {
+-        "unattached",
+         "peripheral",
+         "peripheral-anon",
+     };
+diff --git a/tests/unit/test-qdev-global-props.c b/tests/unit/test-qdev-global-props.c
+index 8ea362cbb9..a941774b9d 100644
+--- a/tests/unit/test-qdev-global-props.c
++++ b/tests/unit/test-qdev-global-props.c
+@@ -78,25 +78,22 @@ static const TypeInfo subclass_type = {
+  * inherit the global states of the parent process) will try to create qdev
+  * and realize the device.
+  *
+- * Realization of such anonymous qdev (with no parent object) requires both
+- * the machine object and its "unattached" container to be at least present.
++ * Realization requires that the device already has a QOM parent.
+  */
+ static void test_init_machine(void)
+ {
+     /* This is a fake machine - it doesn't need to be a machine object */
+-    Object *machine = object_property_add_new_container(
++    object_property_add_new_container(
+         object_get_root(), "machine");
+ 
+-    /* This container must exist for anonymous qdevs to realize() */
+-    object_property_add_new_container(machine, "unattached");
+-}
++    }
+ 
+ /* Test simple static property setting to default value */
+ static void test_static_prop_subprocess(void)
+ {
+     MyType *mt;
+ 
+-    mt = STATIC_TYPE(object_new(TYPE_STATIC_PROPS));
++    mt = STATIC_TYPE(object_new_child(qdev_get_machine(), "dev[*]", TYPE_STATIC_PROPS));
+     qdev_realize(DEVICE(mt), NULL, &error_fatal);
+ 
+     g_assert_cmpuint(mt->prop1, ==, PROP_DEFAULT);
+@@ -131,7 +128,7 @@ static void test_static_globalprop_subprocess(void)
+ 
+     register_global_properties(props);
+ 
+-    mt = STATIC_TYPE(object_new(TYPE_STATIC_PROPS));
++    mt = STATIC_TYPE(object_new_child(qdev_get_machine(), "dev[*]", TYPE_STATIC_PROPS));
+     qdev_realize(DEVICE(mt), NULL, &error_fatal);
+ 
+     g_assert_cmpuint(mt->prop1, ==, 200);
+@@ -249,7 +246,7 @@ static void test_dynamic_globalprop_subprocess(void)
+ 
+     register_global_properties(props);
+ 
+-    mt = DYNAMIC_TYPE(object_new(TYPE_DYNAMIC_PROPS));
++    mt = DYNAMIC_TYPE(object_new_child(qdev_get_machine(), "dev[*]", TYPE_DYNAMIC_PROPS));
+     qdev_realize(DEVICE(mt), NULL, &error_fatal);
+ 
+     g_assert_cmpuint(mt->prop1, ==, 101);
+@@ -295,7 +292,7 @@ static void test_subclass_global_props(void)
+ 
+     register_global_properties(props);
+ 
+-    mt = STATIC_TYPE(object_new(TYPE_SUBCLASS));
++    mt = STATIC_TYPE(object_new_child(qdev_get_machine(), "dev[*]", TYPE_SUBCLASS));
+     qdev_realize(DEVICE(mt), NULL, &error_fatal);
+ 
+     g_assert_cmpuint(mt->prop1, ==, 102);
+diff --git a/tests/unit/test-qdev.c b/tests/unit/test-qdev.c
+index 20eae38e03..eafffb7175 100644
+--- a/tests/unit/test-qdev.c
++++ b/tests/unit/test-qdev.c
+@@ -44,24 +44,21 @@ static const TypeInfo my_dev_type_info = {
+ /*
+  * Initialize a fake machine, being prepared for future tests.
+  *
+- * Realization of anonymous qdev (with no parent object) requires both
+- * the machine object and its "unattached" container to be at least present.
++ * Realization requires that the device already has a QOM parent.
+  */
+ static void test_init_machine(void)
+ {
+     /* This is a fake machine - it doesn't need to be a machine object */
+-    Object *machine = object_property_add_new_container(
++    object_property_add_new_container(
+         object_get_root(), "machine");
+ 
+-    /* This container must exist for anonymous qdevs to realize() */
+-    object_property_add_new_container(machine, "unattached");
+-}
++    }
+ 
+ static void test_qdev_free_properties(void)
+ {
+     MyDev *mt;
+ 
+-    mt = STATIC_TYPE(object_new(TYPE_MY_DEV));
++    mt = STATIC_TYPE(object_new_child(qdev_get_machine(), "dev[*]", TYPE_MY_DEV));
+     object_set_props(OBJECT(mt), &error_fatal,
+                      "string", "something",
+                      "array-u32", "12,13",
+@@ -75,7 +72,6 @@ static void test_qdev_free_properties(void)
+     g_assert_cmpuint(mt->prop_array_u32[1], ==, 13);
+ 
+     object_unparent(OBJECT(mt));
+-    object_unref(mt);
+ }
+ 
+ 
 -- 
 2.47.1
 
