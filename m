@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E969EC4450A
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:01:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7946DC4450A
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:02:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlD6E-0008KW-IF; Sat, 18 Jul 2026 18:01:34 -0400
+	id 1wlD6O-0000eI-2W; Sat, 18 Jul 2026 18:01:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlD6C-0008D8-On; Sat, 18 Jul 2026 18:01:32 -0400
-Received: from pdx-out-010.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.12.53.23])
+ id 1wlD6M-0000Yo-EK; Sat, 18 Jul 2026 18:01:42 -0400
+Received: from pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([44.246.77.92])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlD6A-0005Fx-Ty; Sat, 18 Jul 2026 18:01:32 -0400
+ id 1wlD6K-0005HA-H8; Sat, 18 Jul 2026 18:01:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784412090; x=1815948090;
+ t=1784412100; x=1815948100;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=qNvBAQnsropPFuCvMHAkpcPv/ub05GpIkFSZ2G7cECE=;
- b=fsovACCvlIyvL5l/qV3FJAmQt0WaYLFkXfkAl1KV4eR613Jx5DvsHJSH
- t59NoOwETVdAngDU8+uKKmpk9iSoapEtrVqSkGLgi33bEhg+Ysqr2W+Hw
- xVCMp2+nPh7MigvbKzmfYmQZ/CThHC+wb3n8ApYXMA+o1VFunRDqz6WQm
- 36ADgaW3Hntb4KbId7eoESujLa/fmGINFZVoQ3AJ8tDuSp6TkqLhff348
- OQN9pdzTCSmFHa/UbBZ42RtKm9SBDd9495ua5qmMT2Az1SnHZZ6V6yFCk
- Rm8/A5AqsrC7BiDLz8tMGJRNZ3CEVxkbVfupiTmfIY4FJLk05hmH//DKi A==;
-X-CSE-ConnectionGUID: IFy8SzVNTJ6KYUJKuSfx9w==
-X-CSE-MsgGUID: hWjvNeiBRWKuLpvT0bPDiw==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23795565"
-Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
- by internal-pdx-out-010.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:01:27 +0000
-Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.234:15836]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.11.151:2525]
+ bh=dcl/5z8pjfpIoarlJIEsAr0I+CKYUtttcVSgyF/k1wE=;
+ b=o5e/zmWa0B17FnDiseI+jPQi2+qDzOm8A7V+0YHyzHBlKarOtnnP8L5x
+ l/73NVtiaxmFWsMMHSo6qs7IGtsUGU/3gWgBY59jEgTEGJNg5VknmMcq4
+ K1WbnGFU06xmT/y7fPf6dzJxFNxLQyll7Uz9a5vFbTJ8bhrmCA84QuerN
+ tuQ0h5B2Y6zpEQu2OBEntByBl/0OyJ/DIemDcekdSj62gQEJJLqJE4R/H
+ XtoPSjQRNaqr3A7/VkdLAOyB7n+2UPKTrGnxvoBdlqjpZj0dKypKl8sx4
+ mdabQiH+olNLMTp44xusub2Q70hGAIw5cn3faJ0Pb25t/rUOijAwXQ/Hy w==;
+X-CSE-ConnectionGUID: Ch2CSGaHSGa1a8G7BAu3AQ==
+X-CSE-MsgGUID: yFxN0b0gRzWE5J5FuxgqPA==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23917695"
+Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
+ by internal-pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:01:36 +0000
+Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.104:30969]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.40.177:2525]
  with esmtp (Farcaster)
- id f004e84a-99c8-4385-9526-854b0bdd6e20; Sat, 18 Jul 2026 22:01:27 +0000 (UTC)
-X-Farcaster-Flow-ID: f004e84a-99c8-4385-9526-854b0bdd6e20
+ id 9e308200-d96d-4ec3-802a-8272e00dbf4a; Sat, 18 Jul 2026 22:01:36 +0000 (UTC)
+X-Farcaster-Flow-ID: 9e308200-d96d-4ec3-802a-8272e00dbf4a
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
+ EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:01:26 +0000
+ Sat, 18 Jul 2026 22:01:36 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:01:17 +0000
+ Sat, 18 Jul 2026 22:01:26 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,29 +93,29 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 087/137] cpu: Remove cpu_create_orphan()
-Date: Sat, 18 Jul 2026 21:36:02 +0000
-Message-ID: <20260718213652.37673-88-graf@amazon.com>
+Subject: [RFC PATCH v2 088/137] sysbus: Remove *_orphan() creator variants
+Date: Sat, 18 Jul 2026 21:36:03 +0000
+Message-ID: <20260718213652.37673-89-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
  <20260718213652.37673-1-graf@amazon.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D037UWB004.ant.amazon.com (10.13.138.84) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=52.12.53.23;
+Received-SPF: pass client-ip=44.246.77.92;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-010.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
  HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
+ SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
  UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -132,59 +132,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All targets create their CPUs with an explicit parent now.
+All boards create sysbus devices with an explicit parent now.
+Drop sysbus_create_simple_orphan() and
+sysbus_create_varargs_orphan().
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/core/cpu-common.c  | 12 ------------
- include/hw/core/cpu.h | 10 ----------
- 2 files changed, 22 deletions(-)
+ hw/core/sysbus.c         | 29 -----------------------------
+ include/hw/core/sysbus.h | 11 -----------
+ 2 files changed, 40 deletions(-)
 
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index eef243c1ad..829a044e9e 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -68,18 +68,6 @@ CPUState *cpu_create(Object *parent, const char *id, const char *typename)
-     return cpu;
+diff --git a/hw/core/sysbus.c b/hw/core/sysbus.c
+index 85f56b68fb..1c67ea3580 100644
+--- a/hw/core/sysbus.c
++++ b/hw/core/sysbus.c
+@@ -250,35 +250,6 @@ DeviceState *sysbus_create_varargs(Object *parent, const char *id,
+     return dev;
  }
  
--CPUState *cpu_create_orphan(const char *typename)
+-DeviceState *sysbus_create_varargs_orphan(const char *name,
+-                                   hwaddr addr, ...)
 -{
--    Error *err = NULL;
--    CPUState *cpu = CPU(object_new(typename));
--    if (!qdev_realize(DEVICE(cpu), NULL, &err)) {
--        error_report_err(err);
--        object_unref(OBJECT(cpu));
--        exit(EXIT_FAILURE);
+-    DeviceState *dev;
+-    SysBusDevice *s;
+-    va_list va;
+-    qemu_irq irq;
+-    int n;
+-
+-    dev = qdev_new_orphan(name);
+-    s = SYS_BUS_DEVICE(dev);
+-    sysbus_realize_and_unref(s, &error_fatal);
+-    if (addr != (hwaddr)-1) {
+-        sysbus_mmio_map(s, 0, addr);
 -    }
--    return cpu;
+-    va_start(va, addr);
+-    n = 0;
+-    while (1) {
+-        irq = va_arg(va, qemu_irq);
+-        if (!irq) {
+-            break;
+-        }
+-        sysbus_connect_irq(s, n, irq);
+-        n++;
+-    }
+-    va_end(va);
+-    return dev;
 -}
 -
- void cpu_reset_interrupt(CPUState *cpu, int mask)
+ bool sysbus_realize(SysBusDevice *dev, Error **errp)
  {
-     qatomic_and(&cpu->interrupt_request, ~mask);
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 1b2ec1ab1e..544740a699 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -857,16 +857,6 @@ char *cpu_model_from_type(const char *typename);
-  */
- CPUState *cpu_create(Object *parent, const char *id, const char *typename);
+     return qdev_realize(DEVICE(dev), sysbus_get_default(), errp);
+diff --git a/include/hw/core/sysbus.h b/include/hw/core/sysbus.h
+index 1e07b1978d..ef3d39f576 100644
+--- a/include/hw/core/sysbus.h
++++ b/include/hw/core/sysbus.h
+@@ -119,15 +119,4 @@ static inline DeviceState *sysbus_create_simple(Object *parent,
+     return sysbus_create_varargs(parent, id, type, addr, irq, NULL);
+ }
  
--/**
-- * cpu_create_orphan:
-- * @typename: The CPU type.
-- *
-- * Instantiates a CPU and realizes the CPU.
-- *
-- * Returns: A #CPUState or %NULL if an error occurred.
-- */
--CPUState *cpu_create_orphan(const char *typename);
+-/* Legacy helper function for creating unparented devices.  */
+-DeviceState *sysbus_create_varargs_orphan(const char *name,
+-                                 hwaddr addr, ...);
 -
- /**
-  * parse_cpu_option:
-  * @cpu_option: The -cpu option including optional parameters.
+-static inline DeviceState *sysbus_create_simple_orphan(const char *name,
+-                                              hwaddr addr,
+-                                              qemu_irq irq)
+-{
+-    return sysbus_create_varargs_orphan(name, addr, irq, NULL);
+-}
+-
+ #endif /* HW_SYSBUS_H */
 -- 
 2.47.1
 
