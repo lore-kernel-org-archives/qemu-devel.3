@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E20FC4451B
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:11:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88C46C4450A
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:11:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlDFV-0004bL-3S; Sat, 18 Jul 2026 18:11:09 -0400
+	id 1wlDEr-0002mT-0X; Sat, 18 Jul 2026 18:10:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlDFH-0004PK-Sz; Sat, 18 Jul 2026 18:10:57 -0400
-Received: from pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([44.245.243.92])
+ id 1wlDEd-0002Wx-Fz; Sat, 18 Jul 2026 18:10:16 -0400
+Received: from pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([44.246.77.92])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlDFG-0006pi-3S; Sat, 18 Jul 2026 18:10:55 -0400
+ id 1wlDEb-0006ZK-N5; Sat, 18 Jul 2026 18:10:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784412654; x=1815948654;
+ t=1784412613; x=1815948613;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=XYX1pHdcrjyubK5N7hVhORucyl2rn9044QM9LF7h6vs=;
- b=nHsRRLtRrObqFVmxaPGxKEmkoSs+PrM2QpQ6huZJ9mujRviaC4kvlI7r
- 8h+bDakLKyEpVzEKiVZnBjgWM10mFOF6DuNyqp+apdvMGME7zoSOtSDt3
- I8UEbtTaKAydvVfN3fO4YsGfexDE/wvW4v4xClLqOFVO96bYQAaHSgXhO
- o9noqxktSfarKaMwo0Gr5uwP2kfGBP1GpAMJD7b/JCN/VEE0FHqkPsz0g
- goPRWNrcs/8YxcqTacr0wZlrMPz26NrFVwtKBVJdZIQwXdyd4hcWDQdNx
- aFLfi9c1nPBvXAZ2LcMDpGXTNtrsbp33w5+QxJpAIBQcvrnl0KUPl9zGh Q==;
-X-CSE-ConnectionGUID: t7d5Fp80QHK+OtGgRFOP7A==
-X-CSE-MsgGUID: +AayU4DqTh+B0/BqKRE/hQ==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23423713"
-Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
- by internal-pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:10:50 +0000
-Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.234:27271]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.40.177:2525]
+ bh=9Qn6R6pxE5AvdQsbIZhdL+G28xuxoC+uESHB8pn4JQU=;
+ b=ZtPSPaWXmreIPBnYTyLwqO3WbBUrU6w7mUxJq+kU2dr7zxPYD9AeHmb4
+ ZYnZ2ax3x5FMV438iDqZBHgO0+IzWOJoWAOoqm2QlphtZOHBjKk6YBPoi
+ A2GMxJ7cB7V2OIl0LEfp1Gk11/wS7o3GlhLS+h6BX5/OqMF+6sXXUWq02
+ /Qvb0T81YGpG/6K2Y6MubJ4zCC8yG4874z9Ifdd+jX74Qj+xVaT4w2bzl
+ 9YOBZ0vt2Zrr6l+Ak52Kh3860DoOXH5nWu4zic/zzfdLNxtYSfQwC6Dyy
+ shBG2a6nWAUrR+JXBnaLn/lwU34oJOtd531N7xmixb9lgCEev2QBWa1KO A==;
+X-CSE-ConnectionGUID: 0Vx/TroqSRiAP/Thw0Aq+A==
+X-CSE-MsgGUID: 8+BGN2RJTuGWy5lPVNy4vQ==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23918132"
+Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
+ by internal-pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:10:09 +0000
+Received: from EX19MTAUWB002.ant.amazon.com [205.251.233.111:15151]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.30.230:2525]
  with esmtp (Farcaster)
- id a1fc49ce-f2a9-4500-96a2-641a34b0429e; Sat, 18 Jul 2026 22:10:49 +0000 (UTC)
-X-Farcaster-Flow-ID: a1fc49ce-f2a9-4500-96a2-641a34b0429e
+ id 84d3792a-25d4-4505-ae8c-01ddd0eac50e; Sat, 18 Jul 2026 22:10:09 +0000 (UTC)
+X-Farcaster-Flow-ID: 84d3792a-25d4-4505-ae8c-01ddd0eac50e
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
+ EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:10:49 +0000
+ Sat, 18 Jul 2026 22:10:09 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:10:40 +0000
+ Sat, 18 Jul 2026 22:09:59 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,10 +93,10 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 121/137] hw/core/reset: Give the root reset container
- and legacy shims a QOM path
-Date: Sat, 18 Jul 2026 21:36:36 +0000
-Message-ID: <20260718213652.37673-122-graf@amazon.com>
+Subject: [RFC PATCH v2 119/137] accel: Parent the accelerator singleton under
+ /machine
+Date: Sat, 18 Jul 2026 21:36:34 +0000
+Message-ID: <20260718213652.37673-120-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -105,11 +105,11 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D039UWB002.ant.amazon.com (10.13.138.79) To
+X-ClientProxiedBy: EX19D036UWC003.ant.amazon.com (10.13.139.214) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=44.245.243.92;
+Received-SPF: pass client-ip=44.246.77.92;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -133,78 +133,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The root ResettableContainer and the LegacyReset shim objects are
-long-lived singletons held only by static pointers and refcounts.
-Give them a canonical path in the composition tree so
-qom-tree/qom-list can enumerate them and so device_set_realized()
-can require a QOM parent for every object.
-
-  /machine/reset-container                (ResettableContainer)
-  /machine/reset-container/legacy-reset[N] (LegacyReset shims)
-
-get_root_reset_container() is first reached from configure_accelerators()
-or machine_run_board_init(), both of which run after qemu_create_machine(),
-so qdev_get_machine() is available.  qemu_unregister_reset() switches
-from object_unref() to object_unparent() to release the child<> ref.
+do_configure_accelerator() runs after qemu_create_machine(), so
+current_machine is available.  Give the AccelState singleton a
+canonical path at /machine/accel and drop the floating caller
+reference; on init failure, unparent instead of unref.
 
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/core/reset.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ accel/accel-system.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/hw/core/reset.c b/hw/core/reset.c
-index e7230b49b7..34c1ab84d9 100644
---- a/hw/core/reset.c
-+++ b/hw/core/reset.c
-@@ -27,6 +27,7 @@
- #include "system/reset.h"
- #include "hw/core/resettable.h"
- #include "hw/core/resetcontainer.h"
-+#include "hw/core/qdev.h"
- 
- /*
-  * Return a pointer to the singleton container that holds all the Resettable
-@@ -38,7 +39,9 @@ static ResettableContainer *get_root_reset_container(void)
- 
-     if (!root_reset_container) {
-         root_reset_container =
--            RESETTABLE_CONTAINER(object_new(TYPE_RESETTABLE_CONTAINER));
-+            RESETTABLE_CONTAINER(object_new_child(qdev_get_machine(),
-+                                          "reset-container",
-+                                          TYPE_RESETTABLE_CONTAINER));
+diff --git a/accel/accel-system.c b/accel/accel-system.c
+index 9176665202..987c982c16 100644
+--- a/accel/accel-system.c
++++ b/accel/accel-system.c
+@@ -41,12 +41,14 @@ int accel_init_machine(AccelState *accel, MachineState *ms)
+     AccelClass *acc = ACCEL_GET_CLASS(accel);
+     int ret;
+     ms->accelerator = accel;
++    object_property_add_child(OBJECT(ms), "accel", OBJECT(accel));
++    object_unref(OBJECT(accel));
+     *(acc->allowed) = true;
+     ret = acc->init_machine(accel, ms);
+     if (ret < 0) {
+         ms->accelerator = NULL;
+         *(acc->allowed) = false;
+-        object_unref(OBJECT(accel));
++        object_unparent(OBJECT(accel));
+     } else {
+         object_set_accelerator_compat_props(acc->compat_props);
      }
-     return root_reset_container;
- }
-@@ -94,7 +97,8 @@ static void legacy_reset_class_init(ObjectClass *klass, const void *data)
- 
- void qemu_register_reset(QEMUResetHandler *func, void *opaque)
- {
--    Object *obj = object_new(TYPE_LEGACY_RESET);
-+    Object *obj = object_new_child(OBJECT(get_root_reset_container()),
-+                                   "legacy-reset[*]", TYPE_LEGACY_RESET);
-     LegacyReset *lr = LEGACY_RESET(obj);
- 
-     lr->func = func;
-@@ -104,7 +108,8 @@ void qemu_register_reset(QEMUResetHandler *func, void *opaque)
- 
- void qemu_register_reset_nosnapshotload(QEMUResetHandler *func, void *opaque)
- {
--    Object *obj = object_new(TYPE_LEGACY_RESET);
-+    Object *obj = object_new_child(OBJECT(get_root_reset_container()),
-+                                   "legacy-reset[*]", TYPE_LEGACY_RESET);
-     LegacyReset *lr = LEGACY_RESET(obj);
- 
-     lr->func = func;
-@@ -156,7 +161,7 @@ void qemu_unregister_reset(QEMUResetHandler *func, void *opaque)
- 
-     if (obj) {
-         qemu_unregister_resettable(obj);
--        object_unref(obj);
-+        object_unparent(obj);
-     }
- }
- 
 -- 
 2.47.1
 
