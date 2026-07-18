@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB15DC4451B
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:03:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7264C4450A
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:03:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlD8C-0004zH-LV; Sat, 18 Jul 2026 18:03:36 -0400
+	id 1wlD81-0004UY-Jd; Sat, 18 Jul 2026 18:03:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlD8B-0004uX-2q; Sat, 18 Jul 2026 18:03:35 -0400
-Received: from pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([35.155.198.111])
+ id 1wlD7z-0004Nh-Uw; Sat, 18 Jul 2026 18:03:23 -0400
+Received: from pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([50.112.246.219])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlD86-0005Px-Oh; Sat, 18 Jul 2026 18:03:34 -0400
+ id 1wlD7x-0005Oi-Cj; Sat, 18 Jul 2026 18:03:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784412210; x=1815948210;
+ t=1784412201; x=1815948201;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=FJpdN0tmvBs2dZanyNnSzsyg5k1bnQqSCPREAiSP4Tc=;
- b=o4eKOl2kOOiJtviRuI55k1cX3x8caIqgELnzFLM6fmnnOuIw2Tk4kynN
- 9KWWKPSqQIJlARnCdeW71LbHamZh7wYAENRWR5SoPs61WEmR9xLyjwflA
- oNGq9Am4YV5t0JL5Cnqh9NJThkmDXxQwjTKPM6gce51YfZoElDRsktIx5
- PASoBCYgDCbFLwmfmzCTs65Qg9qy8ddPpatfHdmvkEeoKK8SV5RtnVYry
- 9a9o0BlTYncBGjqOm771UFBFOqfNHdpk9EnFRZ5sL3XuzHMtiOVYyr1dn
- xKd/EZ6fwFpAxPLSj11e8gYPxupDXIzHF6x5yHufN1N8rBqc9y1ll9ycK Q==;
-X-CSE-ConnectionGUID: qe2KqG+RS6K3MD+wKEN79Q==
-X-CSE-MsgGUID: jtXHsg9rSQ+wkCQCaR1dOg==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23817066"
+ bh=GUPIqPSnXHKhYCW3HrZXJz3x53LLkXFzMUY1lGWJWaw=;
+ b=Rg5VkZenK75v0LPua6hxS7wtLSmOASm409CGZIIG9r0L3AhgQByMrtn3
+ KITY4CRF066FCTqyNzuTxBK2LE+SQfgcI7PBiGua1QwxlheMnazLSgXBs
+ ZnwY5ncZ1Z/sLBamRKVLqHY5+60xkmeho8JUgZ1UmOWkTZmcbxkMeZyPT
+ YB4QEzxRB69J39+DRLha3nO2nyHp+VmcjtzP1lo/PjbXPZKLT+2I169Bh
+ yMJy2sfeuPm/URDBSsBsZnF1UT4rbv5SQu6NHuAOol4lFOrQelyROPwGu
+ 0ZsKd0MZ3K3455xn7ai4gcO4CcZ+75T1fK2G7tdlbTRPOtFCRkt7+MLhS A==;
+X-CSE-ConnectionGUID: RJ3rqSGCRPuIPF+narQkSw==
+X-CSE-MsgGUID: IfLEB6trS7e8BmKpDub51A==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23725542"
 Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
  smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
- by internal-pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:03:27 +0000
-Received: from EX19MTAUWC002.ant.amazon.com [205.251.233.51:30288]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.0.115:2525]
+ by internal-pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:03:17 +0000
+Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.104:18393]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.48.250:2525]
  with esmtp (Farcaster)
- id f41ea425-6b7a-4a11-9d5e-42135cc33ead; Sat, 18 Jul 2026 22:03:26 +0000 (UTC)
-X-Farcaster-Flow-ID: f41ea425-6b7a-4a11-9d5e-42135cc33ead
+ id 60eec9b7-fa67-4dec-97bd-27f06aa3c6b8; Sat, 18 Jul 2026 22:03:17 +0000 (UTC)
+X-Farcaster-Flow-ID: 60eec9b7-fa67-4dec-97bd-27f06aa3c6b8
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
+ EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:03:26 +0000
+ Sat, 18 Jul 2026 22:03:16 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:03:16 +0000
+ Sat, 18 Jul 2026 22:03:07 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,9 +93,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 095/137] hw/arm: Give memory regions an explicit owner
-Date: Sat, 18 Jul 2026 21:36:10 +0000
-Message-ID: <20260718213652.37673-96-graf@amazon.com>
+Subject: [RFC PATCH v2 094/137] hw/i386: Give memory regions an explicit owner
+Date: Sat, 18 Jul 2026 21:36:09 +0000
+Message-ID: <20260718213652.37673-95-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -106,9 +106,9 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D031UWA001.ant.amazon.com (10.13.139.88) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=35.155.198.111;
+Received-SPF: pass client-ip=50.112.246.219;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-015.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -133,16 +133,10 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Convert memory_region_init*() calls that pass NULL owner to pass
-the enclosing SoC device or machine instead.
+the enclosing PC/x86/microvm machine or device instead.
 
-Static helpers make_ram()/make_ram_alias() in mps2.c and mps2-tz.c,
-create_tag_ram() in virt.c, and exynos4_boards_init_ram() gain an
-Object *owner first argument. armsse.c:make_alias() and
-aspeed_install_boot_rom() already carry a QOM-derived first
-argument; use it.
-
-hw/arm/omap1.c is handled in a separate commit as its 20+ non-QOM
-sub-init helpers all need owner threading.
+Thread X86MachineState through x86_isa_bios_init() so the isa-bios
+alias is owned by the machine that creates it.
 
 No functional change intended.
 
@@ -150,779 +144,233 @@ RAMBlock idstrs are unchanged: the owners added here are Machine
 or SysBus devices, and memory_region_register_ram() maps both to
 dev=NULL for qemu_ram_set_idstr().
 
-Reviewed-by: Bernhard Beschow <shentey@gmail.com> # imx only
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/arm/armsse.c            |  8 ++++----
- hw/arm/aspeed.c            |  2 +-
- hw/arm/aspeed_soc_common.c |  2 +-
- hw/arm/exynos4210.c        |  2 +-
- hw/arm/exynos4_boards.c    |  8 ++++----
- hw/arm/fsl-imx25.c         |  2 +-
- hw/arm/fsl-imx31.c         |  2 +-
- hw/arm/fsl-imx6.c          |  2 +-
- hw/arm/fsl-imx6ul.c        |  2 +-
- hw/arm/fsl-imx7.c          |  8 ++++----
- hw/arm/imx25_pdk.c         |  2 +-
- hw/arm/integratorcp.c      |  2 +-
- hw/arm/kzm.c               |  2 +-
- hw/arm/max78000_soc.c      |  2 +-
- hw/arm/mps2-tz.c           |  9 +++++----
- hw/arm/mps2.c              | 33 +++++++++++++++++----------------
- hw/arm/mps3r.c             |  4 ++--
- hw/arm/msf2-soc.c          |  2 +-
- hw/arm/msf2-som.c          |  2 +-
- hw/arm/musca.c             |  4 ++--
- hw/arm/musicpal.c          |  2 +-
- hw/arm/omap_sx1.c          | 14 +++++++-------
- hw/arm/realview.c          |  8 ++++----
- hw/arm/sbsa-ref.c          |  2 +-
- hw/arm/stellaris.c         |  4 ++--
- hw/arm/stm32f100_soc.c     |  2 +-
- hw/arm/stm32f205_soc.c     |  2 +-
- hw/arm/stm32f405_soc.c     |  4 ++--
- hw/arm/vexpress.c          |  8 ++++----
- hw/arm/virt.c              | 13 +++++++------
- hw/arm/xilinx_zynq.c       |  2 +-
- hw/arm/xlnx-zynqmp.c       |  2 +-
- 32 files changed, 83 insertions(+), 80 deletions(-)
+ hw/i386/microvm.c          |  4 ++--
+ hw/i386/pc.c               |  8 ++++----
+ hw/i386/pc_piix.c          |  2 +-
+ hw/i386/pc_q35.c           |  2 +-
+ hw/i386/pc_sysfw.c         |  6 +++---
+ hw/i386/x86-common.c       | 11 ++++++-----
+ hw/i386/xen/xen-hvm.c      |  8 ++++----
+ hw/i386/xen/xen_pvdevice.c |  2 +-
+ include/hw/i386/x86.h      |  3 ++-
+ 9 files changed, 24 insertions(+), 22 deletions(-)
 
-diff --git a/hw/arm/armsse.c b/hw/arm/armsse.c
-index ddb210c895..81895ad370 100644
---- a/hw/arm/armsse.c
-+++ b/hw/arm/armsse.c
-@@ -620,7 +620,7 @@ static uint32_t armsse_sys_config_value(ARMSSE *s, const ARMSSEInfo *info)
- static void make_alias(ARMSSE *s, MemoryRegion *mr, MemoryRegion *container,
-                        const char *name, hwaddr base, hwaddr size, hwaddr orig)
- {
--    memory_region_init_alias(mr, NULL, name, container, orig, size);
-+    memory_region_init_alias(mr, OBJECT(s), name, container, orig, size);
-     /* The alias is even lower priority than unimplemented_device regions */
-     memory_region_add_subregion_overlap(container, base, mr, -1500);
- }
-@@ -1161,7 +1161,7 @@ static void armsse_realize(DeviceState *dev, Error **errp)
-         SysBusDevice *sbd_mpc;
-         uint32_t sram_bank_size = 1 << s->sram_addr_width;
- 
--        memory_region_init_ram(&s->sram[i], NULL, ramname,
-+        memory_region_init_ram(&s->sram[i], OBJECT(dev), ramname,
-                                sram_bank_size, errp);
-         g_free(ramname);
-         if (*errp) {
-@@ -1226,11 +1226,11 @@ static void armsse_realize(DeviceState *dev, Error **errp)
- 
-     if (info->has_tcms) {
-         /* The SSE-300 has an ITCM at 0x0000_0000 and a DTCM at 0x2000_0000 */
--        memory_region_init_ram(&s->itcm, NULL, "sse300-itcm", 512 * KiB, errp);
-+        memory_region_init_ram(&s->itcm, OBJECT(dev), "sse300-itcm", 512 * KiB, errp);
-         if (*errp) {
-             return;
-         }
--        memory_region_init_ram(&s->dtcm, NULL, "sse300-dtcm", 512 * KiB, errp);
-+        memory_region_init_ram(&s->dtcm, OBJECT(dev), "sse300-dtcm", 512 * KiB, errp);
-         if (*errp) {
-             return;
-         }
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 2e76e09f8f..f9249a9851 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -201,7 +201,7 @@ static void aspeed_machine_init(MachineState *machine)
-     if (machine->kernel_filename && sc->num_cpus > 1) {
-         /* With no u-boot we must set up a boot stub for the secondary CPU */
-         MemoryRegion *smpboot = g_new(MemoryRegion, 1);
--        memory_region_init_ram(smpboot, NULL, "aspeed.smpboot",
-+        memory_region_init_ram(smpboot, OBJECT(bmc), "aspeed.smpboot",
-                                0x80, &error_abort);
-         memory_region_add_subregion(get_system_memory(),
-                                     AST_SMP_MAILBOX_BASE, smpboot);
-diff --git a/hw/arm/aspeed_soc_common.c b/hw/arm/aspeed_soc_common.c
-index 780a9659cc..c79b27c561 100644
---- a/hw/arm/aspeed_soc_common.c
-+++ b/hw/arm/aspeed_soc_common.c
-@@ -177,7 +177,7 @@ void aspeed_install_boot_rom(AspeedSoCState *soc, BlockBackend *blk,
- {
-     AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(soc);
- 
--    memory_region_init_rom(boot_rom, NULL, "aspeed.boot_rom", rom_size,
-+    memory_region_init_rom(boot_rom, OBJECT(soc), "aspeed.boot_rom", rom_size,
-                            &error_abort);
-     memory_region_add_subregion_overlap(&soc->spi_boot_container, 0,
-                                         boot_rom, 1);
-diff --git a/hw/arm/exynos4210.c b/hw/arm/exynos4210.c
-index 74ce36c1e6..676915e814 100644
---- a/hw/arm/exynos4210.c
-+++ b/hw/arm/exynos4210.c
-@@ -660,7 +660,7 @@ static void exynos4210_realize(DeviceState *socdev, Error **errp)
-                                 &s->irom_alias_mem);
- 
-     /* Internal RAM */
--    memory_region_init_ram(&s->iram_mem, NULL, "exynos4210.iram",
-+    memory_region_init_ram(&s->iram_mem, OBJECT(socdev), "exynos4210.iram",
-                            EXYNOS4210_IRAM_SIZE, &error_fatal);
-     memory_region_add_subregion(system_mem, EXYNOS4210_IRAM_BASE_ADDR,
-                                 &s->iram_mem);
-diff --git a/hw/arm/exynos4_boards.c b/hw/arm/exynos4_boards.c
-index dce2c24860..8430317815 100644
---- a/hw/arm/exynos4_boards.c
-+++ b/hw/arm/exynos4_boards.c
-@@ -88,14 +88,14 @@ static void lan9215_init(uint32_t base, qemu_irq irq)
-     }
- }
- 
--static void exynos4_boards_init_ram(Exynos4BoardState *s,
-+static void exynos4_boards_init_ram(Object *owner, Exynos4BoardState *s,
-                                     MemoryRegion *system_mem,
-                                     unsigned long ram_size)
- {
-     unsigned long mem_size = ram_size;
- 
-     if (mem_size > EXYNOS4210_DRAM_MAX_SIZE) {
--        memory_region_init_ram(&s->dram1_mem, NULL, "exynos4210.dram1",
-+        memory_region_init_ram(&s->dram1_mem, owner, "exynos4210.dram1",
-                                mem_size - EXYNOS4210_DRAM_MAX_SIZE,
-                                &error_fatal);
-         memory_region_add_subregion(system_mem, EXYNOS4210_DRAM1_BASE_ADDR,
-@@ -103,7 +103,7 @@ static void exynos4_boards_init_ram(Exynos4BoardState *s,
-         mem_size = EXYNOS4210_DRAM_MAX_SIZE;
+diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
+index aa0e1ef155..751e3962fa 100644
+--- a/hw/i386/microvm.c
++++ b/hw/i386/microvm.c
+@@ -305,7 +305,7 @@ static void microvm_memory_init(MicrovmMachineState *mms)
      }
  
--    memory_region_init_ram(&s->dram0_mem, NULL, "exynos4210.dram0", mem_size,
-+    memory_region_init_ram(&s->dram0_mem, owner, "exynos4210.dram0", mem_size,
-                            &error_fatal);
-     memory_region_add_subregion(system_mem, EXYNOS4210_DRAM0_BASE_ADDR,
-                                 &s->dram0_mem);
-@@ -122,7 +122,7 @@ exynos4_boards_init_common(MachineState *machine,
-     exynos4_board_binfo.gic_cpu_if_addr =
-             EXYNOS4210_SMP_PRIVATE_BASE_ADDR + 0x100;
+     ram_below_4g = g_malloc(sizeof(*ram_below_4g));
+-    memory_region_init_alias(ram_below_4g, NULL, "ram-below-4g", machine->ram,
++    memory_region_init_alias(ram_below_4g, OBJECT(mms), "ram-below-4g", machine->ram,
+                              0, x86ms->below_4g_mem_size);
+     memory_region_add_subregion(system_memory, 0, ram_below_4g);
  
--    exynos4_boards_init_ram(s, get_system_memory(),
-+    exynos4_boards_init_ram(OBJECT(machine), s, get_system_memory(),
-                             exynos4_board_ram_size[board_type]);
+@@ -313,7 +313,7 @@ static void microvm_memory_init(MicrovmMachineState *mms)
  
-     object_initialize_child(OBJECT(machine), "soc", &s->soc,
-diff --git a/hw/arm/fsl-imx25.c b/hw/arm/fsl-imx25.c
-index 7f65f4ca4b..f589c83567 100644
---- a/hw/arm/fsl-imx25.c
-+++ b/hw/arm/fsl-imx25.c
-@@ -292,7 +292,7 @@ static void fsl_imx25_realize(DeviceState *dev, Error **errp)
-                                 &s->rom[1]);
- 
-     /* initialize internal RAM (128 KB) */
--    if (!memory_region_init_ram(&s->iram, NULL, "imx25.iram",
-+    if (!memory_region_init_ram(&s->iram, OBJECT(dev), "imx25.iram",
-                                 FSL_IMX25_IRAM_SIZE, errp)) {
-         return;
-     }
-diff --git a/hw/arm/fsl-imx31.c b/hw/arm/fsl-imx31.c
-index 190f863355..fc387bbbc3 100644
---- a/hw/arm/fsl-imx31.c
-+++ b/hw/arm/fsl-imx31.c
-@@ -204,7 +204,7 @@ static void fsl_imx31_realize(DeviceState *dev, Error **errp)
-                                 &s->rom);
- 
-     /* initialize internal RAM (16 KB) */
--    if (!memory_region_init_ram(&s->iram, NULL, "imx31.iram",
-+    if (!memory_region_init_ram(&s->iram, OBJECT(dev), "imx31.iram",
-                                 FSL_IMX31_IRAM_SIZE, errp)) {
-         return;
-     }
-diff --git a/hw/arm/fsl-imx6.c b/hw/arm/fsl-imx6.c
-index f0fbdc1a68..99250910cb 100644
---- a/hw/arm/fsl-imx6.c
-+++ b/hw/arm/fsl-imx6.c
-@@ -491,7 +491,7 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
-                                 &s->caam);
- 
-     /* OCRAM memory */
--    if (!memory_region_init_ram(&s->ocram, NULL, "imx6.ocram",
-+    if (!memory_region_init_ram(&s->ocram, OBJECT(dev), "imx6.ocram",
-                                 FSL_IMX6_OCRAM_SIZE, errp)) {
-         return;
-     }
-diff --git a/hw/arm/fsl-imx6ul.c b/hw/arm/fsl-imx6ul.c
-index adbb896fd1..f830dce9df 100644
---- a/hw/arm/fsl-imx6ul.c
-+++ b/hw/arm/fsl-imx6ul.c
-@@ -699,7 +699,7 @@ static void fsl_imx6ul_realize(DeviceState *dev, Error **errp)
-     /*
-      * OCRAM memory
+     if (x86ms->above_4g_mem_size > 0) {
+         ram_above_4g = g_malloc(sizeof(*ram_above_4g));
+-        memory_region_init_alias(ram_above_4g, NULL, "ram-above-4g",
++        memory_region_init_alias(ram_above_4g, OBJECT(mms), "ram-above-4g",
+                                  machine->ram,
+                                  x86ms->below_4g_mem_size,
+                                  x86ms->above_4g_mem_size);
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index e505391985..8057058ff0 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -795,13 +795,13 @@ void pc_memory_init(PCMachineState *pcms,
+      * done for backwards compatibility with older qemus.
       */
--    memory_region_init_ram(&s->ocram, NULL, "imx6ul.ocram",
-+    memory_region_init_ram(&s->ocram, OBJECT(dev), "imx6ul.ocram",
-                            FSL_IMX6UL_OCRAM_MEM_SIZE,
-                            &error_abort);
-     memory_region_add_subregion(get_system_memory(), FSL_IMX6UL_OCRAM_MEM_ADDR,
-diff --git a/hw/arm/fsl-imx7.c b/hw/arm/fsl-imx7.c
-index 07a5ae8cd0..ceb26b4efd 100644
---- a/hw/arm/fsl-imx7.c
-+++ b/hw/arm/fsl-imx7.c
-@@ -689,7 +689,7 @@ static void fsl_imx7_realize(DeviceState *dev, Error **errp)
-     /*
-      * OCRAM memory
-      */
--    memory_region_init_ram(&s->ocram, NULL, "imx7.ocram",
-+    memory_region_init_ram(&s->ocram, OBJECT(dev), "imx7.ocram",
-                            FSL_IMX7_OCRAM_MEM_SIZE,
-                            &error_abort);
-     memory_region_add_subregion(get_system_memory(), FSL_IMX7_OCRAM_MEM_ADDR,
-@@ -698,7 +698,7 @@ static void fsl_imx7_realize(DeviceState *dev, Error **errp)
-     /*
-      * OCRAM EPDC memory
-      */
--    memory_region_init_ram(&s->ocram_epdc, NULL, "imx7.ocram_epdc",
-+    memory_region_init_ram(&s->ocram_epdc, OBJECT(dev), "imx7.ocram_epdc",
-                            FSL_IMX7_OCRAM_EPDC_SIZE,
-                            &error_abort);
-     memory_region_add_subregion(get_system_memory(), FSL_IMX7_OCRAM_EPDC_ADDR,
-@@ -707,7 +707,7 @@ static void fsl_imx7_realize(DeviceState *dev, Error **errp)
-     /*
-      * OCRAM PXP memory
-      */
--    memory_region_init_ram(&s->ocram_pxp, NULL, "imx7.ocram_pxp",
-+    memory_region_init_ram(&s->ocram_pxp, OBJECT(dev), "imx7.ocram_pxp",
-                            FSL_IMX7_OCRAM_PXP_SIZE,
-                            &error_abort);
-     memory_region_add_subregion(get_system_memory(), FSL_IMX7_OCRAM_PXP_ADDR,
-@@ -716,7 +716,7 @@ static void fsl_imx7_realize(DeviceState *dev, Error **errp)
-     /*
-      * OCRAM_S memory
-      */
--    memory_region_init_ram(&s->ocram_s, NULL, "imx7.ocram_s",
-+    memory_region_init_ram(&s->ocram_s, OBJECT(dev), "imx7.ocram_s",
-                            FSL_IMX7_OCRAM_S_SIZE,
-                            &error_abort);
-     memory_region_add_subregion(get_system_memory(), FSL_IMX7_OCRAM_S_ADDR,
-diff --git a/hw/arm/imx25_pdk.c b/hw/arm/imx25_pdk.c
-index 9351d53850..cecfc25e9a 100644
---- a/hw/arm/imx25_pdk.c
-+++ b/hw/arm/imx25_pdk.c
-@@ -104,7 +104,7 @@ static void imx25_pdk_init(MachineState *machine)
-         ram_size -= size;
- 
-         if (size < ram[i].size) {
--            memory_region_init_alias(&s->ram_alias, NULL, "ram.alias",
-+            memory_region_init_alias(&s->ram_alias, OBJECT(machine), "ram.alias",
-                                      machine->ram,
-                                      alias_offset, ram[i].size - size);
-             memory_region_add_subregion(get_system_memory(),
-diff --git a/hw/arm/integratorcp.c b/hw/arm/integratorcp.c
-index ed715a3eb8..81c0bce8f9 100644
---- a/hw/arm/integratorcp.c
-+++ b/hw/arm/integratorcp.c
-@@ -617,7 +617,7 @@ static void integratorcp_init(MachineState *machine)
-     /* SDRAM at address zero*/
-     memory_region_add_subregion(address_space_mem, 0, machine->ram);
-     /* And again at address 0x80000000 */
--    memory_region_init_alias(ram_alias, NULL, "ram.alias", machine->ram,
-+    memory_region_init_alias(ram_alias, OBJECT(machine), "ram.alias", machine->ram,
-                              0, ram_size);
-     memory_region_add_subregion(address_space_mem, 0x80000000, ram_alias);
- 
-diff --git a/hw/arm/kzm.c b/hw/arm/kzm.c
-index 36e12bb362..3e879c492d 100644
---- a/hw/arm/kzm.c
-+++ b/hw/arm/kzm.c
-@@ -104,7 +104,7 @@ static void kzm_init(MachineState *machine)
-         ram_size -= size;
- 
-         if (size < ram[i].size) {
--            memory_region_init_alias(&s->ram_alias, NULL, "ram.alias",
-+            memory_region_init_alias(&s->ram_alias, OBJECT(machine), "ram.alias",
-                                      machine->ram,
-                                      alias_offset, ram[i].size - size);
-             memory_region_add_subregion(get_system_memory(),
-diff --git a/hw/arm/max78000_soc.c b/hw/arm/max78000_soc.c
-index b8e0265de2..41cfaee925 100644
---- a/hw/arm/max78000_soc.c
-+++ b/hw/arm/max78000_soc.c
-@@ -74,7 +74,7 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
- 
-     memory_region_add_subregion(system_memory, FLASH_BASE_ADDRESS, &s->flash);
- 
--    memory_region_init_ram(&s->sram, NULL, "MAX78000.sram", SRAM_SIZE,
-+    memory_region_init_ram(&s->sram, obj, "MAX78000.sram", SRAM_SIZE,
-                            &err);
- 
-     gcrdev = DEVICE(&s->gcr);
-diff --git a/hw/arm/mps2-tz.c b/hw/arm/mps2-tz.c
-index 32e3db1134..a57915e208 100644
---- a/hw/arm/mps2-tz.c
-+++ b/hw/arm/mps2-tz.c
-@@ -338,7 +338,7 @@ static MemoryRegion *mr_for_raminfo(MPS2TZMachineState *mms,
-     assert(raminfo->mrindex < MPS2TZ_RAM_MAX);
-     ram = &mms->ram[raminfo->mrindex];
- 
--    memory_region_init_ram(ram, NULL, raminfo->name,
-+    memory_region_init_ram(ram, OBJECT(mms), raminfo->name,
-                            raminfo->size, &error_fatal);
-     if (raminfo->flags & IS_ROM) {
-         memory_region_set_readonly(ram, true);
-@@ -349,10 +349,10 @@ static MemoryRegion *mr_for_raminfo(MPS2TZMachineState *mms,
- /* Create an alias of an entire original MemoryRegion @orig
-  * located at @base in the memory map.
-  */
--static void make_ram_alias(MemoryRegion *mr, const char *name,
-+static void make_ram_alias(Object *owner, MemoryRegion *mr, const char *name,
-                            MemoryRegion *orig, hwaddr base)
- {
--    memory_region_init_alias(mr, NULL, name, orig, 0,
-+    memory_region_init_alias(mr, owner, name, orig, 0,
-                              memory_region_size(orig));
-     memory_region_add_subregion(get_system_memory(), base, mr);
- }
-@@ -767,7 +767,8 @@ static void create_non_mpc_ram(MPS2TZMachineState *mms)
-         if (p->flags & IS_ALIAS) {
-             SysBusDevice *mpc_sbd = SYS_BUS_DEVICE(&mms->mpc[p->mpc]);
-             MemoryRegion *upstream = sysbus_mmio_get_region(mpc_sbd, 1);
--            make_ram_alias(&mms->ram[p->mrindex], p->name, upstream, p->base);
-+            make_ram_alias(OBJECT(mms), &mms->ram[p->mrindex], p->name,
-+                           upstream, p->base);
-         } else if (p->mpc == -1) {
-             /* RAM not behind an MPC */
-             MemoryRegion *mr = mr_for_raminfo(mms, p);
-diff --git a/hw/arm/mps2.c b/hw/arm/mps2.c
-index 23a814e4e4..1dec4a5d4d 100644
---- a/hw/arm/mps2.c
-+++ b/hw/arm/mps2.c
-@@ -115,20 +115,20 @@ OBJECT_DECLARE_TYPE(MPS2MachineState, MPS2MachineClass, MPS2_MACHINE)
- /* Initialize the auxiliary RAM region @mr and map it into
-  * the memory map at @base.
-  */
--static void make_ram(MemoryRegion *mr, const char *name,
-+static void make_ram(Object *owner, MemoryRegion *mr, const char *name,
-                      hwaddr base, hwaddr size)
- {
--    memory_region_init_ram(mr, NULL, name, size, &error_fatal);
-+    memory_region_init_ram(mr, owner, name, size, &error_fatal);
-     memory_region_add_subregion(get_system_memory(), base, mr);
- }
- 
- /* Create an alias of an entire original MemoryRegion @orig
-  * located at @base in the memory map.
-  */
--static void make_ram_alias(MemoryRegion *mr, const char *name,
-+static void make_ram_alias(Object *owner, MemoryRegion *mr, const char *name,
-                            MemoryRegion *orig, hwaddr base)
- {
--    memory_region_init_alias(mr, NULL, name, orig, 0,
-+    memory_region_init_alias(mr, owner, name, orig, 0,
-                              memory_region_size(orig));
-     memory_region_add_subregion(get_system_memory(), base, mr);
- }
-@@ -192,12 +192,12 @@ static void mps2_common_init(MachineState *machine)
-     memory_region_add_subregion(system_memory, mmc->psram_base, machine->ram);
- 
-     if (mmc->has_block_ram) {
--        make_ram(&mms->blockram, "mps.blockram", 0x01000000, 0x4000);
--        make_ram_alias(&mms->blockram_m1, "mps.blockram_m1",
-+        make_ram(obj, &mms->blockram, "mps.blockram", 0x01000000, 0x4000);
-+        make_ram_alias(obj, &mms->blockram_m1, "mps.blockram_m1",
-                        &mms->blockram, 0x01004000);
--        make_ram_alias(&mms->blockram_m2, "mps.blockram_m2",
-+        make_ram_alias(obj, &mms->blockram_m2, "mps.blockram_m2",
-                        &mms->blockram, 0x01008000);
--        make_ram_alias(&mms->blockram_m3, "mps.blockram_m3",
-+        make_ram_alias(obj, &mms->blockram_m3, "mps.blockram_m3",
-                        &mms->blockram, 0x0100c000);
+     ram_below_4g = g_malloc(sizeof(*ram_below_4g));
+-    memory_region_init_alias(ram_below_4g, NULL, "ram-below-4g", machine->ram,
++    memory_region_init_alias(ram_below_4g, OBJECT(pcms), "ram-below-4g", machine->ram,
+                              0, x86ms->below_4g_mem_size);
+     memory_region_add_subregion(system_memory, 0, ram_below_4g);
+     e820_add_entry(0, x86ms->below_4g_mem_size, E820_RAM);
+     if (x86ms->above_4g_mem_size > 0) {
+         ram_above_4g = g_malloc(sizeof(*ram_above_4g));
+-        memory_region_init_alias(ram_above_4g, NULL, "ram-above-4g",
++        memory_region_init_alias(ram_above_4g, OBJECT(pcms), "ram-above-4g",
+                                  machine->ram,
+                                  x86ms->below_4g_mem_size,
+                                  x86ms->above_4g_mem_size);
+@@ -871,10 +871,10 @@ void pc_memory_init(PCMachineState *pcms,
+     if (!is_tdx_vm()) {
+         option_rom_mr = g_malloc(sizeof(*option_rom_mr));
+         if (machine_require_guest_memfd(machine)) {
+-            memory_region_init_ram_guest_memfd(option_rom_mr, NULL, "pc.rom",
++            memory_region_init_ram_guest_memfd(option_rom_mr, OBJECT(pcms), "pc.rom",
+                                             PC_ROM_SIZE, &error_fatal);
+         } else {
+-            memory_region_init_ram(option_rom_mr, NULL, "pc.rom", PC_ROM_SIZE,
++            memory_region_init_ram(option_rom_mr, OBJECT(pcms), "pc.rom", PC_ROM_SIZE,
+                                 &error_fatal);
+             if (pcmc->pci_enabled) {
+                 memory_region_set_readonly(option_rom_mr, true);
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index c9e6c61734..0b8d7d88b9 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -191,7 +191,7 @@ static void pc_init1(MachineState *machine, const char *pci_type)
      }
  
-@@ -205,17 +205,18 @@ static void mps2_common_init(MachineState *machine)
-     case FPGA_AN385:
-     case FPGA_AN386:
-     case FPGA_AN500:
--        make_ram(&mms->ssram1, "mps.ssram1", 0x0, 0x400000);
--        make_ram_alias(&mms->ssram1_m, "mps.ssram1_m", &mms->ssram1, 0x400000);
--        make_ram(&mms->ssram23, "mps.ssram23", 0x20000000, 0x400000);
--        make_ram_alias(&mms->ssram23_m, "mps.ssram23_m",
-+        make_ram(obj, &mms->ssram1, "mps.ssram1", 0x0, 0x400000);
-+        make_ram_alias(obj, &mms->ssram1_m, "mps.ssram1_m",
-+                       &mms->ssram1, 0x400000);
-+        make_ram(obj, &mms->ssram23, "mps.ssram23", 0x20000000, 0x400000);
-+        make_ram_alias(obj, &mms->ssram23_m, "mps.ssram23_m",
-                        &mms->ssram23, 0x20400000);
-         break;
-     case FPGA_AN511:
--        make_ram(&mms->blockram, "mps.blockram", 0x0, 0x40000);
--        make_ram(&mms->ssram1, "mps.ssram1", 0x00400000, 0x00800000);
--        make_ram(&mms->sram, "mps.sram", 0x20000000, 0x20000);
--        make_ram(&mms->ssram23, "mps.ssram23", 0x20400000, 0x400000);
-+        make_ram(obj, &mms->blockram, "mps.blockram", 0x0, 0x40000);
-+        make_ram(obj, &mms->ssram1, "mps.ssram1", 0x00400000, 0x00800000);
-+        make_ram(obj, &mms->sram, "mps.sram", 0x20000000, 0x20000);
-+        make_ram(obj, &mms->ssram23, "mps.ssram23", 0x20400000, 0x400000);
-         break;
-     default:
-         g_assert_not_reached();
-diff --git a/hw/arm/mps3r.c b/hw/arm/mps3r.c
-index 4d432de6ba..d6c29c1172 100644
---- a/hw/arm/mps3r.c
-+++ b/hw/arm/mps3r.c
-@@ -215,7 +215,7 @@ static MemoryRegion *mr_for_raminfo(MPS3RMachineState *mms,
-     assert(raminfo->mrindex < MPS3R_RAM_MAX);
-     ram = &mms->ram[raminfo->mrindex];
+     pci_memory = g_new(MemoryRegion, 1);
+-    memory_region_init(pci_memory, NULL, "pci", UINT64_MAX);
++    memory_region_init(pci_memory, OBJECT(machine), "pci", UINT64_MAX);
  
--    memory_region_init_ram(ram, NULL, raminfo->name,
-+    memory_region_init_ram(ram, OBJECT(mms), raminfo->name,
-                            raminfo->size, &error_fatal);
-     if (raminfo->flags & IS_ROM) {
-         memory_region_set_readonly(ram, true);
-@@ -397,7 +397,7 @@ static void mps3r_common_init(MachineState *machine)
-         object_unref(mms->cpu[i]);
+     phb = OBJECT(qdev_new(OBJECT(machine), "i440fx", TYPE_I440FX_PCI_HOST_BRIDGE));
+     object_property_set_link(phb, PCI_HOST_PROP_RAM_MEM,
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 62625abed8..b2cdca8ade 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -208,7 +208,7 @@ static void pc_q35_init(MachineState *machine)
+                                                &error_abort);
  
-         /* Per-CPU RAM */
--        memory_region_init_ram(&mms->cpu_ram[i], NULL, ramname,
-+        memory_region_init_ram(&mms->cpu_ram[i], OBJECT(mms), ramname,
-                                0x1000, &error_fatal);
-         memory_region_add_subregion(&mms->cpu_sysmem[i], 0xe7c01000,
-                                     &mms->cpu_ram[i]);
-diff --git a/hw/arm/msf2-soc.c b/hw/arm/msf2-soc.c
-index c03778c439..ce320a5a38 100644
---- a/hw/arm/msf2-soc.c
-+++ b/hw/arm/msf2-soc.c
-@@ -128,7 +128,7 @@ static void m2sxxx_soc_realize(DeviceState *dev_soc, Error **errp)
-     memory_region_add_subregion(system_memory, ENVM_BASE_ADDRESS, &s->nvm);
-     memory_region_add_subregion(system_memory, 0, &s->nvm_alias);
+     /* allocate ram and load rom/bios */
+-    memory_region_init(pci_memory, NULL, "pci", UINT64_MAX);
++    memory_region_init(pci_memory, OBJECT(machine), "pci", UINT64_MAX);
+     pc_memory_init(pcms, system_memory, pci_memory, pci_hole64_size);
  
--    memory_region_init_ram(&s->sram, NULL, "MSF2.eSRAM", s->esram_size,
-+    memory_region_init_ram(&s->sram, OBJECT(dev_soc), "MSF2.eSRAM", s->esram_size,
-                            &error_fatal);
-     memory_region_add_subregion(system_memory, SRAM_BASE_ADDRESS, &s->sram);
- 
-diff --git a/hw/arm/msf2-som.c b/hw/arm/msf2-som.c
-index 0d0e2514dd..5493f1cf70 100644
---- a/hw/arm/msf2-som.c
-+++ b/hw/arm/msf2-som.c
-@@ -55,7 +55,7 @@ static void emcraft_sf2_s2s010_init(MachineState *machine)
-     MemoryRegion *ddr = g_new(MemoryRegion, 1);
-     Clock *m3clk;
- 
--    memory_region_init_ram(ddr, NULL, "ddr-ram", DDR_SIZE,
-+    memory_region_init_ram(ddr, OBJECT(machine), "ddr-ram", DDR_SIZE,
-                            &error_fatal);
-     memory_region_add_subregion(sysmem, DDR_BASE_ADDRESS, ddr);
- 
-diff --git a/hw/arm/musca.c b/hw/arm/musca.c
-index 75d82eebca..38eac4af76 100644
---- a/hw/arm/musca.c
-+++ b/hw/arm/musca.c
-@@ -235,12 +235,12 @@ static MemoryRegion *make_mpc(MuscaMachineState *mms, void *opaque,
-     switch (mpcinfo[i].type) {
-     case MPC_ROM:
-         downstream = &mms->ram[i];
--        memory_region_init_rom(downstream, NULL, mpcinfo[i].name,
-+        memory_region_init_rom(downstream, OBJECT(mms), mpcinfo[i].name,
-                                mpcinfo[i].size, &error_fatal);
-         break;
-     case MPC_RAM:
-         downstream = &mms->ram[i];
--        memory_region_init_ram(downstream, NULL, mpcinfo[i].name,
-+        memory_region_init_ram(downstream, OBJECT(mms), mpcinfo[i].name,
-                                mpcinfo[i].size, &error_fatal);
-         break;
-     case MPC_CRYPTOISLAND:
-diff --git a/hw/arm/musicpal.c b/hw/arm/musicpal.c
-index 86ea348d3d..fda42f71d5 100644
---- a/hw/arm/musicpal.c
-+++ b/hw/arm/musicpal.c
-@@ -1236,7 +1236,7 @@ static void musicpal_init(MachineState *machine)
- 
-     memory_region_add_subregion(address_space_mem, 0, machine->ram);
- 
--    memory_region_init_ram(sram, NULL, "musicpal.sram", MP_SRAM_SIZE,
-+    memory_region_init_ram(sram, OBJECT(machine), "musicpal.sram", MP_SRAM_SIZE,
-                            &error_fatal);
-     memory_region_add_subregion(address_space_mem, MP_SRAM_BASE, sram);
- 
-diff --git a/hw/arm/omap_sx1.c b/hw/arm/omap_sx1.c
-index 1bd6c6d4bc..f8d54c2716 100644
---- a/hw/arm/omap_sx1.c
-+++ b/hw/arm/omap_sx1.c
-@@ -128,22 +128,22 @@ static void sx1_init(MachineState *machine, const int version)
-     mpu = omap310_mpu_init(OBJECT(machine), machine->ram, machine->cpu_type);
- 
-     /* External Flash (EMIFS) */
--    memory_region_init_rom(flash, NULL, "omap_sx1.flash0-0", flash_size,
-+    memory_region_init_rom(flash, OBJECT(machine), "omap_sx1.flash0-0", flash_size,
-                            &error_fatal);
-     memory_region_add_subregion(address_space, OMAP_CS0_BASE, flash);
- 
--    memory_region_init_io(&cs[0], NULL, &static_ops, &cs0val,
-+    memory_region_init_io(&cs[0], OBJECT(machine), &static_ops, &cs0val,
-                           "sx1.cs0", OMAP_CS0_SIZE - flash_size);
-     memory_region_add_subregion(address_space,
-                                 OMAP_CS0_BASE + flash_size, &cs[0]);
- 
- 
--    memory_region_init_io(&cs[2], NULL, &static_ops, &cs2val,
-+    memory_region_init_io(&cs[2], OBJECT(machine), &static_ops, &cs2val,
-                           "sx1.cs2", OMAP_CS2_SIZE);
-     memory_region_add_subregion(address_space,
-                                 OMAP_CS2_BASE, &cs[2]);
- 
--    memory_region_init_io(&cs[3], NULL, &static_ops, &cs3val,
-+    memory_region_init_io(&cs[3], OBJECT(machine), &static_ops, &cs3val,
-                           "sx1.cs3", OMAP_CS3_SIZE);
-     memory_region_add_subregion(address_space,
-                                 OMAP_CS3_BASE, &cs[3]);
-@@ -160,11 +160,11 @@ static void sx1_init(MachineState *machine, const int version)
-     if ((version == 1) &&
-             (dinfo = drive_get(IF_PFLASH, 0, fl_idx)) != NULL) {
-         MemoryRegion *flash_1 = g_new(MemoryRegion, 1);
--        memory_region_init_rom(flash_1, NULL, "omap_sx1.flash1-0",
-+        memory_region_init_rom(flash_1, OBJECT(machine), "omap_sx1.flash1-0",
-                                FLASH1_SIZE, &error_fatal);
-         memory_region_add_subregion(address_space, OMAP_CS1_BASE, flash_1);
- 
--        memory_region_init_io(&cs[1], NULL, &static_ops, &cs1val,
-+        memory_region_init_io(&cs[1], OBJECT(machine), &static_ops, &cs1val,
-                               "sx1.cs1", OMAP_CS1_SIZE - FLASH1_SIZE);
-         memory_region_add_subregion(address_space,
-                                 OMAP_CS1_BASE + FLASH1_SIZE, &cs[1]);
-@@ -175,7 +175,7 @@ static void sx1_init(MachineState *machine, const int version)
-                               SECTOR_SIZE, 4, 0, 0, 0, 0, 0);
-         fl_idx++;
+     object_property_set_link(phb, PCI_HOST_PROP_RAM_MEM,
+diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+index 02d75e2838..b536fca60f 100644
+--- a/hw/i386/pc_sysfw.c
++++ b/hw/i386/pc_sysfw.c
+@@ -52,10 +52,10 @@ static void pc_isa_bios_init(PCMachineState *pcms, MemoryRegion *isa_bios,
+     /* map the last 128KB of the BIOS in ISA space */
+     isa_bios_size = MIN(flash_size, 128 * KiB);
+     if (machine_require_guest_memfd(MACHINE(pcms))) {
+-        memory_region_init_ram_guest_memfd(isa_bios, NULL, "isa-bios",
++        memory_region_init_ram_guest_memfd(isa_bios, OBJECT(pcms), "isa-bios",
+                                            isa_bios_size, &error_fatal);
      } else {
--        memory_region_init_io(&cs[1], NULL, &static_ops, &cs1val,
-+        memory_region_init_io(&cs[1], OBJECT(machine), &static_ops, &cs1val,
-                               "sx1.cs1", OMAP_CS1_SIZE);
-         memory_region_add_subregion(address_space,
-                                 OMAP_CS1_BASE, &cs[1]);
-diff --git a/hw/arm/realview.c b/hw/arm/realview.c
-index 2441137222..73bfffa6e6 100644
---- a/hw/arm/realview.c
-+++ b/hw/arm/realview.c
-@@ -159,18 +159,18 @@ static void realview_init(MachineState *machine,
-         ram_lo = g_new(MemoryRegion, 1);
-         low_ram_size = ram_size - 0x20000000;
-         ram_size = 0x20000000;
--        memory_region_init_ram(ram_lo, NULL, "realview.lowmem", low_ram_size,
-+        memory_region_init_ram(ram_lo, OBJECT(machine), "realview.lowmem", low_ram_size,
+-        memory_region_init_ram(isa_bios, NULL, "isa-bios", isa_bios_size,
++        memory_region_init_ram(isa_bios, OBJECT(pcms), "isa-bios", isa_bios_size,
                                 &error_fatal);
-         memory_region_add_subregion(sysmem, 0x20000000, ram_lo);
      }
- 
--    memory_region_init_ram(ram_hi, NULL, "realview.highmem", ram_size,
-+    memory_region_init_ram(ram_hi, OBJECT(machine), "realview.highmem", ram_size,
-                            &error_fatal);
-     low_ram_size = ram_size;
-     if (low_ram_size > 0x10000000)
-       low_ram_size = 0x10000000;
-     /* SDRAM at address zero.  */
--    memory_region_init_alias(ram_alias, NULL, "realview.alias",
-+    memory_region_init_alias(ram_alias, OBJECT(machine), "realview.alias",
-                              ram_hi, 0, low_ram_size);
-     memory_region_add_subregion(sysmem, 0, ram_alias);
-     if (is_pb) {
-@@ -396,7 +396,7 @@ static void realview_init(MachineState *machine,
-        startup code.  I guess this works on real hardware because the
-        BootROM happens to be in ROM/flash or in memory that isn't clobbered
-        until after Linux boots the secondary CPUs.  */
--    memory_region_init_ram(ram_hack, NULL, "realview.hack", 0x1000,
-+    memory_region_init_ram(ram_hack, OBJECT(machine), "realview.hack", 0x1000,
-                            &error_fatal);
-     memory_region_add_subregion(sysmem, SMP_BOOT_ADDR, ram_hack);
- 
-diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
-index bb35de1616..1df8efd207 100644
---- a/hw/arm/sbsa-ref.c
-+++ b/hw/arm/sbsa-ref.c
-@@ -410,7 +410,7 @@ static void create_secure_ram(SBSAMachineState *sms,
-     hwaddr base = sbsa_ref_memmap[SBSA_SECURE_MEM].base;
-     hwaddr size = sbsa_ref_memmap[SBSA_SECURE_MEM].size;
- 
--    memory_region_init_ram(secram, NULL, "sbsa-ref.secure-ram", size,
-+    memory_region_init_ram(secram, OBJECT(sms), "sbsa-ref.secure-ram", size,
-                            &error_fatal);
-     memory_region_add_subregion(secure_sysmem, base, secram);
- }
-diff --git a/hw/arm/stellaris.c b/hw/arm/stellaris.c
-index 6a732a3c11..1bc428e063 100644
---- a/hw/arm/stellaris.c
-+++ b/hw/arm/stellaris.c
-@@ -1084,11 +1084,11 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
-     object_property_add_child(OBJECT(ms), "soc", soc_container);
- 
-     /* Flash programming is done via the SCU, so pretend it is ROM.  */
--    memory_region_init_rom(flash, NULL, "stellaris.flash", flash_size,
-+    memory_region_init_rom(flash, OBJECT(ms), "stellaris.flash", flash_size,
-                            &error_fatal);
-     memory_region_add_subregion(system_memory, 0, flash);
- 
--    memory_region_init_ram(sram, NULL, "stellaris.sram", sram_size,
-+    memory_region_init_ram(sram, OBJECT(ms), "stellaris.sram", sram_size,
-                            &error_fatal);
-     memory_region_add_subregion(system_memory, 0x20000000, sram);
- 
-diff --git a/hw/arm/stm32f100_soc.c b/hw/arm/stm32f100_soc.c
-index e9e722f359..d6d81c1338 100644
---- a/hw/arm/stm32f100_soc.c
-+++ b/hw/arm/stm32f100_soc.c
-@@ -108,7 +108,7 @@ static void stm32f100_soc_realize(DeviceState *dev_soc, Error **errp)
-     memory_region_add_subregion(system_memory, 0, &s->flash_alias);
- 
-     /* Init SRAM region */
--    memory_region_init_ram(&s->sram, NULL, "STM32F100.sram", SRAM_SIZE,
-+    memory_region_init_ram(&s->sram, OBJECT(dev_soc), "STM32F100.sram", SRAM_SIZE,
-                            &error_fatal);
-     memory_region_add_subregion(system_memory, SRAM_BASE_ADDRESS, &s->sram);
- 
-diff --git a/hw/arm/stm32f205_soc.c b/hw/arm/stm32f205_soc.c
-index a03c6b4002..2997e7d777 100644
---- a/hw/arm/stm32f205_soc.c
-+++ b/hw/arm/stm32f205_soc.c
-@@ -121,7 +121,7 @@ static void stm32f205_soc_realize(DeviceState *dev_soc, Error **errp)
-     memory_region_add_subregion(system_memory, FLASH_BASE_ADDRESS, &s->flash);
-     memory_region_add_subregion(system_memory, 0, &s->flash_alias);
- 
--    memory_region_init_ram(&s->sram, NULL, "STM32F205.sram", SRAM_SIZE,
-+    memory_region_init_ram(&s->sram, OBJECT(dev_soc), "STM32F205.sram", SRAM_SIZE,
-                            &error_fatal);
-     memory_region_add_subregion(system_memory, SRAM_BASE_ADDRESS, &s->sram);
- 
-diff --git a/hw/arm/stm32f405_soc.c b/hw/arm/stm32f405_soc.c
-index dc9b3053a5..4783f3f64a 100644
---- a/hw/arm/stm32f405_soc.c
-+++ b/hw/arm/stm32f405_soc.c
-@@ -134,7 +134,7 @@ static void stm32f405_soc_realize(DeviceState *dev_soc, Error **errp)
-     memory_region_add_subregion(system_memory, FLASH_BASE_ADDRESS, &s->flash);
-     memory_region_add_subregion(system_memory, 0, &s->flash_alias);
- 
--    memory_region_init_ram(&s->sram, NULL, "STM32F405.sram", SRAM_SIZE,
-+    memory_region_init_ram(&s->sram, OBJECT(dev_soc), "STM32F405.sram", SRAM_SIZE,
-                            &err);
-     if (err != NULL) {
-         error_propagate(errp, err);
-@@ -142,7 +142,7 @@ static void stm32f405_soc_realize(DeviceState *dev_soc, Error **errp)
-     }
-     memory_region_add_subregion(system_memory, SRAM_BASE_ADDRESS, &s->sram);
- 
--    memory_region_init_ram(&s->ccm, NULL, "STM32F405.ccm", CCM_SIZE,
-+    memory_region_init_ram(&s->ccm, OBJECT(dev_soc), "STM32F405.ccm", CCM_SIZE,
-                            &err);
-     if (err != NULL) {
-         error_propagate(errp, err);
-diff --git a/hw/arm/vexpress.c b/hw/arm/vexpress.c
-index a643c6b079..f877ccf330 100644
---- a/hw/arm/vexpress.c
-+++ b/hw/arm/vexpress.c
-@@ -392,7 +392,7 @@ static void a15_daughterboard_init(VexpressMachineState *vms,
-     /* 0x2b060000: SP805 watchdog: not modelled */
-     /* 0x2b0a0000: PL341 dynamic memory controller: not modelled */
-     /* 0x2e000000: system SRAM */
--    memory_region_init_ram(&vms->a15sram, NULL, "vexpress.a15sram", 0x10000,
-+    memory_region_init_ram(&vms->a15sram, OBJECT(vms), "vexpress.a15sram", 0x10000,
-                            &error_fatal);
-     memory_region_add_subregion(sysmem, 0x2e000000, &vms->a15sram);
- 
-@@ -677,7 +677,7 @@ static void vexpress_common_init(MachineState *machine)
-         /* Map flash 0 as an alias into low memory */
-         MemoryRegion *flash0mem;
-         flash0mem = sysbus_mmio_get_region(SYS_BUS_DEVICE(pflash0), 0);
--        memory_region_init_alias(&vms->flashalias, NULL, "vexpress.flashalias",
-+        memory_region_init_alias(&vms->flashalias, OBJECT(vms), "vexpress.flashalias",
-                                  flash0mem, 0, VEXPRESS_FLASH_SIZE);
-         memory_region_add_subregion(sysmem, map[VE_NORFLASHALIAS], &vms->flashalias);
-     }
-@@ -687,12 +687,12 @@ static void vexpress_common_init(MachineState *machine)
-                              "vexpress.flash1", dinfo);
- 
-     sram_size = 0x2000000;
--    memory_region_init_ram(&vms->sram, NULL, "vexpress.sram", sram_size,
-+    memory_region_init_ram(&vms->sram, OBJECT(vms), "vexpress.sram", sram_size,
-                            &error_fatal);
-     memory_region_add_subregion(sysmem, map[VE_SRAM], &vms->sram);
- 
-     vram_size = 0x800000;
--    memory_region_init_ram(&vms->vram, NULL, "vexpress.vram", vram_size,
-+    memory_region_init_ram(&vms->vram, OBJECT(vms), "vexpress.vram", vram_size,
-                            &error_fatal);
-     memory_region_add_subregion(sysmem, map[VE_VIDEORAM], &vms->vram);
- 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 8bb20e692e..beb2d481ce 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -2308,13 +2308,13 @@ static void create_platform_bus(VirtMachineState *vms)
-                                 sysbus_mmio_get_region(s, 0));
+     memory_region_add_subregion_overlap(rom_memory,
+@@ -189,7 +189,7 @@ static void pc_system_flash_map(PCMachineState *pcms,
+         if (i == 0) {
+             flash_mem = pflash_cfi01_get_memory(system_flash);
+             if (pcmc->isa_bios_alias) {
+-                x86_isa_bios_init(&x86ms->isa_bios, rom_memory, flash_mem,
++                x86_isa_bios_init(x86ms, &x86ms->isa_bios, rom_memory, flash_mem,
+                                   true);
+             } else {
+                 pc_isa_bios_init(pcms, &x86ms->isa_bios, rom_memory, flash_mem);
+diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+index 73a53fbf3f..151a67ee5f 100644
+--- a/hw/i386/x86-common.c
++++ b/hw/i386/x86-common.c
+@@ -993,13 +993,14 @@ void x86_load_linux(X86MachineState *x86ms,
+     nb_option_roms++;
  }
  
--static void create_tag_ram(MemoryRegion *tag_sysmem,
-+static void create_tag_ram(Object *owner, MemoryRegion *tag_sysmem,
-                            hwaddr base, hwaddr size,
-                            const char *name)
+-void x86_isa_bios_init(MemoryRegion *isa_bios, MemoryRegion *isa_memory,
++void x86_isa_bios_init(X86MachineState *x86ms, MemoryRegion *isa_bios,
++                       MemoryRegion *isa_memory,
+                        MemoryRegion *bios, bool read_only)
  {
-     MemoryRegion *tagram = g_new(MemoryRegion, 1);
+     uint64_t bios_size = memory_region_size(bios);
+     uint64_t isa_bios_size = MIN(bios_size, 128 * KiB);
  
--    memory_region_init_ram(tagram, NULL, name, size / 32, &error_fatal);
-+    memory_region_init_ram(tagram, owner, name, size / 32, &error_fatal);
-     memory_region_add_subregion(tag_sysmem, base / 32, tagram);
- }
+-    memory_region_init_alias(isa_bios, NULL, "isa-bios", bios,
++    memory_region_init_alias(isa_bios, OBJECT(x86ms), "isa-bios", bios,
+                              bios_size - isa_bios_size, isa_bios_size);
+     memory_region_add_subregion_overlap(isa_memory, 1 * MiB - isa_bios_size,
+                                         isa_bios, 1);
+@@ -1036,13 +1037,13 @@ static void load_bios_from_file(X86MachineState *x86ms, const char *bios_name,
  
-@@ -2328,7 +2328,7 @@ static void create_secure_ram(VirtMachineState *vms,
-     hwaddr size = vms->memmap[VIRT_SECURE_MEM].size;
-     MachineState *ms = MACHINE(vms);
- 
--    memory_region_init_ram(secram, NULL, "virt.secure-ram", size,
-+    memory_region_init_ram(secram, OBJECT(vms), "virt.secure-ram", size,
-                            &error_fatal);
-     memory_region_add_subregion(secure_sysmem, base, secram);
- 
-@@ -2340,7 +2340,8 @@ static void create_secure_ram(VirtMachineState *vms,
-     qemu_fdt_setprop_string(ms->fdt, nodename, "secure-status", "okay");
- 
-     if (secure_tag_sysmem) {
--        create_tag_ram(secure_tag_sysmem, base, size, "mach-virt.secure-tag");
-+        create_tag_ram(OBJECT(vms), secure_tag_sysmem, base, size,
-+                       "mach-virt.secure-tag");
-     }
- 
-     g_free(nodename);
-@@ -2840,7 +2841,7 @@ static void virt_post_cpus_gic_realized(VirtMachineState *vms,
-                 exit(1);
-             }
- 
--            memory_region_init_ram(pvtime, NULL, "pvtime", pvtime_size, NULL);
-+            memory_region_init_ram(pvtime, OBJECT(vms), "pvtime", pvtime_size, NULL);
-             memory_region_add_subregion(sysmem, pvtime_reg_base, pvtime);
+     /* BIOS load */
+     if (machine_require_guest_memfd(MACHINE(x86ms))) {
+-        memory_region_init_ram_guest_memfd(&x86ms->bios, NULL, "pc.bios",
++        memory_region_init_ram_guest_memfd(&x86ms->bios, OBJECT(x86ms), "pc.bios",
+                                            bios_size, &error_fatal);
+         if (is_tdx_vm()) {
+             tdx_set_tdvf_region(&x86ms->bios);
          }
-         if (!aarch64 && vms->virt) {
-@@ -3200,7 +3201,7 @@ static void machvirt_init(MachineState *machine)
+     } else {
+-        memory_region_init_ram(&x86ms->bios, NULL, "pc.bios",
++        memory_region_init_ram(&x86ms->bios, OBJECT(x86ms), "pc.bios",
+                                bios_size, &error_fatal);
+     }
+     if (sev_enabled() || is_tdx_vm()) {
+@@ -1107,7 +1108,7 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
+ 
+     if (!machine_require_guest_memfd(MACHINE(x86ms))) {
+         /* map the last 128KB of the BIOS in ISA space */
+-        x86_isa_bios_init(&x86ms->isa_bios, rom_memory, &x86ms->bios,
++        x86_isa_bios_init(x86ms, &x86ms->isa_bios, rom_memory, &x86ms->bios,
+                           !isapc_ram_fw);
      }
  
-     if (tag_sysmem) {
--        create_tag_ram(tag_sysmem, vms->memmap[VIRT_MEM].base,
-+        create_tag_ram(OBJECT(vms), tag_sysmem, vms->memmap[VIRT_MEM].base,
-                        machine->ram_size, "mach-virt.tag");
+diff --git a/hw/i386/xen/xen-hvm.c b/hw/i386/xen/xen-hvm.c
+index d3ce082e07..01d851ce3e 100644
+--- a/hw/i386/xen/xen-hvm.c
++++ b/hw/i386/xen/xen-hvm.c
+@@ -156,11 +156,11 @@ static void xen_ram_init(PCMachineState *pcms,
+          */
+         block_len = (4 * GiB) + x86ms->above_4g_mem_size;
      }
- 
-diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
-index 30f0ce5b5f..441289e63f 100644
---- a/hw/arm/xilinx_zynq.c
-+++ b/hw/arm/xilinx_zynq.c
-@@ -238,7 +238,7 @@ static void zynq_init(MachineState *machine)
-     memory_region_add_subregion(address_space_mem, 0, machine->ram);
- 
-     /* 256K of on-chip memory */
--    memory_region_init_ram(ocm_ram, NULL, "zynq.ocm_ram", 256 * KiB,
-+    memory_region_init_ram(ocm_ram, OBJECT(machine), "zynq.ocm_ram", 256 * KiB,
+-    memory_region_init_ram(&xen_memory, NULL, "xen.ram", block_len,
++    memory_region_init_ram(&xen_memory, OBJECT(pcms), "xen.ram", block_len,
                             &error_fatal);
-     memory_region_add_subregion(address_space_mem, 0xFFFC0000, ocm_ram);
+     *ram_memory_p = &xen_memory;
  
-diff --git a/hw/arm/xlnx-zynqmp.c b/hw/arm/xlnx-zynqmp.c
-index e4a10861a8..a25d5d3158 100644
---- a/hw/arm/xlnx-zynqmp.c
-+++ b/hw/arm/xlnx-zynqmp.c
-@@ -510,7 +510,7 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
-     for (i = 0; i < XLNX_ZYNQMP_NUM_OCM_BANKS; i++) {
-         char *ocm_name = g_strdup_printf("zynqmp.ocm_ram_bank_%d", i);
+-    memory_region_init_alias(&ram_640k, NULL, "xen.ram.640k",
++    memory_region_init_alias(&ram_640k, OBJECT(pcms), "xen.ram.640k",
+                              &xen_memory, 0, 0xa0000);
+     memory_region_add_subregion(sysmem, 0, &ram_640k);
+     /* Skip of the VGA IO memory space, it will be registered later by the VGA
+@@ -169,12 +169,12 @@ static void xen_ram_init(PCMachineState *pcms,
+      * The area between 0xc0000 and 0x100000 will be used by SeaBIOS to load
+      * the Options ROM, so it is registered here as RAM.
+      */
+-    memory_region_init_alias(&ram_lo, NULL, "xen.ram.lo",
++    memory_region_init_alias(&ram_lo, OBJECT(pcms), "xen.ram.lo",
+                              &xen_memory, 0xc0000,
+                              x86ms->below_4g_mem_size - 0xc0000);
+     memory_region_add_subregion(sysmem, 0xc0000, &ram_lo);
+     if (x86ms->above_4g_mem_size > 0) {
+-        memory_region_init_alias(&ram_hi, NULL, "xen.ram.hi",
++        memory_region_init_alias(&ram_hi, OBJECT(pcms), "xen.ram.hi",
+                                  &xen_memory, 0x100000000ULL,
+                                  x86ms->above_4g_mem_size);
+         memory_region_add_subregion(sysmem, 0x100000000ULL, &ram_hi);
+diff --git a/hw/i386/xen/xen_pvdevice.c b/hw/i386/xen/xen_pvdevice.c
+index fab26a06af..6c255aeae1 100644
+--- a/hw/i386/xen/xen_pvdevice.c
++++ b/hw/i386/xen/xen_pvdevice.c
+@@ -108,7 +108,7 @@ static void xen_pv_realize(PCIDevice *pci_dev, Error **errp)
  
--        memory_region_init_ram(&s->ocm_ram[i], NULL, ocm_name,
-+        memory_region_init_ram(&s->ocm_ram[i], OBJECT(dev), ocm_name,
-                                XLNX_ZYNQMP_OCM_RAM_SIZE, &error_fatal);
-         memory_region_add_subregion(get_system_memory(),
-                                     XLNX_ZYNQMP_OCM_RAM_0_ADDRESS +
+     pci_conf[PCI_INTERRUPT_PIN] = 1;
+ 
+-    memory_region_init_io(&d->mmio, NULL, &xen_pv_mmio_ops, d,
++    memory_region_init_io(&d->mmio, OBJECT(pci_dev), &xen_pv_mmio_ops, d,
+                           "mmio", d->size);
+ 
+     pci_register_bar(pci_dev, 1, PCI_BASE_ADDRESS_MEM_PREFETCH,
+diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
+index 61d6ec1755..9d5d7694d4 100644
+--- a/include/hw/i386/x86.h
++++ b/include/hw/i386/x86.h
+@@ -121,7 +121,8 @@ void x86_cpu_unplug_request_cb(HotplugHandler *hotplug_dev,
+ void x86_cpu_unplug_cb(HotplugHandler *hotplug_dev,
+                        DeviceState *dev, Error **errp);
+ 
+-void x86_isa_bios_init(MemoryRegion *isa_bios, MemoryRegion *isa_memory,
++void x86_isa_bios_init(X86MachineState *x86ms, MemoryRegion *isa_bios,
++                       MemoryRegion *isa_memory,
+                        MemoryRegion *bios, bool read_only);
+ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
+                        MemoryRegion *rom_memory, bool isapc_ram_fw);
 -- 
 2.47.1
 
