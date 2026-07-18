@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82DE8C44521
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:59:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98252C44521
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:59:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlD3w-0004Ds-90; Sat, 18 Jul 2026 17:59:12 -0400
+	id 1wlD45-0004Sl-6v; Sat, 18 Jul 2026 17:59:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlD3u-0004BS-Kc; Sat, 18 Jul 2026 17:59:10 -0400
-Received: from pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([44.246.1.125])
+ id 1wlD44-0004O3-3C; Sat, 18 Jul 2026 17:59:20 -0400
+Received: from pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([44.246.77.92])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlD3s-0004or-Px; Sat, 18 Jul 2026 17:59:10 -0400
+ id 1wlD42-0004pe-8a; Sat, 18 Jul 2026 17:59:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784411948; x=1815947948;
+ t=1784411958; x=1815947958;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=5wFHCEJ3Et/505+6rAKfI9MuJkHGEquIWgQUEPU7qyY=;
- b=GDAWqIBndJBaWwXMQ/uFktcE24hglVGWk4QtQJfoSSTiznuZACdZNhIV
- 5YMeBNHmCzQY+QUfIeg1T6jMXAeCZ67qNlJ+hTtveqEi43Rt/Jn+ksoDE
- ya1R2JFIr6ttRsQmAZGsqsN/1euWY96Z3BeRW46xejMN+Rr0VfC1UYTvv
- +aa4PPPoMkUk+H5gow4FE3XDxRdzlolvR3rR2M1EuP64anQccBaiXavrN
- Ut/r5zbqEqiJdiM0qA39iKtqr6uwDDwmeyUGMpqRiQVCdHBBoCT0YKxX8
- E1jd/yPr8dtZwSj84Ly1D86Ipz842nOYocp8fWh0Z94OSA2PB60C4CRH6 w==;
-X-CSE-ConnectionGUID: FzvW/uALS9y5ZxcSYYDaow==
-X-CSE-MsgGUID: qiD9RJq6RMuiHSRx7JUGIw==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23927484"
-Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
- by internal-pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:59:05 +0000
-Received: from EX19MTAUWC002.ant.amazon.com [205.251.233.51:5221]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.58.199:2525]
+ bh=k3WIk/EB2Iz3AbpRf9OhbfBhFNMJVyqGyAvG9AyoT9o=;
+ b=R1UU/e+4d1/kl5M8usm3jSqkFuLgYZEiTEg4fdUjyKnsmgDnxnfyPIju
+ iMm2iLKqcTFnJVBl0TnD79jJ2EEJWKlsUXK3OxlC6J+UiNjcgV/ak2/l/
+ gTz8UbJxWYqksn9J+Bkuqugp6Up4s/NXSxvJy3brMciZf4WY/7cC3UezI
+ vmMiDy9FbKw2knpVIxQjzAkkP+4jVZ7+B/at6/2tceRJI4Yfe7W0WAvUr
+ I/eAUir/tz5sAlfWozM3jOgVff3iepXTsl5hxei2sWcS7co0LASUucHne
+ 1BcHcleOFSrNq9jmjJ7uIuN2FfOTNj0H8zZAO3prBkA5uCG37iHTT7Mvg A==;
+X-CSE-ConnectionGUID: E5/s2yI7QNC8T74z2DXnzA==
+X-CSE-MsgGUID: jObtm9bARuqLm+SJB9jbMQ==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23917582"
+Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
+ by internal-pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:59:14 +0000
+Received: from EX19MTAUWA001.ant.amazon.com [205.251.233.182:2106]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.29.147:2525]
  with esmtp (Farcaster)
- id 1a5b5e0f-92b0-48a1-bae7-850cfac8fc5e; Sat, 18 Jul 2026 21:59:05 +0000 (UTC)
-X-Farcaster-Flow-ID: 1a5b5e0f-92b0-48a1-bae7-850cfac8fc5e
+ id 23c42ef8-ba74-4760-948c-f1bcd52317a0; Sat, 18 Jul 2026 21:59:14 +0000 (UTC)
+X-Farcaster-Flow-ID: 23c42ef8-ba74-4760-948c-f1bcd52317a0
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
+ EX19MTAUWA001.ant.amazon.com (10.250.64.218) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:59:04 +0000
+ Sat, 18 Jul 2026 21:59:14 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:58:55 +0000
+ Sat, 18 Jul 2026 21:59:04 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,10 +93,10 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 079/137] hw/audio: Give -audio model= devices a QOM
- parent
-Date: Sat, 18 Jul 2026 21:35:54 +0000
-Message-ID: <20260718213652.37673-80-graf@amazon.com>
+Subject: [RFC PATCH v2 080/137] hw/xen: Give xenstore-driven backend devices a
+ QOM parent
+Date: Sat, 18 Jul 2026 21:35:55 +0000
+Message-ID: <20260718213652.37673-81-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -107,9 +107,9 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D043UWA001.ant.amazon.com (10.13.139.45) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=44.246.1.125;
+Received-SPF: pass client-ip=44.246.77.92;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -133,57 +133,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-audio_model_devices_init() is the '-audio model=' command-line path,
-so parent the created device under /machine/peripheral-anon like
--device without id= would.
-
-The intel-hda .init helper for '-audio model=hda' additionally
-creates an hda-duplex codec on the controller's HDA bus; the codec
-is a natural child of the controller device it just spawned.
-
-Both sites drop the extra unref: the child<> property now holds the
-reference.
+The XenBackendInfo .create callbacks (vif, console, vbd) create a
+XenDevice in response to xenstore hotplug events.  The lifetime
+owner is the xen-bridge device that hosts the XenBus, so parent
+each device there.  The failure paths already call object_unparent()
+so nothing else changes; the reference previously dropped by
+qdev_realize_and_unref() is now the parent's child<> property.
 
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/audio/intel-hda.c | 4 ++--
- hw/audio/model.c     | 5 +++--
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ hw/block/xen-block.c  | 5 +++--
+ hw/char/xen_console.c | 5 +++--
+ hw/net/xen_nic.c      | 5 +++--
+ 3 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/hw/audio/intel-hda.c b/hw/audio/intel-hda.c
-index cd4743a405..f51c98511a 100644
---- a/hw/audio/intel-hda.c
-+++ b/hw/audio/intel-hda.c
-@@ -1313,9 +1313,9 @@ static void intel_hda_and_codec_init(const char *audiodev)
-     intel_hda = qdev_device_add_from_qdict(props, false, &error_fatal);
-     hdabus = QLIST_FIRST(&intel_hda->child_bus);
- 
--    codec = qdev_new_orphan("hda-duplex");
-+    codec = qdev_new(OBJECT(intel_hda), "codec", "hda-duplex");
-     qdev_prop_set_string(codec, "audiodev", audiodev);
--    qdev_realize_and_unref(codec, hdabus, &error_fatal);
-+    qdev_realize(codec, hdabus, &error_fatal);
-     object_unref(intel_hda);
- }
- 
-diff --git a/hw/audio/model.c b/hw/audio/model.c
-index bd8ca35153..308b899459 100644
---- a/hw/audio/model.c
-+++ b/hw/audio/model.c
-@@ -110,10 +110,11 @@ void audio_model_init(void)
+diff --git a/hw/block/xen-block.c b/hw/block/xen-block.c
+index 9dd69faa02..46d94a9a95 100644
+--- a/hw/block/xen-block.c
++++ b/hw/block/xen-block.c
+@@ -1074,7 +1074,8 @@ static void xen_block_device_create(XenBackendInstance *backend,
+         goto fail;
      }
  
-     if (c->typename) {
--        DeviceState *dev = qdev_new_orphan(c->typename);
-+        DeviceState *dev = qdev_new(machine_get_container("peripheral-anon"),
-+                                    "audio[*]", c->typename);
-         BusState *bus = qdev_find_default_bus(DEVICE_GET_CLASS(dev), &error_fatal);
-         qdev_prop_set_string(dev, "audiodev", audiodev_id);
--        qdev_realize_and_unref(dev, bus, &error_fatal);
-+        qdev_realize(dev, bus, &error_fatal);
-     } else {
-         c->init(audiodev_id);
+-    xendev = XEN_DEVICE(qdev_new_orphan(type));
++    xendev = XEN_DEVICE(qdev_new(OBJECT(BUS(xenbus)->parent), "vbd[*]",
++                                 type));
+     blockdev = XEN_BLOCK_DEVICE(xendev);
+ 
+     if (!object_property_set_str(OBJECT(xendev), "vdev", vdev,
+@@ -1099,7 +1100,7 @@ static void xen_block_device_create(XenBackendInstance *backend,
+     blockdev->iothread = iothread;
+     blockdev->drive = drive;
+ 
+-    if (!qdev_realize_and_unref(DEVICE(xendev), BUS(xenbus), errp)) {
++    if (!qdev_realize(DEVICE(xendev), BUS(xenbus), errp)) {
+         error_prepend(errp, "realization of device %s failed: ", type);
+         goto fail;
+     }
+diff --git a/hw/char/xen_console.c b/hw/char/xen_console.c
+index cd440b82f4..40449b34e8 100644
+--- a/hw/char/xen_console.c
++++ b/hw/char/xen_console.c
+@@ -562,7 +562,8 @@ static void xen_console_device_create(XenBackendInstance *backend,
+         goto fail;
+     }
+ 
+-    xendev = XEN_DEVICE(qdev_new_orphan(TYPE_XEN_CONSOLE_DEVICE));
++    xendev = XEN_DEVICE(qdev_new(OBJECT(BUS(xenbus)->parent), "console[*]",
++                                 TYPE_XEN_CONSOLE_DEVICE));
+     con = XEN_CONSOLE_DEVICE(xendev);
+ 
+     con->dev = number;
+@@ -610,7 +611,7 @@ static void xen_console_device_create(XenBackendInstance *backend,
+         goto fail;
+     }
+ 
+-    if (qdev_realize_and_unref(DEVICE(xendev), BUS(xenbus), errp)) {
++    if (qdev_realize(DEVICE(xendev), BUS(xenbus), errp)) {
+         xen_backend_set_device(backend, xendev);
+         goto done;
+     }
+diff --git a/hw/net/xen_nic.c b/hw/net/xen_nic.c
+index 212281aac7..ff748ae070 100644
+--- a/hw/net/xen_nic.c
++++ b/hw/net/xen_nic.c
+@@ -619,13 +619,14 @@ static void xen_net_device_create(XenBackendInstance *backend,
+         goto fail;
+     }
+ 
+-    xendev = XEN_DEVICE(qdev_new_orphan(TYPE_XEN_NET_DEVICE));
++    xendev = XEN_DEVICE(qdev_new(OBJECT(BUS(xenbus)->parent), "vif[*]",
++                                 TYPE_XEN_NET_DEVICE));
+     net = XEN_NET_DEVICE(xendev);
+ 
+     net->dev = number;
+     memcpy(&net->conf.macaddr, &mac, sizeof(mac));
+ 
+-    if (qdev_realize_and_unref(DEVICE(xendev), BUS(xenbus), errp)) {
++    if (qdev_realize(DEVICE(xendev), BUS(xenbus), errp)) {
+         xen_backend_set_device(backend, xendev);
+         return;
      }
 -- 
 2.47.1
