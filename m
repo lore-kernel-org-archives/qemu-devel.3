@@ -4,44 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40DCAC4451B
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 08:47:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 827D5C4451B
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 08:50:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wl0h0-0006tS-9G; Sat, 18 Jul 2026 04:46:42 -0400
+	id 1wl0kM-0007sT-UY; Sat, 18 Jul 2026 04:50:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wl0gy-0006sz-Pp; Sat, 18 Jul 2026 04:46:40 -0400
+ id 1wl0kL-0007sA-Mb; Sat, 18 Jul 2026 04:50:09 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wl0gx-0001PK-Dc; Sat, 18 Jul 2026 04:46:40 -0400
+ id 1wl0kD-0001hQ-I8; Sat, 18 Jul 2026 04:50:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784364388; bh=ymrCAjXX6Y4ogtfEvsPt8tj9iNQUQEBN9E09VN4NGoA=;
+ t=1784364590; bh=KeyDor1U2L9Hv/VvsqlwOj7ORXnVtCde1Zal5Qavrnc=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=MaiDeL6nurP1PWaqoCtlkRafB39+3vOVbdlW+D/2TBZISx+lIll2kAimJAfgklOJ3
- bge4K6UGwEoVCPcx8cJ6Xe/E5EwjihY0aFYklF3UrdsqSo8hnUULclc5T/mbwQOisc
- Zo0B4QqbZxtaWU0pnpSxyWDrB5X9erU1qWKoL7zib+2oa9gYb44Gmg9I5AtjBghKN/
- rZasd01PmStGKPfSxc9Ds/sc06dtsriT2b6tK84OzOvhU1vkY1+z9jj4JeWNwcJ3QQ
- Zx3oXw1PbFYWS/pJ6qphv0i/wcK3izgJnrQIwePt0afIgjqafHMLPqHVGJFANGN1sb
- kw0AdmZYDc2Kg==
+ b=TM2So/KFIpfnY5R8q6rrRGVTbaFk7hYUuivoRPTnRfl3SrJb0Xth2q+OuteBfOS0Y
+ HdCxDf9ZKYNbeZKvBDt7lTWdjLp82X3Y2QGDJEs3O30X5c4imuZ9/Qc7e4Zp7CJswL
+ aTnbRL+qK4JhVwdTRh0bvcY3GRqyDIEfMOlSU1DKu7yPM/+4a+42BHBKnnwYZbj2a9
+ sOIku5XuM9kIDjVva5fGLANlbW65tDldD/9La5IwFUWvX1Mc6olpLntQoUklry/May
+ QaoLBt9IwJ8nS+y7YgiAJ2tKLYL+15LKOoJ0lj5cicNwbGc2ImXi6vUdTd1I3vnOBv
+ GYC2VMXs8+Kzw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 501571C2A8C;
- Sat, 18 Jul 2026 11:46:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B167B1C2A91;
+ Sat, 18 Jul 2026 11:49:50 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 50B7D3F0BA3;
- Sat, 18 Jul 2026 11:46:37 +0300 (MSK)
-Message-ID: <14c73a26-3c2c-4358-93e0-bfbbbebe5da3@tls.msk.ru>
-Date: Sat, 18 Jul 2026 11:46:28 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id AD1623F0BA4;
+ Sat, 18 Jul 2026 11:49:59 +0300 (MSK)
+Message-ID: <6e4a5178-9622-4b0e-8926-b1f804e225d2@tls.msk.ru>
+Date: Sat, 18 Jul 2026 11:49:50 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] net: only advertise passt in netdev help when CONFIG_PASST
-To: Rohitashv Kumar <rohit.kuma1313@gmail.com>, qemu-devel@nongnu.org
-Cc: Jason Wang <jasowangio@gmail.com>, Rohitashv Kumar <roohiit@amazon.de>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20260713194511.1058450-1-rohit.kuma1313@gmail.com>
+Subject: Re: [PATCH v3 0/2] pvscsi: fix endianness issues
+To: shankerwangmiao@gmail.com, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Arvind Kumar <arvindkumar@vmware.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20260710-pvscsi-endianness-v3-0-27fe1c4d1f6e@gmail.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -87,7 +90,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260713194511.1058450-1-rohit.kuma1313@gmail.com>
+In-Reply-To: <20260710-pvscsi-endianness-v3-0-27fe1c4d1f6e@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -113,23 +116,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/13/26 22:45, Rohitashv Kumar wrote:
-> From: Rohitashv Kumar <roohiit@amazon.de>
+On 7/9/26 22:21, Miao Wang via B4 Relay wrote:
+> This patch series fixes the endianness issues in the pvscsi device
+> emulation and clarfies the endianness of pvscsi data structures.
 > 
-> show_netdevs() lists each conditionally-compiled netdev backend behind
-> its CONFIG_* guard (CONFIG_SLIRP for "user", CONFIG_L2TPV3 for
-> "l2tpv3", CONFIG_NET_BRIDGE for "bridge", ...). The "passt" entry was
-> added unconditionally, so "-netdev help" advertises passt even in
-> builds configured with --disable-passt. Trying to use it then fails
-> with "Parameter 'type' does not accept value 'passt'", since the QAPI
-> NetClientDriver enum member "passt" is gated by 'if': 'CONFIG_PASST'.
+> Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
+> ---
+> Changes in v3:
+> - Remove the unnecessary struct keyword for the structs that have
+>    been already typedef-ed.
+> - Add a comment in vmw_pvscsi.h to explain the endianness of pvscsi
+>    data structures.
+> - Link to v2: https://lore.kernel.org/qemu-devel/20260710-pvscsi-endianness-v2-1-c512e6c8849b@gmail.com
 > 
-> Guard the help entry with CONFIG_PASST so the advertised backends match
-> those actually compiled into the binary.
+> Changes in v2:
+> - Assume pvscsi is little-endian instead of native-endian, and thus
+>    replace tswap*() with le*_to_cpu() and cpu_to_le*() to convert the
+>    endianness of pvscsi data structures to/from CPU endianness.
+> - Link to v1: https://lore.kernel.org/qemu-devel/20260605-pvscsi-endianness-v1-1-b0bf472b0f59@gmail.com
 > 
-> Signed-off-by: Rohitashv Kumar <roohiit@amazon.de>
+> ---
+> Miao Wang (2):
+>        pvscsi: translate data endianness
+>        pvscsi: add a comment to explain the endianness
+> 
+>   hw/scsi/vmw_pvscsi.c | 57 +++++++++++++++++++++++++++++++++++++++++++++++++++-
+>   hw/scsi/vmw_pvscsi.h | 14 +++++++++++++
+>   2 files changed, 70 insertions(+), 1 deletion(-)
 
-I'm picking this trival fix  up for qemu-stable - let's stop confusing people :)
+I'm picking this up for qemu-stable (with reverse API conversion), since
+this issue affects older releases too, and because we want to make the
+(new) rules explicit.
+
+Please let me know if I shouldn't.
 
 Thanks,
 
