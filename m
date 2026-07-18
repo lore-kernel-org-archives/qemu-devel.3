@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98252C44521
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:59:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5DFAC4450A
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:00:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlD45-0004Sl-6v; Sat, 18 Jul 2026 17:59:21 -0400
+	id 1wlD4b-0005VN-56; Sat, 18 Jul 2026 17:59:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlD44-0004O3-3C; Sat, 18 Jul 2026 17:59:20 -0400
-Received: from pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([44.246.77.92])
+ id 1wlD4Z-0005UZ-HB; Sat, 18 Jul 2026 17:59:51 -0400
+Received: from pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([34.218.115.239])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlD42-0004pe-8a; Sat, 18 Jul 2026 17:59:19 -0400
+ id 1wlD4X-0004s2-KI; Sat, 18 Jul 2026 17:59:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784411958; x=1815947958;
+ t=1784411989; x=1815947989;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=k3WIk/EB2Iz3AbpRf9OhbfBhFNMJVyqGyAvG9AyoT9o=;
- b=R1UU/e+4d1/kl5M8usm3jSqkFuLgYZEiTEg4fdUjyKnsmgDnxnfyPIju
- iMm2iLKqcTFnJVBl0TnD79jJ2EEJWKlsUXK3OxlC6J+UiNjcgV/ak2/l/
- gTz8UbJxWYqksn9J+Bkuqugp6Up4s/NXSxvJy3brMciZf4WY/7cC3UezI
- vmMiDy9FbKw2knpVIxQjzAkkP+4jVZ7+B/at6/2tceRJI4Yfe7W0WAvUr
- I/eAUir/tz5sAlfWozM3jOgVff3iepXTsl5hxei2sWcS7co0LASUucHne
- 1BcHcleOFSrNq9jmjJ7uIuN2FfOTNj0H8zZAO3prBkA5uCG37iHTT7Mvg A==;
-X-CSE-ConnectionGUID: E5/s2yI7QNC8T74z2DXnzA==
-X-CSE-MsgGUID: jObtm9bARuqLm+SJB9jbMQ==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23917582"
-Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
- by internal-pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:59:14 +0000
-Received: from EX19MTAUWA001.ant.amazon.com [205.251.233.182:2106]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.29.147:2525]
+ bh=06ETOBsEQzS5d9zH1jkTfyd2j8Kc5P+uPwzN0pdk1os=;
+ b=TEGub6Q+rrofC61kco81vDsLV+wnRuoah1w9K1Qu5Anv3V8ADS88yNkf
+ U2iXUzAxTeLs6+JAWe0nNSwv1P1XS2P1Tm9zoS6rRuIckatfviCDQ4IfD
+ KIeZK5pWajxsrF5s3tq2nkL1upBZkHv6kLC1ZSybSLKKU6XD3zrSjUtEH
+ 6rdp3crjtugcVC5GPA0mh8YlxNxBd22e2v+RlilFIVmVx56DxsnGckAez
+ xC8DvjddODi5KqJU/Z1mqYk1OuZlAKoF7aSGWVuW0bOkf01WWXW8wgfqN
+ 9DVbWlS/vFQZFJXP8PA++QaFXstljmSn3s0WNUOYv0VSR7voaHbEKQcCX w==;
+X-CSE-ConnectionGUID: y5lbufr0TM6scxDwcWCBNw==
+X-CSE-MsgGUID: ZYUO42N/TbCGmQXbaDDN2A==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23719404"
+Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
+ by internal-pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:59:46 +0000
+Received: from EX19MTAUWC001.ant.amazon.com [205.251.233.53:6565]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.30.230:2525]
  with esmtp (Farcaster)
- id 23c42ef8-ba74-4760-948c-f1bcd52317a0; Sat, 18 Jul 2026 21:59:14 +0000 (UTC)
-X-Farcaster-Flow-ID: 23c42ef8-ba74-4760-948c-f1bcd52317a0
+ id 61be5819-85e4-4e9d-8aaa-113133826c15; Sat, 18 Jul 2026 21:59:45 +0000 (UTC)
+X-Farcaster-Flow-ID: 61be5819-85e4-4e9d-8aaa-113133826c15
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA001.ant.amazon.com (10.250.64.218) with Microsoft SMTP Server
+ EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:59:14 +0000
+ Sat, 18 Jul 2026 21:59:45 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:59:04 +0000
+ Sat, 18 Jul 2026 21:59:36 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,10 +93,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 080/137] hw/xen: Give xenstore-driven backend devices a
- QOM parent
-Date: Sat, 18 Jul 2026 21:35:55 +0000
-Message-ID: <20260718213652.37673-81-graf@amazon.com>
+Subject: [RFC PATCH v2 081/137] hw/nitro: Give the vsock bridge a QOM parent
+Date: Sat, 18 Jul 2026 21:35:56 +0000
+Message-ID: <20260718213652.37673-82-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -105,18 +104,18 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D043UWA001.ant.amazon.com (10.13.139.45) To
+X-ClientProxiedBy: EX19D043UWA002.ant.amazon.com (10.13.139.53) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=44.246.77.92;
+Received-SPF: pass client-ip=34.218.115.239;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
  HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
+ RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
  UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -133,88 +132,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The XenBackendInfo .create callbacks (vif, console, vbd) create a
-XenDevice in response to xenstore hotplug events.  The lifetime
-owner is the xen-bridge device that hosts the XenBus, so parent
-each device there.  The failure paths already call object_unparent()
-so nothing else changes; the reference previously dropped by
-qdev_realize_and_unref() is now the parent's child<> property.
+nitro_vsock_bridge_create() was using qdev_set_id() to slot the
+bridge under /machine/peripheral.  The bridge is a board-owned
+singleton created from nitro_machine_init(), so make it a plain
+child of the machine and drop the qdev_set_id() indirection.
+
+The heartbeat device that hangs off the bridge is already a child<>
+of it, so the composition tree becomes:
+
+  /machine/nitro-vsock (nitro-vsock-bridge)
+  /machine/nitro-vsock/heartbeat (nitro-heartbeat)
 
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/block/xen-block.c  | 5 +++--
- hw/char/xen_console.c | 5 +++--
- hw/net/xen_nic.c      | 5 +++--
- 3 files changed, 9 insertions(+), 6 deletions(-)
+ hw/nitro/machine.c                 | 2 +-
+ hw/nitro/nitro-vsock-bus.c         | 9 ++++-----
+ include/hw/nitro/nitro-vsock-bus.h | 2 +-
+ 3 files changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/hw/block/xen-block.c b/hw/block/xen-block.c
-index 9dd69faa02..46d94a9a95 100644
---- a/hw/block/xen-block.c
-+++ b/hw/block/xen-block.c
-@@ -1074,7 +1074,8 @@ static void xen_block_device_create(XenBackendInstance *backend,
-         goto fail;
+diff --git a/hw/nitro/machine.c b/hw/nitro/machine.c
+index 6b61de911f..e522eae5ba 100644
+--- a/hw/nitro/machine.c
++++ b/hw/nitro/machine.c
+@@ -194,7 +194,7 @@ static void nitro_machine_init(MachineState *machine)
+                         MEMTXATTRS_UNSPECIFIED, eif_data, eif_size);
+ 
+     if (defaults_enabled()) {
+-        NitroVsockBridge *bridge = nitro_vsock_bridge_create();
++        NitroVsockBridge *bridge = nitro_vsock_bridge_create(OBJECT(machine));
+         DeviceState *dev;
+ 
+         /* Nitro Enclaves require a heartbeat device. Provide one. */
+diff --git a/hw/nitro/nitro-vsock-bus.c b/hw/nitro/nitro-vsock-bus.c
+index f7540eaa54..2c4b66931f 100644
+--- a/hw/nitro/nitro-vsock-bus.c
++++ b/hw/nitro/nitro-vsock-bus.c
+@@ -20,7 +20,6 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+-#include "monitor/qdev.h"
+ #include "hw/core/sysbus.h"
+ #include "hw/nitro/nitro-vsock-bus.h"
+ 
+@@ -46,12 +45,12 @@ void nitro_vsock_bridge_start_enclave(NitroVsockBridge *bridge,
      }
+ }
  
--    xendev = XEN_DEVICE(qdev_new_orphan(type));
-+    xendev = XEN_DEVICE(qdev_new(OBJECT(BUS(xenbus)->parent), "vbd[*]",
-+                                 type));
-     blockdev = XEN_BLOCK_DEVICE(xendev);
+-NitroVsockBridge *nitro_vsock_bridge_create(void)
++NitroVsockBridge *nitro_vsock_bridge_create(Object *parent)
+ {
+-    DeviceState *dev = qdev_new_orphan(TYPE_NITRO_VSOCK_BRIDGE);
++    DeviceState *dev = qdev_new(parent, "nitro-vsock",
++                                TYPE_NITRO_VSOCK_BRIDGE);
  
-     if (!object_property_set_str(OBJECT(xendev), "vdev", vdev,
-@@ -1099,7 +1100,7 @@ static void xen_block_device_create(XenBackendInstance *backend,
-     blockdev->iothread = iothread;
-     blockdev->drive = drive;
+-    qdev_set_id(dev, g_strdup("nitro-vsock"), &error_fatal);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
  
--    if (!qdev_realize_and_unref(DEVICE(xendev), BUS(xenbus), errp)) {
-+    if (!qdev_realize(DEVICE(xendev), BUS(xenbus), errp)) {
-         error_prepend(errp, "realization of device %s failed: ", type);
-         goto fail;
-     }
-diff --git a/hw/char/xen_console.c b/hw/char/xen_console.c
-index cd440b82f4..40449b34e8 100644
---- a/hw/char/xen_console.c
-+++ b/hw/char/xen_console.c
-@@ -562,7 +562,8 @@ static void xen_console_device_create(XenBackendInstance *backend,
-         goto fail;
-     }
+     return NITRO_VSOCK_BRIDGE(dev);
+ }
+diff --git a/include/hw/nitro/nitro-vsock-bus.h b/include/hw/nitro/nitro-vsock-bus.h
+index 064260aa41..36f4dde78f 100644
+--- a/include/hw/nitro/nitro-vsock-bus.h
++++ b/include/hw/nitro/nitro-vsock-bus.h
+@@ -50,7 +50,7 @@ struct NitroVsockDeviceClass {
+ /*
+  * Machine helper to create the Nitro vsock bridge sysbus device.
+  */
+-NitroVsockBridge *nitro_vsock_bridge_create(void);
++NitroVsockBridge *nitro_vsock_bridge_create(Object *parent);
  
--    xendev = XEN_DEVICE(qdev_new_orphan(TYPE_XEN_CONSOLE_DEVICE));
-+    xendev = XEN_DEVICE(qdev_new(OBJECT(BUS(xenbus)->parent), "console[*]",
-+                                 TYPE_XEN_CONSOLE_DEVICE));
-     con = XEN_CONSOLE_DEVICE(xendev);
- 
-     con->dev = number;
-@@ -610,7 +611,7 @@ static void xen_console_device_create(XenBackendInstance *backend,
-         goto fail;
-     }
- 
--    if (qdev_realize_and_unref(DEVICE(xendev), BUS(xenbus), errp)) {
-+    if (qdev_realize(DEVICE(xendev), BUS(xenbus), errp)) {
-         xen_backend_set_device(backend, xendev);
-         goto done;
-     }
-diff --git a/hw/net/xen_nic.c b/hw/net/xen_nic.c
-index 212281aac7..ff748ae070 100644
---- a/hw/net/xen_nic.c
-+++ b/hw/net/xen_nic.c
-@@ -619,13 +619,14 @@ static void xen_net_device_create(XenBackendInstance *backend,
-         goto fail;
-     }
- 
--    xendev = XEN_DEVICE(qdev_new_orphan(TYPE_XEN_NET_DEVICE));
-+    xendev = XEN_DEVICE(qdev_new(OBJECT(BUS(xenbus)->parent), "vif[*]",
-+                                 TYPE_XEN_NET_DEVICE));
-     net = XEN_NET_DEVICE(xendev);
- 
-     net->dev = number;
-     memcpy(&net->conf.macaddr, &mac, sizeof(mac));
- 
--    if (qdev_realize_and_unref(DEVICE(xendev), BUS(xenbus), errp)) {
-+    if (qdev_realize(DEVICE(xendev), BUS(xenbus), errp)) {
-         xen_backend_set_device(backend, xendev);
-         return;
-     }
+ /*
+  * Find the Nitro vsock bridge on the sysbus.
 -- 
 2.47.1
 
