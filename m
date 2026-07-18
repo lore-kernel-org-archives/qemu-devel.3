@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08843C4451B
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:02:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97829C4451B
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:03:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlD72-0002f6-M2; Sat, 18 Jul 2026 18:02:25 -0400
+	id 1wlD7P-00033x-8M; Sat, 18 Jul 2026 18:02:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlD70-0002di-DX; Sat, 18 Jul 2026 18:02:22 -0400
-Received: from pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([44.246.77.92])
+ id 1wlD7M-0002yq-0D; Sat, 18 Jul 2026 18:02:44 -0400
+Received: from pdx-out-014.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([35.83.148.184])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlD6y-0005LK-Oa; Sat, 18 Jul 2026 18:02:22 -0400
+ id 1wlD7I-0005MV-34; Sat, 18 Jul 2026 18:02:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784412140; x=1815948140;
+ t=1784412160; x=1815948160;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Dn3otMTNYt42pCrVX9LAFPRVYwV4S524ppbCyB1xSIw=;
- b=BqCi+UMl34lcO3DIOsLYYm0vovBnXR8vNHCSAm6P9rlSJUsipKh+l5xi
- +UeMq8s0wu1x94sLIw+JdBjrPwmpPeupBAm7xOHMD3MVzla2JuZ5bdvfn
- 6KdrV3YZb7HKk6nZ8RQBqa0aERnwPFH05eIdmkNCIVwKmfCZ7AqoUija5
- J6YduYNNdJVX4gl4gs2TFxVJ4vb+m/0GgXIF6WPrOHDhgdVefZPjjwPRX
- hO9ySxgbt87MvPYZnHuWHOr9llqN+yepziilz54yOKDN0NH19LBtiOEEq
- DIZW8LnDnyAxt3WzBs033dFHynRqPPlsAA8NahfZdXRKtLet57uOEr3oh Q==;
-X-CSE-ConnectionGUID: CgFqv+b9SR61IJwDiwrTFA==
-X-CSE-MsgGUID: EOh2bZtGSMueFQ8gggRFqQ==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23917749"
-Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
- by internal-pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:02:17 +0000
-Received: from EX19MTAUWA001.ant.amazon.com [205.251.233.182:19126]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.58.199:2525]
+ bh=B2gGflUWO1Ah2HAgPInGCPAFcie2TEomgTxhhFhtP9k=;
+ b=ODiMZi6aVdvrCeFFN3DQbfx89H8qKDaR4FHb2HAYyTbhNBEKcwmverRz
+ mDmq76K6PJ1txcFfp97Sec8pMJQ0JhX1eV3qv73MkAo00frgVRQmDk0pD
+ Z2hFKOCQKdTxc8zsydkhEYM/zcHPQW18/1oj4l+j+K/BlI2MczgZw/MSH
+ sd56GuT83PZ9lCt/NSXlW9oP3AJh2d2vdH2Vg36bPoE0uQhPcTvs2Ka4M
+ CzTZnxT8Yr6vOB9CgN8dIRBCxxK/GOM2L2UwhCR9qHsnUAsHep2s8uICR
+ rBGVS6MIDXkM16RkTcP1+KgR2YTdum0kmtffiF+jz6UCqoFn5WkcEC7Uk w==;
+X-CSE-ConnectionGUID: ej9iJXs2SvSVfAaIgQIMsw==
+X-CSE-MsgGUID: /Kf0tTJ2RQmUpxalIppgGA==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23712933"
+Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
+ by internal-pdx-out-014.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:02:36 +0000
+Received: from EX19MTAUWB002.ant.amazon.com [205.251.233.48:26827]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.29.147:2525]
  with esmtp (Farcaster)
- id aab7997c-e6ee-4723-94f1-2c842ee15e89; Sat, 18 Jul 2026 22:02:16 +0000 (UTC)
-X-Farcaster-Flow-ID: aab7997c-e6ee-4723-94f1-2c842ee15e89
+ id 309c0369-e362-4650-83f6-e58e79358287; Sat, 18 Jul 2026 22:02:36 +0000 (UTC)
+X-Farcaster-Flow-ID: 309c0369-e362-4650-83f6-e58e79358287
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA001.ant.amazon.com (10.250.64.218) with Microsoft SMTP Server
+ EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:02:16 +0000
+ Sat, 18 Jul 2026 22:02:36 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:02:06 +0000
+ Sat, 18 Jul 2026 22:02:26 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,10 +93,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 090/137] memory: Accept non-device owners in
- memory_region_init_ram()
-Date: Sat, 18 Jul 2026 21:36:05 +0000
-Message-ID: <20260718213652.37673-91-graf@amazon.com>
+Subject: [RFC PATCH v2 092/137] hw/mips: Give memory regions an explicit owner
+Date: Sat, 18 Jul 2026 21:36:07 +0000
+Message-ID: <20260718213652.37673-93-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -107,9 +106,9 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D044UWA002.ant.amazon.com (10.13.139.11) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=44.246.77.92;
+Received-SPF: pass client-ip=35.83.148.184;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-014.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -133,54 +132,200 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-memory_region_register_ram() casts the owner to DeviceState with an
-asserting DEVICE() check. Historically this was fine because every
-caller either passed a device or NULL, but the following patches
-give board-created RAM regions their machine as owner, which is not
-a device.
+Convert memory_region_init*() calls that pass NULL owner to pass
+the enclosing machine instead. All sites are inside board init
+functions (MachineState *machine) or a helper that already carries
+an Object *parent from the earlier hw/mips device-parenting patch (malta_fpga_init).
 
-vmstate_register_ram() only uses the device to prefix the RAMBlock
-idstr with the device's canonical path. Use object_dynamic_cast()
-so non-device owners degrade to the same NULL-owner idstr they had
-before, and drop the stale TODO comment.
+No functional change intended.
 
-No functional change for existing callers.
+RAMBlock idstrs are unchanged: the owners added here are Machine
+or SysBus devices, and memory_region_register_ram() maps both to
+dev=NULL for qemu_ram_set_idstr().
 
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- system/memory.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ hw/mips/boston.c         |  8 ++++----
+ hw/mips/fuloong2e.c      |  2 +-
+ hw/mips/jazz.c           | 16 ++++++++--------
+ hw/mips/loongson3_virt.c |  6 +++---
+ hw/mips/malta.c          | 12 ++++++------
+ 5 files changed, 22 insertions(+), 22 deletions(-)
 
-diff --git a/system/memory.c b/system/memory.c
-index 5fc36708ec..838be57b4d 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -3631,15 +3631,16 @@ void mtree_info(bool flatview, bool dispatch_tree, bool owner, bool disabled)
+diff --git a/hw/mips/boston.c b/hw/mips/boston.c
+index a156b218fb..f012f22307 100644
+--- a/hw/mips/boston.c
++++ b/hw/mips/boston.c
+@@ -711,7 +711,7 @@ static void boston_mach_init(MachineState *machine)
+     sysbus_mmio_map_overlap(SYS_BUS_DEVICE(&s->cps), 0, 0, 1);
  
- static void memory_region_register_ram(MemoryRegion *mr, Object *owner)
- {
--    DeviceState *owner_dev;
--
--    /* This will assert if owner is neither NULL nor a DeviceState.
--     * We only want the owner here for the purposes of defining a
--     * unique name for migration. TODO: Ideally we should implement
--     * a naming scheme for Objects which are not DeviceStates, in
--     * which case we can relax this restriction.
-+    /*
-+     * vmstate_register_ram() prefixes the RAMBlock idstr with the
-+     * bus-class dev-path of @owner (via qdev_get_dev_path()), not
-+     * the QOM canonical path, when it is a DeviceState.  Board-
-+     * created RAM regions are owned by the machine, which is not a
-+     * device; pass NULL there so the idstr is the bare region name,
-+     * matching historical behaviour for owner==NULL callers.
+     flash =  g_new(MemoryRegion, 1);
+-    memory_region_init_rom(flash, NULL, "boston.flash",
++    memory_region_init_rom(flash, OBJECT(machine), "boston.flash",
+                            boston_memmap[BOSTON_FLASH].size, &error_fatal);
+     memory_region_add_subregion_overlap(sys_mem,
+                                         boston_memmap[BOSTON_FLASH].base,
+@@ -722,7 +722,7 @@ static void boston_mach_init(MachineState *machine)
+                                         machine->ram, 0);
+ 
+     ddr_low_alias = g_new(MemoryRegion, 1);
+-    memory_region_init_alias(ddr_low_alias, NULL, "boston_low.ddr",
++    memory_region_init_alias(ddr_low_alias, OBJECT(machine), "boston_low.ddr",
+                              machine->ram, 0,
+                              MIN(machine->ram_size, (256 * MiB)));
+     memory_region_add_subregion_overlap(sys_mem, 0, ddr_low_alias, 0);
+@@ -749,7 +749,7 @@ static void boston_mach_init(MachineState *machine)
+                              get_cps_irq(&s->cps, 0));
+ 
+     platreg = g_new(MemoryRegion, 1);
+-    memory_region_init_io(platreg, NULL, &boston_platreg_ops, s,
++    memory_region_init_io(platreg, OBJECT(machine), &boston_platreg_ops, s,
+                           "boston-platregs",
+                           boston_memmap[BOSTON_PLATREG].size);
+     memory_region_add_subregion_overlap(sys_mem,
+@@ -761,7 +761,7 @@ static void boston_mach_init(MachineState *machine)
+                              serial_hd(0), DEVICE_LITTLE_ENDIAN);
+ 
+     lcd = g_new(MemoryRegion, 1);
+-    memory_region_init_io(lcd, NULL, &boston_lcd_ops, s, "boston-lcd", 0x8);
++    memory_region_init_io(lcd, OBJECT(machine), &boston_lcd_ops, s, "boston-lcd", 0x8);
+     memory_region_add_subregion_overlap(sys_mem,
+                                         boston_memmap[BOSTON_LCD].base, lcd, 0);
+ 
+diff --git a/hw/mips/fuloong2e.c b/hw/mips/fuloong2e.c
+index 1b105ca37c..29e6561f2a 100644
+--- a/hw/mips/fuloong2e.c
++++ b/hw/mips/fuloong2e.c
+@@ -245,7 +245,7 @@ static void mips_fuloong2e_init(MachineState *machine)
+     memory_region_add_subregion(address_space_mem, 0, machine->ram);
+ 
+     /* Boot ROM */
+-    memory_region_init_rom(bios, NULL, "fuloong2e.bios", BIOS_SIZE,
++    memory_region_init_rom(bios, OBJECT(machine), "fuloong2e.bios", BIOS_SIZE,
+                            &error_fatal);
+     memory_region_add_subregion(address_space_mem, 0x1fc00000LL, bios);
+ 
+diff --git a/hw/mips/jazz.c b/hw/mips/jazz.c
+index cb24d8c00d..8999efb352 100644
+--- a/hw/mips/jazz.c
++++ b/hw/mips/jazz.c
+@@ -234,9 +234,9 @@ static void mips_jazz_init(MachineState *machine,
+     /* allocate RAM */
+     memory_region_add_subregion(address_space, 0, machine->ram);
+ 
+-    memory_region_init_rom(bios, NULL, "mips_jazz.bios", MAGNUM_BIOS_SIZE,
++    memory_region_init_rom(bios, OBJECT(machine), "mips_jazz.bios", MAGNUM_BIOS_SIZE,
+                            &error_fatal);
+-    memory_region_init_alias(bios2, NULL, "mips_jazz.bios", bios,
++    memory_region_init_alias(bios2, OBJECT(machine), "mips_jazz.bios", bios,
+                              0, MAGNUM_BIOS_SIZE);
+     memory_region_add_subregion(address_space, 0x1fc00000LL, bios);
+     memory_region_add_subregion(address_space, 0xfff00000LL, bios2);
+@@ -270,17 +270,17 @@ static void mips_jazz_init(MachineState *machine,
+                                 sysbus_mmio_get_region(sysbus, 0));
+     memory_region_add_subregion(address_space, 0xf0000000,
+                                 sysbus_mmio_get_region(sysbus, 1));
+-    memory_region_init_io(dma_dummy, NULL, &dma_dummy_ops,
++    memory_region_init_io(dma_dummy, OBJECT(machine), &dma_dummy_ops,
+                           NULL, "dummy_dma", 0x1000);
+     memory_region_add_subregion(address_space, 0x8000d000, dma_dummy);
+ 
+-    memory_region_init_rom(dp8393x_prom, NULL, "dp8393x-jazz.prom",
++    memory_region_init_rom(dp8393x_prom, OBJECT(machine), "dp8393x-jazz.prom",
+                            SONIC_PROM_SIZE, &error_fatal);
+     memory_region_add_subregion(address_space, 0x8000b000, dp8393x_prom);
+ 
+     /* ISA bus: IO space at 0x90000000, mem space at 0x91000000 */
+-    memory_region_init(isa_io, NULL, "isa-io", 0x00010000);
+-    memory_region_init(isa_mem, NULL, "isa-mem", 0x01000000);
++    memory_region_init(isa_io, OBJECT(machine), "isa-io", 0x00010000);
++    memory_region_init(isa_mem, OBJECT(machine), "isa-mem", 0x01000000);
+     memory_region_add_subregion(address_space, 0x90000000, isa_io);
+     memory_region_add_subregion(address_space, 0x91000000, isa_mem);
+     isa_bus = isa_bus_new_bridge(OBJECT(machine), isa_mem, isa_io, &error_abort);
+@@ -306,7 +306,7 @@ static void mips_jazz_init(MachineState *machine,
+         {
+             /* Simple ROM, so user doesn't have to provide one */
+             MemoryRegion *rom_mr = g_new(MemoryRegion, 1);
+-            memory_region_init_rom(rom_mr, NULL, "g364fb.rom", 0x80000,
++            memory_region_init_rom(rom_mr, OBJECT(machine), "g364fb.rom", 0x80000,
+                                    &error_fatal);
+             uint8_t *rom = memory_region_get_ram_ptr(rom_mr);
+             memory_region_add_subregion(address_space, 0x60000000, rom_mr);
+@@ -357,7 +357,7 @@ static void mips_jazz_init(MachineState *machine,
+ 
+     /* Real time clock */
+     mc146818_rtc_init(OBJECT(machine), isa_bus, 1980, NULL);
+-    memory_region_init_io(rtc, NULL, &rtc_ops, NULL, "rtc", 0x1000);
++    memory_region_init_io(rtc, OBJECT(machine), &rtc_ops, NULL, "rtc", 0x1000);
+     memory_region_add_subregion(address_space, 0x80004000, rtc);
+ 
+     /* Keyboard (i8042) */
+diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
+index 93c14026ab..97d097373d 100644
+--- a/hw/mips/loongson3_virt.c
++++ b/hw/mips/loongson3_virt.c
+@@ -586,11 +586,11 @@ static void mips_loongson3_virt_init(MachineState *machine)
+     assert(cpu); /* This variable points to the first created cpu. */
+ 
+     /* Allocate RAM/BIOS, 0x00000000~0x10000000 is alias of 0x80000000~0x90000000 */
+-    memory_region_init_rom(bios, NULL, "loongson3.bios",
++    memory_region_init_rom(bios, OBJECT(machine), "loongson3.bios",
+                            virt_memmap[VIRT_BIOS_ROM].size, &error_fatal);
+-    memory_region_init_alias(ram, NULL, "loongson3.lowmem",
++    memory_region_init_alias(ram, OBJECT(machine), "loongson3.lowmem",
+                            machine->ram, 0, virt_memmap[VIRT_LOWMEM].size);
+-    memory_region_init_io(iomem, NULL, &loongson3_pm_ops,
++    memory_region_init_io(iomem, OBJECT(machine), &loongson3_pm_ops,
+                            NULL, "loongson3_pm", virt_memmap[VIRT_PM].size);
+     qemu_register_wakeup_support();
+ 
+diff --git a/hw/mips/malta.c b/hw/mips/malta.c
+index 72bc97625f..e1d8c3b4dd 100644
+--- a/hw/mips/malta.c
++++ b/hw/mips/malta.c
+@@ -577,11 +577,11 @@ static MaltaFPGAState *malta_fpga_init(Object *parent, MemoryRegion *address_spa
+ 
+     s = g_new0(MaltaFPGAState, 1);
+ 
+-    memory_region_init_io(&s->iomem, NULL, &malta_fpga_ops, s,
++    memory_region_init_io(&s->iomem, parent, &malta_fpga_ops, s,
+                           "malta-fpga", 0x100000);
+-    memory_region_init_alias(&s->iomem_lo, NULL, "malta-fpga",
++    memory_region_init_alias(&s->iomem_lo, parent, "malta-fpga",
+                              &s->iomem, 0, 0x900);
+-    memory_region_init_alias(&s->iomem_hi, NULL, "malta-fpga",
++    memory_region_init_alias(&s->iomem_hi, parent, "malta-fpga",
+                              &s->iomem, 0xa00, 0x100000 - 0xa00);
+ 
+     memory_region_add_subregion(address_space, base, &s->iomem_lo);
+@@ -1115,14 +1115,14 @@ void mips_malta_init(MachineState *machine)
+     memory_region_add_subregion(system_memory, 0x80000000, machine->ram);
+ 
+     /* alias for pre IO hole access */
+-    memory_region_init_alias(ram_low_preio, NULL, "mips_malta_low_preio.ram",
++    memory_region_init_alias(ram_low_preio, OBJECT(machine), "mips_malta_low_preio.ram",
+                              machine->ram, 0, MIN(ram_size, 256 * MiB));
+     memory_region_add_subregion(system_memory, 0, ram_low_preio);
+ 
+     /* alias for post IO hole access, if there is enough RAM */
+     if (ram_size > 512 * MiB) {
+         ram_low_postio = g_new(MemoryRegion, 1);
+-        memory_region_init_alias(ram_low_postio, NULL,
++        memory_region_init_alias(ram_low_postio, OBJECT(machine),
+                                  "mips_malta_low_postio.ram",
+                                  machine->ram, 512 * MiB,
+                                  ram_size - 512 * MiB);
+@@ -1213,7 +1213,7 @@ void mips_malta_init(MachineState *machine)
+      * handled by an overlapping region as the resulting ROM code subpage
+      * regions are not executable.
       */
--    owner_dev = DEVICE(owner);
-+    DeviceState *owner_dev =
-+        (DeviceState *)object_dynamic_cast(owner, TYPE_DEVICE);
-     vmstate_register_ram(mr, owner_dev);
- }
- 
+-    memory_region_init_ram(bios_copy, NULL, "bios.1fc", BIOS_SIZE,
++    memory_region_init_ram(bios_copy, OBJECT(machine), "bios.1fc", BIOS_SIZE,
+                            &error_fatal);
+     if (!rom_copy(memory_region_get_ram_ptr(bios_copy),
+                   FLASH_ADDRESS, BIOS_SIZE)) {
 -- 
 2.47.1
 
