@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 253B0C4451B
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:46:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A110C44521
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:46:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlCr4-00084B-7N; Sat, 18 Jul 2026 17:45:57 -0400
+	id 1wlCrB-0008FP-44; Sat, 18 Jul 2026 17:46:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlCqh-0007oX-W3; Sat, 18 Jul 2026 17:45:35 -0400
-Received: from pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.13.214.179])
+ id 1wlCqv-0007zB-VL; Sat, 18 Jul 2026 17:45:46 -0400
+Received: from pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([35.155.198.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlCqg-0003Bh-75; Sat, 18 Jul 2026 17:45:31 -0400
+ id 1wlCqr-0003FY-Ri; Sat, 18 Jul 2026 17:45:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784411130; x=1815947130;
+ t=1784411141; x=1815947141;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=L0HNnqEa878wZSIDEVLLNIwDBcUK/PY1VQChkuAmyVQ=;
- b=fskCX/HjS9FcTyzkt4Sp0PCHMQzicVMygt3o0f1HzdeI5w7kVo4o3TVf
- cJZmj3u5QUp94qzqYVl/0IMND9/QyYXMZ3SXJQylRyJFIVcuQMmyL1keC
- SSewKCqzXrlH68QBU+39l/2Gwbj83w04f4Hnkac3/G+hAijg6LPKuH67U
- gxWX2kv6D3rI17jkWi5gC/1PggjA/+snsADkz3GUqhN2n3nXJqJfwdLbs
- b4Df/KZHkoGooGh0ZNgBjmZTHTS6/A+vtO+MJ24scyQ1Vgwb7HMU7DBRT
- UTbPVMAD/45kOTk9aCCeMAIJvvdzAwXYmtKTStG6KaP0aF3gHfkaMFQmH w==;
-X-CSE-ConnectionGUID: GxqnFJ5DT2qmGjkRqC77cw==
-X-CSE-MsgGUID: N/m/UYRKTXOjUJGktxAdyQ==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23903703"
-Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
- by internal-pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:45:27 +0000
-Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.104:17828]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.30.230:2525]
+ bh=fZD1WnZ0mWfdYta3eAgKsSlaPes0ejnsjEdNg73jO0E=;
+ b=n8S5TWWH+Mep8UtIPw/9Y4K6dYQx1dKphTN4K8yOsn7bQuhNn5QegPde
+ q/yp/TgHoigfOtG+33NSbzXLYRVgeDijdbqXJqAkDxG6DqXDcEd+dnDe7
+ UGUtHcyFRbW1kcJM+h2iBzLtBJAClFDqq7SR3IB3Uxzh70geRrGbSH/8Z
+ DvHKhBICp3KFirsJ8IEbgB/66x97gSaS069b7+2fy6HADPKz0wqij4sdt
+ G8j+eywAzwBth5xX3k4VgECbShqNVdoAl84QHxHSmCzQ/Sazyz3yPJtlP
+ ckQ9I9rkEI93Gvr/ki4ycA+SpMzncYfkzxWde/BaH+w/qVfummgwyJwGn w==;
+X-CSE-ConnectionGUID: RykFZm12TDaiJWDsTXK77g==
+X-CSE-MsgGUID: y1xc5WjvR/Kyi7oMD+KUXg==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23816452"
+Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
+ by internal-pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:45:36 +0000
+Received: from EX19MTAUWA001.ant.amazon.com [205.251.233.182:4708]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.29.147:2525]
  with esmtp (Farcaster)
- id 3e5df9bf-eed9-4ed9-bd6b-a12e12de8885; Sat, 18 Jul 2026 21:45:26 +0000 (UTC)
-X-Farcaster-Flow-ID: 3e5df9bf-eed9-4ed9-bd6b-a12e12de8885
+ id 66dce21b-701e-40f8-8f56-3074698cc1ab; Sat, 18 Jul 2026 21:45:36 +0000 (UTC)
+X-Farcaster-Flow-ID: 66dce21b-701e-40f8-8f56-3074698cc1ab
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
+ EX19MTAUWA001.ant.amazon.com (10.250.64.217) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:45:26 +0000
+ Sat, 18 Jul 2026 21:45:36 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:45:16 +0000
+ Sat, 18 Jul 2026 21:45:26 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,9 +93,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 030/137] hw/cxl: Give onboard devices a QOM parent
-Date: Sat, 18 Jul 2026 21:35:05 +0000
-Message-ID: <20260718213652.37673-31-graf@amazon.com>
+Subject: [RFC PATCH v2 031/137] hw/hexagon: Give onboard devices a QOM parent
+Date: Sat, 18 Jul 2026 21:35:06 +0000
+Message-ID: <20260718213652.37673-32-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -106,9 +106,9 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D046UWB003.ant.amazon.com (10.13.139.174) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=52.13.214.179;
+Received-SPF: pass client-ip=35.155.198.111;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -132,7 +132,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the *_orphan() device-creation calls in hw/cxl to the new
+Convert the *_orphan() device-creation calls in hw/hexagon to the new
 parented API introduced earlier in this series, so every onboard
 device gets a stable path in the composition tree instead of landing
 in /machine/unattached with an unstable device[N] name.
@@ -143,52 +143,97 @@ composite children.  Names follow existing QOM conventions.
 
 Per-site rationale (reviewers: dispute the modeling here):
 
-hw/cxl/cxl-host.c:29 | qdev_new | parent (new arg) | "cxl-fmw[*]" | Property setter machine_set_cfmw() has Object *obj = machine; thread it through as parent for each fixed memory window
+hw/hexagon/hexagon_dsp.c:134 | qdev_new | OBJECT(machine) | "global-regs" | board init helper; collapse existing object_property_add_child()
+hw/hexagon/hexagon_dsp.c:141 | qdev_new | OBJECT(machine) | "tlb" | board init helper; collapse existing object_property_add_child()
+hw/hexagon/virt.c:132 | qdev_new | OBJECT(vms) | "uart" | board-init helper receives HexagonVirtMachineState*; drop const on vms
+hw/hexagon/virt.c:271 | qdev_new | OBJECT(ms) | "global-regs" | board init; collapse existing object_property_add_child()
+hw/hexagon/virt.c:277 | qdev_new | OBJECT(ms) | "tlb" | board init; collapse existing object_property_add_child()
 
 Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/cxl/cxl-host.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ hw/hexagon/hexagon_dsp.c | 12 +++++-------
+ hw/hexagon/virt.c        | 16 +++++++---------
+ 2 files changed, 12 insertions(+), 16 deletions(-)
 
-diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
-index c7a40a81f0..91ccd0d57c 100644
---- a/hw/cxl/cxl-host.c
-+++ b/hw/cxl/cxl-host.c
-@@ -22,11 +22,12 @@
- #include "hw/pci/pcie_port.h"
- #include "hw/pci-bridge/pci_expander_bridge.h"
+diff --git a/hw/hexagon/hexagon_dsp.c b/hw/hexagon/hexagon_dsp.c
+index 712749cda8..ccd9a06f51 100644
+--- a/hw/hexagon/hexagon_dsp.c
++++ b/hw/hexagon/hexagon_dsp.c
+@@ -131,18 +131,16 @@ static void hexagon_common_init(MachineState *machine, Rev_t rev,
+                            machine->ram_size, &error_fatal);
+     memory_region_add_subregion(address_space, 0x0, &hms->ram);
  
--static void cxl_fixed_memory_window_config(CXLFixedMemoryWindowOptions *object,
-+static void cxl_fixed_memory_window_config(Object *parent,
-+                                           CXLFixedMemoryWindowOptions *object,
-                                            int index, Error **errp)
+-    glob_regs_dev = qdev_new_orphan(TYPE_HEXAGON_GLOBALREG);
+-    object_property_add_child(OBJECT(machine), "global-regs",
+-                              OBJECT(glob_regs_dev));
++    glob_regs_dev = qdev_new(OBJECT(machine), "global-regs",
++                             TYPE_HEXAGON_GLOBALREG);
+     qdev_prop_set_uint64(glob_regs_dev, "config-table-addr", m_cfg->cfgbase);
+     qdev_prop_set_uint32(glob_regs_dev, "dsp-rev", rev);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(glob_regs_dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(glob_regs_dev), &error_fatal);
+ 
+-    tlb_dev = qdev_new_orphan(TYPE_HEXAGON_TLB);
+-    object_property_add_child(OBJECT(machine), "tlb", OBJECT(tlb_dev));
++    tlb_dev = qdev_new(OBJECT(machine), "tlb", TYPE_HEXAGON_TLB);
+     qdev_prop_set_uint32(tlb_dev, "num-entries",
+                          m_cfg->cfgtable.jtlb_size_entries);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(tlb_dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(tlb_dev), &error_fatal);
+ 
+     for (int i = 0; i < machine->smp.cpus; i++) {
+         HexagonCPU *cpu = HEXAGON_CPU(object_new(machine->cpu_type));
+diff --git a/hw/hexagon/virt.c b/hw/hexagon/virt.c
+index a7a6a8fbeb..0619f06c41 100644
+--- a/hw/hexagon/virt.c
++++ b/hw/hexagon/virt.c
+@@ -116,7 +116,7 @@ static int32_t fdt_add_clocks(const HexagonVirtMachineState *vms)
+     return clk_phandle;
+ }
+ 
+-static void fdt_add_uart(const HexagonVirtMachineState *vms, int uart,
++static void fdt_add_uart(HexagonVirtMachineState *vms, int uart,
+                          int32_t clk_phandle)
  {
-     ERRP_GUARD();
--    DeviceState *dev = qdev_new_orphan(TYPE_CXL_FMW);
-+    DeviceState *dev = qdev_new(parent, "cxl-fmw[*]", TYPE_CXL_FMW);
-     CXLFixedWindow *fw = CXL_FMW(dev);
-     strList *target;
-     int i;
-@@ -67,7 +68,7 @@ static void cxl_fixed_memory_window_config(CXLFixedMemoryWindowOptions *object,
-         fw->targets[i] = g_strdup(target->value);
-     }
+     char *nodename;
+@@ -129,11 +129,11 @@ static void fdt_add_uart(const HexagonVirtMachineState *vms, int uart,
+     DeviceState *dev;
+     SysBusDevice *s;
  
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), errp);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), errp);
- }
+-    dev = qdev_new_orphan(TYPE_PL011);
++    dev = qdev_new(OBJECT(vms), "uart", TYPE_PL011);
+     s = SYS_BUS_DEVICE(dev);
+     qdev_prop_set_chr(dev, "chardev", serial_hd(0));
+     qdev_connect_clock_in(dev, "clk", vms->apb_clk);
+-    sysbus_realize_and_unref(s, &error_fatal);
++    sysbus_realize(s, &error_fatal);
+     sysbus_mmio_map(s, 0, base);
  
- static int cxl_fmws_link(Object *obj, void *opaque)
-@@ -557,7 +558,7 @@ static void machine_set_cfmw(Object *obj, Visitor *v, const char *name,
-     }
+     nodename = g_strdup_printf("/pl011@%" PRIx64, base);
+@@ -268,17 +268,15 @@ static void virt_init(MachineState *ms)
+                                 &vms->parent_obj.cfgtable_rom);
+     fdt_add_hvx(vms, m_cfg);
  
-     for (it = cfmw_list, index = 0; it; it = it->next, index++) {
--        cxl_fixed_memory_window_config(it->value, index, errp);
-+        cxl_fixed_memory_window_config(obj, it->value, index, errp);
-     }
-     state->cfmw_list = cfmw_list;
- }
+-    gsregs_dev = qdev_new_orphan(TYPE_HEXAGON_GLOBALREG);
+-    object_property_add_child(OBJECT(ms), "global-regs", OBJECT(gsregs_dev));
++    gsregs_dev = qdev_new(OBJECT(ms), "global-regs", TYPE_HEXAGON_GLOBALREG);
+     qdev_prop_set_uint64(gsregs_dev, "config-table-addr", m_cfg->cfgbase);
+     qdev_prop_set_uint32(gsregs_dev, "dsp-rev", v68_rev);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(gsregs_dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(gsregs_dev), &error_fatal);
+ 
+-    tlb_dev = qdev_new_orphan(TYPE_HEXAGON_TLB);
+-    object_property_add_child(OBJECT(ms), "tlb", OBJECT(tlb_dev));
++    tlb_dev = qdev_new(OBJECT(ms), "tlb", TYPE_HEXAGON_TLB);
+     qdev_prop_set_uint32(tlb_dev, "num-entries",
+                          m_cfg->cfgtable.jtlb_size_entries);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(tlb_dev), &error_fatal);
++    sysbus_realize(SYS_BUS_DEVICE(tlb_dev), &error_fatal);
+ 
+     cpu0 = NULL;
+     for (int i = 0; i < ms->smp.cpus; i++) {
 -- 
 2.47.1
 
