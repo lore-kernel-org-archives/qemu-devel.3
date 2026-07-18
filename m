@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F27D5C4450A
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:10:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FC01C4450A
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:10:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlDDf-0000nS-0h; Sat, 18 Jul 2026 18:09:15 -0400
+	id 1wlDEL-0001ix-RO; Sat, 18 Jul 2026 18:09:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlDDX-0000Xo-Nq; Sat, 18 Jul 2026 18:09:09 -0400
-Received: from pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([44.246.1.125])
+ id 1wlDEK-0001fJ-14; Sat, 18 Jul 2026 18:09:56 -0400
+Received: from pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.26.1.71])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlDDU-0006Tb-Ik; Sat, 18 Jul 2026 18:09:07 -0400
+ id 1wlDEI-0006Vv-8A; Sat, 18 Jul 2026 18:09:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784412544; x=1815948544;
+ t=1784412594; x=1815948594;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=vGQVF4AvH4I1N7F/96ahCv1nChpT2tiIK+RKCxSA6+c=;
- b=SBSoTn39gWQcJQBboDdGucxngzJ60WpRlaREtjXIQLdbrH/rlYCceRY9
- TqRsrXySgk7l1KTshuu4V20j+7jndXEDUH4CeT3DUtugxMAS3IVoMm9M+
- HocrRe61ssRuK4+Lk6qPwdmEbM/XAJkIIUtHI3X16kHcW9fg/dIl7ZO4V
- UVnj1W4S5e2GBy8e7J1EhH+/V2l00Zl1k9kJCNVCc0SLovTEzGyT26vnW
- DsIPGyE3Gi2unIn6MAuIuZ9sW+0rbGbhVZNP+VX76zv7WUlKP1Lb9oy7G
- bE79pmjlCA1ja0d+DiVLS8cy+bI6yy2XH06I+HL2p4t775zVIyf/Yp7R2 g==;
-X-CSE-ConnectionGUID: 6JgrcFRvRH6r9ZQ4XT1Cow==
-X-CSE-MsgGUID: jIQMUlurTXWsZdSCbmlpXQ==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23927901"
+ bh=FY183wjjQlqz+5usHhcMwB4KgwWExApPxxwqiZT033s=;
+ b=WsHX3QHCkKpWNTPsPP9Z710qBHXv0NofGWZOA2yPuNTU7axS7MpaPtN2
+ AZ/7hXPt9mQMRgDkPkpQeYJj/DDBAaqa8tviCdGpqUiHd2F3JOiRm65qA
+ 9fxrypc2OiFu+BxfuDfGuVd9n/WbOSrEBNgaOeAbB0KsjMqZ98tEytu8U
+ mecTIxauPG9/hbCyX4osImWlN1SlJlbdkVIPl85j+G8PckensXnSW/etp
+ Kq/Ggvso096CySe9q4XulO9oE3s5X+AWpzGs9M1Po6DD36uFCr9vcuQfL
+ oGE5TnkjZG2lwS61bYXY+FMvElX2QrK0zYlcJGa74fNfq7hw35CYBazEl Q==;
+X-CSE-ConnectionGUID: G1M1ZeVnS/ueV290kyp2SQ==
+X-CSE-MsgGUID: +Zv4XqJ2TJO48HlGI7jmTQ==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23945061"
 Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
  smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
- by internal-pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:09:00 +0000
-Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.234:15443]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.58.199:2525]
+ by internal-pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:09:50 +0000
+Received: from EX19MTAUWA001.ant.amazon.com [205.251.233.182:4642]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.0.115:2525]
  with esmtp (Farcaster)
- id f1dff26c-470d-4a34-8a2d-e50e8263b1de; Sat, 18 Jul 2026 22:09:00 +0000 (UTC)
-X-Farcaster-Flow-ID: f1dff26c-470d-4a34-8a2d-e50e8263b1de
+ id f6c48346-945f-4e21-bf60-dc11b11f4cc5; Sat, 18 Jul 2026 22:09:50 +0000 (UTC)
+X-Farcaster-Flow-ID: f6c48346-945f-4e21-bf60-dc11b11f4cc5
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
+ EX19MTAUWA001.ant.amazon.com (10.250.64.217) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:08:59 +0000
+ Sat, 18 Jul 2026 22:09:50 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:08:50 +0000
+ Sat, 18 Jul 2026 22:09:40 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,10 +93,10 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 114/137] hw/xtensa: Give allocated IRQs an owner and
- name
-Date: Sat, 18 Jul 2026 21:36:29 +0000
-Message-ID: <20260718213652.37673-115-graf@amazon.com>
+Subject: [RFC PATCH v2 117/137] irq: Delete the *_orphan() IRQ allocation
+ variants
+Date: Sat, 18 Jul 2026 21:36:32 +0000
+Message-ID: <20260718213652.37673-118-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -105,11 +105,11 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D033UWA002.ant.amazon.com (10.13.139.10) To
+X-ClientProxiedBy: EX19D036UWC003.ant.amazon.com (10.13.139.214) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=44.246.1.125;
+Received-SPF: pass client-ip=52.26.1.71;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -133,88 +133,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thread an Object *owner through xtensa_mx_pic_init() and use the CPU
-object as owner for the per-CPU IRQ input arrays.
+Every caller has been converted to the parented form; drop the
+transitional *_orphan() helpers.
 
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/xtensa/mx_pic.c         | 4 ++--
- hw/xtensa/pic_cpu.c        | 5 +++--
- hw/xtensa/xtfpga.c         | 2 +-
- include/hw/xtensa/mx_pic.h | 2 +-
- 4 files changed, 7 insertions(+), 6 deletions(-)
+ hw/core/irq.c         | 35 -----------------------------------
+ include/hw/core/irq.h | 20 +-------------------
+ 2 files changed, 1 insertion(+), 54 deletions(-)
 
-diff --git a/hw/xtensa/mx_pic.c b/hw/xtensa/mx_pic.c
-index 9959bec5f2..f698d592f0 100644
---- a/hw/xtensa/mx_pic.c
-+++ b/hw/xtensa/mx_pic.c
-@@ -341,12 +341,12 @@ static void xtensa_mx_pic_set_irq(void *opaque, int irq, int active)
+diff --git a/hw/core/irq.c b/hw/core/irq.c
+index 1ae53a74d3..459ff467ff 100644
+--- a/hw/core/irq.c
++++ b/hw/core/irq.c
+@@ -68,34 +68,6 @@ void qemu_init_irqs(IRQState irq[], size_t count,
      }
  }
  
--XtensaMxPic *xtensa_mx_pic_init(unsigned n_irq)
-+XtensaMxPic *xtensa_mx_pic_init(Object *owner, unsigned n_irq)
+-qemu_irq *qemu_extend_irqs_orphan(qemu_irq *old, int n_old, qemu_irq_handler handler,
+-                           void *opaque, int n)
+-{
+-    qemu_irq *s;
+-    int i;
+-
+-    if (!old) {
+-        n_old = 0;
+-    }
+-    s = old ? g_renew(qemu_irq, old, n + n_old) : g_new(qemu_irq, n);
+-    for (i = n_old; i < n + n_old; i++) {
+-        s[i] = qemu_allocate_irq_orphan(handler, opaque, i);
+-    }
+-    return s;
+-}
+-
+-qemu_irq *qemu_allocate_irqs_orphan(qemu_irq_handler handler, void *opaque, int n)
+-{
+-    return qemu_extend_irqs_orphan(NULL, 0, handler, opaque, n);
+-}
+-
+-qemu_irq qemu_allocate_irq_orphan(qemu_irq_handler handler, void *opaque, int n)
+-{
+-    IRQState *irq = IRQ(object_new(TYPE_IRQ));
+-    init_irq_fields(irq, handler, opaque, n);
+-    return irq;
+-}
+-
+ qemu_irq qemu_allocate_irq(Object *owner, const char *name,
+                            qemu_irq_handler handler, void *opaque, int n)
  {
-     XtensaMxPic *mx = g_new0(XtensaMxPic, 1);
- 
-     mx->n_irq = n_irq + 1;
--    mx->irq_inputs = qemu_allocate_irqs_orphan(xtensa_mx_pic_set_irq, mx,
-+    mx->irq_inputs = qemu_allocate_irqs(owner, "irq", xtensa_mx_pic_set_irq, mx,
-                                         mx->n_irq);
-     return mx;
+@@ -153,13 +125,6 @@ static void qemu_notirq(void *opaque, int line, int level)
+     qemu_set_irq(irq, !level);
  }
-diff --git a/hw/xtensa/pic_cpu.c b/hw/xtensa/pic_cpu.c
-index c3163a8b6c..496c83a298 100644
---- a/hw/xtensa/pic_cpu.c
-+++ b/hw/xtensa/pic_cpu.c
-@@ -100,9 +100,10 @@ static void xtensa_set_runstall(void *opaque, int irq, int active)
  
- void xtensa_irq_init(CPUXtensaState *env)
+-qemu_irq qemu_irq_invert_orphan(qemu_irq irq)
+-{
+-    /* The default state for IRQs is low, so raise the output now.  */
+-    qemu_irq_raise(irq);
+-    return qemu_allocate_irq_orphan(qemu_notirq, irq, 0);
+-}
+-
+ qemu_irq qemu_irq_invert(Object *owner, const char *name, qemu_irq irq)
  {
-+    Object *cpu = OBJECT(env_cpu(env));
-     unsigned i;
+     /* The default state for IRQs is low, so raise the output now.  */
+diff --git a/include/hw/core/irq.h b/include/hw/core/irq.h
+index 5ccccd2697..89923cf4a8 100644
+--- a/include/hw/core/irq.h
++++ b/include/hw/core/irq.h
+@@ -74,19 +74,8 @@ void qemu_init_irq_child(Object *parent, const char *propname,
+ void qemu_init_irqs(IRQState irq[], size_t count,
+                     qemu_irq_handler handler, void *opaque);
  
--    env->irq_inputs = qemu_allocate_irqs_orphan(xtensa_set_irq, env,
-+    env->irq_inputs = qemu_allocate_irqs(cpu, "irq-in", xtensa_set_irq, env,
-                                          env->config->ninterrupt);
-     if (xtensa_option_enabled(env->config, XTENSA_OPTION_TIMER_INTERRUPT)) {
-         env->time_base = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-@@ -118,7 +119,7 @@ void xtensa_irq_init(CPUXtensaState *env)
+-/* Returns an array of N IRQs. Each IRQ is assigned the argument handler and
+- * opaque data.
+- */
+-qemu_irq *qemu_allocate_irqs_orphan(qemu_irq_handler handler, void *opaque, int n);
+-
+ /*
+- * Allocates a single IRQ. The irq is assigned with a handler, an opaque
+- * data and the interrupt number.
+- */
+-qemu_irq qemu_allocate_irq_orphan(qemu_irq_handler handler, void *opaque, int n);
+-
+-/*
+- * Same as the *_orphan() variants above, but the new IRQ objects are
++ * Allocate IRQ objects with an explicit QOM parent.  The new objects are
+  * parented under @owner with property name @name (or @name[*] for the
+  * array/extend variants).  The reference is held by @owner; call
+  * qemu_free_irq() to unparent and free.
+@@ -99,17 +88,10 @@ qemu_irq *qemu_extend_irqs(Object *owner, const char *name,
+                            qemu_irq *old, int n_old,
+                            qemu_irq_handler handler, void *opaque, int n);
  
-         env->ext_irq_inputs[i] = env->irq_inputs[irq];
-     }
--    env->runstall_irq = qemu_allocate_irq_orphan(xtensa_set_runstall, env, 0);
-+    env->runstall_irq = qemu_allocate_irq(cpu, "runstall", xtensa_set_runstall, env, 0);
- }
+-/* Extends an Array of IRQs. Old IRQs have their handlers and opaque data
+- * preserved. New IRQs are assigned the argument handler and opaque data.
+- */
+-qemu_irq *qemu_extend_irqs_orphan(qemu_irq *old, int n_old, qemu_irq_handler handler,
+-                                void *opaque, int n);
+-
+ void qemu_free_irqs(qemu_irq *s, int n);
+ void qemu_free_irq(qemu_irq irq);
  
- qemu_irq *xtensa_get_extints(CPUXtensaState *env)
-diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
-index f0c21180a2..6ec0822a96 100644
---- a/hw/xtensa/xtfpga.c
-+++ b/hw/xtensa/xtfpga.c
-@@ -247,7 +247,7 @@ static void xtfpga_init(const XtfpgaBoardDesc *board, MachineState *machine)
-     Object *mo = OBJECT(machine);
+ /* Returns a new IRQ with opposite polarity.  */
+-qemu_irq qemu_irq_invert_orphan(qemu_irq irq);
+ qemu_irq qemu_irq_invert(Object *owner, const char *name, qemu_irq irq);
  
-     if (smp_cpus > 1) {
--        mx_pic = xtensa_mx_pic_init(31);
-+        mx_pic = xtensa_mx_pic_init(mo, 31);
-         qemu_register_reset(xtensa_mx_pic_reset, mx_pic);
-     }
-     for (n = 0; n < smp_cpus; n++) {
-diff --git a/include/hw/xtensa/mx_pic.h b/include/hw/xtensa/mx_pic.h
-index 01d5ea884e..212cf91e78 100644
---- a/include/hw/xtensa/mx_pic.h
-+++ b/include/hw/xtensa/mx_pic.h
-@@ -33,7 +33,7 @@
- struct XtensaMxPic;
- typedef struct XtensaMxPic XtensaMxPic;
- 
--XtensaMxPic *xtensa_mx_pic_init(unsigned n_extint);
-+XtensaMxPic *xtensa_mx_pic_init(Object *owner, unsigned n_extint);
- void xtensa_mx_pic_reset(void *opaque);
- MemoryRegion *xtensa_mx_pic_register_cpu(Object *owner, XtensaMxPic *mx,
-                                          qemu_irq *irq,
+ /* For internal use in qtest. */
 -- 
 2.47.1
 
