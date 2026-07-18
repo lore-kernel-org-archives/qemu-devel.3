@@ -4,52 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9A5CC4451C
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 15:42:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0C74C4451C
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 16:54:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wl7B6-0000zs-Dp; Sat, 18 Jul 2026 11:42:12 -0400
+	id 1wl8IG-00058Y-LB; Sat, 18 Jul 2026 12:53:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1wl7B4-0000zI-C4; Sat, 18 Jul 2026 11:42:10 -0400
+ (Exim 4.90_1)
+ (envelope-from <afbe101f9fef3110d79023c604be0b28006cfb60@kylie.crudebyte.com>)
+ id 1wl8ID-00057a-RZ; Sat, 18 Jul 2026 12:53:37 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1wl7B2-00048n-Lf; Sat, 18 Jul 2026 11:42:10 -0400
+ (Exim 4.90_1)
+ (envelope-from <afbe101f9fef3110d79023c604be0b28006cfb60@kylie.crudebyte.com>)
+ id 1wl8IA-0002rz-4I; Sat, 18 Jul 2026 12:53:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=DGA9WfMs2xhpuNyRkK22/9bzSsQAaC4zeOIx93pqX4s=; b=nUC/9vWfNtYeF0plfDWsBPtmUc
- aOOvkDpEaD8z0qRumBHnFhays9ADT92ispy7LVLb8iAPLk8RTG5BkO+mZpjjHCytoDe8wcxJEL/GA
- ItaMspkaGxvxkjSQ5MR+2bInRCvf6ft6YJDqW0jZ0Q6vq7L2NqB4LqE1Kswv0YYXx4/OqPQiLrApl
- uEuZ2rBUTt9lGz7RmVehwHdWvlmcQrQ4alw6Gmdz4TXv8uohSnsikUO3OtUGNYWr9eu/jcrBwBP3o
- AxPjhhUkSd+7+iEEW+JI+My2xAOOItvqrhnVlhLC5s8rgvSswhUE1tKQLT61aRnkbd4YvfLalW/jB
- TmbhRIw2WUWUEm35EFW++GujxYADgv6J13alXBGwCjRlcgGGP1luNpsdMf02tvZL7LO/ivIBxpH6E
- GWgpuYzes9Rxl3VxmduIcoQ44PYjbn0xmk/+C8otDlwKe0y4+ZDBGfWGwhWR1jq0VLNBmvD3tMftV
- o/xmSAuIX+Dw5kveuGXLEiPCfj+PagRr/RO8RVcITTAquj0uCCqQNwCx9mvH8Z2ihSn9OnKr1/Tnc
- fmEbjakinorPztD2cFCTYXeP5/13tvbhxnrM/4E+qUVaoCKOJO4bAQdeAmIdMCY//XLRdsRwFf9Rs
- ROqnmZpF6kpreITHHjniCnku+j0pzpWbzkydHzLsM=;
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:Message-ID:Content-Type:
+ Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Content-ID:
+ Content-Description; bh=LqHiQUAQrZyagAjl2T9yb5rVPUQhs9ajOF5oLBjNb34=; b=FCHyD
+ 4qH0TTRfNdB7AhpcmiqOloAZ+69CkFdkjFD1tqIAnWqN7ZgDCaStuO0BWL1NImE/KsgUi/2uoU9Kx
+ +23WlZnXasPW2EXVPpI4mOJ2oCS5HnRl95G271NvEEdBJuwkrR/nqtx7TVq30lpFkaZSmx07hkqKj
+ Toa1Lf12oh8NmQZea25QkRwidIVru9ukoKwmUKXl/l3OVaBxTryzMsC0tU8eU3rgbnch2T6aG3Lu9
+ ky5siTnxEhRR9vTRaxRDev1skLSs3t/pbI2Jbkqecr7R3CSPyLH3GvfxkVVlhL6F/TdXrs/dMJhEu
+ bSjcEVULNGnqOXVaH0XEbjcqlffL/Eh42YqWlkNXn0gRHiKkCBV+GWW8vph1VRiLEOIpulOlQctMI
+ V1pWd8fJJ/1CBWKeW0fpU4FQsL7F7JMjQ6YGHjieJVmtjDr+kD11biQ3E46B+T7+PpHDRAQ/Pz35E
+ wnGFvQrSybRpnWN2DSAFU2QyK+vrPqbkj5ihdcdVK0BpttG0AlfK+yw1aRBS/XGPP3qEOEELFlPM+
+ lEryNgZQ8wFWBS1TaR49BAJQFDa06UWBqh9J1vrdyPIbEB+9yd8ppeF5YGG0FfsXu1jni/3b1/8Lj
+ L6hL8Po86BiXE+7jHtu07FEn8bRRChrIlsZDuUGh4kAle+0AdOunyAIty3dzvs=;
+Message-ID: <cover.1784392605.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-To: Stefano Stabellini <sstabellini@kernel.org>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>, 
+Date: Sat, 18 Jul 2026 18:50:06 +0200
+Subject: [PATCH v2 0/2] 9p: fix guest-triggered Treaddir/ACPI eject UAF
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
+ Stefano Stabellini <sstabellini@kernel.org>,
  Anthony PERARD <anthony@xenproject.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Subject: Re: [PATCH 3/3] hw/9pfs/xen: drain in-flight PDUs before xen-9p
- disconnect
-Date: Sat, 18 Jul 2026 17:42:03 +0200
-Message-ID: <3351181.5fSG56mABF@weasel>
-In-Reply-To: <alpine.DEB.2.22.394.2607171743150.16921@ubuntu-linux-20-04-desktop>
-References: <cover.1783604079.git.qemu_oss@crudebyte.com>
- <12932229.O9o76ZdvQC@weasel>
- <alpine.DEB.2.22.394.2607171743150.16921@ubuntu-linux-20-04-desktop>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Jia Jia <physicalmtea@gmail.com>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+ envelope-from=afbe101f9fef3110d79023c604be0b28006cfb60@kylie.crudebyte.com;
+ helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -71,125 +67,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Saturday, 18 July 2026 02:46:36 CEST Stefano Stabellini wrote:
-> On Thu, 16 Jul 2026, Christian Schoenebeck wrote:
-> > Hi Stefano,
-> > 
-> > do you might have a chance to look at this Xen patch?
-> 
-> Sorry for the delay
+A guest can trigger unplugging 9pfs server's virtio-pci device via ACPI
+eject. As a consequence the device is unrealized, server's internal state
+is freed while pending coroutines would still have access to them, causing
+a potential heap-use-after-free.
 
-Thanks for looking at this, much appreciated!
+Overview Patches:
 
-> > On Thursday, 9 July 2026 15:50:36 CEST Christian Schoenebeck wrote:
-> > > The xen-9p disconnect path has two issues:
-> > > 
-> > > 1. It frees the Xen9pfsRing structures while in-flight PDUs may still
-> > > 
-> > >    reference them via pdu->tag to index rings[]. This causes a UAF
-> > >    in xen_9pfs_push_and_notify() when worker threads resume after
-> > >    completing filesystem operations.
-> > > 
-> > > 2. It never calls v9fs_device_unrealize_common(), which means server
-> > > 
-> > >    state (struct LocalData, mountfd, FIDs) is never cleaned up on
-> > >    disconnect, causing a resource leak on every guest-initiated
-> > >    disconnect.
-> > > 
-> > > Fix both by draining in-flight PDUs via v9fs_reset() before tearing
-> > > down rings, and calling v9fs_device_unrealize_common() to clean up
-> > > server state.
-> > > 
-> > > Fixes: b37eeb0201 ("xen/9pfs: introduce Xen 9pfs backend")
-> > > Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-> > > ---
-> > > 
-> > >  hw/9pfs/xen-9p-backend.c | 4 ++++
-> > >  1 file changed, 4 insertions(+)
-> > > 
-> > > diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
-> > > index 24c90d97ec..3b7a68779a 100644
-> > > --- a/hw/9pfs/xen-9p-backend.c
-> > > +++ b/hw/9pfs/xen-9p-backend.c
-> > > @@ -368,10 +368,14 @@ static void xen_9pfs_evtchn_event(void *opaque)
-> > > 
-> > >  static void xen_9pfs_disconnect(struct XenLegacyDevice *xendev)
-> > >  {
-> > >  
-> > >      Xen9pfsDev *xen_9pdev = container_of(xendev, Xen9pfsDev, xendev);
-> > > 
-> > > +    V9fsState *s = &xen_9pdev->state;
-> > > 
-> > >      int i;
-> > >      
-> > >      trace_xen_9pfs_disconnect(xendev->name);
-> > > 
-> > > +    v9fs_reset(s);
-> > > +    v9fs_device_unrealize_common(s);
-> 
-> While the patch addresses a real issue, xen_9pfs_disconnect() is also
-> called from the error paths of xen_9pfs_pdu_vmarshal/vunmarshal, which
-> run inside the PDU's own coroutine. v9fs_reset() is not safe to be
-> called there.
+ - Patch 1: this is the core fix, that drains all PDUs (i.e. coroutines
+   that handle individual pending requests in parallel) before freeing
+   server state.
 
-Well, xen_9pfs_pdu_vmarshal() / xen_9pfs_pdu_vunmarshal() are both called on 
-main thread, and xen_be_disconnect() has a guard that prevents the disconnect 
-handler being called twice (more about that later), however you are right that 
-these two functions run within coroutines. Which then leads to the following 
-problem in v9fs_reset():
+ - Patch 2: fixes a similar identified issue with the Xen transport, even
+   though not triggered via ACPI, it is also prone to UAF, plus a resource
+   leak.
 
-    while (!QLIST_EMPTY(&s->active_list)) {
-        aio_poll(qemu_get_aio_context(), true);
-    }
+v2:
+  - Patch 1: Make Jia the official author of this patch.
+  - Drop prev. patch 2 ("hw/9pfs/virtio: disable hotpluggable property...")
+  - Patch 2: defer explict xen_9pfs_disconnect() call from error paths of
+    xen_9pfs_pdu_vmarshal() and xen_9pfs_pdu_vunmarshal().
 
-This loop would then run forever, as the coroutine calling v9fs_reset() is on 
-the active_list, hence this list would never turn empty and the loop condition  
-never turn false.
+Christian Schoenebeck (1):
+  hw/9pfs/xen: drain in-flight PDUs before xen-9p disconnect
 
-Furthermore aio_poll() is marked as no_coroutine_fn:
+Jia Jia (1):
+  hw/9pfs/virtio: drain in-flight PDUs before virtio-9p unrealize
 
-include/qemu/aio.h:bool no_coroutine_fn aio_poll(AioContext *ctx, bool 
-blocking);
+ hw/9pfs/virtio-9p-device.c |  1 +
+ hw/9pfs/xen-9p-backend.c   | 19 +++++++++++++++++--
+ 2 files changed, 18 insertions(+), 2 deletions(-)
 
-So aio_poll() should actually not be called in a coroutine context at all.
- 
-> We could remove the direct call to xen_9pfs_disconnect() from
-> xen_9pfs_pdu_vmarshal/vunmarshal because they already change the state
-> to XenbusStateClosing, which should result in the same
-
-The problem with this approach is that xen_9pfs_pdu_vmarshal() / 
-xen_9pfs_pdu_vunmarshal() would still call:
-
-    xen_be_set_state(&xen_9pfs->xendev, XenbusStateClosing);
-
-And the previously mentioned guard in xen_be_disconnect() for not calling the 
-disconnect callback more than once, looks like this:
-
-    if (xendev->be_state != XenbusStateClosing &&
-        xendev->be_state != XenbusStateClosed  &&
-        xendev->ops->disconnect) {
-        xendev->ops->disconnect(xendev);
-    }
-
-Hence if this (v)unmarshal error path was triggered, the disconnect handler 
-would then actually never be executed. And that's apparently the reason why 
-these two functions do call xen_9pfs_disconnect() explicitly in their error 
-path right now.
-
-What I think might work though, was replacing the current direct 
-xen_9pfs_disconnect() calls by deferred ones, something like:
-
-    aio_bh_schedule_oneshot(... xen_9pfs_disconnect ...);
-
-Because xen_9pfs_disconnect() would then run both on main thread and not run 
-in a coroutine context. So it should turn it safe.
-
-I'll prepare a v2 with the latter solution.
-
-/Christian
-
-
-
-
+-- 
+2.47.3
 
 
