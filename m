@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4A47C4451B
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:06:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE74CC4450A
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:06:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlDAZ-0001N5-BH; Sat, 18 Jul 2026 18:06:18 -0400
+	id 1wlDB0-0001X8-8e; Sat, 18 Jul 2026 18:06:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlDAG-0001C5-4P; Sat, 18 Jul 2026 18:05:44 -0400
+ id 1wlDAP-0001LT-3o; Sat, 18 Jul 2026 18:05:54 -0400
 Received: from pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com
  ([52.26.1.71])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlDAE-0006DK-90; Sat, 18 Jul 2026 18:05:43 -0400
+ id 1wlDAM-0006DK-U0; Sat, 18 Jul 2026 18:05:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784412342; x=1815948342;
+ t=1784412350; x=1815948350;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=uYXfcUGTcd7vy1ZKIayA3ffKEGDWK1Kjsc1hvCY3J34=;
- b=VJx793g1WGxNGAGsJKic6KFBBY+34DMqgmRhnJ2aLe9uCy2HyHdT2Bf4
- 1FwNuBp3m4WoFrgHx8w76nVT55qoCUSk1t1AjiATCPh2e7VsmK5fXIZZe
- WBQC2hRuCsqHQYOQ62aowiBRRfQW+dLFAUyDt88n1KS0dreabEFUA1bVU
- umyUg+CQzaKscOyu/1vAymDPatw1ryD8UIhHNVMaslNFkx6JedB5KG9C1
- eVfJ78lvbDdBwOdjZu4GlnNCxSzKAHudtgXyNaAV8zGg+BEe7s+e7ogLx
- x3y7z2TdM9BdqnlvK2ld0zL35msiJh7PEI8dZTAlK3g5u/kcJ98UWG5eA g==;
-X-CSE-ConnectionGUID: oVLAanCzRteQDpF0CiVGkQ==
-X-CSE-MsgGUID: B8iD5A6PTs+zlSFaABZREw==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23944849"
-Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
+ bh=TGLbKWq9Z9BZZ0ElyIhhTb4+EdvWjYAXyzWadJpm6bI=;
+ b=eVuqg/KboZY9lwtm7opo0anF0Cp3LGIiZVFiScEmusltnF1/pbbSfMv3
+ UmTutZEHz8ndhg3vdTFcPrzIulv1tbH5af9MkR/ntl2IqSo4g+riv8zSg
+ ZBfVGegt8yGrKbV2NAsmkvqSlsaZvL5Rc/ElAp7Cb0G93Xm7GloJABSU1
+ CLJRBJekq8IfZ/CN8QY4RZ6TgsYuTcIULKE9EKQmsrCj7qjSqRwgiMeMe
+ 0NQVf8vxYY4023jmO9/QjUUVu6Z/XyRyBOXy9Oah89DmOYcq1xWNTceaw
+ 2du23BO8G3kRSMuyO/pNB0RIQZXtVBjIfAjF+UGiHDeqPStekMxECew7q Q==;
+X-CSE-ConnectionGUID: qx349e16RYmpYL5Pv95zpg==
+X-CSE-MsgGUID: q3Sjx06LRv6H39Cv3Kdp/Q==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23944869"
+Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
  by internal-pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:05:38 +0000
-Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.234:27628]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.30.230:2525]
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:05:48 +0000
+Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.104:24978]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.40.177:2525]
  with esmtp (Farcaster)
- id 3290fc78-ff97-4dee-b4da-65640f42e02a; Sat, 18 Jul 2026 22:05:38 +0000 (UTC)
-X-Farcaster-Flow-ID: 3290fc78-ff97-4dee-b4da-65640f42e02a
+ id be74d66e-9f5c-4be6-a574-75e84bd9268f; Sat, 18 Jul 2026 22:05:47 +0000 (UTC)
+X-Farcaster-Flow-ID: be74d66e-9f5c-4be6-a574-75e84bd9268f
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
+ EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:05:38 +0000
+ Sat, 18 Jul 2026 22:05:47 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:05:28 +0000
+ Sat, 18 Jul 2026 22:05:38 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,10 +93,10 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 102/137] hw/display: Give memory regions an explicit
- owner
-Date: Sat, 18 Jul 2026 21:36:17 +0000
-Message-ID: <20260718213652.37673-103-graf@amazon.com>
+Subject: [RFC PATCH v2 103/137] hw/arm/omap: Give lcdc and dma memory regions
+ an explicit owner
+Date: Sat, 18 Jul 2026 21:36:18 +0000
+Message-ID: <20260718213652.37673-104-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -133,92 +133,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert memory_region_init*() calls in device realize functions
-to pass OBJECT(dev) instead of NULL. All sites (cg3, g364fb,
-virtio-gpu-gl, vmware_vga) already have the DeviceState in scope.
-
-omap_lcdc is handled separately together with the other OMAP
-peripherals.
+Thread Object *owner as the first argument through omap_lcdc_init()
+and omap_dma_init(), matching the earlier conversion of omap1.c
+sub-block helpers. omap310_mpu_init() passes its parent through.
 
 No functional change intended.
-
-RAMBlock idstrs are unchanged for all conversions except
-vmware_vga.c: the vmsvga.fifo RAM is now owned by a PCI device, so the
-convenience wrapper is replaced with the _nomigrate variant plus an
-explicit vmstate_register_ram_global() to preserve the historical bare
-idstr.  All other display owners here are Machine or SysBus devices.
 
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/display/cg3.c           |  2 +-
- hw/display/g364fb.c        |  2 +-
- hw/display/virtio-gpu-gl.c |  2 +-
- hw/display/vmware_vga.c    | 12 ++++++++++--
- 4 files changed, 13 insertions(+), 5 deletions(-)
+ hw/arm/omap1.c         | 4 ++--
+ hw/display/omap_lcdc.c | 5 +++--
+ hw/dma/omap_dma.c      | 4 ++--
+ include/hw/arm/omap.h  | 5 +++--
+ 4 files changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/hw/display/cg3.c b/hw/display/cg3.c
-index f9dda1549d..507b0d8189 100644
---- a/hw/display/cg3.c
-+++ b/hw/display/cg3.c
-@@ -304,7 +304,7 @@ static void cg3_realizefn(DeviceState *dev, Error **errp)
-         }
+diff --git a/hw/arm/omap1.c b/hw/arm/omap1.c
+index be6af35e26..474a3902fe 100644
+--- a/hw/arm/omap1.c
++++ b/hw/arm/omap1.c
+@@ -3800,7 +3800,7 @@ struct omap_mpu_state_s *omap310_mpu_init(Object *parent, MemoryRegion *dram,
+         dma_irqs[i] = qdev_get_gpio_in(s->ih[omap1_dma_irq_map[i].ih],
+                                        omap1_dma_irq_map[i].intr);
      }
+-    s->dma = omap_dma_init(0xfffed800, dma_irqs, system_memory,
++    s->dma = omap_dma_init(parent, 0xfffed800, dma_irqs, system_memory,
+                            qdev_get_gpio_in(s->ih[0], OMAP_INT_DMA_LCD),
+                            s, omap_findclk(s, "dma_ck"));
  
--    memory_region_init_ram(&s->vram_mem, NULL, "cg3.vram", s->vram_size,
-+    memory_region_init_ram(&s->vram_mem, OBJECT(dev), "cg3.vram", s->vram_size,
-                            &error_fatal);
-     memory_region_set_log(&s->vram_mem, true, DIRTY_MEMORY_VGA);
-     sysbus_init_mmio(sbd, &s->vram_mem);
-diff --git a/hw/display/g364fb.c b/hw/display/g364fb.c
-index af54f1f900..0bd993b826 100644
---- a/hw/display/g364fb.c
-+++ b/hw/display/g364fb.c
-@@ -482,7 +482,7 @@ static void g364fb_init(DeviceState *dev, G364State *s)
+@@ -3835,7 +3835,7 @@ struct omap_mpu_state_s *omap310_mpu_init(Object *parent, MemoryRegion *dram,
+                     qdev_get_gpio_in(s->ih[1], OMAP_INT_OS_TIMER),
+                     omap_findclk(s, "clk32-kHz"));
  
-     memory_region_init_io(&s->mem_ctrl, OBJECT(dev), &g364fb_ctrl_ops, s,
-                           "ctrl", 0x180000);
--    memory_region_init_ram(&s->mem_vram, NULL, "g364fb.vram", s->vram_size,
-+    memory_region_init_ram(&s->mem_vram, OBJECT(dev), "g364fb.vram", s->vram_size,
-                            &error_fatal);
-     memory_region_set_log(&s->mem_vram, true, DIRTY_MEMORY_VGA);
+-    s->lcd = omap_lcdc_init(system_memory, 0xfffec000,
++    s->lcd = omap_lcdc_init(parent, system_memory, 0xfffec000,
+                             qdev_get_gpio_in(s->ih[0], OMAP_INT_LCD_CTRL),
+                             omap_dma_get_lcdch(s->dma),
+                             omap_findclk(s, "lcd_ck"));
+diff --git a/hw/display/omap_lcdc.c b/hw/display/omap_lcdc.c
+index b88ea5f2f1..3f6066e3a8 100644
+--- a/hw/display/omap_lcdc.c
++++ b/hw/display/omap_lcdc.c
+@@ -489,7 +489,8 @@ static const GraphicHwOps omap_ops = {
+     .gfx_update  = omap_update_display,
+ };
+ 
+-struct omap_lcd_panel_s *omap_lcdc_init(MemoryRegion *sysmem,
++struct omap_lcd_panel_s *omap_lcdc_init(Object *owner,
++                                        MemoryRegion *sysmem,
+                                         hwaddr base,
+                                         qemu_irq irq,
+                                         struct omap_dma_lcd_channel_s *dma,
+@@ -502,7 +503,7 @@ struct omap_lcd_panel_s *omap_lcdc_init(MemoryRegion *sysmem,
+     s->sysmem = sysmem;
+     omap_lcdc_reset(s);
+ 
+-    memory_region_init_io(&s->iomem, NULL, &omap_lcdc_ops, s, "omap.lcdc", 0x100);
++    memory_region_init_io(&s->iomem, owner, &omap_lcdc_ops, s, "omap.lcdc", 0x100);
+     memory_region_add_subregion(sysmem, base, &s->iomem);
+ 
+     s->con = qemu_graphic_console_create(NULL, 0, &omap_ops, s);
+diff --git a/hw/dma/omap_dma.c b/hw/dma/omap_dma.c
+index 77f1441498..b130ba2480 100644
+--- a/hw/dma/omap_dma.c
++++ b/hw/dma/omap_dma.c
+@@ -1089,7 +1089,7 @@ static void omap_dma_clk_update(void *opaque, int line, int on)
+             soc_dma_set_request(s->ch[i].dma, on);
  }
-diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
-index 2b7a41c466..b6f183123d 100644
---- a/hw/display/virtio-gpu-gl.c
-+++ b/hw/display/virtio-gpu-gl.c
-@@ -153,7 +153,7 @@ static void virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
-         }
  
-         gl->hostmem_mmap = map;
--        memory_region_init_ram_ptr(&gl->hostmem_background, NULL,
-+        memory_region_init_ram_ptr(&gl->hostmem_background, OBJECT(qdev),
-                                    "hostmem-background", b->conf.hostmem,
-                                    gl->hostmem_mmap);
-         memory_region_add_subregion(&b->hostmem, 0, &gl->hostmem_background);
-diff --git a/hw/display/vmware_vga.c b/hw/display/vmware_vga.c
-index f6f9edfd1d..571c3184c2 100644
---- a/hw/display/vmware_vga.c
-+++ b/hw/display/vmware_vga.c
-@@ -1257,8 +1257,16 @@ static void vmsvga_init(DeviceState *dev, struct vmsvga_state_s *s,
-     s->vga.con = qemu_graphic_console_create(dev, 0, &vmsvga_ops, s);
+-struct soc_dma_s *omap_dma_init(hwaddr base, qemu_irq *irqs,
++struct soc_dma_s *omap_dma_init(Object *owner, hwaddr base, qemu_irq *irqs,
+                                 MemoryRegion *sysmem,
+                                 qemu_irq lcd_irq,
+                                 struct omap_mpu_state_s *mpu, omap_clk clk)
+@@ -1127,7 +1127,7 @@ struct soc_dma_s *omap_dma_init(hwaddr base, qemu_irq *irqs,
+     omap_dma_reset(s->dma);
+     omap_dma_clk_update(s, 0, 1);
  
-     s->fifo_size = SVGA_FIFO_SIZE;
--    memory_region_init_ram(&s->fifo_ram, NULL, "vmsvga.fifo", s->fifo_size,
--                           &error_fatal);
-+    /*
-+     * The fifo RAM must keep its historical bare RAMBlock idstr
-+     * ("vmsvga.fifo") for cross-version migration.  Use _nomigrate + a
-+     * global vmstate registration so the QOM owner is the PCI device but
-+     * the migration idstr is not prefixed with the PCI dev-path.
-+     */
-+    memory_region_init_ram_flags_nomigrate(&s->fifo_ram, OBJECT(dev),
-+                                           "vmsvga.fifo", s->fifo_size, 0,
-+                                           &error_fatal);
-+    vmstate_register_ram_global(&s->fifo_ram);
-     s->fifo_ptr = memory_region_get_ram_ptr(&s->fifo_ram);
+-    memory_region_init_io(&s->iomem, NULL, &omap_dma_ops, s, "omap.dma", memsize);
++    memory_region_init_io(&s->iomem, owner, &omap_dma_ops, s, "omap.dma", memsize);
+     memory_region_add_subregion(sysmem, base, &s->iomem);
  
-     vga_common_init(&s->vga, OBJECT(dev), &error_fatal);
+     mpu->drq = s->dma->drq;
+diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
+index e000dffe13..591abf752b 100644
+--- a/include/hw/arm/omap.h
++++ b/include/hw/arm/omap.h
+@@ -173,7 +173,7 @@ void omap_gpio_set_clk(Omap1GpioState *gpio, omap_clk clk);
+ 
+ /* omap_dma.c */
+ struct soc_dma_s;
+-struct soc_dma_s *omap_dma_init(hwaddr base, qemu_irq *irqs,
++struct soc_dma_s *omap_dma_init(Object *owner, hwaddr base, qemu_irq *irqs,
+                                 MemoryRegion *sysmem,
+                                 qemu_irq lcd_irq,
+                                 struct omap_mpu_state_s *mpu, omap_clk clk);
+@@ -296,7 +296,8 @@ void omap_mcbsp_i2s_attach(struct omap_mcbsp_s *s, I2SCodec *slave);
+ /* omap_lcdc.c */
+ struct omap_lcd_panel_s;
+ void omap_lcdc_reset(struct omap_lcd_panel_s *s);
+-struct omap_lcd_panel_s *omap_lcdc_init(MemoryRegion *sysmem,
++struct omap_lcd_panel_s *omap_lcdc_init(Object *owner,
++                                        MemoryRegion *sysmem,
+                                         hwaddr base,
+                                         qemu_irq irq,
+                                         struct omap_dma_lcd_channel_s *dma,
 -- 
 2.47.1
 
