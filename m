@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0488DC4450A
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:56:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F771C4451B
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:56:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlD0p-0004m3-U8; Sat, 18 Jul 2026 17:55:59 -0400
+	id 1wlD0j-0004DQ-9m; Sat, 18 Jul 2026 17:55:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlD0o-0004fs-O1; Sat, 18 Jul 2026 17:55:58 -0400
-Received: from pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.42.203.116])
+ id 1wlD0e-00040D-KU; Sat, 18 Jul 2026 17:55:48 -0400
+Received: from pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([44.245.243.92])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlD0m-0004bb-0h; Sat, 18 Jul 2026 17:55:58 -0400
+ id 1wlD0c-0004Zq-Fi; Sat, 18 Jul 2026 17:55:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784411756; x=1815947756;
+ t=1784411746; x=1815947746;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=vtF2mHSj4Wqtsp1DClFR9ycudV7uUUq9K0sm6ktNWlk=;
- b=fHvr4eOEo+9oYJeDDpiquTjIymMrD5Q6t4LXAhfiiIg7spVzEVAEVrdR
- IYMt+/Fzey8Q+k5adoSuW9ELUtysai+2tG0ajUi9CrehC4DpOyeHHvBp2
- ss2b5KFgcErsDLwbWS47V1fSOx1oQvuVia8pWgGQSFABHkJ5L5qiSApui
- ZA0e10UJj6zeaWeZWcqIIS/CEKw+aW7P33ez/j1W1pq8qODn68QbDZu97
- vGVw1wEbrSs1woy6r0G+ud6BIoyynxF3VzUFH1vtIBIGR4rPHwkF9thdB
- sFGOjKoSWaRt0KKpDsYLw6aMiJZzQrdHT+V+yuHFXp5VNS1xQdVj9a2QP A==;
-X-CSE-ConnectionGUID: Hs2luzm0QvOJjB4PRZpiMw==
-X-CSE-MsgGUID: U1TMboK0TEWs/NNEEBooDg==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23940014"
-Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
- by internal-pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:55:52 +0000
-Received: from EX19MTAUWA001.ant.amazon.com [205.251.233.236:5317]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.58.199:2525]
+ bh=dKzfer9ZfJv7EUeLtSaSW1MA9kxz2rl8TgAOt4P8l24=;
+ b=E9YSag9peTZErV09XThptKkqlVfGN5e2+kNw5FKTQP82XjCSTXU/H0p5
+ WEqUAkzBoO8HA9bw75sfopzPEvftH51QqFjN+e9fv2DYA59G/6j7Q9cec
+ C5SXRIDzBJL2zwC9u9Q1mTR034t5ccnInFUBUZ4dAbRJccBSAtbZbWBwa
+ MKmbNYlXJ31glkM5f9I7XABbZspPV5Mn6Il2l5w4exadbA0CNR5T4p/66
+ mBOaSLUmxeMXY9BbM61mozPjfo0kJSL8WlGcT0lgNRzKebDqrnqQYUltH
+ A+haDyBl6E6+5ECKjqLQA3UD7lcTK8Flfgjy4t3XVf0Z8XuFP7vNrVcv4 Q==;
+X-CSE-ConnectionGUID: 84eN5zcnTUCgRCgrhfkoZA==
+X-CSE-MsgGUID: wgEVQXpmT0+sbDKeVRdE2w==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23423058"
+Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
+ by internal-pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:55:43 +0000
+Received: from EX19MTAUWC002.ant.amazon.com [205.251.233.51:12402]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.35.17:2525]
  with esmtp (Farcaster)
- id 43934e5c-535c-4d3a-8c72-461f94c9b459; Sat, 18 Jul 2026 21:55:52 +0000 (UTC)
-X-Farcaster-Flow-ID: 43934e5c-535c-4d3a-8c72-461f94c9b459
+ id bdb54ba2-6c82-4779-ae62-9539c1132905; Sat, 18 Jul 2026 21:55:42 +0000 (UTC)
+X-Farcaster-Flow-ID: bdb54ba2-6c82-4779-ae62-9539c1132905
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA001.ant.amazon.com (10.250.64.217) with Microsoft SMTP Server
+ EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:55:52 +0000
+ Sat, 18 Jul 2026 21:55:42 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:55:42 +0000
+ Sat, 18 Jul 2026 21:55:33 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,9 +93,10 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 068/137] hw/arm/omap: Give onboard devices a QOM parent
-Date: Sat, 18 Jul 2026 21:35:43 +0000
-Message-ID: <20260718213652.37673-69-graf@amazon.com>
+Subject: [RFC PATCH v2 067/137] hw/arm/strongarm: Give onboard devices a QOM
+ parent
+Date: Sat, 18 Jul 2026 21:35:42 +0000
+Message-ID: <20260718213652.37673-68-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -106,9 +107,9 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D031UWC003.ant.amazon.com (10.13.139.252) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=52.42.203.116;
+Received-SPF: pass client-ip=44.245.243.92;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -132,7 +133,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the *_orphan() device-creation calls in the hw/arm omap
+Convert the *_orphan() device-creation calls in the hw/arm strongarm
 board files to the new parented API introduced earlier in this
 series, so every onboard device gets a stable path in the
 composition tree instead of landing in /machine/unattached with an
@@ -144,112 +145,139 @@ composite children.  Names follow existing QOM conventions.
 
 Per-site rationale (reviewers: dispute the modeling here):
 
-hw/arm/omap1.c:3752 | cpu_create | parent | "cpu" | omap310_mpu_init() already receives Object *parent; use it directly.
-hw/arm/omap1.c:3766 | qdev_new | parent | "intc[0]" | Two interrupt controllers, explicit index. Paired sysbus_realize_and_unref -> sysbus_realize.
-hw/arm/omap1.c:3776 | qdev_new | parent | "intc[1]" | Second intc. Paired sysbus_realize_and_unref -> sysbus_realize.
-hw/arm/omap1.c:3879 | qdev_new | parent | "mmc" | Single MMC. Paired sysbus_realize_and_unref -> sysbus_realize.
-hw/arm/omap1.c:3891 | qdev_new | parent | "sd-card" | Single SD card (bus is not parent). Paired qdev_realize_and_unref -> qdev_realize.
-hw/arm/omap1.c:3903 | qdev_new | parent | "gpio" | Single GPIO. Paired sysbus_realize_and_unref -> sysbus_realize.
-hw/arm/omap1.c:3920 | qdev_new | parent | "i2c" | Single i2c (only i2c[0] populated on omap1). Paired sysbus_realize_and_unref -> sysbus_realize.
+hw/arm/collie.c:67 | sysbus_create_simple | OBJECT(machine) | "scoop" | Board .init(MachineState *machine); single instance.
+hw/arm/strongarm.c:649 | qdev_new | parent (threaded) | "gpio" | strongarm_gpio_init() static helper: added Object *parent as first arg, threaded from sa1110_init(). Paired sysbus_realize_and_unref -> sysbus_realize.
+hw/arm/strongarm.c:1623 | cpu_create | parent (threaded) | "cpu" | sa1110_init() has no parent-capable pointer; added Object *parent as first arg (prototype in strongarm.h updated), threaded from collie_init() with OBJECT(machine).
+hw/arm/strongarm.c:1625 | sysbus_create_varargs | parent | "pic" | sa1110_init(); single PIC.
+hw/arm/strongarm.c:1630 | sysbus_create_varargs | parent | "timer" | sa1110_init(); single timer.
+hw/arm/strongarm.c:1637 | sysbus_create_simple | parent | "rtc" | sa1110_init(); single RTC.
+hw/arm/strongarm.c:1642 | sysbus_create_varargs | parent | "ppc" | sa1110_init(); single PPC.
+hw/arm/strongarm.c:1645 | qdev_new | parent | "uart[*]" | sa1110_init(); loop over sa_serial[]. Paired sysbus_realize_and_unref -> sysbus_realize.
+hw/arm/strongarm.c:1654 | sysbus_create_varargs | parent | "ssp" | sa1110_init(); single SSP.
 
 Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/arm/omap1.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ hw/arm/collie.c    |  4 ++--
+ hw/arm/strongarm.c | 27 ++++++++++++++-------------
+ hw/arm/strongarm.h |  2 +-
+ 3 files changed, 17 insertions(+), 16 deletions(-)
 
-diff --git a/hw/arm/omap1.c b/hw/arm/omap1.c
-index c86914a464..e5e092e074 100644
---- a/hw/arm/omap1.c
-+++ b/hw/arm/omap1.c
-@@ -3749,7 +3749,7 @@ struct omap_mpu_state_s *omap310_mpu_init(Object *parent, MemoryRegion *dram,
-     MemoryRegion *system_memory = get_system_memory();
+diff --git a/hw/arm/collie.c b/hw/arm/collie.c
+index b3646daa3b..afd4e14315 100644
+--- a/hw/arm/collie.c
++++ b/hw/arm/collie.c
+@@ -52,7 +52,7 @@ static void collie_init(MachineState *machine)
+         exit(EXIT_FAILURE);
+     }
  
-     /* Core */
+-    cms->sa1110 = sa1110_init(machine->cpu_type);
++    cms->sa1110 = sa1110_init(OBJECT(machine), machine->cpu_type);
+ 
+     memory_region_add_subregion(get_system_memory(), SA_SDCS0, machine->ram);
+ 
+@@ -64,7 +64,7 @@ static void collie_init(MachineState *machine)
+                               FLASH_SECTOR_SIZE, 4, 0x00, 0x00, 0x00, 0x00, 0);
+     }
+ 
+-    sysbus_create_simple_orphan("scoop", 0x40800000, NULL);
++    sysbus_create_simple(OBJECT(machine), "scoop", "scoop", 0x40800000, NULL);
+ 
+     collie_binfo.board_id = 0x208;
+     arm_load_kernel(cms->sa1110->cpu, machine, &collie_binfo);
+diff --git a/hw/arm/strongarm.c b/hw/arm/strongarm.c
+index 1704db8baa..0b3b56218a 100644
+--- a/hw/arm/strongarm.c
++++ b/hw/arm/strongarm.c
+@@ -640,14 +640,14 @@ static const MemoryRegionOps strongarm_gpio_ops = {
+     .endianness = DEVICE_NATIVE_ENDIAN,
+ };
+ 
+-static DeviceState *strongarm_gpio_init(hwaddr base,
++static DeviceState *strongarm_gpio_init(Object *parent, hwaddr base,
+                 DeviceState *pic)
+ {
+     DeviceState *dev;
+     int i;
+ 
+-    dev = qdev_new_orphan(TYPE_STRONGARM_GPIO);
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    dev = qdev_new(parent, "gpio", TYPE_STRONGARM_GPIO);
++    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+ 
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
+     for (i = 0; i < 12; i++)
+@@ -1608,7 +1608,7 @@ static const TypeInfo strongarm_ssp_info = {
+ };
+ 
+ /* Main CPU functions */
+-StrongARMState *sa1110_init(const char *cpu_type)
++StrongARMState *sa1110_init(Object *parent, const char *cpu_type)
+ {
+     StrongARMState *s;
+     int i;
+@@ -1620,38 +1620,39 @@ StrongARMState *sa1110_init(const char *cpu_type)
+         exit(1);
+     }
+ 
 -    s->cpu = ARM_CPU(cpu_create_orphan(cpu_type));
 +    s->cpu = ARM_CPU(cpu_create(parent, "cpu", cpu_type));
-     s->sdram_size = memory_region_size(dram);
-     s->sram_size = OMAP15XX_SRAM_SIZE;
  
-@@ -3763,21 +3763,21 @@ struct omap_mpu_state_s *omap310_mpu_init(Object *parent, MemoryRegion *dram,
+-    s->pic = sysbus_create_varargs_orphan("strongarm_pic", 0x90050000,
++    s->pic = sysbus_create_varargs(parent, "pic", "strongarm_pic", 0x90050000,
+                     qdev_get_gpio_in(DEVICE(s->cpu), ARM_CPU_IRQ),
+                     qdev_get_gpio_in(DEVICE(s->cpu), ARM_CPU_FIQ),
+                     NULL);
  
-     omap_clkm_init(system_memory, 0xfffece00, 0xe1008000, s);
+-    sysbus_create_varargs_orphan("pxa25x-timer", 0x90000000,
++    sysbus_create_varargs(parent, "timer", "pxa25x-timer", 0x90000000,
+                     qdev_get_gpio_in(s->pic, SA_PIC_OSTC0),
+                     qdev_get_gpio_in(s->pic, SA_PIC_OSTC1),
+                     qdev_get_gpio_in(s->pic, SA_PIC_OSTC2),
+                     qdev_get_gpio_in(s->pic, SA_PIC_OSTC3),
+                     NULL);
  
--    s->ih[0] = qdev_new_orphan("omap-intc");
-+    s->ih[0] = qdev_new(parent, "intc[0]", "omap-intc");
-     qdev_prop_set_uint32(s->ih[0], "size", 0x100);
-     omap_intc_set_iclk(OMAP_INTC(s->ih[0]), omap_findclk(s, "arminth_ck"));
-     busdev = SYS_BUS_DEVICE(s->ih[0]);
--    sysbus_realize_and_unref(busdev, &error_fatal);
-+    sysbus_realize(busdev, &error_fatal);
-     sysbus_connect_irq(busdev, 0,
-                        qdev_get_gpio_in(DEVICE(s->cpu), ARM_CPU_IRQ));
-     sysbus_connect_irq(busdev, 1,
-                        qdev_get_gpio_in(DEVICE(s->cpu), ARM_CPU_FIQ));
-     sysbus_mmio_map(busdev, 0, 0xfffecb00);
--    s->ih[1] = qdev_new_orphan("omap-intc");
-+    s->ih[1] = qdev_new(parent, "intc[1]", "omap-intc");
-     qdev_prop_set_uint32(s->ih[1], "size", 0x800);
-     omap_intc_set_iclk(OMAP_INTC(s->ih[1]), omap_findclk(s, "arminth_ck"));
-     busdev = SYS_BUS_DEVICE(s->ih[1]);
--    sysbus_realize_and_unref(busdev, &error_fatal);
-+    sysbus_realize(busdev, &error_fatal);
-     sysbus_connect_irq(busdev, 0,
-                        qdev_get_gpio_in(s->ih[0], OMAP_INT_15XX_IH2_IRQ));
-     /* The second interrupt controller's FIQ output is not wired up */
-@@ -3876,8 +3876,8 @@ struct omap_mpu_state_s *omap310_mpu_init(Object *parent, MemoryRegion *dram,
-         warn_report("missing SecureDigital device");
+-    sysbus_create_simple_orphan(TYPE_STRONGARM_RTC, 0x90010000,
++    sysbus_create_simple(parent, "rtc", TYPE_STRONGARM_RTC, 0x90010000,
+                     qdev_get_gpio_in(s->pic, SA_PIC_RTC_ALARM));
+ 
+-    s->gpio = strongarm_gpio_init(0x90040000, s->pic);
++    s->gpio = strongarm_gpio_init(parent, 0x90040000, s->pic);
+ 
+-    s->ppc = sysbus_create_varargs_orphan(TYPE_STRONGARM_PPC, 0x90060000, NULL);
++    s->ppc = sysbus_create_varargs(parent, "ppc", TYPE_STRONGARM_PPC,
++                                   0x90060000, NULL);
+ 
+     for (i = 0; sa_serial[i].io_base; i++) {
+-        DeviceState *dev = qdev_new_orphan(TYPE_STRONGARM_UART);
++        DeviceState *dev = qdev_new(parent, "uart[*]", TYPE_STRONGARM_UART);
+         qdev_prop_set_chr(dev, "chardev", serial_hd(i));
+-        sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++        sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+         sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0,
+                 sa_serial[i].io_base);
+         sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
+                 qdev_get_gpio_in(s->pic, sa_serial[i].irq));
      }
  
--    s->mmc = qdev_new_orphan(TYPE_OMAP_MMC);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(s->mmc), &error_fatal);
-+    s->mmc = qdev_new(parent, "mmc", TYPE_OMAP_MMC);
-+    sysbus_realize(SYS_BUS_DEVICE(s->mmc), &error_fatal);
-     omap_mmc_set_clk(s->mmc, omap_findclk(s, "mmc_ck"));
+-    s->ssp = sysbus_create_varargs_orphan(TYPE_STRONGARM_SSP, 0x80070000,
++    s->ssp = sysbus_create_varargs(parent, "ssp", TYPE_STRONGARM_SSP, 0x80070000,
+                 qdev_get_gpio_in(s->pic, SA_PIC_SSP), NULL);
+     s->ssp_bus = (SSIBus *)qdev_get_child_bus(s->ssp, "ssi");
  
-     memory_region_add_subregion(system_memory, 0xfffb7800,
-@@ -3888,11 +3888,11 @@ struct omap_mpu_state_s *omap310_mpu_init(Object *parent, MemoryRegion *dram,
-                        qdev_get_gpio_in(s->ih[1], OMAP_INT_OQN));
+diff --git a/hw/arm/strongarm.h b/hw/arm/strongarm.h
+index b11b3a3379..72bb9e075c 100644
+--- a/hw/arm/strongarm.h
++++ b/hw/arm/strongarm.h
+@@ -62,6 +62,6 @@ typedef struct {
+     SSIBus *ssp_bus;
+ } StrongARMState;
  
-     if (dinfo) {
--        DeviceState *card = qdev_new_orphan(TYPE_SD_CARD);
-+        DeviceState *card = qdev_new(parent, "sd-card", TYPE_SD_CARD);
-         qdev_prop_set_drive_err(card, "drive", blk_by_legacy_dinfo(dinfo),
-                                 &error_fatal);
--        qdev_realize_and_unref(card, qdev_get_child_bus(s->mmc, "sd-bus"),
--                               &error_fatal);
-+        qdev_realize(card, qdev_get_child_bus(s->mmc, "sd-bus"),
-+                     &error_fatal);
-     }
+-StrongARMState *sa1110_init(const char *cpu_type);
++StrongARMState *sa1110_init(Object *parent, const char *cpu_type);
  
-     s->mpuio = omap_mpuio_init(system_memory, 0xfffb5000,
-@@ -3900,9 +3900,9 @@ struct omap_mpu_state_s *omap310_mpu_init(Object *parent, MemoryRegion *dram,
-                                qdev_get_gpio_in(s->ih[1], OMAP_INT_MPUIO),
-                                omap_findclk(s, "clk32-kHz"));
- 
--    s->gpio = qdev_new_orphan("omap-gpio");
-+    s->gpio = qdev_new(parent, "gpio", "omap-gpio");
-     omap_gpio_set_clk(OMAP1_GPIO(s->gpio), omap_findclk(s, "arm_gpio_ck"));
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(s->gpio), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(s->gpio), &error_fatal);
-     sysbus_connect_irq(SYS_BUS_DEVICE(s->gpio), 0,
-                        qdev_get_gpio_in(s->ih[0], OMAP_INT_GPIO_BANK1));
-     sysbus_mmio_map(SYS_BUS_DEVICE(s->gpio), 0, 0xfffce000);
-@@ -3917,11 +3917,11 @@ struct omap_mpu_state_s *omap310_mpu_init(Object *parent, MemoryRegion *dram,
-     s->pwt = omap_pwt_init(system_memory, 0xfffb6000,
-                            omap_findclk(s, "armxor_ck"));
- 
--    s->i2c[0] = qdev_new_orphan("omap_i2c");
-+    s->i2c[0] = qdev_new(parent, "i2c", "omap_i2c");
-     qdev_prop_set_uint8(s->i2c[0], "revision", 0x11);
-     omap_i2c_set_fclk(OMAP_I2C(s->i2c[0]), omap_findclk(s, "mpuper_ck"));
-     busdev = SYS_BUS_DEVICE(s->i2c[0]);
--    sysbus_realize_and_unref(busdev, &error_fatal);
-+    sysbus_realize(busdev, &error_fatal);
-     sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(s->ih[1], OMAP_INT_I2C));
-     sysbus_connect_irq(busdev, 1, s->drq[OMAP_DMA_I2C_TX]);
-     sysbus_connect_irq(busdev, 2, s->drq[OMAP_DMA_I2C_RX]);
+ #endif
 -- 
 2.47.1
 
