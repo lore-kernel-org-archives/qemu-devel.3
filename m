@@ -4,152 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 916FAC4451C
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 07:22:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F2C3C4451C
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 08:27:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wkzMu-0000aK-2x; Sat, 18 Jul 2026 03:21:52 -0400
+	id 1wl0NN-0001ib-Gp; Sat, 18 Jul 2026 04:26:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wkzMs-0000Zf-7d
- for qemu-devel@nongnu.org; Sat, 18 Jul 2026 03:21:50 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wkzMp-0001SK-Ab
- for qemu-devel@nongnu.org; Sat, 18 Jul 2026 03:21:49 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66I6ScAa113313
- for <qemu-devel@nongnu.org>; Sat, 18 Jul 2026 07:21:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- yrtz1juppdBLA0B3onjx1CeZV3fbOqsGLAPieL/ecSs=; b=T4BuIwcTa0d6klVU
- 1VArulaBpBrjlVxW89fQsB29G1OurJTxXD1BrltImuurb1FUU74mmSUeavWmP3OR
- RRUc12/IC1TxU7x+1xenzW6t/VxO9poysMMIaWHKO1d9dpz8suh2QAecOsVU08xB
- f9YqLQJY7OfJVDB6leLU27S7OZGLdB4DC5X65ExsOFNMZ8zCkgezmC85ZqPqQ6KI
- 1Q93K2xylHpuF8w+m4Wv06zr/WqsC2E0jItUVRj5ohFyLYO57Iz/G05pcDuhulh4
- 6X1x913pNHfJVgWF2MndnntNHGtDKNtTStWSD2JdItD4LsXiEbas/J09n5Ri4V0e
- YWCyOw==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fg2d908x4-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sat, 18 Jul 2026 07:21:44 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-c890bac374eso19888671a12.1
- for <qemu-devel@nongnu.org>; Sat, 18 Jul 2026 00:21:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wl0NL-0001iH-3N
+ for qemu-devel@nongnu.org; Sat, 18 Jul 2026 04:26:23 -0400
+Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wl0NJ-0007nt-At
+ for qemu-devel@nongnu.org; Sat, 18 Jul 2026 04:26:22 -0400
+Received: by mail-yw1-x112a.google.com with SMTP id
+ 00721157ae682-81062fdeaf5so23017887b3.0
+ for <qemu-devel@nongnu.org>; Sat, 18 Jul 2026 01:26:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784363179; cv=none;
+ d=google.com; s=arc-20260327;
+ b=AFeu7NI+GJOejUSA/8HBK5G17p7NPPmn8jdAx36qtxzK5UgGyJREaBql7JLsB+KBBS
+ f7Yet7CdHxBeqfJcvhnC8Y3+HX7hF7XvP8jHC41TrA8UadPVQdGWiSHN05RzzrK+XJhU
+ zdqSJPS5tc85Zz0SlgV2c2VFEAoy4UoKbQBIMRi/5xjcfOHY+c02KgWkG8Yjat9E5ffS
+ wxdzElZHlINrcVZfkDKo6VHiUIkyLmN2rz+RA4O33zt3kOnVlJLCqIK9eB3bzTHyZEq+
+ tApc6NvTt1XmHjasV6HoUBWSQ2H3YvNgWhuBqiprXEtziT3eYteEkVjmTvEHmXn4UOih
+ /keA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=YuR22fjDlUsw3AQzPl6B68oIYVRuajoftYthIhXp7r4=;
+ fh=al5FSA0QDJIfPMoyjfWiwC7oXFj+LfcBdbFSSZtoaSQ=;
+ b=Wl7ENHbymZJhAuh6MbIkSrOyIWlAh7VKx7Jm+mWiotaU4gZqzhYHlckqnHpoHc3N/H
+ fnji13NsiXzMn8+8ic/bPgMJP06Spm7OhUC9zoLehmgmq9M8fBS0WEilKmpIfCuPV6cs
+ hsk/NOsXI9CLyDTEoQfUQ/J2BYAIHPo2mM9KqMzgInyUDGfTvyhLDjdSfGs82W0cu3W/
+ yWLFXOkKy4LIWQ5oC0MTPFlhvo0ZAYAHi1J4MUn6jyyMWiL/bP5dfMGlsuv6TChvNL9T
+ vOfIKqkdfR2zoBC19B/+fBmI8Dz9TmJCE18FCM5c5aeL5YHHKvBOdNNii5MgsqZwKS2e
+ ma9g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784359304; x=1784964104; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=yrtz1juppdBLA0B3onjx1CeZV3fbOqsGLAPieL/ecSs=;
- b=WrwcblQt6OukHaYu9CAizDhkxRW5HO/LjY0E0yflfdIKB/0iUFGRkaWL1+7xXwft0g
- Hqtl8jMCrwr6HmooWRedxWbzQLr5CC8nJS9rjBKMeKKkbQAwy5gmwBDrHWa768onWCme
- u//E9AAxGCIrxlcdsMXGEMqe3JxZ3XeJ7q83fNC8Zd3QAPWXK+9cH9xZPCkTMhQ0Qgal
- w20BXAOIl252SGOuDEohLKcc2oBeBNvLLLhdYZ66TRLGZ5PVRWa/xZDNaHawi4srlouV
- pjPl6auuz91ScjHmw1mEBeFtxBu2Lp+uafZEspQZEP0x8/NvqwJlL8+1ly6GaMQaOAL+
- OC0g==
+ d=linaro.org; s=google; t=1784363179; x=1784967979; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=YuR22fjDlUsw3AQzPl6B68oIYVRuajoftYthIhXp7r4=;
+ b=etyaUup9ZnhJwliutkMdRIiECykswKHSXXcV6x810oYU/loOeGYkaEDglcSN7Ce6zF
+ y0N+7sQxUC8QnitNgcQLrC32prbVkgR/bWVuY6kxtoOv9mr57oc8uFB4/gOE6+AW1UQR
+ F0TbV0Nx2wLnbhulbd1A47PD94hQ4A7PTfJe7aWlwrIJsuiDXPQOD4xzVSHzqAk1NqCD
+ fp1k67Aysta7c+k7Mh8vkggh6PUCjVA+XDpJ8wK5ecdIIrMa2J52XRNd9KBLUyhHgeEK
+ czyFwFO8FXMiJqiXqK6cZDqZLsBECzPhV4nVdRxxbRTeTds7r9kR0aERqqF+oRBaz/2a
+ uh6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784359304; x=1784964104;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=yrtz1juppdBLA0B3onjx1CeZV3fbOqsGLAPieL/ecSs=;
- b=s3igRXLFeTNDLH7V7N+bOiQN7KuYD1zwjfo5is3X8c6ABm1smPE2at/oBhf4WhXHSV
- XDBODI+vZ/VpppFZctH+cTCezzQbSQhieljGICRxdPiDGrntJSwUGmoGMlwuzxMmHJ6q
- jfqY9DzjPjC11ba1E5x9ayHObYNLkPqWzCxU+NyxaFxnvV3VwuZUhHHahBhJqoH6LWCk
- TVpMA8Q5lApRcHeZLyeSjgdfJMlLko0VjE1CHRoaEFv1i7BZ2AS5XAGjaSO1iewPoT2p
- GHrzlt/QPTygXZ5Q9RIywQ0CH3gsxre97t5rHVPDFRcvTh7I/rJ91mlI2N+o3AAwOnns
- 6HWA==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rpy6upL1A5MwMiOcYUg9kiSHgR7Pkt94GR3XkpLDNqVnpstoyOOyOv2l25vfUShaTp6Y6sqDlS1p6Qj@nongnu.org
-X-Gm-Message-State: AOJu0YwiblBGfiC4IvmQ0OTn+6iI6aP1VgVNZ/TSWytab95YoYttxFZW
- 85Dx0hEN8AZxkNa+T6iCo+8Vx0RGiI6zV+caRBZjCXC1yPrWam9vFNpN+gBgPSzooqR8JOkxO7M
- 7FnKm1QDUrD1u7JMMBBRQ/77qPgwezE6q9JBknryO1U+N9bogoeN3R39SfA==
-X-Gm-Gg: AfdE7cnnjiyfc3jaQXSRA5PlT+MZayrwhy/PdV82JC07yZjSmjlXT9Vx/P6CDqVVccE
- /BVXWVIxG5C7r/impbBLnK9ry7lhEfNU08rxSC1o5nWFEiaDFe2+v6zH066jUtEJY0MyIn2vR71
- fYVd25bjWCI4gWYePBT/vTWPQksrXJOL18ExKulou2BKn5HbJo77FWY1DogP1JzyH4hBRmqCvat
- h4ed29i+f1HvfL41kpTDqcD8gC2VnstUfnHZxk+HTG2acs2XS3EU9JPSOp1BXMQmU3Mrzx8t2yX
- ITSAp20JlwWHEnqQI6dX1WlzTAQz8on5WSZy/Vh7oMkwIboeBKCb5V5OWvqaCWGvUkHjc5D4s5s
- Fp3QagnAE3PbRDwQzf7GdYSQokgm89V8Tx/PEWIDkwdJ0Trme8FarrTRJigymE7e4REtL
-X-Received: by 2002:a05:6a20:3886:b0:3c3:b628:6d17 with SMTP id
- adf61e73a8af0-3c3b62871a1mr3783789637.25.1784359303943; 
- Sat, 18 Jul 2026 00:21:43 -0700 (PDT)
-X-Received: by 2002:a05:6a20:3886:b0:3c3:b628:6d17 with SMTP id
- adf61e73a8af0-3c3b62871a1mr3783778637.25.1784359303528; 
- Sat, 18 Jul 2026 00:21:43 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-31429f9bcccsm15907310eec.4.2026.07.18.00.21.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 18 Jul 2026 00:21:42 -0700 (PDT)
-Message-ID: <b56a2e20-0e8c-45f5-ac9d-f207e996498c@oss.qualcomm.com>
-Date: Sat, 18 Jul 2026 00:21:41 -0700
+ d=1e100.net; s=20251104; t=1784363179; x=1784967979;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=YuR22fjDlUsw3AQzPl6B68oIYVRuajoftYthIhXp7r4=;
+ b=iR0YjsR8oE5Ih6GZsz6QmFINQmWUKRj8+rKVrkPPZHmt5v0DzqBsNWjiiwYjMTlqGn
+ KiT8gQdaZzXLvtHw7zZUFQuiG2GzSKx9MBZfdOIgC3YK/j/5861GDyboPoboTxoZ8ia7
+ QH9MwwhQ5FbmXyrysCfvRzdFGoUyD9hf8cvv/ygkMu7jR1jX5U+zA2Jq0UXj7kXU50K4
+ C58eJtH/sqiBr1hqLoI8+tp1N4xur8zR84ySOgKhjHO+9rkr5gJExXog2fPq35Zq5CaM
+ qw2wQQhOvckzUm+7jERuw3jj/4+ai/4oozGkNE0r01VJf2geffWV8t2RzDRHOUcN8QFy
+ dfUw==
+X-Gm-Message-State: AOJu0YxuW7gj3Ru/JNS2TDNBgG5wYRirRbDhdlO225g6TbumDb4RtVb7
+ HyBwmJBM+cJsZjT4ZAU+1gGy8OwyBKGEQ8aS6zjDOXwfAOGgKfFqNNL334eFN+QDjrpps8yUC+5
+ yYUP21pL1yr+lrh7JAa8md5K9GzQbyZVYz+6pyrLh6g==
+X-Gm-Gg: AfdE7cnSjCnizBFLyQL371YT4OqjlxblgTZgcO6cVW1C6HdsvPe/d3R/HDT595NfY3X
+ nPvOAFLnsPf0NEMfROJRLXcFli9tF7rVhT9lMHi5ENVgcWeBFm0ZAyRcnRLitbCO4rtov6O6se/
+ uzYSuv186JM0oeVLeD95J12v9TwdkrdM4WoEtYqF7ur6OSEp9igyNcfNmyH+hwzxo2HvKnFidky
+ OlWzq4LC0gJucMUZpdeMjGdZ7lpZk5RbISDjIDCL63VG+RFji8VyY35Lg2scXi0KnC07lNhkUdd
+ GjhFxACZOgUnvhQO6wY7b+KfLCALJpuUY2/aOFN8WC+h8PH6BH7fE3Ks
+X-Received: by 2002:a05:690c:f06:b0:81e:b78d:688b with SMTP id
+ 00721157ae682-81ee280f13dmr56999437b3.12.1784363179412; Sat, 18 Jul 2026
+ 01:26:19 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/8] hw/vfio/listener.c: remove CONFIG_KVM
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: philmd@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-ppc@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- eric.auger@redhat.com
-References: <20260312224449.1605071-1-pierrick.bouvier@linaro.org>
- <20260312224449.1605071-2-pierrick.bouvier@linaro.org>
- <c3a7cd83-7666-40c5-9baa-ebe64edacab6@tls.msk.ru>
- <3f98fbb6-16be-4de1-b9ae-6108f8f33b57@oss.qualcomm.com>
- <d3f85639-e6a4-4917-8300-d48a7852662f@oss.qualcomm.com>
- <5dc9f2fc-3bd6-4df3-8496-44e6037b51ad@tls.msk.ru>
- <73d87f66-6907-4e02-8026-b89c49912aeb@oss.qualcomm.com>
- <f1a78cc4-a660-4d20-85ad-84431d5a5c13@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <f1a78cc4-a660-4d20-85ad-84431d5a5c13@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=HpxG3UTS c=1 sm=1 tr=0 ts=6a5b2988 cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=p0WdMEafAAAA:8 a=sE8Y2hUrly7P2sNbtWAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-GUID: wVRGQl4f7dhjHIbcLYXO2jR4ErSHhemP
-X-Proofpoint-ORIG-GUID: wVRGQl4f7dhjHIbcLYXO2jR4ErSHhemP
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE4MDA3NSBTYWx0ZWRfX9frHZcFCi2ua
- nkgBfaFN0Cevt7idvlDd6lPCLevgcQQkVsT0DCCBKZX7KwMQ1AhT1Lv/O95evHDmpwCWN3IGiwn
- Cc5iv0iBjC/mBLdbyVbykzQ57wCrGTAmx4JQg4sGjw/mPDOGHJWVGuyJOcKckhQANUl2PuUICnZ
- n6nZ+vnW+eXmhHsEIJ6ZDiZ6EWTMPo1UZ3t0xD0oUXXxVub+ejAQ+aIS5h8b+2tiuxG6YyiTFnX
- V+Ydiybn0anCZtOIf9Nd0fBtHp5qYBB1kXxPYmCo8mdaYYu1Nm+Xy+WhG+1CVzEL3Ohnv+QQjuU
- VURKrRi537Va/etSRGQOY/fiuycJJqH98sdMlPDjCvIjllkUZcPQjwodlKn9OEXg2MtD9JQ310o
- 46/K84CII7SYecvl85Ubggt7ytEZCEvXbKBi1v/EacP71AFZ7ZFP5eWEV2F/efYT+02V5Y2h6Zw
- Nw8DLZahyDhYrofd8WA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE4MDA3NSBTYWx0ZWRfX3hfAY6dOl2e0
- shTIQ9ppbzBMHBHWgU6OKsKAXZK6Z3u1o1Rhol8H7UbETy7+eu0LlaQHCq34/EFtp6fzMLFSD8b
- T7YLoZUUmik4PH2H13iF3C8m6sUwsVU=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-18_02,2026-07-17_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0 malwarescore=0 clxscore=1015 priorityscore=1501
- adultscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607180075
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260717203249.682144-1-thuth@redhat.com>
+In-Reply-To: <20260717203249.682144-1-thuth@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sat, 18 Jul 2026 09:26:07 +0100
+X-Gm-Features: AUfX_mxPHGzMGb-qDCQhJPJ2bcfjbYrWhFKacrSoO4kdVhy-mEZDvPxKCwJLIss
+Message-ID: <CAFEAcA9gT4mM2LQTkuuv4+H8F_Jy1HccT4Z5sTbXgEoQY-TNmA@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/usb/hcd-xhci-sysbus: Fix OOB heap access in
+ xhci_sysbus_intr_raise()
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, kraxel@redhat.com, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ qemu-stable@nongnu.org, "Daniel P . Berrange" <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,55 +116,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/17/2026 10:30 PM, Cédric Le Goater wrote:
-> On 7/18/26 06:52, Pierrick Bouvier wrote:
->> On 7/17/2026 9:14 PM, Michael Tokarev wrote:
->>> On 7/17/26 22:40, Pierrick Bouvier wrote:
->>>
->>>> https://gitlab.com/qemu-project/qemu/-/blob/master/hw/vfio/Kconfig?
->>>> ref_type=heads#L5
->>>>
->>>> ```
->>>> config VFIO
->>>>       bool
->>>>       depends on LINUX
->>>> ```
->>>>
->>>> Incorrect, and it should exclude Linux hosts not supporting VFIO.
->>>> At least sparc64 to fix the current issue.
->>>
->>> Shouldn't there be "depends on LINUX & KVM" ?  At least, this
->>> way we can do --disable-kvm and it will work.
->>>
->>
->> I think it's a safe choice, but not sure if we are supposed to be able
->> to use the exotic combination of vfio with tcg also. Maybe it doesn't
->> make any sense technically though, I don't know the arcane of vfio.
-> 
-> VFIO works in some heterogeneous configurations, aarch64 TCG running
-> on an x86 host for instance. The opposite doesn't. ppc64 TCG on an x86
-> used to work. The limitations primarily stem from architectural
-> differences in the host/guest memory mode, CPU/IOMMU address spaces,
-> assumptions, etc.
+On Fri, 17 Jul 2026 at 21:32, Thomas Huth <thuth@redhat.com> wrote:
 >
-
-Thanks, I remembered trying the first heterogeneous configuration you
-mentioned, but it was some time ago, so I was not completely sure.
-
->> @Cédric, Any idea of which matrix of host/target is supposed to be
->> supported?
-> 
-> Overall, heterogeneous TCG configurations happen to work by accident.
-> I would not consider them supported.
+> From: Thomas Huth <thuth@redhat.com>
 >
+> Some machines like the microvm machine instantiate a "sysbus-xhci"
+> device with just 1 interrupt (by setting the "intrs" property to 1).
+> xhci_sysbus_realize() then only allocates the s->irq array with one
+> entry.
+>
+> When the guest writes to the ERDP register of a corresponding XHCI
+> "interrupter", the generic XHCI code calls the xhci_sysbus_intr_raise()
+> function with n > 1, and this function then calls qemu_set_irq() with
+> s->irq[n] pointing to a bad heap address. The qemu_set_irq() then tries
+> to call an IRQ handler via a function pointer in that heap space. This
+> either causes QEMU to die with a segmentation fault (if it's a bad
+> address), or even worse runs some unexpected code if the destination
+> of the pointer is executable code.
+>
+> Looking at the xHCI spec, it is up to the implementation of the host
+> controller how many interrupters are available. So if we only support
+> one or some few interrupters, the registers of the other interrupters
+> should not do anything, i.e. reads should result in zeros and writes
+> should be completely ignored. (big thanks to Peter Maydell for helping
+> with the analyzation of the correct way to fix this here)
+>
+> This way, the xhci_sysbus_intr_raise() function cannot be called with
+> an invalid interrupt number anymore. But for good measure, also add an
+> assert() statement to the xhci_sysbus_intr_raise() function to prevent
+> that similar problems with calling arbitrary function pointers on the
+> heap could occur again.
+>
+> Fixes: CVE-2026-16043
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4001
+> Reported-by: Tristan Madani <tristan@talencesecurity.com>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  hw/usb/hcd-xhci-sysbus.c |  1 +
+>  hw/usb/hcd-xhci.c        | 12 ++++++++++++
+>  2 files changed, 13 insertions(+)
+>
+> diff --git a/hw/usb/hcd-xhci-sysbus.c b/hw/usb/hcd-xhci-sysbus.c
+> index 19664c5985e..bbdd5fd64ab 100644
+> --- a/hw/usb/hcd-xhci-sysbus.c
+> +++ b/hw/usb/hcd-xhci-sysbus.c
+> @@ -20,6 +20,7 @@ static bool xhci_sysbus_intr_raise(XHCIState *xhci, int n, bool level)
+>  {
+>      XHCISysbusState *s = container_of(xhci, XHCISysbusState, xhci);
+>
+> +    assert(n < xhci->numintrs);
+>      qemu_set_irq(s->irq[n], level);
+>
+>      return false;
+> diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+> index ae8add4227e..dedce34f432 100644
+> --- a/hw/usb/hcd-xhci.c
+> +++ b/hw/usb/hcd-xhci.c
+> @@ -3044,6 +3044,12 @@ static uint64_t xhci_runtime_read(void *ptr, hwaddr reg,
+>          }
+>      } else {
+>          int v = (reg - 0x20) / 0x20;
+> +
+> +        if (v >= xhci->numintrs) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "xhci: read from non-existing interrupter %i\n", v);
 
-Should we forbid them explicitly?
-In this case, we can restrict config VFIO to LINUX & KVM.
+"nonexistent"
 
-> With KVM, the supported architectures are x86, aarch64, s390x, ppc64.
->  C.
-> 
+> +            return 0;
+> +        }
 
-Regards,
-Pierrick
+This early return skips the trace_usb_xhci_runtime_read()
+tracepoint. A 'goto out' is probably the least invasive way
+to arrange to still go through that.
+
+>          XHCIInterrupter *intr = &xhci->intr[v];
+>          switch (reg & 0x1f) {
+>          case 0x00: /* IMAN */
+> @@ -3087,7 +3093,13 @@ static void xhci_runtime_write(void *ptr, hwaddr reg,
+>          trace_usb_xhci_unimplemented("runtime write", reg);
+>          return;
+>      }
+> +
+>      v = (reg - 0x20) / 0x20;
+> +    if (v >= xhci->numintrs) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "xhci: write to non-existing interrupter %i\n", v);
+> +        return;
+> +    }
+
+Early return in the write is fine because we do the trace at the
+start of the function.
+
+(I've occasionally thought that it would be nice if there was
+some way to have MemoryRegionOps read/write fns have "automatic"
+tracepoints, so you could e.g. set ".tracepoint_name = usb_xhci_runtime"
+in the MemoryRegionOps struct and have it automatically interpose
+tracing. Putting them in manually in the read/write functions is
+always a little awkward and boilerplate-y.)
+
+thanks
+-- PMM
 
