@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 032B5C4451B
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:42:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 024BAC4450A
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:42:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlCmh-0006io-PN; Sat, 18 Jul 2026 17:41:23 -0400
+	id 1wlClF-00030s-LA; Sat, 18 Jul 2026 17:39:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlCmg-0006iI-Jk; Sat, 18 Jul 2026 17:41:22 -0400
-Received: from pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.34.181.151])
+ id 1wlCl5-0002ny-GL; Sat, 18 Jul 2026 17:39:44 -0400
+Received: from pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.13.214.179])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlCmd-0002b3-VZ; Sat, 18 Jul 2026 17:41:22 -0400
+ id 1wlCl1-00025p-Op; Sat, 18 Jul 2026 17:39:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784410880; x=1815946880;
+ t=1784410779; x=1815946779;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=mmeTeiyHCX67W2MGbpfNr9HphH7mxrQSMRew8rVBxVs=;
- b=nhAQS1wuN92Vz98ikVRdKcFzf3aUauvHu13MjDTzMVY0y5ZB/KSlTGHo
- SajWB4el0KK6kmsc4BtP5E3kQht1lz4yCORkplJj+oHCXgYL5wVA94PI1
- xiCHplyG77m3D4+uxWJhzX9XJZogSUQUERRfcRrLVu7vpw6THlJk6um6R
- xQmSpz0rtKOKZTx5bY4HzgTEc+29PYYCmQXMEyMqfR6VO+iyhzGqPbhhz
- Fo4I4EBKlSWTXbfWvYyVTSaPBvz3IGXsl7PjgrbKABDRlHceVX1Cb81YO
- 3tb4QymJq1PBytVrHeByvYyfaSwz8gMmRtuM3P6uiBYhO9tnu9/qIbCsh w==;
-X-CSE-ConnectionGUID: Pgy6nWIVSeuT225Mz+EXMQ==
-X-CSE-MsgGUID: bF+CE6cBT+2PX1d83kNTVQ==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23910247"
-Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
- by internal-pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:41:16 +0000
-Received: from EX19MTAUWC001.ant.amazon.com [205.251.233.53:30515]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.0.115:2525]
+ bh=VPXZ5oufGK6iiKeqRU37vBXb9Gf3bdR2KTWvztToIpo=;
+ b=bhgVNw51cp43CS6+46Lg+MXW/sKBxr7Z3WtNz7CqqpRE6snuBNa23ypu
+ hLpAqC9UTgL+KVgsAl8sfGt1Vx222oniCbPEK3NeabnSS0kNG/uN6gOSe
+ ckTAEmzvXY4LGhq+98+G62PeBV7iOe54MR2NSsmzPXP0eDb5cPzYX8CFQ
+ F/SxJSUz7kTtktlGdT71ACMDQtX1FT538hj/7TYry7g/9dWO6q/YXh0xs
+ 52OFEl/9Y5fNLOhLuqrl0RvbZIUp8wzpO4tZS6aL0oS6nvWk31nDADRFV
+ VDpZ6yYSZvJNwyqwFxDHa/BWdbhLhn1HBUDiPb7DGZq+IquGT2ZqHS48z Q==;
+X-CSE-ConnectionGUID: YdAJvaFlQ3CsWSNCVBs2WQ==
+X-CSE-MsgGUID: b2AUPqtNTWaN0Uu2rGcgpQ==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23903583"
+Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
+ by internal-pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:39:36 +0000
+Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.104:29025]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.19.34:2525]
  with esmtp (Farcaster)
- id af4245e0-c301-446e-adea-7c12b023c1f2; Sat, 18 Jul 2026 21:41:16 +0000 (UTC)
-X-Farcaster-Flow-ID: af4245e0-c301-446e-adea-7c12b023c1f2
+ id 7687f1f1-42b7-4909-adea-36dbff4460f1; Sat, 18 Jul 2026 21:39:35 +0000 (UTC)
+X-Farcaster-Flow-ID: 7687f1f1-42b7-4909-adea-36dbff4460f1
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
+ EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:41:15 +0000
+ Sat, 18 Jul 2026 21:39:35 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:41:06 +0000
+ Sat, 18 Jul 2026 21:39:26 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,9 +93,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 015/137] hw/vmapple: Give onboard devices a QOM parent
-Date: Sat, 18 Jul 2026 21:34:50 +0000
-Message-ID: <20260718213652.37673-16-graf@amazon.com>
+Subject: [RFC PATCH v2 009/137] cpu: Make cpu_create() take a QOM parent
+Date: Sat, 18 Jul 2026 21:34:44 +0000
+Message-ID: <20260718213652.37673-10-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -104,18 +104,18 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D046UWB002.ant.amazon.com (10.13.139.181) To
+X-ClientProxiedBy: EX19D046UWB003.ant.amazon.com (10.13.139.174) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=52.34.181.151;
+Received-SPF: pass client-ip=52.13.214.179;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
  HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
+ SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
  UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -132,234 +132,488 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the *_orphan() device-creation calls in hw/vmapple to the new
-parented API introduced earlier in this series, so every onboard
-device gets a stable path in the composition tree instead of landing
-in /machine/unattached with an unstable device[N] name.
+CPUs are the single largest source of orphans in /machine/unattached
+because virtually every board that isn't SoC-based creates them via
+cpu_create(), which calls object_new() with no parent.  This is also
+where the user-visible garbage in query-cpus-fast comes from: qom_path
+reads /machine/unattached/device[N] instead of /machine/cpu[N].
 
-The parent for each device is the object that owns its lifetime: the
-machine for board-created devices, the containing device for
-composite children.  Names follow existing QOM conventions.
+Apply the same rename-and-reintroduce treatment: mechanically rename
+cpu_create() to cpu_create_orphan() and reintroduce cpu_create()
+with a leading (parent, id, ...) pair built on object_new_child().
+On realize failure the parented variant unparents (rather than
+unrefs) since the sole reference is held by the parent.
 
-Per-site rationale (reviewers: dispute the modeling here):
+The mechanical rename part is generated by
 
-  hw/vmapple/vmapple.c:158 | OBJECT(vms) | "bdif" | board-init helper receives VMAppleMachineState *vms; single instance
-  hw/vmapple/vmapple.c:172 | OBJECT(vms) | "pvpanic" | board-init helper receives vms; single instance
-  hw/vmapple/vmapple.c:187 | OBJECT(vms) | "cfg" | board-init helper receives vms; single instance
-  hw/vmapple/vmapple.c:212 | OBJECT(vms) | "gfx" | board-init helper receives vms; single instance
-  hw/vmapple/vmapple.c:225 | OBJECT(vms) | "aes" | board-init helper receives vms; single instance
-  hw/vmapple/vmapple.c:246 | OBJECT(vms) | "gic" | board-init helper receives vms; single instance
-  hw/vmapple/vmapple.c:293 | OBJECT(vms) | "uart" | board-init helper receives vms (const dropped); single instance
-  hw/vmapple/vmapple.c:308 | OBJECT(vms) | "rtc" | board-init helper receives vms (const dropped); single instance
-  hw/vmapple/vmapple.c:326 | OBJECT(vms) | "gpio" | board-init helper receives vms (const dropped); single instance
-  hw/vmapple/vmapple.c:334 | OBJECT(vms) | "gpio-key" | board-init helper receives vms; single instance
-  hw/vmapple/vmapple.c:387 | OBJECT(vms) | "pcie" | board-init helper receives vms; single GPEX host
-  hw/vmapple/vmapple.c:423 | OBJECT(vms) | "xhci" | board-init helper receives vms; single XHCI controller
-  hw/vmapple/vmapple.c:428 | OBJECT(usb_controller) | "usb-kbd" | lifetime owned by the XHCI controller it plugs into
-  hw/vmapple/vmapple.c:429 | OBJECT(usb_controller) | "usb-tablet" | lifetime owned by the XHCI controller it plugs into
+  spatch --sp-file \
+      scripts/coccinelle/qom-parent/cpu-create-orphan.cocci \
+      --in-place --include-headers --dir .
 
-Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
+or equivalently
+
+  git ls-files '*.[ch]' '*.[ch].inc' '*.rst' '*.py' | \
+      grep -v '^subprojects/' | \
+      xargs sed -i 's/\bcpu_create\b/cpu_create_orphan/g'
+
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/vmapple/vmapple.c | 59 +++++++++++++++++++++++---------------------
- 1 file changed, 31 insertions(+), 28 deletions(-)
+ bsd-user/main.c                                   |  2 +-
+ hw/alpha/dp264.c                                  |  2 +-
+ hw/arm/musicpal.c                                 |  2 +-
+ hw/arm/omap1.c                                    |  2 +-
+ hw/arm/strongarm.c                                |  2 +-
+ hw/core/cpu-common.c                              | 14 +++++++++++++-
+ hw/core/null-machine.c                            |  2 +-
+ hw/hppa/machine.c                                 |  2 +-
+ hw/m68k/an5206.c                                  |  2 +-
+ hw/m68k/mcf5208.c                                 |  2 +-
+ hw/m68k/next-cube.c                               |  2 +-
+ hw/m68k/virt.c                                    |  2 +-
+ hw/or1k/or1k-sim.c                                |  2 +-
+ hw/or1k/virt.c                                    |  2 +-
+ hw/ppc/amigaone.c                                 |  2 +-
+ hw/ppc/mac_newworld.c                             |  2 +-
+ hw/ppc/mac_oldworld.c                             |  2 +-
+ hw/ppc/pegasos.c                                  |  2 +-
+ hw/ppc/ppc440_bamboo.c                            |  2 +-
+ hw/ppc/prep.c                                     |  2 +-
+ hw/ppc/sam460ex.c                                 |  2 +-
+ hw/ppc/virtex_ml507.c                             |  2 +-
+ hw/sh4/r2d.c                                      |  2 +-
+ hw/tricore/tricore_testboard.c                    |  2 +-
+ hw/xtensa/sim.c                                   |  2 +-
+ hw/xtensa/xtfpga.c                                |  2 +-
+ include/hw/core/cpu.h                             | 15 ++++++++++++++-
+ linux-user/main.c                                 |  4 ++--
+ .../coccinelle/qom-parent/cpu-create-orphan.cocci | 13 +++++++++++++
+ 29 files changed, 67 insertions(+), 29 deletions(-)
+ create mode 100644 scripts/coccinelle/qom-parent/cpu-create-orphan.cocci
 
-diff --git a/hw/vmapple/vmapple.c b/hw/vmapple/vmapple.c
-index 4d218748c2..60c7dab89b 100644
---- a/hw/vmapple/vmapple.c
-+++ b/hw/vmapple/vmapple.c
-@@ -155,25 +155,25 @@ static void create_bdif(VMAppleMachineState *vms, MemoryRegion *mem)
+diff --git a/bsd-user/main.c b/bsd-user/main.c
+index 694481ae3e..5269ea42a5 100644
+--- a/bsd-user/main.c
++++ b/bsd-user/main.c
+@@ -474,7 +474,7 @@ int main(int argc, char **argv)
+     set_preferred_target_page_bits(ctz32(host_page_size));
+     finalize_target_page_bits();
+ 
+-    cpu = cpu_create(cpu_type);
++    cpu = cpu_create_orphan(cpu_type);
+     env = cpu_env(cpu);
+     cpu_reset(cpu);
+     thread_cpu = cpu;
+diff --git a/hw/alpha/dp264.c b/hw/alpha/dp264.c
+index b07dcebaa0..512b270838 100644
+--- a/hw/alpha/dp264.c
++++ b/hw/alpha/dp264.c
+@@ -65,7 +65,7 @@ static void clipper_init(MachineState *machine)
+     /* Create up to 4 cpus.  */
+     memset(cpus, 0, sizeof(cpus));
+     for (i = 0; i < smp_cpus; ++i) {
+-        cpus[i] = ALPHA_CPU(cpu_create(machine->cpu_type));
++        cpus[i] = ALPHA_CPU(cpu_create_orphan(machine->cpu_type));
      }
  
-     /* PV backdoor device */
--    bdif = qdev_new_orphan(TYPE_VMAPPLE_BDIF);
-+    bdif = qdev_new(OBJECT(vms), "bdif", TYPE_VMAPPLE_BDIF);
-     bdif_sb = SYS_BUS_DEVICE(bdif);
-     sysbus_mmio_map(bdif_sb, 0, vms->memmap[VMAPPLE_BDOOR].base);
- 
-     qdev_prop_set_drive(DEVICE(bdif), "aux", blk_by_legacy_dinfo(di_aux));
-     qdev_prop_set_drive(DEVICE(bdif), "root", blk_by_legacy_dinfo(di_root));
- 
--    sysbus_realize_and_unref(bdif_sb, &error_fatal);
-+    sysbus_realize(bdif_sb, &error_fatal);
- }
- 
- static void create_pvpanic(VMAppleMachineState *vms, MemoryRegion *mem)
- {
-     SysBusDevice *pvpanic;
- 
--    vms->pvpanic = qdev_new_orphan(TYPE_PVPANIC_MMIO_DEVICE);
-+    vms->pvpanic = qdev_new(OBJECT(vms), "pvpanic", TYPE_PVPANIC_MMIO_DEVICE);
-     pvpanic = SYS_BUS_DEVICE(vms->pvpanic);
-     sysbus_mmio_map(pvpanic, 0, vms->memmap[VMAPPLE_PVPANIC].base);
- 
--    sysbus_realize_and_unref(pvpanic, &error_fatal);
-+    sysbus_realize(pvpanic, &error_fatal);
- }
- 
- static bool create_cfg(VMAppleMachineState *vms, MemoryRegion *mem,
-@@ -184,7 +184,7 @@ static bool create_cfg(VMAppleMachineState *vms, MemoryRegion *mem,
-     MachineState *machine = MACHINE(vms);
-     uint32_t rnd = 1;
- 
--    vms->cfg = qdev_new_orphan(TYPE_VMAPPLE_CFG);
-+    vms->cfg = qdev_new(OBJECT(vms), "cfg", TYPE_VMAPPLE_CFG);
-     cfg = SYS_BUS_DEVICE(vms->cfg);
-     sysbus_mmio_map(cfg, 0, vms->memmap[VMAPPLE_CONFIG].base);
- 
-@@ -195,7 +195,7 @@ static bool create_cfg(VMAppleMachineState *vms, MemoryRegion *mem,
-     qdev_prop_set_uint64(vms->cfg, "ram-size", machine->ram_size);
-     qdev_prop_set_uint32(vms->cfg, "rnd", rnd);
- 
--    if (!sysbus_realize_and_unref(cfg, errp)) {
-+    if (!sysbus_realize(cfg, errp)) {
-         error_prepend(errp, "Error creating vmapple cfg device: ");
-         return false;
-     }
-@@ -209,12 +209,12 @@ static void create_gfx(VMAppleMachineState *vms, MemoryRegion *mem)
-     int irq_iosfc = vms->irqmap[VMAPPLE_APV_IOSFC];
-     SysBusDevice *gfx;
- 
--    gfx = SYS_BUS_DEVICE(qdev_new_orphan("apple-gfx-mmio"));
-+    gfx = SYS_BUS_DEVICE(qdev_new(OBJECT(vms), "gfx", "apple-gfx-mmio"));
-     sysbus_mmio_map(gfx, 0, vms->memmap[VMAPPLE_APV_GFX].base);
-     sysbus_mmio_map(gfx, 1, vms->memmap[VMAPPLE_APV_IOSFC].base);
-     sysbus_connect_irq(gfx, 0, qdev_get_gpio_in(vms->gic, irq_gfx));
-     sysbus_connect_irq(gfx, 1, qdev_get_gpio_in(vms->gic, irq_iosfc));
--    sysbus_realize_and_unref(gfx, &error_fatal);
-+    sysbus_realize(gfx, &error_fatal);
- }
- 
- static void create_aes(VMAppleMachineState *vms, MemoryRegion *mem)
-@@ -222,11 +222,11 @@ static void create_aes(VMAppleMachineState *vms, MemoryRegion *mem)
-     int irq = vms->irqmap[VMAPPLE_AES_1];
-     SysBusDevice *aes;
- 
--    aes = SYS_BUS_DEVICE(qdev_new_orphan(TYPE_APPLE_AES));
-+    aes = SYS_BUS_DEVICE(qdev_new(OBJECT(vms), "aes", TYPE_APPLE_AES));
-     sysbus_mmio_map(aes, 0, vms->memmap[VMAPPLE_AES_1].base);
-     sysbus_mmio_map(aes, 1, vms->memmap[VMAPPLE_AES_2].base);
-     sysbus_connect_irq(aes, 0, qdev_get_gpio_in(vms->gic, irq));
--    sysbus_realize_and_unref(aes, &error_fatal);
-+    sysbus_realize(aes, &error_fatal);
- }
- 
- static int arm_gic_ppi_index(int cpu_nr, int ppi_index)
-@@ -243,7 +243,7 @@ static void create_gic(VMAppleMachineState *vms, MemoryRegion *mem)
-     int i;
-     unsigned int smp_cpus = ms->smp.cpus;
- 
--    vms->gic = qdev_new_orphan(gicv3_class_name());
-+    vms->gic = qdev_new(OBJECT(vms), "gic", gicv3_class_name());
-     qdev_prop_set_uint32(vms->gic, "revision", 3);
-     qdev_prop_set_uint32(vms->gic, "num-cpu", smp_cpus);
      /*
-@@ -261,7 +261,7 @@ static void create_gic(VMAppleMachineState *vms, MemoryRegion *mem)
-     qdev_prop_set_array(vms->gic, "redist-region-count", redist_region_count);
- 
-     gicbusdev = SYS_BUS_DEVICE(vms->gic);
--    sysbus_realize_and_unref(gicbusdev, &error_fatal);
-+    sysbus_realize(gicbusdev, &error_fatal);
-     sysbus_mmio_map(gicbusdev, 0, vms->memmap[VMAPPLE_GIC_DIST].base);
-     sysbus_mmio_map(gicbusdev, 1, vms->memmap[VMAPPLE_GIC_REDIST].base);
- 
-@@ -285,27 +285,28 @@ static void create_gic(VMAppleMachineState *vms, MemoryRegion *mem)
+diff --git a/hw/arm/musicpal.c b/hw/arm/musicpal.c
+index baab159bfd..a07359813e 100644
+--- a/hw/arm/musicpal.c
++++ b/hw/arm/musicpal.c
+@@ -1232,7 +1232,7 @@ static void musicpal_init(MachineState *machine)
+         exit(EXIT_FAILURE);
      }
+ 
+-    cpu = ARM_CPU(cpu_create(machine->cpu_type));
++    cpu = ARM_CPU(cpu_create_orphan(machine->cpu_type));
+ 
+     memory_region_add_subregion(address_space_mem, 0, machine->ram);
+ 
+diff --git a/hw/arm/omap1.c b/hw/arm/omap1.c
+index 9115d12fad..eefa2e441a 100644
+--- a/hw/arm/omap1.c
++++ b/hw/arm/omap1.c
+@@ -3749,7 +3749,7 @@ struct omap_mpu_state_s *omap310_mpu_init(MemoryRegion *dram,
+     MemoryRegion *system_memory = get_system_memory();
+ 
+     /* Core */
+-    s->cpu = ARM_CPU(cpu_create(cpu_type));
++    s->cpu = ARM_CPU(cpu_create_orphan(cpu_type));
+     s->sdram_size = memory_region_size(dram);
+     s->sram_size = OMAP15XX_SRAM_SIZE;
+ 
+diff --git a/hw/arm/strongarm.c b/hw/arm/strongarm.c
+index f67aaa23ed..1704db8baa 100644
+--- a/hw/arm/strongarm.c
++++ b/hw/arm/strongarm.c
+@@ -1620,7 +1620,7 @@ StrongARMState *sa1110_init(const char *cpu_type)
+         exit(1);
+     }
+ 
+-    s->cpu = ARM_CPU(cpu_create(cpu_type));
++    s->cpu = ARM_CPU(cpu_create_orphan(cpu_type));
+ 
+     s->pic = sysbus_create_varargs_orphan("strongarm_pic", 0x90050000,
+                     qdev_get_gpio_in(DEVICE(s->cpu), ARM_CPU_IRQ),
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index e314f916f8..eef243c1ad 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -56,7 +56,19 @@ bool cpu_exists(int64_t id)
+     return !!cpu_by_arch_id(id);
  }
  
--static void create_uart(const VMAppleMachineState *vms, int uart,
-+static void create_uart(VMAppleMachineState *vms, int uart,
-                         MemoryRegion *mem, Chardev *chr)
+-CPUState *cpu_create(const char *typename)
++CPUState *cpu_create(Object *parent, const char *id, const char *typename)
++{
++    Error *err = NULL;
++    CPUState *cpu = CPU(object_new_child(parent, id, typename));
++    if (!qdev_realize(DEVICE(cpu), NULL, &err)) {
++        error_report_err(err);
++        object_unparent(OBJECT(cpu));
++        exit(EXIT_FAILURE);
++    }
++    return cpu;
++}
++
++CPUState *cpu_create_orphan(const char *typename)
  {
-     hwaddr base = vms->memmap[uart].base;
-     int irq = vms->irqmap[uart];
--    DeviceState *dev = qdev_new_orphan(TYPE_PL011);
-+    DeviceState *dev = qdev_new(OBJECT(vms), "uart", TYPE_PL011);
-     SysBusDevice *s = SYS_BUS_DEVICE(dev);
+     Error *err = NULL;
+     CPUState *cpu = CPU(object_new(typename));
+diff --git a/hw/core/null-machine.c b/hw/core/null-machine.c
+index f132a7b89b..7cc4b9ab3b 100644
+--- a/hw/core/null-machine.c
++++ b/hw/core/null-machine.c
+@@ -25,7 +25,7 @@ static void machine_none_init(MachineState *mch)
  
-     qdev_prop_set_chr(dev, "chardev", chr);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
-     memory_region_add_subregion(mem, base,
-                                 sysbus_mmio_get_region(s, 0));
-     sysbus_connect_irq(s, 0, qdev_get_gpio_in(vms->gic, irq));
- }
+     /* Initialize CPU (if user asked for it) */
+     if (mch->cpu_type) {
+-        cpu = cpu_create(mch->cpu_type);
++        cpu = cpu_create_orphan(mch->cpu_type);
+         if (!cpu) {
+             error_report("Unable to initialize CPU");
+             exit(1);
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index 44dab9225a..a4b8e9ee77 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -298,7 +298,7 @@ static TranslateFn *machine_HP_common_init_cpus(MachineState *machine)
  
--static void create_rtc(const VMAppleMachineState *vms)
-+static void create_rtc(VMAppleMachineState *vms)
- {
-     hwaddr base = vms->memmap[VMAPPLE_RTC].base;
-     int irq = vms->irqmap[VMAPPLE_RTC];
+     /* Create CPUs.  */
+     for (unsigned int i = 0; i < smp_cpus; i++) {
+-        cpu[i] = HPPA_CPU(cpu_create(machine->cpu_type));
++        cpu[i] = HPPA_CPU(cpu_create_orphan(machine->cpu_type));
+     }
  
--    sysbus_create_simple_orphan("pl031", base, qdev_get_gpio_in(vms->gic, irq));
-+    sysbus_create_simple(OBJECT(vms), "rtc", "pl031", base,
-+                         qdev_get_gpio_in(vms->gic, irq));
- }
+     /* Initialize memory */
+diff --git a/hw/m68k/an5206.c b/hw/m68k/an5206.c
+index f29c3b5226..b649605140 100644
+--- a/hw/m68k/an5206.c
++++ b/hw/m68k/an5206.c
+@@ -46,7 +46,7 @@ static void an5206_init(MachineState *machine)
+     MemoryRegion *address_space_mem = get_system_memory();
+     MemoryRegion *sram = g_new(MemoryRegion, 1);
  
- static DeviceState *gpio_key_dev;
-@@ -315,7 +316,7 @@ static void vmapple_powerdown_req(Notifier *n, void *opaque)
-     qemu_set_irq(qdev_get_gpio_in(gpio_key_dev, 0), 1);
- }
+-    cpu = M68K_CPU(cpu_create(machine->cpu_type));
++    cpu = M68K_CPU(cpu_create_orphan(machine->cpu_type));
+     env = &cpu->env;
  
--static void create_gpio_devices(const VMAppleMachineState *vms, int gpio,
-+static void create_gpio_devices(VMAppleMachineState *vms, int gpio,
-                                 MemoryRegion *mem)
- {
-     DeviceState *pl061_dev;
-@@ -323,16 +324,16 @@ static void create_gpio_devices(const VMAppleMachineState *vms, int gpio,
-     int irq = vms->irqmap[gpio];
-     SysBusDevice *s;
+     /* Initialize CPU registers.  */
+diff --git a/hw/m68k/mcf5208.c b/hw/m68k/mcf5208.c
+index a8068c91f2..d79ec173e6 100644
+--- a/hw/m68k/mcf5208.c
++++ b/hw/m68k/mcf5208.c
+@@ -288,7 +288,7 @@ static void mcf5208evb_init(MachineState *machine)
+     MemoryRegion *sram = g_new(MemoryRegion, 1);
+     DeviceState *intc;
  
--    pl061_dev = qdev_new_orphan("pl061");
-+    pl061_dev = qdev_new(OBJECT(vms), "gpio", "pl061");
-     /* Pull lines down to 0 if not driven by the PL061 */
-     qdev_prop_set_uint8(pl061_dev, "pullups", 0);
-     qdev_prop_set_uint8(pl061_dev, "pulldowns", 0xff);
-     s = SYS_BUS_DEVICE(pl061_dev);
--    sysbus_realize_and_unref(s, &error_fatal);
-+    sysbus_realize(s, &error_fatal);
-     memory_region_add_subregion(mem, base, sysbus_mmio_get_region(s, 0));
-     sysbus_connect_irq(s, 0, qdev_get_gpio_in(vms->gic, irq));
--    gpio_key_dev = sysbus_create_simple_orphan("gpio-key", -1,
--                                        qdev_get_gpio_in(pl061_dev, 3));
-+    gpio_key_dev = sysbus_create_simple(OBJECT(vms), "gpio-key", "gpio-key",
-+                                        -1, qdev_get_gpio_in(pl061_dev, 3));
- }
+-    cpu = M68K_CPU(cpu_create(machine->cpu_type));
++    cpu = M68K_CPU(cpu_create_orphan(machine->cpu_type));
+     env = &cpu->env;
  
- static void vmapple_firmware_init(VMAppleMachineState *vms,
-@@ -384,9 +385,9 @@ static void create_pcie(VMAppleMachineState *vms)
-     DeviceState *usb_controller;
+     /* Initialize CPU registers.  */
+diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
+index 0c1f5b4481..d97168d9f3 100644
+--- a/hw/m68k/next-cube.c
++++ b/hw/m68k/next-cube.c
+@@ -1260,7 +1260,7 @@ static void next_cube_init(MachineState *machine)
+     DeviceState *pcdev;
+ 
+     /* Initialize the cpu core */
+-    cpu = M68K_CPU(cpu_create(machine->cpu_type));
++    cpu = M68K_CPU(cpu_create_orphan(machine->cpu_type));
+     if (!cpu) {
+         error_report("Unable to find m68k CPU definition");
+         exit(1);
+diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
+index e2af0196e8..64ac8c8166 100644
+--- a/hw/m68k/virt.c
++++ b/hw/m68k/virt.c
+@@ -145,7 +145,7 @@ static void virt_init(MachineState *machine)
+     reset_info = g_new0(ResetInfo, 1);
+ 
+     /* init CPUs */
+-    cpu = M68K_CPU(cpu_create(machine->cpu_type));
++    cpu = M68K_CPU(cpu_create_orphan(machine->cpu_type));
+ 
+     reset_info->cpu = cpu;
+     qemu_register_reset(main_cpu_reset, reset_info);
+diff --git a/hw/or1k/or1k-sim.c b/hw/or1k/or1k-sim.c
+index bd668d0e47..6962313315 100644
+--- a/hw/or1k/or1k-sim.c
++++ b/hw/or1k/or1k-sim.c
+@@ -299,7 +299,7 @@ static void openrisc_sim_init(MachineState *machine)
+ 
+     assert(smp_cpus >= 1 && smp_cpus <= OR1KSIM_CPUS_MAX);
+     for (n = 0; n < smp_cpus; n++) {
+-        cpus[n] = OPENRISC_CPU(cpu_create(machine->cpu_type));
++        cpus[n] = OPENRISC_CPU(cpu_create_orphan(machine->cpu_type));
+         if (cpus[n] == NULL) {
+             fprintf(stderr, "Unable to find CPU definition!\n");
+             exit(1);
+diff --git a/hw/or1k/virt.c b/hw/or1k/virt.c
+index 9451a0b7df..f222efafde 100644
+--- a/hw/or1k/virt.c
++++ b/hw/or1k/virt.c
+@@ -481,7 +481,7 @@ static void openrisc_virt_init(MachineState *machine)
+ 
+     assert(smp_cpus >= 1 && smp_cpus <= VIRT_CPUS_MAX);
+     for (n = 0; n < smp_cpus; n++) {
+-        cpus[n] = OPENRISC_CPU(cpu_create(machine->cpu_type));
++        cpus[n] = OPENRISC_CPU(cpu_create_orphan(machine->cpu_type));
+         if (cpus[n] == NULL) {
+             fprintf(stderr, "Unable to find CPU definition!\n");
+             exit(1);
+diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
+index c6b331ff16..80802d42c6 100644
+--- a/hw/ppc/amigaone.c
++++ b/hw/ppc/amigaone.c
+@@ -279,7 +279,7 @@ static void amigaone_init(MachineState *machine)
+     struct boot_info *bi = NULL;
+ 
+     /* init CPU */
+-    cpu = POWERPC_CPU(cpu_create(machine->cpu_type));
++    cpu = POWERPC_CPU(cpu_create_orphan(machine->cpu_type));
+     env = &cpu->env;
+     if (PPC_INPUT(env) != PPC_FLAGS_INPUT_6xx) {
+         error_report("Incompatible CPU, only 6xx bus supported");
+diff --git a/hw/ppc/mac_newworld.c b/hw/ppc/mac_newworld.c
+index 72baeef60a..8c46ecd6d1 100644
+--- a/hw/ppc/mac_newworld.c
++++ b/hw/ppc/mac_newworld.c
+@@ -159,7 +159,7 @@ static void ppc_core99_init(MachineState *machine)
+ 
+     /* init CPUs */
+     for (i = 0; i < machine->smp.cpus; i++) {
+-        cpu = POWERPC_CPU(cpu_create(machine->cpu_type));
++        cpu = POWERPC_CPU(cpu_create_orphan(machine->cpu_type));
+         env = &cpu->env;
+ 
+         /* Set time-base frequency to 100 Mhz */
+diff --git a/hw/ppc/mac_oldworld.c b/hw/ppc/mac_oldworld.c
+index e6c5830c38..4c5746b754 100644
+--- a/hw/ppc/mac_oldworld.c
++++ b/hw/ppc/mac_oldworld.c
+@@ -111,7 +111,7 @@ static void ppc_heathrow_init(MachineState *machine)
+ 
+     /* init CPUs */
+     for (i = 0; i < machine->smp.cpus; i++) {
+-        cpu = POWERPC_CPU(cpu_create(machine->cpu_type));
++        cpu = POWERPC_CPU(cpu_create_orphan(machine->cpu_type));
+         env = &cpu->env;
+ 
+         /* Set time-base frequency to 16.6 Mhz */
+diff --git a/hw/ppc/pegasos.c b/hw/ppc/pegasos.c
+index 0030068ab3..bba73f60c8 100644
+--- a/hw/ppc/pegasos.c
++++ b/hw/ppc/pegasos.c
+@@ -163,7 +163,7 @@ static void pegasos_init(MachineState *machine)
+     uint8_t *spd_data;
+ 
+     /* init CPU */
+-    pm->cpu = POWERPC_CPU(cpu_create(machine->cpu_type));
++    pm->cpu = POWERPC_CPU(cpu_create_orphan(machine->cpu_type));
+     env = &pm->cpu->env;
+     if (PPC_INPUT(env) != PPC_FLAGS_INPUT_6xx) {
+         error_report("Incompatible CPU, only 6xx bus supported");
+diff --git a/hw/ppc/ppc440_bamboo.c b/hw/ppc/ppc440_bamboo.c
+index 7a6c3ebec5..68c7328129 100644
+--- a/hw/ppc/ppc440_bamboo.c
++++ b/hw/ppc/ppc440_bamboo.c
+@@ -148,7 +148,7 @@ static void bamboo_init(MachineState *machine)
+         exit(EXIT_FAILURE);
+     }
+ 
+-    cpu = POWERPC_CPU(cpu_create(machine->cpu_type));
++    cpu = POWERPC_CPU(cpu_create_orphan(machine->cpu_type));
+     env = &cpu->env;
+ 
+     if (env->mmu_model != POWERPC_MMU_BOOKE) {
+diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
+index 32a28bc12a..c861e022f0 100644
+--- a/hw/ppc/prep.c
++++ b/hw/ppc/prep.c
+@@ -257,7 +257,7 @@ static void ibm_40p_init(MachineState *machine)
+     }
+ 
+     /* init CPU */
+-    cpu = POWERPC_CPU(cpu_create(machine->cpu_type));
++    cpu = POWERPC_CPU(cpu_create_orphan(machine->cpu_type));
+     env = &cpu->env;
+     if (PPC_INPUT(env) != PPC_FLAGS_INPUT_6xx) {
+         error_report("only 6xx bus is supported on this machine");
+diff --git a/hw/ppc/sam460ex.c b/hw/ppc/sam460ex.c
+index 39e704dfaa..d23d2c2bd8 100644
+--- a/hw/ppc/sam460ex.c
++++ b/hw/ppc/sam460ex.c
+@@ -260,7 +260,7 @@ static void sam460ex_init(MachineState *machine)
+     uint8_t *spd_data;
+     int success;
+ 
+-    cpu = POWERPC_CPU(cpu_create(machine->cpu_type));
++    cpu = POWERPC_CPU(cpu_create_orphan(machine->cpu_type));
+     env = &cpu->env;
+     if (env->mmu_model != POWERPC_MMU_BOOKE) {
+         error_report("Only MMU model BookE is supported by this machine.");
+diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
+index d7fd72d353..9163d8acf8 100644
+--- a/hw/ppc/virtex_ml507.c
++++ b/hw/ppc/virtex_ml507.c
+@@ -76,7 +76,7 @@ static PowerPCCPU *ppc440_init_xilinx(const char *cpu_type, uint32_t sysclk)
+     DeviceState *uicdev;
+     SysBusDevice *uicsbd;
+ 
+-    cpu = POWERPC_CPU(cpu_create(cpu_type));
++    cpu = POWERPC_CPU(cpu_create_orphan(cpu_type));
+     env = &cpu->env;
+ 
+     ppc_booke_timers_init(cpu, sysclk, 0/* no flags */);
+diff --git a/hw/sh4/r2d.c b/hw/sh4/r2d.c
+index 6f8d270fae..9f313a77cb 100644
+--- a/hw/sh4/r2d.c
++++ b/hw/sh4/r2d.c
+@@ -251,7 +251,7 @@ static void r2d_init(MachineState *machine)
      USBBus *usb_bus;
+     r2d_fpga_t *fpga;
  
--    dev = qdev_new_orphan(TYPE_GPEX_HOST);
-+    dev = qdev_new(OBJECT(vms), "pcie", TYPE_GPEX_HOST);
-     qdev_prop_set_uint32(dev, "num-irqs", GPEX_NUM_IRQS);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+-    cpu = SUPERH_CPU(cpu_create(machine->cpu_type));
++    cpu = SUPERH_CPU(cpu_create_orphan(machine->cpu_type));
+     env = &cpu->env;
  
-     /* Map only the first size_ecam bytes of ECAM space */
-     ecam_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
-@@ -420,13 +421,15 @@ static void create_pcie(VMAppleMachineState *vms)
-     }
+     reset_info = g_new0(ResetData, 1);
+diff --git a/hw/tricore/tricore_testboard.c b/hw/tricore/tricore_testboard.c
+index afed9ad0ae..69794d3445 100644
+--- a/hw/tricore/tricore_testboard.c
++++ b/hw/tricore/tricore_testboard.c
+@@ -67,7 +67,7 @@ static void tricore_testboard_init(MachineState *machine, int board_id)
+     MemoryRegion *pcp_data = g_new(MemoryRegion, 1);
+     MemoryRegion *pcp_text = g_new(MemoryRegion, 1);
  
-     if (defaults_enabled()) {
--        usb_controller = qdev_new_orphan(TYPE_QEMU_XHCI);
--        qdev_realize_and_unref(usb_controller, BUS(pci->bus), &error_fatal);
-+        usb_controller = qdev_new(OBJECT(vms), "xhci", TYPE_QEMU_XHCI);
-+        qdev_realize(usb_controller, BUS(pci->bus), &error_fatal);
+-    cpu = TRICORE_CPU(cpu_create(machine->cpu_type));
++    cpu = TRICORE_CPU(cpu_create_orphan(machine->cpu_type));
+     env = &cpu->env;
+     memory_region_init_ram(ext_cram, NULL, "powerlink_ext_c.ram",
+                            2 * MiB, &error_fatal);
+diff --git a/hw/xtensa/sim.c b/hw/xtensa/sim.c
+index 835cd04fe0..17245a0388 100644
+--- a/hw/xtensa/sim.c
++++ b/hw/xtensa/sim.c
+@@ -63,7 +63,7 @@ XtensaCPU *xtensa_sim_common_init(MachineState *machine)
+     int n;
  
-         usb_bus = USB_BUS(object_resolve_type_unambiguous(TYPE_USB_BUS,
-                                                           &error_fatal));
--        usb_create_simple_orphan(usb_bus, "usb-kbd");
--        usb_create_simple_orphan(usb_bus, "usb-tablet");
-+        usb_create_simple(OBJECT(usb_controller), "usb-kbd", usb_bus,
-+                          "usb-kbd");
-+        usb_create_simple(OBJECT(usb_controller), "usb-tablet", usb_bus,
-+                          "usb-tablet");
-     }
- }
+     for (n = 0; n < machine->smp.cpus; n++) {
+-        cpu = XTENSA_CPU(cpu_create(machine->cpu_type));
++        cpu = XTENSA_CPU(cpu_create_orphan(machine->cpu_type));
+         env = &cpu->env;
  
+         env->sregs[PRID] = n;
+diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
+index 4b1009a398..0ee7350945 100644
+--- a/hw/xtensa/xtfpga.c
++++ b/hw/xtensa/xtfpga.c
+@@ -250,7 +250,7 @@ static void xtfpga_init(const XtfpgaBoardDesc *board, MachineState *machine)
+     for (n = 0; n < smp_cpus; n++) {
+         CPUXtensaState *cenv = NULL;
+ 
+-        cpu = XTENSA_CPU(cpu_create(machine->cpu_type));
++        cpu = XTENSA_CPU(cpu_create_orphan(machine->cpu_type));
+         cenv = &cpu->env;
+         if (!env) {
+             env = cenv;
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index b54035fb13..1b2ec1ab1e 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -846,13 +846,26 @@ char *cpu_model_from_type(const char *typename);
+ 
+ /**
+  * cpu_create:
++ * @parent: the QOM parent (usually the machine or SoC container)
++ * @id: child<> property name, e.g. "cpu[0]" or "cpu[*]"
++ * @typename: the CPU type
++ *
++ * Instantiates a CPU as a child of @parent under @id and realizes it.
++ * The returned CPU is owned by @parent.
++ *
++ * Returns: A #CPUState.  Failure to realize is fatal.
++ */
++CPUState *cpu_create(Object *parent, const char *id, const char *typename);
++
++/**
++ * cpu_create_orphan:
+  * @typename: The CPU type.
+  *
+  * Instantiates a CPU and realizes the CPU.
+  *
+  * Returns: A #CPUState or %NULL if an error occurred.
+  */
+-CPUState *cpu_create(const char *typename);
++CPUState *cpu_create_orphan(const char *typename);
+ 
+ /**
+  * parse_cpu_option:
+diff --git a/linux-user/main.c b/linux-user/main.c
+index 60a695b7ca..966322dbb3 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -235,7 +235,7 @@ void init_task_state(TaskState *ts)
+ CPUArchState *cpu_copy(CPUArchState *env)
+ {
+     CPUState *cpu = env_cpu(env);
+-    CPUState *new_cpu = cpu_create(cpu_type);
++    CPUState *new_cpu = cpu_create_orphan(cpu_type);
+     CPUArchState *new_env = cpu_env(new_cpu);
+     CPUBreakpoint *bp;
+ 
+@@ -817,7 +817,7 @@ int main(int argc, char **argv, char **envp)
+     set_preferred_target_page_bits(ctz32(host_page_size));
+     finalize_target_page_bits();
+ 
+-    cpu = cpu_create(cpu_type);
++    cpu = cpu_create_orphan(cpu_type);
+     env = cpu_env(cpu);
+     cpu_reset(cpu);
+     thread_cpu = cpu;
+diff --git a/scripts/coccinelle/qom-parent/cpu-create-orphan.cocci b/scripts/coccinelle/qom-parent/cpu-create-orphan.cocci
+new file mode 100644
+index 0000000000..c268c05b0c
+--- /dev/null
++++ b/scripts/coccinelle/qom-parent/cpu-create-orphan.cocci
+@@ -0,0 +1,13 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++//
++// Rename cpu_create() to cpu_create_orphan() so that the short
++// name can be reintroduced with a mandatory (parent, id, type)
++// signature.
++//
++// spatch --sp-file scripts/coccinelle/qom-parent/cpu-create-orphan.cocci \
++//        --in-place --include-headers --dir .
++
++@@
++@@
++- cpu_create
+++ cpu_create_orphan
 -- 
 2.47.1
 
