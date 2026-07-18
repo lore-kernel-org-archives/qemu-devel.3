@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7766AC4451B
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:01:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E969EC4450A
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:01:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlD5s-0006em-Qw; Sat, 18 Jul 2026 18:01:12 -0400
+	id 1wlD6E-0008KW-IF; Sat, 18 Jul 2026 18:01:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlD5S-0006Jz-2x; Sat, 18 Jul 2026 18:00:49 -0400
-Received: from pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.34.181.151])
+ id 1wlD6C-0008D8-On; Sat, 18 Jul 2026 18:01:32 -0400
+Received: from pdx-out-010.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.12.53.23])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlD5P-00058R-VR; Sat, 18 Jul 2026 18:00:45 -0400
+ id 1wlD6A-0005Fx-Ty; Sat, 18 Jul 2026 18:01:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784412043; x=1815948043;
+ t=1784412090; x=1815948090;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=d6iS0FIREdz0TNR9DfB/SFND7gP2ybsTkP6Wou/2gWo=;
- b=O5uuMzFbWBIr82lfgeaqk+LsM+sHTZfO8p3F++zuq59NK1VooX5Yq8sf
- dAsRtYEwF7AKyCwxCQwPfrVM8o6ESAPRhNSb0lzckPkAkub/jBUEOAGNk
- i0fKhk7+gStpv2UOtQ6n10SE9/P3G8ktrYv+g7muPxvgIFLBhWV3TlGpL
- rBdZ5KnSznnRVTX6UbRbpoMWQcbMdTYvpNrY8WEG+a3UTOjTE52yOI7+8
- hg5bmhoQUk/QmLHuBLRjur7NHsP6AuP78Dbq7tZN0mhmbDk7W8JUYnG7P
- qiQi+CHCPFLbihLZODvhPc4LuTZeJG9Vg9RePdjKnPMKDtQ40+00PPe1s A==;
-X-CSE-ConnectionGUID: I/07+W4XR1+t0Ssm93EKwA==
-X-CSE-MsgGUID: Mr7LpQicRuqxHIieVbza5g==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23910852"
-Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
- by internal-pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:00:36 +0000
-Received: from EX19MTAUWA001.ant.amazon.com [205.251.233.182:16122]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.48.250:2525]
+ bh=qNvBAQnsropPFuCvMHAkpcPv/ub05GpIkFSZ2G7cECE=;
+ b=fsovACCvlIyvL5l/qV3FJAmQt0WaYLFkXfkAl1KV4eR613Jx5DvsHJSH
+ t59NoOwETVdAngDU8+uKKmpk9iSoapEtrVqSkGLgi33bEhg+Ysqr2W+Hw
+ xVCMp2+nPh7MigvbKzmfYmQZ/CThHC+wb3n8ApYXMA+o1VFunRDqz6WQm
+ 36ADgaW3Hntb4KbId7eoESujLa/fmGINFZVoQ3AJ8tDuSp6TkqLhff348
+ OQN9pdzTCSmFHa/UbBZ42RtKm9SBDd9495ua5qmMT2Az1SnHZZ6V6yFCk
+ Rm8/A5AqsrC7BiDLz8tMGJRNZ3CEVxkbVfupiTmfIY4FJLk05hmH//DKi A==;
+X-CSE-ConnectionGUID: IFy8SzVNTJ6KYUJKuSfx9w==
+X-CSE-MsgGUID: hWjvNeiBRWKuLpvT0bPDiw==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23795565"
+Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
+ by internal-pdx-out-010.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:01:27 +0000
+Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.234:15836]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.11.151:2525]
  with esmtp (Farcaster)
- id c1972da8-fd20-434f-b481-398236befa10; Sat, 18 Jul 2026 22:00:36 +0000 (UTC)
-X-Farcaster-Flow-ID: c1972da8-fd20-434f-b481-398236befa10
+ id f004e84a-99c8-4385-9526-854b0bdd6e20; Sat, 18 Jul 2026 22:01:27 +0000 (UTC)
+X-Farcaster-Flow-ID: f004e84a-99c8-4385-9526-854b0bdd6e20
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA001.ant.amazon.com (10.250.64.218) with Microsoft SMTP Server
+ EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:00:36 +0000
+ Sat, 18 Jul 2026 22:01:26 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:00:26 +0000
+ Sat, 18 Jul 2026 22:01:17 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,10 +93,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 084/137] usb, ssi,
- i2c: Remove *_orphan() creator variants
-Date: Sat, 18 Jul 2026 21:35:59 +0000
-Message-ID: <20260718213652.37673-85-graf@amazon.com>
+Subject: [RFC PATCH v2 087/137] cpu: Remove cpu_create_orphan()
+Date: Sat, 18 Jul 2026 21:36:02 +0000
+Message-ID: <20260718213652.37673-88-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -105,11 +104,11 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D036UWC003.ant.amazon.com (10.13.139.214) To
+X-ClientProxiedBy: EX19D037UWB004.ant.amazon.com (10.13.138.84) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=52.34.181.151;
+Received-SPF: pass client-ip=52.12.53.23;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-010.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -133,187 +132,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All external callers now go through the parented usb_new()/
-usb_create_simple(), ssi_create_peripheral(), i2c_slave_new()/
-i2c_slave_create_simple() introduced earlier in the series.
-Remove the transitional *_orphan() spellings.
-
-The corresponding *_realize_and_unref() helpers stay for now: they
-are still valid for callers that reach for object_new() directly
-and hold a floating reference (qdev_device_add() being the primary
-example one layer down).
+All targets create their CPUs with an explicit parent now.
 
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/i2c/core.c        | 18 ------------------
- hw/ssi/ssi.c         |  8 --------
- include/hw/i2c/i2c.h | 31 ++++---------------------------
- include/hw/ssi/ssi.h |  5 ++---
- include/hw/usb/usb.h |  9 ---------
- 5 files changed, 6 insertions(+), 65 deletions(-)
+ hw/core/cpu-common.c  | 12 ------------
+ include/hw/core/cpu.h | 10 ----------
+ 2 files changed, 22 deletions(-)
 
-diff --git a/hw/i2c/core.c b/hw/i2c/core.c
-index fba21fdfad..f333df3760 100644
---- a/hw/i2c/core.c
-+++ b/hw/i2c/core.c
-@@ -364,15 +364,6 @@ const VMStateDescription vmstate_i2c_slave = {
-     }
- };
- 
--I2CSlave *i2c_slave_new_orphan(const char *name, uint8_t addr)
--{
--    DeviceState *dev;
--
--    dev = qdev_new_orphan(name);
--    qdev_prop_set_uint8(dev, "address", addr);
--    return I2C_SLAVE(dev);
--}
--
- I2CSlave *i2c_slave_new(Object *parent, const char *id,
-                         const char *type, uint8_t addr)
- {
-@@ -398,15 +389,6 @@ bool i2c_slave_realize_and_unref(I2CSlave *dev, I2CBus *bus, Error **errp)
-     return qdev_realize_and_unref(&dev->qdev, &bus->qbus, errp);
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index eef243c1ad..829a044e9e 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -68,18 +68,6 @@ CPUState *cpu_create(Object *parent, const char *id, const char *typename)
+     return cpu;
  }
  
--I2CSlave *i2c_slave_create_simple_orphan(I2CBus *bus, const char *name, uint8_t addr)
+-CPUState *cpu_create_orphan(const char *typename)
 -{
--    I2CSlave *dev = i2c_slave_new_orphan(name, addr);
--
--    i2c_slave_realize_and_unref(dev, bus, &error_abort);
--
--    return dev;
+-    Error *err = NULL;
+-    CPUState *cpu = CPU(object_new(typename));
+-    if (!qdev_realize(DEVICE(cpu), NULL, &err)) {
+-        error_report_err(err);
+-        object_unref(OBJECT(cpu));
+-        exit(EXIT_FAILURE);
+-    }
+-    return cpu;
 -}
 -
- static bool i2c_slave_match(I2CSlave *candidate, uint8_t address,
-                             bool broadcast, I2CNodeList *current_devs)
+ void cpu_reset_interrupt(CPUState *cpu, int mask)
  {
-diff --git a/hw/ssi/ssi.c b/hw/ssi/ssi.c
-index 6031cde7b0..07188d87bb 100644
---- a/hw/ssi/ssi.c
-+++ b/hw/ssi/ssi.c
-@@ -147,14 +147,6 @@ DeviceState *ssi_create_peripheral(Object *parent, const char *id,
-     return dev;
- }
- 
--DeviceState *ssi_create_peripheral_orphan(SSIBus *bus, const char *name)
--{
--    DeviceState *dev = qdev_new_orphan(name);
--
--    ssi_realize_and_unref(dev, bus, &error_fatal);
--    return dev;
--}
--
- SSIBus *ssi_create_bus(DeviceState *parent, const char *name)
- {
-     BusState *bus;
-diff --git a/include/hw/i2c/i2c.h b/include/hw/i2c/i2c.h
-index 0bba1a7c20..c0829edf8f 100644
---- a/include/hw/i2c/i2c.h
-+++ b/include/hw/i2c/i2c.h
-@@ -154,17 +154,6 @@ uint8_t i2c_recv(I2CBus *bus);
- bool i2c_scan_bus(I2CBus *bus, uint8_t address, bool broadcast,
-                   I2CNodeList *current_devs);
- 
--/**
-- * Create an I2C slave device on the heap.
-- * @name: a device type name
-- * @addr: I2C address of the slave when put on a bus
-- *
-- * This only initializes the device state structure and allows
-- * properties to be set. Type @name must exist. The device still
-- * needs to be realized. See qdev-core.h.
-- */
--I2CSlave *i2c_slave_new_orphan(const char *name, uint8_t addr);
--
- /**
-  * Create a parented I2C slave device on the heap.
-  * @parent: the QOM parent
-@@ -172,24 +161,12 @@ I2CSlave *i2c_slave_new_orphan(const char *name, uint8_t addr);
-  * @type: I2C slave device type name
-  * @addr: I2C address of the slave when put on a bus
-  *
-- * Like i2c_slave_new_orphan(), but the returned device is owned by
-+ * Like i2c_slave_new(), but the returned device is owned by
-  * @parent's child<> property.  Pair with qdev_realize().
+     qatomic_and(&cpu->interrupt_request, ~mask);
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 1b2ec1ab1e..544740a699 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -857,16 +857,6 @@ char *cpu_model_from_type(const char *typename);
   */
- I2CSlave *i2c_slave_new(Object *parent, const char *id,
-                         const char *type, uint8_t addr);
+ CPUState *cpu_create(Object *parent, const char *id, const char *typename);
  
 -/**
-- * Create and realize an I2C slave device on the heap.
-- * @bus: I2C bus to put it on
-- * @name: I2C slave device type name
-- * @addr: I2C address of the slave when put on a bus
+- * cpu_create_orphan:
+- * @typename: The CPU type.
 - *
-- * Create the device state structure, initialize it, put it on the
-- * specified @bus, and drop the reference to it (the device is realized).
+- * Instantiates a CPU and realizes the CPU.
+- *
+- * Returns: A #CPUState or %NULL if an error occurred.
 - */
--I2CSlave *i2c_slave_create_simple_orphan(I2CBus *bus, const char *name,
--                                         uint8_t addr);
+-CPUState *cpu_create_orphan(const char *typename);
 -
  /**
-  * Create, parent and realize an I2C slave device on the heap.
-  * @parent: the QOM parent
-@@ -218,11 +195,11 @@ I2CSlave *i2c_slave_create_simple(Object *parent, const char *id,
-  * Call 'realize' on @dev, put it on the specified @bus, and drop the
-  * reference to it.
-  *
-- * This function is useful if you have created @dev via qdev_new_orphan(),
-- * i2c_slave_new_orphan() or i2c_slave_try_new() (which take a reference to
-+ * This function is useful if you have created @dev via qdev_new(),
-+ * i2c_slave_new() or i2c_slave_try_new() (which take a reference to
-  * the device it returns to you), so that you can set properties on it
-  * before realizing it. If you don't need to set properties then
-- * i2c_slave_create_simple_orphan() is probably better (as it does the create,
-+ * i2c_slave_create_simple() is probably better (as it does the create,
-  * init and realize in one step).
-  *
-  * If you are embedding the I2C slave into another QOM device and
-diff --git a/include/hw/ssi/ssi.h b/include/hw/ssi/ssi.h
-index 36ed002281..b2a264bb55 100644
---- a/include/hw/ssi/ssi.h
-+++ b/include/hw/ssi/ssi.h
-@@ -83,7 +83,6 @@ extern const VMStateDescription vmstate_ssi_peripheral;
- 
- DeviceState *ssi_create_peripheral(Object *parent, const char *id,
-                                     SSIBus *bus, const char *type);
--DeviceState *ssi_create_peripheral_orphan(SSIBus *bus, const char *name);
- /**
-  * ssi_realize_and_unref: realize and unref an SSI peripheral
-  * @dev: SSI peripheral to realize
-@@ -94,10 +93,10 @@ DeviceState *ssi_create_peripheral_orphan(SSIBus *bus, const char *name);
-  * reference to it. Errors are reported via @errp and by returning
-  * false.
-  *
-- * This function is useful if you have created @dev via qdev_new_orphan()
-+ * This function is useful if you have created @dev via qdev_new()
-  * (which takes a reference to the device it returns to you), so that
-  * you can set properties on it before realizing it. If you don't need
-- * to set properties then ssi_create_peripheral_orphan() is probably better (as it
-+ * to set properties then ssi_create_peripheral() is probably better (as it
-  * does the create, init and realize in one step).
-  *
-  * If you are embedding the SSI peripheral into another QOM device and
-diff --git a/include/hw/usb/usb.h b/include/hw/usb/usb.h
-index 1ae1f40aa9..d2e59bc83b 100644
---- a/include/hw/usb/usb.h
-+++ b/include/hw/usb/usb.h
-@@ -599,13 +599,4 @@ static inline USBDevice *usb_create_simple(Object *parent, const char *id,
-     return dev;
- }
- 
--static inline USBDevice *usb_create_simple_orphan(USBBus *bus,
--                                                    const char *name)
--{
--    USBDevice *dev = USB_DEVICE(qdev_new_orphan(name));
--
--    usb_realize_and_unref(dev, bus, &error_abort);
--    return dev;
--}
--
- #endif
+  * parse_cpu_option:
+  * @cpu_option: The -cpu option including optional parameters.
 -- 
 2.47.1
 
