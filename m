@@ -4,103 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2464FC4451C
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 08:36:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89F27C4451B
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 08:38:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wl0Wm-0004TP-Tz; Sat, 18 Jul 2026 04:36:08 -0400
+	id 1wl0Yr-0004xy-1X; Sat, 18 Jul 2026 04:38:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wl0Wm-0004T9-2Q
- for qemu-devel@nongnu.org; Sat, 18 Jul 2026 04:36:08 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wl0Wk-0000TK-Ic
- for qemu-devel@nongnu.org; Sat, 18 Jul 2026 04:36:07 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-81ee6b2da98so26229967b3.3
- for <qemu-devel@nongnu.org>; Sat, 18 Jul 2026 01:36:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784363765; cv=none;
- d=google.com; s=arc-20260327;
- b=puz7HDwu1O6auaCqs4AzdD2Re6tMZFpeCD0UJE4khhNyYQF/pfjVMZ1qc85ZuCBrvK
- QZuoRlUGLj4OWp2D4RIpSNuwFdzU+WceMCTFPYUujeKCb40LCCeV9bqa35ZvZyA1cpNe
- YF3tqQ6tzQASw2EdbiuKEaOqI40oPAmLHbHnfAZoLIL14+BgN6t5rgDwHgAWBzKYMpYb
- FvJe8EDLX9fM2mNroLbWus/1I4ePH/TlOgsZJ970QkUjBAWbZS+z9DA15UHcu2laBYSs
- 6FZDBfQG/46ePbqxDz4vcGGbcktVSp6Ig04aWjmWCj43UEW5BXra07vHumdij+GN85q7
- Qdig==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=1bhdRA+bAZrwL/W/YVvs3hmG2rI0cukExJuEs58QV0A=;
- fh=UK46FRujlLSHd574zlUsGBGtMkrs+EaeweF9w4665qI=;
- b=NZq0Dt8FdmThP/TQv9YKESCj/Bq8i+2TjBTfkx/k4oxWtdnrEe1T+34l+onwv1t8oT
- NsgTSMGwMnrN+hij2Drjnx+AtEougtF7COCfSgZJF+SpFQgXlZTJVvxxzLsxnPc8jyVe
- kgTaz12GEP4QTZQqPzyMvVkzRIgAGpIWvL4nmvJDx+TzjIrrYJay3q1VhZ7Ro6aJqbnd
- puR0rZuwJAklaZi9vy0ZLfd0anAPnpHaog1mv8NhPslDa326yAOOvWCNYCBmLEJ8VgcI
- vgtOEXL732SwGqSSdltuYW1stVSHvnfuZGhAduduCp6uYmiawshQ2wjw7E+w4gfmDhb3
- Dw2w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784363765; x=1784968565; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=1bhdRA+bAZrwL/W/YVvs3hmG2rI0cukExJuEs58QV0A=;
- b=nDGYbfpwFQNxXCRPK1/ypB85KWDNNCLcYW2279ETW+zuwMPc9p9LUwadv47GgKu5uJ
- L4RTieDCu3A/8U4kLbV9XvAKJkRKSmy0ycet0TImmnQM+ItzKmwpp/Zffmz+u0wg9dGo
- ORCWC0//RJwlrMXpXw3sJgq3EXbPTAXFLJXnJXq1DINOZcbYm9fVWvuShO+eB3Kjx5e/
- 3gJFv9pzN1bdZwiHCotmtM9u9rj4VtJpc7rkuMlplFeDLFuZbyuWXiKey/fvHPePEwaz
- nh2FgSM+MZHGrPhxDnW8XPL4x/sNK2SZ7EKYLKk9No4Wl8E7QS9+tgcNvkmO/m2F4j9V
- Aztg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784363765; x=1784968565;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=1bhdRA+bAZrwL/W/YVvs3hmG2rI0cukExJuEs58QV0A=;
- b=RahqLFyyKrPVrL/RPhO9339CyAQB8+VlIIRarKGUUclGcGG+Y3EeLt1WcsZWsiv6XM
- NxNHqKbqsemXHDM+UbXsI6XQM9Ox7T6k/BYWSnul1Kq8ItxqA+4pXCsd9BMzijNTDOgB
- mZLvTcGk3YkaMErHqQYaBSNOvDBYRNfjw2Z/k7fpF5TLUCip8TLVnAxV2u6V1xH9wZlc
- wbnB+S0EDKBJlScK51p0qMcEE5AvFzmIVJ4ctl/fW0IEj/qrauX1xJO+8Bg9B5rXWEGZ
- A9zKviCCTyC7lFgDL1WhXoyCCmnzAjCAjnowYH+QRoXBsfH5KAYWc2E6ex3sEC51JBl2
- vqQg==
-X-Gm-Message-State: AOJu0YwKmAfsk4uhtdDz1Hm+EdSLByIJw02fnjvDl0XofqrOMlyYTGi6
- lt3bTLZoKffNeFwcIhOEOIC9YXrCAInReI3hdiRg9yKSOMUzfQbE1x4NN/AnqUQQJ5ubIq6VWP5
- illUV7xaMnVT3ChCib6GbLe4OO9f+dE6d+1UT0eXJ4w==
-X-Gm-Gg: AfdE7cnWn7rTaCm8E/2fz6ffWP0zIckUL4C7iUE4LUjSOGl5YRyB02so/TQidMSQyK5
- 7lgLZ29L3L9wR9ZCQlWiIVet25KtEmKFqLqeWsTT7lIoYtGPMK0biC14gi7P7ZcWeZGQ666QwFw
- bF/gxZBVnFK5QqDD7sZycgS8WCuDCjKd9vVZV2pBXUMMZ0EHTcaDsAJNOQBFLZ2pb7zcb6cymVu
- iAkP+BFAk1uUeMy+FGSkSOxXXjIgI6QM7UoSowaDlePp567LZh+/2ghgh/KeAUjKGjQ5d3cx2eE
- rqwq+e3wI7rZfv+IUnQ0UqjojHhMdMb+mU0I1asVKweBdQ==
-X-Received: by 2002:a05:690c:6107:b0:81e:bbcd:f5c3 with SMTP id
- 00721157ae682-81ef25e16eamr20044647b3.36.1784363765260; Sat, 18 Jul 2026
- 01:36:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wl0Yn-0004xJ-Fo; Sat, 18 Jul 2026 04:38:13 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wl0Yk-0000eO-Kr; Sat, 18 Jul 2026 04:38:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1784363875; bh=XIDqguUQAi/GzOwQBkZ/BSZU6Geeh95bPYMGDBfUheA=;
+ h=Date:Subject:To:References:Cc:From:In-Reply-To;
+ b=cxcj6ZgO4bLjGHSnma6WJg+8JTtN6Kg2ZryyA0xMdC05dVtX639aynoVh97pKArA1
+ Zb5tjBijCWICbVlzI81Xg6Y47Y0mcAegZSavgG8BV6s9Lc557p6BtWSn0Op+6L7hf3
+ qJoNdDwOpAV6nn+Fav9u6vibd32eNRXedeRAzQyZmh7qUew1yHYvccsmf+VNCIcUQk
+ UbKGffpGfCUOJrluobeKZRaxMdo5KYEvvR49nRiV71dBAtDtXNoVDuIu+PknNQjyY4
+ M8xQyIeziD3kpBu1qX1Oc+0MN+qnGFR1AsEPWAEPRLuuWDtzhlP8OiAFOazDlLIKL+
+ aaufurS/nuG4w==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 5AB241C2A83;
+ Sat, 18 Jul 2026 11:37:55 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3B7B73F0B90;
+ Sat, 18 Jul 2026 11:38:04 +0300 (MSK)
+Message-ID: <5b9416b0-7ea7-4397-af93-a1bcfa2617b2@tls.msk.ru>
+Date: Sat, 18 Jul 2026 11:37:55 +0300
 MIME-Version: 1.0
-References: <20260713064617.85374-1-jay.chang@sifive.com>
-In-Reply-To: <20260713064617.85374-1-jay.chang@sifive.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 18 Jul 2026 09:35:53 +0100
-X-Gm-Features: AUfX_myELAvPEZOQ84O3IQo3tQ5Iritm3JvnM1UFUffMQLDNjrHx4iHCNzjBWr8
-Message-ID: <CAFEAcA8B6aT3oSpB86Kxxkb6sFJ3GXf306UUtWhDsK8qrRw0EQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/net/xilinx_axienet: Fix PHY register 17 link status
- reporting
-To: Jay Chang <jay.chang@sifive.com>
-Cc: qemu-devel@nongnu.org, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Alistair Francis <alistair@alistair23.me>, Jason Wang <jasowangio@gmail.com>, 
- "open list:Xilinx Zynq" <qemu-arm@nongnu.org>,
- Frank Chang <frank.chang@sifive.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/display/qxl: fix TOCTOU in cursor chunk data_size
+ handling
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+References: <20260710134352.2313675-1-marcandre.lureau@redhat.com>
+Content-Language: en-US, ru-RU
+Cc: qemu-stable <qemu-stable@nongnu.org>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260710134352.2313675-1-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,36 +113,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 13 Jul 2026 at 07:46, Jay Chang <jay.chang@sifive.com> wrote:
->
-> The Marvell 88E1111 PHY register 17 (PHY Specific Status Register)
-> bit 10 reports real-time link status. Previously, this register
-> returned a fixed value of 0x8800 with bit 10 always cleared,
-> causing U-Boot to always detect "No link" even when the link
-> was up.
->
-> Signed-off-by: Jay Chang <jay.chang@sifive.com>
-> Reviewed-by: Frank Chang <frank.chang@sifive.com>
-> ---
->  hw/net/xilinx_axienet.c | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/hw/net/xilinx_axienet.c b/hw/net/xilinx_axienet.c
-> index 970732b162..9f5f65ecfa 100644
-> --- a/hw/net/xilinx_axienet.c
-> +++ b/hw/net/xilinx_axienet.c
-> @@ -103,6 +103,9 @@ static unsigned int tdk_read(struct PHY *phy, unsigned int req)
->          case 17:
->              /* Marvell PHY on many xilinx boards.  */
->              r = 0x8000; /* 1000Mb  */
-> +            if (phy->link) {
-> +                r |= 0x0400; /* Link is up */
-> +            }
->              break;
+On 7/10/26 16:43, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> Snapshot chunk.data_size into a host-local variable before passing it to
+> qxl_phys2virt() for validation, and pass it through qxl_cursor() and
+> qxl_unpack_chunks() so that no subsequent code re-reads the field.
+> 
+> Without this, a racing vCPU can inflate data_size between the
+> qxl_phys2virt() validation and the memcpy in qxl_unpack_chunks(),
+> causing a source read past the validated region. In practice the read
+> stays within the guest's own VRAM mmap, so the impact is limited.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3757
+> Reported-by: Feifan Qian <bea1e@proton.me>
+> Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
 
-This matches the Marvell PHY datasheet, so seems reasonable.
+This feels like a qemu-stable material.  I'm picking it up for the
+current qemu stable series.  Please let me know if I should not.
 
-Applied to target-arm.next, thanks.
+Thanks,
 
--- PMM
+/mjt
+
 
