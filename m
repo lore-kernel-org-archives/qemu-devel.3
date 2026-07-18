@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98020C4450A
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:04:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED0CBC4450A
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:05:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlD8z-0006zw-H5; Sat, 18 Jul 2026 18:04:25 -0400
+	id 1wlD9U-00009G-Ew; Sat, 18 Jul 2026 18:04:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlD8x-0006w0-0R; Sat, 18 Jul 2026 18:04:23 -0400
-Received: from pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([35.155.198.111])
+ id 1wlD9S-0008WU-QM; Sat, 18 Jul 2026 18:04:54 -0400
+Received: from pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([44.246.77.92])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlD8u-0005T4-Ni; Sat, 18 Jul 2026 18:04:22 -0400
+ id 1wlD9Q-0005nM-2P; Sat, 18 Jul 2026 18:04:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784412260; x=1815948260;
+ t=1784412292; x=1815948292;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=m9WF7sOcpITnllvXQcPF+NIn05qRED1gJpFK9HNjkQM=;
- b=Sj/LBLncjv1GcxO3c2amfe1v3mPEnHfI+T4kUp0+cYKiGHzKZNWpPLpn
- 26TBaTucnO6/rAiiztOKR6DMqcOsqQ2ujODBqvOiI5dRsgpv/w93Xx1lH
- ZWZ69mt6vEpsR6BH0ZQGFnW37JmqdZS7OiX9jUu9KzmxyRDXF4pAwM+I+
- V3SLJlcmUX6k3uilefTuj9kvLoz3cPbCmPJ2BUXfRbplASsd9Xf4lk31i
- w7ylAHfKpwpWCzjgImU0ypsN+XSME+M8lhB8lyO2DjYm6jT3tCZTUQwx2
- w8STq3sDV/fJOIzY+bugv8nxQZFsFkQHc22aV2btmnbTpnDQfTLkG74VY A==;
-X-CSE-ConnectionGUID: WNCxDmKMRBW6mNg9l5iGnA==
-X-CSE-MsgGUID: g83soVdnQ9KDpnSjGzx5gQ==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23817117"
+ bh=Hqoa0Zg4cpWSCjfZXN0aqvvhoBuY41v/DVel18QdV0M=;
+ b=bq2pNSkh6Cq6okv8oKQUqHbrWNduhrzO27e07WE5YMb1hKcHHDKO9msT
+ Ix0JhinmR1RXChjOMeYmCA7lemA0ta5BmfC+VP+t+ArIeyDqlH4Rh2LnH
+ QgHR5W6ZpKgzLiWtpIAL725KYbcodiovH3JkmXBQcu1leXaIk0K44EZwv
+ dr9tzag22WloyVinTQzrQ6c3VhNSAXGXk+9UXwiemRuvGdrhus90tVeKW
+ 2S3wLuPn09rn+0ouYTBoOPGqKcqIuliHS0vcir9MOQQI0f0JDu1/mMpkI
+ 2S0gv+r9IX7IZTE6u8bNrokrqq05VA83lMgLFxgUXJ3WVn2YslMGDJ3z0 A==;
+X-CSE-ConnectionGUID: 72IVsrxPRn2BIDbULQJpog==
+X-CSE-MsgGUID: Bzbay9R2TbKf1QqbIe8c9Q==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23917942"
 Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
  smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
- by internal-pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:04:17 +0000
-Received: from EX19MTAUWB002.ant.amazon.com [205.251.233.48:29768]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.0.115:2525]
+ by internal-pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:04:48 +0000
+Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.234:12741]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.11.151:2525]
  with esmtp (Farcaster)
- id e167519a-a4c5-4640-b0f2-3c8fe08ccd23; Sat, 18 Jul 2026 22:04:16 +0000 (UTC)
-X-Farcaster-Flow-ID: e167519a-a4c5-4640-b0f2-3c8fe08ccd23
+ id 4fc69d3a-aab8-402c-b335-557de534b143; Sat, 18 Jul 2026 22:04:48 +0000 (UTC)
+X-Farcaster-Flow-ID: 4fc69d3a-aab8-402c-b335-557de534b143
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
+ EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:04:16 +0000
+ Sat, 18 Jul 2026 22:04:47 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:04:07 +0000
+ Sat, 18 Jul 2026 22:04:38 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,9 +93,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 098/137] hw/m68k: Give memory regions an explicit owner
-Date: Sat, 18 Jul 2026 21:36:13 +0000
-Message-ID: <20260718213652.37673-99-graf@amazon.com>
+Subject: [RFC PATCH v2 099/137] hw/ppc: Give memory regions an explicit owner
+Date: Sat, 18 Jul 2026 21:36:14 +0000
+Message-ID: <20260718213652.37673-100-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -104,11 +104,11 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D036UWB001.ant.amazon.com (10.13.139.133) To
+X-ClientProxiedBy: EX19D033UWC003.ant.amazon.com (10.13.139.217) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=35.155.198.111;
+Received-SPF: pass client-ip=44.246.77.92;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-004.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -135,7 +135,7 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Convert memory_region_init*() calls that pass NULL owner to pass
 the enclosing machine or device instead.
 
-Thread Object *owner through the static mcf5208_sys_init() helper. mcf5206_mbar_realize() already has DeviceState *dev in scope.
+Thread Object *owner through ppc4xx_l2sram_init() (called from sam460ex board init) and the static ppc4xx_sdram_banks() / sdram_bank_map() / sdram_bank_set_bcr() helpers (called from ppc4xx-sdram-ddr[2] realize and DCR write callbacks that already carry the device state).
 
 No functional change intended.
 
@@ -143,189 +143,316 @@ RAMBlock idstrs are unchanged: the owners added here are Machine
 or SysBus devices, and memory_region_register_ram() maps both to
 dev=NULL for qemu_ram_set_idstr().
 
-Reviewed-by: Thomas Huth <th.huth+qemu@posteo.eu> # coldfire, next-cube only
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/m68k/an5206.c    |  2 +-
- hw/m68k/mcf5206.c   |  2 +-
- hw/m68k/mcf5208.c   | 15 ++++++++-------
- hw/m68k/next-cube.c | 10 +++++-----
- hw/m68k/q800.c      | 10 +++++-----
- 5 files changed, 20 insertions(+), 19 deletions(-)
+ hw/ppc/amigaone.c      |  6 +++---
+ hw/ppc/mac_newworld.c  |  2 +-
+ hw/ppc/mac_oldworld.c  |  2 +-
+ hw/ppc/pegasos.c       |  2 +-
+ hw/ppc/ppc440.h        |  2 +-
+ hw/ppc/ppc440_bamboo.c |  2 +-
+ hw/ppc/ppc440_uc.c     | 10 +++++-----
+ hw/ppc/ppc4xx_sdram.c  | 34 +++++++++++++++++-----------------
+ hw/ppc/prep.c          |  2 +-
+ hw/ppc/sam460ex.c      |  4 ++--
+ 10 files changed, 33 insertions(+), 33 deletions(-)
 
-diff --git a/hw/m68k/an5206.c b/hw/m68k/an5206.c
-index 5027311cad..6c6c7d7248 100644
---- a/hw/m68k/an5206.c
-+++ b/hw/m68k/an5206.c
-@@ -60,7 +60,7 @@ static void an5206_init(MachineState *machine)
-     memory_region_add_subregion(address_space_mem, 0, machine->ram);
+diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
+index 60aed15a6e..4a4e52c1fe 100644
+--- a/hw/ppc/amigaone.c
++++ b/hw/ppc/amigaone.c
+@@ -130,7 +130,7 @@ static void nvram_realize(DeviceState *dev, Error **errp)
+     void *p;
+     uint32_t crc, *c;
  
-     /* Internal SRAM.  */
--    memory_region_init_ram(sram, NULL, "an5206.sram", 512, &error_fatal);
-+    memory_region_init_ram(sram, OBJECT(machine), "an5206.sram", 512, &error_fatal);
-     memory_region_add_subregion(address_space_mem, AN5206_RAMBAR_ADDR, sram);
- 
-     mcf5206_init(OBJECT(machine), cpu, address_space_mem, AN5206_MBAR_ADDR);
-diff --git a/hw/m68k/mcf5206.c b/hw/m68k/mcf5206.c
-index b3c745d3f9..ee39a6ac30 100644
---- a/hw/m68k/mcf5206.c
-+++ b/hw/m68k/mcf5206.c
-@@ -589,7 +589,7 @@ static void mcf5206_mbar_realize(DeviceState *dev, Error **errp)
- {
-     m5206_mbar_state *s = MCF5206_MBAR(dev);
- 
--    memory_region_init_io(&s->iomem, NULL, &m5206_mbar_ops, s,
-+    memory_region_init_io(&s->iomem, OBJECT(dev), &m5206_mbar_ops, s,
-                           "mbar", 0x00001000);
-     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->iomem);
- 
-diff --git a/hw/m68k/mcf5208.c b/hw/m68k/mcf5208.c
-index a955efebeb..93aee5ebd5 100644
---- a/hw/m68k/mcf5208.c
-+++ b/hw/m68k/mcf5208.c
-@@ -227,7 +227,8 @@ static const MemoryRegionOps m5208_rcm_ops = {
-     .endianness = DEVICE_BIG_ENDIAN,
- };
- 
--static void mcf5208_sys_init(MemoryRegion *address_space, DeviceState *intc,
-+static void mcf5208_sys_init(Object *owner, MemoryRegion *address_space,
-+                             DeviceState *intc,
-                              M68kCPU *cpu)
- {
-     MemoryRegion *iomem = g_new(MemoryRegion, 1);
-@@ -236,17 +237,17 @@ static void mcf5208_sys_init(MemoryRegion *address_space, DeviceState *intc,
-     int i;
- 
-     /* RCM */
--    memory_region_init_io(iomem_rcm, NULL, &m5208_rcm_ops, cpu,
-+    memory_region_init_io(iomem_rcm, owner, &m5208_rcm_ops, cpu,
-                           "m5208-rcm", 0x00000080);
-     memory_region_add_subregion(address_space, 0xfc0a0000, iomem_rcm);
-     /* SDRAMC.  */
--    memory_region_init_io(iomem, NULL, &m5208_sys_ops, NULL, "m5208-sys", 0x00004000);
-+    memory_region_init_io(iomem, owner, &m5208_sys_ops, NULL, "m5208-sys", 0x00004000);
-     memory_region_add_subregion(address_space, 0xfc0a8000, iomem);
-     /* Timers.  */
-     for (i = 0; i < 2; i++) {
-         s = g_new0(m5208_timer_state, 1);
-         s->timer = ptimer_init(m5208_timer_trigger, s, PTIMER_POLICY_LEGACY);
--        memory_region_init_io(&s->iomem, NULL, &m5208_timer_ops, s,
-+        memory_region_init_io(&s->iomem, owner, &m5208_timer_ops, s,
-                               "m5208-timer", 0x00004000);
-         memory_region_add_subregion(address_space, 0xfc080000 + 0x4000 * i,
-                                     &s->iomem);
-@@ -296,14 +297,14 @@ static void mcf5208evb_init(MachineState *machine)
-     /* TODO: Configure BARs.  */
- 
-     /* ROM at 0x00000000 */
--    memory_region_init_rom(rom, NULL, "mcf5208.rom", ROM_SIZE, &error_fatal);
-+    memory_region_init_rom(rom, OBJECT(machine), "mcf5208.rom", ROM_SIZE, &error_fatal);
-     memory_region_add_subregion(address_space_mem, 0x00000000, rom);
- 
-     /* DRAM at 0x40000000 */
-     memory_region_add_subregion(address_space_mem, 0x40000000, machine->ram);
- 
-     /* Internal SRAM.  */
--    memory_region_init_ram(sram, NULL, "mcf5208.sram", 16 * KiB, &error_fatal);
-+    memory_region_init_ram(sram, OBJECT(machine), "mcf5208.sram", 16 * KiB, &error_fatal);
-     memory_region_add_subregion(address_space_mem, 0x80000000, sram);
- 
-     /* Internal peripherals.  */
-@@ -316,7 +317,7 @@ static void mcf5208evb_init(MachineState *machine)
-     mcf_uart_create_mmap(OBJECT(machine), 0xfc068000,
-                          qdev_get_gpio_in(intc, 28), serial_hd(2));
- 
--    mcf5208_sys_init(address_space_mem, intc, cpu);
-+    mcf5208_sys_init(OBJECT(machine), address_space_mem, intc, cpu);
- 
-     mcf_fec_init(address_space_mem, 0xfc030000, intc);
- 
-diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index c80d32ef29..564a10a69e 100644
---- a/hw/m68k/next-cube.c
-+++ b/hw/m68k/next-cube.c
-@@ -1310,11 +1310,11 @@ static void next_cube_init(MachineState *machine)
-     sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 5, 0x0211a000);
- 
-     /* BMAP memory */
--    memory_region_init_ram_flags_nomigrate(&m->bmapm1, NULL, "next.bmapmem",
-+    memory_region_init_ram_flags_nomigrate(&m->bmapm1, OBJECT(machine), "next.bmapmem",
-                                            64, RAM_SHARED, &error_fatal);
-     memory_region_add_subregion(sysmem, 0x020c0000, &m->bmapm1);
-     /* The Rev_2.5_v66.bin firmware accesses it at 0x820c0020, too */
--    memory_region_init_alias(&m->bmapm2, NULL, "next.bmapmem2", &m->bmapm1,
-+    memory_region_init_alias(&m->bmapm2, OBJECT(machine), "next.bmapmem2", &m->bmapm1,
-                              0x0, 64);
-     memory_region_add_subregion(sysmem, 0x820c0000, &m->bmapm2);
- 
-@@ -1322,9 +1322,9 @@ static void next_cube_init(MachineState *machine)
-     sysbus_create_simple(OBJECT(machine), "kbd", TYPE_NEXTKBD, 0x0200e000, NULL);
- 
-     /* Load ROM here */
--    memory_region_init_rom(&m->rom, NULL, "next.rom", 0x20000, &error_fatal);
-+    memory_region_init_rom(&m->rom, OBJECT(machine), "next.rom", 0x20000, &error_fatal);
-     memory_region_add_subregion(sysmem, 0x01000000, &m->rom);
--    memory_region_init_alias(&m->rom2, NULL, "next.rom2", &m->rom, 0x0,
-+    memory_region_init_alias(&m->rom2, OBJECT(machine), "next.rom2", &m->rom, 0x0,
-                              0x20000);
-     memory_region_add_subregion(sysmem, 0x0, &m->rom2);
-     Error *local_err = NULL;
-@@ -1352,7 +1352,7 @@ static void next_cube_init(MachineState *machine)
+-    memory_region_init_rom_device(&s->mr, NULL, &nvram_ops, s, "nvram",
++    memory_region_init_rom_device(&s->mr, OBJECT(dev), &nvram_ops, s, "nvram",
+                                   NVRAM_SIZE, &error_fatal);
+     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr);
+     c = p = memory_region_get_ram_ptr(&s->mr);
+@@ -297,7 +297,7 @@ static void amigaone_init(MachineState *machine)
+     if (machine->ram_size < 1 * GiB + 32 * KiB) {
+         /* Firmware uses this area for startup */
+         mr = g_new(MemoryRegion, 1);
+-        memory_region_init_ram(mr, NULL, "init-cache", 32 * KiB, &error_fatal);
++        memory_region_init_ram(mr, OBJECT(machine), "init-cache", 32 * KiB, &error_fatal);
+         memory_region_add_subregion(get_system_memory(), INIT_RAM_ADDR, mr);
      }
  
-     /* DMA */
--    memory_region_init_io(&m->dmamem, NULL, &next_dma_ops, machine,
-+    memory_region_init_io(&m->dmamem, OBJECT(machine), &next_dma_ops, machine,
-                           "next.dma", 0x5000);
-     memory_region_add_subregion(sysmem, 0x02000000, &m->dmamem);
+@@ -313,7 +313,7 @@ static void amigaone_init(MachineState *machine)
+ 
+     /* allocate and load firmware */
+     rom = g_new(MemoryRegion, 1);
+-    memory_region_init_rom(rom, NULL, "rom", PROM_SIZE, &error_fatal);
++    memory_region_init_rom(rom, OBJECT(machine), "rom", PROM_SIZE, &error_fatal);
+     memory_region_add_subregion(get_system_memory(), PROM_ADDR, rom);
+     if (!machine->firmware) {
+         rom_add_blob_fixed("dummy-fw", dummy_fw, sizeof(dummy_fw),
+diff --git a/hw/ppc/mac_newworld.c b/hw/ppc/mac_newworld.c
+index a6af53e21a..392a1fb87d 100644
+--- a/hw/ppc/mac_newworld.c
++++ b/hw/ppc/mac_newworld.c
+@@ -176,7 +176,7 @@ static void ppc_core99_init(MachineState *machine)
+     memory_region_add_subregion(get_system_memory(), 0, machine->ram);
+ 
+     /* allocate and load firmware ROM */
+-    memory_region_init_rom(bios, NULL, "ppc_core99.bios", PROM_SIZE,
++    memory_region_init_rom(bios, OBJECT(machine), "ppc_core99.bios", PROM_SIZE,
+                            &error_fatal);
+     memory_region_add_subregion(get_system_memory(), PROM_BASE, bios);
+ 
+diff --git a/hw/ppc/mac_oldworld.c b/hw/ppc/mac_oldworld.c
+index f9b62a518a..0fe8dfaf8c 100644
+--- a/hw/ppc/mac_oldworld.c
++++ b/hw/ppc/mac_oldworld.c
+@@ -130,7 +130,7 @@ static void ppc_heathrow_init(MachineState *machine)
+     memory_region_add_subregion(get_system_memory(), 0, machine->ram);
+ 
+     /* allocate and load firmware ROM */
+-    memory_region_init_rom(bios, NULL, "ppc_heathrow.bios", PROM_SIZE,
++    memory_region_init_rom(bios, OBJECT(machine), "ppc_heathrow.bios", PROM_SIZE,
+                            &error_fatal);
+     memory_region_add_subregion(get_system_memory(), PROM_BASE, bios);
+ 
+diff --git a/hw/ppc/pegasos.c b/hw/ppc/pegasos.c
+index 4917d8137a..426a54d8ee 100644
+--- a/hw/ppc/pegasos.c
++++ b/hw/ppc/pegasos.c
+@@ -194,7 +194,7 @@ static void pegasos_init(MachineState *machine)
+     if (pm->type == PEGASOS1) {
+         prom_addr += PROM_SIZE;
+     }
+-    memory_region_init_rom(rom, NULL, "rom", PROM_SIZE, &error_fatal);
++    memory_region_init_rom(rom, OBJECT(machine), "rom", PROM_SIZE, &error_fatal);
+     memory_region_add_subregion(get_system_memory(), prom_addr, rom);
+     sz = load_elf(filename, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+                   ELFDATA2MSB, PPC_ELF_MACHINE, 0, 0);
+diff --git a/hw/ppc/ppc440.h b/hw/ppc/ppc440.h
+index 909373fb38..192b76adc4 100644
+--- a/hw/ppc/ppc440.h
++++ b/hw/ppc/ppc440.h
+@@ -13,7 +13,7 @@
+ 
+ #include "hw/ppc/ppc.h"
+ 
+-void ppc4xx_l2sram_init(CPUPPCState *env);
++void ppc4xx_l2sram_init(Object *owner, CPUPPCState *env);
+ void ppc4xx_cpr_init(CPUPPCState *env);
+ void ppc4xx_sdr_init(CPUPPCState *env);
+ void ppc4xx_ahb_init(CPUPPCState *env);
+diff --git a/hw/ppc/ppc440_bamboo.c b/hw/ppc/ppc440_bamboo.c
+index 2d9efeba77..5aad2a504b 100644
+--- a/hw/ppc/ppc440_bamboo.c
++++ b/hw/ppc/ppc440_bamboo.c
+@@ -194,7 +194,7 @@ static void bamboo_init(MachineState *machine)
+         exit(1);
+     }
+ 
+-    memory_region_init_alias(isa, NULL, "isa_mmio",
++    memory_region_init_alias(isa, OBJECT(machine), "isa_mmio",
+                              get_system_io(), 0, PPC440EP_PCI_IOLEN);
+     memory_region_add_subregion(get_system_memory(), PPC440EP_PCI_IO, isa);
+ 
+diff --git a/hw/ppc/ppc440_uc.c b/hw/ppc/ppc440_uc.c
+index 016c756c19..e86519326e 100644
+--- a/hw/ppc/ppc440_uc.c
++++ b/hw/ppc/ppc440_uc.c
+@@ -167,19 +167,19 @@ static void l2sram_reset(void *opaque)
+     memset(l2sram->isram0, 0, sizeof(l2sram->isram0));
  }
-diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
-index 15b3bcab5f..954cdf8489 100644
---- a/hw/m68k/q800.c
-+++ b/hw/m68k/q800.c
-@@ -309,7 +309,7 @@ static void q800_machine_init(MachineState *machine)
-     memory_region_add_subregion(get_system_memory(), IO_BASE + IO_SLICE,
-                                 &m->macio_alias);
  
--    memory_region_init_io(&m->machine_id, NULL, &machine_id_ops, NULL,
-+    memory_region_init_io(&m->machine_id, OBJECT(machine), &machine_id_ops, NULL,
-                           "Machine ID", 4);
-     memory_region_add_subregion(get_system_memory(), 0x5ffffffc,
-                                 &m->machine_id);
-@@ -407,7 +407,7 @@ static void q800_machine_init(MachineState *machine)
-     sysbus_connect_irq(sysbus, 0,
-                        qdev_get_gpio_in(DEVICE(&m->glue), GLUE_IRQ_IN_SONIC));
+-void ppc4xx_l2sram_init(CPUPPCState *env)
++void ppc4xx_l2sram_init(Object *owner, CPUPPCState *env)
+ {
+     ppc4xx_l2sram_t *l2sram;
  
--    memory_region_init_rom(&m->dp8393x_prom, NULL, "dp8393x-q800.prom",
-+    memory_region_init_rom(&m->dp8393x_prom, OBJECT(machine), "dp8393x-q800.prom",
-                            SONIC_PROM_SIZE, &error_fatal);
-     memory_region_add_subregion(get_system_memory(), SONIC_PROM_BASE,
-                                 &m->dp8393x_prom);
-@@ -606,7 +606,7 @@ static void q800_machine_init(MachineState *machine)
-         BOOTINFO1(param_ptr, BI_MAC_VROW, macfb_mode->stride);
-         BOOTINFO1(param_ptr, BI_MAC_SCCBASE, SCC_BASE);
+     l2sram = g_malloc0(sizeof(*l2sram));
+     /* XXX: Size is 4*64kB for 460ex, cf. U-Boot, ppc4xx-isram.h */
+-    memory_region_init_ram(&l2sram->bank[0], NULL, "ppc4xx.l2sram_bank0",
++    memory_region_init_ram(&l2sram->bank[0], owner, "ppc4xx.l2sram_bank0",
+                            64 * KiB, &error_abort);
+-    memory_region_init_ram(&l2sram->bank[1], NULL, "ppc4xx.l2sram_bank1",
++    memory_region_init_ram(&l2sram->bank[1], owner, "ppc4xx.l2sram_bank1",
+                            64 * KiB, &error_abort);
+-    memory_region_init_ram(&l2sram->bank[2], NULL, "ppc4xx.l2sram_bank2",
++    memory_region_init_ram(&l2sram->bank[2], owner, "ppc4xx.l2sram_bank2",
+                            64 * KiB, &error_abort);
+-    memory_region_init_ram(&l2sram->bank[3], NULL, "ppc4xx.l2sram_bank3",
++    memory_region_init_ram(&l2sram->bank[3], owner, "ppc4xx.l2sram_bank3",
+                            64 * KiB, &error_abort);
+     qemu_register_reset(&l2sram_reset, l2sram);
+     ppc_dcr_register(env, DCR_L2CACHE_CFG,
+diff --git a/hw/ppc/ppc4xx_sdram.c b/hw/ppc/ppc4xx_sdram.c
+index b2c8f96d5f..8be3bb3160 100644
+--- a/hw/ppc/ppc4xx_sdram.c
++++ b/hw/ppc/ppc4xx_sdram.c
+@@ -53,7 +53,7 @@
+  * must be one of a small set of sizes. The number of banks and the supported
+  * sizes varies by SoC.
+  */
+-static bool ppc4xx_sdram_banks(MemoryRegion *ram, int nr_banks,
++static bool ppc4xx_sdram_banks(Object *owner, MemoryRegion *ram, int nr_banks,
+                                Ppc4xxSdramBank ram_banks[],
+                                const ram_addr_t sdram_bank_sizes[],
+                                Error **errp)
+@@ -76,7 +76,7 @@ static bool ppc4xx_sdram_banks(MemoryRegion *ram, int nr_banks,
+                 base += bank_size;
+                 size_left -= bank_size;
+                 snprintf(name, sizeof(name), "ppc4xx.sdram%d", i);
+-                memory_region_init_alias(&ram_banks[i].ram, NULL, name, ram,
++                memory_region_init_alias(&ram_banks[i].ram, owner, name, ram,
+                                          ram_banks[i].base, ram_banks[i].size);
+                 break;
+             }
+@@ -108,10 +108,10 @@ static bool ppc4xx_sdram_banks(MemoryRegion *ram, int nr_banks,
+     return true;
+ }
  
--        memory_region_init_ram_ptr(&m->rom, NULL, "m68k_fake_mac.rom",
-+        memory_region_init_ram_ptr(&m->rom, OBJECT(machine), "m68k_fake_mac.rom",
-                                    sizeof(fake_mac_rom), fake_mac_rom);
-         memory_region_set_readonly(&m->rom, true);
-         memory_region_add_subregion(get_system_memory(), MACROM_ADDR, &m->rom);
-@@ -651,12 +651,12 @@ static void q800_machine_init(MachineState *machine)
-     } else {
-         uint8_t *ptr;
-         /* allocate and load BIOS */
--        memory_region_init_rom(&m->rom, NULL, "m68k_mac.rom", MACROM_SIZE,
-+        memory_region_init_rom(&m->rom, OBJECT(machine), "m68k_mac.rom", MACROM_SIZE,
-                                &error_abort);
-         filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
-         memory_region_add_subregion(get_system_memory(), MACROM_ADDR, &m->rom);
+-static void sdram_bank_map(Ppc4xxSdramBank *bank)
++static void sdram_bank_map(Object *owner, Ppc4xxSdramBank *bank)
+ {
+     trace_ppc4xx_sdram_map(bank->base, bank->size);
+-    memory_region_init(&bank->container, NULL, "sdram-container", bank->size);
++    memory_region_init(&bank->container, owner, "sdram-container", bank->size);
+     memory_region_add_subregion(&bank->container, 0, &bank->ram);
+     memory_region_add_subregion(get_system_memory(), bank->base,
+                                 &bank->container);
+@@ -125,7 +125,7 @@ static void sdram_bank_unmap(Ppc4xxSdramBank *bank)
+     object_unparent(OBJECT(&bank->container));
+ }
  
--        memory_region_init_alias(&m->rom_alias, NULL, "m68k_mac.rom-alias",
-+        memory_region_init_alias(&m->rom_alias, OBJECT(machine), "m68k_mac.rom-alias",
-                                  &m->rom, 0, MACROM_SIZE);
-         memory_region_add_subregion(get_system_memory(), 0x40000000,
-                                     &m->rom_alias);
+-static void sdram_bank_set_bcr(Ppc4xxSdramBank *bank, uint32_t bcr,
++static void sdram_bank_set_bcr(Object *owner, Ppc4xxSdramBank *bank, uint32_t bcr,
+                                hwaddr base, hwaddr size, int enabled)
+ {
+     if (memory_region_is_mapped(&bank->container)) {
+@@ -135,7 +135,7 @@ static void sdram_bank_set_bcr(Ppc4xxSdramBank *bank, uint32_t bcr,
+     bank->base = base;
+     bank->size = size;
+     if (enabled && (bcr & 1)) {
+-        sdram_bank_map(bank);
++        sdram_bank_map(owner, bank);
+     }
+ }
+ 
+@@ -296,7 +296,7 @@ static void sdram_ddr_dcr_write(void *opaque, int dcrn, uint32_t val)
+                 /* validate all RAM mappings */
+                 for (i = 0; i < s->nbanks; i++) {
+                     if (s->bank[i].size) {
+-                        sdram_bank_set_bcr(&s->bank[i], s->bank[i].bcr,
++                        sdram_bank_set_bcr(OBJECT(s), &s->bank[i], s->bank[i].bcr,
+                                            s->bank[i].base, s->bank[i].size,
+                                            1);
+                     }
+@@ -307,7 +307,7 @@ static void sdram_ddr_dcr_write(void *opaque, int dcrn, uint32_t val)
+                 /* invalidate all RAM mappings */
+                 for (i = 0; i < s->nbanks; i++) {
+                     if (s->bank[i].size) {
+-                        sdram_bank_set_bcr(&s->bank[i], s->bank[i].bcr,
++                        sdram_bank_set_bcr(OBJECT(s), &s->bank[i], s->bank[i].bcr,
+                                            s->bank[i].base, s->bank[i].size,
+                                            0);
+                     }
+@@ -337,7 +337,7 @@ static void sdram_ddr_dcr_write(void *opaque, int dcrn, uint32_t val)
+             i = (s->addr - 0x40) / 4;
+             val &= SDRAM_DDR_BCR_MASK;
+             if (s->bank[i].size) {
+-                sdram_bank_set_bcr(&s->bank[i], val,
++                sdram_bank_set_bcr(OBJECT(s), &s->bank[i], val,
+                                    sdram_ddr_base(val), sdram_ddr_size(val),
+                                    s->cfg & 0x80000000);
+             }
+@@ -400,17 +400,17 @@ static void ppc4xx_sdram_ddr_realize(DeviceState *dev, Error **errp)
+         error_setg(errp, "Missing dram memory region");
+         return;
+     }
+-    if (!ppc4xx_sdram_banks(s->dram_mr, s->nbanks, s->bank,
++    if (!ppc4xx_sdram_banks(OBJECT(s), s->dram_mr, s->nbanks, s->bank,
+                             valid_bank_sizes, errp)) {
+         return;
+     }
+     for (i = 0; i < s->nbanks; i++) {
+         if (s->bank[i].size) {
+             s->bank[i].bcr = sdram_ddr_bcr(s->bank[i].base, s->bank[i].size);
+-            sdram_bank_set_bcr(&s->bank[i], s->bank[i].bcr,
++            sdram_bank_set_bcr(OBJECT(s), &s->bank[i], s->bank[i].bcr,
+                                s->bank[i].base, s->bank[i].size, 0);
+         } else {
+-            sdram_bank_set_bcr(&s->bank[i], 0, 0, 0, 0);
++            sdram_bank_set_bcr(OBJECT(s), &s->bank[i], 0, 0, 0, 0);
+         }
+         trace_ppc4xx_sdram_init(sdram_ddr_base(s->bank[i].bcr),
+                                 sdram_ddr_size(s->bank[i].bcr),
+@@ -607,7 +607,7 @@ static void sdram_ddr2_dcr_write(void *opaque, int dcrn, uint32_t val)
+                 /* validate all RAM mappings */
+                 for (i = 0; i < s->nbanks; i++) {
+                     if (s->bank[i].size) {
+-                        sdram_bank_set_bcr(&s->bank[i], s->bank[i].bcr,
++                        sdram_bank_set_bcr(OBJECT(s), &s->bank[i], s->bank[i].bcr,
+                                            s->bank[i].base, s->bank[i].size,
+                                            1);
+                     }
+@@ -619,7 +619,7 @@ static void sdram_ddr2_dcr_write(void *opaque, int dcrn, uint32_t val)
+                 /* invalidate all RAM mappings */
+                 for (i = 0; i < s->nbanks; i++) {
+                     if (s->bank[i].size) {
+-                        sdram_bank_set_bcr(&s->bank[i], s->bank[i].bcr,
++                        sdram_bank_set_bcr(OBJECT(s), &s->bank[i], s->bank[i].bcr,
+                                            s->bank[i].base, s->bank[i].size,
+                                            0);
+                     }
+@@ -666,7 +666,7 @@ static void ppc4xx_sdram_ddr2_realize(DeviceState *dev, Error **errp)
+         error_setg(errp, "Missing dram memory region");
+         return;
+     }
+-    if (!ppc4xx_sdram_banks(s->dram_mr, s->nbanks, s->bank,
++    if (!ppc4xx_sdram_banks(OBJECT(s), s->dram_mr, s->nbanks, s->bank,
+                             valid_bank_sizes, errp)) {
+         return;
+     }
+@@ -674,10 +674,10 @@ static void ppc4xx_sdram_ddr2_realize(DeviceState *dev, Error **errp)
+         if (s->bank[i].size) {
+             s->bank[i].bcr = sdram_ddr2_bcr(s->bank[i].base, s->bank[i].size);
+             s->bank[i].bcr &= SDRAM_DDR2_BCR_MASK;
+-            sdram_bank_set_bcr(&s->bank[i], s->bank[i].bcr,
++            sdram_bank_set_bcr(OBJECT(s), &s->bank[i], s->bank[i].bcr,
+                                s->bank[i].base, s->bank[i].size, 0);
+         } else {
+-            sdram_bank_set_bcr(&s->bank[i], 0, 0, 0, 0);
++            sdram_bank_set_bcr(OBJECT(s), &s->bank[i], 0, 0, 0, 0);
+         }
+         trace_ppc4xx_sdram_init(sdram_ddr2_base(s->bank[i].bcr),
+                                 sdram_ddr2_size(s->bank[i].bcr),
+diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
+index 52f94b206a..c79736a1f3 100644
+--- a/hw/ppc/prep.c
++++ b/hw/ppc/prep.c
+@@ -274,7 +274,7 @@ static void ibm_40p_init(MachineState *machine)
+         error_report("Could not find bios image '%s'", bios_name);
+         exit(1);
+     }
+-    memory_region_init_rom(bios, NULL, "bios", BIOS_SIZE, &error_fatal);
++    memory_region_init_rom(bios, OBJECT(machine), "bios", BIOS_SIZE, &error_fatal);
+     memory_region_add_subregion(get_system_memory(), BIOS_ADDR, bios);
+     bios_size = load_elf(filename, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+                          ELFDATA2MSB, PPC_ELF_MACHINE, 0, 0);
+diff --git a/hw/ppc/sam460ex.c b/hw/ppc/sam460ex.c
+index 59c217e2b2..20b2acb40b 100644
+--- a/hw/ppc/sam460ex.c
++++ b/hw/ppc/sam460ex.c
+@@ -375,9 +375,9 @@ static void sam460ex_init(MachineState *machine)
+     ppc4xx_dma_init(env, 0x200);
+ 
+     /* 256K of L2 cache as memory */
+-    ppc4xx_l2sram_init(env);
++    ppc4xx_l2sram_init(OBJECT(machine), env);
+     /* FIXME: remove this after fixing l2sram mapping in ppc440_uc.c? */
+-    memory_region_init_ram(l2cache_ram, NULL, "ppc440.l2cache_ram", 256 * KiB,
++    memory_region_init_ram(l2cache_ram, OBJECT(machine), "ppc440.l2cache_ram", 256 * KiB,
+                            &error_abort);
+     memory_region_add_subregion(get_system_memory(), 0x400000000LL,
+                                 l2cache_ram);
 -- 
 2.47.1
 
