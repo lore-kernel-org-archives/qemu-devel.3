@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2AB8C4451B
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:51:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 559A1C4451B
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:51:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlCvw-0001Zn-GX; Sat, 18 Jul 2026 17:50:56 -0400
+	id 1wlCvZ-0000r6-Af; Sat, 18 Jul 2026 17:50:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlCvu-0001WZ-BJ; Sat, 18 Jul 2026 17:50:54 -0400
-Received: from pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.42.203.116])
+ id 1wlCv8-00008C-LG; Sat, 18 Jul 2026 17:50:13 -0400
+Received: from pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.34.181.151])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlCvs-0003qk-1l; Sat, 18 Jul 2026 17:50:54 -0400
+ id 1wlCv3-0003XB-LT; Sat, 18 Jul 2026 17:50:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784411452; x=1815947452;
+ t=1784411401; x=1815947401;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=+RNJaiqptSSrIdptc8tdkEhBXcnP9xpkHfL4NA622Zo=;
- b=IvWDkXYggu7gL1XhbW7S2JvTKEANxLiXTW+vkcJAeAO6vefL13TG/n0B
- bkVnoPWXtjl4j1WZLKm43ZCDh4Z96hsZMYH9EooNPt/xt6Ah/Bj3J41XD
- cVjN5sxty4oJbdDKhaia0JHDoLQwdXsVyibX0KJo2o83cK1V+RaggJb1T
- xwkz02SNDzokJNlX3GP+pwXj7P7ywlqSRsLBxtJ7v/D8uu9WSAjb2Hy6n
- o7c5u0htGlrNAXnLfQbZ/axR3F3Qs4wotzG08gTHDdCT+3wbXEBFRck0b
- V0hoB7ahoc29+/uihNChcTk/NCCOZoiFmNbvW6XTerHfa9N4lIeK9xLTL g==;
-X-CSE-ConnectionGUID: mukdyU+ZSBi8tenxBzs+1g==
-X-CSE-MsgGUID: 1S+k1wGwSzeygliDisBLHg==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23939800"
-Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
- by internal-pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:50:49 +0000
-Received: from EX19MTAUWB002.ant.amazon.com [205.251.233.48:5917]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.30.230:2525]
+ bh=2QjLH+anvZr4y1azA3Iao1EtATgkMOebEYOkqL/C7HY=;
+ b=GnXgVdgVO3hNjU9GwB4BUyCXjMY5MC2q4WQs+B9aTGqdY4MzLmtMDV6C
+ AWMJVZABhu0bLEGYFdYSPPnZXfJaOHOlAR5WzAa/BUpvQYYcjUXIRneGQ
+ 1S0g1Is59+jra78KCC5ZuH6WqSYMU9bW0p9vUkld/WsRBwJ01DoQaH9ff
+ jtzKOGgntEDG4DAFQ4M6T9Qb6CGRk3jYf1nRT3IaxCYK7ww5TcDp5mRAG
+ z9XkYPeUQNsrpHHlxTyItq/+Z724cXDCxjTG5YuACvsSL3XxDrMcpIhB0
+ zcsaKGoeYK5Vlg/nay4vE8OfG3fe3aOcNf+WCFRcQPOxYm4oT8rkGqosD w==;
+X-CSE-ConnectionGUID: PGjvs0ZVRYSYXkfcuacseg==
+X-CSE-MsgGUID: hkp1ictDQ/OR92cdNSnqkQ==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23910489"
+Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
+ by internal-pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:49:58 +0000
+Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.104:14791]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.35.17:2525]
  with esmtp (Farcaster)
- id 9914b55e-c942-4ae4-b510-999ad951e746; Sat, 18 Jul 2026 21:50:49 +0000 (UTC)
-X-Farcaster-Flow-ID: 9914b55e-c942-4ae4-b510-999ad951e746
+ id 09e41968-ba38-4bda-bcac-a74b3aa10c57; Sat, 18 Jul 2026 21:49:57 +0000 (UTC)
+X-Farcaster-Flow-ID: 09e41968-ba38-4bda-bcac-a74b3aa10c57
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
+ EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:50:48 +0000
+ Sat, 18 Jul 2026 21:49:57 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:50:39 +0000
+ Sat, 18 Jul 2026 21:49:48 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,9 +93,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 050/137] hw/isa: Give onboard devices a QOM parent
-Date: Sat, 18 Jul 2026 21:35:25 +0000
-Message-ID: <20260718213652.37673-51-graf@amazon.com>
+Subject: [RFC PATCH v2 047/137] hw/i2c: Give onboard devices a QOM parent
+Date: Sat, 18 Jul 2026 21:35:22 +0000
+Message-ID: <20260718213652.37673-48-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -104,18 +104,18 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D039UWB001.ant.amazon.com (10.13.138.119) To
+X-ClientProxiedBy: EX19D040UWA003.ant.amazon.com (10.13.139.6) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=52.42.203.116;
+Received-SPF: pass client-ip=52.34.181.151;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-008.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
  HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
+ RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
  UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -132,7 +132,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the *_orphan() device-creation calls in hw/isa to the new
+Convert the *_orphan() device-creation calls in hw/i2c to the new
 parented API introduced earlier in this series, so every onboard
 device gets a stable path in the composition tree instead of landing
 in /machine/unattached with an unstable device[N] name.
@@ -143,142 +143,319 @@ composite children.  Names follow existing QOM conventions.
 
 Per-site rationale (reviewers: dispute the modeling here):
 
-hw/isa/i82378.c:106 | isa_new | OBJECT(s) | "pcspk" | i82378_realize() creates ISA children of the i82378 PCI-ISA bridge
-hw/isa/i82378.c:113 | isa_create_simple | OBJECT(s) | "dma" | i82378_realize() creates ISA children of the i82378 PCI-ISA bridge
-hw/isa/isa-bus.c:62 | qdev_new_orphan | ORPHAN-JUSTIFIED | - | fallback isabus-bridge when caller passes dev==NULL; parenting requires isa_bus_new() signature change across many callers, deferred
-hw/isa/isa-bus.c:174 | isa_new_orphan | ORPHAN-JUSTIFIED | - | API definition (transitional _orphan wrapper)
-hw/isa/isa-bus.c:176 | qdev_new_orphan | ORPHAN-JUSTIFIED | - | API definition body of isa_new_orphan()
-hw/isa/isa-bus.c:179 | isa_try_new_orphan | ORPHAN-JUSTIFIED | - | API definition (transitional _orphan wrapper)
-hw/isa/isa-bus.c:181 | qdev_try_new_orphan | ORPHAN-JUSTIFIED | - | API definition body of isa_try_new_orphan()
-hw/isa/isa-bus.c:184 | isa_create_simple_orphan | ORPHAN-JUSTIFIED | - | API definition (transitional _orphan wrapper)
-hw/isa/isa-bus.c:188 | isa_new_orphan | ORPHAN-JUSTIFIED | - | API definition body of isa_create_simple_orphan()
-hw/isa/isa-bus.c:208 | isa_create_simple_orphan | ORPHAN-JUSTIFIED | - | isa_vga_init() is a public helper called from board code (hw/i386/pc.c); needs Object *parent threaded through include/hw/isa/isa.h; deferred to caller-side patch
-hw/isa/isa-bus.c:213 | isa_create_simple_orphan | ORPHAN-JUSTIFIED | - | isa_vga_init() is a public helper called from board code; deferred to caller-side patch
-hw/isa/isa-superio.c:57 | isa_new | OBJECT(dev) | name | isa_superio_realize(); collapse existing object_property_add_child(OBJECT(dev), name, ...) keeping dynamic per-index name
-hw/isa/isa-superio.c:96 | isa_new | OBJECT(dev) | name | isa_superio_realize(); collapse existing object_property_add_child(OBJECT(dev), name, ...) keeping dynamic per-index name
-hw/isa/isa-superio.c:123 | isa_new | OBJECT(sio) | "isa-fdc" | isa_superio_realize(); collapse existing object_property_add_child(OBJECT(sio), "isa-fdc", ...)
-hw/isa/isa-superio.c:147 | isa_new | OBJECT(sio) | TYPE_I8042 | isa_superio_realize(); collapse existing object_property_add_child(OBJECT(sio), TYPE_I8042, ...)
-hw/isa/isa-superio.c:154 | isa_new | OBJECT(sio) | "isa-ide" | isa_superio_realize(); collapse existing object_property_add_child(OBJECT(sio), "isa-ide", ...)
+hw/i2c/aspeed_i2c.c:1521 | i2c_slave_create_simple | OBJECT(s) | "slave" | inside AspeedI2CBus DeviceClass.realize(); slave belongs to the bus device
+hw/i2c/core.c:367 | - | ORPHAN-JUSTIFIED | - | i2c_slave_new_orphan() is the orphan-API implementation itself; parented sibling already exists at :376
+hw/i2c/core.c:371 | - | ORPHAN-JUSTIFIED | - | body of i2c_slave_new_orphan(); intentional orphan wrapper
+hw/i2c/core.c:401 | - | ORPHAN-JUSTIFIED | - | i2c_slave_create_simple_orphan() is the orphan-API implementation itself; parented sibling already exists at :386
+hw/i2c/core.c:403 | - | ORPHAN-JUSTIFIED | - | body of i2c_slave_create_simple_orphan(); intentional orphan wrapper
+hw/i2c/smbus_eeprom.c:167 | qdev_new | parent | "eeprom[*]" | helper called from many board inits; thread Object *parent through smbus_eeprom_init_one() and smbus_eeprom_init() and update all 17 callers
 
 Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/isa/i82378.c      |  6 +++---
- hw/isa/isa-superio.c | 25 ++++++++++---------------
- 2 files changed, 13 insertions(+), 18 deletions(-)
+ hw/arm/aspeed_ast1040_evb.c               |  3 ++-
+ hw/arm/aspeed_ast10x0_evb.c               |  3 ++-
+ hw/arm/aspeed_ast2400_palmetto.c          |  2 +-
+ hw/arm/aspeed_ast2400_supermicrox11.c     |  2 +-
+ hw/arm/aspeed_ast2500_evb.c               |  2 +-
+ hw/arm/aspeed_ast2500_g220a.c             |  2 +-
+ hw/arm/aspeed_ast2500_supermicro-x11spi.c |  2 +-
+ hw/arm/aspeed_ast2500_witherspoon.c       |  2 +-
+ hw/arm/aspeed_ast2600_evb.c               |  2 +-
+ hw/i2c/aspeed_i2c.c                       |  4 ++--
+ hw/i2c/smbus_eeprom.c                     | 11 ++++++-----
+ hw/i386/pc_piix.c                         |  2 +-
+ hw/i386/pc_q35.c                          |  2 +-
+ hw/mips/fuloong2e.c                       |  2 +-
+ hw/mips/malta.c                           |  2 +-
+ hw/ppc/amigaone.c                         |  4 ++--
+ hw/ppc/pegasos.c                          |  2 +-
+ hw/ppc/sam460ex.c                         |  2 +-
+ include/hw/i2c/smbus_eeprom.h             |  5 +++--
+ 19 files changed, 30 insertions(+), 26 deletions(-)
 
-diff --git a/hw/isa/i82378.c b/hw/isa/i82378.c
-index da09d869f5..1c0a6ad779 100644
---- a/hw/isa/i82378.c
-+++ b/hw/isa/i82378.c
-@@ -103,14 +103,14 @@ static void i82378_realize(PCIDevice *pci, Error **errp)
-     pit = i8254_pit_init(isabus, 0x40, 0, NULL);
+diff --git a/hw/arm/aspeed_ast1040_evb.c b/hw/arm/aspeed_ast1040_evb.c
+index d0326d39f9..fb83087b13 100644
+--- a/hw/arm/aspeed_ast1040_evb.c
++++ b/hw/arm/aspeed_ast1040_evb.c
+@@ -54,7 +54,8 @@ static void ast1040_evb_i2c_init(AspeedMachineState *bmc)
+     AspeedSoCState *soc = bmc->soc;
+     uint8_t *eeprom_buf = g_malloc0(256);
  
-     /* speaker */
--    pcspk = isa_new_orphan(TYPE_PC_SPEAKER);
-+    pcspk = isa_new(OBJECT(s), "pcspk", TYPE_PC_SPEAKER);
-     object_property_set_link(OBJECT(pcspk), "pit", OBJECT(pit), &error_fatal);
--    if (!isa_realize_and_unref(pcspk, isabus, errp)) {
-+    if (!qdev_realize(DEVICE(pcspk), BUS(isabus), errp)) {
-         return;
-     }
- 
-     /* 2 82C37 (dma) */
--    isa_create_simple_orphan(isabus, "i82374");
-+    isa_create_simple(OBJECT(s), "dma", isabus, "i82374");
+-    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50, eeprom_buf);
++    smbus_eeprom_init_one(OBJECT(bmc), aspeed_i2c_get_bus(&soc->i2c, 0), 0x50,
++                          eeprom_buf);
+     i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4d);
  }
  
- static void i82378_init(Object *obj)
-diff --git a/hw/isa/isa-superio.c b/hw/isa/isa-superio.c
-index 2d65255f34..d0c3c1dbd3 100644
---- a/hw/isa/isa-superio.c
-+++ b/hw/isa/isa-superio.c
-@@ -54,7 +54,7 @@ static void isa_superio_realize(DeviceState *dev, Error **errp)
-             } else {
-                 name = g_strdup_printf("parallel%d", i);
-             }
--            isa = isa_new_orphan(TYPE_ISA_PARALLEL);
-+            isa = isa_new(OBJECT(dev), name, TYPE_ISA_PARALLEL);
-             d = DEVICE(isa);
-             qdev_prop_set_uint32(d, "index", i);
-             if (k->parallel.get_iobase) {
-@@ -65,8 +65,7 @@ static void isa_superio_realize(DeviceState *dev, Error **errp)
-                 qdev_prop_set_uint32(d, "irq", k->parallel.get_irq(sio, i));
-             }
-             qdev_prop_set_chr(d, "chardev", chr);
--            object_property_add_child(OBJECT(dev), name, OBJECT(isa));
--            isa_realize_and_unref(isa, bus, &error_fatal);
-+            qdev_realize(DEVICE(isa), BUS(bus), &error_fatal);
-             sio->parallel[i] = isa;
-             trace_superio_create_parallel(i,
-                                           k->parallel.get_iobase ?
-@@ -93,7 +92,7 @@ static void isa_superio_realize(DeviceState *dev, Error **errp)
-             } else {
-                 name = g_strdup_printf("serial%d", i);
-             }
--            isa = isa_new_orphan(TYPE_ISA_SERIAL);
-+            isa = isa_new(OBJECT(dev), name, TYPE_ISA_SERIAL);
-             d = DEVICE(isa);
-             qdev_prop_set_uint32(d, "index", i);
-             if (k->serial.get_iobase) {
-@@ -104,8 +103,7 @@ static void isa_superio_realize(DeviceState *dev, Error **errp)
-                 qdev_prop_set_uint32(d, "irq", k->serial.get_irq(sio, i));
-             }
-             qdev_prop_set_chr(d, "chardev", chr);
--            object_property_add_child(OBJECT(dev), name, OBJECT(isa));
--            isa_realize_and_unref(isa, bus, &error_fatal);
-+            qdev_realize(DEVICE(isa), BUS(bus), &error_fatal);
-             sio->serial[i] = isa;
-             trace_superio_create_serial(i,
-                                         k->serial.get_iobase ?
-@@ -120,7 +118,7 @@ static void isa_superio_realize(DeviceState *dev, Error **errp)
-     assert(k->floppy.count <= 1);
-     if (k->floppy.count &&
-         (!k->floppy.is_enabled || k->floppy.is_enabled(sio, 0))) {
--        isa = isa_new_orphan(TYPE_ISA_FDC);
-+        isa = isa_new(OBJECT(sio), "isa-fdc", TYPE_ISA_FDC);
-         d = DEVICE(isa);
-         if (k->floppy.get_iobase) {
-             qdev_prop_set_uint32(d, "iobase", k->floppy.get_iobase(sio, 0));
-@@ -132,8 +130,7 @@ static void isa_superio_realize(DeviceState *dev, Error **errp)
-         for (i = 0; i < MAX_FD; i++) {
-             fd[i] = drive_get(IF_FLOPPY, 0, i);
-         }
--        object_property_add_child(OBJECT(sio), "isa-fdc", OBJECT(isa));
--        isa_realize_and_unref(isa, bus, &error_fatal);
-+        qdev_realize(DEVICE(isa), BUS(bus), &error_fatal);
-         isa_fdc_init_drives(isa, fd);
-         sio->floppy = isa;
-         trace_superio_create_floppy(0,
-@@ -144,14 +141,13 @@ static void isa_superio_realize(DeviceState *dev, Error **errp)
+diff --git a/hw/arm/aspeed_ast10x0_evb.c b/hw/arm/aspeed_ast10x0_evb.c
+index 52ead37bc7..dc134b555c 100644
+--- a/hw/arm/aspeed_ast10x0_evb.c
++++ b/hw/arm/aspeed_ast10x0_evb.c
+@@ -70,7 +70,8 @@ static void ast1030_evb_i2c_init(AspeedMachineState *bmc)
+ 
+     /* U10 24C08 connects to SDA/SCL Group 1 by default */
+     uint8_t *eeprom_buf = g_malloc0(32 * 1024);
+-    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50, eeprom_buf);
++    smbus_eeprom_init_one(OBJECT(bmc), aspeed_i2c_get_bus(&soc->i2c, 0), 0x50,
++                          eeprom_buf);
+ 
+     /* U11 LM75 connects to SDA/SCL Group 2 by default */
+     i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x4d);
+diff --git a/hw/arm/aspeed_ast2400_palmetto.c b/hw/arm/aspeed_ast2400_palmetto.c
+index d89d042ce2..80f9c911b8 100644
+--- a/hw/arm/aspeed_ast2400_palmetto.c
++++ b/hw/arm/aspeed_ast2400_palmetto.c
+@@ -39,7 +39,7 @@ static void palmetto_bmc_i2c_init(AspeedMachineState *bmc)
+      */
+     i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 0), "ds1338", 0x68);
+ 
+-    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50,
++    smbus_eeprom_init_one(OBJECT(bmc), aspeed_i2c_get_bus(&soc->i2c, 0), 0x50,
+                           eeprom_buf);
+ 
+     /* add a TMP423 temperature sensor */
+diff --git a/hw/arm/aspeed_ast2400_supermicrox11.c b/hw/arm/aspeed_ast2400_supermicrox11.c
+index 9c90998754..b18adf3981 100644
+--- a/hw/arm/aspeed_ast2400_supermicrox11.c
++++ b/hw/arm/aspeed_ast2400_supermicrox11.c
+@@ -39,7 +39,7 @@ static void supermicrox11_bmc_i2c_init(AspeedMachineState *bmc)
+      */
+     i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 0), "ds1338", 0x68);
+ 
+-    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50,
++    smbus_eeprom_init_one(OBJECT(bmc), aspeed_i2c_get_bus(&soc->i2c, 0), 0x50,
+                           eeprom_buf);
+ 
+     /* add a TMP423 temperature sensor */
+diff --git a/hw/arm/aspeed_ast2500_evb.c b/hw/arm/aspeed_ast2500_evb.c
+index e46ce4a5aa..ba8a56bafd 100644
+--- a/hw/arm/aspeed_ast2500_evb.c
++++ b/hw/arm/aspeed_ast2500_evb.c
+@@ -30,7 +30,7 @@ static void ast2500_evb_i2c_init(AspeedMachineState *bmc)
+     AspeedSoCState *soc = bmc->soc;
+     uint8_t *eeprom_buf = g_malloc0(8 * 1024);
+ 
+-    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 3), 0x50,
++    smbus_eeprom_init_one(OBJECT(bmc), aspeed_i2c_get_bus(&soc->i2c, 3), 0x50,
+                           eeprom_buf);
+ 
+     /* The AST2500 EVB expects a LM75 but a TMP105 is compatible */
+diff --git a/hw/arm/aspeed_ast2500_g220a.c b/hw/arm/aspeed_ast2500_g220a.c
+index 577ee0aff4..27c9dc436a 100644
+--- a/hw/arm/aspeed_ast2500_g220a.c
++++ b/hw/arm/aspeed_ast2500_g220a.c
+@@ -59,7 +59,7 @@ static void g220a_bmc_i2c_init(AspeedMachineState *bmc)
+             0x46, 0x46, 0xc4, 0x48, 0x48, 0x47, 0x47, 0xc1,
+             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xa7,
+     };
+-    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 4), 0x57,
++    smbus_eeprom_init_one(OBJECT(bmc), aspeed_i2c_get_bus(&soc->i2c, 4), 0x57,
+                           eeprom_buf);
+ }
+ 
+diff --git a/hw/arm/aspeed_ast2500_supermicro-x11spi.c b/hw/arm/aspeed_ast2500_supermicro-x11spi.c
+index 9e95d26901..bea459eeaa 100644
+--- a/hw/arm/aspeed_ast2500_supermicro-x11spi.c
++++ b/hw/arm/aspeed_ast2500_supermicro-x11spi.c
+@@ -35,7 +35,7 @@ static void supermicro_x11spi_bmc_i2c_init(AspeedMachineState *bmc)
+      */
+     i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 0), "ds1338", 0x68);
+ 
+-    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50,
++    smbus_eeprom_init_one(OBJECT(bmc), aspeed_i2c_get_bus(&soc->i2c, 0), 0x50,
+                           eeprom_buf);
+ 
+     /* add a TMP423 temperature sensor */
+diff --git a/hw/arm/aspeed_ast2500_witherspoon.c b/hw/arm/aspeed_ast2500_witherspoon.c
+index cb57cb421a..dda090ab60 100644
+--- a/hw/arm/aspeed_ast2500_witherspoon.c
++++ b/hw/arm/aspeed_ast2500_witherspoon.c
+@@ -73,7 +73,7 @@ static void witherspoon_bmc_i2c_init(AspeedMachineState *bmc)
+      */
+     i2c_slave_create_simple_orphan(aspeed_i2c_get_bus(&soc->i2c, 11), "ds1338", 0x32);
+ 
+-    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 11), 0x51,
++    smbus_eeprom_init_one(OBJECT(bmc), aspeed_i2c_get_bus(&soc->i2c, 11), 0x51,
+                           eeprom_buf);
+     dev = DEVICE(i2c_slave_new_orphan(TYPE_PCA9552, 0x60));
+     qdev_prop_set_string(dev, "description", "pca0");
+diff --git a/hw/arm/aspeed_ast2600_evb.c b/hw/arm/aspeed_ast2600_evb.c
+index cf1e2b006c..ab7667da75 100644
+--- a/hw/arm/aspeed_ast2600_evb.c
++++ b/hw/arm/aspeed_ast2600_evb.c
+@@ -23,7 +23,7 @@ static void ast2600_evb_i2c_init(AspeedMachineState *bmc)
+     AspeedSoCState *soc = bmc->soc;
+     uint8_t *eeprom_buf = g_malloc0(8 * 1024);
+ 
+-    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 7), 0x50,
++    smbus_eeprom_init_one(OBJECT(bmc), aspeed_i2c_get_bus(&soc->i2c, 7), 0x50,
+                           eeprom_buf);
+ 
+     /* LM75 is compatible with TMP105 driver */
+diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
+index ac09e5f706..c58ecea011 100644
+--- a/hw/i2c/aspeed_i2c.c
++++ b/hw/i2c/aspeed_i2c.c
+@@ -1518,8 +1518,8 @@ static void aspeed_i2c_bus_realize(DeviceState *dev, Error **errp)
+     sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq);
+ 
+     s->bus = i2c_init_bus(dev, s->name);
+-    s->slave = i2c_slave_create_simple_orphan(s->bus, TYPE_ASPEED_I2C_BUS_SLAVE,
+-                                       0xff);
++    s->slave = i2c_slave_create_simple(OBJECT(s), "slave", s->bus,
++                                       TYPE_ASPEED_I2C_BUS_SLAVE, 0xff);
+ 
+     memory_region_init_io(&s->mr, OBJECT(s), &aspeed_i2c_bus_ops,
+                           s, s->name, aic->reg_size);
+diff --git a/hw/i2c/smbus_eeprom.c b/hw/i2c/smbus_eeprom.c
+index 59fe07b16b..aaf90a10da 100644
+--- a/hw/i2c/smbus_eeprom.c
++++ b/hw/i2c/smbus_eeprom.c
+@@ -160,18 +160,19 @@ static const TypeInfo smbus_eeprom_types[] = {
+ 
+ DEFINE_TYPES(smbus_eeprom_types)
+ 
+-void smbus_eeprom_init_one(I2CBus *smbus, uint8_t address, uint8_t *eeprom_buf)
++void smbus_eeprom_init_one(Object *parent, I2CBus *smbus, uint8_t address,
++                           uint8_t *eeprom_buf)
+ {
+     DeviceState *dev;
+ 
+-    dev = qdev_new_orphan(TYPE_SMBUS_EEPROM);
++    dev = qdev_new(parent, "eeprom[*]", TYPE_SMBUS_EEPROM);
+     qdev_prop_set_uint8(dev, "address", address);
+     /* FIXME: use an array of byte or block backend property? */
+     SMBUS_EEPROM(dev)->init_data = eeprom_buf;
+-    qdev_realize_and_unref(dev, (BusState *)smbus, &error_fatal);
++    qdev_realize(dev, (BusState *)smbus, &error_fatal);
+ }
+ 
+-void smbus_eeprom_init(I2CBus *smbus, int nb_eeprom,
++void smbus_eeprom_init(Object *parent, I2CBus *smbus, int nb_eeprom,
+                        const uint8_t *eeprom_spd, int eeprom_spd_size)
+ {
+     int i;
+@@ -184,7 +185,7 @@ void smbus_eeprom_init(I2CBus *smbus, int nb_eeprom,
      }
  
-     /* Keyboard, mouse */
--    isa = isa_new_orphan(TYPE_I8042);
--    object_property_add_child(OBJECT(sio), TYPE_I8042, OBJECT(isa));
--    isa_realize_and_unref(isa, bus, &error_fatal);
-+    isa = isa_new(OBJECT(sio), TYPE_I8042, TYPE_I8042);
-+    qdev_realize(DEVICE(isa), BUS(bus), &error_fatal);
-     sio->kbc = isa;
+     for (i = 0; i < nb_eeprom; i++) {
+-        smbus_eeprom_init_one(smbus, 0x50 + i,
++        smbus_eeprom_init_one(parent, smbus, 0x50 + i,
+                               eeprom_buf + (i * SMBUS_EEPROM_SIZE));
+     }
+ }
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 3f361c8396..44ce592ea2 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -304,7 +304,7 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+         qdev_connect_gpio_out_named(DEVICE(piix4_pm), "smi-irq", 0, smi_irq);
+         pcms->smbus = I2C_BUS(qdev_get_child_bus(DEVICE(piix4_pm), "i2c"));
+         /* TODO: Populate SPD eeprom data.  */
+-        smbus_eeprom_init(pcms->smbus, 8, NULL, 0);
++        smbus_eeprom_init(OBJECT(machine), pcms->smbus, 8, NULL, 0);
  
-     /* IDE */
-     if (k->ide.count && (!k->ide.is_enabled || k->ide.is_enabled(sio, 0))) {
--        isa = isa_new_orphan("isa-ide");
-+        isa = isa_new(OBJECT(sio), "isa-ide", "isa-ide");
-         d = DEVICE(isa);
-         if (k->ide.get_iobase) {
-             qdev_prop_set_uint32(d, "iobase", k->ide.get_iobase(sio, 0));
-@@ -162,8 +158,7 @@ static void isa_superio_realize(DeviceState *dev, Error **errp)
-         if (k->ide.get_irq) {
-             qdev_prop_set_uint32(d, "irq", k->ide.get_irq(sio, 0));
-         }
--        object_property_add_child(OBJECT(sio), "isa-ide", OBJECT(isa));
--        isa_realize_and_unref(isa, bus, &error_fatal);
-+        qdev_realize(DEVICE(isa), BUS(bus), &error_fatal);
-         sio->ide = isa;
-         trace_superio_create_ide(0,
-                                  k->ide.get_iobase ?
+         object_property_add_link(OBJECT(machine), PC_MACHINE_ACPI_DEVICE_PROP,
+                                  TYPE_HOTPLUG_HANDLER,
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index a4a7169398..bfea390825 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -317,7 +317,7 @@ static void pc_q35_init(MachineState *machine)
+                                               TYPE_ICH9_SMB_DEVICE);
+         pcms->smbus = I2C_BUS(qdev_get_child_bus(DEVICE(smb), "i2c"));
+ 
+-        smbus_eeprom_init(pcms->smbus, 8, NULL, 0);
++        smbus_eeprom_init(OBJECT(machine), pcms->smbus, 8, NULL, 0);
+     }
+ 
+     /* the rest devices to which pci devfn is automatically assigned */
+diff --git a/hw/mips/fuloong2e.c b/hw/mips/fuloong2e.c
+index 5e5ade46f3..0046423d40 100644
+--- a/hw/mips/fuloong2e.c
++++ b/hw/mips/fuloong2e.c
+@@ -322,7 +322,7 @@ static void mips_fuloong2e_init(MachineState *machine)
+ 
+     /* Populate SPD eeprom data */
+     spd_data = spd_data_generate(DDR, machine->ram_size);
+-    smbus_eeprom_init_one(smbus, 0x50, spd_data);
++    smbus_eeprom_init_one(OBJECT(machine), smbus, 0x50, spd_data);
+ 
+     /* Network card: RTL8139D */
+     network_init(pci_bus);
+diff --git a/hw/mips/malta.c b/hw/mips/malta.c
+index da6dd15a59..52aae144da 100644
+--- a/hw/mips/malta.c
++++ b/hw/mips/malta.c
+@@ -1249,7 +1249,7 @@ void mips_malta_init(MachineState *machine)
+     smbus = I2C_BUS(qdev_get_child_bus(dev, "i2c"));
+     generate_eeprom_spd(&smbus_eeprom_buf[0 * 256], ram_size);
+     generate_eeprom_serial(&smbus_eeprom_buf[6 * 256]);
+-    smbus_eeprom_init(smbus, 8, smbus_eeprom_buf, smbus_eeprom_size);
++    smbus_eeprom_init(OBJECT(machine), smbus, 8, smbus_eeprom_buf, smbus_eeprom_size);
+     g_free(smbus_eeprom_buf);
+ 
+     /* Super I/O: SMS FDC37M817 */
+diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
+index 80802d42c6..866e5547d6 100644
+--- a/hw/ppc/amigaone.c
++++ b/hw/ppc/amigaone.c
+@@ -338,9 +338,9 @@ static void amigaone_init(MachineState *machine)
+         spd_data = spd_data_generate(SDR, machine->ram_size);
+     }
+     fix_spd_data(spd_data);
+-    smbus_eeprom_init_one(i2c_bus, 0x51, spd_data);
++    smbus_eeprom_init_one(OBJECT(machine), i2c_bus, 0x51, spd_data);
+     if (machine->ram_size > 512 * MiB) {
+-        smbus_eeprom_init_one(i2c_bus, 0x52, spd_data);
++        smbus_eeprom_init_one(OBJECT(machine), i2c_bus, 0x52, spd_data);
+     }
+ 
+     pci_mem = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 1);
+diff --git a/hw/ppc/pegasos.c b/hw/ppc/pegasos.c
+index bba73f60c8..2974625f1c 100644
+--- a/hw/ppc/pegasos.c
++++ b/hw/ppc/pegasos.c
+@@ -261,7 +261,7 @@ static void pegasos_init(MachineState *machine)
+     dev = PCI_DEVICE(object_resolve_path_component(via, "pm"));
+     i2c_bus = I2C_BUS(qdev_get_child_bus(DEVICE(dev), "i2c"));
+     spd_data = spd_data_generate(DDR, machine->ram_size);
+-    smbus_eeprom_init_one(i2c_bus, 0x57, spd_data);
++    smbus_eeprom_init_one(OBJECT(machine), i2c_bus, 0x57, spd_data);
+ 
+     /* other PC hardware */
+     pci_vga_init(pci_bus);
+diff --git a/hw/ppc/sam460ex.c b/hw/ppc/sam460ex.c
+index d23d2c2bd8..8623848633 100644
+--- a/hw/ppc/sam460ex.c
++++ b/hw/ppc/sam460ex.c
+@@ -343,7 +343,7 @@ static void sam460ex_init(MachineState *machine)
+     spd_data = spd_data_generate(machine->ram_size < 128 * MiB ? DDR : DDR2,
+                                  machine->ram_size);
+     spd_data[20] = 4; /* SO-DIMM module */
+-    smbus_eeprom_init_one(i2c, 0x50, spd_data);
++    smbus_eeprom_init_one(OBJECT(machine), i2c, 0x50, spd_data);
+     /* RTC */
+     i2c_slave_create_simple_orphan(i2c, "m41t80", 0x68);
+ 
+diff --git a/include/hw/i2c/smbus_eeprom.h b/include/hw/i2c/smbus_eeprom.h
+index 61a54cda76..f3aefada42 100644
+--- a/include/hw/i2c/smbus_eeprom.h
++++ b/include/hw/i2c/smbus_eeprom.h
+@@ -26,8 +26,9 @@
+ #include "system/ram_addr.h"
+ #include "hw/i2c/i2c.h"
+ 
+-void smbus_eeprom_init_one(I2CBus *bus, uint8_t address, uint8_t *eeprom_buf);
+-void smbus_eeprom_init(I2CBus *bus, int nb_eeprom,
++void smbus_eeprom_init_one(Object *parent, I2CBus *bus, uint8_t address,
++                           uint8_t *eeprom_buf);
++void smbus_eeprom_init(Object *parent, I2CBus *bus, int nb_eeprom,
+                        const uint8_t *eeprom_spd, int size);
+ 
+ enum sdram_type { SDR = 0x4, DDR = 0x7, DDR2 = 0x8 };
 -- 
 2.47.1
 
