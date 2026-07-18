@@ -4,155 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE2F2C4451B
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 18:45:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1CA0C4451B
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 21:38:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlA1h-00062S-9L; Sat, 18 Jul 2026 14:44:42 -0400
+	id 1wlCio-00005P-1O; Sat, 18 Jul 2026 17:37:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wlA1c-00061z-DJ
- for qemu-devel@nongnu.org; Sat, 18 Jul 2026 14:44:36 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
+ id 1wlCim-0008W4-1C; Sat, 18 Jul 2026 17:37:20 -0400
+Received: from pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([35.155.198.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wlA1Y-0004FR-IG
- for qemu-devel@nongnu.org; Sat, 18 Jul 2026 14:44:34 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66IGOUSK1262631
- for <qemu-devel@nongnu.org>; Sat, 18 Jul 2026 18:44:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- xIdPuM0P5ma83j86pkbjvx79vGVEOO7YSt2kte/xptg=; b=YIi4EdHdLT03NHhs
- iGEGlV81ZzhqIe1psqc+iDXkDh8FLAv0OJUnd6mt1N6UhZWORl9hOqiMBOmc7NjK
- 6pvcjE3UA92NAQKkQNgiqLQA+0rmHQJTvOlyYtxSxwLCiNRZ6kbuNeODceDa4OmV
- Z5y11hDOx8zDwkCRVLQS4NJSGKpcjtfbokAMS574PFLhjop+L7x8ZcyNvHPHkZ5S
- drLVHHZKnqbZ09AwCE6VpkYw+aQWCYCnRaFEi1SnFCq784OM/fD+eGQse0A37gI2
- xvO8PW2+fjbFgpMtcMRP+tfmkHG4eL8iyWKqQrZ/ZfWw/h9z/v9sVyb4/DjoLxCX
- rqjk+A==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fg2c69cc6-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sat, 18 Jul 2026 18:44:30 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-cab3e9cd922so4340015a12.0
- for <qemu-devel@nongnu.org>; Sat, 18 Jul 2026 11:44:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
+ id 1wlCik-0001xW-0e; Sat, 18 Jul 2026 17:37:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784400269; x=1785005069; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=xIdPuM0P5ma83j86pkbjvx79vGVEOO7YSt2kte/xptg=;
- b=eVWUTHf4bqUwwTDZEkqgUnKen9Fd58GNNx/rAbdcy5f/oHgWu//0HvX9k5TBP7u0Vc
- wloB8ec/uKXHOe0BhuGTqUGwovEVQWX1ahfnzJmASqhA5z54/1syby8KDAH9b/bR/yQ4
- JG+WpnsoKaqZIt43uETHh4Re6tpWYh1Q5SY+5FuhR+Ad6Xkf10hKMPmLfiMyGOdA3Lqg
- oEBY92EJPwsgjKvMhXRUbf6Hap5QoVKB3x/gHwWyjvOxQS5bhii+egqD5pvf5aRQpvFf
- oS2z44AwNq3Vs6fTtLUrRlEnHC6Hca1FC2CEez89hx2D443jmspYePMKGggCpNXVJEdK
- J9yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784400269; x=1785005069;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=xIdPuM0P5ma83j86pkbjvx79vGVEOO7YSt2kte/xptg=;
- b=jRwxOOowK2+UgfoYK7adORjWBvup0mBg1hRDthehbC6OFE+exiS6N/Q5g4Qw6ShvK8
- tesz+SpS6+4vSQkhMI9vRC3HSlJcqRG3GlizONVfxrRXpQxmpzTB8Gn8E8qv9ZZCr5Dk
- DrPZW/vHGEDhoqAv2MDnqGOEBBmb/cBOBE66QkhJeW5r0bJoZdWeq2on3T9pGBxKi1LG
- /ssgaDqCDrO83RoyZVeb7ux9yxZ//bx+CEQ1TO8gUgcdmmj4Zw5YUQtmBrS06q8FUp/F
- KdEpV+QIDrnYeMnbpiqAjdCFo0VLh8U+icmVuyx+l0VsZcRjQ/NJdvGjBfKhykiALRsL
- 5DsA==
-X-Forwarded-Encrypted: i=1;
- AHgh+RquYS9JfaAB4loBBEQCIi6PVMxOnbQZj9XZsddyfDJgfqqKdYLx9UfgRJkKmks0GBfdo7h+UpTvMHyh@nongnu.org
-X-Gm-Message-State: AOJu0Yy9VKRVE5kTexsADD7xjPQoLL+x0ohAwgqibTEy1txOXjoibJ8F
- nMD/nN+HZw5/J8/r+h1CkhUW5eA+fiCWySXaDGt86VojQuAapBc40UqZl06e/8rHJJJdxEyCdIq
- GWxrJ17Yawm3bA1ZFLXmWeYWlE7stRnMoSEXCb1PDYrmTt0dFDACogglWiw==
-X-Gm-Gg: AfdE7cklJJjgKMowvfyt+kCxvRFvb7MmUyP6bmbwsljDFmMpMxmbZQ5eR2udA1/uI8w
- t9ZXccfsAEbKc1mOMN6IR3FDiAwnZF0R0iRTW+p2efPc1uuZQNBvk0DAhGoKE/qujdye+61NTh6
- tdiVy+yM5035LS8NaVfhLDttOvc8qj3lKWo2UXN3waAmWR8cZ98eMHLkewiXNy+HP5eccYbDrGf
- cIRdB9nP4KZAWkCqW89GL8S6adB0eFxyM2KLjE3IJTiLpw3C/3spFSv2BqSwrObemVo2z5nt4Wu
- p1Ji33B2mEPhhqwuAhJVtEkDPBSw3ln5ZaEIyRVyt1ORttCpTQV5fUo8wm6y6KBON4SGcUDnIhu
- ziIRPYq6RhRuru+7s37N86/E/a31i21fziNXgAgZwS183REnsSAFMZjix6SespZh+5X6V
-X-Received: by 2002:a17:90b:2f0f:b0:387:e0db:bc31 with SMTP id
- 98e67ed59e1d1-38e4b56ed5fmr8140681a91.39.1784400269109; 
- Sat, 18 Jul 2026 11:44:29 -0700 (PDT)
-X-Received: by 2002:a17:90b:2f0f:b0:387:e0db:bc31 with SMTP id
- 98e67ed59e1d1-38e4b56ed5fmr8140657a91.39.1784400268637; 
- Sat, 18 Jul 2026 11:44:28 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3142a1dde81sm36819510eec.21.2026.07.18.11.44.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 18 Jul 2026 11:44:27 -0700 (PDT)
-Message-ID: <e43b316e-e8ac-42ea-afec-c56d2f030819@oss.qualcomm.com>
-Date: Sat, 18 Jul 2026 11:44:26 -0700
+ d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
+ t=1784410638; x=1815946638;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=IA4nALdfZQTZQBYqQKAyhaa+NqJeGaJYK8ZpoH8EEDo=;
+ b=cUdm8OyehPTCxb839VlFO12Aq+7f7TRPQWsm6E8rvKt9vqD4XgqXVlHx
+ U/95+VmG2c7rLhAZ+zggw+fmRZ475ftYFwkQf0uoNIJz79HHvrD3i8NTl
+ JzFfViF4BBzQ7v7tSKjPRVtVgz5miIChILmF6jVPZZzchU1Al4sKiE2ja
+ JbHTEQKs4pQLUd6KmUEz3VCYjy+/uZOwMAGbjQHgNWrWPYhWsITZMfr4m
+ HXLX0bbO8CqjuEac1xz2iDY2wZd20HFAU4s3lk4HebZKNQ9xzBdE6wSGI
+ tnX9zoWBdUBaq6OMrfaSwiR2MZ/0QPxrKd+m/dBq0Nfg0N5s/Uf7D6lOy Q==;
+X-CSE-ConnectionGUID: TIgUOO8ERKOQTOsykgQreg==
+X-CSE-MsgGUID: mLR7Sn1HREScAq49dTgluw==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23816217"
+Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
+ by internal-pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:37:14 +0000
+Received: from EX19MTAUWB002.ant.amazon.com [205.251.233.111:2580]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.58.199:2525]
+ with esmtp (Farcaster)
+ id 2d57d8dc-b67e-476f-8e56-f516b25e8f20; Sat, 18 Jul 2026 21:37:14 +0000 (UTC)
+X-Farcaster-Flow-ID: 2d57d8dc-b67e-476f-8e56-f516b25e8f20
+Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
+ EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
+ Sat, 18 Jul 2026 21:37:13 +0000
+Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
+ EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
+ Sat, 18 Jul 2026 21:37:04 +0000
+From: Alexander Graf <graf@amazon.com>
+To: <qemu-devel@nongnu.org>
+CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
+ <qemu-s390x@nongnu.org>, Song Gao <17746591750@163.com>, Aditya Gupta
+ <adityag@linux.ibm.com>, Alexey Kardashevskiy <aik@ozlabs.ru>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>, Farhan Ali
+ <alifm@linux.ibm.com>, Alistair Francis <alistair.francis@wdc.com>, "Alistair
+ Francis" <alistair@alistair23.me>, Antony Pavlov <antonynpavlov@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>, Artyom Tarasenko
+ <atar4qemu@gmail.com>, BALATON Zoltan <balaton@eik.bme.hu>, Felipe Balbi
+ <balbi@kernel.org>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
+ <berrange@redhat.com>, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>, Hendrik Brueckner
+ <brueckner@linux.ibm.com>, Chao Liu <chao.liu@processmission.com>, "Huacai
+ Chen" <chenhuacai@kernel.org>, =?UTF-8?q?Cl=C3=A9ment=20Chigot?=
+ <chigot@adacore.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Helge Deller <deller@gmx.de>, Dorjoy Chowdhury <dorjoychy111@gmail.com>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, Alexandre Iooss
+ <erdnaxe@crans.org>, Eric Farman <farman@linux.ibm.com>, Fabiano Rosas
+ <farosas@suse.de>, Francisco Iglesias <francisco.iglesias@amd.com>, "Gaurav
+ Sharma" <gaurav.sharma_7@nxp.com>, Gautam Gala <ggala@linux.ibm.com>, "Harsh
+ Prateek Bora" <harshpb@linux.ibm.com>, =?UTF-8?q?Herv=C3=A9=20Poussineau?=
+ <hpoussin@reactos.org>, Jan Kiszka <jan.kiszka@web.de>, Max Filippov
+ <jcmvbkbc@gmail.com>, Joel Stanley <joel@jms.id.au>, Jared Rossi
+ <jrossi@linux.ibm.com>, Tyrone Ting <kfting@nuvoton.com>, Frederic Konrad
+ <konrad.frederic@yahoo.fr>, Laurent Vivier <laurent@vivier.eu>, "Manos
+ Pitsidianakis" <manos.pitsidianakis@linaro.org>, Bibo Mao
+ <maobibo@loongson.cn>, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Glenn Miles <milesg@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Michael Rolnik <mrolnik@gmail.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>, Nicholas Piggin
+ <npiggin@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>, Halil Pasic
+ <pasic@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ "Pierrick Bouvier" <pierrick.bouvier@oss.qualcomm.com>, Richard Henderson
+ <richard.henderson@linaro.org>, Sai Pavan Boddu <sai.pavan.boddu@amd.com>,
+ Samuel Tardieu <sam@rfc1149.net>, Bernhard Beschow <shentey@gmail.com>,
+ Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
+ Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
+ Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
+Subject: [RFC PATCH v2 001/137] qom: Introduce object_new_child()
+Date: Sat, 18 Jul 2026 21:34:36 +0000
+Message-ID: <20260718213652.37673-2-graf@amazon.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
+References: <20260711223707.42139-1-graf@amazon.com>
+ <20260718213652.37673-1-graf@amazon.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/8] hw/vfio/listener.c: remove CONFIG_KVM
-To: BALATON Zoltan <balaton@eik.bme.hu>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-Cc: Michael Tokarev <mjt@tls.msk.ru>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
- philmd@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-ppc@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- eric.auger@redhat.com
-References: <20260312224449.1605071-1-pierrick.bouvier@linaro.org>
- <20260312224449.1605071-2-pierrick.bouvier@linaro.org>
- <c3a7cd83-7666-40c5-9baa-ebe64edacab6@tls.msk.ru>
- <3f98fbb6-16be-4de1-b9ae-6108f8f33b57@oss.qualcomm.com>
- <d3f85639-e6a4-4917-8300-d48a7852662f@oss.qualcomm.com>
- <5dc9f2fc-3bd6-4df3-8496-44e6037b51ad@tls.msk.ru>
- <73d87f66-6907-4e02-8026-b89c49912aeb@oss.qualcomm.com>
- <f1a78cc4-a660-4d20-85ad-84431d5a5c13@redhat.com>
- <cfa19c77-6783-0870-a509-691f0539ff2a@eik.bme.hu>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <cfa19c77-6783-0870-a509-691f0539ff2a@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: iSDel4TXFx--_ZePqQPeQ9pzAiu4Mp28
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE4MDE5NiBTYWx0ZWRfXzV9zs3F56iGj
- ifbru9VwLWUNTGdrF0cfgwpsaAaYFKLREopnff3XzJLt5ClYufcxyPAx+urui38KLQuP0TX2Cna
- joGjoD9tynH6+jveJpo12tGCruhIUqGnrd+EZmvEKwApdsNmAK6x+O2oxER2OUn5UZ2Y9qyZDPd
- UyaYikTbDtsuwKnozeK2i+QEgvHDGLQou7zl1gw2/zW2t/y39zfxpxrcUhqhRoArhnitZNAKY4H
- H+hhci2AuRhAGebgQzHiqIRBF3v67ETGGBdEfgKZScF3V0KyGa7gHPl74xJR0N7WprQJ8OTnO62
- 01rAjZI6XeTugAEIS5BiPtMQkI+28sbpYyhyHCtiuOUu5TvWYJKiQ0Wtu2ZnQlb+d36mH/5/3/D
- LGdIK82VP70VNqXSGIgUjpKci+Bt4qRrLFVIhIauLXC9f44atFMtm/cX6cNbAa4NqKXL/Vkb3uA
- VOkvwNw7Q+D6pknVxwQ==
-X-Proofpoint-ORIG-GUID: iSDel4TXFx--_ZePqQPeQ9pzAiu4Mp28
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE4MDE5NiBTYWx0ZWRfX1GQKZ/+0L3AX
- cE0StnApIdmzhNi6AagLEMajk3H3cRYY25dF98qo19nx9Bcoe1FuIBFXYum6gHj7c6sgbmGw6OG
- Yc8tO7iSL14NINppQF9EUv9FLNp7XVo=
-X-Authority-Analysis: v=2.4 cv=CJQamxrD c=1 sm=1 tr=0 ts=6a5bc98e cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=p0WdMEafAAAA:8 a=g26msxm2AAAA:8 a=fwYiEHGAlrO_WJUAzG8A:9 a=lqcHg5cX4UMA:10
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=z2U-W3hJrleVIN9YIjzO:22
- a=bFCP_H2QrGi7Okbo017w:22 a=GGU-N_oZwHsPb1Xv_0el:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-18_05,2026-07-17_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0
- suspectscore=0 phishscore=0 priorityscore=1501 spamscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607180196
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain
+X-Originating-IP: [172.19.99.218]
+X-ClientProxiedBy: EX19D031UWA001.ant.amazon.com (10.13.139.88) To
+ EX19D001UWA001.ant.amazon.com (10.13.138.214)
+Received-SPF: pass client-ip=35.155.198.111;
+ envelope-from=prvs=65292d44c=graf@amazon.de;
+ helo=pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_LOW=-0.7,
+ SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,65 +132,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/18/2026 4:51 AM, BALATON Zoltan wrote:
-> On Sat, 18 Jul 2026, Cédric Le Goater wrote:
->> On 7/18/26 06:52, Pierrick Bouvier wrote:
->>> On 7/17/2026 9:14 PM, Michael Tokarev wrote:
->>>> On 7/17/26 22:40, Pierrick Bouvier wrote:
->>>>
->>>>> https://gitlab.com/qemu-project/qemu/-/blob/master/hw/vfio/Kconfig?
->>>>> ref_type=heads#L5
->>>>>
->>>>> ```
->>>>> config VFIO
->>>>>       bool
->>>>>       depends on LINUX
->>>>> ```
->>>>>
->>>>> Incorrect, and it should exclude Linux hosts not supporting VFIO.
->>>>> At least sparc64 to fix the current issue.
->>>>
->>>> Shouldn't there be "depends on LINUX & KVM" ?  At least, this
->>>> way we can do --disable-kvm and it will work.
->>>>
->>>
->>> I think it's a safe choice, but not sure if we are supposed to be able
->>> to use the exotic combination of vfio with tcg also. Maybe it doesn't
->>> make any sense technically though, I don't know the arcane of vfio.
->>
->> VFIO works in some heterogeneous configurations, aarch64 TCG running
->> on an x86 host for instance. The opposite doesn't. ppc64 TCG on an x86
->> used to work. The limitations primarily stem from architectural
->> differences in the host/guest memory mode, CPU/IOMMU address spaces,
->> assumptions, etc.
->>
->>> @Cédric, Any idea of which matrix of host/target is supposed to be
->>> supported?
->>
->> Overall, heterogeneous TCG configurations happen to work by accident.
->> I would not consider them supported.
-> 
-> VFIO (vfio-pci) works with PPC TCG and is used for passing through cards
-> including GPU to emulated AmigaNG machines (maybe also mac99). Please do
-> not break that. There are some quirks mostly with GPUs, see https://
-> qmiga.codeberg.page/qemu_vfio.html but it works and used by some people.
->
+We already have two ways of creating a QOM object with a parent set
+from birth: object_initialize_child() for objects embedded in the
+parent struct, and object_new_with_props() for heap-allocated objects
+that also want a list of string properties applied.  What we do not
+have is the plain heap-allocated dual of object_initialize_child():
+create the object, add it as a child<> of a given parent under a given
+name, and hand the reference to the parent.
 
-👍
+Board and composite-device code that heap-allocates children today
+therefore either open-codes object_new()+object_property_add_child()
++object_unref(), or skips the parenting step entirely and lets
+device_set_realized() dump the object into /machine/unattached.
 
-In this case, and we want to ensure we don't break any existing workflow
-we might now be aware of, a safe choice could be to restrict VFIO to all
-hosts that supports KVM. This is different from CONFIG_KVM, which is
-only enabled for new hosts.
+Add object_new_child(parent, id, typename) as that missing primitive.
+The reference created by object_new() is transferred to the parent's
+child<> property, so on return the sole reference is held by @parent
+and the caller does not need to unref.  Later patches build the qdev
+and per-bus creation helpers on top of this.
 
-@Michael: You'll need to detect kvm hosts (see meson.build for
-kvm_targets), add a host config CONFIG_KVM_HOST, and use that for
-CONFIG_VFIO definition. This should restrict VFIO to host providing KVM,
-without limiting which target is ran.
+@id must be a valid QOM child<> property name: non-empty and
+without the "/" QOM path separator.  It may contain the "[*]"
+auto-index suffix; the qdev id_wellformed() grammar does not apply
+here.  The compiler enforces non-NULL arguments via
+__attribute__((nonnull)) instead of runtime asserts, as suggested by
+Richard and Peter.
 
-> Regards,
-> BALATON Zoltan
+Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
+Suggested-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+AI-used-for: code (refactoring)
+Signed-off-by: Alexander Graf <graf@amazon.com>
+---
+ include/qom/object.h | 32 ++++++++++++++++++++++++++++++++
+ qom/object.c         | 12 ++++++++++++
+ 2 files changed, 44 insertions(+)
 
-Regards,
-Pierrick
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 11f55613fc..299673d040 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -632,6 +632,38 @@ Object *object_new_with_class(ObjectClass *klass);
+  */
+ Object *object_new(const char *typename);
+ 
++/**
++ * object_new_child:
++ * @parent: the QOM composition-tree parent
++ * @id: the child<> property name; the object's canonical QOM path
++ *      becomes @parent's path plus "/" plus @id
++ * @typename: the name of the type of the object to instantiate
++ *
++ * Create a heap-allocated object and immediately add it to the QOM
++ * composition tree as a child of @parent.
++ *
++ * This is the heap-allocated dual of object_initialize_child(): use
++ * this when the child is a pointer member of the parent, and use
++ * object_initialize_child() when the child is embedded in the parent
++ * struct.  See also object_new_with_props() for the variant that
++ * additionally sets a list of properties.
++ *
++ * The reference returned by object_new() is transferred to the child<>
++ * property of @parent, so the object has a reference count of 1 held
++ * by @parent, and the caller does not need to unref.
++ *
++ * The @id assert is a sanity check on the caller's string literal;
++ * the authoritative uniqueness check is object_property_add_child(),
++ * which will error_abort() on a duplicate @id under @parent.  Use
++ * the "[*]" auto-index suffix when multiple children of the same
++ * kind may be created.
++ *
++ * Returns: the newly allocated, instantiated and parented object.
++ */
++Object *object_new_child(Object *parent, const char *id,
++                         const char *typename)
++    __attribute__((nonnull(1, 2, 3), returns_nonnull));
++
+ /**
+  * object_new_with_props:
+  * @typename:  The name of the type of the object to instantiate.
+diff --git a/qom/object.c b/qom/object.c
+index f79b2cf361..64b0faf1f5 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -718,6 +718,18 @@ Object *object_new(const char *typename)
+     return object_new_with_type(ti);
+ }
+ 
++Object *object_new_child(Object *parent, const char *id,
++                         const char *typename)
++{
++    Object *obj;
++
++    g_assert(id[0] && !strchr(id, '/'));
++
++    obj = object_new(typename);
++    object_property_add_child(parent, id, obj);
++    object_unref(obj);
++    return obj;
++}
+ 
+ Object *object_new_with_props(const char *typename,
+                               Object *parent,
+-- 
+2.47.1
+
 
