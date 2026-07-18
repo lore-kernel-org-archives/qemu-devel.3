@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 097FBC4450A
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:15:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55859C4451B
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:15:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlDJV-0004Yc-GA; Sat, 18 Jul 2026 18:15:17 -0400
+	id 1wlDJX-0004fU-LP; Sat, 18 Jul 2026 18:15:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlDJN-0004Mz-Sm; Sat, 18 Jul 2026 18:15:13 -0400
-Received: from pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([44.245.243.92])
+ id 1wlDJP-0004N7-8v; Sat, 18 Jul 2026 18:15:13 -0400
+Received: from pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([34.218.115.239])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlDJK-00077U-8C; Sat, 18 Jul 2026 18:15:08 -0400
+ id 1wlDJM-00077b-Hf; Sat, 18 Jul 2026 18:15:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784412906; x=1815948906;
+ t=1784412908; x=1815948908;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Kn1MUAOIEK05pqPjEqHHPU7H8BZuLmOaTQp8KZvj590=;
- b=l7N34ecfKliQqsGwd1FbiHxGTBQTw0jNEcKBekUIvenQnYFfCjVOf4KB
- BUWKCJK9+aZmNx3V7xWtZRc8P1aEH4fSVLxPFL1cENH3cX11QkCMC9UDk
- dJwI0cawEnT9gWrjPMkC91YntVT6Wnmj5ckowF1rwI1qmc/u2aVVKV4DO
- mItZ8vDqdon6bc4ZadUfg37f/Cf2FlfO51Q1zAZCvrnC3+FADKnQ2I/U5
- zHQ0DRhBdwnos+D9CFichC5kk9vkoZ3vQRk7qqv/i0nvbArY4OVDMxCif
- O7ePs13adhujirq6e/sq2dkfxAX95qOD8XyZUV6YSXiZrPnsd29NEuPrv w==;
-X-CSE-ConnectionGUID: HlvVdsQhRLiSszKeJXKhDw==
-X-CSE-MsgGUID: bomBcti/Ryern5a1EmSkBA==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23424001"
-Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
- by internal-pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:15:02 +0000
-Received: from EX19MTAUWC001.ant.amazon.com [205.251.233.105:16389]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.19.34:2525]
+ bh=sMgON8zw7UXzsdFmPjwHuJJjo51/jz+OnnQ10iZLMjY=;
+ b=GH+oZRxrMZpM04P/cRkz4+5WouNnhoCCE0PTAT48XCUHBiim/AR6akVB
+ rzi8HJVgzkfCoACUUB1M4Af1tU71dS0k+ibvXZYLyrIfzGzAdYb+akCAP
+ 0GGRo204HrfHjfZAV8nKwvb+F4zl+1CXFBprccttBCv37Fw3L+geVZgwh
+ sP/uGXE/Cr5m1sYA2aV9g+l/52ESLkAAsSiqsVQ/GCJ6+MPa3LTDhzHYK
+ 3cKeLTOYaEX3tLuUY4Zx0fNhhkh8xf0LbW2aluOFddSipBzujM3uEUi8z
+ HDXxxk2EHbOcrsIdfdlmjblSKwazAg63ijI/LNbvK6UZ11oZyI+O3yiHN Q==;
+X-CSE-ConnectionGUID: qs62OKToTi6xw3W4Hm4/wA==
+X-CSE-MsgGUID: 8dnBRtBrSYOrTI0pyVqUzg==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23720135"
+Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
+ by internal-pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:14:52 +0000
+Received: from EX19MTAUWA001.ant.amazon.com [205.251.233.182:26996]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.40.177:2525]
  with esmtp (Farcaster)
- id 2dd8e872-f7cf-4b1b-bff4-26ff92e74a44; Sat, 18 Jul 2026 22:15:01 +0000 (UTC)
-X-Farcaster-Flow-ID: 2dd8e872-f7cf-4b1b-bff4-26ff92e74a44
+ id 12114d36-f71a-4147-9b1f-b70bc73a65b2; Sat, 18 Jul 2026 22:14:52 +0000 (UTC)
+X-Farcaster-Flow-ID: 12114d36-f71a-4147-9b1f-b70bc73a65b2
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
+ EX19MTAUWA001.ant.amazon.com (10.250.64.217) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:15:01 +0000
+ Sat, 18 Jul 2026 22:14:52 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:14:52 +0000
+ Sat, 18 Jul 2026 22:14:42 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,10 +93,10 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 136/137] docs/devel/qom: Document the composition-tree
- parenting contract
-Date: Sat, 18 Jul 2026 21:36:51 +0000
-Message-ID: <20260718213652.37673-137-graf@amazon.com>
+Subject: [RFC PATCH v2 135/137] tests/qtest/qom-test: Add smp-max init-time
+ ceiling test
+Date: Sat, 18 Jul 2026 21:36:50 +0000
+Message-ID: <20260718213652.37673-136-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -107,16 +107,16 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D043UWC003.ant.amazon.com (10.13.139.240) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=44.245.243.92;
+Received-SPF: pass client-ip=34.218.115.239;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
  HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
+ RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
  UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -133,126 +133,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a section to the QOM developer documentation explaining that
-every object must have a composition-tree parent before use, how
-to pick the parent (creator owns lifetime), how to name children,
-the reference-count contract for parented creators, and where the
-contract is enforced (device_set_realized, memory_region_do_init,
-qdev_connect_gpio_out_named).
+Add a slow-mode subtest that boots aarch64/virt and ppc64/pseries at
+their maximum -smp count and asserts that qtest_init() returns within
+15 seconds.  This guards against quadratic-time init regressions when
+many child objects are created under a single parent, such as the
+"[*]" auto-index property scan that made pseries take ~10 s to launch
+before qemu_extend_irqs() switched to explicit indices.
 
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- docs/devel/qom.rst | 96 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 96 insertions(+)
+ tests/qtest/qom-test.c | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
-diff --git a/docs/devel/qom.rst b/docs/devel/qom.rst
-index 935bb1004a..ffcb3333b5 100644
---- a/docs/devel/qom.rst
-+++ b/docs/devel/qom.rst
-@@ -27,6 +27,102 @@ that make up a QEMU "machine". You can view this tree by running
- objects created by the machine itself as well those created due to
- user configuration.
+diff --git a/tests/qtest/qom-test.c b/tests/qtest/qom-test.c
+index cf4c6b5add..0bfb3233ac 100644
+--- a/tests/qtest/qom-test.c
++++ b/tests/qtest/qom-test.c
+@@ -238,8 +238,32 @@ static void test_qom_qtests(void)
+     qtest_quit(qts);
+ }
  
-+Composition-tree parenting contract
-+====================================
++/*
++ * Guard against O(n^2) init-time regressions when many child objects are
++ * created under one parent (e.g. board-created CPUs).  Launch the machine
++ * at its maximum SMP count and assert an upper bound on time-to-monitor.
++ * The bound is generous (15 s) so this only fires when init cost blows up
++ * quadratically, not on ordinary CI jitter.
++ */
++static void test_smp_max(gconstpointer data)
++{
++    const char *args = data;
++    gint64 t0, dt;
++    QTestState *qts;
 +
-+Every QOM object that participates in the running system must have a
-+composition-tree parent before it is used.  The parent gives the object
-+a stable, canonical path such as ``/machine/soc/uart[0]`` that is
-+visible in ``info qom-tree`` and addressable via ``qom-get`` and
-+``qom-set``.  Objects that reach ``realize`` (for devices), that are
-+wired to another object (for IRQ lines), or that are given a name (for
-+memory regions) without a parent are programming errors.
++    t0 = g_get_monotonic_time();
++    qts = qtest_initf("%s", args);
++    dt = g_get_monotonic_time() - t0;
 +
-+Creating parented objects
-+-------------------------
++    g_test_message("smp-max init time: %" G_GINT64_FORMAT " ms", dt / 1000);
++    g_assert_cmpint(dt, <, 15 * G_USEC_PER_SEC);
 +
-+The standard creation helpers all take the composition-tree parent and
-+the child name as their first two arguments:
++    qtest_quit(qts);
++}
 +
-+.. code-block:: c
-+
-+    Object      *object_new_child(Object *parent, const char *id,
-+                                  const char *typename);
-+    DeviceState *qdev_new(Object *parent, const char *id,
-+                          const char *typename);
-+    DeviceState *sysbus_create_simple(Object *parent, const char *id,
-+                                      const char *type, hwaddr, qemu_irq);
-+    PCIDevice   *pci_new(Object *parent, const char *id, ...);
-+    ISADevice   *isa_new(Object *parent, const char *id, ...);
-+    /* i2c_slave_new(), ssi_create_peripheral(), usb_new(),
-+       cpu_create() etc. follow the same pattern. */
-+
-+``object_new()`` remains available as the primitive allocator for
-+transient introspection objects and for ``qdev_device_add()``, which
-+parents the device via ``qdev_set_id()``.  All other callers should use
-+one of the parented helpers above, or ``object_initialize_child()`` for
-+objects that are embedded by value in the parent's instance struct.
-+
-+Choosing the parent
-+-------------------
-+
-+The QOM parent is the object that owns the child's lifetime.  In
-+practice this is the object whose code is creating the child:
-+
-+* Board code (``MachineClass.init``) parents onboard devices to the
-+  machine: ``OBJECT(machine)``.
-+* A composite device's ``DeviceClass.realize`` parents the sub-devices
-+  it creates to itself: ``OBJECT(dev)``.
-+* An SoC container likewise parents the devices it creates to the SoC
-+  object.
-+
-+The bus a device is plugged into is *not* its composition-tree parent.
-+A device may sit on a bus owned by ``B`` without being a child of
-+``B``; the bus relationship is expressed through the ``parent_bus``
-+link, not the ``child<>`` property.
-+
-+Choosing the child name
-+-----------------------
-+
-+* A single instance takes a bare noun: ``"uart"``, ``"gic"``, ``"rtc"``.
-+* A fixed number of identical instances take an explicit index:
-+  ``"uart[0]"``, ``"uart[1]"``.
-+* When the caller does not care about the index, ``"uart[*]"`` lets
-+  QOM allocate the next free slot in the ``uart[]`` array.
-+* Address-based names such as ``"eth@0x30000000"`` should only be used
-+  when the address is genuinely the identity of the device.
-+
-+Child names share the parent's property namespace, so avoid names that
-+collide with class-defined properties of the parent (in particular,
-+machine class properties visible on ``/machine``).
-+
-+Reference-count contract
-+------------------------
-+
-+``object_new_child()``, ``qdev_new()`` and the per-bus creators return
-+with the object's single reference held by the parent's ``child<>``
-+property.  The caller does *not* hold a reference of its own and must
-+therefore pair creation with plain ``qdev_realize()`` rather than
-+``qdev_realize_and_unref()``.  The object is finalized when the parent
-+drops its ``child<>`` property, typically via ``object_unparent()``.
-+
-+Enforcement
-+-----------
-+
-+The parenting contract is enforced at the points where an unparented
-+object would first become visible or entangled with another object:
-+
-+* ``device_set_realized()`` fails with an ``Error`` if the device has
-+  no composition-tree parent.
-+* ``memory_region_do_init()`` asserts that a memory region given a
-+  non-empty name also has an owner.
-+* ``qdev_connect_gpio_out_named()`` asserts that the outbound IRQ
-+  line being connected already has a composition-tree parent.
-+
-+There is no ``/machine/unattached`` fallback container; an object that
-+would previously have landed there now triggers one of the errors
-+above instead.
-+
- Creating a QOM class
- ====================
+ int main(int argc, char **argv)
+ {
++    const char *arch = qtest_get_arch();
+     char *v_env = getenv("V");
  
+     if (v_env) {
+@@ -251,5 +275,16 @@ int main(int argc, char **argv)
+     qtest_cb_for_every_machine(add_machine_test_case, g_test_quick());
+     qtest_add_func("qom/qom-qtests", test_qom_qtests);
+ 
++    if (g_test_slow()) {
++        if (g_str_equal(arch, "aarch64")) {
++            qtest_add_data_func("qom/smp-max/virt",
++                                "-M virt,gic-version=max -smp 512",
++                                test_smp_max);
++        } else if (g_str_equal(arch, "ppc64")) {
++            qtest_add_data_func("qom/smp-max/pseries",
++                                "-M pseries -smp 512", test_smp_max);
++        }
++    }
++
+     return g_test_run();
+ }
 -- 
 2.47.1
 
