@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5DFAC4450A
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:00:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F69DC4451B
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:00:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlD4b-0005VN-56; Sat, 18 Jul 2026 17:59:53 -0400
+	id 1wlD4o-0005of-VP; Sat, 18 Jul 2026 18:00:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlD4Z-0005UZ-HB; Sat, 18 Jul 2026 17:59:51 -0400
-Received: from pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([34.218.115.239])
+ id 1wlD4j-0005k6-Ef; Sat, 18 Jul 2026 18:00:01 -0400
+Received: from pdx-out-010.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.12.53.23])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlD4X-0004s2-KI; Sat, 18 Jul 2026 17:59:51 -0400
+ id 1wlD4h-0004sg-Dh; Sat, 18 Jul 2026 18:00:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784411989; x=1815947989;
+ t=1784411999; x=1815947999;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=06ETOBsEQzS5d9zH1jkTfyd2j8Kc5P+uPwzN0pdk1os=;
- b=TEGub6Q+rrofC61kco81vDsLV+wnRuoah1w9K1Qu5Anv3V8ADS88yNkf
- U2iXUzAxTeLs6+JAWe0nNSwv1P1XS2P1Tm9zoS6rRuIckatfviCDQ4IfD
- KIeZK5pWajxsrF5s3tq2nkL1upBZkHv6kLC1ZSybSLKKU6XD3zrSjUtEH
- 6rdp3crjtugcVC5GPA0mh8YlxNxBd22e2v+RlilFIVmVx56DxsnGckAez
- xC8DvjddODi5KqJU/Z1mqYk1OuZlAKoF7aSGWVuW0bOkf01WWXW8wgfqN
- 9DVbWlS/vFQZFJXP8PA++QaFXstljmSn3s0WNUOYv0VSR7voaHbEKQcCX w==;
-X-CSE-ConnectionGUID: y5lbufr0TM6scxDwcWCBNw==
-X-CSE-MsgGUID: ZYUO42N/TbCGmQXbaDDN2A==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23719404"
-Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
- by internal-pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:59:46 +0000
-Received: from EX19MTAUWC001.ant.amazon.com [205.251.233.53:6565]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.30.230:2525]
+ bh=lPfFZQmNAiTWiFduxB5+BIk3GXRmLG9EPVVHGi+6pOM=;
+ b=OHDyxTY5Gd5ZEoJ6c/PU1vt9g6zYgY2nTcklXSsXLcBcpIpfsysVw0Z7
+ YWLVe+Q5OVR3j1JIcMoFiELmJfanyaRDDTls6ci67J70xspmInM/bzmMS
+ /TgyaWVza8wNxi8HD9AiM2mmSbkBeHtyJrdTp+iOqF/4kQ0vQFi0Z4kcY
+ VGNAWmdqUbmPS63wJ2JTAW29kE2/pao0UovEaiWSsYUGV5NILrfGc8pR5
+ vg2JixzOgbLqIAoGHy1wED/6TTPVdlAb52vzwS7vO619uRBgC2p1iCjgx
+ Xz/vMzcGi1kGbeT0wuS+FpUie8YKmiq1p7e89YJ94nZ8kCxKilC+V8eF0 A==;
+X-CSE-ConnectionGUID: 3ZldhHdlSfixbSxdETMY8A==
+X-CSE-MsgGUID: PZ3u0opQQ+6PWdYkjPM6Rw==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23795474"
+Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
+ by internal-pdx-out-010.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 21:59:55 +0000
+Received: from EX19MTAUWB002.ant.amazon.com [205.251.233.48:17923]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.0.115:2525]
  with esmtp (Farcaster)
- id 61be5819-85e4-4e9d-8aaa-113133826c15; Sat, 18 Jul 2026 21:59:45 +0000 (UTC)
-X-Farcaster-Flow-ID: 61be5819-85e4-4e9d-8aaa-113133826c15
+ id 2ce57dad-369d-44cb-9f3c-ee27edc9cb9d; Sat, 18 Jul 2026 21:59:55 +0000 (UTC)
+X-Farcaster-Flow-ID: 2ce57dad-369d-44cb-9f3c-ee27edc9cb9d
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
+ EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:59:45 +0000
+ Sat, 18 Jul 2026 21:59:55 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 21:59:36 +0000
+ Sat, 18 Jul 2026 21:59:45 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,9 +93,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 081/137] hw/nitro: Give the vsock bridge a QOM parent
-Date: Sat, 18 Jul 2026 21:35:56 +0000
-Message-ID: <20260718213652.37673-82-graf@amazon.com>
+Subject: [RFC PATCH v2 082/137] hw/isa: Give the isabus-bridge a QOM parent
+Date: Sat, 18 Jul 2026 21:35:57 +0000
+Message-ID: <20260718213652.37673-83-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -106,9 +106,9 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D043UWA002.ant.amazon.com (10.13.139.53) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=34.218.115.239;
+Received-SPF: pass client-ip=52.12.53.23;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-010.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -132,80 +132,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-nitro_vsock_bridge_create() was using qdev_set_id() to slot the
-bridge under /machine/peripheral.  The bridge is a board-owned
-singleton created from nitro_machine_init(), so make it a plain
-child of the machine and drop the qdev_set_id() indirection.
+isa_bus_new(NULL, ...) implicitly created a sysbus "isabus-bridge"
+and put the ISA bus on it.  That bridge ended up under
+/machine/unattached, which this series is deleting.
 
-The heartbeat device that hangs off the bridge is already a child<>
-of it, so the composition tree becomes:
+Split out an explicit isa_bus_new_bridge(parent, ...) helper for
+the five boards that don't already have a south-bridge device to
+own the ISA bus, and make plain isa_bus_new() require a non-NULL
+device.  Callers own the bridge in the composition tree:
 
-  /machine/nitro-vsock (nitro-vsock-bridge)
-  /machine/nitro-vsock/heartbeat (nitro-heartbeat)
+  hw/i386/microvm.c   OBJECT(mms)
+  hw/i386/isapc.c     OBJECT(machine)
+  hw/mips/jazz.c      OBJECT(machine)
+  hw/hppa/machine.c   parent (already threaded)
+  hw/ppc/pnv_lpc.c    OBJECT(lpc)   -- the LPC controller
 
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- hw/nitro/machine.c                 | 2 +-
- hw/nitro/nitro-vsock-bus.c         | 9 ++++-----
- include/hw/nitro/nitro-vsock-bus.h | 2 +-
- 3 files changed, 6 insertions(+), 7 deletions(-)
+ hw/hppa/machine.c    |  2 +-
+ hw/i386/isapc.c      |  2 +-
+ hw/i386/microvm.c    |  2 +-
+ hw/isa/isa-bus.c     | 21 +++++++++++----------
+ hw/mips/jazz.c       |  2 +-
+ hw/ppc/pnv_lpc.c     |  4 ++--
+ include/hw/isa/isa.h |  2 ++
+ 7 files changed, 19 insertions(+), 16 deletions(-)
 
-diff --git a/hw/nitro/machine.c b/hw/nitro/machine.c
-index 6b61de911f..e522eae5ba 100644
---- a/hw/nitro/machine.c
-+++ b/hw/nitro/machine.c
-@@ -194,7 +194,7 @@ static void nitro_machine_init(MachineState *machine)
-                         MEMTXATTRS_UNSPECIFIED, eif_data, eif_size);
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index 002f4299cc..d52f27c51c 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -108,7 +108,7 @@ static ISABus *hppa_isa_bus(Object *parent, hwaddr addr)
+                           NULL, "isa-io", 0x800);
+     memory_region_add_subregion(get_system_memory(), addr, isa_region);
  
-     if (defaults_enabled()) {
--        NitroVsockBridge *bridge = nitro_vsock_bridge_create();
-+        NitroVsockBridge *bridge = nitro_vsock_bridge_create(OBJECT(machine));
-         DeviceState *dev;
+-    isa_bus = isa_bus_new(NULL, get_system_memory(), isa_region,
++    isa_bus = isa_bus_new_bridge(parent, get_system_memory(), isa_region,
+                           &error_abort);
+     isa_irqs = i8259_init(parent, isa_bus, NULL);
+     isa_bus_register_input_irqs(isa_bus, isa_irqs);
+diff --git a/hw/i386/isapc.c b/hw/i386/isapc.c
+index 842ae94acb..e8d5767b80 100644
+--- a/hw/i386/isapc.c
++++ b/hw/i386/isapc.c
+@@ -108,7 +108,7 @@ static void pc_init_isa(MachineState *machine)
  
-         /* Nitro Enclaves require a heartbeat device. Provide one. */
-diff --git a/hw/nitro/nitro-vsock-bus.c b/hw/nitro/nitro-vsock-bus.c
-index f7540eaa54..2c4b66931f 100644
---- a/hw/nitro/nitro-vsock-bus.c
-+++ b/hw/nitro/nitro-vsock-bus.c
-@@ -20,7 +20,6 @@
+     gsi_state = pc_gsi_create(&x86ms->gsi, false);
  
- #include "qemu/osdep.h"
- #include "qapi/error.h"
--#include "monitor/qdev.h"
- #include "hw/core/sysbus.h"
- #include "hw/nitro/nitro-vsock-bus.h"
+-    isa_bus = isa_bus_new(NULL, system_memory, system_io,
++    isa_bus = isa_bus_new_bridge(OBJECT(machine), system_memory, system_io,
+                           &error_abort);
+     isa_bus_register_input_irqs(isa_bus, x86ms->gsi);
  
-@@ -46,12 +45,12 @@ void nitro_vsock_bridge_start_enclave(NitroVsockBridge *bridge,
-     }
- }
+diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
+index 8c61106516..aa0e1ef155 100644
+--- a/hw/i386/microvm.c
++++ b/hw/i386/microvm.c
+@@ -171,7 +171,7 @@ static void microvm_devices_init(MicrovmMachineState *mms)
+     x86ms->gsi = qemu_allocate_irqs(gsi_handler, gsi_state,
+                                     IOAPIC_NUM_PINS * ioapics);
  
--NitroVsockBridge *nitro_vsock_bridge_create(void)
-+NitroVsockBridge *nitro_vsock_bridge_create(Object *parent)
+-    isa_bus = isa_bus_new(NULL, get_system_memory(), get_system_io(),
++    isa_bus = isa_bus_new_bridge(OBJECT(mms), get_system_memory(), get_system_io(),
+                           &error_abort);
+     isa_bus_register_input_irqs(isa_bus, x86ms->gsi);
+ 
+diff --git a/hw/isa/isa-bus.c b/hw/isa/isa-bus.c
+index fb20c43869..7a6a595ce7 100644
+--- a/hw/isa/isa-bus.c
++++ b/hw/isa/isa-bus.c
+@@ -52,28 +52,29 @@ static const TypeInfo isa_bus_info = {
+ ISABus *isa_bus_new(DeviceState *dev, MemoryRegion* address_space,
+                     MemoryRegion *address_space_io, Error **errp)
  {
--    DeviceState *dev = qdev_new_orphan(TYPE_NITRO_VSOCK_BRIDGE);
-+    DeviceState *dev = qdev_new(parent, "nitro-vsock",
-+                                TYPE_NITRO_VSOCK_BRIDGE);
+-    DeviceState *bridge = NULL;
+-
+     if (isabus) {
+         error_setg(errp, "Can't create a second ISA bus");
+         return NULL;
+     }
+-    if (!dev) {
+-        bridge = qdev_new_orphan("isabus-bridge");
+-        dev = bridge;
+-    }
++    g_assert(dev);
  
--    qdev_set_id(dev, g_strdup("nitro-vsock"), &error_fatal);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
+     isabus = ISA_BUS(qbus_new(TYPE_ISA_BUS, dev, NULL));
+     isabus->address_space = address_space;
+     isabus->address_space_io = address_space_io;
  
-     return NITRO_VSOCK_BRIDGE(dev);
+-    if (bridge) {
+-        sysbus_realize_and_unref(SYS_BUS_DEVICE(bridge), &error_fatal);
+-    }
+-
+     return isabus;
  }
-diff --git a/include/hw/nitro/nitro-vsock-bus.h b/include/hw/nitro/nitro-vsock-bus.h
-index 064260aa41..36f4dde78f 100644
---- a/include/hw/nitro/nitro-vsock-bus.h
-+++ b/include/hw/nitro/nitro-vsock-bus.h
-@@ -50,7 +50,7 @@ struct NitroVsockDeviceClass {
- /*
-  * Machine helper to create the Nitro vsock bridge sysbus device.
-  */
--NitroVsockBridge *nitro_vsock_bridge_create(void);
-+NitroVsockBridge *nitro_vsock_bridge_create(Object *parent);
  
- /*
-  * Find the Nitro vsock bridge on the sysbus.
++ISABus *isa_bus_new_bridge(Object *parent, MemoryRegion *address_space,
++                           MemoryRegion *address_space_io, Error **errp)
++{
++    DeviceState *bridge = qdev_new(parent, "isabus-bridge", "isabus-bridge");
++    ISABus *bus = isa_bus_new(bridge, address_space, address_space_io, errp);
++
++    sysbus_realize(SYS_BUS_DEVICE(bridge), &error_fatal);
++    return bus;
++}
++
+ void isa_bus_register_input_irqs(ISABus *bus, qemu_irq *irqs_in)
+ {
+     bus->irqs_in = irqs_in;
+diff --git a/hw/mips/jazz.c b/hw/mips/jazz.c
+index 23d717d96a..8c52608913 100644
+--- a/hw/mips/jazz.c
++++ b/hw/mips/jazz.c
+@@ -283,7 +283,7 @@ static void mips_jazz_init(MachineState *machine,
+     memory_region_init(isa_mem, NULL, "isa-mem", 0x01000000);
+     memory_region_add_subregion(address_space, 0x90000000, isa_io);
+     memory_region_add_subregion(address_space, 0x91000000, isa_mem);
+-    isa_bus = isa_bus_new(NULL, isa_mem, isa_io, &error_abort);
++    isa_bus = isa_bus_new_bridge(OBJECT(machine), isa_mem, isa_io, &error_abort);
+ 
+     /* ISA devices */
+     i8259 = i8259_init(OBJECT(machine), isa_bus, env->irq[4]);
+diff --git a/hw/ppc/pnv_lpc.c b/hw/ppc/pnv_lpc.c
+index d1357dd359..6ae228088f 100644
+--- a/hw/ppc/pnv_lpc.c
++++ b/hw/ppc/pnv_lpc.c
+@@ -972,11 +972,11 @@ ISABus *pnv_lpc_isa_create(PnvLpcController *lpc, bool use_cpld, Error **errp)
+     qemu_irq *irqs;
+     qemu_irq_handler handler;
+ 
+-    /* let isa_bus_new() create its own bridge on SysBus otherwise
++    /* let isa_bus_new_bridge() create the bridge as a child of the LPC;
+      * devices specified on the command line won't find the bus and
+      * will fail to create.
+      */
+-    isa_bus = isa_bus_new(NULL, &lpc->isa_mem, &lpc->isa_io, &local_err);
++    isa_bus = isa_bus_new_bridge(OBJECT(lpc), &lpc->isa_mem, &lpc->isa_io, &local_err);
+     if (local_err) {
+         error_propagate(errp, local_err);
+         return NULL;
+diff --git a/include/hw/isa/isa.h b/include/hw/isa/isa.h
+index 9e35d88b1e..79bfe16361 100644
+--- a/include/hw/isa/isa.h
++++ b/include/hw/isa/isa.h
+@@ -69,6 +69,8 @@ struct ISADevice {
+ 
+ ISABus *isa_bus_new(DeviceState *dev, MemoryRegion *address_space,
+                     MemoryRegion *address_space_io, Error **errp);
++ISABus *isa_bus_new_bridge(Object *parent, MemoryRegion *address_space,
++                           MemoryRegion *address_space_io, Error **errp);
+ void isa_bus_register_input_irqs(ISABus *bus, qemu_irq *irqs_in);
+ void isa_bus_dma(ISABus *bus, IsaDma *dma8, IsaDma *dma16);
+ IsaDma *isa_bus_get_dma(ISABus *bus, int nchan);
 -- 
 2.47.1
 
