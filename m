@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55859C4451B
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:15:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B0BEC4450A
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:15:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlDJX-0004fU-LP; Sat, 18 Jul 2026 18:15:19 -0400
+	id 1wlDJa-0004z1-K4; Sat, 18 Jul 2026 18:15:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlDJP-0004N7-8v; Sat, 18 Jul 2026 18:15:13 -0400
-Received: from pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([34.218.115.239])
+ id 1wlDJV-0004aJ-43; Sat, 18 Jul 2026 18:15:17 -0400
+Received: from pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([52.13.214.179])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlDJM-00077b-Hf; Sat, 18 Jul 2026 18:15:10 -0400
+ id 1wlDJT-0007Je-D5; Sat, 18 Jul 2026 18:15:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784412908; x=1815948908;
+ t=1784412915; x=1815948915;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=sMgON8zw7UXzsdFmPjwHuJJjo51/jz+OnnQ10iZLMjY=;
- b=GH+oZRxrMZpM04P/cRkz4+5WouNnhoCCE0PTAT48XCUHBiim/AR6akVB
- rzi8HJVgzkfCoACUUB1M4Af1tU71dS0k+ibvXZYLyrIfzGzAdYb+akCAP
- 0GGRo204HrfHjfZAV8nKwvb+F4zl+1CXFBprccttBCv37Fw3L+geVZgwh
- sP/uGXE/Cr5m1sYA2aV9g+l/52ESLkAAsSiqsVQ/GCJ6+MPa3LTDhzHYK
- 3cKeLTOYaEX3tLuUY4Zx0fNhhkh8xf0LbW2aluOFddSipBzujM3uEUi8z
- HDXxxk2EHbOcrsIdfdlmjblSKwazAg63ijI/LNbvK6UZ11oZyI+O3yiHN Q==;
-X-CSE-ConnectionGUID: qs62OKToTi6xw3W4Hm4/wA==
-X-CSE-MsgGUID: 8dnBRtBrSYOrTI0pyVqUzg==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23720135"
-Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
- by internal-pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:14:52 +0000
-Received: from EX19MTAUWA001.ant.amazon.com [205.251.233.182:26996]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.40.177:2525]
+ bh=lSks51wnlNrgb7X5bIiCp+KrpRFYjBhNLlcNYBC5Pog=;
+ b=X0TFKI7YTJ3nV9rEeueC51gPio0F7DBvbzKtcGyxxBbpoMFv+6+uIzuf
+ JpKxqJcCashfe3T4OiE0V5uucDeccr0eMeaPG3k0Kjat5CbhY6KDDmdAv
+ phw7JDcd4H2LIFCtgU0/lPOTtnegWqXi+HVUWq6VzCwGBE1Q/3dcNwrsH
+ ZD2xl8HeKuWRxQF93aUS84gk3aUbAOcdpG27vZenLSPGPh1KRkLRlx8ZL
+ 0AkfFmQ03f6+GAN/nUOVvrnG23mAl5G3ndypAXUQHbDGiykAfXGbGp24Y
+ GRT6YWCj9yAthweU9ykDXXBqh3uA2Ev3TM1925avb/lusnSvLHaAWrLlz w==;
+X-CSE-ConnectionGUID: VXC+4TOLQZWKEBw+uE/CjA==
+X-CSE-MsgGUID: Ox6b6rW8QESuBPM3kvCF4g==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23905060"
+Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
+ by internal-pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:15:11 +0000
+Received: from EX19MTAUWB002.ant.amazon.com [205.251.233.111:28417]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.41.246:2525]
  with esmtp (Farcaster)
- id 12114d36-f71a-4147-9b1f-b70bc73a65b2; Sat, 18 Jul 2026 22:14:52 +0000 (UTC)
-X-Farcaster-Flow-ID: 12114d36-f71a-4147-9b1f-b70bc73a65b2
+ id c9ca1e07-4fe8-4dc6-8dcd-7aac7ed717c8; Sat, 18 Jul 2026 22:15:11 +0000 (UTC)
+X-Farcaster-Flow-ID: c9ca1e07-4fe8-4dc6-8dcd-7aac7ed717c8
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA001.ant.amazon.com (10.250.64.217) with Microsoft SMTP Server
+ EX19MTAUWB002.ant.amazon.com (10.250.64.231) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:14:52 +0000
+ Sat, 18 Jul 2026 22:15:10 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:14:42 +0000
+ Sat, 18 Jul 2026 22:15:01 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,10 +93,10 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 135/137] tests/qtest/qom-test: Add smp-max init-time
- ceiling test
-Date: Sat, 18 Jul 2026 21:36:50 +0000
-Message-ID: <20260718213652.37673-136-graf@amazon.com>
+Subject: [RFC PATCH v2 137/137] MAINTAINERS: Add
+ scripts/coccinelle/qom-parent/ under QOM
+Date: Sat, 18 Jul 2026 21:36:52 +0000
+Message-ID: <20260718213652.37673-138-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -107,16 +107,16 @@ Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
 X-ClientProxiedBy: EX19D043UWC003.ant.amazon.com (10.13.139.240) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=34.218.115.239;
+Received-SPF: pass client-ip=52.13.214.179;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
  HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
+ SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
  UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -133,73 +133,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a slow-mode subtest that boots aarch64/virt and ppc64/pseries at
-their maximum -smp count and asserts that qtest_init() returns within
-15 seconds.  This guards against quadratic-time init regressions when
-many child objects are created under a single parent, such as the
-"[*]" auto-index property scan that made pseries take ~10 s to launch
-before qemu_extend_irqs() switched to explicit indices.
+The Coccinelle scripts used to perform the tree-wide *_orphan()
+renames are stored under scripts/coccinelle/qom-parent/.  Add the
+directory to the QOM MAINTAINERS entry.
 
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- tests/qtest/qom-test.c | 35 +++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tests/qtest/qom-test.c b/tests/qtest/qom-test.c
-index cf4c6b5add..0bfb3233ac 100644
---- a/tests/qtest/qom-test.c
-+++ b/tests/qtest/qom-test.c
-@@ -238,8 +238,32 @@ static void test_qom_qtests(void)
-     qtest_quit(qts);
- }
- 
-+/*
-+ * Guard against O(n^2) init-time regressions when many child objects are
-+ * created under one parent (e.g. board-created CPUs).  Launch the machine
-+ * at its maximum SMP count and assert an upper bound on time-to-monitor.
-+ * The bound is generous (15 s) so this only fires when init cost blows up
-+ * quadratically, not on ordinary CI jitter.
-+ */
-+static void test_smp_max(gconstpointer data)
-+{
-+    const char *args = data;
-+    gint64 t0, dt;
-+    QTestState *qts;
-+
-+    t0 = g_get_monotonic_time();
-+    qts = qtest_initf("%s", args);
-+    dt = g_get_monotonic_time() - t0;
-+
-+    g_test_message("smp-max init time: %" G_GINT64_FORMAT " ms", dt / 1000);
-+    g_assert_cmpint(dt, <, 15 * G_USEC_PER_SEC);
-+
-+    qtest_quit(qts);
-+}
-+
- int main(int argc, char **argv)
- {
-+    const char *arch = qtest_get_arch();
-     char *v_env = getenv("V");
- 
-     if (v_env) {
-@@ -251,5 +275,16 @@ int main(int argc, char **argv)
-     qtest_cb_for_every_machine(add_machine_test_case, g_test_quick());
-     qtest_add_func("qom/qom-qtests", test_qom_qtests);
- 
-+    if (g_test_slow()) {
-+        if (g_str_equal(arch, "aarch64")) {
-+            qtest_add_data_func("qom/smp-max/virt",
-+                                "-M virt,gic-version=max -smp 512",
-+                                test_smp_max);
-+        } else if (g_str_equal(arch, "ppc64")) {
-+            qtest_add_data_func("qom/smp-max/pseries",
-+                                "-M pseries -smp 512", test_smp_max);
-+        }
-+    }
-+
-     return g_test_run();
- }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index ecb8cfdc41..1f0586e71c 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3639,6 +3639,7 @@ S: Supported
+ F: docs/devel/qom.rst
+ F: include/qom/
+ F: qapi/qom.json
++F: scripts/coccinelle/qom-parent/
+ F: scripts/coccinelle/qom-parent-type.cocci
+ F: scripts/qom-cast-macro-clean-cocci-gen.py
+ F: qom/
 -- 
 2.47.1
 
