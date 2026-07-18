@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E644C4450A
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:10:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20DA7C4450A
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 22:10:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlDEX-0002Ih-0o; Sat, 18 Jul 2026 18:10:12 -0400
+	id 1wlDDj-0000wu-9a; Sat, 18 Jul 2026 18:09:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlDET-00025M-JZ; Sat, 18 Jul 2026 18:10:05 -0400
-Received: from pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com
- ([52.26.1.71])
+ id 1wlDDh-0000wA-H1; Sat, 18 Jul 2026 18:09:17 -0400
+Received: from pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ ([34.218.115.239])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=65292d44c=graf@amazon.de>)
- id 1wlDER-0006Vv-Pi; Sat, 18 Jul 2026 18:10:05 -0400
+ id 1wlDDe-0006UK-Jo; Sat, 18 Jul 2026 18:09:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
- t=1784412603; x=1815948603;
+ t=1784412554; x=1815948554;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=8SHSJyx3GVUlydRkcEPqaWeFtStFpI38YZCyweyhvk0=;
- b=dp67tkWYmrT+Vz3HjxVfu/PhnR8IPb5DhiH7ZHmqV0XBvW0UYMNO91IW
- KWfdO5r7zkWzEkK3VKqODglMczLjAEKAhElLtx01nCN/mVKa8Y9v8YoJo
- 0QX54d1mlIqHrWZ/NxnARa1Y1gu8Zq8dsWi+pKUehmbeSZSJSNFjwF26l
- jZFizOyBvFbsrC5ZReNjUYMlhUiXVdiF1mvNeH7KAv5TNHQNOxlPEv39R
- v9NICeGS/Cq2/W8uCzDflnOJ8Nhee4mDn10VxgiOHHNkOVcv8QRIslFd/
- 3Uk2OclB4b6fQ3fbqNu9t69kIVTts3Og7JCdC09pJYN5C9DN+kKEdwcns A==;
-X-CSE-ConnectionGUID: F37C0L4dTMaTzUR9kfOISQ==
-X-CSE-MsgGUID: LdVSWtNkRfCdBfVSIpfa+g==
-X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23945083"
-Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO
- smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
- by internal-pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:10:00 +0000
-Received: from EX19MTAUWC001.ant.amazon.com [205.251.233.105:4810]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.30.230:2525]
+ bh=ZWwUDOkk9Mi5vjYATmuEUs97Z81/V7kijcdGVjNy54w=;
+ b=oLuipZACLBkI5qBS8QQTn3V1iSgvK89Tgxabv0FvqHgX7b4jXn9C4xe4
+ NehjdkL2NqeHTCovIBHDJt1Qv93EyuMmzTFv9906Y6p+Bxokzm3ptFPjd
+ dOm7Z8pAmzI/nT18w/gYkBKZZ76F7wdR5hZ3FeYlxUmq2mRsgNSXzOFbf
+ NaReLWQ8IvhrE3Y74wpaNALobWHJhhvTwwE5wZsUSVIj/4AqrfevpgKTm
+ VUQ3S24pw7Ksj4WOUEzg3bSxBupqrlC6OZ1G7+7K1aeiycpL5v2JiQnuK
+ nsNWcTqIkqyoVi5GqwrBKGAyQT+emyqikvHcEw2YTdCtTp4NRi0RV8WVx Q==;
+X-CSE-ConnectionGUID: KSpmMxobSYS6XtJczdMD6A==
+X-CSE-MsgGUID: D8rICDyDTbie5Ru79/HzDw==
+X-IronPort-AV: E=Sophos;i="6.25,171,1779148800"; d="scan'208";a="23719813"
+Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO
+ smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
+ by internal-pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2026 22:09:10 +0000
+Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.104:26903]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.11.151:2525]
  with esmtp (Farcaster)
- id 58687ed2-8679-4c11-b377-937e8589ea68; Sat, 18 Jul 2026 22:09:59 +0000 (UTC)
-X-Farcaster-Flow-ID: 58687ed2-8679-4c11-b377-937e8589ea68
+ id 6afe83e9-76d2-443e-836c-b6db572e6aec; Sat, 18 Jul 2026 22:09:09 +0000 (UTC)
+X-Farcaster-Flow-ID: 6afe83e9-76d2-443e-836c-b6db572e6aec
 Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
+ EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:09:59 +0000
+ Sat, 18 Jul 2026 22:09:09 +0000
 Received: from ip-10-253-83-51.amazon.com (172.19.99.218) by
  EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Sat, 18 Jul 2026 22:09:50 +0000
+ Sat, 18 Jul 2026 22:08:59 +0000
 From: Alexander Graf <graf@amazon.com>
 To: <qemu-devel@nongnu.org>
 CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
@@ -93,10 +93,9 @@ CC: <qemu-arm@nongnu.org>, <qemu-ppc@nongnu.org>, <qemu-riscv@nongnu.org>,
  Stafford Horne <shorne@gmail.com>, Sergio Lopez <slp@redhat.com>, "Subbaraya
  Sundeep" <sundeep.lkml@gmail.com>, Thomas Huth <th.huth+qemu@posteo.eu>, "Ran
  Wang" <wangran@bosc.ac.cn>, Hao Wu <wuhaotsh@google.com>
-Subject: [RFC PATCH v2 118/137] sysbus: Parent main-system-bus directly under
- /machine
-Date: Sat, 18 Jul 2026 21:36:33 +0000
-Message-ID: <20260718213652.37673-119-graf@amazon.com>
+Subject: [RFC PATCH v2 115/137] hw: Give allocated IRQs an owner and name
+Date: Sat, 18 Jul 2026 21:36:30 +0000
+Message-ID: <20260718213652.37673-116-graf@amazon.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260718213652.37673-1-graf@amazon.com>
 References: <20260711223707.42139-1-graf@amazon.com>
@@ -105,18 +104,18 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [172.19.99.218]
-X-ClientProxiedBy: EX19D036UWC003.ant.amazon.com (10.13.139.214) To
+X-ClientProxiedBy: EX19D033UWA002.ant.amazon.com (10.13.139.10) To
  EX19D001UWA001.ant.amazon.com (10.13.138.214)
-Received-SPF: pass client-ip=52.26.1.71;
+Received-SPF: pass client-ip=34.218.115.239;
  envelope-from=prvs=65292d44c=graf@amazon.de;
- helo=pdx-out-006.esa.us-west-2.outbound.mail-perimeter.amazon.com
+ helo=pdx-out-013.esa.us-west-2.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
  HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
+ RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
  UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -133,34 +132,411 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The main system bus is the only object deliberately placed under
-/machine/unattached; every other resident is an accidental orphan.
-Promoting it to /machine/sysbus makes /machine/unattached a pure
-bug indicator that later commits can turn into a hard error.
-
-The canonical path changes from /machine/unattached/sysbus to
-/machine/sysbus.  qom-list users that hard-code the old path need
-to be updated; the hmp/qmp qom-tree output naturally follows.
+Convert the remaining IRQ allocation calls across hw/ to the parented
+form.  Owner is the enclosing device for realize()-time allocations
+and the machine for board-init allocations.  Names describe the pin's
+purpose; the auto-indexed [*] form is used where the same allocation
+runs in a loop.
 
 AI-used-for: code (refactoring)
 Signed-off-by: Alexander Graf <graf@amazon.com>
 ---
- system/vl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/alpha/typhoon.c          | 4 ++--
+ hw/char/diva-gsp.c          | 3 ++-
+ hw/display/macfb.c          | 2 +-
+ hw/ide/ahci.c               | 2 +-
+ hw/ide/pci.c                | 2 +-
+ hw/intc/sh_intc.c           | 2 +-
+ hw/isa/i82378.c             | 3 ++-
+ hw/isa/lpc_ich9.c           | 2 +-
+ hw/m68k/mcf5206.c           | 2 +-
+ hw/m68k/q800.c              | 4 ++--
+ hw/mips/mips_int.c          | 2 +-
+ hw/net/can/can_kvaser_pci.c | 2 +-
+ hw/pci-host/pnv_phb3.c      | 3 ++-
+ hw/pci-host/pnv_phb3_msi.c  | 3 ++-
+ hw/pci-host/pnv_phb4.c      | 3 ++-
+ hw/ppc/e500.c               | 3 ++-
+ hw/ppc/pnv_lpc.c            | 2 +-
+ hw/ppc/pnv_psi.c            | 6 ++++--
+ hw/ppc/spapr_irq.c          | 2 +-
+ hw/riscv/sifive_u.c         | 3 ++-
+ hw/scsi/esp-pci.c           | 2 +-
+ hw/sh4/sh7750.c             | 2 +-
+ hw/sparc/sun4m.c            | 5 +++--
+ hw/sparc64/sun4u.c          | 3 ++-
+ hw/xen/xen-pvh-common.c     | 5 +++--
+ 25 files changed, 42 insertions(+), 30 deletions(-)
 
-diff --git a/system/vl.c b/system/vl.c
-index 061cbdf860..b4434839df 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -2211,7 +2211,7 @@ static void qemu_create_machine(QDict *qdict)
-     object_property_add_child(object_get_root(), "machine",
-                               OBJECT(current_machine));
-     qemu_create_machine_containers(OBJECT(current_machine));
--    object_property_add_child(machine_get_container("unattached"),
-+    object_property_add_child(OBJECT(current_machine),
-                               "sysbus", OBJECT(sysbus_get_default()));
+diff --git a/hw/alpha/typhoon.c b/hw/alpha/typhoon.c
+index 671e8f89d9..bc2073bfa9 100644
+--- a/hw/alpha/typhoon.c
++++ b/hw/alpha/typhoon.c
+@@ -849,8 +849,8 @@ PCIBus *typhoon_init(Object *parent, MemoryRegion *ram, qemu_irq *p_isa_irq,
+         }
+     }
  
-     if (machine_class->minimum_page_bits) {
+-    *p_isa_irq = qemu_allocate_irq_orphan(typhoon_set_isa_irq, s, 0);
+-    *p_rtc_irq = qemu_allocate_irq_orphan(typhoon_set_timer_irq, s, 0);
++    *p_isa_irq = qemu_allocate_irq(parent, "isa-irq", typhoon_set_isa_irq, s, 0);
++    *p_rtc_irq = qemu_allocate_irq(parent, "rtc-irq", typhoon_set_timer_irq, s, 0);
+ 
+     /* Main memory region, 0x00.0000.0000.  Real hardware supports 32GB,
+        but the address space hole reserved at this point is 8TB.  */
+diff --git a/hw/char/diva-gsp.c b/hw/char/diva-gsp.c
+index bf1da1faee..b70811f24f 100644
+--- a/hw/char/diva-gsp.c
++++ b/hw/char/diva-gsp.c
+@@ -126,7 +126,8 @@ static void diva_pci_realize(PCIDevice *dev, Error **errp)
+     pci->dev.config[PCI_INTERRUPT_PIN] = 1;
+     memory_region_init(&pci->membar, OBJECT(pci), "serial_ports", 4096);
+     pci_register_bar(&pci->dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY, &pci->membar);
+-    pci->irqs = qemu_allocate_irqs_orphan(multi_serial_irq_mux, pci, di.nports);
++    pci->irqs = qemu_allocate_irqs(OBJECT(dev), "serial-irq",
++                                   multi_serial_irq_mux, pci, di.nports);
+ 
+     for (i = 0; i < di.nports; i++) {
+         s = pci->state + i;
+diff --git a/hw/display/macfb.c b/hw/display/macfb.c
+index de5c83884e..b59523a0ac 100644
+--- a/hw/display/macfb.c
++++ b/hw/display/macfb.c
+@@ -737,7 +737,7 @@ static void macfb_nubus_realize(DeviceState *dev, Error **errp)
+     memory_region_add_subregion(&nd->slot_mem, DAFB_BASE, &ms->mem_ctrl);
+     memory_region_add_subregion(&nd->slot_mem, VIDEO_BASE, &ms->mem_vram);
+ 
+-    ms->irq = qemu_allocate_irq_orphan(macfb_nubus_set_irq, s, 0);
++    ms->irq = qemu_allocate_irq(OBJECT(dev), "nubus-irq", macfb_nubus_set_irq, s, 0);
+ }
+ 
+ static void macfb_nubus_unrealize(DeviceState *dev)
+diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
+index ac1cf26bab..b8f4e018b9 100644
+--- a/hw/ide/ahci.c
++++ b/hw/ide/ahci.c
+@@ -1594,7 +1594,7 @@ void ahci_realize(AHCIState *s, DeviceState *qdev, AddressSpace *as)
+     assert(s->ports > 0);
+     s->dev = g_new0(AHCIDevice, s->ports);
+     ahci_reg_init(s);
+-    irqs = qemu_allocate_irqs_orphan(ahci_irq_set, s, s->ports);
++    irqs = qemu_allocate_irqs(OBJECT(qdev), "port-irq", ahci_irq_set, s, s->ports);
+     for (i = 0; i < s->ports; i++) {
+         AHCIDevice *ad = &s->dev[i];
+ 
+diff --git a/hw/ide/pci.c b/hw/ide/pci.c
+index c808469008..56750b7b6f 100644
+--- a/hw/ide/pci.c
++++ b/hw/ide/pci.c
+@@ -606,7 +606,7 @@ void bmdma_init(IDEBus *bus, BMDMAState *bm, PCIIDEState *d)
+     bm->dma.ops = &bmdma_ops;
+     bus->dma = &bm->dma;
+     bm->irq = bus->irq;
+-    bus->irq = qemu_allocate_irq_orphan(bmdma_irq, bm, 0);
++    bus->irq = qemu_allocate_irq(OBJECT(d), "bmdma-irq[*]", bmdma_irq, bm, 0);
+     bm->bus = bus;
+     bm->pci_dev = d;
+ }
+diff --git a/hw/intc/sh_intc.c b/hw/intc/sh_intc.c
+index 63f4eee2aa..4eaaeefeea 100644
+--- a/hw/intc/sh_intc.c
++++ b/hw/intc/sh_intc.c
+@@ -403,7 +403,7 @@ int sh_intc_init(Object *owner, MemoryRegion *sysmem,
+     for (i = 0; i < nr_sources; i++) {
+         desc->sources[i].parent = desc;
+     }
+-    desc->irqs = qemu_allocate_irqs_orphan(sh_intc_set_irq, desc, nr_sources);
++    desc->irqs = qemu_allocate_irqs(owner, "src-irq", sh_intc_set_irq, desc, nr_sources);
+     memory_region_init_io(&desc->iomem, owner, &sh_intc_ops, desc, "intc",
+                           0x100000000ULL);
+     j = 0;
+diff --git a/hw/isa/i82378.c b/hw/isa/i82378.c
+index 4f0be992e0..263a0c0dcf 100644
+--- a/hw/isa/i82378.c
++++ b/hw/isa/i82378.c
+@@ -95,7 +95,8 @@ static void i82378_realize(PCIDevice *pci, Error **errp)
+ 
+     /* 2 82C59 (irq) */
+     s->isa_irqs_in = i8259_init(OBJECT(pci), isabus,
+-                                qemu_allocate_irq_orphan(i82378_request_out0_irq,
++                                qemu_allocate_irq(OBJECT(dev), "out0-irq",
++                                                  i82378_request_out0_irq,
+                                                   s, 0));
+     isa_bus_register_input_irqs(isabus, s->isa_irqs_in);
+ 
+diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
+index 7cb82519fb..7b44423372 100644
+--- a/hw/isa/lpc_ich9.c
++++ b/hw/isa/lpc_ich9.c
+@@ -429,7 +429,7 @@ static void ich9_lpc_pm_init(ICH9LPCState *lpc)
+     qemu_irq sci_irq;
+     FWCfgState *fw_cfg = fw_cfg_find();
+ 
+-    sci_irq = qemu_allocate_irq_orphan(ich9_set_sci, lpc, 0);
++    sci_irq = qemu_allocate_irq(OBJECT(lpc), "sci-irq", ich9_set_sci, lpc, 0);
+     ich9_pm_init(PCI_DEVICE(lpc), &lpc->pm, sci_irq);
+ 
+     if (lpc->smi_host_features && fw_cfg) {
+diff --git a/hw/m68k/mcf5206.c b/hw/m68k/mcf5206.c
+index cbb361fae9..ec70d482eb 100644
+--- a/hw/m68k/mcf5206.c
++++ b/hw/m68k/mcf5206.c
+@@ -593,7 +593,7 @@ static void mcf5206_mbar_realize(DeviceState *dev, Error **errp)
+                           "mbar", 0x00001000);
+     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->iomem);
+ 
+-    s->pic = qemu_allocate_irqs_orphan(m5206_mbar_set_irq, s, 14);
++    s->pic = qemu_allocate_irqs(OBJECT(dev), "pic-irq", m5206_mbar_set_irq, s, 14);
+     m5206_timer_init(&s->timer[0], s->pic[9]);
+     m5206_timer_init(&s->timer[1], s->pic[10]);
+     s->uart[0] = mcf_uart_create(OBJECT(s), s->pic[12], serial_hd(0));
+diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
+index 177fff0289..677dc4ad80 100644
+--- a/hw/m68k/q800.c
++++ b/hw/m68k/q800.c
+@@ -474,11 +474,11 @@ static void q800_machine_init(MachineState *machine)
+     sysbus_realize(sysbus, &error_fatal);
+     /* SCSI and SCSI data IRQs are negative edge triggered */
+     sysbus_connect_irq(sysbus, 0,
+-                       qemu_irq_invert_orphan(
++                       qemu_irq_invert(OBJECT(machine), "scsi-irq-inv",
+                            qdev_get_gpio_in(DEVICE(&m->via2),
+                                                    VIA2_IRQ_SCSI_BIT)));
+     sysbus_connect_irq(sysbus, 1,
+-                       qemu_irq_invert_orphan(
++                       qemu_irq_invert(OBJECT(machine), "scsi-drq-inv",
+                            qdev_get_gpio_in(DEVICE(&m->via2),
+                                                    VIA2_IRQ_SCSI_DATA_BIT)));
+     memory_region_add_subregion(&m->macio, ESP_BASE - IO_BASE,
+diff --git a/hw/mips/mips_int.c b/hw/mips/mips_int.c
+index 814d07319f..c404063762 100644
+--- a/hw/mips/mips_int.c
++++ b/hw/mips/mips_int.c
+@@ -56,7 +56,7 @@ void cpu_mips_irq_init_cpu(MIPSCPU *cpu)
+     qemu_irq *qi;
+     int i;
+ 
+-    qi = qemu_allocate_irqs_orphan(cpu_mips_irq_request, cpu, 8);
++    qi = qemu_allocate_irqs(OBJECT(cpu), "cpu-irq", cpu_mips_irq_request, cpu, 8);
+     for (i = 0; i < 8; i++) {
+         env->irq[i] = qi[i];
+     }
+diff --git a/hw/net/can/can_kvaser_pci.c b/hw/net/can/can_kvaser_pci.c
+index 69fc66de14..95bae684d6 100644
+--- a/hw/net/can/can_kvaser_pci.c
++++ b/hw/net/can/can_kvaser_pci.c
+@@ -224,7 +224,7 @@ static void kvaser_pci_realize(PCIDevice *pci_dev, Error **errp)
+     pci_conf = pci_dev->config;
+     pci_conf[PCI_INTERRUPT_PIN] = 0x01; /* interrupt pin A */
+ 
+-    d->irq = qemu_allocate_irq_orphan(kvaser_pci_irq_handler, d, 0);
++    d->irq = qemu_allocate_irq(OBJECT(s), "kvaser-irq", kvaser_pci_irq_handler, d, 0);
+ 
+     can_sja_init(s, d->irq);
+ 
+diff --git a/hw/pci-host/pnv_phb3.c b/hw/pci-host/pnv_phb3.c
+index 63da48f5af..410a27a073 100644
+--- a/hw/pci-host/pnv_phb3.c
++++ b/hw/pci-host/pnv_phb3.c
+@@ -1054,7 +1054,8 @@ static void pnv_phb3_realize(DeviceState *dev, Error **errp)
+         ics_set_irq_type(&phb->lsis, i, true);
+     }
+ 
+-    phb->qirqs = qemu_allocate_irqs_orphan(ics_set_irq, &phb->lsis, phb->lsis.nr_irqs);
++    phb->qirqs = qemu_allocate_irqs(OBJECT(dev), "lsi-irq",
++                                    ics_set_irq, &phb->lsis, phb->lsis.nr_irqs);
+ 
+     /* MSI sources */
+     object_property_set_link(OBJECT(&phb->msis), "phb", OBJECT(phb),
+diff --git a/hw/pci-host/pnv_phb3_msi.c b/hw/pci-host/pnv_phb3_msi.c
+index fa5f61ea2b..1bba60c616 100644
+--- a/hw/pci-host/pnv_phb3_msi.c
++++ b/hw/pci-host/pnv_phb3_msi.c
+@@ -267,7 +267,8 @@ static void phb3_msi_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
+-    msi->qirqs = qemu_allocate_irqs_orphan(phb3_msi_set_irq, msi, ics->nr_irqs);
++    msi->qirqs = qemu_allocate_irqs(OBJECT(dev), "msi-irq",
++                                    phb3_msi_set_irq, msi, ics->nr_irqs);
+ }
+ 
+ static void phb3_msi_instance_init(Object *obj)
+diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
+index 7a1988a2b2..9b567413c7 100644
+--- a/hw/pci-host/pnv_phb4.c
++++ b/hw/pci-host/pnv_phb4.c
+@@ -1605,7 +1605,8 @@ static void pnv_phb4_realize(DeviceState *dev, Error **errp)
+ 
+     pnv_phb4_update_xsrc(phb);
+ 
+-    phb->qirqs = qemu_allocate_irqs_orphan(xive_source_set_irq, xsrc, xsrc->nr_irqs);
++    phb->qirqs = qemu_allocate_irqs(OBJECT(dev), "lsi-irq",
++                                    xive_source_set_irq, xsrc, xsrc->nr_irqs);
+ 
+     pnv_phb4_xscom_realize(phb);
+ }
+diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+index 62692f5776..f3917c0755 100644
+--- a/hw/ppc/e500.c
++++ b/hw/ppc/e500.c
+@@ -1089,7 +1089,8 @@ void ppce500_init(MachineState *machine)
+                                     sysbus_mmio_get_region(s, 0));
+ 
+         /* Power Off GPIO at Pin 0 */
+-        poweroff_irq = qemu_allocate_irq_orphan(ppce500_power_off, NULL, 0);
++        poweroff_irq = qemu_allocate_irq(OBJECT(machine), "poweroff",
++                                         ppce500_power_off, NULL, 0);
+         qdev_connect_gpio_out(dev, 0, poweroff_irq);
+     }
+ 
+diff --git a/hw/ppc/pnv_lpc.c b/hw/ppc/pnv_lpc.c
+index e89defb321..a13d633f64 100644
+--- a/hw/ppc/pnv_lpc.c
++++ b/hw/ppc/pnv_lpc.c
+@@ -993,7 +993,7 @@ ISABus *pnv_lpc_isa_create(PnvLpcController *lpc, bool use_cpld, Error **errp)
+     }
+ 
+     /* POWER has a 17th irq, QEMU only implements the 16 regular device irqs */
+-    irqs = qemu_allocate_irqs_orphan(handler, lpc, ISA_NUM_IRQS);
++    irqs = qemu_allocate_irqs(OBJECT(lpc), "isa-irq", handler, lpc, ISA_NUM_IRQS);
+ 
+     isa_bus_register_input_irqs(isa_bus, irqs);
+ 
+diff --git a/hw/ppc/pnv_psi.c b/hw/ppc/pnv_psi.c
+index 1ff33596ac..1f2148a4d3 100644
+--- a/hw/ppc/pnv_psi.c
++++ b/hw/ppc/pnv_psi.c
+@@ -509,7 +509,8 @@ static void pnv_psi_power8_realize(DeviceState *dev, Error **errp)
+ 
+     qdev_init_gpio_in(dev, pnv_psi_power8_set_irq, ics->nr_irqs);
+ 
+-    psi->qirqs = qemu_allocate_irqs_orphan(ics_set_irq, ics, ics->nr_irqs);
++    psi->qirqs = qemu_allocate_irqs(OBJECT(dev), "psi-irq",
++                                    ics_set_irq, ics, ics->nr_irqs);
+ 
+     /* XSCOM region for PSI registers */
+     pnv_xscom_region_init(&psi->xscom_regs, OBJECT(dev), &pnv_psi_xscom_ops,
+@@ -872,7 +873,8 @@ static void pnv_psi_power9_realize(DeviceState *dev, Error **errp)
+         xive_source_irq_set_lsi(xsrc, i);
+     }
+ 
+-    psi->qirqs = qemu_allocate_irqs_orphan(xive_source_set_irq, xsrc, xsrc->nr_irqs);
++    psi->qirqs = qemu_allocate_irqs(OBJECT(dev), "psi-irq",
++                                    xive_source_set_irq, xsrc, xsrc->nr_irqs);
+ 
+     qdev_init_gpio_in(dev, pnv_psi_power9_set_irq, xsrc->nr_irqs);
+ 
+diff --git a/hw/ppc/spapr_irq.c b/hw/ppc/spapr_irq.c
+index a05edb78bc..82869ea03a 100644
+--- a/hw/ppc/spapr_irq.c
++++ b/hw/ppc/spapr_irq.c
+@@ -339,7 +339,7 @@ void spapr_irq_init(SpaprMachineState *spapr, Error **errp)
+         spapr_xive_hcall_init(spapr);
+     }
+ 
+-    spapr->qirqs = qemu_allocate_irqs_orphan(spapr_set_irq, spapr,
++    spapr->qirqs = qemu_allocate_irqs(OBJECT(spapr), "irq", spapr_set_irq, spapr,
+                                       SPAPR_NR_XIRQS + SPAPR_IRQ_NR_IPIS);
+ 
+     /*
+diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
+index 3df9fafb12..3f4a9b9b7b 100644
+--- a/hw/riscv/sifive_u.c
++++ b/hw/riscv/sifive_u.c
+@@ -484,7 +484,8 @@ static void sifive_u_machine_init(MachineState *machine)
+ 
+     /* register gpio-restart */
+     qdev_connect_gpio_out(DEVICE(&(s->soc.gpio)), 10,
+-                          qemu_allocate_irq_orphan(sifive_u_machine_reset, NULL, 0));
++                          qemu_allocate_irq(OBJECT(machine), "reset-irq",
++                                            sifive_u_machine_reset, NULL, 0));
+ 
+     /* load/create device tree */
+     if (machine->dtb) {
+diff --git a/hw/scsi/esp-pci.c b/hw/scsi/esp-pci.c
+index 4c02b23a28..bfc61b8f3b 100644
+--- a/hw/scsi/esp-pci.c
++++ b/hw/scsi/esp-pci.c
+@@ -407,7 +407,7 @@ static void esp_pci_scsi_realize(PCIDevice *dev, Error **errp)
+                           "esp-io", 0x80);
+ 
+     pci_register_bar(dev, 0, PCI_BASE_ADDRESS_SPACE_IO, &pci->io);
+-    s->irq = qemu_allocate_irq_orphan(esp_irq_handler, pci, 0);
++    s->irq = qemu_allocate_irq(OBJECT(s), "esp-irq", esp_irq_handler, pci, 0);
+ 
+     scsi_bus_init(&s->bus, sizeof(s->bus), d, &esp_pci_scsi_info);
+ }
+diff --git a/hw/sh4/sh7750.c b/hw/sh4/sh7750.c
+index 307daa523d..a42b753a1d 100644
+--- a/hw/sh4/sh7750.c
++++ b/hw/sh4/sh7750.c
+@@ -848,5 +848,5 @@ SH7750State *sh7750_init(Object *parent, SuperHCPU *cpu,
+ qemu_irq sh7750_irl(SH7750State *s)
+ {
+     sh_intc_toggle_source(&s->intc.sources[IRL], 1, 0); /* enable */
+-    return qemu_allocate_irq_orphan(sh_intc_set_irl, &s->intc.sources[IRL], 0);
++    return qemu_allocate_irq(OBJECT(s), "irl", sh_intc_set_irl, &s->intc.sources[IRL], 0);
+ }
+diff --git a/hw/sparc/sun4m.c b/hw/sparc/sun4m.c
+index 0a35b20e17..51f5468a02 100644
+--- a/hw/sparc/sun4m.c
++++ b/hw/sparc/sun4m.c
+@@ -1008,7 +1008,8 @@ static void sun4m_hw_init(MachineState *machine)
+ 
+     if (hwdef->apc_base) {
+         apc_init(OBJECT(machine), hwdef->apc_base,
+-                 qemu_allocate_irq_orphan(cpu_halt_signal, NULL, 0));
++                 qemu_allocate_irq(OBJECT(machine), "cpu-halt",
++                                   cpu_halt_signal, NULL, 0));
+     }
+ 
+     if (hwdef->fd_base) {
+@@ -1018,7 +1019,7 @@ static void sun4m_hw_init(MachineState *machine)
+         sun4m_fdctrl_init(OBJECT(machine), slavio_irq[22], hwdef->fd_base, fd,
+                           &fdc_tc);
+     } else {
+-        fdc_tc = qemu_allocate_irq_orphan(dummy_fdc_tc, NULL, 0);
++        fdc_tc = qemu_allocate_irq(OBJECT(machine), "fdc-tc", dummy_fdc_tc, NULL, 0);
+     }
+ 
+     slavio_misc_init(OBJECT(machine), hwdef->slavio_base, hwdef->aux1_base,
+diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
+index 389436fd3d..7d84dc201f 100644
+--- a/hw/sparc64/sun4u.c
++++ b/hw/sparc64/sun4u.c
+@@ -311,7 +311,8 @@ static void ebus_realize(PCIDevice *pci_dev, Error **errp)
+     }
+ 
+     /* ISA bus */
+-    s->isa_irqs_in = qemu_allocate_irqs_orphan(ebus_isa_irq_handler, s, ISA_NUM_IRQS);
++    s->isa_irqs_in = qemu_allocate_irqs(OBJECT(s), "isa-irq-in",
++                                        ebus_isa_irq_handler, s, ISA_NUM_IRQS);
+     isa_bus_register_input_irqs(s->isa_bus, s->isa_irqs_in);
+     qdev_init_gpio_out_named(DEVICE(s), s->isa_irqs_out, "isa-irq",
+                              ISA_NUM_IRQS);
+diff --git a/hw/xen/xen-pvh-common.c b/hw/xen/xen-pvh-common.c
+index 42514a599e..76893c8fcf 100644
+--- a/hw/xen/xen-pvh-common.c
++++ b/hw/xen/xen-pvh-common.c
+@@ -170,7 +170,7 @@ static void xen_create_virtio_mmio_devices(XenPVHMachineState *s)
+      */
+     for (i = s->cfg.virtio_mmio_num - 1; i >= 0; i--) {
+         hwaddr base = s->cfg.virtio_mmio.base + i * s->cfg.virtio_mmio.size;
+-        qemu_irq irq = qemu_allocate_irq_orphan(xen_set_irq, NULL,
++        qemu_irq irq = qemu_allocate_irq(OBJECT(s), "virtio-irq[*]", xen_set_irq, NULL,
+                                          s->cfg.virtio_mmio_irq_base + i);
+ 
+         sysbus_create_simple(OBJECT(s), "virtio-mmio[*]", "virtio-mmio",
+@@ -260,7 +260,8 @@ static inline void xenpvh_gpex_init(XenPVHMachineState *s,
+     assert(xpc->set_pci_intx_irq);
+ 
+     for (i = 0; i < PCI_NUM_PINS; i++) {
+-        qemu_irq irq = qemu_allocate_irq_orphan(xpc->set_pci_intx_irq, s, i);
++        qemu_irq irq = qemu_allocate_irq(OBJECT(s), "pci-intx-irq[*]",
++                                         xpc->set_pci_intx_irq, s, i);
+ 
+         sysbus_connect_irq(SYS_BUS_DEVICE(dev), i, irq);
+         gpex_set_irq_num(GPEX_HOST(dev), i, s->cfg.pci_intx_irq_base + i);
 -- 
 2.47.1
 
