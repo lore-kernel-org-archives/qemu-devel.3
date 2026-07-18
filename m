@@ -4,85 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9A6FC4451B
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 14:02:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9A5CC4451C
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 15:42:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wl5bw-0004iu-SU; Sat, 18 Jul 2026 10:01:48 -0400
+	id 1wl7B6-0000zs-Dp; Sat, 18 Jul 2026 11:42:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wl5bv-0004ii-Eo
- for qemu-devel@nongnu.org; Sat, 18 Jul 2026 10:01:47 -0400
-Received: from mx2.catap.net ([65.21.79.163])
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wl7B4-0000zI-C4; Sat, 18 Jul 2026 11:42:10 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wl5bt-0003Nb-CV
- for qemu-devel@nongnu.org; Sat, 18 Jul 2026 10:01:47 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=FQynwOz
- ErkG2P4rHg1a0JUZAnfaxZ4wOjU/9DvjN7iKYtJcM6+INdxteOfslMskiw/OiCKrgHCqe6
- uwlGfhcavJmggtM0FvwSdqnYaR29ALklmAPrpVa/uj6yEBRc1FyeDlVxU7PNrZNkijE2it
- d2bt8KS7VDQTAFQvTcL0vWe/GGCbwVm9PY2GPrF4fn4EiWi4wgCB086leOJ4B+2t8UCLap
- mVUa0mMeKUIQgVFQ1f3NE7ZPobax5n8EuVT82Q5Nz7K6tf6/0WpIHT0kRfNGqTFEkf6HMF
- yMrpC1fw1EsLYtlZAoh8nN3S575KD95WJqLl+D/LrC5xxtpgVeJ3IDg==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=k
- UOsdWEmkw1olfr/zkwZoYHF6YAZ9stuP2kAmGhWeWU=;
- h=references:in-reply-to:
- subject:to:from:date:dkim-signature:dkim-signature; d=mx.catap.net; b=
- KCwKVl2Dx3FXkmmKT3CwM7Wj2disgx2aqLYscaG8W9F/mzEiHtmo+z6tm5jzWZK65f7dxU
- vJ37Uf8NuE79H259m9Tj23dgu4d9bBkniC64xlrds8c0i4WIAqTH3qZDtVfHv4J3+GGUDL
- lHvy8CGKQeSTDQYynGaEFaRVGbkD8NYoApE/N/mCuGQTMS4mW5PdY0uEKztVrSl3xtoq4j
- KhNBSWJ1C7bFgw5YGW6WvDxIiizfGRKd0W/X7NAHKkAiFdg3JKCUnygMmYJP5/0s+ZFqZ2
- EThMqrgMmWdrpCGy6Jiyk8XZccKENJ5EnGWQxQFF7HhiqQlz0Gt5gziQPDkXFw==
-ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
- header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=KfNyrED0; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=2wTrJVj6;
- arc=none; iprev=pass; spf=none
- smtp.helo=postmaster@matebook.home.arpa; spf=softfail
- smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=kUOsdWEm
- kw1olfr/zkwZoYHF6YAZ9stuP2kAmGhWeWU=; h=references:in-reply-to:
- subject:to:from:date; d=korins.ky;
- b=KfNyrED0TtG72pSJHBaiNeWaXi+6/7Iot
- ikLXTHNuvmLCyq9IN85YGytfcOJcn1awCChGveEcCpkUH5sglosh40SOmQ9BFzUrw34MSg
- U9URGLtviVJzbQ/+IC0LhuJZuM+aJjFlGGiSQAafdpfFaLO8FIG2ahvnELAUh1jdP6H29E
- /uRznHjenpbi+K27QcOG/m1loR6jHjZKgDo20bSJzvhGIlQpIBQvU4gqb3b7U2F/UxwRxQ
- GXnaPkTFTPXkee4GcrGl1MZhTUcfpxXXpgRCu7vB81q49QBIVHSZE7H9PhdVLumhMnjJty
- 42mH8qtmAogKc/fFYg/ahfnuIoQuw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=kUOsdWEmkw1olfr/zkwZoYHF6YAZ9stuP2kAmGhWeWU=; h=references:
- in-reply-to:subject:to:from:date; d=korins.ky; b=2wTrJVj6rNTmR0+n2058s
- uxG8Evv4sCs0tm19lVolDHXzyAhPyAPukgXLSoO+MvsTMfqL2ykXPPHggFTLljnAw==
-Received: by mx2.catap.net (OpenSMTPD) with ESMTPSA id f7f31078
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Sat, 18 Jul 2026 16:01:40 +0200 (CEST)
-Received: by matebook.home.arpa (OpenSMTPD) with ESMTP id e682edfe;
- Sat, 18 Jul 2026 16:01:37 +0200 (CEST)
-Date: Sat, 18 Jul 2026 16:01:37 +0200
-Message-ID: <87v7ac8khq.wl-kirill@korins.ky>
-From: Kirill A. Korinsky <kirill@korins.ky>
-To: philmd@oss.qualcomm.com, qemu-devel@nongnu.org,
- Kirill A. Korinsky <kirill@korins.ky>
-Subject: Re: [PATCH 1/9] hw/usb/xhci: reassert pending busy interrupts
-In-Reply-To: <87cxwpn1iw.wl-kirill@korins.ky>
-References: <20260713112004.4956-1-kirill@korins.ky>
- <20260713112004.4956-2-kirill@korins.ky>
- <4d6a6a94-49d7-4a37-a590-bf2a3105b994@oss.qualcomm.com>
- <87cxwpn1iw.wl-kirill@korins.ky>
-User-Agent: Wanderlust
-Mail-Followup-To: philmd@oss.qualcomm.com, qemu-devel@nongnu.org,
- kirill@korins.ky
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wl7B2-00048n-Lf; Sat, 18 Jul 2026 11:42:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=DGA9WfMs2xhpuNyRkK22/9bzSsQAaC4zeOIx93pqX4s=; b=nUC/9vWfNtYeF0plfDWsBPtmUc
+ aOOvkDpEaD8z0qRumBHnFhays9ADT92ispy7LVLb8iAPLk8RTG5BkO+mZpjjHCytoDe8wcxJEL/GA
+ ItaMspkaGxvxkjSQ5MR+2bInRCvf6ft6YJDqW0jZ0Q6vq7L2NqB4LqE1Kswv0YYXx4/OqPQiLrApl
+ uEuZ2rBUTt9lGz7RmVehwHdWvlmcQrQ4alw6Gmdz4TXv8uohSnsikUO3OtUGNYWr9eu/jcrBwBP3o
+ AxPjhhUkSd+7+iEEW+JI+My2xAOOItvqrhnVlhLC5s8rgvSswhUE1tKQLT61aRnkbd4YvfLalW/jB
+ TmbhRIw2WUWUEm35EFW++GujxYADgv6J13alXBGwCjRlcgGGP1luNpsdMf02tvZL7LO/ivIBxpH6E
+ GWgpuYzes9Rxl3VxmduIcoQ44PYjbn0xmk/+C8otDlwKe0y4+ZDBGfWGwhWR1jq0VLNBmvD3tMftV
+ o/xmSAuIX+Dw5kveuGXLEiPCfj+PagRr/RO8RVcITTAquj0uCCqQNwCx9mvH8Z2ihSn9OnKr1/Tnc
+ fmEbjakinorPztD2cFCTYXeP5/13tvbhxnrM/4E+qUVaoCKOJO4bAQdeAmIdMCY//XLRdsRwFf9Rs
+ ROqnmZpF6kpreITHHjniCnku+j0pzpWbzkydHzLsM=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: Stefano Stabellini <sstabellini@kernel.org>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>, 
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: Re: [PATCH 3/3] hw/9pfs/xen: drain in-flight PDUs before xen-9p
+ disconnect
+Date: Sat, 18 Jul 2026 17:42:03 +0200
+Message-ID: <3351181.5fSG56mABF@weasel>
+In-Reply-To: <alpine.DEB.2.22.394.2607171743150.16921@ubuntu-linux-20-04-desktop>
+References: <cover.1783604079.git.qemu_oss@crudebyte.com>
+ <12932229.O9o76ZdvQC@weasel>
+ <alpine.DEB.2.22.394.2607171743150.16921@ubuntu-linux-20-04-desktop>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=65.21.79.163; envelope-from=kirill@korins.ky;
- helo=mx2.catap.net
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,77 +71,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 14 Jul 2026 15:28:39 +0200,
-Kirill A. Korinsky <kirill@korins.ky> wrote:
+On Saturday, 18 July 2026 02:46:36 CEST Stefano Stabellini wrote:
+> On Thu, 16 Jul 2026, Christian Schoenebeck wrote:
+> > Hi Stefano,
+> > 
+> > do you might have a chance to look at this Xen patch?
 > 
-> On Tue, 14 Jul 2026 12:01:36 +0200,
-> Philippe Mathieu-Daudé <philmd@oss.qualcomm.com> wrote:
-> > 
-> > Hi Kirill,
-> > 
-> > On 13/7/26 13:16, Kirill A. Korinsky wrote:
-> > > xhci_intr_raise() returned early whenever ERDP.EHB was set; that also
-> > > skipped IRQ assertion after the guest cleared IMAN.IP while leaving the
-> > > event handler busy bit asserted.
+> Sorry for the delay
+
+Thanks for looking at this, much appreciated!
+
+> > On Thursday, 9 July 2026 15:50:36 CEST Christian Schoenebeck wrote:
+> > > The xen-9p disconnect path has two issues:
 > > > 
-> > > Track the previous IMAN.IP state and suppress only duplicate raises;
-> > > when ERDP.EHB remains set after IMAN.IP is cleared, assert the IRQ again
-> > > so the guest can observe the pending event.
+> > > 1. It frees the Xen9pfsRing structures while in-flight PDUs may still
 > > > 
-> > > Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
+> > >    reference them via pdu->tag to index rings[]. This causes a UAF
+> > >    in xen_9pfs_push_and_notify() when worker threads resume after
+> > >    completing filesystem operations.
+> > > 
+> > > 2. It never calls v9fs_device_unrealize_common(), which means server
+> > > 
+> > >    state (struct LocalData, mountfd, FIDs) is never cleaned up on
+> > >    disconnect, causing a resource leak on every guest-initiated
+> > >    disconnect.
+> > > 
+> > > Fix both by draining in-flight PDUs via v9fs_reset() before tearing
+> > > down rings, and calling v9fs_device_unrealize_common() to clean up
+> > > server state.
+> > > 
+> > > Fixes: b37eeb0201 ("xen/9pfs: introduce Xen 9pfs backend")
+> > > Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 > > > ---
-> > >   hw/usb/hcd-xhci.c | 3 ++-
-> > >   1 file changed, 2 insertions(+), 1 deletion(-)
 > > > 
-> > > diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
-> > > index 2cdab3ba0e..ce06d52c36 100644
-> > > --- a/hw/usb/hcd-xhci.c
-> > > +++ b/hw/usb/hcd-xhci.c
-> > > @@ -577,12 +577,13 @@ static void xhci_intr_update(XHCIState *xhci, int v)
-> > >   static void xhci_intr_raise(XHCIState *xhci, int v)
-> > >   {
-> > >       bool pending = (xhci->intr[v].erdp_low & ERDP_EHB);
-> > > +    bool was_raised = (xhci->intr[v].iman & IMAN_IP);
-> > 
-> > Per your description we are missing to clear ERDP_EHB?
-> > 
-> > @@ -592,6 +592,7 @@ static void xhci_intr_raise(XHCIState *xhci, int v)
-> >      }
-> >      if (xhci->intr_raise) {
-> >          if (xhci->intr_raise(xhci, v, true)) {
-> > +            xhci->intr[v].erdp_low &= ~ERDP_EHB;
-> >              xhci->intr[v].iman &= ~IMAN_IP;
-> >          }
-> >      }
-> > 
+> > >  hw/9pfs/xen-9p-backend.c | 4 ++++
+> > >  1 file changed, 4 insertions(+)
+> > > 
+> > > diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
+> > > index 24c90d97ec..3b7a68779a 100644
+> > > --- a/hw/9pfs/xen-9p-backend.c
+> > > +++ b/hw/9pfs/xen-9p-backend.c
+> > > @@ -368,10 +368,14 @@ static void xen_9pfs_evtchn_event(void *opaque)
+> > > 
+> > >  static void xen_9pfs_disconnect(struct XenLegacyDevice *xendev)
+> > >  {
+> > >  
+> > >      Xen9pfsDev *xen_9pdev = container_of(xendev, Xen9pfsDev, xendev);
+> > > 
+> > > +    V9fsState *s = &xen_9pdev->state;
+> > > 
+> > >      int i;
+> > >      
+> > >      trace_xen_9pfs_disconnect(xendev->name);
+> > > 
+> > > +    v9fs_reset(s);
+> > > +    v9fs_device_unrealize_common(s);
 > 
-> What seems a real fix for that may be a real root cause.
-> 
-> My test is simple: I boot OpenBSD/octeon in my machine with USB disk, and
-> inside machine, via SSH, run cvs checkout of ports with -Q option (no
-> output). It produces ~200k files and works for about 30 minutes.
-> 
-> Without my or your diff the cvs process stuck in biowait, I can use any IO
-> at all, ls is blocked.
-> 
-> But network and things like ps works well.
-> 
-> And enough input from serial console usually wake up machines.
-> 
-> So far I had reverted my hack and replaced by yours fix, and it survives two
-> checkout without an issues.
-> 
-> I'll drop that patch from my series.
-> 
+> While the patch addresses a real issue, xen_9pfs_disconnect() is also
+> called from the error paths of xen_9pfs_pdu_vmarshal/vunmarshal, which
+> run inside the PDU's own coroutine. v9fs_reset() is not safe to be
+> called there.
 
-I'd like to whitdraw my claim.
+Well, xen_9pfs_pdu_vmarshal() / xen_9pfs_pdu_vunmarshal() are both called on 
+main thread, and xen_be_disconnect() has a guard that prevents the disconnect 
+handler being called twice (more about that later), however you are right that 
+these two functions run within coroutines. Which then leads to the following 
+problem in v9fs_reset():
 
-I can't reproduce issue on amd64 and riscv64, and I can reproduce issue with
-~ERDP_EHB.
+    while (!QLIST_EMPTY(&s->active_list)) {
+        aio_poll(qemu_get_aio_context(), true);
+    }
 
-So, it indicates that issue is my octeon machine (quite likley) or something
-is missed in mips implementation.
+This loop would then run forever, as the coroutine calling v9fs_reset() is on 
+the active_list, hence this list would never turn empty and the loop condition  
+never turn false.
 
--- 
-wbr, Kirill
+Furthermore aio_poll() is marked as no_coroutine_fn:
+
+include/qemu/aio.h:bool no_coroutine_fn aio_poll(AioContext *ctx, bool 
+blocking);
+
+So aio_poll() should actually not be called in a coroutine context at all.
+ 
+> We could remove the direct call to xen_9pfs_disconnect() from
+> xen_9pfs_pdu_vmarshal/vunmarshal because they already change the state
+> to XenbusStateClosing, which should result in the same
+
+The problem with this approach is that xen_9pfs_pdu_vmarshal() / 
+xen_9pfs_pdu_vunmarshal() would still call:
+
+    xen_be_set_state(&xen_9pfs->xendev, XenbusStateClosing);
+
+And the previously mentioned guard in xen_be_disconnect() for not calling the 
+disconnect callback more than once, looks like this:
+
+    if (xendev->be_state != XenbusStateClosing &&
+        xendev->be_state != XenbusStateClosed  &&
+        xendev->ops->disconnect) {
+        xendev->ops->disconnect(xendev);
+    }
+
+Hence if this (v)unmarshal error path was triggered, the disconnect handler 
+would then actually never be executed. And that's apparently the reason why 
+these two functions do call xen_9pfs_disconnect() explicitly in their error 
+path right now.
+
+What I think might work though, was replacing the current direct 
+xen_9pfs_disconnect() calls by deferred ones, something like:
+
+    aio_bh_schedule_oneshot(... xen_9pfs_disconnect ...);
+
+Because xen_9pfs_disconnect() would then run both on main thread and not run 
+in a coroutine context. So it should turn it safe.
+
+I'll prepare a v2 with the latter solution.
+
+/Christian
+
+
+
+
+
 
