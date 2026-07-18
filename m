@@ -4,47 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 986BBC4450A
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 16:54:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1223C4451C
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 16:54:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wl8II-00058d-0L; Sat, 18 Jul 2026 12:53:43 -0400
+	id 1wl8IP-00059U-9v; Sat, 18 Jul 2026 12:53:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <bc503aefffd20b1806941b3ef708afbd92f0aef2@kylie.crudebyte.com>)
- id 1wl8IF-00057s-Vf; Sat, 18 Jul 2026 12:53:40 -0400
+ (envelope-from <afbe101f9fef3110d79023c604be0b28006cfb60@kylie.crudebyte.com>)
+ id 1wl8IL-00059D-I9; Sat, 18 Jul 2026 12:53:45 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <bc503aefffd20b1806941b3ef708afbd92f0aef2@kylie.crudebyte.com>)
- id 1wl8ID-0002s6-Sn; Sat, 18 Jul 2026 12:53:39 -0400
+ (envelope-from <afbe101f9fef3110d79023c604be0b28006cfb60@kylie.crudebyte.com>)
+ id 1wl8II-0002sQ-Pr; Sat, 18 Jul 2026 12:53:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=TnTyMGcps9pLzVD+xAJmeZIkZhLzfTw6EtxKWuY+Rlk=; b=TRA6D
- fOUx5nQkZ3/j+qXFBWX9P44cSeAFgNJHCodNwDvQ56CW3jnEZp87o3sAme0bfU2zMvf1U4geuo8lj
- UxYcXYZW06mW8A2MINBvhQqAAT2hNe/WLnrOXtExD1kbzGJbyEpL6PmoKRrlzXRgu3z+8dnO2seEk
- 9j3U2gU/citJ3koyknddMoD29sPsSeXOWw/CLM01TRXuI9QGBs4ypZ8N24dwFGPwwZr5lBmm/66vU
- QAIEpY97lgUGGKo/6g44iWC8pLakz3Y7knyxYVoSi6bhwXu0iGQ/afXH+qh50HOpQnUNl+GVmJTdS
- SxFW0YBt6OYoyv6KQTAJl75/XP7CYdvuNSEV7qomfQtM8dcCJoqt4KrZgjpirDCX9E1FNLUkNbO4k
- VhwZFIEHOpZgF6n3ER8D4Gu3+J6i3aUV+ZetrlkmG2FBzJNf2oWU5DCFBAR/wd4kkgoOiu9HyhDge
- jfJ8gUWEDCi4PaBXq6uz0D9Q/nEDAoLSue24Xo5J7ggsn4FG1VKyKEWQFWTnxCCe9bF+bz43Ez+kL
- l11d+Kq76rcre9udlABo91oDrtNHmu+g3tAUlbMFz0piklNCFRfeXf8U63Cpi42CsCSAAioA2v4kj
- DjbzGfJfOAD5rCHXYLGqaaJbpWNqZAOEmxqSZ2bKe4Ok2Et4wecTjJKQqCO5Tc=;
-Message-ID: <bc503aefffd20b1806941b3ef708afbd92f0aef2.1784392605.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=YsOuNZlHXe9XieQkHWIpiRHmFJkT9S9SqNz6ZRG0SIY=; b=qCoj7
+ /hWVL9mGrqLYo60zyvPS5HoFgPGZF6HPVz1b6dmTsvSna73sCRdjUavH72AYREevKIu59laGjMrMv
+ whJL+y+Ct5+shtAp2iR8gc1u2SghPckgjx//Ot1t/PKfChVHfsMryd9XSvSZtAqDTmctw3tHFaASy
+ Jc6CdblbXzGCPfnJCNqNr11qz8e+p3bwAnXa5cKiL/xXFa4qBcIfL9edPg5SzylHfRn0r4pdpZpqv
+ uVyPr+PkU3LjTJpwx8eS+iqcCKrrl36BixD3xTuETNzWSCZd0vTEyS6E0BEtbjvgmW7Kknz9sEeJ6
+ aMAN18GpDhbVB4O7tFqi/bePDkxie8RDpQpdf57XndAPyPLHqcczrF4nnSCHIXQ6xybz5uiWxIv8v
+ xeBTBwk3Iz8wnm1tIdiuVC/JaRqv18fwhgN29vcme4ThbGPoig0zpqyWwnrAxBWXk8wcoUo5NXfCH
+ gETklNxLy9GZ4VI5GK+R1h8qER0CDDjefj53zKE0Ao+NBMLsUGVFdVvLPf589r7A+y6zogsP2RXBE
+ CQXc2zz2MGzFbtVQIAGmgRnDzWe4GbFcfcPLAKM/0MBW6r/Ej9H+CcUoyd66GqxMF9ve/EeKRLJah
+ 0E2vR6Bl8/P7VaY25s1quLFpGvwr5uo+QxBZ2RuwK1gtWPDLmFr/lMsx5APnA0=;
+Message-ID: <afbe101f9fef3110d79023c604be0b28006cfb60.1784392605.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1784392605.git.qemu_oss@crudebyte.com>
 References: <cover.1784392605.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Sat, 18 Jul 2026 18:50:06 +0200
-Subject: [PATCH v2 1/2] hw/9pfs/virtio: drain in-flight PDUs before virtio-9p
- unrealize
+Subject: [PATCH v2 2/2] hw/9pfs/xen: drain in-flight PDUs before xen-9p
+ disconnect
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
- Jia Jia <physicalmtea@gmail.com>
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=bc503aefffd20b1806941b3ef708afbd92f0aef2@kylie.crudebyte.com;
+ envelope-from=afbe101f9fef3110d79023c604be0b28006cfb60@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -67,40 +69,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jia Jia <physicalmtea@gmail.com>
+The xen-9p disconnect path has two issues:
 
-A guest can trigger a heap-use-after-free in the virtio transport
-unrealize path by submitting a Treaddir request and immediately
-ejecting the device via ACPI PCI hotplug. The unrealize path frees
-struct LocalData while a worker thread still holds a reference
-on it, causing a UAF in local_open_nofollow().
+1. It frees the Xen9pfsRing structures while in-flight PDUs may still
+   reference them via pdu->tag to index rings[]. This causes a UAF
+   in xen_9pfs_push_and_notify() when worker threads resume after
+   completing filesystem operations.
 
-Fix this by draining all in-flight 9p PDUs by calling v9fs_reset()
-before final server cleanup. This ensures all coroutines completed,
-all FIDs are closed, and no worker thread still holds references
-on 9p server state when it is freed.
+2. It never calls v9fs_device_unrealize_common(), which means server
+   state (struct LocalData, mountfd, FIDs) is never cleaned up on
+   disconnect, causing a resource leak on every guest-initiated
+   disconnect.
 
-Fixes: 6cecf09373 ("virtio-9p-device: add minimal unrealize handler")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3937
-Signed-off-by: Jia Jia <physicalmtea@gmail.com>
-[ Christian Schoenebeck: add commit log message. ]
+Fix both by draining in-flight PDUs via v9fs_reset() before tearing
+down rings, and calling v9fs_device_unrealize_common() to clean up
+server state.
+
+Additionally, explicit calls of xen_9pfs_disconnect() in the error
+paths of xen_9pfs_pdu_vmarshal() and xen_9pfs_pdu_vunmarshal() must
+be deferred (via aio_bh_schedule_oneshot()), because
+xen_9pfs_pdu_v(un)marshal() are running within a coroutine context
+which makes them unsafe [1] for calling v9fs_reset() directly, as
+the latter e.g. has a loop like:
+
+    while (!QLIST_EMPTY(&s->active_list)) {
+        aio_poll(qemu_get_aio_context(), true);
+    }
+
+which would a) never terminate (as the coroutine is on the
+active_list) and b) aio_poll() is marked as no_coroutine_fn.
+
+[1] https://lore.kernel.org/qemu-devel/3351181.5fSG56mABF@weasel/
+
+And finally, add an idempotent guard to xen_9pfs_disconnect(),
+just for the case.
+
+Fixes: b37eeb0201 ("xen/9pfs: introduce Xen 9pfs backend")
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- hw/9pfs/virtio-9p-device.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/9pfs/xen-9p-backend.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/hw/9pfs/virtio-9p-device.c b/hw/9pfs/virtio-9p-device.c
-index 50dc93091d..1ec48fc9e0 100644
---- a/hw/9pfs/virtio-9p-device.c
-+++ b/hw/9pfs/virtio-9p-device.c
-@@ -243,6 +243,7 @@ static void virtio_9p_device_unrealize(DeviceState *dev)
-     V9fsVirtioState *v = VIRTIO_9P(dev);
-     V9fsState *s = &v->state;
+diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
+index 24c90d97ec..edb65a7afc 100644
+--- a/hw/9pfs/xen-9p-backend.c
++++ b/hw/9pfs/xen-9p-backend.c
+@@ -68,6 +68,11 @@ typedef struct Xen9pfsDev {
+ 
+ static void xen_9pfs_disconnect(struct XenLegacyDevice *xendev);
+ 
++static void xen_9pfs_disconnect_bh(void *opaque)
++{
++    xen_9pfs_disconnect(opaque);
++}
++
+ static void xen_9pfs_in_sg(Xen9pfsRing *ring,
+                            struct iovec *in_sg,
+                            int *num,
+@@ -150,7 +155,8 @@ static ssize_t xen_9pfs_pdu_vmarshal(V9fsPDU *pdu,
+                       "Failed to encode VirtFS reply type %d\n",
+                       pdu->id + 1);
+         xen_be_set_state(&xen_9pfs->xendev, XenbusStateClosing);
+-        xen_9pfs_disconnect(&xen_9pfs->xendev);
++        aio_bh_schedule_oneshot(qemu_get_aio_context(),
++                                xen_9pfs_disconnect_bh, &xen_9pfs->xendev);
+     }
+     return ret;
+ }
+@@ -173,7 +179,8 @@ static ssize_t xen_9pfs_pdu_vunmarshal(V9fsPDU *pdu,
+         xen_pv_printf(&xen_9pfs->xendev, 0,
+                       "Failed to decode VirtFS request type %d\n", pdu->id);
+         xen_be_set_state(&xen_9pfs->xendev, XenbusStateClosing);
+-        xen_9pfs_disconnect(&xen_9pfs->xendev);
++        aio_bh_schedule_oneshot(qemu_get_aio_context(),
++                                xen_9pfs_disconnect_bh, &xen_9pfs->xendev);
+     }
+     return ret;
+ }
+@@ -368,10 +375,18 @@ static void xen_9pfs_evtchn_event(void *opaque)
+ static void xen_9pfs_disconnect(struct XenLegacyDevice *xendev)
+ {
+     Xen9pfsDev *xen_9pdev = container_of(xendev, Xen9pfsDev, xendev);
++    V9fsState *s = &xen_9pdev->state;
+     int i;
+ 
++    if (!xen_9pdev->rings) {
++        return;
++    }
++
+     trace_xen_9pfs_disconnect(xendev->name);
  
 +    v9fs_reset(s);
-     virtio_delete_queue(v->vq);
-     virtio_cleanup(vdev);
-     v9fs_device_unrealize_common(s);
++    v9fs_device_unrealize_common(s);
++
+     for (i = 0; i < xen_9pdev->num_rings; i++) {
+         if (xen_9pdev->rings[i].evtchndev != NULL) {
+             qemu_set_fd_handler(qemu_xen_evtchn_fd(xen_9pdev->rings[i].evtchndev),
 -- 
 2.47.3
 
