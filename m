@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DF2EC4451B
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 01:17:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14F25C44520
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 01:17:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wktfL-0003SX-M0; Fri, 17 Jul 2026 21:16:33 -0400
+	id 1wktfR-0003Tj-UL; Fri, 17 Jul 2026 21:16:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1wktfF-0003SC-RO; Fri, 17 Jul 2026 21:16:29 -0400
+ id 1wktfR-0003TP-0s; Fri, 17 Jul 2026 21:16:37 -0400
 Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1wktfE-0004NE-B8; Fri, 17 Jul 2026 21:16:25 -0400
+ id 1wktfP-0004Na-Cv; Fri, 17 Jul 2026 21:16:36 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 92F414397A;
- Sat, 18 Jul 2026 01:16:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36EFB1F000E9;
- Sat, 18 Jul 2026 01:16:21 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 19D9B402FC;
+ Sat, 18 Jul 2026 01:16:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D611F000E9;
+ Sat, 18 Jul 2026 01:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1784337381;
- bh=a+ejCJXZ8E0G5TxHT1XlkLEgo05f1WOmKU9FYIQKbWU=;
+ s=k20260515; t=1784337393;
+ bh=KHg02DIbUTKS6NQg6D6XkUWG8UnTwJZwxWKhXo5hQLk=;
  h=Date:From:To:cc:Subject:In-Reply-To:References;
- b=QPanwKEFzZl5ILlVGlSF5y5ZZj/mZLBBaba6Bzu9iuINnqeCJlY/NUz7Z4kUin7Ks
- GUzkjZmFRNrfCMf24V4ljv3f6ofRNctUcQZxGiPaGMX5sXCfFKvYGDco7XtcbrGOrW
- hDicv29rwfAAcJsVxLcdS+UmXmTMz6FCVYKef4ptLe8X0ERaHVhr9TYcdWUmMrr7BO
- aekZH6iZfyM0yJl5UxZ6XvmdWux5DWIdahFejwSckPrx/XcVphtuqVJNknSzyRg0EB
- L8EDh4u5hXDpXRZP1WzfgqCFFdJdk/ZYAoQtjZFvkK5ExNSxh2Iz1JbnkTc2BxA4UU
- tRXKJgXTIviVQ==
-Date: Fri, 17 Jul 2026 18:16:21 -0700 (PDT)
+ b=LYWC45lYYN0mRmDAhGncgqU9iboDLKoEJHUDS+I/ueC+P5Eah3qyrUIk0elcjec4D
+ XZ5uD0efly5O8vAN5X5fEXxxi3VWNwzSv/o8JeW5T82YdtYI2o1TwPCp2HoU8+fQyM
+ hq+JOFj9YWW+1NtzJns10L/npkBFj1jtEM/1lFxuYbGx2VPibh7/yNP6xBfUKr4U+u
+ XJ9fRGFnoN5rBWGo2X85qeHYLYdSTt84Ldd+mnD20nQOeSZigs16kWdCEPg1WB9rbS
+ 6pcbrnIu3ojR5XAOXyOwrTJYRKkK7hM7O1OTTB7R27KphM1ODYz4sulYVnDdyBJXvS
+ 18xpprJ3+GNIQ==
+Date: Fri, 17 Jul 2026 18:16:32 -0700 (PDT)
 From: Stefano Stabellini <sstabellini@kernel.org>
 X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
 To: Mitsuru Kariya <Mitsuru.Kariya@oss.nttdata.com>
@@ -43,12 +43,12 @@ cc: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
  "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>, 
  "open list:Block layer core" <qemu-block@nongnu.org>
-Subject: Re: [PATCH 2/4] xen-block: Fix inverted error check in
- xen_cdrom_realize()
-In-Reply-To: <20260716170923.2125858-3-Mitsuru.Kariya@oss.nttdata.com>
-Message-ID: <alpine.DEB.2.22.394.2607171816130.16921@ubuntu-linux-20-04-desktop>
+Subject: Re: [PATCH 3/4] xen-block: Fix BlockBackend leak on unplug of empty
+ CD-ROM
+In-Reply-To: <20260716170923.2125858-4-Mitsuru.Kariya@oss.nttdata.com>
+Message-ID: <alpine.DEB.2.22.394.2607171816240.16921@ubuntu-linux-20-04-desktop>
 References: <20260716170923.2125858-1-Mitsuru.Kariya@oss.nttdata.com>
- <20260716170923.2125858-3-Mitsuru.Kariya@oss.nttdata.com>
+ <20260716170923.2125858-4-Mitsuru.Kariya@oss.nttdata.com>
 User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -76,45 +76,40 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Fri, 17 Jul 2026, Mitsuru Kariya wrote:
-> xen_cdrom_realize() checks the return value of blk_attach_dev() with
+> When a Xen CD-ROM is created without a backing drive (an empty CD-ROM),
+> xen_cdrom_realize() allocates an anonymous BlockBackend for the empty
+> drive with blk_new() and attaches it to the device using
+> blk_attach_dev().
 > 
->     if (!rc) {
->         error_setg_errno(errp, -rc, "failed to create drive");
->         return;
->     }
+> blk_new() returns the backend with refcnt == 1 (the creation reference
+> owned by the caller) and blk_attach_dev() takes an additional reference
+> for the device.  The creation reference was never released, so on
+> unplug blk_detach_dev() only drops the device's reference and the
+> BlockBackend is leaked.
 > 
-> but blk_attach_dev() returns 0 on success and a negative errno on
-> failure.  The condition is inverted: a successful attach (rc == 0) is
-> reported as an error and fails realize, while a real failure (rc < 0)
-> is silently ignored.
-> 
-> Here blk_attach_dev() is called on a BlockBackend just created by
-> blk_new(), so blk->dev is NULL and its only failure path (-EBUSY)
-> cannot be taken.  Replace the bogus check with an assertion, matching
-> the other empty-drive realize paths (scsi-disk, ide, fdc, swim).
+> Release the creation reference with blk_unref() right after
+> blk_attach_dev(), matching the idiom already used in set_drive_helper()
+> in hw/core/qdev-properties-system.c ("If we need to keep a reference,
+> blk_attach_dev() took it").
 > 
 > Signed-off-by: Mitsuru Kariya <Mitsuru.Kariya@oss.nttdata.com>
 
-
 Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
 
+
 > ---
->  hw/block/xen-block.c | 5 +----
->  1 file changed, 1 insertion(+), 4 deletions(-)
+>  hw/block/xen-block.c | 1 +
+>  1 file changed, 1 insertion(+)
 > 
 > diff --git a/hw/block/xen-block.c b/hw/block/xen-block.c
-> index 474c12fe4a..abf9df2eee 100644
+> index abf9df2eee..e5e14e47ee 100644
 > --- a/hw/block/xen-block.c
 > +++ b/hw/block/xen-block.c
-> @@ -762,10 +762,7 @@ static void xen_cdrom_realize(XenBlockDevice *blockdev, Error **errp)
->          conf->blk = blk_new(qemu_get_aio_context(), 0, BLK_PERM_ALL);
+> @@ -763,6 +763,7 @@ static void xen_cdrom_realize(XenBlockDevice *blockdev, Error **errp)
 >  
 >          rc = blk_attach_dev(conf->blk, DEVICE(blockdev));
-> -        if (!rc) {
-> -            error_setg_errno(errp, -rc, "failed to create drive");
-> -            return;
-> -        }
-> +        assert(rc == 0);
+>          assert(rc == 0);
+> +        blk_unref(conf->blk);
 >      }
 >  
 >      blockdev->info = VDISK_READONLY | VDISK_CDROM;
