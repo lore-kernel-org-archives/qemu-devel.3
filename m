@@ -4,45 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89F27C4451B
-	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 08:38:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33B6CC4451C
+	for <qemu-devel@archiver.kernel.org>; Sat, 18 Jul 2026 08:39:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wl0Yr-0004xy-1X; Sat, 18 Jul 2026 04:38:17 -0400
+	id 1wl0a1-0005Px-UK; Sat, 18 Jul 2026 04:39:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wl0Yn-0004xJ-Fo; Sat, 18 Jul 2026 04:38:13 -0400
+ id 1wl0Zz-0005PS-LE; Sat, 18 Jul 2026 04:39:27 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wl0Yk-0000eO-Kr; Sat, 18 Jul 2026 04:38:13 -0400
+ id 1wl0Zy-0000fU-4L; Sat, 18 Jul 2026 04:39:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784363875; bh=XIDqguUQAi/GzOwQBkZ/BSZU6Geeh95bPYMGDBfUheA=;
- h=Date:Subject:To:References:Cc:From:In-Reply-To;
- b=cxcj6ZgO4bLjGHSnma6WJg+8JTtN6Kg2ZryyA0xMdC05dVtX639aynoVh97pKArA1
- Zb5tjBijCWICbVlzI81Xg6Y47Y0mcAegZSavgG8BV6s9Lc557p6BtWSn0Op+6L7hf3
- qJoNdDwOpAV6nn+Fav9u6vibd32eNRXedeRAzQyZmh7qUew1yHYvccsmf+VNCIcUQk
- UbKGffpGfCUOJrluobeKZRaxMdo5KYEvvR49nRiV71dBAtDtXNoVDuIu+PknNQjyY4
- M8xQyIeziD3kpBu1qX1Oc+0MN+qnGFR1AsEPWAEPRLuuWDtzhlP8OiAFOazDlLIKL+
- aaufurS/nuG4w==
+ t=1784363955; bh=BYsjo2PAgh95bBcIT18up3xnfeRovE12RIpiJNkYwTY=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=Nk4waV+71YWhJ9sG6vcMKDa3r5ttf9lwN1tLlJ8RJ6gkOUQKYKrf19FsIPcjl/TL0
+ V+yUo20WlNJgcVk9+EmK42nl55BlFY6rGFqSbreLTySdtyrRwsCqa9OapsaIfTeP2g
+ +4yXQ0BIwWvR+NhJjzoidcl4VDRWvUC9QVDfIhJDFA32U4jrdUZN5v955n1BIzJ7pv
+ 3bSQpJp+tXOulFUdfaHYxNAYhysoNvZXDiFO6lMYRHjRGScmr+r+V0GjpAfDB+4S0D
+ QTrSE9ZGYy97EoF3Vc3bVSqXQ2YK5qTvng4sHyCSSb9aZwpR3FcDOtQeMfrXU2YnAx
+ CI8bneJvPJ7Og==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5AB241C2A83;
- Sat, 18 Jul 2026 11:37:55 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 539B51C2A86;
+ Sat, 18 Jul 2026 11:39:15 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3B7B73F0B90;
- Sat, 18 Jul 2026 11:38:04 +0300 (MSK)
-Message-ID: <5b9416b0-7ea7-4397-af93-a1bcfa2617b2@tls.msk.ru>
-Date: Sat, 18 Jul 2026 11:37:55 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 571B53F0B93;
+ Sat, 18 Jul 2026 11:39:24 +0300 (MSK)
+Message-ID: <fd23a56f-7832-41a3-896f-db7765672765@tls.msk.ru>
+Date: Sat, 18 Jul 2026 11:39:15 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/display/qxl: fix TOCTOU in cursor chunk data_size
- handling
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-References: <20260710134352.2313675-1-marcandre.lureau@redhat.com>
+Subject: Re: [PATCH] hw/sparc64/niagara: use int64_t for vdisk size to avoid
+ truncation
+To: Dmitry Pimenov <sun4qemu@gmail.com>, qemu-devel@nongnu.org
+Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20260710222350.9185-1-sun4qemu@gmail.com>
 Content-Language: en-US, ru-RU
-Cc: qemu-stable <qemu-stable@nongnu.org>
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
@@ -87,9 +89,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260710134352.2313675-1-marcandre.lureau@redhat.com>
+In-Reply-To: <20260710222350.9185-1-sun4qemu@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -19
@@ -113,26 +115,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/10/26 16:43, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+On 7/11/26 01:23, Dmitry Pimenov wrote:
+> blk_getlength() returns int64_t, but niagara_init() stored it in an int,
+> truncating the if=pflash virtual-ramdisk size for images >= 2 GiB. A ~4 GiB
+> image truncated to 0/negative, failed the `size > 0` check, and exit(1)'d
+> before the CPU ran, ending with:
 > 
-> Snapshot chunk.data_size into a host-local variable before passing it to
-> qxl_phys2virt() for validation, and pass it through qxl_cursor() and
-> qxl_unpack_chunks() so that no subsequent code re-reads the field.
+>    qemu-system-sparc64: could not load ram disk
 > 
-> Without this, a racing vCPU can inflate data_size between the
-> qxl_phys2virt() validation and the memcpy in qxl_unpack_chunks(),
-> causing a source read past the validated region. In practice the read
-> stays within the guest's own VRAM mmap, so the impact is limited.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3757
-> Reported-by: Feifan Qian <bea1e@proton.me>
-> Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+> AI-used-for: code (bug fix)
 
-This feels like a qemu-stable material.  I'm picking it up for the
-current qemu stable series.  Please let me know if I should not.
+> Signed-off-by: Dmitry Pimenov <sun4qemu@gmail.com>
 
-Thanks,
+It feels like a qemu-stable material.  I'm picking it up, please
+let me know if I should not.
+
+Thank,s
 
 /mjt
 
