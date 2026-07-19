@@ -4,109 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C713EC4450A
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jul 2026 08:08:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AAA8C44512
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jul 2026 09:32:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlMYy-0003uF-45; Sun, 19 Jul 2026 04:07:52 -0400
+	id 1wlNs8-0006fL-K5; Sun, 19 Jul 2026 05:31:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wlMYw-0003tf-Co
- for qemu-devel@nongnu.org; Sun, 19 Jul 2026 04:07:50 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wlMYu-0006bK-Ma
- for qemu-devel@nongnu.org; Sun, 19 Jul 2026 04:07:50 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-ca957432c7fso6332348a12.1
- for <qemu-devel@nongnu.org>; Sun, 19 Jul 2026 01:07:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784448466; cv=none;
- d=google.com; s=arc-20260327;
- b=ihSXCKujyhH0Gr02DeP7Mgyqy3r7UtdX8rpAVE6BINqdnGkbxpfsbQKo7pbgtzK4xd
- F8vQL9QiqB3ccsNq/HGrkFyj5ht/VL2UHaUaunX7PzndediG6dQcvwGa367s3IWdxWxX
- OJHcCtlIUWLgzRT+zEs3vDyKJPHabRkCzPILgOIEo1xxNxlkX4yOtZtVh1NtCBBoXNzx
- +VMv9W4kH0mv2atacQ3ZucrUHg5b2Eyjby1PwPI/5sT43JP29qd3XR70D5waSG0eqyD4
- jSIxwBKL3c2ekm9nwE/ZfFRocITH5v35/1Wz7gg8isCpUqmbB7MIk9IpQV3HyaFbitVH
- N2Fw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=lVZAhDhvQqNmjYSVsLhXUYFsOV7vdu5poCFuHphZ6pc=;
- fh=y1thu0tJf6haPURRJ3KBvtOw9jdQnjuebMC7DFZSAh0=;
- b=Vogrb0/FN9DckeGqf4d9hb9UgHmRXDeXRZiYZ8+NKBqZ0isp6DTpvgjM3VOTw3+9pf
- x9It9O3Tz8TdI3A58SrMxG8fbTb2P6wB5jXV+h3ieEKk3do0LSmU1ZkIQTRzEeC6pvat
- A80Oecfn1OB3Dlr+umyQLvsCIdsYqCHSthdLrHKVisYvaFp6z7Gz0FvvNmF7BkGVrzwR
- HrqqMNsuNcDDOvhuRu1DOowi0aoBqy0nQhr02jBWdB4uSwc6dRFUXyvAu0Rq332BCtPj
- MW4R05qZm9qg4CSqYjDAxhNMsc+YqY0NiqZxmfsvSxsKAg2+d1GuTH2MpACI2tJLYjma
- tz+w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784448466; x=1785053266; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=lVZAhDhvQqNmjYSVsLhXUYFsOV7vdu5poCFuHphZ6pc=;
- b=SCvK1P4oyQR6KBAx5ZyB1eCvaHsOBc5oe3cS2iIlYe/f7MkZ4aV23y1/6se91FxmSr
- itnm3cSuio11lOUddUbF8GOgKyQ7l7SXs73IvUKYbdj0nJ4LjdA3+17yZvSo9A+1y1Mm
- N+BtpgGJOwrN6Mb2b2mdPVFvc+0UthC8X4vin2WAJoqVNSBU6+L+01+Ee39BrX3RnYkp
- GYRSuweyPiOEA6UGAgjEkYmeyG27pSJ3ub0it0T5IDiz6Pz7B/teEkUyfer6D6og4faH
- /+2XnxErAJ5qUWZHpNF7b9w07h/pzBOcmO88PEoiGpFlcQ81WrsicVVVxaUALb2FePkg
- ixbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784448466; x=1785053266;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=lVZAhDhvQqNmjYSVsLhXUYFsOV7vdu5poCFuHphZ6pc=;
- b=hYF8wtA/jNR2/mPX14mmUL/svQJKfrA3zCvD3mQwpBLXWx1eLF85x1+hHxD9EsME/z
- vxhIHHgsqKsRLpOgpctMMDbHQlh63vLzUlN5KVzkVg7yZ9kbSSgVy9h7dbji3w8jrnwL
- E8+8IFO8Sfhc62gz7bS+PWlp94MqRV569zrfP13vYIqNru+ZmbgX1o3VyUWNbbOP/esT
- Rk5XaAtekg5gth2AE0ET6FK/kcOIbUK/0LCTiBd0yBbQCxM19qH0ltXRPMcLGZSIFcps
- SeOOozzOJqdwGzfbmgVn8aqBbMOW9NuzrDP2RZwS33UDQVsMt31O9XH6aDxbXVqq2HrO
- J2sw==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rpj5E3ewLGWJY19MENcbSoV3OIYQES+oiau92uyUWQ2VJgNfXK1s3nH00Z0X3P5SUTa1hRgc6J0bInm@nongnu.org
-X-Gm-Message-State: AOJu0YxkGXPlEjsxW70hoPD+FWnfI6/B9f0F6mxFGi00zfrshkSxH+CK
- O+DjWDgf4Ql5Ag/8Bx3TddG6hW7hZLNvVlbB0QDWsovskHuIoLJbxOyIFIFKd96RhIoW+8H6Gi4
- hPiP2AslWetnXpBq8ObS4F2QiF1k29jDPyyhqWVBi3A==
-X-Gm-Gg: AfdE7cljxNPz9NSt3ZZiGnwviqVLg9TkRuhfZYL2Yb5hmtEc9IM93yJvsmJiuU5bAbv
- BjY1k7rUG1CMyYt+11cyEME70zz6l1qsxm3Q87qZeis0Kc7B1Ls6AY4hDXEJl3eq0I36X90hbFQ
- O4Jo5y+d4eJ8ZvFBdxm3m3Uf8miRELfFn+I0ZsPTENMLbY1NsY3NRVuDQN7oKrcZdmm2skX0v7V
- 5a6hCULLvrWbKNp+EyTES18xNFrMjtwGwzeTkLNWQBxVb41rHjj7KmNN/CTLXNlLaLya5+HVA/v
- s04JQhcHf4OSgkuE6Q==
-X-Received: by 2002:a05:6a21:2c11:b0:3c0:9c19:6592 with SMTP id
- adf61e73a8af0-3c3ada36c4fmr10160617637.76.1784448465907; Sun, 19 Jul 2026
- 01:07:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wlNs3-0006eR-GL
+ for qemu-devel@nongnu.org; Sun, 19 Jul 2026 05:31:40 -0400
+Received: from smtpout10.mo537.mail-out.ovh.net ([51.210.91.29])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wlNs1-0005Oy-MX
+ for qemu-devel@nongnu.org; Sun, 19 Jul 2026 05:31:39 -0400
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net [79.137.60.37])
+ by mo537.mail-out.ovh.net (Postfix) with ESMTPS id 4h2z195GmGz3wkV;
+ Sun, 19 Jul 2026 09:31:25 +0000 (UTC)
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net. [127.0.0.1])
+ by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Sun, 19 Jul 2026 09:31:25 +0000 (UTC)
+Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.58.138])
+ by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4h2z190SWfz1xsK; Sun, 19 Jul 2026 09:31:25 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.1])
+ (Authenticated sender: clg@kaod.org)
+ by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id EACDC203DE4; 
+ Sun, 19 Jul 2026 09:31:23 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-102R0049aaf6c82-2b91-4d11-bc70-c27e64f9018f,
+ 927533437C4EB51202FF6C72770557251D494D3D) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 90.14.253.154
+Message-ID: <72e0ec9e-23b0-4312-bb53-e11d9bcd79ed@kaod.org>
+Date: Sun, 19 Jul 2026 11:31:23 +0200
 MIME-Version: 1.0
-References: <20260717-fix-v1-0-cb9f7d49dc52@redhat.com>
- <a6f014be-7f31-4f53-a3f4-9b1ea437d7e7@tls.msk.ru>
- <a12f0dfc-2487-4ff9-be0b-149451e80032@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <a12f0dfc-2487-4ff9-be0b-149451e80032@rsg.ci.i.u-tokyo.ac.jp>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Sun, 19 Jul 2026 12:07:34 +0400
-X-Gm-Features: AUfX_mzuzYb9cTzvH4TLaenSz7Ho2RpmkJm_iDLLdBLUeGPOvi67tlkPMJPrDkE
-Message-ID: <CAJ+F1CJe4Xci2wfRXg3umPw+cEb9vO9XPDDopiS8Xa9+ajaeHw@mail.gmail.com>
-Subject: Re: [GIT PULL 00/15] Various UI/security-related fixes for 11.1
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org, 
- qemu-stable <qemu-stable@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pg1-x536.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 02/10] hw/arm/ast27x0: Start TSP in powered-off state
+ to match hardware behavior
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>
+References: <20260708092023.3826159-1-jamin_lin@aspeedtech.com>
+ <20260708092023.3826159-3-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260708092023.3826159-3-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+x-ovh-tracer-id: 11055492661839768691
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTEMd9SrojuL7+IuUtXuT/daw3Ra0LFx4zy+b7UAG5Cb7sGs+QYffKY6retFRmqNg1yTmvQRUh09z6SmAZQfmyVgmzE0L312S3UzzMSf1PFzOJorzLHa+eNaQqZWHNJl8QAl48pu7iMKyHu0T53jxewm2rlEBMlJQ3Gg2oX/g4Qzu4MHFYJNVdzzVnQHjxc5yxr5mApp+j6KZOaWfbqWpFb4HaLNkbFDZh57Jc72+HFAsufd10+hriwwIHouTJh79q89n/qsNY1pYAWVVD6ZU1YgoT/wZ3MlWlkqwQW+LqxknI6SgXOeODNNj0G4tlF6Ifxpv4a+nY9NEmbu9IMKPMY7A6tdfdbfy8Adm149af221nCvdcf1oCvYaZaKZrXnxbe9LWpiOGmk/3ixAiIvvdV5GuJQxKUUdwIMO+81oTLiy1Q+X/w1SNAYrxu5MGN7Gq4+WF5gHcsnbunIG21LlJu2KKlBFHwJhtfem7FuxXDjOKV6chGSR64mWfCELtYDzPu16iGBoW/y1uqLaSLSbUBs+vthse1psmndFxHGDm7gGGgwBUJKst5R/z+Zv+3KO4mzC9FiwcG8LYa8qsaP8EhgDKFTCkLD6UhTf0bitM7JtuYKbIslfl84vBdxJRtHy9qvjYwBVhcOSGbBiyyWkiBZ4ZhFtiaPaedU1vFENYp81w
+DKIM-Signature: a=rsa-sha256; bh=XWsgPTkoNYJcLWT2Kzoo7+hQgV3eYNR6kr0hFprPTE8=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1784453487; v=1;
+ b=f5ScJajZW1c0L2CRt+nx1rQpVVsZE1K8oZEE9jCBcq645yo6XPATFj30FYA9g9UaPZzK2qvt
+ m+S8+pGxdNdEPNU6rUbadfVLQvCWxehrqU7JdTxIqj379aaR5uFT0HeSjSGNEaHmHp1u04jUxeW
+ 1iGoV59k3lcOD6qqfmGFXnisfGM/xQrwELAUt1JYoa93Q8pn2v06dMnYK2ofSMP3e8x7N6mjk41
+ Nop1R2+YtIq7MGunaL7TqW6S3q3Plw+d47QdIpj4GF0L666q7oX7xqiX863zCtCzsKvwUnZFq+8
+ 3vf5//fxWaot3f5zifDJRUIgbfDxOm5feMC2odF/nO75w==
+Received-SPF: pass client-ip=51.210.91.29; envelope-from=clg@kaod.org;
+ helo=smtpout10.mo537.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,74 +137,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On 7/8/26 11:20, Jamin Lin wrote:
+> In the previous design, both the PSP and TSP were started together during
+> SoC initialization. However, on real hardware, the TSP begins in a powered-off
+> state. The typical boot sequence involves the PSP powering up first, loading
+> the TSP firmware binary into shared memory via DRAM remap, and then releasing
+> the TSP reset and enabling it through SCU control registers.
+> 
+> To more accurately model this behavior in QEMU, this commit sets the
+> "start-powered-off" property for the TSP's ARMv7M core. This change ensures
+> the TSP remains off until explicitly enabled via the SCU, simulating the
+> real-world flow where the PSP controls TSP boot through SCU interaction.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   hw/arm/aspeed_ast27x0-tsp.c | 7 +++++++
+>   1 file changed, 7 insertions(+)
+> 
+> diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
+> index 39ba062a20..4212e7bd4c 100644
+> --- a/hw/arm/aspeed_ast27x0-tsp.c
+> +++ b/hw/arm/aspeed_ast27x0-tsp.c
+> @@ -192,6 +192,13 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
+>       qdev_connect_clock_in(armv7m, "cpuclk", s->sysclk);
+>       object_property_set_link(OBJECT(&a->armv7m), "memory",
+>                                OBJECT(s->memory), &error_abort);
+> +    /*
+> +     * The TSP starts in a powered-down state and can be powered up
+> +     * by setting the TSP Control Register through the SCU
+> +     * (System Control Unit)
+> +     */
+> +    object_property_set_bool(OBJECT(&a->armv7m), "start-powered-off", true,
+> +                             &error_abort);
+>       sysbus_realize(SYS_BUS_DEVICE(&a->armv7m), &error_abort);
+>   
+>       /* SDRAM */
 
-On Sun, Jul 19, 2026 at 11:51=E2=80=AFAM Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->
-> On 2026/07/19 16:33, Michael Tokarev wrote:
-> > [Resending with the correct email of Akihiko Odaki, please excuse the
-> > duplicate]
-> >
-> > On 7/17/26 14:52, Marc-Andr=C3=A9 Lureau wrote:
-> >
-> >> Various UI/security-related fixes for 11.1
-> >>
-> >> ----------------------------------------------------------------
-> >> Akihiko Odaki (3):
-> >>        ui/gtk: Narrow DMA-BUF critical section
-> >>        hw/display/virtio-gpu: reject strides exceeding INT_MAX
-> >>        hw/display/virtio-gpu: Check pixman_image_create_bits() results
-> >>
-> >> Marc-Andr=C3=A9 Lureau (12):
-> >>        i386/tdx: fix uninitialized variable warning in tdx_check_featu=
-res
-> >>        ui/vnc: fix OOB write in vnc_refresh_lossy_rect
-> >>        ui/vnc: validate color shifts in SetPixelFormat
-> >>        ui/vnc: use RFB wire types for client message handlers
-> >>        ui/input-barrier: fix off-by-one in keycode bounds check
-> >>        ui/vnc: fix out-of-bounds write in lossy refresh dirty marking
-> >>        ui/vnc: validate SetPixelFormat field ranges
-> >>        hw/display/virtio-gpu: fix dmabuf_fd leak on remap failure
-> >>        hw/display/qxl: fix TOCTOU in cursor chunk data_size handling
-> >>        hw/display/virtio-gpu: validate stride against width on scanout
-> >>        hw/display/virtio-gpu: cap submit_3d command buffer allocation
-> >>        hw/display/virtio-gpu: handle migration iov allocation failure
-> >
-> > Hi!
->
-> Hi Michael, Marc-Andr=C3=A9,
->
-> >
-> > Is there anything in there which should *not* go
-> > to the stable qemu series?
-> > (besides fixes for code which is not in releases, if any)
-> >
-> > It feels like everything in this pullreq should be picked up
-> > for qemu-stable.
->
-> The hw/display/virtio-gpu patches are generally good for stable, with
-> one exception:
->
-> "hw/display/virtio-gpu: validate stride against width on scanout"
->
-> This patch doesn't account for the late feedback I sent here:
-> https://lore.kernel.org/qemu-devel/ec997fca-6dc4-4268-9269-0e4be676b0fb@r=
-sg.ci.i.u-tokyo.ac.jp/
->
-> Marc-Andr=C3=A9: My apologies for the timing, but please check the linked
-> thread.
->
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-Tampering with migration stream is still being discussed, in the
-meantime the patch fixes malicious guest gpu usage. Can you send a
-follow up patch?
+Thanks,
 
-> Michael: You may holding off on that specific patch for qemu-stable
-> until we clear up that edge case, but at least it's not harmful. I think
-> my patches and the other virtio-gpu patches are ready.
->
-> Regards,
-> Akihiko Odaki
->
+C.
+
 
