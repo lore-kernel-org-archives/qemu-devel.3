@@ -4,48 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D29A0C4451B
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jul 2026 15:24:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 594DCC4451B
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jul 2026 15:24:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlTMw-000221-UD; Sun, 19 Jul 2026 11:23:54 -0400
+	id 1wlTMf-0001mr-En; Sun, 19 Jul 2026 11:23:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matthew@pq.io>) id 1wlTMu-0001wB-Ny
- for qemu-devel@nongnu.org; Sun, 19 Jul 2026 11:23:52 -0400
-Received: from mail-08.mail-europe.com ([57.129.93.249])
+ (Exim 4.90_1) (envelope-from <matthew@pq.io>) id 1wlTMa-0001jI-Ok
+ for qemu-devel@nongnu.org; Sun, 19 Jul 2026 11:23:32 -0400
+Received: from mail-05.mail-europe.com ([85.9.206.169])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matthew@pq.io>) id 1wlTMs-0006kA-CU
- for qemu-devel@nongnu.org; Sun, 19 Jul 2026 11:23:52 -0400
+ (Exim 4.90_1) (envelope-from <matthew@pq.io>) id 1wlTMY-0006ib-GQ
+ for qemu-devel@nongnu.org; Sun, 19 Jul 2026 11:23:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pq.io;
- s=protonmail3; t=1784474626; x=1784733826;
- bh=MnDzkJVj+ktL53X4rVVvINugyzKWqDxas6lX7z6bYmE=;
- h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:From:To:
- Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
- b=FHmrIlOYTxmr96NBDYBnC8HSBrVtNS5KXbBxSDC7eOYGDmVgaTRzZRFh0BD125mn+
- 1BCMg68ErXCh+iMmd+zU1B7N1AmXFQ9QftlMy+p5iwAirMGmjVhbsJXBOjZWftAtUx
- 3zl9lklpenC9UaCAs4YNpGrxSdS0QbjFBZn4GObGx+VE5ejlJxPG5WQJ5I6UcuHZU7
- nkagetv4ubl98oIiGw2oFcixM528WXZlqX75Qi3ofV4+s+dMzX/V3iFrbkAy+p8tGp
- sJSgGJRhxKf5haQBvB9/bN5Qb+P+rcvNVqCmumgCyrbcuXZOyHCM6Svo4zWrt5x76/
- 4laeWG6l4iQMw==
-X-Pm-Submission-Id: 4h36qh64jBz2ScPp
+ s=protonmail3; t=1784474604; x=1784733804;
+ bh=FUzEYm5luKWoqbxDpvTLiy5IYCc08o8agx03l+Bm058=;
+ h=From:To:Cc:Subject:Date:Message-ID:From:To:Cc:Date:Subject:
+ Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+ b=pQN+ZR6mFDjrchIIHhfgwN6gV9DI77LJWOcTg+1G7XbswzL3njOaWUFUTHmkRCpzq
+ MfY/6Z5+NXaZFKyB9UU0/ajz3l6BkjcI7/4dIZZYUR/gRJ2ATfywubym5+VpADPZ+8
+ y/5qg+eH8wl5vf0HCFi6CeJ8QC5aGQgO1Q0Wim/9bqq8WJFcRwIN4SZva/VOwAPb8B
+ wXokQdbuaXByXx0TMLMoDth+o0yWMOH/pdTIesclZzak+3HK51xb7XQcLHYt/rJfnN
+ RVi6I1REiCX0dMFyi+lAB0chQ5Fjb9WSlQk3ChVcrHLMt9LbZxk3QusazhOauIfbot
+ R3oTxnzry4QXQ==
+X-Pm-Submission-Id: 4h36qG1pYVz1DFgd
 From: Matthew Jackson <matthew@pq.io>
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com,
-	peter.maydell@linaro.org
-Subject: [PATCH v3 0/2] hw/misc/applesmc: fix GET_KEY_BY_INDEX iteration and
- populate Apple SMC key set
-Date: Sun, 19 Jul 2026 08:23:41 -0700
-Message-ID: <20260719152343.69536-1-matthew@pq.io>
+Cc: kraxel@redhat.com
+Subject: [PATCH 0/2] hw/usb/dev-hid: Apple Magic Keyboard and Mighty Mouse
+ emulators
+Date: Sun, 19 Jul 2026 08:23:16 -0700
+Message-ID: <20260719152318.69501-1-matthew@pq.io>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260507040153.14565-1-matthew@pq.io>
-References: <20260507040153.14565-1-matthew@pq.io>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=57.129.93.249; envelope-from=matthew@pq.io;
- helo=mail-08.mail-europe.com
+Received-SPF: pass client-ip=85.9.206.169; envelope-from=matthew@pq.io;
+ helo=mail-05.mail-europe.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -68,123 +65,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v3: rebased onto current master — no code changes. hw/misc/applesmc.c is
-unchanged upstream since v2 (2026-05-07), so the series applies as-is.
-Resending after the review thread went quiet.
+This series adds two new self-contained USB HID devices to
+hw/usb/dev-hid.c: apple-magic-keyboard and apple-mighty-mouse,
+emulating the USB-cable face of the real Apple Magic Keyboard with
+Numeric Keypad (PID 0x026c) and Apple Mighty Mouse (PID 0x0304).
 
-v1: https://lore.kernel.org/qemu-devel/20260507040153.14565-1-matthew@pq.io/
+Why this exists
+---------------
 
-Changes in v2 (all in patch 2/2, applesmc_isa_realize() #KEY block):
+QEMU has no USB-HID device that macOS recognises as a real Apple
+peripheral. With usb-kbd / usb-tablet, macOS guests:
 
-  * Add braces around the QLIST_FOREACH() count loop body
-    (qemu coding style: loops always need braces, even single-line).
-    Reported-by: Peter Maydell <peter.maydell@linaro.org>
+  * Run Keyboard Setup Assistant on first boot - costs 3-5 minutes
+    on interactive installs and effectively hangs headless
+    (VNC / SPICE) installs.
 
-  * Replace the manual 4-byte big-endian byte-shift packing of
-    `count` into `numkey_buf` with a single stl_be_p() call.
-    Reported-by: Peter Maydell <peter.maydell@linaro.org>
+  * Bind the generic IOUSBHostHIDDevice driver instead of the Apple
+    HID driver chain (AppleUSBTopCaseHIDDriver,
+    AppleDeviceManagementHIDEventService,
+    AppleHIDKeyboardEventDriverV2, AppleHIDMouseEventDriver). Several
+    recovery / install / multi-touch UI panels behave correctly only
+    when the chain matches an Apple-VID peripheral.
 
-Patch 1/2 is unchanged from v1.
+The new devices ship the real wire format (descriptors, HID report
+descriptors, endpoint topology) byte-identical to real hardware in
+USB-cable mode. The keyboard's boot-interface report descriptor is
+byte-for-byte the real Apple Magic Keyboard with Numeric Keypad
+descriptor (182 bytes, four application collections), captured from
+a real keyboard plugged into a Mac via the macOS IOReg dump.
 
-Peter also noted that the static-buffer "must remain valid forever"
-contract that applesmc_add_key() requires is awkward — fair, but
-fixing it (e.g. switching the key table to a glib hashtable that
-copies values) is independent from this series and not reported as
-performance-noticeable in profiles. Happy to follow up with a
-hashtable conversion as a separate series if the maintainers
-think it's worth doing.
+Self-contained, additive only
+-----------------------------
 
-Original v1 cover letter follows below.
+Zero existing files are modified outside the new device blocks in
+hw/usb/dev-hid.c. The existing usb-kbd / usb-mouse / usb-tablet
+devices and their vmstate are unchanged. Migration of existing VMs
+is unaffected.
 
----
+Apple-vendor identity
+---------------------
 
-The QEMU applesmc device implements just enough of the Apple SMC PMIO
-protocol to satisfy the OSK boot check on older macOS versions. On
-modern macOS guests (x86 10.14+, all of the 15.x series) the real
-AppleSMC kext enumerates the SMC key space at boot via
-APPLESMC_GET_KEY_BY_INDEX_CMD (0x12). The current device only
-acknowledges APPLESMC_READ_CMD (0x10) at the command port; every
-other command falls through to the default arm of the switch and
-sets ST_1E_BAD_CMD.
+Both devices declare idVendor 0x05ac (Apple) and the real PIDs.
+Precedent: isa-applesmc ships the verbatim Apple OSK string; mac99
+emulates real Apple PowerPC hardware; apple-gfx.m (Phil Dennis-Jordan,
+2024) emulates Apple's host paravirt GPU. The Apple PnP IDs are
+public identifiers (linux-usb's usb.ids database) and emulating them
+does not bypass any Apple licensing check beyond what isa-applesmc
+already requires.
 
-The macOS driver interprets the resulting 0x82 reply as "spurious
-data" and enters a retry loop that floods the kernel log with
-kSMCSpuriousData (0x81) / kSMCKeyNotFound errors at roughly 1800
-events per second, pegging kernel_task at ~70% CPU and WindowServer
-at ~509% CPU. This reproduces reliably on any recent macOS 15 guest
-booted with -device isa-applesmc,osk=<valid-OSK>.
+If reviewers prefer the Apple PID/VID gated behind an
+apple-id=on/off device property (default off), a v2 patch is prepared
+addressing that. The v1 carries the Apple IDs unconditionally,
+matching the precedent set by sibling devices.
 
-This two-patch series fixes the protocol-level bug and rounds out
-the SMC key table to a complete iMac20,1 profile.
+Why Mighty Mouse, not Magic Trackpad
+------------------------------------
 
-  Patch 1: protocol-level fix
-    - Accept WRITE_CMD, GET_KEY_BY_INDEX_CMD, GET_KEY_TYPE_CMD at the
-      command port (in addition to READ_CMD).
-    - Implement the indexed-iteration walker (returns real key names
-      from s->data_def, or APPLESMC_ST_1E_BAD_INDEX 0xb8 once the
-      index is past the end so the guest stops iterating).
-    - Implement GET_KEY_TYPE returning a 6-byte type/size/attr
-      response matching VirtualSMC's kern_pmio.cpp behaviour.
-    - Accept and log WRITE_CMD silently.
-    - Replace the unknown-key NOEXIST (0x84) reply with a zeroed
-      payload of the requested length, logged at LOG_UNIMP.
-    - Route the BAD_CMD path through qemu_log_mask(LOG_GUEST_ERROR).
-    - Fix MSSD initialiser typo ("\0x3" -> "\x03"). The original
-      literal was three bytes ('\0', 'x', '3') truncated to one
-      ('\0') by the size argument, so MSSD has been silently
-      returning 0 since the device was introduced; the corrected
-      value matches what a real iMac20,1 SMC reports.
+An earlier draft of this series shipped apple-magic-tablet emulating
+Apple Magic Trackpad 2 (PID 0x0265). Magic Trackpad 2 binds
+AppleMultitouchTrackpadHIDEventDriver in macOS, which gates cursor on
+a 1387-byte vendor-multitouch frame format we do not have ground-truth
+wire bytes for. Guessing the wire layout produced AppleHIDStack hangs
+during recovery boots that wasted multiple debug cycles.
 
-  Patch 2: populate the key table
-    - Add 94 keys covering the categories macOS queries on a Sequoia
-      15.7.5 guest: 28 temperature sensors (sp78), 4 fan keys (fpe2),
-      12 power-rail keys, 6 DIMM keys, 11 SMC-internal bookkeeping,
-      13 motion-sensor / wireless, 3 write targets (HE0N/MSDW/NTOK),
-      2 power-management gates (HE2N/WDTC), 8 platform-identity /
-      probe keys, plus the Apple-canonical #KEY total-count.
-    - Sensor values match a real iMac20,1 idle probe published at
-      https://linux-hardware.org/?probe=999fc708a4&log=sensors:
-      CPU 40-51 C, GPU 36-42 C, fan at 1200 RPM (= F0Mn idle), etc.
+Apple Mighty Mouse (PID 0x0304) is Apple's wired ball mouse, M9087,
+released 2005. It binds the generic AppleHIDMouseEventDriver /
+IOHIDPointing chain natively — handles standard 5-byte boot mouse
+reports (3-bit button mask + signed int8 dX/dY + signed int8 vWheel +
+signed int8 hWheel) without any vendor-specific protocol. Same
+"Apple-VID-or-fail" property the Apple HID stack checks for; cursor +
+click + scroll all work unconditionally. v1 of this series ships this
+device.
 
-Measured impact (macOS 15.7.5 guest, iMac20,1 profile):
+For backward compatibility with downstream consumers using the earlier
+draft's name (which exists in some out-of-tree downstream forks),
+patch 0002 also registers a TypeInfo legacy alias `apple-magic-tablet`
+inheriting from the canonical `apple-mighty-mouse` type — both
+`-device` strings resolve to the same implementation. The alias has
+no permanent place in upstream and can be dropped any time after
+in-tree consumers move to the canonical name.
 
-   Metric           | Before   | After
-   -----------------|---------:|------:
-   SMC errors / 5s  |   9,225  |     2
-   kernel_task CPU  |    70 %  |  ~2 %
-   WindowServer CPU |   509 %  |  ~6 %
+Tested
+------
 
-A note for review on the zero-valued keys in patch 2: the 26 keys
-covering DIMM / SMC bookkeeping / motion-sensor / wireless rails are
-registered with present-with-zero values rather than omitted. macOS
-distinguishes "absent" (NOEXIST reply, retry-poll) from "broken"
-(present, value 0, accepted-and-ignored). Registering these keys
-present-with-zero stops the retry-poll behaviour without asserting
-any specific value. If the maintainer prefers a tighter scope for
-this series I am happy to drop any subset and follow up; the
-present-with-zero approach was driven by which keys macOS observed
-querying during boot.
+Tested on macOS 15.7.5 against a stock retail installer, mos-docker
+test rig (privileged container, network_mode=host, --device /dev/kvm,
+QEMU 11.0.0 patched binary).
 
-Backwards compatibility: legacy macOS guests (10.11-10.13) which do
-not iterate the key space via GET_KEY_BY_INDEX boot unchanged. The
-original six keys (REV/OSK0/OSK1/NATJ/MSSP/MSSD) are still present
-and respond with the same values, modulo the MSSD typo fix in patch
-1 which corrects MSSD to the value a real iMac20,1 SMC reports.
+  * Phase 2 regression (patched QEMU + macOS HD + isa-applesmc + ICH9
+    globals + generic usb-kbd / usb-tablet) — boot to login PASS,
+    visual gold-image diff well under 2% threshold.
 
-Tested against current master (post v11.0.0). Builds clean on
-gcc-13 / clang-17 with --enable-werror. Sequoia 15.7.5 guest boots
-to login screen with the SMC retry storm absent from the kernel
-log; smoke test recipe in TESTING.md alongside the series.
+  * Phase 3 regression (+ apple-magic-keyboard + apple-mighty-mouse
+    swap) — boot to login PASS, visual gold-image diff well under 2%
+    threshold. macOS' AppleUSBTopCaseHIDDriver +
+    AppleHIDKeyboardEventDriverV2 bind on the keyboard;
+    AppleHIDMouseEventDriver / IOHIDPointing binds on the mouse.
+
+  * HID delivery verified via a second screendump after driving a
+    deterministic input sequence (QMP send-key for 'a','b','c' →
+    three password dots in the loginwindow field; QMP
+    input-send-event with absolute pointer to centre coords → cursor
+    visible at centre). Gold-image diff against
+    phase-3-input-gold.png passes — proves keyboard and mouse
+    delivery, not just enumeration.
+
+  * Linux-guest descriptor walk (xHCI + libusb) — descriptors and HID
+    report descriptors decode cleanly. PID/VID/strings as expected.
+
+  * Visible keystroke proof — QMP send-key Return advances macOS
+    recovery's language-picker UI; cursor moves on QMP
+    input-send-event abs-pointer.
+
+  * Migration smoke test — VM saves + restores without device
+    breakage on both new types.
+
+Per-patch summary
+-----------------
+
+  0001 — apple-magic-keyboard: composite USB device, two HID
+    interfaces. Interface 0 carries the Apple-vendor descriptor (182
+    bytes, byte-for-byte real device) with vendor reports 0xe0 / 0x9a
+    / 0x90 the Apple driver chain probes. Interface 1 carries the
+    Magic Keyboard boot-keyboard descriptor (boot kbd Report 0x01 +
+    Consumer Eject + Vendor 0xff Usage 0x03; consumer multimedia
+    Report 0x52; system control feature Report 0x09; vendor Report
+    0x3f 64-byte feature blob). Wired to the QEMU input subsystem via
+    qemu_input_handler_register(). STALLs on GET_REPORT for undeclared
+    report IDs (matches real-device USB HID behaviour — returning
+    zero-fill there causes macOS' HID parser to wedge during
+    IOHIDInterface::start). SET_REPORT sets actual_length so the host
+    doesn't retry indefinitely.
+
+  0002 — apple-mighty-mouse: single HID interface, single IN endpoint,
+    standard boot mouse + scroll Report Descriptor (5-byte report —
+    3-bit button mask + dX + dY + vWheel + hWheel). Wired to QEMU's
+    input subsystem accepting REL motion + ABS motion + BTN events.
+    ABS events (from VNC) are converted to REL via a last_abs_x/y
+    delta tracker. Bounded queue (depth 64) drains accumulated motion
+    across multiple reports per input sync so cursor movement stays
+    responsive under large pointer deltas. Includes the
+    `apple-magic-tablet` legacy TypeInfo alias as described above.
+
+Series root
+-----------
+
+Generated against qemu.git v11.0.0. Each patch applies cleanly and
+`make check` is green on x86_64.
+
+  git fetch origin master
+  git checkout -b apple-magic-hid origin/master
+  git am 0001-*.patch
+  git am 0002-*.patch
 
 Matthew Jackson (2):
-  hw/misc/applesmc: fix GET_KEY_BY_INDEX to return real keys, accept
-    WRITE/TYPE commands
-  hw/misc/applesmc: populate Apple SMC key table
+  hw/usb/dev-hid: add apple-magic-keyboard
+  hw/usb/dev-hid: add apple-mighty-mouse
 
- hw/misc/applesmc.c | 346 +++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 338 insertions(+), 8 deletions(-)
+ hw/usb/dev-hid.c | 1411 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 1411 insertions(+)
 
--- 
+--
 2.50.1 (Apple Git-155)
-
 
