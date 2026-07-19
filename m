@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D68CBC4450A
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jul 2026 07:49:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94BB6C44520
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jul 2026 07:49:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlMGf-0007by-FK; Sun, 19 Jul 2026 03:48:57 -0400
+	id 1wlMGL-0007Vb-33; Sun, 19 Jul 2026 03:48:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1wlMGe-0007bY-C5
- for qemu-devel@nongnu.org; Sun, 19 Jul 2026 03:48:56 -0400
+ id 1wlMGI-0007Tu-Fb
+ for qemu-devel@nongnu.org; Sun, 19 Jul 2026 03:48:34 -0400
 Received: from smtp186.sjtu.edu.cn ([202.120.2.186])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1wlMGc-00055Y-5D
- for qemu-devel@nongnu.org; Sun, 19 Jul 2026 03:48:56 -0400
+ id 1wlMGE-00054V-7n
+ for qemu-devel@nongnu.org; Sun, 19 Jul 2026 03:48:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sjtu.edu.cn;
  s=default; t=1784447283;
- bh=JpFxR/oOZtHQHbbjTkCGwxcezSCE6pTwm7ivEjov8/s=;
+ bh=p5117I2X0BDpEQLindw53jpxrdPty0kND9gp4KaUWXI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fMe/P1Aj9XoxcSCl61l1bgyO9sM3ImSB/VB3tqL0XdvhtjTVQ/U1oHyCIJRYs0S5i
- 2/+0L8Fg0Xj5sMl3y7NoDReKIMola3wlRzEuVFUtiqaWnDaYvzaguKeRXeVVqZiJEG
- 6NisjjXOUArNVEa2vq58WwN1vhiYJE5hGuvqWvxMLNpFdGLVHooD9EeNwu1MjaTowq
- x1GYnieRqJIcQEl4IpAcMEjFVPRnb2ONPWQlxGJ053Npi2W3S4DWbytfUIuw6i2bRn
- h9amrVZbO3Db0oMrtOxgPBL9vM5Flq1OBSY6Ac6oURjBtskyhpgiNJflyYUElFeK3V
- 8sl7M7E8097Rw==
+ b=M8jtb1Z4XNM1jQAPmGcuv6zyXpmHsegA5bo7mLIFZE3ekIpgu28KmA72sXqVV5oEE
+ wYtI3ftIdbP+YxaA1z6an+/33qcNAXWTI5E+xpKHhNJx3FsdAR/BGjEuy1sg0ddjfU
+ 2/wx7ZUkb5Vj83a3BRJxGz2d2RieIxFDoGTTpRl1R/EsXCTqphKPjYqSxODSgaPJ55
+ +8Vj/S6JsW2q/hSQCO+E4iY/Ez7UjPr89gs6sZMm8bW2s+V4PvKop3LZ4RyXjIvLrE
+ 6UbTEgkPjPSHj8WpJSAb8gcnWp4NGDOFAdLLunG8WFfX2wCsx/V13Ra+VPuUHik9ZR
+ xs8/7O6ujcf/w==
 Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
- by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id D3E232FF40C;
+ by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id 89DF62FF409;
  Sun, 19 Jul 2026 07:48:03 +0000 (UTC)
 Received: from pc.. (unknown [202.120.40.100])
- by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 45EB7380C9B;
- Sun, 19 Jul 2026 15:47:33 +0800 (CST)
+ by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id E33FC37C925;
+ Sun, 19 Jul 2026 15:47:32 +0800 (CST)
 From: Ziyang Zhang <functioner@sjtu.edu.cn>
 To: qemu-devel <qemu-devel@nongnu.org>
 Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
@@ -47,10 +47,10 @@ Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
  Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
  Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>,
  Ziyang Zhang <functioner@sjtu.edu.cn>
-Subject: [PATCH 3/3] docs/about/emulation: sharpen the dlcall boundary and its
- guest requirements
-Date: Sun, 19 Jul 2026 15:47:30 +0800
-Message-Id: <20260719074730.1520517-4-functioner@sjtu.edu.cn>
+Subject: [PATCH 1/3] contrib/plugins/dlcall: correct the syscall number claim,
+ note the data model
+Date: Sun, 19 Jul 2026 15:47:28 +0800
+Message-Id: <20260719074730.1520517-2-functioner@sjtu.edu.cn>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260719074730.1520517-1-functioner@sjtu.edu.cn>
 References: <20260719074730.1520517-1-functioner@sjtu.edu.cn>
@@ -79,87 +79,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Record the same data model requirement as the plugin: guest_base == 0 is
-necessary but not sufficient.
+The comment claimed every Linux ABI keeps its syscall numbers well below the
+minimum, and that the minimum is all N has to satisfy. Neither holds.
 
-Describe the magic syscall number the way the plugin now does. It has to be a
-number the guest ABI does not use and does not reject before the plugin sees
-it, rather than merely a high one, so show syscall_num= being used as well.
+MIPS O32 bases its numbering at 4000, so the default 4096 is its getpriority.
+Raising N does not rescue it either, because O32 answers numbers its table does
+not define with ENOSYS before the filter runs, which leaves no number that is
+both free and reachable on that ABI. arm32 bounds N from above too, with ENOSYS
+or SIGILL past ARM_NR_BASE. Say all of this, so the number can be chosen with
+the target in mind.
 
-A library is not turned into thunks, it is left alone and the thunks are
-produced for it, so say that instead. Argument marshalling, callbacks and
-variadic functions are also what the plugin does not do, and listing them in
-its description blurs the boundary it draws. Move them to Lorelei, where they
-are pointed at as a reference.
+guest_base == 0 is not the only requirement either. Host pointers are written
+back through the caller's out pointers, so the guest must match the host's
+pointer width and endianness. Fold that into the existing warning.
+
+Also assert the two out pointers that lacked it, and point at Lorelei for
+argument marshalling, callbacks and variadic functions.
 
 Co-authored-by: Kailiang Xu <xukl2019@sjtu.edu.cn>
 Co-authored-by: Mingyuan Xia <xiamy@ultrarisc.com>
 Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
 ---
- docs/about/emulation.rst | 31 +++++++++++++++++++++----------
- 1 file changed, 21 insertions(+), 10 deletions(-)
+ contrib/plugins/dlcall.c | 32 +++++++++++++++++++++++---------
+ 1 file changed, 23 insertions(+), 9 deletions(-)
 
-diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
-index b861501e85..c58149086c 100644
---- a/docs/about/emulation.rst
-+++ b/docs/about/emulation.rst
-@@ -1072,14 +1072,13 @@ syscall, so the real kernel never sees it.
-    Trusted guests only. The guest can load arbitrary host libraries and run
-    arbitrary code in the QEMU host process. The plugin is not a sandbox and
-    provides no isolation. It also requires ``guest_base == 0`` (qemu-user's
--   default), as guest pointers are dereferenced as host addresses with no
--   translation.
-+   default) and a guest whose pointer width and endianness match the host's, as
-+   guest pointers are dereferenced as host addresses with no translation.
- 
- The plugin intentionally keeps the QEMU side lightweight and knows nothing
--about any particular library or its calling convention. Turning a real library
--into working thunks, including argument marshalling, callbacks and variadic
--functions, is done entirely in userspace, and any toolchain can implement the
--interface.
-+about any particular library or its calling convention. Producing the thunks
-+for a real library is done entirely in userspace, and any toolchain can
-+implement the interface.
- 
- Loading the plugin is all that is required from QEMU's side:
- 
-@@ -1087,11 +1086,21 @@ Loading the plugin is all that is required from QEMU's side:
- 
-    qemu-x86_64 -plugin contrib/plugins/libdlcall.so <guest-program> ...
- 
-+If the default number does not suit the guest ABI, pick another one, and build
-+the userspace side to issue the same one:
-+
-+.. code-block:: shell
-+
-+   qemu-x86_64 -plugin contrib/plugins/libdlcall.so,syscall_num=8192 \
-+       <guest-program> ...
-+
- `Lorelei <https://github.com/rover2024/lorelei>`_ is one end-to-end userspace
- implementation of this: it provides the guest and host runtimes and an
- automated toolchain that generates the thunks from a library's headers, so guest
--library calls run on the host's native libraries. It supports an x86_64 guest
--running on an x86_64, aarch64 or riscv64 host.
-+library calls run on the host's native libraries. How it handles the parts the
-+plugin leaves out, including argument marshalling, callbacks and variadic
-+functions, can serve as a reference. It supports an x86_64 guest running on an
-+x86_64, aarch64 or riscv64 host.
- 
- A minimal end-to-end example uses a one-function library, ``libhello.so``, built
- two ways: the guest build tags its output ``(from the guest)`` and the host
-@@ -1201,8 +1210,10 @@ which prints::
-   * - Option
-     - Description
-   * - syscall_num=N
--    - The magic syscall number the guest issues (default 4096). Must be high
--      enough not to clash with a real syscall.
-+    - The magic syscall number the guest issues (default 4096). It must be a
-+      number the guest ABI does not use for a real syscall, and does not
-+      reject before the plugin sees it, which bounds the choice from both
-+      sides.
- 
- Other emulation features
- ------------------------
+diff --git a/contrib/plugins/dlcall.c b/contrib/plugins/dlcall.c
+index 9d2230b2d1..b624735e62 100644
+--- a/contrib/plugins/dlcall.c
++++ b/contrib/plugins/dlcall.c
+@@ -10,7 +10,8 @@
+  * nothing about how a library is thunked. Any toolchain can implement the
+  * userspace side. Lorelei is one end-to-end implementation (guest/host
+  * runtimes plus a thunk compiler that generates thunks from a library's
+- * headers):
++ * headers), and how it handles argument marshalling, callbacks and variadic
++ * functions can serve as a reference:
+  * https://github.com/rover2024/lorelei
+  *
+  * See docs/about/emulation.rst|Dynamic Linking Call for details and examples.
+@@ -20,12 +21,13 @@
+  * execution in the QEMU host process. It is NOT a sandbox and provides no
+  * isolation; only load it for guests you fully trust.
+  *
+- * WARNING: requires guest_base == 0, which is qemu-user's default. Pointer
+- * operands are dereferenced as host addresses directly, and the invoked host
+- * functions dereference guest pointers with no address translation, so guest
+- * and host must share a single address space. A non-zero guest_base (e.g. set
+- * via -B/-R) would make every pointer off by guest_base and hit unrelated
+- * host memory.
++ * WARNING: requires guest_base == 0, which is qemu-user's default, and a
++ * guest whose pointer width and endianness match the host's. Pointer operands
++ * are dereferenced as host addresses directly, and the invoked host functions
++ * dereference guest pointers with no address translation, so guest and host
++ * must share a single address space and agree on how a pointer is stored. A
++ * non-zero guest_base (e.g. set via -B/-R) would make every pointer off by
++ * guest_base and hit unrelated host memory.
+  *
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+@@ -46,8 +48,18 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
+  *
+  * It defaults to DLCALL_SYSCALL_DEFAULT and can be overridden at load time
+  * with the "syscall_num=N" argument. To avoid hijacking a real syscall the
+- * guest might issue, N must be at least DLCALL_SYSCALL_MIN: every Linux ABI
+- * keeps its syscall numbers well below this; numbers from here up are free.
++ * guest might issue, N must be at least DLCALL_SYSCALL_MIN, which most Linux
++ * ABIs keep their syscall numbers well below.
++ *
++ * N also has to reach the filter at all, which bounds it from above in a
++ * target specific way: arm32 answers anything past ARM_NR_BASE (0xf0000) with
++ * ENOSYS or SIGILL before do_syscall() runs, while aarch64 has no such bound.
++ *
++ * MIPS O32 bases its numbering at 4000, so the default is a real syscall there
++ * (getpriority). Raising N does not help either, because O32 rejects numbers
++ * its table does not define, again before the filter runs, which leaves no
++ * number that is both free and reachable on that ABI. Its N32 and N64 ABIs
++ * base at 6000 and 5000 and have no such gate, so they are unaffected.
+  */
+ enum {
+     DLCALL_SYSCALL_DEFAULT = 4096,
+@@ -168,6 +180,7 @@ static bool vcpu_syscall_filter(unsigned int vcpu_index,
+         case DLCALL_ID_FREE_LIBRARY: {
+             void *handle = (void *) a2;
+             int *ret_ptr = (int *) a3;
++            assert(ret_ptr);
+             *ret_ptr = dlclose(handle);
+             *sysret = 0;
+             break;
+@@ -176,6 +189,7 @@ static bool vcpu_syscall_filter(unsigned int vcpu_index,
+         /* Get the last error message for a library event. */
+         case DLCALL_ID_GET_LIBRARY_ERROR: {
+             const char **error_ptr = (const char **) a2;
++            assert(error_ptr);
+             *error_ptr = dlerror();
+             *sysret = 0;
+             break;
 -- 
 2.34.1
 
