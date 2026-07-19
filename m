@@ -4,100 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD52CC4450A
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jul 2026 07:34:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43C41C4450A
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jul 2026 07:48:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlM22-0003tp-3t; Sun, 19 Jul 2026 03:33:50 -0400
+	id 1wlMGE-0007Sv-9w; Sun, 19 Jul 2026 03:48:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wlM1t-0003sf-Rh; Sun, 19 Jul 2026 03:33:41 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
+ id 1wlMG5-0007SB-Df
+ for qemu-devel@nongnu.org; Sun, 19 Jul 2026 03:48:23 -0400
+Received: from smtp186.sjtu.edu.cn ([202.120.2.186])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wlM1r-0003yY-1T; Sun, 19 Jul 2026 03:33:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784446405; bh=zIGmra8c3V9Wg4BcgtrqisxDQaWQUBAu5+tZD7oPVSM=;
- h=Date:From:Subject:To:Cc:References:In-Reply-To;
- b=eQITjkFM2BoteLcK5wtTaWilX0fNaxyG2iPCmJrsyRT1HSy61ySWJ4PYojdvc4pXb
- xyzNJvpwwPaZO1E7knqxlaTtnJ7p+qjW5iHLgj3D1d2rE7xOxxy/VzKHk4OelkSHJg
- /KCo82y/xedRaEjb4acO0MbNypAaf314FpmthWCjvjKP7O9+U7TnmWihHqqiDyKxBd
- U/9oE1Gi6TNpNZsXq6Lp+xO6gY/o5dXYJer3R6OHpGO/S4lUFhB9q/17G70vClrZHS
- a/FXjWQpi5+Zxy2uxYGowAGBYbbbkZ2dJHP3pr2ekQv1pJFgHdYl6eN7bk5pFkOVLL
- EzEceh/bODt3A==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 77F041C2CD1;
- Sun, 19 Jul 2026 10:33:25 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3C1A33F1A15;
- Sun, 19 Jul 2026 10:33:36 +0300 (MSK)
-Message-ID: <a6f014be-7f31-4f53-a3f4-9b1ea437d7e7@tls.msk.ru>
-Date: Sun, 19 Jul 2026 10:33:26 +0300
+ (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
+ id 1wlMG0-00053t-T5
+ for qemu-devel@nongnu.org; Sun, 19 Jul 2026 03:48:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sjtu.edu.cn;
+ s=default; t=1784447283;
+ bh=/O/vxbwpXbZXYbSCQBNEYQGtcjTBlPDztYZMNvB9RGw=;
+ h=From:To:Cc:Subject:Date;
+ b=a/leCE+9nqNJ2wYCFYw6M8qinKD+2oGZuix9f03FWc495+wzoTciIDW1yXaSc6ZYP
+ N+6ROsXj9+VIRLPH56G967lnFh6NVeI+9TxIqRmdCwA1EwbHe57i8jPd3iuwY4TnzV
+ /ETYUemUb8ytfdRqgmv5RCzwZOxFJk1/K6xk8u8ctsJ2hdX0/eN1vh9Y2aiHfVVgS1
+ fQntUQgio+Wa+syt3MEyPSammdgDXhP0mP4vi2+wl35vB9Y5ZwhvU519ZKjWta8J+2
+ lGN61ckVanQdYeaqIuT5SfyO2R+/s4EMKhhFUFR6hNhDBH7pvA1wU+wfy+PubQ4LHK
+ 3EIEHXpV0dsCQ==
+Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
+ by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id 57E382FF3F5;
+ Sun, 19 Jul 2026 07:48:03 +0000 (UTC)
+Received: from pc.. (unknown [202.120.40.100])
+ by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 2248A37C8CA;
+ Sun, 19 Jul 2026 15:47:32 +0800 (CST)
+From: Ziyang Zhang <functioner@sjtu.edu.cn>
+To: qemu-devel <qemu-devel@nongnu.org>
+Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
+ Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Florian Hofhammer <florian.hofhammer@epfl.ch>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
+ Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>,
+ Ziyang Zhang <functioner@sjtu.edu.cn>
+Subject: [PATCH 0/3] dlcall: correct the syscall number claim and the guest
+ requirements
+Date: Sun, 19 Jul 2026 15:47:27 +0800
+Message-Id: <20260719074730.1520517-1-functioner@sjtu.edu.cn>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Michael Tokarev <mjt@tls.msk.ru>
-Subject: Re: [GIT PULL 00/15] Various UI/security-related fixes for 11.1
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: qemu-stable <qemu-stable@nongnu.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-References: <20260717-fix-v1-0-cb9f7d49dc52@redhat.com>
-Content-Language: en-US, ru-RU
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260717-fix-v1-0-cb9f7d49dc52@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=202.120.2.186;
+ envelope-from=functioner@sjtu.edu.cn; helo=smtp186.sjtu.edu.cn
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,57 +77,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-[Resending with the correct email of Akihiko Odaki, please excuse the duplicate]
+Hi,
 
-On 7/17/26 14:52, Marc-André Lureau wrote:
+Three small follow-ups to the dlcall plugin merged for 11.1. There is no
+functional change: all of them are comment and documentation fixes.
 
-> Various UI/security-related fixes for 11.1
-> 
-> ----------------------------------------------------------------
-> Akihiko Odaki (3):
->        ui/gtk: Narrow DMA-BUF critical section
->        hw/display/virtio-gpu: reject strides exceeding INT_MAX
->        hw/display/virtio-gpu: Check pixman_image_create_bits() results
-> 
-> Marc-André Lureau (12):
->        i386/tdx: fix uninitialized variable warning in tdx_check_features
->        ui/vnc: fix OOB write in vnc_refresh_lossy_rect
->        ui/vnc: validate color shifts in SetPixelFormat
->        ui/vnc: use RFB wire types for client message handlers
->        ui/input-barrier: fix off-by-one in keycode bounds check
->        ui/vnc: fix out-of-bounds write in lossy refresh dirty marking
->        ui/vnc: validate SetPixelFormat field ranges
->        hw/display/virtio-gpu: fix dmabuf_fd leak on remap failure
->        hw/display/qxl: fix TOCTOU in cursor chunk data_size handling
->        hw/display/virtio-gpu: validate stride against width on scanout
->        hw/display/virtio-gpu: cap submit_3d command buffer allocation
->        hw/display/virtio-gpu: handle migration iov allocation failure
+The first one matters most. The plugin picks 4096 as its magic syscall number,
+and the comment justified that by saying every Linux ABI keeps its syscall
+numbers well below it. That is not true for MIPS O32, which bases its numbering
+at 4000, so 4000 + 96 is a real getpriority. Loading the plugin on such a guest
+would let the filter consume a legitimate getpriority() and read its arguments
+as a dlcall request, where the first one selects an operation and the second is
+taken as a string pointer.
 
-Hi!
+Raising the number does not rescue that case, which is the part I had wrong at
+first. O32 answers numbers its table does not define with ENOSYS in cpu_loop(),
+before do_syscall() and therefore before the filter, so on O32 there is no
+number that is both free and reachable. Its N32 and N64 ABIs base at 6000 and
+5000 and have no such gate, so they are unaffected.
 
-Is there anything in there which should *not* go
-to the stable qemu series?
-(besides fixes for code which is not in releases, if any)
+I checked this under qemu-mips rather than only reading cpu_loop(), using a
+plugin that logs what its syscall filter receives. A plain getpriority() from
+the guest arrives at the filter as num=4096 a1=0, which is what dlcall would
+read as an operation ID with a NULL key, while syscall(8192, ...) returns
+ENOSYS and never reaches the filter at all.
 
-It feels like everything in this pullreq should be picked up
-for qemu-stable.
+There is an upper bound elsewhere too. arm32 answers anything past ARM_NR_BASE
+(0xf0000) with ENOSYS or SIGILL before do_syscall(), as the comment in
+tests/tcg/multiarch/test-plugin-syscall-filter.c already notes, so a large
+number is not a safe default either. 4096 sits below that and above the
+ordinary syscall numbers, which is why it works on the targets people use this
+with.
+
+That test carried the same wrong reason, so the second patch corrects it. It
+picked 4096 believing no ISA uses the number, when what actually keeps it safe
+is that the filter matches on the first argument as well: a real syscall
+carrying this number falls through untouched. tests/tcg/plugins/setpc.c matches
+on the number alone, which works for the single test program it is loaded with,
+but the collision applies there too, so neither test shows that 4096 is free.
+
+I have deliberately not changed the default, nor restricted which guests may
+load the plugin. The number is already configurable with syscall_num=N, and
+dlcall is generic infrastructure rather than something tied to one userspace
+project, so it should not decide which guest architectures people may
+experiment with. What was wrong here was the reasoning in the comments, so they
+now describe what a target actually does with the number.
+
+The last patch extends the guest_base == 0 warning, since the guest must match
+the host's pointer width and endianness as well, and tidies two things in the
+prose: a library is not turned into thunks but has thunks produced for it, and
+argument marshalling, callbacks and variadic functions belong with Lorelei
+rather than in the plugin's description, since they are precisely what it does
+not do.
+
+Also in the first patch, two out pointers were dereferenced without the assert
+the others carry.
 
 Thanks,
+Ziyang Zhang
 
-/mjt
+Ziyang Zhang (3):
+  contrib/plugins/dlcall: correct the syscall number claim, note the
+    data model
+  tests/tcg: correct why the magic syscall number is safe here
+  docs/about/emulation: sharpen the dlcall boundary and its guest
+    requirements
 
->   contrib/vhost-user-gpu/vugpu.h   |  9 ++++++
->   include/hw/virtio/virtio-gpu.h   |  9 ++++++
->   contrib/vhost-user-gpu/virgl.c   |  7 +++++
->   hw/display/qxl-render.c          | 28 ++++++++++-------
->   hw/display/virtio-gpu-rutabaga.c |  8 +++++
->   hw/display/virtio-gpu-udmabuf.c  |  1 +
->   hw/display/virtio-gpu-virgl.c    |  8 +++++
->   hw/display/virtio-gpu.c          | 57 ++++++++++++++++++++++++++++++++---
->   target/i386/kvm/tdx.c            |  2 +-
->   ui/gtk-egl.c                     |  6 ++--
->   ui/gtk-gl-area.c                 | 23 +-------------
->   ui/input-barrier.c               |  2 +-
->   ui/vnc.c                         | 65 ++++++++++++++++++++++++----------------
->   13 files changed, 157 insertions(+), 68 deletions(-)
+ contrib/plugins/dlcall.c                      | 32 +++++++++++++------
+ docs/about/emulation.rst                      | 31 ++++++++++++------
+ .../multiarch/test-plugin-syscall-filter.c    |  9 ++++--
+ 3 files changed, 50 insertions(+), 22 deletions(-)
+
+-- 
+2.34.1
+
 
