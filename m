@@ -4,45 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EB68C4450A
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jul 2026 15:23:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 104B6C4451B
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jul 2026 15:23:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlTMS-0001i3-Sd; Sun, 19 Jul 2026 11:23:24 -0400
+	id 1wlTMb-0001jS-Aq; Sun, 19 Jul 2026 11:23:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matthew@pq.io>) id 1wlTMM-0001ho-Rz
- for qemu-devel@nongnu.org; Sun, 19 Jul 2026 11:23:19 -0400
+ (Exim 4.90_1) (envelope-from <matthew@pq.io>) id 1wlTMY-0001iX-2t
+ for qemu-devel@nongnu.org; Sun, 19 Jul 2026 11:23:30 -0400
 Received: from mail-05.mail-europe.com ([85.9.206.169])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matthew@pq.io>) id 1wlTMH-0006hJ-0l
- for qemu-devel@nongnu.org; Sun, 19 Jul 2026 11:23:16 -0400
+ (Exim 4.90_1) (envelope-from <matthew@pq.io>) id 1wlTMW-0006i5-LP
+ for qemu-devel@nongnu.org; Sun, 19 Jul 2026 11:23:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pq.io;
- s=protonmail3; t=1784474581; x=1784733781;
- bh=55Kk2uBUTTnug4mm/duDGe3vuwvKlTXdM8MXmjQw4pw=;
+ s=protonmail3; t=1784474601; x=1784733801;
+ bh=UBwPutl+85R5/ITqbrIxd0Q0rL5pfkY//QmCMUqWtZI=;
  h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:From:To:
  Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
- b=h6IrT1UmJnSIyca1jk9YctLXIC9YORRpVL7M+IMqJTJKaCLVO5gKhr7IWgsUFB4QL
- tpercT89F23lBMAWonK4S0+QwNqCpi+8B0mo7u433ogxu+zOusLVVd2jZK5vULbhDK
- uIXySQBdPhePNHHDx1Jd+v7Gi4QZv4WO3tCm89yZHrliXsDLXsnEtFgWbhkDGyFkbF
- 2y0KCZhbnehXN1E0b4BLXU+JfEQ0CFs9ZFE5Eplzr7zxsJnwyTr3iqcXVjRh2f7y0P
- N4agP3I4qtq5L+DfZrq337W8WZCH+siWjM6RTkQ6POaTUEK/LuklhQ71x7su0jR88H
- nKbjwwPvaQiiw==
-X-Pm-Submission-Id: 4h36pr2cJwz1DDrb
+ b=XWvekGekywrw+MBvr6DXx0BKmK/AkIOp3Rvg6pttuh6YMZPJcW+1eIeF3SKDaDHk7
+ jyfbB+ElIdc0UaueQcfkKoa3YP3FYnz+pScJYTh5WgQiiYsrwd35eh1KHoZ60zdT3Z
+ D9eRsQTLnNjKsce+RI+vwH6/MceEE3mdeQg0yPDFDuDIgpcEWF4c0jCTYEK/l39Rqm
+ KmKRRteN5L4n4UXNw753cxNW1ffggCMpfSi/MCHbu5KaBpiSB0xZOcfeyFLZE3Xycg
+ Pi/89GIUD0ETma0BrRjgv+RsHOKRZruDVWGe9wHPx8Z96wLfzAx6onFS0zWtV2eHHY
+ vyUqe8wBKdo/Q==
+X-Pm-Submission-Id: 4h36qD0N9Yz1DDrb
 From: Matthew Jackson <matthew@pq.io>
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com,
-	peter.maydell@linaro.org
-Subject: Re: [PATCH v2 0/2] hw/misc/applesmc: fix GET_KEY_BY_INDEX and
- populate key set
-Date: Sun, 19 Jul 2026 08:22:58 -0700
-Message-ID: <20260719152258.69448-1-matthew@pq.io>
+Cc: kraxel@redhat.com
+Subject: [PATCH 4/4] hw/display/vmware_vga: advertise 8BIT_EMULATION,
+ ALPHA_BLEND and ALPHA_CURSOR
+Date: Sun, 19 Jul 2026 08:23:18 -0700
+Message-ID: <20260719152318.69481-5-matthew@pq.io>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260507152020.48728-1-matthew@pq.io>
-References: <20260507152020.48728-1-matthew@pq.io>
+In-Reply-To: <20260719152318.69481-1-matthew@pq.io>
+References: <20260719152318.69481-1-matthew@pq.io>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=85.9.206.169; envelope-from=matthew@pq.io;
  helo=mail-05.mail-europe.com
@@ -68,13 +66,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping — this v2 (2026-05-07) addressed the v1 review comments and has had
-no further feedback. It still applies cleanly on master (no applesmc.c
-changes upstream since). Happy to rebase/resend as v3 if preferred.
+Modern VMware SVGA II guest drivers expect the 8-bit palette
+emulation capability (`SVGA_CAP_8BIT_EMULATION`, bit 8) and
+the two alpha-blending cursor bits (`SVGA_CAP_ALPHA_BLEND`
+bit 13, `SVGA_CAP_ALPHA_CURSOR` bit 9) to be advertised by
+any device that presents a modern feature set. The upstream
+device already implements the machinery behind all three:
 
-  v1: https://lore.kernel.org/qemu-devel/20260507040153.14565-1-matthew@pq.io/
-  v2: https://lore.kernel.org/qemu-devel/20260507152020.48728-1-matthew@pq.io/
+  * 8-bit palette is handled by the legacy vga core that
+    vmware_vga extends, so advertising 8BIT_EMULATION is a
+    pure capability-bit change.
+  * ALPHA_CURSOR is satisfied by `SVGA_CMD_DEFINE_ALPHA_CURSOR`
+    which the FIFO command dispatcher already handles.
+  * ALPHA_BLEND is a generic "host supports alpha blending on
+    ARGB surfaces" bit; macOS's driver uses it to gate the
+    ARGB cursor upload path.
 
-Thanks,
-Matthew
+Without these bits, macOS's vmware_vga driver falls back to
+the monochrome cursor path and the guest cursor flickers or
+renders without anti-aliasing.
+
+Signed-off-by: Matthew Jackson <matthew@pq.io>
+---
+ hw/display/vmware_vga.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
+
+--- a/hw/display/vmware_vga.c
++++ b/hw/display/vmware_vga.c
+@@ -896,7 +896,18 @@ static uint32_t vmsvga_value_read(void *opaque, uint32_t address)
+         break;
+
+     case SVGA_REG_CAPABILITIES:
+-        caps = SVGA_CAP_PITCHLOCK | SVGA_CAP_EXTENDED_FIFO;
++        /*
++         * Advertise the capability bits that modern VMware SVGA II guest
++         * drivers (Linux vmwgfx, macOS 10.13+, Windows 10+) expect at a
++         * minimum. PITCHLOCK lets the guest pin the scanout pitch across
++         * mode changes; EXTENDED_FIFO exposes the pitchlock/fence/3d-hw
++         * FIFO registers above SVGA_FIFO_STOP; 8BIT_EMULATION advertises
++         * legacy palette support; ALPHA_BLEND / ALPHA_CURSOR are
++         * required for the 32-bit ARGB hardware cursor path.
++         */
++        caps = SVGA_CAP_PITCHLOCK | SVGA_CAP_EXTENDED_FIFO |
++               SVGA_CAP_8BIT_EMULATION | SVGA_CAP_ALPHA_BLEND |
++               SVGA_CAP_ALPHA_CURSOR;
+ #ifdef HW_RECT_ACCEL
+         caps |= SVGA_CAP_RECT_COPY;
+ #endif
+--
+2.47.0
+
 
