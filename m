@@ -4,60 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF9CCC44512
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jul 2026 18:37:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F314CC4450A
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jul 2026 19:29:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlWOQ-0004Q0-VW; Sun, 19 Jul 2026 14:37:38 -0400
+	id 1wlXC2-0005YK-CJ; Sun, 19 Jul 2026 15:28:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wlWOP-0004Pr-02
- for qemu-devel@nongnu.org; Sun, 19 Jul 2026 14:37:37 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wlWON-0008Dc-8q
- for qemu-devel@nongnu.org; Sun, 19 Jul 2026 14:37:36 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id C4B6C60120;
- Sun, 19 Jul 2026 18:37:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C395B1F000E9;
- Sun, 19 Jul 2026 18:37:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1784486246;
- bh=Baus3szB4pl1/YdwNIX8jXaDqUTwkJNzRjkGxgRYLfQ=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=J83c7m28Fu2PZL6Dt3mxZO50PNmT2pesrTY0tQx8qXuN8v98/eSdQPGviJPHcqnUO
- U3lrellmDdaxbWD8fY69B7ziCYeOqeC9DUQXNIsobt9BeFTX7oMwYxCgzpRFKmXY8r
- HG6fZ6AkX0IeFLIrC68mYxkSpMnV1DwQe+cb1WuuuLPE2zgHYKp0f8bCxmbeBUuBjC
- 3QclE3VVmepttL4LnkkoyYLq6t1qhZy+lBailiggO7r49lQOOUQMFZopMoYDyvisCf
- DKhnt86YKwjVmVT/Jv1YPwZwAJa11NlIi88pjqYKBgvNtb+l3mNGNk5veRFe8zDuJ2
- 2DPxWnIDMU3wA==
-From: Helge Deller <deller@kernel.org>
-To: Stefan Hajnoczi <stefanha@gmail.com>,
-	qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Helge Deller <deller@gmx.de>, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Matt Turner <mattst88@gmail.com>
-Subject: [PULL 1/1] linux-user/sparc: Take pending signals in
- sparc64_set_context()
-Date: Sun, 19 Jul 2026 20:37:21 +0200
-Message-ID: <20260719183721.3035-2-deller@kernel.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260719183721.3035-1-deller@kernel.org>
-References: <20260719183721.3035-1-deller@kernel.org>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wlXC0-0005Xo-Pu
+ for qemu-devel@nongnu.org; Sun, 19 Jul 2026 15:28:52 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wlXBz-0004gC-7N
+ for qemu-devel@nongnu.org; Sun, 19 Jul 2026 15:28:52 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-8487088510aso9580838b3a.0
+ for <qemu-devel@nongnu.org>; Sun, 19 Jul 2026 12:28:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1784489329; x=1785094129; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=tu/m4tbGZdTyQjqcxIPyBLhTphiwhax0W9CnBD40Gic=;
+ b=jk/vbp6/JDH9hwkkUfTHCZ3TxTK0DbGj/7VwAl/uO79Px4QQz/lZp6tIG4UZ3IURMR
+ uQNlwI5yZgeJ+vwdsZQ2jK9KBVre0cmN2PUOOlyfeBCtgY+jbuu1LHlfeqKWxxIL750X
+ HO/a9rjlGPhvFyBu7qId+bG/znL2ISY5tEvbzXHI0di7T2pM1AydahlRSIbDpNc2+3Q3
+ u0PP+qeXaU5cq31J59PoEykBKSCGDPkjpgCEsma/WkpGBHK+M/Py2iDyP5yg44hQd9CU
+ yASbD6q9Sv6DjbAO5gs9niKxyivpR/awT2U4W6oo5LRUpQCcFpOxHFRf5MeEsGaybE8j
+ x9bA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784489329; x=1785094129;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=tu/m4tbGZdTyQjqcxIPyBLhTphiwhax0W9CnBD40Gic=;
+ b=H/87SkVUoGH1ApcVQ5EuOWDb+MZyQfNe/f/hrmiQk4PHGZ+DGTQRz2AsNag/WxdIeE
+ R6+J+Qn21fVdhorJA+MdJ8a63Hiduu3/o+yZ1asisF5QheKOSXkQGq76OE3aiGepj2NE
+ PDSul/q7CUWle+byfE3VNjYDkpFaAwf/QhkGD5Sey4JFVezwWoqv0q3LmXKmnNOGZ7MZ
+ jufb0d06jzWHO/xEGQ1iXAhQ2Mhv1oFi72D/6HCUog8m4WCFmUzrfwiKpMofAdh7VnXI
+ QxZ7k978FDGq3T/oAr8G53xP9hIXOZbsConXW0DCXL/CuG13h4dn9lssw6yIRLoS1nOa
+ ki4g==
+X-Gm-Message-State: AOJu0YyGGHko7Q/p1H0akJxOVGBFwVabwct7tuJ55C2MdNdmV0u6daiF
+ 7cE/t3GtRJvXBHDogKx2b1il8/vi8VX4f5dA39g0/h+WDSchbvl4wIIH13c0IYOqGVHzhSaCj1Y
+ 7HVAl
+X-Gm-Gg: AfdE7cko2o9s0aK3ZoDDJ4SH5QT9vn/DH6tN3Xl3uP1HkmAtUsYSMBVtnf6FR3KJxoq
+ IDVf9qzSOkKWfJjlpwjGiwBM1Cen24HpNivo/sF7I0DQXOZQoQwtjWtLrCpAzOJ46UDV1iXqqzb
+ 5XDppU8cZgf5/0FxTDoa5N0sWggYFadLnwRJTF16Sh30A69qUFHnc3PwkMK841YVDM17mU+IeVk
+ u6YfCYNJWhCeRJSVP3F/aVglOJBEWlpAlRkNhPgr+wu7IJ95fVGeiUdgKaQWrBVgN+oMB4hnQzN
+ UXVU+DdUeKFFXr9fJwsWHL1+fGXIYt+SFokl42BEUaxJkPrfi3fWREZQ1oi4a5PdukrwYvBu/TU
+ Tr79694qY24000eVhW0h8d2xEqG/CaD+eFRG3B2n2FI69O+HCtHxnCfaMBfIObbKLN2qOanoKh2
+ 1UC+8e2Pc/18sTWOg=
+X-Received: by 2002:a05:6a20:c70b:b0:3bf:ba89:5236 with SMTP id
+ adf61e73a8af0-3c3ad8083e7mr11963324637.33.1784489329161; 
+ Sun, 19 Jul 2026 12:28:49 -0700 (PDT)
+Received: from [172.20.2.34] ([32.140.233.50])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3142a1de21asm28846339eec.23.2026.07.19.12.28.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 19 Jul 2026 12:28:48 -0700 (PDT)
+Message-ID: <bb5fd3cc-1e67-4cb3-9317-324cfba721df@linaro.org>
+Date: Sun, 19 Jul 2026 12:28:38 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/6] target/arm: Split decode of BFloat SME FMAX/FMIN
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+References: <20260719174905.420725-1-richard.henderson@linaro.org>
+ <20260719174905.420725-5-richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260719174905.420725-5-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,121 +104,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+On 7/19/26 10:49, Richard Henderson wrote:
+> +TRANS_FEAT(BFMAX_n1, aa64_sme2_sve_b16b16, do_zzz_n1_fpst, a,
+> +           f_vector_fmax[s->fpcr_ah][0])
+> +TRANS_FEAT(FMAX_n1, aa64_sme2, do_zzz_n1_fpst, a,
+> +           f_vector_fmax[s->fpcr_ah][a->esz])
 
-Every callsite of block_signals() checks its return value, except
-the one in sparc64_set_context(). Generally you need to check,
-because the standard pattern is:
+Can't leave b16 functions in f_vector_fmax.
 
-    if (block_signals()) {
-        return -QEMU_ERESTARTSYS;
-    }
-    /* do some blocking syscall */
+If b16b16 isn't set, trans_BFMAX_n1 will return false, which will fall through to 
+trans_FMAX_n1.  Since f_vector_fmax[*][0] is non-null, trans_FMAX_n1 will fail to reject.
 
-and we need to take any pending signal before we do the blocking
-operation, not afterwards.
 
-The use in sparc64_set_context() doesn't do this.  It doesn't have to
-because the operations it is doing aren't blocking, so it won't get
-into "we didn't take the signal that we should have" races that
-blocking syscalls do.  But it does make this way of updating the
-signal mask inconsistent with how we do it in do_sigprocmask().
-do_sigprocmask() does the usual "return -QEMU_ERESTARTSYS", so a
-pending signal that was not blocked by the old signal mask and which
-will be blocked by the new mask we're about to install will be taken
-before we change the mask.  sparc64_set_context() doesn't check the
-return value, so we won't take that pending signal.  That's not
-wrong, because it just means the signal lost the race with the
-executing code.  But it seems clearer to behave the same way as
-do_sigprocmask(), not differently.
-
-Make sparc64_set_context() check the return value of block_signals()
-and return early if there's a pending signal to take.  We don't need
-to return a separate return code to indicate this because the main
-loop handles it the same either way.
-
-Coverity CID: 1660058
-
-Fixes: e0f0ce88eb9 ("linux-user/sparc: call block_signals() before set_sigmask() in setcontext")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Matt Turner <mattst88@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
----
- linux-user/sparc/cpu_loop.c | 10 ++++++++++
- linux-user/sparc/signal.c   | 30 +++++++++++++++++++++---------
- 2 files changed, 31 insertions(+), 9 deletions(-)
-
-diff --git a/linux-user/sparc/cpu_loop.c b/linux-user/sparc/cpu_loop.c
-index 0aacda9448..eaf388c167 100644
---- a/linux-user/sparc/cpu_loop.c
-+++ b/linux-user/sparc/cpu_loop.c
-@@ -282,6 +282,16 @@ void cpu_loop (CPUSPARCState *env)
-             break;
-         case TT_TRAP + 0x6f:
-             flush_windows(env);
-+            /*
-+             * If we have a pending signal, sparc64_set_context() may
-+             * return early without changing register state (like a
-+             * syscall that returns -QEMU_ERESTARTSYS). We will then
-+             * take the pending signal via process_pending_signals()
-+             * below and eventually re-execute the trap. We don't need
-+             * the function to return a different value for the
-+             * "restart" case because this main loop code does the
-+             * same thing in both cases.
-+             */
-             sparc64_set_context(env);
-             break;
- #endif
-diff --git a/linux-user/sparc/signal.c b/linux-user/sparc/signal.c
-index ba692c3123..4baf983ed8 100644
---- a/linux-user/sparc/signal.c
-+++ b/linux-user/sparc/signal.c
-@@ -594,6 +594,27 @@ void sparc64_set_context(CPUSPARCState *env)
-     unsigned int i;
-     unsigned char fenab;
- 
-+    if (env->regwptr[WREG_O1]) {
-+        /*
-+         * We're going to set the signal mask; we need to call
-+         * block_signals() first, so that process_pending_signals() is
-+         * guaranteed to run after the mask change.  Without this, a
-+         * guest signal that is pending-and-blocked at setcontext time
-+         * is left undelivered even after its mask bit is cleared,
-+         * because signal_pending stays 0 and the post-trap
-+         * process_pending_signals() loop never enters.
-+         *
-+         * If block_signals() returns true, this means we have a
-+         * pending signal that we could take now; we return early so
-+         * the cpu_loop takes that signal.  Eventually the guest will
-+         * re-execute the trap insn and we'll come back here to have
-+         * another go at set_context. This is the same way that
-+         * do_sigprocmask() handles setting the signal mask.
-+         */
-+        if (block_signals()) {
-+            return;
-+        }
-+    }
-     ucp_addr = env->regwptr[WREG_O0];
-     if (!lock_user_struct(VERIFY_READ, ucp, ucp_addr, 1)) {
-         goto do_sigsegv;
-@@ -619,15 +640,6 @@ void sparc64_set_context(CPUSPARCState *env)
-             }
-         }
-         target_to_host_sigset_internal(&set, &target_set);
--        /*
--         * set_sigmask() requires the caller to have first called
--         * block_signals() so that process_pending_signals() is guaranteed
--         * to run after the mask change.  Without this, a guest signal that
--         * is pending-and-blocked at setcontext time is left undelivered
--         * even after its mask bit is cleared, because signal_pending stays
--         * 0 and the post-trap process_pending_signals() loop never enters.
--         */
--        block_signals();
-         set_sigmask(&set);
-     }
-     env->pc = pc;
--- 
-2.54.0
-
+r~
 
