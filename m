@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4E72C4450A
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jul 2026 07:32:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD52CC4450A
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jul 2026 07:34:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlLzp-0002sb-6c; Sun, 19 Jul 2026 03:31:33 -0400
+	id 1wlM22-0003tp-3t; Sun, 19 Jul 2026 03:33:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wlLzn-0002s7-0u; Sun, 19 Jul 2026 03:31:31 -0400
+ id 1wlM1t-0003sf-Rh; Sun, 19 Jul 2026 03:33:41 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wlLzk-0003ua-8V; Sun, 19 Jul 2026 03:31:30 -0400
+ id 1wlM1r-0003yY-1T; Sun, 19 Jul 2026 03:33:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1784446264; bh=O8i5oGhXVHQ14yD1De15Z8kU4cmtmu80oFj1i2ig+e8=;
- h=Date:Subject:To:References:Cc:From:In-Reply-To;
- b=roGUnCsr4pPKEPiG/+ihvsQdSxNg8sRIjrjoCtxYc2B6i9MGZDpiENI5oPW6rlC7c
- unkunaGMaKFUS1cdT/6WL4tOuu3ZfBXQXTXyiW6FGsQFs79XgSVuuUXaGyPBmLqk/i
- EL4wdVG1nFdj5EYunJdWWn8iGs2wE06PAG41/PJBSqE+oImjNx0kQ+B89nRhB9nCyj
- acrNnIvidNb5pu2lp9ECYXP7IBD7owI8F7oZwSpyKey8cRCcXcSo9bKA36F61PVm0L
- NufkVH31mrmnQd67xrVuLNns8cCzRtlnX4/2fiE6AFhpZz5mlT7isqtAfF5JwDq1qk
- UpUyFsuM4KmAA==
+ t=1784446405; bh=zIGmra8c3V9Wg4BcgtrqisxDQaWQUBAu5+tZD7oPVSM=;
+ h=Date:From:Subject:To:Cc:References:In-Reply-To;
+ b=eQITjkFM2BoteLcK5wtTaWilX0fNaxyG2iPCmJrsyRT1HSy61ySWJ4PYojdvc4pXb
+ xyzNJvpwwPaZO1E7knqxlaTtnJ7p+qjW5iHLgj3D1d2rE7xOxxy/VzKHk4OelkSHJg
+ /KCo82y/xedRaEjb4acO0MbNypAaf314FpmthWCjvjKP7O9+U7TnmWihHqqiDyKxBd
+ U/9oE1Gi6TNpNZsXq6Lp+xO6gY/o5dXYJer3R6OHpGO/S4lUFhB9q/17G70vClrZHS
+ a/FXjWQpi5+Zxy2uxYGowAGBYbbbkZ2dJHP3pr2ekQv1pJFgHdYl6eN7bk5pFkOVLL
+ EzEceh/bODt3A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 86CA71C2CCB;
- Sun, 19 Jul 2026 10:31:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 77F041C2CD1;
+ Sun, 19 Jul 2026 10:33:25 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 590233F1A14;
- Sun, 19 Jul 2026 10:31:15 +0300 (MSK)
-Message-ID: <40d6bb5c-4b3c-4d10-b5ab-1afe75460117@tls.msk.ru>
-Date: Sun, 19 Jul 2026 10:31:05 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3C1A33F1A15;
+ Sun, 19 Jul 2026 10:33:36 +0300 (MSK)
+Message-ID: <a6f014be-7f31-4f53-a3f4-9b1ea437d7e7@tls.msk.ru>
+Date: Sun, 19 Jul 2026 10:33:26 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+From: Michael Tokarev <mjt@tls.msk.ru>
 Subject: Re: [GIT PULL 00/15] Various UI/security-related fixes for 11.1
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
+Cc: qemu-stable <qemu-stable@nongnu.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260717-fix-v1-0-cb9f7d49dc52@redhat.com>
 Content-Language: en-US, ru-RU
-Cc: qemu-stable <qemu-stable@nongnu.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>
-From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -113,6 +113,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
+
+[Resending with the correct email of Akihiko Odaki, please excuse the duplicate]
 
 On 7/17/26 14:52, Marc-André Lureau wrote:
 
