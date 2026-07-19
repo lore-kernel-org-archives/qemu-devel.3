@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 161FBC4451B
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jul 2026 16:16:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7200CC4450A
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jul 2026 16:16:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlUBB-0007jV-On; Sun, 19 Jul 2026 12:15:49 -0400
+	id 1wlUBC-0007kL-RA; Sun, 19 Jul 2026 12:15:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1wlUB9-0007iK-N6
+ id 1wlUB9-0007i3-Fd
  for qemu-devel@nongnu.org; Sun, 19 Jul 2026 12:15:47 -0400
-Received: from fhigh-b4-smtp.messagingengine.com ([202.12.124.155])
+Received: from fout-b3-smtp.messagingengine.com ([202.12.124.146])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1wlUB7-0002P5-4u
+ id 1wlUB7-0002PI-Ga
  for qemu-devel@nongnu.org; Sun, 19 Jul 2026 12:15:47 -0400
 Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 7B6F47A0082;
- Sun, 19 Jul 2026 12:15:42 -0400 (EDT)
+ by mailfout.stl.internal (Postfix) with ESMTP id C06481D00085;
+ Sun, 19 Jul 2026 12:15:44 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-02.internal (MEProxy); Sun, 19 Jul 2026 12:15:42 -0400
+ by phl-compute-02.internal (MEProxy); Sun, 19 Jul 2026 12:15:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1784477742; x=
- 1784564142; bh=s0CQSii4/ZJ3c1go+L4vlGB9APv9y1mACEzske6WaXM=; b=W
- UYxT6TYtQVyBS8MPphA5pKumCAvp/mZxn6aG8849lxtoJAe04h8v2iHEx6J2sFNn
- 2lFd/AAC1FXyDGCogpoZyzXZXBB/raVwepvOc1DjiFr3ioGTLUcMfoO1DNzxAl09
- TIANiKeE3BY0bhgoza0V/Cal3TrgKuovlKn1U67UHY9WTKe4Z6O4GxmvBfd/yiiU
- NdhudeBp3FeJC0w2PxFNprkCbQRDOaT2Y+OVy0gOx6V1rHujKGcefRWUBUUY3gmi
- g6YTzDoJJktC/0oyuxYtzhyvX2RJY6FINAq1LpZEgFQqtC5zOXoXvBYdLtXRmABz
- /Fxm61V/W7nLfdNJkpjfg==
+ :reply-to:subject:subject:to:to; s=fm1; t=1784477744; x=
+ 1784564144; bh=SMfM5tOPVVJjB6fA5OJrqvCV54hWKQWqeNa0ZvBSgq0=; b=j
+ 8k6kA3jsh4BrLfobc9QLXPkfQJYbc3XfrT8zJJYaVWmuRbDBOMneQshVeO1QjSJZ
+ yiGRqNewBqCv2ttzo1hDsKZMVeC/1LnWLNSCkuA9TlsoBBikey+1Fa5DXyxGA5Zs
+ aAxoIbPBzPilCPIEAyzVqRV4taLfQH/i0rvsw4IQoDghpGUdpVQYX4YXlnvTscJM
+ 68o64/vJ/7FIjazxrBFqaade/uJpQLvKgY+eXepVTq0l76q2qLPRmmUQQf3z2vNR
+ ITfqfIhAIpHG8qvcIStbPq3s7vihCCCzesck85MXNuLzvoKjMxCqXi3X6DFtu7gH
+ MUQD0oBCMYD7vJ/k0uHTg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm2; t=1784477742; x=1784564142; bh=s
- 0CQSii4/ZJ3c1go+L4vlGB9APv9y1mACEzske6WaXM=; b=rBW+kzNS8Mv6jG0c+
- VPeSaBdUz0jVmQfoA6qV6534d9uzlQZdZRwNG9CFZYlFXKrbYsTKIzYXSz3Ay7ME
- /3qvh7Wi5QNukOWQ4joIsrtkHr6Gz1s+XDrPYr+sqcphE+sWBRNZcsdlGcltF3Dm
- Lc+U7O5L3Xf81ecqBHzSP+FTzgFkE52ntCR0XulXT1iF7Z50KR744PWJHh8/JrJM
- yJNZbPzlh8kahP/8QMzuKgod4RtSGQ3fZrWIkXHIPhcO+0OZg8lwWm5nIV79Rd+i
- VE+aMKBwMV9jxPdLzYbtr4zpGlqYAvjsFHa7v7xiAfwEZxOSnBeXJTjdkx95knuZ
- UZXjw==
-X-ME-Sender: <xms:LvhcaqDyP2pElEphSDpJ8nyBBibDfJl0imOtrdQUnE1VJCpwGGbT_g>
- <xme:Lvhcar8FiM6SZ23AwfIAcJvDZWU7fWJrMeTPnReyEL81jkgPqxa6CiMg0CDdAxDs6
- JMq9K63rhdNqlO5MYRYYMOe0gdDBk-0xVJBtbSyDtyaVG8ti6-kEAA>
-X-ME-Received: <xmr:Lvhcaq8Upkfx6RGvTl45oxw_La5vvUiQgxKsgcXvzQm5xBCHePpuZdRh9aA>
+ :x-me-sender:x-sasl-enc; s=fm2; t=1784477744; x=1784564144; bh=S
+ MfM5tOPVVJjB6fA5OJrqvCV54hWKQWqeNa0ZvBSgq0=; b=p98CsUxti//9JpwNs
+ /V4pObda5aOJjGo2zs+BZjBxMqPg/uuTekZWkTspZqxzM0zFqFScMW6q+83lQnK0
+ ABmiZ+MKYFRkkeDaui+4dfmtMjKjRsq7KD2g9myzTSmz0ROU5MXTtJdwU8U11+xp
+ DEVKjxDuveU6Rh4rpBIntqusUG3VbqE42SvtuWYL+rZUnC14soExOT0qtDiSP++R
+ +8+kItFDigQmiW9J2Fc2O5DVb7BPUHxPlsP5TsnAeeA3qTLt3jENhJvjRBbHFOvS
+ B1hbsb9YOqypKf5izjyoV70dd4dzdxqf1qgdmPmg9yBhsW8zKDa4pBxzFhCeYlsO
+ IwG+A==
+X-ME-Sender: <xms:MPhcasXsuyZjmrOcFc7ygPXiluPLL9RiwxIywTXdpv9TpvpIe-aE6A>
+ <xme:MPhcaoDFKiLd8QfggR3bEFeoPcHd3m4J4qMzZSWCbqJ6NwXQkf99hFPqyg8tA-JgA
+ p7waItDOh3_ctSXRBXp43MDzgsbdIZLLkPuMf6eIr-iWVMwtKVC3Vg>
+X-ME-Received: <xmr:MPhcatwfJUAAulpKa96ejXkdntxkpV7XzJusohaWKEeXf8NzMOXeXgkXw6w>
 X-ME-Proxy-Cause: dmFkZTF2M8/td2x4uX0quVUht6oTuzlOtlV8s/xAIpba0AK3yD3yx/edKpxJCFjEj6RVFW
  tZylprZe+5ZeJQcZMYpgGdlyYr4p2Wtx0Pp9uwz7oCUjsZcueHidxeZqaoOMQW+WpAqS8o
  36DmnFTRazz4ZZYy3JE1PDUxJVJ6kQybtpH5PX9NmR/So+sfpFNwXUOFOf+enlYoThGfBq
  /4lv/qCY4C+TNW42jFI8nDAtYiw5rFjgpjUCC0EAiSX1/r68t1adlaGfPCZ9kDzHhyIsa/
- zjm0Fxwf9RtbwH8g1DU4zTrN01nzO9FlVCZHr0GOq/w+LWaLMT81m5uJTc0ahE79g4sRFE
- BTfIKNwQSBft9PUx0apEjvZsXu5DC53y1535Qdl19YivuZz9U8XSnXfBvrsHRh9SaMI36c
- WwxkkG7EptUkXOu4CJ2Me0POKSJj5D/RZZoWGB1Zp/m4U0If03/F24WWtjONYUBmm1EOzy
- gP++rMRRXb4+nl79gphVqo3xDn37VfiLKqzn6YfmDSs0uTSuJU5LMB0K5zrDYTQnRugByF
- Zh1KiUJo6A6GGc92XlpONWvw0K1gaVolyDlTP4x+JSnIA5OS8vwTv7UaaspmyNPeXSLgel
- MIcPY4aDzxzHZWKWC9+YRfzGTrfANEy/dq4Xqhtehz37RYxNUbJ1UsNWRMuA
-X-ME-Proxy: <xmx:LvhcaieManTAUSO5Y00tGxiCyAgMqXNrXqRXH5MpT3EexvMNdRO5ug>
- <xmx:LvhcajEynruEuU4u3LgTBFMSMlJog-VrXnGQFCU4UYWKUm7ZjkLvlA>
- <xmx:LvhcagfmMNG-aqLcEWZ2xlLOhB6LJ8HOQPvugXW_nXXDEyyVN8LTQA>
- <xmx:LvhcatFEw46ogisXuynUPmZ1G3eLeH9oyyh25ZvL09c7J0R0svATew>
- <xmx:LvhcagLvRqGQ2bjlGMnyahUvKhsERv9GrufV3nkUdYv_Xx7GKRO-ieDB>
+ zjm0Fxwf9RtbwH8g1DU4zTrN01nzO9FlVCZHr0GOq/w+LWaLMT81m5uJTc0ahE79g4sRDp
+ MrujM+TRxleVO6L17NotoAvZ7Cxru+b/zWS2K0A5CC9Z9T4Y7dzdF43Q9WlA2NwRBg7w8f
+ oMmZYHt++huXN9EUqtAbvTFFTJFIiNj4UeJsG7UrXgvdR6YakF/xSP9T0uY2P2ZnxSl2k4
+ FAu4Je3mF3a8w1+Yeyeo6dseRsAMpAe3xsHQO+mFLJFbMBvnwlbFW3mDRZpWvTYSOVrmOZ
+ XJGUG/4en84g73sEvcmeiz+7t9v82NP8d6jcufWeMzcbdsACPNWX2g7gAA9gbEfbn2sd80
+ qainyZtYH3kcjHo9PCwz4DtVLiJywxT9IeXMW7BgukNgVB4CSv2mwOEd5sOQ
+X-ME-Proxy: <xmx:MPhcalC8CLrhDRsft8h-jXCAaGlctYpdON2Or62fyIRLPoXIniCHHQ>
+ <xmx:MPhcaqaJCXMYGkDAdDaBq_xIhuSM2L5Xh9_j4lSV0YVzfsoaYdQapQ>
+ <xmx:MPhcathAVHCN8uuZ1ud8XsbMHjet4g_jV18j8ah0YzH7K7dpVbOvDA>
+ <xmx:MPhcas61FAsouRIXllb8Z_Y4o0XQK9pfblVVCPJAx8ByW3_Of8rsTg>
+ <xmx:MPhcavE_eobogWkakd1z849TFQ9a1p8M4Kuba6ZJDO8GZnHHiZjn29Sa>
 Feedback-ID: ib26944c1:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 19 Jul 2026 12:15:41 -0400 (EDT)
+ 19 Jul 2026 12:15:44 -0400 (EDT)
 Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id cdbe9dce;
+ by chomposaur (OpenSMTPD) with ESMTPA id 04b61daf;
  Sun, 19 Jul 2026 16:15:40 +0000 (UTC)
 From: Chad Jablonski <chad@jablonski.xyz>
 To: qemu-devel@nongnu.org
 Cc: BALATON Zoltan <balaton@eik.bme.hu>,
 	Chad Jablonski <chad@jablonski.xyz>
-Subject: [PATCH 2/9] ati-vga: r100 does not latch defaults on
- DP_GUI_MASTER_CNTL
-Date: Sun, 19 Jul 2026 12:15:29 -0400
-Message-ID: <20260719161536.774061-3-chad@jablonski.xyz>
+Subject: [PATCH 5/9] ati-vga: Route r100 src and dst offsets through memory
+ controller
+Date: Sun, 19 Jul 2026 12:15:32 -0400
+Message-ID: <20260719161536.774061-6-chad@jablonski.xyz>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260719161536.774061-1-chad@jablonski.xyz>
 References: <20260719161536.774061-1-chad@jablonski.xyz>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.155; envelope-from=chad@jablonski.xyz;
- helo=fhigh-b4-smtp.messagingengine.com
+Received-SPF: pass client-ip=202.12.124.146; envelope-from=chad@jablonski.xyz;
+ helo=fout-b3-smtp.messagingengine.com
 X-Spam_score_int: -2
 X-Spam_score: -0.3
 X-Spam_bar: /
@@ -112,148 +112,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The r128 latches the default values of src/dst clipping, pitch, and
-offset when the default flags are set on DP_GUI_MASTER_CNTL. The r100
-does not do this and instead uses the default values at blit time without
-updating the registers.
+The r100 stores a full GPU address in the dst, src, and default
+offset registers. For this reason the addresses need to be routed via
+the memory controller to obtain offsets. This differs from the r128
+which directly stores framebuffer offsets.
 
-Tested and validated against a Rage 128 Pro Ultra (PCI 1002:5446) and
-Radeon QY (RV100) (PCI 1002:5159).
+Blits outside of VRAM are still not supported. The existing bounds
+checks catch this in most cases. A small edge case exists where an
+offset register could be set to a low memory address outside of the
+VRAM mapping and end up treated as a VRAM offset. This has not been
+observed in real drivers but should be handled when implementing
+blits outside of VRAM.
 
 Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
 ---
- hw/display/ati.c    | 36 +++++++++++++++++++-----------------
- hw/display/ati_2d.c | 41 ++++++++++++++++++++++++++++++-----------
- 2 files changed, 49 insertions(+), 28 deletions(-)
+ hw/display/ati_2d.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/hw/display/ati.c b/hw/display/ati.c
-index db7e08a462..76070d76a7 100644
---- a/hw/display/ati.c
-+++ b/hw/display/ati.c
-@@ -895,23 +895,25 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-                               (data & 0x4000) << 16;
-         s->regs.dp_mix = (data & GMC_ROP3_MASK) | (data & 0x7000000) >> 16;
- 
--        if (!(data & GMC_SRC_PITCH_OFFSET_CNTL)) {
--            s->regs.src_offset = s->regs.default_offset;
--            s->regs.src_pitch = s->regs.default_pitch;
--        }
--        if (!(data & GMC_DST_PITCH_OFFSET_CNTL)) {
--            s->regs.dst_offset = s->regs.default_offset;
--            s->regs.dst_pitch = s->regs.default_pitch;
--        }
--        if (!(data & GMC_SRC_CLIPPING)) {
--            s->regs.src_sc_right = s->regs.default_sc_right;
--            s->regs.src_sc_bottom = s->regs.default_sc_bottom;
--        }
--        if (!(data & GMC_DST_CLIPPING)) {
--            s->regs.sc_top = 0;
--            s->regs.sc_left = 0;
--            s->regs.sc_right = s->regs.default_sc_right;
--            s->regs.sc_bottom = s->regs.default_sc_bottom;
-+        if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
-+            if (!(data & GMC_SRC_PITCH_OFFSET_CNTL)) {
-+                s->regs.src_offset = s->regs.default_offset;
-+                s->regs.src_pitch = s->regs.default_pitch;
-+            }
-+            if (!(data & GMC_DST_PITCH_OFFSET_CNTL)) {
-+                s->regs.dst_offset = s->regs.default_offset;
-+                s->regs.dst_pitch = s->regs.default_pitch;
-+            }
-+            if (!(data & GMC_SRC_CLIPPING)) {
-+                s->regs.src_sc_right = s->regs.default_sc_right;
-+                s->regs.src_sc_bottom = s->regs.default_sc_bottom;
-+            }
-+            if (!(data & GMC_DST_CLIPPING)) {
-+                s->regs.sc_top = 0;
-+                s->regs.sc_left = 0;
-+                s->regs.sc_right = s->regs.default_sc_right;
-+                s->regs.sc_bottom = s->regs.default_sc_bottom;
-+            }
-         }
-         break;
-     case DST_WIDTH_X:
 diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-index 3b27917bf4..f51ecb747a 100644
+index f51ecb747a..e1cbf9efa9 100644
 --- a/hw/display/ati_2d.c
 +++ b/hw/display/ati_2d.c
-@@ -104,18 +104,26 @@ static void setup_2d_blt_ctx(ATIVGAState *s, ATI2DCtx *ctx)
-     ctx->top_to_bottom = s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM;
-     ctx->need_swap = (HOST_BIG_ENDIAN != s->vga.big_endian_fb);
-     ctx->frgd_clr = s->regs.dp_brush_frgd_clr;
--    ctx->dst_offset = s->regs.dst_offset;
- 
-     if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
-         /* r128 scissor values are inclusive */
-         ctx->scissor.width = s->regs.sc_right - s->regs.sc_left + 1;
-         ctx->scissor.height = s->regs.sc_bottom - s->regs.sc_top + 1;
-+        ctx->scissor.x = s->regs.sc_left;
-+        ctx->scissor.y = s->regs.sc_top;
+@@ -135,10 +135,13 @@ static void setup_2d_blt_ctx(ATIVGAState *s, ATI2DCtx *ctx)
+         ctx->dst_stride = s->regs.dst_pitch * ctx->bpp;
+         ctx->dst_offset = s->regs.dst_offset;
      } else {
--        ctx->scissor.width = s->regs.sc_right - s->regs.sc_left;
--        ctx->scissor.height = s->regs.sc_bottom - s->regs.sc_top;
-+        if (s->regs.dp_gui_master_cntl & GMC_DST_CLIPPING) {
-+            ctx->scissor.x = s->regs.sc_left;
-+            ctx->scissor.y = s->regs.sc_top;
-+            ctx->scissor.width = s->regs.sc_right - s->regs.sc_left;
-+            ctx->scissor.height = s->regs.sc_bottom - s->regs.sc_top;
-+        } else {
-+            ctx->scissor.x = 0;
-+            ctx->scissor.y = 0;
-+            ctx->scissor.width = s->regs.default_sc_right;
-+            ctx->scissor.height = s->regs.default_sc_bottom;
-+        }
++        ATIMemRoute res = ati_mc_route(s, s->regs.dp_gui_master_cntl &
++                                       GMC_DST_PITCH_OFFSET_CNTL
++                                       ? s->regs.dst_offset
++                                       : s->regs.default_offset);
+         ctx->dst_stride = s->regs.dp_gui_master_cntl & GMC_DST_PITCH_OFFSET_CNTL
+                           ? s->regs.dst_pitch : s->regs.default_pitch;
+-        ctx->dst_offset = s->regs.dp_gui_master_cntl & GMC_DST_PITCH_OFFSET_CNTL
+-                          ? s->regs.dst_offset : s->regs.default_offset;
++        ctx->dst_offset = res.addr;
      }
--    ctx->scissor.x = s->regs.sc_left;
--    ctx->scissor.y = s->regs.sc_top;
+     ctx->dst_bits = s->vga.vram_ptr + ctx->dst_offset;
  
-     ctx->dst.width = s->regs.dst_width;
-     ctx->dst.height = s->regs.dst_height;
-@@ -123,20 +131,30 @@ static void setup_2d_blt_ctx(ATIVGAState *s, ATI2DCtx *ctx)
-                  s->regs.dst_x : s->regs.dst_x + 1 - ctx->dst.width);
-     ctx->dst.y = (ctx->top_to_bottom ?
-                  s->regs.dst_y : s->regs.dst_y + 1 - ctx->dst.height);
--    ctx->dst_stride = s->regs.dst_pitch;
--    ctx->dst_bits = s->vga.vram_ptr + s->regs.dst_offset;
-     if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
--        ctx->dst_stride *= ctx->bpp;
-+        ctx->dst_stride = s->regs.dst_pitch * ctx->bpp;
-+        ctx->dst_offset = s->regs.dst_offset;
-+    } else {
-+        ctx->dst_stride = s->regs.dp_gui_master_cntl & GMC_DST_PITCH_OFFSET_CNTL
-+                          ? s->regs.dst_pitch : s->regs.default_pitch;
-+        ctx->dst_offset = s->regs.dp_gui_master_cntl & GMC_DST_PITCH_OFFSET_CNTL
-+                          ? s->regs.dst_offset : s->regs.default_offset;
-     }
-+    ctx->dst_bits = s->vga.vram_ptr + ctx->dst_offset;
- 
-     ctx->src.x = (ctx->left_to_right ?
-                  s->regs.src_x : s->regs.src_x + 1 - ctx->dst.width);
-     ctx->src.y = (ctx->top_to_bottom ?
-                  s->regs.src_y : s->regs.src_y + 1 - ctx->dst.height);
--    ctx->src_stride = s->regs.src_pitch;
--    ctx->src_bits = s->vga.vram_ptr + s->regs.src_offset;
-     if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
--        ctx->src_stride *= ctx->bpp;
-+        ctx->src_stride = s->regs.src_pitch * ctx->bpp;
-+        ctx->src_bits = s->vga.vram_ptr + s->regs.src_offset;
-+    } else {
-+        ctx->src_stride = s->regs.dp_gui_master_cntl & GMC_SRC_PITCH_OFFSET_CNTL
-+                          ? s->regs.src_pitch : s->regs.default_pitch;
-+        ctx->src_bits = s->vga.vram_ptr +
-+                        (s->regs.dp_gui_master_cntl & GMC_SRC_PITCH_OFFSET_CNTL
-+                        ? s->regs.src_offset : s->regs.default_offset);
+@@ -150,11 +153,13 @@ static void setup_2d_blt_ctx(ATIVGAState *s, ATI2DCtx *ctx)
+         ctx->src_stride = s->regs.src_pitch * ctx->bpp;
+         ctx->src_bits = s->vga.vram_ptr + s->regs.src_offset;
+     } else {
++        uint32_t src = s->regs.dp_gui_master_cntl & GMC_SRC_PITCH_OFFSET_CNTL
++                       ? s->regs.src_offset
++                       : s->regs.default_offset;
++        ATIMemRoute res = ati_mc_route(s, src);
+         ctx->src_stride = s->regs.dp_gui_master_cntl & GMC_SRC_PITCH_OFFSET_CNTL
+                           ? s->regs.src_pitch : s->regs.default_pitch;
+-        ctx->src_bits = s->vga.vram_ptr +
+-                        (s->regs.dp_gui_master_cntl & GMC_SRC_PITCH_OFFSET_CNTL
+-                        ? s->regs.src_offset : s->regs.default_offset);
++        ctx->src_bits = s->vga.vram_ptr + res.addr;
      }
      DPRINTF("%d %d %d, %d %d %d, (%d,%d) -> (%d,%d) %dx%d %c %c\n",
              s->regs.src_offset, s->regs.dst_offset, s->regs.default_offset,
-@@ -181,6 +199,7 @@ static bool ati_2d_do_blt(const ATI2DCtx *ctx, uint8_t use_pixman)
-     qemu_rect_intersect(&ctx->dst, &ctx->scissor, &vis_dst);
-     if (!vis_dst.height || !vis_dst.width) {
-         /* Nothing is visible, completely clipped */
-+        DPRINTF("entire blt clipped, nothing drawn\n");
-         return false;
-     }
-     /*
 -- 
 2.54.0
 
