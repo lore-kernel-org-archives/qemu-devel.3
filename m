@@ -4,61 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCBBFC4450A
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jul 2026 11:41:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 816ABC44521
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jul 2026 14:43:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlPtc-0004gF-Ao; Sun, 19 Jul 2026 07:41:24 -0400
+	id 1wlSjK-0004TX-TL; Sun, 19 Jul 2026 10:42:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wlPtS-0004fB-OZ; Sun, 19 Jul 2026 07:41:15 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>)
+ id 1wlSjJ-0004TK-Az; Sun, 19 Jul 2026 10:42:57 -0400
+Received: from mx1.catap.net ([162.55.82.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wlPtQ-0001CR-NJ; Sun, 19 Jul 2026 07:41:14 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 66JBf84F084532
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sun, 19 Jul 2026 20:41:09 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=re2NDzhAJ8YBB7tV5ZI+DAM2gHiHe9u+9x8UyrcSw4I=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1784461269; v=1;
- b=NzMquwbYlXjrKu9PAoGV2HF1UWrDRm3UJFmqqS6yTGPp+jCB+amETE/UgETDy0d9
- siHskOf6+L1kxTcbXY7aUiEtETcRNxzKEvN9sYdrnJvioNXQInd2euXpaDr6sEr/
- gozoFG+skixEWSiJCmgPS7OURN5LDmussfIwAS9GgKS9D0HybaPQVUpjXO4Nxck+
- 7N/b/HMnm55SaPlY0hY6nWikRwKxDxI5DSU5h/RGkHWV3OXJaL3S5ClKm2TQMO1N
- FMgtKuM7lF13DiQW9FOM9lQfapF+TeO+54KqA1Y7WB6e0ZyctZjTLiptZ2gHGygY
- oC1pT1k73pm4BICvWyHLhw==
-Message-ID: <dfacca0f-3532-4b2d-ad15-921f7e8f5776@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sun, 19 Jul 2026 20:41:08 +0900
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>)
+ id 1wlSjH-0003KM-8C; Sun, 19 Jul 2026 10:42:57 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=lvZiJKE
+ BDwnHjMKueWK2arO9oujjQBayJhihmkUHpnntQ0nCcBDsELtiezvIsmhtMZLM9aAh0/eAJ
+ 6/Y1SyN77nd0APQoLt4DCyV9OKicFNf62eT5djLtENTIo/fCss1Ch6OuGxgDT5Puoa8F5X
+ E004kKwYe6uODYbqDbO0IdgcjEru0AT1hY+XGD0y0xYKnvAJdm4xlaJbFTQgJEZDWuSBd1
+ NEFnGC1pHkSRu4jDzI60SJ3lcqfsrq9OgFLi3OuA6u2G6BDejv0FbETxeBSTy4bwr76w/Y
+ t3qZO1Ok58cP8uk4HaaHkSv7lESWAod4j5WvhYP9PGwlr6wDGbtMgDw==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=w
+ +QgTrgozqx2mqFhlOj3soekEXgWBP5LbuMq+6YYnyA=;
+ h=references:in-reply-to:
+ subject:cc:to:from:date:dkim-signature:dkim-signature; d=mx.catap.net;
+ b=wo5ChizuDcaO7THQczKB8nCqUMKS21g9lAdgJrswKqHQ+qpBaz2+5nEwhjjvweG7RhWf
+ NBxEC/tqPRvIyjnm/0f1V0lk6qkOyJWc03iQvWfG4GWoUZaR5iJKTarCvTXU8B5c9en6WG
+ B9jtKv7FExUmmsMrTZCGIh5kMqnGVXRYYzPscPxKDWaWtnCkS0KzqT4HAMwF7vpE9pBsnN
+ X03p9/vR6dqDVDr4QvdPFfTZHwUyuVQ9hrnyWyjkwCvXayetEy8ouqvYxXbDImu9XpCpZ/
+ IUmnjk1SaeFnocpj3IywPD2HHRNRcjIGLA+qIZRPOjL64x3Q6JZX5XgA0waYUPWg==
+ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
+ header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
+ header.b=sIMuSV/X; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=e54USCeP;
+ arc=none; iprev=pass; spf=none
+ smtp.helo=postmaster@matebook.home.arpa; spf=softfail
+ smtp.mailfrom=kirill@korins.ky
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=w+QgTrgo
+ zqx2mqFhlOj3soekEXgWBP5LbuMq+6YYnyA=; h=references:in-reply-to:
+ subject:cc:to:from:date; d=korins.ky;
+ b=sIMuSV/XJV1kPdmXBvpZoRAQ6pEtBQ
+ XWzEXKTJ+lrI9K9uddFbDYa0AA2uyKbfS1uDRVbeqJedGLq58c0OcZRz8iaT9uLC9jTIJQ
+ sJee7T//j325TnF3SOTirTAZMv5C+UEM9wIvWf/H5UUhrsrM/sYTZhziaF1HmObjAc2JHi
+ 9TigsTKupw/dBiz14jiXMZrdB/69yZ3EQcYnCilyyZYr6bqOJjPskuAUgBpYAppbpBwgk7
+ NHcMTg1bIp7oObJtF/B26eueoKWxffBTK4sbubDdY0P2Xdx+n158GEZOytVCz1Cg1mNgBQ
+ D5rVNA1rYk6PNH5E0mEW8+tuf8/gF55A==
+DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
+ bh=w+QgTrgozqx2mqFhlOj3soekEXgWBP5LbuMq+6YYnyA=; h=references:
+ in-reply-to:subject:cc:to:from:date; d=korins.ky; b=e54USCePONld0PfawN
+ C/lNUpOySEv+D2lNDFBOpiotxAc9hjImJE+SE2aF6C9GAzgqm7Ktpqx4hUZZWF8AgzCg==
+Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id 0840d681
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Sun, 19 Jul 2026 16:42:49 +0200 (CEST)
+Received: by matebook.home.arpa (OpenSMTPD) with ESMTP id e4f46a35;
+ Sun, 19 Jul 2026 16:42:47 +0200 (CEST)
+Date: Sun, 19 Jul 2026 16:42:47 +0200
+Message-ID: <87qzkzujko.wl-kirill@korins.ky>
+From: Kirill A. Korinsky <kirill@korins.ky>
+To: Shivang Upadhyay <shivangu@linux.ibm.com>
+Cc: adityag@linux.ibm.com, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ npiggin@gmail.com, harshpb@linux.ibm.com, milesg@linux.ibm.com,
+ rathc@linux.ibm.com, brad@comstyle.com
+Subject: Re: [PATCH v3] powernv: boot OpenBSD on POWER9
+In-Reply-To: <01f03069db4b48499c0f138e8afa9b0971e863b4.camel@linux.ibm.com>
+References: <20260702130152.89334-2-kirill@korins.ky>
+ <a52771d5-0179-48de-a0e3-eac95192b789@linux.ibm.com>
+ <871pdkmdd3.wl-kirill@korins.ky>
+ <01f03069db4b48499c0f138e8afa9b0971e863b4.camel@linux.ibm.com>
+User-Agent: Wanderlust
+Mail-Followup-To: shivangu@linux.ibm.com, adityag@linux.ibm.com,
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ npiggin@gmail.com, harshpb@linux.ibm.com,
+ milesg@linux.ibm.com, rathc@linux.ibm.com, brad@comstyle.com,
+ "Kirill A. Korinsky" <kirill@korins.ky>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [GIT PULL 00/15] Various UI/security-related fixes for 11.1
-To: Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
-References: <20260717-fix-v1-0-cb9f7d49dc52@redhat.com>
- <a6f014be-7f31-4f53-a3f4-9b1ea437d7e7@tls.msk.ru>
- <a12f0dfc-2487-4ff9-be0b-149451e80032@rsg.ci.i.u-tokyo.ac.jp>
- <CAJ+F1CJe4Xci2wfRXg3umPw+cEb9vO9XPDDopiS8Xa9+ajaeHw@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <CAJ+F1CJe4Xci2wfRXg3umPw+cEb9vO9XPDDopiS8Xa9+ajaeHw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=162.55.82.72; envelope-from=kirill@korins.ky;
+ helo=mx1.catap.net
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,82 +104,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/07/19 17:07, Marc-André Lureau wrote:
-> Hi
+On Mon, 06 Jul 2026 10:36:57 +0200,
+Shivang Upadhyay <shivangu@linux.ibm.com> wrote:
 > 
-> On Sun, Jul 19, 2026 at 11:51 AM Akihiko Odaki
-> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->>
->> On 2026/07/19 16:33, Michael Tokarev wrote:
->>> [Resending with the correct email of Akihiko Odaki, please excuse the
->>> duplicate]
->>>
->>> On 7/17/26 14:52, Marc-André Lureau wrote:
->>>
->>>> Various UI/security-related fixes for 11.1
->>>>
->>>> ----------------------------------------------------------------
->>>> Akihiko Odaki (3):
->>>>         ui/gtk: Narrow DMA-BUF critical section
->>>>         hw/display/virtio-gpu: reject strides exceeding INT_MAX
->>>>         hw/display/virtio-gpu: Check pixman_image_create_bits() results
->>>>
->>>> Marc-André Lureau (12):
->>>>         i386/tdx: fix uninitialized variable warning in tdx_check_features
->>>>         ui/vnc: fix OOB write in vnc_refresh_lossy_rect
->>>>         ui/vnc: validate color shifts in SetPixelFormat
->>>>         ui/vnc: use RFB wire types for client message handlers
->>>>         ui/input-barrier: fix off-by-one in keycode bounds check
->>>>         ui/vnc: fix out-of-bounds write in lossy refresh dirty marking
->>>>         ui/vnc: validate SetPixelFormat field ranges
->>>>         hw/display/virtio-gpu: fix dmabuf_fd leak on remap failure
->>>>         hw/display/qxl: fix TOCTOU in cursor chunk data_size handling
->>>>         hw/display/virtio-gpu: validate stride against width on scanout
->>>>         hw/display/virtio-gpu: cap submit_3d command buffer allocation
->>>>         hw/display/virtio-gpu: handle migration iov allocation failure
->>>
->>> Hi!
->>
->> Hi Michael, Marc-André,
->>
->>>
->>> Is there anything in there which should *not* go
->>> to the stable qemu series?
->>> (besides fixes for code which is not in releases, if any)
->>>
->>> It feels like everything in this pullreq should be picked up
->>> for qemu-stable.
->>
->> The hw/display/virtio-gpu patches are generally good for stable, with
->> one exception:
->>
->> "hw/display/virtio-gpu: validate stride against width on scanout"
->>
->> This patch doesn't account for the late feedback I sent here:
->> https://lore.kernel.org/qemu-devel/ec997fca-6dc4-4268-9269-0e4be676b0fb@rsg.ci.i.u-tokyo.ac.jp/
->>
->> Marc-André: My apologies for the timing, but please check the linked
->> thread.
->>
+> On Fri, 2026-07-03 at 15:06 +0200, Kirill A.Korinsky wrote:
+> > I have no idea why OpenBSD does it but I see in powerpc64's pmap.c:
+> > 
+> > #define PATMEMSZ	(64 * 1024)
+> > #define PATSIZE		(ffs(PATMEMSZ) - 12)
+> Hi,
 > 
-> Tampering with migration stream is still being discussed, in the
-> meantime the patch fixes malicious guest gpu usage. Can you send a
-> follow up patch?
-
-I sent one:
-https://lore.kernel.org/qemu-devel/20260719-bpp-v1-1-9b91946d6cf3@rsg.ci.i.u-tokyo.ac.jp/
-("[PATCH] hw/display/virtio-gpu: Remove the bytes_pp field")
-
+> This seems like a bug in openbsd to me.
+> PowerISAv3.1 under PTCR says,
+> 	
 > 
->> Michael: You may holding off on that specific patch for qemu-stable
->> until we clear up that edge case, but at least it's not harmful. I think
->> my patches and the other virtio-gpu patches are ready.
+> 	4:51 PATB  | Partition Table Base
+> 	59:63 PATS | Partition Table Size=2^12+PATS , PATS≤24
+> 
+> I think the developer was perhaps wanted a LOG2 functions instead of
+> ffs (which is just LOG2, but 1-indexed). IMO, this should better
+> handled on OS side.
+> 
 
-One correction: we need to apply "hw/display/virtio-gpu: validate stride 
-against width on scanout" and the follow up patch at the same time. 
-Otherwise we will have a user of the bytes_pp field, which the follow up 
-patch drops.
+Thanks, OpenBSD was fixed:
 
-Regards,
-Akihiko Odaki
+https://marc.info/?l=openbsd-cvs&m=178436960888757&w=2
+
+I'll send new version of original diff shortly.
+
+-- 
+wbr, Kirill
 
