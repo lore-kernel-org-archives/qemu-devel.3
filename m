@@ -4,90 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81037C4450A
-	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jul 2026 21:20:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D64E1C4451B
+	for <qemu-devel@archiver.kernel.org>; Sun, 19 Jul 2026 21:22:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlYvG-0007XH-OT; Sun, 19 Jul 2026 17:19:42 -0400
+	id 1wlYy3-0000of-55; Sun, 19 Jul 2026 17:22:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wlYvF-0007Vn-3j
- for qemu-devel@nongnu.org; Sun, 19 Jul 2026 17:19:41 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1wlYxy-0000nd-TG
+ for qemu-devel@nongnu.org; Sun, 19 Jul 2026 17:22:31 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wlYvD-0006pn-KX
- for qemu-devel@nongnu.org; Sun, 19 Jul 2026 17:19:40 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4954dff6536so12327815e9.0
- for <qemu-devel@nongnu.org>; Sun, 19 Jul 2026 14:19:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1wlYxx-0007Il-8U
+ for qemu-devel@nongnu.org; Sun, 19 Jul 2026 17:22:30 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2ccdb73f0e1so53916245ad.3
+ for <qemu-devel@nongnu.org>; Sun, 19 Jul 2026 14:22:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784496146; cv=none;
+ d=google.com; s=arc-20260327;
+ b=jSbUGNHKjQAZR94o2YNh7dZ+rT+5L01HIWTMZlbYIjNpFxqEbpZEcYlDruF9DN2uNy
+ 6B2EK1Hkby01+2kGfpGvsn2DBt7QJIjHSfNJ9yWaS++p83yH+ELcJ6gGFdN+dt6tHknO
+ eaLf2pqsUMJ5z9a8x5XWSWQiODlQtobuQqJO7ZgXgFrlD9zn3ocA57pht/YWuP+e5rBV
+ IZjgSrcwJXuFXYaWl8X+L2erdyiisSnXGn7a57/qQNT9yYrsclKxpl9DSMPY28Sj1xq8
+ hK8b36avOYkgmQJ0Nt+bEbTSMV6dA+FbVT0IHlpq8cfba50k3hnuuVbv1P1PWxMzq3GS
+ zm3A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=CuU8qJPy95WIyMZfrstdxP8ocKoCxNdcr2uMXoVVX1M=;
+ fh=JuLQCNmMiksbImbnJAcswwnmIBEA9QO04KFWdo98ljw=;
+ b=S2ToVNiYOceyy93zB0vGe32i2+RFwHsLgFCueik/oypUsSeEYPjfYChY/OFLTkV4KO
+ dnyMJw9gjA4Hhw7zYShthtXS6PiBTqNB5hVKjJ7dBXZSHqCAq/dQIEt0NvHFuI5C6e1p
+ tfVu9ClxYXeEyR9Ddwf74mrSlw4AL8hidepMNUSsj2QoOc1hgKvBhgQNWsh6OknDiUNu
+ lIVaRgB+3A4iVtPcY1e6mWTBllRVdNsy4BxlyWSgPaDoAX1Mjf5Ylx6+E9mQnB/vv+q/
+ WsiHQYHNuuysoRZUq9yZJBqH0revUPUF9VsM7qBZdfO67LxdHx5sPE7ZbjREAq0rjBTL
+ j9+Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784495977; x=1785100777; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=c7xQW0Y2c2Ttvhuy3nxoGn0GEZdics6zlvTb6qkTGRA=;
- b=QeDpfyCNG65BGoQfL9W7iQ9CbrPytC0sCp7CKS0RLs/DXSluBtsfgNgvsAYaQmMgLr
- /4D923B4fP25qir18G95gP7kMZq9SZorclYAJdw6QiUVwgB5I7AE+vAlrsXbdxbOCuSN
- FjLCEBBYdRTXhQ4cwn5cMTmDFfpNC02HZriJDWYz5iWU0DW8xryDD1J2v6n0GJQX22mD
- fn6iMMHBhs/ppEqn2i7bDALlDRvHbMNA43dj1OL+7mksa0NfEXNfpzC7VkWN5Zyw2tUW
- kqPBYcg+NdfkUUCa4BXBy0A3XrS+EgUhhx+Xl1ABph2NUH29fuHrv0SIPRRL3T6iMtI9
- P35g==
+ d=gmail.com; s=20251104; t=1784496146; x=1785100946; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=CuU8qJPy95WIyMZfrstdxP8ocKoCxNdcr2uMXoVVX1M=;
+ b=NxRPnSd6lQOVaHrHpl/S9OBUoD3fogTfo2Yd/DVo/eFkY6lnyKTvaf8dPJGxk6+CqA
+ f1murvfbuiwAguNB0Z3AV8jEA9lq/6dVWneLaw2T4PdBL6WWwp/U7QFVGiSn4sBe6Gzq
+ PyB2/A/97uLbugUa5JRf+GY5hZKlLuhWcBR5p9b5CYenFEpvmxU7KV3Mk3ZXELcWXXyo
+ kj9AYPVNUgEK+xne+TGcVo10itVdaQWQ0MGJ+HWgXYbz4dpA3TW2YFiKL8Or6q/wwfgo
+ 96f6O4szbPlFI/RY/Hp8F47pwcB1LScYKAOnDFNmVQBdlwzacJQDSWalWFI8tg/ma6n8
+ Kt3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784495977; x=1785100777;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=c7xQW0Y2c2Ttvhuy3nxoGn0GEZdics6zlvTb6qkTGRA=;
- b=Cnf+kh6rAqJi7SXBp03bYk5/QLcDxFUWizkAdAIVBRYH94PUaOPy5a74CWyOnxwyHJ
- muvbP5ok5lmq3CBlmDfSyHapw4kwZKEpcUcJUktNBIsjJUrB+NXmJo9GZ1dBJHT9QREV
- 1oa/E8Fk1BJGedmZODaEQzz1HWaO8RyFwGdzMmvtH3tJVgnhE9sBZ0P8AW9Lm6rI7hkY
- gkf0KipFjz1Arv+F/TrVNtZ83J3yyPPSNdHmahnvuYAbBtw6sIzA8VEPEdF/vyx4+HsZ
- wX65EbgJCsH8TbkFj7ADoulb4UCH9DOTtM0gcBu/VWvwkjD1/Kgh/Ccmt9tWn8WKWYrd
- cWFg==
-X-Gm-Message-State: AOJu0Yy7XoOgbzq72uyOiMPwyw2ck/n3rybpyANRiDYG6tp3uwblXwJQ
- dBXIutNOpm3Q6qN3QnXjvfnzhcdtoEHIT5peZHtJEcv50JmVIQUHQBxhzjJLkQ==
-X-Gm-Gg: AfdE7clxYYfU+Wz6cEnhazvX7aig6WN1VlxSxjKFeOvjqo5P0oqNNy0dD0ZuhVtjEmc
- gGaM77F/RnNerJYOedZYJRi34nUK1fgoAtqSNHBCKd5jBsLODLlkAXmszrU6juUs76RJZqlpxQT
- yxRlgNEVEJYoG2TSZFV4TUfoxk+AEvXswEWxx061thj5nhXaMMhpMVST8arMic1l6fa7rXG7D/k
- mcA6bsk5ZFD0bXH83wzmygGgic+mJtQfp5SFuBN4GjddQf/0+uL7Sl6RLGg+f4S2f7InP+HAZ2h
- hw9ttvoA3ju4gQkuPndbruhTIOmtLsN9fZUpqHj36COkq820tHWoDpKKn66Pd7OcWZWBQAGnBZ2
- eyauLOGng7VXOe/+H/cNi90eWW5AmEZRx3yCYc1A7BTjpT0K2lNYxcWQTia9BqtVSnGFNVBm+eO
- eq+0V/yZZPQPFFurocXD1me/K3PX0U5mrRlbG2Y4NpD2WVYOD+3pHf5H4hs+FK4q0JLi+8+IIbX
- nrVa/X6YS1Aftt7bCebeCjbaYHD7sdlokYi
-X-Received: by 2002:a05:600c:3b91:b0:490:c6c2:52 with SMTP id
- 5b1f17b1804b1-4954a3d0065mr154286965e9.3.1784495976828; 
- Sun, 19 Jul 2026 14:19:36 -0700 (PDT)
-Received: from Provence.localdomain
- (dynamic-2a02-3100-1c56-1500-0219-99ff-feb2-2458.310.pool.telefonica.de.
- [2a02:3100:1c56:1500:219:99ff:feb2:2458])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4954a2a24b6sm234235155e9.3.2026.07.19.14.19.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 19 Jul 2026 14:19:36 -0700 (PDT)
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Bin Meng <bmeng.cn@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- qemu-block@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
- Christian Speich <c.speich@avm.de>
-Subject: [PATCH 1/2] hw/sd/sd: Fix error case for CMD18
-Date: Sun, 19 Jul 2026 23:19:22 +0200
-Message-ID: <20260719211923.1079282-2-shentey@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260719211923.1079282-1-shentey@gmail.com>
-References: <20260719211923.1079282-1-shentey@gmail.com>
+ d=1e100.net; s=20251104; t=1784496146; x=1785100946;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=CuU8qJPy95WIyMZfrstdxP8ocKoCxNdcr2uMXoVVX1M=;
+ b=bKZ10kreUPRBVpZNp4nlUrqa4sMaBWiSJwYj0ktSCm72Eo/jzMhNU8Sq5M8Qgu0Awl
+ wnxCcNyK6PNP4nEjS/TTYDsETrQwoBS6tYIyjWBpfo2O+E7eYfNMDHcFgeLG6jjVJK1A
+ 28jpUbJEs0aXirkifORiww2Z7xS8GmVMRB8b5OZnnaZWzdz5PvYMfl37Mlo45GIX26DG
+ V2BfWZbURI76KLYZF/V2RwEk/xOw0hx5GLkl+t5LuaBqm0ajWfY3thaYza2jHrmU4eq5
+ iYebM4e1VpsqbQeHOx4267F1q2esWEDhvry/mC5iDNeFpOy/u+TcWyAvyydnQFtrLyHn
+ hPIw==
+X-Gm-Message-State: AOJu0YyLhUus7e/8yweA3Z+nZ2EU3sF0CcjTWoon/zO48bamIMy5obK4
+ P8qCUu+Y43ydUN1zvBabJZBaj9eGaUo1QqGK5Ngzu9bSCvu4PKIUduRHzbonxx9PLPCY2gcrsm4
+ ENnxhIKee/ked8Mb65Yp0rqPJUMsk7Gs=
+X-Gm-Gg: AfdE7clkWexRp0jXAoiOLqs8FYJ0cJ4zkaThtcXkpyWe+oRXLMQC+YU6/KfI7XoR7VY
+ uB/quMmyRBj1iotsd++lucNsoSApplMri5nBZg7+pN6YLCzzxwMDHCuhuShnORQMMQm9hMlN3q1
+ HKvkBdB2UEBg0SJ3S7p3bslmT0etpsNt72jRestu3i6SpKxth/NIyZiN8Vh/YG5JyYKazDrgBfC
+ s5qwpqxBNBEZDvYn1HUNarvQ2xxRVTuxJ0ty0yQAGMy0rvWUFlWjUXz67jDmUbTr2OlNApXZ6oX
+ WqSEH3NAb8IFNjFXAw==
+X-Received: by 2002:a17:903:440c:b0:2ca:1594:451e with SMTP id
+ d9443c01a7336-2cf3496b583mr132868965ad.31.1784496146450; Sun, 19 Jul 2026
+ 14:22:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x32c.google.com
+References: <20260715185701.1287176-1-brian.cain@oss.qualcomm.com>
+ <20260715185701.1287176-2-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260715185701.1287176-2-brian.cain@oss.qualcomm.com>
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+Date: Sun, 19 Jul 2026 15:22:15 -0600
+X-Gm-Features: AUfX_mwSNz86-DlifFQGwvVzpZiUYXFjL_GLk9dADDnUwINYPh1At1EUgkxQbPQ
+Message-ID: <CAATN3NrUvUQGhiynN2j33T-YHCAr8ZWuUKsRbm6p2u=-pMNMcA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/7] target/hexagon: initialize deferred sreg-write
+ temps to current value
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, philmd@oss.qualcomm.com, 
+ pierrick.bouvier@oss.qualcomm.com, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ peter.maydell@linaro.org, matheus.bernardino@oss.qualcomm.com, 
+ Thomas Huth <th.huth+qemu@posteo.eu>, Laurent Vivier <lvivier@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>
+Content-Type: multipart/alternative; boundary="000000000000e98d7b0656fd6278"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,39 +121,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In commit 468fa450a7e0 ("hw/sd: Switch read/write primitive to
-buf+len"), `sd_read_byte()` changed its contract to return the read size
-rather than the read value (and was renamed to `sd_read_data()`
-accordingly). In an error case, however, `sd_read_data()` returns 0 by
-means of `dummy_byte` which is the code for the old contract. Moreover,
-`sdbus_read_data()` asserts the virtual method `read_data()` (and thus
-`sd_read_data()`) to return a non-zero size, i.e. to make progress and
-not loop forever. Fix the code to behave like the "DAT read illegal for
-command" case.
+--000000000000e98d7b0656fd6278
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Fixes: 468fa450a7e0 ("hw/sd: Switch read/write primitive to buf+len")
+On Wed, Jul 15, 2026 at 12:57=E2=80=AFPM Brian Cain <brian.cain@oss.qualcom=
+m.com>
+wrote:
 
----
-cc: Christian Speich <c.speich@avm.de>
----
- hw/sd/sd.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+> Unconditionally allocate and initialize the temp to the sreg's current
+> value for every logged sreg write, rather than only allocating
+> when need_commit is set or the register is SSR.
+>
+> Without this, reading a deferred sreg write within the same packet
+> before it is committed can observe an uninitialized temp instead
+> of the register's pre-packet value.
+>
 
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 3360757004..a30c541df0 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -2860,7 +2860,8 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
-         if (sd->data_offset == 0) {
-             if (!address_in_range(sd, "READ_MULTIPLE_BLOCK",
-                                   sd->data_start, io_len)) {
--                return dummy_byte;
-+                *value = dummy_byte;
-+                return length;
-             }
-             partition_access = sd->ext_csd[EXT_CSD_PART_CONFIG]
-                     & EXT_CSD_PART_CONFIG_ACC_MASK;
--- 
-2.55.0
+Do you have an example where this happens?  I searched the code and only
+found references to t_sreg_new_value guarded by ctx->need_commit except
+gen_sreg_writes which should have an early exit if ctx->need_commit is set
+(similar to gen_reg_writes).
 
+The special handling of SSR could be cleaned up.  Consider making writes to
+SSR set ctx->need_commit.
+
+Also, consider creating a function similar to get_result_gpr to centralize
+all the checking (e.g., in gen_log_sreg_write).
+
+
+>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  target/hexagon/translate.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+>
+> diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+> index 77235916f4b..28a171bf623 100644
+> --- a/target/hexagon/translate.c
+> +++ b/target/hexagon/translate.c
+> @@ -615,9 +615,10 @@ static void gen_start_packet(DisasContext *ctx)
+>      }
+>      for (i =3D 0; i < ctx->sreg_log_idx; i++) {
+>          int reg_num =3D ctx->sreg_log[i];
+> -        if (reg_num < HEX_SREG_GLB_START &&
+> -            (ctx->need_commit || reg_num =3D=3D HEX_SREG_SSR)) {
+> +        if (reg_num < HEX_SREG_GLB_START) {
+>              ctx->t_sreg_new_value[reg_num] =3D tcg_temp_new();
+> +            tcg_gen_mov_tl(ctx->t_sreg_new_value[reg_num],
+> +                          hex_t_sreg[reg_num]);
+>          }
+>      }
+>      for (i =3D 0; i < NUM_GREGS; i++) {
+> --
+> 2.34.1
+>
+>
+
+--000000000000e98d7b0656fd6278
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Jul 15,=
+ 2026 at 12:57=E2=80=AFPM Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.q=
+ualcomm.com">brian.cain@oss.qualcomm.com</a>&gt; wrote:<br></div><blockquot=
+e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
+olid rgb(204,204,204);padding-left:1ex">Unconditionally allocate and initia=
+lize the temp to the sreg&#39;s current<br>
+value for every logged sreg write, rather than only allocating<br>
+when need_commit is set or the register is SSR.<br>
+<br>
+Without this, reading a deferred sreg write within the same packet<br>
+before it is committed can observe an uninitialized temp instead<br>
+of the register&#39;s pre-packet value.<br></blockquote><div><br></div><div=
+>Do you have an example where this happens?=C2=A0 I searched the code and o=
+nly found references to t_sreg_new_value guarded by ctx-&gt;need_commit exc=
+ept gen_sreg_writes which should have an early exit if ctx-&gt;need_commit =
+is set (similar to gen_reg_writes).</div><div><br></div><div>The special ha=
+ndling of SSR could be cleaned up.=C2=A0 Consider making writes to SSR set =
+ctx-&gt;need_commit.</div><div><br></div><div>Also, consider creating a fun=
+ction similar to get_result_gpr to centralize all the checking (e.g., in ge=
+n_log_sreg_write).</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" =
+style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
+dding-left:1ex">
+<br>
+Reviewed-by: Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@oss.qu=
+alcomm.com" target=3D"_blank">pierrick.bouvier@oss.qualcomm.com</a>&gt;<br>
+Signed-off-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com=
+" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
+---<br>
+=C2=A0target/hexagon/translate.c | 5 +++--<br>
+=C2=A01 file changed, 3 insertions(+), 2 deletions(-)<br>
+<br>
+diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c<br>
+index 77235916f4b..28a171bf623 100644<br>
+--- a/target/hexagon/translate.c<br>
++++ b/target/hexagon/translate.c<br>
+@@ -615,9 +615,10 @@ static void gen_start_packet(DisasContext *ctx)<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0 =C2=A0 =C2=A0for (i =3D 0; i &lt; ctx-&gt;sreg_log_idx; i++) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0int reg_num =3D ctx-&gt;sreg_log[i];<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (reg_num &lt; HEX_SREG_GLB_START &amp;&amp;=
+<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (ctx-&gt;need_commit || reg_num =
+=3D=3D HEX_SREG_SSR)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (reg_num &lt; HEX_SREG_GLB_START) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ctx-&gt;t_sreg_new_value[re=
+g_num] =3D tcg_temp_new();<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 tcg_gen_mov_tl(ctx-&gt;t_sreg_ne=
+w_value[reg_num],<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 hex_t_sreg[reg_num]);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0 =C2=A0 =C2=A0for (i =3D 0; i &lt; NUM_GREGS; i++) {<br>
+-- <br>
+2.34.1<br>
+<br>
+</blockquote></div></div>
+
+--000000000000e98d7b0656fd6278--
 
