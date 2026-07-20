@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B398C44521
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 07:56:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3D51C44524
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 07:57:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlirU-0003ee-JT; Mon, 20 Jul 2026 03:56:28 -0400
+	id 1wlirP-0003d6-DA; Mon, 20 Jul 2026 03:56:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wlirT-0003e2-7f
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 03:56:27 -0400
+ id 1wlirO-0003Yd-Al
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 03:56:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wlirR-0006kL-S3
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 03:56:26 -0400
+ id 1wlirL-0006jq-Pc
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 03:56:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784534185;
+ s=mimecast20190719; t=1784534179;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5QTOvl8AY8NN1PStmYWdJeZDvzMfZigdv0pXiWXClfA=;
- b=H4jciwD9x26wAq8zFhGgeBT020uLXcy1HRsGXK/3bY7bfcUDKhwmyUAld70beK9+SYgDvP
- pLWyN3gPhoUrx+4y7e5AgFab/9uNp0Da9938pikSrblLmaz+WJkBlnlXSnWdwYIhZbix2V
- DUPX8zFhFk3peLsmLZt0UPrJGLOqibg=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=COHT7p/iqsTdPamcZicw3oA4ocmXtjDA5E14rv82Tas=;
+ b=dE1oyd43t6NRm7CdJ0494aNUwuoLcfGDch+Iasrb4m5N8+ty0MryUdpHxCJwhVGN9Ibyx1
+ HNU33IE3oN7mTeXi/+nRo3ODTx47dvEAMrk3w7egKgwYclXmavvij1dzH5JLwH7D0d51oz
+ fjZDrFALUfcxzKDghD0n7PqLvaeFU/Q=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-423-z8nqN9IpM2Kmb4j07aKHRg-1; Mon,
- 20 Jul 2026 03:56:21 -0400
-X-MC-Unique: z8nqN9IpM2Kmb4j07aKHRg-1
-X-Mimecast-MFC-AGG-ID: z8nqN9IpM2Kmb4j07aKHRg_1784534179
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-329-1ephcCtmPOaVdVcRD1KrdA-1; Mon,
+ 20 Jul 2026 03:56:15 -0400
+X-MC-Unique: 1ephcCtmPOaVdVcRD1KrdA-1
+X-Mimecast-MFC-AGG-ID: 1ephcCtmPOaVdVcRD1KrdA_1784534174
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7FE43195C267; Mon, 20 Jul 2026 07:56:19 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A9EA41944EAB; Mon, 20 Jul 2026 07:56:13 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.17])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 906E930002D6; Mon, 20 Jul 2026 07:56:17 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6F35E1955F73; Mon, 20 Jul 2026 07:56:10 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 20 Jul 2026 11:55:32 +0400
-Subject: [PATCH 3/8] io: add missing coroutine annotation
+Date: Mon, 20 Jul 2026 11:55:31 +0400
+Subject: [PATCH 2/8] migration: fix qemu_get_counted_string annotation
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260720-co-v1-3-fabb4db3c204@redhat.com>
+Message-Id: <20260720-co-v1-2-fabb4db3c204@redhat.com>
 References: <20260720-co-v1-0-fabb4db3c204@redhat.com>
 In-Reply-To: <20260720-co-v1-0-fabb4db3c204@redhat.com>
 To: qemu-devel@nongnu.org
@@ -72,24 +72,24 @@ Cc: Markus Armbruster <armbru@redhat.com>, Peter Xu <peterx@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
  xen-devel@lists.xenproject.org, Li Zhijian <lizhijian@fujitsu.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1375;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=799;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=0uczZ0FGO8LAP5viyGHp+/jxtNxL630HdwYtMufZx5w=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqXdSJR+JAKejvppC4K18+1jyEdnxLV+7l5FH4d
- bj0E9E18KWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCal3UiQAKCRDa6OEJdZac
- 5SpTD/sEFsZvOhVNETpyJacq1WDjsQwhdf6vVRDTle6EPuCTnI0qNdl+pJJuAjRq4OXzlExwWkw
- 38rosD1s5i54gl1cfM7H84MjiRUM9o7BwCenABwGJ2G8aQ2rh0oPRyhp6wezlsB3aNdi515bqln
- NhVNh+DxLRNf7aszVouX1zTNvEC0I1RX2dcUAwq/dIMPZeccIpIzoxX44GomuVjE3mcNNmioBCL
- oJGmog+loSSa/zDjEGkBsAvohWF+1wGArD5cACn2Ylkp7zZ032f7dK9fyqtv86R0/VfYAZX2LHn
- TvN5BGICiE3ZBOyaZGWuJ0lwL5jqDTh41ajF8a/tNkfvY3mG7Xjyc+Js0L9/uXUKfeN2I1nWBvG
- 9Cv9acyi4lp0swyUgdtDLAxsWuKI6es1t7Bx8LNm4w+JretscHcwO3lHOzUkWdMBd01RAq9SGz2
- NSjZUG/OtlIEtKeb5tBr7GXrUDNb8hoxaGI6yy6M2Yf0OyTYYMVmbu8baeWI8VH4FwL7syDmyk9
- w2OgH+Pqm0mFiOFbw63hF944tNW96l6qrPIo6bfcJTFK8jWo6S6nW+s0sORab94LTXqG7rQaB9b
- hSCbNoXPe949y+hV67xrIJ/bqFXFGkVvGPzDbbZ+VmGVkbuEqdbV8SzLFvtNdjDQXuSs8rloSGM
- MZKUhjzwKJNzReQ==
+ bh=N6+L/HnMPoOeFVHLSkUq4poAfMYUnwCM4couCI5iOrU=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqXdSJlx+ej+bpFQ3bSPwwRWhu1sAyEaprMReIu
+ r6EYhcqf5uJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCal3UiQAKCRDa6OEJdZac
+ 5RAIEACPwUGNBa4OSzulBfcHmirufW7Q9ZWtVD8WRKl4QUwYh0x8Vw0wi8AIy8fzd4vXzHG+9SU
+ iuJwNvxODCPewrohwvuzDEFNhfj/d80OL7s1wW4zuYWr3mt3I48r0HpBZrG6GFx/fh+JKh/lV9V
+ yHM74KG/iXF33Qf21gOX2aw/KCFAfGjQ+YgMRf8j55j3uoZOV4rA4KEho/PctuD0xF8GPfRLBUa
+ V4gpAf8InyTVps3Qj068taPoy3njqHXwytycp4WeAG5Cr3DG4QP20zkw2ufPGebXcbm9WlkW8Kj
+ lANa4PkcYh8h6j6oWGX6Tp27ajZeemLSXckz0ZtPS1cVcoWquGHMHe+fBJMisXqkkRawGqShLQ0
+ 9aajHGOdymqfU7zpvfYOKwyhW9YuCLeZ1am7ukvgliGx0pa5mAVUARArVHBV8XY2Wg2Rao3IPFs
+ a9TW6Y5biJGr3YAKMD6SkBXZzq+86hHy/LFyOw8G0iMixpfLkvb7L3yROPwHKC53pa+xUIIfEkZ
+ SA6L6R04xlo7Pyt5ShqF80J3DWQjzHwmr5tgOOjiAXaP6HLGUimlycrzPfKsC0hEEGdvVzzmtSK
+ qxwC2l46fIJFl/BebrwRX2f81u5r8fg9dW767+2Wb9FQ8HUHoxPKpKXBDAfBPHEhPX6Ufv1LWIi
+ NwJ4kSn5fS9vNnQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: permerror client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -115,44 +115,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fixes: 1edf0df28409 ("io: Add qio_channel_wait_cond() helper")
+Fixes: 394b9407e4c ("migration: mark mixed functions that can suspend")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/io/channel.h | 4 ++--
- io/channel.c         | 5 +++--
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ migration/qemu-file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/io/channel.h b/include/io/channel.h
-index 98485c9280a..c90ace20d53 100644
---- a/include/io/channel.h
-+++ b/include/io/channel.h
-@@ -1016,8 +1016,8 @@ void qio_channel_wait(QIOChannel *ioc,
-  * This will work with/without a coroutine context, by automatically select
-  * the proper API to wait.
+diff --git a/migration/qemu-file.c b/migration/qemu-file.c
+index d5a48115bd6..f30e13c66d7 100644
+--- a/migration/qemu-file.c
++++ b/migration/qemu-file.c
+@@ -830,7 +830,7 @@ uint64_t qemu_get_be64(QEMUFile *f)
+  *          else 0
+  *          (Note a 0 length string will return 0 either way)
   */
--void qio_channel_wait_cond(QIOChannel *ioc,
--                           GIOCondition condition);
-+void coroutine_mixed_fn qio_channel_wait_cond(QIOChannel *ioc,
-+                        GIOCondition condition);
- 
- /**
-  * qio_channel_set_aio_fd_handler:
-diff --git a/io/channel.c b/io/channel.c
-index 2853dadb684..620256f310d 100644
---- a/io/channel.c
-+++ b/io/channel.c
-@@ -905,8 +905,9 @@ void qio_channel_wait(QIOChannel *ioc,
-     g_main_context_unref(ctxt);
- }
- 
--void qio_channel_wait_cond(QIOChannel *ioc,
--                           GIOCondition condition)
-+void coroutine_mixed_fn
-+qio_channel_wait_cond(QIOChannel *ioc,
-+                      GIOCondition condition)
+-size_t coroutine_fn qemu_get_counted_string(QEMUFile *f, char buf[256])
++size_t coroutine_mixed_fn qemu_get_counted_string(QEMUFile *f, char buf[256])
  {
-     if (qemu_in_coroutine()) {
-         qio_channel_yield(ioc, condition);
+     size_t len = qemu_get_byte(f);
+     size_t res = qemu_get_buffer(f, (uint8_t *)buf, len);
 
 -- 
 2.55.0
