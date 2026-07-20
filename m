@@ -4,62 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBA63C4452B
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 14:38:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C44FC4452A
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 14:38:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlp86-0003y9-Ny; Mon, 20 Jul 2026 10:38:02 -0400
+	id 1wlp82-0003li-3R; Mon, 20 Jul 2026 10:37:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wlp3b-0001wW-ID
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 10:33:28 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wlp3J-0001sp-1P
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 10:33:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wlp3Z-0002fR-Cm
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 10:33:23 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wlp3H-0002dx-Fn
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 10:33:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784558000;
+ s=mimecast20190719; t=1784557982;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UGWHelquemiDD5NLCvYR1AkBolWYwsAixwbTYXmasbU=;
- b=FflsmWnEx8g9nmZ+GrPzmDVZIYm8gpkgrxupO4GHCmo+6kwvsFU8Ulac79hDIldpcDQF3i
- frz/xqmu7d4XYptXQ6GHu3CW9TGFwYxN2C10UlzFYo5qS9WvJ7SXHUxbigbmPZ4NbsBGns
- XOapo51OX6XF/nrqFa7iSmqUShUUvPw=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=hy2YLW/gLMo797VszhQ6PHzzCHyjlqdKcsagTuGlT/4=;
+ b=Vl+ArHhcyJ0AU4K9S6rih9vs+/GE5BaS44MzFystrWOQkMc/mRfmQxNtEsnsidLe5QQn3s
+ z5IPgNjzlj3zE0YS/ah9Q3tp6zIcUh+XRk62cdaLJ7MNyDfv6eK52bHkh9PrQtmUlpkm9w
+ vjo7ujzp9PNSNMuTXE1GLtaKdDK9vA4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-541-72NoIh1ZMPu3KNwuKuCErA-1; Mon,
- 20 Jul 2026 10:33:19 -0400
-X-MC-Unique: 72NoIh1ZMPu3KNwuKuCErA-1
-X-Mimecast-MFC-AGG-ID: 72NoIh1ZMPu3KNwuKuCErA_1784557998
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-437-Y26WR_SdOKSmLBr7kUVdig-1; Mon,
+ 20 Jul 2026 10:32:58 -0400
+X-MC-Unique: Y26WR_SdOKSmLBr7kUVdig-1
+X-Mimecast-MFC-AGG-ID: Y26WR_SdOKSmLBr7kUVdig_1784557977
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5C368187D359; Mon, 20 Jul 2026 14:32:47 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AC9BA180A997; Mon, 20 Jul 2026 14:32:47 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.44.32.44])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1BB5E18001E7; Mon, 20 Jul 2026 14:32:47 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3A1EF30001BE; Mon, 20 Jul 2026 14:32:47 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 7D74A180086B; Mon, 20 Jul 2026 16:32:44 +0200 (CEST)
+ id 8C6411800900; Mon, 20 Jul 2026 16:32:44 +0200 (CEST)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, mcascell@redhat.com,
  Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH v4 2/6] hw/uefi: remove debug function
-Date: Mon, 20 Jul 2026 16:32:38 +0200
-Message-ID: <20260720143244.821889-3-kraxel@redhat.com>
+Subject: [PATCH v4 3/6] hw/uefi: check lower limit for signature list size
+Date: Mon, 20 Jul 2026 16:32:39 +0200
+Message-ID: <20260720143244.821889-4-kraxel@redhat.com>
 In-Reply-To: <20260720143244.821889-1-kraxel@redhat.com>
 References: <20260720143244.821889-1-kraxel@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: permerror client-ip=170.10.129.124;
  envelope-from=kraxel@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -84,70 +83,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This was never meant to be present in production builds.  It's a code
-path not hit on a normal boot (OVMF wouldn't try variable updates which
-are not allowed), so this went unnoticed.
+Specifically disallow zero which can lead to an endless loop.
 
-Remove the function.  If needed for debugging the git log is your
-friend.
-
-Fixes: CVE-2026-58582
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3615
+Fixes: CVE-2026-61406
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3899
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- hw/uefi/var-service-policy.c | 32 --------------------------------
- 1 file changed, 32 deletions(-)
+ hw/uefi/var-service-siglist.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/hw/uefi/var-service-policy.c b/hw/uefi/var-service-policy.c
-index 989bf87ddb86..0880bfe074a6 100644
---- a/hw/uefi/var-service-policy.c
-+++ b/hw/uefi/var-service-policy.c
-@@ -37,37 +37,6 @@ const VMStateDescription vmstate_uefi_var_policy = {
-     },
- };
- 
--static void print_policy_entry(variable_policy_entry *pe)
--{
--    uint16_t *name = (void *)pe + pe->offset_to_name;
--
--    fprintf(stderr, "%s:\n", __func__);
--
--    fprintf(stderr, "    name ´");
--    while (*name) {
--        fprintf(stderr, "%c", *name);
--        name++;
--    }
--    fprintf(stderr, "', version=%d.%d, size=%d\n",
--            pe->version >> 16, pe->version & 0xffff, pe->size);
--
--    if (pe->min_size) {
--        fprintf(stderr, "    size min=%d\n", pe->min_size);
--    }
--    if (pe->max_size != UINT32_MAX) {
--        fprintf(stderr, "    size max=%u\n", pe->max_size);
--    }
--    if (pe->attributes_must_have) {
--        fprintf(stderr, "    attr must=0x%x\n", pe->attributes_must_have);
--    }
--    if (pe->attributes_cant_have) {
--        fprintf(stderr, "    attr cant=0x%x\n", pe->attributes_cant_have);
--    }
--    if (pe->lock_policy_type) {
--        fprintf(stderr, "    lock policy type %d\n", pe->lock_policy_type);
--    }
--}
--
- static gboolean wildcard_str_equal(uefi_var_policy *pol,
-                                    uefi_variable *var)
- {
-@@ -173,7 +142,6 @@ efi_status uefi_vars_policy_check(uefi_vars_state *uv,
-     pe = pol->entry;
- 
-     uefi_trace_variable(__func__, var->guid, var->name, var->name_size);
--    print_policy_entry(pe);
- 
-     if ((var->attributes & pe->attributes_must_have) != pe->attributes_must_have) {
-         trace_uefi_vars_policy_deny("must-have-attr");
+diff --git a/hw/uefi/var-service-siglist.c b/hw/uefi/var-service-siglist.c
+index 8948f1b78471..9e03a4dc0c28 100644
+--- a/hw/uefi/var-service-siglist.c
++++ b/hw/uefi/var-service-siglist.c
+@@ -94,6 +94,9 @@ void uefi_vars_siglist_parse(uefi_vars_siglist *siglist,
+             break;
+         }
+         efilist = data;
++        if (efilist->siglist_size < sizeof(*efilist)) {
++            break;
++        }
+         if (size < efilist->siglist_size) {
+             break;
+         }
 -- 
 2.55.0
 
