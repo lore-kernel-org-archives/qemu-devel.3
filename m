@@ -4,142 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C565C44520
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 21:14:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88C52C44520
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 21:19:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlvIy-0007iJ-GI; Mon, 20 Jul 2026 17:13:40 -0400
+	id 1wlvNr-0000aA-4e; Mon, 20 Jul 2026 17:18:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wlvIw-0007hg-Hm
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 17:13:38 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <chang.seok.bae@intel.com>)
+ id 1wlvNp-0000ZP-3e; Mon, 20 Jul 2026 17:18:41 -0400
+Received: from mgamail.intel.com ([192.198.163.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wlvIv-0002VU-2n
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 17:13:38 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66KJTh0W3663800
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 21:13:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- z/wjbTXJWg5kCimzr7LvdhiwA8IjxWiwLkGnrkBh9ko=; b=UfWdqQJVCUOKKWCv
- YR/JlqxkAebWwdx5Tg9qw70zF76x8H+RjAH0ndlwDtqL8wn+oeSz4t2qTyAWTwRa
- COPbAZpSptZ8JnhS4S2P/oc7UkgPgtBhNrdZTbIHEB/+TUHs0HWJsK9KhHF/ZaV1
- b/+7O69Iosbxj5tSbF3XMfP3k8SDoVyPsA3kM3AQsCSePSUiEybQ9t0YkIqX8a1B
- aviw0+V5cNWnEf81JYRfmz0KKXndvP7uXjooPzWsJQ5TXDqDIueoJPaux+97snkX
- gr6hiia0JgwpYs8AwC9z3hafEqLvMOOWPrUKk/xd2fS7dJ2FrR+ef6WmkR1S63yv
- UFXgMw==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhqff14nr-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 21:13:35 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-5174a23afcbso90187321cf.3
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 14:13:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784582015; x=1785186815; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=z/wjbTXJWg5kCimzr7LvdhiwA8IjxWiwLkGnrkBh9ko=;
- b=RL84zxjkCW1Nyet+YMJnLHruOkXvsb9SZhfeFihitGnbr/8IXzIKFbk7ALH8Xn4ZyZ
- nSOhtw9Zrrqxhby/o3rDA5GCvAfMWLe+C9ngO1UiGszdWOH6r2qHbvwXJf/sfEpqL2Po
- 9FKIf3Kndnh+ty1+ukUN3GzGel3Be6s4vB+iCa4uKUQBfZxiKREREg3nz3/7Kd0y+uej
- C4UP9drJwlnNVT1e8ijOf8QQFnjx2pqAxgCvDt9gVEJI0mKUGxXzQ8yC54++JVH351rz
- s7q2iXtDubeM15GOFj0GTL6WQOFYhTctcK7MzpCpT9947w/+wzJGls9yvotqKXeS58hf
- 2ZMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784582015; x=1785186815;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=z/wjbTXJWg5kCimzr7LvdhiwA8IjxWiwLkGnrkBh9ko=;
- b=abgyaZr7KuGPjHhloA+2fbBXbY4LBlPXtyldgAH1TTslNIEhVY6dMKZL5+Ta3euc8l
- 4EayPlokJDmYc3qa2CTUJIR6Imc38k14l3BUzlPd0EaKF7ZpIcpzMa04MiFFi+jn+NJb
- 8TmBN+9ZLyrrYC+qO5Ml63Dqp+Zw2wW5eyvByvxf4vpbC4h+NexZK4MI5/Ghs3gSwf8J
- lgIrcxmO8YWZ6HT0eMnhd7VgWYt9UKWLZaW0LxWJFFrDujQcQbJanj8tgBwOxVoM0ND2
- tCVHtUc0su+pOImPt9AiQNG+KSdla4GgmtE1NfjqK3tk2FXFeYtkNFQ5+r0t1ORY2yVH
- dNDQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RorUBpgfyh/1rnDa92BQj8BwZrOg+mKMA9DCmrS/T3fn4xPHEhyt7PRChtJZB4Ad1/QLf7kYMi/V8x/@nongnu.org
-X-Gm-Message-State: AOJu0Yxf4nQsSLvqo4IidlCcB3OkVfl1x83qAY4yH6MZkxTEgLEE2Szv
- XAFDyWcvzLzct0JI/fCw/X0SDAdpfaSmhgCX7EAmyqe9YHPrjNK3C4HNdJbkD4lgMyR1aqs7Neb
- heKm9+F7DSQVkvecutabSF2FIrc6G0lVh7KJXyUCT133ZSxD66GWmTQOeKQ==
-X-Gm-Gg: AfdE7cmL9zG7Mq/ydEf+JRJGE/2mMNNkA5+BEvrPcMttGRHYKWr0Y6QBbO7JypKN056
- /CXZ30Ka7A+Kbi0cxQQFPeIztW22cIIiSWLJK3gSob80V4JjiT/62GlB4n5WeR2IouMinfpqSCO
- ry/JZL+QS2qAzjz992BGnJviZOsUHuw5YFAeZLmtp+x2fJyTdCi/xMCeQ1tKIrMsfusyBo1VHyH
- SRpg4YNFG7j6WsLIb7/O65LZvQdK+R99osS72/vuQSAx8oPpRd73aRKVxHWbhM2qr3QjygNtC4M
- tzHm8HRthQWmrv0NGl8tTQ52sbiZTCD6hUyxYJHbwsJXhjOSesxk6G8v1WZdpt2PhfqNvwBidzG
- tkl7J1DyZiXqhU3m8r1U2QWSJ3WpPbTlpZ+yxrOoh8KtC/sesa+E=
-X-Received: by 2002:a05:622a:4d9a:b0:516:cee1:4727 with SMTP id
- d75a77b69052e-5213c10a2a2mr147822171cf.14.1784582015297; 
- Mon, 20 Jul 2026 14:13:35 -0700 (PDT)
-X-Received: by 2002:a05:622a:4d9a:b0:516:cee1:4727 with SMTP id
- d75a77b69052e-5213c10a2a2mr147822031cf.14.1784582014875; 
- Mon, 20 Jul 2026 14:13:34 -0700 (PDT)
-Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4954aa1a231sm186032045e9.1.2026.07.20.14.13.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Jul 2026 14:13:33 -0700 (PDT)
-Message-ID: <ba171fa9-32d1-4e4b-bc57-c4bbb10875b5@oss.qualcomm.com>
-Date: Mon, 20 Jul 2026 23:13:32 +0200
+ (Exim 4.90_1) (envelope-from <chang.seok.bae@intel.com>)
+ id 1wlvNm-0002s1-JW; Mon, 20 Jul 2026 17:18:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1784582318; x=1816118318;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=jtm6YXQnFw0kebiVQVJ3GvwJKqxTXD5l5rONJ03Stxc=;
+ b=jr+/8z0514z9iEERu5yoszAz6yFQGZHBqciUObCGbEtd9LfiH34/TsC8
+ unwhkGBZV2knsnxWr9Y0rT7veohKyjBcByLaMptK7i27yf1/t267q0KwI
+ R5IlfCD0CE9bWcKVaziDYg1fEJg5YEfSaMbYx5NIAlOE7HMAz5PNJsbHR
+ uGiIk1mIogloHxqZcBQw9448HKauGWFyfdf+YzouSbrTBkmp6M8+amavw
+ n5SnCJO66xY7W991F1cpvgUtGqnvCXaYM70nVif7WaxGXMhvDLCHUudls
+ YyOriIv9/jhIXUeGxvbxDgB2c1oX8/fkhQ4ZX1vbGI7XYGowHS6v8cNwO w==;
+X-CSE-ConnectionGUID: d2DvQ91ITHu8ertstj/zWg==
+X-CSE-MsgGUID: mHSFE6lsTamBH1R7laAEeA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11852"; a="88997056"
+X-IronPort-AV: E=Sophos;i="6.25,175,1779174000"; d="scan'208";a="88997056"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Jul 2026 14:18:34 -0700
+X-CSE-ConnectionGUID: uWqHgMmXQ5CzrMtOrGmHBw==
+X-CSE-MsgGUID: dhE4ptFuSA6YeyvNXCz6wg==
+X-ExtLoop1: 1
+Received: from chang-linux-3.sc.intel.com (HELO chang-linux-3)
+ ([172.25.66.174])
+ by fmviesa003.fm.intel.com with ESMTP; 20 Jul 2026 14:18:34 -0700
+From: "Chang S. Bae" <chang.seok.bae@intel.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, berrange@redhat.com, seanjc@google.com,
+ chang.seok.bae@intel.com, qemu-stable@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH v2] i386/cpu: Remove AMX-TF32 CPUID bit
+Date: Mon, 20 Jul 2026 20:52:27 +0000
+Message-ID: <20260720205227.519647-1-chang.seok.bae@intel.com>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.1? 0/4] hw/display/vmware_vga: raise resolution
- ceiling, advertise modern capability bits
-Content-Language: en-US
-To: Matthew Jackson <matthew@pq.io>, qemu-devel@nongnu.org,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>
-Cc: kraxel@redhat.com
-References: <20260719152318.69481-1-matthew@pq.io>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260719152318.69481-1-matthew@pq.io>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDIzMCBTYWx0ZWRfXwvL/yHAjzL0f
- XGkxvf/I85cIG0X1q3cXhiGRshVdN2SWFLJ+6zxvb1QO3io+5zVGbhD2r9Ct4wI0FkEoSWs8gFI
- liLQWLarb8/ofgJmkrBLukoBxASfsa4=
-X-Proofpoint-GUID: pJ_Rj6bh38Ut5nbErtCXZd1p7Clyhe7u
-X-Authority-Analysis: v=2.4 cv=FJErAeos c=1 sm=1 tr=0 ts=6a5e8f7f cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=pGLkceISAAAA:8 a=69wJf7TsAAAA:8 a=lY6Vmi25UdJ5663uGBMA:9 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDIzMCBTYWx0ZWRfXyDrzWfm54C/I
- sYwpt/jWeR+Gl1LpUpXkR8zKLvDN80gNCb3bhCDekY43kw4rVrij/J4OYM3IGCZ6e1aai7VEqbf
- RNvq1L9+1hSWSqwvPj7XhFAKWJJO9MOc/gWgG7YN74CAlBatc1bSXN0ldQXZ1tKBMoC8D2HrPmf
- GOtv70IgaUk3dZL4aR7otYlzxIs4VenIOoH/FUTMHI5cerkNr2B/bCOCHoCm84UhFfsefKYdAlF
- GeFPmopqzzZt9CGClYY/WYAv1sYJK2nXcsyIkWWLsOEgX7eWnf7W5riYKDohF7J+/Rcl+zSVnt1
- UDC4TgYeUn05vGcB7GNmYX1eLBE9LtOhfHj1tw9mxLzjzApDsqN9d/cclcvJY/l79qlk5wWJDwW
- sI4puqfhGRxqOOI/SKmMSV7rFKfMMfmNs0i4d76czqsOjUp/ALgZ0ROWmbz/QHLM/qQgo9CnR5w
- CkhiD2aAmfDVrQiOWTw==
-X-Proofpoint-ORIG-GUID: pJ_Rj6bh38Ut5nbErtCXZd1p7Clyhe7u
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-20_05,2026-07-20_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 phishscore=0 spamscore=0 suspectscore=0 bulkscore=0
- clxscore=1015 malwarescore=0 priorityscore=1501 adultscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200230
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.12;
+ envelope-from=chang.seok.bae@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) AC_FROM_MANY_DOTS=2.499, BAYES_00=-1.9,
+ DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,47 +78,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc'ing the maintainer:
+A recent revision of the Intel document [1] removed AMX-TF32, confirming
+that the feature will not be implemented in future processors. Remove the
+feature bit definition and its enumeration from the Diamond Rapids CPU
+model.
 
-$ ./scripts/get_maintainer.pl -f hw/display/vmware_vga.c
-Dmitry Fleytman <dmitry.fleytman@gmail.com> (maintainer:VMware)
-qemu-devel@nongnu.org (open list:All patches CC here)
+[1] Intel Architecture Instruction Set Extensions and Future Features
+    (Rev.062)
 
-On 19/7/26 17:23, Matthew Jackson wrote:
-> The QEMU `vmware_vga` device reports `SVGA_CAP_NONE` when the
-> guest reads `SVGA_REG_CAPABILITIES`, and caps mode validation
-> at 2368x1770. This was historically safe because the device
-> implements almost none of the modern VMware SVGA II feature
-> set, but the machinery for five capability bits is in fact
-> already present - the device just never told the guest about
-> them.
-> 
-> This four-patch series fixes that. Each patch touches a
-> single feature and is independently revertible.
-> 
-> | Patch | Subject |
-> |-------|---------|
-> | 1/4   | `hw/display/vmware_vga: raise resolution ceiling to 5K (5120x2880)` |
-> | 2/4   | `hw/display/vmware_vga: advertise PITCHLOCK capability` |
-> | 3/4   | `hw/display/vmware_vga: advertise EXTENDED_FIFO capability` |
-> | 4/4   | `hw/display/vmware_vga: advertise 8BIT_EMULATION, ALPHA_BLEND and ALPHA_CURSOR` |
-> 
-> ## Motivation
-> 
-> Modern VMware SVGA II guest drivers (Linux vmwgfx, macOS
-> 10.13+, Windows 10+) refuse to take optional fast paths when
-> the corresponding capability bits are not advertised. The
-> effect on macOS 15 guests in particular is:
-> 
->    * Cursor is monochrome and flickers (ALPHA_CURSOR missing).
->    * Scanout pitch does not align to guest framebuffer on
->      non-power-of-two widths (PITCHLOCK missing).
-> 
-> Matthew Jackson (4):
->    hw/display/vmware_vga: raise resolution ceiling to 5K
->    hw/display/vmware_vga: add PITCHLOCK capability
->    hw/display/vmware_vga: add EXTENDED_FIFO capability
->    hw/display/vmware_vga: add alpha-blend + alpha-cursor capability bits
-> 
+Cc: qemu-stable@nongnu.org # v11.0+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Chang S. Bae <chang.seok.bae@intel.com>
+---
+V1 -> V2: Collect tag and cc @stable (Zaho)
+---
+ target/i386/cpu.c | 5 ++---
+ target/i386/cpu.h | 2 --
+ 2 files changed, 2 insertions(+), 5 deletions(-)
+
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 5805d33ab92d..bde501ad8f7b 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -1319,7 +1319,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+         .type = CPUID_FEATURE_WORD,
+         .feat_names = {
+             "amx-int8-alias", "amx-bf16-alias", "amx-complex-alias", "amx-fp16-alias",
+-            "amx-fp8", NULL, "amx-tf32", "amx-avx512",
++            "amx-fp8", NULL, NULL, "amx-avx512",
+             "amx-movrs", NULL, NULL, NULL,
+             NULL, NULL, NULL, NULL,
+             NULL, NULL, NULL, NULL,
+@@ -5726,8 +5726,7 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+             CPUID_1E_1_EAX_AMX_INT8_ALIAS | CPUID_1E_1_EAX_AMX_BF16_ALIAS |
+             CPUID_1E_1_EAX_AMX_COMPLEX_ALIAS |
+             CPUID_1E_1_EAX_AMX_FP16_ALIAS | CPUID_1E_1_EAX_AMX_FP8 |
+-            CPUID_1E_1_EAX_AMX_TF32 | CPUID_1E_1_EAX_AMX_AVX512 |
+-            CPUID_1E_1_EAX_AMX_MOVRS,
++            CPUID_1E_1_EAX_AMX_AVX512 | CPUID_1E_1_EAX_AMX_MOVRS,
+         .features[FEAT_29_0_EBX] = CPUID_29_0_EBX_APX_NCI_NDD_NF,
+         /*
+          * Though this bit will be set by avx_version=2, it's better to
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index e6a197602d87..8354c0753f0d 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -1111,8 +1111,6 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+ #define CPUID_1E_1_EAX_AMX_FP16_ALIAS      (1U << 3)
+ /* AMX_FP8 instruction */
+ #define CPUID_1E_1_EAX_AMX_FP8              (1U << 4)
+-/* AMX_TF32 instruction */
+-#define CPUID_1E_1_EAX_AMX_TF32             (1U << 6)
+ /* AMX_AVX512 instruction */
+ #define CPUID_1E_1_EAX_AMX_AVX512           (1U << 7)
+ /* AMX_MOVRS instruction */
+-- 
+2.53.0
 
 
