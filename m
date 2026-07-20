@@ -4,55 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B202BC44515
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 05:35:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E1DBC44515
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 05:37:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlge5-0001iq-C6; Mon, 20 Jul 2026 01:34:29 -0400
+	id 1wlggj-0002x4-6B; Mon, 20 Jul 2026 01:37:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kariyam@oss.nttdata.com>)
- id 1wlgdg-0001cq-As
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 01:34:05 -0400
-Received: from oss.nttdata.com ([49.212.34.109])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <kariyam@oss.nttdata.com>)
- id 1wlgde-0008VO-94
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 01:34:04 -0400
-Received: by oss.nttdata.com (Postfix, from userid 1024)
- id 8A1BC2020285; Mon, 20 Jul 2026 14:33:34 +0900 (JST)
-From: Mitsuru Kariya <Mitsuru.Kariya@oss.nttdata.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Mitsuru Kariya <Mitsuru.Kariya@oss.nttdata.com>, qemu-devel@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Eric Blake <eblake@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Peter Xu <peterx@redhat.com>,
- Jason Wang <jasowang@redhat.com>
-Subject: Re: [PATCH 2/5] qemu-options: document keep-alive-count/idle/interval
- for -netdev stream
-Date: Mon, 20 Jul 2026 14:33:33 +0900
-Message-ID: <20260720053333.2316643-1-Mitsuru.Kariya@oss.nttdata.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <87y0gx8sld.fsf@pond.sub.org>
-References: <20260524073442.435408-3-Mitsuru.Kariya@oss.nttdata.com>
- <87y0gx8sld.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <bea1e@proton.me>) id 1wlggX-0002wd-DU
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 01:37:01 -0400
+Received: from mail-06.mail-europe.com ([85.9.210.45])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <bea1e@proton.me>) id 1wlggS-0000Ku-UL
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 01:37:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+ s=protonmail; t=1784525801; x=1784785001;
+ bh=1CVJh1VpO1q+MjKfhop+zMQKbmDMsrr2llgR+aHSdDY=;
+ h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+ Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+ b=el6gBi/hawc+EENgkoiZZnVOk1aRmQw5w+ZRzpEbdzeBan3C1qGsBKKHeLZUyxYwF
+ Nxoq2/Fnj8C9Y2OQZTt7R8bFhGkC4qM0y0wL8ZTMl1UCxjUB/Iq6uZER6Miea9vF1Z
+ eCPTNlkfL/TvOvkp2pCKy2yXvlIl5NRtPGhhmWxEFD+a0Q1LCu3P21A5kjBySQIlk1
+ hggzug/INe/SV2SYYXKPGxBS4VF9yTldGcGVzeBMhlT0G9qISap5QY4wEVGJaCx7I2
+ vl6jIVLXQbaC7sDrEHibfjQxCZC3BpQoZtDyw60GiTDcHUjFIIiYnoYEWxhaMQgMS0
+ XshLRUPr802AA==
+Date: Mon, 20 Jul 2026 05:36:37 +0000
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+From: Feifan Qian <bea1e@proton.me>
+Cc: "sgarzare@redhat.com" <sgarzare@redhat.com>,
+ "aesteve@redhat.com" <aesteve@redhat.com>
+Subject: [PATCH] vhost-user: check memory slot availability for SHMEM_MAP
+Message-ID: <mjOOKQpuMIz6MQIV5bwxAVsdiCHcF7CelDcVbte7RE5ehci9d4UsTCx2e4EdvRa2FYpryaZuX_gdEkhek7cL7TawBkicooZYlzmMYTEtPvg=@proton.me>
+Feedback-ID: 93226294:user:proton
+X-Pm-Message-ID: 41234652a30ea369145ff2a195c3a53cf730df16
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: clamav-milter 1.4.3 at oss.nttdata.com
-X-Virus-Status: Clean
-Received-SPF: pass client-ip=49.212.34.109;
- envelope-from=kariyam@oss.nttdata.com; helo=oss.nttdata.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/alternative;
+ boundary="b1=_XrikHZjrrzXiIk0oNUQgiHpzYjQ2ZeiBUytQkVmybI"
+Received-SPF: pass client-ip=85.9.210.45; envelope-from=bea1e@proton.me;
+ helo=mail-06.mail-europe.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,34 +64,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thank you for reviewing, and I'm sorry for the late reply.
+--b1=_XrikHZjrrzXiIk0oNUQgiHpzYjQ2ZeiBUytQkVmybI
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
 
-Markus Armbruster <armbru@redhat.com> writes:
-> You document these options only for -netdev stream.  They also work
-> for -netdev dgram, possibly more (didn't check).  Shouldn't we
-> document them every where they work?
+U0hNRU1fTUFQIGNyZWF0ZXMgYSBzZXBhcmF0ZSBSQU0gTWVtb3J5UmVnaW9uIGZvciBldmVyeSBt
+YXBwaW5nLiBJdCBjYW4KdGhlcmVmb3JlIG1ha2UgYSB2aG9zdC11c2VyIG1lbW9yeSB0YWJsZSBl
+eGNlZWQgdGhlIG51bWJlciBvZiBzbG90cwpuZWdvdGlhdGVkIHdpdGggdGhlIGJhY2tlbmQuIFRo
+ZSByZWdpb24gcmVjb25jaWxpYXRpb24gY29kZSB0aGVuIGluZGV4ZXMKZml4ZWQtc2l6ZSBib29r
+a2VlcGluZyBhcnJheXMgcGFzdCB0aGVpciBlbmQuCgpSZWplY3QgYSBtYXBwaW5nIGJlZm9yZSBj
+aGFuZ2luZyB0aGUgbWVtb3J5IHRvcG9sb2d5IGlmIEtWTSBvciBhIHZob3N0CmJhY2tlbmQgaGFz
+IG5vIHVucmVzZXJ2ZWQgc2xvdCBsZWZ0LiBBbHNvIHZhbGlkYXRlIGVhY2ggbWVtb3J5IHRhYmxl
+CmFnYWluc3QgdGhlIG5lZ290aWF0ZWQgdmhvc3QtdXNlciBsaW1pdCBhcyBhIGZpbmFsIGRlZmVu
+c2UgZm9yIG1hcHBpbmdzCnRoYXQgYmVjb21lIHZpc2libGUgaW4gYSBsYXRlciBtZW1vcnkgdHJh
+bnNhY3Rpb24uCgpGaXhlczogYjUyZTE4OTZlNzY0ICgidmhvc3QtdXNlcjogQWRkIFZpcnRJTyBT
+aGFyZWQgTWVtb3J5IG1hcCByZXF1ZXN0IikKU2lnbmVkLW9mZi1ieTogRmVpZmFuIFFpYW4gPGJl
+YTFlQHByb3Rvbi5tZT4KLS0tClRlc3RlZCB3aXRoIGFuIEFTYW4vVUJTYW4geDg2XzY0IGJ1aWxk
+IGFuZCBhIHZob3N0LXVzZXIgYmFja2VuZCB0aGF0Cm1hcHBlZCBvbmUtcGFnZSBTSE1FTSByZWdp
+b25zIHVwIHRvIHRoZSA1MTItc2xvdCBsaW1pdC4gVGhlIG5leHQKU0hNRU1fTUFQIHJlcXVlc3Qg
+d2FzIHJlamVjdGVkIGFuZCBRRU1VIHJlbWFpbmVkIGFsaXZlLiBCZWZvcmUgdGhpcwpwYXRjaCwg
+dGhlIHNhbWUgcmVwcm9kdWNlciByZXBvcnRlZCBhbiBvdXQtb2YtYm91bmRzIHdyaXRlIGF0IGZv
+dW5kWzUxMl0KaW4gc2NydWJfc2hhZG93X3JlZ2lvbnMoKS4gcXRlc3QteDg2XzY0L3Fvcy10ZXN0
+IGFsc28gcGFzc2VkIGFsbCAxNDAKc3VidGVzdHMuCgpody92aXJ0aW8vdmhvc3QtdXNlci5jIHwg
+MTggKysrKysrKysrKysrKysrKysrCjEgZmlsZSBjaGFuZ2VkLCAxOCBpbnNlcnRpb25zKCspCgpk
+aWZmIC0tZ2l0IGEvaHcvdmlydGlvL3Zob3N0LXVzZXIuYyBiL2h3L3ZpcnRpby92aG9zdC11c2Vy
+LmMKaW5kZXggNTE3Y2M0Y2E3MS4uN2YxNDFjMTE2YiAxMDA2NDQKLS0tIGEvaHcvdmlydGlvL3Zo
+b3N0LXVzZXIuYworKysgYi9ody92aXJ0aW8vdmhvc3QtdXNlci5jCkBAIC0xMCw2ICsxMCw3IEBA
+CgojaW5jbHVkZSAicWVtdS9vc2RlcC5oIgojaW5jbHVkZSAicWFwaS9lcnJvci5oIgorI2luY2x1
+ZGUgImh3L21lbS9tZW1vcnktZGV2aWNlLmgiCiNpbmNsdWRlICJody92aXJ0aW8vdmlydGlvLWRt
+YWJ1Zi5oIgojaW5jbHVkZSAiaHcvdmlydGlvL3ZpcnRpby1xbXAuaCIKI2luY2x1ZGUgImh3L3Zp
+cnRpby92aG9zdC5oIgpAQCAtMTEyMyw2ICsxMTI0LDEzIEBAIHN0YXRpYyBpbnQgdmhvc3RfdXNl
+cl9zZXRfbWVtX3RhYmxlKHN0cnVjdCB2aG9zdF9kZXYgKmRldiwKZGV2LCBWSE9TVF9VU0VSX1BS
+T1RPQ09MX0ZfQ09ORklHVVJFX01FTV9TTE9UUyk7CmludCByZXQ7CgorIGlmIChtZW0tPm5yZWdp
+b25zID4gdS0+dXNlci0+bWVtb3J5X3Nsb3RzKSB7CisgZXJyb3JfcmVwb3J0KCJ2aG9zdC11c2Vy
+IG1lbW9yeSB0YWJsZSBoYXMgJXUgcmVnaW9ucywgIgorICJidXQgdGhlIGJhY2tlbmQgc3VwcG9y
+dHMgb25seSAlZCIsCisgbWVtLT5ucmVnaW9ucywgdS0+dXNlci0+bWVtb3J5X3Nsb3RzKTsKKyBy
+ZXR1cm4gLUVOT1NQQzsKKyB9CisKaWYgKGRvX3Bvc3Rjb3B5KSB7Ci8qCiogUG9zdGNvcHkgaGFz
+IGVub3VnaCBkaWZmZXJlbmNlcyB0aGF0IGl0J3MgYmVzdCBkb25lIGluIGl0J3Mgb3duCkBAIC0x
+OTM3LDYgKzE5NDUsNyBAQCB2aG9zdF91c2VyX2JhY2tlbmRfaGFuZGxlX3NobWVtX21hcChzdHJ1
+Y3Qgdmhvc3RfZGV2ICpkZXYsClZob3N0VXNlck1NYXAgKnZ1X21tYXAgPSAmcGF5bG9hZC0+bW1h
+cDsKVmlydGlvU2hhcmVkTWVtb3J5TWFwcGluZyAqZXhpc3Rpbmc7CkVycm9yICpsb2NhbF9lcnIg
+PSBOVUxMOworIHVuc2lnbmVkIGludCByZXNlcnZlZF9tZW1zbG90czsKaW50IHJldCA9IDA7Cgpp
+ZiAoZmQgPCAwKSB7CkBAIC0xOTc3LDYgKzE5ODYsMTUgQEAgdmhvc3RfdXNlcl9iYWNrZW5kX2hh
+bmRsZV9zaG1lbV9tYXAoc3RydWN0IHZob3N0X2RldiAqZGV2LAp9Cn0KCisgcmVzZXJ2ZWRfbWVt
+c2xvdHMgPSBtZW1vcnlfZGV2aWNlc19nZXRfcmVzZXJ2ZWRfbWVtc2xvdHMoKTsKKyBpZiAoKGt2
+bV9lbmFibGVkKCkgJiYKKyBrdm1fZ2V0X2ZyZWVfbWVtc2xvdHMoKSA8PSByZXNlcnZlZF9tZW1z
+bG90cykgfHwKKyB2aG9zdF9nZXRfZnJlZV9tZW1zbG90cygpIDw9IHJlc2VydmVkX21lbXNsb3Rz
+KSB7CisgZXJyb3JfcmVwb3J0KCJObyBmcmVlIG1lbW9yeSBzbG90cyBmb3Igc2hhcmVkIG1lbW9y
+eSBtYXBwaW5nIik7CisgcmV0ID0gLUVOT1NQQzsKKyBnb3RvIHNlbmRfcmVwbHk7CisgfQorCm1l
+bW9yeV9yZWdpb25fdHJhbnNhY3Rpb25fYmVnaW4oKTsKCi8qIENyZWF0ZSBWaXJ0aW9TaGFyZWRN
+ZW1vcnlNYXBwaW5nIG9iamVjdCAqLwotLTIuNDMuMA==
 
-As you pointed out, options such as keep-alive* are accepted by -netdev
-dgram as well. However, since these options are TCP-specific, they have
-no effect on sockets created by -netdev dgram.
-In fact, while these options are applied to sockets in
-inet_set_sockopts(), it is only called from inet_connect_saddr() and
-inet_listen_saddr(), which are for TCP, and not from inet_dgram_saddr(),
-which is for UDP. (I also confirmed this with strace.)
+--b1=_XrikHZjrrzXiIk0oNUQgiHpzYjQ2ZeiBUytQkVmybI
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: base64
 
-Since the options are effectively no-ops there, I thought documenting
-them was unnecessary — but would you prefer that I add some note about
-it?
+PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6IEFyaWFsLCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDE0
+cHg7Ij48L2Rpdj48c3Bhbj5TSE1FTV9NQVAgY3JlYXRlcyBhIHNlcGFyYXRlIFJBTSBNZW1vcnlS
+ZWdpb24gZm9yIGV2ZXJ5IG1hcHBpbmcuIEl0IGNhbjwvc3Bhbj48ZGl2PjxzcGFuPnRoZXJlZm9y
+ZSBtYWtlIGEgdmhvc3QtdXNlciBtZW1vcnkgdGFibGUgZXhjZWVkIHRoZSBudW1iZXIgb2Ygc2xv
+dHM8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj5uZWdvdGlhdGVkIHdpdGggdGhlIGJhY2tlbmQuIFRo
+ZSByZWdpb24gcmVjb25jaWxpYXRpb24gY29kZSB0aGVuIGluZGV4ZXM8L3NwYW4+PC9kaXY+PGRp
+dj48c3Bhbj5maXhlZC1zaXplIGJvb2trZWVwaW5nIGFycmF5cyBwYXN0IHRoZWlyIGVuZC48L3Nw
+YW4+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj48c3Bhbj5SZWplY3QgYSBtYXBwaW5nIGJlZm9y
+ZSBjaGFuZ2luZyB0aGUgbWVtb3J5IHRvcG9sb2d5IGlmIEtWTSBvciBhIHZob3N0PC9zcGFuPjwv
+ZGl2PjxkaXY+PHNwYW4+YmFja2VuZCBoYXMgbm8gdW5yZXNlcnZlZCBzbG90IGxlZnQuIEFsc28g
+dmFsaWRhdGUgZWFjaCBtZW1vcnkgdGFibGU8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj5hZ2FpbnN0
+IHRoZSBuZWdvdGlhdGVkIHZob3N0LXVzZXIgbGltaXQgYXMgYSBmaW5hbCBkZWZlbnNlIGZvciBt
+YXBwaW5nczwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPnRoYXQgYmVjb21lIHZpc2libGUgaW4gYSBs
+YXRlciBtZW1vcnkgdHJhbnNhY3Rpb24uPC9zcGFuPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+
+PHNwYW4+Rml4ZXM6IGI1MmUxODk2ZTc2NCAoInZob3N0LXVzZXI6IEFkZCBWaXJ0SU8gU2hhcmVk
+IE1lbW9yeSBtYXAgcmVxdWVzdCIpPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+U2lnbmVkLW9mZi1i
+eTogRmVpZmFuIFFpYW4gJmx0OzxhIHRhcmdldD0iX2JsYW5rIiByZWw9Im5vcmVmZXJyZXIgbm9m
+b2xsb3cgbm9vcGVuZXIiIGhyZWY9Im1haWx0bzpiZWExZUBwcm90b24ubWUiPmJlYTFlQHByb3Rv
+bi5tZTwvYT4mZ3Q7PC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+LS0tPC9zcGFuPjwvZGl2PjxkaXY+
+PHNwYW4+VGVzdGVkIHdpdGggYW4gQVNhbi9VQlNhbiB4ODZfNjQgYnVpbGQgYW5kIGEgdmhvc3Qt
+dXNlciBiYWNrZW5kIHRoYXQ8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj5tYXBwZWQgb25lLXBhZ2Ug
+U0hNRU0gcmVnaW9ucyB1cCB0byB0aGUgNTEyLXNsb3QgbGltaXQuICZuYnNwO1RoZSBuZXh0PC9z
+cGFuPjwvZGl2PjxkaXY+PHNwYW4+U0hNRU1fTUFQIHJlcXVlc3Qgd2FzIHJlamVjdGVkIGFuZCBR
+RU1VIHJlbWFpbmVkIGFsaXZlLiAmbmJzcDtCZWZvcmUgdGhpczwvc3Bhbj48L2Rpdj48ZGl2Pjxz
+cGFuPnBhdGNoLCB0aGUgc2FtZSByZXByb2R1Y2VyIHJlcG9ydGVkIGFuIG91dC1vZi1ib3VuZHMg
+d3JpdGUgYXQgZm91bmRbNTEyXTwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPmluIHNjcnViX3NoYWRv
+d19yZWdpb25zKCkuICZuYnNwO3F0ZXN0LXg4Nl82NC9xb3MtdGVzdCBhbHNvIHBhc3NlZCBhbGwg
+MTQwPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+c3VidGVzdHMuPC9zcGFuPjwvZGl2PjxkaXY+PGJy
+PjwvZGl2PjxkaXY+PHNwYW4+Jm5ic3A7aHcvdmlydGlvL3Zob3N0LXVzZXIuYyB8IDE4ICsrKysr
+KysrKysrKysrKysrKzwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPiZuYnNwOzEgZmlsZSBjaGFuZ2Vk
+LCAxOCBpbnNlcnRpb25zKCspPC9zcGFuPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+PHNwYW4+
+ZGlmZiAtLWdpdCBhL2h3L3ZpcnRpby92aG9zdC11c2VyLmMgYi9ody92aXJ0aW8vdmhvc3QtdXNl
+ci5jPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+aW5kZXggNTE3Y2M0Y2E3MS4uN2YxNDFjMTE2YiAx
+MDA2NDQ8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj4tLS0gYS9ody92aXJ0aW8vdmhvc3QtdXNlci5j
+PC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+KysrIGIvaHcvdmlydGlvL3Zob3N0LXVzZXIuYzwvc3Bh
+bj48L2Rpdj48ZGl2PjxzcGFuPkBAIC0xMCw2ICsxMCw3IEBAPC9zcGFuPjwvZGl2PjxkaXY+PGJy
+PjwvZGl2PjxkaXY+PHNwYW4+Jm5ic3A7I2luY2x1ZGUgInFlbXUvb3NkZXAuaCI8L3NwYW4+PC9k
+aXY+PGRpdj48c3Bhbj4mbmJzcDsjaW5jbHVkZSAicWFwaS9lcnJvci5oIjwvc3Bhbj48L2Rpdj48
+ZGl2PjxzcGFuPisjaW5jbHVkZSAiaHcvbWVtL21lbW9yeS1kZXZpY2UuaCI8L3NwYW4+PC9kaXY+
+PGRpdj48c3Bhbj4mbmJzcDsjaW5jbHVkZSAiaHcvdmlydGlvL3ZpcnRpby1kbWFidWYuaCI8L3Nw
+YW4+PC9kaXY+PGRpdj48c3Bhbj4mbmJzcDsjaW5jbHVkZSAiaHcvdmlydGlvL3ZpcnRpby1xbXAu
+aCI8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj4mbmJzcDsjaW5jbHVkZSAiaHcvdmlydGlvL3Zob3N0
+LmgiPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+QEAgLTExMjMsNiArMTEyNCwxMyBAQCBzdGF0aWMg
+aW50IHZob3N0X3VzZXJfc2V0X21lbV90YWJsZShzdHJ1Y3Qgdmhvc3RfZGV2ICpkZXYsPC9zcGFu
+PjwvZGl2PjxkaXY+PHNwYW4+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJz
+cDsgJm5ic3A7ZGV2LCBWSE9TVF9VU0VSX1BST1RPQ09MX0ZfQ09ORklHVVJFX01FTV9TTE9UUyk7
+PC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+Jm5ic3A7ICZuYnNwOyAmbmJzcDtpbnQgcmV0Ozwvc3Bh
+bj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PjxzcGFuPisgJm5ic3A7ICZuYnNwO2lmIChtZW0t
+Jmd0O25yZWdpb25zICZndDsgdS0mZ3Q7dXNlci0mZ3Q7bWVtb3J5X3Nsb3RzKSB7PC9zcGFuPjwv
+ZGl2PjxkaXY+PHNwYW4+KyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDtlcnJvcl9yZXBvcnQo
+InZob3N0LXVzZXIgbWVtb3J5IHRhYmxlIGhhcyAldSByZWdpb25zLCAiPC9zcGFuPjwvZGl2Pjxk
+aXY+PHNwYW4+KyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJz
+cDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgImJ1dCB0aGUgYmFja2VuZCBzdXBwb3J0cyBvbmx5ICVk
+Iiw8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj4rICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAm
+bmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyBtZW0tJmd0O25yZWdpb25z
+LCB1LSZndDt1c2VyLSZndDttZW1vcnlfc2xvdHMpOzwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPisg
+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7cmV0dXJuIC1FTk9TUEM7PC9zcGFuPjwvZGl2Pjxk
+aXY+PHNwYW4+KyAmbmJzcDsgJm5ic3A7fTwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPis8L3NwYW4+
+PC9kaXY+PGRpdj48c3Bhbj4mbmJzcDsgJm5ic3A7ICZuYnNwO2lmIChkb19wb3N0Y29weSkgezwv
+c3Bhbj48L2Rpdj48ZGl2PjxzcGFuPiZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsv
+Kjwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPiZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJz
+cDsgKiBQb3N0Y29weSBoYXMgZW5vdWdoIGRpZmZlcmVuY2VzIHRoYXQgaXQncyBiZXN0IGRvbmUg
+aW4gaXQncyBvd248L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj5AQCAtMTkzNyw2ICsxOTQ1LDcgQEAg
+dmhvc3RfdXNlcl9iYWNrZW5kX2hhbmRsZV9zaG1lbV9tYXAoc3RydWN0IHZob3N0X2RldiAqZGV2
+LDwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPiZuYnNwOyAmbmJzcDsgJm5ic3A7Vmhvc3RVc2VyTU1h
+cCAqdnVfbW1hcCA9ICZhbXA7cGF5bG9hZC0mZ3Q7bW1hcDs8L3NwYW4+PC9kaXY+PGRpdj48c3Bh
+bj4mbmJzcDsgJm5ic3A7ICZuYnNwO1ZpcnRpb1NoYXJlZE1lbW9yeU1hcHBpbmcgKmV4aXN0aW5n
+Ozwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPiZuYnNwOyAmbmJzcDsgJm5ic3A7RXJyb3IgKmxvY2Fs
+X2VyciA9IE5VTEw7PC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+KyAmbmJzcDsgJm5ic3A7dW5zaWdu
+ZWQgaW50IHJlc2VydmVkX21lbXNsb3RzOzwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPiZuYnNwOyAm
+bmJzcDsgJm5ic3A7aW50IHJldCA9IDA7PC9zcGFuPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+
+PHNwYW4+Jm5ic3A7ICZuYnNwOyAmbmJzcDtpZiAoZmQgJmx0OyAwKSB7PC9zcGFuPjwvZGl2Pjxk
+aXY+PHNwYW4+QEAgLTE5NzcsNiArMTk4NiwxNSBAQCB2aG9zdF91c2VyX2JhY2tlbmRfaGFuZGxl
+X3NobWVtX21hcChzdHJ1Y3Qgdmhvc3RfZGV2ICpkZXYsPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+
+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO308L3NwYW4+PC9kaXY+PGRpdj48c3Bh
+bj4mbmJzcDsgJm5ic3A7ICZuYnNwO308L3NwYW4+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj48
+c3Bhbj4rICZuYnNwOyAmbmJzcDtyZXNlcnZlZF9tZW1zbG90cyA9IG1lbW9yeV9kZXZpY2VzX2dl
+dF9yZXNlcnZlZF9tZW1zbG90cygpOzwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPisgJm5ic3A7ICZu
+YnNwO2lmICgoa3ZtX2VuYWJsZWQoKSAmYW1wOyZhbXA7PC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+
+KyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsga3ZtX2dldF9mcmVlX21lbXNsb3RzKCkgJmx0
+Oz0gcmVzZXJ2ZWRfbWVtc2xvdHMpIHx8PC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+KyAmbmJzcDsg
+Jm5ic3A7ICZuYnNwOyAmbmJzcDt2aG9zdF9nZXRfZnJlZV9tZW1zbG90cygpICZsdDs9IHJlc2Vy
+dmVkX21lbXNsb3RzKSB7PC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+KyAmbmJzcDsgJm5ic3A7ICZu
+YnNwOyAmbmJzcDtlcnJvcl9yZXBvcnQoIk5vIGZyZWUgbWVtb3J5IHNsb3RzIGZvciBzaGFyZWQg
+bWVtb3J5IG1hcHBpbmciKTs8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj4rICZuYnNwOyAmbmJzcDsg
+Jm5ic3A7ICZuYnNwO3JldCA9IC1FTk9TUEM7PC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+KyAmbmJz
+cDsgJm5ic3A7ICZuYnNwOyAmbmJzcDtnb3RvIHNlbmRfcmVwbHk7PC9zcGFuPjwvZGl2PjxkaXY+
+PHNwYW4+KyAmbmJzcDsgJm5ic3A7fTwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPis8L3NwYW4+PC9k
+aXY+PGRpdj48c3Bhbj4mbmJzcDsgJm5ic3A7ICZuYnNwO21lbW9yeV9yZWdpb25fdHJhbnNhY3Rp
+b25fYmVnaW4oKTs8L3NwYW4+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj48c3Bhbj4mbmJzcDsg
+Jm5ic3A7ICZuYnNwOy8qIENyZWF0ZSBWaXJ0aW9TaGFyZWRNZW1vcnlNYXBwaW5nIG9iamVjdCAq
+Lzwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPi0tPC9zcGFuPjwvZGl2PjxzcGFuPjIuNDMuMDwvc3Bh
+bj48ZGl2IHN0eWxlPSJmb250LWZhbWlseTogQXJpYWwsIHNhbnMtc2VyaWY7IGZvbnQtc2l6ZTog
+MTRweDsiIGNsYXNzPSJwcm90b25tYWlsX3NpZ25hdHVyZV9ibG9jayI+PGRpdiBjbGFzcz0icHJv
+dG9ubWFpbF9zaWduYXR1cmVfYmxvY2stcHJvdG9uIj4NCiAgICA8L2Rpdj4NCjwvZGl2Pg0K
 
-For completeness, I also checked places other than -netdev stream and
--incoming tcp:.
-For -blockdev driver=nbd and -drive driver=nbd, the keep-alive* options
-do take effect.  However, the documentation for -blockdev refers
-readers to the blockdev-add QMP command, and -drive is documented as
-accepting the same options as -blockdev, so I concluded that no
-additional description is needed there.
 
-As for -netdev socket, -drive file=nbd:, -chardev socket, and -vnc,
-they can also be used with TCP connections, but the keep-alive* options
-cannot be specified with them.
+--b1=_XrikHZjrrzXiIk0oNUQgiHpzYjQ2ZeiBUytQkVmybI--
+
 
