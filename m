@@ -4,86 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2114AC4451B
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 02:49:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67A2DC4451B
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 05:22:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wle4F-0004mt-SI; Sun, 19 Jul 2026 22:49:19 -0400
+	id 1wlgRr-0006v6-4i; Mon, 20 Jul 2026 01:21:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jianghaotian.sunday@gmail.com>)
- id 1wle4C-0004mH-8M
- for qemu-devel@nongnu.org; Sun, 19 Jul 2026 22:49:16 -0400
-Received: from mail-pj2-x0a.google.com ([2607:f8b0:4864:39::a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jianghaotian.sunday@gmail.com>)
- id 1wle4A-0001X9-Fe
- for qemu-devel@nongnu.org; Sun, 19 Jul 2026 22:49:15 -0400
-Received: by mail-pj2-x0a.google.com with SMTP id
- d9443c01a7336-2cf49dc298bso14586185ad.0
- for <qemu-devel@nongnu.org>; Sun, 19 Jul 2026 19:49:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784515753; x=1785120553; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=m8lltpzLlvYxzHjHcmkKzoMmUMZ6AAvTk0ePIiurVHc=;
- b=pzQELLBHPHRkSBolH9F8LAtTNUb89LN0qkICRXUmGzFBgmmfRbvSxXQA/cQVggiMrZ
- P+J4CxPNUgXYNsBxIvsv7zgzYtyCYLxkdgEt6jGCkXKElc+RWhINppru0/JHTf91y6p0
- D7IIt9wPOKTQhRknvMDPxtZEFNsqrLcfmt0Ejk4/nznuJT841nDtVbdIug3kN/VVddzY
- vKUm+8CUzbRplpjh5++J2RHLjC4MrbTWbkNj4oK99IisuOpiiArkGyPUWthe/81uIvSP
- Iy1ugFUpMJW78fMtmLdJWAT3r+sfXB/964ScmW7cSky5jhx235Mb0ntcz2OMPljLBR/t
- 5Oyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784515753; x=1785120553;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=m8lltpzLlvYxzHjHcmkKzoMmUMZ6AAvTk0ePIiurVHc=;
- b=dgUyXaJu2m1lXBF5O3CcyH2vETIkm3Bzj4dnH+WTb3iKTjHPXEHoYpX2CJ6YB4Dfq/
- efswHxMMSWXQm9DplRMAlXBZit2cqBUYEnlqyCidCxANhpQsDuhO3ibQsoQxUn5n7zmG
- aqJGNb4T0Ds2jsBNuNUgxOTjSyGXY2aU3UXLjDtcNoScY8U4tfgNtaN9qJrw+eWdYIrw
- LXuM6WfVM6GG1rgWvwDR5UAdxR0U724tIeXsE6mlIB4wQUFAder1F9ls/neFZRE21CbE
- OD4OxvMcnZQmTozDuD7tVGUeC1U1Ffy54EqC6T7FkUS87v3ZLW24s6OqQcpzU4kB99TZ
- ny8A==
-X-Gm-Message-State: AOJu0YzWcc2q03gRxC38XgueP8hTOHUrYLtJp8MLYEc78i1ml03MtXmF
- j+13uDgZypiE9+sWbAZf6CCa/E6o+ov1Dq/Za6c2lLj4i1Bz6RNcpg5Zn+LWgtubsFhAx2Xm
-X-Gm-Gg: AfdE7ck2Knceazbwg2HprmOcusHyeMXOcdW5pVSYZ/9d0HCRVNviCAoLL1q8OTegFCH
- XmYMaNa1OpIL6A1jT286WloZXggAnuS5KMW4Yhgc+Szg4ZP5E9/gLjdm49A0PfGgNhh2HwZsN5Z
- R4ooXqXpPHGwVR3NZTAG+G7g32Y4OQpW6MXksTYOxWKLljjhVtIZOsZgXZntQNHxSpzsNmTXlPI
- Ec6HLgv017lbYSivv+CaamQTORItAqB1jdKb53cVzJW78u5zqEOqpebhi28mRQYjYn0MX6VKh7c
- fv/6G7XExgPtECR3/Lb9GQrhTSVHQcBshyIe8uKp2mrFpZk1XRPUbFoEXGqZggsvtUQ02BJv2y0
- 0za2K+Oe+EP4MF+L3lX1hlAdxt/WLegAsbk9kLzxM56xSvFjPHfRUsXsMXAEmJmXxRE9I5kq3MY
- eWiqV9/MP5Cz9Ze+/4KaIqH5SQ2knicj1H2klY1apaF9PgrEZ8PAoUcDppdIVpTF7oCy+8KAgYN
- VmgFI++tBLDRIychCboZSHdi4tk
-X-Received: by 2002:a17:903:1a43:b0:2cc:7d4a:3f5a with SMTP id
- d9443c01a7336-2cf3487711cmr143468335ad.20.1784515752770; 
- Sun, 19 Jul 2026 19:49:12 -0700 (PDT)
-Received: from VM-210-252-ubuntu.. ([14.22.11.168])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2cf347554a2sm48885115ad.73.2026.07.19.19.49.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 19 Jul 2026 19:49:12 -0700 (PDT)
-From: jianghaotian.sunday@gmail.com
-To: qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com, philmd@mailo.com, vsementsov@yandex-team.ru,
- thuth@redhat.com, farosas@suse.de, qemu-stable@nongnu.org,
- Haotian Jiang <sundayjiang@tencent.com>,
- Haotian Jiang of Tencent Security <jianghaotian.sunday@gmail.com>
-Subject: [PATCH] hw/display/qxl: unregister vm_change_state handler and BHs on
- device exit (CVE-2026-63322)
-Date: Mon, 20 Jul 2026 10:48:55 +0800
-Message-Id: <20260720024855.3757499-1-jianghaotian.sunday@gmail.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1wlgRk-0006ua-7E; Mon, 20 Jul 2026 01:21:45 -0400
+Received: from sender4-op-o11.zoho.com ([136.143.188.11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1wlgRh-0007aw-OP; Mon, 20 Jul 2026 01:21:43 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1784524885; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=Bb1GF4mJku8VpBb7zzHQ2z4EiExTG0nJCz/AXJfb7X0orXvTwqkUxXs0kN/gqDUBNbE+xs8f/Coi55Pb7xd6NtFV0B9LRw7yRCYqBU3hUpdM+XQfUJ15jKUwrnrHB8HY0bflNUeIK4K0kiRKsSTWkQlyY6BRx5inIAP4pstgCmo=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1784524885;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=48AFrF4se8ACX53XnlQHyeN7lFvzQ3ItcEj508mTzHs=; 
+ b=msBMWcO/T+EKig8ksETn2h9n3zTlETbLb8/0w/Gh6xEVqavbF8lzxKJSki2pSjAZOyQgay3RvtkxzPwofzfp90aaqoJBTLGhH1F3vdXOd3dDlzMiWT/RlnzIOpsJeuhMLPIRTMh5fQ4rZrleYLxE6G1OIETI+toZkMiE7q+NSz4=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1784524885; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=48AFrF4se8ACX53XnlQHyeN7lFvzQ3ItcEj508mTzHs=;
+ b=giY+QmzBPsD4PShMZTtxPUAODqtEcDtSrMMnAYzy8sDzcjwaaC+NVxBpaMlwZ4ob
+ EK/QdxzSxel2wdqI6MabOQXEwU6DlxzrUP0K/DHxWVPriWErfw3bHGL5/3AUe0YZZds
+ j3st2pMaf5NJYEKYQZLdpCaiyTV31DpddQquESpc=
+Received: by mx.zohomail.com with SMTPS id 1784524883100714.1723671972308;
+ Sun, 19 Jul 2026 22:21:23 -0700 (PDT)
+Message-ID: <35907323-7733-4440-95e0-5bbbbb6e56c9@collabora.com>
+Date: Mon, 20 Jul 2026 08:21:18 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::a;
- envelope-from=jianghaotian.sunday@gmail.com; helo=mail-pj2-x0a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/display/virtio-gpu: Remove the bytes_pp field
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>, qemu-stable@nongnu.org
+References: <20260719-bpp-v1-1-9b91946d6cf3@rsg.ci.i.u-tokyo.ac.jp>
+Content-Language: en-US
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <20260719-bpp-v1-1-9b91946d6cf3@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.11;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-op-o11.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,93 +79,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Haotian Jiang <sundayjiang@tencent.com>
+On 7/19/26 14:35, Akihiko Odaki wrote:
+> virtio_gpu_do_set_scanout() validates the stride field of struct
+> virtio_gpu_framebuffer against the bytes_pp field, but bytes_pp in the
+> migration stream may be inconsistent with the format field, which
+> pixman_image_create_bits() uses when it accesses the framebuffer.
+> That validation is therefore incomplete.
+> 
+> To avoid the trouble of synchronizing the two fields, remove bytes_pp,
+> and always derive its value from format. Removing bytes_pp is safe
+> because no released version of QEMU uses its migrated value.
+> 
+> Fixes: 7b5574225429 ("hw/display: check frame buffer can hold blob")
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> ---
+> Based-on: <20260715201055.2465320-1-marcandre.lureau@redhat.com>
+> ("[PATCH] hw/display/virtio-gpu: validate stride against width on scanout")
+> ---
+>  include/hw/virtio/virtio-gpu.h |  1 -
+>  hw/display/virtio-gpu.c        | 27 +++++++++++++++++----------
+>  2 files changed, 17 insertions(+), 11 deletions(-)
+> 
+> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+> index f69fc1946273..6f889ee84a16 100644
+> --- a/include/hw/virtio/virtio-gpu.h
+> +++ b/include/hw/virtio/virtio-gpu.h
+> @@ -65,7 +65,6 @@ struct virtio_gpu_simple_resource {
+>  
+>  struct virtio_gpu_framebuffer {
+>      pixman_format_code_t format;
+> -    uint32_t bytes_pp;
+>      uint32_t width, height;
+>      uint32_t stride;
+>      uint32_t offset;
+> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+> index e00fb6effa50..660191d15f78 100644
+> --- a/hw/display/virtio-gpu.c
+> +++ b/hw/display/virtio-gpu.c
+> @@ -617,6 +617,11 @@ void virtio_gpu_update_scanout(VirtIOGPU *g,
+>      scanout->fb = *fb;
+>  }
+>  
+> +static uint32_t virtio_gpu_format_bytes_pp(pixman_format_code_t format)
+> +{
+> +    return DIV_ROUND_UP(PIXMAN_FORMAT_BPP(format), 8);
+> +}
+> +
+>  static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
+>                                        uint32_t scanout_id,
+>                                        struct virtio_gpu_framebuffer *fb,
+> @@ -625,6 +630,7 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
+>                                        uint32_t *error)
+>  {
+>      struct virtio_gpu_scanout *scanout;
+> +    uint32_t bytes_pp = virtio_gpu_format_bytes_pp(fb->format);
+>      uint8_t *data;
+>  
+>      scanout = &g->parent_obj.scanout[scanout_id];
+> @@ -646,10 +652,10 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
+>          return false;
+>      }
+>  
+> -    if (fb->stride < (uint64_t)fb->width * fb->bytes_pp) {
+> +    if (fb->stride < (uint64_t)fb->width * bytes_pp) {
+>          qemu_log_mask(LOG_GUEST_ERROR,
+>                        "%s: stride %u too small for width %u at %u bpp\n",
+> -                      __func__, fb->stride, fb->width, fb->bytes_pp);
+> +                      __func__, fb->stride, fb->width, bytes_pp);
+>          *error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
+>          return false;
+>      }
+> @@ -708,6 +714,7 @@ static void virtio_gpu_set_scanout(VirtIOGPU *g,
+>      struct virtio_gpu_simple_resource *res;
+>      struct virtio_gpu_framebuffer fb = { 0 };
+>      struct virtio_gpu_set_scanout ss;
+> +    uint32_t bytes_pp;
+>  
+>      VIRTIO_GPU_FILL_CMD(ss);
+>      virtio_gpu_bswap_32(&ss, sizeof(ss));
+> @@ -733,11 +740,11 @@ static void virtio_gpu_set_scanout(VirtIOGPU *g,
+>      }
+>  
+>      fb.format = pixman_image_get_format(res->image);
+> -    fb.bytes_pp = DIV_ROUND_UP(PIXMAN_FORMAT_BPP(fb.format), 8);
+> +    bytes_pp = virtio_gpu_format_bytes_pp(fb.format);
+>      fb.width  = pixman_image_get_width(res->image);
+>      fb.height = pixman_image_get_height(res->image);
+>      fb.stride = pixman_image_get_stride(res->image);
+> -    fb.offset = ss.r.x * fb.bytes_pp + ss.r.y * fb.stride;
+> +    fb.offset = ss.r.x * bytes_pp + ss.r.y * fb.stride;
+>  
+>      virtio_gpu_do_set_scanout(g, ss.scanout_id,
+>                                &fb, res, &ss.r, &cmd->error);
+> @@ -748,6 +755,7 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
+>                                     uint64_t blob_size)
+>  {
+>      uint64_t fbend;
+> +    uint32_t bytes_pp;
+>  
+>      fb->format = virtio_gpu_get_pixman_format(ss->format);
+>      if (!fb->format) {
+> @@ -757,19 +765,19 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
+>          return false;
+>      }
+>  
+> -    fb->bytes_pp = DIV_ROUND_UP(PIXMAN_FORMAT_BPP(fb->format), 8);
+> +    bytes_pp = virtio_gpu_format_bytes_pp(fb->format);
+>      fb->width = ss->width;
+>      fb->height = ss->height;
+>      fb->stride = ss->strides[0];
+>  
+> -    if (fb->stride < (uint64_t)fb->width * fb->bytes_pp) {
+> +    if (fb->stride < (uint64_t)fb->width * bytes_pp) {
+>          qemu_log_mask(LOG_GUEST_ERROR,
+>                        "%s: stride %u too small for width %u at %u bpp\n",
+> -                      __func__, fb->stride, fb->width, fb->bytes_pp);
+> +                      __func__, fb->stride, fb->width, bytes_pp);
+>          return false;
+>      }
+>  
+> -    fb->offset = ss->offsets[0] + ss->r.x * fb->bytes_pp + ss->r.y * fb->stride;
+> +    fb->offset = ss->offsets[0] + ss->r.x * bytes_pp + ss->r.y * fb->stride;
+>  
+>      fbend = fb->offset;
+>      fbend += (uint64_t) fb->stride * ss->r.height;
+> @@ -1219,8 +1227,7 @@ static const VMStateDescription vmstate_virtio_gpu_scanout = {
+>          VMSTATE_UINT32(cursor.pos.y, struct virtio_gpu_scanout),
+>          VMSTATE_UINT32_TEST(fb.format, struct virtio_gpu_scanout,
+>                              scanout_vmstate_after_v2),
+> -        VMSTATE_UINT32_TEST(fb.bytes_pp, struct virtio_gpu_scanout,
+> -                            scanout_vmstate_after_v2),
+> +        VMSTATE_UNUSED_TEST(scanout_vmstate_after_v2, 4),
+>          VMSTATE_UINT32_TEST(fb.width, struct virtio_gpu_scanout,
+>                              scanout_vmstate_after_v2),
+>          VMSTATE_UINT32_TEST(fb.height, struct virtio_gpu_scanout,
+> 
+> ---
+> base-commit: 499039798cdad7d86b787fec0eaf1da4151c0f05
+> change-id: 20260719-bpp-803a3544fb79
+> prerequisite-message-id: <20260715201055.2465320-1-marcandre.lureau@redhat.com>
+> prerequisite-patch-id: 2c43dfa5d6a955e0fa3e3ca39ce3038968d85e7a
+> 
+> Best regards,
+> --  
+> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> 
 
-qxl_realize_common() registers a vm_change_state handler via
-qemu_add_vm_change_state_handler() and creates three bottom halves
-(update_irq, update_area_bh, cursor_bh), but none are ever cleaned up.
-The return value of qemu_add_vm_change_state_handler() is discarded, so
-the handler is never removed from the global list, and there is no
-PCIDeviceClass.exit callback to delete the BHs.
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-When a secondary QXL device (hotpluggable by default) is hot-unplugged
-via device_del, the PCIQXLDevice memory is freed but the vm_state
-handler and BH entries remain with dangling opaque pointers. On the
-next VM state change (stop/cont/migrate) or BH dispatch, the callback
-dereferences freed memory, causing a use-after-free.
-
-Fix this by storing the VMChangeStateEntry returned by
-qemu_add_vm_change_state_handler() and adding a qxl_exit() callback
-that deletes the vm_state handler, all three BHs, and the
-guest_surfaces.cmds allocation before the device memory is freed.
-
-Fixes: a19cbfb34642 ("spice: add qxl device")
-Fixes: CVE-2026-63322
-Reported-by: Haotian Jiang of Tencent Security (Yunding Lab) <jianghaotian.sunday@gmail.com>
-Signed-off-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3607
----
- hw/display/qxl.c | 15 ++++++++++++++-
- hw/display/qxl.h |  1 +
- 2 files changed, 15 insertions(+), 1 deletion(-)
-
-diff --git a/hw/display/qxl.c b/hw/display/qxl.c
-index 74258afa58..c9323672a6 100644
---- a/hw/display/qxl.c
-+++ b/hw/display/qxl.c
-@@ -2203,7 +2203,8 @@ static void qxl_realize_common(PCIQXLDevice *qxl, Error **errp)
-         error_report_err(err);
-     }
- 
--    qemu_add_vm_change_state_handler(qxl_vm_change_state_handler, qxl);
-+    qxl->vmstate_handler =
-+        qemu_add_vm_change_state_handler(qxl_vm_change_state_handler, qxl);
- 
-     qxl->update_irq = qemu_bh_new_guarded(qxl_update_irq_bh, qxl,
-                                           &DEVICE(qxl)->mem_reentrancy_guard);
-@@ -2475,6 +2476,17 @@ static const Property qxl_properties[] = {
-         DEFINE_PROP_UINT32("yres", PCIQXLDevice, yres, 0),
- };
- 
-+static void qxl_exit(PCIDevice *dev)
-+{
-+    PCIQXLDevice *qxl = PCI_QXL(dev);
-+
-+    g_clear_pointer(&qxl->vmstate_handler, qemu_del_vm_change_state_handler);
-+    g_clear_pointer(&qxl->update_irq, qemu_bh_delete);
-+    g_clear_pointer(&qxl->update_area_bh, qemu_bh_delete);
-+    g_clear_pointer(&qxl->ssd.cursor_bh, qemu_bh_delete);
-+    g_clear_pointer(&qxl->guest_surfaces.cmds, g_free);
-+}
-+
- static void qxl_pci_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-@@ -2482,6 +2494,7 @@ static void qxl_pci_class_init(ObjectClass *klass, const void *data)
- 
-     k->vendor_id = REDHAT_PCI_VENDOR_ID;
-     k->device_id = QXL_DEVICE_ID_STABLE;
-+    k->exit = qxl_exit;
-     set_bit(DEVICE_CATEGORY_DISPLAY, dc->categories);
-     device_class_set_legacy_reset(dc, qxl_reset_handler);
-     dc->vmsd = &qxl_vmstate;
-diff --git a/hw/display/qxl.h b/hw/display/qxl.h
-index ad8a912878..48d664f777 100644
---- a/hw/display/qxl.h
-+++ b/hw/display/qxl.h
-@@ -83,6 +83,7 @@ struct PCIQXLDevice {
- 
-     /* thread signaling */
-     QEMUBH             *update_irq;
-+    VMChangeStateEntry *vmstate_handler;
- 
-     /* ram pci bar */
-     QXLRam             *ram;
 -- 
-Changes v1 -> v2:
-  - Use g_clear_pointer() for cleanup per Marc-Andre Lureau's suggestion
-  - Simplifies the code by removing redundant NULL checks and assignments
-2.34.1
-
+Best regards,
+Dmitry
 
