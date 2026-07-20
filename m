@@ -4,155 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AA92C44520
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 15:24:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC816C44515
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 15:37:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlpqz-0007GW-VV; Mon, 20 Jul 2026 11:24:26 -0400
+	id 1wlq3C-0002Iu-UV; Mon, 20 Jul 2026 11:37:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wlpqv-0007AW-0c
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 11:24:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wlpqp-0001Ql-No
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 11:24:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784561054;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=8mv+mujiyjXSsJWxXclvJVodv+RRZ5HXtPh7Dd6NMvk=;
- b=D3c6AwXkqn/nK7WbwxPBzqDXC6KZbkYun2kEG1SK18/goU4O0yA9xPyzU+1IKsX2L2Ov7t
- g2NgirBP4bRxfooetdq0KuIpmwLLs+N3Fnid+XkTHkqrJf5FSGQK1IzUuCwTTFg15BYG9i
- LFYAge+XnGj2Vs72WTMBgm/O7J7WKlk=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-657-ZU09UhaYOv2qtQ60L9s8Ow-1; Mon, 20 Jul 2026 11:24:10 -0400
-X-MC-Unique: ZU09UhaYOv2qtQ60L9s8Ow-1
-X-Mimecast-MFC-AGG-ID: ZU09UhaYOv2qtQ60L9s8Ow_1784561050
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-4740be00302so6024497f8f.2
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 08:24:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wlq31-0002FE-H7
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 11:36:51 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wlq2z-0002ks-2A
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 11:36:50 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-698e5859a3cso7966916a12.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 08:36:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784561807; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Zd9r7uCiYO9C073AP0DPWbR4Mx8pIHzTG2owhOIyZpY2Awe5wqo9D4zONvb3cMWhuh
+ i5atM7s7FPNDa+N/WLBPMHIDfUrHQy/b9iYAe1R4bGccAPYDn+2EyiYMPtk6xYV9aCZv
+ ZlPv0uJCRFV0Id3OA8O5WMjiORHBgE5ICuQDV7GAvUgGshXpFrCr3P1zbyAco43K7uq7
+ YPD5GqYmHzdMKZNyWO96a4lTYjh+0Rsw9FKo5EPb8PrnSoBBoKLnxjUm08QcHiwEIJTC
+ a/3W7aklaDRuAJ2Djr9UIwqrnlBE2Gie+U23MTfnG8vuLPZeKq9NHpGjHW8dluwM6+Am
+ O16g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=7nNmMMIzBT4LmNsOiO6ifxwI98l+m1IlOZC8ousl4tg=;
+ fh=qvswdB/KlbL20ZFuhSZlPzooxHJ/+ZgLrLv7+6O59m4=;
+ b=NWqRy0zKBC37u44+f408uvE3u/sagNo1MkYqYPnCcCqwEXgiK73qlVH5O0V4FBLV1/
+ hkwpVgB103hhNCNkHxdlvvHsZaJnafm1Lc4UOwI+L9DN2sRNHsP0+lIQyNo45/fqv2yG
+ IaQ2kj36ypR8KB5EPNjCJwAS72wokFSrEVDPoc+0OwJ49HzHfAx+r8ZrsNVxcce+wxVp
+ ZEaAZa8KbU+ikRYS9S6ZebAnjxIxz2elyNRLIPLuGiKFu6DYlUeoWEYPJj6hTmx1T8xP
+ Voc7XGZG9qmJq6veOWuGf5UVXDGctGlr7vae+6yKPSmgm4PawFVaw+yJyOH+FdJHIB9v
+ kGQQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784561049; x=1785165849; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=8mv+mujiyjXSsJWxXclvJVodv+RRZ5HXtPh7Dd6NMvk=;
- b=QM4n3R23ny7Pz3N5KtHiViqfnb5WuhvB3eMrZJdSJt9Wj0iAKHbT2JAkwyjvUq+B23
- KMFnFz3PGQr3z4KiFpB5QjAYZ3unIsXBaWG++QDCQIvl66KrSUbsaDgGdf7Xv+8bD5vI
- 2K9aHuANFDWUwGaxDQTW2UUyjDnzQqErMQMvDEN0Q52L631oGTe5NFZZ08BRCfUf3Qwm
- 4Gdhe1tM2Wfs5ufewzzoSq+pJVWXUpolTgSbWGt8YLt5TjzlwoRrGmCXD94fOTNlno9g
- YYBF0n5zSh1sGTL9DOVID5Ysy1yKaRKUvYyThv6J6itt2F7065dbFBXaZqUtbTsFy6vv
- 55Ig==
+ d=gmail.com; s=20251104; t=1784561807; x=1785166607; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=7nNmMMIzBT4LmNsOiO6ifxwI98l+m1IlOZC8ousl4tg=;
+ b=ATNwu3gamZKt1gJSVvNPaFcICRHy+2ffBZkbKrvkeuXtEb4kEDL7U37PzBO6Wv0KMP
+ u6fBqOym+MV7j19KrpGwS+dq0/py7VeFIgQWGE6tmj8XFjwDUbf5Fkm7vZ5AVuYJG9YX
+ S2RprOu4BknAvaI5ZDLi0Z+qWxT3IiMhz7cQI6ypc2eeMBImirYoFdj09ZzM4VW9XvJ+
+ 4gEnCp8bjM/bWnCgxWwUjiLdr2LKZ/IVUy6PDMIeIKp2IQQroZaYkULhVIbxL+Gp0jis
+ VqXyXAsY7W4tW76pzqkRhKtz/WIRnw267fkoU/iN29HjDLH236FwG9JKg5ooynMrBFBP
+ AfsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784561049; x=1785165849;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=8mv+mujiyjXSsJWxXclvJVodv+RRZ5HXtPh7Dd6NMvk=;
- b=RqJbZiTaWxyy+SRCPqviH871Qv9CAGTf68DiJwpEmSPV/DhnOSeGqS0J0vDSCb0nj8
- duguDEphQypA8Y6xrAkEvUrxrmoJAepLq4H8x1Hg9meCmiIIpASfnIh0S/ZwJohOaCDS
- vXTbviYmuxIIzpmORsz7AAi4/R2IpeJ0D3Dl2kmPAnV4nHU6+cfinxFcF0T+RtQUsrIX
- PAKk7UPMZFVjwQg23BITvWojqz+8SZi0ak21SCI0r6LnC8hQF/36wcNTXNMcc67VxTQO
- izqTed0pJyVvpuJqzySUy5e2jnI4xaZAsjtNYnymfZppjVbhKiWmGaPOlLNJXFJ3rcVE
- wLkg==
+ d=1e100.net; s=20251104; t=1784561807; x=1785166607;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=7nNmMMIzBT4LmNsOiO6ifxwI98l+m1IlOZC8ousl4tg=;
+ b=Fm4hqlNjSUrrCKfHJe3rSh9u4orXquq7t8iBEI5j4k5lx0DsGpVGX1TYh7uqIkgOJM
+ d5Gtw96IqmH4q+S+Ufy7PAKsxrlGx5px6ZBLShcj1Q9NCRwtm+zc5aCT6IPJDEHUxhmd
+ Huvaf8M0Y2Iu5th0xRk/6XR9FplWBrY1g4Coz7cbNVT6eezVH3pqwRbHzTyF7QHekK7+
+ S+8U5VkmmKhrvcwjZrYsYu1c0itfmbSsrCFKVHRIIN6qlMN25zlGiFeoFZiIL9iUyY8K
+ GKwnukmokb36dj3fDuSTpzTyOwjOLB1C9n+TL01IkersVa5ubL/BZJWsa0NlBFHTBe7o
+ azZg==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rrc/pnc1j2Q+8XX6cW9aD4LGzzmadm0/l5pFKMrv0wnYm8GXkUJ9LMCkZqJMkzzFu99tCXj7ixlQ9YU@nongnu.org
-X-Gm-Message-State: AOJu0Yx4leY/380uSTuvqBndcQ8pq/9r/iFAERf3rhL/M5OKdt+GzyRD
- exELj/GH8ZpT0cqtY0zka7F8t7SXHcgErpIDY4szM202chbvM75Q3qWJ0JE+A3Zn3+EKeqszZ26
- F9NqCWOofSBoo1r+zvQ4F2i5zA2I6AYFXR9gBo+CFK6l+LnawPBQvhyHM
-X-Gm-Gg: AR+sD12tD9/k9ltwHR0zr/j9m+qmLLJIJOkAk4FdX0EjvhXoIY6vJaE+GFwHiUUSuEp
- cjMTFvjShUsIjzSukDIx7+XnTy1swHPbOnq3D4h5XytRJnq5FI34csrOTbHQhWqN9/MmmwV8c+l
- Y1c4+5yAgP962XfvpnFzmlMKjtMD6TB5utURuuohHNCXba/+FprcC8yve02fa4mpHiXtsTBrS99
- W6BOYkQs0gLJbPxsZ3azOC7RVO9yGjIA7Y0y2/KsqvoMcGoL6qH/YL0otu0eLybqkG+WjrHIHTl
- Zl/2YyeB45hueS4abC4uCHMbGgCIrISWkL0p6+y08qtScesYwwqKEnC9qEOqHX2MPI1II00zOjW
- 2mO+EVbRjCH95v6SlqcMM0pJVVCP+Oy0NaIkXILg=
-X-Received: by 2002:a05:6000:2287:b0:47f:6fa0:a9f8 with SMTP id
- ffacd0b85a97d-47f6fa0aa2emr9780953f8f.28.1784561049579; 
- Mon, 20 Jul 2026 08:24:09 -0700 (PDT)
-X-Received: by 2002:a05:6000:2287:b0:47f:6fa0:a9f8 with SMTP id
- ffacd0b85a97d-47f6fa0aa2emr9780921f8f.28.1784561049076; 
- Mon, 20 Jul 2026 08:24:09 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
- ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f63e65644sm29301315f8f.16.2026.07.20.08.24.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Jul 2026 08:24:08 -0700 (PDT)
-Message-ID: <24c5b800-9c79-4d8e-87d1-3dcbb197be8b@redhat.com>
-Date: Mon, 20 Jul 2026 17:24:07 +0200
+ AHgh+RrKaTusjsDbepDNHqLJLZmhamNPNA3PTbpGqvfwRCp/UOd67z3dcBVPPvhv3cKlGv7xXvwVMjtSBw1z@nongnu.org
+X-Gm-Message-State: AOJu0YxgSyOavGus4k8dK1V66t71AApcYvSDS81tmQ5L/kuYoGhm6/t7
+ ULhUr+YS8ZvlAglRjK01Woo5wXlgzjGLBsIDdX5HcSJHXPzdPsYrqGXSoKW+RygrMg0a/s4Zl0W
+ y8Gk184f3bl3e5MBy1j8AmmN8hhNmzkk=
+X-Gm-Gg: AfdE7cmj+P4bEuChn3szk1o7v4KFyvyO1RWUFiNfbvhPrqrpZtPmZ9+bMvH+Dfmf5pk
+ +GqPtCT5fgos/QXWwvd2iEfFjkei0oFHNnZueVtTW286AzTOE8J+u5a1XZjymnbGKREGBx3cI+R
+ LLXkcUU+xRVdmqPgTVNlWYctxOjR5sTT1sf9h8du65JRGEyIpELba4cRFVOCGyfEjF8/hM1DbQq
+ 8C+Hyw57VwP9qcnrT79i/w5lW4jKzMX75pOwNwdx17E5p5xlMISIbOZiuogDa/tk53aBX5j9I+S
+ 6IktyzRmexpdQYTzDXdWA1rqebpaCO8=
+X-Received: by 2002:a05:6402:a4e4:b0:69a:3652:9d33 with SMTP id
+ 4fb4d7f45d1cf-69e38d7a165mr5712126a12.19.1784561806849; Mon, 20 Jul 2026
+ 08:36:46 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] vfio-user: vfio_user_device_io_get_region_info: fix
- capability check
-To: Thanos Makatos <thanos.makatos@nutanix.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: John Levon <john.levon@nutanix.com>
-References: <20260720091718.2642-1-thanos.makatos@nutanix.com>
- <20260720091718.2642-6-thanos.makatos@nutanix.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260720091718.2642-6-thanos.makatos@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: permerror client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <CAJSP0QXRy1Dc_MwqtU_gS1+jOdrW=Vk6YynP75q5HP3Rz_CpTA@mail.gmail.com>
+ <904444A5-0120-4BE6-8E11-C7167F2A3BDB@unpredictable.fr>
+ <D91DC576-2462-4652-9E8C-5A7C96791622@unpredictable.fr>
+ <CAFEAcA-X7h0hQ4FaTaVoEUKTJvxfaK8GcihR=+RzxOTBf3X_mw@mail.gmail.com>
+In-Reply-To: <CAFEAcA-X7h0hQ4FaTaVoEUKTJvxfaK8GcihR=+RzxOTBf3X_mw@mail.gmail.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Mon, 20 Jul 2026 11:36:32 -0400
+X-Gm-Features: AUfX_mw6jmway8HJq8Rfz3af5VMPXJR_yVzJvseWEos7PpyqDF3WAn_Mz1mxhl8
+Message-ID: <CAJSP0QUkmT4vDPY0cHYFJNaeo57ZsNwxd8nYvAXtuHY8StPeYA@mail.gmail.com>
+Subject: Re: macOS builds broken in CI
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-devel <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,40 +123,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/20/26 11:17, Thanos Makatos wrote:
-> The existing check for PCI capabilities misses the case where
-> info->cap_offset == info->argsz, which results in accessing unallocated
-> memory. Fix the comparison.
+On Mon, Jul 20, 2026 at 5:38=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+>
+> On Thu, 25 Jun 2026 at 20:15, Mohamed Mediouni <mohamed@unpredictable.fr>=
+ wrote:
+> >
+> >
+> >
+> > > On 25. Jun 2026, at 21:11, Mohamed Mediouni <mohamed@unpredictable.fr=
+> wrote:
+> > >
+> > >
+> > >
+> > >> On 25. Jun 2026, at 20:38, Stefan Hajnoczi <stefanha@gmail.com> wrot=
+e:
+> > >>
+> > >> Hi Alex,
+> > >> tests/tcg/multiarch/system/Makefile.softmmu-target's
+> > >> run-gdbstub-interrupt seems to be broken on GitLab CI macOS runners.=
+ 5
+> > >> days ago it still passed, but now rerunning the pipeline on the same
+> > >> commit ID fails:
+> > >>
+> > >> - Good (5 days ago): https://gitlab.com/qemu-project/qemu/-/pipeline=
+s/2615134022
+> > >> - Bad (today): https://gitlab.com/qemu-project/qemu/-/pipelines/2629=
+704018
+> > >>
+> > >> I've tried many CI runs with different pull requests applied on top =
+of
+> > >> qemu.git/master and they fail in the same way. Maybe it's an
+> > >> environmental thing with the macOS runners?
+> > >>
+> > >> It's unclear where the SIGKILL (Error 137) comes from. Could it be a=
+n
+> > >> out-of-memory condition on macOS runners?
+> > >
+> > > Hi,
+> > >
+> > > SIGKILL is the known symptom for failure during signature verificatio=
+n
+> > > by AMFI.
+> > >
+> > > Now that we don=E2=80=99t have separate -unsigned binaries anymore bu=
+t relying
+> > > on in-place ad-hoc (w/o certificate) signing with entitlements we mig=
+ht
+> > > have issues linked to that.
+> > >
+> > > In the past file modification had issues with verification tied to th=
+e
+> > > inode and the workaround being a reboot or a cat binary > new_binary;
+> > > chmod +x new_binary so that the old (now out of sync) signing state i=
+s lost
+> > >
+> > This is highlighted in the software update context in: https://develope=
+r.apple.com/documentation/security/updating-mac-software
+> >
+> > > This code is incorrect because it modifies the command-line tool=E2=
+=80=99s executable file in place. macOS caches information about the code=
+=E2=80=99s signature in the kernel. It doesn=E2=80=99t flush that cache whe=
+n you modify the file=E2=80=99s contents. Modifying the file in place yield=
+s a mismatch between the file=E2=80=99s contents and the in-kernel cache, w=
+hich can cause a hard-to-reproduce code-signing crash the next time you run=
+ the tool.
+> > > While this example uses a command-line tool to demonstrate the issue,=
+ updating any file that contains signed code might trigger this code-signin=
+g crash. That includes executables, frameworks, dynamic libraries, and bund=
+les.
+> > > To update a file that contains signed code without risking this crash=
+, write the updated code to a temporary file and replace the existing file =
+with that temporary one:
+>
+> I was just looking at this again today, but looking at our
+> scripts/entitlement.sh, when meson.build calls the script SRC
+> will be qemu-system-foo-unsigned and DST will be
+> qemu-system-foo, and we take the in_place case and do:
+>
+>   cp -pPf "$SRC" "$DST.tmp"
+>   SRC=3D"$DST.tmp"
+>
+> to copy the -unsigned binary to a .tmp file. Then we
+> run codesign on that .tmp file, and finally
+>
+>   mv -f "$SRC" "$DST"
+>
+> to rename the signed binary to its final name.
+>
+> So that looks to me like we're following the rules for
+> not signing executables in place to me...
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3865
+Hmm...then the next step could be reproducing the job failure locally
+on a Mac where it can be debugged or bisected.
 
-> Signed-off-by: Thanos Makatos <thanos.makatos@nutanix.com>
-> ---
->   hw/vfio-user/device.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/vfio-user/device.c b/hw/vfio-user/device.c
-> index d7cf39dda7..ce437b2464 100644
-> --- a/hw/vfio-user/device.c
-> +++ b/hw/vfio-user/device.c
-> @@ -215,7 +215,7 @@ static int vfio_user_device_io_get_region_info(VFIODevice *vbasedev,
->   
->       /* cap_offset in valid area */
->       if ((info->flags & VFIO_REGION_INFO_FLAG_CAPS) &&
-> -        (info->cap_offset < sizeof(*info) || info->cap_offset > info->argsz)) {
-> +        (info->cap_offset < sizeof(*info) || info->cap_offset >= info->argsz)) {
+Please let me know if you need help on the GitLab CI side. Mac runners
+are available to open source projects, so you might not be able to
+test in a personal fork
+(https://docs.gitlab.com/ci/runners/hosted_runners/macos/). Peter, I
+think you have the same GitLab permissions as I do, so you could
+probably run experiments without my help.
 
-May be :
-
-        info->cap_offset + sizeof(struct vfio_info_cap_header) > info->argsz
-
-Thisensures at least a full capability header fits.
-
-As you wish,
-
-Thanks,
-
-C.
-
-
+Stefan
 
