@@ -4,135 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E836BC44515
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 17:35:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBF8AC44515
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 17:42:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlrtl-0004cc-RH; Mon, 20 Jul 2026 13:35:25 -0400
+	id 1wls01-0008DO-89; Mon, 20 Jul 2026 13:41:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wlrtk-0004ZD-Nq
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 13:35:24 -0400
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1wlrzU-00080d-Dt
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 13:41:25 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wlrth-00021N-F2
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 13:35:24 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1wlrzR-0002x7-FV
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 13:41:20 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66KH6jP43299199
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 17:35:14 GMT
+ 66KHBrWH3442633
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 17:41:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 1nJSN/16zpCcBanPqmL4DZU9JKaSYAh1VwTvJrYDWKY=; b=GZ1IhtFHKrNVDPYq
- f0DiCXYgmSDv/W3RMEcughL1l+3OwWBtAmE6PfKmZjr9zGPn5OfSul+Hdbkl1MmO
- RWVH2NWLcFY6CYg8nG+tL+Yp2+pVgG+ErjJdBOzDsPW79MvEOSdHsK92jg3BntXh
- NmEh1NOk60LLn1uj7tBI++lgLtxdbS2s0bFwzB1huXbmx5ueQYkS6/DF4AVgokur
- i/mFny6Q9S9TC2NXpXubJcw9VrsV4+5fHoRXsL/9J8sKJ/K2XRDtmUJNoag5sN9T
- f2rXijnI9gQ6Q5irYPa2wh6gIKD7S10bMrIwxK9oE2/F7DTVe7ESmBiIQhbV4sEC
- 89LeAg==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhfvxjk80-1
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=EFswy5eh2Ck
+ Nrk+N8UM9hmPqBP0xTdauqnFywLbP7Ck=; b=cto2FXZH2DYC2XwINxLzJzJhoUS
+ v+1them0LIR10scZEXETTWyPyHzUBd+AOUduek8ADFedfSAULsIErF8HbKn85ytt
+ 84j1du9A9SvH2XUs3/Gllj3o1v1wz4yWbOWh0aE1FDwMozmKlxkroq7I/4rg1f9t
+ v10TCQhPuf0VUikQWT9HU/g/dIwEgRG+rKUGqyiFdpn9mxsfACDmYKWa9cd0oNq8
+ VyrX6rSt8APyLyEBe7LrzXZIq7F1xRP4EOx8sQ9Z7DLTpA9GvV/lu7CXP/8dboFL
+ 59tvrWndRxUka3PCD+wZs296JM80QQPPSv32n0whSA+GmeKC9bK5zMs9GRw==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhqv5r46a-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 17:35:14 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2cce870a060so181425515ad.2
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 10:35:14 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 17:41:16 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-2cee1ec30f2so95473905ad.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 10:41:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784568914; x=1785173714; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=1nJSN/16zpCcBanPqmL4DZU9JKaSYAh1VwTvJrYDWKY=;
- b=UC4lZG/hysMm0D5lNd6x03g9TvhXasbVCX7sfb/zbigYr/b7RwCprXu3MwnkHp6eKG
- F7syrF9LuGjfvdHgd34Dyvyd6uYLIH8dqWtiQCHgcgczHl4lVjIKvWHDdk7YCGHhgFRg
- DusE2+zuv/w+VlTy2+6+t2cXB+P/l+8WCO0DchkHZXgkGluOZUAFhjaw+OoCqr4n2W8W
- Jx68zWN8SWXf6X1TNcYg8ZzS4p2tsxL/3wwcodYLJwEL6Kaj5ClJajeZ0Jvh4LaDT/yw
- 8LyuCrplouBVAxnN80sNJRPMH7fnHY2eG+KJpn7oVtuhWhdCoQfygb8e1KPezD1kWEvM
- jI+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784568914; x=1785173714;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1784569275; x=1785174075; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=1nJSN/16zpCcBanPqmL4DZU9JKaSYAh1VwTvJrYDWKY=;
- b=Zcu3+LlwTPvJwTrFoz05F4BSF8x2gsi8hU9qX79Dg7kgWQrmhqNgSrjwCMGo3WKpvf
- MWLooLdhrpxp38cVxxyeMGvB99kdOZcwTm3pVROLiB1GahjTxGnug+Fv4Tas1iNVuwAD
- EAlSq3NlqiPJPNPAJN8pBZL10wVi2k3WgZ9X93TfnH/IvJyXnPwN74fCm62thaHIflNj
- DxUjjnwkDWTwRkBgfQgPxISyKC5qF9G0vmWOtjV4mPfhTldVcQAYbTo+jG32+bQUCjbs
- uZPp5cjPM4mEAtHuiWzd7SyYUBFBxGKKMNZiUZS3GMj1jmfX77SFa8LajPMrNu0Kow1r
- z40A==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpVTHES2x0DrM7VlSN9ndt05g3z6OZfOkekvC+rOV2lZY6CnUG38aCmmxysYqapqEoLESod04xh//ZU@nongnu.org
-X-Gm-Message-State: AOJu0YwuK2qKePpdnC3sS/w3ra9wQz8xCmwsdRZ3iDJY3VhXeZieJqSo
- muTk4jKK87tBLW75zGtKDP/SsMuDUYEM78vieuEXUC2H2cO6WCvMCN0Z1J6PzZNhjXDlOIChPV/
- 8bXlsyXlv9MaKhAD77nNiGv+Ay8CZw/uhdC7Y5vYxM8LY2Fi/4f2ckeBEJg==
-X-Gm-Gg: AR+sD12b08DP0TgiRmvcsPUdkkB3aStW+ellRf3jD8ebqc/Xv6rmxC/fzy7S4mR1Mes
- wSFe/F2H1c3eTuNJkeLjeZxbPUiEvd38D0NytSjvS9SUH3lAHO0BNDuSfj0NzauxQYTfF0jAm1Q
- YJ6hRO8YpR1TVDhfqzqF+pvAI78fWD7KgDoA9PBWBPon+0hYHlQAXdcwjukfH7ILf6VxAON9z6D
- vOBeFU2W/xchJtFMJGm7/BbtAeuSXkyXP+rQGdVgJj4x3V/iEEDRgdbR67yf+oXYWBD2apBWkj8
- TmxsysIvZIpotR+4hK4g9qndCx4L8Wi5zXluTk1+B/qoraqUSyKy6TQQETRDWroRMsdLVw92mAO
- ShCb+DTDwUtQyZi0+GxIOmSG9ZDa3AjgeXG35tVPyKJO1QPXLDYdlBsqWM6kSKRg38uBp
-X-Received: by 2002:a17:903:3805:b0:2ce:8551:318c with SMTP id
- d9443c01a7336-2cf349d1747mr147460005ad.40.1784568913961; 
- Mon, 20 Jul 2026 10:35:13 -0700 (PDT)
-X-Received: by 2002:a17:903:3805:b0:2ce:8551:318c with SMTP id
- d9443c01a7336-2cf349d1747mr147459665ad.40.1784568913410; 
- Mon, 20 Jul 2026 10:35:13 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-31429f9d44fsm37364959eec.1.2026.07.20.10.35.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Jul 2026 10:35:12 -0700 (PDT)
-Message-ID: <764a8c69-0511-4b86-a649-c0a0ea9080bb@oss.qualcomm.com>
-Date: Mon, 20 Jul 2026 10:35:11 -0700
+ bh=EFswy5eh2CkNrk+N8UM9hmPqBP0xTdauqnFywLbP7Ck=;
+ b=P+qAoZHqO9MMckEhapzEIUwlWpoTS8M9H+1bCA+bL0Kt14Nm/WEMGWf6zqf5YgE9vE
+ BHuRDekXSVJJqx6YL7/TadUjJ2ANkzd2CirKjXCwVJrX03gw15urr19+qICYNBOAZa2W
+ Etnms+d3xwwCXpCLPe+Fa5RaAdAVGZh1GVSNJhKGTpT2LpYrYKI2tlEpyBfn5np/0dfH
+ iHj7FUydlFy6I/DpGamjq8Yk917LTtDFPdtQF5reMpuUcqbhjmQEVsWHjSh0K4KZjaxc
+ nrieveylae7RcL5YUTSY/D3ujMadJYvv4GboAgw9TZxC0T8/PZDEvWGgl9DyVh7/KWVE
+ KccA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784569275; x=1785174075;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=EFswy5eh2CkNrk+N8UM9hmPqBP0xTdauqnFywLbP7Ck=;
+ b=J2gUWJ/tfrKM/jg0PAzlg4PpcI7hdLxtfJRKbR+IIiaY0I8sqiZZnKgsUtXMVJeDJa
+ zXVMExL2ZMyQrDkVVlmNtiJutzYMf8n1xewi/DfSsW07X+ZG+YPEe6dYj6pkLzve0GYj
+ ahKVEpZUcvJgMiPrOijV/pYq7TqPsEEcXg28ms0EkznwU8OA/feU1xhMNc50g33PMHAA
+ Q7uGZHgIFYKWmvVIoNEnlkBhHSX1MAZRIjo4F9eCzA9KOoYploM8InkjkbYIFymL+TXo
+ l4F6qaTyPq1n4DSiUjQKeNFW1u9/BBHJ2ml7knnU6iRVgLI8322NAYRWxvyqr9WUFkrk
+ EBrw==
+X-Gm-Message-State: AOJu0YzIq4YKBhr5Qv0MIHvuvMzd0gNh62UAW+oClpSRdgdNHWBoBJaD
+ Yh02+dIu7xbMBkRBaKec+txsy0Gw6fCsJ2R0sClVdDtUfir1pfNY8bCL2ri9/Yb/2NknDcjYC6H
+ 8JPrFRq++RPQjQyQl0qwj9V74lB4tm7THyUSAchzL1vCDBbWDIuhIzYk/fvhplM4nzQ==
+X-Gm-Gg: AR+sD13rod4UHrDTudWtPzORtg28GobhDEeBhXKBj02XbYDiRcSJRxDtEtLgFJQqoCQ
+ byZmf9HuQCr7/hp+35x5Nybvs10t3ByON5pT+15Em3Kts8qholf5iv1pMeKC8rvUwR8b+/+ZdTW
+ Al3868HQIR9QRdfPBoFuvWJs7YvY8zAhrK+osZCZkBNmxFmD9GzgZMQhTijKej76R6QoZROAQTW
+ hWiI1DopKm2esY7IWtmWk6H7TysdP8pJhirGgFErCEqxH4M3iJhy/gQnZvRbG/cke2to1jrwZzd
+ JWdmt7NQaMi2/Bq8DiuTxBn9uOUV/IrDUfPYK8ZZRwZcRIcUMET0sDgXaqlkQmdWjpq0v/yOeAr
+ CMd2XpVKQqzUpenSy5zvZBJuWxIrgh6OjlK2nNvSsEhK8/ozwSTadi0BzK8x5iYs=
+X-Received: by 2002:a17:903:1aa4:b0:2bf:27b2:4b80 with SMTP id
+ d9443c01a7336-2cf34873e2dmr157903325ad.14.1784569275092; 
+ Mon, 20 Jul 2026 10:41:15 -0700 (PDT)
+X-Received: by 2002:a17:903:1aa4:b0:2bf:27b2:4b80 with SMTP id
+ d9443c01a7336-2cf34873e2dmr157902905ad.14.1784569274430; 
+ Mon, 20 Jul 2026 10:41:14 -0700 (PDT)
+Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3142a1dde81sm66281257eec.21.2026.07.20.10.41.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 20 Jul 2026 10:41:14 -0700 (PDT)
+From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: brian.cain@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
+ marco.liebel@oss.qualcomm.com, philmd@oss.qualcomm.com, ale@rev.ng,
+ anjo@rev.ng
+Subject: [PATCH v3 03/13] target/hexagon: add aux functions for guest mem
+ load/store
+Date: Mon, 20 Jul 2026 10:40:59 -0700
+Message-Id: <db1ec7611b774093ea57c60dc18be61bfbb87bbf.1784568922.git.matheus.bernardino@oss.qualcomm.com>
+X-Mailer: git-send-email 2.37.2
+In-Reply-To: <cover.1784568922.git.matheus.bernardino@oss.qualcomm.com>
+References: <cover.1784568922.git.matheus.bernardino@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Revert "target/arm: Build cpu32-system.o as common object"
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-References: <20260720100312.119894-1-peter.maydell@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260720100312.119894-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=HKLz0Itv c=1 sm=1 tr=0 ts=6a5e5c52 cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=p0WdMEafAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=5ksWg3-Fzs99CpwBcB0A:9
- a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDE5MiBTYWx0ZWRfX7AFui+it1KbO
- SqFclfVH82k4NKIENPUt5pTBtGD6HyytaVRQKZh3RCEbx4uGYWFvDFk/L0CA+yHx8Mc5blBIQn0
- 1RKR3GSNajFB+qgfxLrqFWg/Fl+SD4U=
-X-Proofpoint-GUID: wva2aonbYJ13VUqILAgC51v9lDY8PIT9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDE5MiBTYWx0ZWRfX9KxaBXxNchEx
- GnJF9mUDYywD7kEK6Jo2CvBUknsRn/JaelFHrKQ4h7stajaT7LfcVNogTKxA7qZzUXB/4S2QlTp
- Htec+CdEY/5GOncMr4g8t41flllq+zHddieCcQjPfRtLPb8pDeTyqU3+EvLOlf73ObnibmH+4yB
- oPDffyAvpioLmhIkPhNB5II+1mBzFBuZtW1KPozrzjNS3ySdPY9xLRPpyhUJ6UN4IZjVMq5TXmY
- nkJODj5z8xMwy82GBOxSBWULX4bpg+PLf2DJrF1c/TArewLf8ijyPxNuTsGli9SLmjIcwkOOLZ8
- QuE/GXrZd4gNTBN0smLlZJLya06KGr9cVlc2eivMndE6HHOBua3NnLWAzjHzBJpXAPw6v3WmkKE
- nUTx1pXUNrip4LRqQmrVeP5f0t4+/qQP4/Y2j40xSPOYk8FfEsb5sUpkgq4mzWR5W8+ySnMS6XZ
- 822Ku9UACRpU93k8Omg==
-X-Proofpoint-ORIG-GUID: wva2aonbYJ13VUqILAgC51v9lDY8PIT9
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDE5MyBTYWx0ZWRfX22MhPiEtpvPf
+ LVFFrmpyy7WmYeElH2yT+aZ+MDfwOkaXVcfIBNhCJVklR1aNd9wcIR+Fd9chWue/qpmLiMh3V3E
+ NCxt76UAZZXC+oYxBN53wScS8SxSvYMF8i0isjnu5d+4NNg8ke4xzliiQDKZrew2g8NMFJjtk8f
+ hpTOurA0Nod7v3/2tW4TdpCOzr9kUCnTguyfd04rE4VuxeX8XoQ/2u5lEKJ/SBYwOshaCzl/0eP
+ 8lXEkoI+WqmmTagQ9qQ4BuW2oXu0CdeKrydFzsQHxKSSqS2wrAOAFK6MOYayYsRhlKxma9UJqPy
+ bgYdVHvWWCcZaByJTiqJI0ubPx8LSZ7ScEGYrMdFsB1Sq7asXCBHiLwC8cvP01onx8Gt0CfRs7w
+ ZSE0ZK63QFCooKX/HjoRbmIx7wbEUb4dhoCsmM1Fhb2LWxewjoXGsZaSCmkj05jkoPoagJiU0zL
+ CgaaxAGFBy/xa7PyekA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDE5MyBTYWx0ZWRfX4U2iQXFtJLj1
+ YlYo1f3/G9asXqqaKLKqQ8e+9EqGe9b8hgSzWk7VgwG4F9tURWviygWorFObZ3umZFWoHM5A25b
+ IBE5Bmm66S9akpR4l09hTa2l9eMGznA=
+X-Authority-Analysis: v=2.4 cv=WNpPmHsR c=1 sm=1 tr=0 ts=6a5e5dbc cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=EUspDBNiAAAA:8
+ a=f3xLiZNeclign1bWSxgA:9 a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-GUID: U6ppvrJ0Fl2zTupiFY0fZlshIQ1TUJdT
+X-Proofpoint-ORIG-GUID: U6ppvrJ0Fl2zTupiFY0fZlshIQ1TUJdT
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-20_04,2026-07-20_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 clxscore=1015 malwarescore=0 bulkscore=0
- spamscore=0 lowpriorityscore=0 suspectscore=0 priorityscore=1501 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200192
+ adultscore=0 clxscore=1015 suspectscore=0 spamscore=0 malwarescore=0
+ priorityscore=1501 impostorscore=0 phishscore=0 bulkscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607200193
 Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ envelope-from=matheus.bernardino@oss.qualcomm.com;
  helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -140,7 +135,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,33 +151,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/20/2026 3:03 AM, Peter Maydell wrote:
-> In c8bea1276c we moved cpu32.c and built it as a common object.  The
-> commit message says "cpu32.c only contains CPU types used in 32-bit
-> system emulation".  However, this is incorrect -- it contains 32-bit
-> CPU types used in both system and usermode emulation.  (The case
-> where we don't need these CPUs and which we were using ifdefs to
-> avoid is specifically the AArch64 usermode qemu-aarch64 binary.)
-> 
-> The effect is that qemu-arm lost all the named CPU types except
-> the M-profile ones (which are in cpu-v7m.c).
-> 
-> This reverts commit c8bea1276c85855b2e088b740737d043c8556d58.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3962
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> The commit reverts cleanly, and looking at the git history
-> I don't think we have anything that depends on it, so a simple
-> revert seems best to me, especially given that cpu32-system.c
-> doesn't reflect the fact that we do need these CPUs in
-> usermode too.
-> ---
->  target/arm/tcg/{cpu32-system.c => cpu32.c} | 10 +++++++++-
->  target/arm/tcg/meson.build                 |  5 ++++-
->  2 files changed, 13 insertions(+), 2 deletions(-)
->  rename target/arm/tcg/{cpu32-system.c => cpu32.c} (99%)
-> 
+Will be used for semihosting.
 
+Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+---
+ target/hexagon/cpu_helper.h |   6 ++
+ target/hexagon/cpu_helper.c | 133 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 139 insertions(+)
+
+diff --git a/target/hexagon/cpu_helper.h b/target/hexagon/cpu_helper.h
+index d1767503156..ca2e13ab1d1 100644
+--- a/target/hexagon/cpu_helper.h
++++ b/target/hexagon/cpu_helper.h
+@@ -7,6 +7,12 @@
+ #ifndef HEXAGON_CPU_HELPER_H
+ #define HEXAGON_CPU_HELPER_H
+ 
++void hexagon_read_memory(CPUHexagonState *env, target_ulong vaddr, int size,
++                         void *retptr, uintptr_t retaddr);
++void hexagon_write_memory(CPUHexagonState *env, target_ulong vaddr,
++                          int size, uint64_t data, uintptr_t retaddr);
++void hexagon_peek_memory_range(CPUHexagonState *env, uint32_t start_addr,
++                               uint32_t length, uintptr_t retaddr);
+ uint32_t hexagon_get_pmu_counter(CPUHexagonState *cur_env, int index);
+ void hexagon_modify_ssr(CPUHexagonState *env, uint32_t new, uint32_t old);
+ int get_cpu_mode(CPUHexagonState *env);
+diff --git a/target/hexagon/cpu_helper.c b/target/hexagon/cpu_helper.c
+index 64c5746c6d9..e981e11a35d 100644
+--- a/target/hexagon/cpu_helper.c
++++ b/target/hexagon/cpu_helper.c
+@@ -25,6 +25,139 @@
+ #include "sys_macros.h"
+ #include "arch.h"
+ 
++#ifndef CONFIG_USER_ONLY
++
++static bool hexagon_read_memory_small(CPUHexagonState *env, target_ulong addr,
++                                      int byte_count, unsigned char *dstbuf,
++                                      int mmu_idx, uintptr_t retaddr)
++ {
++    /* handle small sizes */
++    switch (byte_count) {
++    case 1:
++        *dstbuf = cpu_ldub_mmuidx_ra(env, addr, mmu_idx, retaddr);
++        return true;
++
++    case 2:
++        if (QEMU_IS_ALIGNED(addr, 2)) {
++            *(unsigned short *)dstbuf =
++                cpu_lduw_le_mmuidx_ra(env, addr, mmu_idx, retaddr);
++            return true;
++        }
++        break;
++
++    case 4:
++        if (QEMU_IS_ALIGNED(addr, 4)) {
++            *(uint32_t *)dstbuf =
++                cpu_ldl_le_mmuidx_ra(env, addr, mmu_idx, retaddr);
++            return true;
++        }
++        break;
++
++    case 8:
++        if (QEMU_IS_ALIGNED(addr, 8)) {
++            *(uint64_t *)dstbuf =
++                cpu_ldq_le_mmuidx_ra(env, addr, mmu_idx, retaddr);
++            return true;
++        }
++        break;
++
++    default:
++        /* larger request, handle elsewhere */
++        return false;
++    }
++
++    /* not aligned, copy bytes */
++    for (int i = 0; i < byte_count; ++i) {
++        *dstbuf++ = cpu_ldub_mmuidx_ra(env, addr++, mmu_idx, retaddr);
++    }
++    return true;
++}
++
++void hexagon_read_memory(CPUHexagonState *env, target_ulong vaddr, int size,
++                         void *retptr, uintptr_t retaddr)
++{
++    BQL_LOCK_GUARD();
++    CPUState *cs = env_cpu(env);
++    unsigned mmu_idx = cpu_mmu_index(cs, false);
++    if (!hexagon_read_memory_small(env, vaddr, size, retptr, mmu_idx,
++                                   retaddr)) {
++        cpu_abort(cs, "%s: ERROR: bad size = %d!\n", __func__, size);
++    }
++}
++
++static bool hexagon_write_memory_small(CPUHexagonState *env, target_ulong addr,
++                                       int byte_count, unsigned char *srcbuf,
++                                       int mmu_idx, uintptr_t retaddr)
++{
++    /* handle small sizes */
++    switch (byte_count) {
++    case 1:
++        cpu_stb_mmuidx_ra(env, addr, *srcbuf, mmu_idx, retaddr);
++        return true;
++
++    case 2:
++        if (QEMU_IS_ALIGNED(addr, 2)) {
++            cpu_stw_le_mmuidx_ra(env, addr, *(uint16_t *)srcbuf, mmu_idx, retaddr);
++            return true;
++        }
++        break;
++
++    case 4:
++        if (QEMU_IS_ALIGNED(addr, 4)) {
++            cpu_stl_le_mmuidx_ra(env, addr, *(uint32_t *)srcbuf, mmu_idx, retaddr);
++            return true;
++        }
++        break;
++
++    case 8:
++        if (QEMU_IS_ALIGNED(addr, 8)) {
++            cpu_stq_le_mmuidx_ra(env, addr, *(uint64_t *)srcbuf, mmu_idx, retaddr);
++            return true;
++        }
++        break;
++
++    default:
++        /* larger request, handle elsewhere */
++        return false;
++    }
++
++    /* not aligned, copy bytes */
++    for (int i = 0; i < byte_count; ++i) {
++        cpu_stb_mmuidx_ra(env, addr++, *srcbuf++, mmu_idx, retaddr);
++    }
++
++    return true;
++}
++
++void hexagon_write_memory(CPUHexagonState *env, target_ulong vaddr,
++                          int size, uint64_t data, uintptr_t retaddr)
++{
++    CPUState *cs = env_cpu(env);
++    unsigned mmu_idx = cpu_mmu_index(cs, false);
++    if (!hexagon_write_memory_small(env, vaddr, size, (unsigned char *)&data,
++                                   mmu_idx, retaddr)) {
++        cpu_abort(cs, "%s: ERROR: bad size = %d!\n", __func__, size);
++    }
++}
++
++static inline uint32_t page_start(uint32_t addr)
++{
++    uint32_t page_align = ~(TARGET_PAGE_SIZE - 1);
++    return addr & page_align;
++}
++
++void hexagon_peek_memory_range(CPUHexagonState *env, uint32_t start_addr,
++                               uint32_t length, uintptr_t retaddr)
++{
++    unsigned int warm;
++    uint32_t first = page_start(start_addr);
++    uint32_t last = page_start(start_addr + length - 1);
++    for (uint32_t page = first; page <= last; page += TARGET_PAGE_SIZE) {
++        hexagon_read_memory(env, page, 1, &warm, retaddr);
++    }
++}
++
++#endif
+ 
+ uint32_t hexagon_get_pmu_counter(CPUHexagonState *cur_env, int index)
+ {
+-- 
+2.37.2
+
 
