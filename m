@@ -4,138 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43D44C4451B
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 07:59:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55BE2C4451B
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 08:00:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wliuQ-0007bo-Ng; Mon, 20 Jul 2026 03:59:31 -0400
+	id 1wliue-0007wm-TL; Mon, 20 Jul 2026 03:59:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1wliuI-0007RW-HF; Mon, 20 Jul 2026 03:59:22 -0400
-Received: from mail-westeuropeazlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c201::3] helo=AS8PR04CU009.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wliuV-0007rU-M9
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 03:59:36 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1wliuE-00071T-B2; Mon, 20 Jul 2026 03:59:21 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=tSipwLHJGlIDOpy7xRpkPf4ynaJ9nYmiX5YRXKuLovdDfljzpNPqA65IAlaolR/G54uZLqZsfQr1cf+z5tUoGKnCh2YdyrdibuqYGMNs8QeG8LtpnTW9K+1UjAxyRPF76WJtJeQVet8gA2kLfgzKPXb0PiGkZRFnWSwrrBfXcIL9N+yqsLyFCKi343NdxP468iO7zGHLTMbv1Se29aLMldrEBopjMVxZRzeByzJbpwGNlyzMy4VwTLWGoIwOzQlfrttBjrwDMz3xFuKtJGE5YumHUOZ1++IZRxSAZWhWkGhkDWjO99JADQ6l5IXw+VQismJbaU/vB2jlvWEGGIxgBA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uhQpJSQ2Do7L4fpGJkceHVh8V3JYokuisGbDEKz2B/o=;
- b=sW18pAgeipUeEAAt43s8a9jTiXpfTTjpu7kC7lY+jfNVg9QKlj6C39hCCtCi/K4nYlalw0FymLHYsMe9RMeaQdr2USnIDc25VtkoNgzo8BbdPg1dwi+WB+wX7i7OoWOWN2nWqPF1DT+DqN6A9YvSOsqr8WzYAh/5ct4HvKUs8qBoWocpgH/eF2eju78F2pJFIl0/TzlPbXBoZ7+YXPJJMz2bZBSMy3F+2dYsuI2d+it16/SS1/yVbGNxIrBnvxmEbCZ8tPHrECHJ9lfFfBcbGDGicXdmsBL4BhJFtaL9f/kaCXUq4CEnfqoB3IN5hYOhnePagCvQs1zoEnWpicPaww==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uhQpJSQ2Do7L4fpGJkceHVh8V3JYokuisGbDEKz2B/o=;
- b=ysukEMtgEBUuIhLFKUFiYt+EC4/ACe89SrEU91+5SJ0sdgVQ8ob8oZnJX8Pz5kSQaA/bAery9XEqpwzRVN3EXsrkSyg9w2ZGOKqIq7Pc2DGIMffBhY4qHkpB6I7HR2E9D5yjke8BbxKpSarSgEonT5PH4g/qTVCjDUYfyYTlhQfPXMOlvcVVGKA2A8O/KYpl2MzcN0she7apwAY3Ii6Bmz94niC0Lvk+th81iCSA2/cvhHfbGScdeTe1S2QGU3fipT+YYK6LymS9Wj9+bNIiBPcLqzsd/n6HGM3vFX2bpLGesOvrCAF6QF+vfA/P2HCsgOyk7JJmHXhqBP/Sz2lsEA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
- by DU2PR08MB9962.eurprd08.prod.outlook.com (2603:10a6:10:498::17)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.18; Mon, 20 Jul
- 2026 07:59:12 +0000
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0223.017; Mon, 20 Jul 2026
- 07:59:12 +0000
-Message-ID: <f0c8a8ac-9a64-4d5d-a028-9961ff68f78f@virtuozzo.com>
-Date: Mon, 20 Jul 2026 09:59:11 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/1] coroutine: fix lost wakeup in qemu_co_sleep_wake()
-To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, qemu-stable@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
-References: <20260610115850.2410566-1-den@openvz.org>
-Content-Language: en-US
-From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <20260610115850.2410566-1-den@openvz.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: VI1P194CA0053.EURP194.PROD.OUTLOOK.COM
- (2603:10a6:803:3c::42) To AM9PR08MB5892.eurprd08.prod.outlook.com
- (2603:10a6:20b:2dd::16)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wliuS-00072w-TU
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 03:59:35 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66K76Qi11712940
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 07:59:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ /FJJnALZ90nRcM6xb1lEXesLXBRoShEBJ5XfWq//F8k=; b=hbhTUyNUnuguSP1b
+ fODaBED11/jMYFPASZ5Yqsj1N6igjUVvoGvNQLrUVeujOhpEm7yN8AQqdZeZURjv
+ pOxgwjMNDbLNrN3AvVAsuQkPXWSD/rsZQ+ab6BBpyrpc69nm1moLv3Vg02Sk9n+P
+ eAaov8aDZtFBqv9isbDxgykIHqxY8tXJYagekN26jpZBFpFlB96Tw6vAmh5Z7srq
+ 4u8kKpYnfuCCgmqFldIQ8446Cri82lexk+huyBLSEppZNMECPWyCn9ySa2jJC66X
+ w/SkQDx/ZMNAtXTCz96yrZyI1RqhxYxuyC09sER5F6BYHYZYv/tnYGrAT7NzKdFX
+ okBYtw==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhf0c068c-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 07:59:31 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-51c1a97644aso264773911cf.2
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 00:59:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1784534370; x=1785139170; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=/FJJnALZ90nRcM6xb1lEXesLXBRoShEBJ5XfWq//F8k=;
+ b=aN75MlWuiAFt54fscoMeV0HALbFu1z55vxY52Qe4EsOQr6DRUqBkp9PqWzV5wG/+M9
+ Z88JlkcXHrF7mqB1XdZ0OZ9mgaoA2Njnh7U91NHayDdZhLlzTpNL+BM+1iBc5kQ7DVBJ
+ 2SijD8TaDPInfM8fd2eUiilQe5t8ZZnK0apcodZWDEc4NPDpPvoSxlT9vIQ342wEDaeP
+ g+JNAPvIkSr0ONoQHg6wc3m4BFmnrjJQwf6N9H8iaOB+jvI7db665Xi6wrSDHYU01xQ6
+ rFj/D2RlZyauRI9TZcKzAllf7OXOVBDJhrXZLr+KSVpxhSvdjdyQBAR7Wr8kAyqR4P3D
+ +1tA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784534370; x=1785139170;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=/FJJnALZ90nRcM6xb1lEXesLXBRoShEBJ5XfWq//F8k=;
+ b=P6ztQsWrMMINOkS9l8xWovKfNnTviFeFrlqpqcqBxohFlGWYb2zhN5LhDi+pmbHfNO
+ 0yHdnutrtDwTGXMqX0Wcd3sLc4EkCVhEvGmIxuHs/eL0UmSCrNcOcpZgFNKzZ9QR45+Q
+ 6zZXbfeAvHomH8xuZKpTxzmZ3hZNesG5a91VuVhOsssvonCsWebLWq5XdfY4kX+GVuhk
+ NOGQiKQe+yzS3cVZt8V981nXO3QK8sXTactvW0FeRxzRE/KMJNhqYg2GxCJK8OPOsRZ0
+ 62jIB6PE2dHqE98/bVELUnhmfDxbDAKQYn1ZbaOsC7yAkbw0/o5qLF0ZfmiKBc1tIUxt
+ 1tAA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rp2hQJRBloaupmvJ7pmAyGCpIFvv2s9Ear4HoedH68kqQNWOCka8X1RhutFRCh8NTzqBld8mZziaIxR@nongnu.org
+X-Gm-Message-State: AOJu0Ywi/qOVFg437p5Qdo4nkn/ekXcDuzvhzznVAX48ee+MNWd0y45S
+ twCjxyqaxPHgata0eSGseyO2AK51vheajMas7CGQ7PYbSy6/NmqhcSuzJeYyEtieoNUMCAMK3Eo
+ 6vX2oEK4mG0A/C66MqplErdMk275HgwxgdwXM2+194xViWL1RGj/Wg9quOg==
+X-Gm-Gg: AfdE7cmqqGXy5LdC3E4Co8wLmVerorscT0ilIrZZyZXG5fyinN0UATA9HNec12ccet0
+ uChOBrZ4503SO2Ph8bLACM6ZySrQEGVF38gR3v3ZX06dyNigZHuObrp44u7QHroMkAEmmsEWkay
+ eN+TnqKmKy1puccv7mbYqnyiPVGnaAmAU3DZRGqMdD7GjuLE65kmeR1M+wthfLiLIpFAmZ5f0/K
+ enRdg0oYwv04iJ2kKIyZJliySvNG1wtwmr49SZC9lurAWfzSVhhxXwCOehkPfOPRmz3iHu3P0Mx
+ QJ9/yLnztZE3MOG4/UCdjcwIKoNx7wjFPxRER25eks1+MfhK7kWd6z0TbPCTvV75mM5StG3eYr0
+ Sy5lByPliKiLE7lvlktX9yY9e1Bo2G7+2aJZK+MAduIs72hLkwtE=
+X-Received: by 2002:a05:622a:1a9c:b0:51b:fe47:b3a4 with SMTP id
+ d75a77b69052e-5213e28e228mr132249121cf.46.1784534370518; 
+ Mon, 20 Jul 2026 00:59:30 -0700 (PDT)
+X-Received: by 2002:a05:622a:1a9c:b0:51b:fe47:b3a4 with SMTP id
+ d75a77b69052e-5213e28e228mr132248991cf.46.1784534370102; 
+ Mon, 20 Jul 2026 00:59:30 -0700 (PDT)
+Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49558cb8433sm73278965e9.2.2026.07.20.00.59.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 Jul 2026 00:59:28 -0700 (PDT)
+Message-ID: <a16c336c-e899-4243-aa15-13a0681930f9@oss.qualcomm.com>
+Date: Mon, 20 Jul 2026 09:59:26 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|DU2PR08MB9962:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9458d63b-8297-41ef-621d-08dee634c935
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|23010399003|10070799003|376014|6133799003|56012099006|10067099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: dNJA0s/spallLzbUYm4m4FR3JWnoLkqlpzpBWxNvuUAeWXjx6mWJlGdEghGnW6IttR9Hc0/YMQwqJENzi5nmkYfYZcqN1JuX5CjyGALCTOo2JvNgGoxKdQFBOqm0DpTGOwqcLX9k7+mpiNGmXq9HW32aC9Fr7r58B4kOuy0sSbsAon3LQi3X9V3bJFBZiDRG+9lSCEbJ93gP2Bbwdy5y8OVuG7hQ3AtTni7Zz0qpO5aopydMoVoLMG9JvCEfXCY1TLq5MRRaaYerf9ZvdiHhFeLiK0wAhnmK9T24tSYkpLO6rgEIsHcu2bPSl9tf9auzo5bjPSY/IL00QmrE/PgfHAOQpe6u73mJ0NwKeBdYdMDL0kDZqMD5rE1B09LQ7lkRLH952QYtFnEJMGIMVs4l8qI29+D//ufJZwVcRitxBjss1AAVyeGwaUwcXXKtkwhsEeyttFZceapqRD6uOQ2My6d18z5+Rvx+UXQ2ZbQG0JgBQX86JVu2Nv82gUehlCtUEv0ZFkahiHzHrldGYsSgW8syvbgJyR5uPlujBS6cl0z0gcmvdFFsvGxTmmIXan2DRtIrXtIppjJBjiwn32BX+1OE2pgms/lsa/PG+ruuODYZsL81zveDHPIs1HjaKX1jA7fZHmonQviNe+7RNWjKNMehreZZgfX4gmO/7vcJKcw=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(23010399003)(10070799003)(376014)(6133799003)(56012099006)(10067099003)(22082099003)(18002099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dTJScWU0SjBSUUF0dzVJMlFRaHpPeUI4N2JDZ08zTWRzd3NoRVVULy93Vm55?=
- =?utf-8?B?d3lTdnZlTVVtS2FvVTVhWmt0eVUvVmZCOHlPQWxxSkpLQzlsRzZGQlU1Vm96?=
- =?utf-8?B?Skw4QmkxZkFxWWVScXJnTEpBSjRxSWZwUEx1RmN5cXVQWG5QZ0FCd3ZWUVh6?=
- =?utf-8?B?MVhNYVQ4dGFKZUw5SnNtVDNOdW1YS0FiK1F6Q253Vk5PRUYrQmZWSEhrMmMw?=
- =?utf-8?B?VXFKcW1iSE9pUmRPZEJlclZOWVlpT3pzUG5DWnpsTDYyanZoMk1kL3JHWm9o?=
- =?utf-8?B?dEY4ellGdmtkWVRnUGNDWS9Yd3BYMHg0S2ljWnNuUzVmQVI3R0pnRTlMK0FI?=
- =?utf-8?B?ckxkRVdMVFR1bFM4NXo4bU1nM1lxRW44TVNVdGlMVWRvY2VMVTVvaUd3UkJT?=
- =?utf-8?B?czhBVW02amJPU2FPeTg3b1hJbnIza0xSaVNab21HSS9ZMHkyb0YyR2U2eHAw?=
- =?utf-8?B?aHhTSGRVMDJZYmlCMC9jbURmaGttWnRXb1ROQ01GbUN2dit2TGtPMzdTTE5j?=
- =?utf-8?B?ak0yOFhyQ2xtYlFIRmxJOVB5MnJ4WE9UbTl1ZVh1d08wNk1PbjRIWVI1K3NR?=
- =?utf-8?B?VUE4RFRkMlBlV3o5ZnhMTkJNSEEwbzEyU3hNUCtKeTJuci9QMXVkTFpzQ0p5?=
- =?utf-8?B?UVhLcHlWOFlwaEhzZlArSDA3bUtsSy9XSlVOMTBhMHBCaDFxYSs5UWcwRVNY?=
- =?utf-8?B?bjhRa3dRWkpNcno0NE9yWFJXN1lrWllTMllDUXNXZTVmRnBQK1NpaGtKeld4?=
- =?utf-8?B?VVB0Vk0zYk1jREtueGdyaEdlc1JXSURMSmNFTGpRdXFsWjJZVlpYNjVySnpU?=
- =?utf-8?B?SDh3bjk5R2hJMlhkNk5SeE9SaU0rVVVYeDVxNlJiREdyL3VsVldua1J5NTNU?=
- =?utf-8?B?cWZRU25vd2ZaRFg1U3hkbEEzTWVrQUxnMkkwcDRDQVhsdWRWcWY5cVRESlRk?=
- =?utf-8?B?cmJLQy9LeUFmNU1SNmVxWnlkWU5yOWJVek9IcEZHdEZ3ZHYvcy9sT1VKTThC?=
- =?utf-8?B?WlkyQUFHakZLdEdncldNY25qbHRmR1ZzY3Z0VUZCUHZiU1VUZmZJMGNBckpw?=
- =?utf-8?B?MXRscFgyYmNhLzdhTWJ5MmhqZEFKZkpRMkdHM3J2Rjh3MGoxc3pGc21qZFd4?=
- =?utf-8?B?cmtXQ1F3WlNTeE42R1dpUnY4ekl0ME1sZGNpajNHbkxRMVFQVVIzRkU5dm5R?=
- =?utf-8?B?Q1hsTi91SHRCZ0tVZXdNSElveG5rdXRsTXF1SFVCeENHaXdYWm9nSnZCWkRi?=
- =?utf-8?B?L3N3WjdKNzhQTDNZQnZqdmxYWUJ4WCsvSEtacEpkcFhMdGcyKzE1WTFyS3VB?=
- =?utf-8?B?U0k1NTVoYmdveGplcE8vbEZUV0M0M2kxNDNnZVFzOVpRRFFPZmRjMFdQbm0y?=
- =?utf-8?B?elEzTzV3YWFiVmpoZnVTRzVsTnJaMEttMVlocm0zaGVmMDRWMkkwZHVrb01O?=
- =?utf-8?B?ZXI1NHZjOXNlUUNXZ0Q0a3c0Skw0NkM1dk1UUWNmS2E0V2V5ZU1URXE1d2tD?=
- =?utf-8?B?K2lEK3NETkNadHg1OGs0NDVnRTdvYmJlS1FEUVF5TnZuWlp0cUxuTUpTRGRL?=
- =?utf-8?B?c3k2YVluaDM1TklWaUFkVVJ6dTQyeDRqR05ITUpWeGdZQkxzcUptT2k4bVFy?=
- =?utf-8?B?ZHBWVU1ZTzNzMmJnS214elo2RUh5Rk56aEYvbnlXRlB2ZjNFTzJjaFZtdGt1?=
- =?utf-8?B?NFRwS0txSmxCNytGVWFqVm5hcWtTQnArcS9GYW9RYml6Z1p4VGlWTjBpOWpC?=
- =?utf-8?B?eUQyT2lOTEt4Z1p4THVjTUMyVUNyRzFzbVkzalhBYWN6YVdJN2YzK0VpSHcv?=
- =?utf-8?B?Qk5PekdUaHg2YWFnRytVTG0yUWhZcEh6R0x6cjBGMDlGT1Eyc2JBeDJGSVUw?=
- =?utf-8?B?WUdDa3VCWWVMcUFHbHordkRtQTlWMkVwY2dGU21XRG82c1F2SDJzUHBmL1Fw?=
- =?utf-8?B?VkpUaEpyRWY1MTBOamNTTmU4MjZ4TFVVa0VxeTlTU1NEZitJN0hlZmtSTEky?=
- =?utf-8?B?aGc3ZVd1M3VleUZ1cngvL3RkMDRLOE1jYkt0RFJyOFVDLzNTR0tiTEZ2di9l?=
- =?utf-8?B?eEZIcmJzWUhZVm5FblJFdWQ3VHdDVXlZc2MrK21vV3VwRUNXS09aNTNxUktM?=
- =?utf-8?B?dkRjZk1nanRRY3dRelhMZllJZXFaMFpIbm9USjhOVkhXc21SRWJ0Uzg4SlRa?=
- =?utf-8?B?RXUycks3TWRLck10cnJnUjQyZjV2dkgvbEVQUTVKM25LZ0crcENxaTFwVHlY?=
- =?utf-8?B?QTk1cDJZMFRFeU4zcUlZTGQ4TWRIVVZtbG9RSjVWNngzd3ZsN2V3WEw1MkJQ?=
- =?utf-8?B?R0xHMXJyQ2l2S3BNek9XeFczdzZhWjliWmowRXJoSUxZUkQrazBzK1piL2hX?=
- =?utf-8?Q?EqeGFczZQFhS4Sx0rleCeguZuz3zbsMPT7qG3HuaMlkhQ?=
-X-MS-Exchange-AntiSpam-MessageData-1: ypxFLqnwkrlXXQ==
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9458d63b-8297-41ef-621d-08dee634c935
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jul 2026 07:59:12.3415 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: GlwOWjETWIz7L8RIP2idpGgBPeGjwIBJLao7/+6t6rwEQzur4BAem6ceN5f2nvzJf4dQxpdZCLUPX7RPiiUo8A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU2PR08MB9962
-Received-SPF: pass client-ip=2a01:111:f403:c201::3;
- envelope-from=den@virtuozzo.com;
- helo=AS8PR04CU009.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/7] hw/hexagon: connect l2vic device
+Content-Language: en-US
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: pierrick.bouvier@oss.qualcomm.com, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ peter.maydell@linaro.org, matheus.bernardino@oss.qualcomm.com,
+ ltaylorsimpson@gmail.com, Thomas Huth <th.huth+qemu@posteo.eu>,
+ Laurent Vivier <lvivier@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+References: <20260715185701.1287176-1-brian.cain@oss.qualcomm.com>
+ <20260715185701.1287176-6-brian.cain@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260715185701.1287176-6-brian.cain@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=HeYkiCE8 c=1 sm=1 tr=0 ts=6a5dd563 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=EUspDBNiAAAA:8 a=fARxdbHzVQyMdUbhcZUA:9 a=QEXdDO2ut3YA:10
+ a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-GUID: aOv83LpFshn8-aY6X6TOE30YLPY4WTBz
+X-Proofpoint-ORIG-GUID: aOv83LpFshn8-aY6X6TOE30YLPY4WTBz
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDA4NyBTYWx0ZWRfX5ZjprPI5WGIm
+ sF8XHo85h2MGKQHGtCYVFbG3PA65E1+Wyb45eY0AQgTVPsP2k8ya0gCb/YFx/ayA3F0T0x2ZrdA
+ EN+QnKvS5/cTeuImWSupa3/BVC/Se4Q=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDA4NyBTYWx0ZWRfX7+V739hgzGUs
+ cfuG9AYwzNMdC23fXu9q2IW7CAxQDm9WoAzxLmAPvmzG+QfVROi0I2Oas6xYoGF8703PwhaDtHR
+ uU1hw7cbSuZass5DqYWBVcxdwk7YAGNRe1e6OwsvM1CiIj6rgKDcoAnBwqIAe7jGiGGj1l0Ax2U
+ yk1V3k//xv0AF5oAjsGQ2XIs2dRJVAN84DDxYfrityqR8pgHZkerJ2oyfz4ExPy4Xi2vGwzCMGu
+ BJR6z0GNUZR7ajsbpdhsrDz23v2MIqSDbF1Zr8DUumyrThCqSwDqrBfUZ8Yf+q6S6ANiVj2pR0M
+ uXN2IYaaHINlA3E8Dv27PfZw1qVqXA92E7yqvq33XxqFD27v0FQBrmbfWKvhsvwXNTgDGAojElR
+ Ml8oDHVTZaQxr/lyrr5kdM3MOVA27CjVJ9+cdc8IczS30V5cJMyM8YDeH8UWMYevYX+hN5Q8bQ0
+ 5IhdKX4dIyYQP2Ga9EQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-20_01,2026-07-17_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 lowpriorityscore=0 impostorscore=0 malwarescore=0 suspectscore=0
+ phishscore=0 clxscore=1015 adultscore=0 bulkscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200087
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -152,77 +159,295 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/10/26 13:58, Denis V. Lunev wrote:
-> Changes since v2
-> ----------------
->   * Drop the redundant fast-path check in qemu_co_sleep(); the publish
->     cmpxchg already consumes a pending wake (Kevin).
->   * Add a deterministic regression test, no threads or timers needed.
->
-> Changes since v1
-> ----------------
->   * Patch 1 (graph-lock) applied as e3082ab3b3, dropped here.
->   * Fix the qemu_co_sleep_wake() primitive instead of working around
->     it in qcow2 (Kevin).
->
-> Problem
-> -------
->
-> The qemu shutdown / blockdev-close path can deadlock permanently on
-> upstream master. The main thread enters ppoll(timeout=-1) holding
-> BQL, no other thread has a wake source that points back at it, and
-> qemu has to be SIGKILLed. The hang has no timeout -- it is a hard
-> deadlock, not a slow operation; behind BQL, RCU, VCPUs and every
-> iothread path that needs BQL stall with it.
->
-> The race exposed in qcow2's cache_clean_timer cancellation path:
->
->   ppoll -> aio_poll -> cache_clean_timer_del_and_wait -> qcow2_close
->
-> The race diagram and the exact stale-state read are in the patch's
-> commit message.
->
-> Reproducer
-> ----------
->
-> Environment: 4-vCPU VM guest, kernel 6.12.x, upstream master at
-> de5d8bfd61. On modern bare-metal the window is narrow enough that the
-> hang rarely reproduces without a VM -- a VM guest under full CPU
-> saturation is what makes the timing reliable.
->
->     # reproducer
->     stress-ng --cpu "$(nproc)" --timeout 0 &
->     for r in $(seq 20); do
->         timeout 120 ./build/tests/qemu-iotests/check -qcow2 iothreads-create
->     done
->     kill %1
->
-> With `stress-ng --cpu $(nproc)` the race surfaces. With
-> `stress-ng --cpu $(($(nproc) - 1))` or without a stressor it does
-> not reproduce reliably across 20 iterations.
->
-> The new unit test reproduces the same lost wakeup deterministically,
-> without a VM or a stressor.
->
-> Results
-> -------
->
-> Same guest, 20 iterations of the loop above, master at de5d8bfd61:
->
->   without this patch:  reproduces reliably (qcow2_close in ppoll)
->   with this patch:     20/20 PASS
->
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> Cc: Kevin Wolf <kwolf@redhat.com>
-> Cc: Hanna Reitz <hreitz@redhat.com>
->
-> Denis V. Lunev (1):
->   coroutine: fix lost wakeup in qemu_co_sleep_wake()
->
->  include/qemu/coroutine.h    | 17 +++++++++---
->  tests/unit/test-coroutine.c | 53 +++++++++++++++++++++++++++++++++++++
->  util/qemu-coroutine-sleep.c | 53 ++++++++++++++++++++++++++-----------
->  3 files changed, 104 insertions(+), 19 deletions(-)
->
-ping v5
+On 15/7/26 20:56, Brian Cain wrote:
+> Instantiate the L2VIC device in both machine models, map its slow and
+> MMIO regions, and link it to each CPU via the "l2vic" property.
+
+"slow and MMIO" description is not clear to me.
+
+> 
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>   include/hw/hexagon/hexagon.h           |  1 +
+>   include/hw/hexagon/hexagon_globalreg.h |  4 +++
+>   hw/hexagon/hexagon_dsp.c               | 20 +++++++++++++
+>   hw/hexagon/hexagon_globalreg.c         | 41 ++++++++++++++++++++++----
+>   hw/hexagon/virt.c                      | 22 ++++++++++++++
+>   5 files changed, 83 insertions(+), 5 deletions(-)
+> 
+> diff --git a/include/hw/hexagon/hexagon.h b/include/hw/hexagon/hexagon.h
+> index 1034b09c2ac..6753ae32cde 100644
+> --- a/include/hw/hexagon/hexagon.h
+> +++ b/include/hw/hexagon/hexagon.h
+> @@ -156,6 +156,7 @@ struct HexagonCommonMachineState {
+>   
+>       MemoryRegion ram;
+>       MemoryRegion cfgtable_rom;
+> +    DeviceState *l2vic_dev;
+
+s/_dev//
+
+>   };
+>   
+>   #endif
+> diff --git a/include/hw/hexagon/hexagon_globalreg.h b/include/hw/hexagon/hexagon_globalreg.h
+> index 950099808fd..397dc6854c9 100644
+> --- a/include/hw/hexagon/hexagon_globalreg.h
+> +++ b/include/hw/hexagon/hexagon_globalreg.h
+> @@ -10,6 +10,7 @@
+>   
+>   #include "hw/core/qdev.h"
+>   #include "hw/core/sysbus.h"
+> +#include "hw/intc/hex-l2vic.h"
+>   #include "qom/object.h"
+>   #include "target/hexagon/cpu.h"
+>   
+> @@ -22,6 +23,9 @@ struct HexagonGlobalRegState {
+>       /* Array of system registers */
+>       uint32_t regs[NUM_SREGS];
+>   
+> +    /* L2VIC interface used to back the VID/VID1 registers */
+> +    HexL2VicInterface *l2vic;
+> +
+>       /* Global performance cycle counter base */
+>       uint64_t g_pcycle_base;
+>   
+> diff --git a/hw/hexagon/hexagon_dsp.c b/hw/hexagon/hexagon_dsp.c
+> index aa493993229..4cf88627c8f 100644
+> --- a/hw/hexagon/hexagon_dsp.c
+> +++ b/hw/hexagon/hexagon_dsp.c
+> @@ -16,6 +16,7 @@
+>   #include "hw/hexagon/hexagon.h"
+>   #include "hw/hexagon/hexagon_globalreg.h"
+>   #include "hw/hexagon/hexagon_tlb.h"
+> +#include "hw/intc/hex-l2vic.h"
+>   #include "hw/core/loader.h"
+>   #include "qapi/error.h"
+>   #include "qemu/error-report.h"
+> @@ -111,6 +112,7 @@ static void hexagon_common_init(MachineState *machine, Rev_t rev,
+>       MemoryRegion *address_space;
+>       DeviceState *glob_regs_dev;
+>       DeviceState *tlb_dev;
+> +    DeviceState *cpu0 = NULL;
+>   
+>       memset(&hexagon_binfo, 0, sizeof(hexagon_binfo));
+>       if (machine->kernel_filename) {
+> @@ -131,11 +133,21 @@ static void hexagon_common_init(MachineState *machine, Rev_t rev,
+>                              machine->ram_size, &error_fatal);
+>       memory_region_add_subregion(address_space, 0x0, &hms->ram);
+>   
+> +    hms->l2vic_dev = qdev_new(TYPE_HEX_L2VIC);
+> +    object_property_add_child(OBJECT(machine), "l2vic",
+> +                              OBJECT(hms->l2vic_dev));
+> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(hms->l2vic_dev), &error_fatal);
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(hms->l2vic_dev), 0, m_cfg->l2vic_base);
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(hms->l2vic_dev), 1,
+> +                    m_cfg->cfgtable.fastl2vic_base << 16);
+> +
+>       glob_regs_dev = qdev_new(TYPE_HEXAGON_GLOBALREG);
+>       object_property_add_child(OBJECT(machine), "global-regs",
+>                                 OBJECT(glob_regs_dev));
+>       qdev_prop_set_uint64(glob_regs_dev, "config-table-addr", m_cfg->cfgbase);
+>       qdev_prop_set_uint32(glob_regs_dev, "dsp-rev", rev);
+> +    object_property_set_link(OBJECT(glob_regs_dev), "l2vic",
+> +                             OBJECT(hms->l2vic_dev), &error_fatal);
+>       sysbus_realize_and_unref(SYS_BUS_DEVICE(glob_regs_dev), &error_fatal);
+>   
+>       tlb_dev = qdev_new(TYPE_HEXAGON_TLB);
+> @@ -154,15 +166,23 @@ static void hexagon_common_init(MachineState *machine, Rev_t rev,
+>            */
+>           qdev_prop_set_bit(DEVICE(cpu), "start-powered-off", (i != 0));
+>           if (i == 0) {
+> +            cpu0 = DEVICE(cpu);
+
+Alternatively call sysbus_connect_irq() here.
+
+>               hexagon_init_bootstrap(dms, cpu);
+>           }
+>           object_property_set_link(OBJECT(cpu), "global-regs",
+>                                    OBJECT(glob_regs_dev), &error_fatal);
+>           object_property_set_link(OBJECT(cpu), "tlb",
+>                                    OBJECT(tlb_dev), &error_fatal);
+> +        object_property_set_link(OBJECT(cpu), "l2vic",
+> +                                 OBJECT(hms->l2vic_dev), &error_fatal);
+>           qdev_realize_and_unref(DEVICE(cpu), NULL, &error_fatal);
+>       }
+>   
+> +    for (int i = 0; i < 8; i++) {
+> +        sysbus_connect_irq(SYS_BUS_DEVICE(hms->l2vic_dev), i,
+> +                           qdev_get_gpio_in(cpu0, i));
+> +    }
+> +
+>       rom_add_blob_fixed_as("config_table.rom", &m_cfg->cfgtable,
+>                             sizeof(m_cfg->cfgtable), m_cfg->cfgbase,
+>                             &address_space_memory);
+> diff --git a/hw/hexagon/hexagon_globalreg.c b/hw/hexagon/hexagon_globalreg.c
+> index b5e5913507e..3d0d6f9516c 100644
+> --- a/hw/hexagon/hexagon_globalreg.c
+> +++ b/hw/hexagon/hexagon_globalreg.c
+> @@ -11,6 +11,7 @@
+>   #include "hw/core/qdev-properties.h"
+>   #include "hw/core/sysbus.h"
+>   #include "hw/core/resettable.h"
+> +#include "hw/intc/hex-l2vic.h"
+>   #include "migration/vmstate.h"
+>   #include "qom/object.h"
+>   #include "target/hexagon/cpu.h"
+> @@ -135,6 +136,32 @@ static inline uint32_t apply_write_mask(uint32_t new_val, uint32_t cur_val,
+>       return new_val;
+>   }
+>   
+> +static inline bool is_vid_reg(uint32_t reg)
+> +{
+> +    return reg == HEX_SREG_VID || reg == HEX_SREG_VID1;
+> +}
+> +
+> +/*
+> + * HEX_SREG_VID/VID1 are backed by the L2VIC's VID group registers
+> + * rather than the plain regs[] array, when an L2VIC is wired up.
+> + */
+> +static uint32_t get_reg_value(HexagonGlobalRegState *s, uint32_t reg)
+> +{
+> +    if (is_vid_reg(reg) && s->l2vic) {
+
+Do we still want an optional l2vic? Otherwise we should make it
+unconditional, checking the link is set in hexagon_globalreg_realize().
+
+> +        return l2vic_read_vid(s->l2vic, reg == HEX_SREG_VID ? 0 : 1);
+> +    }
+> +    return s->regs[reg];
+> +}
+> +
+> +static void set_reg_value(HexagonGlobalRegState *s, uint32_t reg,
+> +                          uint32_t value)
+> +{
+> +    s->regs[reg] = value;
+
+IIUC HEX_SREG_VID,1 are read-only and shouldn't be updated, is that right?
+
+> +    if (is_vid_reg(reg) && s->l2vic) {
+> +        l2vic_update_vid(s->l2vic, reg == HEX_SREG_VID ? 0 : 1, value);
+> +    }
+> +}
+> +
+>   uint32_t hexagon_globalreg_read(HexagonGlobalRegState *s, uint32_t reg,
+>                                   uint32_t htid)
+>   {
+> @@ -146,7 +173,7 @@ uint32_t hexagon_globalreg_read(HexagonGlobalRegState *s, uint32_t reg,
+>       g_assert(reg < NUM_SREGS);
+>       g_assert(reg >= HEX_SREG_GLB_START);
+>   
+> -    value = s->regs[reg];
+> +    value = get_reg_value(s, reg);
+>   
+>       trace_hexagon_globalreg_read(htid, get_sreg_name(reg), value);
+>       return value;
+> @@ -160,7 +187,7 @@ void hexagon_globalreg_write(HexagonGlobalRegState *s, uint32_t reg,
+>       }
+>       g_assert(reg < NUM_SREGS);
+>       g_assert(reg >= HEX_SREG_GLB_START);
+> -    s->regs[reg] = value;
+> +    set_reg_value(s, reg, value);
+
+A preliminary patch with extracting get_reg_value/set_reg_value stubs
+would reduce this diff.
+
+>       trace_hexagon_globalreg_write(htid, get_sreg_name(reg), value);
+>   }
+>   
+> @@ -168,6 +195,7 @@ uint32_t hexagon_globalreg_masked_value(HexagonGlobalRegState *s, uint32_t reg,
+>                                           uint32_t value)
+>   {
+>       uint32_t reg_mask;
+> +    uint32_t cur_val;
+>   
+>       if (!s) {
+>           return value;
+> @@ -175,9 +203,10 @@ uint32_t hexagon_globalreg_masked_value(HexagonGlobalRegState *s, uint32_t reg,
+>       g_assert(reg < NUM_SREGS);
+>       g_assert(reg >= HEX_SREG_GLB_START);
+>       reg_mask = global_sreg_immut_masks[reg];
+> +    cur_val = get_reg_value(s, reg);
+>       return reg_mask == IMMUTABLE ?
+> -            s->regs[reg] :
+> -            apply_write_mask(value, s->regs[reg], reg_mask);
+> +            cur_val :
+> +            apply_write_mask(value, cur_val, reg_mask);
+>   }
+>   
+>   void hexagon_globalreg_write_masked(HexagonGlobalRegState *s, uint32_t reg,
+> @@ -186,7 +215,7 @@ void hexagon_globalreg_write_masked(HexagonGlobalRegState *s, uint32_t reg,
+>       if (!s) {
+>           return;
+>       }
+> -    s->regs[reg] = hexagon_globalreg_masked_value(s, reg, value);
+> +    set_reg_value(s, reg, hexagon_globalreg_masked_value(s, reg, value));
+>   }
+>   
+>   uint64_t hexagon_globalreg_get_pcycle_base(HexagonGlobalRegState *s)
+> @@ -275,6 +304,8 @@ static const VMStateDescription vmstate_hexagon_globalreg = {
+>   };
+>   
+>   static const Property hexagon_globalreg_properties[] = {
+> +    DEFINE_PROP_LINK("l2vic", HexagonGlobalRegState, l2vic,
+> +                     TYPE_HEX_L2VIC_INTERFACE, HexL2VicInterface *),
+>       DEFINE_PROP_UINT32("boot-evb", HexagonGlobalRegState, boot_evb, 0x0),
+>       DEFINE_PROP_UINT64("config-table-addr", HexagonGlobalRegState,
+>                          config_table_addr, 0xffffffffULL),
+> diff --git a/hw/hexagon/virt.c b/hw/hexagon/virt.c
+> index a3638998b87..2256d3d53a5 100644
+> --- a/hw/hexagon/virt.c
+> +++ b/hw/hexagon/virt.c
+> @@ -15,6 +15,7 @@
+>   #include "hw/hexagon/hexagon.h"
+>   #include "hw/hexagon/hexagon_globalreg.h"
+>   #include "hw/hexagon/hexagon_tlb.h"
+> +#include "hw/intc/hex-l2vic.h"
+>   #include "hw/core/loader.h"
+>   #include "hw/core/qdev-properties.h"
+>   #include "hw/core/qdev-clock.h"
+> @@ -268,10 +269,22 @@ static void virt_init(MachineState *ms)
+>                                   &vms->parent_obj.cfgtable_rom);
+>       fdt_add_hvx(vms, m_cfg);
+>   
+> +    vms->parent_obj.l2vic_dev = qdev_new(TYPE_HEX_L2VIC);
+> +    object_property_add_child(OBJECT(ms), "l2vic",
+> +                              OBJECT(vms->parent_obj.l2vic_dev));
+> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(vms->parent_obj.l2vic_dev),
+> +                             &error_fatal);
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(vms->parent_obj.l2vic_dev), 0,
+> +                    m_cfg->l2vic_base);
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(vms->parent_obj.l2vic_dev), 1,
+> +                    m_cfg->cfgtable.fastl2vic_base << 16);
+> +
+>       gsregs_dev = qdev_new(TYPE_HEXAGON_GLOBALREG);
+>       object_property_add_child(OBJECT(ms), "global-regs", OBJECT(gsregs_dev));
+>       qdev_prop_set_uint64(gsregs_dev, "config-table-addr", m_cfg->cfgbase);
+>       qdev_prop_set_uint32(gsregs_dev, "dsp-rev", v68_rev);
+> +    object_property_set_link(OBJECT(gsregs_dev), "l2vic",
+> +                             OBJECT(vms->parent_obj.l2vic_dev), &error_fatal);
+>       sysbus_realize_and_unref(SYS_BUS_DEVICE(gsregs_dev), &error_fatal);
+>   
+>       tlb_dev = qdev_new(TYPE_HEXAGON_TLB);
+> @@ -301,9 +314,18 @@ static void virt_init(MachineState *ms)
+>                                    OBJECT(gsregs_dev), &error_fatal);
+>           object_property_set_link(OBJECT(cpu), "tlb",
+>                                    OBJECT(tlb_dev), &error_fatal);
+> +        object_property_set_link(OBJECT(cpu), "l2vic",
+> +                                 OBJECT(vms->parent_obj.l2vic_dev),
+> +                                 &error_fatal);
+>   
+>           qdev_realize_and_unref(DEVICE(cpu), NULL, &error_fatal);
+>       }
+> +
+> +    for (int i = 0; i < 8; i++) {
+> +        sysbus_connect_irq(SYS_BUS_DEVICE(vms->parent_obj.l2vic_dev), i,
+> +                           qdev_get_gpio_in(cpu0, i));
+> +    }
+> +
+>       fdt_add_cpu_nodes(vms);
+>       clk_phandle = fdt_add_clocks(vms);
+>       fdt_add_uart(vms, VIRT_UART0, clk_phandle);
+
 
