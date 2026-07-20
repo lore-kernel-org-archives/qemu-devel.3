@@ -4,126 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE57CC44525
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 09:43:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1A6CC44527
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 09:50:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlkWn-0007sZ-GW; Mon, 20 Jul 2026 05:43:13 -0400
+	id 1wlkdC-0002cq-Q3; Mon, 20 Jul 2026 05:49:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1wlkWh-0007pd-5j; Mon, 20 Jul 2026 05:43:07 -0400
-Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
- ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1wlkWe-0001s4-BL; Mon, 20 Jul 2026 05:43:06 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RI8Eoo+THxLlSPILXJypgvIbb2PoEW93ieSGNaBdFTSeeGYi9Akg1qf/KlchqVYLz8KAsX5qlZYPxte0FB89Zzpqixaipb7YSk+D+99uNgDeBXJ17b+F5DqND8+Wd9ITLseERDWy84su3Pk2b4IPAnkav8iMZ2kpslUfWNqKEyDtASkilQEahExipT6JHlnoCwg7HInoyh4MW8nCNeDktx9NPQ18iHd57dKxIG+Lcw9iD++rrzY1xN/cZTR08BjGhm05caktCJ7CGlHGV902fKHUuLle1Yh31KLFJpDp+r6LsHGl7rxOnBBXFD/kXceRbplhwPNRGbuhBAQ4hsUwcg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=PLGPmM1WJqpJv5PV1ncLkJ4WrhQ6d/4a4AaKzra5Wtk=;
- b=lpXXS5ZzaVNu0zbdMwcK1dpEJ8Cjhl0tSN/DizgorjDA8H7f12jjFUXCGMtNNoRmfAL74Ffo110PpGk1oMOZFIVhvxh4ZzNzfVvhh9L8xHl8eq39wwT6YaHJ76kp75dWJsByWBSJsWZh8LzewzegjStmWzdgz/rc5hMEI6Svl/kuhwOP18l7bX+jsj/AZwCMMRr7Ez0wUnYx7m6GjCe+X70vjdyfGKRytAIV2tTERBMh1xdfjWWLjSYQimC3nmhRn17isOAslKFEZv+pekvu06vrQlgnVBj6uCrAfytHKkb1gjNXP+pTPwKGJgTlm4TJDhGV6B2J7NxaeTdHRenv2Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PLGPmM1WJqpJv5PV1ncLkJ4WrhQ6d/4a4AaKzra5Wtk=;
- b=oaED1dMac9G24Ml2jbm+W0/+4o5v3sNpzTwZ+Bt0QGKOfUD9HynbCNwunyFvrSf1zrl0Hf7nKaXk45f7jLc2S8PGwrQyzRSRhDWReYfSbwjCPQT5F41t+8r9d1Grxf1wCAJ/L2qtq1Pd9p0pvbtL5czaVIHncKbSKTQFs6enblfszhY9lhcuarreArJkuimjt1raW3S5QPy1xGIfOyPTynB7+zZiojpnioniA50hRyEozJBij4EvEQre9LA1U30xneTIvpsM4n1aq/OnplEuFPNy2cu9XM7bzt3VZRkjAclS7yg6Hsgs5WWHfd+tL9Jb1ngKPwFXJi8GhOiVpRaHVQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
- by SE3PR02MB9612.apcprd02.prod.outlook.com (2603:1096:101:330::9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.16; Mon, 20 Jul
- 2026 09:42:56 +0000
-Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
- ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
- ([fe80::e5f3:5fb7:3d29:5934%4]) with mapi id 15.21.0223.015; Mon, 20 Jul 2026
- 09:42:55 +0000
-Date: Mon, 20 Jul 2026 17:42:50 +0800
-From: Chao Liu <chao.liu@processmission.com>
-To: Jian Cai <lingqian_gi@163.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
- alistair.francis@wdc.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com
-Subject: Re: [RFC PATCH 1/3] hw/riscv: add K230 SRAM device model
-Message-ID: <al3rA90UyfbNANuG@ChaodeMacBook-Pro.local>
-References: <20260720074545.8987-1-lingqian_gi@163.com>
- <20260720074545.8987-2-lingqian_gi@163.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260720074545.8987-2-lingqian_gi@163.com>
-X-ClientProxiedBy: SJ0PR05CA0061.namprd05.prod.outlook.com
- (2603:10b6:a03:332::6) To TYNPR02MB9351.apcprd02.prod.outlook.com
- (2603:1096:405:3d0::15)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|SE3PR02MB9612:EE_
-X-MS-Office365-Filtering-Correlation-Id: c6f67b7e-3fe1-43fd-5dbb-08dee64346a1
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|34096008|376014|1800799024|366016|6133799003|56012099006|4143699003|10067099003|13003099007|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: HVLT71PKKhwlhX+9Jc4c8W1sO/LMfvFxgm5N0mTr+fvMDr4Yn/wHZu9d8ZcOGO6YibEagRysIHiSiwlUMI4krrhIkEJHBQVk2AveSzubYCNgJk/uK+w4wyPHtx2o+TEwRcX2WghvtGoLIsa+m0AawsWQNV+/kmZsGOOEte6ld9msTR5TMxd45MxA1ETsqpm1X62epAcTdabWTg62WxKhr8JITXwVeTyoOfG3zlZ6cINxvrJi6aj8nwYSU85IMmsTrhfrVKLawMEGChd92bZcCVbWScGimIcF79xhDlErLfuo40nqni4HYax3MAt7VbzcLs88LRFziEe2NBRx3WcE7AGky7rJZdTlFaZf79VdKpEIICljmx5LJd8+3vWbTIi88NlkbmoaG+1uOyFCf5D3g+2bpA3hbF0YGgHpTm2D0RKELgXnXETYl3f+W/eFeZheNgtEZrcOpBFNwRpcwNO4jEGTpD6B0qEEemTIP/GcZ0GNjDBZ6tkmbB9J4tYMSi/8a1w+WOYeeShvZQ31+lHB74aL2U6R4MgWixi4Q/ZNoXLs4Cx4uIAI/lgOd+rMFJpHWMe+4EvTjnDRAvXaCt45dU6fbXsl9tYqIuWoA3Tyyk4Faa5k7hywWyHZhl9SNE3h
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(34096008)(376014)(1800799024)(366016)(6133799003)(56012099006)(4143699003)(10067099003)(13003099007)(22082099003)(18002099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?riYwIXo/gNwwWKLotErKx5v8+DJVG2BTgV30zecYGv6hH4vn2W5bfrnb7cqw?=
- =?us-ascii?Q?/fKIbRvfLpXruhg9cM6HClyN/nkIHucbPWgka3p9ktnX40s1QFLme/PNW6WD?=
- =?us-ascii?Q?5bYba9U8J3fKV3LJWcLliGTZ4cuNmmjkCwVcY8Ssn4V8ETOXVxUdR7H5GjAc?=
- =?us-ascii?Q?ttGqC3uDZ7ptpTM/JOemkgfF6xCy+eRGNnjAnPjQu8iQua5GtjVx5FIc4G0Q?=
- =?us-ascii?Q?E4YKTUOiLVn1VPoBGIqXreg1EDHpB8cggSbtcYdj1iarUSukYE/Af4FDrI6v?=
- =?us-ascii?Q?PM1BJSUsT7RPiTgNdcSdX/JiHegQEfOSTDi/OfXBDaLyNVj5/3GfrXHSZwG2?=
- =?us-ascii?Q?AexxKPGhGNNisVxcRO3QIRgMLYZW6LksOGp9/JPdPAdwC6FC/WActqNWXACf?=
- =?us-ascii?Q?/nZ7RP5YEENTgo3qsD2lG1okiGl6l20UQFTYeFZtjJVwzv6nee2J1x4Jldmc?=
- =?us-ascii?Q?+MEsqFrJQe+Oz7vgAKEfstEQBQCuXuosBdXdvfyc/XxoVBYaGB2+rD+vch2y?=
- =?us-ascii?Q?6GoFCf9Mif+KarxdQXJWpZHyHP84TIyZR7MWNjWtvc8IpxA1sEx9XGWOolGX?=
- =?us-ascii?Q?eboaRLw0jRx7K1rzSycDc2rbm3vq86PxJVoAD5k7E8FUw0gueyryd1DErcfP?=
- =?us-ascii?Q?88fR/PHRhzDd+9hgOWbwOjZXAqVTsJCXs6vdI1nN18q65DVx7kJkwx+/XjV+?=
- =?us-ascii?Q?g4PfiP1aApMdk27F8dmBB2tPtG+gdEp+iTR9o5CNu3u3tF3GANVDj2X1S1Fc?=
- =?us-ascii?Q?Ip+PuNcP7wyE5MlUOdOavuVGJFPJPQiGgN0jzUf2zmBl9nP7CRN3ot1Brs33?=
- =?us-ascii?Q?Jv6MFLA5DZGh9ud00/OkoeQ0t0LuJp7dG3a4GcgerauDZLPT5lwDgecRs+So?=
- =?us-ascii?Q?maC4axffQSw4TGANdS6Av+Nd2s4yphxak7rnIy+dhFHSP6iS1TDsxlcPLJf/?=
- =?us-ascii?Q?dKQovuirxDOV/ecErxZ2xXOkXxVf81xcL9TC9dF9KLpVJK+pbAvJh2W+O0pc?=
- =?us-ascii?Q?JcbBGrlCCmWekskvbDqZCy1p7nOyqr5bg5lfjQhNlxI2QyPlGZRZOxC2/lXI?=
- =?us-ascii?Q?vUJzql1/4g4qvrRKusAx8gA3z4WssqIWqQICp6wFqIO+qdor400S5tkKnJNj?=
- =?us-ascii?Q?xsBHvZQYTAHAm7G7MZ6t5mBCrf1nnOW5+gTpwGLQtZV80vskB0/W/IqNLVQH?=
- =?us-ascii?Q?ncmshOM2GLb3uJ3JvBjiz62AiFFQx0RRRL0iqrKupEK04ZezqBGvoH4DSAIm?=
- =?us-ascii?Q?GuOZoMBr5Izdj3JtGhpjx8EdkrlPmXdIi8byhpkmGRX0U+qU9UActJy7PSHw?=
- =?us-ascii?Q?sVIO6TakawMqJWK0kja0A8nC8wTZpqgEJ/jUv2THGSF7kPv99btZw5CNdPER?=
- =?us-ascii?Q?y1i4a+p+3n1baiUCUEwL3k37k7Hn1k21Qvqtf8erNlzcx0tXOhY3BW6c3W8k?=
- =?us-ascii?Q?AWWsgmSgM4in/OdBMZMNdmpU+K088BHreNGlfKOdJWbb6nyihYOiSa2x4a87?=
- =?us-ascii?Q?89Wlj6GDNe5UzJIB0F7ZoxSxVgMn9eJchRR5A30J4XVBiG5oGxHB6aqlywxJ?=
- =?us-ascii?Q?xikDQeisXrTkHG9wSBBglXEYSpe9VXq+21O23gqYBZ7VjOnXFTdqG9vK+uPN?=
- =?us-ascii?Q?3jSge4NdXRWQZX100n4ug9BAbTqdDLFUNdfAZgLwqaCrSHr3m3pfkqgMRph4?=
- =?us-ascii?Q?01WRdPNOXfPGEas20IgukyoEqrngZglNdeYZzNtpeK66ul5Sv1j5QPUT20S0?=
- =?us-ascii?Q?tDgcMX4OnfC/WXHDqMAdM5PUFgNWggo=3D?=
-X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c6f67b7e-3fe1-43fd-5dbb-08dee64346a1
-X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jul 2026 09:42:55.7118 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: x+KGw2wTpac/wTHuzUaLB0IKEgUBgMsnNfKYPk0WyevyBhTOPpbE8Lc2eL1tv18istYIuRwPxFtEA3DjlvK7iaAHViUM7A7dAWEVvdNEwiU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SE3PR02MB9612
-Received-SPF: pass client-ip=2a01:111:f403:c406::3;
- envelope-from=chao.liu@processmission.com;
- helo=OS8PR02CU002.outbound.protection.outlook.com
+ (Exim 4.90_1) (envelope-from <shankerwangmiao@gmail.com>)
+ id 1wlkd8-0002c3-Eq
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 05:49:48 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shankerwangmiao@gmail.com>)
+ id 1wlkd6-0002Sd-39
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 05:49:45 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2cc8311c6ddso13107705ad.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 02:49:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1784540982; x=1785145782; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:content-type:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=u1p3yHC1c3uyQamWTfxTSUIKHrxU0rigoHzlVx7xtt4=;
+ b=TDDICGYHNAShTuZ+rlOsyAaoUGUgIUuA4hunwUxxW1Udyxhcd6vnlVxZslZhGjM9RG
+ VZq7OU9cdmQtUkGB4Tu6NUMQ/KYeuaGxLmZNGgA0l6XzQf34E3DJpYhl6ocV4cesmi6v
+ QK/87Gsb5rmh2YPnMGBqvby/sy32Ve9gF7W2da/8bW4HdLnLgfmDUflPZDywVf0LbmSY
+ LuTXfS91JZeydVHPRu4QYbIrZLJIS+gGDycb5C9xXM6T6z1ozLAdn7R+Ho9C/VMxmYUY
+ xmlfouUJNZHKTt0hSpa84CPR5+96Bp6ADsGWQFIY680AbFncAWWHNxGGQHZnFKQtejaw
+ x37A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784540982; x=1785145782;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:content-type:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=u1p3yHC1c3uyQamWTfxTSUIKHrxU0rigoHzlVx7xtt4=;
+ b=dDAg/ZaqH8UZacXlIWcTXDpz9sCQesmsGswixWfHgoXBcZ+xwwixcst9o8Fy1nxpjl
+ 8nRzgY34eCoyCUW3bbJNAOq6ZCjAurOSj32P4Wi04vLrqa1HgCEdBWKLyJXkSdOMfVp+
+ yYlGWuAYPckaGlP+/VkTv3ExMWfQmiYLmv8khdsYNUjV9gMZCEYUJV/sZTxTQx76mfsY
+ luq4TA0m8qQyC0HjHTuQWqXl73Jxin+bVaI3F8aFfgh0CvNoqZCa1/xbigtBLX98PPRR
+ Fq5yNl0QibxWu+j5RH5RkxFpidAdi4IvRlFZmW1tOZv/+UZ6ZOnC3pcUyjTglD0qZ4SR
+ w6sQ==
+X-Gm-Message-State: AOJu0Yw9ro+Ed7Bxyjklj65oBDKlLnfnJi7v53aJsw9IbR3vfT6wtig3
+ XdMbwfcUL+ZB+EnW0lQraXaTkg0lG5wL2FvjMrtHD/z4rNoOcxv8UJQt
+X-Gm-Gg: AfdE7ckyLU7DbIt1QtvgyereLEtDQsTlnm0VIuroO5dMF8HvGYN98cRBAb7+sRLpK3u
+ CGuf4pOAxV/hzqPa/NHZn9TMMxdIPVRRO/SmqCAlruSIOcsZlru2OG1H9whLFJAST6VXQbx+std
+ 1TAANSHipmQkjNxQzcIUdyR/e/oAzFeD3Am3qFtNfngUp3J05r9n3JyzUmiSMHpU+YsTn88Wk+h
+ DnL4TevSIJ/15iHzV3PqYDlusE09coY6QYZ+Se0rWpT1vxQL3NaSzw7vjBbSV8p006T2T7vJOhy
+ 32poQcw7wgKlj2apk5e/wNtsRIb77ANLz1/86tFJjIFDCDAUSiZthUeBOwcpbhY+9CBHlpkpf2K
+ ficXqdB1CM69hifmcV0jF/kQvb65cXQEvkG5Fv9Qjv83KrNy8V9iKvwpVWRluzSmw+KVt8G8iCE
+ jiXo9Q6XjKX6H5koluObXI6VScBA==
+X-Received: by 2002:a17:903:8c7:b0:2ca:6885:8a06 with SMTP id
+ d9443c01a7336-2cf349c533amr112464865ad.5.1784540982134; 
+ Mon, 20 Jul 2026 02:49:42 -0700 (PDT)
+Received: from smtpclient.apple ([23.247.139.92])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2cf344df393sm52871375ad.30.2026.07.20.02.49.39
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 20 Jul 2026 02:49:41 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.8\))
+Subject: Re: [PATCH v2] target/loongarch: fix data race in CSR_ESTAT
+From: Miao Wang <shankerwangmiao@gmail.com>
+In-Reply-To: <c4b1f905-49e8-13f6-b9c1-caa17b9343e9@loongson.cn>
+Date: Mon, 20 Jul 2026 17:49:26 +0800
+Cc: qemu-devel@nongnu.org, Song Gao <17746591750@163.com>,
+ Xianglai Li <lixianglai@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Xi Ruoyao <xry111@xry111.site>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <DFC75026-9D83-43A7-8CD7-290A493E6A79@gmail.com>
+References: <20260716-loong-race-v2-1-01e68e4b850f@gmail.com>
+ <3613f855-8b22-2e94-fa14-339acec997ed@loongson.cn>
+ <185FB2BE-2645-45CF-BA2B-316F67495FF5@gmail.com>
+ <7a7cc87e-a097-30df-3085-a4249a2233b9@loongson.cn>
+ <2E82143C-8EC0-47F4-B0FF-5C35D36078E7@gmail.com>
+ <c4b1f905-49e8-13f6-b9c1-caa17b9343e9@loongson.cn>
+To: Bibo Mao <maobibo@loongson.cn>
+X-Mailer: Apple Mail (2.3826.700.81.1.8)
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=shankerwangmiao@gmail.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -140,209 +109,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jian,
-On Mon, Jul 20, 2026 at 03:45:43PM +0800, Jian Cai wrote:
-> The K230 shared SRAM (2 MB at 0x80200000) has no software-visible
-> controller registers: it is a pure on-chip RAM block accessed via
-> the AXI bus. This patch wraps it as a SysBusDevice so that it appears
-> in the QOM tree, supports VMState migration, and can be introspected
-> by management tools.
-> 
-> Clock gating (CMU at 0x91100000, offset 0x5c) and reset control
-> (RMU at 0x91101000, offsets 0x60/0x64) are handled by separate
-> system-controller peripherals and are not modelled here.
-> 
-> Reference:
-> K230 TRM V0.3.1 (2024-11-18), Section 5.2 Sram
-Thanks for the contribution!
+Hi,
 
-But I didn't receive the cover letter for this patch set. Please check if you
-prepared one, or if it might have been lost during transmission.
+> 2026=E5=B9=B47=E6=9C=8820=E6=97=A5 17:34=EF=BC=8CBibo Mao =
+<maobibo@loongson.cn> =E5=86=99=E9=81=93=EF=BC=9A
+>=20
+>=20
+>=20
+> On 2026/7/20 =E4=B8=8B=E5=8D=885:20, Miao Wang wrote:
+>> Hi,
+>>> 2026=E5=B9=B47=E6=9C=8820=E6=97=A5 17:04=EF=BC=8CBibo Mao =
+<maobibo@loongson.cn> =E5=86=99=E9=81=93=EF=BC=9A
+>>>=20
+>>>=20
+>>>=20
+>>> On 2026/7/20 =E4=B8=8B=E5=8D=884:49, Miao Wang wrote:
+>>>> Hi,
+>>>>> 2026=E5=B9=B47=E6=9C=8820=E6=97=A5 16:34=EF=BC=8CBibo Mao =
+<maobibo@loongson.cn> =E5=86=99=E9=81=93=EF=BC=9A
+>>>>>=20
+>>>>>=20
+>>>>>=20
+>>>>> On 2026/7/16 =E4=B8=8A=E5=8D=884:48, Miao Wang via B4 Relay wrote:
+>>>>>> From: Miao Wang <shankerwangmiao@gmail.com>
+>>>>>> The CSR_ESTAT register of a CPU can be read and written by both =
+the
+>>>>>> CPU thread and other threads (e.g., the interrupt controller =
+thread).
+>>>>>> Currently the possible readers and writers of CSR_ESTAT are:
+>>>>>> - Readers
+>>>>>>   - tcg generated by trans_csrrd(, CSR_ESTAT)
+>>>>>>   - loongarch_cpu_has_work()
+>>>>>> - Writers
+>>>>>>   - tcg generated by trans_csrxchg(, CSR_ESTAT)
+>>>>>>   - helper_csrwr_estat()
+>>>>>>   - helper_csrrd_msgir()
+>>>>>>   - loongarch_cpu_set_irq()
+>>>>>>   - loongarch_cpu_do_interrupt()
+>>>>>>   - loongarch_cpu_exec_interrupt()
+>>>>>> The access from the CPU thread is not synchronized with the =
+access from
+>>>>>> other threads, which may lead to data races. The above readers =
+and
+>>>>>> writers shall all run on the corresponding CPU thread except for
+>>>>>> loongarch_cpu_set_irq(). To fix this, the access to CSR_ESTAT in
+>>>>>> loongarch_cpu_set_irq() is moved to the CPU thread by using
+>>>>>> async_run_on_cpu().
+>>>>>> The data race has been identified while running the test cases =
+from
+>>>>>> dracut, which is using QEMU to boot a LoongArch guest. By running =
+the
+>>>>>> tests repeatedly (about 30 times) in the following conditions, =
+the
+>>>>>> guest will hang in the middle of booting:
+>>>>>> - Host architecture: LoongArch64 or Aarch64
+>>>>>> - Guest kernel: 7.1.3+deb14-loong64
+>>>>>> - Number of vCPUs: 1 or 2
+>>>>>> - CPU Features: max, la464,msgint=3Doff,ptw=3Doff, or =
+la464,msgint=3Doff,ptw=3Don
+>>>>>> - Accelerator: tcg
+>>>>>> When the guest hangs, the guest kernel log shows various errors =
+related
+>>>>>> to RCU stalls or other Soft Lockup or Hard Lockup issues. When =
+running
+>>>>>> with 1 vCPU and the guest hangs, the guest kernel directly hangs =
+without
+>>>>>> any messages and stucks at idle_exit.
+>>>>>> With this patch, the guest can boot successfully without any =
+hangs
+>>>>>> during repeated runs of the test cases.
+>>>>>> Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
+>>>>>> ---
+>>>>>> Changes in v2:
+>>>>>> - Simplify the changes to move the access to CSR_ESTAT from the =
+only
+>>>>>>   unsynchronized loongarch_cpu_set_irq() to the CPU thread using
+>>>>>>   async_run_on_cpu() to avoid the race condition.
+>>>>>> - Link to v1: =
+https://lore.kernel.org/qemu-devel/20260714-loong-race-v1-1-54111549c95e@g=
+mail.com
+>>>>>> ---
+>>>>>>  target/loongarch/cpu.c | 27 +++++++++++++++++++--------
+>>>>>>  1 file changed, 19 insertions(+), 8 deletions(-)
+>>>>>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+>>>>>> index =
+fb03424ffa8cd5e5d250531cc2a36fa789fc25a9..126c3ad276cc44311942542e086bcabe=
+41d91b63 100644
+>>>>>> --- a/target/loongarch/cpu.c
+>>>>>> +++ b/target/loongarch/cpu.c
+>>>>>> @@ -57,12 +57,27 @@ static vaddr loongarch_cpu_get_pc(CPUState =
+*cs)
+>>>>>>  #ifndef CONFIG_USER_ONLY
+>>>>>>  #include "hw/loongarch/virt.h"
+>>>>>>  +static void do_set_cpu_estat(CPUState *cs, run_on_cpu_data =
+data)
+>>>>>> +{
+>>>>>> +    CPULoongArchState *env =3D cpu_env(cs);
+>>>>>> +    CPUSysState *sys =3D env_sys(env);
+>>>>>> +
+>>>>>> +    int irq =3D data.host_int;
+>>>>>> +    int level =3D irq >=3D 0 ? 1 : 0;
+>>>>>> +    irq =3D level ? irq : -irq;
+>>>>>> +
+>>>>>> +    sys->CSR_ESTAT =3D deposit64(sys->CSR_ESTAT, irq, 1, level =
+!=3D 0);
+>>>>>> +    if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
+>>>>>> +        cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+>>>>>> +    } else {
+>>>>>> +        cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+>>>>>> +    }
+>>>>>> +}
+>>>>>> +
+>>>>>>  void loongarch_cpu_set_irq(void *opaque, int irq, int level)
+>>>>>>  {
+>>>>>>      LoongArchCPU *cpu =3D opaque;
+>>>>>> -    CPULoongArchState *env =3D &cpu->env;
+>>>>>>      CPUState *cs =3D CPU(cpu);
+>>>>>> -    CPUSysState *sys =3D env_sys(env);
+>>>>>>        if (irq < 0 || irq >=3D N_IRQS) {
+>>>>>>          return;
+>>>>>> @@ -71,12 +86,8 @@ void loongarch_cpu_set_irq(void *opaque, int =
+irq, int level)
+>>>>>>      if (kvm_enabled()) {
+>>>>>>          kvm_loongarch_set_interrupt(cpu, irq, level);
+>>>>>>      } else if (tcg_enabled()) {
+>>>>>> -        sys->CSR_ESTAT =3D deposit64(sys->CSR_ESTAT, irq, 1, =
+level !=3D 0);
+>>>>>> -        if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
+>>>>>> -            cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+>>>>>> -        } else {
+>>>>>> -            cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+>>>>>> -        }
+>>>>>> +        async_run_on_cpu(cs, do_set_cpu_estat,
+>>>>>> +                         RUN_ON_CPU_HOST_INT(level ? irq : =
+-irq));
+>>>>> This is a good method with async_run_on_cpu, there is one small =
+issue with irq =3D=3D 0 interrupt injection where -irq/irq are both 0.
+>>>> Since according to Section 7.4.6. of Loongarch Reference Manual =
+Vol1,
+>>>> bit [1:0] stands for the software interrupt SW1 and SW0, I expect =
+that
+>>>> these two irqs should not be manipulated by hardware sources and =
+thus
+>>>> the irq here should be larger than 2. Can you further explain under
+>>>> what condition the irq line 0 and 1 of a cpu core would be =
+connected
+>>>> to external outputs.
+>>> loongarch_cpu_set_irq() is not only for external interrupts, percpu =
+interrupt injection also uses loongarch_cpu_set_irq() such as IRQ_TIMER =
+etc.
+>> The users of loongarch_cpu_set_irq() are limited. The main usage is
+>> as the callback of qdev_init_gpio_in(). Other usage is for the timer,
+>> where the irq number is IRQ_TIMER, i.e. 11.
+>>> With SW1 and SW0, if the CPU set bit0 of estat, it will inject SW0 =
+to this CPU itself. And de-assert the irq if the CPU clear bit0 of =
+estat.
+>> When SW1 and/or SW0 are set by the guest code running in the emulated
+> Linux kernel does not use SW0/SW1 now, which does not meaning that it =
+is not an interrupt. It is only interrupt generated by software, rather =
+than hardware.
+>=20
 
-Could you please include a cover letter when you send the next revision
-of this series? It should briefly explain what the series does as a
-whole and what problem it is intended to solve.
+Yes, but it seem that in qemu, loongarch_cpu_set_irq() is used to handle
+interrupt generated by hardware. When software interrupts are asserted
+by the guest code of the emulated CPU, setting CSR_ESTAT[1:0] bits
+are handled by helper_csrwr_estat() and picked up by
+cpu_loongarch_hw_interrupts_pending() and are not relevant with
+loongarch_cpu_set_irq(). I do admit that SW1 and SW0 are really
+interrupts. What I insist is that the handling of them is not going
+through loongarch_cpu_set_irq().
 
-Here are two ways to generate one:
+>> CPU, the handling of the software IRQs in the qemu side does not
+>> involve loongarch_cpu_set_irq(). As a result, I believe that it is
+>> safe to assume that the second parameter of loongarch_cpu_set_irq(),
+>> i.e. irq should not be smaller than 2. I also suggest enforce this
+> So, What is behavior with the code *set_csr_estat(BIT(0))* on real =
+hardware? and how should QEMU TCG implement this instruction?
 
-1. Store the cover letter in the branch description:
+If the guest code set CSR_ESTAT[1:0], then according to the manual,
+the CPU will behave as if it receives a hard interrupt. The handling
+of this in QEMU is described above, and I don't think the process
+is related to loongarch_cpu_set_irq(). I have searched the code
+and see no other callers of it.
 
-   git branch --edit-description
-   git format-patch --cover-letter --cover-from-description=subject \
-       -o outgoing
+Cheers,
+Miao Wang
 
-2. Generate a cover letter template and edit it manually:
 
-   git format-patch --cover-letter -o k230-patches
-   $EDITOR k230-patches/0000-cover-letter.patch
-
-In general, a single-patch submission does not need a separate cover
-letter. For a multi-patch series like this one, however, we prefer a
-cover letter that provides an overview of the whole series.
-
-> 
-> Signed-off-by: Jian Cai <lingqian_gi@163.com>
-> ---
->  MAINTAINERS                  |  5 +++
->  hw/riscv/k230_sram.c         | 81 ++++++++++++++++++++++++++++++++++++
->  include/hw/riscv/k230_sram.h | 35 ++++++++++++++++
->  3 files changed, 121 insertions(+)
->  create mode 100644 hw/riscv/k230_sram.c
->  create mode 100644 include/hw/riscv/k230_sram.h
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 6171cc7494..3567563ba6 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1825,6 +1825,11 @@ L: qemu-riscv@nongnu.org
->  S: Maintained
->  F: docs/system/riscv/k230.rst
->  F: hw/riscv/k230.c
-> +F: hw/riscv/k230_sram.c
-> +F: include/hw/riscv/k230_sram.h
-> +F: hw/riscv/k230_sram.c
-> +F: include/hw/riscv/k230_sram.h
-> +F: tests/qtest/k230-sram-test.c
->  F: hw/watchdog/k230_wdt.c
->  F: include/hw/riscv/k230.h
->  F: include/hw/watchdog/k230_wdt.h
-> diff --git a/hw/riscv/k230_sram.c b/hw/riscv/k230_sram.c
-> new file mode 100644
-> index 0000000000..1d960e733e
-> --- /dev/null
-> +++ b/hw/riscv/k230_sram.c
-> @@ -0,0 +1,81 @@
-> +/*
-> + * K230 SRAM Controller
-> + *
-> + * K230 Technical Reference Manual V0.3.1 (2024-11-18):
-> + * https://github.com/revyos/external-docs/blob/master/K230/en-us/K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
-> + *
-> + * The K230 shared SRAM (2 MB at 0x80200000) has no software-visible
-> + * controller registers.  This device wraps the SRAM as a SysBusDevice
-> + * so that it appears in the QOM tree, supports migration (VMState),
-> + * and can be introspected by management tools.
-> + *
-> + * Clock gating is controlled by the CMU at 0x91100000 (shrm_CLK_CFG,
-> + * offset 0x5c, bit 10: sram_aclk_enable).  Reset is controlled by the
-> + * RMU at 0x91101000 (SRAM_RST_TIM/SRAM_RST_CTL, offsets 0x60/0x64).
-> + * Those peripherals are not modelled yet, so SRAM is always enabled
-> + * in the current QEMU implementation.
-> + *
-> + * Copyright (c) 2026 Jian Cai <lingqian_gi@163.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-We probably don't need to create a dedicated device model for SRAM.
-It can actually be replaced directly by using a QEMU memory region RAM.
-
-A simpler approach would be to keep this code in k230.c, perhaps in a
-helper function such as k230_sram_create().
-
-Thanks,
-Chao
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/units.h"
-> +#include "hw/core/sysbus.h"
-> +#include "migration/vmstate.h"
-> +#include "qapi/error.h"
-> +#include "hw/riscv/k230_sram.h"
-> +
-> +static void k230_sram_realize(DeviceState *dev, Error **errp)
-> +{
-> +    K230SramState *s = K230_SRAM(dev);
-> +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-> +
-> +    memory_region_init_ram(&s->sram, OBJECT(dev), "k230.sram",
-> +                           2 * MiB, &error_fatal);
-> +    sysbus_init_mmio(sbd, &s->sram);
-> +}
-> +
-> +static void k230_sram_reset_hold(Object *obj, ResetType type)
-> +{
-> +    /*
-> +     * No software-visible registers to reset.  SRAM content is preserved
-> +     * across warm reset on real hardware; a cold reset would clear it,
-> +     * but QEMU memory_region_init_ram already zeroes the region on init.
-> +     */
-> +}
-> +
-> +static const VMStateDescription vmstate_k230_sram = {
-> +    .name = "k230.sram",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_END_OF_LIST()
-> +    },
-> +};
-> +
-> +static void k230_sram_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    ResettableClass *rc = RESETTABLE_CLASS(klass);
-> +
-> +    dc->realize = k230_sram_realize;
-> +    rc->phases.hold = k230_sram_reset_hold;
-> +    dc->vmsd = &vmstate_k230_sram;
-> +    dc->desc = "K230 SRAM";
-> +}
-> +
-> +static const TypeInfo k230_sram_info = {
-> +    .name          = TYPE_K230_SRAM,
-> +    .parent        = TYPE_SYS_BUS_DEVICE,
-> +    .instance_size = sizeof(K230SramState),
-> +    .class_init    = k230_sram_class_init,
-> +};
-> +
-> +static void k230_sram_register_type(void)
-> +{
-> +    type_register_static(&k230_sram_info);
-> +}
-> +
-> +type_init(k230_sram_register_type)
-> diff --git a/include/hw/riscv/k230_sram.h b/include/hw/riscv/k230_sram.h
-> new file mode 100644
-> index 0000000000..6d15970ab9
-> --- /dev/null
-> +++ b/include/hw/riscv/k230_sram.h
-> @@ -0,0 +1,35 @@
-> +/*
-> + * K230 SRAM Controller
-> + *
-> + * K230 Technical Reference Manual V0.3.1 (2024-11-18):
-> + * https://github.com/revyos/external-docs/blob/master/K230/en-us/K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
-> + *
-> + * The K230 shared SRAM (2 MB at 0x80200000) has no software-visible
-> + * controller registers: it is a pure on-chip RAM block accessed directly
-> + * via the AXI bus.  Clock gating (CMU at 0x91100000, offset 0x5c) and
-> + * reset control (RMU at 0x91101000, offsets 0x60/0x64) are handled by
-> + * separate system-controller peripherals and are not modelled here yet.
-> + *
-> + * Copyright (c) 2026 Jian Cai <lingqian_gi@163.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef K230_SRAM_H
-> +#define K230_SRAM_H
-> +
-> +#include "hw/core/sysbus.h"
-> +#include "qom/object.h"
-> +
-> +#define TYPE_K230_SRAM "riscv.k230.sram"
-> +OBJECT_DECLARE_SIMPLE_TYPE(K230SramState, K230_SRAM)
-> +
-> +struct K230SramState {
-> +    /*< private >*/
-> +    SysBusDevice parent_obj;
-> +
-> +    /*< public >*/
-> +    MemoryRegion sram;          /* 2 MB SRAM storage */
-> +};
-> +
-> +#endif /* K230_SRAM_H */
-> -- 
-> 2.43.0
-> 
 
