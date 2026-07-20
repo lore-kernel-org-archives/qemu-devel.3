@@ -4,148 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EFE7C44515
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 09:19:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D0EBC4451B
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 09:20:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlkA5-0005Wp-TC; Mon, 20 Jul 2026 05:19:45 -0400
+	id 1wlkAx-0006CS-1n; Mon, 20 Jul 2026 05:20:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wlkA2-0005UU-J4
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 05:19:42 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wlkA0-0007aV-Nn
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 05:19:41 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66K965XS2110642
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 09:19:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ApbP7hYuqc8R2yOVpRZwPLW+EwvbTObRLWXaVaOR9Vw=; b=BiFo7Vp2FjynFrPm
- Dby7MR771tKleFUkeaBCMwTa3Ao7fDgHQawMnShr9UszC6wnVcOofxkxf8FaJ/EF
- ovTuiC+WNWaRB60YItn98zAfDfQJ67+tccRbs9klvyIfcUU6/5j/Kz7/4/g0Lkcc
- FqTEpwK//qqctzns2GZd1ufWsQFJptApD0RMtfMWA60eZBtr05O6OAvRSG5NAJI5
- KAP1VXmNKXjYAmzWQK0u1Ndjzpfno365Bv+28JMExXMZE3bMzkJ7pBbDF46P5XSF
- P5oOqdqJ+0ARuNTcjGTClC55GokJi/LMRUJdtMHAsfYI4w/SlO/wzV3mwmn/DQW5
- Fket1Q==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhgre829p-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 09:19:38 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51c0f0a0760so236742371cf.2
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 02:19:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shankerwangmiao@gmail.com>)
+ id 1wlkAu-0006C1-85
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 05:20:37 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shankerwangmiao@gmail.com>)
+ id 1wlkAs-0007vg-6H
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 05:20:35 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2cad68425a7so14557795ad.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 02:20:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784539178; x=1785143978; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ApbP7hYuqc8R2yOVpRZwPLW+EwvbTObRLWXaVaOR9Vw=;
- b=QOZza6R7mnP3CIHM2GjSHFMbY13N1qHLwOT/q5JEJKuam0wGXHZGWnqU4rvoWjRZQZ
- M6kj5Fe+nD0pViiPW5Sc/eUqysWCirR66lezzETvmT7PvZGkkVaY3qSnoqXJK4fVoXVj
- PPPkyecb/rRPIzKzQI8EvK9LUAkBwBpII8fU+7p9Zbtqs7SGdj0MTju60gA6ylzQF7fU
- MvbFPenLer3AVYHLXKnRkhTJbZdBSVeBNdU3+4ZR39VeztT1NmQJypkv2bNGGVBNtZCB
- fg4FZ82UV+L89E9/yzYdUDdygDHjF/xf/WmteUIJc3K78ZP/Osxw4npvsAdTPSTK21g5
- k1KA==
+ d=gmail.com; s=20251104; t=1784539232; x=1785144032; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:content-type:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=pyjJ86V9akEiHAxLyk8DJHVjvPtoPLPNjz6n9mwvDSA=;
+ b=mZQAtH83/2LQsXVdS7kIS+h00K8YePDU7+dpoqWwGWIZ/SbFWzqZu2UC0IvQt9c0pl
+ 4a1H3akmoeesPg7ysO3XZmLUN6DYINOGco5IwsS+oGn3Wwa5SVZMqeqdFfMgDIHCGade
+ h658r2PsqyO3L6koXypnr5ggHVoK9xFYaduE0rxJ0Q2OmQqzNJsqda6dE3c3NXb7H9Uv
+ 45AiQ4Ik/f4cs34e8QtmGECRqbG+AsEZa8imoDM6JhH9jPyMML2s95NxjNlOiqXK4S5h
+ Uii1ikty5GsODWOKQgBVWlG17hlqfk95KTg+y4JM7kKSmF3gFTGyI4H5jxE4xP998jxW
+ fyUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784539178; x=1785143978;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ApbP7hYuqc8R2yOVpRZwPLW+EwvbTObRLWXaVaOR9Vw=;
- b=TPuWK7HeE8MM8WthOdcjaXdt+1hEVynaLHkNfS5olA4gckVlJhqh3Pk5LOED6jmp3z
- k4pvhJqL2NHaTAytBfJVsZ7jJQifv9CEddwKqqpL23qn35VRUN37fTyI4xX4XlUA0nga
- MO/jap7DnXF79jHY1kanh3Fb37dvw5AyCal9bxqbWq5KMc81k9ZJnzEgs643KhWPh8Q3
- FtJ41psvOgfuQqeRthHJcPqsr2c9yvIjSZQ9vHPAcfWblDKfzlK5rZ9v0sMEwsuoaBH+
- Ba97pExOl9TpYeHQHsZgCCX0GduLaO1Um43zPPRVN5V6Qc4qQ418h7KKA6AmFzdkiaqJ
- MeiA==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpNXuvDv6z6bCsg07RBM8IR9hrlGP+7CbaYfvH1VWqyEUpuHJZuponGE1p/L2jnLzjc+DVW1ou4hJIs@nongnu.org
-X-Gm-Message-State: AOJu0YxmVs/evDN43ztpqa5Qi2efXypDqrDV4nwSpoN2OKooVXhLxo1s
- NjClWUKZaM6k8Wn3tM0iXjfWhVT/KIWOqWZf3JVeENylUjRlEddvf/KFGR9j4Tn3ZPpZgf9rxOj
- 7emVp8hco2r/vWOlDIG550WvDjfjYfLOtEI9uwte9ivCsYCGX34IAibLX1Q==
-X-Gm-Gg: AfdE7ckkxXKDeKbBBH86m4EF765kJPiXsbd5U3by5JQQlWMv2Tae6BM0jVIVCEZkYyJ
- LQIIt6MNFXjRL+y+Lu4Z7fcCFtURxSjTruUfD33enQKwv0U2x13n4zTy2Y5nGXvwFiJupBiwzC6
- I0RXX55eb+1DS0Q5JRZvjYow6FWr1w2KC9OaQQZlRYIc0KZrUtRehB4/Ug+Hku2UsHyGLvl37p2
- H1nIRPa+G+nnu2LexjLq1rnNtGljVWLosi6sKaeIP1qeJknq8A3LBWY6sLcaDlvwinTn9Fe5Wbj
- c5DEsECaFKEYFkrOlMoI/CqLpnLfoRE6tPH8FFM8yjyq6Z70VDoXr5avO9+Gqz3q47BsW0xQphf
- 6luqty59XDkI3v8PGyzhZK2Eg0TJqephfJe/W32ceI4jiKrbKpNo=
-X-Received: by 2002:a05:622a:155:b0:51c:1b22:b84c with SMTP id
- d75a77b69052e-5213ee77fa4mr125124201cf.60.1784539178253; 
- Mon, 20 Jul 2026 02:19:38 -0700 (PDT)
-X-Received: by 2002:a05:622a:155:b0:51c:1b22:b84c with SMTP id
- d75a77b69052e-5213ee77fa4mr125124011cf.60.1784539177850; 
- Mon, 20 Jul 2026 02:19:37 -0700 (PDT)
-Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4954995b78dsm174683335e9.0.2026.07.20.02.19.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Jul 2026 02:19:36 -0700 (PDT)
-Message-ID: <e0a13116-ecfb-481e-a883-5c95e3b31b73@oss.qualcomm.com>
-Date: Mon, 20 Jul 2026 11:19:35 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 01/10] build: add optional librpmi dependency
-Content-Language: en-US
-To: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>,
- qemu-riscv@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-References: <20260714075659.2258023-1-subrahmanya.lingappa@oss.qualcomm.com>
- <20260714075659.2258023-2-subrahmanya.lingappa@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260714075659.2258023-2-subrahmanya.lingappa@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDEwMyBTYWx0ZWRfXxaPtG0mFgqlS
- Bt6RGklptyZ3pvO/5JJrJ+cW6b2nsNxXhHTEgJtWdP6qxYSKkmWeM/+VGvZRy1ZAIJG/6xeIqO9
- AvCmM37YjMlnllixPvCb9TB8+VinRKc=
-X-Proofpoint-GUID: XmFZ6DuCal6uCBpz2U_ERKyKZAlA0Ry6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDEwMyBTYWx0ZWRfX4uDgLunebaMM
- JlZQa1mwaHOJJPERuwQt8DkYwGv+UYq6vXmsn093vN1gFHVxtzwMahSJ4pvboFfAhTbbvm8jNJ+
- SJPCE5G/zU5s350bHmBxrfQWhNE8kpi4AvAUr7F8xMVXYR+FtGktC9BhFudiiIB3YVMvJ34ZHX4
- xvVt2vfL5lo51gWsKe7B3vOtOINJiArpOseGoNQefhS+/oNXHlxGLKC7kznzqCDWIrYtBkkA//k
- xAzVBkea01lWvWogAH2T1GqLPXh25BUnumKJE/+NkTEQxpNaehyt8kbZzW+fuhxfdIjaScGLE++
- Nj33kxIVhIZov9pwOeSO2Sa8b/LN9KNMXMAFpOCwwX8WxtZYF6DMart4KLr7BZJwiz2evbR/R3l
- Eozg6fwAezzSF7JKDtX22yUbN/OUO87dz/SQu/12GgkEP6o2cakT8BXStk22aTJLMlnpRYAZOA/
- rlem16cJdZq/gIlbRnA==
-X-Proofpoint-ORIG-GUID: XmFZ6DuCal6uCBpz2U_ERKyKZAlA0Ry6
-X-Authority-Analysis: v=2.4 cv=foLsol4f c=1 sm=1 tr=0 ts=6a5de82a cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=WRReY8dDeiYyY52TRfoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-20_01,2026-07-17_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 suspectscore=0 priorityscore=1501 spamscore=0 clxscore=1015
- lowpriorityscore=0 bulkscore=0 malwarescore=0 adultscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200103
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ d=1e100.net; s=20251104; t=1784539232; x=1785144032;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:content-type:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=pyjJ86V9akEiHAxLyk8DJHVjvPtoPLPNjz6n9mwvDSA=;
+ b=aZ+uXEl0e3J2zKlWBGfAmqyHXvDt1zVZMexSCI6MhLHxilmtuttMWko3mEio1l99he
+ rr143toZeaCinbp+pi7DgyTTI44Hf0jpF9WPbmCWOnAeQqVs1Rj4t/lvXKLogHm94HHO
+ EiOaX2kBbHkhXOZX9kjLTqVQ0fvS+jArUyjsF7QZg9vJXeaJ0kfu1iALqtrZ8JEdSIcd
+ f6OEUOF0o5WTPKThKe7lT8xNJlNCtIvvq7TBEMdY3GGt4xS+vbg3mHWTNXAicZNf6l67
+ QP+PaigJKKaXupO/Ib0Vu5w9bdOqoxmfzb1MREqGdWJF+mWoWx9sBRfjwj+EydEj3Web
+ Jidw==
+X-Gm-Message-State: AOJu0YzXGgfXY28rq9aaNdTU13XmC+wG8mXHFtbkM5f3Sehpc/mM7VcT
+ qGj5TbqRL38PXP/4Y6xNhyQiFFrKjECqK6+H/KijJJE3JUBZYTEHfJg0
+X-Gm-Gg: AfdE7clehQv+KBtGYR0dmbDll0jZxpVtiMSXH9egtMJtWs1LjHz5MJhmNXooAw8NNxk
+ pC983i9p3XcFEKjxY36vuaIGqcRR3qt52/Re/qOvGZkWj+WtHMDNK1KRG8OgryIeqKzFO10f2PD
+ 3z3Ew3X3yeLpAqbhtHztdIQSp9U9McwM0AiiSxrADMGYxcGDVeC00bPm9cY9QajWG/qZq/xdfKN
+ BtVc9+5pD4f/l8yTi4tPvUMZqhntq4NgHi1NMfWDW7zHDGYuz0OBRN1Yh43fMf8ZZx1nNaLyQH/
+ U8E6HxvHgyk2/nhO2hmD5f1tqZNargUePG4sA1QKt3ULSibB1qcCbNBU4Eut9p7mWyZYDk2YyXM
+ E6Crjetj2m5g0fpQ79bbe6zTqt/tcNl3utTxpq+db3k4/H+icMnQYweWF4/KdSQXxj+nTHf36ID
+ DR6uywYo4T9nEkbtdGXKjrFqVDTw==
+X-Received: by 2002:a05:6a21:9206:b0:3c3:755c:12dd with SMTP id
+ adf61e73a8af0-3c3ad30198bmr9919731637.0.1784539232338; 
+ Mon, 20 Jul 2026 02:20:32 -0700 (PDT)
+Received: from smtpclient.apple ([23.247.139.92])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-cb517f8ffcbsm4246591a12.12.2026.07.20.02.20.29
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 20 Jul 2026 02:20:31 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.8\))
+Subject: Re: [PATCH v2] target/loongarch: fix data race in CSR_ESTAT
+From: Miao Wang <shankerwangmiao@gmail.com>
+In-Reply-To: <7a7cc87e-a097-30df-3085-a4249a2233b9@loongson.cn>
+Date: Mon, 20 Jul 2026 17:20:17 +0800
+Cc: qemu-devel@nongnu.org, Song Gao <17746591750@163.com>,
+ Xianglai Li <lixianglai@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Xi Ruoyao <xry111@xry111.site>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <2E82143C-8EC0-47F4-B0FF-5C35D36078E7@gmail.com>
+References: <20260716-loong-race-v2-1-01e68e4b850f@gmail.com>
+ <3613f855-8b22-2e94-fa14-339acec997ed@loongson.cn>
+ <185FB2BE-2645-45CF-BA2B-316F67495FF5@gmail.com>
+ <7a7cc87e-a097-30df-3085-a4249a2233b9@loongson.cn>
+To: Bibo Mao <maobibo@loongson.cn>
+X-Mailer: Apple Mail (2.3826.700.81.1.8)
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=shankerwangmiao@gmail.com; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,72 +109,152 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi,
 
-On 14/7/26 09:56, Subrahmanya Lingappa wrote:
-> Add a meson option and config probe for librpmi so RISC-V machines can
-> opt into RPMI support when the library is available. Keep the dependency
-> optional so default builds without librpmi continue to work.
-> 
-> Signed-off-by: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
-> ---
->   Kconfig.host                  |  3 +++
->   meson.build                   | 14 ++++++++++++++
->   meson_options.txt             |  2 ++
->   scripts/meson-buildoptions.sh |  3 +++
->   4 files changed, 22 insertions(+)
+> 2026=E5=B9=B47=E6=9C=8820=E6=97=A5 17:04=EF=BC=8CBibo Mao =
+<maobibo@loongson.cn> =E5=86=99=E9=81=93=EF=BC=9A
+>=20
+>=20
+>=20
+> On 2026/7/20 =E4=B8=8B=E5=8D=884:49, Miao Wang wrote:
+>> Hi,
+>>> 2026=E5=B9=B47=E6=9C=8820=E6=97=A5 16:34=EF=BC=8CBibo Mao =
+<maobibo@loongson.cn> =E5=86=99=E9=81=93=EF=BC=9A
+>>>=20
+>>>=20
+>>>=20
+>>> On 2026/7/16 =E4=B8=8A=E5=8D=884:48, Miao Wang via B4 Relay wrote:
+>>>> From: Miao Wang <shankerwangmiao@gmail.com>
+>>>> The CSR_ESTAT register of a CPU can be read and written by both the
+>>>> CPU thread and other threads (e.g., the interrupt controller =
+thread).
+>>>> Currently the possible readers and writers of CSR_ESTAT are:
+>>>> - Readers
+>>>>   - tcg generated by trans_csrrd(, CSR_ESTAT)
+>>>>   - loongarch_cpu_has_work()
+>>>> - Writers
+>>>>   - tcg generated by trans_csrxchg(, CSR_ESTAT)
+>>>>   - helper_csrwr_estat()
+>>>>   - helper_csrrd_msgir()
+>>>>   - loongarch_cpu_set_irq()
+>>>>   - loongarch_cpu_do_interrupt()
+>>>>   - loongarch_cpu_exec_interrupt()
+>>>> The access from the CPU thread is not synchronized with the access =
+from
+>>>> other threads, which may lead to data races. The above readers and
+>>>> writers shall all run on the corresponding CPU thread except for
+>>>> loongarch_cpu_set_irq(). To fix this, the access to CSR_ESTAT in
+>>>> loongarch_cpu_set_irq() is moved to the CPU thread by using
+>>>> async_run_on_cpu().
+>>>> The data race has been identified while running the test cases from
+>>>> dracut, which is using QEMU to boot a LoongArch guest. By running =
+the
+>>>> tests repeatedly (about 30 times) in the following conditions, the
+>>>> guest will hang in the middle of booting:
+>>>> - Host architecture: LoongArch64 or Aarch64
+>>>> - Guest kernel: 7.1.3+deb14-loong64
+>>>> - Number of vCPUs: 1 or 2
+>>>> - CPU Features: max, la464,msgint=3Doff,ptw=3Doff, or =
+la464,msgint=3Doff,ptw=3Don
+>>>> - Accelerator: tcg
+>>>> When the guest hangs, the guest kernel log shows various errors =
+related
+>>>> to RCU stalls or other Soft Lockup or Hard Lockup issues. When =
+running
+>>>> with 1 vCPU and the guest hangs, the guest kernel directly hangs =
+without
+>>>> any messages and stucks at idle_exit.
+>>>> With this patch, the guest can boot successfully without any hangs
+>>>> during repeated runs of the test cases.
+>>>> Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
+>>>> ---
+>>>> Changes in v2:
+>>>> - Simplify the changes to move the access to CSR_ESTAT from the =
+only
+>>>>   unsynchronized loongarch_cpu_set_irq() to the CPU thread using
+>>>>   async_run_on_cpu() to avoid the race condition.
+>>>> - Link to v1: =
+https://lore.kernel.org/qemu-devel/20260714-loong-race-v1-1-54111549c95e@g=
+mail.com
+>>>> ---
+>>>>  target/loongarch/cpu.c | 27 +++++++++++++++++++--------
+>>>>  1 file changed, 19 insertions(+), 8 deletions(-)
+>>>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+>>>> index =
+fb03424ffa8cd5e5d250531cc2a36fa789fc25a9..126c3ad276cc44311942542e086bcabe=
+41d91b63 100644
+>>>> --- a/target/loongarch/cpu.c
+>>>> +++ b/target/loongarch/cpu.c
+>>>> @@ -57,12 +57,27 @@ static vaddr loongarch_cpu_get_pc(CPUState *cs)
+>>>>  #ifndef CONFIG_USER_ONLY
+>>>>  #include "hw/loongarch/virt.h"
+>>>>  +static void do_set_cpu_estat(CPUState *cs, run_on_cpu_data data)
+>>>> +{
+>>>> +    CPULoongArchState *env =3D cpu_env(cs);
+>>>> +    CPUSysState *sys =3D env_sys(env);
+>>>> +
+>>>> +    int irq =3D data.host_int;
+>>>> +    int level =3D irq >=3D 0 ? 1 : 0;
+>>>> +    irq =3D level ? irq : -irq;
+>>>> +
+>>>> +    sys->CSR_ESTAT =3D deposit64(sys->CSR_ESTAT, irq, 1, level !=3D =
+0);
+>>>> +    if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
+>>>> +        cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+>>>> +    } else {
+>>>> +        cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+>>>> +    }
+>>>> +}
+>>>> +
+>>>>  void loongarch_cpu_set_irq(void *opaque, int irq, int level)
+>>>>  {
+>>>>      LoongArchCPU *cpu =3D opaque;
+>>>> -    CPULoongArchState *env =3D &cpu->env;
+>>>>      CPUState *cs =3D CPU(cpu);
+>>>> -    CPUSysState *sys =3D env_sys(env);
+>>>>        if (irq < 0 || irq >=3D N_IRQS) {
+>>>>          return;
+>>>> @@ -71,12 +86,8 @@ void loongarch_cpu_set_irq(void *opaque, int =
+irq, int level)
+>>>>      if (kvm_enabled()) {
+>>>>          kvm_loongarch_set_interrupt(cpu, irq, level);
+>>>>      } else if (tcg_enabled()) {
+>>>> -        sys->CSR_ESTAT =3D deposit64(sys->CSR_ESTAT, irq, 1, level =
+!=3D 0);
+>>>> -        if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
+>>>> -            cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+>>>> -        } else {
+>>>> -            cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+>>>> -        }
+>>>> +        async_run_on_cpu(cs, do_set_cpu_estat,
+>>>> +                         RUN_ON_CPU_HOST_INT(level ? irq : -irq));
+>>> This is a good method with async_run_on_cpu, there is one small =
+issue with irq =3D=3D 0 interrupt injection where -irq/irq are both 0.
+>> Since according to Section 7.4.6. of Loongarch Reference Manual Vol1,
+>> bit [1:0] stands for the software interrupt SW1 and SW0, I expect =
+that
+>> these two irqs should not be manipulated by hardware sources and thus
+>> the irq here should be larger than 2. Can you further explain under
+>> what condition the irq line 0 and 1 of a cpu core would be connected
+>> to external outputs.
+> loongarch_cpu_set_irq() is not only for external interrupts, percpu =
+interrupt injection also uses loongarch_cpu_set_irq() such as IRQ_TIMER =
+etc.
 
+The users of loongarch_cpu_set_irq() are limited. The main usage is
+as the callback of qdev_init_gpio_in(). Other usage is for the timer,
+where the irq number is IRQ_TIMER, i.e. 11.
 
->   ignored = [ 'TARGET_XML_FILES', 'TARGET_ABI_DIR' ]
-> @@ -4971,6 +4984,7 @@ summary_info += {'TPM support':       have_tpm}
->   summary_info += {'IGVM support':      igvm}
->   summary_info += {'libssh support':    libssh}
->   summary_info += {'lzo support':       lzo}
-> +summary_info += {'librpmi support':   librpmi}
+> With SW1 and SW0, if the CPU set bit0 of estat, it will inject SW0 to =
+this CPU itself. And de-assert the irq if the CPU clear bit0 of estat.
 
-"rpmi support"?
+When SW1 and/or SW0 are set by the guest code running in the emulated
+CPU, the handling of the software IRQs in the qemu side does not
+involve loongarch_cpu_set_irq(). As a result, I believe that it is
+safe to assume that the second parameter of loongarch_cpu_set_irq(),
+i.e. irq should not be smaller than 2. I also suggest enforce this
+check at the entrance of loongarch_cpu_set_irq().
 
->   summary_info += {'snappy support':    snappy}
->   summary_info += {'bzip2 support':     libbzip2}
->   summary_info += {'lzfse support':     liblzfse}
-> diff --git a/meson_options.txt b/meson_options.txt
-> index a07cb47d35..9f773a7886 100644
-> --- a/meson_options.txt
-> +++ b/meson_options.txt
-> @@ -204,6 +204,8 @@ option('lzfse', type : 'feature', value : 'auto',
->          description: 'lzfse support for DMG images')
->   option('lzo', type : 'feature', value : 'auto',
->          description: 'lzo compression support')
-> +option('librpmi', type : 'feature', value : 'auto',
-> +       description: 'RISC-V RPMI support')
+Cheers,
 
-Either "RISC-V PMI" or "RPMI".
-
->   option('pvg', type: 'feature', value: 'auto',
->          description: 'macOS paravirtualized graphics support')
->   option('rbd', type : 'feature', value : 'auto',
-> diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-> index c003985047..e8a20068e7 100644
-> --- a/scripts/meson-buildoptions.sh
-> +++ b/scripts/meson-buildoptions.sh
-> @@ -140,6 +140,7 @@ meson_options_help() {
->     printf "%s\n" '  libkeyutils     Linux keyutils support'
->     printf "%s\n" '  libnfs          libnfs block device driver'
->     printf "%s\n" '  libpmem         libpmem support'
-> +  printf "%s\n" '  librpmi         RISC-V RPMI support'
-
-Ditto, "RPMI support", otherwise:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-
->     printf "%s\n" '  libssh          ssh block device support'
->     printf "%s\n" '  libudev         Use libudev to enumerate host devices'
->     printf "%s\n" '  libusb          libusb support for USB passthrough'
-> @@ -376,6 +377,8 @@ _meson_option_parse() {
->       --disable-libnfs) printf "%s" -Dlibnfs=disabled ;;
->       --enable-libpmem) printf "%s" -Dlibpmem=enabled ;;
->       --disable-libpmem) printf "%s" -Dlibpmem=disabled ;;
-> +    --enable-librpmi) printf "%s" -Dlibrpmi=enabled ;;
-> +    --disable-librpmi) printf "%s" -Dlibrpmi=disabled ;;
->       --enable-libssh) printf "%s" -Dlibssh=enabled ;;
->       --disable-libssh) printf "%s" -Dlibssh=disabled ;;
->       --enable-libudev) printf "%s" -Dlibudev=enabled ;;
+Miao Wang
 
 
