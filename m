@@ -4,71 +4,158 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A849C44515
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 09:04:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7AF4C44515
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 09:14:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wljvb-0007rM-Bo; Mon, 20 Jul 2026 05:04:47 -0400
+	id 1wlk3f-0001Gf-1p; Mon, 20 Jul 2026 05:13:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wljvY-0007qx-MC
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 05:04:44 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wljvU-0005pU-H3
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 05:04:43 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxBOqj5F1qHjcFAA--.15607S3;
- Mon, 20 Jul 2026 17:04:35 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJAxTOWh5F1qp7kSAA--.34166S2;
- Mon, 20 Jul 2026 17:04:33 +0800 (CST)
-Subject: Re: [PATCH v2] target/loongarch: fix data race in CSR_ESTAT
-To: Miao Wang <shankerwangmiao@gmail.com>
-Cc: qemu-devel@nongnu.org, Song Gao <17746591750@163.com>,
- Xianglai Li <lixianglai@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Xi Ruoyao <xry111@xry111.site>
-References: <20260716-loong-race-v2-1-01e68e4b850f@gmail.com>
- <3613f855-8b22-2e94-fa14-339acec997ed@loongson.cn>
- <185FB2BE-2645-45CF-BA2B-316F67495FF5@gmail.com>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <7a7cc87e-a097-30df-3085-a4249a2233b9@loongson.cn>
-Date: Mon, 20 Jul 2026 17:04:23 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wlk3d-0001G0-5h
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 05:13:05 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wlk3a-0006qU-Lv
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 05:13:04 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66K963PM2110447
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 09:13:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ jCbbPKJjOip/jxzsUlYPPWRKmJ4stYrRdsFnRWltmIU=; b=JGuETMjGVOKg4TFH
+ srgBE3BVppl80U56aHW6c5uecZc1WxspLEdQGvPwgMcnDJh4xvyUG+FlcdY1Vefn
+ rKeuZ6YIZZprLtCuTXd6IXNgecQzqQ6/yb6FNPDvRE3/FLkk7R8Idclcnj15UEKg
+ mkqD/xmjwzcZZ2Jnp1vF6pxYnFclm0KnpS/A7MLxT/H4OeyEiQxt5qNe7+IXeKfO
+ srfazGyYIo0Tjqh7OSieddx7+L59OCs/TNe7C9O5rJ4wW8O3KIHrMCHYtuheAOXM
+ C0FvIW8BIlLpnuEHD5eKO8cMszMwpDejAvHmoxx2pGlqHjX6QrDb2p/i6jnHlHc0
+ UfBgog==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhgre81a9-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 09:13:01 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-51c12e43b98so194794031cf.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 02:13:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1784538781; x=1785143581; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=jCbbPKJjOip/jxzsUlYPPWRKmJ4stYrRdsFnRWltmIU=;
+ b=UsCGPr3pF4DdZrHJoOxNIUuo9A77UAWIZVATa19WMKmNPZdXRxxPYpsc2nlBjd5OdL
+ mgsbJbeW26bYD3Kk7+DZQtqgXicJ77LxhDLLBcYxpGxePXM8SSVTWUmGX02wl8W17Y/B
+ oBz25uOWtUOpkAom+xI+atLreudYF866EtqldheWkg4VKVtPm1LYmPMuSzUt0og3Ll+6
+ q4XIn9o44+fJ7MK2WkvIK+9ieupnNuqehNTXqRIQNSgedk0NcLVhWqUT/7a9SriZ1otQ
+ Clb6kXS6SisJYYjg45UW7KwyqklUC5SeVLydEpMgSoh+Z8fCoGRD4HFTovF9jVZpx2bQ
+ 5j9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784538781; x=1785143581;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=jCbbPKJjOip/jxzsUlYPPWRKmJ4stYrRdsFnRWltmIU=;
+ b=Hqq/Ro+Pw8m137ityAgY97m92NGyOYSBCFabIu6caRc1aIjCYhFh1azdoo79WxV0LK
+ fLZxOWxn4BralNclBz+C2vx8TcRB6fOES4g75sihjmgS4SYHj46GsLrm7avd1S17RA3P
+ IW7N+qCbRa1AhDebvmjXqVNgtvo4z3JxYMVrK7Q6JlwD1CslorUJfk3AU4724mrH4jW5
+ TLjQmFcHPb/jElWSp/BMm6fHnh06YqUgN8NYH7Lp8g3//zf2+4C9uTdXSYd2AerdCQqp
+ GOfwIQJwQtWNPvtCeJf0mfJ96aakZYjF2LPdRivs+psRGU1FCzJbYtQlZNrE79K4708V
+ +enQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Ro+b0+ASJViSkR7CFIKUgrRoJo4kYc/xnYdPwmcg9wBfrOru2Vaf/EFAl9YvLeiEtMxSWfh5EFbTxWo@nongnu.org
+X-Gm-Message-State: AOJu0YzGafIGjcJ7/SqqXlz4Yav/WXkgCohLpckyItb5kiarZJZQYAtq
+ nEXaAhhqRMv+NsyBkWTqGJjpYzcblQsZg5lOKIKRqqV9PsCgXEvWuMHhixfQRiQWtGmwU3kbfI+
+ oKNJyJufzGnKQIzHe50kdLekcjcVnEJ7idxhvgU/hzKP4O9kBK/89Fb5Uhw==
+X-Gm-Gg: AfdE7cnUBZLdTvwpmXlkvGOl7d4pvvAt41EH5MDBYkKCHk4IkcZ5JEZTFfnIeibShGY
+ zPh5hKo3T4nz328cs/phLq4LZnlLAZrVDGdCyty7qVpcL4TFKawu3jgws3CzFnUruv430uOzH6Z
+ PMHVkYb8NLZfYmCKxICev/kmJE0u8CPokTicHsqyUb8Ck27mj3+B4CagJ8Gzvz1zzmp1CCpisci
+ 8DiKEvnLHDrjaWVVJOzwryttMyaAz/DWBk8HqN3vumQwRDQPS1oaxl2Y3WH43hDL1lqC921p2ft
+ EEJ8tO2zOMayf5/+FEYrQ/3xCqpelaNesX7SgO9WHzjBXYbkdrysxe3+eLfi5cxq4VboHkcKeSz
+ xgQaKcD+sqr+ffBEwrs+7I+UcWJADEcCpYmfwRlI0Y5iW6HQXT+E=
+X-Received: by 2002:ac8:7d52:0:b0:519:dfd7:70cd with SMTP id
+ d75a77b69052e-5213e082527mr125466241cf.49.1784538778762; 
+ Mon, 20 Jul 2026 02:12:58 -0700 (PDT)
+X-Received: by 2002:ac8:7d52:0:b0:519:dfd7:70cd with SMTP id
+ d75a77b69052e-5213e082527mr125466121cf.49.1784538778347; 
+ Mon, 20 Jul 2026 02:12:58 -0700 (PDT)
+Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49563eee22esm2802415e9.1.2026.07.20.02.12.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 Jul 2026 02:12:56 -0700 (PDT)
+Message-ID: <9c2ad22a-e768-4a07-85a2-01ce1fc14368@oss.qualcomm.com>
+Date: Mon, 20 Jul 2026 11:12:54 +0200
 MIME-Version: 1.0
-In-Reply-To: <185FB2BE-2645-45CF-BA2B-316F67495FF5@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/2] system/memory: Use qemu_ram_{copy, move}() in ram
+ device region accessors
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxTOWh5F1qp7kSAA--.34166S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxuw17WF1ruw4kAFWUGFWUZFc_yoW7XFWrpr
- W7CFnxtr4kWrW5Jw10qan09rn8Zr1xGr1Svanrt34fCry5uw15Xr1kt3sxWFWku34rWr10
- vryFga98WayjyFXCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9ab4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C2
- 67AKxVWUtVW8ZwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
- 8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWU
- CwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
- 1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsG
- vfC2KfnxnUUI43ZEXa7IU8j-e5UUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.494,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+To: "Michael S. Tsirkin" <mst@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: Gavin Shan <gshan@redhat.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ peterx@redhat.com, alex@shazbot.org, richard.henderson@linaro.org,
+ berrange@redhat.com, philmd@mailo.com, david@kernel.org,
+ clg@redhat.com, pbonzini@redhat.com, phrdina@redhat.com,
+ jugraham@redhat.com, liugang24219@sangfor.com.cn,
+ dinghui@sangfor.com.cn, shan.gavin@gmail.com,
+ qemu-s390x <qemu-s390x@nongnu.org>
+References: <20260625091334-mutt-send-email-mst@kernel.org>
+ <CAFEAcA8xK+t3-prEphtkq-o9UY2mgS6cowhs880GOaxL9dKSGw@mail.gmail.com>
+ <20260625101817-mutt-send-email-mst@kernel.org>
+ <CAFEAcA8-Un+Q1yBDqLWCLPRwtgTA_VhJqGobgZChrFhAeVfG8A@mail.gmail.com>
+ <20260625123119-mutt-send-email-mst@kernel.org>
+ <CAFEAcA8UjtXgmPC27fOKMwbaWs2piwGYudtwCNWQHuu3E_7A-A@mail.gmail.com>
+ <5faf04b9-d596-4a1d-9fe3-5e9ad5f0a99a@redhat.com>
+ <73f79841-8cc7-4ca6-8f6b-fb97b53a6fe8@redhat.com>
+ <20260717091756-mutt-send-email-mst@kernel.org>
+ <CAFEAcA-O6Z4JrVV0DL_tta6khRyUta_Zz5mJt6OszaW1mu0o6Q@mail.gmail.com>
+ <20260717095407-mutt-send-email-mst@kernel.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260717095407-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDEwMiBTYWx0ZWRfX+t3K9UmB2dkk
+ ecIbVL4TrSQUS7R7y6TdDWz/lijS7EyPKnTyGMF4iGUWC0Mtwd2tRuabLUvAmOAcOrNSw0YxHPy
+ 0z1m81470MSV9Wik249i+yRQaZML73A=
+X-Proofpoint-GUID: sIXq9AqvD3p4Ukalqz6ZZxU-naM-9dli
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDEwMiBTYWx0ZWRfX/F20LPOteAQ3
+ NnJ+JLFlpd9ZeFfF3Tu5b1hwDIrnEuJ6DUgt9YHNoNizNBuTAS91AnIrhKMoUjvn79J3OMO5h6P
+ +rPy2tL3V6vRSiNikXK/Dtj9MtZqTiys8fGQsB94e2Bo8YLUw0H2zEzbhoYvMGcLnI3W2qOhObK
+ wcbtfJhm3ObMd8v2mlQaaOTUC2jQEIT/Wp0YyC9I4g5cwhhDQNM1sQhPHEmFm0C2dUgkXn+u4nQ
+ CiXwRfBpjwwsqL/6u48JbTPIOPUV4i3aHsz5c5QuY6o+zeNBXaWRNzJn0Sm+IzGkQtbIscXWw/D
+ eGYnLXXn+URULtaL+O2Oa0xD/Gts6JsRToZ44afF9Vxvgj7HYHbSwMjqjKGJIVejbgQl3Haxn9T
+ lqOZLS5ZRxYm/QdHUk9LE5y+V1CLPW+1AYDwCbyuWe5S9PlESZm5lB1qFHGAMra51howBdHh8A+
+ TEE1PtbhlhxXYEXhWjQ==
+X-Proofpoint-ORIG-GUID: sIXq9AqvD3p4Ukalqz6ZZxU-naM-9dli
+X-Authority-Analysis: v=2.4 cv=foLsol4f c=1 sm=1 tr=0 ts=6a5de69d cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=20KFwNOVAAAA:8 a=vOaL0qSEioxi9lXWA_sA:9 a=QEXdDO2ut3YA:10
+ a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-20_01,2026-07-17_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 suspectscore=0 priorityscore=1501 spamscore=0 clxscore=1015
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 adultscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200102
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,125 +171,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2026/7/20 下午4:49, Miao Wang wrote:
-> Hi,
-> 
->> 2026年7月20日 16:34，Bibo Mao <maobibo@loongson.cn> 写道：
+On 17/7/26 15:55, Michael S. Tsirkin wrote:
+> On Fri, Jul 17, 2026 at 02:49:53PM +0100, Peter Maydell wrote:
+>> On Fri, 17 Jul 2026 at 14:24, Michael S. Tsirkin <mst@redhat.com> wrote:
+>>>
+>>> On Thu, Jul 09, 2026 at 07:52:12PM +1000, Gavin Shan wrote:
+>>>> Hi Michael and Peter,
 >>
+>>>>
+>>>> Could you help to confirm if the conclusion is to have unified qemu_ram_{copy, move}()
+>>>> for all architectures? In qemu_ram_{copy, move}(), the fixed sized accesses like
+>>>> 1/2/4/8 bytes are handled by __builtin_{memcpy, memmove}() and fall back to
+>>>> memcpy/memmove() for other sized accesses. It's basically what was proposed by
+>>>> Michael :-)
+>>>
+>>> No. __builtin_ and  memcpy/memmove are same on modern linuxes.
+>>>
+>>> I'd say as a 1st step, on x86 hosts we can do a fixed size
+>>> memmove for 1/2/4/8, on other hosts
+>>> *aligned* 1/2/4/8 bytes can do
+>>>   __atomic_store ... __ATOMIC_RELAXED
+>>> and the rest can hobble along on memmove
+>>> and hope for the best.
 >>
+>> I don't think we should be doing something that's x86-host specific,
+>> as I've mentioned previously.
 >>
->> On 2026/7/16 上午4:48, Miao Wang via B4 Relay wrote:
->>> From: Miao Wang <shankerwangmiao@gmail.com>
->>> The CSR_ESTAT register of a CPU can be read and written by both the
->>> CPU thread and other threads (e.g., the interrupt controller thread).
->>> Currently the possible readers and writers of CSR_ESTAT are:
->>> - Readers
->>>    - tcg generated by trans_csrrd(, CSR_ESTAT)
->>>    - loongarch_cpu_has_work()
->>> - Writers
->>>    - tcg generated by trans_csrxchg(, CSR_ESTAT)
->>>    - helper_csrwr_estat()
->>>    - helper_csrrd_msgir()
->>>    - loongarch_cpu_set_irq()
->>>    - loongarch_cpu_do_interrupt()
->>>    - loongarch_cpu_exec_interrupt()
->>> The access from the CPU thread is not synchronized with the access from
->>> other threads, which may lead to data races. The above readers and
->>> writers shall all run on the corresponding CPU thread except for
->>> loongarch_cpu_set_irq(). To fix this, the access to CSR_ESTAT in
->>> loongarch_cpu_set_irq() is moved to the CPU thread by using
->>> async_run_on_cpu().
->>> The data race has been identified while running the test cases from
->>> dracut, which is using QEMU to boot a LoongArch guest. By running the
->>> tests repeatedly (about 30 times) in the following conditions, the
->>> guest will hang in the middle of booting:
->>> - Host architecture: LoongArch64 or Aarch64
->>> - Guest kernel: 7.1.3+deb14-loong64
->>> - Number of vCPUs: 1 or 2
->>> - CPU Features: max, la464,msgint=off,ptw=off, or la464,msgint=off,ptw=on
->>> - Accelerator: tcg
->>> When the guest hangs, the guest kernel log shows various errors related
->>> to RCU stalls or other Soft Lockup or Hard Lockup issues. When running
->>> with 1 vCPU and the guest hangs, the guest kernel directly hangs without
->>> any messages and stucks at idle_exit.
->>> With this patch, the guest can boot successfully without any hangs
->>> during repeated runs of the test cases.
->>> Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
->>> ---
->>> Changes in v2:
->>> - Simplify the changes to move the access to CSR_ESTAT from the only
->>>    unsynchronized loongarch_cpu_set_irq() to the CPU thread using
->>>    async_run_on_cpu() to avoid the race condition.
->>> - Link to v1: https://lore.kernel.org/qemu-devel/20260714-loong-race-v1-1-54111549c95e@gmail.com
->>> ---
->>>   target/loongarch/cpu.c | 27 +++++++++++++++++++--------
->>>   1 file changed, 19 insertions(+), 8 deletions(-)
->>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
->>> index fb03424ffa8cd5e5d250531cc2a36fa789fc25a9..126c3ad276cc44311942542e086bcabe41d91b63 100644
->>> --- a/target/loongarch/cpu.c
->>> +++ b/target/loongarch/cpu.c
->>> @@ -57,12 +57,27 @@ static vaddr loongarch_cpu_get_pc(CPUState *cs)
->>>   #ifndef CONFIG_USER_ONLY
->>>   #include "hw/loongarch/virt.h"
->>>   +static void do_set_cpu_estat(CPUState *cs, run_on_cpu_data data)
->>> +{
->>> +    CPULoongArchState *env = cpu_env(cs);
->>> +    CPUSysState *sys = env_sys(env);
->>> +
->>> +    int irq = data.host_int;
->>> +    int level = irq >= 0 ? 1 : 0;
->>> +    irq = level ? irq : -irq;
->>> +
->>> +    sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, irq, 1, level != 0);
->>> +    if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
->>> +        cpu_interrupt(cs, CPU_INTERRUPT_HARD);
->>> +    } else {
->>> +        cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
->>> +    }
->>> +}
->>> +
->>>   void loongarch_cpu_set_irq(void *opaque, int irq, int level)
->>>   {
->>>       LoongArchCPU *cpu = opaque;
->>> -    CPULoongArchState *env = &cpu->env;
->>>       CPUState *cs = CPU(cpu);
->>> -    CPUSysState *sys = env_sys(env);
->>>         if (irq < 0 || irq >= N_IRQS) {
->>>           return;
->>> @@ -71,12 +86,8 @@ void loongarch_cpu_set_irq(void *opaque, int irq, int level)
->>>       if (kvm_enabled()) {
->>>           kvm_loongarch_set_interrupt(cpu, irq, level);
->>>       } else if (tcg_enabled()) {
->>> -        sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, irq, 1, level != 0);
->>> -        if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
->>> -            cpu_interrupt(cs, CPU_INTERRUPT_HARD);
->>> -        } else {
->>> -            cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
->>> -        }
->>> +        async_run_on_cpu(cs, do_set_cpu_estat,
->>> +                         RUN_ON_CPU_HOST_INT(level ? irq : -irq));
->> This is a good method with async_run_on_cpu, there is one small issue with irq == 0 interrupt injection where -irq/irq are both 0.
+>> -- PMM
 > 
-> Since according to Section 7.4.6. of Loongarch Reference Manual Vol1,
-> bit [1:0] stands for the software interrupt SW1 and SW0, I expect that
-> these two irqs should not be manipulated by hardware sources and thus
-> the irq here should be larger than 2. Can you further explain under
-> what condition the irq line 0 and 1 of a cpu core would be connected
-> to external outputs.
-loongarch_cpu_set_irq() is not only for external interrupts, percpu 
-interrupt injection also uses loongarch_cpu_set_irq() such as IRQ_TIMER etc.
+> Shrug. Of course we already have arch specific code in asm.
+> But we can make the unaligned 1/2/4/8 for x86 host a separate
+> optimization on top. They are unlikely to be common.
 
-With SW1 and SW0, if the CPU set bit0 of estat, it will inject SW0 to 
-this CPU itself. And de-assert the irq if the CPU clear bit0 of estat.
-
-Regards
-Bibo Mao
-> 
-> Cheers,
-> 
-> Miao Wang
-> 
-
+Note we have include/qemu/host-pci-mmio.h with s390x specific
+optimizations in util/s390x_pci_mmio.c ...
 
