@@ -4,141 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AFB4C4451B
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 08:12:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 135A7C4451B
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 08:12:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlj6x-0003m6-CY; Mon, 20 Jul 2026 04:12:27 -0400
+	id 1wlj7D-0003pe-4W; Mon, 20 Jul 2026 04:12:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wlj6v-0003lo-Rl
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:12:25 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wlj78-0003mt-5l
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:12:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wlj6u-0000El-9A
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:12:25 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66K6RiwV1774889
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 08:12:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- vm7EwAewzb5dqTdwtVZpGzLsVFm8DafDDe4fNtytAGQ=; b=TZS1mX0esxh0cCbt
- XTOv+0YUOlV4IJepXxTH4S+XazY9Gsk3+wWeqvdMfgKp1kpW/3TrrKKs/QEfvmh3
- z9sA06KnAy+jK4x/D1kL3AXSjMDuNum6+lrlmw/Kellw/Lgk5b+JDVrqOE+cWp4I
- cd24aiO4zkVwF6KilPScEMbDNn8U8w1R018os2xoMUY0YwAkDL1FbTTMKMItwt+S
- wotPIW2wvgSkQQ2G5GpkAdaiP+5vwmf/9SVJ7Njw82r4hucQUrdUyEsmb7k+p9gR
- DR7KgTI+I7pZIS82czWg5ESm1NhD3duheewfVPdhNPsXtMl+8xRIP69Ufm7FC79q
- 73R6oQ==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fg2af548b-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 08:12:22 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51c20762d21so90669331cf.0
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 01:12:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wlj75-0000F4-MQ
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:12:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784535154;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=b4ZN4w49/scrUqvtulLtVv+8lCiA06QCX3kOQJrZMKg=;
+ b=PmaLCHdbPoGteNRl1Er5NsovWTgiGSy1ntd6QkimsFrTmB6RVzCsXV8UqqwoXGXxEAF2Bn
+ BYz8j7wzFfxdKG+vHUdlKVoULdlpauxkLMbeBViBhokEtYDVMvbxeWsu9jULgl20nAIPnA
+ Vg2e/P4EAZ/rVytC2D0iQuCERb2Z61o=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-426-t4VvCfYTPyWOhMBP8FyybQ-1; Mon, 20 Jul 2026 04:12:32 -0400
+X-MC-Unique: t4VvCfYTPyWOhMBP8FyybQ-1
+X-Mimecast-MFC-AGG-ID: t4VvCfYTPyWOhMBP8FyybQ_1784535151
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-49554715277so17146665e9.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 01:12:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784535142; x=1785139942; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=vm7EwAewzb5dqTdwtVZpGzLsVFm8DafDDe4fNtytAGQ=;
- b=fLsZhkGoD/G56g2sMlv7hihvJEulRYhWZUQtqB536Eh+Wgafe3g26MLsfxVUxWDBhr
- lkcF0GSMMynWzq6XtnDNW+CnwCOT+arEe7MP5MpTLbyM7Rxa44LncJmNNpeb81UKUExy
- VtQbmMgWM1gAFyhJEPh5HpMclJqZJ5cYi/eATAEX/7W5h1PB3P//79FbCmdw+ipVjQAq
- QjD1zpll8O3gslFp0Ud7v6e9yTJl7dihgaq7s+7PJesWW03+ciEik3rN93Avmz3nYdMq
- kKYG2D3FFJiAF3OxKazI6ScX5wK19u3WGUXSPnXUnIS5rlu52CjjUnQ5jKpIgRDbRw3G
- zDFw==
+ d=redhat.com; s=google; t=1784535151; x=1785139951; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:cc
+ :from:content-language:references:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=b4ZN4w49/scrUqvtulLtVv+8lCiA06QCX3kOQJrZMKg=;
+ b=eSX6OgXHYDjni+UqdNRK/x6vEtk+YHBF4Q5+wGE49z541h4RRETBw8ihj/gkts+Ozy
+ dFhIWEB9zedqNkGeVdFfT7MlM6cwdlmJNGA4nuAnUh44kA5qB9xYJOlw+ZTsmQaL3e/t
+ gfcPveqfpsl97XuFHdO3t7DsNJpxzpM3X2uFajmwT1uwF6iWl9j7BXlqCsiWJ2AmVMxG
+ YurPd8xoxueJj+3CwBrfalZqz34d4Pp3Biu9njeMjBxeB9o07F72/w/A7P3IZKNpDMaa
+ QynydWtUjQBprC739NEbIITeTB5HSZ49PAxZN6O6Ie+c8PvwV310xnBXazrMNExoZ79H
+ nQCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784535142; x=1785139942;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1784535151; x=1785139951;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:cc
+ :from:content-language:references:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=vm7EwAewzb5dqTdwtVZpGzLsVFm8DafDDe4fNtytAGQ=;
- b=JyHujGIXELJzeZHOWLmpvLQ5c/JCKfKONr/ujv+y2x8/60VH0TfwKmXJeH7+XxKnuZ
- XO4xuXOPxS79s3eqU04cCGL3pAsnt4vip30o9gr81MyyEwYzPnesZ7dXkoCqK/gle11L
- NCyV90gUZ7lwac6qmjPMNqaWcocWVOZ/Oq0HWC9kkJZCgCq/16045zIE/4JT1szSwq3+
- xtGijzTKEffi/JHWFd6sGovP9EjwSH8dBnF9CYvx+JEISVvCyTlbdpMQNbqNaTZcWjux
- AU0O6O1DDJWqOw22DzegqSOhRPXrE/Cn8JH+lYephg9uWuEC8TuBfavg1rCALLRCmE1N
- Osuw==
+ bh=b4ZN4w49/scrUqvtulLtVv+8lCiA06QCX3kOQJrZMKg=;
+ b=W0cUEGV1bu97cULCQvjfiKfOHkF0BZeZ6TWJm7yuoSLD41OfV9JQeP4U+CgiYb1Lin
+ xZG6hz6Izzc+MDEqMltKnHJok/gLr+hfARi7meT3UdS/1YrwXxaY4Z+jSkuWZ4pnRuEJ
+ QX23c5KMpFfWjkE6AuPBw8jy0DaXRwhtoNzYj5q8ys+uBif9pEQFtNuc9i8IpqUqJ11q
+ AJxiz488Fv0ILb6OnFmwlBE/AQuxv9m1GSmhRKe705pwbSt52MN5Ebk4VEZ10I4aoVsA
+ 0W/iw1AxBMZuEdeB0Tb/mgs5dIZ1p3JQrtL1U5GIGH9zoOvkvmxPNvP3JmBx9moSOQXc
+ 7p1A==
 X-Forwarded-Encrypted: i=1;
- AHgh+RqNbwj1vXC8dhmUpUZsosa4m8PCFKHdGVlCrji/oGimFnuFPiJidRmdary8FUt+GGCps70ZxB7HOzuU@nongnu.org
-X-Gm-Message-State: AOJu0YwQtpM64Cyx+4a0lVx54+UTHL1aD7SI3DkLjkv9jVlfVr1yEJwe
- hZh8MTTpNj2vDZGlSv1PVegn31ADTmZ0mQgxapenp8j2V0srCI+oj9EQtKm/bZRjUUFKAAfwoc4
- booyFVNRuFy55Pe7ixeZKlgzEn+1Dt/EBSkh3Y9g96GFmFhauR7V1hyWw/A==
-X-Gm-Gg: AfdE7clYsAvexBU7P59TiPu7XShi5/9YgCb95CxEM7HXa/a9rMu0QM8cdJWgKYEkFqF
- BoQk9edagcRPnXf6kNvR1cbAxDOmaLhU1xGCvTZk4Rj2aNGA2zl/juRjIu37iZezWnQ5BCSc9+i
- SJmZoRfdLV0CT9f3x7aEUxcSe+AZxZVm8Nnh8dNIxSjddQ2NyjqXVdxwn1p1KqKIHOa6QlgUjFK
- pKLQ3lDcR61a9tk1yXzQ4ElqF9RejGt8D/kRNXHBKuc559oIr4D/FwwvjeCFV3YLQKXs0BmH+93
- KWonF1V7JAx8tBOTxBP4eI2aDVX0xeBoNlzjjEHOGhVVF4VODF8srO32X33cn40iE6XemHN4b2j
- p8ppOmqTXXm9I9glt0bF4Z7HJmTSYg92zHCCyvQhXKebJPpnBGiY=
-X-Received: by 2002:a05:622a:4188:b0:51c:1f97:e860 with SMTP id
- d75a77b69052e-5213c10a76dmr121835241cf.3.1784535142191; 
- Mon, 20 Jul 2026 01:12:22 -0700 (PDT)
-X-Received: by 2002:a05:622a:4188:b0:51c:1f97:e860 with SMTP id
- d75a77b69052e-5213c10a76dmr121835071cf.3.1784535141727; 
- Mon, 20 Jul 2026 01:12:21 -0700 (PDT)
-Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49548e0fcdbsm221500995e9.2.2026.07.20.01.12.19
+ AHgh+RpXpv8pv6vSby2K3USDd5nbi9JYx/+q7XONtJP5pSCCKR4mKTLf3nTuf9zthC2onpHJkVD6Yp0l0IHN@nongnu.org
+X-Gm-Message-State: AOJu0YzAVLCRoDqu9i6C4MoFVcLDo2+mhOze3SchEy73QENaz77flrO4
+ oNz+CHF7gRei6+VHNBFwfUrjnFfccQ6fz1FQyGqhC4xNL9k05sVsQ9KajSsitxoekfw38lx8Ko9
+ XagT44xetoUjOod4LM8FMkFtnxM37qiC05Uq2FKT0Q0Mq7svgq4M5+c+k
+X-Gm-Gg: AfdE7cmgv9DPERY7YKx0R/G5fz4OS9PzVO5C3N4rwoSPZF/Sj/huTjknQo/d+5dQ9io
+ hQcxPcf1ljFwWYRIo1iyEw9YxxUQrzIdj4+zUP2nxUY1Omu7wb4FBnUWIbJog59JFs+92et6Uy2
+ 3Hdq1kwcrx4wPGQAgbwWne02jtBcZxwjuOhGm1+s/OQougTaf93OjpRsLNW4WfcWFLNSIIBnMjm
+ WTbBQuGbVEZOAg+sckncnbbDQf5tLFv/TqMpvGXMogcvNryLiJdVNfNDGUTMFs3QY5qCdVLV2OP
+ EbMvl3g7karb77M6aIfXDcFRtYsf5blQU88WTfDA6K7gYLWllvcKqb4RCd/wpczbMUE0HdUgeQ=
+ =
+X-Received: by 2002:a05:600c:4ecb:b0:495:4c73:3d59 with SMTP id
+ 5b1f17b1804b1-4954c733e07mr125172705e9.23.1784535150670; 
+ Mon, 20 Jul 2026 01:12:30 -0700 (PDT)
+X-Received: by 2002:a05:600c:4ecb:b0:495:4c73:3d59 with SMTP id
+ 5b1f17b1804b1-4954c733e07mr125172295e9.23.1784535150140; 
+ Mon, 20 Jul 2026 01:12:30 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.112.144])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4955370d78csm143531045e9.12.2026.07.20.01.12.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Jul 2026 01:12:20 -0700 (PDT)
-Message-ID: <1d7252e0-3a09-4043-bd5f-9ba0aa1b23a4@oss.qualcomm.com>
-Date: Mon, 20 Jul 2026 10:12:19 +0200
+ Mon, 20 Jul 2026 01:12:29 -0700 (PDT)
+Message-ID: <bb76dd56-e97e-4d1c-aaf8-9eb55e6858b3@redhat.com>
+Date: Mon, 20 Jul 2026 10:12:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] replay: fix use of uninitialized pointer on error
+Subject: Re: [PATCH] hw/usb/host-libusb: keep autoscan enabled for bus+addr
+ selector
+To: Gerd Hoffmann <kraxel@redhat.com>
+References: <20250912-usbhost-disconnect-v1-1-9c7c5fa9b50a@iki.fi>
 Content-Language: en-US
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-References: <20260719113216.1177594-1-marcandre.lureau@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260719113216.1177594-1-marcandre.lureau@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Cc: =?UTF-8?Q?Timo_Ter=C3=A4s?= <timo.teras@iki.fi>, qemu-devel@nongnu.org
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250912-usbhost-disconnect-v1-1-9c7c5fa9b50a@iki.fi>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDA5MCBTYWx0ZWRfX9n1ZncjpkzRA
- zIfMKBHbZJTeKJ5Ho25lanEfOQjJKJdKUg5UVHHyIO9TBh1rNxaSVuPoGd1lax440TPE7OwgbTb
- l998jtw0FVokQZ54BqWfVP1WwAmU43U=
-X-Proofpoint-GUID: gtjWcJDNVUMaT9Turf0f1LRqb8v0cnbM
-X-Proofpoint-ORIG-GUID: gtjWcJDNVUMaT9Turf0f1LRqb8v0cnbM
-X-Authority-Analysis: v=2.4 cv=a+sAM0SF c=1 sm=1 tr=0 ts=6a5dd866 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDA5MCBTYWx0ZWRfX+2u9gdJm4ZYI
- xTv9qY7rffbqXD4dy/c0jdF+Ars4fs3IiDQyLaH//25LnW/syiEnEjozmWs25plFv+mdDlAw2rB
- bHMigNmRAymoslDS/3ZAjbilHyvLAG5Zmc65uGycwBuPpIjzt2uVHj8TQlmuVtp7Se1oTjnBN0r
- qZ7ge3z6aZRCxnt/NdynjRgi5gr2a0ovi2HjDEX46dyvmktooAbiV1Lm5SvILqiS93j+ELKr7Ck
- khGc01lOJ2Up1loyVAMmz8pgxLzQDPyxUXZcE/nXERuQbN0Uif0RcKbYaS1wkNkT+CQRJjgm6w7
- fPDytcCf5bir2xExGljtsGCLdxVOxu6aleFXT14fe9A3HIRnvYkl+FGCi6twwHkA7dlXWiOnCzx
- faI0UHVkEeepGL/MZrH+wAsW3YAkgA7MAabIEHKvbuC9AUbbX7Oqu/eFcNW+/c8r0sGlroQzKPo
- KBpvrGxZiG+W0+vQyiw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-20_01,2026-07-17_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015 impostorscore=0 malwarescore=0 spamscore=0
- phishscore=0 priorityscore=1501 lowpriorityscore=0 adultscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200090
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: permerror client-ip=170.10.133.124;
+ envelope-from=thuth@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,19 +164,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/7/26 13:32, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> When bdrv_snapshot_list() returns a negative error code, sn_tab is
-> uninitialized. The loop does not execute (since i=0 < negative is
-> false), but the code falls through to g_free(sn_tab) which frees
-> an uninitialized pointer.
-> 
-> Fixes: f6baed3d1485 ("replay: implement replay-seek command")
-> Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
-> ---
->   replay/replay-debugging.c | 23 ++++++++++++-----------
->   1 file changed, 12 insertions(+), 11 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+  Hi Gerd,
+
+since you originally wrote commit e058fa2dd599, could you maybe have a look 
+at this patch?
+
+  Thanks,
+   Thomas
+
+
+On 12/09/2025 13.14, Timo Teräs wrote:
+> This is partial revert of commit e058fa2dd599.
+> 
+> The portion to immediately validate the device is kept, but this
+> adds and enables again the autoscan functionality. This is needed
+> to detect and relay USB device disconnect event to the guest.
+> 
+> Fixes: e058fa2dd599 ("usb-host: add special case for bus+addr")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3111
+> Signed-off-by: Timo Teräs <timo.teras@iki.fi>
+> ---
+>   hw/usb/host-libusb.c | 14 ++++----------
+>   1 file changed, 4 insertions(+), 10 deletions(-)
+> 
+> diff --git a/hw/usb/host-libusb.c b/hw/usb/host-libusb.c
+> index b74670ae25696b5252f0d034cb9b759e338a050f..f0baf6b2f2d12fbf8feb5b788b46d3187028df58 100644
+> --- a/hw/usb/host-libusb.c
+> +++ b/hw/usb/host-libusb.c
+> @@ -90,7 +90,6 @@ struct USBHostDevice {
+>       uint32_t                         iso_urb_frames;
+>       uint32_t                         options;
+>       uint32_t                         loglevel;
+> -    bool                             needs_autoscan;
+>       bool                             allow_one_guest_reset;
+>       bool                             allow_all_guest_resets;
+>       bool                             suppress_remote_wake;
+> @@ -1211,7 +1210,6 @@ static void usb_host_realize(USBDevice *udev, Error **errp)
+>   #if LIBUSB_API_VERSION >= 0x01000107 && !defined(CONFIG_WIN32)
+>       if (s->hostdevice) {
+>           int fd;
+> -        s->needs_autoscan = false;
+>           fd = qemu_open(s->hostdevice, O_RDWR, errp);
+>           if (fd < 0) {
+>               return;
+> @@ -1227,7 +1225,6 @@ static void usb_host_realize(USBDevice *udev, Error **errp)
+>           !s->match.vendor_id &&
+>           !s->match.product_id &&
+>           !s->match.port) {
+> -        s->needs_autoscan = false;
+>           ldev = usb_host_find_ref(s->match.bus_num,
+>                                    s->match.addr);
+>           if (!ldev) {
+> @@ -1242,14 +1239,13 @@ static void usb_host_realize(USBDevice *udev, Error **errp)
+>                          s->match.bus_num, s->match.addr);
+>               return;
+>           }
+> -    } else {
+> -        s->needs_autoscan = true;
+> -        QTAILQ_INSERT_TAIL(&hostdevs, s, next);
+> -        usb_host_auto_check(NULL);
+>       }
+>   
+>       s->exit.notify = usb_host_exit_notifier;
+>       qemu_add_exit_notifier(&s->exit);
+> +
+> +    QTAILQ_INSERT_TAIL(&hostdevs, s, next);
+> +    usb_host_auto_check(NULL);
+>   }
+>   
+>   static void usb_host_instance_init(Object *obj)
+> @@ -1267,9 +1263,7 @@ static void usb_host_unrealize(USBDevice *udev)
+>       USBHostDevice *s = USB_HOST_DEVICE(udev);
+>   
+>       qemu_remove_exit_notifier(&s->exit);
+> -    if (s->needs_autoscan) {
+> -        QTAILQ_REMOVE(&hostdevs, s, next);
+> -    }
+> +    QTAILQ_REMOVE(&hostdevs, s, next);
+>       usb_host_close(s);
+>   }
+>   
+> 
+> ---
+> base-commit: 190d5d7fd725ff754f94e8e0cbfb69f279c82b5d
+> change-id: 20250912-usbhost-disconnect-192ecaa8fc3e
+> 
+> Best regards,
+
 
