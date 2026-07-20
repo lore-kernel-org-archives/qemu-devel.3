@@ -4,162 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80ED5C44520
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 11:20:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D4FBC44520
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 11:21:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlm31-0004QW-3p; Mon, 20 Jul 2026 07:20:35 -0400
+	id 1wlm3t-0005JX-8M; Mon, 20 Jul 2026 07:21:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
- id 1wlm2z-0004P4-Ho
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 07:20:33 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wlm3r-0005J6-R8
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 07:21:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
- id 1wlm2x-0006DW-MP
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 07:20:33 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66KAvv6F1910743
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 11:20:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- QSYWmlbPl8jGvur0D30SZgMAigihbsNK0PCztApsFhg=; b=HDnODUF/AGd0BDm4
- b0u+GXcDIHLNfBShYaV59Pr0qOHn68rVfvy5H5L5zqG4kB0k/HseOHo00tMLLczj
- ups4rwCmfRHIAhddUrLj/8or6IqRDS4flFmHLuJ4pUc/SVqL2lxZrQmte+75hC00
- 6KSIyHQ9zu4pslhq1cGMtUxsJ6qltGb6y5zxS38sLMIqJe6yuO9Zg91VTNNu74j2
- 3RxkvYGm+UmbcCUvCdktAEVn/hKxsWk9+78NlH19wH5VOdyiG6mYM7ZTWBJPj18Z
- Qlra+8eRsXZN5JlphtR09UyB9M9WvoyQtEAF2lj7o5VzNS0yh4lIcKOFGF5j1/JP
- M0mGxw==
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhgs50jyb-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 11:20:30 +0000 (GMT)
-Received: by mail-yw1-f199.google.com with SMTP id
- 00721157ae682-7d38b23d6cfso10716397b3.2
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 04:20:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784546429; cv=none;
- d=google.com; s=arc-20260327;
- b=pK+ZXPY2VFFyqa/VgDv7zxTCJMdPP5t73o/39b7fZTV2ALk3SAFA4Bj1QItuHM1ZKz
- Ib77V+UgvMoRNkbCw5la5n3kC/W9XeyWXGVV3zkQa4jhk5MndxTagAHEelFDAZTfO/6q
- JCns4AFaMtjrbCVqoHRh1Tvc6QgkObe5YmvQhQ3ghUbORfmIrjOlHm8BJnsHQudhX9lK
- TETzK585LoDOmxh8JTbgcm3hP6E40/78SEGOMBzr0hM4nN9FzMFtaJVgjg+l3wgaMNqI
- AVcPrnQbQV5RI/wBI6AbqqmByYo4whhS+YlzSrlRPfsA/QK84I1erzWC5oUa/NF3oLFG
- qqKw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=QSYWmlbPl8jGvur0D30SZgMAigihbsNK0PCztApsFhg=;
- fh=Ykh1hinT4EwUNa6yKQbKGOhZrrfkasOwKf8D5y/arlc=;
- b=d2DG8cltDB5jp6yDzSSlTmpG0DDGane3YOHRTtn4rYOo5ihYxpQrwZ79HYv76+kzSB
- ZHjfOeVxWaAd6CwJ1/w+6awZqYQxKXdJlGNdN6fjfpFZvzz+AbtwktfQOmc0ySzB+BI4
- bVinzzZYgEFHwVwx6FWUU7q5hGKgf7PMWB6Odq0mzrHGWjlVbu3s1/LF7tCm8/I67OXf
- aSa3YzO7ivkIpJFzmgabY/AKz6dVXz0+r67YPQl5+ViZ2oFVJ2xRjw41gI/6EUzx3q68
- aMFC6GTt0et52TEC8eHS4zfXAwh1uEB91NAVpn/0iPzdU9zUDB/k2rN4iVLpe+ZqgqfM
- W7cg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784546429; x=1785151229; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=QSYWmlbPl8jGvur0D30SZgMAigihbsNK0PCztApsFhg=;
- b=VQMcmEeHKzO7hTAt+2H8JzCcXkHU7NJBZpE4OWXNUyb+ZgkoGNQwnWLTZXg5qEJiMl
- /++seupowPm86lFAUHqAATLesOGKuXVg1YRqjCYTxhXVfe0IEu2Y06lpA9zpHF9VnSeP
- b/jRJs0qouHDrpIxmb52IP1BIN1QsgB7WcVDAK6nk8azgMyAAWLFbtSEYVBVuvnKst/C
- tin5CoPQMkYlPFRpZSaidlDnREyKHj8ZCgVfmcZYnaaW3arXr37NGWaIYTqAULzMeC5m
- paGbDS2f7aO7g+8eecoaTPTIqwUlEWx4KbTqSmIzb2PVnieJ2RhYV9xUSC00+BiDGwyl
- mEPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784546429; x=1785151229;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=QSYWmlbPl8jGvur0D30SZgMAigihbsNK0PCztApsFhg=;
- b=StpNjpgOnhBfRYn4X3pKwz98j14s0cqjKvLUM2Who7tJfphjUS7TRwjQVplNLKDTmx
- ge6vfVt2CdMqtllEEcfz6Bwpzk9R9t15SUR+IivCQnINTbe21DPFE3R46SEhNp/6QfV7
- knaIuE4eLNu6Q73zTyW5IcHW7iXmwCMBl9YQUMC+a5tqZ3X9sBufRE0bwKryh5agbz2U
- nrjzgyhVC4ZFmmN10Mw56f5tCPR6DESpg/CQ2rmPKbzRx8IFYsU16VvkZ/U8mgdn6GHP
- hMK276p1M+eu3viebK7CBtqgwcAY6WPDaxeVeVpNzOBpL5GRjGHS0PYTUCMMR6s65YZb
- 1lbw==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rr80uQOZMso2gzfuCOYdJdqdCUm+9pBgAxwMx8jRc5eKbqj/0XEHmOnU3M+8fqU45tSCCcZtS/AXvdN@nongnu.org
-X-Gm-Message-State: AOJu0Yz+xN1fe/IUvJW7zrondFSw/6g7IfOxR0lrYlI3E63Xi5ZGmbJ8
- W0GiPSoYA6WPnhGB31eFJuHEoDa2SzQ5bqY5qaiAPbb+TusV7VGVEHaSqcMFCMJymxLPfRHT5vD
- B+/wYMCoAOkQlab53jaeipce0zM34G4cJQH52DfPCaEInybk1Dd6pIk0wL52Miupg7eiRnTXixo
- m2CjjG/nheVulgNTYW21ayrYGHBRTJbhFY
-X-Gm-Gg: AR+sD10DNkIu/7YHR/6aZaQzYI+fv99/3V3R6SsYSImcYYJQqTvHDLkDmwZpBOu/N7+
- oZiSX182eFFiM7I6sCn9XV0/9FZ6cOXWiN/PoXaI0Y7fLMr+FrJSFqVsZh4dWIkkZ/gHfFlohuR
- bXpVLwwzNA4o0n3LkwMzU7leMlpyE+7ddPue2I1AcOP9n45Db9aBGTTt9VYHM=
-X-Received: by 2002:a05:690c:660b:b0:81e:c06e:58b1 with SMTP id
- 00721157ae682-81f20de733bmr779537b3.1.1784546429161; 
- Mon, 20 Jul 2026 04:20:29 -0700 (PDT)
-X-Received: by 2002:a05:690c:660b:b0:81e:c06e:58b1 with SMTP id
- 00721157ae682-81f20de733bmr779407b3.1.1784546428623; Mon, 20 Jul 2026
- 04:20:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wlm3q-0006JM-3i
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 07:21:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784546485;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Vv5TF82+0nFqG/zoihMaJj6xJrnpzL9Pz0s3NsdylqM=;
+ b=Tscvb6DJPBsn5gIc9+tL6rUYbNHvWnDSiB2ogWeV8+oAo1wZeK3YdfZW3/nQlDU1Ku6iPC
+ 4Uwt8Ght9a6MAyh7B1UkvuzpYTq0hmU4LOgCjwjSR2MM0SR8Zpr/fOpmnM5xsfc35DiFjY
+ tWiKoeOL6B0Ej2AmS7t/lSyQeOGLIoA=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-509-Nxxdt3x0OXexPndfcfk_jQ-1; Mon,
+ 20 Jul 2026 07:21:22 -0400
+X-MC-Unique: Nxxdt3x0OXexPndfcfk_jQ-1
+X-Mimecast-MFC-AGG-ID: Nxxdt3x0OXexPndfcfk_jQ_1784546480
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A0B871800662; Mon, 20 Jul 2026 11:21:19 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6D6D330001BE; Mon, 20 Jul 2026 11:21:18 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id E2EA421E6920; Mon, 20 Jul 2026 13:21:15 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,  Peter
+ Maydell <peter.maydell@linaro.org>,  qemu-devel@nongnu.org,  Jan Kiszka
+ <jan.kiszka@siemens.com>,  qemu-arm@nongnu.org,  BALATON Zoltan
+ <balaton@eik.bme.hu>,  qemu-ppc@nongnu.org,  Huacai Chen
+ <chenhuacai@kernel.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,  Gerd Hoffmann <kraxel@redhat.com>
+Subject: Re: A few Machines crash when "no default audio driver available"
+In-Reply-To: <ak_FOBO0sPYrM4XR@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Thu, 9 Jul 2026 16:58:48 +0100")
+References: <87o6gge6b0.fsf@pond.sub.org>
+ <CAFEAcA9goRQuxw3VD7AqUOHHTdOXu8MSfCxdQMBviE3QgGD58w@mail.gmail.com>
+ <87zf00cn7m.fsf@pond.sub.org> <ak-i1dNY_RrGNHAM@redhat.com>
+ <CAFEAcA_=rz22ZqPr77REQa5BJRZVuEkriq-gJ9xGg4E46JPUxQ@mail.gmail.com>
+ <CAJ+F1C+BiqriKhDO-vY15z5iQECVarJN-NoemiaW3w93c3EpNg@mail.gmail.com>
+ <ak-p56pwFPq9omMz@redhat.com>
+ <CAMxuvaz=7RxVDjDsR8LeMxAgk-u46ZsKGshsAGKXxMykj7M=FA@mail.gmail.com>
+ <ak_FOBO0sPYrM4XR@redhat.com>
+Date: Mon, 20 Jul 2026 13:21:15 +0200
+Message-ID: <87wlupvrdg.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20260714075659.2258023-1-subrahmanya.lingappa@oss.qualcomm.com>
- <20260714075659.2258023-5-subrahmanya.lingappa@oss.qualcomm.com>
- <3118a11c-a5b5-4d03-8059-c8c66bd9b89a@oss.qualcomm.com>
-In-Reply-To: <3118a11c-a5b5-4d03-8059-c8c66bd9b89a@oss.qualcomm.com>
-From: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
-Date: Mon, 20 Jul 2026 16:50:17 +0530
-X-Gm-Features: AUfX_mwGApTt9UtMqmqvyylwbUvw5qZOhQz0INZyv9CMH31l70zLl_60LD5UoLc
-Message-ID: <CAPxK-6fLE87h-siwUXf5eqZiaZBZndsKD9YDe-60_ZXwxr8_Uw@mail.gmail.com>
-Subject: Re: [PATCH v3 04/10] hw/riscv/virt: add opt-in RPMI base support
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-riscv@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDEyNiBTYWx0ZWRfX54r/uDRyc+wG
- ydSzd0q9YsszEpSdOBnIZo2uj9GYOWEEClrBcM2mKyPhvKfkgn0ocQCPZL/WYuNCHkOQIY6w+H7
- M1OjB6JHPTJWz/QGxPigMtkKemiU5AQ=
-X-Proofpoint-GUID: m0vEPwFb4M-r1wg5yezca7UwUpU1cgYC
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDEyNiBTYWx0ZWRfX6QDFSEjwctAP
- NAvFO+snx2J6Zzc86ZbZN15PTqtcLLPcbMSzpLlwzUFQSF0Vb6OonxU4Q4GlQzNDlQDz9ACb6P0
- /hzMsxJ6RUuSjGa+nTmWSbvUcwGM2C5LteK4QodSidAkEVRwwUDToqXqw5Ks1UheGvOb5AeT0Md
- SR1mt3RA5ANAI/obLzqMux2QvMc0ff48h5gpv5XbD7Qh2nTKhN4uWjA6jbI2A3K7n/k89MHxq/x
- XHEQ1vzS/nM9Ij3Samt8sBHYvsy2EDHfjcVhhCoiWHFFVyLcivJY17Xl1KI9l2sMZTdqA36Q5u+
- q3+Nk2EFuKrJHzmAsgA+5cu/fMQdMXSRYQQYT8vp5n7O1Hq/1+sHI5tqff9bLvZB2IpdUsWCRuL
- 8Yyr+mLOv0w+Dx7WeUCKJTCP3HUQiOzmIXoJxbxUxYSz2f1OyGpxM3xf6dokyEqIAqTYL1gnWrI
- wmCz9+yzLBwzxF0gcBw==
-X-Authority-Analysis: v=2.4 cv=CpiPtH4D c=1 sm=1 tr=0 ts=6a5e047e cx=c_pps
- a=72HoHk1woDtn7btP4rdmlg==:117 a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=DJpcGTmdVt4CTyJn9g5Z:22 a=EUspDBNiAAAA:8 a=ItmM5VYfkUr9BNyn6ioA:9
- a=QEXdDO2ut3YA:10 a=kA6IBgd4cpdPkAWqgNAz:22
-X-Proofpoint-ORIG-GUID: m0vEPwFb4M-r1wg5yezca7UwUpU1cgYC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-20_02,2026-07-20_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 phishscore=0 spamscore=0 clxscore=1015
- suspectscore=0 lowpriorityscore=0 impostorscore=0 adultscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200126
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=subrahmanya.lingappa@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: permerror client-ip=170.10.129.124;
+ envelope-from=armbru@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -175,88 +99,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe,
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-On Mon, Jul 20, 2026 at 4:26=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> On 14/7/26 09:56, Subrahmanya Lingappa wrote:
-> > Add the virt machine rpmi=3Don/off option and wire the initial RPMI Bas=
-e
-> > transport into machine realization.
-> >
-> > The option remains disabled by default and requires TCG plus librpmi.
-> > Invalid accelerator/build combinations fail during machine
-> > initialization. When enabled, virt allocates the RPMI shared-memory
-> > transport, creates the RPMI device, configures Base service metadata,
-> > and emits the corresponding device-tree nodes for firmware discovery.
-> >
-> > Signed-off-by: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.=
-com>
-> > ---
-> >   hw/riscv/Kconfig             |  1 +
-> >   hw/riscv/virt.c              | 96 +++++++++++++++++++++++++++++++++++=
-+
-> >   include/hw/misc/riscv_rpmi.h | 10 ++++
-> >   include/hw/riscv/virt.h      |  3 ++
-> >   4 files changed, 110 insertions(+)
->
->
-> > diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> > index 33775a61fd..e52ccfae1f 100644
-> > --- a/hw/riscv/virt.c
-> > +++ b/hw/riscv/virt.c
->
->
-> > @@ -1410,6 +1452,18 @@ static void virt_machine_init(MachineState *mach=
-ine)
-> >           exit(1);
-> >       }
-> >
-> > +
-> > +    if (s->have_rpmi) {
-> > +#ifndef CONFIG_LIBRPMI
-> > +        error_report("RISC-V RPMI support is not compiled in");
-> > +        exit(1);
-> > +#else
-> > +        if (kvm_enabled()) {
-> > +            error_report("RISC-V RPMI support is not available with KV=
-M");
-> > +            exit(1);
-> > +        }
-> > +#endif
-> > +    }
->
->
-> > diff --git a/include/hw/misc/riscv_rpmi.h b/include/hw/misc/riscv_rpmi.=
-h
-> > index cb2658e57e..b5d8a32f9b 100644
-> > --- a/include/hw/misc/riscv_rpmi.h
-> > +++ b/include/hw/misc/riscv_rpmi.h
-> > @@ -85,6 +85,16 @@ struct RiscvRpmiState {
-> >       bool has_shmem;
-> >   };
-> >
-> > +#ifdef CONFIG_LIBRPMI
-> >   DeviceState *riscv_rpmi_create(const RiscvRpmiConfig *cfg, Error **er=
-rp);
-> > +#else
-> > +static inline DeviceState *riscv_rpmi_create(const RiscvRpmiConfig *cf=
-g,
-> > +                                             Error **errp)
-> > +{
-> > +    (void)cfg;
-> > +    (void)errp;
-> > +    return NULL;
-> > +}
-> > +#endif
->
-> Could we use a stub file instead?
+> On Thu, Jul 09, 2026 at 07:31:31PM +0400, Marc-Andr=C3=A9 Lureau wrote:
+>> Hi
+>>=20
+>> On Thu, Jul 9, 2026 at 6:02=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange=
+@redhat.com> wrote:
+>> >
+>> > On Thu, Jul 09, 2026 at 05:54:30PM +0400, Marc-Andr=C3=A9 Lureau wrote:
+>> > > Hi
+>> > >
+>> > > On Thu, Jul 9, 2026 at 5:44=E2=80=AFPM Peter Maydell <peter.maydell@=
+linaro.org> wrote:
+>> > > >
+>> > > > On Thu, 9 Jul 2026 at 14:32, Daniel P. Berrang=C3=A9 <berrange@red=
+hat.com> wrote:
+>> > > > >
+>> > > > > On Thu, Jul 09, 2026 at 03:22:05PM +0200, Markus Armbruster wrot=
+e:
+>> > > > > > Cc: mainainters for "Overall Audio backends"
+>> > > > > > Peter Maydell <peter.maydell@linaro.org> writes:
+>> > > > > >
+>> > > > > > > On Thu, 9 Jul 2026 at 12:44, Markus Armbruster <armbru@redha=
+t.com> wrote:
+>> > > > > > >>
+>> > > > > > >> I stumbled over ARM machine musicpal, PPC machines pegasos1=
+, pegasos2,
+>> > > > > > >> and MIPS machine fuloong2e crashes.
+>> > > > > > >>
+>> > > > > > >> I run them like this:
+>> > > > > > >>
+>> > > > > > >> $ qemu-system-aarch64 -M musicpal -nodefaults -S -display n=
+one -monitor stdio
+>> > > > > > >
+>> > > > > > >> Died when device_set_realized() tried to propagate a "no de=
+fault audio
+>> > > > > > >> driver available" error to &error_abort.
+>> > > > > > >
+>> > > > > > > Is this something we want to have be a possibility the devic=
+es
+>> > > > > > > have to cope with? Can we have the "ignores all audio data"
+>> > > > > > > backend be always available instead?
+>> > > > > >
+>> > > > > > There's plenty of precedence for /dev/null-like backends.
+>> > > > > >
+>> > > > > > > Otherwise every audio device needs to cope with "there is no
+>> > > > > > > audio backend available" and implement "do nothing with the
+>> > > > > > > audio data" itself.
+>> > > > > >
+>> > > > > > Yes.
+>> > > > >
+>> > > > > We've got a bit of tension between "no defaults" and "builtin au=
+dio
+>> > > > > devices" here.
+>> > > > >
+>> > > > > Cnosider if I had instead done
+>> > > > >
+>> > > > >   qemu-system-x86_64 -M pc -device ac97 -nodefaults
+>> > > > >
+>> > > > > It is not unreasonable to expect to see an error because you ask=
+ed
+>> > > > > explicitly for 'ac97'  and forgot to wire up the required audio
+>> > > > > backend, and asked to NOT have any defaults.
 
-  Thanks, agreed. v4 still keeps this as an inline fallback with
-  G_GNUC_UNUSED, but I will move it to a dedicated stub source file in the
-  next revision.
+Even then, a crash is unequivocally wrong.  Fatal error would be
+defensible.
 
-thanks,
-Subbu
+>> > > > > But with your 'musicpal' machine example, you never asked for the
+>> > > > > frontend device, so you should be forgiven for also not asking
+>> > > > > for a audio backend.
+
+Indeed.
+
+>> > > > Ah, so this is because of -nodefaults, not because QEMU was
+>> > > > somehow built with no audio backends in it.
+
+Yes.
+
+There are more ways to end up with no audio backend.
+
+>> > > > > If we guarantee a /dev/null audio backend always exists, we help
+>> > > > > the second case but degrade the first case
+>> > > >
+>> > > > As a possible analogy, for network devices we just warn in
+>> > > > the analogous "device created but no backend wired up":
+>> > > >
+>> > > >  ./build/x86/qemu-system-x86_64 -nodefaults -device e1000 -display=
+ none
+>> > > > qemu-system-x86_64: warning: nic e1000.0 has no peer
+>> > > >
+>> > > > and the effective behaviour is that output packets are dropped.
+
+When a network device lacks a backend, we make it behave as if it's not
+connected to anything, and also tell the user that this is the case.
+Makes sense, especially for onboard devices: the user may not care for
+such an onboard device, and can't remove it.
+
+When an audio device lacks a backend, could we make it behave as if it's
+not connected to anything?
+
+Longwinded way to say ...
+
+>> > > > We could make audio devices do that (which would be basically
+>> > > > equivalent to "if we need an audio backend and we don't have
+>> > > > one, warn and create the null backend").
+
+... yes, please.
+
+>> > > Note that we don't have a real "null" backend. The "none" backend do=
+es
+>> > > mixing/resampling/volume before dropping the audio (its parent is
+>> > > MIXENG_BACKEND). I think it would be worth to add (so one day we can
+>> > > compile qemu without the whole audio/ engine)
+>> >
+>> > Rather than adding "null" backend, IMHO, we should make "none" do
+>> > what its name suggests, by removing the MIGENG_BACKEND from it.
+>> >
+>>=20
+>> It's a bit more complicated, the "none" backend can be used by vnc
+>> (not spice or dbus), and we have the now-deprecated HMP wavcapture
+>> command.
+>
+> Oh right because VNC used the capture APIs to receive the audio.
+> It should probably have had an explicit "vnc" audio backend like
+> spice did :-(
+
+Is this fixable?
+
+"Certain audio commands only work when you actually have an audio
+backend" would be perfectly reasonable, wouldn'it ?
+
+>> Note, the new "qemu-vnc" server does not mix/resample audio at this
+>> point, it takes the first audio stream instead.
+>
+>>=20
+>> Fwiw, a "null" audio backend would still need to process audio data at
+>> a correct pace.
+
+I'm dense today: why?
+
 
