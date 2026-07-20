@@ -4,105 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9D13C44520
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9D50C44524
 	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 16:03:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlqSB-0004XC-3B; Mon, 20 Jul 2026 12:02:51 -0400
+	id 1wlqRH-0003S5-6e; Mon, 20 Jul 2026 12:01:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wlqSA-0004WT-9h
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 12:02:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wlqS7-0005yJ-Hz
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 12:02:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784563366;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=XRZa9+oiAprZlt+O1KJQUffJUxIioWtyM/sis+hPzso=;
- b=ZAO2YgtZvYD/xgvuaOYlIYPsYl55//DeFLZmAe5tlUd3Y/jOLqS5JMNYAN85XWr+a38Fgd
- pT7LQl5s8dMveq1TzMajKTv6M29eP8WhoT4o6eml2hOrBgYXfw9MIgY8P6lR08qFaXrE5v
- xsV7f4Di7taFsNeK2wgqPCClqwftTL4=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-592-5W61zwIoM5-DurcBaujdQQ-1; Mon, 20 Jul 2026 12:02:45 -0400
-X-MC-Unique: 5W61zwIoM5-DurcBaujdQQ-1
-X-Mimecast-MFC-AGG-ID: 5W61zwIoM5-DurcBaujdQQ_1784563365
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51c0408254aso91874631cf.0
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 09:02:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wlqQd-0003Hp-H9
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 12:01:30 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wlqQb-0005bO-KI
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 12:01:15 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4954aff6088so20284665e9.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 09:01:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784563365; x=1785168165; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=XRZa9+oiAprZlt+O1KJQUffJUxIioWtyM/sis+hPzso=;
- b=JfM4gijhABfLSZaWUDjcLzK3n20YviE8xOD+TDFEogQuxYQ8ghdr/chGKiAeqpP8EK
- oczt/98e64FNBnbyaRu5ShpP2OtLz7XLEoFt5+zSmNqC89cveneXimsTxjyuwR2AFM50
- HbEIatcLwOiB6f0gIiv5yhB0RidujHh1WBc2a60RpnzwDwP9hev2cirfguyQSuzZIx7t
- MqtAw0WKcSV6RvfxN9GsehakbUwk+S244FAOruWt+KsRIhuyFA9Koq/zW7VLrJt5fHhX
- 1dkr//MIvah8wZM/VmG3MWZIU/oW5/kZKzCMATyVNcCumtmCdSn+CAp+XH5l4uxV/xu/
- bCMw==
+ d=linaro.org; s=google; t=1784563272; x=1785168072; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=qkGXXcEmb0Lov1uMTqJnjJBL98VB9Jw/+TrmYRzcpnk=;
+ b=QfpBtVpGsRyQjz+dpcPyGq35Y4v/WUI16rOg7ivpPxLsSiZUNCAoRZL53ok3Mp72aB
+ HEBwY+t+WRCyd+CfXPJLJlkuW02hAihKns/pJMhw3nAxOrnLJ+3kTJLGXZ2fBlE3XYUn
+ Mer/RQ+f3uIoFD9tbLGBfhJa/frq30hhHbDy0iBYycdrWXDT7HyqHCDPUc4GmzBKcjQC
+ ub4H9CS2rpfyv42T4F1C/Vk5qZQJAx3K4mbyuqNrBPfvhrDyEK1oWg/o/asND+LpsRyg
+ WDSAm+vdzEaOiXO8XKw4SN0M+csSEx7NdYc2bfFQn0pfZnNj9p6vtVfAaezRXri5ZkTS
+ eMZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784563365; x=1785168165;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
+ d=1e100.net; s=20251104; t=1784563272; x=1785168072;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=XRZa9+oiAprZlt+O1KJQUffJUxIioWtyM/sis+hPzso=;
- b=NVXo6oeAtctVS54cTDINRLKB2ncCCsE3wwsGpV2DHaVdStByvLbRmmey8Ij7lbENHl
- y+b0PW97p2eoE4QtSZEPDL0UZOzInR3KrUNu5t4EErvbkS1ecGHNJ8t1VhNAIHTaFq5E
- km0opieZLzgvR96H87tIezL91x3qnOqZlCyaGsnD4W4frE69zqw6z3rvN8FE8jBjhzaO
- 1JqtGs2TEGV3hVmdZGTPeBbhWjl4L718ksK5vIs4JuJC1QdHP9c+NldRfbWGR/+BtMsQ
- wUQkQj0gzZoSnO0iB1gXZPzs0PCpYfI5FW2dCwYRj1nexnZ902Ruixt3bLt6H/54lgu/
- 4lVw==
-X-Gm-Message-State: AOJu0YxPKdCyGi8neBUsgeuU8gH6pN5H5etcIZf26Yvtbuj40z1FN5DF
- asVmG7agtq+EVlc73LQW6mpX1alfRtMabthnQ+OpZAFMvPSYV99NYUdOld11YjLZz6ypmjW9VZ+
- OOQWbyRJCfeNGJxfm8zz0V+5U1j09cKHLqQmphLK78rc9fEX6gFvr+XhD
-X-Gm-Gg: AfdE7ck61N1iAlNWgYFuMmI9H88anyld6LWhd+wXBerv3cLp0hky8oPTS5OL28OBYfg
- N6mxlyoc0kClsURv8Fb8SpqaIHDH0SPn7LpSBsXIfoWny8XJDUZEFHppsb6AUG8ExVr0bdO7tm9
- 5SakpiAJprluuEBSNrtAhb4duwy1bW4K9rU4oxtkkdQGoE1Jh3RaQKnuxf59OgLOwuUjsP9gEPq
- XIEtGyf4j8ylBMAq9WqeZ9OZDr+UQPMCCmqkCOSnd2y9+k3ZILg3uo49KQHjHurLec5iZ0ISSTz
- u2Mip2CWzuVPlALdbvarbt4rJdH3ymUhahtlw2JGjJ0Az50mGFlsDZMkb2QusvAIAP34
-X-Received: by 2002:ac8:7f04:0:b0:517:5ed7:d28f with SMTP id
- d75a77b69052e-5212b63ae94mr137104241cf.25.1784563364791; 
- Mon, 20 Jul 2026 09:02:44 -0700 (PDT)
-X-Received: by 2002:ac8:7f04:0:b0:517:5ed7:d28f with SMTP id
- d75a77b69052e-5212b63ae94mr137103501cf.25.1784563364094; 
- Mon, 20 Jul 2026 09:02:44 -0700 (PDT)
-Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-521502b92acsm81088431cf.30.2026.07.20.09.02.42
+ bh=qkGXXcEmb0Lov1uMTqJnjJBL98VB9Jw/+TrmYRzcpnk=;
+ b=Z0ycrLrnfypBbMLCA7fBPqHQDJOOa7Fv55oCSq184eIdCHnjVd5FayhOqB9soyC5jw
+ oCzyeur/HOmvHltTIrzHu5mgCIjuKXn6MiGzR1jVvLX9T0M0qWP4aiQlkw7q3/dQosng
+ xCUL2h253N50kPsKIItRy3l5457u6G5VXO4/hQ/h3ngl+ekP4JhNzE3vI/RieXHi+zrB
+ zelx2P99G4+F8d4bXey6QoSvSUWnbzrqaCw9amgZ9kS+V8Yp7XEywWekw0I0H2fKP2Js
+ qtcRvMjQfD6xN/1P2WCRzSqqczBEWLHA/ZciTKvWzdhECjr0KCqrh2gehZC89du5smVM
+ VQfA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoeI3i9TODzPTnrvu0Hh6ucSQ7ViQhAfV4AnOm89jAc/zNiTupr/QZMNp2npPgI6vxoCeY+DyNVuFRr@nongnu.org
+X-Gm-Message-State: AOJu0YzVeiXo8plc06kBiFw5tqnGAvmBhVkKccoSJEoBqTNr/FCOClzk
+ lsW+i4tFLZlkPMdFI06tOnyFXCvTG0SYn16IFARNGLlLVecTPz/l5YXhIg2AlF6m+EU=
+X-Gm-Gg: AfdE7ckfvnOMlCY5fgMKCTwTGfs9+D14yfzqRAmia/IZSdC/V4Es8KwtUmRwPtJ3Y24
+ lq6R2Uqk7WVJ1CNxERAfkSPpnhfPU2QssUUjyojNcZRazLTgZGrLdxYFmm0Jyv1Tcw6pgvocJY1
+ IMPVf2JGxieB3ti6OBFAulBcdGsZuzxU0oB71I7o5UJAeXf6LIEnic7MhWpjzvYhaZGdD8MYyh4
+ y9xn1rMlcclYVogMGPzJTN8/Xory1dmCSUBHLkocIiHGk0mKhMz2heyiZDQOjlotash5wZxX4ND
+ p4tpGsbjIRhK2mCGy4QxEkZaA3cx+iMfp7QUM77ZOO15I8wjx+JbkMM1xBj1yolqqL0xQR761xb
+ KXf/YvfFZ9gcRFfeuxm1F2HB0jV06gYvDoR4ahsks7574JzvnMzKAQ5j0GiHyOs9XgoteV5gHQa
+ krvw==
+X-Received: by 2002:a05:600c:1c1b:b0:495:4b24:1b64 with SMTP id
+ 5b1f17b1804b1-4954b241d02mr185824765e9.0.1784563271186; 
+ Mon, 20 Jul 2026 09:01:11 -0700 (PDT)
+Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f63e499c2sm29131191f8f.4.2026.07.20.09.01.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Jul 2026 09:02:43 -0700 (PDT)
-Date: Mon, 20 Jul 2026 12:02:31 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Aadeshveer Singh <aadeshveer07@gmail.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, pbonzini@redhat.com,
- philmd@mailo.com, lvivier@redhat.com, ayoub@saferwall.com,
- pierrick.bouvier@oss.qualcomm.com
-Subject: Re: [PATCH v3 04/11] migration: Use file_bmap for RAMBlock during
- incoming file load
-Message-ID: <al5Gl3GIIPHWqwFo@x1.local>
-References: <20260714141547.1268000-1-aadeshveer07@gmail.com>
- <20260714141547.1268000-5-aadeshveer07@gmail.com>
+ Mon, 20 Jul 2026 09:01:10 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id DFE345F911;
+ Mon, 20 Jul 2026 17:01:08 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,  Mohamed Mediouni
+ <mohamed@unpredictable.fr>,  qemu-devel <qemu-devel@nongnu.org>
+Subject: Re: macOS builds broken in CI
+In-Reply-To: <CAJSP0QUkmT4vDPY0cHYFJNaeo57ZsNwxd8nYvAXtuHY8StPeYA@mail.gmail.com>
+ (Stefan Hajnoczi's message of "Mon, 20 Jul 2026 11:36:32 -0400")
+References: <CAJSP0QXRy1Dc_MwqtU_gS1+jOdrW=Vk6YynP75q5HP3Rz_CpTA@mail.gmail.com>
+ <904444A5-0120-4BE6-8E11-C7167F2A3BDB@unpredictable.fr>
+ <D91DC576-2462-4652-9E8C-5A7C96791622@unpredictable.fr>
+ <CAFEAcA-X7h0hQ4FaTaVoEUKTJvxfaK8GcihR=+RzxOTBf3X_mw@mail.gmail.com>
+ <CAJSP0QUkmT4vDPY0cHYFJNaeo57ZsNwxd8nYvAXtuHY8StPeYA@mail.gmail.com>
+User-Agent: mu4e 1.14.3-pre1; emacs 30.1
+Date: Mon, 20 Jul 2026 17:01:08 +0100
+Message-ID: <87ldb5sla3.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260714141547.1268000-5-aadeshveer07@gmail.com>
-Received-SPF: permerror client-ip=170.10.133.124;
- envelope-from=peterx@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,23 +111,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 14, 2026 at 07:45:40PM +0530, Aadeshveer Singh wrote:
-> Replace the temporary bitmap with the existing file_bmap attribute of
-> the RAMBlock. This acts as a preparatory change for the upcoming fast
-> snapshot load feature.
-> 
-> Reusing this bitmap allows the destination to track page types during
-> a postcopy load, enabling faster, direct placement of zero pages.
-> 
-> Since file_bmap is currently only utilized during the migration save
-> phase, it can be safely repurposed during the load phase without
-> introducing conflicts.
-> 
-> Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
+Stefan Hajnoczi <stefanha@gmail.com> writes:
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+> On Mon, Jul 20, 2026 at 5:38=E2=80=AFAM Peter Maydell <peter.maydell@lina=
+ro.org> wrote:
+>>
+>> On Thu, 25 Jun 2026 at 20:15, Mohamed Mediouni <mohamed@unpredictable.fr=
+> wrote:
+>> >
+>> >
+>> >
+>> > > On 25. Jun 2026, at 21:11, Mohamed Mediouni <mohamed@unpredictable.f=
+r> wrote:
+>> > >
+>> > >
+>> > >
+>> > >> On 25. Jun 2026, at 20:38, Stefan Hajnoczi <stefanha@gmail.com> wro=
+te:
+>> > >>
+>> > >> Hi Alex,
+>> > >> tests/tcg/multiarch/system/Makefile.softmmu-target's
+>> > >> run-gdbstub-interrupt seems to be broken on GitLab CI macOS runners=
+. 5
+>> > >> days ago it still passed, but now rerunning the pipeline on the same
+>> > >> commit ID fails:
+>> > >>
+>> > >> - Good (5 days ago): https://gitlab.com/qemu-project/qemu/-/pipelin=
+es/2615134022
+>> > >> - Bad (today): https://gitlab.com/qemu-project/qemu/-/pipelines/262=
+9704018
+>> > >>
+>> > >> I've tried many CI runs with different pull requests applied on top=
+ of
+>> > >> qemu.git/master and they fail in the same way. Maybe it's an
+>> > >> environmental thing with the macOS runners?
+>> > >>
+>> > >> It's unclear where the SIGKILL (Error 137) comes from. Could it be =
+an
+>> > >> out-of-memory condition on macOS runners?
+>> > >
+>> > > Hi,
+>> > >
+>> > > SIGKILL is the known symptom for failure during signature verificati=
+on
+>> > > by AMFI.
+>> > >
+>> > > Now that we don=E2=80=99t have separate -unsigned binaries anymore b=
+ut relying
+>> > > on in-place ad-hoc (w/o certificate) signing with entitlements we mi=
+ght
+>> > > have issues linked to that.
+>> > >
+>> > > In the past file modification had issues with verification tied to t=
+he
+>> > > inode and the workaround being a reboot or a cat binary > new_binary;
+>> > > chmod +x new_binary so that the old (now out of sync) signing state =
+is lost
+>> > >
+>> > This is highlighted in the software update context in: https://develop=
+er.apple.com/documentation/security/updating-mac-software
+>> >
+>> > > This code is incorrect because it modifies the command-line
+>> > > tool=E2=80=99s executable file in place. macOS caches information ab=
+out
+>> > > the code=E2=80=99s signature in the kernel. It doesn=E2=80=99t flush=
+ that cache
+>> > > when you modify the file=E2=80=99s contents. Modifying the file in p=
+lace
+>> > > yields a mismatch between the file=E2=80=99s contents and the in-ker=
+nel
+>> > > cache, which can cause a hard-to-reproduce code-signing crash
+>> > > the next time you run the tool.
+>> > > While this example uses a command-line tool to demonstrate the issue=
+, updating any file that contains signed code might trigger this code-signi=
+ng crash. That includes executables, frameworks, dynamic libraries, and bun=
+dles.
+>> > > To update a file that contains signed code without risking this cras=
+h, write the updated code to a temporary file and replace the existing file=
+ with that temporary one:
+>>
+>> I was just looking at this again today, but looking at our
+>> scripts/entitlement.sh, when meson.build calls the script SRC
+>> will be qemu-system-foo-unsigned and DST will be
+>> qemu-system-foo, and we take the in_place case and do:
+>>
+>>   cp -pPf "$SRC" "$DST.tmp"
+>>   SRC=3D"$DST.tmp"
+>>
+>> to copy the -unsigned binary to a .tmp file. Then we
+>> run codesign on that .tmp file, and finally
+>>
+>>   mv -f "$SRC" "$DST"
+>>
+>> to rename the signed binary to its final name.
+>>
+>> So that looks to me like we're following the rules for
+>> not signing executables in place to me...
+>
+> Hmm...then the next step could be reproducing the job failure locally
+> on a Mac where it can be debugged or bisected.
 
--- 
-Peter Xu
+Unfortunately I can't reproduce it on the one piece of hardware I have
+access to.
 
+We can disable the gdb tests and the rest passes:
+
+  https://gitlab.com/qemu-project/qemu-ci-testing/-/pipelines/2690820623
+
+>
+> Please let me know if you need help on the GitLab CI side. Mac runners
+> are available to open source projects, so you might not be able to
+> test in a personal fork
+> (https://docs.gitlab.com/ci/runners/hosted_runners/macos/). Peter, I
+> think you have the same GitLab permissions as I do, so you could
+> probably run experiments without my help.
+>
+> Stefan
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
