@@ -4,105 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44F89C44520
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 11:43:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DE1DC44515
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 11:45:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlmMx-0002ha-7w; Mon, 20 Jul 2026 07:41:11 -0400
+	id 1wlmR5-0004wh-GX; Mon, 20 Jul 2026 07:45:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wlmMv-0002h6-Pu
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 07:41:09 -0400
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wlmMu-0001Po-Dt
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 07:41:09 -0400
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-80e24970f1dso49677157b3.0
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 04:41:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784547667; cv=none;
- d=google.com; s=arc-20260327;
- b=EbGvUMjdnYP/DFCjGZEt6mX3DEvZJiPldE5/cvKLJcatNAswP7HQduiIbkLNRAsfOM
- u+2f8Go4Mlz7zeXvJL6TD6Q16LA4hHv7rwPKgEgoi6WIGmZmqcPwoq8VsZixCEWYCbeb
- Erp2S+5ACdB1ljUseEliYdvu6vW2Y290bAKDKLUYlM7+Che+6BsldtOJmY3LBBGYGVNg
- b4op4jT1p6uUCagVX8nkcF5+ZuHPGCTQgQhcbtjD0xymsnjBEHarPLTaHv4XpQoNdIB9
- bvlsEl0sj0Xq23nbXFJGbX+3kJXZPl4KCTwzUPPKqoNTZioWzO7jzwaeXleidTK7X+U7
- j34A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=QSUqbf52NBBuCC7IJl6m184vPqck3DyrBNqgII0nbsU=;
- fh=vWmEuRD+mf4wwxpF6BEmjY/L0Zb0w6Ufn7Jm0dWwipA=;
- b=Upde0kP1Q4X7nOICCSNjTKo2vDDcuCnoGLaHBrE2FRFDhbYnvdHnk26xmOVQb+5RYD
- 195Oc4FsfNNtDOjuZylzYiGQOxyTtdYm9JdmQYGfzfisGDd2V0sw8+h4/jVAhbDJYEZL
- F38i2X9ETkUBqVj+c1hm5MHwn/HIhqtXZ/Vc5KI/+L72vsTWP9TNri1ErJcOYSlw7WWw
- SGLHwwDnBKy7H1DVurJ6tvPiDmlg/lQwYnlgwBLYmbyV7wJXYEEUuybGgl2sQDtBR0AI
- qqK2EvARB8tqkT12oeLipTvqoXwMK8EsVsDq670bTauT98YxTDeGvj6fiJDiQBUEOSUN
- UZ+A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784547667; x=1785152467; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=QSUqbf52NBBuCC7IJl6m184vPqck3DyrBNqgII0nbsU=;
- b=bytO50q+coyuOQQSm//khFu5SL77Uwn3jnDLvsQpSBVicWDIGCQQv6cDr6oUMnZ01c
- Jz0FFOs1YbI70WoeQmsTj1fGKKrQOvdNQ94s7wUQeLVvlsYbNafXVytdpsGSMAQ76wqe
- rGe4T9koP2CwN3mesLyVv/LU81yyeZorkwiW65faz5X3fEx/vaT2LoVRJktwFP9vSZwQ
- yaYl3kp4XkclVEVFsYa6Nu3TKZRZhydYqhqpnpZ6xgXn3YP19YNJkI+yd8vMBbT1IOIV
- M+BOxCrEnGl94hu0CyZUSyzboqxrgqoqCvJCARX89/qjL53r4+JlIhjg7FbOOyrQ1DaJ
- 9o7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784547667; x=1785152467;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=QSUqbf52NBBuCC7IJl6m184vPqck3DyrBNqgII0nbsU=;
- b=gyjyT1J4xw/JsHLBJENhbLUAu03IcC4P6vl2yAuOdHGtvpXSTLWp0rD/7t8JRY1z2V
- Z+C7vArTstkVueteJaGu+KwhbpuP/Urz7mRQHY6F4xhwd8yaztoMli0KR86yrbUHxPTc
- 5c9RtVuvDip2T0KfCJNH9hcEeQAkp8ksO05VzaJJgMJjFlB/Q/hKHstOsZnmD0Xd+tqI
- KR4eA8fDH0MXSBXBiXsa5UpWgiumWJhZ4xi0b//Ck9L7GJrKzFzPpvBfuH6CQOlXHmRI
- 2Jk0mzhC6QIaJP27yzzHz8JGRGvmxM4lfyUoyIRVrtXRy/KyBR8mMlnuT7X5xEbR0Jmb
- Orow==
-X-Gm-Message-State: AOJu0YwpXt/hOVW3Y1/bDT1qYruamR0jKimYCR9+c+Z+jsdDfCJ1SCk8
- MKjZ1uoQEuFQOWLTr31V5h1EM0OubPMJ6DY/SpdFVbqW/P0+pKv0F+UkbIZJyaK5e2w1csOSVJU
- QFAIBIhst7bcDUH3xDrNqErspYvH5BRs=
-X-Gm-Gg: AR+sD13hB3DRXq6zSAOPZXLgvArnm6VGDS3UP1hJSMTJmb6ycYisj0d1MrPPSxgkvr2
- oqqu1g8ypXz9nmQPBpfh6+tRTiSFM6VEYtNZQKqt3CAmH2MPSGr7s57O9o/PbikP9TCt8ADXnfs
- 3hcqsKMko2HhD3q1ZyCY6i+gTmniSm/DosxGrXP1+86jIG1ZgfEn3cXEEfpHDX58+8qX/bWoofI
- rFMiQn/7fJdZdFatcKJ83flr3aFMv6AAFw9f2tv78gIlFKutjRF3nXKV6Fb
-X-Received: by 2002:a05:690c:4d83:b0:803:6bb9:1753 with SMTP id
- 00721157ae682-81ef23e80demr37477017b3.21.1784547667038; Mon, 20 Jul 2026
- 04:41:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wlmR3-0004uL-0R
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 07:45:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wlmR1-0002LP-Aw
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 07:45:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784547921;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=vDMfCNJL4UMCBXo6maaFDh2By6IaadEcmRgiCqU3iX8=;
+ b=MP34RTql6lc5+yc80oiD2CVCDVVz7HMGCIAtoV8o9DfRKJL5Qr0dukv+/yNt1r1T0sA/nS
+ UupEbFI8qYRRd0kpOiGZroOpe9nNm5a4QjWn4cAV8TIFJtqSR+zqAY60k80AMqpIU+miVE
+ E+1qO7Au2NbsRxD0GJxxhPIDFM0dZKE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-483-OHToc7ZcMPOHigS2pCFKaA-1; Mon,
+ 20 Jul 2026 07:45:19 -0400
+X-MC-Unique: OHToc7ZcMPOHigS2pCFKaA-1
+X-Mimecast-MFC-AGG-ID: OHToc7ZcMPOHigS2pCFKaA_1784547918
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4B895195C242
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 11:45:18 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.17])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 36C951956094; Mon, 20 Jul 2026 11:45:16 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH] hw/display/qxl: validate primary surface stride against width
+Date: Mon, 20 Jul 2026 15:45:13 +0400
+Message-ID: <20260720114513.2500370-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-References: <20260719211923.1079282-1-shentey@gmail.com>
- <20260719211923.1079282-2-shentey@gmail.com>
-In-Reply-To: <20260719211923.1079282-2-shentey@gmail.com>
-From: Bin Meng <bmeng.cn@gmail.com>
-Date: Mon, 20 Jul 2026 19:40:55 +0800
-X-Gm-Features: AUfX_mxaZC2NG-tWCA1SdXr6eMCNpKsedT-9ffVEc1SX34vUNNYirPPWrS3k2mA
-Message-ID: <CAEUhbmVe8+VdRq2QQF7eRTv7op+5TwO7ZpkOOnjJ00okgyUY1Q@mail.gmail.com>
-Subject: Re: [PATCH 1/2] hw/sd/sd: Fix error case for CMD18
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- qemu-block@nongnu.org, Christian Speich <c.speich@avm.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yw1-x1129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: permerror client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,31 +82,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 20, 2026 at 5:19=E2=80=AFAM Bernhard Beschow <shentey@gmail.com=
-> wrote:
->
-> In commit 468fa450a7e0 ("hw/sd: Switch read/write primitive to
-> buf+len"), `sd_read_byte()` changed its contract to return the read size
-> rather than the read value (and was renamed to `sd_read_data()`
-> accordingly). In an error case, however, `sd_read_data()` returns 0 by
-> means of `dummy_byte` which is the code for the old contract. Moreover,
-> `sdbus_read_data()` asserts the virtual method `read_data()` (and thus
-> `sd_read_data()`) to return a non-zero size, i.e. to make progress and
-> not loop forever. Fix the code to behave like the "DAT read illegal for
-> command" case.
->
-> Fixes: 468fa450a7e0 ("hw/sd: Switch read/write primitive to buf+len")
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Missing SoB ...
+The existing validation in qxl_create_guest_primary() checks that
+abs(stride) * height fits in vgamem_size and that stride is 4-byte
+aligned, but never checks that abs(stride) is large enough to hold one
+row of pixels for the declared width and format.
 
->
-> ---
-> cc: Christian Speich <c.speich@avm.de>
-> ---
->  hw/sd/sd.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
+A malicious guest can create a primary surface with a stride much
+smaller than width * bytes_per_pixel (e.g. stride=4 for a 64-wide 32bpp
+surface). The spice server rejects this via red_validate_surface(), but
+the return is void and QEMU unconditionally proceeds to set up the local
+rendering state. On the next display refresh, VNC or SDL reads width *
+byptes_pp per scanline from a region backed by only stride bytes per
+row, causing a host-side out-of-bounds read.
 
-Other than that,
-Reviewed-by: Bin Meng <bin.meng@processmission.com>
+Add three checks before creating the surface:
+ - reject unknown surface formats
+ - reject zero width or height
+ - reject surfaces where abs(stride) < width * bytes_per_pixel
+
+Fixes: CVE-2026-16271
+Fixes: 3761abb16784 ("hw/display/qxl: fix signed to unsigned comparison")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3637
+Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+---
+ hw/display/qxl.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
+
+diff --git a/hw/display/qxl.c b/hw/display/qxl.c
+index 4a56f07b157..36fc681cbfb 100644
+--- a/hw/display/qxl.c
++++ b/hw/display/qxl.c
+@@ -1524,6 +1524,7 @@ static void qxl_create_guest_primary(PCIQXLDevice *qxl, int loadvm,
+     QXLSurfaceCreate *sc = &qxl->guest_primary.surface;
+     uint32_t requested_height = le32_to_cpu(sc->height);
+     int requested_stride = le32_to_cpu(sc->stride);
++    uint32_t bytes_pp;
+ 
+     if (requested_stride == INT32_MIN ||
+         abs(requested_stride) * (uint64_t)requested_height
+@@ -1560,6 +1561,34 @@ static void qxl_create_guest_primary(PCIQXLDevice *qxl, int loadvm,
+         return;
+     }
+ 
++    switch (surface.format) {
++    case SPICE_SURFACE_FMT_16_555:
++    case SPICE_SURFACE_FMT_16_565:
++        bytes_pp = 2;
++        break;
++    case SPICE_SURFACE_FMT_32_xRGB:
++    case SPICE_SURFACE_FMT_32_ARGB:
++        bytes_pp = 4;
++        break;
++    default:
++        qxl_set_guest_bug(qxl, "%s: unhandled format %d",
++                          __func__, surface.format);
++        return;
++    }
++
++    if (surface.width == 0 || surface.height == 0) {
++        qxl_set_guest_bug(qxl, "%s: zero dimension %ux%u",
++                          __func__, surface.width, surface.height);
++        return;
++    }
++
++    if ((uint64_t)surface.width * bytes_pp > abs(surface.stride)) {
++        qxl_set_guest_bug(qxl, "%s: stride too small for width:"
++                          " stride %d width %u bpp %u",
++                          __func__, surface.stride, surface.width, bytes_pp);
++        return;
++    }
++
+     surface.mouse_mode = true;
+     surface.group_id   = MEMSLOT_GROUP_GUEST;
+     if (loadvm) {
+-- 
+2.55.0
+
 
