@@ -4,91 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9BD8C4451B
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 08:50:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84FD6C44515
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 09:00:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wljhY-0004Q8-Nc; Mon, 20 Jul 2026 04:50:16 -0400
+	id 1wljql-00069h-3Y; Mon, 20 Jul 2026 04:59:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shankerwangmiao@gmail.com>)
- id 1wljhV-0004Or-G2
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:50:14 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wljqj-00069Q-WE
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:59:46 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shankerwangmiao@gmail.com>)
- id 1wljhT-0004No-JL
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:50:13 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-84a3e5ca66eso1248061b3a.3
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 01:50:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wljqi-0005Cc-LA
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:59:45 -0400
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-81e9d8f3289so73033857b3.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 01:59:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784537983; cv=none;
+ d=google.com; s=arc-20260327;
+ b=s0cx1vh8bhSxlq+WnAdDv3Wedu1hfz2lLXIJLGtNf0X1ttYKrY2D0UQevf45VYTl8T
+ cfa6x+mhyz4Ckr1Rvwx7EKo8xQqsWgMvWszFPPyou0UXLI18RLrGFldRQY20sppulUR1
+ AoheZ/MS5F5Q1L2Qp9Mk+vm123sjUCMojjAmsMVKhAIrBEsZi9x/YnLmFmb4iK4wsnWD
+ nCWt5Lm6aMswrDwP08dJ64IZgEexe7ymQDKPqjAnU0dbg/ZTS+n7ZHOV3ihxmlf/dImY
+ Ym3VYV/Wms7wSqDSumc+NNUj0zkjre5+TNnT+3Wjq9wDTRMr4z0vTrvSbbar87SqTFRI
+ 0cXw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=DDpyDvVAs5OPQkE4io3OJaVk90qZEK7aw6QVd7Ucsso=;
+ fh=9rEtyBdtKd4dd7Ra7Ut8jbkHG/PzW0JYYUNXzZiuEvs=;
+ b=swk2QP94jp7LP65tkdJrVB+GsOpM6cD6tDuIGbDqm6WaNOKJ/mq76ueJtqTLpNOSRN
+ GX/W94Bp5czacSCGhEDx9fjQzs4cZwdc3EeQwDys+8sWv807bI+cpJ8GzL9we7QY+Bec
+ Be6cGDpeGtXlLkkkqD1rFb35ElVHHo57Ffpjrb6rrahhrzPthep+v0xhEa0uetPna1WN
+ RoxuYzisFRpi3afWs4GsZVKr+OTijcE2SKJSwxrfPLQFEjmEgiXIhaFKJN0GFtFWs9kZ
+ eyLx1s3Vb2nkTxlpI4Ra2pRsKvIESljL0pmdiThfRlnEm2ks2hY2+2oJJxHZZmYgedlU
+ r6lQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784537410; x=1785142210; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:content-type:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=zpvwf6XG3PE14rYErPFv+buEkaHBcr9h2qTqBtJkkoU=;
- b=b5OdbE/doiiqSawXjHjHvsiPBHKSWuMbcjnFjL63WnQZmO818MyWBkgVguyEQZAFob
- dhyA05Lfq3n51i+JkP9LIXXrtfoIuvcbHZlkP1JcVjgFeKtpYAjThj/ZGixcoA8gHToR
- sWzv4ktt5V9hJCfnKMsEbcuSRovOUItYyyPNELRK8SYuZ1Ggvhx8ZuM/f99Lwzh5Qp4h
- IyeJ0YfaNXTg4N3hVKRs7A8g4r/1qP8znkW22MJt36p8PoN2Elkg9gFHMlOaktahLM0k
- faPOEGmuIgsOdfpbdSh11TnQnnR4AD9wbkCAjXstkt9YDlCCjzVRxT3uKlW/Zretyfyq
- RWHA==
+ d=linaro.org; s=google; t=1784537983; x=1785142783; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=DDpyDvVAs5OPQkE4io3OJaVk90qZEK7aw6QVd7Ucsso=;
+ b=L7PM49NNAjBpLIsrlFeir3XDMiewvVfJ3LqXBrFMwRbSocX8Yeu4BibVOmxKuTT+0R
+ Za2odXBHQ4eCYCREMYVPzJT+8hEEWiUHvaKEw4jmsUeZeNSrBOksZs2hV0Koyc3KR4r3
+ 42zJ2NVYK/HwmM3P3PbQ3faspy4fbUlGHnvffyIz+4qSCuMwUiEGBBzzAiZI+H24SSBn
+ rLlvOOHBR38ey8YSoPPPy3ROS+3RwKKpclMhotJx3YE0fgRb/bM7R8z4Z27twRq3aLtH
+ u61JSfD5yWRH44gQ+SSFE9xxHnIGlFouTgetTqgITcumIRbRrYzB3dAq6HQ2+rALowst
+ WdxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784537410; x=1785142210;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:content-type:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=zpvwf6XG3PE14rYErPFv+buEkaHBcr9h2qTqBtJkkoU=;
- b=dqiWrXti5LxXmbYTX9aHlXTZRHAPFV4pqMOJUsPnbwh70BviZ1fSXOOOvF9tGN3f51
- t+8IA9n/XGWx+wBN44jN93+nHn/O6zQCuePNW6rtwAJrRKvxDs4YM6wMsXazwdsj8pNh
- 9H8eLi1HiliKo4iQp4jEVlt4ALAewotnljVD2VqdnttYiXXCmH475ruL1Z+73mjVLtTu
- ftvi2Cg23oF4pLNiOIA99R9cfLyJvpr1QVJ/3T793r7xJ+JSF9o3Q0wQ6Y/oRlCWO3xk
- 4EGTOV7g7zsXk/ZwZwFosZIcrDlzBXfYq4UEGgBG4FHUaSA/Uz5C6Wse7TLiXe9etgFp
- VU0Q==
-X-Gm-Message-State: AOJu0YxUtxusNHnByEWpkBYlV7f1ID+8HbF+3w21+zT4Zl1fiZ9GEfRF
- oUhmWVMRJZ2Q9Qqout+0OaLaetQXLEuzeYC/7j6cXvqGpzBoqz1CoOM0
-X-Gm-Gg: AfdE7ckBxtP3eSIG/kCnsDsOv/U25zmaByjru/a2mTzYu2a2Ng50BN7jIl2KxZnIvdH
- OdGOmEwWO7RuR4rBj8gZQ3GDdRJg2EU4IKLklrxjQc2syTwrCAYqxZKynJbBkZQDyjHzOiZsGhW
- 24ZKxRsxrxMwxIdTZnmY3F7jOr46mi1hR/VlB16VJTqdAaUY7jwPeZrXEGDpvoQqI65SmRI6n26
- Cb4Zg2BqcILcTITJwhXoUlfP5KIdjh7En74vLm7Yfjs6epDQAo5fWaza6GMI8+OKKpEfIyD0Xzp
- FAUS95Z7AcCOPJ9MdV+923yNajpmd1QrYoX2HDz5lNre7IaareEXrZ6OyL+qIcj+St8GY321ATf
- nW3uBjAtY8k7kcydwyC4WmsSb1vYDe4j4FoDuYDNuful90K88L7LbZrmDaKZ48TIO9il6R+1nqe
- /jQ2AFiNHSMA/8aW6oloCbH+fibw==
-X-Received: by 2002:a05:6a00:278d:b0:848:3dbd:5cb0 with SMTP id
- d2e1a72fcca58-84c29444e58mr9047785b3a.2.1784537409634; 
- Mon, 20 Jul 2026 01:50:09 -0700 (PDT)
-Received: from smtpclient.apple ([23.247.139.92])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-84c2af331e0sm5179239b3a.28.2026.07.20.01.50.06
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 20 Jul 2026 01:50:08 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.8\))
-Subject: Re: [PATCH v2] target/loongarch: fix data race in CSR_ESTAT
-From: Miao Wang <shankerwangmiao@gmail.com>
-In-Reply-To: <3613f855-8b22-2e94-fa14-339acec997ed@loongson.cn>
-Date: Mon, 20 Jul 2026 16:49:53 +0800
-Cc: qemu-devel@nongnu.org, Song Gao <17746591750@163.com>,
- Xianglai Li <lixianglai@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Xi Ruoyao <xry111@xry111.site>,
- b4-sent@kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <185FB2BE-2645-45CF-BA2B-316F67495FF5@gmail.com>
-References: <20260716-loong-race-v2-1-01e68e4b850f@gmail.com>
- <3613f855-8b22-2e94-fa14-339acec997ed@loongson.cn>
-To: Bibo Mao <maobibo@loongson.cn>
-X-Mailer: Apple Mail (2.3826.700.81.1.8)
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=shankerwangmiao@gmail.com; helo=mail-pf1-x42e.google.com
+ d=1e100.net; s=20251104; t=1784537983; x=1785142783;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=DDpyDvVAs5OPQkE4io3OJaVk90qZEK7aw6QVd7Ucsso=;
+ b=PU1K7cekaEJlsuR7+SCj1cHiEZkp2DwQCgS4WU/o4CADSR+kJoGnnMvE+xo2fFgByN
+ /Z0yGtWVVqkwWChANBNCwrFsKki5jcuBQikribeBoGprbeA0tWPTVf01xqUPisM/o6KC
+ uvWaz5arTsWY/vDf8ntciIO4imjWGFskHTX/G4QWOhP19iU1QOIseSeZzVGLaoTiX7BF
+ 4WWJqxsliR0PidwHqu/DaXucHe9MM72GPoLjU76xIpVVjRce49srW4q+SZUPdIzUI/aG
+ 8OhPGufqr+SrIQmiUPVIaKUbvdWa06RWZTF+mcqgYI3RTFQi1QaOqmzUt+IUJPeoOMpm
+ UH2A==
+X-Gm-Message-State: AOJu0YzSgVHh0B63nIP6YvzznS2wJdcxAdinetrkFTPpVujxHs7mKSRm
+ Fz9lAbmDjAHJQa9H+4qSCq0wD9+417Tg8c9pN+PnQTL9P0oWDKSTFqQlxCM7Wwk0SkOqO4Ly572
+ BCaYV8oYR7fAtziCgNC5nnbx0b567dDL7+/TifS8YRQ==
+X-Gm-Gg: AR+sD113wTSrvI5H5FRR9j14jyfVs09JxKKmmONBcQ1yQCfVn8b/6ZIfjo3nRYGXTWW
+ PWdw6brGfONO+z2kReoWkn7keNiCf4IQ9B36/Vg8tF+wUfR0eSPZfnHQLuyRLDeGn32q330/SfH
+ A6hMM6oLEugIJ6Xcz10ahU9SnA7IcLyN+ByE6iMI50ix20i5Q1R6QpFCNyK7nqlzhtR0k5Fjx4T
+ OYV2R6GZCk6vyANzJRiWlm1uJ66eRTUVPPkQ8zb4m8RdbggAXwPdZwSpJnjaP6eeQ78lKpo52cj
+ bXpIsqvPnqNnYwVE2Qi07sEcQZA+r0tmWK3bxtvnMcIbUg==
+X-Received: by 2002:a05:690c:968b:b0:81e:45a6:bd52 with SMTP id
+ 00721157ae682-81ef2611184mr42838747b3.34.1784537983168; Mon, 20 Jul 2026
+ 01:59:43 -0700 (PDT)
+MIME-Version: 1.0
+References: <20260709095056.1803725-1-peter.maydell@linaro.org>
+ <20260709201237.46ba7f2d-72-amachhiw@linux.ibm.com>
+ <CAFEAcA8__tL8Dh5XwAK_GifA2boh1uMfL_eZgMTFvyMq15hLwA@mail.gmail.com>
+ <CAEuJdmrG_rRsivvfhEsVV+7y-q=NZ0L6hzxXPdgWGmX7OOLaHg@mail.gmail.com>
+In-Reply-To: <CAEuJdmrG_rRsivvfhEsVV+7y-q=NZ0L6hzxXPdgWGmX7OOLaHg@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 20 Jul 2026 09:59:31 +0100
+X-Gm-Features: AUfX_mwqKe2Go03Z75iNpP_HE16KAKy0LPbU1ZuXR6SvfVOQUT5lbOkTPDG4fug
+Message-ID: <CAFEAcA-uotw_dqhV9zkgu8MkuQiPx9kYON4KjWgrnKBTojVbtQ@mail.gmail.com>
+Subject: Re: [PATCH] target/ppc: Remove unused helper_lscbx()
+To: Harsh Prateek Bora <harsh.prateek.bora@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>, 
+ Glenn Miles <milesg@linux.ibm.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,128 +118,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On Mon, 20 Jul 2026 at 09:48, Harsh Prateek Bora
+<harsh.prateek.bora@gmail.com> wrote:
+>
+> Hi Peter,
+>
+> I am travelling till July end.
+> If it's urgent, Could you please take it via your next PR or I can take it via next PPC PR in August.
 
-> 2026=E5=B9=B47=E6=9C=8820=E6=97=A5 16:34=EF=BC=8CBibo Mao =
-<maobibo@loongson.cn> =E5=86=99=E9=81=93=EF=BC=9A
->=20
->=20
->=20
-> On 2026/7/16 =E4=B8=8A=E5=8D=884:48, Miao Wang via B4 Relay wrote:
->> From: Miao Wang <shankerwangmiao@gmail.com>
->> The CSR_ESTAT register of a CPU can be read and written by both the
->> CPU thread and other threads (e.g., the interrupt controller thread).
->> Currently the possible readers and writers of CSR_ESTAT are:
->> - Readers
->>   - tcg generated by trans_csrrd(, CSR_ESTAT)
->>   - loongarch_cpu_has_work()
->> - Writers
->>   - tcg generated by trans_csrxchg(, CSR_ESTAT)
->>   - helper_csrwr_estat()
->>   - helper_csrrd_msgir()
->>   - loongarch_cpu_set_irq()
->>   - loongarch_cpu_do_interrupt()
->>   - loongarch_cpu_exec_interrupt()
->> The access from the CPU thread is not synchronized with the access =
-from
->> other threads, which may lead to data races. The above readers and
->> writers shall all run on the corresponding CPU thread except for
->> loongarch_cpu_set_irq(). To fix this, the access to CSR_ESTAT in
->> loongarch_cpu_set_irq() is moved to the CPU thread by using
->> async_run_on_cpu().
->> The data race has been identified while running the test cases from
->> dracut, which is using QEMU to boot a LoongArch guest. By running the
->> tests repeatedly (about 30 times) in the following conditions, the
->> guest will hang in the middle of booting:
->> - Host architecture: LoongArch64 or Aarch64
->> - Guest kernel: 7.1.3+deb14-loong64
->> - Number of vCPUs: 1 or 2
->> - CPU Features: max, la464,msgint=3Doff,ptw=3Doff, or =
-la464,msgint=3Doff,ptw=3Don
->> - Accelerator: tcg
->> When the guest hangs, the guest kernel log shows various errors =
-related
->> to RCU stalls or other Soft Lockup or Hard Lockup issues. When =
-running
->> with 1 vCPU and the guest hangs, the guest kernel directly hangs =
-without
->> any messages and stucks at idle_exit.
->> With this patch, the guest can boot successfully without any hangs
->> during repeated runs of the test cases.
->> Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
->> ---
->> Changes in v2:
->> - Simplify the changes to move the access to CSR_ESTAT from the only
->>   unsynchronized loongarch_cpu_set_irq() to the CPU thread using
->>   async_run_on_cpu() to avoid the race condition.
->> - Link to v1: =
-https://lore.kernel.org/qemu-devel/20260714-loong-race-v1-1-54111549c95e@g=
-mail.com
->> ---
->>  target/loongarch/cpu.c | 27 +++++++++++++++++++--------
->>  1 file changed, 19 insertions(+), 8 deletions(-)
->> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
->> index =
-fb03424ffa8cd5e5d250531cc2a36fa789fc25a9..126c3ad276cc44311942542e086bcabe=
-41d91b63 100644
->> --- a/target/loongarch/cpu.c
->> +++ b/target/loongarch/cpu.c
->> @@ -57,12 +57,27 @@ static vaddr loongarch_cpu_get_pc(CPUState *cs)
->>  #ifndef CONFIG_USER_ONLY
->>  #include "hw/loongarch/virt.h"
->>  +static void do_set_cpu_estat(CPUState *cs, run_on_cpu_data data)
->> +{
->> +    CPULoongArchState *env =3D cpu_env(cs);
->> +    CPUSysState *sys =3D env_sys(env);
->> +
->> +    int irq =3D data.host_int;
->> +    int level =3D irq >=3D 0 ? 1 : 0;
->> +    irq =3D level ? irq : -irq;
->> +
->> +    sys->CSR_ESTAT =3D deposit64(sys->CSR_ESTAT, irq, 1, level !=3D =
-0);
->> +    if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
->> +        cpu_interrupt(cs, CPU_INTERRUPT_HARD);
->> +    } else {
->> +        cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
->> +    }
->> +}
->> +
->>  void loongarch_cpu_set_irq(void *opaque, int irq, int level)
->>  {
->>      LoongArchCPU *cpu =3D opaque;
->> -    CPULoongArchState *env =3D &cpu->env;
->>      CPUState *cs =3D CPU(cpu);
->> -    CPUSysState *sys =3D env_sys(env);
->>        if (irq < 0 || irq >=3D N_IRQS) {
->>          return;
->> @@ -71,12 +86,8 @@ void loongarch_cpu_set_irq(void *opaque, int irq, =
-int level)
->>      if (kvm_enabled()) {
->>          kvm_loongarch_set_interrupt(cpu, irq, level);
->>      } else if (tcg_enabled()) {
->> -        sys->CSR_ESTAT =3D deposit64(sys->CSR_ESTAT, irq, 1, level =
-!=3D 0);
->> -        if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
->> -            cpu_interrupt(cs, CPU_INTERRUPT_HARD);
->> -        } else {
->> -            cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
->> -        }
->> +        async_run_on_cpu(cs, do_set_cpu_estat,
->> +                         RUN_ON_CPU_HOST_INT(level ? irq : -irq));
-> This is a good method with async_run_on_cpu, there is one small issue =
-with irq =3D=3D 0 interrupt injection where -irq/irq are both 0.
+It's not super urgent, but I'm happy to pick it up via my tree
+as it's a pretty small safe change.
 
-Since according to Section 7.4.6. of Loongarch Reference Manual Vol1,
-bit [1:0] stands for the software interrupt SW1 and SW0, I expect that
-these two irqs should not be manipulated by hardware sources and thus
-the irq here should be larger than 2. Can you further explain under
-what condition the irq line 0 and 1 of a cpu core would be connected
-to external outputs.
-
-Cheers,
-
-Miao Wang
-
-
+thanks
+-- PMM
 
