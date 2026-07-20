@@ -4,104 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98D98C44515
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 08:23:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB451C4451B
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 08:26:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wljGv-0005vJ-5h; Mon, 20 Jul 2026 04:22:45 -0400
+	id 1wljK3-0006cM-8g; Mon, 20 Jul 2026 04:25:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wljGt-0005v3-CU
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:22:43 -0400
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wljGr-0001Ic-P0
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:22:43 -0400
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-6685483aad2so1058540d50.0
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 01:22:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784535760; cv=none;
- d=google.com; s=arc-20260327;
- b=dC6b9mpXFSG/ywPHRPYirWehSHv4oEs6QjMUrwg1CzWn2G9aR8jvw6TSeQdFVyLeaa
- 7QXAYt/wt+adm4w/7jAtWxL0nctZ380I4xx0MorW2PC6EYE9ma0xoNRFpGdHOQLOQyWl
- cPcxKVPy4y+Bbv9rLkml4oNskCzKirs7Uf/5f+vWRe7ZsRvOkz0G143fJzctiokPcYYt
- qGItBtGxYVNjD1b6l8N+484jH1YRWbF5fo+xnBe7xEZVYvLgKStJI2h2d4j+TjkvgLQ8
- kXhvZH4H/BJdAWWSDkEbfOaX6Sz2h73WFMHKyDV05jgK2bpnZxUxHJVB50VeePfGKBu6
- tx4w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=M9A6jkMVVolLkv/BO0tKGbA7QdhmCZZDNiQCYD7HWf4=;
- fh=irEcErfWMJfCUH+Q/yFHLDJyuj3eSefAvVjQyz37IN0=;
- b=o0LpfNt0WLdj2HIi0BbYsFSYwOdRKszmenWMwmIB/ooaykAS0QDbaFkVlZfHytUmEZ
- 9+A5BSZ1Dwp6nPZFKUleaZzpdERmyyFTcQnqHmKnEGM+2ttKvy2FtJuqt0H92nlE/W0q
- XOfIvYSxtmtGhX6idtwNE8sylzp+vCDGRm3KMV9cMX2X9bCyjwKVFLejE1wauhSZZe35
- AixH/b4wzCYZT9p86qWipz0hxLeWuq/I4b/Ym5jsQfAm8Btu8R7rraM+yJ81g/1nJbq1
- KTKcyKbgrDAfzbBk4CXDfSF4ZArna5ceeL2XGjVJtElJ03W5oV6nxiYw781O/wkUVrYk
- +Sbg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wljJe-0006Zk-VK
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:25:35 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wljJc-0001dq-BS
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:25:34 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66K6RoDH1263202
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 08:25:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ UQTmmlk3Ftp56dW3WFZ8bcsagWfeiqwA7V2wJpSIxpU=; b=RZ7afEKWl5wCeByS
+ G16daZdK1FAAMw2q64I/IcE4dU5G4voWbrqNf1NTVAI2UGPcrfwYHgqv26yVTvcG
+ GcJ3Rl90J2IpFbqRKPhzaUtqvhFhF4/gpHHhTEyGDrVyzT7z9DIAKOOLL5Q5CUtp
+ Uoc1E71OzHGFiQV6OH5r/CyQDpwYt2yt6wjgdSt1KF/I2DG7MtYcRg0nwtaGiG6d
+ 8WMTmfXceCSdXP4W3u9VkyLWK56CukFGbIL4MJ1mSeRlOwhIckOd6zJC22H8Ur32
+ aXFS53p7NL21QAqvKHRAEhUte9UVyyCnUz4ihZYeAKeJykO8A/uxlD35srWaxdgc
+ 13KQHg==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fg2nhn5jw-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 08:25:26 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-904ee4473a8so159543106d6.2
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 01:25:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784535760; x=1785140560; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=M9A6jkMVVolLkv/BO0tKGbA7QdhmCZZDNiQCYD7HWf4=;
- b=igY4sGMQ1W+bTjr6c/qdORxK2AuCGW7ZN+JGb+sUi3LXdg2TsuGjhJleJMrIhU6PUo
- +buRkVPVb0JGVu/AtlYAnS1WMgNnZdmpzTl2n5yuVZFBCOJWYYpySUNCCMkUY1S3TEL5
- odUsGwmT41AS0LK0GQ0bstn+LaeeD6rY2xfeCdZMjuZQPyb2lupyIdm1XyYoqxZKdgSY
- syw7mEjACe3z7x5Vms0k4zZnGHnKTy/KPusCeIlbtAne0p5KLEWcIE/2BEVoTGZfNOmv
- b3v/HM7q19++U9yfVoobLKvmA//gjB30S6+hXllqK5f3udK7m9CU9mPiaVgLM7iKAzKU
- EQ+Q==
+ d=oss.qualcomm.com; s=google; t=1784535925; x=1785140725; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=UQTmmlk3Ftp56dW3WFZ8bcsagWfeiqwA7V2wJpSIxpU=;
+ b=Kd3AqQpT7+RZaiqSUhc1wZT66gdLZhOPngyUnNFOfHSLBIxEuRjiLrwPmapaj2H54P
+ FSP9kl0A4G79dmOF34UxE3OC2P0+6C9RBgBi8RTAJTVad91tRm3UwFCTkHMnhjPlGrrW
+ rzxD7dPTN4+O6MDsxTGkG1s71l1elVj+MH33Ad6LkzS/bfQ/xynt65NF3LiXjXuIvyGA
+ jfOhvuZmMdLUIKFBcapXwKyg4JPTRf4GMgY1GEpGgFr7zcMwbfLLPGn27b4iB6PRQu8i
+ d5TMGet8lf79IIDLiR90EcE/p4iHHtkM2b8ijQMsvZx27fNCB9fzsShiewJtOxJSsi5x
+ ywUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784535760; x=1785140560;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=M9A6jkMVVolLkv/BO0tKGbA7QdhmCZZDNiQCYD7HWf4=;
- b=SuZSL67onGGQWPaNdpxMupCp31Il4R0vYM9kzsJpWFowWGIsZMFg/40Dlg7XGCHvof
- p2RLHSRgRAYX3MNU/dea8Qkh3BwERiA5TOs8IUxzVYNZaBJ8FKmYAFP73gOgG8seRXVu
- B1c5lVg5wB0f+CAbJKiioJY+4Jhshb5k6PEu/yqjsT+O3q3sffK8mgyWOKmiNuExELzU
- cy0Rxo6Vv/nPbRryu7buVoPn2jyO0aGufC+VeVfSQ0+UWowBMlt4ScmKXhD24fhtZc2X
- JnXwz8+ylXl4bwcseq5d0AS18cSHo0kPQ3Op5GHhwQyt6K8fOvo/dpkvjB9DdJxAjuDj
- Qs2w==
-X-Gm-Message-State: AOJu0YxoDLjQA+qDqoxVdOTDgP1+Vl8ifQrRAedpSYTkGORfqNmAVpPt
- oH9rnFK79SYOUmZeDGjbTATtmIsdKdCGCixLUAEP/xZU/k1pAb5oGxjKUWfLOSoFS80MjUoRbDI
- Ccu5HFP7Do9dAfiigW7LTT5v7/Ln7UVwF7bLCYenVog==
-X-Gm-Gg: AR+sD109QCsFoIkeqJE3sOYr/byEnDwHsMC506vB8PzYUSZmFABclknB0pnpPr1qZLm
- J0xM4a7HEhd5QQwdMZmoyog3Jxaj/Cw7DgnmKjl+Sk1LfTfkqSwrkr+Y55iMQAHt8v+mJ9/I3OQ
- Ur51YvoP7X8nfVJhRoOcGuQp14nNRI3xW5VBS3w0UCTS4ttFGmi5F5dXwg0GhelULseQsvs+Nyc
- kQvLg9gkc9jS7BZYS22+8GvJfvMx57tEkhUFLMrEYIglRPjzwsgpEPjggiZKyTLc+jjcohzjas8
- zIig4nb4mYB3zjZ0hrLoE1Dhg7NMHY2TMuVp3KCSCvYPgg==
-X-Received: by 2002:a05:690c:9a93:b0:80d:bb95:5a06 with SMTP id
- 00721157ae682-81ef273600amr41900147b3.5.1784535759878; Mon, 20 Jul 2026
- 01:22:39 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1784535925; x=1785140725;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=UQTmmlk3Ftp56dW3WFZ8bcsagWfeiqwA7V2wJpSIxpU=;
+ b=jFNOM5E4iC8LFs6ipGLgv0qbttxcRSEp+gMPc8Mn/UU88lr/BKFr9Ehoi0Qg3vpB0A
+ /eVz8ZQiH3o24pnCbi64U3Z6MYCzU6S6sJvBZu5YupxMCERcpIYnnIOcTrDt7NGpC5hZ
+ 8LiFIoXWDIj035WaTOQfqtwXjQpbN436O0tCWuZYVD0/zOHJUm7dKJ+LJtQkpEi6T1M2
+ hI+DVGsoJkujc8bRBapJxEQpR2xom+dNnfv84X6/p6gnScrdRsDeAuPSu+Xkks8xgx51
+ PAzfdOB5MH8qHZrRRl+fwOlg57Bg2KRn3GPXK6YMEvvmCAy7oQf+Maoyl7WCRuTHmz7E
+ hdMg==
+X-Gm-Message-State: AOJu0Yw0HsfgHRwAhwpitdabdoKtnEUvxgMNFTsEKMQ6mTToJPkQF4nx
+ mGAz41SG8eNO4AdvDt6AF5QJiRtJ8IbZNBerLNZCWehXtGzaxRU87W4Gdc4Xoq422BqS/YdZvsn
+ zJT+cM24y03vl+yAmxIqEd65mH7vmOctQiCobIz9abG77EoDkSwXrL2K3mA==
+X-Gm-Gg: AfdE7cmlM4OvQafbZCoHnjZ5yX1zRrhl9PGzjap/u76Ybq5xlfdhDHEtvZQIHu2dsDd
+ WquwcNIw3Q+uFe7iRVNLecHnM6BnvZMm1xsIBb0VHcQHlrnyc75AsoF3hj/pU4Hh7uWhg+PM/RS
+ DQXQN/wN2XhBetC0Hwl3bOo4LX7c3xOL9bQXDDN+ENtxpgampoyq8LCNAHSnGqKUmCyIc6bVZgH
+ yvN2dBqTTMTEGZmCBDYp9IDEodk4fM9ulG+2B3DLX63Xr2z6tOE0ZIl7EhAEjaOzIsHdojGTW+w
+ rUi7D447Cg/aaFBxTEck+JQVD6OeMmArw9BlTRmzwxyBSkVYhs09wXnC9BmPE2pBkY77t0+YFDU
+ FYPfcxebg3x0NOcOKqNfy5szMbqftWbKl/I9VMNKkQEBuaewCL1I=
+X-Received: by 2002:ac8:5ac1:0:b0:51b:fc54:c23c with SMTP id
+ d75a77b69052e-5213e67a3c3mr119006681cf.61.1784535925483; 
+ Mon, 20 Jul 2026 01:25:25 -0700 (PDT)
+X-Received: by 2002:ac8:5ac1:0:b0:51b:fc54:c23c with SMTP id
+ d75a77b69052e-5213e67a3c3mr119006431cf.61.1784535925104; 
+ Mon, 20 Jul 2026 01:25:25 -0700 (PDT)
+Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f63e52aa4sm28555684f8f.10.2026.07.20.01.25.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 Jul 2026 01:25:24 -0700 (PDT)
+Message-ID: <45c9ab4c-3f47-44a0-8f48-bad329c9c1cd@oss.qualcomm.com>
+Date: Mon, 20 Jul 2026 10:25:23 +0200
 MIME-Version: 1.0
-References: <20260719152318.69501-1-matthew@pq.io>
- <20260719152318.69501-3-matthew@pq.io>
-In-Reply-To: <20260719152318.69501-3-matthew@pq.io>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 20 Jul 2026 09:22:28 +0100
-X-Gm-Features: AUfX_mwGf65FjEX05iB-5HXxEQZ8mfnEaP4ePX9p9ffPeDeK_uWqh3EbPEWrhTU
-Message-ID: <CAFEAcA9Mqtk65y9jJCWZgmRUMwgV+Sz7Y=R=Pp5R5huNj8cLjw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] hw/usb/dev-hid: add apple-mighty-mouse
-To: Matthew Jackson <matthew@pq.io>
-Cc: qemu-devel@nongnu.org, kraxel@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] riscv/virt: Add optional UART1
+Content-Language: en-US
+To: Yanfeng Liu <yfliu2008@qq.com>, qemu-riscv@nongnu.org
+Cc: qemu-devel@nongnu.org, alistair.francis@wdc.com,
+ pierrick.bouvier@oss.qualcomm.com, sunilvl@ventanamicro.com,
+ palmer@dabbelt.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu.zevorn@gmail.com
+References: <tencent_4EEBFC805F3E59863BEDC38094EF5A109206@qq.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <tencent_4EEBFC805F3E59863BEDC38094EF5A109206@qq.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=Le0MLDfi c=1 sm=1 tr=0 ts=6a5ddb76 cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=dZbOZ2KzAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22
+X-Proofpoint-GUID: nKhG0DVK-YX4g0_xBcfxQyCPcOZrYiB4
+X-Proofpoint-ORIG-GUID: nKhG0DVK-YX4g0_xBcfxQyCPcOZrYiB4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDA5MiBTYWx0ZWRfX+/SsLvjLedSk
+ riE5QiJ4nBoTDoNBeNyDgOLkTKeorLXy2vgJnY/EXTiExwGHiJQ8WPhbobud/qjStrVyAqY0i/V
+ b4RApxOPpcw4tl/z4nM+Vf6qCAuhAmqNfQBskqCn7+ijjHak53U4s1b9eA81oVm0sRwTav7VHp3
+ 8Kkvx6eyU7MNl4JUQuVYx+YVjZTP9JbDqZ9lSFrOex3znDDxyZPTauIstyC21tugHJdMpjUyNCz
+ po6g5vtjs2CqG0wBiUpiJmnnGScIloSUVR3niOk4jPwLyXLLqFlddPabIMN3KzzU06riR80KdcO
+ p3RJoVhI9q6VSegDStDMRDJfvL2HpBVPSoAX9hXhIlkaT8tt3RM7nIVeGLo7IKQ5frpNtOsvANu
+ M2IaFEoA14+ovY5sMdPMI0KkqPmZjA/LLiz2EfYxLISWaNpYhU/5f+01eDxJAQGl0cOSqeJeNL3
+ UIUCqNQvD9UGp5Q20fQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDA5MiBTYWx0ZWRfX1CqWEUtuxuhJ
+ AMu0IKK5MsxkBeD3HIPjdZJLxHpdTppqjC6YgaQibr3FxKKvsHuVkRcCKhgXDzFm7qX4GZdkbWT
+ szG83BBybGj16ElVKO7L7PGqmWRvrMw=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-20_01,2026-07-17_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 lowpriorityscore=0 clxscore=1015 adultscore=0 phishscore=0
+ bulkscore=0 impostorscore=0 priorityscore=1501 malwarescore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200092
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,63 +155,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 19 Jul 2026 at 16:24, Matthew Jackson <matthew@pq.io> wrote:
+On 18/7/26 04:16, Yanfeng Liu wrote:
+> This adds optional UART1 to RiscV virt board if required at
+> runtime to simplify multicore development.
+> 
+> Note that UART0 remains default serial_hd(0) and it is:
+> 
+> - the lowest address UART
+> - first serial in DTB
+> - behind /aliases/serial0 in DTB
+> - the /chosen/stdout-path in DTB
+> 
+> Note that UART1 is placed at different page from UART0 to
+> support page level isolation.
+> 
+> Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
+> ---
+>   docs/system/riscv/virt.rst |  5 ++++-
+>   hw/riscv/virt-acpi-build.c | 12 ++++++++----
+>   hw/riscv/virt.c            | 40 ++++++++++++++++++++++++++++----------
+>   include/hw/riscv/virt.h    |  3 +++
+>   4 files changed, 45 insertions(+), 15 deletions(-)
 
-> +
-> +/*
-> + * apple-mighty-mouse (USB type name; legacy alias `apple-magic-tablet`)
-> + * --------------------------------------------------------------------
-> + *
-> + * Internal symbols carry the historic `amt` / `apple_magic_tablet` /
-> + * `USBAppleMagicTabletState` prefixes =E2=80=94 kept to minimize diff c=
-hurn
-> + * since this file's user-facing identity flipped during the 2026-05-09
-> + * fresh-eyes rewrite (see header below). Only the `-device` string and
-> + * vmstate name are user-visible and were renamed.
-> + */
-
-For QEMU upstream this is a fresh new piece of code and we
-don't care about its development history -- we would rather
-have it be consistent.
-
-> +/*
-> + * apple-mighty-mouse device =E2=80=94 FRESH-EYES REWRITE 2026-05-09.
-> + *
-> + * Goal: macOS sees a USB HID mouse from Apple that "just works" for cur=
-sor
-> + * motion. Not Magic Trackpad multitouch =E2=80=94 that path needs deep =
-RE we don't
-> + * have ground-truth wire bytes for. Instead, present as **Apple Mighty
-> + * Mouse (PID 0x0304)** =E2=80=94 Apple's wired ball mouse. macOS' gener=
-ic
-> + * AppleHIDMouseEventDriver / IOHIDPointing chain handles standard boot
-> + * mouse reports natively; cursor motion works without any vendor-specif=
-ic
-> + * SET_REPORT / multitouch protocol.
-> + *
-> + * Why this works where Magic Trackpad emulation didn't:
-> + *   - Mighty Mouse PID 0x0304 does NOT match AppleMultitouchTrackpadHID
-> + *     EventDriver (which is the driver gating cursor on PID 0x0265).
-> + *   - Mighty Mouse uses standard USB HID boot mouse protocol (3-byte
-> + *     reports: button + dx + dy) =E2=80=94 no proprietary 1387-byte Rep=
-ort 0x44.
-> + *   - Single USB interface =E2=80=94 no SET_REPORT-gated multitouch ena=
-ble path.
-> + *   - bSubClass=3D1 bProto=3D2 (boot mouse) =E2=80=94 guaranteed-bindin=
-g driver match
-> + *     across every macOS version.
-> + *
-> + * Single interface, single IN endpoint, simple 3-byte boot-mouse report=
-s.
-> + */
-
-Reading this comment prompts me to check with you whether you have
-read our AI contribution policy, which at present is essentially
-a "no AI generated code or text in contributions" policy:
-
-https://www.qemu.org/docs/master/devel/code-provenance.html#use-of-ai-gener=
-ated-content
-
-thanks
--- PMM
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
