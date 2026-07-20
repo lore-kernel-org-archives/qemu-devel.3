@@ -4,133 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7435CC44515
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 22:28:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39C89C44515
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 23:11:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlwSY-00005r-AI; Mon, 20 Jul 2026 18:27:40 -0400
+	id 1wlx8E-0004UA-Ab; Mon, 20 Jul 2026 19:10:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wlwSL-00005C-NR
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 18:27:27 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wlx8C-0004TL-VS
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 19:10:41 -0400
+Received: from fout-b6-smtp.messagingengine.com ([202.12.124.149])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wlwSJ-0004lo-R8
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 18:27:25 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66KJTe0r3637646
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 22:27:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=qcppdkim1; bh=MAvFo3n6Gjs/ushR/NA6bwilDO4tfRrH4pI
- sAyNeYjA=; b=USdsCnW/ykFHJA60dqE0PaaMwlRICR2ULOR09fB3V1mtzXzhrxr
- 1rJCZkDMCSfzmdNyRUcjjJEIQvxtVhS4qonzJNZ8gUtBZpJJJhecrSMo2TdBae7e
- 16sKB7ZcOYFmVpneoJfVkGhcIu6syusbVMBev6VAn/T6FDcBFHnF0J5bB/ceIZBt
- kFcJhv9YfSzpgWOQ8CXnxWhqHkCCfKnDVOXoUpghXs43RBhgOzgH5KvHOqxyx3eh
- tq7pO4DNekz1bTJbBuACJRN0RBijoj7dCzYjGpUHipZkHir+Vy0RpLFU5LKPYHvs
- zUwGLrjOHIy5pt15EjSmGcMM9yuedz+oh6w==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhhgyu44e-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 22:27:22 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-ca6bd8a190cso14932963a12.0
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 15:27:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784586441; x=1785191241; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=MAvFo3n6Gjs/ushR/NA6bwilDO4tfRrH4pIsAyNeYjA=;
- b=ixhwCDvdpnLvVeKzNqbCgUQEhqI6B73r8B981pWiukDTa7WB/dPhgbxJf/m8bDkhRc
- LhkonEQ5SichoksqdTmlq/1zhn9mbWjIFVT0H0b5h6IQ/2Ywk/dfLQB/BThwZ/Ln/mBA
- 1HwyrdMky11nZzEuDkXPKNngZI+9cD0niv+JD5XuakueXpu3UFxqYov0Lh+G6w4BV8yx
- YWWGESrL9KSggQl8cWNAkrRTGUjJMeEhxX6UykNYtZk3u3O0j+tR8zWUFZMHsGfuVnVK
- GOMigBUHu1RgN/LMB8Z3knag7OEpnRTcDa6RIZ0FS2NQpm2/LGRARB8OXmDvZtysR/it
- HxXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784586441; x=1785191241;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=MAvFo3n6Gjs/ushR/NA6bwilDO4tfRrH4pIsAyNeYjA=;
- b=J0su2cL+OaEaLh652lSryPbDVnW3cLIZA0yh1a9hZpP9WATEQwD4jk2jSp+BdWhGYW
- 7/AaJRU34XJMFN1Kqv0+0oYjBet7/B1yRe+k667QMj/BMLvlzfg9jj/X02Uufpy24vdO
- cm4LSPxdZWQkz6v1GcHmU5r4MJblV0PFpBb/e7OsGt9Jlk0muRHjQKexwjep2o8WGjgg
- XYHlaAjAZiFr6kNdsVZgoyzM5OwjT8H66DSOqv05tujeTe+s/V7CpG+Kccp6p4h4+7RA
- /FFe0bQRf/Nh3Mt+4t7dQZ6/SZKuQ8xdbxNIQZnfPSpfbiAyUNaDiVYZK2Tbe085BzYe
- okJg==
-X-Gm-Message-State: AOJu0Yz/ZtcHQHTJ+dPMmY1KCDP3aYdQRR3LR5u/QA9d3U2FAMC8xRmj
- 1Zp+hzbE12rYZl9+ewPUlKI0pfk6SsJRalJ/4+cNQJLDmAq1XciIXdwpwzG5GF/CfoClnEEm1Ni
- 59rO5Jj6ICdyse7IMDzMfwnbfjmBioTmhPMu61ky6HDp4OI1aXDDts7dkpCewgB6OXQ==
-X-Gm-Gg: AfdE7clW8oXaXblmIcAAiLv51SLvyk+jccZnXZTrlkiQZd4LpJVCPdt0fiMqD0Fi11L
- R+IhTgaLw0sy25eI/zUsSoyNBBzhfKzi3KMFUTj1fC3h5+93tzq/y5uXPYoDsBo0aF7aZMC77aA
- 0dwwfGx44x2QsRGuT0zq94ZuYCIT6EmNUfySbjG8e5nd8CXbIK04gPQ5+LOg+MpLVvUDqJdXK6u
- p8eTJo8NTS+252zGdkGN71ssJwbiXCYuc2X7BnQJBTjhext/ApkjC3/IXVfWO1/om74RQO+bb5X
- ce4pQvA4SZBSkH3mFveUJI1c6ietN4Lvjs0MG5m8qPrD62IKJtBsxPeFaAdt5WNYI8SW6UrdqtV
- kULbHjqFkMsWDZhm9/Roha/dd11XF3Ic6uUfxaT6x3t7CO8VezilWK1dtMKWrT90E83l72p4=
-X-Received: by 2002:a05:6a20:cc0b:b0:3c3:9a7f:7307 with SMTP id
- adf61e73a8af0-3c3ad7ec489mr18341441637.24.1784586440985; 
- Mon, 20 Jul 2026 15:27:20 -0700 (PDT)
-X-Received: by 2002:a05:6a20:cc0b:b0:3c3:9a7f:7307 with SMTP id
- adf61e73a8af0-3c3ad7ec489mr18341418637.24.1784586440497; 
- Mon, 20 Jul 2026 15:27:20 -0700 (PDT)
-Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3142a210571sm41138795eec.31.2026.07.20.15.27.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Jul 2026 15:27:19 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH] docs: fix sphinx build failure
-Date: Mon, 20 Jul 2026 22:27:17 +0000
-Message-ID: <20260720222717.33078-1-pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wlx8A-0002OS-VD
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 19:10:40 -0400
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+ by mailfout.stl.internal (Postfix) with ESMTP id A9F0F1D000E1;
+ Mon, 20 Jul 2026 19:10:34 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-05.internal (MEProxy); Mon, 20 Jul 2026 19:10:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm1; t=1784589034;
+ x=1784675434; bh=KTaAJhWi7Q9Nk6wASCtu744XKidiR8U0DC0k8LyAb1E=; b=
+ Hu2aKyudPWNNDbY4oVsX8NUp5MHZBweNCDR7hkrjW1lGZMhQw+GzJl12TU/GXtYV
+ GEV3EoU+GG2egouIuwVZ8s9DNLu++QFfjKsTylGGqJzKCC0ixHlTZzYg4wTQd8TG
+ 2ANbEMNNvj3G8tgtiNk7G/btlcvOVleFlDjwm9NbtlQneiP6XN0rVRqskYzGLHZC
+ lU5+I1To8+t1X8cDkUI5nJzldEaDKnX+gnpQJl9GvaLdcryN6eprHS5914S5Xbcz
+ Yq2GxZQaLo3MwZtWFC7zV2I7ppjdxSdHQAickKBgdtHDS6/TfRPrf2o0nlbb3xpH
+ 2OCjXQbMDyaldsmW3h332g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1784589034; x=
+ 1784675434; bh=KTaAJhWi7Q9Nk6wASCtu744XKidiR8U0DC0k8LyAb1E=; b=X
+ 0R6iZou5tXR66F2c9WnRWzUwqUv6FOV488j+0T1kRNjUQI7CdF17ht2Ejj8PYbZY
+ y61y8pVUMWDlTCYYz60dO0mTOxRc/EVChu2pHcZroJu1i0cn4eG7HBK/O835dpII
+ 8H3EkgZdFEA7f0skgTYXDRPt7cn1ozcD+ArUlOkx5HbEcQW88LQaEA4PmNrvDl+3
+ bIxOkoeYnj8vTY9cYCOozPfAf3B9D5TQsdvY/hn1nknw5XA4fpvN9Hvn2mnxGGCz
+ CkWUQnawjF7cs+i21TK4ORsu19FPiLwT6NpjLWdPXzBNxi12q9NlWBLSkaLpDG2o
+ 91BfqB6s2WuOm9YYoDuug==
+X-ME-Sender: <xms:6apeagkjUrKVJ2C-co9LsJIzwvp36TZCVEQRyVUP3F5NUfZBhiP4ow>
+ <xme:6apeaky2S-C86xoze9Y9DiNi-kGvubw8wA5hJ8LFdtSuPe2NWzxjxeR8jFJwPHglj
+ pE0Ddy_dsfEc0oo5xw4h3ulBxTtoHhTT3QEPTLk3mhgHeZzxPmKfg>
+X-ME-Received: <xmr:6apeai4Wlf0qtChfh7-7Xl_oFVsJIfP_IFg3sFkYgJoUatD_xyskS2EcH40>
+X-ME-Proxy-Cause: dmFkZTE0FmQyjGWuj5X1bj6AfZ51WYSRjUzVtmN0JYqFINX2lfF96p8DOnBcjl6eVVvBHy
+ Hn7abI8zetQ6YvIc5DZJj5jCCCVadTun2QeafP90/U99+UjvpzC8daMlXobRLChO3uQv93
+ CoYUClxOwurrSTxU7eY1XH9nCGIoe/mv3t3loEirZ/yQMXOrMjSOMQLykxzvoJ81sQbXzq
+ sCBb/YZ+IuJGjz0NG0iw7RWxhaqD9DX8vly2/UIcauLmq+rmceYReEYI7+gEHx7CTUywUu
+ fpupq2KLuEuTJqI1+noGNEoC4rUlBZSfoCsS0I/wjJH2A1Ep2j4DuvymjdbAhzr5AedvA+
+ wd8eH/X+d85/Eu2pOOTqQLoDuZGTg4estNkf0UntNiAGhK0O/+YWEHiF2unhP23ZJtbiG5
+ krfDbj1WLmXc+J8gB4o+dvOIoGJLRls1W50CTfzOM9icz7rmJKfurLt1NyAL+FP5BdSfMQ
+ bVgtAs7f8Mh0wPOGmyODKsGdP7aeXgYxfXGVOAsZUOy9YYQQ2WMZx/CwwZ7/RYiMK8UWoR
+ II9p6QlWZzn3328fWEgyTZN2NsL85B1mB4YtNuLKGTrGHlGtiL3s4fFJuF5JmEyB6qn0XA
+ KUxGTL08xp2I0yvYxORnyi25eUcp7vwacoArDc2CYLNJ+7gr3ULCtqwTCn7Q
+X-ME-Proxy: <xmx:6apeasV7cVJUjMIWeceLZoUIguNGCbW8oDks0tEnjwaTobLbDk4EVw>
+ <xmx:6apeaiKtJ8hOzpIjJFsLJn-cjwNvj4EaoyRc6iyNxb8iGvlY9CZ56A>
+ <xmx:6apeamsqlW0axGKzS765LWwhZI7Z589BIoleT205QLCOhTEG8rLKRQ>
+ <xmx:6apeanJq6QT-PpBLruVxilIR3Xk_eN5j6JvTCRQkh0LO1KpvFwPbCw>
+ <xmx:6qpearrOCvYD97ZvyZPkN9Ov8PQmLHDcXshwi0_vYZorZHWnMgmuuUcj>
+Feedback-ID: i03f14258:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 20 Jul 2026 19:10:32 -0400 (EDT)
+Date: Mon, 20 Jul 2026 17:10:31 -0600
+From: Alex Williamson <alex@shazbot.org>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, mjt@tls.msk.ru, "Daniel P. =?UTF-8?B?QmVycmFu?=
+ =?UTF-8?B?Z8Op?=" <berrange@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>,
+ Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@mailo.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau <marcandre.lureau@redhat.com>,
+ alex@shazbot.org
+Subject: Re: [PATCH 0/2] build: fix sparc64 host
+Message-ID: <20260720171031.259f590e@shazbot.org>
+In-Reply-To: <20260720221715.27108-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20260720221715.27108-1-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDI0NCBTYWx0ZWRfX5NRzbym13QUq
- 1BoBEOli7NUcavEADwa1Mp1DfSrn1wQR25LZLLUcULvD8MPawT3Cz2GbcHvXy4HS/1J1ZFm5OkF
- zFCg82VHn/KqcAbGibWuVEDdfCELy8k=
-X-Authority-Analysis: v=2.4 cv=LK9WhpW9 c=1 sm=1 tr=0 ts=6a5ea0ca cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=NEAV23lmAAAA:8
- a=EUspDBNiAAAA:8 a=ImoT4asuE-UzBlIn8mMA:9 a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-ORIG-GUID: Xa9ndFAuECxRPpfbvk49sMIrnvAFXqOL
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDI0NCBTYWx0ZWRfX4ZFfpVAE+0yB
- rpnQRSAFKgEUMts/IKq+PVYq8r8aFfTzjZluXpHGOnqJ6eq9T2tFMvPx2RbTlwsA2i0fpucm5N0
- tfPUmpqPxgwilAWWaEoV02EctVOx9+JOyhyAnH7SdouMlxlhjWYqtUaXeZMM0DyGiDUNvMvrzbj
- Kb/1GFY/WdNRvVUr7cObsg3ccxtPh/yJpIQJu7e7GKPc1mUzMBE1r56FsYMrZ0C1flHvZL5pzjx
- 4/2PMXDO1mQpJWVUMqqAT1Ve0WAb83WmOA0ttQSRd1VfP2Za4h/LCFuWrlahIDBFCOEyTaUdHvm
- MDJKlxFEKfGp30vae8i/LD9aadlzgudSIFKymxbAAqnFRkKqoRQ3Zm6N0UoPDSjyukHmfidn72J
- 0fD/+M/5t27mF8RcP7grz1DJCNb3aVNjziuDeYnsDxtgnRHLGER3hVVYSE4fJStk4w7PQ5J8Bug
- Ch78otzUsCSfa2TjILQ==
-X-Proofpoint-GUID: Xa9ndFAuECxRPpfbvk49sMIrnvAFXqOL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-20_05,2026-07-20_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 phishscore=0 clxscore=1015 malwarescore=0
- suspectscore=0 impostorscore=0 lowpriorityscore=0 spamscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200244
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=202.12.124.149; envelope-from=alex@shazbot.org;
+ helo=fout-b6-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -147,44 +110,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We recently started to have those failures appearing when building
-documentation. It's hard to identify if it comes from a python, sphinx
-or sphinx extension, but it blocks us.
+On Mon, 20 Jul 2026 22:17:13 +0000
+Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> wrote:
 
-Exception occurred:
-  File "/usr/lib/python3.13/multiprocessing/connection.py", line 399, in _recv
-    raise EOFError
-EOFError
-The full traceback has been saved in /tmp/sphinx-*.log, if you want to report the issue to the developers.
+> It was reported that build on sparc64 host is currently broken, due to inclusion
+> of asm/kvm.h, which is not present on this platform:
+> https://lore.kernel.org/qemu-devel/c3a7cd83-7666-40c5-9baa-ebe64edacab6@tls.msk.ru/
 
-This seems to be the generic error message for "something went wrong in
-sphinx multiprocess":
-- https://github.com/sphinx-doc/sphinx/issues/11449
-- https://github.com/sphinx-doc/sphinx/issues/14458
-- https://github.com/sphinx-doc/sphinx/issues/8973
+Isn't is sufficient just to remove the stale <linux/kvm.h> include?
 
-Solve the issue by simply going back to sequential builds. We didn't
-notice a huge speedup anyway.
+I don't know of a case that fails, platforms that support vfio might
+actually be a sub-set of those that support KVM, but being dependent on
+a KVM supported host has no technical basis.  KVM and VFIO are
+independent features where neither should have a hard dependency on the
+other.  Thanks,
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
----
- docs/meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Alex
 
-diff --git a/docs/meson.build b/docs/meson.build
-index a8d893681ec..4d8cc545fcc 100644
---- a/docs/meson.build
-+++ b/docs/meson.build
-@@ -4,7 +4,7 @@ sphinx_build = find_program(fs.parent(python.full_path()) / 'sphinx-build',
- # Check if tools are available to build documentation.
- build_docs = false
- if sphinx_build.found()
--  SPHINX_ARGS = ['env', 'CONFDIR=' + qemu_confdir, sphinx_build, '-q', '-j', 'auto']
-+  SPHINX_ARGS = ['env', 'CONFDIR=' + qemu_confdir, sphinx_build, '-q']
-   # If we're making warnings fatal, apply this to Sphinx runs as well
-   if get_option('werror')
-     SPHINX_ARGS += [ '-W', '-Dkerneldoc_werror=1' ]
--- 
-2.43.0
+> Problem is that we assumed in Kconfig that VFIO is available for all linux
+> hosts, which is wrong. It is limited to linux hosts having kvm support.
+> Since we already have a meson.build section identifying those hosts, just define
+> a new CONFIG_KVM_HOST in host configuration.
+> 
+> Pierrick Bouvier (2):
+>   meson.build: define CONFIG_KVM_HOST
+>   hw/vfio: restrict to kvm hosts
+> 
+>  Kconfig.host    | 3 +++
+>  hw/vfio/Kconfig | 8 ++++----
+>  meson.build     | 4 ++++
+>  3 files changed, 11 insertions(+), 4 deletions(-)
+> 
 
 
