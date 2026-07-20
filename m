@@ -4,155 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BFFDC44520
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 11:41:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1C40C44520
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 11:43:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlmMh-0002WN-8V; Mon, 20 Jul 2026 07:40:55 -0400
+	id 1wlmO4-0003MH-GF; Mon, 20 Jul 2026 07:42:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wlmMf-0002Vq-Ln
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 07:40:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wlmO2-0003Kp-GH
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 07:42:18 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wlmMd-0001Av-7M
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 07:40:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784547650;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=IstgpN6J15JMjZtfRaOyDhxq9Y0Y1bmwxtSGFea9aIw=;
- b=RY+HmGyGmPRwv8E3cjBRHwaix4e/Yzs+QueZLuYIdiNkIra03kRBMmt8l0OukbVfqLH6Tf
- jae3eEj10MYhvCIZLu+t+DI5V8TjIvd5xW1IfVhJWkwRrbS/pZff6O7iI/WTmeFyR1r245
- c89ixZS9MgnySse0ZZBLLN1ewHrASL0=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-524-bHoeBe-jMSuWcXSVTjr2uw-1; Mon, 20 Jul 2026 07:40:45 -0400
-X-MC-Unique: bHoeBe-jMSuWcXSVTjr2uw-1
-X-Mimecast-MFC-AGG-ID: bHoeBe-jMSuWcXSVTjr2uw_1784547644
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-472c330e555so4863029f8f.1
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 04:40:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wlmO0-0001fd-KA
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 07:42:18 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66KAvUD52542111
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 11:42:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 8mHGGwbfGIhPeGkBfLxh3tEn98cuUvWzMniTWdbDASs=; b=QCFwyZFclW7ygL10
+ dm28kMNmKanDa0jtSGuSi2Sae0MOZUdJtc4K0/uUcmWjfCEw84RlAdy0wtrYaW2a
+ wJgT8aTJz38k18ySBISWv1G+qQZUMHpVdKLy3CcQrWnzwZjKst/8tOe6yrokKjL2
+ MZzgVxYeuuvp27b+GAjS/yQ2j11MV4qJO3cDMM8h67iQp/OqFjxUg/OSCpKa63YY
+ YIPhn8cuKmO6JRL0ZYpiLRSwq8/2BXVBrXorb5Yp+7/gEMxJrgyGGKrQpK7PZ2E1
+ PlnLSLwhSuEM+KHP3GoFxBZL782cLND/OwgGMIhKbK7XGyNGSk4Yp5R/w13A1b+t
+ XYNR3g==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhfdch3se-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 11:42:14 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-51c1d7886cdso86977771cf.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 04:42:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784547644; x=1785152444; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=IstgpN6J15JMjZtfRaOyDhxq9Y0Y1bmwxtSGFea9aIw=;
- b=ssx5LYZ7AMPZGW52pCJxu/hr+o2tTmNkT8/lRO7Di22t65BoMXCy++FBcM0ljCJzCK
- gX/XQxjlgy9zpQjw7sEOwtsIm3wfg1BUep0jPjMhsPFE+NEVKc1SqV84TXdRZzyCnsWG
- N2VmOrOPfCZfteUhG+Pp62bdgDoRUofSfKNy3E3DgZWUbSVwkfDmRcUvga8xSzjXbDjM
- EwdT+UcoIUT4Ij4J4S+Xw1VEMhfz29aEDm0aL4Y+dkWqiCMym4M2NgbicIwFbU5KRaKi
- +3bO5rGl719YUvXuqFu/iXCyfdGIPgLyo8l2JJz4sWl+qvsUvkd2mIjP7RxIL3VAJFkV
- XAgA==
+ d=oss.qualcomm.com; s=google; t=1784547733; x=1785152533; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=8mHGGwbfGIhPeGkBfLxh3tEn98cuUvWzMniTWdbDASs=;
+ b=jFA+yhosNXvdg4WTg4EzpURPj3utjHNK8QbeYo667W4ethRYr7yUpzsAYA7UOhW5jJ
+ uYyhSNa4vgPYa7xlV3d+1IsDbSu6+EtfzCeLEFFX7uAFgTTdiZx1s+aj1LAiKFznAiyg
+ LdXTc0Ck4C+6nkZrv+zRyiJF4wNISTNBmsrtuQO0PAtgnP7XfVXS2W7qmSUhMH9hIgvW
+ pIzmMsOb4+lSmvZoOVIwhrAyEAYuldFhzYKabGXGuoUgYmmVE/4COzl4KLlFZj3jYcgZ
+ WP/costt4+TdiQ6rNQqP8cjU3teB6H0Q9/g85uW4EDeVQe/rrzUNJyoBacoriTuc27kP
+ ah+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784547644; x=1785152444;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1784547733; x=1785152533;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=IstgpN6J15JMjZtfRaOyDhxq9Y0Y1bmwxtSGFea9aIw=;
- b=NWaxW3UNUnvqBMMOMDQq/ExiK/kscR36U+xbe8oemn1LlGF9QK8YsJAk9OQgB8GM52
- WleKAKf0XgAUgowceJzh6834r26DwmjL4yEvqpOW4tYRlsUqCucqvT5VfiFp5ScKLj9a
- kAHZgiVqd0W19QnO08V/SjsqeKWOn+jmORjxcO7bVy5MGOw23ph03TfRQm5rxOsOzTLM
- 9n+4OiJjdIHpRZA7GU3R5klBMKY5HHOPyA7ewwxgpWvxA+8uqxyLIawNrczpDCfaoS5Z
- QAOVSDz/x2OIfLuyOuU0CVvWGy/5od9UW0IJ5l7x7+QYqJKX3z+YjICQJ4HR7DJLltaZ
- 7uDQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RruuZBo5Bhf3QY9y+5QY8Id1SQ7RtSW/kHcF+I64dtpl193Jwsw3nqvkyfMgb1Yy4ziItNQOYSHu6/w@nongnu.org
-X-Gm-Message-State: AOJu0YzZTj4COUuQZGTzqxHrB4ILnqc33v6n58pOK0XzehTdjDOH/0lz
- 2my3Jdcl1jak06PVw0Jzu3/J8cn1GsyrEzpSFfSmKCy23OllJq2j+WcdSWRnrKQS3sBzwknfeiP
- Rzp4MF3Hn5ygsRj7UmuDM4k39O3czlaFQYnjlDFC2t55Uk/1xRQPsnglF
-X-Gm-Gg: AR+sD13/KoDxwYhlwtXLrEPyYHc2BylVJbDpoj+4VnKCsWRB/Wdy+X/kACKn/AM7d67
- MDHo0J01AiYFytHIcIOLU1vfZ1nBRXgvCp+UGZZNPVs1C756qGfoixW9YDBEZQ4xEah/EsglXOg
- DGtXHRPVsVS143w5mm4CoGonmQk81aGerMM5Ei/U0R6PH19Z61sE33UgfD7fziAPBrOUAnW1IL/
- g3ppZ9qzEIitg1toUFNVosTfYcYYnMWlOJn+GA73z4drTUjZ8YzauZu2MmfjZMaGTi3LyAI6jsF
- xZwWeh9pQWW28FLU6737h9Pu+fuiYHflOuB/CgkS00jXea/kQT4Q7keQ+JS89Peh4/7pfXYUvpz
- x9KzmKwFTLLHdXyp2rxlfe2ncGKSEagV992xenng=
-X-Received: by 2002:a05:6000:2906:b0:47f:788c:4c8b with SMTP id
- ffacd0b85a97d-47f788c541bmr3838620f8f.23.1784547644333; 
- Mon, 20 Jul 2026 04:40:44 -0700 (PDT)
-X-Received: by 2002:a05:6000:2906:b0:47f:788c:4c8b with SMTP id
- ffacd0b85a97d-47f788c541bmr3838575f8f.23.1784547643827; 
- Mon, 20 Jul 2026 04:40:43 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
- ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f63e49469sm30383646f8f.7.2026.07.20.04.40.42
+ bh=8mHGGwbfGIhPeGkBfLxh3tEn98cuUvWzMniTWdbDASs=;
+ b=dN/RLlD+crv0rU9AJNMottxO68iagcPpt2IjXCcwSrhxFD7PE9/UFin0mWPlAXXmCw
+ 4/mM3MVFGpPQUV1vYH/0vYjv8z5jgPQUGdLB8/q8r1zvyacLmvqTL7KxgcPlsa1h+NLb
+ rWKfRNfWFIX27Gm8/ovZbAHNPZIUMBGtTIbSfBfDLeLhIBQQo9nOpglPZwMASOut0ATe
+ Ay8kER7Cj+A/DR51lUB6yvMq4cGgFazXLH5htZkOjeXwUP8TqpEx11j2ZuZbhUmbJ6dz
+ cLTDj0W4Cccm7nXoCwgnX3ZHhyYG3v3kNjawQLRiMevCDlXXHKNxviQ0shtL6/8r8GJ4
+ nR/Q==
+X-Gm-Message-State: AOJu0YwfQaW9e7m9DJUH+KehkraNGfZ/xev1AmkD4Rah5UfBOEFuKclL
+ /YD8Yl00B4ON/7XABzq4HC08t52nx/6DUKrrkF1IsSeLoLzqI1dP7PfQGwdOJbg8AMuKM4p7mTQ
+ dPOD4nZ1cuei2qY9YBrYgbxJlKemibngpoHkcdIfT5WLzkqgmkMy1gOq4qA==
+X-Gm-Gg: AfdE7ckhfN2aBHjuEW/yJ1PYjhhNcCT7KC1PjvcPTUzTPCsZ3qR1ioC0aqmP9E2euQ5
+ sTz93k26185Nrx16yrViPMFYy3fHZErCGgZMCAVdWjQyRJWqGlm55Lp1i8Ce+Z5uj6pw97ap9qK
+ f4CIaRH1VJgMicFReFudk/0FQsV1iZKLsDgBbcgSRhqJ8FKflgLv/j6c9j/eoq/39N2WNy+RVKI
+ AURlN+qj8JgmpwE5wmBUIoozVpwxINOjyG41/QdyaMgOuf47FUWQjuCvsSTTL/75t0UjL48W/sM
+ 1nF/1PhOtPw2A3ZYRYHqnzY3pq+24g7ZjayGbYlVxs0A3JtohV9CEIJ+/SXv4wlYcClGlf46ACy
+ EoiVWSw6I+KUmEl+huwLR98+EXZwKTyTmnDIlaH/WE8HsPM5c1is=
+X-Received: by 2002:ac8:5d49:0:b0:51a:1a44:101f with SMTP id
+ d75a77b69052e-5213aa6a5dcmr133938491cf.21.1784547733237; 
+ Mon, 20 Jul 2026 04:42:13 -0700 (PDT)
+X-Received: by 2002:ac8:5d49:0:b0:51a:1a44:101f with SMTP id
+ d75a77b69052e-5213aa6a5dcmr133938231cf.21.1784547732841; 
+ Mon, 20 Jul 2026 04:42:12 -0700 (PDT)
+Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49562709500sm41951155e9.14.2026.07.20.04.42.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Jul 2026 04:40:43 -0700 (PDT)
-Message-ID: <71a1d159-3bcc-4bcc-ad31-05d4641456b5@redhat.com>
-Date: Mon, 20 Jul 2026 13:40:42 +0200
+ Mon, 20 Jul 2026 04:42:11 -0700 (PDT)
+Message-ID: <56a25874-cb6f-4510-8946-bd60e11fde43@oss.qualcomm.com>
+Date: Mon, 20 Jul 2026 13:42:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] vfio-user: vfio_user_get_region_info: prevent
- excessive malloc
-To: Thanos Makatos <thanos.makatos@nutanix.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: John Levon <john.levon@nutanix.com>
-References: <20260720091718.2642-1-thanos.makatos@nutanix.com>
- <20260720091718.2642-5-thanos.makatos@nutanix.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260720091718.2642-5-thanos.makatos@nutanix.com>
+Subject: Re: [PATCH] hw/usb/xhci: clamp interval exponent to avoid UB shift in
+ xhci_init_epctx()
+Content-Language: en-US
+To: Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
+ Feifan Qian <bea1e@proton.me>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Gerd Hoffmann <kraxel@redhat.com>
+References: <sXJQOREScD4G6fYInirO2wbLtvZf6EK1yuTrP6U3GQBM5dIq7dhRnCm9uxSSiRRK0b4m7OEZRqEgjzHCTFoS0DruFvYUXh-UUXhkY0x786A=@proton.me>
+ <CAJ+F1CK=jxw1Nf8UYa6jx344HknSXyj5A4MaoUWr5xJSK-ohjg@mail.gmail.com>
+ <f8f6b689-eb5f-442b-ae69-f09c226ea9f2@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <f8f6b689-eb5f-442b-ae69-f09c226ea9f2@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: permerror client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: -WFkv1uyu5CtoNynJeMNrzwgGBNToB4v
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDEzMCBTYWx0ZWRfX/AusAfzdpkyL
+ iRxQYLPmreVkj1t43Apf414MkqaRIYfK+OgWC/BDv2qPuzsFq1hBScuw3rTOLlvbQ1jlG4bDTLL
+ FMfJ1dbUQKZxNRhHHZ9XRkpqpr9h5IMQscDj6Hl2QESl4jG8vNBTtAZKjclaoyGE1d8rPyQX/lO
+ Gez2KpGsTqW+9tz8KTJpDDDKmS9i6+AJzIq67+mT4bVHmP/fzQzgAPNwG43fzC/IYi0kDwtPWur
+ IauB5s9BkinnoAPR6u8e0+Jt8TkXh2kOH9LNetk9Olk1nCJiL+LrzhdDIK5DU6l1zms97digbx8
+ mYP+eyiSyvK5SSYwgo1ijYvYBp9rN9/F3ls1S6G1ke+9RopgAym7hgujiDpOIembT/iqHcMrLw7
+ W/wwtXUbnz6vOXWGo8rJttawNRDhsPMN61uzB3+GPc1pg7GWkC/Hwi9CEZ3mDfeuwXzUHyatNjN
+ Forl8grPOq8J28rjlhQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDEzMCBTYWx0ZWRfX+4vNYUarpE/6
+ cuMRf79mpQd7BLAHiC5BDgCtT8iezZZvz8TEYBml0qMZq5K7SBCRgSnCq+cYHEbb8InDu5DFjch
+ GcD3ws4yeWepGPMdgyQo4qb627U1fKU=
+X-Proofpoint-GUID: -WFkv1uyu5CtoNynJeMNrzwgGBNToB4v
+X-Authority-Analysis: v=2.4 cv=bv58wkai c=1 sm=1 tr=0 ts=6a5e0996 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=tTXoP5QR1v55suf8amIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-20_02,2026-07-20_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 bulkscore=0 priorityscore=1501 spamscore=0 malwarescore=0
+ phishscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200130
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,75 +157,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/20/26 11:17, Thanos Makatos wrote:
-> If the vfio-user server responds with a value larger than max_xfer_size
-> vfio_device_get_region_info() blindly uses it in the next loop in
-> g_realloc. An value larger than max_xfer_size is anyway rejected by the
-> check at the beginning of vfio_user_get_region_info(), however that only
-> happens _after_ the g_realloc, and if that value is excessively large it
-> can cause g_realloc to fail, so check it here.
+On 20/7/26 10:37, Thomas Huth wrote:
+> On 24/04/2026 16.54, Marc-André Lureau wrote:
+>> Hi
+>>
+>> On Fri, Apr 24, 2026 at 4:37 PM Feifan Qian <bea1e@proton.me> wrote:
+>>>
+>>> The xHCI endpoint context dword 0 bits 23:16 ("Interval") are written
+>>> by the guest and passed directly as the shift amount in:
+>>>
+>>>      epctx->interval = 1 << ((ctx[0] >> 16) & 0xff);
+>>>
+>>> The shift amount can be 0-255.  Shifting a 32-bit `int` left by >= 32
+>>> is undefined behaviour under C11 §6.5.7p4.  With UBSan
+>>> (halt_on_error=1) this causes QEMU to abort; with aggressive compiler
+>>> optimisations that assume UB is unreachable the result is
+>>> unpredictable.
+>>>
+>>> Clamp the exponent to [0, 31] with MIN() before the shift, and use
+>>> `1u` (unsigned) to avoid shifting a signed integer.  The xHCI
+>>> specification defines a maximum meaningful Interval value of 15 for
+>>> most endpoint types; clamping to 31 is the minimal safe fix that
+>>> preserves the full unsigned 32-bit range for any compliant value.
+>>
+>> I think we should clamp it to 15, to comply with the spec.
+>> Otherwise, the patch looks fine.
 > 
-> Signed-off-by: Thanos Makatos <thanos.makatos@nutanix.com>
-> ---
->   hw/vfio-user/device.c | 10 ++++++++++
->   1 file changed, 10 insertions(+)
+> Some endpoint types seem also to allow up to 18, so I'm going to pick up
+
+Which ones? I agree with Marc-André they are using illegal values.
+
+> this patch with 31 replaced by 18.
+
+If we don't want to report the illegal value as GUEST_ERROR, I'd
+just clamp to the spec and call it a day:
+
+     epctx->interval = 1u << extract32(ctx[0], 16, 4);
+
 > 
-> diff --git a/hw/vfio-user/device.c b/hw/vfio-user/device.c
-> index 1907a6653f..d7cf39dda7 100644
-> --- a/hw/vfio-user/device.c
-> +++ b/hw/vfio-user/device.c
-> @@ -171,6 +171,16 @@ static int vfio_user_get_region_info(VFIOUserProxy *proxy,
->           return -EINVAL;
->       }
->   
-> +    /*
-> +     * The server can respond with a larger argsz in the reply to request a
-> +     * larger buffer on the next iteration via vfio_device_get_region_info().
-> +     * Reject values that would trigger an oversized realloc.
-> +     */
-> +    if (msgp->argsz > proxy->max_xfer_size) {
-> +        error_printf("vfio_user_get_region_info reply argsz too large\n");
-> +        return -E2BIG;
-> +    }
-> +
->       memcpy(info, &msgp->argsz, info->argsz);
->   
->       /*
-
-I wonder if vfio_device_get_region_info() shouldn't also have
-extra protection. See below.
-
-Thanks,
-
-C.
-
-
---- a/hw/vfio/device.c
-+++ b/hw/vfio/device.c
-@@ -28,6 +28,12 @@
-  #include "migration/blocker.h"
-  #include "monitor/monitor.h"
-  #include "vfio-helpers.h"
-+
-+/*
-+ * Upper bound on region info argsz accepted on retry.
-+ */
-+#define VFIO_MAX_REGION_INFO_ARGSZ  (64 * 1024)
-
-  VFIODeviceList vfio_device_list =
-      QLIST_HEAD_INITIALIZER(vfio_device_list);
-@@ -236,6 +242,12 @@ retry:
-
-      if ((*info)->argsz > argsz) {
-          argsz = (*info)->argsz;
-+        if (argsz > VFIO_MAX_REGION_INFO_ARGSZ) {
-+            error_report("region %d argsz too large (0x%zx)", index, argsz);
-+            g_free(*info);
-+            *info = NULL;
-+            return -E2BIG;
-+        }
-          *info = g_realloc(*info, argsz);
-
-          if (fd != -1) {
+>   Thomas
+> 
+>>>
+>>> Reported-by: Feifan Qian <bea1e@proton.me>
+>>> Signed-off-by: Feifan Qian <bea1e@proton.me>
+>>> ---
+>>> hw/usb/hcd-xhci.c | 2 +-
+>>> 1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+>>> index 0000000000..0000000001 100644
+>>> --- a/hw/usb/hcd-xhci.c
+>>> +++ b/hw/usb/hcd-xhci.c
+>>> @@ -1119,8 +1119,8 @@ static void xhci_init_epctx(XHCIEPContext *epctx,
+>>>          xhci_ring_init(epctx->xhci, &epctx->ring, dequeue);
+>>>          epctx->ring.ccs = ctx[2] & 1;
+>>>      }
+>>>
+>>> -    epctx->interval = 1 << ((ctx[0] >> 16) & 0xff);
+>>> +    epctx->interval = 1u << MIN((ctx[0] >> 16) & 0xffu, 31u);
+>>> }
+>>>
+>>> static TRBCCode xhci_enable_ep(XHCIState *xhci, unsigned int slotid,
+>>> -- 
+>>> 2.43.0
+>>>
+>>
+>>
+> 
+> 
 
 
