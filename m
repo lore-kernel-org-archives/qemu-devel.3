@@ -4,98 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7FA0C44515
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 19:57:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ECCFC44529
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 19:58:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlu6W-0005D3-37; Mon, 20 Jul 2026 15:56:44 -0400
+	id 1wlu82-00067u-0q; Mon, 20 Jul 2026 15:58:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1wlu6G-00058s-U0
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 15:56:29 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1wlu6D-0004Uo-9u
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 15:56:28 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-385ea3ce80dso10636215a91.2
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 12:56:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wlu80-00066z-B1
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 15:58:16 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wlu7y-0004Zl-Gt
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 15:58:16 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66KJTcJP3663759
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 19:58:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ ZIX6eCg8w1tgZrSBV2l+LwmQZesdXYukL+3H017RICE=; b=fqgTZoKD7UOTKXVn
+ /Takr3w9aR9zmh7hJgNrBzRaeIddsw6YYUW50RB2F0XJekpAqd8WE+TrPZsABgv6
+ OOp6EH1YPkxsaX0yyAGtRcIKGjb01kqKvzsx9xZVatNmBlsdHrhIMqWOS65wMhKD
+ s1Z/a5AuWX1afaCo1X/sbjvenK69d/JTQRobmjIqPqqSVrHMHh22AKaNaqKCUMIa
+ G/COlXg3ypX+5OG5t1Sz1feqXAtyXS+HQgJmDlWF+6SVwVP04wFeM5rb9byTRHy/
+ IeVUJJLhANR6SjuFPCl2mcz/wtindM5kEbMRrQTRaRdotNWBPi4S12yR5+mY3gSF
+ tvdgvg==
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhqff0uyy-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 19:58:12 +0000 (GMT)
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-c9fe4c5eb39so7351458a12.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 12:58:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784577383; x=1785182183; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=qypg8MG/GYHcwh7ZOfCoQhkX/up+rVzHDtc/xpQiT9M=;
- b=wxbgm27/tawmPt+lWeixx/bj030itP5woSc/CbCrisrL951AxAuuqxLyWe7CMDpSAT
- 6xJzjflo26wdXfO5H8vZqefmzFvfzGGAVBW6k4pnedBFwfg1/TbjgtiS2QAVIy2KhwE/
- mMvrLa1rFRy6wyV0ud2qaPBcOtUc+8EZA03Txu8FyOzK18PAZkFMzAe75kyN01naLS++
- duecCpKBoIIcBqXHbZFLPyBivzXzWUUVnLfOAqVIfot4DHqLx0sPPbu+iCTieHajc93B
- 9DW1ScHwYfXo6ELt3zwHawJCALgUuWfSDQueUQxOp7tF6Lb3DSN2Rlf0f3gEK24cqc6+
- llfQ==
+ d=oss.qualcomm.com; s=google; t=1784577491; x=1785182291; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ZIX6eCg8w1tgZrSBV2l+LwmQZesdXYukL+3H017RICE=;
+ b=FWEVheBS1zZFWHZ3D528pvbgkegc+ZyhCkg2Qe6rBTVFulgcfOAA45a4puWMdKVnB6
+ wubKXcb8jdG/yknn9twrq2JlppL/9GtAQOcHpcewyASk+sBCd+CJNiDqLj5R1115kOJH
+ sN8r4o9Gb8Iia0pYb1mr8ZTLC6zTUDMyE2eKXffQI3L3G5ZVqYPelCakEXKLYoS2Q3V4
+ y2sPf/THlPHI5lem5f3KZqypPSq7HXrZqPGqFDiebOevzztNg1eBgDqeGBVI7EcBn3pN
+ xuuocWqneLi1+7b7C45OHEr4kpctOR+2TSTom/Givg+CxI5BujpGjJb4WwC9hsXXPz0x
+ ICzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784577383; x=1785182183;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=qypg8MG/GYHcwh7ZOfCoQhkX/up+rVzHDtc/xpQiT9M=;
- b=Om5/oD/FKw4/FCbdYJJ5NxvZoiwHe+QaI/aFYGx1GlaxQjZQYt69UVK84bPCfXK7V4
- t7Cr0KdnJsK0FkEqyKauSoYUV2wh/JK63y4MM0JpJntW/kEPykkdE//luYsTzaEt0hYO
- tstAeF1OJcJXp+17gFvwQZ4KLPMeMqTDT/dLScoNqiYftlQmiwizFSxKn+vePbhXnh42
- 4x06KJsMYFV8iewKy7Es+Fjk7jxB1vNcZ5O8YD1XDFXA5gh1Kl+V2x9SryO15ds1mE/N
- L1S4mkNHvfmw+QktHtmK/BYByyeQIhSfk3hy9rj6EzOr4bT32fXkYiujKYbIyIQbFQHZ
- IgWg==
+ d=1e100.net; s=20251104; t=1784577491; x=1785182291;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=ZIX6eCg8w1tgZrSBV2l+LwmQZesdXYukL+3H017RICE=;
+ b=h/E+PoW4xSYVWyYRb5NtJwuVCw+aFjGCM2wT1R0UcyoCINAxm3NQMZrEyQrdIsIFmV
+ FoYAlCDZ/5Wf1L6AjMgSynILpnTDErS+8OpwulAY8MdFmmla0C/yMKmNwNcFviwp0CY/
+ 2YPZY2o2S1ZjSMqUf5Syu++3PPWshfi8rFOKy+qSVyviMX5ufuXDMOAtQ4W6aYG4alX4
+ hWnxUTvADOfAED0/ycfCB7UfsDLfuen71wnxpBDoJ9RvSzvLGowKEntwOcXNrx/bU0rg
+ MGZ6ABRkBu2dN76Ry0G79cV/dMa6dd3PB3HD3LE2FcnTdtP3/BmfPF7hkMoMX2H72c1V
+ InFg==
 X-Forwarded-Encrypted: i=1;
- AHgh+RqthKG6dBZRMOG501r8d90DCP2gtx81V8wXv0KjU2dt04NVM90/i+Pq8XV7yO7RttbqSrtzX6ksQQJy@nongnu.org
-X-Gm-Message-State: AOJu0YzMZuAKv/mYm9KU0qoajawk0N3fVtd7zowVaMUCuYCu54SSzEuL
- 9c3d6FFq1Hqq9YlagzQtPbWjXvklVuIQRJ0ByiuyMLDJW2LY+7EY2PqHTuCJw1DexZw=
-X-Gm-Gg: AR+sD118ju5SY1raKyx9lb4+7jY8JW57nSd85XWK2JXrcG0wnH9m8FBvO7O7/DXAjnU
- QCS0QXcuLnlumqyFyn4GV4GOXNxYrlSrcmYsZT/O89c0wBoo3cYFKV6/UCCo0z8p/JGaRmOJMgv
- gKDh5SepIIyJKjOnIQvPW9Qo1w3zSehSFJBNkKhOcObgpsuzPxQm75IdLq7NXweB06iKHj7VyJV
- OZ8hUOReokuKt867eZvDQla4bCoYJM1bRHXSY4CuzOrOMkF2bkQ86Gecnttp42lMQvMmYcJD+b/
- j7G83tKp13TkxAXqfm1HUkHz8hp6u+5efnVg7MQmFHkUSqmGYSLVb3ec7HnLXbmbQycOe1uJFxv
- akKcEOuI+mgf3H3M+knASO1UHtMHi4YGZi6OCH9OlUA/WdWHVt+DLXoZ/eqogYSvTCE2vkNd14p
- GbJyl+
-X-Received: by 2002:a17:90b:1f88:b0:37f:9cdf:f0ac with SMTP id
- 98e67ed59e1d1-38e4b538984mr16982634a91.27.1784577383024; 
- Mon, 20 Jul 2026 12:56:23 -0700 (PDT)
-Received: from p14s ([2604:3d09:148c:c800:966a:e23:19e7:951a])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38e9237a26asm224764a91.14.2026.07.20.12.56.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Jul 2026 12:56:22 -0700 (PDT)
-Date: Mon, 20 Jul 2026 13:56:19 -0600
-From: Mathieu Poirier <mathieu.poirier@linaro.org>
-To: Gavin Shan <gshan@redhat.com>
-Cc: berrange@redhat.com, kchamart@redhat.com,
- pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
- mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
- eblake@redhat.com, armbru@redhat.com, jpb@kernel.org,
- lorenzo.pieralisi@linaro.org, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvm@vger.kernel.org
-Subject: Re: [RFC v1 10/25] hw/core/loader: Add a ROM loader notifier
-Message-ID: <al59Y0S_DLMbAESK@p14s>
-References: <20260707224306.1202330-1-mathieu.poirier@linaro.org>
- <20260707224306.1202330-11-mathieu.poirier@linaro.org>
- <47136344-8e15-498a-a4fb-0dbbb0c71861@redhat.com>
- <allIviFWgoKgDob1@p14s>
- <2ad36e97-63d7-4464-b909-2a28d496e887@redhat.com>
+ AHgh+Rpb9OVoQ9ZfGcs9Msqgemat1dshasnYFTbKAK+BTt0Ti3sYphoVQbzUkEJRnK/+EsD0vz0aoHQjlaC0@nongnu.org
+X-Gm-Message-State: AOJu0YyTIDfL8v/fIW/pNgCXF+MDDJDsgCy81kQT8lwVe7kYmVc2rTiD
+ fscNwin7eS+Y2JAu8q6NCTp30aqLBgHZN+Iwtf16EtZSdCOMWE3WEjLtcN1KoTdFcuSLmd9Kkii
+ 0d4FWs0ohW6Z8zQ0p3g0GCdsQqgd5aAw59RZPbmhfPm5Vit12ElfR/aILiA==
+X-Gm-Gg: AfdE7cnGkqxaqStafXPBoogPioU2VUlNyKLRdKh/J9J7fJEjL9M6Qf6JpMwQBsJRjMp
+ SJvHCgpBmJRTRgbkjtLN4qai2913NDMTMckEgRnWnUdOShE7QuiazfS3svFNy5sO/oJBDampUAr
+ V7CwAkac786YnPSk2P9m+vcnsVdLgYnADi9cx06JlTqNYlvVPERP4V+fCGVu0a1+y2Moq0cDLEE
+ KQLYYuFi4fyt8sFb+Tw5gJ9msuGOlS0IuFpYSUhFjg08xVRcbPZzRtiwUzvZLVm16f1Q5DtHaS7
+ 0GpLZ5mqdb0HgQ3rkWNGe9maYfIe2jnCv9J9JM0GHuKhsZjA4WLBc9r1krZw4qLoTi01sCknRtL
+ BGbHn7nOs0FRfaWwCxlKHEk6nl9lCZvpx1ZL+Ue/6zWP87x5YmC6yAglJNHRT95DG52E/
+X-Received: by 2002:a05:6a21:610f:b0:3c3:a529:1e44 with SMTP id
+ adf61e73a8af0-3c3ad9e7e92mr15955651637.57.1784577491430; 
+ Mon, 20 Jul 2026 12:58:11 -0700 (PDT)
+X-Received: by 2002:a05:6a21:610f:b0:3c3:a529:1e44 with SMTP id
+ adf61e73a8af0-3c3ad9e7e92mr15955613637.57.1784577490918; 
+ Mon, 20 Jul 2026 12:58:10 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3142a1bbaf6sm35565306eec.17.2026.07.20.12.58.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 Jul 2026 12:58:09 -0700 (PDT)
+Message-ID: <7bb06e89-ffc7-4d4c-9938-c48761b69e5d@oss.qualcomm.com>
+Date: Mon, 20 Jul 2026 12:58:08 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2ad36e97-63d7-4464-b909-2a28d496e887@redhat.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=mathieu.poirier@linaro.org; helo=mail-pj1-x102a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] contrib/plugins/dlcall: correct the syscall number
+ claim, note the data model
+To: Ziyang Zhang <functioner@sjtu.edu.cn>, qemu-devel <qemu-devel@nongnu.org>
+Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
+ Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Florian Hofhammer <florian.hofhammer@epfl.ch>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
+ Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
+References: <20260719074730.1520517-1-functioner@sjtu.edu.cn>
+ <20260719074730.1520517-2-functioner@sjtu.edu.cn>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260719074730.1520517-2-functioner@sjtu.edu.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDIxOCBTYWx0ZWRfX5Gwyz2aYIJZP
+ sBUjTMJvYnkK8X2BlCKqMgREyhQgJ84Blilddi7O/HM9YzpHKZjA3gqFFZIaFiLoCdGnhmGMLR0
+ 6bxcqI9Hhef+i8IEkvrxzV3tDLuue9o=
+X-Proofpoint-GUID: 4PSA7z0AAC7KxO4kksehpUon9o7F7mBY
+X-Authority-Analysis: v=2.4 cv=FJErAeos c=1 sm=1 tr=0 ts=6a5e7dd4 cx=c_pps
+ a=rz3CxIlbcmazkYymdCej/Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=Lx1EvxgrAAAA:8 a=EUspDBNiAAAA:8 a=io64dps14P2r0fVfe2UA:9 a=QEXdDO2ut3YA:10
+ a=bFCP_H2QrGi7Okbo017w:22 a=ZFi1QaP_tuf8dODdgmj-:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDIxOCBTYWx0ZWRfX/NV+Yj5BB6j0
+ nwOPcz7FTjDF6Nf5IAkI6UZzURJYR3GJSB3OEx3aepaFh0ODxmJpFq60wFTjHJJBcKq7ZoNKNMY
+ JIPbRQE0fDg6UZxkmQI1ySqRN4Dl+7sLZU74UU6Gwzh0yX3CQ5mUdgGcgAok0f1xr7kTZxooIWk
+ j6kt+7oXcTt3boeMjzrQG6OYBUCKalIbryIycZC6BrINMkbt116zLcgl6oaq6fo9JLgUIbFzbt5
+ OCMZXPrE9jerJPnzteMmS83vQg+aocSfqU+0BN06E6yrubbR2OJKerWhyGQC2h5+RB9/qi9NBEX
+ pe+FKRGTo4oxqYmXmPrvGYX+Hva+J8JL+31c/Pr9TNoUoPnfXuB94Udo642JYLBthFe0FnP3TgO
+ EE1CgOejayC5bJ2g8KHr+9a1ZaDQCXSZ2wkQWCfQL8oY6iNuwRYJ7UZZbBJY9B+bduuVOK9mwqg
+ Dso7gbOPP+dPHrGVR4w==
+X-Proofpoint-ORIG-GUID: 4PSA7z0AAC7KxO4kksehpUon9o7F7mBY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-20_05,2026-07-20_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 phishscore=0 spamscore=0 suspectscore=0 bulkscore=0
+ clxscore=1015 malwarescore=0 priorityscore=1501 adultscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200218
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,143 +162,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 20, 2026 at 04:47:53PM +1000, Gavin Shan wrote:
-> On 7/17/26 7:10 AM, Mathieu Poirier wrote:
-> > On Tue, Jul 14, 2026 at 08:52:43PM +1000, Gavin Shan wrote:
-> > > On 7/8/26 8:42 AM, Mathieu Poirier wrote:
-> > > > From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> > > > 
-> > > > Add a function to register a notifier that is invoked when ROMs get
-> > > > loaded into guest memory.
-> > > > 
-> > > > It will be used by Arm confidential guest support, in order to register
-> > > > all blobs loaded into memory with KVM, so that their content is moved
-> > > > into Realm state and measured into the initial VM state.
-> > > > 
-> > > > Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> > > > Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-> > > > ---
-> > > >    hw/core/loader.c         | 15 +++++++++++++++
-> > > >    include/hw/core/loader.h | 17 +++++++++++++++++
-> > > >    2 files changed, 32 insertions(+)
-> > > > 
-> > > > diff --git a/hw/core/loader.c b/hw/core/loader.c
-> > > > index 5cbfba0a86d2..b3d769bec5cb 100644
-> > > > --- a/hw/core/loader.c
-> > > > +++ b/hw/core/loader.c
-> > > > @@ -74,6 +74,8 @@
-> > > >    #endif
-> > > 
-> > > The (edk2) firmware for the realm guest can be specified by the legacy
-> > > '-drive if=pflash' or '-bios'. The memory region corresponding to the
-> > > firmware image specified by '-bios' is recorded by the newly added notifier
-> > > and populated to TF-RMM properly.
-> > > 
-> > > I don't see how the memory region corresponding to (edk2) firmware image
-> > > specified by '-drive if=pflash' is recorded and populated to TF-RMM
-> > > accordingly in this series. So I guess '-drive if=pflash' isn't supported
-> > > yet?
-> > 
-> > Please give '-drive if=pflash' a try and let me know how you fare.  Edk2 is not
-> > part of the bootstack I'm currently testing with but I know of configurations
-> > where it does work.
-> > 
-> > I'll add it to my list of things to do if it doesn't work, though I may not
-> > address it in this patchset.  We'll see how busy things get.
-> > 
+On 7/19/2026 12:47 AM, Ziyang Zhang wrote:
+> The comment claimed every Linux ABI keeps its syscall numbers well below the
+> minimum, and that the minimum is all N has to satisfy. Neither holds.
 > 
-> Ok, I don't think '-driver if=pflash' or the 'pflash0' property of the virt machine
-> aren't supported any more due to [RFC v1 21/25], where the 'pflash0' property has
-> been removed.
+> MIPS O32 bases its numbering at 4000, so the default 4096 is its getpriority.
+> Raising N does not rescue it either, because O32 answers numbers its table does
+> not define with ENOSYS before the filter runs, which leaves no number that is
+> both free and reachable on that ABI. arm32 bounds N from above too, with ENOSYS
+> or SIGILL past ARM_NR_BASE. Say all of this, so the number can be chosen with
+> the target in mind.
 > 
->   [RFC v1 21/25] hw/arm/virt: Use RAM instead of flash for confidential guest firmware
+> guest_base == 0 is not the only requirement either. Host pointers are written
+> back through the caller's out pointers, so the guest must match the host's
+> pointer width and endianness. Fold that into the existing warning.
 > 
-> - Tried to boot the realm guest with '-driver if=pflash' and I was told it's not supported.
+> Also assert the two out pointers that lacked it, and point at Lorelei for
+> argument marshalling, callbacks and variadic functions.
 > 
->   qemu-system-aarch64: -drive if=pflash,format=raw,unit=0,file=/mnt/edk2/Build/ArmVirtQemu-AARCH64/RELEASE_GCC5/FV/QEMU_EFI.fd,readonly=on: machine type   does not support if=pflash,bus=0,unit=0
+> Co-authored-by: Kailiang Xu <xukl2019@sjtu.edu.cn>
+> Co-authored-by: Mingyuan Xia <xiamy@ultrarisc.com>
+> Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
+> ---
+>  contrib/plugins/dlcall.c | 32 +++++++++++++++++++++++---------
+>  1 file changed, 23 insertions(+), 9 deletions(-)
 > 
-> - Tried to use 'pflash0' property, and I was told it's not supported either.
-> 
->   qemu-system-aarch64: Property 'virt-11.1-machine.pflash0' not found
-> 
-> So the only option to specify the firmware image is '-bios', which worked for me.
 
-Thanks for the follow-up.
-
-> 
-> Thanks,
-> Gavin
-> 
-> 
-> > > 
-> > > Note that I didn't give '-drive if=pflash' a try yet.
-> > > 
-> > > >    static int roms_loaded;
-> > > > +static NotifierList rom_loader_notifier =
-> > > > +    NOTIFIER_LIST_INITIALIZER(rom_loader_notifier);
-> > > >    /* return the size or -1 if error */
-> > > >    int64_t get_image_size(const char *filename, Error **errp)
-> > > > @@ -1201,6 +1203,11 @@ MemoryRegion *rom_add_blob(const char *name, const void *blob, size_t len,
-> > > >        return mr;
-> > > >    }
-> > > > +void rom_add_load_notifier(Notifier *notifier)
-> > > > +{
-> > > > +    notifier_list_add(&rom_loader_notifier, notifier);
-> > > > +}
-> > > > +
-> > > >    /* This function is specific for elf program because we don't need to allocate
-> > > >     * all the rom. We just allocate the first part and the rest is just zeros. This
-> > > >     * is why romsize and datasize are different. Also, this function takes its own
-> > > > @@ -1242,6 +1249,7 @@ ssize_t rom_add_option(const char *file, int32_t bootindex)
-> > > >    static void rom_reset(void *unused)
-> > > >    {
-> > > >        Rom *rom;
-> > > > +    RomLoaderNotifyData notify;
-> > > >        QTAILQ_FOREACH(rom, &roms, next) {
-> > > >            if (rom->fw_file) {
-> > > > @@ -1290,6 +1298,13 @@ static void rom_reset(void *unused)
-> > > >            address_space_flush_icache_range(rom->as, rom->addr, rom->datasize);
-> > > >            trace_loader_write_rom(rom->name, rom->addr, rom->datasize, rom->isrom);
-> > > > +
-> > > > +        notify = (RomLoaderNotifyData) {
-> > > > +            .addr = rom->addr,
-> > > > +            .len = rom->datasize,
-> > > > +            .as = rom->as,
-> > > > +        };
-> > > > +        notifier_list_notify(&rom_loader_notifier, &notify);
-> > > >        }
-> > > >    }
-> > > > diff --git a/include/hw/core/loader.h b/include/hw/core/loader.h
-> > > > index d9431e8a8d12..94cf6ad2e26b 100644
-> > > > --- a/include/hw/core/loader.h
-> > > > +++ b/include/hw/core/loader.h
-> > > > @@ -342,6 +342,23 @@ void *rom_ptr_for_as(AddressSpace *as, hwaddr addr, size_t size);
-> > > >    ssize_t rom_add_vga(const char *file);
-> > > >    ssize_t rom_add_option(const char *file, int32_t bootindex);
-> > > > +typedef struct RomLoaderNotifyData {
-> > > > +    /* Address of the blob in guest memory */
-> > > > +    hwaddr addr;
-> > > > +    /* Length of the blob */
-> > > > +    size_t len;
-> > > > +    /* Address space of the blob */
-> > > > +    AddressSpace *as;
-> > > > +} RomLoaderNotifyData;
-> > > > +
-> > > > +/**
-> > > > + * rom_add_load_notifier - Add a notifier for loaded images
-> > > > + *
-> > > > + * Add a notifier that will be invoked with a RomLoaderNotifyData structure for
-> > > > + * each blob loaded into guest memory, after the blob is loaded.
-> > > > + */
-> > > > +void rom_add_load_notifier(Notifier *notifier);
-> > > > +
-> > > >    /* This is the usual maximum in uboot, so if a uImage overflows this, it would
-> > > >     * overflow on real hardware too. */
-> > > >    #define UBOOT_MAX_DECOMPRESSED_BYTES (64 << 20)
-> > > 
-> > > Thanks,
-> > > Gavin
-> > > 
-> > 
-> 
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
