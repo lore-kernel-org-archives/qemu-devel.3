@@ -4,140 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DA69C4451B
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 08:41:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6D1EC44515
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 08:41:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wljYU-0005EM-KF; Mon, 20 Jul 2026 04:40:54 -0400
+	id 1wljZI-0006R2-G1; Mon, 20 Jul 2026 04:41:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wljYT-0005Dh-41
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:40:53 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wljYR-0003OE-KJ
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:40:52 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66K7YYU02044966
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 08:40:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- L0oNE6+duxQAcJ50aEgbhzeLujnpIgklrwRnZa1EXBo=; b=bU51+rtGtqoSp6bz
- elfFK9VfeCeLSEXFFtPoUXX6zNPE4+byfZ1V2yYyVCfzOJX5TyhkbGRTfGX94P4C
- La0V+j3/A+2/KA84hU0bbmtQo3gDFt8MFQVz6HDnQQ8HWST8FQGCjsUgOR1ZAI84
- 0LnKHHRyzPHAB9W8zu6haBd/BCcAPJTiWb2OQFLHlQIYIv35ruNa96Wv+gXjBZnm
- kz+klN9XLyYBdBZxnf6/Zh1s0o/pmZfO9I3/QM89kGk91IZGP01iQAFLnAh4uVlu
- wxdd2Z7ZnubXIsn3rHgTfGzZiuU2dN2beRaJIwN6AcuhVoFfL2qARZCC6Brm2o1c
- TQAxEw==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhfdcg7w7-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 08:40:44 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-51c1eb52e1fso78027651cf.0
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 01:40:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wljZG-0006BV-8l
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:41:42 -0400
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wljZE-0003SW-Cg
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:41:42 -0400
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-80814edb536so67453167b3.2
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 01:41:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784536899; cv=none;
+ d=google.com; s=arc-20260327;
+ b=NJBNNlBqbQklmrbOVOvwRgFl7JrgZ8ZIPmMmdu1j9PQ0UmHPgMosbgtMjSaw7wZUCA
+ Bz4r6QwyMZt9SmGqsID2rzc+BoXPRvGTjsh27nDmoPs2rd5iFz+y32eMvyigIEdUUxz2
+ /0XiiPxYLWXRBM7RBqHbqSRP/5Tz+II8CxrbrYtmoENkFBjkOgN/cF/TM3O48ZfgUmiT
+ 5JaG/CtrH65OAEHOftgAHVOY4hVXgWZQ7Sv6US+CddOWwzYnUAJAYtRpa+0TiN+LmpnB
+ 5kTf3RW8VREx+uJuq8H1Q0yEbSxpTtSo5A5Vr6QGQjrn8RXmM8PZaLph069Ijtrvzq/9
+ TuCA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=EMCFqIk1cvsrPQ6Nv8ZE2kq9WxwWNuFpSUFhPci6Jv0=;
+ fh=N98ljGDrl6SjWC3df2+h4NM0iI+rITWAtTHiuzLCNEE=;
+ b=BZMqUphELSidHmYXbfjCz0WBO5OsCtaJ1IuvMSCrF3skKN5o++8nSRrjq8IXbdm7A/
+ Rmm2qkcxTforfd3thRW9IbKeR6tYWWtA4PN7s2e55n+mvw3UAXbI5ACsGeYC4orul1nm
+ zQgzeCOwE0RnvzQKRe1vk6TSlzIQORW1lwL+afJYv5E9P/DLFJnRDa9ZqRDnyqx+Ijvs
+ a13+2iWGqgvRb+zuMZMlnSrueaDJ9FkYwClXZVbaq37JJ4g+H/7Zs2gJ0G/xKUR5cz+e
+ 2cSevLi5MMFfiLdXR8zJPz64L1z8xyx9nxrIzt2aoPTLzOpd2DGcUvx9f55v20Foq1CM
+ RGvQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784536843; x=1785141643; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=L0oNE6+duxQAcJ50aEgbhzeLujnpIgklrwRnZa1EXBo=;
- b=PfOD84NGCphWmpojdXrJrfkBCV34o00w8lp1bIC/hpecm2TYRdGjW4Mi0nO+u1zvCN
- XKqRLYO0tBvq+keZC/eYLSh6MnmHh6QbixbsDD/J7bodfJn7Ho39Luoe8CDqHZgX7v7b
- 8SYEdA1IviTzlvzFVvy8TQv5N1BnQgMKjtnbSAceRUdJBHaPm+Il6GQP3c49yR1Wcenc
- VHEVlgPFKnwKPqgUbS7rAEKXv2SeJCtbhaXnx/cS6IHH0JxGXhaHES/R8AFg82PgJAEH
- c8GGYmaYxYx3kvYRTTg8pnVvcgWHxoGmINOyZS98XpdR2Gt/EykjlPKyiBwWJwNBuP9Q
- snBQ==
+ d=linaro.org; s=google; t=1784536899; x=1785141699; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=EMCFqIk1cvsrPQ6Nv8ZE2kq9WxwWNuFpSUFhPci6Jv0=;
+ b=wRSAfxj78ANVzMwnwMXcLSqwEpknaGFZQGGUAg3fS9DXNULA6xHjKYykm+i8VT1MGd
+ oPbkAsSjwEPDtag8HcXP5ZEj6oZ3HRdLWoUgPCZ8DH3cI7K4XVUI5RrvdQljYQTkbCMO
+ 7U9gRTp+PNXx7T/Fnc4lXGB63fjAHXnowrOp0oK/HtuZvzSYc9qeaKcv8Z9fs8lJvXUW
+ HJX+gnDWPGXGKNigCb6VsQtwsRx1yKkMl4XSiVJwp3kem8gfuuqmXrTv5WWdbkbVqHfN
+ E17PfVvQ5XdE/k2X95RoVi2nVsG335tfPsIsJdAMPcpwfwoZxqMJdwfYCKYcoC+zLjcw
+ edkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784536843; x=1785141643;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=L0oNE6+duxQAcJ50aEgbhzeLujnpIgklrwRnZa1EXBo=;
- b=aBZMXMlg6sMRRLqBC5itTK7sbSye8HggUdtqRUuGnMz3XpkVvLMB23uMhJmjOhG/A9
- 6pclWCQ5djQI/FAYh3VtPfbgZNv5kE4BvflG7ed0qlK5KmnR26wZBugGsJ04IqjSpanF
- uEy3cfdV90aAmVky/X38ZeqiNT1erDDn6umS3Tq85b4F9/l8D4+M4+j8h9ZodIghEU0s
- inLO6gNFkgXRFK85lYcHaYUuRrY3PmBb6V6SXwIJbGQ8PeUvv2SshnjbYsbUnadp5rjd
- Bf2lKt3/8Nzz3IgIwwOcc4s2pwR/R+VShwY6B9k65CUKOu0xK3UDrs/6kUSEkd0lsdo3
- x3tQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpZe5v7oa+1pHVOSq0MfgwjgbgZ4VArDKnHXyCFD0th0VA6XLF6n3qDhcAXet+07/t8kzZ4q/VB+Nr0@nongnu.org
-X-Gm-Message-State: AOJu0YwxzQtLYT/BOfkSfX397Ht0QFpG3qxoAQndxmBlKoDAyv+xo777
- BTWQt6OgElV/j1OTO67qrto8Ln1SxmG36upaEfWpuyBhKTbrXjxN2hXnAt/EL8HJ/6Q3cGfGzR0
- GjZIr28+ocyjTNg81o00JR8z0lgl3YllXQqTOECGKEgHujOLmbSW12UUajRVeGhb46Q==
-X-Gm-Gg: AfdE7cm9v6ExfArgPQuzb0p6gsdncNG+eNo1elyPLJuJxru49z9jOSgPI8aL6uqJVWr
- wY/9wekkPBnO2tIOMG6YX+TUd4iMaaZSgW6LrIVuwz7D6f0h6sfe2Y0iCVT89FTY5l+BYnrFEJu
- UYoC5T4qoUhI/Ev8ATmLweCqEaEEep2VG3+74fC76XnmTtLvELt3INqYm7EtMbfRZyI4ETYqqVW
- brnfeHUkFymWCLczTPPT/XVa+vPG04NLVFjDbDTE5NbsOqKMv2Q/eKuGereYFZXgnxPDc4ecyyi
- LanL79hfvBJuENncg4POfVy4mRzeXG3TmdDZGyDLn5Idurb0bclHFwWRu3pdn50fwTu5IHs7ocQ
- +aSJnIGFkly/MslcUX5Jh4DCkKm6pMs6fITq2UkZi+klrnga0SDA=
-X-Received: by 2002:ac8:598c:0:b0:51b:e92f:ec5 with SMTP id
- d75a77b69052e-5213a385911mr137223101cf.3.1784536843524; 
- Mon, 20 Jul 2026 01:40:43 -0700 (PDT)
-X-Received: by 2002:ac8:598c:0:b0:51b:e92f:ec5 with SMTP id
- d75a77b69052e-5213a385911mr137222991cf.3.1784536843164; 
- Mon, 20 Jul 2026 01:40:43 -0700 (PDT)
-Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f63ed244asm26746564f8f.20.2026.07.20.01.40.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Jul 2026 01:40:42 -0700 (PDT)
-Message-ID: <17becc5a-233f-454c-8c4c-c89ab2beaee9@oss.qualcomm.com>
-Date: Mon, 20 Jul 2026 10:40:41 +0200
+ d=1e100.net; s=20251104; t=1784536899; x=1785141699;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=EMCFqIk1cvsrPQ6Nv8ZE2kq9WxwWNuFpSUFhPci6Jv0=;
+ b=ryVExeNXVcuvYxGWsUES0rj72FBif4qdQFWRevsPYskMEPTR7TTA6EFPQa+WLOlqwv
+ sO5U2277b3akSMe8+xQwiSxC5moKxXDam8FtIXBF4vwo/+beiCOQ9VG8bB2yeEY0o8ib
+ 9NrxUj1YAHfd+p5/GBgKWoiSysxCb0jiXbqOQkPFiQVbKOYg8ctG8yaRmTKmCrW3RxM5
+ BFhfYUXgBIhbLPlaqgLWtO9SGXyQ+RAz/x07+VaP75TUhTVUzlRsYIUavypk26Z/aup4
+ O6tpl8D3go73rJN9XUVG3qfoZXezF0Icp+fiamNHgay6zi4h6jP8l+w4X/7aH4hRU3E0
+ bsEQ==
+X-Gm-Message-State: AOJu0YzxskyswLVaPXNgG7pPsjTBnstfoa5SQ6YpDRUSpR8i42qDTNeu
+ 6z9tZ4UdZiuz/egkite6YK4Kfnj9r6XucobUxhSw6p1lcxu26BtZ3KjK9k1gubtypj+QRs38YhN
+ 2X3XrFqi83q7qXwBqx+G/0d2i4hAzsyJ+PaVmPIU/30zKvM9XPUjd
+X-Gm-Gg: AR+sD13MZ35c//GZWpUEWpdLRMKBIYlCoVoBm5HmVzdaloSPD4BDnVbFUtQ/orEZTjT
+ ZKhOWnMZTnI0yXrFB30UNDG2RZ6AJ8DE6DZ3f74J/iWCPGD7B0j8VuWTgeWeUU1ZpFtTlMhJ5nH
+ 0jR+WVBoiQLZSD0eOrM8LqIjdQQnLY1q0a7Rvf/MwuHmysSQIuiUZV14uhVSkhJP3G+k85ulW19
+ ++hpzl1qvDWZgSn25dlLpI37p9tmpg9wJduyFe5TNbDzxdeWMtJDM20s6tTAY+wLQ/wFsyTEWP/
+ dU997/5/1WPvkhWdPXnTGfYL+jitViKjkeapjANUtEPZaw==
+X-Received: by 2002:a05:690c:3709:b0:81d:26f9:bc85 with SMTP id
+ 00721157ae682-81ef25e1756mr41486607b3.45.1784536899195; Mon, 20 Jul 2026
+ 01:41:39 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/17] target/arm: Expand dczid_bs in DisasContext
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-References: <20260717232306.378988-1-richard.henderson@linaro.org>
- <20260717232306.378988-13-richard.henderson@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260717232306.378988-13-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: wtjQzqCWJh_mXtt6EqsHkKwLLLpaUmK6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDA5NSBTYWx0ZWRfX6zwgw4Oq+4hy
- 9DSpv39ugPyEkYbw7DoZAr6ZpknWDsgBNkuBK4Qb1Olo7ErY+r143A+pVl8DXCl5PkxfZJeLPnU
- jbr/WqdDb17b9XcnuC0MTwW6Pk20KY2kV476R+kYcNT7OyrD+dI1+WnMkYLdrhTcPgmUdz3plkF
- 6xzIw+gUzDO1vGC56Q4ttnHTWjKRKC1eNG5DxyGYHQ41/c44xff/gUOD4wskW/7TM96japf6Udr
- 3PoudsfH+M0ocgW53lPpoRWgW7maX0KEdG1rHlvgX38mmlIUkifrT2zUpA3ZiUw7tLhhHdtkA5y
- xiCuNeZJLD/JWyo0RgrfXut69N+SfhzxMyKPri8O4W4Unv54XWT5dCH3WYwjibTU1xX1i4bzt0I
- VJ97BXkRWwuOmGX91riABaY+D24/AM4oNycyf7WfiKGSMxVkZ4ZuBnA8g7q9clpSBDdJCl1c3TQ
- 6/nKAd+NKmnjI6jysYw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDA5NSBTYWx0ZWRfXzHustAxsBPK/
- S028+4h64pl4IjXeK4cdgyiOBCmXENTcFLoADnpSfWW3zA937DNX8Krbcts8KlaTbseX59BlMRo
- 0JjHZdXxofaO51Qr6ynFnvahmJO/Gpc=
-X-Proofpoint-GUID: wtjQzqCWJh_mXtt6EqsHkKwLLLpaUmK6
-X-Authority-Analysis: v=2.4 cv=bv58wkai c=1 sm=1 tr=0 ts=6a5ddf0c cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-20_01,2026-07-17_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 priorityscore=1501 spamscore=0 malwarescore=0
- phishscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200095
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260706162704.787495-1-peter.maydell@linaro.org>
+In-Reply-To: <20260706162704.787495-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 20 Jul 2026 09:41:26 +0100
+X-Gm-Features: AUfX_myPX00TaItZgy2Q7JKw_4KBxQpxvAc2mHEKk2cUYXFtAFhMiv9RGfudYpg
+Message-ID: <CAFEAcA_AE+D=3TJ26s7zhvVN_rhak13EJU1Yw-iaahHT83p6Fg@mail.gmail.com>
+Subject: Re: [PATCH] hw/net/xilinx_axienet: Don't write checksums off end of
+ packet
+To: qemu-devel@nongnu.org
+Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>, 
+ Jason Wang <jasowangio@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -154,14 +116,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/7/26 01:22, Richard Henderson wrote:
-> Store the true blocksize, not the encoding.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/arm/tcg/translate.h     | 4 ++--
->   target/arm/tcg/translate-a64.c | 5 ++---
->   2 files changed, 4 insertions(+), 5 deletions(-)
+Ping for review, please?
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+thanks
+-- PMM
+
+On Mon, 6 Jul 2026 at 17:27, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> The xilinx_axienet device has ethernet checksum offloading, with a
+> mode where the guest provides the offsets within the packet where
+> the data to be checksummed starts, and where the final checksum
+> should be written into the packet.
+>
+> We don't sanity check the TX_CSINSERT offset before writing the
+> checksum data into it, which means the guest can pass us a value that
+> is larger than the packet itself and cause us to write the checksum
+> off the end of the buffer.  We also don't explicitly check the
+> TX_CSBEGIN offset; this doesn't currently cause any problems because
+> we will pass a negative length to net_checksum_add() which does
+> nothing, but it's a potential trap for the future if the type
+> used for the length gets changed to be unsigned.
+>
+> Explicitly check the offsets.  The datasheet doesn't say what happens
+> if the guest misprograms this, so we choose to log an error and send
+> the packet as-is.
+>
+> Cc: qemu-stable@nongnu.org
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3599
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>  hw/net/xilinx_axienet.c | 29 ++++++++++++++++++-----------
+>  1 file changed, 18 insertions(+), 11 deletions(-)
+>
+> diff --git a/hw/net/xilinx_axienet.c b/hw/net/xilinx_axienet.c
+> index 970732b162..a44dda5385 100644
+> --- a/hw/net/xilinx_axienet.c
+> +++ b/hw/net/xilinx_axienet.c
+> @@ -919,20 +919,27 @@ xilinx_axienet_data_stream_push(StreamSink *obj, uint8_t *buf, size_t size,
+>      if (s->hdr[0] & 1) {
+>          unsigned int start_off = s->hdr[1] >> 16;
+>          unsigned int write_off = s->hdr[1] & 0xffff;
+> -        uint32_t tmp_csum;
+> -        uint16_t csum;
+>
+> -        tmp_csum = net_checksum_add(s->txpos - start_off,
+> -                                    buf + start_off);
+> -        /* Accumulate the seed.  */
+> -        tmp_csum += s->hdr[2] & 0xffff;
+> +        if (start_off > s->txpos || write_off + 2 > s->txpos) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "%s: offsets outside packet, skipping checksum\n",
+> +                          TYPE_XILINX_AXI_ENET);
+> +        } else {
+> +            uint32_t tmp_csum;
+> +            uint16_t csum;
+>
+> -        /* Fold the 32bit partial checksum.  */
+> -        csum = net_checksum_finish(tmp_csum);
+> +            tmp_csum = net_checksum_add(s->txpos - start_off,
+> +                                        buf + start_off);
+> +            /* Accumulate the seed.  */
+> +            tmp_csum += s->hdr[2] & 0xffff;
+>
+> -        /* Writeback.  */
+> -        buf[write_off] = csum >> 8;
+> -        buf[write_off + 1] = csum & 0xff;
+> +            /* Fold the 32bit partial checksum.  */
+> +            csum = net_checksum_finish(tmp_csum);
+> +
+> +            /* Writeback.  */
+> +            buf[write_off] = csum >> 8;
+> +            buf[write_off + 1] = csum & 0xff;
+> +        }
+>      }
+>
+>      qemu_send_packet(qemu_get_queue(s->nic), buf, s->txpos);
+> --
+> 2.43.0
 
