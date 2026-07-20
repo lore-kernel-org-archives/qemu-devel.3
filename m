@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4D50C44512
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 02:22:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2114AC4451B
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 02:49:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlddG-0000Zw-QW; Sun, 19 Jul 2026 22:21:26 -0400
+	id 1wle4F-0004mt-SI; Sun, 19 Jul 2026 22:49:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jianghaotian.sunday@gmail.com>)
- id 1wlddF-0000ZH-6x
- for qemu-devel@nongnu.org; Sun, 19 Jul 2026 22:21:25 -0400
-Received: from mail-pj2-x00.google.com ([2607:f8b0:4864:39::])
+ id 1wle4C-0004mH-8M
+ for qemu-devel@nongnu.org; Sun, 19 Jul 2026 22:49:16 -0400
+Received: from mail-pj2-x0a.google.com ([2607:f8b0:4864:39::a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jianghaotian.sunday@gmail.com>)
- id 1wlddD-0007js-KN
- for qemu-devel@nongnu.org; Sun, 19 Jul 2026 22:21:24 -0400
-Received: by mail-pj2-x00.google.com with SMTP id
- d9443c01a7336-2cc7ef596c6so85438925ad.1
- for <qemu-devel@nongnu.org>; Sun, 19 Jul 2026 19:21:22 -0700 (PDT)
+ id 1wle4A-0001X9-Fe
+ for qemu-devel@nongnu.org; Sun, 19 Jul 2026 22:49:15 -0400
+Received: by mail-pj2-x0a.google.com with SMTP id
+ d9443c01a7336-2cf49dc298bso14586185ad.0
+ for <qemu-devel@nongnu.org>; Sun, 19 Jul 2026 19:49:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1784514082; x=1785118882; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1784515753; x=1785120553; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=+sR1BstrE0XzA4vldixr4uehPXwa7g66LGt5Awaoh40=;
- b=SNsYeuzeLsA+aGbZsSkUIL1FI4yMTNTZP8nE3IOWbQiewXf3BYsmnGXRTYzDUv8duZ
- vlYE36hKJfwLWEXKa6dJuJue6uDXz6A9DhRwmygrhozqpCcOp9SDh8HP63BidQCb7J8h
- QFJvHL44cZ1b+uveQnRskTZAABMtWBd4lOuyv/QVHZL3tgQNhbpm/r+LAga0UCpt4Lc6
- pLfYFV1lG3PIMjd/grV2F3jLe81HGFQCKrS8fJypMXpFTU7Si+CNWXKrpUPaFubmVn8K
- /9I0FsPxONnq1SaHmWIPxIWsxJWw76msEqlBPGQYvJFMQotZVq276zN/QsT9VzVNxkCm
- 3m6g==
+ bh=m8lltpzLlvYxzHjHcmkKzoMmUMZ6AAvTk0ePIiurVHc=;
+ b=pzQELLBHPHRkSBolH9F8LAtTNUb89LN0qkICRXUmGzFBgmmfRbvSxXQA/cQVggiMrZ
+ P+J4CxPNUgXYNsBxIvsv7zgzYtyCYLxkdgEt6jGCkXKElc+RWhINppru0/JHTf91y6p0
+ D7IIt9wPOKTQhRknvMDPxtZEFNsqrLcfmt0Ejk4/nznuJT841nDtVbdIug3kN/VVddzY
+ vKUm+8CUzbRplpjh5++J2RHLjC4MrbTWbkNj4oK99IisuOpiiArkGyPUWthe/81uIvSP
+ Iy1ugFUpMJW78fMtmLdJWAT3r+sfXB/964ScmW7cSky5jhx235Mb0ntcz2OMPljLBR/t
+ 5Oyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784514082; x=1785118882;
+ d=1e100.net; s=20251104; t=1784515753; x=1785120553;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=+sR1BstrE0XzA4vldixr4uehPXwa7g66LGt5Awaoh40=;
- b=AtAbqYcPN5TuDksD7L8Yhm9bhe7ohil3oeCBGvRNBbQv0rprM0bv1oO5dS6bI/AEOm
- Oos7WiOQY92LgBcNdvSReeEnqXy3O8wEY3ugt62UToYpL2AgqVvvSsm5NXQGENYc0A2A
- z4n3lauCiE9ajt3FEjKmH1hBqJV9LO6jALiONvGNlzE/25aqi4viAKwKo+/jOUHXmutm
- XwInW3tktAyjzvkl0OX8V6xNCL7hIhqusVOGuz9bUTfhSDjBKJjCWVKfi2PgVC08E9NP
- 2JkMi2JgF1xEkGEqb2aXov7U0JsJZkI5BZPXw3tvFjImFCAc3F3+cSiR8wnekaH/jcXl
- 6LsQ==
-X-Gm-Message-State: AOJu0Yz2g8+XWajAMBBj68B65tjnOTMuIyMTeJi5K7JMz6E4+QzjcN3i
- EtiyoKueidJ0729I9+U/v0xhHwe8zAHjl2tz49fn8kWGIzAc9qkaK+m0JVIFcYcEXIRD25YwpCU
- =
-X-Gm-Gg: AfdE7clR1/pdP1V4M4jJ/8IxLiLMUCmVohZTF3CI+QoSbJv3ICBe4Su03WO5RQpXk9t
- cZ7szB2hMLLxIA5ZnYY/7b+6ayoAxaXXA2Q3ijqlIVrl0gAweXdOQ2JcL6d7N9woIqFlMtgk06n
- ALVB1ZXDYs1UYO+pos5X/s4v6nGrdeGaazD3knLCRlfutvL1qY1Kx4vRpD36+tbemIie7IeuBSe
- WCTl+bQFWBtDT+v5nqJJUr1+HU9vykMHPxIQ7Eh+mfICmpgDOx5cbQXkaP2p5VWLt5wPE9dLUfE
- PEHco/o8JqGxeDb0wzbv2MJ+R3JaaE5SKFHZFoKBRXios2ZZEq9VFMnRrFDO738S0V/ATp7tM1o
- OOtU3MT+A7vTlRaRxbhwV2JdG+owfOCiNXh33Tf+r+HIF1VRHgWzI0FSuu6enFaHfI5iohcac4S
- qagKrnnIL2LWK8IkYAbBVvGG1G6aFoGFET15I6NP/PSylgn4R9KUrocaBLUzlAbY0sCqEEEk4SX
- Oz/pdVlwjJwbCgNqkRoxypIIuF6ug==
-X-Received: by 2002:a17:902:f642:b0:2cc:fa08:eebc with SMTP id
- d9443c01a7336-2cf34831b12mr132087195ad.1.1784514081488; 
- Sun, 19 Jul 2026 19:21:21 -0700 (PDT)
-Received: from VM-210-252-ubuntu.. ([14.116.239.34])
+ bh=m8lltpzLlvYxzHjHcmkKzoMmUMZ6AAvTk0ePIiurVHc=;
+ b=dgUyXaJu2m1lXBF5O3CcyH2vETIkm3Bzj4dnH+WTb3iKTjHPXEHoYpX2CJ6YB4Dfq/
+ efswHxMMSWXQm9DplRMAlXBZit2cqBUYEnlqyCidCxANhpQsDuhO3ibQsoQxUn5n7zmG
+ aqJGNb4T0Ds2jsBNuNUgxOTjSyGXY2aU3UXLjDtcNoScY8U4tfgNtaN9qJrw+eWdYIrw
+ LXuM6WfVM6GG1rgWvwDR5UAdxR0U724tIeXsE6mlIB4wQUFAder1F9ls/neFZRE21CbE
+ OD4OxvMcnZQmTozDuD7tVGUeC1U1Ffy54EqC6T7FkUS87v3ZLW24s6OqQcpzU4kB99TZ
+ ny8A==
+X-Gm-Message-State: AOJu0YzWcc2q03gRxC38XgueP8hTOHUrYLtJp8MLYEc78i1ml03MtXmF
+ j+13uDgZypiE9+sWbAZf6CCa/E6o+ov1Dq/Za6c2lLj4i1Bz6RNcpg5Zn+LWgtubsFhAx2Xm
+X-Gm-Gg: AfdE7ck2Knceazbwg2HprmOcusHyeMXOcdW5pVSYZ/9d0HCRVNviCAoLL1q8OTegFCH
+ XmYMaNa1OpIL6A1jT286WloZXggAnuS5KMW4Yhgc+Szg4ZP5E9/gLjdm49A0PfGgNhh2HwZsN5Z
+ R4ooXqXpPHGwVR3NZTAG+G7g32Y4OQpW6MXksTYOxWKLljjhVtIZOsZgXZntQNHxSpzsNmTXlPI
+ Ec6HLgv017lbYSivv+CaamQTORItAqB1jdKb53cVzJW78u5zqEOqpebhi28mRQYjYn0MX6VKh7c
+ fv/6G7XExgPtECR3/Lb9GQrhTSVHQcBshyIe8uKp2mrFpZk1XRPUbFoEXGqZggsvtUQ02BJv2y0
+ 0za2K+Oe+EP4MF+L3lX1hlAdxt/WLegAsbk9kLzxM56xSvFjPHfRUsXsMXAEmJmXxRE9I5kq3MY
+ eWiqV9/MP5Cz9Ze+/4KaIqH5SQ2knicj1H2klY1apaF9PgrEZ8PAoUcDppdIVpTF7oCy+8KAgYN
+ VmgFI++tBLDRIychCboZSHdi4tk
+X-Received: by 2002:a17:903:1a43:b0:2cc:7d4a:3f5a with SMTP id
+ d9443c01a7336-2cf3487711cmr143468335ad.20.1784515752770; 
+ Sun, 19 Jul 2026 19:49:12 -0700 (PDT)
+Received: from VM-210-252-ubuntu.. ([14.22.11.168])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2cf3448db72sm48562055ad.1.2026.07.19.19.21.18
+ d9443c01a7336-2cf347554a2sm48885115ad.73.2026.07.19.19.49.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 19 Jul 2026 19:21:20 -0700 (PDT)
+ Sun, 19 Jul 2026 19:49:12 -0700 (PDT)
 From: jianghaotian.sunday@gmail.com
 To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, alex.bennee@linaro.org, odaki@rsg.ci.i.u-tokyo.ac.jp,
- dmitry.osipenko@collabora.com, qemu-stable@nongnu.org,
+Cc: marcandre.lureau@redhat.com, philmd@mailo.com, vsementsov@yandex-team.ru,
+ thuth@redhat.com, farosas@suse.de, qemu-stable@nongnu.org,
  Haotian Jiang <sundayjiang@tencent.com>,
  Haotian Jiang of Tencent Security <jianghaotian.sunday@gmail.com>
-Subject: [PATCH] virtio-gpu: fix NULL deref in rutabaga set_scanout
-Date: Mon, 20 Jul 2026 10:21:00 +0800
-Message-Id: <20260720022100.3700582-1-jianghaotian.sunday@gmail.com>
+Subject: [PATCH] hw/display/qxl: unregister vm_change_state handler and BHs on
+ device exit (CVE-2026-63322)
+Date: Mon, 20 Jul 2026 10:48:55 +0800
+Message-Id: <20260720024855.3757499-1-jianghaotian.sunday@gmail.com>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:39::;
- envelope-from=jianghaotian.sunday@gmail.com; helo=mail-pj2-x00.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:39::a;
+ envelope-from=jianghaotian.sunday@gmail.com; helo=mail-pj2-x0a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,46 +102,91 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Haotian Jiang <sundayjiang@tencent.com>
 
-rutabaga_cmd_set_scanout() checks scanout_id < VIRTIO_GPU_MAX_SCANOUTS
-(16), but does not check scanout_id < conf.max_outputs like the base
-class (virtio-gpu.c) and virgl backend (virtio-gpu-virgl.c) do.
+qxl_realize_common() registers a vm_change_state handler via
+qemu_add_vm_change_state_handler() and creates three bottom halves
+(update_irq, update_area_bh, cursor_bh), but none are ever cleaned up.
+The return value of qemu_add_vm_change_state_handler() is discarded, so
+the handler is never removed from the global list, and there is no
+PCIDeviceClass.exit callback to delete the BHs.
 
-With the default max_outputs=1, virtio_gpu_base_device_realize only
-initializes scanout[0].con. A guest submitting SET_SCANOUT with
-scanout_id >= 1 takes the con=NULL path, and
-qemu_console_set_surface(NULL, NULL) dereferences con->ds, crashing
-QEMU.
+When a secondary QXL device (hotpluggable by default) is hot-unplugged
+via device_del, the PCIQXLDevice memory is freed but the vm_state
+handler and BH entries remain with dangling opaque pointers. On the
+next VM state change (stop/cont/migrate) or BH dispatch, the callback
+dereferences freed memory, causing a use-after-free.
 
-Replace VIRTIO_GPU_MAX_SCANOUTS with vb->conf.max_outputs in the
-CHECK, since realization already ensures max_outputs <=
-VIRTIO_GPU_MAX_SCANOUTS.
+Fix this by storing the VMChangeStateEntry returned by
+qemu_add_vm_change_state_handler() and adding a qxl_exit() callback
+that deletes the vm_state handler, all three BHs, and the
+guest_surfaces.cmds allocation before the device memory is freed.
 
-Fixes: 1dcc6adbc1 ("gfxstream + rutabaga: add initial support for gfxstream")
+Fixes: a19cbfb34642 ("spice: add qxl device")
+Fixes: CVE-2026-63322
 Reported-by: Haotian Jiang of Tencent Security (Yunding Lab) <jianghaotian.sunday@gmail.com>
 Signed-off-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
 Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3607
 ---
- hw/display/virtio-gpu-rutabaga.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/display/qxl.c | 15 ++++++++++++++-
+ hw/display/qxl.h |  1 +
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
-index 6ff1263901..3f78899442 100644
---- a/hw/display/virtio-gpu-rutabaga.c
-+++ b/hw/display/virtio-gpu-rutabaga.c
-@@ -302,7 +302,7 @@ rutabaga_cmd_set_scanout(VirtIOGPU *g, struct virtio_gpu_ctrl_command *cmd)
-     trace_virtio_gpu_cmd_set_scanout(ss.scanout_id, ss.resource_id,
-                                      ss.r.width, ss.r.height, ss.r.x, ss.r.y);
+diff --git a/hw/display/qxl.c b/hw/display/qxl.c
+index 74258afa58..c9323672a6 100644
+--- a/hw/display/qxl.c
++++ b/hw/display/qxl.c
+@@ -2203,7 +2203,8 @@ static void qxl_realize_common(PCIQXLDevice *qxl, Error **errp)
+         error_report_err(err);
+     }
  
--    CHECK(ss.scanout_id < VIRTIO_GPU_MAX_SCANOUTS, cmd);
-+    CHECK(ss.scanout_id < vb->conf.max_outputs, cmd);
-     scanout = &vb->scanout[ss.scanout_id];
+-    qemu_add_vm_change_state_handler(qxl_vm_change_state_handler, qxl);
++    qxl->vmstate_handler =
++        qemu_add_vm_change_state_handler(qxl_vm_change_state_handler, qxl);
  
-     if (ss.resource_id == 0) {
+     qxl->update_irq = qemu_bh_new_guarded(qxl_update_irq_bh, qxl,
+                                           &DEVICE(qxl)->mem_reentrancy_guard);
+@@ -2475,6 +2476,17 @@ static const Property qxl_properties[] = {
+         DEFINE_PROP_UINT32("yres", PCIQXLDevice, yres, 0),
+ };
+ 
++static void qxl_exit(PCIDevice *dev)
++{
++    PCIQXLDevice *qxl = PCI_QXL(dev);
++
++    g_clear_pointer(&qxl->vmstate_handler, qemu_del_vm_change_state_handler);
++    g_clear_pointer(&qxl->update_irq, qemu_bh_delete);
++    g_clear_pointer(&qxl->update_area_bh, qemu_bh_delete);
++    g_clear_pointer(&qxl->ssd.cursor_bh, qemu_bh_delete);
++    g_clear_pointer(&qxl->guest_surfaces.cmds, g_free);
++}
++
+ static void qxl_pci_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+@@ -2482,6 +2494,7 @@ static void qxl_pci_class_init(ObjectClass *klass, const void *data)
+ 
+     k->vendor_id = REDHAT_PCI_VENDOR_ID;
+     k->device_id = QXL_DEVICE_ID_STABLE;
++    k->exit = qxl_exit;
+     set_bit(DEVICE_CATEGORY_DISPLAY, dc->categories);
+     device_class_set_legacy_reset(dc, qxl_reset_handler);
+     dc->vmsd = &qxl_vmstate;
+diff --git a/hw/display/qxl.h b/hw/display/qxl.h
+index ad8a912878..48d664f777 100644
+--- a/hw/display/qxl.h
++++ b/hw/display/qxl.h
+@@ -83,6 +83,7 @@ struct PCIQXLDevice {
+ 
+     /* thread signaling */
+     QEMUBH             *update_irq;
++    VMChangeStateEntry *vmstate_handler;
+ 
+     /* ram pci bar */
+     QXLRam             *ram;
 -- 
 Changes v1 -> v2:
-  - Replace VIRTIO_GPU_MAX_SCANOUTS with vb->conf.max_outputs per
-    Akihiko Odaki's suggestion (simpler, no extra if block needed)
-
+  - Use g_clear_pointer() for cleanup per Marc-Andre Lureau's suggestion
+  - Simplifies the code by removing redundant NULL checks and assignments
 2.34.1
 
 
