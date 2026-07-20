@@ -4,105 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A533FC44520
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 21:25:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25116C44515
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 21:38:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlvTm-0002I6-Dk; Mon, 20 Jul 2026 17:24:50 -0400
+	id 1wlvgW-00073j-IX; Mon, 20 Jul 2026 17:38:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wlvTe-0002Fh-Rj
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 17:24:43 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wlvgT-00072m-Oz; Mon, 20 Jul 2026 17:37:58 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wlvTc-0003xH-1r
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 17:24:42 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66KJTxuQ3368774
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 21:24:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- j2+BIPfOpMQnPiqWstnwAPqopwffGmsDh3bGtfv5x4w=; b=FuOYWVov3JBe/c97
- 2HOLkwkOoJY6UgGQiVFcwAxnxKYG4GeakE49526pik6QP8Wqm/jzpSbMdnT9rLNw
- gDXp9VMtsFOoJmx+JxfP2tIFcPvNNVIKEa4OpRtCA6E0/xjwcnC0NCrbO9lL0qWu
- zzmVg2PscGGKDfDKTZ7vUT87faAwKxz9OoMDOxuciQhX/cIfiHDsSl6h/oiHm20O
- Wikye7xLn63JSeO+E3oIiqVSl7Ho40K5FB74A2n3LHtdDqZUTvUuj+/BTMsmkcCr
- bvvYiZ4RiCs5BlWXolQSx9i9TGvtJkr9VINYp1FNmXU3Q23Ts0OuQCtRy2jeGeq0
- nNKYRA==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhgs033r8-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 21:24:37 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-51c0f0a0760so253132121cf.2
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 14:24:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784582677; x=1785187477; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=j2+BIPfOpMQnPiqWstnwAPqopwffGmsDh3bGtfv5x4w=;
- b=d6BLyyThJNRhiEa9nwMPd/FmO4mVfMyvqc9hDb9ImJ2eXd/Mo4shBXz6Dn3hydHDgW
- hufZeQpYbZmZVlPOjs3r54OEC4WVNSTa/ChwIKVssEIxxOrngVL6SviaI/K5qM8kr1fx
- 2iwSYoQaX/fdNCtaEX5bDk5QVMRcAQA7K5RvziQJ0o+e++hBDizMh7pEFORVNOIXDiKF
- gEo1pcLYnqMdn3BfgaJGb2zc1tqWQsHORDGauY/GWxkbC6/jOlswajuOfd3kK2sb+NUH
- RfsXEh0hWK/J4Bzc6MxTnq9z/qRehMhKv2An6flSUPlm+bE68RLNFRRkCTD/exEMUVzI
- x7Gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784582677; x=1785187477;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=j2+BIPfOpMQnPiqWstnwAPqopwffGmsDh3bGtfv5x4w=;
- b=o5AmuYcLM7LHZg5vqtGfK4TYMBs9WtfACvPfxqfEN5feoAix5U8GzHK3hkb+iRpqDc
- qCu4Oy1XjoV6eCytueG/5Xtwo2J0DhTaSBZ/D8ouVLkBjHw4Ur8eHQyaOsG+ehHpuNQ6
- 36XG5NCkzvuo3gnrJFaY1MYfqyeiEKH3EaVCJXyc+k8+lFkQ93NZICSSJA+T6qrqV1Sc
- Z+z/TY+89JUIuP8O/kbWXASjmpwmA1+R4qDmYlU89TMHUGyNGCM3dolbQ4azgdQ28uOE
- ynlZkIVnkRuPzQ4VcaBd5NPYYtHPmOzhGLXi3XedTKTN1js1SKUPX39UzwsNkIidndEk
- uMTw==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rrydzz/G1WuK8YN0grLrMeuh9vJdTm9jvkbAGUED/8uQ6yjTSfaRurLuN+h9d9kwlcNjN13VoQRzNg5@nongnu.org
-X-Gm-Message-State: AOJu0YzQgw1d67H8DrJiapm+Uz4xa9pJe487Qg8pN9ng5K9uD+al4F7t
- xtlmgHj1In5aEh+ZDSRsrpqLa+Bp+sPPxI9et7+MaNFejCHrltKMOrccKa4iQLqChIych9X7+Hn
- n2qwZq36sOFcHdOnO5nndYWMgp9fFhGyVAqb6COiUvtCuB6pR0Je/J9JsKQ==
-X-Gm-Gg: AfdE7clHA1eEVLQt8GMhT2h0vi6tnUVQkBlueotB2kNxGldsxvv7iWelWecIth23AQG
- Bx1W6YIvtQlX7Q2PX+OdsSObScIxlt9tW7KqzIJK92M0rioEmry5wAKjEW8CafTR8T1Tzs0pt8Q
- PGKhwm7n4hu/FLlVRG78+RJX6RCPp32XjyQEdAaX6dqJOMx2/IXJcO9hAQmSlV0yGCYJ0ddFZjs
- sarBy4nf+9FxSZOoKEMuowZpVUGUphIc8BZlV3RGoU+4NlYr2MiLfU5y2DBYdTNvsdpYWJzLF8T
- QmQGGOPDuPwKELnRS+xxk0Pcay6wrBMdq4cxrAe4e9/92szA2zrN+jxiieKuSmJ4XOYm4gXQTjD
- ZhxPf+m5Dv179tu7TDRmdQzdplusWrKJGAeIyG/xhwS4z02XmI64=
-X-Received: by 2002:ac8:7d0e:0:b0:51c:7b11:41a5 with SMTP id
- d75a77b69052e-5213f56e20fmr147679281cf.82.1784582676737; 
- Mon, 20 Jul 2026 14:24:36 -0700 (PDT)
-X-Received: by 2002:ac8:7d0e:0:b0:51c:7b11:41a5 with SMTP id
- d75a77b69052e-5213f56e20fmr147678931cf.82.1784582676180; 
- Mon, 20 Jul 2026 14:24:36 -0700 (PDT)
-Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f63edcd13sm32656583f8f.26.2026.07.20.14.24.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Jul 2026 14:24:35 -0700 (PDT)
-Message-ID: <1d7b9883-5f12-4cc6-b379-ce13a1f1afcc@oss.qualcomm.com>
-Date: Mon, 20 Jul 2026 23:24:32 +0200
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wlvgR-00064G-H3; Mon, 20 Jul 2026 17:37:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1784583455; bh=xSEK7RNB6mFZNcaNQZ5NGb7Keqi6mj8pjfnJiAx3UjA=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=FZCvFDf3eGDs3PInFeSPGlMGjIlKJgVh6U4g7RDnbmq0b6yaO+1dO9DH0XcjOYA3Z
+ zskrICAbsG7wc5A99UpynSz+rDOadGbq6VeRZxPJ88YgW1iGkdYJnyQSgXYMKocQGS
+ kjPUifGuqhTMVD2kyVDNyXRRPe2aCaQ09MaFVUMub4KV6YNj+NMLRc2PttPy2Ex8z9
+ ItcIqcQeqmEnP/kZDS/3Jw86dGNG1nSI0SQH4yO5QDt/7bgOf/yHyV0O1qnoUtTTdL
+ zYAYzBjPK3iK9h1GZLUhFVexksnmVY45lQW6VZk0nvjhsaFRSfR1NfJIVn74HUN3Lo
+ ndWuv+yz6pHCA==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 1E1991C33D3;
+ Tue, 21 Jul 2026 00:37:35 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0758E3F250F;
+ Tue, 21 Jul 2026 00:37:49 +0300 (MSK)
+Message-ID: <ad75b68b-40a7-4bff-b6a2-5dd90401a186@tls.msk.ru>
+Date: Tue, 21 Jul 2026 00:37:36 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 1/8] hw/vfio/listener.c: remove CONFIG_KVM
-Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  BALATON Zoltan <balaton@eik.bme.hu>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
  <clg@redhat.com>
-Cc: Michael Tokarev <mjt@tls.msk.ru>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
- philmd@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-ppc@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- eric.auger@redhat.com
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
+ philmd@linaro.org, Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>, eric.auger@redhat.com
 References: <20260312224449.1605071-1-pierrick.bouvier@linaro.org>
  <20260312224449.1605071-2-pierrick.bouvier@linaro.org>
  <c3a7cd83-7666-40c5-9baa-ebe64edacab6@tls.msk.ru>
@@ -113,47 +55,63 @@ References: <20260312224449.1605071-1-pierrick.bouvier@linaro.org>
  <f1a78cc4-a660-4d20-85ad-84431d5a5c13@redhat.com>
  <cfa19c77-6783-0870-a509-691f0539ff2a@eik.bme.hu>
  <e43b316e-e8ac-42ea-afec-c56d2f030819@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <e43b316e-e8ac-42ea-afec-c56d2f030819@oss.qualcomm.com>
+ <1d7b9883-5f12-4cc6-b379-ce13a1f1afcc@oss.qualcomm.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <1d7b9883-5f12-4cc6-b379-ce13a1f1afcc@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDIzMiBTYWx0ZWRfX9oo9EPVXZbGs
- kuLYl8lmUd7pdpGq4C3cDQwa+bQF4V66YMKkjrxHjcr7HyK9dEenBsdkzNATGH0+uBotRfFGnG4
- q/YWhLXf851CjN/iet4rb9z1iXpgGaw=
-X-Proofpoint-ORIG-GUID: E4SrrwsitfLBPpFCFdQGlZttn1B5FeL3
-X-Authority-Analysis: v=2.4 cv=DMS/JSNb c=1 sm=1 tr=0 ts=6a5e9215 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=p0WdMEafAAAA:8 a=g26msxm2AAAA:8 a=QxbLE5Ik5vzX3J06DfwA:9 a=lqcHg5cX4UMA:10
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=z2U-W3hJrleVIN9YIjzO:22
- a=kacYvNCVWA4VmyqE58fU:22 a=GGU-N_oZwHsPb1Xv_0el:22
-X-Proofpoint-GUID: E4SrrwsitfLBPpFCFdQGlZttn1B5FeL3
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDIzMiBTYWx0ZWRfX6rZKU3mNNHPj
- NxLAUiC/3J0y6+jTgimL995FjBKwyspdCcX4JIsMwumbVeb5kfY5fY8z8iU4SdWzyZWeV7sLwim
- s43mfYyhovFNbCbtmzy7QIEyiGL5G2knsBGXxXpRYqQ34vdoyI+KJp3WHR8S8wRdbMRK6eZ+fmq
- rQf1bShWzCVwuHOqPhzwPudB0L7nKImuYExmWSB3i0q7/t+MS+MikMBw+cIMFRsXCI+/n44fWdr
- SbbWC0A1B4ByAjpFYppt3rURhG36fAsZ7cbmbuhMt9BUjmInyQgP4TgT6eLF61wDAGrTMCcLwK/
- eDkkUJC4z4y5CMDglU8h9wmvKmUrD2G5rVa44erjZRIc+lBsjCY/0FHdI02jDDRZky7kJg98fcd
- FACi8D2s6Aa91sd2hGL8+tmNDJ5g1KwSQKsSeFSN+y96bm/06ekBa2gNEEhNU561zbiP/vR2ql7
- 8uRTlE+3e0rMkbtdN3A==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-20_05,2026-07-20_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 impostorscore=0 priorityscore=1501 spamscore=0 bulkscore=0
- lowpriorityscore=0 clxscore=1015 phishscore=0 malwarescore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200232
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,85 +127,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/7/26 20:44, Pierrick Bouvier wrote:
-> On 7/18/2026 4:51 AM, BALATON Zoltan wrote:
->> On Sat, 18 Jul 2026, Cédric Le Goater wrote:
->>> On 7/18/26 06:52, Pierrick Bouvier wrote:
->>>> On 7/17/2026 9:14 PM, Michael Tokarev wrote:
->>>>> On 7/17/26 22:40, Pierrick Bouvier wrote:
->>>>>
->>>>>> https://gitlab.com/qemu-project/qemu/-/blob/master/hw/vfio/Kconfig?
->>>>>> ref_type=heads#L5
->>>>>>
->>>>>> ```
->>>>>> config VFIO
->>>>>>        bool
->>>>>>        depends on LINUX
->>>>>> ```
->>>>>>
->>>>>> Incorrect, and it should exclude Linux hosts not supporting VFIO.
->>>>>> At least sparc64 to fix the current issue.
->>>>>
->>>>> Shouldn't there be "depends on LINUX & KVM" ?  At least, this
->>>>> way we can do --disable-kvm and it will work.
->>>>>
->>>>
->>>> I think it's a safe choice, but not sure if we are supposed to be able
->>>> to use the exotic combination of vfio with tcg also. Maybe it doesn't
->>>> make any sense technically though, I don't know the arcane of vfio.
->>>
->>> VFIO works in some heterogeneous configurations, aarch64 TCG running
->>> on an x86 host for instance. The opposite doesn't. ppc64 TCG on an x86
->>> used to work. The limitations primarily stem from architectural
->>> differences in the host/guest memory mode, CPU/IOMMU address spaces,
->>> assumptions, etc.
->>>
->>>> @Cédric, Any idea of which matrix of host/target is supposed to be
->>>> supported?
+On 7/21/26 00:24, Philippe Mathieu-Daudé wrote:
 
- >>> With KVM, the supported architectures are x86, aarch64, s390x, ppc64.
-
->>>
->>> Overall, heterogeneous TCG configurations happen to work by accident.
->>> I would not consider them supported.
->>
->> VFIO (vfio-pci) works with PPC TCG and is used for passing through cards
->> including GPU to emulated AmigaNG machines (maybe also mac99).
-
-So also Kconfig PPC (32-bit).
-
-Can we assume the following is safe on 'LINUX && !KVM'?
-
-   #include <linux/kvm.h>
-
-> Please do
->> not break that. There are some quirks mostly with GPUs, see https://
->> qmiga.codeberg.page/qemu_vfio.html but it works and used by some people.
->>
+> For the 11.1 release I'd go with this 1-line fix:
 > 
-> 👍
-> 
-> In this case, and we want to ensure we don't break any existing workflow
-> we might now be aware of, a safe choice could be to restrict VFIO to all
-> hosts that supports KVM. This is different from CONFIG_KVM, which is
-> only enabled for new hosts.
-> 
-> @Michael: You'll need to detect kvm hosts (see meson.build for
-> kvm_targets), add a host config CONFIG_KVM_HOST, and use that for
-> CONFIG_VFIO definition. This should restrict VFIO to host providing KVM,
-> without limiting which target is ran.
+>   -         depends on LINUX
+>   +         depends on LINUX && (AARCH64 || I386 || PPC || S390X)
 
-For the 11.1 release I'd go with this 1-line fix:
+BTW, it looks like this can be expressed as:
 
-  -         depends on LINUX
-  +         depends on LINUX && (AARCH64 || I386 || PPC || S390X)
+          depends on LINUX
+          depends on AARCH64 || I386 || PPC || S390X
 
-> 
->> Regards,
->> BALATON Zoltan
-> 
-> Regards,
-> Pierrick
-> 
+(my lame attempt to fix sparc was to add
+   depends on !SPARC64
+  line here)
+
+FWIW.
+
+Thanks,
+
+/mjt
 
 
