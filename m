@@ -4,168 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15F21C44520
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 21:59:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE080C44520
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 22:17:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlw0w-0006Bu-WF; Mon, 20 Jul 2026 17:59:07 -0400
+	id 1wlwIk-0003yW-8W; Mon, 20 Jul 2026 18:17:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=65431f960=graf@amazon.de>)
- id 1wlw0v-0006BY-79; Mon, 20 Jul 2026 17:59:05 -0400
-Received: from fra-out-007.esa.eu-central-1.outbound.mail-perimeter.amazon.com
- ([3.75.33.185])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wlwIj-0003y5-25
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 18:17:29 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=65431f960=graf@amazon.de>)
- id 1wlw0t-00019f-F5; Mon, 20 Jul 2026 17:59:04 -0400
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wlwIh-0003aN-Dz
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 18:17:28 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66KJTRdk3491991
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 22:17:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=Oc+JzOP3dek
+ vrqSq35vjqf+pJXDkdiSTWJZRhjnCpqk=; b=PJo70N3gqT2nLStcnQ2+82bNaQI
+ Qf959xEgviZeAc8yOJVmNnieMFlQFIjFbXkjPHPfXH8Obrth1/K0a9wou28PMD90
+ VGdx4jDHIyHcozk45WzIFj9/nJhmmh+yfILZZsZcmRLfPiBqhYayPBJqmcsfhNf1
+ WWMA3k9oHDvzNYB2KfabzialBocItlfecjQLoRmSoAc5RPbZPlrWt+sGIV3p3rnG
+ xL0WDDAcIinsWI+u6VDP2jQ3PuzUgVH0yz3Mo4ivf2I4zt/gAfn7Igme5Y/lDibH
+ L9tRF3/7pReF7wyrWAsADzMudcOvUfuzKX05vLKzqMtZPZQDdcVGT+GggHw==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhqv4164w-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 22:17:25 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-38dd87656d3so10198002a91.2
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 15:17:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.de; i=@amazon.de; q=dns/txt; s=amazoncorp2;
- t=1784584743; x=1816120743;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-id:content-transfer-encoding: mime-version;
- bh=VI8/iAJTcXzbL3OMGa8CV/mCl/KuJrZPoVCu4hHNDQo=;
- b=Sfj3oM+GN83xgVWGd5fqtgT58Jkjb09i+ecs9KyDN411rcsP7JCnwKD0
- b7eSaPBl/O/NIwxZexur9oxXdHcXFxf2NKCImbMJT1E3mxkhr9n5TLRxL
- NbEOwchlOfXkt36h2DGmgctUiUmzuGZQqRr/FeZNnKF919XR2ClJlMz0b
- M3nFdZDDKkLhy21vE/iggsGHo2AJOKb1EOHz98lGHaepHgrsIrIWMfdLN
- qSjyIsqYsoLLdjsuDHW/qdeYrjh8gHGc/aDRUIBFu+Fbj0CMT/TB+5EDk
- CDhtPSQSAHRbso7bJR+DuU7sgQ8dTsXAgZyTm8wasUIoN3ptWNHz8ifcQ g==;
-X-CSE-ConnectionGUID: gdE5FXonRmm8BpI1WmciJg==
-X-CSE-MsgGUID: mNquJlC5QrWnzJXytJt1QA==
-X-IronPort-AV: E=Sophos;i="6.25,175,1779148800"; d="scan'208";a="16716930"
-Received: from ip-10-6-3-216.eu-central-1.compute.internal (HELO
- smtpout.naws.eu-central-1.prod.farcaster.email.amazon.dev) ([10.6.3.216])
- by internal-fra-out-007.esa.eu-central-1.outbound.mail-perimeter.amazon.com
- with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jul 2026 21:58:56 +0000
-Received: from EX19MTAEUC001.ant.amazon.com [54.240.197.233:17841]
- by smtpin.naws.eu-central-1.prod.farcaster.email.amazon.dev [10.0.4.185:2525]
- with esmtp (Farcaster)
- id 970a9ea7-95ac-4f68-81f0-b58ec900e469; Mon, 20 Jul 2026 21:58:56 +0000 (UTC)
-X-Farcaster-Flow-ID: 970a9ea7-95ac-4f68-81f0-b58ec900e469
-Received: from EX19EXOEUC002.ant.amazon.com (10.252.51.145) by
- EX19MTAEUC001.ant.amazon.com (10.252.51.193) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43;
- Mon, 20 Jul 2026 21:58:56 +0000
-Received: from FR6P281CU001.outbound.protection.outlook.com (10.252.51.94) by
- EX19EXOEUC002.ant.amazon.com (10.252.51.145) with Microsoft SMTP
- Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.43
- via Frontend Transport; Mon, 20 Jul 2026 21:58:56 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=updVoUHDPurRcQQDAhGJ1kxceU3BZUI5vvWldNXv48YwMZlbqQV9htJM9GESyfO23nvJYGcwStIyUninGDiwGYVo6iSZtkh9a0wG0LSylP2vSSW/sb1KuuSso9W4YxFabvtkwaWaYfBBRBJkMSUeYaM4aoUYiakR5KUTsMamUbnNCtUDIKmIfYMJIncYUWqVzrWCRbZYKrVNzv3AhT++WYbaicltASecfExqoG+tc5NyVyfsJh2ERbBvIv4fg/Zt0kyPxePWe0ksxJVWaKkZ+rY4Fq1/I6H6nMcbz0LCYXco4LzWh1wxt5p5iQvd/KjENuGSsvVhks7WAPywedNDjA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VI8/iAJTcXzbL3OMGa8CV/mCl/KuJrZPoVCu4hHNDQo=;
- b=REngmfflRKfx+kpxRQytRKGxKxUewOTe/Cc4L4SY21HSXsS2yf7WW12hj8NLJUOHABzhHBY4ry7GZd5ueAYv0Qkub5e+KSbOMcwhB4r3W7ypLUI0TVEdH8fIg7SMG0wrDHDZE+KjcK2gxSlGSG96+kOF56Xgx09xNEmEJIhuBkkM9LMx8RBfh+/Sog5dOecC3Pmx5GnlINx9yPlUMvUMYaSmdfqiiLYAg/hcdKGZhclqJTX06xPn1+C5ZLMDzfzq0nXpdDXFbGroMh9w/styN5gMn7xey/A+jqFH8tlolqV41az4dVENcxA4LSonotozuX7lrvAIili8O3BVmLJmTw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amazon.de; dmarc=pass action=none header.from=amazon.de;
- dkim=pass header.d=amazon.de; arc=none
-Received: from FRSP281MB6250.DEUP281.PROD.OUTLOOK.COM (2603:10a6:d10:1e0::23)
- by BEYP281MB3911.DEUP281.PROD.OUTLOOK.COM (2603:10a6:b10:b7::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.18; Mon, 20 Jul
- 2026 21:58:52 +0000
-Received: from FRSP281MB6250.DEUP281.PROD.OUTLOOK.COM
- ([fe80::7ad:f028:e0a7:bd4b]) by FRSP281MB6250.DEUP281.PROD.OUTLOOK.COM
- ([fe80::7ad:f028:e0a7:bd4b%6]) with mapi id 15.21.0223.017; Mon, 20 Jul 2026
- 21:58:52 +0000
-From: "Graf (AWS), Alexander" <graf@amazon.de>
-To: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@oss.qualcomm.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "qemu-stable@nongnu.org" <qemu-stable@nongnu.org>, Matthew Jackson
- <matthew@pq.io>
-Subject: Re: [PATCH] hw/misc/applesmc: Fix a typo setting MSSD key
-Thread-Topic: [PATCH] hw/misc/applesmc: Fix a typo setting MSSD key
-Thread-Index: AQHdGJLzIHRdR5gSik2rLB14ancSzQ==
-Date: Mon, 20 Jul 2026 21:58:52 +0000
-Message-ID: <712f880a-51d3-435b-8122-8a9b781fd838@amazon.com>
-References: <20260720115336.75063-1-philmd@oss.qualcomm.com>
-In-Reply-To: <20260720115336.75063-1-philmd@oss.qualcomm.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amazon.de;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: FRSP281MB6250:EE_|BEYP281MB3911:EE_
-x-ms-office365-filtering-correlation-id: 93182c52-a346-477d-a458-08dee6aa1601
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|376014|23010399003|366016|18002099003|22082099003|38070700021|56012099006|11063799006|10067099003;
-x-microsoft-antispam-message-info: TjIA/V2T/39R8NILKbBpYeI9jYUcyjpuCqZIC2iINGmnBcIWSehDJAMpyZwghE7Od7fKNFqLTscxMMEzAMTmilq7QlFBqOnI1BPOTSzY6HoJzDBxtUhWgBXPP7Ti9ZqZ6a+jsICBk4F4B3YRHe5qBAuCEVoEA14UOOQqTXfEQaAqoCMnBgW6TBBmP/jP8bgOD2VJVByk6YCOxHe4G0k0HZJI2/hClMJAwIGvj+errR9NdwUO6Fdc/huNJ0CuSCMyy85Q+zNe6cwUfTsLD9x9K9qbn6YoMSkY6ESEVgi1h68096bzTNRwhlkUoq7tBMdlZpbMjfhikD8y+e0g2MwPDoyhE02ihAB4+2Sf4PR89pGf3gc5hsrxOAyvjXzKsW9w4fnn9ODdh7u38EV/OPmqND4rVlIMHeKiP3+DuwGBb2cy1XBnnOWb0mO+qG21zrSEqhjO6+bMn944Tp9adrok2Yt4F36k27VHrG4zE2P93eHONRxc+1br+Xxbtl1BpzdPq9RO8jW0BzoyBamwhHDdDouBtxTIxA+YeB/QHr04zEMRLmQZYWdO6aJRO1TTQV5s40qJPGV1kibRe3W4AgIC5kMlcoGhl55kHiWXIQjTqDJPlAeC4Yg1Xa4mgENlXBRCCpZR0BEAN3CNHfFR7hoCGd8Z+5to3ZNuTLd5k8QQPMdxmYN1q6smFhacmPwR0rAYh6L26Sh7Snw/Afqp/CZMoKmDYTtQgT8o4wsFVJo+fbI=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:FRSP281MB6250.DEUP281.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(18002099003)(22082099003)(38070700021)(56012099006)(11063799006)(10067099003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?bWFpVjlSbzdzUGw3S3lEV2FsM3NXb242eVZlUEhrakZoanQ4eXd0VjlKS0lh?=
- =?utf-8?B?aFI4NGNuTG1heDN0NEY1VG40TzRGVXdpK01jeFJJWmp3RW5HL2JaWVJSM1NH?=
- =?utf-8?B?MnY5SUJmbGFrZVlJVERtL0g3c1VrQWtMOWhBNlVjTithYUN4SVExTndkTjJD?=
- =?utf-8?B?OUZBVVo2Vm12elpVcDlsRUdTMm9sTGxRWVVMd1dOOW9wRXNRZThIamlQNTVN?=
- =?utf-8?B?UDJQV0VTaEVmdHVlaDM4TWtHd2pjaTJSOXJyR2I2Ui9aTkZZWVlYeWZaT1ZY?=
- =?utf-8?B?M05vS1ZrbU9rTFlMbUhRSkcrMGZrNURDL2srVGFMYmpBV1Z4UmhKSnUrWXo4?=
- =?utf-8?B?b0xBUWpnVkRVeFBCV1d6dnVtczZtOHdRUTVQWWhyZ0h5UEZNcHJ5N0hDZzhR?=
- =?utf-8?B?K2JsRjZPT3AyMFVYRkVNaFl4bTZWV1d3VEZvd3RIcnNmamN5VFZLc1lNTDZE?=
- =?utf-8?B?NHM5R29RbUR5TDRiUGg1NU1SRGV1dmhaTGtWbnhCbHliUDdIS1l0UWN6VzJx?=
- =?utf-8?B?MktwdXZGS3MrT0tjTEk0aDU4WTlpU2FnNXgvMGlYbmhzSDYrZ3ZVTkx6dmMy?=
- =?utf-8?B?TXZOS1NYTUMwQkhhN1h3ZXhqc2xQNlVBWnZ4SkxCcWRnZXZiNVRFeU1MR0wv?=
- =?utf-8?B?d2NtOWhiUTZDckVMZ1BtKzBIWmZwcWZYSVZhMXBUN0g4TkQ5WS8xemkrNHd5?=
- =?utf-8?B?SVpHcEZrbmt2bnRrcXFyTEYrbzRGUzVWcDU5TDV1UlRidk5nRUlqR1hnWm40?=
- =?utf-8?B?YjUrTjBOMkdlWmluMlBSSk4zbE5EMjVJMVNSOS90QmJ4TEVhM0ErQ0kyNUxX?=
- =?utf-8?B?ckxtTGcxVElFNWZYQU42YitYVHpRSVFYMCtIWE4xZFZYeTcvUFlEYmxPSTBU?=
- =?utf-8?B?eC9seFBRL2oxVVR4T2NXbXJSZUY1c1E4RVVmaXVJYXZEU0l2Q1NrRHpOcFRm?=
- =?utf-8?B?ZzR2by9YVUZTSUZHK2RWNTVnd09Ra3ZuN21wbUUrVHlreXFIWFkxQlBwNmZz?=
- =?utf-8?B?QURHY1NoVU9XMGJnOTNHVnhzaGQ5NFJnSHhFckZaVm9wWnQwMEVwOHYwd0JU?=
- =?utf-8?B?SHk1S0Nld2xQalBybEF4Rytod24xWUM4WTZiMk5wS2w0UEgrVDNkais4UFpl?=
- =?utf-8?B?L3ZOcGVHL2F1cUY4VmF5cTM1d1VBTjUrTVZTNG55M1UzYngzWjI3cmcwbG4v?=
- =?utf-8?B?alpBWkZlTUwxRm5ZV1hTMkdPR3pEMU5ZdndWand0Z0VLR3R5eWlqTWdnNytN?=
- =?utf-8?B?eGZnNklYazRqdUp1ZjZZMnZVeW4zczZKNWhVb3gyc1dHY2ZMODArV09HWGFk?=
- =?utf-8?B?N1RMbUhialN1NGdLTy9TblhzT2ZBbnNnZVErNi9mZ2NsaUFsbWt1emcvNndV?=
- =?utf-8?B?WDhoU2d6TjRCTG02OTQzWlhhcUl3aCtvSDgvSUdsWFJKS0FXVE1xVlRsS2lT?=
- =?utf-8?B?NE5vdFR5cGhFdW5JeEVDU3RuQm0zS1o4WitpQTZaL0l3d0JMNUF2eUhPMFA4?=
- =?utf-8?B?LzZWM2l6QlBSWnp1UkFhd0NKVHZOaWV1WWxZSGFacWVDSVAxZ05PeGZISVFX?=
- =?utf-8?B?Q01peWx4dGxSck1tcjlIeU9mZG9oYldPZFN2YWFzYnhScm5FTXlvTVB1WE1H?=
- =?utf-8?B?ek5wcDhrUEFEMjIremJsd0w5SjBNdFl3cDRJNzJGV3NkSHQyb3lTc0Nid3J2?=
- =?utf-8?B?Z0I5Q0pjdnkrb0FheHlRS0JJVXE2clZVdTYySG1YZDVyYVNhN0c3QVE5Mnpm?=
- =?utf-8?B?RnBJa1RWTnZLcnhpTHNuRlVlV0R4RGNQVWFNemRsN2JYZ1lQdEpGL2FiMDBq?=
- =?utf-8?B?TDlXSEhkWkppbWhDZ1BkbDI5UTFwRUdsZkVxQkZ6Z3RjNHd5Rk9kc1VYWlor?=
- =?utf-8?B?RTdxcm1HU2lYUnp2dExBWnZxbnFtRUxSRS85M1A0Rko4ZVI0ZDFOckFKMnlo?=
- =?utf-8?B?M1NhV242ejN0RUlaODQycDVZbTRMZ1RUMk1kWVNtWUtmaHduUzk3dGJFNHhM?=
- =?utf-8?B?eUVVcmxudXZaT3pscmdoNXptaW1tejRiTFJxOHU0M3hod28vREZieVJLcCsz?=
- =?utf-8?B?WTZObU0zQkw0VzlYN0p6d09PaGFWS2JGcTJYNStqeEMxdVVqVUJMamUycXpl?=
- =?utf-8?B?MHNBRldwR0hvWUJwVE9zNTdqWVBIZUF5MXk2MWVHbk9wMmpQanF6Z2kwUmh3?=
- =?utf-8?B?WTdXTWhNRExYQ3FLYnQzV3JkbGJ1Ym5qVDJRM0IzQnAwZnYvMmk4b2dxNU1k?=
- =?utf-8?B?M0x5cVJza1ZPMHpSYy9ubEFlVEhVcTVJZGhJYjV2UWNhd0JlRVVUWFFhWE9w?=
- =?utf-8?Q?PIPVq6wo6UdlPzBgpw?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <4D9BF7C2A1907E42901202088A712E81@DEUP281.PROD.OUTLOOK.COM>
-Content-Transfer-Encoding: base64
+ d=oss.qualcomm.com; s=google; t=1784585845; x=1785190645; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Oc+JzOP3dekvrqSq35vjqf+pJXDkdiSTWJZRhjnCpqk=;
+ b=i9p6vDxiHAXtQI17lQi1RtzIP11ydl0yXyR8b3TjmQfL1jwCd/4LCW1WYh36lovOym
+ JqfDtskwsKhU60hDnEJWxqbvafau4+PoTT4Ozhu6TCJzUZAqW6W1Q1jnlPQ5rGRm1Lpn
+ cutNUa9upzId2M+Aua1bd+znkZGlSkX3rvLAlNIJw4g1WF5qyNxN7Z5wvhKST665tHQP
+ blSqNVBXSC/jdG9L+3lJV1ti+A9sO25sD9HYDlKHTBCFK8+FakpdT1SbbSf1iTnMsa6n
+ h6VB455gNZwSzY94O5XnvgqONcje8eQI9fNQkbm+i/Q6pxxO10B/85cu10q84p9Ng+DS
+ lUuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784585845; x=1785190645;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Oc+JzOP3dekvrqSq35vjqf+pJXDkdiSTWJZRhjnCpqk=;
+ b=C+Qzi9vZWz+1NwmmYelDPk26GjIXX47aPfSV8UdBaS3Hm2K+v24Iufs1Go8nCuSW8y
+ zqyLPlgy/PuVfylIMfo/qKIC1pvk0ESSgHBRu6v2e4ae5AAt5P5Ltb0cQOalkvUFd/+U
+ dMUyts/6PHrBFeBorisKcxJPPYxxP1mc9YtHYBc+e7MYM7gYKfiE/b+VOUCyqNtB209u
+ b7FOn8fAHj24nw+q3Z49M9HsgqtFwa1TvhW/ZqTWh9ml3ojwc22P5RWPWt0oWp9K+dWm
+ hbmXqI8M47sVDV5ONx0G5FE4hJ1NzUdyKeo7VkGfBcj8pe6IvQZaPiLNrsGrabQRa796
+ tQ7Q==
+X-Gm-Message-State: AOJu0YzbgK3Z/rNurhvu0f1t/kRCb/4koOzBG7errxO4ErEfIfFOi/Ui
+ jbDJHpFKb0AaxElmCGYuilR04SU5CqDQxVs11w1TAZQPqwN18lEv9pYKDPrHsHxoV3DYux9Ovll
+ uWnX+vy0VSn9WR5FOJygFFhKr0gAkbGOIFZLQG7uSEsws2qgPh3/ym+U3E1oGDN+WYw==
+X-Gm-Gg: AR+sD12mN+vehwvIHnq0gFshdb/Shd7BvuSZClWjKDgxmXurYRnTZknfZMu3Egw+9hv
+ GnHJ1v4aQVXmMUapRtJDiKX4bvpNIWeWgGo92YakDaHdZz8/bJWmZGOkruqp6OxVP3NSBQ5O/54
+ OpuPOMFPzQJ6QAGgGYNHMIAbL6MnCRtOAffx3s4z7SiSv2AMuAlVkwA6BLLrZEk5P5VMXr+FjQe
+ ABLDqo8mF9BS+D3qWKnP9+ypISTck0hDVau/5Ml1AziS9Ci83d4GOV+w8AQNaMv41jOhLbD3xAq
+ +PbluNP+lEp4dWJUEcNuBsn9udHSF8t7mL7UjUyla0A3Wl/J1a03Spp7RQEo4Ma1+fy9crGcAkw
+ Zn2HS5+TUQKVxvDI55nIw0Q566wtebrD1AWXQp+ZkA+ffteMuxguBoSZWK8+uKTs3ZrKKLMI=
+X-Received: by 2002:a17:90b:4a43:b0:36b:bec8:94c5 with SMTP id
+ 98e67ed59e1d1-38e4b44138fmr17061430a91.10.1784585844953; 
+ Mon, 20 Jul 2026 15:17:24 -0700 (PDT)
+X-Received: by 2002:a17:90b:4a43:b0:36b:bec8:94c5 with SMTP id
+ 98e67ed59e1d1-38e4b44138fmr17061408a91.10.1784585844543; 
+ Mon, 20 Jul 2026 15:17:24 -0700 (PDT)
+Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-13ce2cd6e6esm33855000c88.13.2026.07.20.15.17.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 20 Jul 2026 15:17:24 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: mjt@tls.msk.ru,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH 1/2] meson.build: define CONFIG_KVM_HOST
+Date: Mon, 20 Jul 2026 22:17:14 +0000
+Message-ID: <20260720221715.27108-2-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260720221715.27108-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20260720221715.27108-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: daWfwETo+1biVG1wrGAlLT3dnNSleQopZfGZ3DxvmpyCZ5pKUMYU6kqFHADZtYHpBbiVZz7zq2fYZ7merse8t/LOH0mIwW24DMs7XUOL66SqLtpM6aXwIc5QH3u9rv6se9kqJLEc47uaE/E/wqHlnYmHmp/ZDOxhX3t3U162yo07g9C7LzSMa/ScyDGoZu/TYAMTgxhBGZdm+L/yW6HmRV2Q+Y2WFkUmeK7wBH0Gs0DsXS7NvjKrUu9JgNbNnaYuJFcygF41hP4YUQDlWPF03w+H81Gq4BilEfcZYPIy5x+3xUlWtgY17evzocQLyyq6IJl2K5Y7uRpFEDVo8zcJxw==
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: FRSP281MB6250.DEUP281.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: 93182c52-a346-477d-a458-08dee6aa1601
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Jul 2026 21:58:52.1047 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 5280104a-472d-4538-9ccf-1e1d0efe8b1b
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: naEm3UE+9tsOCJ0xfT+lYRV+xV0NInwgSZH2jnjj1UWx1lkdNVy8wnnprjmKb41s
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BEYP281MB3911
-X-OriginatorOrg: amazon.de
-Received-SPF: pass client-ip=3.75.33.185;
- envelope-from=prvs=65431f960=graf@amazon.de;
- helo=fra-out-007.esa.eu-central-1.outbound.mail-perimeter.amazon.com
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: 44IP9Fa4Px7g0bTi9pCfBfzlDcZKshml
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDI0MiBTYWx0ZWRfX63S2gIFrpBLl
+ LbyEQzMKM5qwNtT6w8r+ujLlN2ZCQLPjIOgbAKQTzJZrQKlT5P47lf33dKV7KwwXWJw4MwWHgIE
+ mdbmoyTW90u1I6icWpcrcCHxDH43keE2RuDGgMHKpIYVow5P5GzGHOR7yjvrQS8jQIwgowaHdCN
+ TCcbe3y2Rhs0uMQTQ6jMv9H3nNUh+ZHG5L0Y9OMzQlJvO6Mb+DJH5z3dMl/YzI+sW7xIMBTe94O
+ ckHXPU9CdujyrSaH6mIZFLldWQya8sXaJoA8zF3iE5fHKdIvyUYK63Ea/IfKKBZzc8D9L7mlrLM
+ cxfliDLgMCxc8zMDKIu/B38oB0km8+lydY1vPwkcwP4dJFomPPvi1BRS39D/jg7UqsOcDO54Hc1
+ YzsrV3NafiIqse/6b4HuOzQw0fO5mtt28VJgeXAsHM8sE2V+JRpO1+cRL4h4S7XMfr/31D5e+dx
+ Kwr+Id720+Q9cS0UO0A==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDI0MiBTYWx0ZWRfX8ndv/y4ZNzsy
+ cBSOuSjjV56xII4w9AFe69Z42hI9I9xjV+Nfe6g7ZkV9rSb/wmoDKqHZs7SirZYjP2TW6/0pniO
+ mpJxxAN5AESZ2v0Cu0VGsPV+qGo48XU=
+X-Authority-Analysis: v=2.4 cv=daawG3Xe c=1 sm=1 tr=0 ts=6a5e9e75 cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=EUspDBNiAAAA:8
+ a=DzptWh3yG9ibc3xU_dMA:9 a=mQ_c8vxmzFEMiUWkPHU9:22
+X-Proofpoint-GUID: 44IP9Fa4Px7g0bTi9pCfBfzlDcZKshml
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-20_05,2026-07-20_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 impostorscore=0 priorityscore=1501 suspectscore=0 malwarescore=0
+ clxscore=1015 adultscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200242
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -181,14 +154,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQpPbiAyMC4wNy4yNiAxMzo1MywgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IElu
-IGNvbW1pdCAxZGRkYTVjZDM2NCB3ZSBtZWFudCB0byBzZXQgTVNTRD0zLCBidXQgZHVlDQo+IHRv
-IGEgdHlwbyB3ZSBlbmRlZCBzZXR0aW5nIE1TU0Q9MC4gQ29udmVydCB0aGUgdHdvIG90aGVyDQo+
-IE5BVEogYW5kIE1TU1Aga2V5cyB0byB1c2UgaGV4YWRlY2ltYWwgbm90YXRpb24gdG8gYXZvaWQN
-Cj4gc2ltaWxhciBjb3B5L3Bhc3RlIHR5cG9zLg0KPg0KPiBDYzogcWVtdS1zdGFibGVAbm9uZ251
-Lm9yZw0KPiBGaXhlczogMWRkZGE1Y2QzNjQgKCJBcHBsZVNNQyBkZXZpY2UgZW11bGF0aW9uIikN
-Cj4gUmVwb3J0ZWQtYnk6IE1hdHRoZXcgSmFja3NvbiA8bWF0dGhld0BwcS5pbz4NCj4gU2lnbmVk
-LW9mZi1ieTogUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgPHBoaWxtZEBvc3MucXVhbGNvbW0uY29t
-Pg0KDQoNCkZ1bm55IDopDQoNClJldmlld2VkLWJ5OiBBbGV4YW5kZXIgR3JhZiA8YWdyYWZAY3Nn
-cmFmLmRlPg0KDQoNCkFsZXgNCg==
+True if we are on a host providing kvm acceleration. To the opposite of
+CONFIG_KVM, it will be enabled for all targets.
+
+We used that in next commit to enable hw/vfio on kvm hosts only.
+
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ Kconfig.host | 3 +++
+ meson.build  | 4 ++++
+ 2 files changed, 7 insertions(+)
+
+diff --git a/Kconfig.host b/Kconfig.host
+index 933425c74b4..a7d8baaf723 100644
+--- a/Kconfig.host
++++ b/Kconfig.host
+@@ -64,3 +64,6 @@ config HAVE_RUST
+ 
+ config MAC_PVG
+     bool
++
++config KVM_HOST
++    bool
+diff --git a/meson.build b/meson.build
+index 164328ded83..632650e7d09 100644
+--- a/meson.build
++++ b/meson.build
+@@ -274,6 +274,7 @@ else
+   host_arch = cpu
+ endif
+ 
++kvm_host = true
+ if cpu == 'x86_64'
+   kvm_targets = ['i386-softmmu', 'x86_64-softmmu']
+ elif cpu == 'aarch64'
+@@ -288,6 +289,7 @@ elif cpu == 'loongarch64'
+   kvm_targets = ['loongarch64-softmmu']
+ else
+   kvm_targets = []
++  kvm_host = false
+ endif
+ accelerator_targets = { 'CONFIG_KVM': kvm_targets }
+ 
+@@ -2255,6 +2257,8 @@ endif
+ 
+ config_host_data = configuration_data()
+ 
++config_host_data.set('CONFIG_KVM_HOST', kvm_host)
++
+ config_host_data.set('CONFIG_HAVE_RUST', have_rust)
+ audio_drivers_selected = []
+ if have_system
+-- 
+2.43.0
+
 
