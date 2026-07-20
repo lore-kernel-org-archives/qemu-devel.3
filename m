@@ -4,144 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB101C44520
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 11:06:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B181C44515
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 11:06:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wllmA-0002rG-D2; Mon, 20 Jul 2026 07:03:10 -0400
+	id 1wllpJ-0007c5-P7; Mon, 20 Jul 2026 07:06:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
- id 1wllm8-0002qi-Vv
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 07:03:09 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
- id 1wllm6-0002st-MS
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 07:03:08 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66KAvV3M2162169
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 11:03:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=u2inny1kyHj
- ix+ilOuGF76rFjWqbyjoEgMiN6LdTVuU=; b=h53QDa4cp8Sm3n0l1DO18qeXMsu
- 6piejxjXWpRts72ykZ7bwt5euRpVIeQg/Q4ZixkMwOcpHpnrJ8v0490GWNJ3U5kK
- kg0JG+N4RgbUV+TWs2OB4Elv/CtRqS7+3XAx/7FEzDUYh/r5WlVkKlusWbggvOW7
- M4bjYoEDXqS0LT6APGDDoEFOPIpRPJcTInNnsczRDBJqndKwhWiGPWCPB8eR3sLF
- FlEHTFY98pAp2x6YowAZmr8aMv+GJTpqO3zCHS7tUn7xtTCaIe2zd6BfhWVHyT70
- eB8IgG1ENlolgFLEa9bQ9mPeVWBRfuKiCl7banjKrHppBJe1Lcr6fm4R1cA==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhgs00fc5-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 11:03:04 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-2cc98d6a88bso33989585ad.0
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 04:03:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wllpG-0007WB-Hu
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 07:06:23 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wllpE-0003VU-PY
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 07:06:22 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-38e88b60121so306970a91.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 04:06:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784545579; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Jdv02sDsBz3nSKHcUrGnL7jaFaFCx85O/QkqUFSMa7zXKyeK9E0UGOEvurNMvGHRV2
+ crHZdCG3gwW6win9hcF751yeYOmEKvx4FoXVrbqe6UuQdjmx11K4sH37mz7l7AS8eiDq
+ pWim1oRvuBdbeX6M20PmvIjTx8fUXB0KEX7p/brDHIfZm3Zb3HC/xE3PwxOWcZHyUOfa
+ ZH8OaFOYXNiHr9AWWRxkcBs3g77/Jhjbfot6FEwV1jT/y/pHQrH4JDyHAVWPLpC9qW7c
+ fGJ+M9MG97UJ4c9QvOO7w5l7tMFROowGAxTbyx5MTlXcF8pT7Z28ZmGIm2YJ5V1wHjhD
+ rIAg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=zyANhnZ9k+RcyOnHxj62+row/oJiquHJv3MGzBwUxgg=;
+ fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
+ b=AtbJsidEbwbiMspfuF1gIaQFdjG/teco4wRzik1+q1rMMUoy0W75PhWrL5584fXPxS
+ aRF6+mvE3/IgVfsoaL4bpL7RGTpDPoCBJcUgCIzB5g/2lr3Ade2f/Q8Q+fN+SCS4GSSU
+ z0lHOflSF08xRmUOLR5NhEwyAf7u1owqSCPhmBCTLJE+IWVF6hWcUBwTU9V/kfO3GRT/
+ ahiLmwgeIIODkLXMjRDAY8mj2cydqK5Z26UyM0s1aL68caaDOcXYcREPrMNH+ZP3JB5k
+ eG2vaf6ATv/ZmrfRdLTNaAhqGl1WA0ny6zjUeaosCbsvS7fwVQzN/+ohmrUrFyyiqJS+
+ ZcmA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784545383; x=1785150183; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1784545579; x=1785150379; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:to:subject:message-id:date
+ :from:in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=u2inny1kyHjix+ilOuGF76rFjWqbyjoEgMiN6LdTVuU=;
- b=iYD2gzFmsVaclEH3wKS57KJK2bAF1kclxzqUeYuHsBNOnnghT8toxswlK7QKyx8xKS
- pl+GOY29ui7d8Z7g7zl2TSlwtGlyOxe62LzZCpfJAurS0W9ZnpbjAAjtSLcGNslQlFEs
- K8oMAXdIAWASI+0p9vMJDq7pWatqwuzHIH1aVoMD83pMTiGjmaLC9/qMqPcCWdPA0k+T
- BQsNVBK3r4NsQwVivifuiGspiDst42TMQAfay4zdCkKI2bGVCdKrad6P1wIGkT8XtV/Y
- /bhC6iUa4hAWs3Z6z8uudfpQcRD1wjINnSRiCIcIovl2z1M9Cg8nz9FSH30D7vkvJAgL
- E2KA==
+ bh=zyANhnZ9k+RcyOnHxj62+row/oJiquHJv3MGzBwUxgg=;
+ b=g3j2n7WmEjDj18ERX/iTOpPLXExtyb7G4fYRCsDZIo1kIYCEua764xhYFvUMQ023el
+ Rg8VhDCHOv5pgcnLefFVCDuxqk1PrQPPNmYLR+jL1shmS2Js+AX6lbap/895LA6srBw4
+ /LwlnVvDilKt8WbUAeRILLZ1RtLbVjf0GOo98TsTxEmtHFT7YHIogx+6U7I3uMgAsGJZ
+ AUdNMtCle2pb+7Ojxu+aH2nzbcyeQuQcXGIeudwKQ5eDK2cPIXczBIsZRPgqeTVFP/tK
+ hn+2qYvNvUbpt3JoP6ujthM+uBN7BEoyRIk4rE3czg6bioJ7kJsqoyjlxtuV+J6zrqwm
+ CE0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784545383; x=1785150183;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=u2inny1kyHjix+ilOuGF76rFjWqbyjoEgMiN6LdTVuU=;
- b=mfua04ZPD22CCvpMBefneNL6p4U0fqf1YA0lnlUatIJ3yUpv5PRvnaByeSmLl2lozx
- Eg/f0/q45tpVjbBu1CUGxybOE0jhc/7jrPf2YTvBnnixxR5w8jYY0u/gndI656PYuzQq
- sKlrtqNG09b4oC6hyJPEry9/cZKzizwYMC3xjVaVuJy98rTu9u+iooBhCdEENn4c+BjZ
- mQA2njyTW7R6mY9UZX1qUFyu75eyu0gA5L6Ch3174G7HJ/8KnLQMkApq86W7dMym7opk
- C1E/Ry+Pizoz8UmPWGXURqs7IQ3AZjb9iUQvC53l/9pL4cSo6en2taqPgEJaTRPcBhxG
- pxZg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrtYWOGkbjpPlw/ca30Rz8SztJv/zXsDscx/IqHDIaOsJE7iwc5Seoj3Gi9aBl1sLcpAgudkFkcLjrd@nongnu.org
-X-Gm-Message-State: AOJu0Yzkaxq2cANY8BESncSpyLtb/FrIiJ6YRoO3sXOq4kwicC6TTm9m
- m3M4gscUjDXwOBFyeANzolOmd2IVYcdz/YEf6lApRlGuAIb4rHCQEAltEAVjhppGJkwQXIRho8T
- UlO0/D9WNSjCUN3zW8UUzf9cY6/QnIik4QKmaAGIJmKiXB/dfkLVw8/S0jA==
-X-Gm-Gg: AR+sD13JGM8pJ7ZlqOOTBkO0qIVEA5q22pN5fFOSC58bfoZDrefCHhDDZVA4YOLI+V8
- gbOfBRUmLQIKPJhFo1YpWKIP7yn66Mobhj39fIR5xcsTrZ/7lzQD7M2O8usweNYZ4c+dDtza9pE
- XpdvT3btG1oPu3sEJvXBGKQhP8P6k3nL/AVYfjkhlk1LiEmjrjnHQ4B9LcvxxGmwaEtLgGd58CJ
- IcAIPR1bcN1WjSv7XawaJw9PvWaiYVMweIhbCdhirjQGc/GlpP+gO1QxsnuvagPuWHVxzb5nnvp
- fQs7lpcT5tUh7WRPOYXqwLZw+QVoWWekvwIFFQzKMP079pgRbhAM1IGZAIMJVpsEOa2gmUFWJ4h
- Qo6F/VVUPgUBN01kDhB1qvLcgDw9nQtN2NE7Vu02WlNoHRfoRLt6Fa5gcLewhARGluUXNlKxpm3
- EZY6OqmBej1G6vxTU5C8e+EMGbgiQsCPo=
-X-Received: by 2002:a17:903:2d1:b0:2c9:99be:f011 with SMTP id
- d9443c01a7336-2cf34988a8dmr98692735ad.6.1784545383153; 
- Mon, 20 Jul 2026 04:03:03 -0700 (PDT)
-X-Received: by 2002:a17:903:2d1:b0:2c9:99be:f011 with SMTP id
- d9443c01a7336-2cf34988a8dmr98692435ad.6.1784545382660; 
- Mon, 20 Jul 2026 04:03:02 -0700 (PDT)
-Received: from hu-slingapp-blr.qualcomm.com
- (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3142a20b1f3sm34698566eec.26.2026.07.20.04.02.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Jul 2026 04:03:01 -0700 (PDT)
-From: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
-To: qemu-riscv@nongnu.org
-Cc: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>,
- qemu-devel@nongnu.org (open list:All patches CC here)
-Subject: [PATCH v4 03/10] hw/riscv: add RPMI FDT helpers
-Date: Mon, 20 Jul 2026 16:32:26 +0530
-Message-ID: <025da435c6b7097161342724a6e1ba7e85b64258.1784541996.git.subrahmanya.lingappa@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1784541996.git.subrahmanya.lingappa@oss.qualcomm.com>
-References: <cover.1784541996.git.subrahmanya.lingappa@oss.qualcomm.com>
+ d=1e100.net; s=20251104; t=1784545579; x=1785150379;
+ h=content-transfer-encoding:content-type:to:subject:message-id:date
+ :from:in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=zyANhnZ9k+RcyOnHxj62+row/oJiquHJv3MGzBwUxgg=;
+ b=KA5Pt7rm+tZX3Qf1d/MXHpmxyaqo+I4On53DXmtkNNHnDWqLnDNXI/4KYmRfdalh7j
+ KU0u2YlFDjhZnwlb9nMGHwt6FabQmd9vUAnJtM0m2176fWT39ZYo9GAyv3AamodCr+mE
+ K4y4zOIRI9nQaXozJO0HfiIt/cFoFmG8+6cFzIISgrc0igGipmR2hKeFtCPRQrjjTE7y
+ soYU7sLtT2eMvWT4RVY+oevZbuWTUm3rpEoiQ0ruEii2MrHdLe1o/aYD1YNgfbE+PE1t
+ xeowTjapYOsEpyfyI940Nn/0AwtfSnV9SkZp2kCsUbjkcPdrevhg0LO53juEC5y+gxgl
+ U7uQ==
+X-Gm-Message-State: AOJu0YwGqa7tpkl61IwPclk/cAK7pI2MDkG6XfDYMphkqHiN7NQ2BRvn
+ pc0HmVp5VfFx8QWrqCMpDp7Bd+5wPRxVTTts0IhePR/C2UU04Ot0hfIpw5lo39JNAd6xx151yNG
+ DMJ3gor69n13TaHJLEKlS5oqddYxnYEjOH5RIlSE=
+X-Gm-Gg: AR+sD12XMZ/jtk3oYIY/oeQNF2RSdvnrCJlDKn0r3a1DSRp1GKzsNVWI0BucVyMU3zF
+ k/DrSDUHAwjW2zUZwNxi9nG67WyWX5OLpFwtSRPNwX2ZXf3idfmojvO2hIvY0Y34IuBR4b7Gvsa
+ aM8MS0TH51JuBh+tAtElJsAcV/3rBTwfwJ/dEpxNy6Kk8QqCN5h8agH+CWzJZXt/AV8TdqUSt7G
+ JPOqymHyyMxxZ0f/a4PRyKZzSS9dHiNOY18EB78hTesbIQQIn3O8d5r5mIlBi0qDx1RuOP6qhEU
+ UT+0afYsTVoHAiUZLQ==
+X-Received: by 2002:a17:903:b8b:b0:2c9:cf5d:d9b8 with SMTP id
+ d9443c01a7336-2cf349a4e71mr157269105ad.33.1784545578880; Mon, 20 Jul 2026
+ 04:06:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDEyMyBTYWx0ZWRfX+1ec8WzRJAlO
- vgZorBY/V5HkReRPST0XKOEKE7LN8n/lIAfXPlV52F/XTMsixXwWsKnQOWHxj49gagshqX7wjqq
- QfpdwUZL200KJT+J1Dcn9AdbF8mF+FI=
-X-Proofpoint-ORIG-GUID: HYY5H8DgDrHDPGUqz8zfj3Ovg1BWNCw1
-X-Authority-Analysis: v=2.4 cv=DMS/JSNb c=1 sm=1 tr=0 ts=6a5e0068 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=EUspDBNiAAAA:8
- a=jHWy4UxqgUe44QwoGJQA:9 a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-GUID: HYY5H8DgDrHDPGUqz8zfj3Ovg1BWNCw1
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDEyMyBTYWx0ZWRfX0FVfXLkKkAPd
- hWToRPDRA56VR9j78c5ESHigM3jBZY6UuqAVdSW9CmsHQqKaF4vHBXz0QxY3bq2mIQHJQuXPkAv
- 5w3KRdBTJjpRurNmBVLjeAbyJYSCEojPXHybnCZdrmj9EGbMMbP2UGnCWLVS55eZFhmyldNpO/p
- np6xIDMk2mTFWnYHUfxgaXPZ6Ap51jc0sVKdYHjROlnWoynlV8Ds8s082itB/PWRKbFUxQSYbsr
- Mtvy2KfA5MtPDDr8+sp8iGfS1VKpWVdgRvFOFdLZxVVmPCewSlUt28xCCeQDNPSiJxmbiZLo1sn
- 7zUs/pWunPhRYvCIyCYzV/ThSux6sFs6+s+SQnf6//BB0Uuf8EKSSGuVfkzcytwADSQ8LKoq1J6
- qdEplRoKH/OUK0zKgWk9/ePPqD2MJIofFFKg7DS+UsBn9X9laamFJZ2oMy5aD5TvQz4zx1eYxGj
- PsHp3xEI8SMvDBmCaxQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-20_02,2026-07-20_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 impostorscore=0 priorityscore=1501 spamscore=0 bulkscore=0
- lowpriorityscore=0 clxscore=1015 phishscore=0 malwarescore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200123
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=subrahmanya.lingappa@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20260715072722.1643289-1-marcandre.lureau@redhat.com>
+In-Reply-To: <20260715072722.1643289-1-marcandre.lureau@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Mon, 20 Jul 2026 15:06:06 +0400
+X-Gm-Features: AUfX_mx9NgWJXVbIuPQYXDWmEekPJZkizOl5WKyK00TZTlmgulIWJ288zT9YNbU
+Message-ID: <CAJ+F1C+pNG4HWNDL9a8D4EU4HDW24eg8S6eVHgLs+=nE3H3Y6w@mail.gmail.com>
+Subject: Re: [PATCH] hw/display/qxl: validate monitors_config heads[] in
+ phys2virt
+To: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-pj1-x1034.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,181 +116,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add helper routines for describing RPMI shared-memory mailbox transports
-and service child nodes in the RISC-V virt device tree.
+Hi
 
-The helpers keep RPMI node construction in one place so the virt machine
-can add service groups without open-coding compatible strings, channel
-IDs, interrupts, and shared-memory references at each call site.
+On Wed, Jul 15, 2026 at 11:28=E2=80=AFAM <marcandre.lureau@redhat.com> wrot=
+e:
+>
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> The qxl_phys2virt() call for guest_monitors_config only validates
+> sizeof(QXLMonitorsConfig), which covers the fixed header (count and
+> max_allowed) since commit 8efec0ef8bbc ("hw/display/qxl: Pass requested
+> buffer size to qxl_phys2virt()"), but not the flexible array member
+> heads[]. When count =3D=3D 1, heads[0] is accessed without its memory bei=
+ng
+> validated, allowing a guest to cause an out-of-bounds read.
+>
+> Include sizeof(QXLHead) in the size passed to qxl_phys2virt() so that
+> the first head entry is validated within the guest memory slot, preventin=
+g
+> guest-visible memory reading.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4027
+> Reported-by: Tristan @TristanInSec
+> Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
 
-Signed-off-by: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
----
- hw/riscv/meson.build        |   1 +
- hw/riscv/rpmi-fdt.c         | 103 ++++++++++++++++++++++++++++++++++++
- include/hw/riscv/rpmi-fdt.h |  30 +++++++++++
- 3 files changed, 134 insertions(+)
- create mode 100644 hw/riscv/rpmi-fdt.c
- create mode 100644 include/hw/riscv/rpmi-fdt.h
+we are receiving multiple reports of this issue, can someone review?
 
-diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
-index b70a054579..ae69426eb1 100644
---- a/hw/riscv/meson.build
-+++ b/hw/riscv/meson.build
-@@ -3,6 +3,7 @@ riscv_ss.add(files('boot.c'))
- riscv_ss.add(files('fdt-common.c'))
- riscv_ss.add(when: 'CONFIG_RISCV_NUMA', if_true: files('numa.c'))
- riscv_ss.add(files('riscv_hart.c'))
-+riscv_ss.add(when: 'CONFIG_RISCV_RPMI', if_true: files('rpmi-fdt.c'))
- riscv_ss.add(when: 'CONFIG_OPENTITAN', if_true: files('opentitan.c'))
- riscv_ss.add(when: 'CONFIG_RISCV_VIRT', if_true: files('virt.c'))
- riscv_ss.add(when: 'CONFIG_SHAKTI_C', if_true: files('shakti_c.c'))
-diff --git a/hw/riscv/rpmi-fdt.c b/hw/riscv/rpmi-fdt.c
-new file mode 100644
-index 0000000000..b2b3daea1c
---- /dev/null
-+++ b/hw/riscv/rpmi-fdt.c
-@@ -0,0 +1,103 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * RISC-V RPMI device-tree helpers
-+ *
-+ * Copyright (c) 2026 Qualcomm Technologies, Inc.
-+ * Author:
-+ *  Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/bswap.h"
-+#include "hw/riscv/rpmi-fdt.h"
-+#include "hw/misc/riscv_rpmi.h"
-+#include "system/device_tree.h"
-+
-+void riscv_rpmi_fdt_add_mbox(void *fdt,
-+                             const RiscvRpmiFdtMboxConfig *cfg,
-+                             uint32_t *phandle,
-+                             uint32_t *mbox_handle)
-+{
-+    g_autofree char *name = NULL;
-+    hwaddr a2p_req_base, p2a_ack_base, p2a_req_base, a2p_ack_base;
-+    static const char * const regnames_all[RPMI_ALL_NUM_REGS] = {
-+        "a2p-req", "p2a-ack", "p2a-req", "a2p-ack", "a2p-doorbell"
-+    };
-+    static const char * const regnames_a2p[RPMI_A2P_NUM_REGS] = {
-+        "a2p-req", "p2a-ack", "a2p-doorbell"
-+    };
-+
-+    a2p_req_base = cfg->shmem_base;
-+    p2a_ack_base = a2p_req_base + cfg->a2p_req_size;
-+    p2a_req_base = p2a_ack_base + cfg->a2p_req_size;
-+    a2p_ack_base = p2a_req_base + cfg->p2a_req_size;
-+
-+    *mbox_handle = (*phandle)++;
-+    name = g_strdup_printf("/soc/mailbox@%" HWADDR_PRIx, cfg->shmem_base);
-+    qemu_fdt_add_subnode(fdt, name);
-+    qemu_fdt_setprop_string(fdt, name, "compatible", "riscv,rpmi-shmem-mbox");
-+    qemu_fdt_setprop_cell(fdt, name, "riscv,slot-size", RPMI_QUEUE_SLOT_SIZE);
-+    qemu_fdt_setprop_cell(fdt, name, "#mbox-cells", 1);
-+
-+    if (cfg->p2a_req_size) {
-+        qemu_fdt_setprop_string_array(fdt, name, "reg-names",
-+                                      (char **)&regnames_all,
-+                                      ARRAY_SIZE(regnames_all));
-+        qemu_fdt_setprop_cells(fdt, name, "reg",
-+            (uint32_t)(a2p_req_base >> 32), (uint32_t)a2p_req_base,
-+            0x0, cfg->a2p_req_size,
-+            (uint32_t)(p2a_ack_base >> 32), (uint32_t)p2a_ack_base,
-+            0x0, cfg->a2p_req_size,
-+            (uint32_t)(p2a_req_base >> 32), (uint32_t)p2a_req_base,
-+            0x0, cfg->p2a_req_size,
-+            (uint32_t)(a2p_ack_base >> 32), (uint32_t)a2p_ack_base,
-+            0x0, cfg->p2a_req_size,
-+            (uint32_t)(cfg->doorbell_base >> 32), (uint32_t)cfg->doorbell_base,
-+            0x0, cfg->doorbell_size);
-+    } else {
-+        qemu_fdt_setprop_string_array(fdt, name, "reg-names",
-+                                      (char **)&regnames_a2p,
-+                                      ARRAY_SIZE(regnames_a2p));
-+        qemu_fdt_setprop_cells(fdt, name, "reg",
-+            (uint32_t)(a2p_req_base >> 32), (uint32_t)a2p_req_base,
-+            0x0, cfg->a2p_req_size,
-+            (uint32_t)(p2a_ack_base >> 32), (uint32_t)p2a_ack_base,
-+            0x0, cfg->a2p_req_size,
-+            (uint32_t)(cfg->doorbell_base >> 32), (uint32_t)cfg->doorbell_base,
-+            0x0, cfg->doorbell_size);
-+    }
-+
-+    qemu_fdt_setprop_cells(fdt, name, "phandle", *mbox_handle);
-+}
-+
-+void riscv_rpmi_fdt_add_service(void *fdt, hwaddr shmem_base,
-+                                const char *node_name,
-+                                const char *compatible,
-+                                uint32_t mbox_handle,
-+                                uint32_t service_group,
-+                                bool has_mpxy_channel,
-+                                uint32_t mpxy_channel)
-+{
-+    g_autofree char *name = g_strdup_printf("/soc/mailbox@%" HWADDR_PRIx "/%s",
-+                                            shmem_base, node_name);
-+
-+    qemu_fdt_add_subnode(fdt, name);
-+    qemu_fdt_setprop_string(fdt, name, "compatible", compatible);
-+    qemu_fdt_setprop_cells(fdt, name, "mboxes", mbox_handle, service_group);
-+    if (has_mpxy_channel) {
-+        qemu_fdt_setprop_cell(fdt, name, "riscv,sbi-mpxy-channel-id",
-+                              mpxy_channel);
-+    }
-+}
-+
-+void riscv_rpmi_fdt_add_service_node(void *fdt, hwaddr shmem_base,
-+                                     const RiscvRpmiServiceConfig *service,
-+                                     uint32_t mbox_handle)
-+{
-+    riscv_rpmi_fdt_add_service(fdt, shmem_base, service->node_name,
-+                               service->compatible, mbox_handle,
-+                               service->service_group,
-+                               service->has_mpxy_channel,
-+                               service->mpxy_channel);
-+}
-diff --git a/include/hw/riscv/rpmi-fdt.h b/include/hw/riscv/rpmi-fdt.h
-new file mode 100644
-index 0000000000..f053ae5d57
---- /dev/null
-+++ b/include/hw/riscv/rpmi-fdt.h
-@@ -0,0 +1,30 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * RISC-V RPMI device-tree helpers
-+ *
-+ * Copyright (c) 2026 Qualcomm Technologies, Inc.
-+ * Author:
-+ *  Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
-+ */
-+
-+#ifndef HW_RISCV_RPMI_FDT_H
-+#define HW_RISCV_RPMI_FDT_H
-+
-+#include "exec/hwaddr.h"
-+#include "hw/misc/riscv_rpmi.h"
-+
-+typedef struct RiscvRpmiFdtMboxConfig {
-+    hwaddr shmem_base;
-+    hwaddr doorbell_base;
-+    uint32_t a2p_req_size;
-+    uint32_t p2a_req_size;
-+    uint32_t doorbell_size;
-+} RiscvRpmiFdtMboxConfig;
-+
-+void riscv_rpmi_fdt_add_mbox(void *fdt,
-+                             const RiscvRpmiFdtMboxConfig *cfg,
-+                             uint32_t *phandle,
-+                             uint32_t *mbox_handle);
-+
-+#endif
--- 
-2.43.0
+(why the code only cares about count =3D=3D 1 here? to limit the area to
+render. in case of multi-monitor, it's the client job to handle the
+monitor-config areas - tbh I suspect QEMU -display doesn't handle that
+well, but I didn't check)
 
+> ---
+>  hw/display/qxl.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/hw/display/qxl.c b/hw/display/qxl.c
+> index 74258afa582..3df796175c2 100644
+> --- a/hw/display/qxl.c
+> +++ b/hw/display/qxl.c
+> @@ -270,7 +270,7 @@ static void qxl_spice_monitors_config_async(PCIQXLDev=
+ice *qxl, int replay)
+>      }
+>
+>      cfg =3D qxl_phys2virt(qxl, qxl->guest_monitors_config, MEMSLOT_GROUP=
+_GUEST,
+> -                        sizeof(QXLMonitorsConfig));
+> +                        sizeof(QXLMonitorsConfig) + sizeof(QXLHead));
+>      if (cfg !=3D NULL && cfg->count =3D=3D 1) {
+>          qxl->guest_primary.resized =3D 1;
+>          qxl->guest_head0_width  =3D cfg->heads[0].width;
+> --
+> 2.55.0
+>
+>
 
