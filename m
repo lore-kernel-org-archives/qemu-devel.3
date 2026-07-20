@@ -4,67 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9771C44527
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 10:39:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 878D5C44529
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 10:39:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wllOb-0003jW-DS; Mon, 20 Jul 2026 06:38:49 -0400
+	id 1wllOo-0003mv-8E; Mon, 20 Jul 2026 06:39:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wllOW-0003jD-17
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 06:38:44 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wllOm-0003mP-4Y
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 06:39:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wllOU-0008Fh-0D
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 06:38:43 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wllOk-0008IJ-LV
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 06:38:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784543919;
+ s=mimecast20190719; t=1784543938;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=g3Sw9l9BSxAk/udltAZf7E9K3+LweeIjLjiVXqWK4PI=;
- b=W7IliFd5WiQI5TcfDYOQtktZrGOTUOPwZpFQQvhtAdA6UjTl6KCZwyVirwjpDL24F1TB1m
- AIVhus/+yZLq2ZYgKnANqk6ZQ/I8Qs1yP+pTKmIyrZarOsAVy4XLPti/qZcUG9UCJHsA2W
- kAHCKL2EJqh6ExGwPP1JyVorQaSKGZw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8+FPfCzpRA13rUQiz7x4b9yGDzYKNxGYMOHyt30DAOI=;
+ b=i2qu6vEjl2MWiqHMwrtVIJjJmsVMefdpL6Q1dA//rj6BVwxktj2xdeKCh3RcYuiOzkDZX9
+ 3jMhKeHHm7ECW75tBO0HPHWbZvJm4iDPmDIftA/ZQc6q/JGmwXGzdqnSlm4mfC+iVr7GNL
+ Ylo2XPTqo5SZd2Bp5mrh0eA51nAbrdw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-354-e4yxxxC_MOycd_-902OAYg-1; Mon,
- 20 Jul 2026 06:38:37 -0400
-X-MC-Unique: e4yxxxC_MOycd_-902OAYg-1
-X-Mimecast-MFC-AGG-ID: e4yxxxC_MOycd_-902OAYg_1784543917
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-10-QwL3aHqjOvOSYRr307xMfw-1; Mon,
+ 20 Jul 2026 06:38:53 -0400
+X-MC-Unique: QwL3aHqjOvOSYRr307xMfw-1
+X-Mimecast-MFC-AGG-ID: QwL3aHqjOvOSYRr307xMfw_1784543932
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D56CA195604C
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 10:38:36 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 951301802575; Mon, 20 Jul 2026 10:38:52 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.34.82])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 779D81588; Mon, 20 Jul 2026 10:38:35 +0000 (UTC)
+ id A7F6C1588; Mon, 20 Jul 2026 10:38:50 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 0/7] USB-related bug fixes
-Date: Mon, 20 Jul 2026 12:38:26 +0200
-Message-ID: <20260720103833.364506-1-thuth@redhat.com>
+Cc: Tristan Madani <tristan@talencesecurity.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 7/7] hw/usb/hcd-xhci-sysbus: Fix OOB heap access in
+ xhci_sysbus_intr_raise()
+Date: Mon, 20 Jul 2026 12:38:33 +0200
+Message-ID: <20260720103833.364506-8-thuth@redhat.com>
+In-Reply-To: <20260720103833.364506-1-thuth@redhat.com>
+References: <20260720103833.364506-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: permerror client-ip=170.10.133.124;
  envelope-from=thuth@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,44 +83,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
- Hi Stefan!
+From: Thomas Huth <thuth@redhat.com>
 
-The following changes since commit 5ef0ecc5942ee07bb581cc96a97bbfc0fdf4005c:
+Some machines like the microvm machine instantiate a "sysbus-xhci"
+device with just 1 interrupt (by setting the "intrs" property to 1).
+xhci_sysbus_realize() then only allocates the s->irq array with one
+entry.
 
-  Merge tag 'hw-misc-20260714' of https://github.com/philmd/qemu into staging (2026-07-17 10:01:52 +0100)
+When the guest writes to the ERDP register of a corresponding XHCI
+"interrupter", the generic XHCI code calls the xhci_sysbus_intr_raise()
+function with n > 1, and this function then calls qemu_set_irq() with
+s->irq[n] pointing to a bad heap address. The qemu_set_irq() then tries
+to call an IRQ handler via a function pointer in that heap space. This
+either causes QEMU to die with a segmentation fault (if it's a bad
+address), or even worse runs some unexpected code if the destination
+of the pointer is executable code.
 
-are available in the Git repository at:
+Looking at the xHCI spec, it is up to the implementation of the host
+controller how many interrupters are available. So if we only support
+one or some few interrupters, the registers of the other interrupters
+should not do anything, i.e. reads should result in zeros and writes
+should be completely ignored. (big thanks to Peter Maydell for helping
+with the analyzation of the correct way to fix this here)
 
-  https://gitlab.com/thuth/qemu.git tags/pull-request-2026-07-20
+This way, the xhci_sysbus_intr_raise() function cannot be called with
+an invalid interrupt number anymore. But for good measure, also add an
+assert() statement to the xhci_sysbus_intr_raise() function to prevent
+that similar problems with calling arbitrary function pointers on the
+heap could occur again.
 
-for you to fetch changes up to cc479aa89743655a725ce29328bcd0585a65983a:
+Fixes: CVE-2026-16043
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4001
+Reported-by: Tristan Madani <tristan@talencesecurity.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260719061528.15587-1-thuth@redhat.com>
+---
+ hw/usb/hcd-xhci-sysbus.c |  1 +
+ hw/usb/hcd-xhci.c        | 13 +++++++++++++
+ 2 files changed, 14 insertions(+)
 
-  hw/usb/hcd-xhci-sysbus: Fix OOB heap access in xhci_sysbus_intr_raise() (2026-07-20 11:27:52 +0200)
-
-----------------------------------------------------------------
-* Fixes for various USB-related bugs
-
-----------------------------------------------------------------
-Feifan Qian (1):
-      hw/usb/xhci: clamp interval exponent to avoid UB shift in xhci_init_epctx()
-
-Marc-André Lureau (2):
-      usbredir: fix use-after-free on buffered bulk packet overflow
-      usbredir: fix infinite loop and SIGFPE with zero max_packet_size
-
-Thomas Huth (2):
-      hw/usb/hcd-xhci: Fix guest-triggerable assert() in xhci_find_stream()
-      hw/usb/hcd-xhci-sysbus: Fix OOB heap access in xhci_sysbus_intr_raise()
-
-Xiangfeng Cai (2):
-      hw/usb/hcd-xhci-pci: break host link cycle so device_finalize() runs on unplug
-      tests/qtest: add xhci-pci unplug finalize regression test
-
- hw/usb/hcd-xhci-pci.c           | 12 ++++++++
- hw/usb/hcd-xhci-sysbus.c        |  1 +
- hw/usb/hcd-xhci.c               | 22 ++++++++++++--
- hw/usb/redirect.c               | 42 +++++++++++++++++++++++++-
- tests/qtest/usb-hcd-xhci-test.c | 67 +++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 141 insertions(+), 3 deletions(-)
+diff --git a/hw/usb/hcd-xhci-sysbus.c b/hw/usb/hcd-xhci-sysbus.c
+index 19664c5985e..bbdd5fd64ab 100644
+--- a/hw/usb/hcd-xhci-sysbus.c
++++ b/hw/usb/hcd-xhci-sysbus.c
+@@ -20,6 +20,7 @@ static bool xhci_sysbus_intr_raise(XHCIState *xhci, int n, bool level)
+ {
+     XHCISysbusState *s = container_of(xhci, XHCISysbusState, xhci);
+ 
++    assert(n < xhci->numintrs);
+     qemu_set_irq(s->irq[n], level);
+ 
+     return false;
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+index b94249993a1..569386b8cf1 100644
+--- a/hw/usb/hcd-xhci.c
++++ b/hw/usb/hcd-xhci.c
+@@ -3044,6 +3044,12 @@ static uint64_t xhci_runtime_read(void *ptr, hwaddr reg,
+         }
+     } else {
+         int v = (reg - 0x20) / 0x20;
++
++        if (v >= xhci->numintrs) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "xhci: read from nonexistent interrupter %i\n", v);
++            goto out_trace;
++        }
+         XHCIInterrupter *intr = &xhci->intr[v];
+         switch (reg & 0x1f) {
+         case 0x00: /* IMAN */
+@@ -3070,6 +3076,7 @@ static uint64_t xhci_runtime_read(void *ptr, hwaddr reg,
+         }
+     }
+ 
++out_trace:
+     trace_usb_xhci_runtime_read(reg, ret);
+     return ret;
+ }
+@@ -3087,7 +3094,13 @@ static void xhci_runtime_write(void *ptr, hwaddr reg,
+         trace_usb_xhci_unimplemented("runtime write", reg);
+         return;
+     }
++
+     v = (reg - 0x20) / 0x20;
++    if (v >= xhci->numintrs) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "xhci: write to nonexistent interrupter %i\n", v);
++        return;
++    }
+     intr = &xhci->intr[v];
+ 
+     switch (reg & 0x1f) {
+-- 
+2.55.0
 
 
