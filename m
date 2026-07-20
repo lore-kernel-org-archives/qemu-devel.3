@@ -4,66 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67A2DC4451B
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 05:22:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0FD6C44515
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 05:27:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlgRr-0006v6-4i; Mon, 20 Jul 2026 01:21:53 -0400
+	id 1wlgXO-0007nS-3G; Mon, 20 Jul 2026 01:27:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1wlgRk-0006ua-7E; Mon, 20 Jul 2026 01:21:45 -0400
-Received: from sender4-op-o11.zoho.com ([136.143.188.11])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wlgXG-0007n3-RK
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 01:27:26 -0400
+Received: from smtpout2.mo537.mail-out.ovh.net ([51.210.91.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1wlgRh-0007aw-OP; Mon, 20 Jul 2026 01:21:43 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1784524885; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=Bb1GF4mJku8VpBb7zzHQ2z4EiExTG0nJCz/AXJfb7X0orXvTwqkUxXs0kN/gqDUBNbE+xs8f/Coi55Pb7xd6NtFV0B9LRw7yRCYqBU3hUpdM+XQfUJ15jKUwrnrHB8HY0bflNUeIK4K0kiRKsSTWkQlyY6BRx5inIAP4pstgCmo=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1784524885;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=48AFrF4se8ACX53XnlQHyeN7lFvzQ3ItcEj508mTzHs=; 
- b=msBMWcO/T+EKig8ksETn2h9n3zTlETbLb8/0w/Gh6xEVqavbF8lzxKJSki2pSjAZOyQgay3RvtkxzPwofzfp90aaqoJBTLGhH1F3vdXOd3dDlzMiWT/RlnzIOpsJeuhMLPIRTMh5fQ4rZrleYLxE6G1OIETI+toZkMiE7q+NSz4=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1784524885; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=48AFrF4se8ACX53XnlQHyeN7lFvzQ3ItcEj508mTzHs=;
- b=giY+QmzBPsD4PShMZTtxPUAODqtEcDtSrMMnAYzy8sDzcjwaaC+NVxBpaMlwZ4ob
- EK/QdxzSxel2wdqI6MabOQXEwU6DlxzrUP0K/DHxWVPriWErfw3bHGL5/3AUe0YZZds
- j3st2pMaf5NJYEKYQZLdpCaiyTV31DpddQquESpc=
-Received: by mx.zohomail.com with SMTPS id 1784524883100714.1723671972308;
- Sun, 19 Jul 2026 22:21:23 -0700 (PDT)
-Message-ID: <35907323-7733-4440-95e0-5bbbbb6e56c9@collabora.com>
-Date: Mon, 20 Jul 2026 08:21:18 +0300
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wlgXD-0007z4-Fm
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 01:27:26 -0400
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net [51.210.158.128])
+ by mo537.mail-out.ovh.net (Postfix) with ESMTPS id 4h3TY30fqWz405Z;
+ Mon, 20 Jul 2026 05:27:19 +0000 (UTC)
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net. [127.0.0.1])
+ by director1.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Mon, 20 Jul 2026 05:27:18 +0000 (UTC)
+Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.231.245])
+ by director1.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4h3TY25M86z6DgN; Mon, 20 Jul 2026 05:27:18 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.4])
+ (Authenticated sender: clg@kaod.org)
+ by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 29803203DF1; 
+ Mon, 20 Jul 2026 05:27:17 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-113S007ca0eaccc-cb39-422d-bdb3-847e2e0c34bc,
+ 4C691EFFF00230C9D76A3F7E6338562E7D7850CB) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <bd86fbae-eb7e-4404-a48f-22972012497b@kaod.org>
+Date: Mon, 20 Jul 2026 07:27:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/display/virtio-gpu: Remove the bytes_pp field
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>, qemu-stable@nongnu.org
-References: <20260719-bpp-v1-1-9b91946d6cf3@rsg.ci.i.u-tokyo.ac.jp>
-Content-Language: en-US
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <20260719-bpp-v1-1-9b91946d6cf3@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v5 00/10] Add SSP/TSP power control and DRAM remap support
+ for AST2700
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>
+References: <20260708092023.3826159-1-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260708092023.3826159-1-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.11;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-op-o11.zoho.com
+x-ovh-tracer-id: 12805422594631969907
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTFtbC9n4aj/voKZjz0Z25TGSTSULmSCKO1OAnhQvdxPGtixyPpCUK8WYOrHlvQaVAgrRuu7FtiE83T/YwGmx8LhiE7EENQA2syQKjwel3PSxTT1SWVTQ7JnrBkg4BgjYJK5Uo+G/U+O45Lie/8xjTu4ZMKdHEnPnnf98Snf8BfJnFHUFaeoykBYnpNycsIkydytQmpmWb1d8WSUOTu2u3luMRsuBh7Wgsj3yGeioH4UA+fG4lo6iS4dLT/8rST3hBCCuTmBVzy07vDZMrmeelwg9TgHjfsufp5BwhPsGx39Uaka/GUkoVyRBh8E4pSNvCwtKQ1+Hx1/aIE+ssitMFaOe+kZsNLta9g6t+R+pNmMRV3y6yegeaf/SRfPR8ztyKGfEQKwLRRvwCKOYFUaemNOZH4vQMSuJDTziLlut3hgwytGetEBTK7PehUjdodp0kq63djnpRJW9tyb/uF0UOnxcGVs0+6UqraJ7CMZvrEftAwRqAVtsnCOIsgVYjf00Dkd6mms8WsNnToCaQJ6G5HzcytRooEfocyv9POr0ID7cB48RslAtKTLBzsVGaZ2/mObDdv95pJEmgECeYeaXeCjyiEIFFuwQDjzeKBpaRAAvcafmT/aC4STsGbupJMZcN85w2o1W6RlW/v/uX7L4gksiwCug+pOo+IuI+UdCv71VQ
+DKIM-Signature: a=rsa-sha256; bh=zIgJ6wtkr7Exj6+UPEI8XbPYQsNMEeG0iJUQLIcJOuQ=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1784525240; v=1;
+ b=aqUe9UVE/71K+60zLDj8wbW7Pxgvw8i7Mo25vc6LrNdOPhTGMJ61kNRGAcVv/UTDjfist6NG
+ G3BjW6ifKCXXruSLaatb113f+eKpKxh7GSlm2BkFTJ/uoiij8cAVsYQKMD4Al5rzZFCBPZrF4mN
+ 2UoRzLOPY67TMAww5EB/MjlYZYSgy8xTJiIM3rZqoC6Qy7RDa/YuZ19+NHrvMcT3jAk/tXYQrI2
+ bRIc8PPjOCWHv/Wf5IsxHOmCfJs9Vh9MxT3g5mZNFpDOx5leCZONgCgXcJVr40T0P4S+WhiuDQW
+ jPWI71R79jkmfn1NayXlPguQZlqgEBnovQ5tyGHOJlLoQ==
+Received-SPF: pass client-ip=51.210.91.21; envelope-from=clg@kaod.org;
+ helo=smtpout2.mo537.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,156 +136,225 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/19/26 14:35, Akihiko Odaki wrote:
-> virtio_gpu_do_set_scanout() validates the stride field of struct
-> virtio_gpu_framebuffer against the bytes_pp field, but bytes_pp in the
-> migration stream may be inconsistent with the format field, which
-> pixman_image_create_bits() uses when it accesses the framebuffer.
-> That validation is therefore incomplete.
+Hello Jamin,
+
+On 7/8/26 11:20, Jamin Lin wrote:
+> This series improves AST2700 platform support by aligning SSP/TSP
+> power and reset behavior with hardware, and enabling DRAM remapping
+> required for proper firmware boot flow.
 > 
-> To avoid the trouble of synchronizing the two fields, remove bytes_pp,
-> and always derive its value from format. Removing bytes_pp is safe
-> because no released version of QEMU uses its migrated value.
+> This series depends on:
+> [v2,0/8] Refactor AST2700 SCU preparation for coprocessors
+> https://patchwork.kernel.org/project/qemu-devel/cover/20260707060919.350637-1-jamin_lin@aspeedtech.com/
 > 
-> Fixes: 7b5574225429 ("hw/display: check frame buffer can hold blob")
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> ---
-> Based-on: <20260715201055.2465320-1-marcandre.lureau@redhat.com>
-> ("[PATCH] hw/display/virtio-gpu: validate stride against width on scanout")
-> ---
->  include/hw/virtio/virtio-gpu.h |  1 -
->  hw/display/virtio-gpu.c        | 27 +++++++++++++++++----------
->  2 files changed, 17 insertions(+), 11 deletions(-)
+> v1:
+>    1. The changes move DRAM/SDMC initialization earlier to support memory
+> aliasing, add DRAM aliases for SSP/TSP SDRAM remap, and implement
+> SSP/TSP reset, power-on, and remap controls via SCU registers.
+>    2. With these updates, SSP and TSP can be booted via PSP and load their
+> binaries from DRAM. Functional tests and documentation are updated
+> accordingly.
 > 
-> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-> index f69fc1946273..6f889ee84a16 100644
-> --- a/include/hw/virtio/virtio-gpu.h
-> +++ b/include/hw/virtio/virtio-gpu.h
-> @@ -65,7 +65,6 @@ struct virtio_gpu_simple_resource {
->  
->  struct virtio_gpu_framebuffer {
->      pixman_format_code_t format;
-> -    uint32_t bytes_pp;
->      uint32_t width, height;
->      uint32_t stride;
->      uint32_t offset;
-> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> index e00fb6effa50..660191d15f78 100644
-> --- a/hw/display/virtio-gpu.c
-> +++ b/hw/display/virtio-gpu.c
-> @@ -617,6 +617,11 @@ void virtio_gpu_update_scanout(VirtIOGPU *g,
->      scanout->fb = *fb;
->  }
->  
-> +static uint32_t virtio_gpu_format_bytes_pp(pixman_format_code_t format)
-> +{
-> +    return DIV_ROUND_UP(PIXMAN_FORMAT_BPP(format), 8);
-> +}
-> +
->  static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
->                                        uint32_t scanout_id,
->                                        struct virtio_gpu_framebuffer *fb,
-> @@ -625,6 +630,7 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
->                                        uint32_t *error)
->  {
->      struct virtio_gpu_scanout *scanout;
-> +    uint32_t bytes_pp = virtio_gpu_format_bytes_pp(fb->format);
->      uint8_t *data;
->  
->      scanout = &g->parent_obj.scanout[scanout_id];
-> @@ -646,10 +652,10 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
->          return false;
->      }
->  
-> -    if (fb->stride < (uint64_t)fb->width * fb->bytes_pp) {
-> +    if (fb->stride < (uint64_t)fb->width * bytes_pp) {
->          qemu_log_mask(LOG_GUEST_ERROR,
->                        "%s: stride %u too small for width %u at %u bpp\n",
-> -                      __func__, fb->stride, fb->width, fb->bytes_pp);
-> +                      __func__, fb->stride, fb->width, bytes_pp);
->          *error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
->          return false;
->      }
-> @@ -708,6 +714,7 @@ static void virtio_gpu_set_scanout(VirtIOGPU *g,
->      struct virtio_gpu_simple_resource *res;
->      struct virtio_gpu_framebuffer fb = { 0 };
->      struct virtio_gpu_set_scanout ss;
-> +    uint32_t bytes_pp;
->  
->      VIRTIO_GPU_FILL_CMD(ss);
->      virtio_gpu_bswap_32(&ss, sizeof(ss));
-> @@ -733,11 +740,11 @@ static void virtio_gpu_set_scanout(VirtIOGPU *g,
->      }
->  
->      fb.format = pixman_image_get_format(res->image);
-> -    fb.bytes_pp = DIV_ROUND_UP(PIXMAN_FORMAT_BPP(fb.format), 8);
-> +    bytes_pp = virtio_gpu_format_bytes_pp(fb.format);
->      fb.width  = pixman_image_get_width(res->image);
->      fb.height = pixman_image_get_height(res->image);
->      fb.stride = pixman_image_get_stride(res->image);
-> -    fb.offset = ss.r.x * fb.bytes_pp + ss.r.y * fb.stride;
-> +    fb.offset = ss.r.x * bytes_pp + ss.r.y * fb.stride;
->  
->      virtio_gpu_do_set_scanout(g, ss.scanout_id,
->                                &fb, res, &ss.r, &cmd->error);
-> @@ -748,6 +755,7 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
->                                     uint64_t blob_size)
->  {
->      uint64_t fbend;
-> +    uint32_t bytes_pp;
->  
->      fb->format = virtio_gpu_get_pixman_format(ss->format);
->      if (!fb->format) {
-> @@ -757,19 +765,19 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
->          return false;
->      }
->  
-> -    fb->bytes_pp = DIV_ROUND_UP(PIXMAN_FORMAT_BPP(fb->format), 8);
-> +    bytes_pp = virtio_gpu_format_bytes_pp(fb->format);
->      fb->width = ss->width;
->      fb->height = ss->height;
->      fb->stride = ss->strides[0];
->  
-> -    if (fb->stride < (uint64_t)fb->width * fb->bytes_pp) {
-> +    if (fb->stride < (uint64_t)fb->width * bytes_pp) {
->          qemu_log_mask(LOG_GUEST_ERROR,
->                        "%s: stride %u too small for width %u at %u bpp\n",
-> -                      __func__, fb->stride, fb->width, fb->bytes_pp);
-> +                      __func__, fb->stride, fb->width, bytes_pp);
->          return false;
->      }
->  
-> -    fb->offset = ss->offsets[0] + ss->r.x * fb->bytes_pp + ss->r.y * fb->stride;
-> +    fb->offset = ss->offsets[0] + ss->r.x * bytes_pp + ss->r.y * fb->stride;
->  
->      fbend = fb->offset;
->      fbend += (uint64_t) fb->stride * ss->r.height;
-> @@ -1219,8 +1227,7 @@ static const VMStateDescription vmstate_virtio_gpu_scanout = {
->          VMSTATE_UINT32(cursor.pos.y, struct virtio_gpu_scanout),
->          VMSTATE_UINT32_TEST(fb.format, struct virtio_gpu_scanout,
->                              scanout_vmstate_after_v2),
-> -        VMSTATE_UINT32_TEST(fb.bytes_pp, struct virtio_gpu_scanout,
-> -                            scanout_vmstate_after_v2),
-> +        VMSTATE_UNUSED_TEST(scanout_vmstate_after_v2, 4),
->          VMSTATE_UINT32_TEST(fb.width, struct virtio_gpu_scanout,
->                              scanout_vmstate_after_v2),
->          VMSTATE_UINT32_TEST(fb.height, struct virtio_gpu_scanout,
+> v2:
+>    Fix "make check" failure caused by both AST2700 and AST1700 realizing the same
+>    TYPE_AST2700_SCU model.
+>    
+> v3:
+>   1. Drop "Move DRAM and SDMC initialization earlier to support memory aliasing"
+>   2. Support SPI/FMC FIFO Mode
+>   3. Add unimplemented devices
 > 
-> ---
-> base-commit: 499039798cdad7d86b787fec0eaf1da4151c0f05
-> change-id: 20260719-bpp-803a3544fb79
-> prerequisite-message-id: <20260715201055.2465320-1-marcandre.lureau@redhat.com>
-> prerequisite-patch-id: 2c43dfa5d6a955e0fa3e3ca39ce3038968d85e7a
+> v4:
+>   1. Introduce Aspeed2700SCU subclass and separate from generic SCU.
+>   2. Add separate reset handler for AST2700 SCUIO
+>   3. Add AST2700 SCUIO RNG control and data registers
+>   4. Share single SCUIO instance across PSP, SSP, and TSP
+>   5. Fix AST2700 FC hardware strap settings
 > 
-> Best regards,
-> --  
-> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> v5:
+>   1. To speed up the review process, move the following patches into a separate
+>      patch series, as they are not directly related to the main topic of this series:
+>   
+>      [v4,01/21] hw/misc/aspeed_scu: Introduce Aspeed2700SCU subclass and separate from generic SCU
+>      [v4,02/21] hw/misc/aspeed_scu: Add separate reset handler for AST2700 SCUIO
+>      [v4,11/21] hw/arm/ast27x0: Share FMC controller with SSP and TSP
+>      [v4,12/21] hw/arm/aspeed_ast27x0: Add unimplemented Privilege Controller MMIO regions for SSP/TSP (Merged)
+>      [v4,13/21] hw/arm/aspeed_ast27x0: Add unimplemented OTP controller MMIO regions for SSP/TSP (Merged)
+>      [v4,14/21] hw/block/m25p80: Implement volatile status register write enable for Winbond
+>      [v4,15/21] hw/ssi/aspeed_smc: Add Data FIFO-based flash access support for AST2700
+>      [v4,16/21] hw/misc/aspeed_scu: Drop noisy unhandled read logs for AST2700 SCU/SCUIO (Merged)
+>      [v4,17/21] hw/misc/aspeed_scu: Add AST2700 SCUIO RNG control and data registers (Merged)
+>      [v4,18/21] hw/arm/ast27x0: Share single SCUIO instance across PSP, SSP, and TSP
+>      [v4,19/21] hw/arm/aspeed_ast27x0-fc: Fix hardware strap settings (Merged)
+>      
+>    2. Add memory_region_transaction_begin() and memory_region_transaction_commit()
+>       to protect the transaction.
+>      
+> Jamin Lin (10):
+>    hw/arm/ast27x0: Start SSP in powered-off state to match hardware
+>      behavior
+>    hw/arm/ast27x0: Start TSP in powered-off state to match hardware
+>      behavior
+>    hw/arm/ast27x0: Add DRAM alias for SSP SDRAM remap
+>    hw/arm/ast27x0: Add DRAM alias for TSP SDRAM remap
+>    hw/misc/aspeed_scu: Implement SSP reset and power-on control via SCU
+>      registers
+>    hw/misc/aspeed_scu: Implement TSP reset and power-on control via SCU
+>      registers
+>    hw/misc/aspeed_scu: Add SCU support for SSP SDRAM remap
+>    hw/misc/aspeed_scu: Add SCU support for TSP SDRAM remap
+>    tests/functional/aarch64/test_aspeed_ast2700fc: Boot SSP/TSP via PSP
+>      and load binaries from DRAM
+>    docs: Add support vbootrom and update Manual boot for ast2700fc
+> 
+>   docs/system/arm/aspeed.rst                    |  42 ++-
+>   include/hw/misc/aspeed_scu.h                  |   5 +
+>   hw/arm/aspeed_ast27x0-fc.c                    |   4 +
+>   hw/arm/aspeed_ast27x0-ssp.c                   |  13 +
+>   hw/arm/aspeed_ast27x0-tsp.c                   |  10 +
+>   hw/arm/aspeed_ast27x0.c                       |   6 +
+>   hw/misc/aspeed_scu.c                          | 285 ++++++++++++++++++
+>   .../aarch64/test_aspeed_ast2700fc.py          |  29 +-
+>   8 files changed, 374 insertions(+), 20 deletions(-)
 > 
 
-Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Here are some general comments on the design,
 
--- 
-Best regards,
-Dmitry
+
+* Aspeed SCU Models
+
+Aspeed2700SCUState is used by 3 instances:
+- 1 PSP SCU, then linked in SSP and TSP
+- 2 I/O expander SCUs (all aspeed.scu-ast2700)
+   
+AspeedSCUState (the parent) is used by SCUIO (aspeed.scuio-ast2700)
+
+The I/O expander embeds Aspeed2700SCUState and gets the full
+dram_remap_alias[3], ssp_cpuid, tsp_cpuid, and dram link.
+none of which make sense for I/O.
+
+Also, I doubt the whole register space is implemented for all SoCs.
+This model seems overused to me and The I/O expander would need a
+fix to separate the SCU type.
+
+* remap Memory Regions
+
+I think we need to reorganize the code.
+
+The dram_remap Memory regions belong to the SSP and TSP coprocessor
+SoC states. Makes more sense to me. The only reason they are under
+SCU today is because it makes things easier for the memory region
+controls.
+
+So :
+
+   include/hw/arm/aspeed_coprocessor.h:
+   @@ -57,6 +57,8 @@ struct Aspeed27x0CoprocessorState {
+        MemoryRegion scu_alias;
+        MemoryRegion scuio_alias;
+        MemoryRegion fmc_alias;
+   +    MemoryRegion dram_remap[2];
+   +    MemoryRegion *dram;
+        Aspeed2700SCUState *scu;
+        AspeedSCUState *scuio;
+        AspeedSMCState *fmc;
+        
+   include/hw/misc/aspeed_scu.h:
+   @@ -45,8 +45,8 @@ struct AspeedSCUState {
+    struct Aspeed2700SCUState {
+        AspeedSCUState parent_obj;
+    
+   +    MemoryRegion *ssp_remap[2];
+   +    MemoryRegion *tsp_remap;
+
+    static const Property aspeed_2700_scu_properties[] = {
+   +    DEFINE_PROP_LINK("ssp-remap-0", Aspeed2700SCUState, ssp_remap[0],
+   +                     TYPE_MEMORY_REGION, MemoryRegion *),
+   +    DEFINE_PROP_LINK("ssp-remap-1", Aspeed2700SCUState, ssp_remap[1],
+   +                     TYPE_MEMORY_REGION, MemoryRegion *),
+   +    DEFINE_PROP_LINK("tsp-remap", Aspeed2700SCUState, tsp_remap,
+   +                     TYPE_MEMORY_REGION, MemoryRegion *),
+     };
+
+The TSP and SSP models would initialize the alias(es) always :
+   
+   hw/arm/aspeed_ast27x0-ssp.c:
+   +    /* DRAM remap aliases for PSP to access SSP SDRAM */
+   +    memory_region_init_alias(&a->dram_remap[0], OBJECT(a),
+   +                             "ssp.dram.remap1", a->dram, 0, 0x1a77e000);
+   +    memory_region_init_alias(&a->dram_remap[1], OBJECT(a),
+   +                             "ssp.dram.remap2", a->dram, 0x2c000000, 0x05880000);
+   +    memory_region_add_subregion(&s->sdram, 0, &a->dram_remap[1]);
+   +    memory_region_add_subregion(&s->sdram,
+   +            memory_region_size(&a->dram_remap[1]), &a->dram_remap[0]);
+   +    object_property_set_link(OBJECT(a->scu), "ssp-remap-0",
+   +                             OBJECT(&a->dram_remap[0]), &error_abort);
+   +    object_property_set_link(OBJECT(a->scu), "ssp-remap-1",
+   +                             OBJECT(&a->dram_remap[1]), &error_abort);
+    
+        /* INTC */
+        if (!sysbus_realize(SYS_BUS_DEVICE(&a->intc[0]), errp)) {
+   @@ -323,6 +330,8 @@ static const Property aspeed_27x0_coproc
+                         TYPE_ASPEED_SCU, AspeedSCUState *),
+        DEFINE_PROP_LINK("fmc", Aspeed27x0CoprocessorState, fmc, TYPE_ASPEED_SMC,
+                         AspeedSMCState *),
+   +    DEFINE_PROP_LINK("dram", Aspeed27x0CoprocessorState, dram,
+   +                     TYPE_MEMORY_REGION, MemoryRegion *),
+    };
+  
+   hw/arm/aspeed_ast27x0-fc.c:
+        object_property_set_link(OBJECT(&s->ssp), "sram",
+                                 OBJECT(&psp->sram), &error_abort);
+   +    object_property_set_link(OBJECT(&s->ssp), "dram",
+   +                             OBJECT(psp->dram_mr), &error_abort);
+        object_property_set_link(OBJECT(&s->ssp), "scu",
+                                 OBJECT(&s->ca35.scu), &error_abort);
+        object_property_set_link(OBJECT(&s->ssp), "scuio",
+
+
+In SCU, we can drop the aspeed_2700_scu_realize() changes and the
+control bits become :
+
+   hw/misc/aspeed_scu.c:
+        case AST2700_SCU_SSP_CTRL_1:
+        case AST2700_SCU_SSP_CTRL_2:
+   +        mr = (reg == AST2700_SCU_SSP_CTRL_1) ? a->ssp_remap[0] : a->ssp_remap[1];
+            if (a->ssp_cpuid < 0 || mr == NULL) {
+                return;
+            }
+
+
+* CPU index
+
+As for the "tsp-cpuid" and "ssp-cpuid" properties, we have a
+chicken&egg issue because the shared SCU model needs to be realized
+and the SSP and TSP CPUs too.
+
+I would be tempted to simply bypass QOM to avoid hardcoding cpu_index
+values:
+
+   hw/arm/aspeed_ast27x0-ssp.c:
+         object_property_set_bool(OBJECT(&a->armv7m), "start-powered-off", true,
+                                  &error_abort);
+         sysbus_realize(SYS_BUS_DEVICE(&a->armv7m), &error_abort);
+    +    a->scu->ssp_cpuid = CPU(a->armv7m.cpu)->cpu_index;
+   
+         /* SDRAM */
+         sdram_name = g_strdup_printf("aspeed.sdram.%d",
+   
+   hw/arm/aspeed_ast27x0-tsp.c:
+         object_property_set_bool(OBJECT(&a->armv7m), "start-powered-off", true,
+                                  &error_abort);
+         sysbus_realize(SYS_BUS_DEVICE(&a->armv7m), &error_abort);
+    +    a->scu->tsp_cpuid = CPU(a->armv7m.cpu)->cpu_index;
+   
+         /* SDRAM */
+         sdram_name = g_strdup_printf("aspeed.sdram.%d",
+
+Or keep it that way for now.
+
+
+Thanks,
+
+C.
 
