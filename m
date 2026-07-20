@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0BA1C44521
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 07:56:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B398C44521
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 07:56:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlirH-0003PC-Hf; Mon, 20 Jul 2026 03:56:16 -0400
+	id 1wlirU-0003ee-JT; Mon, 20 Jul 2026 03:56:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wlirB-0003Oj-AR
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 03:56:09 -0400
+ id 1wlirT-0003e2-7f
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 03:56:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wlir7-0006it-Qx
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 03:56:08 -0400
+ id 1wlirR-0006kL-S3
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 03:56:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784534164;
+ s=mimecast20190719; t=1784534185;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=D6SwdudhFqpaKV0XMGXiUeT/Rco0k1hj7dJhN9XTk30=;
- b=fYUbTLyuNLACEx/R7AvNTrZflM3Yk9FuPI47jwdYlKe66aP1UkC4K72bu+iQzOb3lTduw+
- l65aSwAw3s/BGdO6Hj/acrbgV3YmTjMJN8E4Y1zr19lvU5iaI+p24bSsVagN2ssFL78JwQ
- FarwycVSFuVtejRX2YOG54JRCciICvo=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5QTOvl8AY8NN1PStmYWdJeZDvzMfZigdv0pXiWXClfA=;
+ b=H4jciwD9x26wAq8zFhGgeBT020uLXcy1HRsGXK/3bY7bfcUDKhwmyUAld70beK9+SYgDvP
+ pLWyN3gPhoUrx+4y7e5AgFab/9uNp0Da9938pikSrblLmaz+WJkBlnlXSnWdwYIhZbix2V
+ DUPX8zFhFk3peLsmLZt0UPrJGLOqibg=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-193-CpgzGo4-MYukQUb9BufLvA-1; Mon,
- 20 Jul 2026 03:56:03 -0400
-X-MC-Unique: CpgzGo4-MYukQUb9BufLvA-1
-X-Mimecast-MFC-AGG-ID: CpgzGo4-MYukQUb9BufLvA_1784534161
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-423-z8nqN9IpM2Kmb4j07aKHRg-1; Mon,
+ 20 Jul 2026 03:56:21 -0400
+X-MC-Unique: z8nqN9IpM2Kmb4j07aKHRg-1
+X-Mimecast-MFC-AGG-ID: z8nqN9IpM2Kmb4j07aKHRg_1784534179
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 96D251955F22; Mon, 20 Jul 2026 07:55:59 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7FE43195C267; Mon, 20 Jul 2026 07:56:19 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.17])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 35B0418001E0; Mon, 20 Jul 2026 07:55:56 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 906E930002D6; Mon, 20 Jul 2026 07:56:17 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 0/8] coroutine: add missing annotations
-Date: Mon, 20 Jul 2026 11:55:29 +0400
-Message-Id: <20260720-co-v1-0-fabb4db3c204@redhat.com>
+Date: Mon, 20 Jul 2026 11:55:32 +0400
+Subject: [PATCH 3/8] io: add missing coroutine annotation
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDcyMD3eR8XTMj0xRLi2TzlGTTVCWgwoKi1LTMCrAh0bEQfnFpUlZqcgl
- Ip1JtLQALZewkZgAAAA==
-X-Change-ID: 20260720-co-625d98c7dc5e
+Message-Id: <20260720-co-v1-3-fabb4db3c204@redhat.com>
+References: <20260720-co-v1-0-fabb4db3c204@redhat.com>
+In-Reply-To: <20260720-co-v1-0-fabb4db3c204@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>, Peter Xu <peterx@redhat.com>, 
  Fabiano Rosas <farosas@suse.de>, 
@@ -73,24 +72,24 @@ Cc: Markus Armbruster <armbru@redhat.com>, Peter Xu <peterx@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
  xen-devel@lists.xenproject.org, Li Zhijian <lizhijian@fujitsu.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1771;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1375;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=3p+9mnh7A1Sd9gkpZEuHm2Arv0B2DJblMllOqVWD9JU=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqXdSJGhUyT1s/3ctymKycGnr95OA0QKInBP1Ui
- yXIJzazgUKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCal3UiQAKCRDa6OEJdZac
- 5eMbEACq8EYoKuxQ9/nJnUX4f5S9btARbnstqg+dSMili5YH/rKseLzJI6ASS9TRCiSaLbKxCHr
- J0NH1UiF6C9zFiw2Fcpt7ZQafNIFmEAf8xLYSC0Uuf0RrO97+r+IXptsPvua0gcVAULgRrDkGZh
- aiTm8owI247yvspBOR7nty5r5jfYB6o4znP70TAd2hhGTB5YN43ajTnooWxl1joh+byoU/csVqS
- 1g47AbXMZyZLxkpwayh4IcPRZaiEu9XM1JsMHOceeOkvfG68vRzNYwmFNeDyGtJeQCU+e4P3GdO
- JqGc/DDDP5CO2K88SV4AouRI0wP3xzV+IWZFXMqPPURxKomVtZMesnur2fwIZpD2ANvVLkx8IG4
- 4Vvt486nrxm6rqGjCG8qqGX8bMUGwN1kwPxwcLKB+T9uUD5dut147306SNOFxE2TTecc49oEFlF
- PiL9bmKXCYgE7082Jyv8XQpnvqDo9Qjt+biA3A3IPdPghJYlFvrCDu0hkY3aqHqmZdnC1WkKFXi
- 23+TLZlfkBIOOeqjLQ/er5TRHC4NIB1yTeUqYXTb/vJH2nbbrzJBchS6rmCtAdNJuePl8SIq1az
- Ay2aGD4BDqnMux3yzImPX4z0wGgcu+1/8LfK7yxA5x6n/x887t2hbwyNe/mwkZXHggL6a4TAcWh
- PAxjQOvVtrBQiZg==
+ bh=0uczZ0FGO8LAP5viyGHp+/jxtNxL630HdwYtMufZx5w=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqXdSJR+JAKejvppC4K18+1jyEdnxLV+7l5FH4d
+ bj0E9E18KWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCal3UiQAKCRDa6OEJdZac
+ 5SpTD/sEFsZvOhVNETpyJacq1WDjsQwhdf6vVRDTle6EPuCTnI0qNdl+pJJuAjRq4OXzlExwWkw
+ 38rosD1s5i54gl1cfM7H84MjiRUM9o7BwCenABwGJ2G8aQ2rh0oPRyhp6wezlsB3aNdi515bqln
+ NhVNh+DxLRNf7aszVouX1zTNvEC0I1RX2dcUAwq/dIMPZeccIpIzoxX44GomuVjE3mcNNmioBCL
+ oJGmog+loSSa/zDjEGkBsAvohWF+1wGArD5cACn2Ylkp7zZ032f7dK9fyqtv86R0/VfYAZX2LHn
+ TvN5BGICiE3ZBOyaZGWuJ0lwL5jqDTh41ajF8a/tNkfvY3mG7Xjyc+Js0L9/uXUKfeN2I1nWBvG
+ 9Cv9acyi4lp0swyUgdtDLAxsWuKI6es1t7Bx8LNm4w+JretscHcwO3lHOzUkWdMBd01RAq9SGz2
+ NSjZUG/OtlIEtKeb5tBr7GXrUDNb8hoxaGI6yy6M2Yf0OyTYYMVmbu8baeWI8VH4FwL7syDmyk9
+ w2OgH+Pqm0mFiOFbw63hF944tNW96l6qrPIo6bfcJTFK8jWo6S6nW+s0sORab94LTXqG7rQaB9b
+ hSCbNoXPe949y+hV67xrIJ/bqFXFGkVvGPzDbbZ+VmGVkbuEqdbV8SzLFvtNdjDQXuSs8rloSGM
+ MZKUhjzwKJNzReQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: permerror client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -116,48 +115,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-Add missing coroutine_fn, coroutine_mixed_fn annotations and fix
-a few related issues across monitor, migration, io, block, and
-9pfs subsystems.
-
+Fixes: 1edf0df28409 ("io: Add qio_channel_wait_cond() helper")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
-Marc-André Lureau (8):
-      monitor: annotate monitor_qmp_dispatcher_pop_any() as coroutine
-      migration: fix qemu_get_counted_string annotation
-      io: add missing coroutine annotation
-      block: add missing coroutine annotation
-      qcow2: remove invalid qcow2_check_refcounts calls
-      block: add missing coroutine_fn annotations
-      hw/9pfs: annotate V9fsTransport callbacks as coroutine_fn
-      migration/rdma: annotate and simplify wait_comp_channel()
+ include/io/channel.h | 4 ++--
+ io/channel.c         | 5 +++--
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
- hw/9pfs/9p.h                 | 26 +++++++++++++++-----------
- include/block/blockjob_int.h |  2 +-
- include/io/channel.h         |  4 ++--
- block/commit.c               |  5 +++--
- block/crypto.c               | 13 +++++++------
- block/io.c                   |  8 +++++---
- block/parallels.c            |  5 +++--
- block/qcow2-snapshot.c       | 18 ------------------
- block/qcow2.c                | 11 +++++++----
- blockjob.c                   |  3 ++-
- hw/9pfs/9p.c                 | 31 +++++++++++++++++++------------
- hw/9pfs/virtio-9p-device.c   | 24 +++++++++++++-----------
- hw/9pfs/xen-9p-backend.c     | 34 +++++++++++++++++-----------------
- io/channel.c                 |  5 +++--
- migration/qemu-file.c        |  2 +-
- migration/rdma.c             | 12 ++++--------
- monitor/qmp.c                |  3 ++-
- 17 files changed, 104 insertions(+), 102 deletions(-)
----
-base-commit: 5ef0ecc5942ee07bb581cc96a97bbfc0fdf4005c
-change-id: 20260720-co-625d98c7dc5e
+diff --git a/include/io/channel.h b/include/io/channel.h
+index 98485c9280a..c90ace20d53 100644
+--- a/include/io/channel.h
++++ b/include/io/channel.h
+@@ -1016,8 +1016,8 @@ void qio_channel_wait(QIOChannel *ioc,
+  * This will work with/without a coroutine context, by automatically select
+  * the proper API to wait.
+  */
+-void qio_channel_wait_cond(QIOChannel *ioc,
+-                           GIOCondition condition);
++void coroutine_mixed_fn qio_channel_wait_cond(QIOChannel *ioc,
++                        GIOCondition condition);
+ 
+ /**
+  * qio_channel_set_aio_fd_handler:
+diff --git a/io/channel.c b/io/channel.c
+index 2853dadb684..620256f310d 100644
+--- a/io/channel.c
++++ b/io/channel.c
+@@ -905,8 +905,9 @@ void qio_channel_wait(QIOChannel *ioc,
+     g_main_context_unref(ctxt);
+ }
+ 
+-void qio_channel_wait_cond(QIOChannel *ioc,
+-                           GIOCondition condition)
++void coroutine_mixed_fn
++qio_channel_wait_cond(QIOChannel *ioc,
++                      GIOCondition condition)
+ {
+     if (qemu_in_coroutine()) {
+         qio_channel_yield(ioc, condition);
 
-Best regards,
---  
-Marc-André Lureau <marcandre.lureau@redhat.com>
+-- 
+2.55.0
 
 
