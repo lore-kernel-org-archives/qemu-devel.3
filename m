@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F8AEC44515
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 10:39:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A968CC44527
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 10:39:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wllOm-0003mY-NS; Mon, 20 Jul 2026 06:39:00 -0400
+	id 1wllOl-0003m4-RZ; Mon, 20 Jul 2026 06:38:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wllOj-0003lK-K0
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 06:38:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wllOc-0003kK-Cv
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 06:38:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wllOh-0008Hn-3X
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 06:38:56 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wllOa-0008Gg-Ps
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 06:38:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784543934;
+ s=mimecast20190719; t=1784543928;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=X/AmVS2H7e5pCfszF4amIkYPrIlpVwvF0XwijKV+5Jc=;
- b=fLCf5oRig8HsGOhimrHgdRzdPpV/A9UNko6bxuTq9e/F2/p0hebjlD8SHgGvJB6PEkFUDi
- CDXS6S2xHDxQEJO8sfPjRhb6UjO1jNx46yEy1wzzlAxvInBW8XgPoYZMnKOl8xiSXvBMFD
- 2RMwDQ3DrO/FiW01LDR8qXtr8in4Pk0=
+ bh=h9gHWXrpug65VRTeYXgdUAFcY9n2qUEl8WfpF47AYrQ=;
+ b=c4CXDDVuIPAg6UUi2l4lBBdH3VLsTBWnhxLzlSC75QNRIF02rydFWpLLjpEYkoeDPABcdg
+ rOSycGXBbooo4NMRDxZisY9Hr8b6uPQMWvkkcjz9S3NhK8M/cGkz875SkztrHVkJlXbz4X
+ q6H+ITmLFYesMowzOqQrRiiIGMglmC8=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-314-663L_OrWPZabOiN-XxclWQ-1; Mon,
- 20 Jul 2026 06:38:51 -0400
-X-MC-Unique: 663L_OrWPZabOiN-XxclWQ-1
-X-Mimecast-MFC-AGG-ID: 663L_OrWPZabOiN-XxclWQ_1784543930
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-681-xRBc717gMwuvjdn5_m0gNA-1; Mon,
+ 20 Jul 2026 06:38:46 -0400
+X-MC-Unique: xRBc717gMwuvjdn5_m0gNA-1
+X-Mimecast-MFC-AGG-ID: xRBc717gMwuvjdn5_m0gNA_1784543926
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2895E19560B5; Mon, 20 Jul 2026 10:38:50 +0000 (UTC)
+ id CF4921955F22; Mon, 20 Jul 2026 10:38:45 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.34.82])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1F38B158E; Mon, 20 Jul 2026 10:38:47 +0000 (UTC)
+ id 32D4F158E; Mon, 20 Jul 2026 10:38:43 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 6/7] hw/usb/hcd-xhci: Fix guest-triggerable assert() in
- xhci_find_stream()
-Date: Mon, 20 Jul 2026 12:38:32 +0200
-Message-ID: <20260720103833.364506-7-thuth@redhat.com>
+Cc: Feifan Qian <bea1e@proton.me>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 4/7] usbredir: fix use-after-free on buffered bulk packet
+ overflow
+Date: Mon, 20 Jul 2026 12:38:30 +0200
+Message-ID: <20260720103833.364506-5-thuth@redhat.com>
 In-Reply-To: <20260720103833.364506-1-thuth@redhat.com>
 References: <20260720103833.364506-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: permerror client-ip=170.10.133.124;
+Received-SPF: permerror client-ip=170.10.129.124;
  envelope-from=thuth@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,38 +84,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The assert() statement in xhci_find_stream() can be triggered by
-the guest (see bug tickets #273, #3895 and #3988 on gitlab.com).
-Turn it into a qemu_log_mask() instead to fix this problem.
+When usbredir_buffered_bulk_packet() splits a multi-fragment buffered
+bulk packet into max-packet-size chunks, only the final fragment owns
+the shared parser allocation (via free_on_destroy). If bufp_alloc()
+drops the final fragment due to queue overflow, it frees the backing
+buffer while earlier fragments already queued still hold interior
+pointers into it. Subsequent guest bulk-IN transfers then read from
+freed heap memory.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/273
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Fix this by tracking how many fragments were queued during the current
+packet. When bufp_alloc() fails, remove all already-queued fragments
+from the tail of the endpoint queue before breaking out of the loop.
+If the dropped fragment was non-final, free the data buffer explicitly
+since no fragment took ownership.
+
+Fixes: CVE-2026-15705
+Fixes: b2d1fe67d09d ("usbredir: Add support for buffered bulk input (v2)")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3808
+Reported-by: Feifan Qian <bea1e@proton.me>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260714185717.1156157-1-marcandre.lureau@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260715203357.424556-1-thuth@redhat.com>
 ---
- hw/usb/hcd-xhci.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ hw/usb/redirect.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
-index 47b7484d533..b94249993a1 100644
---- a/hw/usb/hcd-xhci.c
-+++ b/hw/usb/hcd-xhci.c
-@@ -1009,7 +1009,12 @@ static XHCIStreamContext *xhci_find_stream(XHCIEPContext *epctx,
-     dma_addr_t base;
-     uint32_t ctx[2], sct;
+diff --git a/hw/usb/redirect.c b/hw/usb/redirect.c
+index bde821e214b..284bcbdb34d 100644
+--- a/hw/usb/redirect.c
++++ b/hw/usb/redirect.c
+@@ -2138,7 +2138,7 @@ static void usbredir_buffered_bulk_packet(void *priv, uint64_t id,
+     USBRedirDevice *dev = priv;
+     uint8_t status, ep = buffered_bulk_packet->endpoint;
+     void *free_on_destroy;
+-    int i, len;
++    int i, len, queued = 0;
  
--    assert(streamid != 0);
-+    if (!streamid) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "xhci: stream ID is zero\n");
-+        *cc_error = CC_INVALID_STREAM_ID_ERROR;
-+        return NULL;
-+    }
-+
-     if (epctx->lsa) {
-         if (streamid >= epctx->nr_pstreams) {
-             *cc_error = CC_INVALID_STREAM_ID_ERROR;
+     DPRINTF("buffered-bulk-in status %d ep %02X len %d id %"PRIu64"\n",
+             buffered_bulk_packet->status, ep, data_len, id);
+@@ -2169,8 +2169,24 @@ static void usbredir_buffered_bulk_packet(void *priv, uint64_t id,
+         /* bufp_alloc also adds the packet to the ep queue */
+         r = bufp_alloc(dev, data + i, len, status, ep, free_on_destroy);
+         if (r) {
++            /*
++             * Earlier fragments from this packet are in the queue
++             * with interior pointers into data. If the dropped
++             * fragment was the final one, bufp_alloc already freed
++             * data so those pointers are dangling. Remove them.
++             */
++            while (queued > 0) {
++                struct buf_packet *bufp;
++                bufp = QTAILQ_LAST(&dev->endpoint[EP2I(ep)].bufpq);
++                bufp_free(dev, bufp, ep);
++                queued--;
++            }
++            if (!free_on_destroy) {
++                free(data);
++            }
+             break;
+         }
++        queued++;
+     }
+ 
+     if (dev->endpoint[EP2I(ep)].pending_async_packet) {
 -- 
 2.55.0
 
