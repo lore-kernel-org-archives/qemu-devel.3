@@ -4,118 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A2A7C4452A
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 14:13:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ADA3C44515
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 14:25:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlok6-0004XC-Ds; Mon, 20 Jul 2026 10:13:14 -0400
+	id 1wlove-0007Kh-64; Mon, 20 Jul 2026 10:25:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wlok5-0004X2-PJ
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 10:13:13 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wlova-0007E5-HA
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 10:25:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wlok3-0000K0-Kl
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 10:13:13 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wlovX-0001ei-Tl
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 10:25:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784556790;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1784557502;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=amn6kDIT0WP5ybt8VbJ5VW8vOOWsBH/TSBn2QO9H038=;
- b=GvIrEnx6zPicgD/bU3WPKbv5fwowcvL4VqsZ7zo0hCJaqmE62BvE3BsiroeD45S4m6MMTs
- R/g1XXqXSBKcQb04EzbEw6gVtRVz2hDwS34ntn590AVr1m0LEyMiiDVaIynreLVn81mepf
- XfQkxgtV4Q6d6YpCMxN+J/ZF/5JW/z0=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=XyYskVW5Q3OAyXu3DG/PTzV3maSXjfq/3t1Pihd5U2Y=;
+ b=amWZoeCvd9W/r/nDnjbb2Hfoq1NOKLEsVJ06U0vM9mkq1rVcZebofdpZb1uKSVnFX3XOcd
+ GC4FHCep7LJV7eUv3LyxC8RFspUnlJ/Rbv+B90U9B61H9BpocpB9yv2HgFLGlqlURfCZQn
+ nBT1nPX/OYK6tei/i4y/hxe9lpHC/Xk=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-457-YtxNytSYPh651Zi2gCUL6w-1; Mon, 20 Jul 2026 10:13:09 -0400
-X-MC-Unique: YtxNytSYPh651Zi2gCUL6w-1
-X-Mimecast-MFC-AGG-ID: YtxNytSYPh651Zi2gCUL6w_1784556789
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-930a098ea19so606988085a.1
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 07:13:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784556789; x=1785161589; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=amn6kDIT0WP5ybt8VbJ5VW8vOOWsBH/TSBn2QO9H038=;
- b=XQ7GS9CD6cz1e7lhB6emjQakVV2qR9h5e7OkXbUIEEPYyi+NSaw6LSqP0HPWTNkiKd
- evdJq9HfLie+G9lQ2Fwx2wGMv2F5n7TuLivgJG2Mg5yeY7Nk+W/7tO7Mrsuj4/TrVNLy
- bsD/KIgufJBZOfLgLlzhoHJcRWRyPQmGc5tbAaIu7xlmFdiwpoxoavNNuecWnboBFwyU
- Jm4CKnBBzwUX/hy+0huw+oLbzHlrpejLq4W1B3tKeejVh2KRA7WYKlTiw5s1kjFTyIBo
- UHI+iPzy08MML51Juy7Ah43Q1W6dDyJF8pxxFpgqpqvgWDZ6dwcsj5lmZPGYHLlqpgV7
- f/TA==
+ us-mta-591-XcOiUITWMSWg6wdfWILVkA-1; Mon, 20 Jul 2026 10:25:00 -0400
+X-MC-Unique: XcOiUITWMSWg6wdfWILVkA-1
+X-Mimecast-MFC-AGG-ID: XcOiUITWMSWg6wdfWILVkA_1784557500
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-49564d4b849so6255e9.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 07:25:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784556789; x=1785161589;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=amn6kDIT0WP5ybt8VbJ5VW8vOOWsBH/TSBn2QO9H038=;
- b=flXomci5QAnErc7eyXRcA1Gei14E0zwozPBpqHQP8TYYOoM9IZUmwjidGmAGXTv0Ug
- L4aF6mBCVL248SeplfMqfGwTIcyQkwV2PuYASgh+5G8frUBob3xB384KuL6XO6AJoRtN
- o/MFLb/KxJELjhv5uQDBdNZTBKviuKkgasjw2cNKGZOodOqs/q9+svxQcCqRYTT2KVQh
- P4zjcvv1n6gKOCNwBkCdxJ3kxzZphfUg0BYAnxpahgcfFqfOZvgjjOCcPV15uRevzYnL
- KjOemzaJCu2w3I6aWq+DSOCUxIreV+LXiRIfwij69//UhvYXMdlpVyv0aUUZHhfDvtqe
- bGeg==
-X-Gm-Message-State: AOJu0Yz36qZR61yBGj8ScwJ9JmQAnhhRDhm7lnM0+Y5D3tuDFYe3GjDy
- 4uL7ngb/Hd+MGZP0b8fRt6aGzf6uKPfP5fxVk2Y7Few5CuOxqGe5xZ+nj0HkCJqc2LNcoda3SYJ
- DbUm02WHvMp4f9rrf3ct/urPXV6KYkc0CLta3JhAeMEonkX9M0VmSLlEU
-X-Gm-Gg: AfdE7cn08NWjjlG7bSZ1rnVM3BZvN2zaqwS4a83Vt5XVCHyU1XcllphEFJtUNrY4qA5
- QKnuHaBloZXs3vb3sth3TvYRgXcMKbP28YpAbAzo5gQacF2wn8ZU4yTOVqdyzPsFKqFSI7f+Dbt
- 0R2U4j6kXQ3eo7dImBoMOlgsFAtn7tMcGz/ofbh0l0iRdxZutynrPIMIQRMxPj/RGDRdGPIJQUW
- aYh9Jlf8FE6s5qSJIHQrEoX0zScFVUvv5L49rxpIDm1mlflJXDad6TMmZBXo3ZLUZ4N5WO7D5iL
- /rnDC27tCTQTFa0+N8h6BPzoK0N0c9kb+oWkSPvSS3bDuAy+PKDXnaf+9XomtnIGEFV6
-X-Received: by 2002:a05:620a:3708:b0:92e:e695:d622 with SMTP id
- af79cd13be357-930b3ea8f77mr1401548885a.28.1784556788440; 
- Mon, 20 Jul 2026 07:13:08 -0700 (PDT)
-X-Received: by 2002:a05:620a:3708:b0:92e:e695:d622 with SMTP id
- af79cd13be357-930b3ea8f77mr1401540785a.28.1784556787735; 
- Mon, 20 Jul 2026 07:13:07 -0700 (PDT)
-Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-9077856348esm91631706d6.12.2026.07.20.07.13.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Jul 2026 07:13:07 -0700 (PDT)
-Date: Mon, 20 Jul 2026 10:13:03 -0400
-From: Peter Xu <peterx@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- John Snow <jsnow@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Fam Zheng <fam@euphon.net>, "Denis V. Lunev" <den@openvz.org>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Greg Kurz <groug@kaod.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- xen-devel@lists.xenproject.org, Li Zhijian <lizhijian@fujitsu.com>
-Subject: Re: [PATCH 8/8] migration/rdma: annotate and simplify
- wait_comp_channel()
-Message-ID: <al4s77A0rlX0_PQc@x1.local>
-References: <20260720-co-v1-0-fabb4db3c204@redhat.com>
- <20260720-co-v1-8-fabb4db3c204@redhat.com>
+ d=1e100.net; s=20251104; t=1784557499; x=1785162299;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:reply-to:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=XyYskVW5Q3OAyXu3DG/PTzV3maSXjfq/3t1Pihd5U2Y=;
+ b=ShM0r5K6n0VKO6R3q5xLxZtk4H0LH87ShhdcdLS8MSTpTnbB6ntu0HkBhur2AezI7k
+ qNhJW1OO6gP1MXaoBEjZhtr5kOUn/hXb3MEk3AolxL5d5wbfZvydkAun66yK0FFOY1/D
+ FmgNpTyr8DpkJP52hxj2gFrVbmHfqp/OJUOIooYiG+RF6DiKzCHejhmIO3jOZJVhHnpg
+ xd6AYt8hCaVolbnNrlBZqFoWRjoJ+R23rzJdWDDEkoujFxdcvK5kDxifDL+nda6sQ9oU
+ WRoo0b6inyfnlRyKExYARa1Tl/H0yKrwpUUAuLoG6zr0sRownTHzmybV4ytRunFIqN/u
+ E7TQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Ro+geKIPj7Xms5N0YjyJVU2satNZzBzN4ItyXSdLohnt9yGgF+lw7h+aVZQzNb96IW3LRRhv50WgRun@nongnu.org
+X-Gm-Message-State: AOJu0YyoXMrZ2w515Yll7i4QtPVBqwbphPn5vFdOqt1YYnMceMAGUeas
+ b11hALttp2rkG3u43GJ2SRubHiSvM3mntPmrX2uov+Cb83/E32MIPZH5geC45nVk/qYpizVCizw
+ JdePImP5IsTd+ocIYHcDLsCbsW7oGW5AYreyh46ejHY4Bd7H0NVWgF/g9
+X-Gm-Gg: AfdE7cm5EL7guz+V0gpqaXM5s9gja4a8V5sXldTIWgnNd1mMGuxpTWEZe3aaiXB4S05
+ QWZS7FQelRyf4m+70Rp30VCVo/iNWg2nqpNqjyuAEFM4f+zQuml0CsL2h1S7IpQ8neFmisDqEB6
+ DYd4aAkKtq/vHccYX1UJYQwxqlVG1R75JpgWr0rpDIKv8sp/MntrcLHDBScKpI6P6TJ6LVeiwHi
+ Yv/tu/UWPyZvLxCPxIJQIQI/190RCm7O4QYQ89oBpofR4IuCNHIY8fm1WBjpOhn1VyHtOqTA86m
+ 55hkFnKAbF92UbIkFF2QkzcPL9Bf6F9NalSz5wL2Rl8A7dASp/68KHYQFzBNNlPUGctjRabBhYb
+ jItQoZfsejxLZCDehlIqtP3AuR1ZxIt+26BjLlvoGIr1Whib9
+X-Received: by 2002:a05:600c:4755:b0:495:4a34:16e3 with SMTP id
+ 5b1f17b1804b1-4954a3d0d04mr170863925e9.1.1784557499405; 
+ Mon, 20 Jul 2026 07:24:59 -0700 (PDT)
+X-Received: by 2002:a05:600c:4755:b0:495:4a34:16e3 with SMTP id
+ 5b1f17b1804b1-4954a3d0d04mr170863575e9.1.1784557498880; 
+ Mon, 20 Jul 2026 07:24:58 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4954a2aa698sm261654155e9.4.2026.07.20.07.24.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 Jul 2026 07:24:57 -0700 (PDT)
+Message-ID: <b839f20a-da50-493c-9b71-78069b62b867@redhat.com>
+Date: Mon, 20 Jul 2026 16:24:56 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260720-co-v1-8-fabb4db3c204@redhat.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v3 02/19] scripts: bug fixes in
+ update-aarch64-cpu-sysreg-properties
+Content-Language: en-US
+To: Khushit Shah <khushit.shah@nutanix.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev
+Cc: cohuck@redhat.com, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
+ berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
+ gshan@redhat.com, skolothumtho@nvidia.com, sebott@redhat.com,
+ armbru@redhat.com, philmd@linaro.org, yangjinqian1@huawei.com,
+ shaju.abraham@nutanix.com, mark.caveayland@nutanix.com,
+ prerna.saxena@nutanix.com
+References: <20260716213858.609699-1-khushit.shah@nutanix.com>
+ <20260716213858.609699-3-khushit.shah@nutanix.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260716213858.609699-3-khushit.shah@nutanix.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Received-SPF: permerror client-ip=170.10.129.124;
- envelope-from=peterx@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+ T_SPF_PERMERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,67 +119,141 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 20, 2026 at 11:55:37AM +0400, Marc-André Lureau wrote:
-> The function calls yield_until_fd_readable() (coroutine_fn) when in
-> coroutine context, and polls with qemu_poll_ns() otherwise.
-> 
-> Replace the migration-state proxy check with qemu_in_coroutine(),
-> which directly tests what matters.
-> 
-> Fixes: 2da776db4846 ("rdma: core logic")
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
 
-Just to say we can also drop the var.  I have a patch did it already but I
-didn't get chance to revisit the series:
+On 7/16/26 11:38 PM, Khushit Shah wrote:
+> - handle quoted bitstrings  and decimal
+> - skip Values.ValueRange entries.
+The above is the issue you reported on my v6. See my comment on the
+other thread.
+> - Emit unique RESx_{lsb} names for reserved fields so no two fields in
+>   a register share a name.
+The requirement for naming RES field needs to be explained. I understand
+that now you expose all fields including those which are not writable it
+may be required but at this stage I still fail why this is requested.
+> - Emit a dummy 64-bit VAL field for registers with no defined fields,
+>   such as AIDR_EL1 and REVIDR_EL1.
+This is yet another functional change that could be separate.
 
-https://lore.kernel.org/qemu-devel/20251022192612.2737648-5-peterx@redhat.com/
+Thanks
 
-So we can also pick that single patch up, then this patch can be
-annotation-only.  I'll leave it to you.
-
-Thanks,
-
+Eric
+>
+> Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
 > ---
->  migration/rdma.c | 12 ++++--------
->  1 file changed, 4 insertions(+), 8 deletions(-)
-> 
-> diff --git a/migration/rdma.c b/migration/rdma.c
-> index 3e37a1d4401..438419d1894 100644
-> --- a/migration/rdma.c
-> +++ b/migration/rdma.c
-> @@ -1348,17 +1348,13 @@ static int qemu_rdma_poll(RDMAContext *rdma, struct ibv_cq *cq,
->  /* Wait for activity on the completion channel.
->   * Returns 0 on success, none-0 on error.
->   */
-> -static int qemu_rdma_wait_comp_channel(RDMAContext *rdma,
-> -                                       struct ibv_comp_channel *comp_channel)
-> +static int coroutine_mixed_fn
-> +qemu_rdma_wait_comp_channel(RDMAContext *rdma,
-> +                            struct ibv_comp_channel *comp_channel)
->  {
->      struct rdma_cm_event *cm_event;
+>  .../update-aarch64-cpu-sysreg-properties.py   | 67 +++++++++++++------
+>  1 file changed, 45 insertions(+), 22 deletions(-)
+>  mode change 100644 => 100755 scripts/update-aarch64-cpu-sysreg-properties.py
+>
+> diff --git a/scripts/update-aarch64-cpu-sysreg-properties.py b/scripts/update-aarch64-cpu-sysreg-properties.py
+> old mode 100644
+> new mode 100755
+> index 9e829fda2e..ecc35db528
+> --- a/scripts/update-aarch64-cpu-sysreg-properties.py
+> +++ b/scripts/update-aarch64-cpu-sysreg-properties.py
+> @@ -106,6 +106,29 @@ def collect_fields(item, bit_offset=0):
 >  
-> -    /*
-> -     * Coroutine doesn't start until migration_fd_process_incoming()
-> -     * so don't yield unless we know we're running inside of a coroutine.
-> -     */
-> -    if (rdma->migration_started_on_destination &&
-> -        migration_incoming_get_current()->state == MIGRATION_STATUS_ACTIVE) {
-> +    if (qemu_in_coroutine()) {
->          yield_until_fd_readable(comp_channel->fd);
->      } else {
->          /* This is the source side, we're in a separate thread
-> 
-> -- 
-> 2.55.0
-> 
-
--- 
-Peter Xu
+>      return fields
+>  
+> +def parse_value_int(raw_val):
+> +    if raw_val is None or isinstance(raw_val, bool):
+> +        return None
+> +
+> +    # may already be real number
+> +    if isinstance(raw_val, int):
+> +        return raw_val
+> +
+> +    raw_str = str(raw_val).strip()
+> +
+> +    if "'" in raw_str:
+> +        # quoted bitstring like "'0100'"
+> +        bits = raw_str.replace("'", "")
+> +        try:
+> +            return int(bits, 2)
+> +        except ValueError:
+> +            return None
+> +
+> +    # unquoted, try decimal
+> +    try:
+> +        return int(raw_str, 0)
+> +    except ValueError:
+> +        return None
+>  
+>  def extract_field_enums(field):
+>      enums = []
+> @@ -124,32 +147,23 @@ def extract_field_enums(field):
+>      if not isinstance(val_entries, list):
+>          return enums
+>  
+> +    # A Values.ValueRange field specifies start and end value for a range.
+> +    # Don't enumerate anything for them.
+> +    for val_entry in val_entries:
+> +        if isinstance(val_entry, dict) and \
+> +           val_entry.get("_type") == "Values.ValueRange":
+> +               return []
+> +
+>      for val_entry in val_entries:
+>          if not isinstance(val_entry, dict):
+>              continue
+> -            
+> +
+>          if val_entry.get("_type") == "Values.Value":
+> -            raw_val = val_entry.get("value")
+> -            if raw_val is None:
+> +            int_val = parse_value_int(val_entry.get("value"))
+> +            if int_val is None:
+>                  continue
+> -                
+> -            # some of the values have ' like "'0100'"
+> -            raw_val_str = str(raw_val).strip().replace("'", "")
+> -            
+> -            try:
+> -                # convert into bin 
+> -                int_val = int(raw_val_str, 2)
+> -            except ValueError:
+> -                try:
+> -                    # Fallback to dec if not bin
+> -                    int_val = int(raw_val_str, 0)
+> -                except ValueError:
+> -                    continue
+> -            
+> -            enums.append({
+> -                'value': int_val
+> -            })
+> -            
+> +            enums.append({'value': int_val})
+> +
+>      return enums
+>  
+>  def generate_sysreg_properties_from_registers_json(id_reg_names, raw_json_path):
+> @@ -210,7 +224,7 @@ def generate_sysreg_properties_from_registers_json(id_reg_names, raw_json_path):
+>                         msb > current_fieldset_fields[unique_key]['msb']:
+>                          enums = extract_field_enums(val)
+>                          current_fieldset_fields[unique_key] = {
+> -                            'raw_name': name,
+> +                            'raw_name': unique_key,
+>                              'lsb': lsb,
+>                              'msb': msb,
+>                              'width': width,
+> @@ -238,6 +252,15 @@ def generate_sysreg_properties_from_registers_json(id_reg_names, raw_json_path):
+>          # Sort decreasing lsbs
+>          sorted_fields = sorted(unique_fields.items(),
+>                                 key=lambda x: x[1]['lsb'], reverse=True)
+> +        if len(sorted_fields) == 0:
+> +            # cases like REVIDR_EL1 and AIDR_EL1.
+> +            # augment a dummy fields VAL.
+> +            sorted_fields.append(('VAL', {
+> +                'lsb': 0,
+> +                'msb': 63,
+> +                'width': 64,
+> +                'enums': []
+> +            }))
+>  
+>          for unique_key, bits in sorted_fields:
+>              enums_list = bits.get('enums', [])
 
 
