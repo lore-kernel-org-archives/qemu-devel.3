@@ -4,100 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10F07C44515
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 13:19:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26D55C4452A
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 13:20:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlntk-000737-RH; Mon, 20 Jul 2026 09:19:10 -0400
+	id 1wlnuf-0007US-GU; Mon, 20 Jul 2026 09:20:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wlntT-0006yp-SG
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 09:18:51 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wlntP-0001Er-Ip
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 09:18:50 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-4720f3bf164so2033309f8f.1
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 06:18:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784553526; x=1785158326; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=gDfSSUpPFmGzYrWP+G121a4FEVFQYzCHGfzGBULlGCU=;
- b=V38pMca+Mf+oCH2vS6MM4LxoXOSpdLjIvqqg5PHGc1VtraSA664d4S5JBelk4Aaaki
- dUUn+GRaeYlErzkO747fFtjdqkFdhR7jQGzIBICBa76D7r01ghWUUVnMSQhycHHtkG/i
- 8V8TnCqVD9QoRl4wYw4bPET2w0oFBLPThY851NBsPf7hcdUaG+B5cFt5yUwOH3OCDaSw
- N0TSaB4uvj5tqnRvPIz49m+7z5B5JRUXgTarbhB95Yb9DCO5727MukvLiCOIOsnrtJjt
- /MbA/teQVU9O47Quy1SoFWythvoMtapQSTcO6+YIOBwSViIaO9PGWV9DznOcfGQ1iN6a
- an7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784553526; x=1785158326;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=gDfSSUpPFmGzYrWP+G121a4FEVFQYzCHGfzGBULlGCU=;
- b=ksUJ1y9OqfNp85Ds/oy4nNBOGXRXJAnkH6nBDzAlGUKzdb/QQ2amL4VjU4XLitRZxy
- PyjAHcCzm0xjoM0hl/QsMv7S26hmSx14zl7wvQyv067oMhRCCWk7u0YBEyacWXYlIt7p
- L+s1KrTSxWVEWOegpJ3Z+6RNDjb/vR8/tQSDXBH3nA77FIUO0FephaGJZSRrWLaCRgZv
- wWqJJEHjxRARY9VjWU0oRPaxd6EUIKVkAn3tYzDl2qXmflC15+qJEWoEqlgyh2SkQnOH
- krccKUJQSqs44u/fymXG1abXFezJsy+rvl3f1HHH7XUf9IQ4ZHKXixa2WrlxvRRrPAb2
- uR3w==
-X-Gm-Message-State: AOJu0YzzNB5j2JitZ4gKGZlteq0vC5MqatcwXtMFMtTIiLMJaVmLd2yE
- GemiTfWS4OuGh7YUbefORjZ7klzqkbJrPqOM8TiUiIDY7671jXM2pfyCW0UfTUDJhIk=
-X-Gm-Gg: AR+sD12bnA7hHDwpvJu/a6JndwfzENV9vafX+hcI62br1M074GgISxAkG2kb/FIVxgt
- 8hz9FQfXktnzm7eV1WxpnJY3uztE3OCFxubSNsFXZo20ARibqbemgSUk1B70uHv/A6/EzhcvFEv
- qF9HG/7NvLPG3cKu8AcMkthStZYmihxOSGkGha0FUrmKSeLbjnTSLexPQSzbCpE6enE6IpK6KDP
- J4Yvve8CdXrPuiHx8aUE1UgGfea8tCr1m1gUy4JnMXyiBZVFhoyA6RiOJnLfMTgQPBkMFh7XrLI
- 3MHNtWxJXr9pm5G2Fm818ghZYWvX6vXPo7+hLQFi2j1PKsjIUYyMF697xS4QbbsuphgqaZ2ynTN
- Wt5bKH10BPBgMhIoXQqY0MAzsrymCUgmCLGrJZUA5houzSvPzQ7tBsJ8efluFeFM8/KLHmKIEqU
- hDxg==
-X-Received: by 2002:a05:6000:26cd:b0:47f:73e8:3f8c with SMTP id
- ffacd0b85a97d-47f73e8400dmr6457910f8f.14.1784553525442; 
- Mon, 20 Jul 2026 06:18:45 -0700 (PDT)
-Received: from draig.lan ([185.124.0.114]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47f63ec7ea1sm30839218f8f.24.2026.07.20.06.18.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Jul 2026 06:18:44 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9F5AD5F911;
- Mon, 20 Jul 2026 14:18:43 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,  Brian Cain <brian.cain@oss.qualcomm.com>,  Peter
- Maydell <peter.maydell@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?=
- <philmd@oss.qualcomm.com>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,  Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>,  Laurent Vivier <laurent@vivier.eu>,
- Paolo Bonzini <pbonzini@redhat.com>,  Gustavo Romero
- <gustavo.romero@linaro.org>,  Helge Deller <deller@gmx.de>
-Subject: Re: [PATCH v5 00/98] tests/tcg: run tests with meson
-In-Reply-To: <d6d19210-67e0-4995-8ca5-b5bdc41e16ee@oss.qualcomm.com> (Pierrick
- Bouvier's message of "Fri, 10 Jul 2026 14:58:12 -0700")
-References: <20260710214343.2065491-1-pierrick.bouvier@oss.qualcomm.com>
- <d6d19210-67e0-4995-8ca5-b5bdc41e16ee@oss.qualcomm.com>
-User-Agent: mu4e 1.14.3-pre1; emacs 30.1
-Date: Mon, 20 Jul 2026 14:18:43 +0100
-Message-ID: <87qzkxssss.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1wlnud-0007U3-1y; Mon, 20 Jul 2026 09:20:03 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1wlnua-0001LZ-3P; Mon, 20 Jul 2026 09:20:02 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66KBBomq1935626; Mon, 20 Jul 2026 13:19:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=1awnLZ
+ 0CsODzkNoAOIEHjkob1FGWEcs+dbOHzOul3JM=; b=nwZxWZc7pLLGg/QV1icauC
+ aDR8ulu23r4d8O+gXlgRbkWDzQb5Gt+m/0HKnzHGngXqNoMfqsidZah3rs7t99rh
+ 6gzIj9yZol/VGF5EhV863uw9LvoLN47XYKUbwsizowxYbzbnUMl0fSBTusOfhhbZ
+ 2LQ+sFT9o7LZoepL5JYGP3+37AsFPLz86dOlt7gXTd3g3TmBEjFyNE52Gkiqu5D1
+ B9gEd1I9OOoYAd3biHyBUKGJZplpUjxziITXfKVJ8JSx+QNia5ONQAcw/AKq9etn
+ WO9M1xdU/firo4OpJx6QPikwrn9AXYWTybtV93dp0PmqUDoICLERoWUjLr/bJUiA
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fg78fybyk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 20 Jul 2026 13:19:58 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 66KD4ZE9022527;
+ Mon, 20 Jul 2026 13:19:57 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fgktpwwes-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 20 Jul 2026 13:19:57 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 66KDJtNo26018364
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 20 Jul 2026 13:19:55 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 40AC758051;
+ Mon, 20 Jul 2026 13:19:55 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F18775805F;
+ Mon, 20 Jul 2026 13:19:51 +0000 (GMT)
+Received: from [9.39.17.136] (unknown [9.39.17.136])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 20 Jul 2026 13:19:51 +0000 (GMT)
+Message-ID: <8aa63fba-4b12-4c67-9c1b-d3dccf3b4b0f@linux.ibm.com>
+Date: Mon, 20 Jul 2026 18:49:49 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 15/28] target/ppc: move various conditional branch
+ insns to decodetree
+To: Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+ Nikhil Kumar Singh <nikhilks@linux.ibm.com>, ojaswin@linux.ibm.com
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
+ harshpb@linux.ibm.com
+References: <20260520160728.2283628-1-rathc@linux.ibm.com>
+ <20260520160728.2283628-16-rathc@linux.ibm.com>
+ <46867b5b-bb66-4378-8722-d918fd720037@linux.ibm.com>
+ <aldMCp8X6_lpE97M@li-dc0c254c-257c-11b2-a85c-98b6c1322444.ibm.com>
+Content-Language: en-US
+From: Chinmay Rath <rathc@linux.ibm.com>
+In-Reply-To: <aldMCp8X6_lpE97M@li-dc0c254c-257c-11b2-a85c-98b6c1322444.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDE0NyBTYWx0ZWRfX/ttBg3BwYHWv
+ Fk+fUltg53EkAs6ZcAjZltsVhTcS51w8yQjfS6jkGGBCXIktXy9Jqg8FX1t16qb1oNTGrcn+Plb
+ zGdaAcc8FxkGTTamcaymvGaoafKhljto7Z4l9YlTkd7mMULKvO5zgAyor9lui+lSXxDNQKhoY7M
+ FKQAYNwALwvxvGB77A4BXptuWiy12aNDQjYprNwdvKPn/S5jNXeru+lwR3/DkNmYwskIoVznmRn
+ b7J4df1ueGi3yAYNRAp1D/3Q5urI/ijN+nSGIa3uVsYP0m8SXG+iIKBRhA2T/Npl2nFegbchIWg
+ kDuGHitSTTaBC3qNUxM8KA701En9PdO5VOUwX2HbrFNAiOBlaICOpehCVr2gkcX4xeFUy4DkBd5
+ euqIBj9pm2zVZUudT1ulyUke7uOU73CucMwhHYklnD279/wz3uLgGq/S+NOW3I4zBLJQr+UWmC2
+ Bd831jDQ3gduT19/L4g==
+X-Proofpoint-GUID: jNUe8ku7n0Nx7JwvrPCPXzy4UF4ck4av
+X-Authority-Analysis: v=2.4 cv=MelcfZ/f c=1 sm=1 tr=0 ts=6a5e207e cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=JjzOvMtOYvD3pLNmDDMA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDE0NyBTYWx0ZWRfX8L0Y7SfmO4id
+ ku85MejKtX8JLC2VCG9TgdWArKz5ZVFFFMWp0KfpmwEsEYonCWq5tWwAkKiSmpkEv9O0q3CAjnR
+ rjiNQLke2aseuCqtQnLV0iJJfggDS/A=
+X-Proofpoint-ORIG-GUID: 7lYpGYWDEb6c_b_-SNmtcj2URtOEmBai
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-20_02,2026-07-20_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0 spamscore=0
+ clxscore=1015 malwarescore=0 phishscore=0 adultscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200147
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,581 +129,438 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 
-> On 7/10/2026 2:42 PM, Pierrick Bouvier wrote:
->> This series replaces TCG tests makefiles with meson, with the
->> goal of having something more readable and maintainable in the long term.
->> Also it closes the gap that tcg tests had with the rest of tests, by int=
-egrating
->> them with meson directly.
->>=20
->> It covers all existing tests for all architectures, including
->> user/system/multiarch-user/multiarch-system. It implements all requireme=
-nts
->> listed on original thread [1].
->>=20
->> [1] https://lore.kernel.org/qemu-devel/87wlwfsay4.fsf@draig.linaro.org/
->>=20
->> We also have for free:
->> - correct and complete dependencies for any test, including:
->>   scripts, c.inc, headers, reference files and binaries/plugins.
->> - catch test declaration issues at configure time vs test time.
->> - proper data types for variables instead of string expansion with make.
->>=20
->> Series first introduce the meson machinery needed in tests/tcg/meson.bui=
-ld, step
->> by step. Then it adds support for all existing archs. Finally, we remove
->> Makefiles and configure bits, and add documentation.
->>=20
->> Usage:
->>=20
->> ```
->> make check-tcg
->> make check-tcg-aarch64-linux-user
->> make check-tcg-aarch64-softmmu
->> make tcg-tests
->>=20
->> ninja tcg-tests
->> ninja clean
->> ./pyvenv/bin/meson test aarch64-softmmu-asid2 --verbose
->> ```
->>=20
->> v5
->> --
->>=20
->> - remove Makefiles incrementally to ease review, as suggested by Philippe
->> - default timeout 120 (matching Makefile default)
->>=20
->> v4
->> --
->>=20
->> - rebase on top of master (Makefiles + Dockerfile changes)
->> - full CI pass on GitLab
->> - update documentation for tcg-tests
->> - check host cross cc is working (handle fedora cross compiler without r=
-untime or
->>   headers)
->> - rename cc_docker_arch to cc_docker_host_arch
->> - add test added since v3: aarch64/fprcvt
->> - enable tricore system tests (was missing -kernel parameter)
->> - add xtensaeb system tests
->> - remove dependency from s390x/console.c to roms/SLOF submodule, which a=
-llows to
->>   compile those tests without requiring the submodule.
->> - fix meson warnings (min version for test with external program in args=
- +
->>   s/source_root/project_source_root/)
->> - skip failing test gdb-prot-none on GitLab CI
->>=20
->> v3
->> --
->>=20
->> - add all architectures
->> - reduce number of plugins tests (only add one test for each plugin from
->>   multiarch pool)
->> - add depends for executable - allow to depend on a custom target for ge=
-nerated
->>   headers (x86_64 mmx, avx)
->> - add new tests added since last version for aarch64 (mte + gpc)
->> - refactor series to keep all arch files at end
->> - add docker host architecture selection
->>=20
->> v2
->> --
->>=20
->> - s/mispell/misspell
->> - moved comment about why we remove 'lib' prefix for plugins
->> - if user declare a wrong entry in a dictionary, list possible keys
->> - build tests by default (with 'all' target), as long as cross compiler =
-is
->>   natively installed, to avoid triggering a container build.
->> - reword some comments based on reviewers feedback
->> - always declare all tests and avoid "per config" errors (no 'if' in arc=
-h files)
->> - move compiler feature and gdb version checks directly in tests/tcg/mes=
-on.build
->> - add support for cross containers
->> - add top target 'tcg-tests' to rebuild all tests
->>=20
->> Pierrick Bouvier (98):
->>   tests/tcg/multiarch/system/memory.c: remove unused variable
->>   tests/tcg/multiarch/plugin/check-plugin-output.sh: take test output as
->>     input
->>   tests/tcg/multiarch/plugin: rename check-plugin-output to
->>     regex-compare
->>   meson: bump minimal version to 1.6.0
->>   tests/tcg: introduce meson.build
->>   tests/tcg/meson.build: introduce exe_name
->>   tests/tcg/meson.build: introduce test_name
->>   tests/tcg/meson.build: introduce cflags
->>   tests/tcg/meson.build: introduce qemu_args
->>   tests/tcg/meson.build: introduce env_var
->>   tests/tcg/plugins: build list of test_plugins
->>   tests/tcg/meson.build: introduce plugin_test
->>   tests/tcg/meson.build: test gdb support and introduce gdb_arch
->>   tests/tcg/meson.build: introduce gdb_test
->>   tests/tcg/meson.build: introduce wrapper
->>   tests/tcg/meson.build: introduce expected_output
->>   tests/tcg/meson.build: add wrapper run_and_check_forbidden_output
->>   tests/tcg/meson.build: add wrapper run_with_input
->>   tests/tcg/meson.build: add wrapper record_replay
->>   tests/tcg/meson.build: add wrapper check_plugin_output
->>   tests/tcg/meson.build: add logic to skip tests
->>   tests/tcg/meson.build: introduce cc_feat and cc_feat_cflags
->>   tests/tcg/meson.build: introduce gdb_feat and gdb_feat_version
->>   tests/tcg/meson.build: move gdb_arch support check
->>   tests/tcg/meson.build: let test infrastructure detect compiler
->>   tests/docker/docker.py: return error code if probe fails
->>   tests/docker/docker.py: remove "Image is up to date" info
->>   tests/tcg/meson.build: introduce cc_dockerfile and cc_docker_host_arch
->>   tests/tcg/meson.build: check host cross cc is working
->>   tests/tcg/meson.build: introduce depends
->>   tests/tcg/meson.build: add top-level 'tcg-tests' target
->>   tests/tcg/Makefile: skip user/system tests if target Makefile is not
->>     present
->>   tests/tcg/multiarch/gdbstub/prot-none.py: deactivate on gitlab CI
->>   tests/tcg/multiarch: declare user tests
->>   tests/tcg/multiarch: declare system tests
->>   tests/tcg/meson.build: add generic plugin tests
->>   tests/tcg/arm/fcvt.c: use raw opcode for FPRCVT
->>   tests/tcg/aarch64: user tests
->>   tests/tcg/aarch64/system/gpc-test.c: remove unused variables
->>   tests/tcg/aarch64: system tests
->>   tests/tcg/aarch64_be: user tests
->>   tests/tcg/alpha: add float reference files
->>   tests/tcg/alpha: user tests
->>   tests/tcg/alpha: system tests
->>   tests/tcg/arm: user tests
->>   tests/tcg/arm: system tests
->>   tests/tcg/hexagon/overflow.c: add missing include
->>   tests/tcg/hexagon: user tests
->>   tests/tcg/multiarch/sha1.c: fix big endian implementation
->>   tests/tcg/hppa: add float reference files
->>   tests/tcg/hppa: user tests
->>   tests/tcg/i386: add missing float reference files
->>   tests/tcg/i386: user tests
->>   tests/tcg/i386: system tests
->>   tests/tcg/loongarch64: user tests
->>   tests/tcg/loongarch64: system tests
->>   tests/tcg/m68k: add float reference files
->>   tests/tcg/m68k: user tests
->>   scripts/probe-gdb-support.py: add mapping for mips architecture
->>   tests/tcg/mips: add float reference files
->>   test/tcg/mips: user tests
->>   tests/tcg/mips64: add float reference files
->>   tests/tcg/mips64: user tests
->>   tests/tcg/mips64el: add float reference files
->>   tests/tcg/mips64el: user tests
->>   tests/docker/dockerfiles/debian-all-test-cross.docker: add or1k
->>     toolchain
->>   tests/tcg/or1k/test_addic.c: remove unused variables
->>   tests/tcg/or1k/test_muli.c: remove set but unused variable
->>   tests/tcg/or1k: add float reference files
->>   plugins/api.c: identify or1k pc register and mark it as read only
->>   tests/tcg/or1k: user tests
->>   tests/tcg/ppc64: add float reference files
->>   tests/tcg/ppc64: remove dependency on qemu/compiler.h
->>   tests/tcg/ppc64: user tests
->>   tests/tcg/ppc64le: add missing float reference file
->>   tests/tcg/ppc64le: user tests
->>   tests/tcg/riscv64: add float reference files
->>   tests/tcg/riscv64: user tests
->>   tests/tcg/riscv64: system tests
->>   tests/tcg/s390x/head64.S: declare _exit symbol after main
->>   tests/tcg/s390x: add float reference files
->>   tests/tcg/s390x: user tests
->>   tests/tcg/s390x/console.c: directly implement memcpy and memset
->>   tests/tcg/s390x: system tests
->>   tests/tcg/sh4: add float reference files
->>   tests/tcg/sh4: user tests
->>   tests/tcg/tricore: system tests
->>   tests/tcg/x86_64: add missing float reference file
->>   tests/tcg/x86_64: user tests
->>   tests/tcg/x86_64: system tests
->>   tests/tcg/xtensa/crt.S: align .text section
->>   tests/docker/dockerfiles/debian-xtensa-cross.docker: add test_kc705_be
->>     toolchain for xtensaeb
->>   tests/tcg/xtensa: system tests
->>   tests/tcg/xtensa: xtensaeb system tests
->>   tests: remove tcg tests machinery
->>   tests/tcg: remove remaining Makefiles
->>   configure: remove --cross-cc* options
->>   docs/devel/testing/: update documentation
->>=20
->>  configure                                     | 473 ---------
->>  docs/devel/build-system.rst                   |   4 +-
->>  docs/devel/testing/main.rst                   |  55 +-
->>  meson.build                                   |   4 +-
->>  plugins/api.c                                 |   2 +
->>  pythondeps.toml                               |   2 +-
->>  scripts/probe-gdb-support.py                  |   1 +
->>  .../packagefiles/anyhow-1-rs/meson.build      |   2 +-
->>  .../arbitrary-int-1-rs/meson.build            |   2 +-
->>  .../packagefiles/attrs-0.2-rs/meson.build     |   2 +-
->>  .../packagefiles/bilge-0.2-rs/meson.build     |   2 +-
->>  .../bilge-impl-0.2-rs/meson.build             |   2 +-
->>  .../packagefiles/either-1-rs/meson.build      |   2 +-
->>  .../packagefiles/foreign-0.3-rs/meson.build   |   2 +-
->>  .../packagefiles/glib-sys-0.21-rs/meson.build |   2 +-
->>  .../itertools-0.11-rs/meson.build             |   2 +-
->>  .../packagefiles/libc-0.2-rs/meson.build      |   2 +-
->>  .../packagefiles/probe-0.5-rs/meson.build     |   2 +-
->>  .../proc-macro-error-1-rs/meson.build         |   2 +-
->>  .../proc-macro-error-attr-1-rs/meson.build    |   2 +-
->>  .../packagefiles/proc-macro2-1-rs/meson.build |   2 +-
->>  .../packagefiles/quote-1-rs/meson.build       |   2 +-
->>  subprojects/packagefiles/syn-2-rs/meson.build |   2 +-
->>  .../unicode-ident-1-rs/meson.build            |   2 +-
->>  tests/Makefile.include                        |  68 +-
->>  tests/docker/docker.py                        |   4 +-
->>  .../dockerfiles/debian-all-test-cross.docker  |  14 +-
->>  .../dockerfiles/debian-xtensa-cross.docker    |   4 +-
->>  tests/lcitool/refresh                         |  14 +-
->>  tests/meson.build                             |   2 +-
->>  tests/tcg/Makefile.target                     | 281 -----
->>  tests/tcg/aarch64/Makefile.softmmu-target     | 147 ---
->>  tests/tcg/aarch64/Makefile.target             | 210 ----
->>  tests/tcg/aarch64/meson.build                 | 207 ++++
->>  tests/tcg/aarch64/system/gpc-test.c           |   5 -
->>  tests/tcg/aarch64/system/meson.build          | 108 ++
->>  tests/tcg/aarch64_be/Makefile.target          |  17 -
->>  tests/tcg/aarch64_be/meson.build              |  22 +
->>  tests/tcg/alpha/Makefile.softmmu-target       |  34 -
->>  tests/tcg/alpha/Makefile.target               |  18 -
->>  tests/tcg/alpha/float_convd.ref               | 988 ++++++++++++++++++
->>  tests/tcg/alpha/float_convs.ref               | 748 +++++++++++++
->>  tests/tcg/alpha/float_madds.ref               | 768 ++++++++++++++
->>  tests/tcg/alpha/meson.build                   |  55 +
->>  tests/tcg/alpha/system/meson.build            |  46 +
->>  tests/tcg/arm/Makefile.softmmu-target         |  80 --
->>  tests/tcg/arm/Makefile.target                 |  87 --
->>  tests/tcg/arm/fcvt.c                          |   6 +-
->>  tests/tcg/arm/meson.build                     |  80 ++
->>  tests/tcg/arm/system/meson.build              |  66 ++
->>  tests/tcg/hexagon/Makefile.target             | 146 ---
->>  tests/tcg/hexagon/meson.build                 | 111 ++
->>  tests/tcg/hexagon/overflow.c                  |   1 +
->>  tests/tcg/hppa/Makefile.target                |  14 -
->>  tests/tcg/hppa/float_convd.ref                | 988 ++++++++++++++++++
->>  tests/tcg/hppa/float_convs.ref                | 748 +++++++++++++
->>  tests/tcg/hppa/float_madds.ref                | 768 ++++++++++++++
->>  tests/tcg/hppa/meson.build                    |  22 +
->>  tests/tcg/i386/Makefile.softmmu-target        |  37 -
->>  tests/tcg/i386/Makefile.target                | 102 --
->>  tests/tcg/i386/float_convd.conf               | 988 ------------------
->>  tests/tcg/i386/float_convd.ref                | 988 ++++++++++++++++++
->>  tests/tcg/i386/float_madds.ref                | 768 ++++++++++++++
->>  tests/tcg/i386/meson.build                    |  58 +
->>  tests/tcg/i386/system/meson.build             |  48 +
->>  tests/tcg/loongarch64/Makefile.softmmu-target |  33 -
->>  tests/tcg/loongarch64/Makefile.target         |  20 -
->>  tests/tcg/loongarch64/meson.build             |  32 +
->>  tests/tcg/loongarch64/system/meson.build      |  47 +
->>  tests/tcg/m68k/Makefile.target                |   7 -
->>  tests/tcg/m68k/float_convd.ref                | 988 ++++++++++++++++++
->>  tests/tcg/m68k/float_convs.ref                | 748 +++++++++++++
->>  tests/tcg/m68k/float_madds.ref                | 768 ++++++++++++++
->>  tests/tcg/m68k/meson.build                    |  23 +
->>  tests/tcg/meson.build                         | 462 ++++++++
->>  tests/tcg/minilib/Makefile.target             |  21 -
->>  tests/tcg/mips/Makefile.target                |  19 -
->>  tests/tcg/mips/float_convd.ref                | 988 ++++++++++++++++++
->>  tests/tcg/mips/float_convs.ref                | 748 +++++++++++++
->>  tests/tcg/mips/float_madds.ref                | 768 ++++++++++++++
->>  tests/tcg/mips/meson.build                    |  25 +
->>  tests/tcg/mips64/Makefile.target              |  20 -
->>  tests/tcg/mips64/float_convd.ref              | 988 ++++++++++++++++++
->>  tests/tcg/mips64/float_convs.ref              | 748 +++++++++++++
->>  tests/tcg/mips64/float_madds.ref              | 768 ++++++++++++++
->>  tests/tcg/mips64/meson.build                  |  27 +
->>  tests/tcg/mips64el/Makefile.target            |   8 -
->>  tests/tcg/mips64el/float_convd.ref            | 988 ++++++++++++++++++
->>  tests/tcg/mips64el/float_convs.ref            | 748 +++++++++++++
->>  tests/tcg/mips64el/float_madds.ref            | 768 ++++++++++++++
->>  tests/tcg/mips64el/meson.build                |  14 +
->>  tests/tcg/multiarch/Makefile.target           | 224 ----
->>  tests/tcg/multiarch/gdbstub/prot-none.py      |  11 +-
->>  tests/tcg/multiarch/meson.build               | 149 +++
->>  .../multiarch/plugin/check-plugin-output.sh   |  36 -
->>  tests/tcg/multiarch/plugin/regex-compare.sh   |  28 +
->>  tests/tcg/multiarch/sha1.c                    |   4 +-
->>  tests/tcg/multiarch/sha1.ref                  |   1 +
->>  .../multiarch/system/Makefile.softmmu-target  |  81 --
->>  tests/tcg/multiarch/system/memory.c           |   3 +-
->>  tests/tcg/multiarch/system/meson.build        |  53 +
->>  tests/tcg/or1k/Makefile                       |  71 --
->>  tests/tcg/or1k/float_convd.ref                | 247 +++++
->>  tests/tcg/or1k/float_convs.ref                | 187 ++++
->>  tests/tcg/or1k/float_madds.ref                | 192 ++++
->>  tests/tcg/or1k/meson.build                    |  72 ++
->>  tests/tcg/or1k/test_addic.c                   |   2 +-
->>  tests/tcg/or1k/test_muli.c                    |   5 +-
->>  tests/tcg/plugins/meson.build                 |  11 +-
->>  tests/tcg/ppc64/Makefile.target               |  63 --
->>  tests/tcg/ppc64/float_convd.ref               | 988 ++++++++++++++++++
->>  tests/tcg/ppc64/float_convs.ref               | 748 +++++++++++++
->>  tests/tcg/ppc64/float_madds.ref               | 768 ++++++++++++++
->>  tests/tcg/ppc64/meson.build                   |  56 +
->>  tests/tcg/ppc64/vector.c                      |  11 +-
->>  tests/tcg/ppc64/vsx_f2i_nan.c                 |   7 +-
->>  tests/tcg/ppc64le/Makefile.target             |   7 -
->>  tests/tcg/ppc64le/float_convd.ref             | 988 ++++++++++++++++++
->>  tests/tcg/ppc64le/meson.build                 |  14 +
->>  tests/tcg/riscv64/Makefile.softmmu-target     |  45 -
->>  tests/tcg/riscv64/Makefile.target             |  20 -
->>  tests/tcg/riscv64/float_convd.ref             | 988 ++++++++++++++++++
->>  tests/tcg/riscv64/float_convs.ref             | 748 +++++++++++++
->>  tests/tcg/riscv64/float_madds.ref             | 768 ++++++++++++++
->>  tests/tcg/riscv64/meson.build                 |  38 +
->>  tests/tcg/riscv64/system/meson.build          |  38 +
->>  tests/tcg/s390x/Makefile.softmmu-target       |  57 -
->>  tests/tcg/s390x/Makefile.target               | 127 ---
->>  tests/tcg/s390x/console.c                     |  30 +-
->>  tests/tcg/s390x/float_convd.ref               | 988 ++++++++++++++++++
->>  tests/tcg/s390x/float_convs.ref               | 748 +++++++++++++
->>  tests/tcg/s390x/float_madds.ref               | 768 ++++++++++++++
->>  tests/tcg/s390x/head64.S                      |   2 +
->>  tests/tcg/s390x/meson.build                   | 140 +++
->>  tests/tcg/s390x/system/meson.build            |  90 ++
->>  tests/tcg/scripts/check_plugin_output.sh      |  25 +
->>  tests/tcg/scripts/record_replay.sh            |  16 +
->>  .../scripts/run_and_check_forbidden_output.sh |  19 +
->>  tests/tcg/scripts/run_and_diff.sh             |  15 +
->>  tests/tcg/scripts/run_with_input.sh           |  12 +
->>  tests/tcg/sh4/Makefile.target                 |  18 -
->>  tests/tcg/sh4/float_convd.ref                 | 494 +++++++++
->>  tests/tcg/sh4/float_convs.ref                 | 374 +++++++
->>  tests/tcg/sh4/float_madds.ref                 | 384 +++++++
->>  tests/tcg/sh4/meson.build                     |  25 +
->>  tests/tcg/test_cc.c                           |   7 +
->>  tests/tcg/tricore/Makefile.softmmu-target     |  53 -
->>  tests/tcg/tricore/meson.build                 |  57 +
->>  tests/tcg/x86_64/Makefile.softmmu-target      |  44 -
->>  tests/tcg/x86_64/Makefile.target              |  40 -
->>  tests/tcg/x86_64/float_madds.ref              | 768 ++++++++++++++
->>  tests/tcg/x86_64/meson.build                  |  83 ++
->>  tests/tcg/x86_64/system/meson.build           |  62 ++
->>  tests/tcg/xtensa/Makefile.softmmu-target      |  46 -
->>  tests/tcg/xtensa/crt.S                        |   1 +
->>  tests/tcg/xtensa/meson.build                  | 110 ++
->>  tests/tcg/xtensaeb/Makefile.softmmu-target    |   5 -
->>  157 files changed, 30640 insertions(+), 3855 deletions(-)
->>  delete mode 100644 tests/tcg/Makefile.target
->>  delete mode 100644 tests/tcg/aarch64/Makefile.softmmu-target
->>  delete mode 100644 tests/tcg/aarch64/Makefile.target
->>  create mode 100644 tests/tcg/aarch64/meson.build
->>  create mode 100644 tests/tcg/aarch64/system/meson.build
->>  delete mode 100644 tests/tcg/aarch64_be/Makefile.target
->>  create mode 100644 tests/tcg/aarch64_be/meson.build
->>  delete mode 100644 tests/tcg/alpha/Makefile.softmmu-target
->>  delete mode 100644 tests/tcg/alpha/Makefile.target
->>  create mode 100644 tests/tcg/alpha/float_convd.ref
->>  create mode 100644 tests/tcg/alpha/float_convs.ref
->>  create mode 100644 tests/tcg/alpha/float_madds.ref
->>  create mode 100644 tests/tcg/alpha/meson.build
->>  create mode 100644 tests/tcg/alpha/system/meson.build
->>  delete mode 100644 tests/tcg/arm/Makefile.softmmu-target
->>  delete mode 100644 tests/tcg/arm/Makefile.target
->>  create mode 100644 tests/tcg/arm/meson.build
->>  create mode 100644 tests/tcg/arm/system/meson.build
->>  delete mode 100644 tests/tcg/hexagon/Makefile.target
->>  create mode 100644 tests/tcg/hexagon/meson.build
->>  delete mode 100644 tests/tcg/hppa/Makefile.target
->>  create mode 100644 tests/tcg/hppa/float_convd.ref
->>  create mode 100644 tests/tcg/hppa/float_convs.ref
->>  create mode 100644 tests/tcg/hppa/float_madds.ref
->>  create mode 100644 tests/tcg/hppa/meson.build
->>  delete mode 100644 tests/tcg/i386/Makefile.softmmu-target
->>  delete mode 100644 tests/tcg/i386/Makefile.target
->>  delete mode 100644 tests/tcg/i386/float_convd.conf
->>  create mode 100644 tests/tcg/i386/float_convd.ref
->>  create mode 100644 tests/tcg/i386/float_madds.ref
->>  create mode 100644 tests/tcg/i386/meson.build
->>  create mode 100644 tests/tcg/i386/system/meson.build
->>  delete mode 100644 tests/tcg/loongarch64/Makefile.softmmu-target
->>  delete mode 100644 tests/tcg/loongarch64/Makefile.target
->>  create mode 100644 tests/tcg/loongarch64/meson.build
->>  create mode 100644 tests/tcg/loongarch64/system/meson.build
->>  delete mode 100644 tests/tcg/m68k/Makefile.target
->>  create mode 100644 tests/tcg/m68k/float_convd.ref
->>  create mode 100644 tests/tcg/m68k/float_convs.ref
->>  create mode 100644 tests/tcg/m68k/float_madds.ref
->>  create mode 100644 tests/tcg/m68k/meson.build
->>  create mode 100644 tests/tcg/meson.build
->>  delete mode 100644 tests/tcg/minilib/Makefile.target
->>  delete mode 100644 tests/tcg/mips/Makefile.target
->>  create mode 100644 tests/tcg/mips/float_convd.ref
->>  create mode 100644 tests/tcg/mips/float_convs.ref
->>  create mode 100644 tests/tcg/mips/float_madds.ref
->>  create mode 100644 tests/tcg/mips/meson.build
->>  delete mode 100644 tests/tcg/mips64/Makefile.target
->>  create mode 100644 tests/tcg/mips64/float_convd.ref
->>  create mode 100644 tests/tcg/mips64/float_convs.ref
->>  create mode 100644 tests/tcg/mips64/float_madds.ref
->>  create mode 100644 tests/tcg/mips64/meson.build
->>  delete mode 100644 tests/tcg/mips64el/Makefile.target
->>  create mode 100644 tests/tcg/mips64el/float_convd.ref
->>  create mode 100644 tests/tcg/mips64el/float_convs.ref
->>  create mode 100644 tests/tcg/mips64el/float_madds.ref
->>  create mode 100644 tests/tcg/mips64el/meson.build
->>  delete mode 100644 tests/tcg/multiarch/Makefile.target
->>  create mode 100644 tests/tcg/multiarch/meson.build
->>  delete mode 100755 tests/tcg/multiarch/plugin/check-plugin-output.sh
->>  create mode 100755 tests/tcg/multiarch/plugin/regex-compare.sh
->>  create mode 100644 tests/tcg/multiarch/sha1.ref
->>  delete mode 100644 tests/tcg/multiarch/system/Makefile.softmmu-target
->>  create mode 100644 tests/tcg/multiarch/system/meson.build
->>  delete mode 100644 tests/tcg/or1k/Makefile
->>  create mode 100644 tests/tcg/or1k/float_convd.ref
->>  create mode 100644 tests/tcg/or1k/float_convs.ref
->>  create mode 100644 tests/tcg/or1k/float_madds.ref
->>  create mode 100644 tests/tcg/or1k/meson.build
->>  delete mode 100644 tests/tcg/ppc64/Makefile.target
->>  create mode 100644 tests/tcg/ppc64/float_convd.ref
->>  create mode 100644 tests/tcg/ppc64/float_convs.ref
->>  create mode 100644 tests/tcg/ppc64/float_madds.ref
->>  create mode 100644 tests/tcg/ppc64/meson.build
->>  delete mode 100644 tests/tcg/ppc64le/Makefile.target
->>  create mode 100644 tests/tcg/ppc64le/float_convd.ref
->>  create mode 100644 tests/tcg/ppc64le/meson.build
->>  delete mode 100644 tests/tcg/riscv64/Makefile.softmmu-target
->>  delete mode 100644 tests/tcg/riscv64/Makefile.target
->>  create mode 100644 tests/tcg/riscv64/float_convd.ref
->>  create mode 100644 tests/tcg/riscv64/float_convs.ref
->>  create mode 100644 tests/tcg/riscv64/float_madds.ref
->>  create mode 100644 tests/tcg/riscv64/meson.build
->>  create mode 100644 tests/tcg/riscv64/system/meson.build
->>  delete mode 100644 tests/tcg/s390x/Makefile.softmmu-target
->>  delete mode 100644 tests/tcg/s390x/Makefile.target
->>  create mode 100644 tests/tcg/s390x/float_convd.ref
->>  create mode 100644 tests/tcg/s390x/float_convs.ref
->>  create mode 100644 tests/tcg/s390x/float_madds.ref
->>  create mode 100644 tests/tcg/s390x/meson.build
->>  create mode 100644 tests/tcg/s390x/system/meson.build
->>  create mode 100755 tests/tcg/scripts/check_plugin_output.sh
->>  create mode 100755 tests/tcg/scripts/record_replay.sh
->>  create mode 100755 tests/tcg/scripts/run_and_check_forbidden_output.sh
->>  create mode 100755 tests/tcg/scripts/run_and_diff.sh
->>  create mode 100755 tests/tcg/scripts/run_with_input.sh
->>  delete mode 100644 tests/tcg/sh4/Makefile.target
->>  create mode 100644 tests/tcg/sh4/float_convd.ref
->>  create mode 100644 tests/tcg/sh4/float_convs.ref
->>  create mode 100644 tests/tcg/sh4/float_madds.ref
->>  create mode 100644 tests/tcg/sh4/meson.build
->>  create mode 100644 tests/tcg/test_cc.c
->>  delete mode 100644 tests/tcg/tricore/Makefile.softmmu-target
->>  create mode 100644 tests/tcg/tricore/meson.build
->>  delete mode 100644 tests/tcg/x86_64/Makefile.softmmu-target
->>  delete mode 100644 tests/tcg/x86_64/Makefile.target
->>  create mode 100644 tests/tcg/x86_64/float_madds.ref
->>  create mode 100644 tests/tcg/x86_64/meson.build
->>  create mode 100644 tests/tcg/x86_64/system/meson.build
->>  delete mode 100644 tests/tcg/xtensa/Makefile.softmmu-target
->>  create mode 100644 tests/tcg/xtensa/meson.build
->>  delete mode 100644 tests/tcg/xtensaeb/Makefile.softmmu-target
->>=20
+On 7/15/26 14:29, Ojaswin Mujoo wrote:
+> On Mon, Jul 06, 2026 at 10:50:39PM +0530, Nikhil Kumar Singh wrote:
+>> On 20/05/26 21:37, Chinmay Rath wrote:
+>>> From: Ojaswin Mujoo<ojaswin@linux.ibm.com>
+>>>
+>>> Convert the following instrunctions to decodetree specification:
+>> The word should be spelled `instructions` and not `instrunctions`. Please
+>> fix this in the
+>> commit message.
+> Hi Nikhil, thanks for the review. I'll make the change.
+>>> bc
+>>> bca
+>>> bcl
+>>> bcla
+>>>
+>>> bclr
+>>> bclrl
+>>>
+>>> bcctr
+>>> bcctrl
+>>>
+>>> bctar
+>>> bctarl
+>>>
+>>> The branch was tested by comparing the qemu -D log -d op,in_asm output for
+>>> each instruction and also for the various combinations of branch option
+>>> (BO) bits for the conditional branch instructions. Additionally, gdb
+>>> was used to confirm the LR and other register's behavior is consistent
+>>> to legacy behavior.
+>>>
+>>> Further, the changes also pass a boot test into Fedora distro.
+>>>
+>>> Signed-off-by: Ojaswin Mujoo<ojaswin@linux.ibm.com>
+>>> Signed-off-by: Chinmay Rath<rathc@linux.ibm.com>
+>>> ---
+>>>    target/ppc/insn32.decode               |  13 ++
+>>>    target/ppc/translate.c                 | 148 -----------------------
+>>>    target/ppc/translate/branch-impl.c.inc | 157 +++++++++++++++++++++++++
+>>>    3 files changed, 170 insertions(+), 148 deletions(-)
+>>>
+>>> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+>>> index b98fe01a84..34b36cbef6 100644
+>>> --- a/target/ppc/insn32.decode
+>>> +++ b/target/ppc/insn32.decode
+>>> @@ -1485,6 +1485,19 @@ CLRBHRB         011111 ----- ----- ----- 0110101110 -
+>>>    B               010010 ........................ . .  @I_b
+>>> +%bd             2:14 !function=times_4
+>>> +&bcond          bo:uint32_t bi bd aa:bool lk:bool
+>>> +@B_bcond        ...... bo:5 bi:5 .............. aa:1 lk:1 &bcond bd=%bd
+>>> +
+>>> +BC              010000 ..... ..... .............. . .  @B_bcond
+>>> +
+>>> +&bclr          bo bi bh lk:bool
+>>> +@XL_bclr       ...... bo:5 bi:5 --- bh:2 .......... lk:1 &bclr
+>>> +
+>>> +BCLR            010011 ..... ..... ---.. 0000010000 . @XL_bclr
+>>> +BCCTR           010011 ..... ..... ---.. 1000010000 . @XL_bclr
+>>> +BCTAR           010011 ..... ..... ---.. 1000110000 . @XL_bclr
+>>> +
+>>>    ## Misc POWER instructions
+>>>    ATTN            000000 00000 00000 00000 0100000000 0
+>>> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+>>> index 37a164951f..22125c30a5 100644
+>>> --- a/target/ppc/translate.c
+>>> +++ b/target/ppc/translate.c
+>>> @@ -3089,150 +3089,6 @@ static inline void gen_setlr(DisasContext *ctx, target_ulong nip)
+>>>        tcg_gen_movi_tl(cpu_lr, nip);
+>>>    }
+>>> -#define BCOND_IM  0
+>>> -#define BCOND_LR  1
+>>> -#define BCOND_CTR 2
+>>> -#define BCOND_TAR 3
+>>> -
+>>> -static void gen_bcond(DisasContext *ctx, int type)
+>>> -{
+>>> -    uint32_t bo = BO(ctx->opcode);
+>>> -    TCGLabel *l1;
+>>> -    TCGv target;
+>>> -    target_long bhrb_type = BHRB_TYPE_OTHER;
+>>> -
+>>> -    if (type == BCOND_LR || type == BCOND_CTR || type == BCOND_TAR) {
+>>> -        target = tcg_temp_new();
+>>> -        if (type == BCOND_CTR) {
+>>> -            tcg_gen_mov_tl(target, cpu_ctr);
+>>> -        } else if (type == BCOND_TAR) {
+>>> -            gen_load_spr(target, SPR_TAR);
+>>> -        } else {
+>>> -            tcg_gen_mov_tl(target, cpu_lr);
+>>> -        }
+>>> -        if (!LK(ctx->opcode)) {
+>>> -            bhrb_type |= BHRB_TYPE_INDIRECT;
+>>> -        }
+>>> -        bhrb_type |= BHRB_TYPE_XL_FORM;
+>>> -    } else {
+>>> -        target = NULL;
+>>> -    }
+>>> -    if (LK(ctx->opcode)) {
+>>> -        gen_setlr(ctx, ctx->base.pc_next);
+>>> -        bhrb_type |= BHRB_TYPE_CALL;
+>>> -    }
+>>> -    l1 = gen_new_label();
+>>> -    if ((bo & 0x4) == 0) {
+>>> -        /* Decrement and test CTR */
+>>> -        TCGv temp = tcg_temp_new();
+>>> -
+>>> -        if (type == BCOND_CTR) {
+>>> -            /*
+>>> -             * All ISAs up to v3 describe this form of bcctr as invalid but
+>>> -             * some processors, ie. 64-bit server processors compliant with
+>>> -             * arch 2.x, do implement a "test and decrement" logic instead,
+>>> -             * as described in their respective UMs. This logic involves CTR
+>>> -             * to act as both the branch target and a counter, which makes
+>>> -             * it basically useless and thus never used in real code.
+>>> -             *
+>>> -             * This form was hence chosen to trigger extra micro-architectural
+>>> -             * side-effect on real HW needed for the Spectre v2 workaround.
+>>> -             * It is up to guests that implement such workaround, ie. linux, to
+>>> -             * use this form in a way it just triggers the side-effect without
+>>> -             * doing anything else harmful.
+>>> -             */
+>>> -            if (unlikely(!is_book3s_arch2x(ctx))) {
+>>> -                gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
+>>> -                return;
+>>> -            }
+>>> -
+>>> -            if (NARROW_MODE(ctx)) {
+>>> -                tcg_gen_ext32u_tl(temp, cpu_ctr);
+>>> -            } else {
+>>> -                tcg_gen_mov_tl(temp, cpu_ctr);
+>>> -            }
+>>> -            if (bo & 0x2) {
+>>> -                tcg_gen_brcondi_tl(TCG_COND_NE, temp, 0, l1);
+>>> -            } else {
+>>> -                tcg_gen_brcondi_tl(TCG_COND_EQ, temp, 0, l1);
+>>> -            }
+>>> -            tcg_gen_subi_tl(cpu_ctr, cpu_ctr, 1);
+>>> -        } else {
+>>> -            tcg_gen_subi_tl(cpu_ctr, cpu_ctr, 1);
+>>> -            if (NARROW_MODE(ctx)) {
+>>> -                tcg_gen_ext32u_tl(temp, cpu_ctr);
+>>> -            } else {
+>>> -                tcg_gen_mov_tl(temp, cpu_ctr);
+>>> -            }
+>>> -            if (bo & 0x2) {
+>>> -                tcg_gen_brcondi_tl(TCG_COND_NE, temp, 0, l1);
+>>> -            } else {
+>>> -                tcg_gen_brcondi_tl(TCG_COND_EQ, temp, 0, l1);
+>>> -            }
+>>> -        }
+>>> -        bhrb_type |= BHRB_TYPE_COND;
+>>> -    }
+>>> -    if ((bo & 0x10) == 0) {
+>>> -        /* Test CR */
+>>> -        uint32_t bi = BI(ctx->opcode);
+>>> -        uint32_t mask = 0x08 >> (bi & 0x03);
+>>> -        TCGv_i32 temp = tcg_temp_new_i32();
+>>> -
+>>> -        if (bo & 0x8) {
+>>> -            tcg_gen_andi_i32(temp, cpu_crf[bi >> 2], mask);
+>>> -            tcg_gen_brcondi_i32(TCG_COND_EQ, temp, 0, l1);
+>>> -        } else {
+>>> -            tcg_gen_andi_i32(temp, cpu_crf[bi >> 2], mask);
+>>> -            tcg_gen_brcondi_i32(TCG_COND_NE, temp, 0, l1);
+>>> -        }
+>>> -        bhrb_type |= BHRB_TYPE_COND;
+>>> -    }
+>>> -
+>>> -    gen_update_branch_history(ctx, ctx->cia, target, bhrb_type);
+>>> -
+>>> -    if (type == BCOND_IM) {
+>>> -        target_ulong li = (target_long)((int16_t)(BD(ctx->opcode)));
+>>> -        if (likely(AA(ctx->opcode) == 0)) {
+>>> -            gen_goto_tb(ctx, 0, ctx->cia + li);
+>>> -        } else {
+>>> -            gen_goto_tb(ctx, 0, li);
+>>> -        }
+>>> -    } else {
+>>> -        if (NARROW_MODE(ctx)) {
+>>> -            tcg_gen_andi_tl(cpu_nip, target, (uint32_t)~3);
+>>> -        } else {
+>>> -            tcg_gen_andi_tl(cpu_nip, target, ~3);
+>>> -        }
+>>> -        gen_lookup_and_goto_ptr(ctx);
+>>> -    }
+>>> -    if ((bo & 0x14) != 0x14) {
+>>> -        /* fallthrough case */
+>>> -        gen_set_label(l1);
+>>> -        gen_goto_tb(ctx, 1, ctx->base.pc_next);
+>>> -    }
+>>> -    ctx->base.is_jmp = DISAS_NORETURN;
+>>> -}
+>>> -
+>>> -static void gen_bc(DisasContext *ctx)
+>>> -{
+>>> -    gen_bcond(ctx, BCOND_IM);
+>>> -}
+>>> -
+>>> -static void gen_bcctr(DisasContext *ctx)
+>>> -{
+>>> -    gen_bcond(ctx, BCOND_CTR);
+>>> -}
+>>> -
+>>> -static void gen_bclr(DisasContext *ctx)
+>>> -{
+>>> -    gen_bcond(ctx, BCOND_LR);
+>>> -}
+>>> -
+>>> -static void gen_bctar(DisasContext *ctx)
+>>> -{
+>>> -    gen_bcond(ctx, BCOND_TAR);
+>>> -}
+>>> -
+>>>    /***                      Condition register logical                       ***/
+>>>    #define GEN_CRLOGIC(name, tcg_op, opc)                                        \
+>>>    static void glue(gen_, name)(DisasContext *ctx)                               \
+>>> @@ -5367,10 +5223,6 @@ GEN_HANDLER(stswx, 0x1F, 0x15, 0x14, 0x00000001, PPC_STRING),
+>>>    /* ISA v3.0 changed the extended opcode from 62 to 30 */
+>>>    GEN_HANDLER(wait, 0x1F, 0x1E, 0x01, 0x039FF801, PPC_WAIT),
+>>>    GEN_HANDLER_E(wait, 0x1F, 0x1E, 0x00, 0x039CF801, PPC_NONE, PPC2_ISA300),
+>>> -GEN_HANDLER(bc, 0x10, 0xFF, 0xFF, 0x00000000, PPC_FLOW),
+>>> -GEN_HANDLER(bcctr, 0x13, 0x10, 0x10, 0x00000000, PPC_FLOW),
+>>> -GEN_HANDLER(bclr, 0x13, 0x10, 0x00, 0x00000000, PPC_FLOW),
+>>> -GEN_HANDLER_E(bctar, 0x13, 0x10, 0x11, 0x0000E000, PPC_NONE, PPC2_BCTAR_ISA207),
+>>>    GEN_HANDLER(rfi, 0x13, 0x12, 0x01, 0x03FF8001, PPC_FLOW),
+>>>    #if defined(TARGET_PPC64)
+>>>    GEN_HANDLER(rfid, 0x13, 0x12, 0x00, 0x03FF8001, PPC_64B),
+>>> diff --git a/target/ppc/translate/branch-impl.c.inc b/target/ppc/translate/branch-impl.c.inc
+>>> index 745f71afd1..44ed40422e 100644
+>>> --- a/target/ppc/translate/branch-impl.c.inc
+>>> +++ b/target/ppc/translate/branch-impl.c.inc
+>>> @@ -55,3 +55,160 @@ static bool trans_B(DisasContext *ctx, arg_I_b *a)
+>>>        return true;
+>>>    }
+>>> +
+>>> +#define BCOND_IM  0
+>>> +#define BCOND_LR  1
+>>> +#define BCOND_CTR 2
+>>> +#define BCOND_TAR 3
+>>> +
+>>> +static bool bcond_helper(DisasContext *ctx, int type, uint32_t bo, int bi,
+>>> +                         int bd, int bh, bool aa, bool lk)
+>>> +{
+>>> +    TCGLabel *l1;
+>>> +    TCGv target;
+>>> +    target_long bhrb_type = BHRB_TYPE_OTHER;
+>>> +
+>>> +    if (type == BCOND_IM && bh != -1) {
+>>> +        /* BCOND_IM should never use bh */
+>>> +        return false;
+>>> +    } else if (type != BCOND_IM && (bd != -1 || aa != 0)) {
+>>> +        /* Other BCOND types should never use bd or aa */
+>>> +        return false;
+>>> +    }
+>>> +
+>>> +    if (type == BCOND_LR || type == BCOND_CTR || type == BCOND_TAR) {
+>>> +        target = tcg_temp_new();
+>>> +        if (type == BCOND_CTR) {
+>>> +            tcg_gen_mov_tl(target, cpu_ctr);
+>>> +        } else if (type == BCOND_TAR) {
+>>> +            gen_load_spr(target, SPR_TAR);
+>>> +        } else {
+>>> +            tcg_gen_mov_tl(target, cpu_lr);
+>>> +        }
+>>> +        if (!lk) {
+>>> +            bhrb_type |= BHRB_TYPE_INDIRECT;
+>>> +        }
+>>> +        bhrb_type |= BHRB_TYPE_XL_FORM;
+>>> +    } else {
+>>> +        target = NULL;
+>>> +    }
+>>> +    if (lk) {
+>>> +        gen_setlr(ctx, ctx->base.pc_next);
+>>> +        bhrb_type |= BHRB_TYPE_CALL;
+>>> +    }
+>>> +    l1 = gen_new_label();
+>>> +    if ((bo & 0x4) == 0) {
+>>> +        /* Decrement and test CTR */
+>>> +        TCGv temp = tcg_temp_new();
+>>> +
+>>> +        if (type == BCOND_CTR) {
+>>> +            /*
+>>> +             * All ISAs up to v3 describe this form of bcctr as invalid but
+>>> +             * some processors, ie. 64-bit server processors compliant with
+>>> +             * arch 2.x, do implement a "test and decrement" logic instead,
+>>> +             * as described in their respective UMs. This logic involves CTR
+>>> +             * to act as both the branch target and a counter, which makes
+>>> +             * it basically useless and thus never used in real code.
+>>> +             *
+>>> +             * This form was hence chosen to trigger extra micro-architectural
+>>> +             * side-effect on real HW needed for the Spectre v2 workaround.
+>>> +             * It is up to guests that implement such workaround, ie. linux, to
+>>> +             * use this form in a way it just triggers the side-effect without
+>>> +             * doing anything else harmful.
+>>> +             */
+>>> +            if (unlikely(!is_book3s_arch2x(ctx))) {
+>>> +                gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
+>>> +                return true;
+>>> +            }
+>>> +
+>>> +            if (NARROW_MODE(ctx)) {
+>>> +                tcg_gen_ext32u_tl(temp, cpu_ctr);
+>>> +            } else {
+>>> +                tcg_gen_mov_tl(temp, cpu_ctr);
+>>> +            }
+>>> +            if (bo & 0x2) {
+>>> +                tcg_gen_brcondi_tl(TCG_COND_NE, temp, 0, l1);
+>>> +            } else {
+>>> +                tcg_gen_brcondi_tl(TCG_COND_EQ, temp, 0, l1);
+>>> +            }
+>>> +            tcg_gen_subi_tl(cpu_ctr, cpu_ctr, 1);
+>>> +        } else {
+>>> +            tcg_gen_subi_tl(cpu_ctr, cpu_ctr, 1);
+>>> +            if (NARROW_MODE(ctx)) {
+>>> +                tcg_gen_ext32u_tl(temp, cpu_ctr);
+>>> +            } else {
+>>> +                tcg_gen_mov_tl(temp, cpu_ctr);
+>>> +            }
+>>> +            if (bo & 0x2) {
+>>> +                tcg_gen_brcondi_tl(TCG_COND_NE, temp, 0, l1);
+>>> +            } else {
+>>> +                tcg_gen_brcondi_tl(TCG_COND_EQ, temp, 0, l1);
+>>> +            }
+>>> +        }
+>>> +        bhrb_type |= BHRB_TYPE_COND;
+>>> +    }
+>>> +    if ((bo & 0x10) == 0) {
+>>> +        /* Test CR */
+>>> +        uint32_t mask = 0x08 >> (bi & 0x03);
+>>> +        TCGv_i32 temp = tcg_temp_new_i32();
+>>> +
+>>> +        if (bo & 0x8) {
+>>> +            tcg_gen_andi_i32(temp, cpu_crf[bi >> 2], mask);
+>>> +            tcg_gen_brcondi_i32(TCG_COND_EQ, temp, 0, l1);
+>>> +        } else {
+>>> +            tcg_gen_andi_i32(temp, cpu_crf[bi >> 2], mask);
+>>> +            tcg_gen_brcondi_i32(TCG_COND_NE, temp, 0, l1);
+>>> +        }
+>>> +        bhrb_type |= BHRB_TYPE_COND;
+>>> +    }
+>>> +
+>>> +    gen_update_branch_history(ctx, ctx->cia, target, bhrb_type);
+>>> +
+>>> +    if (type == BCOND_IM) {
+>>> +        target_ulong li = (target_long)((int16_t)(bd));
+>>> +        if (likely(aa == 0)) {
+>>> +            gen_goto_tb(ctx, 0, ctx->cia + li);
+>>> +        } else {
+>>> +            gen_goto_tb(ctx, 0, li);
+>>> +        }
+>>> +    } else {
+>>> +        if (NARROW_MODE(ctx)) {
+>>> +            tcg_gen_andi_tl(cpu_nip, target, (uint32_t)~3);
+>>> +        } else {
+>>> +            tcg_gen_andi_tl(cpu_nip, target, ~3);
+>>> +        }
+>>> +        gen_lookup_and_goto_ptr(ctx);
+>>> +    }
+>>> +    if ((bo & 0x14) != 0x14) {
+>>> +        /* fallthrough case */
+>>> +        gen_set_label(l1);
+>>> +        gen_goto_tb(ctx, 1, ctx->base.pc_next);
+>>> +    }
+>>> +    ctx->base.is_jmp = DISAS_NORETURN;
+>>> +
+>>> +    return true;
+>>> +}
+>>> +
+>>> +static bool trans_BC(DisasContext *ctx, arg_bcond *a)
+>>> +{
+>>> +    /*
+>>> +     * bh is not used for bc variants hence we pass -1
+>>> +     */
+>>> +    return bcond_helper(ctx, BCOND_IM, a->bo, a->bi, a->bd, -1, a->aa, a->lk);
+>>> +}
+>>> +
+>>> +/*
+>>> + * This helper is shared by bclr, bcctr and bctar.
+>>> + */
+>>> +static bool bclr_helper(DisasContext *ctx, arg_bclr *a, int type)
+>>> +{
+>>> +    /*
+>>> +     * bd and aa is not used for bc variants hence we pass -1 and 0 respectively
+>>> +     */
+>>> +    return bcond_helper(ctx, type, a->bo, a->bi, -1, a->bh, 0, a->lk);
+>>> +}
+>>> +
+>>> +TRANS(BCLR, bclr_helper, BCOND_LR)
+>>> +TRANS(BCCTR, bclr_helper, BCOND_CTR)
+>>> +TRANS(BCTAR, bclr_helper, BCOND_TAR)
+>>> +
+>> The patch looks mostly fine, but I noticed one small issue regarding the
+>> bctar instruction.
+>>
+>> Actually, in the legacy implementation, bctar was properly guarded by the
+>> ISA 2.07 feature flag like this:
+>> GEN_HANDLER_E(bctar, 0x13, 0x10, 0x11, 0x0000E000, PPC_NONE,
+>> PPC2_BCTAR_ISA207)
+>>
+>> But in the new decodetree implementation, it is getting mapped directly
+>> using the standard macro
+>> TRANS(BCTAR, bclr_helper, BCOND_TAR)
+> Yes you are right, I missed this. Thanks for pointing it out.
 >
-> If someone with a macos machine could give a try with their podman or
-> docker, it would be nice. The hosts I have access to don't have
-> virtualization support unfortunately.
-
-
-I don't think we can drop local compiler support - for exactly this
-reason. The CI image is unlikely to have virtualisation support either.
-
-As it happens it all skips anyway:
-
-Full log written to /Users/alex/lsrc/qemu.git/builds/testing/meson-logs/tes=
-tlog.txt
-/Users/alex/lsrc/qemu.git/builds/testing/pyvenv/bin/meson test  --no-rebuil=
-d -t 1  --num-processes 1 --print-errorlogs  --suite tcg
- 1/32 tcg+tcg-aarch64-softmmu - qemu:aarch64-softmmu-hello                 =
-       SKIP             0.01s   exit status 77
- 2/32 tcg+tcg-aarch64-softmmu - qemu:aarch64-softmmu-interrupt             =
-       SKIP             0.00s   exit status 77
- 3/32 tcg+tcg-aarch64-softmmu - qemu:aarch64-softmmu-memory                =
-       SKIP             0.00s   exit status 77
- 4/32 tcg+tcg-aarch64-softmmu - qemu:aarch64-softmmu-gdb-memory            =
-       SKIP             0.00s   exit status 77
- 5/32 tcg+tcg-aarch64-softmmu - qemu:aarch64-softmmu-gdb-interrupt         =
-       SKIP             0.00s   exit status 77
- 6/32 tcg+tcg-aarch64-softmmu - qemu:aarch64-softmmu-gdb-untimely-packet   =
-       SKIP             0.00s   exit status 77
- 7/32 tcg+tcg-aarch64-softmmu - qemu:aarch64-softmmu-gdb-registers         =
-       SKIP             0.00s   exit status 77
- 8/32 tcg+tcg-aarch64-softmmu - qemu:aarch64-softmmu-memory-sve            =
-       SKIP             0.00s   exit status 77
- 9/32 tcg+tcg-aarch64-softmmu - qemu:aarch64-softmmu-asid2                 =
-       SKIP             0.00s   exit status 77
-10/32 tcg+tcg-aarch64-softmmu - qemu:aarch64-softmmu-feat-xs               =
-       SKIP             0.00s   exit status 77
-11/32 tcg+tcg-aarch64-softmmu - qemu:aarch64-softmmu-gpc-test              =
-       SKIP             0.00s   exit status 77
-12/32 tcg+tcg-aarch64-softmmu - qemu:aarch64-softmmu-rme_gdi               =
-       SKIP             0.00s   exit status 77
-13/32 tcg+tcg-aarch64-softmmu - qemu:aarch64-softmmu-semiheap              =
-       SKIP             0.00s   exit status 77
-14/32 tcg+tcg-aarch64-softmmu - qemu:aarch64-softmmu-semiconsole           =
-       SKIP             0.00s   exit status 77
-15/32 tcg+tcg-aarch64-softmmu - qemu:aarch64-softmmu-memory-record-replay  =
-       SKIP             0.00s   exit status 77
-16/32 tcg+tcg-aarch64-softmmu - qemu:aarch64-softmmu-vtimer                =
-       SKIP             0.00s   exit status 77
-17/32 tcg+tcg-aarch64-softmmu - qemu:aarch64-softmmu-pauth-3               =
-       SKIP             0.00s   exit status 77
-18/32 tcg+tcg-aarch64-softmmu - qemu:aarch64-softmmu-gdb-mte               =
-       SKIP             0.00s   exit status 77
-19/32 tcg+tcg-i386-softmmu - qemu:i386-softmmu-hello                       =
-       SKIP             0.00s   exit status 77
-20/32 tcg+tcg-i386-softmmu - qemu:i386-softmmu-interrupt                   =
-       SKIP             0.00s   exit status 77
-21/32 tcg+tcg-i386-softmmu - qemu:i386-softmmu-memory                      =
-       SKIP             0.00s   exit status 77
-22/32 tcg+tcg-i386-softmmu - qemu:i386-softmmu-gdb-memory                  =
-       SKIP             0.00s   exit status 77
-23/32 tcg+tcg-i386-softmmu - qemu:i386-softmmu-gdb-interrupt               =
-       SKIP             0.00s   exit status 77
-24/32 tcg+tcg-i386-softmmu - qemu:i386-softmmu-gdb-untimely-packet         =
-       SKIP             0.00s   exit status 77
-25/32 tcg+tcg-i386-softmmu - qemu:i386-softmmu-gdb-registers               =
-       SKIP             0.00s   exit status 77
-26/32 tcg+tcg-x86_64-softmmu - qemu:x86_64-softmmu-hello                   =
-       SKIP             0.00s   exit status 77
-27/32 tcg+tcg-x86_64-softmmu - qemu:x86_64-softmmu-interrupt               =
-       SKIP             0.00s   exit status 77
-28/32 tcg+tcg-x86_64-softmmu - qemu:x86_64-softmmu-memory                  =
-       SKIP             0.00s   exit status 77
-29/32 tcg+tcg-x86_64-softmmu - qemu:x86_64-softmmu-gdb-memory              =
-       SKIP             0.00s   exit status 77
-30/32 tcg+tcg-x86_64-softmmu - qemu:x86_64-softmmu-gdb-interrupt           =
-       SKIP             0.00s   exit status 77
-31/32 tcg+tcg-x86_64-softmmu - qemu:x86_64-softmmu-gdb-untimely-packet     =
-       SKIP             0.00s   exit status 77
-32/32 tcg+tcg-x86_64-softmmu - qemu:x86_64-softmmu-gdb-registers           =
-       SKIP             0.00s   exit status 77
-
-Ok:                0=20=20=20
-Fail:              0=20=20=20
-Skipped:           32=20=20
-
-Full log written to
-/Users/alex/lsrc/qemu.git/builds/testing/meson-logs/testlog.txt
-
-
+>> Since the TRANS macro doesn't apply any secondary instruction flags (and
+>> even bclr_helper / bcond_helper are not checking for it),
+>> this check is being missed out.
+Hi Nikhil,
+Thanks for catching this !
+>>
+>> It could be better if you can just write a dedicated translation handler for
+>> the same to enforce the BCTAR_ISA207 check.
+>> I guess Chinmay can tell better on this.
+> I think we can just do the following and it should be good enough:
 >
-> Infrastructure patches missing reviews:
-> - 4
-> - 28-29
-> - 31
-> - 36
+> -TRANS(BCTAR, bclr_helper, BCOND_TAR)
+> +TRANS_FLAGS2(BCTAR_ISA207, BCTAR, bclr_helper, BCOND_TAR)
 >
-> All commits above 31 (multiarch and arch) need review also.
+> If this looks okay, I can send a v2.
+
+Hi Ojas,
+Since it is just a single line change, I will take care of it while 
+posting v2 series.
+
+Regards,
+Chinmay
+
 >
 > Regards,
-> Pierrick
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> ojaswin
+>
+>> Thanks
+>> ~ Nikhil
+>>
 
