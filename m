@@ -4,151 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF916C44515
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 12:42:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 550C6C44515
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 12:44:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlnKV-0005Be-EX; Mon, 20 Jul 2026 08:42:43 -0400
+	id 1wlnLL-0005ZG-M4; Mon, 20 Jul 2026 08:43:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wlnKN-0005Ap-66
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 08:42:36 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wlnLJ-0005Yf-Id
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 08:43:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wlnKL-0003kY-9s
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 08:42:34 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66KAvWB81910265
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 12:42:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- WUEFeqe3nmFgcDPXmVor19zyDV7iuIH2BWCvGqlAub8=; b=dhDVHhQYX/MiEu9X
- t6Yl1RVacUdH/3GQTaoAuWNARadsFbjKLrnSrbM8NIiYRfWJXCRfYR3XAGyIhE/N
- AEgaGvenWRtgelulvGguK+xDJZT6cUWS2RMmEp1bBFkCOk6xKjfXQxqs8QbRBWoc
- VQozE42VRWFIfX6imJqK1Tg2qaFR9EUvbNSV57hwBmuzy6/pR+tfGvt1/UxzCmN+
- FIwgmUHIJVvC5Apxvyu7WjRo+SKMh+aY1JYHOMPrki+Zi/EvaGz0SR7ffHYLLzQP
- lY9xEI+4dR4G5vtA2rk7w2olkKoy9JwLmjuAtazyuJhtymfMx1kvr6dRIJWt09wp
- snJDXw==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhgs50vh7-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 12:42:30 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51c0408254aso88035041cf.0
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 05:42:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wlnLG-0004BS-Ur
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 08:43:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784551409;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=KJ9NSPrkxe0KAdp3IHHX9DTL99yOGdvOCcxyTgnQMwo=;
+ b=QgyTP3AViL/8GhNRT4Vemqjf34zaAXdemopQWt0BVAR7lLPkFLsaHUt6NICAMQUgk3xzmZ
+ VqasL5ffeFbC5yGtdOa0ZIqIiIeo8F0jauuNGBpiJExe01SyblFD7saxH6yD3cplOenNM7
+ PEqHOP8QvVHQ50hb80acAhSTmytfO0A=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-246-CibIR-dlN5eZ-LCRSl6FEg-1; Mon, 20 Jul 2026 08:43:28 -0400
+X-MC-Unique: CibIR-dlN5eZ-LCRSl6FEg-1
+X-Mimecast-MFC-AGG-ID: CibIR-dlN5eZ-LCRSl6FEg_1784551406
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-47f24a50f0cso9007236f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 05:43:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784551350; x=1785156150; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=WUEFeqe3nmFgcDPXmVor19zyDV7iuIH2BWCvGqlAub8=;
- b=WTv6H0UXspGwcw6Fq8PZdYYSkjkV2IuBvVA+Kvl8YPJsdmSLi1dNm7vpQDmwl3K4iA
- vw3t1ApVzLWKkVIPSCrM9D7aItt7g7205oQMM6p1wZ4g3G0QfZkLOjlj0n+xeiwMKskP
- nz/CZTdY3Azmej6d4kqkcfEHOVNEBZn+DarZSreu+Z+Q/ec493oyM+iZHxzC1ZU/ztzA
- OrnSvDVsjrtT5dtamp2xWCkMRdAtIyHW7McY9LUSKuNIw2k8t6WFzQvVXBamQNov+oWL
- bxIUOVN/X+KRIaKjAtpfOHelL75XQ9Z5mgBLI6lN84TLdLK4fyKu88u77iMhnwJnFyx0
- m5ig==
+ d=redhat.com; s=google; t=1784551406; x=1785156206; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=KJ9NSPrkxe0KAdp3IHHX9DTL99yOGdvOCcxyTgnQMwo=;
+ b=tYviWHXQNMAkeHGamaMedV2uQDT4bqPo30JFvm+iinXxszZk0s8YW5WQxv62PaBXPz
+ ZQsD9r90nLihRcq8BCCsEeEb/0UUxOjxN2DDjQ/nEAJ/EXjQKZwrRXFtkWOcoxyoALsN
+ 2XepYenyYr+b2MW95HPY/ghJeeopfBVcaK3SvBOTcYG+miML4VrC3Pg2TE+p012VPaBG
+ AIym/hB3A6gH7uU1NJrgk3VnUKUEufK3ETqh5DYDyhO7a3hpsDa4eUFyfka7xpHZlMcD
+ dS2q8bIXwHKfPPGG79iHaRf2nFcwQqnH+VmsRSUJzwY3GyP0pEw2Ag0lzWzHQnWPK223
+ B/Uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784551350; x=1785156150;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=WUEFeqe3nmFgcDPXmVor19zyDV7iuIH2BWCvGqlAub8=;
- b=WanekLmkmXIujuCg43zpQiU4/+Ks8WgWfbTFZakPQ9B9DPv03sxh+pyuVHsTmPoLfJ
- FWLOMJ0k/nexxJRJjDms1slhsJBo66E9e4Id/IZXhAsEXTZpqukxfwgySE6Ozvy1KV66
- CTWeNbLgYy3kI7pTCm5jWfktaZXizC1ND3dnUbJWFdPpYU/z32HUU/2kEylcrqfANjT1
- oU9+XzxdHFkPtMSAdzD473JXiJLQk77dAeD1KFiOZ/xXkIYYnwbIxnj9qwnD+D0fCDZy
- 3cdsT7xS0K+cnaujkTLPbiTq5XQbaitKUTqzuSBKg+JM80x8fzIWTne3yV6WwNdvBBJw
- FPCg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrjFSGS4hJoujAzVKkdeQcrRYJivsYvDgl9Khjh5zTjrlaZXGTwgMvM+iV56GB0B+3g70etyvhVOWqr@nongnu.org
-X-Gm-Message-State: AOJu0YyFzcnehr8a73DNBlnIGxiq5cnAIT5SrOqkrTxVdZEfYwk/zBx0
- okpKvuGiFl1A3k1k3sYS4+ih+J+RqQMBW7kwr9P2Rl8jSB6bJG4NWYfFcS+LWaUyNhH8SPJA/6t
- BYRezPkQ631rH3P2KW84b6y9IrBF2cG9+fQRv21Pd1lBlDVeYIrVe62moxg==
-X-Gm-Gg: AfdE7clJiX163cWr7JENXa/TErHXayBXv3nWFd5OtMPYWu+cESnch1KpVG8hUyL9wU6
- 2CCfwG+CtQpAyCNbFPMfIKACMCOBMvfr0fbl+SZuGDzuE8eCiPFKnnvIb3qpbh4Op9DHRF5uw6L
- R/0d7ZeAiMlkRSS9iH3SWhcd0I3uJ4dbZ6xUPtfaJdVhyy6TMJkEVhmFGEdj3/HQhnwl1/ji7xe
- IdDjVwrSp4C3eIpAtq6keC6s+Mqu2lv0Ha4wrFdkfhaB4IaIPnTOPGx8AxPnphRYegKmvPeC9kF
- Fce2t/yX+gGfQNwUzqxSKyM08ogprwwzTlC59/Y/IHqKG9bX2MIg3gMnLT71LamZQftIWEfVB2D
- lfL1pzXXdNepr4Bl2pMrX4qLNugQlgV9Dao2FqNnFtj7o+9PqWpk=
-X-Received: by 2002:a05:622a:50c:b0:516:82e2:7788 with SMTP id
- d75a77b69052e-51fbeeb3148mr168186421cf.1.1784551349888; 
- Mon, 20 Jul 2026 05:42:29 -0700 (PDT)
-X-Received: by 2002:a05:622a:50c:b0:516:82e2:7788 with SMTP id
- d75a77b69052e-51fbeeb3148mr168186181cf.1.1784551349489; 
- Mon, 20 Jul 2026 05:42:29 -0700 (PDT)
-Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4954a2aa698sm255832295e9.4.2026.07.20.05.42.27
+ d=1e100.net; s=20251104; t=1784551406; x=1785156206;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=KJ9NSPrkxe0KAdp3IHHX9DTL99yOGdvOCcxyTgnQMwo=;
+ b=KBKbd+yzflzINCg5KO6wQMFHlHm+GGAbSkPYeZMi+GNOojm1D7qpui5Nps1RszjdDJ
+ qpDDqaR9f1d3HgrUkiJQ4smWSJ/AX8OkYyHlpRHTSSWjjUEFu8lILgLPoTte4LqZTyWT
+ S6LbLnqbz8ZmhTx4WQ897uWiicqIR8hfr8KU4Umr3FVRk9lG38F5/wya53anNhnOANET
+ RLKKNCqQDHVjUjzn2PwdMicybJztvMyD1TStGOrNr0oWooowzZ/+aBvdEjnzcPRzoGpP
+ j7Mf7ZCa+oeyYAynuOaa/y0xACTCKJ88XLlInpH9CkzsFVyiN/r9BmAg6OVARgF3Vbnz
+ 3VNw==
+X-Gm-Message-State: AOJu0YyazR8G2+BO6qzt0XbCeXGCbTVHGRJ6dUpceluudYmN8SBPovnW
+ PEMh5YOR7d3SQP3ZZa9FXBzzUd1hR2Y2vroShw4ONs5C/VelThODyA9b04STNFs66NlavgKieKA
+ N3LIN/My6HD83EC9qzNJGI/lJRifpulREnmPNItp+4JGd/5MJiCYAMHTH
+X-Gm-Gg: AR+sD10Ycke8+zZf1myjRXtmpasUyqxLxqO7kXa+D4xr9bnram1rNA9iQuSjwbO/M1/
+ dq2D9+oQD3bKTv+PZ/UzvhcJTjIdUwTxGToxpRH1IPZLsd5zDts+51y2vS4nsInm1DsqO28ICcL
+ i11J5I0lAVEsXj5Alyka12ZND3oLqXuJNixuTjHC6T1WUWW1omkem1NhF3bPCRo+T67b4SAmIIK
+ yvUHRzDusEcxjUjehQPwaFYXPH7B0bvuepuyXreKzElM/8I+ObL5WoWxyHB62BnW3gOdKyzHAcw
+ Yb89ejQGUKn6IHLXVsVeZZ+5mPtP4aJd5XwcvhTs8741pFTeIsUyCtmtWl1R4BRx23MNLXFr+g=
+ =
+X-Received: by 2002:a05:6000:25f7:b0:47f:4fbf:7b21 with SMTP id
+ ffacd0b85a97d-47f622fcd69mr16725603f8f.12.1784551406008; 
+ Mon, 20 Jul 2026 05:43:26 -0700 (PDT)
+X-Received: by 2002:a05:6000:25f7:b0:47f:4fbf:7b21 with SMTP id
+ ffacd0b85a97d-47f622fcd69mr16725542f8f.12.1784551405474; 
+ Mon, 20 Jul 2026 05:43:25 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.112.144])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f63e49ce4sm30467655f8f.8.2026.07.20.05.43.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Jul 2026 05:42:28 -0700 (PDT)
-Message-ID: <2f85ee9f-91a6-4e61-8438-8c5f3a0dee38@oss.qualcomm.com>
-Date: Mon, 20 Jul 2026 14:42:27 +0200
+ Mon, 20 Jul 2026 05:43:24 -0700 (PDT)
+Message-ID: <e1ebb262-3419-4a87-8f13-54bada56beef@redhat.com>
+Date: Mon, 20 Jul 2026 14:43:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/7] bitops.h: Add find_first_bit32()
-Content-Language: en-US
+Subject: Re: [PATCH] hw/usb/dev-uas: Fix guest-triggerable heap OOB access
 To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org,
- pierrick.bouvier@oss.qualcomm.com, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- matheus.bernardino@oss.qualcomm.com, ltaylorsimpson@gmail.com,
- Thomas Huth <th.huth+qemu@posteo.eu>,
- Laurent Vivier <lvivier@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-References: <20260715185701.1287176-1-brian.cain@oss.qualcomm.com>
- <20260715185701.1287176-4-brian.cain@oss.qualcomm.com>
- <cc3b6f33-6cc7-484c-901c-ffa4003c2865@oss.qualcomm.com>
- <CAFEAcA9iSgrua_ekOQ=EaXp=Mcxwk52qK6AkRXCrH1KcRm_vTA@mail.gmail.com>
- <6e4220ed-1e4f-4174-88cd-151c03b8048d@oss.qualcomm.com>
- <CAFEAcA-_rWzq3zq4AfduTRodMTcBZEU6bFtX3qhJYfn3VfBLdA@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <CAFEAcA-_rWzq3zq4AfduTRodMTcBZEU6bFtX3qhJYfn3VfBLdA@mail.gmail.com>
+Cc: qemu-devel@nongnu.org, kraxel@redhat.com,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-trivial@nongnu.org, qemu-stable@nongnu.org
+References: <20260716193321.256391-1-thuth@redhat.com>
+ <CAFEAcA_s8pZmJu9GW5Kqkg=7UZjKcMOGCrQNz=n_z8vY45doaA@mail.gmail.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <CAFEAcA_s8pZmJu9GW5Kqkg=7UZjKcMOGCrQNz=n_z8vY45doaA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDE0MSBTYWx0ZWRfX3wfkJzFgy+NJ
- pQk5xfU/tTWbtWBklWOPp49hB50Lagj8E8zmuUc/ghy6O/WMCVjcr9SxjXhuvxI2SoEkbcCmJLF
- 4T0cnNEUix3gzAfTp8XU0vqtjk6NSKk=
-X-Proofpoint-GUID: w-1C7pZ4uRLgZ77aNEAz4FPabHq5on5c
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDE0MSBTYWx0ZWRfX+l9zTz68x72U
- Cwq/CqCIbqv8oI/hA+rWxorymRDAo4iXSLg9FQkqqhb+D3oYK4MoTXeT+emsc6Pqdj+HYOgmUZU
- SXEWAvJLnwjMMxjPyMHGvQT3Pjgo/4HIcIOFrWVua0VLJAkw9yj7372BWVY4pn6YkDBlLjpQeUi
- RrvFY1D1RM4YkB1aaHinWfCaJk+fSZZ2CYHx0a5y/IrUtpYQrm3X8TjRT4ugVXryjiN4MoRkdSn
- M/J6Pm5USQIWmIn1XTWI2bYEYjhdx+8nJ0lp5HxXQ5CZtWZ9eF2ZGZUgcaxs/m33yCHf/wHM/9A
- YgdsEUcutAw0il0Ppo8YrBc4XM8phT+dT8IS2hFG1DBExY6AiUfn+0jc1eG2G35/yxT73o21I3+
- BZSZxQ0kDsxkLQEqEVzEv3TODgn08/fbIZnXF1yBvVw4MuXKNSPW6hicWRr+iYyXdccsYFJKuRh
- +qGJbMq548lvakR3WGA==
-X-Authority-Analysis: v=2.4 cv=CpiPtH4D c=1 sm=1 tr=0 ts=6a5e17b6 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=EUspDBNiAAAA:8 a=XfjdRMWuiX4hZh7pmcAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-ORIG-GUID: w-1C7pZ4uRLgZ77aNEAz4FPabHq5on5c
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-20_02,2026-07-20_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 phishscore=0 spamscore=0 clxscore=1015
- suspectscore=0 lowpriorityscore=0 impostorscore=0 adultscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200141
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 7bit
+Received-SPF: permerror client-ip=170.10.133.124;
+ envelope-from=thuth@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,68 +166,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/7/26 13:51, Peter Maydell wrote:
-> On Mon, 20 Jul 2026 at 12:46, Philippe Mathieu-Daudé
-> <philmd@oss.qualcomm.com> wrote:
+On 17/07/2026 13.05, Peter Maydell wrote:
+> On Thu, 16 Jul 2026 at 20:33, Thomas Huth <thuth@redhat.com> wrote:
 >>
->> On 20/7/26 10:31, Peter Maydell wrote:
->>> On Mon, 20 Jul 2026 at 08:49, Philippe Mathieu-Daudé
->>> <philmd@oss.qualcomm.com> wrote:
->>>>
->>>> Hi Brian,
->>>>
->>>> some random thoughts...
->>>>
->>>> On 15/7/26 20:56, Brian Cain wrote:
->>>>> set_bit32()/test_bit32()/etc already let devices operate on
->>>>> guest-visible uint32_t register arrays without depending on the
->>>>> host's 'unsigned long' size. find_first_bit() has no such
->>>>> equivalent, which pushes callers towards casting a uint32_t array
->>>>> to 'unsigned long *'.
->>>>>
->>>>> Add find_first_bit32(), implemented the same way as find_first_bit().
->>>>>
->>>>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->>>>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
->>>>> ---
->>>>>     include/qemu/bitops.h | 30 ++++++++++++++++++++++++++----
->>>>>     1 file changed, 26 insertions(+), 4 deletions(-)
->>>>
->>>>
->>>>> +/**
->>>>> + * find_first_bit32 - find the first set bit in a memory region
->>>>> + * @addr: The address to start the search at
->>>>
->>>> s/addr/ptr/?
->>>>
->>>>> + * @size: The maximum size to search
->>>>
->>>> Pre-existing, it is not clear this is expressed in bits. Neither if
->>>> we expect it to be a multiple of 32, or @addr to be 32-bit aligbed.
->>>>
->>>> Maybe rename as @last_searched_bit?
->>>
->>> Could we please stop bikeshedding this function? It's
->>> a simple copy of the existing find_first_bit() but
->>> with the type changed from 'unsigned long' to 'uint32_t'.
->>> The comments and parameter names on that existing function
->>> have been fine for years, and having the new function
->>> pick different names and comment phrasing seems unnecessary
->>> and obscures the parallels between the two functions.
+>> From: Thomas Huth <thuth@redhat.com>
 >>
->> Argument renaming of course implies renaming the other companion
->> methods. You taught me to add public APIs with good descriptions
->> when possible, I thought your advice was worth to other contributors.
->> I'm not considering this review comment as bikeshedding. Anyway,
->> thanks for your review and advice. I don't object if Brian keeps
->> the current names or rename as @a, @b, @foo, @bar.
+>> The stream ID is under control of the guest, so we must not use
+>> it for indexing into the status3[] array without checking it for
+>> being in range.
+>>
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3612
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3986
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>>   hw/usb/dev-uas.c | 11 +++++++++--
+>>   1 file changed, 9 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/usb/dev-uas.c b/hw/usb/dev-uas.c
+>> index 8576dfec96f..7df58cdeee7 100644
+>> --- a/hw/usb/dev-uas.c
+>> +++ b/hw/usb/dev-uas.c
+>> @@ -383,8 +383,15 @@ static void usb_uas_send_status_bh(void *opaque)
+>>
+>>   static void usb_uas_queue_status(UASDevice *uas, UASStatus *st, int length)
+>>   {
+>> -    USBPacket *p = uas_using_streams(uas) ?
+>> -        uas->status3[st->stream] : uas->status2;
+>> +    USBPacket *p = NULL;
+>> +
+>> +    if (!uas_using_streams(uas)) {
+>> +        p = uas->status2;
+>> +    } else if (st->stream <= UAS_MAX_STREAMS) {
+>> +        p = uas->status3[st->stream];
+>> +    } else {
+>> +        warn_report_once(TYPE_USB_UAS ": bad stream ID 0x%x", st->stream);
+>> +    }
+>>
+>>       st->length += length;
+>>       QTAILQ_INSERT_TAIL(&uas->results, st, next);
 > 
-> Sorry for being a bit grumpy -- it's just that this is the
-> second time around of somebody suggesting a change here
-> to something that's already present in the existing
-> function this is patterned off (and which we borrowed from
-> the Linux kernel originally).
+> Doesn't this just postpone the problem? This function puts the
+> UASStatus struct (with the out-of-range stream value) oto the
+> uas->results queue. Later on we will end up in the
+> usb_uas_send_status_bh function, which picks USBStatus structs
+> off the queue and uses the same "assume st->stream is in bounds"
+> logic for finding a USBPacket for them.
+> 
+> Also, once we put this UASStatus into the results queue we
+> will never take it off again -- the code for handling reads
+> on the status pipe will only remove and process UASStatus
+> entries where st->stream matches the stream ID used for
+> the read on the status pipe (which must be in-bounds, we
+> check that).
+> 
+> The copy of the USB attached storage spec I found is not very
+> clear about error handling. But I think there is no way for us
+> to report back the "invalid stream ID" case. So I think:
+> 
+> (1) in usb_uas_command() we should check the tag for being
+> in bounds first, before any other error check; if it is not
+> then LOG_GUEST_ERROR and return (do not call
+> usb_uas_queue_fake_sense(); have comment about why not)
+> 
+> (2) is usb_uas_queue_status() and usb_uas_send_status_bh(),
+> assert() that st->stream is in bounds before using it
+Yes, after staring at the code for a while, I think you're right. I'll send 
+a v2 with those changes.
 
-Ah, I missed the previous suggestion and didn't know about the
-historical origin. Thanks Peter.
+  Thomas
+
 
