@@ -4,64 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0E3FC4451B
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 09:28:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B945BC4451B
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 09:35:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlkHv-00005U-Fd; Mon, 20 Jul 2026 05:27:51 -0400
+	id 1wlkOr-0002jh-PD; Mon, 20 Jul 2026 05:35:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1wlkHt-0008WR-78; Mon, 20 Jul 2026 05:27:49 -0400
-Received: from apollo.dupie.be ([2001:bc8:3f2a:101::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1wlkHp-00005K-LD; Mon, 20 Jul 2026 05:27:48 -0400
-Received: from [IPV6:2a02:a03f:fafb:301:46c3:62e6:fe62:23a1] (unknown
- [IPv6:2a02:a03f:fafb:301:46c3:62e6:fe62:23a1])
- by apollo.dupie.be (Postfix) with ESMTPSA id 193F41520EF6;
- Mon, 20 Jul 2026 11:27:40 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
- t=1784539660;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NnMe/cqMncXJWua2nUPlX3QYnMFfIr+81XDkBgYEmPg=;
- b=IJs6yMolIE1NiaBlxOqsl+WSUlT50B068fhQxo662uy3QWyGYr0K7dwvBtEJgwWmrKQj3c
- xfjKwWOB80t4SqFdc7do6siJ2cdEhCQO+wM3o5+eIOxUU9Xw8ak9UfRuUlXpFNyB8yaYHw
- saw2EdlgvS05sKUqo/tfhMyi1q+ZZqynWEnVdMOUy+QbIR8mVGHpKEyeYiUWZki07q3hB0
- aYE1DNBRW+8Iz2IX/UEKGhq/ohotPrgg+PL6v5OGS5hTXtyKXVxhN1t3TSFrH+fAj9jwix
- hjEHeQBlgwcqchgJDuwUc9kDxv2mx2k3gSnev2ZWH6JHE/1RFaik7IfJoDCX8Q==
-Message-ID: <c09ccbc4-2561-4ff2-ac12-14e9f56150f2@dupond.be>
-Date: Mon, 20 Jul 2026 11:27:39 +0200
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1wlkOO-0002UO-QC
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 05:34:37 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1wlkOL-0000yr-LE
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 05:34:32 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8BxGOuh611qkzkFAA--.20692S3;
+ Mon, 20 Jul 2026 17:34:25 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJBxb8ef611qb8ESAA--.32973S2;
+ Mon, 20 Jul 2026 17:34:23 +0800 (CST)
+Subject: Re: [PATCH v2] target/loongarch: fix data race in CSR_ESTAT
+To: Miao Wang <shankerwangmiao@gmail.com>
+Cc: qemu-devel@nongnu.org, Song Gao <17746591750@163.com>,
+ Xianglai Li <lixianglai@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Xi Ruoyao <xry111@xry111.site>
+References: <20260716-loong-race-v2-1-01e68e4b850f@gmail.com>
+ <3613f855-8b22-2e94-fa14-339acec997ed@loongson.cn>
+ <185FB2BE-2645-45CF-BA2B-316F67495FF5@gmail.com>
+ <7a7cc87e-a097-30df-3085-a4249a2233b9@loongson.cn>
+ <2E82143C-8EC0-47F4-B0FF-5C35D36078E7@gmail.com>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <c4b1f905-49e8-13f6-b9c1-caa17b9343e9@loongson.cn>
+Date: Mon, 20 Jul 2026 17:34:13 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/1] qcow2: add functionality to repair bitmaps
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- John Snow <jsnow@redhat.com>, qemu-block@nongnu.org,
- Eric Blake <eblake@redhat.com>
-References: <20260522224335.1286291-1-jean-louis@dupond.be>
- <20260522224335.1286291-2-jean-louis@dupond.be>
- <93dc8fbe-2346-430d-90f1-ca44b3970cd5@yandex-team.ru>
- <7697a2b6-fc26-4de2-8cd6-0b3651b79511@dupond.be>
- <8a04a36e-b78b-4a60-ab1b-b2ecec6b3966@yandex-team.ru>
-Content-Language: en-US, en-GB, nl-BE
-From: Jean-Louis Dupond <jean-louis@dupond.be>
-In-Reply-To: <8a04a36e-b78b-4a60-ab1b-b2ecec6b3966@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <2E82143C-8EC0-47F4-B0FF-5C35D36078E7@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:bc8:3f2a:101::1;
- envelope-from=jean-louis@dupond.be; helo=apollo.dupie.be
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowJBxb8ef611qb8ESAA--.32973S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3Gr15JF15ur15Gr4kWw13ZFc_yoWxWr4kpr
+ W7CF13tr4kJrW7Jw1vq3WYyrn0vr1fKr1IvFsrtw1fCrn8tw15Xr18tr9xuFyku348Wr10
+ vr1FgFZxWa4jyFgCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUU9Sb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
+ 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C2
+ 67AKxVW8ZVWrXwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
+ 8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWU
+ CwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
+ 1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBI
+ daVFxhVjvjDU0xZFpf9x07jnUUUUUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.494,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,392 +87,144 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 10/07/2026 14:53, Vladimir Sementsov-Ogievskiy wrote:
-> On 10.07.26 11:34, Jean-Louis Dupond wrote:
->>
->> On 29/06/2026 11:18, Vladimir Sementsov-Ogievskiy wrote:
->>> 23.05.26 01:43, Jean-Louis Dupond пишет:
->>>> In some cases, it might happen that bitmaps become corrupt.
->>>> For example when adding/removing bitmaps on a live image.
->>>>
->>>> Of course this should not happen, but in case this happens, the 
->>>> image is
->>>> corrupt and even cannot be opened anymore. You'll get something 
->>>> like the
->>>> following:
->>>> qemu-img: Could not open 'disk.qcow2': Bitmap '' doesn't satisfy 
->>>> the constraints
->>>>
->>>> So the image becomes useless, and cannot be repaired. This while in 
->>>> fact
->>>> only (one) bitmap entry is corrupt, and the rest of the data is just
->>>> intact.
->>>>
->>>> This commit adds a way to fix this corruption, by just replacing the
->>>> bitmap list in the qcow2 image with the valid bitmaps, and dropping 
->>>> the
->>>> bitmaps that are corrupt.
->>>>
->>>> $ qemu-img check disk.qcow2
->>>> qemu-img: Check failed: Invalid argument
->>>> qemu-img: Lost persistent bitmaps during inactivation of node 
->>>> '#block147': Bitmap '' doesn't satisfy the constraints
->>>>
->>>> $ qemu-img check -r all disk.qcow2
->>>> qcow2_free_clusters failed: Invalid argument
->>>> Leaked cluster 3 refcount=1 reference=0
->>>> Leaked cluster 26 refcount=1 reference=0
->>>> ERROR cluster 983214 refcount=0 reference=1
->>>> Rebuilding refcount structure
->>>> Repairing cluster 1 refcount=1 reference=0
->>>> Repairing cluster 2 refcount=1 reference=0
->>>> Repairing cluster 32768 refcount=1 reference=0
->>>> ....
->>>> Repairing cluster 983214 refcount=1 reference=0
->>>> The following inconsistencies were found and repaired:
->>>>
->>>>      2 leaked clusters
->>>>      3 corruptions
->>>>
->>>> Double checking the fixed image now...
->>>> No errors were found on the image.
->>>> 983056/1048576 = 93.75% allocated, 0.05% fragmented, 0.00% 
->>>> compressed clusters
->>>> Image end offset: 64437878784
->>>>
->>>> And the image is valid again!
->>>> Worst case you lose all bitmaps, but at least the image and the data
->>>> itself is useable again.
->>>>
->>>> Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
->>>
->>> Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->>>
->>> (some nit-picking and notes below, but the patch is OK for me as is)
->> Thanks!
->>>
->>>> ---
->>>>   block/qcow2-bitmap.c   | 42 
->>>> +++++++++++++++++++++++++++++++++++++++---
->>>>   block/qcow2-refcount.c |  3 ++-
->>>>   block/qcow2.c          | 16 ++++++++++++----
->>>>   block/qcow2.h          |  3 ++-
->>>>   4 files changed, 55 insertions(+), 9 deletions(-)
->>>>
->>>> diff --git a/block/qcow2-bitmap.c b/block/qcow2-bitmap.c
->>>> index 256ec99878..91bd82a9f5 100644
->>>> --- a/block/qcow2-bitmap.c
->>>> +++ b/block/qcow2-bitmap.c
->>>> @@ -100,6 +100,9 @@ typedef enum BitmapType {
->>>>       BT_DIRTY_TRACKING_BITMAP = 1
->>>>   } BitmapType;
->>>>   +static int GRAPH_RDLOCK
->>>> +update_ext_header_and_dir(BlockDriverState *bs, Qcow2BitmapList 
->>>> *bm_list);
->>>> +
->>>>   static inline bool can_write(BlockDriverState *bs)
->>>>   {
->>>>       return !bdrv_is_read_only(bs) && !(bdrv_get_flags(bs) & 
->>>> BDRV_O_INACTIVE);
->>>> @@ -655,12 +658,14 @@ fail:
->>>>   int coroutine_fn
->>>>   qcow2_check_bitmaps_refcounts(BlockDriverState *bs, 
->>>> BdrvCheckResult *res,
->>>>                                 void **refcount_table,
->>>> -                              int64_t *refcount_table_size)
->>>> +                              int64_t *refcount_table_size,
->>>> +                              BdrvCheckMode fix)
->>>>   {
->>>>       int ret;
->>>>       BDRVQcow2State *s = bs->opaque;
->>>>       Qcow2BitmapList *bm_list;
->>>> -    Qcow2Bitmap *bm;
->>>> +    Qcow2Bitmap *bm, *bm_next;
->>>> +    bool bitmap_modified = false;
->>>
->>> (I'd call it bm_list_modified, as we don't modify any bitmap..)
->> I slightly modified it to also address comment below.
->>>
->>>>         if (s->nb_bitmaps == 0) {
->>>>           return 0;
->>>> @@ -677,12 +682,21 @@ 
->>>> qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult 
->>>> *res,
->>>> s->bitmap_directory_size, NULL);
->>>>       if (bm_list == NULL) {
->>>>           res->corruptions++;
->>>> +
->>>> +        if (fix & BDRV_FIX_ERRORS) {
->>>> +            ret = update_ext_header_and_dir(bs, NULL);
->>>> +            if (ret >= 0) {
->>>> +                res->corruptions_fixed++;
->>>> +            }
->>>> +            goto out;
->>>
->>> I think, "return ret" is better here.
->>>
->>> at "out:" we only free the bm_list, which is NULL here anyway.
->>>
->>> And on the next line, we do "return -EINVAL", not "goto out", better 
->>> be consistent.
->> Fixed
->>>
->>>> +        }
->>>>           return -EINVAL;
->>>>       }
->>>>   -    QSIMPLEQ_FOREACH(bm, bm_list, entry) {
->>>> +    QSIMPLEQ_FOREACH_SAFE(bm, bm_list, entry, bm_next) {
->>>>           uint64_t *bitmap_table = NULL;
->>>>           int i;
->>>> +        bool bitmap_valid = true;
->>>>             ret = qcow2_inc_refcounts_imrt(bs, res,
->>>>                                          refcount_table, 
->>>> refcount_table_size,
->>>> @@ -695,6 +709,12 @@ qcow2_check_bitmaps_refcounts(BlockDriverState 
->>>> *bs, BdrvCheckResult *res,
->>>>           ret = bitmap_table_load(bs, &bm->table, &bitmap_table);
->>>>           if (ret < 0) {
->>>>               res->corruptions++;
->>>
->>> This maybe called several times per bitmap, but finally we calculate
->>> corruptions_fixed as bitmaps count.
->>>
->>> Still, I don't think it's important.
->> Modified to bm_list_fixed. Which counts the corruptions fixed.
->> Value is then used to increment corruptions_fixed.
->>>
->>>> +            if (fix & BDRV_FIX_ERRORS) {
->>>> +                QSIMPLEQ_REMOVE(bm_list, bm, Qcow2Bitmap, entry);
->>>> +                bitmap_free(bm);
->>>> +                bitmap_modified = true;
->>>> +                continue;
->>>> +            }
->>>>               goto out;
->>>>           }
->>>>   @@ -704,6 +724,7 @@ 
->>>> qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult 
->>>> *res,
->>>>                 if (check_table_entry(entry, s->cluster_size) < 0) {
->>>>                   res->corruptions++;
->>>> +                bitmap_valid = false;
->>>>                   continue;
->>>>               }
->>>>   @@ -720,9 +741,24 @@ 
->>>> qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult 
->>>> *res,
->>>>               }
->>>>           }
->>>
->>> Note, that if qcow2_inc_refcounts_imrt() fails, we'll fix nothing.
->> Indeed. Then we have deeper corruption.
->> I don't know if we could just ignore the failure if in 
->> BDRV_FIX_ERRORS mode and clear the bitmap table if call fails?
->>>
->>>>   +        if ((fix & BDRV_FIX_ERRORS) && !bitmap_valid) {
->>>> +            QSIMPLEQ_REMOVE(bm_list, bm, Qcow2Bitmap, entry);
->>>> +            bitmap_free(bm);
->>>> +            bitmap_modified = true;
->>>> +        }
->>>> +
->>>>           g_free(bitmap_table);
->>>>       }
->>>>   +    /* If fixing, update the bitmap directory with the repaired 
->>>> list */
->>>> +    if ((fix & BDRV_FIX_ERRORS) && bitmap_modified) {
->>>> +        uint32_t initial_bitmaps = s->nb_bitmaps;
->>>> +        ret = update_ext_header_and_dir(bs, bm_list);
->>>> +        if (ret >= 0) {
->>>> +            res->corruptions_fixed += initial_bitmaps - 
->>>> s->nb_bitmaps;
->>>> +        }
->>>> +    }
->>>> +
->>>>   out:
->>>>       bitmap_list_free(bm_list);
->>>>   diff --git a/block/qcow2-refcount.c b/block/qcow2-refcount.c
->>>> index 6512cda407..df7f6d2f23 100644
->>>> --- a/block/qcow2-refcount.c
->>>> +++ b/block/qcow2-refcount.c
->>>> @@ -2305,7 +2305,8 @@ calculate_refcounts(BlockDriverState *bs, 
->>>> BdrvCheckResult *res,
->>>>       }
->>>>         /* bitmaps */
->>>> -    ret = qcow2_check_bitmaps_refcounts(bs, res, refcount_table, 
->>>> nb_clusters);
->>>> +    ret = qcow2_check_bitmaps_refcounts(bs, res, refcount_table,
->>>> +                                        nb_clusters, fix);
->>>>       if (ret < 0) {
->>>>           return ret;
->>>>       }
->>>> diff --git a/block/qcow2.c b/block/qcow2.c
->>>> index 81fd299b4c..adfb7ee37a 100644
->>>> --- a/block/qcow2.c
->>>> +++ b/block/qcow2.c
->>>> @@ -1927,11 +1927,19 @@ qcow2_do_open(BlockDriverState *bs, QDict 
->>>> *options, int flags,
->>>>       if (!(bdrv_get_flags(bs) & BDRV_O_INACTIVE)) {
->>>>           /* It's case 1, 2 or 3.2. Or 3.1 which is BUG in 
->>>> management layer. */
->>>>           bool header_updated;
->>>> -        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, errp)) {
->>>> -            ret = -EINVAL;
->>>> -            goto fail;
->>>> +        Error *local_err = NULL;
->>>> +        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, 
->>>> &local_err)) {
->>>> +            /*
->>>> +             * Allow this to fail in check mode
->>>> +             * because otherwise we can't open the image at all.
->>>> +             */
->>>> +            if (!(flags & BDRV_O_CHECK)) {
->>>> +                ret = -EINVAL;
->>>> +                error_propagate(errp, local_err);
->>>> +                goto fail;
->>>> +            }
->>>
->>> Should we at least print local_err (I mean error_report_err())?
->> As we do an error_propagate this shouldn't be needed?
->
-> You do error_propagate on error-path it's OK.
->
-> I mean when "error-skip" path, when you do just error_free(). In this
-> case we print nothing about error.
->
-Fixed in v6
->>>
->>>> +            error_free(local_err);
->>>>           }
->>>> -
->>>>           update_header = update_header && !header_updated;
->>>>       }
->>>>   diff --git a/block/qcow2.h b/block/qcow2.h
->>>> index 192a45d596..2d9c6929a7 100644
->>>> --- a/block/qcow2.h
->>>> +++ b/block/qcow2.h
->>>> @@ -1034,7 +1034,8 @@ void qcow2_cache_discard(Qcow2Cache *c, void 
->>>> *table);
->>>>   int coroutine_fn GRAPH_RDLOCK
->>>>   qcow2_check_bitmaps_refcounts(BlockDriverState *bs, 
->>>> BdrvCheckResult *res,
->>>>                                 void **refcount_table,
->>>> -                              int64_t *refcount_table_size);
->>>> +                              int64_t *refcount_table_size,
->>>> +                              BdrvCheckMode fix);
->>>>     bool coroutine_fn GRAPH_RDLOCK
->>>>   qcow2_load_dirty_bitmaps(BlockDriverState *bs, bool *header_updated,
->>>
->>>
->>
->> I now have the following diff since v5, if you confirm it's ok, then 
->> I'll push a v6:
->>
->> diff --git a/block/qcow2-bitmap.c b/block/qcow2-bitmap.c
->> index 91bd82a9f5..90a109d9b2 100644
->> --- a/block/qcow2-bitmap.c
->> +++ b/block/qcow2-bitmap.c
->> @@ -665,7 +665,7 @@ qcow2_check_bitmaps_refcounts(BlockDriverState 
->> *bs, BdrvCheckResult *res,
->>       BDRVQcow2State *s = bs->opaque;
->>       Qcow2BitmapList *bm_list;
->>       Qcow2Bitmap *bm, *bm_next;
->> -    bool bitmap_modified = false;
->> +    int bm_list_fixed = 0;
->>
->>       if (s->nb_bitmaps == 0) {
->>           return 0;
->> @@ -688,14 +688,14 @@ qcow2_check_bitmaps_refcounts(BlockDriverState 
->> *bs, BdrvCheckResult *res,
->>               if (ret >= 0) {
->>                   res->corruptions_fixed++;
->>               }
->> -            goto out;
->> +            return ret;
->>           }
->>           return -EINVAL;
->>       }
->>
->>       QSIMPLEQ_FOREACH_SAFE(bm, bm_list, entry, bm_next) {
->>           uint64_t *bitmap_table = NULL;
->> -        int i;
->> +        int i, corruptions;
->>           bool bitmap_valid = true;
->>
->>           ret = qcow2_inc_refcounts_imrt(bs, res,
->> @@ -712,12 +712,13 @@ qcow2_check_bitmaps_refcounts(BlockDriverState 
->> *bs, BdrvCheckResult *res,
->>               if (fix & BDRV_FIX_ERRORS) {
->>                   QSIMPLEQ_REMOVE(bm_list, bm, Qcow2Bitmap, entry);
->>                   bitmap_free(bm);
->> -                bitmap_modified = true;
->> +                bm_list_fixed++;
->>                   continue;
->>               }
->>               goto out;
->>           }
->>
->> +        corruptions = res->corruptions;
->>           for (i = 0; i < bm->table.size; ++i) {
->>               uint64_t entry = bitmap_table[i];
->>               uint64_t offset = entry & BME_TABLE_ENTRY_OFFSET_MASK;
->
->             if (check_table_entry(entry, s->cluster_size) < 0) {
->                 res->corruptions++;
->
-> I'd prefer simply bm_list_fixed++ here, instead of recalculating from 
-> res->corruptions.
-> Relaying on res is not good, as we pass it to other functions, like 
-> qcow2_inc_refcounts_imrt().
-> It's not a problem now, as we fail if qcow2_inc_refcounts_imrt() 
-> fails, and on success
-> path we expect it doesn't modify res. Still the code may change in 
-> future. I think res
-> is mostly for "write only (increment counters) access". It's external 
-> to our code, and
-> it looks unsafe to reuse it for internal logic.
->
-> Or even better make a separate counter nb_corrupted_entries, starting 
-> from zero. And it
-> can replace also the bimtap_modified variable.
->
->                 continue;
->             }
->
->             if (offset == 0) {
->                 continue;
->             }
->
-Fixed in v6
->> @@ -744,18 +745,18 @@ qcow2_check_bitmaps_refcounts(BlockDriverState 
->> *bs, BdrvCheckResult *res,
->>           if ((fix & BDRV_FIX_ERRORS) && !bitmap_valid) {
->>               QSIMPLEQ_REMOVE(bm_list, bm, Qcow2Bitmap, entry);
->>               bitmap_free(bm);
->> -            bitmap_modified = true;
->> +            bm_list_fixed += res->corruptions - corruptions;
->>           }
->>
->>           g_free(bitmap_table);
->>       }
->>
->>       /* If fixing, update the bitmap directory with the repaired 
->> list */
->> -    if ((fix & BDRV_FIX_ERRORS) && bitmap_modified) {
->> +    if ((fix & BDRV_FIX_ERRORS) && bm_list_fixed > 0) {
->>           uint32_t initial_bitmaps = s->nb_bitmaps;
->>           ret = update_ext_header_and_dir(bs, bm_list);
->>           if (ret >= 0) {
->> -            res->corruptions_fixed += initial_bitmaps - s->nb_bitmaps;
->> +            res->corruptions_fixed += bm_list_fixed;
->>           }
->>       }
->>
->>
->
->
 
-Pushed a v6 last week that addresses the missing things.
-Thanks for the review!
+On 2026/7/20 下午5:20, Miao Wang wrote:
+> Hi,
+> 
+>> 2026年7月20日 17:04，Bibo Mao <maobibo@loongson.cn> 写道：
+>>
+>>
+>>
+>> On 2026/7/20 下午4:49, Miao Wang wrote:
+>>> Hi,
+>>>> 2026年7月20日 16:34，Bibo Mao <maobibo@loongson.cn> 写道：
+>>>>
+>>>>
+>>>>
+>>>> On 2026/7/16 上午4:48, Miao Wang via B4 Relay wrote:
+>>>>> From: Miao Wang <shankerwangmiao@gmail.com>
+>>>>> The CSR_ESTAT register of a CPU can be read and written by both the
+>>>>> CPU thread and other threads (e.g., the interrupt controller thread).
+>>>>> Currently the possible readers and writers of CSR_ESTAT are:
+>>>>> - Readers
+>>>>>    - tcg generated by trans_csrrd(, CSR_ESTAT)
+>>>>>    - loongarch_cpu_has_work()
+>>>>> - Writers
+>>>>>    - tcg generated by trans_csrxchg(, CSR_ESTAT)
+>>>>>    - helper_csrwr_estat()
+>>>>>    - helper_csrrd_msgir()
+>>>>>    - loongarch_cpu_set_irq()
+>>>>>    - loongarch_cpu_do_interrupt()
+>>>>>    - loongarch_cpu_exec_interrupt()
+>>>>> The access from the CPU thread is not synchronized with the access from
+>>>>> other threads, which may lead to data races. The above readers and
+>>>>> writers shall all run on the corresponding CPU thread except for
+>>>>> loongarch_cpu_set_irq(). To fix this, the access to CSR_ESTAT in
+>>>>> loongarch_cpu_set_irq() is moved to the CPU thread by using
+>>>>> async_run_on_cpu().
+>>>>> The data race has been identified while running the test cases from
+>>>>> dracut, which is using QEMU to boot a LoongArch guest. By running the
+>>>>> tests repeatedly (about 30 times) in the following conditions, the
+>>>>> guest will hang in the middle of booting:
+>>>>> - Host architecture: LoongArch64 or Aarch64
+>>>>> - Guest kernel: 7.1.3+deb14-loong64
+>>>>> - Number of vCPUs: 1 or 2
+>>>>> - CPU Features: max, la464,msgint=off,ptw=off, or la464,msgint=off,ptw=on
+>>>>> - Accelerator: tcg
+>>>>> When the guest hangs, the guest kernel log shows various errors related
+>>>>> to RCU stalls or other Soft Lockup or Hard Lockup issues. When running
+>>>>> with 1 vCPU and the guest hangs, the guest kernel directly hangs without
+>>>>> any messages and stucks at idle_exit.
+>>>>> With this patch, the guest can boot successfully without any hangs
+>>>>> during repeated runs of the test cases.
+>>>>> Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
+>>>>> ---
+>>>>> Changes in v2:
+>>>>> - Simplify the changes to move the access to CSR_ESTAT from the only
+>>>>>    unsynchronized loongarch_cpu_set_irq() to the CPU thread using
+>>>>>    async_run_on_cpu() to avoid the race condition.
+>>>>> - Link to v1: https://lore.kernel.org/qemu-devel/20260714-loong-race-v1-1-54111549c95e@gmail.com
+>>>>> ---
+>>>>>   target/loongarch/cpu.c | 27 +++++++++++++++++++--------
+>>>>>   1 file changed, 19 insertions(+), 8 deletions(-)
+>>>>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+>>>>> index fb03424ffa8cd5e5d250531cc2a36fa789fc25a9..126c3ad276cc44311942542e086bcabe41d91b63 100644
+>>>>> --- a/target/loongarch/cpu.c
+>>>>> +++ b/target/loongarch/cpu.c
+>>>>> @@ -57,12 +57,27 @@ static vaddr loongarch_cpu_get_pc(CPUState *cs)
+>>>>>   #ifndef CONFIG_USER_ONLY
+>>>>>   #include "hw/loongarch/virt.h"
+>>>>>   +static void do_set_cpu_estat(CPUState *cs, run_on_cpu_data data)
+>>>>> +{
+>>>>> +    CPULoongArchState *env = cpu_env(cs);
+>>>>> +    CPUSysState *sys = env_sys(env);
+>>>>> +
+>>>>> +    int irq = data.host_int;
+>>>>> +    int level = irq >= 0 ? 1 : 0;
+>>>>> +    irq = level ? irq : -irq;
+>>>>> +
+>>>>> +    sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, irq, 1, level != 0);
+>>>>> +    if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
+>>>>> +        cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+>>>>> +    } else {
+>>>>> +        cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+>>>>> +    }
+>>>>> +}
+>>>>> +
+>>>>>   void loongarch_cpu_set_irq(void *opaque, int irq, int level)
+>>>>>   {
+>>>>>       LoongArchCPU *cpu = opaque;
+>>>>> -    CPULoongArchState *env = &cpu->env;
+>>>>>       CPUState *cs = CPU(cpu);
+>>>>> -    CPUSysState *sys = env_sys(env);
+>>>>>         if (irq < 0 || irq >= N_IRQS) {
+>>>>>           return;
+>>>>> @@ -71,12 +86,8 @@ void loongarch_cpu_set_irq(void *opaque, int irq, int level)
+>>>>>       if (kvm_enabled()) {
+>>>>>           kvm_loongarch_set_interrupt(cpu, irq, level);
+>>>>>       } else if (tcg_enabled()) {
+>>>>> -        sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, irq, 1, level != 0);
+>>>>> -        if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
+>>>>> -            cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+>>>>> -        } else {
+>>>>> -            cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+>>>>> -        }
+>>>>> +        async_run_on_cpu(cs, do_set_cpu_estat,
+>>>>> +                         RUN_ON_CPU_HOST_INT(level ? irq : -irq));
+>>>> This is a good method with async_run_on_cpu, there is one small issue with irq == 0 interrupt injection where -irq/irq are both 0.
+>>> Since according to Section 7.4.6. of Loongarch Reference Manual Vol1,
+>>> bit [1:0] stands for the software interrupt SW1 and SW0, I expect that
+>>> these two irqs should not be manipulated by hardware sources and thus
+>>> the irq here should be larger than 2. Can you further explain under
+>>> what condition the irq line 0 and 1 of a cpu core would be connected
+>>> to external outputs.
+>> loongarch_cpu_set_irq() is not only for external interrupts, percpu interrupt injection also uses loongarch_cpu_set_irq() such as IRQ_TIMER etc.
+> 
+> The users of loongarch_cpu_set_irq() are limited. The main usage is
+> as the callback of qdev_init_gpio_in(). Other usage is for the timer,
+> where the irq number is IRQ_TIMER, i.e. 11.
+> 
+>> With SW1 and SW0, if the CPU set bit0 of estat, it will inject SW0 to this CPU itself. And de-assert the irq if the CPU clear bit0 of estat.
+> 
+> When SW1 and/or SW0 are set by the guest code running in the emulated
+Linux kernel does not use SW0/SW1 now, which does not meaning that it is 
+not an interrupt. It is only interrupt generated by software, rather 
+than hardware.
 
-Jean-Louis
+> CPU, the handling of the software IRQs in the qemu side does not
+> involve loongarch_cpu_set_irq(). As a result, I believe that it is
+> safe to assume that the second parameter of loongarch_cpu_set_irq(),
+> i.e. irq should not be smaller than 2. I also suggest enforce this
+So, What is behavior with the code *set_csr_estat(BIT(0))* on real 
+hardware? and how should QEMU TCG implement this instruction?
+
+Regards
+Bibo Mao
+> check at the entrance of loongarch_cpu_set_irq().
+> 
+> Cheers,
+> 
+> Miao Wang
+> 
 
 
