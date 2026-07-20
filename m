@@ -4,151 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 135A7C4451B
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 08:12:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CA5DC4451B
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 08:21:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlj7D-0003pe-4W; Mon, 20 Jul 2026 04:12:43 -0400
+	id 1wljFB-0005Wv-Vn; Mon, 20 Jul 2026 04:20:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wlj78-0003mt-5l
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:12:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wljEn-0005Vo-Nt
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:20:37 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wlj75-0000F4-MQ
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:12:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784535154;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=b4ZN4w49/scrUqvtulLtVv+8lCiA06QCX3kOQJrZMKg=;
- b=PmaLCHdbPoGteNRl1Er5NsovWTgiGSy1ntd6QkimsFrTmB6RVzCsXV8UqqwoXGXxEAF2Bn
- BYz8j7wzFfxdKG+vHUdlKVoULdlpauxkLMbeBViBhokEtYDVMvbxeWsu9jULgl20nAIPnA
- Vg2e/P4EAZ/rVytC2D0iQuCERb2Z61o=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-426-t4VvCfYTPyWOhMBP8FyybQ-1; Mon, 20 Jul 2026 04:12:32 -0400
-X-MC-Unique: t4VvCfYTPyWOhMBP8FyybQ-1
-X-Mimecast-MFC-AGG-ID: t4VvCfYTPyWOhMBP8FyybQ_1784535151
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-49554715277so17146665e9.1
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 01:12:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wljEl-0001EV-NB
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:20:33 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 66K76fj91713125
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 08:20:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ JkE94juDKULxzHC4mMoxnbUMRIAbq3MMJu2tAqr63fI=; b=Sw+qWPNtqa3gM0nZ
+ 68/ZfysIDBuWwsGGyisG/QmGmKroDgKAnB57xIL45QkOw0v9H5Lv2PH7Jy8YSzF3
+ bY9zBWmvG3shPcCI0O/FAXICdOfwoi5/THfs39U9ae3Cex0K0gLz7MGQQerbjTN4
+ UD6ac9QazPoT8gAUtef2f5hUDGkroSqHz8f21zB9CfLZ4/uob8gadSvKrfDqlkGH
+ QMWXeaCeFJKbrA+SPnCjzqyx41bzlytVrpQoyPN5DrhP4ZYiM4cqf7WDXGt1BixO
+ m9sSiJ5afiQ7WXqeJeKIchLb1z4b2pXfOkyaiaTh35tptugioQXmbGD1phf10m7e
+ YN6Unw==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhf0c08w1-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 08:20:29 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-92da6f3cc81so1358178285a.2
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 01:20:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784535151; x=1785139951; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:cc
- :from:content-language:references:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=b4ZN4w49/scrUqvtulLtVv+8lCiA06QCX3kOQJrZMKg=;
- b=eSX6OgXHYDjni+UqdNRK/x6vEtk+YHBF4Q5+wGE49z541h4RRETBw8ihj/gkts+Ozy
- dFhIWEB9zedqNkGeVdFfT7MlM6cwdlmJNGA4nuAnUh44kA5qB9xYJOlw+ZTsmQaL3e/t
- gfcPveqfpsl97XuFHdO3t7DsNJpxzpM3X2uFajmwT1uwF6iWl9j7BXlqCsiWJ2AmVMxG
- YurPd8xoxueJj+3CwBrfalZqz34d4Pp3Biu9njeMjBxeB9o07F72/w/A7P3IZKNpDMaa
- QynydWtUjQBprC739NEbIITeTB5HSZ49PAxZN6O6Ie+c8PvwV310xnBXazrMNExoZ79H
- nQCw==
+ d=oss.qualcomm.com; s=google; t=1784535629; x=1785140429; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=JkE94juDKULxzHC4mMoxnbUMRIAbq3MMJu2tAqr63fI=;
+ b=MrFkYnlFOwoGAylPl2D95Atdm+TqG0aYDnoc6v+THsX251ZRK2/1FwKovtuh+dK7vb
+ TOXVutfJHkUGi8XUcgMc59srQRm1VEMDGoIqFnqtSHxNEeYLL7yCqIFWlmALkf3jr74m
+ 6jzqULTBxLqCAItHooaJOoYt3dg+OGt9lfdUVnbBbTC0xH2vH5dKLbOCz4vOBCAw1DGA
+ 0EOxXm1TEQs6d5cXtkgxa9fZPiGR7yj8tCfd8fqfTZK5K9swD+H27C8PKiPaL9uvUnXb
+ kBfISb51IXl964UOIxOKQlKdPTTnGWCLZSDlENlBB8zB5hX5O9RrDGprpqNe9R6t57os
+ BcPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784535151; x=1785139951;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:cc
- :from:content-language:references:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=b4ZN4w49/scrUqvtulLtVv+8lCiA06QCX3kOQJrZMKg=;
- b=W0cUEGV1bu97cULCQvjfiKfOHkF0BZeZ6TWJm7yuoSLD41OfV9JQeP4U+CgiYb1Lin
- xZG6hz6Izzc+MDEqMltKnHJok/gLr+hfARi7meT3UdS/1YrwXxaY4Z+jSkuWZ4pnRuEJ
- QX23c5KMpFfWjkE6AuPBw8jy0DaXRwhtoNzYj5q8ys+uBif9pEQFtNuc9i8IpqUqJ11q
- AJxiz488Fv0ILb6OnFmwlBE/AQuxv9m1GSmhRKe705pwbSt52MN5Ebk4VEZ10I4aoVsA
- 0W/iw1AxBMZuEdeB0Tb/mgs5dIZ1p3JQrtL1U5GIGH9zoOvkvmxPNvP3JmBx9moSOQXc
- 7p1A==
+ d=1e100.net; s=20251104; t=1784535629; x=1785140429;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=JkE94juDKULxzHC4mMoxnbUMRIAbq3MMJu2tAqr63fI=;
+ b=T9dp3zUcdl7Pgdz+NIKNOzZ4d4bMkHz8JH4+xLIh3Bvc25ccaES41Dvhae7ekXH6yd
+ EgzsXcNGrZqrMOGyFyclu6IP237SM8bAV32EqTxIKd5dIz+zm0xNa342xNhgeRJlLMno
+ PuUvmjHgGMFj2UIxjFPLk85vt2D84DPaLHsBN2TcKVlTd09Egu8QTIesVISNVmhkNZ5H
+ YIw0WOuRRm9zLFItj64E0mDz3aR8xnQlfFMZo3vrTbSjPblbkrsR/6kv4DSmsebbhkz5
+ dIFpKn919AYHlz9IjBeekf3O4+d1h9rJUNaJCQgB4F13l94quli7Y0zPpN2exL/ZTSGU
+ Bd2Q==
 X-Forwarded-Encrypted: i=1;
- AHgh+RpXpv8pv6vSby2K3USDd5nbi9JYx/+q7XONtJP5pSCCKR4mKTLf3nTuf9zthC2onpHJkVD6Yp0l0IHN@nongnu.org
-X-Gm-Message-State: AOJu0YzAVLCRoDqu9i6C4MoFVcLDo2+mhOze3SchEy73QENaz77flrO4
- oNz+CHF7gRei6+VHNBFwfUrjnFfccQ6fz1FQyGqhC4xNL9k05sVsQ9KajSsitxoekfw38lx8Ko9
- XagT44xetoUjOod4LM8FMkFtnxM37qiC05Uq2FKT0Q0Mq7svgq4M5+c+k
-X-Gm-Gg: AfdE7cmgv9DPERY7YKx0R/G5fz4OS9PzVO5C3N4rwoSPZF/Sj/huTjknQo/d+5dQ9io
- hQcxPcf1ljFwWYRIo1iyEw9YxxUQrzIdj4+zUP2nxUY1Omu7wb4FBnUWIbJog59JFs+92et6Uy2
- 3Hdq1kwcrx4wPGQAgbwWne02jtBcZxwjuOhGm1+s/OQougTaf93OjpRsLNW4WfcWFLNSIIBnMjm
- WTbBQuGbVEZOAg+sckncnbbDQf5tLFv/TqMpvGXMogcvNryLiJdVNfNDGUTMFs3QY5qCdVLV2OP
- EbMvl3g7karb77M6aIfXDcFRtYsf5blQU88WTfDA6K7gYLWllvcKqb4RCd/wpczbMUE0HdUgeQ=
- =
-X-Received: by 2002:a05:600c:4ecb:b0:495:4c73:3d59 with SMTP id
- 5b1f17b1804b1-4954c733e07mr125172705e9.23.1784535150670; 
- Mon, 20 Jul 2026 01:12:30 -0700 (PDT)
-X-Received: by 2002:a05:600c:4ecb:b0:495:4c73:3d59 with SMTP id
- 5b1f17b1804b1-4954c733e07mr125172295e9.23.1784535150140; 
- Mon, 20 Jul 2026 01:12:30 -0700 (PDT)
-Received: from [192.168.0.9] ([47.64.112.144])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4955370d78csm143531045e9.12.2026.07.20.01.12.28
+ AHgh+RqTAXiFzTIcaGLyQGvL6S7AYI4H8yc9PgXRZHxvoX0mpYRTruPFCAGwsEgxcXV19PpLMz6Bu0fQec95@nongnu.org
+X-Gm-Message-State: AOJu0YwtoxzzzcPQs6zdMsH8lKwOV/o8Y9572AFp/Plw+xpGhLFQTNmW
+ y6JXMsYFJZs3JUuCm/hNnqdXX24AogOSAhLhfTd2k0957KihtC0oFnIHBCQxKyG84j7qGOBkFfr
+ JnDLQra2WRH703OwtL+1dvMmZyIu6sXhoJgg2BEqTUXHoXZnvyeRqMyPBmQ==
+X-Gm-Gg: AfdE7cmC0w24SUULvDbjj5SshdLjQfZtgpNJYCsYVnF7hBO8+BjwnvjE/dsEDjK4XHF
+ /apYxWU855Sqb/GGhkNgN8EYO+oUfrV5qlXHD+imYzxd/2yZYRq57q64i12DC8GP+UTH4V7kQfV
+ v9YMYu6iMGlytVOAO7HsFX6FAqg4NsWlV2e29vO29qpVim+wFax8KcihXuxF/xIUCAth5nSqOMc
+ uM4I8CYQF+TzTFER/L7S0af02CKwlUErN/9eO45PT15BxvxeRDKAJ9KbxWyVUHxF3Id6paIRzqa
+ qGWE4zWGjsBpNG4eFWcSskPE3B+YrW3G23qC4W5Irs60tvar9OjqmVgol8qzZtfuH4RXBgZiHgo
+ QdQZ6PJffMIEf/Z9cY11Sor0va2QSEqZHPoLfNwVB4ztvZzTaRG0=
+X-Received: by 2002:ac8:594a:0:b0:51c:7b12:5ff7 with SMTP id
+ d75a77b69052e-5213d7abfb3mr123937811cf.83.1784535628510; 
+ Mon, 20 Jul 2026 01:20:28 -0700 (PDT)
+X-Received: by 2002:ac8:594a:0:b0:51c:7b12:5ff7 with SMTP id
+ d75a77b69052e-5213d7abfb3mr123937611cf.83.1784535627890; 
+ Mon, 20 Jul 2026 01:20:27 -0700 (PDT)
+Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f63edcf8dsm30458976f8f.27.2026.07.20.01.20.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Jul 2026 01:12:29 -0700 (PDT)
-Message-ID: <bb76dd56-e97e-4d1c-aaf8-9eb55e6858b3@redhat.com>
-Date: Mon, 20 Jul 2026 10:12:27 +0200
+ Mon, 20 Jul 2026 01:20:26 -0700 (PDT)
+Message-ID: <4359cab9-fdb4-4bd2-ad35-dc0724b12a62@oss.qualcomm.com>
+Date: Mon, 20 Jul 2026 10:20:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/usb/host-libusb: keep autoscan enabled for bus+addr
- selector
-To: Gerd Hoffmann <kraxel@redhat.com>
-References: <20250912-usbhost-disconnect-v1-1-9c7c5fa9b50a@iki.fi>
+Subject: Re: [RFC PATCH 001/134] qom: Introduce object_new_child()
 Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Cc: =?UTF-8?Q?Timo_Ter=C3=A4s?= <timo.teras@iki.fi>, qemu-devel@nongnu.org
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250912-usbhost-disconnect-v1-1-9c7c5fa9b50a@iki.fi>
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Alexander Graf <graf@amazon.com>, qemu-devel@nongnu.org
+References: <20260711223707.42139-1-graf@amazon.com>
+ <20260711223707.42139-2-graf@amazon.com>
+ <12d544b3-5c68-488a-91e5-ac64d1a27338@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <12d544b3-5c68-488a-91e5-ac64d1a27338@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: permerror client-ip=170.10.133.124;
- envelope-from=thuth@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Authority-Analysis: v=2.4 cv=HeYkiCE8 c=1 sm=1 tr=0 ts=6a5dda4d cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=VwQbUJbxAAAA:8 a=ZiMIAIO6AAAA:8 a=20KFwNOVAAAA:8 a=vggBfdFIAAAA:8
+ a=KKAkSRfTAAAA:8 a=MR4dTCdTAYsfVAQqf0QA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22 a=KohFQSMcaiS2QNUyYz07:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: sfx-k5lG_hxUdF37Oaf2fY8cSO9bls3W
+X-Proofpoint-ORIG-GUID: sfx-k5lG_hxUdF37Oaf2fY8cSO9bls3W
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDA5MSBTYWx0ZWRfXyoopuCvNxHYJ
+ Lntd/3kmU6mh8eLKlgilaA/3mzpUE57RUS/iYe4pP0sHJNZ02McQOUUthXxBIfHAjeLxXVgcRwk
+ CZke7h5XUIL7itDOHbtnW4JsN8wyTo0=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDA5MSBTYWx0ZWRfX49lpVYZ2bn7n
+ w41LGdFA6r2ZruL4k3glKX7PgxieOKZKsQLv4Tu2RF4e7SVPbJmfHXUBzFHc2MUjF+5jFaq4BKx
+ 6X+uwHiN43r7BTPP+CgFADbju4CuiE+eyMPrIrRMqZhy/eMJTypkCbhw7wToPrlazCFEs+msj9T
+ WM+qMWk5fZZL9hzbZx3n+bIZtw5xH7ug8tJTWFjw/n5mSblDOHGly+hVTOaxzn1RCARQYwTywdg
+ XhTfQRbtnyFX4WYIm9Fb/UtXAVbdEBq0J0x/zdjz8HZaLGNwA87vSH1MBts77iPM5EuAn9P4/+4
+ C7qDeGRJh62qV00DHKEtYOhhhKpUHOlUYJE5UZT24rTUiS7SsDFp8HCE/SUuiBlbQAnlW/TgEIy
+ FDFW37908C36R6EsE3xaPPNPlt47+7CLQaApn1sayGK1BVWvSMT5Duj8z7OWaKscCVY0sRohX+u
+ dtj2vqMv9nYa23k32mQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-20_01,2026-07-17_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 lowpriorityscore=0 impostorscore=0 malwarescore=0 suspectscore=0
+ phishscore=0 clxscore=1015 adultscore=0 bulkscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200091
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,92 +156,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-  Hi Gerd,
-
-since you originally wrote commit e058fa2dd599, could you maybe have a look 
-at this patch?
-
-  Thanks,
-   Thomas
-
-
-On 12/09/2025 13.14, Timo Teräs wrote:
-> This is partial revert of commit e058fa2dd599.
+On 13/7/26 18:49, Richard Henderson wrote:
+> On 7/11/26 15:34, Alexander Graf wrote:
+>> We already have two ways of creating a QOM object with a parent set
+>> from birth: object_initialize_child() for objects embedded in the
+>> parent struct, and object_new_with_props() for heap-allocated objects
+>> that also want a list of string properties applied.  What we do not
+>> have is the plain heap-allocated dual of object_initialize_child():
+>> create the object, add it as a child<> of a given parent under a given
+>> name, and hand the reference to the parent.
+>>
+>> Board and composite-device code that heap-allocates children today
+>> therefore either open-codes object_new()+object_property_add_child()
+>> +object_unref(), or skips the parenting step entirely and lets
+>> device_set_realized() dump the object into /machine/unattached.
+>>
+>> Add object_new_child(parent, id, typename) as that missing primitive.
+>> The reference created by object_new() is transferred to the parent's
+>> child<> property, so on return the sole reference is held by @parent
+>> and the caller does not need to unref.  Later patches build the qdev
+>> and per-bus creation helpers on top of this.
+>>
+>> Suggested-by: Markus Armbruster <armbru@redhat.com>
+>> Link: https://lore.kernel.org/qemu-devel/87jyr3w9tc.fsf@pond.sub.org/
+>> Assisted-by: Kiro
+>> Signed-off-by: Alexander Graf <graf@amazon.com>
+>> ---
+>>   include/qom/object.h | 25 +++++++++++++++++++++++++
+>>   qom/object.c         | 13 +++++++++++++
+>>   2 files changed, 38 insertions(+)
 > 
-> The portion to immediately validate the device is kept, but this
-> adds and enables again the autoscan functionality. This is needed
-> to detect and relay USB device disconnect event to the guest.
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > 
-> Fixes: e058fa2dd599 ("usb-host: add special case for bus+addr")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3111
-> Signed-off-by: Timo Teräs <timo.teras@iki.fi>
-> ---
->   hw/usb/host-libusb.c | 14 ++++----------
->   1 file changed, 4 insertions(+), 10 deletions(-)
+>> +Object *object_new_child(Object *parent, const char *id,
+>> +                          const char *typename)
+>> +{
+>> +    Object *obj;
+>> +
+>> +    g_assert(parent);
+>> +    g_assert(id);
 > 
-> diff --git a/hw/usb/host-libusb.c b/hw/usb/host-libusb.c
-> index b74670ae25696b5252f0d034cb9b759e338a050f..f0baf6b2f2d12fbf8feb5b788b46d3187028df58 100644
-> --- a/hw/usb/host-libusb.c
-> +++ b/hw/usb/host-libusb.c
-> @@ -90,7 +90,6 @@ struct USBHostDevice {
->       uint32_t                         iso_urb_frames;
->       uint32_t                         options;
->       uint32_t                         loglevel;
-> -    bool                             needs_autoscan;
->       bool                             allow_one_guest_reset;
->       bool                             allow_all_guest_resets;
->       bool                             suppress_remote_wake;
-> @@ -1211,7 +1210,6 @@ static void usb_host_realize(USBDevice *udev, Error **errp)
->   #if LIBUSB_API_VERSION >= 0x01000107 && !defined(CONFIG_WIN32)
->       if (s->hostdevice) {
->           int fd;
-> -        s->needs_autoscan = false;
->           fd = qemu_open(s->hostdevice, O_RDWR, errp);
->           if (fd < 0) {
->               return;
-> @@ -1227,7 +1225,6 @@ static void usb_host_realize(USBDevice *udev, Error **errp)
->           !s->match.vendor_id &&
->           !s->match.product_id &&
->           !s->match.port) {
-> -        s->needs_autoscan = false;
->           ldev = usb_host_find_ref(s->match.bus_num,
->                                    s->match.addr);
->           if (!ldev) {
-> @@ -1242,14 +1239,13 @@ static void usb_host_realize(USBDevice *udev, Error **errp)
->                          s->match.bus_num, s->match.addr);
->               return;
->           }
-> -    } else {
-> -        s->needs_autoscan = true;
-> -        QTAILQ_INSERT_TAIL(&hostdevs, s, next);
-> -        usb_host_auto_check(NULL);
->       }
->   
->       s->exit.notify = usb_host_exit_notifier;
->       qemu_add_exit_notifier(&s->exit);
-> +
-> +    QTAILQ_INSERT_TAIL(&hostdevs, s, next);
-> +    usb_host_auto_check(NULL);
->   }
->   
->   static void usb_host_instance_init(Object *obj)
-> @@ -1267,9 +1263,7 @@ static void usb_host_unrealize(USBDevice *udev)
->       USBHostDevice *s = USB_HOST_DEVICE(udev);
->   
->       qemu_remove_exit_notifier(&s->exit);
-> -    if (s->needs_autoscan) {
-> -        QTAILQ_REMOVE(&hostdevs, s, next);
-> -    }
-> +    QTAILQ_REMOVE(&hostdevs, s, next);
->       usb_host_close(s);
->   }
->   
+> Of course, typename can't be null either.
 > 
-> ---
-> base-commit: 190d5d7fd725ff754f94e8e0cbfb69f279c82b5d
-> change-id: 20250912-usbhost-disconnect-192ecaa8fc3e
-> 
-> Best regards,
+> But it reminds me that gcc and llvm have attributes nonnull and 
+> returns_nonnull; we should be using those, both for their Werror and 
+> documentation values.
 
+'nonnull' attribute is not useful at runtime, and the odd of writing
+code with NULL argument are low.
+
+'returns_nonnull' is a hint to optimizers and don't help protecting
+us from bad code / pattern.
+
+OTOH the one I find useful is 'warn_unused'.
 
