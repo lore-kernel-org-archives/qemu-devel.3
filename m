@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1624BC4452A
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 14:10:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A2A7C4452A
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 14:13:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlogS-0002lE-Ty; Mon, 20 Jul 2026 10:09:30 -0400
+	id 1wlok6-0004XC-Ds; Mon, 20 Jul 2026 10:13:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wlogQ-0002kb-0A
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 10:09:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wlok5-0004X2-PJ
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 10:13:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wlogO-0008Ia-21
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 10:09:25 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wlok3-0000K0-Kl
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 10:13:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784556561;
+ s=mimecast20190719; t=1784556790;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=u3IRo2FfwSRH3SmDYXoFL3FfZdxPQ3jnnPGCl1NtgQQ=;
- b=HSQHkgkvH/Dm7oxbcFancDFXeCAr+JfKYkbH3qCXdCVz6TKuIuYy8j0qUOJKiovIBy6qJb
- PmAF33GxTTu3BKJ3I6CFXMmfO1JQB21gNW/YQq3E0A2qhqGkck2vKE3Q7ZLqoyamMEXAJC
- ltD8AcAqxiJqqb7zMxcKP0hd8iF28ck=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=amn6kDIT0WP5ybt8VbJ5VW8vOOWsBH/TSBn2QO9H038=;
+ b=GvIrEnx6zPicgD/bU3WPKbv5fwowcvL4VqsZ7zo0hCJaqmE62BvE3BsiroeD45S4m6MMTs
+ R/g1XXqXSBKcQb04EzbEw6gVtRVz2hDwS34ntn590AVr1m0LEyMiiDVaIynreLVn81mepf
+ XfQkxgtV4Q6d6YpCMxN+J/ZF/5JW/z0=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-608-wNAHI_tIPBepgbRIdViYnw-1; Mon, 20 Jul 2026 10:09:20 -0400
-X-MC-Unique: wNAHI_tIPBepgbRIdViYnw-1
-X-Mimecast-MFC-AGG-ID: wNAHI_tIPBepgbRIdViYnw_1784556559
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-92ec91dc265so656609685a.2
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 07:09:20 -0700 (PDT)
+ us-mta-457-YtxNytSYPh651Zi2gCUL6w-1; Mon, 20 Jul 2026 10:13:09 -0400
+X-MC-Unique: YtxNytSYPh651Zi2gCUL6w-1
+X-Mimecast-MFC-AGG-ID: YtxNytSYPh651Zi2gCUL6w_1784556789
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-930a098ea19so606988085a.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 07:13:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784556559; x=1785161359; darn=nongnu.org;
+ d=redhat.com; s=google; t=1784556789; x=1785161589; darn=nongnu.org;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :content-type:mime-version:references:message-id:subject:cc:to:from
  :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=u3IRo2FfwSRH3SmDYXoFL3FfZdxPQ3jnnPGCl1NtgQQ=;
- b=EvFRE56hWHwj00qIKGy92pfzGcnKcB3zfWx93GHC7K7c1YsYCXtgTysu53zPNbkAXR
- Mg7S4xfB4Zqc5/I0I9aSSFaQPCGdmPx7Y++76PmQER5IqItG+uf1mTG96mhXSrSkqcg1
- 0+6hBb+zz2nDYI9Znu6qWSbvnUh0sFfc4VNrN0JVGsL3KwiFpkE721+HD2yTf4QsOJV9
- PEJG9LiTflZsxtr4ernyFr8D496EzOYFPKh+j/7QJGr5pMjplQYBxmAZkfU0uhbDg65B
- aq9MuL4uJNVIJjc5015qpiNcHOxNdH5j8ZlzcisWtQjxws/I/y76C/Y8obF+PSlCsuR8
- nEnQ==
+ bh=amn6kDIT0WP5ybt8VbJ5VW8vOOWsBH/TSBn2QO9H038=;
+ b=XQ7GS9CD6cz1e7lhB6emjQakVV2qR9h5e7OkXbUIEEPYyi+NSaw6LSqP0HPWTNkiKd
+ evdJq9HfLie+G9lQ2Fwx2wGMv2F5n7TuLivgJG2Mg5yeY7Nk+W/7tO7Mrsuj4/TrVNLy
+ bsD/KIgufJBZOfLgLlzhoHJcRWRyPQmGc5tbAaIu7xlmFdiwpoxoavNNuecWnboBFwyU
+ Jm4CKnBBzwUX/hy+0huw+oLbzHlrpejLq4W1B3tKeejVh2KRA7WYKlTiw5s1kjFTyIBo
+ UHI+iPzy08MML51Juy7Ah43Q1W6dDyJF8pxxFpgqpqvgWDZ6dwcsj5lmZPGYHLlqpgV7
+ f/TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784556559; x=1785161359;
+ d=1e100.net; s=20251104; t=1784556789; x=1785161589;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :content-type:mime-version:references:message-id:subject:cc:to:from
  :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=u3IRo2FfwSRH3SmDYXoFL3FfZdxPQ3jnnPGCl1NtgQQ=;
- b=TGG+Qi8PYisPz/MSHngmSxBiZ+Ig2gN5OgErf1A3rT2ucpxY9Jrbmt0Qkn97geAvNB
- 8/Emc91fD2dGCGIrbAAf6hKnBdTtYLXhta6GzSJJ5hzACjv/IXx9CZi/RqkYCgof5BCV
- E6taHxpifJlb5Mks2rEV9E4Q69ync0orpuCpYVzYUqi0piypjBt5zl0e98SZdeHblUtE
- rGlGacQi/01PZxqiCzsIMWN6cwcc4czaIPj78CZNgq5D90aSo+c5/mCTxDt/R3E9hTEZ
- MGarFIJTscxwn4dBUunV/I/xS1eb5MbJ8ubADGPBRB6Q6LYslKRiYZaU6ObYc+jz1Kkt
- P5Ow==
-X-Gm-Message-State: AOJu0YzbnNaXoVCO15ehPfKa9FG1ggVJ/mTIwjNZeY1YDLnBQkHZi7Wx
- 8+fuHaahKLfdFxgTtykcVLi2igK0toWBkeI/4bccjDGM1jMbtMBEs7B5DgShlidp9o1h+8qWoVA
- 0r9PPD/T/N2jsP8JcrmDpff0QGaqedSAr9wjCUskNN300uuXjIcAW3+sw
-X-Gm-Gg: AfdE7ckhlLM8oOdFcaEgPT4t62hMl6gp+7za8Y0G1xrzgLpansZ0BBPHy+c2sqz0EWr
- W0ID5n56YFN/SkjhvQah3P66QZxz14iw5Xz1PVTaARSw9ga+WcCvKFUJ4NVbll9vc+K+hMsvyGH
- Q5jZlaZ2KCI2Z3yXg17YZnpUyCalsJOccyzd739miT7p7cnhQhZU45Fo/OUNHP9F03cUsvggmsz
- kO85WYqFlrjsMAVzGRc53gE/v+ykNwxHDePQ8RTbn8KU644VOIz1PYqOt305jTiBlFytcxtMGwg
- Deq4LuCxBlQuhuGNQt3yhts103xzp98SJKN0ecwXTZbh5e1kRrNPoy4I/PiBUNsE+dYe
-X-Received: by 2002:a05:620a:6cc2:b0:915:83fa:b3e0 with SMTP id
- af79cd13be357-930b3e4919fmr1369859485a.5.1784556559091; 
- Mon, 20 Jul 2026 07:09:19 -0700 (PDT)
-X-Received: by 2002:a05:620a:6cc2:b0:915:83fa:b3e0 with SMTP id
- af79cd13be357-930b3e4919fmr1369851885a.5.1784556558528; 
- Mon, 20 Jul 2026 07:09:18 -0700 (PDT)
+ bh=amn6kDIT0WP5ybt8VbJ5VW8vOOWsBH/TSBn2QO9H038=;
+ b=flXomci5QAnErc7eyXRcA1Gei14E0zwozPBpqHQP8TYYOoM9IZUmwjidGmAGXTv0Ug
+ L4aF6mBCVL248SeplfMqfGwTIcyQkwV2PuYASgh+5G8frUBob3xB384KuL6XO6AJoRtN
+ o/MFLb/KxJELjhv5uQDBdNZTBKviuKkgasjw2cNKGZOodOqs/q9+svxQcCqRYTT2KVQh
+ P4zjcvv1n6gKOCNwBkCdxJ3kxzZphfUg0BYAnxpahgcfFqfOZvgjjOCcPV15uRevzYnL
+ KjOemzaJCu2w3I6aWq+DSOCUxIreV+LXiRIfwij69//UhvYXMdlpVyv0aUUZHhfDvtqe
+ bGeg==
+X-Gm-Message-State: AOJu0Yz36qZR61yBGj8ScwJ9JmQAnhhRDhm7lnM0+Y5D3tuDFYe3GjDy
+ 4uL7ngb/Hd+MGZP0b8fRt6aGzf6uKPfP5fxVk2Y7Few5CuOxqGe5xZ+nj0HkCJqc2LNcoda3SYJ
+ DbUm02WHvMp4f9rrf3ct/urPXV6KYkc0CLta3JhAeMEonkX9M0VmSLlEU
+X-Gm-Gg: AfdE7cn08NWjjlG7bSZ1rnVM3BZvN2zaqwS4a83Vt5XVCHyU1XcllphEFJtUNrY4qA5
+ QKnuHaBloZXs3vb3sth3TvYRgXcMKbP28YpAbAzo5gQacF2wn8ZU4yTOVqdyzPsFKqFSI7f+Dbt
+ 0R2U4j6kXQ3eo7dImBoMOlgsFAtn7tMcGz/ofbh0l0iRdxZutynrPIMIQRMxPj/RGDRdGPIJQUW
+ aYh9Jlf8FE6s5qSJIHQrEoX0zScFVUvv5L49rxpIDm1mlflJXDad6TMmZBXo3ZLUZ4N5WO7D5iL
+ /rnDC27tCTQTFa0+N8h6BPzoK0N0c9kb+oWkSPvSS3bDuAy+PKDXnaf+9XomtnIGEFV6
+X-Received: by 2002:a05:620a:3708:b0:92e:e695:d622 with SMTP id
+ af79cd13be357-930b3ea8f77mr1401548885a.28.1784556788440; 
+ Mon, 20 Jul 2026 07:13:08 -0700 (PDT)
+X-Received: by 2002:a05:620a:3708:b0:92e:e695:d622 with SMTP id
+ af79cd13be357-930b3ea8f77mr1401540785a.28.1784556787735; 
+ Mon, 20 Jul 2026 07:13:07 -0700 (PDT)
 Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-930b52dd4fasm875197485a.4.2026.07.20.07.09.17
+ 6a1803df08f44-9077856348esm91631706d6.12.2026.07.20.07.13.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Jul 2026 07:09:17 -0700 (PDT)
-Date: Mon, 20 Jul 2026 10:09:13 -0400
+ Mon, 20 Jul 2026 07:13:07 -0700 (PDT)
+Date: Mon, 20 Jul 2026 10:13:03 -0400
 From: Peter Xu <peterx@redhat.com>
 To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
 Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
@@ -97,25 +97,25 @@ Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
  Anthony PERARD <anthony@xenproject.org>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  xen-devel@lists.xenproject.org, Li Zhijian <lizhijian@fujitsu.com>
-Subject: Re: [PATCH 2/8] migration: fix qemu_get_counted_string annotation
-Message-ID: <al4sCVxUxqrtmLjd@x1.local>
+Subject: Re: [PATCH 8/8] migration/rdma: annotate and simplify
+ wait_comp_channel()
+Message-ID: <al4s77A0rlX0_PQc@x1.local>
 References: <20260720-co-v1-0-fabb4db3c204@redhat.com>
- <20260720-co-v1-2-fabb4db3c204@redhat.com>
+ <20260720-co-v1-8-fabb4db3c204@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260720-co-v1-2-fabb4db3c204@redhat.com>
-Received-SPF: permerror client-ip=170.10.133.124;
+In-Reply-To: <20260720-co-v1-8-fabb4db3c204@redhat.com>
+Received-SPF: permerror client-ip=170.10.129.124;
  envelope-from=peterx@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,11 +131,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 20, 2026 at 11:55:31AM +0400, Marc-André Lureau wrote:
-> Fixes: 394b9407e4c ("migration: mark mixed functions that can suspend")
+On Mon, Jul 20, 2026 at 11:55:37AM +0400, Marc-André Lureau wrote:
+> The function calls yield_until_fd_readable() (coroutine_fn) when in
+> coroutine context, and polls with qemu_poll_ns() otherwise.
+> 
+> Replace the migration-state proxy check with qemu_in_coroutine(),
+> which directly tests what matters.
+> 
+> Fixes: 2da776db4846 ("rdma: core logic")
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
+
+Just to say we can also drop the var.  I have a patch did it already but I
+didn't get chance to revisit the series:
+
+https://lore.kernel.org/qemu-devel/20251022192612.2737648-5-peterx@redhat.com/
+
+So we can also pick that single patch up, then this patch can be
+annotation-only.  I'll leave it to you.
+
+Thanks,
+
+> ---
+>  migration/rdma.c | 12 ++++--------
+>  1 file changed, 4 insertions(+), 8 deletions(-)
+> 
+> diff --git a/migration/rdma.c b/migration/rdma.c
+> index 3e37a1d4401..438419d1894 100644
+> --- a/migration/rdma.c
+> +++ b/migration/rdma.c
+> @@ -1348,17 +1348,13 @@ static int qemu_rdma_poll(RDMAContext *rdma, struct ibv_cq *cq,
+>  /* Wait for activity on the completion channel.
+>   * Returns 0 on success, none-0 on error.
+>   */
+> -static int qemu_rdma_wait_comp_channel(RDMAContext *rdma,
+> -                                       struct ibv_comp_channel *comp_channel)
+> +static int coroutine_mixed_fn
+> +qemu_rdma_wait_comp_channel(RDMAContext *rdma,
+> +                            struct ibv_comp_channel *comp_channel)
+>  {
+>      struct rdma_cm_event *cm_event;
+>  
+> -    /*
+> -     * Coroutine doesn't start until migration_fd_process_incoming()
+> -     * so don't yield unless we know we're running inside of a coroutine.
+> -     */
+> -    if (rdma->migration_started_on_destination &&
+> -        migration_incoming_get_current()->state == MIGRATION_STATUS_ACTIVE) {
+> +    if (qemu_in_coroutine()) {
+>          yield_until_fd_readable(comp_channel->fd);
+>      } else {
+>          /* This is the source side, we're in a separate thread
+> 
+> -- 
+> 2.55.0
+> 
 
 -- 
 Peter Xu
