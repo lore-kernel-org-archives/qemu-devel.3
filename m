@@ -4,108 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87DF3C44515
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 09:38:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE57CC44525
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 09:43:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlkSY-0005WE-Hu; Mon, 20 Jul 2026 05:38:51 -0400
+	id 1wlkWn-0007sZ-GW; Mon, 20 Jul 2026 05:43:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wlkSS-0005Uz-VA
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 05:38:45 -0400
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wlkSR-0001KR-6H
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 05:38:44 -0400
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-81e69a2db34so49295967b3.0
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 02:38:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784540322; cv=none;
- d=google.com; s=arc-20260327;
- b=HgEacak/kJQhRaY3yaa08AgiCgMqdBqFDcfM8KM4EMbdO1F1mHuWVxmBXaemodwaxJ
- AKt2jp1YtBNjmJnEsDntm+ABvBxGwAi44DrlCDzeSBHETvAej8l29UF/IafXgD6UPlLR
- 2aoOKETnIbF51tc9rkQteSI+iUdTq2RR+qIB7liNtFoJA33iQGvuN4B7HLNEA2uhSX7O
- zlSqELafQVwCwj93eGPwASq5e4qiu8g5DgtdAoVFYIGXIy/MnxqJv90cXZyOoJ+vIhvp
- D0UK2Lpf4Ly8EN4ag2F1vX418+2Sti5e3PKDqfBx7pHdMXb5GliRq3o3uBMfDwvB2Sxe
- UaZg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=fGs3YhUAy5iS39FJNJw5sUjFsROlOzM4DzyuocfWb0Q=;
- fh=s3NtNAP3kwCTVC9F9j28vf7WgKiQrzz4SlBOeBsXzE8=;
- b=dZdsxmuAnga1HoUJX/M7r1BvjPfTDm2Tbk5bsMkn+E+qn4FyzpkKfZ3W51L5IPdwfa
- Vk+bTKs0BMJkbovgcd/jvk5uOiyYwtXQh48bEoSOJEcj1B+jURiOhpsT8JkWZ31ApalW
- QVH76MkOsi4i/dg9p+IcvmMRaMN37Xw2+qKwoUyA70h7aXVhYfkRq9EXzgOQtybwo1yY
- /l8+SM6aF4NP1c1W9YmVtUEnj0iz6OOrfYvC0FLIhsUhAwebHA45V0/pSoKeGw4GwI7k
- ZNH7xIfq/rmFpWuBbNZDJzeLVH+ZDxkd/wfTwY4u/2NdyHILmIbJb5fHs239//9FFfZG
- F62w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784540322; x=1785145122; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=fGs3YhUAy5iS39FJNJw5sUjFsROlOzM4DzyuocfWb0Q=;
- b=ZyZdEi5j9rB+bYMoseThqcmK5LT51xWP45+M8cQVpmRVOBaneZJQbG9cmZy1SryYUo
- bav3DdtXlu39xuvIG/9UNEoNoH7m5ghrdOgkVV1eum/JksOb6obj+RxhjDy4MDfHqJZr
- YNlmXqWz2DlQI4kuLmsv1RN5yVW9Se6QlVmfU9oktM2re79eqTY1dmjt4MFxSoMH0A1U
- 4IO52G+qk8vf6XlFKfRPz6ou/bd9sa22lvEfHPXFmPilpMsmzH43vvvAqJx/P92uYim5
- rN+w2RapFoUf5ksn/ctk5D5SsTGRY9A3+mr8JJqN55aJ0em/8aY1QIT/Ybzzjiy+slKs
- 4rBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784540322; x=1785145122;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=fGs3YhUAy5iS39FJNJw5sUjFsROlOzM4DzyuocfWb0Q=;
- b=ONEcbwnfww0fsgObRFYi0C6BlCbIuYSZYtfaGpAM2aWblmCiMK+0c+iVLY87WYKSgR
- 8/AhWEePv4d3axMXYwXPXeqcxexYjnm/ijyj88bNThU/LvKMSK2GZ6qsCcpO3T9Gc02L
- NXvfMUi3tu04dUNl0zj4fs4I6c9v3Ea3ZwGyQYgno9LvtfoDAzajxEoOIXYcsogdk/iL
- LhhQ2tCU8zisBbhLKwDm9WfHyRV9Me0jubgPgUpiwIGKAkPTVjNF722Q27XiNLXuW16Y
- W/hJOQXJQkjISxAPHP+4yTkW89cW2TFkF2oBKe1O8UPVByflFSXa2f7t/0KllrEkZD35
- Gm0w==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpftuWVv9XKqecix1oRUVLO04PBcbDh05I82a8lBmdDqAaj7HieccaiGtqQ8YmCk5ZhdsztjnHQ817/@nongnu.org
-X-Gm-Message-State: AOJu0YxJDy66KNkH1/riW+tOjWLOe7AQVjJJ7tG5cYVP7bCp9IkzUfzb
- VTcYb+Z+L7QfbbntI+R7k9Asb7iLutm/NgH1gD+bzz63pEGdF6GssYReSDT+KWeWsAmHt5kJunA
- XPot7n5po7BH2Wd2gUM/Qmi5cKXI8Y81qzQGLzc57cA==
-X-Gm-Gg: AR+sD10d3Lpzkn5g5KaKnlKpxMkzc6f5PB6ftieQBI3xmkuHyTU69OVWmA378DflzAh
- A8Gcir3U8DchDm5qnjDxdF1CoSU4ebBfYlUmIN/SVhBTkIQtAmBVKRU5Mdb3DKWIwaJgkqNMUs+
- RXRE1/gcHRHrq41EmvgctS7j1GOST5zwwmYl0Ii3qWJBd4T+v0+JekQ3ud2vPBnqa/n/jIM2Tjf
- JiEEQhNqEXNAvRFyWxNmx0jfI4ihtmifQ1jM2eENgr1FrS1SB5Y4FpEcseATJwGHA42F/mTE7Da
- yJFCOJSgXpSWgRIfB6Hx7Pfawz5FP1w0ywRF2SM8KfQ3pwjOwn1y9led
-X-Received: by 2002:a05:690c:6111:b0:81e:6816:9487 with SMTP id
- 00721157ae682-81ef28da68amr40494987b3.66.1784540321603; Mon, 20 Jul 2026
- 02:38:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
+ id 1wlkWh-0007pd-5j; Mon, 20 Jul 2026 05:43:07 -0400
+Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
+ ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
+ id 1wlkWe-0001s4-BL; Mon, 20 Jul 2026 05:43:06 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=RI8Eoo+THxLlSPILXJypgvIbb2PoEW93ieSGNaBdFTSeeGYi9Akg1qf/KlchqVYLz8KAsX5qlZYPxte0FB89Zzpqixaipb7YSk+D+99uNgDeBXJ17b+F5DqND8+Wd9ITLseERDWy84su3Pk2b4IPAnkav8iMZ2kpslUfWNqKEyDtASkilQEahExipT6JHlnoCwg7HInoyh4MW8nCNeDktx9NPQ18iHd57dKxIG+Lcw9iD++rrzY1xN/cZTR08BjGhm05caktCJ7CGlHGV902fKHUuLle1Yh31KLFJpDp+r6LsHGl7rxOnBBXFD/kXceRbplhwPNRGbuhBAQ4hsUwcg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=PLGPmM1WJqpJv5PV1ncLkJ4WrhQ6d/4a4AaKzra5Wtk=;
+ b=lpXXS5ZzaVNu0zbdMwcK1dpEJ8Cjhl0tSN/DizgorjDA8H7f12jjFUXCGMtNNoRmfAL74Ffo110PpGk1oMOZFIVhvxh4ZzNzfVvhh9L8xHl8eq39wwT6YaHJ76kp75dWJsByWBSJsWZh8LzewzegjStmWzdgz/rc5hMEI6Svl/kuhwOP18l7bX+jsj/AZwCMMRr7Ez0wUnYx7m6GjCe+X70vjdyfGKRytAIV2tTERBMh1xdfjWWLjSYQimC3nmhRn17isOAslKFEZv+pekvu06vrQlgnVBj6uCrAfytHKkb1gjNXP+pTPwKGJgTlm4TJDhGV6B2J7NxaeTdHRenv2Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=processmission.com; dmarc=pass action=none
+ header.from=processmission.com; dkim=pass header.d=processmission.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=PLGPmM1WJqpJv5PV1ncLkJ4WrhQ6d/4a4AaKzra5Wtk=;
+ b=oaED1dMac9G24Ml2jbm+W0/+4o5v3sNpzTwZ+Bt0QGKOfUD9HynbCNwunyFvrSf1zrl0Hf7nKaXk45f7jLc2S8PGwrQyzRSRhDWReYfSbwjCPQT5F41t+8r9d1Grxf1wCAJ/L2qtq1Pd9p0pvbtL5czaVIHncKbSKTQFs6enblfszhY9lhcuarreArJkuimjt1raW3S5QPy1xGIfOyPTynB7+zZiojpnioniA50hRyEozJBij4EvEQre9LA1U30xneTIvpsM4n1aq/OnplEuFPNy2cu9XM7bzt3VZRkjAclS7yg6Hsgs5WWHfd+tL9Jb1ngKPwFXJi8GhOiVpRaHVQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=processmission.com;
+Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
+ by SE3PR02MB9612.apcprd02.prod.outlook.com (2603:1096:101:330::9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.16; Mon, 20 Jul
+ 2026 09:42:56 +0000
+Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
+ ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
+ ([fe80::e5f3:5fb7:3d29:5934%4]) with mapi id 15.21.0223.015; Mon, 20 Jul 2026
+ 09:42:55 +0000
+Date: Mon, 20 Jul 2026 17:42:50 +0800
+From: Chao Liu <chao.liu@processmission.com>
+To: Jian Cai <lingqian_gi@163.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com
+Subject: Re: [RFC PATCH 1/3] hw/riscv: add K230 SRAM device model
+Message-ID: <al3rA90UyfbNANuG@ChaodeMacBook-Pro.local>
+References: <20260720074545.8987-1-lingqian_gi@163.com>
+ <20260720074545.8987-2-lingqian_gi@163.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260720074545.8987-2-lingqian_gi@163.com>
+X-ClientProxiedBy: SJ0PR05CA0061.namprd05.prod.outlook.com
+ (2603:10b6:a03:332::6) To TYNPR02MB9351.apcprd02.prod.outlook.com
+ (2603:1096:405:3d0::15)
 MIME-Version: 1.0
-References: <CAJSP0QXRy1Dc_MwqtU_gS1+jOdrW=Vk6YynP75q5HP3Rz_CpTA@mail.gmail.com>
- <904444A5-0120-4BE6-8E11-C7167F2A3BDB@unpredictable.fr>
- <D91DC576-2462-4652-9E8C-5A7C96791622@unpredictable.fr>
-In-Reply-To: <D91DC576-2462-4652-9E8C-5A7C96791622@unpredictable.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 20 Jul 2026 10:38:30 +0100
-X-Gm-Features: AUfX_mwmsDuPawTQUb1yoVNqwq9y2LJJvn2tFHACUO5HV2mHaV5oUq3WsWZNhLw
-Message-ID: <CAFEAcA-X7h0hQ4FaTaVoEUKTJvxfaK8GcihR=+RzxOTBf3X_mw@mail.gmail.com>
-Subject: Re: macOS builds broken in CI
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: Stefan Hajnoczi <stefanha@gmail.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- qemu-devel <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|SE3PR02MB9612:EE_
+X-MS-Office365-Filtering-Correlation-Id: c6f67b7e-3fe1-43fd-5dbb-08dee64346a1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|34096008|376014|1800799024|366016|6133799003|56012099006|4143699003|10067099003|13003099007|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: HVLT71PKKhwlhX+9Jc4c8W1sO/LMfvFxgm5N0mTr+fvMDr4Yn/wHZu9d8ZcOGO6YibEagRysIHiSiwlUMI4krrhIkEJHBQVk2AveSzubYCNgJk/uK+w4wyPHtx2o+TEwRcX2WghvtGoLIsa+m0AawsWQNV+/kmZsGOOEte6ld9msTR5TMxd45MxA1ETsqpm1X62epAcTdabWTg62WxKhr8JITXwVeTyoOfG3zlZ6cINxvrJi6aj8nwYSU85IMmsTrhfrVKLawMEGChd92bZcCVbWScGimIcF79xhDlErLfuo40nqni4HYax3MAt7VbzcLs88LRFziEe2NBRx3WcE7AGky7rJZdTlFaZf79VdKpEIICljmx5LJd8+3vWbTIi88NlkbmoaG+1uOyFCf5D3g+2bpA3hbF0YGgHpTm2D0RKELgXnXETYl3f+W/eFeZheNgtEZrcOpBFNwRpcwNO4jEGTpD6B0qEEemTIP/GcZ0GNjDBZ6tkmbB9J4tYMSi/8a1w+WOYeeShvZQ31+lHB74aL2U6R4MgWixi4Q/ZNoXLs4Cx4uIAI/lgOd+rMFJpHWMe+4EvTjnDRAvXaCt45dU6fbXsl9tYqIuWoA3Tyyk4Faa5k7hywWyHZhl9SNE3h
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(34096008)(376014)(1800799024)(366016)(6133799003)(56012099006)(4143699003)(10067099003)(13003099007)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?riYwIXo/gNwwWKLotErKx5v8+DJVG2BTgV30zecYGv6hH4vn2W5bfrnb7cqw?=
+ =?us-ascii?Q?/fKIbRvfLpXruhg9cM6HClyN/nkIHucbPWgka3p9ktnX40s1QFLme/PNW6WD?=
+ =?us-ascii?Q?5bYba9U8J3fKV3LJWcLliGTZ4cuNmmjkCwVcY8Ssn4V8ETOXVxUdR7H5GjAc?=
+ =?us-ascii?Q?ttGqC3uDZ7ptpTM/JOemkgfF6xCy+eRGNnjAnPjQu8iQua5GtjVx5FIc4G0Q?=
+ =?us-ascii?Q?E4YKTUOiLVn1VPoBGIqXreg1EDHpB8cggSbtcYdj1iarUSukYE/Af4FDrI6v?=
+ =?us-ascii?Q?PM1BJSUsT7RPiTgNdcSdX/JiHegQEfOSTDi/OfXBDaLyNVj5/3GfrXHSZwG2?=
+ =?us-ascii?Q?AexxKPGhGNNisVxcRO3QIRgMLYZW6LksOGp9/JPdPAdwC6FC/WActqNWXACf?=
+ =?us-ascii?Q?/nZ7RP5YEENTgo3qsD2lG1okiGl6l20UQFTYeFZtjJVwzv6nee2J1x4Jldmc?=
+ =?us-ascii?Q?+MEsqFrJQe+Oz7vgAKEfstEQBQCuXuosBdXdvfyc/XxoVBYaGB2+rD+vch2y?=
+ =?us-ascii?Q?6GoFCf9Mif+KarxdQXJWpZHyHP84TIyZR7MWNjWtvc8IpxA1sEx9XGWOolGX?=
+ =?us-ascii?Q?eboaRLw0jRx7K1rzSycDc2rbm3vq86PxJVoAD5k7E8FUw0gueyryd1DErcfP?=
+ =?us-ascii?Q?88fR/PHRhzDd+9hgOWbwOjZXAqVTsJCXs6vdI1nN18q65DVx7kJkwx+/XjV+?=
+ =?us-ascii?Q?g4PfiP1aApMdk27F8dmBB2tPtG+gdEp+iTR9o5CNu3u3tF3GANVDj2X1S1Fc?=
+ =?us-ascii?Q?Ip+PuNcP7wyE5MlUOdOavuVGJFPJPQiGgN0jzUf2zmBl9nP7CRN3ot1Brs33?=
+ =?us-ascii?Q?Jv6MFLA5DZGh9ud00/OkoeQ0t0LuJp7dG3a4GcgerauDZLPT5lwDgecRs+So?=
+ =?us-ascii?Q?maC4axffQSw4TGANdS6Av+Nd2s4yphxak7rnIy+dhFHSP6iS1TDsxlcPLJf/?=
+ =?us-ascii?Q?dKQovuirxDOV/ecErxZ2xXOkXxVf81xcL9TC9dF9KLpVJK+pbAvJh2W+O0pc?=
+ =?us-ascii?Q?JcbBGrlCCmWekskvbDqZCy1p7nOyqr5bg5lfjQhNlxI2QyPlGZRZOxC2/lXI?=
+ =?us-ascii?Q?vUJzql1/4g4qvrRKusAx8gA3z4WssqIWqQICp6wFqIO+qdor400S5tkKnJNj?=
+ =?us-ascii?Q?xsBHvZQYTAHAm7G7MZ6t5mBCrf1nnOW5+gTpwGLQtZV80vskB0/W/IqNLVQH?=
+ =?us-ascii?Q?ncmshOM2GLb3uJ3JvBjiz62AiFFQx0RRRL0iqrKupEK04ZezqBGvoH4DSAIm?=
+ =?us-ascii?Q?GuOZoMBr5Izdj3JtGhpjx8EdkrlPmXdIi8byhpkmGRX0U+qU9UActJy7PSHw?=
+ =?us-ascii?Q?sVIO6TakawMqJWK0kja0A8nC8wTZpqgEJ/jUv2THGSF7kPv99btZw5CNdPER?=
+ =?us-ascii?Q?y1i4a+p+3n1baiUCUEwL3k37k7Hn1k21Qvqtf8erNlzcx0tXOhY3BW6c3W8k?=
+ =?us-ascii?Q?AWWsgmSgM4in/OdBMZMNdmpU+K088BHreNGlfKOdJWbb6nyihYOiSa2x4a87?=
+ =?us-ascii?Q?89Wlj6GDNe5UzJIB0F7ZoxSxVgMn9eJchRR5A30J4XVBiG5oGxHB6aqlywxJ?=
+ =?us-ascii?Q?xikDQeisXrTkHG9wSBBglXEYSpe9VXq+21O23gqYBZ7VjOnXFTdqG9vK+uPN?=
+ =?us-ascii?Q?3jSge4NdXRWQZX100n4ug9BAbTqdDLFUNdfAZgLwqaCrSHr3m3pfkqgMRph4?=
+ =?us-ascii?Q?01WRdPNOXfPGEas20IgukyoEqrngZglNdeYZzNtpeK66ul5Sv1j5QPUT20S0?=
+ =?us-ascii?Q?tDgcMX4OnfC/WXHDqMAdM5PUFgNWggo=3D?=
+X-OriginatorOrg: processmission.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c6f67b7e-3fe1-43fd-5dbb-08dee64346a1
+X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jul 2026 09:42:55.7118 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: x+KGw2wTpac/wTHuzUaLB0IKEgUBgMsnNfKYPk0WyevyBhTOPpbE8Lc2eL1tv18istYIuRwPxFtEA3DjlvK7iaAHViUM7A7dAWEVvdNEwiU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SE3PR02MB9612
+Received-SPF: pass client-ip=2a01:111:f403:c406::3;
+ envelope-from=chao.liu@processmission.com;
+ helo=OS8PR02CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,86 +140,209 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 25 Jun 2026 at 20:15, Mohamed Mediouni <mohamed@unpredictable.fr> w=
-rote:
->
->
->
-> > On 25. Jun 2026, at 21:11, Mohamed Mediouni <mohamed@unpredictable.fr> =
-wrote:
-> >
-> >
-> >
-> >> On 25. Jun 2026, at 20:38, Stefan Hajnoczi <stefanha@gmail.com> wrote:
-> >>
-> >> Hi Alex,
-> >> tests/tcg/multiarch/system/Makefile.softmmu-target's
-> >> run-gdbstub-interrupt seems to be broken on GitLab CI macOS runners. 5
-> >> days ago it still passed, but now rerunning the pipeline on the same
-> >> commit ID fails:
-> >>
-> >> - Good (5 days ago): https://gitlab.com/qemu-project/qemu/-/pipelines/=
-2615134022
-> >> - Bad (today): https://gitlab.com/qemu-project/qemu/-/pipelines/262970=
-4018
-> >>
-> >> I've tried many CI runs with different pull requests applied on top of
-> >> qemu.git/master and they fail in the same way. Maybe it's an
-> >> environmental thing with the macOS runners?
-> >>
-> >> It's unclear where the SIGKILL (Error 137) comes from. Could it be an
-> >> out-of-memory condition on macOS runners?
-> >
-> > Hi,
-> >
-> > SIGKILL is the known symptom for failure during signature verification
-> > by AMFI.
-> >
-> > Now that we don=E2=80=99t have separate -unsigned binaries anymore but =
-relying
-> > on in-place ad-hoc (w/o certificate) signing with entitlements we might
-> > have issues linked to that.
-> >
-> > In the past file modification had issues with verification tied to the
-> > inode and the workaround being a reboot or a cat binary > new_binary;
-> > chmod +x new_binary so that the old (now out of sync) signing state is =
-lost
-> >
-> This is highlighted in the software update context in: https://developer.=
-apple.com/documentation/security/updating-mac-software
->
-> > This code is incorrect because it modifies the command-line tool=E2=80=
-=99s executable file in place. macOS caches information about the code=E2=
-=80=99s signature in the kernel. It doesn=E2=80=99t flush that cache when y=
-ou modify the file=E2=80=99s contents. Modifying the file in place yields a=
- mismatch between the file=E2=80=99s contents and the in-kernel cache, whic=
-h can cause a hard-to-reproduce code-signing crash the next time you run th=
-e tool.
-> > While this example uses a command-line tool to demonstrate the issue, u=
-pdating any file that contains signed code might trigger this code-signing =
-crash. That includes executables, frameworks, dynamic libraries, and bundle=
-s.
-> > To update a file that contains signed code without risking this crash, =
-write the updated code to a temporary file and replace the existing file wi=
-th that temporary one:
+Hi Jian,
+On Mon, Jul 20, 2026 at 03:45:43PM +0800, Jian Cai wrote:
+> The K230 shared SRAM (2 MB at 0x80200000) has no software-visible
+> controller registers: it is a pure on-chip RAM block accessed via
+> the AXI bus. This patch wraps it as a SysBusDevice so that it appears
+> in the QOM tree, supports VMState migration, and can be introspected
+> by management tools.
+> 
+> Clock gating (CMU at 0x91100000, offset 0x5c) and reset control
+> (RMU at 0x91101000, offsets 0x60/0x64) are handled by separate
+> system-controller peripherals and are not modelled here.
+> 
+> Reference:
+> K230 TRM V0.3.1 (2024-11-18), Section 5.2 Sram
+Thanks for the contribution!
 
-I was just looking at this again today, but looking at our
-scripts/entitlement.sh, when meson.build calls the script SRC
-will be qemu-system-foo-unsigned and DST will be
-qemu-system-foo, and we take the in_place case and do:
+But I didn't receive the cover letter for this patch set. Please check if you
+prepared one, or if it might have been lost during transmission.
 
-  cp -pPf "$SRC" "$DST.tmp"
-  SRC=3D"$DST.tmp"
+Could you please include a cover letter when you send the next revision
+of this series? It should briefly explain what the series does as a
+whole and what problem it is intended to solve.
 
-to copy the -unsigned binary to a .tmp file. Then we
-run codesign on that .tmp file, and finally
+Here are two ways to generate one:
 
-  mv -f "$SRC" "$DST"
+1. Store the cover letter in the branch description:
 
-to rename the signed binary to its final name.
+   git branch --edit-description
+   git format-patch --cover-letter --cover-from-description=subject \
+       -o outgoing
 
-So that looks to me like we're following the rules for
-not signing executables in place to me...
+2. Generate a cover letter template and edit it manually:
 
--- PMM
+   git format-patch --cover-letter -o k230-patches
+   $EDITOR k230-patches/0000-cover-letter.patch
+
+In general, a single-patch submission does not need a separate cover
+letter. For a multi-patch series like this one, however, we prefer a
+cover letter that provides an overview of the whole series.
+
+> 
+> Signed-off-by: Jian Cai <lingqian_gi@163.com>
+> ---
+>  MAINTAINERS                  |  5 +++
+>  hw/riscv/k230_sram.c         | 81 ++++++++++++++++++++++++++++++++++++
+>  include/hw/riscv/k230_sram.h | 35 ++++++++++++++++
+>  3 files changed, 121 insertions(+)
+>  create mode 100644 hw/riscv/k230_sram.c
+>  create mode 100644 include/hw/riscv/k230_sram.h
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 6171cc7494..3567563ba6 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1825,6 +1825,11 @@ L: qemu-riscv@nongnu.org
+>  S: Maintained
+>  F: docs/system/riscv/k230.rst
+>  F: hw/riscv/k230.c
+> +F: hw/riscv/k230_sram.c
+> +F: include/hw/riscv/k230_sram.h
+> +F: hw/riscv/k230_sram.c
+> +F: include/hw/riscv/k230_sram.h
+> +F: tests/qtest/k230-sram-test.c
+>  F: hw/watchdog/k230_wdt.c
+>  F: include/hw/riscv/k230.h
+>  F: include/hw/watchdog/k230_wdt.h
+> diff --git a/hw/riscv/k230_sram.c b/hw/riscv/k230_sram.c
+> new file mode 100644
+> index 0000000000..1d960e733e
+> --- /dev/null
+> +++ b/hw/riscv/k230_sram.c
+> @@ -0,0 +1,81 @@
+> +/*
+> + * K230 SRAM Controller
+> + *
+> + * K230 Technical Reference Manual V0.3.1 (2024-11-18):
+> + * https://github.com/revyos/external-docs/blob/master/K230/en-us/K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
+> + *
+> + * The K230 shared SRAM (2 MB at 0x80200000) has no software-visible
+> + * controller registers.  This device wraps the SRAM as a SysBusDevice
+> + * so that it appears in the QOM tree, supports migration (VMState),
+> + * and can be introspected by management tools.
+> + *
+> + * Clock gating is controlled by the CMU at 0x91100000 (shrm_CLK_CFG,
+> + * offset 0x5c, bit 10: sram_aclk_enable).  Reset is controlled by the
+> + * RMU at 0x91101000 (SRAM_RST_TIM/SRAM_RST_CTL, offsets 0x60/0x64).
+> + * Those peripherals are not modelled yet, so SRAM is always enabled
+> + * in the current QEMU implementation.
+> + *
+> + * Copyright (c) 2026 Jian Cai <lingqian_gi@163.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+We probably don't need to create a dedicated device model for SRAM.
+It can actually be replaced directly by using a QEMU memory region RAM.
+
+A simpler approach would be to keep this code in k230.c, perhaps in a
+helper function such as k230_sram_create().
+
+Thanks,
+Chao
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/units.h"
+> +#include "hw/core/sysbus.h"
+> +#include "migration/vmstate.h"
+> +#include "qapi/error.h"
+> +#include "hw/riscv/k230_sram.h"
+> +
+> +static void k230_sram_realize(DeviceState *dev, Error **errp)
+> +{
+> +    K230SramState *s = K230_SRAM(dev);
+> +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+> +
+> +    memory_region_init_ram(&s->sram, OBJECT(dev), "k230.sram",
+> +                           2 * MiB, &error_fatal);
+> +    sysbus_init_mmio(sbd, &s->sram);
+> +}
+> +
+> +static void k230_sram_reset_hold(Object *obj, ResetType type)
+> +{
+> +    /*
+> +     * No software-visible registers to reset.  SRAM content is preserved
+> +     * across warm reset on real hardware; a cold reset would clear it,
+> +     * but QEMU memory_region_init_ram already zeroes the region on init.
+> +     */
+> +}
+> +
+> +static const VMStateDescription vmstate_k230_sram = {
+> +    .name = "k230.sram",
+> +    .version_id = 1,
+> +    .minimum_version_id = 1,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_END_OF_LIST()
+> +    },
+> +};
+> +
+> +static void k230_sram_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +    ResettableClass *rc = RESETTABLE_CLASS(klass);
+> +
+> +    dc->realize = k230_sram_realize;
+> +    rc->phases.hold = k230_sram_reset_hold;
+> +    dc->vmsd = &vmstate_k230_sram;
+> +    dc->desc = "K230 SRAM";
+> +}
+> +
+> +static const TypeInfo k230_sram_info = {
+> +    .name          = TYPE_K230_SRAM,
+> +    .parent        = TYPE_SYS_BUS_DEVICE,
+> +    .instance_size = sizeof(K230SramState),
+> +    .class_init    = k230_sram_class_init,
+> +};
+> +
+> +static void k230_sram_register_type(void)
+> +{
+> +    type_register_static(&k230_sram_info);
+> +}
+> +
+> +type_init(k230_sram_register_type)
+> diff --git a/include/hw/riscv/k230_sram.h b/include/hw/riscv/k230_sram.h
+> new file mode 100644
+> index 0000000000..6d15970ab9
+> --- /dev/null
+> +++ b/include/hw/riscv/k230_sram.h
+> @@ -0,0 +1,35 @@
+> +/*
+> + * K230 SRAM Controller
+> + *
+> + * K230 Technical Reference Manual V0.3.1 (2024-11-18):
+> + * https://github.com/revyos/external-docs/blob/master/K230/en-us/K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
+> + *
+> + * The K230 shared SRAM (2 MB at 0x80200000) has no software-visible
+> + * controller registers: it is a pure on-chip RAM block accessed directly
+> + * via the AXI bus.  Clock gating (CMU at 0x91100000, offset 0x5c) and
+> + * reset control (RMU at 0x91101000, offsets 0x60/0x64) are handled by
+> + * separate system-controller peripherals and are not modelled here yet.
+> + *
+> + * Copyright (c) 2026 Jian Cai <lingqian_gi@163.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef K230_SRAM_H
+> +#define K230_SRAM_H
+> +
+> +#include "hw/core/sysbus.h"
+> +#include "qom/object.h"
+> +
+> +#define TYPE_K230_SRAM "riscv.k230.sram"
+> +OBJECT_DECLARE_SIMPLE_TYPE(K230SramState, K230_SRAM)
+> +
+> +struct K230SramState {
+> +    /*< private >*/
+> +    SysBusDevice parent_obj;
+> +
+> +    /*< public >*/
+> +    MemoryRegion sram;          /* 2 MB SRAM storage */
+> +};
+> +
+> +#endif /* K230_SRAM_H */
+> -- 
+> 2.43.0
+> 
 
