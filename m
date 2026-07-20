@@ -4,132 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4CC9C4451B
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 08:04:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 139EDC44515
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 08:12:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlizE-0001Zw-8O; Mon, 20 Jul 2026 04:04:28 -0400
+	id 1wlj6u-0003lk-J5; Mon, 20 Jul 2026 04:12:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wlizB-0001Z8-HG
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:04:25 -0400
+ id 1wlj6q-0003lH-IW
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:12:20 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wliz7-0007cX-TD
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:04:25 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ id 1wlj6n-0000EN-QZ
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:12:20 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66K6Ro8V1263202
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 08:04:20 GMT
+ 66K6RXR21420266
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 08:12:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- xkqXMSJlI9CkZwZCjy9nC4vIhQiBa2+Yu5nI0eqsvVs=; b=ZbvH7yVHt7BYuwox
- f13OZVevBxVZpiGN4VkSUPXyv39l9gPdwtUFP1VgLIb75A1GlJBtO7PtUswGzGy/
- zZL/Y0ydggbSAjr9sHeCjQNAQxDi5lJXKT88jSVIHLBFTEqOAoQJx1syyYHOQ00x
- Yf7zBXVjVzuUGfWAIxcHYGO3xquDWoo9U2E4HmS4qdiYVwdnbOQlZCRrd8XYDO4w
- FnMHX/vy5tQqw9ang2RH+o3WiqAsFMgl4/YtyP9jGgHhAvaXR35lxGjLugSwyEYU
- OdgIkrBPp6v8UiUPMMD9ZW3u6bivQIx5+Cvi/XnEtmLllZrfpJ6HdAE9l+OPkX1y
- +FalGQ==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fg2nhn2mx-1
+ qXCW2u5Zf3sHXiRkFa4GiLmRJ0/lczR8t7soZbpiguo=; b=eaiFLco5WxQ5y0Wx
+ BPqZ2uNCZJQPHmFX7YPu4xGRBbQeS6ew9ULuaobUQt1P+W2TzqsbIkb6NIj/ClYv
+ G8nlZ9EsTuIeshR+CTmaadvB6jmontDn+RdXZo875Xm12qipvykMtYePYd8tJZnh
+ R20CBSuK4wyjQIazXjOT0dBD0pmf2LWopPRHFYo6gKXyTbDihhNtFlIvnwAWlIPm
+ SisTlzaDG8kqSIA29BY9a1kOCnQ7/7ZpYqK2JsXGQf+WpGu0JU2NiW5UZUZ9X1Rb
+ HmRVhGorkINKWPASVIdOLwP1305m7l3ZcHOTxAU0B6Pr9A9KkriiJ9IyxEGKYz+4
+ wXPAbA==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fg2s7w2bk-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 08:04:20 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-51c1d137a68so261958651cf.3
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 01:04:19 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 08:12:11 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-51c1852a86fso138808501cf.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 01:12:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784534659; x=1785139459; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1784535131; x=1785139931; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=xkqXMSJlI9CkZwZCjy9nC4vIhQiBa2+Yu5nI0eqsvVs=;
- b=PdByVUD7mQpXsjoGmRsfv15QqL80gm1oBo4IoihS2kk0gth6qYGBenv6IHS+wFeERg
- JPi2rMCebY/dop7k3FHTXtm0D+H/iAbhZc8GmVUpQJh7vz0NxIsERpcT5cpugs9+9vlW
- lJJJf1KbqKjF5TAJdY37dIYEgS9RJs++uUPZt0P8pMavWcyL7I7/hJ3TicVOQd3aMnUD
- jBGj41nF8klIalnbJAHRaIIUisN1XvWyF8+MQnlsPyhOOVt6dqJji2XlIgMEiGq0CACT
- guBmuZgGUq0ZlEnD0GkZmYmkOg2kw3uL2uU0jnN6fh9zwvkLdzhKa2CA7HFfx9eyR6xV
- PL0Q==
+ bh=qXCW2u5Zf3sHXiRkFa4GiLmRJ0/lczR8t7soZbpiguo=;
+ b=YERB1ifR4FrNmIpO+DGaRrXwwFLA+wi6rPt1ao2YMv7DmY/5e14WnhXSr7BbuEmoTK
+ DpjYZlj6nZDccZ5N9qo4hj20BqtZITbKmS1O9e/AY5BOJIcTv/GMoL8TCDfIAIqDyidp
+ 8xKkzAUdFOvwvYK61xiB6D5dOph4fAtSAp6+wIef0pPzC5+cRizazaSowMTvvl8j6PRV
+ ji0OgqSwRJkVfGol4LfgOB3f9MTVBFF9mdPGn7y1UaB7OuGdknvhwev1RMvO4qXi9b5z
+ ++nhEju/03pOGDcFqcb44F9plDC4A0Xs5ApfMhAazDOIXpK+TZopEPKSQUkizb/erxoO
+ flQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784534659; x=1785139459;
+ d=1e100.net; s=20251104; t=1784535131; x=1785139931;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=xkqXMSJlI9CkZwZCjy9nC4vIhQiBa2+Yu5nI0eqsvVs=;
- b=gjXltuJufZfKv88G+VLuOvGNcZAwhw9MFYkhGyumZrV8GiJ1+jGa6kjkwAIcjrP8zL
- J5RIz7t6ZaGTCSZR+WQtpRARMGiNVkUucJ+DfXqkRiNx3slmmEyeTkpKl8lh2zIVNDaJ
- 9/pBbIrV58L/NrJaPt8zO8tOacl/uqLCsaOr0ooW9JRtOv+9zPQVhAySkgskUmilp/zO
- LAtPM1OQDBI9PoDZAN5+NaMKQHb8UIlOTZnu/capQKsegyD7VTgMBvlAZdRzsrkqyQOu
- Wm6ISaDMtP/b/HFmfR1tvKdhMAQBOJ7hbzGIv5D66DTsQFnRECity5cHWlyjod3oB1Wz
- yQ7A==
+ bh=qXCW2u5Zf3sHXiRkFa4GiLmRJ0/lczR8t7soZbpiguo=;
+ b=QFRtGhgWIpiK7egjeZd3gr0sTIVF0GzE/l2WCuWjKu+pF9VEiTYk9JrfywqvHgEdxp
+ IuCh23QxSIPUGzW9nzhkrtJ7Jp6zUgSGUaZ16hjJOCUthyd8RMFdloljZEicwo9qbIgm
+ lYHE2Wxs7qE7k9jWGBLcwEnZQgP+k86u6ttJiTbYJogyG+hfpzNUXxLZSmZXzKi8TVaC
+ sHSbHaSL+iaYQ8TkxI6o/61IXGKr0nsuzdEU5+oEdPfZ4Vdck6UlFLS+9ffHPZTXpknI
+ 77PMKMrQ0pR2QU891/qGO4c5KF94bR77TZLTS3idUZ+/o4mJPeIpQAlZS9tkjh2fkGaj
+ 04Hg==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rom/X70EdSWCdK+/t6LTgoEH1uIQn6qV83z6p7z8PohGhRYmVpVc2bP01DxXnWMW1ob70D0BIGGivEq@nongnu.org
-X-Gm-Message-State: AOJu0Yych85jPV0rn/C9o+4PFayO6XZNAAa9zt/6xVS/4hot3qx6s4qq
- lkE75DSYtrA23hBM8LvXWS7pt/bdphSha2ecJDPA38c3jLz5X0/CYBr6peDcO4SH/6Dhc3oXwe9
- BwhuePBDtn2B79+U28KnFlwqZKAFgRcYkYTL8y/rADFHg+1lA/AF8SgRLqQ==
-X-Gm-Gg: AfdE7cmX9pw4a4timVFSlebRfI8gKSlY2V+xPXNAAC75Vw5+RBTVrfnNXOYU6TKY6ZE
- ZDvvRcrt5SYB/ly7A3wozDudsjTVUSePZFGdxYdA+dcKBXnCBvzUe05bjJmGzgEWJVKWwataK/d
- qFkY0mMeMReFpdRkE8UwvDSrzTng65gXDNu9l1B5//ocyiIzPWWAYmhfKjq5N0qd0ENQCroqnQm
- ePtLqBl5GvpuwDzYqNB5LWDTz2VhDg92e/Go97ISZzbqLjiaSedCv/JLuse7y0QMcLZtaU6Z4ux
- mMxGNaduCMBh8USmcq7kOHVOAeC6+8Pd1U+miy4VELz47wQ+KGwrkXR8WPLLzgIU/KIJ4EoXx9/
- 5XntyOY5MBDeEbJYRPByyhWY/igPb3+K+w/mu2pkEAEYPHKMIrTY=
-X-Received: by 2002:ac8:7f56:0:b0:51c:f04:4aa9 with SMTP id
- d75a77b69052e-5213ced03f9mr126994211cf.32.1784534658910; 
- Mon, 20 Jul 2026 01:04:18 -0700 (PDT)
-X-Received: by 2002:ac8:7f56:0:b0:51c:f04:4aa9 with SMTP id
- d75a77b69052e-5213ced03f9mr126993961cf.32.1784534658433; 
- Mon, 20 Jul 2026 01:04:18 -0700 (PDT)
+ AHgh+RrKFurvNn9u7snnuW8aR5KqPjhEJD4/UkhMYrgGKYi6g+7jtJHkqfuU8yIqm7JFgVfYsfi9H32gko0e@nongnu.org
+X-Gm-Message-State: AOJu0YwSejaR2p9aPC4r6pxOXAclJByQxS433IrCD1ylLL1EQ2MDqqKX
+ cs9awEGs+VU3zzHUYNCj5tp0C+Mr8yHlETBBi2RnjsNO/ZsXvV9KUNlkTuEpEcWHOTc7NooVYp7
+ aUKuTY05QZwA9kWA0yaWkxHcs7oktyzWZ4UCMMj9bSm6Btfzl9ZUYN0nlWg==
+X-Gm-Gg: AfdE7ckmh2JIBet9OD6u9PjrrSObJ7KQ9SVA76IG6WbOUy8xZ4X1nc1MH9jbOkYvFwM
+ rtNsZAhV+yA9qyRWPm5VPNTueHqa8Xeb+v2fzDCFEAbH/Dr9RH5kwlZ19DbR5vWY/Ish+rqdrTL
+ PnAZ9wlnxnf6Kk7SLidVP5RMzbWv/tauKau52lAbVpY+PS5udbOIyXUMcU9hIN06cssVmmEm5Zv
+ Dfrag+U5BHL62O3Wmb+0s5LQbsxndDBkvNV8h+D0HECvmtMtlKRXSEpOUMr3x1PPwZ9UBzSLt+E
+ DFZ9Ox2LyRFPa6woNuY/k9NxFYqu2qkmFtB6x8Zw1Uap0RMMg/5NNokFi5Al6aK7HHH7FMd6RZd
+ ajR7JFBD4wHRXZ36Ub+gDdUROooqDfjradBo/MI7lPQn1LzJ/E/o=
+X-Received: by 2002:a05:622a:5d1:b0:51c:bfd:772b with SMTP id
+ d75a77b69052e-5213ea80af2mr112215111cf.65.1784535131070; 
+ Mon, 20 Jul 2026 01:12:11 -0700 (PDT)
+X-Received: by 2002:a05:622a:5d1:b0:51c:bfd:772b with SMTP id
+ d75a77b69052e-5213ea80af2mr112214981cf.65.1784535130563; 
+ Mon, 20 Jul 2026 01:12:10 -0700 (PDT)
 Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4954a2edda2sm246448545e9.13.2026.07.20.01.04.17
+ ffacd0b85a97d-47f6980582csm20653559f8f.13.2026.07.20.01.12.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Jul 2026 01:04:17 -0700 (PDT)
-Message-ID: <6807fbd7-542c-4e94-a3c7-e29e957655c9@oss.qualcomm.com>
-Date: Mon, 20 Jul 2026 10:04:16 +0200
+ Mon, 20 Jul 2026 01:12:09 -0700 (PDT)
+Message-ID: <23c9a0e2-857e-4cea-81dd-cf53399f1490@oss.qualcomm.com>
+Date: Mon, 20 Jul 2026 10:12:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] hw/misc/applesmc: populate Apple SMC key table
+Subject: Re: [PATCH] replay: fix use of uninitialized pointer on error
 Content-Language: en-US
-To: Matthew Jackson <matthew@pq.io>, qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, peter.maydell@linaro.org
-References: <20260507040153.14565-1-matthew@pq.io>
- <20260719152343.69536-3-matthew@pq.io>
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+References: <20260719113216.1177594-1-marcandre.lureau@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260719152343.69536-3-matthew@pq.io>
+In-Reply-To: <20260719113216.1177594-1-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=Le0MLDfi c=1 sm=1 tr=0 ts=6a5dd684 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDA5MCBTYWx0ZWRfX+g7/+P48Qf5J
+ 2Y3KAjO6KwPBo3va9OsTjPlGUGWtEDLTsdqqfdAEWJ/ck3UcQ1jbrsT356LUJKu8kChrFpc/wUb
+ L+58m0FZzvF5Yb/xRGaqcC0hfoNi8jtfxdVYh56DrrLWThe2CLN4ce5ar4VvYty6Xiogagg8AIk
+ 6eyf8Vxy6MkY4xx60WcHOb4kzbmC5fZMnXYDKnBODKKAqroOmzKoi/nFBHxe/o88H4ZPB9LRzgm
+ QDr/2fvY789YRWpKdsmad4k/Rhm90BEUiU4nY1s+YUOt4A3O6tu6wjfYIZP0A93QtMfJTe2Uxl5
+ EeKjO53kZM+uanu9+Lxhb/rMGAMzc/cOCfGrOiGDxMITPp2VrAiRRPeCAkPmPEm1jZSvjMPLBN8
+ t3avvGp/ppHZpWO0Dw2VjJ2dIkhqtJjtDyLXTYQTFlZnWt+mAoddnYWez6gjPpLB7sfhxendsAu
+ 0NMPnomobG0jw4TzoPA==
+X-Authority-Analysis: v=2.4 cv=eKsjSnp1 c=1 sm=1 tr=0 ts=6a5dd85c cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=xVuscgmnAAAA:8 a=oakljCaMmmysf0hPbkIA:9 a=QEXdDO2ut3YA:10
- a=a_PwQJl-kcHnX1M80qC6:22 a=vnkFwwgN4siT8HrQ9gDI:22
-X-Proofpoint-GUID: nwCcr4doXc_ylN3CjoBJWGG6teEJ53YI
-X-Proofpoint-ORIG-GUID: nwCcr4doXc_ylN3CjoBJWGG6teEJ53YI
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDA4OCBTYWx0ZWRfX8OV30mzTn1Zb
- tvwOnQNJDSdz2ZK7ohSC9Z5l5Apy9FghlCg6HA5g7geN9gT5x9/2Q0M6yxzPzalbT+vt5VpCDnX
- sRTBMgKZu0QznKnp2sgBPK/YeU7USYxrE/qmwVFzY+A3IoTpOe37d89v7u1VgNiLn5tB/vgO8/6
- icDwjevwAKoR0j6iSLcAT1Uu3WdrIQReIq+j1UQ8RlbEkOHEUya6VowXo/WNzKCy01BrjsLAcvQ
- mVDnqF67AgZFxY8wuakJSPFIMIglFtgcVsCycu/VyroiqYRzzKyZieFtyuk0UfWJnK6Y6vsyeHV
- snUswL4JtmgW6oMY14gZ/p/UfFNdqzLOzLMIqJ5+pm9miulp5pjxVIgAfQ3cytNLmTs7FNlpb5N
- TKJeoTckwclL/kqpvJP+M2EtO7rQIqXf/0byKsPihCeWUZZDrYc74NHA+vHaltRDASe8i5AEPld
- /ypn6w/j9dEVpagO1fA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDA4OCBTYWx0ZWRfX48rVJrljOTQi
- 7jvzKiQ+W9UAegwC45Y8HH93H4YnHOgKlBYWI5SeGZrJUCX/HmU6UVI8duyMw9kBvn9XPEZjbR0
- J2OpS2I/mn/xOdLU6mkE2TdbUXxPWC4=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=20KFwNOVAAAA:8 a=J5NEWGdLVZZC7EV8Bk4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-ORIG-GUID: ZpAoZbTP17Q9JLXaex_HSkWOr3Ymdfpp
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDA5MCBTYWx0ZWRfX22DPADZvcPXe
+ Fhnj+Q0HK/ZNZntmZa/8qf5Tb2XAGKmnhpmUyk0/L+nv2T0fGp149KGGvX/VZltUSn7hvzrbqFv
+ IWaV64TFfWTkqcE9XvqxLtl/ZJSfWm4=
+X-Proofpoint-GUID: ZpAoZbTP17Q9JLXaex_HSkWOr3Ymdfpp
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-20_01,2026-07-17_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 clxscore=1015 adultscore=0 phishscore=0
- bulkscore=0 impostorscore=0 priorityscore=1501 malwarescore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200088
+ priorityscore=1501 suspectscore=0 impostorscore=0 malwarescore=0
+ clxscore=1015 phishscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607200090
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -154,103 +155,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/7/26 17:23, Matthew Jackson wrote:
-> With APPLESMC_GET_KEY_BY_INDEX_CMD now functional (previous
-> patch), the modern macOS AppleSMC kext walks the device's key
-> table at boot to discover what's available. The current key
-> set (REV/OSK0/OSK1/NATJ/MSSP/MSSD) is sparse enough that
-> several macOS subsystems retry-poll keys they expect to find,
-> contributing to the same kSMCSpuriousData traffic the previous
-> patch addresses.
+On 19/7/26 13:32, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> This patch fills the key table out to a complete iMac20,1
-> profile (94 additional keys plus the canonical #KEY count).
-> Sensor values match a real iMac20,1 idle probe published at:
+> When bdrv_snapshot_list() returns a negative error code, sn_tab is
+> uninitialized. The loop does not execute (since i=0 < negative is
+> false), but the code falls through to g_free(sn_tab) which frees
+> an uninitialized pointer.
 > 
->    https://linux-hardware.org/?probe=999fc708a4&log=sensors
-> 
-> Categories:
-> 
->    * 28 temperature sensors in sp78 format with idle readings
->      from the probe: CPU 40 C (TC0P) / 45 C (TC0F) / 51 C
->      (TCXc), GPU 36 C (TG0P) / 42 C (TG0F/TG1F/TGDD), HDD
->      41 C (TH0P/TH1C/TH1F), LCD 28-29 C (TL0V/TL1V), memory
->      34-36 C (TM0V/TM0P), ambient 24 C (TA0V), PSU 33 C
->      (Tp00/Tp2F), generic sensors 33 C (Ts*S, TS0V), VRM
->      50 C (TVMD/TVmS/TVSL/TVSR; not in the probe, conservative
->      estimate). Battery sensors (TB0T/TB1T/TB2T) are
->      present-with-zero because iMacs have no battery; macOS's
->      "absent vs broken" distinction relies on the key being
->      registered even with a zero reading.
-> 
->    * 4 fan keys (FNum/F0Ac/F0Mn/F0Mx) describing iMac20,1's
->      single chassis fan: 1 fan, current 1200 RPM (= F0Mn,
->      matching the probe-reported idle), min 1200, max 3600.
->      fpe2 encoding (raw = RPM * 4, big-endian).
-> 
->    * 12 power-rail keys (PC0R/PCPC/PCPG/PCPT/PfCP/PfCT/PfGT/
->      PfHT/PfM0/PfST/PSTR/PHDC) for telemetry; present-with-
->      zero satisfies macOS without claiming a specific value.
-> 
->    * 6 DIMM keys (DM0P/DM0S/DM1P/DM1S/MD1R/MD1W); same
->      rationale.
-> 
->    * 11 SMC-internal bookkeeping keys (CLKH/DICT/RPlt/SBFL/
->      VRTC/WKTP plus 5 lower-case Apple-private bookkeeping
->      keys cePn/cmDU/maNN/mxT1/zEPD); same rationale.
-> 
->    * 13 motion-sensor / wireless keys (MSAc/MSAf/MSAg/MSAi/
->      MSGA/MSHP/MSPA/MTLV/QCLV/QENA/WIr0/WIw0/WIz0). Present-
->      with-zero is the correct desktop-class answer.
-> 
->    * 3 write targets that must also be readable: HE0N (iGPU
->      power; AGPM driver writes 1 on start), MSDW, NTOK.
-> 
->    * 2 power-management gates required by AGPM and the
->      watchdog probe: HE2N (dGPU power enable), WDTC.
-> 
->    * 8 platform-identity / probe keys (MPRO/MPRD/LGPB/BSLN/
->      EPCI/BEMB/$Adr/RGEN/DPLM/MSSW/OSWD): VirtualSMC-style
->      identity plus the early boot-time SMC probe keys.
-> 
->    * 2 GPU temperature sensors (TGDD/TG0P) and #KEY (the
->      Apple-canonical total-keys count, computed by walking
->      the data_def list at realize time).
-> 
->    * 1 VirtualSMC-compatible $Num key (some drivers prefer it
->      over #KEY).
-> 
-> After this patch, with the protocol fix from the previous
-> patch in place, a Sequoia 15.7.5 guest boots without the SMC
-> retry storm:
-> 
->     Metric           | Before   | After
->     -----------------|---------:|------:
->     SMC errors / 5s  |   9,225  |     2
->     kernel_task CPU  |    70 %  |  ~2 %
->     WindowServer CPU |   509 %  |  ~6 %
-> 
-> Legacy macOS guests (10.11-10.13) that do not iterate the
-> key space see no behavioural change beyond the corrected
-> MSSD value (now 0x03 as on real iMac20,1 hardware) and the
-> fact that READ on a previously-unknown key returns zeros
-> instead of NOEXIST.
-> 
-> Signed-off-by: Matthew Jackson <matthew@pq.io>
+> Fixes: f6baed3d1485 ("replay: implement replay-seek command")
+> Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
 > ---
->   hw/misc/applesmc.c | 169 ++++++++++++++++++++++++++++++++++++++++++++-
->   1 file changed, 168 insertions(+), 1 deletion(-)
+>   replay/replay-debugging.c | 23 ++++++++++++-----------
+>   1 file changed, 12 insertions(+), 11 deletions(-)
 > 
-> diff --git a/hw/misc/applesmc.c b/hw/misc/applesmc.c
-> index 2b5ef3c..d11fb32 100644
-> --- a/hw/misc/applesmc.c
-> +++ b/hw/misc/applesmc.c
-> @@ -32,7 +32,7 @@
+> diff --git a/replay/replay-debugging.c b/replay/replay-debugging.c
+> index 11053640021..7b904a14165 100644
+> --- a/replay/replay-debugging.c
+> +++ b/replay/replay-debugging.c
+> @@ -139,9 +139,8 @@ static char *replay_find_nearest_snapshot(int64_t icount,
+>                                             int64_t *snapshot_icount)
+>   {
+>       BlockDriverState *bs;
+> -    QEMUSnapshotInfo *sn_tab;
+> +    g_autofree QEMUSnapshotInfo *sn_tab = NULL;
+>       QEMUSnapshotInfo *nearest = NULL;
+> -    char *ret = NULL;
+>       int rv;
+>       int nb_sns, i;
 >   
->   #include "qemu/osdep.h"
->   #include "hw/isa/isa.h"
-> -#include "hw/core/qdev-properties.h"
-> +#include "hw/qdev-properties.h"
+> @@ -149,15 +148,19 @@ static char *replay_find_nearest_snapshot(int64_t icount,
+>   
+>       bs = bdrv_all_find_vmstate_bs(NULL, false, NULL, NULL);
+>       if (!bs) {
+> -        goto fail;
+> +        return NULL;
+>       }
+>   
+>       nb_sns = bdrv_snapshot_list(bs, &sn_tab);
+> +    if (nb_sns < 0) {
+> +        return NULL;
+> +    }
+>   
+>       for (i = 0; i < nb_sns; i++) {
+>           rv = bdrv_all_has_snapshot(sn_tab[i].name, false, NULL, NULL);
+> -        if (rv < 0)
+> -            goto fail;
+> +        if (rv < 0) {
+> +            return NULL;
+> +        }
+>           if (rv == 1) {
+>               if (sn_tab[i].icount != -1ULL
+>                   && sn_tab[i].icount <= icount
+> @@ -166,14 +169,12 @@ static char *replay_find_nearest_snapshot(int64_t icount,
+>               }
+>           }
+>       }
+> -    if (nearest) {
+> -        ret = g_strdup(nearest->name);
+> -        *snapshot_icount = nearest->icount;
+> +    if (!nearest) {
+> +        return NULL;
+>       }
+> -    g_free(sn_tab);
+>   
+> -fail:
+> -    return ret;
+> +    *snapshot_icount = nearest->icount;
+> +    return g_strdup(nearest->name);
+>   }
+>   
+>   static void replay_seek(int64_t icount, QEMUTimerCB callback, Error **errp)
 
-Something seems wrong in your tree.
 
