@@ -4,136 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57DC5C44529
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 19:25:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1EFCC44529
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 19:25:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wltbS-0005Gn-8M; Mon, 20 Jul 2026 15:24:38 -0400
+	id 1wltcB-00064o-M1; Mon, 20 Jul 2026 15:25:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wltbQ-0005Fi-Vs
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 15:24:37 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wltc5-00061v-PE
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 15:25:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wltbP-0000Ew-7o
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 15:24:36 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66KHC5ht137594
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 19:24:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=qcppdkim1; bh=HXibsLbq1eNHg/KEZ2srTMftmDT6exvhPjO
- HSQmRglw=; b=BfxwtX4wucnF0nN40Vb5sbIcznHlqZMFk2+NTdWttuRUB9UiRPk
- 6wtF8UacLZdCHIo1TtjSyQGx9uzNRcs0rwIW62pvJKp6JgSygt3sKiyqn5u5UHFL
- YVY3QZaeTzgfIAkrjW8YcDEM4tjrxHOO3lR292IC7BvvoN2pYtP2oKEFfaXzv5GP
- y3f3uZad4+YJVpHa/2U8yVXbPk2zDIqYbowqMzXaKFTRBZX3RJTFWxq5or1Cbrzl
- iAZD56UJYA2c3Tvp5oSheqGsAdZ7IszFCVNSFEKzF+pWCWlCXvf6k0gz3UjBtk2x
- zZDVYJeBZXmiRBJDHaQUIE0ztwx3DRRvY1w==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhqv5rh94-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 19:24:33 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-cbb6433e9d4so66965a12.3
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 12:24:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wltc3-0000Sc-NM
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 15:25:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784575513;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JhY0/mudAdMbBHB1coTzE3FhoqTGZTuNBpQmaQiDhRs=;
+ b=MbnZgvTzejmw78Br2ngHbdfQPaXWNKXUrFSB7q1XUSiBoIBYZZOsqFu2qJiO3xAPi/jcqm
+ CXaZA5dhy+vmHGxP2w4GWipfvya2rLbnkM59P+M7iMsW8WYXp1WZPCL1nnbksDQgqrImnY
+ HkOoMzllHLJ6DXarv+0PG9fYIvQEr4Q=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-383-r63diIddM5SZfdg2r3XNvg-1; Mon, 20 Jul 2026 15:25:12 -0400
+X-MC-Unique: r63diIddM5SZfdg2r3XNvg-1
+X-Mimecast-MFC-AGG-ID: r63diIddM5SZfdg2r3XNvg_1784575512
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-904dac0f77fso196248696d6.1
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 12:25:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784575472; x=1785180272; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=HXibsLbq1eNHg/KEZ2srTMftmDT6exvhPjOHSQmRglw=;
- b=S/21dcVy9cIdfBWMgNPb0kz/T3q1Jbltkb3hy3xsBoCdndU01K+osiNt08AQRC3axo
- wRynV081uBxRoOxoLpQ+rFrNZOxfDj96sWU6igHWLUYXH+/C2yH4UDkWCx3EllhGorJg
- cXeJNvPsnDtanBQUBRDnM8GGB4GmyvtBECIhOzULUPS5YYwIVKM72YLJ/wVUjWGOqWQK
- 2TPff+8SqsJ27kr91SDuE/EzZy1e/EEG3XMCIUolRW+6PkIxRkCEVuM+3FSY2xTYim6L
- NXiY6wPSI87PRDYR1gSvFi91v6mgxCwDCXnntg6kwE1CTubjfAA9n7qJlVYaP8JRYXIV
- uESg==
+ d=redhat.com; s=google; t=1784575512; x=1785180312; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=JhY0/mudAdMbBHB1coTzE3FhoqTGZTuNBpQmaQiDhRs=;
+ b=VemyBVJ72n1bxaTsfdh1M1jWWHLGiAnjE0x4rTLHHOkeAuXr9jMAIwQ1xi6Hto/JOd
+ LEdw0cZDBQJXtX8RkERb9wJ5M9avA7sZ0Y2UNUaZeHRY7i1ZDbbHhIva6eCrxhyNu9Oi
+ hkWmUay8DEKmEILBRvhIMJ5MCaVELaRyETyXs8UhjnNrS4H85kPgVj+DO5SHYLPg/nbV
+ Xz/dutEdgRUYoM0jTv7WD8yBOf8QW9Jkm+OopA7IdkZaavL8bqYxv+YLLWWRIrHSIjD/
+ kLU+A6OQ1kZTAiRvkHL0InH+VOCoLGW+zMx5bboQbEy2mWRiLsKeIjhOJwG1N8m53X1g
+ +b1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784575472; x=1785180272;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=HXibsLbq1eNHg/KEZ2srTMftmDT6exvhPjOHSQmRglw=;
- b=lGbjSJ8Zw5SOVbf+GZbYYf1Jj5gDQPE490jrDGuTZgXLzFaozo1eGS0foCOZGPS37c
- z/g2yEEs5MhiDuV/srNL1iDDDLI7vigtPCc1KENdlulcGvlpR7Kax6kvIbKOn0qT29Uq
- XYw5RgI8aoH6Yp6s0TarI+bYQVK2r8xK58aKEZBxAu2lmzhFFrUaJv888vs9lOPviIMM
- 2uPUWMWbFDB0Ay/rYzNZ1z0hTZAGcBupmsGJneHt7mVO152Qv98MWXOY/Rq74GwahKyq
- 23VlEfrAvC2Vh0VGDuQZrVhRLGw/jz8f/HXSFV4gwkV6OHLAgmZDGKxqD0qqagYHZgMM
- zeUw==
-X-Gm-Message-State: AOJu0YxqYeg4n7vJoTTzHWlilv2DsUxFTfV3ZYEfUYss16+fQxennpMj
- gql5kCg0YPaLw3D/hQYh6DXZgObMJ7KW2W9aouKpWUgvTduJIwXUMGzXdA2FW366vZLYN4B/K0R
- 8xtSe7yGeBogxeKCACzGMPyAFcztEESGn0HrexTWP32ZbHnZcSjO0nCnCCv0+wLtOeA==
-X-Gm-Gg: AfdE7cmmJYjBMY813PCdwwfrG9lugUvQe9yZDNCGuLg2HoStBu/qOLtW4JT0FWBg90h
- ALjW4R/BP59uDCNzHRb8Cfh9WH3totYowqMzRToRoOokoDb1raGk4WH0sRu4UBgICZ5nNU+GxFt
- cd3rHEXcRb9qxg917WTSGcr4c1IpKt+DdOqHE3jMW7n3c2N/JYM/d25WNMVjGiQ40WFNq64SemZ
- n8Okm5CgqjrQ+8IyLLAh6dIRgzPGhy4U4Lpy57jUy8pLBY2MLcffIUslw5I8dLtA1k+1Tix7DQM
- bFR4SzT1OV8W6XrZJewrRaPFjf81i01KpuSKvLS51lu5ANWpGHyyjYdAvNlfPk4ZUvDtx3QOEUM
- uNAXmjLxDnYjQclI7dW+/EweJwr/lEmQH110x7/bVGUccni1U8RWzoJXZnMOhU9N3/hPie3o=
-X-Received: by 2002:a05:6a21:3b89:b0:3c3:64cc:311a with SMTP id
- adf61e73a8af0-3c3ad64b57emr16978687637.22.1784575472503; 
- Mon, 20 Jul 2026 12:24:32 -0700 (PDT)
-X-Received: by 2002:a05:6a21:3b89:b0:3c3:64cc:311a with SMTP id
- adf61e73a8af0-3c3ad64b57emr16978662637.22.1784575472102; 
- Mon, 20 Jul 2026 12:24:32 -0700 (PDT)
-Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3142a1bb770sm42709799eec.16.2026.07.20.12.24.30
+ d=1e100.net; s=20251104; t=1784575512; x=1785180312;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=JhY0/mudAdMbBHB1coTzE3FhoqTGZTuNBpQmaQiDhRs=;
+ b=DTpwSEstC1fuiEMKoYFHhNss6VQxWFEKHQGsQZQQU+CbvWzzukeuzsRqlIRGf8o0+c
+ 2ZWm9Uso89UYAWKDqm+PNo6pt9YYldt8EpQx6JlypkqSwKwzCv5c4tee/b/8NKrzrcH+
+ NJvrW9fiS9bikbzzkhChBJLgSClv4Pbi8aeJeqz/8UI4JewcI5VdJO5uH/fQY4Z+xkze
+ SxswUmUtF2tUmY/D/SVAN0xfG48iuQw57ynGVhxBLebMFXl8yzJ418QIwfXpsrfeOYJ5
+ TCQZ/TI2if7gUEf9/K58hjCYCFFVkANjczM4j0eAYstrPDSYES78Qboorq44GKnn1lKW
+ yZ6A==
+X-Gm-Message-State: AOJu0YzqH9gUkaxvM03A/rqJcNDWrZD84Yz851slFxIbJt8DTiHetzZw
+ BLD4M/JZvCR1LHJtDvlHHZ/3cYAAHwjbgVbdVeArZgG5oiK7U8+8xD5VTTGV8nSfyZWX6NWAlX/
+ kARg6OJCMqKJEtcg5OsAJYZiZcwAaMVM4RrrP5aXwcKqTKS75UeUp5gn7
+X-Gm-Gg: AR+sD11ZAChnRozDWr9DFvQNViTnlXjMC+i9TjAIWp40mElYxMUYyV4SMLXLkzwBZqR
+ dPjWCkMlADhE6JQ/aJz3oKjHMJZjPFTszBpANzLwe6Qf8pqCYIdSkZcWor/R+OiUlwxekCsZz6m
+ hqlIbJRgsL1IPvi7dFCLANmuqLdKtWM2gyv7hi5JZMpsuqOooqeSmGhqkcaFeHsVozcbvAWxROV
+ nmBSpa9MizA4AujfrBCHphDQ7vWPpr91I21ucQg89MH1yh1Ihrc4N1GJteJbR6/6kiuFzJTOCu+
+ tfphUIfCZVOLJqtzZC3QzNhmZTWCz1e+NjSpSj0MoH8Kyi5Z1aQ0gPQvUa9JXFRSQVx8
+X-Received: by 2002:a05:6214:3207:b0:8cc:ea95:2261 with SMTP id
+ 6a1803df08f44-9077850c1f7mr175398486d6.36.1784575511485; 
+ Mon, 20 Jul 2026 12:25:11 -0700 (PDT)
+X-Received: by 2002:a05:6214:3207:b0:8cc:ea95:2261 with SMTP id
+ 6a1803df08f44-9077850c1f7mr175397756d6.36.1784575510787; 
+ Mon, 20 Jul 2026 12:25:10 -0700 (PDT)
+Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-907786acb67sm98290406d6.32.2026.07.20.12.25.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Jul 2026 12:24:31 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org,
- Chinmay Rath <rathc@linux.ibm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH] target/ppc/cpu_init: make cpu listing determnistic
-Date: Mon, 20 Jul 2026 19:24:03 +0000
-Message-ID: <20260720192403.66694-1-pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
+ Mon, 20 Jul 2026 12:25:10 -0700 (PDT)
+Date: Mon, 20 Jul 2026 15:24:59 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Aadeshveer Singh <aadeshveer07@gmail.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, pbonzini@redhat.com,
+ philmd@mailo.com, lvivier@redhat.com, ayoub@saferwall.com,
+ pierrick.bouvier@oss.qualcomm.com
+Subject: Re: [PATCH v3 00/11] migration: fast snapshot load
+Message-ID: <al52Cyl6CMdxTJW3@x1.local>
+References: <20260714141547.1268000-1-aadeshveer07@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 20thZxwF1q0iU5aZF7MEbEUW3q5Pb4bv
-X-Proofpoint-ORIG-GUID: 20thZxwF1q0iU5aZF7MEbEUW3q5Pb4bv
-X-Authority-Analysis: v=2.4 cv=e+U2j6p/ c=1 sm=1 tr=0 ts=6a5e75f1 cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=EUspDBNiAAAA:8
- a=r3LtdbDxSBjJ6MmgX84A:9 a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDIxMCBTYWx0ZWRfX9Wv4rNuCq1g4
- WyN577/KEUs/A8NGkZzD128Gpxrp5YBh1jOvz/Ym75TiMmzk2BRTSrZIQ8jUKdhP8VOvVwsAPxb
- 9zczrJvkTFbnvMFSnOuU/qfH0pfl4gA=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDIxMCBTYWx0ZWRfX0rOMy71nv6wL
- 1vT+/mzkgbf/3L0RVawEoP6zl4vwhckuB0Ch8fKG4odldU2cQHrwPfE1IBb4NV7iU1Q7lEv/FJG
- aYBndpI+h0+OBcMIZWt2N2UuP1VYzeHahIiINFBxebh4A13kmc1gQGbY4x0fmSzVqVt83OQRMTD
- c+fJbaapmet9arMbVyMcaitz4n6WXf96utasbYv9bVmo18aBF99oX2XnWo7nv8O9laYIfsjDtML
- xqsBaaDyZzYDT9PHl4wc5Mq3GNJPwEdhjUQO8NQFfhRcydsjQMo9V39sZ0gN9DzkJc8x53fUpUO
- IhKqql3ZV5FcQo6Ephoq1sIc7sWEfaBahkwHtUOmlxYEiPzrOLxmcqCPe/JvUAGIhZRTzVSS0Uu
- YHqwbufq2AMH0tKNCzK1HvB+gqWrLdAjISw7Vhaxaw5XXftXQaWFDe5viZRo02gTvTTbgsvnF0m
- 22nCBpxH8q0oKzmTqFA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-20_04,2026-07-20_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 suspectscore=0 bulkscore=0 priorityscore=1501 adultscore=0
- lowpriorityscore=0 impostorscore=0 phishscore=0 clxscore=1015 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200210
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260714141547.1268000-1-aadeshveer07@gmail.com>
+Received-SPF: permerror client-ip=170.10.129.124;
+ envelope-from=peterx@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,50 +116,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The existing compare function only make sure that we list cpus with PVR
-order. However, we never compare cpu names.
-As a result, while cpus are grouped per PVR, the order within a group is
-non deterministic. Depending on QOM type initialization order, we get
-different results for -cpu help.
+On Tue, Jul 14, 2026 at 07:45:36PM +0530, Aadeshveer Singh wrote:
+> This series implements a "fast snapshot load" mechanism to
+> significantly reduce the perceived resume time of a VM from a snapshot
+> file.
+> 
+> Currently, resuming a VM from a snapshot file requires loading all RAM
+> pages into the QEMU instance before execution begins. This extension
+> allows the user to run the VM nearly instantly by loading only the
+> required device states up front and loading RAM pages lazily, by
+> trapping access to pages that have not yet been loaded.
+> 
+> Using the Linux userfaultfd syscall, a fault thread catches all page
+> faults caused by the guest and loads in the pages required to keep
+> the VM running. Concurrently, an eager background thread iteratively
+> loads all remaining pages into RAM so the guest does not have to
+> depend on the fault thread indefinitely.
+> 
+> Much of code is reused from postcopy for fault handling and precopy
+> for reading mapped ram file. Implementation revolves around two
+> threads named the fault thread and eager load thread. Fault thread as
+> name suggests catches page faults by the guest and serves them using
+> userfaultfd. Postcopy fault thread is reused but instead of requesting
+> source for a page it loads the page directly by reading from file. In
+> order to remove the dependency of guest on fault thread indefinitely
+> the eager load thread loads in the entire RAM sequentially, and after
+> iterating through the entire RAM signals fault thread to exit and
+> calls cleanup.
+> 
+> In order to prevent the case of a page being loaded twice(in the
+> case when eager load thread is loading it and fault thread also
+> tries to serve fault on same page) a bitmap called pending_bmap is
+> used to track pages which are pending and not being loaded by any
+> thread. Atomic operations on this bitmap allows coordination between
+> threads to prevent any unwanted behaviours
+> 
+> Future direction:
+> - Add support for multifd
+> - Add support for vhost-user
 
-For instance, previous output could be:
-Available CPUs:
-  755_v1.0         PVR 00083100
-  745_v1.0         PVR 00083100
-  755_v1.1         PVR 00083101
-  745_v1.1         PVR 00083101
+Please always still at least have a section for testing.  It's an important
+piece of information on what you have tested (and what you have not, which
+can also be included when it may matter).
 
-While a sorted output should be:
-Available CPUs:
-  745_v1.0         PVR 00083100
-  755_v1.0         PVR 00083100
-  745_v1.1         PVR 00083101
-  755_v1.1         PVR 00083101
+For example, I know you should have tested at least normal and some huge
+page setup, you can list them there.  You can also mention if you only
+tested x86_64, or if you have played with anything else; logically this
+should also work elsewhere whenever all facilities are available.  It's
+fine to only test on x86_64, though.
 
-Fix it by comparing cpu names to have a stable result.
-This allows us to record and compare various command line results across
-versions to make sure we didn't break anything while working on
-single-binary.
+Thanks,
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
----
- target/ppc/cpu_init.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> ---
+> v1 -> v2
+> 
+> - Structure Change: Expanded from 7 to 11 patches
+> - Move test removal patch from first to post implementation as
+>   suggested by Peter
+> - Patch 1 to 5 are meant to be non functional changes meant to
+>   modernize parts of code and prepare for feature Implementation
+> - Patch 10 performs a smoke test for implemented feature
+> - Patch 11 adds a documentation page for fast snapshot load
+> - Added explicit fails for features not supported/incompatible with
+>   fast snapshot load in compatibility check in options.c as suggested
+>   by Peter
+> - Passed errp object to qemu_get_buffer_at() to improve on error
+>   reporting as suggested by Peter
+> - Size of pending_bmap is updated to have a bit for every guest page
+>   according to guest page size and not host page size as pointed
+>   by Peter
+> - New function(ramblock_file_bitmap_page_is_nonzero()) has been
+>   introduced to test for zero pages while loading essentially enableing
+>   support for hugepages
+> - Updated the documentation comment over postcopy_mapped_ram_load_page()
+>   to add errp as pointed by Peter
+> - Added a new function try_mark_postcopy_blocktime_begin() to call
+>   mark_postcopy_blocktime_begin() taking care of assumptions like
+>   skipping if page is already received to improve on the readability
+>   as pointed by Peter
+> - Fixed bug, that sent non page alined addresses to
+>   mark_postcopy_blocktime_begin() as pointed by Peter
+> - Separate the postcopy_listen_thread_bh() rename patch as suggested
+>   by Peter
+> - Add comment explaining changes in process_incoming_migration_co()
+>   as suggested by Peter
+> - Make qemu_loadvm_run_fast_snapshot_load() and
+>   postcopy_ram_eager_load_setup() return void as these functions
+>   never fail as pointed by Peter
+> 
+> Aadeshveer Singh (11):
+>   migration: Propagate error in postcopy setup functions
+>   migration: Extract blocktime marking helper
+>   migration: Rename postcopy_listen_thread_bh
+>   migration: Use file_bmap for RAMBlock during incoming file load
+>   migration: Make qemu_get_buffer_at() thread-safe
+>   migration: add RAMBlock field and helper for fast snapshot load
+>   migration: add support for fault thread to load pages from disk
+>   migration: add eager load thread and setup for fast snapshot load
+>   migration/tests: remove capability conflict test
+>     postcopy-ram+mapped-ram
+>   migration/tests: Add test for fast snapshot load
+>   docs/migration: Add documentation for fast snapshot load feature
+> 
+>  docs/devel/migration/fast-snapshot-load.rst |  81 ++++++
+>  docs/devel/migration/features.rst           |   1 +
+>  include/system/ramblock.h                   |   6 +
+>  migration/migration.c                       |  60 +++--
+>  migration/migration.h                       |   5 +
+>  migration/options.c                         |  14 +-
+>  migration/postcopy-ram.c                    | 266 ++++++++++++++++----
+>  migration/postcopy-ram.h                    |   7 +-
+>  migration/qemu-file.c                       |   9 +-
+>  migration/qemu-file.h                       |   4 +-
+>  migration/ram.c                             | 103 +++++++-
+>  migration/ram.h                             |   2 +
+>  migration/savevm.c                          |  16 ++
+>  migration/savevm.h                          |   2 +
+>  migration/trace-events                      |   2 +
+>  tests/qtest/migration/file-tests.c          |  24 ++
+>  tests/qtest/migration/misc-tests.c          |  52 ----
+>  17 files changed, 511 insertions(+), 143 deletions(-)
+>  create mode 100644 docs/devel/migration/fast-snapshot-load.rst
+> 
+> -- 
+> 2.55.0
+> 
 
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index f404c7e549d..3443dbeeb01 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -7130,7 +7130,7 @@ static gint ppc_cpu_list_compare(gconstpointer a, gconstpointer b, gpointer d)
-         } else if (pcc_a->pvr > pcc_b->pvr) {
-             return 1;
-         } else {
--            return 0;
-+            return strcmp(name_a, name_b);
-         }
-     }
- }
 -- 
-2.43.0
+Peter Xu
 
 
