@@ -4,152 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4246C4452A
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 14:39:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56947C44515
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 14:40:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlp86-0003xV-LQ; Mon, 20 Jul 2026 10:38:02 -0400
+	id 1wlp9z-0006sb-On; Mon, 20 Jul 2026 10:40:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wlp4g-0002SJ-R9
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 10:34:41 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wlp9Y-0006jA-IK
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 10:39:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wlp4f-0002jz-3X
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 10:34:30 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66KDqe612604305
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 14:34:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 40DLNsd71N5eBW/MZDm6EHHz8FUOpH65CDFh15oybyQ=; b=T8CXIzCZDY2RNEUT
- o9NqrYhq6+e2ckezEK8aq0FjKRAT4IxErZsz65kyn4kraXgM5WsgDQQX00/y6KOJ
- vBAbQV8VuvqNw554UytpLd1zuJZ0wAnSQB8RSWcEw2FAHQUyiqZFeZHF/TYEvlpE
- 7VZUZKVO/w3pJMoM5zemwYnV2NT1GiDYfMc2b9usBFpgmczgDSl5qxELRijVmwyZ
- iRIrdGVZef6KC3G0N9vWWXpaYc2IBECqhWnURZWCO1wbsq/Ib9OG9idpvs5Be78k
- rYCXv8oCXkWa1GfBBQXugCyPycgHQstqjYHfMOodKCrsNjdb9Qy+AyRj+O4SCe+/
- qciLJw==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhggg9ktt-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 14:34:26 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-38e8e864ef0so339124a91.0
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 07:34:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784558065; x=1785162865; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=40DLNsd71N5eBW/MZDm6EHHz8FUOpH65CDFh15oybyQ=;
- b=cgYKU+CgGQadPZ4TiTMqlWCTsal3k/HbJYLIIozQxDCTltxvDxEPeki2APRxGH5WCs
- 5e7k4IuCT3O9f0IYctOAtfEFkAK4Jezmyi/1+ziMA9UgRe7RXo0LITGMYxYWeZG5IQdr
- rGikfKs4IjpUU/9qiMrhrq5fTYqVSPQ1eSi6hrGKLug+WDzQSO3J9fQMGKZT53QR/SVp
- YtSszfrBsmAIYZXVcQuLNlxJpZckh2KUHIkErXFv8WSY1TgG3UIVEzubgmC4r/l+FMaS
- hyUkS3CYBDwK4EWk3usI5RVycpvmklz5+5AnuxgzKL/GicOmsXNIbnxos101irrASMqM
- 8gFA==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wlp9U-0003Hb-Td
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 10:39:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784558367;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3qhWWitmUCO68XqXKoGGdlUJloyDmbH93RqEdWf8/Pw=;
+ b=Px9RhSMJj/Fri1oft1Gy3FP4BtyhewhdkaO8C+r216ghY5BGXJUZ4OAFZKkrAZ2nrZ06LH
+ ntsHMEHw+Z0ktKWhEJtpLVHJy9pqHqNoVfUb6vnrsUwe8Cq3F/AJ47ym+/vD4Ts84wGnvh
+ Lua9XncIq5KHgG2cXAHmBC0bSQfkLMQ=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-642-xKGLKCfWNpuYB424lR2WgQ-1; Mon, 20 Jul 2026 10:39:26 -0400
+X-MC-Unique: xKGLKCfWNpuYB424lR2WgQ-1
+X-Mimecast-MFC-AGG-ID: xKGLKCfWNpuYB424lR2WgQ_1784558365
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-473f4a48e9aso7086616f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 07:39:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784558065; x=1785162865;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1784558365; x=1785163165;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:reply-to:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=40DLNsd71N5eBW/MZDm6EHHz8FUOpH65CDFh15oybyQ=;
- b=P2AsoIORPF06oeahaKgIMuo4lq04pDdoufBcpGOTho+wQmIA8xWtZkXDjyC7k7c3mD
- X1/3iYl+l0tRramiqixd6rANSwi7b4wUBHWWnyWVq6t+cBn+Iio4fVMJaTJx3J5b6WJc
- WBeVWMuBll7Q1Jz48MFnJ+Kz6Ly+wxw79LXdKiITrqOd9wdw+pJge0HqiIi29gNti06r
- afzMvOoT08PUtRF17ZG8sc+zstSA705oY2HuSpq3LNMmL0aOtNe6JeyLPo4t+yvB1CZf
- L/PzBz6GTort461L3qCK2CfsRzJsXe/jIUWqaJGliolCD5/fqWiron72lioOjjlvX0Ty
- DUaQ==
+ bh=3qhWWitmUCO68XqXKoGGdlUJloyDmbH93RqEdWf8/Pw=;
+ b=c10lCDWEuirRsLJ34L6PIl4YVHSkomuROjyxwo6jsy3K2VY99JV/Vjk0TvOIG0KSD9
+ eSujI2NNsH4tCAsOTWJwwNwoJupf0HyE8s75j9jmE9FumgVPEY8QfNpnnYD8Htg8IFFY
+ Ma1KPkFfQEPcNT5FDX/vxWJKvCNEesX6hqEyxmxB9xssfInb2yGwHiEJgIV6Z1Ap4JIC
+ rGuKzrLQ796p+w06nN8PaRdKkqDSNJj9ihzTiLUMhFXhFdP0oI4O+rL1KXlrMh0/R+e7
+ t4rHfEFUZgMnqkN1luAV9Cw/U2iEyU8h/UVPNNfh+qmM3bHx9ohPX3eMbAguUcsLVuvS
+ WqSA==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rr1OH9q+hYQj3KqPafyk3SoxJX414ojaotYNxPFUWOmFhE1ZSSTZHAD+anS8OrENYOecUz5lCGAqPcO@nongnu.org
-X-Gm-Message-State: AOJu0YzUd85ltPMPf9jdmPt0fSYaF7NjRAJs+Aty76fxf1JUJebiw8q2
- ON18AnzNrIbKB/lOzrxPJZtjYfHKTIkwl+RjLBehjr8FFKZ4IIORR5Krwjtxg7u5vw5hAWADr1v
- t3NO7wrCuIo9GKdfVOet/zsTVUA/24X2E79YFpWQ+RGC09db7/BWwUfb5Yw==
-X-Gm-Gg: AR+sD11T3BLDbuYBy5ED1Q+l5xE4xNrt0yHk6fa+BSrg9y1WRzeFsQ47TJ3WyRV3Kzn
- fPGCcgp06IR30/o5MVC6TUDF4KqCBB2EmfLycnV7SAHxjk/AwYGReaEQo/YKHDVh/dtoX99cYjY
- t7UgLb1EvhS3NyrMx07v+rn/Dvth4Wb52onemxysvGeJAO2uOFMjPe4gGp+0ayt6W5fT5pyknhh
- zMvoz1EHD0xL4iZu2Pdxss1IKYxZeVvr2oNAXa+704UzKcgAJf/Hd4msYHfGOG3NkujZC1YC+bX
- fWCpzqQOtkASP9e1P1+MCcPMtFUbyejE6B/6pv+mUj24h/Z/lwA26lQVDtrocMOD6CGopq4FOxC
- bnIEcyTJblLFVSt8yUrqGYdLYfAa1CSP+M5j5MNvcKtTV0Qc6A4iRFSg1mszYjwuSRgMU
-X-Received: by 2002:a17:90b:3dce:b0:38e:7f1b:f01 with SMTP id
- 98e67ed59e1d1-38e7f1b144cmr4216058a91.36.1784558065254; 
- Mon, 20 Jul 2026 07:34:25 -0700 (PDT)
-X-Received: by 2002:a17:90b:3dce:b0:38e:7f1b:f01 with SMTP id
- 98e67ed59e1d1-38e7f1b144cmr4216027a91.36.1784558064717; 
- Mon, 20 Jul 2026 07:34:24 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38e656e5686sm4010215a91.14.2026.07.20.07.34.23
+ AHgh+RqOse4b5y46BjiMosckMLMrb9SGDG3UHqHZ585Q2Ng6NUJaQGy12yPhIK6nzkVqR6PpubObXpwdjRsP@nongnu.org
+X-Gm-Message-State: AOJu0YyTXLIEn2/ZJKbHXuw0Gg543cnDlB8f4C1VwOwwmFnXZ1apQard
+ OUwqelE3Ri0HcCz7KViB4BZGBILMEi+/jB1IRqA6UyEL/pxy9jaH1XAAIRYm1Ds6vBpbo/2RA3W
+ XnYAsX1jslkChowZi5/BC7mgNur++tFy42m8oTXvXmvXoJBtgXg/3Afq9
+X-Gm-Gg: AR+sD11vK4T1Q2tUvu6wDibjaf8mVCItIgotp8r84JCW/X/JID5UnAFVfM0ZpxuTfqA
+ umQk+zBW1xJArUDILeZgtzsZO5Kx/W91Zn77gsEGPaKxXSTPoP0YGFsjintdFL4lAjmE4tsnQ5M
+ ub3tT20p4BXFhlBpYAf/7YvnjdJtjUo2if3KIOZ6bCxHP97ST6UsGd/679Wsno3K6ODX9Gklv8C
+ QNPc97WUU29Dvw4V1oxXGpp7EYU9b7HZw3A25FbKk6RgimEsaWuPnxdL8OdDbiX2e3QLj7M6UBr
+ PbbuytXA2wFzuPEvS8n8+r8Q9NAndLSOeCCKN1COAn/+3bH0hnJIotSlIAE6bRQNCdG+BfqawDY
+ WiyqxVS2vrFkcGzNtIUiPYupsKElU9vhHbNMbHMeNcYdu4k+/
+X-Received: by 2002:a05:6000:18a3:b0:47f:741f:7b04 with SMTP id
+ ffacd0b85a97d-47f741f7b74mr7482982f8f.44.1784558365120; 
+ Mon, 20 Jul 2026 07:39:25 -0700 (PDT)
+X-Received: by 2002:a05:6000:18a3:b0:47f:741f:7b04 with SMTP id
+ ffacd0b85a97d-47f741f7b74mr7482920f8f.44.1784558364575; 
+ Mon, 20 Jul 2026 07:39:24 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f63ec7c69sm32577884f8f.17.2026.07.20.07.39.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Jul 2026 07:34:23 -0700 (PDT)
-Message-ID: <5e5d5996-5376-429f-8787-d448f9bfbf81@oss.qualcomm.com>
-Date: Mon, 20 Jul 2026 07:34:22 -0700
+ Mon, 20 Jul 2026 07:39:23 -0700 (PDT)
+Message-ID: <c781072d-2717-4a26-9203-65fa1a5af237@redhat.com>
+Date: Mon, 20 Jul 2026 16:39:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] hw/remote/machine.c: Mark x-remote machine as OK for
- AArch64 and AArch32
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-References: <20260507194728.2034696-1-peter.maydell@linaro.org>
- <20260507194728.2034696-2-peter.maydell@linaro.org>
- <1bcf5fd5-b2ee-4adf-ad16-bac12050baa3@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [RFC PATCH v3 03/19] target/arm: regenerate cpu-idregs.h.inc
 Content-Language: en-US
-In-Reply-To: <1bcf5fd5-b2ee-4adf-ad16-bac12050baa3@oss.qualcomm.com>
+To: Khushit Shah <khushit.shah@nutanix.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev
+Cc: cohuck@redhat.com, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
+ berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
+ gshan@redhat.com, skolothumtho@nvidia.com, sebott@redhat.com,
+ armbru@redhat.com, philmd@linaro.org, yangjinqian1@huawei.com,
+ shaju.abraham@nutanix.com, mark.caveayland@nutanix.com,
+ prerna.saxena@nutanix.com
+References: <20260716213858.609699-1-khushit.shah@nutanix.com>
+ <20260716213858.609699-4-khushit.shah@nutanix.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260716213858.609699-4-khushit.shah@nutanix.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: TwVhjgkKpepBx7Tk5UpDGobFjeDVGbPQ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDE2MiBTYWx0ZWRfX4QOA4HrYyrhg
- oIBR2FUiZQl5ePU8FhLApeOtl5P/h/1KAl2JLy9fkpNtZWN+8DS7cqQEGPeXIFgHffkhSTogU43
- WMAV9FdD6A3U969Hcxigo5t3p4bZFrkr9dGiWH+QPTdaJpk9W8Utt5D5QMFxoVGQYnbgBtrhb3A
- zsKVXxAE8HRrIn30qAKHB+iA+WBjtCf9koN+ZQLKlux4D+yzVfZ4PuAZ+VaITJ9UluBS5Cx7RXT
- XfGJa1h+6sf9WHEAThpQrtLtjNhFOT5yU5LkyWFkc6v2QuaB38mApPNUcUTW5GA3KiJPtG7bY9w
- EmheTCVGz1Kshym9oZKXG/rffi2hVNno2kTYX3oP7fCYJuwcwqEGksoI8KXL9rB/EBSHKOFjP5u
- 2do4y+GBbI1Oo9DkyCdJiUl7uZ70c4jdHnbQ27ysY2TK1k4qA6ITtT0eIkij3goihB2Ak9mLGEM
- 5AmAHuOhb+vte9WoCSA==
-X-Authority-Analysis: v=2.4 cv=RPmD2Yi+ c=1 sm=1 tr=0 ts=6a5e31f2 cx=c_pps
- a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8 a=LG1_uKtv5rtgl5um6SgA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=uKXjsCUrEbL0IQVhDsJ9:22 a=Fg1AiH1G6rFz08G2ETeA:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: TwVhjgkKpepBx7Tk5UpDGobFjeDVGbPQ
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDE2MiBTYWx0ZWRfX+78V/jRUrp7V
- eLS6j8KOkK2ouwu6owSJUiBrS1w4hxZXr7EXh815U0Iyv9tWzTrG6sgxfJZpIUrkCcoN+t3WO92
- lGLk/GHRVOpGclbH+FBdsuaIRd7DKWs=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-20_03,2026-07-20_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0 clxscore=1015 priorityscore=1501
- lowpriorityscore=0 spamscore=0 bulkscore=0 malwarescore=0 adultscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607200162
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 7bit
+Received-SPF: permerror client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01,
+ UPPERCASE_75_100=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,86 +119,608 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/20/2026 5:39 AM, Philippe Mathieu-Daudé wrote:
-> +Stefan
-> 
-> On 7/5/26 21:47, Peter Maydell wrote:
->> When we updated Arm and AArch64 board types to mark them for the
->> target_machine_typename() filter, we forgot about the "x-remote"
->> machine type, which meant that it disappeared from the set of board
->> types exposed on the qemu-system-arm and qemu-system-aarch64
->> binaries.  We didn't notice this, because although we have a
->> functional test for it, it requires the KVM accelerator and we don't
-> 
-> I don't remember why it requires KVM.
-> 
-> $ git grep -i kvm hw/remote/
-> hw/remote/Kconfig:3:    depends on PCI && PCI_EXPRESS && KVM
-> hw/remote/proxy.c:36: kvm_irqchip_remove_irqfd_notifier_gsi(kvm_state,
-> &dev->intr, dev->virq);
-> hw/remote/proxy.c:45: kvm_irqchip_add_irqfd_notifier_gsi(kvm_state,
-> &dev->intr,
-> 
-> I suppose these 2 calls should be replaced by generic equivalents:
-> - accel_irqchip_remove_irqfd_notifier_gsi()
-> - accel_irqchip_add_irqfd_notifier_gsi()
-> 
->> run the functional tests on an AArch64 host in CI.
->>
->> Mark the machine as being OK to expose in qemu-system-arm and
-> 
-> Otherwise if it is tied to KVM, we removed support for 32-bit ARM
-> KVM in commit 82bf7ae84ce; ...
-> 
->> qemu-system-aarch64, in the same way we do for the "none" machine
->> type. This fixes a check-functional failure on aarch64 host, where
->> it would otherwise fail with:
->>     qemu-system-aarch64: unsupported machine type: "x-remote"
->>
->> Cc: qemu-stable@nongnu.org
->> Fixes: eb796c55513d9d39 ("hw/core: Allow ARM/Aarch64 binaries to use
->> the 'none' machine")
->> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->> ---
->> I couldn't figure out which git commit started enforcing the
->> filtering of machine types based on the TARGET_FOO_MACHINE
->> interface markings, so I picked the Fixes: commit hash for when
->> we added them to the "none" machine, on the basis that that's
->> the point at which we logically ought to have also done x-remote.
->> ---
->>   hw/remote/machine.c | 3 +++
->>   1 file changed, 3 insertions(+)
->>
->> diff --git a/hw/remote/machine.c b/hw/remote/machine.c
->> index ced782f6a9..df08f64019 100644
->> --- a/hw/remote/machine.c
->> +++ b/hw/remote/machine.c
->> @@ -24,6 +24,7 @@
->>   #include "hw/core/qdev.h"
->>   #include "hw/remote/vfio-user-obj.h"
->>   #include "hw/pci/msi.h"
->> +#include "hw/arm/machines-qom.h"
->>     static void remote_machine_init(MachineState *machine)
->>   {
->> @@ -148,6 +149,8 @@ static const TypeInfo remote_machine = {
->>       .class_init = remote_machine_class_init,
->>       .interfaces = (const InterfaceInfo[]) {
->>           { TYPE_HOTPLUG_HANDLER },
->> +        { TYPE_TARGET_AARCH64_MACHINE },
->> +        { TYPE_TARGET_ARM_MACHINE },
-> 
-> ... so exposing this machine on 32-bit host binary doesn't
-> look right.
+
+
+On 7/16/26 11:38 PM, Khushit Shah wrote:
+> Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
+> ---
+>  target/arm/cpu-idregs.h.inc | 165 +++++++++++++++++-------------------
+>  1 file changed, 76 insertions(+), 89 deletions(-)
 >
+> diff --git a/target/arm/cpu-idregs.h.inc b/target/arm/cpu-idregs.h.inc
+> index 5fdc84237c..1851b37937 100644
+> --- a/target/arm/cpu-idregs.h.inc
+> +++ b/target/arm/cpu-idregs.h.inc
+> @@ -12,23 +12,24 @@
+>  /* IDREG_END(REG) */
+>  
+>  IDREG_START(AIDR_EL1)
+> +    IDREG_FIELD(AIDR_EL1, VAL, 0, 64)
+>  IDREG_END(AIDR_EL1)
+>  
+>  IDREG_START(CCSIDR2_EL1)
+> -    IDREG_FIELD(CCSIDR2_EL1, RES0, 24, 40)
+> +    IDREG_FIELD(CCSIDR2_EL1, RES0_24, 24, 40)
+>      IDREG_FIELD(CCSIDR2_EL1, NumSets, 0, 24)
+>  IDREG_END(CCSIDR2_EL1)
+>  
+>  IDREG_START(CCSIDR_EL1)
+> -    IDREG_FIELD(CCSIDR_EL1, RES0, 56, 8)
+> +    IDREG_FIELD(CCSIDR_EL1, RES0_56, 56, 8)
+>      IDREG_FIELD(CCSIDR_EL1, NumSets, 32, 24)
+> -    IDREG_FIELD(CCSIDR_EL1, RES0, 24, 8)
+> +    IDREG_FIELD(CCSIDR_EL1, RES0_24, 24, 8)
+>      IDREG_FIELD(CCSIDR_EL1, Associativity, 3, 21)
+>      IDREG_FIELD(CCSIDR_EL1, LineSize, 0, 3)
+>  IDREG_END(CCSIDR_EL1)
+>  
+>  IDREG_START(CLIDR_EL1)
+> -    IDREG_FIELD(CLIDR_EL1, RES0, 47, 17)
+> +    IDREG_FIELD(CLIDR_EL1, RES0_47, 47, 17)
+>      IDREG_FIELD(CLIDR_EL1, Ttype7, 45, 2)
+>      IDREG_FIELD(CLIDR_EL1, Ttype6, 43, 2)
+>      IDREG_FIELD(CLIDR_EL1, Ttype5, 41, 2)
+> @@ -59,10 +60,10 @@ IDREG_START(CLIDR_EL1)
+>  IDREG_END(CLIDR_EL1)
+>  
+>  IDREG_START(CTR_EL0)
+> -    IDREG_FIELD(CTR_EL0, RES0, 38, 26)
+> +    IDREG_FIELD(CTR_EL0, RES0_38, 38, 26)
+>      IDREG_FIELD(CTR_EL0, TminLine, 32, 6)
+> -    IDREG_FIELD(CTR_EL0, RES1, 31, 1)
+> -    IDREG_FIELD(CTR_EL0, RES0, 30, 1)
+> +    IDREG_FIELD(CTR_EL0, RES1_31, 31, 1)
+> +    IDREG_FIELD(CTR_EL0, RES0_30, 30, 1)
+>      IDREG_FIELD_START(CTR_EL0, DIC, 29, 1)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -80,28 +81,28 @@ IDREG_START(CTR_EL0)
+>          IDREG_FIELD_ARCH_VAL(2)
+>          IDREG_FIELD_ARCH_VAL(3)
+>      IDREG_FIELD_END(CTR_EL0, L1Ip)
+> -    IDREG_FIELD(CTR_EL0, RES0, 4, 10)
+> +    IDREG_FIELD(CTR_EL0, RES0_4, 4, 10)
+>      IDREG_FIELD(CTR_EL0, IminLine, 0, 4)
+>  IDREG_END(CTR_EL0)
+>  
+>  IDREG_START(DCZID_EL0)
+> -    IDREG_FIELD(DCZID_EL0, RES0, 9, 55)
+> +    IDREG_FIELD(DCZID_EL0, RES0_9, 9, 55)
+>      IDREG_FIELD(DCZID_EL0, TBS, 5, 4)
+>      IDREG_FIELD(DCZID_EL0, DZP, 4, 1)
+>      IDREG_FIELD(DCZID_EL0, BS, 0, 4)
+>  IDREG_END(DCZID_EL0)
+>  
+>  IDREG_START(GMID_EL1)
+> -    IDREG_FIELD(GMID_EL1, RES0, 4, 60)
+> +    IDREG_FIELD(GMID_EL1, RES0_4, 4, 60)
+>      IDREG_FIELD(GMID_EL1, BS, 0, 4)
+>  IDREG_END(GMID_EL1)
+>  
+>  IDREG_START(ID_AA64AFR0_EL1)
+> -    IDREG_FIELD(ID_AA64AFR0_EL1, RES0, 32, 32)
+> +    IDREG_FIELD(ID_AA64AFR0_EL1, RES0_32, 32, 32)
+>  IDREG_END(ID_AA64AFR0_EL1)
+>  
+>  IDREG_START(ID_AA64AFR1_EL1)
+> -    IDREG_FIELD(ID_AA64AFR1_EL1, RES0, 0, 64)
+> +    IDREG_FIELD(ID_AA64AFR1_EL1, RES0_0, 0, 64)
+>  IDREG_END(ID_AA64AFR1_EL1)
+>  
+>  IDREG_START(ID_AA64DFR0_EL1)
+> @@ -145,18 +146,14 @@ IDREG_START(ID_AA64DFR0_EL1)
+>          IDREG_FIELD_ARCH_VAL(5)
+>          IDREG_FIELD_ARCH_VAL(6)
+>      IDREG_FIELD_END(ID_AA64DFR0_EL1, PMSVer)
+> -    IDREG_FIELD_START(ID_AA64DFR0_EL1, CTX_CMPs, 28, 4)
+> -        IDREG_FIELD_ARCH_VAL(15)
+> -    IDREG_FIELD_END(ID_AA64DFR0_EL1, CTX_CMPs)
+> -    IDREG_FIELD(ID_AA64DFR0_EL1, RES0, 24, 4)
+> +    IDREG_FIELD(ID_AA64DFR0_EL1, CTX_CMPs, 28, 4)
+so it seems you remove all the ARCH values found in ValueRange (by the
+way there were incomplete)
 
-I noticed that and fix it in the upcoming series for single-binary.
-
->>           { }
->>       }
->>   };
-> 
+Eric
+> +    IDREG_FIELD(ID_AA64DFR0_EL1, RES0_24, 24, 4)
+>      IDREG_FIELD(ID_AA64DFR0_EL1, WRPs, 20, 4)
+>      IDREG_FIELD_START(ID_AA64DFR0_EL1, PMSS, 16, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+>      IDREG_FIELD_END(ID_AA64DFR0_EL1, PMSS)
+> -    IDREG_FIELD_START(ID_AA64DFR0_EL1, BRPs, 12, 4)
+> -        IDREG_FIELD_ARCH_VAL(15)
+> -    IDREG_FIELD_END(ID_AA64DFR0_EL1, BRPs)
+> +    IDREG_FIELD(ID_AA64DFR0_EL1, BRPs, 12, 4)
+>      IDREG_FIELD_START(ID_AA64DFR0_EL1, PMUVer, 8, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -209,20 +206,14 @@ IDREG_START(ID_AA64DFR1_EL1)
+>          IDREG_FIELD_ARCH_VAL(1)
+>          IDREG_FIELD_ARCH_VAL(2)
+>      IDREG_FIELD_END(ID_AA64DFR1_EL1, SPMU)
+> -    IDREG_FIELD_START(ID_AA64DFR1_EL1, CTX_CMPs, 24, 8)
+> -        IDREG_FIELD_ARCH_VAL(0)
+> -    IDREG_FIELD_END(ID_AA64DFR1_EL1, CTX_CMPs)
+> -    IDREG_FIELD_START(ID_AA64DFR1_EL1, WRPs, 16, 8)
+> -        IDREG_FIELD_ARCH_VAL(0)
+> -    IDREG_FIELD_END(ID_AA64DFR1_EL1, WRPs)
+> -    IDREG_FIELD_START(ID_AA64DFR1_EL1, BRPs, 8, 8)
+> -        IDREG_FIELD_ARCH_VAL(0)
+> -    IDREG_FIELD_END(ID_AA64DFR1_EL1, BRPs)
+> +    IDREG_FIELD(ID_AA64DFR1_EL1, CTX_CMPs, 24, 8)
+> +    IDREG_FIELD(ID_AA64DFR1_EL1, WRPs, 16, 8)
+> +    IDREG_FIELD(ID_AA64DFR1_EL1, BRPs, 8, 8)
+>      IDREG_FIELD(ID_AA64DFR1_EL1, SYSPMUID, 0, 8)
+>  IDREG_END(ID_AA64DFR1_EL1)
+>  
+>  IDREG_START(ID_AA64DFR2_EL1)
+> -    IDREG_FIELD(ID_AA64DFR2_EL1, RES0, 28, 36)
+> +    IDREG_FIELD(ID_AA64DFR2_EL1, RES0_28, 28, 36)
+>      IDREG_FIELD_START(ID_AA64DFR2_EL1, TRBE_EXC, 24, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -235,7 +226,7 @@ IDREG_START(ID_AA64DFR2_EL1)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+>      IDREG_FIELD_END(ID_AA64DFR2_EL1, SPE_EXC)
+> -    IDREG_FIELD(ID_AA64DFR2_EL1, RES0, 8, 8)
+> +    IDREG_FIELD(ID_AA64DFR2_EL1, RES0_8, 8, 8)
+>      IDREG_FIELD_START(ID_AA64DFR2_EL1, BWE, 4, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -248,7 +239,7 @@ IDREG_START(ID_AA64DFR2_EL1)
+>  IDREG_END(ID_AA64DFR2_EL1)
+>  
+>  IDREG_START(ID_AA64FPFR0_EL1)
+> -    IDREG_FIELD(ID_AA64FPFR0_EL1, RES0, 32, 32)
+> +    IDREG_FIELD(ID_AA64FPFR0_EL1, RES0_32, 32, 32)
+>      IDREG_FIELD_START(ID_AA64FPFR0_EL1, F8CVT, 31, 1)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -273,13 +264,13 @@ IDREG_START(ID_AA64FPFR0_EL1)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+>      IDREG_FIELD_END(ID_AA64FPFR0_EL1, F8MM4)
+> -    IDREG_FIELD(ID_AA64FPFR0_EL1, RES0, 16, 10)
+> +    IDREG_FIELD(ID_AA64FPFR0_EL1, RES0_16, 16, 10)
+>      IDREG_FIELD_START(ID_AA64FPFR0_EL1, F16MM2, 15, 1)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+>      IDREG_FIELD_END(ID_AA64FPFR0_EL1, F16MM2)
+> -    IDREG_FIELD(ID_AA64FPFR0_EL1, RES0, 8, 7)
+> -    IDREG_FIELD(ID_AA64FPFR0_EL1, RAZ, 2, 6)
+> +    IDREG_FIELD(ID_AA64FPFR0_EL1, RES0_8, 8, 7)
+> +    IDREG_FIELD(ID_AA64FPFR0_EL1, RAZ_2, 2, 6)
+>      IDREG_FIELD_START(ID_AA64FPFR0_EL1, F8E4M3, 1, 1)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -331,7 +322,7 @@ IDREG_START(ID_AA64ISAR0_EL1)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+>      IDREG_FIELD_END(ID_AA64ISAR0_EL1, RDM)
+> -    IDREG_FIELD(ID_AA64ISAR0_EL1, RES0, 24, 4)
+> +    IDREG_FIELD(ID_AA64ISAR0_EL1, RES0_24, 24, 4)
+>      IDREG_FIELD_START(ID_AA64ISAR0_EL1, Atomic, 20, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(2)
+> @@ -355,7 +346,7 @@ IDREG_START(ID_AA64ISAR0_EL1)
+>          IDREG_FIELD_ARCH_VAL(1)
+>          IDREG_FIELD_ARCH_VAL(2)
+>      IDREG_FIELD_END(ID_AA64ISAR0_EL1, AES)
+> -    IDREG_FIELD(ID_AA64ISAR0_EL1, RES0, 0, 4)
+> +    IDREG_FIELD(ID_AA64ISAR0_EL1, RES0_0, 0, 4)
+>  IDREG_END(ID_AA64ISAR0_EL1)
+>  
+>  IDREG_START(ID_AA64ISAR1_EL1)
+> @@ -519,7 +510,7 @@ IDREG_START(ID_AA64ISAR2_EL1)
+>  IDREG_END(ID_AA64ISAR2_EL1)
+>  
+>  IDREG_START(ID_AA64ISAR3_EL1)
+> -    IDREG_FIELD(ID_AA64ISAR3_EL1, RES0, 48, 16)
+> +    IDREG_FIELD(ID_AA64ISAR3_EL1, RES0_48, 48, 16)
+>      IDREG_FIELD_START(ID_AA64ISAR3_EL1, LSCP, 44, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -583,7 +574,7 @@ IDREG_START(ID_AA64MMFR0_EL1)
+>          IDREG_FIELD_ARCH_VAL(1)
+>          IDREG_FIELD_ARCH_VAL(2)
+>      IDREG_FIELD_END(ID_AA64MMFR0_EL1, FGT)
+> -    IDREG_FIELD(ID_AA64MMFR0_EL1, RES0, 48, 8)
+> +    IDREG_FIELD(ID_AA64MMFR0_EL1, RES0_48, 48, 8)
+>      IDREG_FIELD_START(ID_AA64MMFR0_EL1, ExS, 44, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -736,7 +727,7 @@ IDREG_START(ID_AA64MMFR2_EL1)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+>      IDREG_FIELD_END(ID_AA64MMFR2_EL1, TTL)
+> -    IDREG_FIELD(ID_AA64MMFR2_EL1, RES0, 44, 4)
+> +    IDREG_FIELD(ID_AA64MMFR2_EL1, RES0_44, 44, 4)
+>      IDREG_FIELD_START(ID_AA64MMFR2_EL1, FWB, 40, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -802,7 +793,7 @@ IDREG_START(ID_AA64MMFR3_EL1)
+>          IDREG_FIELD_ARCH_VAL(2)
+>          IDREG_FIELD_ARCH_VAL(3)
+>      IDREG_FIELD_END(ID_AA64MMFR3_EL1, SDERR)
+> -    IDREG_FIELD(ID_AA64MMFR3_EL1, RES0, 48, 4)
+> +    IDREG_FIELD(ID_AA64MMFR3_EL1, RES0_48, 48, 4)
+>      IDREG_FIELD_START(ID_AA64MMFR3_EL1, ANERR, 44, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1056,7 +1047,7 @@ IDREG_START(ID_AA64PFR1_EL1)
+>          IDREG_FIELD_ARCH_VAL(1)
+>          IDREG_FIELD_ARCH_VAL(2)
+>      IDREG_FIELD_END(ID_AA64PFR1_EL1, SME)
+> -    IDREG_FIELD(ID_AA64PFR1_EL1, RES0, 20, 4)
+> +    IDREG_FIELD(ID_AA64PFR1_EL1, RES0_20, 20, 4)
+>      IDREG_FIELD_START(ID_AA64PFR1_EL1, MPAM_frac, 16, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1084,7 +1075,7 @@ IDREG_START(ID_AA64PFR1_EL1)
+>  IDREG_END(ID_AA64PFR1_EL1)
+>  
+>  IDREG_START(ID_AA64PFR2_EL1)
+> -    IDREG_FIELD(ID_AA64PFR2_EL1, RES0, 48, 16)
+> +    IDREG_FIELD(ID_AA64PFR2_EL1, RES0_48, 48, 16)
+>      IDREG_FIELD_START(ID_AA64PFR2_EL1, VMTETCL, 44, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1144,7 +1135,7 @@ IDREG_START(ID_AA64SMFR0_EL1)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+>      IDREG_FIELD_END(ID_AA64SMFR0_EL1, FA64)
+> -    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0, 62, 1)
+> +    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0_62, 62, 1)
+>      IDREG_FIELD_START(ID_AA64SMFR0_EL1, LUT6, 61, 1)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1164,7 +1155,7 @@ IDREG_START(ID_AA64SMFR0_EL1)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(15)
+>      IDREG_FIELD_END(ID_AA64SMFR0_EL1, I16I64)
+> -    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0, 49, 3)
+> +    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0_49, 49, 3)
+>      IDREG_FIELD_START(ID_AA64SMFR0_EL1, F64F64, 48, 1)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1209,7 +1200,7 @@ IDREG_START(ID_AA64SMFR0_EL1)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+>      IDREG_FIELD_END(ID_AA64SMFR0_EL1, F32F32)
+> -    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0, 31, 1)
+> +    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0_31, 31, 1)
+>      IDREG_FIELD_START(ID_AA64SMFR0_EL1, SF8FMA, 30, 1)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1222,7 +1213,7 @@ IDREG_START(ID_AA64SMFR0_EL1)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+>      IDREG_FIELD_END(ID_AA64SMFR0_EL1, SF8DP2)
+> -    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0, 26, 2)
+> +    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0_26, 26, 2)
+>      IDREG_FIELD_START(ID_AA64SMFR0_EL1, SBitPerm, 25, 1)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1235,12 +1226,12 @@ IDREG_START(ID_AA64SMFR0_EL1)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+>      IDREG_FIELD_END(ID_AA64SMFR0_EL1, SFEXPA)
+> -    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0, 17, 6)
+> +    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0_17, 17, 6)
+>      IDREG_FIELD_START(ID_AA64SMFR0_EL1, STMOP, 16, 1)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+>      IDREG_FIELD_END(ID_AA64SMFR0_EL1, STMOP)
+> -    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0, 1, 15)
+> +    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0_1, 1, 15)
+>      IDREG_FIELD_START(ID_AA64SMFR0_EL1, SMOP4, 0, 1)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1248,7 +1239,7 @@ IDREG_START(ID_AA64SMFR0_EL1)
+>  IDREG_END(ID_AA64SMFR0_EL1)
+>  
+>  IDREG_START(ID_AA64ZFR0_EL1)
+> -    IDREG_FIELD(ID_AA64ZFR0_EL1, RES0, 60, 4)
+> +    IDREG_FIELD(ID_AA64ZFR0_EL1, RES0_60, 60, 4)
+>      IDREG_FIELD_START(ID_AA64ZFR0_EL1, F64MM, 56, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1269,12 +1260,12 @@ IDREG_START(ID_AA64ZFR0_EL1)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+>      IDREG_FIELD_END(ID_AA64ZFR0_EL1, SM4)
+> -    IDREG_FIELD(ID_AA64ZFR0_EL1, RES0, 36, 4)
+> +    IDREG_FIELD(ID_AA64ZFR0_EL1, RES0_36, 36, 4)
+>      IDREG_FIELD_START(ID_AA64ZFR0_EL1, SHA3, 32, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+>      IDREG_FIELD_END(ID_AA64ZFR0_EL1, SHA3)
+> -    IDREG_FIELD(ID_AA64ZFR0_EL1, RES0, 28, 4)
+> +    IDREG_FIELD(ID_AA64ZFR0_EL1, RES0_28, 28, 4)
+>      IDREG_FIELD_START(ID_AA64ZFR0_EL1, B16B16, 24, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1294,7 +1285,7 @@ IDREG_START(ID_AA64ZFR0_EL1)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+>      IDREG_FIELD_END(ID_AA64ZFR0_EL1, EltPerm)
+> -    IDREG_FIELD(ID_AA64ZFR0_EL1, RES0, 8, 4)
+> +    IDREG_FIELD(ID_AA64ZFR0_EL1, RES0_8, 8, 4)
+>      IDREG_FIELD_START(ID_AA64ZFR0_EL1, AES, 4, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1311,11 +1302,11 @@ IDREG_START(ID_AA64ZFR0_EL1)
+>  IDREG_END(ID_AA64ZFR0_EL1)
+>  
+>  IDREG_START(ID_AFR0_EL1)
+> -    IDREG_FIELD(ID_AFR0_EL1, RES0, 0, 64)
+> +    IDREG_FIELD(ID_AFR0_EL1, RES0_0, 0, 64)
+>  IDREG_END(ID_AFR0_EL1)
+>  
+>  IDREG_START(ID_DFR0_EL1)
+> -    IDREG_FIELD(ID_DFR0_EL1, RES0, 32, 32)
+> +    IDREG_FIELD(ID_DFR0_EL1, RES0_32, 32, 32)
+>      IDREG_FIELD_START(ID_DFR0_EL1, TraceFilt, 28, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1367,7 +1358,7 @@ IDREG_START(ID_DFR0_EL1)
+>  IDREG_END(ID_DFR0_EL1)
+>  
+>  IDREG_START(ID_DFR1_EL1)
+> -    IDREG_FIELD(ID_DFR1_EL1, RES0, 8, 56)
+> +    IDREG_FIELD(ID_DFR1_EL1, RES0_8, 8, 56)
+>      IDREG_FIELD_START(ID_DFR1_EL1, HPMN0, 4, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1380,7 +1371,7 @@ IDREG_START(ID_DFR1_EL1)
+>  IDREG_END(ID_DFR1_EL1)
+>  
+>  IDREG_START(ID_ISAR0_EL1)
+> -    IDREG_FIELD(ID_ISAR0_EL1, RES0, 28, 36)
+> +    IDREG_FIELD(ID_ISAR0_EL1, RES0_28, 28, 36)
+>      IDREG_FIELD_START(ID_ISAR0_EL1, Divide, 24, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1416,7 +1407,7 @@ IDREG_START(ID_ISAR0_EL1)
+>  IDREG_END(ID_ISAR0_EL1)
+>  
+>  IDREG_START(ID_ISAR1_EL1)
+> -    IDREG_FIELD(ID_ISAR1_EL1, RES0, 32, 32)
+> +    IDREG_FIELD(ID_ISAR1_EL1, RES0_32, 32, 32)
+>      IDREG_FIELD_START(ID_ISAR1_EL1, Jazelle, 28, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1455,7 +1446,7 @@ IDREG_START(ID_ISAR1_EL1)
+>  IDREG_END(ID_ISAR1_EL1)
+>  
+>  IDREG_START(ID_ISAR2_EL1)
+> -    IDREG_FIELD(ID_ISAR2_EL1, RES0, 32, 32)
+> +    IDREG_FIELD(ID_ISAR2_EL1, RES0_32, 32, 32)
+>      IDREG_FIELD_START(ID_ISAR2_EL1, Reversal, 28, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1501,7 +1492,7 @@ IDREG_START(ID_ISAR2_EL1)
+>  IDREG_END(ID_ISAR2_EL1)
+>  
+>  IDREG_START(ID_ISAR3_EL1)
+> -    IDREG_FIELD(ID_ISAR3_EL1, RES0, 32, 32)
+> +    IDREG_FIELD(ID_ISAR3_EL1, RES0_32, 32, 32)
+>      IDREG_FIELD_START(ID_ISAR3_EL1, T32EE, 28, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1539,7 +1530,7 @@ IDREG_START(ID_ISAR3_EL1)
+>  IDREG_END(ID_ISAR3_EL1)
+>  
+>  IDREG_START(ID_ISAR4_EL1)
+> -    IDREG_FIELD(ID_ISAR4_EL1, RES0, 32, 32)
+> +    IDREG_FIELD(ID_ISAR4_EL1, RES0_32, 32, 32)
+>      IDREG_FIELD_START(ID_ISAR4_EL1, SWP_frac, 28, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1564,12 +1555,12 @@ IDREG_START(ID_ISAR4_EL1)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+>      IDREG_FIELD_END(ID_ISAR4_EL1, Writeback)
+> -    IDREG_FIELD_START(ID_ISAR4_EL1, WI, 4, 4)
+> +    IDREG_FIELD_START(ID_ISAR4_EL1, WI_4, 4, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+>          IDREG_FIELD_ARCH_VAL(3)
+>          IDREG_FIELD_ARCH_VAL(4)
+> -    IDREG_FIELD_END(ID_ISAR4_EL1, WI)
+> +    IDREG_FIELD_END(ID_ISAR4_EL1, WI_4)
+>      IDREG_FIELD_START(ID_ISAR4_EL1, Unpriv, 0, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1578,7 +1569,7 @@ IDREG_START(ID_ISAR4_EL1)
+>  IDREG_END(ID_ISAR4_EL1)
+>  
+>  IDREG_START(ID_ISAR5_EL1)
+> -    IDREG_FIELD(ID_ISAR5_EL1, RES0, 32, 32)
+> +    IDREG_FIELD(ID_ISAR5_EL1, RES0_32, 32, 32)
+>      IDREG_FIELD_START(ID_ISAR5_EL1, VCMA, 28, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1587,7 +1578,7 @@ IDREG_START(ID_ISAR5_EL1)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+>      IDREG_FIELD_END(ID_ISAR5_EL1, RDM)
+> -    IDREG_FIELD(ID_ISAR5_EL1, RES0, 20, 4)
+> +    IDREG_FIELD(ID_ISAR5_EL1, RES0_20, 20, 4)
+>      IDREG_FIELD_START(ID_ISAR5_EL1, CRC32, 16, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1612,7 +1603,7 @@ IDREG_START(ID_ISAR5_EL1)
+>  IDREG_END(ID_ISAR5_EL1)
+>  
+>  IDREG_START(ID_ISAR6_EL1)
+> -    IDREG_FIELD(ID_ISAR6_EL1, RES0, 32, 32)
+> +    IDREG_FIELD(ID_ISAR6_EL1, RES0_32, 32, 32)
+>      IDREG_FIELD_START(ID_ISAR6_EL1, CLRBHB, 28, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1649,7 +1640,7 @@ IDREG_START(ID_ISAR6_EL1)
+>  IDREG_END(ID_ISAR6_EL1)
+>  
+>  IDREG_START(ID_MMFR0_EL1)
+> -    IDREG_FIELD(ID_MMFR0_EL1, RES0, 32, 32)
+> +    IDREG_FIELD(ID_MMFR0_EL1, RES0_32, 32, 32)
+>      IDREG_FIELD_START(ID_MMFR0_EL1, InnerShr, 28, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1696,7 +1687,7 @@ IDREG_START(ID_MMFR0_EL1)
+>  IDREG_END(ID_MMFR0_EL1)
+>  
+>  IDREG_START(ID_MMFR1_EL1)
+> -    IDREG_FIELD(ID_MMFR1_EL1, RES0, 32, 32)
+> +    IDREG_FIELD(ID_MMFR1_EL1, RES0_32, 32, 32)
+>      IDREG_FIELD_START(ID_MMFR1_EL1, BPred, 28, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1745,7 +1736,7 @@ IDREG_START(ID_MMFR1_EL1)
+>  IDREG_END(ID_MMFR1_EL1)
+>  
+>  IDREG_START(ID_MMFR2_EL1)
+> -    IDREG_FIELD(ID_MMFR2_EL1, RES0, 32, 32)
+> +    IDREG_FIELD(ID_MMFR2_EL1, RES0_32, 32, 32)
+>      IDREG_FIELD_START(ID_MMFR2_EL1, HWAccFlg, 28, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1784,7 +1775,7 @@ IDREG_START(ID_MMFR2_EL1)
+>  IDREG_END(ID_MMFR2_EL1)
+>  
+>  IDREG_START(ID_MMFR3_EL1)
+> -    IDREG_FIELD(ID_MMFR3_EL1, RES0, 32, 32)
+> +    IDREG_FIELD(ID_MMFR3_EL1, RES0_32, 32, 32)
+>      IDREG_FIELD_START(ID_MMFR3_EL1, Supersec, 28, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(15)
+> @@ -1824,7 +1815,7 @@ IDREG_START(ID_MMFR3_EL1)
+>  IDREG_END(ID_MMFR3_EL1)
+>  
+>  IDREG_START(ID_MMFR4_EL1)
+> -    IDREG_FIELD(ID_MMFR4_EL1, RES0, 32, 32)
+> +    IDREG_FIELD(ID_MMFR4_EL1, RES0_32, 32, 32)
+>      IDREG_FIELD_START(ID_MMFR4_EL1, EVT, 28, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1862,7 +1853,7 @@ IDREG_START(ID_MMFR4_EL1)
+>  IDREG_END(ID_MMFR4_EL1)
+>  
+>  IDREG_START(ID_MMFR5_EL1)
+> -    IDREG_FIELD(ID_MMFR5_EL1, RES0, 8, 56)
+> +    IDREG_FIELD(ID_MMFR5_EL1, RES0_8, 8, 56)
+>      IDREG_FIELD_START(ID_MMFR5_EL1, nTLBPA, 4, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1876,7 +1867,7 @@ IDREG_START(ID_MMFR5_EL1)
+>  IDREG_END(ID_MMFR5_EL1)
+>  
+>  IDREG_START(ID_PFR0_EL1)
+> -    IDREG_FIELD(ID_PFR0_EL1, RES0, 32, 32)
+> +    IDREG_FIELD(ID_PFR0_EL1, RES0_32, 32, 32)
+>      IDREG_FIELD_START(ID_PFR0_EL1, RAS, 28, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1918,7 +1909,7 @@ IDREG_START(ID_PFR0_EL1)
+>  IDREG_END(ID_PFR0_EL1)
+>  
+>  IDREG_START(ID_PFR1_EL1)
+> -    IDREG_FIELD(ID_PFR1_EL1, RES0, 32, 32)
+> +    IDREG_FIELD(ID_PFR1_EL1, RES0_32, 32, 32)
+>      IDREG_FIELD_START(ID_PFR1_EL1, GIC, 28, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -1958,7 +1949,7 @@ IDREG_START(ID_PFR1_EL1)
+>  IDREG_END(ID_PFR1_EL1)
+>  
+>  IDREG_START(ID_PFR2_EL1)
+> -    IDREG_FIELD(ID_PFR2_EL1, RES0, 12, 52)
+> +    IDREG_FIELD(ID_PFR2_EL1, RES0_12, 12, 52)
+>      IDREG_FIELD_START(ID_PFR2_EL1, RAS_frac, 8, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -2006,14 +1997,14 @@ IDREG_START(MIDR_EL1)
+>  IDREG_END(MIDR_EL1)
+>  
+>  IDREG_START(MPIDR_EL1)
+> -    IDREG_FIELD(MPIDR_EL1, RES0, 40, 24)
+> +    IDREG_FIELD(MPIDR_EL1, RES0_40, 40, 24)
+>      IDREG_FIELD(MPIDR_EL1, Aff3, 32, 8)
+> -    IDREG_FIELD(MPIDR_EL1, RES1, 31, 1)
+> +    IDREG_FIELD(MPIDR_EL1, RES1_31, 31, 1)
+>      IDREG_FIELD_START(MPIDR_EL1, U, 30, 1)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+>      IDREG_FIELD_END(MPIDR_EL1, U)
+> -    IDREG_FIELD(MPIDR_EL1, RES0, 25, 5)
+> +    IDREG_FIELD(MPIDR_EL1, RES0_25, 25, 5)
+>      IDREG_FIELD_START(MPIDR_EL1, MT, 24, 1)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -2024,7 +2015,7 @@ IDREG_START(MPIDR_EL1)
+>  IDREG_END(MPIDR_EL1)
+>  
+>  IDREG_START(MVFR0_EL1)
+> -    IDREG_FIELD(MVFR0_EL1, RES0, 32, 32)
+> +    IDREG_FIELD(MVFR0_EL1, RES0_32, 32, 32)
+>      IDREG_FIELD_START(MVFR0_EL1, FPRound, 28, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -2063,7 +2054,7 @@ IDREG_START(MVFR0_EL1)
+>  IDREG_END(MVFR0_EL1)
+>  
+>  IDREG_START(MVFR1_EL1)
+> -    IDREG_FIELD(MVFR1_EL1, RES0, 32, 32)
+> +    IDREG_FIELD(MVFR1_EL1, RES0_32, 32, 32)
+>      IDREG_FIELD_START(MVFR1_EL1, SIMDFMAC, 28, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -2102,7 +2093,7 @@ IDREG_START(MVFR1_EL1)
+>  IDREG_END(MVFR1_EL1)
+>  
+>  IDREG_START(MVFR2_EL1)
+> -    IDREG_FIELD(MVFR2_EL1, RES0, 8, 56)
+> +    IDREG_FIELD(MVFR2_EL1, RES0_8, 8, 56)
+>      IDREG_FIELD_START(MVFR2_EL1, FPMisc, 4, 4)
+>          IDREG_FIELD_ARCH_VAL(0)
+>          IDREG_FIELD_ARCH_VAL(1)
+> @@ -2119,17 +2110,13 @@ IDREG_START(MVFR2_EL1)
+>  IDREG_END(MVFR2_EL1)
+>  
+>  IDREG_START(REVIDR_EL1)
+> +    IDREG_FIELD(REVIDR_EL1, VAL, 0, 64)
+>  IDREG_END(REVIDR_EL1)
+>  
+>  IDREG_START(SMIDR_EL1)
+> -    IDREG_FIELD(SMIDR_EL1, RES0, 60, 4)
+> -    IDREG_FIELD_START(SMIDR_EL1, NSMC, 56, 4)
+> -        IDREG_FIELD_ARCH_VAL(0)
+> -        IDREG_FIELD_ARCH_VAL(15)
+> -    IDREG_FIELD_END(SMIDR_EL1, NSMC)
+> -    IDREG_FIELD_START(SMIDR_EL1, HIP, 52, 4)
+> -        IDREG_FIELD_ARCH_VAL(0)
+> -    IDREG_FIELD_END(SMIDR_EL1, HIP)
+> +    IDREG_FIELD(SMIDR_EL1, RES0_60, 60, 4)
+> +    IDREG_FIELD(SMIDR_EL1, NSMC, 56, 4)
+> +    IDREG_FIELD(SMIDR_EL1, HIP, 52, 4)
+so this looks wrong to me. I fixed that in v7
+>      IDREG_FIELD(SMIDR_EL1, Affinity2, 32, 20)
+>      IDREG_FIELD_START(SMIDR_EL1, Implementer, 24, 8)
+>          IDREG_FIELD_ARCH_VAL(0)
+> @@ -2158,7 +2145,7 @@ IDREG_START(SMIDR_EL1)
+>          IDREG_FIELD_ARCH_VAL(2)
+>          IDREG_FIELD_ARCH_VAL(3)
+>      IDREG_FIELD_END(SMIDR_EL1, SH)
+> -    IDREG_FIELD(SMIDR_EL1, RES0, 12, 1)
+> +    IDREG_FIELD(SMIDR_EL1, RES0_12, 12, 1)
+>      IDREG_FIELD(SMIDR_EL1, Affinity, 0, 12)
+>  IDREG_END(SMIDR_EL1)
+>  
 
 
