@@ -4,113 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A023C4451B
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 08:32:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1B58C4451B
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 08:35:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wljPz-0001ew-NN; Mon, 20 Jul 2026 04:32:07 -0400
+	id 1wljSq-0002B5-C1; Mon, 20 Jul 2026 04:35:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wljPt-0001eU-TN
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:32:03 -0400
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wljPs-0002Tt-2J
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:32:01 -0400
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-7dbcb505578so61402087b3.3
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 01:31:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784536318; cv=none;
- d=google.com; s=arc-20260327;
- b=RyMntX0Vm8RfYUaIA8tHSTO2DZmItGBbQuvjxoucogVT84Pj9GaoI7Dw6M/eMz4Hgr
- ctH4ZhXr835VHiIdFIlE1wpATptJ5rUFZeR2jpH7Ugea7l6F6abMYvkBkFxVo8URHqBf
- 1Lgh2SQyQ46TDE5mWe2ECjVNTFrbQWvNdzlg+7ActuCu5hnSKNE3Ak+UEiuRVACsZEuK
- eEaoocEYB4bVpLgN+GGd/xFtcVNm16stuIAkZTUeBjTEz0Z01LO8RgUh1T/cR3cmIumQ
- 09ywGpQB9i5tQAMlgj/0cDRs0OFWJXp2hm92spGdzwJBJ06UuPe7I7iyHuxk+8SmjVbb
- onfg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=gIEnLpBMMVRyDO5mv5koU9MuFZKWGefAWsKxEU9XMzc=;
- fh=4NKQzDpksfHY6WJy7V3nk40+yqgJaRP/0yAq75KogA4=;
- b=UqOJ+PTiZcMZDAliFL+PMUztFaNJEPDvviuFcYAeQcU6R9/Sm5mNZhmeaKHo5Defja
- COdOkWZoNFuD6p/ZNOixjfK+k5qM+l36GKoQqtuEE3wj10I+BU6XMYeY52aA3NDGWKWX
- NGDxcroJxmsigmF0hzhEqaRjbr0JTP3rsRqlks8UilJwqtFtf4rhX3k2R2L2ef8kDcRG
- EOmX80uZMEMS33EFOwm+EElxGjeuLcrSXsY9zvVCGKE9+GDUCvwaHEmrj6HUQN9Sz4+4
- hnvqPFQuQ6LfsU+xQgej4KPYvoaCE8vbY05NgfJBuh14vuVS2KouBdeCdCWxGbLoeJDf
- ZI6g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1784536318; x=1785141118; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=gIEnLpBMMVRyDO5mv5koU9MuFZKWGefAWsKxEU9XMzc=;
- b=uJjy6vkdUVRLQdLJDJKH/Qdv1yLqceMTWoIpVc135lIAxh6rlAOi98pyscqWJpyUGC
- ptWhYmVBwiYTHbCBEihK3mT0aWntzAs++dmDs58rplclW1vTdeS7SdVpJUvhtrAHa5T4
- 7xg5uwdP9ECp5MabGW1k5fQf8wyXogAwSeWIhlljLUzZZ6tXpwrZRNKo49dG0MLWOCJe
- zTgI2OijDfK9qBGCjmSJqDdhnRIyFMjal+ASgRKsFegLSJbQpaKwcTZoAImjH/DZK4ss
- o6ryIdf40cRjEuJ+a3MwhwegJobi+ZA2D6EB8dgsMDuHpQGYR97TbG6xZHybgnO85y08
- Xvqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784536318; x=1785141118;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=gIEnLpBMMVRyDO5mv5koU9MuFZKWGefAWsKxEU9XMzc=;
- b=iewlaeIBYilel0q9IHZFPEgWdN5ANeNSEz+munTjHahuGVOFohT2iLrGXz1Z/SWguT
- CZbqnyIh7p55YIgPoAOWZcwsVOHVCGNqsZnRk8o8mDGXMAXvVcpHKHsA6iXHOiVjhfFU
- lC3humyjr0CQRvJnSUq7BTGiWdb0m/xWnRYPAYozrO9tzRS9C1g7iDkS2bKxcjxm6YDE
- 8vi8mXXIIe3UeupPCHolROeD3Pwh3pT49wPTXVOVsF1qfTKULb2GCv+ePFTh7mle3xQl
- TxbjogJJ5go23Ld1BglpGSJvOZlePlPGqV96Q9lnjEmR7VnimrgB1fx2cgll8bpeAP+8
- ++6w==
-X-Forwarded-Encrypted: i=1;
- AHgh+Ro4m1pdGwN9spIm/PNZ8577evvotA1MJPjABxki+uJofgpsgAkPiAQBG9vJVYYxWs9POOHIHXk+eiQ9@nongnu.org
-X-Gm-Message-State: AOJu0Yz/6ckFay+zSwLWEgV0BPMRV5N9ZZegTj8eYtWAGhOOYpBrduqJ
- ea4NfnDpAsfHQZg3wE1oqEfDPxlHo6sqWWkPtE8rcykHYyTB8YvlqMrYTTEib4AL928rh2nEKfu
- B3j71mO71fQCjHWdGSw1C8LQ+PXomo85Kgs8wM2T04w==
-X-Gm-Gg: AR+sD13uT+/ajvQ1fRXgZB2hDEN8bezJs82h3SK46Fg8L16kNEDzFXYIi/CUmRAvNTJ
- 8WtaDmnK7tIUyVUrkVjO8akaZ4/R1dc2WeXlrlqUdvSuAofzfqRVWifgSBxCtcCV0PgzjU8KK90
- 97x6AYjpYj9zOvBDxIdu/jwA8gUPFgK3cW62huEMPrzTd5rza8cVQqbMTPlMo2Qbto/ayztcEqn
- Oj+KbnHPd0zVpNw6m/OVTTcpWE1hUoGx3hcZxoXqDREORiegSS6b9nFtDy89ieCBhCfKF+yC74A
- QIqG6i42TOK328BKHJbpSIA0Ax64nVDnpho+srww4unFppXgn7wmnq4Y
-X-Received: by 2002:a05:690c:67c4:b0:81c:e8ab:c4ed with SMTP id
- 00721157ae682-81ef2602339mr31935267b3.51.1784536318550; Mon, 20 Jul 2026
- 01:31:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1wljSo-0002Al-Eh
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:35:02 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1wljSk-0002dT-Uq
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:35:02 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8BxZeik3V1qiDQFAA--.19286S3;
+ Mon, 20 Jul 2026 16:34:44 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJAxTsWa3V1q9bESAA--.31591S2;
+ Mon, 20 Jul 2026 16:34:37 +0800 (CST)
+Subject: Re: [PATCH v2] target/loongarch: fix data race in CSR_ESTAT
+To: shankerwangmiao@gmail.com, qemu-devel@nongnu.org
+Cc: Song Gao <17746591750@163.com>, Xianglai Li <lixianglai@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Xi Ruoyao <xry111@xry111.site>,
+ b4-sent@kernel.org
+References: <20260716-loong-race-v2-1-01e68e4b850f@gmail.com>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <3613f855-8b22-2e94-fa14-339acec997ed@loongson.cn>
+Date: Mon, 20 Jul 2026 16:34:24 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20260715185701.1287176-1-brian.cain@oss.qualcomm.com>
- <20260715185701.1287176-4-brian.cain@oss.qualcomm.com>
- <cc3b6f33-6cc7-484c-901c-ffa4003c2865@oss.qualcomm.com>
-In-Reply-To: <cc3b6f33-6cc7-484c-901c-ffa4003c2865@oss.qualcomm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 20 Jul 2026 09:31:46 +0100
-X-Gm-Features: AUfX_mwK-B9ogPnyB6gisT2YbpG7xUmZp_KIhsZYEHwGHulq1Z2xjI5XA0QXmbE
-Message-ID: <CAFEAcA9iSgrua_ekOQ=EaXp=Mcxwk52qK6AkRXCrH1KcRm_vTA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/7] bitops.h: Add find_first_bit32()
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org, 
- pierrick.bouvier@oss.qualcomm.com, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- matheus.bernardino@oss.qualcomm.com, ltaylorsimpson@gmail.com, 
- Thomas Huth <th.huth+qemu@posteo.eu>, Laurent Vivier <lvivier@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20260716-loong-race-v2-1-01e68e4b850f@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJAxTsWa3V1q9bESAA--.31591S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxXFWkAr13WF4xtFyUCryfGrX_yoWrCF1xpr
+ W2kFnIqr4kGrWUJ3Z7ta9I9rn8Ar4xGFnFvanFy34fCF45uw15Wr1vq3srWFWDW3s5ur40
+ vrWFgF98Wa4jvFgCm3ZEXasCq-sJn29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUBYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1ln4kS14v26r1Y6r17M2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12
+ xvs2x26I8E6xACxx1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y
+ 6r17McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr4
+ 1lc7I2V7IY0VAS07AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWU
+ JVW8JwCFI7km07C267AKxVWUXVWUAwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4
+ vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IY
+ x2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26c
+ xKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAF
+ wI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8hiSPUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.494,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,50 +82,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 20 Jul 2026 at 08:49, Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> Hi Brian,
->
-> some random thoughts...
->
-> On 15/7/26 20:56, Brian Cain wrote:
-> > set_bit32()/test_bit32()/etc already let devices operate on
-> > guest-visible uint32_t register arrays without depending on the
-> > host's 'unsigned long' size. find_first_bit() has no such
-> > equivalent, which pushes callers towards casting a uint32_t array
-> > to 'unsigned long *'.
-> >
-> > Add find_first_bit32(), implemented the same way as find_first_bit().
-> >
-> > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> > ---
-> >   include/qemu/bitops.h | 30 ++++++++++++++++++++++++++----
-> >   1 file changed, 26 insertions(+), 4 deletions(-)
->
->
-> > +/**
-> > + * find_first_bit32 - find the first set bit in a memory region
-> > + * @addr: The address to start the search at
->
-> s/addr/ptr/?
->
-> > + * @size: The maximum size to search
->
-> Pre-existing, it is not clear this is expressed in bits. Neither if
-> we expect it to be a multiple of 32, or @addr to be 32-bit aligbed.
->
-> Maybe rename as @last_searched_bit?
 
-Could we please stop bikeshedding this function? It's
-a simple copy of the existing find_first_bit() but
-with the type changed from 'unsigned long' to 'uint32_t'.
-The comments and parameter names on that existing function
-have been fine for years, and having the new function
-pick different names and comment phrasing seems unnecessary
-and obscures the parallels between the two functions.
 
-thanks
--- PMM
+On 2026/7/16 上午4:48, Miao Wang via B4 Relay wrote:
+> From: Miao Wang <shankerwangmiao@gmail.com>
+> 
+> The CSR_ESTAT register of a CPU can be read and written by both the
+> CPU thread and other threads (e.g., the interrupt controller thread).
+> Currently the possible readers and writers of CSR_ESTAT are:
+> 
+> - Readers
+>    - tcg generated by trans_csrrd(, CSR_ESTAT)
+>    - loongarch_cpu_has_work()
+> 
+> - Writers
+>    - tcg generated by trans_csrxchg(, CSR_ESTAT)
+>    - helper_csrwr_estat()
+>    - helper_csrrd_msgir()
+>    - loongarch_cpu_set_irq()
+>    - loongarch_cpu_do_interrupt()
+>    - loongarch_cpu_exec_interrupt()
+> 
+> The access from the CPU thread is not synchronized with the access from
+> other threads, which may lead to data races. The above readers and
+> writers shall all run on the corresponding CPU thread except for
+> loongarch_cpu_set_irq(). To fix this, the access to CSR_ESTAT in
+> loongarch_cpu_set_irq() is moved to the CPU thread by using
+> async_run_on_cpu().
+> 
+> The data race has been identified while running the test cases from
+> dracut, which is using QEMU to boot a LoongArch guest. By running the
+> tests repeatedly (about 30 times) in the following conditions, the
+> guest will hang in the middle of booting:
+> 
+> - Host architecture: LoongArch64 or Aarch64
+> - Guest kernel: 7.1.3+deb14-loong64
+> - Number of vCPUs: 1 or 2
+> - CPU Features: max, la464,msgint=off,ptw=off, or la464,msgint=off,ptw=on
+> - Accelerator: tcg
+> 
+> When the guest hangs, the guest kernel log shows various errors related
+> to RCU stalls or other Soft Lockup or Hard Lockup issues. When running
+> with 1 vCPU and the guest hangs, the guest kernel directly hangs without
+> any messages and stucks at idle_exit.
+> 
+> With this patch, the guest can boot successfully without any hangs
+> during repeated runs of the test cases.
+> 
+> Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
+> ---
+> Changes in v2:
+> - Simplify the changes to move the access to CSR_ESTAT from the only
+>    unsynchronized loongarch_cpu_set_irq() to the CPU thread using
+>    async_run_on_cpu() to avoid the race condition.
+> - Link to v1: https://lore.kernel.org/qemu-devel/20260714-loong-race-v1-1-54111549c95e@gmail.com
+> ---
+>   target/loongarch/cpu.c | 27 +++++++++++++++++++--------
+>   1 file changed, 19 insertions(+), 8 deletions(-)
+> 
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index fb03424ffa8cd5e5d250531cc2a36fa789fc25a9..126c3ad276cc44311942542e086bcabe41d91b63 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -57,12 +57,27 @@ static vaddr loongarch_cpu_get_pc(CPUState *cs)
+>   #ifndef CONFIG_USER_ONLY
+>   #include "hw/loongarch/virt.h"
+>   
+> +static void do_set_cpu_estat(CPUState *cs, run_on_cpu_data data)
+> +{
+> +    CPULoongArchState *env = cpu_env(cs);
+> +    CPUSysState *sys = env_sys(env);
+> +
+> +    int irq = data.host_int;
+> +    int level = irq >= 0 ? 1 : 0;
+> +    irq = level ? irq : -irq;
+> +
+> +    sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, irq, 1, level != 0);
+> +    if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
+> +        cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+> +    } else {
+> +        cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+> +    }
+> +}
+> +
+>   void loongarch_cpu_set_irq(void *opaque, int irq, int level)
+>   {
+>       LoongArchCPU *cpu = opaque;
+> -    CPULoongArchState *env = &cpu->env;
+>       CPUState *cs = CPU(cpu);
+> -    CPUSysState *sys = env_sys(env);
+>   
+>       if (irq < 0 || irq >= N_IRQS) {
+>           return;
+> @@ -71,12 +86,8 @@ void loongarch_cpu_set_irq(void *opaque, int irq, int level)
+>       if (kvm_enabled()) {
+>           kvm_loongarch_set_interrupt(cpu, irq, level);
+>       } else if (tcg_enabled()) {
+> -        sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, irq, 1, level != 0);
+> -        if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
+> -            cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+> -        } else {
+> -            cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+> -        }
+> +        async_run_on_cpu(cs, do_set_cpu_estat,
+> +                         RUN_ON_CPU_HOST_INT(level ? irq : -irq));
+This is a good method with async_run_on_cpu, there is one small issue 
+with irq == 0 interrupt injection where -irq/irq are both 0.
+
+Regards
+Bibo Mao
+>       }
+>   }
+>   
+> 
+> ---
+> base-commit: 499039798cdad7d86b787fec0eaf1da4151c0f05
+> change-id: 20260707-loong-race-63639e8f5afb
+> 
+> Best regards,
+> 
+
 
