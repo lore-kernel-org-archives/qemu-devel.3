@@ -4,101 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CF98C44520
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 20:55:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AE78C44520
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 20:58:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlv0l-0007pc-L9; Mon, 20 Jul 2026 16:54:51 -0400
+	id 1wlv3o-0001C8-3x; Mon, 20 Jul 2026 16:58:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wlv0k-0007nw-AQ
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 16:54:50 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wlv3m-0001AB-RB
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 16:57:58 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wlv0h-0007yk-Rm
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 16:54:49 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ id 1wlv3l-00005H-6O
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 16:57:58 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66KJTgfD3622334
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 20:54:44 GMT
+ 66KJTSRh3492064
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 20:57:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- j1yaI9+UfRFExxJWNuN1Irm3lmYbG6CVl7bu6i2Vrzo=; b=X0vUQZthLGy8i433
- mR5mzBPnxNQhvq8pyqcdPPYxs0hKq6ojsfeLyBxhEQoJ2kX+7XzzlpWH1x1ZcSDs
- af4H7NlkefIYXCHgNr5aAjK0sPygak+dQyc4LR1u9+tO/dTCPIEKaE89ZlJNhapx
- Vn/sxHP9Vpg1ejGKmMYRWOQMIhZiA4HX7sDtlrUGUe/Ku1tsbG00184P9hbj3ZME
- PAJ9G3/PP+aV6IdigP4fqQ8+lA6qb66XYHSJkff2ywNcZwsiE9Pxw1+oAo/ekbOb
- cgb7nh2pNKgugnYFcgMlPvLb3mXgVxbnCH9jiKLCW956r2vbXIjVzvZqIm5yzTo8
- YN6OmA==
+ q5m5YhLzsuHt+goJykgjATSDXmmGEZj6f/t2DG1fv54=; b=gypfM1C+hunrJKHP
+ PjUplKokm19F9kwMHfHjJXb83UIG+z/+cXd0m7YHJBxAq59vkEL68OqFB/fwlPw8
+ EjjzoRbSI253roi6ECXdNTBWjE0TdXujyVQlNmF9W2bjuzCkpUGPr8/n2ozUUBGG
+ jWLnAA/2HqXOi92LTnGypSyHcb0bDgVjyNoZUSnvD/zzaHJA9geKQtDOMgXQrJCy
+ qF9MEauOAmdkFQnsHOtNvZH6OU6+f/GN3wBQX63y4BFLSK2RTMAktpeE659hhxqN
+ WLNt4QXyrJKDfU674Xj8cePSrBV1NyPWHk02iGk5+8Y0GwQxG2VwwvnXLJsJU+8I
+ CP79Xw==
 Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
  [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhfvxkb5p-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhqv40xma-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 20:54:44 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 20:57:55 +0000 (GMT)
 Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-51c1b4d961dso78998731cf.1
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 13:54:44 -0700 (PDT)
+ d75a77b69052e-522de3c645dso66027381cf.3
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 13:57:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784580883; x=1785185683; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:references:cc:to
- :from:content-language:subject:user-agent:mime-version:date
+ d=oss.qualcomm.com; s=google; t=1784581075; x=1785185875; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=j1yaI9+UfRFExxJWNuN1Irm3lmYbG6CVl7bu6i2Vrzo=;
- b=DDCQn2gptSEXbw09Al6Ho8r1+SEh0HsJBAiL6rs4mF8nigGn6ZM0+y0MwzOWMLESVE
- JTP5Pn0xZfSbVD7o5zud8xSYnpxtTnQyZ2JmefNjLE8P6d2tlWIRKORdy14ySSY8ZOck
- 0y4eD9gaqpD1tWsompaffw3Efo58MZVuyKK0DM+yPzac8ZeUE1j1OTmm9NIUBWk60QXW
- lo9tPWbk9xD8Au42X587i1xqrmzaOvz0lze9lGw/xMMOsi500drI/9X4lzful4QRRgxz
- 5tj00XGEBFTgbMg96ivy+Q3wWs9c5aWiEoElf+SD2S0oL+MH9B3QqJZGuMvv1/IcfBqh
- is0g==
+ bh=q5m5YhLzsuHt+goJykgjATSDXmmGEZj6f/t2DG1fv54=;
+ b=QFgrLa3hwYA6jCBytGpjqS+3m7xhDUEA4h1QF5GOfvXOVPRd0awZcvgdwaV3yJI2/h
+ raSXXvorlt5vvuvyn9CvtNGSv8D+z20CwysXdwiSDxlcg5FI5CJYPUQALhij+xKZyEbm
+ daENUN5VZeonEKjL9rZt2ZgTgm8aRZCS0IEh5RBcbSdw/WS6zFudyko9hD/j0Gfcgglk
+ 53KokqDDbx1ynSFQblY/QGIkuauEMFKigK7XkI+WSnuWqpOMiiskMNTWhgwgskwwD8ky
+ 1QM0MBBInEokiZTOxrzfnDWm3tlaJPUMlLD8YM8MQFJDff+OqKHHmoKPXBpmZD3/wOW5
+ Ua+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784580883; x=1785185683;
- h=content-transfer-encoding:content-type:in-reply-to:references:cc:to
- :from:content-language:subject:user-agent:mime-version:date
+ d=1e100.net; s=20251104; t=1784581075; x=1785185875;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=j1yaI9+UfRFExxJWNuN1Irm3lmYbG6CVl7bu6i2Vrzo=;
- b=r8IqONz8zS60RQRd3Dg04dYd7j4oJ6OVYD37XYm2CX7Jf0Zn5wW6l8BsNg1VU4bqH/
- EKDKikvBIKqyg1eX0OxQAYIA2Xtx6wH0EsuCFN+5bw2mMffdYiJzFfPwzlDoR7WKdK/G
- 2HVsoaFQJWlvW8f8bWISAIe1+pT//OHRSW8UWDTxpYMC7pcsbCn95VJShJ0J0bEbkBvQ
- lSXnSUpbC6+KdCKNcKf6/0LCu2Hpa7Yb6eiL0/XxpimV4Ej7zYwxHRFX29HU7ynEdRLQ
- VCAiN/JfmHs4wfhvtFZ39g+RA+2MAHrgv8I2+idNpNqK5XY3XhfPk9FEYBDCjG4sbMrB
- v5uw==
+ bh=q5m5YhLzsuHt+goJykgjATSDXmmGEZj6f/t2DG1fv54=;
+ b=FZc5jU2tADL4MIRpgRAltGi9WaaP+2xoajsQKjn5CGusNH0xzabWYxGxdunmR4FBf0
+ dzMXftBQQthfwkH0HKBidztrUo18j4pI+JyC4PN4O+pa6Lk4K8+++txnVU+51Uy+V5Z5
+ 26YJ478Gn3CYV0NkdFP/FlUfO0rfy3iGe0zD4BdNavZ5jaEM33YzDzIaLX7I1Mxl6cOV
+ blM4Ug8Bb6yXusieW5FtAlxghJbInbXiSdZFZ7fWuYzki7fYwZy8j6j58Ewq7qZmbmTW
+ FKs4rhrehr/YQa8IeOfbsU0u/I5lJoTMIK+qPwYW7WH9Rr/A2O1YuMmS1vHI62Y69eFG
+ LJoQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RqgFOLGl67EHBFK1UscAaXBAqlgUpT/saHtI+tdVfnMVcG5RxZTNOxgPFcy4/xyXbuxVUR5gGQ/OGJA@nongnu.org
-X-Gm-Message-State: AOJu0YzT1xe99iXQQVEcLwLY9OVFHemwqW9d2stkV0M9ok2uvahm9FLd
- PS0sprwulS9MqF1JERKBtaX5zDGn+VBEBDFOW6YvH9+Szh7Q734awTxhM2n1sd/4v9KtAZjmDjN
- XdY9TjMw7EruAMUpk379W6SWELrTHJmR4ZDjgFxpkXRSU5dCcYGmveYXxIw==
-X-Gm-Gg: AfdE7cknZPCXQQDZLmReqogh02lG5nKmvX6j6qjFLN2dfZjMH/QantC7LYYNCWaitsX
- YG7uMw9F0FCQG9yeVmUBTOhP58XyW9CyeCSgFfFin1XUNq3LIm3zOgvQ9A4RGg4xeiNt3iTLHVX
- SjWwb/tbRoWbBGZd6GTvLkWkbRUFb1r33se2ofvNnDYhOZeMHqc28QDMtaygnDcbmpR27x1Prc9
- LuRz2f7SGvHjFgNWqt9diPRlNbhMTyc5uh2wQOvkp3apbxh9WJS9ZVhzs2oeY4ihHu+nJWukUrE
- xqgi+tSsyuzDeJEsmQrLEHNSjgDNILXmnGRdRoKjapMwqRDQnrBPa7Wq3VaVR7RSGDpSWVIlFHd
- UIvu/UJ5BPfT1cnSqs5O4dYHy77hHasgKbtnM5laOmcp6cPj8lS4=
-X-Received: by 2002:a05:622a:60c:b0:51c:98f:f288 with SMTP id
- d75a77b69052e-51fc1293160mr201720201cf.25.1784580883411; 
- Mon, 20 Jul 2026 13:54:43 -0700 (PDT)
-X-Received: by 2002:a05:622a:60c:b0:51c:98f:f288 with SMTP id
- d75a77b69052e-51fc1293160mr201719971cf.25.1784580882969; 
- Mon, 20 Jul 2026 13:54:42 -0700 (PDT)
+ AHgh+RoKTzU0Fq5L79TNKqYSL3kvAQDGtQJAqEHyVirhtgbXalekYCOG8aR2QE4F0TNptGdIy1V55evWqixB@nongnu.org
+X-Gm-Message-State: AOJu0YyTHN7Ejh0Ef9kjRjTyhQwAoxS/03SjC3HZNbkU2CcDvf+d21Av
+ jIJ7AnA1KEkMOEYMBxTaCcsj51ZL6dhck7VStJP6MhdtqmYqFiYMLV9hrRIuCJ4gAKTGlzqFpiI
+ DFlQWb2GJ4daIRja2LI0OWzMzIt1ev/I4Jw1l6ZBIe+Hn0ngyAucr7VS4IA==
+X-Gm-Gg: AfdE7cm0kNSIfaH4vrx7D6cCxMViYEvENjfxovV8QlQ8FaoARqqyYRY2V7YO4GTynvg
+ 3H8njJXwGqB09mtsUtqNRX0wlhf+dt2n2EXD+75m47t7HJGC5E0DmKvs+a5U92yKK8npnjCWUOP
+ EH6gyJ6kK76MECNricKbQs0dBLr6ZQXSyhwxFHUu+Hc4jS59lssbYJX8k7ebBaPqJU9LoXN9W5m
+ EicZsAi8lmxO7mr5ix6Lw0sLvhn/sFPiYUfB00HrDQqO3Bd3pxDX55qtfFES+kdKQiUXEyKG2pA
+ 2u/ljI+Mn8/uaDK+IZm8M49P2DTUhQ8zUYfJ7gqIxWSbiQvyUwZiC0Qoxb8Ly7WO+n6R6rXDdPX
+ 2dpFrOOEqu0Yljj2PJ1UROIM8hsdvvmNnpGfFgcXmzi8juWvvh/Y=
+X-Received: by 2002:ac8:7d4f:0:b0:51c:185b:29e0 with SMTP id
+ d75a77b69052e-5213a3824d6mr151131251cf.10.1784581075122; 
+ Mon, 20 Jul 2026 13:57:55 -0700 (PDT)
+X-Received: by 2002:ac8:7d4f:0:b0:51c:185b:29e0 with SMTP id
+ d75a77b69052e-5213a3824d6mr151130961cf.10.1784581074544; 
+ Mon, 20 Jul 2026 13:57:54 -0700 (PDT)
 Received: from [192.168.69.219] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4956547319dsm13811755e9.5.2026.07.20.13.54.40
+ 5b1f17b1804b1-49548e075d4sm221781295e9.1.2026.07.20.13.57.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Jul 2026 13:54:41 -0700 (PDT)
-Message-ID: <5af0aaf1-d372-4800-9f6f-8f5dacd8c69e@oss.qualcomm.com>
-Date: Mon, 20 Jul 2026 22:54:40 +0200
+ Mon, 20 Jul 2026 13:57:53 -0700 (PDT)
+Message-ID: <797f3cd6-5ca2-4cba-8aa0-43fa883f274c@oss.qualcomm.com>
+Date: Mon, 20 Jul 2026 22:57:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/8] hw/9pfs: annotate V9fsTransport callbacks as
- coroutine_fn
+Subject: Re: [PATCH 5/8] qcow2: remove invalid qcow2_check_refcounts calls
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>, Peter Xu <peterx@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
  <berrange@redhat.com>, John Snow <jsnow@redhat.com>,
@@ -106,46 +104,47 @@ Cc: Markus Armbruster <armbru@redhat.com>, Peter Xu <peterx@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  qemu-block@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
  Fam Zheng <fam@euphon.net>, "Denis V. Lunev" <den@openvz.org>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Greg Kurz <groug@kaod.org>, "Michael S. Tsirkin" <mst@redhat.com>,
  Stefano Stabellini <sstabellini@kernel.org>,
  Anthony PERARD <anthony@xenproject.org>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  xen-devel@lists.xenproject.org, Li Zhijian <lizhijian@fujitsu.com>
 References: <20260720-co-v1-0-fabb4db3c204@redhat.com>
- <20260720-co-v1-7-fabb4db3c204@redhat.com> <7970030.EvYhyI6sBW@weasel>
- <7790107e-1256-4ed8-ba49-cab980197938@oss.qualcomm.com>
-In-Reply-To: <7790107e-1256-4ed8-ba49-cab980197938@oss.qualcomm.com>
+ <20260720-co-v1-5-fabb4db3c204@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260720-co-v1-5-fabb4db3c204@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=HKLz0Itv c=1 sm=1 tr=0 ts=6a5e8b14 cx=c_pps
+X-Proofpoint-ORIG-GUID: PXZtkxEnLEu3mVDAoQQhI8pMwzqfHBbo
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDIyOSBTYWx0ZWRfXxutk4BmWUeqo
+ blmDwqHVYQp6bZ2NoALl4PcU0rBQCAgT3yPiB/i1BS0g0WKqSyoJDptYkeim85jSGx5sRkacpCg
+ 9h4SjxV+1MEBriX5ks7K6uvOImlqea491B1umNg/6eV4joc2ysNKBxdr6uHaOiVoXyuRrf1PgvG
+ 6mPn1EhGFPHQxpkRwiLPHgJm7PfxF/WS0xnRkNTYyghdcsrc2t06ylqaOpTO3l8DeEcVGtihW1K
+ BeGTf5f5vj/lISCbBWJQhYksrY2yuiYXGcop2pxBKuiJHU8HFPUU04DTfd/12PbEyvr8AS9DCF/
+ 6mMg9WgowjrAYwQAdbgmaktAuFaprt69CKmneqS30d1tMaSr/BZqcPA5iN8F6wVYmEMQzNkDi4/
+ FUnj5MJRiLHZe2qjwx6U9bNT0rA4TaTwK/fMOj/3PbqEqaRYGMnqxlBjJJ+AbImE+SUBx2zFbzB
+ 8cvJWa7zFV/4a60BNfQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDIyOSBTYWx0ZWRfX6/wssqnm9CmV
+ /dg1SVTVZCs3dsHavUe7MQvHxUG2z1rljIaUwv4Nl5iEHBfAUWnsjuc9DYzzvIcJ3A4RIWPomye
+ 1zpmvrbRZcqNFTgGWnZMNxBn260Tsa8=
+X-Authority-Analysis: v=2.4 cv=daawG3Xe c=1 sm=1 tr=0 ts=6a5e8bd3 cx=c_pps
  a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=20KFwNOVAAAA:8 a=FKbDSFgr-VcrMEy9-l8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDIyOCBTYWx0ZWRfX0mU2l9oCzJnT
- 27mr9tLnSzn2zznMC9rRzZ4rywNSh4Sri9apGL3kd+r07V6wTAr9BGl0x+bRFoiz0z5fBtSIrze
- b5oXepdYoOnQa/2lPg2PV8vPnqVewoI=
-X-Proofpoint-GUID: WUm0sbBwuNgsDdrE-kBhDfD7RHLBzXW2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDIyOCBTYWx0ZWRfX8/bsPTfIZ6TG
- V8IZfSXLu7AI9F/M5kteJcdXP07IJQ99JL0JFTgSyUxM60Zk2SSwNBosbxF+r3AhLfU7J4AfNuM
- UdwkdPjxFNiXpj9WPtQ7z72zLaHZ+LQNya48rq4mojn2uCDJJWpMFmGxnu/Obedu4SaFwoYI9Rv
- SkhMErY/6BEdLlVnfzAWQALThopIAJ814VnJQ/scFo3lVgh6IFGOUkI3Tq7oACaIngUbSBYYurB
- Itqz1RxL+y2v3l15vPm/Z4NgiaAQY8AsZ2xVz0oLEYD2pKfXAOy2h1FTlNEwHFojGu6Lsf507WX
- ZU2deVkp8DYr4954wZ4SMJHmgUZE8+SIRCkuKLjH024M/RVVMlr/078ljW7ctJt/W8gSGs/aOsj
- DqyxodR33+Zhzh5Mq8mVHseX2XjywXx/QgbAyCTaeTKS2l2rqwpYNy16pphZEhywb67Di2X+DZN
- kMU9dyoE2fyGrZeZ+wA==
-X-Proofpoint-ORIG-GUID: WUm0sbBwuNgsDdrE-kBhDfD7RHLBzXW2
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=bejFeoJku8wluUMwU-oA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-GUID: PXZtkxEnLEu3mVDAoQQhI8pMwzqfHBbo
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-20_05,2026-07-20_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 clxscore=1015 malwarescore=0 bulkscore=0
- spamscore=0 lowpriorityscore=0 suspectscore=0 priorityscore=1501 phishscore=0
+ phishscore=0 impostorscore=0 priorityscore=1501 suspectscore=0 malwarescore=0
+ clxscore=1015 adultscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200228
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200229
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -168,115 +167,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/7/26 22:42, Philippe Mathieu-DaudÃ© wrote:
-> On 20/7/26 16:02, Christian Schoenebeck wrote:
->> On Monday, 20 July 2026 09:55:36 CEST Marc-André Lureau wrote:
->>> All V9fsTransport callbacks are invoked exclusively from coroutine
->>> context (the v9fs_* PDU handlers). Annotate the function pointer
->>> types in V9fsTransport and all implementations (virtio and xen
->>> backends), as well as intermediate callers in 9p.c (pdu_marshal,
->>> pdu_unmarshal, v9fs_init_qiov_from_pdu, etc.).
->>>
->>> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->>> ---
->>>   hw/9pfs/9p.h               | 26 +++++++++++++++-----------
->>>   hw/9pfs/9p.c               | 31 +++++++++++++++++++------------
->>>   hw/9pfs/virtio-9p-device.c | 24 +++++++++++++-----------
->>>   hw/9pfs/xen-9p-backend.c   | 34 +++++++++++++++++-----------------
->>>   4 files changed, 64 insertions(+), 51 deletions(-)
->>>
->>> diff --git a/hw/9pfs/9p.h b/hw/9pfs/9p.h
->>> index 1a309664f6e..0e52ffbdf38 100644
->>> --- a/hw/9pfs/9p.h
->>> +++ b/hw/9pfs/9p.h
->>> @@ -472,17 +472,21 @@ void pdu_submit(V9fsPDU *pdu, P9MsgHeader *hdr);
->>>   void v9fs_reset(V9fsState *s);
->>>
->>>
->>>   struct V9fsTransport {
->>> -    ssize_t     (*pdu_vmarshal)(V9fsPDU *pdu, size_t offset, const 
->>> char *fmt,
->>> -                                va_list ap);
->>> -    ssize_t     (*pdu_vunmarshal)(V9fsPDU *pdu, size_t offset, const 
->>> char *fmt,
->>> -                                  va_list ap);
->>> -    void        (*init_in_iov_from_pdu)(V9fsPDU *pdu, struct iovec 
->>> **piov,
->>> -                                        unsigned int *pniov, size_t 
->>> size);
->>> -    void        (*init_out_iov_from_pdu)(V9fsPDU *pdu, struct iovec 
->>> **piov,
->>> -                                         unsigned int *pniov, size_t 
->>> size);
->>> -    void        (*push_and_notify)(V9fsPDU *pdu);
->>> -    size_t      (*msize_limit)(V9fsState *s);
->>> -    size_t      (*response_buffer_size)(V9fsPDU *pdu);
->>> +    ssize_t     coroutine_fn (*pdu_vmarshal)(V9fsPDU *pdu, size_t 
->>> offset,
->>> +                                             const char *fmt, 
->>> va_list ap);
->>> +    ssize_t     coroutine_fn (*pdu_vunmarshal)(V9fsPDU *pdu, size_t 
->>> offset,
->>> +                                               const char *fmt, 
->>> va_list ap);
->>> +    void        coroutine_fn (*init_in_iov_from_pdu)(V9fsPDU *pdu,
->>> +                                                     struct iovec 
->>> **piov,
->>> +                                                     unsigned int 
->>> *pniov,
->>> +                                                     size_t size);
->>> +    void        coroutine_fn (*init_out_iov_from_pdu)(V9fsPDU *pdu,
->>> +                                                      struct iovec 
->>> **piov,
->>> +                                                      unsigned int 
->>> *pniov,
->>> +                                                      size_t size);
->>> +    void        coroutine_fn (*push_and_notify)(V9fsPDU *pdu);
->>> +    size_t      coroutine_fn (*msize_limit)(V9fsState *s);
->>> +    size_t      coroutine_fn (*response_buffer_size)(V9fsPDU *pdu);
->>>   };
->>
->> I wonder whether that could be made more diff/blame-friendly. 
->> Especially as
->> this currently only serves documentation purposes.
->>
->> They way you are positioning coroutine_fn it usually resolves to an 
->> attribute
->> attached to the function's return type, not to the function itself, even
->> though clang/gcc handling it flexible. For attaching an attribute to the
->> function itself the attribute should either be attached before the 
->> function
->> declaration or after the function declaration.
+On 20/7/26 09:55, Marc-AndrÃ© Lureau wrote:
+> Those DEBUG_ALLOC-guarded are dead code incorrectly calling coroutine fn
+> from non-coroutine. Remove it.
 > 
-> I tend to aggree it would be clearer to have these attributes /before/
-> the function prototype declaration.
-
-$ git grep -E '^(static )?coroutine_(mixed_)?fn' | wc -l
-       90
-
-block/block-copy.c:47:static coroutine_fn int 
-block_copy_task_entry(AioTask *task);
-block/copy-before-write.c:106:static coroutine_fn int 
-cbw_do_copy_before_write(BlockDriverState *bs,
-block/nvme.c:1351:static coroutine_fn int nvme_co_flush(BlockDriverState 
-*bs)
-block/ssh.c:1223:static coroutine_fn int ssh_flush(BDRVSSHState *s, 
-BlockDriverState *bs)
-nbd/server.c:3077:static coroutine_fn void nbd_trip(void *opaque)
-block/block-copy.c:581:static coroutine_fn int 
-block_copy_task_entry(AioTask *task)
-...
-
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   block/qcow2-snapshot.c | 18 ------------------
+>   1 file changed, 18 deletions(-)
 > 
->> In both cases you could then
->> add it to its own, separate line, avoiding a lot of noise.
->>
->> /Christian
->>
->>
->>
->>
-> 
-> 
+> diff --git a/block/qcow2-snapshot.c b/block/qcow2-snapshot.c
+> index 1e8dc48be1c..8453ad73d10 100644
+> --- a/block/qcow2-snapshot.c
+> +++ b/block/qcow2-snapshot.c
+> @@ -740,12 +740,6 @@ int qcow2_snapshot_create(BlockDriverState *bs, QEMUSnapshotInfo *sn_info)
+>                             ROUND_UP(sn->vm_state_size, s->cluster_size),
+>                             QCOW2_DISCARD_NEVER, false);
+>   
+> -#ifdef DEBUG_ALLOC
+> -    {
+> -      BdrvCheckResult result = {0};
+> -      qcow2_check_refcounts(bs, &result, 0);
+> -    }
+> -#endif
+>       return 0;
+>   
 
+Fixes: 70bacc44532 ("qcow2: mark more functions as coroutine_fns and 
+GRAPH_RDLOCK")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+
+While here we could remove DEBUG_ALLOC:
+
+-- >8 --
+diff --git a/block/qcow2.h b/block/qcow2.h
+index ce517040c47..5e1f916d58f 100644
+--- a/block/qcow2.h
++++ b/block/qcow2.h
+@@ -33,3 +33,2 @@
+
+-//#define DEBUG_ALLOC
+  //#define DEBUG_ALLOC2
+diff --git a/block/qcow2.c b/block/qcow2.c
+index 19271b10a49..6965b80af03 100644
+--- a/block/qcow2.c
++++ b/block/qcow2.c
+@@ -1965,9 +1965,2 @@ qcow2_do_open(BlockDriverState *bs, QDict 
+*options, int flags,
+
+-#ifdef DEBUG_ALLOC
+-    {
+-        BdrvCheckResult result = {0};
+-        qcow2_check_refcounts(bs, &result, 0);
+-    }
+-#endif
+-
+      qemu_co_queue_init(&s->thread_task_queue);
+---
 
