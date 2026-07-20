@@ -4,125 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38035C44515
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 20:05:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C77BC44529
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 20:05:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wluEe-0001eP-DM; Mon, 20 Jul 2026 16:05:09 -0400
+	id 1wluEd-0001dr-Ea; Mon, 20 Jul 2026 16:05:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wluEX-0001Yi-AE
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 16:05:02 -0400
+ id 1wluEW-0001YU-Jk
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 16:05:00 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wluEV-00059g-ER
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 16:05:01 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ id 1wluEU-00059Y-Jp
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 16:05:00 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66KJTcPW3397310
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 20:04:58 GMT
+ 66KJTpwi3637881
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 20:04:57 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=/jkfrt5wdLV
- wCz8umHCidn+gDwOEOrWGibdjwx7HTlw=; b=Jnu+/Mkx1FWRQVeWa63ez6yGGzb
- Ln+zL4bkF3ClbcNNwFxY6XBmS2g9rEpNx0rTk1Ag/VOZOGWeW8o7tRoK/s4QpSXV
- js16IZ3Z/BMTEqWQ0UpBMXj2SZwGZBDLbYLGsHjw5SEYt2AquJYGTGv8n55VR3UL
- nrEyjMyhMElcwBNsBstvd4Xm0kYHA4Cd9LVCxmOXXBuuU1DkpcQ04w9av6C9Z1Od
- DX4jQNkgaLrb/yhmZZnbQ232q+Se6g5OeKwzLMCx+Sk8iqzfw+/6irfTL4KfX45q
- r+oVdHrlY39L/wDzJmIeZoYwrq5GpMktuJXdo3/oxxvUOh7lzzQNCcnAs+A==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhqvc8q86-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=dlupJaF/qMa
+ Fv5BO8vkl4bxKLu6Nx9N+zSn1gf9YIZk=; b=Eb4DnOk21FIF92tmkLi2t0rKQ7y
+ R9wF7UvU5P/7n7wuujJrH5hymZcI3FKS6WoEv0y+GyWzF7RA9EPDvUc8vtgVTVuU
+ j0yywH4rwUEHJM94IEvOfySyw9HlXMJmY6M5tchk2ID8mZ+tji/iUbS3gKZZZFIU
+ y5ERVWVYFh5XndVSY1YiyINA1KbpC3CWVZKak0w2T80A8Jq+HlZtKLRZGQxi8Tje
+ MBDsiu61GP1LoHSS1Z/0mqMGmTN/07Xfb+0C/ZLslPhKGmO+eRBQgEupt67+ZIiA
+ SuI5BjJ3srMWY3HHN4rxEyVA3B0pxoYmADU/2rfMDhHeHUSqFSfo9A6E+Mg==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fhhgytmr8-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 20:04:58 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-cb711c88f2eso1030536a12.2
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 13:04:58 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 20:04:56 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-cb733fc5024so2375621a12.2
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 13:04:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784577897; x=1785182697; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1784577896; x=1785182696; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=/jkfrt5wdLVwCz8umHCidn+gDwOEOrWGibdjwx7HTlw=;
- b=KqH7I6q7/iY5cS91aFEwVcvzoo2DkQSo95kHO0E2J1EXwo4DEXUW0ESueCoSN2sUZq
- OuAQn+qlkzUyG+YfNf1EtnJA5TnRUnOqyb8to9LLtvNJrcnXQigyW+guV2AgVr4QtWJG
- YBFIoG4DPX1TxxQ284BL2rgAF/Rm6btiTm+zHkxxCrCsN31JXVFOsIYL9KKtCGLd3ajS
- ceoER3UsxFGUauCyiluqKn3ilhdC0NH7pUH88sGZ/VQKwIVwiBxm3TQapq3uBotgkopI
- /O1jQq/s1JPvZHpXEAb2aj8LfdwNP1z1QQ0FdxosHEn3ErsKj9nBvbaeGmTm4kfymQlX
- iscw==
+ bh=dlupJaF/qMaFv5BO8vkl4bxKLu6Nx9N+zSn1gf9YIZk=;
+ b=b0tb5iLIKpkFsbCyjHiwhnCme/NtRgjKLDGIwDnP9/EWYrcUHEowhehx/ghf3iMTGh
+ vmZWYasrPHRAOmsgDE0jWafL4/87otNZskXAWOpg5CHd/k0Bj8TueC4l/Tv/jG9nLesl
+ T3yp/GN7D3ewV1/FBI1Qu9aBDzo+P2OUJMY/XU2q5rVRdxexXFFRyp2PjCLPQ1w4dbTU
+ gOWqrGoNa+TN8R2uiuD4ZjZY+ik+jpb+YWyb0X2YBxgC0SFyq2WzFq4ZWAlgxQNyJjXN
+ 0bCUzYOp0B9mXhWG9fQAPpaxz3r3Gr/Ndm6KPyVUZbm1fOXEgDF3x+Rmhmo0RpIAC2fp
+ Yxuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784577897; x=1785182697;
+ d=1e100.net; s=20251104; t=1784577896; x=1785182696;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=/jkfrt5wdLVwCz8umHCidn+gDwOEOrWGibdjwx7HTlw=;
- b=rHVSyDyUAoU70F7fKRKUPb05JZmd+xEXrQnkq9oH+F4N3XKm/rD06vLjHzNHaCWzAr
- 0bj3nFPpo8UF+IgsTq5N6yhhcOdPr0LQxLqbvfZxDfpdFlV7ZP2Xn4IhNeB4Hi2xI3p7
- 2H2pHtX7/Ju5XAPX71yi9JuRYCLgEvst0WEO6LakXYzTVrsdwuvbNjXJBKoayT6oxx7n
- wqF1KUkMKoVr23ljK+RPOnrxkeiFYn3NXWEBnbcGBof310VzZLDMkkA3d2Tppn55wsrJ
- kGrK8funGHIThC58TqU4JizwajjGd1kDgPh0yvwzzT16IuJev555mBx7GUUo75L3JQ1I
- zh5Q==
-X-Gm-Message-State: AOJu0YzTjpsFTAu9ZIztHZangQkKamPti4BJJqa0xWINk3I+KCxBal+N
- RcixTZ/RvyfEmrnYl5hT3T/k7EJmc1u7WSy1o8Ul4YbqZnyiHYkn/segO1XunpTImslfUMVuQ66
- FxggVX2YRz9SyjVRQvhcI4zgTuT23n6X2Ll6vcIdXVrdAvilltpw2fT0hXnKUjmeq4Q==
-X-Gm-Gg: AfdE7ckNDfSiyS+NxZaqzVrMj444tVv2SYoa78o5QA5mDHNk186dOq8BfpbZSGbMwae
- GAePU1L0hM5Iu8x1++fAMXJZuW6YZ/kc2vO1nxAaAZeq9J7xSaXYTXOxLrj3JotofJ+oX5em2f5
- ObEgLuZtS9WzjrMb0mjbgfptpL306JZaKT8NS+AI8wk0CaGhTIY2PYRnYVjeKASHnhQL1sDOPOv
- gMzvPtN1w1FZlOAJBKJ423WRxodhayg6HSDMli4uFm5HJkWPbHzzC6SjSsEMS6lJO/Q2n8Qkalb
- 2LFeY31oHtnlX2rwFwI0CrbAxetscbfP6A4LNsWinj74XrLbNtRNkkhBMFDg7+yl6z14c7GRz45
- I+mII13UIPk1TuqEc0bQOthnr8z4QqCKhHQSAlxUOOOJrxTHuGtDH+E/oaDvTHxSf+wG9tZU=
-X-Received: by 2002:a05:6a20:1eaf:b0:3c3:9557:3b47 with SMTP id
- adf61e73a8af0-3c3ad9e2f31mr14047529637.51.1784577897420; 
- Mon, 20 Jul 2026 13:04:57 -0700 (PDT)
-X-Received: by 2002:a05:6a20:1eaf:b0:3c3:9557:3b47 with SMTP id
- adf61e73a8af0-3c3ad9e2f31mr14047504637.51.1784577896778; 
- Mon, 20 Jul 2026 13:04:56 -0700 (PDT)
+ bh=dlupJaF/qMaFv5BO8vkl4bxKLu6Nx9N+zSn1gf9YIZk=;
+ b=s01TDTQwGiq5/Z9IHVjvsAwVNlpORzPb5NeThLMlak3mF6ze5Z/fDL6n5CBK1wIJTb
+ jZQo2gRCj1PpRxH55kY4aXvgjGewn3CcYUNS2j2IV9ZSjjC9WBGhUjIKqykDpQqIH4CJ
+ lmp80cI0BV9Ch2WEE9ozNtikQiw8bJDZePI3iiiWyHrpY2gCjRJLkEeNAS6y142viYQW
+ PU3YndMhtSBtjy+2R/CApfLC8lSQBCXLMqvneNQzFKMCk56/4XUPAALYRjbOhunr+brP
+ 02xb8tB/jN7zCsdIZGlLoXT1dPUJvKwvSm0XeJSbwx++EoHLOqmlAtQhu5tZT2mm5EUE
+ NJ5A==
+X-Gm-Message-State: AOJu0YxYaa/nIKPyd+qhbHBKqnuhf7p0MfMg13XMY6M5D7xNHCyGlVDr
+ 02ShBi8PqnP9mT/zTUs3RrhdcZ8PX3o5QxDpQIvty/yuayun4g4Xs6pRdgrnttFoQ4J5H6wXQcx
+ /8X7GL0MTQvJOljAC3dluPXqzt6/ORmky8jvhU+Vo/CiokWpun3DZH2ZBCJkSkHiBCQ==
+X-Gm-Gg: AfdE7ck/hzaONfLmqLE0sm0w/AMcyqyAKJUrXzAUlmYYTWLbv7EpEzulk6kohkglTY1
+ MKL+G1/mHeuMm7XZq0X9DVNNkWGtp7+v9HGQ6neEUhF2FA5TA/6tK4xqDcs+s859ibPoAukXLgt
+ wzNBv4gALS7j/jkS8oLOwf4wSZIz+e3eqfxqiauJrO4GjgCcrb5FwJvvntVM+YcM8RxS+LfrC67
+ ySloJIjYcb6Gh6u1t5E2SBLdkI8YOHwHMThlDk+UAY21Bn/2aDlLyaA5zNutINgIiPhtKmiPzae
+ 8QzDrtn5HQsdP4/6EqYkTGYMSAihFr4YNgEZvFHSP+FiJJPkb60eEFEJ5kZPTanUIUSMTGn1K5G
+ +qXCTvLW1cMHOgeuXqLmxKWFnBdZkC2HLi+U6DZ+PVn1pl5Uq01CzgOQo38lMpvypOiWjSCM=
+X-Received: by 2002:a05:6300:614e:b0:3bf:b182:94b with SMTP id
+ adf61e73a8af0-3c3ad66a462mr17787780637.6.1784577895623; 
+ Mon, 20 Jul 2026 13:04:55 -0700 (PDT)
+X-Received: by 2002:a05:6300:614e:b0:3bf:b182:94b with SMTP id
+ adf61e73a8af0-3c3ad66a462mr17787746637.6.1784577895017; 
+ Mon, 20 Jul 2026 13:04:55 -0700 (PDT)
 Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3142a1dd90fsm38487229eec.22.2026.07.20.13.04.55
+ 5a478bee46e88-3142a1dd90fsm38487229eec.22.2026.07.20.13.04.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Jul 2026 13:04:55 -0700 (PDT)
+ Mon, 20 Jul 2026 13:04:54 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@oss.qualcomm.com
-Subject: [PULL 2/3] tests/tcg: correct why the magic syscall number is safe
- here
-Date: Mon, 20 Jul 2026 13:04:46 -0700
-Message-ID: <20260720200447.2145622-3-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL 1/3] contrib/plugins/dlcall: correct the syscall number claim,
+ note the data model
+Date: Mon, 20 Jul 2026 13:04:45 -0700
+Message-ID: <20260720200447.2145622-2-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260720200447.2145622-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260720200447.2145622-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDIxOSBTYWx0ZWRfX3cdhRExwz55Y
- 2kffp/K7P9VYSunmZTwEzRq4ahAY9/xM4ixWEXr165RcbqUys+so+1skdaMb06JRU+FCbDf0ZiU
- 7BkhmF9yUWF7SOSk4WQGc37ZBexbDBA=
-X-Proofpoint-GUID: AK7DK-YPNvSHG0rhTXWojxM0-S1dUllR
-X-Authority-Analysis: v=2.4 cv=OMYXGyaB c=1 sm=1 tr=0 ts=6a5e7f6a cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDIxOSBTYWx0ZWRfX0b20+fuTUgCl
+ YUAl0wOMLkAKZmiy7+RmV1PLtKBcGvFn5Lng94Ym+xsk9i5o7eY7xQ2Id82slMxI2OlFBd+YLAA
+ 0inuDfUxdIX/sdjWYHSdvXncc61/TJQ=
+X-Authority-Analysis: v=2.4 cv=LK9WhpW9 c=1 sm=1 tr=0 ts=6a5e7f68 cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=VwQbUJbxAAAA:8
- a=Lx1EvxgrAAAA:8 a=EUspDBNiAAAA:8 a=5mCGn3sackZv1r44w-oA:9
- a=bFCP_H2QrGi7Okbo017w:22 a=ZFi1QaP_tuf8dODdgmj-:22
-X-Proofpoint-ORIG-GUID: AK7DK-YPNvSHG0rhTXWojxM0-S1dUllR
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDIxOSBTYWx0ZWRfX5uQ7Sshl1i3r
- aE4QweP4c20rFbOfmuvA1peZzNI+C/4ZijS0VdxRlkryZAWjNcypU0MQgEzQUUVg8XX9yoouWoz
- k0noNsaookcFTtT7cPT56umqwTqbsAP+DLjpg+GP7wpqkrV3pH4JvY+ZpCnjb4xtK8yMMUpW13F
- Btjs8MWSEhUtBiWsjw5f+IjGNX0OP5rvGGWFyUnUzZRTbuHFteSqOeI6Q3/HtwM9nCB1x+5YtSt
- MyFbXzEmqiwTbjDDLn6FR5PyNgG2isfJ/GPmD+3t2qt+S8Y88TDqT6swCaN1IVZrww9CEMF0p6l
- Sj+WNo7E25lKLfbus4UH3SvvTPIguKZ2KE60iqjty4NJXBNUt3oe9mFGxGoYp6f93b4fP/OVqq5
- 73Sl7PeTqolQu+9M17QbT183HFNKkk4v03PLEw6vsNEsvrjqW947hCdjeLYW3gwozewtdDfU6xd
- wruxGvK6eKrO5K+bj/g==
+ a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=VwQbUJbxAAAA:8
+ a=NEAV23lmAAAA:8 a=Lx1EvxgrAAAA:8 a=EUspDBNiAAAA:8 a=6AWcqj6TRxFK8_drfj0A:9
+ a=_Vgx9l1VpLgwpw_dHYaR:22 a=ZFi1QaP_tuf8dODdgmj-:22
+X-Proofpoint-ORIG-GUID: 7FT6qD5cv1JxJiYJVQFskzfFRL_Vm_Jj
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDIxOSBTYWx0ZWRfX2lEEz+kdHvgo
+ e2atMi/e/Y3MWMn5IHZkViqsBR20Ka6Jy0yVUHQ6hy7sZGsAAT9gW/hn7pCIKKlUiwohorjtXnb
+ EQ3+7XaXDLCH56Lpe6YXAllA/BGgFniliFihRspo8K2+KrXAWfdQwbkRg7Ta31UqtQM81kGHI6P
+ fpwgJKPesyXufGYesHY/Db/niCdBGMJ2Yx3aHf2OnT/sNjJQI0rqhcifbSn3hUieJ8XA6Qu592E
+ NrT6AaYUqfma9kQjKM76EPh/nbGR37MvyogHLEyYIhIJ4cqm78YfXXfn2Lvn4jkAl60iIPQhacw
+ P2oAWuwbXYBDhJpvOa6pdDVNFR4eaShTDeQt5k+cBEIhyrEv1WCUcVBxuRhC/2NMoNL8WqMhU/e
+ 3or/k7WpmeNDDxy7vimQNb6i80ju881C9/zwjFZ0GkPxqY797di8pFYH4KHAafoRjBkLmWjx4sK
+ DcgmexLqC677UITTxEQ==
+X-Proofpoint-GUID: 7FT6qD5cv1JxJiYJVQFskzfFRL_Vm_Jj
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-20_05,2026-07-20_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 priorityscore=1501 suspectscore=0 lowpriorityscore=0
- bulkscore=0 malwarescore=0 clxscore=1015 impostorscore=0 phishscore=0
+ priorityscore=1501 bulkscore=0 phishscore=0 clxscore=1015 malwarescore=0
+ suspectscore=0 impostorscore=0 lowpriorityscore=0 spamscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200219
 Received-SPF: pass client-ip=205.220.180.131;
@@ -152,44 +152,104 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ziyang Zhang <functioner@sjtu.edu.cn>
 
-The comment said 4096 was picked because no ISA in Linux uses it. The same
-comment already notes that mips 32 bits numbers from 4000, which makes 4096 its
-getpriority.
+The comment claimed every Linux ABI keeps its syscall numbers well below the
+minimum, and that the minimum is all N has to satisfy. Neither holds.
 
-What actually keeps this test safe is the filter, which matches on the first
-argument as well, so a real syscall carrying this number is left alone. Say
-that instead.
+MIPS O32 bases its numbering at 4000, so the default 4096 is its getpriority.
+Raising N does not rescue it either, because O32 answers numbers its table does
+not define with ENOSYS before the filter runs, which leaves no number that is
+both free and reachable on that ABI. arm32 bounds N from above too, with ENOSYS
+or SIGILL past ARM_NR_BASE. Say all of this, so the number can be chosen with
+the target in mind.
+
+guest_base == 0 is not the only requirement either. Host pointers are written
+back through the caller's out pointers, so the guest must match the host's
+pointer width and endianness. Fold that into the existing warning.
+
+Also assert the two out pointers that lacked it, and point at Lorelei for
+argument marshalling, callbacks and variadic functions.
 
 Co-authored-by: Kailiang Xu <xukl2019@sjtu.edu.cn>
 Co-authored-by: Mingyuan Xia <xiamy@ultrarisc.com>
 Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Link: https://lore.kernel.org/qemu-devel/20260719074730.1520517-3-functioner@sjtu.edu.cn
+Link: https://lore.kernel.org/qemu-devel/20260719074730.1520517-2-functioner@sjtu.edu.cn
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/tcg/multiarch/test-plugin-syscall-filter.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ contrib/plugins/dlcall.c | 32 +++++++++++++++++++++++---------
+ 1 file changed, 23 insertions(+), 9 deletions(-)
 
-diff --git a/tests/tcg/multiarch/test-plugin-syscall-filter.c b/tests/tcg/multiarch/test-plugin-syscall-filter.c
-index 951e338a7c9..089fb2a1107 100644
---- a/tests/tcg/multiarch/test-plugin-syscall-filter.c
-+++ b/tests/tcg/multiarch/test-plugin-syscall-filter.c
-@@ -23,9 +23,12 @@ int main(int argc, char *argv[])
-      * "linux-user/arm/cpu_loop.c:cpu_loop".
-      * As well, some arch expect a minimum, like 4000 for mips 32 bits.
-      *
--     * Therefore, we pick 4096 because, as of now, no ISA in Linux uses this
--     * number. This is just a test case; replace this number as needed in the
--     * future.
-+     * Therefore, we pick 4096, which sits between those bounds. It is not
-+     * unused everywhere though: mips 32 bits numbers from 4000, so 4096 is its
-+     * getpriority. This test is unaffected because the filter also requires
-+     * the first argument to be 0x66CCFF, so a real syscall carrying this
-+     * number falls through untouched. This is just a test case, so replace
-+     * this number as needed in the future.
-      *
-      * The corresponding syscall filter is implemented in
-      * "tests/tcg/plugins/syscall.c".
+diff --git a/contrib/plugins/dlcall.c b/contrib/plugins/dlcall.c
+index 9d2230b2d1a..b624735e62c 100644
+--- a/contrib/plugins/dlcall.c
++++ b/contrib/plugins/dlcall.c
+@@ -10,7 +10,8 @@
+  * nothing about how a library is thunked. Any toolchain can implement the
+  * userspace side. Lorelei is one end-to-end implementation (guest/host
+  * runtimes plus a thunk compiler that generates thunks from a library's
+- * headers):
++ * headers), and how it handles argument marshalling, callbacks and variadic
++ * functions can serve as a reference:
+  * https://github.com/rover2024/lorelei
+  *
+  * See docs/about/emulation.rst|Dynamic Linking Call for details and examples.
+@@ -20,12 +21,13 @@
+  * execution in the QEMU host process. It is NOT a sandbox and provides no
+  * isolation; only load it for guests you fully trust.
+  *
+- * WARNING: requires guest_base == 0, which is qemu-user's default. Pointer
+- * operands are dereferenced as host addresses directly, and the invoked host
+- * functions dereference guest pointers with no address translation, so guest
+- * and host must share a single address space. A non-zero guest_base (e.g. set
+- * via -B/-R) would make every pointer off by guest_base and hit unrelated
+- * host memory.
++ * WARNING: requires guest_base == 0, which is qemu-user's default, and a
++ * guest whose pointer width and endianness match the host's. Pointer operands
++ * are dereferenced as host addresses directly, and the invoked host functions
++ * dereference guest pointers with no address translation, so guest and host
++ * must share a single address space and agree on how a pointer is stored. A
++ * non-zero guest_base (e.g. set via -B/-R) would make every pointer off by
++ * guest_base and hit unrelated host memory.
+  *
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+@@ -46,8 +48,18 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
+  *
+  * It defaults to DLCALL_SYSCALL_DEFAULT and can be overridden at load time
+  * with the "syscall_num=N" argument. To avoid hijacking a real syscall the
+- * guest might issue, N must be at least DLCALL_SYSCALL_MIN: every Linux ABI
+- * keeps its syscall numbers well below this; numbers from here up are free.
++ * guest might issue, N must be at least DLCALL_SYSCALL_MIN, which most Linux
++ * ABIs keep their syscall numbers well below.
++ *
++ * N also has to reach the filter at all, which bounds it from above in a
++ * target specific way: arm32 answers anything past ARM_NR_BASE (0xf0000) with
++ * ENOSYS or SIGILL before do_syscall() runs, while aarch64 has no such bound.
++ *
++ * MIPS O32 bases its numbering at 4000, so the default is a real syscall there
++ * (getpriority). Raising N does not help either, because O32 rejects numbers
++ * its table does not define, again before the filter runs, which leaves no
++ * number that is both free and reachable on that ABI. Its N32 and N64 ABIs
++ * base at 6000 and 5000 and have no such gate, so they are unaffected.
+  */
+ enum {
+     DLCALL_SYSCALL_DEFAULT = 4096,
+@@ -168,6 +180,7 @@ static bool vcpu_syscall_filter(unsigned int vcpu_index,
+         case DLCALL_ID_FREE_LIBRARY: {
+             void *handle = (void *) a2;
+             int *ret_ptr = (int *) a3;
++            assert(ret_ptr);
+             *ret_ptr = dlclose(handle);
+             *sysret = 0;
+             break;
+@@ -176,6 +189,7 @@ static bool vcpu_syscall_filter(unsigned int vcpu_index,
+         /* Get the last error message for a library event. */
+         case DLCALL_ID_GET_LIBRARY_ERROR: {
+             const char **error_ptr = (const char **) a2;
++            assert(error_ptr);
+             *error_ptr = dlerror();
+             *sysret = 0;
+             break;
 -- 
 2.47.3
 
