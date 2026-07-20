@@ -4,153 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 225CBC4451B
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 08:37:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CC89C4451B
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 08:39:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wljV6-0003kB-Is; Mon, 20 Jul 2026 04:37:24 -0400
+	id 1wljXO-0004c5-RT; Mon, 20 Jul 2026 04:39:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wljV4-0003hQ-6Q
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:37:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wljV1-0002wH-8t
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:37:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784536637;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=M4EBWw4z3eeYUAUWdu5hR2+y3jdwDOwsItnJ/vRY0zk=;
- b=eTrJDvk8zZiVDa4EhPVf6cgvbdXDx1QnSIIJzl4m8M7SqL7HQSjQI+fjIfZzVx/EySEm/Z
- NiWNCaZfAokyM9czFKZ5HVdWoj3Wt6WSfwPXEVzqwp1zzXzbgwEIDKawy3xyUDFxZjAG4m
- VCLnwKv/NHzyf/ErH+e0bxw3dCoAD9k=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-38-luEqq5uBO5Ofie4TgGl26Q-1; Mon, 20 Jul 2026 04:37:16 -0400
-X-MC-Unique: luEqq5uBO5Ofie4TgGl26Q-1
-X-Mimecast-MFC-AGG-ID: luEqq5uBO5Ofie4TgGl26Q_1784536635
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-49559af7b97so7384305e9.2
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 01:37:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wljXN-0004bn-Ha
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:39:45 -0400
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wljXL-00033B-MD
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 04:39:45 -0400
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-80814edb536so67440727b3.2
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 01:39:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784536782; cv=none;
+ d=google.com; s=arc-20260327;
+ b=QVxE4tzvxGSIXTzyC9WjKTzL2I2P46qekbLZFzX5UIbHuBh5xiWJk9wCvgC+LT/gjN
+ oSqojlj2opjOZCulWlfvxOB4IRpSen5JEU7PoEXQYnfwSGo1OHG8VGrcZZLUbjIxJpUc
+ 4lagac0kOYOZ11UE6qmOd3+lYqoHyTTp/2/5b/rPuG+OH/XcdfGFAI/gWYelj+tIOQQo
+ Vuh7zhmOe/K46wsAlsGx46ZJdSzkWgtaIFiMgkjY0C/I11FNcEETaGQ410iS7HHS3koF
+ 7d2W0ecmw7pmasvRQLv1pOpRSRRXfc9mBZVQfpPmqsp2UHk/v8UATQKDYrlakq3sTgRl
+ 9BoQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :dkim-signature;
+ bh=sPMKVRs2YolYOTVPLxJzSQtljSvEn18yhYhoZvGNaKI=;
+ fh=jaMzx8HEjQowExyDQRok/dSeNj0SaVh5RJRWlty3W7Y=;
+ b=c6HK+m/OO1tiIFWgOvJx+oWSxCuCIQO4q1DAo1BVzkI8vSyLjmWsOxr2m1oLEjBpcl
+ iBgu2Z+hxv3mLa9yz8BGPBilbR86N3Q4YocThGbl5agQIWeXdmxJUhJ2iShERlTbonhc
+ UvHsxnK8FSr6oXth9Wm3KKHU3EMVzFHFjSK3OX+q6mOwRDucPfHisY+S850NsFPI5u9h
+ Fb7+WxtP2BDBeGdUcwWJL+G+90h8DDFfO082oy96MPqx1ddAoKt2KPrAahFxyENWoyDe
+ jr67S+Fc59zy0n7qx2jrSqCvVlIoO49z3K+teTwoDmPOT+oHlX2uC+q4FvwDTcraBMdu
+ taRQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784536635; x=1785141435; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=M4EBWw4z3eeYUAUWdu5hR2+y3jdwDOwsItnJ/vRY0zk=;
- b=gbLRB323HS4h8GEgfd8r8fm5AP4BYZxKztZ7ovPh/wRtmwPMx2Lr9IbJI73SCDvI3U
- X7xH1kA5UroO+jQ9lzL+szxBwhDzM66wyL7rLRBYLGPEjlDLXyizN//ex2VUa4wKpw1K
- yorgoLb2oxi2Z8W+pTDwjsA2j4So+7CXzOrRke0i/6PxymaPGdt3JKAtcsOV8L2vx6pA
- rackhqY0WiniVlM13CCm8XnuGlfTP+qddxhNrPJTqyB2s0n5SSfp7JlUW2D4CHMjqLCa
- o6T6qSl6j+fMiByPK/WFrwqh7iaYeoi+dxKg74ASaAOSCsJsJ/IUG+4vmdAFGamnwnee
- VeHg==
+ d=linaro.org; s=google; t=1784536782; x=1785141582; darn=nongnu.org;
+ h=content-type:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=sPMKVRs2YolYOTVPLxJzSQtljSvEn18yhYhoZvGNaKI=;
+ b=MIkJzicjG03ZPl79KNUodaC0Prax/vBkOS9REyKKvG+HS59TyD/rpHxC3clcSnb8FO
+ mQuSEsYsUnSnOFvCPKEglAXyVBLBsGtiztLl7rzbkGhzuEuFyRBJXnkky1cu+WQtsaIC
+ lX8+I+l1cp/NTejcgPFMyv2fX8jgOwueSl5byk2wtrnhN926yhVx0B8ynjAoMJRCGbyA
+ Pe7dzFYg/C8YvDvqlNBm+5uem37JB7lYM7T+VISjHbvn8m1cVneywwgeijyuGYpHa/jo
+ kgto+w0zPrJDaQO6W0zeNV+esAPmIM5GObs+khHyC5bHkIfISQzgg62qGcbzEYafXlBT
+ nCQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784536635; x=1785141435;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=M4EBWw4z3eeYUAUWdu5hR2+y3jdwDOwsItnJ/vRY0zk=;
- b=WmqYMIOTngDPKLaICJLgdCMBLBcWDx5NyHNGgoHTVPrqGdOUFcD/4z0qaTMCFqlKv6
- wsZi5KzbmzvFCQN6o0EfWQf1MWJYVsPVdgFUnLLnuzi4rK53S+S6LbPZOoCqHUlnW4j3
- xR8vhUkBasOMmjgI4WsjgatoLNd0A/QbkMdgYMHVVtnIwXVycWvJOll1SyHuinuSoUT7
- DMe7ifLeONNcICML42jKBKgfwyNAlfJ8M4llFCX9dOT9UhuHl0LceT98rOqAXTu2g6Un
- 4t91IEh+lk7DQkLo6P6YdBH5QD9nYS6WSbRygesi4h9nLm7ahWXSYOC2LauIlpTGSnWz
- m+Dw==
-X-Gm-Message-State: AOJu0YxjXhi0C0p8pvj+c+BxeYzQfNSetkcYwKu5bx1WCk7V4bOsxzi2
- OE8yVxWU9MQfuZxqLCERIW5bcB+vMy85mk5fYk+Xx3FjosXmXLHeKumE45ugGSRSstzpviuz5//
- m03IZPc1xnNSOHaiL0zO1PIsx1meyV178UL7Oz94hq33c6gle+mnzIg6V
-X-Gm-Gg: AfdE7cmQ0TqZ+s79GYdqVdikzlgOxwbW4UXlNV8KWX3L03+IpvJZA0sQjGvHpDGXE8A
- B1FV5WVLhSyRUjdZUZi20laZwvxy6v3Y3E7R+7IlfuLhkBwiwINiKEUCGPfAQ6iS7uE7oQsX9N1
- 0PYRW9Lyh5UMJdVEhjDdXbj0/9bklkfXZ3QsN/U5NGAQmxnIU++P8UPY7iHrdzmFZ/ktZBORCVZ
- xiR25RBsFMtTM3lfVPudFKfVV098kaeiz7ovPGBCMn6tOiUguUKXbE/O5jJhU16esOJeRzHUNUs
- mdJVx2nGFuKicf7JCIGEdsCIPmgTMAcq443Iu1XcgyAq59XG5HoSY9a9Fy+lbPYX48DW+jVXag=
- =
-X-Received: by 2002:a05:600c:3512:b0:495:4572:21af with SMTP id
- 5b1f17b1804b1-4954a3ef7dbmr136907465e9.9.1784536634752; 
- Mon, 20 Jul 2026 01:37:14 -0700 (PDT)
-X-Received: by 2002:a05:600c:3512:b0:495:4572:21af with SMTP id
- 5b1f17b1804b1-4954a3ef7dbmr136907145e9.9.1784536634370; 
- Mon, 20 Jul 2026 01:37:14 -0700 (PDT)
-Received: from [192.168.0.9] ([47.64.112.144])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4955df9d2f6sm49138605e9.4.2026.07.20.01.37.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Jul 2026 01:37:13 -0700 (PDT)
-Message-ID: <f8f6b689-eb5f-442b-ae69-f09c226ea9f2@redhat.com>
-Date: Mon, 20 Jul 2026 10:37:12 +0200
+ d=1e100.net; s=20251104; t=1784536782; x=1785141582;
+ h=content-type:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=sPMKVRs2YolYOTVPLxJzSQtljSvEn18yhYhoZvGNaKI=;
+ b=W8ARoCCZWL3uJ6+HlF11Bm0/vLW4Zl9F5absFgGYXtaw0cn5C/E9kYxdHSXWHKyPM2
+ ctVYok4Hx6QpY1D9CE0ZVZ1ilzHJr7C/eLocwwjBryVuN1KGCZEnHqtm93TLessidY4O
+ CbXV01S4X1kyl70fH0HOSsSs2pOoo4PyGhkWirfuhBKJ75mBnMrDfmHakSw24zRSGFn5
+ Xq3sSMSA4mZVvOJ91jPuHMnk80TfxYRPujSQm5gQbwRb4i/FEpPYg/sCqL4EpQrSyE8o
+ fGVQPtKnR8w3AMrH7XitZRfpcNAVQaNFIRdc6hMFQ0EOr3aR15E1r6oGgrO7/OpYfXj3
+ Ohvw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rq8DdNAcs/1EfkbIOwRWpuDTqHu2l5RLekQDiabIF8fCy9rO5jPKFV19WP3YocXq2ad/CVlGTzj2233@nongnu.org
+X-Gm-Message-State: AOJu0YxlblZsbhdbFzjFBCDmeWNo1QIIOJag1aCBj/g1BUbKRMir1msY
+ ASjSGrTHoBN5CBYmQYoe0kYBfjQBVbgp0/tq1toeasavjMdd20s4YKjaI1Y4rDzlAwERLJtXN28
+ 7A1Jgo6SJtdU+H0fM9uaSQ0vKDENPo6CeP3ylijkSxQ==
+X-Gm-Gg: AR+sD13C0xiNBoaHIG4+LnVPs/YCXSTzdPQTADwfzneWhUaQSTZOM0xOdTTvjVFesGi
+ Y23YPsP3N0PyiWV4UsqrfPQlGc/voPDw6z2OlFUy6kk6ZEKymvyKbkFk43XMMPDPMhPRFwGPlAK
+ TlcoqSV6Sxz2pbT+uQ/j12/D4JO0UVr/F2ts+tZZuWVcCAj/9RfYMd51ZlM+NqmO1x9N2DH8Rzx
+ i8Guz+QhPGlw7nargF9p3FAbcxBfNiNRFknu3//dlV2RFAyBGzHIl6z3nffTZgRYGVs7z53nDpP
+ cD2DEIUOYxU3i98HRri9BgNZ77tkrjGyqtMrt1zbryDIKg==
+X-Received: by 2002:a05:690c:c508:b0:81e:cf41:9ca9 with SMTP id
+ 00721157ae682-81ef260d3e0mr43920407b3.53.1784536781976; Mon, 20 Jul 2026
+ 01:39:41 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/usb/xhci: clamp interval exponent to avoid UB shift in
- xhci_init_epctx()
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
- Feifan Qian <bea1e@proton.me>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Gerd Hoffmann <kraxel@redhat.com>
-References: <sXJQOREScD4G6fYInirO2wbLtvZf6EK1yuTrP6U3GQBM5dIq7dhRnCm9uxSSiRRK0b4m7OEZRqEgjzHCTFoS0DruFvYUXh-UUXhkY0x786A=@proton.me>
- <CAJ+F1CK=jxw1Nf8UYa6jx344HknSXyj5A4MaoUWr5xJSK-ohjg@mail.gmail.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <CAJ+F1CK=jxw1Nf8UYa6jx344HknSXyj5A4MaoUWr5xJSK-ohjg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: permerror client-ip=170.10.133.124;
- envelope-from=thuth@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+References: <20260709095056.1803725-1-peter.maydell@linaro.org>
+ <20260709201237.46ba7f2d-72-amachhiw@linux.ibm.com>
+In-Reply-To: <20260709201237.46ba7f2d-72-amachhiw@linux.ibm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 20 Jul 2026 09:39:30 +0100
+X-Gm-Features: AUfX_mxllmErbTBpjXTs3lHoBPEkMB-zbA10-s8br7wCEsc-CZQju3ixk7jxLL8
+Message-ID: <CAFEAcA8__tL8Dh5XwAK_GifA2boh1uMfL_eZgMTFvyMq15hLwA@mail.gmail.com>
+Subject: Re: [PATCH] target/ppc: Remove unused helper_lscbx()
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, 
+ Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>, 
+ Glenn Miles <milesg@linux.ibm.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,61 +118,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/04/2026 16.54, Marc-André Lureau wrote:
-> Hi
-> 
-> On Fri, Apr 24, 2026 at 4:37 PM Feifan Qian <bea1e@proton.me> wrote:
->>
->> The xHCI endpoint context dword 0 bits 23:16 ("Interval") are written
->> by the guest and passed directly as the shift amount in:
->>
->>      epctx->interval = 1 << ((ctx[0] >> 16) & 0xff);
->>
->> The shift amount can be 0-255.  Shifting a 32-bit `int` left by >= 32
->> is undefined behaviour under C11 §6.5.7p4.  With UBSan
->> (halt_on_error=1) this causes QEMU to abort; with aggressive compiler
->> optimisations that assume UB is unreachable the result is
->> unpredictable.
->>
->> Clamp the exponent to [0, 31] with MIN() before the shift, and use
->> `1u` (unsigned) to avoid shifting a signed integer.  The xHCI
->> specification defines a maximum meaningful Interval value of 15 for
->> most endpoint types; clamping to 31 is the minimal safe fix that
->> preserves the full unsigned 32-bit range for any compliant value.
-> 
-> I think we should clamp it to 15, to comply with the spec.
-> Otherwise, the patch looks fine.
+Ping: this has been reviewed, is somebody on the ppc side
+going to pick it up ?
 
-Some endpoint types seem also to allow up to 18, so I'm going to pick up 
-this patch with 31 replaced by 18.
+thanks
+-- PMM
 
-  Thomas
-
->>
->> Reported-by: Feifan Qian <bea1e@proton.me>
->> Signed-off-by: Feifan Qian <bea1e@proton.me>
->> ---
->> hw/usb/hcd-xhci.c | 2 +-
->> 1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
->> index 0000000000..0000000001 100644
->> --- a/hw/usb/hcd-xhci.c
->> +++ b/hw/usb/hcd-xhci.c
->> @@ -1119,8 +1119,8 @@ static void xhci_init_epctx(XHCIEPContext *epctx,
->>          xhci_ring_init(epctx->xhci, &epctx->ring, dequeue);
->>          epctx->ring.ccs = ctx[2] & 1;
->>      }
->>
->> -    epctx->interval = 1 << ((ctx[0] >> 16) & 0xff);
->> +    epctx->interval = 1u << MIN((ctx[0] >> 16) & 0xffu, 31u);
->> }
->>
->> static TRBCCode xhci_enable_ep(XHCIState *xhci, unsigned int slotid,
->> --
->> 2.43.0
->>
-> 
-> 
-
+On Thu, 9 Jul 2026 at 15:46, Amit Machhiwal <amachhiw@linux.ibm.com> wrote:
+>
+> On 2026/07/09 10:50 AM, Peter Maydell wrote:
+> > The helper_lscbx() function isn't called anywhere.  It used to be
+> > used by the PPC 601 CPU support; we removed that in commit 005b69fdcc
+> > in 2022 but missed this helper function.
+> >
+> > Fixes: 005b69fdcc ("target/ppc: Remove PowerPC 601 CPUs")
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> > This came to my attention because Coverity reported a
+> > "shifts into sign bit" issue in the function: CID 1663681
+> > ---
+> >  target/ppc/helper.h     |  1 -
+> >  target/ppc/mem_helper.c | 28 ----------------------------
+> >  2 files changed, 29 deletions(-)
+>
+> "git grep lscbx" returns only the declaration in helper.h and the
+> definition in mem_helper.c -- no TCG translator references, no
+> gen_lscbx, nothing in translate.c. Confirmed dead code with zero
+> callers. Thanks for the cleanup.
+>
+> Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+>
+> Thanks,
+> Amit
+>
+> >
+> > diff --git a/target/ppc/helper.h b/target/ppc/helper.h
+> > index e99c8c824b..6b2d19a3ad 100644
+> > --- a/target/ppc/helper.h
+> > +++ b/target/ppc/helper.h
+> > @@ -54,7 +54,6 @@ DEF_HELPER_FLAGS_2(dcbzl, TCG_CALL_NO_WG, void, env, tl)
+> >  #endif
+> >  DEF_HELPER_FLAGS_2(icbi, TCG_CALL_NO_WG, void, env, tl)
+> >  DEF_HELPER_FLAGS_2(icbiep, TCG_CALL_NO_WG, void, env, tl)
+> > -DEF_HELPER_5(lscbx, tl, env, tl, i32, i32, i32)
+> >
+> >  #if defined(TARGET_PPC64)
+> >  DEF_HELPER_4(DIVDEU, i64, env, i64, i64, i32)
+> > diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
+> > index 119dc1df23..787ba2cdec 100644
+> > --- a/target/ppc/mem_helper.c
+> > +++ b/target/ppc/mem_helper.c
+> > @@ -367,34 +367,6 @@ void helper_icbiep(CPUPPCState *env, target_ulong addr)
+> >  #endif
+> >  }
+> >
+> > -/* XXX: to be tested */
+> > -target_ulong helper_lscbx(CPUPPCState *env, target_ulong addr, uint32_t reg,
+> > -                          uint32_t ra, uint32_t rb)
+> > -{
+> > -    int i, c, d;
+> > -
+> > -    d = 24;
+> > -    for (i = 0; i < xer_bc; i++) {
+> > -        c = cpu_ldub_data_ra(env, addr, GETPC());
+> > -        addr = addr_add(env, addr, 1);
+> > -        /* ra (if not 0) and rb are never modified */
+> > -        if (likely(reg != rb && (ra == 0 || reg != ra))) {
+> > -            env->gpr[reg] = (env->gpr[reg] & ~(0xFF << d)) | (c << d);
+> > -        }
+> > -        if (unlikely(c == xer_cmp)) {
+> > -            break;
+> > -        }
+> > -        if (likely(d != 0)) {
+> > -            d -= 8;
+> > -        } else {
+> > -            d = 24;
+> > -            reg++;
+> > -            reg = reg & 0x1F;
+> > -        }
+> > -    }
+> > -    return i;
+> > -}
+> > -
+> >  /*****************************************************************************/
+> >  /* Altivec extension helpers */
+> >  #if HOST_BIG_ENDIAN
+> > --
+> > 2.43.0
 
