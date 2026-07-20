@@ -4,127 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2348EC44520
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 12:08:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A75DFC44515
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 12:12:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlmn0-0008UE-BH; Mon, 20 Jul 2026 08:08:07 -0400
+	id 1wlmqs-0001VP-7b; Mon, 20 Jul 2026 08:12:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wlmmv-0008St-PO; Mon, 20 Jul 2026 08:08:02 -0400
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wlmqq-0001Ud-6E
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 08:12:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wlmmt-0005tM-Sq; Mon, 20 Jul 2026 08:08:01 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=KKsZHufBgsIl4p3X+WSIb18H+uDXOclBTVkMzcMxQqVR3Bhxy80/RG3mZEk3bmPlTJZm941j4psRJBjM4H7Bkahew/Gq/XoeYXLnt4IubFMCRnmyLALzFD0V5onnMi2CwG3CjBKG35fsN65O4lspMKJfplFRTf3ej0oWOgZgtudNu1nFKXvmxlmgEzdOFgxIshJwLBhHpT1SmHC4/spTJBVxnFV2Y/F2W7Xmxs4vEYfTugS+nDNhzfRPvQJTsRQzjZvtN+G/QTKBwtQsk+bMb7WuPyY0Ddi8VPcLcxGF4fStSsQ5Waw35PF/T/brZka13bqFIBGJBnVDZhNNxvQOfQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RMLZ2EZn0m0FbMOCKFQs9isP8wTYVnMP9AGXbyGS+kg=;
- b=HfgUSktGNun8NAYpE/gpE/ca8Q32g/d/18lFp/qEEQC0PzfrWA3j88dZYy5svzhXD6Zu7PzNf/CoaL7oqhugtyr/FOYq16RsDFeAUMSCJTRbvRsU1b+1JDJVu8+oS3iVD7XE316+WRVCP8F1XEzkZ3uwridkRIpdjZMNd9fCxdbO/XG3Ykxf+As28E3Uqq+KeSuT9u/mlWELGBq3jvTT1O046xSiBxI/pBs4osmxNl8/VHbyNWSaAKu00Uf7SpHdgl+QqLbbgCi5xI/ph8MHas0xeGEZ/bMN1pigYJiqRQ6ogN0AC+iK/W9Du2QNY17Xf/jRdSzCwUIo+1mKR14oEQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RMLZ2EZn0m0FbMOCKFQs9isP8wTYVnMP9AGXbyGS+kg=;
- b=BKysS/+pE0hdKaMesmyklC9mMTWLXQBknyLlIEpeNovWNtzR7flk+Kqeb8MEo/zOuIOdyLrIHTGkkSn0w1NQoqheArWY4aBVO4bNjQyCHfjQBQfcjQ6TTdUvtQg5Bu5KG1Un9zb0mlgzXp2N0Nh3HP4IPlZPKwPIAFDzm6447TEnCDoYGKe3qYK9GqzfqyIYgmmlnKXfczavem1W90QtFd1YYwgEPIAetf58ACNvgvPF8ZD62coBjDTYkq9K6E4QPTGZzVcAsQshYVVRZfQZg55cbM2L0GAi/kxtOk7JVu+8i9oS5XpilewGOtIB5RzS/xjjhIzq1byEpOuArzKuCA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
- by SEZPR02MB5519.apcprd02.prod.outlook.com (2603:1096:101:48::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.18; Mon, 20 Jul
- 2026 12:07:49 +0000
-Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
- ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
- ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0223.015; Mon, 20 Jul 2026
- 12:07:48 +0000
-From: Bin Meng <bin.meng@processmission.com>
-To: QEMU <qemu-devel@nongnu.org>
-Cc: qemu-stable@nongnu.org, Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Jason Wang <jasowangio@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-Subject: [PATCH] hw/net: cadence: Return current Cadence GEM queue pointers
-Date: Mon, 20 Jul 2026 20:07:31 +0800
-Message-Id: <20260720120731.2022475-1-bin.meng@processmission.com>
-X-Mailer: git-send-email 2.34.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: TYCP286CA0197.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:400:385::11) To KL1PR02MB4977.apcprd02.prod.outlook.com
- (2603:1096:820:71::8)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wlmqn-0006XP-Bg
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 08:12:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784549519;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=xd9y3mATfQIKtcIXvAkA2ABfdkCApbp+cQtC4H0DoTY=;
+ b=JiY9YoKJqlypMvyEnsaJEX7ZMov4/sYaGZQYnj8Lxf1Yv6Uh4HLcZQKkLrrazI9v7ip2QC
+ ZSckEcUKvKnxaZPlLWqf7zq9WxSLlQulyIFZ4diugqlqS0LymRvUn5oHG5bJfO/KR8LJLO
+ GMhc2mXt27OCrGhiQJOBLt92JmsedtI=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-457-6qoKLsMKPxaWDOcA2ZwqlA-1; Mon, 20 Jul 2026 08:11:57 -0400
+X-MC-Unique: 6qoKLsMKPxaWDOcA2ZwqlA-1
+X-Mimecast-MFC-AGG-ID: 6qoKLsMKPxaWDOcA2ZwqlA_1784549516
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-c15ff68c858so1155083566b.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 05:11:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784549516; x=1785154316;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:reply-to:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=xd9y3mATfQIKtcIXvAkA2ABfdkCApbp+cQtC4H0DoTY=;
+ b=mkeYEBURH4EaHuZMePqj8lKdbqQqhojrUtqXVGm4rzxMm1HxRcT3mNu1dtRnoBzws+
+ xo3UbJNZnc0p8I7tYDsL9WLR5rxm9CNRc+6wB8nefP/ZBOuTc8lboOVP0qUo5q7Dw5s6
+ 8HbVS12jSmjTGxpmv6Kp4Fl07Z0lOwqLFoeISzwnALgo8+iN4tmJY/aw6bwJoNN5eCsx
+ b0WuMUp7DK7c4J2gUwHs+TBVHUMJeQn4KnPSR4hNbZlGlbLBhfiPE5DsoTbT2uJ2Otuk
+ Au39qXORpjENp5qZaBI3IBGoBCIryhw90F+Po2Lf3OZL9p+fAqCfbMmri6zAXeK3ajNY
+ 86uQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrgAa1WSvhDV3E8A5cjlMLxpghOS5Go715mLatn5umxpAzXYpu0MVrYC9YM0yjx8+4aOSRK2MHDK2Ot@nongnu.org
+X-Gm-Message-State: AOJu0YxAy0zbNIqz32rFdTEOOh+C6CrfZACMvMv6y8JlJgxYf7xGTrBl
+ L+db6H4P9zu3Eavog44GGgxgERSUql4+A1Q45RpIFXBxqNDG7rZE+kEKQJ5k7twkZZqf35v2dFl
+ YxY/ndY76cpjCKdm1+w7dimEgr/Wb2N8qo7Go6uyjvb6FAIndW8Kb+fG8
+X-Gm-Gg: AfdE7cnJNr2eix6ifDnR6t55MCRik331CaV2pHSjftS470K4LrLUN1x9BHswvatWEml
+ DN0eS3sW4NMvlRmSdrcJo+xPEpG2zw8YXV7KP9z7k3awFHeRd5q/5LrnPhViMAVb4uFF6PdvMqJ
+ MOHPgnIRpsX84YkwmJOH0otpCuuEXtdq2/l0vcApdISk71n4bJIQkTfBrkvGp6WOdaCExTJRDKL
+ wklMSdAgCEiNqSr5AbA+Fp58HmRmoOlNhIlAaPieZ02PffLwZQrIbUH4UmGxuFV79cu3STEEiR5
+ k2rCVV30QA3U1guwdFh0BJ41dnt7bCI71DlvksETJKS2IJh6x4GsID3O1bZD/cX6Op37x4fHTKe
+ kGUbIFkcragk6KXvpPAV2L/xdXgRtPZCKdLaqexzR8eXQTEeG
+X-Received: by 2002:a17:907:9720:b0:bf0:2253:ad67 with SMTP id
+ a640c23a62f3a-c16b482612amr577604766b.46.1784549516334; 
+ Mon, 20 Jul 2026 05:11:56 -0700 (PDT)
+X-Received: by 2002:a17:907:9720:b0:bf0:2253:ad67 with SMTP id
+ a640c23a62f3a-c16b482612amr577602266b.46.1784549515869; 
+ Mon, 20 Jul 2026 05:11:55 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c17009ae00asm447960566b.7.2026.07.20.05.11.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 Jul 2026 05:11:55 -0700 (PDT)
+Message-ID: <c09c55df-a79d-4ea9-a5b4-3eb4c489370f@redhat.com>
+Date: Mon, 20 Jul 2026 14:11:53 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|SEZPR02MB5519:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7cf062f3-fbce-42d4-6c7e-08dee65783a2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|366016|376014|34096008|1800799024|10067099003|56012099006|5023799004|18002099003;
-X-Microsoft-Antispam-Message-Info: G67pe2C1G7Yodd5a2t/UO1QRnNvW4USwkvGYb/Asl3Zt6kkvhYcOco+iPr1b6NK240Z+ErxMB/2+/DGI9UYGr0Hq+k3IjlRYHV904ZwFOEt6ZH3a9K2CKLdk3y8FbxmTKmeb27ueiNqJzmu2cDcM2GrebIyHck9pIzkmM5pyQzp8/+5D72YyKklz4paYl8s5es3SnVCvaPjvPq2g3O8IoX3G9kM5F31DXJoWQEwxeRLaFe1lr0HynVMoz61bdlIAriCBIyfvoZZakwhdxXi+7XI68+Xt0lKv1n/4CKOoHMh5rjQynt21nTKgUjxby1b0ZKIqJ3hEJzd33IqjxwI5vJ7Ghkl1HjL/bJ2kwYkLRzn6B7uWrIL10rUXyeWPf0Lc8q3Hie/9s4b7q1NPDgmbvD4Zp2z/cf817hWH1UksiUrjFXk6W9KM7dmrxI3lDbAzVCi/+QwN/9FR4Oq7upwzPCcZER27wpWFXIc8vEvSWtqQzlQQWB/6k5osI296QT1BboL7Sc6aGtRiqMuf4GkaiHNfpa0kZ3b7dwIiR/K7fXT7BoUTLVszPbrq+XhEuCvv28VYrg8M81g1sdyNsZiJhmAE+bF/jEqxX2rgI1POKwjkQwx2UFTjdJ4USV8+cZ6gW4hC/KXWN/WzTRR9i2x9RBTj93wcXr736Um3R+YMGgY=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(366016)(376014)(34096008)(1800799024)(10067099003)(56012099006)(5023799004)(18002099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?H2pbUW4TJIwNBZC1W42aYdMaYTheT7rei/ekqKyBLPYuID9h+cleIf4v7Y8i?=
- =?us-ascii?Q?aHfV4dBoQ0JLzAthg8xbx7yZCn6lEbVob9J2hqKVplQO7wz9Og8qpnmuOPrX?=
- =?us-ascii?Q?+t4tX1FPF07MtdJKo4MxkRJeyWZ2omGWkwbawKd6gyQVOWqOzEdPrTKPKY0D?=
- =?us-ascii?Q?TD8p8t/0apMzjAW+PcGLnaRTjmb2N62u3FMdmYNzTYMLJfkXSZwe3Gs05mHj?=
- =?us-ascii?Q?gyhwCMkQppalebRAOX+7/CVHq4EhEpH3T6OqNN31/wmimncLxjksxTBp1v46?=
- =?us-ascii?Q?jhRehfnyuannyrOi5U1HYmZxx0Q/WYsnTrDnUDgprnr7zUbVHUpteF7zO19z?=
- =?us-ascii?Q?vo2QRVVAwwEaYSz8gV4Mb8wueH0xuy/SD5WqiXLMFeO3vojlOFCA4fd6Svmu?=
- =?us-ascii?Q?fQMi027J91NMFUjqlC3ATG1qNciIkQlaX3QRkfYhzCJBavrVyxMxQLOlHA8e?=
- =?us-ascii?Q?h0qAIqVWrJF/e2QtW0pIGVuhYs7AY7NSZ+lwegCRYzKTkXphVRdKCFsoqoKP?=
- =?us-ascii?Q?9Ze1btBjm9F7Qgv+J4GaIvF2FgD+UTR0+RpGTyNTEgtrqRm0bRpw2NZmo6+h?=
- =?us-ascii?Q?N7Paj6+NPpM9L6wJtammRDv0TxC0+BI6X2UY28retT7Smxw+38lmxouQmEoo?=
- =?us-ascii?Q?Mlm7gN4aNZBV+WNK64AxWrBBlY6vfqN1xTQ/5aByPDR4+ogfPzw/TkX1+vy5?=
- =?us-ascii?Q?Du38JqA7ueju3lpWUhUpxp6/ZPv5eI1HWReq+nm1ybJSWyXAvBXQ8M+Xytm6?=
- =?us-ascii?Q?hTXhmfn0IgFcYoByzu6GePqsE87su46jTc1ofVXwc0B5l3J7rslhSWQ8Vjit?=
- =?us-ascii?Q?r2rlukwXF7XlegCnZc3l/YSIHgbe12xv1o7BEDGN3Duj/WPIz2+x0hixoeAP?=
- =?us-ascii?Q?zK0DPYTBg1MN4ek9lNX9m04peW3ISbcZCBVxzveot/SlvQAT0zypBxveVwT7?=
- =?us-ascii?Q?mVoXVzIhBFrwrfWKgfwTCNbI8adb02sqhobz1yHSDlBpki6tVmTkxoLCFNyK?=
- =?us-ascii?Q?EZVPcTVUP7U4xOjZ8WI4jNpaGz1skzF928huvPpOQCSM3ZHE7JqJ+xhCa9BW?=
- =?us-ascii?Q?xY0W5o5qH2hk5MuVtmeWCEk6+xEunnmkPffKxLUvfbcI8X4SYEzLzFD2B54X?=
- =?us-ascii?Q?/OTTForNIK6tL5G05mUSYJXeAvLmcsgGGXosPV1V366G39TK2pMSznguE/bN?=
- =?us-ascii?Q?lx7F6ieNFYR3ZVUpv0+SJQNo1K7GwXZcq4u9lm5mnWu+2beOMKofYPlG3y+j?=
- =?us-ascii?Q?y4nnOjToT4V1xT0CWKpw8x176O6cuR7cpIeCjaW3axfwaq9DekPyVNSqnoSL?=
- =?us-ascii?Q?5o77nS7zTC/NV9QT2shD4FYTmXrzHIkCzmsU6ae23pVReRD0bu7bTy7OOpZq?=
- =?us-ascii?Q?AuN1WDkP735O8RMlzr0mLY0ZBYC9ou7gd/+OuDU9Cqv+m5xi1YvBLzvw7hPX?=
- =?us-ascii?Q?DyJcP7atVtLhwCH4aV0HuH0AWnsv2T9fkYTaFviuvV+p4zGnHOIinAg34BmH?=
- =?us-ascii?Q?JqqqZVnj2QWzByLhAz3OH6EIMJrEIldw8ccIkQix39GnemwQsATzeOXXsAim?=
- =?us-ascii?Q?EODX5/RzOSDThzf1D//xJ2CZWxbXaHrxYxpoyjbwb+58ogCOot5ueHkjBYSg?=
- =?us-ascii?Q?2loo2pS5Sw2nBYlAgARHvGHIrUXI6KRqInQ91KJRpP8PRko4omyLs5DhZzoC?=
- =?us-ascii?Q?0akBB5HwO/x1IrR+9L1J6lwzFmVD+3khzrAXT1JwHdPnCYxPe3lpN4bW6pI0?=
- =?us-ascii?Q?sbe83yc4NMBvzMR5jE5X2PdMDaOaEto=3D?=
-X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7cf062f3-fbce-42d4-6c7e-08dee65783a2
-X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jul 2026 12:07:48.6710 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: X4Bph/lIGX3BkWOSKOpwnfObt8j31ZaixHFjiigFsE+7+5eq/1npifjiHVm+7xuTUuUiKgSSV1dtgo31LstiiQhvfFtGYo6bq0SxoAMK8Wo=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR02MB5519
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
- envelope-from=bin.meng@processmission.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v3 01/19] target/arm/sysreg: regenerate
+ cpu-sysregs.h.inc
+Content-Language: en-US
+To: Khushit Shah <khushit.shah@nutanix.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev
+Cc: cohuck@redhat.com, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
+ berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
+ gshan@redhat.com, skolothumtho@nvidia.com, sebott@redhat.com,
+ armbru@redhat.com, philmd@linaro.org, yangjinqian1@huawei.com,
+ shaju.abraham@nutanix.com, mark.caveayland@nutanix.com,
+ prerna.saxena@nutanix.com
+References: <20260716213858.609699-1-khushit.shah@nutanix.com>
+ <20260716213858.609699-2-khushit.shah@nutanix.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260716213858.609699-2-khushit.shah@nutanix.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: permerror client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,77 +119,36 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cadence GEM queue pointer registers are programmed with the descriptor
-ring base, but reads return the descriptor currently being accessed.
-The model tracked the current positions separately while continuing to
-return the configured base.
+Hi Khushit,
 
-The Linux macb driver uses the transmit queue pointer when recovering
-from a used-buffer interrupt. A stale priority-queue pointer can make
-the driver restart DMA before that queue handles its completion
-interrupt, causing queue 0 to repeatedly raise TX_USED.
+On 7/16/26 11:38 PM, Khushit Shah wrote:
+> Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
+> ---
+>  target/arm/cpu-sysregs.h.inc | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
+> index 05f558610b..2188cd7be0 100644
+> --- a/target/arm/cpu-sysregs.h.inc
+> +++ b/target/arm/cpu-sysregs.h.inc
+> @@ -19,6 +19,7 @@ DEF(ID_AA64FPFR0_EL1, 3, 0, 0, 4, 7)
+>  DEF(ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
+>  DEF(ID_AA64ISAR1_EL1, 3, 0, 0, 6, 1)
+>  DEF(ID_AA64ISAR2_EL1, 3, 0, 0, 6, 2)
+> +DEF(ID_AA64ISAR3_EL1, 3, 0, 0, 6, 3)
+Please could you send a branch. It is difficult to understand on which
+code base you applied thise series as
+ID_AA64ISAR3_EL1 definition is already upstream
 
-The primary queue has had this mismatch since the initial model.
-Priority queue support later copied the same register-read behavior.
+Thanks
 
-A single-queue machine usually handles TX_COMPLETE before TX_USED and
-empties the software queue before the restart check, which kept the
-issue hidden there.
-
-Return the current RX and TX descriptor positions on queue-pointer reads
-and clear those positions on reset.
-
-Fixes: e9f186e514a7 ("cadence_gem: initial version of device model")
-Fixes: 6710172501be ("cadence_gem: Add queue support")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
-
----
-
- hw/net/cadence_gem.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
-
-diff --git a/hw/net/cadence_gem.c b/hw/net/cadence_gem.c
-index b568fa3392..39e3620ef5 100644
---- a/hw/net/cadence_gem.c
-+++ b/hw/net/cadence_gem.c
-@@ -1469,6 +1469,8 @@ static void gem_reset(DeviceState *d)
- 
-     /* Set post reset register values */
-     memset(&s->regs[0], 0, sizeof(s->regs));
-+    memset(&s->rx_desc_addr[0], 0, sizeof(s->rx_desc_addr));
-+    memset(&s->tx_desc_addr[0], 0, sizeof(s->tx_desc_addr));
-     s->regs[R_NWCFG] = 0x00080000;
-     s->regs[R_NWSTATUS] = 0x00000006;
-     s->regs[R_DMACFG] = 0x00020784;
-@@ -1593,9 +1595,22 @@ static uint64_t gem_read(void *opaque, hwaddr offset, unsigned size)
-     offset >>= 2;
-     retval = s->regs[offset];
- 
--    DB_PRINT("offset: 0x%04x read: 0x%08x\n", (unsigned)offset*4, retval);
-+    DB_PRINT("offset: 0x%04x read: 0x%08x\n", (unsigned)offset * 4,
-+             retval);
- 
-     switch (offset) {
-+    case R_RXQBASE:
-+        retval = s->rx_desc_addr[0];
-+        break;
-+    case R_TXQBASE:
-+        retval = s->tx_desc_addr[0];
-+        break;
-+    case R_TRANSMIT_Q1_PTR ... R_TRANSMIT_Q7_PTR:
-+        retval = s->tx_desc_addr[offset - R_TRANSMIT_Q1_PTR + 1];
-+        break;
-+    case R_RECEIVE_Q1_PTR ... R_RECEIVE_Q7_PTR:
-+        retval = s->rx_desc_addr[offset - R_RECEIVE_Q1_PTR + 1];
-+        break;
-     case R_ISR:
-         DB_PRINT("lowering irqs on ISR read\n");
-         /* The interrupts get updated at the end of the function. */
--- 
-2.34.1
+Eric
+>  DEF(ID_AA64MMFR0_EL1, 3, 0, 0, 7, 0)
+>  DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
+>  DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
 
 
