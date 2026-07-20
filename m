@@ -4,138 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2542EC44515
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 07:02:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29701C44515
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 07:17:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wli0L-00018i-3y; Mon, 20 Jul 2026 03:01:33 -0400
+	id 1wliF5-0002zP-2r; Mon, 20 Jul 2026 03:16:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
- id 1wli0E-000188-Iv
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 03:01:28 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
- id 1wli0C-0000CL-Vo
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 03:01:26 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 66K6RUHe1665557
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 07:01:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=qcppdkim1; bh=FALdyOvXzP70GeuDjWxy2vT/
- fhKw4YxzpYENnZXo9t0=; b=gBCGihWvHFd1hcmeMfOB2adBMh2dzFNQEACfQB12
- Iby0lkeAYKlVYsOHyn/ab45/GLdcVWsFqb++d5y/A0WhFqYWGlhyHoRl0XnUMzid
- agQ8iDg0K4jM66u2NfYRIqXfjPSJv01CrwXNxYykQfm5+UxhSAODuWK7TwxXQRcf
- /4vdYpFIqbpt0IEltdmidDPFN6fslDdMQhU3pqrZXshcdKO4FtccZUEDUoGNPxp0
- u+BGYVJq+q6oB/ooH/y4vyG0YKvyfEtJfmrUoskaNG7SxxZ4Vex18E+I28XRFi/q
- +KCD1+3rNcLYK+FQN2v76OH7bI6y21yw05z3mGMMOAWCQg==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fgd04uuar-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 07:01:21 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-5174a23afcbso80687201cf.3
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 00:01:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jianghaotian.sunday@gmail.com>)
+ id 1wliEm-0002xo-Dd
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 03:16:30 -0400
+Received: from mail-pj2-x04.google.com ([2607:f8b0:4864:39::4])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jianghaotian.sunday@gmail.com>)
+ id 1wliEi-0001kX-Ru
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 03:16:27 -0400
+Received: by mail-pj2-x04.google.com with SMTP id
+ d9443c01a7336-2cabe9335f1so58864245ad.0
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 00:16:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1784530881; x=1785135681; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=FALdyOvXzP70GeuDjWxy2vT/fhKw4YxzpYENnZXo9t0=;
- b=PERjIdFh+5myDahuqrR9iQyX3VH3+3m4PD7mgKLnIkyygX843zQcnRcdtBbT8S5usM
- Hn1LBGkz+JFX7IHqtX3PIXoqkpfP6xOZF1yCQM6e2cX3fd2w8F8HiRJJkb/9fWgHU4K+
- 7NL0EOa9hA286KjU8/gc31ua+Cdk1xd27C+k/UjEcRYbxUoFINw3G+BOpTS/RHNNvCys
- k/t2iIctFfopLLgtSsvXu78Im0/SaDt7zoiGNUX7nwyS22vQgO6ly/NaeVtJAWQv2eqS
- CYu8GF8VcT3l0TgmUb/z1SAQhbOh8y7Y4QboEQ1s5iHt4syy3FS0u+5LFtWotRpxH/4q
- gXNA==
+ d=gmail.com; s=20251104; t=1784531782; x=1785136582; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=pfScrBn38640llKJwckOWShlKCm58AeclKkJ/RdzCGw=;
+ b=ZCN3swTGld0gIj9GhBRBnazVn/Uw2gXeh6KQJzlo9HIWvQ5vMYRBJcnbKtoZYr6sUl
+ BBiadhgYs5Y/3IgUZF6H/yhSw00hEgV4eImpC83HSre64Bv76rq0M6ayMNB+EgG/xnmQ
+ dViWettjunCKnWYUjrIdNkmP1aQi128EvW+ahGAuk7dx9/KJoka8fNTmxh90ZKNbmWb0
+ ltPo8me3lq8PDWKMTYOFeobJolrp5LW0DNmSfWeax8Pvbkk40JStnik6d5pxiUzojIV0
+ QpcS8pbvH/vT0J9Tb4XEVm5+n7CmnB4pP36E4LqhXnX8zymZhe2gB4MB4RnQY4eD7S3x
+ QkyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784530881; x=1785135681;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=FALdyOvXzP70GeuDjWxy2vT/fhKw4YxzpYENnZXo9t0=;
- b=RH+I2ealWikUGoMeY/gWwzRl4qaxKfDkb7QzicM/MbS6t9vZA31q4VA3VOkAJgm3zM
- U5KIp5HV2axdjFVCR982ayTI22cWKIi8T7nv/BFLyB0gGvOVEiRYSKgBPOwinKPQzNVv
- lgfNBWoE81ri4opn0V3h0FVX2ngcsy2DPPmiNpkc/eNV13xhu+FqqJpKj+xVbRXogTrB
- kxW54W0sA2PspKx0efgPMwdWpebhG8Uv8q/L6hy7+UP+7rhEZuGGmLegChrg7Mzyd3MZ
- jdjCmBbSdh667YO1Ll0e74hIIralT6Dek8/aQ4Su9pWQMdwVfSwEyziF6A37zePrKXBK
- MHvQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqFgZRjIp1Tu5LOgZdR/bJM3xHZkO+v2Ov/5j3bXemkoQBnHbg9dBPxpAoySWPNN/b1QwHlQcnGOdqx@nongnu.org
-X-Gm-Message-State: AOJu0Ywm+extTaqrK1mV6nj6+ObMPmlsd+3TLRnc7K4WgtwdJRoBWqLT
- Lb/JS/XHzi124dOFEG8RgzJW63jeS6buPgDF4Wxg2QjO4YdcJ4TdouvYQ29MnMFvX02uVwRj6kT
- fSPiaz5d0JAT4Q0PMCln5PpVqV1fcZ/71iJ9GoRVB3U971xGW8qhyntLMwQ==
-X-Gm-Gg: AfdE7ckHuZyyQdZY1aDGcIOwNI6+nIh+tCSCmKEKLDEIoIyT10dv1pgw5lrRRjYs3xM
- eqOD4/ycaUrltKlh3SAguOaMT7q+rmQE466o0v3K26lHlWMN7uhExSfKyng8mfEDFRnqaYOGR4y
- UuyW5exWd2xpoZV7Q6j44GJqrJ6XutCV9VBKVVyEF3kmvG71bFei6P1bfNqa6+KgwAarvj2rPoq
- jHKvkeLZaEOgK6w7j/K9Z8uh38gg9bYZJ6infSk43z9tH499FXq43oRaDn86OJyOWBsQ/T0hyBs
- mV5bbvIdZervOgO699xuiZXM7fAsrUaStHrDWmuYyNxhGFYuCkKCwmuHT1462Oag30zf1rI9k0Q
- /EsjxWj4ftIjKkVWQW5JSf4VBlZ1dk14D1Ter
-X-Received: by 2002:ac8:5fd5:0:b0:517:76b7:7b3e with SMTP id
- d75a77b69052e-5213cdcce1bmr113574111cf.38.1784530880288; 
- Mon, 20 Jul 2026 00:01:20 -0700 (PDT)
-X-Received: by 2002:ac8:5fd5:0:b0:517:76b7:7b3e with SMTP id
- d75a77b69052e-5213cdcce1bmr113573831cf.38.1784530879826; 
- Mon, 20 Jul 2026 00:01:19 -0700 (PDT)
-Received: from localhost (ip-86-49-247-5.bb.vodafone.cz. [86.49.247.5])
+ d=1e100.net; s=20251104; t=1784531782; x=1785136582;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=pfScrBn38640llKJwckOWShlKCm58AeclKkJ/RdzCGw=;
+ b=hGZ0eOkxfOnz2Wsa7TbhiR8GoZoZjGm7X/x/ebIjZpCKQ3BuJazTQ1l3zkTaVqbdsl
+ 5B4V3iGXYuiXq2mI+4GhUAZBcidTjuxiV8jT4HIV03PQ286wkzfa7P8tIhS7lNfeYXM2
+ 0VtypUQSuS1/xUxW0haS+5TnO+sm6RvGDYVPMGGnwW0MKrbifzpWcq/R6MOyClnLnfZL
+ sFyeazl5frLI9sykh6iFNigfA6CuhbrzDHGYcO/ZYaQHFn9oFT2/MNV/o/biOHyJfLB3
+ CFUD4G/8T9aBITFJt3GhTTBO8UbrUMYK1dpnVMzUkop8IwLT6/mhhqvexwO1iHaxSk8w
+ 63qQ==
+X-Gm-Message-State: AOJu0YzBSTOfNfUE3cWxlukroaPrf8/ZsQXXO2KJYRClMyicUf8w/suq
+ MzJCJvzGSIOwNwLhO4bSL7z78POILumJHwb7OJu8MofV29qm6s2tO70rYU/AAzOEcXPrY7ef
+X-Gm-Gg: AfdE7ckuQcusEIAXMNmWtzNC1YbO+rZMTqWhJ3FMv7X22FxkzJ+zLqfVoEFosp7UWGb
+ d6/IcCVnRDB1Dow7Ti3TyOq02xHVv0I+dDDLkGtf68kU0yIcQjN2GMWkL6c5a+vMejAeF9BuKZc
+ RktLB4RUruzcE64NavWG6WEJdJpygYerSn6o9EOMJieqDskORdeD3kCuTlC/ta9++tX+oRLEw59
+ nhnfLsmavu+nj/t4k8ZKiE58+JuVhaALC0G9/rhMBZVqcWy8bYUzd5HVIQRpVEcN8wtX16zVaH/
+ wFM0EsNN/Lu1UU1KJ712juZ/s+blMtXv22/ume0kE+Z+lkU98M/qtHBNyuRSW6hVbCQ7wZRnFOX
+ 48aygHNFg2QVduLLbE5otzVgKG78e4V3X9iVWgkDQRAXFxSBX309vs7D+o+bm6k9rH7F80oR496
+ t6N+MxKZEOOotD9QtJMOU9v+j2h1EKRgsb0Qa9lJNA1+gUXuPTBh2frln7ampsn90lxLRg/GDPE
+ t1eAKxf0KZUqgzaP8fEEc5EG8oBVw==
+X-Received: by 2002:a17:902:ce89:b0:2bf:9760:b94d with SMTP id
+ d9443c01a7336-2cf3485ea4emr138122105ad.15.1784531782054; 
+ Mon, 20 Jul 2026 00:16:22 -0700 (PDT)
+Received: from VM-210-252-ubuntu.. ([14.116.239.34])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c1712a63d99sm417208266b.41.2026.07.20.00.01.14
+ d9443c01a7336-2cf346db113sm50931775ad.39.2026.07.20.00.16.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Jul 2026 00:01:16 -0700 (PDT)
-Date: Mon, 20 Jul 2026 09:01:12 +0200
-From: Andrew Jones <andrew.jones@oss.qualcomm.com>
-To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Cc: alistair.francis@wdc.com, palmer@dabbelt.com,
- daniel.barboza@oss.qualcomm.com
-Subject: Re: [PATCH] hw/riscv/riscv-iommu: preserve requested perm in
- spa_fetch()
-Message-ID: <blo4r5n35wddu3lf3eifkbuk5n7s4kfqd75vzea65j274hxj2u@j6vt7whhvhza>
-References: <20260717144525.1154204-1-andrew.jones@oss.qualcomm.com>
+ Mon, 20 Jul 2026 00:16:21 -0700 (PDT)
+From: jianghaotian.sunday@gmail.com
+To: qemu-devel@nongnu.org
+Cc: mst@redhat.com, alex.bennee@linaro.org, odaki@rsg.ci.i.u-tokyo.ac.jp,
+ dmitry.osipenko@collabora.com, qemu-stable@nongnu.org,
+ Haotian Jiang <jianghaotian.sunday@gmail.com>
+Subject: [PATCH v2] virtio-gpu: fix NULL deref in rutabaga set_scanout
+Date: Mon, 20 Jul 2026 15:15:56 +0800
+Message-Id: <20260720071556.106003-1-jianghaotian.sunday@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260717144525.1154204-1-andrew.jones@oss.qualcomm.com>
-X-Authority-Analysis: v=2.4 cv=POs/P/qC c=1 sm=1 tr=0 ts=6a5dc7c1 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=aYZ+cQcEYoLAp2L633VOig==:17
- a=kj9zAlcOel0A:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=EUspDBNiAAAA:8 a=pBlKQAIQ7nZEyNdry6oA:9 a=CjuIK1q_8ugA:10
- a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIwMDA3NiBTYWx0ZWRfXw6I0otE6wJvb
- bOV8uf82Rm94jHqDdaHPJXBaXU7rMOm3CBYhcZn2iamA07FLW0ruDpkaGtYNsuk7Hg+XNrsBmPV
- 9dKGj0jF/BAhQ1gsSh2UYU812cR20ZIf7QdcCSOmSyWT/hhO8kr1GbAAvGZPkZLFfaXpE5FaQ9U
- bxwTIU3f2wbb+bXoCdlUMj6dqYd/wStzmO7XzAQQzAkiLE9phaLrl/7m7PN2KYWvssSZvE0vsSk
- 155iOA2duQQ2bp0dfmK/BUn7GvX9a4fnT6grRT/nZ/SfYiI1ExCWMQ0Urmp+zTpX1t0cwcyvxi8
- a6eAtuJ+BDfldbQcQNLCT8GphM1zuIAJqLw8mLXni1HcIGgjgH0RPmZLyJjR1WmYi4q8/g2b4bM
- 4W+e6QlDuw/2sABFIzjtEVeiOQ9ciQAdb08rebYaoQbMHjht/VJtpweLdP7+aPwWX4O+E9dsMTI
- So27WsoDPEgET05iPJw==
-X-Proofpoint-ORIG-GUID: ojoFvLwz5g59kIpBA62GHSc3689caC6c
-X-Proofpoint-GUID: ojoFvLwz5g59kIpBA62GHSc3689caC6c
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIwMDA3NiBTYWx0ZWRfX+M7U4naquhIb
- 44SH3SSFXxDR5wUvEWyMal1Gjl9fvV7E6DlrBjDS1kwDkW9RI6bEGS25lnmVUxTBxYfa0Vqhtpx
- +RaFNHc6P86bfFq2JWpqF6JHdZ3jPmA=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-20_01,2026-07-17_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 spamscore=0 adultscore=0 clxscore=1015 suspectscore=0
- priorityscore=1501 malwarescore=0 impostorscore=0 phishscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607200076
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=andrew.jones@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:39::4;
+ envelope-from=jianghaotian.sunday@gmail.com; helo=mail-pj2-x04.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -152,34 +99,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 17, 2026 at 04:45:25PM +0200, Andrew Jones wrote:
-> b18e3f0e2d0f fixed spa_fetch() faults whose TTYP used the leaf PTE
-> permission instead of the original request permission.  However, it kept
-> that request-narrowed value in iotlb->perm after a successful walk, and
-> riscv_iommu_translate() caches iotlb->perm for later accesses to the same
-> IOVA.
-> 
-> That means a write to an RW mapping can cache the entry as write-only.
-> A later read then hits the cache and faults even though the mapping allows
-> it, which showed up in NVMe testing as bogus completions and controller
-> timeouts.
-> 
-> Keep the requested permission in a separate req_perm and use it for all
-> permission checks and fault-type decisions.  Accumulate the leaf
-> permissions separately and copy them to iotlb->perm only after the full
-> walk succeeds, so cached entries describe the mapping rather than the
-> current request.  Since faults leave iotlb->perm as the original request,
-> the S-stage and G-stage TTYP fixes remain intact.
-> 
-> Fixes: b18e3f0e2d0f ("hw/riscv/riscv-iommu.c: fix fault type for spa_fetch() faults")
-> Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
-> ---
->  hw/riscv/riscv-iommu.c | 50 ++++++++++++++++++++++++------------------
->  1 file changed, 29 insertions(+), 21 deletions(-)
->
+From: Haotian Jiang <jianghaotian.sunday@gmail.com>
 
-Based-on: 20260717112340.1071148-1-andrew.jones@oss.qualcomm.com
+rutabaga_cmd_set_scanout() checks scanout_id < VIRTIO_GPU_MAX_SCANOUTS
+(16), but does not check scanout_id < conf.max_outputs like the base
+class (virtio-gpu.c) and virgl backend (virtio-gpu-virgl.c) do.
 
-Thanks,
-drew
+With the default max_outputs=1, virtio_gpu_base_device_realize only
+initializes scanout[0].con. A guest submitting SET_SCANOUT with
+scanout_id >= 1 takes the con=NULL path, and
+qemu_console_set_surface(NULL, NULL) dereferences con->ds, crashing
+QEMU.
+
+Replace VIRTIO_GPU_MAX_SCANOUTS with vb->conf.max_outputs in the
+CHECK, since realization already ensures max_outputs <=
+VIRTIO_GPU_MAX_SCANOUTS.
+
+Fixes: 1dcc6adbc1 ("gfxstream + rutabaga: add initial support for gfxstream")
+Reported-by: Haotian Jiang of Tencent Security (Yunding Lab) <jianghaotian.sunday@gmail.com>
+Signed-off-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
+Cc: qemu-stable@nongnu.org
+---
+ hw/display/virtio-gpu-rutabaga.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
+index 6ff1263901..3f78899442 100644
+--- a/hw/display/virtio-gpu-rutabaga.c
++++ b/hw/display/virtio-gpu-rutabaga.c
+@@ -302,7 +302,7 @@ rutabaga_cmd_set_scanout(VirtIOGPU *g, struct virtio_gpu_ctrl_command *cmd)
+     trace_virtio_gpu_cmd_set_scanout(ss.scanout_id, ss.resource_id,
+                                      ss.r.width, ss.r.height, ss.r.x, ss.r.y);
+ 
+-    CHECK(ss.scanout_id < VIRTIO_GPU_MAX_SCANOUTS, cmd);
++    CHECK(ss.scanout_id < vb->conf.max_outputs, cmd);
+     scanout = &vb->scanout[ss.scanout_id];
+ 
+     if (ss.resource_id == 0) {
+-- 
+2.34.1
+
 
