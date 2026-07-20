@@ -4,119 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F523C44520
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 15:24:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AA92C44520
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 15:24:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlpqI-00076X-Gm; Mon, 20 Jul 2026 11:23:42 -0400
+	id 1wlpqz-0007GW-VV; Mon, 20 Jul 2026 11:24:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wlpqG-000764-Qs
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 11:23:40 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wlpqF-0001NW-2f
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 11:23:40 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 1EDD63E23;
- Mon, 20 Jul 2026 15:23:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1784561016; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wlpqv-0007AW-0c
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 11:24:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wlpqp-0001Ql-No
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 11:24:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1784561054;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=u5tPuo1xRGF1vjewjDIfx78o6HHCQjfbdIeumnw4Cqw=;
- b=R4e/JONCfSKecEZ70D/cvKc6pkjKr4tAP0BegTulHWt3pkbwWjOMb1I44Mugoh3XVUgmU+
- rWJZkeUrEExSHgTKvekNYKQ8moWrh+1EcDLLLhsJvoHm4iATGy8/udrHjkCUi9qnOam6Br
- WmKVnO1uZUzXMat5gMq3GrrV0Dgtris=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1784561016;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=u5tPuo1xRGF1vjewjDIfx78o6HHCQjfbdIeumnw4Cqw=;
- b=vGJI2hCYcc1XRg+KPqmKB5qU1sdv3cNTIWmykkj8srJcXFtsuPvBi30z9eqfIg8OVwNsVa
- KuTXhFYgNDGxsHAw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1784561016; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=u5tPuo1xRGF1vjewjDIfx78o6HHCQjfbdIeumnw4Cqw=;
- b=R4e/JONCfSKecEZ70D/cvKc6pkjKr4tAP0BegTulHWt3pkbwWjOMb1I44Mugoh3XVUgmU+
- rWJZkeUrEExSHgTKvekNYKQ8moWrh+1EcDLLLhsJvoHm4iATGy8/udrHjkCUi9qnOam6Br
- WmKVnO1uZUzXMat5gMq3GrrV0Dgtris=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1784561016;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=u5tPuo1xRGF1vjewjDIfx78o6HHCQjfbdIeumnw4Cqw=;
- b=vGJI2hCYcc1XRg+KPqmKB5qU1sdv3cNTIWmykkj8srJcXFtsuPvBi30z9eqfIg8OVwNsVa
- KuTXhFYgNDGxsHAw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AB439779AA;
- Mon, 20 Jul 2026 15:23:35 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id Sy7jHnc9XmrpBgAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 20 Jul 2026 15:23:35 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org,
- Thomas Huth <thuth@redhat.com>, Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Mauro Matteo Cascella <mcascell@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?=
- <philmd@linaro.org>, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Peter Xu <peterx@redhat.com>
-Subject: Re: [PATCH] docs: outline some guidelines for security classification
-In-Reply-To: <alpIDh7WOcFsa9EA@redhat.com>
-References: <20260707105927.2776822-1-berrange@redhat.com>
- <CAMxuvazpNiy8iqu76wJwiF3aKEizjgZaQFgF3gtHDXqiGh9Fsw@mail.gmail.com>
- <ak0q0vOeFVJsDBcL@redhat.com> <87jyqv3u32.fsf@suse.de>
- <alj4V6I__bCOjRTt@redhat.com> <87ech24wcz.fsf@suse.de>
- <alpIDh7WOcFsa9EA@redhat.com>
-Date: Mon, 20 Jul 2026 12:23:33 -0300
-Message-ID: <874iht4rd6.fsf@suse.de>
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=8mv+mujiyjXSsJWxXclvJVodv+RRZ5HXtPh7Dd6NMvk=;
+ b=D3c6AwXkqn/nK7WbwxPBzqDXC6KZbkYun2kEG1SK18/goU4O0yA9xPyzU+1IKsX2L2Ov7t
+ g2NgirBP4bRxfooetdq0KuIpmwLLs+N3Fnid+XkTHkqrJf5FSGQK1IzUuCwTTFg15BYG9i
+ LFYAge+XnGj2Vs72WTMBgm/O7J7WKlk=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-657-ZU09UhaYOv2qtQ60L9s8Ow-1; Mon, 20 Jul 2026 11:24:10 -0400
+X-MC-Unique: ZU09UhaYOv2qtQ60L9s8Ow-1
+X-Mimecast-MFC-AGG-ID: ZU09UhaYOv2qtQ60L9s8Ow_1784561050
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-4740be00302so6024497f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 08:24:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1784561049; x=1785165849; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=8mv+mujiyjXSsJWxXclvJVodv+RRZ5HXtPh7Dd6NMvk=;
+ b=QM4n3R23ny7Pz3N5KtHiViqfnb5WuhvB3eMrZJdSJt9Wj0iAKHbT2JAkwyjvUq+B23
+ KMFnFz3PGQr3z4KiFpB5QjAYZ3unIsXBaWG++QDCQIvl66KrSUbsaDgGdf7Xv+8bD5vI
+ 2K9aHuANFDWUwGaxDQTW2UUyjDnzQqErMQMvDEN0Q52L631oGTe5NFZZ08BRCfUf3Qwm
+ 4Gdhe1tM2Wfs5ufewzzoSq+pJVWXUpolTgSbWGt8YLt5TjzlwoRrGmCXD94fOTNlno9g
+ YYBF0n5zSh1sGTL9DOVID5Ysy1yKaRKUvYyThv6J6itt2F7065dbFBXaZqUtbTsFy6vv
+ 55Ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1784561049; x=1785165849;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=8mv+mujiyjXSsJWxXclvJVodv+RRZ5HXtPh7Dd6NMvk=;
+ b=RqJbZiTaWxyy+SRCPqviH871Qv9CAGTf68DiJwpEmSPV/DhnOSeGqS0J0vDSCb0nj8
+ duguDEphQypA8Y6xrAkEvUrxrmoJAepLq4H8x1Hg9meCmiIIpASfnIh0S/ZwJohOaCDS
+ vXTbviYmuxIIzpmORsz7AAi4/R2IpeJ0D3Dl2kmPAnV4nHU6+cfinxFcF0T+RtQUsrIX
+ PAKk7UPMZFVjwQg23BITvWojqz+8SZi0ak21SCI0r6LnC8hQF/36wcNTXNMcc67VxTQO
+ izqTed0pJyVvpuJqzySUy5e2jnI4xaZAsjtNYnymfZppjVbhKiWmGaPOlLNJXFJ3rcVE
+ wLkg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rrc/pnc1j2Q+8XX6cW9aD4LGzzmadm0/l5pFKMrv0wnYm8GXkUJ9LMCkZqJMkzzFu99tCXj7ixlQ9YU@nongnu.org
+X-Gm-Message-State: AOJu0Yx4leY/380uSTuvqBndcQ8pq/9r/iFAERf3rhL/M5OKdt+GzyRD
+ exELj/GH8ZpT0cqtY0zka7F8t7SXHcgErpIDY4szM202chbvM75Q3qWJ0JE+A3Zn3+EKeqszZ26
+ F9NqCWOofSBoo1r+zvQ4F2i5zA2I6AYFXR9gBo+CFK6l+LnawPBQvhyHM
+X-Gm-Gg: AR+sD12tD9/k9ltwHR0zr/j9m+qmLLJIJOkAk4FdX0EjvhXoIY6vJaE+GFwHiUUSuEp
+ cjMTFvjShUsIjzSukDIx7+XnTy1swHPbOnq3D4h5XytRJnq5FI34csrOTbHQhWqN9/MmmwV8c+l
+ Y1c4+5yAgP962XfvpnFzmlMKjtMD6TB5utURuuohHNCXba/+FprcC8yve02fa4mpHiXtsTBrS99
+ W6BOYkQs0gLJbPxsZ3azOC7RVO9yGjIA7Y0y2/KsqvoMcGoL6qH/YL0otu0eLybqkG+WjrHIHTl
+ Zl/2YyeB45hueS4abC4uCHMbGgCIrISWkL0p6+y08qtScesYwwqKEnC9qEOqHX2MPI1II00zOjW
+ 2mO+EVbRjCH95v6SlqcMM0pJVVCP+Oy0NaIkXILg=
+X-Received: by 2002:a05:6000:2287:b0:47f:6fa0:a9f8 with SMTP id
+ ffacd0b85a97d-47f6fa0aa2emr9780953f8f.28.1784561049579; 
+ Mon, 20 Jul 2026 08:24:09 -0700 (PDT)
+X-Received: by 2002:a05:6000:2287:b0:47f:6fa0:a9f8 with SMTP id
+ ffacd0b85a97d-47f6fa0aa2emr9780921f8f.28.1784561049076; 
+ Mon, 20 Jul 2026 08:24:09 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
+ ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47f63e65644sm29301315f8f.16.2026.07.20.08.24.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 20 Jul 2026 08:24:08 -0700 (PDT)
+Message-ID: <24c5b800-9c79-4d8e-87d1-3dcbb197be8b@redhat.com>
+Date: Mon, 20 Jul 2026 17:24:07 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[12];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/5] vfio-user: vfio_user_device_io_get_region_info: fix
+ capability check
+To: Thanos Makatos <thanos.makatos@nutanix.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: John Levon <john.levon@nutanix.com>
+References: <20260720091718.2642-1-thanos.makatos@nutanix.com>
+ <20260720091718.2642-6-thanos.makatos@nutanix.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260720091718.2642-6-thanos.makatos@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: permerror client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,88 +168,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On 7/20/26 11:17, Thanos Makatos wrote:
+> The existing check for PCI capabilities misses the case where
+> info->cap_offset == info->argsz, which results in accessing unallocated
+> memory. Fix the comparison.
 
->> >> E) The migration source QEMU process is assumed to be secure. Comprom=
-ise
->> >> of the source QEMU process is nonetheless possible but exploiting the
->> >> migration process is expected to grant no further privileges.
->> >
->> > This is the tricky assumption.
->> >
->> > Cnsider source host as 2 QEMU processes, one of tenant A and
->> > one for tenant B.
->> >
->> > If tenant A compromises their QEMU, and can wait until a live
->> > migration for tenant B is initiating, potentially tenant A can
->> > connect to a dest QEMU for tenant B. I would consider that to
->> > be gaining privileges.
->> >
->>=20
->> I thought of that, but I can't understand how "dest QEMU for tenant B"
->> isn't just "dest QEMU for tenant A that has now took over". If none of
->> the stream from source B is reaching dest B, then that's harmless.
->
-> Two VMs configured with identical virtual hardware should have
-> the same vmstate structure, and so be compatible from the
-> POV of live migration flow. They can none the less have different
-> backend connections. So if tenant A can connect to a incoming
-> QEMU from tenant B, the live migration can probably succeed,
-> thus giving tenant A a working VM but with the HDD now backed
-> by data belonging to tenant B.
->
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3865
 
-Ok, I haven't thought about the storage aspect. In the scenario you
-describe, there's nothing the migration code can currently do to avoid
-such an exploit. The "migration process" seen as a larger thing is
-vulnerable and there's currently no code in QEMU whether broken or
-behaving properly that would stop this attack. We're kind of back to
-what Peter said that compromised source is game over. Unless I'm missing
-some mechanism.
+> Signed-off-by: Thanos Makatos <thanos.makatos@nutanix.com>
+> ---
+>   hw/vfio-user/device.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/vfio-user/device.c b/hw/vfio-user/device.c
+> index d7cf39dda7..ce437b2464 100644
+> --- a/hw/vfio-user/device.c
+> +++ b/hw/vfio-user/device.c
+> @@ -215,7 +215,7 @@ static int vfio_user_device_io_get_region_info(VFIODevice *vbasedev,
+>   
+>       /* cap_offset in valid area */
+>       if ((info->flags & VFIO_REGION_INFO_FLAG_CAPS) &&
+> -        (info->cap_offset < sizeof(*info) || info->cap_offset > info->argsz)) {
+> +        (info->cap_offset < sizeof(*info) || info->cap_offset >= info->argsz)) {
 
->
->> > With TLS we lack fine grained authentication in common setups
->> > today that rely on x509 certs configured per-host, not per-QEMU.
->> >
->> > In current libvirt we're introducing oout of the box support for
->> > TLS PSK, which means live migration sessions will be tied to
->> > individual matched (src,dst) QEMU pairs, so even if tenant A is
->> > compromised they would be able to do a TLS handshake for tenant
->> > B's dst QEMU.
->> >
->>=20
->> ITYM "wouldn't be able".
->
-> Yes.
->
->> > I'd like app mgmt apps to switch to PSK instad of x509 for
->> > live migration, but that'll take along time.
->> >
->>=20
->> Is TLS PSK a reasonable setup to expect and to include in this policy?
->
-> We should probably have a standalone doc for migraton detailing
-> the recommended configuration scenarios, we could then link to
-> from this doc if needed.
->
->
->> > WIth this it seems like the only 2 scenarios where a migration security
->> > flaw can be issued are:
->> >
->> >  * Something goes wrong before/during the TLS handshake
->> >  * A bug in source QEMU, somehow allows a guest OS user
->> >    to set magic device data that turns into an exploitable
->> >    VM state record.
->> >
->>=20
->> We don't need a bug in source QEMU, the magic data could be within
->> accepted parameters.
->
-> I guess there could be a bug in the dest QEMU that trips up over
-> otherwise valid vmstate data. Dn't recall seeing an example of it
-> but never say never.
->
->
-> With regards,
-> Daniel
+May be :
+
+        info->cap_offset + sizeof(struct vfio_info_cap_header) > info->argsz
+
+Thisensures at least a full capability header fits.
+
+As you wish,
+
+Thanks,
+
+C.
+
+
 
