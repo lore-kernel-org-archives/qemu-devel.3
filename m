@@ -4,111 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44BCFC44520
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 11:24:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14F94C44515
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 11:28:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlm68-00064H-9Q; Mon, 20 Jul 2026 07:23:48 -0400
+	id 1wlmAG-0007nT-K6; Mon, 20 Jul 2026 07:28:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1wlm67-000645-1l
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 07:23:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wlmAF-0007n5-36; Mon, 20 Jul 2026 07:28:03 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1wlm65-0006kU-4y
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 07:23:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784546623;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=CaYT/hlQebVBBjWxo6yEYllRtoTGR+8HUzobQBXo5no=;
- b=KMOIgeK559N09Nm2uGjqwWCvoHrNp9JLi3wmSbBjs92IQ5cVTHmAWWXQg3uQQ/yqO7Dc1r
- 6N4hIbH5jLZGiFSQ9S6ZAFPFOBLfHHjWxsTAyvjCLRKfwTmeblD/osNvv8kVkPfl+CjE5e
- /nYQroub7irBL8x4rMpnD+YC87tyIQw=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-396-mdQDlRxHO06JHGaAgR1--A-1; Mon, 20 Jul 2026 07:23:42 -0400
-X-MC-Unique: mdQDlRxHO06JHGaAgR1--A-1
-X-Mimecast-MFC-AGG-ID: mdQDlRxHO06JHGaAgR1--A_1784546621
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4955ecd8a10so5154205e9.3
- for <qemu-devel@nongnu.org>; Mon, 20 Jul 2026 04:23:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1784546621; x=1785151421; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=CaYT/hlQebVBBjWxo6yEYllRtoTGR+8HUzobQBXo5no=;
- b=tlxmlrK7nWKQxA75rnj4/5fDJLCPdyF9GVjIwGcnSTOUX1+RhYKiPveYQZwZ0GebB3
- 7MLSEpguK1rlS2EornPozsEZTE2sGSpmAcSDkP6nYnYYQQL0BsTTyFx4EHLNVg/RVF0C
- 86F54MRa+HeL2FdedW8FDkXw9plahDf/7maRhWOV8+21g1CSVJvjypYS4a7QdXWRutRj
- Cbkq1a4RrP+dqnMf8CxOC04zZx2DfNEPlvvbcG/EbUl9F7ddtH2J/BlBD+CB1GkS07h0
- hIp6IltBhWhOsuuXbo5XrasccN/VomW4gF7az1xsKxVmHr25REoG023dGapSQazgBRUU
- rD3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1784546621; x=1785151421;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=CaYT/hlQebVBBjWxo6yEYllRtoTGR+8HUzobQBXo5no=;
- b=M/un9r9dK07PeCFJSCHakuMv+Mczhfbx0ju3AQPWKsHw8faeRqxZGVGnc0ifOpktDS
- SE7ns77IKxKV1obDEUYdjZ4QSl/Y1lgTtyquXoAiFO5rnufMBUOvtInNvN0xz7AiVPYE
- o/oyeByFJx93NIUMgZhnen5U1X4H8dOX8Bgqh3wqB5WWMI32o4k3bqzzWzRmO4D1b0ND
- KMbS6QOeeJTg2LJuCXCtSbWV7fTkWuqRKnVYPXPtHJoYgjM6Bwoothe6uLIGWRW32cqM
- 4vkzrOyfUzQzDXImf30/mXasfCbft037AIPqLWUHojq3PLQcg/CqjELNx05CWito8+qU
- FPFg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrsNpKW3PwiLwie67LJAUZSlIl6q7hV6PitbsBo/ExOaym6UMQsQmsFjvtmbjwslmHAdu1kQYkfB2xK@nongnu.org
-X-Gm-Message-State: AOJu0YwkD6/X/M2dfAIrBcHoeVyuNw5ZMvt7yNhBxuDbXABvSs/9Ajfi
- psUb8oV7X49I9LCip3EZJSRgk24DLefD3Irh9nsWVroUkNG22txm6F3/mDPjcg0h/cy4kwre9cP
- 5Ec7B4SUy8IVtCdNf0ZYC/cpgHGHg2lgKA016gmWHC3oTn+g/0UdTvdUN
-X-Gm-Gg: AfdE7cnO4fWVVzUmlPo3qX02/uMPBzw16eKb0EFGPNU2hAXbCkLjgMqjqKE+P9AFFED
- C/LdHxc9fLmDJJAXraT8aNWpwaTnO1Lon7WXz2m3WbP3UZdR0k6cHq9kfc3r2Ujq0+rYcYRLEHP
- VlDDN71opbg5UdY8SnBmGYhKePW/OtTbUP/OYIPcvO2zAFGamenHX4tgkb+ynFG7hnZYSWuXUCN
- ZNNKTxqRnaT3p7UHJbjwGOLof3eOYpWD45tZEOrOdA/EIm411pl5H2RU41ZUXJPloL0NSOhEzJp
- duXahCXC9ShuFbd/nkxX0M7uSytBamefsSq7oMAiI4ZuUbts0qQm42tSxQiT
-X-Received: by 2002:a05:600c:1d15:b0:494:ca0e:880a with SMTP id
- 5b1f17b1804b1-4954a3e4855mr156077295e9.12.1784546620825; 
- Mon, 20 Jul 2026 04:23:40 -0700 (PDT)
-X-Received: by 2002:a05:600c:1d15:b0:494:ca0e:880a with SMTP id
- 5b1f17b1804b1-4954a3e4855mr156076905e9.12.1784546620420; 
- Mon, 20 Jul 2026 04:23:40 -0700 (PDT)
-Received: from imammedo ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4955dfa4a97sm101926315e9.4.2026.07.20.04.23.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Jul 2026 04:23:40 -0700 (PDT)
-Date: Mon, 20 Jul 2026 13:23:37 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: "Daniel P. =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>
-Cc: Christian Schoenebeck <qemu_oss@crudebyte.com>, qemu-devel@nongnu.org,
- Greg Kurz <groug@kaod.org>, Jia Jia <physicalmtea@gmail.com>
-Subject: Re: [PATCH 2/3] hw/9pfs/virtio: disable hotpluggable property of
- virtio-9p device
-Message-ID: <20260720132337.0110bd9e@imammedo>
-In-Reply-To: <alo5LiqOfOVx0Yxu@redhat.com>
-References: <cover.1783604079.git.qemu_oss@crudebyte.com>
- <alEEROvr0gbuWCB2@redhat.com> <20260713094935.5eda77f9@imammedo>
- <3767624.R56niFO833@weasel> <alo5LiqOfOVx0Yxu@redhat.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wlmAC-0007Qh-Ne; Mon, 20 Jul 2026 07:28:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1784546856; bh=BLQHpWG5BfYKzSH7vxrrS9hU+MMo5lVdapEN5NHKei0=;
+ h=Date:Subject:To:References:Cc:From:In-Reply-To;
+ b=Q9WzsPK5BI52L/i0BOqvnf3tO4Q7EDHI8xJu/CalcnjMPx5ptyFQhbjAg5mGhZ7KF
+ WkV8HXz03b2OsJW9FyKTZ3g4emMQYZpv9DnGFo8RKAG4KT4h5bminXaUPpMwliPjqc
+ wC7PH5pjISf1f8Ey1OmW9/m6AnobktceXCyjSbEsTHO+v1WNUOdz9zGGYOtQoP/06X
+ m/N5YD1Gijq8Bm297OK6mQKuHPSzJZo/7Bhlc93J1UJ+U/36+3kMms8CwWJs/DZTrn
+ TFo5kUD6h6zSvw6+fH+YiqYcyMa+fwwkXUvKuHnHwlimx6xcIsMa5zL/r5dMAKxRLl
+ 9HYHaW3WvBywQ==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id A7E971C3133;
+ Mon, 20 Jul 2026 14:27:36 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id D1BDC3F21E8;
+ Mon, 20 Jul 2026 14:27:49 +0300 (MSK)
+Message-ID: <7732e00a-9552-41da-b06a-0e18a4eb6629@tls.msk.ru>
+Date: Mon, 20 Jul 2026 14:27:38 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: permerror client-ip=170.10.133.124;
- envelope-from=imammedo@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GIT PULL 00/15] Various UI/security-related fixes for 11.1
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+References: <20260717-fix-v1-0-cb9f7d49dc52@redhat.com>
+Content-Language: en-US, ru-RU
+Cc: QEMU Stable <qemu-stable@nongnu.org>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260717-fix-v1-0-cb9f7d49dc52@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,88 +113,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 17 Jul 2026 15:16:14 +0100
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrote:
+On 7/17/26 14:52, Marc-André Lureau wrote:
+...
+> Akihiko Odaki (3):
+>        ui/gtk: Narrow DMA-BUF critical section
+>        hw/display/virtio-gpu: reject strides exceeding INT_MAX
+>        hw/display/virtio-gpu: Check pixman_image_create_bits() results
+> 
+> Marc-André Lureau (12):
+>        i386/tdx: fix uninitialized variable warning in tdx_check_features
+>        ui/vnc: fix OOB write in vnc_refresh_lossy_rect
+>        ui/vnc: validate color shifts in SetPixelFormat
+>        ui/vnc: use RFB wire types for client message handlers
+>        ui/input-barrier: fix off-by-one in keycode bounds check
+>        ui/vnc: fix out-of-bounds write in lossy refresh dirty marking
+>        ui/vnc: validate SetPixelFormat field ranges
+>        hw/display/virtio-gpu: fix dmabuf_fd leak on remap failure
+>        hw/display/qxl: fix TOCTOU in cursor chunk data_size handling
+>        hw/display/virtio-gpu: validate stride against width on scanout
+>        hw/display/virtio-gpu: cap submit_3d command buffer allocation
+>        hw/display/virtio-gpu: handle migration iov allocation failure
 
-> On Fri, Jul 17, 2026 at 04:05:42PM +0200, Christian Schoenebeck wrote:
-> > On Monday, 13 July 2026 09:49:35 CEST Igor Mammedov wrote: =20
-> > > On Fri, 10 Jul 2026 15:40:04 +0100
-> > >=20
-> > > Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrote: =20
-> > > > On Fri, Jul 10, 2026 at 04:31:51PM +0200, Christian Schoenebeck wro=
-te: =20
-> > > > > On Friday, 10 July 2026 14:51:49 CEST Igor Mammedov wrote: =20
-> > > > > > On Fri, 10 Jul 2026 12:49:06 +0200
-> > > > > >=20
-> > > > > > Christian Schoenebeck <qemu_oss@crudebyte.com> wrote: =20
-> > > > > > > On Friday, 10 July 2026 12:23:45 CEST Igor Mammedov wrote: =20
-> > > > > [...]
-> > > > >  =20
-> > > > > > note: I'm looking from pov of hotpluggable PCI device and gener=
-ic
-> > > > > > hotplug
-> > > > > > infra, only. =20
-> > > > >=20
-> > > > > That's okay, but so far I don't see the relevance for this partic=
-ular 9p
-> > > > > device.
-> > > > >  =20
-> > > > > > it's not guest users directly, it's how hotplug flow works for =
-various
-> > > > > > guest OSes:
-> > > > > >=20
-> > > > > > 1. host plugs device in (-device or device_add)
-> > > > > > 2. guest OS get's notified one way or another and does what eve=
-r guest
-> > > > > > side
-> > > > > >=20
-> > > > > >    init needed (incl. mounting share in 9pfs case) =20
-> > > > >=20
-> > > > > That's not affected by this patch, right?
-> > > > >  =20
-> > > > > > opposite flow:
-> > > > > > 1. host does device_del (basically notify guest to remove devic=
-e)
-> > > > > > 2. guest OS frees resources and tells qemu to delete device
-> > > > > > 3. qemu process remove event (which incl. unrealize as part of
-> > > > > > destroying
-> > > > > > device) =20
-> > > > >=20
-> > > > > And that's not affected by this patch either, right? =20
-> > >=20
-> > > the patch would break unplug flow by effectively removing 'eject' knob
-> > > from guest side, which is part of unplug flow. =20
-> >=20
-> > These are two different things: device_del would not be affected by thi=
-s.=20
-> >=20
-> > 1. Ejecting the device from host side e.g. via QMP would still work.
-> >=20
-> > vs.
-> >=20
-> > 2. Ejecting from guest side OTOH would be disabled.
-> >=20
-> > It is also different from regular block devices where you have convenie=
-nt ways
-> > to eject a block device on guest OSes. For a virtio-9p device it is not=
- that
-> > easy. =20
->=20
-> Igor can correct me if I'm wrong, but IIUC there's no distinction
-> to those 2 scenarios from the guest POV.
->=20
-> A "device_del" in QMP does not actually delete a device from the
-> QEMU POV.  Rather it triggers an ACPI notification to the geust
-> OS, that the operator wants to unplug the device.  The guest OS
-> then honours (or not) that by initiating a guest side "eject".
-> IOW disabling guest initiated eject would break device_del too
-> AFAIK.
+ From this batch, I'm NOT picking up for stable:
 
-That's how it works.
-Sorry if I wasn't able to convey the message in my previous replies.
+         i386/tdx: fix uninitialized variable warning in tdx_check_features
+         ui/vnc: use RFB wire types for client message handlers
+           (this one I'm not certain, maybe I should pick it up too)
 
->=20
-> With regards,
-> Daniel
+queued, waiting for an addiitonal fix to land:
 
+         hw/display/virtio-gpu: validate stride against width on scanout
+           (as discussed)
+         hw/display/virtio-gpu: reject strides exceeding INT_MAX
+           (context depends on the previous one)
+
+the rest are queued up for 10.0.x and 11.0.x.
+
+BTW, a few of them, namely:
+
+        hw/display/qxl: fix TOCTOU in cursor chunk data_size handling
+        hw/display/virtio-gpu: fix dmabuf_fd leak on remap failure
+
+has already been merged through misc tree.
+
+Thanks,
+
+/mjt
 
