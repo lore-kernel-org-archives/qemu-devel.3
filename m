@@ -4,80 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D345C44515
-	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 16:28:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26D28C4452D
+	for <qemu-devel@archiver.kernel.org>; Mon, 20 Jul 2026 16:50:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wlqqS-0004fo-8b; Mon, 20 Jul 2026 12:27:56 -0400
+	id 1wlrBa-0007s0-DL; Mon, 20 Jul 2026 12:49:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wlqqP-0004dG-Ew
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 12:27:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <matthew@pq.io>) id 1wlrBY-0007no-Mw
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 12:49:44 -0400
+Received: from mail-43171.protonmail.ch ([185.70.43.171])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wlqqN-0001n8-QR
- for qemu-devel@nongnu.org; Mon, 20 Jul 2026 12:27:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1784564871;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XRdUvBVdW2JSMvhgyap2ynHQUuKL1QkqeqYGxtQaBNY=;
- b=cYlZiNzcWxEGQoH0GeMotO2X4e8R3Iks9yXX75aWm0WuAxMp/KyEFpG2iKjskS9SarLGmi
- /pJpjrJqcDZCKRT0erLaYGS9ruKgopIwHQM/vrGIQiisAp/loGRFgPoQpok14HbXBBckSS
- aOAGtWrzgaNYve54PgDp7V7RNkjSh2k=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-364-Fcqke1cJPbKLuxVCC0ZmUA-1; Mon,
- 20 Jul 2026 12:27:47 -0400
-X-MC-Unique: Fcqke1cJPbKLuxVCC0ZmUA-1
-X-Mimecast-MFC-AGG-ID: Fcqke1cJPbKLuxVCC0ZmUA_1784564864
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 060791955F1F; Mon, 20 Jul 2026 16:27:44 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.50.22])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 791F8195422C; Mon, 20 Jul 2026 16:27:40 +0000 (UTC)
-Date: Mon, 20 Jul 2026 17:27:36 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>,
- Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
- kane_chen@aspeedtech.com, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>
-Subject: Re: [PATCH] tests/functional/aspeed: Fix remaining hostname-specific
- login prompts
-Message-ID: <al5MeE5rPlZz4hFA@redhat.com>
-References: <20260720162321.3497633-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <matthew@pq.io>) id 1wlrBX-0004Qg-3U
+ for qemu-devel@nongnu.org; Mon, 20 Jul 2026 12:49:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pq.io;
+ s=protonmail3; t=1784566174; x=1784825374;
+ bh=yrkWP1pU6GaNLvSexglusKT0/s8MV28FxZSAenGt8cs=;
+ h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:From:To:
+ Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+ b=nVyr+Uc3YPz6G1CZT0S6NW3nsiFKGHt/6ffwlgACjKVptR3KbGpd2ZNJ39GPuAd37
+ EiKlFJkX3RLi5s3DVKPeS3/Mi7CaWTEi4Kep57KOihd7xmPt/VdWGy6zUwau13jMW4
+ 7zz6VZPfOC4WvHTZO3dpyNVELjdMbehM3ESiXWDihl1VpRkMO5vTPwo7Q6WIaLdfaW
+ NS0a6iRKov0i8kITEIQhfaoNrpDmyO22UVLiHDRDaH4Rq053HqSJZa5Ue7qSX8W9ma
+ uSa/JJhNK+Z5jXNAEJFqxRFSDzZ5zpknsAewGwrqcaqrCgtai+H1gGho0RLu8ewc8b
+ HLDBU0KPDSzQw==
+X-Pm-Submission-Id: 4h3mhD4qCGz2Scsg
+From: Matthew Jackson <matthew@pq.io>
+To: qemu-devel@nongnu.org
+Cc: kraxel@redhat.com, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-trivial@nongnu.org
+Subject: [PATCH v4 0/2] hw/misc/applesmc: fix GET_KEY_BY_INDEX iteration and
+ populate Apple SMC key set
+Date: Mon, 20 Jul 2026 09:49:28 -0700
+Message-ID: <20260720164930.68383-1-matthew@pq.io>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260719152343.69536-1-matthew@pq.io>
+References: <20260719152343.69536-1-matthew@pq.io>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260720162321.3497633-1-clg@redhat.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: permerror client-ip=170.10.133.124;
- envelope-from=berrange@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=185.70.43.171; envelope-from=matthew@pq.io;
+ helo=mail-43171.protonmail.ch
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,37 +65,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 20, 2026 at 06:23:21PM +0200, Cédric Le Goater wrote:
-> Commit b04746bd0d7c unified boot completion detection on the generic
-> 'login:' prompt but missed several SDK test files that still matched
-> on hostname-prefixed patterns. Apply the same fix.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4059
-> Fixes: b04746bd0d7c ("tests/functional/aspeed: unify boot completion detection on 'login:' prompt")
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->  tests/functional/aarch64/test_aspeed_ast2700a1.py   | 2 +-
->  tests/functional/aarch64/test_aspeed_ast2700a2.py   | 2 +-
->  tests/functional/aarch64/test_aspeed_ast2700fc.py   | 2 +-
->  tests/functional/arm/test_aspeed_ast2500_sdk.py     | 2 +-
->  tests/functional/arm/test_aspeed_ast2500_sdk_515.py | 2 +-
->  tests/functional/arm/test_aspeed_ast2600_sdk.py     | 2 +-
->  tests/functional/arm/test_aspeed_ast2600_sdk_515.py | 2 +-
->  7 files changed, 7 insertions(+), 7 deletions(-)
+The applesmc device only answers APPLESMC_READ_CMD at its command
+port. Modern macOS guests (x86 10.14+, all 15.x) also issue WRITE,
+TYPE and GET_KEY_BY_INDEX, and enumerate the SMC key space at boot.
+The unanswered commands and the near-empty key table drive the
+AppleSMC kext into a kSMCSpuriousData retry storm (~1800 errors/sec,
+kernel_task ~70% CPU, WindowServer ~509% CPU on macOS 15).
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Patch 1 implements the missing commands. Patch 2 populates the key
+table with a realistic iMac20,1 profile and the canonical #KEY count,
+so the guest's boot-time enumeration terminates.
 
+v4:
+  - Regenerated against current master. Drop a stray hunk in patch 2/2
+    that reverted the qdev-properties.h include move (commit 78d45220b4);
+    the include is now left untouched. Reported-by Philippe
+    Mathieu-Daudé. No functional change.
+  - No other changes from v3.
 
-With regards,
-Daniel
+v3: https://lore.kernel.org/qemu-devel/20260719152343.69536-1-matthew@pq.io/
+v2: addressed Peter Maydell's style review (loop braces, stl_be_p()).
+v1: https://lore.kernel.org/qemu-devel/20260507040153.14565-1-matthew@pq.io/
+
+Matthew Jackson (2):
+  hw/misc/applesmc: implement GET_KEY_BY_INDEX, WRITE and TYPE commands
+  hw/misc/applesmc: populate Apple SMC key table
+
+ hw/misc/applesmc.c | 344 ++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 337 insertions(+), 7 deletions(-)
+
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.50.1 (Apple Git-155)
 
 
